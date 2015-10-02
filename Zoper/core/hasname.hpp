@@ -11,7 +11,7 @@ namespace lib
 		{
 		public:
 			HasName(const std::string name) :_name(name) {}
-			virtual ~HasName();
+			virtual ~HasName() {}
 			
 			inline const std::string &name() const { return _name; }
 		private:

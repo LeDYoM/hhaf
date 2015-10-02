@@ -33,7 +33,13 @@
     <ClCompile Include="core\programcontroller.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="zooperwindow.cpp">
+    <ClCompile Include="zoperwindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="zoperscenemanager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="menuscene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -62,7 +68,13 @@
     <ClInclude Include="core\programcontroller.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="zooperwindow.h">
+    <ClInclude Include="zoperwindow.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="zoperscenemanager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="menuscene.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -9,17 +9,16 @@ namespace lib
 	{
 		Window::Window()
 		{
+		}
+
+		void Window::create(int w, int h, int bpp, const std::string &title)
+		{
 			LOG_DEBUG("Going to create Window");
-			create(VideoMode(1024, 768, 32), title);
+			sf::Window::create(VideoMode(w, h, bpp), title);
 		}
 
 		Window::~Window()
 		{
-		}
-
-		void Window::setTitle(const std::string &title)
-		{
-			setTitle(title.c_str());
 		}
 
 		void Window::loop()

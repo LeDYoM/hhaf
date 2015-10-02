@@ -21,7 +21,7 @@ namespace lib
 		private:
 			Scene *getSceneByName(const std::string &name) const;
 			std::vector<Scene*> _scenes;
-			Scene *_currentScene;
+			Scene *_currentScene{ nullptr };
 		};
 	}
 }

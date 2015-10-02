@@ -1,9 +1,9 @@
-#include "core/window.hpp"
+#include "zoperprogramcontroller.hpp"
 
 int main(int argc, char* argv[])
 {
-	lib::core::Window window("Zoper");
+	zoper::ZoperProgramController program;
 
-	window.loop();
+	program.start();
 	return 0;
 }

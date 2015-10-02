@@ -46,14 +46,14 @@ namespace lib
 		
 		Scene *SceneManager::getSceneByName(const std::string &name) const
 		{
-			for (int i=0;i<_scenes.size();++i)
+			for (auto scene : _scenes)
 			{
-				if (_scenes[i]->name() == name)
+				if (scene->name() == name)
 				{
-					return _scenes[i];
+					return scene;
 				}
 			}
-			return 0;
+			return nullptr;
 		}
 	}
 }

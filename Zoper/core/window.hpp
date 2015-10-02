@@ -12,13 +12,13 @@ namespace lib
 		{
 		public:
 			Window();
-			void setTitle(const std::string &title);
 			virtual ~Window();
+			void create(int w, int h, int bpp, const std::string &title);
 			void loop();
 
 		protected:
-			void onCreate();
-			void onDestroy();
+			virtual void onCreate();
+			virtual void onDestroy();
 		};
 	}
 }

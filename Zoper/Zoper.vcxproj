@@ -87,7 +87,9 @@
     <ClCompile Include="core\scene.cpp" />
     <ClCompile Include="core\scenemanager.cpp" />
     <ClCompile Include="core\window.cpp" />
-    <ClCompile Include="zooperwindow.cpp" />
+    <ClCompile Include="menuscene.cpp" />
+    <ClCompile Include="zoperscenemanager.cpp" />
+    <ClCompile Include="zoperwindow.cpp" />
     <ClCompile Include="zoperprogramcontroller.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -98,7 +100,9 @@
     <ClInclude Include="core\scene.hpp" />
     <ClInclude Include="core\scenemanager.hpp" />
     <ClInclude Include="core\window.hpp" />
-    <ClInclude Include="zooperwindow.h" />
+    <ClInclude Include="menuscene.hpp" />
+    <ClInclude Include="zoperscenemanager.hpp" />
+    <ClInclude Include="zoperwindow.hpp" />
     <ClInclude Include="zoperprogramcontroller.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

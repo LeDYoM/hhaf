@@ -1,4 +1,5 @@
 #include "programcontroller.hpp"
+#include "window.hpp"
 
 namespace lib
 {
@@ -16,6 +17,7 @@ namespace lib
 		void ProgramController::start()
 		{
 			onInit();
+			_window->loop();
 		}
 
 	}

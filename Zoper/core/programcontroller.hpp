@@ -6,6 +6,7 @@ namespace lib
 	namespace core
 	{
 		class Window;
+		class SceneManager;
 		
 		class ProgramController
 		{
@@ -16,9 +17,15 @@ namespace lib
 			virtual void onInit()=0;
 			
 			void start();
+			void setWindow(Window *window) { _window = window; }
+			void setSceneManager(SceneManager *sceneManager) { _sceneManager = sceneManager; }
+
+			inline SceneManager *sceneManager() const { return _sceneManager; }
 		protected:
 			void loopStep();
+		private:
 			Window *_window;
+			SceneManager *_sceneManager;
 			
 		private:
 			bool exit;
