@@ -1,6 +1,6 @@
 #include "scenemanager.hpp"
 #include "scene.hpp"
-#include "log.h"
+#include "log.hpp"
 
 namespace lib
 {
@@ -15,24 +15,28 @@ namespace lib
 		{
 		}
 
-		void SceneManager::addScene(Scene *newScene)
+		void SceneManager::addScene(std::shared_ptr<Scene> newScene)
 		{
 			_scenes.push_back(newScene);
 		}
 
-		void SceneManager::setScene(Scene *scene)
+		void SceneManager::setScene(std::shared_ptr<Scene> newScene)
 		{
 			if (_currentScene)
 			{
-				_currentScene->onDeactivated();
+				_currentScene->onExitScene();
 			}
-			_currentScene = scene;
-			_currentScene->onActivated();
+			else
+			{
+				LOG_DEBUG("Scene was empty");
+			}
+			_currentScene = newScene;
+			_currentScene->onEnterScene();
 		}
 		
 		void SceneManager::setScene(const std::string &name)
 		{
-			Scene *scene = getSceneByName(name);
+			std::shared_ptr<Scene> scene = getSceneByName(name);
 			
 			if (scene)
 			{
@@ -44,7 +48,7 @@ namespace lib
 			}
 		}
 		
-		Scene *SceneManager::getSceneByName(const std::string &name) const
+		std::shared_ptr<Scene> SceneManager::getSceneByName(const std::string &name) const
 		{
 			for (auto scene : _scenes)
 			{
@@ -54,6 +58,14 @@ namespace lib
 				}
 			}
 			return nullptr;
+		}
+
+		void SceneManager::update()
+		{
+			if (!_currentScene)
+			{
+				setScene(_scenes[0]);
+			}
 		}
 	}
 }

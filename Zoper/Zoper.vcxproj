@@ -82,6 +82,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="core\log.cpp" />
     <ClCompile Include="core\programcontroller.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="core\scene.cpp" />
@@ -95,7 +96,7 @@
   <ItemGroup>
     <ClInclude Include="core\config.h" />
     <ClInclude Include="core\hasname.hpp" />
-    <ClInclude Include="core\log.h" />
+    <ClInclude Include="core\log.hpp" />
     <ClInclude Include="core\programcontroller.hpp" />
     <ClInclude Include="core\scene.hpp" />
     <ClInclude Include="core\scenemanager.hpp" />

@@ -5,9 +5,8 @@ namespace zoper
 {
 	ZoperSceneManager::ZoperSceneManager()
 	{
-		addScene(new MenuScene());
+		addScene(std::shared_ptr<MenuScene>(new MenuScene()));
 	}
-
 
 	ZoperSceneManager::~ZoperSceneManager()
 	{

@@ -3,22 +3,25 @@
 
 #include <SFML/Graphics.hpp>
 #include <string>
+#include <memory>
 
 namespace lib
 {
 	namespace core
 	{
+		struct WindowPrivate;
+
 		class Window : public sf::Window
 		{
 		public:
 			Window();
 			virtual ~Window();
 			void create(int w, int h, int bpp, const std::string &title);
-			void loop();
-
-		protected:
+			bool loopStep();
 			virtual void onCreate();
 			virtual void onDestroy();
+		private:
+			std::unique_ptr<WindowPrivate> p_wPrivate{ nullptr };
 		};
 	}
 }

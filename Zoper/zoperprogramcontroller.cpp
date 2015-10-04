@@ -13,11 +13,7 @@ namespace zoper
 		
 	void ZoperProgramController::onInit()
 	{
-		auto w = new ZoperWindow();
-
-		setWindow(w);
-		setSceneManager(new ZoperSceneManager());
-
-
+		setWindow(std::shared_ptr<ZoperWindow>(new ZoperWindow));
+		setSceneManager(std::shared_ptr<ZoperSceneManager>(new ZoperSceneManager));
 	}
 }

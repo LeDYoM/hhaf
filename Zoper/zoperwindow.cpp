@@ -15,12 +15,12 @@ namespace zoper
 
 	void ZoperWindow::onCreate()
 	{
-
+		Window::onCreate();
 	}
 
 	void ZoperWindow::onDestroy()
 	{
-
+		Window::onDestroy();
 	}
 
 }

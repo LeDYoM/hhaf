@@ -42,11 +42,11 @@
     <ClCompile Include="menuscene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="core\log.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="core\log.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="core\window.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -75,6 +75,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="menuscene.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\log.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

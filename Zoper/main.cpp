@@ -2,8 +2,10 @@
 
 int main(int argc, char* argv[])
 {
-	zoper::ZoperProgramController program;
+	zoper::ZoperProgramController *program = new zoper::ZoperProgramController;
 
-	program.start();
-	return 0;
+	program->start();
+	int result = program->loop();
+
+	delete program;
 }

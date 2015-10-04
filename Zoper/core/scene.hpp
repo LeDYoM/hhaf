@@ -2,6 +2,7 @@
 #define __LIB_SCENE_HPP__
 
 #include "hasname.hpp"
+#include <memory>
 
 namespace lib
 {
@@ -13,9 +14,11 @@ namespace lib
 			Scene(const std::string &name);
 			virtual ~Scene();
 
-			virtual void onActivated() = 0;
-			virtual void onDeactivated() = 0;
+			virtual void onEnterScene();
+			virtual void onExitScene();
 		};
+
+		using ScenePtr = std::shared_ptr<Scene>;
 	}
 }
 

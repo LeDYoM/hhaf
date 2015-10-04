@@ -12,14 +12,14 @@ namespace zoper
 	{
 	}
 
-	void MenuScene::onActivated()
+	void MenuScene::onEnterScene()
 	{
-		throw std::logic_error("The method or operation is not implemented.");
+		Scene::onEnterScene();
 	}
 
-	void MenuScene::onDeactivated()
+	void MenuScene::onExitScene()
 	{
-		throw std::logic_error("The method or operation is not implemented.");
+		Scene::onExitScene();
 	}
 
 }
