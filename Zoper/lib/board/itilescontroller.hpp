@@ -9,13 +9,8 @@ namespace lib
 		{
 		public:
 
-			ITilesController()
-			{
-			}
-
-			virtual ~ITilesController()
-			{
-			}
+			ITilesController() {}
+			virtual ~ITilesController() {}
 		};
 	}
 }

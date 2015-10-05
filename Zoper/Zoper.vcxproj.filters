@@ -48,7 +48,7 @@
     <ClCompile Include="lib\core\window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="lib\tiles\TileManager.cpp">
+    <ClCompile Include="lib\board\boardmodel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -89,10 +89,10 @@
     <ClInclude Include="lib\core\window.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="lib\tiles\TileManager.hpp">
+    <ClInclude Include="lib\board\boardmodel.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="lib\tiles\itilescontroller.hpp">
+    <ClInclude Include="lib\board\itilescontroller.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
