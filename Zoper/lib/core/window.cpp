@@ -1,5 +1,5 @@
 #include "window.hpp"
-#include "log.hpp"
+#include "../log.hpp"
 
 #include <SFML/System.hpp>
 
@@ -18,16 +18,18 @@ namespace lib
 		};
 		Window::Window():p_wPrivate{new WindowPrivate()}
 		{
+			LOG_CONSTRUCT_NOPARAMS;
+		}
+
+		Window::~Window()
+		{
+			LOG_DESTRUCT_NOPARAMS;
 		}
 
 		void Window::create(int w, int h, int bpp, const std::string &title)
 		{
 			LOG_DEBUG("Going to create Window");
 			sf::Window::create(VideoMode(w, h, bpp), title);
-		}
-
-		Window::~Window()
-		{
 		}
 
 		bool Window::loopStep()

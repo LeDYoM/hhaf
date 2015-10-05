@@ -8,6 +8,7 @@ namespace lib
 {
 	namespace core
 	{
+		class SceneManager;
 		class Scene : public HasName
 		{
 		public:
@@ -16,9 +17,12 @@ namespace lib
 
 			virtual void onEnterScene();
 			virtual void onExitScene();
-		};
 
-		using ScenePtr = std::shared_ptr<Scene>;
+			void setNextScene(const std::string &name);
+		private:
+			SceneManager *p_scnManager{ nullptr };
+			friend class SceneManager;
+		};
 	}
 }
 

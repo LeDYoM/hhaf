@@ -1,7 +1,7 @@
 #ifndef __ZOPERSCENEMANAGER_HPP__
 #define __ZOPERSCENEMANAGER_HPP__
 
-#include "core/scenemanager.hpp"
+#include "lib/core/scenemanager.hpp"
 
 namespace zoper
 {

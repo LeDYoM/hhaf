@@ -1,7 +1,7 @@
 #ifndef __ZOOPERWINDOW_HPP_
 #define __ZOOPERWINDOW_HPP_
 
-#include "core/window.hpp"
+#include "lib/core/window.hpp"
 
 namespace zoper
 {

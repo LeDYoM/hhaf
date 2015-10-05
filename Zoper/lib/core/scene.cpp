@@ -1,5 +1,6 @@
 #include "scene.hpp"
-#include "log.hpp"
+#include "../log.hpp"
+#include "scenemanager.hpp"
 
 namespace lib
 {
@@ -7,11 +8,12 @@ namespace lib
 	{
 		Scene::Scene(const std::string &name) : HasName(name)
 		{
+			LOG_CONSTRUCT("Name: "<<name);
 		}
-
 
 		Scene::~Scene()
 		{
+			LOG_DESTRUCT("Name: "<<name());
 		}
 
 		void Scene::onEnterScene()
@@ -22,6 +24,13 @@ namespace lib
 		void Scene::onExitScene()
 		{
 			LOG_DEBUG("Exited from scene " << name());
+		}
+
+
+		void Scene::setNextScene(const std::string &name)
+		{
+			__ASSERT(p_scnManager, "Null SceneManager on Scene");
+			p_scnManager->setScene(name);
 		}
 
 	}

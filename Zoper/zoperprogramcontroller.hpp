@@ -1,7 +1,7 @@
 #ifndef __LIB_ZOPERPROGRAMCONTROLLER_HPP__
 #define __LIB_ZOPERPROGRAMCONTROLLER_HPP__
 
-#include "core/programcontroller.hpp"
+#include "lib/core/programcontroller.hpp"
 
 namespace zoper
 {

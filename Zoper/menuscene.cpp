@@ -15,6 +15,7 @@ namespace zoper
 	void MenuScene::onEnterScene()
 	{
 		Scene::onEnterScene();
+		setNextScene("GameScene");
 	}
 
 	void MenuScene::onExitScene()

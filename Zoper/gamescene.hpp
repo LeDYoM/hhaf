@@ -1,15 +1,15 @@
-#ifndef __MENUSCENE_HPP__
-#define __MENUSCENE_HPP__
+#ifndef __GAMESCENE_HPP__
+#define __GAMESCENE_HPP__
 
 #include "lib/core/scene.hpp"
 
 namespace zoper
 {
-	class MenuScene : public lib::core::Scene
+	class GameScene : public lib::core::Scene
 	{
 	public:
-		MenuScene();
-		virtual ~MenuScene();
+		GameScene();
+		virtual ~GameScene();
 
 		virtual void onEnterScene() override;
 		virtual void onExitScene() override;

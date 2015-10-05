@@ -1,7 +1,7 @@
 #include "programcontroller.hpp"
 #include "window.hpp"
 #include "scenemanager.hpp"
-#include "log.hpp"
+#include "../log.hpp"
 
 namespace lib
 {
@@ -9,11 +9,13 @@ namespace lib
 	{
 		ProgramController::ProgramController()
 		{
+			LOG_CONSTRUCT_NOPARAMS;
 		}
 
 
 		ProgramController::~ProgramController()
 		{
+			LOG_DESTRUCT_NOPARAMS;
 		}
 		
 		void ProgramController::start()
