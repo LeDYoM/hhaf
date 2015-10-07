@@ -9,6 +9,7 @@ namespace lib
 	namespace core
 	{
 		class Scene;
+		class Window;
 		class SceneManager
 		{
 		public:
@@ -26,6 +27,9 @@ namespace lib
 			sptr<Scene> _currentScene{ nullptr };
 			bool b_lock{ false };
 			sptr<Scene> _nextScene{ nullptr };
+			Window *p_parentWindow{ nullptr };
+
+			friend class ProgramController;
 		};
 	}
 }

@@ -22,6 +22,8 @@ namespace zoper
 		virtual void onEnterScene() override;
 		virtual void onExitScene() override;
 
+		virtual void update() = 0;
+
 	private:
 		lib::sptr<lib::board::BoardModel> p_boardModel{ nullptr };
 	};

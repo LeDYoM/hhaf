@@ -14,6 +14,7 @@ namespace zoper
 		virtual void onEnterScene() override;
 		virtual void onExitScene() override;
 
+		virtual void update();
 	};
 }
 

@@ -23,6 +23,7 @@ namespace lib
 			onInit();
 			__ASSERT(p_window, "");
 			__ASSERT(p_sceneManager, "");
+			p_sceneManager->p_parentWindow = p_window.get();
 		}
 
 		int ProgramController::loop()

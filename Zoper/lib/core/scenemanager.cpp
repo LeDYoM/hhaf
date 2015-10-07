@@ -1,6 +1,7 @@
 #include "scenemanager.hpp"
 #include "scene.hpp"
 #include "../log.hpp"
+#include "window.hpp"
 
 namespace lib
 {

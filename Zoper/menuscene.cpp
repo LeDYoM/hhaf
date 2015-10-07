@@ -23,4 +23,9 @@ namespace zoper
 		Scene::onExitScene();
 	}
 
+	void MenuScene::update()
+	{
+
+	}
+
 }
