@@ -54,9 +54,6 @@
     <ClCompile Include="lib\memmanager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="lib\core\statemanager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="zoperprogramcontroller.hpp">
@@ -105,9 +102,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="lib\memmanager.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\core\statemanager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

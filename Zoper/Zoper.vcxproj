@@ -94,7 +94,6 @@
     <ClCompile Include="lib\core\window.cpp" />
     <ClCompile Include="lib\memmanager.cpp" />
     <ClCompile Include="menuscene.cpp" />
-    <ClCompile Include="lib\core\statemanager.cpp" />
     <ClCompile Include="zoperscenemanager.cpp" />
     <ClCompile Include="zoperwindow.cpp" />
     <ClCompile Include="zoperprogramcontroller.cpp" />
@@ -113,7 +112,6 @@
     <ClInclude Include="lib\types.hpp" />
     <ClInclude Include="lib\memmanager.hpp" />
     <ClInclude Include="menuscene.hpp" />
-    <ClInclude Include="lib\core\statemanager.hpp" />
     <ClInclude Include="zoperscenemanager.hpp" />
     <ClInclude Include="zoperwindow.hpp" />
     <ClInclude Include="zoperprogramcontroller.hpp" />
