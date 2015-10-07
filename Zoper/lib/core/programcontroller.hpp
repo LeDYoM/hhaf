@@ -1,7 +1,8 @@
 #ifndef __LIB_PROGRAMCONTROLLER_HPP__
 #define __LIB_PROGRAMCONTROLLER_HPP__
 
-#include <memory>
+#include "../types.hpp"
+#include "../compileconfig.hpp"
 
 namespace lib
 {
@@ -13,8 +14,6 @@ namespace lib
 		class ProgramController
 		{
 		public:
-			using WindowPtr = std::shared_ptr<Window>;
-			using SceneManagerPtr = std::shared_ptr<SceneManager>;
 
 			ProgramController();
 			virtual ~ProgramController();
@@ -22,15 +21,15 @@ namespace lib
 			virtual void onInit()=0;
 			void start();
 			int loop();
-			void setWindow(WindowPtr window) { p_window = window; }
-			void setSceneManager(SceneManagerPtr sceneManager) { p_sceneManager = sceneManager; }
+			void setWindow(sptr<Window> window) { p_window = window; }
+			void setSceneManager(sptr<SceneManager> sceneManager) { p_sceneManager = sceneManager; }
 
-			inline std::shared_ptr<SceneManager> sceneManager() const { return p_sceneManager; }
+			inline sptr<SceneManager> sceneManager() const { return p_sceneManager; }
 		protected:
 			bool loopStep();
 		private:
-			std::shared_ptr<Window> p_window;
-			std::shared_ptr<SceneManager> p_sceneManager;		
+			sptr<Window> p_window;
+			sptr<SceneManager> p_sceneManager;		
 		};
 	}
 }

@@ -7,8 +7,8 @@ namespace zoper
 	ZoperSceneManager::ZoperSceneManager()
 	{
 		// Add scenes
-		addScene(std::shared_ptr<MenuScene>(new MenuScene()));
-		addScene(std::shared_ptr<GameScene>(new GameScene()));
+		addScene(lib::sptr<MenuScene>(new MenuScene()));
+		addScene(lib::sptr<GameScene>(new GameScene()));
 	}
 
 	ZoperSceneManager::~ZoperSceneManager()

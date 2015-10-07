@@ -17,7 +17,7 @@ namespace lib
 			LOG_DESTRUCT_NOPARAMS;
 		}
 
-		void SceneManager::addScene(std::shared_ptr<Scene> newScene)
+		void SceneManager::addScene(sptr<Scene> newScene)
 		{
 			_scenes.push_back(newScene);
 			newScene->p_scnManager = this;
@@ -25,7 +25,7 @@ namespace lib
 	
 		void SceneManager::setScene(const std::string &name)
 		{
-			std::shared_ptr<Scene> scene = getSceneByName(name);
+			sptr<Scene> scene = getSceneByName(name);
 			
 			if (scene)
 			{
@@ -47,7 +47,7 @@ namespace lib
 			}
 		}
 		
-		void SceneManager::setScene(std::shared_ptr<Scene> scene)
+		void SceneManager::setScene(sptr<Scene> scene)
 		{
 			__ASSERT(scene, "Cannot change to a nullptr Scene");
 			if (_currentScene)
@@ -62,7 +62,7 @@ namespace lib
 			_currentScene->onEnterScene();
 		}
 
-		std::shared_ptr<Scene> SceneManager::getSceneByName(const std::string &name) const
+		sptr<Scene> SceneManager::getSceneByName(const std::string &name) const
 		{
 			for (auto scene : _scenes)
 			{

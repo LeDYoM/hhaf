@@ -2,7 +2,15 @@
 #define __GAMESCENE_HPP__
 
 #include "lib/core/scene.hpp"
+#include "lib/types.hpp"
 
+namespace lib
+{
+	namespace board
+	{
+		class BoardModel;
+	}
+}
 namespace zoper
 {
 	class GameScene : public lib::core::Scene
@@ -14,6 +22,8 @@ namespace zoper
 		virtual void onEnterScene() override;
 		virtual void onExitScene() override;
 
+	private:
+		lib::sptr<lib::board::BoardModel> p_boardModel{ nullptr };
 	};
 }
 

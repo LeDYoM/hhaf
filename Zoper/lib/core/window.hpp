@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <memory>
+#include "../types.hpp"
 
 namespace lib
 {
@@ -21,7 +22,7 @@ namespace lib
 			virtual void onCreate();
 			virtual void onDestroy();
 		private:
-			std::unique_ptr<WindowPrivate> p_wPrivate{ nullptr };
+			uptr<WindowPrivate> p_wPrivate{ nullptr };
 		};
 	}
 }

@@ -2,7 +2,7 @@
 #define __LIB_SCENEMANAGER_HPP__
 
 #include <vector>
-#include <memory>
+#include "../types.hpp"
 
 namespace lib
 {
@@ -15,17 +15,17 @@ namespace lib
 			SceneManager();
 			virtual ~SceneManager();
 
-			void addScene(std::shared_ptr<Scene> newScene);
+			void addScene(sptr<Scene> newScene);
 			void setScene(const std::string &name);
 			void update();
 		private:
-			void setScene(std::shared_ptr<Scene> scene);
+			void setScene(sptr<Scene> scene);
 
-			std::shared_ptr<Scene> getSceneByName(const std::string &name) const;
-			std::vector<std::shared_ptr<Scene>> _scenes;
-			std::shared_ptr<Scene> _currentScene{ nullptr };
+			sptr<Scene> getSceneByName(const std::string &name) const;
+			std::vector<sptr<Scene>> _scenes;
+			sptr<Scene> _currentScene{ nullptr };
 			bool b_lock{ false };
-			std::shared_ptr<Scene> _nextScene{ nullptr };
+			sptr<Scene> _nextScene{ nullptr };
 		};
 	}
 }

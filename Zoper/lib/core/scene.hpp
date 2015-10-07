@@ -3,6 +3,7 @@
 
 #include "hasname.hpp"
 #include <memory>
+#include "../compileconfig.hpp"
 
 namespace lib
 {

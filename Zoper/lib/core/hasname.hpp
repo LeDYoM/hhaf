@@ -2,6 +2,7 @@
 #define __LIB_IHASNAME_HPP__
 
 #include <string>
+#include "../compileconfig.hpp"
 
 namespace lib
 {
