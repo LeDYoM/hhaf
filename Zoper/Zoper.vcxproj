@@ -59,6 +59,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)SFML\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-system-d.lib;sfml-window-d.lib;sfml-graphics-d.lib;sfml-network-d.lib;sfml-audio-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>sfml-system-d-2.dll;sfml-window-d-2.dll;sfml-graphics-d-2.dll;sfml-network-d-2.dll;sfml-audio-d-2.dll</DelayLoadDLLs>
+      <SupportUnloadOfDelayLoadedDLL>true</SupportUnloadOfDelayLoadedDLL>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -90,7 +92,9 @@
     <ClCompile Include="lib\core\scene.cpp" />
     <ClCompile Include="lib\core\scenemanager.cpp" />
     <ClCompile Include="lib\core\window.cpp" />
+    <ClCompile Include="lib\memmanager.cpp" />
     <ClCompile Include="menuscene.cpp" />
+    <ClCompile Include="lib\core\statemanager.cpp" />
     <ClCompile Include="zoperscenemanager.cpp" />
     <ClCompile Include="zoperwindow.cpp" />
     <ClCompile Include="zoperprogramcontroller.cpp" />
@@ -98,7 +102,7 @@
   <ItemGroup>
     <ClInclude Include="lib\board\boardmodel.hpp" />
     <ClInclude Include="lib\board\itilescontroller.hpp" />
-    <ClInclude Include="lib\config.h" />
+    <ClInclude Include="lib\compileconfig.hpp" />
     <ClInclude Include="lib\core\hasname.hpp" />
     <ClInclude Include="lib\log.hpp" />
     <ClInclude Include="lib\core\programcontroller.hpp" />
@@ -106,7 +110,10 @@
     <ClInclude Include="lib\core\scenemanager.hpp" />
     <ClInclude Include="lib\core\window.hpp" />
     <ClInclude Include="gamescene.hpp" />
+    <ClInclude Include="lib\types.hpp" />
+    <ClInclude Include="lib\memmanager.hpp" />
     <ClInclude Include="menuscene.hpp" />
+    <ClInclude Include="lib\core\statemanager.hpp" />
     <ClInclude Include="zoperscenemanager.hpp" />
     <ClInclude Include="zoperwindow.hpp" />
     <ClInclude Include="zoperprogramcontroller.hpp" />
