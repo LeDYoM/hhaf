@@ -13,6 +13,15 @@ namespace lib
 }
 namespace zoper
 {
+	struct GameData
+	{
+		lib::u32 width{ 0 };
+		lib::u32 height{ 0 };
+		lib::u32 centerQuadx{ 0 };
+		lib::u32 centerQuady{ 0 };
+		lib::u32 centerQuadw{ 0 };
+		lib::u32 centerQuadh{ 0 };
+	};
 	class GameScene : public lib::core::Scene
 	{
 	public:
@@ -24,8 +33,16 @@ namespace zoper
 
 		virtual void update();
 
+		inline void setGameData(const GameData &gData) { _gameData = gData; }
+		inline const GameData &getGameData() const { return _gameData; };
 	private:
+		void generateNextToken();
 		lib::sptr<lib::board::BoardModel> p_boardModel{ nullptr };
+		GameData _gameData;
+		sf::Clock clock;
+		lib::s32 _millisBetweenTokens{ 1000 };
+		lib::u8 _nextTokenPart{ 0 };
+
 	};
 }
 
