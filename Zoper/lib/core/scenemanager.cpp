@@ -7,11 +7,12 @@ namespace lib
 {
 	namespace core
 	{
+		wptr<Window> SceneManager::p_parentWindow;
+
 		SceneManager::SceneManager()
 		{
 			LOG_CONSTRUCT_NOPARAMS;
 		}
-
 
 		SceneManager::~SceneManager()
 		{
@@ -21,7 +22,6 @@ namespace lib
 		void SceneManager::addScene(sptr<Scene> newScene)
 		{
 			_scenes.push_back(newScene);
-			newScene->p_scnManager = this;
 		}
 	
 		void SceneManager::setScene(const std::string &name)
@@ -81,10 +81,13 @@ namespace lib
 			{
 				setScene(_scenes[0]);
 			}
-
-			if (_nextScene)
+			else if (_nextScene)
 			{
 				setScene(_nextScene);
+			}
+			else
+			{
+				_currentScene->update();
 			}
 		}
 	}

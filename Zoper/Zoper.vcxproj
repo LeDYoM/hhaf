@@ -59,7 +59,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)SFML\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-system-d.lib;sfml-window-d.lib;sfml-graphics-d.lib;sfml-network-d.lib;sfml-audio-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <DelayLoadDLLs>sfml-system-d-2.dll;sfml-window-d-2.dll;sfml-graphics-d-2.dll;sfml-network-d-2.dll;sfml-audio-d-2.dll</DelayLoadDLLs>
+      <DelayLoadDLLs>sfml-system-d-2.dll;sfml-window-d-2.dll;sfml-network-d-2.dll;sfml-audio-d-2.dll</DelayLoadDLLs>
       <SupportUnloadOfDelayLoadedDLL>true</SupportUnloadOfDelayLoadedDLL>
     </Link>
   </ItemDefinitionGroup>
@@ -94,6 +94,7 @@
     <ClCompile Include="lib\core\window.cpp" />
     <ClCompile Include="lib\memmanager.cpp" />
     <ClCompile Include="menuscene.cpp" />
+    <ClCompile Include="lib\core\renderizable.cpp" />
     <ClCompile Include="zoperscenemanager.cpp" />
     <ClCompile Include="zoperwindow.cpp" />
     <ClCompile Include="zoperprogramcontroller.cpp" />
@@ -112,6 +113,8 @@
     <ClInclude Include="lib\types.hpp" />
     <ClInclude Include="lib\memmanager.hpp" />
     <ClInclude Include="menuscene.hpp" />
+    <ClInclude Include="lib\stostr.hpp" />
+    <ClInclude Include="lib\core\renderizable.hpp" />
     <ClInclude Include="zoperscenemanager.hpp" />
     <ClInclude Include="zoperwindow.hpp" />
     <ClInclude Include="zoperprogramcontroller.hpp" />

@@ -21,8 +21,8 @@ namespace lib
 			virtual void onInit()=0;
 			void start();
 			int loop();
-			void setWindow(sptr<Window> window) { p_window = window; }
-			void setSceneManager(sptr<SceneManager> sceneManager) { p_sceneManager = sceneManager; }
+			void setWindow(sptr<Window> window);
+			void setSceneManager(sptr<SceneManager> sceneManager);
 
 			inline sptr<SceneManager> sceneManager() const { return p_sceneManager; }
 		protected:

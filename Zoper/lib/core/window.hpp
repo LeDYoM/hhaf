@@ -12,7 +12,7 @@ namespace lib
 	{
 		struct WindowPrivate;
 
-		class Window : public sf::Window
+		class Window : public sf::RenderWindow
 		{
 		public:
 			Window();

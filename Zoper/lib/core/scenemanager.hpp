@@ -27,9 +27,10 @@ namespace lib
 			sptr<Scene> _currentScene{ nullptr };
 			bool b_lock{ false };
 			sptr<Scene> _nextScene{ nullptr };
-			Window *p_parentWindow{ nullptr };
+			static wptr<Window> p_parentWindow;
 
 			friend class ProgramController;
+			friend class Scene;
 		};
 	}
 }

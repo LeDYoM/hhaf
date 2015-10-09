@@ -31,10 +31,11 @@ void finishMemManager()
 {
 #ifdef USE_MEM_MANAGER
 #ifdef VS_NATIVE_MEMMANAGER
+	__FUnloadDelayLoadedDLL2("sfml-graphics-d-2.dll");
 	__FUnloadDelayLoadedDLL2("sfml-system-d-2.dll");
 	__FUnloadDelayLoadedDLL2("sfml-window-d-2.dll");
-
-	_CrtDumpMemoryLeaks();
+	
+	//_CrtDumpMemoryLeaks();
 #endif
 #endif
 }

@@ -6,6 +6,8 @@
 #include "../compileconfig.hpp"
 #include "../types.hpp"
 
+#include <SFML/Graphics.hpp>
+
 namespace lib
 {
 	namespace core
@@ -24,10 +26,16 @@ namespace lib
 			virtual void update() = 0;
 
 			void setNextScene(const std::string &name);
+			void draw(const sf::Drawable &drawable);
+
+			sptr<sf::Text> createText();
 		private:
-			SceneManager *p_scnManager;
-			Window *p_parentWindow;
+			std::vector<sptr<sf::Drawable>> v_nodes;
+			uptr<sf::View> p_view;
+
+			static wptr<SceneManager> p_scnManager;
 			friend class SceneManager;
+			friend class ProgramController;
 		};
 	}
 }

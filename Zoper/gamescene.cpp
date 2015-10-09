@@ -41,6 +41,13 @@ namespace zoper
 		// set the text style
 		text.setStyle(sf::Text::Bold | sf::Text::Underlined);
 
+		text.setPosition(500, 500);
+
+	}
+
+	void GameScene::update()
+	{
+		draw(text);
 	}
 
 	void GameScene::onExitScene()
@@ -48,10 +55,4 @@ namespace zoper
 		p_boardModel = nullptr;
 		Scene::onExitScene();
 	}
-
-	void GameScene::update()
-	{
-
-	}
-
 }
