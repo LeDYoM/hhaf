@@ -54,7 +54,10 @@
     <ClCompile Include="lib\memmanager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="lib\core\renderizable.cpp">
+    <ClCompile Include="lib\draw\renderizable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\randomizer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -110,7 +113,10 @@
     <ClInclude Include="lib\stostr.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="lib\core\renderizable.hpp">
+    <ClInclude Include="lib\draw\renderizable.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\randomizer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
