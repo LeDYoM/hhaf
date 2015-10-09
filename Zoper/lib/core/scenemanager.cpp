@@ -89,6 +89,8 @@ namespace lib
 			{
 				_currentScene->update();
 			}
+
+			_currentScene->drawAll();
 		}
 	}
 }

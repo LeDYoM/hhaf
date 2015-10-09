@@ -8,8 +8,13 @@
 
 #include <SFML/Graphics.hpp>
 
+
 namespace lib
 {
+	namespace draw
+	{
+		class Renderizable;
+	}
 	namespace core
 	{
 		class SceneManager;
@@ -28,9 +33,13 @@ namespace lib
 			void setNextScene(const std::string &name);
 			void draw(const sf::Drawable &drawable);
 
-			sptr<sf::Text> createText();
+			sf::Text* const createText(const std::string &name);
+			sf::Sprite* const createSprite(const std::string &name);
+			sf::Shape* const createShape(const std::string &name);
+
 		private:
-			std::vector<sptr<sf::Drawable>> v_nodes;
+			u32 drawAll();
+			std::vector<sptr<lib::draw::Renderizable>> v_nodes;
 			uptr<sf::View> p_view;
 
 			static wptr<SceneManager> p_scnManager;

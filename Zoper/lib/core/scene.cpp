@@ -3,6 +3,7 @@
 #include "scenemanager.hpp"
 #include "window.hpp"
 #include "../stostr.hpp"
+#include "../draw/renderizable.hpp"
 
 namespace lib
 {
@@ -43,10 +44,39 @@ namespace lib
 			p_scnManager.lock()->p_parentWindow.lock()->draw(drawable);
 		}
 
-		sptr<sf::Text> Scene::createText()
+		sf::Text *const Scene::createText(const std::string &name)
 		{
-
+			auto result = sptr<lib::draw::Renderizable>(new lib::draw::Renderizable(name,new sf::Text));
+			v_nodes.push_back(result);
+			return result->getAsText();
 		}
 
+		sf::Sprite* const Scene::createSprite(const std::string &name)
+		{
+			auto result = sptr<lib::draw::Renderizable>(new lib::draw::Renderizable(name, new sf::Sprite));
+			v_nodes.push_back(result);
+			return result->getAsSprite();
+		}
+
+		sf::Shape* const Scene::createShape(const std::string &name)
+		{
+			auto result = sptr<lib::draw::Renderizable>(new lib::draw::Renderizable(name, new sf::CircleShape));
+			v_nodes.push_back(result);
+			return result->getAsShape();
+		}
+
+		u32 Scene::drawAll()
+		{
+			auto window = p_scnManager.lock()->p_parentWindow.lock();
+
+			u32 rNodes{ 0 };
+			
+			for (auto renderizable : v_nodes)
+			{
+				window->draw(*(renderizable->getAsDrawable()));
+				++rNodes;
+			}
+			return rNodes;
+		}
 	}
 }
