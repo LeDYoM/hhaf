@@ -37,6 +37,8 @@ namespace lib
 			sf::Sprite* const createSprite(const std::string &name);
 			sf::Shape* const createShape(const std::string &name);
 
+			u32 getRandomNumer(u32 max = 1, u32 min = 0);
+
 		private:
 			u32 drawAll();
 			std::vector<sptr<lib::draw::Renderizable>> v_nodes;

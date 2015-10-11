@@ -78,5 +78,11 @@ namespace lib
 			}
 			return rNodes;
 		}
+
+		u32 Scene::getRandomNumer(u32 max /*= 1*/, u32 min /*= 0*/)
+		{
+			return p_scnManager.lock()->p_parentWindow.lock()->getRandomNumer(max, min);
+		}
+
 	}
 }

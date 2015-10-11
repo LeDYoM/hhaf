@@ -37,6 +37,7 @@ namespace zoper
 		inline const GameData &getGameData() const { return _gameData; };
 	private:
 		void generateNextToken();
+		bool pointInBounds(lib::u32 x, lib::u32 y) const;
 		lib::sptr<lib::board::BoardModel> p_boardModel{ nullptr };
 		GameData _gameData;
 		sf::Clock clock;

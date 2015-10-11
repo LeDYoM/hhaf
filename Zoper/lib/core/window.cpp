@@ -1,6 +1,6 @@
 #include "window.hpp"
 #include "../log.hpp"
-
+#include "../randomizer.hpp"
 #include <SFML/System.hpp>
 
 using namespace sf;
@@ -15,6 +15,7 @@ namespace lib
 			Int32 lastTimeFps{ 0 };
 			int lastFps{ 0 };
 			int currentFps{ 0 };
+			Randomizer randomizer;
 		};
 		Window::Window():p_wPrivate{new WindowPrivate()}
 		{
@@ -67,5 +68,11 @@ namespace lib
 			close();
 			LOG_DEBUG("Window closed");
 		}
+
+		u32 Window::getRandomNumer(u32 max /*= 1*/, u32 min /*= 0*/)
+		{
+			return p_wPrivate->randomizer.getUInt(max, min);
+		}
+
 	}
 }
