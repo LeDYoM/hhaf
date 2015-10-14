@@ -84,6 +84,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="lib\configuration.cpp" />
     <ClCompile Include="lib\board\boardmodel.cpp" />
     <ClCompile Include="lib\log.cpp" />
     <ClCompile Include="lib\core\programcontroller.cpp" />
@@ -101,6 +102,7 @@
     <ClCompile Include="zoperprogramcontroller.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="lib\configuration.hpp" />
     <ClInclude Include="lib\board\boardmodel.hpp" />
     <ClInclude Include="lib\board\itilescontroller.hpp" />
     <ClInclude Include="lib\compileconfig.hpp" />

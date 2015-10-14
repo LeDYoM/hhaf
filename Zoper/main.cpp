@@ -1,6 +1,6 @@
 #include "lib/compileconfig.hpp"
 #include "zoperprogramcontroller.hpp"
-
+#include "lib/log.hpp"
 #include <SFML/Window.hpp>
 
 int main2(int argc, char* argv[])
@@ -37,5 +37,6 @@ int main(int argc, char* argv[])
 
 	delete program;
 	finishMemManager();
+	finishLog();
 	return result;
 }
