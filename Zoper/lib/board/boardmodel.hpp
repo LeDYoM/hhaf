@@ -19,6 +19,7 @@ namespace lib
 			int getTile(u32 x, u32 y) const;
 			void setTile(u32 x, u32 y, s32 newTile);
 			void moveTile(u32 xSource, u32 ySource, u32 xDest, u32 yDest);
+
 		private:
 			inline bool validCoords(u32 x, u32 y) const { return _tiles.size() > x && _tiles[0].size() > y; }
 			std::vector<std::vector<s32>> _tiles;

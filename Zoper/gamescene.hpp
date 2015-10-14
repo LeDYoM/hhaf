@@ -3,6 +3,7 @@
 
 #include "lib/core/scene.hpp"
 #include "lib/types.hpp"
+#include <array>
 
 namespace lib
 {
@@ -11,6 +12,7 @@ namespace lib
 		class BoardModel;
 	}
 }
+
 namespace zoper
 {
 	struct GameData
@@ -21,6 +23,19 @@ namespace zoper
 		lib::u32 centerQuady{ 0 };
 		lib::u32 centerQuadw{ 0 };
 		lib::u32 centerQuadh{ 0 };
+
+		struct TokenZone
+		{
+			lib::u32 x1, y1, x2, y2;
+			bool horizontal;
+			inline lib::s32 distX() const { return x2 - x1; }
+			inline lib::s32 distY() const { return y2 - y1; }
+			inline bool increment() const { return horizontal ? distX() > 0 : distY() > 0; }
+		};
+
+		void generateTokenZones();
+		std::array<TokenZone, 4> _tokenZones;
+
 	};
 	class GameScene : public lib::core::Scene
 	{
@@ -37,7 +52,10 @@ namespace zoper
 		inline const GameData &getGameData() const { return _gameData; };
 	private:
 		void generateNextToken();
-		bool pointInBounds(lib::u32 x, lib::u32 y) const;
+		bool pointInBounds(lib::s32 x, lib::s32 y) const;
+		bool pointInCenter(lib::s32 x, lib::s32 y) const;
+
+		void _debugDisplayBoard() const;
 		lib::sptr<lib::board::BoardModel> p_boardModel{ nullptr };
 		GameData _gameData;
 		sf::Clock clock;
