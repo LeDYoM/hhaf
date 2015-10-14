@@ -29,9 +29,11 @@ namespace lib
 		LOG_DESTRUCT_NOPARAMS;
 	}
 
-	u32 Randomizer::getUInt(u32 max /*= 1*/, u32 min/*=0*/)
+	u32 Randomizer::getUInt(u32 max, u32 min)
 	{
 		LOG_DEBUG("Asked for random number between " << min << " and " << max);
+		__ASSERT(min != max, "The min and max parameters must be different");
+		__ASSERT(max > min, "The max paramter must be greater than min");
 		auto g = p_rPriv->dist(p_rPriv->mt) % (max - min);
 		LOG_DEBUG("\tGot " << g);
 		LOG_DEBUG("\tReturning " << min+g);
