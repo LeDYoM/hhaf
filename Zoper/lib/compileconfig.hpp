@@ -10,4 +10,7 @@
 	#include "memmanager.hpp"
 #endif
 
+#define __USE_LOGS__
+#define __MULTITHREAD_LOG__
+
 #endif
