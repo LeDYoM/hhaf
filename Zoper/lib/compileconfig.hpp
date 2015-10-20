@@ -12,5 +12,6 @@
 
 #define __USE_LOGS__
 #define __MULTITHREAD_LOG__
+#define __LOGFILE__		"log.txt"
 
 #endif

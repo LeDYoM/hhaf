@@ -5,7 +5,7 @@
 
 #ifdef __USE_LOGS__
 	#include <sstream>
-
+	void initLog();
 	void finishLog();
 	void logOutput(const char *);
 	#define PREPARE_LOG(params) { std::ostringstream os_; os_ << params << std::endl; logOutput(os_.str().c_str()); }

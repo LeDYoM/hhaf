@@ -1,11 +1,37 @@
 #include "log.hpp"
 
+#ifdef __USE_LOGS__
+
 #if defined(_MSC_VER) || defined(__BORLANDC__)
 	#define WIN32_LEAN_AND_MEAN
 	#include <Windows.h>
 #endif
 
 #include <iostream>
+
+#ifdef __LOGFILE__
+	#include <fstream>
+	std::ofstream logFile;
+#endif
+
+void initLog()
+{
+#ifdef __LOGFILE__
+	logFile.open(__LOGFILE__);
+#endif
+}
+
+void commitLog(const char *str)
+{
+#ifdef __LOGFILE__
+	if (logFile.is_open())
+		logFile << str;
+#endif
+	std::cout << str;
+#if defined(_MSC_VER) || defined(__BORLANDC__)
+	OutputDebugString(str);
+#endif
+}
 
 #ifdef __MULTITHREAD_LOG__
 	#include <queue>
@@ -43,10 +69,7 @@
 				while (!logQueue.empty())
 				{
 					const std::string &str = logQueue.front();
-					std::cout << str;
-#if defined(_MSC_VER) || defined(__BORLANDC__)
-					OutputDebugString(str.c_str());
-#endif
+					commitLog(str.c_str());
 					logQueue.pop();
 				}
 			}
@@ -54,23 +77,22 @@
 	}
 
 	std::thread t1(doLogOutput);
-
-	void finishLog()
-	{
-		doLoop = false;
-		t1.join();
-	}
 #else
 void logOutput(const char *str)
 {
-	std::cout << str;
-#if defined(_MSC_VER) || defined(__BORLANDC__)
-	OutputDebugString(str);
-#endif
+	commitLog(str);
 }
+#endif
+
 void finishLog()
 {
-
+#ifdef __MULTITHREAD_LOG__
+	doLoop = false;
+	t1.join();
+#endif
+#ifdef __LOGFILE__
+	logFile.close();
+#endif
 }
 
 #endif

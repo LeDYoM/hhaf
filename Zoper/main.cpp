@@ -29,6 +29,7 @@ int main2(int argc, char* argv[])
 
 int main(int argc, char* argv[])
 {
+	initLog();
 	installMemManager();
 	zoper::ZoperProgramController *program = new zoper::ZoperProgramController;
 
