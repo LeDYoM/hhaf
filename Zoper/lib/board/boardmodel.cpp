@@ -41,8 +41,9 @@ namespace lib
 		{
 			if (validCoords(x, y))
 			{
+				s32 oldTile = _tiles[x][y];
 				_tiles[x][y] = newTile;
-				if (p_tController) p_tController->tileSet(x, y, newTile);
+				if (p_tController) p_tController->tileSet(x, y, oldTile, newTile);
 			}
 			else
 			{
