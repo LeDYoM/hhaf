@@ -69,29 +69,33 @@ namespace zoper
 		_tokenZones[0].x1 = 0;
 		_tokenZones[0].y1 = centerQuady;
 		_tokenZones[0].x2 = centerQuadx - 1;
-		_tokenZones[0].y2 = centerQuady + centerQuadh - 1;
+		_tokenZones[0].y2 = (centerQuady + centerQuadh) - 1;
 		_tokenZones[0].horizontal = true;
+		_tokenZones[0].increment = true;
 
 		// From top to bottom
 		_tokenZones[1].x1 = centerQuadx;
 		_tokenZones[1].y1 = 0;
-		_tokenZones[1].x2 = centerQuadx + (centerQuadw - 1);
+		_tokenZones[1].x2 = (centerQuadx + centerQuadw) - 1;
 		_tokenZones[1].y2 = centerQuady - 1;
 		_tokenZones[1].horizontal = false;
+		_tokenZones[1].increment = true;
 
 		// From right to left
 		_tokenZones[2].x1 = width - 1;
-		_tokenZones[2].y1 = centerQuady;
-		_tokenZones[2].x2 = centerQuadx + centerQuadw;
-		_tokenZones[2].y2 = centerQuady - centerQuadh - 1;
+		_tokenZones[2].y1 = centerQuady ;
+		_tokenZones[2].x2 = (centerQuadx + centerQuadw);
+		_tokenZones[2].y2 = (centerQuady + centerQuadh) - 1;
 		_tokenZones[2].horizontal = true;
+		_tokenZones[2].increment = false;
 
 		// From bottom to top
 		_tokenZones[3].x1 = centerQuadx;
 		_tokenZones[3].y1 = height - 1;
-		_tokenZones[3].x2 = centerQuadx + (centerQuadw - 1);
-		_tokenZones[3].y2 = centerQuady + (centerQuadh - 1);
+		_tokenZones[3].x2 = (centerQuadx + centerQuadw) - 1;
+		_tokenZones[3].y2 = centerQuady + centerQuadh;
 		_tokenZones[3].horizontal = false;
+		_tokenZones[3].increment = false;
 	}
 
 	void GameScene::generateNextToken()
@@ -101,23 +105,22 @@ namespace zoper
 		LOG_DEBUG("NextTokenPart: " << std::to_string(_nextTokenPart));
 		LOG_DEBUG("x1: " << currentTokenZone.x1 << " y1: " << currentTokenZone.y1 << " x2: " << currentTokenZone.x2 << " y2: " << currentTokenZone.y2);
 		LOG_DEBUG("distX: " << currentTokenZone.distX() << " distY: " << currentTokenZone.distY());
-		LOG_DEBUG("horizontal: " << currentTokenZone.horizontal << " increment: " << currentTokenZone.increment());
+		LOG_DEBUG("horizontal: " << currentTokenZone.horizontal << " increment: " << currentTokenZone.increment);
 
-		lib::s32 newToken = getRandomNumer(5, 1);
-		lib::s32 size,sizep;
+		lib::u32 newToken = getRandomNumer(5, 1);
 
-		size = currentTokenZone.horizontal ? _gameData.centerQuadh : _gameData.centerQuadw;
-		sizep = getRandomNumer(size, 0);
+		lib::u32 size = currentTokenZone.horizontal ? _gameData.centerQuadh : _gameData.centerQuadw;
+		lib::u32 sizep = getRandomNumer(size, 0);
 
-		lib::s32 newX = currentTokenZone.x1 + currentTokenZone.horizontal ? 0 : sizep;
-		lib::s32 newY = currentTokenZone.y1 + currentTokenZone.horizontal ? sizep : 0;
+		lib::u32 newX = currentTokenZone.x1 + (currentTokenZone.horizontal ? 0 : sizep);
+		lib::u32 newY = currentTokenZone.y1 + (currentTokenZone.horizontal ? sizep : 0);
 		LOG_DEBUG("New tile pos: " << newX << "," << newY);
 
-		lib::s32 x = currentTokenZone.x2;
-		lib::s32 y = currentTokenZone.y2;
+		lib::s32 x = currentTokenZone.horizontal ? currentTokenZone.x2 : newX;
+		lib::s32 y = currentTokenZone.horizontal ? newY : currentTokenZone.y2;
 
-		lib::s32 incX = currentTokenZone.horizontal ? (currentTokenZone.increment()?-1:1) : 0;
-		lib::s32 incY = currentTokenZone.horizontal ? 0 :(currentTokenZone.increment() ? -1 : 1);
+		lib::s32 incX = currentTokenZone.horizontal ? (currentTokenZone.increment?-1:1) : 0;
+		lib::s32 incY = currentTokenZone.horizontal ? 0 :(currentTokenZone.increment ? -1 : 1);
 
 		LOG_DEBUG("Starting at: " << x << "," << y);
 		LOG_DEBUG("increment: " << incX << "," << incY);
@@ -131,8 +134,8 @@ namespace zoper
 		}
 
 		// Set the new token
-		LOG_DEBUG("Adding new tile at " << currentTokenZone.x1 + newX << "," << currentTokenZone.y1 + newY << " with value "<<newToken);
-		p_boardModel->setTile(currentTokenZone.x1 + newX, currentTokenZone.y1 + newY, newToken);
+		LOG_DEBUG("Adding new tile at " << newX << "," << newY << " with value "<<newToken);
+		p_boardModel->setTile(newX, newY, newToken);
 		_nextTokenPart = (_nextTokenPart + 1) % 4;
 
 		_debugDisplayBoard();

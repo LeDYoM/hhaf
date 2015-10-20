@@ -28,9 +28,9 @@ namespace zoper
 		{
 			lib::u32 x1, y1, x2, y2;
 			bool horizontal;
+			bool increment;
 			inline lib::s32 distX() const { return x2 - x1; }
 			inline lib::s32 distY() const { return y2 - y1; }
-			inline bool increment() const { return horizontal ? distX() > 0 : distY() > 0; }
 		};
 
 		void generateTokenZones();
