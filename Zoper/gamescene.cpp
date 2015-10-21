@@ -3,6 +3,7 @@
 #include "lib/board/itilescontroller.hpp"
 #include "lib/log.hpp"
 #include <SFML/Graphics.hpp>
+#include "lib/compileconfig.hpp"
 
 namespace zoper
 {
@@ -183,6 +184,41 @@ namespace zoper
 			}
 			LOG_DEBUG(temp);
 		}
+	}
+
+	void GameScene::tileAppeared(lib::u32 x, lib::u32 y, lib::s32 tileType)
+	{
+
+	}
+
+	void GameScene::tileDissapeared(lib::u32 x, lib::u32 y)
+	{
+
+	}
+
+	void GameScene::tileSet(lib::u32 x, lib::u32 y, lib::s32 oTile, lib::s32 nTile)
+	{
+		if (oTile && nTile)
+		{
+			// Tile substitution. That should not happen
+			__ASSERT(false, "Tile set substituting a tile");
+		}
+		else if (oTile && !nTile)
+		{
+			// Tile dissappeared
+			tileDissapeared(x, y);
+		}
+		else if (!oTile && nTile)
+		{
+			// Tile appeared
+			tileAppeared(x, y, nTile);
+		}
+
+		// The rest (basically set from 0 to 0) should be ignored
+	}
+
+	void GameScene::tileMoved(lib::u32 xSource, lib::u32 ySource, lib::u32 xDest, lib::u32 yDest, lib::s32 tile)
+	{
 	}
 
 }

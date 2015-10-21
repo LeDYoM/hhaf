@@ -3,6 +3,9 @@
 
 #include "lib/core/scene.hpp"
 #include "lib/types.hpp"
+#include "lib/board/itilescontroller.hpp"
+#include "lib/types.hpp"
+#include "lib/compileconfig.hpp"
 #include <array>
 
 namespace lib
@@ -37,7 +40,7 @@ namespace zoper
 		std::array<TokenZone, 4> _tokenZones;
 
 	};
-	class GameScene : public lib::core::Scene
+	class GameScene : public lib::core::Scene, public lib::board::ITilesController
 	{
 	public:
 		GameScene();
@@ -61,6 +64,14 @@ namespace zoper
 		sf::Clock clock;
 		lib::s32 _millisBetweenTokens{ 1000 };
 		lib::u8 _nextTokenPart{ 0 };
+
+
+		void tileAppeared(lib::u32 x, lib::u32 y, lib::s32 tileType);
+		void tileDissapeared(lib::u32 x, lib::u32 y);
+
+		// Inherited via ITilesController
+		virtual void tileSet(lib::u32 x, lib::u32 y, lib::s32 oTile, lib::s32 nTile) override;
+		virtual void tileMoved(lib::u32 xSource, lib::u32 ySource, lib::u32 xDest, lib::u32 yDest, lib::s32 tile) override;
 
 	};
 }
