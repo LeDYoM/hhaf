@@ -39,28 +39,36 @@ namespace lib
 
 		void BoardModel::setTile(u32 x, u32 y, s32 newTile)
 		{
-			if (validCoords(x, y))
-			{
-				s32 oldTile = _tiles[x][y];
-				_tiles[x][y] = newTile;
-				if (p_tController) p_tController->tileSet(x, y, oldTile, newTile);
-			}
-			else
-			{
-				__ASSERT(false, "Error getting tile in coords " << x << "," << y);
-			}
+			_setTile(x, y, newTile);
+			if (p_tController) p_tController->tileSet(x, y, newTile, newTile);
 		}
 
 		void BoardModel::moveTile(u32 xSource, u32 ySource, u32 xDest, u32 yDest)
 		{
 			s32 sValue = getTile(xSource, ySource);
-			s32 dValue = getTile(xDest, yDest);
 
 			LOG_DEBUG("Moving tile from " << xSource << "," << ySource << " to " << xDest << "," << yDest << 
-				". Source Value: " << sValue << ". Erased value: " << dValue);
+				". Source Value: " << getTile(xSource, ySource) << ". Erased value: " << getTile(xDest, yDest));
 
-			setTile(xDest, yDest, sValue);
-			if (p_tController) p_tController->tileMoved(xSource, ySource, xDest, yDest, sValue,dValue);
+			if (!tileEmpty(xSource, ySource))
+			{
+				//			__ASSERT(!tileEmpty(xSource, ySource), "Tile " << xSource << "," << ySource << " is empty");
+				__ASSERT(tileEmpty(xDest, yDest), "Trying to move to a not empty tile: " << xDest << "," << yDest << " contains " << getTile(xDest, yDest));
+
+				_setTile(xDest, yDest, sValue);
+				_setTile(xSource, ySource, _emptyValue);
+
+				if (p_tController) p_tController->tileMoved(xSource, ySource, xDest, yDest, sValue);
+			}
+		}
+
+		s32 BoardModel::_setTile(u32 x, u32 y, u32 newTile)
+		{
+			// Implicit error checking
+			s32 oldTile = getTile(x, y);
+
+			_tiles[x][y] = newTile;
+			return oldTile;
 		}
 	}
 }
