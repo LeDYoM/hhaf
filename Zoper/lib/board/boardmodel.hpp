@@ -10,25 +10,22 @@ namespace lib
 {
 	namespace board
 	{
-		using BoardTile = s32;
 		class BoardModel
 		{
 		public:
 			BoardModel(u32 w, u32 h, ITilesController *tController = nullptr);
 			virtual ~BoardModel();
 
-			int getTile(u32 x, u32 y) const;
-			inline bool tileEmpty(u32 x, u32 y) const { return getTile(x, y) == _emptyValue; }
-			void setTile(u32 x, u32 y, s32 newTile);
-			void moveTile(u32 xSource, u32 ySource, u32 xDest, u32 yDest);
+			WITilePointer getTile(u32 x, u32 y) const;
+			inline bool tileEmpty(u32 x, u32 y) const { return getTile(x, y).lock() == nullptr; }
+			void setTile(u32 x, u32 y, WITilePointer newTile);
+			void moveTile(u32 xSource, u32 ySource, u32 xDest, u32 yDest, bool ignoreEmptySource = false);
 
 		private:
-			s32 _setTile(u32 x, u32 y, u32 newTile);
+			void _setTile(u32 x, u32 y, WITilePointer newTile);
 			inline bool validCoords(u32 x, u32 y) const { return _tiles.size() > x && _tiles[0].size() > y; }
-			std::vector<std::vector<s32>> _tiles;
+			std::vector<std::vector<WITilePointer>> _tiles;
 			ITilesController *p_tController{ nullptr };
-			BoardTile _emptyValue{ 0 };
-
 		};
 	}
 }

@@ -97,6 +97,7 @@
     <ClCompile Include="menuscene.cpp" />
     <ClCompile Include="lib\draw\renderizable.cpp" />
     <ClCompile Include="lib\randomizer.cpp" />
+    <ClCompile Include="tile.cpp" />
     <ClCompile Include="zoperscenemanager.cpp" />
     <ClCompile Include="zoperwindow.cpp" />
     <ClCompile Include="zoperprogramcontroller.cpp" />
@@ -119,6 +120,7 @@
     <ClInclude Include="lib\stostr.hpp" />
     <ClInclude Include="lib\draw\renderizable.hpp" />
     <ClInclude Include="lib\randomizer.hpp" />
+    <ClInclude Include="tile.hpp" />
     <ClInclude Include="zoperscenemanager.hpp" />
     <ClInclude Include="zoperwindow.hpp" />
     <ClInclude Include="zoperprogramcontroller.hpp" />

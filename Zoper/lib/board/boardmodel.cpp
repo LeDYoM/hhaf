@@ -11,10 +11,10 @@ namespace lib
 			LOG_CONSTRUCT(" w: " << w << " h: " << h);
 			for (u32 x = 0; x < w; ++x)
 			{
-				std::vector<s32> column;
+				std::vector<WITilePointer> column;
 				for (u32 y = 0; y < h; ++y)
 				{
-					column.push_back(0);
+					column.push_back(WITilePointer());
 				}
 				_tiles.push_back(column);
 			}
@@ -27,48 +27,63 @@ namespace lib
 			p_tController = nullptr;
 		}
 
-		int BoardModel::getTile(u32 x, u32 y) const
+		WITilePointer BoardModel::getTile(u32 x, u32 y) const
 		{
 			if (validCoords(x, y))
 			{
 				return _tiles[x][y];
 			}
 			__ASSERT(false, "Error getting tile in coords " << x << "," << y);
-			return -1;
+			return WITilePointer();
 		}
 
-		void BoardModel::setTile(u32 x, u32 y, s32 newTile)
+		void BoardModel::setTile(u32 x, u32 y, WITilePointer newTile)
 		{
 			_setTile(x, y, newTile);
-			if (p_tController) p_tController->tileSet(x, y, newTile, newTile);
+			if (p_tController) p_tController->tileSet(x, y, newTile);
 		}
 
-		void BoardModel::moveTile(u32 xSource, u32 ySource, u32 xDest, u32 yDest)
+		void BoardModel::moveTile(u32 xSource, u32 ySource, u32 xDest, u32 yDest, bool ignoreEmptySource)
 		{
-			s32 sValue = getTile(xSource, ySource);
-
-			LOG_DEBUG("Moving tile from " << xSource << "," << ySource << " to " << xDest << "," << yDest << 
-				". Source Value: " << getTile(xSource, ySource) << ". Erased value: " << getTile(xDest, yDest));
-
 			if (!tileEmpty(xSource, ySource))
 			{
-				//			__ASSERT(!tileEmpty(xSource, ySource), "Tile " << xSource << "," << ySource << " is empty");
-				__ASSERT(tileEmpty(xDest, yDest), "Trying to move to a not empty tile: " << xDest << "," << yDest << " contains " << getTile(xDest, yDest));
+				SITilePointer sourceTile{ getTile(xSource, ySource) };
+				WITilePointer destTile{ getTile(xDest, yDest) };
 
-				_setTile(xDest, yDest, sValue);
-				_setTile(xSource, ySource, _emptyValue);
+				LOG_DEBUG("Moving tile from " << xSource << "," << ySource << " to " << xDest << "," << yDest <<
+					". Source Value: " << sourceTile->getData());
 
-				if (p_tController) p_tController->tileMoved(xSource, ySource, xDest, yDest, sValue);
+				if (sourceTile)
+				{
+					//			__ASSERT(!tileEmpty(xSource, ySource), "Tile " << xSource << "," << ySource << " is empty");
+					__ASSERT(!destTile.lock(), "Trying to move to a not empty tile: " << xDest << "," << yDest << " contains " << destTile.lock()->getData());
+
+					_setTile(xDest, yDest, sourceTile);
+					_setTile(xSource, ySource, WITilePointer());
+
+					if (p_tController) p_tController->tileMoved(xSource, ySource, xDest, yDest, sourceTile);
+				}
+			}
+			else
+			{
+				if (!ignoreEmptySource)
+				{
+					__ASSERT(false, "Trying to move an empty tile: " << xSource << "," << ySource);
+				}
+				else
+				{
+					LOG_DEBUG("Trying to move empty tile: " << xSource << "," << ySource << " ignoring it");
+				}
 			}
 		}
 
-		s32 BoardModel::_setTile(u32 x, u32 y, u32 newTile)
+		void BoardModel::_setTile(u32 x, u32 y, WITilePointer newTile)
 		{
 			// Implicit error checking
-			s32 oldTile = getTile(x, y);
+			// By default, we can only set in empty tiles.
+			__ASSERT(tileEmpty(x,y), "You can only set data in empty tiles");
 
 			_tiles[x][y] = newTile;
-			return oldTile;
 		}
 	}
 }
