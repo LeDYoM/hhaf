@@ -4,17 +4,11 @@
 #include "lib/core/scene.hpp"
 #include "lib/types.hpp"
 #include "lib/board/itilescontroller.hpp"
+#include "lib/board/boardmodel.hpp"
 #include "lib/types.hpp"
 #include "lib/compileconfig.hpp"
-#include <array>
 
-namespace lib
-{
-	namespace board
-	{
-		class BoardModel;
-	}
-}
+#include <array>
 
 namespace zoper
 {
@@ -66,12 +60,12 @@ namespace zoper
 		lib::u8 _nextTokenPart{ 0 };
 
 
-		void tileAppeared(lib::u32 x, lib::u32 y, lib::s32 tileType);
+		void tileAppeared(lib::u32 x, lib::u32 y, lib::board::WITilePointer tile);
 		void tileDissapeared(lib::u32 x, lib::u32 y);
 
 		// Inherited via ITilesController
-		virtual void tileSet(lib::u32 x, lib::u32 y, lib::s32 oTile, lib::s32 nTile) override;
-		virtual void tileMoved(lib::u32 xSource, lib::u32 ySource, lib::u32 xDest, lib::u32 yDest, lib::s32 tile) override;
+		virtual void tileSet(lib::u32 x, lib::u32 y, lib::board::WITilePointer nTile) override;
+		virtual void tileMoved(lib::u32 xSource, lib::u32 ySource, lib::u32 xDest, lib::u32 yDest, lib::board::WITilePointer tile) override;
 
 	};
 }

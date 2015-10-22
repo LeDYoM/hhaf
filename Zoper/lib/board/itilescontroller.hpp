@@ -8,6 +8,21 @@ namespace lib
 {
 	namespace board
 	{
+		using BoardTileData = s32;
+
+
+		class ITile
+		{
+		public:
+			ITile(const BoardTileData data) : _data{ data } {}
+			virtual ~ITile() {}
+			inline const BoardTileData &getData() const { return _data; }
+		private:
+			BoardTileData _data;
+		};
+		typedef sptr<ITile> SITilePointer;
+		typedef wptr<ITile> WITilePointer;
+
 		class ITilesController
 		{
 		public:
@@ -15,8 +30,8 @@ namespace lib
 			ITilesController() {}
 			virtual ~ITilesController() {}
 
-			virtual void tileSet(u32 x, u32 y, s32 oTile, s32 nTile) = 0;
-			virtual void tileMoved(u32 xSource, u32 ySource, u32 xDest, u32 yDest, s32 tile) = 0;
+			virtual void tileSet(u32 x, u32 y, WITilePointer nTile) = 0;
+			virtual void tileMoved(u32 xSource, u32 ySource, u32 xDest, u32 yDest, WITilePointer tile) = 0;
 
 		};
 	}
