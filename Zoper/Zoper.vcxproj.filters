@@ -116,9 +116,6 @@
     <ClInclude Include="lib\memmanager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="lib\stostr.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="lib\draw\renderizable.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>

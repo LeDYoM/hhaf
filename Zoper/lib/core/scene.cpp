@@ -2,7 +2,6 @@
 #include "../log.hpp"
 #include "scenemanager.hpp"
 #include "window.hpp"
-#include "../stostr.hpp"
 #include "../draw/renderizable.hpp"
 
 namespace lib
@@ -15,7 +14,7 @@ namespace lib
 		{
 			LOG_CONSTRUCT("Name: "<<name);
 			p_view = uptr<sf::View>(new sf::View(p_scnManager.lock()->p_parentWindow.lock()->getView()));
-			LOG_DEBUG("Scene view set to: center: " << V2_TOLOG(p_view->getCenter()) << " and size: " << V2_TOLOG(p_view->getSize()));
+			LOG_DEBUG("Scene view set to: center: " << p_view->getCenter().x << "," << p_view->getCenter().y << " and size: " << p_view->getSize().x << "," << p_view->getSize().y);
 		}
 
 		Scene::~Scene()
