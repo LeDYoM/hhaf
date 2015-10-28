@@ -14,6 +14,8 @@ namespace zoper
 {
 	struct GameData
 	{
+		#define NUMWAYS		4
+
 		lib::u32 width{ 0 };
 		lib::u32 height{ 0 };
 		lib::u32 centerQuadx{ 0 };
@@ -23,15 +25,19 @@ namespace zoper
 
 		struct TokenZone
 		{
+			// Filled statically
 			lib::u32 x1, y1, x2, y2;
 			bool horizontal;
 			bool increment;
 			inline lib::s32 distX() const { return x2 - x1; }
 			inline lib::s32 distY() const { return y2 - y1; }
+
+			// Filled dynamically
+			lib::u32 size;
 		};
 
 		void generateTokenZones();
-		std::array<TokenZone, 4> _tokenZones;
+		std::array<TokenZone, NUMWAYS> _tokenZones;
 
 	};
 	class GameScene : public lib::core::Scene, public lib::board::ITilesController

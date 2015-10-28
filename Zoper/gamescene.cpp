@@ -101,6 +101,12 @@ namespace zoper
 		_tokenZones[3].y2 = centerQuady + centerQuadh;
 		_tokenZones[3].horizontal = false;
 		_tokenZones[3].increment = false;
+
+		for (lib::u32 i = 0; i < NUMWAYS; ++i)
+		{
+			_tokenZones[i].size = _tokenZones[i].horizontal ? centerQuadh : centerQuadw;
+
+		}
 	}
 
 	void GameScene::generateNextToken()
@@ -114,8 +120,7 @@ namespace zoper
 
 		lib::u32 newToken = getRandomNumer(5, 1);
 
-		lib::u32 size = currentTokenZone.horizontal ? _gameData.centerQuadh : _gameData.centerQuadw;
-		lib::u32 sizep = getRandomNumer(size, 0);
+		lib::u32 sizep = getRandomNumer(currentTokenZone.size, 0);
 
 		lib::u32 newX = currentTokenZone.x1 + (currentTokenZone.horizontal ? 0 : sizep);
 		lib::u32 newY = currentTokenZone.y1 + (currentTokenZone.horizontal ? sizep : 0);
