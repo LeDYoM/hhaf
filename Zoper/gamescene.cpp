@@ -105,6 +105,9 @@ namespace zoper
 		for (lib::u32 i = 0; i < NUMWAYS; ++i)
 		{
 			_tokenZones[i].size = _tokenZones[i].horizontal ? centerQuadh : centerQuadw;
+			_tokenZones[i].incX = _tokenZones[i].horizontal ? (_tokenZones[i].increment ? -1 : 1) : 0;
+			_tokenZones[i].incY = _tokenZones[i].horizontal ? 0 : (_tokenZones[i].increment ? -1 : 1);
+
 
 		}
 	}
@@ -129,39 +132,25 @@ namespace zoper
 		lib::s32 x = currentTokenZone.horizontal ? currentTokenZone.x2 : newX;
 		lib::s32 y = currentTokenZone.horizontal ? newY : currentTokenZone.y2;
 
-		lib::s32 incX = currentTokenZone.horizontal ? (currentTokenZone.increment?-1:1) : 0;
-		lib::s32 incY = currentTokenZone.horizontal ? 0 :(currentTokenZone.increment ? -1 : 1);
-
 		LOG_DEBUG("Starting at: " << x << "," << y);
-		LOG_DEBUG("increment: " << incX << "," << incY);
+		LOG_DEBUG("increment: " << currentTokenZone.incX << "," << currentTokenZone.incY);
 
 		// Now, we have the data for the new token generated, but first, lets start to move the row or col.
 		for (;
-			pointInBounds(x, y) && !pointInCenter(x, y);
-			x += incX, y += incY)
+			p_boardModel->validCoords(x, y) && !pointInCenter(x, y);
+			x += currentTokenZone.incX, y += currentTokenZone.incY)
 		{
-			p_boardModel->moveTile(x, y, x - incX, y - incY, true);
+			p_boardModel->moveTile(x, y, x - currentTokenZone.incX, y - currentTokenZone.incY, true);
 		}
 
 		// Set the new token
 		LOG_DEBUG("Adding new tile at " << newX << "," << newY << " with value "<<newToken);
 		auto newTile = lib::board::SITilePointer(new Tile(lib::board::BoardTileData(newToken)));
 		p_boardModel->setTile(newX, newY, newTile);
-		_nextTokenPart = (_nextTokenPart + 1) % 4;
+		_nextTokenPart = (_nextTokenPart + 1) % NUMWAYS;
 
 		_debugDisplayBoard();
 
-	}
-
-	bool GameScene::pointInBounds(lib::s32 x, lib::s32 y) const
-	{
-		if (x < 0 || y < 0)
-			return false;
-
-		if (x >= static_cast<lib::s32>(_gameData.width) || y >= static_cast<lib::s32>(_gameData.height))
-			return false;
-
-		return true;
 	}
 
 	bool GameScene::pointInCenter(lib::s32 x, lib::s32 y) const

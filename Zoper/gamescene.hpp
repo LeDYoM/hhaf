@@ -34,6 +34,7 @@ namespace zoper
 
 			// Filled dynamically
 			lib::u32 size;
+			lib::s32 incX, incY;
 		};
 
 		void generateTokenZones();
@@ -55,7 +56,6 @@ namespace zoper
 		inline const GameData &getGameData() const { return _gameData; };
 	private:
 		void generateNextToken();
-		bool pointInBounds(lib::s32 x, lib::s32 y) const;
 		bool pointInCenter(lib::s32 x, lib::s32 y) const;
 
 		void _debugDisplayBoard() const;
