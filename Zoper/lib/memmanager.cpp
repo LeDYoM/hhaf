@@ -2,13 +2,12 @@
 #include "compileconfig.hpp"
 
 #ifdef USE_MEM_MANAGER
-#ifdef VS_NATIVE_MEMMANAGER
+#ifdef _MSC_VER
 #include <windows.h>
-#include <delayimp.h>
 
 static int crtDebugMemAllocHook(int allocType, void *userData, size_t size, int blockType, long requestIndex, const unsigned char *fileName, int lineIndex){
 
-	if (requestIndex == 214) //break;
+	if (requestIndex == 316) //break;
 
 		return true;
 
@@ -21,7 +20,8 @@ static int crtDebugMemAllocHook(int allocType, void *userData, size_t size, int 
 void installMemManager()
 {
 #ifdef USE_MEM_MANAGER
-#ifdef VS_NATIVE_MEMMANAGER
+#ifdef _MSC_VER
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	_CrtSetAllocHook(crtDebugMemAllocHook);
 #endif
 #endif
@@ -30,12 +30,8 @@ void installMemManager()
 void finishMemManager()
 {
 #ifdef USE_MEM_MANAGER
-#ifdef VS_NATIVE_MEMMANAGER
-	__FUnloadDelayLoadedDLL2("sfml-graphics-d-2.dll");
-	__FUnloadDelayLoadedDLL2("sfml-system-d-2.dll");
-	__FUnloadDelayLoadedDLL2("sfml-window-d-2.dll");
-	
-	//_CrtDumpMemoryLeaks();
+#ifdef _MSC_VER
+//	_CrtDumpMemoryLeaks();
 #endif
 #endif
 }

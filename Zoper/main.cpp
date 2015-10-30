@@ -1,6 +1,9 @@
 #include "lib/compileconfig.hpp"
-#include "zoperprogramcontroller.hpp"
+#include "lib/memmanager.hpp"
 #include "lib/log.hpp"
+
+#include "zoperprogramcontroller.hpp"
+
 #include <SFML/Window.hpp>
 
 int main2(int argc, char* argv[])

@@ -2,6 +2,7 @@
 #include <random>
 
 #include "log.hpp"
+#include "compileconfig.hpp"
 
 namespace lib
 {
