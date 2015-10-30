@@ -31,11 +31,12 @@ namespace lib
 			virtual void update() = 0;
 
 			void setNextScene(const std::string &name);
-			void draw(const sf::Drawable &drawable);
 
-			sf::Text* const createText(const std::string &name);
-			sf::Sprite* const createSprite(const std::string &name);
-			sf::Shape* const createShape(const std::string &name);
+			sptr<draw::Renderizable> createText(const std::string &name);
+			sptr<draw::Renderizable> createSprite(const std::string &name);
+			sptr<draw::Renderizable> createShape(const std::string &name);
+
+			sptr<draw::Renderizable> addRenderizable(sptr<draw::Renderizable> newElement);
 
 			u32 getRandomNumer(u32 max = 1, u32 min = 0);
 

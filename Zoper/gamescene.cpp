@@ -4,10 +4,13 @@
 
 #include "lib/board/boardmodel.hpp"
 #include "lib/board/itilescontroller.hpp"
+#include "lib/draw/renderizable.hpp"
 #include "lib/log.hpp"
 #include "lib/compileconfig.hpp"
 
 #include <SFML/Graphics.hpp>
+
+#include <memory>
 
 namespace zoper
 {
@@ -36,7 +39,7 @@ namespace zoper
 
 		font.loadFromFile("resources/fonts/sansation.ttf");
 
-		auto text = this->createText("hellow");
+		auto text = this->createText("hellow")->getAsText();
 
 		// select the font
 		text->setFont(font); // font is a sf::Font
@@ -145,8 +148,8 @@ namespace zoper
 
 		// Set the new token
 		LOG_DEBUG("Adding new tile at " << newX << "," << newY << " with value "<<newToken);
-		auto newTile = lib::board::SITilePointer(new Tile(lib::board::BoardTileData(newToken)));
-		p_boardModel->setTile(newX, newY, newTile);
+		auto newTileToken = lib::sptr<Tile>(new Tile(lib::board::BoardTileData(newToken)));
+		p_boardModel->setTile(newX, newY, std::dynamic_pointer_cast<lib::board::ITile>(addRenderizable(newTileToken)));
 		_nextTokenPart = (_nextTokenPart + 1) % NUMWAYS;
 
 		_debugDisplayBoard();

@@ -38,30 +38,31 @@ namespace lib
 			p_scnManager.lock()->setScene(name);
 		}
 
-		void Scene::draw(const sf::Drawable &drawable)
-		{
-			p_scnManager.lock()->p_parentWindow.lock()->draw(drawable);
-		}
-
-		sf::Text *const Scene::createText(const std::string &name)
+		sptr<draw::Renderizable> Scene::createText(const std::string &name)
 		{
 			auto result = sptr<lib::draw::Renderizable>(new lib::draw::Renderizable(name,new sf::Text));
-			v_nodes.push_back(result);
-			return result->getAsText();
+			addRenderizable(result);
+			return result;
 		}
 
-		sf::Sprite* const Scene::createSprite(const std::string &name)
+		sptr<draw::Renderizable> Scene::createSprite(const std::string &name)
 		{
 			auto result = sptr<lib::draw::Renderizable>(new lib::draw::Renderizable(name, new sf::Sprite));
-			v_nodes.push_back(result);
-			return result->getAsSprite();
+			addRenderizable(result);
+			return result;
 		}
 
-		sf::Shape* const Scene::createShape(const std::string &name)
+		sptr<draw::Renderizable> Scene::createShape(const std::string &name)
 		{
 			auto result = sptr<lib::draw::Renderizable>(new lib::draw::Renderizable(name, new sf::CircleShape));
-			v_nodes.push_back(result);
-			return result->getAsShape();
+			addRenderizable(result);
+			return result;
+		}
+
+		sptr<draw::Renderizable> Scene::addRenderizable(sptr<draw::Renderizable> newElement)
+		{
+			v_nodes.push_back(newElement);
+			return newElement;
 		}
 
 		u32 Scene::drawAll()
