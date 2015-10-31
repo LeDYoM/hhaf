@@ -39,7 +39,10 @@ namespace lib
 			sptr<draw::Renderizable> addRenderizable(sptr<draw::Renderizable> newElement);
 
 			u32 getRandomNumer(u32 max = 1, u32 min = 0);
+		protected:
 
+			void updateView();
+			sf::View *const getView() const;
 		private:
 			u32 drawAll();
 			std::vector<sptr<lib::draw::Renderizable>> v_nodes;

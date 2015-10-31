@@ -22,6 +22,17 @@ namespace lib
 			LOG_DESTRUCT("Name: "<<name());
 		}
 
+		void Scene::updateView()
+		{
+			p_scnManager.lock()->p_parentWindow.lock()->setView(*p_view.get());
+			LOG_DEBUG("Scene view set to: center: " << p_view->getCenter().x << "," << p_view->getCenter().y << " and size: " << p_view->getSize().x << "," << p_view->getSize().y);
+		}
+
+		sf::View *const Scene::getView() const
+		{
+			return p_view.get();
+		}
+
 		void Scene::onEnterScene()
 		{
 			LOG_DEBUG("Entered in scene " << name());
