@@ -39,6 +39,9 @@ namespace lib
 
 		void BoardModel::setTile(u32 x, u32 y, WITilePointer newTile)
 		{
+			// By default, we can only set in empty tiles.
+			__ASSERT(tileEmpty(x, y), "You can only set data in empty tiles");
+
 			_setTile(x, y, newTile);
 			if (p_tController) p_tController->tileSet(x, y, newTile);
 		}
@@ -79,10 +82,6 @@ namespace lib
 
 		void BoardModel::_setTile(u32 x, u32 y, WITilePointer newTile)
 		{
-			// Implicit error checking
-			// By default, we can only set in empty tiles.
-			__ASSERT(tileEmpty(x,y), "You can only set data in empty tiles");
-
 			_tiles[x][y] = newTile;
 		}
 	}
