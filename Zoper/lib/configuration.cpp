@@ -23,6 +23,11 @@ namespace lib
 		return Configuration::CMapLine(*first, *last);
 	}
 
+	s32 Configuration::getAsInt(const std::string & section, const std::string & subSection) const
+	{
+		return s32();
+	}
+
 	void Configuration::readAllConfig()
 	{
 		std::ifstream file(_fileName);
