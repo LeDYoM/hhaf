@@ -35,9 +35,13 @@ namespace zoper
 	void GameScene::onEnterScene()
 	{
 		Scene::onEnterScene();
-		p_boardModel = lib::sptr<lib::board::BoardModel>(new lib::board::BoardModel(_gameData.width,_gameData.height));
+		p_boardModel = lib::sptr<lib::board::BoardModel>(new lib::board::BoardModel(_gameData.width,_gameData.height,this));
 
 		font.loadFromFile("resources/fonts/sansation.ttf");
+
+		getView()->setSize(10000, 10000);
+		getView()->setCenter(5000, 5000);
+		updateView();
 
 		auto text = this->createText("hellow")->getAsText();
 
@@ -110,8 +114,6 @@ namespace zoper
 			_tokenZones[i].size = _tokenZones[i].horizontal ? centerQuadh : centerQuadw;
 			_tokenZones[i].incX = _tokenZones[i].horizontal ? (_tokenZones[i].increment ? -1 : 1) : 0;
 			_tokenZones[i].incY = _tokenZones[i].horizontal ? 0 : (_tokenZones[i].increment ? -1 : 1);
-
-
 		}
 	}
 
@@ -153,7 +155,6 @@ namespace zoper
 		_nextTokenPart = (_nextTokenPart + 1) % NUMWAYS;
 
 		_debugDisplayBoard();
-
 	}
 
 	bool GameScene::pointInCenter(lib::s32 x, lib::s32 y) const
