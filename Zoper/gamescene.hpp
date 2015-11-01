@@ -5,17 +5,18 @@
 #include "lib/types.hpp"
 #include "lib/board/itilescontroller.hpp"
 #include "lib/board/boardmodel.hpp"
+#include "lib/configuration.hpp"
 #include "lib/types.hpp"
 #include "lib/compileconfig.hpp"
 
 #include <array>
 
+#define NUMWAYS		4
+#define NUMTOKENS	5
 namespace zoper
 {
 	struct GameData
 	{
-		#define NUMWAYS		4
-
 		lib::u32 width{ 0 };
 		lib::u32 height{ 0 };
 		lib::u32 centerQuadx{ 0 };
@@ -41,7 +42,7 @@ namespace zoper
 		std::array<TokenZone, NUMWAYS> _tokenZones;
 
 	};
-	class GameScene : public lib::core::Scene, public lib::board::ITilesController
+	class GameScene : public lib::core::Scene, public lib::board::ITilesController, public lib::Configuration
 	{
 	public:
 		GameScene();

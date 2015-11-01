@@ -126,9 +126,9 @@ namespace zoper
 		LOG_DEBUG("distX: " << currentTokenZone.distX() << " distY: " << currentTokenZone.distY());
 		LOG_DEBUG("horizontal: " << currentTokenZone.horizontal << " increment: " << currentTokenZone.increment);
 
-		lib::u32 newToken = getRandomNumer(5, 1);
+		lib::u32 newToken = getRandomNumer(NUMTOKENS);
 
-		lib::u32 sizep = getRandomNumer(currentTokenZone.size, 0);
+		lib::u32 sizep = getRandomNumer(currentTokenZone.size);
 
 		lib::u32 newX = currentTokenZone.x1 + (currentTokenZone.horizontal ? 0 : sizep);
 		lib::u32 newY = currentTokenZone.y1 + (currentTokenZone.horizontal ? sizep : 0);
@@ -202,7 +202,6 @@ namespace zoper
 
 	void GameScene::tileAppeared(lib::u32 x, lib::u32 y, lib::board::WITilePointer tile)
 	{
-
 	}
 
 	void GameScene::tileDissapeared(lib::u32 x, lib::u32 y)
