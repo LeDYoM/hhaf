@@ -6,39 +6,50 @@
 
 namespace lib
 {
-	Configuration::Configuration(const std::string &fName)
-	{
-		_fileName = fName;
-	}
+	Configuration::CMap Configuration::_data;
 
-
-	Configuration::~Configuration()
-	{
-	}
-
-	std::pair<std::string,std::string> split(const std::string& input, const std::string& regex) {
+	Configuration::CMapLine split(const std::string& input, const std::string& regex) {
 		// passing -1 as the submatch index parameter performs splitting
 		std::sregex_token_iterator first(input.begin(), input.end(), std::regex(regex), -1 ),
 			last;
 		return Configuration::CMapLine(*first, *last);
 	}
 
-	s32 Configuration::getAsInt(const std::string & section, const std::string & subSection) const
+	s32 Configuration::getAsInt(const std::string &name) const
 	{
-		return s32();
+		return std::stoi(getAsString(name));
 	}
 
-	void Configuration::readAllConfig()
+	std::string Configuration::getAsString(const std::string & name) const
 	{
-		std::ifstream file(_fileName);
+		CMap::iterator dataIterator = _data.find(name);
+		if (dataIterator != _data.end())
+		{
+			return dataIterator->second;
+		}
+		LOG_ERROR("Key " << name << " not found in configuration");
+		return std::string();
+	}
+
+	bool Configuration::addConfigProperty(const std::string & name, const std::string & value)
+	{
+		_data[name] = value;
+		return true;
+	}
+
+	bool Configuration::addConfigFile(const std::string & fileName)
+	{
+		std::ifstream file(fileName);
+		bool result{ false };
 
 		while (file)
 		{
 			std::string line;
 			file >> line;
 			CMapLine lineData(split(line,"="));
-			_data[lineData.first] = lineData.second;
+			result &= addConfigProperty(lineData.first, lineData.second);
 		}
+		return result;
 	}
 
 }

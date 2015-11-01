@@ -11,18 +11,23 @@ namespace lib
 	class Configuration
 	{
 	public:
-		Configuration(const std::string &fName);
-		virtual ~Configuration();
+		Configuration() {}
+		virtual ~Configuration() {}
+
+		s32 getAsInt(const std::string &name) const;
+		std::string getAsString(const std::string &name) const;
 
 		typedef std::map < std::string, std::string > CMap;
 		typedef std::pair<std::string, std::string> CMapLine;
 
-		s32 getAsInt(const std::string &section, const std::string &subSection) const;
+		bool addConfigProperty(const std::string &name, const std::string &value);
+		bool addConfigFile(const std::string &fileName);
+
 	private:
-		void readAllConfig();
-		CMap _data;
-		std::string _fileName;
+		static CMap _data;
+
 	};
+
 }
 
 #endif
