@@ -1,12 +1,12 @@
 #include "scene.hpp"
 #include "../log.hpp"
 #include "scenemanager.hpp"
-#include "window.hpp"
+#include "../core/window.hpp"
 #include "../draw/renderizable.hpp"
 
 namespace lib
 {
-	namespace core
+	namespace scn
 	{
 		wptr<SceneManager> Scene::p_scnManager;
 

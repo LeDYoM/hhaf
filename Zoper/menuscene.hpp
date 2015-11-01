@@ -1,11 +1,11 @@
 #ifndef __MENUSCENE_HPP__
 #define __MENUSCENE_HPP__
 
-#include "lib/core/scene.hpp"
+#include "lib/scn/scene.hpp"
 
 namespace zoper
 {
-	class MenuScene : public lib::core::Scene
+	class MenuScene : public lib::scn::Scene
 	{
 	public:
 		MenuScene();

@@ -91,8 +91,8 @@
     <ClCompile Include="lib\core\programcontroller.cpp" />
     <ClCompile Include="gamescene.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="lib\core\scene.cpp" />
-    <ClCompile Include="lib\core\scenemanager.cpp" />
+    <ClCompile Include="lib\scn\scene.cpp" />
+    <ClCompile Include="lib\scn\scenemanager.cpp" />
     <ClCompile Include="lib\core\window.cpp" />
     <ClCompile Include="lib\memmanager.cpp" />
     <ClCompile Include="menuscene.cpp" />
@@ -111,8 +111,8 @@
     <ClInclude Include="lib\core\hasname.hpp" />
     <ClInclude Include="lib\log.hpp" />
     <ClInclude Include="lib\core\programcontroller.hpp" />
-    <ClInclude Include="lib\core\scene.hpp" />
-    <ClInclude Include="lib\core\scenemanager.hpp" />
+    <ClInclude Include="lib\scn\scene.hpp" />
+    <ClInclude Include="lib\scn\scenemanager.hpp" />
     <ClInclude Include="lib\core\window.hpp" />
     <ClInclude Include="gamescene.hpp" />
     <ClInclude Include="lib\types.hpp" />

@@ -1,7 +1,7 @@
 #include "programcontroller.hpp"
 #include "window.hpp"
-#include "scenemanager.hpp"
-#include "scene.hpp"
+#include "../scn/scenemanager.hpp"
+#include "../scn/scene.hpp"
 #include "../log.hpp"
 
 namespace lib
@@ -17,8 +17,8 @@ namespace lib
 		ProgramController::~ProgramController()
 		{
 			// Not really necessary, but it is better for security
-			Scene::p_scnManager.reset();
-			SceneManager::p_parentWindow.reset();
+			scn::Scene::p_scnManager.reset();
+			scn::SceneManager::p_parentWindow.reset();
 			LOG_DESTRUCT_NOPARAMS;
 		}
 		
@@ -50,15 +50,15 @@ namespace lib
 		{
 			__ASSERT(window, "window is null");
 			p_window = window;
-			SceneManager::p_parentWindow = window;
+			scn::SceneManager::p_parentWindow = window;
 		}
 
-		void ProgramController::setSceneManager(sptr<SceneManager> sceneManager)
+		void ProgramController::setSceneManager(sptr<scn::SceneManager> sceneManager)
 		{
 			__ASSERT(sceneManager, "");
 			__ASSERT(p_window, "");
 			p_sceneManager = sceneManager;
-			Scene::p_scnManager = p_sceneManager;
+			scn::Scene::p_scnManager = p_sceneManager;
 		}
 	}
 }

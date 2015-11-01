@@ -1,7 +1,7 @@
 #ifndef __LIB_SCENE_HPP__
 #define __LIB_SCENE_HPP__
 
-#include "hasname.hpp"
+#include "../core/hasname.hpp"
 #include <memory>
 #include "../compileconfig.hpp"
 #include "../types.hpp"
@@ -15,11 +15,18 @@ namespace lib
 	{
 		class Renderizable;
 	}
+
 	namespace core
 	{
-		class SceneManager;
 		class Window;
-		class Scene : public HasName
+		class ProgramController;
+	}
+
+	namespace scn
+	{
+		class SceneManager;
+
+		class Scene : public lib::core::HasName
 		{
 		public:
 			Scene(const std::string &name);
@@ -50,7 +57,7 @@ namespace lib
 
 			static wptr<SceneManager> p_scnManager;
 			friend class SceneManager;
-			friend class ProgramController;
+			friend class lib::core::ProgramController;
 		};
 	}
 }

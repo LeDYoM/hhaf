@@ -8,8 +8,12 @@ namespace lib
 {
 	namespace core
 	{
-		class Scene;
 		class Window;
+		class ProgramController;
+	}
+	namespace scn
+	{
+		class Scene;
 		class SceneManager
 		{
 		public:
@@ -27,9 +31,9 @@ namespace lib
 			sptr<Scene> _currentScene{ nullptr };
 			bool b_lock{ false };
 			sptr<Scene> _nextScene{ nullptr };
-			static wptr<Window> p_parentWindow;
+			static wptr<core::Window> p_parentWindow;
 
-			friend class ProgramController;
+			friend class lib::core::ProgramController;
 			friend class Scene;
 		};
 	}

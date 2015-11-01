@@ -1,11 +1,11 @@
 #ifndef __ZOPERSCENEMANAGER_HPP__
 #define __ZOPERSCENEMANAGER_HPP__
 
-#include "lib/core/scenemanager.hpp"
+#include "lib/scn/scenemanager.hpp"
 
 namespace zoper
 {
-	class ZoperSceneManager : public lib::core::SceneManager
+	class ZoperSceneManager : public lib::scn::SceneManager
 	{
 	public:
 		ZoperSceneManager();

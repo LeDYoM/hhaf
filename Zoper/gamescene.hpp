@@ -1,7 +1,7 @@
 #ifndef __GAMESCENE_HPP__
 #define __GAMESCENE_HPP__
 
-#include "lib/core/scene.hpp"
+#include "lib/scn/scene.hpp"
 #include "lib/types.hpp"
 #include "lib/board/itilescontroller.hpp"
 #include "lib/board/boardmodel.hpp"
@@ -42,7 +42,7 @@ namespace zoper
 		std::array<TokenZone, NUMWAYS> _tokenZones;
 
 	};
-	class GameScene : public lib::core::Scene, public lib::board::ITilesController, public lib::Configuration
+	class GameScene : public lib::scn::Scene, public lib::board::ITilesController, public lib::Configuration
 	{
 	public:
 		GameScene();

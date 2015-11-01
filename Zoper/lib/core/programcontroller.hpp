@@ -6,10 +6,13 @@
 
 namespace lib
 {
+	namespace scn
+	{
+		class SceneManager;
+	}
 	namespace core
 	{
 		class Window;
-		class SceneManager;
 		
 		class ProgramController
 		{
@@ -22,14 +25,14 @@ namespace lib
 			void start();
 			int loop();
 			void setWindow(sptr<Window> window);
-			void setSceneManager(sptr<SceneManager> sceneManager);
+			void setSceneManager(sptr<scn::SceneManager> sceneManager);
 
-			inline sptr<SceneManager> sceneManager() const { return p_sceneManager; }
+			inline sptr<scn::SceneManager> sceneManager() const { return p_sceneManager; }
 		protected:
 			bool loopStep();
 		private:
 			sptr<Window> p_window;
-			sptr<SceneManager> p_sceneManager;		
+			sptr<scn::SceneManager> p_sceneManager;		
 		};
 	}
 }

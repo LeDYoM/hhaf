@@ -1,13 +1,13 @@
 #include "scenemanager.hpp"
 #include "scene.hpp"
 #include "../log.hpp"
-#include "window.hpp"
+#include "../core/window.hpp"
 
 namespace lib
 {
-	namespace core
+	namespace scn
 	{
-		wptr<Window> SceneManager::p_parentWindow;
+		wptr<lib::core::Window> SceneManager::p_parentWindow;
 
 		SceneManager::SceneManager()
 		{
