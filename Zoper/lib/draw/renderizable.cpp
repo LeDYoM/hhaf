@@ -31,6 +31,15 @@ namespace lib
 			_activeDrawNode = ActiveDrawNode::Shape;
 		}
 
+		Renderizable::Renderizable(const std::string & name, sf::CircleShape * circleShape)
+			: HasName{ name }
+		{
+			LOG_CONSTRUCT("Name: " << name << " of type circleShape");
+			_drawNodeData.shape = circleShape;
+			_activeDrawNode = ActiveDrawNode::CircleShape;
+
+		}
+
 		Renderizable::~Renderizable()
 		{
 			LOG_DESTRUCT("Name: " << name());
