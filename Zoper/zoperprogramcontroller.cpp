@@ -15,5 +15,8 @@ namespace zoper
 	{
 		setWindow(lib::sptr<ZoperWindow>(new ZoperWindow));
 		setSceneManager(lib::sptr<ZoperSceneManager>(new ZoperSceneManager));
+
+		// Init configuration data
+		addConfigProperty("GraphicsLevel", "4");
 	}
 }
