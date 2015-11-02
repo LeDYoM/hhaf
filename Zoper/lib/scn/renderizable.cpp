@@ -10,6 +10,8 @@ namespace lib
 			LOG_CONSTRUCT("Name: " << name << " of type text");
 
 			_drawNodeData.text = text;
+			_drawNodeAsDrawable = text;
+			_drawNodeAsTransformable = text;
 			_activeDrawNode = ActiveDrawNode::Text;
 		}
 
