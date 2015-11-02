@@ -21,23 +21,19 @@ namespace lib
 			LOG_CONSTRUCT("Name: " << name << " of type sprite");
 
 			_drawNodeData.sprite = sprite;
+			_drawNodeAsDrawable = sprite;
+			_drawNodeAsTransformable = sprite;
 			_activeDrawNode = ActiveDrawNode::Sprite;
 		}
 
-		Renderizable::Renderizable(const std::string &name, sf::Shape *shape)
-			: HasName{ name }
-		{
-			LOG_CONSTRUCT("Name: " << name << " of type shape");
-
-			_drawNodeData.shape = shape;
-			_activeDrawNode = ActiveDrawNode::Shape;
-		}
 
 		Renderizable::Renderizable(const std::string & name, sf::CircleShape * circleShape)
 			: HasName{ name }
 		{
 			LOG_CONSTRUCT("Name: " << name << " of type circleShape");
-			_drawNodeData.shape = circleShape;
+			_drawNodeData.circleShape = circleShape;
+			_drawNodeAsDrawable = circleShape;
+			_drawNodeAsTransformable = circleShape;
 			_activeDrawNode = ActiveDrawNode::CircleShape;
 
 		}
