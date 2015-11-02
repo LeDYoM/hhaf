@@ -7,7 +7,7 @@
 
 namespace lib
 {
-	namespace draw
+	namespace scn
 	{
 		class Renderizable : public lib::core::HasName
 		{

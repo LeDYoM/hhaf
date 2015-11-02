@@ -2,7 +2,7 @@
 
 namespace lib
 {
-	namespace draw
+	namespace scn
 	{
 		Renderizable::Renderizable(const std::string &name, sf::Text *text)
 			: HasName{ name }

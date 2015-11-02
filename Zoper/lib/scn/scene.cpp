@@ -2,7 +2,7 @@
 #include "../log.hpp"
 #include "scenemanager.hpp"
 #include "../core/window.hpp"
-#include "../draw/renderizable.hpp"
+#include "renderizable.hpp"
 
 namespace lib
 {
@@ -49,28 +49,28 @@ namespace lib
 			p_scnManager.lock()->setScene(name);
 		}
 
-		sptr<draw::Renderizable> Scene::createText(const std::string &name)
+		sptr<Renderizable> Scene::createText(const std::string &name)
 		{
-			auto result = sptr<lib::draw::Renderizable>(new lib::draw::Renderizable(name,new sf::Text));
+			auto result = sptr<Renderizable>(new Renderizable(name,new sf::Text));
 			addRenderizable(result);
 			return result;
 		}
 
-		sptr<draw::Renderizable> Scene::createSprite(const std::string &name)
+		sptr<Renderizable> Scene::createSprite(const std::string &name)
 		{
-			auto result = sptr<lib::draw::Renderizable>(new lib::draw::Renderizable(name, new sf::Sprite));
+			auto result = sptr<Renderizable>(new Renderizable(name, new sf::Sprite));
 			addRenderizable(result);
 			return result;
 		}
 
-		sptr<draw::Renderizable> Scene::createShape(const std::string &name)
+		sptr<Renderizable> Scene::createShape(const std::string &name)
 		{
-			auto result = sptr<lib::draw::Renderizable>(new lib::draw::Renderizable(name, new sf::CircleShape));
+			auto result = sptr<Renderizable>(new Renderizable(name, new sf::CircleShape));
 			addRenderizable(result);
 			return result;
 		}
 
-		sptr<draw::Renderizable> Scene::addRenderizable(sptr<draw::Renderizable> newElement)
+		sptr<Renderizable> Scene::addRenderizable(sptr<Renderizable> newElement)
 		{
 			v_nodes.push_back(newElement);
 			return newElement;

@@ -4,7 +4,7 @@
 
 #include "lib/board/boardmodel.hpp"
 #include "lib/board/itilescontroller.hpp"
-#include "lib/draw/renderizable.hpp"
+#include "lib/scn/renderizable.hpp"
 #include "lib/log.hpp"
 #include "lib/compileconfig.hpp"
 
@@ -150,7 +150,7 @@ namespace zoper
 
 		// Set the new token
 		LOG_DEBUG("Adding new tile at " << newX << "," << newY << " with value "<<newToken);
-		auto newTileToken = lib::sptr<Tile>(new Tile(lib::board::BoardTileData(newToken)));
+		auto newTileToken = lib::sptr<Tile>(new Tile(lib::board::BoardTileData(newToken),0));
 		p_boardModel->setTile(newX, newY, std::dynamic_pointer_cast<lib::board::ITile>(addRenderizable(newTileToken)));
 		_nextTokenPart = (_nextTokenPart + 1) % NUMWAYS;
 
