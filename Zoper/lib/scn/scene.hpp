@@ -19,7 +19,11 @@ namespace lib
 
 	namespace scn
 	{
-		class Renderizable;
+		namespace draw
+		{
+			class Renderizable;
+		}
+
 		class SceneManager;
 
 		class Scene : public lib::core::HasName
@@ -35,10 +39,10 @@ namespace lib
 
 			void setNextScene(const std::string &name);
 
-			sptr<Renderizable> createText(const std::string &name);
-			sptr<Renderizable> createSprite(const std::string &name);
-			sptr<Renderizable> createShape(const std::string &name);
-			sptr<Renderizable> addRenderizable(sptr<Renderizable> newElement);
+			sptr<draw::Renderizable> createText(const std::string &name);
+			sptr<draw::Renderizable> createSprite(const std::string &name);
+			sptr<draw::Renderizable> createShape(const std::string &name);
+			sptr<draw::Renderizable> addRenderizable(sptr<draw::Renderizable> newElement);
 
 			u32 getRandomNumer(u32 max = 1, u32 min = 0);
 		protected:
@@ -47,7 +51,7 @@ namespace lib
 			sf::View *const getView() const;
 		private:
 			u32 drawAll();
-			std::vector<sptr<Renderizable>> v_nodes;
+			std::vector<sptr<draw::Renderizable>> v_nodes;
 			uptr<sf::View> p_view;
 
 			static wptr<SceneManager> p_scnManager;

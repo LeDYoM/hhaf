@@ -4,7 +4,7 @@
 
 #include "lib/board/boardmodel.hpp"
 #include "lib/board/itilescontroller.hpp"
-#include "lib/scn/renderizable.hpp"
+#include "lib/scn/draw/renderizable.hpp"
 #include "lib/log.hpp"
 #include "lib/compileconfig.hpp"
 
@@ -162,6 +162,9 @@ namespace zoper
 		auto newTileToken = lib::sptr<Tile>(new Tile(lib::board::BoardTileData(newToken), 0));
 		// Set the position in the scene depending on the board position
 		newTileToken->getAsTransformable()->setPosition(board2Scene(x, y));
+
+		// Set the radius depending on the scene
+		newTileToken->getAsCircleShape()->setRadius(tileSize().x);
 		// Add it to the board and to the scene nodes
 		p_boardModel->setTile(x, y, std::dynamic_pointer_cast<lib::board::ITile>(addRenderizable(newTileToken)));
 	}
@@ -182,6 +185,11 @@ namespace zoper
 		const sf::View &view = *(this->getView());
 		sf::Vector2f result{ view.getSize().x / static_cast<float>(p_boardModel->width()), view.getSize().y / static_cast<float>(p_boardModel->height()) };
 		return sf::Vector2f{ result.x * x, result.y *y };
+	}
+
+	const sf::Vector2f GameScene::tileSize() const
+	{
+		return board2Scene(1, 1);
 	}
 
 	void GameScene::onExitScene()

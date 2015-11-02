@@ -3,7 +3,7 @@
 
 namespace zoper
 {
-	Tile::Tile(lib::board::BoardTileData data, lib::u32 index) : lib::board::ITile{ data }, lib::scn::Renderizable("",new sf::CircleShape)
+	Tile::Tile(lib::board::BoardTileData data, lib::u32 index) : lib::board::ITile{ data }, lib::scn::draw::Renderizable("",new sf::CircleShape)
 	{
 		sf::Color c;
 		switch (getData())
@@ -30,8 +30,6 @@ namespace zoper
 		}
 		sf::CircleShape *this_ = getAsCircleShape();
 		this_->setFillColor(c);
-//		this_->setPosition(100, 100);
-		this_->setRadius(500);
 		this_->setPointCount(5);
 
 	}

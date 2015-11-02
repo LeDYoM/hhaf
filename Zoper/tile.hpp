@@ -2,11 +2,11 @@
 #define __TILE_HPP__
 
 #include "lib/board/itilescontroller.hpp"
-#include "lib/scn/renderizable.hpp"
+#include "lib/scn/draw/renderizable.hpp"
 
 namespace zoper
 {
-	class Tile : public lib::board::ITile, public lib::scn::Renderizable
+	class Tile : public lib::board::ITile, public lib::scn::draw::Renderizable
 	{
 	public:
 		explicit Tile(lib::board::BoardTileData data,lib::u32 index);
