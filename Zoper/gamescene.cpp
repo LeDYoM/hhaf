@@ -149,12 +149,25 @@ namespace zoper
 		}
 
 		// Set the new token
-		LOG_DEBUG("Adding new tile at " << newX << "," << newY << " with value "<<newToken);
-		auto newTileToken = lib::sptr<Tile>(new Tile(lib::board::BoardTileData(newToken),0));
-		p_boardModel->setTile(newX, newY, std::dynamic_pointer_cast<lib::board::ITile>(addRenderizable(newTileToken)));
+		addNewToken(newX, newY, newToken);
 		_nextTokenPart = (_nextTokenPart + 1) % NUMWAYS;
 
 		_debugDisplayBoard();
+	}
+
+	void GameScene::addNewToken(lib::u32 x, lib::u32 y, lib::u32 newToken)
+	{
+		LOG_DEBUG("Adding new tile at " << x << "," << y << " with value " << newToken);
+		// Create a new Tile instance
+		auto newTileToken = lib::sptr<Tile>(new Tile(lib::board::BoardTileData(newToken), 0));
+		// Set the position in the scene depending on the board position
+		sf::Vector2f pos = board2Scene(x, y);
+		newTileToken->getAsTransformable()->setPosition(pos.x,pos.y);
+
+		sf::Vector2f wtf = newTileToken->getAsTransformable()->getPosition();
+
+		// Add it to the board and to the scene nodes
+		p_boardModel->setTile(x, y, std::dynamic_pointer_cast<lib::board::ITile>(addRenderizable(newTileToken)));
 	}
 
 	bool GameScene::pointInCenter(lib::s32 x, lib::s32 y) const
@@ -166,6 +179,14 @@ namespace zoper
 			return false;
 
 		return true;
+	}
+
+	const sf::Vector2f GameScene::board2Scene(lib::u32 x, lib::u32 y) const
+	{
+		const sf::View &view = *(this->getView());
+		sf::Vector2f result{ view.getSize().x / static_cast<float>(p_boardModel->width()), view.getSize().y / static_cast<float>(p_boardModel->height()) };
+//		return sf::Vector2f{ result.x * x, result.y *y };
+		return sf::Vector2f{ 150,1500 };
 	}
 
 	void GameScene::onExitScene()

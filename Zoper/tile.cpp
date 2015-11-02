@@ -30,7 +30,7 @@ namespace zoper
 		}
 		sf::CircleShape *this_ = getAsCircleShape();
 		this_->setFillColor(c);
-		this_->setPosition(100, 100);
+//		this_->setPosition(100, 100);
 		this_->setRadius(500);
 		this_->setPointCount(5);
 

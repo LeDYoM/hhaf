@@ -23,6 +23,8 @@ namespace lib
 
 			inline bool validCoords(u32 x, u32 y) const { return _tiles.size() > x && _tiles[0].size() > y; }
 			inline bool validCoords(s32 x, s32 y) const { return x >= 0 && y >= 0 && validCoords(static_cast<u32>(x), static_cast<u32>(y)); }
+			inline u32 width() const { return _tiles.size(); }
+			inline u32 height() const { return _tiles[0].size(); }
 
 		private:
 			void _setTile(u32 x, u32 y, WITilePointer newTile);

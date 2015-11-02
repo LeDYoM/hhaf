@@ -57,7 +57,9 @@ namespace zoper
 		inline const GameData &getGameData() const { return _gameData; };
 	private:
 		void generateNextToken();
+		void addNewToken(lib::u32 x, lib::u32 y, lib::u32 newToken);
 		bool pointInCenter(lib::s32 x, lib::s32 y) const;
+		const sf::Vector2f board2Scene(lib::u32 x, lib::u32 y) const;
 
 		void _debugDisplayBoard() const;
 		lib::sptr<lib::board::BoardModel> p_boardModel{ nullptr };
