@@ -161,11 +161,7 @@ namespace zoper
 		// Create a new Tile instance
 		auto newTileToken = lib::sptr<Tile>(new Tile(lib::board::BoardTileData(newToken), 0));
 		// Set the position in the scene depending on the board position
-		sf::Vector2f pos = board2Scene(x, y);
-		newTileToken->getAsTransformable()->setPosition(pos.x,pos.y);
-
-		sf::Vector2f wtf = newTileToken->getAsTransformable()->getPosition();
-
+		newTileToken->getAsTransformable()->setPosition(board2Scene(x, y));
 		// Add it to the board and to the scene nodes
 		p_boardModel->setTile(x, y, std::dynamic_pointer_cast<lib::board::ITile>(addRenderizable(newTileToken)));
 	}
@@ -185,8 +181,7 @@ namespace zoper
 	{
 		const sf::View &view = *(this->getView());
 		sf::Vector2f result{ view.getSize().x / static_cast<float>(p_boardModel->width()), view.getSize().y / static_cast<float>(p_boardModel->height()) };
-//		return sf::Vector2f{ result.x * x, result.y *y };
-		return sf::Vector2f{ 150,1500 };
+		return sf::Vector2f{ result.x * x, result.y *y };
 	}
 
 	void GameScene::onExitScene()
