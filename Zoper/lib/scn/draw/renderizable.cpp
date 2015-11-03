@@ -40,6 +40,17 @@ namespace lib
 
 			}
 
+			Renderizable::Renderizable(const std::string & name, lib::scn::draw::EllipseShape * ellipseShape)
+				: HasName{ name }
+			{
+				LOG_CONSTRUCT("Name: " << name << " of type ellipseShape");
+				_drawNodeData.ellipseShape = ellipseShape;
+				_drawNodeAsDrawable = ellipseShape;
+				_drawNodeAsTransformable = ellipseShape;
+				_activeDrawNode = ActiveDrawNode::EllipseShape;
+
+			}
+
 			Renderizable::~Renderizable()
 			{
 				LOG_DESTRUCT("Name: " << name());

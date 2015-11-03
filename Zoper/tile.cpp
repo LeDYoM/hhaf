@@ -1,9 +1,10 @@
 #include "tile.hpp"
+#include "lib/scn/draw/ellipseshape.hpp"
 #include <SFML/Graphics.hpp>
 
 namespace zoper
 {
-	Tile::Tile(lib::board::BoardTileData data, lib::u32 index) : lib::board::ITile{ data }, lib::scn::draw::Renderizable("",new sf::CircleShape)
+	Tile::Tile(lib::board::BoardTileData data, lib::u32 index) : lib::board::ITile{ data }, lib::scn::draw::Renderizable("",new lib::scn::draw::EllipseShape)
 	{
 		sf::Color c;
 		switch (getData())
@@ -28,9 +29,9 @@ namespace zoper
 			LOG_ERROR("Error value for token: " << getData() << " is not supported");
 			break;
 		}
-		sf::CircleShape *this_ = getAsCircleShape();
+		auto this_ = getAsEllipseShape();
 		this_->setFillColor(c);
-		this_->setPointCount(5);
+//		this_->setPointCount(5);
 
 	}
 
