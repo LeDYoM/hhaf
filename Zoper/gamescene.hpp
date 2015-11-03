@@ -11,8 +11,10 @@
 
 #include <array>
 
-#define NUMWAYS		4
-#define NUMTOKENS	5
+#define NUMWAYS			4
+#define NUMTOKENS		5
+#define PLAYER_TOKEN	NUMTOKENS
+
 namespace zoper
 {
 	class Player;

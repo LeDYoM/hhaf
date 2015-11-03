@@ -1,6 +1,7 @@
 #include "gamescene.hpp"
 
 #include "tile.hpp"
+#include "player.hpp"
 
 #include "lib/board/boardmodel.hpp"
 #include "lib/board/itilescontroller.hpp"
@@ -43,7 +44,7 @@ namespace zoper
 		getView()->setCenter(5000, 5000);
 		updateView();
 
-		player = 
+		addPlayer();
 
 		auto text = this->createText("hellow")->getAsText();
 
@@ -159,16 +160,18 @@ namespace zoper
 
 	void GameScene::addPlayer()
 	{
-		LOG_DEBUG("Adding player tile at " << x << "," << y << " with value " << newToken);
-		// Create a new Tile instance
-		auto newTileToken = lib::sptr<Tile>(new Tile(lib::board::BoardTileData(newToken), 0));
+		LOG_DEBUG("Adding player tile at " << _gameData.centerQuadx << "," << _gameData.centerQuady);
+		__ASSERT(!p_player, "Player already initialized");
+		// Create the player instance
+		p_player = lib::sptr<Player>(new Player(_gameData.centerQuadx,_gameData.centerQuady));
 		// Set the position in the scene depending on the board position
-		newTileToken->getAsTransformable()->setPosition(board2Scene(x, y));
+		p_player->getAsTransformable()->setPosition(board2Scene(p_player->boardX(), p_player->boardY()));
 
 		// Set the radius depending on the scene
-		newTileToken->getAsEllipseShape()->setSize(tileSize());
+		p_player->getAsEllipseShape()->setSize(tileSize());
+
 		// Add it to the board and to the scene nodes
-		p_boardModel->setTile(x, y, std::dynamic_pointer_cast<lib::board::ITile>(addRenderizable(newTileToken)));
+		p_boardModel->setTile(p_player->boardX(), p_player->boardY(), std::dynamic_pointer_cast<lib::board::ITile>(addRenderizable(p_player)));
 	}
 
 	void GameScene::addNewToken(lib::u32 x, lib::u32 y, lib::u32 newToken)
@@ -230,9 +233,9 @@ namespace zoper
 				else
 				{
 					chTemp = "*";
+					if (pointInCenter(x, y))
+						chTemp = "C";
 				}
-				if (pointInCenter(x, y))
-					chTemp = "C";
 
 				temp += chTemp;
 			}
