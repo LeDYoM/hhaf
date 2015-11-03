@@ -15,6 +15,8 @@
 #define NUMTOKENS	5
 namespace zoper
 {
+	class Player;
+
 	struct GameData
 	{
 		lib::u32 width{ 0 };
@@ -68,6 +70,9 @@ namespace zoper
 		sf::Clock clock;
 		lib::s32 _millisBetweenTokens{ 1000 };
 		lib::u8 _nextTokenPart{ 0 };
+		lib::sptr<Player> p_player{ nullptr };
+
+		void addPlayer();
 
 
 		void tileAppeared(lib::u32 x, lib::u32 y, lib::board::WITilePointer tile);

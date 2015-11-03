@@ -43,6 +43,8 @@ namespace zoper
 		getView()->setCenter(5000, 5000);
 		updateView();
 
+		player = 
+
 		auto text = this->createText("hellow")->getAsText();
 
 		// select the font
@@ -155,6 +157,20 @@ namespace zoper
 		_debugDisplayBoard();
 	}
 
+	void GameScene::addPlayer()
+	{
+		LOG_DEBUG("Adding player tile at " << x << "," << y << " with value " << newToken);
+		// Create a new Tile instance
+		auto newTileToken = lib::sptr<Tile>(new Tile(lib::board::BoardTileData(newToken), 0));
+		// Set the position in the scene depending on the board position
+		newTileToken->getAsTransformable()->setPosition(board2Scene(x, y));
+
+		// Set the radius depending on the scene
+		newTileToken->getAsEllipseShape()->setSize(tileSize());
+		// Add it to the board and to the scene nodes
+		p_boardModel->setTile(x, y, std::dynamic_pointer_cast<lib::board::ITile>(addRenderizable(newTileToken)));
+	}
+
 	void GameScene::addNewToken(lib::u32 x, lib::u32 y, lib::u32 newToken)
 	{
 		LOG_DEBUG("Adding new tile at " << x << "," << y << " with value " << newToken);
@@ -164,7 +180,7 @@ namespace zoper
 		newTileToken->getAsTransformable()->setPosition(board2Scene(x, y));
 
 		// Set the radius depending on the scene
-		newTileToken->getAsCircleShape()->setRadius(tileSize().x);
+		newTileToken->getAsEllipseShape()->setSize(tileSize());
 		// Add it to the board and to the scene nodes
 		p_boardModel->setTile(x, y, std::dynamic_pointer_cast<lib::board::ITile>(addRenderizable(newTileToken)));
 	}
@@ -253,6 +269,8 @@ namespace zoper
 
 	void GameScene::tileMoved(lib::u32 xSource, lib::u32 ySource, lib::u32 xDest, lib::u32 yDest, lib::board::WITilePointer tile)
 	{
+		auto ztile = std::dynamic_pointer_cast<Tile>(tile.lock());
+		ztile->getAsTransformable()->setPosition(board2Scene(xDest, yDest));
 	}
 
 }
