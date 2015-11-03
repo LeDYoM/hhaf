@@ -18,11 +18,13 @@ namespace lib
 				void setSize(const sf::Vector2f &size);
 				const sf::Vector2f &getRadius() const;
 				const sf::Vector2f &getSize() const;
-				virtual u32 getPointCount() const;
-				virtual sf::Vector2f getPoint(unsigned int index) const;
+				virtual u32 getPointCount() const override;
+				void setPointCount(lib::u32 numPoints);
+				virtual sf::Vector2f getPoint(lib::u32 index) const;
 
 			private:
 				sf::Vector2f m_radius;
+				lib::u32 m_pointCount;
 			};
 		}
 	}

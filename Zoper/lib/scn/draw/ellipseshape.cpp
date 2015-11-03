@@ -6,7 +6,7 @@ namespace lib
 	{
 		namespace draw
 		{
-			EllipseShape::EllipseShape(const sf::Vector2f& radius) : m_radius{ radius }
+			EllipseShape::EllipseShape(const sf::Vector2f& radius) : m_radius{ radius }, m_pointCount{ 30 }
 			{
 				update();
 			}
@@ -35,11 +35,18 @@ namespace lib
 
 			u32 EllipseShape::getPointCount() const
 			{
-				return 30; // fixed, but could be an attribute of the class if needed
+				return m_pointCount;
+			}
+
+			void EllipseShape::setPointCount(lib::u32 numPoints)
+			{
+				m_pointCount = numPoints;
 			}
 
 			sf::Vector2f EllipseShape::getPoint(unsigned int index) const
 			{
+				// TO DO:
+				// Optimize and cache it
 				static const float pi = 3.141592654f;
 
 				float angle = index * 2 * pi / getPointCount() - pi / 2;
