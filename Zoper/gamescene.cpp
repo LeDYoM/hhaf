@@ -178,7 +178,7 @@ namespace zoper
 	{
 		LOG_DEBUG("Adding new tile at " << x << "," << y << " with value " << newToken);
 		// Create a new Tile instance
-		auto newTileToken = lib::sptr<Tile>(new Tile(lib::board::BoardTileData(newToken), 0));
+		auto newTileToken = lib::sptr<Tile>(new Tile(lib::board::BoardTileData(newToken)));
 		// Set the position in the scene depending on the board position
 		newTileToken->getAsTransformable()->setPosition(board2Scene(x, y));
 

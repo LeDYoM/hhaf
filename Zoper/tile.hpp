@@ -9,9 +9,13 @@ namespace zoper
 	class Tile : public lib::board::ITile, public lib::scn::draw::Renderizable
 	{
 	public:
-		explicit Tile(lib::board::BoardTileData data,lib::u32 index);
+		explicit Tile(lib::board::BoardTileData data);
 		Tile(const Tile &other) = delete;
 		virtual ~Tile();
+
+		static void resetTileCounter();
+	private:
+		static lib::u32 _tileCounter;
 	};
 }
 

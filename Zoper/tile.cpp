@@ -4,9 +4,14 @@
 
 namespace zoper
 {
-	Tile::Tile(lib::board::BoardTileData data, lib::u32 index) : lib::board::ITile{ data }, lib::scn::draw::Renderizable("",new lib::scn::draw::EllipseShape)
+	lib::u32 Tile::_tileCounter{ 0 };
+
+	Tile::Tile(lib::board::BoardTileData data) : lib::board::ITile{ data }, lib::scn::draw::Renderizable(std::string("tile")+std::to_string(_tileCounter),new lib::scn::draw::EllipseShape)
 	{
 		sf::Color c;
+
+		++_tileCounter;
+
 		switch (getData())
 		{
 		case 0:
@@ -37,5 +42,10 @@ namespace zoper
 
 	Tile::~Tile()
 	{
+	}
+
+	void Tile::resetTileCounter()
+	{
+		_tileCounter = 0;
 	}
 }
