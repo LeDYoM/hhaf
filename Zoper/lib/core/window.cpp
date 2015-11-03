@@ -44,12 +44,16 @@ namespace lib
 				setTitle("FPS:" + std::to_string(p_wPrivate->lastFps));
 			}
 			++(p_wPrivate->currentFps);
-			sf::Event Event;
-			while (pollEvent(Event))
+			sf::Event event;
+			while (pollEvent(event))
 			{
-				if (Event.type == sf::Event::Closed)
+				if (event.type == sf::Event::Closed)
 				{
 					return true;
+				}
+				else if (event.type == sf::Event::KeyPressed || event.type == sf::Event::KeyReleased)
+				{
+					keyEvent(event);
 				}
 			}
 
@@ -72,6 +76,12 @@ namespace lib
 		u32 Window::getRandomNumer(u32 max /*= 1*/, u32 min /*= 0*/)
 		{
 			return p_wPrivate->randomizer.getUInt(max, min);
+		}
+
+		void Window::keyEvent(sf::Event e)
+		{
+			_ASSERT(e.type == sf::Event::KeyPressed || e.type == sf::Event::KeyReleased);
+
 		}
 
 	}
