@@ -21,6 +21,7 @@ namespace lib
 		typedef std::pair<std::string, std::string> CMapLine;
 
 		bool addConfigProperty(const std::string &name, const std::string &value);
+		bool addConfigInt(const std::string &name, int value);
 		bool addConfigFile(const std::string &fileName);
 
 	private:

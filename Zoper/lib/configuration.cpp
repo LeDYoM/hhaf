@@ -37,6 +37,11 @@ namespace lib
 		return true;
 	}
 
+	bool Configuration::addConfigInt(const std::string & name, int value)
+	{
+		return addConfigProperty(name, std::to_string(value));
+	}
+
 	bool Configuration::addConfigFile(const std::string & fileName)
 	{
 		std::ifstream file(fileName);
