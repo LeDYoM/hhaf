@@ -4,6 +4,8 @@
 #include "../scn/scene.hpp"
 #include "../log.hpp"
 
+#include <SFML/Config.hpp>
+
 namespace lib
 {
 	namespace core
@@ -11,8 +13,9 @@ namespace lib
 		ProgramController::ProgramController()
 		{
 			LOG_CONSTRUCT_NOPARAMS;
+			LOG_DEBUG("Starting system...");
+			LOG_DEBUG("Compiled using SFML ver "<< SFML_VERSION_MAJOR << "." << SFML_VERSION_MINOR << "." << SFML_VERSION_PATCH);
 		}
-
 
 		ProgramController::~ProgramController()
 		{
