@@ -65,7 +65,6 @@ namespace lib
 
 			SceneManager *p_scnManager;
 			friend class SceneManager;
-			friend class lib::core::ProgramController;
 		};
 	}
 }
