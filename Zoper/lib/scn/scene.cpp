@@ -55,6 +55,16 @@ namespace lib
 			LOG_DEBUG("Exited from scene " << name());
 		}
 
+		void Scene::onKeyPressed(sf::Event::KeyEvent kEvent)
+		{
+			LOG_DEBUG("Key pressed: " << int{ kEvent.code });
+		}
+
+		void Scene::onKeyReleased(sf::Event::KeyEvent kEvent)
+		{
+			LOG_DEBUG("Key released: " << int{ kEvent.code });
+		}
+
 		void Scene::setNextScene(const std::string &name)
 		{
 			__ASSERT(p_scnManager, "Null SceneManager on Scene");

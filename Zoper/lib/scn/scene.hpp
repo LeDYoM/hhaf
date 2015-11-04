@@ -39,6 +39,9 @@ namespace lib
 
 			virtual void update() = 0;
 
+			virtual void onKeyPressed(sf::Event::KeyEvent kEvent);
+			virtual void onKeyReleased(sf::Event::KeyEvent kEvent);
+
 			void setNextScene(const std::string &name);
 
 			sptr<draw::Renderizable> createText(const std::string &name);
