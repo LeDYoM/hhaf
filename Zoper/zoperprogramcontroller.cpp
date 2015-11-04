@@ -16,6 +16,11 @@ namespace zoper
 	{
 		// Init configuration data
 		addConfigProperty("GraphicsLevel", "4");
+		addConfigProperty("KeyLeft", std::to_string(sf::Keyboard::Left));
+		addConfigProperty("KeyRight", std::to_string(sf::Keyboard::Right));
+		addConfigProperty("KeyUp", std::to_string(sf::Keyboard::Up));
+		addConfigProperty("KeyDown", std::to_string(sf::Keyboard::Down));
+		addConfigProperty("KeyLaunch", std::to_string(sf::Keyboard::Space));
 	}
 
 	std::vector<lib::sptr<lib::scn::Scene>> ZoperProgramController::scenesVector()
