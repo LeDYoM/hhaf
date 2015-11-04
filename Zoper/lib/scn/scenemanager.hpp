@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "../types.hpp"
+#include <SFML/Window/Event.hpp>
 
 namespace lib
 {
@@ -28,6 +29,9 @@ namespace lib
 			core::Window *parentWindow() { return p_parentWindow; }
 
 			void addScenes(const std::vector<sptr<Scene>> &&sceneVector);
+
+			void onKeyPressed(sf::Event::KeyEvent kEvent);
+			void onKeyReleased(sf::Event::KeyEvent kEvent);
 		private:
 			void setScene(sptr<Scene> scene);
 
@@ -37,8 +41,6 @@ namespace lib
 			bool b_lock{ false };
 			sptr<Scene> _nextScene{ nullptr };
 			core::Window *p_parentWindow;
-
-			friend class lib::core::ProgramController;
 		};
 	}
 }
