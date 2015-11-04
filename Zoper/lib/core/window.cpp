@@ -94,6 +94,14 @@ namespace lib
 		{
 			_ASSERT(e.type == sf::Event::KeyPressed || e.type == sf::Event::KeyReleased);
 
+			if (e.type == sf::Event::KeyPressed)
+			{
+				p_sceneManager->onKeyPressed(e.key);
+			}
+			else
+			{
+				p_sceneManager->onKeyReleased(e.key);
+			}
 		}
 
 	}
