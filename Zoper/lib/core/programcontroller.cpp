@@ -16,17 +16,14 @@ namespace lib
 
 		ProgramController::~ProgramController()
 		{
-			// Not really necessary, but it is better for security
-			scn::Scene::p_scnManager.reset();
-			scn::SceneManager::p_parentWindow.reset();
 			LOG_DESTRUCT_NOPARAMS;
 		}
 		
 		void ProgramController::start()
 		{
+			p_window = sptr<Window>(new Window(this));
+
 			onInit();
-			__ASSERT(p_window, "");
-			__ASSERT(p_sceneManager, "");
 		}
 
 		int ProgramController::loop()
@@ -42,23 +39,7 @@ namespace lib
 
 		bool ProgramController::loopStep()
 		{
-			p_sceneManager->update();
 			return p_window->loopStep();
-		}
-
-		void ProgramController::setWindow(sptr<Window> window)
-		{
-			__ASSERT(window, "window is null");
-			p_window = window;
-			scn::SceneManager::p_parentWindow = window;
-		}
-
-		void ProgramController::setSceneManager(sptr<scn::SceneManager> sceneManager)
-		{
-			__ASSERT(sceneManager, "");
-			__ASSERT(p_window, "");
-			p_sceneManager = sceneManager;
-			scn::Scene::p_scnManager = p_sceneManager;
 		}
 	}
 }

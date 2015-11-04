@@ -17,12 +17,17 @@ namespace lib
 		class SceneManager
 		{
 		public:
-			SceneManager();
+			SceneManager(core::Window *pParentWindow);
 			virtual ~SceneManager();
 
 			void addScene(sptr<Scene> newScene);
 			void setScene(const std::string &name);
 			void update();
+
+			const core::Window *parentWindow() const { return p_parentWindow; }
+			core::Window *parentWindow() { return p_parentWindow; }
+
+			void addScenes(const std::vector<sptr<Scene>> &&sceneVector);
 		private:
 			void setScene(sptr<Scene> scene);
 
@@ -31,10 +36,9 @@ namespace lib
 			sptr<Scene> _currentScene{ nullptr };
 			bool b_lock{ false };
 			sptr<Scene> _nextScene{ nullptr };
-			static wptr<core::Window> p_parentWindow;
+			core::Window *p_parentWindow;
 
 			friend class lib::core::ProgramController;
-			friend class Scene;
 		};
 	}
 }

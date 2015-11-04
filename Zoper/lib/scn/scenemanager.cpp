@@ -7,11 +7,11 @@ namespace lib
 {
 	namespace scn
 	{
-		wptr<lib::core::Window> SceneManager::p_parentWindow;
-
-		SceneManager::SceneManager()
+		SceneManager::SceneManager(core::Window *pParentWindow)
 		{
 			LOG_CONSTRUCT_NOPARAMS;
+			p_parentWindow = pParentWindow;
+			__ASSERT(p_parentWindow, "Cannot create a scene manager from null window");
 		}
 
 		SceneManager::~SceneManager()
@@ -21,7 +21,10 @@ namespace lib
 
 		void SceneManager::addScene(sptr<Scene> newScene)
 		{
+			__ASSERTERROR(newScene, "Cannot add a null scene");
+			newScene->p_scnManager = this;
 			_scenes.push_back(newScene);
+			newScene->privateOnInit();
 		}
 	
 		void SceneManager::setScene(const std::string &name)
@@ -48,6 +51,14 @@ namespace lib
 			}
 		}
 		
+		void SceneManager::addScenes(const std::vector<sptr<Scene>>&& sceneVector)
+		{
+			for (auto scene : sceneVector)
+			{
+				addScene(scene);
+			}
+		}
+
 		void SceneManager::setScene(sptr<Scene> scene)
 		{
 			__ASSERT(scene, "Cannot change to a nullptr Scene");

@@ -8,13 +8,22 @@ namespace lib
 {
 	namespace core
 	{
+		class IHasName
+		{
+		public:
+			IHasName() {}
+			virtual ~IHasName() {}
+
+			virtual const std::string name() const = 0;
+		};
+
 		class HasName
 		{
 		public:
 			HasName(const std::string name) :_name(name) {}
 			virtual ~HasName() {}
 			
-			inline const std::string &name() const { return _name; }
+			virtual const std::string name() const { return _name; }
 		private:
 			std::string _name;
 		};

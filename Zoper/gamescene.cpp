@@ -33,9 +33,16 @@ namespace zoper
 
 	sf::Font font;
 
+	void GameScene::onInit()
+	{
+	}
+
+	void GameScene::onDeinit()
+	{
+	}
+
 	void GameScene::onEnterScene()
 	{
-		Scene::onEnterScene();
 		p_boardModel = lib::sptr<lib::board::BoardModel>(new lib::board::BoardModel(_gameData.width,_gameData.height,this));
 
 		font.loadFromFile("resources/fonts/sansation.ttf");
@@ -66,6 +73,11 @@ namespace zoper
 		text->setPosition(500, 500);
 
 		clock.restart();
+	}
+
+	void GameScene::onExitScene()
+	{
+		p_boardModel = nullptr;
 	}
 
 	void GameScene::update()
@@ -211,12 +223,6 @@ namespace zoper
 		return board2Scene(1, 1);
 	}
 
-	void GameScene::onExitScene()
-	{
-		p_boardModel = nullptr;
-		Scene::onExitScene();
-	}
-
 	void GameScene::_debugDisplayBoard() const
 	{
 		for (lib::u32 y = 0; y < _gameData.height; ++y)
@@ -275,5 +281,4 @@ namespace zoper
 		auto ztile = std::dynamic_pointer_cast<Tile>(tile.lock());
 		ztile->getAsTransformable()->setPosition(board2Scene(xDest, yDest));
 	}
-
 }

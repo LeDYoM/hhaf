@@ -21,12 +21,6 @@
     <ClCompile Include="zoperprogramcontroller.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="zoperwindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="zoperscenemanager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="menuscene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -75,12 +69,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="zoperprogramcontroller.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="zoperwindow.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="zoperscenemanager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="menuscene.hpp">

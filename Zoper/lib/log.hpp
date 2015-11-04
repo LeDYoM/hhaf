@@ -17,6 +17,7 @@
 	#define LOG_DESTRUCT_NOPARAMS	LOG_DESTRUCT("")
 
 	#define __ASSERT(cond,x)		if (!(cond)) LOG_ERROR(x<< "\n\tIn file "<<__FILE__<< " and line: "<<__LINE__<<"\n\tFunction: "<<__FUNCDNAME__ );
+	#define __ASSERTERROR(cond,x)	__ASSERT(cond,x)
 
 #endif
 

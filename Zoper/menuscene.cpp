@@ -12,20 +12,25 @@ namespace zoper
 	{
 	}
 
+	void MenuScene::onInit()
+	{
+	}
+
+	void MenuScene::onDeinit()
+	{
+	}
+
 	void MenuScene::onEnterScene()
 	{
-		Scene::onEnterScene();
 		setNextScene("GameScene");
 	}
 
 	void MenuScene::onExitScene()
 	{
-		Scene::onExitScene();
 	}
 
 	void MenuScene::update()
 	{
 
 	}
-
 }

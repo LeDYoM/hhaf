@@ -2,7 +2,7 @@
 #define __LIB_SCENE_HPP__
 
 #include "../core/hasname.hpp"
-#include <memory>
+#include <string>
 #include "../compileconfig.hpp"
 #include "../types.hpp"
 
@@ -29,11 +29,13 @@ namespace lib
 		class Scene : public lib::core::HasName
 		{
 		public:
-			Scene(const std::string &name);
+			Scene(const std::string &_name);
 			virtual ~Scene();
 
-			virtual void onEnterScene();
-			virtual void onExitScene();
+			virtual void onInit() = 0;
+			virtual void onDeinit() = 0;
+			virtual void onEnterScene() = 0;
+			virtual void onExitScene() = 0;
 
 			virtual void update() = 0;
 
@@ -50,11 +52,15 @@ namespace lib
 			void updateView();
 			sf::View *const getView() const;
 		private:
+			void privateOnInit();
+			void privateOnDeinit();
+			void privateOnEnterScene();
+			void privateOnExitScene();
 			u32 drawAll();
 			std::vector<sptr<draw::Renderizable>> v_nodes;
 			uptr<sf::View> p_view;
 
-			static wptr<SceneManager> p_scnManager;
+			SceneManager *p_scnManager;
 			friend class SceneManager;
 			friend class lib::core::ProgramController;
 		};

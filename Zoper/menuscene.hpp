@@ -11,6 +11,9 @@ namespace zoper
 		MenuScene();
 		virtual ~MenuScene();
 
+		// Inherited via Scene
+		virtual void onInit() override;
+		virtual void onDeinit() override;
 		virtual void onEnterScene() override;
 		virtual void onExitScene() override;
 

@@ -1,6 +1,8 @@
 #include "window.hpp"
 #include "../log.hpp"
 #include "../randomizer.hpp"
+#include "../scn/scenemanager.hpp"
+#include "programcontroller.hpp"
 #include <SFML/System.hpp>
 
 using namespace sf;
@@ -17,9 +19,17 @@ namespace lib
 			int currentFps{ 0 };
 			Randomizer randomizer;
 		};
-		Window::Window():p_wPrivate{new WindowPrivate()}
+		Window::Window(ProgramController *parentController) :p_wPrivate{ new WindowPrivate() }, p_parentController{ parentController }
 		{
 			LOG_CONSTRUCT_NOPARAMS;
+			__ASSERTERROR(p_parentController, " Cannot create a Window with no parent");
+			// TO DO: Read from config
+			create(1024, 768, 32, "Zoper");
+
+			// Create the scene manager
+			p_sceneManager = sptr<lib::scn::SceneManager>(new lib::scn::SceneManager(this));
+			p_sceneManager->addScenes(p_parentController->scenesVector());
+
 		}
 
 		Window::~Window()
@@ -56,6 +66,8 @@ namespace lib
 					keyEvent(event);
 				}
 			}
+
+			p_sceneManager->update();
 
 			display();
 			return false;

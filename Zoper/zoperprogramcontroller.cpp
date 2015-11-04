@@ -1,6 +1,7 @@
 #include "zoperprogramcontroller.hpp"
-#include "zoperwindow.hpp"
-#include "zoperscenemanager.hpp"
+#include "menuscene.hpp"
+#include "gamescene.hpp"
+
 namespace zoper
 {
 	ZoperProgramController::ZoperProgramController()
@@ -13,10 +14,12 @@ namespace zoper
 		
 	void ZoperProgramController::onInit()
 	{
-		setWindow(lib::sptr<ZoperWindow>(new ZoperWindow));
-		setSceneManager(lib::sptr<ZoperSceneManager>(new ZoperSceneManager));
-
 		// Init configuration data
 		addConfigProperty("GraphicsLevel", "4");
+	}
+
+	std::vector<lib::sptr<lib::scn::Scene>> ZoperProgramController::scenesVector()
+	{
+		return{ lib::sptr<lib::scn::Scene>(new MenuScene), lib::sptr<lib::scn::Scene>(new GameScene) };
 	}
 }

@@ -13,6 +13,9 @@ namespace zoper
 		virtual ~ZoperProgramController();
 		
 		void onInit();
+
+		// Inherited via ProgramController
+		virtual std::vector<lib::sptr<lib::scn::Scene>> scenesVector() override;
 	};
 }
 

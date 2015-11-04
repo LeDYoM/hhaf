@@ -4,11 +4,14 @@
 #include "../types.hpp"
 #include "../compileconfig.hpp"
 
+#include <vector>
+
 namespace lib
 {
 	namespace scn
 	{
 		class SceneManager;
+		class Scene;
 	}
 	namespace core
 	{
@@ -22,17 +25,14 @@ namespace lib
 			virtual ~ProgramController();
 			
 			virtual void onInit()=0;
+			virtual std::vector<sptr<lib::scn::Scene>> scenesVector() = 0;
+
 			void start();
 			int loop();
-			void setWindow(sptr<Window> window);
-			void setSceneManager(sptr<scn::SceneManager> sceneManager);
-
-			inline sptr<scn::SceneManager> sceneManager() const { return p_sceneManager; }
 		protected:
 			bool loopStep();
 		private:
 			sptr<Window> p_window;
-			sptr<scn::SceneManager> p_sceneManager;		
 		};
 	}
 }

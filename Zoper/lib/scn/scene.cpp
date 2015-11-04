@@ -8,13 +8,9 @@ namespace lib
 {
 	namespace scn
 	{
-		wptr<SceneManager> Scene::p_scnManager;
-
-		Scene::Scene(const std::string &name) : HasName(name)
+		Scene::Scene(const std::string &_name) : HasName{ _name }
 		{
-			LOG_CONSTRUCT("Name: "<<name);
-			p_view = uptr<sf::View>(new sf::View(p_scnManager.lock()->p_parentWindow.lock()->getView()));
-			LOG_DEBUG("Scene view set to: center: " << p_view->getCenter().x << "," << p_view->getCenter().y << " and size: " << p_view->getSize().x << "," << p_view->getSize().y);
+			LOG_CONSTRUCT("Name: " << name());
 		}
 
 		Scene::~Scene()
@@ -24,7 +20,7 @@ namespace lib
 
 		void Scene::updateView()
 		{
-			p_scnManager.lock()->p_parentWindow.lock()->setView(*p_view.get());
+			p_scnManager->parentWindow()->setView(*p_view.get());
 			LOG_DEBUG("Scene view set to: center: " << p_view->getCenter().x << "," << p_view->getCenter().y << " and size: " << p_view->getSize().x << "," << p_view->getSize().y);
 		}
 
@@ -33,20 +29,36 @@ namespace lib
 			return p_view.get();
 		}
 
-		void Scene::onEnterScene()
+		void Scene::privateOnInit()
 		{
-			LOG_DEBUG("Entered in scene " << name());
+			LOG_DEBUG("Initializing scene " << name());
+			p_view = uptr<sf::View>(new sf::View(p_scnManager->parentWindow()->getView()));
+			LOG_DEBUG("Scene view set to: center: " << p_view->getCenter().x << "," << p_view->getCenter().y << " and size: " << p_view->getSize().x << "," << p_view->getSize().y);
+			onInit();
 		}
 
-		void Scene::onExitScene()
+		void Scene::privateOnDeinit()
 		{
+			LOG_DEBUG("Deinitializing scene " << name());
+		}
+
+		void Scene::privateOnEnterScene()
+		{
+			LOG_DEBUG("Entered in scene " << name());
+			onEnterScene();
+
+		}
+
+		void Scene::privateOnExitScene()
+		{
+			onExitScene();
 			LOG_DEBUG("Exited from scene " << name());
 		}
 
 		void Scene::setNextScene(const std::string &name)
 		{
-			__ASSERT(!p_scnManager.expired(), "Null SceneManager on Scene");
-			p_scnManager.lock()->setScene(name);
+			__ASSERT(p_scnManager, "Null SceneManager on Scene");
+			p_scnManager->setScene(name);
 		}
 
 		sptr<draw::Renderizable> Scene::createText(const std::string &name)
@@ -78,7 +90,7 @@ namespace lib
 
 		u32 Scene::drawAll()
 		{
-			auto window = p_scnManager.lock()->p_parentWindow.lock();
+			auto window = p_scnManager->parentWindow();
 
 			u32 rNodes{ 0 };
 			
@@ -92,7 +104,7 @@ namespace lib
 
 		u32 Scene::getRandomNumer(u32 max /*= 1*/, u32 min /*= 0*/)
 		{
-			return p_scnManager.lock()->p_parentWindow.lock()->getRandomNumer(max, min);
+			return p_scnManager->parentWindow()->getRandomNumer(max, min);
 		}
 
 	}
