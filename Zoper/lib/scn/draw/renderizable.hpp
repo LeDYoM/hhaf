@@ -46,6 +46,9 @@ namespace lib
 				inline sf::CircleShape *const getAsCircleShape() const { __ASSERT(_activeDrawNode == ActiveDrawNode::CircleShape, "Node is not a circle shape"); return _drawNodeData.circleShape; }
 				inline lib::scn::draw::EllipseShape *const getAsEllipseShape() const { __ASSERT(_activeDrawNode == ActiveDrawNode::EllipseShape, "Node is not an ellipse shape"); return _drawNodeData.ellipseShape; }
 
+				// Some useful shortcuts
+				inline void setPosition(const sf::Vector2f &pos) { getAsTransformable()->setPosition(pos); }
+
 			private:
 				DrawNodeData _drawNodeData;
 				sf::Drawable *_drawNodeAsDrawable{ nullptr };
