@@ -31,30 +31,48 @@ namespace lib
 		return std::string();
 	}
 
-	bool Configuration::addConfigProperty(const std::string & name, const std::string & value)
+	std::string Configuration::addConfigProperty(const std::string & name, const std::string & value)
 	{
-		_data[name] = value;
-		return true;
+		if (_overwrite)
+		{
+			_data[name] = value;
+		}
+		else
+		{
+			auto iterator = _data.find(name);
+			if (iterator != _data.end())
+			{
+				return iterator->second;
+			}
+			else
+			{
+				_data.emplace(std::pair<std::string, std::string>(name, value));
+			}
+
+		}
+		return value;
 	}
 
-	bool Configuration::addConfigInt(const std::string & name, int value)
+	s32 Configuration::addConfigInt(const std::string & name, int value)
 	{
-		return addConfigProperty(name, std::to_string(value));
+		return std::stoi(addConfigProperty(name, std::to_string(value)));
 	}
 
 	bool Configuration::addConfigFile(const std::string & fileName)
 	{
 		std::ifstream file(fileName);
-		bool result{ false };
 
-		while (file)
+		if (file.is_open())
 		{
-			std::string line;
-			file >> line;
-			CMapLine lineData(split(line,"="));
-			result &= addConfigProperty(lineData.first, lineData.second);
+			while (file)
+			{
+				std::string line;
+				file >> line;
+				CMapLine lineData(split(line, "="));
+			}
+			return true;
 		}
-		return result;
+		return false;
 	}
 
 }
