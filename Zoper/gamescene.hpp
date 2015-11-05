@@ -2,12 +2,11 @@
 #define __GAMESCENE_HPP__
 
 #include "lib/scn/scene.hpp"
+#include "lib/compileconfig.hpp"
 #include "lib/types.hpp"
 #include "lib/board/itilescontroller.hpp"
 #include "lib/board/boardmodel.hpp"
 #include "lib/configuration.hpp"
-#include "lib/types.hpp"
-#include "lib/compileconfig.hpp"
 
 #include <array>
 
@@ -79,7 +78,8 @@ namespace zoper
 		lib::sptr<Player> p_player{ nullptr };
 
 		void addPlayer();
-
+		virtual void onKeyPressed(sf::Event::KeyEvent kEvent);
+		virtual void onKeyReleased(sf::Event::KeyEvent kEvent);
 
 		void tileAppeared(lib::u32 x, lib::u32 y, lib::board::WITilePointer tile);
 		void tileDissapeared(lib::u32 x, lib::u32 y);

@@ -175,12 +175,12 @@ namespace zoper
 		LOG_DEBUG("Adding player tile at " << _gameData.centerQuadx << "," << _gameData.centerQuady);
 		__ASSERT(!p_player, "Player already initialized");
 		// Create the player instance
-		p_player = lib::sptr<Player>(new Player(_gameData.centerQuadx,_gameData.centerQuady));
+		p_player = lib::sptr<Player>(new Player(_gameData.centerQuadx,_gameData.centerQuady,tileSize()));
 		// Set the position in the scene depending on the board position
 		p_player->getAsTransformable()->setPosition(board2Scene(p_player->boardX(), p_player->boardY()));
 
 		// Set the radius depending on the scene
-		p_player->getAsEllipseShape()->setSize(tileSize());
+//		p_player->getAsEllipseShape()->setSize(tileSize());
 
 		// Add it to the board and to the scene nodes
 		p_boardModel->setTile(p_player->boardX(), p_player->boardY(), std::dynamic_pointer_cast<lib::board::ITile>(addRenderizable(p_player)));
@@ -190,14 +190,24 @@ namespace zoper
 	{
 		LOG_DEBUG("Adding new tile at " << x << "," << y << " with value " << newToken);
 		// Create a new Tile instance
-		auto newTileToken = lib::sptr<Tile>(new Tile(lib::board::BoardTileData(newToken)));
+		auto newTileToken = lib::sptr<Tile>(new Tile(lib::board::BoardTileData(newToken),tileSize()));
 		// Set the position in the scene depending on the board position
 		newTileToken->getAsTransformable()->setPosition(board2Scene(x, y));
 
-		// Set the radius depending on the scene
-		newTileToken->getAsEllipseShape()->setSize(tileSize());
 		// Add it to the board and to the scene nodes
 		p_boardModel->setTile(x, y, std::dynamic_pointer_cast<lib::board::ITile>(addRenderizable(newTileToken)));
+	}
+
+	void GameScene::onKeyPressed(sf::Event::KeyEvent kEvent)
+	{
+		Scene::onKeyPressed(kEvent);
+		p_player->onKeyPressed(kEvent);
+	}
+
+	void GameScene::onKeyReleased(sf::Event::KeyEvent kEvent)
+	{
+		Scene::onKeyReleased(kEvent);
+		p_player->onKeyReleased(kEvent);
 	}
 
 	bool GameScene::pointInCenter(lib::s32 x, lib::s32 y) const
