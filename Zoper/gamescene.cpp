@@ -177,7 +177,7 @@ namespace zoper
 		// Create the player instance
 		p_player = lib::sptr<Player>(new Player(_gameData.centerQuadx,_gameData.centerQuady,tileSize()));
 		// Set the position in the scene depending on the board position
-		p_player->getAsTransformable()->setPosition(board2Scene(p_player->boardX(), p_player->boardY()));
+		p_player->setPosition(board2Scene(p_player->boardX(), p_player->boardY()));
 
 		// Set the radius depending on the scene
 //		p_player->getAsEllipseShape()->setSize(tileSize());
@@ -192,7 +192,7 @@ namespace zoper
 		// Create a new Tile instance
 		auto newTileToken = lib::sptr<Tile>(new Tile(lib::board::BoardTileData(newToken),tileSize()));
 		// Set the position in the scene depending on the board position
-		newTileToken->getAsTransformable()->setPosition(board2Scene(x, y));
+		newTileToken->setPosition(board2Scene(x, y));
 
 		// Add it to the board and to the scene nodes
 		p_boardModel->setTile(x, y, std::dynamic_pointer_cast<lib::board::ITile>(addRenderizable(newTileToken)));
