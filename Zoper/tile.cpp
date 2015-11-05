@@ -6,7 +6,7 @@ namespace zoper
 {
 	lib::u32 Tile::_tileCounter{ 0 };
 
-	Tile::Tile(lib::board::BoardTileData data) : lib::board::ITile{ data }, lib::scn::draw::Renderizable(std::string("tile")+std::to_string(_tileCounter),new lib::scn::draw::EllipseShape)
+	Tile::Tile(lib::board::BoardTileData data, const sf::Vector2f &size) : lib::board::ITile{ data }, lib::scn::draw::Renderizable(std::string("tile")+std::to_string(_tileCounter),new lib::scn::draw::EllipseShape)
 	{
 		sf::Color c;
 
@@ -36,6 +36,7 @@ namespace zoper
 		}
 		auto this_ = getAsEllipseShape();
 		this_->setFillColor(c);
+		this_->setSize(size);
 //		this_->setPointCount(5);
 
 	}
