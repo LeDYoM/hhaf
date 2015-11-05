@@ -101,6 +101,7 @@
     <ClCompile Include="lib\randomizer.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="tile.cpp" />
+    <ClCompile Include="utils.cpp" />
     <ClCompile Include="zoperprogramcontroller.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -123,6 +124,7 @@
     <ClInclude Include="lib\randomizer.hpp" />
     <ClInclude Include="player.hpp" />
     <ClInclude Include="tile.hpp" />
+    <ClInclude Include="utils.hpp" />
     <ClInclude Include="zoperprogramcontroller.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
