@@ -5,6 +5,8 @@
 #include <memory>
 #include "compileconfig.hpp"
 
+#include <SFML/System/Vector2.hpp>
+
 namespace lib
 {
 	template <typename T>
@@ -22,6 +24,12 @@ namespace lib
 	using s16 = int_fast16_t;
 	using u8 = uint8_t;
 	using s8 = int_fast8_t;
+
+	using vector2du32 = sf::Vector2u;
+	using vector2ds32 = sf::Vector2i;
+	using vector2df = sf::Vector2f;
+
+
 }
 
 

@@ -1,21 +1,13 @@
-#ifndef __UTILS_HPP__
-#define __UTILS_HPP__
+#ifndef __KEYMAPPING_HPP__
+#define __KEYMAPPING_HPP__
 
 #include <SFML/Window/Keyboard.hpp>
 #include "lib/configuration.hpp"
+#include "direction.hpp"
 #include <array>
 
 namespace zoper
 {
-	enum Direction
-	{
-		Left = 0,
-		Right = 1,
-		Up = 2,
-		Down = 3,
-		Total = 4
-	};
-
 	class KeyMapping : public lib::Configuration
 	{
 	public:
@@ -27,7 +19,8 @@ namespace zoper
 
 		Direction getDirectionFromKey(sf::Keyboard::Key k) const;
 	private:
-		std::array<sf::Keyboard::Key,Direction::Total+1> _keys;
+		std::array<sf::Keyboard::Key, Direction::Total + 1> _keys;
 	};
 }
+
 #endif

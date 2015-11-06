@@ -18,12 +18,12 @@ namespace zoper
 	GameScene::GameScene()
 		: Scene("GameScene")
 	{
-		_gameData.width = 18;
-		_gameData.height = 12;
-		_gameData.centerQuadx = 7;
-		_gameData.centerQuady = 4;
-		_gameData.centerQuadw = 4;
-		_gameData.centerQuadh = 4;
+		_gameData.size.x = 18;
+		_gameData.size.y = 12;
+		_gameData.centerRect.begin.x = 7;
+		_gameData.centerRect.begin.y = 4;
+		_gameData.centerRect.size.x = 4;
+		_gameData.centerRect.size.y = 4;
 		_gameData.generateTokenZones();
 	}
 
@@ -43,7 +43,7 @@ namespace zoper
 
 	void GameScene::onEnterScene()
 	{
-		p_boardModel = lib::sptr<lib::board::BoardModel>(new lib::board::BoardModel(_gameData.width,_gameData.height,this));
+		p_boardModel = lib::sptr<lib::board::BoardModel>(new lib::board::BoardModel(_gameData.size,this));
 
 		font.loadFromFile("resources/fonts/sansation.ttf");
 
@@ -94,39 +94,39 @@ namespace zoper
 	{
 		// From left to right
 		_tokenZones[0].x1 = 0;
-		_tokenZones[0].y1 = centerQuady;
-		_tokenZones[0].x2 = centerQuadx - 1;
-		_tokenZones[0].y2 = (centerQuady + centerQuadh) - 1;
+		_tokenZones[0].y1 = centerRect.begin.y;
+		_tokenZones[0].x2 = centerRect.begin.x - 1;
+		_tokenZones[0].y2 = (centerRect.begin.y + centerRect.size.y) - 1;
 		_tokenZones[0].horizontal = true;
 		_tokenZones[0].increment = true;
 
 		// From top to bottom
-		_tokenZones[1].x1 = centerQuadx;
+		_tokenZones[1].x1 = centerRect.begin.x;
 		_tokenZones[1].y1 = 0;
-		_tokenZones[1].x2 = (centerQuadx + centerQuadw) - 1;
-		_tokenZones[1].y2 = centerQuady - 1;
+		_tokenZones[1].x2 = (centerRect.begin.x + centerRect.size.x) - 1;
+		_tokenZones[1].y2 = centerRect.begin.y - 1;
 		_tokenZones[1].horizontal = false;
 		_tokenZones[1].increment = true;
 
 		// From right to left
-		_tokenZones[2].x1 = width - 1;
-		_tokenZones[2].y1 = centerQuady ;
-		_tokenZones[2].x2 = (centerQuadx + centerQuadw);
-		_tokenZones[2].y2 = (centerQuady + centerQuadh) - 1;
+		_tokenZones[2].x1 = size.x - 1;
+		_tokenZones[2].y1 = centerRect.begin.y;
+		_tokenZones[2].x2 = (centerRect.begin.x + centerRect.size.x);
+		_tokenZones[2].y2 = (centerRect.begin.y + centerRect.size.y) - 1;
 		_tokenZones[2].horizontal = true;
 		_tokenZones[2].increment = false;
 
 		// From bottom to top
-		_tokenZones[3].x1 = centerQuadx;
-		_tokenZones[3].y1 = height - 1;
-		_tokenZones[3].x2 = (centerQuadx + centerQuadw) - 1;
-		_tokenZones[3].y2 = centerQuady + centerQuadh;
+		_tokenZones[3].x1 = centerRect.begin.x;
+		_tokenZones[3].y1 = size.y - 1;
+		_tokenZones[3].x2 = (centerRect.begin.x + centerRect.size.x) - 1;
+		_tokenZones[3].y2 = centerRect.begin.y + centerRect.size.y;
 		_tokenZones[3].horizontal = false;
 		_tokenZones[3].increment = false;
 
 		for (lib::u32 i = 0; i < NUMWAYS; ++i)
 		{
-			_tokenZones[i].size = _tokenZones[i].horizontal ? centerQuadh : centerQuadw;
+			_tokenZones[i].size = _tokenZones[i].horizontal ? centerRect.size.y : centerRect.size.x;
 			_tokenZones[i].incX = _tokenZones[i].horizontal ? (_tokenZones[i].increment ? -1 : 1) : 0;
 			_tokenZones[i].incY = _tokenZones[i].horizontal ? 0 : (_tokenZones[i].increment ? -1 : 1);
 		}
@@ -138,7 +138,7 @@ namespace zoper
 
 		LOG_DEBUG("NextTokenPart: " << std::to_string(_nextTokenPart));
 		LOG_DEBUG("x1: " << currentTokenZone.x1 << " y1: " << currentTokenZone.y1 << " x2: " << currentTokenZone.x2 << " y2: " << currentTokenZone.y2);
-		LOG_DEBUG("distX: " << currentTokenZone.distX() << " distY: " << currentTokenZone.distY());
+//		LOG_DEBUG("distX: " << currentTokenZone.distX() << " distY: " << currentTokenZone.distY());
 		LOG_DEBUG("horizontal: " << currentTokenZone.horizontal << " increment: " << currentTokenZone.increment);
 
 		lib::u32 newToken = getRandomNumer(NUMTOKENS);
@@ -157,14 +157,14 @@ namespace zoper
 
 		// Now, we have the data for the new token generated, but first, lets start to move the row or col.
 		for (;
-			p_boardModel->validCoords(x, y) && !pointInCenter(x, y);
+			p_boardModel->validCoords(lib::vector2du32(x, y)) && !pointInCenter(lib::vector2ds32(x, y));
 			x += currentTokenZone.incX, y += currentTokenZone.incY)
 		{
-			p_boardModel->moveTile(x, y, x - currentTokenZone.incX, y - currentTokenZone.incY, true);
+			p_boardModel->moveTile(lib::vector2du32(x, y), lib::vector2du32(x - currentTokenZone.incX, y - currentTokenZone.incY), true);
 		}
 
 		// Set the new token
-		addNewToken(newX, newY, newToken);
+		addNewToken(lib::vector2du32{ newX, newY }, newToken);
 		_nextTokenPart = (_nextTokenPart + 1) % NUMWAYS;
 
 		_debugDisplayBoard();
@@ -172,30 +172,30 @@ namespace zoper
 
 	void GameScene::addPlayer()
 	{
-		LOG_DEBUG("Adding player tile at " << _gameData.centerQuadx << "," << _gameData.centerQuady);
+		LOG_DEBUG("Adding player tile at " << _gameData.centerRect.begin.x << "," << _gameData.centerRect.begin.y);
 		__ASSERT(!p_player, "Player already initialized");
 		// Create the player instance
-		p_player = lib::sptr<Player>(new Player(_gameData.centerQuadx,_gameData.centerQuady,tileSize()));
+		p_player = lib::sptr<Player>(new Player(lib::vector2du32(_gameData.centerRect.begin),tileSize()));
 		// Set the position in the scene depending on the board position
-		p_player->setPosition(board2Scene(p_player->boardX(), p_player->boardY()));
+		p_player->setPosition(board2Scene(p_player->boardPosition()));
 
 		// Set the radius depending on the scene
 //		p_player->getAsEllipseShape()->setSize(tileSize());
 
 		// Add it to the board and to the scene nodes
-		p_boardModel->setTile(p_player->boardX(), p_player->boardY(), std::dynamic_pointer_cast<lib::board::ITile>(addRenderizable(p_player)));
+		p_boardModel->setTile(p_player->boardPosition(), std::dynamic_pointer_cast<lib::board::ITile>(addRenderizable(p_player)));
 	}
 
-	void GameScene::addNewToken(lib::u32 x, lib::u32 y, lib::u32 newToken)
+	void GameScene::addNewToken(const lib::vector2du32 &position, lib::u32 newToken)
 	{
-		LOG_DEBUG("Adding new tile at " << x << "," << y << " with value " << newToken);
+		LOG_DEBUG("Adding new tile at " << position.x << "," << position.y << " with value " << newToken);
 		// Create a new Tile instance
 		auto newTileToken = lib::sptr<Tile>(new Tile(lib::board::BoardTileData(newToken),tileSize()));
 		// Set the position in the scene depending on the board position
-		newTileToken->setPosition(board2Scene(x, y));
+		newTileToken->setPosition(board2Scene(position));
 
 		// Add it to the board and to the scene nodes
-		p_boardModel->setTile(x, y, std::dynamic_pointer_cast<lib::board::ITile>(addRenderizable(newTileToken)));
+		p_boardModel->setTile(position, std::dynamic_pointer_cast<lib::board::ITile>(addRenderizable(newTileToken)));
 	}
 
 	void GameScene::onKeyPressed(sf::Event::KeyEvent kEvent)
@@ -210,38 +210,38 @@ namespace zoper
 		p_player->onKeyReleased(kEvent);
 	}
 
-	bool GameScene::pointInCenter(lib::s32 x, lib::s32 y) const
+	bool GameScene::pointInCenter(const lib::vector2ds32 &position) const
 	{
-		if (x < static_cast<lib::s32>(_gameData.centerQuadx) || y < static_cast<lib::s32>(_gameData.centerQuady))
+		if (position.x < static_cast<lib::s32>(_gameData.centerRect.begin.x) || position.y < static_cast<lib::s32>(_gameData.centerRect.begin.y))
 			return false;
 
-		if (x >= static_cast<lib::s32>(_gameData.centerQuadx + _gameData.centerQuadw) || y >= static_cast<lib::s32>(_gameData.centerQuady + _gameData.centerQuadh))
+		if (position.x >= static_cast<lib::s32>(_gameData.centerRect.begin.x + _gameData.centerRect.size.x) || position.y >= static_cast<lib::s32>(_gameData.centerRect.begin.y + _gameData.centerRect.size.y))
 			return false;
 
 		return true;
 	}
 
-	const sf::Vector2f GameScene::board2Scene(lib::u32 x, lib::u32 y) const
+	const lib::vector2df GameScene::board2Scene(const lib::vector2du32 &bPosition) const
 	{
 		const sf::View &view = *(this->getView());
-		sf::Vector2f result{ view.getSize().x / static_cast<float>(p_boardModel->width()), view.getSize().y / static_cast<float>(p_boardModel->height()) };
-		return sf::Vector2f{ result.x * x, result.y *y };
+		sf::Vector2f result{ view.getSize().x / static_cast<float>(p_boardModel->size().x), view.getSize().y / static_cast<float>(p_boardModel->size().y) };
+		return lib::vector2df{ result.x * bPosition.x, result.y * bPosition.y };
 	}
 
-	const sf::Vector2f GameScene::tileSize() const
+	const lib::vector2df GameScene::tileSize() const
 	{
-		return board2Scene(1, 1);
+		return board2Scene(lib::vector2du32( 1, 1 ));
 	}
 
 	void GameScene::_debugDisplayBoard() const
 	{
-		for (lib::u32 y = 0; y < _gameData.height; ++y)
+		for (lib::u32 y = 0; y < _gameData.size.y; ++y)
 		{
 			std::string temp;
-			for (lib::u32 x = 0; x < _gameData.width; ++x)
+			for (lib::u32 x = 0; x < _gameData.size.x; ++x)
 			{
 				std::string chTemp;
-				auto lp_tile = p_boardModel->getTile(x, y).lock();
+				auto lp_tile = p_boardModel->getTile(lib::vector2du32(x, y)).lock();
 				if (lp_tile)
 				{
 					chTemp = std::to_string(lp_tile->getData());
@@ -249,7 +249,7 @@ namespace zoper
 				else
 				{
 					chTemp = "*";
-					if (pointInCenter(x, y))
+					if (pointInCenter(lib::vector2ds32(x, y)))
 						chTemp = "C";
 				}
 
@@ -259,36 +259,36 @@ namespace zoper
 		}
 	}
 
-	void GameScene::tileAppeared(lib::u32 x, lib::u32 y, lib::board::WITilePointer tile)
+	void GameScene::tileAppeared(const lib::vector2du32 &position, lib::board::WITilePointer tile)
 	{
 	}
 
-	void GameScene::tileDissapeared(lib::u32 x, lib::u32 y)
+	void GameScene::tileDissapeared(const lib::vector2du32 &position)
 	{
 
 	}
 
-	void GameScene::tileSet(lib::u32 x, lib::u32 y, lib::board::WITilePointer nTile)
+	void GameScene::tileSet(const lib::vector2du32 &position, lib::board::WITilePointer nTile)
 	{
 		lib::sptr<lib::board::ITile> snTile{ nTile };
 
 		if (!snTile)
 		{
 			// Tile dissappeared
-			tileDissapeared(x, y);
+			tileDissapeared(position);
 		}
 		else
 		{
 			// Tile appeared
-			tileAppeared(x, y, nTile);
+			tileAppeared(position, nTile);
 		}
 
 		// The rest (basically set from 0 to 0) should be ignored
 	}
 
-	void GameScene::tileMoved(lib::u32 xSource, lib::u32 ySource, lib::u32 xDest, lib::u32 yDest, lib::board::WITilePointer tile)
+	void GameScene::tileMoved(const lib::vector2du32 &source, const lib::vector2du32 &dest, lib::board::WITilePointer tile)
 	{
 		auto ztile = std::dynamic_pointer_cast<Tile>(tile.lock());
-		ztile->getAsTransformable()->setPosition(board2Scene(xDest, yDest));
+		ztile->getAsTransformable()->setPosition(board2Scene(dest));
 	}
 }

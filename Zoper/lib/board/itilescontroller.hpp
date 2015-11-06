@@ -30,8 +30,8 @@ namespace lib
 			ITilesController() {}
 			virtual ~ITilesController() {}
 
-			virtual void tileSet(u32 x, u32 y, WITilePointer nTile) = 0;
-			virtual void tileMoved(u32 xSource, u32 ySource, u32 xDest, u32 yDest, WITilePointer tile) = 0;
+			virtual void tileSet(const vector2du32 &position, WITilePointer nTile) = 0;
+			virtual void tileMoved(const vector2du32 &position, const vector2du32 &dest, WITilePointer tile) = 0;
 
 		};
 	}

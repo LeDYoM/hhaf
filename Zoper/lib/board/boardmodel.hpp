@@ -13,21 +13,20 @@ namespace lib
 		class BoardModel
 		{
 		public:
-			BoardModel(u32 w, u32 h, ITilesController *tController = nullptr);
+			BoardModel(const vector2du32 &size, ITilesController *tController = nullptr);
 			virtual ~BoardModel();
 
-			WITilePointer getTile(u32 x, u32 y) const;
-			inline bool tileEmpty(u32 x, u32 y) const { return getTile(x, y).lock() == nullptr; }
-			void setTile(u32 x, u32 y, WITilePointer newTile);
-			void moveTile(u32 xSource, u32 ySource, u32 xDest, u32 yDest, bool ignoreEmptySource = false);
+			WITilePointer getTile(const vector2du32 &position) const;
+			inline bool tileEmpty(const vector2du32 &position) const { return getTile(position).lock() == nullptr; }
+			void setTile(const vector2du32 &position, WITilePointer newTile);
+			void moveTile(const vector2du32 &source, const vector2du32 &dest, bool ignoreEmptySource = false);
 
-			inline bool validCoords(u32 x, u32 y) const { return _tiles.size() > x && _tiles[0].size() > y; }
-			inline bool validCoords(s32 x, s32 y) const { return x >= 0 && y >= 0 && validCoords(static_cast<u32>(x), static_cast<u32>(y)); }
-			inline u32 width() const { return _tiles.size(); }
-			inline u32 height() const { return _tiles[0].size(); }
+			inline bool validCoords(const vector2du32 &tPosition) const { return _tiles.size() > tPosition.x && _tiles[0].size() > tPosition.y; }
+			inline bool validCoords(const vector2ds32 &tPosition) const { return tPosition.x >= 0 && tPosition.y >= 0 && validCoords(vector2du32(static_cast<u32>(tPosition.x), static_cast<u32>(tPosition.y))); }
+			inline vector2du32 size() const { return vector2du32{ _tiles.size(),_tiles[0].size() }; }
 
 		private:
-			void _setTile(u32 x, u32 y, WITilePointer newTile);
+			void _setTile(const vector2du32 &position, WITilePointer newTile);
 			std::vector<std::vector<WITilePointer>> _tiles;
 			ITilesController *p_tController{ nullptr };
 		};

@@ -85,6 +85,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="keymapping.cpp" />
     <ClCompile Include="lib\scn\draw\ellipseshape.cpp" />
     <ClCompile Include="lib\configuration.cpp" />
     <ClCompile Include="lib\board\boardmodel.cpp" />
@@ -101,10 +102,11 @@
     <ClCompile Include="lib\randomizer.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="tile.cpp" />
-    <ClCompile Include="utils.cpp" />
     <ClCompile Include="zoperprogramcontroller.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="direction.hpp" />
+    <ClInclude Include="keymapping.hpp" />
     <ClInclude Include="lib\scn\draw\ellipseshape.hpp" />
     <ClInclude Include="lib\configuration.hpp" />
     <ClInclude Include="lib\board\boardmodel.hpp" />
@@ -124,7 +126,6 @@
     <ClInclude Include="lib\randomizer.hpp" />
     <ClInclude Include="player.hpp" />
     <ClInclude Include="tile.hpp" />
-    <ClInclude Include="utils.hpp" />
     <ClInclude Include="zoperprogramcontroller.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

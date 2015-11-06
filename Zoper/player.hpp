@@ -4,19 +4,19 @@
 #include "lib/board/itilescontroller.hpp"
 #include "lib/scn/draw/renderizable.hpp"
 
-#include "utils.hpp"
+#include "keymapping.hpp"
+#include "direction.hpp"
 
 namespace zoper
 {
 	class Player : public lib::board::ITile, public lib::scn::draw::Renderizable, public KeyMapping
 	{
 	public:
-		Player(lib::u32 x,lib::u32 y, const sf::Vector2f &size);
+		Player(const lib::vector2du32 &bPosition, const sf::Vector2f &size);
 		virtual ~Player();
 
-		void setBoardPosition(lib::u32 x, lib::u32 y);
-		inline lib::u32 boardX() const { return _x; }
-		inline lib::u32 boardY() const { return _y; }
+		void setBoardPosition(const lib::vector2du32 &np);
+		inline lib::vector2du32 boardPosition() const { return _boardPosition; }
 
 		virtual bool onKeyPressed(sf::Event::KeyEvent kEvent);
 		virtual bool onKeyReleased(sf::Event::KeyEvent kEvent);
@@ -24,8 +24,7 @@ namespace zoper
 	private:
 		void updateGraphicalDirection();
 
-		lib::u32 _x;
-		lib::u32 _y;
+		lib::vector2du32 _boardPosition;
 		Direction playerDirection;
 	};
 }

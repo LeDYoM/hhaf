@@ -5,7 +5,7 @@
 
 namespace zoper
 {
-	Player::Player(lib::u32 x, lib::u32 y, const sf::Vector2f &size)
+	Player::Player(const lib::vector2du32 &bPosition, const sf::Vector2f &size)
 		:lib::board::ITile{ PLAYER_TOKEN }, lib::scn::draw::Renderizable{ "player", new lib::scn::draw::EllipseShape }
 	{
 		auto this_ = getAsEllipseShape();
@@ -13,22 +13,23 @@ namespace zoper
 		this_->setFillColor(sf::Color::White);
 		this_->setSize(size);
 
-		setBoardPosition(x, y);
+		setBoardPosition(bPosition);
 		playerDirection = Direction::Up;
 	}
 
 	Player::~Player()
 	{
 	}
-	void Player::setBoardPosition(lib::u32 x, lib::u32 y)
+
+	void Player::setBoardPosition(const lib::vector2du32 &np)
 	{
-		_x = x;
-		_y = y;
+		_boardPosition = np;
 	}
+
 	bool Player::onKeyPressed(sf::Event::KeyEvent kEvent)
 	{
 		auto dir = getDirectionFromKey(kEvent.code);
-		if (dir != Direction::Total)
+		if (dir.isValid())
 		{
 			if (dir != playerDirection)
 			{

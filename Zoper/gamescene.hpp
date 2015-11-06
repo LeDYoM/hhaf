@@ -20,12 +20,14 @@ namespace zoper
 
 	struct GameData
 	{
-		lib::u32 width{ 0 };
-		lib::u32 height{ 0 };
-		lib::u32 centerQuadx{ 0 };
-		lib::u32 centerQuady{ 0 };
-		lib::u32 centerQuadw{ 0 };
-		lib::u32 centerQuadh{ 0 };
+		lib::vector2du32 size{ 0u, 0u };
+
+		struct Rect
+		{
+			lib::vector2du32 begin;
+			lib::vector2du32 size;
+		};
+		Rect centerRect;
 
 		struct TokenZone
 		{
@@ -33,8 +35,6 @@ namespace zoper
 			lib::u32 x1, y1, x2, y2;
 			bool horizontal;
 			bool increment;
-			inline lib::s32 distX() const { return x2 - x1; }
-			inline lib::s32 distY() const { return y2 - y1; }
 
 			// Filled dynamically
 			lib::u32 size;
@@ -64,10 +64,10 @@ namespace zoper
 		inline const GameData &getGameData() const { return _gameData; };
 	private:
 		void generateNextToken();
-		void addNewToken(lib::u32 x, lib::u32 y, lib::u32 newToken);
-		bool pointInCenter(lib::s32 x, lib::s32 y) const;
-		const sf::Vector2f board2Scene(lib::u32 x, lib::u32 y) const;
-		const sf::Vector2f tileSize() const;
+		void addNewToken(const lib::vector2du32 &tPosition, lib::u32 newToken);
+		bool pointInCenter(const lib::vector2ds32 &tPosition) const;
+		const lib::vector2df board2Scene(const lib::vector2du32 &bPosition) const;
+		const lib::vector2df tileSize() const;
 
 		void _debugDisplayBoard() const;
 		lib::sptr<lib::board::BoardModel> p_boardModel{ nullptr };
@@ -81,12 +81,12 @@ namespace zoper
 		virtual void onKeyPressed(sf::Event::KeyEvent kEvent);
 		virtual void onKeyReleased(sf::Event::KeyEvent kEvent);
 
-		void tileAppeared(lib::u32 x, lib::u32 y, lib::board::WITilePointer tile);
-		void tileDissapeared(lib::u32 x, lib::u32 y);
+		void tileAppeared(const lib::vector2du32 &position, lib::board::WITilePointer tile);
+		void tileDissapeared(const lib::vector2du32 &position);
 
 		// Inherited via ITilesController
-		virtual void tileSet(lib::u32 x, lib::u32 y, lib::board::WITilePointer nTile) override;
-		virtual void tileMoved(lib::u32 xSource, lib::u32 ySource, lib::u32 xDest, lib::u32 yDest, lib::board::WITilePointer tile) override;
+		virtual void tileSet(const lib::vector2du32 &position, lib::board::WITilePointer nTile) override;
+		virtual void tileMoved(const lib::vector2du32 &source, const lib::vector2du32 &dest, lib::board::WITilePointer tile) override;
 
 	};
 }
