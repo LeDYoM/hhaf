@@ -2,6 +2,7 @@
 #define __DIRECTION_HPP__
 
 #include "lib/types.hpp"
+#include "lib/log.hpp"
 
 namespace zoper
 {
@@ -27,7 +28,36 @@ namespace zoper
 
 		DirectionData value() const { return data; }
 		bool isValid() const { return data <= Invalid; }
+
 		static const lib::u8 Total = DirectionData::Invalid;
+
+		lib::Vector2ds8 DirectionVector(const lib::u32 scale = 1) const
+		{
+			lib::Vector2ds8 result{ 0,0 };
+
+			switch (data)
+			{
+			case DirectionData::Left:
+				result = lib::Vector2ds8(-1, 0);
+				break;
+			case DirectionData::Right:
+				result = lib::Vector2ds8(1, 0);
+				break;
+			case DirectionData::Up:
+				result = lib::Vector2ds8(0, -1);
+				break;
+			case DirectionData::Down:
+				result = lib::Vector2ds8(0, 1);
+				break;
+			case DirectionData::Invalid:
+			default:
+				LOG_ERROR("Invalid direction. Cannot convert");
+			}
+
+			result *= (lib::s8)scale;
+			return result;
+		}
+
 	private:
 		DirectionData data;
 	};

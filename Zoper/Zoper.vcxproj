@@ -85,6 +85,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="direction.cpp" />
     <ClCompile Include="keymapping.cpp" />
     <ClCompile Include="lib\scn\draw\ellipseshape.cpp" />
     <ClCompile Include="lib\configuration.cpp" />

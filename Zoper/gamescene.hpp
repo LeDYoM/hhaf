@@ -22,12 +22,7 @@ namespace zoper
 	{
 		lib::vector2du32 size{ 0u, 0u };
 
-		struct Rect
-		{
-			lib::vector2du32 begin;
-			lib::vector2du32 size;
-		};
-		Rect centerRect;
+		lib::Rect centerRect;
 
 		struct TokenZone
 		{
