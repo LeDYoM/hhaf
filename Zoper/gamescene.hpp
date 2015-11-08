@@ -27,7 +27,7 @@ namespace zoper
 		struct TokenZone
 		{
 			// Filled statically
-			lib::u32 x1, y1, x2, y2;
+			lib::Rect zone;
 			bool horizontal;
 			bool increment;
 

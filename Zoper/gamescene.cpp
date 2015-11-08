@@ -93,34 +93,34 @@ namespace zoper
 	void GameData::generateTokenZones()
 	{
 		// From left to right
-		_tokenZones[0].x1 = 0;
-		_tokenZones[0].y1 = centerRect.begin.y;
-		_tokenZones[0].x2 = centerRect.begin.x - 1;
-		_tokenZones[0].y2 = (centerRect.begin.y + centerRect.size.y) - 1;
+		_tokenZones[0].zone.begin.x = 0;
+		_tokenZones[0].zone.begin.y = centerRect.begin.y;
+		_tokenZones[0].zone.size.x = centerRect.begin.x - 1;
+		_tokenZones[0].zone.size.y = (centerRect.begin.y + centerRect.size.y) - 1;
 		_tokenZones[0].horizontal = true;
 		_tokenZones[0].increment = true;
 
 		// From top to bottom
-		_tokenZones[1].x1 = centerRect.begin.x;
-		_tokenZones[1].y1 = 0;
-		_tokenZones[1].x2 = (centerRect.begin.x + centerRect.size.x) - 1;
-		_tokenZones[1].y2 = centerRect.begin.y - 1;
+		_tokenZones[1].zone.begin.x = centerRect.begin.x;
+		_tokenZones[1].zone.begin.y = 0;
+		_tokenZones[1].zone.size.x = (centerRect.begin.x + centerRect.size.x) - 1;
+		_tokenZones[1].zone.size.y = centerRect.begin.y - 1;
 		_tokenZones[1].horizontal = false;
 		_tokenZones[1].increment = true;
 
 		// From right to left
-		_tokenZones[2].x1 = size.x - 1;
-		_tokenZones[2].y1 = centerRect.begin.y;
-		_tokenZones[2].x2 = (centerRect.begin.x + centerRect.size.x);
-		_tokenZones[2].y2 = (centerRect.begin.y + centerRect.size.y) - 1;
+		_tokenZones[2].zone.begin.x = size.x - 1;
+		_tokenZones[2].zone.begin.y = centerRect.begin.y;
+		_tokenZones[2].zone.size.x = (centerRect.begin.x + centerRect.size.x);
+		_tokenZones[2].zone.size.y = (centerRect.begin.y + centerRect.size.y) - 1;
 		_tokenZones[2].horizontal = true;
 		_tokenZones[2].increment = false;
 
 		// From bottom to top
-		_tokenZones[3].x1 = centerRect.begin.x;
-		_tokenZones[3].y1 = size.y - 1;
-		_tokenZones[3].x2 = (centerRect.begin.x + centerRect.size.x) - 1;
-		_tokenZones[3].y2 = centerRect.begin.y + centerRect.size.y;
+		_tokenZones[3].zone.begin.x = centerRect.begin.x;
+		_tokenZones[3].zone.begin.y = size.y - 1;
+		_tokenZones[3].zone.size.x = (centerRect.begin.x + centerRect.size.x) - 1;
+		_tokenZones[3].zone.size.y = centerRect.begin.y + centerRect.size.y;
 		_tokenZones[3].horizontal = false;
 		_tokenZones[3].increment = false;
 
@@ -137,7 +137,8 @@ namespace zoper
 		const GameData::TokenZone &currentTokenZone = _gameData._tokenZones[_nextTokenPart];
 
 		LOG_DEBUG("NextTokenPart: " << std::to_string(_nextTokenPart));
-		LOG_DEBUG("x1: " << currentTokenZone.x1 << " y1: " << currentTokenZone.y1 << " x2: " << currentTokenZone.x2 << " y2: " << currentTokenZone.y2);
+		LOG_DEBUG("x1: " << currentTokenZone.zone.begin.x << " y1: " << currentTokenZone.zone.begin.y << 
+			" x2: " << currentTokenZone.zone.size.x << " y2: " << currentTokenZone.zone.size.y);
 //		LOG_DEBUG("distX: " << currentTokenZone.distX() << " distY: " << currentTokenZone.distY());
 		LOG_DEBUG("horizontal: " << currentTokenZone.horizontal << " increment: " << currentTokenZone.increment);
 
@@ -145,12 +146,12 @@ namespace zoper
 
 		lib::u32 sizep = getRandomNumer(currentTokenZone.size);
 
-		lib::u32 newX = currentTokenZone.x1 + (currentTokenZone.horizontal ? 0 : sizep);
-		lib::u32 newY = currentTokenZone.y1 + (currentTokenZone.horizontal ? sizep : 0);
+		lib::u32 newX = currentTokenZone.zone.begin.x + (currentTokenZone.horizontal ? 0 : sizep);
+		lib::u32 newY = currentTokenZone.zone.begin.y + (currentTokenZone.horizontal ? sizep : 0);
 		LOG_DEBUG("New tile pos: " << newX << "," << newY);
 
-		lib::s32 x = currentTokenZone.horizontal ? currentTokenZone.x2 : newX;
-		lib::s32 y = currentTokenZone.horizontal ? newY : currentTokenZone.y2;
+		lib::s32 x = currentTokenZone.horizontal ? currentTokenZone.zone.size.x : newX;
+		lib::s32 y = currentTokenZone.horizontal ? newY : currentTokenZone.zone.size.y;
 
 		LOG_DEBUG("Starting at: " << x << "," << y);
 		LOG_DEBUG("increment: " << currentTokenZone.incX << "," << currentTokenZone.incY);
