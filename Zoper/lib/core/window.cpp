@@ -54,6 +54,9 @@ namespace lib
 				setTitle("FPS:" + std::to_string(p_wPrivate->lastFps));
 			}
 			++(p_wPrivate->currentFps);
+
+			clear();
+
 			sf::Event event;
 			while (pollEvent(event))
 			{

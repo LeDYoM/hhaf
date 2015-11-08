@@ -175,7 +175,7 @@ namespace zoper
 		LOG_DEBUG("Adding player tile at " << _gameData.centerRect.begin.x << "," << _gameData.centerRect.begin.y);
 		__ASSERT(!p_player, "Player already initialized");
 		// Create the player instance
-		p_player = lib::sptr<Player>(new Player(lib::vector2du32(_gameData.centerRect.begin),tileSize(),_gameData.centerRect));
+		p_player = lib::sptr<Player>(new Player(lib::vector2du32(_gameData.centerRect.begin),tileSize()));
 		// Set the position in the scene depending on the board position
 		p_player->setPosition(board2Scene(p_player->boardPosition()));
 
@@ -201,13 +201,33 @@ namespace zoper
 	void GameScene::onKeyPressed(sf::Event::KeyEvent kEvent)
 	{
 		Scene::onKeyPressed(kEvent);
-		p_player->onKeyPressed(kEvent);
+		auto dir = p_player->getDirectionFromKey(kEvent.code);
+		if (dir.isValid())
+		{
+			if (dir != p_player->currentDirection())
+			{
+				p_player->setCurrentDirection(dir);
+			}
+			movePlayer(dir);
+		}
+	}
+
+	void GameScene::movePlayer(const Direction & dir)
+	{
+		__ASSERT(dir.isValid(), "Invalid direction passed to move");
+		auto dVector = dir.DirectionVector();
+		auto nPosition = lib::vector2ds32(p_player->boardPosition().x, p_player->boardPosition().y) + lib::vector2ds32(dVector.x, dVector.y);
+		if (pointInCenter(nPosition))
+		{
+			p_boardModel->moveTile(p_player->boardPosition(), lib::vector2du32(nPosition.x,nPosition.y));
+			p_player->setBoardPosition(lib::vector2du32(nPosition.x, nPosition.y));
+
+		}
 	}
 
 	void GameScene::onKeyReleased(sf::Event::KeyEvent kEvent)
 	{
 		Scene::onKeyReleased(kEvent);
-		p_player->onKeyReleased(kEvent);
 	}
 
 	bool GameScene::pointInCenter(const lib::vector2ds32 &position) const
@@ -288,7 +308,14 @@ namespace zoper
 
 	void GameScene::tileMoved(const lib::vector2du32 &source, const lib::vector2du32 &dest, lib::board::WITilePointer tile)
 	{
-		auto ztile = std::dynamic_pointer_cast<Tile>(tile.lock());
-		ztile->getAsTransformable()->setPosition(board2Scene(dest));
+		
+		if (auto ztile = std::dynamic_pointer_cast<Tile>(tile.lock()))
+		{
+			ztile->getAsTransformable()->setPosition(board2Scene(dest));
+		}
+		else if (auto ztile = std::dynamic_pointer_cast<Player>(tile.lock()))
+		{
+			ztile->getAsTransformable()->setPosition(board2Scene(dest));
+		}
 	}
 }

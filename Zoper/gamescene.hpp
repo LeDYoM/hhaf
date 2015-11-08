@@ -7,7 +7,7 @@
 #include "lib/board/itilescontroller.hpp"
 #include "lib/board/boardmodel.hpp"
 #include "lib/configuration.hpp"
-
+#include "direction.hpp"
 #include <array>
 
 #define NUMWAYS			4
@@ -57,12 +57,15 @@ namespace zoper
 
 		inline void setGameData(const GameData &gData) { _gameData = gData; }
 		inline const GameData &getGameData() const { return _gameData; };
+
 	private:
 		void generateNextToken();
 		void addNewToken(const lib::vector2du32 &tPosition, lib::u32 newToken);
 		bool pointInCenter(const lib::vector2ds32 &tPosition) const;
 		const lib::vector2df board2Scene(const lib::vector2du32 &bPosition) const;
 		const lib::vector2df tileSize() const;
+
+		void movePlayer(const Direction &dir);
 
 		void _debugDisplayBoard() const;
 		lib::sptr<lib::board::BoardModel> p_boardModel{ nullptr };
