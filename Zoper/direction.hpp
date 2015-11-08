@@ -31,6 +31,8 @@ namespace zoper
 
 		static const lib::u8 Total = DirectionData::Invalid;
 
+		inline bool isHorizontal() const { return data == DirectionData::Left || data == DirectionData::Right; }
+
 		lib::Vector2ds8 DirectionVector(const lib::u32 scale = 1) const
 		{
 			lib::Vector2ds8 result{ 0,0 };

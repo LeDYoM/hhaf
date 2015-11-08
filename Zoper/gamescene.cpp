@@ -97,38 +97,38 @@ namespace zoper
 		_tokenZones[0].zone.begin.y = centerRect.begin.y;
 		_tokenZones[0].zone.size.x = centerRect.begin.x - 1;
 		_tokenZones[0].zone.size.y = (centerRect.begin.y + centerRect.size.y) - 1;
-		_tokenZones[0].horizontal = true;
-		_tokenZones[0].increment = true;
+		_tokenZones[0].direction = Direction::DirectionData::Right;
+//		_tokenZones[0].increment = true;
 
 		// From top to bottom
 		_tokenZones[1].zone.begin.x = centerRect.begin.x;
 		_tokenZones[1].zone.begin.y = 0;
 		_tokenZones[1].zone.size.x = (centerRect.begin.x + centerRect.size.x) - 1;
 		_tokenZones[1].zone.size.y = centerRect.begin.y - 1;
-		_tokenZones[1].horizontal = false;
-		_tokenZones[1].increment = true;
+		_tokenZones[1].direction = Direction::DirectionData::Down;
+//		_tokenZones[1].increment = true;
 
 		// From right to left
 		_tokenZones[2].zone.begin.x = size.x - 1;
 		_tokenZones[2].zone.begin.y = centerRect.begin.y;
 		_tokenZones[2].zone.size.x = (centerRect.begin.x + centerRect.size.x);
 		_tokenZones[2].zone.size.y = (centerRect.begin.y + centerRect.size.y) - 1;
-		_tokenZones[2].horizontal = true;
-		_tokenZones[2].increment = false;
+		_tokenZones[2].direction = Direction::DirectionData::Left;
+//		_tokenZones[2].increment = false;
 
 		// From bottom to top
 		_tokenZones[3].zone.begin.x = centerRect.begin.x;
 		_tokenZones[3].zone.begin.y = size.y - 1;
 		_tokenZones[3].zone.size.x = (centerRect.begin.x + centerRect.size.x) - 1;
 		_tokenZones[3].zone.size.y = centerRect.begin.y + centerRect.size.y;
-		_tokenZones[3].horizontal = false;
-		_tokenZones[3].increment = false;
+		_tokenZones[3].direction = Direction::DirectionData::Up;
+//		_tokenZones[3].increment = false;
 
 		for (lib::u32 i = 0; i < NUMWAYS; ++i)
 		{
-			_tokenZones[i].size = _tokenZones[i].horizontal ? centerRect.size.y : centerRect.size.x;
-			_tokenZones[i].incX = _tokenZones[i].horizontal ? (_tokenZones[i].increment ? -1 : 1) : 0;
-			_tokenZones[i].incY = _tokenZones[i].horizontal ? 0 : (_tokenZones[i].increment ? -1 : 1);
+			_tokenZones[i].size = _tokenZones[i].direction.isHorizontal() ? centerRect.size.y : centerRect.size.x;
+//			_tokenZones[i].incX = _tokenZones[i].direction.isHorizontal() ? (_tokenZones[i].increment ? -1 : 1) : 0;
+//			_tokenZones[i].incY = _tokenZones[i].direction.isHorizontal() ? 0 : (_tokenZones[i].increment ? -1 : 1);
 		}
 	}
 
@@ -140,28 +140,31 @@ namespace zoper
 		LOG_DEBUG("x1: " << currentTokenZone.zone.begin.x << " y1: " << currentTokenZone.zone.begin.y << 
 			" x2: " << currentTokenZone.zone.size.x << " y2: " << currentTokenZone.zone.size.y);
 //		LOG_DEBUG("distX: " << currentTokenZone.distX() << " distY: " << currentTokenZone.distY());
-		LOG_DEBUG("horizontal: " << currentTokenZone.horizontal << " increment: " << currentTokenZone.increment);
+//		LOG_DEBUG("horizontal: " << currentTokenZone.direction.isHorizontal() << " increment: " << currentTokenZone.increment);
 
 		lib::u32 newToken = getRandomNumer(NUMTOKENS);
 
 		lib::u32 sizep = getRandomNumer(currentTokenZone.size);
 
-		lib::u32 newX = currentTokenZone.zone.begin.x + (currentTokenZone.horizontal ? 0 : sizep);
-		lib::u32 newY = currentTokenZone.zone.begin.y + (currentTokenZone.horizontal ? sizep : 0);
+		lib::u32 newX = currentTokenZone.zone.begin.x + (currentTokenZone.direction.isHorizontal() ? 0 : sizep);
+		lib::u32 newY = currentTokenZone.zone.begin.y + (currentTokenZone.direction.isHorizontal() ? sizep : 0);
 		LOG_DEBUG("New tile pos: " << newX << "," << newY);
 
-		lib::s32 x = currentTokenZone.horizontal ? currentTokenZone.zone.size.x : newX;
-		lib::s32 y = currentTokenZone.horizontal ? newY : currentTokenZone.zone.size.y;
+		lib::vector2ds32 loopPosition{ (lib::s32)(currentTokenZone.direction.isHorizontal() ? currentTokenZone.zone.size.x : newX),
+			(lib::s32)(currentTokenZone.direction.isHorizontal() ? newY : currentTokenZone.zone.size.y) };
 
-		LOG_DEBUG("Starting at: " << x << "," << y);
-		LOG_DEBUG("increment: " << currentTokenZone.incX << "," << currentTokenZone.incY);
+		LOG_DEBUG("Starting at: " << loopPosition.x << "," << loopPosition.y);
+//		LOG_DEBUG("increment: " << currentTokenZone.incX << "," << currentTokenZone.incY);
 
 		// Now, we have the data for the new token generated, but first, lets start to move the row or col.
+		lib::vector2ds32 inc{ currentTokenZone.direction.DirectionVector() };
+
 		for (;
-			p_boardModel->validCoords(lib::vector2du32(x, y)) && !pointInCenter(lib::vector2ds32(x, y));
-			x += currentTokenZone.incX, y += currentTokenZone.incY)
+			p_boardModel->validCoords(loopPosition) && !pointInCenter(loopPosition);
+			loopPosition += inc)
 		{
-			p_boardModel->moveTile(lib::vector2du32(x, y), lib::vector2du32(x - currentTokenZone.incX, y - currentTokenZone.incY), true);
+			p_boardModel->moveTile(lib::vector2du32(loopPosition), 
+				lib::vector2du32(loopPosition + inc), true);
 		}
 
 		// Set the new token

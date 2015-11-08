@@ -28,12 +28,11 @@ namespace zoper
 		{
 			// Filled statically
 			lib::Rect zone;
-			bool horizontal;
-			bool increment;
+			Direction direction;
 
 			// Filled dynamically
 			lib::u32 size;
-			lib::s32 incX, incY;
+//			lib::s32 incX, incY;
 		};
 
 		void generateTokenZones();
