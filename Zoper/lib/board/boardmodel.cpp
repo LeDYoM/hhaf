@@ -50,11 +50,12 @@ namespace lib
 		{
 			if (!tileEmpty(source))
 			{
+				LOG_DEBUG("Moving tile from " << source.x << "," << source.y << " to " << dest.x << "," << dest.y);
+
 				SITilePointer sourceTile{ getTile(source) };
 				WITilePointer destTile{ getTile(dest) };
 
-				LOG_DEBUG("Moving tile from " << source.x << "," << source.y << " to " << dest.x << "," << dest.y <<
-					". Source Value: " << sourceTile->getData());
+				LOG_DEBUG("Source Value: " << sourceTile->getData());
 
 				if (sourceTile)
 				{
