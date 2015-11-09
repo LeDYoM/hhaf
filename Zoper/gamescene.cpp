@@ -150,22 +150,40 @@ namespace zoper
 		lib::u32 newY = currentTokenZone.zone.begin.y + (currentTokenZone.direction.isHorizontal() ? sizep : 0);
 		LOG_DEBUG("New tile pos: " << newX << "," << newY);
 
-		lib::vector2ds32 loopPosition{ (lib::s32)(currentTokenZone.direction.isHorizontal() ? currentTokenZone.zone.size.x : newX),
-			(lib::s32)(currentTokenZone.direction.isHorizontal() ? newY : currentTokenZone.zone.size.y) };
+		lib::vector2du32 loopPosition{ (currentTokenZone.direction.isHorizontal() ? currentTokenZone.zone.size.x : newX),
+			(currentTokenZone.direction.isHorizontal() ? newY : currentTokenZone.zone.size.y) };
+		lib::vector2du32 destPosition;
 
 		LOG_DEBUG("Starting at: " << loopPosition.x << "," << loopPosition.y);
 //		LOG_DEBUG("increment: " << currentTokenZone.incX << "," << currentTokenZone.incY);
 
 		// Now, we have the data for the new token generated, but first, lets start to move the row or col.
-		lib::vector2ds32 inc{ currentTokenZone.direction.DirectionVector() };
+		bool stay;
+		do
+		{
+			destPosition = currentTokenZone.direction.applyToVector(loopPosition);
+			stay = !pointInCenter(loopPosition) && p_boardModel->validCoords(loopPosition) && p_boardModel->validCoords(destPosition);
+			if (stay)
+			{
+				p_boardModel->moveTile(loopPosition, destPosition, true);
+			}
+			loopPosition = currentTokenZone.direction.negate().applyToVector(loopPosition);
 
+		} while (stay);
+
+		/*
 		for (;
 			p_boardModel->validCoords(loopPosition) && !pointInCenter(loopPosition);
-			loopPosition += inc)
 		{
-			p_boardModel->moveTile(lib::vector2du32(loopPosition), 
-				lib::vector2du32(loopPosition + inc), true);
+			LOG_DEBUG("loppPosition:" << loopPosition.x << "," << loopPosition.y);
+
+			if (p_boardModel->validCoords(destPosition) && !pointInCenter(destPosition))
+			{
+				p_boardModel->moveTile(lib::vector2du32(loopPosition), destPosition, true);
+			}
+
 		}
+			*/
 
 		// Set the new token
 		addNewToken(lib::vector2du32{ newX, newY }, newToken);
@@ -219,8 +237,8 @@ namespace zoper
 	void GameScene::movePlayer(const Direction & dir)
 	{
 		__ASSERT(dir.isValid(), "Invalid direction passed to move");
-		auto dVector = dir.DirectionVector();
-		auto nPosition = lib::vector2ds32(p_player->boardPosition().x, p_player->boardPosition().y) + lib::vector2ds32(dVector.x, dVector.y);
+		auto dVector = dir.directionVector();
+		auto nPosition = lib::vector2du32(lib::vector2ds32(p_player->boardPosition().x, p_player->boardPosition().y) + lib::vector2ds32(dVector.x, dVector.y));
 		if (pointInCenter(nPosition))
 		{
 			p_boardModel->moveTile(p_player->boardPosition(), lib::vector2du32(nPosition.x,nPosition.y));
@@ -234,15 +252,19 @@ namespace zoper
 		Scene::onKeyReleased(kEvent);
 	}
 
-	bool GameScene::pointInCenter(const lib::vector2ds32 &position) const
+	bool GameScene::pointInCenter(const lib::vector2du32 &position) const
 	{
-		if (position.x < static_cast<lib::s32>(_gameData.centerRect.begin.x) || position.y < static_cast<lib::s32>(_gameData.centerRect.begin.y))
-			return false;
+		if (p_boardModel->validCoords(position))
+		{
+			if (position.x < _gameData.centerRect.begin.x || position.y < _gameData.centerRect.begin.y)
+				return false;
 
-		if (position.x >= static_cast<lib::s32>(_gameData.centerRect.begin.x + _gameData.centerRect.size.x) || position.y >= static_cast<lib::s32>(_gameData.centerRect.begin.y + _gameData.centerRect.size.y))
-			return false;
+			if (position.x >= (_gameData.centerRect.begin.x + _gameData.centerRect.size.x) || position.y >= (_gameData.centerRect.begin.y + _gameData.centerRect.size.y))
+				return false;
 
-		return true;
+			return true;
+		}
+		return false;
 	}
 
 	const lib::vector2df GameScene::board2Scene(const lib::vector2du32 &bPosition) const
@@ -273,7 +295,7 @@ namespace zoper
 				else
 				{
 					chTemp = "*";
-					if (pointInCenter(lib::vector2ds32(x, y)))
+					if (pointInCenter(lib::vector2du32(x, y)))
 						chTemp = "C";
 				}
 

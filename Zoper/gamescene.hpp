@@ -60,7 +60,7 @@ namespace zoper
 	private:
 		void generateNextToken();
 		void addNewToken(const lib::vector2du32 &tPosition, lib::u32 newToken);
-		bool pointInCenter(const lib::vector2ds32 &tPosition) const;
+		bool pointInCenter(const lib::vector2du32 &tPosition) const;
 		const lib::vector2df board2Scene(const lib::vector2du32 &bPosition) const;
 		const lib::vector2df tileSize() const;
 
