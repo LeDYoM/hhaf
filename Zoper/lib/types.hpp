@@ -28,8 +28,8 @@ namespace lib
 	using vector2du32 = sf::Vector2u;
 	using vector2ds32 = sf::Vector2i;
 	using vector2df = sf::Vector2f;
-	using Vector2du8 = sf::Vector2<u8>;
-	using Vector2ds8 = sf::Vector2<s8>;
+	using vector2du8 = sf::Vector2<u8>;
+	using vector2ds8 = sf::Vector2<s8>;
 
 	struct Rect
 	{
