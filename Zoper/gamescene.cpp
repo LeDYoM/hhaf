@@ -161,12 +161,16 @@ namespace zoper
 		bool stay;
 		do
 		{
+			// The position of the current token is the current position + the direction of the token zone
 			destPosition = currentTokenZone.direction.applyToVector(loopPosition);
+			// Exit loop condition: did we arrive to the center or is any of the positions invalid?
 			stay = !pointInCenter(loopPosition) && p_boardModel->validCoords(loopPosition) && p_boardModel->validCoords(destPosition);
 			if (stay)
 			{
+				// Move the token
 				p_boardModel->moveTile(loopPosition, destPosition, true);
 			}
+			// The next token to move is in the opossite direction that we moved
 			loopPosition = currentTokenZone.direction.negate().applyToVector(loopPosition);
 
 		} while (stay);
