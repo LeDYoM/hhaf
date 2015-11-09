@@ -33,31 +33,68 @@ namespace zoper
 
 		inline bool isHorizontal() const { return data == DirectionData::Left || data == DirectionData::Right; }
 
-		lib::Vector2ds8 DirectionVector(const lib::u32 scale = 1) const
+		inline Direction negate() const {
+			switch (data)
+			{
+			case DirectionData::Left:
+				return DirectionData::Right;
+				break;
+			case DirectionData::Right:
+				return DirectionData::Left;
+				break;
+			case DirectionData::Up:
+				return DirectionData::Down;
+				break;
+			case DirectionData::Down:
+				return DirectionData::Up;
+				break;
+			case DirectionData::Invalid:
+			default:
+				LOG_ERROR("Invalid direction. Cannot convert");
+			}
+			return DirectionData::Invalid;
+		}
+
+		lib::vector2du32 applyToVector(const lib::vector2du32 &v,const lib::u32 scale = 1) const
 		{
-			lib::Vector2ds8 result{ 0,0 };
+			lib::vector2ds32 dv{ directionVector(scale) };
+			lib::vector2du32 result(v.x + dv.x, v.y + dv.y);
+			return result;
+		}
+
+		const lib::vector2ds32 directionVector(const lib::u32 scale = 1) const
+		{
+			lib::vector2ds32 result{ 0,0 };
 
 			switch (data)
 			{
 			case DirectionData::Left:
-				result = lib::Vector2ds8(-1, 0);
+				result = lib::vector2ds32(-1, 0);
 				break;
 			case DirectionData::Right:
-				result = lib::Vector2ds8(1, 0);
+				result = lib::vector2ds32(1, 0);
 				break;
 			case DirectionData::Up:
-				result = lib::Vector2ds8(0, -1);
+				result = lib::vector2ds32(0, -1);
 				break;
 			case DirectionData::Down:
-				result = lib::Vector2ds8(0, 1);
+				result = lib::vector2ds32(0, 1);
 				break;
 			case DirectionData::Invalid:
 			default:
 				LOG_ERROR("Invalid direction. Cannot convert");
 			}
 
-			result *= (lib::s8)scale;
+			result *= (lib::s32)scale;
 			return result;
+		}
+
+		const lib::vector2ds32 negatedDirectionVector(const lib::u32 scale = 1) const
+		{
+			lib::vector2ds32 result{ directionVector(scale) };
+			result *= (lib::s32) - 1;
+			return result;
+
 		}
 
 	private:
