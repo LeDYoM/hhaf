@@ -158,6 +158,7 @@ namespace zoper
 //		LOG_DEBUG("increment: " << currentTokenZone.incX << "," << currentTokenZone.incY);
 
 		// Now, we have the data for the new token generated, but first, lets start to move the row or col.
+
 		bool stay;
 		do
 		{
@@ -174,20 +175,6 @@ namespace zoper
 			loopPosition = currentTokenZone.direction.negate().applyToVector(loopPosition);
 
 		} while (stay);
-
-		/*
-		for (;
-			p_boardModel->validCoords(loopPosition) && !pointInCenter(loopPosition);
-		{
-			LOG_DEBUG("loppPosition:" << loopPosition.x << "," << loopPosition.y);
-
-			if (p_boardModel->validCoords(destPosition) && !pointInCenter(destPosition))
-			{
-				p_boardModel->moveTile(lib::vector2du32(loopPosition), destPosition, true);
-			}
-
-		}
-			*/
 
 		// Set the new token
 		addNewToken(lib::vector2du32{ newX, newY }, newToken);
@@ -247,7 +234,6 @@ namespace zoper
 		{
 			p_boardModel->moveTile(p_player->boardPosition(), lib::vector2du32(nPosition.x,nPosition.y));
 			p_player->setBoardPosition(lib::vector2du32(nPosition.x, nPosition.y));
-
 		}
 	}
 

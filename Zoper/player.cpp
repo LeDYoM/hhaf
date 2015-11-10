@@ -27,6 +27,12 @@ namespace zoper
 		_boardPosition = np;
 	}
 
+	void Player::setCurrentDirection(const Direction & direction)
+	{
+		auto this_ = getAsEllipseShape();
+		this_->setRotation(direction.angle());
+	}
+
 	void Player::updateGraphicalDirection()
 	{
 //		this->getAsEllipseShape()->setRotation();

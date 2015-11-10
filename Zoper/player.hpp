@@ -19,7 +19,7 @@ namespace zoper
 		inline lib::vector2du32 boardPosition() const { return _boardPosition; }
 
 		inline const Direction &currentDirection() const { return playerDirection; }
-		inline void setCurrentDirection(const Direction &nv) { playerDirection = nv; }
+		void setCurrentDirection(const Direction &nv);
 
 	private:
 		void updateGraphicalDirection();

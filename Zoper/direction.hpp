@@ -94,7 +94,32 @@ namespace zoper
 			lib::vector2ds32 result{ directionVector(scale) };
 			result *= (lib::s32) - 1;
 			return result;
+		}
 
+		lib::f32 angle() const
+		{
+			lib::f32 result{ 0.f };
+
+			switch (data)
+			{
+			case DirectionData::Left:
+				result = 270.f;
+				break;
+			case DirectionData::Right:
+				result = 90.f;
+				break;
+			case DirectionData::Up:
+				result = 0.f;
+				break;
+			case DirectionData::Down:
+				result = 180.f;
+				break;
+			case DirectionData::Invalid:
+			default:
+				LOG_ERROR("Invalid direction. Cannot convert");
+			}
+
+			return result;
 		}
 
 	private:
