@@ -229,7 +229,7 @@ namespace zoper
 	{
 		__ASSERT(dir.isValid(), "Invalid direction passed to move");
 		auto dVector = dir.directionVector();
-		auto nPosition = lib::vector2du32(lib::vector2ds32(p_player->boardPosition().x, p_player->boardPosition().y) + lib::vector2ds32(dVector.x, dVector.y));
+		auto nPosition = lib::vector2du32(lib::vector2ds32(p_player->boardPosition().x, p_player->boardPosition().y) + dVector);
 		if (pointInCenter(nPosition))
 		{
 			p_boardModel->moveTile(p_player->boardPosition(), lib::vector2du32(nPosition.x,nPosition.y));
@@ -331,7 +331,13 @@ namespace zoper
 		}
 		else if (auto ztile = std::dynamic_pointer_cast<Player>(tile.lock()))
 		{
-			ztile->getAsTransformable()->setPosition(board2Scene(dest));
+			auto player = ztile->getAsEllipseShape();
+			auto vec = board2Scene(dest);
+			vec += tileSize() / 2.0f;
+			player->setOrigin(tileSize() / 2.0f);
+			player->setPosition(board2Scene(dest) + (tileSize() / 2.0f));
+			player->setRotation(ztile->currentDirection().angle());
+
 		}
 	}
 }
