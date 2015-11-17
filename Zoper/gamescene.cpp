@@ -12,6 +12,7 @@
 #include <SFML/Graphics.hpp>
 
 #include <memory>
+#include <functional>
 
 namespace zoper
 {
@@ -98,7 +99,6 @@ namespace zoper
 		_tokenZones[0].zone.size.x = centerRect.begin.x - 1;
 		_tokenZones[0].zone.size.y = (centerRect.begin.y + centerRect.size.y) - 1;
 		_tokenZones[0].direction = Direction::DirectionData::Right;
-//		_tokenZones[0].increment = true;
 
 		// From top to bottom
 		_tokenZones[1].zone.begin.x = centerRect.begin.x;
@@ -106,7 +106,6 @@ namespace zoper
 		_tokenZones[1].zone.size.x = (centerRect.begin.x + centerRect.size.x) - 1;
 		_tokenZones[1].zone.size.y = centerRect.begin.y - 1;
 		_tokenZones[1].direction = Direction::DirectionData::Down;
-//		_tokenZones[1].increment = true;
 
 		// From right to left
 		_tokenZones[2].zone.begin.x = size.x - 1;
@@ -114,7 +113,6 @@ namespace zoper
 		_tokenZones[2].zone.size.x = (centerRect.begin.x + centerRect.size.x);
 		_tokenZones[2].zone.size.y = (centerRect.begin.y + centerRect.size.y) - 1;
 		_tokenZones[2].direction = Direction::DirectionData::Left;
-//		_tokenZones[2].increment = false;
 
 		// From bottom to top
 		_tokenZones[3].zone.begin.x = centerRect.begin.x;
@@ -122,13 +120,10 @@ namespace zoper
 		_tokenZones[3].zone.size.x = (centerRect.begin.x + centerRect.size.x) - 1;
 		_tokenZones[3].zone.size.y = centerRect.begin.y + centerRect.size.y;
 		_tokenZones[3].direction = Direction::DirectionData::Up;
-//		_tokenZones[3].increment = false;
 
 		for (lib::u32 i = 0; i < NUMWAYS; ++i)
 		{
 			_tokenZones[i].size = _tokenZones[i].direction.isHorizontal() ? centerRect.size.y : centerRect.size.x;
-//			_tokenZones[i].incX = _tokenZones[i].direction.isHorizontal() ? (_tokenZones[i].increment ? -1 : 1) : 0;
-//			_tokenZones[i].incY = _tokenZones[i].direction.isHorizontal() ? 0 : (_tokenZones[i].increment ? -1 : 1);
 		}
 	}
 
@@ -155,10 +150,8 @@ namespace zoper
 		lib::vector2du32 destPosition;
 
 		LOG_DEBUG("Starting at: " << loopPosition.x << "," << loopPosition.y);
-//		LOG_DEBUG("increment: " << currentTokenZone.incX << "," << currentTokenZone.incY);
 
 		// Now, we have the data for the new token generated, but first, lets start to move the row or col.
-
 		bool stay;
 		do
 		{

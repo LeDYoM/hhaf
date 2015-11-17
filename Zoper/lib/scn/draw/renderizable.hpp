@@ -16,22 +16,6 @@ namespace lib
 			class Renderizable : public lib::core::HasName
 			{
 			public:
-				union DrawNodeData
-				{
-					sf::Text *text{ nullptr };
-					sf::Sprite *sprite;
-					sf::CircleShape *circleShape;
-					EllipseShape *ellipseShape;
-				};
-				enum ActiveDrawNode
-				{
-					Empty = 0,
-					Text = 1,
-					Sprite = 2,
-					CircleShape = 3,
-					EllipseShape = 4,
-					MaxActiveDrawNode = 0xffff
-				};
 				explicit Renderizable(const std::string &name, sf::Text *text);
 				explicit Renderizable(const std::string &name, sf::Sprite *sprite);
 				explicit Renderizable(const std::string &name, sf::CircleShape *circleShape);
@@ -50,10 +34,24 @@ namespace lib
 				inline void setPosition(const sf::Vector2f &pos) { getAsTransformable()->setPosition(pos); }
 
 			private:
-				DrawNodeData _drawNodeData;
+				union DrawNodeData
+				{
+					sf::Text *text{ nullptr };
+					sf::Sprite *sprite;
+					sf::CircleShape *circleShape;
+					EllipseShape *ellipseShape;
+				} _drawNodeData;
 				sf::Drawable *_drawNodeAsDrawable{ nullptr };
 				sf::Transformable *_drawNodeAsTransformable{ nullptr };
-				ActiveDrawNode _activeDrawNode{ Empty };
+				enum class ActiveDrawNode
+				{
+					Empty = 0,
+					Text = 1,
+					Sprite = 2,
+					CircleShape = 3,
+					EllipseShape = 4,
+					MaxActiveDrawNode = 0xffff
+				} _activeDrawNode{ ActiveDrawNode::Empty };
 			};
 		}
 	}
