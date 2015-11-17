@@ -102,6 +102,7 @@
     <ClCompile Include="lib\scn\draw\renderizable.cpp" />
     <ClCompile Include="lib\randomizer.cpp" />
     <ClCompile Include="player.cpp" />
+    <ClCompile Include="lib\scn\resourcemanager.cpp" />
     <ClCompile Include="tile.cpp" />
     <ClCompile Include="zoperprogramcontroller.cpp" />
   </ItemGroup>
@@ -126,6 +127,7 @@
     <ClInclude Include="lib\scn\draw\renderizable.hpp" />
     <ClInclude Include="lib\randomizer.hpp" />
     <ClInclude Include="player.hpp" />
+    <ClInclude Include="lib\scn\resourcemanager.hpp" />
     <ClInclude Include="tile.hpp" />
     <ClInclude Include="zoperprogramcontroller.hpp" />
   </ItemGroup>
