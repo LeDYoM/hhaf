@@ -127,6 +127,38 @@ namespace zoper
 		}
 	}
 
+	class TokenProcessor
+	{
+	public:
+		virtual void updateDestPosition(const Direction &direction)
+		{
+			// The position of the current token is the current position + the direction of the token zone
+			destPosition = direction.applyToVector(loopPosition);
+		}
+
+		virtual void action(const lib::vector2du32 &loopPosition,const lib::vector2du32 &destPosition)
+		{
+			p_boardModel->moveTile(loopPosition, destPosition, true);
+		}
+		virtual bool update(const Direction &direction)
+		{
+			updateDestPosition(direction);
+			// Exit loop condition: did we arrive to the center or is any of the positions invalid?
+			bool stay = /*!pointInCenter(loopPosition) &&*/ p_boardModel->validCoords(loopPosition) && p_boardModel->validCoords(destPosition);
+			if (stay)
+			{
+				// Move the token
+				action(loopPosition, destPosition);
+				p_boardModel->moveTile(loopPosition, destPosition, true);
+			}
+			// The next token to move is in the opossite direction that we moved
+			loopPosition = direction.negate().applyToVector(loopPosition);
+		}
+		lib::vector2du32 loopPosition;
+		lib::vector2du32 destPosition;
+		lib::board::BoardModel *p_boardModel;
+	};
+
 	void GameScene::generateNextToken()
 	{
 		const GameData::TokenZone &currentTokenZone = _gameData._tokenZones[_nextTokenPart];
@@ -148,11 +180,15 @@ namespace zoper
 		lib::vector2du32 loopPosition{ (currentTokenZone.direction.isHorizontal() ? currentTokenZone.zone.size.x : newX),
 			(currentTokenZone.direction.isHorizontal() ? newY : currentTokenZone.zone.size.y) };
 		lib::vector2du32 destPosition;
-
 		LOG_DEBUG("Starting at: " << loopPosition.x << "," << loopPosition.y);
 
 		// Now, we have the data for the new token generated, but first, lets start to move the row or col.
 		bool stay;
+		do
+		{
+
+		} while (stay);
+		/*
 		do
 		{
 			// The position of the current token is the current position + the direction of the token zone
@@ -168,7 +204,7 @@ namespace zoper
 			loopPosition = currentTokenZone.direction.negate().applyToVector(loopPosition);
 
 		} while (stay);
-
+*/
 		// Set the new token
 		addNewToken(lib::vector2du32{ newX, newY }, newToken);
 		_nextTokenPart = (_nextTokenPart + 1) % NUMWAYS;
