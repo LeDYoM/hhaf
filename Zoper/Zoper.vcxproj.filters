@@ -146,5 +146,8 @@
     <ClInclude Include="lib\scn\resourcemanager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="tokenprocessor.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
