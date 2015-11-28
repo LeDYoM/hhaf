@@ -127,11 +127,6 @@ namespace zoper
 		}
 	}
 
-	class TokenProcessor
-	{
-	public:
-	};
-
 	void GameScene::generateNextToken()
 	{
 		const GameData::TokenZone &currentTokenZone = _gameData._tokenZones[_nextTokenPart];
@@ -152,26 +147,40 @@ namespace zoper
 
 		lib::vector2du32 loopPosition{ (currentTokenZone.direction.isHorizontal() ? currentTokenZone.zone.size.x : newX),
 			(currentTokenZone.direction.isHorizontal() ? newY : currentTokenZone.zone.size.y) };
-		lib::vector2du32 destPosition;
+//		lib::vector2du32 destPosition;
 		LOG_DEBUG("Starting at: " << loopPosition.x << "," << loopPosition.y);
 
 		// Now, we have the data for the new token generated, but first, lets start to move the row or col.
+		Direction loopDirection = currentTokenZone.direction.negate();
+		_tokenProcessor(loopDirection, loopPosition, *p_boardModel, [&](const lib::vector2du32& loopPosition)
+		{ 
+			return !pointInCenter(loopPosition);
+		}, [](lib::board::BoardModel &r_boardModel, const Direction &loopDirection, const lib::vector2du32 &loopPosition)
+		{
+			auto dest = loopDirection.negate().applyToVector(loopPosition);
+			// TO DO: Check for game over
+			r_boardModel.moveTile(loopPosition, dest);
+		});
+
+		/*
 		bool stay;
 		do
 		{
 			// The position of the current token is the current position + the direction of the token zone
-			destPosition = currentTokenZone.direction.applyToVector(loopPosition);
+			destPosition = loopDirection.negate().applyToVector(loopPosition);
 			// Exit loop condition: did we arrive to the center or is any of the positions invalid?
-			stay = !pointInCenter(loopPosition) && p_boardModel->validCoords(loopPosition) && p_boardModel->validCoords(destPosition);
+			stay = p_boardModel->validCoords(destPosition);
 			if (stay)
 			{
 				// Move the token
 				p_boardModel->moveTile(loopPosition, destPosition, true);
 			}
 			// The next token to move is in the opossite direction that we moved
-			loopPosition = currentTokenZone.direction.negate().applyToVector(loopPosition);
+			loopPosition = loopDirection.applyToVector(loopPosition);
+			stay = !pointInCenter(loopPosition) && p_boardModel->validCoords(loopPosition);
 
 		} while (stay);
+		*/
 		// Set the new token
 		addNewToken(lib::vector2du32{ newX, newY }, newToken);
 		_nextTokenPart = (_nextTokenPart + 1) % NUMWAYS;
@@ -224,8 +233,7 @@ namespace zoper
 	void GameScene::movePlayer(const Direction & dir)
 	{
 		__ASSERT(dir.isValid(), "Invalid direction passed to move");
-		auto dVector = dir.directionVector();
-		auto nPosition = lib::vector2du32(lib::vector2ds32(p_player->boardPosition().x, p_player->boardPosition().y) + dVector);
+		auto nPosition = dir.applyToVector(p_player->boardPosition());
 		if (pointInCenter(nPosition))
 		{
 			p_boardModel->moveTile(p_player->boardPosition(), lib::vector2du32(nPosition.x,nPosition.y));

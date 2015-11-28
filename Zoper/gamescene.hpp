@@ -8,6 +8,7 @@
 #include "lib/board/boardmodel.hpp"
 #include "lib/configuration.hpp"
 #include "direction.hpp"
+#include "tokenprocessor.hpp"
 #include <array>
 
 #define NUMWAYS			4
@@ -73,6 +74,7 @@ namespace zoper
 		lib::s32 _millisBetweenTokens{ 1000 };
 		lib::u8 _nextTokenPart{ 0 };
 		lib::sptr<Player> p_player{ nullptr };
+		TokenProcessor _tokenProcessor;
 
 		void addPlayer();
 		virtual void onKeyPressed(sf::Event::KeyEvent kEvent);

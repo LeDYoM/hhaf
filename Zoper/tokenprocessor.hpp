@@ -3,42 +3,37 @@
 
 #include "direction.hpp"
 #include "lib/board/boardmodel.hpp"
+#include <functional>
 
 namespace zoper
 {
 	class TokenProcessor
 	{
 	public:
-		TokenProcessor() {}
-		virtual ~TokenProcessor() {}
-
-		virtual void updateDestPosition(const Direction &direction)
+		void operator()(const Direction &loopDirection, const lib::vector2du32 &_loopPosition, lib::board::BoardModel &r_boardModel,
+			std::function<bool(const lib::vector2du32 &)> stayCondition,
+			std::function<void(lib::board::BoardModel &r_boardModel, const Direction &,const lib::vector2du32 &)> action)
 		{
-			// The position of the current token is the current position + the direction of the token zone
-			destPosition = direction.applyToVector(loopPosition);
-		}
-
-		virtual void action(const lib::vector2du32 &loopPosition, const lib::vector2du32 &destPosition)
-		{
-			p_boardModel->moveTile(loopPosition, destPosition, true);
-		}
-		virtual bool update(const Direction &direction)
-		{
-			updateDestPosition(direction);
-			// Exit loop condition: did we arrive to the center or is any of the positions invalid?
-			bool stay = /*!pointInCenter(loopPosition) &&*/ p_boardModel->validCoords(loopPosition) && p_boardModel->validCoords(destPosition);
-			if (stay)
+			lib::vector2du32 loopPosition{ _loopPosition };
+			// Now, we have the data for the new token generated, but first, lets start to move the row or col.
+			bool stay;
+			do
 			{
-				// Move the token
-				action(loopPosition, destPosition);
-				p_boardModel->moveTile(loopPosition, destPosition, true);
-			}
-			// The next token to move is in the opossite direction that we moved
-			loopPosition = direction.negate().applyToVector(loopPosition);
+				// The position of the current token is the current position + the direction of the token zone
+				// Exit loop condition: did we arrive to the center or is any of the positions invalid?
+				stay = r_boardModel.validCoords(loopDirection.negate().applyToVector(loopPosition));
+				if (stay)
+				{
+					// Move the token
+					action(r_boardModel,loopDirection, loopPosition);
+//					r_boardModel.moveTile(loopPosition, loopDirection.negate().applyToVector(loopPosition));
+				}
+				// The next token to move is in the opossite direction that we moved
+				loopPosition = loopDirection.applyToVector(loopPosition);
+				stay = r_boardModel.validCoords(loopPosition) && stayCondition(loopPosition);
+
+			} while (stay);
 		}
-		lib::vector2du32 loopPosition;
-		lib::vector2du32 destPosition;
-		lib::board::BoardModel *p_boardModel;
 	};
 }
 
