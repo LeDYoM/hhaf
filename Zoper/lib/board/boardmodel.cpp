@@ -46,7 +46,7 @@ namespace lib
 			if (p_tController) p_tController->tileSet(tPosition, newTile);
 		}
 
-		void BoardModel::moveTile(const vector2du32 &source, const vector2du32 &dest, bool ignoreEmptySource)
+		bool BoardModel::moveTile(const vector2du32 &source, const vector2du32 &dest)
 		{
 			if (!tileEmpty(source))
 			{
@@ -66,19 +66,14 @@ namespace lib
 					_setTile(source, WITilePointer());
 
 					if (p_tController) p_tController->tileMoved(source, dest, sourceTile);
+					return true;
 				}
 			}
 			else
 			{
-				if (!ignoreEmptySource)
-				{
-					__ASSERT(false, "Trying to move an empty tile: " << source.x << "," << source.y);
-				}
-				else
-				{
-					LOG_DEBUG("Trying to move empty tile: " << source.x << "," << source.y << " ignoring it");
-				}
+				LOG_DEBUG("Trying to move empty tile: " << source.x << "," << source.y << " ignoring it");
 			}
+			return false;
 		}
 
 		void BoardModel::_setTile(const vector2du32 &position, WITilePointer newTile)

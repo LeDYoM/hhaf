@@ -19,7 +19,7 @@ namespace lib
 			WITilePointer getTile(const vector2du32 &position) const;
 			inline bool tileEmpty(const vector2du32 &position) const { return getTile(position).lock() == nullptr; }
 			void setTile(const vector2du32 &position, WITilePointer newTile);
-			void moveTile(const vector2du32 &source, const vector2du32 &dest, bool ignoreEmptySource = false);
+			bool moveTile(const vector2du32 &source, const vector2du32 &dest);
 
 			inline bool validCoords(const vector2du32 &tPosition) const { return _tiles.size() > tPosition.x && _tiles[0].size() > tPosition.y; }
 			inline bool validCoords(const vector2ds32 &tPosition) const { return tPosition.x >= 0 && tPosition.y >= 0 && validCoords(vector2du32(static_cast<u32>(tPosition.x), static_cast<u32>(tPosition.y))); }
