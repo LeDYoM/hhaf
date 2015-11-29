@@ -6,7 +6,7 @@
 namespace zoper
 {
 	Player::Player(const lib::vector2du32 &bPosition, const lib::vector2df &size)
-		:lib::board::ITile{ PLAYER_TOKEN }, 
+		:lib::board::ITile{ 0 }, 
 		lib::scn::draw::Renderizable{ "player", new lib::scn::draw::EllipseShape },
 		playerDirection{ Direction::Up }
 	{

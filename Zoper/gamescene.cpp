@@ -230,7 +230,15 @@ namespace zoper
 
 	void GameScene::launchPlayer()
 	{
-
+		LOG_DEBUG("Launching player");
+		const Direction loopDirection = p_player->currentDirection();
+		lib::vector2du32 loopPosition{ p_player->boardPosition() };
+		_tokenProcessor(loopDirection, loopPosition, *p_boardModel, [&](const lib::vector2du32& loopPosition)
+		{
+			return true;
+		}, [](lib::board::BoardModel &r_boardModel, const Direction &loopDirection, const lib::vector2du32 &loopPosition)
+		{
+		});
 	}
 
 	bool GameScene::pointInCenter(const lib::vector2du32 &position) const
@@ -301,7 +309,7 @@ namespace zoper
 
 		if (!snTile)
 		{
-			// Tile dissappeared
+			// Tile disappeared
 			tileDissapeared(position);
 		}
 		else

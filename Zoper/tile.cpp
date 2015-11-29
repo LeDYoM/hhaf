@@ -37,8 +37,6 @@ namespace zoper
 		auto this_ = getAsEllipseShape();
 		this_->setFillColor(c);
 		this_->setSize(size);
-//		this_->setPointCount(5);
-
 	}
 
 	Tile::~Tile()
