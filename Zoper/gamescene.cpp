@@ -336,7 +336,6 @@ namespace zoper
 			player->setOrigin(tileSize() / 2.0f);
 			player->setPosition(board2Scene(dest) + (tileSize() / 2.0f));
 			player->setRotation(ztile->currentDirection().angle());
-
 		}
 	}
 }

@@ -12,6 +12,8 @@ namespace zoper
 		explicit GameBaseTile(lib::board::BoardTileData data, const sf::Vector2f &size, const std::string &baseName);
 		GameBaseTile(const GameBaseTile &other) = delete;
 		virtual ~GameBaseTile();
+
+		sf::Color getColorForToken() const;
 	};
 }
 

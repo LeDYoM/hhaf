@@ -1,15 +1,13 @@
 #ifndef __PLAYER_HPP__
 #define __PLAYER_HPP__
 
-#include "lib/board/itilescontroller.hpp"
-#include "lib/scn/draw/renderizable.hpp"
-
+#include "gamebasetile.hpp"
 #include "keymapping.hpp"
 #include "direction.hpp"
 
 namespace zoper
 {
-	class Player : public lib::board::ITile, public lib::scn::draw::Renderizable, public KeyMapping
+	class Player : public GameBaseTile, public KeyMapping
 	{
 	public:
 		Player(const lib::vector2du32 &bPosition, const lib::vector2df &size);

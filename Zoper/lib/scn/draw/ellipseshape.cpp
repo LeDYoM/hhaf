@@ -41,6 +41,7 @@ namespace lib
 			void EllipseShape::setPointCount(lib::u32 numPoints)
 			{
 				m_pointCount = numPoints;
+				update();
 			}
 
 			sf::Vector2f EllipseShape::getPoint(unsigned int index) const

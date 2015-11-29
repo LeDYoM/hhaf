@@ -5,6 +5,17 @@ namespace zoper
 	GameBaseTile::GameBaseTile(lib::board::BoardTileData data, const sf::Vector2f &size, const std::string &baseName) 
 		: lib::board::ITile{ data }, lib::scn::draw::Renderizable(baseName, new lib::scn::draw::EllipseShape)
 	{
+		auto this_ = getAsEllipseShape();
+		this_->setSize(size);
+	}
+
+	GameBaseTile::~GameBaseTile()
+	{
+	}
+
+	sf::Color GameBaseTile::getColorForToken() const
+	{
+
 		sf::Color c;
 
 		switch (getData())
@@ -29,12 +40,7 @@ namespace zoper
 			LOG_ERROR("Error value for token: " << getData() << " is not supported");
 			break;
 		}
-		auto this_ = getAsEllipseShape();
-		this_->setFillColor(c);
-		this_->setSize(size);
+		return c;
 	}
 
-	GameBaseTile::~GameBaseTile()
-	{
-	}
 }

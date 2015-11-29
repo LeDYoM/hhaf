@@ -6,15 +6,12 @@
 namespace zoper
 {
 	Player::Player(const lib::vector2du32 &bPosition, const lib::vector2df &size)
-		:lib::board::ITile{ 0 }, 
-		lib::scn::draw::Renderizable{ "player", new lib::scn::draw::EllipseShape },
+		: GameBaseTile{ 0, size, "player" },
 		playerDirection{ Direction::Up }
 	{
 		auto this_ = getAsEllipseShape();
 		this_->setPointCount(3);
-		this_->setFillColor(sf::Color::White);
-		this_->setSize(size);
-
+		this_->setFillColor(getColorForToken());
 		setBoardPosition(bPosition);
 	}
 
