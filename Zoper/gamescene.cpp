@@ -235,9 +235,17 @@ namespace zoper
 		lib::vector2du32 loopPosition{ p_player->boardPosition() };
 		_tokenProcessor(loopDirection, loopPosition, *p_boardModel, [&](const lib::vector2du32& loopPosition)
 		{
-			return true;
-		}, [](lib::board::BoardModel &r_boardModel, const Direction &loopDirection, const lib::vector2du32 &loopPosition)
+			//return !pointInCenter(loopPosition);
+			lib::board::BoardTileData tileType = p_boardModel->getTile(loopPosition).lock()->getData();
+			return p_boardModel->tileEmpty(loopPosition) || tileType == p_player->getData();
+		}, 
+		[](lib::board::BoardModel &r_boardModel, const Direction &loopDirection, const lib::vector2du32 &loopPosition)
 		{
+			if (!r_boardModel.tileEmpty(loopPosition))
+			{
+				lib::board::BoardTileData tileType = r_boardModel.getTile(loopPosition).lock()->getData();
+				
+			}
 		});
 	}
 
