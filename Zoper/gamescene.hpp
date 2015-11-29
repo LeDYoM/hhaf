@@ -66,6 +66,7 @@ namespace zoper
 		const lib::vector2df tileSize() const;
 
 		void movePlayer(const Direction &dir);
+		void launchPlayer();
 
 		void _debugDisplayBoard() const;
 		lib::sptr<lib::board::BoardModel> p_boardModel{ nullptr };

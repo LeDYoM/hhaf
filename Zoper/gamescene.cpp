@@ -162,25 +162,6 @@ namespace zoper
 			r_boardModel.moveTile(loopPosition, dest);
 		});
 
-		/*
-		bool stay;
-		do
-		{
-			// The position of the current token is the current position + the direction of the token zone
-			destPosition = loopDirection.negate().applyToVector(loopPosition);
-			// Exit loop condition: did we arrive to the center or is any of the positions invalid?
-			stay = p_boardModel->validCoords(destPosition);
-			if (stay)
-			{
-				// Move the token
-				p_boardModel->moveTile(loopPosition, destPosition, true);
-			}
-			// The next token to move is in the opossite direction that we moved
-			loopPosition = loopDirection.applyToVector(loopPosition);
-			stay = !pointInCenter(loopPosition) && p_boardModel->validCoords(loopPosition);
-
-		} while (stay);
-		*/
 		// Set the new token
 		addNewToken(lib::vector2du32{ newX, newY }, newToken);
 		_nextTokenPart = (_nextTokenPart + 1) % NUMWAYS;
@@ -222,11 +203,12 @@ namespace zoper
 		auto dir = p_player->getDirectionFromKey(kEvent.code);
 		if (dir.isValid())
 		{
-			if (dir != p_player->currentDirection())
-			{
-				p_player->setCurrentDirection(dir);
-			}
+			p_player->setCurrentDirection(dir);
 			movePlayer(dir);
+		}
+		else if (p_player->isLaunchKey(kEvent.code))
+		{
+			launchPlayer();
 		}
 	}
 
@@ -244,6 +226,11 @@ namespace zoper
 	void GameScene::onKeyReleased(sf::Event::KeyEvent kEvent)
 	{
 		Scene::onKeyReleased(kEvent);
+	}
+
+	void GameScene::launchPlayer()
+	{
+
 	}
 
 	bool GameScene::pointInCenter(const lib::vector2du32 &position) const

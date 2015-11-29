@@ -14,10 +14,10 @@ namespace zoper
 		KeyMapping();
 		virtual ~KeyMapping();
 
-		void load();
 		sf::Keyboard::Key getKey(Direction d) const;
-
 		Direction getDirectionFromKey(sf::Keyboard::Key k) const;
+		sf::Keyboard::Key getLaunchKey() const;
+		bool isLaunchKey(const sf::Keyboard::Key &key) const;
 	private:
 		std::array<sf::Keyboard::Key, Direction::Total + 1> _keys;
 	};

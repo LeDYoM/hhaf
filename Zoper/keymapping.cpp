@@ -16,10 +16,6 @@ namespace zoper
 	{
 	}
 
-	void KeyMapping::load()
-	{
-	}
-
 	sf::Keyboard::Key KeyMapping::getKey(Direction d) const
 	{
 		return _keys[d];
@@ -35,4 +31,15 @@ namespace zoper
 		}
 		return Direction::Invalid;
 	}
+
+	sf::Keyboard::Key KeyMapping::getLaunchKey() const
+	{
+		return _keys[Direction::Total];
+	}
+
+	bool KeyMapping::isLaunchKey(const sf::Keyboard::Key &key) const
+	{
+		return key == getLaunchKey();
+	}
+
 }
