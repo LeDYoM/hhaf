@@ -64,6 +64,8 @@ namespace zoper
 		bool pointInCenter(const lib::vector2du32 &tPosition) const;
 		const lib::vector2df board2Scene(const lib::vector2du32 &bPosition) const;
 		const lib::vector2df tileSize() const;
+		void for_each_token_in_line(const lib::vector2du32 &startPosition, const Direction &direction,
+			std::function<bool(const lib::vector2du32 &, const Direction &)> updatePredicate);
 
 		void movePlayer(const Direction &dir);
 		void launchPlayer();

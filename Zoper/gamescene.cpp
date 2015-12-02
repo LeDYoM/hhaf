@@ -169,6 +169,20 @@ namespace zoper
 		_debugDisplayBoard();
 	}
 
+	void GameScene::for_each_token_in_line(const lib::vector2du32 &startPosition, const Direction &direction,
+		std::function<bool(const lib::vector2du32 &, const Direction &)> updatePredicate)
+	{
+		lib::vector2du32 loopPosition{ startPosition };
+		// Now, we have the data for the new token generated, but first, lets start to move the row or col.
+		bool stay;
+		do
+		{
+			stay &= updatePredicate(loopPosition, direction);
+			loopPosition = direction.negate().applyToVector(loopPosition);
+			stay &= p_boardModel->validCoords(loopPosition);
+		} while (stay);
+	}
+
 	void GameScene::addPlayer()
 	{
 		LOG_DEBUG("Adding player tile at " << _gameData.centerRect.begin.x << "," << _gameData.centerRect.begin.y);
