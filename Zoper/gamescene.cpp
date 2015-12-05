@@ -152,16 +152,21 @@ namespace zoper
 
 		// Now, we have the data for the new token generated, but first, lets start to move the row or col.
 		Direction loopDirection = currentTokenZone.direction.negate();
-		_tokenProcessor(loopDirection, loopPosition, *p_boardModel, [&](const lib::vector2du32& loopPosition)
-		{ 
-			return !pointInCenter(loopPosition);
-		}, [](lib::board::BoardModel &r_boardModel, const Direction &loopDirection, const lib::vector2du32 &loopPosition)
+		for_each_token_in_line(loopPosition, loopDirection, [this](const lib::vector2du32 &loopPosition, const Direction &direction)
 		{
-			auto dest = loopDirection.negate().applyToVector(loopPosition);
 			// TO DO: Check for game over
-			r_boardModel.moveTile(loopPosition, dest);
-		});
+			if (!p_boardModel->tileEmpty(loopPosition))
+			{
+				lib::vector2du32 dest = direction.negate().applyToVector(loopPosition);
+				p_boardModel->moveTile(loopPosition, dest);
 
+				if (pointInCenter(dest))
+				{
+					//game over
+				}
+			}
+			return true;
+		});
 		// Set the new token
 		addNewToken(lib::vector2du32{ newX, newY }, newToken);
 		_nextTokenPart = (_nextTokenPart + 1) % NUMWAYS;
@@ -174,11 +179,11 @@ namespace zoper
 	{
 		lib::vector2du32 loopPosition{ startPosition };
 		// Now, we have the data for the new token generated, but first, lets start to move the row or col.
-		bool stay;
+		bool stay{ true };
 		do
 		{
 			stay &= updatePredicate(loopPosition, direction);
-			loopPosition = direction.negate().applyToVector(loopPosition);
+			loopPosition = direction.applyToVector(loopPosition);
 			stay &= p_boardModel->validCoords(loopPosition);
 		} while (stay);
 	}
@@ -247,6 +252,21 @@ namespace zoper
 		LOG_DEBUG("Launching player");
 		const Direction loopDirection = p_player->currentDirection();
 		lib::vector2du32 loopPosition{ p_player->boardPosition() };
+		lib::board::BoardTileData tokenType = p_player->getData();
+		for_each_token_in_line(loopPosition, loopDirection, [this,tokenType](const lib::vector2du32 &loopPosition, const Direction &direction)
+		{
+			if (!p_boardModel->tileEmpty(loopPosition) && !pointInCenter(loopPosition))
+			{
+				lib::board::BoardTileData currentTokenType = p_boardModel->getTile(loopPosition).lock()->getData();
+				if (currentTokenType != tokenType)
+				{
+					p_player->setData(currentTokenType);
+//					p_boardModel
+				}
+			}
+			return true;
+		});
+		/*
 		_tokenProcessor(loopDirection, loopPosition, *p_boardModel, [&](const lib::vector2du32& loopPosition)
 		{
 			//return !pointInCenter(loopPosition);
@@ -261,6 +281,7 @@ namespace zoper
 				
 			}
 		});
+		*/
 	}
 
 	bool GameScene::pointInCenter(const lib::vector2du32 &position) const

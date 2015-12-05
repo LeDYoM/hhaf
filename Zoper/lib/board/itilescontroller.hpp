@@ -14,9 +14,10 @@ namespace lib
 		class ITile
 		{
 		public:
-			ITile(const BoardTileData data) : _data{ data } {}
+			ITile(const BoardTileData &data) : _data{ data } {}
 			virtual ~ITile() {}
 			inline const BoardTileData &getData() const { return _data; }
+			inline void setData(const BoardTileData &data) { _data = data; }
 		private:
 			BoardTileData _data;
 		};
