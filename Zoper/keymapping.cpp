@@ -10,6 +10,8 @@ namespace zoper
 		{
 			_keys[i] = static_cast<sf::Keyboard::Key>(addConfigInt("key" + std::to_string(i), defaults[i]));
 		}
+
+		_keys[Direction::Invalid] = static_cast<sf::Keyboard::Key>(addConfigInt("key" + std::to_string(Direction::Total), defaults[Direction::Total]));
 	}
 
 	KeyMapping::~KeyMapping()

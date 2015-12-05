@@ -261,7 +261,7 @@ namespace zoper
 				if (currentTokenType != tokenType)
 				{
 					p_player->setData(currentTokenType);
-//					p_boardModel
+					LOG_DEBUG("Player type changed to " << p_player->getData());
 				}
 			}
 			return true;

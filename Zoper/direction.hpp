@@ -27,7 +27,7 @@ namespace zoper
 		operator lib::u8() const { return data; }
 
 		DirectionData value() const { return data; }
-		bool isValid() const { return data <= Invalid; }
+		bool isValid() const { return data < Invalid; }
 
 		static const lib::u8 Total = DirectionData::Invalid;
 
