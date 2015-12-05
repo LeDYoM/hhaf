@@ -286,9 +286,8 @@ namespace zoper
 
 	const lib::vector2df GameScene::board2Scene(const lib::vector2du32 &bPosition) const
 	{
-		const sf::View &view = *(this->getView());
-		sf::Vector2f result{ view.getSize().x / static_cast<float>(p_boardModel->size().x), view.getSize().y / static_cast<float>(p_boardModel->size().y) };
-		return lib::vector2df{ result.x * bPosition.x, result.y * bPosition.y };
+		return lib::vector2df{ (getView()->getSize().x * bPosition.x) / static_cast<float>(p_boardModel->size().x),
+			(getView()->getSize().y * bPosition.y) / static_cast<float>(p_boardModel->size().y) };
 	}
 
 	const lib::vector2df GameScene::tileSize() const
