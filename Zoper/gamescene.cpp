@@ -262,26 +262,11 @@ namespace zoper
 				{
 					p_player->setData(currentTokenType);
 					LOG_DEBUG("Player type changed to " << p_player->getData());
+					return false;
 				}
 			}
 			return true;
 		});
-		/*
-		_tokenProcessor(loopDirection, loopPosition, *p_boardModel, [&](const lib::vector2du32& loopPosition)
-		{
-			//return !pointInCenter(loopPosition);
-			lib::board::BoardTileData tileType = p_boardModel->getTile(loopPosition).lock()->getData();
-			return p_boardModel->tileEmpty(loopPosition) || tileType == p_player->getData();
-		}, 
-		[](lib::board::BoardModel &r_boardModel, const Direction &loopDirection, const lib::vector2du32 &loopPosition)
-		{
-			if (!r_boardModel.tileEmpty(loopPosition))
-			{
-				lib::board::BoardTileData tileType = r_boardModel.getTile(loopPosition).lock()->getData();
-				
-			}
-		});
-		*/
 	}
 
 	bool GameScene::pointInCenter(const lib::vector2du32 &position) const

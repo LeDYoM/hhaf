@@ -20,8 +20,6 @@ namespace zoper
 		void setCurrentDirection(const Direction &nv);
 
 	private:
-		void updateGraphicalDirection();
-
 		lib::vector2du32 _boardPosition;
 		Direction playerDirection;
 	};

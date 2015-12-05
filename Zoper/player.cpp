@@ -28,11 +28,5 @@ namespace zoper
 	{
 		playerDirection = direction;
 		auto this_ = getAsEllipseShape();
-//		this_->setRotation(playerDirection.angle());
-	}
-
-	void Player::updateGraphicalDirection()
-	{
-//		this->getAsEllipseShape()->setRotation();
 	}
 }
