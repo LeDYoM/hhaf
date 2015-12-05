@@ -39,11 +39,17 @@ namespace lib
 
 		void BoardModel::setTile(const lib::vector2du32 &tPosition, WITilePointer newTile)
 		{
-			// By default, we can only set in empty tiles.
 			__ASSERT(tileEmpty(tPosition), "You can only set data in empty tiles");
 
 			_setTile(tPosition, newTile);
 			if (p_tController) p_tController->tileSet(tPosition, newTile);
+		}
+
+		void BoardModel::changeTileData(const vector2du32 &source, const BoardTileData &nv)
+		{
+			__ASSERT(!tileEmpty(source), "You can only change data in not empty tiles");
+//			getTile(source).lock()->
+
 		}
 
 		bool BoardModel::moveTile(const vector2du32 &source, const vector2du32 &dest)

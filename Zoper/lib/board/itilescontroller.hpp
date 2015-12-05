@@ -17,7 +17,6 @@ namespace lib
 			ITile(const BoardTileData &data) : _data{ data } {}
 			virtual ~ITile() {}
 			inline const BoardTileData &getData() const { return _data; }
-			inline void setData(const BoardTileData &data) { _data = data; }
 		private:
 			BoardTileData _data;
 		};
@@ -33,6 +32,7 @@ namespace lib
 
 			virtual void tileSet(const vector2du32 &position, WITilePointer nTile) = 0;
 			virtual void tileMoved(const vector2du32 &position, const vector2du32 &dest, WITilePointer tile) = 0;
+
 
 		};
 	}

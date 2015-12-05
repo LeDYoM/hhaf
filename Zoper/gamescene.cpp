@@ -194,8 +194,6 @@ namespace zoper
 		__ASSERT(!p_player, "Player already initialized");
 		// Create the player instance
 		p_player = lib::sptr<Player>(new Player(lib::vector2du32(_gameData.centerRect.begin),tileSize()));
-		// Set the position in the scene depending on the board position
-		p_player->setPosition(board2Scene(p_player->boardPosition()));
 
 		// Set the radius depending on the scene
 //		p_player->getAsEllipseShape()->setSize(tileSize());
@@ -208,7 +206,7 @@ namespace zoper
 	{
 		LOG_DEBUG("Adding new tile at " << position.x << "," << position.y << " with value " << newToken);
 		// Create a new Tile instance
-		auto newTileToken = lib::sptr<Tile>(new Tile(lib::board::BoardTileData(newToken),tileSize()));
+		lib::sptr<Tile> newTileToken = lib::sptr<Tile>(new Tile(lib::board::BoardTileData(newToken),tileSize()));
 		// Set the position in the scene depending on the board position
 		newTileToken->setPosition(board2Scene(position));
 
@@ -260,7 +258,7 @@ namespace zoper
 				lib::board::BoardTileData currentTokenType = p_boardModel->getTile(loopPosition).lock()->getData();
 				if (currentTokenType != tokenType)
 				{
-					p_player->setData(currentTokenType);
+					p_boardModel->changeTileData(p_player->boardPosition(), currentTokenType);
 					LOG_DEBUG("Player type changed to " << p_player->getData());
 					return false;
 				}
@@ -321,15 +319,6 @@ namespace zoper
 		}
 	}
 
-	void GameScene::tileAppeared(const lib::vector2du32 &position, lib::board::WITilePointer tile)
-	{
-	}
-
-	void GameScene::tileDissapeared(const lib::vector2du32 &position)
-	{
-
-	}
-
 	void GameScene::tileSet(const lib::vector2du32 &position, lib::board::WITilePointer nTile)
 	{
 		lib::sptr<lib::board::ITile> snTile{ nTile };
@@ -337,32 +326,82 @@ namespace zoper
 		if (!snTile)
 		{
 			// Tile disappeared
-			tileDissapeared(position);
+			if (auto ztile = std::dynamic_pointer_cast<Tile>(nTile.lock()))
+			{
+				tokenDissapeared(position);
+			}
+			else if (auto ztile = std::dynamic_pointer_cast<Player>(nTile.lock()))
+			{
+				playerDissapeared(position);
+			}
 		}
 		else
 		{
 			// Tile appeared
-			tileAppeared(position, nTile);
+			if (auto ztile = std::dynamic_pointer_cast<Tile>(nTile.lock()))
+			{
+				tokenAppeared(position, ztile);
+			}
+			else if (auto ztile = std::dynamic_pointer_cast<Player>(nTile.lock()))
+			{
+				// Set the position in the scene depending on the board position
+				playerAppeared(position, ztile);
+			}
 		}
-
-		// The rest (basically set from 0 to 0) should be ignored
 	}
 
 	void GameScene::tileMoved(const lib::vector2du32 &source, const lib::vector2du32 &dest, lib::board::WITilePointer tile)
 	{
-		
 		if (auto ztile = std::dynamic_pointer_cast<Tile>(tile.lock()))
 		{
-			ztile->getAsTransformable()->setPosition(board2Scene(dest));
+			tokenMoved(source, dest, ztile);
 		}
 		else if (auto ztile = std::dynamic_pointer_cast<Player>(tile.lock()))
 		{
-			auto player = ztile->getAsEllipseShape();
-			auto vec = board2Scene(dest);
-			vec += tileSize() / 2.0f;
-			player->setOrigin(tileSize() / 2.0f);
-			player->setPosition(board2Scene(dest) + (tileSize() / 2.0f));
-			player->setRotation(ztile->currentDirection().angle());
+			playerMoved(source, dest, ztile);
 		}
+	}
+
+	void GameScene::tokenChangedValue(const lib::vector2du32 &position, lib::sptr<Tile> tile)
+	{
+
+	}
+
+	void GameScene::tokenMoved(const lib::vector2du32 &source, const lib::vector2du32 &dest, lib::sptr<Tile> tile)
+	{
+		tile->setPosition(board2Scene(dest));
+	}
+
+	void GameScene::tokenAppeared(const lib::vector2du32 &position, lib::sptr<Tile> tile)
+	{
+
+	}
+
+	void GameScene::tokenDissapeared(const lib::vector2du32 &position)
+	{
+
+	}
+
+	void GameScene::playerChangedValue(const lib::vector2du32 &position, lib::sptr<Player> player)
+	{
+
+	}
+
+	void GameScene::playerMoved(const lib::vector2du32 &source, const lib::vector2du32 &dest, lib::sptr<Player> player_)
+	{
+		auto player = player_->getAsEllipseShape();
+		player->setOrigin(tileSize() / 2.0f);
+		player->setPosition(board2Scene(dest) + (tileSize() / 2.0f));
+		player->setRotation(player_->currentDirection().angle());
+	}
+
+	void GameScene::playerAppeared(const lib::vector2du32 &position, lib::sptr<Player> player)
+	{
+		player->setPosition(board2Scene(position));
+	}
+
+	void GameScene::playerDissapeared(const lib::vector2du32 &position)
+	{
+
 	}
 }

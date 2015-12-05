@@ -18,6 +18,7 @@
 namespace zoper
 {
 	class Player;
+	class Tile;
 
 	struct GameData
 	{
@@ -83,13 +84,20 @@ namespace zoper
 		virtual void onKeyPressed(sf::Event::KeyEvent kEvent);
 		virtual void onKeyReleased(sf::Event::KeyEvent kEvent);
 
-		void tileAppeared(const lib::vector2du32 &position, lib::board::WITilePointer tile);
-		void tileDissapeared(const lib::vector2du32 &position);
-
 		// Inherited via ITilesController
 		virtual void tileSet(const lib::vector2du32 &position, lib::board::WITilePointer nTile) override;
 		virtual void tileMoved(const lib::vector2du32 &source, const lib::vector2du32 &dest, lib::board::WITilePointer tile) override;
 
+		// Specializations from ITilesController for our tokens.
+		void tokenChangedValue(const lib::vector2du32 &position, lib::sptr<Tile> tile);
+		void tokenMoved(const lib::vector2du32 &source, const lib::vector2du32 &dest, lib::sptr<Tile> tile);
+		void tokenAppeared(const lib::vector2du32 &position, lib::sptr<Tile> tile);
+		void tokenDissapeared(const lib::vector2du32 &position);
+
+		void playerChangedValue(const lib::vector2du32 &position, lib::sptr<Player> player);
+		void playerMoved(const lib::vector2du32 &source, const lib::vector2du32 &dest, lib::sptr<Player> player);
+		void playerAppeared(const lib::vector2du32 &position, lib::sptr<Player> player);
+		void playerDissapeared(const lib::vector2du32 &position);
 	};
 }
 
