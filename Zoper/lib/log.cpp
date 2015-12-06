@@ -96,4 +96,8 @@ void finishLog()
 #endif
 }
 
+#else
+void initLog() {}
+void finishLog() {}
+
 #endif

@@ -19,6 +19,17 @@
 	#define __ASSERT(cond,x)		if (!(cond)) LOG_ERROR(x<< "\n\tIn file "<<__FILE__<< " and line: "<<__LINE__<<"\n\tFunction: "<<__FUNCDNAME__ );
 	#define __ASSERTERROR(cond,x)	__ASSERT(cond,x)
 
-#endif
+#else
+	#define LOG_DEBUG(x)
+	#define LOG_ERROR(x)
+	#define LOG_CONSTRUCT(x)
+	#define LOG_DESTRUCT(x)
+	#define LOG_CONSTRUCT_NOPARAMS
+	#define LOG_DESTRUCT_NOPARAMS
 
+	#define __ASSERT(cond,x)
+	#define __ASSERTERROR(cond,x)
+#endif
+void initLog();
+void finishLog();
 #endif
