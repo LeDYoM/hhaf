@@ -256,7 +256,11 @@ namespace zoper
 			if (!p_boardModel->tileEmpty(loopPosition) && !pointInCenter(loopPosition))
 			{
 				lib::board::BoardTileData currentTokenType = p_boardModel->getTile(loopPosition).lock()->getData();
-				if (currentTokenType != tokenType)
+				if (currentTokenType == tokenType)
+				{
+					p_boardModel->deleteTile(loopPosition);
+				}
+				else
 				{
 					p_boardModel->changeTileData(p_player->boardPosition(), currentTokenType);
 					LOG_DEBUG("Player type changed to " << p_player->getData());
@@ -319,34 +323,29 @@ namespace zoper
 		}
 	}
 
-	void GameScene::tileSet(const lib::vector2du32 &position, lib::board::WITilePointer nTile)
+	void GameScene::tileAdded(const lib::vector2du32 &position, lib::board::WITilePointer nTile)
 	{
-		lib::sptr<lib::board::ITile> snTile{ nTile };
-
-		if (!snTile)
+		// Tile appeared
+		if (auto ztile = std::dynamic_pointer_cast<Tile>(nTile.lock()))
 		{
-			// Tile disappeared
-			if (auto ztile = std::dynamic_pointer_cast<Tile>(nTile.lock()))
-			{
-				tokenDissapeared(position);
-			}
-			else if (auto ztile = std::dynamic_pointer_cast<Player>(nTile.lock()))
-			{
-				playerDissapeared(position);
-			}
+			tokenAppeared(position, ztile);
 		}
-		else
+		else if (auto ztile = std::dynamic_pointer_cast<Player>(nTile.lock()))
 		{
-			// Tile appeared
-			if (auto ztile = std::dynamic_pointer_cast<Tile>(nTile.lock()))
-			{
-				tokenAppeared(position, ztile);
-			}
-			else if (auto ztile = std::dynamic_pointer_cast<Player>(nTile.lock()))
-			{
-				// Set the position in the scene depending on the board position
-				playerAppeared(position, ztile);
-			}
+			// Set the position in the scene depending on the board position
+			playerAppeared(position, ztile);
+		}
+	}
+
+	void GameScene::tileDeleted(const lib::vector2du32 &position, lib::board::WITilePointer nTile)
+	{
+		if (auto ztile = std::dynamic_pointer_cast<Tile>(nTile.lock()))
+		{
+			tokenDissapeared(position,ztile);
+		}
+		else if (auto ztile = std::dynamic_pointer_cast<Player>(nTile.lock()))
+		{
+			playerDissapeared(position,ztile);
 		}
 	}
 
@@ -362,9 +361,17 @@ namespace zoper
 		}
 	}
 
-	void GameScene::tokenChangedValue(const lib::vector2du32 &position, lib::sptr<Tile> tile)
+	void GameScene::tileChanged(const lib::vector2du32 &position, lib::board::WITilePointer nTile, 
+		const lib::board::BoardTileData &ov, const lib::board::BoardTileData &nv)
 	{
-
+		if (auto ztile = std::dynamic_pointer_cast<Tile>(nTile.lock()))
+		{
+			tokenChangedValue(position, ztile, ov, nv);
+		}
+		else if (auto ztile = std::dynamic_pointer_cast<Player>(nTile.lock()))
+		{
+			playerChangedValue(position, ztile, ov, nv);
+		}
 	}
 
 	void GameScene::tokenMoved(const lib::vector2du32 &source, const lib::vector2du32 &dest, lib::sptr<Tile> tile)
@@ -377,14 +384,16 @@ namespace zoper
 
 	}
 
-	void GameScene::tokenDissapeared(const lib::vector2du32 &position)
+	void GameScene::tokenDissapeared(const lib::vector2du32 &position, lib::sptr<Tile> tile)
 	{
-
+		LOG_DEBUG("Deleting token " << tile->name() << " from scene");
+		removeRenderizable(tile);
 	}
 
-	void GameScene::playerChangedValue(const lib::vector2du32 &position, lib::sptr<Player> player)
+	void GameScene::tokenChangedValue(const lib::vector2du32 &position, lib::sptr<Tile> tile,
+		const lib::board::BoardTileData &ov, const lib::board::BoardTileData &nv)
 	{
-
+		tile->getAsEllipseShape()->setFillColor(tile->getColorForToken());
 	}
 
 	void GameScene::playerMoved(const lib::vector2du32 &source, const lib::vector2du32 &dest, lib::sptr<Player> player_)
@@ -400,8 +409,14 @@ namespace zoper
 		player->setPosition(board2Scene(position));
 	}
 
-	void GameScene::playerDissapeared(const lib::vector2du32 &position)
+	void GameScene::playerDissapeared(const lib::vector2du32 &position, lib::sptr<Player> player)
 	{
 
+	}
+
+	void GameScene::playerChangedValue(const lib::vector2du32 &position, lib::sptr<Player> player,
+		const lib::board::BoardTileData &ov, const lib::board::BoardTileData &nv)
+	{
+		player->getAsEllipseShape()->setFillColor(player->getColorForToken());
 	}
 }

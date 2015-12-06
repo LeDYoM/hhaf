@@ -75,7 +75,7 @@ namespace zoper
 		lib::sptr<lib::board::BoardModel> p_boardModel{ nullptr };
 		GameData _gameData;
 		sf::Clock clock;
-		lib::s32 _millisBetweenTokens{ 100 };
+		lib::s32 _millisBetweenTokens{ 500 };
 		lib::u8 _nextTokenPart{ 0 };
 		lib::sptr<Player> p_player{ nullptr };
 		TokenProcessor _tokenProcessor;
@@ -85,19 +85,24 @@ namespace zoper
 		virtual void onKeyReleased(sf::Event::KeyEvent kEvent);
 
 		// Inherited via ITilesController
-		virtual void tileSet(const lib::vector2du32 &position, lib::board::WITilePointer nTile) override;
+		virtual void tileAdded(const lib::vector2du32 &position, lib::board::WITilePointer nTile) override;
+		virtual void tileDeleted(const lib::vector2du32 &position, lib::board::WITilePointer nTile) override;
 		virtual void tileMoved(const lib::vector2du32 &source, const lib::vector2du32 &dest, lib::board::WITilePointer tile) override;
+		virtual void tileChanged(const lib::vector2du32 &position, lib::board::WITilePointer nTile, 
+			const lib::board::BoardTileData &ov, const lib::board::BoardTileData &nv) override;
 
 		// Specializations from ITilesController for our tokens.
-		void tokenChangedValue(const lib::vector2du32 &position, lib::sptr<Tile> tile);
+		void tokenChangedValue(const lib::vector2du32 &position, lib::sptr<Tile> tile, 
+			const lib::board::BoardTileData &ov, const lib::board::BoardTileData &nv);
 		void tokenMoved(const lib::vector2du32 &source, const lib::vector2du32 &dest, lib::sptr<Tile> tile);
 		void tokenAppeared(const lib::vector2du32 &position, lib::sptr<Tile> tile);
-		void tokenDissapeared(const lib::vector2du32 &position);
+		void tokenDissapeared(const lib::vector2du32 &position, lib::sptr<Tile> tile);
 
-		void playerChangedValue(const lib::vector2du32 &position, lib::sptr<Player> player);
+		void playerChangedValue(const lib::vector2du32 &position, lib::sptr<Player> player,
+			const lib::board::BoardTileData &ov, const lib::board::BoardTileData &nv);
 		void playerMoved(const lib::vector2du32 &source, const lib::vector2du32 &dest, lib::sptr<Player> player);
 		void playerAppeared(const lib::vector2du32 &position, lib::sptr<Player> player);
-		void playerDissapeared(const lib::vector2du32 &position);
+		void playerDissapeared(const lib::vector2du32 &position, lib::sptr<Player> player);
 	};
 }
 

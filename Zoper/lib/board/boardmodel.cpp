@@ -42,14 +42,25 @@ namespace lib
 			__ASSERT(tileEmpty(tPosition), "You can only set data in empty tiles");
 
 			_setTile(tPosition, newTile);
-			if (p_tController) p_tController->tileSet(tPosition, newTile);
+			if (p_tController) p_tController->tileAdded(tPosition, newTile);
+		}
+
+		void BoardModel::deleteTile(const vector2du32 &position)
+		{
+			__ASSERT(!tileEmpty(position), "You can only delete not empty tiles");
+			WITilePointer current = getTile(position);
+			_tiles[position.x][position.y].reset();
+			if (p_tController) p_tController->tileDeleted(position,current);
 		}
 
 		void BoardModel::changeTileData(const vector2du32 &source, const BoardTileData &nv)
 		{
 			__ASSERT(!tileEmpty(source), "You can only change data in not empty tiles");
-//			getTile(source).lock()->
 
+			auto tile = getTile(source).lock();
+			BoardTileData ov = tile->getData();
+			tile->setData(nv);
+			if (p_tController) p_tController->tileChanged(source, tile, ov,nv);
 		}
 
 		bool BoardModel::moveTile(const vector2du32 &source, const vector2du32 &dest)

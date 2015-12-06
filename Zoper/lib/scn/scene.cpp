@@ -98,6 +98,28 @@ namespace lib
 			return newElement;
 		}
 
+		bool Scene::removeRenderizable(sptr<draw::Renderizable> element)
+		{
+			auto i = v_nodes.begin();
+			bool found = false;
+
+			while (i != v_nodes.end() && !found)
+			{
+				if ((*i).get() == element.get())
+				{
+					i = v_nodes.erase(i);
+					found = true;
+				}
+				else
+				{
+					++i;
+				}
+			}
+
+			LOG_DEBUG("Element was" << (found ? "" : " not ") << " found. Number of left references: " << element.use_count());
+			return found;
+		}
+
 		u32 Scene::drawAll()
 		{
 			auto window = p_scnManager->parentWindow();
@@ -116,6 +138,5 @@ namespace lib
 		{
 			return p_scnManager->parentWindow()->getRandomNumer(max, min);
 		}
-
 	}
 }

@@ -19,6 +19,7 @@ namespace lib
 			WITilePointer getTile(const vector2du32 &position) const;
 			inline bool tileEmpty(const vector2du32 &position) const { return getTile(position).lock() == nullptr; }
 			void setTile(const vector2du32 &position, WITilePointer newTile);
+			void deleteTile(const vector2du32 &position);
 			bool moveTile(const vector2du32 &source, const vector2du32 &dest);
 			void changeTileData(const vector2du32 &source, const BoardTileData &nv);
 
