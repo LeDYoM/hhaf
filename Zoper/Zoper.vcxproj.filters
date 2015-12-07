@@ -149,9 +149,6 @@
     <ClInclude Include="lib\scn\resourcemanager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="tokenprocessor.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="gamebasetile.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
