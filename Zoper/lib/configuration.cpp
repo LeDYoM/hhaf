@@ -15,7 +15,7 @@ namespace lib
 		return Configuration::CMapLine(*first, *last);
 	}
 
-	Configuration::Configuration(const std::string file)
+	Configuration::Configuration(const std::string &file)
 	{
 		CDataMap::iterator fIterator{ _data.find(file) };
 
@@ -51,6 +51,12 @@ namespace lib
 			_data[file] = cMap;
 			currentMap = &(_data[file]);
 		}
+	}
+
+	bool Configuration::configFileExists(const std::string &file)
+	{
+		std::ifstream f(file);
+		return f.is_open();
 	}
 
 	s32 Configuration::getAsInt(const std::string &name) const

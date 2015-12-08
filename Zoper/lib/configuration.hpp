@@ -12,7 +12,7 @@ namespace lib
 	{
 	public:
 		Configuration() = delete;
-		Configuration(const std::string file);
+		Configuration(const std::string &file);
 		Configuration(const Configuration &other) = delete;
 
 		virtual ~Configuration() {}
@@ -27,6 +27,7 @@ namespace lib
 
 		std::string addConfigProperty(const std::string &name, const std::string &value, bool overwrite = false);
 		s32 addConfigInt(const std::string &name, int value, bool overwrite = false);
+		bool configFileExists(const std::string &file);
 
 	private:
 		const std::string currentFile;

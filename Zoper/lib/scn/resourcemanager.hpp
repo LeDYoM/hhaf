@@ -2,13 +2,14 @@
 #define __LIB_RESOURCEMANAGER_HPP__
 
 #include "../types.hpp"
+#include "../configuration.hpp"
 #include <SFML/Graphics/Font.hpp>
 
 namespace lib
 {
 	namespace scn
 	{
-		class ResourceManager
+		class ResourceManager : public Configuration
 		{
 		public:
 			ResourceManager();
