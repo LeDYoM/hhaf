@@ -15,18 +15,19 @@ namespace lib
 		return Configuration::CMapLine(*first, *last);
 	}
 
-	Configuration::Configuration(const std::string file, bool overwrite /*= false*/)
-		: _overwrite{overwrite}
+	Configuration::Configuration(const std::string file)
 	{
 		CDataMap::iterator fIterator{ _data.find(file) };
 
 		if (fIterator != _data.end())
 		{
 			// Configuration file already in use.
+			LOG_DESTRUCT("Map data for file " << file << " found. Using it");
 			currentMap = &(fIterator->second);
 		}
 		else
 		{
+			LOG_DESTRUCT("Map data for file " << file << " not created. Trying to read file");
 			CMap cMap;
 
 			std::ifstream f(file);
@@ -39,14 +40,16 @@ namespace lib
 					f >> line;
 					CMapLine lineData(split(line, "="));
 					cMap[lineData.first] = lineData.second;
+					LOG_DEBUG("Adding key" << lineData.first << " with value " << lineData.second);
 				}
 			}
-
-			if (cMap.size() > 0)
+			else
 			{
-				_data[file] = cMap;
-				currentMap = &(_data[file]);
+				LOG_DEBUG("File " << file << " not found. Assosiating empty data to file");
 			}
+
+			_data[file] = cMap;
+			currentMap = &(_data[file]);
 		}
 	}
 
@@ -66,9 +69,9 @@ namespace lib
 		return std::string();
 	}
 
-	std::string Configuration::addConfigProperty(const std::string & name, const std::string & value)
+	std::string Configuration::addConfigProperty(const std::string & name, const std::string & value, bool overwrite)
 	{
-		if (_overwrite)
+		if (overwrite)
 		{
 			(*currentMap)[name] = value;
 		}
@@ -87,7 +90,7 @@ namespace lib
 		return value;
 	}
 
-	s32 Configuration::addConfigInt(const std::string & name, int value)
+	s32 Configuration::addConfigInt(const std::string & name, int value, bool overwrite)
 	{
 		return std::stoi(addConfigProperty(name, std::to_string(value)));
 	}

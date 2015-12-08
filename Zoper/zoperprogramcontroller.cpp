@@ -5,6 +5,7 @@
 namespace zoper
 {
 	ZoperProgramController::ZoperProgramController()
+		: Configuration("config.cfg")
 	{
 	}
 

@@ -11,7 +11,7 @@ namespace lib
 	class Configuration
 	{
 	public:
-		Configuration(const std::string file, bool overwrite = false);
+		Configuration(const std::string file);
 		virtual ~Configuration() {}
 
 		s32 getAsInt(const std::string &name) const;
@@ -21,14 +21,10 @@ namespace lib
 		typedef std::pair<std::string, std::string> CMapLine;
 		typedef std::map<std::string, CMap> CDataMap;
 
-		std::string addConfigProperty(const std::string &name, const std::string &value);
-		s32 addConfigInt(const std::string &name, int value);
-
-		inline bool overwrite() const { return _overwrite; }
-		inline void setOverwrite(bool nv) { _overwrite = nv; }
+		std::string addConfigProperty(const std::string &name, const std::string &value, bool overwrite = false);
+		s32 addConfigInt(const std::string &name, int value, bool overwrite = false);
 
 	private:
-		bool _overwrite;
 		const std::string currentFile;
 		CMap *currentMap;
 		static CDataMap _data;

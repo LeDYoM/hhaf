@@ -17,7 +17,7 @@
 namespace zoper
 {
 	GameScene::GameScene()
-		: Scene("GameScene")
+		: Scene("GameScene"), Configuration("config.cfg")
 	{
 		_gameData.size.x = 18;
 		_gameData.size.y = 12;
