@@ -14,6 +14,7 @@ namespace lib
 	}
 	namespace scn
 	{
+		class ResourceManager;
 		class Scene;
 		class SceneManager
 		{
@@ -32,6 +33,7 @@ namespace lib
 
 			void onKeyPressed(sf::Event::KeyEvent kEvent);
 			void onKeyReleased(sf::Event::KeyEvent kEvent);
+//			uptr<ResourceManager> &resourceManager() { return _resourceManager; }
 		private:
 			void setScene(sptr<Scene> scene);
 
@@ -41,6 +43,7 @@ namespace lib
 			bool b_lock{ false };
 			sptr<Scene> _nextScene{ nullptr };
 			core::Window *p_parentWindow;
+//			uptr<ResourceManager> _resourceManager;
 		};
 	}
 }

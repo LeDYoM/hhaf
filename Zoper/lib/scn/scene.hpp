@@ -25,6 +25,7 @@ namespace lib
 		}
 
 		class SceneManager;
+		class ResourceManager;
 
 		class Scene : public lib::core::HasName
 		{
@@ -51,6 +52,7 @@ namespace lib
 			bool removeRenderizable(sptr<draw::Renderizable> element);
 
 			u32 getRandomNumer(u32 max = 1, u32 min = 0);
+//			uptr<ResourceManager> &resourceManager();
 		protected:
 
 			void updateView();

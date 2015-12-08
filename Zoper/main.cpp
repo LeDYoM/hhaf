@@ -6,6 +6,7 @@
 
 #include <SFML/Window.hpp>
 
+/*
 int main2(int argc, char* argv[])
 {
 	installMemManager();
@@ -28,7 +29,7 @@ int main2(int argc, char* argv[])
 	finishMemManager();
 	return 0;
 }
-
+*/
 
 int main(int argc, char* argv[])
 {

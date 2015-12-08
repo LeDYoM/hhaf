@@ -2,7 +2,7 @@
 
 namespace zoper
 {
-	KeyMapping::KeyMapping() : lib::Configuration{ false }
+	KeyMapping::KeyMapping() : lib::Configuration("config.cfg")
 	{
 		std::array<sf::Keyboard::Key, Direction::Total + 1> defaults{ sf::Keyboard::Key::Left,sf::Keyboard::Key::Right,sf::Keyboard::Key::Up,sf::Keyboard::Key::Down,sf::Keyboard::Key::Space };
 
@@ -28,7 +28,7 @@ namespace zoper
 		{
 			if (_keys[i] == k)
 			{
-				return Direction(i);
+				return Direction(static_cast<Direction>(i));
 			}
 		}
 		return Direction::Invalid;

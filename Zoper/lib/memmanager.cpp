@@ -7,6 +7,14 @@
 
 static int crtDebugMemAllocHook(int allocType, void *userData, size_t size, int blockType, long requestIndex, const unsigned char *fileName, int lineIndex){
 
+	lineIndex;
+	fileName;
+	blockType;
+	blockType;
+	size;
+	userData;
+	allocType;
+
 	if (requestIndex == 316) //break;
 
 		return true;

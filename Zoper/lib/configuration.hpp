@@ -11,9 +11,13 @@ namespace lib
 	class Configuration
 	{
 	public:
+		Configuration() = delete;
 		Configuration(const std::string file);
+		Configuration(const Configuration &other) = delete;
+
 		virtual ~Configuration() {}
 
+		Configuration &operator=(const Configuration &other) = delete;
 		s32 getAsInt(const std::string &name) const;
 		std::string getAsString(const std::string &name) const;
 
@@ -29,7 +33,6 @@ namespace lib
 		CMap *currentMap;
 		static CDataMap _data;
 	};
-
 }
 
 #endif

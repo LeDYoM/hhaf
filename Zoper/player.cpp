@@ -27,6 +27,5 @@ namespace zoper
 	void Player::setCurrentDirection(const Direction & direction)
 	{
 		playerDirection = direction;
-		auto this_ = getAsEllipseShape();
 	}
 }
