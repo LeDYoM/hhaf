@@ -10,9 +10,12 @@ namespace lib
 
 	Configuration::CMapLine split(const std::string& input, const std::string& regex) {
 		// passing -1 as the sub match index parameter performs splitting
-		std::sregex_token_iterator first(input.begin(), input.end(), std::regex(regex), -1),
-			last;
-		return Configuration::CMapLine(*first, *last);
+		if (input.find(regex[0]) != std::string::npos)
+		{
+			std::sregex_token_iterator first(input.begin(), input.end(), std::regex(regex), -1), last;
+			return Configuration::CMapLine(*first, *last);
+		}
+		return Configuration::CMapLine(input, "");
 	}
 
 	Configuration::Configuration(const std::string &file)
@@ -38,9 +41,12 @@ namespace lib
 				{
 					std::string line;
 					f >> line;
-					CMapLine lineData(split(line, "="));
-					cMap[lineData.first] = lineData.second;
-					LOG_DEBUG("Adding key" << lineData.first << " with value " << lineData.second);
+					if (line.size() > 0)
+					{
+						CMapLine lineData(split(line, "="));
+						cMap[lineData.first] = lineData.second;
+						LOG_DEBUG("Adding key" << lineData.first << " with value " << lineData.second);
+					}
 				}
 			}
 			else
