@@ -59,6 +59,11 @@ namespace lib
 		return f.is_open();
 	}
 
+	void Configuration::for_each_property(std::function<void(const CMapLine&)> callback)
+	{
+		std::for_each(currentMap->begin(), currentMap->end(), callback);
+	}
+
 	s32 Configuration::getAsInt(const std::string &name) const
 	{
 		return std::stoi(getAsString(name));

@@ -4,20 +4,23 @@
 #include "../types.hpp"
 #include "../configuration.hpp"
 #include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/Texture.hpp>
 
 namespace lib
 {
 	namespace scn
 	{
+		class Resource;
+
 		class ResourceManager : public Configuration
 		{
 		public:
-			ResourceManager();
+			ResourceManager(const std::string &resourceFile);
 			virtual ~ResourceManager();
-			sptr<sf::Font> getFont() const;
+			uptr<Resource> &getResource(const std::string &rid);
 
 		private:
-			std::map<std::string, sptr<sf::Font>> fonts;
+			std::map<std::string, uptr<Resource>> resources;
 
 		};
 	}

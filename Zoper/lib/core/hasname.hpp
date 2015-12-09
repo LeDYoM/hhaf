@@ -21,6 +21,7 @@ namespace lib
 		{
 		public:
 			HasName(const std::string name) :_name(name) {}
+			HasName(HasName &&other) { _name = std::move(other._name); }
 			virtual ~HasName() {}
 			
 			virtual const std::string name() const { return _name; }

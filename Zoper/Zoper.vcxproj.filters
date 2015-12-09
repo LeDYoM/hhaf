@@ -78,6 +78,9 @@
     <ClCompile Include="gamebasetile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="lib\scn\resource.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="zoperprogramcontroller.hpp">
@@ -150,6 +153,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="gamebasetile.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\scn\resource.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

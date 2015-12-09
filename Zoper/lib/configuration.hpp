@@ -4,6 +4,7 @@
 #include <string>
 #include <map>
 #include <fstream>
+#include <functional>
 #include "types.hpp"
 
 namespace lib
@@ -28,6 +29,8 @@ namespace lib
 		std::string addConfigProperty(const std::string &name, const std::string &value, bool overwrite = false);
 		s32 addConfigInt(const std::string &name, int value, bool overwrite = false);
 		bool configFileExists(const std::string &file);
+
+		void for_each_property(std::function<void(const CMapLine&)> callback);
 
 	private:
 		const std::string currentFile;

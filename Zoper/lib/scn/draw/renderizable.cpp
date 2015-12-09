@@ -53,8 +53,31 @@ namespace lib
 
 			Renderizable::~Renderizable()
 			{
-				LOG_DESTRUCT("Name: " << name());
-				delete _drawNodeData.text;
+				switch (_activeDrawNode)
+				{
+				default:
+				case ActiveDrawNode::Empty:
+					__ASSERT(!_drawNodeData.text, "Empty draw node data containing data at deletion time");
+					LOG_DESTRUCT("Name: " << name() << " and type <not defined>");
+					delete _drawNodeData.text;
+					break;
+				case ActiveDrawNode::Text:
+					LOG_DESTRUCT("Name: " << name() << " and type Text");
+					delete _drawNodeData.text;
+					break;
+				case ActiveDrawNode::Sprite:
+					LOG_DESTRUCT("Name: " << name() << " and type Sprite");
+					delete _drawNodeData.sprite;
+					break;
+				case ActiveDrawNode::CircleShape:
+					LOG_DESTRUCT("Name: " << name() << " and type CircleShape");
+					delete _drawNodeData.circleShape;
+					break;
+				case ActiveDrawNode::EllipseShape:
+					LOG_DESTRUCT("Name: " << name() << " and type EllipseShape");
+					delete _drawNodeData.ellipseShape;
+					break;
+				}
 			}
 		}
 	}
