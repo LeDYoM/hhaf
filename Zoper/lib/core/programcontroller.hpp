@@ -26,6 +26,7 @@ namespace lib
 			
 			virtual void onInit()=0;
 			virtual std::vector<sptr<lib::scn::Scene>> scenesVector() = 0;
+			virtual std::string resourceFile() { return ""; }
 
 			void start();
 			int loop();

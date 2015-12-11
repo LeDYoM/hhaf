@@ -19,7 +19,7 @@ namespace lib
 		class SceneManager
 		{
 		public:
-			SceneManager(core::Window *pParentWindow);
+			SceneManager(core::Window *pParentWindow, const std::string &resFile="");
 			virtual ~SceneManager();
 
 			void addScene(sptr<Scene> newScene);

@@ -8,13 +8,13 @@ namespace lib
 {
 	namespace scn
 	{
-		SceneManager::SceneManager(core::Window *pParentWindow)
+		SceneManager::SceneManager(core::Window *pParentWindow, const std::string &resFile)
 		{
 			LOG_CONSTRUCT_NOPARAMS;
 			p_parentWindow = pParentWindow;
 			__ASSERT(p_parentWindow, "Cannot create a scene manager from null window");
 
-			_resourceManager = std::make_unique<ResourceManager>("res.cfg");
+			_resourceManager = std::make_unique<ResourceManager>(resFile);
 		}
 
 		SceneManager::~SceneManager()

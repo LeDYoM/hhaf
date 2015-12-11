@@ -28,4 +28,8 @@ namespace zoper
 	{
 		return{ lib::sptr<lib::scn::Scene>(new MenuScene), lib::sptr<lib::scn::Scene>(new GameScene) };
 	}
+	std::string ZoperProgramController::resourceFile()
+	{
+		return "res.cfg";
+	}
 }

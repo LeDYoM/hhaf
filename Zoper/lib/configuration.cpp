@@ -8,14 +8,34 @@ namespace lib
 {
 	Configuration::CDataMap Configuration::_data;
 
-	Configuration::CMapLine split(const std::string& input, const std::string& regex) {
+	std::vector<std::string> split_helper(const std::string& input, const std::string& regex)
+	{
 		// passing -1 as the sub match index parameter performs splitting
 		if (input.find(regex[0]) != std::string::npos)
 		{
-			std::sregex_token_iterator first(input.begin(), input.end(), std::regex(regex), -1), last;
-			return Configuration::CMapLine(*first, *last);
+			std::regex re(regex);
+			std::sregex_token_iterator first(input.begin(), input.end(), re, -1), last;
+			return{ first,last };
 		}
-		return Configuration::CMapLine(input, "");
+		return{ };
+	}
+
+	Configuration::CMapLine split(const std::string& input, const std::string& regex)
+	{
+		auto splitted = split_helper(input, regex);
+
+		if (splitted.size() < 1)
+		{
+			return { "","" };
+		}
+		else if (splitted.size() < 2)
+		{
+			return{ splitted[0],"" };
+		}
+		else
+		{
+			return{ splitted[0],splitted[1] };
+		}
 	}
 
 	Configuration::Configuration(const std::string &file)
