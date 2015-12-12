@@ -1,7 +1,6 @@
 #include "configuration.hpp"
 #include "log.hpp"
 
-#include <vector>
 #include <regex>
 
 namespace lib
@@ -38,6 +37,22 @@ namespace lib
 		}
 	}
 
+	std::vector<std::string> Configuration::splitString(const std::string &input, const char separator)
+	{
+		std::string rest{ input };
+		std::vector<std::string> result;
+
+		while (rest.find(separator) != std::string::npos)
+		{
+			auto tResult = split_helper(input, std::string{ separator });
+			rest = tResult[1];
+			result.push_back(tResult[0]);
+		}
+
+		result.push_back(rest);
+		return result;
+	}
+
 	Configuration::Configuration(const std::string &file)
 	{
 		CDataMap::iterator fIterator{ _data.find(file) };
@@ -45,12 +60,12 @@ namespace lib
 		if (fIterator != _data.end())
 		{
 			// Configuration file already in use.
-			LOG_DESTRUCT("Map data for file " << file << " found. Using it");
+			LOG_DEBUG("Map data for file " << file << " found. Using it");
 			currentMap = &(fIterator->second);
 		}
 		else
 		{
-			LOG_DESTRUCT("Map data for file " << file << " not created. Trying to read file");
+			LOG_DEBUG("Map data for file " << file << " not created. Trying to read file");
 			CMap cMap;
 
 			std::ifstream f(file);

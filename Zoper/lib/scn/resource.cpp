@@ -24,7 +24,7 @@ namespace lib
 
 				sf::Font *font = new sf::Font();
 				_resourceData.font = font;
-				rType = ResourceType::Font;
+				_resourceType = ResourceType::Font;
 
 				if (!(_isValid = font->loadFromFile(file)))
 				{
@@ -37,7 +37,7 @@ namespace lib
 
 				sf::Texture *texture = new sf::Texture();
 				_resourceData.texture = texture;
-				rType = ResourceType::Texture;
+				_resourceType = ResourceType::Texture;
 
 				if (!(_isValid = texture->loadFromFile(file)))
 				{

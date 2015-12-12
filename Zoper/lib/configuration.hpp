@@ -5,6 +5,7 @@
 #include <map>
 #include <fstream>
 #include <functional>
+#include <vector>
 #include "types.hpp"
 
 namespace lib
@@ -31,7 +32,8 @@ namespace lib
 		bool configFileExists(const std::string &file);
 
 		void for_each_property(std::function<void(const CMapLine&)> callback);
-
+	protected:
+		std::vector<std::string> splitString(const std::string &input, const char separator);
 	private:
 		const std::string currentFile;
 		CMap *currentMap;
