@@ -68,14 +68,6 @@ namespace zoper
 		void launchPlayer();
 
 		void _debugDisplayBoard() const;
-		lib::sptr<lib::board::BoardModel> p_boardModel{ nullptr };
-		GameData _gameData;
-		sf::Clock clock;
-		lib::s32 _millisBetweenTokens{ 500 };
-		lib::u8 _nextTokenPart{ 0 };
-		lib::sptr<Player> p_player{ nullptr };
-		lib::sptr<lib::scn::draw::Renderizable> _scoreText{ nullptr };
-		lib::sptr<lib::scn::draw::Renderizable> _scoreDisplay{ nullptr };
 
 		void addPlayer();
 		virtual void onKeyPressed(sf::Event::KeyEvent kEvent);
@@ -100,6 +92,19 @@ namespace zoper
 		void playerMoved(const lib::vector2du32 &source, const lib::vector2du32 &dest, lib::sptr<Player> player);
 		void playerAppeared(const lib::vector2du32 &position, lib::sptr<Player> player);
 		void playerDissapeared(const lib::vector2du32 &position, lib::sptr<Player> player);
+
+		// Properties
+		lib::sptr<lib::board::BoardModel> p_boardModel{ nullptr };
+		GameData _gameData;
+		sf::Clock clock;
+		lib::s32 _millisBetweenTokens{ 500 };
+		lib::u8 _nextTokenPart{ 0 };
+
+		// Nodes from the scene
+		lib::sptr<Player> p_player{ nullptr };
+		lib::sptr<lib::scn::draw::Renderizable> _scoreText{ nullptr };
+		lib::sptr<lib::scn::draw::Renderizable> _scoreDisplay{ nullptr };
+
 	};
 }
 
