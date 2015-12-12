@@ -258,13 +258,16 @@ namespace zoper
 		const Direction loopDirection = p_player->currentDirection();
 		lib::vector2du32 loopPosition{ p_player->boardPosition() };
 		lib::board::BoardTileData tokenType = p_player->getData();
-		for_each_token_in_line(loopPosition, loopDirection, [this,tokenType](const lib::vector2du32 &loopPosition, const Direction &direction)
+		lib::u32 inARow{ 0 };
+		for_each_token_in_line(loopPosition, loopDirection, [this,tokenType,&inARow](const lib::vector2du32 &loopPosition, const Direction &direction)
 		{
 			if (!p_boardModel->tileEmpty(loopPosition) && !pointInCenter(loopPosition))
 			{
 				lib::board::BoardTileData currentTokenType = p_boardModel->getTile(loopPosition).lock()->getData();
 				if (currentTokenType == tokenType)
 				{
+					++inARow;
+					increaseScore(inARow*10);
 					p_boardModel->deleteTile(loopPosition);
 				}
 				else
@@ -426,4 +429,13 @@ namespace zoper
 	{
 		player->getAsEllipseShape()->setFillColor(player->getColorForToken());
 	}
+
+	void GameScene::increaseScore(lib::u32 scoreIncrement)
+	{
+		_score += scoreIncrement;
+		std::string result{ std::to_string(_score) };
+		while (result.size() < 5) result = "0" + result;
+		_scoreDisplay->getAsText()->setString(result);
+	}
+
 }

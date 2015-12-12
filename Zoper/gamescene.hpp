@@ -56,6 +56,7 @@ namespace zoper
 		inline const GameData &getGameData() const { return _gameData; };
 
 	private:
+		void increaseScore(lib::u32 scoreIncrement);
 		void generateNextToken();
 		void addNewToken(const lib::vector2du32 &tPosition, lib::u32 newToken);
 		bool pointInCenter(const lib::vector2du32 &tPosition) const;
@@ -98,6 +99,7 @@ namespace zoper
 		GameData _gameData;
 		sf::Clock clock;
 		lib::s32 _millisBetweenTokens{ 500 };
+		lib::u32 _score{ 0 };
 		lib::u8 _nextTokenPart{ 0 };
 
 		// Nodes from the scene
