@@ -22,15 +22,18 @@ void initLog()
 #endif
 }
 
-void commitLog(const char *str)
+void commitLog(const std::string &str)
 {
 #ifdef __LOGFILE__
 	if (logFile.is_open())
 		logFile << str;
 #endif
-	std::cout << str;
+	if (str.find("Error: ") == 0)
+		std::cerr << str;
+	else
+		std::cout << str;
 #if defined(_MSC_VER) || defined(__BORLANDC__)
-	OutputDebugString(str);
+	OutputDebugString(str.c_str());
 #endif
 }
 
@@ -70,7 +73,7 @@ void commitLog(const char *str)
 				while (!logQueue.empty())
 				{
 					const std::string &str = logQueue.front();
-					commitLog(str.c_str());
+					commitLog(str);
 					logQueue.pop();
 				}
 			}
