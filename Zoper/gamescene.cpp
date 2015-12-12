@@ -36,6 +36,42 @@ namespace zoper
 
 	void GameScene::onInit()
 	{
+		p_boardModel = lib::sptr<lib::board::BoardModel>(new lib::board::BoardModel(_gameData.size, this));
+
+		font.loadFromFile("resources/score.ttf");
+
+		getView()->setSize(2000, 2000);
+		getView()->setCenter(1000, 1000);
+		updateView();
+
+		addPlayer();
+
+		_scoreText = this->createText("scoretxt");
+		_scoreDisplay = this->createText("scoredisplay");
+
+		auto _scoreTextText = _scoreText->getAsText();
+		auto _scoreDisplayText = _scoreDisplay->getAsText();
+
+		_scoreTextText->setFont(font); // font is a sf::Font
+		_scoreDisplayText->setFont(font); // font is a sf::Font
+
+		_scoreTextText->setString("Score: ");
+		_scoreDisplayText->setString("00000");
+
+		_scoreTextText->setCharacterSize(90);
+		_scoreDisplayText->setCharacterSize(90);
+
+		_scoreTextText->setColor(sf::Color::Blue);
+		_scoreDisplayText->setColor(sf::Color::White);
+
+		_scoreTextText->setScale(1.0f, 2.0f);
+		_scoreDisplayText->setScale(1.0f, 2.0f);
+
+		//		text->setStyle(sf::Text::Bold | sf::Text::Underlined);
+
+		_scoreTextText->setPosition(50, 50);
+		auto rBounds = _scoreTextText->getLocalBounds();
+		_scoreDisplayText->setPosition(50 + rBounds.width, 50);
 	}
 
 	void GameScene::onDeinit()
@@ -44,50 +80,6 @@ namespace zoper
 
 	void GameScene::onEnterScene()
 	{
-		p_boardModel = lib::sptr<lib::board::BoardModel>(new lib::board::BoardModel(_gameData.size,this));
-
-		font.loadFromFile("resources/fonts/sansation.ttf");
-
-		getView()->setSize(10000, 10000);
-		getView()->setCenter(5000, 5000);
-		updateView();
-
-		addPlayer();
-
-		auto text = this->createText("hellow")->getAsText();
-		_scoreText = this->createText("scoretxt");
-		_scoreDisplay = this->createText("scoredisplay");
-
-		auto _scoreTextText = _scoreText->getAsText();
-		auto _scoreDisplayText = _scoreDisplay->getAsText();
-
-		// select the font
-		text->setFont(font); // font is a sf::Font
-		_scoreTextText->setFont(font); // font is a sf::Font
-		_scoreDisplayText->setFont(font); // font is a sf::Font
-
-		// set the string to display
-		text->setString("Hello world");
-		_scoreTextText->setString("Score:");
-		_scoreDisplayText->setString("000000");
-
-		// set the character size
-		text->setCharacterSize(24); // in pixels, not points!
-		_scoreTextText->setCharacterSize(240);
-		_scoreDisplayText->setCharacterSize(240);
-
-		// set the color
-		text->setColor(sf::Color::Red);
-		_scoreTextText->setColor(sf::Color::Red);
-		_scoreDisplayText->setColor(sf::Color::Red);
-
-		// set the text style
-		text->setStyle(sf::Text::Bold | sf::Text::Underlined);
-
-		text->setPosition(500, 500);
-		_scoreTextText->setPosition(500, 500);
-		_scoreDisplayText->setPosition(100, 100);
-
 		clock.restart();
 	}
 

@@ -25,6 +25,7 @@ namespace lib
 	using u8 = uint8_t;
 	using s8 = int_fast8_t;
 	using f32 = float;
+	using f64 = double;
 
 	using vector2du32 = sf::Vector2u;
 	using vector2ds32 = sf::Vector2i;
