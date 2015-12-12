@@ -10,7 +10,7 @@ namespace lib
 {
 	namespace scn
 	{
-		class Resource : lib::core::HasName
+		class Resource : public lib::core::HasName
 		{
 		public:
 			enum class ResourceType

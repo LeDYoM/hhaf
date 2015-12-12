@@ -30,7 +30,7 @@ namespace lib
 							resourceType = (resourceTypeStr[0] == 'f' || resourceTypeStr[0] == 'F')
 								? Resource::ResourceType::Font :
 								Resource::ResourceType::Texture;
-							uptr<Resource> resource = std::make_unique<Resource>(resourceType, resourcesDirectory + dataLine.second, id);
+							resources.push_back(std::make_unique<Resource>(resourceType, resourcesDirectory + dataLine.second, id));
 							LOG_DEBUG("Resource with id " << dataLine.second << " from file " << dataLine.first << " added");
 						}
 					});
@@ -48,9 +48,16 @@ namespace lib
 			resources.clear();
 		}
 
-		uptr<Resource>& ResourceManager::getResource(const std::string &rid)
+		uptr<Resource>& ResourceManager::getResource(const std::string rid)
 		{
-			return resources[rid];
+			for (auto i = 0u; i < resources.size(); ++i)
+			{
+				if (resources[i]->name() == rid)
+				{
+					return resources[i];
+				}
+			}
+			return *resources.begin();
 		}
 	}
 }

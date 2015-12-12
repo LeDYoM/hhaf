@@ -28,13 +28,9 @@ namespace zoper
 
 		struct TokenZone
 		{
-			// Filled statically
 			lib::Rect zone;
 			Direction direction;
-
-			// Filled dynamically
 			lib::u32 size;
-//			lib::s32 incX, incY;
 		};
 
 		void generateTokenZones();
@@ -78,6 +74,8 @@ namespace zoper
 		lib::s32 _millisBetweenTokens{ 500 };
 		lib::u8 _nextTokenPart{ 0 };
 		lib::sptr<Player> p_player{ nullptr };
+		lib::sptr<lib::scn::draw::Renderizable> _scoreText{ nullptr };
+		lib::sptr<lib::scn::draw::Renderizable> _scoreDisplay{ nullptr };
 
 		void addPlayer();
 		virtual void onKeyPressed(sf::Event::KeyEvent kEvent);

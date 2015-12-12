@@ -55,23 +55,38 @@ namespace zoper
 		addPlayer();
 
 		auto text = this->createText("hellow")->getAsText();
+		_scoreText = this->createText("scoretxt");
+		_scoreDisplay = this->createText("scoredisplay");
+
+		auto _scoreTextText = _scoreText->getAsText();
+		auto _scoreDisplayText = _scoreDisplay->getAsText();
 
 		// select the font
 		text->setFont(font); // font is a sf::Font
+		_scoreTextText->setFont(font); // font is a sf::Font
+		_scoreDisplayText->setFont(font); // font is a sf::Font
 
 		// set the string to display
 		text->setString("Hello world");
+		_scoreTextText->setString("Score:");
+		_scoreDisplayText->setString("000000");
 
 		// set the character size
 		text->setCharacterSize(24); // in pixels, not points!
+		_scoreTextText->setCharacterSize(240);
+		_scoreDisplayText->setCharacterSize(240);
 
 		// set the color
 		text->setColor(sf::Color::Red);
+		_scoreTextText->setColor(sf::Color::Red);
+		_scoreDisplayText->setColor(sf::Color::Red);
 
 		// set the text style
 		text->setStyle(sf::Text::Bold | sf::Text::Underlined);
 
 		text->setPosition(500, 500);
+		_scoreTextText->setPosition(500, 500);
+		_scoreDisplayText->setPosition(100, 100);
 
 		clock.restart();
 	}
