@@ -260,15 +260,25 @@ namespace zoper
 	void GameScene::onKeyPressed(sf::Event::KeyEvent kEvent)
 	{
 		Scene::onKeyPressed(kEvent);
-		auto dir = p_player->getDirectionFromKey(kEvent.code);
-		if (dir.isValid())
+		switch (state())
 		{
-			p_player->setCurrentDirection(dir);
-			movePlayer(dir);
+		case Playing:
+		{
+			auto dir = p_player->getDirectionFromKey(kEvent.code);
+			if (dir.isValid())
+			{
+				p_player->setCurrentDirection(dir);
+				movePlayer(dir);
+			}
+			else if (p_player->isLaunchKey(kEvent.code))
+			{
+				launchPlayer();
+			}
 		}
-		else if (p_player->isLaunchKey(kEvent.code))
-		{
-			launchPlayer();
+		break;
+		case GameOver:
+
+		break;
 		}
 	}
 
@@ -280,6 +290,10 @@ namespace zoper
 		{
 			p_boardModel->moveTile(p_player->boardPosition(), lib::vector2du32(nPosition.x,nPosition.y));
 			p_player->setBoardPosition(lib::vector2du32(nPosition.x, nPosition.y));
+		}
+		else
+		{
+			updatePlayer(p_player->boardPosition(), p_player);
 		}
 	}
 
@@ -442,12 +456,17 @@ namespace zoper
 		tile->getAsEllipseShape()->setFillColor(tile->getColorForToken());
 	}
 
-	void GameScene::playerMoved(const lib::vector2du32 &source, const lib::vector2du32 &dest, lib::sptr<Player> player_)
+	void GameScene::updatePlayer(const lib::vector2du32 &dest, lib::sptr<Player> player_)
 	{
 		auto player = player_->getAsEllipseShape();
 		player->setOrigin(tileSize() / 2.0f);
 		player->setPosition(board2Scene(dest) + (tileSize() / 2.0f));
-		player->setRotation(player_->currentDirection().angle());
+		player_->getAsTransformable()->setRotation(player_->currentDirection().angle());
+	}
+
+	void GameScene::playerMoved(const lib::vector2du32 &source, const lib::vector2du32 &dest, lib::sptr<Player> player_)
+	{
+		updatePlayer(dest, player_);
 	}
 
 	void GameScene::playerAppeared(const lib::vector2du32 &position, lib::sptr<Player> player)

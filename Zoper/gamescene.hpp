@@ -89,6 +89,8 @@ namespace zoper
 		virtual void tileChanged(const lib::vector2du32 &position, lib::board::WITilePointer nTile, 
 			const lib::board::BoardTileData &ov, const lib::board::BoardTileData &nv) override;
 
+		void updatePlayer(const lib::vector2du32 &dest, lib::sptr<Player> player_);
+
 		// Specializations from ITilesController for our tokens.
 		void tokenChangedValue(const lib::vector2du32 &position, lib::sptr<Tile> tile, 
 			const lib::board::BoardTileData &ov, const lib::board::BoardTileData &nv);
