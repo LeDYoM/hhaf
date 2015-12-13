@@ -3,6 +3,7 @@
 
 #include "../types.hpp"
 #include "../core/hasname.hpp"
+#include "../log.hpp"
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/Texture.hpp>
 
@@ -27,6 +28,8 @@ namespace lib
 			virtual ~Resource();
 
 			inline bool isValid() const { return _isValid; }
+			sf::Font *getAsFont() const { __ASSERT(_resourceType == ResourceType::Font, "Resource is not a font"); return _resourceData.font; }
+			sf::Texture *getAsTexture() const { __ASSERT(_resourceType == ResourceType::Texture ,"Resource is not a font"); return _resourceData.texture; }
 		private:
 			bool _isValid{ false };
 			union ResourceData

@@ -141,5 +141,11 @@ namespace lib
 		{
 			return p_scnManager->parentWindow()->getRandomNumer(max, min);
 		}
+
+		uptr<ResourceManager> & Scene::resourceManager()
+		{
+			return p_scnManager->resourceManager();
+		}
+
 	}
 }
