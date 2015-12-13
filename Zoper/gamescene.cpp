@@ -323,6 +323,7 @@ namespace zoper
 				else
 				{
 					p_boardModel->changeTileData(p_player->boardPosition(), currentTokenType);
+					p_boardModel->changeTileData(loopPosition, tokenType);
 					LOG_DEBUG("Player type changed to " << p_player->getData());
 					return false;
 				}
