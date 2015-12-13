@@ -90,12 +90,20 @@ namespace zoper
 
 	void GameScene::update()
 	{
-		if (clock.getElapsedTime().asMilliseconds() > _millisBetweenTokens)
+		if (state() == Playing)
 		{
-			// New token
-			generateNextToken();
-			clock.restart();
+			if (clock.getElapsedTime().asMilliseconds() > _millisBetweenTokens)
+			{
+				// New token
+				generateNextToken();
+				clock.restart();
+			}
 		}
+		else
+		{
+
+		}
+//		if (state )
 	}
 
 	void GameData::generateTokenZones()
@@ -179,6 +187,11 @@ namespace zoper
 		_nextTokenPart = (_nextTokenPart + 1) % NUMWAYS;
 
 		_debugDisplayBoard();
+	}
+
+	void GameScene::startGameOver()
+	{
+		setState(GameOver);
 	}
 
 	void GameScene::for_each_token_in_line(const lib::vector2du32 &startPosition, const Direction &direction,
@@ -437,5 +450,4 @@ namespace zoper
 		while (result.size() < 5) result = "0" + result;
 		_scoreDisplay->getAsText()->setString(result);
 	}
-
 }

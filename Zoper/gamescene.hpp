@@ -65,6 +65,14 @@ namespace zoper
 		void for_each_token_in_line(const lib::vector2du32 &startPosition, const Direction &direction,
 			std::function<bool(const lib::vector2du32 &, const Direction &)> updatePredicate);
 
+		enum
+		{
+			Playing = 0,
+			GameOver = 1
+		} _sceneStates{ Playing };
+
+		void startGameOver();
+
 		void movePlayer(const Direction &dir);
 		void launchPlayer();
 

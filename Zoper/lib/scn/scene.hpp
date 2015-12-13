@@ -56,8 +56,10 @@ namespace lib
 
 			void updateView();
 			sf::View *const getView() const;
-			sf::Clock clock;
+			inline u32 state() const { return _state; }
+			inline void setState(u32 ns) { _state = ns; }
 
+			sf::Clock clock;
 		private:
 			void privateOnInit();
 			void privateOnDeinit();
@@ -66,6 +68,7 @@ namespace lib
 			u32 drawAll();
 			std::vector<sptr<draw::Renderizable>> v_nodes;
 			uptr<sf::View> p_view;
+			u32 _state;
 
 			SceneManager *p_scnManager;
 			friend class SceneManager;

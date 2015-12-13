@@ -47,7 +47,6 @@ namespace lib
 			LOG_DEBUG("Entered in scene " << name());
 			clock.restart();
 			onEnterScene();
-
 		}
 
 		void Scene::privateOnExitScene()

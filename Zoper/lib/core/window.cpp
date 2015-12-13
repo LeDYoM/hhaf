@@ -29,7 +29,6 @@ namespace lib
 			// Create the scene manager
 			p_sceneManager = sptr<lib::scn::SceneManager>(new lib::scn::SceneManager(this, p_parentController->resourceFile()));
 			p_sceneManager->addScenes(p_parentController->scenesVector());
-
 		}
 
 		Window::~Window()
