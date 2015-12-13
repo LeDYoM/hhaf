@@ -97,7 +97,6 @@ namespace zoper
 		// Properties
 		lib::sptr<lib::board::BoardModel> p_boardModel{ nullptr };
 		GameData _gameData;
-		sf::Clock clock;
 		lib::s32 _millisBetweenTokens{ 500 };
 		lib::u32 _score{ 0 };
 		lib::u8 _nextTokenPart{ 0 };

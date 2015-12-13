@@ -56,6 +56,8 @@ namespace lib
 
 			void updateView();
 			sf::View *const getView() const;
+			sf::Clock clock;
+
 		private:
 			void privateOnInit();
 			void privateOnDeinit();
