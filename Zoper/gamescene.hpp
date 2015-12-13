@@ -108,11 +108,14 @@ namespace zoper
 		lib::s32 _millisBetweenTokens{ 500 };
 		lib::u32 _score{ 0 };
 		lib::u8 _nextTokenPart{ 0 };
+		const lib::u8 _scoreSize{ 5 };
 
 		// Nodes from the scene
 		lib::sptr<Player> p_player{ nullptr };
 		lib::sptr<lib::scn::draw::Renderizable> _scoreText{ nullptr };
 		lib::sptr<lib::scn::draw::Renderizable> _scoreDisplay{ nullptr };
+		lib::sptr<lib::scn::draw::Renderizable> _gameText{ nullptr };
+		lib::sptr<lib::scn::draw::Renderizable> _overText{ nullptr };
 
 	};
 }

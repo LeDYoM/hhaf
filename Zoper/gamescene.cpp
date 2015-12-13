@@ -8,6 +8,8 @@
 #include "lib/scn/draw/renderizable.hpp"
 #include "lib/log.hpp"
 #include "lib/compileconfig.hpp"
+#include "lib/scn/resourcemanager.hpp"
+#include "lib/scn/resource.hpp"
 
 #include <SFML/Graphics.hpp>
 
@@ -32,13 +34,9 @@ namespace zoper
 	{
 	}
 
-	sf::Font font;
-
 	void GameScene::onInit()
 	{
 		p_boardModel = lib::sptr<lib::board::BoardModel>(new lib::board::BoardModel(_gameData.size, this));
-
-		font.loadFromFile("resources/score.ttf");
 
 		getView()->setSize(2000, 2000);
 		getView()->setCenter(1000, 1000);
@@ -48,30 +46,44 @@ namespace zoper
 
 		_scoreText = this->createText("scoretxt");
 		_scoreDisplay = this->createText("scoredisplay");
+		_gameText = this->createText("gameovergame");
+		_overText = this->createText("gameoverover");
 
 		auto _scoreTextText = _scoreText->getAsText();
 		auto _scoreDisplayText = _scoreDisplay->getAsText();
+		auto _gameTextText = _gameText->getAsText();
+		auto _overTextText = _overText->getAsText();
 
-		_scoreTextText->setFont(font); // font is a sf::Font
-		_scoreDisplayText->setFont(font); // font is a sf::Font
+		_scoreTextText->setFont(*(resourceManager()->getResource("game_scene.scoreFont")->getAsFont()));
+		_scoreDisplayText->setFont(*(resourceManager()->getResource("game_scene.scoreFont")->getAsFont()));
+		_gameTextText->setFont(*(resourceManager()->getResource("game_scene.scoreFont")->getAsFont()));
+		_overTextText->setFont(*(resourceManager()->getResource("game_scene.scoreFont")->getAsFont()));
 
 		_scoreTextText->setString("Score: ");
-		_scoreDisplayText->setString("00000");
+		increaseScore(0);
+		_gameTextText->setString("GAME");
+		_overTextText->setString("OVER");
 
 		_scoreTextText->setCharacterSize(90);
 		_scoreDisplayText->setCharacterSize(90);
+		_gameTextText->setCharacterSize(180);
+		_overTextText->setCharacterSize(180);
 
 		_scoreTextText->setColor(sf::Color::Blue);
 		_scoreDisplayText->setColor(sf::Color::White);
+		_gameTextText->setColor(sf::Color::White);
+		_overTextText->setColor(sf::Color::White);
 
 		_scoreTextText->setScale(1.0f, 2.0f);
 		_scoreDisplayText->setScale(1.0f, 2.0f);
 
-		//		text->setStyle(sf::Text::Bold | sf::Text::Underlined);
-
 		_scoreTextText->setPosition(50, 50);
 		auto rBounds = _scoreTextText->getLocalBounds();
 		_scoreDisplayText->setPosition(50 + rBounds.width, 50);
+
+		_gameTextText->setPosition(0, 0);
+		_overTextText->setPosition(0, 0);
+
 	}
 
 	void GameScene::onDeinit()
@@ -81,6 +93,8 @@ namespace zoper
 	void GameScene::onEnterScene()
 	{
 		clock.restart();
+		setState(Playing);
+
 	}
 
 	void GameScene::onExitScene()
@@ -103,7 +117,6 @@ namespace zoper
 		{
 
 		}
-//		if (state )
 	}
 
 	void GameData::generateTokenZones()
@@ -192,6 +205,7 @@ namespace zoper
 	void GameScene::startGameOver()
 	{
 		setState(GameOver);
+
 	}
 
 	void GameScene::for_each_token_in_line(const lib::vector2du32 &startPosition, const Direction &direction,
@@ -447,7 +461,7 @@ namespace zoper
 	{
 		_score += scoreIncrement;
 		std::string result{ std::to_string(_score) };
-		while (result.size() < 5) result = "0" + result;
+		while (result.size() < _scoreSize) result = "0" + result;
 		_scoreDisplay->getAsText()->setString(result);
 	}
 }
