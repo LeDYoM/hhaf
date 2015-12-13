@@ -38,8 +38,8 @@ namespace zoper
 	{
 		p_boardModel = lib::sptr<lib::board::BoardModel>(new lib::board::BoardModel(_gameData.size, this));
 
-		getView()->setSize(2000, 2000);
-		getView()->setCenter(1000, 1000);
+		getView()->setSize(sceneSize.x, sceneSize.y);
+		getView()->setCenter(sceneCenter.x, sceneCenter.y);
 		updateView();
 
 		addPlayer();
@@ -81,9 +81,10 @@ namespace zoper
 		auto rBounds = _scoreTextText->getLocalBounds();
 		_scoreDisplayText->setPosition(50 + rBounds.width, 50);
 
-		_gameTextText->setPosition(0, 0);
-		_overTextText->setPosition(0, 0);
-
+		auto _gameBoundingBox = _gameTextText->getLocalBounds();
+		auto _overBoundingBox = _overTextText->getLocalBounds();
+		_gameTextText->setPosition(sceneCenter.x - (_gameBoundingBox.width / 2.0f), 0);
+		_overTextText->setPosition(sceneCenter.y - (_gameBoundingBox.height / 2.0f), 0);
 	}
 
 	void GameScene::onDeinit()

@@ -109,6 +109,8 @@ namespace zoper
 		lib::u32 _score{ 0 };
 		lib::u8 _nextTokenPart{ 0 };
 		const lib::u8 _scoreSize{ 5 };
+		const lib::vector2df sceneSize{ 2000.0f, 2000.0f };
+		const lib::vector2df sceneCenter{ sceneSize.x/2.0f, sceneSize.y/2.0f };
 
 		// Nodes from the scene
 		lib::sptr<Player> p_player{ nullptr };
