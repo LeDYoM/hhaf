@@ -131,8 +131,8 @@ namespace lib
 				if (renderizable->isVisible())
 				{
 					window->draw(*(renderizable->getAsDrawable()));
+					++rNodes;
 				}
-				++rNodes;
 			}
 			return rNodes;
 		}
