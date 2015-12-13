@@ -123,9 +123,8 @@ namespace lib
 		u32 Scene::drawAll()
 		{
 			auto window = p_scnManager->parentWindow();
-
 			u32 rNodes{ 0 };
-			
+	
 			for (auto renderizable : v_nodes)
 			{
 				if (renderizable->isVisible())

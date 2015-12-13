@@ -103,6 +103,7 @@ namespace zoper
 		void playerDissapeared(const lib::vector2du32 &position, lib::sptr<Player> player);
 
 		// Properties
+		sf::Clock gameClock;
 		lib::sptr<lib::board::BoardModel> p_boardModel{ nullptr };
 		GameData _gameData;
 		lib::s32 _millisBetweenTokens{ 500 };

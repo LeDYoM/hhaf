@@ -66,8 +66,8 @@ namespace zoper
 
 		_scoreTextText->setCharacterSize(90);
 		_scoreDisplayText->setCharacterSize(90);
-		_gameTextText->setCharacterSize(180);
-		_overTextText->setCharacterSize(180);
+		_gameTextText->setCharacterSize(360);
+		_overTextText->setCharacterSize(360);
 
 		_scoreTextText->setColor(sf::Color::Blue);
 		_scoreDisplayText->setColor(sf::Color::White);
@@ -83,8 +83,11 @@ namespace zoper
 
 		auto _gameBoundingBox = _gameTextText->getLocalBounds();
 		auto _overBoundingBox = _overTextText->getLocalBounds();
-		_gameTextText->setPosition(sceneCenter.x - (_gameBoundingBox.width / 2.0f), 0);
-		_overTextText->setPosition(sceneCenter.y - (_gameBoundingBox.height / 2.0f), 0);
+		_gameTextText->setPosition(sceneCenter.x - (_gameBoundingBox.width / 2.0f), sceneCenter.y - _gameBoundingBox.height);
+		_overTextText->setPosition(sceneCenter.x - (_overBoundingBox.width / 2.0f), sceneCenter.y);
+
+		_gameText->setVisible(false);
+		_overText->setVisible(false);
 	}
 
 	void GameScene::onDeinit()
@@ -93,9 +96,14 @@ namespace zoper
 
 	void GameScene::onEnterScene()
 	{
-		clock.restart();
-		setState(Playing);
+		_millisBetweenTokens = 500;
+		_score = 0;
+		_nextTokenPart = 0;
+		_gameText->setVisible(false);
+		_overText->setVisible(false);
 
+		gameClock.restart();
+		setState(Playing);
 	}
 
 	void GameScene::onExitScene()
@@ -107,11 +115,11 @@ namespace zoper
 	{
 		if (state() == Playing)
 		{
-			if (clock.getElapsedTime().asMilliseconds() > _millisBetweenTokens)
+			if (gameClock.getElapsedTime().asMilliseconds() > _millisBetweenTokens)
 			{
 				// New token
 				generateNextToken();
-				clock.restart();
+				gameClock.restart();
 			}
 		}
 		else
@@ -183,7 +191,6 @@ namespace zoper
 		Direction loopDirection = currentTokenZone.direction.negate();
 		for_each_token_in_line(loopPosition, loopDirection, [this](const lib::vector2du32 &loopPosition, const Direction &direction)
 		{
-			// TO DO: Check for game over
 			if (!p_boardModel->tileEmpty(loopPosition))
 			{
 				lib::vector2du32 dest = direction.negate().applyToVector(loopPosition);
@@ -191,7 +198,7 @@ namespace zoper
 
 				if (pointInCenter(dest))
 				{
-					//game over
+					startGameOver();
 				}
 			}
 			return true;
@@ -206,7 +213,8 @@ namespace zoper
 	void GameScene::startGameOver()
 	{
 		setState(GameOver);
-
+		_gameText->setVisible(true);
+		_overText->setVisible(true);
 	}
 
 	void GameScene::for_each_token_in_line(const lib::vector2du32 &startPosition, const Direction &direction,

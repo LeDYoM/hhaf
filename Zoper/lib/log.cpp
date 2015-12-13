@@ -92,6 +92,7 @@ void finishLog()
 {
 #ifdef __MULTITHREAD_LOG__
 	doLoop = false;
+	_condVar.notify_all();
 	t1.join();
 #endif
 #ifdef __LOGFILE__
