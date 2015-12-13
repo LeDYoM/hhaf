@@ -32,6 +32,8 @@ namespace lib
 
 				// Some useful shortcuts
 				inline void setPosition(const sf::Vector2f &pos) { getAsTransformable()->setPosition(pos); }
+				inline bool isVisible() const { return visible; }
+				inline void setVisible(bool nv) { visible = nv; }
 
 			private:
 				union DrawNodeData
@@ -43,6 +45,7 @@ namespace lib
 				} _drawNodeData;
 				sf::Drawable *_drawNodeAsDrawable{ nullptr };
 				sf::Transformable *_drawNodeAsTransformable{ nullptr };
+				bool visible{ true };
 				enum class ActiveDrawNode
 				{
 					Empty = 0,

@@ -128,7 +128,10 @@ namespace lib
 			
 			for (auto renderizable : v_nodes)
 			{
-				window->draw(*(renderizable->getAsDrawable()));
+				if (renderizable->isVisible())
+				{
+					window->draw(*(renderizable->getAsDrawable()));
+				}
 				++rNodes;
 			}
 			return rNodes;
