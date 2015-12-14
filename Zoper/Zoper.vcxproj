@@ -106,6 +106,7 @@
     <ClCompile Include="player.cpp" />
     <ClCompile Include="lib\scn\resourcemanager.cpp" />
     <ClCompile Include="lib\scn\resource.cpp" />
+    <ClCompile Include="lib\scn\draw\rendergroup.cpp" />
     <ClCompile Include="tile.cpp" />
     <ClCompile Include="zoperprogramcontroller.cpp" />
   </ItemGroup>
@@ -133,6 +134,7 @@
     <ClInclude Include="player.hpp" />
     <ClInclude Include="lib\scn\resourcemanager.hpp" />
     <ClInclude Include="lib\scn\resource.hpp" />
+    <ClInclude Include="lib\scn\draw\rendergroup.hpp" />
     <ClInclude Include="tile.hpp" />
     <ClInclude Include="zoperprogramcontroller.hpp" />
   </ItemGroup>
