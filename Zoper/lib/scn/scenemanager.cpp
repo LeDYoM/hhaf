@@ -116,7 +116,7 @@ namespace lib
 				_currentScene->update();
 			}
 
-			_currentScene->drawAll();
+			_currentScene->drawAll(p_parentWindow);
 		}
 	}
 }
