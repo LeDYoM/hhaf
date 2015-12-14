@@ -27,7 +27,7 @@ namespace lib
 				sptr<draw::Renderizable> addRenderizable(sptr<Renderizable> newElement);
 				bool removeRenderizable(sptr<Renderizable> element);
 
-				u32 drawAll(lib::core::Window *window);
+				u32 drawAll(lib::core::Window *window) const;
 			private:
 				RenderGroup *_parent{ nullptr };
 				std::vector<sptr<RenderGroup>> _childrenGroup;

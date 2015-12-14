@@ -67,11 +67,9 @@ namespace lib
 				return found;
 			}
 
-			u32 RenderGroup::drawAll(lib::core::Window *window)
+			u32 RenderGroup::drawAll(lib::core::Window *window) const
 			{
 				u32 rNodes{ 0 };
-
-//				auto window = p_scnManager->parentWindow();
 
 				for (const auto renderizable : _renderNodes)
 				{
@@ -80,6 +78,11 @@ namespace lib
 						window->draw(*(renderizable->getAsDrawable()));
 						++rNodes;
 					}
+				}
+
+				for (const auto group : _childrenGroup)
+				{
+					rNodes += group->drawAll(window);
 				}
 				return rNodes;
 			}
