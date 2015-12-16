@@ -15,10 +15,10 @@ namespace lib
 		namespace draw
 		{
 			class Renderizable;
-			class RenderGroup
+			class RenderGroup : lib::core::HasName
 			{
 			public:
-				RenderGroup(RenderGroup *parent=nullptr);
+				RenderGroup(const std::string &name, RenderGroup *parent=nullptr);
 				virtual ~RenderGroup();
 
 				sptr<draw::Renderizable> createText(const std::string &name);
@@ -28,6 +28,10 @@ namespace lib
 				bool removeRenderizable(sptr<Renderizable> element);
 
 				u32 drawAll(lib::core::Window *window) const;
+
+				sptr<RenderGroup> createNewRenderGroup(const std::string &name);
+				bool removeRenderGroup(sptr<RenderGroup> element);
+
 			private:
 				RenderGroup *_parent{ nullptr };
 				std::vector<sptr<RenderGroup>> _childrenGroup;

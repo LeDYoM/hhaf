@@ -8,8 +8,8 @@ namespace lib
 	{
 		namespace draw
 		{
-			RenderGroup::RenderGroup(RenderGroup *parent)
-				: _parent{ parent }
+			RenderGroup::RenderGroup(const std::string &name, RenderGroup *parent)
+				: HasName{ name }, _parent{ parent }
 			{
 			}
 
@@ -45,16 +45,17 @@ namespace lib
 				return newElement;
 			}
 
-			bool RenderGroup::removeRenderizable(sptr<Renderizable> element)
+			template <typename T>
+			bool removeFromspVector(sptr<T> element,std::vector<sptr<T>> &container)
 			{
-				auto i = _renderNodes.begin();
+				auto i = container.begin();
 				bool found = false;
 
-				while (i != _renderNodes.end() && !found)
+				while (i != container.end() && !found)
 				{
 					if ((*i).get() == element.get())
 					{
-						i = _renderNodes.erase(i);
+						i = container.erase(i);
 						found = true;
 					}
 					else
@@ -65,6 +66,10 @@ namespace lib
 
 				LOG_DEBUG("Element was" << (found ? "" : " not ") << " found. Number of left references: " << element.use_count());
 				return found;
+			}
+			bool RenderGroup::removeRenderizable(sptr<Renderizable> element)
+			{
+				return removeFromspVector(element, _renderNodes);
 			}
 
 			u32 RenderGroup::drawAll(lib::core::Window *window) const
@@ -85,6 +90,18 @@ namespace lib
 					rNodes += group->drawAll(window);
 				}
 				return rNodes;
+			}
+
+			sptr<RenderGroup> RenderGroup::createNewRenderGroup(const std::string & name)
+			{
+				auto rg = std::make_shared<RenderGroup>(name, this);
+				_childrenGroup.push_back(rg);
+				return rg;
+			}
+
+			bool RenderGroup::removeRenderGroup(sptr<RenderGroup> element)
+			{
+				return removeFromspVector(element, _childrenGroup);
 			}
 
 		}
