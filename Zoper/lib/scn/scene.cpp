@@ -8,7 +8,7 @@ namespace lib
 {
 	namespace scn
 	{
-		Scene::Scene(const std::string &_name) : HasName{ _name }
+		Scene::Scene(const std::string &_name) : RenderGroup{_name,nullptr}
 		{
 			LOG_CONSTRUCT("Name: " << name());
 		}

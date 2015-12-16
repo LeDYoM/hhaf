@@ -2,6 +2,7 @@
 #define __LIB_RENDERGROUP_HPP__
 
 #include "../../types.hpp"
+#include "../../core/HasName.hpp"
 #include <vector>
 
 namespace lib
@@ -15,7 +16,7 @@ namespace lib
 		namespace draw
 		{
 			class Renderizable;
-			class RenderGroup : lib::core::HasName
+			class RenderGroup : public lib::core::HasName
 			{
 			public:
 				RenderGroup(const std::string &name, RenderGroup *parent=nullptr);

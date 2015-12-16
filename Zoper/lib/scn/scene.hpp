@@ -21,9 +21,13 @@ namespace lib
 	namespace scn
 	{
 		class SceneManager;
+		namespace draw
+		{
+			class RenderGroup;
+		}
 		class ResourceManager;
 
-		class Scene : public lib::core::HasName, public draw::RenderGroup
+		class Scene : public draw::RenderGroup
 		{
 		public:
 			Scene(const std::string &_name);
