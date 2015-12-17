@@ -42,12 +42,14 @@ namespace zoper
 		getView()->setCenter(sceneCenter.x, sceneCenter.y);
 		updateView();
 
+		_mainBoardrg = this->createNewRenderGroup("mainBoard");
+		_gameOverrg = this->createNewRenderGroup("gameOverScreen");
 		addPlayer();
 
-		_scoreText = this->createText("scoretxt");
-		_scoreDisplay = this->createText("scoredisplay");
-		_gameText = this->createText("gameovergame");
-		_overText = this->createText("gameoverover");
+		_scoreText = _mainBoardrg->createText("scoretxt");
+		_scoreDisplay = _mainBoardrg->createText("scoredisplay");
+		_gameText = _gameOverrg->createText("gameovergame");
+		_overText = _gameOverrg->createText("gameoverover");
 
 		auto _scoreTextText = _scoreText->getAsText();
 		auto _scoreDisplayText = _scoreDisplay->getAsText();
@@ -242,7 +244,7 @@ namespace zoper
 //		p_player->getAsEllipseShape()->setSize(tileSize());
 
 		// Add it to the board and to the scene nodes
-		p_boardModel->setTile(p_player->boardPosition(), std::dynamic_pointer_cast<lib::board::ITile>(addRenderizable(p_player)));
+		p_boardModel->setTile(p_player->boardPosition(), std::dynamic_pointer_cast<lib::board::ITile>(_mainBoardrg->addRenderizable(p_player)));
 	}
 
 	void GameScene::addNewToken(const lib::vector2du32 &position, lib::u32 newToken)
@@ -254,7 +256,7 @@ namespace zoper
 		newTileToken->setPosition(board2Scene(position));
 
 		// Add it to the board and to the scene nodes
-		p_boardModel->setTile(position, std::dynamic_pointer_cast<lib::board::ITile>(addRenderizable(newTileToken)));
+		p_boardModel->setTile(position, std::dynamic_pointer_cast<lib::board::ITile>(_mainBoardrg->addRenderizable(newTileToken)));
 	}
 
 	void GameScene::onKeyPressed(sf::Event::KeyEvent kEvent)

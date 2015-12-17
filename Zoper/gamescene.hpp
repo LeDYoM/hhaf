@@ -111,6 +111,8 @@ namespace zoper
 		lib::s32 _millisBetweenTokens{ 500 };
 		lib::u32 _score{ 0 };
 		lib::u8 _nextTokenPart{ 0 };
+		lib::sptr<lib::scn::draw::RenderGroup> _mainBoardrg{ nullptr };
+		lib::sptr<lib::scn::draw::RenderGroup> _gameOverrg{ nullptr };
 		const lib::u8 _scoreSize{ 5 };
 		const lib::vector2df sceneSize{ 2000.0f, 2000.0f };
 		const lib::vector2df sceneCenter{ sceneSize.x/2.0f, sceneSize.y/2.0f };

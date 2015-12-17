@@ -24,14 +24,21 @@ namespace lib
 						if (dataLine.first != resourcesDirectoryKey)
 						{
 							auto completeId = splitString(dataLine.first, '@');
-							std::string resourceTypeStr = completeId[0];
-							std::string id = completeId[1];
-							Resource::ResourceType resourceType{ Resource::ResourceType::Empty };
-							resourceType = (resourceTypeStr[0] == 'f' || resourceTypeStr[0] == 'F')
-								? Resource::ResourceType::Font :
-								Resource::ResourceType::Texture;
-							resources.push_back(std::make_unique<Resource>(resourceType, resourcesDirectory + dataLine.second, id));
-							LOG_DEBUG("Resource with id " << dataLine.second << " from file " << dataLine.first << " added");
+							if (completeId.size() > 2)
+							{
+								std::string resourceTypeStr = completeId[0];
+								std::string id = completeId[1];
+								Resource::ResourceType resourceType{ Resource::ResourceType::Empty };
+								resourceType = (resourceTypeStr[0] == 'f' || resourceTypeStr[0] == 'F')
+									? Resource::ResourceType::Font :
+									Resource::ResourceType::Texture;
+								resources.push_back(std::make_unique<Resource>(resourceType, resourcesDirectory + dataLine.second, id));
+								LOG_DEBUG("Resource with id " << dataLine.second << " from file " << dataLine.first << " added");
+							}
+							else
+							{
+								LOG_ERROR("Malformed resource file");
+							}
 						}
 					});
 				}
