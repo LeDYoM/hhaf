@@ -1,4 +1,5 @@
 #include "renderizable.hpp"
+#include "../../core/window.hpp"
 
 namespace lib
 {
@@ -49,6 +50,16 @@ namespace lib
 				_drawNodeAsTransformable = ellipseShape;
 				_activeDrawNode = ActiveDrawNode::EllipseShape;
 
+			}
+
+			u32 Renderizable::draw(lib::core::Window *window) const
+			{
+				if (isVisible())
+				{
+					window->draw(*getAsDrawable());
+					return 1;
+				}
+				return 0;
 			}
 
 			Renderizable::~Renderizable()

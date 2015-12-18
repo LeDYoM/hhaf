@@ -24,7 +24,7 @@ namespace lib
 						if (dataLine.first != resourcesDirectoryKey)
 						{
 							auto completeId = splitString(dataLine.first, '@');
-							if (completeId.size() > 2)
+							if (completeId.size() > 1)
 							{
 								std::string resourceTypeStr = completeId[0];
 								std::string id = completeId[1];

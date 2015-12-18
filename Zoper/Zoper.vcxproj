@@ -113,6 +113,7 @@
   <ItemGroup>
     <ClInclude Include="direction.hpp" />
     <ClInclude Include="gamebasetile.hpp" />
+    <ClInclude Include="lib\scn\draw\idrawable.hpp" />
     <ClInclude Include="keymapping.hpp" />
     <ClInclude Include="lib\scn\draw\ellipseshape.hpp" />
     <ClInclude Include="lib\configuration.hpp" />

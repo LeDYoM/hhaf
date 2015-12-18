@@ -164,5 +164,8 @@
     <ClInclude Include="lib\scn\draw\rendergroup.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="lib\scn\draw\idrawable.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

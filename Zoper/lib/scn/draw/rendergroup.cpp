@@ -72,22 +72,18 @@ namespace lib
 				return removeFromspVector(element, _renderNodes);
 			}
 
-			u32 RenderGroup::drawAll(lib::core::Window *window) const
+			u32 RenderGroup::draw(lib::core::Window *window) const
 			{
 				u32 rNodes{ 0 };
 
 				for (const auto renderizable : _renderNodes)
 				{
-					if (renderizable->isVisible())
-					{
-						window->draw(*(renderizable->getAsDrawable()));
-						++rNodes;
-					}
+					rNodes += renderizable->draw(window);
 				}
 
 				for (const auto group : _childrenGroup)
 				{
-					rNodes += group->drawAll(window);
+					rNodes += group->draw(window);
 				}
 				return rNodes;
 			}

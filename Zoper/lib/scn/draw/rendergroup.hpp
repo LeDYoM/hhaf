@@ -3,6 +3,7 @@
 
 #include "../../types.hpp"
 #include "../../core/HasName.hpp"
+#include "idrawable.hpp"
 #include <vector>
 
 namespace lib
@@ -16,7 +17,7 @@ namespace lib
 		namespace draw
 		{
 			class Renderizable;
-			class RenderGroup : public lib::core::HasName
+			class RenderGroup : public lib::core::HasName, IDrawable
 			{
 			public:
 				RenderGroup(const std::string &name, RenderGroup *parent=nullptr);
@@ -28,7 +29,7 @@ namespace lib
 				sptr<draw::Renderizable> addRenderizable(sptr<Renderizable> newElement);
 				bool removeRenderizable(sptr<Renderizable> element);
 
-				u32 drawAll(lib::core::Window *window) const;
+				u32 draw(lib::core::Window *window) const override;
 
 				sptr<RenderGroup> createNewRenderGroup(const std::string &name);
 				bool removeRenderGroup(sptr<RenderGroup> element);
