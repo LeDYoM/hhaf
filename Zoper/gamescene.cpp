@@ -450,7 +450,7 @@ namespace zoper
 	void GameScene::tokenDissapeared(const lib::vector2du32 &position, lib::sptr<Tile> tile)
 	{
 		LOG_DEBUG("Deleting token " << tile->name() << " from scene");
-		removeRenderizable(tile);
+		_mainBoardrg->removeRenderizable(tile);
 	}
 
 	void GameScene::tokenChangedValue(const lib::vector2du32 &position, lib::sptr<Tile> tile,

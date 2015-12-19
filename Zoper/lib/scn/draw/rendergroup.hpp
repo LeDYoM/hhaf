@@ -17,7 +17,7 @@ namespace lib
 		namespace draw
 		{
 			class Renderizable;
-			class RenderGroup : public lib::core::HasName, IDrawable
+			class RenderGroup : public lib::core::HasName, public IDrawable
 			{
 			public:
 				RenderGroup(const std::string &name, RenderGroup *parent=nullptr);
@@ -36,8 +36,8 @@ namespace lib
 
 			private:
 				RenderGroup *_parent{ nullptr };
-				std::vector<sptr<RenderGroup>> _childrenGroup;
-				std::vector<sptr<Renderizable>> _renderNodes;
+//				std::vector<sptr<RenderGroup>> _childrenGroup;
+				std::vector<sptr<IDrawable>> _renderNodes;
 			};
 		}
 	}
