@@ -88,8 +88,6 @@ namespace zoper
 		_gameTextText->setPosition(sceneCenter.x - (_gameBoundingBox.width / 2.0f), sceneCenter.y - _gameBoundingBox.height);
 		_overTextText->setPosition(sceneCenter.x - (_overBoundingBox.width / 2.0f), sceneCenter.y);
 
-		_gameText->setVisible(false);
-		_overText->setVisible(false);
 	}
 
 	void GameScene::onDeinit()
@@ -101,8 +99,7 @@ namespace zoper
 		_millisBetweenTokens = 500;
 		_score = 0;
 		_nextTokenPart = 0;
-		_gameText->setVisible(false);
-		_overText->setVisible(false);
+		_gameOverrg->setVisible(false);
 
 		gameClock.restart();
 		setState(Playing);
@@ -215,8 +212,7 @@ namespace zoper
 	void GameScene::startGameOver()
 	{
 		setState(GameOver);
-		_gameText->setVisible(true);
-		_overText->setVisible(true);
+		_gameOverrg->setVisible(true);
 	}
 
 	void GameScene::for_each_token_in_line(const lib::vector2du32 &startPosition, const Direction &direction,

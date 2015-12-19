@@ -20,6 +20,10 @@ namespace lib
 				virtual ~IDrawable() {}
 
 				virtual u32 draw(lib::core::Window *window) const = 0;
+				inline bool isVisible() const { return visible; }
+				inline void setVisible(bool nv) { visible = nv; }
+			protected:
+				bool visible{ true };
 			};
 		}
 	}

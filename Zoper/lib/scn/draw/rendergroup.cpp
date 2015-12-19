@@ -78,20 +78,18 @@ namespace lib
 
 			u32 RenderGroup::draw(lib::core::Window *window) const
 			{
-				u32 rNodes{ 0 };
-
-				for (const auto renderizable : _renderNodes)
+				if (isVisible())
 				{
-					rNodes += renderizable->draw(window);
+					u32 rNodes{ 0 };
+
+					for (const auto renderizable : _renderNodes)
+					{
+						rNodes += renderizable->draw(window);
+					}
+					return rNodes;
 				}
 
-				/*
-				for (const auto group : _childrenGroup)
-				{
-					rNodes += group->draw(window);
-				}
-				*/
-				return rNodes;
+				return 0;
 			}
 
 			sptr<RenderGroup> RenderGroup::createNewRenderGroup(const std::string & name)
