@@ -5,12 +5,18 @@
 
 #ifdef __USE_LOGS__
 	#include <sstream>
+	enum class LogType
+	{
+		Debug,
+		Error,
+	};
+
 	void initLog();
 	void finishLog();
-	void logOutput(const char *);
-	#define PREPARE_LOG(params) { std::ostringstream os_; os_ << params << std::endl; logOutput(os_.str().c_str()); }
-	#define LOG_DEBUG(x)			PREPARE_LOG(x)
-	#define LOG_ERROR(x)			PREPARE_LOG("Error: " << x)
+	void logOutput(const LogType&, const std::string&);
+	#define PREPARE_LOG(level,params) { std::ostringstream os_; os_ << params << std::endl; logOutput(level,os_.str()); }
+	#define LOG_DEBUG(x)			PREPARE_LOG(LogType::Debug, x)
+	#define LOG_ERROR(x)			PREPARE_LOG(LogType::Error, "Error: " << x)
 	#define LOG_CONSTRUCT(x)		LOG_DEBUG("Constructing "<< typeid(*this).name() << " " << x)
 	#define LOG_DESTRUCT(x)			LOG_DEBUG("Destroying "<< typeid(*this).name() << " " << x)
 	#define LOG_CONSTRUCT_NOPARAMS	LOG_CONSTRUCT("")

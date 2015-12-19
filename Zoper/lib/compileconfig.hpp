@@ -9,6 +9,7 @@
 	#define USE_MEM_MANAGER
 
 	#define __USE_LOGS__
+	#define __EXIT_ON_ERROR__
 	#define __MULTITHREAD_LOG__
 	#define __LOGFILE__		"log.txt"
 #else

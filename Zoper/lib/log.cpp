@@ -3,6 +3,12 @@
 
 #ifdef __USE_LOGS__
 
+struct LogMessage
+{
+	LogType logType;
+	std::string message;
+};
+
 #if defined(_MSC_VER) || defined(__BORLANDC__)
 	#define WIN32_LEAN_AND_MEAN
 	#include <Windows.h>
@@ -22,13 +28,15 @@ void initLog()
 #endif
 }
 
-void commitLog(const std::string &str)
+void commitLog(const LogMessage &message)
 {
+	const std::string &str = message.message;
+	const LogType &lt = message.logType;
 #ifdef __LOGFILE__
 	if (logFile.is_open())
 		logFile << str;
 #endif
-	if (str.find("Error: ") == 0)
+	if (lt == LogType::Error)
 		std::cerr << str;
 	else
 		std::cout << str;
@@ -44,18 +52,17 @@ void commitLog(const std::string &str)
 	#include <mutex>
 	#include <condition_variable>
 
-
-	std::queue<std::string> logQueue;
+	std::queue<LogMessage> logQueue;
 	std::mutex _mutex;
 	std::condition_variable _condVar;
 
 	void doLogOutput();
 	bool doLoop = true;
 
-	void logOutput(const char *str)
+	void logOutput(const LogType &lt, const std::string&str)
 	{
 		std::unique_lock<std::mutex> _lock(_mutex);
-		logQueue.push(str);
+		logQueue.push({ lt, str });
 		_condVar.notify_all();
 	}
 
@@ -72,7 +79,7 @@ void commitLog(const std::string &str)
 			{
 				while (!logQueue.empty())
 				{
-					const std::string &str = logQueue.front();
+					const LogMessage &str = logQueue.front();
 					commitLog(str);
 					logQueue.pop();
 				}
