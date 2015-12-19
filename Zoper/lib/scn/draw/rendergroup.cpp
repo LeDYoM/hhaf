@@ -104,6 +104,10 @@ namespace lib
 				return removeFromspVector(element, _renderNodes);
 			}
 
+			void RenderGroup::clear()
+			{
+				_renderNodes.clear();
+			}
 		}
 	}
 }

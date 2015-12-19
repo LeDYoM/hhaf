@@ -28,6 +28,7 @@ namespace lib
 				sptr<draw::Renderizable> createShape(const std::string &name);
 				sptr<draw::Renderizable> addRenderizable(sptr<Renderizable> newElement);
 				bool removeRenderizable(sptr<Renderizable> element);
+				void clear();
 
 				u32 draw(lib::core::Window *window) const override;
 
