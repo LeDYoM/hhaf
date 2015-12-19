@@ -40,6 +40,7 @@ namespace lib
 		void Scene::privateOnDeinit()
 		{
 			LOG_DEBUG("Deinitializing scene " << name());
+			onDeinit();
 		}
 
 		void Scene::privateOnEnterScene()

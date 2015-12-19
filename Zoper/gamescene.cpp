@@ -36,15 +36,12 @@ namespace zoper
 
 	void GameScene::onInit()
 	{
-		p_boardModel = lib::sptr<lib::board::BoardModel>(new lib::board::BoardModel(_gameData.size, this));
-
 		getView()->setSize(sceneSize.x, sceneSize.y);
 		getView()->setCenter(sceneCenter.x, sceneCenter.y);
 		updateView();
 
 		_mainBoardrg = this->createNewRenderGroup("mainBoard");
 		_gameOverrg = this->createNewRenderGroup("gameOverScreen");
-		addPlayer();
 
 		_scoreText = _mainBoardrg->createText("scoretxt");
 		_scoreDisplay = _mainBoardrg->createText("scoredisplay");
@@ -96,7 +93,10 @@ namespace zoper
 
 	void GameScene::onEnterScene()
 	{
-		_millisBetweenTokens = 500;
+		p_boardModel = lib::sptr<lib::board::BoardModel>(new lib::board::BoardModel(_gameData.size, this));
+		addPlayer();
+
+		_millisBetweenTokens = 50;
 		_score = 0;
 		_nextTokenPart = 0;
 		_gameOverrg->setVisible(false);
@@ -107,7 +107,9 @@ namespace zoper
 
 	void GameScene::onExitScene()
 	{
+		_mainBoardrg->clear();
 		p_boardModel = nullptr;
+		p_player = nullptr;
 	}
 
 	void GameScene::update()
@@ -123,7 +125,7 @@ namespace zoper
 		}
 		else
 		{
-
+			
 		}
 	}
 
@@ -275,8 +277,8 @@ namespace zoper
 		}
 		break;
 		case GameOver:
-
-		break;
+			setNextScene("MenuScene");
+			break;
 		}
 	}
 

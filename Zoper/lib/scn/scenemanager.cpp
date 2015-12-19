@@ -110,6 +110,7 @@ namespace lib
 			else if (_nextScene)
 			{
 				setScene(_nextScene);
+				_nextScene = nullptr;
 			}
 			else
 			{
