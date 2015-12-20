@@ -32,7 +32,7 @@ namespace zoper
 
 	void MenuScene::onEnterScene()
 	{
-		_logo->getAsSprite()->setPosition(getCoordinatesToCenter(_logo->getAsSprite()->getLocalBounds()));
+		_logo->setPositionX(getCoordinatesToCenter(_logo->getAsSprite()->getLocalBounds()).x);
 //		setNextScene("GameScene");
 	}
 
