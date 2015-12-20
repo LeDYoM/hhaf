@@ -89,6 +89,8 @@ namespace zoper
 
 	void GameScene::onDeinit()
 	{
+		// Remove instances from all nodes.
+		this->clear();
 	}
 
 	void GameScene::onEnterScene()
@@ -100,6 +102,7 @@ namespace zoper
 		_score = 0;
 		_nextTokenPart = 0;
 		_gameOverrg->setVisible(false);
+		_mainBoardrg->setVisible(true);
 
 		gameClock.restart();
 		setState(Playing);
