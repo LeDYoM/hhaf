@@ -36,10 +36,6 @@ namespace zoper
 
 	void GameScene::onInit()
 	{
-		getView()->setSize(sceneSize.x, sceneSize.y);
-		getView()->setCenter(sceneCenter.x, sceneCenter.y);
-		updateView();
-
 		_mainBoardrg = this->createNewRenderGroup("mainBoard");
 		_gameOverrg = this->createNewRenderGroup("gameOverScreen");
 
@@ -495,5 +491,10 @@ namespace zoper
 		std::string result{ std::to_string(_score) };
 		while (result.size() < _scoreSize) result = "0" + result;
 		_scoreDisplay->getAsText()->setString(result);
+	}
+
+	const lib::vector2df GameScene::getDefaultSizeView()
+	{
+		return{ 2000.0f, 2000.0f };
 	}
 }

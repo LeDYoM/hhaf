@@ -17,17 +17,22 @@ namespace zoper
 
 	void MenuScene::onInit()
 	{
+		_logo = createSprite("mainLogo");
+		auto _logoSprite = _logo->getAsSprite();
+		_logoSprite->setTexture(*(resourceManager()->getResource("game_menu.logo")->getAsTexture()));
+		auto a = _logoSprite->getLocalBounds();
+		auto b = _logoSprite->getGlobalBounds();
+		auto c = _logoSprite->getPosition();
 	}
 
 	void MenuScene::onDeinit()
 	{
+
 	}
 
 	void MenuScene::onEnterScene()
 	{
-		_logo = createSprite("mainLogo");
-		_logo->getAsSprite()->setTexture(*(resourceManager()->getResource("game_menu.logo")->getAsTexture()));
-
+		_logo->getAsSprite()->setPosition(getCoordinatesToCenter(_logo->getAsSprite()->getLocalBounds()));
 //		setNextScene("GameScene");
 	}
 
@@ -39,4 +44,10 @@ namespace zoper
 	{
 
 	}
+
+	const lib::vector2df MenuScene::getDefaultSizeView()
+	{
+		return{ 2000.0f, 2000.0f };
+	}
+
 }

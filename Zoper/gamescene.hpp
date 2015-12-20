@@ -86,7 +86,8 @@ namespace zoper
 		virtual void tileAdded(const lib::vector2du32 &position, lib::board::WITilePointer nTile) override;
 		virtual void tileDeleted(const lib::vector2du32 &position, lib::board::WITilePointer nTile) override;
 		virtual void tileMoved(const lib::vector2du32 &source, const lib::vector2du32 &dest, lib::board::WITilePointer tile) override;
-		virtual void tileChanged(const lib::vector2du32 &position, lib::board::WITilePointer nTile, 
+
+		virtual void tileChanged(const lib::vector2du32 &position, lib::board::WITilePointer nTile,
 			const lib::board::BoardTileData &ov, const lib::board::BoardTileData &nv) override;
 
 		void updatePlayer(const lib::vector2du32 &dest, lib::sptr<Player> player_);
@@ -103,6 +104,8 @@ namespace zoper
 		void playerMoved(const lib::vector2du32 &source, const lib::vector2du32 &dest, lib::sptr<Player> player);
 		void playerAppeared(const lib::vector2du32 &position, lib::sptr<Player> player);
 		void playerDissapeared(const lib::vector2du32 &position, lib::sptr<Player> player);
+
+		virtual const lib::vector2df getDefaultSizeView() override;
 
 		// Properties
 		sf::Clock gameClock;

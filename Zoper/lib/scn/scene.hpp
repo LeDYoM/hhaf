@@ -46,7 +46,11 @@ namespace lib
 			void setNextScene(const std::string &name);
 
 			u32 getRandomNumer(u32 max = 1, u32 min = 0);
+			virtual const vector2df getDefaultSizeView() = 0;
+
 		protected:
+			const vector2df getCoordinatesToCenter(const sf::FloatRect &coordinates) const;
+			const vector2df getCenterCoordinates() const;
 
 			void updateView();
 			sf::View *const getView() const;
