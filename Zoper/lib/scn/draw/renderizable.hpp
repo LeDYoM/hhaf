@@ -34,6 +34,8 @@ namespace lib
 
 				// Some useful shortcuts
 				inline void setPosition(const sf::Vector2f &pos) { getAsTransformable()->setPosition(pos); }
+				inline void setPositionX(const float x) { getAsTransformable()->setPosition(x, getAsTransformable()->getPosition().y); }
+				inline void setPositionY(const float y) { getAsTransformable()->setPosition(getAsTransformable()->getPosition().x, y); }
 
 			private:
 				union DrawNodeData
