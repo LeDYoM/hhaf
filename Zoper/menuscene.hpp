@@ -17,7 +17,11 @@ namespace zoper
 		virtual void onEnterScene() override;
 		virtual void onExitScene() override;
 
-		virtual void update();
+		virtual void update() override;
+
+	private:
+		lib::sptr<lib::scn::draw::RenderGroup> _mainMenurg{ nullptr };
+		lib::sptr<lib::scn::draw::Renderizable> _logo{ nullptr };
 	};
 }
 
