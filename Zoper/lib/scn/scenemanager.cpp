@@ -83,7 +83,7 @@ namespace lib
 			}
 			else
 			{
-				LOG_DEBUG("Scene was empty");
+				LOG_DEBUG("Set first scene");
 			}
 			_currentScene = scene;
 			_currentScene->onEnterScene();
