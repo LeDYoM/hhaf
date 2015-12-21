@@ -100,9 +100,11 @@
     <ClCompile Include="lib\scn\scenemanager.cpp" />
     <ClCompile Include="lib\core\window.cpp" />
     <ClCompile Include="lib\memmanager.cpp" />
+    <ClCompile Include="lib\menu\menumanager.cpp" />
     <ClCompile Include="menuscene.cpp" />
     <ClCompile Include="lib\scn\draw\renderizable.cpp" />
     <ClCompile Include="lib\randomizer.cpp" />
+    <ClCompile Include="lib\menu\menustep.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="lib\scn\resourcemanager.cpp" />
     <ClCompile Include="lib\scn\resource.cpp" />
@@ -129,9 +131,11 @@
     <ClInclude Include="gamescene.hpp" />
     <ClInclude Include="lib\types.hpp" />
     <ClInclude Include="lib\memmanager.hpp" />
+    <ClInclude Include="lib\menu\menumanager.hpp" />
     <ClInclude Include="menuscene.hpp" />
     <ClInclude Include="lib\scn\draw\renderizable.hpp" />
     <ClInclude Include="lib\randomizer.hpp" />
+    <ClInclude Include="lib\menu\menustep.hpp" />
     <ClInclude Include="player.hpp" />
     <ClInclude Include="lib\scn\resourcemanager.hpp" />
     <ClInclude Include="lib\scn\resource.hpp" />
