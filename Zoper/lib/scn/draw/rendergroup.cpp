@@ -99,6 +99,13 @@ namespace lib
 				return rg;
 			}
 
+			void RenderGroup::addRenderGroup(sptr<RenderGroup> node)
+			{
+				_renderNodes.push_back(node);
+				__ASSERT(!node->_parent, "Node "<< node->name() <<"already has a parent");
+				node->_parent = this;
+			}
+
 			bool RenderGroup::removeRenderGroup(sptr<RenderGroup> element)
 			{
 				return removeFromspVector(element, _renderNodes);

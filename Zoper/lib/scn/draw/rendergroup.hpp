@@ -33,6 +33,7 @@ namespace lib
 				u32 draw(lib::core::Window *window) const override;
 
 				sptr<RenderGroup> createNewRenderGroup(const std::string &name);
+				void addRenderGroup(sptr<RenderGroup> node);
 				bool removeRenderGroup(sptr<RenderGroup> element);
 
 			private:
