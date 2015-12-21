@@ -6,7 +6,7 @@
 namespace zoper
 {
 	MenuScene::MenuScene()
-		: Scene("MenuScene")
+		: lib::menu::MenuManager("MenuScene")
 	{
 	}
 
@@ -17,12 +17,6 @@ namespace zoper
 
 	void MenuScene::onInit()
 	{
-		_mainMenurg = createNewRenderGroup("mainMenugroup");
-		_logo = _mainMenurg->createSprite("mainLogo");
-		auto _logoSprite = _logo->getAsSprite();
-		_logoSprite->setTexture(*(resourceManager()->getResource("game_menu.logo")->getAsTexture()));
-		_logo->setPositionX(getCoordinatesToCenter(_logo->getAsSprite()->getLocalBounds()).x);
-		_mainMenurg->setVisible(false);
 	}
 
 	void MenuScene::onDeinit()
@@ -32,7 +26,7 @@ namespace zoper
 
 	void MenuScene::onEnterScene()
 	{
-		_mainMenurg->setVisible(true);
+		start();
 //		setNextScene("GameScene");
 	}
 

@@ -12,6 +12,8 @@ namespace lib
 		public:
 			MenuStep(const std::string &name);
 			virtual ~MenuStep();
+
+			virtual void onCreate() = 0;
 		};
 	}
 }

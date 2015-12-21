@@ -18,8 +18,14 @@ namespace lib
 
 			void addMenuSteps(const std::vector<sptr<MenuStep>> &steps);
 			void addMenuStep(sptr<MenuStep> step);
+
+			void start(sptr<MenuStep> firstStep);
+			void changeStep(const std::string &step);
 		private:
+			void setActiveStep(sptr<MenuStep> step);
+
 			std::vector<sptr<MenuStep>> _steps;
+			sptr<MenuStep> _activeMenuStep{ nullptr };
 		};
 	}
 }

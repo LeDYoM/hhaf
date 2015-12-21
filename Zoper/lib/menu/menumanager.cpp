@@ -1,4 +1,5 @@
 #include "menumanager.hpp"
+#include "menustep.hpp"
 #include "../log.hpp"
 
 namespace lib
@@ -26,7 +27,33 @@ namespace lib
 
 		void MenuManager::addMenuStep(sptr<MenuStep> step)
 		{
+			addRenderGroup(step);
+		}
 
+		void MenuManager::start(sptr<MenuStep> firstStep)
+		{
+			__ASSERT(firstStep, "Cannot start in nullptr step");
+		}
+
+		void MenuManager::changeStep(const std::string &step)
+		{
+			for (const auto nstep : _steps)
+			{
+				if (nstep->name() == step)
+				{
+					setActiveStep(nstep);
+				}
+			}
+		}
+
+		void MenuManager::setActiveStep(sptr<MenuStep> step)
+		{
+			_activeMenuStep = step;
+
+			for (auto _step : _steps)
+			{
+				_step->setVisible(_step == step);
+			}
 		}
 	}
 }

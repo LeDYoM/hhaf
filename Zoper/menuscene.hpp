@@ -1,11 +1,11 @@
 #ifndef __MENUSCENE_HPP__
 #define __MENUSCENE_HPP__
 
-#include "lib/scn/scene.hpp"
+#include "lib/menu/menumanager.hpp"
 
 namespace zoper
 {
-	class MenuScene : public lib::scn::Scene
+	class MenuScene : public lib::menu::MenuManager
 	{
 	public:
 		MenuScene();
@@ -21,9 +21,6 @@ namespace zoper
 
 		virtual const lib::vector2df getDefaultSizeView() override;
 
-	private:
-		lib::sptr<lib::scn::draw::RenderGroup> _mainMenurg{ nullptr };
-		lib::sptr<lib::scn::draw::Renderizable> _logo{ nullptr };
 	};
 }
 
