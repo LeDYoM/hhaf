@@ -86,6 +86,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="lib\menu\choosecontrol.cpp" />
     <ClCompile Include="direction.cpp" />
     <ClCompile Include="gamebasetile.cpp" />
     <ClCompile Include="keymapping.cpp" />
@@ -114,6 +115,7 @@
     <ClCompile Include="zoperprogramcontroller.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="lib\menu\choosecontrol.hpp" />
     <ClInclude Include="direction.hpp" />
     <ClInclude Include="gamebasetile.hpp" />
     <ClInclude Include="lib\scn\draw\idrawable.hpp" />
