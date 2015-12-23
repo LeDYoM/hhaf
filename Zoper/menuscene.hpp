@@ -2,6 +2,9 @@
 #define __MENUSCENE_HPP__
 
 #include "lib/menu/menumanager.hpp"
+#include "lib/menu/menustep.hpp"
+#include "lib/types.hpp"
+#include <vector>
 
 namespace zoper
 {
@@ -20,7 +23,7 @@ namespace zoper
 		virtual void update() override;
 
 		virtual const lib::vector2df getDefaultSizeView() override;
-
+//		virtual void getSteps() override;
 	};
 }
 

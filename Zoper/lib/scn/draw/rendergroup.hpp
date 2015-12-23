@@ -37,9 +37,10 @@ namespace lib
 			protected:
 				void addRenderGroup(sptr<RenderGroup> node);
 
+				RenderGroup *parent() const { return _parent; }
+
 			private:
 				RenderGroup *_parent{ nullptr };
-//				std::vector<sptr<RenderGroup>> _childrenGroup;
 				std::vector<sptr<IDrawable>> _renderNodes;
 			};
 		}

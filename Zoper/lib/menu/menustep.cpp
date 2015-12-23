@@ -1,4 +1,5 @@
 #include "menustep.hpp"
+#include "menumanager.hpp"
 
 namespace lib
 {
@@ -13,5 +14,11 @@ namespace lib
 		MenuStep::~MenuStep()
 		{
 		}
+
+		MenuManager * MenuStep::menuManager()
+		{
+			return dynamic_cast<MenuManager*>(parent());
+		}
+
 	}
 }

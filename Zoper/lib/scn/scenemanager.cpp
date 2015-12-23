@@ -14,7 +14,7 @@ namespace lib
 			p_parentWindow = pParentWindow;
 			__ASSERT(p_parentWindow, "Cannot create a scene manager from null window");
 
-			_resourceManager = std::make_unique<ResourceManager>(resFile);
+			_resourceManager = std::make_shared<ResourceManager>(resFile);
 		}
 
 		SceneManager::~SceneManager()
