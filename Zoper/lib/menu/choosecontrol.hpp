@@ -3,18 +3,23 @@
 
 #include "../types.hpp"
 #include "../scn/draw/renderizable.hpp"
-#include "../scn/draw/rendergroup.hpp"
+#include "imenucontrol.hpp"
 #include <vector>
 
 namespace lib
 {
+	namespace scn
+	{
+		class Resource;
+	}
 	namespace menu
 	{
+		class OptionDescriptor;
 		class MenuStep;
-		class ChooseControl : public lib::scn::draw::RenderGroup
+		class ChooseControl : public IMenuControl
 		{
 		public:
-			ChooseControl(const std::string &name, const std::vector<std::string> labels);
+			ChooseControl(const std::string &name, sptr<scn::Resource> font, const std::vector<sptr<OptionDescriptor>> labels);
 			virtual ~ChooseControl();
 
 		private:

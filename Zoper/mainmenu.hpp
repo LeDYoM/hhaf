@@ -2,6 +2,7 @@
 #define __MAINMENU_HPP__
 
 #include "lib/menu/menustep.hpp"
+#include "lib/menu/choosecontrol.hpp"
 
 namespace zoper
 {
@@ -17,6 +18,7 @@ namespace zoper
 
 		private:
 			lib::sptr<lib::scn::draw::Renderizable> _logo{ nullptr };
+			lib::sptr<lib::menu::ChooseControl> _chooseControl{ nullptr };
 
 		};
 	}
