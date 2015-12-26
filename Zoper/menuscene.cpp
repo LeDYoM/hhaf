@@ -48,16 +48,4 @@ namespace zoper
 	{
 		return{ 2000.0f, 2000.0f };
 	}
-	/*
-	int MenuScene::stepsVector()
-	{
-		return 0;
-//		return{ lib::sptr<lib::menu::MenuStep>(new zoper::menu::MainMenu) };
-	}
-
-	void MenuScene::getSteps()
-	{
-
-	}
-	*/
 }
