@@ -29,22 +29,15 @@ namespace zoper
 			_logo->setPositionX(menuManager()->getCoordinatesToCenter(_logo->getAsSprite()->getLocalBounds()).x);
 			_logo->setPositionY(100);
 
-			auto cursor = createShape("cursor");
-			auto this_ = cursor->getAsCircleShape();
-			this_->setPointCount(3);
-			this_->setFillColor(sf::Color::Red);
-
 			_chooseControl = lib::sptr<lib::menu::ChooseControl>(new lib::menu::ChooseControl("mainmenu_chooseControl",
 				rManager->getResource("game_menu.mainFont"),
-				cursor,
 				std::vector<lib::sptr<lib::menu::OptionDescriptor>>{
 				lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Play", { 0.0f, 0.0f }, 45, sf::Color::Blue)),
 				lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Options", { 0.0f, 0.0f }, 45, sf::Color::Blue)),
 				lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Exit", { 0.0f, 0.0f }, 45, sf::Color::Blue)),
 			}));
 			addMenuControl(_chooseControl);
-			_chooseControl->move({ 400, 400 });
+			_chooseControl->setPosition(100, 100);
 		}
-
 	}
 }

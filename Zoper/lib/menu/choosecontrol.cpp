@@ -6,7 +6,7 @@ namespace lib
 {
 	namespace menu
 	{
-		ChooseControl::ChooseControl(const std::string &name, sptr<scn::Resource> font, sptr<scn::draw::Renderizable> cursor, 
+		ChooseControl::ChooseControl(const std::string &name, sptr<scn::Resource> font, 
 			const std::vector<sptr<OptionDescriptor>> labels)
 			: IMenuControl{ name }
 		{
@@ -25,15 +25,30 @@ namespace lib
 				currentPos.y += labels[count]->getCharSize();
 				++count;
 			}
-			addRenderizable(cursor);
-			vector2df pos{ -1 * (cursor->getAsCircleShape()->getLocalBounds().width), 0 };
-			cursor->getAsCircleShape()->setRadius(100);
-			cursor->setPosition(pos);
+
+			_numElements = count;
+			_cursor = createShape("cursor");
+			auto cursor_ = _cursor->getAsCircleShape();
+			cursor_->setPointCount(3);
+			cursor_->setFillColor(sf::Color::Red);
+
+//			addRenderizable(cursor);
+			vector2df pos{ -1 * (cursor_->getLocalBounds().width), 0 };
+			cursor_->setRadius(100);
+			cursor_->setPosition(pos);
 		}
 
 
 		ChooseControl::~ChooseControl()
 		{
 		}
+
+		void ChooseControl::cursorSelectItem(u32 nodeIndex)
+		{
+			__ASSERT(nodeIndex < _numElements, "Invalid select index for cursor");
+
+			_cursorItemSelected = nodeIndex;
+		}
+
 	}
 }

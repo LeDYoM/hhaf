@@ -52,11 +52,11 @@ namespace lib
 
 			}
 
-			u32 Renderizable::draw(lib::core::Window *window) const
+			u32 Renderizable::draw(lib::core::Window *window, sf::RenderStates &states) const
 			{
 				if (isVisible())
 				{
-					window->draw(*getAsDrawable());
+					window->draw(*getAsDrawable(),states);
 					return 1;
 				}
 				return 0;

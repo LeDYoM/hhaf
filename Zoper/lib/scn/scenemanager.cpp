@@ -117,7 +117,7 @@ namespace lib
 				_currentScene->update();
 			}
 
-			_currentScene->draw(p_parentWindow);
+			_currentScene->draw(p_parentWindow,sf::RenderStates());
 		}
 	}
 }

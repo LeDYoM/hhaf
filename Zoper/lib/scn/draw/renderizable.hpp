@@ -30,7 +30,7 @@ namespace lib
 				inline sf::CircleShape *const getAsCircleShape() const { __ASSERT(_activeDrawNode == ActiveDrawNode::CircleShape, "Node is not a circle shape"); return _drawNodeData.circleShape; }
 				inline lib::scn::draw::EllipseShape *const getAsEllipseShape() const { __ASSERT(_activeDrawNode == ActiveDrawNode::EllipseShape, "Node is not an ellipse shape"); return _drawNodeData.ellipseShape; }
 
-				virtual u32 draw(lib::core::Window *window) const override;
+				virtual u32 draw(lib::core::Window *window, sf::RenderStates &states) const override;
 
 				// Some useful shortcuts
 				inline void setPosition(const sf::Vector2f &pos) { getAsTransformable()->setPosition(pos); }

@@ -16,6 +16,7 @@ namespace lib
 
 			RenderGroup::~RenderGroup()
 			{
+				_renderNodes.clear();
 			}
 
 			sptr<draw::Renderizable> RenderGroup::createText(const std::string &name)
@@ -76,16 +77,19 @@ namespace lib
 				return removeFromspVector(element, _renderNodes);
 			}
 
-			u32 RenderGroup::draw(lib::core::Window *window) const
+			u32 RenderGroup::draw(lib::core::Window *window, sf::RenderStates &states) const
 			{
 				if (isVisible())
 				{
 					u32 rNodes{ 0 };
+					auto t = this->getTransform();
+					states.transform *= t;
 
 					for (const auto renderizable : _renderNodes)
 					{
-						rNodes += renderizable->draw(window);
+						rNodes += renderizable->draw(window,states);
 					}
+					states.transform = t;
 					return rNodes;
 				}
 
@@ -115,15 +119,6 @@ namespace lib
 			{
 				_renderNodes.clear();
 			}
-
-			void RenderGroup::move(const vector2df &position)
-			{
-				for (auto node : _renderNodes)
-				{
-					node->move(position);
-				}
-			}
-
 		}
 	}
 }
