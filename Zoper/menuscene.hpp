@@ -1,6 +1,7 @@
 #ifndef __MENUSCENE_HPP__
 #define __MENUSCENE_HPP__
 
+#include "keymapping.hpp"
 #include "lib/menu/menumanager.hpp"
 #include "lib/menu/menustep.hpp"
 #include "lib/types.hpp"
@@ -8,7 +9,7 @@
 
 namespace zoper
 {
-	class MenuScene : public lib::menu::MenuManager
+	class MenuScene : public lib::menu::MenuManager, public KeyMapping
 	{
 	public:
 		MenuScene();
@@ -23,7 +24,6 @@ namespace zoper
 		virtual void update() override;
 
 		virtual const lib::vector2df getDefaultSizeView() override;
-//		virtual void getSteps() override;
 	};
 }
 
