@@ -47,7 +47,14 @@ namespace lib
 
 		void ChooseControl::onKeyPressed(sf::Event::KeyEvent kEvent)
 		{
-
+			if (kEvent.code == sf::Keyboard::Down || kEvent.code == sf::Keyboard::Numpad2)
+			{
+				goDown();
+			}
+			else if (kEvent.code == sf::Keyboard::Up || kEvent.code == sf::Keyboard::Numpad8)
+			{
+				goUp();
+			}
 		}
 
 		void ChooseControl::onKeyReleased(sf::Event::KeyEvent kEvent)
@@ -73,12 +80,26 @@ namespace lib
 
 		void ChooseControl::goDown()
 		{
-
+			if (_cursorItemSelected < (_labels.size() - 1))
+			{
+				cursorSelectItem(_cursorItemSelected + 1);
+			}
+			else
+			{
+				cursorSelectItem(0);
+			}
 		}
 
 		void ChooseControl::goUp()
 		{
-
+			if (_cursorItemSelected > 0)
+			{
+				cursorSelectItem(_cursorItemSelected - 1);
+			}
+			else
+			{
+				cursorSelectItem(_labels.size()-1);
+			}
 		}
 
 	}
