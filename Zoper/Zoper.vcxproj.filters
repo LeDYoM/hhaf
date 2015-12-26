@@ -96,9 +96,6 @@
     <ClCompile Include="lib\menu\choosecontrol.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="lib\menu\optiondescriptor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="zoperprogramcontroller.hpp">
@@ -194,10 +191,10 @@
     <ClInclude Include="lib\menu\choosecontrol.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="lib\menu\optiondescriptor.hpp">
+    <ClInclude Include="lib\menu\imenucontrol.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="lib\menu\imenucontrol.hpp">
+    <ClInclude Include="lib\menu\menudescriptors.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

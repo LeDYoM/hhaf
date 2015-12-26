@@ -28,6 +28,7 @@ namespace lib
 				sptr<draw::Renderizable> createText(const std::string &name);
 				sptr<draw::Renderizable> createSprite(const std::string &name);
 				sptr<draw::Renderizable> createShape(const std::string &name);
+				sptr<draw::Renderizable> createCircleShape(const std::string &name);
 				sptr<draw::Renderizable> addRenderizable(sptr<Renderizable> newElement);
 				bool removeRenderizable(sptr<Renderizable> element);
 				void clear();

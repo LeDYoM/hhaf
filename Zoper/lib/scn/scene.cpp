@@ -43,6 +43,12 @@ namespace lib
 		{
 			LOG_DEBUG("Initializing scene " << name());
 			p_view = uptr<sf::View>(new sf::View(p_scnManager->parentWindow()->getView()));
+			auto sceneSize = getDefaultSizeView();
+			p_view->setSize(sceneSize.x, sceneSize.y);
+			p_view->setCenter(sceneSize.x / 2, sceneSize.y / 2);
+			updateView();
+
+			LOG_DEBUG("Scene view set to: center: " << p_view->getCenter().x << "," << p_view->getCenter().y << " and size: " << p_view->getSize().x << "," << p_view->getSize().y);
 
 			onInit();
 		}
