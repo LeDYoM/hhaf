@@ -2,6 +2,7 @@
 #define __LIB_IMENUCONTROL_HPP__
 
 #include "../scn/draw/rendergroup.hpp"
+#include <SFML/Window/Event.hpp>
 
 namespace lib
 {
@@ -13,6 +14,9 @@ namespace lib
 
 			IMenuControl(const std::string &name) : lib::scn::draw::RenderGroup(name) {}
 			virtual ~IMenuControl() {}
+			virtual void onKeyPressed(sf::Event::KeyEvent kEvent) = 0;
+			virtual void onKeyReleased(sf::Event::KeyEvent kEvent) = 0;
+
 		};
 	}
 }

@@ -25,5 +25,22 @@ namespace lib
 			addRenderGroup(nControl);
 			_controls.push_back(nControl);
 		}
+
+		void MenuStep::onKeyPressed(sf::Event::KeyEvent kEvent)
+		{
+			for (auto control : _controls)
+			{
+				control->onKeyPressed(kEvent);
+			}
+		}
+
+		void MenuStep::onKeyReleased(sf::Event::KeyEvent kEvent)
+		{
+			for (auto control : _controls)
+			{
+				control->onKeyReleased(kEvent);
+			}
+		}
+
 	}
 }

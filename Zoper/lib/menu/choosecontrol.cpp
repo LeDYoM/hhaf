@@ -41,6 +41,18 @@ namespace lib
 
 		ChooseControl::~ChooseControl()
 		{
+			_labels.clear();
+			_cursor = nullptr;
+		}
+
+		void ChooseControl::onKeyPressed(sf::Event::KeyEvent kEvent)
+		{
+
+		}
+
+		void ChooseControl::onKeyReleased(sf::Event::KeyEvent kEvent)
+		{
+
 		}
 
 		void ChooseControl::cursorSelectItem(u32 nodeIndex)
@@ -57,6 +69,16 @@ namespace lib
 			cursor_->setRotation(90);
 
 			_cursor->setPositionY(selectedText->getPosition().y);
+		}
+
+		void ChooseControl::goDown()
+		{
+
+		}
+
+		void ChooseControl::goUp()
+		{
+
 		}
 
 	}

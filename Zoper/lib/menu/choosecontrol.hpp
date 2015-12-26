@@ -27,8 +27,13 @@ namespace lib
 				const std::vector<sptr<OptionDescriptor>> labels);
 			virtual ~ChooseControl();
 
+			virtual void onKeyPressed(sf::Event::KeyEvent kEvent);
+			virtual void onKeyReleased(sf::Event::KeyEvent kEvent);
+
 		private:
 			void cursorSelectItem(u32 nodeIndex);
+			void goDown();
+			void goUp();
 
 			vector2df descriptorCursorSize;
 			u32 _cursorItemSelected{ 0 };

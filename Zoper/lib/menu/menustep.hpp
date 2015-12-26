@@ -23,6 +23,9 @@ namespace lib
 			MenuManager *menuManager();
 
 			void addMenuControl(sptr<IMenuControl> nControl);
+			virtual void onKeyPressed(sf::Event::KeyEvent kEvent);
+			virtual void onKeyReleased(sf::Event::KeyEvent kEvent);
+
 		private:
 			std::vector<sptr<IMenuControl>> _controls;
 		};
