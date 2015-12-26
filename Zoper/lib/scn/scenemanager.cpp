@@ -19,6 +19,11 @@ namespace lib
 
 		SceneManager::~SceneManager()
 		{
+			for (auto scene : _scenes)
+			{
+				scene->privateOnDeinit();
+			}
+			_scenes.clear();
 			LOG_DESTRUCT_NOPARAMS;
 		}
 
@@ -79,14 +84,14 @@ namespace lib
 			__ASSERT(scene, "Cannot change to a nullptr Scene");
 			if (_currentScene)
 			{
-				_currentScene->onExitScene();
+				_currentScene->privateOnExitScene();
 			}
 			else
 			{
 				LOG_DEBUG("Set first scene");
 			}
 			_currentScene = scene;
-			_currentScene->onEnterScene();
+			_currentScene->privateOnEnterScene();
 		}
 
 		sptr<Scene> SceneManager::getSceneByName(const std::string &name) const
