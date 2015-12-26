@@ -17,10 +17,10 @@ namespace lib
 		public:
 			ResourceManager(const std::string &resourceFile);
 			virtual ~ResourceManager();
-			uptr<Resource> &getResource(const std::string rid);
+			sptr<Resource> &getResource(const std::string rid);
 
 		private:
-			std::vector<uptr<Resource>> resources;
+			std::vector<sptr<Resource>> resources;
 
 		};
 	}

@@ -20,5 +20,10 @@ namespace lib
 			return dynamic_cast<MenuManager*>(parent());
 		}
 
+		void MenuStep::addMenuControl(sptr<IMenuControl> nControl)
+		{
+			addRenderGroup(nControl);
+			_controls.push_back(nControl);
+		}
 	}
 }

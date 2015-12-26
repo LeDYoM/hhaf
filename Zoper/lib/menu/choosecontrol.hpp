@@ -19,11 +19,12 @@ namespace lib
 		class ChooseControl : public IMenuControl
 		{
 		public:
-			ChooseControl(const std::string &name, sptr<scn::Resource> font, const std::vector<sptr<OptionDescriptor>> labels);
+			ChooseControl(const std::string &name, sptr<scn::Resource> font, sptr<scn::draw::Renderizable> cursor, const std::vector<sptr<OptionDescriptor>> labels);
 			virtual ~ChooseControl();
 
 		private:
 			std::vector<sptr<scn::draw::Renderizable>> _labels;
+			sptr<scn::draw::Renderizable> _cursor;
 		};
 	}
 }

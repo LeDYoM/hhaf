@@ -2,6 +2,7 @@
 #define __LIB_MENUSTEP_HPP__
 
 #include "../scn/draw/rendergroup.hpp"
+#include "../menu/imenucontrol.hpp"
 #include "../types.hpp"
 
 #include <vector>
@@ -20,6 +21,8 @@ namespace lib
 
 			virtual void onCreate() = 0;
 			MenuManager *menuManager();
+
+			void addMenuControl(sptr<IMenuControl> nControl);
 		private:
 			std::vector<sptr<IMenuControl>> _controls;
 		};

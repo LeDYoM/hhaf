@@ -115,6 +115,15 @@ namespace lib
 			{
 				_renderNodes.clear();
 			}
+
+			void RenderGroup::move(const vector2df &position)
+			{
+				for (auto node : _renderNodes)
+				{
+					node->move(position);
+				}
+			}
+
 		}
 	}
 }

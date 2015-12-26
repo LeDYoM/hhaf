@@ -6,7 +6,8 @@ namespace lib
 {
 	namespace menu
 	{
-		ChooseControl::ChooseControl(const std::string &name, sptr<scn::Resource> font, const std::vector<sptr<OptionDescriptor>> labels)
+		ChooseControl::ChooseControl(const std::string &name, sptr<scn::Resource> font, sptr<scn::draw::Renderizable> cursor, 
+			const std::vector<sptr<OptionDescriptor>> labels)
 			: IMenuControl{ name }
 		{
 			u32 count{ 0 };
@@ -22,7 +23,12 @@ namespace lib
 				text->setPosition(currentPos);
 				currentPos += labels[count]->getInc();
 				currentPos.y += labels[count]->getCharSize();
+				++count;
 			}
+			addRenderizable(cursor);
+			vector2df pos{ -1 * (cursor->getAsCircleShape()->getLocalBounds().width), 0 };
+			cursor->getAsCircleShape()->setRadius(100);
+			cursor->setPosition(pos);
 		}
 
 

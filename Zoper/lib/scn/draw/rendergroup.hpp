@@ -32,6 +32,8 @@ namespace lib
 
 				u32 draw(lib::core::Window *window) const override;
 
+				void move(const vector2df &position);
+
 				sptr<RenderGroup> createNewRenderGroup(const std::string &name);
 				bool removeRenderGroup(sptr<RenderGroup> element);
 			protected:
