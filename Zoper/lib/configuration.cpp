@@ -60,33 +60,37 @@ namespace lib
 		if (fIterator != _data.end())
 		{
 			// Configuration file already in use.
-			LOG_DEBUG("Map data for file " << file << " found. Using it");
+			LOG_DEBUG("Map data for " << file << " found. Using it");
 			currentMap = &(fIterator->second);
 		}
 		else
 		{
-			LOG_DEBUG("Map data for file " << file << " not created. Trying to read file");
+			LOG_DEBUG("Map data for " << file << " not created.");
 			CMap cMap;
 
-			std::ifstream f(file);
-
-			if (f.is_open())
+			if (file[0] != ':')
 			{
-				while (f)
+				LOG_DEBUG("Trying to read file");
+				std::ifstream f(file);
+
+				if (f.is_open())
 				{
-					std::string line;
-					f >> line;
-					if (line.size() > 0)
+					while (f)
 					{
-						CMapLine lineData(split(line, "="));
-						cMap[lineData.first] = lineData.second;
-						LOG_DEBUG("Adding key" << lineData.first << " with value " << lineData.second);
+						std::string line;
+						f >> line;
+						if (line.size() > 0)
+						{
+							CMapLine lineData(split(line, "="));
+							cMap[lineData.first] = lineData.second;
+							LOG_DEBUG("Adding key" << lineData.first << " with value " << lineData.second);
+						}
 					}
 				}
-			}
-			else
-			{
-				LOG_DEBUG("File " << file << " not found. Assosiating empty data to file");
+				else
+				{
+					LOG_DEBUG("File " << file << " not found. Associating empty data to file");
+				}
 			}
 
 			_data[file] = cMap;

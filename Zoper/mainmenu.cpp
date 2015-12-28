@@ -6,12 +6,14 @@
 #include "lib/scn/resourcemanager.hpp"
 #include "lib/scn/resource.hpp"
 
+#include "common.hpp"
+
 namespace zoper
 {
 	namespace zmenu
 	{
 		MainMenu::MainMenu()
-			: lib::menu::MenuStep{ "MainMenu" }
+			: lib::menu::MenuStep{ "MainMenu" }, _gameConfig{ ":NextGame" }
 		{
 		}
 
@@ -35,6 +37,7 @@ namespace zoper
 				switch (index)
 				{
 				case 0:
+					_gameConfig.addConfigInt(StartTokenTime, 500, true);
 					menuManager()->setNextScene("GameScene");
 					break;
 				case 1:

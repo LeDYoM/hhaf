@@ -2,7 +2,7 @@
 
 #include "tile.hpp"
 #include "player.hpp"
-
+#include "common.hpp"
 #include "lib/board/boardmodel.hpp"
 #include "lib/board/itilescontroller.hpp"
 #include "lib/scn/draw/renderizable.hpp"
@@ -19,7 +19,7 @@
 namespace zoper
 {
 	GameScene::GameScene()
-		: Scene("GameScene"), Configuration("config.cfg")
+		: Scene("GameScene"), Configuration("config.cfg"), _gameConfig{ ":NextGame" }
 	{
 		_gameData.size.x = 18;
 		_gameData.size.y = 12;
@@ -94,7 +94,7 @@ namespace zoper
 		p_boardModel = lib::sptr<lib::board::BoardModel>(new lib::board::BoardModel(_gameData.size, this));
 		addPlayer();
 
-		_millisBetweenTokens = 50;
+		_millisBetweenTokens = _gameConfig.getAsInt(StartTokenTime);
 		_score = 0;
 		_nextTokenPart = 0;
 		_gameOverrg->setVisible(false);

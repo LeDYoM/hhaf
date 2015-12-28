@@ -56,6 +56,7 @@ namespace zoper
 		inline const GameData &getGameData() const { return _gameData; };
 
 	private:
+		lib::Configuration _gameConfig;
 		void increaseScore(lib::u32 scoreIncrement);
 		void generateNextToken();
 		void addNewToken(const lib::vector2du32 &tPosition, lib::u32 newToken);

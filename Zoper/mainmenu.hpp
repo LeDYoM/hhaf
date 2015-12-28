@@ -3,6 +3,7 @@
 
 #include "lib/menu/menustep.hpp"
 #include "lib/menu/choosecontrol.hpp"
+#include "lib/configuration.hpp"
 
 namespace zoper
 {
@@ -17,6 +18,7 @@ namespace zoper
 			virtual void onCreate() override;
 
 		private:
+			lib::Configuration _gameConfig;
 			lib::sptr<lib::scn::draw::Renderizable> _logo{ nullptr };
 			lib::sptr<lib::menu::ChooseControl> _chooseControl{ nullptr };
 
