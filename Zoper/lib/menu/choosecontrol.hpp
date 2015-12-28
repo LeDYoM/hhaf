@@ -6,6 +6,7 @@
 #include "imenucontrol.hpp"
 #include "menudescriptors.hpp"
 #include <vector>
+#include <functional>
 
 namespace lib
 {
@@ -21,8 +22,7 @@ namespace lib
 		{
 		public:
 			ChooseControl(const std::string &name, sptr<scn::Resource> font,
-				u32 chSize,
-				float incY,
+				u32 chSize, float incY, std::function<void(const u32)> onSelected,
 				sptr<CursorDescriptor> cursorDescriptor, 
 				const std::vector<sptr<OptionDescriptor>> labels);
 			virtual ~ChooseControl();
@@ -39,6 +39,7 @@ namespace lib
 			u32 _cursorItemSelected{ 0 };
 			std::vector<sptr<scn::draw::Renderizable>> _labels;
 			sptr<scn::draw::Renderizable> _cursor;
+			std::function<void(const u32)> _onSelected;
 		};
 	}
 }

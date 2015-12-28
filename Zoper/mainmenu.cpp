@@ -30,9 +30,25 @@ namespace zoper
 			_logo->setPositionX(menuManager()->getCoordinatesToCenter(_logo->getAsSprite()->getGlobalBounds()).x);
 			_logo->setPositionY(100);
 
+			auto callBack = [this](lib::u32 index)
+			{
+				switch (index)
+				{
+				case 0:
+					menuManager()->setNextScene("GameScene");
+					break;
+				case 1:
+					break;
+				case 2:
+				default:
+					menuManager()->exitProgram();
+					break;
+				}
+			};
 			_chooseControl = lib::sptr<lib::menu::ChooseControl>(new lib::menu::ChooseControl("mainmenu_chooseControl",
 				rManager->getResource("game_menu.mainFont"),
 				90, 1,
+				callBack,
 				lib::sptr<lib::menu::CursorDescriptor>(new lib::menu::CursorDescriptor(3, lib::vector2df{ 90.0f, 90.0f },sf::Color::Red)),
 				std::vector<lib::sptr<lib::menu::OptionDescriptor>>{
 				lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Play", sf::Color::Blue)),

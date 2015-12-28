@@ -72,7 +72,7 @@ namespace lib
 			p_sceneManager->update();
 
 			display();
-			return false;
+			return _shouldClose;
 		}
 
 		void Window::onCreate()
@@ -104,6 +104,11 @@ namespace lib
 			{
 				p_sceneManager->onKeyReleased(e.key);
 			}
+		}
+
+		void Window::exitProgram()
+		{
+			_shouldClose = true;
 		}
 
 	}

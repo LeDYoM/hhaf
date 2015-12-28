@@ -10,7 +10,6 @@ namespace lib
 	namespace core
 	{
 		class Window;
-		class ProgramController;
 	}
 	namespace scn
 	{
@@ -34,6 +33,7 @@ namespace lib
 			void onKeyPressed(sf::Event::KeyEvent kEvent);
 			void onKeyReleased(sf::Event::KeyEvent kEvent);
 			sptr<ResourceManager> &resourceManager() { return _resourceManager; }
+			void exitProgram();
 		private:
 			void setScene(sptr<Scene> scene);
 

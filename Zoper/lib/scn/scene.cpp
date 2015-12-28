@@ -104,5 +104,11 @@ namespace lib
 		{
 			return p_scnManager->resourceManager();
 		}
+
+		void Scene::exitProgram()
+		{
+			p_scnManager->exitProgram();
+		}
+
 	}
 }

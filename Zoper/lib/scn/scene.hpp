@@ -12,12 +12,6 @@
 
 namespace lib
 {
-	namespace core
-	{
-		class Window;
-		class ProgramController;
-	}
-
 	namespace scn
 	{
 		class SceneManager;
@@ -50,6 +44,8 @@ namespace lib
 			sptr<ResourceManager> &resourceManager();
 			const vector2df getCoordinatesToCenter(const sf::FloatRect &coordinates) const;
 			const vector2df getCenterCoordinates() const;
+
+			void exitProgram();
 
 		protected:
 

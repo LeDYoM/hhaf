@@ -124,5 +124,11 @@ namespace lib
 
 			_currentScene->draw(p_parentWindow,sf::RenderStates());
 		}
+
+		void SceneManager::exitProgram()
+		{
+			p_parentWindow->exitProgram();
+		}
+
 	}
 }

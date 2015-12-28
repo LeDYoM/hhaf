@@ -28,12 +28,13 @@ namespace lib
 			virtual void onCreate();
 			virtual void onDestroy();
 			u32 getRandomNumer(u32 max = 1, u32 min = 0);
+			void exitProgram();
 
 		private:
 			sptr<lib::scn::SceneManager> p_sceneManager;
 			uptr<WindowPrivate> p_wPrivate{ nullptr };
 			ProgramController *p_parentController;
-
+			bool _shouldClose{ false };
 			void keyEvent(sf::Event e);
 		};
 	}

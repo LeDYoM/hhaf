@@ -7,10 +7,13 @@ namespace lib
 	namespace menu
 	{
 		ChooseControl::ChooseControl(const std::string &name, sptr<scn::Resource> font, 
-			u32 chSize,float incY,sptr<CursorDescriptor> cursorDescriptor, 
+			u32 chSize,float incY,
+			std::function<void(const u32)> onSelected,
+			sptr<CursorDescriptor> cursorDescriptor, 
 			const std::vector<sptr<OptionDescriptor>> labels)
 			: IMenuControl{ name }
 		{
+			_onSelected = onSelected;
 			descriptorCursorSize = cursorDescriptor->getSize();
 			_cursor = createShape("cursor");
 			auto cursor_ = _cursor->getAsEllipseShape();
@@ -54,6 +57,13 @@ namespace lib
 			else if (kEvent.code == sf::Keyboard::Up || kEvent.code == sf::Keyboard::Numpad8)
 			{
 				goUp();
+			}
+			else if (kEvent.code == sf::Keyboard::Return || kEvent.code == sf::Keyboard::Space)
+			{
+				if (_onSelected)
+				{
+					_onSelected(_cursorItemSelected);
+				}
 			}
 		}
 
