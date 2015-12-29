@@ -4,6 +4,7 @@
 namespace zoper
 {
 	static const char *StartTokenTime = "StartTokenTime";
+	static const char *GameModeStr = "GameMode";
 }
 
 #endif

@@ -1,4 +1,5 @@
 #include "window.hpp"
+#include "../compileconfig.hpp"
 #include "../log.hpp"
 #include "../randomizer.hpp"
 #include "../scn/scenemanager.hpp"
@@ -22,9 +23,13 @@ namespace lib
 		Window::Window(ProgramController *parentController) :p_wPrivate{ new WindowPrivate() }, p_parentController{ parentController }
 		{
 			LOG_CONSTRUCT_NOPARAMS;
-			__ASSERTERROR(p_parentController, " Cannot create a Window with no parent");
+			__ASSERT(p_parentController, " Cannot create a Window with no parent");
 			// TO DO: Read from config
 			create(1024, 768, 32, "Zoper");
+
+#ifndef DEBUG
+			this->setVerticalSyncEnabled(true);
+#endif
 
 			// Create the scene manager
 			p_sceneManager = sptr<lib::scn::SceneManager>(new lib::scn::SceneManager(this, p_parentController->resourceFile()));

@@ -36,6 +36,15 @@ namespace zoper
 		void generateTokenZones();
 		std::array<TokenZone, NUMWAYS> _tokenZones;
 
+		sf::Clock levelClock;
+		lib::u32 ConsumedTokens;
+		lib::u32 _currentLevel;
+
+		enum GameModes : lib::u8
+		{
+			Token=0,
+			Time=1,
+		} _gameMode{ Token };
 	};
 	class GameScene : public lib::scn::Scene, public lib::board::ITilesController, public lib::Configuration
 	{
@@ -57,6 +66,8 @@ namespace zoper
 
 	private:
 		lib::Configuration _gameConfig;
+		void setLevel(const lib::u32 nv);
+		void updateLevelData();
 		void increaseScore(lib::u32 scoreIncrement);
 		void generateNextToken();
 		void addNewToken(const lib::vector2du32 &tPosition, lib::u32 newToken);
@@ -117,16 +128,20 @@ namespace zoper
 		lib::u8 _nextTokenPart{ 0 };
 		lib::sptr<lib::scn::draw::RenderGroup> _mainBoardrg{ nullptr };
 		lib::sptr<lib::scn::draw::RenderGroup> _gameOverrg{ nullptr };
+		lib::sptr<lib::scn::draw::RenderGroup> _scorerg{ nullptr };
+		lib::sptr<lib::scn::draw::RenderGroup> _levelrg{ nullptr };
 		const lib::u8 _scoreSize{ 5 };
-		const lib::vector2df sceneSize{ 2000.0f, 2000.0f };
-		const lib::vector2df sceneCenter{ sceneSize.x/2.0f, sceneSize.y/2.0f };
+		const lib::u8 _levelDataSize{ 5 };
 
 		// Nodes from the scene
 		lib::sptr<Player> p_player{ nullptr };
 		lib::sptr<lib::scn::draw::Renderizable> _scoreText{ nullptr };
 		lib::sptr<lib::scn::draw::Renderizable> _scoreDisplay{ nullptr };
+		lib::sptr<lib::scn::draw::Renderizable> _levelText{ nullptr };
+		lib::sptr<lib::scn::draw::Renderizable> _levelDisplay{ nullptr };
 		lib::sptr<lib::scn::draw::Renderizable> _gameText{ nullptr };
 		lib::sptr<lib::scn::draw::Renderizable> _overText{ nullptr };
+
 
 	};
 }
