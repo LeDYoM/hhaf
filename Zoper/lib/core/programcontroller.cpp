@@ -24,7 +24,7 @@ namespace lib
 		
 		void ProgramController::start()
 		{
-			p_window = sptr<Window>(new Window(this));
+			p_window = sptr<Window>(new Window(this,getWindowCreationParams()));
 
 			onInit();
 		}

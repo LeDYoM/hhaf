@@ -16,14 +16,14 @@ namespace lib
 	namespace core
 	{
 		struct WindowPrivate;
+		struct WindowCreationParams;
 		class ProgramController;
 
 		class Window : public sf::RenderWindow
 		{
 		public:
-			Window(ProgramController *parentController);
+			Window(ProgramController *parentController, const WindowCreationParams &wcp);
 			virtual ~Window();
-			void create(int w, int h, int bpp, const std::string &title);
 			bool loopStep();
 			virtual void onCreate();
 			virtual void onDestroy();
@@ -31,11 +31,14 @@ namespace lib
 			void exitProgram();
 
 		private:
+			void create(const WindowCreationParams &wcp);
+
 			sptr<lib::scn::SceneManager> p_sceneManager;
 			uptr<WindowPrivate> p_wPrivate{ nullptr };
 			ProgramController *p_parentController;
 			bool _shouldClose{ false };
 			void keyEvent(sf::Event e);
+			std::string _title;
 		};
 	}
 }

@@ -5,6 +5,7 @@
 #include "../compileconfig.hpp"
 
 #include <vector>
+#include <string>
 
 namespace lib
 {
@@ -16,6 +17,14 @@ namespace lib
 	namespace core
 	{
 		class Window;
+
+		struct WindowCreationParams
+		{
+			std::string windowTitle;
+			u32 width{ 1024 };
+			u32 height{ 768 };
+			u8 bpp{ 16 };
+		};
 		
 		class ProgramController
 		{
@@ -27,6 +36,8 @@ namespace lib
 			virtual void onInit()=0;
 			virtual std::vector<sptr<lib::scn::Scene>> scenesVector() = 0;
 			virtual std::string resourceFile() { return ""; }
+
+			virtual const WindowCreationParams getWindowCreationParams() = 0;
 
 			void start();
 			int loop();

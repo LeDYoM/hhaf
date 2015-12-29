@@ -16,6 +16,7 @@ namespace zoper
 		void onInit() override;
 		virtual std::vector<lib::sptr<lib::scn::Scene>> scenesVector() override;
 		virtual std::string resourceFile() override;
+		virtual const lib::core::WindowCreationParams getWindowCreationParams() override;
 
 	};
 }

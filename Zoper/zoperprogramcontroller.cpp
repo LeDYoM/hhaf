@@ -1,6 +1,7 @@
 #include "zoperprogramcontroller.hpp"
 #include "menuscene.hpp"
 #include "gamescene.hpp"
+#include "common.hpp"
 
 namespace zoper
 {
@@ -11,17 +12,17 @@ namespace zoper
 
 	ZoperProgramController::~ZoperProgramController()
 	{
+		saveConfig();
 	}
 		
 	void ZoperProgramController::onInit()
 	{
 		// Init configuration data
-		addConfigProperty("GraphicsLevel", "4");
-		addConfigProperty("KeyLeft", std::to_string(sf::Keyboard::Left));
-		addConfigProperty("KeyRight", std::to_string(sf::Keyboard::Right));
-		addConfigProperty("KeyUp", std::to_string(sf::Keyboard::Up));
-		addConfigProperty("KeyDown", std::to_string(sf::Keyboard::Down));
-		addConfigProperty("KeyLaunch", std::to_string(sf::Keyboard::Space));
+		addConfigInt(GraphicsLevelStr, 4);
+		addConfigInt(ResolutionXStr, 1024);
+		addConfigInt(ResolutionYStr, 768);
+		addConfigInt(BPPStr, 32);
+		addConfigInt(FulscreenStr, 0);
 	}
 
 	std::vector<lib::sptr<lib::scn::Scene>> ZoperProgramController::scenesVector()
@@ -31,5 +32,15 @@ namespace zoper
 	std::string ZoperProgramController::resourceFile()
 	{
 		return "res.cfg";
+	}
+
+	const lib::core::WindowCreationParams ZoperProgramController::getWindowCreationParams()
+	{
+		lib::core::WindowCreationParams params;
+		params.windowTitle = "Zoper";
+		params.width = 1024;
+		params.height = 768;
+		params.bpp = 32;
+		return params;
 	}
 }

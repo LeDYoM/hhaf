@@ -31,11 +31,15 @@ namespace lib
 
 		std::string addConfigProperty(const std::string &name, const std::string &value, bool overwrite = false);
 		s32 addConfigInt(const std::string &name, int value, bool overwrite = false);
+
+
+	protected:
 		bool configFileExists(const std::string &file);
 
 		void for_each_property(std::function<void(const CMapLine&)> callback);
-	protected:
+		bool saveConfig();
 		std::vector<std::string> splitString(const std::string &input, const char separator);
+
 	private:
 		const std::string currentFile;
 		CMap *currentMap;

@@ -20,12 +20,13 @@ namespace lib
 			int currentFps{ 0 };
 			Randomizer randomizer;
 		};
-		Window::Window(ProgramController *parentController) :p_wPrivate{ new WindowPrivate() }, p_parentController{ parentController }
+		Window::Window(ProgramController *parentController, const WindowCreationParams &wcp)
+			: p_wPrivate{ new WindowPrivate() }, p_parentController{ parentController }, _title(wcp.windowTitle)
 		{
 			LOG_CONSTRUCT_NOPARAMS;
 			__ASSERT(p_parentController, " Cannot create a Window with no parent");
 			// TO DO: Read from config
-			create(1024, 768, 32, "Zoper");
+			create(wcp);
 
 #ifndef DEBUG
 			this->setVerticalSyncEnabled(true);
@@ -41,10 +42,10 @@ namespace lib
 			LOG_DESTRUCT_NOPARAMS;
 		}
 
-		void Window::create(int w, int h, int bpp, const std::string &title)
+		void Window::create(const WindowCreationParams &wcp)
 		{
 			LOG_DEBUG("Going to create Window");
-			sf::Window::create(VideoMode(w, h, bpp), title);
+			sf::Window::create(VideoMode(wcp.width, wcp.height, wcp.bpp), _title);
 		}
 
 		bool Window::loopStep()

@@ -54,24 +54,25 @@ namespace lib
 	}
 
 	Configuration::Configuration(const std::string &file)
+		: currentFile(file)
 	{
-		CDataMap::iterator fIterator{ _data.find(file) };
+		CDataMap::iterator fIterator{ _data.find(currentFile) };
 
 		if (fIterator != _data.end())
 		{
 			// Configuration file already in use.
-			LOG_DEBUG("Map data for " << file << " found. Using it");
+			LOG_DEBUG("Map data for " << currentFile << " found. Using it");
 			currentMap = &(fIterator->second);
 		}
 		else
 		{
-			LOG_DEBUG("Map data for " << file << " not created.");
+			LOG_DEBUG("Map data for " << currentFile << " not created.");
 			CMap cMap;
 
 			if (file[0] != ':')
 			{
 				LOG_DEBUG("Trying to read file");
-				std::ifstream f(file);
+				std::ifstream f(currentFile);
 
 				if (f.is_open())
 				{
@@ -94,7 +95,7 @@ namespace lib
 			}
 
 			_data[file] = cMap;
-			currentMap = &(_data[file]);
+			currentMap = &(_data[currentFile]);
 		}
 	}
 
@@ -169,4 +170,28 @@ namespace lib
 	{
 		return std::stoi(addConfigProperty(name, std::to_string(value)));
 	}
+
+	bool Configuration::saveConfig()
+	{
+		__ASSERT(currentFile.size() > 0, "Empty file name");
+		__ASSERT(currentFile[0] != ':', "Cannot save memory streams");
+		LOG_DEBUG("Saving configuration file " << currentFile);
+		std::ofstream f(currentFile);
+
+		if (f.is_open())
+		{
+			for_each_property([&f](const CMapLine &line)
+			{
+				f << line.first << "=" << line.second << std::endl;
+				LOG_DEBUG("Written: " << line.first << "=" << line.second);
+			});
+			return true;
+		}
+		else
+		{
+			LOG_ERROR("Cannot write file " << currentFile);
+			return false;
+		}
+	}
+
 }
