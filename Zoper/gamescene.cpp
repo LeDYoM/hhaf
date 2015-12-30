@@ -104,12 +104,8 @@ namespace zoper
 		_scoreDisplay->setPositionX(rBounds.width);
 
 		_levelrg->setPosition(1250, 50);
-		auto levelrBounds = _levelTextText->getLocalBounds();
-		_levelDisplay->setPositionX(rBounds.width);
 		
 		_goalText->setPositionY(200);
-		auto goalrBounds = _goalTextText->getLocalBounds();
-		_levelDisplay->setPosition(sf::Vector2f{ goalrBounds.width+200, 200 });
 
 		auto _gameBoundingBox = _gameTextText->getLocalBounds();
 		auto _overBoundingBox = _overTextText->getLocalBounds();
@@ -122,7 +118,7 @@ namespace zoper
 	void GameScene::onDeinit()
 	{
 		// Remove instances from all nodes.
-		this->clear();
+		clear();
 	}
 
 	void GameScene::onEnterScene()
@@ -144,13 +140,17 @@ namespace zoper
 		{
 		default:
 		case GameData::GameModes::Token:
-			levelText->setString("Tokens:");
-			goalText->setString("Goal:");
+			levelText->setString("Tokens: ");
+			goalText->setString("Goal: ");
+			_levelDisplay->setPositionX(levelText->getLocalBounds().width);
+			_goalDisplay->setPosition(sf::Vector2f{ goalText->getLocalBounds().width, 200 });
 			break;
 
 		case GameData::GameModes::Time:
 			levelText->setString("Time:");
-			goalText->setString("Goal:");
+			goalText->setString("Goal: ");
+			_levelDisplay->setPositionX(levelText->getLocalBounds().width);
+			_goalDisplay->setPosition(sf::Vector2f{ goalText->getLocalBounds().width, 200 });
 			break;
 		}
 
