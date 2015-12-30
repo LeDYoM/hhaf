@@ -314,7 +314,7 @@ namespace zoper
 		addNewToken(lib::vector2du32{ newX, newY }, newToken);
 		_nextTokenPart = (_nextTokenPart + 1) % NUMWAYS;
 
-		_debugDisplayBoard();
+		EXECUTE_IN_DEBUG(_debugDisplayBoard());
 	}
 
 	void GameScene::startGameOver()

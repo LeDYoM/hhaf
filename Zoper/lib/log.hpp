@@ -15,6 +15,7 @@
 	void finishLog();
 	void logOutput(const LogType&, const std::string&);
 	#define PREPARE_LOG(level,params) { std::ostringstream os_; os_ << params << std::endl; logOutput(level,os_.str()); }
+	#define EXECUTE_IN_DEBUG(x)		x
 	#define LOG_DEBUG(x)			PREPARE_LOG(LogType::Debug, x)
 	#define LOG_ERROR(x)			PREPARE_LOG(LogType::Error, "Error: " << x)
 	#define LOG_CONSTRUCT(x)		LOG_DEBUG("Constructing "<< typeid(*this).name() << " " << x)
@@ -26,6 +27,7 @@
 	#define __ASSERTERROR(cond,x)	__ASSERT(cond,x)
 
 #else
+	#define EXECUTE_IN_DEBUG(x)	
 	#define LOG_DEBUG(x)
 	#define LOG_ERROR(x)
 	#define LOG_CONSTRUCT(x)
