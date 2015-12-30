@@ -168,7 +168,7 @@ namespace lib
 
 	s32 Configuration::addConfigInt(const std::string & name, int value, bool overwrite)
 	{
-		return std::stoi(addConfigProperty(name, std::to_string(value)));
+		return std::stoi(addConfigProperty(name, std::to_string(value),overwrite));
 	}
 
 	bool Configuration::saveConfig()
