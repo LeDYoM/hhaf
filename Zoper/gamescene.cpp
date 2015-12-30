@@ -147,7 +147,7 @@ namespace zoper
 			break;
 
 		case GameData::GameModes::Time:
-			levelText->setString("Time:");
+			levelText->setString("Time: ");
 			goalText->setString("Goal: ");
 			_levelDisplay->setPositionX(levelText->getLocalBounds().width);
 			_goalDisplay->setPosition(sf::Vector2f{ goalText->getLocalBounds().width, 200 });
@@ -211,11 +211,11 @@ namespace zoper
 		{
 		default:
 		case GameData::GameModes::Token:
-			goaldisplay->setString(std::to_string(_gameData.consumedTokens));
+			goaldisplay->setString(std::to_string(_levelProperties.stayTokens()));
 			break;
 
 		case GameData::GameModes::Time:
-			goaldisplay->setString(std::to_string(_gameData.ellapsedTime));
+			goaldisplay->setString(std::to_string(_levelProperties.stayTime()));
 			break;
 		}
 	}
@@ -232,7 +232,7 @@ namespace zoper
 			break;
 
 		case GameData::GameModes::Time:
-			leveldisplay->setString(std::to_string(_gameData.ellapsedTime));
+			leveldisplay->setString(std::to_string(static_cast<lib::u16>(_gameData.levelClock.getElapsedTime().asSeconds())));
 			break;
 		}
 	}
