@@ -24,8 +24,7 @@ namespace lib
 			: p_wPrivate{ new WindowPrivate() }, p_parentController{ parentController }, _title(wcp.windowTitle)
 		{
 			LOG_CONSTRUCT_NOPARAMS;
-			__ASSERT(p_parentController, " Cannot create a Window with no parent");
-			// TO DO: Read from config
+			__ASSERT(p_parentController, "Cannot create a Window with no parent");
 			create(wcp);
 
 #ifndef DEBUG
