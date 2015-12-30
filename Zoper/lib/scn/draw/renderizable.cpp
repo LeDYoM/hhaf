@@ -90,12 +90,6 @@ namespace lib
 					break;
 				}
 			}
-
-			void Renderizable::move(const vector2df& to)
-			{
-				getAsTransformable()->move(to);
-			}
-
 		}
 	}
 }

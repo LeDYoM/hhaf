@@ -37,8 +37,6 @@ namespace lib
 				inline void setPositionX(const float x) { getAsTransformable()->setPosition(x, getAsTransformable()->getPosition().y); }
 				inline void setPositionY(const float y) { getAsTransformable()->setPosition(getAsTransformable()->getPosition().x, y); }
 
-				virtual void move(const vector2df& to);
-
 			private:
 				union DrawNodeData
 				{
