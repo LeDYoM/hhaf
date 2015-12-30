@@ -8,6 +8,8 @@
 #include "lib/board/boardmodel.hpp"
 #include "lib/configuration.hpp"
 #include "direction.hpp"
+#include "levelproperties.hpp"
+
 #include <array>
 #include <functional>
 
@@ -37,8 +39,8 @@ namespace zoper
 		std::array<TokenZone, NUMWAYS> _tokenZones;
 
 		sf::Clock levelClock;
-		lib::u32 ConsumedTokens;
-		lib::u32 _currentLevel;
+		lib::u32 consumedTokens;
+		lib::u32 ellapsedTime;
 
 		enum GameModes : lib::u8
 		{
@@ -68,6 +70,7 @@ namespace zoper
 		lib::Configuration _gameConfig;
 		void setLevel(const lib::u32 nv);
 		void updateLevelData();
+		void updateGoals();
 		void increaseScore(lib::u32 scoreIncrement);
 		void generateNextToken();
 		void addNewToken(const lib::vector2du32 &tPosition, lib::u32 newToken);
@@ -132,6 +135,7 @@ namespace zoper
 		lib::sptr<lib::scn::draw::RenderGroup> _levelrg{ nullptr };
 		const lib::u8 _scoreSize{ 5 };
 		const lib::u8 _levelDataSize{ 5 };
+		LevelProperties _levelProperties;
 
 		// Nodes from the scene
 		lib::sptr<Player> p_player{ nullptr };
@@ -139,6 +143,8 @@ namespace zoper
 		lib::sptr<lib::scn::draw::Renderizable> _scoreDisplay{ nullptr };
 		lib::sptr<lib::scn::draw::Renderizable> _levelText{ nullptr };
 		lib::sptr<lib::scn::draw::Renderizable> _levelDisplay{ nullptr };
+		lib::sptr<lib::scn::draw::Renderizable> _goalText{ nullptr };
+		lib::sptr<lib::scn::draw::Renderizable> _goalDisplay{ nullptr };
 		lib::sptr<lib::scn::draw::Renderizable> _gameText{ nullptr };
 		lib::sptr<lib::scn::draw::Renderizable> _overText{ nullptr };
 

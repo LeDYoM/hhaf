@@ -5,6 +5,7 @@ namespace zoper
 {
 	static const char *StartTokenTime = "StartTokenTime";
 	static const char *GameModeStr = "GameMode";
+	static const char *StartLevelStr = "StartLevel";
 
 	static const char *GraphicsLevelStr = "GraphicsLevel";
 	static const char *ResolutionXStr = "ResolutionX";

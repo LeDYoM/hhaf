@@ -37,12 +37,18 @@ namespace zoper
 				switch (index)
 				{
 				case 0:
-					_gameConfig.addConfigInt(StartTokenTime, 500, true);
+					_gameConfig.addConfigInt(GameModeStr, 0, true);
+					_gameConfig.addConfigInt(StartLevelStr, 0, true);
 					menuManager()->setNextScene("GameScene");
 					break;
 				case 1:
+					_gameConfig.addConfigInt(GameModeStr, 1, true);
+					_gameConfig.addConfigInt(StartLevelStr, 0, true);
+					menuManager()->setNextScene("GameScene");
 					break;
 				case 2:
+					break;
+				case 3:
 				default:
 					menuManager()->exitProgram();
 					break;
@@ -54,7 +60,8 @@ namespace zoper
 				callBack,
 				lib::sptr<lib::menu::CursorDescriptor>(new lib::menu::CursorDescriptor(3, lib::vector2df{ 90.0f, 90.0f },sf::Color::Red)),
 				std::vector<lib::sptr<lib::menu::OptionDescriptor>>{
-				lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Play", sf::Color::Blue)),
+				lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Play token mode", sf::Color::Blue)),
+					lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Play time mode", sf::Color::Blue)),
 				lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Options", sf::Color::Blue)),
 				lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Exit", sf::Color::Blue)),
 			}));

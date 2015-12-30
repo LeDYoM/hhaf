@@ -86,6 +86,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="levelproperties.cpp" />
     <ClCompile Include="lib\menu\choosecontrol.cpp" />
     <ClCompile Include="direction.cpp" />
     <ClCompile Include="gamebasetile.cpp" />
@@ -116,6 +117,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.hpp" />
+    <ClInclude Include="levelproperties.hpp" />
     <ClInclude Include="lib\menu\imenucontrol.hpp" />
     <ClInclude Include="lib\menu\choosecontrol.hpp" />
     <ClInclude Include="direction.hpp" />
