@@ -32,10 +32,25 @@ namespace lib
 
 				virtual u32 draw(lib::core::Window *window, sf::RenderStates &states) const override;
 
+				sf::FloatRect getLocalBounds();
+				sf::FloatRect getGlobalBounds();
+
 				// Some useful shortcuts
 				inline void setPosition(const sf::Vector2f &pos) { getAsTransformable()->setPosition(pos); }
 				inline void setPositionX(const float x) { getAsTransformable()->setPosition(x, getAsTransformable()->getPosition().y); }
 				inline void setPositionY(const float y) { getAsTransformable()->setPosition(getAsTransformable()->getPosition().x, y); }
+
+				void setCenterPositionLocal(const sf::Vector2f &pos);
+				void setCenterPositionLocalX(const float posX);
+				void setCenterPositionLocalY(const float posY);
+
+				void setCenterPositionGlobal(const sf::Vector2f &pos);
+				void setCenterPositionGlobalX(const float posX);
+				void setCenterPositionGlobalY(const float posY);
+
+				void setCenterPositionFromBox(const sf::Vector2f &pos, const sf::FloatRect &rect);
+				void setCenterPositionFromBoxX(const float posX, const sf::FloatRect &rect);
+				void setCenterPositionFromBoxY(const float posY, const sf::FloatRect &rect);
 
 			private:
 				union DrawNodeData

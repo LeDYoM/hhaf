@@ -90,6 +90,102 @@ namespace lib
 					break;
 				}
 			}
+
+			void Renderizable::setCenterPositionLocal(const sf::Vector2f &pos)
+			{
+				setCenterPositionFromBox(pos, getLocalBounds());
+			}
+
+			void Renderizable::setCenterPositionLocalX(const float posX)
+			{
+				setCenterPositionFromBoxX(posX, getLocalBounds());
+			}
+
+			void Renderizable::setCenterPositionLocalY(const float posY)
+			{
+				setCenterPositionFromBoxY(posY, getLocalBounds());
+			}
+
+			void Renderizable::setCenterPositionGlobal(const sf::Vector2f &pos)
+			{
+				setCenterPositionFromBox(pos, getGlobalBounds());
+			}
+
+			void Renderizable::setCenterPositionGlobalX(const float posX)
+			{
+				setCenterPositionFromBoxX(posX, getGlobalBounds());
+			}
+
+			void Renderizable::setCenterPositionGlobalY(const float posY)
+			{
+				setCenterPositionFromBoxY(posY, getGlobalBounds());
+			}
+
+			void Renderizable::setCenterPositionFromBox(const sf::Vector2f &pos, const sf::FloatRect &rect)
+			{
+				setCenterPositionFromBoxX(pos.x, rect);
+				setCenterPositionFromBoxY(pos.y, rect);
+			}
+
+			void Renderizable::setCenterPositionFromBoxX(const float posX, const sf::FloatRect &rect)
+			{
+				setPositionX(posX - (rect.width / 2.0f));
+			}
+
+			void Renderizable::setCenterPositionFromBoxY(const float posY, const sf::FloatRect &rect)
+			{
+				setPositionX(posY - (rect.height / 2.0f));
+			}
+
+			sf::FloatRect Renderizable::getLocalBounds()
+			{
+				// For some reason SFML does not have inheritance in these methods, so let's wrap it
+				__ASSERT(!_drawNodeData.text, "Empty draw node data");
+				switch (_activeDrawNode)
+				{
+				default:
+				case ActiveDrawNode::Empty:
+					return sf::FloatRect();
+					break;
+				case ActiveDrawNode::Text:
+					return getAsText()->getLocalBounds();
+					break;
+				case ActiveDrawNode::Sprite:
+					return getAsSprite()->getLocalBounds();
+					break;
+				case ActiveDrawNode::CircleShape:
+					return getAsCircleShape()->getLocalBounds();
+					break;
+				case ActiveDrawNode::EllipseShape:
+					return getAsEllipseShape()->getLocalBounds();
+					break;
+				}
+			}
+
+			sf::FloatRect Renderizable::getGlobalBounds()
+			{
+				// For some reason SFML does not have inheritance in these methods, so let's wrap it
+				__ASSERT(!_drawNodeData.text, "Empty draw node data");
+				switch (_activeDrawNode)
+				{
+				default:
+				case ActiveDrawNode::Empty:
+					return sf::FloatRect();
+					break;
+				case ActiveDrawNode::Text:
+					return getAsText()->getGlobalBounds();
+					break;
+				case ActiveDrawNode::Sprite:
+					return getAsSprite()->getGlobalBounds();
+					break;
+				case ActiveDrawNode::CircleShape:
+					return getAsCircleShape()->getGlobalBounds();
+					break;
+				case ActiveDrawNode::EllipseShape:
+					return getAsEllipseShape()->getGlobalBounds();
+					break;
+				}
+			}
 		}
 	}
 }
