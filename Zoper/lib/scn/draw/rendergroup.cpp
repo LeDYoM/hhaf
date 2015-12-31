@@ -33,13 +33,6 @@ namespace lib
 				return result;
 			}
 
-			sptr<draw::Renderizable> RenderGroup::createCircleShape(const std::string &name)
-			{
-				auto result = sptr<draw::Renderizable>(new Renderizable(name, new sf::CircleShape));
-				addRenderizable(result);
-				return result;
-			}
-
 			sptr<draw::Renderizable> RenderGroup::createShape(const std::string &name)
 			{
 				auto result = sptr<draw::Renderizable>(new Renderizable(name, new EllipseShape));

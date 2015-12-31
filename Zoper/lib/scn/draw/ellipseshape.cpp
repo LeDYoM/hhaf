@@ -17,10 +17,20 @@ namespace lib
 				update();
 			}
 
+			void EllipseShape::setRadius(const float radius)
+			{
+				setRadius(sf::Vector2f(radius, radius));
+			}
+
 			void EllipseShape::setSize(const sf::Vector2f & size)
 			{
 				m_radius = size / 2.0f;
 				update();
+			}
+
+			void EllipseShape::setSize(const float size)
+			{
+				setSize(sf::Vector2f(size,size));
 			}
 
 			const sf::Vector2f& EllipseShape::getRadius() const

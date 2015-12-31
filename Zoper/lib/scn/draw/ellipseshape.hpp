@@ -16,6 +16,8 @@ namespace lib
 				explicit EllipseShape(const sf::Vector2f& radius = sf::Vector2f(0, 0));
 				void setRadius(const sf::Vector2f & radius);
 				void setSize(const sf::Vector2f &size);
+				void setRadius(const float radius);
+				void setSize(const float size);
 				const sf::Vector2f &getRadius() const;
 				const sf::Vector2f &getSize() const;
 				virtual u32 getPointCount() const override;

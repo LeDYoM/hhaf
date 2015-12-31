@@ -29,18 +29,6 @@ namespace lib
 				_activeDrawNode = ActiveDrawNode::Sprite;
 			}
 
-
-			Renderizable::Renderizable(const std::string & name, sf::CircleShape * circleShape)
-				: HasName{ name }
-			{
-				LOG_CONSTRUCT("Name: " << name << " of type circleShape");
-				_drawNodeData.circleShape = circleShape;
-				_drawNodeAsDrawable = circleShape;
-				_drawNodeAsTransformable = circleShape;
-				_activeDrawNode = ActiveDrawNode::CircleShape;
-
-			}
-
 			Renderizable::Renderizable(const std::string & name, lib::scn::draw::EllipseShape * ellipseShape)
 				: HasName{ name }
 			{
@@ -80,10 +68,6 @@ namespace lib
 					LOG_DESTRUCT("Name: " << name() << " and type Sprite");
 					delete _drawNodeData.sprite;
 					break;
-				case ActiveDrawNode::CircleShape:
-					LOG_DESTRUCT("Name: " << name() << " and type CircleShape");
-					delete _drawNodeData.circleShape;
-					break;
 				case ActiveDrawNode::EllipseShape:
 					LOG_DESTRUCT("Name: " << name() << " and type EllipseShape");
 					delete _drawNodeData.ellipseShape;
@@ -94,7 +78,7 @@ namespace lib
 			sf::FloatRect Renderizable::getLocalBounds()
 			{
 				// For some reason SFML does not have inheritance in these methods, so let's wrap it
-				__ASSERT(!_drawNodeData.text, "Empty draw node data");
+				__ASSERT(_drawNodeData.text, "Empty draw node data");
 				switch (_activeDrawNode)
 				{
 				default:
@@ -107,9 +91,6 @@ namespace lib
 				case ActiveDrawNode::Sprite:
 					return getAsSprite()->getLocalBounds();
 					break;
-				case ActiveDrawNode::CircleShape:
-					return getAsCircleShape()->getLocalBounds();
-					break;
 				case ActiveDrawNode::EllipseShape:
 					return getAsEllipseShape()->getLocalBounds();
 					break;
@@ -119,7 +100,7 @@ namespace lib
 			sf::FloatRect Renderizable::getGlobalBounds()
 			{
 				// For some reason SFML does not have inheritance in these methods, so let's wrap it
-				__ASSERT(!_drawNodeData.text, "Empty draw node data");
+				__ASSERT(_drawNodeData.text, "Empty draw node data");
 				switch (_activeDrawNode)
 				{
 				default:
@@ -131,9 +112,6 @@ namespace lib
 					break;
 				case ActiveDrawNode::Sprite:
 					return getAsSprite()->getGlobalBounds();
-					break;
-				case ActiveDrawNode::CircleShape:
-					return getAsCircleShape()->getGlobalBounds();
 					break;
 				case ActiveDrawNode::EllipseShape:
 					return getAsEllipseShape()->getGlobalBounds();
