@@ -27,7 +27,7 @@ namespace lib
 			__ASSERT(p_parentController, "Cannot create a Window with no parent");
 			create(wcp);
 
-#ifndef DEBUG
+#ifdef NDEBUG
 			this->setVerticalSyncEnabled(true);
 #endif
 
