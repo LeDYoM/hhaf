@@ -24,7 +24,6 @@ namespace lib
 			{
 			public:
 				explicit Renderizable(const std::string &name, sf::Text *text);
-				explicit Renderizable(const std::string &name, sf::Sprite *sprite);
 				explicit Renderizable(const std::string &name, lib::scn::draw::EllipseShape *circleShape);
 
 				virtual ~Renderizable();
@@ -32,7 +31,6 @@ namespace lib
 				inline sf::Drawable *const getAsDrawable() const { return _drawNodeAsDrawable; }
 				inline sf::Transformable *const getAsTransformable() const { return _drawNodeAsTransformable; }
 				inline sf::Text *const getAsText() const { __ASSERT(_activeDrawNode == ActiveDrawNode::Text, "Node is not a text"); return _drawNodeData.text; }
-				inline sf::Sprite *const getAsSprite() const { __ASSERT(_activeDrawNode == ActiveDrawNode::Sprite, "Node is not a sprite"); return _drawNodeData.sprite; }
 				inline lib::scn::draw::EllipseShape *const getAsEllipseShape() const { __ASSERT(_activeDrawNode == ActiveDrawNode::EllipseShape, "Node is not an ellipse shape"); return _drawNodeData.ellipseShape; }
 
 				virtual u32 draw(lib::core::Window *window, sf::RenderStates &states) const override;
@@ -58,8 +56,7 @@ namespace lib
 				{
 					Empty = 0,
 					Text = 1,
-					Sprite = 2,
-					EllipseShape = 4,
+					EllipseShape = 2,
 					MaxActiveDrawNode = 0xffff
 				} _activeDrawNode{ ActiveDrawNode::Empty };
 			};

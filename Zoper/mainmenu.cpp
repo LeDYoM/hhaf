@@ -24,13 +24,16 @@ namespace zoper
 
 		void MainMenu::onCreate()
 		{
-			_logo = createSprite("mainLogo");
-			auto _logoSprite = _logo->getAsSprite();
+			_logo = createShape("mainLogo");
+			auto _logoSprite = _logo->getAsEllipseShape();
+			_logoSprite->setPointCount(4);
+//			_logoSprite->setFillColor(sf::Color(0, 255, 0));
+//			_logoSprite->setRadius(sf::Vector2f(200, 200));
 			auto rManager = menuManager()->resourceManager();
-			_logoSprite->setTexture(*(rManager->getResource("game_menu.logo")->getAsTexture()));
+			_logoSprite->setTexture(rManager->getResource("game_menu.logo")->getAsTexture());
 			_logoSprite->setScale(2.0f, 2.0f);
-			_logo->setPositionX(menuManager()->getCoordinatesToCenter(_logo->getAsSprite()->getGlobalBounds()).x);
-			_logo->setPositionY(100);
+			_logo->setPositionX(menuManager()->getCoordinatesToCenter(_logo->getAsEllipseShape()->getGlobalBounds()).x);
+//			_logo->setPositionY(100);
 
 			auto callBack = [this](lib::u32 index)
 			{

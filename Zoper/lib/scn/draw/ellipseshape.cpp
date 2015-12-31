@@ -1,4 +1,5 @@
 #include "ellipseshape.hpp"
+#include <SFML/Graphics/Texture.hpp>
 
 namespace lib
 {
@@ -66,6 +67,16 @@ namespace lib
 
 				return sf::Vector2f(m_radius.x + x, m_radius.y + y);
 			}
+
+			void EllipseShape::setTexture(const sf::Texture *texture, bool resetSize/*=true*/, bool resetRect /*= false*/)
+			{
+				sf::Shape::setTexture(texture, resetRect);
+				if (resetSize)
+				{
+					setSize(static_cast<sf::Vector2f>(texture->getSize()));
+				}
+			}
+
 		}
 	}
 }

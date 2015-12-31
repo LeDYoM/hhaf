@@ -18,17 +18,6 @@ namespace lib
 				_activeDrawNode = ActiveDrawNode::Text;
 			}
 
-			Renderizable::Renderizable(const std::string &name, sf::Sprite *sprite)
-				: HasName{ name }
-			{
-				LOG_CONSTRUCT("Name: " << name << " of type sprite");
-
-				_drawNodeData.sprite = sprite;
-				_drawNodeAsDrawable = sprite;
-				_drawNodeAsTransformable = sprite;
-				_activeDrawNode = ActiveDrawNode::Sprite;
-			}
-
 			Renderizable::Renderizable(const std::string & name, lib::scn::draw::EllipseShape * ellipseShape)
 				: HasName{ name }
 			{
@@ -64,10 +53,6 @@ namespace lib
 					LOG_DESTRUCT("Name: " << name() << " and type Text");
 					delete _drawNodeData.text;
 					break;
-				case ActiveDrawNode::Sprite:
-					LOG_DESTRUCT("Name: " << name() << " and type Sprite");
-					delete _drawNodeData.sprite;
-					break;
 				case ActiveDrawNode::EllipseShape:
 					LOG_DESTRUCT("Name: " << name() << " and type EllipseShape");
 					delete _drawNodeData.ellipseShape;
@@ -88,9 +73,6 @@ namespace lib
 				case ActiveDrawNode::Text:
 					return getAsText()->getLocalBounds();
 					break;
-				case ActiveDrawNode::Sprite:
-					return getAsSprite()->getLocalBounds();
-					break;
 				case ActiveDrawNode::EllipseShape:
 					return getAsEllipseShape()->getLocalBounds();
 					break;
@@ -109,9 +91,6 @@ namespace lib
 					break;
 				case ActiveDrawNode::Text:
 					return getAsText()->getGlobalBounds();
-					break;
-				case ActiveDrawNode::Sprite:
-					return getAsSprite()->getGlobalBounds();
 					break;
 				case ActiveDrawNode::EllipseShape:
 					return getAsEllipseShape()->getGlobalBounds();

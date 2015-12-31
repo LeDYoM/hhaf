@@ -23,6 +23,7 @@ namespace lib
 				virtual u32 getPointCount() const override;
 				void setPointCount(lib::u32 numPoints);
 				virtual sf::Vector2f getPoint(lib::u32 index) const;
+				void setTexture(const sf::Texture *texture, bool resetSize=true, bool resetRect = false);
 
 			private:
 				sf::Vector2f m_radius;
