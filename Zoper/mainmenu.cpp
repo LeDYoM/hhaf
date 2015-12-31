@@ -56,6 +56,7 @@ namespace zoper
 			};
 			_chooseControl = lib::sptr<lib::menu::ChooseControl>(new lib::menu::ChooseControl("mainmenu_chooseControl",
 				rManager->getResource("game_menu.mainFont"),
+				lib::scn::draw::Alignment::Center,
 				90, 1,
 				callBack,
 				lib::sptr<lib::menu::CursorDescriptor>(new lib::menu::CursorDescriptor(3, lib::vector2df{ 90.0f, 90.0f },sf::Color::Red)),
@@ -66,7 +67,7 @@ namespace zoper
 				lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Exit", sf::Color::Blue)),
 			}));
 			addMenuControl(_chooseControl);
-			_chooseControl->setPosition(700, 700);
+			_chooseControl->setPosition(menuManager()->getCenterCoordinates().x, 700);
 		}
 	}
 }

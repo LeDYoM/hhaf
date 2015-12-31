@@ -126,7 +126,6 @@ namespace zoper
 		sf::Clock gameClock;
 		lib::sptr<lib::board::BoardModel> p_boardModel{ nullptr };
 		GameData _gameData;
-		lib::s32 _millisBetweenTokens{ 500 };
 		lib::u32 _score{ 0 };
 		lib::u8 _nextTokenPart{ 0 };
 		lib::sptr<lib::scn::draw::RenderGroup> _mainBoardrg{ nullptr };

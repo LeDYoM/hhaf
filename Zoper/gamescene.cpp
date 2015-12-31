@@ -173,7 +173,7 @@ namespace zoper
 			if (_gameData._gameMode == GameData::GameModes::Time)
 				updateLevelData();
 
-			if (gameClock.getElapsedTime().asMilliseconds() > _millisBetweenTokens)
+			if (gameClock.getElapsedTime().asMilliseconds() > static_cast<sf::Int32>(_levelProperties.millisBetweenTokens()))
 			{
 				// New token
 				generateNextToken();
@@ -190,7 +190,6 @@ namespace zoper
 	{
 		_levelProperties.setLevel(_gameConfig.getAsInt(StartLevelStr, nv));
 		LOG_DEBUG("Level set: " << _levelProperties.currentLevel());
-		_millisBetweenTokens = _levelProperties.millisBetweenTokens();
 		LOG_DEBUG("Millis between tokens: " << _levelProperties.millisBetweenTokens());
 		LOG_DEBUG("Current base score: " << _levelProperties.baseScore());
 		LOG_DEBUG("Seconds to next level: " << _levelProperties.stayTime());

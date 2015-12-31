@@ -18,7 +18,7 @@ namespace zoper
 		inline lib::u32 stayTime() const { return _stayTime; }
 		inline lib::u32 currentLevel() const { return _level; }
 		inline lib::u32 stayTokens() const { return _stayTokens; }
-		const lib::u32 maxLevelWithProperties{ 20u };
+		const lib::u32 maxLevelWithProperties{ 25u };
 	private:
 		lib::u32 _level;
 		lib::u32 _millisBetweenTokens;

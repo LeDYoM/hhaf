@@ -7,6 +7,7 @@ namespace lib
 	namespace menu
 	{
 		ChooseControl::ChooseControl(const std::string &name, sptr<scn::Resource> font, 
+			const scn::draw::Alignment aleignment,
 			u32 chSize,float incY,
 			std::function<void(const u32)> onSelected,
 			sptr<CursorDescriptor> cursorDescriptor, 
@@ -31,7 +32,7 @@ namespace lib
 				text->setCharacterSize(chSize);
 				text->setString(labels[count]->getText());
 				text->setColor(labels[count]->getColor());
-				renderizable->setPositionX(descriptorCursorSize.x);
+				renderizable->setPositionX(0,lib::scn::draw::Alignment::Center);
 				renderizable->setPositionY(currentPos.y);
 				currentPos.y += (chSize + incY);
 				++count;
@@ -82,7 +83,7 @@ namespace lib
 
 			auto cursor_ = _cursor->getAsEllipseShape();
 //			cursor_->setOrigin(descriptorCursorSize / 2.0f);
-			cursor_->setPosition(vector2df{ 0.0f, selectedText->getPosition().y } + (descriptorCursorSize / 2.0f));
+			cursor_->setPosition(vector2df{ selectedText->getPosition().x - descriptorCursorSize.x, selectedText->getPosition().y });
 			cursor_->setRotation(90);
 
 			_cursor->setPositionY(selectedText->getPosition().y);

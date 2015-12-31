@@ -91,52 +91,6 @@ namespace lib
 				}
 			}
 
-			void Renderizable::setCenterPositionLocal(const sf::Vector2f &pos)
-			{
-				setCenterPositionFromBox(pos, getLocalBounds());
-			}
-
-			void Renderizable::setCenterPositionLocalX(const float posX)
-			{
-				setCenterPositionFromBoxX(posX, getLocalBounds());
-			}
-
-			void Renderizable::setCenterPositionLocalY(const float posY)
-			{
-				setCenterPositionFromBoxY(posY, getLocalBounds());
-			}
-
-			void Renderizable::setCenterPositionGlobal(const sf::Vector2f &pos)
-			{
-				setCenterPositionFromBox(pos, getGlobalBounds());
-			}
-
-			void Renderizable::setCenterPositionGlobalX(const float posX)
-			{
-				setCenterPositionFromBoxX(posX, getGlobalBounds());
-			}
-
-			void Renderizable::setCenterPositionGlobalY(const float posY)
-			{
-				setCenterPositionFromBoxY(posY, getGlobalBounds());
-			}
-
-			void Renderizable::setCenterPositionFromBox(const sf::Vector2f &pos, const sf::FloatRect &rect)
-			{
-				setCenterPositionFromBoxX(pos.x, rect);
-				setCenterPositionFromBoxY(pos.y, rect);
-			}
-
-			void Renderizable::setCenterPositionFromBoxX(const float posX, const sf::FloatRect &rect)
-			{
-				setPositionX(posX - (rect.width / 2.0f));
-			}
-
-			void Renderizable::setCenterPositionFromBoxY(const float posY, const sf::FloatRect &rect)
-			{
-				setPositionX(posY - (rect.height / 2.0f));
-			}
-
 			sf::FloatRect Renderizable::getLocalBounds()
 			{
 				// For some reason SFML does not have inheritance in these methods, so let's wrap it
@@ -186,6 +140,65 @@ namespace lib
 					break;
 				}
 			}
+
+			void Renderizable::setPosition(const sf::Vector2f &pos, Alignment alignment /*= Alignment::Left*/)
+			{
+				switch (alignment)
+				{
+				default:
+				case lib::scn::draw::Alignment::Left:
+					getAsTransformable()->setPosition(pos);
+					break;
+				case lib::scn::draw::Alignment::Center:
+					setPosition(sf::Vector2f{ pos.x - (getLocalBounds().width / 2.0f), pos.y - (getLocalBounds().height / 2.0f) });
+					break;
+				case lib::scn::draw::Alignment::Right:
+					setPosition(sf::Vector2f{ pos.x - (getLocalBounds().width), pos.y - (getLocalBounds().height) });
+					break;
+				}
+			}
+
+			void Renderizable::setPositionX(const float x, Alignment alignment /*= Alignment::Left*/)
+			{
+				const sf::Vector2f position( getAsTransformable()->getPosition() );
+				switch (alignment)
+				{
+				default:
+				case lib::scn::draw::Alignment::Left:
+					getAsTransformable()->setPosition(sf::Vector2f{ x, position.y });
+					break;
+				case lib::scn::draw::Alignment::Center:
+					getAsTransformable()->setPosition(sf::Vector2f{ x - (getLocalBounds().width / 2.0f), position.y });
+					break;
+				case lib::scn::draw::Alignment::Right:
+					getAsTransformable()->setPosition(sf::Vector2f{ x - (getLocalBounds().width), position.y });
+					break;
+				}
+			}
+
+			void Renderizable::setPositionY(const float y, Alignment alignment /*= Alignment::Left*/)
+			{
+				const sf::Vector2f position(getAsTransformable()->getPosition());
+				switch (alignment)
+				{
+				default:
+				case lib::scn::draw::Alignment::Left:
+					getAsTransformable()->setPosition(sf::Vector2f{ position.x, y });
+					break;
+				case lib::scn::draw::Alignment::Center:
+					getAsTransformable()->setPosition(sf::Vector2f{ position.x, y - (getLocalBounds().height / 2.0f) });
+					break;
+				case lib::scn::draw::Alignment::Right:
+					getAsTransformable()->setPosition(sf::Vector2f{ position.x, y - (getLocalBounds().height) });
+					break;
+				}
+			}
+
+			void Renderizable::setAlignment(Alignment alignment)
+			{
+				setPosition(getAsTransformable()->getPosition(), alignment);
+			}
+
 		}
 	}
 }

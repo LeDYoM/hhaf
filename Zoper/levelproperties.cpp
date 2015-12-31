@@ -20,7 +20,7 @@ namespace zoper
 
 		if (_level <= maxLevelWithProperties)
 		{
-			_millisBetweenTokens = 500 - (_level * 20);
+			_millisBetweenTokens = 2600 - (_level * 100);
 			_stayTime = 180 + (_level * 30);
 			_stayTokens = 25 + (10 * _level);
 		}
