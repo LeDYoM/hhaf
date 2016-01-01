@@ -1,5 +1,5 @@
 #include "player.hpp"
-#include "lib/scn/draw/ellipseshape.hpp"
+#include "lib/scn/draw/NodeShape.hpp"
 
 #include "gamescene.hpp"
 

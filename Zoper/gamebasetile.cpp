@@ -1,12 +1,12 @@
 #include "gamebasetile.hpp"
+#define _USE_MATH_DEFINES
+#include <math.h>
 
 namespace zoper
 {
 	GameBaseTile::GameBaseTile(lib::board::BoardTileData data, const sf::Vector2f &size, const std::string &baseName) 
-		: lib::board::ITile{ data }, lib::scn::draw::Renderizable(baseName, new lib::scn::draw::EllipseShape)
+		: lib::board::ITile{ data }, lib::scn::draw::Renderizable(baseName, new lib::scn::draw::NodeShape(size/2.0f,4))
 	{
-		auto this_ = getAsEllipseShape();
-		this_->setSize(size);
 	}
 
 	GameBaseTile::~GameBaseTile()

@@ -91,7 +91,7 @@
     <ClCompile Include="direction.cpp" />
     <ClCompile Include="gamebasetile.cpp" />
     <ClCompile Include="keymapping.cpp" />
-    <ClCompile Include="lib\scn\draw\ellipseshape.cpp" />
+    <ClCompile Include="lib\scn\draw\nodeshape.cpp" />
     <ClCompile Include="lib\configuration.cpp" />
     <ClCompile Include="lib\board\boardmodel.cpp" />
     <ClCompile Include="lib\log.cpp" />
@@ -124,7 +124,7 @@
     <ClInclude Include="gamebasetile.hpp" />
     <ClInclude Include="lib\scn\draw\idrawable.hpp" />
     <ClInclude Include="keymapping.hpp" />
-    <ClInclude Include="lib\scn\draw\ellipseshape.hpp" />
+    <ClInclude Include="lib\scn\draw\nodeshape.hpp" />
     <ClInclude Include="lib\configuration.hpp" />
     <ClInclude Include="lib\board\boardmodel.hpp" />
     <ClInclude Include="lib\board\itilescontroller.hpp" />

@@ -1,5 +1,5 @@
 #include "tile.hpp"
-#include "lib/scn/draw/ellipseshape.hpp"
+#include "lib/scn/draw/NodeShape.hpp"
 #include <SFML/Graphics.hpp>
 
 namespace zoper

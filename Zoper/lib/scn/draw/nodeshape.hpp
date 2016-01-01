@@ -10,10 +10,10 @@ namespace lib
 	{
 		namespace draw
 		{
-			class EllipseShape : public sf::Shape
+			class NodeShape : public sf::Shape
 			{
 			public:
-				explicit EllipseShape(const sf::Vector2f& radius = sf::Vector2f(0, 0));
+				explicit NodeShape(const sf::Vector2f& radius, const u32 pointCount);
 				void setRadius(const sf::Vector2f & radius);
 				void setSize(const sf::Vector2f &size);
 				void setRadius(const float radius);
@@ -24,10 +24,12 @@ namespace lib
 				void setPointCount(lib::u32 numPoints);
 				virtual sf::Vector2f getPoint(lib::u32 index) const;
 				void setTexture(const sf::Texture *texture, bool resetSize=true, bool resetRect = false);
+				void setStartAngle(double st);
 
 			private:
 				sf::Vector2f m_radius;
 				lib::u32 m_pointCount;
+				double _startAngle;
 			};
 		}
 	}

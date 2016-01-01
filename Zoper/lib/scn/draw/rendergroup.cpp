@@ -26,9 +26,9 @@ namespace lib
 				return result;
 			}
 
-			sptr<draw::Renderizable> RenderGroup::createShape(const std::string &name)
+			sptr<draw::Renderizable> RenderGroup::createShape(const std::string &name, const sf::Vector2f &radius/*=sf::Vector2f()*/, u32 pointCount/*=30*/)
 			{
-				auto result = sptr<draw::Renderizable>(new Renderizable(name, new EllipseShape));
+				auto result = sptr<draw::Renderizable>(new Renderizable(name, new NodeShape(radius,pointCount)));
 				addRenderizable(result);
 				return result;
 			}

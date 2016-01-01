@@ -58,8 +58,7 @@ namespace lib
 				setTitle("FPS:" + std::to_string(p_wPrivate->lastFps));
 			}
 			++(p_wPrivate->currentFps);
-
-			clear();
+			clear(sf::Color(128,128,128));
 
 			sf::Event event;
 			while (pollEvent(event))
