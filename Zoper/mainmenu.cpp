@@ -26,17 +26,10 @@ namespace zoper
 		{
 			_logo = createSpriteShape("mainLogo");
 			auto _logoSprite = _logo->getAsEllipseShape();
-//			_logoSprite->setPointCount(4);
-//			_logoSprite->setFillColor(sf::Color(0, 255, 0));
-//			_logoSprite->setRadius(sf::Vector2f(200, 200));
 			auto rManager = menuManager()->resourceManager();
 			_logoSprite->setTexture(rManager->getResource("game_menu.logo")->getAsTexture(),true,false);
-			_logoSprite->setSize(sf::Vector2f(1000, 500));
-			auto a = _logo->getLocalBounds();
-			auto b = rManager->getResource("game_menu.logo")->getAsTexture()->getSize();
-			_logo->setPositionX(0, lib::scn::draw::Alignment::Center);
-//			_logoSprite->setScale(2.0f, 2.0f);
-			_logo->setPositionX(menuManager()->getCoordinatesToCenter(_logo->getAsEllipseShape()->getGlobalBounds()).x);
+			_logoSprite->setSize(sf::Vector2f(800, 400));
+			_logo->setPositionX(menuManager()->getCenterCoordinates().x, lib::scn::draw::Alignment::Center);
 			_logo->setPositionY(100);
 
 			auto callBack = [this](lib::u32 index)
