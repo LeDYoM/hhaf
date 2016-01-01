@@ -1,6 +1,8 @@
 #include "rendergroup.hpp"
 #include "renderizable.hpp"
 #include "../../core/window.hpp"
+#define _USE_MATH_DEFINES
+#include <math.h>
 
 namespace lib
 {
@@ -30,6 +32,13 @@ namespace lib
 			{
 				auto result = sptr<draw::Renderizable>(new Renderizable(name, new NodeShape(radius,pointCount)));
 				addRenderizable(result);
+				return result;
+			}
+
+			sptr<draw::Renderizable> RenderGroup::createSpriteShape(const std::string &name, const sf::Vector2f &radius /*= sf::Vector2f()*/)
+			{
+				auto result = createShape(name, radius, 4);
+//				result->getAsEllipseShape()->setStartAngle(M_PI_4);
 				return result;
 			}
 

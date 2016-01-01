@@ -125,7 +125,10 @@ namespace lib
 					getAsTransformable()->setPosition(sf::Vector2f{ x, position.y });
 					break;
 				case lib::scn::draw::Alignment::Center:
+				{
+					auto a = sf::Vector2f{ x - (getLocalBounds().width / 2.0f), position.y };
 					getAsTransformable()->setPosition(sf::Vector2f{ x - (getLocalBounds().width / 2.0f), position.y });
+				}
 					break;
 				case lib::scn::draw::Alignment::Right:
 					getAsTransformable()->setPosition(sf::Vector2f{ x - (getLocalBounds().width), position.y });

@@ -27,6 +27,7 @@ namespace lib
 
 				sptr<draw::Renderizable> createText(const std::string &name);
 				sptr<draw::Renderizable> createShape(const std::string &name,const sf::Vector2f &radius=sf::Vector2f(),u32 pointCount=30);
+				sptr<draw::Renderizable> createSpriteShape(const std::string &name, const sf::Vector2f &radius = sf::Vector2f());
 				sptr<draw::Renderizable> addRenderizable(sptr<Renderizable> newElement);
 				bool removeRenderizable(sptr<Renderizable> element);
 				void clear();
