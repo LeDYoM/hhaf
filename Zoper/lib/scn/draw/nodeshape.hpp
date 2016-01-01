@@ -15,7 +15,12 @@ namespace lib
 			class NodeShape : public sf::Drawable, public sf::Transformable
 			{
 			public:
-				explicit NodeShape(const sf::Vector2f& size, const u32 pointCount);
+				enum class NodeMode : u8
+				{
+					Shape = 0,
+					Sprite = 1,
+				} _mode{ NodeMode::Shape };
+				explicit NodeShape(const sf::Vector2f& size, const u32 pointCount=4,const NodeMode mode=NodeMode::Shape);
 				virtual ~NodeShape();
 				void setSize(const sf::Vector2f &size);
 				void setSize(const float size);
@@ -52,16 +57,15 @@ namespace lib
 				void updateOutlineColors();
 
 			private:
-				const Texture* m_texture;          ///< Texture of the shape
-				IntRect        m_textureRect;      ///< Rectangle defining the area of the source texture to display
-				Color          m_fillColor;        ///< Fill color
-				Color          m_outlineColor;     ///< Outline color
-				float          m_outlineThickness; ///< Thickness of the shape's outline
-				VertexArray    m_vertices;         ///< Vertex array containing the fill geometry
-				VertexArray    m_outlineVertices;  ///< Vertex array containing the outline geometry
-				FloatRect      m_insideBounds;     ///< Bounding rectangle of the inside (fill)
-				FloatRect      m_bounds;           ///< Bounding rectangle of the whole shape (outline + fill)
-
+				const Texture* m_texture;
+				IntRect m_textureRect;
+				Color m_fillColor;
+				Color m_outlineColor;
+				float m_outlineThickness;
+				VertexArray m_vertices;
+				VertexArray m_outlineVertices;
+				FloatRect m_insideBounds;
+				FloatRect m_bounds;
 			};
 		}
 	}

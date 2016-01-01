@@ -18,7 +18,7 @@ namespace zoper
 
 		_baseScore = 10 + _level;
 
-		if (_level <= maxLevelWithProperties)
+		if (_level >= maxLevelWithProperties)
 		{
 			_millisBetweenTokens = 2600 - (_level * 100);
 			_stayTime = 180 + (_level * 30);

@@ -31,13 +31,13 @@ namespace zoper
 //			_logoSprite->setRadius(sf::Vector2f(200, 200));
 			auto rManager = menuManager()->resourceManager();
 			_logoSprite->setTexture(rManager->getResource("game_menu.logo")->getAsTexture(),true,false);
-			//_logoSprite->setSize(sf::Vector2f(1000, 500));
+			_logoSprite->setSize(sf::Vector2f(1000, 500));
 			auto a = _logo->getLocalBounds();
 			auto b = rManager->getResource("game_menu.logo")->getAsTexture()->getSize();
 			_logo->setPositionX(0, lib::scn::draw::Alignment::Center);
 //			_logoSprite->setScale(2.0f, 2.0f);
-//			_logo->setPositionX(menuManager()->getCoordinatesToCenter(_logo->getAsEllipseShape()->getGlobalBounds()).x);
-//			_logo->setPositionY(100);
+			_logo->setPositionX(menuManager()->getCoordinatesToCenter(_logo->getAsEllipseShape()->getGlobalBounds()).x);
+			_logo->setPositionY(100);
 
 			auto callBack = [this](lib::u32 index)
 			{

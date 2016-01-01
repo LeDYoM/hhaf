@@ -1,5 +1,6 @@
 #include "NodeShape.hpp"
 #include <SFML/Graphics/Texture.hpp>
+#include "../../log.hpp"
 #define _USE_MATH_DEFINES
 #include <math.h>
 
@@ -9,13 +10,14 @@ namespace lib
 	{
 		namespace draw
 		{
-			NodeShape::NodeShape(const sf::Vector2f& size, const u32 pointCount)
-				:
+			NodeShape::NodeShape(const sf::Vector2f& size, const u32 pointCount, const NodeMode mode)
+				: _mode{ mode },
 				m_texture{ nullptr },m_textureRect(),m_fillColor(255, 255, 255),
 				m_outlineColor(255, 255, 255),m_outlineThickness(0),m_vertices(TrianglesFan),
 				m_outlineVertices(TrianglesStrip),m_insideBounds(),
 				m_bounds(), _size{ size }, m_pointCount{ pointCount }
 			{
+				update();
 			}
 
 			NodeShape::~NodeShape()
@@ -54,19 +56,64 @@ namespace lib
 				m_pointCount = numPoints;
 				update();
 			}
+			
+			sf::Vector2f NodeShape::getPoint(unsigned int index) const
+			{
+				// TO DO:
+				// Optimize and cache it
+				switch (_mode)
+				{
+				default:
+				case lib::scn::draw::NodeShape::NodeMode::Shape:
+				{
+					sf::Vector2f m_radius{ _size / 2.0f };
+					double angle = ((index * 2 * M_PI) / getPointCount()) - (M_PI_2);
+					double x = std::cos(angle) * m_radius.x;
+					double y = std::sin(angle) * m_radius.y;
 
+					return sf::Vector2f(static_cast<float>(m_radius.x + x), static_cast<float>(m_radius.y + y));
+
+				}
+				break;
+				case lib::scn::draw::NodeShape::NodeMode::Sprite:
+				{
+					__ASSERT(m_pointCount == 4, "Invalid sprite state");
+
+					switch (index)
+					{
+					default:
+					case 0: return Vector2f(0, 0);
+					case 1: return Vector2f(_size.x, 0);
+					case 2: return Vector2f(_size.x, _size.y);
+					case 3: return Vector2f(0, _size.y);
+					}
+				}
+				break;
+				}
+			}
+			/*
 			sf::Vector2f NodeShape::getPoint(unsigned int index) const
 			{
 				// TO DO:
 				// Optimize and cache it
 				sf::Vector2f m_radius{ _size / 2.0f };
-				double angle = ((index * 2 * M_PI) / getPointCount()) - (M_PI_2);
-				double x = std::cos(angle) * m_radius.x;
-				double y = std::sin(angle) * m_radius.y;
+				double x;
+				double y;
+				if (_mode == NodeMode::Shape)
+				{
+					double angle = ((index * 2 * M_PI) / m_pointCount) - (M_PI_2);
+					x = std::cos(angle) * m_radius.x;
+					y = std::sin(angle) * m_radius.y;
+				}
+				else
+				{
+					x = m_radius.x;
+					y = m_radius.y;
+				}
 
 				return sf::Vector2f(static_cast<float>(m_radius.x + x), static_cast<float>(m_radius.y + y));
 			}
-
+			*/
 			void NodeShape::setTexture(const sf::Texture *texture, bool resetSize/*=true*/, bool resetRect /*= false*/)
 			{
 				setTexture_(texture, resetRect);

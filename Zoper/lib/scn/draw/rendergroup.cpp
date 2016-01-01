@@ -37,8 +37,8 @@ namespace lib
 
 			sptr<draw::Renderizable> RenderGroup::createSpriteShape(const std::string &name, const sf::Vector2f &radius /*= sf::Vector2f()*/)
 			{
-				auto result = createShape(name, radius, 4);
-//				result->getAsEllipseShape()->setStartAngle(M_PI_4);
+				auto result = sptr<draw::Renderizable>(new Renderizable(name, new NodeShape(radius, 4,NodeShape::NodeMode::Sprite)));
+				addRenderizable(result);
 				return result;
 			}
 
