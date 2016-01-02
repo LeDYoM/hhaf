@@ -18,6 +18,10 @@ namespace lib
 		namespace draw
 		{
 			class RenderGroup;
+			namespace anim
+			{
+				class IAnimation;
+			}
 		}
 		class ResourceManager;
 

@@ -1,6 +1,7 @@
 #include "choosecontrol.hpp"
 #include "menudescriptors.hpp"
 #include "../scn/resource.hpp"
+#include "../scn/draw/anim/positionanimation.hpp"
 
 namespace lib
 {
@@ -82,11 +83,10 @@ namespace lib
 			auto selectedText = selected->getAsText();
 
 			auto cursor_ = _cursor->getAsEllipseShape();
-//			cursor_->setOrigin(descriptorCursorSize / 2.0f);
-			cursor_->setPosition(vector2df{ selectedText->getPosition().x - descriptorCursorSize.x, selectedText->getPosition().y });
 			cursor_->setRotation(90);
-
-			_cursor->setPositionY(selectedText->getPosition().y);
+			
+			addAnimation(scn::draw::anim::PositionAnimation::create(200, _cursor, 
+				vector2df{ selectedText->getPosition().x - descriptorCursorSize.x, selectedText->getPosition().y }));
 		}
 
 		void ChooseControl::goDown()

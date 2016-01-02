@@ -91,29 +91,7 @@ namespace lib
 				break;
 				}
 			}
-			/*
-			sf::Vector2f NodeShape::getPoint(unsigned int index) const
-			{
-				// TO DO:
-				// Optimize and cache it
-				sf::Vector2f m_radius{ _size / 2.0f };
-				double x;
-				double y;
-				if (_mode == NodeMode::Shape)
-				{
-					double angle = ((index * 2 * M_PI) / m_pointCount) - (M_PI_2);
-					x = std::cos(angle) * m_radius.x;
-					y = std::sin(angle) * m_radius.y;
-				}
-				else
-				{
-					x = m_radius.x;
-					y = m_radius.y;
-				}
 
-				return sf::Vector2f(static_cast<float>(m_radius.x + x), static_cast<float>(m_radius.y + y));
-			}
-			*/
 			void NodeShape::setTexture(const sf::Texture *texture, bool resetSize/*=true*/, bool resetRect /*= false*/)
 			{
 				setTexture_(texture, resetRect);

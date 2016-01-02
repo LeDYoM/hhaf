@@ -86,6 +86,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="lib\scn\draw\anim\animationmanager.cpp" />
     <ClCompile Include="levelproperties.cpp" />
     <ClCompile Include="lib\menu\choosecontrol.cpp" />
     <ClCompile Include="direction.cpp" />
@@ -112,11 +113,15 @@
     <ClCompile Include="lib\scn\resourcemanager.cpp" />
     <ClCompile Include="lib\scn\resource.cpp" />
     <ClCompile Include="lib\scn\draw\rendergroup.cpp" />
+    <ClCompile Include="lib\scn\draw\anim\positionanimation.cpp" />
     <ClCompile Include="tile.cpp" />
     <ClCompile Include="zoperprogramcontroller.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="lib\core\vutils.hpp" />
+    <ClInclude Include="lib\scn\draw\anim\animationmanager.hpp" />
     <ClInclude Include="common.hpp" />
+    <ClInclude Include="lib\scn\draw\anim\ianimation.hpp" />
     <ClInclude Include="levelproperties.hpp" />
     <ClInclude Include="lib\menu\imenucontrol.hpp" />
     <ClInclude Include="lib\menu\choosecontrol.hpp" />
@@ -149,6 +154,7 @@
     <ClInclude Include="lib\scn\resourcemanager.hpp" />
     <ClInclude Include="lib\scn\resource.hpp" />
     <ClInclude Include="lib\scn\draw\rendergroup.hpp" />
+    <ClInclude Include="lib\scn\draw\anim\positionanimation.hpp" />
     <ClInclude Include="tile.hpp" />
     <ClInclude Include="zoperprogramcontroller.hpp" />
   </ItemGroup>
