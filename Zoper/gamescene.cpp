@@ -10,7 +10,7 @@
 #include "lib/compileconfig.hpp"
 #include "lib/scn/resourcemanager.hpp"
 #include "lib/scn/resource.hpp"
-
+#include "lib/scn/draw/anim/positionanimation.hpp"
 #include <SFML/Graphics.hpp>
 
 #include <memory>
@@ -543,7 +543,8 @@ namespace zoper
 
 	void GameScene::tokenMoved(const lib::vector2du32 &source, const lib::vector2du32 &dest, lib::sptr<Tile> tile)
 	{
-		tile->setPosition(board2Scene(dest));
+		addAnimation(lib::scn::draw::anim::PositionAnimation::create(_levelProperties.millisBetweenTokens() / 2, tile, board2Scene(dest)));
+//		tile->setPosition(board2Scene(dest));
 	}
 
 	void GameScene::tokenAppeared(const lib::vector2du32 &position, lib::sptr<Tile> tile)

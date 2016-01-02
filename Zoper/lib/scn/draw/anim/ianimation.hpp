@@ -20,10 +20,10 @@ namespace lib
 					{
 						_clock.restart();
 					}
+					virtual const std::string animationType() const = 0;
 					virtual bool animate()
 					{
-						s32 currentTime = _clock.getElapsedTime().asMilliseconds();
-//						LOG_DEBUG("currentTime: " << currentTime);
+						currentTime = _clock.getElapsedTime().asMilliseconds();
 						if (currentTime > _duration)
 						{
 							_delta = 1.0f;
@@ -32,10 +32,12 @@ namespace lib
 						_delta = (static_cast<f32>(currentTime) / _duration);
 						return true;
 					}
+					sptr<Renderizable> node() const { return _node; }
 					virtual ~IAnimation(){}
 				protected:
+					s32 currentTime;
 					s32 _duration;
-					float _delta;
+					float _delta{ 0.0f };
 					sptr<Renderizable> _node;
 					sf::Clock _clock;
 				};

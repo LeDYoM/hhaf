@@ -26,7 +26,8 @@ namespace zoper
 		}
 		else
 		{
-			_millisBetweenTokens = 50;
+//			_millisBetweenTokens = 50;
+			_millisBetweenTokens = 250;
 			_stayTime = 12000;
 			_stayTokens = 400;
 		}

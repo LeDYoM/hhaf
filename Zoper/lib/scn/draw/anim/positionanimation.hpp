@@ -20,6 +20,7 @@ namespace lib
 					static sptr<PositionAnimation> create(const s32 duration, sptr<Renderizable> node, const vector2df &endPosition);
 					virtual ~PositionAnimation();
 					virtual bool animate();
+					virtual const std::string animationType() const { return "PositionAnimation"; }
 				};
 			}
 		}

@@ -21,6 +21,20 @@ namespace lib
 
 				void AnimationManager::addAnimation(sptr<IAnimation> nanimation)
 				{
+					if (!_animations.empty())
+					{
+						auto elemFound = std::find_if(_animations.begin(), _animations.end(), [&nanimation](sptr<IAnimation> canimation)
+						{
+							return nanimation->node() == canimation->node() && canimation->animationType() == nanimation->animationType();
+						});
+
+						if (elemFound != _animations.end())
+						{
+							LOG_DEBUG("Same animation type already in node");
+							removeFromspVector(*elemFound, _animations);
+						}
+					}
+
 					_animations.push_back(nanimation);
 				}
 
