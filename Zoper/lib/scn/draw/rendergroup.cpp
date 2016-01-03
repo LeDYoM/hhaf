@@ -60,14 +60,14 @@ namespace lib
 				{
 					updateAnimations();
 					u32 rNodes{ 0 };
-					auto t = this->getTransform();
-					states.transform *= t;
+					auto oldTransformation = states.transform;
+					states.transform *= getTransform();
 
 					for (const auto renderizable : _renderNodes)
 					{
 						rNodes += renderizable->draw(window,states);
 					}
-					states.transform = t;
+					states.transform = oldTransformation;
 					return rNodes;
 				}
 
