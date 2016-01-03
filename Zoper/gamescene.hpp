@@ -83,13 +83,15 @@ namespace zoper
 		enum
 		{
 			Playing = 0,
-			GameOver = 1
+			GameOver = 1,
+			Pause = 2
 		} _sceneStates{ Playing };
 
 		void startGameOver();
 
 		void movePlayer(const Direction &dir);
 		void launchPlayer();
+		bool switchPause();
 
 		void _debugDisplayBoard() const;
 
@@ -121,6 +123,8 @@ namespace zoper
 		void playerDissapeared(const lib::vector2du32 &position, lib::sptr<Player> player);
 
 		virtual const lib::vector2df getDefaultSizeView() override;
+		virtual void onAnimationStarted(lib::sptr<lib::scn::draw::anim::IAnimation> anim, lib::sptr<lib::scn::draw::Renderizable> node) override;
+		virtual void onAnimationFinished(lib::sptr<lib::scn::draw::anim::IAnimation> anim, lib::sptr<lib::scn::draw::Renderizable> node) override;
 
 		// Properties
 		sf::Clock gameClock;
@@ -132,6 +136,7 @@ namespace zoper
 		lib::sptr<lib::scn::draw::RenderGroup> _gameOverrg{ nullptr };
 		lib::sptr<lib::scn::draw::RenderGroup> _scorerg{ nullptr };
 		lib::sptr<lib::scn::draw::RenderGroup> _levelrg{ nullptr };
+		lib::sptr<lib::scn::draw::RenderGroup> _pauserg{ nullptr };
 		const lib::u8 _scoreSize{ 5 };
 		const lib::u8 _levelDataSize{ 5 };
 		LevelProperties _levelProperties;
@@ -146,8 +151,7 @@ namespace zoper
 		lib::sptr<lib::scn::draw::Renderizable> _goalDisplay{ nullptr };
 		lib::sptr<lib::scn::draw::Renderizable> _gameText{ nullptr };
 		lib::sptr<lib::scn::draw::Renderizable> _overText{ nullptr };
-
-
+		lib::sptr<lib::scn::draw::Renderizable> _pauseText{ nullptr };
 	};
 }
 

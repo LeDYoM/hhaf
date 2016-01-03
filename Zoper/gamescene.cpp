@@ -40,6 +40,7 @@ namespace zoper
 		_gameOverrg = this->createNewRenderGroup("gameOverScreen");
 		_scorerg = this->createNewRenderGroup("score");
 		_levelrg = this->createNewRenderGroup("level");
+		_pauserg = this->createNewRenderGroup("pause");
 
 		_scoreText = _scorerg->createText("scoretxt");
 		_scoreDisplay = _scorerg->createText("scoredisplay");
@@ -47,6 +48,7 @@ namespace zoper
 		_levelDisplay = _levelrg->createText("leveldisplay");
 		_goalText = _levelrg->createText("leveltxt");
 		_goalDisplay = _levelrg->createText("leveldisplay");
+		_pauseText = _pauserg->createText("pausetext");
 
 		_gameText = _gameOverrg->createText("gameovergame");
 		_overText = _gameOverrg->createText("gameoverover");
@@ -59,6 +61,7 @@ namespace zoper
 		auto _levelDisplayText = _levelDisplay->getAsText();
 		auto _goalTextText = _goalText->getAsText();
 		auto _goalDisplayText = _goalDisplay->getAsText();
+		auto _pauseTextText = _pauseText->getAsText();
 
 		_scoreTextText->setFont(*(resourceManager()->getResource("game_scene.scoreFont")->getAsFont()));
 		_scoreDisplayText->setFont(*(resourceManager()->getResource("game_scene.scoreFont")->getAsFont()));
@@ -68,11 +71,13 @@ namespace zoper
 		_levelDisplayText->setFont(*(resourceManager()->getResource("game_scene.scoreFont")->getAsFont()));
 		_goalTextText->setFont(*(resourceManager()->getResource("game_scene.scoreFont")->getAsFont()));
 		_goalDisplayText->setFont(*(resourceManager()->getResource("game_scene.scoreFont")->getAsFont()));
+		_pauseTextText->setFont(*(resourceManager()->getResource("game_scene.scoreFont")->getAsFont()));
 
 		_scoreTextText->setString("Score: ");
 		increaseScore(0);
 		_gameTextText->setString("GAME");
 		_overTextText->setString("OVER");
+		_pauseTextText->setString("PAUSE");
 
 		_scoreTextText->setCharacterSize(90);
 		_scoreDisplayText->setCharacterSize(90);
@@ -82,6 +87,7 @@ namespace zoper
 		_levelDisplayText->setCharacterSize(90);
 		_goalTextText->setCharacterSize(90);
 		_goalDisplayText->setCharacterSize(90);
+		_pauseTextText->setCharacterSize(180);
 
 		_scoreTextText->setColor(sf::Color::Blue);
 		_scoreDisplayText->setColor(sf::Color::White);
@@ -91,6 +97,7 @@ namespace zoper
 		_levelDisplayText->setColor(sf::Color::White);
 		_goalTextText->setColor(sf::Color::Blue);
 		_goalDisplayText->setColor(sf::Color::White);
+		_pauseTextText->setColor(sf::Color::White);
 
 		_scoreTextText->setScale(1.0f, 2.0f);
 		_scoreDisplayText->setScale(1.0f, 2.0f);
@@ -104,14 +111,15 @@ namespace zoper
 		_scoreDisplay->setPositionX(rBounds.width);
 
 		_levelrg->setPosition(1250, 50);
-		
 		_goalText->setPositionY(200);
 
 		auto _gameBoundingBox = _gameTextText->getLocalBounds();
 		auto _overBoundingBox = _overTextText->getLocalBounds();
-		auto sceneCenter = getDefaultSizeView() / 2.0f;
+		auto sceneCenter = getCenterCoordinates();
 		_gameTextText->setPosition(sceneCenter.x - (_gameBoundingBox.width / 2.0f), sceneCenter.y - _gameBoundingBox.height);
 		_overTextText->setPosition(sceneCenter.x - (_overBoundingBox.width / 2.0f), sceneCenter.y);
+
+		_pauseText->setPosition(sf::Vector2f{ 1000.0f, 1000.0f }, lib::scn::draw::Alignment::Center);
 
 	}
 
@@ -132,6 +140,7 @@ namespace zoper
 		setLevel(0);
 		_gameOverrg->setVisible(false);
 		_mainBoardrg->setVisible(true);
+		_pauserg->setVisible(true);
 
 		auto levelText = _levelText->getAsText();
 		auto goalText = _goalText->getAsText();
@@ -184,6 +193,23 @@ namespace zoper
 		{
 			
 		}
+	}
+
+	bool GameScene::switchPause()
+	{
+		if (state() == Playing)
+		{
+			setState(Pause);
+			_pauserg->setVisible(true);
+			return true;
+		}
+		else if (state() == Pause)
+		{
+			setState(Playing);
+			_pauserg->setVisible(false);
+			return false;
+		}
+		return false;
 	}
 
 	void GameScene::setLevel(const lib::u32 nv)
@@ -376,10 +402,16 @@ namespace zoper
 			{
 				launchPlayer();
 			}
+			else if (p_player->isPauseKey(kEvent.code))
+			{
+				switchPause();
+			}
 		}
 		break;
 		case GameOver:
 			setNextScene("MenuScene");
+			break;
+		case Pause:
 			break;
 		}
 	}
@@ -402,6 +434,20 @@ namespace zoper
 	void GameScene::onKeyReleased(sf::Event::KeyEvent kEvent)
 	{
 		Scene::onKeyReleased(kEvent);
+	}
+
+	void GameScene::onAnimationStarted(lib::sptr<lib::scn::draw::anim::IAnimation> anim, lib::sptr<lib::scn::draw::Renderizable> node)
+	{
+		if (anim->animationType() == "ColorAnimation" && node == _pauseText)
+		{
+			_pauserg->setVisible(false);
+			_pauseText->setColor(sf::Color::White);
+		}
+	}
+
+	void GameScene::onAnimationFinished(lib::sptr<lib::scn::draw::anim::IAnimation> anim, lib::sptr<lib::scn::draw::Renderizable> node)
+	{
+
 	}
 
 	void GameScene::launchPlayer()

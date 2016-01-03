@@ -18,8 +18,10 @@ namespace zoper
 		Direction getDirectionFromKey(sf::Keyboard::Key k) const;
 		sf::Keyboard::Key getLaunchKey() const;
 		bool isLaunchKey(const sf::Keyboard::Key &key) const;
+		sf::Keyboard::Key getPauseKey() const;
+		bool isPauseKey(const sf::Keyboard::Key &key) const;
 	private:
-		std::array<sf::Keyboard::Key, Direction::Total + 1> _keys;
+		std::array<sf::Keyboard::Key, Direction::Total + 2> _keys;
 	};
 }
 
