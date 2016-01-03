@@ -140,7 +140,7 @@ namespace zoper
 		setLevel(0);
 		_gameOverrg->setVisible(false);
 		_mainBoardrg->setVisible(true);
-		_pauserg->setVisible(true);
+		_pauserg->setVisible(false);
 
 		auto levelText = _levelText->getAsText();
 		auto goalText = _goalText->getAsText();
@@ -201,12 +201,14 @@ namespace zoper
 		{
 			setState(Pause);
 			_pauserg->setVisible(true);
+			gameClock.pause();
 			return true;
 		}
 		else if (state() == Pause)
 		{
 			setState(Playing);
 			_pauserg->setVisible(false);
+			gameClock.start();
 			return false;
 		}
 		return false;
@@ -392,17 +394,17 @@ namespace zoper
 		{
 		case Playing:
 		{
-			auto dir = p_player->getDirectionFromKey(kEvent.code);
+			auto dir = _keyMapping.getDirectionFromKey(kEvent.code);
 			if (dir.isValid())
 			{
 				p_player->setCurrentDirection(dir);
 				movePlayer(dir);
 			}
-			else if (p_player->isLaunchKey(kEvent.code))
+			else if (_keyMapping.isLaunchKey(kEvent.code))
 			{
 				launchPlayer();
 			}
-			else if (p_player->isPauseKey(kEvent.code))
+			else if (_keyMapping.isPauseKey(kEvent.code))
 			{
 				switchPause();
 			}
@@ -412,6 +414,10 @@ namespace zoper
 			setNextScene("MenuScene");
 			break;
 		case Pause:
+			if (_keyMapping.isPauseKey(kEvent.code))
+			{
+				switchPause();
+			}
 			break;
 		}
 	}

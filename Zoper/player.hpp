@@ -2,12 +2,11 @@
 #define __PLAYER_HPP__
 
 #include "gamebasetile.hpp"
-#include "keymapping.hpp"
 #include "direction.hpp"
 
 namespace zoper
 {
-	class Player : public GameBaseTile, public KeyMapping
+	class Player : public GameBaseTile
 	{
 	public:
 		Player(const lib::vector2du32 &bPosition, const lib::vector2df &size);

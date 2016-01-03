@@ -7,6 +7,8 @@
 #include "lib/board/itilescontroller.hpp"
 #include "lib/board/boardmodel.hpp"
 #include "lib/configuration.hpp"
+#include "lib/pclock.hpp"
+#include "keymapping.hpp"
 #include "direction.hpp"
 #include "levelproperties.hpp"
 
@@ -67,6 +69,7 @@ namespace zoper
 		inline const GameData &getGameData() const { return _gameData; };
 
 	private:
+		KeyMapping _keyMapping;
 		lib::Configuration _gameConfig;
 		void setLevel(const lib::u32 nv);
 		void updateLevelData();
@@ -127,7 +130,7 @@ namespace zoper
 		virtual void onAnimationFinished(lib::sptr<lib::scn::draw::anim::IAnimation> anim, lib::sptr<lib::scn::draw::Renderizable> node) override;
 
 		// Properties
-		sf::Clock gameClock;
+		lib::PClock gameClock;
 		lib::sptr<lib::board::BoardModel> p_boardModel{ nullptr };
 		GameData _gameData;
 		lib::u32 _score{ 0 };
