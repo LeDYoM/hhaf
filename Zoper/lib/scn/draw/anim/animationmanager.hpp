@@ -10,6 +10,7 @@ namespace lib
 	{
 		namespace draw
 		{
+			class Renderizable;
 			namespace anim
 			{
 				class AnimationManager
@@ -19,6 +20,8 @@ namespace lib
 					virtual ~AnimationManager();
 					void addAnimation(sptr<IAnimation> nanimation);
 					void updateAnimations();
+					virtual void onAnimationStarted(sptr<IAnimation> anim, sptr<Renderizable> node);
+					virtual void onAnimationFinished(sptr<IAnimation> anim, sptr<Renderizable> node);
 				private:
 					std::vector<sptr<IAnimation>> _animations;
 					std::vector<sptr<IAnimation>> _animationsToDelete;

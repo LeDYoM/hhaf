@@ -36,6 +36,7 @@ namespace lib
 					}
 
 					_animations.push_back(nanimation);
+					onAnimationStarted(nanimation, nanimation->node());
 				}
 
 				void AnimationManager::updateAnimations()
@@ -46,6 +47,7 @@ namespace lib
 						{
 							if (!animation->animate())
 							{
+								onAnimationFinished(animation, animation->node());
 								_animationsToDelete.push_back(animation);
 							}
 						}
@@ -59,6 +61,16 @@ namespace lib
 							_animationsToDelete.clear();
 						}
 					}
+				}
+
+				void AnimationManager::onAnimationStarted(sptr<IAnimation> anim, sptr<Renderizable> node)
+				{
+
+				}
+
+				void AnimationManager::onAnimationFinished(sptr<IAnimation> anim, sptr<Renderizable> node)
+				{
+
 				}
 
 			}
