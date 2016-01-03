@@ -110,6 +110,7 @@
     <ClCompile Include="lib\scn\draw\renderizable.cpp" />
     <ClCompile Include="lib\randomizer.cpp" />
     <ClCompile Include="lib\menu\menustep.cpp" />
+    <ClCompile Include="lib\pclock.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="lib\scn\resourcemanager.cpp" />
     <ClCompile Include="lib\scn\resource.cpp" />
@@ -152,6 +153,7 @@
     <ClInclude Include="lib\randomizer.hpp" />
     <ClInclude Include="lib\menu\menustep.hpp" />
     <ClInclude Include="lib\menu\menudescriptors.hpp" />
+    <ClInclude Include="lib\pclock.hpp" />
     <ClInclude Include="player.hpp" />
     <ClInclude Include="lib\scn\resourcemanager.hpp" />
     <ClInclude Include="lib\scn\resource.hpp" />
@@ -159,9 +161,6 @@
     <ClInclude Include="lib\scn\draw\anim\positionanimation.hpp" />
     <ClInclude Include="tile.hpp" />
     <ClInclude Include="zoperprogramcontroller.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
