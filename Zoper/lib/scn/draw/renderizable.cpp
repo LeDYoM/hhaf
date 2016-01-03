@@ -60,6 +60,20 @@ namespace lib
 				}
 			}
 
+			void Renderizable::setColor(const sf::Color &color)
+			{
+				switch (_activeDrawNode)
+				{
+				case ActiveDrawNode::Text:
+					getAsText()->setColor(color);
+					break;
+				default:
+				case ActiveDrawNode::EllipseShape:
+					getAsEllipseShape()->setFillColor(color);
+					break;
+				}
+			}
+
 			sf::FloatRect Renderizable::getLocalBounds()
 			{
 				// For some reason SFML does not have inheritance in these methods, so let's wrap it
@@ -158,7 +172,6 @@ namespace lib
 			{
 				setPosition(getAsTransformable()->getPosition(), alignment);
 			}
-
 		}
 	}
 }
