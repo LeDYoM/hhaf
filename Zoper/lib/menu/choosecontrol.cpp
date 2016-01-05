@@ -35,9 +35,22 @@ namespace lib
 				text->setColor(labels[count]->_color);
 				renderizable->setPositionX(0,alignment);
 				renderizable->setPositionY(currentPos.y);
+
+				if (labels[count]->_subOptionsLabels.size()>0)
+				{
+					auto subrenderizable = createText("sub_name" + count);
+					auto subtext = subrenderizable->getAsText();
+					subtext->setFont(*(font->getAsFont()));
+					subtext->setCharacterSize(chSize);
+					subtext->setString(labels[count]->_subOptionsLabels[labels[count]->_startValueIndex]);
+					subtext->setColor(labels[count]->_color);
+					subrenderizable->setPositionX(1800, lib::scn::draw::Alignment::Right);
+					subrenderizable->setPositionY(currentPos.y);
+				}
+
 				currentPos.y += (chSize + incY);
+				_labelData.push_back(LabelData(labels[count]->_subOptionsLabels,nullptr,renderizable, labels[count]->_startValueIndex));
 				++count;
-				_labels.push_back(renderizable);
 			}
 
 			cursorSelectItem(0);
@@ -46,7 +59,7 @@ namespace lib
 
 		ChooseControl::~ChooseControl()
 		{
-			_labels.clear();
+			_labelData.clear();
 			_cursor = nullptr;
 		}
 
@@ -76,10 +89,10 @@ namespace lib
 
 		void ChooseControl::cursorSelectItem(u32 nodeIndex)
 		{
-			__ASSERT(nodeIndex < _labels.size(), "Invalid select index for cursor");
+			__ASSERT(nodeIndex < _labelData.size(), "Invalid select index for cursor");
 
 			_cursorItemSelected = nodeIndex;
-			auto selected = _labels[nodeIndex];
+			auto selected = _labelData[nodeIndex].label;
 			auto selectedText = selected->getAsText();
 
 			auto cursor_ = _cursor->getAsEllipseShape();
@@ -91,7 +104,7 @@ namespace lib
 
 		void ChooseControl::goDown()
 		{
-			if (_cursorItemSelected < (_labels.size() - 1))
+			if (_cursorItemSelected < (_labelData.size() - 1))
 			{
 				cursorSelectItem(_cursorItemSelected + 1);
 			}
@@ -109,7 +122,7 @@ namespace lib
 			}
 			else
 			{
-				cursorSelectItem(_labels.size()-1);
+				cursorSelectItem(_labelData.size()-1);
 			}
 		}
 
