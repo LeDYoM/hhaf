@@ -24,6 +24,8 @@ namespace lib
 			u32 width{ 1024 };
 			u32 height{ 768 };
 			u8 bpp{ 16 };
+			bool fullScreen{ false };
+			bool resizable{ false };
 		};
 		
 		class ProgramController
