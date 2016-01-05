@@ -13,15 +13,16 @@ namespace lib
 		class OptionDescriptor
 		{
 		public:
-			explicit OptionDescriptor(const std::string &text, const sf::Color &color)
-				: _text(text), _color{ color } {}
-			virtual ~OptionDescriptor() {}
+			explicit OptionDescriptor(const std::string &text, const sf::Color &color,bool createSubString=false,u32 startValueIndex=0,
+				const std::vector<std::string> &subOptionsLabels=std::vector<std::string>())
+				: _text(text), _color{ color }, _createSubString{ createSubString }, _startValueIndex{ startValueIndex },
+				_subOptionsLabels( subOptionsLabels ) {}
 
-			inline const std::string getText() const { return _text; }
-			inline const sf::Color getColor() const { return _color; }
-		private:
 			std::string _text;
 			sf::Color _color;
+			bool _createSubString;
+			u32 _startValueIndex;
+			std::vector<std::string> _subOptionsLabels;
 		};
 
 		class CursorDescriptor
@@ -29,12 +30,7 @@ namespace lib
 		public:
 			explicit CursorDescriptor(const u32 nVertex, const vector2df &size, const sf::Color &color)
 				: _nVertex{ nVertex }, _size{ size }, _color{ color } {}
-			virtual ~CursorDescriptor() {}
 
-			inline const u32 getNVertex() const { return _nVertex; }
-			inline const vector2df getSize() const { return _size; }
-			inline const sf::Color getColor() const { return _color; }
-		private:
 			u32 _nVertex;
 			vector2df _size;
 			sf::Color _color;
