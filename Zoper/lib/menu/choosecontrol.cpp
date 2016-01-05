@@ -8,7 +8,7 @@ namespace lib
 	namespace menu
 	{
 		ChooseControl::ChooseControl(const std::string &name, sptr<scn::Resource> font, 
-			const scn::draw::Alignment aleignment,
+			const scn::draw::Alignment alignment,
 			u32 chSize,float incY,
 			std::function<void(const u32)> onSelected,
 			sptr<CursorDescriptor> cursorDescriptor, 
@@ -16,11 +16,11 @@ namespace lib
 			: IMenuControl{ name }
 		{
 			_onSelected = onSelected;
-			descriptorCursorSize = cursorDescriptor->getSize();
+			descriptorCursorSize = cursorDescriptor->_size;
 			_cursor = createShape("cursor");
 			auto cursor_ = _cursor->getAsEllipseShape();
-			cursor_->setPointCount(cursorDescriptor->getNVertex());
-			cursor_->setFillColor(cursorDescriptor->getColor());
+			cursor_->setPointCount(cursorDescriptor->_nVertex);
+			cursor_->setFillColor(cursorDescriptor->_color);
 			cursor_->setSize(descriptorCursorSize);
 
 			u32 count{ 0 };
@@ -31,9 +31,9 @@ namespace lib
 				auto text = renderizable->getAsText();
 				text->setFont(*(font->getAsFont()));
 				text->setCharacterSize(chSize);
-				text->setString(labels[count]->getText());
-				text->setColor(labels[count]->getColor());
-				renderizable->setPositionX(0,lib::scn::draw::Alignment::Center);
+				text->setString(labels[count]->_text);
+				text->setColor(labels[count]->_color);
+				renderizable->setPositionX(0,alignment);
 				renderizable->setPositionY(currentPos.y);
 				currentPos.y += (chSize + incY);
 				++count;
