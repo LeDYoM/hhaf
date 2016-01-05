@@ -11,6 +11,7 @@
 #include "lib/scn/resourcemanager.hpp"
 #include "lib/scn/resource.hpp"
 #include "lib/scn/draw/anim/positionanimation.hpp"
+#include "lib/scn/draw/anim/coloranimation.hpp"
 #include <SFML/Graphics.hpp>
 
 #include <memory>
@@ -201,6 +202,7 @@ namespace zoper
 		{
 			setState(Pause);
 			_pauserg->setVisible(true);
+			addAnimation(lib::scn::draw::anim::ColorAnimation::create(2000, _pauseText, sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 0)));
 			gameClock.pause();
 			return true;
 		}
@@ -444,16 +446,15 @@ namespace zoper
 
 	void GameScene::onAnimationStarted(lib::sptr<lib::scn::draw::anim::IAnimation> anim, lib::sptr<lib::scn::draw::Renderizable> node)
 	{
-		if (anim->animationType() == "ColorAnimation" && node == _pauseText)
-		{
-			_pauserg->setVisible(false);
-			_pauseText->setColor(sf::Color::White);
-		}
 	}
 
 	void GameScene::onAnimationFinished(lib::sptr<lib::scn::draw::anim::IAnimation> anim, lib::sptr<lib::scn::draw::Renderizable> node)
 	{
-
+		if (anim->animationType() == "ColorAnimation" && node == _pauseText)
+		{
+			_pauserg->setVisible(state()==Pause);
+			_pauseText->setColor(sf::Color::White);
+		}
 	}
 
 	void GameScene::launchPlayer()
