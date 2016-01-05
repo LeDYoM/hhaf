@@ -4,14 +4,13 @@
 #include "lib/scn/resource.hpp"
 
 #include "mainmenu.hpp"
+#include "optionsmenu.hpp"
 
 namespace zoper
 {
 	MenuScene::MenuScene()
 		: lib::menu::MenuManager("MenuScene")
 	{
-//		getSteps();
-
 	}
 
 
@@ -22,6 +21,7 @@ namespace zoper
 	void MenuScene::onInit()
 	{
 		addMenuStep(lib::sptr<lib::menu::MenuStep>(new zoper::zmenu::MainMenu));
+		addMenuStep(lib::sptr<lib::menu::MenuStep>(new zoper::zmenu::OptionsMenu));
 	}
 
 	void MenuScene::onDeinit()
@@ -32,7 +32,6 @@ namespace zoper
 	void MenuScene::onEnterScene()
 	{
 		start("MainMenu");
-//		setNextScene("GameScene");
 	}
 
 	void MenuScene::onExitScene()
