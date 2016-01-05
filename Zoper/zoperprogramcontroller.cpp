@@ -19,10 +19,6 @@ namespace zoper
 	{
 		// Init configuration data
 		addConfigInt(GraphicsLevelStr, 4);
-		addConfigInt(ResolutionXStr, 1024);
-		addConfigInt(ResolutionYStr, 768);
-		addConfigInt(BPPStr, 32);
-		addConfigInt(FulscreenStr, 0);
 	}
 
 	std::vector<lib::sptr<lib::scn::Scene>> ZoperProgramController::scenesVector()
@@ -38,9 +34,10 @@ namespace zoper
 	{
 		lib::core::WindowCreationParams params;
 		params.windowTitle = "Zoper";
-		params.width = 1024;
-		params.height = 768;
-		params.bpp = 32;
+		params.width = addConfigInt(ResolutionXStr, 1024);
+		params.height = addConfigInt(ResolutionYStr, 768);
+		params.bpp = addConfigInt(BPPStr, 32);
+		params.fullScreen = addConfigInt(FulscreenStr, 0) == 0 ? false : true;
 		return params;
 	}
 }
