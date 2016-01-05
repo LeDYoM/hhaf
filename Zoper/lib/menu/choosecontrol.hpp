@@ -22,7 +22,7 @@ namespace lib
 		{
 		public:
 			ChooseControl(const std::string &name, sptr<scn::Resource> font,
-				const scn::draw::Alignment aleignment,
+				const scn::draw::Alignment alignment,
 				u32 chSize, float incY, std::function<void(const u32)> onSelected,
 				sptr<CursorDescriptor> cursorDescriptor, 
 				const std::vector<sptr<OptionDescriptor>> labels);
