@@ -35,6 +35,8 @@ namespace lib
 			void cursorSelectItem(u32 nodeIndex);
 			void goDown();
 			void goUp();
+			void goLeft();
+			void goRight();
 
 			vector2df descriptorCursorSize;
 			u32 _cursorItemSelected{ 0 };

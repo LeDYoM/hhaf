@@ -92,11 +92,10 @@ namespace zoper
 					lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Resolution", sf::Color::Blue
 						, true, 0, std::vector<std::string>{"Worst", "Bad", "Normal", "Good", "Best"})),
 					lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Fullscreen", sf::Color::Blue
-					, true, 0, std::vector<std::string>{"Worst", "Bad", "Normal", "Good", "Best"})),
+					, true, 0, std::vector<std::string>{"No", "Yes"})),
 					lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("VSync", sf::Color::Blue
-						, true, 0, std::vector<std::string>{"Worst", "Bad", "Normal", "Good", "Best"})),
-					lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Redefine keyboard", sf::Color::Blue
-						, true, 0, std::vector<std::string>{"Worst", "Bad", "Normal", "Good", "Best"})),
+						, true, 0, std::vector<std::string>{"No", "Yes"})),
+					lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Redefine keyboard", sf::Color::Blue)),
 					lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Back", sf::Color::Blue,true)),
 			}));
 			addMenuControl(_chooseControl);

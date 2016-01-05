@@ -36,9 +36,10 @@ namespace lib
 				renderizable->setPositionX(0,alignment);
 				renderizable->setPositionY(currentPos.y);
 
+				sptr<scn::draw::Renderizable> subrenderizable{ nullptr };
 				if (labels[count]->_subOptionsLabels.size()>0)
 				{
-					auto subrenderizable = createText("sub_name" + count);
+					subrenderizable = createText("sub_name" + count);
 					auto subtext = subrenderizable->getAsText();
 					subtext->setFont(*(font->getAsFont()));
 					subtext->setCharacterSize(chSize);
@@ -49,7 +50,7 @@ namespace lib
 				}
 
 				currentPos.y += (chSize + incY);
-				_labelData.push_back(LabelData(labels[count]->_subOptionsLabels,nullptr,renderizable, labels[count]->_startValueIndex));
+				_labelData.push_back(LabelData(labels[count]->_subOptionsLabels,subrenderizable,renderizable, labels[count]->_startValueIndex));
 				++count;
 			}
 
@@ -78,6 +79,17 @@ namespace lib
 				if (_onSelected)
 				{
 					_onSelected(_cursorItemSelected);
+				}
+			}
+			else if (_labelData[_cursorItemSelected].textSubLabel.size() > 0)
+			{
+				if (kEvent.code == sf::Keyboard::Left || kEvent.code == sf::Keyboard::Numpad4)
+				{
+					goLeft();
+				}
+				else if (kEvent.code == sf::Keyboard::Right || kEvent.code == sf::Keyboard::Numpad6)
+				{
+					goRight();
 				}
 			}
 		}
@@ -126,5 +138,44 @@ namespace lib
 			}
 		}
 
+		void ChooseControl::goLeft()
+		{
+			auto index = _labelData[_cursorItemSelected].selectedSublabel;
+
+			if (_labelData[_cursorItemSelected].textSubLabel.size() > 0)
+			{
+				if (index < 1)
+				{
+					index = _labelData[_cursorItemSelected].textSubLabel.size()-1;
+				}
+				else
+				{
+					--index;
+				}
+				std::string str(_labelData[_cursorItemSelected].textSubLabel[index]);
+				_labelData[_cursorItemSelected].subLabel->getAsText()->setString(str);
+				_labelData[_cursorItemSelected].selectedSublabel = index;
+			}
+		}
+
+		void ChooseControl::goRight()
+		{
+			auto index = _labelData[_cursorItemSelected].selectedSublabel;
+
+			if (_labelData[_cursorItemSelected].textSubLabel.size() > 0)
+			{
+				if (index >= _labelData[_cursorItemSelected].textSubLabel.size() - 1)
+				{
+					index = 0;
+				}
+				else
+				{
+					++index;
+				}
+				std::string str(_labelData[_cursorItemSelected].textSubLabel[index]);
+				_labelData[_cursorItemSelected].subLabel->getAsText()->setString(str);
+				_labelData[_cursorItemSelected].selectedSublabel = index;
+			}
+		}
 	}
 }
