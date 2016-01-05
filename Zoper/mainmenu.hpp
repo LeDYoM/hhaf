@@ -21,7 +21,6 @@ namespace zoper
 			lib::Configuration _gameConfig;
 			lib::sptr<lib::scn::draw::Renderizable> _logo{ nullptr };
 			lib::sptr<lib::menu::ChooseControl> _chooseControl{ nullptr };
-
 		};
 	}
 }

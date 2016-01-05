@@ -32,7 +32,8 @@ namespace zoper
 			_logo->setPositionX(menuManager()->getCenterCoordinates().x, lib::scn::draw::Alignment::Center);
 			_logo->setPositionY(100);
 
-			auto callBack = [this](lib::u32 index)
+			auto callBack = [this](lib::u32 index/*, lib::sptr<lib::scn::draw::Renderizable> node, 
+				const lib::u32 subNodeIndexSelected, lib::sptr<lib::scn::draw::Renderizable> subNode*/)
 			{
 				switch (index)
 				{
@@ -47,6 +48,7 @@ namespace zoper
 					menuManager()->setNextScene("GameScene");
 					break;
 				case 2:
+					menuManager()->changeStep("OptionsMenu");
 					break;
 				case 3:
 				default:
@@ -59,12 +61,13 @@ namespace zoper
 				lib::scn::draw::Alignment::Center,
 				90, 1,
 				callBack,
+//				nullptr,
 				lib::sptr<lib::menu::CursorDescriptor>(new lib::menu::CursorDescriptor(3, lib::vector2df{ 90.0f, 90.0f },sf::Color::Red)),
 				std::vector<lib::sptr<lib::menu::OptionDescriptor>>{
 				lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Play token mode", sf::Color::Blue)),
 					lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Play time mode", sf::Color::Blue)),
 				lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Options", sf::Color::Blue)),
-				lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Exit", sf::Color::Blue)),
+				lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Exit", sf::Color::Blue))
 			}));
 			addMenuControl(_chooseControl);
 			_chooseControl->setPosition(menuManager()->getCenterCoordinates().x, 700);
