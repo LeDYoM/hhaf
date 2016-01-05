@@ -86,6 +86,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="keyredefinitionmenu.cpp" />
     <ClCompile Include="lib\scn\draw\anim\coloranimation.cpp" />
     <ClCompile Include="lib\scn\draw\anim\animationmanager.cpp" />
     <ClCompile Include="levelproperties.cpp" />
@@ -111,6 +112,7 @@
     <ClCompile Include="lib\randomizer.cpp" />
     <ClCompile Include="lib\menu\menustep.cpp" />
     <ClCompile Include="lib\pclock.cpp" />
+    <ClCompile Include="optionsmenu.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="lib\scn\resourcemanager.cpp" />
     <ClCompile Include="lib\scn\resource.cpp" />
@@ -120,6 +122,7 @@
     <ClCompile Include="zoperprogramcontroller.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="keyredefinitionmenu.hpp" />
     <ClInclude Include="lib\scn\draw\anim\coloranimation.hpp" />
     <ClInclude Include="lib\core\vutils.hpp" />
     <ClInclude Include="lib\scn\draw\anim\animationmanager.hpp" />
@@ -154,6 +157,7 @@
     <ClInclude Include="lib\menu\menustep.hpp" />
     <ClInclude Include="lib\menu\menudescriptors.hpp" />
     <ClInclude Include="lib\pclock.hpp" />
+    <ClInclude Include="optionsmenu.hpp" />
     <ClInclude Include="player.hpp" />
     <ClInclude Include="lib\scn\resourcemanager.hpp" />
     <ClInclude Include="lib\scn\resource.hpp" />

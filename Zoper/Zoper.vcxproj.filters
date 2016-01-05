@@ -111,6 +111,12 @@
     <ClCompile Include="lib\pclock.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="optionsmenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="keyredefinitionmenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="zoperprogramcontroller.hpp">
@@ -234,6 +240,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="lib\pclock.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="optionsmenu.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="keyredefinitionmenu.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
