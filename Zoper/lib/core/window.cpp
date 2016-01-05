@@ -27,9 +27,9 @@ namespace lib
 			__ASSERT(p_parentController, "Cannot create a Window with no parent");
 			create(wcp);
 
-#ifdef NDEBUG
+//#ifdef NDEBUG
 			this->setVerticalSyncEnabled(true);
-#endif
+//#endif
 
 			// Create the scene manager
 			p_sceneManager = sptr<lib::scn::SceneManager>(new lib::scn::SceneManager(this, p_parentController->resourceFile()));
@@ -44,7 +44,10 @@ namespace lib
 		void Window::create(const WindowCreationParams &wcp)
 		{
 			LOG_DEBUG("Going to create Window");
-			sf::Window::create(VideoMode(wcp.width, wcp.height, wcp.bpp), _title);
+			sf::Uint32 style{ sf::Style::Titlebar | sf::Style::Close };
+			if (wcp.fullScreen)
+				style = sf::Style::Fullscreen;
+			sf::Window::create(VideoMode(wcp.width, wcp.height, wcp.bpp), _title, style);
 		}
 
 		bool Window::loopStep()
