@@ -24,6 +24,7 @@ namespace lib
 			u32 width{ 1024 };
 			u32 height{ 768 };
 			u8 bpp{ 16 };
+			u32 antialiasing{ 0 };
 			bool fullScreen{ false };
 			bool resizable{ false };
 		};
