@@ -74,16 +74,30 @@ namespace lib
 				return 0;
 			}
 
-			sptr<RenderGroup> RenderGroup::createNewRenderGroup(const std::string & name)
+			sptr<RenderGroup> RenderGroup::createNewRenderGroup(const std::string & name, sptr<IDrawable> beforeNode)
 			{
 				sptr<RenderGroup> rg = std::make_shared<RenderGroup>(name, this);
-				_renderNodes.push_back(rg);
+				addRenderGroup(rg, beforeNode);
 				return rg;
 			}
 
-			void RenderGroup::addRenderGroup(sptr<RenderGroup> node)
+			void RenderGroup::addRenderGroup(sptr<RenderGroup> node, sptr<IDrawable> beforeNode)
 			{
-				_renderNodes.push_back(node);
+				if (!beforeNode)
+				{
+					_renderNodes.push_back(node);
+				}
+				else
+				{
+					for (auto iterator = _renderNodes.begin(); iterator != _renderNodes.end();++iterator)
+					{
+						if (*iterator == beforeNode)
+						{
+							_renderNodes.insert(iterator, node);
+							iterator = _renderNodes.end()-1;
+						}
+					}
+				}
 				__ASSERT(!node->_parent, "Node "<< node->name() <<"already has a parent");
 				node->_parent = this;
 			}
@@ -91,16 +105,6 @@ namespace lib
 			bool RenderGroup::removeRenderGroup(sptr<RenderGroup> element)
 			{
 				return removeFromspVector(element, _renderNodes);
-			}
-
-			bool RenderGroup::putOnTop(sptr<IDrawable> node)
-			{
-				return true;
-			}
-
-			bool RenderGroup::putonBottom(sptr<IDrawable> node)
-			{
-				return true;
 			}
 
 			void RenderGroup::clear()

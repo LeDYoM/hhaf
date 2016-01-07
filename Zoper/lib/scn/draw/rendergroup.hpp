@@ -33,16 +33,13 @@ namespace lib
 				bool removeRenderizable(sptr<Renderizable> element);
 				void clear();
 
-				sptr<RenderGroup> createNewRenderGroup(const std::string &name);
+				sptr<RenderGroup> createNewRenderGroup(const std::string &name,sptr<IDrawable> beforeNode=nullptr);
 				bool removeRenderGroup(sptr<RenderGroup> element);
-
-				bool putOnTop(sptr<IDrawable> node);
-				bool putonBottom(sptr<IDrawable> node);
 
 				u32 draw(lib::core::Window *window, sf::RenderStates &states) override;
 
 			protected:
-				void addRenderGroup(sptr<RenderGroup> node);
+				void addRenderGroup(sptr<RenderGroup> node, sptr<IDrawable> beforeNode = nullptr);
 
 				RenderGroup *parent() const { return _parent; }
 				std::vector<sptr<IDrawable>> _renderNodes;
