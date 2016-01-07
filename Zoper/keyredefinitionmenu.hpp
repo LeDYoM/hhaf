@@ -16,9 +16,15 @@ namespace zoper
 			virtual ~KeyRedefinitionMenu();
 			virtual void onCreate() override;
 
+			virtual void onKeyPressed(sf::Event::KeyEvent kEvent) override;
+			virtual void onKeyReleased(sf::Event::KeyEvent kEvent) override;
+
 		private:
+			const std::string getKeyNameStr(const lib::u32 index) const;
+			void setTextForKey();
+
+			lib::u32 _indexKey;
 			KeyMapping _keyMapping;
-//			sf::Keyboard::Key 
 			lib::Configuration _gameConfig;
 			lib::sptr<lib::scn::draw::Renderizable> _nextKeyText{ nullptr };
 		};
