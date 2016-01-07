@@ -4,7 +4,7 @@ namespace zoper
 {
 	KeyMapping::KeyMapping() : lib::Configuration("config.cfg")
 	{
-		std::array<sf::Keyboard::Key, Direction::Total + 2> defaults{ sf::Keyboard::Key::Left,sf::Keyboard::Key::Right,sf::Keyboard::Key::Up,sf::Keyboard::Key::Down,sf::Keyboard::Key::Space,sf::Keyboard::Key::Escape };
+		std::array<sf::Keyboard::Key, TotalKeys> defaults{ sf::Keyboard::Key::Left,sf::Keyboard::Key::Right,sf::Keyboard::Key::Up,sf::Keyboard::Key::Down,sf::Keyboard::Key::Space,sf::Keyboard::Key::Escape };
 
 		for (auto i = 0u; i < Direction::Total; ++i)
 		{
@@ -53,6 +53,21 @@ namespace zoper
 	bool KeyMapping::isPauseKey(const sf::Keyboard::Key &key) const
 	{
 		return key == getPauseKey();
+	}
+
+	bool KeyMapping::setKey(lib::u32 index, sf::Keyboard::Key key)
+	{
+		__ASSERT(index < TotalKeys, "Invalid index");
+
+		for (lib::u32 i = 0u; i < index; ++i)
+		{
+			if (_keys[i] == key)
+			{
+				return false;
+			}
+		}
+		_keys[index] = key;
+		return true;
 	}
 
 }

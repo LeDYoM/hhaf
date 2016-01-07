@@ -32,8 +32,7 @@ namespace zoper
 			_logo->setPositionX(menuManager()->getCenterCoordinates().x, lib::scn::draw::Alignment::Center);
 			_logo->setPositionY(100);
 
-			auto callBack = [this](lib::u32 index/*, lib::sptr<lib::scn::draw::Renderizable> node, 
-				const lib::u32 subNodeIndexSelected, lib::sptr<lib::scn::draw::Renderizable> subNode*/)
+			auto callBack = [this](lib::u32 index, const lib::menu::ChooseControl &self)
 			{
 				switch (index)
 				{

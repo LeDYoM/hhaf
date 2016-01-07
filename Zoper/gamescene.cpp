@@ -387,6 +387,7 @@ namespace zoper
 
 		// Add it to the board and to the scene nodes
 		p_boardModel->setTile(position, std::dynamic_pointer_cast<lib::board::ITile>(_mainBoardrg->addRenderizable(newTileToken)));
+		_mainBoardrg->putonBottom(newTileToken);
 	}
 
 	void GameScene::onKeyPressed(sf::Event::KeyEvent kEvent)

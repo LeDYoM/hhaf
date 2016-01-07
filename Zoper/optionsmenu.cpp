@@ -13,7 +13,7 @@ namespace zoper
 	namespace zmenu
 	{
 		OptionsMenu::OptionsMenu()
-			: lib::menu::MenuStep{ "OptionsMenu" }, _gameConfig{ ":NextGame" }
+			: lib::menu::MenuStep{ "OptionsMenu" }, lib::Configuration("config.cfg"), _gameConfig{ ":NextGame" }
 		{
 		}
 
@@ -25,56 +25,45 @@ namespace zoper
 		void OptionsMenu::onCreate()
 		{
 			auto rManager = menuManager()->resourceManager();
-			/*
-			auto initCallback = [this](lib::u32 index, lib::sptr<lib::scn::draw::Renderizable> node, 
-				const lib::u32 subNodeIndexSelected, lib::sptr<lib::scn::draw::Renderizable> subNode)
+			// Read available resolutions
+			auto _resolutions = sf::VideoMode::getFullscreenModes();
+			std::vector<std::string> _resolutionsStr;
+			for (const auto resolution : _resolutions)
 			{
-				auto subNode_ = subNode->getAsText();
+				_resolutionsStr.push_back(std::to_string(resolution.width) + "x" + std::to_string(resolution.height) + "x" + std::to_string(resolution.bitsPerPixel));
+			}
+			auto callBack = [this](lib::u32 index, const lib::menu::ChooseControl &self)
+			{
 				switch (index)
 				{
 				case 0:
-					subNode_->setString("A");
-					subNode->setPositionX(1800, lib::scn::draw::Alignment::Right);
 					break;
 				case 1:
-					subNode_->setString("1024x768");
-					if (subNodeIndexSelected > sf::VideoMode::getFullscreenModes().size())
-					subNode->setPositionX(1800, lib::scn::draw::Alignment::Right);
 					break;
 				case 2:
-					subNode_->setString("No");
-					subNode->setPositionX(1800, lib::scn::draw::Alignment::Right);
 					break;
 				case 3:
-					subNode_->setString("No");
-					subNode->setPositionX(1800, lib::scn::draw::Alignment::Right);
 					break;
 				case 4:
+					menuManager()->changeStep("KeyRedefinitionMenu");
 					break;
 				case 5:
-				default:
 					menuManager()->changeStep("MainMenu");
+					reset();
 					break;
-				}
-			};
-			*/
-			auto callBack = [this](lib::u32 index/*, lib::sptr<lib::scn::draw::Renderizable> node, 
-				const lib::u32 subNodeIndexSelected, lib::sptr<lib::scn::draw::Renderizable> subNode*/)
-			{
-				switch (index)
-				{
-				case 0:
-					break;
-				case 1:
-					break;
-				case 2:
-					break;
-				case 3:
-					break;
-				case 4:
-					break;
-				case 5:
+				case 6:
 				default:
+					addConfigInt(GraphicsLevelStr, self.getSelectedSubLabel(0), true);
+					auto _resolution = sf::VideoMode::getFullscreenModes()[self.getSelectedSubLabel(1)];
+					if (_resolution.isValid())
+					{
+						addConfigInt(ResolutionXStr, _resolution.width, true);
+						addConfigInt(ResolutionYStr, _resolution.height, true);
+						addConfigInt(BPPStr, _resolution.bitsPerPixel, true);
+					}
+					addConfigInt(FulscreenStr, self.getSelectedSubLabel(2), true);
+					addConfigInt(VSyncStr, self.getSelectedSubLabel(3), true);
+					saveConfig();
 					menuManager()->changeStep("MainMenu");
 					break;
 				}
@@ -84,19 +73,19 @@ namespace zoper
 				lib::scn::draw::Alignment::Left,
 				70, 1,
 				callBack,
-//				initCallback,
 				lib::sptr<lib::menu::CursorDescriptor>(new lib::menu::CursorDescriptor(3, lib::vector2df{ 70.0f, 70.0f }, sf::Color::Red)),
 				std::vector<lib::sptr<lib::menu::OptionDescriptor>>{
 				lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Graphics quality", sf::Color::Blue
 					,true,0,std::vector<std::string>{"Worst","Bad","Normal","Good","Best"})),
 					lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Resolution", sf::Color::Blue
-						, true, 0, std::vector<std::string>{"Worst", "Bad", "Normal", "Good", "Best"})),
+						, true, 0, _resolutionsStr)),
 					lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Fullscreen", sf::Color::Blue
 					, true, 0, std::vector<std::string>{"No", "Yes"})),
 					lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("VSync", sf::Color::Blue
 						, true, 0, std::vector<std::string>{"No", "Yes"})),
 					lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Redefine keyboard", sf::Color::Blue)),
-					lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Back", sf::Color::Blue,true)),
+					lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Cancel", sf::Color::Blue,true)),
+					lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Accept", sf::Color::Blue, true))
 			}));
 			addMenuControl(_chooseControl);
 			_chooseControl->setPosition(100, 700);

@@ -12,6 +12,7 @@ namespace zoper
 	static const char *ResolutionYStr = "ResolutionY";
 	static const char *FulscreenStr = "Fullscreen";
 	static const char *BPPStr = "bpp";
+	static const char *VSyncStr = "VSync";
 
 }
 

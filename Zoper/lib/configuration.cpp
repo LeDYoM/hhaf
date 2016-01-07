@@ -5,6 +5,7 @@
 
 namespace lib
 {
+
 	Configuration::CDataMap Configuration::_data;
 
 	std::vector<std::string> split_helper(const std::string& input, const std::string& regex)
@@ -55,6 +56,11 @@ namespace lib
 
 	Configuration::Configuration(const std::string &file)
 		: currentFile(file)
+	{
+		loadFile(file);
+	}
+
+	void Configuration::loadFile(const std::string &file)
 	{
 		CDataMap::iterator fIterator{ _data.find(currentFile) };
 
@@ -169,6 +175,13 @@ namespace lib
 	s32 Configuration::addConfigInt(const std::string & name, int value, bool overwrite)
 	{
 		return std::stoi(addConfigProperty(name, std::to_string(value),overwrite));
+	}
+
+	void Configuration::reset()
+	{
+		_data.erase(currentFile);
+		currentMap->clear();
+		loadFile(currentFile);
 	}
 
 	bool Configuration::saveConfig()

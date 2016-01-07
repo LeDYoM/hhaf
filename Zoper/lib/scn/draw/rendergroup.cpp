@@ -93,6 +93,16 @@ namespace lib
 				return removeFromspVector(element, _renderNodes);
 			}
 
+			bool RenderGroup::putOnTop(sptr<IDrawable> node)
+			{
+				return true;
+			}
+
+			bool RenderGroup::putonBottom(sptr<IDrawable> node)
+			{
+				return true;
+			}
+
 			void RenderGroup::clear()
 			{
 				_renderNodes.clear();

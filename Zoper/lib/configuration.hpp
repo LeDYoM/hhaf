@@ -31,7 +31,7 @@ namespace lib
 
 		std::string addConfigProperty(const std::string &name, const std::string &value, bool overwrite = false);
 		s32 addConfigInt(const std::string &name, int value, bool overwrite = false);
-
+		void reset();
 
 	protected:
 		bool configFileExists(const std::string &file);
@@ -41,6 +41,7 @@ namespace lib
 		std::vector<std::string> splitString(const std::string &input, const char separator);
 
 	private:
+		void loadFile(const std::string &file);
 		const std::string currentFile;
 		CMap *currentMap;
 		static CDataMap _data;

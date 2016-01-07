@@ -10,7 +10,7 @@ namespace lib
 		ChooseControl::ChooseControl(const std::string &name, sptr<scn::Resource> font, 
 			const scn::draw::Alignment alignment,
 			u32 chSize,float incY,
-			std::function<void(const u32)> onSelected,
+			std::function<void(const u32, const ChooseControl &self)> onSelected,
 			sptr<CursorDescriptor> cursorDescriptor, 
 			const std::vector<sptr<OptionDescriptor>> labels)
 			: IMenuControl{ name }
@@ -64,6 +64,12 @@ namespace lib
 			_cursor = nullptr;
 		}
 
+		lib::u32 ChooseControl::getSelectedSubLabel(u32 index) const
+		{
+			__ASSERT(index < _labelData.size(), "Invalid index");
+			return _labelData[index].selectedSublabel;
+		}
+
 		void ChooseControl::onKeyPressed(sf::Event::KeyEvent kEvent)
 		{
 			if (kEvent.code == sf::Keyboard::Down || kEvent.code == sf::Keyboard::Numpad2)
@@ -78,7 +84,7 @@ namespace lib
 			{
 				if (_onSelected)
 				{
-					_onSelected(_cursorItemSelected);
+					_onSelected(_cursorItemSelected,*this);
 				}
 			}
 			else if (_labelData[_cursorItemSelected].textSubLabel.size() > 0)

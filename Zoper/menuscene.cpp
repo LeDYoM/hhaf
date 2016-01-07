@@ -5,6 +5,7 @@
 
 #include "mainmenu.hpp"
 #include "optionsmenu.hpp"
+#include "keyredefinitionmenu.hpp"
 
 namespace zoper
 {
@@ -22,6 +23,7 @@ namespace zoper
 	{
 		addMenuStep(lib::sptr<lib::menu::MenuStep>(new zoper::zmenu::MainMenu));
 		addMenuStep(lib::sptr<lib::menu::MenuStep>(new zoper::zmenu::OptionsMenu));
+		addMenuStep(lib::sptr<lib::menu::MenuStep>(new zoper::zmenu::KeyRedefinitionMenu));
 	}
 
 	void MenuScene::onDeinit()
