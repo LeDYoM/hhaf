@@ -86,11 +86,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="incrementscoretoken.cpp" />
+    <ClCompile Include="incrementscoretokenfactory.cpp" />
     <ClCompile Include="keyredefinitionmenu.cpp" />
+    <ClCompile Include="lib\menu\choosecontrol.cpp" />
+    <ClCompile Include="lib\menu\menumanager.cpp" />
+    <ClCompile Include="lib\menu\menustep.cpp" />
     <ClCompile Include="lib\scn\draw\anim\coloranimation.cpp" />
     <ClCompile Include="lib\scn\draw\anim\animationmanager.cpp" />
     <ClCompile Include="levelproperties.cpp" />
-    <ClCompile Include="lib\menu\choosecontrol.cpp" />
     <ClCompile Include="direction.cpp" />
     <ClCompile Include="gamebasetile.cpp" />
     <ClCompile Include="keymapping.cpp" />
@@ -105,12 +109,10 @@
     <ClCompile Include="lib\scn\scenemanager.cpp" />
     <ClCompile Include="lib\core\window.cpp" />
     <ClCompile Include="lib\memmanager.cpp" />
-    <ClCompile Include="lib\menu\menumanager.cpp" />
     <ClCompile Include="mainmenu.cpp" />
     <ClCompile Include="menuscene.cpp" />
     <ClCompile Include="lib\scn\draw\renderizable.cpp" />
     <ClCompile Include="lib\randomizer.cpp" />
-    <ClCompile Include="lib\menu\menustep.cpp" />
     <ClCompile Include="lib\pclock.cpp" />
     <ClCompile Include="optionsmenu.cpp" />
     <ClCompile Include="player.cpp" />
@@ -122,15 +124,20 @@
     <ClCompile Include="zoperprogramcontroller.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="incrementscoreToken.hpp" />
+    <ClInclude Include="incrementscoretokenfactory.hpp" />
     <ClInclude Include="keyredefinitionmenu.hpp" />
+    <ClInclude Include="lib\menu\choosecontrol.hpp" />
+    <ClInclude Include="lib\menu\imenucontrol.hpp" />
+    <ClInclude Include="lib\menu\menudescriptors.hpp" />
+    <ClInclude Include="lib\menu\menumanager.hpp" />
+    <ClInclude Include="lib\menu\menustep.hpp" />
     <ClInclude Include="lib\scn\draw\anim\coloranimation.hpp" />
     <ClInclude Include="lib\core\vutils.hpp" />
     <ClInclude Include="lib\scn\draw\anim\animationmanager.hpp" />
     <ClInclude Include="common.hpp" />
     <ClInclude Include="lib\scn\draw\anim\ianimation.hpp" />
     <ClInclude Include="levelproperties.hpp" />
-    <ClInclude Include="lib\menu\imenucontrol.hpp" />
-    <ClInclude Include="lib\menu\choosecontrol.hpp" />
     <ClInclude Include="direction.hpp" />
     <ClInclude Include="gamebasetile.hpp" />
     <ClInclude Include="lib\scn\draw\idrawable.hpp" />
@@ -149,13 +156,10 @@
     <ClInclude Include="gamescene.hpp" />
     <ClInclude Include="lib\types.hpp" />
     <ClInclude Include="lib\memmanager.hpp" />
-    <ClInclude Include="lib\menu\menumanager.hpp" />
     <ClInclude Include="mainmenu.hpp" />
     <ClInclude Include="menuscene.hpp" />
     <ClInclude Include="lib\scn\draw\renderizable.hpp" />
     <ClInclude Include="lib\randomizer.hpp" />
-    <ClInclude Include="lib\menu\menustep.hpp" />
-    <ClInclude Include="lib\menu\menudescriptors.hpp" />
     <ClInclude Include="lib\pclock.hpp" />
     <ClInclude Include="optionsmenu.hpp" />
     <ClInclude Include="player.hpp" />
