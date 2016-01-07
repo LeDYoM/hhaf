@@ -25,7 +25,7 @@ namespace lib
 
 			inline bool validCoords(const vector2du32 &tPosition) const { return _tiles.size() > tPosition.x && _tiles[0].size() > tPosition.y; }
 			inline bool validCoords(const vector2ds32 &tPosition) const { return tPosition.x >= 0 && tPosition.y >= 0 && validCoords(vector2du32(static_cast<u32>(tPosition.x), static_cast<u32>(tPosition.y))); }
-			inline vector2du32 size() const { return vector2du32{ _tiles.size(),_tiles[0].size() }; }
+			inline const vector2du32 size() const { return vector2du32{ _tiles.size(),_tiles[0].size() }; }
 
 		private:
 			void _setTile(const vector2du32 &position, WITilePointer newTile);
