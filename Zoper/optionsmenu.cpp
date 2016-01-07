@@ -75,7 +75,7 @@ namespace zoper
 				callBack,
 				lib::sptr<lib::menu::CursorDescriptor>(new lib::menu::CursorDescriptor(3, lib::vector2df{ 70.0f, 70.0f }, sf::Color::Red)),
 				std::vector<lib::sptr<lib::menu::OptionDescriptor>>{
-				lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Graphics quality", sf::Color::Blue
+				lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Antialiasing", sf::Color::Blue
 					,true,0,std::vector<std::string>{"Worst","Bad","Normal","Good","Best"})),
 					lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Resolution", sf::Color::Blue
 						, true, 0, _resolutionsStr)),

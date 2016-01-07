@@ -17,8 +17,6 @@ namespace zoper
 		
 	void ZoperProgramController::onInit()
 	{
-		// Init configuration data
-		addConfigInt(GraphicsLevelStr, 4);
 	}
 
 	std::vector<lib::sptr<lib::scn::Scene>> ZoperProgramController::scenesVector()
@@ -34,6 +32,7 @@ namespace zoper
 	{
 		lib::core::WindowCreationParams params;
 		params.windowTitle = "Zoper";
+		params.antialiasing = addConfigInt(GraphicsLevelStr, 0);
 		params.width = addConfigInt(ResolutionXStr, 1024);
 		params.height = addConfigInt(ResolutionYStr, 768);
 		params.bpp = addConfigInt(BPPStr, 32);
