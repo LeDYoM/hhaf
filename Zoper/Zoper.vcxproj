@@ -86,8 +86,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="incrementscoretoken.cpp" />
-    <ClCompile Include="incrementscoretokenfactory.cpp" />
     <ClCompile Include="keyredefinitionmenu.cpp" />
     <ClCompile Include="lib\menu\choosecontrol.cpp" />
     <ClCompile Include="lib\menu\menumanager.cpp" />
@@ -124,8 +122,6 @@
     <ClCompile Include="zoperprogramcontroller.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="incrementscoreToken.hpp" />
-    <ClInclude Include="incrementscoretokenfactory.hpp" />
     <ClInclude Include="keyredefinitionmenu.hpp" />
     <ClInclude Include="lib\menu\choosecontrol.hpp" />
     <ClInclude Include="lib\menu\imenucontrol.hpp" />

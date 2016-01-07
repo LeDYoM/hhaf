@@ -133,12 +133,13 @@ namespace zoper
 	void GameScene::onEnterScene()
 	{
 		p_boardModel = lib::sptr<lib::board::BoardModel>(new lib::board::BoardModel(_gameData.size, this));
+		tilesCreated();
 		addPlayer();
 		_gameData._gameMode = static_cast<GameData::GameModes>(_gameConfig.getAsInt(GameModeStr, 0));
 
 		_score = 0;
 		_nextTokenPart = 0;
-		setLevel(0);
+		setLevel(_gameConfig.getAsInt(StartLevelStr, 0));
 		_gameOverrg->setVisible(false);
 		_mainBoardrg->setVisible(true);
 		_pauserg->setVisible(false);
@@ -174,6 +175,8 @@ namespace zoper
 		_mainBoardrg->clear();
 		p_boardModel = nullptr;
 		p_player = nullptr;
+		_backgroundTilesrg = nullptr;
+		_backgroundTiles.clear();
 	}
 
 	void GameScene::update()
@@ -218,7 +221,7 @@ namespace zoper
 
 	void GameScene::setLevel(const lib::u32 nv)
 	{
-		_levelProperties.setLevel(_gameConfig.getAsInt(StartLevelStr, nv));
+		_levelProperties.setLevel(nv);
 		LOG_DEBUG("Level set: " << _levelProperties.currentLevel());
 		LOG_DEBUG("Millis between tokens: " << _levelProperties.millisBetweenTokens());
 		LOG_DEBUG("Current base score: " << _levelProperties.baseScore());
@@ -228,6 +231,17 @@ namespace zoper
 		_gameData.levelClock.restart();
 		_gameData.consumedTokens = 0;
 		_gameData.ellapsedTime = 0;
+
+		// Update background tiles
+		for (lib::u32 y = 0; y < _gameData.size.y; ++y)
+		{
+			for (lib::u32 x = 0; x < _gameData.size.x; ++x)
+			{
+				_backgroundTiles[y][x]->setColor(_levelProperties.getBackgroundTileColor(x, y, pointInCenter(lib::vector2du32{ x,y })));
+				
+			}
+		}
+
 		updateGoals();
 		updateLevelData();
 	}
@@ -258,10 +272,14 @@ namespace zoper
 		default:
 		case GameData::GameModes::Token:
 			leveldisplay->setString(std::to_string(_gameData.consumedTokens));
+			if (_gameData.consumedTokens >= _levelProperties.stayTokens())
+				setLevel(_levelProperties.currentLevel() + 1);
 			break;
 
 		case GameData::GameModes::Time:
 			leveldisplay->setString(std::to_string(static_cast<lib::u16>(_gameData.levelClock.getElapsedTime().asSeconds())));
+			if (_gameData.ellapsedTime >= _levelProperties.stayTime())
+				setLevel(_levelProperties.currentLevel() + 1);
 			break;
 		}
 	}
@@ -387,7 +405,6 @@ namespace zoper
 
 		// Add it to the board and to the scene nodes
 		p_boardModel->setTile(position, std::dynamic_pointer_cast<lib::board::ITile>(_mainBoardrg->addRenderizable(newTileToken)));
-		_mainBoardrg->putonBottom(newTileToken);
 	}
 
 	void GameScene::onKeyPressed(sf::Event::KeyEvent kEvent)
@@ -456,6 +473,10 @@ namespace zoper
 			_pauserg->setVisible(state()==Pause);
 			_pauseText->setColor(sf::Color::White);
 		}
+		else if (anim->animationType() == "PositionAnimation" && node->name() == "pointIncrementScore")
+		{
+			removeRenderizable(node);
+		}
 	}
 
 	void GameScene::launchPlayer()
@@ -467,25 +488,37 @@ namespace zoper
 		lib::u32 inARow{ 0 };
 		for_each_token_in_line(loopPosition, loopDirection, [this,tokenType,&inARow](const lib::vector2du32 &loopPosition, const Direction &direction)
 		{
-			if (!p_boardModel->tileEmpty(loopPosition) && !pointInCenter(loopPosition))
+			bool result{ true };
+			bool found{ false };
+			sf::Vector2f lastTokenPosition;
+
+			if (!p_boardModel->tileEmpty(loopPosition) && !pointInCenter(loopPosition) && result)
 			{
-				lib::board::BoardTileData currentTokenType = p_boardModel->getTile(loopPosition).lock()->getData();
+				lib::sptr<lib::board::ITile> currentToken{ p_boardModel->getTile(loopPosition).lock() };
+				lib::board::BoardTileData currentTokenType = currentToken->getData();
 				if (currentTokenType == tokenType)
 				{
 					++inARow;
 					increaseScore(inARow*_levelProperties.baseScore());
 					_gameData.consumedTokens++;
+					lastTokenPosition = board2Scene(loopPosition);
 					p_boardModel->deleteTile(loopPosition);
+					found = true;
 				}
 				else
 				{
 					p_boardModel->changeTileData(p_player->boardPosition(), currentTokenType);
 					p_boardModel->changeTileData(loopPosition, tokenType);
 					LOG_DEBUG("Player type changed to " << p_player->getData());
-					return false;
+					result = false;
 				}
 			}
-			return true;
+			if (found)
+			{
+				auto node = createShape("pointIncrementScore", sf::Vector2f{ 15.0f,15.0f });
+				addAnimation(lib::scn::draw::anim::PositionAnimation::create(600, node, lastTokenPosition, lib::vector2df(450,100)));
+			}
+			return result;
 		});
 
 		if (_gameData._gameMode == GameData::GameModes::Token)
@@ -544,6 +577,32 @@ namespace zoper
 		}
 	}
 
+	void GameScene::tilesCreated()
+	{
+		_backgroundTilesrg = createNewRenderGroup("backgroundTiles", _mainBoardrg);
+		for (lib::u32 y = 0; y < _gameData.size.y; ++y)
+		{
+			std::vector<lib::sptr<lib::scn::draw::Renderizable>> column;
+
+			for (lib::u32 x = 0; x < _gameData.size.x; ++x)
+			{
+				auto tileBackground = _backgroundTilesrg->createSpriteShape("backgroundTile", tileSize());
+				tileBackground->setPosition(board2Scene(lib::vector2du32{ x,y }));
+				column.push_back(tileBackground);
+
+				auto node = _backgroundTilesrg->createShape("backgroundTilePoint", sf::Vector2f{ 10.0f,10.0f });
+				sf::Vector2f center( board2Scene(lib::vector2du32{ x,y }) );
+				center.x += tileSize().x / 2.0f;
+				center.y += tileSize().y / 2.0f;
+				center.x -= (node->getLocalBounds().width / 2.0f);
+				center.y -= (node->getLocalBounds().height / 2.0f);
+				node->setPosition(center);
+				node->setColor(sf::Color::White);
+			}
+			_backgroundTiles.push_back(column);
+		}
+	}
+
 	void GameScene::tileAdded(const lib::vector2du32 &position, lib::board::WITilePointer nTile)
 	{
 		// Tile appeared
@@ -598,7 +657,6 @@ namespace zoper
 	void GameScene::tokenMoved(const lib::vector2du32 &source, const lib::vector2du32 &dest, lib::sptr<Tile> tile)
 	{
 		addAnimation(lib::scn::draw::anim::PositionAnimation::create(_levelProperties.millisBetweenTokens() / 2, tile, board2Scene(dest)));
-//		tile->setPosition(board2Scene(dest));
 	}
 
 	void GameScene::tokenAppeared(const lib::vector2du32 &position, lib::sptr<Tile> tile)
@@ -644,7 +702,7 @@ namespace zoper
 	void GameScene::playerChangedValue(const lib::vector2du32 &position, lib::sptr<Player> player,
 		const lib::board::BoardTileData &ov, const lib::board::BoardTileData &nv)
 	{
-		player->getAsEllipseShape()->setFillColor(player->getColorForToken());
+		player->setColor(player->getColorForToken());
 	}
 
 	void GameScene::increaseScore(lib::u32 scoreIncrement)

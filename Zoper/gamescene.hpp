@@ -99,6 +99,8 @@ namespace zoper
 		void _debugDisplayBoard() const;
 
 		void addPlayer();
+		void tilesCreated();
+
 		virtual void onKeyPressed(sf::Event::KeyEvent kEvent);
 		virtual void onKeyReleased(sf::Event::KeyEvent kEvent);
 
@@ -140,6 +142,7 @@ namespace zoper
 		lib::sptr<lib::scn::draw::RenderGroup> _scorerg{ nullptr };
 		lib::sptr<lib::scn::draw::RenderGroup> _levelrg{ nullptr };
 		lib::sptr<lib::scn::draw::RenderGroup> _pauserg{ nullptr };
+		lib::sptr<lib::scn::draw::RenderGroup> _backgroundTilesrg{ nullptr };
 		const lib::u8 _scoreSize{ 5 };
 		const lib::u8 _levelDataSize{ 5 };
 		LevelProperties _levelProperties;
@@ -155,6 +158,7 @@ namespace zoper
 		lib::sptr<lib::scn::draw::Renderizable> _gameText{ nullptr };
 		lib::sptr<lib::scn::draw::Renderizable> _overText{ nullptr };
 		lib::sptr<lib::scn::draw::Renderizable> _pauseText{ nullptr };
+		std::vector<std::vector<lib::sptr<lib::scn::draw::Renderizable>>> _backgroundTiles;
 	};
 }
 

@@ -117,12 +117,6 @@
     <ClCompile Include="lib\menu\menustep.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="incrementscoretoken.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="incrementscoretokenfactory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="zoperprogramcontroller.hpp">
@@ -252,12 +246,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="lib\menu\menustep.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="incrementscoreToken.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="incrementscoretokenfactory.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
