@@ -31,7 +31,8 @@ namespace lib
 
 		std::string addConfigProperty(const std::string &name, const std::string &value, bool overwrite = false);
 		s32 addConfigInt(const std::string &name, int value, bool overwrite = false);
-		void reset();
+
+		bool join(const Configuration &other,const bool overwrite=true);
 
 	protected:
 		bool configFileExists(const std::string &file);

@@ -13,7 +13,7 @@ namespace zoper
 	namespace zmenu
 	{
 		KeyRedefinitionMenu::KeyRedefinitionMenu()
-			: lib::menu::MenuStep{ "KeyRedefinitionMenu" }, _gameConfig{ ":NextGame" }
+			: lib::menu::MenuStep{ "KeyRedefinitionMenu" }
 		{
 		}
 
@@ -32,8 +32,9 @@ namespace zoper
 			_nextKeyTextText->setCharacterSize(90);
 			_nextKeyTextText->setString(" ");
 			_nextKeyTextText->setColor(sf::Color::Blue);
-			_nextKeyText->setPosition(sf::Vector2f{ 0.0f, 0.0f }, lib::scn::draw::Alignment::Center);
+			_nextKeyText->setPosition(sf::Vector2f{ 1000.0f, 1000.0f }, lib::scn::draw::Alignment::Center);
 			_indexKey = 0;
+			setTextForKey();
 		}
 
 		void KeyRedefinitionMenu::onKeyPressed(sf::Event::KeyEvent kEvent)
@@ -60,7 +61,7 @@ namespace zoper
 			}
 			else
 			{
-				_nextKeyText->getAsText()->setString(getKeyNameStr(_indexKey));
+				_nextKeyText->getAsText()->setString("Press key for "+getKeyNameStr(_indexKey));
 			}
 		}
 

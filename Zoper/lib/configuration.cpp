@@ -177,11 +177,17 @@ namespace lib
 		return std::stoi(addConfigProperty(name, std::to_string(value),overwrite));
 	}
 
-	void Configuration::reset()
+	bool Configuration::join(const Configuration &other, const bool overwrite)
 	{
-//		_data.erase(currentFile);
-//		currentMap->clear();
-//		loadFile(currentFile);
+		if (currentFile != other.currentFile)
+		{
+			return false;
+		}
+
+		for (const auto &node : *(other.currentMap))
+		{
+			addConfigProperty(node.first, node.second, overwrite);
+		}
 	}
 
 	bool Configuration::saveConfig()

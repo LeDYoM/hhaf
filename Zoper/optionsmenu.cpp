@@ -13,7 +13,7 @@ namespace zoper
 	namespace zmenu
 	{
 		OptionsMenu::OptionsMenu()
-			: lib::menu::MenuStep{ "OptionsMenu" }, lib::Configuration("config.cfg"), _gameConfig{ "config.cfg" }
+			: lib::menu::MenuStep{ "OptionsMenu" }, lib::Configuration("config.cfg")
 		{
 		}
 
@@ -48,7 +48,6 @@ namespace zoper
 					break;
 				case 5:
 					menuManager()->changeStep("MainMenu");
-					reset();
 					resetControl();
 					break;
 				case 6:

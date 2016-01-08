@@ -70,4 +70,15 @@ namespace zoper
 		return true;
 	}
 
+	void KeyMapping::apply()
+	{
+		for (auto i = 0u; i < Direction::Total; ++i)
+		{
+			addConfigInt("key" + std::to_string(i), _keys[i],true);
+		}
+
+		addConfigInt("key_launch" + std::to_string(Direction::Total), _keys[Direction::Total]);
+		addConfigInt("key_pause" + std::to_string(Direction::Total + 1), _keys[Direction::Total + 1]);
+	}
+
 }

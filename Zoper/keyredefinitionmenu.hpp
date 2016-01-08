@@ -2,7 +2,6 @@
 #define __KEYREDEFINITONMENU_HPP__
 
 #include "lib/menu/menustep.hpp"
-#include "lib/configuration.hpp"
 #include "keymapping.hpp"
 
 namespace zoper
@@ -25,7 +24,6 @@ namespace zoper
 
 			lib::u32 _indexKey;
 			KeyMapping _keyMapping;
-			lib::Configuration _gameConfig;
 			lib::sptr<lib::scn::draw::Renderizable> _nextKeyText{ nullptr };
 		};
 	}

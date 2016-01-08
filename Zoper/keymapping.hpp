@@ -24,6 +24,7 @@ namespace zoper
 		bool isPauseKey(const sf::Keyboard::Key &key) const;
 
 		bool setKey(lib::u32 index, sf::Keyboard::Key key);
+		void apply();
 	private:
 		std::array<sf::Keyboard::Key, KeyMapping::TotalKeys> _keys;
 	};
