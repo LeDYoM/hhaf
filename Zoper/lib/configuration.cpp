@@ -179,9 +179,9 @@ namespace lib
 
 	void Configuration::reset()
 	{
-		_data.erase(currentFile);
-		currentMap->clear();
-		loadFile(currentFile);
+//		_data.erase(currentFile);
+//		currentMap->clear();
+//		loadFile(currentFile);
 	}
 
 	bool Configuration::saveConfig()

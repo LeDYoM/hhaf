@@ -16,6 +16,7 @@ namespace zoper
 			virtual ~OptionsMenu();
 			virtual void onCreate() override;
 
+			void resetControl();
 		private:
 			lib::Configuration _gameConfig;
 			lib::sptr<lib::menu::ChooseControl> _chooseControl{ nullptr };
