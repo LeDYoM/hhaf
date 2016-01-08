@@ -29,10 +29,12 @@ namespace lib
 			virtual ~ChooseControl();
 
 			u32 getSelectedSubLabel(u32 index) const;
+			void setSelectedSubLabel(u32 index, u32 subIndex);
 		private:
 			virtual void onKeyPressed(sf::Event::KeyEvent kEvent);
 			virtual void onKeyReleased(sf::Event::KeyEvent kEvent);
 
+			void updateSubLabelText(const u32 index);
 			void cursorSelectItem(u32 nodeIndex);
 			void goDown();
 			void goUp();

@@ -70,6 +70,13 @@ namespace lib
 			return _labelData[index].selectedSublabel;
 		}
 
+		void ChooseControl::setSelectedSubLabel(u32 index, u32 subIndex)
+		{
+			__ASSERT(index < _labelData.size(), "Invalid index");
+			_labelData[index].selectedSublabel = subIndex;
+			updateSubLabelText(index);
+		}
+
 		void ChooseControl::onKeyPressed(sf::Event::KeyEvent kEvent)
 		{
 			if (kEvent.code == sf::Keyboard::Down || kEvent.code == sf::Keyboard::Numpad2)
@@ -103,6 +110,12 @@ namespace lib
 		void ChooseControl::onKeyReleased(sf::Event::KeyEvent kEvent)
 		{
 
+		}
+
+		void ChooseControl::updateSubLabelText(const u32 index)
+		{
+			std::string str(_labelData[index].textSubLabel[_labelData[index].selectedSublabel]);
+			_labelData[index].subLabel->getAsText()->setString(str);
 		}
 
 		void ChooseControl::cursorSelectItem(u32 nodeIndex)
@@ -158,9 +171,8 @@ namespace lib
 				{
 					--index;
 				}
-				std::string str(_labelData[_cursorItemSelected].textSubLabel[index]);
-				_labelData[_cursorItemSelected].subLabel->getAsText()->setString(str);
 				_labelData[_cursorItemSelected].selectedSublabel = index;
+				updateSubLabelText(_cursorItemSelected);
 			}
 		}
 
@@ -178,9 +190,9 @@ namespace lib
 				{
 					++index;
 				}
-				std::string str(_labelData[_cursorItemSelected].textSubLabel[index]);
-				_labelData[_cursorItemSelected].subLabel->getAsText()->setString(str);
 				_labelData[_cursorItemSelected].selectedSublabel = index;
+				updateSubLabelText(_cursorItemSelected);
+
 			}
 		}
 	}
