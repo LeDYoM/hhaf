@@ -38,13 +38,11 @@ namespace zoper
 				{
 				case 0:
 					_gameConfig.addConfigInt(GameModeStr, 0, true);
-					_gameConfig.addConfigInt(StartLevelStr, 0, true);
-					menuManager()->setNextScene("GameScene");
+					menuManager()->changeStep("StartLevelMenu");
 					break;
 				case 1:
 					_gameConfig.addConfigInt(GameModeStr, 1, true);
-					_gameConfig.addConfigInt(StartLevelStr, 0, true);
-					menuManager()->setNextScene("GameScene");
+					menuManager()->changeStep("StartLevelMenu");
 					break;
 				case 2:
 					menuManager()->changeStep("OptionsMenu");
