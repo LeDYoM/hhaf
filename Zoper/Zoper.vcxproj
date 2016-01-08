@@ -118,6 +118,7 @@
     <ClCompile Include="lib\scn\resource.cpp" />
     <ClCompile Include="lib\scn\draw\rendergroup.cpp" />
     <ClCompile Include="lib\scn\draw\anim\positionanimation.cpp" />
+    <ClCompile Include="startlevelmenu.cpp" />
     <ClCompile Include="tile.cpp" />
     <ClCompile Include="zoperprogramcontroller.cpp" />
   </ItemGroup>
@@ -163,6 +164,7 @@
     <ClInclude Include="lib\scn\resource.hpp" />
     <ClInclude Include="lib\scn\draw\rendergroup.hpp" />
     <ClInclude Include="lib\scn\draw\anim\positionanimation.hpp" />
+    <ClInclude Include="startlevelmenu.hpp" />
     <ClInclude Include="tile.hpp" />
     <ClInclude Include="zoperprogramcontroller.hpp" />
   </ItemGroup>
