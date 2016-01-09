@@ -30,7 +30,7 @@ namespace lib
 		LOG_DESTRUCT_NOPARAMS;
 	}
 
-	u32 Randomizer::getUInt(u32 max, u32 min)
+	u32 Randomizer::getUInt(u32 max, u32 min) const
 	{
 		LOG_DEBUG("Asked for random number between " << min << " and " << max);
 		__ASSERT(min != max, "The min and max parameters must be different");

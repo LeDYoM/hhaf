@@ -13,7 +13,7 @@ namespace lib
 		Randomizer();
 		virtual ~Randomizer();
 		
-		u32 getUInt(u32 max = 1,u32 min=0);
+		u32 getUInt(u32 max = 1, u32 min = 0) const;
 	private:
 		uptr<RandomizerPrivate> p_rPriv;
 	};
