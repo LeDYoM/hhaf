@@ -8,7 +8,6 @@
 
 namespace lib
 {
-	class Randomizer;
 	namespace scn
 	{
 		class SceneManager;
