@@ -151,6 +151,8 @@ namespace zoper
 		lib::sptr<Player> p_player{ nullptr };
 		lib::sptr<lib::scn::draw::Renderizable> _scoreText{ nullptr };
 		lib::sptr<lib::scn::draw::Renderizable> _scoreDisplay{ nullptr };
+		lib::sptr<lib::scn::draw::Renderizable> _currentLevelText{ nullptr };
+		lib::sptr<lib::scn::draw::Renderizable> _currentLevelDisplay{ nullptr };
 		lib::sptr<lib::scn::draw::Renderizable> _levelText{ nullptr };
 		lib::sptr<lib::scn::draw::Renderizable> _levelDisplay{ nullptr };
 		lib::sptr<lib::scn::draw::Renderizable> _goalText{ nullptr };
