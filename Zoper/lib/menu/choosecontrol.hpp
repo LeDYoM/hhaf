@@ -23,7 +23,7 @@ namespace lib
 		public:
 			ChooseControl(const std::string &name, sptr<scn::Resource> font,
 				const scn::draw::Alignment alignment,
-				u32 chSize, float incY, std::function<void(const u32,const ChooseControl &self)> onSelected,
+				u32 chSize, float incY, std::function<void(const u32,ChooseControl &self)> onSelected,
 				sptr<CursorDescriptor> cursorDescriptor, 
 				const std::vector<sptr<OptionDescriptor>> labels);
 			virtual ~ChooseControl();
@@ -55,7 +55,7 @@ namespace lib
 			};
 			std::vector<LabelData> _labelData;
 			sptr<scn::draw::Renderizable> _cursor;
-			std::function<void(const u32, const ChooseControl &self)> _onSelected;
+			std::function<void(const u32, ChooseControl &self)> _onSelected;
 		};
 	}
 }
