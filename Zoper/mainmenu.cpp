@@ -24,15 +24,7 @@ namespace zoper
 
 		void MainMenu::onCreate()
 		{
-			_logo = createSpriteShape("mainLogo");
-			auto _logoSprite = _logo->getAsEllipseShape();
-			auto rManager = menuManager()->resourceManager();
-			_logoSprite->setTexture(rManager->getResource("game_menu.logo")->getAsTexture(),true,false);
-			_logoSprite->setSize(sf::Vector2f(800, 400));
-			_logo->setPositionX(menuManager()->getCenterCoordinates().x, lib::scn::draw::Alignment::Center);
-			_logo->setPositionY(100);
-
-			auto callBack = [this](lib::u32 index, const lib::menu::ChooseControl &self)
+			auto callBack = [this](lib::u32 index, lib::menu::ChooseControl &self)
 			{
 				switch (index)
 				{
@@ -54,11 +46,10 @@ namespace zoper
 				}
 			};
 			_chooseControl = lib::sptr<lib::menu::ChooseControl>(new lib::menu::ChooseControl("mainmenu_chooseControl",
-				rManager->getResource("game_menu.mainFont"),
+				menuManager()->resourceManager()->getResource("game_menu.mainFont"),
 				lib::scn::draw::Alignment::Center,
 				90, 1,
 				callBack,
-//				nullptr,
 				lib::sptr<lib::menu::CursorDescriptor>(new lib::menu::CursorDescriptor(3, lib::vector2df{ 90.0f, 90.0f },sf::Color::Red)),
 				std::vector<lib::sptr<lib::menu::OptionDescriptor>>{
 				lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Play token mode", sf::Color::Blue)),

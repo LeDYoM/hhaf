@@ -6,6 +6,7 @@
 #include "mainmenu.hpp"
 #include "optionsmenu.hpp"
 #include "keyredefinitionmenu.hpp"
+#include "startlevelmenu.hpp"
 
 namespace zoper
 {
@@ -24,6 +25,14 @@ namespace zoper
 		addMenuStep(lib::sptr<lib::menu::MenuStep>(new zoper::zmenu::MainMenu));
 		addMenuStep(lib::sptr<lib::menu::MenuStep>(new zoper::zmenu::OptionsMenu));
 		addMenuStep(lib::sptr<lib::menu::MenuStep>(new zoper::zmenu::KeyRedefinitionMenu));
+		addMenuStep(lib::sptr<lib::menu::MenuStep>(new zoper::zmenu::StartLevelMenu));
+
+		_logo = createSpriteShape("mainLogo");
+		auto _logoSprite = _logo->getAsEllipseShape();
+		_logoSprite->setTexture(resourceManager()->getResource("game_menu.logo")->getAsTexture(), true, false);
+		_logoSprite->setSize(sf::Vector2f(800, 400));
+		_logo->setPositionX(getCenterCoordinates().x, lib::scn::draw::Alignment::Center);
+		_logo->setPositionY(100);
 	}
 
 	void MenuScene::onDeinit()
