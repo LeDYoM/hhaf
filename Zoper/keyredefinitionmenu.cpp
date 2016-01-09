@@ -57,11 +57,13 @@ namespace zoper
 			if (_indexKey >= KeyMapping::TotalKeys)
 			{
 				_indexKey = 0;
+				_keyMapping.apply();
 				menuManager()->changeStep("OptionsMenu");
 			}
 			else
 			{
 				_nextKeyText->getAsText()->setString("Press key for "+getKeyNameStr(_indexKey));
+				_nextKeyText->setPosition(sf::Vector2f{ 1000.0,1000.0 }, lib::scn::draw::Alignment::Center);
 			}
 		}
 

@@ -25,23 +25,19 @@ namespace zoper
 		void StartLevelMenu::onCreate()
 		{
 			auto rManager = menuManager()->resourceManager();
-			auto callBack = [this](lib::u32 index, const lib::menu::ChooseControl &self)
+			auto callBack = [this](lib::u32 index, lib::menu::ChooseControl &self)
 			{
 				switch (index)
 				{
 				case 0:
 					_gameConfig.addConfigInt(StartLevelStr, self.getSelectedSubLabel(0), true);
 					LOG_DEBUG("Starting t level:" << self.getSelectedSubLabel(0));
+					self.setSelectedSubLabel(0, 0);
 					menuManager()->setNextScene("GameScene");
 
 					break;
-				case 1:
-					menuManager()->changeStep("MainMenu");
-					break;
-				case 2:
-					break;
-				case 3:
 				default:
+				case 1:
 					menuManager()->changeStep("MainMenu");
 					break;
 				}
@@ -54,7 +50,7 @@ namespace zoper
 				lib::sptr<lib::menu::CursorDescriptor>(new lib::menu::CursorDescriptor(3, lib::vector2df{ 70.0f, 70.0f }, sf::Color::Red)),
 				std::vector<lib::sptr<lib::menu::OptionDescriptor>>{
 				lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Start level: ", sf::Color::Blue
-					, true, 0, std::vector<std::string>{"0", "1", "2", "3", "4","5", "6","7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19" })),
+					, true, 0, std::vector<std::string>{"1", "2", "3", "4","5", "6","7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" })),
 					lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Back", sf::Color::Blue, true))
 			}));
 			addMenuControl(_chooseControl);
