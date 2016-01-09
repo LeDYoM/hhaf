@@ -188,6 +188,7 @@ namespace lib
 		{
 			addConfigProperty(node.first, node.second, overwrite);
 		}
+		return true;
 	}
 
 	bool Configuration::saveConfig()

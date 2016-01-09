@@ -31,7 +31,7 @@ namespace zoper
 			{
 				_resolutionsStr.push_back(std::to_string(resolution.width) + "x" + std::to_string(resolution.height) + "x" + std::to_string(resolution.bitsPerPixel));
 			}
-			auto callBack = [this](lib::u32 index, const lib::menu::ChooseControl &self)
+			auto callBack = [this](lib::u32 index, lib::menu::ChooseControl &self)
 			{
 				switch (index)
 				{

@@ -10,7 +10,7 @@ namespace lib
 		ChooseControl::ChooseControl(const std::string &name, sptr<scn::Resource> font, 
 			const scn::draw::Alignment alignment,
 			u32 chSize,float incY,
-			std::function<void(const u32, const ChooseControl &self)> onSelected,
+			std::function<void(const u32, ChooseControl &self)> onSelected,
 			sptr<CursorDescriptor> cursorDescriptor, 
 			const std::vector<sptr<OptionDescriptor>> labels)
 			: IMenuControl{ name }
