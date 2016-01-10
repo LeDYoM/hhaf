@@ -98,7 +98,6 @@ namespace lib
 						}
 					}
 				}
-				__ASSERT(!node->_parent, "Node "<< node->name() <<"already has a parent");
 				node->_parent = this;
 			}
 
