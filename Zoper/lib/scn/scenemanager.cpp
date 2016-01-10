@@ -29,7 +29,7 @@ namespace lib
 
 		void SceneManager::addScene(sptr<Scene> newScene)
 		{
-			__ASSERTERROR(newScene, "Cannot add a null scene");
+			__ASSERT(newScene, "Cannot add a null scene");
 			newScene->p_scnManager = this;
 			_scenes.push_back(newScene);
 			newScene->privateOnInit();
