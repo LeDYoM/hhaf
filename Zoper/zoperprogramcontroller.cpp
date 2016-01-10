@@ -35,7 +35,7 @@ namespace zoper
 		params.antialiasing = addConfigInt(GraphicsLevelStr, 0);
 		params.width = addConfigInt(ResolutionXStr, 1024);
 		params.height = addConfigInt(ResolutionYStr, 768);
-		params.vsync = addConfigInt(VSyncStr, 0);
+		params.vsync = addConfigInt(VSyncStr, 0) == 0 ? false : true;
 		params.bpp = addConfigInt(BPPStr, 32);
 		params.fullScreen = addConfigInt(FulscreenStr, 0) == 0 ? false : true;
 		return params;

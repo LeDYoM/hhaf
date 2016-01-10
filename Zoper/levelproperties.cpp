@@ -27,10 +27,11 @@ namespace zoper
 		else
 		{
 			_millisBetweenTokens = 250;
-			_stayTime = 12000;
+			_stayTime = 1200;
 			_stayTokens = 400;
 		}
 		_millisBetweenTokens = 2500;
+		_stayTime = 500;
 		_stayTokens = 1;
 	}
 

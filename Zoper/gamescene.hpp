@@ -42,7 +42,6 @@ namespace zoper
 
 		sf::Clock levelClock;
 		lib::u32 consumedTokens;
-		lib::u32 ellapsedTime;
 
 		enum GameModes : lib::u8
 		{

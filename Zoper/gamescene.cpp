@@ -248,7 +248,6 @@ namespace zoper
 
 		_gameData.levelClock.restart();
 		_gameData.consumedTokens = 0;
-		_gameData.ellapsedTime = 0;
 
 		// Update background tiles
 		for (lib::u32 y = 0; y < _gameData.size.y; ++y)
@@ -297,7 +296,7 @@ namespace zoper
 
 		case GameData::GameModes::Time:
 			leveldisplay->setString(std::to_string(static_cast<lib::u16>(_gameData.levelClock.getElapsedTime().asSeconds())));
-			if (_gameData.ellapsedTime >= _levelProperties.stayTime())
+			if (_gameData.levelClock.getElapsedTime().asSeconds() >= _levelProperties.stayTime())
 				setLevel(_levelProperties.currentLevel() + 1);
 			break;
 		}
