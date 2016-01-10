@@ -13,13 +13,12 @@ namespace lib
 		class OptionDescriptor
 		{
 		public:
-			explicit OptionDescriptor(const std::string &text, const sf::Color &color,bool createSubString=false,u32 startValueIndex=0,
+			explicit OptionDescriptor(const std::string &text, bool createSubString=false,u32 startValueIndex=0,
 				const std::vector<std::string> &subOptionsLabels=std::vector<std::string>())
-				: _text(text), _color{ color }, _createSubString{ createSubString }, _startValueIndex{ startValueIndex },
+				: _text(text), _createSubString{ createSubString }, _startValueIndex{ startValueIndex },
 				_subOptionsLabels( subOptionsLabels ) {}
 
 			std::string _text;
-			sf::Color _color;
 			bool _createSubString;
 			u32 _startValueIndex;
 			std::vector<std::string> _subOptionsLabels;

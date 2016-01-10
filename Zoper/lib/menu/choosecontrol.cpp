@@ -8,14 +8,14 @@ namespace lib
 	namespace menu
 	{
 		ChooseControl::ChooseControl(const std::string &name, sptr<scn::Resource> font, 
+			const sf::Color &textColor, const sf::Color &selectedTextColor,
 			const scn::draw::Alignment alignment,
 			u32 chSize,float incY,
 			std::function<void(const u32, ChooseControl &self)> onSelected,
 			sptr<CursorDescriptor> cursorDescriptor, 
 			const std::vector<sptr<OptionDescriptor>> labels)
-			: IMenuControl{ name }
+			: IMenuControl{ name }, _textColor{ textColor }, _selectedTextColor{ selectedTextColor }, _onSelected {onSelected}
 		{
-			_onSelected = onSelected;
 			descriptorCursorSize = cursorDescriptor->_size;
 			_cursor = createShape("cursor");
 			auto cursor_ = _cursor->getAsEllipseShape();
@@ -32,7 +32,7 @@ namespace lib
 				text->setFont(*(font->getAsFont()));
 				text->setCharacterSize(chSize);
 				text->setString(labels[count]->_text);
-				text->setColor(labels[count]->_color);
+				text->setColor(textColor);
 				renderizable->setPositionX(0,alignment);
 				renderizable->setPositionY(currentPos.y);
 
@@ -44,7 +44,7 @@ namespace lib
 					subtext->setFont(*(font->getAsFont()));
 					subtext->setCharacterSize(chSize);
 					subtext->setString(labels[count]->_subOptionsLabels[labels[count]->_startValueIndex]);
-					subtext->setColor(labels[count]->_color);
+					subtext->setColor(textColor);
 					subrenderizable->setPositionX(1800, lib::scn::draw::Alignment::Right);
 					subrenderizable->setPositionY(currentPos.y);
 				}
@@ -114,22 +114,33 @@ namespace lib
 
 		void ChooseControl::updateSubLabelText(const u32 index)
 		{
-			std::string str(_labelData[index].textSubLabel[_labelData[index].selectedSublabel]);
-			_labelData[index].subLabel->getAsText()->setString(str);
+			_labelData[index].subLabel->getAsText()->setString(_labelData[index].textSubLabel[_labelData[index].selectedSublabel]);
 		}
 
 		void ChooseControl::cursorSelectItem(u32 nodeIndex)
 		{
 			__ASSERT(nodeIndex < _labelData.size(), "Invalid select index for cursor");
 
+			_labelData[_cursorItemSelected].label->getAsText()->setColor(_textColor);
+			if (_labelData[_cursorItemSelected].subLabel)
+			{
+				_labelData[_cursorItemSelected].subLabel->getAsText()->setColor(_textColor);
+			}
+
 			_cursorItemSelected = nodeIndex;
 			auto selected = _labelData[nodeIndex].label;
 			auto selectedText = selected->getAsText();
 
+			selectedText->setColor(_selectedTextColor);
+			if (_labelData[_cursorItemSelected].subLabel)
+			{
+				_labelData[_cursorItemSelected].subLabel->getAsText()->setColor(_selectedTextColor);
+			}
+
 			auto cursor_ = _cursor->getAsEllipseShape();
 			cursor_->setRotation(90);
 			
-			addAnimation(scn::draw::anim::PositionAnimation::create(200, _cursor, 
+			addAnimation(scn::draw::anim::PositionAnimation::create(120, _cursor, 
 				vector2df{ selectedText->getPosition().x - descriptorCursorSize.x, selectedText->getPosition().y }));
 		}
 

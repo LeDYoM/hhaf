@@ -43,15 +43,15 @@ namespace zoper
 				}
 			};
 			_chooseControl = lib::sptr<lib::menu::ChooseControl>(new lib::menu::ChooseControl("optionsmenu_chooseControl",
-				rManager->getResource("game_menu.mainFont"),
+				rManager->getResource("game_menu.mainFont"), sf::Color::Blue, sf::Color::Red,
 				lib::scn::draw::Alignment::Left,
 				70, 1,
 				callBack,
 				lib::sptr<lib::menu::CursorDescriptor>(new lib::menu::CursorDescriptor(3, lib::vector2df{ 70.0f, 70.0f }, sf::Color::Red)),
 				std::vector<lib::sptr<lib::menu::OptionDescriptor>>{
-				lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Start level: ", sf::Color::Blue
-					, true, 0, std::vector<std::string>{"1", "2", "3", "4","5", "6","7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" })),
-					lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Back", sf::Color::Blue, true))
+				lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Start level: ", 
+					true, 0, std::vector<std::string>{"1", "2", "3", "4","5", "6","7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" })),
+					lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Back", true))
 			}));
 			addMenuControl(_chooseControl);
 			_chooseControl->setPosition(100, 700);

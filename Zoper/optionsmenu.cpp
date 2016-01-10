@@ -71,22 +71,23 @@ namespace zoper
 
 			_chooseControl = lib::sptr<lib::menu::ChooseControl>(new lib::menu::ChooseControl("optionsmenu_chooseControl",
 				rManager->getResource("game_menu.mainFont"),
+				sf::Color::Blue, sf::Color::Red,
 				lib::scn::draw::Alignment::Left,
 				70, 1,
 				callBack,
 				lib::sptr<lib::menu::CursorDescriptor>(new lib::menu::CursorDescriptor(3, lib::vector2df{ 70.0f, 70.0f }, sf::Color::Red)),
 				std::vector<lib::sptr<lib::menu::OptionDescriptor>>{
-				lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Antialiasing", sf::Color::Blue
-					, true, 0, std::vector<std::string>{"Worst", "Bad", "Normal", "Good", "Best"})),
-					lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Resolution", sf::Color::Blue
-						, true, 0, _resolutionsStr)),
-					lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Fullscreen", sf::Color::Blue
-					, true, 0, std::vector<std::string>{"No", "Yes"})),
-					lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("VSync", sf::Color::Blue
-						, true, 0, std::vector<std::string>{"No", "Yes"})),
-					lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Redefine keyboard", sf::Color::Blue)),
-					lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Cancel", sf::Color::Blue,true)),
-					lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Accept", sf::Color::Blue, true))
+				lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Antialiasing", 
+					true, 0, std::vector<std::string>{"Worst", "Bad", "Normal", "Good", "Best"})),
+					lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Resolution",
+					true, 0, _resolutionsStr)),
+					lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Fullscreen",
+					true, 0, std::vector<std::string>{"No", "Yes"})),
+					lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("VSync",
+					true, 0, std::vector<std::string>{"No", "Yes"})),
+					lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Redefine keyboard")),
+					lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Cancel")),
+					lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Accept"))
 			}));
 			addMenuControl(_chooseControl);
 			_chooseControl->setPosition(100, 700);
