@@ -49,10 +49,7 @@ namespace lib
 				style = sf::Style::Fullscreen;
 			sf::Window::create(VideoMode(wcp.width, wcp.height, wcp.bpp), _title, style,sf::ContextSettings(0,0,wcp.antialiasing));
 
-//			if (wcp.)
-			this->setVerticalSyncEnabled(true);
-			//#endif
-
+			this->setVerticalSyncEnabled(wcp.vsync);
 		}
 
 		bool Window::loopStep()
