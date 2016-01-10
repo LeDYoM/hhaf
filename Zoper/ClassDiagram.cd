@@ -1,2 +1,368 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ClassDiagram /> 
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="lib::core::Window" Collapsed="true">
+    <Position X="23.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAIAAAAIAAAAAAAAIAAAAAASAIAAAgCABACAgQAQA=</HashCode>
+      <FileName>lib\core\window.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="lib::core::IHasName" Collapsed="true">
+    <Position X="23.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAIAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>lib\core\hasname.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="lib::core::HasName" Collapsed="true">
+    <Position X="11.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAAAAAAAAAAAAAAAAEAAAACAAAgAAAAAA=</HashCode>
+      <FileName>lib\core\hasname.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="lib::core::ProgramController" Collapsed="true">
+    <Position X="7.5" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAoAAIAAAACBAAAAABAAAAgAgAAAAA=</HashCode>
+      <FileName>lib\core\programcontroller.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="lib::RandomizerPrivate" Collapsed="true">
+    <Position X="20" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAgAAAAAAAAAAAAAAAAAAACAAAAAAAABA=</HashCode>
+      <FileName>lib\randomizer.cpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="lib::Configuration" Collapsed="true">
+    <Position X="4.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEBAAABAAAACAIAAEIAAQAgYAAAAAAgAAgAAABgAI=</HashCode>
+      <FileName>lib\configuration.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="lib::Randomizer" Collapsed="true">
+    <Position X="18.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAgAAAAAAAEAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>lib\randomizer.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="lib::PClock" Collapsed="true">
+    <Position X="23.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>hAAAABAAAAAAIAAgAAAQABAAAAAAQgAAAAAAAAAAIAA=</HashCode>
+      <FileName>lib\pclock.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="zoper::zmenu::KeyRedefinitionMenu" Collapsed="true">
+    <Position X="11.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgABAQAAAACAgAABAAAACAAAAAAAAAAkAAAAAAAAAAA=</HashCode>
+      <FileName>keyredefinitionmenu.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="zoper::zmenu::MainMenu" Collapsed="true">
+    <Position X="5.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAKAAAAAAAAAQAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>mainmenu.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="zoper::zmenu::OptionsMenu" Collapsed="true">
+    <Position X="7.75" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAACAAAAAAAAAAAAAAAAAgAAAAAAABAAQ=</HashCode>
+      <FileName>optionsmenu.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="zoper::zmenu::StartLevelMenu" Collapsed="true">
+    <Position X="5.5" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAKAAAAAACAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>startlevelmenu.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="lib::scn::Resource" Collapsed="true">
+    <Position X="13.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAACAAAAAAAAAAAAAADAAAAAEAAAAgQAQA=</HashCode>
+      <FileName>lib\scn\resource.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="lib::scn::SceneManager" Collapsed="true">
+    <Position X="21.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgABJQAAQAAAEEAAAAAAABAAABAAAKAAAAAAEKAEAAQ=</HashCode>
+      <FileName>lib\scn\scenemanager.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="lib::scn::Scene" Collapsed="true">
+    <Position X="12.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABIQAIAAAAAAQAgAIAKQCARBAFCAMEABACAAIUAAQ=</HashCode>
+      <FileName>lib\scn\scene.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="lib::scn::ResourceManager" Collapsed="true">
+    <Position X="10" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAAAAAAEAAAAAAAAAAAAAAAAAAIAAg=</HashCode>
+      <FileName>lib\scn\resourcemanager.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="lib::menu::OptionDescriptor" Collapsed="true">
+    <Position X="21.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAACAAAAAAggAAAAAAIAAAAAAQAAAA=</HashCode>
+      <FileName>lib\menu\menudescriptors.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="lib::menu::MenuStep" Collapsed="true">
+    <Position X="7.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAARAQCAAAIAAAAAAAEAAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>lib\menu\menustep.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="lib::menu::ChooseControl" Collapsed="true">
+    <Position X="9" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CIABIxAgAAQBAQAAAAAAAAIAwAAABABAABAAAAAACEA=</HashCode>
+      <FileName>lib\menu\choosecontrol.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="lib::menu::IMenuControl" Collapsed="true">
+    <Position X="9.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAQAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>lib\menu\imenucontrol.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="lib::menu::CursorDescriptor" Collapsed="true">
+    <Position X="20" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAAAAAAAAAAAAAAAACAAAAAEAIAAAA=</HashCode>
+      <FileName>lib\menu\menudescriptors.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="lib::menu::MenuManager" Collapsed="true">
+    <Position X="13.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABoQAAEAAQAAAgAAAAAAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>lib\menu\menumanager.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="lib::scn::draw::anim::ColorAnimation" Collapsed="true">
+    <Position X="2.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAMAAAAEAAAAAABAAAAAACA=</HashCode>
+      <FileName>lib\scn\draw\anim\coloranimation.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="lib::scn::draw::anim::AnimationManager" Collapsed="true">
+    <Position X="13.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAEAAAAAgAAACAAAIABAAAAABAAAAAAAAAAQAA=</HashCode>
+      <FileName>lib\scn\draw\anim\animationmanager.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="lib::scn::draw::anim::IAnimation" Collapsed="true">
+    <Position X="1.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAgBIAAAAAAAAAABAAAAAAAAAEQACAAAQAAAAAACA=</HashCode>
+      <FileName>lib\scn\draw\anim\ianimation.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="lib::scn::draw::anim::IValueAnimation&lt;T&gt;" Collapsed="true">
+    <Position X="1.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAACAAAAAIAAAAAA=</HashCode>
+      <FileName>lib\scn\draw\anim\ianimation.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="lib::scn::draw::anim::PositionAnimation" Collapsed="true">
+    <Position X="0.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAQAgAAAAEAAAAAABAAAAAACA=</HashCode>
+      <FileName>lib\scn\draw\anim\positionanimation.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="lib::scn::draw::Renderizable" Collapsed="true">
+    <Position X="11.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACCCgAIoAAAAAAIAAAACAAAAAAgAAAAAggAIASg=</HashCode>
+      <FileName>lib\scn\draw\renderizable.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="lib::scn::draw::IDrawable" Collapsed="true">
+    <Position X="14.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQgAAAAAAAIAABIAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>lib\scn\draw\idrawable.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="lib::scn::draw::NodeShape" Collapsed="true">
+    <Position X="20" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAUQgiBMIIQggjAgIAGAAEwBEAEgAgCAACAAIEQCA=</HashCode>
+      <FileName>lib\scn\draw\nodeshape.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="lib::scn::draw::RenderGroup" Collapsed="true">
+    <Position X="11.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEACACAAAAgAEABEAAIAAAAwAAABBAAQAAABgAAAAAA=</HashCode>
+      <FileName>lib\scn\draw\rendergroup.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="zoper::LevelProperties" Collapsed="true">
+    <Position X="18.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIgBAACAAAUARQAAAAAAQAgAAAABAAQBAABEAAAAAA=</HashCode>
+      <FileName>levelproperties.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="zoper::Direction" Collapsed="true">
+    <Position X="21.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAACAAAACAAgAAAAAAGQCQAAAAwABBAAAA=</HashCode>
+      <FileName>direction.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="zoper::GameBaseTile" Collapsed="true">
+    <Position X="8.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAABAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>gamebasetile.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="zoper::KeyMapping" Collapsed="true">
+    <Position X="12.75" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAwEAAAABAAAAAABUAACAAAAQAAAAAAAAAAAAAAQBI=</HashCode>
+      <FileName>keymapping.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="zoper::Player" Collapsed="true">
+    <Position X="5.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIEAAAAAAAAAAAgAAAAAAgAgAAAAAAAAAAAAARAAABA=</HashCode>
+      <FileName>player.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="zoper::Tile" Collapsed="true">
+    <Position X="3.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAACIAAQA=</HashCode>
+      <FileName>tile.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="zoper::GameScene" Collapsed="true">
+    <Position X="15.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>JxSBpQA0RQEAJpgHgiBgpjGMFICACEAAMBCJcgRUYJw=</HashCode>
+      <FileName>gamescene.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="zoper::MenuScene" Collapsed="true">
+    <Position X="13.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgIAAAAAgAAAAAAAAAIACABAAAAIAAABAAAQAEAAA=</HashCode>
+      <FileName>menuscene.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="zoper::ZoperProgramController" Collapsed="true">
+    <Position X="4.5" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAIAAAAAAAARAAAAABAAAAQAgAAAAA=</HashCode>
+      <FileName>zoperprogramcontroller.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="lib::board::BoardModel" Collapsed="true">
+    <Position X="18.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgBAAAACBAAQAAAIAAAAEgAAAAAQAAAAAgAAEQAAg=</HashCode>
+      <FileName>lib\board\boardmodel.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="lib::board::ITile" Collapsed="true">
+    <Position X="8.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEQAAAABBAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>lib\board\itilescontroller.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="lib::board::ITilesController" Collapsed="true">
+    <Position X="15" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAQAAAAAABAABAAAAAAAAAAAAAAACAAAAAAEA=</HashCode>
+      <FileName>lib\board\itilescontroller.hpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="LogMessage" Collapsed="true">
+    <Position X="20" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>lib\log.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="lib::core::WindowPrivate" Collapsed="true">
+    <Position X="18.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CEAAAQAAAAAAAAAAAAAAAAAAAAAEAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>lib\core\window.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="lib::core::WindowCreationParams" Collapsed="true">
+    <Position X="23.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAEAAAAAAQAQAACAAAAAAAAAAAAAAABAAAAAAY=</HashCode>
+      <FileName>lib\core\programcontroller.hpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="lib::Rect" Collapsed="true">
+    <Position X="21.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAQAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>lib\types.hpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="zoper::GameData" Collapsed="true">
+    <Position X="18.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAIAABEAAAAIAAAEAAAAAAAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>gamescene.hpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Typedef Name="lib::board::SITilePointer" Collapsed="true">
+    <Position X="18.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>lib\board\itilescontroller.hpp</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Typedef Name="lib::board::WITilePointer" Collapsed="true">
+    <Position X="20" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>lib\board\itilescontroller.hpp</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Enum Name="LogType" Collapsed="true">
+    <Position X="20" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>lib\log.hpp</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="lib::scn::draw::Alignment" Collapsed="true">
+    <Position X="18.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACACAAAAIAAA=</HashCode>
+      <FileName>lib\scn\draw\renderizable.hpp</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
