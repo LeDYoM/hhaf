@@ -60,7 +60,7 @@ namespace lib
 				p_wPrivate->lastTimeFps = eMs;
 				p_wPrivate->lastFps = p_wPrivate->currentFps;
 				p_wPrivate->currentFps = 0;
-				setTitle("FPS:" + std::to_string(p_wPrivate->lastFps));
+				setTitle(_title + " FPS:" + std::to_string(p_wPrivate->lastFps));
 			}
 			++(p_wPrivate->currentFps);
 			clear(sf::Color(128,128,128));
