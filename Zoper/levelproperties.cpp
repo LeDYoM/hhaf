@@ -30,9 +30,9 @@ namespace zoper
 			_stayTime = 1200;
 			_stayTokens = 400;
 		}
-		_millisBetweenTokens = 2500;
-		_stayTime = 500;
-		_stayTokens = 1;
+//		_millisBetweenTokens = 2500;
+//		_stayTime = 500;
+//		_stayTokens = 1;
 	}
 
 	const sf::Color LevelProperties::getBackgroundTileColor(const lib::u32 x, const lib::u32 y, const bool isCenter) const
