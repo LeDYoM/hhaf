@@ -26,6 +26,7 @@ namespace zoper
 		virtual const lib::vector2df getDefaultSizeView() override;
 	private:
 		lib::sptr<lib::scn::draw::Renderizable> _logo{ nullptr };
+		lib::sptr<lib::scn::draw::Renderizable> _background{ nullptr };
 	};
 }
 

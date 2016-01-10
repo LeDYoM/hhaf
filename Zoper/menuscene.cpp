@@ -22,6 +22,8 @@ namespace zoper
 
 	void MenuScene::onInit()
 	{
+		_background = createSpriteShape("background");
+
 		addMenuStep(lib::sptr<lib::menu::MenuStep>(new zoper::zmenu::MainMenu));
 		addMenuStep(lib::sptr<lib::menu::MenuStep>(new zoper::zmenu::OptionsMenu));
 		addMenuStep(lib::sptr<lib::menu::MenuStep>(new zoper::zmenu::KeyRedefinitionMenu));
@@ -33,6 +35,10 @@ namespace zoper
 		_logoSprite->setSize(sf::Vector2f(800, 400));
 		_logo->setPositionX(getCenterCoordinates().x, lib::scn::draw::Alignment::Center);
 		_logo->setPositionY(100);
+
+		auto _bacgroundSprite = _background->getAsEllipseShape();
+		_bacgroundSprite->setTexture(resourceManager()->getResource("game_menu.background")->getAsTexture(), true, false);
+		_bacgroundSprite->setSize(2000.0f);
 	}
 
 	void MenuScene::onDeinit()
