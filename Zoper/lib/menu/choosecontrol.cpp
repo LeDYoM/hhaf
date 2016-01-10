@@ -115,6 +115,7 @@ namespace lib
 		void ChooseControl::updateSubLabelText(const u32 index)
 		{
 			_labelData[index].subLabel->getAsText()->setString(_labelData[index].textSubLabel[_labelData[index].selectedSublabel]);
+			_labelData[index].subLabel->setPositionX(1800.0f, lib::scn::draw::Alignment::Right);
 		}
 
 		void ChooseControl::cursorSelectItem(u32 nodeIndex)
