@@ -1,10 +1,10 @@
 #ifndef __LIB_WINDOW_HPP__
 #define __LIB_WINDOW_HPP__
 
-#include <SFML/Graphics.hpp>
+#include "../types.hpp"
+#include "external/renderwindow.hpp"
 #include <string>
 #include <memory>
-#include "../types.hpp"
 
 namespace lib
 {
@@ -18,7 +18,7 @@ namespace lib
 		struct WindowCreationParams;
 		class ProgramController;
 
-		class Window : public sf::RenderWindow
+		class Window : public external::RenderWindow
 		{
 		public:
 			Window(ProgramController *parentController, const WindowCreationParams &wcp);
@@ -31,12 +31,12 @@ namespace lib
 
 		private:
 			void create(const WindowCreationParams &wcp);
+			void keyEvent(sf::Event e);
 
 			sptr<lib::scn::SceneManager> p_sceneManager;
 			uptr<WindowPrivate> p_wPrivate{ nullptr };
 			ProgramController *p_parentController;
 			bool _shouldClose{ false };
-			void keyEvent(sf::Event e);
 			std::string _title;
 		};
 	}

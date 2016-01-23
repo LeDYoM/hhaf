@@ -124,6 +124,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="keyredefinitionmenu.hpp" />
+    <ClInclude Include="lib\core\external\renderwindow.hpp" />
     <ClInclude Include="lib\menu\choosecontrol.hpp" />
     <ClInclude Include="lib\menu\imenucontrol.hpp" />
     <ClInclude Include="lib\menu\menudescriptors.hpp" />
