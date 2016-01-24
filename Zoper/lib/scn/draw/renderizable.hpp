@@ -29,12 +29,12 @@ namespace lib
 
 				virtual ~Renderizable();
 
-				inline sf::Drawable *const getAsDrawable() const { return _drawNodeAsDrawable; }
+				inline IDrawable *const getAsDrawable() const { return _drawNodeAsDrawable; }
 				inline sf::Transformable *const getAsTransformable() const { return _drawNodeAsTransformable; }
 				inline lib::scn::draw::NodeText *const getAsText() const { __ASSERT(_activeDrawNode == ActiveDrawNode::Text, "Node is not a text"); return _drawNodeData.text; }
 				inline lib::scn::draw::NodeShape *const getAsEllipseShape() const { __ASSERT(_activeDrawNode == ActiveDrawNode::EllipseShape, "Node is not an ellipse shape"); return _drawNodeData.ellipseShape; }
 
-				virtual void draw(sf::RenderTarget &window, sf::RenderStates &states) const override;
+				virtual void draw(sf::RenderTarget &window, sf::RenderStates states) const override;
 				void setColor(const sf::Color &color);
 
 				sf::FloatRect getLocalBounds();
@@ -51,7 +51,7 @@ namespace lib
 					NodeText *text{ nullptr };
 					NodeShape *ellipseShape;
 				} _drawNodeData;
-				sf::Drawable *_drawNodeAsDrawable{ nullptr };
+				IDrawable *_drawNodeAsDrawable{ nullptr };
 				sf::Transformable *_drawNodeAsTransformable{ nullptr };
 				enum class ActiveDrawNode : u8
 				{

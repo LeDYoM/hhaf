@@ -29,7 +29,7 @@ namespace lib
 
 			}
 
-			void Renderizable::draw(sf::RenderTarget &window, sf::RenderStates &states) const
+			void Renderizable::draw(sf::RenderTarget &window, sf::RenderStates states) const
 			{
 				if (isVisible())
 				{

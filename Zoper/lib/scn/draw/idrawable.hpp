@@ -21,7 +21,7 @@ namespace lib
 				IDrawable() {}
 				virtual ~IDrawable() {}
 
-				virtual void draw(sf::RenderTarget &window, sf::RenderStates &states) const = 0;
+				virtual void draw(sf::RenderTarget &window, sf::RenderStates states) const = 0;
 				inline bool isVisible() const { return visible; }
 				inline void setVisible(bool nv) { visible = nv; }
 			protected:

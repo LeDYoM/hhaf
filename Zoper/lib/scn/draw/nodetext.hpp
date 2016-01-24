@@ -1,13 +1,12 @@
 #ifndef _LIB_NODETEXT_HPP__
 #define _LIB_NODETEXT_HPP__
 
-#include <SFML/Graphics/Export.hpp>
-#include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Transformable.hpp>
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/VertexArray.hpp>
 #include <SFML/System/String.hpp>
+#include "idrawable.hpp"
 #include <string>
 #include <vector>
 
@@ -17,7 +16,7 @@ namespace lib
 	{
 		namespace draw
 		{
-			class NodeText : public sf::Drawable, public sf::Transformable
+			class NodeText : public IDrawable, public sf::Transformable
 			{
 			public:
 				enum Style
@@ -47,7 +46,8 @@ namespace lib
 				sf::FloatRect getLocalBounds() const;
 				sf::FloatRect getGlobalBounds() const;
 			private:
-				virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+				virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
 				void ensureGeometryUpdate() const;
 
 				sf::String m_string;

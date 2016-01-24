@@ -2,6 +2,7 @@
 #define __LIB_ELLIPSESHAPE_HPP__
 
 #include "../../types.hpp"
+#include "idrawable.hpp"
 #include <SFML/Graphics.hpp>
 
 using namespace sf;
@@ -12,7 +13,7 @@ namespace lib
 	{
 		namespace draw
 		{
-			class NodeShape : public sf::Drawable, public sf::Transformable
+			class NodeShape : public IDrawable, public sf::Transformable
 			{
 			public:
 				enum class NodeMode : u8
@@ -43,10 +44,11 @@ namespace lib
 				FloatRect getLocalBounds() const;
 				FloatRect getGlobalBounds() const;
 
+				virtual void draw(RenderTarget& target, RenderStates states) const;
+
 			protected:
 				void update();
 				void setTexture_(const Texture* texture, bool resetRect = false);
-				virtual void draw(RenderTarget& target, RenderStates states) const;
 				void updateFillColors();
 				void updateTexCoords();
 				void updateOutline();

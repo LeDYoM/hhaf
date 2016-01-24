@@ -54,7 +54,7 @@ namespace lib
 				return removeFromspVector(element, _renderNodes);
 			}
 
-			void RenderGroup::draw(sf::RenderTarget &window, sf::RenderStates &states) const
+			void RenderGroup::draw(sf::RenderTarget &window, sf::RenderStates states) const
 			{
 				if (isVisible())
 				{
@@ -66,7 +66,7 @@ namespace lib
 					{
 						renderizable->draw(window,states);
 					}
-					states.transform = oldTransformation;
+//					states.transform = oldTransformation;
 				}
 			}
 
