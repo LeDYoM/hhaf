@@ -20,7 +20,7 @@ namespace lib
 					Shape = 0,
 					Sprite = 1,
 				} _mode{ NodeMode::Shape };
-				explicit NodeShape(const sf::Vector2f& size, const u32 pointCount=4,const NodeMode mode=NodeMode::Shape);
+				explicit NodeShape(const vector2df& size, const u32 pointCount=4,const NodeMode mode=NodeMode::Shape);
 				virtual ~NodeShape();
 				void setSize(const sf::Vector2f &size);
 				void setSize(const float size);
@@ -31,7 +31,6 @@ namespace lib
 				virtual sf::Vector2f getPoint(lib::u32 index) const;
 				void setTexture(const sf::Texture *texture, bool resetSize=true, bool resetRect = false);
 
-				void setTexture_(const Texture* texture, bool resetRect = false);
 				void setTextureRect(const IntRect& rect);
 				void setFillColor(const Color& color);
 				void setOutlineColor(const Color& color);
@@ -44,12 +43,9 @@ namespace lib
 				FloatRect getLocalBounds() const;
 				FloatRect getGlobalBounds() const;
 
-			private:
-				sf::Vector2f _size;
-				lib::u32 m_pointCount;
 			protected:
 				void update();
-			private:
+				void setTexture_(const Texture* texture, bool resetRect = false);
 				virtual void draw(RenderTarget& target, RenderStates states) const;
 				void updateFillColors();
 				void updateTexCoords();
@@ -58,6 +54,8 @@ namespace lib
 
 			private:
 				const Texture* m_texture;
+				sf::Vector2f _size;
+				lib::u32 m_pointCount;
 				IntRect m_textureRect;
 				Color m_fillColor;
 				Color m_outlineColor;

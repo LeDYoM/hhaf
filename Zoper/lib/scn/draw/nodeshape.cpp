@@ -10,7 +10,7 @@ namespace lib
 	{
 		namespace draw
 		{
-			NodeShape::NodeShape(const sf::Vector2f& size, const u32 pointCount, const NodeMode mode)
+			NodeShape::NodeShape(const vector2df& size, const u32 pointCount, const NodeMode mode)
 				: _mode{ mode },
 				m_texture{ nullptr },m_textureRect(),m_fillColor(255, 255, 255),
 				m_outlineColor(255, 255, 255),m_outlineThickness(0),m_vertices(TrianglesFan),
@@ -57,7 +57,7 @@ namespace lib
 				update();
 			}
 			
-			sf::Vector2f NodeShape::getPoint(unsigned int index) const
+			vector2df NodeShape::getPoint(unsigned int index) const
 			{
 				// TO DO:
 				// Optimize and cache it
@@ -71,7 +71,7 @@ namespace lib
 					double x = std::cos(angle) * m_radius.x;
 					double y = std::sin(angle) * m_radius.y;
 
-					return sf::Vector2f(static_cast<float>(m_radius.x + x), static_cast<float>(m_radius.y + y));
+					return vector2df(static_cast<float>(m_radius.x + x), static_cast<float>(m_radius.y + y));
 
 				}
 				break;
@@ -82,10 +82,10 @@ namespace lib
 					switch (index)
 					{
 					default:
-					case 0: return Vector2f(0, 0);
-					case 1: return Vector2f(_size.x, 0);
-					case 2: return Vector2f(_size.x, _size.y);
-					case 3: return Vector2f(0, _size.y);
+					case 0: return vector2df(0, 0);
+					case 1: return vector2df(_size.x, 0);
+					case 2: return vector2df(_size.x, _size.y);
+					case 3: return vector2df(0, _size.y);
 					}
 				}
 				break;
@@ -102,7 +102,7 @@ namespace lib
 			}
 
 			// Compute the normal of a segment
-			::sf::Vector2f computeNormal(const ::sf::Vector2f& p1, const sf::Vector2f& p2)
+			vector2df computeNormal(const ::sf::Vector2f& p1, const sf::Vector2f& p2)
 			{
 				::sf::Vector2f normal(p1.y - p2.y, p2.x - p1.x);
 				float length = std::sqrt(normal.x * normal.x + normal.y * normal.y);
@@ -112,7 +112,7 @@ namespace lib
 			}
 
 			// Compute the dot product of two vectors
-			float dotProduct(const ::sf::Vector2f& p1, const ::sf::Vector2f& p2)
+			float dotProduct(const vector2df& p1, const vector2df& p2)
 			{
 				return p1.x * p2.x + p1.y * p2.y;
 			}
