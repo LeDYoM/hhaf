@@ -19,6 +19,15 @@ namespace lib
 
 			NodeText::~NodeText() {	}
 
+			void NodeText::setString(const sf::String& string)
+			{
+				if (m_string != string)
+				{
+					m_string = string;
+					m_geometryNeedUpdate = true;
+				}
+			}
+
 			void NodeText::setFont(const sf::Font& font)
 			{
 				if (m_font != &font)
@@ -28,8 +37,6 @@ namespace lib
 				}
 			}
 
-
-			////////////////////////////////////////////////////////////
 			void NodeText::setCharacterSize(unsigned int size)
 			{
 				if (m_characterSize != size)
@@ -39,8 +46,6 @@ namespace lib
 				}
 			}
 
-
-			////////////////////////////////////////////////////////////
 			void NodeText::setStyle(sf::Uint32 style)
 			{
 				if (m_style != style)
@@ -50,8 +55,6 @@ namespace lib
 				}
 			}
 
-
-			////////////////////////////////////////////////////////////
 			void NodeText::setColor(const sf::Color& color)
 			{
 				if (color != m_color)
@@ -68,43 +71,31 @@ namespace lib
 				}
 			}
 
-
-			////////////////////////////////////////////////////////////
 			const sf::String& NodeText::getString() const
 			{
 				return m_string;
 			}
 
-
-			////////////////////////////////////////////////////////////
 			const sf::Font* NodeText::getFont() const
 			{
 				return m_font;
 			}
 
-
-			////////////////////////////////////////////////////////////
 			unsigned int NodeText::getCharacterSize() const
 			{
 				return m_characterSize;
 			}
 
-
-			////////////////////////////////////////////////////////////
 			sf::Uint32 NodeText::getStyle() const
 			{
 				return m_style;
 			}
 
-
-			////////////////////////////////////////////////////////////
 			const sf::Color& NodeText::getColor() const
 			{
 				return m_color;
 			}
 
-
-			////////////////////////////////////////////////////////////
 			sf::Vector2f NodeText::findCharacterPos(std::size_t index) const
 			{
 				// Make sure that we have a valid font
@@ -149,8 +140,6 @@ namespace lib
 				return position;
 			}
 
-
-			////////////////////////////////////////////////////////////
 			sf::FloatRect NodeText::getLocalBounds() const
 			{
 				ensureGeometryUpdate();
@@ -158,15 +147,11 @@ namespace lib
 				return m_bounds;
 			}
 
-
-			////////////////////////////////////////////////////////////
 			sf::FloatRect NodeText::getGlobalBounds() const
 			{
 				return getTransform().transformRect(getLocalBounds());
 			}
 
-
-			////////////////////////////////////////////////////////////
 			void NodeText::draw(sf::RenderTarget& target, sf::RenderStates states) const
 			{
 				if (m_font)
@@ -179,8 +164,6 @@ namespace lib
 				}
 			}
 
-
-			////////////////////////////////////////////////////////////
 			void NodeText::ensureGeometryUpdate() const
 			{
 				// Do nothing, if geometry has not changed

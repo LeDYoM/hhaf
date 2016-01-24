@@ -3,7 +3,8 @@
 
 #include "../../log.hpp"
 #include "../../core/hasname.hpp"
-#include "NodeShape.hpp"
+#include "nodeshape.hpp"
+#include "nodetext.hpp"
 #include "idrawable.hpp"
 #include <SFML/Graphics.hpp>
 
@@ -23,14 +24,14 @@ namespace lib
 			class Renderizable : public lib::core::HasName, public IDrawable
 			{
 			public:
-				explicit Renderizable(const std::string &name, sf::Text *text);
+				explicit Renderizable(const std::string &name, lib::scn::draw::NodeText *text);
 				explicit Renderizable(const std::string &name, lib::scn::draw::NodeShape *circleShape);
 
 				virtual ~Renderizable();
 
 				inline sf::Drawable *const getAsDrawable() const { return _drawNodeAsDrawable; }
 				inline sf::Transformable *const getAsTransformable() const { return _drawNodeAsTransformable; }
-				inline sf::Text *const getAsText() const { __ASSERT(_activeDrawNode == ActiveDrawNode::Text, "Node is not a text"); return _drawNodeData.text; }
+				inline lib::scn::draw::NodeText *const getAsText() const { __ASSERT(_activeDrawNode == ActiveDrawNode::Text, "Node is not a text"); return _drawNodeData.text; }
 				inline lib::scn::draw::NodeShape *const getAsEllipseShape() const { __ASSERT(_activeDrawNode == ActiveDrawNode::EllipseShape, "Node is not an ellipse shape"); return _drawNodeData.ellipseShape; }
 
 				virtual u32 draw(lib::core::Window *window, sf::RenderStates &states) override;
@@ -47,7 +48,7 @@ namespace lib
 			private:
 				union DrawNodeData
 				{
-					sf::Text *text{ nullptr };
+					NodeText *text{ nullptr };
 					NodeShape *ellipseShape;
 				} _drawNodeData;
 				sf::Drawable *_drawNodeAsDrawable{ nullptr };

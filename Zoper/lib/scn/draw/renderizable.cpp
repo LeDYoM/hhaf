@@ -7,7 +7,7 @@ namespace lib
 	{
 		namespace draw
 		{
-			Renderizable::Renderizable(const std::string &name, sf::Text *text)
+			Renderizable::Renderizable(const std::string &name, NodeText *text)
 				: HasName{ name }
 			{
 				LOG_CONSTRUCT("Name: " << name << " of type text");
@@ -18,7 +18,7 @@ namespace lib
 				_activeDrawNode = ActiveDrawNode::Text;
 			}
 
-			Renderizable::Renderizable(const std::string & name, lib::scn::draw::NodeShape * ellipseShape)
+			Renderizable::Renderizable(const std::string & name, NodeShape * ellipseShape)
 				: HasName{ name }
 			{
 				LOG_CONSTRUCT("Name: " << name << " of type ellipseShape");

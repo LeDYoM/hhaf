@@ -24,7 +24,7 @@ namespace lib
 
 			sptr<draw::Renderizable> RenderGroup::createText(const std::string &name)
 			{
-				auto result = sptr<draw::Renderizable>(new Renderizable(name, new sf::Text));
+				auto result = sptr<draw::Renderizable>(new Renderizable(name, new NodeText));
 				addRenderizable(result);
 				return result;
 			}
