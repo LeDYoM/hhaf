@@ -120,6 +120,9 @@
     <ClCompile Include="startlevelmenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="lib\scn\draw\nodetext.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="zoperprogramcontroller.hpp">
@@ -255,6 +258,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="lib\core\external\renderwindow.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\scn\draw\nodetext.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

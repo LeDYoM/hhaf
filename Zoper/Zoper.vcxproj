@@ -112,6 +112,7 @@
     <ClCompile Include="lib\scn\draw\renderizable.cpp" />
     <ClCompile Include="lib\randomizer.cpp" />
     <ClCompile Include="lib\pclock.cpp" />
+    <ClCompile Include="lib\scn\draw\nodetext.cpp" />
     <ClCompile Include="optionsmenu.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="lib\scn\resourcemanager.cpp" />
@@ -159,6 +160,7 @@
     <ClInclude Include="lib\scn\draw\renderizable.hpp" />
     <ClInclude Include="lib\randomizer.hpp" />
     <ClInclude Include="lib\pclock.hpp" />
+    <ClInclude Include="lib\scn\draw\nodetext.hpp" />
     <ClInclude Include="optionsmenu.hpp" />
     <ClInclude Include="player.hpp" />
     <ClInclude Include="lib\scn\resourcemanager.hpp" />
