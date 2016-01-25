@@ -6,7 +6,7 @@
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/VertexArray.hpp>
 #include <SFML/System/String.hpp>
-#include "idrawable.hpp"
+#include "scenenode.hpp"
 #include <string>
 #include <vector>
 
@@ -16,7 +16,7 @@ namespace lib
 	{
 		namespace draw
 		{
-			class NodeText : public IDrawable, public sf::Transformable
+			class NodeText : public SceneNode
 			{
 			public:
 				enum Style

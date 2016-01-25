@@ -2,7 +2,7 @@
 #define __LIB_ELLIPSESHAPE_HPP__
 
 #include "../../types.hpp"
-#include "idrawable.hpp"
+#include "scenenode.hpp"
 #include <SFML/Graphics.hpp>
 
 using namespace sf;
@@ -13,7 +13,7 @@ namespace lib
 	{
 		namespace draw
 		{
-			class NodeShape : public IDrawable, public sf::Transformable
+			class NodeShape : public SceneNode
 			{
 			public:
 				enum class NodeMode : u8
