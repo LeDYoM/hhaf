@@ -4,6 +4,7 @@
 #include "../../types.hpp"
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/Drawable.hpp>
 
 namespace lib
 {
@@ -15,7 +16,7 @@ namespace lib
 	{
 		namespace draw
 		{
-			class IDrawable
+			class IDrawable : public sf::Drawable
 			{
 			public:
 				IDrawable() {}
