@@ -5,7 +5,7 @@
 #include "../../core/hasname.hpp"
 #include "nodeshape.hpp"
 #include "nodetext.hpp"
-#include "idrawable.hpp"
+#include "scenenode.hpp"
 #include <SFML/Graphics.hpp>
 
 namespace lib
@@ -21,7 +21,7 @@ namespace lib
 				Right = 2
 			};
 
-			class Renderizable : public lib::core::HasName, public IDrawable
+			class Renderizable : public lib::core::HasName, public SceneNode
 			{
 			public:
 				explicit Renderizable(const std::string &name, lib::scn::draw::NodeText *text);
@@ -29,16 +29,14 @@ namespace lib
 
 				virtual ~Renderizable();
 
-				inline IDrawable *const getAsDrawable() const { return _drawNodeAsDrawable; }
-				inline sf::Transformable *const getAsTransformable() const { return _drawNodeAsTransformable; }
 				inline lib::scn::draw::NodeText *const getAsText() const { __ASSERT(_activeDrawNode == ActiveDrawNode::Text, "Node is not a text"); return _drawNodeData.text; }
 				inline lib::scn::draw::NodeShape *const getAsEllipseShape() const { __ASSERT(_activeDrawNode == ActiveDrawNode::EllipseShape, "Node is not an ellipse shape"); return _drawNodeData.ellipseShape; }
 
 				virtual void draw(sf::RenderTarget &window, sf::RenderStates states) const override;
 				void setColor(const sf::Color &color);
 
-				sf::FloatRect getLocalBounds();
-				sf::FloatRect getGlobalBounds();
+				floatRect getLocalBounds() const override;
+				floatRect getGlobalBounds() const override;
 
 				// Some useful shortcuts
 				void setPosition(const sf::Vector2f &pos, Alignment alignment = Alignment::Left);
@@ -51,8 +49,6 @@ namespace lib
 					NodeText *text{ nullptr };
 					NodeShape *ellipseShape;
 				} _drawNodeData;
-				IDrawable *_drawNodeAsDrawable{ nullptr };
-				sf::Transformable *_drawNodeAsTransformable{ nullptr };
 				enum class ActiveDrawNode : u8
 				{
 					Empty = 0,

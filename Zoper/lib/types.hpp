@@ -6,6 +6,8 @@
 #include "compileconfig.hpp"
 
 #include <SFML/System/Vector2.hpp>
+#include <SFML/Graphics/Rect.hpp>
+#include <SFML/Graphics/Color.hpp>
 
 namespace lib
 {
@@ -32,6 +34,10 @@ namespace lib
 	using vector2df = sf::Vector2f;
 	using vector2du8 = sf::Vector2<u8>;
 	using vector2ds8 = sf::Vector2<s8>;
+
+	using floatRect = sf::FloatRect;
+	using intRect = sf::IntRect;
+	using color = sf::Color;
 
 	struct Rect
 	{

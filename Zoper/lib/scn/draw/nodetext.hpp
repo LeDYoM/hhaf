@@ -40,24 +40,23 @@ namespace lib
 				const sf::String& getString() const;
 				const sf::Font* getFont() const;
 				unsigned int getCharacterSize() const;
-				sf::Uint32 getStyle() const;
-				const sf::Color& getColor() const;
-				sf::Vector2f findCharacterPos(std::size_t index) const;
-				sf::FloatRect getLocalBounds() const;
-				sf::FloatRect getGlobalBounds() const;
+				u32 getStyle() const;
+				const color& getColor() const;
+				vector2df findCharacterPos(std::size_t index) const;
+				virtual floatRect getLocalBounds() const override;
+				virtual floatRect getGlobalBounds() const override;
+			protected:
+				virtual void ensureGeometryUpdate() const override;
+
 			private:
 				virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-
-				void ensureGeometryUpdate() const;
 
 				sf::String m_string;
 				const sf::Font* m_font;
 				unsigned int m_characterSize;
-				sf::Uint32 m_style;
-				sf::Color m_color;
+				u32 m_style;
+				color m_color;
 				mutable sf::VertexArray m_vertices;
-				mutable sf::FloatRect m_bounds;
-				mutable bool m_geometryNeedUpdate;
 			};
 		}
 	}

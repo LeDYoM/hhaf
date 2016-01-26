@@ -5,8 +5,6 @@
 #include "scenenode.hpp"
 #include <SFML/Graphics.hpp>
 
-using namespace sf;
-
 namespace lib
 {
 	namespace scn
@@ -32,40 +30,40 @@ namespace lib
 				virtual sf::Vector2f getPoint(lib::u32 index) const;
 				void setTexture(const sf::Texture *texture, bool resetSize=true, bool resetRect = false);
 
-				void setTextureRect(const IntRect& rect);
-				void setFillColor(const Color& color);
-				void setOutlineColor(const Color& color);
+				void setTextureRect(const intRect& rect);
+				void setFillColor(const color& color);
+				void setOutlineColor(const color& color);
 				void setOutlineThickness(float thickness);
-				const Texture* getTexture() const;
-				const IntRect& getTextureRect() const;
-				const Color& getFillColor() const;
-				const Color& getOutlineColor() const;
+				const sf::Texture* getTexture() const;
+				const intRect& getTextureRect() const;
+				const color& getFillColor() const;
+				const color& getOutlineColor() const;
 				float getOutlineThickness() const;
-				FloatRect getLocalBounds() const;
-				FloatRect getGlobalBounds() const;
+				virtual floatRect getLocalBounds() const override;
+				virtual floatRect getGlobalBounds() const override;
 
-				virtual void draw(RenderTarget& target, RenderStates states) const;
+				virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
 			protected:
-				void update();
-				void setTexture_(const Texture* texture, bool resetRect = false);
+				virtual void ensureGeometryUpdate() const override;
+				void setTexture_(const sf::Texture* texture, bool resetRect = false);
 				void updateFillColors();
 				void updateTexCoords();
 				void updateOutline();
 				void updateOutlineColors();
 
 			private:
-				const Texture* m_texture;
+				const sf::Texture* m_texture;
 				sf::Vector2f _size;
-				lib::u32 m_pointCount;
-				IntRect m_textureRect;
-				Color m_fillColor;
-				Color m_outlineColor;
+				u32 m_pointCount;
+				intRect m_textureRect;
+				color m_fillColor;
+				color m_outlineColor;
 				float m_outlineThickness;
-				VertexArray m_vertices;
-				VertexArray m_outlineVertices;
-				FloatRect m_insideBounds;
-				FloatRect m_bounds;
+				mutable sf::VertexArray m_vertices;
+				mutable sf::VertexArray m_outlineVertices;
+				floatRect m_insideBounds;
+				floatRect m_bounds;
 			};
 		}
 	}

@@ -13,8 +13,6 @@ namespace lib
 				LOG_CONSTRUCT("Name: " << name << " of type text");
 
 				_drawNodeData.text = text;
-				_drawNodeAsDrawable = text;
-				_drawNodeAsTransformable = text;
 				_activeDrawNode = ActiveDrawNode::Text;
 			}
 
@@ -22,18 +20,16 @@ namespace lib
 				: HasName{ name }
 			{
 				LOG_CONSTRUCT("Name: " << name << " of type ellipseShape");
-				_drawNodeData.ellipseShape = ellipseShape;
-				_drawNodeAsDrawable = ellipseShape;
-				_drawNodeAsTransformable = ellipseShape;
-				_activeDrawNode = ActiveDrawNode::EllipseShape;
 
+				_drawNodeData.ellipseShape = ellipseShape;
+				_activeDrawNode = ActiveDrawNode::EllipseShape;
 			}
 
 			void Renderizable::draw(sf::RenderTarget &window, sf::RenderStates states) const
 			{
 				if (isVisible())
 				{
-					window.draw(*getAsDrawable(),states);
+					window.draw(*this,states);
 				}
 			}
 
@@ -72,7 +68,7 @@ namespace lib
 				}
 			}
 
-			sf::FloatRect Renderizable::getLocalBounds()
+			floatRect Renderizable::getLocalBounds() const
 			{
 				// For some reason SFML does not have inheritance in these methods, so let's wrap it
 				__ASSERT(_drawNodeData.text, "Empty draw node data");
@@ -91,7 +87,7 @@ namespace lib
 				}
 			}
 
-			sf::FloatRect Renderizable::getGlobalBounds()
+			floatRect Renderizable::getGlobalBounds() const
 			{
 				// For some reason SFML does not have inheritance in these methods, so let's wrap it
 				__ASSERT(_drawNodeData.text, "Empty draw node data");
@@ -99,7 +95,7 @@ namespace lib
 				{
 				default:
 				case ActiveDrawNode::Empty:
-					return sf::FloatRect();
+					return floatRect();
 					break;
 				case ActiveDrawNode::Text:
 					return getAsText()->getGlobalBounds();
@@ -116,7 +112,7 @@ namespace lib
 				{
 				default:
 				case lib::scn::draw::Alignment::Left:
-					getAsTransformable()->setPosition(pos);
+					sf::Transformable::setPosition(pos);
 					break;
 				case lib::scn::draw::Alignment::Center:
 					setPosition(sf::Vector2f{ pos.x - (getLocalBounds().width / 2.0f), pos.y - (getLocalBounds().height / 2.0f) });
@@ -129,46 +125,46 @@ namespace lib
 
 			void Renderizable::setPositionX(const float x, Alignment alignment /*= Alignment::Left*/)
 			{
-				const sf::Vector2f position( getAsTransformable()->getPosition() );
+				const sf::Vector2f position( sf::Transformable::getPosition() );
 				switch (alignment)
 				{
 				default:
 				case lib::scn::draw::Alignment::Left:
-					getAsTransformable()->setPosition(sf::Vector2f{ x, position.y });
+					sf::Transformable::setPosition(sf::Vector2f{ x, position.y });
 					break;
 				case lib::scn::draw::Alignment::Center:
 				{
 					auto a = sf::Vector2f{ x - (getLocalBounds().width / 2.0f), position.y };
-					getAsTransformable()->setPosition(sf::Vector2f{ x - (getLocalBounds().width / 2.0f), position.y });
+					sf::Transformable::setPosition(sf::Vector2f{ x - (getLocalBounds().width / 2.0f), position.y });
 				}
 					break;
 				case lib::scn::draw::Alignment::Right:
-					getAsTransformable()->setPosition(sf::Vector2f{ x - (getLocalBounds().width), position.y });
+					sf::Transformable::setPosition(sf::Vector2f{ x - (getLocalBounds().width), position.y });
 					break;
 				}
 			}
 
 			void Renderizable::setPositionY(const float y, Alignment alignment /*= Alignment::Left*/)
 			{
-				const sf::Vector2f position(getAsTransformable()->getPosition());
+				const sf::Vector2f position(sf::Transformable::getPosition());
 				switch (alignment)
 				{
 				default:
 				case lib::scn::draw::Alignment::Left:
-					getAsTransformable()->setPosition(sf::Vector2f{ position.x, y });
+					sf::Transformable::setPosition(sf::Vector2f{ position.x, y });
 					break;
 				case lib::scn::draw::Alignment::Center:
-					getAsTransformable()->setPosition(sf::Vector2f{ position.x, y - (getLocalBounds().height / 2.0f) });
+					sf::Transformable::setPosition(sf::Vector2f{ position.x, y - (getLocalBounds().height / 2.0f) });
 					break;
 				case lib::scn::draw::Alignment::Right:
-					getAsTransformable()->setPosition(sf::Vector2f{ position.x, y - (getLocalBounds().height) });
+					sf::Transformable::setPosition(sf::Vector2f{ position.x, y - (getLocalBounds().height) });
 					break;
 				}
 			}
 
 			void Renderizable::setAlignment(Alignment alignment)
 			{
-				setPosition(getAsTransformable()->getPosition(), alignment);
+				setPosition(sf::Transformable::getPosition(), alignment);
 			}
 		}
 	}

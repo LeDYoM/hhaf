@@ -13,8 +13,8 @@ namespace lib
 			NodeShape::NodeShape(const vector2df& size, const u32 pointCount, const NodeMode mode)
 				: _mode{ mode },
 				m_texture{ nullptr },m_textureRect(),m_fillColor(255, 255, 255),
-				m_outlineColor(255, 255, 255),m_outlineThickness(0),m_vertices(TrianglesFan),
-				m_outlineVertices(TrianglesStrip),m_insideBounds(),
+				m_outlineColor(255, 255, 255),m_outlineThickness(0),m_vertices(sf::TrianglesFan),
+				m_outlineVertices(sf::TrianglesStrip),m_insideBounds(),
 				m_bounds(), _size{ size }, m_pointCount{ pointCount }
 			{
 				update();
@@ -117,13 +117,13 @@ namespace lib
 				return p1.x * p2.x + p1.y * p2.y;
 			}
 
-			void NodeShape::setTexture_(const Texture* texture, bool resetRect)
+			void NodeShape::setTexture_(const sf::Texture* texture, bool resetRect)
 			{
 				if (texture)
 				{
 					// Recompute the texture area if requested, or if there was no texture & rect before
-					if (resetRect || (!m_texture && (m_textureRect == IntRect())))
-						setTextureRect(IntRect(0, 0, texture->getSize().x, texture->getSize().y));
+					if (resetRect || (!m_texture && (m_textureRect == intRect())))
+						setTextureRect(intRect(0, 0, texture->getSize().x, texture->getSize().y));
 				}
 
 				// Assign the new texture
@@ -131,40 +131,40 @@ namespace lib
 			}
 
 
-			const Texture* NodeShape::getTexture() const
+			const sf::Texture* NodeShape::getTexture() const
 			{
 				return m_texture;
 			}
 
-			void NodeShape::setTextureRect(const IntRect& rect)
+			void NodeShape::setTextureRect(const intRect& rect)
 			{
 				m_textureRect = rect;
-				updateTexCoords();
+				m_geometryNeedUpdate = true;
 			}
 
-			const IntRect& NodeShape::getTextureRect() const
+			const intRect& NodeShape::getTextureRect() const
 			{
 				return m_textureRect;
 			}
 
-			void NodeShape::setFillColor(const Color& color)
+			void NodeShape::setFillColor(const color& color)
 			{
 				m_fillColor = color;
-				updateFillColors();
+				m_geometryNeedUpdate = true;
 			}
 
-			const Color& NodeShape::getFillColor() const
+			const color& NodeShape::getFillColor() const
 			{
 				return m_fillColor;
 			}
 
-			void NodeShape::setOutlineColor(const Color& color)
+			void NodeShape::setOutlineColor(const color& color)
 			{
 				m_outlineColor = color;
-				updateOutlineColors();
+				m_geometryNeedUpdate = true;
 			}
 
-			const Color& NodeShape::getOutlineColor() const
+			const color& NodeShape::getOutlineColor() const
 			{
 				return m_outlineColor;
 			}
@@ -172,7 +172,8 @@ namespace lib
 			void NodeShape::setOutlineThickness(float thickness)
 			{
 				m_outlineThickness = thickness;
-				update(); // recompute everything because the whole shape must be offset
+				m_geometryNeedUpdate = true;
+				ensureGeometryUpdate();
 			}
 
 			float NodeShape::getOutlineThickness() const
@@ -180,18 +181,21 @@ namespace lib
 				return m_outlineThickness;
 			}
 
-			FloatRect NodeShape::getLocalBounds() const
+			floatRect NodeShape::getLocalBounds() const
 			{
 				return m_bounds;
 			}
 
-			FloatRect NodeShape::getGlobalBounds() const
+			floatRect NodeShape::getGlobalBounds() const
 			{
 				return getTransform().transformRect(getLocalBounds());
 			}
 
-			void NodeShape::update()
+			void NodeShape::ensureGeometryUpdate() const
 			{
+				if (!m_geometryNeedUpdate)
+					return;
+
 				// Get the total number of points of the shape
 				std::size_t count = getPointCount();
 				if (count < 3)
@@ -226,7 +230,7 @@ namespace lib
 				updateOutline();
 			}
 
-			void NodeShape::draw(RenderTarget& target, RenderStates states) const
+			void NodeShape::draw(sf::RenderTarget& target, sf::RenderStates states) const
 			{
 				states.transform *= getTransform();
 
@@ -269,13 +273,13 @@ namespace lib
 					std::size_t index = i + 1;
 
 					// Get the two segments shared by the current point
-					Vector2f p0 = (i == 0) ? m_vertices[count].position : m_vertices[index - 1].position;
-					Vector2f p1 = m_vertices[index].position;
-					Vector2f p2 = m_vertices[index + 1].position;
+					vector2df p0 = (i == 0) ? m_vertices[count].position : m_vertices[index - 1].position;
+					vector2df p1 = m_vertices[index].position;
+					vector2df p2 = m_vertices[index + 1].position;
 
 					// Compute their normal
-					Vector2f n1 = computeNormal(p0, p1);
-					Vector2f n2 = computeNormal(p1, p2);
+					vector2df n1 = computeNormal(p0, p1);
+					vector2df n2 = computeNormal(p1, p2);
 
 					// Make sure that the normals point towards the outside of the shape
 					// (this depends on the order in which the points were defined)
@@ -286,7 +290,7 @@ namespace lib
 
 					// Combine them to get the extrusion direction
 					float factor = 1.f + (n1.x * n2.x + n1.y * n2.y);
-					Vector2f normal = (n1 + n2) / factor;
+					vector2df normal = (n1 + n2) / factor;
 
 					// Update the outline points
 					m_outlineVertices[i * 2 + 0].position = p1;

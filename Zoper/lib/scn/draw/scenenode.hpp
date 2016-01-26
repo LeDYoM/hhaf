@@ -15,6 +15,15 @@ namespace lib
 			public:
 				SceneNode();
 				virtual ~SceneNode();
+
+				virtual floatRect getLocalBounds() const = 0;
+				virtual floatRect getGlobalBounds() const = 0;
+
+				virtual void ensureGeometryUpdate() const = 0;
+
+			protected:
+				mutable floatRect m_bounds;
+				mutable bool m_geometryNeedUpdate;
 			};
 		}
 	}

@@ -96,7 +96,7 @@ namespace zoper
 
 		void OptionsMenu::resetControl()
 		{
-			VideoMode vm;
+			sf::VideoMode vm;
 			vm.width = getAsInt(ResolutionXStr, 1024);
 			vm.height = getAsInt(ResolutionYStr, 768);
 			vm.bitsPerPixel = getAsInt(BPPStr, 32);

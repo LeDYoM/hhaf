@@ -696,10 +696,9 @@ namespace zoper
 
 	void GameScene::updatePlayer(const lib::vector2du32 &dest, lib::sptr<Player> player_)
 	{
-		auto player = player_->getAsEllipseShape();
-		player->setOrigin(tileSize() / 2.0f);
-		player->setPosition(board2Scene(dest) + (tileSize() / 2.0f));
-		player_->getAsTransformable()->setRotation(player_->currentDirection().angle());
+		player_->setOrigin(tileSize() / 2.0f);
+		player_->setPosition(board2Scene(dest) + (tileSize() / 2.0f));
+		player_->setRotation(player_->currentDirection().angle());
 	}
 
 	void GameScene::playerMoved(const lib::vector2du32 &source, const lib::vector2du32 &dest, lib::sptr<Player> player_)
