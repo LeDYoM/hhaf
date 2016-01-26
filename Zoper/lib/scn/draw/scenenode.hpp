@@ -2,6 +2,7 @@
 #define __LIB_SCENENODE_HPP__
 
 #include "idrawable.hpp"
+#include "vertexarray.hpp"
 #include <SFML/Graphics/Transformable.hpp>
 
 namespace lib
@@ -24,6 +25,7 @@ namespace lib
 			protected:
 				mutable floatRect m_bounds;
 				mutable bool m_geometryNeedUpdate;
+				mutable VertexArray m_vertices;
 			};
 		}
 	}

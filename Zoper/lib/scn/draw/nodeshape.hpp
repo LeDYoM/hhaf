@@ -60,10 +60,8 @@ namespace lib
 				color m_fillColor;
 				color m_outlineColor;
 				float m_outlineThickness;
-				mutable sf::VertexArray m_vertices;
 				mutable sf::VertexArray m_outlineVertices;
-				floatRect m_insideBounds;
-				floatRect m_bounds;
+				mutable floatRect m_insideBounds;
 			};
 		}
 	}

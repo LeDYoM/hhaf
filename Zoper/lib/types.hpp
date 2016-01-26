@@ -35,8 +35,8 @@ namespace lib
 	using vector2du8 = sf::Vector2<u8>;
 	using vector2ds8 = sf::Vector2<s8>;
 
-	using floatRect = sf::FloatRect;
-	using intRect = sf::IntRect;
+	using floatRect = sf::Rect<float>;
+	using intRect = sf::Rect<int>;
 	using color = sf::Color;
 
 	struct Rect

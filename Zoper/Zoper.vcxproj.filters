@@ -126,6 +126,9 @@
     <ClCompile Include="lib\scn\draw\scenenode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="lib\scn\draw\vertexarray.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="zoperprogramcontroller.hpp">
@@ -267,6 +270,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="lib\scn\draw\scenenode.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\scn\draw\vertexarray.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

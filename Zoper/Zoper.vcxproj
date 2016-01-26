@@ -122,6 +122,7 @@
     <ClCompile Include="lib\scn\draw\scenenode.cpp" />
     <ClCompile Include="startlevelmenu.cpp" />
     <ClCompile Include="tile.cpp" />
+    <ClCompile Include="lib\scn\draw\vertexarray.cpp" />
     <ClCompile Include="zoperprogramcontroller.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -171,6 +172,7 @@
     <ClInclude Include="lib\scn\draw\scenenode.hpp" />
     <ClInclude Include="startlevelmenu.hpp" />
     <ClInclude Include="tile.hpp" />
+    <ClInclude Include="lib\scn\draw\vertexarray.hpp" />
     <ClInclude Include="zoperprogramcontroller.hpp" />
   </ItemGroup>
   <ItemGroup>

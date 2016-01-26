@@ -1,5 +1,6 @@
 #include "NodeShape.hpp"
 #include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics/Rect.hpp>
 #include "../../log.hpp"
 #define _USE_MATH_DEFINES
 #include <math.h>
@@ -11,13 +12,13 @@ namespace lib
 		namespace draw
 		{
 			NodeShape::NodeShape(const vector2df& size, const u32 pointCount, const NodeMode mode)
-				: _mode{ mode },
-				m_texture{ nullptr },m_textureRect(),m_fillColor(255, 255, 255),
-				m_outlineColor(255, 255, 255),m_outlineThickness(0),m_vertices(sf::TrianglesFan),
+				: SceneNode(), _mode{ mode }, m_texture{ nullptr },m_textureRect(),m_fillColor(255, 255, 255),
+				m_outlineColor(255, 255, 255),m_outlineThickness(0),
 				m_outlineVertices(sf::TrianglesStrip),m_insideBounds(),
-				m_bounds(), _size{ size }, m_pointCount{ pointCount }
+				_size{ size }, m_pointCount{ pointCount }
 			{
-				update();
+				m_vertices.setPrimitiveType(sf::TrianglesFan);
+				ensureGeometryUpdate();
 			}
 
 			NodeShape::~NodeShape()
@@ -28,7 +29,8 @@ namespace lib
 			void NodeShape::setSize(const sf::Vector2f & size)
 			{
 				_size = size;
-				update();
+				m_geometryNeedUpdate = true;
+				ensureGeometryUpdate();
 			}
 
 			void NodeShape::setSize(const float size)
@@ -54,7 +56,8 @@ namespace lib
 			void NodeShape::setPointCount(lib::u32 numPoints)
 			{
 				m_pointCount = numPoints;
-				update();
+				m_geometryNeedUpdate = true;
+				ensureGeometryUpdate();
 			}
 			
 			vector2df NodeShape::getPoint(unsigned int index) const
@@ -221,13 +224,13 @@ namespace lib
 				m_vertices[0].position.y = m_insideBounds.top + m_insideBounds.height / 2;
 
 				// Color
-				updateFillColors();
+//				updateFillColors();
 
 				// Texture coordinates
-				updateTexCoords();
+//				updateTexCoords();
 
 				// Outline
-				updateOutline();
+//				updateOutline();
 			}
 
 			void NodeShape::draw(sf::RenderTarget& target, sf::RenderStates states) const

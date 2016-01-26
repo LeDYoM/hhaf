@@ -56,7 +56,6 @@ namespace lib
 				unsigned int m_characterSize;
 				u32 m_style;
 				color m_color;
-				mutable sf::VertexArray m_vertices;
 			};
 		}
 	}
