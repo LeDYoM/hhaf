@@ -166,6 +166,12 @@ namespace lib
 			{
 				setPosition(sf::Transformable::getPosition(), alignment);
 			}
+
+			void Renderizable::ensureGeometryUpdate() const
+			{
+//				throw std::logic_error("The method or operation is not implemented.");
+			}
+
 		}
 	}
 }

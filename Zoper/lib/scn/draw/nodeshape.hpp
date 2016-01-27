@@ -3,6 +3,7 @@
 
 #include "../../types.hpp"
 #include "scenenode.hpp"
+#include "iscenenode.hpp"
 #include <SFML/Graphics.hpp>
 
 namespace lib
@@ -11,7 +12,7 @@ namespace lib
 	{
 		namespace draw
 		{
-			class NodeShape : public SceneNode
+			class NodeShape : public SceneNode, public ISceneNode
 			{
 			public:
 				enum class NodeMode : u8

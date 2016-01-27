@@ -43,6 +43,9 @@ namespace lib
 				void setPositionX(const float x, Alignment alignment = Alignment::Left);
 				void setPositionY(const float y, Alignment alignment = Alignment::Left);
 				void setAlignment(Alignment alignment);
+
+				virtual void ensureGeometryUpdate() const override;
+
 			private:
 				union DrawNodeData
 				{

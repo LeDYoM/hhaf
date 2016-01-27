@@ -102,6 +102,18 @@ namespace lib
 				return removeFromspVector(element, _renderNodes);
 			}
 
+			bool RenderGroup::addNode(sptr<ISceneNode> node)
+			{
+				_renderNodes.push_back(node);
+				// TODO: Check for duplicate names
+				return true;
+			}
+
+			bool RenderGroup::removeNode(sptr<ISceneNode> node)
+			{
+				return removeFromspVector(node, _renderNodes);
+			}
+
 			void RenderGroup::clear()
 			{
 				_renderNodes.clear();
