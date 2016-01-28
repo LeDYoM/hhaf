@@ -29,12 +29,11 @@ namespace lib
 
 				virtual ~Renderizable();
 
-				inline sf::Drawable *const getAsDrawable() const { return _drawNodeAsDrawable; }
 				inline sf::Transformable *const getAsTransformable() const { return _drawNodeAsTransformable; }
 				inline lib::scn::draw::NodeText *const getAsText() const { __ASSERT(_activeDrawNode == ActiveDrawNode::Text, "Node is not a text"); return _drawNodeData.text; }
 				inline lib::scn::draw::NodeShape *const getAsEllipseShape() const { __ASSERT(_activeDrawNode == ActiveDrawNode::EllipseShape, "Node is not an ellipse shape"); return _drawNodeData.ellipseShape; }
 
-				virtual u32 draw(lib::core::Window *window, sf::RenderStates &states) override;
+//				virtual u32 draw(lib::core::Window *window, sf::RenderStates &states) override;
 				void setColor(const sf::Color &color);
 
 				sf::FloatRect getLocalBounds();

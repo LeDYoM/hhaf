@@ -11,13 +11,15 @@
 #include <string>
 #include <vector>
 
+#include "idrawable.hpp"
+
 namespace lib
 {
 	namespace scn
 	{
 		namespace draw
 		{
-			class NodeText : public sf::Drawable, public sf::Transformable
+			class NodeText : public IDrawable, public sf::Transformable
 			{
 			public:
 				enum Style
@@ -47,7 +49,7 @@ namespace lib
 				sf::FloatRect getLocalBounds() const;
 				sf::FloatRect getGlobalBounds() const;
 			private:
-				virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+				virtual u32 draw(lib::core::Window *window, sf::RenderStates &states) override;
 				void ensureGeometryUpdate() const;
 
 				sf::String m_string;

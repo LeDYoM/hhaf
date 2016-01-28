@@ -3,6 +3,7 @@
 
 #include "../../types.hpp"
 #include <SFML/Graphics.hpp>
+#include "idrawable.hpp"
 
 using namespace sf;
 
@@ -12,7 +13,7 @@ namespace lib
 	{
 		namespace draw
 		{
-			class NodeShape : public sf::Drawable, public sf::Transformable
+			class NodeShape : public IDrawable, public sf::Transformable
 			{
 			public:
 				enum class NodeMode : u8
@@ -46,7 +47,7 @@ namespace lib
 			protected:
 				void update();
 				void setTexture_(const Texture* texture, bool resetRect = false);
-				virtual void draw(RenderTarget& target, RenderStates states) const;
+				virtual u32 draw(lib::core::Window *window, sf::RenderStates &states) override;
 				void updateFillColors();
 				void updateTexCoords();
 				void updateOutline();

@@ -13,7 +13,6 @@ namespace lib
 				LOG_CONSTRUCT("Name: " << name << " of type text");
 
 				_drawNodeData.text = text;
-				_drawNodeAsDrawable = text;
 				_drawNodeAsTransformable = text;
 				_activeDrawNode = ActiveDrawNode::Text;
 			}
@@ -23,22 +22,23 @@ namespace lib
 			{
 				LOG_CONSTRUCT("Name: " << name << " of type ellipseShape");
 				_drawNodeData.ellipseShape = ellipseShape;
-				_drawNodeAsDrawable = ellipseShape;
 				_drawNodeAsTransformable = ellipseShape;
 				_activeDrawNode = ActiveDrawNode::EllipseShape;
 
 			}
 
+			/*
 			u32 Renderizable::draw(lib::core::Window *window, sf::RenderStates &states)
 			{
 				if (isVisible())
 				{
+					window->draw()
 					window->draw(*getAsDrawable(),states);
 					return 1;
 				}
 				return 0;
 			}
-
+			*/
 			Renderizable::~Renderizable()
 			{
 				switch (_activeDrawNode)

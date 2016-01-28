@@ -1,6 +1,7 @@
 #include "NodeShape.hpp"
 #include <SFML/Graphics/Texture.hpp>
 #include "../../log.hpp"
+#include "../../core/window.hpp"
 #define _USE_MATH_DEFINES
 #include <math.h>
 
@@ -226,20 +227,21 @@ namespace lib
 				updateOutline();
 			}
 
-			void NodeShape::draw(RenderTarget& target, RenderStates states) const
+			u32 NodeShape::draw(lib::core::Window *window, sf::RenderStates &states)
 			{
 				states.transform *= getTransform();
 
 				// Render the inside
 				states.texture = m_texture;
-				target.draw(m_vertices, states);
+				window->draw(m_vertices, states);
+				return 1;
 
 				// Render the outline
-				if (m_outlineThickness != 0)
-				{
-					states.texture = NULL;
-					target.draw(m_outlineVertices, states);
-				}
+//				if (m_outlineThickness != 0)
+//				{
+//					states.texture = NULL;
+//					window->draw(m_outlineVertices, states);
+//				}
 			}
 
 			void NodeShape::updateFillColors()
