@@ -13,7 +13,6 @@ namespace lib
 				LOG_CONSTRUCT("Name: " << name << " of type text");
 
 				_drawNodeData.text = text;
-				_drawNodeAsTransformable = text;
 				_activeDrawNode = ActiveDrawNode::Text;
 			}
 
@@ -22,7 +21,6 @@ namespace lib
 			{
 				LOG_CONSTRUCT("Name: " << name << " of type ellipseShape");
 				_drawNodeData.ellipseShape = ellipseShape;
-				_drawNodeAsTransformable = ellipseShape;
 				_activeDrawNode = ActiveDrawNode::EllipseShape;
 
 			}
@@ -112,65 +110,65 @@ namespace lib
 				}
 			}
 
-			void Renderizable::setPosition(const sf::Vector2f &pos, Alignment alignment /*= Alignment::Left*/)
+			void Renderizable::setPosition(const sf::Vector2f &pos, Alignment alignment)
 			{
 				switch (alignment)
 				{
 				default:
 				case lib::scn::draw::Alignment::Left:
-					getAsTransformable()->setPosition(pos);
+					sf::Transformable::setPosition(pos);
 					break;
 				case lib::scn::draw::Alignment::Center:
-					setPosition(sf::Vector2f{ pos.x - (getLocalBounds().width / 2.0f), pos.y - (getLocalBounds().height / 2.0f) });
+					sf::Transformable::setPosition(sf::Vector2f{ pos.x - (getLocalBounds().width / 2.0f), pos.y - (getLocalBounds().height / 2.0f) });
 					break;
 				case lib::scn::draw::Alignment::Right:
-					setPosition(sf::Vector2f{ pos.x - (getLocalBounds().width), pos.y - (getLocalBounds().height) });
+					sf::Transformable::setPosition(sf::Vector2f{ pos.x - (getLocalBounds().width), pos.y - (getLocalBounds().height) });
 					break;
 				}
 			}
 
 			void Renderizable::setPositionX(const float x, Alignment alignment /*= Alignment::Left*/)
 			{
-				const sf::Vector2f position( getAsTransformable()->getPosition() );
+				const sf::Vector2f position( sf::Transformable::getPosition() );
 				switch (alignment)
 				{
 				default:
 				case lib::scn::draw::Alignment::Left:
-					getAsTransformable()->setPosition(sf::Vector2f{ x, position.y });
+					sf::Transformable::setPosition(sf::Vector2f{ x, position.y });
 					break;
 				case lib::scn::draw::Alignment::Center:
 				{
 					auto a = sf::Vector2f{ x - (getLocalBounds().width / 2.0f), position.y };
-					getAsTransformable()->setPosition(sf::Vector2f{ x - (getLocalBounds().width / 2.0f), position.y });
+					sf::Transformable::setPosition(sf::Vector2f{ x - (getLocalBounds().width / 2.0f), position.y });
 				}
 					break;
 				case lib::scn::draw::Alignment::Right:
-					getAsTransformable()->setPosition(sf::Vector2f{ x - (getLocalBounds().width), position.y });
+					sf::Transformable::setPosition(sf::Vector2f{ x - (getLocalBounds().width), position.y });
 					break;
 				}
 			}
 
 			void Renderizable::setPositionY(const float y, Alignment alignment /*= Alignment::Left*/)
 			{
-				const sf::Vector2f position(getAsTransformable()->getPosition());
+				const sf::Vector2f position(sf::Transformable::getPosition());
 				switch (alignment)
 				{
 				default:
 				case lib::scn::draw::Alignment::Left:
-					getAsTransformable()->setPosition(sf::Vector2f{ position.x, y });
+					sf::Transformable::setPosition(sf::Vector2f{ position.x, y });
 					break;
 				case lib::scn::draw::Alignment::Center:
-					getAsTransformable()->setPosition(sf::Vector2f{ position.x, y - (getLocalBounds().height / 2.0f) });
+					sf::Transformable::setPosition(sf::Vector2f{ position.x, y - (getLocalBounds().height / 2.0f) });
 					break;
 				case lib::scn::draw::Alignment::Right:
-					getAsTransformable()->setPosition(sf::Vector2f{ position.x, y - (getLocalBounds().height) });
+					sf::Transformable::setPosition(sf::Vector2f{ position.x, y - (getLocalBounds().height) });
 					break;
 				}
 			}
 
 			void Renderizable::setAlignment(Alignment alignment)
 			{
-				setPosition(getAsTransformable()->getPosition(), alignment);
+				setPosition(getPosition(), alignment);
 			}
 		}
 	}

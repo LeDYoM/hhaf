@@ -13,7 +13,7 @@ namespace lib
 	{
 		namespace draw
 		{
-			class NodeShape : public ISceneNode
+			class NodeShape : public Renderizable
 			{
 			public:
 				enum class NodeMode : u8

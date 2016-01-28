@@ -21,7 +21,7 @@ namespace lib
 				Right = 2
 			};
 
-			class Renderizable : public lib::core::HasName, public IDrawable
+			class Renderizable : public lib::core::HasName, public IDrawable, public sf::Transformable
 			{
 			public:
 				explicit Renderizable(const std::string &name, lib::scn::draw::NodeText *text);
@@ -29,7 +29,6 @@ namespace lib
 
 				virtual ~Renderizable();
 
-				inline sf::Transformable *const getAsTransformable() const { return _drawNodeAsTransformable; }
 				inline lib::scn::draw::NodeText *const getAsText() const { __ASSERT(_activeDrawNode == ActiveDrawNode::Text, "Node is not a text"); return _drawNodeData.text; }
 				inline lib::scn::draw::NodeShape *const getAsEllipseShape() const { __ASSERT(_activeDrawNode == ActiveDrawNode::EllipseShape, "Node is not an ellipse shape"); return _drawNodeData.ellipseShape; }
 
@@ -40,7 +39,8 @@ namespace lib
 				sf::FloatRect getGlobalBounds();
 
 				// Some useful shortcuts
-				void setPosition(const sf::Vector2f &pos, Alignment alignment = Alignment::Left);
+				using sf::Transformable::setPosition;
+				void setPosition(const sf::Vector2f &pos, Alignment alignment);
 				void setPositionX(const float x, Alignment alignment = Alignment::Left);
 				void setPositionY(const float y, Alignment alignment = Alignment::Left);
 				void setAlignment(Alignment alignment);
@@ -50,8 +50,6 @@ namespace lib
 					NodeText *text{ nullptr };
 					NodeShape *ellipseShape;
 				} _drawNodeData;
-				sf::Drawable *_drawNodeAsDrawable{ nullptr };
-				sf::Transformable *_drawNodeAsTransformable{ nullptr };
 				enum class ActiveDrawNode : u8
 				{
 					Empty = 0,

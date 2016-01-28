@@ -19,7 +19,7 @@ namespace lib
 	{
 		namespace draw
 		{
-			class NodeText : public ISceneNode
+			class NodeText : public Renderizable
 			{
 			public:
 				enum Style
