@@ -27,18 +27,18 @@ namespace lib
 
 			}
 
-			/*
+
 			u32 Renderizable::draw(lib::core::Window *window, sf::RenderStates &states)
 			{
 				if (isVisible())
 				{
-					window->draw()
-					window->draw(*getAsDrawable(),states);
+//					window->draw()
+//					window->draw(*getAsDrawable(),states);
 					return 1;
 				}
 				return 0;
 			}
-			*/
+
 			Renderizable::~Renderizable()
 			{
 				switch (_activeDrawNode)

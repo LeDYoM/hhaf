@@ -11,7 +11,7 @@
 #include <string>
 #include <vector>
 
-#include "idrawable.hpp"
+#include "iscenenode.hpp"
 
 namespace lib
 {
@@ -19,7 +19,7 @@ namespace lib
 	{
 		namespace draw
 		{
-			class NodeText : public IDrawable, public sf::Transformable
+			class NodeText : public ISceneNode
 			{
 			public:
 				enum Style

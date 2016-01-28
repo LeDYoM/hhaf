@@ -3,7 +3,7 @@
 
 #include "../../types.hpp"
 #include <SFML/Graphics.hpp>
-#include "idrawable.hpp"
+#include "iscenenode.hpp"
 
 using namespace sf;
 
@@ -13,7 +13,7 @@ namespace lib
 	{
 		namespace draw
 		{
-			class NodeShape : public IDrawable, public sf::Transformable
+			class NodeShape : public ISceneNode
 			{
 			public:
 				enum class NodeMode : u8
