@@ -122,7 +122,7 @@ namespace lib
 				_currentScene->update();
 			}
 
-			_currentScene->draw(*p_parentWindow,sf::RenderStates());
+			_currentScene->draw(p_parentWindow,sf::RenderStates());
 		}
 
 		void SceneManager::exitProgram()

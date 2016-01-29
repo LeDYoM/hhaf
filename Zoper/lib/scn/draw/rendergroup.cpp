@@ -57,20 +57,24 @@ namespace lib
 				return removeFromspVector(element, _renderNodes);
 			}
 
-			void RenderGroup::draw(sf::RenderTarget &window, sf::RenderStates states) const
+			u32 RenderGroup::draw(lib::core::Window *window, sf::RenderStates &states)
 			{
 				if (isVisible())
 				{
-//					updateAnimations();
+					updateAnimations();
+					u32 rNodes{ 0 };
 					auto oldTransformation = states.transform;
 					states.transform *= getTransform();
 
 					for (const auto renderizable : _renderNodes)
 					{
-						renderizable->draw(window,states);
+						rNodes += renderizable->draw(window,states);
 					}
-//					states.transform = oldTransformation;
+					states.transform = oldTransformation;
+					return rNodes;
 				}
+
+				return 0;
 			}
 
 			sptr<RenderGroup> RenderGroup::createNewRenderGroup(const std::string & name, sptr<IDrawable> beforeNode)
@@ -103,18 +107,6 @@ namespace lib
 			bool RenderGroup::removeRenderGroup(sptr<RenderGroup> element)
 			{
 				return removeFromspVector(element, _renderNodes);
-			}
-
-			bool RenderGroup::addNode(sptr<ISceneNode> node)
-			{
-				_renderNodes.push_back(node);
-				// TODO: Check for duplicate names
-				return true;
-			}
-
-			bool RenderGroup::removeNode(sptr<ISceneNode> node)
-			{
-				return removeFromspVector(node, _renderNodes);
 			}
 
 			void RenderGroup::clear()

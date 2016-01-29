@@ -33,17 +33,6 @@ namespace lib
 				sptr<NodeShape> createSpriteShape(const std::string &name, const sf::Vector2f &radius = sf::Vector2f());
 				sptr<draw::Renderizable> addRenderizable(sptr<Renderizable> newElement);
 				bool removeRenderizable(sptr<Renderizable> element);
-
-				template <typename T> sptr<T> createSceneNode(const std::string &name)
-				{
-					auto result = std::make_shared<T>(name);
-					addNode(result);
-					return result;
-				}
-
-				bool addNode(sptr<ISceneNode> node);
-				bool removeNode(sptr<ISceneNode> node);
-
 				void clear();
 
 				template <typename T>
@@ -55,7 +44,7 @@ namespace lib
 				sptr<RenderGroup> createNewRenderGroup(const std::string &name,sptr<IDrawable> beforeNode=nullptr);
 				bool removeRenderGroup(sptr<RenderGroup> element);
 
-				virtual void draw(sf::RenderTarget &window, sf::RenderStates states) const override;
+				u32 draw(lib::core::Window *window, sf::RenderStates &states) override;
 
 			protected:
 				void addRenderGroup(sptr<RenderGroup> node, sptr<IDrawable> beforeNode = nullptr);
