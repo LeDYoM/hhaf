@@ -7,106 +7,29 @@ namespace lib
 	{
 		namespace draw
 		{
-			Renderizable::Renderizable(const std::string &name, NodeText *text)
+			Renderizable::Renderizable(const std::string &name)
 				: HasName{ name }
 			{
-				LOG_CONSTRUCT("Name: " << name << " of type text");
+				LOG_CONSTRUCT("Name: " << name << " of type");
 
-				_drawNodeData.text = text;
-				_activeDrawNode = ActiveDrawNode::Text;
 			}
 
-			Renderizable::Renderizable(const std::string & name, NodeShape * ellipseShape)
-				: HasName{ name }
-			{
-				LOG_CONSTRUCT("Name: " << name << " of type ellipseShape");
-
-				_drawNodeData.ellipseShape = ellipseShape;
-				_activeDrawNode = ActiveDrawNode::EllipseShape;
-			}
-
-			void Renderizable::draw(sf::RenderTarget &window, sf::RenderStates states) const
+			u32 Renderizable::draw(lib::core::Window *window, sf::RenderStates &states)
 			{
 				if (isVisible())
 				{
-					window.draw(*this,states);
+//					window->draw()
+//					window->draw(*getAsDrawable(),states);
+					return 1;
 				}
+				return 0;
 			}
 
 			Renderizable::~Renderizable()
 			{
-				switch (_activeDrawNode)
-				{
-				default:
-				case ActiveDrawNode::Empty:
-					__ASSERT(!_drawNodeData.text, "Empty draw node data containing data at deletion time");
-					LOG_DESTRUCT("Name: " << name() << " and type <not defined>");
-					delete _drawNodeData.text;
-					break;
-				case ActiveDrawNode::Text:
-					LOG_DESTRUCT("Name: " << name() << " and type Text");
-					delete _drawNodeData.text;
-					break;
-				case ActiveDrawNode::EllipseShape:
-					LOG_DESTRUCT("Name: " << name() << " and type EllipseShape");
-					delete _drawNodeData.ellipseShape;
-					break;
-				}
 			}
 
-			void Renderizable::setColor(const sf::Color &color)
-			{
-				switch (_activeDrawNode)
-				{
-				case ActiveDrawNode::Text:
-					getAsText()->setColor(color);
-					break;
-				default:
-				case ActiveDrawNode::EllipseShape:
-					getAsEllipseShape()->setFillColor(color);
-					break;
-				}
-			}
-
-			floatRect Renderizable::getLocalBounds() const
-			{
-				// For some reason SFML does not have inheritance in these methods, so let's wrap it
-				__ASSERT(_drawNodeData.text, "Empty draw node data");
-				switch (_activeDrawNode)
-				{
-				default:
-				case ActiveDrawNode::Empty:
-					return sf::FloatRect();
-					break;
-				case ActiveDrawNode::Text:
-					return getAsText()->getLocalBounds();
-					break;
-				case ActiveDrawNode::EllipseShape:
-					return getAsEllipseShape()->getLocalBounds();
-					break;
-				}
-			}
-
-			floatRect Renderizable::getGlobalBounds() const
-			{
-				// For some reason SFML does not have inheritance in these methods, so let's wrap it
-				__ASSERT(_drawNodeData.text, "Empty draw node data");
-				switch (_activeDrawNode)
-				{
-				default:
-				case ActiveDrawNode::Empty:
-					return floatRect();
-					break;
-				case ActiveDrawNode::Text:
-					return getAsText()->getGlobalBounds();
-					break;
-				case ActiveDrawNode::EllipseShape:
-					return getAsEllipseShape()->getGlobalBounds();
-					break;
-				}
-			}
-
-			void Renderizable::setPosition(const sf::Vector2f &pos, Alignment alignment /*= Alignment::Left*/)
+			void Renderizable::setPosition(const sf::Vector2f &pos, Alignment alignment)
 			{
 				switch (alignment)
 				{
@@ -115,10 +38,10 @@ namespace lib
 					sf::Transformable::setPosition(pos);
 					break;
 				case lib::scn::draw::Alignment::Center:
-					setPosition(sf::Vector2f{ pos.x - (getLocalBounds().width / 2.0f), pos.y - (getLocalBounds().height / 2.0f) });
+					sf::Transformable::setPosition(sf::Vector2f{ pos.x - (getLocalBounds().width / 2.0f), pos.y - (getLocalBounds().height / 2.0f) });
 					break;
 				case lib::scn::draw::Alignment::Right:
-					setPosition(sf::Vector2f{ pos.x - (getLocalBounds().width), pos.y - (getLocalBounds().height) });
+					sf::Transformable::setPosition(sf::Vector2f{ pos.x - (getLocalBounds().width), pos.y - (getLocalBounds().height) });
 					break;
 				}
 			}
@@ -164,14 +87,8 @@ namespace lib
 
 			void Renderizable::setAlignment(Alignment alignment)
 			{
-				setPosition(sf::Transformable::getPosition(), alignment);
+				setPosition(getPosition(), alignment);
 			}
-
-			void Renderizable::ensureGeometryUpdate() const
-			{
-//				throw std::logic_error("The method or operation is not implemented.");
-			}
-
 		}
 	}
 }

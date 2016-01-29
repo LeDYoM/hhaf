@@ -2,19 +2,19 @@
 #define __LIB_ISCENENODE_HPP__
 
 #include "idrawable.hpp"
-#include "../../core/hasname.hpp"
+#include <SFML/Graphics/Transformable.hpp>
+
 namespace lib
 {
 	namespace scn
 	{
 		namespace draw
 		{
-			class ISceneNode : public IDrawable
+			class ISceneNode : public IDrawable, public sf::Transformable
 			{
 			public:
-
-				ISceneNode() {}
-				virtual ~ISceneNode() {}
+				ISceneNode();
+				virtual ~ISceneNode();
 			};
 		}
 	}

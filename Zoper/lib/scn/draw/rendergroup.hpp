@@ -20,15 +20,17 @@ namespace lib
 		namespace draw
 		{
 			class Renderizable;
+			class NodeShape;
+			class NodeText;
 			class RenderGroup : public lib::core::HasName, public IDrawable, public anim::AnimationManager, public sf::Transformable
 			{
 			public:
 				RenderGroup(const std::string &name, RenderGroup *parent=nullptr);
 				virtual ~RenderGroup();
 
-				sptr<draw::Renderizable> createText(const std::string &name);
-				sptr<draw::Renderizable> createShape(const std::string &name,const sf::Vector2f &radius=sf::Vector2f(),u32 pointCount=30);
-				sptr<draw::Renderizable> createSpriteShape(const std::string &name, const sf::Vector2f &radius = sf::Vector2f());
+				sptr<NodeText> createText(const std::string &name);
+				sptr<NodeShape> createShape(const std::string &name,const sf::Vector2f &radius=sf::Vector2f(),u32 pointCount=30);
+				sptr<NodeShape> createSpriteShape(const std::string &name, const sf::Vector2f &radius = sf::Vector2f());
 				sptr<draw::Renderizable> addRenderizable(sptr<Renderizable> newElement);
 				bool removeRenderizable(sptr<Renderizable> element);
 
@@ -43,6 +45,12 @@ namespace lib
 				bool removeNode(sptr<ISceneNode> node);
 
 				void clear();
+
+				template <typename T>
+				sptr<T> createNode(const std::string &name)
+				{
+
+				}
 
 				sptr<RenderGroup> createNewRenderGroup(const std::string &name,sptr<IDrawable> beforeNode=nullptr);
 				bool removeRenderGroup(sptr<RenderGroup> element);

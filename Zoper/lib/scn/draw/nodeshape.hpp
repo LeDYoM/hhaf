@@ -2,9 +2,10 @@
 #define __LIB_ELLIPSESHAPE_HPP__
 
 #include "../../types.hpp"
-#include "scenenode.hpp"
-#include "iscenenode.hpp"
 #include <SFML/Graphics.hpp>
+#include "renderizable.hpp"
+
+using namespace sf;
 
 namespace lib
 {
@@ -12,7 +13,7 @@ namespace lib
 	{
 		namespace draw
 		{
-			class NodeShape : public SceneNode, public ISceneNode
+			class NodeShape : public Renderizable
 			{
 			public:
 				enum class NodeMode : u8
@@ -20,7 +21,7 @@ namespace lib
 					Shape = 0,
 					Sprite = 1,
 				} _mode{ NodeMode::Shape };
-				explicit NodeShape(const vector2df& size, const u32 pointCount=4,const NodeMode mode=NodeMode::Shape);
+				explicit NodeShape(const std::string &name, const vector2df& size, const u32 pointCount=4,const NodeMode mode=NodeMode::Shape);
 				virtual ~NodeShape();
 				void setSize(const sf::Vector2f &size);
 				void setSize(const float size);
@@ -31,38 +32,31 @@ namespace lib
 				virtual sf::Vector2f getPoint(lib::u32 index) const;
 				void setTexture(const sf::Texture *texture, bool resetSize=true, bool resetRect = false);
 
-				void setTextureRect(const intRect& rect);
-				void setFillColor(const color& color);
-				void setOutlineColor(const color& color);
-				void setOutlineThickness(float thickness);
-				const sf::Texture* getTexture() const;
-				const intRect& getTextureRect() const;
-				const color& getFillColor() const;
-				const color& getOutlineColor() const;
+				void setTextureRect(const IntRect& rect);
+				virtual void setColor(const Color& color) override;
+				const Texture* getTexture() const;
+				const IntRect& getTextureRect() const;
+				const Color& getFillColor() const;
+				const Color& getOutlineColor() const;
 				float getOutlineThickness() const;
-				virtual floatRect getLocalBounds() const override;
-				virtual floatRect getGlobalBounds() const override;
-
-				virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+				FloatRect getLocalBounds() const override;
+				FloatRect getGlobalBounds() const override;
 
 			protected:
-				virtual void ensureGeometryUpdate() const override;
-				void setTexture_(const sf::Texture* texture, bool resetRect = false);
+				void update();
+				void setTexture_(const Texture* texture, bool resetRect = false);
+				virtual u32 draw(lib::core::Window *window, sf::RenderStates &states) override;
 				void updateFillColors();
 				void updateTexCoords();
-				void updateOutline();
-				void updateOutlineColors();
 
 			private:
-				const sf::Texture* m_texture;
+				const Texture* m_texture;
 				sf::Vector2f _size;
-				u32 m_pointCount;
-				intRect m_textureRect;
-				color m_fillColor;
-				color m_outlineColor;
-				float m_outlineThickness;
-				mutable sf::VertexArray m_outlineVertices;
-				mutable floatRect m_insideBounds;
+				lib::u32 m_pointCount;
+				IntRect m_textureRect;
+				Color m_fillColor;
+				VertexArray m_vertices;
+				FloatRect m_bounds;
 			};
 		}
 	}

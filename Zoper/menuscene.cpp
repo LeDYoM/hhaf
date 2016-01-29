@@ -1,5 +1,6 @@
 #include "menuscene.hpp"
-#include "lib/scn/draw/renderizable.hpp"
+#include "lib/scn/draw/nodeshape.hpp"
+#include "lib/scn/draw/nodetext.hpp"
 #include "lib/scn/resourcemanager.hpp"
 #include "lib/scn/resource.hpp"
 
@@ -30,15 +31,13 @@ namespace zoper
 		addMenuStep(lib::sptr<lib::menu::MenuStep>(new zoper::zmenu::StartLevelMenu));
 
 		_logo = createSpriteShape("mainLogo");
-		auto _logoSprite = _logo->getAsEllipseShape();
-		_logoSprite->setTexture(resourceManager()->getResource("game_menu.logo")->getAsTexture(), true, false);
-		_logoSprite->setSize(sf::Vector2f(800, 400));
+		_logo->setTexture(resourceManager()->getResource("game_menu.logo")->getAsTexture(), true, false);
+		_logo->setSize(sf::Vector2f(800, 400));
 		_logo->setPositionX(getCenterCoordinates().x, lib::scn::draw::Alignment::Center);
 		_logo->setPositionY(100);
 
-		auto _bacgroundSprite = _background->getAsEllipseShape();
-		_bacgroundSprite->setTexture(resourceManager()->getResource("game_menu.background")->getAsTexture(), true, false);
-		_bacgroundSprite->setSize(2000.0f);
+		_background->setTexture(resourceManager()->getResource("game_menu.background")->getAsTexture(), true, false);
+		_background->setSize(2000.0f);
 	}
 
 	void MenuScene::onDeinit()

@@ -148,18 +148,18 @@ namespace zoper
 
 		// Nodes from the scene
 		lib::sptr<Player> p_player{ nullptr };
-		lib::sptr<lib::scn::draw::Renderizable> _scoreText{ nullptr };
-		lib::sptr<lib::scn::draw::Renderizable> _scoreDisplay{ nullptr };
-		lib::sptr<lib::scn::draw::Renderizable> _currentLevelText{ nullptr };
-		lib::sptr<lib::scn::draw::Renderizable> _currentLevelDisplay{ nullptr };
-		lib::sptr<lib::scn::draw::Renderizable> _levelText{ nullptr };
-		lib::sptr<lib::scn::draw::Renderizable> _levelDisplay{ nullptr };
-		lib::sptr<lib::scn::draw::Renderizable> _goalText{ nullptr };
-		lib::sptr<lib::scn::draw::Renderizable> _goalDisplay{ nullptr };
-		lib::sptr<lib::scn::draw::Renderizable> _gameText{ nullptr };
-		lib::sptr<lib::scn::draw::Renderizable> _overText{ nullptr };
-		lib::sptr<lib::scn::draw::Renderizable> _pauseText{ nullptr };
-		std::vector<std::vector<lib::sptr<lib::scn::draw::Renderizable>>> _backgroundTiles;
+		lib::sptr<lib::scn::draw::NodeText> _scoreText{ nullptr };
+		lib::sptr<lib::scn::draw::NodeText> _scoreDisplay{ nullptr };
+		lib::sptr<lib::scn::draw::NodeText> _currentLevelText{ nullptr };
+		lib::sptr<lib::scn::draw::NodeText> _currentLevelDisplay{ nullptr };
+		lib::sptr<lib::scn::draw::NodeText> _levelText{ nullptr };
+		lib::sptr<lib::scn::draw::NodeText> _levelDisplay{ nullptr };
+		lib::sptr<lib::scn::draw::NodeText> _goalText{ nullptr };
+		lib::sptr<lib::scn::draw::NodeText> _goalDisplay{ nullptr };
+		lib::sptr<lib::scn::draw::NodeText> _gameText{ nullptr };
+		lib::sptr<lib::scn::draw::NodeText> _overText{ nullptr };
+		lib::sptr<lib::scn::draw::NodeText> _pauseText{ nullptr };
+		std::vector<std::vector<lib::sptr<lib::scn::draw::NodeShape>>> _backgroundTiles;
 	};
 }
 

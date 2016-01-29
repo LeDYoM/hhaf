@@ -13,6 +13,8 @@
 #include "lib/scn/draw/anim/positionanimation.hpp"
 #include "lib/scn/draw/anim/coloranimation.hpp"
 #include <SFML/Graphics.hpp>
+#include "lib/scn/draw/nodeshape.hpp"
+#include "lib/scn/draw/nodetext.hpp"
 
 #include <memory>
 #include <functional>
@@ -56,71 +58,59 @@ namespace zoper
 		_gameText = _gameOverrg->createText("gameovergame");
 		_overText = _gameOverrg->createText("gameoverover");
 
-		auto _scoreTextText = _scoreText->getAsText();
-		auto _scoreDisplayText = _scoreDisplay->getAsText();
-		auto _currentLevelTextText = _currentLevelText->getAsText();
-		auto _currentLevelDisplayText = _currentLevelDisplay->getAsText();
-		auto _gameTextText = _gameText->getAsText();
-		auto _overTextText = _overText->getAsText();
-		auto _levelTextText = _levelText->getAsText();
-		auto _levelDisplayText = _levelDisplay->getAsText();
-		auto _goalTextText = _goalText->getAsText();
-		auto _goalDisplayText = _goalDisplay->getAsText();
-		auto _pauseTextText = _pauseText->getAsText();
+		_scoreText->setFont(*(resourceManager()->getResource("game_scene.scoreFont")->getAsFont()));
+		_scoreDisplay->setFont(*(resourceManager()->getResource("game_scene.scoreFont")->getAsFont()));
+		_currentLevelText->setFont(*(resourceManager()->getResource("game_scene.scoreFont")->getAsFont()));
+		_currentLevelDisplay->setFont(*(resourceManager()->getResource("game_scene.scoreFont")->getAsFont()));
+		_gameText->setFont(*(resourceManager()->getResource("game_scene.scoreFont")->getAsFont()));
+		_overText->setFont(*(resourceManager()->getResource("game_scene.scoreFont")->getAsFont()));
+		_levelText->setFont(*(resourceManager()->getResource("game_scene.scoreFont")->getAsFont()));
+		_levelDisplay->setFont(*(resourceManager()->getResource("game_scene.scoreFont")->getAsFont()));
+		_goalText->setFont(*(resourceManager()->getResource("game_scene.scoreFont")->getAsFont()));
+		_goalDisplay->setFont(*(resourceManager()->getResource("game_scene.scoreFont")->getAsFont()));
+		_pauseText->setFont(*(resourceManager()->getResource("game_scene.scoreFont")->getAsFont()));
 
-		_scoreTextText->setFont(*(resourceManager()->getResource("game_scene.scoreFont")->getAsFont()));
-		_scoreDisplayText->setFont(*(resourceManager()->getResource("game_scene.scoreFont")->getAsFont()));
-		_currentLevelTextText->setFont(*(resourceManager()->getResource("game_scene.scoreFont")->getAsFont()));
-		_currentLevelDisplayText->setFont(*(resourceManager()->getResource("game_scene.scoreFont")->getAsFont()));
-		_gameTextText->setFont(*(resourceManager()->getResource("game_scene.scoreFont")->getAsFont()));
-		_overTextText->setFont(*(resourceManager()->getResource("game_scene.scoreFont")->getAsFont()));
-		_levelTextText->setFont(*(resourceManager()->getResource("game_scene.scoreFont")->getAsFont()));
-		_levelDisplayText->setFont(*(resourceManager()->getResource("game_scene.scoreFont")->getAsFont()));
-		_goalTextText->setFont(*(resourceManager()->getResource("game_scene.scoreFont")->getAsFont()));
-		_goalDisplayText->setFont(*(resourceManager()->getResource("game_scene.scoreFont")->getAsFont()));
-		_pauseTextText->setFont(*(resourceManager()->getResource("game_scene.scoreFont")->getAsFont()));
-
-		_scoreTextText->setString("Score: ");
+		_scoreText->setString("Score: ");
 		increaseScore(0);
-		_gameTextText->setString("GAME");
-		_overTextText->setString("OVER");
-		_pauseTextText->setString("PAUSE");
-		_currentLevelTextText->setString("Level: ");
-		_currentLevelDisplayText->setString("0");
+		_gameText->setString("GAME");
+		_overText->setString("OVER");
+		_pauseText->setString("PAUSE");
+		_currentLevelText->setString("Level: ");
+		_currentLevelDisplay->setString("0");
 
-		_scoreTextText->setCharacterSize(90);
-		_scoreDisplayText->setCharacterSize(90);
-		_currentLevelTextText->setCharacterSize(90);
-		_currentLevelDisplayText->setCharacterSize(90);
-		_gameTextText->setCharacterSize(360);
-		_overTextText->setCharacterSize(360);
-		_levelTextText->setCharacterSize(90);
-		_levelDisplayText->setCharacterSize(90);
-		_goalTextText->setCharacterSize(90);
-		_goalDisplayText->setCharacterSize(90);
-		_pauseTextText->setCharacterSize(180);
+		_scoreText->setCharacterSize(90);
+		_scoreDisplay->setCharacterSize(90);
+		_currentLevelText->setCharacterSize(90);
+		_currentLevelDisplay->setCharacterSize(90);
+		_gameText->setCharacterSize(360);
+		_overText->setCharacterSize(360);
+		_levelText->setCharacterSize(90);
+		_levelDisplay->setCharacterSize(90);
+		_goalText->setCharacterSize(90);
+		_goalDisplay->setCharacterSize(90);
+		_pauseText->setCharacterSize(180);
 
-		_scoreTextText->setColor(sf::Color::Blue);
-		_scoreDisplayText->setColor(sf::Color::White);
-		_currentLevelTextText->setColor(sf::Color::Blue);
-		_currentLevelDisplayText->setColor(sf::Color::White);
-		_gameTextText->setColor(sf::Color::White);
-		_overTextText->setColor(sf::Color::White);
-		_levelTextText->setColor(sf::Color::Blue);
-		_levelDisplayText->setColor(sf::Color::White);
-		_goalTextText->setColor(sf::Color::Blue);
-		_goalDisplayText->setColor(sf::Color::White);
-		_pauseTextText->setColor(sf::Color::White);
+		_scoreText->setColor(sf::Color::Blue);
+		_scoreDisplay->setColor(sf::Color::White);
+		_currentLevelText->setColor(sf::Color::Blue);
+		_currentLevelDisplay->setColor(sf::Color::White);
+		_gameText->setColor(sf::Color::White);
+		_overText->setColor(sf::Color::White);
+		_levelText->setColor(sf::Color::Blue);
+		_levelDisplay->setColor(sf::Color::White);
+		_goalText->setColor(sf::Color::Blue);
+		_goalDisplay->setColor(sf::Color::White);
+		_pauseText->setColor(sf::Color::White);
 
-		_scoreTextText->setScale(1.0f, 2.0f);
-		_scoreDisplayText->setScale(1.0f, 2.0f);
-		_levelTextText->setScale(1.0f, 2.0f);
-		_levelDisplayText->setScale(1.0f, 2.0f);
-		_goalTextText->setScale(1.0f, 2.0f);
-		_goalDisplayText->setScale(1.0f, 2.0f);
+		_scoreText->setScale(1.0f, 2.0f);
+		_scoreDisplay->setScale(1.0f, 2.0f);
+		_levelText->setScale(1.0f, 2.0f);
+		_levelDisplay->setScale(1.0f, 2.0f);
+		_goalText->setScale(1.0f, 2.0f);
+		_goalDisplay->setScale(1.0f, 2.0f);
 
 		_scorerg->setPosition(50, 50);
-		_scoreDisplay->setPositionX(_scoreTextText->getLocalBounds().width);
+		_scoreDisplay->setPositionX(_scoreText->getLocalBounds().width);
 
 		_currentLevelDisplay->setPositionX(_currentLevelText->getLocalBounds().width);
 
@@ -131,11 +121,11 @@ namespace zoper
 		_currentLevelDisplay->setPositionY(200);
 
 
-		auto _gameBoundingBox = _gameTextText->getLocalBounds();
-		auto _overBoundingBox = _overTextText->getLocalBounds();
+		auto _gameBoundingBox = _gameText->getLocalBounds();
+		auto _overBoundingBox = _overText->getLocalBounds();
 		auto sceneCenter = getCenterCoordinates();
-		_gameTextText->setPosition(sceneCenter.x - (_gameBoundingBox.width / 2.0f), sceneCenter.y - _gameBoundingBox.height);
-		_overTextText->setPosition(sceneCenter.x - (_overBoundingBox.width / 2.0f), sceneCenter.y);
+		_gameText->setPosition(sceneCenter.x - (_gameBoundingBox.width / 2.0f), sceneCenter.y - _gameBoundingBox.height);
+		_overText->setPosition(sceneCenter.x - (_overBoundingBox.width / 2.0f), sceneCenter.y);
 
 		_pauseText->setPosition(sf::Vector2f{ 1000.0f, 1000.0f }, lib::scn::draw::Alignment::Center);
 
@@ -161,25 +151,22 @@ namespace zoper
 		_mainBoardrg->setVisible(true);
 		_pauserg->setVisible(false);
 
-		auto levelText = _levelText->getAsText();
-		auto goalText = _goalText->getAsText();
-
 		switch (_gameData._gameMode)
 		{
 		default:
 		case GameData::GameModes::Token:
-			levelText->setString("Tokens: ");
-			goalText->setString("Goal: ");
+			_levelText->setString("Tokens: ");
+			_goalText->setString("Goal: ");
 			break;
 
 		case GameData::GameModes::Time:
-			levelText->setString("Time: ");
-			goalText->setString("Goal: ");
+			_levelText->setString("Time: ");
+			_goalText->setString("Goal: ");
 			break;
 		}
 
-		_levelDisplay->setPositionX(levelText->getLocalBounds().width);
-		_goalDisplay->setPosition(sf::Vector2f{ goalText->getLocalBounds().width, 200 });
+		_levelDisplay->setPositionX(_levelText->getLocalBounds().width);
+		_goalDisplay->setPosition(sf::Vector2f{ _goalText->getLocalBounds().width, 200 });
 
 
 		setState(Playing);
@@ -265,37 +252,34 @@ namespace zoper
 
 	void GameScene::updateGoals()
 	{
-		_currentLevelDisplay->getAsText()->setString(std::to_string(_levelProperties.currentLevel()+1));
-		auto goaldisplay = _goalDisplay->getAsText();
+		_currentLevelDisplay->setString(std::to_string(_levelProperties.currentLevel()+1));
 
 		switch (_gameData._gameMode)
 		{
 		default:
 		case GameData::GameModes::Token:
-			goaldisplay->setString(std::to_string(_levelProperties.stayTokens()));
+			_goalDisplay->setString(std::to_string(_levelProperties.stayTokens()));
 			break;
 
 		case GameData::GameModes::Time:
-			goaldisplay->setString(std::to_string(_levelProperties.stayTime()));
+			_goalDisplay->setString(std::to_string(_levelProperties.stayTime()));
 			break;
 		}
 	}
 
 	void GameScene::updateLevelData()
 	{
-		auto leveldisplay = _levelDisplay->getAsText();
-
 		switch (_gameData._gameMode)
 		{
 		default:
 		case GameData::GameModes::Token:
-			leveldisplay->setString(std::to_string(_gameData.consumedTokens));
+			_levelDisplay->setString(std::to_string(_gameData.consumedTokens));
 			if (_gameData.consumedTokens >= _levelProperties.stayTokens())
 				setLevel(_levelProperties.currentLevel() + 1);
 			break;
 
 		case GameData::GameModes::Time:
-			leveldisplay->setString(std::to_string(static_cast<lib::u16>(_gameData.levelClock.getElapsedTime().asSeconds())));
+			_levelDisplay->setString(std::to_string(static_cast<lib::u16>(_gameData.levelClock.getElapsedTime().asSeconds())));
 			if (_gameData.levelClock.getElapsedTime().asSeconds() >= _levelProperties.stayTime())
 				setLevel(_levelProperties.currentLevel() + 1);
 			break;
@@ -600,7 +584,7 @@ namespace zoper
 		_backgroundTilesrg = createNewRenderGroup("backgroundTiles", _mainBoardrg);
 		for (lib::u32 y = 0; y < _gameData.size.y; ++y)
 		{
-			std::vector<lib::sptr<lib::scn::draw::Renderizable>> column;
+			std::vector<lib::sptr<lib::scn::draw::NodeShape>> column;
 
 			for (lib::u32 x = 0; x < _gameData.size.x; ++x)
 			{
@@ -691,7 +675,7 @@ namespace zoper
 	void GameScene::tokenChangedValue(const lib::vector2du32 &position, lib::sptr<Tile> tile,
 		const lib::board::BoardTileData &ov, const lib::board::BoardTileData &nv)
 	{
-		tile->getAsEllipseShape()->setFillColor(tile->getColorForToken());
+		tile->setColor(tile->getColorForToken());
 	}
 
 	void GameScene::updatePlayer(const lib::vector2du32 &dest, lib::sptr<Player> player_)
@@ -727,7 +711,7 @@ namespace zoper
 		_score += scoreIncrement;
 		std::string result{ std::to_string(_score) };
 		while (result.size() < _scoreSize) result = "0" + result;
-		_scoreDisplay->getAsText()->setString(result);
+		_scoreDisplay->setString(result);
 	}
 
 	const lib::vector2df GameScene::getDefaultSizeView()

@@ -123,10 +123,10 @@
     <ClCompile Include="lib\scn\draw\nodetext.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="lib\scn\draw\scenenode.cpp">
+    <ClCompile Include="lib\scn\draw\iscenenode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="lib\scn\draw\vertexarray.cpp">
+    <ClCompile Include="lib\scn\draw\idrawable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -267,12 +267,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="lib\scn\draw\nodetext.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\scn\draw\scenenode.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\scn\draw\vertexarray.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="lib\scn\draw\iscenenode.hpp">

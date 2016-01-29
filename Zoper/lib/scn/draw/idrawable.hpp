@@ -3,7 +3,6 @@
 
 #include "../../types.hpp"
 #include <SFML/Graphics/RenderStates.hpp>
-#include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Drawable.hpp>
 
 namespace lib
@@ -16,13 +15,15 @@ namespace lib
 	{
 		namespace draw
 		{
-			class IDrawable : public sf::Drawable
+			class IDrawable : private sf::Drawable
 			{
 			public:
 				IDrawable() {}
 				virtual ~IDrawable() {}
 
-				virtual void draw(sf::RenderTarget &window, sf::RenderStates states) const = 0;
+				virtual u32 draw(lib::core::Window *window, sf::RenderStates &states);
+				virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
 				inline bool isVisible() const { return visible; }
 				inline void setVisible(bool nv) { visible = nv; }
 			protected:

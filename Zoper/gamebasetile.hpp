@@ -2,11 +2,11 @@
 #define __GAMEBASETILE_HPP__
 
 #include "lib/board/itilescontroller.hpp"
-#include "lib/scn/draw/renderizable.hpp"
+#include "lib/scn/draw/nodeshape.hpp"
 
 namespace zoper
 {
-	class GameBaseTile : public lib::board::ITile, public lib::scn::draw::Renderizable
+	class GameBaseTile : public lib::board::ITile, public lib::scn::draw::NodeShape
 	{
 	public:
 		explicit GameBaseTile(lib::board::BoardTileData data, const sf::Vector2f &size, const std::string &baseName);
