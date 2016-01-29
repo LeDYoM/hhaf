@@ -11,7 +11,7 @@
 #include <string>
 #include <vector>
 
-#include "iscenenode.hpp"
+#include "renderizable.hpp"
 
 namespace lib
 {
@@ -19,7 +19,7 @@ namespace lib
 	{
 		namespace draw
 		{
-			class NodeText : public Renderizable
+			class NodeText : public lib::scn::draw::Renderizable
 			{
 			public:
 				enum Style
@@ -31,10 +31,9 @@ namespace lib
 					StrikeThrough = 1 << 3  ///< Strike through characters
 				};
 
-				NodeText();
 				virtual ~NodeText();
-
-				NodeText(const sf::String& string, const sf::Font& font, unsigned int characterSize = 30);
+				NodeText(const std::string &name);
+				NodeText(const std::string &name, const sf::String& string, const sf::Font& font, unsigned int characterSize = 30);
 				void setString(const sf::String& string);
 				void setFont(const sf::Font& font);
 				void setCharacterSize(unsigned int size);

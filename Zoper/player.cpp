@@ -9,9 +9,8 @@ namespace zoper
 		: GameBaseTile{ 0, size, "player" },
 		playerDirection{ Direction::Up }
 	{
-		auto this_ = getAsEllipseShape();
-		this_->setPointCount(3);
-		this_->setFillColor(getColorForToken());
+		setPointCount(3);
+		setColor(getColorForToken());
 		setBoardPosition(bPosition);
 	}
 

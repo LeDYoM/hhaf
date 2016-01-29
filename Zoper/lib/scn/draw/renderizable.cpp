@@ -7,24 +7,12 @@ namespace lib
 	{
 		namespace draw
 		{
-			Renderizable::Renderizable(const std::string &name, NodeText *text)
+			Renderizable::Renderizable(const std::string &name)
 				: HasName{ name }
 			{
-				LOG_CONSTRUCT("Name: " << name << " of type text");
-
-				_drawNodeData.text = text;
-				_activeDrawNode = ActiveDrawNode::Text;
-			}
-
-			Renderizable::Renderizable(const std::string & name, NodeShape * ellipseShape)
-				: HasName{ name }
-			{
-				LOG_CONSTRUCT("Name: " << name << " of type ellipseShape");
-				_drawNodeData.ellipseShape = ellipseShape;
-				_activeDrawNode = ActiveDrawNode::EllipseShape;
+				LOG_CONSTRUCT("Name: " << name << " of type");
 
 			}
-
 
 			u32 Renderizable::draw(lib::core::Window *window, sf::RenderStates &states)
 			{
@@ -39,75 +27,6 @@ namespace lib
 
 			Renderizable::~Renderizable()
 			{
-				switch (_activeDrawNode)
-				{
-				default:
-				case ActiveDrawNode::Empty:
-					__ASSERT(!_drawNodeData.text, "Empty draw node data containing data at deletion time");
-					LOG_DESTRUCT("Name: " << name() << " and type <not defined>");
-					delete _drawNodeData.text;
-					break;
-				case ActiveDrawNode::Text:
-					LOG_DESTRUCT("Name: " << name() << " and type Text");
-					delete _drawNodeData.text;
-					break;
-				case ActiveDrawNode::EllipseShape:
-					LOG_DESTRUCT("Name: " << name() << " and type EllipseShape");
-					delete _drawNodeData.ellipseShape;
-					break;
-				}
-			}
-
-			void Renderizable::setColor(const sf::Color &color)
-			{
-				switch (_activeDrawNode)
-				{
-				case ActiveDrawNode::Text:
-					getAsText()->setColor(color);
-					break;
-				default:
-				case ActiveDrawNode::EllipseShape:
-					getAsEllipseShape()->setFillColor(color);
-					break;
-				}
-			}
-
-			sf::FloatRect Renderizable::getLocalBounds()
-			{
-				// For some reason SFML does not have inheritance in these methods, so let's wrap it
-				__ASSERT(_drawNodeData.text, "Empty draw node data");
-				switch (_activeDrawNode)
-				{
-				default:
-				case ActiveDrawNode::Empty:
-					return sf::FloatRect();
-					break;
-				case ActiveDrawNode::Text:
-					return getAsText()->getLocalBounds();
-					break;
-				case ActiveDrawNode::EllipseShape:
-					return getAsEllipseShape()->getLocalBounds();
-					break;
-				}
-			}
-
-			sf::FloatRect Renderizable::getGlobalBounds()
-			{
-				// For some reason SFML does not have inheritance in these methods, so let's wrap it
-				__ASSERT(_drawNodeData.text, "Empty draw node data");
-				switch (_activeDrawNode)
-				{
-				default:
-				case ActiveDrawNode::Empty:
-					return sf::FloatRect();
-					break;
-				case ActiveDrawNode::Text:
-					return getAsText()->getGlobalBounds();
-					break;
-				case ActiveDrawNode::EllipseShape:
-					return getAsEllipseShape()->getGlobalBounds();
-					break;
-				}
 			}
 
 			void Renderizable::setPosition(const sf::Vector2f &pos, Alignment alignment)

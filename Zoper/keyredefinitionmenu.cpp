@@ -5,6 +5,7 @@
 #include "lib/scn/draw/renderizable.hpp"
 #include "lib/scn/resourcemanager.hpp"
 #include "lib/scn/resource.hpp"
+#include "lib/scn/draw/nodetext.hpp"
 
 #include "common.hpp"
 
@@ -25,13 +26,12 @@ namespace zoper
 		void KeyRedefinitionMenu::onCreate()
 		{
 			_nextKeyText = createText("pressKey");
-			auto _nextKeyTextText = _nextKeyText->getAsText();
 			auto rManager = menuManager()->resourceManager();
 
-			_nextKeyTextText->setFont(*rManager->getResource("game_menu.mainFont")->getAsFont());
-			_nextKeyTextText->setCharacterSize(90);
-			_nextKeyTextText->setString(" ");
-			_nextKeyTextText->setColor(sf::Color::Blue);
+			_nextKeyText->setFont(*rManager->getResource("game_menu.mainFont")->getAsFont());
+			_nextKeyText->setCharacterSize(90);
+			_nextKeyText->setString(" ");
+			_nextKeyText->setColor(sf::Color::Blue);
 			_nextKeyText->setPosition(sf::Vector2f{ 1000.0f, 1000.0f }, lib::scn::draw::Alignment::Center);
 			_indexKey = 0;
 			setTextForKey();
@@ -62,7 +62,7 @@ namespace zoper
 			}
 			else
 			{
-				_nextKeyText->getAsText()->setString("Press key for "+getKeyNameStr(_indexKey));
+				_nextKeyText->setString("Press key for "+getKeyNameStr(_indexKey));
 				_nextKeyText->setPosition(sf::Vector2f{ 1000.0,1000.0 }, lib::scn::draw::Alignment::Center);
 			}
 		}

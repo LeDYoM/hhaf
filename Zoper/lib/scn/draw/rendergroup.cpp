@@ -5,6 +5,9 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
+#include "nodeshape.hpp"
+#include "nodetext.hpp"
+
 namespace lib
 {
 	namespace scn
@@ -22,23 +25,23 @@ namespace lib
 				_renderNodes.clear();
 			}
 
-			sptr<draw::Renderizable> RenderGroup::createText(const std::string &name)
+			sptr<NodeText> RenderGroup::createText(const std::string &name)
 			{
-				auto result = sptr<draw::Renderizable>(new Renderizable(name, new NodeText));
+				auto result = sptr<NodeText>(new NodeText(name));
 				addRenderizable(result);
 				return result;
 			}
 
-			sptr<draw::Renderizable> RenderGroup::createShape(const std::string &name, const sf::Vector2f &radius/*=sf::Vector2f()*/, u32 pointCount/*=30*/)
+			sptr<NodeShape> RenderGroup::createShape(const std::string &name, const sf::Vector2f &radius/*=sf::Vector2f()*/, u32 pointCount/*=30*/)
 			{
-				auto result = sptr<draw::Renderizable>(new Renderizable(name, new NodeShape(radius,pointCount)));
+				auto result = sptr<NodeShape>(new NodeShape(name,radius,pointCount));
 				addRenderizable(result);
 				return result;
 			}
 
-			sptr<draw::Renderizable> RenderGroup::createSpriteShape(const std::string &name, const sf::Vector2f &radius /*= sf::Vector2f()*/)
+			sptr<NodeShape> RenderGroup::createSpriteShape(const std::string &name, const sf::Vector2f &radius /*= sf::Vector2f()*/)
 			{
-				auto result = sptr<draw::Renderizable>(new Renderizable(name, new NodeShape(radius, 4,NodeShape::NodeMode::Sprite)));
+				auto result = sptr<NodeShape>(new NodeShape(name,radius, 4,NodeShape::NodeMode::Sprite));
 				addRenderizable(result);
 				return result;
 			}

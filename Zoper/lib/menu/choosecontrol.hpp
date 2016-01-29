@@ -50,15 +50,15 @@ namespace lib
 			struct LabelData
 			{
 				std::vector<std::string> textSubLabel;
-				sptr<scn::draw::Renderizable> subLabel{ nullptr };
-				sptr<scn::draw::Renderizable> label{ nullptr };
+				sptr<scn::draw::NodeText> subLabel{ nullptr };
+				sptr<scn::draw::NodeText> label{ nullptr };
 				u32 selectedSublabel{ 0 };
-				LabelData(const std::vector<std::string> textSubLevel_, sptr<scn::draw::Renderizable> subLabel_,
-					sptr<scn::draw::Renderizable> label_, const u32 selectedSubLabel_)
+				LabelData(const std::vector<std::string> textSubLevel_, sptr<scn::draw::NodeText> subLabel_,
+					sptr<scn::draw::NodeText> label_, const u32 selectedSubLabel_)
 					: textSubLabel(textSubLevel_), subLabel{ subLabel_ }, label{ label_ }, selectedSublabel{ selectedSubLabel_ } {}
 			};
 			std::vector<LabelData> _labelData;
-			sptr<scn::draw::Renderizable> _cursor;
+			sptr<scn::draw::NodeShape> _cursor;
 			std::function<void(const u32, ChooseControl &self)> _onSelected;
 		};
 	}

@@ -2,6 +2,8 @@
 #include "menudescriptors.hpp"
 #include "../scn/resource.hpp"
 #include "../scn/draw/anim/positionanimation.hpp"
+#include "../scn/draw/nodeshape.hpp"
+#include "../scn/draw/nodetext.hpp"
 
 namespace lib
 {
@@ -18,39 +20,36 @@ namespace lib
 		{
 			descriptorCursorSize = cursorDescriptor->_size;
 			_cursor = createShape("cursor");
-			auto cursor_ = _cursor->getAsEllipseShape();
-			cursor_->setPointCount(cursorDescriptor->_nVertex);
-			cursor_->setFillColor(cursorDescriptor->_color);
-			cursor_->setSize(descriptorCursorSize);
+			_cursor->setPointCount(cursorDescriptor->_nVertex);
+			_cursor->setColor(cursorDescriptor->_color);
+			_cursor->setSize(descriptorCursorSize);
 
 			u32 count{ 0 };
 			vector2df currentPos{ 0.0f, 0.0f };
 			for (const auto label : labels)
 			{
-				auto renderizable = createText("name" + count);
-				auto text = renderizable->getAsText();
+				auto text = createText("name" + count);
 				text->setFont(*(font->getAsFont()));
 				text->setCharacterSize(chSize);
 				text->setString(labels[count]->_text);
 				text->setColor(textColor);
-				renderizable->setPositionX(0,alignment);
-				renderizable->setPositionY(currentPos.y);
+				text->setPositionX(0, alignment);
+				text->setPositionY(currentPos.y);
 
-				sptr<scn::draw::Renderizable> subrenderizable{ nullptr };
+				sptr<scn::draw::NodeText> subtext{ nullptr };
 				if (labels[count]->_subOptionsLabels.size()>0)
 				{
-					subrenderizable = createText("sub_name" + count);
-					auto subtext = subrenderizable->getAsText();
+					subtext = createText("sub_name" + count);
 					subtext->setFont(*(font->getAsFont()));
 					subtext->setCharacterSize(chSize);
 					subtext->setString(labels[count]->_subOptionsLabels[labels[count]->_startValueIndex]);
 					subtext->setColor(textColor);
-					subrenderizable->setPositionX(1800, lib::scn::draw::Alignment::Right);
-					subrenderizable->setPositionY(currentPos.y);
+					subtext->setPositionX(1800, lib::scn::draw::Alignment::Right);
+					subtext->setPositionY(currentPos.y);
 				}
 
 				currentPos.y += (chSize + incY);
-				_labelData.push_back(LabelData(labels[count]->_subOptionsLabels,subrenderizable,renderizable, labels[count]->_startValueIndex));
+				_labelData.push_back(LabelData(labels[count]->_subOptionsLabels,subtext,text, labels[count]->_startValueIndex));
 				++count;
 			}
 
@@ -114,7 +113,7 @@ namespace lib
 
 		void ChooseControl::updateSubLabelText(const u32 index)
 		{
-			_labelData[index].subLabel->getAsText()->setString(_labelData[index].textSubLabel[_labelData[index].selectedSublabel]);
+			_labelData[index].subLabel->setString(_labelData[index].textSubLabel[_labelData[index].selectedSublabel]);
 			_labelData[index].subLabel->setPositionX(1800.0f, lib::scn::draw::Alignment::Right);
 		}
 
@@ -122,24 +121,22 @@ namespace lib
 		{
 			__ASSERT(nodeIndex < _labelData.size(), "Invalid select index for cursor");
 
-			_labelData[_cursorItemSelected].label->getAsText()->setColor(_textColor);
+			_labelData[_cursorItemSelected].label->setColor(_textColor);
 			if (_labelData[_cursorItemSelected].subLabel)
 			{
-				_labelData[_cursorItemSelected].subLabel->getAsText()->setColor(_textColor);
+				_labelData[_cursorItemSelected].subLabel->setColor(_textColor);
 			}
 
 			_cursorItemSelected = nodeIndex;
-			auto selected = _labelData[nodeIndex].label;
-			auto selectedText = selected->getAsText();
+			auto selectedText = _labelData[nodeIndex].label;
 
 			selectedText->setColor(_selectedTextColor);
 			if (_labelData[_cursorItemSelected].subLabel)
 			{
-				_labelData[_cursorItemSelected].subLabel->getAsText()->setColor(_selectedTextColor);
+				_labelData[_cursorItemSelected].subLabel->setColor(_selectedTextColor);
 			}
 
-			auto cursor_ = _cursor->getAsEllipseShape();
-			cursor_->setRotation(90);
+			_cursor->setRotation(90);
 			
 			addAnimation(scn::draw::anim::PositionAnimation::create(120, _cursor, 
 				vector2df{ selectedText->getPosition().x - descriptorCursorSize.x, selectedText->getPosition().y }));

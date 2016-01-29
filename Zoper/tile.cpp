@@ -9,8 +9,7 @@ namespace zoper
 	Tile::Tile(lib::board::BoardTileData data, const sf::Vector2f &size) : GameBaseTile{ data, size, std::string("tile") + std::to_string(_tileCounter) }
 	{
 		++_tileCounter;
-		auto this_ = getAsEllipseShape();
-		this_->setFillColor(getColorForToken());
+		setColor(getColorForToken());
 	}
 
 	Tile::~Tile()

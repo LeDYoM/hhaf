@@ -3,7 +3,7 @@
 
 #include "../../types.hpp"
 #include <SFML/Graphics.hpp>
-#include "iscenenode.hpp"
+#include "renderizable.hpp"
 
 using namespace sf;
 
@@ -21,7 +21,7 @@ namespace lib
 					Shape = 0,
 					Sprite = 1,
 				} _mode{ NodeMode::Shape };
-				explicit NodeShape(const vector2df& size, const u32 pointCount=4,const NodeMode mode=NodeMode::Shape);
+				explicit NodeShape(const std::string &name, const vector2df& size, const u32 pointCount=4,const NodeMode mode=NodeMode::Shape);
 				virtual ~NodeShape();
 				void setSize(const sf::Vector2f &size);
 				void setSize(const float size);
@@ -33,16 +33,14 @@ namespace lib
 				void setTexture(const sf::Texture *texture, bool resetSize=true, bool resetRect = false);
 
 				void setTextureRect(const IntRect& rect);
-				void setFillColor(const Color& color);
-				void setOutlineColor(const Color& color);
-				void setOutlineThickness(float thickness);
+				virtual void setColor(const Color& color) override;
 				const Texture* getTexture() const;
 				const IntRect& getTextureRect() const;
 				const Color& getFillColor() const;
 				const Color& getOutlineColor() const;
 				float getOutlineThickness() const;
-				FloatRect getLocalBounds() const;
-				FloatRect getGlobalBounds() const;
+				FloatRect getLocalBounds() const override;
+				FloatRect getGlobalBounds() const override;
 
 			protected:
 				void update();
@@ -50,8 +48,6 @@ namespace lib
 				virtual u32 draw(lib::core::Window *window, sf::RenderStates &states) override;
 				void updateFillColors();
 				void updateTexCoords();
-				void updateOutline();
-				void updateOutlineColors();
 
 			private:
 				const Texture* m_texture;
@@ -59,11 +55,7 @@ namespace lib
 				lib::u32 m_pointCount;
 				IntRect m_textureRect;
 				Color m_fillColor;
-				Color m_outlineColor;
-				float m_outlineThickness;
 				VertexArray m_vertices;
-				VertexArray m_outlineVertices;
-				FloatRect m_insideBounds;
 				FloatRect m_bounds;
 			};
 		}

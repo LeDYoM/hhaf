@@ -12,11 +12,12 @@ namespace lib
 	{
 		namespace draw
 		{
-			NodeText::NodeText() : m_string(), m_font(nullptr), m_characterSize(30), m_style(Regular),
+			NodeText::NodeText(const std::string &name)
+				: Renderizable{ name }, m_string(), m_font(nullptr), m_characterSize(30), m_style(Regular),
 				m_color(255, 255, 255), m_vertices(sf::Triangles), m_bounds(), m_geometryNeedUpdate(false) {}
 
-			NodeText::NodeText(const sf::String& string, const sf::Font& font, unsigned int characterSize) :
-				m_string(string), m_font(&font), m_characterSize(characterSize), m_style(Regular),
+			NodeText::NodeText(const std::string &name, const sf::String& string, const sf::Font& font, unsigned int characterSize) :
+				Renderizable{ name }, m_string(string), m_font(&font), m_characterSize(characterSize), m_style(Regular),
 				m_color(255, 255, 255), m_vertices(sf::Triangles), m_bounds(), m_geometryNeedUpdate(true) {}
 
 			NodeText::~NodeText() {	}
@@ -160,9 +161,11 @@ namespace lib
 				{
 					ensureGeometryUpdate();
 
+					auto oldTransform = states.transform;
 					states.transform *= getTransform();
 					states.texture = &m_font->getTexture(m_characterSize);
 					window->draw(m_vertices, states);
+					states.transform = oldTransform;
 					return 1;
 				}
 				return 0;
@@ -171,8 +174,8 @@ namespace lib
 			void NodeText::ensureGeometryUpdate() const
 			{
 				// Do nothing, if geometry has not changed
-				if (!m_geometryNeedUpdate)
-					return;
+//				if (!m_geometryNeedUpdate)
+//					return;
 
 				// Mark geometry as updated
 				m_geometryNeedUpdate = false;
