@@ -35,12 +35,6 @@ namespace lib
 				bool removeRenderizable(sptr<Renderizable> element);
 				void clear();
 
-				template <typename T>
-				sptr<T> createNode(const std::string &name)
-				{
-
-				}
-
 				sptr<RenderGroup> createNewRenderGroup(const std::string &name,sptr<IDrawable> beforeNode=nullptr);
 				bool removeRenderGroup(sptr<RenderGroup> element);
 

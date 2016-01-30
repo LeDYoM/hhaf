@@ -86,7 +86,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="lib\scn\draw\idrawable.cpp" />
     <ClCompile Include="lib\scn\draw\iscenenode.cpp" />
     <ClCompile Include="keyredefinitionmenu.cpp" />
     <ClCompile Include="lib\menu\choosecontrol.cpp" />

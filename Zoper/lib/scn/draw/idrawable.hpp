@@ -15,14 +15,13 @@ namespace lib
 	{
 		namespace draw
 		{
-			class IDrawable : private sf::Drawable
+			class IDrawable
 			{
 			public:
 				IDrawable() {}
 				virtual ~IDrawable() {}
 
-				virtual u32 draw(lib::core::Window *window, sf::RenderStates &states);
-				virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+				virtual u32 draw(lib::core::Window *window, sf::RenderStates &states) = 0;
 
 				inline bool isVisible() const { return visible; }
 				inline void setVisible(bool nv) { visible = nv; }

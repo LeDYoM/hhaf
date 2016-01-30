@@ -126,9 +126,6 @@
     <ClCompile Include="lib\scn\draw\iscenenode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="lib\scn\draw\idrawable.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="zoperprogramcontroller.hpp">
