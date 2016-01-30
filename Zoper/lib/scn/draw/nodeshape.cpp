@@ -13,7 +13,7 @@ namespace lib
 		{
 			NodeShape::NodeShape(const std::string &name, const vector2df& size, const u32 pointCount, const NodeMode mode)
 				: Renderizable{ name }, _mode{ mode }, m_texture{ nullptr },m_textureRect(),m_fillColor(255, 255, 255),
-				m_vertices(TrianglesFan), m_bounds(), _size{ size }, m_pointCount{ pointCount }
+				m_vertices(sf::TrianglesFan), m_bounds(), _size{ size }, m_pointCount{ pointCount }
 			{
 				update();
 			}
@@ -115,13 +115,13 @@ namespace lib
 				return p1.x * p2.x + p1.y * p2.y;
 			}
 
-			void NodeShape::setTexture_(const Texture* texture, bool resetRect)
+			void NodeShape::setTexture_(const sf::Texture* texture, bool resetRect)
 			{
 				if (texture)
 				{
 					// Recompute the texture area if requested, or if there was no texture & rect before
-					if (resetRect || (!m_texture && (m_textureRect == IntRect())))
-						setTextureRect(IntRect(0, 0, texture->getSize().x, texture->getSize().y));
+					if (resetRect || (!m_texture && (m_textureRect == sf::IntRect())))
+						setTextureRect(sf::IntRect(0, 0, texture->getSize().x, texture->getSize().y));
 				}
 
 				// Assign the new texture
@@ -129,39 +129,39 @@ namespace lib
 			}
 
 
-			const Texture* NodeShape::getTexture() const
+			const sf::Texture* NodeShape::getTexture() const
 			{
 				return m_texture;
 			}
 
-			void NodeShape::setTextureRect(const IntRect& rect)
+			void NodeShape::setTextureRect(const sf::IntRect& rect)
 			{
 				m_textureRect = rect;
 				updateTexCoords();
 			}
 
-			const IntRect& NodeShape::getTextureRect() const
+			const sf::IntRect& NodeShape::getTextureRect() const
 			{
 				return m_textureRect;
 			}
 
-			void NodeShape::setColor(const Color& color)
+			void NodeShape::setColor(const sf::Color& color)
 			{
 				m_fillColor = color;
 				updateFillColors();
 			}
 
-			const Color& NodeShape::getFillColor() const
+			const sf::Color& NodeShape::getFillColor() const
 			{
 				return m_fillColor;
 			}
 
-			FloatRect NodeShape::getLocalBounds() const
+			sf::FloatRect NodeShape::getLocalBounds() const
 			{
 				return m_bounds;
 			}
 
-			FloatRect NodeShape::getGlobalBounds() const
+			sf::FloatRect NodeShape::getGlobalBounds() const
 			{
 				return getTransform().transformRect(getLocalBounds());
 			}

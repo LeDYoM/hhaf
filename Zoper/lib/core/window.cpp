@@ -6,18 +6,16 @@
 #include "programcontroller.hpp"
 #include <SFML/System.hpp>
 
-using namespace sf;
-
 namespace lib
 {
 	namespace core
 	{
 		struct WindowPrivate
 		{
-			Clock globalClock;
-			Int32 lastTimeFps{ 0 };
-			int lastFps{ 0 };
-			int currentFps{ 0 };
+			sf::Clock globalClock;
+			u32 lastTimeFps{ 0 };
+			s32 lastFps{ 0 };
+			s32 currentFps{ 0 };
 			Randomizer randomizer;
 		};
 		Window::Window(ProgramController *parentController, const WindowCreationParams &wcp)
@@ -47,7 +45,7 @@ namespace lib
 			sf::Uint32 style{ sf::Style::Titlebar | sf::Style::Close };
 			if (wcp.fullScreen)
 				style = sf::Style::Fullscreen;
-			sf::Window::create(VideoMode(wcp.width, wcp.height, wcp.bpp), _title, style,sf::ContextSettings(0,0,wcp.antialiasing));
+			sf::Window::create(sf::VideoMode(wcp.width, wcp.height, wcp.bpp), _title, style,sf::ContextSettings(0,0,wcp.antialiasing));
 
 			this->setVerticalSyncEnabled(wcp.vsync);
 		}

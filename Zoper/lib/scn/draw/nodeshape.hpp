@@ -5,8 +5,6 @@
 #include <SFML/Graphics.hpp>
 #include "renderizable.hpp"
 
-using namespace sf;
-
 namespace lib
 {
 	namespace scn
@@ -32,31 +30,31 @@ namespace lib
 				virtual sf::Vector2f getPoint(lib::u32 index) const;
 				void setTexture(const sf::Texture *texture, bool resetSize=true, bool resetRect = false);
 
-				void setTextureRect(const IntRect& rect);
-				virtual void setColor(const Color& color) override;
-				const Texture* getTexture() const;
-				const IntRect& getTextureRect() const;
-				const Color& getFillColor() const;
-				const Color& getOutlineColor() const;
+				void setTextureRect(const sf::IntRect& rect);
+				virtual void setColor(const sf::Color& color) override;
+				const sf::Texture* getTexture() const;
+				const sf::IntRect& getTextureRect() const;
+				const sf::Color& getFillColor() const;
+				const sf::Color& getOutlineColor() const;
 				float getOutlineThickness() const;
-				FloatRect getLocalBounds() const override;
-				FloatRect getGlobalBounds() const override;
+				sf::FloatRect getLocalBounds() const override;
+				sf::FloatRect getGlobalBounds() const override;
 
 			protected:
 				void update();
-				void setTexture_(const Texture* texture, bool resetRect = false);
+				void setTexture_(const sf::Texture* texture, bool resetRect = false);
 				virtual u32 draw(lib::core::Window *window, sf::RenderStates &states) override;
 				void updateFillColors();
 				void updateTexCoords();
 
 			private:
-				const Texture* m_texture;
+				const sf::Texture* m_texture;
 				sf::Vector2f _size;
 				lib::u32 m_pointCount;
-				IntRect m_textureRect;
-				Color m_fillColor;
-				VertexArray m_vertices;
-				FloatRect m_bounds;
+				sf::IntRect m_textureRect;
+				sf::Color m_fillColor;
+				sf::VertexArray m_vertices;
+				sf::FloatRect m_bounds;
 			};
 		}
 	}
