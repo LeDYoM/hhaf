@@ -3,6 +3,7 @@
 #include "../log.hpp"
 #include "../randomizer.hpp"
 #include "../scn/scenemanager.hpp"
+#include "../timer.hpp"
 #include "programcontroller.hpp"
 #include <SFML/System.hpp>
 
@@ -12,8 +13,8 @@ namespace lib
 	{
 		struct WindowPrivate
 		{
-			sf::Clock globalClock;
-			u32 lastTimeFps{ 0 };
+			Timer globalClock;
+			u64 lastTimeFps{ 0 };
 			s32 lastFps{ 0 };
 			s32 currentFps{ 0 };
 			Randomizer randomizer;
@@ -52,7 +53,7 @@ namespace lib
 
 		bool Window::loopStep()
 		{
-			auto eMs = p_wPrivate->globalClock.getElapsedTime().asMilliseconds();
+			auto eMs = p_wPrivate->globalClock.getElapsedTime().asMilliSeconds();
 			if ((eMs - p_wPrivate->lastTimeFps) > 1000)
 			{
 				p_wPrivate->lastTimeFps = eMs;

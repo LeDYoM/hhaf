@@ -190,7 +190,7 @@ namespace zoper
 			if (_gameData._gameMode == GameData::GameModes::Time)
 				updateLevelData();
 
-			if (gameClock.getElapsedTime().asMilliseconds() > static_cast<sf::Int32>(_levelProperties.millisBetweenTokens()))
+			if (gameClock.getElapsedTime().asMilliSeconds() > static_cast<lib::u64>(_levelProperties.millisBetweenTokens()))
 			{
 				// New token
 				generateNextToken();
@@ -218,7 +218,7 @@ namespace zoper
 		{
 			setState(Playing);
 			_pauserg->setVisible(false);
-			gameClock.start();
+			gameClock.resume();
 			return false;
 		}
 		return false;

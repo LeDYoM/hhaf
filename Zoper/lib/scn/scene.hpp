@@ -5,6 +5,7 @@
 #include <string>
 #include "../compileconfig.hpp"
 #include "../types.hpp"
+#include "../timer.hpp"
 #include "draw/rendergroup.hpp"
 
 #include <SFML/Graphics.hpp>
@@ -58,7 +59,7 @@ namespace lib
 			inline u32 state() const { return _state; }
 			inline void setState(u32 ns) { _state = ns; }
 
-			sf::Clock clock;
+			Timer clock;
 		private:
 			void privateOnInit();
 			void privateOnDeinit();

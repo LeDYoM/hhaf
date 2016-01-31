@@ -122,6 +122,7 @@
     <ClCompile Include="lib\scn\draw\anim\positionanimation.cpp" />
     <ClCompile Include="startlevelmenu.cpp" />
     <ClCompile Include="tile.cpp" />
+    <ClCompile Include="lib\timer.cpp" />
     <ClCompile Include="zoperprogramcontroller.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -171,6 +172,7 @@
     <ClInclude Include="lib\scn\draw\anim\positionanimation.hpp" />
     <ClInclude Include="startlevelmenu.hpp" />
     <ClInclude Include="tile.hpp" />
+    <ClInclude Include="lib\timer.hpp" />
     <ClInclude Include="zoperprogramcontroller.hpp" />
   </ItemGroup>
   <ItemGroup>

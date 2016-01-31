@@ -7,6 +7,7 @@
 #include "lib/board/itilescontroller.hpp"
 #include "lib/board/boardmodel.hpp"
 #include "lib/configuration.hpp"
+#include "lib/timer.hpp"
 #include "lib/pclock.hpp"
 #include "keymapping.hpp"
 #include "direction.hpp"
@@ -27,7 +28,6 @@ namespace zoper
 	struct GameData
 	{
 		lib::vector2du32 size{ 0u, 0u };
-
 		lib::Rect centerRect;
 
 		struct TokenZone
@@ -40,7 +40,7 @@ namespace zoper
 		void generateTokenZones();
 		std::array<TokenZone, NUMWAYS> _tokenZones;
 
-		sf::Clock levelClock;
+		lib::Timer levelClock;
 		lib::u32 consumedTokens;
 
 		enum GameModes : lib::u8
@@ -63,9 +63,6 @@ namespace zoper
 		virtual void onExitScene() override;
 
 		virtual void update();
-
-		inline void setGameData(const GameData &gData) { _gameData = gData; }
-		inline const GameData &getGameData() const { return _gameData; };
 
 	private:
 		KeyMapping _keyMapping;
@@ -131,7 +128,7 @@ namespace zoper
 		virtual void onAnimationFinished(lib::sptr<lib::scn::draw::anim::IAnimation> anim, lib::sptr<lib::scn::draw::Renderizable> node) override;
 
 		// Properties
-		lib::PClock gameClock;
+		lib::PausableTimer gameClock;
 		lib::sptr<lib::board::BoardModel> p_boardModel{ nullptr };
 		GameData _gameData;
 		lib::u32 _score{ 0 };

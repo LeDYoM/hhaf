@@ -3,6 +3,7 @@
 
 #include "../renderizable.hpp"
 #include "../../../log.hpp"
+#include "../../../timer.hpp"
 
 namespace lib
 {
@@ -23,7 +24,7 @@ namespace lib
 					virtual const std::string animationType() const = 0;
 					virtual bool animate()
 					{
-						currentTime = _clock.getElapsedTime().asMilliseconds();
+						currentTime = _clock.getElapsedTime().asMilliSeconds();
 						if (currentTime > _duration)
 						{
 							_delta = 1.0f;
@@ -35,11 +36,11 @@ namespace lib
 					sptr<Renderizable> node() const { return _node; }
 					virtual ~IAnimation(){}
 				protected:
-					s32 currentTime;
-					s32 _duration;
+					u64 currentTime;
+					u64 _duration;
 					float _delta{ 0.0f };
 					sptr<Renderizable> _node;
-					sf::Clock _clock;
+					Timer _clock;
 				};
 
 				template <typename T>
