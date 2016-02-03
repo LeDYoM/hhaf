@@ -1,0 +1,4 @@
+C:/Users/Ixmaelon/MyProjects/Cpp/Zoper/_build/app/CMakeFiles/app.dir
+C:/Users/Ixmaelon/MyProjects/Cpp/Zoper/_build/CMakeFiles/ALL_BUILD.dir
+C:/Users/Ixmaelon/MyProjects/Cpp/Zoper/_build/app/CMakeFiles/copy_sfml.dir
+C:/Users/Ixmaelon/MyProjects/Cpp/Zoper/_build/CMakeFiles/ZERO_CHECK.dir
