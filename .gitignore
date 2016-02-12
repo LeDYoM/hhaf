@@ -198,3 +198,4 @@ Zoper/log.txt
 dist/
 Zoper.VC.opendb
 install/
+_build/
