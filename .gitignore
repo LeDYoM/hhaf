@@ -194,7 +194,8 @@ FakesAssemblies/
 
 # Visual Studio 6 workspace options file
 *.opt
-Zoper/log.txt
-dist/
-Zoper.VC.opendb
-install/
+
+#Zoper/log.txt
+#dist/
+#Zoper.VC.opendb
+#install/

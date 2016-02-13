@@ -1,0 +1,132 @@
+[General]
+Program name = Zoper
+Program version = 
+Windows 2000 = 1
+Windows XP = 1
+Windows Server 2003 = 1
+Windows Vista = 1
+Windows Server 2008 = 1
+Windows 7 = 1
+Windows 8 = 1
+Company name = Ismael Gonzalez Burgos
+Website = 
+SFA = 1
+DFA = 1
+Comp = 1
+[Graphics]
+Wizard image = <main>
+Header image = <main>
+Install-icon image = <main>
+Show Label = 1
+Windows style = 1
+XpStyle = 1
+[Files]
+Include Zipfile = 0
+Zipfile = 
+Installation path = <programfiles>\<appname>\
+Autcip = 1
+[Uninstall]
+Vwau = 0
+Website = 
+Include uninstaller = 1
+Uninstaller filename = Uninstall
+[Licence]
+Licence dialog = 1
+[Finish]
+Sart program = 0
+Reboot computer = 0
+Execute DLL: = 0
+Program = <installpath>\
+Dll = 
+[Shortcuts]
+Allowtc = 1
+Shortcut path = <company>\<appname>\
+[Serialoptions]
+Allows = 0
+Number = 20
+[SplashScreen]
+Image = 
+Sound = 
+Time = 2
+PlaySound = 0
+Allow = 0
+[Build]
+File = C:\Users\Ixmaelon\Desktop\MyProjects\Cpp\Zoper\install\zoper.exe
+[Updater]
+Allow = 0
+1 = <appname>
+2 = <appversion>
+3 = http://
+4 = http://
+5 = http://
+6 = Update
+Language = 0
+RunProg = 
+RunProgs = 0
+Execdlls = 0
+[Languages]
+2
+3
+[Files/Dirs]
+C:\Users\Ixmaelon\Desktop\MyProjects\Cpp\Zoper\dist\openal32.dll
+414 KB
+dll
+C:\Users\Ixmaelon\Desktop\MyProjects\Cpp\Zoper\dist\sfml-audio-2.dll
+851 KB
+dll
+C:\Users\Ixmaelon\Desktop\MyProjects\Cpp\Zoper\dist\sfml-audio-d-2.dll
+1.3 MB
+dll
+C:\Users\Ixmaelon\Desktop\MyProjects\Cpp\Zoper\dist\sfml-graphics-2.dll
+668 KB
+dll
+C:\Users\Ixmaelon\Desktop\MyProjects\Cpp\Zoper\dist\sfml-graphics-d-2.dll
+1.2 MB
+dll
+C:\Users\Ixmaelon\Desktop\MyProjects\Cpp\Zoper\dist\sfml-network-2.dll
+101.5 KB
+dll
+C:\Users\Ixmaelon\Desktop\MyProjects\Cpp\Zoper\dist\sfml-network-d-2.dll
+292 KB
+dll
+C:\Users\Ixmaelon\Desktop\MyProjects\Cpp\Zoper\dist\sfml-system-2.dll
+42.5 KB
+dll
+C:\Users\Ixmaelon\Desktop\MyProjects\Cpp\Zoper\dist\sfml-system-d-2.dll
+168.5 KB
+dll
+C:\Users\Ixmaelon\Desktop\MyProjects\Cpp\Zoper\dist\sfml-window-2.dll
+76.5 KB
+dll
+C:\Users\Ixmaelon\Desktop\MyProjects\Cpp\Zoper\dist\sfml-window-d-2.dll
+253.5 KB
+dll
+C:\Users\Ixmaelon\Desktop\MyProjects\Cpp\Zoper\dist\Zoper.exe
+177.5 KB
+exe
+C:\Users\Ixmaelon\Desktop\MyProjects\Cpp\Zoper\dist\Zoper_debug.exe
+1002.5 KB
+exe
+C:\Users\Ixmaelon\Desktop\MyProjects\Cpp\Zoper\dist\res.cfg
+223 Byte
+cfg
+C:\Users\Ixmaelon\Desktop\MyProjects\Cpp\Zoper\dist\resources\
+n/a
+[Folder]
+[Licence_Begin]
+[Licence_End]
+[Registry]
+[Variables]
+[SCs]
+Desktop
+Zoper
+<installpath>\Zoper.exe
+
+Desktop
+Zoper (debug mode)
+<installpath>\Zoper_debug.exe
+
+[IFP_End]
+[Serials]
+[Serials_End]
+[Commands]
