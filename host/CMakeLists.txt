@@ -33,8 +33,9 @@ include_directories (${LIB_BASE_DIRECTORY})
 file (GLOB ZOPER_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/*.hpp")
 file (GLOB ZOPER_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
 
+set (CURRENT_TARGET host)
 
-add_executable (host ${ZOPER_HEADERS} ${ZOPER_SOURCES} ${LIB_HEADERS} ${LIB_SOURCES})
+add_executable (${CURRENT_TARGET} ${ZOPER_HEADERS} ${ZOPER_SOURCES} ${LIB_HEADERS} ${LIB_SOURCES})
 
 # Define source groups for lib
 #source_group("lib\\Header Files" FILES ${LIB_HEADERS})
@@ -47,21 +48,17 @@ source_group("lib\\menu" FILES ${LIB_MENU_HEADERS} ${LIB_MENU_SOURCES})
 source_group("lib\\board" FILES ${LIB_BOARD_HEADERS} ${LIB_SOURCES})
 
 
-# Define SFML libraries depending on Configuration
-target_link_libraries(host 
-	debug sfml-system-d
-	debug sfml-window-d
-	debug sfml-graphics-d
-	debug sfml-main-d
-	
-	optimized sfml-system
-	optimized sfml-window
-	optimized sfml-graphics
-	optimized sfml-main
-	)
+# Detect and add SFML
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
+set (SFML_ROOT "${CMAKE_SOURCE_DIR}/SFML")
+#Find any version 2.X of SFML
+#See the FindSFML.cmake file for additional details and instructions
+find_package(SFML 2 REQUIRED system window graphics network audio)
+if(SFML_FOUND)
+  include_directories(${SFML_INCLUDE_DIR})
+  target_link_libraries(${CURRENT_TARGET} ${SFML_LIBRARIES})
+endif()
 
-set (SFML_LINK_DLLS_DIR ${PROJECT_SOURCE_DIR}/SFML/shared/)
-#message("SFML_LINK_DLLS_DIR:" ${SFML_LINK_DLLS_DIR})
 
 add_custom_target(copy_sfml)
 add_custom_command(TARGET copy_sfml PRE_BUILD
@@ -76,22 +73,14 @@ add_custom_command(TARGET copy_zoper_data PRE_BUILD
 	$<TARGET_FILE_DIR:host>)
 
 
-# Copy SFML dlls to Target directory
-#add_custom_command(TARGET host POST_BUILD
-#    COMMAND ${CMAKE_COMMAND} -E copy_directory
-#        ${SFML_LINK_DLLS_DIR}$<CONFIG>
-#        $<TARGET_FILE_DIR:host>)
+set(_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/)
 
+set_target_properties(${CURRENT_TARGET}
+    PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY_DEBUG "${_OUTPUT_DIRECTORY}"
+    RUNTIME_OUTPUT_DIRECTORY_MINSIZEREL "${_OUTPUT_DIRECTORY}"
+	RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO "${_OUTPUT_DIRECTORY}"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${_OUTPUT_DIRECTORY}"
+)
 
-# Install part
-# Copy SFML to bin
-#add_custom_command(TARGET INSTALL POST_BUILD        # Adds a post-build event to MyTest
-#    COMMAND ${CMAKE_COMMAND} -E copy_directory  # which executes "cmake - E copy_if_different..."
-#        "${PROJECT_SOURCE_DIR}/SFML/shared"      # <--this is in-file
-#        "${PROJECT_BINARY_DIR}/bin")                 # <--this is out-file path
-		
-# Adds logic to INSTALL.vcproj to copy host.exe to destination directory
-install (TARGETS host RUNTIME DESTINATION ${PROJECT_BINARY_DIR}/bin)
-#install(FILES ${SFML_LINK_DLLS_DIR}$<CONFIG>/*.dll DESTINATION ${PROJECT_BINARY_DIR}/bin)
-# Copy all assets to resources file
-#INSTALL(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/assets/ DESTINATION ${INSTALL_PATH}/assets FILES_MATCHING PATTERN "*.dae"  PATTERN "*.jpg")
+install (TARGETS ${CURRENT_TARGET} RUNTIME DESTINATION ${_OUTPUT_DIRECTORY})
