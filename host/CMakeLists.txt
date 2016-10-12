@@ -83,4 +83,19 @@ set_target_properties(${CURRENT_TARGET}
     RUNTIME_OUTPUT_DIRECTORY_RELEASE "${_OUTPUT_DIRECTORY}"
 )
 
+if (MSVC)
+	file( WRITE "${CMAKE_CURRENT_BINARY_DIR}/${CURRENT_TARGET}.vcxproj.user" 
+    "<?xml version=\"1.0\" encoding=\"utf-8\"?>     \
+    <Project ToolsVersion=\"4.0\" xmlns=\"http://schemas.microsoft.com/developer/msbuild/2003\">
+    <PropertyGroup Condition=\"'$(Configuration)|$(Platform)'=='Debug|Win32'\">
+        <LocalDebuggerWorkingDirectory>$(OutDir)</LocalDebuggerWorkingDirectory>
+        <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+    </PropertyGroup>
+    <PropertyGroup Condition=\"'$(Configuration)|$(Platform)'=='Release|Win32'\">
+        <LocalDebuggerWorkingDirectory>$(OutDir)</LocalDebuggerWorkingDirectory>
+        <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+    </PropertyGroup>
+    </Project>")
+endif()
+
 install (TARGETS ${CURRENT_TARGET} RUNTIME DESTINATION ${_OUTPUT_DIRECTORY})
