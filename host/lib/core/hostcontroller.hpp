@@ -24,17 +24,12 @@ namespace lib
 
 			int run();
 
-			void addApp(uptr<IApp> iapp);
-			void removeApp(sptr<AppController> iapp);
+			void setApp(uptr<IApp> iapp);
 
 		private:
-			void addTask(sptr<HostTask> newTask);
-
-			void processTask();
 			sptr<Window> m_window{ nullptr };
 			bool exit{ false };
-			std::queue<sptr<HostTask>> m_pendingTasks;
-			VecSPtr<AppController> m_apps;
+			uptr<AppController> m_app;
 		};
 	}
 }

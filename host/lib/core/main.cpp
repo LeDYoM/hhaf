@@ -40,7 +40,7 @@ namespace lib
 			core::HostController hostController(transformParams(argc,argv));
 			// WIP:
 			uptr<IApp> zpc = std::make_unique<zoper::ZoperProgramController>();
-			hostController.addApp(std::move(zpc));
+			hostController.setApp(std::move(zpc));
 
 			// End wip
 			result = hostController.run();
