@@ -27,7 +27,7 @@ namespace lib
 			{
 				bool terminated{ m_app->update() };
 				if (terminated) {
-					m_app.release();
+					m_app.reset();
 				}
 
 				exit = (m_app == nullptr);
