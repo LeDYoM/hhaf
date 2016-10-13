@@ -35,14 +35,9 @@ namespace lib
 		{
 			initLog();
 			installMemManager();
-//			zoper::ZoperProgramController *program = new zoper::ZoperProgramController;
 
 			core::HostController hostController(transformParams(argc,argv));
-			// WIP:
-			uptr<IApp> zpc = std::make_unique<zoper::ZoperProgramController>();
-			hostController.setApp(std::move(zpc));
-
-			// End wip
+			hostController.setApp(std::make_unique<zoper::ZoperProgramController>());
 			result = hostController.run();
 		}
 		catch (lib::excp::BaseException e)
