@@ -63,14 +63,14 @@ endif()
 add_custom_target(copy_sfml)
 add_custom_command(TARGET copy_sfml PRE_BUILD
 	COMMAND ${CMAKE_COMMAND} -E copy_directory
-	${SFML_LINK_DLLS_DIR}$<CONFIG>
-	$<TARGET_FILE_DIR:host>)
+	${SFML_ROOT}/bin
+	$<TARGET_FILE_DIR:${CURRENT_TARGET}>)
 
 add_custom_target(copy_zoper_data)
 add_custom_command(TARGET copy_zoper_data PRE_BUILD
 	COMMAND ${CMAKE_COMMAND} -E copy_directory
 	${PROJECT_SOURCE_DIR}/zoper/data/
-	$<TARGET_FILE_DIR:host>)
+	$<TARGET_FILE_DIR:${CURRENT_TARGET}>)
 
 
 set(_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/)
