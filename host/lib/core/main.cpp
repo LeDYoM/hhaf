@@ -35,7 +35,6 @@ namespace lib
 			installMemManager();
 
 			core::HostController hostController(transformParams(argc,argv));
-//			hostController.setApp(std::make_unique<zoper::ZoperProgramController>());
 			hostController.setApp(std::move(app));
 			result = hostController.run();
 		}
