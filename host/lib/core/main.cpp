@@ -25,10 +25,8 @@ namespace lib
 		}
 	}
 
-	int lib::libMain(int argc, char *argv[])
+	int libMain(int argc, char *argv[], uptr<IApp> app)
 	{
-		argc;
-		argv;
 		int result = -1;
 
 		try
@@ -37,12 +35,21 @@ namespace lib
 			installMemManager();
 
 			core::HostController hostController(transformParams(argc,argv));
-			hostController.setApp(std::make_unique<zoper::ZoperProgramController>());
+//			hostController.setApp(std::make_unique<zoper::ZoperProgramController>());
+			hostController.setApp(std::move(app));
 			result = hostController.run();
 		}
 		catch (lib::excp::BaseException e)
 		{
-			LOG_DEBUG("Exception: " << e.what());
+			LOG_DEBUG("BaseException: " << e.what());
+		}
+		catch (std::exception e)
+		{
+			LOG_DEBUG("BaseException: " << e.what());
+		}
+		catch (...)
+		{
+			LOG_DEBUG("Unexpected exception");
 		}
 		finishMemManager();
 		finishLog();
