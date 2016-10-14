@@ -2,6 +2,7 @@
 #include "window.hpp"
 #include "log.hpp"
 #include "appcontroller.hpp"
+#include <SFML/Config.hpp>
 
 namespace lib
 {
@@ -26,6 +27,7 @@ namespace lib
 		{
 			LOG_CONSTRUCT_NOPARAMS;
 			LOG_INFO("Starting HostController...");
+			LOG_INFO("Using SFML version " << SFML_VERSION_MAJOR << "." << SFML_VERSION_MINOR << "." << SFML_VERSION_PATCH << " as backend");
 			LOG_INFO("Parsing parameters...");
 			m_params = std::move(transformParams(argc,argv));
 		}
