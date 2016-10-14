@@ -42,7 +42,7 @@ namespace lib
 
 		void HostController::setApp(uptr<IApp> iapp)
 		{
-			m_app = uptr<AppController>(new AppController(std::move(iapp)));
+			m_app = std::make_unique<AppController>(std::move(iapp));
 		}
 	}
 }
