@@ -39,8 +39,7 @@ namespace lib
 
 		int HostController::run()
 		{
-			while (!exit)
-			{
+			while (!exit) {
 				bool terminated{ m_app->update() };
 				if (terminated) {
 					m_app.reset();
@@ -49,8 +48,7 @@ namespace lib
 				exit = (m_app == nullptr);
 			}
 
-			if (!m_app)
-			{
+			if (!m_app) {
 				LOG_INFO("App destroyed. Exiting normally");
 			}
 			return 0;
