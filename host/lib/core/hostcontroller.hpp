@@ -19,7 +19,7 @@ namespace lib
 		class HostController : public Configuration
 		{
 		public:
-			HostController(const std::vector<std::string> &params);
+			HostController(int argc, char *argv[]);
 			virtual ~HostController();
 
 			int run();
@@ -28,8 +28,9 @@ namespace lib
 
 		private:
 			sptr<Window> m_window{ nullptr };
-			bool exit{ false };
 			uptr<AppController> m_app;
+			bool exit{ false };
+			std::vector<std::string> m_params;
 		};
 	}
 }

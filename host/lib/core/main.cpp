@@ -4,27 +4,9 @@
 #include <lib/core/log.hpp>
 #include <lib/core/exceptions.hpp>
 #include <lib/core/hostcontroller.hpp>
-#include <vector>
-#include <string>
-
-#include "zoperprogramcontroller.hpp"
 
 namespace lib
 {
-	namespace
-	{
-		std::vector<std::string> transformParams(int argc, char *argv[])
-		{
-			std::vector<std::string> temp;
-
-			for (int i=1;i<argc;++i)
-			{
-				temp.push_back(argv[i]);
-			}
-			return temp;
-		}
-	}
-
 	int libMain(int argc, char *argv[], uptr<IApp> app)
 	{
 		int result = -1;
@@ -34,7 +16,7 @@ namespace lib
 			initLog();
 			installMemManager();
 
-			core::HostController hostController(transformParams(argc,argv));
+			core::HostController hostController(argc,argv);
 			hostController.setApp(std::move(app));
 			result = hostController.run();
 		}

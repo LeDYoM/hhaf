@@ -7,18 +7,34 @@ namespace lib
 {
 	namespace core
 	{
+		namespace
+		{
+			std::vector<std::string> transformParams(int argc, char *argv[])
+			{
+				std::vector<std::string> temp;
 
-		HostController::HostController(const std::vector<std::string> &params)
+				for (int i = 1; i<argc; ++i)
+				{
+					temp.push_back(argv[i]);
+				}
+				return temp;
+			}
+		}
+
+		HostController::HostController(int argc, char *argv[])
 			: Configuration{ "host.cfg" }
 		{
-			params;
 			LOG_CONSTRUCT_NOPARAMS;
 			LOG_INFO("Starting HostController...");
+			LOG_INFO("Parsing parameters...");
+			m_params = std::move(transformParams(argc,argv));
 		}
 
 		HostController::~HostController()
 		{
 			LOG_DESTRUCT_NOPARAMS;
+			m_window.reset();
+			m_params.clear();
 		}
 
 		int HostController::run()
