@@ -11,17 +11,26 @@ namespace lib
 {
 	namespace core
 	{
-		AppController::AppController(uptr<IApp> iapp)
-			: m_iapp( std::move(iapp) )
+		AppController::AppController()
 		{
 			LOG_CONSTRUCT_NOPARAMS;
-			LOG_DEBUG("Starting app " << appId() << "...");
-			m_state = AppState::ReadyToStart;
 		}
 
 		AppController::~AppController()
 		{
 			LOG_DESTRUCT("Name: " << appId());
+		}
+
+		bool AppController::setApplication(uptr<IApp> iapp)
+		{
+			if (!m_iapp && iapp)
+			{
+				std::swap(m_iapp, iapp);
+				LOG_DEBUG("Starting app " << appId() << "...");
+				m_state = AppState::ReadyToStart;
+				return true;
+			}
+			return false;
 		}
 
 		bool AppController::update()

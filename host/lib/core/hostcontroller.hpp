@@ -13,7 +13,6 @@ namespace lib
 	namespace core
 	{
 		class Window;
-		class HostTask;
 		class AppController;
 
 		class HostController : public Configuration

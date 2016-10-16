@@ -4,6 +4,7 @@
 #include <lib/include/types.hpp>
 #include <lib/include/iapp.hpp>
 #include <lib/core/vecsptr.hpp>
+#include <lib/include/singleton.hpp>
 #include <vector>
 #include <string>
 
@@ -20,7 +21,7 @@ namespace lib
 		class ResourceManager;
 		class EventManager;
 	
-		class AppController
+		class AppController : public Singleton<AppController>
 		{
 		public:
 			enum class AppState
@@ -31,20 +32,21 @@ namespace lib
 				ReadyToTerminate,
 				Terminated
 			};
-			AppController(uptr<IApp> iapp);
+			AppController();
 			virtual ~AppController();
-			
+
+			bool setApplication(uptr<IApp> iapp);
+
 			bool update();
 			uptr<Window> const &parentWindow() const { return m_window; }
 			uptr<ResourceManager> const &resourceManager() const { return m_resourceManager; }
 			uptr<EventManager> const &eventManager() const { return m_eventManager; }
 
 			const std::string appId() const;
-
 		protected:
 			bool loopStep();
 		private:
-			AppState m_state;
+			AppState m_state{ AppState::NotInitialized };
 			uptr<Window> m_window{ nullptr };
 			uptr<IApp> m_iapp{ nullptr };
 			uptr<scn::SceneManager> m_sceneManager{ nullptr };
