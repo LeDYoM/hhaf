@@ -27,14 +27,7 @@ namespace lib
 			static bool destroyHost() noexcept;
 
 			inline static Host &host() noexcept { return *m_instance; }
-			enum class AppState
-			{
-				NotInitialized,
-				ReadyToStart,
-				Executing,
-				ReadyToTerminate,
-				Terminated
-			};
+			enum class AppState : u8;
 			Host(int argc, char *argv[]);
 			~Host();
 
@@ -54,7 +47,7 @@ namespace lib
 			bool loopStep();
 		private:
 			static Host *m_instance;
-			AppState m_state{ AppState::NotInitialized };
+			AppState m_state;
 			uptr<Window> m_window{ nullptr };
 			uptr<IApp> m_iapp{ nullptr };
 			uptr<scn::SceneManager> m_sceneManager{ nullptr };

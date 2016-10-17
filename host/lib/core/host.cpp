@@ -22,6 +22,15 @@ namespace lib
 			return temp;
 		}
 
+		enum class Host::AppState : u8
+		{
+			NotInitialized,
+			ReadyToStart,
+			Executing,
+			ReadyToTerminate,
+			Terminated
+		};
+
 		Host *Host::m_instance = nullptr;
 
 		bool Host::createHost(int argc, char * argv[])
@@ -44,6 +53,7 @@ namespace lib
 		}
 
 		Host::Host(int argc, char *argv[])
+			: m_state{ AppState::NotInitialized }
 		{
 			LOG_CONSTRUCT_NOPARAMS;
 			LOG_INFO("Starting HostController...");
