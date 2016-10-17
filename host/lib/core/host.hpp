@@ -21,7 +21,7 @@ namespace lib
 		class ResourceManager;
 		class EventManager;
 	
-		class AppController : public Singleton<AppController>
+		class Host
 		{
 		public:
 			enum class AppState
@@ -32,8 +32,8 @@ namespace lib
 				ReadyToTerminate,
 				Terminated
 			};
-			AppController(int argc, char *argv[]);
-			virtual ~AppController();
+			Host(int argc, char *argv[]);
+			virtual ~Host();
 
 			bool setApplication(uptr<IApp> iapp);
 			int run();

@@ -1,4 +1,4 @@
-#include "appcontroller.hpp"
+#include "host.hpp"
 #include "window.hpp"
 #include "resourcemanager.hpp"
 #include <lib/draw/scenemanager.hpp>
@@ -22,7 +22,7 @@ namespace lib
 			return temp;
 		}
 
-		AppController::AppController(int argc, char *argv[])
+		Host::Host(int argc, char *argv[])
 		{
 			LOG_CONSTRUCT_NOPARAMS;
 			LOG_INFO("Starting HostController...");
@@ -31,12 +31,12 @@ namespace lib
 			m_params = std::move(transformParams(argc, argv));
 		}
 
-		AppController::~AppController()
+		Host::~Host()
 		{
 			LOG_DESTRUCT("Name: " << appId());
 		}
 
-		bool AppController::setApplication(uptr<IApp> iapp)
+		bool Host::setApplication(uptr<IApp> iapp)
 		{
 			if (!m_iapp && iapp)
 			{
@@ -48,15 +48,15 @@ namespace lib
 			return false;
 		}
 
-		bool AppController::update()
+		bool Host::update()
 		{
 			bool _continue{ true };
 
 			switch (m_state)
 			{
-			case lib::core::AppController::AppState::NotInitialized:
+			case lib::core::Host::AppState::NotInitialized:
 				break;
-			case lib::core::AppController::AppState::ReadyToStart:
+			case lib::core::Host::AppState::ReadyToStart:
 			{
 				// Create the scene manager
 				LOG_DEBUG(appId() << ": " << " Starting initialization...");
@@ -73,7 +73,7 @@ namespace lib
 				LOG_DEBUG(appId() << ": " << " is now executing");
 			}
 				break;
-			case lib::core::AppController::AppState::Executing:
+			case lib::core::Host::AppState::Executing:
 			{
 				if (loopStep())
 				{
@@ -82,7 +82,7 @@ namespace lib
 				}
 			}
 				break;
-			case lib::core::AppController::AppState::ReadyToTerminate:
+			case lib::core::Host::AppState::ReadyToTerminate:
 				LOG_DEBUG(appId() << ": " << " started termination");
 				m_state = AppState::Terminated;
 //				m_iapp->onFinish();
@@ -93,7 +93,7 @@ namespace lib
 				LOG_DEBUG(appId() << ": " << " terminated");
 				return true;
 				break;
-			case lib::core::AppController::AppState::Terminated:
+			case lib::core::Host::AppState::Terminated:
 				return true;
 				break;
 			default:
@@ -102,7 +102,7 @@ namespace lib
 			return false;
 		}
 
-		int AppController::run()
+		int Host::run()
 		{
 			while (!exit) {
 				bool terminated{ update() };
@@ -119,7 +119,7 @@ namespace lib
 			return 0;
 		}
 
-		bool AppController::loopStep()
+		bool Host::loopStep()
 		{
 			bool windowWants2Close = m_window->preLoop();
 			m_sceneManager->update();
@@ -127,7 +127,7 @@ namespace lib
 			return windowWants2Close;
 		}
 
-		const std::string AppController::appId() const
+		const std::string Host::appId() const
 		{
 			if (m_iapp)
 			{
