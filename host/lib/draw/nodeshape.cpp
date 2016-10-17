@@ -1,8 +1,9 @@
 #include "NodeShape.hpp"
 #include <lib/core/log.hpp>
 #include <lib/core/window.hpp>
-
+#include <lib/core/host.hpp>
 #include <SFML/Graphics/Texture.hpp>
+
 
 #define _USE_MATH_DEFINES
 #include <math.h>
@@ -194,14 +195,14 @@ namespace lib
 				updateTexCoords();
 			}
 
-			u32 NodeShape::draw(lib::core::Window *window, sf::RenderStates &states)
+			u32 NodeShape::draw(sf::RenderStates &states)
 			{
 				auto oldTransform = states.transform;
 				states.transform *= getTransform();
 
 				// Render the inside
 				states.texture = m_texture;
-				window->draw(m_vertices, states);
+				host().parentWindow().draw(m_vertices, states);
 
 				states.transform = oldTransform;
 				return 1;

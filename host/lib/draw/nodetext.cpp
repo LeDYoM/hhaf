@@ -3,6 +3,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <cmath>
 
+#include <lib/core/host.hpp>
 #include <lib/core/window.hpp>
 
 namespace lib
@@ -154,7 +155,7 @@ namespace lib
 				return getTransform().transformRect(getLocalBounds());
 			}
 
-			lib::u32 NodeText::draw(lib::core::Window *window, sf::RenderStates &states)
+			lib::u32 NodeText::draw(sf::RenderStates &states)
 			{
 				if (m_font)
 				{
@@ -163,7 +164,7 @@ namespace lib
 					auto oldTransform = states.transform;
 					states.transform *= getTransform();
 					states.texture = &m_font->getTexture(m_characterSize);
-					window->draw(m_vertices, states);
+					host().parentWindow().draw(m_vertices, states);
 					states.transform = oldTransform;
 					return 1;
 				}

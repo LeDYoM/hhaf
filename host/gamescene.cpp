@@ -15,6 +15,7 @@
 #include <lib/draw/nodetext.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/core/resource.hpp>
+#include <lib/core/host.hpp>
 #include <memory>
 #include <functional>
 
@@ -57,17 +58,18 @@ namespace zoper
 		_gameText = _gameOverrg->createText("gameovergame");
 		_overText = _gameOverrg->createText("gameoverover");
 
-		_scoreText->setFont(*(resourceManager()->getResource("game_scene.scoreFont")->getAsFont()));
-		_scoreDisplay->setFont(*(resourceManager()->getResource("game_scene.scoreFont")->getAsFont()));
-		_currentLevelText->setFont(*(resourceManager()->getResource("game_scene.scoreFont")->getAsFont()));
-		_currentLevelDisplay->setFont(*(resourceManager()->getResource("game_scene.scoreFont")->getAsFont()));
-		_gameText->setFont(*(resourceManager()->getResource("game_scene.scoreFont")->getAsFont()));
-		_overText->setFont(*(resourceManager()->getResource("game_scene.scoreFont")->getAsFont()));
-		_levelText->setFont(*(resourceManager()->getResource("game_scene.scoreFont")->getAsFont()));
-		_levelDisplay->setFont(*(resourceManager()->getResource("game_scene.scoreFont")->getAsFont()));
-		_goalText->setFont(*(resourceManager()->getResource("game_scene.scoreFont")->getAsFont()));
-		_goalDisplay->setFont(*(resourceManager()->getResource("game_scene.scoreFont")->getAsFont()));
-		_pauseText->setFont(*(resourceManager()->getResource("game_scene.scoreFont")->getAsFont()));
+		auto& resourceManager{ lib::host().resourceManager() };
+		_scoreText->setFont(*(resourceManager.getResource("game_scene.scoreFont")->getAsFont()));
+		_scoreDisplay->setFont(*(resourceManager.getResource("game_scene.scoreFont")->getAsFont()));
+		_currentLevelText->setFont(*(resourceManager.getResource("game_scene.scoreFont")->getAsFont()));
+		_currentLevelDisplay->setFont(*(resourceManager.getResource("game_scene.scoreFont")->getAsFont()));
+		_gameText->setFont(*(resourceManager.getResource("game_scene.scoreFont")->getAsFont()));
+		_overText->setFont(*(resourceManager.getResource("game_scene.scoreFont")->getAsFont()));
+		_levelText->setFont(*(resourceManager.getResource("game_scene.scoreFont")->getAsFont()));
+		_levelDisplay->setFont(*(resourceManager.getResource("game_scene.scoreFont")->getAsFont()));
+		_goalText->setFont(*(resourceManager.getResource("game_scene.scoreFont")->getAsFont()));
+		_goalDisplay->setFont(*(resourceManager.getResource("game_scene.scoreFont")->getAsFont()));
+		_pauseText->setFont(*(resourceManager.getResource("game_scene.scoreFont")->getAsFont()));
 
 		_scoreText->setString("Score: ");
 		increaseScore(0);

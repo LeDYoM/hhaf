@@ -5,7 +5,7 @@
 #include <lib/draw/renderizable.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/core/resource.hpp>
-
+#include <lib/core/host.hpp>
 #include "common.hpp"
 
 namespace zoper
@@ -69,7 +69,7 @@ namespace zoper
 			};
 
 			_chooseControl = lib::sptr<lib::menu::ChooseControl>(new lib::menu::ChooseControl("optionsmenu_chooseControl",
-				menuManager()->resourceManager()->getResource("game_menu.mainFont"),
+				lib::host().resourceManager().getResource("game_menu.mainFont"),
 				sf::Color::Blue, sf::Color::Red,
 				lib::scn::draw::Alignment::Left,
 				70, 1,

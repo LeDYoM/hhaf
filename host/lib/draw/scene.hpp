@@ -46,7 +46,6 @@ namespace lib
 			void setNextScene(const std::string &name);
 
 			virtual const vector2df getDefaultSizeView() = 0;
-			uptr<core::ResourceManager> const &resourceManager();
 			const vector2df getCoordinatesToCenter(const sf::FloatRect &coordinates) const;
 			const vector2df getCenterCoordinates() const;
 

@@ -24,7 +24,7 @@ namespace lib
 				explicit Renderizable(const std::string &name);
 				virtual ~Renderizable();
 
-				virtual u32 draw(lib::core::Window *window, sf::RenderStates &states) override;
+				virtual u32 draw(sf::RenderStates &states) override;
 				virtual void setColor(const sf::Color &color) = 0;
 
 				virtual sf::FloatRect getLocalBounds() const = 0;

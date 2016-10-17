@@ -22,7 +22,7 @@ namespace lib
 
 		void Scene::updateView()
 		{
-			core::Host::host().parentWindow()->setView(*p_view.get());
+			core::Host::host().parentWindow().setView(*p_view.get());
 			LOG_DEBUG("Scene view set to: center: " << p_view->getCenter().x << "," << p_view->getCenter().y << " and size: " << p_view->getSize().x << "," << p_view->getSize().y);
 		}
 
@@ -44,7 +44,7 @@ namespace lib
 		void Scene::privateOnInit()
 		{
 			LOG_DEBUG("Initializing scene " << name());
-			p_view = uptr<sf::View>(new sf::View(core::Host::host().parentWindow()->getView()));
+			p_view = uptr<sf::View>(new sf::View(core::Host::host().parentWindow().getView()));
 			auto sceneSize = getDefaultSizeView();
 			p_view->setSize(sceneSize.x, sceneSize.y);
 			p_view->setCenter(sceneSize.x / 2, sceneSize.y / 2);
@@ -95,11 +95,6 @@ namespace lib
 		{
 			__ASSERT(p_scnManager, "Null SceneManager on Scene");
 			p_scnManager->setScene(name);
-		}
-
-		uptr<core::ResourceManager> const &Scene::resourceManager()
-		{
-			return core::Host::host().resourceManager();
 		}
 
 		void Scene::exitProgram()

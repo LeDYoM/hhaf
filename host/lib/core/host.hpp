@@ -21,7 +21,7 @@ namespace lib
 		class ResourceManager;
 		class EventManager;
 	
-		class Host
+		class Host final
 		{
 		public:
 			static bool createHost(int argc, char *argv[]);
@@ -37,15 +37,18 @@ namespace lib
 				Terminated
 			};
 			Host(int argc, char *argv[]);
-			virtual ~Host();
+			~Host();
 
 			bool setApplication(uptr<IApp> iapp);
 			int run();
 			bool update();
 
-			uptr<Window> const &parentWindow() const { return m_window; }
-			uptr<ResourceManager> const &resourceManager() const { return m_resourceManager; }
-			uptr<EventManager> const &eventManager() const { return m_eventManager; }
+			inline Window const &parentWindow() const noexcept { return *m_window; }
+			inline Window &parentWindow()  noexcept { return *m_window; }
+			inline ResourceManager const &resourceManager() const  noexcept { return *m_resourceManager; }
+			inline ResourceManager &resourceManager()  noexcept { return *m_resourceManager; }
+			inline EventManager const &eventManager() const  noexcept { return *m_eventManager; }
+			inline EventManager &eventManager()  noexcept { return *m_eventManager; }
 
 			const std::string appId() const;
 		protected:
@@ -62,6 +65,8 @@ namespace lib
 			std::vector<std::string> m_params;
 		};
 	}
+
+	inline core::Host &host() noexcept { return core::Host::host(); }
 }
 
 #endif

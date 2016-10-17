@@ -21,7 +21,7 @@ namespace lib
 				IDrawable() {}
 				virtual ~IDrawable() {}
 
-				virtual u32 draw(lib::core::Window *window, sf::RenderStates &states) = 0;
+				virtual u32 draw(sf::RenderStates &states) = 0;
 
 				inline bool isVisible() const { return visible; }
 				inline void setVisible(bool nv) { visible = nv; }

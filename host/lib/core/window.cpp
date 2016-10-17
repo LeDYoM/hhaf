@@ -139,12 +139,12 @@ namespace lib
 
 			if (e.type == sf::Event::KeyPressed)
 			{
-				Host::host().eventManager()->addEvent(uptr<lib::events::KeyPressedEvent>(new lib::events::KeyPressedEvent{doCast(e.key.code)}));
+				host().eventManager().addEvent(uptr<lib::events::KeyPressedEvent>(new lib::events::KeyPressedEvent{doCast(e.key.code)}));
 //				p_sceneManager->onKeyPressed(e.key);
 			}
 			else
 			{
-				Host::host().eventManager()->addEvent(uptr<lib::events::KeyReleasedEvent>(new lib::events::KeyReleasedEvent{ doCast(e.key.code) }));
+				host().eventManager().addEvent(uptr<lib::events::KeyReleasedEvent>(new lib::events::KeyReleasedEvent{ doCast(e.key.code) }));
 				//				p_sceneManager->onKeyReleased(e.key);
 			}
 		}

@@ -126,7 +126,7 @@ namespace lib
 			}
 
 			sf::RenderStates states;
-			_currentScene->draw(core::Host::host().parentWindow().get(), states);
+			_currentScene->draw(states);
 		}
 
 		void SceneManager::exitProgram()

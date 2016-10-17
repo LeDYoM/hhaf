@@ -48,7 +48,7 @@ namespace lib
 				sf::FloatRect getLocalBounds() const;
 				sf::FloatRect getGlobalBounds() const;
 			private:
-				virtual u32 draw(lib::core::Window *window, sf::RenderStates &states) override;
+				virtual u32 draw(sf::RenderStates &states) override;
 				void ensureGeometryUpdate() const;
 
 				std::string m_string;
