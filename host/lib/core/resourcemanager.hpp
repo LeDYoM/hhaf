@@ -23,7 +23,7 @@ namespace lib
 		class ResourceManager : public AppService, public Configuration
 		{
 		public:
-			ResourceManager(core::AppController *appController, const std::string &resourceFile);
+			ResourceManager(const std::string &resourceFile);
 			virtual ~ResourceManager();
 			sptr<Resource> &getResource(const std::string rid);
 

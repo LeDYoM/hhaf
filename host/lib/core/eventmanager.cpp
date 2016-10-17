@@ -7,8 +7,7 @@ namespace lib
 	namespace core
 	{
 
-		EventManager::EventManager(AppController *const appController)
-			: AppService{ appController }
+		EventManager::EventManager()
 		{
 			LOG_CONSTRUCT_NOPARAMS;
 		}

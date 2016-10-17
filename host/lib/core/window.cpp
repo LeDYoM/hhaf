@@ -4,7 +4,7 @@
 #include "log.hpp"
 #include "randomizer.hpp"
 #include "timer.hpp"
-#include "appcontroller.hpp"
+#include "host.hpp"
 #include <lib/include/iapp.hpp>
 #include <lib/include/event.hpp>
 #include <lib/include/inputevent.hpp>
@@ -49,8 +49,8 @@ namespace lib
 			p_sceneManager->addScenes(p_parentController->scenesVector());
 		}
 		*/
-		Window::Window(AppController *const appController, const WindowCreationParams &wcp)
-			: p_wPrivate{ new WindowPrivate() }, AppService{ appController }, _title(wcp.windowTitle)
+		Window::Window(const WindowCreationParams &wcp)
+			: p_wPrivate{ new WindowPrivate() }, _title(wcp.windowTitle)
 		{
 			LOG_CONSTRUCT_NOPARAMS;
 			create(wcp);
@@ -139,12 +139,12 @@ namespace lib
 
 			if (e.type == sf::Event::KeyPressed)
 			{
-				appController->eventManager()->addEvent(uptr<lib::events::KeyPressedEvent>(new lib::events::KeyPressedEvent{doCast(e.key.code)}));
+				Host::host().eventManager()->addEvent(uptr<lib::events::KeyPressedEvent>(new lib::events::KeyPressedEvent{doCast(e.key.code)}));
 //				p_sceneManager->onKeyPressed(e.key);
 			}
 			else
 			{
-				appController->eventManager()->addEvent(uptr<lib::events::KeyReleasedEvent>(new lib::events::KeyReleasedEvent{ doCast(e.key.code) }));
+				Host::host().eventManager()->addEvent(uptr<lib::events::KeyReleasedEvent>(new lib::events::KeyReleasedEvent{ doCast(e.key.code) }));
 				//				p_sceneManager->onKeyReleased(e.key);
 			}
 		}

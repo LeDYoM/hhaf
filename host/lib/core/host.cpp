@@ -22,6 +22,27 @@ namespace lib
 			return temp;
 		}
 
+		Host *Host::m_instance = nullptr;
+
+		bool Host::createHost(int argc, char * argv[])
+		{
+			if (!m_instance) {
+				m_instance = new Host(argc, argv);
+				return true;
+			}
+			return false;
+		}
+
+		bool Host::destroyHost() noexcept
+		{
+			if (m_instance) {
+				delete m_instance;
+				m_instance = nullptr;
+				return true;
+			}
+			return false;
+		}
+
 		Host::Host(int argc, char *argv[])
 		{
 			LOG_CONSTRUCT_NOPARAMS;
@@ -50,8 +71,6 @@ namespace lib
 
 		bool Host::update()
 		{
-			bool _continue{ true };
-
 			switch (m_state)
 			{
 			case lib::core::Host::AppState::NotInitialized:
@@ -63,10 +82,10 @@ namespace lib
 				m_state = AppState::Executing;
 
 				//TO DO: Ask via requests
-				m_eventManager = uptr<EventManager>(new EventManager(this));
-				m_window = uptr<Window>(new Window(this, m_iapp->getAppDescriptor().wcp));
-				m_resourceManager = uptr<ResourceManager>(new core::ResourceManager(this,m_iapp->getAppDescriptor().resourceFile));
-				m_sceneManager = uptr<scn::SceneManager>(new scn::SceneManager(this));
+				m_eventManager = uptr<EventManager>(new EventManager());
+				m_window = uptr<Window>(new Window(m_iapp->getAppDescriptor().wcp));
+				m_resourceManager = uptr<ResourceManager>(new core::ResourceManager(m_iapp->getAppDescriptor().resourceFile));
+				m_sceneManager = uptr<scn::SceneManager>(new scn::SceneManager());
 				m_sceneManager->addScenes(m_iapp->scenesVector());
 
 				m_iapp->onInit();

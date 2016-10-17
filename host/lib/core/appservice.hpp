@@ -5,15 +5,18 @@ namespace lib
 {
 	namespace core
 	{
-		class AppController;
+		class Host;
 	}
 
 	class AppService
 	{
 	public:
-		AppService(core::AppController *appController_) : appController{ appController_ } {}
+		AppService(const AppService &rh) = delete;
 		AppService &operator=(const AppService &rh) = delete;
-		core::AppController *const appController;
+
+	protected:
+		constexpr AppService() {};
+		friend class Host;
 	};
 }
 #endif

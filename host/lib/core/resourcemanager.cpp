@@ -6,8 +6,8 @@ namespace lib
 {
 	namespace core
 	{
-		ResourceManager::ResourceManager(core::AppController *appController, const std::string &resourceFile)
-			: AppService{ appController }, Configuration{ resourceFile }
+		ResourceManager::ResourceManager(const std::string &resourceFile)
+			: AppService{ }, Configuration{ resourceFile }
 		{
 			if (resourceFile.size() > 0 && !configFileExists(resourceFile))
 			{

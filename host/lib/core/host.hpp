@@ -24,6 +24,10 @@ namespace lib
 		class Host
 		{
 		public:
+			static bool createHost(int argc, char *argv[]);
+			static bool destroyHost() noexcept;
+
+			inline static Host &host() noexcept { return *m_instance; }
 			enum class AppState
 			{
 				NotInitialized,
@@ -47,6 +51,7 @@ namespace lib
 		protected:
 			bool loopStep();
 		private:
+			static Host *m_instance;
 			AppState m_state{ AppState::NotInitialized };
 			uptr<Window> m_window{ nullptr };
 			uptr<IApp> m_iapp{ nullptr };

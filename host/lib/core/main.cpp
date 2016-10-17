@@ -3,7 +3,7 @@
 #include <lib/core/memmanager.hpp>
 #include <lib/core/log.hpp>
 #include <lib/core/exceptions.hpp>
-#include <lib/core/appcontroller.hpp>
+#include <lib/core/host.hpp>
 
 namespace lib
 {
@@ -16,9 +16,10 @@ namespace lib
 			initLog();
 			installMemManager();
 
-			core::AppController hostController(argc,argv);
-			hostController.setApplication(std::move(app));
-			result = hostController.run();
+			core::Host::createHost(argc, argv);
+			core::Host::host().setApplication(std::move(app));
+			result = core::Host::host().run();
+			core::Host::destroyHost();
 		}
 		catch (lib::excp::BaseException e)
 		{

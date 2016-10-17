@@ -3,13 +3,13 @@
 #include <lib/core/log.hpp>
 #include <lib/core/window.hpp>
 #include <lib/core/resourcemanager.hpp>
-#include <lib/core/appcontroller.hpp>
+#include <lib/core/host.hpp>
 
 namespace lib
 {
 	namespace scn
 	{
-		SceneManager::SceneManager(core::AppController *const appController) : AppService{ appController }
+		SceneManager::SceneManager()
 		{
 			LOG_CONSTRUCT_NOPARAMS;
 		}
@@ -126,7 +126,7 @@ namespace lib
 			}
 
 			sf::RenderStates states;
-			_currentScene->draw(appController->parentWindow().get(), states);
+			_currentScene->draw(core::Host::host().parentWindow().get(), states);
 		}
 
 		void SceneManager::exitProgram()

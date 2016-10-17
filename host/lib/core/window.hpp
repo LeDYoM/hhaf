@@ -17,8 +17,8 @@ namespace lib
 		class Window : public AppService, public external::RenderWindow
 		{
 		public:
-			Window(AppController *const appController, const WindowCreationParams &wcp);
-			virtual ~Window();
+			Window(const WindowCreationParams &wcp);
+			~Window();
 			bool preLoop();
 			bool postLoop();
 			virtual void onCreate();

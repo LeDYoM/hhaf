@@ -3,7 +3,7 @@
 #include "renderizable.hpp"
 #include <lib/core/log.hpp>
 #include <lib/core/window.hpp>
-#include <lib/core/appcontroller.hpp>
+#include <lib/core/host.hpp>
 #include <lib/core/resourcemanager.hpp>
 
 namespace lib
@@ -22,7 +22,7 @@ namespace lib
 
 		void Scene::updateView()
 		{
-			p_scnManager->appController->parentWindow()->setView(*p_view.get());
+			core::Host::host().parentWindow()->setView(*p_view.get());
 			LOG_DEBUG("Scene view set to: center: " << p_view->getCenter().x << "," << p_view->getCenter().y << " and size: " << p_view->getSize().x << "," << p_view->getSize().y);
 		}
 
@@ -44,7 +44,7 @@ namespace lib
 		void Scene::privateOnInit()
 		{
 			LOG_DEBUG("Initializing scene " << name());
-			p_view = uptr<sf::View>(new sf::View(p_scnManager->appController->parentWindow()->getView()));
+			p_view = uptr<sf::View>(new sf::View(core::Host::host().parentWindow()->getView()));
 			auto sceneSize = getDefaultSizeView();
 			p_view->setSize(sceneSize.x, sceneSize.y);
 			p_view->setCenter(sceneSize.x / 2, sceneSize.y / 2);
@@ -99,7 +99,7 @@ namespace lib
 
 		uptr<core::ResourceManager> const &Scene::resourceManager()
 		{
-			return p_scnManager->appController->resourceManager();
+			return core::Host::host().resourceManager();
 		}
 
 		void Scene::exitProgram()
