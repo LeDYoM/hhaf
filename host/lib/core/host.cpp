@@ -69,8 +69,7 @@ namespace lib
 
 		bool Host::setApplication(uptr<IApp> iapp)
 		{
-			if (!m_iapp && iapp)
-			{
+			if (!m_iapp && iapp) {
 				std::swap(m_iapp, iapp);
 				LOG_DEBUG("Starting app " << appId() << "...");
 				m_state = AppState::ReadyToStart;
@@ -104,8 +103,7 @@ namespace lib
 				break;
 			case lib::core::Host::AppState::Executing:
 			{
-				if (loopStep())
-				{
+				if (loopStep()) {
 					m_state = AppState::ReadyToTerminate;
 					LOG_DEBUG(appId() << ": " << " is now ready to terminate");
 				}
@@ -137,9 +135,8 @@ namespace lib
 				bool terminated{ update() };
 				if (terminated) {
 					m_iapp.reset();
+					exit = true;
 				}
-
-				exit = (m_iapp == nullptr);
 			}
 
 			if (!m_iapp) {
@@ -158,10 +155,15 @@ namespace lib
 
 		const std::string Host::appId() const
 		{
-			if (m_iapp)
-			{
-				return std::string(m_iapp->getAppDescriptor().Name + ":" + std::to_string(m_iapp->getAppDescriptor().Version) +
-					"." + std::to_string(m_iapp->getAppDescriptor().SubVersion) + "."+std::to_string(m_iapp->getAppDescriptor().Patch));
+			using std::string;
+			using std::to_string;
+
+			if (m_iapp) {
+				return string(
+					m_iapp->getAppDescriptor().Name + ":" + 
+					to_string(m_iapp->getAppDescriptor().Version) + "." + 
+					to_string(m_iapp->getAppDescriptor().SubVersion) + "." + 
+					to_string(m_iapp->getAppDescriptor().Patch));
 			}
 			return "NoApp:0.0.0";
 		}
