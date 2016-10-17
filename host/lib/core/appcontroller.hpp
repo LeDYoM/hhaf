@@ -32,12 +32,13 @@ namespace lib
 				ReadyToTerminate,
 				Terminated
 			};
-			AppController();
+			AppController(int argc, char *argv[]);
 			virtual ~AppController();
 
 			bool setApplication(uptr<IApp> iapp);
-
+			int run();
 			bool update();
+
 			uptr<Window> const &parentWindow() const { return m_window; }
 			uptr<ResourceManager> const &resourceManager() const { return m_resourceManager; }
 			uptr<EventManager> const &eventManager() const { return m_eventManager; }
@@ -52,7 +53,8 @@ namespace lib
 			uptr<scn::SceneManager> m_sceneManager{ nullptr };
 			uptr<ResourceManager> m_resourceManager{ nullptr };
 			uptr<EventManager> m_eventManager{ nullptr };
-
+			bool exit{ false };
+			std::vector<std::string> m_params;
 		};
 	}
 }

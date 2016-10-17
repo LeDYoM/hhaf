@@ -11,9 +11,24 @@ namespace lib
 {
 	namespace core
 	{
-		AppController::AppController()
+		std::vector<std::string> transformParams(int argc, char *argv[])
+		{
+			std::vector<std::string> temp;
+
+			for (int i = 1; i<argc; ++i)
+			{
+				temp.push_back(argv[i]);
+			}
+			return temp;
+		}
+
+		AppController::AppController(int argc, char *argv[])
 		{
 			LOG_CONSTRUCT_NOPARAMS;
+			LOG_INFO("Starting HostController...");
+			LOG_INFO("Using SFML version " << SFML_VERSION_MAJOR << "." << SFML_VERSION_MINOR << "." << SFML_VERSION_PATCH << " as backend");
+			LOG_INFO("Parsing parameters...");
+			m_params = std::move(transformParams(argc, argv));
 		}
 
 		AppController::~AppController()
@@ -35,6 +50,8 @@ namespace lib
 
 		bool AppController::update()
 		{
+			bool _continue{ true };
+
 			switch (m_state)
 			{
 			case lib::core::AppController::AppState::NotInitialized:
@@ -83,6 +100,23 @@ namespace lib
 				break;
 			}
 			return false;
+		}
+
+		int AppController::run()
+		{
+			while (!exit) {
+				bool terminated{ update() };
+				if (terminated) {
+					m_iapp.reset();
+				}
+
+				exit = (m_iapp == nullptr);
+			}
+
+			if (!m_iapp) {
+				LOG_INFO("App destroyed. Exiting normally");
+			}
+			return 0;
 		}
 
 		bool AppController::loopStep()
