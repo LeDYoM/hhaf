@@ -28,7 +28,6 @@ namespace lib
 		public:
 			constexpr KeyPressedEvent(const input::Key key_) : InputEvent{ Action::KeyPressed }, key{ key_ } {}
 			const input::Key key;
-			virtual ~KeyPressedEvent() {}
 		};
 
 		class KeyReleasedEvent : public InputEvent, public EventTemplate<KeyPressedEvent>
@@ -36,7 +35,6 @@ namespace lib
 		public:
 			constexpr KeyReleasedEvent(const input::Key key_) : InputEvent{ Action::KeyPressed }, key{ key_ } {}
 			const input::Key key;
-			virtual ~KeyReleasedEvent() {}
 		};
 	}
 }
