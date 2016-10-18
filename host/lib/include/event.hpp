@@ -15,7 +15,7 @@ namespace lib
 			using listener_container_t = std::list<listener_t>;
 
 		};
-		template <typename T>
+		template <class T>
 		class EventTemplate : public Event
 		{
 		public:
@@ -25,11 +25,14 @@ namespace lib
 			static const listener_container_t &listeners() noexcept { return m_listeners; }
 			static bool subscribe(listener_t newListener)
 			{
-				m_listeners.emplace(std::move(newListener));
+				m_listeners.emplace_back(std::move(newListener));
+				return true;
 			}
 		private:
 			static listener_container_t m_listeners;
 		};
+
+		template <typename T> Event::listener_container_t EventTemplate<T>::m_listeners;
 	}
 }
 #endif

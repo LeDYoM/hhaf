@@ -9,8 +9,6 @@ namespace lib
 		MenuManager::MenuManager(const std::string &name)
 			: scn::Scene{ name }
 		{
-//			_steps = stepsVector();
-//			getSteps();
 		}
 
 

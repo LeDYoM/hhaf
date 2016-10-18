@@ -5,6 +5,8 @@
 #include <lib/core/window.hpp>
 #include <lib/core/host.hpp>
 #include <lib/core/resourcemanager.hpp>
+#include <lib/core/eventmanager.hpp>
+#include <lib/include/inputevent.hpp>
 
 namespace lib
 {
@@ -13,6 +15,7 @@ namespace lib
 		Scene::Scene(const std::string &_name) : RenderGroup{_name,nullptr}
 		{
 			LOG_CONSTRUCT("Name: " << name());
+			events::KeyReleasedEvent::subscribe([](const events::Event&) { return true; });
 		}
 
 		Scene::~Scene()
