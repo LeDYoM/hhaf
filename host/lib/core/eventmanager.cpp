@@ -23,13 +23,6 @@ namespace lib
 			LOG_DESTRUCT_NOPARAMS;
 		}
 
-		sptr<events::EventSender> EventManager::newEventSender()
-		{
-			auto temp = sptr<events::EventSender>(new events::EventSender(this));
-			m_eventsenders.push_back(temp);
-			return temp;
-		}
-
 		void EventManager::addEvent(sptr<lib::events::Event> event_)
 		{
 			eventQueue.push(std::move(event_));
