@@ -23,7 +23,7 @@ namespace lib
 			~EventManager();
 
 			sptr<events::EventSender> newEventSender();
-			virtual void addEvent(uptr<lib::events::Event> event_);
+			void addEvent(sptr<lib::events::Event> event_);
 		private:
 			virtual bool empty();
 			friend class events::EventSender;

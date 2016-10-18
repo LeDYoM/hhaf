@@ -24,7 +24,9 @@ namespace zoper
 
 		void MainMenu::onCreate()
 		{
-			auto callBack = [this](lib::u32 index, lib::menu::ChooseControl &self)
+			using namespace lib::menu;
+
+			auto callBack = [this](lib::u32 index, ChooseControl &self)
 			{
 				self;
 				switch (index)
@@ -46,18 +48,18 @@ namespace zoper
 					break;
 				}
 			};
-			_chooseControl = lib::sptr<lib::menu::ChooseControl>(new lib::menu::ChooseControl("mainmenu_chooseControl",
+			_chooseControl = lib::sptr<ChooseControl>(new ChooseControl("mainmenu_chooseControl",
 				lib::host().resourceManager().getResource("game_menu.mainFont"),
 				sf::Color::Blue, sf::Color::Red,
 				lib::scn::draw::Alignment::Center,
 				90, 1,
 				callBack,
-				lib::sptr<lib::menu::CursorDescriptor>(new lib::menu::CursorDescriptor(3, lib::vector2df{ 90.0f, 90.0f },sf::Color::Red)),
-				std::vector<lib::sptr<lib::menu::OptionDescriptor>>{
-				lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Play token mode")),
-					lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Play time mode")),
-				lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Options")),
-				lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Exit"))
+				lib::sptr<CursorDescriptor>(new CursorDescriptor(3, lib::vector2df{ 90.0f, 90.0f },sf::Color::Red)),
+				std::vector<lib::sptr<OptionDescriptor>>{
+				lib::sptr<OptionDescriptor>(new OptionDescriptor("Play token mode")),
+					lib::sptr<OptionDescriptor>(new OptionDescriptor("Play time mode")),
+				lib::sptr<OptionDescriptor>(new OptionDescriptor("Options")),
+				lib::sptr<OptionDescriptor>(new OptionDescriptor("Exit"))
 			}));
 			addMenuControl(_chooseControl);
 			_chooseControl->setPosition(menuManager()->getCenterCoordinates().x, 700);

@@ -137,15 +137,13 @@ namespace lib
 		{
 			_ASSERT(e.type == sf::Event::KeyPressed || e.type == sf::Event::KeyReleased);
 
-			if (e.type == sf::Event::KeyPressed)
-			{
-				host().eventManager().addEvent(uptr<lib::events::KeyPressedEvent>(new lib::events::KeyPressedEvent{doCast(e.key.code)}));
-//				p_sceneManager->onKeyPressed(e.key);
+			using namespace lib::events;
+
+			if (e.type == sf::Event::KeyPressed) {
+				host().eventManager().addEvent(uptr<KeyPressedEvent>(new KeyPressedEvent{doCast(e.key.code)}));
 			}
-			else
-			{
-				host().eventManager().addEvent(uptr<lib::events::KeyReleasedEvent>(new lib::events::KeyReleasedEvent{ doCast(e.key.code) }));
-				//				p_sceneManager->onKeyReleased(e.key);
+			else {
+				host().eventManager().addEvent(uptr<KeyReleasedEvent>(new KeyReleasedEvent{ doCast(e.key.code) }));
 			}
 		}
 

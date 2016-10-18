@@ -3,12 +3,13 @@
 
 #include <lib/include/key.hpp>
 #include "event.hpp"
+#include <lib/include/types.hpp>
 
 namespace lib
 {
 	namespace events
 	{
-		class InputEvent : public Event
+		class InputEvent
 		{
 		public:
 			enum class Action
@@ -16,23 +17,26 @@ namespace lib
 				KeyPressed,
 				KeyReleased
 			};
-			InputEvent(const Action &_action) : action{ _action } {}
+			constexpr InputEvent(const Action &_action) : action{ _action } {}
 			const Action action;
-			InputEvent &operator=(const InputEvent &rho) = delete;
+
+		protected:
 		};
 
-		class KeyPressedEvent : public InputEvent
+		class KeyPressedEvent : public InputEvent, public EventTemplate<KeyPressedEvent>
 		{
 		public:
-			KeyPressedEvent(const input::Key key_) : InputEvent{ Action::KeyPressed }, key{ key_ } {}
+			constexpr KeyPressedEvent(const input::Key key_) : InputEvent{ Action::KeyPressed }, key{ key_ } {}
 			const input::Key key;
+			virtual ~KeyPressedEvent() {}
 		};
 
-		class KeyReleasedEvent : public InputEvent
+		class KeyReleasedEvent : public InputEvent, public EventTemplate<KeyPressedEvent>
 		{
 		public:
-			KeyReleasedEvent(const input::Key key_) : InputEvent{ Action::KeyPressed }, key{ key_ } {}
+			constexpr KeyReleasedEvent(const input::Key key_) : InputEvent{ Action::KeyPressed }, key{ key_ } {}
 			const input::Key key;
+			virtual ~KeyReleasedEvent() {}
 		};
 	}
 }
