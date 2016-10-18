@@ -28,7 +28,20 @@ namespace lib
 			eventQueue.push(std::move(event_));
 		}
 
-		bool EventManager::empty()
+		void EventManager::update()
+		{
+			while (!eventQueue.empty()) {
+				const auto event (eventQueue.front());
+				if (!event->listeners().empty()) {
+					for (const auto &subscriber : event->listeners()) {
+						subscriber(*event);
+					}
+				}
+				eventQueue.pop();
+			}
+		}
+
+		bool EventManager::empty() const noexcept
 		{
 			return eventQueue.empty();
 		}

@@ -14,6 +14,7 @@ namespace lib
 			using listener_t = std::function<bool(const Event &)>;
 			using listener_container_t = std::list<listener_t>;
 
+			virtual const listener_container_t &listeners() const noexcept = 0;
 		};
 		template <class T>
 		class EventTemplate : public Event
@@ -22,7 +23,9 @@ namespace lib
 			constexpr EventTemplate() {}
 			virtual ~EventTemplate() { }
 
-			static const listener_container_t &listeners() noexcept { return m_listeners; }
+			virtual const listener_container_t &listeners() const noexcept { return m_listeners; }
+
+			static const listener_container_t &listenersStatic() noexcept { return m_listeners; }
 			static bool subscribe(listener_t newListener)
 			{
 				m_listeners.emplace_back(std::move(newListener));

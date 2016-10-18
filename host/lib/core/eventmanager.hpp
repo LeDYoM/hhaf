@@ -17,8 +17,9 @@ namespace lib
 			~EventManager();
 
 			void addEvent(sptr<lib::events::Event> event_);
+			void update();
 		private:
-			bool empty();
+			bool empty() const noexcept;
 			std::queue<sptr<lib::events::Event>> eventQueue;
 		};
 	}
