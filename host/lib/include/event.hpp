@@ -11,11 +11,25 @@ namespace lib
 		class Event
 		{
 		public:
-			using listener_t = std::function<bool(const Event &)>;
+			using listener_t = std::function<void(const Event &)>;
 			using listener_container_t = std::list<listener_t>;
 
 			virtual const listener_container_t &listeners() const noexcept = 0;
 		};
+
+		class EventSubscription
+		{
+		public:
+			using iterator_t = Event::listener_container_t::iterator;
+			EventSubscription(iterator_t it) : iData{ it } {}
+			iterator_t iData;
+			EventSubscription() = default;
+			EventSubscription(const EventSubscription&) = default;
+			EventSubscription &operator=(const EventSubscription&) = default;
+			EventSubscription(EventSubscription&&) = default;
+			EventSubscription &operator=(EventSubscription&&) = default;
+		};
+
 		template <class T>
 		class EventTemplate : public Event
 		{
@@ -26,10 +40,15 @@ namespace lib
 			virtual const listener_container_t &listeners() const noexcept { return m_listeners; }
 
 			static const listener_container_t &listenersStatic() noexcept { return m_listeners; }
-			static bool subscribe(listener_t newListener)
+			static EventSubscription subscribe(listener_t &&newListener)
 			{
 				m_listeners.emplace_back(std::move(newListener));
-				return true;
+				return std::move(EventSubscription{ std::prev(m_listeners.end()) });
+			}
+
+			static void unsubscribe(const EventSubscription&evs)
+			{
+				m_listeners.erase(evs.iData);
 			}
 		private:
 			static listener_container_t m_listeners;
