@@ -17,13 +17,14 @@ namespace lib
 			virtual const listener_container_t &listeners() const noexcept = 0;
 		};
 
-		class EventSubscription
+		class EventSubscription final
 		{
 		public:
-			using iterator_t = Event::listener_container_t::iterator;
-			EventSubscription(iterator_t it, Event::listener_container_t & listeners) : iData{ it }, m_eventListeners{ listeners } {}
+			using listener_container_t = Event::listener_container_t;
+			using iterator_t = listener_container_t::iterator;
+			EventSubscription(iterator_t it, listener_container_t & listeners) : iData{ it }, m_eventListeners{ listeners } {}
 			iterator_t iData;
-			EventSubscription() = default;
+			EventSubscription() = delete;
 			EventSubscription(const EventSubscription&) = default;
 			EventSubscription &operator=(const EventSubscription&) = default;
 			EventSubscription(EventSubscription&&) = default;
@@ -45,12 +46,12 @@ namespace lib
 			constexpr EventTemplate() {}
 			virtual ~EventTemplate() { }
 
-			virtual const listener_container_t &listeners() const noexcept { return m_listeners; }
+			virtual const listener_container_t &listeners() const noexcept override { return m_listeners; }
 
 			static const listener_container_t &listenersStatic() noexcept { return m_listeners; }
 			static EventSubscription subscribe(listener_t &&newListener)
 			{
-				m_listeners.emplace_back(std::move(newListener));
+				m_listeners.push_back(std::move(newListener));
 				return std::move(EventSubscription{ std::prev(m_listeners.end()), m_listeners });
 			}
 

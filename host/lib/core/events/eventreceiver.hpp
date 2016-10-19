@@ -16,7 +16,7 @@ namespace lib
 				EventReceiver();
 				virtual ~EventReceiver();
 
-				void addSubscription(lib::events::EventSubscription &&);
+				void addSubscription(lib::events::EventSubscription &&) noexcept;
 				void unsubscribeAll();
 			private:
 				std::list<lib::events::EventSubscription> m_subscriptions;

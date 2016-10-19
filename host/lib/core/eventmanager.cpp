@@ -30,14 +30,17 @@ namespace lib
 
 		void EventManager::update()
 		{
-			while (!eventQueue.empty()) {
-				const auto event (eventQueue.front());
-				if (!event->listeners().empty()) {
-					for (const auto &subscriber : event->listeners()) {
-						subscriber(*event);
+			if (!eventQueue.empty()) {
+				LOG_DEBUG("Found " << eventQueue.size() << " events in the event queue");
+				do {
+					const auto event(eventQueue.front());
+					if (!event->listeners().empty()) {
+						for (const auto &subscriber : event->listeners()) {
+							subscriber(*event);
+						}
 					}
-				}
-				eventQueue.pop();
+					eventQueue.pop();
+				} while (!eventQueue.empty());
 			}
 		}
 
