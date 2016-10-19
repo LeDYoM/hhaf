@@ -14,15 +14,19 @@ namespace lib
 	{
 		Scene::Scene(const std::string &_name) : RenderGroup{_name,nullptr}
 		{
+			using namespace events;
+
 			LOG_CONSTRUCT("Name: " << name());
-			es = events::KeyReleasedEvent::subscribe([this](const events::Event&) {
+			es = KeyReleasedEvent::subscribe([this](const events::Event&) {
 				LOG_DEBUG("Key pressed from Scene: "<< name());
 			});
 		}
 
 		Scene::~Scene()
 		{
-			events::KeyReleasedEvent::unsubscribe(es);
+			using namespace events;
+
+			KeyReleasedEvent::unsubscribe(es);
 			LOG_DESTRUCT("Name: "<<name());
 		}
 

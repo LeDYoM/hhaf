@@ -1,5 +1,4 @@
 #include "eventreceiver.hpp"
-#include "../eventmanager.hpp"
 
 namespace lib
 {
@@ -7,14 +6,16 @@ namespace lib
 	{
 		namespace events
 		{
-			EventReceiver::EventReceiver(EventManager *const eventManager) : m_eventManager{ eventManager }
-			{
+			EventReceiver::EventReceiver() = default;
+			EventReceiver::~EventReceiver() = default;
 
+			void EventReceiver::addSubscription(lib::events::EventSubscription &&nSubscription)
+			{
+				m_subscriptions.emplace_back(std::move(nSubscription));
 			}
 
-			EventReceiver::~EventReceiver()
+			void EventReceiver::unsubscribeAll()
 			{
-
 			}
 		}
 	}

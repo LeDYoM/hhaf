@@ -17,17 +17,19 @@ namespace lib
 			virtual const listener_container_t &listeners() const noexcept = 0;
 		};
 
-		class EventSubscription
+		template <typename T>
+		class EventSubscriptionTemplate
 		{
 		public:
 			using iterator_t = Event::listener_container_t::iterator;
-			EventSubscription(iterator_t it) : iData{ it } {}
+			EventSubscriptionTemplate(iterator_t it) : iData{ it } {}
 			iterator_t iData;
-			EventSubscription() = default;
-			EventSubscription(const EventSubscription&) = default;
-			EventSubscription &operator=(const EventSubscription&) = default;
-			EventSubscription(EventSubscription&&) = default;
-			EventSubscription &operator=(EventSubscription&&) = default;
+			EventSubscriptionTemplate() = default;
+			EventSubscriptionTemplate(const EventSubscriptionTemplate&) = default;
+			EventSubscriptionTemplate &operator=(const EventSubscriptionTemplate&) = default;
+			EventSubscriptionTemplate(EventSubscriptionTemplate&&) = default;
+			EventSubscriptionTemplate &operator=(EventSubscriptionTemplate&&) = default;
+			~EventSubscriptionTemplate() = default;
 		};
 
 		template <class T>
@@ -40,13 +42,13 @@ namespace lib
 			virtual const listener_container_t &listeners() const noexcept { return m_listeners; }
 
 			static const listener_container_t &listenersStatic() noexcept { return m_listeners; }
-			static EventSubscription subscribe(listener_t &&newListener)
+			static EventSubscriptionTemplate subscribe(listener_t &&newListener)
 			{
 				m_listeners.emplace_back(std::move(newListener));
-				return std::move(EventSubscription{ std::prev(m_listeners.end()) });
+				return std::move(EventSubscriptionTemplate{ std::prev(m_listeners.end()) });
 			}
 
-			static void unsubscribe(const EventSubscription&evs)
+			static void unsubscribe(const EventSubscriptionTemplate&evs)
 			{
 				m_listeners.erase(evs.iData);
 			}

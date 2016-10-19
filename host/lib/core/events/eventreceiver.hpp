@@ -2,25 +2,24 @@
 #define __LIB_CORE_EVENTSENDER_HPP__
 
 #include <lib/include/event.hpp>
+#include <list>
 
 namespace lib
 {
 	namespace core
 	{
-		class EventManager;
-
 		namespace events
 		{
 			class EventReceiver
 			{
 			public:
-				EventReceiver &operator=(const EventReceiver &rh) = delete;
+				EventReceiver();
 				virtual ~EventReceiver();
 
+				void addSubscription(lib::events::EventSubscription &&);
+				void unsubscribeAll();
 			private:
-				EventReceiver(EventManager *const eventManager);
-				EventManager  *const m_eventManager;
-				friend class EventManager;
+				std::list<lib::events::EventSubscription> m_subscriptions;
 			};
 		}
 	}
