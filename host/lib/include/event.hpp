@@ -17,19 +17,20 @@ namespace lib
 			virtual const listener_container_t &listeners() const noexcept = 0;
 		};
 
-		template <typename T>
-		class EventSubscriptionTemplate
+		class EventSubscription
 		{
 		public:
 			using iterator_t = Event::listener_container_t::iterator;
-			EventSubscriptionTemplate(iterator_t it) : iData{ it } {}
+			EventSubscription(iterator_t it, Event::listener_container_t & listeners) : iData{ it }, m_eventListeners{ listeners } {}
 			iterator_t iData;
-			EventSubscriptionTemplate() = default;
-			EventSubscriptionTemplate(const EventSubscriptionTemplate&) = default;
-			EventSubscriptionTemplate &operator=(const EventSubscriptionTemplate&) = default;
-			EventSubscriptionTemplate(EventSubscriptionTemplate&&) = default;
-			EventSubscriptionTemplate &operator=(EventSubscriptionTemplate&&) = default;
-			~EventSubscriptionTemplate() = default;
+			EventSubscription() = default;
+			EventSubscription(const EventSubscription&) = default;
+			EventSubscription &operator=(const EventSubscription&) = default;
+			EventSubscription(EventSubscription&&) = default;
+			EventSubscription &operator=(EventSubscription&&) = default;
+			~EventSubscription() = default;
+
+			Event::listener_container_t &m_eventListeners;
 		};
 
 		template <class T>
@@ -42,13 +43,13 @@ namespace lib
 			virtual const listener_container_t &listeners() const noexcept { return m_listeners; }
 
 			static const listener_container_t &listenersStatic() noexcept { return m_listeners; }
-			static EventSubscriptionTemplate subscribe(listener_t &&newListener)
+			static EventSubscription subscribe(listener_t &&newListener)
 			{
 				m_listeners.emplace_back(std::move(newListener));
-				return std::move(EventSubscriptionTemplate{ std::prev(m_listeners.end()) });
+				return std::move(EventSubscription{ std::prev(m_listeners.end()), m_listeners });
 			}
 
-			static void unsubscribe(const EventSubscriptionTemplate&evs)
+			static void unsubscribe(const EventSubscription&evs)
 			{
 				m_listeners.erase(evs.iData);
 			}
