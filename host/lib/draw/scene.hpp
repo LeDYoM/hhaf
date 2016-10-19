@@ -69,7 +69,6 @@ namespace lib
 
 			uptr<sf::View> p_view;
 			u32 _state;
-			events::EventSubscription es;
 			core::events::EventReceiver eventConnector;
 
 			SceneManager *p_scnManager;

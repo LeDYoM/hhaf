@@ -30,6 +30,11 @@ namespace lib
 			EventSubscription &operator=(EventSubscription&&) = default;
 			~EventSubscription() = default;
 
+			void unsubscribe() 
+			{
+				m_eventListeners.erase(iData);
+			}
+
 			Event::listener_container_t &m_eventListeners;
 		};
 

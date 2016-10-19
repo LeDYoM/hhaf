@@ -17,16 +17,13 @@ namespace lib
 			using namespace events;
 
 			LOG_CONSTRUCT("Name: " << name());
-			es = KeyReleasedEvent::subscribe([this](const events::Event&) {
+			eventConnector.addSubscription(KeyReleasedEvent::subscribe([this](const events::Event&) {
 				LOG_DEBUG("Key pressed from Scene: "<< name());
-			});
+			}));
 		}
 
 		Scene::~Scene()
 		{
-			using namespace events;
-
-			KeyReleasedEvent::unsubscribe(es);
 			LOG_DESTRUCT("Name: "<<name());
 		}
 
