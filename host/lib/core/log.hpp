@@ -3,6 +3,9 @@
 
 #include "compileconfig.hpp"
 
+void initLog();
+void finishLog();
+
 #ifdef __USE_LOGS__
 	#include <sstream>
 	enum class LogType
@@ -13,9 +16,7 @@
 		Error,
 	};
 
-	void initLog();
-	void finishLog();
-	void logOutput(const LogType&, const std::string&);
+	void logOutput(const LogType, const std::string&);
 	#define PREPARE_LOG(level,params) { std::ostringstream os_; os_ << params << std::endl; logOutput(level,os_.str()); }
 	#define EXECUTE_IN_DEBUG(x)		x
 	#define LOG_DEBUG(x)			PREPARE_LOG(LogType::Debug, x)
@@ -44,6 +45,4 @@
 	#define __ASSERT(cond,x)
 	#define __CHECK(cond,x)
 #endif
-void initLog();
-void finishLog();
 #endif

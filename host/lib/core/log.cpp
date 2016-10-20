@@ -31,8 +31,8 @@ void initLog()
 
 void commitLog(const LogMessage &message)
 {
-	const std::string &str = message.message;
-	const LogType &lt = message.logType;
+	const auto&& str = std::move(message.message);
+	const LogType lt{ message.logType };
 #ifdef __LOGFILE__
 	if (logFile.is_open())
 		logFile << str;
@@ -60,31 +60,30 @@ void commitLog(const LogMessage &message)
 	void doLogOutput();
 	bool doLoop = true;
 
-	void logOutput(const LogType &lt, const std::string&str)
+	void logOutput(const LogType lt, const std::string&str)
 	{
-		{
-			std::unique_lock<std::mutex> _lock(_mutex);
-			logQueue.push({ lt, str });
-			_condVar.notify_all();
-		}
+		std::unique_lock<std::mutex> _lock(_mutex);
+		logQueue.push({ lt, str });
+		_condVar.notify_all();
 	}
 
 	void doLogOutput()
 	{
-		while (doLoop)
-		{
-			std::unique_lock<std::mutex> _lock(_mutex);
-			if (logQueue.empty())
+		while (doLoop) {
 			{
-				_condVar.wait(_lock);
-			}
-			else
-			{
-				while (!logQueue.empty())
+				std::unique_lock<std::mutex> _lock(_mutex);
+				if (logQueue.empty())
 				{
-					const LogMessage &str = logQueue.front();
-					commitLog(str);
-					logQueue.pop();
+					_condVar.wait(_lock);
+				}
+				else
+				{
+					while (!logQueue.empty())
+					{
+						const auto&&str (logQueue.front());
+						commitLog(str);
+						logQueue.pop();
+					}
 				}
 			}
 		}
@@ -92,9 +91,9 @@ void commitLog(const LogMessage &message)
 
 	std::thread t1(doLogOutput);
 #else
-void logOutput(const char *str)
+void logOutput(const LogType lt, const std::string&str)
 {
-	commitLog(str);
+	commitLog(LogMessage{ lt,str });
 }
 #endif
 
