@@ -32,7 +32,7 @@ namespace zoper
 					_gameConfig.addConfigInt(StartLevelStr, self.getSelectedSubLabel(0), true);
 					LOG_DEBUG("Starting t level:" << self.getSelectedSubLabel(0));
 					self.setSelectedSubLabel(0, 0);
-					menuManager()->setNextScene("GameScene");
+					lib::host().setScene("GameScene");
 
 					break;
 				default:

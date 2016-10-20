@@ -1,5 +1,4 @@
 #include "scene.hpp"
-#include "scenemanager.hpp"
 #include "renderizable.hpp"
 #include <lib/core/log.hpp>
 #include <lib/core/window.hpp>
@@ -87,27 +86,5 @@ namespace lib
 			onExitScene();
 			LOG_DEBUG("Exited from scene " << name());
 		}
-
-		void Scene::onKeyPressed(sf::Event::KeyEvent kEvent)
-		{
-			LOG_DEBUG("Key pressed: " << int{ kEvent.code });
-		}
-
-		void Scene::onKeyReleased(sf::Event::KeyEvent kEvent)
-		{
-			LOG_DEBUG("Key released: " << int{ kEvent.code });
-		}
-
-		void Scene::setNextScene(const std::string &name)
-		{
-			__ASSERT(p_scnManager, "Null SceneManager on Scene");
-			p_scnManager->setScene(name);
-		}
-
-		void Scene::exitProgram()
-		{
-			p_scnManager->exitProgram();
-		}
-
 	}
 }

@@ -44,7 +44,7 @@ namespace zoper
 					break;
 				case 3:
 				default:
-					menuManager()->exitProgram();
+//					menuManager()->exitProgram();
 					break;
 				}
 			};

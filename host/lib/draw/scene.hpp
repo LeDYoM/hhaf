@@ -16,6 +16,7 @@ namespace lib
 	namespace core
 	{
 		class ResourceManager;
+		class Host;
 	}
 	namespace scn
 	{
@@ -42,16 +43,9 @@ namespace lib
 
 			virtual void update() = 0;
 
-			virtual void onKeyPressed(sf::Event::KeyEvent kEvent);
-			virtual void onKeyReleased(sf::Event::KeyEvent kEvent);
-
-			void setNextScene(const std::string &name);
-
 			virtual const vector2df getDefaultSizeView() = 0;
 			const vector2df getCoordinatesToCenter(const sf::FloatRect &coordinates) const;
 			const vector2df getCenterCoordinates() const;
-
-			void exitProgram();
 
 		protected:
 
@@ -71,8 +65,7 @@ namespace lib
 			u32 _state;
 			core::events::EventReceiver eventConnector;
 
-			SceneManager *p_scnManager;
-			friend class SceneManager;
+			friend class lib::core::Host;
 		};
 	}
 }

@@ -11,7 +11,6 @@ namespace lib
 {
 	namespace scn
 	{
-		class SceneManager;
 		class Scene;
 	}
 	namespace core
@@ -35,6 +34,16 @@ namespace lib
 			int run();
 			bool update();
 
+			void addScene(sptr<scn::Scene> newScene);
+			void setScene(const std::string &name);
+
+			void addScenes(const std::vector<sptr<scn::Scene>> &&sceneVector);
+			sptr<scn::Scene> getSceneByName(const std::string &name) const;
+
+			void exitProgram();
+
+			void setScene(sptr<scn::Scene> scene);
+
 			inline Window const &parentWindow() const noexcept { return *m_window; }
 			inline Window &parentWindow()  noexcept { return *m_window; }
 			inline ResourceManager const &resourceManager() const  noexcept { return *m_resourceManager; }
@@ -50,10 +59,11 @@ namespace lib
 			AppState m_state;
 			uptr<Window> m_window{ nullptr };
 			uptr<IApp> m_iapp{ nullptr };
-			uptr<scn::SceneManager> m_sceneManager{ nullptr };
 			uptr<ResourceManager> m_resourceManager{ nullptr };
 			uptr<EventManager> m_eventManager{ nullptr };
 			bool exit{ false };
+			std::vector<sptr<scn::Scene>> m_scenes;
+			sptr<scn::Scene> m_currentScene{ nullptr };
 			std::vector<std::string> m_params;
 		};
 	}

@@ -412,7 +412,7 @@ namespace zoper
 
 	void GameScene::onKeyPressed(sf::Event::KeyEvent kEvent)
 	{
-		Scene::onKeyPressed(kEvent);
+//		Scene::onKeyPressed(kEvent);
 		switch (state())
 		{
 		case Playing:
@@ -434,7 +434,7 @@ namespace zoper
 		}
 		break;
 		case GameOver:
-			setNextScene("MenuScene");
+			lib::host().setScene("MenuScene");
 			break;
 		case Pause:
 			if (_keyMapping.isPauseKey(kEvent.code))
@@ -460,9 +460,9 @@ namespace zoper
 		}
 	}
 
-	void GameScene::onKeyReleased(sf::Event::KeyEvent kEvent)
+	void GameScene::onKeyReleased(sf::Event::KeyEvent)
 	{
-		Scene::onKeyReleased(kEvent);
+//		Scene::onKeyReleased(kEvent);
 	}
 
 	void GameScene::onAnimationStarted(lib::sptr<lib::scn::draw::anim::IAnimation> anim, lib::sptr<lib::scn::draw::Renderizable> node)

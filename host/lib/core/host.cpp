@@ -1,11 +1,12 @@
 #include "host.hpp"
 #include "window.hpp"
 #include "resourcemanager.hpp"
-#include <lib/draw/scenemanager.hpp>
 #include <lib/draw/scene.hpp>
 #include "log.hpp"
 #include "eventmanager.hpp"
 #include <SFML/Config.hpp>
+
+#include <algorithm>
 
 namespace lib
 {
@@ -15,8 +16,7 @@ namespace lib
 		{
 			std::vector<std::string> temp;
 
-			for (int i = 1; i<argc; ++i)
-			{
+			for (int i = 1; i<argc; ++i) {
 				temp.push_back(argv[i]);
 			}
 			return temp;
@@ -64,6 +64,11 @@ namespace lib
 
 		Host::~Host()
 		{
+			for (auto &scene : m_scenes) {
+				scene->privateOnDeinit();
+			}
+			m_scenes.clear();
+			m_params.clear();
 			LOG_DESTRUCT("Name: " << appId());
 		}
 
@@ -94,8 +99,8 @@ namespace lib
 				m_eventManager = uptr<EventManager>(new EventManager());
 				m_window = uptr<Window>(new Window(m_iapp->getAppDescriptor().wcp));
 				m_resourceManager = uptr<ResourceManager>(new core::ResourceManager(m_iapp->getAppDescriptor().resourceFile));
-				m_sceneManager = uptr<scn::SceneManager>(new scn::SceneManager());
-				m_sceneManager->addScenes(m_iapp->scenesVector());
+				
+				addScenes(m_iapp->scenesVector());
 
 				m_iapp->onInit();
 				LOG_DEBUG(appId() << ": " << " is now executing");
@@ -114,7 +119,6 @@ namespace lib
 				m_state = AppState::Terminated;
 //				m_iapp->onFinish();
 				m_window = nullptr;
-				m_sceneManager = nullptr;
 				m_resourceManager = nullptr;
 				m_eventManager = nullptr;
 				LOG_DEBUG(appId() << ": " << " terminated");
@@ -149,7 +153,19 @@ namespace lib
 		{
 			bool windowWants2Close = m_window->preLoop();
 			m_eventManager->update();
-			m_sceneManager->update();
+
+			if (!m_currentScene) {
+				if (m_scenes.size() > 0) {
+					setScene(m_scenes[0]);
+				}
+			}
+			else {
+				m_currentScene->update();
+			}
+
+			sf::RenderStates states;
+			m_currentScene->draw(states);
+
 			windowWants2Close |= m_window->postLoop();
 			return windowWants2Close;
 		}
@@ -169,5 +185,57 @@ namespace lib
 			return "NoApp:0.0.0";
 		}
 
+		void Host::addScene(sptr<scn::Scene> newScene)
+		{
+			__ASSERT(newScene, "Cannot add a null scene");
+			m_scenes.push_back(newScene);
+			newScene->privateOnInit();
+		}
+
+		void Host::setScene(const std::string &name)
+		{
+			if (sptr<scn::Scene> scene = getSceneByName(name)) {
+				setScene(std::move(scene));
+				LOG_DEBUG("Changed scene to " << name);
+			}
+			else {
+				LOG_ERROR("Scene " << name << " not found in SceneManager");
+			}
+		}
+
+		void Host::addScenes(const std::vector<sptr<scn::Scene>>&& sceneVector)
+		{
+			for (auto &&scene : sceneVector)
+			{
+				addScene(std::move(scene));
+			}
+		}
+
+		void Host::setScene(sptr<scn::Scene> scene)
+		{
+			__ASSERT(scene, "Cannot change to a nullptr Scene");
+			if (m_currentScene) {
+				m_currentScene->privateOnExitScene();
+			}
+			else {
+				LOG_DEBUG("Set first scene");
+			}
+			m_currentScene = scene;
+			m_currentScene->privateOnEnterScene();
+		}
+
+		sptr<scn::Scene> Host::getSceneByName(const std::string &name) const
+		{
+			const auto iterator(std::find_if(m_scenes.cbegin(), m_scenes.cend(), [&name](const auto&scene)
+			{
+				return scene->name() == name;
+			}));
+			return iterator == m_scenes.end() ? nullptr : *iterator;
+		}
+
+		void Host::exitProgram()
+		{
+			//			p_parentWindow->exitProgram();
+		}
 	}
 }
