@@ -29,8 +29,6 @@ namespace lib
 
 			void addScenes(const std::vector<sptr<Scene>> &&sceneVector);
 
-			void onKeyPressed(sf::Event::KeyEvent kEvent);
-			void onKeyReleased(sf::Event::KeyEvent kEvent);
 			void exitProgram();
 
 		private:

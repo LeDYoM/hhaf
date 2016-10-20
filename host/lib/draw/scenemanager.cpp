@@ -64,18 +64,6 @@ namespace lib
 			}
 		}
 
-		void SceneManager::onKeyPressed(sf::Event::KeyEvent kEvent)
-		{
-			__ASSERT(_currentScene, "No active scene when pressing a key");
-			_currentScene->onKeyPressed(kEvent);
-		}
-
-		void SceneManager::onKeyReleased(sf::Event::KeyEvent kEvent)
-		{
-			__ASSERT(_currentScene, "No active scene when releasing a key");
-			_currentScene->onKeyReleased(kEvent);
-		}
-
 		void SceneManager::setScene(sptr<Scene> scene)
 		{
 			__ASSERT(scene, "Cannot change to a nullptr Scene");
