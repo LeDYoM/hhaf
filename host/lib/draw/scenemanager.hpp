@@ -37,8 +37,6 @@ namespace lib
 			sptr<Scene> getSceneByName(const std::string &name) const;
 			std::vector<sptr<Scene>> _scenes;
 			sptr<Scene> _currentScene{ nullptr };
-			bool b_lock{ false };
-			sptr<Scene> _nextScene{ nullptr };
 		};
 	}
 }

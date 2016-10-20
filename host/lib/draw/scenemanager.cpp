@@ -34,24 +34,11 @@ namespace lib
 	
 		void SceneManager::setScene(const std::string &name)
 		{
-			sptr<Scene> scene = getSceneByName(name);
-			
-			if (scene)
-			{
-				if (b_lock)
-				{
-					_nextScene = scene;
-					LOG_DEBUG("Deferred Change scene to " << name);
-				}
-				else
-				{
-					b_lock = true;
-					setScene(scene);
-					b_lock = false;
-				}
+			if (sptr<Scene> scene = getSceneByName(name)) {
+				setScene(std::move(scene));
+				LOG_DEBUG("Changed scene to " << name);
 			}
-			else
-			{
+			else {
 				LOG_ERROR("Scene " << name << " not found in SceneManager");
 			}
 		}
@@ -67,12 +54,10 @@ namespace lib
 		void SceneManager::setScene(sptr<Scene> scene)
 		{
 			__ASSERT(scene, "Cannot change to a nullptr Scene");
-			if (_currentScene)
-			{
+			if (_currentScene) {
 				_currentScene->privateOnExitScene();
 			}
-			else
-			{
+			else {
 				LOG_DEBUG("Set first scene");
 			}
 			_currentScene = scene;
@@ -81,36 +66,22 @@ namespace lib
 
 		sptr<Scene> SceneManager::getSceneByName(const std::string &name) const
 		{
-			for (auto scene : _scenes)
+			const auto iterator(std::find_if(_scenes.cbegin(), _scenes.cend(), [&name](const auto&scene)
 			{
-				if (scene->name() == name)
-				{
-					return scene;
-				}
-			}
-			return nullptr;
+				return scene->name() == name;
+			}));
+			return iterator == _scenes.end() ? nullptr : *iterator;
 		}
 
 		void SceneManager::update()
 		{
-			if (!_currentScene)
-			{
-				if (_scenes.size() > 0)
-				{
+			if (!_currentScene) {
+				if (_scenes.size() > 0) {
 					setScene(_scenes[0]);
 				}
 			}
-			else if (_nextScene)
-			{
-				setScene(_nextScene);
-				_nextScene = nullptr;
-			}
-			else
-			{
-				if (_currentScene)
-				{
-					_currentScene->update();
-				}
+			else {
+				_currentScene->update();
 			}
 
 			sf::RenderStates states;
