@@ -47,6 +47,8 @@ namespace lib
 			const vector2df getCoordinatesToCenter(const sf::FloatRect &coordinates) const;
 			const vector2df getCenterCoordinates() const;
 
+			bool isActiveScene() const noexcept { return m_isActiveScene; }
+
 		protected:
 
 			void updateView();
