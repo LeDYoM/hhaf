@@ -63,7 +63,6 @@ namespace lib
 		virtual ~IApp() {}
 
 		virtual const IAppDescriptor getAppDescriptor() const = 0;
-		virtual ServicesRequest getServicesRequest() const = 0;
 		virtual void onInit() = 0;
 		virtual lib::VecSPtr<scn::Scene> scenesVector() = 0;
 		virtual int loop() = 0;
