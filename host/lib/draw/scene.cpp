@@ -16,6 +16,7 @@ namespace lib
 			using namespace events;
 
 			LOG_CONSTRUCT("Name: " << name());
+			eventConnector.setFilter([]() { return false; });
 			eventConnector.addSubscription(KeyReleasedEvent::subscribe([this](const Event&) {
 				LOG_DEBUG("Key pressed from Scene: "<< name());
 			}));
