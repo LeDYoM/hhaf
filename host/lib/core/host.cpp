@@ -154,14 +154,8 @@ namespace lib
 			bool windowWants2Close = m_window->preLoop();
 			m_eventManager->update();
 
-			if (!m_currentScene) {
-				if (m_scenes.size() > 0) {
-					setScene(m_scenes[0]);
-				}
-			}
-			else {
-				m_currentScene->update();
-			}
+			__ASSERT(m_currentScene, "Current scene cannot be nullptr");
+			m_currentScene->update();
 
 			sf::RenderStates states;
 			m_currentScene->draw(states);
@@ -199,14 +193,13 @@ namespace lib
 				LOG_DEBUG("Changed scene to " << name);
 			}
 			else {
-				LOG_ERROR("Scene " << name << " not found in SceneManager");
+				LOG_ERROR("Scene " << name << " not found in scenes");
 			}
 		}
 
 		void Host::addScenes(const std::vector<sptr<scn::Scene>>&& sceneVector)
 		{
-			for (auto &&scene : sceneVector)
-			{
+			for (auto &&scene : sceneVector) {
 				addScene(std::move(scene));
 			}
 		}
@@ -220,9 +213,17 @@ namespace lib
 			else {
 				LOG_DEBUG("Set first scene");
 			}
+			updateActiveSceneStates(m_currentScene, scene);
 			m_currentScene = scene;
 			m_currentScene->privateOnEnterScene();
 		}
+
+		void Host::updateActiveSceneStates(const sptr<scn::Scene>&previous, const sptr<scn::Scene>&next) const noexcept
+		{
+			if (previous) previous->setAsActiveScene(false);
+			if (next) next->setAsActiveScene(true);
+		}
+
 
 		sptr<scn::Scene> Host::getSceneByName(const std::string &name) const
 		{
