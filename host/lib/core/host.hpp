@@ -55,6 +55,9 @@ namespace lib
 		protected:
 			bool loopStep();
 		private:
+
+			void updateActiveSceneStates(const sptr<scn::Scene> &, const sptr<scn::Scene> &) const noexcept;
+
 			static Host *m_instance;
 			AppState m_state;
 			uptr<Window> m_window{ nullptr };

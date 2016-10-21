@@ -20,7 +20,6 @@ namespace lib
 	}
 	namespace scn
 	{
-		class SceneManager;
 		namespace draw
 		{
 			class RenderGroup;
@@ -56,6 +55,8 @@ namespace lib
 			inline u32 state() const { return _state; }
 			inline void setState(u32 ns) { _state = ns; }
 
+			bool isActiveScene() const noexcept { return m_isActiveScene; }
+
 			Timer clock;
 		private:
 			void privateOnInit();
@@ -63,8 +64,11 @@ namespace lib
 			void privateOnEnterScene();
 			void privateOnExitScene();
 
+			inline void setAsActiveScene(const bool nv) noexcept { m_isActiveScene = nv; }
+
 			uptr<sf::View> p_view;
 			u32 _state;
+			bool m_isActiveScene{ false };
 			core::events::EventReceiver eventConnector;
 
 			friend class lib::core::Host;

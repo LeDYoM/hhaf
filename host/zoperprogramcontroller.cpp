@@ -2,25 +2,24 @@
 #include "menuscene.hpp"
 #include "gamescene.hpp"
 #include "common.hpp"
+#include <lib/core/host.hpp>
 
 namespace zoper
 {
-	ZoperProgramController::ZoperProgramController()
-	{
-	}
+	using namespace lib;
 
-	ZoperProgramController::~ZoperProgramController()
-	{
-//		saveConfig();
-	}
+	ZoperProgramController::ZoperProgramController() = default;
+
+	ZoperProgramController::~ZoperProgramController() = default;
 		
 	void ZoperProgramController::onInit()
 	{
+		host().setScene("MenuScene");
 	}
 
-	const lib::IAppDescriptor ZoperProgramController::getAppDescriptor() const
+	const IAppDescriptor ZoperProgramController::getAppDescriptor() const
 	{
-		return lib::IAppDescriptor
+		return IAppDescriptor
 		{
 			"Zoper",
 			1,
@@ -28,13 +27,13 @@ namespace zoper
 			1,
 			"config.cfg",
 			"res.cfg",
-			lib::WindowCreationParams
+			WindowCreationParams
 			(
 				std::string("ZOPER"),
-				(lib::u32)1024,
-				(lib::u32)768,
-				(lib::u32)32,
-				(lib::u32)0,
+				1024,
+				768,
+				32,
+				0,
 				false,
 				false,
 				false
@@ -42,25 +41,14 @@ namespace zoper
 		};
 	}
 
-//	void ZoperProgramController::start()
-//	{
-//		throw std::logic_error("The method or operation is not implemented.");
-//	}
-
 	int ZoperProgramController::loop()
 	{
-//		throw std::logic_error("The method or operation is not implemented.");
 		return 0;
 	}
 
-	lib::ServicesRequest ZoperProgramController::getServicesRequest() const
+	VecSPtr<scn::Scene> ZoperProgramController::scenesVector()
 	{
-		return lib::ServicesRequest();
-	}
-
-	lib::VecSPtr<lib::scn::Scene> ZoperProgramController::scenesVector()
-	{
-		return{ lib::sptr<lib::scn::Scene>(new MenuScene), lib::sptr<lib::scn::Scene>(new GameScene) };
+		return{ sptr<scn::Scene>(new MenuScene), sptr<scn::Scene>(new GameScene) };
 	}
 
 
