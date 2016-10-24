@@ -23,8 +23,6 @@ namespace lib
 			void start(const std::string &firstStep);
 			void changeStep(const std::string &step);
 			void changeStep(sptr<MenuStep> step);
-			virtual void onKeyPressed(sf::Event::KeyEvent kEvent);
-			virtual void onKeyReleased(sf::Event::KeyEvent kEvent);
 
 		private:
 			void setActiveStep(sptr<MenuStep> step);

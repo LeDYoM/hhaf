@@ -35,7 +35,7 @@ namespace zoper
 			_indexKey = 0;
 			setTextForKey();
 		}
-
+		/*
 		void KeyRedefinitionMenu::onKeyPressed(sf::Event::KeyEvent kEvent)
 		{
 			lib::menu::MenuStep::onKeyPressed(kEvent);
@@ -50,7 +50,7 @@ namespace zoper
 		{
 			lib::menu::MenuStep::onKeyReleased(kEvent);
 		}
-
+		*/
 		void KeyRedefinitionMenu::setTextForKey()
 		{
 			if (_indexKey >= KeyMapping::TotalKeys)

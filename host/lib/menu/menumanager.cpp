@@ -68,17 +68,5 @@ namespace lib
 				_step->setVisible(_step == step);
 			}
 		}
-
-		void MenuManager::onKeyPressed(sf::Event::KeyEvent kEvent)
-		{
-//			Scene::onKeyPressed(kEvent);
-			_activeMenuStep->onKeyPressed(kEvent);
-		}
-
-		void MenuManager::onKeyReleased(sf::Event::KeyEvent kEvent)
-		{
-//			Scene::onKeyReleased(kEvent);
-			_activeMenuStep->onKeyReleased(kEvent);
-		}
 	}
 }
