@@ -2,12 +2,13 @@
 #define __LIB_SCENE_HPP__
 
 #include "hasname.hpp"
+#include "rendergroup.hpp"
+
 #include <lib/core/compileconfig.hpp>
 #include <lib/include/types.hpp>
 #include <lib/core/timer.hpp>
-#include "rendergroup.hpp"
-#include <lib/include/event.hpp>
-#include <lib/core/events/eventreceiver.hpp>
+#include <lib/include/events/event.hpp>
+#include <lib/include/events/eventreceiver.hpp>
 #include <string>
 #include <SFML/Window/Event.hpp>
 
@@ -46,7 +47,7 @@ namespace lib
 			const vector2df getCoordinatesToCenter(const sf::FloatRect &coordinates) const;
 			const vector2df getCenterCoordinates() const;
 
-			bool isActiveScene() const noexcept { return m_isActiveScene; }
+			inline bool isActiveScene() const noexcept { return m_isActiveScene; }
 
 		protected:
 
@@ -54,10 +55,9 @@ namespace lib
 			sf::View *const getView() const;
 			inline u32 state() const { return _state; }
 			inline void setState(u32 ns) { _state = ns; }
-
-			bool isActiveScene() const noexcept { return m_isActiveScene; }
-
 			Timer clock;
+			EventReceiver eventConnector;
+
 		private:
 			void privateOnInit();
 			void privateOnDeinit();
@@ -69,7 +69,6 @@ namespace lib
 			uptr<sf::View> p_view;
 			u32 _state;
 			bool m_isActiveScene{ false };
-			core::events::EventReceiver eventConnector;
 
 			friend class lib::core::Host;
 		};

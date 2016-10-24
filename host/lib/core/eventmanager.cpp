@@ -1,12 +1,12 @@
 #include "eventmanager.hpp"
-#include "events/eventsender.hpp"
 #include "log.hpp"
+
+#include <lib/include/events/eventreceiver.hpp>
 
 namespace lib
 {
 	namespace core
 	{
-
 		EventManager::EventManager()
 		{
 			LOG_CONSTRUCT_NOPARAMS;

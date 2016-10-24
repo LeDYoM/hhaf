@@ -2,7 +2,7 @@
 #define __LIB_EVENTMANAGER_HPP__
 
 #include "appservice.hpp"
-#include <lib/include/event.hpp>
+#include <lib/include/events/event.hpp>
 #include <lib/include/types.hpp>
 #include <queue>
 
@@ -20,7 +20,7 @@ namespace lib
 			void update();
 		private:
 			bool empty() const noexcept;
-			std::queue<sptr<lib::events::Event>> eventQueue;
+			std::queue<sptr<events::Event>> eventQueue;
 		};
 	}
 }

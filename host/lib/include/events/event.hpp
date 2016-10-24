@@ -22,7 +22,7 @@ namespace lib
 		public:
 			using listener_container_t = Event::listener_container_t;
 			using iterator_t = listener_container_t::iterator;
-			EventSubscription(iterator_t it, listener_container_t & listeners) : iData{ it }, m_eventListeners{ listeners } {}
+			EventSubscription(iterator_t it, listener_container_t & listeners) : iData{ it }, m_eventListeners{ listeners }, m_subscribed{ true } {}
 			iterator_t iData;
 			EventSubscription() = delete;
 			EventSubscription(const EventSubscription&) = default;
@@ -36,6 +36,8 @@ namespace lib
 				m_eventListeners.erase(iData);
 			}
 
+		private:
+			bool m_subscribed;
 			Event::listener_container_t &m_eventListeners;
 		};
 
