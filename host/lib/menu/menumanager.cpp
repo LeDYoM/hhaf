@@ -17,7 +17,7 @@ namespace lib
 			_steps.clear();
 		}
 
-		void MenuManager::addMenuSteps(std::vector<sptr<MenuStep>> &steps)
+		void MenuManager::addMenuSteps(std::vector<sptr<MenuControl>> &steps)
 		{
 			for (auto menuStep : steps)
 			{
@@ -25,14 +25,14 @@ namespace lib
 			}
 		}
 
-		void MenuManager::addMenuStep(sptr<MenuStep> step)
+		void MenuManager::addMenuStep(sptr<MenuControl> step)
 		{
 			addRenderGroup(step);
 			_steps.push_back(step);
 			step->onCreate();
 		}
 
-		void MenuManager::start(sptr<MenuStep> firstStep)
+		void MenuManager::start(sptr<MenuControl> firstStep)
 		{
 			__ASSERT(firstStep, "Cannot start in nullptr step");
 			changeStep(firstStep);
@@ -54,12 +54,12 @@ namespace lib
 			}
 		}
 
-		void MenuManager::changeStep(sptr<MenuStep> step)
+		void MenuManager::changeStep(sptr<MenuControl> step)
 		{
 			setActiveStep(step);
 		}
 
-		void MenuManager::setActiveStep(sptr<MenuStep> step)
+		void MenuManager::setActiveStep(sptr<MenuControl> step)
 		{
 			_activeMenuStep = step;
 

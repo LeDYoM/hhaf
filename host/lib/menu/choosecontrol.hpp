@@ -17,7 +17,7 @@ namespace lib
 	namespace menu
 	{
 		class OptionDescriptor;
-		class MenuStep;
+		class MenuControl;
 		class ChooseControl : public IMenuControl
 		{
 		public:

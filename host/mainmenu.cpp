@@ -13,7 +13,7 @@ namespace zoper
 	namespace zmenu
 	{
 		MainMenu::MainMenu()
-			: lib::menu::MenuStep{ "MainMenu" }, _gameConfig{ ":NextGame" }
+			: lib::menu::MenuControl{ "MainMenu" }, _gameConfig{ ":NextGame" }
 		{
 		}
 
@@ -62,7 +62,7 @@ namespace zoper
 				sptr<OptionDescriptor>(new OptionDescriptor("Options")),
 				sptr<OptionDescriptor>(new OptionDescriptor("Exit"))
 			}));
-			addMenuControl(_chooseControl);
+			setMenuControl(_chooseControl);
 			_chooseControl->setPosition(menuManager()->getCenterCoordinates().x, 700);
 		}
 	}

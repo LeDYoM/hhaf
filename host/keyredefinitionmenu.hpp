@@ -8,7 +8,7 @@ namespace zoper
 {
 	namespace zmenu
 	{
-		class KeyRedefinitionMenu : public lib::menu::MenuStep
+		class KeyRedefinitionMenu : public lib::menu::MenuControl
 		{
 		public:
 			KeyRedefinitionMenu();

@@ -1,5 +1,5 @@
-#ifndef __LIB_MENUSTEP_HPP__
-#define __LIB_MENUSTEP_HPP__
+#ifndef LIB_MENU_MENUCONTROL_INCLUDE_HPP__
+#define LIB_MENU_MENUCONTROL_INCLUDE_HPP__
 
 #include <lib/draw/rendergroup.hpp>
 #include <lib/menu/imenucontrol.hpp>
@@ -13,19 +13,19 @@ namespace lib
 	namespace menu
 	{
 		class MenuManager;
-		class MenuStep : public scn::draw::RenderGroup
+		class MenuControl : public scn::draw::RenderGroup
 		{
 		public:
-			MenuStep(const std::string &name);
-			virtual ~MenuStep();
+			MenuControl(const std::string &name);
+			virtual ~MenuControl();
 
 			virtual void onCreate() = 0;
 			MenuManager *menuManager();
 
-			void addMenuControl(sptr<IMenuControl> nControl);
+			void setMenuControl(sptr<IMenuControl> nControl);
 
 		private:
-			std::vector<sptr<IMenuControl>> _controls;
+			sptr<IMenuControl> m_control;
 		};
 	}
 }

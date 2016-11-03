@@ -5,25 +5,25 @@ namespace lib
 {
 	namespace menu
 	{
-		MenuStep::MenuStep(const std::string &name)
+		MenuControl::MenuControl(const std::string &name)
 			: RenderGroup(name)
 		{
 		}
 
 
-		MenuStep::~MenuStep()
+		MenuControl::~MenuControl()
 		{
 		}
 
-		MenuManager * MenuStep::menuManager()
+		MenuManager * MenuControl::menuManager()
 		{
 			return dynamic_cast<MenuManager*>(parent());
 		}
 
-		void MenuStep::addMenuControl(sptr<IMenuControl> nControl)
+		void MenuControl::setMenuControl(sptr<IMenuControl> nControl)
 		{
 			addRenderGroup(nControl);
-			_controls.push_back(nControl);
+			m_control = nControl;
 		}
 	}
 }

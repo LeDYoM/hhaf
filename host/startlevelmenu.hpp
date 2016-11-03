@@ -9,7 +9,7 @@ namespace zoper
 {
 	namespace zmenu
 	{
-		class StartLevelMenu : public lib::menu::MenuStep, public lib::Configuration
+		class StartLevelMenu : public lib::menu::MenuControl, public lib::Configuration
 		{
 		public:
 			StartLevelMenu();

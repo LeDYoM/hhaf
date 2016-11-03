@@ -9,7 +9,7 @@ namespace zoper
 {
 	namespace zmenu
 	{
-		class OptionsMenu : public lib::menu::MenuStep, public lib::Configuration
+		class OptionsMenu : public lib::menu::MenuControl, public lib::Configuration
 		{
 		public:
 			OptionsMenu();
