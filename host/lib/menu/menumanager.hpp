@@ -4,31 +4,31 @@
 #include <vector>
 #include <lib/include/types.hpp>
 #include <lib/draw/scene.hpp>
-#include "menustep.hpp"
 
 namespace lib
 {
 	namespace menu
 	{
+		class IMenuControl;
 		class MenuManager : public lib::scn::Scene
 		{
 		public:
 			MenuManager(const std::string &name);
 			virtual ~MenuManager();
 
-			void addMenuSteps(std::vector<sptr<MenuControl>> &steps);
-			void addMenuStep(sptr<MenuControl> step);
+			void addMenuSteps(std::vector<sptr<IMenuControl>> &steps);
+			void addMenuStep(sptr<IMenuControl> step);
 
-			void start(sptr<MenuControl> firstStep);
+			void start(sptr<IMenuControl> firstStep);
 			void start(const std::string &firstStep);
 			void changeStep(const std::string &step);
-			void changeStep(sptr<MenuControl> step);
+			void changeStep(sptr<IMenuControl> step);
 
 		private:
-			void setActiveStep(sptr<MenuControl> step);
+			void setActiveStep(sptr<IMenuControl> step);
 
-			std::vector<sptr<MenuControl>> _steps;
-			sptr<MenuControl> _activeMenuStep{ nullptr };
+			std::vector<sptr<IMenuControl>> m_steps;
+			sptr<IMenuControl> m_activeMenuStep{ nullptr };
 		};
 	}
 }

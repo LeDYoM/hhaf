@@ -3,6 +3,7 @@
 
 #include <lib/draw/rendergroup.hpp>
 #include <SFML/Window/Event.hpp>
+#include "menumanager.hpp"
 
 namespace lib
 {
@@ -14,6 +15,9 @@ namespace lib
 
 			IMenuControl(const std::string &name) : lib::scn::draw::RenderGroup(name) {}
 			virtual ~IMenuControl() {}
+
+			virtual void onCreate() = 0;
+			MenuManager *menuManager() const { return dynamic_cast<MenuManager*>(parent()); }
 		};
 	}
 }

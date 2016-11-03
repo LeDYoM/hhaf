@@ -31,6 +31,9 @@ namespace lib
 
 			u32 getSelectedSubLabel(u32 index) const;
 			void setSelectedSubLabel(u32 index, u32 subIndex);
+
+			void onCreate() override {}
+
 		private:
 			virtual void onKeyPressed(sf::Event::KeyEvent kEvent);
 			virtual void onKeyReleased(sf::Event::KeyEvent kEvent);

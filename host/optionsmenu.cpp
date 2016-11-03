@@ -13,7 +13,7 @@ namespace zoper
 	namespace zmenu
 	{
 		OptionsMenu::OptionsMenu()
-			: lib::menu::MenuControl{ "OptionsMenu" }, lib::Configuration("config.cfg")
+			: lib::menu::IMenuControl{ "OptionsMenu" }, lib::Configuration("config.cfg")
 		{
 		}
 
@@ -88,7 +88,7 @@ namespace zoper
 					lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Cancel")),
 					lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Accept"))
 			}));
-			setMenuControl(_chooseControl);
+			addRenderGroup(_chooseControl);
 			_chooseControl->setPosition(100, 700);
 			resetControl();
 		}

@@ -1,14 +1,14 @@
 #ifndef __KEYREDEFINITONMENU_HPP__
 #define __KEYREDEFINITONMENU_HPP__
 
-#include <lib/menu/menustep.hpp>
 #include "keymapping.hpp"
+#include <lib/menu/imenucontrol.hpp>
 
 namespace zoper
 {
 	namespace zmenu
 	{
-		class KeyRedefinitionMenu : public lib::menu::MenuControl
+		class KeyRedefinitionMenu : public lib::menu::IMenuControl
 		{
 		public:
 			KeyRedefinitionMenu();

@@ -14,7 +14,7 @@ namespace zoper
 	namespace zmenu
 	{
 		KeyRedefinitionMenu::KeyRedefinitionMenu()
-			: lib::menu::MenuControl{ "KeyRedefinitionMenu" }
+			: lib::menu::IMenuControl{ "KeyRedefinitionMenu" }
 		{
 		}
 

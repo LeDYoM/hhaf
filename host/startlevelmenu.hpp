@@ -1,7 +1,6 @@
 #ifndef __STARTLEVELMENU_HPP__
 #define __STARTLEVELMENU_HPP__
 
-#include <lib/menu/menustep.hpp>
 #include <lib/menu/choosecontrol.hpp>
 #include <lib/core/configuration.hpp>
 
@@ -9,7 +8,7 @@ namespace zoper
 {
 	namespace zmenu
 	{
-		class StartLevelMenu : public lib::menu::MenuControl, public lib::Configuration
+		class StartLevelMenu : public lib::menu::IMenuControl, public lib::Configuration
 		{
 		public:
 			StartLevelMenu();

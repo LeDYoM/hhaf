@@ -1,7 +1,6 @@
 #ifndef __OPTIONSMENU_HPP__
 #define __OPTIONSMENU_HPP__
 
-#include <lib/menu/menustep.hpp>
 #include <lib/menu/choosecontrol.hpp>
 #include <lib/core/configuration.hpp>
 
@@ -9,7 +8,7 @@ namespace zoper
 {
 	namespace zmenu
 	{
-		class OptionsMenu : public lib::menu::MenuControl, public lib::Configuration
+		class OptionsMenu : public lib::menu::IMenuControl, public lib::Configuration
 		{
 		public:
 			OptionsMenu();
