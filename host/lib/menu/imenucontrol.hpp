@@ -9,6 +9,7 @@ namespace lib
 {
 	namespace menu
 	{
+		class ChooseControl;
 		class IMenuControl : public lib::scn::draw::RenderGroup
 		{
 		public:
@@ -18,6 +19,7 @@ namespace lib
 
 			virtual void onCreate() = 0;
 			MenuManager *menuManager() const { return dynamic_cast<MenuManager*>(parent()); }
+			void addChooseControl(sptr<ChooseControl>);
 		};
 	}
 }

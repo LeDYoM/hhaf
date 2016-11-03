@@ -88,7 +88,7 @@ namespace zoper
 					lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Cancel")),
 					lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Accept"))
 			}));
-			addRenderGroup(_chooseControl);
+			addChooseControl(_chooseControl);
 			_chooseControl->setPosition(100, 700);
 			resetControl();
 		}
