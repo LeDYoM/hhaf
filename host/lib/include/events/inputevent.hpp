@@ -30,7 +30,7 @@ namespace lib
 			const input::Key key;
 		};
 
-		class KeyReleasedEvent : public InputEvent, public EventTemplate<KeyPressedEvent>
+		class KeyReleasedEvent : public InputEvent, public EventTemplate<KeyReleasedEvent>
 		{
 		public:
 			constexpr KeyReleasedEvent(const input::Key key_) : InputEvent{ Action::KeyPressed }, key{ key_ } {}
