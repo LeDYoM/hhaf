@@ -17,7 +17,7 @@ namespace lib
 				KeyPressed,
 				KeyReleased
 			};
-			constexpr InputEvent(const Action &_action) : action{ _action } {}
+			constexpr InputEvent(const Action _action) : action{ _action } {}
 			const Action action;
 
 		protected:
