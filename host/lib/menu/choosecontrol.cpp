@@ -1,6 +1,8 @@
 #include "choosecontrol.hpp"
 #include "menudescriptors.hpp"
 #include <lib/core/resource.hpp>
+#include <lib/core/eventmanager.hpp>
+#include <lib/include/events/inputevent.hpp>
 #include <lib/draw/positionanimation.hpp>
 #include <lib/draw/nodeshape.hpp>
 #include <lib/draw/nodetext.hpp>
@@ -54,8 +56,27 @@ namespace lib
 			}
 
 			cursorSelectItem(0);
+			parentScene()->addSubscription(events::KeyPressedEvent::subscribe([this](const events::Event&ev) {
+				LOG_DEBUG("Key pressed from Chose control ");
+				const auto kEvent_temp{ dynamic_cast<const events::KeyPressedEvent*>(&ev) };
+				if (!kEvent_temp)
+				{
+					LOG_DEBUG("Is not this type");
+				}
+				const auto &kEvent{ dynamic_cast<const events::KeyPressedEvent&>(ev) };
+				if (kEvent.key == input::Key::Down || kEvent.key == input::Key::Numpad2) {
+					goDown();
+				}
+				else if (kEvent.key == input::Key::Up || kEvent.key == input::Key::Numpad8) {
+					goUp();
+				}
+				else if (kEvent.key == input::Key::Return || kEvent.key == input::Key::Space) {
+					if (_onSelected) {
+						//						_onSelected(m_itemSelected, *this);
+					}
+				}
+			}));
 		}
-
 
 		ChooseControl::~ChooseControl()
 		{
@@ -75,6 +96,38 @@ namespace lib
 			_labelData[index].selectedSublabel = subIndex;
 			updateSubLabelText(index);
 		}
+		
+		/*
+		eventConnector.addSubscription(events::KeyPressedEvent::subscribe([this](const events::Event&ev) {
+			LOG_DEBUG("Key pressed from Chose control ");
+			const auto kEvent_temp{ dynamic_cast<const events::KeyPressedEvent*>(&ev) };
+			if (!kEvent_temp)
+			{
+				LOG_DEBUG("Is not this type");
+			}
+			const auto &kEvent{ dynamic_cast<const events::KeyPressedEvent&>(ev) };
+			if (kEvent.key == input::Key::Down || kEvent.key == input::Key::Numpad2) {
+				goDown();
+			}
+			else if (kEvent.key == input::Key::Up || kEvent.key == input::Key::Numpad8) {
+				goUp();
+			}
+			else if (kEvent.key == input::Key::Return || kEvent.key == input::Key::Space) {
+				if (_onSelected) {
+					//						_onSelected(m_itemSelected, *this);
+				}
+			}
+			/*
+			else if (m_labelData[m_itemSelected]->textSubLabel.size() > 0) {
+			if (kEvent.key == input::Key::Left || kEvent.key == input::Key::Numpad4) {
+			goLeft();
+			}
+			else if (kEvent.key == input::Key::Right || kEvent.key == input::Key::Numpad6) {
+			goRight();
+			}
+			}
+			*/
+		}));
 
 		void ChooseControl::onKeyPressed(sf::Event::KeyEvent kEvent)
 		{

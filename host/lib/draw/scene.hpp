@@ -48,6 +48,7 @@ namespace lib
 			const vector2df getCenterCoordinates() const;
 
 			inline bool isActiveScene() const noexcept { return m_isActiveScene; }
+			inline void addSubscription(lib::events::EventSubscription &&es) noexcept { eventConnector.addSubscription(std::move(es)); }
 
 		protected:
 
@@ -57,6 +58,7 @@ namespace lib
 			inline void setState(u32 ns) { _state = ns; }
 			Timer clock;
 			EventReceiver eventConnector;
+			virtual Scene *const parentScene() noexcept override { return this; }
 
 		private:
 			void privateOnInit();

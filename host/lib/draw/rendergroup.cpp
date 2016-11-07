@@ -2,6 +2,7 @@
 #include "renderizable.hpp"
 #include "nodeshape.hpp"
 #include "nodetext.hpp"
+#include "scene.hpp"
 #include <lib/core/window.hpp>
 
 namespace lib
@@ -14,7 +15,6 @@ namespace lib
 				: HasName{ name }, _parent{ parent }
 			{
 			}
-
 
 			RenderGroup::~RenderGroup()
 			{

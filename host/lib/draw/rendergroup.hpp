@@ -16,6 +16,8 @@ namespace lib
 	}
 	namespace scn
 	{
+		class Scene;
+
 		namespace draw
 		{
 			class Renderizable;
@@ -42,7 +44,8 @@ namespace lib
 			protected:
 				void addRenderGroup(sptr<RenderGroup> node, sptr<IDrawable> beforeNode = nullptr);
 
-				RenderGroup *parent() const { return _parent; }
+				inline RenderGroup *parent() const noexcept { return _parent; }
+				virtual Scene *const parentScene() noexcept { return _parent->parentScene(); }
 				VecSPtr<IDrawable> _renderNodes;
 
 			private:
