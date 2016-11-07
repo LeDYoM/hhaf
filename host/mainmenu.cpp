@@ -12,8 +12,8 @@ namespace zoper
 {
 	namespace zmenu
 	{
-		MainMenu::MainMenu()
-			: lib::menu::IMenuControl{ "MainMenu" }, _gameConfig{ ":NextGame" }
+		MainMenu::MainMenu(lib::scn::draw::RenderGroup *parent)
+			: lib::menu::IMenuControl{ "MainMenu", parent }, _gameConfig{ ":NextGame" }
 		{
 		}
 
@@ -49,7 +49,7 @@ namespace zoper
 					break;
 				}
 			};
-			_chooseControl = sptr<ChooseControl>(new ChooseControl("mainmenu_chooseControl",
+			_chooseControl = sptr<ChooseControl>(new ChooseControl("mainmenu_chooseControl", parent(),
 				lib::host().resourceManager().getResource("game_menu.mainFont"),
 				sf::Color::Blue, sf::Color::Red,
 				scn::draw::Alignment::Center,

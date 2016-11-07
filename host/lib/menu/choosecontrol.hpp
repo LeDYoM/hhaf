@@ -21,7 +21,7 @@ namespace lib
 		class ChooseControl : public IMenuControl
 		{
 		public:
-			ChooseControl(const std::string &name, sptr<core::Resource> font,
+			ChooseControl(const std::string &name, scn::draw::RenderGroup *parent, sptr<core::Resource> font,
 				const sf::Color &textColor, const sf::Color &selectedTextColor,
 				const scn::draw::Alignment alignment,
 				u32 chSize, float incY, std::function<void(const u32,ChooseControl &self)> onSelected,

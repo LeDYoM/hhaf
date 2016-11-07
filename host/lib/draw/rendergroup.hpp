@@ -45,7 +45,7 @@ namespace lib
 				void addRenderGroup(sptr<RenderGroup> node, sptr<IDrawable> beforeNode = nullptr);
 
 				inline RenderGroup *parent() const noexcept { return _parent; }
-				virtual Scene *const parentScene() noexcept { return _parent->parentScene(); }
+				virtual Scene *const parentScene() { return _parent->parentScene(); }
 				VecSPtr<IDrawable> _renderNodes;
 
 			private:

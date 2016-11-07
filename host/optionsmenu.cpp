@@ -13,7 +13,7 @@ namespace zoper
 	namespace zmenu
 	{
 		OptionsMenu::OptionsMenu()
-			: lib::menu::IMenuControl{ "OptionsMenu" }, lib::Configuration("config.cfg")
+			: lib::menu::IMenuControl{ "OptionsMenu", nullptr }, lib::Configuration("config.cfg")
 		{
 		}
 
@@ -68,7 +68,7 @@ namespace zoper
 				}
 			};
 
-			_chooseControl = lib::sptr<lib::menu::ChooseControl>(new lib::menu::ChooseControl("optionsmenu_chooseControl",
+			_chooseControl = lib::sptr<lib::menu::ChooseControl>(new lib::menu::ChooseControl("optionsmenu_chooseControl", nullptr,
 				lib::host().resourceManager().getResource("game_menu.mainFont"),
 				sf::Color::Blue, sf::Color::Red,
 				lib::scn::draw::Alignment::Left,

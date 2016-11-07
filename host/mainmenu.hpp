@@ -11,7 +11,7 @@ namespace zoper
 		class MainMenu : public lib::menu::IMenuControl
 		{
 		public:
-			MainMenu();
+			MainMenu(lib::scn::draw::RenderGroup *parent);
 			virtual ~MainMenu();
 
 			virtual void onCreate() override;

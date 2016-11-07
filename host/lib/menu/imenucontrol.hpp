@@ -14,7 +14,7 @@ namespace lib
 		{
 		public:
 
-			IMenuControl(const std::string &name) : lib::scn::draw::RenderGroup(name) {}
+			IMenuControl(const std::string &name, scn::draw::RenderGroup *parent) : scn::draw::RenderGroup(name,parent) {}
 			virtual ~IMenuControl() {}
 
 			virtual void onCreate() = 0;
