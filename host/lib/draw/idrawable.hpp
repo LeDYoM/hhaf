@@ -3,7 +3,6 @@
 
 #include <lib/include/types.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
-#include <SFML/Graphics/Drawable.hpp>
 
 namespace lib
 {
