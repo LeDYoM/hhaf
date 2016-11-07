@@ -1,8 +1,10 @@
 #include "choosecontrol.hpp"
 #include "menudescriptors.hpp"
+#include "menumanager.hpp"
 #include <lib/core/resource.hpp>
 #include <lib/core/eventmanager.hpp>
 #include <lib/include/events/inputevent.hpp>
+#include <lib/draw/scene.hpp>
 #include <lib/draw/positionanimation.hpp>
 #include <lib/draw/nodeshape.hpp>
 #include <lib/draw/nodetext.hpp>
@@ -18,7 +20,7 @@ namespace lib
 			std::function<void(const u32, ChooseControl &self)> onSelected,
 			sptr<CursorDescriptor> cursorDescriptor, 
 			const std::vector<sptr<OptionDescriptor>> labels)
-			: IMenuControl{ name, parent }, _textColor{ textColor }, _selectedTextColor{ selectedTextColor }, _onSelected{ onSelected }
+			: scn::draw::RenderGroup{ name, parent }, _textColor{ textColor }, _selectedTextColor{ selectedTextColor }, _onSelected{ onSelected }
 		{
 			descriptorCursorSize = cursorDescriptor->_size;
 			_cursor = createShape("cursor");
@@ -82,6 +84,11 @@ namespace lib
 		{
 			_labelData.clear();
 			_cursor = nullptr;
+		}
+
+		MenuManager * ChooseControl::menuManager() const
+		{
+			return dynamic_cast<MenuManager*>(parent());
 		}
 
 		lib::u32 ChooseControl::getSelectedSubLabel(u32 index) const

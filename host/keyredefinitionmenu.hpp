@@ -2,18 +2,18 @@
 #define __KEYREDEFINITONMENU_HPP__
 
 #include "keymapping.hpp"
-#include <lib/menu/imenucontrol.hpp>
+#include <lib/menu/choosecontrol.hpp>
 
 namespace zoper
 {
 	namespace zmenu
 	{
-		class KeyRedefinitionMenu : public lib::menu::IMenuControl
+		class KeyRedefinitionMenu : public lib::scn::draw::RenderGroup
 		{
 		public:
-			KeyRedefinitionMenu();
+			KeyRedefinitionMenu(lib::scn::draw::RenderGroup *parent);
 			virtual ~KeyRedefinitionMenu();
-			virtual void onCreate() override;
+			virtual void onAddedToScene() override;
 
 		private:
 			const std::string getKeyNameStr(const lib::u32 index) const;

@@ -12,18 +12,75 @@ namespace zoper
 {
 	namespace zmenu
 	{
-		OptionsMenu::OptionsMenu()
-			: lib::menu::IMenuControl{ "OptionsMenu", nullptr }, lib::Configuration("config.cfg")
+		using namespace lib;
+		using namespace lib::menu;
+
+		OptionsMenu::OptionsMenu(scn::draw::RenderGroup *parent)
+			: ChooseControl( "OptionsMenu", parent,
+			host().resourceManager().getResource("game_menu.mainFont"),
+			sf::Color::Blue, sf::Color::Red,
+			lib::scn::draw::Alignment::Left,
+			70, 1,
+			[this](u32 index, ChooseControl &self)
+			{
+				switch (index)
+				{
+				case 0:
+					break;
+				case 1:
+					break;
+				case 2:
+					break;
+				case 3:
+					break;
+				case 4:
+					menuManager()->changeStep("KeyRedefinitionMenu");
+					break;
+				case 5:
+					menuManager()->changeStep("MainMenu");
+					resetControl();
+					break;
+				case 6:
+				default:
+					addConfigInt(GraphicsLevelStr, self.getSelectedSubLabel(0), true);
+					auto _resolution = sf::VideoMode::getFullscreenModes()[self.getSelectedSubLabel(1)];
+					if (_resolution.isValid())
+					{
+						addConfigInt(ResolutionXStr, _resolution.width, true);
+						addConfigInt(ResolutionYStr, _resolution.height, true);
+						addConfigInt(BPPStr, _resolution.bitsPerPixel, true);
+					}
+					addConfigInt(FulscreenStr, self.getSelectedSubLabel(2), true);
+					addConfigInt(VSyncStr, self.getSelectedSubLabel(3), true);
+					saveConfig();
+					resetControl();
+					menuManager()->changeStep("MainMenu");
+					break;
+				}
+			},
+			sptr<CursorDescriptor>(new CursorDescriptor(3, vector2df{ 70.0f, 70.0f }, sf::Color::Red)),
+			std::vector<sptr<OptionDescriptor>>{
+				sptr<OptionDescriptor>(new OptionDescriptor("Antialiasing",
+					true, 0, std::vector<std::string>{"Worst", "Bad", "Normal", "Good", "Best"})),
+				sptr<OptionDescriptor>(new OptionDescriptor("Resolution",
+					true, 0, std::vector<std::string>{"Worst", "1Bad", "2Normal", "3Good", "4Best"})),
+				sptr<OptionDescriptor>(new OptionDescriptor("Fullscreen",
+					true, 0, std::vector<std::string>{"No", "Yes"})),
+				sptr<OptionDescriptor>(new OptionDescriptor("VSync",
+					true, 0, std::vector<std::string>{"No", "Yes"})),
+				sptr<OptionDescriptor>(new OptionDescriptor("Redefine keyboard")),
+				sptr<OptionDescriptor>(new OptionDescriptor("Cancel")),
+				sptr<OptionDescriptor>(new OptionDescriptor("Accept"))
+			} ),
+			lib::Configuration("config.cfg")
 		{
 		}
 
+		OptionsMenu::~OptionsMenu() = default;
 
-		OptionsMenu::~OptionsMenu()
+		void OptionsMenu::onAddedToScene()
 		{
-		}
-
-		void OptionsMenu::onCreate()
-		{
+			/*
 			// Read available resolutions
 			std::vector<std::string> _resolutionsStr;
 			for (const auto resolution : sf::VideoMode::getFullscreenModes())
@@ -68,7 +125,7 @@ namespace zoper
 				}
 			};
 
-			_chooseControl = lib::sptr<lib::menu::ChooseControl>(new lib::menu::ChooseControl("optionsmenu_chooseControl", nullptr,
+			_chooseControl = lib::sptr<lib::menu::ChooseControl>(new lib::menu::ChooseControl("optionsmenu_chooseControl", parent(),
 				lib::host().resourceManager().getResource("game_menu.mainFont"),
 				sf::Color::Blue, sf::Color::Red,
 				lib::scn::draw::Alignment::Left,
@@ -89,8 +146,9 @@ namespace zoper
 					lib::sptr<lib::menu::OptionDescriptor>(new lib::menu::OptionDescriptor("Accept"))
 			}));
 			addChooseControl(_chooseControl);
-			_chooseControl->setPosition(100, 700);
-			resetControl();
+			*/
+			setPosition(100, 700);
+//			resetControl();
 		}
 
 		void OptionsMenu::resetControl()

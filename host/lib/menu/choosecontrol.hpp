@@ -2,8 +2,7 @@
 #define __LIB_CHOOSECONTROL_HPP__
 
 #include <lib/include/types.hpp>
-#include <lib/draw/renderizable.hpp>
-#include "imenucontrol.hpp"
+#include <lib/draw/rendergroup.hpp>
 #include "menudescriptors.hpp"
 #include <vector>
 #include <functional>
@@ -18,7 +17,8 @@ namespace lib
 	{
 		class OptionDescriptor;
 		class MenuControl;
-		class ChooseControl : public IMenuControl
+		class MenuManager;
+		class ChooseControl : public scn::draw::RenderGroup
 		{
 		public:
 			ChooseControl(const std::string &name, scn::draw::RenderGroup *parent, sptr<core::Resource> font,
@@ -29,10 +29,12 @@ namespace lib
 				const std::vector<sptr<OptionDescriptor>> labels);
 			virtual ~ChooseControl();
 
+			MenuManager *menuManager() const;
+
 			u32 getSelectedSubLabel(u32 index) const;
 			void setSelectedSubLabel(u32 index, u32 subIndex);
 
-			void onCreate() override {}
+			void onAddedToScene() override {}
 
 		private:
 			virtual void onKeyPressed(sf::Event::KeyEvent kEvent);

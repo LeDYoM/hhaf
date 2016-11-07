@@ -12,7 +12,7 @@ namespace lib
 		namespace draw
 		{
 			RenderGroup::RenderGroup(const std::string &name, RenderGroup *parent)
-				: HasName{ name }, _parent{ parent }
+				: HasName{ name }, m_parent{ parent }
 			{
 			}
 
@@ -93,11 +93,12 @@ namespace lib
 						if (*iterator == beforeNode)
 						{
 							_renderNodes.insert(iterator, node);
-							iterator = _renderNodes.end()-1;
+							break;
 						}
 					}
 				}
-				node->_parent = this;
+				node->m_parent = this;
+				node->onAddedToScene();
 			}
 
 			bool RenderGroup::removeRenderGroup(sptr<RenderGroup> element)

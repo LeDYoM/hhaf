@@ -8,12 +8,12 @@ namespace zoper
 {
 	namespace zmenu
 	{
-		class OptionsMenu : public lib::menu::IMenuControl, public lib::Configuration
+		class OptionsMenu : public lib::menu::ChooseControl, public lib::Configuration
 		{
 		public:
-			OptionsMenu();
+			OptionsMenu(lib::scn::draw::RenderGroup *parent);
 			virtual ~OptionsMenu();
-			virtual void onCreate() override;
+			virtual void onAddedToScene() override;
 
 			void resetControl();
 		private:

@@ -13,17 +13,15 @@ namespace zoper
 {
 	namespace zmenu
 	{
-		KeyRedefinitionMenu::KeyRedefinitionMenu()
-			: lib::menu::IMenuControl{ "KeyRedefinitionMenu", nullptr }
+		KeyRedefinitionMenu::KeyRedefinitionMenu(lib::scn::draw::RenderGroup *parent)
+			: lib::scn::draw::RenderGroup{ "KeyRedefinitionMenu", parent }
 		{
 		}
 
 
-		KeyRedefinitionMenu::~KeyRedefinitionMenu()
-		{
-		}
+		KeyRedefinitionMenu::~KeyRedefinitionMenu() = default;
 
-		void KeyRedefinitionMenu::onCreate()
+		void KeyRedefinitionMenu::onAddedToScene()
 		{
 			_nextKeyText = createText("pressKey");
 
@@ -57,7 +55,7 @@ namespace zoper
 			{
 				_indexKey = 0;
 				_keyMapping.apply();
-				menuManager()->changeStep("OptionsMenu");
+//				menuManager()->changeStep("OptionsMenu");
 			}
 			else
 			{

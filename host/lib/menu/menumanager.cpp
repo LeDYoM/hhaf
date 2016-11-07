@@ -1,6 +1,6 @@
 #include "menumanager.hpp"
 #include <lib/core/log.hpp>
-#include "imenucontrol.hpp"
+#include "choosecontrol.hpp"
 
 namespace lib
 {
@@ -17,7 +17,7 @@ namespace lib
 			m_steps.clear();
 		}
 
-		void MenuManager::addMenuSteps(std::vector<sptr<IMenuControl>> &steps)
+		void MenuManager::addMenuSteps(std::vector<sptr<ChooseControl>> &steps)
 		{
 			for (auto menuStep : steps)
 			{
@@ -25,44 +25,43 @@ namespace lib
 			}
 		}
 
-		void MenuManager::addMenuStep(sptr<IMenuControl> step)
+		void MenuManager::addMenuStep(sptr<ChooseControl> step)
 		{
 			addRenderGroup(step);
 			m_steps.push_back(step);
-			step->onCreate();
 		}
 
-		void MenuManager::start(sptr<IMenuControl> firstStep)
+		void MenuManager::start(sptr<ChooseControl> firstStep)
 		{
 			__ASSERT(firstStep, "Cannot start in nullptr step");
 			changeStep(firstStep);
 		}
 
-		void MenuManager::start(const std::string &firstStep)
+		void MenuManager::start(std::string firstStep)
 		{
-			changeStep(firstStep);
+			changeStep(std::move(firstStep));
 		}
 
-		void MenuManager::changeStep(const std::string &step)
+		void MenuManager::changeStep(std::string step)
 		{
 			for (const auto& nstep : m_steps) {
 				if (nstep->name() == step) {
 					changeStep(nstep);
+					break;
 				}
 			}
 		}
 
-		void MenuManager::changeStep(sptr<IMenuControl> step)
+		void MenuManager::changeStep(sptr<ChooseControl> step)
 		{
 			setActiveStep(step);
 		}
 
-		void MenuManager::setActiveStep(sptr<IMenuControl> step)
+		void MenuManager::setActiveStep(sptr<ChooseControl> step)
 		{
 			m_activeMenuStep = step;
 
-			for (auto _step : m_steps)
-			{
+			for (const auto &_step : m_steps) {
 				_step->setVisible(_step == step);
 			}
 		}

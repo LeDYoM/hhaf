@@ -2,7 +2,7 @@
 #include <lib/menu/menumanager.hpp>
 #include <lib/menu/choosecontrol.hpp>
 #include <lib/menu/menudescriptors.hpp>
-#include <lib/draw/renderizable.hpp>
+#include <lib/draw/rendergroup.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/core/resource.hpp>
 #include <lib/core/host.hpp>
@@ -12,18 +12,52 @@ namespace zoper
 {
 	namespace zmenu
 	{
+		using namespace lib;
+		using namespace lib::menu;
+
 		MainMenu::MainMenu(lib::scn::draw::RenderGroup *parent)
-			: lib::menu::IMenuControl{ "MainMenu", parent }, _gameConfig{ ":NextGame" }
-		{
-		}
+			: lib::menu::ChooseControl( "MainMenu", parent,
+			lib::host().resourceManager().getResource("game_menu.mainFont"),
+			sf::Color::Blue, sf::Color::Red,
+			scn::draw::Alignment::Center,
+			90, 1,
+			[this](lib::u32 index, ChooseControl &self)
+			{
+				self;
+				switch (index)
+				{
+				case 0:
+					_gameConfig.addConfigInt(GameModeStr, 0, true);
+					menuManager()->changeStep("StartLevelMenu");
+					break;
+				case 1:
+					_gameConfig.addConfigInt(GameModeStr, 1, true);
+					menuManager()->changeStep("StartLevelMenu");
+					break;
+				case 2:
+					menuManager()->changeStep("OptionsMenu");
+					break;
+				case 3:
+				default:
+					//					menuManager()->exitProgram();
+					break;
+				}
+			},
+			sptr<CursorDescriptor>(new CursorDescriptor(3, vector2df{ 90.0f, 90.0f },sf::Color::Red)),
+			std::vector<sptr<OptionDescriptor>>{
+			sptr<OptionDescriptor>(new OptionDescriptor("Play token mode")),
+				sptr<OptionDescriptor>(new OptionDescriptor("Play time mode")),
+				sptr<OptionDescriptor>(new OptionDescriptor("Options")),
+				sptr<OptionDescriptor>(new OptionDescriptor("Exit"))
+		}),
+			_gameConfig{ ":NextGame" } { }
 
 
-		MainMenu::~MainMenu()
-		{
-		}
+		MainMenu::~MainMenu() = default;
 
-		void MainMenu::onCreate()
+		void MainMenu::onAddedToScene()
 		{
+			/*
 			using namespace lib;
 			using namespace lib::menu;
 
@@ -64,6 +98,7 @@ namespace zoper
 			}));
 			addChooseControl(_chooseControl);
 			_chooseControl->setPosition(menuManager()->getCenterCoordinates().x, 700);
+			*/
 		}
 	}
 }

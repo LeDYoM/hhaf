@@ -9,26 +9,26 @@ namespace lib
 {
 	namespace menu
 	{
-		class IMenuControl;
+		class ChooseControl;
 		class MenuManager : public lib::scn::Scene
 		{
 		public:
 			MenuManager(const std::string &name);
 			virtual ~MenuManager();
 
-			void addMenuSteps(std::vector<sptr<IMenuControl>> &steps);
-			void addMenuStep(sptr<IMenuControl> step);
+			void addMenuSteps(std::vector<sptr<ChooseControl>> &steps);
+			void addMenuStep(sptr<ChooseControl> step);
 
-			void start(sptr<IMenuControl> firstStep);
-			void start(const std::string &firstStep);
-			void changeStep(const std::string &step);
-			void changeStep(sptr<IMenuControl> step);
+			void start(sptr<ChooseControl> firstStep);
+			void start(std::string firstStep);
+			void changeStep(std::string step);
+			void changeStep(sptr<ChooseControl> step);
 
 		private:
-			void setActiveStep(sptr<IMenuControl> step);
+			void setActiveStep(sptr<ChooseControl> step);
 
-			std::vector<sptr<IMenuControl>> m_steps;
-			sptr<IMenuControl> m_activeMenuStep{ nullptr };
+			std::vector<sptr<ChooseControl>> m_steps;
+			sptr<ChooseControl> m_activeMenuStep{ nullptr };
 		};
 	}
 }

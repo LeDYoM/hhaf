@@ -29,6 +29,7 @@ namespace lib
 				RenderGroup(const std::string &name, RenderGroup *parent=nullptr);
 				virtual ~RenderGroup();
 
+				virtual void onAddedToScene() {}
 				sptr<NodeText> createText(const std::string &name);
 				sptr<NodeShape> createShape(const std::string &name,const sf::Vector2f &radius=sf::Vector2f(),u32 pointCount=30);
 				sptr<NodeShape> createSpriteShape(const std::string &name, const sf::Vector2f &radius = sf::Vector2f());
@@ -44,12 +45,24 @@ namespace lib
 			protected:
 				void addRenderGroup(sptr<RenderGroup> node, sptr<IDrawable> beforeNode = nullptr);
 
-				inline RenderGroup *parent() const noexcept { return _parent; }
-				virtual Scene *const parentScene() { return _parent->parentScene(); }
+				inline RenderGroup *parent() const noexcept { return m_parent; }
+
+				template <typename T>
+				inline bool isParentOfType() const noexcept
+				{
+					return m_parent ? dynamic_cast<T*>(m_parent) != nullptr : false;
+				}
+
+				template <typename T>
+				inline T* parentAs() const noexcept
+				{
+					return m_parent ? dynamic_cast<T*>(m_parent) : nullptr;
+				}
+				virtual Scene *const parentScene() { return m_parent->parentScene(); }
 				VecSPtr<IDrawable> _renderNodes;
 
 			private:
-				RenderGroup *_parent{ nullptr };
+				RenderGroup *m_parent{ nullptr };
 			};
 		}
 	}

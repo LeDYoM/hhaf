@@ -8,16 +8,15 @@ namespace zoper
 {
 	namespace zmenu
 	{
-		class StartLevelMenu : public lib::menu::IMenuControl, public lib::Configuration
+		class StartLevelMenu : public lib::menu::ChooseControl, public lib::Configuration
 		{
 		public:
-			StartLevelMenu();
+			StartLevelMenu(lib::scn::draw::RenderGroup *parent);
 			virtual ~StartLevelMenu();
-			virtual void onCreate() override;
+			virtual void onAddedToScene() override;
 
 		private:
 			lib::Configuration _gameConfig;
-			lib::sptr<lib::menu::ChooseControl> _chooseControl{ nullptr };
 		};
 	}
 }
