@@ -43,12 +43,12 @@ namespace zoper
 					break;
 				}
 			},
-			sptr<CursorDescriptor>(new CursorDescriptor(3, vector2df{ 90.0f, 90.0f },sf::Color::Red)),
+			msptr<CursorDescriptor>(3, vector2df{ 90.0f, 90.0f },sf::Color::Red),
 			std::vector<sptr<OptionDescriptor>>{
-			sptr<OptionDescriptor>(new OptionDescriptor("Play token mode")),
-				sptr<OptionDescriptor>(new OptionDescriptor("Play time mode")),
-				sptr<OptionDescriptor>(new OptionDescriptor("Options")),
-				sptr<OptionDescriptor>(new OptionDescriptor("Exit"))
+			msptr<OptionDescriptor>("Play token mode"),
+				msptr<OptionDescriptor>("Play time mode"),
+				msptr<OptionDescriptor>("Options"),
+				msptr<OptionDescriptor>("Exit")
 		}),
 			_gameConfig{ ":NextGame" } { }
 
