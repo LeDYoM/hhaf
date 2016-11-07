@@ -72,7 +72,7 @@ namespace lib
 				}
 				else if (kEvent.key == input::Key::Return || kEvent.key == input::Key::Space) {
 					if (_onSelected) {
-						//						_onSelected(m_itemSelected, *this);
+						_onSelected(_cursorItemSelected, *this);
 					}
 				}
 			}));
