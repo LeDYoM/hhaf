@@ -97,8 +97,8 @@ namespace zoper
 				sptr<OptionDescriptor>(new OptionDescriptor("Exit"))
 			}));
 			addChooseControl(_chooseControl);
-			_chooseControl->setPosition(menuManager()->getCenterCoordinates().x, 700);
 			*/
+			setPosition(menuManager()->getCenterCoordinates().x, 700);
 		}
 	}
 }
