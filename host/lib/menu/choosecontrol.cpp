@@ -126,8 +126,7 @@ namespace lib
 			goRight();
 			}
 			}
-			*/
-		}));
+		}));*/
 
 		void ChooseControl::onKeyPressed(sf::Event::KeyEvent kEvent)
 		{
