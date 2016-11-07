@@ -45,7 +45,7 @@ namespace lib
 
 		void MenuManager::changeStep(const std::string &step)
 		{
-			for (const auto nstep : m_steps)
+			for (const auto& nstep : m_steps)
 			{
 				if (nstep->name() == step)
 				{
