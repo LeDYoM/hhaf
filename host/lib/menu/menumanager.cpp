@@ -17,7 +17,7 @@ namespace lib
 			m_steps.clear();
 		}
 
-		void MenuManager::addMenuSteps(std::vector<sptr<ChooseControl>> &steps)
+		void MenuManager::addMenuSteps(const std::vector<sptr<ChooseControl>> &steps)
 		{
 			for (auto menuStep : steps)
 			{
@@ -31,20 +31,20 @@ namespace lib
 			m_steps.push_back(step);
 		}
 
-		void MenuManager::start(sptr<ChooseControl> firstStep)
+		void MenuManager::start(sptr<ChooseControl> &firstStep)
 		{
 			__ASSERT(firstStep, "Cannot start in nullptr step");
 			changeStep(firstStep);
 		}
 
-		void MenuManager::start(std::string firstStep)
+		void MenuManager::start(const std::string &firstStep)
 		{
-			changeStep(std::move(firstStep));
+			changeStep(firstStep);
 		}
 
-		void MenuManager::changeStep(std::string step)
+		void MenuManager::changeStep(const std::string &step)
 		{
-			for (const auto& nstep : m_steps) {
+			for (auto& nstep : m_steps) {
 				if (nstep->name() == step) {
 					changeStep(nstep);
 					break;
@@ -52,12 +52,12 @@ namespace lib
 			}
 		}
 
-		void MenuManager::changeStep(sptr<ChooseControl> step)
+		void MenuManager::changeStep(sptr<ChooseControl> &step)
 		{
 			setActiveStep(step);
 		}
 
-		void MenuManager::setActiveStep(sptr<ChooseControl> step)
+		void MenuManager::setActiveStep(sptr<ChooseControl> &step)
 		{
 			m_activeMenuStep = step;
 

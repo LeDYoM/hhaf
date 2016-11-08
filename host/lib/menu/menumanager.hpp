@@ -16,16 +16,16 @@ namespace lib
 			MenuManager(const std::string &name);
 			virtual ~MenuManager();
 
-			void addMenuSteps(std::vector<sptr<ChooseControl>> &steps);
+			void addMenuSteps(const std::vector<sptr<ChooseControl>> &steps);
 			void addMenuStep(sptr<ChooseControl> step);
 
-			void start(sptr<ChooseControl> firstStep);
-			void start(std::string firstStep);
-			void changeStep(std::string step);
-			void changeStep(sptr<ChooseControl> step);
+			void start(const std::string &firstStep);
+			void changeStep(const std::string &step);
 
 		private:
-			void setActiveStep(sptr<ChooseControl> step);
+			void start(sptr<ChooseControl> &firstStep);
+			void changeStep(sptr<ChooseControl> &step);
+			void setActiveStep(sptr<ChooseControl> &step);
 
 			std::vector<sptr<ChooseControl>> m_steps;
 			sptr<ChooseControl> m_activeMenuStep{ nullptr };
