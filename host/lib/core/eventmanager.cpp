@@ -33,7 +33,7 @@ namespace lib
 			if (!eventQueue.empty()) {
 				LOG_DEBUG("Found " << eventQueue.size() << " events in the event queue");
 				do {
-					const auto event(eventQueue.front());
+					const auto &event(eventQueue.front());
 					if (!event->listeners().empty()) {
 						for (const auto &subscriber : event->listeners()) {
 							subscriber(*event);
