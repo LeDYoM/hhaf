@@ -15,7 +15,7 @@ namespace zoper
 		using namespace lib;
 		using namespace lib::menu;
 
-		MainMenu::MainMenu(lib::scn::draw::RenderGroup *parent)
+		MainMenu::MainMenu(MenuManager *parent)
 			: lib::menu::ChooseControl( "MainMenu", parent,
 			lib::host().resourceManager().getResource("game_menu.mainFont"),
 			sf::Color::Blue, sf::Color::Red,

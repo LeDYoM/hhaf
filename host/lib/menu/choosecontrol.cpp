@@ -13,7 +13,7 @@ namespace lib
 {
 	namespace menu
 	{
-		ChooseControl::ChooseControl(const std::string &name, scn::draw::RenderGroup *parent, sptr<core::Resource> font,
+		ChooseControl::ChooseControl(const std::string &name, MenuManager *parent, sptr<core::Resource> font,
 			const sf::Color &textColor, const sf::Color &selectedTextColor,
 			const scn::draw::Alignment alignment,
 			u32 chSize,float incY,

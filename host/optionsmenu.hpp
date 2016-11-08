@@ -11,7 +11,7 @@ namespace zoper
 		class OptionsMenu : public lib::menu::ChooseControl, public lib::Configuration
 		{
 		public:
-			OptionsMenu(lib::scn::draw::RenderGroup *parent);
+			OptionsMenu(lib::menu::MenuManager *parent);
 			virtual ~OptionsMenu();
 			virtual void onAddedToScene() override;
 

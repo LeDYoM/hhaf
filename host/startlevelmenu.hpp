@@ -11,7 +11,7 @@ namespace zoper
 		class StartLevelMenu : public lib::menu::ChooseControl, public lib::Configuration
 		{
 		public:
-			StartLevelMenu(lib::scn::draw::RenderGroup *parent);
+			StartLevelMenu(lib::menu::MenuManager *parent);
 			virtual ~StartLevelMenu();
 			virtual void onAddedToScene() override;
 

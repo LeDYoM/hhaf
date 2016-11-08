@@ -12,7 +12,9 @@ namespace zoper
 {
 	namespace zmenu
 	{
-		StartLevelMenu::StartLevelMenu(lib::scn::draw::RenderGroup *parent)
+		using namespace lib::menu;
+
+		StartLevelMenu::StartLevelMenu(MenuManager *parent)
 			: lib::menu::ChooseControl( "StartLevelMenu", parent,
 			lib::host().resourceManager().getResource("game_menu.mainFont"), sf::Color::Blue, sf::Color::Red,
 			lib::scn::draw::Alignment::Left,

@@ -11,7 +11,7 @@ namespace zoper
 		class MainMenu : public lib::menu::ChooseControl
 		{
 		public:
-			MainMenu(lib::scn::draw::RenderGroup *parent);
+			MainMenu(lib::menu::MenuManager *parent);
 			virtual ~MainMenu();
 
 			virtual void onAddedToScene() override;
