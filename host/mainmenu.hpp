@@ -11,6 +11,7 @@ namespace zoper
 		class MainMenu : public lib::menu::ChooseControl
 		{
 		public:
+			constexpr static char* ClassName = "MainMenu";
 			MainMenu(lib::menu::MenuManager *parent);
 			virtual ~MainMenu();
 

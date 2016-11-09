@@ -41,14 +41,9 @@ namespace lib
 					}
 				}
 			}));
-
 		}
 
-
-		MenuManager::~MenuManager()
-		{
-			m_steps.clear();
-		}
+		MenuManager::~MenuManager() = default;
 
 		void MenuManager::addMenuSteps(const std::vector<sptr<ChooseControl>> &steps)
 		{

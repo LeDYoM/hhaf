@@ -15,6 +15,7 @@
 namespace zoper
 {
 	using namespace lib;
+	using namespace zmenu;
 
 	MenuScene::MenuScene()
 		: lib::menu::MenuManager("MenuScene")
@@ -30,10 +31,10 @@ namespace zoper
 	{
 		_background = createSpriteShape("background");
 
-		addMenuStep(msptr<zmenu::MainMenu>(this));
-		addMenuStep(msptr<zmenu::OptionsMenu>(this));
-//		addMenuStep(msptr<zmenu::KeyRedefinitionMenu>(this));
-		addMenuStep(msptr<zmenu::StartLevelMenu>(this));
+		addMenuStep(msptr<MainMenu>(this));
+		addMenuStep(msptr<OptionsMenu>(this));
+//		addMenuStep(msptr<KeyRedefinitionMenu>(this));
+		addMenuStep(msptr<StartLevelMenu>(this));
 
 		_logo = createSpriteShape("mainLogo");
 		_logo->setTexture(lib::host().resourceManager().getResource("game_menu.logo")->getAsTexture(), true, false);
@@ -52,7 +53,7 @@ namespace zoper
 
 	void MenuScene::onEnterScene()
 	{
-		start("MainMenu");
+		start(MainMenu::ClassName);
 		eventConnector.addSubscription(events::KeyPressedEvent::subscribe([this](const events::Event&) {
 			LOG_DEBUG("Key pressed on menu : " << name());
 		}));

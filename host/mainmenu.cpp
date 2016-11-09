@@ -16,7 +16,7 @@ namespace zoper
 		using namespace lib::menu;
 
 		MainMenu::MainMenu(MenuManager *parent)
-			: lib::menu::ChooseControl( "MainMenu", parent,
+			: lib::menu::ChooseControl( ClassName, parent,
 			[this](lib::u32 index, ChooseControl &self)
 			{
 				self;
