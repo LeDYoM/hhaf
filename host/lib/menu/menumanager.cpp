@@ -1,14 +1,23 @@
 #include "menumanager.hpp"
-#include <lib/core/log.hpp>
 #include "choosecontrol.hpp"
+
+#include <lib/core/log.hpp>
+#include <lib/core/host.hpp>
+#include <lib/core/resourcemanager.hpp>
 
 namespace lib
 {
 	namespace menu
 	{
-		MenuManager::MenuManager(const std::string &name)
-			: scn::Scene{ name }
+		MenuManager::MenuManager(const std::string &name, Theme theme)
+			: scn::Scene{ name }, m_theme( theme )
 		{
+			m_theme.font = host().resourceManager().getResource("game_menu.mainFont");
+			m_theme.textColor = sf::Color::Blue;
+			m_theme.selectedTextColor = sf::Color::Red;
+			m_theme.alignment = scn::draw::Alignment::Center;
+			m_theme.chSize = 70;
+			m_theme.incY = 1;
 		}
 
 
@@ -50,6 +59,11 @@ namespace lib
 					break;
 				}
 			}
+		}
+
+		const Theme & MenuManager::currentTheme() const noexcept
+		{
+			return m_theme;
 		}
 
 		void MenuManager::changeStep(sptr<ChooseControl> &step)

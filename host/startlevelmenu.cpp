@@ -16,9 +16,6 @@ namespace zoper
 
 		StartLevelMenu::StartLevelMenu(MenuManager *parent)
 			: lib::menu::ChooseControl( "StartLevelMenu", parent,
-			lib::host().resourceManager().getResource("game_menu.mainFont"), sf::Color::Blue, sf::Color::Red,
-			lib::scn::draw::Alignment::Left,
-			70, 1,
 			[this](lib::u32 index, lib::menu::ChooseControl &self)
 			{
 				switch (index)

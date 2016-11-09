@@ -17,10 +17,6 @@ namespace zoper
 
 		OptionsMenu::OptionsMenu(MenuManager *parent)
 			: ChooseControl( "OptionsMenu", parent,
-			host().resourceManager().getResource("game_menu.mainFont"),
-			sf::Color::Blue, sf::Color::Red,
-			lib::scn::draw::Alignment::Left,
-			70, 1,
 			[this](u32 index, ChooseControl &self)
 			{
 				switch (index)

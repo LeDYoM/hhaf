@@ -13,15 +13,13 @@ namespace lib
 {
 	namespace menu
 	{
-		ChooseControl::ChooseControl(const std::string &name, MenuManager *parent, sptr<core::Resource> font,
-			const sf::Color &textColor, const sf::Color &selectedTextColor,
-			const scn::draw::Alignment alignment,
-			u32 chSize,float incY,
+		ChooseControl::ChooseControl(const std::string &name, MenuManager *parent,
 			std::function<void(const u32, ChooseControl &self)> onSelected,
 			sptr<CursorDescriptor> cursorDescriptor, 
 			const std::vector<sptr<OptionDescriptor>> labels)
-			: scn::draw::RenderGroup{ name, parent }, _textColor{ textColor }, _selectedTextColor{ selectedTextColor }, _onSelected{ onSelected }
+			: scn::draw::RenderGroup{ name, parent }, _onSelected{ onSelected }
 		{
+			const auto &cTheme(parent->currentTheme());
 			descriptorCursorSize = cursorDescriptor->_size;
 			_cursor = createShape("cursor");
 			_cursor->setPointCount(cursorDescriptor->_nVertex);
@@ -33,26 +31,26 @@ namespace lib
 			for (const auto label : labels)
 			{
 				auto text = createText("name" + count);
-				text->setFont(*(font->getAsFont()));
-				text->setCharacterSize(chSize);
+				text->setFont(*(cTheme.font->getAsFont()));
+				text->setCharacterSize(cTheme.chSize);
 				text->setString(labels[count]->_text);
-				text->setColor(textColor);
-				text->setPositionX(0, alignment);
+				text->setColor(cTheme.textColor);
+				text->setPositionX(0, cTheme.alignment);
 				text->setPositionY(currentPos.y);
 
 				sptr<scn::draw::NodeText> subtext{ nullptr };
-				if (labels[count]->_subOptionsLabels.size()>0)
+				if (!labels[count]->_subOptionsLabels.empty())
 				{
 					subtext = createText("sub_name" + count);
-					subtext->setFont(*(font->getAsFont()));
-					subtext->setCharacterSize(chSize);
+					subtext->setFont(*(cTheme.font->getAsFont()));
+					subtext->setCharacterSize(cTheme.chSize);
 					subtext->setString(labels[count]->_subOptionsLabels[labels[count]->_startValueIndex]);
-					subtext->setColor(textColor);
+					subtext->setColor(cTheme.textColor);
 					subtext->setPositionX(1800, lib::scn::draw::Alignment::Right);
 					subtext->setPositionY(currentPos.y);
 				}
 
-				currentPos.y += (chSize + incY);
+				currentPos.y += (cTheme.chSize + cTheme.incY);
 				_labelData.push_back(LabelData(labels[count]->_subOptionsLabels,subtext,text, labels[count]->_startValueIndex));
 				++count;
 			}
@@ -114,19 +112,21 @@ namespace lib
 		{
 			__ASSERT(nodeIndex < _labelData.size(), "Invalid select index for cursor");
 
-			_labelData[_cursorItemSelected].label->setColor(_textColor);
+			const auto &cTheme(menuManager()->currentTheme());
+
+			_labelData[_cursorItemSelected].label->setColor(cTheme.textColor);
 			if (_labelData[_cursorItemSelected].subLabel)
 			{
-				_labelData[_cursorItemSelected].subLabel->setColor(_textColor);
+				_labelData[_cursorItemSelected].subLabel->setColor(cTheme.textColor);
 			}
 
 			_cursorItemSelected = nodeIndex;
 			auto selectedText = _labelData[nodeIndex].label;
 
-			selectedText->setColor(_selectedTextColor);
+			selectedText->setColor(cTheme.selectedTextColor);
 			if (_labelData[_cursorItemSelected].subLabel)
 			{
-				_labelData[_cursorItemSelected].subLabel->setColor(_selectedTextColor);
+				_labelData[_cursorItemSelected].subLabel->setColor(cTheme.selectedTextColor);
 			}
 
 			_cursor->setRotation(90);

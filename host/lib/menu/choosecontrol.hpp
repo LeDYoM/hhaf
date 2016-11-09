@@ -20,10 +20,7 @@ namespace lib
 		class ChooseControl : public scn::draw::RenderGroup
 		{
 		public:
-			ChooseControl(const std::string &name, MenuManager *parent, sptr<core::Resource> font,
-				const sf::Color &textColor, const sf::Color &selectedTextColor,
-				const scn::draw::Alignment alignment,
-				u32 chSize, float incY, std::function<void(const u32,ChooseControl &self)> onSelected,
+			ChooseControl(const std::string &name, MenuManager *parent, std::function<void(const u32,ChooseControl &self)> onSelected,
 				sptr<CursorDescriptor> cursorDescriptor, 
 				const std::vector<sptr<OptionDescriptor>> labels);
 			virtual ~ChooseControl();
@@ -45,8 +42,6 @@ namespace lib
 
 			vector2df descriptorCursorSize;
 			u32 _cursorItemSelected{ 0 };
-			sf::Color _textColor;
-			sf::Color _selectedTextColor;
 
 			struct LabelData
 			{

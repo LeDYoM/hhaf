@@ -17,10 +17,6 @@ namespace zoper
 
 		MainMenu::MainMenu(MenuManager *parent)
 			: lib::menu::ChooseControl( "MainMenu", parent,
-			lib::host().resourceManager().getResource("game_menu.mainFont"),
-			sf::Color::Blue, sf::Color::Red,
-			scn::draw::Alignment::Center,
-			90, 1,
 			[this](lib::u32 index, ChooseControl &self)
 			{
 				self;
