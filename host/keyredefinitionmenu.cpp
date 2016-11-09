@@ -33,22 +33,7 @@ namespace zoper
 			_indexKey = 0;
 			setTextForKey();
 		}
-		/*
-		void KeyRedefinitionMenu::onKeyPressed(sf::Event::KeyEvent kEvent)
-		{
-			lib::menu::MenuStep::onKeyPressed(kEvent);
-			if (_keyMapping.setKey(_indexKey, kEvent.code))
-			{
-				++_indexKey;
-				setTextForKey();
-			}
-		}
 
-		void KeyRedefinitionMenu::onKeyReleased(sf::Event::KeyEvent kEvent)
-		{
-			lib::menu::MenuStep::onKeyReleased(kEvent);
-		}
-		*/
 		void KeyRedefinitionMenu::setTextForKey()
 		{
 			if (_indexKey >= KeyMapping::TotalKeys)

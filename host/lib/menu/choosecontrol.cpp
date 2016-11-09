@@ -56,26 +56,6 @@ namespace lib
 			}
 
 			cursorSelectItem(0);
-			parentScene()->addSubscription(events::KeyPressedEvent::subscribe([this](const events::Event&ev) {
-				LOG_DEBUG("Key pressed from Chose control ");
-				const auto kEvent_temp{ dynamic_cast<const events::KeyPressedEvent*>(&ev) };
-				if (!kEvent_temp)
-				{
-					LOG_DEBUG("Is not this type");
-				}
-				const auto &kEvent{ dynamic_cast<const events::KeyPressedEvent&>(ev) };
-				if (kEvent.key == input::Key::Down || kEvent.key == input::Key::Numpad2) {
-					goDown();
-				}
-				else if (kEvent.key == input::Key::Up || kEvent.key == input::Key::Numpad8) {
-					goUp();
-				}
-				else if (kEvent.key == input::Key::Return || kEvent.key == input::Key::Space) {
-					if (_onSelected) {
-						_onSelected(_cursorItemSelected, *this);
-					}
-				}
-			}));
 		}
 
 		ChooseControl::~ChooseControl()

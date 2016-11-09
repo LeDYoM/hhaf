@@ -56,6 +56,8 @@ namespace lib
 			std::vector<LabelData> _labelData;
 			sptr<scn::draw::NodeShape> _cursor;
 			std::function<void(const u32, ChooseControl &self)> _onSelected;
+
+			friend class MenuManager;
 		};
 	}
 }
