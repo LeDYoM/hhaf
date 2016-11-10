@@ -15,15 +15,14 @@ namespace lib
 	{
 		ChooseControl::ChooseControl(const std::string &name, MenuManager *parent,
 			std::function<void(const u32, ChooseControl &self)> onSelected,
-			sptr<CursorDescriptor> cursorDescriptor, 
 			const std::vector<sptr<OptionDescriptor>> labels)
 			: scn::draw::RenderGroup{ name, parent }, _onSelected{ onSelected }
 		{
 			const auto &cTheme(parent->currentTheme());
-			descriptorCursorSize = cursorDescriptor->_size;
+			descriptorCursorSize = cTheme.cursorDescriptor.m_size;
 			_cursor = createShape("cursor");
-			_cursor->setPointCount(cursorDescriptor->_nVertex);
-			_cursor->setColor(cursorDescriptor->_color);
+			_cursor->setPointCount(cTheme.cursorDescriptor.m_nVertex);
+			_cursor->setColor(cTheme.cursorDescriptor.m_color);
 			_cursor->setSize(descriptorCursorSize);
 
 			u32 count{ 0 };

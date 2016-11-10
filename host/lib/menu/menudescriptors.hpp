@@ -22,17 +22,6 @@ namespace lib
 			u32 _startValueIndex;
 			std::vector<std::string> _subOptionsLabels;
 		};
-
-		class CursorDescriptor
-		{
-		public:
-			explicit CursorDescriptor(const u32 nVertex, const vector2df &size, const sf::Color &color)
-				: _nVertex{ nVertex }, _size{ size }, _color{ color } {}
-
-			u32 _nVertex;
-			vector2df _size;
-			sf::Color _color;
-		};
 	}
 }
 

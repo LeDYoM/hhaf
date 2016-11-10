@@ -21,7 +21,6 @@ namespace lib
 		{
 		public:
 			ChooseControl(const std::string &name, MenuManager *parent, std::function<void(const u32,ChooseControl &self)> onSelected,
-				sptr<CursorDescriptor> cursorDescriptor, 
 				const std::vector<sptr<OptionDescriptor>> labels);
 			virtual ~ChooseControl();
 

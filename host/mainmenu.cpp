@@ -1,4 +1,5 @@
 #include "mainmenu.hpp"
+#include "startlevelmenu.hpp"
 #include <lib/menu/menumanager.hpp>
 #include <lib/menu/choosecontrol.hpp>
 #include <lib/menu/menudescriptors.hpp>
@@ -24,7 +25,7 @@ namespace zoper
 				{
 				case 0:
 					_gameConfig.addConfigInt(GameModeStr, 0, true);
-					menuManager()->changeStep("StartLevelMenu");
+					menuManager()->changeStep(StartLevelMenu::ClassName);
 					break;
 				case 1:
 					_gameConfig.addConfigInt(GameModeStr, 1, true);
@@ -39,7 +40,6 @@ namespace zoper
 					break;
 				}
 			},
-			msptr<CursorDescriptor>(3, vector2df{ 90.0f, 90.0f },sf::Color::Red),
 			std::vector<sptr<OptionDescriptor>>{
 			msptr<OptionDescriptor>("Play token mode"),
 				msptr<OptionDescriptor>("Play time mode"),

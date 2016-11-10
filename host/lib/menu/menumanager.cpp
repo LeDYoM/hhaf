@@ -20,6 +20,7 @@ namespace lib
 			m_theme.alignment = scn::draw::Alignment::Center;
 			m_theme.chSize = 70;
 			m_theme.incY = 1;
+			m_theme.cursorDescriptor = CursorDescriptor{ 3, vector2df{ 90.0f, 90.0f },sf::Color::Red };
 
 			addSubscription(events::KeyPressedEvent::subscribe([this](const events::Event&ev) {
 				LOG_DEBUG("Key pressed toMenuManager");

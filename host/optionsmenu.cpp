@@ -54,7 +54,6 @@ namespace zoper
 					break;
 				}
 			},
-			sptr<CursorDescriptor>(new CursorDescriptor(3, vector2df{ 70.0f, 70.0f }, sf::Color::Red)),
 			std::vector<sptr<OptionDescriptor>>{
 				sptr<OptionDescriptor>(new OptionDescriptor("Antialiasing",
 					true, 0, std::vector<std::string>{"Worst", "Bad", "Normal", "Good", "Best"})),

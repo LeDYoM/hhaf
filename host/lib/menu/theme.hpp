@@ -10,6 +10,14 @@ namespace lib
 {
 	namespace menu
 	{
+		struct CursorDescriptor
+		{
+		public:
+			u32 m_nVertex;
+			vector2df m_size;
+			sf::Color m_color;
+		};
+
 		struct Theme
 		{
 			sptr<core::Resource> font;
@@ -18,6 +26,7 @@ namespace lib
 			scn::draw::Alignment alignment;
 			u32 chSize;
 			f32 incY;
+			CursorDescriptor cursorDescriptor;
 		};
 	}
 }
