@@ -23,7 +23,6 @@ namespace lib
 			sptr<core::Resource> font;
 			sf::Color textColor;
 			sf::Color selectedTextColor;
-			scn::draw::Alignment alignment;
 			u32 chSize;
 			f32 incY;
 			CursorDescriptor cursorDescriptor;

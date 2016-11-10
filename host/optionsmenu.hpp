@@ -14,10 +14,6 @@ namespace zoper
 			OptionsMenu(lib::menu::MenuManager *parent);
 			virtual ~OptionsMenu();
 			virtual void onAddedToScene() override;
-
-			void resetControl();
-		private:
-			lib::sptr<lib::menu::ChooseControl> _chooseControl{ nullptr };
 		};
 	}
 }

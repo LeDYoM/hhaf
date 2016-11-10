@@ -17,7 +17,6 @@ namespace lib
 			m_theme.font = host().resourceManager().getResource("game_menu.mainFont");
 			m_theme.textColor = sf::Color::Blue;
 			m_theme.selectedTextColor = sf::Color::Red;
-			m_theme.alignment = scn::draw::Alignment::Center;
 			m_theme.chSize = 70;
 			m_theme.incY = 1;
 			m_theme.cursorDescriptor = CursorDescriptor{ 3, vector2df{ 90.0f, 90.0f },sf::Color::Red };
@@ -37,8 +36,8 @@ namespace lib
 					m_activeMenuStep->goUp();
 				}
 				else if (kEvent.key == input::Key::Return || kEvent.key == input::Key::Space) {
-					if (m_activeMenuStep->_onSelected) {
-						m_activeMenuStep->_onSelected(m_activeMenuStep->_cursorItemSelected, *m_activeMenuStep);
+					if (m_activeMenuStep->m_onSelected) {
+						m_activeMenuStep->m_onSelected(m_activeMenuStep->_cursorItemSelected);
 					}
 				}
 			}));

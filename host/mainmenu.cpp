@@ -18,9 +18,8 @@ namespace zoper
 
 		MainMenu::MainMenu(MenuManager *parent)
 			: lib::menu::ChooseControl( ClassName, parent,
-			[this](lib::u32 index, ChooseControl &self)
+			[this](const u32 index)
 			{
-				self;
 				switch (index)
 				{
 				case 0:
@@ -45,8 +44,10 @@ namespace zoper
 				msptr<OptionDescriptor>("Play time mode"),
 				msptr<OptionDescriptor>("Options"),
 				msptr<OptionDescriptor>("Exit")
-		}),
-			_gameConfig{ ":NextGame" } { }
+			}),
+			_gameConfig{ ":NextGame" }
+		{
+		}
 
 
 		MainMenu::~MainMenu() = default;

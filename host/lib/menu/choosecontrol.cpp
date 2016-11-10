@@ -14,9 +14,9 @@ namespace lib
 	namespace menu
 	{
 		ChooseControl::ChooseControl(const std::string &name, MenuManager *parent,
-			std::function<void(const u32, ChooseControl &self)> onSelected,
+			std::function<void(const u32)> onSelected,
 			const std::vector<sptr<OptionDescriptor>> labels)
-			: scn::draw::RenderGroup{ name, parent }, _onSelected{ onSelected }
+			: scn::draw::RenderGroup{ name, parent }, m_onSelected{ onSelected }
 		{
 			const auto &cTheme(parent->currentTheme());
 			descriptorCursorSize = cTheme.cursorDescriptor.m_size;
@@ -25,20 +25,25 @@ namespace lib
 			_cursor->setColor(cTheme.cursorDescriptor.m_color);
 			_cursor->setSize(descriptorCursorSize);
 
+			const bool menuType{ labels.empty()?false:labels[0]->_subOptionsLabels.empty() };
+
+			scn::draw::Alignment normalLabelAlign{ menuType ? scn::draw::Alignment::Center : scn::draw::Alignment::Left };
 			u32 count{ 0 };
 			vector2df currentPos{ 0.0f, 0.0f };
 			for (const auto label : labels)
 			{
+				const bool hasSubLabels{ !labels[count]->_subOptionsLabels.empty() };
+
 				auto text = createText("name" + count);
 				text->setFont(*(cTheme.font->getAsFont()));
 				text->setCharacterSize(cTheme.chSize);
 				text->setString(labels[count]->_text);
 				text->setColor(cTheme.textColor);
-				text->setPositionX(0, cTheme.alignment);
+				text->setPositionX(0, normalLabelAlign);
 				text->setPositionY(currentPos.y);
 
 				sptr<scn::draw::NodeText> subtext{ nullptr };
-				if (!labels[count]->_subOptionsLabels.empty())
+				if (hasSubLabels)
 				{
 					subtext = createText("sub_name" + count);
 					subtext->setFont(*(cTheme.font->getAsFont()));
@@ -57,11 +62,7 @@ namespace lib
 			cursorSelectItem(0);
 		}
 
-		ChooseControl::~ChooseControl()
-		{
-			_labelData.clear();
-			_cursor = nullptr;
-		}
+		ChooseControl::~ChooseControl() = default;
 
 		MenuManager * ChooseControl::menuManager() const
 		{

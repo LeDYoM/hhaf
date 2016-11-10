@@ -16,16 +16,16 @@ namespace zoper
 		using namespace lib::menu;
 
 		StartLevelMenu::StartLevelMenu(MenuManager *parent)
-			: lib::menu::ChooseControl( "StartLevelMenu", parent,
-			[this](lib::u32 index, lib::menu::ChooseControl &self)
+			: lib::menu::ChooseControl( ClassName, parent,
+			[this](const u32 index)
 			{
 				switch (index)
 				{
 				case 0:
-					_gameConfig.addConfigInt(StartLevelStr, self.getSelectedSubLabel(0), true);
-					LOG_DEBUG("Starting at level:" << self.getSelectedSubLabel(0));
-					self.setSelectedSubLabel(0, 0);
-					lib::host().setScene("GameScene");
+					_gameConfig.addConfigInt(StartLevelStr, getSelectedSubLabel(0), true);
+					LOG_DEBUG("Starting at level:" << getSelectedSubLabel(0));
+					setSelectedSubLabel(0, 0);
+					host().setScene("GameScene");
 
 					break;
 				default:
@@ -47,7 +47,7 @@ namespace zoper
 
 		void StartLevelMenu::onAddedToScene()
 		{
-			setPosition(300, 700);
+			setPosition(0, 700);
 		}
 	}
 }

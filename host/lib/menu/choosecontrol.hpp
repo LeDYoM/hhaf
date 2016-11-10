@@ -20,7 +20,7 @@ namespace lib
 		class ChooseControl : public scn::draw::RenderGroup
 		{
 		public:
-			ChooseControl(const std::string &name, MenuManager *parent, std::function<void(const u32,ChooseControl &self)> onSelected,
+			ChooseControl(const std::string &name, MenuManager *parent, std::function<void(const u32)> onSelected,
 				const std::vector<sptr<OptionDescriptor>> labels);
 			virtual ~ChooseControl();
 
@@ -54,7 +54,7 @@ namespace lib
 			};
 			std::vector<LabelData> _labelData;
 			sptr<scn::draw::NodeShape> _cursor;
-			std::function<void(const u32, ChooseControl &self)> _onSelected;
+			std::function<void(const u32)> m_onSelected;
 
 			friend class MenuManager;
 		};
