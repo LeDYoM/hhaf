@@ -33,7 +33,7 @@ namespace lib
 			if (!eventQueue.empty()) {
 				LOG_DEBUG("Found " << eventQueue.size() << " events in the event queue");
 				do {
-					auto &event(eventQueue.front());
+					auto event(eventQueue.front());
 					eventQueue.pop();
 
 					if (!event->listeners().empty()) {
