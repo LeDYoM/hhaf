@@ -19,7 +19,6 @@ namespace lib
 			void addEvent(sptr<lib::events::Event> event_);
 			void update();
 		private:
-			bool empty() const noexcept;
 			std::queue<sptr<events::Event>> eventQueue;
 		};
 	}
