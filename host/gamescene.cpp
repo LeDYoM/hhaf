@@ -39,6 +39,7 @@ namespace zoper
 
 	void GameScene::onInit()
 	{
+		Scene::onInit();
 		_mainBoardrg = this->createNewRenderGroup("mainBoard");
 		_gameOverrg = this->createNewRenderGroup("gameOverScreen");
 		_scorerg = this->createNewRenderGroup("score");
@@ -136,10 +137,12 @@ namespace zoper
 	{
 		// Remove instances from all nodes.
 		clear();
+		Scene::onDeinit();
 	}
 
 	void GameScene::onEnterScene()
 	{
+		Scene::onEnterScene();
 		p_boardModel = lib::sptr<lib::board::BoardModel>(new lib::board::BoardModel(_gameData.size, this));
 		tilesCreated();
 		addPlayer();
@@ -182,6 +185,7 @@ namespace zoper
 		p_player = nullptr;
 		_backgroundTilesrg = nullptr;
 		_backgroundTiles.clear();
+		Scene::onExitScene();
 	}
 
 	void GameScene::update()

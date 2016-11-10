@@ -36,10 +36,10 @@ namespace lib
 			Scene(const std::string &_name);
 			virtual ~Scene();
 
-			virtual void onInit() = 0;
-			virtual void onDeinit() = 0;
-			virtual void onEnterScene() = 0;
-			virtual void onExitScene() = 0;
+			virtual void onInit();
+			virtual void onDeinit();
+			virtual void onEnterScene();
+			virtual void onExitScene();
 
 			virtual void update() = 0;
 
@@ -59,12 +59,6 @@ namespace lib
 			Timer clock;
 			EventReceiver eventConnector;
 			virtual Scene *const parentScene() noexcept override { return this; }
-
-		private:
-			void privateOnInit();
-			void privateOnDeinit();
-			void privateOnEnterScene();
-			void privateOnExitScene();
 
 			inline void setAsActiveScene(const bool nv) noexcept { m_isActiveScene = nv; }
 

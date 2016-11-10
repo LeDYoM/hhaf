@@ -48,7 +48,7 @@ namespace lib
 			return{ p_view->getSize().x / 2.0f, p_view->getSize().y / 2.0f };
 		}
 
-		void Scene::privateOnInit()
+		void Scene::onInit()
 		{
 			LOG_DEBUG("Initializing scene " << name());
 			p_view = uptr<sf::View>(new sf::View(core::Host::host().parentWindow().getView()));
@@ -58,17 +58,14 @@ namespace lib
 			updateView();
 
 			LOG_DEBUG("Scene view set to: center: " << p_view->getCenter().x << "," << p_view->getCenter().y << " and size: " << p_view->getSize().x << "," << p_view->getSize().y);
-
-			onInit();
 		}
 
-		void Scene::privateOnDeinit()
+		void Scene::onDeinit()
 		{
 			LOG_DEBUG("Deinitializing scene " << name());
-			onDeinit();
 		}
 
-		void Scene::privateOnEnterScene()
+		void Scene::onEnterScene()
 		{
 			LOG_DEBUG("Entered in scene " << name());
 			auto sceneSize = getDefaultSizeView();
@@ -79,12 +76,11 @@ namespace lib
 			LOG_DEBUG("Scene view set to: center: " << p_view->getCenter().x << "," << p_view->getCenter().y << " and size: " << p_view->getSize().x << "," << p_view->getSize().y);
 
 			clock.restart();
-			onEnterScene();
 		}
 
-		void Scene::privateOnExitScene()
+		void Scene::onExitScene()
 		{
-			onExitScene();
+			eventConnector.unsubscribeAll();
 			LOG_DEBUG("Exited from scene " << name());
 		}
 	}

@@ -29,6 +29,7 @@ namespace zoper
 
 	void MenuScene::onInit()
 	{
+		MenuManager::onInit();
 		_background = createSpriteShape("background");
 
 		addMenuStep(msptr<MainMenu>(this));
@@ -46,14 +47,10 @@ namespace zoper
 		_background->setSize(2000.0f);
 	}
 
-	void MenuScene::onDeinit()
-	{
-
-	}
-
 	void MenuScene::onEnterScene()
 	{
-		start(MainMenu::ClassName);
+		MenuManager::onEnterScene();
+		start(StartLevelMenu::ClassName);
 		eventConnector.addSubscription(events::KeyPressedEvent::subscribe([this](const events::Event&) {
 			LOG_DEBUG("Key pressed on menu : " << name());
 		}));
@@ -61,7 +58,7 @@ namespace zoper
 
 	void MenuScene::onExitScene()
 	{
-		eventConnector.unsubscribeAll();
+		lib::menu::MenuManager::onExitScene();
 	}
 
 	void MenuScene::update()

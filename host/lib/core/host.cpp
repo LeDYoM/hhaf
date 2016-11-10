@@ -65,7 +65,7 @@ namespace lib
 		Host::~Host()
 		{
 			for (auto &scene : m_scenes) {
-				scene->privateOnDeinit();
+				scene->onDeinit();
 			}
 			m_scenes.clear();
 			m_params.clear();
@@ -183,7 +183,7 @@ namespace lib
 		{
 			__ASSERT(newScene, "Cannot add a null scene");
 			m_scenes.push_back(newScene);
-			newScene->privateOnInit();
+			newScene->onInit();
 		}
 
 		void Host::setScene(const std::string &name)
@@ -208,14 +208,14 @@ namespace lib
 		{
 			__ASSERT(scene, "Cannot change to a nullptr Scene");
 			if (m_currentScene) {
-				m_currentScene->privateOnExitScene();
+				m_currentScene->onExitScene();
 			}
 			else {
 				LOG_DEBUG("Set first scene");
 			}
 			updateActiveSceneStates(m_currentScene, scene);
 			m_currentScene = scene;
-			m_currentScene->privateOnEnterScene();
+			m_currentScene->onEnterScene();
 		}
 
 		void Host::updateActiveSceneStates(const sptr<scn::Scene>&previous, const sptr<scn::Scene>&next) const noexcept
