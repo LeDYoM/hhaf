@@ -7,10 +7,9 @@
 #include <lib/core/compileconfig.hpp>
 #include <lib/include/types.hpp>
 #include <lib/core/timer.hpp>
-#include <lib/include/events/event.hpp>
-#include <lib/include/events/eventreceiver.hpp>
+#include <lib/core/events/event.hpp>
+#include <lib/core/events/eventreceiver.hpp>
 #include <string>
-#include <SFML/Window/Event.hpp>
 
 namespace lib
 {

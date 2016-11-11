@@ -1,7 +1,7 @@
 #include "eventmanager.hpp"
-#include "log.hpp"
+#include "eventreceiver.hpp"
 
-#include <lib/include/events/eventreceiver.hpp>
+#include <lib/core/log.hpp>
 
 namespace lib
 {

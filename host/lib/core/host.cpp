@@ -1,9 +1,9 @@
 #include "host.hpp"
 #include "window.hpp"
 #include "resourcemanager.hpp"
-#include <lib/draw/scene.hpp>
 #include "log.hpp"
-#include "eventmanager.hpp"
+#include <lib/draw/scene.hpp>
+#include <lib/core/events/eventmanager.hpp>
 #include <SFML/Config.hpp>
 
 #include <algorithm>

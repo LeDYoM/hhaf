@@ -1,8 +1,8 @@
 #ifndef __LIB_EVENTMANAGER_HPP__
 #define __LIB_EVENTMANAGER_HPP__
 
-#include "appservice.hpp"
-#include <lib/include/events/event.hpp>
+#include "event.hpp"
+#include <lib/core/appservice.hpp>
 #include <lib/include/types.hpp>
 #include <queue>
 

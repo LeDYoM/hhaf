@@ -6,9 +6,9 @@
 #include "timer.hpp"
 #include "host.hpp"
 #include <lib/include/iapp.hpp>
-#include <lib/include/events/event.hpp>
-#include <lib/include/events/inputevent.hpp>
-#include "eventmanager.hpp"
+#include <lib/core/events/event.hpp>
+#include <lib/core/events/inputevent.hpp>
+#include <lib/core/events/eventmanager.hpp>
 
 namespace lib
 {

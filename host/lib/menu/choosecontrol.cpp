@@ -2,8 +2,8 @@
 #include "menudescriptors.hpp"
 #include "menumanager.hpp"
 #include <lib/core/resource.hpp>
-#include <lib/core/eventmanager.hpp>
-#include <lib/include/events/inputevent.hpp>
+#include <lib/core/events/eventmanager.hpp>
+#include <lib/core/events/inputevent.hpp>
 #include <lib/draw/scene.hpp>
 #include <lib/draw/positionanimation.hpp>
 #include <lib/draw/nodeshape.hpp>

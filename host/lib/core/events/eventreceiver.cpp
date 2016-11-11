@@ -1,4 +1,4 @@
-#include <lib/include/events/eventreceiver.hpp>
+#include "eventreceiver.hpp"
 
 namespace lib
 {

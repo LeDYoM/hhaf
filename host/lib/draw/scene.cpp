@@ -4,8 +4,8 @@
 #include <lib/core/window.hpp>
 #include <lib/core/host.hpp>
 #include <lib/core/resourcemanager.hpp>
-#include <lib/core/eventmanager.hpp>
-#include <lib/include/events/inputevent.hpp>
+#include <lib/core/events/eventmanager.hpp>
+#include <lib/core/events/inputevent.hpp>
 
 namespace lib
 {

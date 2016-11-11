@@ -5,7 +5,7 @@
 #include <lib/core/host.hpp>
 #include <lib/core/resourcemanager.hpp>
 
-#include <lib/include/events/inputevent.hpp>
+#include <lib/core/events/inputevent.hpp>
 
 namespace lib
 {
