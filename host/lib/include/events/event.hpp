@@ -44,22 +44,18 @@ namespace lib
 		class EventTemplate : public Event
 		{
 		public:
-			constexpr EventTemplate() {}
-			virtual ~EventTemplate() { }
+			virtual ~EventTemplate() = default;
 
 			virtual const listener_container_t &listeners() const noexcept override { return m_listeners; }
 
-			inline static const listener_container_t &listenersStatic() noexcept { return m_listeners; }
-			inline static EventSubscription subscribe(listener_t &&newListener)
+			constexpr inline static const listener_container_t &listenersStatic() noexcept { return m_listeners; }
+			constexpr inline static EventSubscription subscribe(listener_t &&newListener)
 			{
-				m_listeners.emplace_back(newListener);
+				m_listeners.emplace_back(std::move(newListener));
 				return EventSubscription{ std::prev(m_listeners.end()), m_listeners };
 			}
 
-			inline static void unsubscribe(const EventSubscription&evs)
-			{
-				m_listeners.erase(evs.iData);
-			}
+			inline static void unsubscribe(const EventSubscription&evs) { m_listeners.erase(evs.iData); }
 
 			virtual void dispatch() override
 			{
