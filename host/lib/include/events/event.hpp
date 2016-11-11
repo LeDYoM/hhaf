@@ -63,10 +63,13 @@ namespace lib
 
 			virtual void dispatch() override
 			{
-				if (!listeners().empty()) {
-					for (const auto &listener : m_listeners) {
+				if (!m_listeners.empty()) {
+					auto listenersCopy(m_listeners);
+					for (const auto &listener : listenersCopy) {
 						listener(*this);
 					}
+					std::swap(listenersCopy, m_listeners);
+					listenersCopy.clear();
 				}
 			}
 
