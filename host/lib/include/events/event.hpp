@@ -15,6 +15,7 @@ namespace lib
 			using listener_container_t = std::list<listener_t>;
 
 			virtual const listener_container_t &listeners() const noexcept = 0;
+			virtual void dispatch() = 0;
 		};
 
 		class EventSubscription final
@@ -47,22 +48,35 @@ namespace lib
 
 			virtual const listener_container_t &listeners() const noexcept override { return m_listeners; }
 
-			static const listener_container_t &listenersStatic() noexcept { return m_listeners; }
-			static EventSubscription subscribe(listener_t &&newListener)
+			inline static const listener_container_t &listenersStatic() noexcept { return m_listeners; }
+			inline static EventSubscription subscribe(listener_t &&newListener)
 			{
-				m_listeners.push_back(std::move(newListener));
-				return std::move(EventSubscription{ std::prev(m_listeners.end()), m_listeners });
+				m_listeners.emplace_back(newListener);
+				return EventSubscription{ std::prev(m_listeners.end()), m_listeners };
 			}
 
-			static void unsubscribe(const EventSubscription&evs)
+			inline static void unsubscribe(const EventSubscription&evs)
 			{
 				m_listeners.erase(evs.iData);
 			}
+
+			virtual void dispatch() override
+			{
+				if (!listeners().empty()) {
+					for (const auto &listener : m_listeners) {
+						listener(*this);
+					}
+				}
+			}
 		private:
 			static listener_container_t m_listeners;
+			static listener_container_t m_listenersRemoved;
+			static listener_container_t m_listenersAdded;
 		};
 
 		template <typename T> Event::listener_container_t EventTemplate<T>::m_listeners;
+		template <typename T> Event::listener_container_t EventTemplate<T>::m_listenersRemoved;
+		template <typename T> Event::listener_container_t EventTemplate<T>::m_listenersAdded;
 	}
 }
 #endif

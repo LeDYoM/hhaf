@@ -25,7 +25,7 @@ namespace lib
 
 		void EventManager::addEvent(sptr<lib::events::Event> event_)
 		{
-			eventQueue.push(std::move(event_));
+			eventQueue.emplace(std::move(event_));
 		}
 
 		void EventManager::update()
@@ -33,14 +33,8 @@ namespace lib
 			if (!eventQueue.empty()) {
 				LOG_DEBUG("Found " << eventQueue.size() << " events in the event queue");
 				do {
-					auto event(eventQueue.front());
+					eventQueue.front()->dispatch();
 					eventQueue.pop();
-
-					if (!event->listeners().empty()) {
-						for (const auto &listener : event->listeners()) {
-							listener(*event);
-						}
-					}
 				} while (!eventQueue.empty());
 			}
 		}
