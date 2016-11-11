@@ -15,6 +15,7 @@ namespace lib
 			using listener_container_t = std::list<listener_t>;
 
 			virtual const listener_container_t &listeners() const noexcept = 0;
+			virtual bool lock(const bool) = 0;
 			virtual void dispatch() = 0;
 		};
 
@@ -68,15 +69,21 @@ namespace lib
 					}
 				}
 			}
+
+			virtual bool lock(const bool nState) override
+			{
+				const bool prev{ m_locked };
+				m_locked = nState;
+				return prev;
+			}
 		private:
 			static listener_container_t m_listeners;
-			static listener_container_t m_listenersRemoved;
-			static listener_container_t m_listenersAdded;
+			static bool m_locked;
 		};
 
 		template <typename T> Event::listener_container_t EventTemplate<T>::m_listeners;
-		template <typename T> Event::listener_container_t EventTemplate<T>::m_listenersRemoved;
-		template <typename T> Event::listener_container_t EventTemplate<T>::m_listenersAdded;
+		template <typename T> bool EventTemplate<T>::m_locked = false;
+
 	}
 }
 #endif
