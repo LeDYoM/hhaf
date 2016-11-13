@@ -19,25 +19,49 @@ namespace lib
 			virtual void dispatch() = 0;
 		};
 
-		class EventSubscription final
+		class EventSubscription
+		{
+		public:
+			using listener_t = Event::listener_t;
+			using listener_container_t = Event::listener_container_t;
+			using iterator_t = listener_container_t::iterator;
+
+			virtual void subscribe() = 0;
+			virtual void unsubscribe() = 0;
+			virtual void dettach() = 0;
+		};
+
+		template <typename T>
+		class EventSubscriptionTemplate : public EventSubscription
 		{
 		public:
 			using listener_container_t = Event::listener_container_t;
 			using iterator_t = listener_container_t::iterator;
-			EventSubscription(iterator_t it, listener_container_t & listeners) : iData{ it }, m_eventListeners{ listeners } {}
-			EventSubscription() = delete;
-			EventSubscription(const EventSubscription&) = default;
-			EventSubscription &operator=(const EventSubscription&) = default;
-			EventSubscription(EventSubscription&&) = default;
-			EventSubscription &operator=(EventSubscription&&) = default;
-			~EventSubscription() = default;
+			EventSubscriptionTemplate(listener_t &&newListener) 
+			{
+				listener = std::move(newListener);
+				subscribe();
+			}
 
-			inline void unsubscribe() { m_eventListeners.erase(iData);	}
+			virtual void subscribe() override
+			{
+				EventTemplate<T>::m_listeners.push_back(listener);
+				iData = std::prev(EventTemplate<T>::m_listeners.end());
+			}
 
+			virtual void unsubscribe() override
+			{ 
+				EventTemplate<T>::m_listeners.erase(iData);
+				iData = nullptr;
+			}
+
+			virtual void dettach()
+			{
+				(*it) = nullptr;
+			}
+
+			listener_t listener{ nullptr };
 			iterator_t iData;
-
-		private:
-			Event::listener_container_t &m_eventListeners;
 		};
 
 		template <class T>
@@ -54,8 +78,6 @@ namespace lib
 				m_listeners.emplace_back(std::move(newListener));
 				return EventSubscription{ std::prev(m_listeners.end()), m_listeners };
 			}
-
-			inline static void unsubscribe(const EventSubscription&evs) { m_listeners.erase(evs.iData); }
 
 			virtual void dispatch() override
 			{
@@ -75,13 +97,13 @@ namespace lib
 				m_locked = nState;
 				return prev;
 			}
-		private:
+
 			static listener_container_t m_listeners;
-			static bool m_locked;
+			static listener_container_t m_listenersToRemove;
 		};
 
 		template <typename T> Event::listener_container_t EventTemplate<T>::m_listeners;
-		template <typename T> bool EventTemplate<T>::m_locked = false;
+		template <typename T> Event::listener_container_t EventTemplate<T>::m_listenersToRemove;
 
 	}
 }

@@ -13,7 +13,7 @@ namespace lib
 	void EventReceiver::unsubscribeAll()
 	{
 		for (auto &subscription : m_subscriptions) {
-			subscription.unsubscribe();
+			subscription->unsubscribe();
 		}
 		m_subscriptions.clear();
 	}

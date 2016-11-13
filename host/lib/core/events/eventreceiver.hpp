@@ -1,9 +1,8 @@
-#ifndef LIB_EVENTS_EVENTSENDER_HPP__
-#define LIB_EVENTS_EVENTSENDER_HPP__
+#ifndef LIB_EVENTS_EVENTRECEIVER_INCLUDE_HPP__
+#define LIB_EVENTS_EVENTRECEIVER_INCLUDE_HPP__
 
 #include "event.hpp"
-
-#include <functional>
+#include <lib/include/types.hpp>
 #include <list>
 
 namespace lib
@@ -17,7 +16,7 @@ namespace lib
 		void addSubscription(lib::events::EventSubscription &&) noexcept;
 		void unsubscribeAll();
 	private:
-		std::list<lib::events::EventSubscription> m_subscriptions;
+		std::list<sptr<lib::events::EventSubscription>> m_subscriptions;
 	};
 }
 #endif
