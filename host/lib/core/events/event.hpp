@@ -15,7 +15,6 @@ namespace lib
 			using listener_container_t = std::list<listener_t>;
 
 			virtual const listener_container_t &listeners() const noexcept = 0;
-			virtual bool lock(const bool) = 0;
 			virtual void dispatch() = 0;
 		};
 
@@ -37,9 +36,9 @@ namespace lib
 		public:
 			using listener_container_t = Event::listener_container_t;
 			using iterator_t = listener_container_t::iterator;
-			EventSubscriptionTemplate(listener_t &&newListener) 
+			EventSubscriptionTemplate(listener_t newListener) 
 			{
-				listener = std::move(newListener);
+				listener = newListener;
 				subscribe();
 			}
 
@@ -52,12 +51,11 @@ namespace lib
 			virtual void unsubscribe() override
 			{ 
 				EventTemplate<T>::m_listeners.erase(iData);
-				iData = nullptr;
 			}
 
 			virtual void dettach()
 			{
-				(*it) = nullptr;
+				(*iData) = nullptr;
 			}
 
 			listener_t listener{ nullptr };
@@ -73,10 +71,10 @@ namespace lib
 			virtual const listener_container_t &listeners() const noexcept override { return m_listeners; }
 
 			constexpr inline static const listener_container_t &listenersStatic() noexcept { return m_listeners; }
-			constexpr inline static EventSubscription subscribe(listener_t &&newListener)
+			constexpr inline static auto subscribe(listener_t newListener)
 			{
-				m_listeners.emplace_back(std::move(newListener));
-				return EventSubscription{ std::prev(m_listeners.end()), m_listeners };
+				m_listeners.emplace_back(newListener);
+				return sptr<EventSubscriptionTemplate<T>>(new EventSubscriptionTemplate<T>{ newListener });
 			}
 
 			virtual void dispatch() override
@@ -89,13 +87,6 @@ namespace lib
 					std::swap(listenersCopy, m_listeners);
 					listenersCopy.clear();
 				}
-			}
-
-			virtual bool lock(const bool nState) override
-			{
-				const bool prev{ m_locked };
-				m_locked = nState;
-				return prev;
 			}
 
 			static listener_container_t m_listeners;
