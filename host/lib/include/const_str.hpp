@@ -3,17 +3,22 @@
 
 namespace lib
 {
-	struct constexpr_str {
-		const char const* str;
-		std::size_t size;
+#include <cstddef>
+#include <stdexcept>
 
-		// can only construct from a char[] literal
-		template <std::size_t N>
-		constexpr constexpr_str(char const (&s)[N])
-			: str(s)
-			, size(N - 1) // not count the trailing nul
-		{}
-	};
-}
+class str_const {
+    const char * const p_;
+    const std::size_t sz_;
+public:
+    template <std::size_t N>
+    constexpr str_const( const char( & a )[ N ] )
+		: p_( a ), sz_( N - 1 ) {}
+
+    constexpr char operator[]( std::size_t n ) const 
+	{
+        return n < sz_ ? p_[ n ] : throw std::out_of_range( "" );
+    }
+    constexpr std::size_t size() const  noexcept { return sz_; }
+};}
 
 #endif
