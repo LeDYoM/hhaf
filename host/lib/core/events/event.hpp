@@ -4,6 +4,7 @@
 #include <functional>
 #include <list>
 #include <lib/include/types.hpp>
+#include <lib/core/log.hpp>
 
 namespace lib
 {
@@ -24,67 +25,69 @@ namespace lib
 		{
 		public:
 			using listener_t = Event::listener_t;
+			EventSubscription(const listener_t &newListener) : listener{ newListener } {	}
 
-			virtual void subscribe() = 0;
-			virtual void markForUnsubscription() = 0;
-			listener_t listener{ nullptr };
-		};
-
-		template <typename T>
-		class EventSubscriptionTemplate : public EventSubscription
-		{
-		public:
-			EventSubscriptionTemplate(listener_t newListener)
-			{
-				listener = newListener;
-				subscribe();
-			}
-
-			virtual void subscribe() override
-			{
-//				EventTemplate<T>::m_subscriptions.push_back(listener);
-			}
-
-			virtual void markForUnsubscription() override
+			void markForUnsubscription() noexcept
 			{
 				m_markedForUnsubscription = true;
 			}
 
 			bool m_markedForUnsubscription{ false };
+			const listener_t listener;
 		};
 
 		template <class T>
 		class EventTemplate : public Event
 		{
 		public:
+			using listener_container_t = Event::listener_container_t;
 			virtual ~EventTemplate() = default;
 
 			virtual const listener_container_t &subscriptions() const noexcept override { return m_subscriptions; }
 
-			inline static auto subscribe(listener_t newListener)
+			inline static auto subscribe(const listener_t &newListener)
 			{
-				sptr<EventSubscriptionTemplate<T>> m_ptr{ new EventSubscriptionTemplate<T>(newListener) };
+				auto m_ptr( msptr<EventSubscription>(newListener) );
 				m_subscriptions.emplace_back(m_ptr);
 				return m_ptr;
 			}
 
-			constexpr inline static void addSubscription(sptr<EventSubscriptionTemplate<T>> newListener)
+			inline static void unsubscribeMarked()
 			{
-				m_subscriptions.emplace_back(newListener);
+				__ASSERT(!m_dispatching, "Cannot disconnect while processing the event!");
+
+				for (auto it = m_subscriptions.begin(); it != m_subscriptions.end();) {
+					auto itTemp(it++);
+					if ((*itTemp)->m_markedForUnsubscription) {
+						(*itTemp)->m_markedForUnsubscription = false;
+						m_subscriptions.erase(itTemp);
+					}
+				}
 			}
 
 			virtual void dispatch() override
 			{
 				if (!m_subscriptions.empty()) {
+					m_dispatching = true;
+					bool unsubsciptionNeeded = false;
 					for (const auto &subscription : m_subscriptions) {
 						subscription->listener(*this);
+
+						if (subscription->m_markedForUnsubscription) {
+							unsubsciptionNeeded = true;
+						}
+					}
+					m_dispatching = false;
+					if (unsubsciptionNeeded) {
+						unsubscribeMarked();
 					}
 				}
 			}
-
+			static bool m_dispatching;
 			static listener_container_t m_subscriptions;
 		};
 
+		template <typename T> bool EventTemplate<T>::m_dispatching;
 		template <typename T> Event::listener_container_t EventTemplate<T>::m_subscriptions;
 	}
 }

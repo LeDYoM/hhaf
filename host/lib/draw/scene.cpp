@@ -13,12 +13,7 @@ namespace lib
 	{
 		Scene::Scene(const std::string &_name) : RenderGroup{_name,nullptr}
 		{
-			using namespace events;
-
 			LOG_CONSTRUCT("Name: " << name());
-//			eventConnector.addSubscription(KeyPressedEvent::subscribe([this](const Event&) {
-//				LOG_DEBUG("Key pressed from Scene: "<< name());
-//			}));
 		}
 
 		Scene::~Scene()
@@ -66,7 +61,12 @@ namespace lib
 
 		void Scene::onEnterScene()
 		{
+			using namespace events;
 			LOG_DEBUG("Entered in scene " << name());
+			eventConnector.addSubscription(KeyPressedEvent::subscribe([this](const Event&) {
+				LOG_DEBUG("Key pressed from Scene: "<< name());
+			}));
+
 			auto sceneSize = getDefaultSizeView();
 			p_view->setSize(sceneSize.x, sceneSize.y);
 			p_view->setCenter(sceneSize.x / 2, sceneSize.y / 2);
