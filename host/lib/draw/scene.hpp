@@ -47,7 +47,7 @@ namespace lib
 			const vector2df getCenterCoordinates() const;
 
 			inline bool isActiveScene() const noexcept { return m_isActiveScene; }
-			inline void addSubscription(lib::events::EventSubscription &&es) noexcept { eventConnector.addSubscription(std::move(es)); }
+			inline void addSubscription(sptr<lib::events::EventSubscription> &&es) noexcept { eventConnector.addSubscription(std::move(es)); }
 
 		protected:
 

@@ -3,9 +3,15 @@
 namespace lib
 {
 	EventReceiver::EventReceiver() = default;
-	EventReceiver::~EventReceiver() = default;
 
-	void EventReceiver::addSubscription(lib::events::EventSubscription &&nSubscription) noexcept
+
+	EventReceiver::~EventReceiver()
+	{
+		unsubscribeAll();
+		m_subscriptions.clear();
+	}
+
+	void EventReceiver::addSubscription(sptr<lib::events::EventSubscription> &&nSubscription) noexcept
 	{
 		m_subscriptions.emplace_back(std::move(nSubscription));
 	}
@@ -13,8 +19,8 @@ namespace lib
 	void EventReceiver::unsubscribeAll()
 	{
 		for (auto &subscription : m_subscriptions) {
-			subscription->unsubscribe();
+			subscription->markForUnsubscription();
 		}
-		m_subscriptions.clear();
+//		m_subscriptions.clear();
 	}
 }
