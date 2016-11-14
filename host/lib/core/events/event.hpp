@@ -4,6 +4,7 @@
 #include <functional>
 #include <list>
 #include <lib/include/types.hpp>
+#include <lib/core/log.hpp>
 
 namespace lib
 {
@@ -25,8 +26,12 @@ namespace lib
 		public:
 			using listener_t = Event::listener_t;
 
-			virtual void subscribe() = 0;
-			virtual void markForUnsubscription() = 0;
+			void markForUnsubscription()
+			{
+				m_markedForUnsubscription = true;
+			}
+
+			bool m_markedForUnsubscription{ false };
 			listener_t listener{ nullptr };
 		};
 
@@ -37,26 +42,14 @@ namespace lib
 			EventSubscriptionTemplate(listener_t newListener)
 			{
 				listener = newListener;
-				subscribe();
 			}
-
-			virtual void subscribe() override
-			{
-//				EventTemplate<T>::m_subscriptions.push_back(listener);
-			}
-
-			virtual void markForUnsubscription() override
-			{
-				m_markedForUnsubscription = true;
-			}
-
-			bool m_markedForUnsubscription{ false };
 		};
 
 		template <class T>
 		class EventTemplate : public Event
 		{
 		public:
+			using listener_container_t = Event::listener_container_t;
 			virtual ~EventTemplate() = default;
 
 			virtual const listener_container_t &subscriptions() const noexcept override { return m_subscriptions; }
@@ -68,23 +61,35 @@ namespace lib
 				return m_ptr;
 			}
 
-			constexpr inline static void addSubscription(sptr<EventSubscriptionTemplate<T>> newListener)
+			inline static void unsubscribeMarked()
 			{
-				m_subscriptions.emplace_back(newListener);
+				__ASSERT(!m_dispatching, "Cannot disconnect while processing the event!");
+
+				for (auto it = m_subscriptions.begin(); it != m_subscriptions.end();) {
+					auto itTemp(it++);
+					if ((*itTemp)->m_markedForUnsubscription) {
+						(*itTemp)->m_markedForUnsubscription = false;
+						m_subscriptions.erase(itTemp);
+					}
+				}
 			}
 
 			virtual void dispatch() override
 			{
 				if (!m_subscriptions.empty()) {
+					m_dispatching = true;
 					for (const auto &subscription : m_subscriptions) {
 						subscription->listener(*this);
 					}
+					m_dispatching = false;
+					unsubscribeMarked();
 				}
 			}
-
+			static bool m_dispatching;
 			static listener_container_t m_subscriptions;
 		};
 
+		template <typename T> bool EventTemplate<T>::m_dispatching;
 		template <typename T> Event::listener_container_t EventTemplate<T>::m_subscriptions;
 	}
 }
