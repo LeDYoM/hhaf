@@ -25,24 +25,15 @@ namespace lib
 		{
 		public:
 			using listener_t = Event::listener_t;
+			EventSubscription(const listener_t &newListener) : listener{ newListener } {	}
 
-			void markForUnsubscription()
+			void markForUnsubscription() noexcept
 			{
 				m_markedForUnsubscription = true;
 			}
 
 			bool m_markedForUnsubscription{ false };
-			listener_t listener{ nullptr };
-		};
-
-		template <typename T>
-		class EventSubscriptionTemplate : public EventSubscription
-		{
-		public:
-			EventSubscriptionTemplate(listener_t newListener)
-			{
-				listener = newListener;
-			}
+			const listener_t listener;
 		};
 
 		template <class T>
@@ -54,9 +45,9 @@ namespace lib
 
 			virtual const listener_container_t &subscriptions() const noexcept override { return m_subscriptions; }
 
-			inline static auto subscribe(listener_t newListener)
+			inline static auto subscribe(const listener_t &newListener)
 			{
-				sptr<EventSubscriptionTemplate<T>> m_ptr{ new EventSubscriptionTemplate<T>(newListener) };
+				auto m_ptr( msptr<EventSubscription>(newListener) );
 				m_subscriptions.emplace_back(m_ptr);
 				return m_ptr;
 			}

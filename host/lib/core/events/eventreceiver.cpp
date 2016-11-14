@@ -21,6 +21,5 @@ namespace lib
 		for (auto &subscription : m_subscriptions) {
 			subscription->markForUnsubscription();
 		}
-//		m_subscriptions.clear();
 	}
 }
