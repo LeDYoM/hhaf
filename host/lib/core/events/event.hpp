@@ -36,9 +36,9 @@ namespace lib
 		public:
 			using listener_container_t = Event::listener_container_t;
 			using iterator_t = listener_container_t::iterator;
-			EventSubscriptionTemplate(listener_t newListener) 
+			EventSubscriptionTemplate(listener_t newListener)
+				: listener{ newListener }
 			{
-				listener = newListener;
 				subscribe();
 			}
 
@@ -73,7 +73,6 @@ namespace lib
 			constexpr inline static const listener_container_t &listenersStatic() noexcept { return m_listeners; }
 			constexpr inline static auto subscribe(listener_t newListener)
 			{
-				m_listeners.emplace_back(newListener);
 				return sptr<EventSubscriptionTemplate<T>>(new EventSubscriptionTemplate<T>{ newListener });
 			}
 
