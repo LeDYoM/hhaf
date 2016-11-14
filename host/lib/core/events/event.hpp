@@ -69,11 +69,18 @@ namespace lib
 			{
 				if (!m_subscriptions.empty()) {
 					m_dispatching = true;
+					bool unsubsciptionNeeded = false;
 					for (const auto &subscription : m_subscriptions) {
 						subscription->listener(*this);
+
+						if (subscription->m_markedForUnsubscription) {
+							unsubsciptionNeeded = true;
+						}
 					}
 					m_dispatching = false;
-					unsubscribeMarked();
+					if (unsubsciptionNeeded) {
+						unsubscribeMarked();
+					}
 				}
 			}
 			static bool m_dispatching;
