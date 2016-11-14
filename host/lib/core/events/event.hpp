@@ -27,7 +27,7 @@ namespace lib
 
 			virtual void subscribe() = 0;
 			virtual void unsubscribe() = 0;
-			virtual void dettach() = 0;
+			virtual void markForUnsubscription() = 0;
 		};
 
 		template <typename T>
@@ -50,14 +50,15 @@ namespace lib
 
 			virtual void unsubscribe() override
 			{ 
-				EventTemplate<T>::m_listeners.erase(iData);
+//				EventTemplate<T>::m_listeners.erase(iData);
 			}
 
-			virtual void dettach()
+			virtual void markForUnsubscription() override
 			{
-				(*iData) = nullptr;
+				m_markedForUnsubscription = true;
 			}
 
+			bool m_markedForUnsubscription{ false };
 			listener_t listener{ nullptr };
 			iterator_t iData;
 		};
@@ -79,12 +80,9 @@ namespace lib
 			virtual void dispatch() override
 			{
 				if (!m_listeners.empty()) {
-					auto listenersCopy(m_listeners);
-					for (const auto &listener : listenersCopy) {
+					for (const auto &listener : m_listeners) {
 						listener(*this);
 					}
-					std::swap(listenersCopy, m_listeners);
-					listenersCopy.clear();
 				}
 			}
 
