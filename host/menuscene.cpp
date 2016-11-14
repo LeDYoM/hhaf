@@ -50,7 +50,7 @@ namespace zoper
 	void MenuScene::onEnterScene()
 	{
 		MenuManager::onEnterScene();
-		start(StartLevelMenu::ClassName);
+		start(MainMenu::ClassName);
 	}
 
 	void MenuScene::onExitScene()
