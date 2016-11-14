@@ -6,7 +6,7 @@
 
 namespace zoper
 {
-	class GameBaseTile : public lib::board::ITile, public lib::scn::draw::NodeShape
+	class GameBaseTile : public lib::board::ITile, public lib::draw::NodeShape
 	{
 	public:
 		explicit GameBaseTile(lib::board::BoardTileData data, const sf::Vector2f &size, const std::string &baseName);

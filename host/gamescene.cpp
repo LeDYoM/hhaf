@@ -129,7 +129,7 @@ namespace zoper
 		_gameText->setPosition(sceneCenter.x - (_gameBoundingBox.width / 2.0f), sceneCenter.y - _gameBoundingBox.height);
 		_overText->setPosition(sceneCenter.x - (_overBoundingBox.width / 2.0f), sceneCenter.y);
 
-		_pauseText->setPosition(sf::Vector2f{ 1000.0f, 1000.0f }, lib::scn::draw::Alignment::Center);
+		_pauseText->setPosition(sf::Vector2f{ 1000.0f, 1000.0f }, lib::draw::Alignment::Center);
 
 	}
 
@@ -215,7 +215,7 @@ namespace zoper
 			setState(Pause);
 			_pauserg->setVisible(true);
 			//_pauseText->getAsText()->setColor(sf::Color(255, 255, 255, 20));
-			addAnimation(lib::scn::draw::anim::ColorAnimation::create(1000, _pauseText, sf::Color(255, 255, 255, 0), sf::Color(255, 255, 255, 255)));
+			addAnimation(lib::draw::anim::ColorAnimation::create(1000, _pauseText, sf::Color(255, 255, 255, 0), sf::Color(255, 255, 255, 255)));
 			gameClock.pause();
 			return true;
 		}
@@ -469,11 +469,11 @@ namespace zoper
 //		Scene::onKeyReleased(kEvent);
 	}
 
-	void GameScene::onAnimationStarted(lib::sptr<lib::scn::draw::anim::IAnimation> anim, lib::sptr<lib::scn::draw::Renderizable> node)
+	void GameScene::onAnimationStarted(lib::sptr<lib::draw::anim::IAnimation> anim, lib::sptr<lib::draw::Renderizable> node)
 	{
 	}
 
-	void GameScene::onAnimationFinished(lib::sptr<lib::scn::draw::anim::IAnimation> anim, lib::sptr<lib::scn::draw::Renderizable> node)
+	void GameScene::onAnimationFinished(lib::sptr<lib::draw::anim::IAnimation> anim, lib::sptr<lib::draw::Renderizable> node)
 	{
 		if (anim->animationType() == "ColorAnimation" && node == _pauseText)
 		{
@@ -524,7 +524,7 @@ namespace zoper
 			if (found)
 			{
 				auto node = createShape("pointIncrementScore", sf::Vector2f{ 15.0f,15.0f });
-				addAnimation(lib::scn::draw::anim::PositionAnimation::create(600, node, lastTokenPosition, lib::vector2df(450,100)));
+				addAnimation(lib::draw::anim::PositionAnimation::create(600, node, lastTokenPosition, lib::vector2df(450,100)));
 			}
 			return result;
 		});
@@ -590,7 +590,7 @@ namespace zoper
 		_backgroundTilesrg = createNewRenderGroup("backgroundTiles", _mainBoardrg);
 		for (lib::u32 y = 0; y < _gameData.size.y; ++y)
 		{
-			std::vector<lib::sptr<lib::scn::draw::NodeShape>> column;
+			std::vector<lib::sptr<lib::draw::NodeShape>> column;
 
 			for (lib::u32 x = 0; x < _gameData.size.x; ++x)
 			{
@@ -665,7 +665,7 @@ namespace zoper
 	void GameScene::tokenMoved(const lib::vector2du32 &source, const lib::vector2du32 &dest, lib::sptr<Tile> tile)
 	{
 		source;
-		addAnimation(lib::scn::draw::anim::PositionAnimation::create(_levelProperties.millisBetweenTokens() / 2, tile, board2Scene(dest)));
+		addAnimation(lib::draw::anim::PositionAnimation::create(_levelProperties.millisBetweenTokens() / 2, tile, board2Scene(dest)));
 	}
 
 	void GameScene::tokenAppeared(const lib::vector2du32 &position, lib::sptr<Tile> tile)

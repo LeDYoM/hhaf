@@ -6,7 +6,7 @@
 namespace zoper
 {
 	GameBaseTile::GameBaseTile(lib::board::BoardTileData data, const sf::Vector2f &size, const std::string &baseName) 
-		: lib::board::ITile{ data }, lib::scn::draw::NodeShape(baseName,size,30)
+		: lib::board::ITile{ data }, lib::draw::NodeShape(baseName,size,30)
 	{
 	}
 

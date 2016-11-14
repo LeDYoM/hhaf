@@ -9,10 +9,6 @@
 
 namespace lib
 {
-	namespace scn
-	{
-		class Scene;
-	}
 	namespace core
 	{
 		class Window;
@@ -34,15 +30,15 @@ namespace lib
 			int run();
 			bool update();
 
-			void addScene(sptr<scn::Scene> newScene);
+			void addScene(sptr<draw::Scene> newScene);
 			void setScene(const std::string &name);
 
-			void addScenes(const std::vector<sptr<scn::Scene>> &&sceneVector);
-			sptr<scn::Scene> getSceneByName(const std::string &name) const;
+			void addScenes(const std::vector<sptr<draw::Scene>> &&sceneVector);
+			sptr<draw::Scene> getSceneByName(const std::string &name) const;
 
 			void exitProgram();
 
-			void setScene(sptr<scn::Scene> scene);
+			void setScene(sptr<draw::Scene> scene);
 
 			inline Window const &parentWindow() const noexcept { return *m_window; }
 			inline Window &parentWindow()  noexcept { return *m_window; }
@@ -56,7 +52,7 @@ namespace lib
 			bool loopStep();
 		private:
 
-			void updateActiveSceneStates(const sptr<scn::Scene> &, const sptr<scn::Scene> &) const noexcept;
+			void updateActiveSceneStates(const sptr<draw::Scene> &, const sptr<draw::Scene> &) const noexcept;
 
 			static Host *m_instance;
 			AppState m_state;
@@ -65,8 +61,8 @@ namespace lib
 			uptr<ResourceManager> m_resourceManager{ nullptr };
 			uptr<EventManager> m_eventManager{ nullptr };
 			bool exit{ false };
-			std::vector<sptr<scn::Scene>> m_scenes;
-			sptr<scn::Scene> m_currentScene{ nullptr };
+			std::vector<sptr<draw::Scene>> m_scenes;
+			sptr<draw::Scene> m_currentScene{ nullptr };
 			std::vector<std::string> m_params;
 		};
 	}

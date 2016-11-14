@@ -46,9 +46,9 @@ namespace zoper
 		return 0;
 	}
 
-	VecSPtr<scn::Scene> ZoperProgramController::scenesVector()
+	VecSPtr<lib::draw::Scene> ZoperProgramController::scenesVector()
 	{
-		return{ sptr<scn::Scene>(new MenuScene), sptr<scn::Scene>(new GameScene) };
+		return{ sptr<lib::draw::Scene>(new MenuScene), sptr<lib::draw::Scene>(new GameScene) };
 	}
 
 

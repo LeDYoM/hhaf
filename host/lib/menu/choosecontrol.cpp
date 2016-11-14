@@ -16,7 +16,7 @@ namespace lib
 		ChooseControl::ChooseControl(const std::string &name, MenuManager *parent,
 			std::function<void(const u32)> onSelected,
 			const std::vector<sptr<OptionDescriptor>> labels)
-			: scn::draw::RenderGroup{ name, parent }, m_onSelected{ onSelected }
+			: draw::RenderGroup{ name, parent }, m_onSelected{ onSelected }
 		{
 			const auto &cTheme(parent->currentTheme());
 			descriptorCursorSize = cTheme.cursorDescriptor.m_size;
@@ -27,7 +27,7 @@ namespace lib
 
 			const bool menuType{ labels.empty()?false:labels[0]->_subOptionsLabels.empty() };
 
-			scn::draw::Alignment normalLabelAlign{ menuType ? scn::draw::Alignment::Center : scn::draw::Alignment::Left };
+			draw::Alignment normalLabelAlign{ menuType ? draw::Alignment::Center : draw::Alignment::Left };
 			u32 count{ 0 };
 			vector2df currentPos{ 0.0f, 0.0f };
 			for (const auto label : labels)
@@ -42,7 +42,7 @@ namespace lib
 				text->setPositionX(0, normalLabelAlign);
 				text->setPositionY(currentPos.y);
 
-				sptr<scn::draw::NodeText> subtext{ nullptr };
+				sptr<draw::NodeText> subtext{ nullptr };
 				if (hasSubLabels)
 				{
 					subtext = createText("sub_name" + count);
@@ -50,7 +50,7 @@ namespace lib
 					subtext->setCharacterSize(cTheme.chSize);
 					subtext->setString(labels[count]->_subOptionsLabels[labels[count]->_startValueIndex]);
 					subtext->setColor(cTheme.textColor);
-					subtext->setPositionX(1800, lib::scn::draw::Alignment::Right);
+					subtext->setPositionX(1800, lib::draw::Alignment::Right);
 					subtext->setPositionY(currentPos.y);
 				}
 
@@ -85,7 +85,7 @@ namespace lib
 		void ChooseControl::updateSubLabelText(const u32 index)
 		{
 			_labelData[index].subLabel->setString(_labelData[index].textSubLabel[_labelData[index].selectedSublabel]);
-			_labelData[index].subLabel->setPositionX(1800.0f, lib::scn::draw::Alignment::Right);
+			_labelData[index].subLabel->setPositionX(1800.0f, lib::draw::Alignment::Right);
 		}
 
 		void ChooseControl::cursorSelectItem(u32 nodeIndex)
@@ -111,7 +111,7 @@ namespace lib
 
 			_cursor->setRotation(90);
 			
-			addAnimation(scn::draw::anim::PositionAnimation::create(120, _cursor, 
+			addAnimation(draw::anim::PositionAnimation::create(120, _cursor, 
 				vector2df{ selectedText->getPosition().x - descriptorCursorSize.x, selectedText->getPosition().y }));
 		}
 

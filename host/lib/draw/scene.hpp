@@ -18,15 +18,12 @@ namespace lib
 		class ResourceManager;
 		class Host;
 	}
-	namespace scn
+	namespace draw
 	{
-		namespace draw
+		class RenderGroup;
+		namespace anim
 		{
-			class RenderGroup;
-			namespace anim
-			{
-				class IAnimation;
-			}
+			class IAnimation;
 		}
 
 		class Scene : public draw::RenderGroup

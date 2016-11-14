@@ -9,16 +9,16 @@
 
 namespace lib
 {
-	namespace scn
+	namespace draw
 	{
-		Scene::Scene(const std::string &_name) : RenderGroup{_name,nullptr}
+		Scene::Scene(const std::string &_name) : RenderGroup{ _name,nullptr }
 		{
 			LOG_CONSTRUCT("Name: " << name());
 		}
 
 		Scene::~Scene()
 		{
-			LOG_DESTRUCT("Name: "<<name());
+			LOG_DESTRUCT("Name: " << name());
 		}
 
 		void Scene::updateView()
@@ -64,7 +64,7 @@ namespace lib
 			using namespace events;
 			LOG_DEBUG("Entered in scene " << name());
 			eventConnector.addSubscription(KeyPressedEvent::subscribe([this](const Event&) {
-				LOG_DEBUG("Key pressed from Scene: "<< name());
+				LOG_DEBUG("Key pressed from Scene: " << name());
 			}));
 
 			auto sceneSize = getDefaultSizeView();

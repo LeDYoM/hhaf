@@ -8,10 +8,10 @@ namespace zoper
 {
 	namespace zmenu
 	{
-		class KeyRedefinitionMenu : public lib::scn::draw::RenderGroup
+		class KeyRedefinitionMenu : public lib::draw::RenderGroup
 		{
 		public:
-			KeyRedefinitionMenu(lib::scn::draw::RenderGroup *parent);
+			KeyRedefinitionMenu(lib::draw::RenderGroup *parent);
 			virtual ~KeyRedefinitionMenu();
 			virtual void onAddedToScene() override;
 
@@ -21,7 +21,7 @@ namespace zoper
 
 			lib::u32 _indexKey;
 			KeyMapping _keyMapping;
-			lib::sptr<lib::scn::draw::NodeText> _nextKeyText{ nullptr };
+			lib::sptr<lib::draw::NodeText> _nextKeyText{ nullptr };
 		};
 	}
 }

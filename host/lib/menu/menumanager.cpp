@@ -12,7 +12,7 @@ namespace lib
 	namespace menu
 	{
 		MenuManager::MenuManager(const std::string &name, Theme theme)
-			: scn::Scene{ name }, m_theme( theme )
+			: draw::Scene{ name }, m_theme( theme )
 		{
 			m_theme.font = host().resourceManager().getResource("game_menu.mainFont");
 			m_theme.textColor = sf::Color::Blue;

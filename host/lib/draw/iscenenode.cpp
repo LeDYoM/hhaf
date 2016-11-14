@@ -2,18 +2,15 @@
 
 namespace lib
 {
-	namespace scn
+	namespace draw
 	{
-		namespace draw
+		ISceneNode::ISceneNode()
 		{
-			ISceneNode::ISceneNode()
-			{
-			}
+		}
 
 
-			ISceneNode::~ISceneNode()
-			{
-			}
+		ISceneNode::~ISceneNode()
+		{
 		}
 	}
 }

@@ -179,7 +179,7 @@ namespace lib
 			return "NoApp:0.0.0";
 		}
 
-		void Host::addScene(sptr<scn::Scene> newScene)
+		void Host::addScene(sptr<draw::Scene> newScene)
 		{
 			__ASSERT(newScene, "Cannot add a null scene");
 			m_scenes.push_back(newScene);
@@ -188,7 +188,7 @@ namespace lib
 
 		void Host::setScene(const std::string &name)
 		{
-			if (sptr<scn::Scene> scene = getSceneByName(name)) {
+			if (sptr<draw::Scene> scene = getSceneByName(name)) {
 				setScene(std::move(scene));
 				LOG_DEBUG("Changed scene to " << name);
 			}
@@ -197,14 +197,14 @@ namespace lib
 			}
 		}
 
-		void Host::addScenes(const std::vector<sptr<scn::Scene>>&& sceneVector)
+		void Host::addScenes(const std::vector<sptr<draw::Scene>>&& sceneVector)
 		{
 			for (auto &&scene : sceneVector) {
 				addScene(std::move(scene));
 			}
 		}
 
-		void Host::setScene(sptr<scn::Scene> scene)
+		void Host::setScene(sptr<draw::Scene> scene)
 		{
 			__ASSERT(scene, "Cannot change to a nullptr Scene");
 			if (m_currentScene) {
@@ -218,14 +218,14 @@ namespace lib
 			m_currentScene->onEnterScene();
 		}
 
-		void Host::updateActiveSceneStates(const sptr<scn::Scene>&previous, const sptr<scn::Scene>&next) const noexcept
+		void Host::updateActiveSceneStates(const sptr<draw::Scene>&previous, const sptr<draw::Scene>&next) const noexcept
 		{
 			if (previous) previous->setAsActiveScene(false);
 			if (next) next->setAsActiveScene(true);
 		}
 
 
-		sptr<scn::Scene> Host::getSceneByName(const std::string &name) const
+		sptr<draw::Scene> Host::getSceneByName(const std::string &name) const
 		{
 			const auto iterator(std::find_if(m_scenes.cbegin(), m_scenes.cend(), [&name](const auto&scene)
 			{

@@ -10,24 +10,21 @@ namespace lib
 	{
 		class Window;
 	}
-	namespace scn
+	namespace draw
 	{
-		namespace draw
+		class IDrawable
 		{
-			class IDrawable
-			{
-			public:
-				IDrawable() {}
-				virtual ~IDrawable() {}
+		public:
+			IDrawable() {}
+			virtual ~IDrawable() {}
 
-				virtual u32 draw(sf::RenderStates &states) = 0;
+			virtual u32 draw(sf::RenderStates &states) = 0;
 
-				inline bool isVisible() const { return visible; }
-				inline void setVisible(bool nv) { visible = nv; }
-			protected:
-				bool visible{ true };
-			};
-		}
+			inline bool isVisible() const { return visible; }
+			inline void setVisible(bool nv) { visible = nv; }
+		protected:
+			bool visible{ true };
+		};
 	}
 }
 

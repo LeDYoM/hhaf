@@ -11,7 +11,7 @@ namespace lib
 	namespace menu
 	{
 		class ChooseControl;
-		class MenuManager : public scn::Scene
+		class MenuManager : public draw::Scene
 		{
 		public:
 			MenuManager(const std::string &name, Theme theme = Theme{});

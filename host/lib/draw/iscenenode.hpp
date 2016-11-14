@@ -6,17 +6,14 @@
 
 namespace lib
 {
-	namespace scn
+	namespace draw
 	{
-		namespace draw
+		class ISceneNode : public IDrawable, public sf::Transformable
 		{
-			class ISceneNode : public IDrawable, public sf::Transformable
-			{
-			public:
-				ISceneNode();
-				virtual ~ISceneNode();
-			};
-		}
+		public:
+			ISceneNode();
+			virtual ~ISceneNode();
+		};
 	}
 }
 

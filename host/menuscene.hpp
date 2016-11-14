@@ -23,8 +23,8 @@ namespace zoper
 
 		virtual const lib::vector2df getDefaultSizeView() override;
 	private:
-		lib::sptr<lib::scn::draw::NodeShape> _logo{ nullptr };
-		lib::sptr<lib::scn::draw::NodeShape> _background{ nullptr };
+		lib::sptr<lib::draw::NodeShape> _logo{ nullptr };
+		lib::sptr<lib::draw::NodeShape> _background{ nullptr };
 	};
 }
 
