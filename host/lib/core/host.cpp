@@ -161,7 +161,7 @@ namespace lib
 			m_currentScene->draw(states);
 
 			windowWants2Close |= m_window->postLoop();
-			return windowWants2Close;
+			return windowWants2Close || m_currentScene == nullptr;
 		}
 
 		const std::string Host::appId() const
@@ -206,7 +206,6 @@ namespace lib
 
 		void Host::setScene(sptr<draw::Scene> scene)
 		{
-			__ASSERT(scene, "Cannot change to a nullptr Scene");
 			if (m_currentScene) {
 				m_currentScene->onExitScene();
 			}
@@ -215,7 +214,14 @@ namespace lib
 			}
 			updateActiveSceneStates(m_currentScene, scene);
 			m_currentScene = scene;
-			m_currentScene->onEnterScene();
+
+			if (m_currentScene) {
+				m_currentScene->onEnterScene();
+			}
+			else
+			{
+				LOG_DEBUG("Active scene set to nullptr.")
+			}
 		}
 
 		void Host::updateActiveSceneStates(const sptr<draw::Scene>&previous, const sptr<draw::Scene>&next) const noexcept
