@@ -51,9 +51,9 @@ namespace zoper
 	{
 		MenuManager::onEnterScene();
 		start(StartLevelMenu::ClassName);
-		eventConnector.addSubscription(events::KeyPressedEvent::subscribe([this](const events::Event&) {
-			LOG_DEBUG("Key pressed on menu : " << name());
-		}));
+//		eventConnector.addSubscription(events::KeyPressedEvent::subscribe([this](const events::Event&) {
+//			LOG_DEBUG("Key pressed on menu : " << name());
+//		}));
 	}
 
 	void MenuScene::onExitScene()

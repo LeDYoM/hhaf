@@ -3,7 +3,13 @@
 namespace lib
 {
 	EventReceiver::EventReceiver() = default;
-	EventReceiver::~EventReceiver() = default;
+
+
+	EventReceiver::~EventReceiver()
+	{
+		unsubscribeAll();
+		m_subscriptions.clear();
+	}
 
 	void EventReceiver::addSubscription(sptr<lib::events::EventSubscription> &&nSubscription) noexcept
 	{

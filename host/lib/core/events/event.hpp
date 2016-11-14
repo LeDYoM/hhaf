@@ -3,18 +3,20 @@
 
 #include <functional>
 #include <list>
+#include <lib/include/types.hpp>
 
 namespace lib
 {
 	namespace events
 	{
+		class EventSubscription;
 		class Event
 		{
 		public:
 			using listener_t = std::function<void(const Event &)>;
-			using listener_container_t = std::list<listener_t>;
+			using listener_container_t = std::list<sptr<EventSubscription>>;
 
-			virtual const listener_container_t &listeners() const noexcept = 0;
+			virtual const listener_container_t &subscriptions() const noexcept = 0;
 			virtual void dispatch() = 0;
 		};
 
@@ -22,35 +24,25 @@ namespace lib
 		{
 		public:
 			using listener_t = Event::listener_t;
-			using listener_container_t = Event::listener_container_t;
-			using iterator_t = listener_container_t::iterator;
 
 			virtual void subscribe() = 0;
-			virtual void unsubscribe() = 0;
 			virtual void markForUnsubscription() = 0;
+			listener_t listener{ nullptr };
 		};
 
 		template <typename T>
 		class EventSubscriptionTemplate : public EventSubscription
 		{
 		public:
-			using listener_container_t = Event::listener_container_t;
-			using iterator_t = listener_container_t::iterator;
 			EventSubscriptionTemplate(listener_t newListener)
-				: listener{ newListener }
 			{
+				listener = newListener;
 				subscribe();
 			}
 
 			virtual void subscribe() override
 			{
-				EventTemplate<T>::m_listeners.push_back(listener);
-				iData = std::prev(EventTemplate<T>::m_listeners.end());
-			}
-
-			virtual void unsubscribe() override
-			{ 
-//				EventTemplate<T>::m_listeners.erase(iData);
+//				EventTemplate<T>::m_subscriptions.push_back(listener);
 			}
 
 			virtual void markForUnsubscription() override
@@ -59,8 +51,6 @@ namespace lib
 			}
 
 			bool m_markedForUnsubscription{ false };
-			listener_t listener{ nullptr };
-			iterator_t iData;
 		};
 
 		template <class T>
@@ -69,30 +59,33 @@ namespace lib
 		public:
 			virtual ~EventTemplate() = default;
 
-			virtual const listener_container_t &listeners() const noexcept override { return m_listeners; }
+			virtual const listener_container_t &subscriptions() const noexcept override { return m_subscriptions; }
 
-			constexpr inline static const listener_container_t &listenersStatic() noexcept { return m_listeners; }
-			constexpr inline static auto subscribe(listener_t newListener)
+			inline static auto subscribe(listener_t newListener)
 			{
-				return sptr<EventSubscriptionTemplate<T>>(new EventSubscriptionTemplate<T>{ newListener });
+				sptr<EventSubscriptionTemplate<T>> m_ptr{ new EventSubscriptionTemplate<T>(newListener) };
+				m_subscriptions.emplace_back(m_ptr);
+				return m_ptr;
+			}
+
+			constexpr inline static void addSubscription(sptr<EventSubscriptionTemplate<T>> newListener)
+			{
+				m_subscriptions.emplace_back(newListener);
 			}
 
 			virtual void dispatch() override
 			{
-				if (!m_listeners.empty()) {
-					for (const auto &listener : m_listeners) {
-						listener(*this);
+				if (!m_subscriptions.empty()) {
+					for (const auto &subscription : m_subscriptions) {
+						subscription->listener(*this);
 					}
 				}
 			}
 
-			static listener_container_t m_listeners;
-			static listener_container_t m_listenersToRemove;
+			static listener_container_t m_subscriptions;
 		};
 
-		template <typename T> Event::listener_container_t EventTemplate<T>::m_listeners;
-		template <typename T> Event::listener_container_t EventTemplate<T>::m_listenersToRemove;
-
+		template <typename T> Event::listener_container_t EventTemplate<T>::m_subscriptions;
 	}
 }
 #endif
