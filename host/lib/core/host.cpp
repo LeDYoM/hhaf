@@ -64,12 +64,7 @@ namespace lib
 
 		Host::~Host()
 		{
-			for (auto &scene : m_scenes) {
-				scene->onDeinit();
-			}
-			m_scenes.clear();
-			m_params.clear();
-			LOG_DESTRUCT("Name: " << appId());
+			LOG_DESTRUCT_NOPARAMS;
 		}
 
 		bool Host::setApplication(uptr<IApp> iapp)
@@ -123,11 +118,16 @@ namespace lib
 					m_currentScene->onExitScene();
 				}
 				m_currentScene = nullptr;
+				for (auto &scene : m_scenes) {
+					scene->onDeinit();
+				}
+				m_scenes.clear();
 				m_state = AppState::Terminated;
 //				m_iapp->onFinish();
 				m_window = nullptr;
 				m_resourceManager = nullptr;
 				m_eventManager = nullptr;
+				m_params.clear();
 				LOG_DEBUG(appId() << ": " << " terminated");
 				return true;
 				break;
