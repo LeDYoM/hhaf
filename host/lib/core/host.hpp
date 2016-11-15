@@ -38,7 +38,7 @@ namespace lib
 
 			void exitProgram();
 
-			void setScene(sptr<draw::Scene> scene);
+			void setScene(sptr<draw::Scene> &&scene);
 
 			inline Window const &parentWindow() const noexcept { return *m_window; }
 			inline Window &parentWindow()  noexcept { return *m_window; }
@@ -51,7 +51,7 @@ namespace lib
 		protected:
 			bool loopStep();
 		private:
-
+			void updateScene();
 			void updateActiveSceneStates(const sptr<draw::Scene> &, const sptr<draw::Scene> &) const noexcept;
 
 			static Host *m_instance;
@@ -63,6 +63,7 @@ namespace lib
 			bool exit{ false };
 			std::vector<sptr<draw::Scene>> m_scenes;
 			sptr<draw::Scene> m_currentScene{ nullptr };
+			sptr<draw::Scene> m_nextScene{ nullptr };
 			std::vector<std::string> m_params;
 		};
 	}

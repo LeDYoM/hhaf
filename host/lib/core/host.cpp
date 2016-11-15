@@ -161,8 +161,8 @@ namespace lib
 			bool windowWants2Close = m_window->preLoop();
 			m_eventManager->update();
 
-			__ASSERT(m_currentScene, "Current scene cannot be nullptr");
-			m_currentScene->update();
+			__ASSERT(m_currentScene || m_nextScene, "Current scene and nextscene cannot be nullptr at same time");
+			updateScene();
 
 			sf::RenderStates states;
 			m_currentScene->draw(states);
@@ -217,24 +217,30 @@ namespace lib
 			}
 		}
 
-		void Host::setScene(sptr<draw::Scene> scene)
+		void Host::updateScene()
 		{
-			if (m_currentScene) {
-				m_currentScene->onExitScene();
-			}
-			else {
-				LOG_DEBUG("Set first scene");
-			}
-			updateActiveSceneStates(m_currentScene, scene);
-			m_currentScene = scene;
+			if (m_nextScene)
+			{
+				if (m_currentScene) {
+					m_currentScene->onExitScene();
+				}
+				else {
+					LOG_DEBUG("Set first scene");
+				}
+				updateActiveSceneStates(m_currentScene, m_nextScene);
+				m_currentScene = m_nextScene;
+				m_nextScene = nullptr;
 
-			if (m_currentScene) {
 				m_currentScene->onEnterScene();
 			}
-			else
-			{
-				LOG_DEBUG("Active scene set to nullptr.")
+			else {
+				m_currentScene->update();
 			}
+		}
+
+		void Host::setScene(sptr<draw::Scene> &&scene)
+		{
+			m_nextScene = std::move(scene);
 		}
 
 		void Host::updateActiveSceneStates(const sptr<draw::Scene>&previous, const sptr<draw::Scene>&next) const noexcept
