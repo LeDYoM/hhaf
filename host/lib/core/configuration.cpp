@@ -119,22 +119,6 @@ namespace lib
 		std::for_each(currentMap->begin(), currentMap->end(), callback);
 	}
 
-	/*
-	s32 Configuration::getAsInt(const std::string &name) const
-	{
-		return std::stoi(getAsString(name));
-	}
-
-	std::string Configuration::getAsString(const std::string & name) const
-	{
-		CMap::iterator dataIterator = currentMap->find(name);
-		if (dataIterator != currentMap->end())
-		{
-			return dataIterator->second;
-		}
-		return std::string{};
-	}
-	*/
 	std::string Configuration::addConfigProperty(const std::string & name, const std::string & value, bool overwrite)
 	{
 		if (overwrite) {
