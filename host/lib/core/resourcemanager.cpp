@@ -20,7 +20,7 @@ namespace lib
 				if (resourceFile.size() > 0)
 				{
 					const string resourcesDirectoryKey = "resources_directory";
-					string resourcesDirectory = value<string>(resourcesDirectoryKey);
+					auto resourcesDirectory = value<string>(resourcesDirectoryKey)();
 					for_each_property([&resourcesDirectoryKey,&resourcesDirectory,this](const Configuration::CMapLine &dataLine) 
 					{
 						if (dataLine.first != resourcesDirectoryKey)

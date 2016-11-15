@@ -105,6 +105,12 @@ namespace lib
 		}
 	}
 
+	std::stringstream Configuration::propertyStreamed(const std::string &name) const
+	{
+		CMap::iterator dataIterator = currentMap->find(name);
+		return std::move(dataIterator != currentMap->end()?std::stringstream{ dataIterator->second } : std::stringstream{});
+	}
+
 	bool Configuration::configFileExists(const std::string &file)
 	{
 		std::ifstream f(file);
@@ -116,6 +122,7 @@ namespace lib
 		std::for_each(currentMap->begin(), currentMap->end(), callback);
 	}
 
+	/*
 	s32 Configuration::getAsInt(const std::string &name) const
 	{
 		return std::stoi(getAsString(name));
@@ -130,23 +137,19 @@ namespace lib
 		}
 		return std::string{};
 	}
-
+	*/
 	std::string Configuration::addConfigProperty(const std::string & name, const std::string & value, bool overwrite)
 	{
-		if (overwrite)
-		{
+		if (overwrite) {
 			(*currentMap)[name] = value;
 		}
-		else
-		{
-			auto iterator = currentMap->find(name);
-			if (iterator != currentMap->end())
-			{
+		else {
+			const auto iterator = currentMap->find(name);
+			if (iterator != currentMap->end()) {
 				return iterator->second;
 			}
-			else
-			{
-				currentMap->emplace(std::pair<std::string, std::string>(name, value));
+			else {
+				currentMap->emplace(std::pair<std::string, std::string>{name, value});
 			}
 		}
 		return value;
