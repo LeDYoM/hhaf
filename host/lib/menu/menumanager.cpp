@@ -23,17 +23,18 @@ namespace lib
 
 			addSubscription(events::KeyPressedEvent::subscribe([this](const events::Event&ev) {
 				LOG_DEBUG("Key pressed toMenuManager");
-				const auto kEvent_temp{ dynamic_cast<const events::KeyPressedEvent*>(&ev) };
-				if (!kEvent_temp)
-				{
-					LOG_DEBUG("Is not this type");
-				}
 				const auto &kEvent{ dynamic_cast<const events::KeyPressedEvent&>(ev) };
 				if (kEvent.key == input::Key::Down || kEvent.key == input::Key::Numpad2) {
 					m_activeMenuStep->goDown();
 				}
 				else if (kEvent.key == input::Key::Up || kEvent.key == input::Key::Numpad8) {
 					m_activeMenuStep->goUp();
+				}
+				else if (kEvent.key == input::Key::Left || kEvent.key == input::Key::Numpad4) {
+					m_activeMenuStep->goLeft();
+				}
+				else if (kEvent.key == input::Key::Right || kEvent.key == input::Key::Numpad8) {
+					m_activeMenuStep->goRight();
 				}
 				else if (kEvent.key == input::Key::Return || kEvent.key == input::Key::Space) {
 					if (m_activeMenuStep->m_onSelected) {
