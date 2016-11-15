@@ -116,25 +116,6 @@ namespace lib
 		std::for_each(currentMap->begin(), currentMap->end(), callback);
 	}
 
-	s32 Configuration::getAsInt(const std::string &name, s32 defaultValue) const
-	{
-		const auto result = getAsString(name, "");
-		if (result == "")
-			return defaultValue;
-
-		return std::stoi(result);
-	}
-
-	std::string Configuration::getAsString(const std::string & name, const std::string &defaultValue) const
-	{
-		CMap::iterator dataIterator = currentMap->find(name);
-		if (dataIterator != currentMap->end())
-		{
-			return dataIterator->second;
-		}
-		return defaultValue;
-	}
-
 	s32 Configuration::getAsInt(const std::string &name) const
 	{
 		return std::stoi(getAsString(name));
@@ -147,8 +128,7 @@ namespace lib
 		{
 			return dataIterator->second;
 		}
-		LOG_ERROR("Key " << name << " not found in configuration");
-		return std::string();
+		return std::string{};
 	}
 
 	std::string Configuration::addConfigProperty(const std::string & name, const std::string & value, bool overwrite)

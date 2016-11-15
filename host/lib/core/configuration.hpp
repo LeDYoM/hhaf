@@ -22,8 +22,15 @@ namespace lib
 		Configuration &operator=(const Configuration &other) = delete;
 		s32 getAsInt(const std::string &name) const;
 		std::string getAsString(const std::string &name) const;
-		s32 getAsInt(const std::string &name,s32 defaultValue) const;
-		std::string getAsString(const std::string &name,const std::string &defaultValue) const;
+
+		template <typename T>
+		T value(const std::string &name) const { return T{}; }
+
+		template <>
+		s32 value(const std::string &name) const { return getAsInt(name); }
+
+		template <>
+		std::string value(const std::string &name) const { return getAsString(name); }
 
 		typedef std::map<std::string, std::string> CMap;
 		typedef std::pair<std::string, std::string> CMapLine;

@@ -146,11 +146,11 @@ namespace zoper
 		p_boardModel = lib::sptr<lib::board::BoardModel>(new lib::board::BoardModel(_gameData.size, this));
 		tilesCreated();
 		addPlayer();
-		_gameData._gameMode = static_cast<GameData::GameModes>(_gameConfig.getAsInt(GameModeStr, 0));
+		_gameData._gameMode = static_cast<GameData::GameModes>(_gameConfig.getAsInt(GameModeStr));
 
 		_score = 0;
 		_nextTokenPart = 0;
-		setLevel(_gameConfig.getAsInt(StartLevelStr, 0));
+		setLevel(_gameConfig.getAsInt(StartLevelStr));
 		_gameOverrg->setVisible(false);
 		_mainBoardrg->setVisible(true);
 		_pauserg->setVisible(false);

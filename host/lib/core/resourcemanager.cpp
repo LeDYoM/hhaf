@@ -9,6 +9,8 @@ namespace lib
 		ResourceManager::ResourceManager(const std::string &resourceFile)
 			: AppService{ }, Configuration{ resourceFile }
 		{
+			using std::string;
+
 			if (resourceFile.size() > 0 && !configFileExists(resourceFile))
 			{
 				throw ResourceNotFoundException(resourceFile);
@@ -17,8 +19,8 @@ namespace lib
 			{
 				if (resourceFile.size() > 0)
 				{
-					const std::string resourcesDirectoryKey = "resources_directory";
-					std::string resourcesDirectory = getAsString(resourcesDirectoryKey);
+					const string resourcesDirectoryKey = "resources_directory";
+					string resourcesDirectory = value<string>(resourcesDirectoryKey);
 					for_each_property([&resourcesDirectoryKey,&resourcesDirectory,this](const Configuration::CMapLine &dataLine) 
 					{
 						if (dataLine.first != resourcesDirectoryKey)
@@ -26,8 +28,8 @@ namespace lib
 							auto completeId = splitString(dataLine.first, '@');
 							if (completeId.size() > 1)
 							{
-								std::string resourceTypeStr = completeId[0];
-								std::string id = completeId[1];
+								string resourceTypeStr = completeId[0];
+								string id = completeId[1];
 								Resource::ResourceType resourceType{ Resource::ResourceType::Empty };
 								resourceType = (resourceTypeStr[0] == 'f' || resourceTypeStr[0] == 'F')
 									? Resource::ResourceType::Font :
