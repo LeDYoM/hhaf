@@ -22,18 +22,15 @@ namespace lib
 
 	Configuration::CMapLine split(const std::string& input, const std::string& regex)
 	{
-		auto splitted = split_helper(input, regex);
+		const auto splitted = split_helper(input, regex);
 
-		if (splitted.size() < 1)
-		{
+		if (splitted.size() < 1) {
 			return { "","" };
 		}
-		else if (splitted.size() < 2)
-		{
+		else if (splitted.size() < 2) {
 			return{ splitted[0],"" };
 		}
-		else
-		{
+		else {
 			return{ splitted[0],splitted[1] };
 		}
 	}
