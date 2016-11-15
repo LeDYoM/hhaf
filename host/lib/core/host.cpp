@@ -112,10 +112,17 @@ namespace lib
 					m_state = AppState::ReadyToTerminate;
 					LOG_DEBUG(appId() << ": " << " is now ready to terminate");
 				}
+				else if (m_state == AppState::ReadyToTerminate) {
+					LOG_DEBUG(appId() << ": " << " requested to terminate");
+				}
 			}
 				break;
 			case lib::core::Host::AppState::ReadyToTerminate:
 				LOG_DEBUG(appId() << ": " << " started termination");
+				if (m_currentScene) {
+					m_currentScene->onExitScene();
+				}
+				m_currentScene = nullptr;
 				m_state = AppState::Terminated;
 //				m_iapp->onFinish();
 				m_window = nullptr;
@@ -161,7 +168,13 @@ namespace lib
 			m_currentScene->draw(states);
 
 			windowWants2Close |= m_window->postLoop();
-			return windowWants2Close || m_currentScene == nullptr;
+			return windowWants2Close;
+		}
+
+		void Host::exitProgram()
+		{
+			__ASSERT(m_state == AppState::Executing, "Cannot terminate a program that is not in the executing state");
+			m_state = AppState::ReadyToTerminate;
 		}
 
 		const std::string Host::appId() const
@@ -230,7 +243,6 @@ namespace lib
 			if (next) next->setAsActiveScene(true);
 		}
 
-
 		sptr<draw::Scene> Host::getSceneByName(const std::string &name) const
 		{
 			const auto iterator(std::find_if(m_scenes.cbegin(), m_scenes.cend(), [&name](const auto&scene)
@@ -238,11 +250,6 @@ namespace lib
 				return scene->name() == name;
 			}));
 			return iterator == m_scenes.end() ? nullptr : *iterator;
-		}
-
-		void Host::exitProgram()
-		{
-			//			p_parentWindow->exitProgram();
 		}
 	}
 }

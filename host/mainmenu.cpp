@@ -35,7 +35,7 @@ namespace zoper
 					break;
 				case 3:
 				default:
-					//					menuManager()->exitProgram();
+					host().exitProgram();
 					break;
 				}
 			},
