@@ -19,9 +19,9 @@ namespace lib
 			else
 			{
 				if (!resourceFile.empty()) {
-					str_const resourcesDirectoryKey = "resources_directory";
+					static str_const resourcesDirectoryKey = "resources_directory";
 					const auto resourcesDirectory = value(resourcesDirectoryKey.c_str())->get<string>();
-					for_each_property([&resourcesDirectoryKey,&resourcesDirectory,this](const Configuration::CMapLine &dataLine) {
+					for_each_property([&resourcesDirectory,this](const Configuration::CMapLine &dataLine) {
 						if (dataLine.first != resourcesDirectoryKey.c_str()) {
 							auto completeId = splitString(dataLine.first, '@');
 							if (completeId.size() > 1) {
