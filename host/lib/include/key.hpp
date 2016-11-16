@@ -7,7 +7,7 @@ namespace lib
 {
 	namespace input
 	{
-		enum Key
+		enum Key : int
 		{
 			Unknown = -1, ///< Unhandled key
 			A = 0,        ///< The A key

@@ -417,6 +417,7 @@ namespace zoper
 	void GameScene::onKeyPressed(sf::Event::KeyEvent kEvent)
 	{
 //		Scene::onKeyPressed(kEvent);
+		/*
 		switch (state())
 		{
 		case Playing:
@@ -447,6 +448,7 @@ namespace zoper
 			}
 			break;
 		}
+		*/
 	}
 
 	void GameScene::movePlayer(const Direction & dir)

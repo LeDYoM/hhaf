@@ -23,11 +23,11 @@ namespace zoper
 				switch (index)
 				{
 				case 0:
-//					_gameConfig.addConfigInt(GameModeStr, 0, true);
+					_gameConfig.value(GameModeStr)->set<s32>(0);
 					menuManager()->changeStep(StartLevelMenu::ClassName);
 					break;
 				case 1:
-//					_gameConfig.addConfigInt(GameModeStr, 1, true);
+					_gameConfig.value(GameModeStr)->set<s32>(1);
 					menuManager()->changeStep("StartLevelMenu");
 					break;
 				case 2:

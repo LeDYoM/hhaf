@@ -1,8 +1,8 @@
 #ifndef __KEYMAPPING_HPP__
 #define __KEYMAPPING_HPP__
 
-#include <SFML/Window/Keyboard.hpp>
 #include <lib/core/configuration.hpp>
+#include <lib/include/key.hpp>
 #include "direction.hpp"
 #include <array>
 
@@ -16,17 +16,18 @@ namespace zoper
 
 		static const lib::u32 TotalKeys = Direction::Total + 2;
 
-		sf::Keyboard::Key getKey(Direction d) const;
-		Direction getDirectionFromKey(sf::Keyboard::Key k) const;
-		sf::Keyboard::Key getLaunchKey() const;
-		bool isLaunchKey(const sf::Keyboard::Key &key) const;
-		sf::Keyboard::Key getPauseKey() const;
-		bool isPauseKey(const sf::Keyboard::Key &key) const;
+		lib::input::Key getKey(const Direction d) const;
+		Direction getDirectionFromKey(const lib::input::Key k) const;
+		lib::input::Key getLaunchKey() const;
+		bool isLaunchKey(const lib::input::Key key) const;
+		lib::input::Key getPauseKey() const;
+		bool isPauseKey(const lib::input::Key key) const;
 
-		bool setKey(lib::u32 index, sf::Keyboard::Key key);
+		bool setKey(const lib::u32 index, const lib::input::Key key);
 		void apply();
 	private:
-		std::array<sf::Keyboard::Key, KeyMapping::TotalKeys> _keys;
+		using key_type = std::underlying_type<lib::input::Key>::type;
+		std::array<key_type, KeyMapping::TotalKeys> m_keys;
 	};
 }
 

@@ -23,7 +23,7 @@ namespace lib
 
 		~Configuration() {}
 
-		sptr<ConfigurationProperty> value(const std::string &name) const;
+		sptr<ConfigurationProperty> value(const std::string &) const;
 
 		using CMap = std::map<std::string, sptr<ConfigurationProperty>>;
 		using CMapRawLine = std::pair<std::string, std::string>;
@@ -50,7 +50,8 @@ namespace lib
 	public:
 		using string = std::string;
 		using stringstream = std::stringstream;
-		ConfigurationProperty(string &&t) noexcept : m_data(std::move(t)) {}
+		constexpr ConfigurationProperty() noexcept : m_data("") {}
+		constexpr ConfigurationProperty(string &&t) noexcept : m_data(std::move(t)) {}
 
 		template <typename T>
 		const T get() const noexcept
@@ -64,14 +65,17 @@ namespace lib
 		template <typename T>
 		bool set(T&& v) noexcept
 		{
-			stringstream tmpstream(m_data);
+			stringstream tmpstream;
 			tmpstream << v;
+			m_data = tmpstream.str();
 			return tmpstream.fail();
 		}
 
 		const string &str() const noexcept { return m_data; }
-
+		bool empty() const noexcept { return m_data == ""; }
+	private:
 		string m_data;
+
 	};
 
 }
