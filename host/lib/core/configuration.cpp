@@ -6,6 +6,8 @@
 namespace lib
 {
 
+	using CMapRawLine = std::pair<std::string, std::string>;
+
 	Configuration::CDataMap Configuration::m_data;
 
 	std::vector<std::string> split_helper(const std::string& input, const std::string& regex)
@@ -20,7 +22,7 @@ namespace lib
 		return{ };
 	}
 
-	Configuration::CMapRawLine split(const std::string& input, const std::string& regex)
+	CMapRawLine split(const std::string& input, const std::string& regex)
 	{
 		const auto splitted = split_helper(input, regex);
 
@@ -112,9 +114,15 @@ namespace lib
 		return it != currentMap->end() ? it->second : msptr<ConfigurationProperty>();
 	}
 
+	sptr<ConfigurationProperty> Configuration::value(str_const name) const
+	{
+		const auto &it(currentMap->find(name.c_str()));
+		return it != currentMap->end() ? it->second : msptr<ConfigurationProperty>();
+	}
+
 	bool Configuration::saveConfig()
 	{
-		__ASSERT(currentFile.size() > 0, "Empty file name");
+		__ASSERT(!currentFile.empty(), "Empty file name");
 		__ASSERT(currentFile[0] != ':', "Cannot save memory streams");
 		LOG_DEBUG("Saving configuration file " << currentFile);
 		std::ofstream f(currentFile);
