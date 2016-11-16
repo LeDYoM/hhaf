@@ -143,14 +143,14 @@ namespace zoper
 	void GameScene::onEnterScene()
 	{
 		Scene::onEnterScene();
-		p_boardModel = lib::sptr<lib::board::BoardModel>(new lib::board::BoardModel(_gameData.size, this));
+		p_boardModel = lib::msptr<lib::board::BoardModel>(_gameData.size, this);
 		tilesCreated();
 		addPlayer();
-//		_gameData._gameMode = static_cast<GameData::GameModes>((*_gameConfig.value(GameModeStr))());
+		_gameData._gameMode = static_cast<GameData::GameModes>(_gameConfig.value(GameModeStr)->get<int>());
 
 		_score = 0;
 		_nextTokenPart = 0;
-//		setLevel(_gameConfig.value<lib::s32>(StartLevelStr)());
+		setLevel(_gameConfig.value(StartLevelStr)->get<int>());
 		_gameOverrg->setVisible(false);
 		_mainBoardrg->setVisible(true);
 		_pauserg->setVisible(false);
