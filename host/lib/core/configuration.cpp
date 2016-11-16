@@ -114,12 +114,6 @@ namespace lib
 		return it != currentMap->end() ? it->second : msptr<ConfigurationProperty>();
 	}
 
-	sptr<ConfigurationProperty> Configuration::value(str_const name) const
-	{
-		const auto &it(currentMap->find(name.c_str()));
-		return it != currentMap->end() ? it->second : msptr<ConfigurationProperty>();
-	}
-
 	bool Configuration::saveConfig()
 	{
 		__ASSERT(!currentFile.empty(), "Empty file name");

@@ -8,7 +8,6 @@
 #include <vector>
 #include <sstream>
 #include <lib/include/types.hpp>
-#include <lib/include/const_str.hpp>
 
 namespace lib
 {
@@ -24,7 +23,6 @@ namespace lib
 
 		~Configuration() {}
 
-		sptr<ConfigurationProperty> value(str_const) const;
 		sptr<ConfigurationProperty> value(const std::string &) const;
 
 
