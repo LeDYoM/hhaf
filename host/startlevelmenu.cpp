@@ -22,7 +22,7 @@ namespace zoper
 				switch (index)
 				{
 				case 0:
-					_gameConfig.addConfigInt(StartLevelStr, getSelectedSubLabel(0), true);
+//					_gameConfig.addConfigInt(StartLevelStr, getSelectedSubLabel(0), true);
 					LOG_DEBUG("Starting at level:" << getSelectedSubLabel(0));
 					setSelectedSubLabel(0, 0);
 					host().setScene("GameScene");

@@ -11,22 +11,8 @@
 
 namespace lib
 {
-	template <typename T>
-	class ConfigurationProperty
-	{
-	public:
-		using type = T;
-		using string = std::string;
-		using stringstream = std::stringstream;
-		ConfigurationProperty(stringstream &&t) : m_stream{ std::move(t) }, m_valid{ (m_stream >> m_data) } {}
-		const type &operator()() const { return m_data; }
-		type &operator()() { return m_data; }
-		void set(const type &nv) { m_data = nv; }
+	class ConfigurationProperty;
 
-		stringstream m_stream;
-		type m_data;
-		bool m_valid;
-	};
 	class Configuration
 	{
 	public:
@@ -37,20 +23,15 @@ namespace lib
 
 		~Configuration() {}
 
-		template <typename T>
-		ConfigurationProperty<T> value(const std::string &name) const { return ConfigurationProperty<T>(propertyStreamed(name)); }
+		sptr<ConfigurationProperty> value(const std::string &name) const;
 
-		std::string addConfigProperty(const std::string &name, const std::string &value, bool overwrite = false);
-		s32 addConfigInt(const std::string &name, int value, bool overwrite = false);
-
-		bool join(const Configuration &other,const bool overwrite=true);
-		using CMap = std::map<std::string, std::string>;
-		using CMapLine = std::pair<std::string, std::string>;
+		using CMap = std::map<std::string, sptr<ConfigurationProperty>>;
+		using CMapRawLine = std::pair<std::string, std::string>;
+		using CMapLine = std::pair<const CMap::key_type, sptr<ConfigurationProperty>>;
 		using CDataMap = std::map<std::string, CMap>;
 
 	protected:
 
-		std::stringstream propertyStreamed(const std::string &) const;
 		bool configFileExists(const std::string &file);
 
 		void for_each_property(std::function<void(const CMapLine&)> callback);
@@ -61,8 +42,38 @@ namespace lib
 		void loadFile(const std::string &file);
 		const std::string currentFile;
 		CMap *currentMap;
-		static CDataMap _data;
+		static CDataMap m_data;
 	};
+
+	class ConfigurationProperty
+	{
+	public:
+		using string = std::string;
+		using stringstream = std::stringstream;
+		ConfigurationProperty(string &&t) noexcept : m_data(std::move(t)) {}
+
+		template <typename T>
+		const T get() const noexcept
+		{
+			stringstream tmpstream(m_data);
+			T tmp;
+			tmpstream >> tmp;
+			return tmp;
+		}
+
+		template <typename T>
+		bool set(T&& v) noexcept
+		{
+			stringstream tmpstream(m_data);
+			tmpstream << v;
+			return tmpstream.fail();
+		}
+
+		const string &str() const noexcept { return m_data; }
+
+		string m_data;
+	};
+
 }
 
 #endif

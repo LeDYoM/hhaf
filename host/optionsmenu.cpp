@@ -37,16 +37,16 @@ namespace zoper
 					break;
 				case 6:
 				default:
-					addConfigInt(GraphicsLevelStr, getSelectedSubLabel(0), true);
+//					addConfigInt(GraphicsLevelStr, getSelectedSubLabel(0), true);
 					auto _resolution = sf::VideoMode::getFullscreenModes()[getSelectedSubLabel(1)];
 					if (_resolution.isValid())
 					{
-						addConfigInt(ResolutionXStr, _resolution.width, true);
-						addConfigInt(ResolutionYStr, _resolution.height, true);
-						addConfigInt(BPPStr, _resolution.bitsPerPixel, true);
+//						addConfigInt(ResolutionXStr, _resolution.width, true);
+//						addConfigInt(ResolutionYStr, _resolution.height, true);
+//						addConfigInt(BPPStr, _resolution.bitsPerPixel, true);
 					}
-					addConfigInt(FulscreenStr, getSelectedSubLabel(2), true);
-					addConfigInt(VSyncStr, getSelectedSubLabel(3), true);
+//					addConfigInt(FulscreenStr, getSelectedSubLabel(2), true);
+//					addConfigInt(VSyncStr, getSelectedSubLabel(3), true);
 					saveConfig();
 					menuManager()->changeStep("MainMenu");
 					break;
