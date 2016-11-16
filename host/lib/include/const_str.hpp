@@ -19,6 +19,7 @@ public:
         return n < sz_ ? p_[ n ] : throw std::out_of_range( "" );
     }
     constexpr std::size_t size() const  noexcept { return sz_; }
+	constexpr const char *const c_str() const noexcept { return p_; }
 };}
 
 #endif

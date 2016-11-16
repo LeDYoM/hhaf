@@ -2,6 +2,8 @@
 #include "log.hpp"
 #include "resource.hpp"
 
+#include <lib/include/const_str.hpp>
+
 namespace lib
 {
 	namespace core
@@ -17,10 +19,10 @@ namespace lib
 			else
 			{
 				if (!resourceFile.empty()) {
-					const string resourcesDirectoryKey = "resources_directory";
-					const auto resourcesDirectory = value(resourcesDirectoryKey)->get<string>();
+					str_const resourcesDirectoryKey = "resources_directory";
+					const auto resourcesDirectory = value(resourcesDirectoryKey.c_str())->get<string>();
 					for_each_property([&resourcesDirectoryKey,&resourcesDirectory,this](const Configuration::CMapLine &dataLine) {
-						if (dataLine.first != resourcesDirectoryKey) {
+						if (dataLine.first != resourcesDirectoryKey.c_str()) {
 							auto completeId = splitString(dataLine.first, '@');
 							if (completeId.size() > 1) {
 								string resourceTypeStr = completeId[0];
