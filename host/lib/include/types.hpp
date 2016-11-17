@@ -42,15 +42,6 @@ namespace lib
 	{
 		vector2du32 begin;
 		vector2du32 size;
-
-		bool inBounds(const vector2ds32&point)
-		{
-			if (point.x < 0 || point.y < 0 
-				|| point.x < (s32)begin.x || point.y < (s32)begin.y || point.x > (s32)(begin.x + size.x) || point.y > (s32)(begin.y + size.y))
-				return false;
-
-			return true;
-		}
 	};
 
 
