@@ -59,9 +59,9 @@ namespace lib
 				sptr<draw::NodeText> subLabel{ nullptr };
 				sptr<draw::NodeText> label{ nullptr };
 				u32 selectedSublabel{ 0 };
-				LabelData(const std::vector<std::string> textSubLevel_, sptr<draw::NodeText> subLabel_,
+				LabelData(const std::vector<std::string> &textSubLevel_, sptr<draw::NodeText> subLabel_,
 					sptr<draw::NodeText> label_, const u32 selectedSubLabel_)
-					: textSubLabel(textSubLevel_), subLabel{ subLabel_ }, label{ label_ }, selectedSublabel{ selectedSubLabel_ } {}
+					: textSubLabel{ textSubLevel_ }, subLabel{ subLabel_ }, label{ label_ }, selectedSublabel{ selectedSubLabel_ } {}
 			};
 
 			std::vector<LabelData> m_labelData;
