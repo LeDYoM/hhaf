@@ -1,7 +1,6 @@
 #include "startlevelmenu.hpp"
 #include <lib/menu/menumanager.hpp>
 #include <lib/menu/choosecontrol.hpp>
-#include <lib/menu/menudescriptors.hpp>
 #include <lib/draw/renderizable.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/core/resource.hpp>

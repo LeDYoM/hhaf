@@ -1,9 +1,8 @@
-#ifndef __LIB_CHOOSECONTROL_HPP__
-#define __LIB_CHOOSECONTROL_HPP__
+#ifndef LIB_GUI_CHOOSECONTROL_HPP__
+#define LIB_GUI_CHOOSECONTROL_HPP__
 
 #include <lib/include/types.hpp>
 #include <lib/draw/rendergroup.hpp>
-#include "menudescriptors.hpp"
 #include <vector>
 #include <functional>
 
@@ -15,7 +14,19 @@ namespace lib
 	}
 	namespace menu
 	{
-		class OptionDescriptor;
+		class OptionDescriptor
+		{
+		public:
+			explicit OptionDescriptor(const std::string &text, bool createSubString = false, u32 startValueIndex = 0,
+				const std::vector<std::string> &subOptionsLabels = std::vector<std::string>())
+				: _text(text), _createSubString{ createSubString }, _startValueIndex{ startValueIndex },
+				_subOptionsLabels(subOptionsLabels) {}
+
+			std::string _text;
+			bool _createSubString;
+			u32 _startValueIndex;
+			std::vector<std::string> _subOptionsLabels;
+		};
 		class MenuManager;
 		class ChooseControl : public draw::RenderGroup
 		{
@@ -52,6 +63,7 @@ namespace lib
 					sptr<draw::NodeText> label_, const u32 selectedSubLabel_)
 					: textSubLabel(textSubLevel_), subLabel{ subLabel_ }, label{ label_ }, selectedSublabel{ selectedSubLabel_ } {}
 			};
+
 			std::vector<LabelData> _labelData;
 			sptr<draw::NodeShape> _cursor;
 			std::function<void(const u32)> m_onSelected;

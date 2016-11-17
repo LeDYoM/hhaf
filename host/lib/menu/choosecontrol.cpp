@@ -1,5 +1,4 @@
 #include "choosecontrol.hpp"
-#include "menudescriptors.hpp"
 #include "menumanager.hpp"
 #include <lib/core/resource.hpp>
 #include <lib/core/events/eventmanager.hpp>
