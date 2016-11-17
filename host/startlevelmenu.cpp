@@ -6,6 +6,7 @@
 #include <lib/core/resource.hpp>
 #include <lib/core/host.hpp>
 #include "common.hpp"
+#include "menuscene.hpp"
 
 namespace zoper
 {
@@ -46,7 +47,7 @@ namespace zoper
 
 		void StartLevelMenu::onAddedToScene()
 		{
-			setPosition(0, 700);
+			setPosition(MenuScene::MenuPosX, 700);
 		}
 	}
 }

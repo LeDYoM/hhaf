@@ -11,6 +11,8 @@ namespace zoper
 		class KeyRedefinitionMenu : public lib::draw::RenderGroup
 		{
 		public:
+			constexpr static char* ClassName = "KeyRedefinitionMenu";
+
 			KeyRedefinitionMenu(lib::draw::RenderGroup *parent);
 			virtual ~KeyRedefinitionMenu();
 			virtual void onAddedToScene() override;

@@ -6,6 +6,7 @@
 #include <lib/core/resource.hpp>
 #include <lib/core/host.hpp>
 #include "common.hpp"
+#include "menuscene.hpp"
 
 namespace zoper
 {
@@ -15,7 +16,7 @@ namespace zoper
 		using namespace lib::menu;
 
 		OptionsMenu::OptionsMenu(MenuManager *parent)
-			: ChooseControl( "OptionsMenu", parent,
+			: ChooseControl( ClassName, parent,
 			[this](u32 index)
 			{
 				switch (index)
@@ -72,7 +73,7 @@ namespace zoper
 
 		void OptionsMenu::onAddedToScene()
 		{
-			setPosition(100, 700);
+			setPosition(MenuScene::MenuPosX, 700);
 		}
 	}
 }

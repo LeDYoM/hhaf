@@ -43,9 +43,6 @@ namespace lib
 		vector2du32 begin;
 		vector2du32 size;
 	};
-
-
-
 }
 
 
