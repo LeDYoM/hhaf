@@ -52,7 +52,7 @@ namespace zoper
 	{
 	public:
 		GameScene();
-		virtual ~GameScene();
+		~GameScene();
 
 		// Inherited via Scene
 		virtual void onInit() override;
@@ -96,8 +96,7 @@ namespace zoper
 		void addPlayer();
 		void tilesCreated();
 
-		virtual void onKeyPressed(sf::Event::KeyEvent kEvent);
-		virtual void onKeyReleased(sf::Event::KeyEvent kEvent);
+		void registerEvents();
 
 		// Inherited via ITilesController
 		virtual void tileAdded(const lib::vector2du32 &position, lib::board::WITilePointer nTile) override;

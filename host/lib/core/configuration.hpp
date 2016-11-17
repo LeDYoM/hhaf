@@ -48,7 +48,7 @@ namespace lib
 	{
 	public:
 		constexpr ConfigurationProperty() noexcept : m_data("") {}
-		constexpr ConfigurationProperty(string &&t) noexcept : m_data(std::move(t)) {}
+		constexpr ConfigurationProperty(std::string &&t) noexcept : m_data(std::move(t)) {}
 
 		ConfigurationProperty(const ConfigurationProperty&) = delete;
 		ConfigurationProperty& operator=(const ConfigurationProperty&) = delete;

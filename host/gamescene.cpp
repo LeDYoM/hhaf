@@ -16,6 +16,7 @@
 #include <lib/core/resourcemanager.hpp>
 #include <lib/core/resource.hpp>
 #include <lib/core/host.hpp>
+#include <lib/core/events/inputevent.hpp>
 #include <memory>
 #include <functional>
 
@@ -171,7 +172,7 @@ namespace zoper
 
 		_levelDisplay->setPositionX(_levelText->getLocalBounds().width);
 		_goalDisplay->setPosition(sf::Vector2f{ _goalText->getLocalBounds().width, 200 });
-
+		registerEvents();
 
 		setState(Playing);
 
@@ -383,8 +384,7 @@ namespace zoper
 		lib::vector2du32 loopPosition{ startPosition };
 		// Now, we have the data for the new token generated, but first, lets start to move the row or col.
 		bool stay{ true };
-		do
-		{
+		do {
 			stay &= updatePredicate(loopPosition, direction);
 			loopPosition = direction.applyToVector(loopPosition);
 			stay &= p_boardModel->validCoords(loopPosition);
@@ -414,41 +414,40 @@ namespace zoper
 		p_boardModel->setTile(position, std::dynamic_pointer_cast<lib::board::ITile>(_mainBoardrg->addRenderizable(newTileToken)));
 	}
 
-	void GameScene::onKeyPressed(sf::Event::KeyEvent kEvent)
+	void zoper::GameScene::registerEvents()
 	{
-//		Scene::onKeyPressed(kEvent);
-		/*
-		switch (state())
-		{
-		case Playing:
-		{
-			auto dir = _keyMapping.getDirectionFromKey(kEvent.code);
-			if (dir.isValid())
+		using namespace lib;
+
+		addSubscription(events::KeyPressedEvent::subscribe([this](const events::Event&ev) {
+			LOG_DEBUG("Key pressed in GameScene");
+			const auto &kEvent{ dynamic_cast<const events::KeyPressedEvent&>(ev) };
+			switch (state())
 			{
-				p_player->setCurrentDirection(dir);
-				movePlayer(dir);
-			}
-			else if (_keyMapping.isLaunchKey(kEvent.code))
+			case Playing:
 			{
-				launchPlayer();
-			}
-			else if (_keyMapping.isPauseKey(kEvent.code))
-			{
-				switchPause();
-			}
-		}
-		break;
-		case GameOver:
-			lib::host().setScene("MenuScene");
-			break;
-		case Pause:
-			if (_keyMapping.isPauseKey(kEvent.code))
-			{
-				switchPause();
+				auto dir = _keyMapping.getDirectionFromKey(kEvent.key);
+				if (dir.isValid()) {
+					p_player->setCurrentDirection(dir);
+					movePlayer(dir);
+				}
+				else if (_keyMapping.isLaunchKey(kEvent.key)) {
+					launchPlayer();
+				}
+				else if (_keyMapping.isPauseKey(kEvent.key)) {
+					switchPause();
+				}
 			}
 			break;
-		}
-		*/
+			case GameOver:
+				lib::host().setScene("MenuScene");
+				break;
+			case Pause:
+				if (_keyMapping.isPauseKey(kEvent.key)) {
+					switchPause();
+				}
+				break;
+			}
+		}));
 	}
 
 	void GameScene::movePlayer(const Direction & dir)
@@ -464,11 +463,6 @@ namespace zoper
 		{
 			updatePlayer(p_player->boardPosition(), p_player);
 		}
-	}
-
-	void GameScene::onKeyReleased(sf::Event::KeyEvent)
-	{
-//		Scene::onKeyReleased(kEvent);
 	}
 
 	void GameScene::onAnimationStarted(lib::sptr<lib::draw::anim::IAnimation> anim, lib::sptr<lib::draw::Renderizable> node)
