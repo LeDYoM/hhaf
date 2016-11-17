@@ -26,8 +26,7 @@ namespace zoper
 		bool setKey(const lib::u32 index, const lib::input::Key key);
 		void apply();
 	private:
-		using key_type = std::underlying_type<lib::input::Key>::type;
-		std::array<key_type, KeyMapping::TotalKeys> m_keys;
+		std::array<lib::input::Key, KeyMapping::TotalKeys> m_keys;
 	};
 }
 

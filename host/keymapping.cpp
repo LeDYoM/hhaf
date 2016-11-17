@@ -7,24 +7,24 @@ namespace zoper
 		using namespace lib;
 		using namespace lib::input;
 
-		std::array<key_type, TotalKeys> defaults{ Key::Left, Key::Right, Key::Up, Key::Down, Key::Space, Key::Escape };
+		std::array<lib::input::Key, TotalKeys> defaults{ Key::Left, Key::Right, Key::Up, Key::Down, Key::Space, Key::Escape };
 
 		for (auto i = 0u; i < Direction::Total; ++i) {
 			auto configProperty(value("key" + std::to_string(i)));
-			m_keys[i] = configProperty->empty() ? defaults[i] : configProperty->get<key_type>();
+			m_keys[i] = configProperty->empty() ? defaults[i] : configProperty->get<Key>();
 		}
 
 		auto configProperty(value("key_launch" + std::to_string(Direction::Total)));
-		m_keys[Direction::Total] = configProperty->empty() ? defaults[Direction::Total] : configProperty->get<key_type>();
+		m_keys[Direction::Total] = configProperty->empty() ? defaults[Direction::Total] : configProperty->get<lib::input::Key>();
 		configProperty = value("key_pause" + std::to_string(Direction::Total+1));
-		m_keys[Direction::Total+1] = configProperty->empty() ? defaults[Direction::Total+1] : configProperty->get<key_type>();
+		m_keys[Direction::Total+1] = configProperty->empty() ? defaults[Direction::Total+1] : configProperty->get<lib::input::Key>();
 	}
 
 	KeyMapping::~KeyMapping() = default;
 
 	lib::input::Key KeyMapping::getKey(const Direction d) const
 	{
-		return static_cast<lib::input::Key>(m_keys[d]);
+		return m_keys[d];
 	}
 
 	Direction KeyMapping::getDirectionFromKey(const lib::input::Key k) const
@@ -40,7 +40,7 @@ namespace zoper
 
 	lib::input::Key KeyMapping::getLaunchKey() const
 	{
-		return static_cast<lib::input::Key>(m_keys[Direction::Total]);
+		return m_keys[Direction::Total];
 	}
 
 	bool KeyMapping::isLaunchKey(const lib::input::Key key) const
@@ -50,7 +50,7 @@ namespace zoper
 
 	lib::input::Key KeyMapping::getPauseKey() const
 	{
-		return static_cast<lib::input::Key>(m_keys[Direction::Total+1]);
+		return m_keys[Direction::Total+1];
 	}
 
 	bool KeyMapping::isPauseKey(const lib::input::Key key) const

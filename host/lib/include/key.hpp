@@ -114,6 +114,20 @@ namespace lib
 
 			KeyCount      ///< Keep last -- the total number of keyboard keys
 		};
+
+		inline std::ostream& operator<<(std::ostream & os, const Key &key)
+		{
+			os << static_cast<int>(key);
+		}
+
+		inline std::istream& operator>>(std::istream & is, Key &key)
+		{
+			int p;
+			is >> p;
+			key = static_cast<Key>(p);
+			return is;
+		}
+
 	}
 }
 
