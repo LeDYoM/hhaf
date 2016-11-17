@@ -47,15 +47,19 @@ namespace lib
 	class ConfigurationProperty
 	{
 	public:
-		using string = std::string;
-		using stringstream = std::stringstream;
 		constexpr ConfigurationProperty() noexcept : m_data("") {}
 		constexpr ConfigurationProperty(string &&t) noexcept : m_data(std::move(t)) {}
+
+		ConfigurationProperty(const ConfigurationProperty&) = delete;
+		ConfigurationProperty& operator=(const ConfigurationProperty&) = delete;
+
+		ConfigurationProperty(ConfigurationProperty&&) = default;
+		ConfigurationProperty& operator=(ConfigurationProperty&&) = delete;
 
 		template <typename T>
 		const T get() const noexcept
 		{
-			stringstream tmpstream(m_data);
+			std::istringstream tmpstream(m_data);
 			T tmp;
 			tmpstream >> tmp;
 			return tmp;
@@ -64,16 +68,16 @@ namespace lib
 		template <typename T>
 		bool set(T&& v) noexcept
 		{
-			stringstream tmpstream;
+			std::ostringstream tmpstream;
 			tmpstream << v;
 			m_data = tmpstream.str();
 			return tmpstream.fail();
 		}
 
-		const string &str() const noexcept { return m_data; }
+		const std::string &str() const noexcept { return m_data; }
 		bool empty() const noexcept { return m_data == ""; }
 	private:
-		string m_data;
+		std::string m_data;
 
 	};
 

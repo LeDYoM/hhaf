@@ -111,7 +111,12 @@ namespace lib
 	sptr<ConfigurationProperty> Configuration::value(const std::string & name) const
 	{
 		const auto &it(currentMap->find(name));
-		return it != currentMap->end() ? it->second : msptr<ConfigurationProperty>();
+		if (it != currentMap->end()) {
+			return it->second;
+		}
+		else {
+			return (currentMap->emplace(name, msptr<ConfigurationProperty>())).first->second;
+		}
 	}
 
 	bool Configuration::saveConfig()
