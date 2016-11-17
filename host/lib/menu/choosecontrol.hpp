@@ -64,8 +64,8 @@ namespace lib
 					: textSubLabel(textSubLevel_), subLabel{ subLabel_ }, label{ label_ }, selectedSublabel{ selectedSubLabel_ } {}
 			};
 
-			std::vector<LabelData> _labelData;
-			sptr<draw::NodeShape> _cursor;
+			std::vector<LabelData> m_labelData;
+			sptr<draw::NodeShape> m_cursor;
 			std::function<void(const u32)> m_onSelected;
 
 			friend class MenuManager;

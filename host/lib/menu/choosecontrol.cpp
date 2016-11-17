@@ -19,10 +19,10 @@ namespace lib
 		{
 			const auto &cTheme(parent->currentTheme());
 			descriptorCursorSize = cTheme.cursorDescriptor.m_size;
-			_cursor = createShape("cursor");
-			_cursor->setPointCount(cTheme.cursorDescriptor.m_nVertex);
-			_cursor->setColor(cTheme.cursorDescriptor.m_color);
-			_cursor->setSize(descriptorCursorSize);
+			m_cursor = createShape("cursor");
+			m_cursor->setPointCount(cTheme.cursorDescriptor.m_nVertex);
+			m_cursor->setColor(cTheme.cursorDescriptor.m_color);
+			m_cursor->setSize(descriptorCursorSize);
 
 			const bool menuType{ labels.empty()?false:labels[0]->_subOptionsLabels.empty() };
 
@@ -54,7 +54,7 @@ namespace lib
 				}
 
 				currentPos.y += (cTheme.chSize + cTheme.incY);
-				_labelData.push_back(LabelData(labels[count]->_subOptionsLabels,subtext,text, labels[count]->_startValueIndex));
+				m_labelData.push_back(LabelData(labels[count]->_subOptionsLabels,subtext,text, labels[count]->_startValueIndex));
 				++count;
 			}
 
@@ -70,53 +70,53 @@ namespace lib
 
 		lib::u32 ChooseControl::getSelectedSubLabel(u32 index) const
 		{
-			__ASSERT(index < _labelData.size(), "Invalid index");
-			return _labelData[index].selectedSublabel;
+			__ASSERT(index < m_labelData.size(), "Invalid index");
+			return m_labelData[index].selectedSublabel;
 		}
 
 		void ChooseControl::setSelectedSubLabel(u32 index, u32 subIndex)
 		{
-			__ASSERT(index < _labelData.size(), "Invalid index");
-			_labelData[index].selectedSublabel = subIndex;
+			__ASSERT(index < m_labelData.size(), "Invalid index");
+			m_labelData[index].selectedSublabel = subIndex;
 			updateSubLabelText(index);
 		}
 		
 		void ChooseControl::updateSubLabelText(const u32 index)
 		{
-			_labelData[index].subLabel->setString(_labelData[index].textSubLabel[_labelData[index].selectedSublabel]);
-			_labelData[index].subLabel->setPositionX(1800.0f, lib::draw::Alignment::Right);
+			m_labelData[index].subLabel->setString(m_labelData[index].textSubLabel[m_labelData[index].selectedSublabel]);
+			m_labelData[index].subLabel->setPositionX(1800.0f, lib::draw::Alignment::Right);
 		}
 
 		void ChooseControl::cursorSelectItem(u32 nodeIndex)
 		{
-			__ASSERT(nodeIndex < _labelData.size(), "Invalid select index for cursor");
+			__ASSERT(nodeIndex < m_labelData.size(), "Invalid select index for cursor");
 
 			const auto &cTheme(menuManager()->currentTheme());
 
-			_labelData[_cursorItemSelected].label->setColor(cTheme.textColor);
-			if (_labelData[_cursorItemSelected].subLabel)
+			m_labelData[_cursorItemSelected].label->setColor(cTheme.textColor);
+			if (m_labelData[_cursorItemSelected].subLabel)
 			{
-				_labelData[_cursorItemSelected].subLabel->setColor(cTheme.textColor);
+				m_labelData[_cursorItemSelected].subLabel->setColor(cTheme.textColor);
 			}
 
 			_cursorItemSelected = nodeIndex;
-			auto selectedText = _labelData[nodeIndex].label;
+			auto selectedText = m_labelData[nodeIndex].label;
 
 			selectedText->setColor(cTheme.selectedTextColor);
-			if (_labelData[_cursorItemSelected].subLabel)
+			if (m_labelData[_cursorItemSelected].subLabel)
 			{
-				_labelData[_cursorItemSelected].subLabel->setColor(cTheme.selectedTextColor);
+				m_labelData[_cursorItemSelected].subLabel->setColor(cTheme.selectedTextColor);
 			}
 
-			_cursor->setRotation(90);
+			m_cursor->setRotation(90);
 			
-			addAnimation(draw::anim::PositionAnimation::create(120, _cursor, 
+			addAnimation(draw::anim::PositionAnimation::create(120, m_cursor, 
 				vector2df{ selectedText->getPosition().x - descriptorCursorSize.x, selectedText->getPosition().y }));
 		}
 
 		void ChooseControl::goDown()
 		{
-			if (_cursorItemSelected < (_labelData.size() - 1))
+			if (_cursorItemSelected < (m_labelData.size() - 1))
 			{
 				cursorSelectItem(_cursorItemSelected + 1);
 			}
@@ -134,36 +134,36 @@ namespace lib
 			}
 			else
 			{
-				cursorSelectItem(_labelData.size()-1);
+				cursorSelectItem(m_labelData.size()-1);
 			}
 		}
 
 		void ChooseControl::goLeft()
 		{
-			auto index = _labelData[_cursorItemSelected].selectedSublabel;
+			auto index = m_labelData[_cursorItemSelected].selectedSublabel;
 
-			if (_labelData[_cursorItemSelected].textSubLabel.size() > 0)
+			if (m_labelData[_cursorItemSelected].textSubLabel.size() > 0)
 			{
 				if (index < 1)
 				{
-					index = _labelData[_cursorItemSelected].textSubLabel.size()-1;
+					index = m_labelData[_cursorItemSelected].textSubLabel.size()-1;
 				}
 				else
 				{
 					--index;
 				}
-				_labelData[_cursorItemSelected].selectedSublabel = index;
+				m_labelData[_cursorItemSelected].selectedSublabel = index;
 				updateSubLabelText(_cursorItemSelected);
 			}
 		}
 
 		void ChooseControl::goRight()
 		{
-			auto index = _labelData[_cursorItemSelected].selectedSublabel;
+			auto index = m_labelData[_cursorItemSelected].selectedSublabel;
 
-			if (_labelData[_cursorItemSelected].textSubLabel.size() > 0)
+			if (m_labelData[_cursorItemSelected].textSubLabel.size() > 0)
 			{
-				if (index >= _labelData[_cursorItemSelected].textSubLabel.size() - 1)
+				if (index >= m_labelData[_cursorItemSelected].textSubLabel.size() - 1)
 				{
 					index = 0;
 				}
@@ -171,7 +171,7 @@ namespace lib
 				{
 					++index;
 				}
-				_labelData[_cursorItemSelected].selectedSublabel = index;
+				m_labelData[_cursorItemSelected].selectedSublabel = index;
 				updateSubLabelText(_cursorItemSelected);
 
 			}
