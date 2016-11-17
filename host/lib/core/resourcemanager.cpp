@@ -45,17 +45,12 @@ namespace lib
 			}
 		}
 
-		ResourceManager::~ResourceManager()
-		{
-			resources.clear();
-		}
+		ResourceManager::~ResourceManager() = default;
 
 		sptr<Resource>& ResourceManager::getResource(const std::string rid)
 		{
-			for (auto i = 0u; i < resources.size(); ++i)
-			{
-				if (resources[i]->name() == rid)
-				{
+			for (auto i = 0u; i < resources.size(); ++i) {
+				if (resources[i]->name() == rid) {
 					return resources[i];
 				}
 			}

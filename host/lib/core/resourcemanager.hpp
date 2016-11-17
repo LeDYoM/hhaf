@@ -24,7 +24,7 @@ namespace lib
 		{
 		public:
 			ResourceManager(const std::string &resourceFile);
-			virtual ~ResourceManager();
+			~ResourceManager();
 			sptr<Resource> &getResource(const std::string rid);
 
 		private:
