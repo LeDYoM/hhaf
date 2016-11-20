@@ -24,7 +24,7 @@ namespace lib
 
 		}
 
-		void NodeShape::setSize(const sf::Vector2f & size)
+		void NodeShape::setSize(const vector2df & size)
 		{
 			_size = size;
 			update();
@@ -32,10 +32,10 @@ namespace lib
 
 		void NodeShape::setSize(const float size)
 		{
-			setSize(sf::Vector2f(size,size));
+			setSize(vector2df(size,size));
 		}
 
-		const sf::Vector2f & NodeShape::getSize() const
+		const vector2df & NodeShape::getSize() const
 		{
 			return _size;
 		}
@@ -60,7 +60,7 @@ namespace lib
 			default:
 			case lib::draw::NodeShape::NodeMode::Shape:
 			{
-				sf::Vector2f m_radius{ _size / 2.0f };
+				vector2df m_radius{ _size / 2.0f };
 				double angle = ((index * 2 * M_PI) / getPointCount()) - (M_PI_2);
 				double x = std::cos(angle) * m_radius.x;
 				double y = std::sin(angle) * m_radius.y;
@@ -89,16 +89,15 @@ namespace lib
 		void NodeShape::setTexture(const sf::Texture *texture, bool resetSize/*=true*/, bool resetRect /*= false*/)
 		{
 			setTexture_(texture, resetRect);
-			if (resetSize)
-			{
-				setSize(static_cast<sf::Vector2f>(texture->getSize()));
+			if (resetSize) {
+				setSize({ static_cast<f32>(texture->getSize().x), static_cast<f32>(texture->getSize().y) });
 			}
 		}
 
 		// Compute the normal of a segment
-		vector2df computeNormal(const ::sf::Vector2f& p1, const sf::Vector2f& p2)
+		vector2df computeNormal(const vector2df& p1, const vector2df& p2)
 		{
-			::sf::Vector2f normal(p1.y - p2.y, p2.x - p1.x);
+			vector2df normal(p1.y - p2.y, p2.x - p1.x);
 			float length = std::sqrt(normal.x * normal.x + normal.y * normal.y);
 			if (length != 0.f)
 				normal /= length;

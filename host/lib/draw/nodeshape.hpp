@@ -20,12 +20,12 @@ namespace lib
 			} _mode{ NodeMode::Shape };
 			explicit NodeShape(const std::string &name, const vector2df& size, const u32 pointCount=4,const NodeMode mode=NodeMode::Shape);
 			virtual ~NodeShape();
-			void setSize(const sf::Vector2f &size);
+			void setSize(const vector2df &size);
 			void setSize(const float size);
-			const sf::Vector2f &getSize() const;
+			const vector2df &getSize() const;
 			u32 getPointCount() const;
 			void setPointCount(lib::u32 numPoints);
-			virtual sf::Vector2f getPoint(lib::u32 index) const;
+			virtual vector2df getPoint(lib::u32 index) const;
 			void setTexture(const sf::Texture *texture, bool resetSize=true, bool resetRect = false);
 
 			void setTextureRect(const sf::IntRect& rect);
@@ -47,7 +47,7 @@ namespace lib
 
 		private:
 			const sf::Texture* m_texture;
-			sf::Vector2f _size;
+			vector2df _size;
 			lib::u32 m_pointCount;
 			sf::IntRect m_textureRect;
 			sf::Color m_fillColor;

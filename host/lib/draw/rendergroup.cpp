@@ -26,14 +26,14 @@ namespace lib
 			return result;
 		}
 
-		sptr<NodeShape> RenderGroup::createShape(const std::string &name, const sf::Vector2f &radius/*=sf::Vector2f()*/, u32 pointCount/*=30*/)
+		sptr<NodeShape> RenderGroup::createShape(const std::string &name, const vector2df &radius/*=vector2df()*/, u32 pointCount/*=30*/)
 		{
 			auto result = sptr<NodeShape>(new NodeShape(name,radius,pointCount));
 			addRenderizable(result);
 			return result;
 		}
 
-		sptr<NodeShape> RenderGroup::createSpriteShape(const std::string &name, const sf::Vector2f &radius /*= sf::Vector2f()*/)
+		sptr<NodeShape> RenderGroup::createSpriteShape(const std::string &name, const vector2df &radius /*= vector2df()*/)
 		{
 			auto result = sptr<NodeShape>(new NodeShape(name,radius, 4,NodeShape::NodeMode::Sprite));
 			addRenderizable(result);

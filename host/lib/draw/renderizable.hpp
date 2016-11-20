@@ -3,6 +3,8 @@
 
 #include "hasname.hpp"
 #include "idrawable.hpp"
+#include <lib/include/types.hpp>
+#include <lib/include/vector2d.hpp>
 #include <SFML/Graphics.hpp>
 
 namespace lib
@@ -30,7 +32,7 @@ namespace lib
 
 			// Some useful shortcuts
 			using sf::Transformable::setPosition;
-			void setPosition(const sf::Vector2f &pos, Alignment alignment);
+			void setPosition(const vector2df &pos, Alignment alignment);
 			void setPositionX(const float x, Alignment alignment = Alignment::Left);
 			void setPositionY(const float y, Alignment alignment = Alignment::Left);
 			void setAlignment(Alignment alignment);

@@ -42,7 +42,7 @@ namespace lib
 			unsigned int getCharacterSize() const;
 			sf::Uint32 getStyle() const;
 			const sf::Color& getColor() const;
-			sf::Vector2f findCharacterPos(std::size_t index) const;
+			vector2df findCharacterPos(std::size_t index) const;
 			sf::FloatRect getLocalBounds() const;
 			sf::FloatRect getGlobalBounds() const;
 		private:

@@ -29,7 +29,7 @@ namespace lib
 		{
 		}
 
-		void Renderizable::setPosition(const sf::Vector2f &pos, Alignment alignment)
+		void Renderizable::setPosition(const vector2df &pos, Alignment alignment)
 		{
 			switch (alignment)
 			{
@@ -38,49 +38,49 @@ namespace lib
 				sf::Transformable::setPosition(pos);
 				break;
 			case lib::draw::Alignment::Center:
-				sf::Transformable::setPosition(sf::Vector2f{ pos.x - (getLocalBounds().width / 2.0f), pos.y - (getLocalBounds().height / 2.0f) });
+				sf::Transformable::setPosition(vector2df{ pos.x - (getLocalBounds().width / 2.0f), pos.y - (getLocalBounds().height / 2.0f) });
 				break;
 			case lib::draw::Alignment::Right:
-				sf::Transformable::setPosition(sf::Vector2f{ pos.x - (getLocalBounds().width), pos.y - (getLocalBounds().height) });
+				sf::Transformable::setPosition(vector2df{ pos.x - (getLocalBounds().width), pos.y - (getLocalBounds().height) });
 				break;
 			}
 		}
 
 		void Renderizable::setPositionX(const float x, Alignment alignment /*= Alignment::Left*/)
 		{
-			const sf::Vector2f position( sf::Transformable::getPosition() );
+			const vector2df position( sf::Transformable::getPosition() );
 			switch (alignment)
 			{
 			default:
 			case lib::draw::Alignment::Left:
-				sf::Transformable::setPosition(sf::Vector2f{ x, position.y });
+				sf::Transformable::setPosition(vector2df{ x, position.y });
 				break;
 			case lib::draw::Alignment::Center:
 			{
-				auto a = sf::Vector2f{ x - (getLocalBounds().width / 2.0f), position.y };
-				sf::Transformable::setPosition(sf::Vector2f{ x - (getLocalBounds().width / 2.0f), position.y });
+				auto a = vector2df{ x - (getLocalBounds().width / 2.0f), position.y };
+				sf::Transformable::setPosition(vector2df{ x - (getLocalBounds().width / 2.0f), position.y });
 			}
 				break;
 			case lib::draw::Alignment::Right:
-				sf::Transformable::setPosition(sf::Vector2f{ x - (getLocalBounds().width), position.y });
+				sf::Transformable::setPosition(vector2df{ x - (getLocalBounds().width), position.y });
 				break;
 			}
 		}
 
 		void Renderizable::setPositionY(const float y, Alignment alignment /*= Alignment::Left*/)
 		{
-			const sf::Vector2f position(sf::Transformable::getPosition());
+			const vector2df position(sf::Transformable::getPosition());
 			switch (alignment)
 			{
 			default:
 			case lib::draw::Alignment::Left:
-				sf::Transformable::setPosition(sf::Vector2f{ position.x, y });
+				sf::Transformable::setPosition(vector2df{ position.x, y });
 				break;
 			case lib::draw::Alignment::Center:
-				sf::Transformable::setPosition(sf::Vector2f{ position.x, y - (getLocalBounds().height / 2.0f) });
+				sf::Transformable::setPosition(vector2df{ position.x, y - (getLocalBounds().height / 2.0f) });
 				break;
 			case lib::draw::Alignment::Right:
-				sf::Transformable::setPosition(sf::Vector2f{ position.x, y - (getLocalBounds().height) });
+				sf::Transformable::setPosition(vector2df{ position.x, y - (getLocalBounds().height) });
 				break;
 			}
 		}

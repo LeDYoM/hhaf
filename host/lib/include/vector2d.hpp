@@ -10,6 +10,7 @@ namespace lib
 	class vector2d
 	{
 	public:
+		inline vector2d(const sf::Vector2<T> &rh) : x{ rh.x }, y{ rh.y } {}
 		inline vector2d() : x{}, y{} {}
 		inline vector2d(T X, T Y) : x{ X }, y{ Y } {}
 		inline vector2d(const vector2d<T> &) = default;

@@ -20,6 +20,8 @@
 #include <memory>
 #include <functional>
 
+using namespace lib;
+
 namespace zoper
 {
 	GameScene::GameScene()
@@ -130,7 +132,7 @@ namespace zoper
 		_gameText->setPosition(sceneCenter.x - (_gameBoundingBox.width / 2.0f), sceneCenter.y - _gameBoundingBox.height);
 		_overText->setPosition(sceneCenter.x - (_overBoundingBox.width / 2.0f), sceneCenter.y);
 
-		_pauseText->setPosition(sf::Vector2f{ 1000.0f, 1000.0f }, lib::draw::Alignment::Center);
+		_pauseText->setPosition(lib::vector2df{ 1000.0f, 1000.0f }, lib::draw::Alignment::Center);
 
 	}
 
@@ -171,7 +173,7 @@ namespace zoper
 		}
 
 		_levelDisplay->setPositionX(_levelText->getLocalBounds().width);
-		_goalDisplay->setPosition(sf::Vector2f{ _goalText->getLocalBounds().width, 200 });
+		_goalDisplay->setPosition(lib::vector2df{ _goalText->getLocalBounds().width, 200 });
 		registerEvents();
 
 		setState(Playing);
@@ -519,7 +521,7 @@ namespace zoper
 			}
 			if (found)
 			{
-				auto node = createShape("pointIncrementScore", sf::Vector2f{ 15.0f,15.0f });
+				auto node = createShape("pointIncrementScore", vector2df{ 15.0f,15.0f });
 				addAnimation(lib::draw::anim::PositionAnimation::create(600, node, lastTokenPosition, lib::vector2df(450,100)));
 			}
 			return result;
@@ -594,8 +596,8 @@ namespace zoper
 				tileBackground->setPosition(board2Scene(lib::vector2du32{ x,y }));
 				column.push_back(tileBackground);
 
-				auto node = _backgroundTilesrg->createShape("backgroundTilePoint", sf::Vector2f{ 10.0f,10.0f });
-				sf::Vector2f center( board2Scene(lib::vector2du32{ x,y }) );
+				auto node = _backgroundTilesrg->createShape("backgroundTilePoint", vector2df{ 10.0f,10.0f });
+				vector2df center( board2Scene(lib::vector2du32{ x,y }) );
 				center.x += tileSize().x / 2.0f;
 				center.y += tileSize().y / 2.0f;
 				center.x -= (node->getLocalBounds().width / 2.0f);
