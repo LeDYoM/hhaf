@@ -9,7 +9,7 @@ namespace zoper
 	class GameBaseTile : public lib::board::ITile, public lib::draw::NodeShape
 	{
 	public:
-		explicit GameBaseTile(lib::board::BoardTileData data, const sf::Vector2f &size, const std::string &baseName);
+		explicit GameBaseTile(lib::board::BoardTileData data, const lib::vector2df &size, const std::string &baseName);
 		GameBaseTile(const GameBaseTile &other) = delete;
 		virtual ~GameBaseTile();
 

@@ -31,18 +31,6 @@ namespace lib
 	using s8 = int8_t;
 	using f32 = float;
 	using f64 = double;
-
-	using vector2du32 = sf::Vector2u;
-	using vector2ds32 = sf::Vector2i;
-	using vector2df = sf::Vector2f;
-	using vector2du8 = sf::Vector2<u8>;
-	using vector2ds8 = sf::Vector2<s8>;
-
-	struct Rect
-	{
-		vector2du32 begin;
-		vector2du32 size;
-	};
 }
 
 

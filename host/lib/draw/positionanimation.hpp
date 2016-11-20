@@ -3,6 +3,7 @@
 
 #include "ianimation.hpp"
 #include <lib/include/types.hpp>
+#include <lib/include/vector2d.hpp>
 
 namespace lib
 {

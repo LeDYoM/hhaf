@@ -2,6 +2,7 @@
 #define __LIB_RENDERGROUP_HPP__
 
 #include <lib/include/types.hpp>
+#include <lib/include/vector2d.hpp>
 #include "HasName.hpp"
 #include "idrawable.hpp"
 #include "animationmanager.hpp"

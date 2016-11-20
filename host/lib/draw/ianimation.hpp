@@ -3,6 +3,7 @@
 
 #include "renderizable.hpp"
 #include <lib/core/timer.hpp>
+#include <lib/include/types.hpp>
 
 namespace lib
 {

@@ -494,7 +494,7 @@ namespace zoper
 			direction;
 			bool result{ true };
 			bool found{ false };
-			sf::Vector2f lastTokenPosition;
+			lib::vector2df lastTokenPosition;
 
 			if (!p_boardModel->tileEmpty(loopPosition) && !pointInCenter(loopPosition) && result)
 			{

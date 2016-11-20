@@ -2,6 +2,7 @@
 #define __DIRECTION_HPP__
 
 #include <lib/include/types.hpp>
+#include <lib/include/vector2d.hpp>
 #include <lib/core/log.hpp>
 
 namespace zoper

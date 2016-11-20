@@ -2,6 +2,7 @@
 #define __LIB_ELLIPSESHAPE_HPP__
 
 #include <lib/include/types.hpp>
+#include <lib/include/vector2d.hpp>
 #include <SFML/Graphics.hpp>
 #include "renderizable.hpp"
 
