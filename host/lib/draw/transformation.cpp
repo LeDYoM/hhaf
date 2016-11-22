@@ -16,9 +16,9 @@ namespace lib
 			m_matrix[3] = 0.f; m_matrix[7] = 0.f; m_matrix[11] = 0.f; m_matrix[15] = 1.f;
 		}
 
-		Transform::Transform(float a00, float a01, float a02,
-			float a10, float a11, float a12,
-			float a20, float a21, float a22)
+		Transform::Transform(const f32 a00, const f32 a01, const f32 a02,
+			const f32 a10, const f32 a11, const f32 a12,
+			const f32 a20, const f32 a21, const f32 a22)
 		{
 			m_matrix[0] = a00; m_matrix[4] = a01; m_matrix[8] = 0.f; m_matrix[12] = a02;
 			m_matrix[1] = a10; m_matrix[5] = a11; m_matrix[9] = 0.f; m_matrix[13] = a12;
@@ -26,7 +26,7 @@ namespace lib
 			m_matrix[3] = a20; m_matrix[7] = a21; m_matrix[11] = 0.f; m_matrix[15] = a22;
 		}
 
-		const float* Transform::getMatrix() const
+		const f32* Transform::getMatrix() const
 		{
 			return m_matrix;
 		}
@@ -34,7 +34,7 @@ namespace lib
 		Transform Transform::getInverse() const
 		{
 			// Compute the determinant
-			float det = m_matrix[0] * (m_matrix[15] * m_matrix[5] - m_matrix[7] * m_matrix[13]) -
+			f32 det = m_matrix[0] * (m_matrix[15] * m_matrix[5] - m_matrix[7] * m_matrix[13]) -
 				m_matrix[1] * (m_matrix[15] * m_matrix[4] - m_matrix[7] * m_matrix[12]) +
 				m_matrix[3] * (m_matrix[13] * m_matrix[4] - m_matrix[5] * m_matrix[12]);
 
@@ -58,7 +58,7 @@ namespace lib
 			}
 		}
 
-		vector2df Transform::transformPoint(float x, float y) const
+		vector2df Transform::transformPoint(const f32 x, const f32 y) const
 		{
 			return vector2df(m_matrix[0] * x + m_matrix[4] * y + m_matrix[12],
 				m_matrix[1] * x + m_matrix[5] * y + m_matrix[13]);
@@ -114,7 +114,7 @@ namespace lib
 			return *this;
 		}
 
-		Transform& Transform::translate(float x, float y)
+		Transform& Transform::translate(const f32 x, const f32 y)
 		{
 			Transform translation(1, 0, x,
 				0, 1, y,
@@ -128,7 +128,7 @@ namespace lib
 			return translate(offset.x, offset.y);
 		}
 
-		Transform& Transform::rotate(float angle)
+		Transform& Transform::rotate(const f32 angle)
 		{
 			float rad = angle * 3.141592654f / 180.f;
 			float cos = std::cos(rad);
@@ -141,7 +141,7 @@ namespace lib
 			return combine(rotation);
 		}
 
-		Transform& Transform::rotate(float angle, float centerX, float centerY)
+		Transform& Transform::rotate(const f32 angle, const f32 centerX, const f32 centerY)
 		{
 			float rad = angle * 3.141592654f / 180.f;
 			float cos = std::cos(rad);
@@ -154,12 +154,12 @@ namespace lib
 			return combine(rotation);
 		}
 
-		Transform& Transform::rotate(float angle, const vector2df& center)
+		Transform& Transform::rotate(const f32 angle, const vector2df& center)
 		{
 			return rotate(angle, center.x, center.y);
 		}
 
-		Transform& Transform::scale(float scaleX, float scaleY)
+		Transform& Transform::scale(const f32 scaleX, const f32 scaleY)
 		{
 			Transform scaling(scaleX, 0, 0,
 				0, scaleY, 0,
@@ -168,7 +168,7 @@ namespace lib
 			return combine(scaling);
 		}
 
-		Transform& Transform::scale(float scaleX, float scaleY, float centerX, float centerY)
+		Transform& Transform::scale(const f32 scaleX, const f32 scaleY, const f32 centerX, const f32 centerY)
 		{
 			Transform scaling(scaleX, 0, centerX * (1 - scaleX),
 				0, scaleY, centerY * (1 - scaleY),

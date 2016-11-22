@@ -12,22 +12,22 @@ namespace lib
 		{
 		public:
 			Transform();
-			Transform(float a00, float a01, float a02,
-				float a10, float a11, float a12,
-				float a20, float a21, float a22);
+			Transform(const f32 a00, const f32 a01, const f32 a02,
+				const f32 a10, const f32 a11, const f32 a12,
+				const f32 a20, const f32 a21, const f32 a22);
 
-			const float* getMatrix() const;
+			const f32* getMatrix() const;
 			Transform getInverse() const;
-			vector2df transformPoint(float x, float y) const;
+			vector2df transformPoint(const f32 x, const f32 y) const;
 			vector2df transformPoint(const vector2df& point) const;
 			sf::FloatRect transformRect(const sf::FloatRect& rectangle) const;
 			Transform& combine(const Transform& transform);
-			Transform& translate(float x, float y);
+			Transform& translate(const f32 x, const f32 y);
 			Transform& translate(const vector2df& offset);
-			Transform& rotate(float angle);
-			Transform& rotate(float angle, float centerX, float centerY);
-			Transform& rotate(float angle, const vector2df& center);
-			Transform& scale(float scaleX, float scaleY);
+			Transform& rotate(const f32 angle);
+			Transform& rotate(const f32 angle, const f32 centerX, const f32 centerY);
+			Transform& rotate(const f32 angle, const vector2df& center);
+			Transform& scale(const f32 scaleX, const f32 scaleY);
 			Transform& scale(float scaleX, float scaleY, float centerX, float centerY);
 			Transform& scale(const vector2df& factors);
 			Transform& scale(const vector2df& factors, const vector2df& center);
