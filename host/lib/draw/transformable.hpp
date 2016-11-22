@@ -11,7 +11,7 @@ namespace lib
 		class Transformable
 		{
 		public:
-			Transformable();
+			Transformable() noexcept;
 			virtual ~Transformable();
 			void setPosition(const f32 x, const f32 y);
 			void setPosition(const vector2df& position);

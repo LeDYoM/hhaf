@@ -5,21 +5,17 @@ namespace lib
 {
 	namespace draw
 	{
-		Transformable::Transformable() :
-			m_origin(0, 0),
-			m_position(0, 0),
-			m_rotation(0),
-			m_scale(1, 1),
+		Transformable::Transformable() noexcept :
+			m_origin{ 0, 0 },
+			m_position{ 0, 0 },
+			m_rotation{ 0 },
+			m_scale{ 1, 1 },
 			m_transform{},
-			m_transformNeedUpdate(true),
+			m_transformNeedUpdate{ true },
 			m_inverseTransform{},
-			m_inverseTransformNeedUpdate(true)
-		{
-		}
+			m_inverseTransformNeedUpdate{ true } {}
 
-		Transformable::~Transformable()
-		{
-		}
+		Transformable::~Transformable() = default;
 
 		void Transformable::setPosition(const f32 x, const f32 y)
 		{

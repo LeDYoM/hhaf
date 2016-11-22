@@ -13,12 +13,18 @@ namespace lib
 		class Transform
 		{
 		public:
-			Transform() noexcept;
-			Transform(const f32 a00, const f32 a01, const f32 a02,
+			constexpr Transform() noexcept;
+			constexpr Transform(const f32 a00, const f32 a01, const f32 a02,
 				const f32 a10, const f32 a11, const f32 a12,
 				const f32 a20, const f32 a21, const f32 a22) noexcept;
 
-			inline const f32* getMatrix() const noexcept { return &m_matrix[0]; }
+			Transform(const Transform&) = default;
+			Transform& operator=(const Transform&) = default;
+
+			Transform(Transform&&) = default;
+			Transform& operator=(Transform&&) = default;
+
+			constexpr inline const f32* const getMatrix() const noexcept { return &m_matrix[0]; }
 			Transform getInverse() const;
 			vector2df transformPoint(const f32 x, const f32 y) const;
 			vector2df transformPoint(const vector2df& point) const;
@@ -36,7 +42,7 @@ namespace lib
 			operator sf::Transform() const noexcept;
 			static const Transform Identity;
 		private:
-			std::array<float, 16> m_matrix;
+			std::array<f32, 16> m_matrix;
 		};
 
 		Transform operator *(const Transform& left, const Transform& right);

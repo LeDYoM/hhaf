@@ -5,23 +5,21 @@ namespace lib
 {
 	namespace draw
 	{
-		const Transform Transform::Identity;
+		const Transform Transform::Identity = Transform{};
 
-		Transform::Transform() noexcept
+		constexpr Transform::Transform() noexcept
 			: m_matrix{ 1.f, 0.f, 0.f, 0.f,
 			0.f, 1.f, 0.f, 0.f,
 			0.f, 0.f, 1.f, 0.f,
-			0.f, 0.f, 0.f, 1.f }
-		{
-		}
+			0.f, 0.f, 0.f, 1.f } {}
 
-		Transform::Transform(const f32 a00, const f32 a01, const f32 a02,
+		constexpr Transform::Transform(const f32 a00, const f32 a01, const f32 a02,
 			const f32 a10, const f32 a11, const f32 a12,
 			const f32 a20, const f32 a21, const f32 a22) noexcept
 			: m_matrix{ a00, a10, 0.f, a20,
 			a01, a11, 0.f, a21,
 			0.f, 0.f, 1.f, 0.f,
-			a02, a12, 0.f, a22 }
+			a02, a12, 0.f, a22 } 
 		{
 //			m_matrix[0] = a00; m_matrix[4] = a01; m_matrix[8] = 0.f; m_matrix[12] = a02;
 //			m_matrix[1] = a10; m_matrix[5] = a11; m_matrix[9] = 0.f; m_matrix[13] = a12;
