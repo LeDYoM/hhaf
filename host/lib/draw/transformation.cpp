@@ -7,28 +7,26 @@ namespace lib
 	{
 		const Transform Transform::Identity;
 
-		Transform::Transform()
+		Transform::Transform() noexcept
+			: m_matrix{ 1.f, 0.f, 0.f, 0.f,
+			0.f, 1.f, 0.f, 0.f,
+			0.f, 0.f, 1.f, 0.f,
+			0.f, 0.f, 0.f, 1.f }
 		{
-			// Identity matrix
-			m_matrix[0] = 1.f; m_matrix[4] = 0.f; m_matrix[8] = 0.f; m_matrix[12] = 0.f;
-			m_matrix[1] = 0.f; m_matrix[5] = 1.f; m_matrix[9] = 0.f; m_matrix[13] = 0.f;
-			m_matrix[2] = 0.f; m_matrix[6] = 0.f; m_matrix[10] = 1.f; m_matrix[14] = 0.f;
-			m_matrix[3] = 0.f; m_matrix[7] = 0.f; m_matrix[11] = 0.f; m_matrix[15] = 1.f;
 		}
 
 		Transform::Transform(const f32 a00, const f32 a01, const f32 a02,
 			const f32 a10, const f32 a11, const f32 a12,
-			const f32 a20, const f32 a21, const f32 a22)
+			const f32 a20, const f32 a21, const f32 a22) noexcept
+			: m_matrix{ a00, a10, 0.f, a20,
+			a01, a11, 0.f, a21,
+			0.f, 0.f, 1.f, 0.f,
+			a02, a12, 0.f, a22 }
 		{
-			m_matrix[0] = a00; m_matrix[4] = a01; m_matrix[8] = 0.f; m_matrix[12] = a02;
-			m_matrix[1] = a10; m_matrix[5] = a11; m_matrix[9] = 0.f; m_matrix[13] = a12;
-			m_matrix[2] = 0.f; m_matrix[6] = 0.f; m_matrix[10] = 1.f; m_matrix[14] = 0.f;
-			m_matrix[3] = a20; m_matrix[7] = a21; m_matrix[11] = 0.f; m_matrix[15] = a22;
-		}
-
-		const f32* Transform::getMatrix() const
-		{
-			return m_matrix;
+//			m_matrix[0] = a00; m_matrix[4] = a01; m_matrix[8] = 0.f; m_matrix[12] = a02;
+//			m_matrix[1] = a10; m_matrix[5] = a11; m_matrix[9] = 0.f; m_matrix[13] = a12;
+//			m_matrix[2] = 0.f; m_matrix[6] = 0.f; m_matrix[10] = 1.f; m_matrix[14] = 0.f;
+//			m_matrix[3] = a20; m_matrix[7] = a21; m_matrix[11] = 0.f; m_matrix[15] = a22;
 		}
 
 		Transform Transform::getInverse() const

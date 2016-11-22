@@ -11,12 +11,12 @@ namespace lib
 		class Transform
 		{
 		public:
-			Transform();
+			Transform() noexcept;
 			Transform(const f32 a00, const f32 a01, const f32 a02,
 				const f32 a10, const f32 a11, const f32 a12,
-				const f32 a20, const f32 a21, const f32 a22);
+				const f32 a20, const f32 a21, const f32 a22) noexcept;
 
-			const f32* getMatrix() const;
+			inline const f32* getMatrix() const noexcept { return &m_matrix[0]; }
 			Transform getInverse() const;
 			vector2df transformPoint(const f32 x, const f32 y) const;
 			vector2df transformPoint(const vector2df& point) const;
@@ -28,7 +28,7 @@ namespace lib
 			Transform& rotate(const f32 angle, const f32 centerX, const f32 centerY);
 			Transform& rotate(const f32 angle, const vector2df& center);
 			Transform& scale(const f32 scaleX, const f32 scaleY);
-			Transform& scale(float scaleX, float scaleY, float centerX, float centerY);
+			Transform& scale(const f32 scaleX, const f32 scaleY, const f32 centerX, const f32 centerY);
 			Transform& scale(const vector2df& factors);
 			Transform& scale(const vector2df& factors, const vector2df& center);
 			operator sf::Transform() const noexcept;
