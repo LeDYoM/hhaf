@@ -10,14 +10,14 @@ namespace lib
 	class vector2d
 	{
 	public:
-		inline vector2d(const sf::Vector2<T> &rh) : x{ rh.x }, y{ rh.y } {}
-		inline vector2d() : x{}, y{} {}
-		inline vector2d(T X, T Y) : x{ X }, y{ Y } {}
+		constexpr inline vector2d(const sf::Vector2<T> &rh) noexcept : x{ rh.x }, y{ rh.y } {}
+		constexpr inline vector2d()  noexcept : x{}, y{} {}
+		constexpr inline vector2d(T X, T Y)  noexcept : x{ X }, y{ Y } {}
 		inline vector2d(const vector2d<T> &) = default;
 		inline vector2d &operator=(const vector2d<T> &) = default;
 
 		template <typename U>
-		inline explicit vector2d(const vector2d<U>& vector) : x{ static_cast<T>(vector.x) }, y{ static_cast<T>(vector.y) } {}
+		constexpr inline explicit vector2d(const vector2d<U>& vector)  noexcept : x{ static_cast<T>(vector.x) }, y{ static_cast<T>(vector.y) } {}
 
 		inline vector2d &operator+=(const vector2d &right)
 		{ 
@@ -74,10 +74,10 @@ namespace lib
 		inline vector2d operator/(const vector2d &right) const { return (vector2d(*this) /= right); }
 		inline vector2d operator*(const T &right) const { return (vector2d(*this) *= right);	}
 		inline vector2d operator/(const T &right) const { return (vector2d(*this) /= right); }
-		inline bool operator ==(const vector2d &right) const { return (x == right.x && y == right.y); }
-		inline bool operator !=(const vector2d &right) const {	return !(*operator==(right)); }
+		inline bool operator ==(const vector2d &right) const noexcept { return (x == right.x && y == right.y); }
+		inline bool operator !=(const vector2d &right) const noexcept {	return !(*operator==(right)); }
 
-		inline operator sf::Vector2<T>() const { return sf::Vector2<T>{x, y}; }
+		constexpr inline operator sf::Vector2<T>() const noexcept { return sf::Vector2<T>{x, y}; }
 		T x;
 		T y;
 	};
