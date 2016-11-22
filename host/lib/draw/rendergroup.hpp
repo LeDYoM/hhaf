@@ -6,8 +6,8 @@
 #include "HasName.hpp"
 #include "idrawable.hpp"
 #include "animationmanager.hpp"
+#include "transformable.hpp"
 #include <lib/core/vecsptr.hpp>
-#include <SFML/Graphics/Transformable.hpp>
 
 namespace lib
 {
@@ -21,7 +21,7 @@ namespace lib
 		class Renderizable;
 		class NodeShape;
 		class NodeText;
-		class RenderGroup : public lib::core::HasName, public IDrawable, public anim::AnimationManager, public sf::Transformable
+		class RenderGroup : public lib::core::HasName, public IDrawable, public anim::AnimationManager, public Transformable
 		{
 		public:
 			RenderGroup(const std::string &name, RenderGroup *parent=nullptr);

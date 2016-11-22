@@ -2,13 +2,13 @@
 #define __LIB_ISCENENODE_HPP__
 
 #include "idrawable.hpp"
-#include <SFML/Graphics/Transformable.hpp>
+#include "transformable.hpp"
 
 namespace lib
 {
 	namespace draw
 	{
-		class ISceneNode : public IDrawable, public sf::Transformable
+		class ISceneNode : public IDrawable, public Transformable
 		{
 		public:
 			ISceneNode();
