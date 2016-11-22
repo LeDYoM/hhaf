@@ -196,7 +196,7 @@ namespace lib
 		{
 			auto oldTransform = states.transform;
 //			states.transform *= getTransform();
-			states.transform = static_cast<sf::Transform>(getTransform());
+			states.transform *= static_cast<sf::Transform>(getTransform());
 
 			// Render the inside
 			states.texture = m_texture;
