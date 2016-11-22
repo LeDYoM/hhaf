@@ -1,7 +1,7 @@
 #ifndef LIB_TRANSFORMABLE_INCLUDE_HPP
 #define LIB_TRANSFORMABLE_INCLUDE_HPP
 
-#include <SFML/Graphics/Transform.hpp>
+#include "transformation.hpp"
 #include <lib/include/vector2d.hpp>
 
 namespace lib
@@ -29,8 +29,8 @@ namespace lib
 			void rotate(const f32 angle);
 			void scale(const f32 factorX, const f32 factorY);
 			void scale(const vector2df& factor);
-			const sf::Transform& getTransform() const;
-			const sf::Transform& getInverseTransform() const;
+			const Transform& getTransform() const;
+			const Transform& getInverseTransform() const;
 
 		private:
 
@@ -38,9 +38,9 @@ namespace lib
 			vector2df m_position;
 			f32 m_rotation;
 			vector2df m_scale;
-			mutable sf::Transform m_transform;
+			mutable Transform m_transform;
 			mutable bool m_transformNeedUpdate;
-			mutable sf::Transform m_inverseTransform;
+			mutable Transform m_inverseTransform;
 			mutable bool m_inverseTransformNeedUpdate;
 		};
 	}

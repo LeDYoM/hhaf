@@ -115,7 +115,7 @@ namespace lib
 			setScale(m_scale.x * factor.x, m_scale.y * factor.y);
 		}
 
-		const sf::Transform& Transformable::getTransform() const
+		const Transform& Transformable::getTransform() const
 		{
 			// Recompute the combined transform if needed
 			if (m_transformNeedUpdate)
@@ -130,7 +130,7 @@ namespace lib
 				const f32 tx = -m_origin.x * sxc - m_origin.y * sys + m_position.x;
 				const f32 ty = m_origin.x * sxs - m_origin.y * syc + m_position.y;
 
-				m_transform = sf::Transform(sxc, sys, tx,
+				m_transform = Transform(sxc, sys, tx,
 					-sxs, syc, ty,
 					0.f, 0.f, 1.f);
 				m_transformNeedUpdate = false;
@@ -139,7 +139,7 @@ namespace lib
 			return m_transform;
 		}
 
-		const sf::Transform& Transformable::getInverseTransform() const
+		const Transform& Transformable::getInverseTransform() const
 		{
 			// Recompute the inverse transform if needed
 			if (m_inverseTransformNeedUpdate)
