@@ -4,6 +4,8 @@
 #include <lib/include/vector2d.hpp>
 #include <SFML/Graphics.hpp>
 
+#include <array>
+
 namespace lib
 {
 	namespace draw
@@ -34,7 +36,7 @@ namespace lib
 			operator sf::Transform() const noexcept;
 			static const Transform Identity;
 		private:
-			float m_matrix[16];
+			std::array<float, 16> m_matrix;
 		};
 
 		Transform operator *(const Transform& left, const Transform& right);

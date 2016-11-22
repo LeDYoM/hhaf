@@ -96,8 +96,8 @@ namespace lib
 
 		Transform& Transform::combine(const Transform& transform)
 		{
-			const float* a = m_matrix;
-			const float* b = transform.m_matrix;
+			const float* a = getMatrix();
+			const float* b = transform.getMatrix();
 
 			*this = Transform(a[0] * b[0] + a[4] * b[1] + a[12] * b[3],
 				a[0] * b[4] + a[4] * b[5] + a[12] * b[7],
