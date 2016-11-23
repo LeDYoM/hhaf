@@ -21,32 +21,33 @@ namespace lib
 			Transform(const Transform&) = default;
 			Transform& operator=(const Transform&) = default;
 
-			Transform(Transform&&) = default;
-			Transform& operator=(Transform&&) = default;
+			Transform(Transform&&) noexcept = default;
+			Transform& operator=(Transform&&) noexcept = default;
 
 			constexpr inline const f32* const getMatrix() const noexcept { return &m_matrix[0]; }
-			Transform getInverse() const;
-			vector2df transformPoint(const f32 x, const f32 y) const;
-			vector2df transformPoint(const vector2df& point) const;
-			sf::FloatRect transformRect(const sf::FloatRect& rectangle) const;
-			Transform& combine(const Transform& transform);
-			Transform& translate(const f32 x, const f32 y);
-			Transform& translate(const vector2df& offset);
-			Transform& rotate(const f32 angle);
-			Transform& rotate(const f32 angle, const f32 centerX, const f32 centerY);
-			Transform& rotate(const f32 angle, const vector2df& center);
-			Transform& scale(const f32 scaleX, const f32 scaleY);
-			Transform& scale(const f32 scaleX, const f32 scaleY, const f32 centerX, const f32 centerY);
-			Transform& scale(const vector2df& factors);
-			Transform& scale(const vector2df& factors, const vector2df& center);
+			Transform getInverse() const noexcept;
+			constexpr vector2df transformPoint(const f32 x, const f32 y) const noexcept;
+			constexpr vector2df transformPoint(const vector2df& point) const noexcept;
+			sf::FloatRect transformRect(const sf::FloatRect& rectangle) const noexcept;
+			Transform& combine(const Transform& transform) noexcept;
+			Transform& translate(const f32 x, const f32 y) noexcept;
+			Transform& translate(const vector2df& offset) noexcept;
+			Transform& rotate(const f32 angle) noexcept;
+			Transform& rotate(const f32 angle, const f32 centerX, const f32 centerY) noexcept;
+			Transform& rotate(const f32 angle, const vector2df& center) noexcept;
+			Transform& scale(const f32 scaleX, const f32 scaleY) noexcept;
+			Transform& scale(const f32 scaleX, const f32 scaleY, const f32 centerX, const f32 centerY) noexcept;
+			Transform& scale(const vector2df& factors) noexcept;
+			Transform& scale(const vector2df& factors, const vector2df& center) noexcept;
 			operator sf::Transform() const noexcept;
 			static const Transform Identity;
+			Transform& operator *=(const Transform& right);
+
 		private:
 			std::array<f32, 16> m_matrix;
 		};
 
 		Transform operator *(const Transform& left, const Transform& right);
-		Transform& operator *=(Transform& left, const Transform& right);
 		vector2df operator *(const Transform& left, const vector2df& right);
 	}
 }

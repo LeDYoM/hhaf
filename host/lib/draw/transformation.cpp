@@ -1,5 +1,6 @@
 #include "transformation.hpp"
 #include <cmath>
+#include <math.h>
 
 namespace lib
 {
@@ -27,10 +28,10 @@ namespace lib
 //			m_matrix[3] = a20; m_matrix[7] = a21; m_matrix[11] = 0.f; m_matrix[15] = a22;
 		}
 
-		Transform Transform::getInverse() const
+		Transform Transform::getInverse() const noexcept
 		{
 			// Compute the determinant
-			f32 det = m_matrix[0] * (m_matrix[15] * m_matrix[5] - m_matrix[7] * m_matrix[13]) -
+			const f32 det = m_matrix[0] * (m_matrix[15] * m_matrix[5] - m_matrix[7] * m_matrix[13]) -
 				m_matrix[1] * (m_matrix[15] * m_matrix[4] - m_matrix[7] * m_matrix[12]) +
 				m_matrix[3] * (m_matrix[13] * m_matrix[4] - m_matrix[5] * m_matrix[12]);
 
@@ -54,21 +55,21 @@ namespace lib
 			}
 		}
 
-		vector2df Transform::transformPoint(const f32 x, const f32 y) const
+		constexpr vector2df Transform::transformPoint(const f32 x, const f32 y) const noexcept
 		{
 			return vector2df(m_matrix[0] * x + m_matrix[4] * y + m_matrix[12],
 				m_matrix[1] * x + m_matrix[5] * y + m_matrix[13]);
 		}
 
-		vector2df Transform::transformPoint(const vector2df& point) const
+		constexpr vector2df Transform::transformPoint(const vector2df& point) const noexcept
 		{
 			return transformPoint(point.x, point.y);
 		}
 
-		sf::FloatRect Transform::transformRect(const sf::FloatRect& rectangle) const
+		sf::FloatRect Transform::transformRect(const sf::FloatRect& rectangle) const noexcept
 		{
 			// Transform the 4 corners of the rectangle
-			const vector2df points[] =
+			const std::array<vector2df,4> points =
 			{
 				transformPoint(rectangle.left, rectangle.top),
 				transformPoint(rectangle.left, rectangle.top + rectangle.height),
@@ -77,25 +78,25 @@ namespace lib
 			};
 
 			// Compute the bounding rectangle of the transformed points
-			float left = points[0].x;
-			float top = points[0].y;
-			float right = points[0].x;
-			float bottom = points[0].y;
-			for (int i = 1; i < 4; ++i)
+			f32 left = points[0].x;
+			f32 top = points[0].y;
+			f32 right = points[0].x;
+			f32 bottom = points[0].y;
+			for (const auto point : points)
 			{
-				if (points[i].x < left)   left = points[i].x;
-				else if (points[i].x > right)  right = points[i].x;
-				if (points[i].y < top)    top = points[i].y;
-				else if (points[i].y > bottom) bottom = points[i].y;
+				if (point.x < left)   left = point.x;
+				else if (point.x > right)  right = point.x;
+				if (point.y < top)    top = point.y;
+				else if (point.y > bottom) bottom = point.y;
 			}
 
 			return sf::FloatRect(left, top, right - left, bottom - top);
 		}
 
-		Transform& Transform::combine(const Transform& transform)
+		Transform& Transform::combine(const Transform& transform) noexcept
 		{
-			const float* a = getMatrix();
-			const float* b = transform.getMatrix();
+			const std::array<f32,16> &a = m_matrix;
+			const std::array<f32, 16> &b = transform.m_matrix;
 
 			*this = Transform(a[0] * b[0] + a[4] * b[1] + a[12] * b[3],
 				a[0] * b[4] + a[4] * b[5] + a[12] * b[7],
@@ -110,7 +111,7 @@ namespace lib
 			return *this;
 		}
 
-		Transform& Transform::translate(const f32 x, const f32 y)
+		Transform& Transform::translate(const f32 x, const f32 y) noexcept
 		{
 			Transform translation(1, 0, x,
 				0, 1, y,
@@ -119,16 +120,18 @@ namespace lib
 			return combine(translation);
 		}
 
-		Transform& Transform::translate(const vector2df& offset)
+		Transform& Transform::translate(const vector2df& offset) noexcept
 		{
 			return translate(offset.x, offset.y);
 		}
 
-		Transform& Transform::rotate(const f32 angle)
+		static constexpr f32 radFactor = 3.141592654f / 180.f;
+
+		Transform& Transform::rotate(const f32 angle) noexcept
 		{
-			float rad = angle * 3.141592654f / 180.f;
-			float cos = std::cos(rad);
-			float sin = std::sin(rad);
+			const f32 rad = angle * radFactor;
+			const f32 cos = std::cos(rad);
+			const f32 sin = std::sin(rad);
 
 			Transform rotation(cos, -sin, 0,
 				sin, cos, 0,
@@ -137,11 +140,11 @@ namespace lib
 			return combine(rotation);
 		}
 
-		Transform& Transform::rotate(const f32 angle, const f32 centerX, const f32 centerY)
+		Transform& Transform::rotate(const f32 angle, const f32 centerX, const f32 centerY) noexcept
 		{
-			float rad = angle * 3.141592654f / 180.f;
-			float cos = std::cos(rad);
-			float sin = std::sin(rad);
+			const f32 rad = angle * radFactor;
+			const f32 cos = std::cos(rad);
+			const f32 sin = std::sin(rad);
 
 			Transform rotation(cos, -sin, centerX * (1 - cos) + centerY * sin,
 				sin, cos, centerY * (1 - cos) - centerX * sin,
@@ -150,12 +153,12 @@ namespace lib
 			return combine(rotation);
 		}
 
-		Transform& Transform::rotate(const f32 angle, const vector2df& center)
+		Transform& Transform::rotate(const f32 angle, const vector2df& center) noexcept
 		{
 			return rotate(angle, center.x, center.y);
 		}
 
-		Transform& Transform::scale(const f32 scaleX, const f32 scaleY)
+		Transform& Transform::scale(const f32 scaleX, const f32 scaleY) noexcept
 		{
 			Transform scaling(scaleX, 0, 0,
 				0, scaleY, 0,
@@ -164,7 +167,7 @@ namespace lib
 			return combine(scaling);
 		}
 
-		Transform& Transform::scale(const f32 scaleX, const f32 scaleY, const f32 centerX, const f32 centerY)
+		Transform& Transform::scale(const f32 scaleX, const f32 scaleY, const f32 centerX, const f32 centerY) noexcept
 		{
 			Transform scaling(scaleX, 0, centerX * (1 - scaleX),
 				0, scaleY, centerY * (1 - scaleY),
@@ -173,12 +176,12 @@ namespace lib
 			return combine(scaling);
 		}
 
-		Transform& Transform::scale(const vector2df& factors)
+		Transform& Transform::scale(const vector2df& factors) noexcept
 		{
 			return scale(factors.x, factors.y);
 		}
 
-		Transform& Transform::scale(const vector2df& factors, const vector2df& center)
+		Transform& Transform::scale(const vector2df& factors, const vector2df& center) noexcept
 		{
 			return scale(factors.x, factors.y, center.x, center.y);
 		}
@@ -190,14 +193,14 @@ namespace lib
 				m_matrix[3], m_matrix[7], m_matrix[15]);
 		}
 
+		Transform & Transform::operator*=(const Transform & right)
+		{
+			return combine(right);
+		}
+
 		Transform operator *(const Transform& left, const Transform& right)
 		{
 			return Transform(left).combine(right);
-		}
-
-		Transform& operator *=(Transform& left, const Transform& right)
-		{
-			return left.combine(right);
 		}
 
 		vector2df operator *(const Transform& left, const vector2df& right)
