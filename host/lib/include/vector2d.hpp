@@ -89,13 +89,6 @@ namespace lib
 	using vector2df = vector2d<f32>;
 	using vector2du8 = vector2d<u8>;
 	using vector2ds8 = vector2d<s8>;
-
-	struct Rect
-	{
-		vector2du32 begin;
-		vector2du32 size;
-	};
-
 }
 
 #endif

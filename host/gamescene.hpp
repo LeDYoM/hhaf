@@ -27,11 +27,11 @@ namespace zoper
 	struct GameData
 	{
 		lib::vector2du32 size{ 0u, 0u };
-		lib::Rect centerRect;
+		lib::Rectu32 centerRect;
 
 		struct TokenZone
 		{
-			lib::Rect zone;
+			lib::Rectu32 zone;
 			Direction direction;
 			lib::u32 size;
 		};

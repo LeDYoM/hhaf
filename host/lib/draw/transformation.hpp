@@ -2,6 +2,7 @@
 #define LIB_TRANSFORMATION_INCLUDE_HPP__
 
 #include <lib/include/vector2d.hpp>
+#include <lib/include/rect.hpp>
 #include <SFML/Graphics.hpp>
 
 #include <array>
@@ -28,7 +29,7 @@ namespace lib
 			Transform getInverse() const noexcept;
 			constexpr vector2df transformPoint(const f32 x, const f32 y) const noexcept;
 			constexpr vector2df transformPoint(const vector2df& point) const noexcept;
-			sf::FloatRect transformRect(const sf::FloatRect& rectangle) const noexcept;
+			Rect<f32> transformRect(const sf::FloatRect& rectangle) const noexcept;
 			Transform& combine(const Transform& transform) noexcept;
 			Transform& translate(const f32 x, const f32 y) noexcept;
 			Transform& translate(const vector2df& offset) noexcept;

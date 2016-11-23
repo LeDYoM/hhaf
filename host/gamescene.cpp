@@ -29,10 +29,7 @@ namespace zoper
 	{
 		_gameData.size.x = 18;
 		_gameData.size.y = 12;
-		_gameData.centerRect.begin.x = 7;
-		_gameData.centerRect.begin.y = 4;
-		_gameData.centerRect.size.x = 4;
-		_gameData.centerRect.size.y = 4;
+		_gameData.centerRect = Rectu32{ 7,4,4,4 };
 		_gameData.generateTokenZones();
 	}
 
@@ -297,8 +294,8 @@ namespace zoper
 	void GameData::generateTokenZones()
 	{
 		// From left to right
-		_tokenZones[0].zone.begin.x = 0;
-		_tokenZones[0].zone.begin.y = centerRect.begin.y;
+		_tokenZones[0].zone.setLeft(0);
+		_tokenZones[0].zone.setTop(centerRect.begin.y)
 		_tokenZones[0].zone.size.x = centerRect.begin.x - 1;
 		_tokenZones[0].zone.size.y = (centerRect.begin.y + centerRect.size.y) - 1;
 		_tokenZones[0].direction = Direction::DirectionData::Right;

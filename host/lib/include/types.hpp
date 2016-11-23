@@ -33,5 +33,4 @@ namespace lib
 	using f64 = double;
 }
 
-
 #endif
