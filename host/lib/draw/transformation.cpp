@@ -90,7 +90,7 @@ namespace lib
 				else if (point.y > bottom) bottom = point.y;
 			}
 
-			return sf::FloatRect{left, top, right - left, bottom - top};
+			return Rectf32{left, top, right - left, bottom - top};
 		}
 
 		Transform& Transform::combine(const Transform& transform) noexcept

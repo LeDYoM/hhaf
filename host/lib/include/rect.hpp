@@ -101,7 +101,7 @@ namespace lib
 		inline vector2d<T> rightBottom() const { return vector2d<T>{right(), bottom()}; }
 		inline vector2d<T> rightTop() const { return vector2d<T>{right(), top}; }
 		inline vector2d<T> leftBottom() const { return vector2d<T>{left, bottom()}; }
-		inline explicit operator sf::Rect<T>() const { return sf::Rect<T>(left, top, width, height); }
+		inline operator sf::Rect<T>() const { return sf::Rect<T>(left, top, width, height); }
 	};
 
 	using Rects32 = lib::Rect<s32>;
