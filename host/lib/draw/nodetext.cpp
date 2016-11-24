@@ -200,7 +200,7 @@ namespace lib
 			// Compute the location of the strike through dynamically
 			// We use the center point of the lowercase 'x' glyph as the reference
 			// We reuse the underline thickness as the thickness of the strike through as well
-			sf::FloatRect xBounds = m_font->getGlyph(L'x', m_characterSize, bold).bounds;
+			Rectf32 xBounds{ m_font->getGlyph(L'x', m_characterSize, bold).bounds };
 			float strikeThroughOffset = xBounds.top + xBounds.height / 2.f;
 
 			// Precompute the variables needed by the algorithm

@@ -33,8 +33,6 @@ namespace lib
 			const sf::Texture* getTexture() const;
 			const sf::IntRect& getTextureRect() const;
 			const sf::Color& getFillColor() const;
-			const sf::Color& getOutlineColor() const;
-			float getOutlineThickness() const;
 			Rectf32 getLocalBounds() const override;
 			Rectf32 getGlobalBounds() const override;
 
@@ -48,7 +46,7 @@ namespace lib
 		private:
 			const sf::Texture* m_texture;
 			vector2df _size;
-			lib::u32 m_pointCount;
+			u32 m_pointCount;
 			sf::IntRect m_textureRect;
 			sf::Color m_fillColor;
 			sf::VertexArray m_vertices;

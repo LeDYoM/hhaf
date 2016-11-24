@@ -22,14 +22,14 @@ namespace lib
 			Transform(const Transform&) = default;
 			Transform& operator=(const Transform&) = default;
 
-			Transform(Transform&&) noexcept = default;
+			constexpr Transform(Transform&&) noexcept = default;
 			Transform& operator=(Transform&&) noexcept = default;
 
 			constexpr inline const f32* const getMatrix() const noexcept { return &m_matrix[0]; }
 			Transform getInverse() const noexcept;
 			constexpr vector2df transformPoint(const f32 x, const f32 y) const noexcept;
 			constexpr vector2df transformPoint(const vector2df& point) const noexcept;
-			Rectf32 transformRect(const sf::FloatRect& rectangle) const noexcept;
+			Rectf32 transformRect(const Rectf32& rectangle) const noexcept;
 			Transform& combine(const Transform& transform) noexcept;
 			Transform& translate(const f32 x, const f32 y) noexcept;
 			Transform& translate(const vector2df& offset) noexcept;

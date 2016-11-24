@@ -17,13 +17,10 @@ namespace lib
 		inline constexpr Rect(const Rect&) = default;
 		inline Rect &operator=(const Rect&) = default;
 		inline Rect(const sf::Rect<T> &rh) noexcept : Rect{ rh.left,rh.top,rh.width,rh.height } {}
-//		inline Rect operator=(const sf::Rect<T> &rh) const noexcept { return Rect{ rh.left,rh.top,rh.width,rh.height }; }
 		template <typename U>
 		inline Rect(const Rect<U>& rectangle) :
 			left{ static_cast<T>(rectangle.left) }, top{ static_cast<T>(rectangle.top) },
 			width{ static_cast<T>(rectangle.width) }, height{ static_cast<T>(rectangle.height) } {}
-
-//		static_assert(std::is_move_constructible<Rect>(), "Rect<T> not movable");
 
 		inline vector2d<T> center() const { return vector2d<T> {left + (width / static_cast<T>(2)), 
 			top + (height / static_cast<T>(2))}; }
