@@ -6,16 +6,14 @@ namespace lib
 {
 	namespace draw
 	{
-		Renderizable::Renderizable(const std::string &name)
-			: HasName{ name }
+		Renderizable::Renderizable(const std::string &name, sf::PrimitiveType type, std::size_t vertexCount)
+			: HasName{ name }, m_vertices{ type, vertexCount }, m_bounds{}
 		{
 			LOG_CONSTRUCT("Name: " << name << " of type");
-
 		}
 
-		u32 Renderizable::draw( sf::RenderStates &states)
+		u32 Renderizable::draw( sf::RenderStates &)
 		{
-			states;
 			if (isVisible())
 			{
 //					window->draw()
@@ -25,9 +23,7 @@ namespace lib
 			return 0;
 		}
 
-		Renderizable::~Renderizable()
-		{
-		}
+		Renderizable::~Renderizable() = default;
 
 		void Renderizable::setPosition(const vector2df &pos, Alignment alignment)
 		{
@@ -89,5 +85,16 @@ namespace lib
 		{
 			setPosition(getPosition(), alignment);
 		}
+
+		Rectf32 Renderizable::getLocalBounds() const
+		{
+			return m_bounds;
+		}
+
+		Rectf32 Renderizable::getGlobalBounds() const
+		{
+			return getTransform().transformRect(getLocalBounds());
+		}
+
 	}
 }

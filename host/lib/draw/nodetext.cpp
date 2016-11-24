@@ -11,12 +11,12 @@ namespace lib
 	namespace draw
 	{
 		NodeText::NodeText(const std::string &name)
-			: Renderizable{ name }, m_string(), m_font(nullptr), m_characterSize(30), m_style(Regular),
-			m_color(255, 255, 255), m_vertices(sf::Triangles), m_bounds() {}
+			: Renderizable{ name, sf::Triangles }, m_string(), m_font(nullptr), m_characterSize(30), m_style(Regular),
+			m_color(255, 255, 255) {}
 
 		NodeText::NodeText(const std::string &name, const sf::String& string, const sf::Font& font, unsigned int characterSize) :
-			Renderizable{ name }, m_string(string), m_font(&font), m_characterSize(characterSize), m_style(Regular),
-			m_color(255, 255, 255), m_vertices(sf::Triangles), m_bounds() {}
+			Renderizable{ name, sf::Triangles }, m_string(string), m_font(&font), m_characterSize(characterSize), m_style(Regular),
+			m_color(255, 255, 255) {}
 
 		NodeText::~NodeText() {	}
 
@@ -77,7 +77,7 @@ namespace lib
 			return m_font;
 		}
 
-		unsigned int NodeText::getCharacterSize() const
+		u32 NodeText::getCharacterSize() const
 		{
 			return m_characterSize;
 		}
@@ -92,30 +92,29 @@ namespace lib
 			return m_color;
 		}
 
-		vector2df NodeText::findCharacterPos(std::size_t index) const
+		vector2df NodeText::findCharacterPos(const std::size_t cindex) const
 		{
 			// Make sure that we have a valid font
 			if (!m_font)
-				return vector2df();
+				return vector2df{};
 
 			// Adjust the index if it's out of range
-			if (index > m_string.length())
-				index = m_string.length();
+			decltype(cindex) index = (cindex > m_string.length() ? m_string.length() : cindex);
 
 			// Precompute the variables needed by the algorithm
-			bool  bold = (m_style & Bold) != 0;
-			float hspace = static_cast<float>(m_font->getGlyph(L' ', m_characterSize, bold).advance);
-			float vspace = static_cast<float>(m_font->getLineSpacing(m_characterSize));
+			const bool  bold = (m_style & Bold) != 0;
+			f32 hspace = m_font->getGlyph(L' ', m_characterSize, bold).advance;
+			f32 vspace = static_cast<float>(m_font->getLineSpacing(m_characterSize));
 
 			// Compute the position
 			vector2df position;
-			sf::Uint32 prevChar = 0;
+			std::string::value_type prevChar{ 0 };
 			for (std::size_t i = 0; i < index; ++i)
 			{
-				sf::Uint32 curChar = m_string[i];
+				auto curChar = m_string[i];
 
 				// Apply the kerning offset
-				position.x += static_cast<float>(m_font->getKerning(prevChar, curChar, m_characterSize));
+				position.x += m_font->getKerning(prevChar, curChar, m_characterSize);
 				prevChar = curChar;
 
 				// Handle special characters
@@ -127,23 +126,13 @@ namespace lib
 				}
 
 				// For regular characters, add the advance offset of the glyph
-				position.x += static_cast<float>(m_font->getGlyph(curChar, m_characterSize, bold).advance);
+				position.x += m_font->getGlyph(curChar, m_characterSize, bold).advance;
 			}
 
 			// Transform the position to global coordinates
 			position = getTransform().transformPoint(position);
 
 			return position;
-		}
-
-		Rectf32 NodeText::getLocalBounds() const
-		{
-			return m_bounds;
-		}
-
-		Rectf32 NodeText::getGlobalBounds() const
-		{
-			return getTransform().transformRect(getLocalBounds());
 		}
 
 		lib::u32 NodeText::draw(sf::RenderStates &states)

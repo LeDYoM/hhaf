@@ -19,17 +19,17 @@ namespace lib
 			Right = 2
 		};
 
-		class Renderizable : public lib::core::HasName, public IDrawable, public Transformable
+		class Renderizable : public core::HasName, public IDrawable, public Transformable
 		{
 		public:
-			explicit Renderizable(const std::string &name);
+			explicit Renderizable(const std::string &name, sf::PrimitiveType type, std::size_t vertexCount = 0);
 			virtual ~Renderizable();
 
 			virtual u32 draw(sf::RenderStates &states) override;
 			virtual void setColor(const sf::Color &color) = 0;
 
-			virtual Rectf32 getLocalBounds() const = 0;
-			virtual Rectf32 getGlobalBounds() const = 0;
+			virtual Rectf32 getLocalBounds() const;
+			virtual Rectf32 getGlobalBounds() const;
 
 			// Some useful shortcuts
 			using Transformable::setPosition;
@@ -37,6 +37,10 @@ namespace lib
 			void setPositionX(const float x, Alignment alignment = Alignment::Left);
 			void setPositionY(const float y, Alignment alignment = Alignment::Left);
 			void setAlignment(Alignment alignment);
+
+		protected:
+			sf::VertexArray m_vertices;
+			Rectf32 m_bounds;
 		};
 	}
 }

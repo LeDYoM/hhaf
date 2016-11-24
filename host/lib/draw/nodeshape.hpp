@@ -33,8 +33,6 @@ namespace lib
 			const sf::Texture* getTexture() const;
 			Rects32 getTextureRect() const;
 			const sf::Color& getFillColor() const;
-			Rectf32 getLocalBounds() const override;
-			Rectf32 getGlobalBounds() const override;
 
 		protected:
 			void update();
@@ -49,8 +47,6 @@ namespace lib
 			u32 m_pointCount;
 			Rects32 m_textureRect;
 			sf::Color m_fillColor;
-			sf::VertexArray m_vertices;
-			Rectf32 m_bounds;
 		};
 	}
 }

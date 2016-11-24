@@ -39,12 +39,10 @@ namespace lib
 			void setColor(const sf::Color& color);
 			const std::string & getString() const;
 			const sf::Font* getFont() const;
-			unsigned int getCharacterSize() const;
+			u32 getCharacterSize() const;
 			sf::Uint32 getStyle() const;
 			const sf::Color& getColor() const;
-			vector2df findCharacterPos(std::size_t index) const;
-			Rectf32 getLocalBounds() const override;
-			Rectf32 getGlobalBounds() const override;
+			vector2df findCharacterPos(const std::size_t index) const;
 		private:
 			virtual u32 draw(sf::RenderStates &states) override;
 			void ensureGeometryUpdate();
@@ -54,8 +52,6 @@ namespace lib
 			u32 m_characterSize;
 			sf::Uint32 m_style;
 			sf::Color m_color;
-			sf::VertexArray m_vertices;
-			Rectf32 m_bounds;
 		};
 	}
 }
