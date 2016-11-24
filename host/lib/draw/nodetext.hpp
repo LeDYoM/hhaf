@@ -55,7 +55,7 @@ namespace lib
 			sf::Uint32 m_style;
 			sf::Color m_color;
 			mutable sf::VertexArray m_vertices;
-			mutable sf::FloatRect m_bounds;
+			mutable Rectf32 m_bounds;
 			mutable bool m_geometryNeedUpdate;
 		};
 	}

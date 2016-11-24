@@ -144,7 +144,6 @@ namespace lib
 		Rectf32 NodeText::getLocalBounds() const
 		{
 			ensureGeometryUpdate();
-
 			return m_bounds;
 		}
 
@@ -180,7 +179,7 @@ namespace lib
 
 			// Clear the previous geometry
 			m_vertices.clear();
-			m_bounds = sf::FloatRect();
+			m_bounds = Rectf32{};
 
 			// No font: nothing to draw
 			if (!m_font)
