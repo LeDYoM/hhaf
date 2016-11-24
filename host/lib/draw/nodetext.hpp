@@ -43,8 +43,8 @@ namespace lib
 			sf::Uint32 getStyle() const;
 			const sf::Color& getColor() const;
 			vector2df findCharacterPos(std::size_t index) const;
-			sf::FloatRect getLocalBounds() const;
-			sf::FloatRect getGlobalBounds() const;
+			Rectf32 getLocalBounds() const override;
+			Rectf32 getGlobalBounds() const override;
 		private:
 			virtual u32 draw(sf::RenderStates &states) override;
 			void ensureGeometryUpdate() const;

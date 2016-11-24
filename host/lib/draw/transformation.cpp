@@ -66,7 +66,7 @@ namespace lib
 			return transformPoint(point.x, point.y);
 		}
 
-		sf::FloatRect Transform::transformRect(const sf::FloatRect& rectangle) const noexcept
+		Rectf32 Transform::transformRect(const sf::FloatRect& rectangle) const noexcept
 		{
 			// Transform the 4 corners of the rectangle
 			const std::array<vector2df,4> points =
@@ -82,7 +82,7 @@ namespace lib
 			f32 top = points[0].y;
 			f32 right = points[0].x;
 			f32 bottom = points[0].y;
-			for (const auto point : points)
+			for (const auto& point : points)
 			{
 				if (point.x < left)   left = point.x;
 				else if (point.x > right)  right = point.x;

@@ -141,14 +141,14 @@ namespace lib
 			return position;
 		}
 
-		sf::FloatRect NodeText::getLocalBounds() const
+		Rectf32 NodeText::getLocalBounds() const
 		{
 			ensureGeometryUpdate();
 
 			return m_bounds;
 		}
 
-		sf::FloatRect NodeText::getGlobalBounds() const
+		Rectf32 NodeText::getGlobalBounds() const
 		{
 			return getTransform().transformRect(getLocalBounds());
 		}
