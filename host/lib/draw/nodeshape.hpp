@@ -28,10 +28,10 @@ namespace lib
 			virtual vector2df getPoint(u32 index) const;
 			void setTexture(const sf::Texture *texture, bool resetSize=true, bool resetRect = false);
 
-			void setTextureRect(const sf::IntRect& rect);
+			void setTextureRect(const Rects32& rect);
 			virtual void setColor(const sf::Color& color) override;
 			const sf::Texture* getTexture() const;
-			const sf::IntRect& getTextureRect() const;
+			Rects32 getTextureRect() const;
 			const sf::Color& getFillColor() const;
 			Rectf32 getLocalBounds() const override;
 			Rectf32 getGlobalBounds() const override;
@@ -47,7 +47,7 @@ namespace lib
 			const sf::Texture* m_texture;
 			vector2df _size;
 			u32 m_pointCount;
-			sf::IntRect m_textureRect;
+			Rects32 m_textureRect;
 			sf::Color m_fillColor;
 			sf::VertexArray m_vertices;
 			Rectf32 m_bounds;

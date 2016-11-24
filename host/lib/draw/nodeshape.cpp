@@ -115,8 +115,8 @@ namespace lib
 			if (texture)
 			{
 				// Recompute the texture area if requested, or if there was no texture & rect before
-				if (resetRect || (!m_texture && (m_textureRect == sf::IntRect())))
-					setTextureRect(sf::IntRect(0, 0, texture->getSize().x, texture->getSize().y));
+				if (resetRect || (!m_texture && (m_textureRect == Rects32{})))
+					setTextureRect({ 0, 0, static_cast<s32>(texture->getSize().x), static_cast<s32>(texture->getSize().y) });
 			}
 
 			// Assign the new texture
@@ -129,13 +129,13 @@ namespace lib
 			return m_texture;
 		}
 
-		void NodeShape::setTextureRect(const sf::IntRect& rect)
+		void NodeShape::setTextureRect(const Rects32& rect)
 		{
 			m_textureRect = rect;
 			updateTexCoords();
 		}
 
-		const sf::IntRect& NodeShape::getTextureRect() const
+		Rects32 NodeShape::getTextureRect() const
 		{
 			return m_textureRect;
 		}
