@@ -16,7 +16,7 @@ namespace lib
 		inline constexpr Rect(const vector2d<T>& position, const vector2d<T>& size) : Rect{ position.x, position.y, size.x, size.y } {}
 		inline constexpr Rect(const Rect&) = default;
 		inline Rect &operator=(const Rect&) = default;
-		inline Rect(const sf::Rect<T> &rh) noexcept : Rect{ rh.left,rh.top,rh.width,rh.height } {}
+		inline constexpr Rect(const sf::Rect<T> &rh) noexcept : Rect{ rh.left,rh.top,rh.width,rh.height } {}
 		template <typename U>
 		inline Rect(const Rect<U>& rectangle) :
 			left{ static_cast<T>(rectangle.left) }, top{ static_cast<T>(rectangle.top) },

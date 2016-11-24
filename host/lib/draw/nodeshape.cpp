@@ -153,7 +153,7 @@ namespace lib
 
 		Rectf32 NodeShape::getLocalBounds() const
 		{
-			return static_cast<const Rectf32>(m_bounds);
+			return m_bounds;
 		}
 
 		Rectf32 NodeShape::getGlobalBounds() const

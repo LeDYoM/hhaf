@@ -25,7 +25,7 @@ namespace lib
 			const vector2df &getSize() const;
 			u32 getPointCount() const;
 			void setPointCount(lib::u32 numPoints);
-			virtual vector2df getPoint(lib::u32 index) const;
+			virtual vector2df getPoint(u32 index) const;
 			void setTexture(const sf::Texture *texture, bool resetSize=true, bool resetRect = false);
 
 			void setTextureRect(const sf::IntRect& rect);
@@ -50,7 +50,7 @@ namespace lib
 			sf::IntRect m_textureRect;
 			sf::Color m_fillColor;
 			sf::VertexArray m_vertices;
-			sf::FloatRect m_bounds;
+			Rectf32 m_bounds;
 		};
 	}
 }

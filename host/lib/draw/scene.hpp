@@ -40,8 +40,8 @@ namespace lib
 			virtual void update() = 0;
 
 			virtual const vector2df getDefaultSizeView() = 0;
-			const vector2df getCoordinatesToCenter(const sf::FloatRect &coordinates) const;
-			const vector2df getCenterCoordinates() const;
+			vector2df getCoordinatesToCenter(const Rectf32 &coordinates) const;
+			vector2df getCenterCoordinates() const;
 
 			inline bool isActiveScene() const noexcept { return m_isActiveScene; }
 			inline void addSubscription(sptr<lib::events::EventSubscription> &&es) noexcept { eventConnector.addSubscription(std::move(es)); }
