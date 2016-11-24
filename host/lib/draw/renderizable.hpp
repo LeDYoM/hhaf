@@ -28,8 +28,8 @@ namespace lib
 			virtual u32 draw(sf::RenderStates &states) override;
 			virtual void setColor(const sf::Color &color) = 0;
 
-			virtual Rectf32 getLocalBounds() const = 0;
-			virtual Rectf32 getGlobalBounds() const = 0;
+			virtual sf::FloatRect getLocalBounds() const = 0;
+			virtual sf::FloatRect getGlobalBounds() const = 0;
 
 			// Some useful shortcuts
 			using Transformable::setPosition;
