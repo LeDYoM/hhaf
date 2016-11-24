@@ -12,11 +12,11 @@ namespace lib
 	{
 		NodeText::NodeText(const std::string &name)
 			: Renderizable{ name }, m_string(), m_font(nullptr), m_characterSize(30), m_style(Regular),
-			m_color(255, 255, 255), m_vertices(sf::Triangles), m_bounds(), m_geometryNeedUpdate(false) {}
+			m_color(255, 255, 255), m_vertices(sf::Triangles), m_bounds() {}
 
 		NodeText::NodeText(const std::string &name, const sf::String& string, const sf::Font& font, unsigned int characterSize) :
 			Renderizable{ name }, m_string(string), m_font(&font), m_characterSize(characterSize), m_style(Regular),
-			m_color(255, 255, 255), m_vertices(sf::Triangles), m_bounds(), m_geometryNeedUpdate(true) {}
+			m_color(255, 255, 255), m_vertices(sf::Triangles), m_bounds() {}
 
 		NodeText::~NodeText() {	}
 
@@ -25,7 +25,7 @@ namespace lib
 			if (m_string != string)
 			{
 				m_string = string;
-				m_geometryNeedUpdate = true;
+				ensureGeometryUpdate();
 			}
 		}
 
@@ -34,16 +34,16 @@ namespace lib
 			if (m_font != &font)
 			{
 				m_font = &font;
-				m_geometryNeedUpdate = true;
+				ensureGeometryUpdate();
 			}
 		}
 
-		void NodeText::setCharacterSize(unsigned int size)
+		void NodeText::setCharacterSize(u32 size)
 		{
 			if (m_characterSize != size)
 			{
 				m_characterSize = size;
-				m_geometryNeedUpdate = true;
+				ensureGeometryUpdate();
 			}
 		}
 
@@ -52,7 +52,7 @@ namespace lib
 			if (m_style != style)
 			{
 				m_style = style;
-				m_geometryNeedUpdate = true;
+				ensureGeometryUpdate();
 			}
 		}
 
@@ -62,13 +62,8 @@ namespace lib
 			{
 				m_color = color;
 
-				// Change vertex colors directly, no need to update whole geometry
-				// (if geometry is updated anyway, we can skip this step)
-				if (!m_geometryNeedUpdate)
-				{
-					for (std::size_t i = 0; i < m_vertices.getVertexCount(); ++i)
-						m_vertices[i].color = m_color;
-				}
+				for (std::size_t i = 0; i < m_vertices.getVertexCount(); ++i)
+					m_vertices[i].color = m_color;
 			}
 		}
 
@@ -143,7 +138,6 @@ namespace lib
 
 		Rectf32 NodeText::getLocalBounds() const
 		{
-			ensureGeometryUpdate();
 			return m_bounds;
 		}
 
@@ -168,15 +162,8 @@ namespace lib
 			return 0;
 		}
 
-		void NodeText::ensureGeometryUpdate() const
+		void NodeText::ensureGeometryUpdate()
 		{
-			// Do nothing, if geometry has not changed
-//				if (!m_geometryNeedUpdate)
-//					return;
-
-			// Mark geometry as updated
-			m_geometryNeedUpdate = false;
-
 			// Clear the previous geometry
 			m_vertices.clear();
 			m_bounds = Rectf32{};

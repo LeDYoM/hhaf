@@ -34,7 +34,7 @@ namespace lib
 			NodeText(const std::string &name, const sf::String& string, const sf::Font& font, unsigned int characterSize = 30);
 			void setString(const std::string &string);
 			void setFont(const sf::Font& font);
-			void setCharacterSize(unsigned int size);
+			void setCharacterSize(u32 size);
 			void setStyle(sf::Uint32 style);
 			void setColor(const sf::Color& color);
 			const std::string & getString() const;
@@ -47,16 +47,15 @@ namespace lib
 			Rectf32 getGlobalBounds() const override;
 		private:
 			virtual u32 draw(sf::RenderStates &states) override;
-			void ensureGeometryUpdate() const;
+			void ensureGeometryUpdate();
 
 			std::string m_string;
 			const sf::Font* m_font;
-			unsigned int m_characterSize;
+			u32 m_characterSize;
 			sf::Uint32 m_style;
 			sf::Color m_color;
-			mutable sf::VertexArray m_vertices;
-			mutable Rectf32 m_bounds;
-			mutable bool m_geometryNeedUpdate;
+			sf::VertexArray m_vertices;
+			Rectf32 m_bounds;
 		};
 	}
 }

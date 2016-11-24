@@ -112,11 +112,11 @@ namespace lib
 
 		void NodeShape::setTexture_(const sf::Texture* texture, bool resetRect)
 		{
-			if (texture)
-			{
+			if (texture) {
 				// Recompute the texture area if requested, or if there was no texture & rect before
-				if (resetRect || (!m_texture && (m_textureRect == Rects32{})))
+				if (resetRect || (!m_texture && m_textureRect == Rects32{})) {
 					setTextureRect({ 0, 0, static_cast<s32>(texture->getSize().x), static_cast<s32>(texture->getSize().y) });
+				}
 			}
 
 			// Assign the new texture
