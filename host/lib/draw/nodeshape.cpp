@@ -151,12 +151,12 @@ namespace lib
 			return m_fillColor;
 		}
 
-		sf::FloatRect NodeShape::getLocalBounds() const
+		Rectf32 NodeShape::getLocalBounds() const
 		{
 			return m_bounds;
 		}
 
-		sf::FloatRect NodeShape::getGlobalBounds() const
+		Rectf32 NodeShape::getGlobalBounds() const
 		{
 			return getTransform().transformRect(getLocalBounds());
 		}

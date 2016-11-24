@@ -294,67 +294,69 @@ namespace zoper
 	void GameData::generateTokenZones()
 	{
 		// From left to right
-		_tokenZones[0].zone.setLeft(0);
-		_tokenZones[0].zone.setTop(centerRect.begin.y)
-		_tokenZones[0].zone.size.x = centerRect.begin.x - 1;
-		_tokenZones[0].zone.size.y = (centerRect.begin.y + centerRect.size.y) - 1;
+		_tokenZones[0].zone = Rectu32{ 0,centerRect.top,centerRect.left - 1, centerRect.bottom() - 1 };
 		_tokenZones[0].direction = Direction::DirectionData::Right;
 
 		// From top to bottom
-		_tokenZones[1].zone.begin.x = centerRect.begin.x;
-		_tokenZones[1].zone.begin.y = 0;
-		_tokenZones[1].zone.size.x = (centerRect.begin.x + centerRect.size.x) - 1;
-		_tokenZones[1].zone.size.y = centerRect.begin.y - 1;
+		_tokenZones[1].zone = Rectu32{ centerRect.left , 0, centerRect.right() - 1, centerRect.top - 1 };
+//		_tokenZones[1].zone.begin.x = centerRect.begin.x;
+//		_tokenZones[1].zone.begin.y = 0;
+//		_tokenZones[1].zone.size.x = (centerRect.begin.x + centerRect.size.x) - 1;
+//		_tokenZones[1].zone.size.y = centerRect.begin.y - 1;
 		_tokenZones[1].direction = Direction::DirectionData::Down;
 
 		// From right to left
-		_tokenZones[2].zone.begin.x = size.x - 1;
-		_tokenZones[2].zone.begin.y = centerRect.begin.y;
-		_tokenZones[2].zone.size.x = (centerRect.begin.x + centerRect.size.x);
-		_tokenZones[2].zone.size.y = (centerRect.begin.y + centerRect.size.y) - 1;
+		_tokenZones[2].zone = Rectu32{ size.x - 1 , centerRect.top,  centerRect.right(), centerRect.bottom() - 1 };
+//		_tokenZones[2].zone.begin.x = size.x - 1;
+//		_tokenZones[2].zone.begin.y = centerRect.begin.y;
+//		_tokenZones[2].zone.size.x = (centerRect.begin.x + centerRect.size.x);
+//		_tokenZones[2].zone.size.y = (centerRect.begin.y + centerRect.size.y) - 1;
 		_tokenZones[2].direction = Direction::DirectionData::Left;
 
 		// From bottom to top
-		_tokenZones[3].zone.begin.x = centerRect.begin.x;
-		_tokenZones[3].zone.begin.y = size.y - 1;
-		_tokenZones[3].zone.size.x = (centerRect.begin.x + centerRect.size.x) - 1;
-		_tokenZones[3].zone.size.y = centerRect.begin.y + centerRect.size.y;
+		_tokenZones[3].zone = Rectu32{ centerRect.left , size.y, centerRect.right() - 1, centerRect.bottom() - 1 };
+//		_tokenZones[3].zone.begin.x = centerRect.begin.x;
+//		_tokenZones[3].zone.begin.y = size.y - 1;
+//		_tokenZones[3].zone.size.x = (centerRect.begin.x + centerRect.size.x) - 1;
+//		_tokenZones[3].zone.size.y = centerRect.begin.y + centerRect.size.y;
 		_tokenZones[3].direction = Direction::DirectionData::Up;
 
 		for (lib::u32 i = 0; i < NUMWAYS; ++i)
 		{
-			_tokenZones[i].size = _tokenZones[i].direction.isHorizontal() ? centerRect.size.y : centerRect.size.x;
+			_tokenZones[i].size = _tokenZones[i].direction.isHorizontal() ? centerRect.size().y : centerRect.size().x;
 		}
 	}
 
 	void GameScene::generateNextToken()
 	{
+		using namespace lib;
+
 		const GameData::TokenZone &currentTokenZone = _gameData._tokenZones[_nextTokenPart];
 
 		LOG_DEBUG("NextTokenPart: " << std::to_string(_nextTokenPart));
-		LOG_DEBUG("x1: " << currentTokenZone.zone.begin.x << " y1: " << currentTokenZone.zone.begin.y << 
-			" x2: " << currentTokenZone.zone.size.x << " y2: " << currentTokenZone.zone.size.y);
+		LOG_DEBUG("left: " << currentTokenZone.zone.left << " top: " << currentTokenZone.zone.top << 
+			" size: " << currentTokenZone.zone.size().x << " y2: " << currentTokenZone.zone.size().y);
 
-		lib::u32 newToken = 0;// getRandomNumer(NUMTOKENS);
+		u32 newToken = 0;// getRandomNumer(NUMTOKENS);
 
-		lib::u32 sizep = 0;// getRandomNumer(currentTokenZone.size);
+		u32 sizep = 0;// getRandomNumer(currentTokenZone.size);
 
-		lib::u32 newX = currentTokenZone.zone.begin.x + (currentTokenZone.direction.isHorizontal() ? 0 : sizep);
-		lib::u32 newY = currentTokenZone.zone.begin.y + (currentTokenZone.direction.isHorizontal() ? sizep : 0);
+		u32 newX = currentTokenZone.zone.left + (currentTokenZone.direction.isHorizontal() ? 0 : sizep);
+		lib::u32 newY = currentTokenZone.zone.top + (currentTokenZone.direction.isHorizontal() ? sizep : 0);
 		LOG_DEBUG("New tile pos: " << newX << "," << newY);
 
-		lib::vector2du32 loopPosition{ (currentTokenZone.direction.isHorizontal() ? currentTokenZone.zone.size.x : newX),
-			(currentTokenZone.direction.isHorizontal() ? newY : currentTokenZone.zone.size.y) };
+		vector2du32 loopPosition{ (currentTokenZone.direction.isHorizontal() ? currentTokenZone.zone.size().x : newX),
+			(currentTokenZone.direction.isHorizontal() ? newY : currentTokenZone.zone.size().y) };
 //		lib::vector2du32 destPosition;
 		LOG_DEBUG("Starting at: " << loopPosition.x << "," << loopPosition.y);
 
 		// Now, we have the data for the new token generated, but first, lets start to move the row or col.
 		Direction loopDirection = currentTokenZone.direction.negate();
-		for_each_token_in_line(loopPosition, loopDirection, [this](const lib::vector2du32 &loopPosition, const Direction &direction)
+		for_each_token_in_line(loopPosition, loopDirection, [this](const vector2du32 &loopPosition, const Direction &direction)
 		{
 			if (!p_boardModel->tileEmpty(loopPosition))
 			{
-				lib::vector2du32 dest = direction.negate().applyToVector(loopPosition);
+				vector2du32 dest = direction.negate().applyToVector(loopPosition);
 				p_boardModel->moveTile(loopPosition, dest);
 
 				if (pointInCenter(dest))
@@ -365,7 +367,7 @@ namespace zoper
 			return true;
 		});
 		// Set the new token
-		addNewToken(lib::vector2du32{ newX, newY }, newToken);
+		addNewToken(vector2du32{ newX, newY }, newToken);
 		_nextTokenPart = (_nextTokenPart + 1) % NUMWAYS;
 
 		EXECUTE_IN_DEBUG(_debugDisplayBoard());
@@ -392,10 +394,10 @@ namespace zoper
 
 	void GameScene::addPlayer()
 	{
-		LOG_DEBUG("Adding player tile at " << _gameData.centerRect.begin.x << "," << _gameData.centerRect.begin.y);
+		LOG_DEBUG("Adding player tile at " << _gameData.centerRect.left << "," << _gameData.centerRect.top);
 		__ASSERT(!p_player, "Player already initialized");
 		// Create the player instance
-		p_player = lib::sptr<Player>(new Player(lib::vector2du32(_gameData.centerRect.begin),tileSize()));
+		p_player = lib::sptr<Player>(new Player(lib::vector2du32(_gameData.centerRect.leftTop()),tileSize()));
 
 		// Add it to the board and to the scene nodes
 		p_boardModel->setTile(p_player->boardPosition(), std::dynamic_pointer_cast<lib::board::ITile>(_mainBoardrg->addRenderizable(p_player)));
@@ -532,10 +534,10 @@ namespace zoper
 	{
 		if (p_boardModel->validCoords(position))
 		{
-			if (position.x < _gameData.centerRect.begin.x || position.y < _gameData.centerRect.begin.y)
+			if (position.x < _gameData.centerRect.left || position.y < _gameData.centerRect.top)
 				return false;
 
-			if (position.x >= (_gameData.centerRect.begin.x + _gameData.centerRect.size.x) || position.y >= (_gameData.centerRect.begin.y + _gameData.centerRect.size.y))
+			if (position.x >= _gameData.centerRect.right() || position.y >= _gameData.centerRect.bottom())
 				return false;
 
 			return true;

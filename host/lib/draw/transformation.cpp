@@ -66,7 +66,7 @@ namespace lib
 			return transformPoint(point.x, point.y);
 		}
 
-		Rect<f32> Transform::transformRect(const sf::FloatRect& rectangle) const noexcept
+		Rect<f32> Transform::transformRect(const Rectf32& rectangle) const noexcept
 		{
 			// Transform the 4 corners of the rectangle
 			const std::array<vector2df,4> points =

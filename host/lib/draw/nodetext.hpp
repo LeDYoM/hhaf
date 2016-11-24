@@ -43,8 +43,8 @@ namespace lib
 			sf::Uint32 getStyle() const;
 			const sf::Color& getColor() const;
 			vector2df findCharacterPos(std::size_t index) const;
-			sf::FloatRect getLocalBounds() const;
-			sf::FloatRect getGlobalBounds() const;
+			Rectf32 getLocalBounds() const;
+			Rectf32 getGlobalBounds() const;
 		private:
 			virtual u32 draw(sf::RenderStates &states) override;
 			void ensureGeometryUpdate() const;
@@ -55,7 +55,7 @@ namespace lib
 			sf::Uint32 m_style;
 			sf::Color m_color;
 			mutable sf::VertexArray m_vertices;
-			mutable sf::FloatRect m_bounds;
+			mutable Rectf32 m_bounds;
 			mutable bool m_geometryNeedUpdate;
 		};
 	}

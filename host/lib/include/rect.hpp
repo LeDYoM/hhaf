@@ -2,6 +2,7 @@
 #define LIB_RECT_INCLUDE_HPP__
 
 #include "types.hpp"
+#include <SFML/Graphics/Rect.hpp>
 
 namespace lib
 {
@@ -10,10 +11,12 @@ namespace lib
 	{
 		T left, top, width, height;
 
-		inline constexpr Rect(T rectLeft, T rectTop, T rectWidth, T rectHeight) : left{ rectLeft }, top{ rectTop }, width{ rectWidth }, height{ rectHeight } noexcept { }
-		inline constexpr explicit Rect() : Rect{ {}, {}, {}, {} } noexcept {}
-		inline Rect(const vector2d<T>& position, const vector2d<T>& size) : Rect{ position.x, position.y, size.x, size.y } {}
-		inline Rect(const Rect&) = default;
+		inline constexpr Rect(T rectLeft, T rectTop, T rectWidth, T rectHeight) noexcept : left{ rectLeft }, top{ rectTop }, width{ rectWidth }, height{ rectHeight } { }
+		inline constexpr explicit Rect() noexcept : Rect{ {}, {}, {}, {} } {}
+		inline constexpr Rect(const vector2d<T>& position, const vector2d<T>& size) : Rect{ position.x, position.y, size.x, size.y } {}
+		inline constexpr Rect(const Rect&) = default;
+		inline Rect &operator=(const Rect&) = default;
+		inline Rect operator=(const sf::Rect<T> &rh) const noexcept { return Rect{ rh.left,rh.top,rh.width,rh.height }; }
 		template <typename U>
 		inline Rect(const Rect<U>& rectangle) :
 			left{ static_cast<T>(rectangle.left) }, top{ static_cast<T>(rectangle.top) },
@@ -98,6 +101,7 @@ namespace lib
 		inline vector2d<T> rightBottom() const { return vector2d<T>{right(), bottom()}; }
 		inline vector2d<T> rightTop() const { return vector2d<T>{right(), top}; }
 		inline vector2d<T> leftBottom() const { return vector2d<T>{left, bottom()}; }
+		inline explicit operator sf::Rect<T>() const { return sf::Rect<T>(left, top, width, height); }
 	};
 
 	using Rects32 = lib::Rect<s32>;

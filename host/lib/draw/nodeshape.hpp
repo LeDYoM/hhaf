@@ -3,6 +3,7 @@
 
 #include <lib/include/types.hpp>
 #include <lib/include/vector2d.hpp>
+#include <lib/include/rect.hpp>
 #include <SFML/Graphics.hpp>
 #include "renderizable.hpp"
 
@@ -33,10 +34,8 @@ namespace lib
 			const sf::Texture* getTexture() const;
 			const sf::IntRect& getTextureRect() const;
 			const sf::Color& getFillColor() const;
-			const sf::Color& getOutlineColor() const;
-			float getOutlineThickness() const;
-			sf::FloatRect getLocalBounds() const override;
-			sf::FloatRect getGlobalBounds() const override;
+			Rectf32 getLocalBounds() const override;
+			Rectf32 getGlobalBounds() const override;
 
 		protected:
 			void update();
@@ -52,7 +51,7 @@ namespace lib
 			sf::IntRect m_textureRect;
 			sf::Color m_fillColor;
 			sf::VertexArray m_vertices;
-			sf::FloatRect m_bounds;
+			Rectf32 m_bounds;
 		};
 	}
 }
