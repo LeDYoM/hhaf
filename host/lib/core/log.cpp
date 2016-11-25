@@ -4,11 +4,9 @@
 
 #ifdef __USE_LOGS__
 
-struct LogMessage
-{
-	LogType logType;
-	std::string message;
-};
+using log_output_stream_t = std::ostringstream;
+
+log_output_stream_t log_output_stream;
 
 #if defined(_MSC_VER) || defined(__BORLANDC__)
 	#define WIN32_LEAN_AND_MEAN
@@ -29,21 +27,18 @@ void initLog()
 #endif
 }
 
-void commitLog(const LogMessage &message)
+void commitLog()
 {
-	const auto&& str = std::move(message.message);
-	const LogType lt{ message.logType };
+	auto outstr(log_output_stream.str());
 #ifdef __LOGFILE__
 	if (logFile.is_open())
-		logFile << str;
+		logFile << outstr;
 #endif
-	if (lt == LogType::Error || lt == LogType::Warning)
-		std::cerr << str;
-	else
-		std::cout << str;
+	std::cout << outstr;
 #if defined(_MSC_VER) || defined(__BORLANDC__)
-	OutputDebugString(str.c_str());
+	OutputDebugString(outstr.c_str());
 #endif
+	log_output_stream.clear();
 }
 
 #ifdef __MULTITHREAD_LOG__
@@ -91,9 +86,9 @@ void commitLog(const LogMessage &message)
 
 	std::thread t1(doLogOutput);
 #else
-void logOutput(const LogType lt, const std::string&str)
+void logOutput()
 {
-	commitLog(LogMessage{ lt,str });
+	commitLog();
 }
 #endif
 
