@@ -17,8 +17,6 @@
 #include <lib/core/resource.hpp>
 #include <lib/core/host.hpp>
 #include <lib/core/events/inputevent.hpp>
-#include <memory>
-#include <functional>
 
 using namespace lib;
 
@@ -299,39 +297,24 @@ namespace zoper
 
 		// From top to bottom
 		_tokenZones[1].zone = Rectu32{ centerRect.left , 0, centerRect.right() - 1, centerRect.top - 1 };
-//		_tokenZones[1].zone.begin.x = centerRect.begin.x;
-//		_tokenZones[1].zone.begin.y = 0;
-//		_tokenZones[1].zone.size.x = (centerRect.begin.x + centerRect.size.x) - 1;
-//		_tokenZones[1].zone.size.y = centerRect.begin.y - 1;
 		_tokenZones[1].direction = Direction::DirectionData::Down;
 
 		// From right to left
 		_tokenZones[2].zone = Rectu32{ size.x - 1 , centerRect.top,  centerRect.right(), centerRect.bottom() - 1 };
-//		_tokenZones[2].zone.begin.x = size.x - 1;
-//		_tokenZones[2].zone.begin.y = centerRect.begin.y;
-//		_tokenZones[2].zone.size.x = (centerRect.begin.x + centerRect.size.x);
-//		_tokenZones[2].zone.size.y = (centerRect.begin.y + centerRect.size.y) - 1;
 		_tokenZones[2].direction = Direction::DirectionData::Left;
 
 		// From bottom to top
 		_tokenZones[3].zone = Rectu32{ centerRect.left , size.y, centerRect.right() - 1, centerRect.bottom() - 1 };
-//		_tokenZones[3].zone.begin.x = centerRect.begin.x;
-//		_tokenZones[3].zone.begin.y = size.y - 1;
-//		_tokenZones[3].zone.size.x = (centerRect.begin.x + centerRect.size.x) - 1;
-//		_tokenZones[3].zone.size.y = centerRect.begin.y + centerRect.size.y;
 		_tokenZones[3].direction = Direction::DirectionData::Up;
 
-		for (lib::u32 i = 0; i < NUMWAYS; ++i)
-		{
+		for (u32 i = 0; i < NUMWAYS; ++i) {
 			_tokenZones[i].size = _tokenZones[i].direction.isHorizontal() ? centerRect.size().y : centerRect.size().x;
 		}
 	}
 
 	void GameScene::generateNextToken()
 	{
-		using namespace lib;
-
-		const GameData::TokenZone &currentTokenZone = _gameData._tokenZones[_nextTokenPart];
+		const GameData::TokenZone &currentTokenZone{ _gameData._tokenZones[_nextTokenPart] };
 
 		LOG_DEBUG("NextTokenPart: " << std::to_string(_nextTokenPart));
 		LOG_DEBUG("left: " << currentTokenZone.zone.left << " top: " << currentTokenZone.zone.top << 
@@ -417,8 +400,6 @@ namespace zoper
 
 	void zoper::GameScene::registerEvents()
 	{
-		using namespace lib;
-
 		addSubscription(events::KeyPressedEvent::subscribe([this](const events::Event&ev) {
 			LOG_DEBUG("Key pressed in GameScene");
 			const auto &kEvent{ dynamic_cast<const events::KeyPressedEvent&>(ev) };
