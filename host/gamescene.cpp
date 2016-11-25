@@ -18,10 +18,11 @@
 #include <lib/core/host.hpp>
 #include <lib/core/events/inputevent.hpp>
 
-using namespace lib;
-
 namespace zoper
 {
+	using namespace lib;
+	using namespace lib::draw;
+
 	GameScene::GameScene()
 		: Scene("GameScene"), Configuration("config.cfg"), _gameConfig{ ":NextGame" }
 	{
@@ -127,7 +128,7 @@ namespace zoper
 		_gameText->setPosition({ sceneCenter.x - (_gameBoundingBox.width / 2.0f), sceneCenter.y - _gameBoundingBox.height });
 		_overText->setPosition({ sceneCenter.x - (_overBoundingBox.width / 2.0f), sceneCenter.y });
 
-		_pauseText->setPositionWithAlignment(lib::vector2df{ 1000.0f, 1000.0f }, lib::draw::Alignment::Center);
+		_pauseText->setPositionWithAlignment(vector2df{ 1000.0f, 1000.0f }, NodeText::Alignment::Center);
 
 	}
 

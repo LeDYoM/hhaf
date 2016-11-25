@@ -320,14 +320,14 @@ namespace lib
 			switch (alignment)
 			{
 			default:
-			case lib::draw::Alignment::Left:
+			case Alignment::Left:
 				setPosition(pos);
 				break;
-			case lib::draw::Alignment::Center:
-				setPosition(vector2df{ pos.x - (getLocalBounds().width / 2.0f), pos.y - (getLocalBounds().height / 2.0f) });
+			case Alignment::Center:
+				setPosition({ pos.x - (getLocalBounds().width / 2.0f), pos.y - (getLocalBounds().height / 2.0f) });
 				break;
-			case lib::draw::Alignment::Right:
-				setPosition(vector2df{ pos.x - (getLocalBounds().width), pos.y - (getLocalBounds().height) });
+			case Alignment::Right:
+				setPosition({ pos.x - (getLocalBounds().width), pos.y - (getLocalBounds().height) });
 				break;
 			}
 		}
@@ -338,17 +338,17 @@ namespace lib
 			switch (alignment)
 			{
 			default:
-			case lib::draw::Alignment::Left:
+			case Alignment::Left:
 				setPosition(vector2df{ x, position.y });
 				break;
-			case lib::draw::Alignment::Center:
+			case Alignment::Center:
 			{
 				auto a = vector2df{ x - (getLocalBounds().width / 2.0f), position.y };
-				setPosition(vector2df{ x - (getLocalBounds().width / 2.0f), position.y });
+				setPosition({ x - (getLocalBounds().width / 2.0f), position.y });
 			}
 			break;
-			case lib::draw::Alignment::Right:
-				setPosition(vector2df{ x - (getLocalBounds().width), position.y });
+			case Alignment::Right:
+				setPosition({ x - (getLocalBounds().width), position.y });
 				break;
 			}
 		}
@@ -359,14 +359,14 @@ namespace lib
 			switch (alignment)
 			{
 			default:
-			case lib::draw::Alignment::Left:
-				setPosition(vector2df{ position.x, y });
+			case Alignment::Left:
+				setPosition({ position.x, y });
 				break;
-			case lib::draw::Alignment::Center:
-				setPosition(vector2df{ position.x, y - (getLocalBounds().height / 2.0f) });
+			case Alignment::Center:
+				setPosition({ position.x, y - (getLocalBounds().height / 2.0f) });
 				break;
-			case lib::draw::Alignment::Right:
-				setPosition(vector2df{ position.x, y - (getLocalBounds().height) });
+			case Alignment::Right:
+				setPosition({ position.x, y - (getLocalBounds().height) });
 				break;
 			}
 		}

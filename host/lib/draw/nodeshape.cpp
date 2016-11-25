@@ -30,9 +30,9 @@ namespace lib
 			update();
 		}
 
-		void NodeShape::setSize(const float size)
+		void NodeShape::setSize(const f32 size)
 		{
-			setSize(vector2df(size,size));
+			setSize({ size,size });
 		}
 
 		const vector2df & NodeShape::getSize() const
@@ -45,13 +45,13 @@ namespace lib
 			return m_pointCount;
 		}
 
-		void NodeShape::setPointCount(lib::u32 numPoints)
+		void NodeShape::setPointCount(const u32 numPoints)
 		{
 			m_pointCount = numPoints;
 			update();
 		}
 			
-		vector2df NodeShape::getPoint(unsigned int index) const
+		vector2df NodeShape::getPoint(const u32 index) const
 		{
 			// TO DO:
 			// Optimize and cache it

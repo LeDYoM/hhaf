@@ -37,14 +37,11 @@ namespace lib
 
 			MenuManager *menuManager() const;
 
-			u32 getSelectedSubLabel(u32 index) const;
-			void setSelectedSubLabel(u32 index, u32 subIndex);
-
-			void onAddedToScene() override {}
+			u32 selectedSubLabel(const u32 index) const;
 
 		private:
 			void updateSubLabelText(const u32 index);
-			void cursorSelectItem(u32 nodeIndex);
+			void cursorSelectItem(const u32 nodeIndex);
 			void goDown();
 			void goUp();
 			void goLeft();

@@ -14,6 +14,8 @@ namespace zoper
 {
 	namespace zmenu
 	{
+		using namespace lib;
+		using namespace lib::draw;
 		KeyRedefinitionMenu::KeyRedefinitionMenu(lib::draw::RenderGroup *parent)
 			: lib::draw::RenderGroup{ ClassName, parent }
 		{
@@ -30,7 +32,7 @@ namespace zoper
 			_nextKeyText->setCharacterSize(90);
 			_nextKeyText->setString(" ");
 			_nextKeyText->setColor(sf::Color::Blue);
-			_nextKeyText->setPositionWithAlignment({ 1000.0f, 1000.0f }, lib::draw::Alignment::Center);
+			_nextKeyText->setPositionWithAlignment({ 1000.0f, 1000.0f }, NodeText::Alignment::Center);
 			_indexKey = 0;
 			setTextForKey();
 		}
@@ -46,7 +48,7 @@ namespace zoper
 			else
 			{
 				_nextKeyText->setString("Press key for "+getKeyNameStr(_indexKey));
-				_nextKeyText->setPositionWithAlignment({ 1000.0,1000.0 }, lib::draw::Alignment::Center);
+				_nextKeyText->setPositionWithAlignment({ 1000.0,1000.0 }, NodeText::Alignment::Center);
 			}
 		}
 

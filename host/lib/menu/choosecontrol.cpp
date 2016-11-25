@@ -26,7 +26,7 @@ namespace lib
 
 			const bool menuType{ labels.empty()?false:labels[0]->_subOptionsLabels.empty() };
 
-			draw::Alignment normalLabelAlign{ menuType ? draw::Alignment::Center : draw::Alignment::Left };
+			auto normalLabelAlign( menuType ? draw::NodeText::Alignment::Center : draw::NodeText::Alignment::Left );
 			u32 count{ 0 };
 			vector2df currentPos{ 0.0f, 0.0f };
 			for (const auto label : labels)
@@ -49,7 +49,7 @@ namespace lib
 					subtext->setCharacterSize(cTheme.chSize);
 					subtext->setString(labels[count]->_subOptionsLabels[labels[count]->_startValueIndex]);
 					subtext->setColor(cTheme.textColor);
-					subtext->setPositionWithAlignmentX(1800, lib::draw::Alignment::Right);
+					subtext->setPositionWithAlignmentX(1800, draw::NodeText::Alignment::Right);
 					subtext->setPositionY(currentPos.y);
 				}
 
@@ -68,34 +68,27 @@ namespace lib
 			return dynamic_cast<MenuManager*>(parent());
 		}
 
-		lib::u32 ChooseControl::getSelectedSubLabel(u32 index) const
+		u32 ChooseControl::selectedSubLabel(const u32 index) const
 		{
 			__ASSERT(index < m_labelData.size(), "Invalid index");
 			return m_labelData[index].selectedSublabel;
 		}
 
-		void ChooseControl::setSelectedSubLabel(u32 index, u32 subIndex)
-		{
-			__ASSERT(index < m_labelData.size(), "Invalid index");
-			m_labelData[index].selectedSublabel = subIndex;
-			updateSubLabelText(index);
-		}
-		
+	
 		void ChooseControl::updateSubLabelText(const u32 index)
 		{
 			m_labelData[index].subLabel->setString(m_labelData[index].textSubLabel[m_labelData[index].selectedSublabel]);
-			m_labelData[index].subLabel->setPositionWithAlignmentX(1800.0f, lib::draw::Alignment::Right);
+			m_labelData[index].subLabel->setPositionWithAlignmentX(1800.0f, draw::NodeText::Alignment::Right);
 		}
 
-		void ChooseControl::cursorSelectItem(u32 nodeIndex)
+		void ChooseControl::cursorSelectItem(const u32 nodeIndex)
 		{
 			__ASSERT(nodeIndex < m_labelData.size(), "Invalid select index for cursor");
 
 			const auto &cTheme(menuManager()->currentTheme());
 
 			m_labelData[_cursorItemSelected].label->setColor(cTheme.textColor);
-			if (m_labelData[_cursorItemSelected].subLabel)
-			{
+			if (m_labelData[_cursorItemSelected].subLabel) {
 				m_labelData[_cursorItemSelected].subLabel->setColor(cTheme.textColor);
 			}
 
@@ -103,8 +96,7 @@ namespace lib
 			auto selectedText = m_labelData[nodeIndex].label;
 
 			selectedText->setColor(cTheme.selectedTextColor);
-			if (m_labelData[_cursorItemSelected].subLabel)
-			{
+			if (m_labelData[_cursorItemSelected].subLabel) {
 				m_labelData[_cursorItemSelected].subLabel->setColor(cTheme.selectedTextColor);
 			}
 

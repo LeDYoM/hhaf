@@ -16,15 +16,14 @@ namespace zoper
 		using namespace lib::menu;
 
 		StartLevelMenu::StartLevelMenu(MenuManager *parent)
-			: lib::menu::ChooseControl( ClassName, parent,
+			: ChooseControl( ClassName, parent,
 			[this](const u32 index)
 			{
 				switch (index)
 				{
 				case 0:
-					_gameConfig.value(StartLevelStr)->set(getSelectedSubLabel(0));
-					LOG_DEBUG("Starting at level:" << getSelectedSubLabel(0));
-					setSelectedSubLabel(0, 0);
+					_gameConfig.value(StartLevelStr)->set(selectedSubLabel(0));
+					LOG_DEBUG("Starting at level:" << selectedSubLabel(0));
 					host().setScene("GameScene");
 
 					break;

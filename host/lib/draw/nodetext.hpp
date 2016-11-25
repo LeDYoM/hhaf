@@ -20,6 +20,13 @@ namespace lib
 		class NodeText : public lib::draw::Renderizable
 		{
 		public:
+			enum class Alignment : u8
+			{
+				Left = 0,
+				Center = 1,
+				Right = 2
+			};
+
 			enum Style
 			{
 				Regular = 0,      ///< Regular characters, no style

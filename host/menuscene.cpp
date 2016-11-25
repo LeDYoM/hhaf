@@ -38,12 +38,12 @@ namespace zoper
 		addMenuStep(msptr<StartLevelMenu>(this));
 
 		_logo = createSpriteShape("mainLogo");
-		_logo->setTexture(lib::host().resourceManager().getResource("game_menu.logo")->getAsTexture(), true, false);
-		_logo->setSize(vector2df(800, 400));
+		_logo->setTexture(host().resourceManager().getResource("game_menu.logo")->getAsTexture(), true, false);
+		_logo->setSize({ 800, 400 });
 		_logo->setPositionX(getCenterCoordinates().x/*, lib::draw::Alignment::Center*/);
 		_logo->setPositionY(100);
 
-		_background->setTexture(lib::host().resourceManager().getResource("game_menu.background")->getAsTexture(), true, false);
+		_background->setTexture(host().resourceManager().getResource("game_menu.background")->getAsTexture(), true, false);
 		_background->setSize(2000.0f);
 	}
 
