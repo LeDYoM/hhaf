@@ -314,5 +314,67 @@ namespace lib
 			m_bounds.width = maxX - minX;
 			m_bounds.height = maxY - minY;
 		}
+
+		void NodeText::setPositionWithAlignment(const vector2df &pos, Alignment alignment)
+		{
+			switch (alignment)
+			{
+			default:
+			case lib::draw::Alignment::Left:
+				setPosition(pos);
+				break;
+			case lib::draw::Alignment::Center:
+				setPosition(vector2df{ pos.x - (getLocalBounds().width / 2.0f), pos.y - (getLocalBounds().height / 2.0f) });
+				break;
+			case lib::draw::Alignment::Right:
+				setPosition(vector2df{ pos.x - (getLocalBounds().width), pos.y - (getLocalBounds().height) });
+				break;
+			}
+		}
+
+		void NodeText::setPositionWithAlignmentX(const float x, Alignment alignment /*= Alignment::Left*/)
+		{
+			const vector2df position(getPosition());
+			switch (alignment)
+			{
+			default:
+			case lib::draw::Alignment::Left:
+				setPosition(vector2df{ x, position.y });
+				break;
+			case lib::draw::Alignment::Center:
+			{
+				auto a = vector2df{ x - (getLocalBounds().width / 2.0f), position.y };
+				setPosition(vector2df{ x - (getLocalBounds().width / 2.0f), position.y });
+			}
+			break;
+			case lib::draw::Alignment::Right:
+				setPosition(vector2df{ x - (getLocalBounds().width), position.y });
+				break;
+			}
+		}
+
+		void NodeText::setPositionWithAlignmentY(const float y, Alignment alignment /*= Alignment::Left*/)
+		{
+			const vector2df position(getPosition());
+			switch (alignment)
+			{
+			default:
+			case lib::draw::Alignment::Left:
+				setPosition(vector2df{ position.x, y });
+				break;
+			case lib::draw::Alignment::Center:
+				setPosition(vector2df{ position.x, y - (getLocalBounds().height / 2.0f) });
+				break;
+			case lib::draw::Alignment::Right:
+				setPosition(vector2df{ position.x, y - (getLocalBounds().height) });
+				break;
+			}
+		}
+
+		void NodeText::setAlignment(Alignment alignment)
+		{
+			setPositionWithAlignment(getPosition(), alignment);
+		}
+
 	}
 }

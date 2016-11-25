@@ -47,7 +47,7 @@ namespace zoper
 
 		void StartLevelMenu::onAddedToScene()
 		{
-			setPosition(MenuScene::MenuPosX, 700);
+			setPosition({ MenuScene::MenuPosX, 700 });
 		}
 	}
 }

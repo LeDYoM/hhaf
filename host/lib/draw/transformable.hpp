@@ -13,24 +13,21 @@ namespace lib
 		public:
 			Transformable() noexcept;
 			virtual ~Transformable();
-			void setPosition(const f32 x, const f32 y);
 			void setPosition(const vector2df& position);
+			void setPositionX(const f32 x);
+			void setPositionY(const f32 y);
 			void setRotation(const f32 angle);
-			void setScale(const f32 factorX, const f32 factorY);
 			void setScale(const vector2df& factors);
-			void setOrigin(const f32 x, const f32 y);
 			void setOrigin(const vector2df& origin);
 			const vector2df& getPosition() const;
 			f32 getRotation() const;
 			const vector2df& getScale() const;
 			const vector2df& getOrigin() const;
-			void move(const f32 offsetX, const f32 offsetY);
 			void move(const vector2df& offset);
 			void rotate(const f32 angle);
-			void scale(const f32 factorX, const f32 factorY);
 			void scale(const vector2df& factor);
 			const Transform& getTransform() const;
-			const Transform& getInverseTransform() const;
+			void updateTransform();
 
 		private:
 
@@ -38,10 +35,7 @@ namespace lib
 			vector2df m_position;
 			f32 m_rotation;
 			vector2df m_scale;
-			mutable Transform m_transform;
-			mutable bool m_transformNeedUpdate;
-			mutable Transform m_inverseTransform;
-			mutable bool m_inverseTransformNeedUpdate;
+			Transform m_transform;
 		};
 	}
 }

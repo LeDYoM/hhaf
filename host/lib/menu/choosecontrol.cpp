@@ -38,7 +38,7 @@ namespace lib
 				text->setCharacterSize(cTheme.chSize);
 				text->setString(labels[count]->_text);
 				text->setColor(cTheme.textColor);
-				text->setPositionX(0, normalLabelAlign);
+				text->setPositionWithAlignmentX(0, normalLabelAlign);
 				text->setPositionY(currentPos.y);
 
 				sptr<draw::NodeText> subtext{ nullptr };
@@ -49,7 +49,7 @@ namespace lib
 					subtext->setCharacterSize(cTheme.chSize);
 					subtext->setString(labels[count]->_subOptionsLabels[labels[count]->_startValueIndex]);
 					subtext->setColor(cTheme.textColor);
-					subtext->setPositionX(1800, lib::draw::Alignment::Right);
+					subtext->setPositionWithAlignmentX(1800, lib::draw::Alignment::Right);
 					subtext->setPositionY(currentPos.y);
 				}
 
@@ -84,7 +84,7 @@ namespace lib
 		void ChooseControl::updateSubLabelText(const u32 index)
 		{
 			m_labelData[index].subLabel->setString(m_labelData[index].textSubLabel[m_labelData[index].selectedSublabel]);
-			m_labelData[index].subLabel->setPositionX(1800.0f, lib::draw::Alignment::Right);
+			m_labelData[index].subLabel->setPositionWithAlignmentX(1800.0f, lib::draw::Alignment::Right);
 		}
 
 		void ChooseControl::cursorSelectItem(u32 nodeIndex)

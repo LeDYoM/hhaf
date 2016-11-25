@@ -43,6 +43,12 @@ namespace lib
 			sf::Uint32 getStyle() const;
 			const sf::Color& getColor() const;
 			vector2df findCharacterPos(const std::size_t index) const;
+
+			void setPositionWithAlignment(const vector2df &pos, Alignment alignment);
+			void setPositionWithAlignmentX(const float x, Alignment alignment = Alignment::Left);
+			void setPositionWithAlignmentY(const float y, Alignment alignment = Alignment::Left);
+			void setAlignment(Alignment alignment);
+
 		private:
 			virtual u32 draw(sf::RenderStates &states) override;
 			void ensureGeometryUpdate();

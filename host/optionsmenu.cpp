@@ -73,7 +73,7 @@ namespace zoper
 
 		void OptionsMenu::onAddedToScene()
 		{
-			setPosition(MenuScene::MenuPosX, 700);
+			setPosition({ MenuScene::MenuPosX, 700 });
 		}
 	}
 }

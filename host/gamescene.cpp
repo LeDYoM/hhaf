@@ -104,19 +104,19 @@ namespace zoper
 		_goalDisplay->setColor(sf::Color::White);
 		_pauseText->setColor(sf::Color::White);
 
-		_scoreText->setScale(1.0f, 2.0f);
-		_scoreDisplay->setScale(1.0f, 2.0f);
-		_levelText->setScale(1.0f, 2.0f);
-		_levelDisplay->setScale(1.0f, 2.0f);
-		_goalText->setScale(1.0f, 2.0f);
-		_goalDisplay->setScale(1.0f, 2.0f);
+		_scoreText->setScale({ 1.0f, 2.0f });
+		_scoreDisplay->setScale({ 1.0f, 2.0f });
+		_levelText->setScale({ 1.0f, 2.0f });
+		_levelDisplay->setScale({ 1.0f, 2.0f });
+		_goalText->setScale({ 1.0f, 2.0f });
+		_goalDisplay->setScale({ 1.0f, 2.0f });
 
-		_scorerg->setPosition(50, 50);
+		_scorerg->setPosition({ 50, 50 });
 		_scoreDisplay->setPositionX(_scoreText->getLocalBounds().width);
 
 		_currentLevelDisplay->setPositionX(_currentLevelText->getLocalBounds().width);
 
-		_levelrg->setPosition(1250, 50);
+		_levelrg->setPosition({ 1250, 50 });
 		_goalText->setPositionY(200);
 
 		_currentLevelText->setPositionY(200);
@@ -126,10 +126,10 @@ namespace zoper
 		auto _gameBoundingBox = _gameText->getLocalBounds();
 		auto _overBoundingBox = _overText->getLocalBounds();
 		auto sceneCenter = getCenterCoordinates();
-		_gameText->setPosition(sceneCenter.x - (_gameBoundingBox.width / 2.0f), sceneCenter.y - _gameBoundingBox.height);
-		_overText->setPosition(sceneCenter.x - (_overBoundingBox.width / 2.0f), sceneCenter.y);
+		_gameText->setPosition({ sceneCenter.x - (_gameBoundingBox.width / 2.0f), sceneCenter.y - _gameBoundingBox.height });
+		_overText->setPosition({ sceneCenter.x - (_overBoundingBox.width / 2.0f), sceneCenter.y });
 
-		_pauseText->setPosition(lib::vector2df{ 1000.0f, 1000.0f }, lib::draw::Alignment::Center);
+		_pauseText->setPositionWithAlignment(lib::vector2df{ 1000.0f, 1000.0f }, lib::draw::Alignment::Center);
 
 	}
 

@@ -31,13 +31,6 @@ namespace lib
 			virtual Rectf32 getLocalBounds() const;
 			virtual Rectf32 getGlobalBounds() const;
 
-			// Some useful shortcuts
-			using Transformable::setPosition;
-			void setPosition(const vector2df &pos, Alignment alignment);
-			void setPositionX(const float x, Alignment alignment = Alignment::Left);
-			void setPositionY(const float y, Alignment alignment = Alignment::Left);
-			void setAlignment(Alignment alignment);
-
 		protected:
 			sf::VertexArray m_vertices;
 			Rectf32 m_bounds;
