@@ -56,12 +56,8 @@ namespace lib
 			: m_state{ AppState::NotInitialized }
 		{
 			LOG_CONSTRUCT_NOPARAMS;
-			int d(345345);
-			const char *p = "asfasf";
-			std::string qwe{ "vvvvvv" };
-			logprint<LogType::Debug>("This is a test", d," ",p,qwe);
 			LOG_INFO("Starting HostController...");
-			LOG_INFO("Using SFML version " << SFML_VERSION_MAJOR << "." << SFML_VERSION_MINOR << "." << SFML_VERSION_PATCH << " as backend");
+			LOG_INFO("Using SFML version ", SFML_VERSION_MAJOR, ".", SFML_VERSION_MINOR,".", SFML_VERSION_PATCH, " as backend");
 			LOG_INFO("Parsing parameters...");
 			m_params = std::move(transformParams(argc, argv));
 		}

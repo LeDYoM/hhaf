@@ -1,5 +1,5 @@
-#ifndef __LIB_LOG_HPP__
-#define __LIB_LOG_HPP__
+#ifndef LIB_LOG_INCLUDE_HPP__
+#define LIB_LOG_INCLUDE_HPP__
 
 #include "compileconfig.hpp"
 #include <iostream>
@@ -56,13 +56,14 @@ void finishLog();
 		print_impl(std::forward<Args>(args)...);
 	}
 
-	void logOutput(const LogType, const std::string&);
-	#define PREPARE_LOG(level,params) { std::ostringstream os_; os_ << params << std::endl; logOutput(level,os_.str()); }
+//	void logOutput(const LogType, const std::string&);
+//	#define PREPARE_LOG(level,params) { std::ostringstream os_; os_ << params << std::endl; logOutput(level,os_.str()); }
+#define PREPARE_LOG(x)
 	#define EXECUTE_IN_DEBUG(x)		x
-	#define LOG_DEBUG(x)			PREPARE_LOG(LogType::Debug, x)
-	#define LOG_INFO(x)				PREPARE_LOG(LogType::Info, x)
-	#define LOG_WARNING(x)			PREPARE_LOG(LogType::Warning, x)
-	#define LOG_ERROR(x)			PREPARE_LOG(LogType::Error, "Error: " << x)
+	#define LOG_DEBUG(x)			PREPARE_LOG(x)
+	#define LOG_INFO(x)				logprint<LogType::Info>(x)
+	#define LOG_WARNING(x)			PREPARE_LOG(x)
+	#define LOG_ERROR(x)			PREPARE_LOG(x)
 	#define LOG_CONSTRUCT(x)		LOG_DEBUG("Constructing "<< typeid(*this).name() << " " << x)
 	#define LOG_DESTRUCT(x)			LOG_DEBUG("Destroying "<< typeid(*this).name() << " " << x)
 	#define LOG_CONSTRUCT_NOPARAMS	LOG_CONSTRUCT("")
