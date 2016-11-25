@@ -109,6 +109,11 @@ void finishLog()
 #endif
 }
 
+std::ostream & log_stream()
+{
+	return std::cout;
+}
+
 #else
 void initLog() {}
 void finishLog() {}

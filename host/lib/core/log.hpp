@@ -2,6 +2,7 @@
 #define __LIB_LOG_HPP__
 
 #include "compileconfig.hpp"
+#include <iostream>
 
 void initLog();
 void finishLog();
@@ -15,6 +16,45 @@ void finishLog();
 		Warning,
 		Error,
 	};
+
+	std::ostream &log_stream();
+
+//	std::ostream &log_stream = std::cout;
+	inline void print_impl()
+	{
+		log_stream() << '\n';
+	}
+
+	template<typename T, typename ...Args>
+	inline void print_impl(T&& value, Args&&... args)
+	{
+		log_stream() << value;
+		print_impl(std::forward<Args>(args)...);
+	}
+
+	template<LogType log_type, typename ...Args >
+	inline void logprint(Args&&...args)
+	{
+		switch (log_type)
+		{
+		case LogType::Debug:
+			log_stream() << "<DEBUG> :";
+			break;
+		case LogType::Info:
+			log_stream() << "<INFO> :";
+			break;
+		case LogType::Warning:
+			log_stream() << "<WARNING> :";
+			break;
+		case LogType::Error:
+			log_stream() << "<ERROR> :";
+			break;
+		default:
+			log_stream() << "<UNKNOWN> :";
+			break;
+		}
+		print_impl(std::forward<Args>(args)...);
+	}
 
 	void logOutput(const LogType, const std::string&);
 	#define PREPARE_LOG(level,params) { std::ostringstream os_; os_ << params << std::endl; logOutput(level,os_.str()); }
