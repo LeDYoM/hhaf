@@ -35,7 +35,7 @@ namespace zoper
 			break;
 		default:
 			c = sf::Color::White;
-			LOG_ERROR("Error value for token: " << getData() << " is not supported");
+			LOG_ERROR("Error value for token: ", getData(), " is not supported");
 			break;
 		}
 		return c;

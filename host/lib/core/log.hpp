@@ -19,11 +19,7 @@ void finishLog();
 
 	std::ostream &log_stream();
 
-//	std::ostream &log_stream = std::cout;
-	inline void print_impl()
-	{
-		log_stream() << '\n';
-	}
+	void print_impl();
 
 	template<typename T, typename ...Args>
 	inline void print_impl(T&& value, Args&&... args)
@@ -32,7 +28,7 @@ void finishLog();
 		print_impl(std::forward<Args>(args)...);
 	}
 
-	template<LogType log_type, typename ...Args >
+	template<LogType log_type, typename ...Args>
 	inline void logprint(Args&&...args)
 	{
 		switch (log_type)
@@ -59,18 +55,18 @@ void finishLog();
 //	void logOutput(const LogType, const std::string&);
 //	#define PREPARE_LOG(level,params) { std::ostringstream os_; os_ << params << std::endl; logOutput(level,os_.str()); }
 #define PREPARE_LOG(x)
+
 	#define EXECUTE_IN_DEBUG(x)		x
 	#define LOG_DEBUG(x)			PREPARE_LOG(x)
 	#define LOG_INFO(x)				logprint<LogType::Info>(x)
-	#define LOG_WARNING(x)			PREPARE_LOG(x)
-	#define LOG_ERROR(x)			PREPARE_LOG(x)
+	#define LOG_WARNING(x)			logprint<LogType::Warning>(x)
+	#define LOG_ERROR(x)			logprint<LogType::Error>(x)
 	#define LOG_CONSTRUCT(x)		LOG_DEBUG("Constructing "<< typeid(*this).name() << " " << x)
 	#define LOG_DESTRUCT(x)			LOG_DEBUG("Destroying "<< typeid(*this).name() << " " << x)
 	#define LOG_CONSTRUCT_NOPARAMS	LOG_CONSTRUCT("")
 	#define LOG_DESTRUCT_NOPARAMS	LOG_DESTRUCT("")
 
-	#define __ASSERT(cond,x)		if (!(cond)) LOG_ERROR(x<< "\n\tIn file "<<__FILE__<< " and line: "<<__LINE__<<"\n\tFunction: "<<__FUNCDNAME__ );
-	#define __CHECK(cond,x)		if (!(cond)) LOG_WARNING(x<< "\n\tIn file "<<__FILE__<< " and line: "<<__LINE__<<"\n\tFunction: "<<__FUNCDNAME__ );
+	#define __ASSERT(cond,x)		if (!(cond)) LOG_ERROR(x, "\n\tIn file ", __FILE__, " and line: ",__LINE__,"\n\tFunction: "<<__FUNCDNAME__ );
 
 #else
 	#define EXECUTE_IN_DEBUG(x)	
@@ -84,6 +80,5 @@ void finishLog();
 	#define LOG_DESTRUCT_NOPARAMS
 
 	#define __ASSERT(cond,x)
-	#define __CHECK(cond,x)
 #endif
 #endif

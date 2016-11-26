@@ -26,7 +26,7 @@ namespace lib
 				_resourceData.font = font;
 				_resourceType = ResourceType::Font;
 				_isValid = font->loadFromFile(file);
-				__ASSERT(_isValid, "File " << file << " not found");
+				__ASSERT(_isValid, "File ", file, " not found");
 			}
 			else if (rType == ResourceType::Texture)
 			{
@@ -36,7 +36,7 @@ namespace lib
 				_resourceData.texture = texture;
 				_resourceType = ResourceType::Texture;
 				_isValid = texture->loadFromFile(file);
-				__ASSERT(_isValid, "File " << file << " not found");
+				__ASSERT(_isValid, "File ", file, " not found");
 			}
 		}
 

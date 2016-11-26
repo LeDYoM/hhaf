@@ -14,21 +14,18 @@ namespace lib
 	{
 		auto i = container.begin();
 
-		while (i != container.end())
-		{
-			if ((*i).get() == element.get())
-			{
+		while (i != container.end()) {
+			if ((*i).get() == element.get()) {
 				i = container.erase(i);
 				LOG_DEBUG("Element was found. Number of left references: " << element.use_count());
 				return true;
 			}
-			else
-			{
+			else {
 				++i;
 			}
 		}
 
-		LOG_ERROR("Element " << element << " not found in list");
+		LOG_ERROR("Element ", element , " not found in list");
 		return false;
 	}
 }

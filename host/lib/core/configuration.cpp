@@ -135,7 +135,7 @@ namespace lib
 			return true;
 		}
 		else {
-			LOG_ERROR("Cannot write file " << currentFile);
+			LOG_ERROR("Cannot write file ", currentFile);
 			return false;
 		}
 	}

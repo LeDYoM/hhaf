@@ -27,6 +27,11 @@ void initLog()
 #endif
 }
 
+void print_impl()
+{
+	log_stream() << '\n';
+}
+
 void commitLog()
 {
 	auto outstr(log_output_stream.str());

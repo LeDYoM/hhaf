@@ -33,7 +33,7 @@ namespace lib
 			{
 				return _tiles[position.x][position.y];
 			}
-			LOG_ERROR("Error getting tile in coords " << position.x << "," << position.y);
+			LOG_ERROR("Error getting tile in coords ", position.x, ",", position.y);
 			return WITilePointer();
 		}
 
@@ -76,8 +76,7 @@ namespace lib
 
 				if (sourceTile)
 				{
-					//			__ASSERT(!tileEmpty(xSource, ySource), "Tile " << xSource << "," << ySource << " is empty");
-					__ASSERT(!destTile.lock(), "Trying to move to a not empty tile: " << dest.x << "," << dest.y << " contains " << destTile.lock()->getData());
+					__ASSERT(!destTile.lock(), "Trying to move to a not empty tile: " , dest.x, ",", dest.y, " contains ", destTile.lock()->getData());
 
 					_setTile(dest, sourceTile);
 					_setTile(source, WITilePointer());

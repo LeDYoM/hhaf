@@ -206,7 +206,7 @@ namespace lib
 				LOG_DEBUG("Changed scene to " << name);
 			}
 			else {
-				LOG_ERROR("Scene " << name << " not found in scenes");
+				LOG_ERROR("Scene ", name, " not found in scenes");
 			}
 		}
 
