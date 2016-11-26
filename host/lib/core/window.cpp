@@ -53,9 +53,9 @@ namespace lib
 		void Window::create(const WindowCreationParams &wcp)
 		{
 			LOG_DEBUG("Going to create Window");
-			LOG_DEBUG("Resolution:" << wcp.width << "x" << wcp.height << "x" << std::to_string(wcp.bpp));
-			LOG_DEBUG("Fullscreen:" << wcp.fullScreen);
-			LOG_DEBUG("Antialiasing:" << wcp.antialiasing);
+			LOG_DEBUG("Resolution:", wcp.width, "x", wcp.height ,"x", wcp.bpp);
+			LOG_DEBUG("Fullscreen:" , wcp.fullScreen);
+			LOG_DEBUG("Antialiasing:", wcp.antialiasing);
 
 			sf::Uint32 style{ sf::Style::Titlebar | sf::Style::Close };
 			if (wcp.fullScreen)

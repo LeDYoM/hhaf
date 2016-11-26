@@ -17,7 +17,7 @@ namespace lib
 		while (i != container.end()) {
 			if ((*i).get() == element.get()) {
 				i = container.erase(i);
-				LOG_DEBUG("Element was found. Number of left references: " << element.use_count());
+				LOG_DEBUG("Element was found. Number of left references: ", element.use_count());
 				return true;
 			}
 			else {

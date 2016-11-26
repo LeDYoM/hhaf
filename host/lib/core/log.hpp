@@ -57,12 +57,16 @@ void finishLog();
 #define PREPARE_LOG(x)
 
 	#define EXECUTE_IN_DEBUG(x)		x
-	#define LOG_DEBUG(x)			PREPARE_LOG(x)
-	#define LOG_INFO(x)				logprint<LogType::Info>(x)
-	#define LOG_WARNING(x)			logprint<LogType::Warning>(x)
-	#define LOG_ERROR(x)			logprint<LogType::Error>(x)
-	#define LOG_CONSTRUCT(x)		LOG_DEBUG("Constructing "<< typeid(*this).name() << " " << x)
-	#define LOG_DESTRUCT(x)			LOG_DEBUG("Destroying "<< typeid(*this).name() << " " << x)
+	template <typename... Args>
+	constexpr inline void LOG_DEBUG(Args&&... args) { logprint<LogType::Debug>(std::forward<Args>(args)...); }
+	template <typename... Args>
+	constexpr inline void LOG_INFO(Args&&... args) { logprint<LogType::Info>(std::forward<Args>(args)...); }
+	template <typename... Args>
+	constexpr inline void LOG_WARNING(Args&&... args) { logprint<LogType::Warning>(std::forward<Args>(args)...); }
+	template <typename... Args>
+	constexpr inline void LOG_ERROR(Args&&... args) { logprint<LogType::Error>(std::forward<Args>(args)...); }
+	#define LOG_CONSTRUCT(x)		LOG_DEBUG("Constructing ", typeid(*this).name(), " ", x)
+	#define LOG_DESTRUCT(x)			LOG_DEBUG("Destroying ", typeid(*this).name(), " ", x)
 	#define LOG_CONSTRUCT_NOPARAMS	LOG_CONSTRUCT("")
 	#define LOG_DESTRUCT_NOPARAMS	LOG_DESTRUCT("")
 

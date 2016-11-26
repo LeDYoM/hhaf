@@ -71,7 +71,7 @@ namespace lib
 		{
 			if (!m_iapp && iapp) {
 				std::swap(m_iapp, iapp);
-				LOG_DEBUG("Starting app " << appId() << "...");
+				LOG_DEBUG("Starting app ", appId(), "...");
 				m_state = AppState::ReadyToStart;
 				return true;
 			}
@@ -87,7 +87,7 @@ namespace lib
 			case lib::core::Host::AppState::ReadyToStart:
 			{
 				// Create the scene manager
-				LOG_DEBUG(appId() << ": " << " Starting initialization...");
+				LOG_DEBUG(appId(), ": ", " Starting initialization...");
 				m_state = AppState::Executing;
 
 				//TO DO: Ask via requests
@@ -98,22 +98,22 @@ namespace lib
 				addScenes(m_iapp->scenesVector());
 
 				m_iapp->onInit();
-				LOG_DEBUG(appId() << ": " << " is now executing");
+				LOG_DEBUG(appId(), ": ", " is now executing");
 			}
 				break;
 			case lib::core::Host::AppState::Executing:
 			{
 				if (loopStep()) {
 					m_state = AppState::ReadyToTerminate;
-					LOG_DEBUG(appId() << ": " << " is now ready to terminate");
+					LOG_DEBUG(appId(), ": ", " is now ready to terminate");
 				}
 				else if (m_state == AppState::ReadyToTerminate) {
-					LOG_DEBUG(appId() << ": " << " requested to terminate");
+					LOG_DEBUG(appId(), ": ", " requested to terminate");
 				}
 			}
 				break;
 			case lib::core::Host::AppState::ReadyToTerminate:
-				LOG_DEBUG(appId() << ": " << " started termination");
+				LOG_DEBUG(appId(), ": " ," started termination");
 				if (m_currentScene) {
 					m_currentScene->onExitScene();
 				}
@@ -128,7 +128,7 @@ namespace lib
 				m_resourceManager = nullptr;
 				m_eventManager = nullptr;
 				m_params.clear();
-				LOG_DEBUG(appId() << ": " << " terminated");
+				LOG_DEBUG(appId(), ": ", " terminated");
 				return true;
 				break;
 			case lib::core::Host::AppState::Terminated:
@@ -203,7 +203,7 @@ namespace lib
 		{
 			if (sptr<draw::Scene> scene = getSceneByName(name)) {
 				setScene(std::move(scene));
-				LOG_DEBUG("Changed scene to " << name);
+				LOG_DEBUG("Changed scene to ", name);
 			}
 			else {
 				LOG_ERROR("Scene ", name, " not found in scenes");

@@ -13,18 +13,18 @@ namespace lib
 	{
 		Scene::Scene(const std::string &_name) : RenderGroup{ _name,nullptr }
 		{
-			LOG_CONSTRUCT("Name: " << name());
+			LOG_CONSTRUCT("Name: ", name());
 		}
 
 		Scene::~Scene()
 		{
-			LOG_DESTRUCT("Name: " << name());
+			LOG_DESTRUCT("Name: ", name());
 		}
 
 		void Scene::updateView()
 		{
 			core::Host::host().parentWindow().setView(*p_view.get());
-			LOG_DEBUG("Scene view set to: center: " << p_view->getCenter().x << "," << p_view->getCenter().y << " and size: " << p_view->getSize().x << "," << p_view->getSize().y);
+			LOG_DEBUG("Scene view set to: center: ", p_view->getCenter().x, ",", p_view->getCenter().y, " and size: ", p_view->getSize().x, ",", p_view->getSize().y);
 		}
 
 		sf::View *const Scene::getView() const
@@ -44,27 +44,27 @@ namespace lib
 
 		void Scene::onInit()
 		{
-			LOG_DEBUG("Initializing scene " << name());
+			LOG_DEBUG("Initializing scene ", name());
 			p_view = uptr<sf::View>(new sf::View(core::Host::host().parentWindow().getView()));
 			auto sceneSize = getDefaultSizeView();
 			p_view->setSize(sceneSize.x, sceneSize.y);
 			p_view->setCenter(sceneSize.x / 2, sceneSize.y / 2);
 			updateView();
 
-			LOG_DEBUG("Scene view set to: center: " << p_view->getCenter().x << "," << p_view->getCenter().y << " and size: " << p_view->getSize().x << "," << p_view->getSize().y);
+			LOG_DEBUG("Scene view set to: center: ", p_view->getCenter().x, ",", p_view->getCenter().y, " and size: ", p_view->getSize().x, ",", p_view->getSize().y);
 		}
 
 		void Scene::onDeinit()
 		{
-			LOG_DEBUG("Deinitializing scene " << name());
+			LOG_DEBUG("Deinitializing scene ", name());
 		}
 
 		void Scene::onEnterScene()
 		{
 			using namespace events;
-			LOG_DEBUG("Entered in scene " << name());
+			LOG_DEBUG("Entered in scene ", name());
 			eventConnector.addSubscription(KeyPressedEvent::subscribe([this](const Event&) {
-				LOG_DEBUG("Key pressed from Scene: " << name());
+				LOG_DEBUG("Key pressed from Scene: ", name());
 			}));
 
 			auto sceneSize = getDefaultSizeView();
@@ -72,7 +72,7 @@ namespace lib
 			p_view->setCenter(sceneSize.x / 2, sceneSize.y / 2);
 			updateView();
 
-			LOG_DEBUG("Scene view set to: center: " << p_view->getCenter().x << "," << p_view->getCenter().y << " and size: " << p_view->getSize().x << "," << p_view->getSize().y);
+			LOG_DEBUG("Scene view set to: center: ", p_view->getCenter().x, ",", p_view->getCenter().y, " and size: ", p_view->getSize().x, ",", p_view->getSize().y);
 
 			clock.restart();
 		}
@@ -80,7 +80,7 @@ namespace lib
 		void Scene::onExitScene()
 		{
 			eventConnector.unsubscribeAll();
-			LOG_DEBUG("Exited from scene " << name());
+			LOG_DEBUG("Exited from scene ", name());
 		}
 	}
 }

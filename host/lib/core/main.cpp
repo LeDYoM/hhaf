@@ -23,11 +23,11 @@ namespace lib
 		}
 		catch (lib::excp::BaseException e)
 		{
-			LOG_DEBUG("BaseException: " << e.what());
+			LOG_DEBUG("BaseException: ", e.what());
 		}
 		catch (std::exception e)
 		{
-			LOG_DEBUG("BaseException: " << e.what());
+			LOG_DEBUG("std::Exception: ", e.what());
 		}
 		catch (...)
 		{

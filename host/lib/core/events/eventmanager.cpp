@@ -15,9 +15,8 @@ namespace lib
 		EventManager::~EventManager()
 		{
 			LOG_DEBUG("Going to destroy event manager...");
-			while (!eventQueue.empty())
-			{
-				LOG_DEBUG("Event was still in queue: " << typeid(*(eventQueue.front())).name());
+			while (!eventQueue.empty()) {
+				LOG_DEBUG("Event was still in queue: ", typeid(*(eventQueue.front())).name());
 				eventQueue.pop();
 			}
 			LOG_DESTRUCT_NOPARAMS;
@@ -31,7 +30,7 @@ namespace lib
 		void EventManager::update()
 		{
 			if (!eventQueue.empty()) {
-				LOG_DEBUG("Found " << eventQueue.size() << " events in the event queue");
+				LOG_DEBUG("Found ", eventQueue.size(), " events in the event queue");
 				do {
 					eventQueue.front()->dispatch();
 					eventQueue.pop();
