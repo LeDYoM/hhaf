@@ -127,7 +127,6 @@ namespace lib
 			key = static_cast<Key>(p);
 			return is;
 		}
-
 	}
 }
 

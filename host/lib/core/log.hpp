@@ -52,10 +52,6 @@ void finishLog();
 		print_impl(std::forward<Args>(args)...);
 	}
 
-//	void logOutput(const LogType, const std::string&);
-//	#define PREPARE_LOG(level,params) { std::ostringstream os_; os_ << params << std::endl; logOutput(level,os_.str()); }
-#define PREPARE_LOG(x)
-
 	#define EXECUTE_IN_DEBUG(x)		x
 	template <typename... Args>
 	constexpr inline void LOG_DEBUG(Args&&... args) { logprint<LogType::Debug>(std::forward<Args>(args)...); }
@@ -64,17 +60,17 @@ void finishLog();
 	template <typename... Args>
 	constexpr inline void LOG_WARNING(Args&&... args) { logprint<LogType::Warning>(std::forward<Args>(args)...); }
 	template <typename... Args>
-	constexpr inline void LOG_ERROR(Args&&... args) { logprint<LogType::Error>(std::forward<Args>(args)...); }
+	constexpr inline void LOG_ERROR(Args&&... args) { logprint<LogType::Error>(__FILE__,"(",__LINE__,"): ",std::forward<Args>(args)...); }
 	template <typename... Args>
-	inline void LOG_CONSTRUCT(Args&&... args) { LOG_DEBUG("Constructing ", " ", std::forward<Args>(args)...); }
+	constexpr inline void LOG_CONSTRUCT(Args&&... args) { LOG_DEBUG("Constructing ", " ", std::forward<Args>(args)...); }
 	template <typename... Args>
-	inline void LOG_DESTRUCT(Args&&... args) { LOG_DEBUG("Constructing ",  " ", std::forward<Args>(args)...); }
+	constexpr inline void LOG_DESTRUCT(Args&&... args) { LOG_DEBUG("Constructing ",  " ", std::forward<Args>(args)...); }
 
 	#define LOG_CONSTRUCT_NOPARAMS	LOG_CONSTRUCT("")
 	#define LOG_DESTRUCT_NOPARAMS	LOG_DESTRUCT("")
 
 	template <typename T, typename ...Args>
-	inline void __ASSERT(T&& cond, Args&&... args) { if (!(cond)) LOG_ERROR(std::forward<Args>(args)..., "\n\tIn file ", __FILE__, " and line: ", __LINE__, "\n\tFunction: ", __FUNCDNAME__); }
+	constexpr inline void __ASSERT(T&& cond, Args&&... args) { if (!(cond)) LOG_ERROR(std::forward<Args>(args)...); }
 
 #else
 	#define EXECUTE_IN_DEBUG(x)	

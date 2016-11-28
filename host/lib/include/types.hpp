@@ -5,8 +5,6 @@
 #include <memory>
 #include <lib/core/compileconfig.hpp>
 
-#include <SFML/System/Vector2.hpp>
-
 namespace lib
 {
 	template <typename T>

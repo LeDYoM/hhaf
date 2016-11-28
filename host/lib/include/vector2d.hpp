@@ -82,6 +82,27 @@ namespace lib
 		T y;
 	};
 
+	// Serialization operators
+	template <typename T>
+	inline std::ostream& operator<<(std::ostream & os, const vector2d<T> &v2d)
+	{
+		os << "{" << v2d.x << "," << v2d.y << "}";
+		return os;
+	}
+
+	template <typename T>
+	inline std::istream& operator >> (std::istream & is, const vector2d<T> &v2d)
+	{
+		std::string p;
+		is >> p;	// "{"
+		is >> v.x;
+		is >> p;	// ","
+		is >> v.y;
+		is >> p;	// "}"
+		return is;
+	}
+
+
 	using vector2du32 = vector2d<u32>;
 	using vector2ds32 = vector2d<s32>;
 	using vector2du16 = vector2d<u16>;
