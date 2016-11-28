@@ -12,15 +12,8 @@ namespace lib
 			logConstruct("Name: ", name );
 		}
 
-		u32 Renderizable::draw( sf::RenderStates &)
+		void Renderizable::draw(sf::RenderStates &)
 		{
-			if (isVisible())
-			{
-//					window->draw()
-//					window->draw(*getAsDrawable(),states);
-				return 1;
-			}
-			return 0;
 		}
 
 		Renderizable::~Renderizable() = default;

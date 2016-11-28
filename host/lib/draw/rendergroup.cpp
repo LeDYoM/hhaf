@@ -51,24 +51,18 @@ namespace lib
 			return removeFromspVector(element, _renderNodes);
 		}
 
-		u32 RenderGroup::draw(sf::RenderStates &states)
+		void RenderGroup::draw(sf::RenderStates &states)
 		{
-			if (isVisible())
-			{
+			if (isVisible()) {
 				updateAnimations();
-				u32 rNodes{ 0 };
 				auto oldTransformation = states.transform;
 				states.transform *= getTransform();
 
-				for (const auto renderizable : _renderNodes)
-				{
-					rNodes += renderizable->draw(states);
+				for (const auto& renderizable : _renderNodes) {
+					renderizable->draw(states);
 				}
 				states.transform = oldTransformation;
-				return rNodes;
 			}
-
-			return 0;
 		}
 
 		sptr<RenderGroup> RenderGroup::createNewRenderGroup(const std::string & name, sptr<IDrawable> beforeNode)

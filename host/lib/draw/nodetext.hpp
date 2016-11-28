@@ -57,7 +57,7 @@ namespace lib
 			void setAlignment(Alignment alignment);
 
 		private:
-			virtual u32 draw(sf::RenderStates &states) override;
+			virtual void draw(sf::RenderStates &states) override;
 			void ensureGeometryUpdate();
 
 			std::string m_string;

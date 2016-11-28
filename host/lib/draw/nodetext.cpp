@@ -135,10 +135,9 @@ namespace lib
 			return position;
 		}
 
-		lib::u32 NodeText::draw(sf::RenderStates &states)
+		void NodeText::draw(sf::RenderStates &states)
 		{
-			if (m_font)
-			{
+			if (m_font) {
 				ensureGeometryUpdate();
 
 				auto oldTransform = states.transform;
@@ -146,9 +145,7 @@ namespace lib
 				states.texture = &m_font->getTexture(m_characterSize);
 				host().parentWindow().draw(m_vertices, states);
 				states.transform = oldTransform;
-				return 1;
 			}
-			return 0;
 		}
 
 		void NodeText::ensureGeometryUpdate()

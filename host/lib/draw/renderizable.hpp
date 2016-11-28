@@ -18,7 +18,7 @@ namespace lib
 			explicit Renderizable(const std::string &name, sf::PrimitiveType type, std::size_t vertexCount = 0);
 			virtual ~Renderizable();
 
-			virtual u32 draw(sf::RenderStates &states) override;
+			virtual void draw(sf::RenderStates &states) override;
 			virtual void setColor(const sf::Color &color) = 0;
 
 			virtual Rectf32 getLocalBounds() const;

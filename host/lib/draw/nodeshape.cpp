@@ -182,7 +182,7 @@ namespace lib
 			updateTexCoords();
 		}
 
-		u32 NodeShape::draw(sf::RenderStates &states)
+		void NodeShape::draw(sf::RenderStates &states)
 		{
 			auto oldTransform = states.transform;
 //			states.transform *= getTransform();
@@ -193,14 +193,6 @@ namespace lib
 			host().parentWindow().draw(m_vertices, states);
 
 			states.transform = oldTransform;
-			return 1;
-
-			// Render the outline
-//				if (m_outlineThickness != 0)
-//				{
-//					states.texture = NULL;
-//					window->draw(m_outlineVertices, states);
-//				}
 		}
 
 		void NodeShape::updateFillColors()
