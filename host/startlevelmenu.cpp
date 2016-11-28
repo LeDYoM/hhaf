@@ -23,7 +23,7 @@ namespace zoper
 				{
 				case 0:
 					_gameConfig.value(StartLevelStr)->set(selectedSubLabel(0));
-					LOG_DEBUG("Starting at level:", selectedSubLabel(0));
+					logDebug("Starting at level:", selectedSubLabel(0));
 					host().setScene("GameScene");
 
 					break;

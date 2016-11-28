@@ -31,16 +31,16 @@ namespace lib
 									? Resource::ResourceType::Font :
 									Resource::ResourceType::Texture;
 								resources.emplace_back(msptr<Resource>(resourceType, resourcesDirectory + dataLine.second->get<string>(), id));
-								LOG_DEBUG("Resource with id ", dataLine.second, " from file ", dataLine.first, " added");
+								logDebug("Resource with id ", dataLine.second, " from file ", dataLine.first, " added");
 							}
 							else {
-								LOG_ERROR("Malformed resource file");
+								logError("Malformed resource file");
 							}
 						}
 					});
 				}
 				else {
-					LOG_DEBUG("Empty resources file. No resources loaded or used");
+					logDebug("Empty resources file. No resources loaded or used");
 				}
 			}
 		}

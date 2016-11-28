@@ -9,7 +9,7 @@ namespace lib
 		Renderizable::Renderizable(const std::string &name, sf::PrimitiveType type, std::size_t vertexCount)
 			: HasName{ name }, m_vertices{ type, vertexCount }, m_bounds{}
 		{
-			LOG_CONSTRUCT("Name: ", name , " of type");
+			logConstruct("Name: ", name );
 		}
 
 		u32 Renderizable::draw( sf::RenderStates &)

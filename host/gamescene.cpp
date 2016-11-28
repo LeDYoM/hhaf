@@ -231,11 +231,11 @@ namespace zoper
 	void GameScene::setLevel(const lib::u32 nv)
 	{
 		_levelProperties.setLevel(nv);
-		LOG_DEBUG("Level set: ",_levelProperties.currentLevel());
-		LOG_DEBUG("Millis between tokens: ", _levelProperties.millisBetweenTokens());
-		LOG_DEBUG("Current base score: ", _levelProperties.baseScore());
-		LOG_DEBUG("Seconds to next level: ", _levelProperties.stayTime());
-		LOG_DEBUG("Tokens to next level: ",_levelProperties.stayTokens());
+		logDebug("Level set: ",_levelProperties.currentLevel());
+		logDebug("Millis between tokens: ", _levelProperties.millisBetweenTokens());
+		logDebug("Current base score: ", _levelProperties.baseScore());
+		logDebug("Seconds to next level: ", _levelProperties.stayTime());
+		logDebug("Tokens to next level: ",_levelProperties.stayTokens());
 
 		_gameData.levelClock.restart();
 		_gameData.consumedTokens = 0;
@@ -317,8 +317,8 @@ namespace zoper
 	{
 		const GameData::TokenZone &currentTokenZone{ _gameData._tokenZones[_nextTokenPart] };
 
-		LOG_DEBUG("NextTokenPart: ", std::to_string(_nextTokenPart));
-		LOG_DEBUG("left: ", currentTokenZone.zone.left, " top: ", currentTokenZone.zone.top,
+		logDebug("NextTokenPart: ", std::to_string(_nextTokenPart));
+		logDebug("left: ", currentTokenZone.zone.left, " top: ", currentTokenZone.zone.top,
 			" size: ", currentTokenZone.zone.size().x, " y2: ", currentTokenZone.zone.size().y);
 
 		u32 newToken = 0;// getRandomNumer(NUMTOKENS);
@@ -327,12 +327,12 @@ namespace zoper
 
 		u32 newX = currentTokenZone.zone.left + (currentTokenZone.direction.isHorizontal() ? 0 : sizep);
 		lib::u32 newY = currentTokenZone.zone.top + (currentTokenZone.direction.isHorizontal() ? sizep : 0);
-		LOG_DEBUG("New tile pos: ", newX, ",", newY);
+		logDebug("New tile pos: ", newX, ",", newY);
 
 		vector2du32 loopPosition{ (currentTokenZone.direction.isHorizontal() ? currentTokenZone.zone.size().x : newX),
 			(currentTokenZone.direction.isHorizontal() ? newY : currentTokenZone.zone.size().y) };
 //		lib::vector2du32 destPosition;
-		LOG_DEBUG("Starting at: ", loopPosition.x, ",", loopPosition.y);
+		logDebug("Starting at: ", loopPosition.x, ",", loopPosition.y);
 
 		// Now, we have the data for the new token generated, but first, lets start to move the row or col.
 		Direction loopDirection = currentTokenZone.direction.negate();
@@ -378,7 +378,7 @@ namespace zoper
 
 	void GameScene::addPlayer()
 	{
-		LOG_DEBUG("Adding player tile at ", _gameData.centerRect.left, ",", _gameData.centerRect.top);
+		logDebug("Adding player tile at ", _gameData.centerRect.left, ",", _gameData.centerRect.top);
 		__ASSERT(!p_player, "Player already initialized");
 		// Create the player instance
 		p_player = lib::sptr<Player>(new Player(lib::vector2du32(_gameData.centerRect.leftTop()),tileSize()));
@@ -389,7 +389,7 @@ namespace zoper
 
 	void GameScene::addNewToken(const lib::vector2du32 &position, lib::u32 newToken)
 	{
-		LOG_DEBUG("Adding new tile at ", position.x, ",", position.y, " with value ", newToken);
+		logDebug("Adding new tile at ", position.x, ",", position.y, " with value ", newToken);
 		// Create a new Tile instance
 		lib::sptr<Tile> newTileToken = lib::sptr<Tile>(new Tile(lib::board::BoardTileData(newToken),tileSize()));
 		// Set the position in the scene depending on the board position
@@ -402,7 +402,7 @@ namespace zoper
 	void zoper::GameScene::registerEvents()
 	{
 		addSubscription(events::KeyPressedEvent::subscribe([this](const events::Event&ev) {
-			LOG_DEBUG("Key pressed in GameScene");
+			logDebug("Key pressed in GameScene");
 			const auto &kEvent{ dynamic_cast<const events::KeyPressedEvent&>(ev) };
 			switch (state())
 			{
@@ -467,7 +467,7 @@ namespace zoper
 
 	void GameScene::launchPlayer()
 	{
-		LOG_DEBUG("Launching player");
+		logDebug("Launching player");
 		const Direction loopDirection = p_player->currentDirection();
 		lib::vector2du32 loopPosition{ p_player->boardPosition() };
 		lib::board::BoardTileData tokenType = p_player->getData();
@@ -496,7 +496,7 @@ namespace zoper
 				{
 					p_boardModel->changeTileData(p_player->boardPosition(), currentTokenType);
 					p_boardModel->changeTileData(loopPosition, tokenType);
-					LOG_DEBUG("Player type changed to ", p_player->getData());
+					logDebug("Player type changed to ", p_player->getData());
 					result = false;
 				}
 			}
@@ -560,7 +560,7 @@ namespace zoper
 
 				temp += chTemp;
 			}
-			LOG_DEBUG(temp);
+			logDebug(temp);
 		}
 	}
 
@@ -656,7 +656,7 @@ namespace zoper
 	void GameScene::tokenDissapeared(const lib::vector2du32 &position, lib::sptr<Tile> tile)
 	{
 		position;
-		LOG_DEBUG("Deleting token ", tile->name(), " from scene");
+		logDebug("Deleting token ", tile->name(), " from scene");
 		_mainBoardrg->removeRenderizable(tile);
 	}
 

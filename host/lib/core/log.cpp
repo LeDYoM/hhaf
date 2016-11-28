@@ -39,10 +39,17 @@ void commitLog()
 	if (logFile.is_open())
 		logFile << outstr;
 #endif
+
+#ifdef USE_COUT_FOR_LOGS
 	std::cout << outstr;
-#if defined(_MSC_VER) || defined(__BORLANDC__)
-	OutputDebugString(outstr.c_str());
 #endif
+
+#ifdef USE_IDE_CONSOLE_FOR_LOGS
+	#if defined(_MSC_VER) || defined(__BORLANDC__)
+		OutputDebugString(outstr.c_str());
+	#endif
+#endif
+
 	log_output_stream.clear();
 }
 

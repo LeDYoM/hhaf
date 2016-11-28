@@ -21,23 +21,23 @@ namespace lib
 	Randomizer::Randomizer()
 		: p_rPriv{ new RandomizerPrivate() }
 	{
-		LOG_CONSTRUCT_NOPARAMS;
+		logConstruct_NOPARAMS;
 	}
 
 
 	Randomizer::~Randomizer()
 	{
-		LOG_DESTRUCT_NOPARAMS;
+		logDestruct_NOPARAMS;
 	}
 
 	u32 Randomizer::getUInt(u32 max, u32 min) const
 	{
-		LOG_DEBUG("Asked for random number between ", min, " and ", max);
+		logDebug("Asked for random number between ", min, " and ", max);
 		__ASSERT(min != max, "The min and max parameters must be different");
 		__ASSERT(max > min, "The max paramter must be greater than min");
 		auto g = p_rPriv->dist(p_rPriv->mt) % (max - min);
-		LOG_DEBUG("\tGot ", g);
-		LOG_DEBUG("\tReturning ", min+g);
+		logDebug("\tGot ", g);
+		logDebug("\tReturning ", min+g);
 		return min + g;
 	}
 

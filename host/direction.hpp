@@ -51,7 +51,7 @@ namespace zoper
 				break;
 			case DirectionData::Invalid:
 			default:
-				LOG_ERROR("Invalid direction. Cannot convert");
+				logError("Invalid direction. Cannot convert");
 			}
 			return DirectionData::Invalid;
 		}
@@ -83,7 +83,7 @@ namespace zoper
 				break;
 			case DirectionData::Invalid:
 			default:
-				LOG_ERROR("Invalid direction. Cannot convert");
+				logError("Invalid direction. Cannot convert");
 			}
 
 			result *= (lib::s32)scale;
@@ -117,7 +117,7 @@ namespace zoper
 				break;
 			case DirectionData::Invalid:
 			default:
-				LOG_ERROR("Invalid direction. Cannot convert");
+				logError("Invalid direction. Cannot convert");
 			}
 
 			return result;

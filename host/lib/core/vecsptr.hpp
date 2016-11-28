@@ -17,7 +17,7 @@ namespace lib
 		while (i != container.end()) {
 			if ((*i).get() == element.get()) {
 				i = container.erase(i);
-				LOG_DEBUG("Element was found. Number of left references: ", element.use_count());
+				logDebug("Element was found. Number of left references: ", element.use_count());
 				return true;
 			}
 			else {
@@ -25,7 +25,7 @@ namespace lib
 			}
 		}
 
-		LOG_ERROR("Element ", element , " not found in list");
+		logError("Element ", element , " not found in list");
 		return false;
 	}
 }

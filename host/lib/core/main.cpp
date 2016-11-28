@@ -23,15 +23,15 @@ namespace lib
 		}
 		catch (lib::excp::BaseException e)
 		{
-			LOG_DEBUG("BaseException: ", e.what());
+			logDebug("BaseException: ", e.what());
 		}
 		catch (std::exception e)
 		{
-			LOG_DEBUG("std::Exception: ", e.what());
+			logDebug("std::Exception: ", e.what());
 		}
 		catch (...)
 		{
-			LOG_DEBUG("Unexpected exception");
+			logDebug("Unexpected exception");
 		}
 		finishMemManager();
 		finishLog();

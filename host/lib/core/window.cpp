@@ -41,21 +41,21 @@ namespace lib
 		Window::Window(const WindowCreationParams &wcp)
 			: p_wPrivate{ new WindowPrivate() }, _title(wcp.windowTitle)
 		{
-			LOG_CONSTRUCT_NOPARAMS;
+			logConstruct_NOPARAMS;
 			create(wcp);
 		}
 
 		Window::~Window()
 		{
-			LOG_DESTRUCT_NOPARAMS;
+			logDestruct_NOPARAMS;
 		}
 
 		void Window::create(const WindowCreationParams &wcp)
 		{
-			LOG_DEBUG("Going to create Window");
-			LOG_DEBUG("Resolution:", wcp.width, "x", wcp.height ,"x", wcp.bpp);
-			LOG_DEBUG("Fullscreen:" , wcp.fullScreen);
-			LOG_DEBUG("Antialiasing:", wcp.antialiasing);
+			logDebug("Going to create Window");
+			logDebug("Resolution:", wcp.width, "x", wcp.height ,"x", wcp.bpp);
+			logDebug("Fullscreen:" , wcp.fullScreen);
+			logDebug("Antialiasing:", wcp.antialiasing);
 
 			sf::Uint32 style{ sf::Style::Titlebar | sf::Style::Close };
 			if (wcp.fullScreen)
@@ -105,14 +105,14 @@ namespace lib
 
 		void Window::onCreate()
 		{
-			LOG_DEBUG("Window created");
+			logDebug("Window created");
 		}
 
 		void Window::onDestroy()
 		{
-			LOG_DEBUG("Going to close Window");
+			logDebug("Going to close Window");
 			close();
-			LOG_DEBUG("Window closed");
+			logDebug("Window closed");
 		}
 
 		u32 Window::getRandomNumer(u32 max /*= 1*/, u32 min /*= 0*/)

@@ -65,15 +65,15 @@ namespace lib
 
 		if (fIterator != m_data.end()) {
 			// Configuration file already in use.
-			LOG_DEBUG("Map data for ", currentFile, " found. Using it");
+			logDebug("Map data for ", currentFile, " found. Using it");
 			currentMap = &(fIterator->second);
 		}
 		else {
-			LOG_DEBUG("Map data for ", currentFile, " not created.");
+			logDebug("Map data for ", currentFile, " not created.");
 			CMap cMap;
 
 			if (file[0] != ':') {
-				LOG_DEBUG("Trying to read file");
+				logDebug("Trying to read file");
 				std::ifstream f(currentFile);
 
 				if (f.is_open()) {
@@ -82,13 +82,13 @@ namespace lib
 						f >> line;
 						if (!line.empty()) {
 							CMapRawLine lineData(split(line, "="));
-							LOG_DEBUG("Adding key", lineData.first, " with value ", lineData.second);
+							logDebug("Adding key", lineData.first, " with value ", lineData.second);
 							cMap.emplace(lineData.first, msptr<ConfigurationProperty>(std::move(lineData.second)));
 						}
 					}
 				}
 				else {
-					LOG_DEBUG("File ", file , " not found. Associating empty data to file");
+					logDebug("File ", file , " not found. Associating empty data to file");
 				}
 			}
 
@@ -123,19 +123,19 @@ namespace lib
 	{
 		__ASSERT(!currentFile.empty(), "Empty file name");
 		__ASSERT(currentFile[0] != ':', "Cannot save memory streams");
-		LOG_DEBUG("Saving configuration file ", currentFile);
+		logDebug("Saving configuration file ", currentFile);
 		std::ofstream f(currentFile);
 
 		if (f.is_open())
 		{
 			for_each_property([&f](const CMapLine &line) {
 				f << line.first << "=" << line.second->str() << std::endl;
-				LOG_DEBUG("Written: ", line.first, "=", line.second->str());
+				logDebug("Written: ", line.first, "=", line.second->str());
 			});
 			return true;
 		}
 		else {
-			LOG_ERROR("Cannot write file ", currentFile);
+			logError("Cannot write file ", currentFile);
 			return false;
 		}
 	}

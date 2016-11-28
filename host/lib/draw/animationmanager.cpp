@@ -28,7 +28,7 @@ namespace lib
 
 					if (elemFound != _animations.end())
 					{
-						LOG_DEBUG("Same animation type already in node");
+						logDebug("Same animation type already in node");
 						removeFromspVector(*elemFound, _animations);
 					}
 				}

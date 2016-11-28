@@ -8,7 +8,7 @@ namespace lib
 		BoardModel::BoardModel(const vector2du32 &size, ITilesController *tController)
 		{
 			p_tController = tController;
-			LOG_CONSTRUCT(" w: ", size.x, " h: ", size.y);
+			logConstruct(" w: ", size.x, " h: ", size.y);
 			for (auto x = 0u; x < size.x; ++x)
 			{
 				std::vector<WITilePointer> column;
@@ -22,7 +22,7 @@ namespace lib
 
 		BoardModel::~BoardModel()
 		{
-			LOG_DESTRUCT_NOPARAMS;
+			logDestruct_NOPARAMS;
 			_tiles.clear();
 			p_tController = nullptr;
 		}
@@ -33,7 +33,7 @@ namespace lib
 			{
 				return _tiles[position.x][position.y];
 			}
-			LOG_ERROR("Error getting tile in coords ", position.x, ",", position.y);
+			logError("Error getting tile in coords ", position.x, ",", position.y);
 			return WITilePointer();
 		}
 
@@ -66,12 +66,12 @@ namespace lib
 		bool BoardModel::moveTile(const vector2du32 &source, const vector2du32 &dest)
 		{
 			if (!tileEmpty(source)) {
-				LOG_DEBUG("Moving tile from ", source.x, ",", source.y, " to ", dest.x , ",", dest.y);
+				logDebug("Moving tile from ", source.x, ",", source.y, " to ", dest.x , ",", dest.y);
 
 				SITilePointer sourceTile{ getTile(source) };
 				WITilePointer destTile{ getTile(dest) };
 
-				LOG_DEBUG("Source Value: ", sourceTile->getData());
+				logDebug("Source Value: ", sourceTile->getData());
 
 				if (sourceTile)	{
 					__ASSERT(!destTile.lock(), "Trying to move to a not empty tile: " , dest.x, ",", dest.y, " contains ", destTile.lock()->getData());
@@ -84,7 +84,7 @@ namespace lib
 				}
 			}
 			else {
-				LOG_DEBUG("Trying to move empty tile: ", source.x , ",", source.y, " ignoring it");
+				logDebug("Trying to move empty tile: ", source.x , ",", source.y, " ignoring it");
 			}
 			return false;
 		}
