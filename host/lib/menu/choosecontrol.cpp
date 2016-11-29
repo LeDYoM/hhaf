@@ -17,7 +17,7 @@ namespace lib
 			: draw::RenderGroup{ name, parent }, m_onSelected{ onSelected }
 		{
 			const auto &cTheme(parent->currentTheme());
-//			descriptorCursorSize = cTheme.cursorDescriptor.m_size;
+			descriptorCursorSize = cTheme.cursorDescriptor.m_size;
 			m_cursor = createShape("cursor");
 			m_cursor->setPointCount(cTheme.cursorDescriptor.m_nVertex);
 			m_cursor->setColor(cTheme.cursorDescriptor.m_color);
