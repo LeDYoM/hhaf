@@ -10,6 +10,7 @@ namespace lib
 {
 	namespace draw
 	{
+		class Texture;
 		class NodeShape : public Renderizable
 		{
 		public:
@@ -26,23 +27,23 @@ namespace lib
 			u32 getPointCount() const;
 			void setPointCount(const u32 numPoints);
 			virtual vector2df getPoint(const u32 index) const;
-			void setTexture(const sf::Texture *texture, bool resetSize=true, bool resetRect = false);
+			void setTexture(const Texture *texture, bool resetSize=true, bool resetRect = false);
 
 			void setTextureRect(const Rects32& rect);
 			virtual void setColor(const sf::Color& color) override;
-			const sf::Texture* getTexture() const;
+			const Texture* getTexture() const;
 			Rects32 getTextureRect() const;
 			const sf::Color& getFillColor() const;
 
 		protected:
 			void update();
-			void setTexture_(const sf::Texture* texture, bool resetRect = false);
+			void setTexture_(const Texture* texture, bool resetRect = false);
 			virtual void draw(sf::RenderStates &states) override;
 			void updateFillColors();
 			void updateTexCoords();
 
 		private:
-			const sf::Texture* m_texture;
+			const Texture* m_texture;
 			vector2df _size;
 			u32 m_pointCount;
 			Rects32 m_textureRect;

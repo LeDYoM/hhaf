@@ -14,7 +14,7 @@ namespace lib
 			: Renderizable{ name, sf::Triangles }, m_string(), m_font(nullptr), m_characterSize(30), m_style(Regular),
 			m_color(255, 255, 255) {}
 
-		NodeText::NodeText(const std::string &name, const sf::String& string, const sf::Font& font, unsigned int characterSize) :
+		NodeText::NodeText(const std::string &name, const sf::String& string, const draw::Font& font, unsigned int characterSize) :
 			Renderizable{ name, sf::Triangles }, m_string(string), m_font(&font), m_characterSize(characterSize), m_style(Regular),
 			m_color(255, 255, 255) {}
 
@@ -29,10 +29,9 @@ namespace lib
 			}
 		}
 
-		void NodeText::setFont(const sf::Font& font)
+		void NodeText::setFont(const draw::Font& font)
 		{
-			if (m_font != &font)
-			{
+			if (m_font != &font) {
 				m_font = &font;
 				ensureGeometryUpdate();
 			}
@@ -40,8 +39,7 @@ namespace lib
 
 		void NodeText::setCharacterSize(u32 size)
 		{
-			if (m_characterSize != size)
-			{
+			if (m_characterSize != size) {
 				m_characterSize = size;
 				ensureGeometryUpdate();
 			}
@@ -49,8 +47,7 @@ namespace lib
 
 		void NodeText::setStyle(sf::Uint32 style)
 		{
-			if (m_style != style)
-			{
+			if (m_style != style) {
 				m_style = style;
 				ensureGeometryUpdate();
 			}
@@ -58,8 +55,7 @@ namespace lib
 
 		void NodeText::setColor(const sf::Color& color)
 		{
-			if (color != m_color)
-			{
+			if (color != m_color) {
 				m_color = color;
 
 				for (std::size_t i = 0; i < m_vertices.getVertexCount(); ++i)
@@ -72,7 +68,7 @@ namespace lib
 			return m_string;
 		}
 
-		const sf::Font* NodeText::getFont() const
+		const draw::Font* NodeText::getFont() const
 		{
 			return m_font;
 		}

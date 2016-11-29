@@ -2,8 +2,7 @@
 #include <lib/core/log.hpp>
 #include <lib/core/window.hpp>
 #include <lib/core/host.hpp>
-#include <SFML/Graphics/Texture.hpp>
-
+#include <lib/draw/texture.hpp>
 
 #define _USE_MATH_DEFINES
 #include <math.h>
@@ -86,7 +85,7 @@ namespace lib
 			}
 		}
 
-		void NodeShape::setTexture(const sf::Texture *texture, bool resetSize/*=true*/, bool resetRect /*= false*/)
+		void NodeShape::setTexture(const Texture *texture, bool resetSize/*=true*/, bool resetRect /*= false*/)
 		{
 			setTexture_(texture, resetRect);
 			if (resetSize) {
@@ -110,7 +109,7 @@ namespace lib
 			return p1.x * p2.x + p1.y * p2.y;
 		}
 
-		void NodeShape::setTexture_(const sf::Texture* texture, bool resetRect)
+		void NodeShape::setTexture_(const Texture* texture, bool resetRect)
 		{
 			if (texture) {
 				// Recompute the texture area if requested, or if there was no texture & rect before
@@ -124,7 +123,7 @@ namespace lib
 		}
 
 
-		const sf::Texture* NodeShape::getTexture() const
+		const Texture* NodeShape::getTexture() const
 		{
 			return m_texture;
 		}

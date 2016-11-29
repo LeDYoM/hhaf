@@ -1,12 +1,7 @@
 #ifndef _LIB_NODETEXT_HPP__
 #define _LIB_NODETEXT_HPP__
 
-#include <SFML/Graphics/Export.hpp>
-#include <SFML/Graphics/Drawable.hpp>
-#include <SFML/Graphics/Transformable.hpp>
-#include <SFML/Graphics/Font.hpp>
-#include <SFML/Graphics/Rect.hpp>
-#include <SFML/Graphics/VertexArray.hpp>
+#include <lib/draw/font.hpp>
 #include <SFML/System/String.hpp>
 #include <string>
 #include <vector>
@@ -38,14 +33,14 @@ namespace lib
 
 			virtual ~NodeText();
 			NodeText(const std::string &name);
-			NodeText(const std::string &name, const sf::String& string, const sf::Font& font, unsigned int characterSize = 30);
+			NodeText(const std::string &name, const sf::String& string, const draw::Font& font, unsigned int characterSize = 30);
 			void setString(const std::string &string);
-			void setFont(const sf::Font& font);
+			void setFont(const draw::Font& font);
 			void setCharacterSize(u32 size);
 			void setStyle(sf::Uint32 style);
 			void setColor(const sf::Color& color);
 			const std::string & getString() const;
-			const sf::Font* getFont() const;
+			const draw::Font* getFont() const;
 			u32 getCharacterSize() const;
 			sf::Uint32 getStyle() const;
 			const sf::Color& getColor() const;
@@ -61,7 +56,7 @@ namespace lib
 			void ensureGeometryUpdate();
 
 			std::string m_string;
-			const sf::Font* m_font;
+			const draw::Font* m_font;
 			u32 m_characterSize;
 			sf::Uint32 m_style;
 			sf::Color m_color;
