@@ -17,7 +17,7 @@ namespace lib
 			: draw::RenderGroup{ name, parent }, m_onSelected{ onSelected }
 		{
 			const auto &cTheme(parent->currentTheme());
-			descriptorCursorSize = cTheme.cursorDescriptor.m_size;
+//			descriptorCursorSize = cTheme.cursorDescriptor.m_size;
 			m_cursor = createShape("cursor");
 			m_cursor->setPointCount(cTheme.cursorDescriptor.m_nVertex);
 			m_cursor->setColor(cTheme.cursorDescriptor.m_color);
@@ -33,7 +33,7 @@ namespace lib
 				const bool hasSubLabels{ !labels[count]->_subOptionsLabels.empty() };
 
 				auto text = createText("name" + count);
-				text->setFont(*(cTheme.font->getAsFont()));
+				text->setFont(*(cTheme.font));
 				text->setCharacterSize(cTheme.chSize);
 				text->setString(labels[count]->_text);
 				text->setColor(cTheme.textColor);
@@ -44,7 +44,7 @@ namespace lib
 				if (hasSubLabels)
 				{
 					subtext = createText("sub_name" + count);
-					subtext->setFont(*(cTheme.font->getAsFont()));
+					subtext->setFont(*(cTheme.font));
 					subtext->setCharacterSize(cTheme.chSize);
 					subtext->setString(labels[count]->_subOptionsLabels[labels[count]->_startValueIndex]);
 					subtext->setColor(cTheme.textColor);

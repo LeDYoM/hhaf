@@ -28,11 +28,13 @@ namespace lib
 								string resourceTypeStr = completeId[0];
 								string id = completeId[1];
 								if (resourceTypeStr[0] == 'f' || resourceTypeStr[0] == 'F') {
-									sptr<draw::Font> font = sptr<draw::Font>(new draw::Font());
-
-									m_fonts.emplace_back(msptr<draw::Font>(resourceType, resourcesDirectory + dataLine.second->get<string>(), id));
+									auto font = sptr<draw::Font>(new draw::Font(id));
+									font->loadFromFile(resourcesDirectory + dataLine.second->get<string>());
+									m_fonts.emplace_back(std::move(font));
 								} else {
-									m_textures.emplace_back(msptr<Resource>(resourceType, resourcesDirectory + dataLine.second->get<string>(), id));
+									auto texture = sptr<draw::Texture>(new draw::Texture(id));
+									texture->loadFromFile(resourcesDirectory + dataLine.second->get<string>());
+									m_textures.emplace_back(std::move(texture));
 								}
 								logDebug("Resource with id ", dataLine.second, " from file ", dataLine.first, " added");
 							}
