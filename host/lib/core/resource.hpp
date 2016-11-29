@@ -4,8 +4,8 @@
 #include <lib/include/types.hpp>
 #include <lib/draw/hasname.hpp>
 #include "log.hpp"
-#include <SFML/Graphics/Font.hpp>
-#include <SFML/Graphics/Texture.hpp>
+#include <lib/draw/font.hpp>
+#include <lib/draw/texture.hpp>
 
 namespace lib
 {
@@ -28,14 +28,14 @@ namespace lib
 			virtual ~Resource();
 
 			inline bool isValid() const { return _isValid; }
-			sf::Font *getAsFont() const { __ASSERT(_resourceType == ResourceType::Font, "Resource is not a font"); return _resourceData.font; }
-			sf::Texture *getAsTexture() const { __ASSERT(_resourceType == ResourceType::Texture ,"Resource is not a font"); return _resourceData.texture; }
+			draw::Font *getAsFont() const { __ASSERT(_resourceType == ResourceType::Font, "Resource is not a font"); return _resourceData.font; }
+			draw::Texture *getAsTexture() const { __ASSERT(_resourceType == ResourceType::Texture ,"Resource is not a font"); return _resourceData.texture; }
 		private:
 			bool _isValid{ false };
 			union ResourceData
 			{
-				sf::Font *font{ nullptr };
-				sf::Texture *texture;
+				draw::Font *font{ nullptr };
+				draw::Texture *texture;
 			} _resourceData;
 		};
 	}

@@ -22,20 +22,18 @@ namespace lib
 			{
 				logConstruct("Name: ", name(), " of type Font");
 
-				sf::Font *font = new sf::Font();
-				_resourceData.font = font;
+				_resourceData.font = new draw::Font();
 				_resourceType = ResourceType::Font;
-				_isValid = font->loadFromFile(file);
+				_isValid = _resourceData.font->loadFromFile(file);
 				__ASSERT(_isValid, "File ", file, " not found");
 			}
 			else if (rType == ResourceType::Texture)
 			{
 				logConstruct("Name: ", name(), " of type Texture");
 
-				sf::Texture *texture = new sf::Texture();
-				_resourceData.texture = texture;
+				_resourceData.texture = new draw::Texture();
 				_resourceType = ResourceType::Texture;
-				_isValid = texture->loadFromFile(file);
+				_isValid = _resourceData.texture->loadFromFile(file);
 				__ASSERT(_isValid, "File ", file, " not found");
 			}
 		}
