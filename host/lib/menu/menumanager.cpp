@@ -14,7 +14,7 @@ namespace lib
 		MenuManager::MenuManager(const std::string &name, Theme theme)
 			: draw::Scene{ name }, m_theme( theme )
 		{
-			m_theme.font = host().resourceManager().getResource("game_menu.mainFont");
+			m_theme.font = host().resourceManager().getFont("game_menu.mainFont");
 			m_theme.textColor = sf::Color::Blue;
 			m_theme.selectedTextColor = sf::Color::Red;
 			m_theme.chSize = 70;

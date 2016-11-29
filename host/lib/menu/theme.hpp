@@ -2,9 +2,9 @@
 #define LIB_MENU_THEME_INCLUDE_HPP__
 
 #include <lib/include/types.hpp>
-#include <lib/core/resource.hpp>
-#include <lib/draw/renderizable.hpp>
 #include <SFML/Graphics/Color.hpp>
+#include <lib/draw/font.hpp>
+
 
 namespace lib
 {
@@ -20,7 +20,7 @@ namespace lib
 
 		struct Theme
 		{
-			sptr<core::Resource> font;
+			sptr<draw::Font> font;
 			sf::Color textColor;
 			sf::Color selectedTextColor;
 			u32 chSize;

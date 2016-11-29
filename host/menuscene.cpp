@@ -2,7 +2,6 @@
 #include <lib/draw/nodeshape.hpp>
 #include <lib/draw/nodetext.hpp>
 #include <lib/core/resourcemanager.hpp>
-#include <lib/core/resource.hpp>
 #include <lib/core/host.hpp>
 #include <lib/core/events/eventmanager.hpp>
 #include <lib/core/events/inputevent.hpp>
@@ -38,12 +37,12 @@ namespace zoper
 		addMenuStep(msptr<StartLevelMenu>(this));
 
 		_logo = createSpriteShape("mainLogo");
-		_logo->setTexture(host().resourceManager().getResource("game_menu.logo")->getAsTexture(), true, false);
+		_logo->setTexture(host().resourceManager().getTexture("game_menu.logo").get(), true, false);
 		_logo->setSize({ 800, 400 });
 		_logo->setPositionX(getCenterCoordinates().x/*, lib::draw::Alignment::Center*/);
 		_logo->setPositionY(100);
 
-		_background->setTexture(host().resourceManager().getResource("game_menu.background")->getAsTexture(), true, false);
+		_background->setTexture(host().resourceManager().getTexture("game_menu.background").get(), true, false);
 		_background->setSize(2000.0f);
 	}
 

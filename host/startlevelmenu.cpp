@@ -3,7 +3,6 @@
 #include <lib/menu/choosecontrol.hpp>
 #include <lib/draw/renderizable.hpp>
 #include <lib/core/resourcemanager.hpp>
-#include <lib/core/resource.hpp>
 #include <lib/core/host.hpp>
 #include "common.hpp"
 #include "menuscene.hpp"

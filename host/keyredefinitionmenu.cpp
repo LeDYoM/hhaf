@@ -2,7 +2,6 @@
 #include <lib/menu/menumanager.hpp>
 #include <lib/menu/choosecontrol.hpp>
 #include <lib/core/resourcemanager.hpp>
-#include <lib/core/resource.hpp>
 #include <lib/draw/renderizable.hpp>
 #include <lib/draw/nodetext.hpp>
 #include <lib/core/host.hpp>
@@ -28,7 +27,7 @@ namespace zoper
 		{
 			_nextKeyText = createText("pressKey");
 
-			_nextKeyText->setFont(*lib::host().resourceManager().getResource("game_menu.mainFont")->getAsFont());
+			_nextKeyText->setFont(*lib::host().resourceManager().getFont("game_menu.mainFont"));
 			_nextKeyText->setCharacterSize(90);
 			_nextKeyText->setString(" ");
 			_nextKeyText->setColor(sf::Color::Blue);

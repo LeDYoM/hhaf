@@ -1,7 +1,8 @@
 #include "resourcemanager.hpp"
 #include "log.hpp"
-#include "resource.hpp"
 
+#include <lib/draw/font.hpp>
+#include <lib/draw/texture.hpp>
 
 namespace lib
 {
@@ -26,11 +27,13 @@ namespace lib
 							if (completeId.size() > 1) {
 								string resourceTypeStr = completeId[0];
 								string id = completeId[1];
-								Resource::ResourceType resourceType{ Resource::ResourceType::Empty };
-								resourceType = (resourceTypeStr[0] == 'f' || resourceTypeStr[0] == 'F')
-									? Resource::ResourceType::Font :
-									Resource::ResourceType::Texture;
-								resources.emplace_back(msptr<Resource>(resourceType, resourcesDirectory + dataLine.second->get<string>(), id));
+								if (resourceTypeStr[0] == 'f' || resourceTypeStr[0] == 'F') {
+									sptr<draw::Font> font = sptr<draw::Font>(new draw::Font());
+
+									m_fonts.emplace_back(msptr<draw::Font>(resourceType, resourcesDirectory + dataLine.second->get<string>(), id));
+								} else {
+									m_textures.emplace_back(msptr<Resource>(resourceType, resourcesDirectory + dataLine.second->get<string>(), id));
+								}
 								logDebug("Resource with id ", dataLine.second, " from file ", dataLine.first, " added");
 							}
 							else {
@@ -47,14 +50,15 @@ namespace lib
 
 		ResourceManager::~ResourceManager() = default;
 
-		sptr<Resource>& ResourceManager::getResource(const std::string rid)
+		sptr<draw::Font> ResourceManager::getFont(const std::string rid) const
 		{
-			for (auto i = 0u; i < resources.size(); ++i) {
-				if (resources[i]->name() == rid) {
-					return resources[i];
-				}
-			}
-			throw ResourceNotFoundException(rid);
+			auto iterator(std::find_if(m_fonts.begin(), m_fonts.end(), [&rid](const sptr<draw::Font> &font) {return font->name() == rid; }));
+			return iterator == m_fonts.end() ? nullptr : *iterator;
+		}
+		sptr<draw::Texture> ResourceManager::getTexture(const std::string rid) const
+		{
+			auto iterator(std::find_if(m_textures.begin(), m_textures.end(), [&rid](const sptr<draw::Texture> &texture) {return texture->name() == rid; }));
+			return iterator == m_textures.end() ? nullptr : *iterator;
 		}
 	}
 }

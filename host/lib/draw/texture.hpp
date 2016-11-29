@@ -2,15 +2,16 @@
 #define LIB_DRAW_TEXTURE_INCLUDE_HPP__
 
 #include <SFML/Graphics/Texture.hpp>
+#include <lib/draw/hasname.hpp>
 
 namespace lib
 {
 	namespace draw
 	{
-		class Texture : public sf::Texture
+		class Texture : public sf::Texture, public core::HasName
 		{
 		public:
-			using sf::Texture::Texture;
+			Texture(const std::string name) : core::HasName(name) {}
 
 			virtual ~Texture() {}
 		};

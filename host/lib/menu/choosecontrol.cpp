@@ -1,6 +1,5 @@
 #include "choosecontrol.hpp"
 #include "menumanager.hpp"
-#include <lib/core/resource.hpp>
 #include <lib/core/events/eventmanager.hpp>
 #include <lib/core/events/inputevent.hpp>
 #include <lib/draw/scene.hpp>
