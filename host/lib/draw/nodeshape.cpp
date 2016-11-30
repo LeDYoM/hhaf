@@ -85,7 +85,7 @@ namespace lib
 			}
 		}
 
-		void NodeShape::setTexture(const Texture *texture, bool resetSize/*=true*/, bool resetRect /*= false*/)
+		void NodeShape::setTexture(sptr<Texture> texture, bool resetSize/*=true*/, bool resetRect /*= false*/)
 		{
 			setTexture_(texture, resetRect);
 			if (resetSize) {
@@ -109,7 +109,7 @@ namespace lib
 			return p1.x * p2.x + p1.y * p2.y;
 		}
 
-		void NodeShape::setTexture_(const Texture* texture, bool resetRect)
+		void NodeShape::setTexture_(sptr<Texture> texture, bool resetRect)
 		{
 			if (texture) {
 				// Recompute the texture area if requested, or if there was no texture & rect before
@@ -123,7 +123,7 @@ namespace lib
 		}
 
 
-		const Texture* NodeShape::getTexture() const
+		sptr<Texture> NodeShape::getTexture() const
 		{
 			return m_texture;
 		}
@@ -188,7 +188,7 @@ namespace lib
 			states.transform *= static_cast<sf::Transform>(getTransform());
 
 			// Render the inside
-			states.texture = m_texture;
+			states.texture = m_texture.get();
 			host().parentWindow().draw(m_vertices, states);
 
 			states.transform = oldTransform;

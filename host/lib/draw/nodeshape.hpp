@@ -27,23 +27,23 @@ namespace lib
 			u32 getPointCount() const;
 			void setPointCount(const u32 numPoints);
 			virtual vector2df getPoint(const u32 index) const;
-			void setTexture(const Texture *texture, bool resetSize=true, bool resetRect = false);
+			void setTexture(sptr<Texture> texture, bool resetSize=true, bool resetRect = false);
 
 			void setTextureRect(const Rects32& rect);
 			virtual void setColor(const sf::Color& color) override;
-			const Texture* getTexture() const;
+			sptr<Texture> getTexture() const;
 			Rects32 getTextureRect() const;
 			const sf::Color& getFillColor() const;
 
 		protected:
 			void update();
-			void setTexture_(const Texture* texture, bool resetRect = false);
+			void setTexture_(sptr<Texture> texture, bool resetRect = false);
 			virtual void draw(sf::RenderStates &states) override;
 			void updateFillColors();
 			void updateTexCoords();
 
 		private:
-			const Texture* m_texture;
+			sptr<Texture> m_texture;
 			vector2df _size;
 			u32 m_pointCount;
 			Rects32 m_textureRect;
