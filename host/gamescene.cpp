@@ -88,17 +88,17 @@ namespace zoper
 		_goalDisplay->setCharacterSize(90);
 		_pauseText->setCharacterSize(180);
 
-		_scoreText->setColor(sf::Color::Blue);
-		_scoreDisplay->setColor(sf::Color::White);
-		_currentLevelText->setColor(sf::Color::Blue);
-		_currentLevelDisplay->setColor(sf::Color::White);
-		_gameText->setColor(sf::Color::White);
-		_overText->setColor(sf::Color::White);
-		_levelText->setColor(sf::Color::Blue);
-		_levelDisplay->setColor(sf::Color::White);
-		_goalText->setColor(sf::Color::Blue);
-		_goalDisplay->setColor(sf::Color::White);
-		_pauseText->setColor(sf::Color::White);
+		_scoreText->setColor(colors::Blue);
+		_scoreDisplay->setColor(colors::White);
+		_currentLevelText->setColor(colors::Blue);
+		_currentLevelDisplay->setColor(colors::White);
+		_gameText->setColor(colors::White);
+		_overText->setColor(colors::White);
+		_levelText->setColor(colors::Blue);
+		_levelDisplay->setColor(colors::White);
+		_goalText->setColor(colors::Blue);
+		_goalDisplay->setColor(colors::White);
+		_pauseText->setColor(colors::White);
 
 		_scoreText->setScale({ 1.0f, 2.0f });
 		_scoreDisplay->setScale({ 1.0f, 2.0f });
@@ -210,8 +210,8 @@ namespace zoper
 		{
 			setState(Pause);
 			_pauserg->setVisible(true);
-			//_pauseText->getAsText()->setColor(sf::Color(255, 255, 255, 20));
-			addAnimation(lib::draw::anim::ColorAnimation::create(1000, _pauseText, sf::Color(255, 255, 255, 0), sf::Color(255, 255, 255, 255)));
+			//_pauseText->getAsText()->setColor(lib::draw::Color(255, 255, 255, 20));
+			addAnimation(lib::draw::anim::ColorAnimation::create(1000, _pauseText, lib::draw::Color(255, 255, 255, 0), lib::draw::Color(255, 255, 255, 255)));
 			gameClock.pause();
 			return true;
 		}
@@ -454,7 +454,7 @@ namespace zoper
 		if (anim->animationType() == "ColorAnimation" && node == _pauseText)
 		{
 			_pauserg->setVisible(state()==Pause);
-			_pauseText->setColor(sf::Color::White);
+			_pauseText->setColor(lib::draw::colors::White);
 		}
 		else if (anim->animationType() == "PositionAnimation" && node->name() == "pointIncrementScore")
 		{
@@ -581,7 +581,7 @@ namespace zoper
 				center.x -= (node->getLocalBounds().width / 2.0f);
 				center.y -= (node->getLocalBounds().height / 2.0f);
 				node->setPosition(center);
-				node->setColor(sf::Color::White);
+				node->setColor(lib::draw::colors::White);
 			}
 			_backgroundTiles.push_back(column);
 		}

@@ -30,7 +30,7 @@ namespace zoper
 			_nextKeyText->setFont(lib::host().resourceManager().getFont("game_menu.mainFont"));
 			_nextKeyText->setCharacterSize(90);
 			_nextKeyText->setString(" ");
-			_nextKeyText->setColor(sf::Color::Blue);
+			_nextKeyText->setColor(lib::draw::colors::Blue);
 			_nextKeyText->setPositionWithAlignment({ 1000.0f, 1000.0f }, NodeText::Alignment::Center);
 			_indexKey = 0;
 			setTextForKey();

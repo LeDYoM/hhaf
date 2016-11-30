@@ -3,7 +3,7 @@
 
 #include <lib/include/types.hpp>
 #include <lib/include/vector2d.hpp>
-#include <SFML/Graphics.hpp>
+#include "color.hpp"
 #include "renderizable.hpp"
 
 namespace lib
@@ -30,10 +30,10 @@ namespace lib
 			void setTexture(sptr<Texture> texture, bool resetSize=true, bool resetRect = false);
 
 			void setTextureRect(const Rects32& rect);
-			virtual void setColor(const sf::Color& color) override;
+			virtual void setColor(const Color color) override;
 			sptr<Texture> getTexture() const;
 			Rects32 getTextureRect() const;
-			const sf::Color& getFillColor() const;
+			Color getFillColor() const;
 
 		protected:
 			void update();
@@ -47,7 +47,7 @@ namespace lib
 			vector2df _size;
 			u32 m_pointCount;
 			Rects32 m_textureRect;
-			sf::Color m_fillColor;
+			Color m_fillColor;
 		};
 	}
 }

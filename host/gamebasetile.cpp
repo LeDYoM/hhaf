@@ -12,33 +12,30 @@ namespace zoper
 
 	GameBaseTile::~GameBaseTile() = default;
 
-	sf::Color GameBaseTile::getColorForToken() const
+	lib::draw::Color GameBaseTile::getColorForToken() const
 	{
-		sf::Color c;
-
 		switch (getData())
 		{
 		case 0:
-			c = sf::Color::Red;
+			return lib::draw::colors::Red;
 			break;
 		case 1:
-			c = sf::Color::Green;
+			return lib::draw::colors::Green;
 			break;
 		case 2:
-			c = sf::Color::Blue;
+			return lib::draw::colors::Blue;
 			break;
 		case 3:
-			c = sf::Color::Yellow;
+			return lib::draw::colors::Yellow;
 			break;
 		case 4:
-			c = sf::Color::Magenta;
+			return lib::draw::colors::Magenta;
 			break;
 		default:
-			c = sf::Color::White;
 			logError("Error value for token: ", getData(), " is not supported");
+			return lib::draw::colors::White;
 			break;
 		}
-		return c;
 	}
 
 }

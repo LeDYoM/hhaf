@@ -4,6 +4,7 @@
 #include "hasname.hpp"
 #include "idrawable.hpp"
 #include "transformable.hpp"
+#include "color.hpp"
 #include <lib/include/types.hpp>
 #include <lib/include/vector2d.hpp>
 #include <SFML/Graphics.hpp>
@@ -19,7 +20,7 @@ namespace lib
 			virtual ~Renderizable();
 
 			virtual void draw(sf::RenderStates &states) override;
-			virtual void setColor(const sf::Color &color) = 0;
+			virtual void setColor(const Color color) = 0;
 
 			virtual Rectf32 getLocalBounds() const;
 			virtual Rectf32 getGlobalBounds() const;

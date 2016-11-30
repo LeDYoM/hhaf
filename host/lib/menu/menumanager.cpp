@@ -15,11 +15,11 @@ namespace lib
 			: draw::Scene{ name }, m_theme( theme )
 		{
 			m_theme.font = host().resourceManager().getFont("game_menu.mainFont");
-			m_theme.textColor = sf::Color::Blue;
-			m_theme.selectedTextColor = sf::Color::Red;
+			m_theme.textColor = draw::colors::Blue;
+			m_theme.selectedTextColor = draw::colors::Red;
 			m_theme.chSize = 70;
 			m_theme.incY = 1;
-			m_theme.cursorDescriptor = CursorDescriptor{ 3, vector2df{ 90.0f, 90.0f },sf::Color::Red };
+			m_theme.cursorDescriptor = CursorDescriptor{ 3, vector2df{ 90.0f, 90.0f },draw::colors::Red };
 
 			addSubscription(events::KeyPressedEvent::subscribe([this](const events::Event&ev) {
 				logDebug("Key pressed toMenuManager");

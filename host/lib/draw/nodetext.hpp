@@ -38,12 +38,12 @@ namespace lib
 			void setFont(sptr<Font> font);
 			void setCharacterSize(u32 size);
 			void setStyle(sf::Uint32 style);
-			void setColor(const sf::Color& color);
+			virtual void setColor(const Color color) override;
 			const std::string & getString() const;
 			sptr<Font> getFont() const;
 			u32 getCharacterSize() const;
 			sf::Uint32 getStyle() const;
-			const sf::Color& getColor() const;
+			Color getColor() const;
 			vector2df findCharacterPos(const std::size_t index) const;
 
 			void setPositionWithAlignment(const vector2df &pos, Alignment alignment);
@@ -59,7 +59,7 @@ namespace lib
 			sptr<Font> m_font;
 			u32 m_characterSize;
 			sf::Uint32 m_style;
-			sf::Color m_color;
+			Color m_color;
 		};
 	}
 }

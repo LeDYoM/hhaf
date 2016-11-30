@@ -53,7 +53,7 @@ namespace lib
 			}
 		}
 
-		void NodeText::setColor(const sf::Color& color)
+		void NodeText::setColor(const Color color)
 		{
 			if (color != m_color) {
 				m_color = color;
@@ -83,7 +83,7 @@ namespace lib
 			return m_style;
 		}
 
-		const sf::Color& NodeText::getColor() const
+		Color NodeText::getColor() const
 		{
 			return m_color;
 		}

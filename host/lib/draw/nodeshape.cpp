@@ -139,13 +139,13 @@ namespace lib
 			return m_textureRect;
 		}
 
-		void NodeShape::setColor(const sf::Color& color)
+		void NodeShape::setColor(const Color color)
 		{
 			m_fillColor = color;
 			updateFillColors();
 		}
 
-		const sf::Color& NodeShape::getFillColor() const
+		Color NodeShape::getFillColor() const
 		{
 			return m_fillColor;
 		}

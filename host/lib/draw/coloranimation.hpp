@@ -10,12 +10,12 @@ namespace lib
 	{
 		namespace anim
 		{
-			class ColorAnimation : public IValueAnimation<sf::Color>
+			class ColorAnimation : public IValueAnimation<Color>
 			{
 			public:
-				ColorAnimation(const s32 duration, sptr<Renderizable> node, const sf::Color &startColor, const sf::Color &endColor);
-				static sptr<ColorAnimation> create(const s32 duration, sptr<Renderizable> node, const sf::Color &startColor, const sf::Color &endColor);
-				static sptr<ColorAnimation> create(const s32 duration, sptr<Renderizable> node, const sf::Color &endColor);
+				ColorAnimation(const s32 duration, sptr<Renderizable> node, const Color startColor, const Color endColor);
+				static sptr<ColorAnimation> create(const s32 duration, sptr<Renderizable> node, const Color startColor, const Color endColor);
+				static sptr<ColorAnimation> create(const s32 duration, sptr<Renderizable> node, const Color endColor);
 				virtual ~ColorAnimation();
 				virtual bool animate();
 				virtual const std::string animationType() const { return "ColorAnimation"; }
