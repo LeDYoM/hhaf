@@ -12,7 +12,7 @@ namespace lib
 		class Color
 		{
 		public:
-			constexpr Color() noexcept : r{ 0 }, g{ 0 }, b{ 0 }, a{ 255 } {}
+			constexpr Color() noexcept : r{ }, g{ }, b{ }, a{ 255 } {}
 			constexpr Color(const u8 red, const u8 green, const u8 blue, const u8 alpha = 255) noexcept
 				: r{ red }, g{ green }, b{ blue }, a{ alpha } {}
 
@@ -23,15 +23,15 @@ namespace lib
 				a{ static_cast<u8>((color & 0x000000ff) >> 0) } {}
 
 			constexpr u32 toInteger() const noexcept { return (r << 24) | (g << 16) | (b << 8) | a; }
-			Color(const Color&) noexcept = default;
-
-			operator sf::Color() const noexcept { return sf::Color(r, g, b, a); }
-			bool operator ==(const Color& right) const
+			constexpr Color(const Color&) noexcept = default;
+			Color& operator=(const Color&) noexcept = default;
+			operator sf::Color() const noexcept { return { r, g, b, a }; }
+			constexpr bool operator ==(const Color& right) const noexcept
 			{
 				return (r == right.r && g == right.g && b == right.b && a == right.a);
 			}
 
-			bool operator !=(const Color& right) const
+			constexpr bool operator !=(const Color& right) const noexcept
 			{
 				return !(*this == right);
 			}
@@ -51,7 +51,7 @@ namespace lib
 				return (Color(*this) *= right);
 			}
 
-			Color &operator +=(const Color& right)
+			Color &operator +=(const Color& right) noexcept
 			{
 				r = static_cast<u8>(std::min(static_cast<u32>(r)+right.r, 255u));
 				g = static_cast<u8>(std::min(static_cast<u32>(g)+right.g, 255u));
@@ -60,7 +60,7 @@ namespace lib
 				return *this;
 			}
 
-			Color &operator -=(const Color& right)
+			Color &operator -=(const Color& right) noexcept
 			{
 				r = static_cast<u8>(std::max(static_cast<u32>(r) - right.r, 0u));
 				g = static_cast<u8>(std::max(static_cast<u32>(g) - right.g, 0u));
@@ -70,7 +70,7 @@ namespace lib
 
 			}
 
-			Color &operator *=(const Color& right)
+			Color &operator *=(const Color& right) noexcept
 			{
 				r = static_cast<u8>(static_cast<u32>(r)* right.r / 255);
 				g = static_cast<u8>(static_cast<u32>(g)* right.g / 255);
@@ -79,14 +79,14 @@ namespace lib
 				return *this;
 			}
 
-			Color operator*(const f32 delta) const
+			Color operator*(const f32 delta) const noexcept
 			{
-				return Color(
+				return Color{
 					static_cast<u8>(static_cast<u32>(r)* delta),
 					static_cast<u8>(static_cast<u32>(g)* delta),
 					static_cast<u8>(static_cast<u32>(b)* delta),
 					static_cast<u8>(static_cast<u32>(a)* delta)
-					);
+				};
 			}
 
 			u8 r;
@@ -97,15 +97,15 @@ namespace lib
 
 		namespace colors
 		{
-			static const Color Black{ 0,0,0,0 };
-			static const Color White{ 255, 255, 255 };
-			static const Color Red{ 255, 0, 0 };
-			static const Color Green{ 0, 255, 0 };
-			static const Color Blue{ 0, 0, 255 };
-			static const Color Yellow{ 255, 255, 0 };
-			static const Color Magenta{ 255, 0, 255 };
-			static const Color Cyan{ 0, 255, 255 };
-			static const Color Transparent{ 0, 0, 0, 0 };
+			static constexpr const Color Black{ 0,0,0,0 };
+			static constexpr const Color White{ 255, 255, 255 };
+			static constexpr const Color Red{ 255, 0, 0 };
+			static constexpr const Color Green{ 0, 255, 0 };
+			static constexpr const Color Blue{ 0, 0, 255 };
+			static constexpr const Color Yellow{ 255, 255, 0 };
+			static constexpr const Color Magenta{ 255, 0, 255 };
+			static constexpr const Color Cyan{ 0, 255, 255 };
+			static constexpr const Color Transparent{ 0, 0, 0, 0 };
 		}
 
 	}

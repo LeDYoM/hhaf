@@ -79,12 +79,9 @@ namespace zoper
 						}
 					}
 					else {
-						if (x % 2) {
-							return (y % 2) ? lib::draw::Color{ 25,25,25 } : lib::draw::Color{ 10, 12, 250 };
-						}
-						else {
-							return (y % 2) ? lib::draw::Color{ 250, 50, 10 } : lib::draw::Color{ 10, 200, 10 };
-						}
+						return (x % 2) ?
+							((y % 2) ? lib::draw::Color{ 25,25,25 } : lib::draw::Color{ 10, 12, 250 }) :
+							((y % 2) ? lib::draw::Color{ 250, 50, 10 } : lib::draw::Color{ 10, 200, 10 });
 					}
 				}
 				else if (_level < maxLevelWithProperties)
