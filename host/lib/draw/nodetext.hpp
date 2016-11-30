@@ -33,14 +33,14 @@ namespace lib
 
 			virtual ~NodeText();
 			NodeText(const std::string &name);
-			NodeText(const std::string &name, const sf::String& string, const draw::Font& font, unsigned int characterSize = 30);
+			NodeText(const std::string &name, const sf::String& string, sptr<draw::Font> font, unsigned int characterSize = 30);
 			void setString(const std::string &string);
-			void setFont(const draw::Font& font);
+			void setFont(sptr<draw::Font> font);
 			void setCharacterSize(u32 size);
 			void setStyle(sf::Uint32 style);
 			void setColor(const sf::Color& color);
 			const std::string & getString() const;
-			const draw::Font* getFont() const;
+			sptr<draw::Font> getFont() const;
 			u32 getCharacterSize() const;
 			sf::Uint32 getStyle() const;
 			const sf::Color& getColor() const;
@@ -56,7 +56,7 @@ namespace lib
 			void ensureGeometryUpdate();
 
 			std::string m_string;
-			const draw::Font* m_font;
+			sptr<draw::Font> m_font;
 			u32 m_characterSize;
 			sf::Uint32 m_style;
 			sf::Color m_color;

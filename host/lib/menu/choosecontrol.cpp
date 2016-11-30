@@ -25,17 +25,17 @@ namespace lib
 
 			const bool menuType{ labels.empty()?false:labels[0]->_subOptionsLabels.empty() };
 
-			auto normalLabelAlign( menuType ? draw::NodeText::Alignment::Center : draw::NodeText::Alignment::Left );
+			const auto normalLabelAlign( menuType ? draw::NodeText::Alignment::Center : draw::NodeText::Alignment::Left );
 			u32 count{ 0 };
 			vector2df currentPos{ 0.0f, 0.0f };
-			for (const auto label : labels)
+			for (const auto& label : labels)
 			{
-				const bool hasSubLabels{ !labels[count]->_subOptionsLabels.empty() };
+				const bool hasSubLabels{ !label->_subOptionsLabels.empty() };
 
 				auto text = createText("name" + count);
-				text->setFont(*(cTheme.font));
+				text->setFont(cTheme.font);
 				text->setCharacterSize(cTheme.chSize);
-				text->setString(labels[count]->_text);
+				text->setString(label->_text);
 				text->setColor(cTheme.textColor);
 				text->setPositionWithAlignmentX(0, normalLabelAlign);
 				text->setPositionY(currentPos.y);
@@ -44,16 +44,16 @@ namespace lib
 				if (hasSubLabels)
 				{
 					subtext = createText("sub_name" + count);
-					subtext->setFont(*(cTheme.font));
+					subtext->setFont(cTheme.font);
 					subtext->setCharacterSize(cTheme.chSize);
-					subtext->setString(labels[count]->_subOptionsLabels[labels[count]->_startValueIndex]);
+					subtext->setString(label->_subOptionsLabels[label->_startValueIndex]);
 					subtext->setColor(cTheme.textColor);
 					subtext->setPositionWithAlignmentX(1800, draw::NodeText::Alignment::Right);
 					subtext->setPositionY(currentPos.y);
 				}
 
 				currentPos.y += (cTheme.chSize + cTheme.incY);
-				m_labelData.push_back(LabelData(labels[count]->_subOptionsLabels,subtext,text, labels[count]->_startValueIndex));
+				m_labelData.push_back(LabelData(label->_subOptionsLabels,subtext,text, label->_startValueIndex));
 				++count;
 			}
 

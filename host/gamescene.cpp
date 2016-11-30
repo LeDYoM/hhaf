@@ -56,17 +56,17 @@ namespace zoper
 		_overText = _gameOverrg->createText("gameoverover");
 
 		auto& resourceManager{ lib::host().resourceManager() };
-		_scoreText->setFont(*(resourceManager.getFont("game_scene.scoreFont")));
-		_scoreDisplay->setFont(*(resourceManager.getFont("game_scene.scoreFont")));
-		_currentLevelText->setFont(*(resourceManager.getFont("game_scene.scoreFont")));
-		_currentLevelDisplay->setFont(*(resourceManager.getFont("game_scene.scoreFont")));
-		_gameText->setFont(*(resourceManager.getFont("game_scene.scoreFont")));
-		_overText->setFont(*(resourceManager.getFont("game_scene.scoreFont")));
-		_levelText->setFont(*(resourceManager.getFont("game_scene.scoreFont")));
-		_levelDisplay->setFont(*(resourceManager.getFont("game_scene.scoreFont")));
-		_goalText->setFont(*(resourceManager.getFont("game_scene.scoreFont")));
-		_goalDisplay->setFont(*(resourceManager.getFont("game_scene.scoreFont")));
-		_pauseText->setFont(*(resourceManager.getFont("game_scene.scoreFont")));
+		_scoreText->setFont(resourceManager.getFont("game_scene.scoreFont"));
+		_scoreDisplay->setFont(resourceManager.getFont("game_scene.scoreFont"));
+		_currentLevelText->setFont(resourceManager.getFont("game_scene.scoreFont"));
+		_currentLevelDisplay->setFont(resourceManager.getFont("game_scene.scoreFont"));
+		_gameText->setFont(resourceManager.getFont("game_scene.scoreFont"));
+		_overText->setFont(resourceManager.getFont("game_scene.scoreFont"));
+		_levelText->setFont(resourceManager.getFont("game_scene.scoreFont"));
+		_levelDisplay->setFont(resourceManager.getFont("game_scene.scoreFont"));
+		_goalText->setFont(resourceManager.getFont("game_scene.scoreFont"));
+		_goalDisplay->setFont(resourceManager.getFont("game_scene.scoreFont"));
+		_pauseText->setFont(resourceManager.getFont("game_scene.scoreFont"));
 
 		_scoreText->setString("Score: ");
 		increaseScore(0);

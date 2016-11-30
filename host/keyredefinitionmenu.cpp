@@ -27,7 +27,7 @@ namespace zoper
 		{
 			_nextKeyText = createText("pressKey");
 
-			_nextKeyText->setFont(*lib::host().resourceManager().getFont("game_menu.mainFont"));
+			_nextKeyText->setFont(lib::host().resourceManager().getFont("game_menu.mainFont"));
 			_nextKeyText->setCharacterSize(90);
 			_nextKeyText->setString(" ");
 			_nextKeyText->setColor(sf::Color::Blue);
