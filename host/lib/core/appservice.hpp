@@ -14,7 +14,6 @@ namespace lib
 		AppService(const AppService &rh) = delete;
 		AppService &operator=(const AppService &rh) = delete;
 
-	protected:
 		constexpr AppService() {};
 		friend class Host;
 	};

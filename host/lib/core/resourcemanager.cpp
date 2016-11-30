@@ -8,6 +8,17 @@ namespace lib
 {
 	namespace core
 	{
+		namespace
+		{
+			template <typename T>
+			inline void add(std::list<sptr<T>> &container, std::string &&id, std::string &&fileName)
+			{
+				auto&& resource(msptr<T>(std::move(id)));
+				resource->loadFromFile(std::move(fileName));
+				container.emplace_back(std::move(resource));
+			}
+
+		}
 		ResourceManager::ResourceManager(const std::string &resourceFile)
 			: AppService{ }, Configuration{ resourceFile }
 		{
@@ -27,14 +38,12 @@ namespace lib
 							if (completeId.size() > 1) {
 								string resourceTypeStr = completeId[0];
 								string id = completeId[1];
+								string filename(resourcesDirectory + dataLine.second->get<string>());
 								if (resourceTypeStr[0] == 'f' || resourceTypeStr[0] == 'F') {
-									auto font = sptr<draw::Font>(new draw::Font(id));
-									font->loadFromFile(resourcesDirectory + dataLine.second->get<string>());
-									m_fonts.emplace_back(std::move(font));
+									add(m_fonts, std::move(id), std::move(filename));
 								} else {
-									auto texture = sptr<draw::Texture>(new draw::Texture(id));
-									texture->loadFromFile(resourcesDirectory + dataLine.second->get<string>());
-									m_textures.emplace_back(std::move(texture));
+									add(m_textures, std::move(id), std::move(filename));
+
 								}
 								logDebug("Resource with id ", dataLine.second, " from file ", dataLine.first, " added");
 							}
