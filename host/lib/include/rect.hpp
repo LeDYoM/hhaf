@@ -2,6 +2,7 @@
 #define LIB_RECT_INCLUDE_HPP__
 
 #include "types.hpp"
+#include <lib/include/vector2d.hpp>
 #include <SFML/Graphics/Rect.hpp>
 
 namespace lib
