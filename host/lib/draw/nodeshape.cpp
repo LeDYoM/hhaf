@@ -189,7 +189,7 @@ namespace lib
 
 			// Render the inside
 			states.texture = m_texture.get();
-			host().parentWindow().draw(&m_vertices[0], m_vertices.getVertexCount(), m_vertices.getPrimitiveType(), states);
+			host().parentWindow().draw(&m_vertices[0], m_vertices.getVertexCount(), static_cast<sf::PrimitiveType>(m_vertices.getPrimitiveType()), states);
 
 			states.transform = oldTransform;
 		}

@@ -7,7 +7,7 @@ namespace lib
 	namespace draw
 	{
 		Renderizable::Renderizable(const std::string &name, sf::PrimitiveType type, std::size_t vertexCount)
-			: HasName{ name }, m_vertices{ type, vertexCount }, m_bounds{}
+			: HasName{ name }, m_vertices{ static_cast<PrimitiveType>(type), vertexCount }, m_bounds{}
 		{
 			logConstruct("Name: ", name );
 		}
