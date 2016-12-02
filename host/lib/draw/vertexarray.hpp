@@ -15,12 +15,12 @@ namespace lib
 		/*
 		enum class PrimitiveType
 		{
-			Points,
-			Lines,
-			LinesStrip,
-			Triangles,
-			TrianglesStrip,
-			TrianglesFan,
+		Points,
+		Lines,
+		LineStrip,
+		Triangles,
+		TriangleStrip,
+		TriangleFan,
 		};
 		*/
 		class VertexArray
