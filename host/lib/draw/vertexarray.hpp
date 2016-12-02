@@ -3,10 +3,8 @@
 
 #include <lib/include/types.hpp>
 #include <lib/include/rect.hpp>
-#include <vector>
 #include <lib/draw/vertex.hpp>
-#include <SFML/Graphics/Vertex.hpp>
-#include <SFML/Graphics/PrimitiveType.hpp>
+#include <vector>
 
 namespace lib
 {
@@ -35,7 +33,7 @@ namespace lib
 			template <typename T> inline void resize(T&& vertexCount) { m_vertices.resize(std::forward<T>(vertexCount)); }
 
 			void append(Vertex &&vertex) { m_vertices.emplace_back(std::move(vertex)); }
-			template <typename... Args> void append(Args&&... args) { m_vertices.emplace_back(std::forward<Args>(args)...); }
+			template <typename... Args> inline void append(Args&&... args) { m_vertices.emplace_back(std::forward<Args>(args)...); }
 			inline void setPrimitiveType(const PrimitiveType type) { m_primitiveType = type; }
 			inline PrimitiveType getPrimitiveType() const { return m_primitiveType; }
 			Rectf32 getBounds() const;
