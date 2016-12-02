@@ -4,6 +4,7 @@
 #include <lib/include/types.hpp>
 #include <lib/include/rect.hpp>
 #include <vector>
+#include <lib/draw/vertex.hpp>
 #include <SFML/Graphics/Vertex.hpp>
 #include <SFML/Graphics/PrimitiveType.hpp>
 
@@ -11,7 +12,7 @@ namespace lib
 {
 	namespace draw
 	{
-		using BasicVertexArray = std::vector<sf::Vertex>;
+		using BasicVertexArray = std::vector<Vertex>;
 
 		enum PrimitiveType
 		{
@@ -27,8 +28,8 @@ namespace lib
 		public:
 			VertexArray();
 			explicit VertexArray(const PrimitiveType type, const std::size_t vertexCount = 0);
-			sf::Vertex &operator [](const std::size_t index);
-			const sf::Vertex &operator [](const std::size_t index) const;
+			Vertex &operator [](const std::size_t index);
+			const Vertex &operator [](const std::size_t index) const;
 			void clear();
 			void resize(const std::size_t vertexCount);
 			void append(const sf::Vertex &vertex);

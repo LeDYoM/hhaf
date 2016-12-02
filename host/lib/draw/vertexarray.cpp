@@ -12,12 +12,12 @@ namespace lib
 		VertexArray::VertexArray(const PrimitiveType type, const std::size_t vertexCount)
 			: m_vertices( vertexCount ), m_primitiveType{ type } {}
 
-		sf::Vertex &VertexArray::operator [](const std::size_t index)
+		Vertex &VertexArray::operator [](const std::size_t index)
 		{
 			return m_vertices[index];
 		}
 
-		const sf::Vertex &VertexArray::operator [](const std::size_t index) const
+		const Vertex &VertexArray::operator [](const std::size_t index) const
 		{
 			return m_vertices[index];
 		}
@@ -34,7 +34,7 @@ namespace lib
 
 		void VertexArray::append(const sf::Vertex &vertex)
 		{
-			m_vertices.push_back(vertex);
+			m_vertices.push_back(*(const Vertex*)&vertex);
 		}
 
 		void VertexArray::setPrimitiveType(PrimitiveType type)
