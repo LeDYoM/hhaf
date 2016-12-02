@@ -26,17 +26,21 @@ namespace lib
 		class VertexArray
 		{
 		public:
-			VertexArray();
+			constexpr VertexArray();
 			explicit VertexArray(const PrimitiveType type, const std::size_t vertexCount = 0);
-			Vertex &operator [](const std::size_t index);
-			const Vertex &operator [](const std::size_t index) const;
-			void clear();
-			void resize(const std::size_t vertexCount);
-			void append(const sf::Vertex &vertex);
-			void setPrimitiveType(const PrimitiveType type);
-			PrimitiveType getPrimitiveType() const;
+			inline Vertex &VertexArray::operator [](const std::size_t index) { return m_vertices[index]; }
+			inline const Vertex &VertexArray::operator [](const std::size_t index) const { return m_vertices[index]; }
+
+			inline void clear() noexcept { m_vertices.clear(); }
+			template <typename T> inline void resize(T&& vertexCount) { m_vertices.resize(std::forward<T>(vertexCount)); }
+
+			void append(Vertex &&vertex) { m_vertices.emplace_back(std::move(vertex)); }
+			template <typename... Args> void append(Args&&... args) { m_vertices.emplace_back(std::forward<Args>(args)...); }
+			inline void setPrimitiveType(const PrimitiveType type) { m_primitiveType = type; }
+			inline PrimitiveType getPrimitiveType() const { return m_primitiveType; }
 			Rectf32 getBounds() const;
-			inline const BasicVertexArray *data() const { return &m_vertices; }
+
+			inline const BasicVertexArray *data() const noexcept { return &m_vertices; }
 			inline const BasicVertexArray::size_type getVertexCount() const { return m_vertices.size(); }
 		private:
 			BasicVertexArray m_vertices;
