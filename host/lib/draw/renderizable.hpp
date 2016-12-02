@@ -8,6 +8,7 @@
 #include <lib/include/types.hpp>
 #include <lib/include/vector2d.hpp>
 #include <SFML/Graphics.hpp>
+#include "vertexarray.hpp"
 
 namespace lib
 {
@@ -26,7 +27,7 @@ namespace lib
 			virtual Rectf32 getGlobalBounds() const;
 
 		protected:
-			sf::VertexArray m_vertices;
+			VertexArray m_vertices;
 			Rectf32 m_bounds;
 		};
 	}

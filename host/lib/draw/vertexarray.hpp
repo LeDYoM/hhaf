@@ -37,7 +37,7 @@ namespace lib
 			sf::PrimitiveType getPrimitiveType() const;
 			Rectf32 getBounds() const;
 			inline const BasicVertexArray *data() const { return &m_vertices; }
-			inline const BasicVertexArray::size_type size() const { return m_vertices.size(); }
+			inline const BasicVertexArray::size_type getVertexCount() const { return m_vertices.size(); }
 		private:
 			BasicVertexArray m_vertices;
 			sf::PrimitiveType m_primitiveType;
