@@ -153,9 +153,8 @@ namespace lib
 		void NodeShape::update()
 		{
 			// Get the total number of points of the shape
-			std::size_t count = getPointCount();
-			if (count < 3)
-			{
+			auto count = getPointCount();
+			if (count < 3) {
 				m_vertices.resize(0);
 				return;
 			}
@@ -184,14 +183,13 @@ namespace lib
 		void NodeShape::draw(sf::RenderStates &states)
 		{
 			auto oldTransform = states.transform;
-//			states.transform *= getTransform();
-			states.transform *= static_cast<sf::Transform>(getTransform());
+			states.transform *= getTransform();
 
 			// Render the inside
 			states.texture = m_texture.get();
 			host().parentWindow().draw((const sf::Vertex*)&m_vertices[0], m_vertices.getVertexCount(), static_cast<sf::PrimitiveType>(m_vertices.getPrimitiveType()), states);
 
-			states.transform = oldTransform;
+			states.transform = std::move(oldTransform);
 		}
 
 		void NodeShape::updateFillColors()

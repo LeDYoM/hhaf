@@ -19,8 +19,8 @@ namespace lib
 				const f32 a10, const f32 a11, const f32 a12,
 				const f32 a20, const f32 a21, const f32 a22) noexcept;
 
-			Transform(const Transform&) = default;
-			Transform& operator=(const Transform&) = default;
+			constexpr Transform(const Transform&) noexcept = default;
+			Transform& operator=(const Transform&) noexcept = default;
 
 			constexpr Transform(Transform&&) noexcept = default;
 			Transform& operator=(Transform&&) noexcept = default;
@@ -40,7 +40,7 @@ namespace lib
 			Transform& scale(const f32 scaleX, const f32 scaleY, const f32 centerX, const f32 centerY) noexcept;
 			Transform& scale(const vector2df& factors) noexcept;
 			Transform& scale(const vector2df& factors, const vector2df& center) noexcept;
-			operator sf::Transform() const noexcept;
+			operator const sf::Transform() const noexcept;
 			static const Transform Identity;
 			Transform& operator *=(const Transform& right);
 

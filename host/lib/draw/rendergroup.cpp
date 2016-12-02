@@ -61,7 +61,7 @@ namespace lib
 				for (const auto& renderizable : _renderNodes) {
 					renderizable->draw(states);
 				}
-				states.transform = oldTransformation;
+				states.transform = std::move(oldTransformation);
 			}
 		}
 

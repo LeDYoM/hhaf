@@ -186,7 +186,7 @@ namespace lib
 			return scale(factors.x, factors.y, center.x, center.y);
 		}
 
-		Transform::operator sf::Transform() const noexcept
+		Transform::operator const sf::Transform() const noexcept
 		{
 			return sf::Transform(m_matrix[0], m_matrix[4], m_matrix[12],
 				m_matrix[1], m_matrix[5], m_matrix[13],

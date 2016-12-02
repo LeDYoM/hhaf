@@ -87,7 +87,7 @@ namespace lib
 			setScale(m_scale * factor);
 		}
 
-		const Transform& Transformable::getTransform() const
+		const Transform& Transformable::getTransform() const noexcept
 		{
 			return m_transform;
 		}

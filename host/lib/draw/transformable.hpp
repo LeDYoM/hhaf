@@ -26,7 +26,7 @@ namespace lib
 			void move(const vector2df& offset);
 			void rotate(const f32 angle);
 			void scale(const vector2df& factor);
-			const Transform& getTransform() const;
+			const Transform& getTransform() const noexcept;
 			void updateTransform();
 
 		private:
