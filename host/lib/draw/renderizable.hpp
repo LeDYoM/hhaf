@@ -17,7 +17,7 @@ namespace lib
 		class Renderizable : public core::HasName, public IDrawable, public Transformable
 		{
 		public:
-			explicit Renderizable(const std::string &name, sf::PrimitiveType type, std::size_t vertexCount = 0);
+			explicit Renderizable(const std::string &name, PrimitiveType type, std::size_t vertexCount = 0);
 			virtual ~Renderizable();
 
 			virtual void draw(sf::RenderStates &states) override;

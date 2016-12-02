@@ -11,12 +11,11 @@ namespace lib
 	namespace draw
 	{
 		NodeText::NodeText(const std::string &name)
-			: Renderizable{ name, sf::Triangles }, m_string(), m_font(nullptr), m_characterSize(30), m_style(Regular),
-			m_color(255, 255, 255) {}
+			:NodeText(name, sf::String{},nullptr,30) {}
 
 		NodeText::NodeText(const std::string &name, const sf::String& string, sptr<Font> font, unsigned int characterSize) :
-			Renderizable{ name, sf::Triangles }, m_string(string), m_font{ font }, m_characterSize{ characterSize }, m_style(Regular),
-			m_color(255, 255, 255) {}
+			Renderizable{ name, Triangles }, m_string(string), m_font{ font }, m_characterSize{ characterSize }, m_style{ Regular },
+			m_color{ 255, 255, 255 } {}
 
 		NodeText::~NodeText() {	}
 
