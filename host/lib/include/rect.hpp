@@ -3,7 +3,6 @@
 
 #include "types.hpp"
 #include <lib/include/vector2d.hpp>
-#include <SFML/Graphics/Rect.hpp>
 
 namespace lib
 {
@@ -12,75 +11,76 @@ namespace lib
 	{
 		T left, top, width, height;
 
-		inline constexpr Rect(T rectLeft, T rectTop, T rectWidth, T rectHeight) noexcept : left{ rectLeft }, top{ rectTop }, width{ rectWidth }, height{ rectHeight } { }
+		inline constexpr Rect(const T rectLeft, const T rectTop, const T rectWidth, const T rectHeight) noexcept : left{ rectLeft }, top{ rectTop }, width{ rectWidth }, height{ rectHeight } { }
 		inline constexpr explicit Rect() noexcept : Rect{ {}, {}, {}, {} } {}
-		inline constexpr Rect(const vector2d<T>& position, const vector2d<T>& size) : Rect{ position.x, position.y, size.x, size.y } {}
-		inline constexpr Rect(const Rect&) = default;
-		inline Rect &operator=(const Rect&) = default;
-		inline constexpr Rect(const sf::Rect<T> &rh) noexcept : Rect{ rh.left,rh.top,rh.width,rh.height } {}
+		inline constexpr Rect(const vector2d<T>& position, const vector2d<T>& size) noexcept : Rect{ position.x, position.y, size.x, size.y } {}
+		inline constexpr Rect(const Rect&) noexcept = default;
+		inline Rect &operator=(const Rect&) noexcept = default;
+		inline constexpr Rect(Rect&&) noexcept = default;
+		inline Rect &operator=(Rect&&) noexcept = default;
 		template <typename U>
-		inline Rect(const Rect<U>& rectangle) :
+		inline constexpr Rect(const Rect<U>& rectangle) :
 			left{ static_cast<T>(rectangle.left) }, top{ static_cast<T>(rectangle.top) },
 			width{ static_cast<T>(rectangle.width) }, height{ static_cast<T>(rectangle.height) } {}
 
-		inline vector2d<T> center() const { return vector2d<T> {left + (width / static_cast<T>(2)), 
+		inline constexpr vector2d<T> center() const { return vector2d<T> {left + (width / static_cast<T>(2)), 
 			top + (height / static_cast<T>(2))}; }
 
-		inline bool contains(T x, T y) const
+		inline constexpr bool contains(const T x, const T y) const noexcept
 		{
-			T minX = std::min(left, static_cast<T>(left + width));
-			T maxX = std::max(left, static_cast<T>(left + width));
-			T minY = std::min(top, static_cast<T>(top + height));
-			T maxY = std::max(top, static_cast<T>(top + height));
+			const T minX = std::min(left, static_cast<T>(left + width));
+			const T maxX = std::max(left, static_cast<T>(left + width));
+			const T minY = std::min(top, static_cast<T>(top + height));
+			const T maxY = std::max(top, static_cast<T>(top + height));
 
 			return (x >= minX) && (x < maxX) && (y >= minY) && (y < maxY);
 		}
 
-		bool contains(const vector2d<T>& point) const
+		inline constexpr bool contains(const vector2d<T>& point) const noexcept
 		{
 			return contains(point.x, point.y);
 		}
 
-		bool intersects(const Rect<T>& rectangle) const
+		inline constexpr bool intersects(const Rect& rectangle, Rect& intersection) const noexcept
 		{
-			return intersects(rectangle, std::move(Rect<T>()));
-		}
+			const T r1MinX = std::min(left, right());
+			const T r1MaxX = std::max(left, right());
+			const T r1MinY = std::min(top, bottom());
+			const T r1MaxY = std::max(top, bottom());
 
-		bool intersects(const Rect<T>& rectangle, Rect<T>& intersection) const
-		{
-			T r1MinX = std::min(left, right());
-			T r1MaxX = std::max(left, right());
-			T r1MinY = std::min(top, bottom());
-			T r1MaxY = std::max(top, bottom());
-
-			T r2MinX = std::min(rectangle.left, static_cast<T>(rectangle.left + rectangle.width));
-			T r2MaxX = std::max(rectangle.left, static_cast<T>(rectangle.left + rectangle.width));
-			T r2MinY = std::min(rectangle.top, static_cast<T>(rectangle.top + rectangle.height));
-			T r2MaxY = std::max(rectangle.top, static_cast<T>(rectangle.top + rectangle.height));
+			const T r2MinX = std::min(rectangle.left, static_cast<T>(rectangle.left + rectangle.width));
+			const T r2MaxX = std::max(rectangle.left, static_cast<T>(rectangle.left + rectangle.width));
+			const T r2MinY = std::min(rectangle.top, static_cast<T>(rectangle.top + rectangle.height));
+			const T r2MaxY = std::max(rectangle.top, static_cast<T>(rectangle.top + rectangle.height));
 
 			// Compute the intersection boundaries
-			T interLeft = std::max(r1MinX, r2MinX);
-			T interTop = std::max(r1MinY, r2MinY);
-			T interRight = std::min(r1MaxX, r2MaxX);
-			T interBottom = std::min(r1MaxY, r2MaxY);
+			const T interLeft = std::max(r1MinX, r2MinX);
+			const T interTop = std::max(r1MinY, r2MinY);
+			const T interRight = std::min(r1MaxX, r2MaxX);
+			const T interBottom = std::min(r1MaxY, r2MaxY);
 
 			// If the intersection is valid (positive non zero area), then there is an intersection
 			if ((interLeft < interRight) && (interTop < interBottom)) {
-				intersection = Rect<T>(interLeft, interTop, interRight - interLeft, interBottom - interTop);
+				intersection = Rect{ interLeft, interTop, interRight - interLeft, interBottom - interTop };
 				return true;
 			}
 			else {
-				intersection = Rect<T>(0, 0, 0, 0);
+				intersection = Rect{};
 				return false;
 			}
 		}
 
-		inline bool operator==(const Rect<T> &r) const
+		inline constexpr bool intersects(const Rect<T>& rectangle) const noexcept
+		{
+			return intersects(rectangle, std::move(Rect<T>()));
+		}
+
+		inline constexpr bool operator==(const Rect &r) const noexcept
 		{
 			return (left == r.left && width == r.width && top == r.top && height == r.height);
 		}
 
-		inline bool operator!=(const Rect<T> &r) const
+		inline constexpr bool operator!=(const Rect<T> &r) const noexcept
 		{
 			return !(operator==(r));
 		}
@@ -100,7 +100,6 @@ namespace lib
 		inline vector2d<T> rightBottom() const { return vector2d<T>{right(), bottom()}; }
 		inline vector2d<T> rightTop() const { return vector2d<T>{right(), top}; }
 		inline vector2d<T> leftBottom() const { return vector2d<T>{left, bottom()}; }
-		inline operator sf::Rect<T>() const { return sf::Rect<T>(left, top, width, height); }
 	};
 
 	using Rects32 = lib::Rect<s32>;
