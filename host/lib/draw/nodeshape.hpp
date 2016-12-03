@@ -37,14 +37,13 @@ namespace lib
 
 		protected:
 			void update();
-			void setTexture_(sptr<Texture> texture, bool resetRect = false);
 			virtual void draw(sf::RenderStates &states) override;
 			void updateFillColors();
 			void updateTexCoords();
 
 		private:
 			sptr<Texture> m_texture;
-			vector2df _size;
+			vector2df m_size;
 			u32 m_pointCount;
 			Rects32 m_textureRect;
 			Color m_fillColor;

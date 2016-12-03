@@ -13,7 +13,7 @@ namespace lib
 	{
 		NodeShape::NodeShape(const std::string &name, const vector2df& size, const u32 pointCount, const NodeMode mode)
 			: Renderizable{ name, TriangleFan }, _mode{ mode }, m_texture{ nullptr },m_textureRect(),m_fillColor(255, 255, 255),
-			_size{ size }, m_pointCount{ pointCount }
+			m_size{ size }, m_pointCount{ pointCount }
 		{
 			update();
 		}
@@ -25,7 +25,7 @@ namespace lib
 
 		void NodeShape::setSize(const vector2df & size)
 		{
-			_size = size;
+			m_size = size;
 			update();
 		}
 
@@ -36,7 +36,7 @@ namespace lib
 
 		const vector2df & NodeShape::getSize() const
 		{
-			return _size;
+			return m_size;
 		}
 
 		u32 NodeShape::getPointCount() const
@@ -59,13 +59,10 @@ namespace lib
 			default:
 			case lib::draw::NodeShape::NodeMode::Shape:
 			{
-				vector2df m_radius{ _size / 2.0f };
-				double angle = ((index * 2 * M_PI) / getPointCount()) - (M_PI_2);
-				double x = std::cos(angle) * m_radius.x;
-				double y = std::sin(angle) * m_radius.y;
-
-				return vector2df(static_cast<float>(m_radius.x + x), static_cast<float>(m_radius.y + y));
-
+				vector2df m_radius{ m_size / 2.0f };
+				const f64 angle = ((index * 2 * M_PI) / getPointCount()) - (M_PI_2);
+				const vector2dd r{ std::cos(angle) * m_radius.x, std::sin(angle) * m_radius.y };
+				return vector2df(static_cast<f32>(m_radius.x + r.x), static_cast<f32>(m_radius.y + r.y));
 			}
 			break;
 			case lib::draw::NodeShape::NodeMode::Sprite:
@@ -76,9 +73,9 @@ namespace lib
 				{
 				default:
 				case 0: return vector2df(0, 0);
-				case 1: return vector2df(_size.x, 0);
-				case 2: return vector2df(_size.x, _size.y);
-				case 3: return vector2df(0, _size.y);
+				case 1: return vector2df(m_size.x, 0);
+				case 2: return vector2df(m_size.x, m_size.y);
+				case 3: return vector2df(0, m_size.y);
 				}
 			}
 			break;
@@ -86,30 +83,6 @@ namespace lib
 		}
 
 		void NodeShape::setTexture(sptr<Texture> texture, bool resetSize/*=true*/, bool resetRect /*= false*/)
-		{
-			setTexture_(texture, resetRect);
-			if (resetSize) {
-				setSize({ static_cast<f32>(texture->getSize().x), static_cast<f32>(texture->getSize().y) });
-			}
-		}
-
-		// Compute the normal of a segment
-		vector2df computeNormal(const vector2df& p1, const vector2df& p2)
-		{
-			vector2df normal(p1.y - p2.y, p2.x - p1.x);
-			float length = std::sqrt(normal.x * normal.x + normal.y * normal.y);
-			if (length != 0.f)
-				normal /= length;
-			return normal;
-		}
-
-		// Compute the dot product of two vectors
-		float dotProduct(const vector2df& p1, const vector2df& p2)
-		{
-			return p1.x * p2.x + p1.y * p2.y;
-		}
-
-		void NodeShape::setTexture_(sptr<Texture> texture, bool resetRect)
 		{
 			if (texture) {
 				// Recompute the texture area if requested, or if there was no texture & rect before
@@ -120,8 +93,27 @@ namespace lib
 
 			// Assign the new texture
 			m_texture = texture;
+
+			if (resetSize) {
+				setSize({ static_cast<f32>(texture->getSize().x), static_cast<f32>(texture->getSize().y) });
+			}
 		}
 
+		// Compute the normal of a segment
+		vector2df computeNormal(const vector2df& p1, const vector2df& p2)
+		{
+			vector2df normal(p1.y - p2.y, p2.x - p1.x);
+			f32 length = std::sqrt(normal.x * normal.x + normal.y * normal.y);
+			if (length != 0.f)
+				normal /= length;
+			return normal;
+		}
+
+		// Compute the dot product of two vectors
+		float dotProduct(const vector2df& p1, const vector2df& p2)
+		{
+			return p1.x * p2.x + p1.y * p2.y;
+		}
 
 		sptr<Texture> NodeShape::getTexture() const
 		{
@@ -164,6 +156,7 @@ namespace lib
 			// Position
 			for (std::size_t i = 0; i < count; ++i)
 				m_vertices[i + 1].position = getPoint(i);
+		
 			m_vertices[count + 1].position = m_vertices[1].position;
 
 			// Update the bounding rectangle
@@ -194,19 +187,21 @@ namespace lib
 
 		void NodeShape::updateFillColors()
 		{
-			for (std::size_t i = 0; i < m_vertices.getVertexCount(); ++i)
-				m_vertices[i].color = m_fillColor;
+			m_vertices.for_each_vertex([this](Vertex& v)
+			{
+				v.color = m_fillColor;
+			});
 		}
 
 		void NodeShape::updateTexCoords()
 		{
-			for (std::size_t i = 0; i < m_vertices.getVertexCount(); ++i)
+			m_vertices.for_each_vertex([this](Vertex& v)
 			{
-				float xratio = m_bounds.width > 0 ? (m_vertices[i].position.x - m_bounds.left) / m_bounds.width : 0;
-				float yratio = m_bounds.height > 0 ? (m_vertices[i].position.y - m_bounds.top) / m_bounds.height : 0;
-				m_vertices[i].texCoords.x = m_textureRect.left + m_textureRect.width * xratio;
-				m_vertices[i].texCoords.y = m_textureRect.top + m_textureRect.height * yratio;
-			}
+				const f32 xratio = m_bounds.width > 0 ? (v.position.x - m_bounds.left) / m_bounds.width : 0;
+				const f32 yratio = m_bounds.height > 0 ? (v.position.y - m_bounds.top) / m_bounds.height : 0;
+				v.texCoords.x = m_textureRect.left + m_textureRect.width * xratio;
+				v.texCoords.y = m_textureRect.top + m_textureRect.height * yratio;
+			});
 		}
 	}
 }

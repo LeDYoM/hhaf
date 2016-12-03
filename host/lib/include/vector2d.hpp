@@ -102,14 +102,14 @@ namespace lib
 		return is;
 	}
 
-
-	using vector2du32 = vector2d<u32>;
-	using vector2ds32 = vector2d<s32>;
-	using vector2du16 = vector2d<u16>;
-	using vector2ds16 = vector2d<s16>;
-	using vector2df = vector2d<f32>;
 	using vector2du8 = vector2d<u8>;
 	using vector2ds8 = vector2d<s8>;
+	using vector2du16 = vector2d<u16>;
+	using vector2ds16 = vector2d<s16>;
+	using vector2du32 = vector2d<u32>;
+	using vector2ds32 = vector2d<s32>;
+	using vector2df = vector2d<f32>;
+	using vector2dd = vector2d<f64>;
 }
 
 #endif
