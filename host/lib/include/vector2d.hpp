@@ -13,14 +13,14 @@ namespace lib
 		constexpr inline vector2d(const sf::Vector2<T> &rh) noexcept : x{ rh.x }, y{ rh.y } {}
 		constexpr inline vector2d()  noexcept : x{}, y{} {}
 		constexpr inline vector2d(T X, T Y)  noexcept : x{ X }, y{ Y } {}
-		inline vector2d(const vector2d<T> &) = default;
+		constexpr inline vector2d(const vector2d<T> &) = default;
 		inline vector2d &operator=(const vector2d<T> &) = default;
 
 		template <typename U>
 		constexpr inline explicit vector2d(const vector2d<U>& vector)  noexcept : x{ static_cast<T>(vector.x) }, y{ static_cast<T>(vector.y) } {}
 
 		inline vector2d &operator+=(const vector2d &right)
-		{ 
+		{
 			x += right.x;
 			y += right.y;
 			return *this;

@@ -38,11 +38,11 @@ namespace lib
 			void setFont(sptr<Font> font);
 			void setCharacterSize(const u32 size);
 			void setStyle(const Style style);
+			inline Style getStyle() const noexcept { return m_style; }
 			virtual void setColor(const Color color) override;
-			const std::string & getString() const;
-			sptr<Font> getFont() const;
-			u32 getCharacterSize() const;
-			Style getStyle() const;
+			const std::string & getString() const { return m_string; }
+			sptr<Font> getFont() const noexcept { return m_font; }
+			u32 getCharacterSize() const noexcept { return m_characterSize; }
 			Color getColor() const;
 			vector2df findCharacterPos(const std::size_t index) const;
 
@@ -53,7 +53,7 @@ namespace lib
 
 		private:
 			virtual void draw(sf::RenderStates &states) override;
-			void ensureGeometryUpdate();
+			void updateGeometry();
 
 			std::string m_string;
 			sptr<Font> m_font;

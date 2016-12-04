@@ -24,7 +24,7 @@ namespace lib
 			if (m_string != string)
 			{
 				m_string = string;
-				ensureGeometryUpdate();
+				updateGeometry();
 			}
 		}
 
@@ -32,7 +32,7 @@ namespace lib
 		{
 			if (m_font != font) {
 				m_font = font;
-				ensureGeometryUpdate();
+				updateGeometry();
 			}
 		}
 
@@ -40,7 +40,7 @@ namespace lib
 		{
 			if (m_characterSize != size) {
 				m_characterSize = size;
-				ensureGeometryUpdate();
+				updateGeometry();
 			}
 		}
 
@@ -48,7 +48,7 @@ namespace lib
 		{
 			if (m_style != style) {
 				m_style = style;
-				ensureGeometryUpdate();
+				updateGeometry();
 			}
 		}
 
@@ -57,29 +57,10 @@ namespace lib
 			if (color != m_color) {
 				m_color = color;
 
-				for (std::size_t i = 0; i < m_vertices.getVertexCount(); ++i)
-					m_vertices[i].color = m_color;
+				m_vertices.for_each_vertex([this](Vertex& v) {
+					v.color = m_color;
+				});
 			}
-		}
-
-		const std::string & NodeText::getString() const
-		{
-			return m_string;
-		}
-
-		sptr<Font> NodeText::getFont() const
-		{
-			return m_font;
-		}
-
-		u32 NodeText::getCharacterSize() const
-		{
-			return m_characterSize;
-		}
-
-		NodeText::Style NodeText::getStyle() const
-		{
-			return m_style;
 		}
 
 		Color NodeText::getColor() const
@@ -133,7 +114,6 @@ namespace lib
 		void NodeText::draw(sf::RenderStates &states)
 		{
 			if (m_font) {
-				ensureGeometryUpdate();
 
 				auto oldTransform = states.transform;
 				states.transform *= getTransform();
@@ -143,7 +123,7 @@ namespace lib
 			}
 		}
 
-		void NodeText::ensureGeometryUpdate()
+		void NodeText::updateGeometry()
 		{
 			// Clear the previous geometry
 			m_vertices.clear();
