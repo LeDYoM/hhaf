@@ -96,17 +96,17 @@ namespace lib
 			// Adjust the index if it's out of range
 			decltype(cindex) index = (cindex > m_string.length() ? m_string.length() : cindex);
 
-			// Precompute the variables needed by the algorithm
-			const bool  bold = (m_style & Bold) != 0;
-			f32 hspace = m_font->getGlyph(L' ', m_characterSize, bold).advance;
-			f32 vspace = static_cast<float>(m_font->getLineSpacing(m_characterSize));
+			// Compute the variables needed by the algorithm
+			const bool  bold = (m_style & NodeText::Style::Bold) != 0;
+			const f32 hspace = m_font->getGlyph(L' ', m_characterSize, bold).advance;
+			const f32 vspace = static_cast<f32>(m_font->getLineSpacing(m_characterSize));
 
 			// Compute the position
-			vector2df position;
+			vector2df position{};
 			std::string::value_type prevChar{ 0 };
 			for (std::size_t i = 0; i < index; ++i)
 			{
-				auto curChar = m_string[i];
+				const auto curChar = m_string[i];
 
 				// Apply the kerning offset
 				position.x += m_font->getKerning(prevChar, curChar, m_characterSize);
