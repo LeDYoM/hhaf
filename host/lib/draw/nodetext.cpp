@@ -36,7 +36,7 @@ namespace lib
 			}
 		}
 
-		void NodeText::setCharacterSize(u32 size)
+		void NodeText::setCharacterSize(const u32 size)
 		{
 			if (m_characterSize != size) {
 				m_characterSize = size;
@@ -44,7 +44,7 @@ namespace lib
 			}
 		}
 
-		void NodeText::setStyle(sf::Uint32 style)
+		void NodeText::setStyle(const Style style)
 		{
 			if (m_style != style) {
 				m_style = style;
@@ -77,7 +77,7 @@ namespace lib
 			return m_characterSize;
 		}
 
-		sf::Uint32 NodeText::getStyle() const
+		NodeText::Style NodeText::getStyle() const
 		{
 			return m_style;
 		}

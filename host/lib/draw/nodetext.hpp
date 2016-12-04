@@ -1,11 +1,12 @@
 #ifndef _LIB_NODETEXT_HPP__
 #define _LIB_NODETEXT_HPP__
 
+#include "renderizable.hpp"
+
 #include <lib/draw/font.hpp>
+
 #include <string>
 #include <vector>
-
-#include "renderizable.hpp"
 
 namespace lib
 {
@@ -35,13 +36,13 @@ namespace lib
 			NodeText(const std::string &name, const std::string& string, sptr<Font> font, unsigned int characterSize = 30);
 			void setString(const std::string &string);
 			void setFont(sptr<Font> font);
-			void setCharacterSize(u32 size);
-			void setStyle(sf::Uint32 style);
+			void setCharacterSize(const u32 size);
+			void setStyle(const Style style);
 			virtual void setColor(const Color color) override;
 			const std::string & getString() const;
 			sptr<Font> getFont() const;
 			u32 getCharacterSize() const;
-			sf::Uint32 getStyle() const;
+			Style getStyle() const;
 			Color getColor() const;
 			vector2df findCharacterPos(const std::size_t index) const;
 
@@ -57,7 +58,7 @@ namespace lib
 			std::string m_string;
 			sptr<Font> m_font;
 			u32 m_characterSize;
-			sf::Uint32 m_style;
+			Style m_style;
 			Color m_color;
 		};
 	}
