@@ -2,7 +2,6 @@
 #define _LIB_NODETEXT_HPP__
 
 #include <lib/draw/font.hpp>
-#include <SFML/System/String.hpp>
 #include <string>
 #include <vector>
 
@@ -12,7 +11,7 @@ namespace lib
 {
 	namespace draw
 	{
-		class NodeText : public lib::draw::Renderizable
+		class NodeText : public Renderizable
 		{
 		public:
 			enum class Alignment : u8
@@ -33,7 +32,7 @@ namespace lib
 
 			virtual ~NodeText();
 			NodeText(const std::string &name);
-			NodeText(const std::string &name, const sf::String& string, sptr<Font> font, unsigned int characterSize = 30);
+			NodeText(const std::string &name, const std::string& string, sptr<Font> font, unsigned int characterSize = 30);
 			void setString(const std::string &string);
 			void setFont(sptr<Font> font);
 			void setCharacterSize(u32 size);

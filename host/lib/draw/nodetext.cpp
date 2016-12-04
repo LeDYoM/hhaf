@@ -13,7 +13,7 @@ namespace lib
 		NodeText::NodeText(const std::string &name)
 			:NodeText(name, sf::String{},nullptr,30) {}
 
-		NodeText::NodeText(const std::string &name, const sf::String& string, sptr<Font> font, unsigned int characterSize) :
+		NodeText::NodeText(const std::string &name, const std::string& string, sptr<Font> font, unsigned int characterSize) :
 			Renderizable{ name, Triangles }, m_string(string), m_font{ font }, m_characterSize{ characterSize }, m_style{ Regular },
 			m_color{ 255, 255, 255 } {}
 
