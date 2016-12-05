@@ -12,16 +12,13 @@ namespace lib
 	namespace draw
 	{
 		NodeShape::NodeShape(const std::string &name, const vector2df& size, const u32 pointCount, const NodeMode mode)
-			: Renderizable{ name, TriangleFan }, _mode{ mode }, m_texture{ nullptr },m_textureRect(),m_fillColor(255, 255, 255),
+			: Renderizable{ name, TriangleFan }, _mode{ mode }, m_texture{ nullptr }, m_textureRect{}, m_fillColor{ 255, 255, 255 },
 			m_size{ size }, m_pointCount{ pointCount }
 		{
 			update();
 		}
 
-		NodeShape::~NodeShape()
-		{
-
-		}
+		NodeShape::~NodeShape() = default;
 
 		void NodeShape::setSize(const vector2df & size)
 		{
@@ -175,6 +172,7 @@ namespace lib
 
 		void NodeShape::draw()
 		{
+			auto p = host().rStates().prepareNewElement(getTransform(), m_texture);
 			host().parentWindow().draw((const sf::Vertex*)&m_vertices[0], m_vertices.getVertexCount(), static_cast<sf::PrimitiveType>(m_vertices.getPrimitiveType()), 
 				host().rStates().prepareNewElement(getTransform(), m_texture));
 		}

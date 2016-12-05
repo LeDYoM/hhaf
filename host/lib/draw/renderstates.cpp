@@ -23,8 +23,8 @@ namespace lib
 		}
 		void RenderStates::pushChanges(const Transform & transform)
 		{
-			m_renderStates = prepareNewElement(transform, nullptr);
 			m_statesStack.push(m_renderStates);
+			m_renderStates = prepareNewElement(transform, nullptr);
 		}
 		void RenderStates::popChanges()
 		{
