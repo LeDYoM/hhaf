@@ -1,8 +1,12 @@
 #ifndef LIB_DRAW_RENDERSTATES_INCLUDE_HPP__
 #define LIB_DRAW_RENDERSTATES_INCLUDE_HPP__
 
-#include <SFML/Graphics/RenderStates.hpp>
+#include "transformation.hpp"
+#include "texture.hpp"
 
+#include <lib/include/types.hpp>
+
+#include <SFML/Graphics/RenderStates.hpp>
 
 namespace lib
 {
@@ -16,7 +20,7 @@ namespace lib
 
 			sf::RenderStates &internalStates() { return m_renderStates; }
 			void newFrame();
-
+			sf::RenderStates prepareNewElement(const Transform &transform, sptr<Texture> texture);
 		private:
 			sf::RenderStates m_renderStates;
 		};
