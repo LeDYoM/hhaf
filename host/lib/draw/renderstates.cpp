@@ -21,5 +21,15 @@ namespace lib
 		{
 			return sf::RenderStates(m_renderStates.blendMode, m_renderStates.transform*transform, texture, m_renderStates.shader);
 		}
+		void RenderStates::pushChanges(const Transform & transform)
+		{
+			m_renderStates = prepareNewElement(transform, nullptr);
+			m_statesStack.push(m_renderStates);
+		}
+		void RenderStates::popChanges()
+		{
+			m_renderStates = m_statesStack.top();
+			m_statesStack.pop();
+		}
 	}
 }

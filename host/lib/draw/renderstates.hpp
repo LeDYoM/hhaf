@@ -8,6 +8,8 @@
 
 #include <SFML/Graphics/RenderStates.hpp>
 
+#include <stack>
+
 namespace lib
 {
 	namespace draw
@@ -22,8 +24,11 @@ namespace lib
 			void newFrame();
 			sf::RenderStates prepareNewElement(const Transform &transform, sptr<Texture> texture);
 			sf::RenderStates prepareNewElement(const Transform &transform, const sf::Texture* texture);
+			void pushChanges(const Transform &transform);
+			void popChanges();
 		private:
 			sf::RenderStates m_renderStates;
+			std::stack<sf::RenderStates> m_statesStack;
 		};
 	}
 }
