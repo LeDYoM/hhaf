@@ -164,8 +164,7 @@ namespace lib
 			__ASSERT(m_currentScene || m_nextScene, "Current scene and nextscene cannot be nullptr at same time");
 			updateScene();
 
-
-			m_renderStates = sf::RenderStates();
+			m_renderStates.newFrame();
 			m_currentScene->draw();
 
 			windowWants2Close |= m_window->postLoop();

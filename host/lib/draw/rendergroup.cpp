@@ -57,13 +57,13 @@ namespace lib
 		{
 			if (isVisible()) {
 				updateAnimations();
-				auto oldTransformation = host().rStates().transform;
-				host().rStates().transform *= getTransform();
+				auto oldTransformation = host().rStates().internalStates().transform;
+				host().rStates().internalStates().transform *= getTransform();
 
 				for (const auto& renderizable : _renderNodes) {
 					renderizable->draw();
 				}
-				host().rStates().transform = std::move(oldTransformation);
+				host().rStates().internalStates().transform = std::move(oldTransformation);
 			}
 		}
 

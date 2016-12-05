@@ -7,7 +7,7 @@
 #include <vector>
 #include <string>
 
-#include <SFML/Graphics/RenderStates.hpp>
+#include <lib/draw/renderstates.hpp>
 
 namespace lib
 {
@@ -51,7 +51,7 @@ namespace lib
 
 			const std::string appId() const;
 
-			sf::RenderStates &rStates() { return m_renderStates; }
+			draw::RenderStates &rStates() { return m_renderStates; }
 		protected:
 			bool loopStep();
 		private:
@@ -69,7 +69,7 @@ namespace lib
 			sptr<draw::Scene> m_currentScene{ nullptr };
 			sptr<draw::Scene> m_nextScene{ nullptr };
 			std::vector<std::string> m_params;
-			sf::RenderStates m_renderStates;
+			draw::RenderStates m_renderStates;
 		};
 	}
 
