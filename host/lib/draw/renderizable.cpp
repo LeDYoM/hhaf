@@ -12,7 +12,7 @@ namespace lib
 			logConstruct("Name: ", name );
 		}
 
-		void Renderizable::draw(sf::RenderStates &)
+		void Renderizable::draw()
 		{
 		}
 
@@ -22,11 +22,5 @@ namespace lib
 		{
 			return m_bounds;
 		}
-
-		Rectf32 Renderizable::getGlobalBounds() const
-		{
-			return getTransform().transformRect(getLocalBounds());
-		}
-
 	}
 }

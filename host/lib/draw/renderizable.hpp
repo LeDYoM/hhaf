@@ -20,11 +20,10 @@ namespace lib
 			explicit Renderizable(const std::string &name, PrimitiveType type, std::size_t vertexCount = 0);
 			virtual ~Renderizable();
 
-			virtual void draw(sf::RenderStates &states) override;
+			virtual void draw() override;
 			virtual void setColor(const Color color) = 0;
 
 			virtual Rectf32 getLocalBounds() const;
-			virtual Rectf32 getGlobalBounds() const;
 
 		protected:
 			VertexArray m_vertices;

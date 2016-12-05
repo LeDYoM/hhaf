@@ -15,15 +15,26 @@ namespace lib
 		class IDrawable
 		{
 		public:
-			IDrawable() {}
-			virtual ~IDrawable() {}
+			IDrawable() = default;
+			virtual ~IDrawable() = default;
 
-			virtual void draw(sf::RenderStates &states) = 0;
+			/*
+			virtual bool canDraw() = 0;
+			virtual void draw()
+			{
+				if (isVisible() && canDraw())
+				{
 
-			inline bool isVisible() const { return visible; }
-			inline void setVisible(bool nv) { visible = nv; }
+				}
+			}
+
+			*/
+			virtual void draw() = 0;
+
+			inline bool isVisible() const noexcept { return m_visible; }
+			inline void setVisible(bool nv) noexcept { m_visible = nv; }
 		protected:
-			bool visible{ true };
+			bool m_visible{ true };
 		};
 	}
 }

@@ -37,7 +37,7 @@ namespace lib
 
 		protected:
 			void update();
-			virtual void draw(sf::RenderStates &states) override;
+			virtual void draw() override;
 			void updateFillColors();
 			void updateTexCoords();
 

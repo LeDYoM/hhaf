@@ -111,15 +111,15 @@ namespace lib
 			return position;
 		}
 
-		void NodeText::draw(sf::RenderStates &states)
+		void NodeText::draw()
 		{
 			if (m_font) {
 
-				auto oldTransform = states.transform;
-				states.transform *= getTransform();
-				states.texture = &m_font->getTexture(m_characterSize);
-				host().parentWindow().draw((const sf::Vertex*)&m_vertices[0], m_vertices.getVertexCount(), static_cast<sf::PrimitiveType>(m_vertices.getPrimitiveType()), states);
-				states.transform = oldTransform;
+				auto oldTransform = host().rStates().transform;
+				host().rStates().transform *= getTransform();
+				host().rStates().texture = &m_font->getTexture(m_characterSize);
+				host().parentWindow().draw((const sf::Vertex*)&m_vertices[0], m_vertices.getVertexCount(), static_cast<sf::PrimitiveType>(m_vertices.getPrimitiveType()), host().rStates());
+				host().rStates().transform = oldTransform;
 			}
 		}
 

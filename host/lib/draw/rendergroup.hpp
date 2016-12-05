@@ -38,7 +38,7 @@ namespace lib
 			sptr<RenderGroup> createNewRenderGroup(const std::string &name,sptr<IDrawable> beforeNode=nullptr);
 			bool removeRenderGroup(sptr<RenderGroup> element);
 
-			void draw(sf::RenderStates &states) override;
+			void draw() override;
 
 		protected:
 			void addRenderGroup(sptr<RenderGroup> node, sptr<IDrawable> beforeNode = nullptr);

@@ -173,16 +173,17 @@ namespace lib
 			updateTexCoords();
 		}
 
-		void NodeShape::draw(sf::RenderStates &states)
+		void NodeShape::draw()
 		{
-			auto oldTransform = states.transform;
-			states.transform *= getTransform();
+
+			auto oldTransform = host().rStates().transform;
+			host().rStates().transform *= getTransform();
 
 			// Render the inside
-			states.texture = m_texture.get();
-			host().parentWindow().draw((const sf::Vertex*)&m_vertices[0], m_vertices.getVertexCount(), static_cast<sf::PrimitiveType>(m_vertices.getPrimitiveType()), states);
+			host().rStates().texture = m_texture.get();
+			host().parentWindow().draw((const sf::Vertex*)&m_vertices[0], m_vertices.getVertexCount(), static_cast<sf::PrimitiveType>(m_vertices.getPrimitiveType()), host().rStates());
 
-			states.transform = std::move(oldTransform);
+			host().rStates().transform = oldTransform;
 		}
 
 		void NodeShape::updateFillColors()

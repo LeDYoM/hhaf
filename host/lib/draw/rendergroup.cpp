@@ -3,7 +3,9 @@
 #include "nodeshape.hpp"
 #include "nodetext.hpp"
 #include "scene.hpp"
+
 #include <lib/core/window.hpp>
+#include <lib/core/host.hpp>
 
 namespace lib
 {
@@ -51,17 +53,17 @@ namespace lib
 			return removeFromspVector(element, _renderNodes);
 		}
 
-		void RenderGroup::draw(sf::RenderStates &states)
+		void RenderGroup::draw()
 		{
 			if (isVisible()) {
 				updateAnimations();
-				auto oldTransformation = states.transform;
-				states.transform *= getTransform();
+				auto oldTransformation = host().rStates().transform;
+				host().rStates().transform *= getTransform();
 
 				for (const auto& renderizable : _renderNodes) {
-					renderizable->draw(states);
+					renderizable->draw();
 				}
-				states.transform = std::move(oldTransformation);
+				host().rStates().transform = std::move(oldTransformation);
 			}
 		}
 
@@ -74,16 +76,12 @@ namespace lib
 
 		void RenderGroup::addRenderGroup(sptr<RenderGroup> node, sptr<IDrawable> beforeNode)
 		{
-			if (!beforeNode)
-			{
+			if (!beforeNode) {
 				_renderNodes.push_back(node);
 			}
-			else
-			{
-				for (auto iterator = _renderNodes.begin(); iterator != _renderNodes.end();++iterator)
-				{
-					if (*iterator == beforeNode)
-					{
+			else {
+				for (auto iterator = _renderNodes.begin(); iterator != _renderNodes.end();++iterator) {
+					if (*iterator == beforeNode) {
 						_renderNodes.insert(iterator, node);
 						break;
 					}
