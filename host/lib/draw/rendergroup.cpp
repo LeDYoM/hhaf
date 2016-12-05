@@ -18,7 +18,7 @@ namespace lib
 
 		RenderGroup::~RenderGroup()
 		{
-			_renderNodes.clear();
+			m_renderNodes.clear();
 		}
 
 		sptr<NodeText> RenderGroup::createText(const std::string &name)
@@ -44,13 +44,13 @@ namespace lib
 
 		sptr<draw::Renderizable> RenderGroup::addRenderizable(sptr<Renderizable> newElement)
 		{
-			_renderNodes.push_back(newElement);
+			m_renderNodes.push_back(newElement);
 			return newElement;
 		}
 
 		bool RenderGroup::removeRenderizable(sptr<Renderizable> element)
 		{
-			return removeFromspVector(element, _renderNodes);
+			return removeFromspVector(element, m_renderNodes);
 		}
 
 		void RenderGroup::draw()
@@ -60,7 +60,7 @@ namespace lib
 				auto oldTransformation = host().rStates().internalStates().transform;
 				host().rStates().internalStates().transform *= getTransform();
 
-				for (const auto& renderizable : _renderNodes) {
+				for (const auto& renderizable : m_renderNodes) {
 					renderizable->draw();
 				}
 				host().rStates().internalStates().transform = std::move(oldTransformation);
@@ -77,12 +77,12 @@ namespace lib
 		void RenderGroup::addRenderGroup(sptr<RenderGroup> node, sptr<IDrawable> beforeNode)
 		{
 			if (!beforeNode) {
-				_renderNodes.push_back(node);
+				m_renderNodes.push_back(node);
 			}
 			else {
-				for (auto iterator = _renderNodes.begin(); iterator != _renderNodes.end();++iterator) {
+				for (auto iterator = m_renderNodes.begin(); iterator != m_renderNodes.end();++iterator) {
 					if (*iterator == beforeNode) {
-						_renderNodes.insert(iterator, node);
+						m_renderNodes.insert(iterator, node);
 						break;
 					}
 				}
@@ -93,12 +93,12 @@ namespace lib
 
 		bool RenderGroup::removeRenderGroup(sptr<RenderGroup> element)
 		{
-			return removeFromspVector(element, _renderNodes);
+			return removeFromspVector(element, m_renderNodes);
 		}
 
 		void RenderGroup::clear()
 		{
-			_renderNodes.clear();
+			m_renderNodes.clear();
 		}
 	}
 }

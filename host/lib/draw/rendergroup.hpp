@@ -57,7 +57,7 @@ namespace lib
 				return m_parent ? dynamic_cast<T*>(m_parent) : nullptr;
 			}
 			virtual Scene *const parentScene() { return m_parent->parentScene(); }
-			VecSPtr<IDrawable> _renderNodes;
+			VecSPtr<IDrawable> m_renderNodes;
 
 		private:
 			RenderGroup *m_parent{ nullptr };
