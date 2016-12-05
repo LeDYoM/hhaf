@@ -26,6 +26,16 @@ namespace lib
 			m_statesStack.emplace(std::move(m_renderStates));
 			m_renderStates = prepareNewElement(transform, nullptr);
 		}
+		void RenderStates::pushChanges(const Transform & transform, sptr<Texture> texture)
+		{
+			m_statesStack.emplace(std::move(m_renderStates));
+			m_renderStates = prepareNewElement(transform, texture);
+		}
+		void RenderStates::pushChanges(const Transform & transform, const sf::Texture * texture)
+		{
+			m_statesStack.emplace(std::move(m_renderStates));
+			m_renderStates = prepareNewElement(transform, texture);
+		}
 		void RenderStates::popChanges()
 		{
 			m_renderStates = m_statesStack.top();

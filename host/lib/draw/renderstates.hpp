@@ -25,6 +25,8 @@ namespace lib
 			sf::RenderStates prepareNewElement(const Transform &transform, sptr<Texture> texture);
 			sf::RenderStates prepareNewElement(const Transform &transform, const sf::Texture* texture);
 			void pushChanges(const Transform &transform);
+			void pushChanges(const Transform &transform, sptr<Texture> texture);
+			void pushChanges(const Transform &transform, const sf::Texture* texture);
 			void popChanges();
 		private:
 			sf::RenderStates m_renderStates;
