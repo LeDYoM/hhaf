@@ -12,10 +12,6 @@ namespace lib
 			logConstruct("Name: ", name );
 		}
 
-		void Renderizable::draw()
-		{
-		}
-
 		Renderizable::~Renderizable() = default;
 
 		Rectf32 Renderizable::getLocalBounds() const
