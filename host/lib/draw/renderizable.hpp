@@ -6,8 +6,6 @@
 #include "transformable.hpp"
 #include "color.hpp"
 #include <lib/include/types.hpp>
-#include <lib/include/vector2d.hpp>
-#include <SFML/Graphics.hpp>
 #include "vertexarray.hpp"
 
 namespace lib
