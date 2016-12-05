@@ -114,12 +114,8 @@ namespace lib
 		void NodeText::draw()
 		{
 			if (m_font) {
-
-				auto oldTransform = host().rStates().internalStates().transform;
-				host().rStates().internalStates().transform *= getTransform();
-				host().rStates().internalStates().texture = &m_font->getTexture(m_characterSize);
-				host().parentWindow().draw((const sf::Vertex*)&m_vertices[0], m_vertices.getVertexCount(), static_cast<sf::PrimitiveType>(m_vertices.getPrimitiveType()), host().rStates().internalStates());
-				host().rStates().internalStates().transform = oldTransform;
+				host().parentWindow().draw((const sf::Vertex*)&m_vertices[0], m_vertices.getVertexCount(), static_cast<sf::PrimitiveType>(m_vertices.getPrimitiveType()), 
+					host().rStates().prepareNewElement(getTransform(), &m_font->getTexture(m_characterSize)));
 			}
 		}
 

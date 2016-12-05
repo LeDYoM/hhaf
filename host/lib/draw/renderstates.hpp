@@ -21,6 +21,7 @@ namespace lib
 			sf::RenderStates &internalStates() { return m_renderStates; }
 			void newFrame();
 			sf::RenderStates prepareNewElement(const Transform &transform, sptr<Texture> texture);
+			sf::RenderStates prepareNewElement(const Transform &transform, const sf::Texture* texture);
 		private:
 			sf::RenderStates m_renderStates;
 		};

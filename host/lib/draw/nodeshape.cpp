@@ -175,15 +175,8 @@ namespace lib
 
 		void NodeShape::draw()
 		{
-			auto rs = host().rStates().prepareNewElement(getTransform(), m_texture);
-//			auto oldTransform = host().rStates().internalStates().transform;
-//			host().rStates().internalStates().transform *= getTransform();
-
-			// Render the inside
-			host().rStates().internalStates().texture = m_texture.get();
-			host().parentWindow().draw((const sf::Vertex*)&m_vertices[0], m_vertices.getVertexCount(), static_cast<sf::PrimitiveType>(m_vertices.getPrimitiveType()), rs);
-
-//			host().rStates().internalStates().transform = oldTransform;
+			host().parentWindow().draw((const sf::Vertex*)&m_vertices[0], m_vertices.getVertexCount(), static_cast<sf::PrimitiveType>(m_vertices.getPrimitiveType()), 
+				host().rStates().prepareNewElement(getTransform(), m_texture));
 		}
 
 		void NodeShape::updateFillColors()

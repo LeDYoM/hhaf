@@ -15,7 +15,11 @@ namespace lib
 		}
 		sf::RenderStates RenderStates::prepareNewElement(const Transform &transform, sptr<Texture> texture)
 		{
-			return sf::RenderStates(m_renderStates.blendMode, m_renderStates.transform*transform, texture.get(),m_renderStates.shader);
+			return prepareNewElement(transform, texture.get());
+		}
+		sf::RenderStates RenderStates::prepareNewElement(const Transform & transform, const sf::Texture * texture)
+		{
+			return sf::RenderStates(m_renderStates.blendMode, m_renderStates.transform*transform, texture, m_renderStates.shader);
 		}
 	}
 }
