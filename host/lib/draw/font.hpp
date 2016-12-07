@@ -8,7 +8,7 @@ namespace lib
 {
 	namespace draw
 	{
-		class Font : public sf::Font, public core::HasName
+		class Font final : public sf::Font, public core::HasName
 		{
 		public:
 			Font(std::string name) : core::HasName(name), sf::Font{} {}
