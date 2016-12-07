@@ -14,6 +14,17 @@ namespace lib
 {
 	namespace draw
 	{
+		class RenderStates;
+		class RenderStatesStackHandle
+		{
+		public:
+			~RenderStatesStackHandle();
+		private:
+			RenderStatesStackHandle(RenderStates &stack);
+			RenderStates &m_stack;
+			friend class RenderStates;
+		};
+
 		class RenderStates
 		{
 		public:
@@ -22,15 +33,13 @@ namespace lib
 
 			sf::RenderStates &internalStates() { return m_renderStates; }
 			void newFrame();
-			sf::RenderStates prepareNewElement(const Transform &transform, sptr<Texture> texture);
-			sf::RenderStates prepareNewElement(const Transform &transform, const sf::Texture* texture);
-			void pushChanges(const Transform &transform);
-			void pushChanges(const Transform &transform, sptr<Texture> texture);
-			void pushChanges(const Transform &transform, const sf::Texture* texture);
+			RenderStatesStackHandle pushChanges(const Transform *transform, const sf::Texture * texture);
 			void popChanges();
 		private:
+			sf::RenderStates prepareNewElement(const Transform *transform, const sf::Texture * texture);
 			sf::RenderStates m_renderStates;
 			std::stack<sf::RenderStates> m_statesStack;
+			friend class RenderStatesStackHandle;
 		};
 	}
 }

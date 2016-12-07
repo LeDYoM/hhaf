@@ -172,10 +172,9 @@ namespace lib
 
 		void NodeShape::draw()
 		{
-			host().rStates().pushChanges(getTransform(), m_texture);
+			auto handle = host().rStates().pushChanges(&getTransform(), &(*m_texture));
 			host().parentWindow().draw((const sf::Vertex*)&m_vertices[0], m_vertices.getVertexCount(), static_cast<sf::PrimitiveType>(m_vertices.getPrimitiveType()), 
 				host().rStates().internalStates());
-			host().rStates().popChanges();
 		}
 
 		void NodeShape::updateFillColors()

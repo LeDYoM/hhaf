@@ -57,12 +57,11 @@ namespace lib
 		{
 			if (isVisible()) {
 				updateAnimations();
-				host().rStates().pushChanges(getTransform());
+				auto handle = host().rStates().pushChanges(&getTransform(), nullptr);
 
 				for (const auto& renderizable : m_renderNodes) {
 					renderizable->draw();
 				}
-				host().rStates().popChanges();
 			}
 		}
 
