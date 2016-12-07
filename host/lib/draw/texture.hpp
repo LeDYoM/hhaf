@@ -12,8 +12,7 @@ namespace lib
 		{
 		public:
 			Texture(const std::string name) : core::HasName(name) {}
-
-			virtual ~Texture() {}
+			Texture(const sf::Texture &texture) : core::HasName("internal"), sf::Texture(texture) {}
 		};
 	}
 }
