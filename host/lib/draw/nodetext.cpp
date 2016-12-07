@@ -32,6 +32,7 @@ namespace lib
 		{
 			if (m_font != font) {
 				m_font = font;
+				m_currentTexture = &m_font->getTexture(m_characterSize);
 				updateGeometry();
 			}
 		}
@@ -40,6 +41,7 @@ namespace lib
 		{
 			if (m_characterSize != size) {
 				m_characterSize = size;
+				m_currentTexture = &m_font->getTexture(m_characterSize);
 				updateGeometry();
 			}
 		}
@@ -114,7 +116,7 @@ namespace lib
 		void NodeText::draw()
 		{
 			if (m_font) {
-				auto handle = host().rStates().pushChanges(&getTransform(), &m_font->getTexture(m_characterSize));
+				auto handle = host().rStates().pushChanges(&getTransform(), m_currentTexture);
 				m_vertices.draw();
 			}
 		}

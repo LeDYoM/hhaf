@@ -57,6 +57,7 @@ namespace lib
 
 			std::string m_string;
 			sptr<Font> m_font;
+			const sf::Texture *m_currentTexture;
 			u32 m_characterSize;
 			Style m_style;
 			Color m_color;
