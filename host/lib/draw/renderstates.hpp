@@ -1,7 +1,7 @@
 #ifndef LIB_DRAW_RENDERSTATES_INCLUDE_HPP__
 #define LIB_DRAW_RENDERSTATES_INCLUDE_HPP__
 
-#include "transformation.hpp"
+
 #include "texture.hpp"
 
 #include <lib/include/types.hpp>
@@ -14,25 +14,27 @@ namespace lib
 {
 	namespace draw
 	{
+		class Transform;
+
 		class RenderStates;
-		class RenderStatesStackHandle
+		class RenderStatesStackHandle final
 		{
 		public:
 			~RenderStatesStackHandle();
 		private:
-			RenderStatesStackHandle(RenderStates &stack);
+			constexpr RenderStatesStackHandle(RenderStates &stack);
 			RenderStates &m_stack;
 			friend class RenderStates;
 		};
 
-		class RenderStates
+		class RenderStates final
 		{
 		public:
 			RenderStates();
 			~RenderStates();
 
-			sf::RenderStates &internalStates() { return m_renderStates; }
-			void newFrame();
+			sf::RenderStates const &internalStates() { return m_renderStates; }
+			void newFrame() noexcept;
 			RenderStatesStackHandle pushChanges(const Transform *transform, const sf::Texture * texture);
 			void popChanges();
 		private:

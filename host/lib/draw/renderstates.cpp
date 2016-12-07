@@ -1,6 +1,7 @@
 #include "renderstates.hpp"
 #include "transformation.hpp"
 #include "texture.hpp"
+#include <lib/core/log.hpp>
 
 namespace lib
 {
@@ -9,10 +10,11 @@ namespace lib
 		RenderStates::RenderStates() = default;
 		RenderStates::~RenderStates() = default;
 
-		void RenderStates::newFrame()
+		void RenderStates::newFrame() noexcept
 		{
-			m_renderStates = sf::RenderStates{};
+			m_renderStates = sf::RenderStates::Default;
 		}
+
 		sf::RenderStates RenderStates::prepareNewElement(const Transform *transform, const sf::Texture * texture)
 		{
 			return sf::RenderStates(m_renderStates.blendMode, 
@@ -28,6 +30,7 @@ namespace lib
 		}
 		void RenderStates::popChanges()
 		{
+			__ASSERT(!m_statesStack.empty(), "RenderStates stack is empty");
 			m_renderStates = m_statesStack.top();
 			m_statesStack.pop();
 		}
@@ -37,7 +40,7 @@ namespace lib
 			m_stack.popChanges();
 		}
 
-		RenderStatesStackHandle::RenderStatesStackHandle(RenderStates & stack)
+		constexpr RenderStatesStackHandle::RenderStatesStackHandle(RenderStates & stack)
 			: m_stack{ stack } {}
 	}
 }
