@@ -33,7 +33,7 @@ namespace lib
 			inline void clear() noexcept { m_vertices.clear(); }
 			template <typename T> inline void resize(T&& vertexCount) { m_vertices.resize(std::forward<T>(vertexCount)); }
 
-			void for_each_vertex(std::function<void(Vertex&)>);
+			void for_each_vertex(std::function<void(Vertex&)>&&);
 			void append(Vertex &&vertex) { m_vertices.emplace_back(std::move(vertex)); }
 			template <typename... Args> inline void append(Args&&... args) { m_vertices.emplace_back(std::forward<Args>(args)...); }
 			inline void setPrimitiveType(const PrimitiveType type) { m_primitiveType = type; }
