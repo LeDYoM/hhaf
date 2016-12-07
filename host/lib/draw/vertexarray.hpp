@@ -42,6 +42,7 @@ namespace lib
 
 			inline const BasicVertexArray *data() const noexcept { return &m_vertices; }
 			inline const BasicVertexArray::size_type getVertexCount() const { return m_vertices.size(); }
+			void draw() const;
 		private:
 			BasicVertexArray m_vertices;
 			PrimitiveType m_primitiveType;

@@ -173,16 +173,12 @@ namespace lib
 		void NodeShape::draw()
 		{
 			auto handle = host().rStates().pushChanges(&getTransform(), &(*m_texture));
-			host().parentWindow().draw((const sf::Vertex*)&m_vertices[0], m_vertices.getVertexCount(), static_cast<sf::PrimitiveType>(m_vertices.getPrimitiveType()), 
-				host().rStates().internalStates());
+			m_vertices.draw();
 		}
 
 		void NodeShape::updateFillColors()
 		{
-			m_vertices.for_each_vertex([this](Vertex& v)
-			{
-				v.color = m_fillColor;
-			});
+			m_vertices.for_each_vertex([this](Vertex& v) { v.color = m_fillColor; });
 		}
 
 		void NodeShape::updateTexCoords()

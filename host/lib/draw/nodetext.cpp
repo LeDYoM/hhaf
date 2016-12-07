@@ -115,8 +115,7 @@ namespace lib
 		{
 			if (m_font) {
 				auto handle = host().rStates().pushChanges(&getTransform(), &m_font->getTexture(m_characterSize));
-				host().parentWindow().draw((const sf::Vertex*)&m_vertices[0], m_vertices.getVertexCount(), static_cast<sf::PrimitiveType>(m_vertices.getPrimitiveType()),
-					host().rStates().internalStates());
+				m_vertices.draw();
 			}
 		}
 

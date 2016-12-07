@@ -1,5 +1,6 @@
 #include "vertexarray.hpp"
 #include <lib/core/window.hpp>
+#include <lib/core/host.hpp>
 
 namespace lib
 {
@@ -48,6 +49,12 @@ namespace lib
 			{
 				return Rectf32{};
 			}
+		}
+
+		void VertexArray::draw() const
+		{
+			host().parentWindow().draw((const sf::Vertex*)m_vertices.data(), m_vertices.size(), static_cast<sf::PrimitiveType>(m_primitiveType),
+				host().rStates().internalStates());
 		}
 	}
 }
