@@ -30,18 +30,17 @@ namespace lib
 			inline Vertex &VertexArray::operator [](const std::size_t index) { return m_vertices[index]; }
 			inline const Vertex &VertexArray::operator [](const std::size_t index) const { return m_vertices[index]; }
 
-			inline void clear() noexcept { m_vertices.clear(); }
+			inline void clear() { m_vertices.clear(); }
 			template <typename T> inline void resize(T&& vertexCount) { m_vertices.resize(std::forward<T>(vertexCount)); }
 
 			void for_each_vertex(std::function<void(Vertex&)>&&);
 			void append(Vertex &&vertex) { m_vertices.emplace_back(std::move(vertex)); }
-			template <typename... Args> inline void append(Args&&... args) { m_vertices.emplace_back(std::forward<Args>(args)...); }
+			template <typename... Args> inline void append(Args&&... args) { m_vertices.emplace_back(std::forward<Args&&>(args)...); }
 			inline void setPrimitiveType(const PrimitiveType type) { m_primitiveType = type; }
 			inline PrimitiveType getPrimitiveType() const { return m_primitiveType; }
+			inline const BasicVertexArray::size_type getVertexCount() const { return m_vertices.size(); }
 			Rectf32 getBounds() const;
 
-			inline const BasicVertexArray *data() const noexcept { return &m_vertices; }
-			inline const BasicVertexArray::size_type getVertexCount() const { return m_vertices.size(); }
 			void draw() const;
 		private:
 			BasicVertexArray m_vertices;
