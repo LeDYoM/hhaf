@@ -43,7 +43,7 @@ namespace zoper
 		_logo->setPositionY(100);
 
 		_background->setTexture(host().resourceManager().getTexture("game_menu.background"), true, false);
-		_background->setSize(2000.0f);
+		_background->setSize({ 2000.0f,2000.f });
 	}
 
 	void MenuScene::onEnterScene()

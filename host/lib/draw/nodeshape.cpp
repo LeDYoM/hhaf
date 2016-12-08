@@ -13,20 +13,15 @@ namespace lib
 			: Renderizable{ name, TriangleFan }, _mode{ mode }, m_textureRect{}, m_fillColor{ 255, 255, 255 },
 			m_size{ size }, m_pointCount{ pointCount }
 		{
-			update();
+			updateGeometry();
 		}
 
 		NodeShape::~NodeShape() = default;
 
-		void NodeShape::setSize(const vector2df & size)
+		void NodeShape::setSize(const vector2df size)
 		{
 			m_size = size;
-			update();
-		}
-
-		void NodeShape::setSize(const f32 size)
-		{
-			setSize({ size,size });
+			updateGeometry();
 		}
 
 		const vector2df & NodeShape::getSize() const
@@ -42,7 +37,7 @@ namespace lib
 		void NodeShape::setPointCount(const u32 numPoints)
 		{
 			m_pointCount = numPoints;
-			update();
+			updateGeometry();
 		}
 			
 		vector2df NodeShape::getPoint(const u32 index) const
@@ -137,7 +132,7 @@ namespace lib
 			return m_fillColor;
 		}
 
-		void NodeShape::update()
+		void NodeShape::updateGeometry()
 		{
 			// Get the total number of points of the shape
 			auto count = getPointCount();
