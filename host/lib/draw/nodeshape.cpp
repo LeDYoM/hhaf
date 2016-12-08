@@ -1,7 +1,5 @@
 #include "NodeShape.hpp"
 #include <lib/core/log.hpp>
-#include <lib/core/window.hpp>
-#include <lib/core/host.hpp>
 #include <lib/draw/texture.hpp>
 
 #define _USE_MATH_DEFINES
@@ -168,12 +166,6 @@ namespace lib
 
 			// Texture coordinates
 			updateTexCoords();
-		}
-
-		void NodeShape::draw()
-		{
-			auto handle = host().rStates().pushChanges(&getTransform(), &(*m_texture));
-			m_vertices.draw();
 		}
 
 		void NodeShape::updateFillColors()

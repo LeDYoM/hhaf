@@ -51,7 +51,6 @@ namespace lib
 			void setAlignment(Alignment alignment);
 
 		private:
-			virtual void draw() override;
 			void updateGeometry();
 
 			std::string m_string;

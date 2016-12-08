@@ -37,7 +37,6 @@ namespace lib
 
 		protected:
 			void update();
-			virtual void draw() override;
 			void updateFillColors();
 			void updateTexCoords();
 

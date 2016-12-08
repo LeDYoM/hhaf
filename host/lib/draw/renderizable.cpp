@@ -1,6 +1,6 @@
 #include "renderizable.hpp"
-#include <lib/core/window.hpp>
 #include <lib/core/log.hpp>
+#include <lib/core/host.hpp>
 
 namespace lib
 {
@@ -14,9 +14,10 @@ namespace lib
 
 		Renderizable::~Renderizable() = default;
 
-		Rectf32 Renderizable::getLocalBounds() const
+		void Renderizable::draw()
 		{
-			return m_bounds;
+			auto handle = host().rStates().pushChanges(&getTransform(), m_texture.get());
+			m_vertices.draw();
 		}
 	}
 }

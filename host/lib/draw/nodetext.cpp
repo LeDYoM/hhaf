@@ -3,9 +3,6 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <cmath>
 
-#include <lib/core/host.hpp>
-#include <lib/core/window.hpp>
-
 namespace lib
 {
 	namespace draw
@@ -66,15 +63,6 @@ namespace lib
 		Color NodeText::getColor() const
 		{
 			return m_color;
-		}
-
-		void NodeText::draw()
-		{
-			if (m_font) {
-//				m_currentTexture = new Texture(m_font->getTexture(m_characterSize));
-				auto handle = host().rStates().pushChanges(&getTransform(), m_texture.get());
-				m_vertices.draw();
-			}
 		}
 
 		void NodeText::updateGeometry()
