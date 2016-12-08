@@ -2,7 +2,6 @@
 #define LIB_VECTOR2D_INCLUDE_HPP
 
 #include "types.hpp"
-#include <SFML/System/Vector2.hpp>
 
 namespace lib
 {
@@ -10,7 +9,6 @@ namespace lib
 	class vector2d
 	{
 	public:
-		constexpr inline vector2d(const sf::Vector2<T> &rh) noexcept : x{ rh.x }, y{ rh.y } {}
 		constexpr inline vector2d()  noexcept : x{}, y{} {}
 		constexpr inline vector2d(T X, T Y)  noexcept : x{ X }, y{ Y } {}
 		constexpr inline vector2d(const vector2d<T> &) = default;
@@ -19,28 +17,28 @@ namespace lib
 		template <typename U>
 		constexpr inline explicit vector2d(const vector2d<U>& vector)  noexcept : x{ static_cast<T>(vector.x) }, y{ static_cast<T>(vector.y) } {}
 
-		inline vector2d &operator+=(const vector2d &right)
+		inline vector2d &operator+=(const vector2d &right) noexcept
 		{
 			x += right.x;
 			y += right.y;
 			return *this;
 		}
 
-		inline vector2d &operator-=(const vector2d &right)
+		inline vector2d &operator-=(const vector2d &right) noexcept
 		{
 			x -= right.x;
 			y -= right.y;
 			return *this;
 		}
 
-		inline vector2d &operator*=(const vector2d &right)
+		inline vector2d &operator*=(const vector2d &right) noexcept
 		{
 			x *= right.x;
 			y *= right.y;
 			return *this;
 		}
 
-		inline vector2d &operator*=(const T &scalar)
+		inline vector2d &operator*=(const T &scalar) noexcept
 		{
 			x *= scalar;
 			y *= scalar;
@@ -61,23 +59,28 @@ namespace lib
 			return *this;
 		}
 
-		inline vector2d &operator-()
+		inline vector2d &operator-() noexcept
 		{
 			x = -x;
 			y = -y;
 			return *this;
 		}
 
-		inline vector2d operator+(const vector2d &right) const { return (vector2d(*this) += right); }
-		inline vector2d operator-(const vector2d &right) const { return (vector2d(*this) -= right); }
-		inline vector2d operator*(const vector2d &right) const { return (vector2d(*this) *= right); }
-		inline vector2d operator/(const vector2d &right) const { return (vector2d(*this) /= right); }
-		inline vector2d operator*(const T &right) const { return (vector2d(*this) *= right);	}
-		inline vector2d operator/(const T &right) const { return (vector2d(*this) /= right); }
-		inline bool operator ==(const vector2d &right) const noexcept { return (x == right.x && y == right.y); }
-		inline bool operator !=(const vector2d &right) const noexcept {	return !(*operator==(right)); }
+		T dotProduct(const vector2d& p2) const noexcept
+		{
+			auto r(*this * p2);
+			return r.x + r.y;
+		}
 
-		constexpr inline operator sf::Vector2<T>() const noexcept { return sf::Vector2<T>{x, y}; }
+		inline constexpr vector2d operator+(const vector2d &right) const noexcept { return (vector2d(*this) += right); }
+		inline constexpr vector2d operator-(const vector2d &right) const noexcept { return (vector2d(*this) -= right); }
+		inline constexpr vector2d operator*(const vector2d &right) const noexcept { return (vector2d(*this) *= right); }
+		inline constexpr vector2d operator/(const vector2d &right) const noexcept { return (vector2d(*this) /= right); }
+		inline constexpr vector2d operator*(const T &right) const noexcept { return (vector2d(*this) *= right);	}
+		inline constexpr vector2d operator/(const T &right) const noexcept { return (vector2d(*this) /= right); }
+		inline constexpr bool operator ==(const vector2d &right) const noexcept { return (x == right.x && y == right.y); }
+		inline constexpr bool operator !=(const vector2d &right) const noexcept {	return !(*operator==(right)); }
+
 		T x;
 		T y;
 	};

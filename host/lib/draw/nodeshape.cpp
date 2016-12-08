@@ -99,11 +99,6 @@ namespace lib
 			return normal;
 		}
 
-		// Compute the dot product of two vectors
-		float dotProduct(const vector2df& p1, const vector2df& p2)
-		{
-			return p1.x * p2.x + p1.y * p2.y;
-		}
 
 		sptr<Texture> NodeShape::getTexture() const
 		{
