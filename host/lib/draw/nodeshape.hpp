@@ -42,7 +42,6 @@ namespace lib
 			void updateTexCoords();
 
 		private:
-			sptr<Texture> m_texture;
 			vector2df m_size;
 			u32 m_pointCount;
 			Rects32 m_textureRect;

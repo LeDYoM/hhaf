@@ -32,7 +32,6 @@ namespace lib
 		{
 			if (m_font != font) {
 				m_font = font;
-				m_currentTexture = new Texture(m_font->getTexture(m_characterSize));
 				updateGeometry();
 			}
 		}
@@ -41,7 +40,6 @@ namespace lib
 		{
 			if (m_characterSize != size) {
 				m_characterSize = size;
-				m_currentTexture = new Texture(m_font->getTexture(m_characterSize));
 				updateGeometry();
 			}
 		}
@@ -70,54 +68,11 @@ namespace lib
 			return m_color;
 		}
 
-		vector2df NodeText::findCharacterPos(const std::size_t cindex) const
-		{
-			// Make sure that we have a valid font
-			if (!m_font)
-				return vector2df{};
-
-			// Adjust the index if it's out of range
-			decltype(cindex) index = (cindex > m_string.length() ? m_string.length() : cindex);
-
-			// Compute the variables needed by the algorithm
-			const bool  bold = (m_style & NodeText::Style::Bold) != 0;
-			const f32 hspace = m_font->getGlyph(L' ', m_characterSize, bold).advance;
-			const f32 vspace = static_cast<f32>(m_font->getLineSpacing(m_characterSize));
-
-			// Compute the position
-			vector2df position{};
-			std::string::value_type prevChar{ 0 };
-			for (std::size_t i = 0; i < index; ++i)
-			{
-				const auto curChar = m_string[i];
-
-				// Apply the kerning offset
-				position.x += m_font->getKerning(prevChar, curChar, m_characterSize);
-				prevChar = curChar;
-
-				// Handle special characters
-				switch (curChar)
-				{
-				case ' ':  position.x += hspace;                 continue;
-				case '\t': position.x += hspace * 4;             continue;
-				case '\n': position.y += vspace; position.x = 0; continue;
-				}
-
-				// For regular characters, add the advance offset of the glyph
-				position.x += m_font->getGlyph(curChar, m_characterSize, bold).advance;
-			}
-
-			// Transform the position to global coordinates
-			position = getTransform().transformPoint(position);
-
-			return position;
-		}
-
 		void NodeText::draw()
 		{
 			if (m_font) {
-				m_currentTexture = new Texture(m_font->getTexture(m_characterSize));
-				auto handle = host().rStates().pushChanges(&getTransform(), m_currentTexture);
+//				m_currentTexture = new Texture(m_font->getTexture(m_characterSize));
+				auto handle = host().rStates().pushChanges(&getTransform(), m_texture.get());
 				m_vertices.draw();
 			}
 		}
@@ -280,6 +235,8 @@ namespace lib
 			m_bounds.top = minY;
 			m_bounds.width = maxX - minX;
 			m_bounds.height = maxY - minY;
+
+			m_texture = msptr<Texture>(m_font->getTexture(m_characterSize));
 		}
 
 		void NodeText::setPositionWithAlignment(const vector2df &pos, Alignment alignment)

@@ -5,6 +5,7 @@
 #include "idrawable.hpp"
 #include "transformable.hpp"
 #include "color.hpp"
+#include "texture.hpp"
 #include <lib/include/types.hpp>
 #include "vertexarray.hpp"
 
@@ -25,6 +26,7 @@ namespace lib
 
 		protected:
 			VertexArray m_vertices;
+			sptr<Texture> m_texture;
 			Rectf32 m_bounds;
 		};
 	}

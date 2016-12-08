@@ -44,7 +44,6 @@ namespace lib
 			sptr<Font> getFont() const noexcept { return m_font; }
 			u32 getCharacterSize() const noexcept { return m_characterSize; }
 			Color getColor() const;
-			vector2df findCharacterPos(const std::size_t index) const;
 
 			void setPositionWithAlignment(const vector2df &pos, Alignment alignment);
 			void setPositionWithAlignmentX(const float x, Alignment alignment = Alignment::Left);
@@ -57,7 +56,6 @@ namespace lib
 
 			std::string m_string;
 			sptr<Font> m_font;
-			Texture *m_currentTexture;
 			u32 m_characterSize;
 			Style m_style;
 			Color m_color;
