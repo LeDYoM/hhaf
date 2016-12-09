@@ -122,11 +122,6 @@ namespace lib
 			updateFillColors();
 		}
 
-		Color NodeShape::getFillColor() const
-		{
-			return m_fillColor;
-		}
-
 		void NodeShape::updateGeometry()
 		{
 			// Get the total number of points of the shape

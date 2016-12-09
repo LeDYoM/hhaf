@@ -30,9 +30,9 @@ namespace lib
 
 			void setTextureRect(const Rects32& rect);
 			virtual void setColor(const Color color) override;
+			inline Color color() const noexcept { return m_fillColor; }
 			sptr<Texture> getTexture() const;
 			Rects32 getTextureRect() const;
-			Color getFillColor() const;
 
 		protected:
 			void updateGeometry();

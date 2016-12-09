@@ -45,8 +45,7 @@ namespace lib
 
 				return Rectf32{ left, top, right - left, bottom - top };
 			}
-			else
-			{
+			else {
 				return Rectf32{};
 			}
 		}
@@ -55,6 +54,11 @@ namespace lib
 		{
 			host().parentWindow().draw((const sf::Vertex*)m_vertices.data(), m_vertices.size(), static_cast<sf::PrimitiveType>(m_primitiveType),
 				host().rStates().internalStates());
+		}
+
+		void VertexArray::setColor(const Color color)
+		{
+			if (!m_vertices.empty()) for (auto &v : m_vertices) v.color = color;
 		}
 	}
 }

@@ -42,6 +42,7 @@ namespace lib
 			Rectf32 getBounds() const;
 
 			void draw() const;
+			void setColor(const Color color);
 		private:
 			BasicVertexArray m_vertices;
 			PrimitiveType m_primitiveType;
