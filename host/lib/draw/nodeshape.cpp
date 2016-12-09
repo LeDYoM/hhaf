@@ -24,7 +24,7 @@ namespace lib
 			updateGeometry();
 		}
 
-		const vector2df & NodeShape::getSize() const
+		vector2df NodeShape::getSize() const
 		{
 			return m_size;
 		}
@@ -87,22 +87,6 @@ namespace lib
 			if (resetSize) {
 				setSize({ static_cast<f32>(texture->getSize().x), static_cast<f32>(texture->getSize().y) });
 			}
-		}
-
-		// Compute the normal of a segment
-		vector2df computeNormal(const vector2df& p1, const vector2df& p2)
-		{
-			vector2df normal(p1.y - p2.y, p2.x - p1.x);
-			f32 length = std::sqrt(normal.x * normal.x + normal.y * normal.y);
-			if (length != 0.f)
-				normal /= length;
-			return normal;
-		}
-
-
-		sptr<Texture> NodeShape::getTexture() const
-		{
-			return m_texture;
 		}
 
 		void NodeShape::setTextureRect(const Rects32& rect)

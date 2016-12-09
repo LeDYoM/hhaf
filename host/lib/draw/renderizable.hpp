@@ -23,6 +23,7 @@ namespace lib
 			inline Color color() const noexcept { return m_color; }
 			Rectf32 getLocalBounds() const noexcept { return m_bounds; }
 			virtual void draw() override;
+			sptr<Texture> getTexture() const { return m_texture; }
 
 		protected:
 			void updateFillColors();

@@ -22,14 +22,13 @@ namespace lib
 			explicit NodeShape(const std::string &name, const vector2df& size, const u32 pointCount=4,const NodeMode mode=NodeMode::Shape);
 			virtual ~NodeShape();
 			void setSize(const vector2df size);
-			const vector2df &getSize() const;
+			inline vector2df getSize() const noexcept { return m_size; }
 			u32 getPointCount() const;
 			void setPointCount(const u32 numPoints);
 			virtual vector2df getPoint(const u32 index) const;
 			void setTexture(sptr<Texture> texture, bool resetSize=true, bool resetRect = false);
 
 			void setTextureRect(const Rects32& rect);
-			sptr<Texture> getTexture() const;
 			Rects32 getTextureRect() const;
 
 		protected:
