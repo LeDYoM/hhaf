@@ -23,28 +23,28 @@ namespace lib
 
 		sptr<NodeText> RenderGroup::createText(const std::string &name)
 		{
-			auto result = sptr<NodeText>(new NodeText(name));
+			auto result = msptr<NodeText>(name);
 			addRenderizable(result);
 			return result;
 		}
 
 		sptr<NodeShape> RenderGroup::createShape(const std::string &name, const vector2df &radius/*=vector2df()*/, u32 pointCount/*=30*/)
 		{
-			auto result = sptr<NodeShape>(new NodeShape(name,radius,pointCount, NodeShape::NodeMode::Shape));
+			auto result = msptr<NodeShape>(name,radius,pointCount, NodeShape::NodeMode::Shape);
 			addRenderizable(result);
 			return result;
 		}
 
 		sptr<NodeShape> RenderGroup::createSpriteShape(const std::string &name, const vector2df &radius /*= vector2df()*/)
 		{
-			auto result = sptr<NodeShape>(new NodeShape(name,radius, 4,NodeShape::NodeMode::Sprite));
+			auto result = msptr<NodeShape>(name,radius, 4,NodeShape::NodeMode::Sprite);
 			addRenderizable(result);
 			return result;
 		}
 
 		sptr<draw::Renderizable> RenderGroup::addRenderizable(sptr<Renderizable> newElement)
 		{
-			m_renderNodes.push_back(newElement);
+			m_renderNodes.emplace_back(newElement);
 			return newElement;
 		}
 
@@ -75,12 +75,12 @@ namespace lib
 		void RenderGroup::addRenderGroup(sptr<RenderGroup> node, sptr<IDrawable> beforeNode)
 		{
 			if (!beforeNode) {
-				m_renderNodes.push_back(node);
+				m_renderNodes.emplace_back(node);
 			}
 			else {
 				for (auto iterator = m_renderNodes.begin(); iterator != m_renderNodes.end();++iterator) {
 					if (*iterator == beforeNode) {
-						m_renderNodes.insert(iterator, node);
+						m_renderNodes.emplace(iterator, node);
 						break;
 					}
 				}
