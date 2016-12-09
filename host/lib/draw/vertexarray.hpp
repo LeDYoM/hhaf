@@ -25,8 +25,13 @@ namespace lib
 		class VertexArray
 		{
 		public:
-			constexpr VertexArray();
-			explicit VertexArray(const PrimitiveType type, const std::size_t vertexCount = 0);
+			constexpr VertexArray() noexcept;
+			explicit VertexArray(const PrimitiveType type, const std::size_t vertexCount = 0) noexcept;
+			constexpr VertexArray(const VertexArray&) noexcept = default;
+			VertexArray& operator=(const VertexArray&) noexcept = default;
+			constexpr VertexArray(VertexArray&&) noexcept = default;
+			VertexArray& operator=(VertexArray&&) noexcept = default;
+
 			inline Vertex &VertexArray::operator [](const std::size_t index) { return m_vertices[index]; }
 			inline const Vertex &VertexArray::operator [](const std::size_t index) const { return m_vertices[index]; }
 

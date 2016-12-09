@@ -6,11 +6,11 @@ namespace lib
 {
 	namespace draw
 	{
-		constexpr VertexArray::VertexArray() 
+		constexpr VertexArray::VertexArray() noexcept
 			: m_vertices{}, m_primitiveType{ PrimitiveType::Points } {}
 
 
-		VertexArray::VertexArray(const PrimitiveType type, const std::size_t vertexCount)
+		VertexArray::VertexArray(const PrimitiveType type, const std::size_t vertexCount) noexcept
 			: m_vertices{ vertexCount }, m_primitiveType{ type } {}
 
 		void VertexArray::for_each_vertex(std::function<void(Vertex&)>&& f)
@@ -28,7 +28,7 @@ namespace lib
 
 				for (const auto& v : m_vertices)
 				{
-					const vector2df &position = v.position;
+					const vector2df &position{ v.position };
 
 					// Update left and right
 					if (position.x < left)
