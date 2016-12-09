@@ -22,7 +22,6 @@ namespace lib
 			explicit NodeShape(const std::string &name, const vector2df& size, const u32 pointCount=4,const NodeMode mode=NodeMode::Shape);
 			virtual ~NodeShape();
 			void setSize(const vector2df size);
-			inline vector2df getSize() const noexcept { return m_size; }
 			u32 getPointCount() const;
 			void setPointCount(const u32 numPoints);
 			virtual vector2df getPoint(const u32 index) const;

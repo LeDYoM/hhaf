@@ -24,11 +24,6 @@ namespace lib
 			updateGeometry();
 		}
 
-		vector2df NodeShape::getSize() const
-		{
-			return m_size;
-		}
-
 		u32 NodeShape::getPointCount() const
 		{
 			return m_pointCount;
