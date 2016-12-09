@@ -3,7 +3,6 @@
 
 #include <lib/include/types.hpp>
 #include <algorithm>
-#include <SFML/Graphics/Color.hpp>
 
 namespace lib
 {
@@ -25,16 +24,15 @@ namespace lib
 			constexpr u32 toInteger() const noexcept { return (r << 24) | (g << 16) | (b << 8) | a; }
 			constexpr Color(const Color&) noexcept = default;
 			Color& operator=(const Color&) noexcept = default;
-			operator sf::Color() const noexcept { return { r, g, b, a }; }
+			constexpr Color(Color&&) noexcept = default;
+			Color& operator=(Color&&) noexcept = default;
+
 			constexpr bool operator ==(const Color& right) const noexcept
 			{
 				return (r == right.r && g == right.g && b == right.b && a == right.a);
 			}
 
-			constexpr bool operator !=(const Color& right) const noexcept
-			{
-				return !(*this == right);
-			}
+			constexpr bool operator !=(const Color& right) const noexcept { return !(*this == right); }
 
 			Color operator+(const Color& right) const
 			{
@@ -62,12 +60,11 @@ namespace lib
 
 			Color &operator -=(const Color& right) noexcept
 			{
-				r = static_cast<u8>(std::max(static_cast<u32>(r) - right.r, 0u));
-				g = static_cast<u8>(std::max(static_cast<u32>(g) - right.g, 0u));
-				b = static_cast<u8>(std::max(static_cast<u32>(b) - right.b, 0u));
-				a = static_cast<u8>(std::max(static_cast<u32>(a) - right.a, 0u));
+				r = static_cast<u8>(std::max(static_cast<s32>(r) - right.r, 0));
+				g = static_cast<u8>(std::max(static_cast<s32>(g) - right.g, 0));
+				b = static_cast<u8>(std::max(static_cast<s32>(b) - right.b, 0));
+				a = static_cast<u8>(std::max(static_cast<s32>(a) - right.a, 0));
 				return *this;
-
 			}
 
 			Color &operator *=(const Color& right) noexcept
