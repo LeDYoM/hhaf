@@ -30,7 +30,7 @@ namespace lib
 
 		sptr<NodeShape> RenderGroup::createShape(const std::string &name, const vector2df &radius/*=vector2df()*/, u32 pointCount/*=30*/)
 		{
-			auto result = sptr<NodeShape>(new NodeShape(name,radius,pointCount));
+			auto result = sptr<NodeShape>(new NodeShape(name,radius,pointCount, NodeShape::NodeMode::Shape));
 			addRenderizable(result);
 			return result;
 		}

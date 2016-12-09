@@ -19,7 +19,7 @@ namespace lib
 				Shape = 0,
 				Sprite = 1,
 			} _mode{ NodeMode::Shape };
-			explicit NodeShape(const std::string &name, const vector2df& size, const u32 pointCount=4,const NodeMode mode=NodeMode::Shape);
+			explicit NodeShape(const std::string &name, const vector2df& size, const u32 pointCount,const NodeMode mode);
 			virtual ~NodeShape();
 			void setSize(const vector2df size);
 			u32 getPointCount() const;

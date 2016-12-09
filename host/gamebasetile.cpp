@@ -1,14 +1,14 @@
 #include "gamebasetile.hpp"
 #include <lib/core/log.hpp>
-#define _USE_MATH_DEFINES
-#include <math.h>
 
 namespace zoper
 {
-	GameBaseTile::GameBaseTile(lib::board::BoardTileData data, const lib::vector2df &size, const std::string &baseName) 
-		: lib::board::ITile{ data }, lib::draw::NodeShape(baseName,size,30)
-	{
-	}
+	using namespace lib;
+	using namespace lib::board;
+	using namespace lib::draw;
+
+	GameBaseTile::GameBaseTile(BoardTileData data, const vector2df &size, const std::string &baseName)
+		: ITile{ data }, NodeShape{baseName, size, 30, NodeShape::NodeMode::Shape} {}
 
 	GameBaseTile::~GameBaseTile() = default;
 
@@ -17,23 +17,23 @@ namespace zoper
 		switch (getData())
 		{
 		case 0:
-			return lib::draw::colors::Red;
+			return colors::Red;
 			break;
 		case 1:
-			return lib::draw::colors::Green;
+			return colors::Green;
 			break;
 		case 2:
-			return lib::draw::colors::Blue;
+			return colors::Blue;
 			break;
 		case 3:
-			return lib::draw::colors::Yellow;
+			return colors::Yellow;
 			break;
 		case 4:
-			return lib::draw::colors::Magenta;
+			return colors::Magenta;
 			break;
 		default:
 			logError("Error value for token: ", getData(), " is not supported");
-			return lib::draw::colors::White;
+			return colors::White;
 			break;
 		}
 	}
