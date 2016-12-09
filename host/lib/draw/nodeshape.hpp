@@ -29,21 +29,17 @@ namespace lib
 			void setTexture(sptr<Texture> texture, bool resetSize=true, bool resetRect = false);
 
 			void setTextureRect(const Rects32& rect);
-			virtual void setColor(const Color color) override;
-			inline Color color() const noexcept { return m_fillColor; }
 			sptr<Texture> getTexture() const;
 			Rects32 getTextureRect() const;
 
 		protected:
 			void updateGeometry();
-			void updateFillColors();
 			void updateTexCoords();
 
 		private:
 			vector2df m_size;
 			u32 m_pointCount;
 			Rects32 m_textureRect;
-			Color m_fillColor;
 		};
 	}
 }

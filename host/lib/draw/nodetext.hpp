@@ -39,11 +39,9 @@ namespace lib
 			void setCharacterSize(const u32 size);
 			void setStyle(const Style style);
 			inline Style getStyle() const noexcept { return m_style; }
-			virtual void setColor(const Color color) override;
 			const std::string & getString() const { return m_string; }
 			sptr<Font> getFont() const noexcept { return m_font; }
 			u32 getCharacterSize() const noexcept { return m_characterSize; }
-			Color getColor() const;
 
 			void setPositionWithAlignment(const vector2df &pos, Alignment alignment);
 			void setPositionWithAlignmentX(const float x, Alignment alignment = Alignment::Left);
@@ -57,7 +55,6 @@ namespace lib
 			sptr<Font> m_font;
 			u32 m_characterSize;
 			Style m_style;
-			Color m_color;
 		};
 	}
 }

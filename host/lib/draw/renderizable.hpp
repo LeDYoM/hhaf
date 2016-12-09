@@ -19,15 +19,18 @@ namespace lib
 			explicit Renderizable(const std::string &name, PrimitiveType type, std::size_t vertexCount = 0);
 			virtual ~Renderizable();
 
-			virtual void setColor(const Color color) = 0;
-
+			virtual void setColor(const Color color);
+			inline Color color() const noexcept { return m_color; }
 			Rectf32 getLocalBounds() const noexcept { return m_bounds; }
 			virtual void draw() override;
 
 		protected:
+			void updateFillColors();
+
 			VertexArray m_vertices;
 			sptr<Texture> m_texture;
 			Rectf32 m_bounds;
+			Color m_color;
 		};
 	}
 }

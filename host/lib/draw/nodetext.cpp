@@ -11,8 +11,7 @@ namespace lib
 			:NodeText(name, sf::String{},nullptr,30) {}
 
 		NodeText::NodeText(const std::string &name, const std::string& string, sptr<Font> font, unsigned int characterSize) :
-			Renderizable{ name, Triangles }, m_string(string), m_font{ font }, m_characterSize{ characterSize }, m_style{ Regular },
-			m_color{ 255, 255, 255 } {}
+			Renderizable{ name, Triangles }, m_string(string), m_font{ font }, m_characterSize{ characterSize }, m_style{ Regular } {}
 
 		NodeText::~NodeText() {	}
 
@@ -47,22 +46,6 @@ namespace lib
 				m_style = style;
 				updateGeometry();
 			}
-		}
-
-		void NodeText::setColor(const Color color)
-		{
-			if (color != m_color) {
-				m_color = color;
-
-				m_vertices.for_each_vertex([this](Vertex& v) {
-					v.color = m_color;
-				});
-			}
-		}
-
-		Color NodeText::getColor() const
-		{
-			return m_color;
 		}
 
 		void NodeText::updateGeometry()
@@ -224,6 +207,7 @@ namespace lib
 			m_bounds.width = maxX - minX;
 			m_bounds.height = maxY - minY;
 
+			updateFillColors();
 			m_texture = msptr<Texture>(m_font->getTexture(m_characterSize));
 		}
 

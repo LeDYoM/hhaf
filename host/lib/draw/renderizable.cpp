@@ -7,12 +7,26 @@ namespace lib
 	namespace draw
 	{
 		Renderizable::Renderizable(const std::string &name, PrimitiveType type, std::size_t vertexCount)
-			: HasName{ name }, m_vertices{ type, vertexCount }, m_bounds{}, m_texture{ nullptr }
+			: HasName{ name }, m_vertices{ type, vertexCount }, m_bounds{}, m_texture{ nullptr }, m_color{ colors::White }
 		{
 			logConstruct("Name: ", name );
 		}
 
 		Renderizable::~Renderizable() = default;
+
+		void Renderizable::setColor(const Color color)
+		{
+			if (color != m_color) {
+				m_color = color;
+
+				updateFillColors();
+			}
+		}
+
+		void Renderizable::updateFillColors()
+		{
+			m_vertices.for_each_vertex([this](Vertex& v) { v.color = m_color; });
+		}
 
 		void Renderizable::draw()
 		{

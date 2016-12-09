@@ -10,7 +10,7 @@ namespace lib
 	namespace draw
 	{
 		NodeShape::NodeShape(const std::string &name, const vector2df& size, const u32 pointCount, const NodeMode mode)
-			: Renderizable{ name, TriangleFan }, _mode{ mode }, m_textureRect{}, m_fillColor{ 255, 255, 255 },
+			: Renderizable{ name, TriangleFan }, _mode{ mode }, m_textureRect{},
 			m_size{ size }, m_pointCount{ pointCount }
 		{
 			updateGeometry();
@@ -116,12 +116,6 @@ namespace lib
 			return m_textureRect;
 		}
 
-		void NodeShape::setColor(const Color color)
-		{
-			m_fillColor = color;
-			updateFillColors();
-		}
-
 		void NodeShape::updateGeometry()
 		{
 			// Get the total number of points of the shape
@@ -151,11 +145,6 @@ namespace lib
 
 			// Texture coordinates
 			updateTexCoords();
-		}
-
-		void NodeShape::updateFillColors()
-		{
-			m_vertices.for_each_vertex([this](Vertex& v) { v.color = m_fillColor; });
 		}
 
 		void NodeShape::updateTexCoords()
