@@ -12,10 +12,14 @@ namespace lib
 		class Vertex
 		{
 		public:
-			constexpr Vertex(const vector2df &p, const Color &c, const vector2df &tc) : position{ p }, color{ c }, texCoords{ tc } {}
-			constexpr Vertex() : Vertex({}, {}, {}) {}
+			constexpr Vertex(const vector2df &p, const Color &c, const vector2df &tc) noexcept : position{ p }, color{ c }, texCoords{ tc } {}
+			constexpr Vertex() noexcept = default;
+			constexpr Vertex(Vertex&&) noexcept = default;
+			Vertex& operator=(Vertex&&) noexcept = default;
+			constexpr Vertex(const Vertex&) noexcept = default;
+			Vertex& operator=(const Vertex&) noexcept = default;
 			vector2df position;
-			Color color{ colors::White };
+			Color color;
 			vector2df texCoords;
 		};
 	}
