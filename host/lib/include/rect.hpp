@@ -11,7 +11,7 @@ namespace lib
 	{
 		T left, top, width, height;
 
-		inline constexpr Rect(const T rectLeft, const T rectTop, const T rectWidth, const T rectHeight) noexcept : left{ rectLeft }, top{ rectTop }, width{ rectWidth }, height{ rectHeight } { }
+		inline constexpr Rect(T rectLeft, T rectTop, T rectWidth, T rectHeight) noexcept : left{ rectLeft }, top{ rectTop }, width{ rectWidth }, height{ rectHeight } { }
 		inline constexpr explicit Rect() noexcept : Rect{ {}, {}, {}, {} } {}
 		inline constexpr Rect(const vector2d<T>& position, const vector2d<T>& size) noexcept : Rect{ position.x, position.y, size.x, size.y } {}
 		inline constexpr Rect(const Rect&) noexcept = default;
@@ -85,13 +85,9 @@ namespace lib
 			return !(operator==(r));
 		}
 
-		inline void setLeft(const T&nleft) { left = nleft; }
-		inline void setTop(const T&nTop) { top = nTop; }
 		inline void setLeftTop(const vector2d<T>&nleftTop) { setLeft(nleftTop.x); setTop(nleftTop.y); }
 		inline void move(const vector2d<T>&relativePosition) { left += relativePosition.x; top += relativePosition.y; }
-		inline void setWidth(const T &nw) { width = nw; }
-		inline void setHeight(const T &nh) { height = nh; }
-		inline void setSize(const vector2d<T>&nsize) { setWidth(nsize.x); setHeight(nsize.y); }
+		inline void setSize(const vector2d<T>&nsize) { width = nsize.x; height = nsize.y; }
 
 		inline vector2d<T> leftTop() const { return vector2d<T>{left, top}; }
 		inline vector2d<T> size() const { return vector2d<T>{width, height}; }

@@ -22,21 +22,29 @@ namespace lib
 			TriangleStrip,
 			TriangleFan,
 		};
+		enum class VertexGeometryType
+		{
+			Quad,
+			Ellipse,
+			Text
+		};
 		class VertexArray
 		{
 		public:
 			constexpr VertexArray() noexcept;
 			explicit VertexArray(const PrimitiveType type, const std::size_t vertexCount = 0) noexcept;
-			constexpr VertexArray(const VertexArray&) noexcept = default;
-			VertexArray& operator=(const VertexArray&) noexcept = default;
+			constexpr VertexArray(const VertexArray&) = default;
+			VertexArray& operator=(const VertexArray&) = default;
 			constexpr VertexArray(VertexArray&&) noexcept = default;
 			VertexArray& operator=(VertexArray&&) noexcept = default;
+
+			BasicVertexArray::size_type generate(VertexGeometryType);
 
 			inline Vertex &VertexArray::operator [](const std::size_t index) { return m_vertices[index]; }
 			inline const Vertex &VertexArray::operator [](const std::size_t index) const { return m_vertices[index]; }
 
 			inline void clear() { m_vertices.clear(); }
-			template <typename T> inline void resize(T&& vertexCount) { m_vertices.resize(std::forward<T>(vertexCount)); }
+			inline void resize(std::size_t vertexCount) { m_vertices.resize(vertexCount); }
 
 			void for_each_vertex(std::function<void(Vertex&)>&&);
 			void append(Vertex &&vertex) { m_vertices.emplace_back(std::move(vertex)); }

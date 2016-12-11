@@ -13,6 +13,11 @@ namespace lib
 		VertexArray::VertexArray(const PrimitiveType type, const std::size_t vertexCount) noexcept
 			: m_vertices{ vertexCount }, m_primitiveType{ type } {}
 
+		BasicVertexArray::size_type VertexArray::generate(VertexGeometryType)
+		{
+			return m_vertices.size();
+		}
+
 		void VertexArray::for_each_vertex(std::function<void(Vertex&)>&& f)
 		{
 			std::for_each(m_vertices.begin(), m_vertices.end(), std::move(f));
