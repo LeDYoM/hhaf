@@ -38,7 +38,9 @@ namespace lib
 			constexpr VertexArray(VertexArray&&) noexcept = default;
 			VertexArray& operator=(VertexArray&&) noexcept = default;
 
-			BasicVertexArray::size_type generate(VertexGeometryType);
+			Rectf32 generateQuad(const vector2df &size);
+			std::pair<BasicVertexArray::size_type, Rectf32> generateShape(VertexGeometryType, const vector2df &size, u32 granularity = 10);
+			Rectf32 generateFont(const vector2df &size);
 
 			inline Vertex &VertexArray::operator [](const std::size_t index) { return m_vertices[index]; }
 			inline const Vertex &VertexArray::operator [](const std::size_t index) const { return m_vertices[index]; }
