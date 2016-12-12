@@ -97,31 +97,10 @@ namespace lib
 
 		void NodeShape::updateGeometry()
 		{
-			if (_mode == NodeMode::Sprite)
+			if (_mode == NodeMode::Sprite) {
 				m_bounds = m_vertices.generateQuad(m_size);
-			else
-			{
-				// Get the total number of points of the shape
-				auto count = getPointCount();
-				if (count < 3) {
-					m_vertices.resize(0);
-					return;
-				}
-
-				m_vertices.resize(count + 2); // + 2 for center and repeated first point
-
-				// Position
-				for (std::size_t i = 0; i < count; ++i)
-					m_vertices[i + 1].position = getPoint(i);
-
-				m_vertices[count + 1].position = m_vertices[1].position;
-
-				// Update the bounding rectangle
-				m_vertices[0] = m_vertices[1]; // so that the result of getBounds() is correct
-				m_bounds = m_vertices.getBounds();
-				// Compute the center and make it the first vertex
-				m_vertices[0].position.x = m_bounds.width / 2;
-				m_vertices[0].position.y = m_bounds.height / 2;
+			} else if (_mode == NodeMode::Shape) {
+				m_bounds = m_vertices.generateShape(m_size,m_pointCount);
 			}
 
 			// Color

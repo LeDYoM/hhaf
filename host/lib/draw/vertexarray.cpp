@@ -35,7 +35,7 @@ namespace lib
 
 		}
 
-		std::pair<BasicVertexArray::size_type, Rectf32> VertexArray::generateShape(VertexGeometryType, const vector2df & size, u32 granularity)
+		Rectf32 VertexArray::generateShape(const vector2df & size, u32 granularity)
 		{
 			constexpr u32 nPoints = 4;
 			constexpr u32 nVertex = nPoints + 2;
