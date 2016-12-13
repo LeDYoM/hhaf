@@ -19,19 +19,21 @@ namespace lib
 			if (color != m_color) {
 				m_color = color;
 
-				updateFillColors();
+				m_vertices.setColor(m_color);
 			}
 		}
 
 		void Renderizable::updateFillColors()
 		{
-			m_vertices.for_each_vertex([this](Vertex& v) { v.color = m_color; });
+			m_vertices.setColor(m_color);
 		}
 
 		void Renderizable::draw()
 		{
-			auto handle = host().rStates().pushChanges(&getTransform(), m_texture.get());
-			m_vertices.draw();
+			if (m_visible) {
+				auto handle = host().rStates().pushChanges(&getTransform(), m_texture.get());
+				m_vertices.draw();
+			}
 		}
 	}
 }

@@ -10,7 +10,7 @@ namespace lib
 	namespace draw
 	{
 		NodeShape::NodeShape(const std::string &name, const vector2df& size, const u32 pointCount, const NodeMode mode)
-			: Renderizable{ name, TriangleFan }, _mode{ mode }, m_textureRect{},
+			: Renderizable{ name, TriangleFan }, m_mode{ mode }, m_textureRect{},
 			m_size{ size }, m_pointCount{ pointCount }
 		{
 			updateGeometry();
@@ -24,22 +24,17 @@ namespace lib
 			updateGeometry();
 		}
 
-		u32 NodeShape::getPointCount() const
-		{
-			return m_pointCount;
-		}
-
 		void NodeShape::setPointCount(const u32 numPoints)
 		{
 			m_pointCount = numPoints;
 			updateGeometry();
 		}
 
-		void NodeShape::setTexture(sptr<Texture> texture, bool resetSize/*=true*/, bool resetRect /*= false*/)
+		void NodeShape::setTexture(sptr<Texture> texture)
 		{
 			if (texture) {
 				// Recompute the texture area if requested, or if there was no texture & rect before
-				if (resetRect || (!m_texture && m_textureRect == Rects32{})) {
+				if ((!m_texture && m_textureRect == Rects32{})) {
 					setTextureRect({ 0, 0, static_cast<s32>(texture->getSize().x), static_cast<s32>(texture->getSize().y) });
 				}
 			}
@@ -47,9 +42,7 @@ namespace lib
 			// Assign the new texture
 			m_texture = texture;
 
-			if (resetSize) {
-				setSize({ static_cast<f32>(texture->getSize().x), static_cast<f32>(texture->getSize().y) });
-			}
+			setSize({ static_cast<f32>(texture->getSize().x), static_cast<f32>(texture->getSize().y) });
 		}
 
 		void NodeShape::setTextureRect(const Rects32& rect)
@@ -65,9 +58,9 @@ namespace lib
 
 		void NodeShape::updateGeometry()
 		{
-			if (_mode == NodeMode::Sprite) {
+			if (m_mode == NodeMode::Sprite) {
 				m_bounds = m_vertices.generateQuad(m_size, m_color);
-			} else if (_mode == NodeMode::Shape) {
+			} else if (m_mode == NodeMode::Shape) {
 				m_bounds = m_vertices.generateShape(m_size, m_color, m_pointCount);
 			}
 

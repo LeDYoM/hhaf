@@ -182,16 +182,16 @@ namespace lib
 				const f32 v2 = static_cast<f32>(glyph.textureRect.top + glyph.textureRect.height);
 
 				// Add a quad for the current character
-				m_vertices.emplace_back(vector2df(x + left - italic * top, y + top), vector2df(u1, v1));
-				m_vertices.emplace_back(vector2df(x + right - italic * top, y + top), vector2df(u2, v1));
-				m_vertices.emplace_back(vector2df(x + left - italic * bottom, y + bottom), vector2df(u1, v2));
-				m_vertices.emplace_back(vector2df(x + left - italic * bottom, y + bottom), vector2df(u1, v2));
-				m_vertices.emplace_back(vector2df(x + right - italic * top, y + top), vector2df(u2, v1));
-				m_vertices.emplace_back(vector2df(x + right - italic * bottom, y + bottom), vector2df(u2, v2));
+				m_vertices.emplace_back(vector2df(x + left - (italic * top), y + top), globalColor, vector2df(u1, v1));
+				m_vertices.emplace_back(vector2df(x + right - (italic * top), y + top), globalColor, vector2df(u2, v1));
+				m_vertices.emplace_back(vector2df(x + left - (italic * bottom), y + bottom), globalColor, vector2df(u1, v2));
+				m_vertices.emplace_back(vector2df(x + left - (italic * bottom), y + bottom), globalColor, vector2df(u1, v2));
+				m_vertices.emplace_back(vector2df(x + right - italic * top, y + top), globalColor, vector2df(u2, v1));
+				m_vertices.emplace_back(vector2df(x + right - italic * bottom, y + bottom), globalColor, vector2df(u2, v2));
 
 				// Update the current bounds
-				minX = std::min(minX, x + left - italic * bottom);
-				maxX = std::max(maxX, x + right - italic * top);
+				minX = std::min(minX, x + left - (italic * bottom));
+				maxX = std::max(maxX, x + right - (italic * top));
 				minY = std::min(minY, y + top);
 				maxY = std::max(maxY, y + bottom);
 

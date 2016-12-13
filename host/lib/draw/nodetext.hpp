@@ -28,19 +28,19 @@ namespace lib
 			void setString(const std::string &string);
 			void setFont(sptr<Font> font);
 			void setCharacterSize(const u32 size);
+			u32 getCharacterSize() const noexcept { return m_characterSize; }
 			const std::string & getString() const { return m_string; }
 			sptr<Font> getFont() const noexcept { return m_font; }
-			u32 getCharacterSize() const noexcept { return m_characterSize; }
 
 			void setPositionWithAlignment(const vector2df &pos, Alignment alignment);
 			void setPositionWithAlignmentX(const float x, Alignment alignment = Alignment::Left);
 			void setPositionWithAlignmentY(const float y, Alignment alignment = Alignment::Left);
 			void setAlignment(Alignment alignment);
 
-			void setIsBold(const bool v) noexcept { m_isBold = v; }
-			void setIsItalic(const bool v) noexcept { m_isItalic = v; }
-			void setIsUnderlined(const bool v) noexcept { m_isUnderlined = v; }
-			void setIsStrikeThrough(const bool v) noexcept { m_isStrikeThrough = v; }
+			inline void setIsBold(const bool v) noexcept { m_isBold = v; }
+			inline void setIsItalic(const bool v) noexcept { m_isItalic = v; }
+			inline void setIsUnderlined(const bool v) noexcept { m_isUnderlined = v; }
+			inline void setIsStrikeThrough(const bool v) noexcept { m_isStrikeThrough = v; }
 		private:
 			void updateGeometry();
 
