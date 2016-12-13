@@ -28,6 +28,7 @@ namespace lib
 			Ellipse,
 			Text
 		};
+		class Font;
 		class VertexArray
 		{
 		public:
@@ -39,8 +40,9 @@ namespace lib
 			VertexArray& operator=(VertexArray&&) noexcept = default;
 
 			Rectf32 generateQuad(const vector2df &size);
-			Rectf32 generateShape(const vector2df &size, u32 granularity = 10);
-			Rectf32 generateFont(const vector2df &size);
+			Rectf32 generateShape(const vector2df &size, const u32 granularity = 10);
+			Rectf32 generateText(const sptr<Font> &, std::string str, const u32 characterSize, 
+				const bool bold, const bool underlined, const bool strikeThrough, const bool isItalic);
 
 			inline Vertex &VertexArray::operator [](const std::size_t index) { return m_vertices[index]; }
 			inline const Vertex &VertexArray::operator [](const std::size_t index) const { return m_vertices[index]; }

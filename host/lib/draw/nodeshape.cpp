@@ -34,38 +34,6 @@ namespace lib
 			m_pointCount = numPoints;
 			updateGeometry();
 		}
-			
-		vector2df NodeShape::getPoint(const u32 index) const
-		{
-			// TO DO:
-			// Optimize and cache it
-			switch (_mode)
-			{
-			default:
-			case lib::draw::NodeShape::NodeMode::Shape:
-			{
-				vector2df m_radius{ m_size / 2.0f };
-				const f64 angle = ((index * 2 * M_PI) / getPointCount()) - (M_PI_2);
-				const vector2dd r{ std::cos(angle) * m_radius.x, std::sin(angle) * m_radius.y };
-				return vector2df(static_cast<f32>(m_radius.x + r.x), static_cast<f32>(m_radius.y + r.y));
-			}
-			break;
-			case lib::draw::NodeShape::NodeMode::Sprite:
-			{
-				__ASSERT(m_pointCount == 4, "Invalid sprite state");
-
-				switch (index)
-				{
-				default:
-				case 0: return vector2df(0, 0);
-				case 1: return vector2df(m_size.x, 0);
-				case 2: return vector2df(m_size.x, m_size.y);
-				case 3: return vector2df(0, m_size.y);
-				}
-			}
-			break;
-			}
-		}
 
 		void NodeShape::setTexture(sptr<Texture> texture, bool resetSize/*=true*/, bool resetRect /*= false*/)
 		{
@@ -98,9 +66,9 @@ namespace lib
 		void NodeShape::updateGeometry()
 		{
 			if (_mode == NodeMode::Sprite) {
-				m_bounds = m_vertices.generateQuad(m_size);
+				m_bounds = m_vertices.generateQuad(m_size, m_color);
 			} else if (_mode == NodeMode::Shape) {
-				m_bounds = m_vertices.generateShape(m_size,m_pointCount);
+				m_bounds = m_vertices.generateShape(m_size, m_color, m_pointCount);
 			}
 
 			// Color

@@ -22,23 +22,12 @@ namespace lib
 				Right = 2
 			};
 
-			enum Style : u8
-			{
-				Regular = 0,
-				Bold = 1 << 0,
-				Italic = 1 << 1,
-				Underlined = 1 << 2,
-				StrikeThrough = 1 << 3
-			};
-
 			virtual ~NodeText();
 			NodeText(const std::string &name);
 			NodeText(const std::string &name, const std::string& string, sptr<Font> font, unsigned int characterSize = 30);
 			void setString(const std::string &string);
 			void setFont(sptr<Font> font);
 			void setCharacterSize(const u32 size);
-			void setStyle(const Style style);
-			inline Style getStyle() const noexcept { return m_style; }
 			const std::string & getString() const { return m_string; }
 			sptr<Font> getFont() const noexcept { return m_font; }
 			u32 getCharacterSize() const noexcept { return m_characterSize; }
@@ -48,13 +37,20 @@ namespace lib
 			void setPositionWithAlignmentY(const float y, Alignment alignment = Alignment::Left);
 			void setAlignment(Alignment alignment);
 
+			void setIsBold(const bool v) noexcept { m_isBold = v; }
+			void setIsItalic(const bool v) noexcept { m_isItalic = v; }
+			void setIsUnderlined(const bool v) noexcept { m_isUnderlined = v; }
+			void setIsStrikeThrough(const bool v) noexcept { m_isStrikeThrough = v; }
 		private:
 			void updateGeometry();
 
 			std::string m_string;
 			sptr<Font> m_font;
 			u32 m_characterSize;
-			Style m_style;
+			bool m_isBold{ false };
+			bool m_isItalic{ false };
+			bool m_isUnderlined{ false };
+			bool m_isStrikeThrough{ false };
 		};
 	}
 }

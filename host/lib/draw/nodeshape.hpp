@@ -24,7 +24,6 @@ namespace lib
 			void setSize(const vector2df size);
 			u32 getPointCount() const;
 			void setPointCount(const u32 numPoints);
-			virtual vector2df getPoint(const u32 index) const;
 			void setTexture(sptr<Texture> texture, bool resetSize=true, bool resetRect = false);
 
 			void setTextureRect(const Rects32& rect);
