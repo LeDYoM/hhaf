@@ -15,19 +15,24 @@ namespace lib
 		VertexArray::VertexArray(const PrimitiveType type, const std::size_t vertexCount) noexcept
 			: m_vertices{ vertexCount }, m_primitiveType{ type } {}
 
-		Rectf32 VertexArray::generateQuad(const vector2df & size)
+		Rectf32 VertexArray::generateQuad(const vector2df & size, const Color &globalColor)
 		{
 			constexpr u32 nPoints = 4;
 			constexpr u32 nVertex = nPoints + 2;
 
 			m_vertices.resize(nVertex); // + 2 for center and repeated first point
 			m_vertices[1].position = vector2df(0, 0);
+			m_vertices[1].color = globalColor;
 			m_vertices[2].position = vector2df(size.x, 0);
+			m_vertices[2].color = globalColor;
 			m_vertices[3].position = vector2df(size.x, size.y);
+			m_vertices[3].color = globalColor;
 			m_vertices[4].position = vector2df(0, size.y);
+			m_vertices[4].color = globalColor;
 
 			// Update the bounding rectangle
 			m_vertices[5] = m_vertices[1]; // so that the result of getBounds() is correct
+			m_vertices[5].color = globalColor;
 			const Rectf32 bounds = getBounds();
 			// Compute the center and make it the first vertex
 			m_vertices[0].position.x = bounds.width / 2;
@@ -41,7 +46,7 @@ namespace lib
 		template <typename T>
 		constexpr T PID2Constant = 3.14159265358979323846 / static_cast<T>(2);
 
-		Rectf32 VertexArray::generateShape(const vector2df & size, const u32 granularity)
+		Rectf32 VertexArray::generateShape(const vector2df & size, const Color &globalColor, const u32 granularity)
 		{
 			const u32 nPoints(granularity);
 			const u32 nVertex = nPoints + 2;
@@ -53,13 +58,16 @@ namespace lib
 			{
 				const f64 angle = (i*baseAngle) - (PID2Constant<f64>);
 				const vector2dd r{ std::cos(angle) * radius.x, std::sin(angle) * radius.y };
-				m_vertices[i + 1].position = vector2df(static_cast<f32>(radius.x + r.x), static_cast<f32>(radius.y + r.y));
+				m_vertices[i + 1].position = vector2df{ static_cast<f32>(radius.x + r.x), static_cast<f32>(radius.y + r.y) };
+				m_vertices[i + 1].color = globalColor;
 			}
 
 			m_vertices[nPoints + 1].position = m_vertices[1].position;
+			m_vertices[nPoints + 1].color = globalColor;
 
 			// Update the bounding rectangle
 			m_vertices[0] = m_vertices[1]; // so that the result of getBounds() is correct
+			m_vertices[0].color = globalColor;
 			const Rectf32 bounds = getBounds();
 			// Compute the center and make it the first vertex
 			m_vertices[0].position.x = bounds.width / 2;
@@ -68,8 +76,8 @@ namespace lib
 			return bounds;
 		}
 
-		Rectf32 VertexArray::generateText(const sptr<Font> &font, std::string str, const u32 characterSize,
-			const bool bold, const bool underlined, const bool strikeThrough, const bool isItalic)
+		Rectf32 VertexArray::generateText(const sptr<Font> &font, std::string str, const Color &globalColor,
+			const u32 characterSize, const bool bold, const bool underlined, const bool strikeThrough, const bool isItalic)
 		{
 			// Clear the previous geometry
 			m_vertices.clear();
@@ -99,18 +107,18 @@ namespace lib
 			const f32 hspace = static_cast<float>(font->getGlyph(L' ', characterSize, bold).advance);
 			const f32 vspace = static_cast<float>(font->getLineSpacing(characterSize));
 			f32 x = 0.f;
-			f32 y = static_cast<float>(characterSize);
+			f32 y = static_cast<f32>(characterSize);
 
 			// Create one quad for each character
-			f32 minX = static_cast<float>(characterSize);
-			f32 minY = static_cast<float>(characterSize);
+			f32 minX = static_cast<f32>(characterSize);
+			f32 minY = static_cast<f32>(characterSize);
 			f32 maxX = 0.f;
 			f32 maxY = 0.f;
 			sf::Uint32 prevChar = 0;
 			for (const auto curChar : str)
 			{
 				// Apply the kerning offset
-				x += static_cast<float>(font->getKerning(prevChar, curChar, characterSize));
+				x += static_cast<f32>(font->getKerning(prevChar, curChar, characterSize));
 				prevChar = curChar;
 
 				// If we're using the underlined style and there's a new line, draw a line
@@ -118,12 +126,12 @@ namespace lib
 					const f32 top = std::floor(y + underlineOffset - (underlineThickness / 2) + 0.5f);
 					const f32 bottom = top + std::floor(underlineThickness + 0.5f);
 
-					append(vector2df(0, top), vector2df(1, 1));
-					append(vector2df(x, top), vector2df(1, 1));
-					append(vector2df(0, bottom), vector2df(1, 1));
-					append(vector2df(0, bottom), vector2df(1, 1));
-					append(vector2df(x, top), vector2df(1, 1));
-					append(vector2df(x, bottom), vector2df(1, 1));
+					append(vector2df(0, top), globalColor, vector2df(1, 1));
+					append(vector2df(x, top), globalColor, vector2df(1, 1));
+					append(vector2df(0, bottom), globalColor, vector2df(1, 1));
+					append(vector2df(0, bottom), globalColor, vector2df(1, 1));
+					append(vector2df(x, top), globalColor, vector2df(1, 1));
+					append(vector2df(x, bottom), globalColor, vector2df(1, 1));
 				}
 
 				// If we're using the strike through style and there's a new line, draw a line across all characters
@@ -131,12 +139,12 @@ namespace lib
 					const f32 top{ std::floor(y + strikeThroughOffset - (underlineThickness / 2) + 0.5f) };
 					const f32 bottom{ top + std::floor(underlineThickness + 0.5f) };
 
-					append(vector2df(0, top), vector2df(1, 1));
-					append(vector2df(x, top), vector2df(1, 1));
-					append(vector2df(0, bottom), vector2df(1, 1));
-					append(vector2df(0, bottom), vector2df(1, 1));
-					append(vector2df(x, top), vector2df(1, 1));
-					append(vector2df(x, bottom), vector2df(1, 1));
+					append(vector2df(0, top), globalColor, vector2df(1, 1));
+					append(vector2df(x, top), globalColor, vector2df(1, 1));
+					append(vector2df(0, bottom), globalColor, vector2df(1, 1));
+					append(vector2df(0, bottom), globalColor, vector2df(1, 1));
+					append(vector2df(x, top), globalColor, vector2df(1, 1));
+					append(vector2df(x, bottom), globalColor, vector2df(1, 1));
 				}
 
 				// Handle special characters
@@ -196,12 +204,12 @@ namespace lib
 				const f32 top = std::floor(y + underlineOffset - (underlineThickness / 2) + 0.5f);
 				const f32 bottom = top + std::floor(underlineThickness + 0.5f);
 
-				append(vector2df(0, top), color, vector2df(1, 1));
-				append(vector2df(x, top), color, vector2df(1, 1));
-				append(vector2df(0, bottom), color, vector2df(1, 1));
-				append(vector2df(0, bottom), color, vector2df(1, 1));
-				append(vector2df(x, top), color, vector2df(1, 1));
-				append(vector2df(x, bottom), color, vector2df(1, 1));
+				append(vector2df(0, top), globalColor, vector2df(1, 1));
+				append(vector2df(x, top), globalColor, vector2df(1, 1));
+				append(vector2df(0, bottom), globalColor, vector2df(1, 1));
+				append(vector2df(0, bottom), globalColor, vector2df(1, 1));
+				append(vector2df(x, top), globalColor, vector2df(1, 1));
+				append(vector2df(x, bottom), globalColor, vector2df(1, 1));
 			}
 
 			// If we're using the strike through style, add the last line across all characters
@@ -209,12 +217,12 @@ namespace lib
 				const f32 top = std::floor(y + strikeThroughOffset - (underlineThickness / 2) + 0.5f);
 				const f32 bottom = top + std::floor(underlineThickness + 0.5f);
 
-				append(vector2df(0, top), color, vector2df(1, 1));
-				append(vector2df(x, top), color, vector2df(1, 1));
-				append(vector2df(0, bottom), color, vector2df(1, 1));
-				append(vector2df(0, bottom), color, vector2df(1, 1));
-				append(vector2df(x, top), color, vector2df(1, 1));
-				append(vector2df(x, bottom), color, vector2df(1, 1));
+				append(vector2df(0, top), globalColor, vector2df(1, 1));
+				append(vector2df(x, top), globalColor, vector2df(1, 1));
+				append(vector2df(0, bottom), globalColor, vector2df(1, 1));
+				append(vector2df(0, bottom), globalColor, vector2df(1, 1));
+				append(vector2df(x, top), globalColor, vector2df(1, 1));
+				append(vector2df(x, bottom), globalColor, vector2df(1, 1));
 			}
 
 			// Update the bounding rectangle
