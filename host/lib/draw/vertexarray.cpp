@@ -126,12 +126,12 @@ namespace lib
 					const f32 top = std::floor(y + underlineOffset - (underlineThickness / 2) + 0.5f);
 					const f32 bottom = top + std::floor(underlineThickness + 0.5f);
 
-					append(vector2df(0, top), globalColor, vector2df(1, 1));
-					append(vector2df(x, top), globalColor, vector2df(1, 1));
-					append(vector2df(0, bottom), globalColor, vector2df(1, 1));
-					append(vector2df(0, bottom), globalColor, vector2df(1, 1));
-					append(vector2df(x, top), globalColor, vector2df(1, 1));
-					append(vector2df(x, bottom), globalColor, vector2df(1, 1));
+					m_vertices.emplace_back(vector2df(0, top), globalColor, vector2df(1, 1));
+					m_vertices.emplace_back(vector2df(x, top), globalColor, vector2df(1, 1));
+					m_vertices.emplace_back(vector2df(0, bottom), globalColor, vector2df(1, 1));
+					m_vertices.emplace_back(vector2df(0, bottom), globalColor, vector2df(1, 1));
+					m_vertices.emplace_back(vector2df(x, top), globalColor, vector2df(1, 1));
+					m_vertices.emplace_back(vector2df(x, bottom), globalColor, vector2df(1, 1));
 				}
 
 				// If we're using the strike through style and there's a new line, draw a line across all characters
@@ -139,12 +139,12 @@ namespace lib
 					const f32 top{ std::floor(y + strikeThroughOffset - (underlineThickness / 2) + 0.5f) };
 					const f32 bottom{ top + std::floor(underlineThickness + 0.5f) };
 
-					append(vector2df(0, top), globalColor, vector2df(1, 1));
-					append(vector2df(x, top), globalColor, vector2df(1, 1));
-					append(vector2df(0, bottom), globalColor, vector2df(1, 1));
-					append(vector2df(0, bottom), globalColor, vector2df(1, 1));
-					append(vector2df(x, top), globalColor, vector2df(1, 1));
-					append(vector2df(x, bottom), globalColor, vector2df(1, 1));
+					m_vertices.emplace_back(vector2df(0, top), globalColor, vector2df(1, 1));
+					m_vertices.emplace_back(vector2df(x, top), globalColor, vector2df(1, 1));
+					m_vertices.emplace_back(vector2df(0, bottom), globalColor, vector2df(1, 1));
+					m_vertices.emplace_back(vector2df(0, bottom), globalColor, vector2df(1, 1));
+					m_vertices.emplace_back(vector2df(x, top), globalColor, vector2df(1, 1));
+					m_vertices.emplace_back(vector2df(x, bottom), globalColor, vector2df(1, 1));
 				}
 
 				// Handle special characters
@@ -182,12 +182,12 @@ namespace lib
 				const f32 v2 = static_cast<f32>(glyph.textureRect.top + glyph.textureRect.height);
 
 				// Add a quad for the current character
-				append(vector2df(x + left - italic * top, y + top), vector2df(u1, v1));
-				append(vector2df(x + right - italic * top, y + top), vector2df(u2, v1));
-				append(vector2df(x + left - italic * bottom, y + bottom), vector2df(u1, v2));
-				append(vector2df(x + left - italic * bottom, y + bottom), vector2df(u1, v2));
-				append(vector2df(x + right - italic * top, y + top), vector2df(u2, v1));
-				append(vector2df(x + right - italic * bottom, y + bottom), vector2df(u2, v2));
+				m_vertices.emplace_back(vector2df(x + left - italic * top, y + top), vector2df(u1, v1));
+				m_vertices.emplace_back(vector2df(x + right - italic * top, y + top), vector2df(u2, v1));
+				m_vertices.emplace_back(vector2df(x + left - italic * bottom, y + bottom), vector2df(u1, v2));
+				m_vertices.emplace_back(vector2df(x + left - italic * bottom, y + bottom), vector2df(u1, v2));
+				m_vertices.emplace_back(vector2df(x + right - italic * top, y + top), vector2df(u2, v1));
+				m_vertices.emplace_back(vector2df(x + right - italic * bottom, y + bottom), vector2df(u2, v2));
 
 				// Update the current bounds
 				minX = std::min(minX, x + left - italic * bottom);
@@ -204,12 +204,12 @@ namespace lib
 				const f32 top = std::floor(y + underlineOffset - (underlineThickness / 2) + 0.5f);
 				const f32 bottom = top + std::floor(underlineThickness + 0.5f);
 
-				append(vector2df(0, top), globalColor, vector2df(1, 1));
-				append(vector2df(x, top), globalColor, vector2df(1, 1));
-				append(vector2df(0, bottom), globalColor, vector2df(1, 1));
-				append(vector2df(0, bottom), globalColor, vector2df(1, 1));
-				append(vector2df(x, top), globalColor, vector2df(1, 1));
-				append(vector2df(x, bottom), globalColor, vector2df(1, 1));
+				m_vertices.emplace_back(vector2df(0, top), globalColor, vector2df(1, 1));
+				m_vertices.emplace_back(vector2df(x, top), globalColor, vector2df(1, 1));
+				m_vertices.emplace_back(vector2df(0, bottom), globalColor, vector2df(1, 1));
+				m_vertices.emplace_back(vector2df(0, bottom), globalColor, vector2df(1, 1));
+				m_vertices.emplace_back(vector2df(x, top), globalColor, vector2df(1, 1));
+				m_vertices.emplace_back(vector2df(x, bottom), globalColor, vector2df(1, 1));
 			}
 
 			// If we're using the strike through style, add the last line across all characters
@@ -217,12 +217,12 @@ namespace lib
 				const f32 top = std::floor(y + strikeThroughOffset - (underlineThickness / 2) + 0.5f);
 				const f32 bottom = top + std::floor(underlineThickness + 0.5f);
 
-				append(vector2df(0, top), globalColor, vector2df(1, 1));
-				append(vector2df(x, top), globalColor, vector2df(1, 1));
-				append(vector2df(0, bottom), globalColor, vector2df(1, 1));
-				append(vector2df(0, bottom), globalColor, vector2df(1, 1));
-				append(vector2df(x, top), globalColor, vector2df(1, 1));
-				append(vector2df(x, bottom), globalColor, vector2df(1, 1));
+				m_vertices.emplace_back(vector2df(0, top), globalColor, vector2df(1, 1));
+				m_vertices.emplace_back(vector2df(x, top), globalColor, vector2df(1, 1));
+				m_vertices.emplace_back(vector2df(0, bottom), globalColor, vector2df(1, 1));
+				m_vertices.emplace_back(vector2df(0, bottom), globalColor, vector2df(1, 1));
+				m_vertices.emplace_back(vector2df(x, top), globalColor, vector2df(1, 1));
+				m_vertices.emplace_back(vector2df(x, bottom), globalColor, vector2df(1, 1));
 			}
 
 			// Update the bounding rectangle

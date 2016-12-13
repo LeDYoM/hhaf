@@ -44,18 +44,7 @@ namespace lib
 			Rectf32 generateText(const sptr<Font> &, std::string str, const Color &globalColor, const u32 characterSize,
 				const bool bold, const bool underlined, const bool strikeThrough, const bool isItalic);
 
-			inline Vertex &VertexArray::operator [](const std::size_t index) { return m_vertices[index]; }
-			inline const Vertex &VertexArray::operator [](const std::size_t index) const { return m_vertices[index]; }
-
-			inline void clear() { m_vertices.clear(); }
-			inline void resize(std::size_t vertexCount) { m_vertices.resize(vertexCount); }
-
 			void for_each_vertex(std::function<void(Vertex&)>&&);
-			void append(Vertex &&vertex) { m_vertices.emplace_back(std::move(vertex)); }
-			template <typename... Args> inline void append(Args&&... args) { m_vertices.emplace_back(std::forward<Args&&>(args)...); }
-			inline void setPrimitiveType(const PrimitiveType type) { m_primitiveType = type; }
-			inline PrimitiveType getPrimitiveType() const { return m_primitiveType; }
-			inline const BasicVertexArray::size_type getVertexCount() const { return m_vertices.size(); }
 			Rectf32 getBounds() const;
 
 			void draw() const;
