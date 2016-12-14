@@ -18,12 +18,14 @@ namespace lib
 		void ISimpleNode::setTexture(sptr<Texture> texture)
 		{
 			if (texture) {
+				auto tSize(texture->getSize());
 				if ((!m_texture && m_textureRect == Rects32{})) {
-					setTextureRect({ 0, 0, static_cast<s32>(texture->getSize().x), static_cast<s32>(texture->getSize().y) });
+					setTextureRect({ 0, 0, static_cast<s32>(tSize.x), static_cast<s32>(tSize.y) });
 				}
+				setSize({ static_cast<f32>(tSize.x), static_cast<f32>(tSize.y) });
+
 			}
 
-			setSize({ static_cast<f32>(texture->getSize().x), static_cast<f32>(texture->getSize().y) });
 			m_texture = std::move(texture);
 		}
 
