@@ -42,8 +42,9 @@ namespace lib
 
 		void NodeText::updateGeometry()
 		{
-			m_bounds = m_vertices.generateText(m_font, m_string, m_color, m_characterSize, m_isBold, m_isUnderlined, m_isStrikeThrough, m_isItalic);
+			m_bounds = m_vertices.generateText(m_font, m_string, m_characterSize, m_isBold, m_isUnderlined, m_isStrikeThrough, m_isItalic);
 			m_texture = msptr<Texture>(m_font->getTexture(m_characterSize));
+			updateFillColors();
 		}
 
 		void NodeText::setPositionWithAlignment(const vector2df &pos, Alignment alignment)

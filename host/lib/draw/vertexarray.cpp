@@ -15,24 +15,19 @@ namespace lib
 		VertexArray::VertexArray(const PrimitiveType type, const std::size_t vertexCount) noexcept
 			: m_vertices{ vertexCount }, m_primitiveType{ type } {}
 
-		Rectf32 VertexArray::generateQuad(const vector2df & size, const Color &globalColor)
+		Rectf32 VertexArray::generateQuad(const vector2df & size)
 		{
 			constexpr u32 nPoints = 4;
 			constexpr u32 nVertex = nPoints + 2;
 
 			m_vertices.resize(nVertex); // + 2 for center and repeated first point
 			m_vertices[1].position = vector2df(0, 0);
-			m_vertices[1].color = globalColor;
 			m_vertices[2].position = vector2df(size.x, 0);
-			m_vertices[2].color = globalColor;
 			m_vertices[3].position = vector2df(size.x, size.y);
-			m_vertices[3].color = globalColor;
 			m_vertices[4].position = vector2df(0, size.y);
-			m_vertices[4].color = globalColor;
 
 			// Update the bounding rectangle
 			m_vertices[5] = m_vertices[1]; // so that the result of getBounds() is correct
-			m_vertices[5].color = globalColor;
 			const Rectf32 bounds = getBounds();
 			// Compute the center and make it the first vertex
 			m_vertices[0].position.x = bounds.width / 2;
@@ -46,7 +41,7 @@ namespace lib
 		template <typename T>
 		constexpr T PID2Constant = 3.14159265358979323846 / static_cast<T>(2);
 
-		Rectf32 VertexArray::generateShape(const vector2df & size, const Color &globalColor, const u32 granularity)
+		Rectf32 VertexArray::generateShape(const vector2df & size, const u32 granularity)
 		{
 			const u32 nPoints(granularity);
 			const u32 nVertex = nPoints + 2;
@@ -59,15 +54,12 @@ namespace lib
 				const f64 angle = (i*baseAngle) - (PID2Constant<f64>);
 				const vector2dd r{ std::cos(angle) * radius.x, std::sin(angle) * radius.y };
 				m_vertices[i + 1].position = vector2df{ static_cast<f32>(radius.x + r.x), static_cast<f32>(radius.y + r.y) };
-				m_vertices[i + 1].color = globalColor;
 			}
 
 			m_vertices[nPoints + 1].position = m_vertices[1].position;
-			m_vertices[nPoints + 1].color = globalColor;
 
 			// Update the bounding rectangle
 			m_vertices[0] = m_vertices[1]; // so that the result of getBounds() is correct
-			m_vertices[0].color = globalColor;
 			const Rectf32 bounds = getBounds();
 			// Compute the center and make it the first vertex
 			m_vertices[0].position.x = bounds.width / 2;
@@ -76,7 +68,7 @@ namespace lib
 			return bounds;
 		}
 
-		Rectf32 VertexArray::generateText(const sptr<Font> &font, std::string str, const Color &globalColor,
+		Rectf32 VertexArray::generateText(const sptr<Font> &font, std::string str,
 			const u32 characterSize, const bool bold, const bool underlined, const bool strikeThrough, const bool isItalic)
 		{
 			// Clear the previous geometry
@@ -126,12 +118,12 @@ namespace lib
 					const f32 top = std::floor(y + underlineOffset - (underlineThickness / 2) + 0.5f);
 					const f32 bottom = top + std::floor(underlineThickness + 0.5f);
 
-					m_vertices.emplace_back(vector2df(0, top), globalColor, vector2df(1, 1));
-					m_vertices.emplace_back(vector2df(x, top), globalColor, vector2df(1, 1));
-					m_vertices.emplace_back(vector2df(0, bottom), globalColor, vector2df(1, 1));
-					m_vertices.emplace_back(vector2df(0, bottom), globalColor, vector2df(1, 1));
-					m_vertices.emplace_back(vector2df(x, top), globalColor, vector2df(1, 1));
-					m_vertices.emplace_back(vector2df(x, bottom), globalColor, vector2df(1, 1));
+					m_vertices.emplace_back(vector2df(0, top), vector2df(1, 1));
+					m_vertices.emplace_back(vector2df(x, top), vector2df(1, 1));
+					m_vertices.emplace_back(vector2df(0, bottom), vector2df(1, 1));
+					m_vertices.emplace_back(vector2df(0, bottom), vector2df(1, 1));
+					m_vertices.emplace_back(vector2df(x, top), vector2df(1, 1));
+					m_vertices.emplace_back(vector2df(x, bottom), vector2df(1, 1));
 				}
 
 				// If we're using the strike through style and there's a new line, draw a line across all characters
@@ -139,12 +131,12 @@ namespace lib
 					const f32 top{ std::floor(y + strikeThroughOffset - (underlineThickness / 2) + 0.5f) };
 					const f32 bottom{ top + std::floor(underlineThickness + 0.5f) };
 
-					m_vertices.emplace_back(vector2df(0, top), globalColor, vector2df(1, 1));
-					m_vertices.emplace_back(vector2df(x, top), globalColor, vector2df(1, 1));
-					m_vertices.emplace_back(vector2df(0, bottom), globalColor, vector2df(1, 1));
-					m_vertices.emplace_back(vector2df(0, bottom), globalColor, vector2df(1, 1));
-					m_vertices.emplace_back(vector2df(x, top), globalColor, vector2df(1, 1));
-					m_vertices.emplace_back(vector2df(x, bottom), globalColor, vector2df(1, 1));
+					m_vertices.emplace_back(vector2df(0, top), vector2df(1, 1));
+					m_vertices.emplace_back(vector2df(x, top), vector2df(1, 1));
+					m_vertices.emplace_back(vector2df(0, bottom), vector2df(1, 1));
+					m_vertices.emplace_back(vector2df(0, bottom), vector2df(1, 1));
+					m_vertices.emplace_back(vector2df(x, top), vector2df(1, 1));
+					m_vertices.emplace_back(vector2df(x, bottom), vector2df(1, 1));
 				}
 
 				// Handle special characters
@@ -182,12 +174,12 @@ namespace lib
 				const f32 v2 = static_cast<f32>(glyph.textureRect.top + glyph.textureRect.height);
 
 				// Add a quad for the current character
-				m_vertices.emplace_back(vector2df(x + left - (italic * top), y + top), globalColor, vector2df(u1, v1));
-				m_vertices.emplace_back(vector2df(x + right - (italic * top), y + top), globalColor, vector2df(u2, v1));
-				m_vertices.emplace_back(vector2df(x + left - (italic * bottom), y + bottom), globalColor, vector2df(u1, v2));
-				m_vertices.emplace_back(vector2df(x + left - (italic * bottom), y + bottom), globalColor, vector2df(u1, v2));
-				m_vertices.emplace_back(vector2df(x + right - italic * top, y + top), globalColor, vector2df(u2, v1));
-				m_vertices.emplace_back(vector2df(x + right - italic * bottom, y + bottom), globalColor, vector2df(u2, v2));
+				m_vertices.emplace_back(vector2df(x + left - (italic * top), y + top), vector2df(u1, v1));
+				m_vertices.emplace_back(vector2df(x + right - (italic * top), y + top), vector2df(u2, v1));
+				m_vertices.emplace_back(vector2df(x + left - (italic * bottom), y + bottom), vector2df(u1, v2));
+				m_vertices.emplace_back(vector2df(x + left - (italic * bottom), y + bottom), vector2df(u1, v2));
+				m_vertices.emplace_back(vector2df(x + right - italic * top, y + top), vector2df(u2, v1));
+				m_vertices.emplace_back(vector2df(x + right - italic * bottom, y + bottom), vector2df(u2, v2));
 
 				// Update the current bounds
 				minX = std::min(minX, x + left - (italic * bottom));
@@ -204,12 +196,12 @@ namespace lib
 				const f32 top = std::floor(y + underlineOffset - (underlineThickness / 2) + 0.5f);
 				const f32 bottom = top + std::floor(underlineThickness + 0.5f);
 
-				m_vertices.emplace_back(vector2df(0, top), globalColor, vector2df(1, 1));
-				m_vertices.emplace_back(vector2df(x, top), globalColor, vector2df(1, 1));
-				m_vertices.emplace_back(vector2df(0, bottom), globalColor, vector2df(1, 1));
-				m_vertices.emplace_back(vector2df(0, bottom), globalColor, vector2df(1, 1));
-				m_vertices.emplace_back(vector2df(x, top), globalColor, vector2df(1, 1));
-				m_vertices.emplace_back(vector2df(x, bottom), globalColor, vector2df(1, 1));
+				m_vertices.emplace_back(vector2df(0, top), vector2df(1, 1));
+				m_vertices.emplace_back(vector2df(x, top), vector2df(1, 1));
+				m_vertices.emplace_back(vector2df(0, bottom), vector2df(1, 1));
+				m_vertices.emplace_back(vector2df(0, bottom), vector2df(1, 1));
+				m_vertices.emplace_back(vector2df(x, top), vector2df(1, 1));
+				m_vertices.emplace_back(vector2df(x, bottom), vector2df(1, 1));
 			}
 
 			// If we're using the strike through style, add the last line across all characters
@@ -217,12 +209,12 @@ namespace lib
 				const f32 top = std::floor(y + strikeThroughOffset - (underlineThickness / 2) + 0.5f);
 				const f32 bottom = top + std::floor(underlineThickness + 0.5f);
 
-				m_vertices.emplace_back(vector2df(0, top), globalColor, vector2df(1, 1));
-				m_vertices.emplace_back(vector2df(x, top), globalColor, vector2df(1, 1));
-				m_vertices.emplace_back(vector2df(0, bottom), globalColor, vector2df(1, 1));
-				m_vertices.emplace_back(vector2df(0, bottom), globalColor, vector2df(1, 1));
-				m_vertices.emplace_back(vector2df(x, top), globalColor, vector2df(1, 1));
-				m_vertices.emplace_back(vector2df(x, bottom), globalColor, vector2df(1, 1));
+				m_vertices.emplace_back(vector2df(0, top), vector2df(1, 1));
+				m_vertices.emplace_back(vector2df(x, top), vector2df(1, 1));
+				m_vertices.emplace_back(vector2df(0, bottom), vector2df(1, 1));
+				m_vertices.emplace_back(vector2df(0, bottom), vector2df(1, 1));
+				m_vertices.emplace_back(vector2df(x, top), vector2df(1, 1));
+				m_vertices.emplace_back(vector2df(x, bottom), vector2df(1, 1));
 			}
 
 			// Update the bounding rectangle

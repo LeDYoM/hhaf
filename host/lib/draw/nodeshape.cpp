@@ -59,9 +59,9 @@ namespace lib
 		void NodeShape::updateGeometry()
 		{
 			if (m_mode == NodeMode::Sprite) {
-				m_bounds = m_vertices.generateQuad(m_size, m_color);
+				m_bounds = m_vertices.generateQuad(m_size);
 			} else if (m_mode == NodeMode::Shape) {
-				m_bounds = m_vertices.generateShape(m_size, m_color, m_pointCount);
+				m_bounds = m_vertices.generateShape(m_size, m_pointCount);
 			}
 
 			// Color
