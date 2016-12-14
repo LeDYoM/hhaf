@@ -3,14 +3,12 @@
 
 #include <lib/include/types.hpp>
 #include <lib/include/vector2d.hpp>
-#include "color.hpp"
 #include "isimplenode.hpp"
 
 namespace lib
 {
 	namespace draw
 	{
-		class Texture;
 		class NodeQuad : public ISimpleNode
 		{
 		public:
@@ -19,7 +17,6 @@ namespace lib
 
 		protected:
 			virtual void updateGeometrySimpleNode() override;
-			void updateTexCoords();
 		};
 	}
 }

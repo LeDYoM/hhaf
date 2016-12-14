@@ -2,8 +2,6 @@
 #include <lib/core/log.hpp>
 #include <lib/draw/texture.hpp>
 
-#include <math.h>
-
 namespace lib
 {
 	namespace draw

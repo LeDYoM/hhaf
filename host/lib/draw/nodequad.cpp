@@ -1,9 +1,5 @@
 #include "nodequad.hpp"
 #include <lib/core/log.hpp>
-#include <lib/draw/texture.hpp>
-
-#define _USE_MATH_DEFINES
-#include <math.h>
 
 namespace lib
 {
