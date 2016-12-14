@@ -11,6 +11,7 @@
 #include <lib/draw/positionanimation.hpp>
 #include <lib/draw/coloranimation.hpp>
 #include <lib/draw/nodeshape.hpp>
+#include <lib/draw/nodequad.hpp>
 #include <lib/draw/nodetext.hpp>
 #include <lib/core/host.hpp>
 #include <lib/core/events/inputevent.hpp>
@@ -180,7 +181,7 @@ namespace zoper
 		p_boardModel = nullptr;
 		p_player = nullptr;
 		_backgroundTilesrg = nullptr;
-		_backgroundTiles.clear();
+		m_backgroundTiles.clear();
 		Scene::onExitScene();
 	}
 
@@ -242,7 +243,7 @@ namespace zoper
 		{
 			for (lib::u32 x = 0; x < _gameData.size.x; ++x)
 			{
-				_backgroundTiles[y][x]->setColor(_levelProperties.getBackgroundTileColor(x, y, pointInCenter(lib::vector2du32{ x,y })));
+				m_backgroundTiles[y][x]->setColor(_levelProperties.getBackgroundTileColor(x, y, pointInCenter(lib::vector2du32{ x,y })));
 				
 			}
 		}
@@ -564,18 +565,18 @@ namespace zoper
 	void GameScene::tilesCreated()
 	{
 		_backgroundTilesrg = createNewRenderGroup("backgroundTiles", _mainBoardrg);
-		for (lib::u32 y = 0; y < _gameData.size.y; ++y)
+		for (u32 y = 0; y < _gameData.size.y; ++y)
 		{
-			std::vector<lib::sptr<lib::draw::NodeShape>> column;
+			std::vector<sptr<NodeQuad>> column;
 
-			for (lib::u32 x = 0; x < _gameData.size.x; ++x)
+			for (u32 x = 0; x < _gameData.size.x; ++x)
 			{
 				auto tileBackground = _backgroundTilesrg->createSpriteShape("backgroundTile", tileSize());
-				tileBackground->setPosition(board2Scene(lib::vector2du32{ x,y }));
-				column.push_back(tileBackground);
+				tileBackground->setPosition(board2Scene(vector2du32{ x,y }));
+				column.push_back(std::move(tileBackground));
 
 				auto node = _backgroundTilesrg->createShape("backgroundTilePoint", vector2df{ 10.0f,10.0f });
-				vector2df center( board2Scene(lib::vector2du32{ x,y }) );
+				vector2df center( board2Scene(vector2du32{ x,y }) );
 				center.x += tileSize().x / 2.0f;
 				center.y += tileSize().y / 2.0f;
 				center.x -= (node->getLocalBounds().width / 2.0f);
@@ -583,7 +584,7 @@ namespace zoper
 				node->setPosition(center);
 				node->setColor(lib::draw::colors::White);
 			}
-			_backgroundTiles.push_back(column);
+			m_backgroundTiles.push_back(column);
 		}
 	}
 

@@ -1,33 +1,28 @@
-#include "nodeshape.hpp"
+#include "nodequad.hpp"
 #include <lib/core/log.hpp>
 #include <lib/draw/texture.hpp>
 
+#define _USE_MATH_DEFINES
 #include <math.h>
 
 namespace lib
 {
 	namespace draw
 	{
-		NodeShape::NodeShape(const std::string &name, const vector2df& size, const u32 pointCount)
+		NodeQuad::NodeQuad(const std::string &name, const vector2df& size)
 			: Renderizable{ name, TriangleFan }, m_textureRect{},
-			m_size{ size }, m_pointCount{ pointCount }
+			m_size{ size }
 		{
 			updateGeometry();
 		}
 
-		void NodeShape::setSize(const vector2df size)
+		void NodeQuad::setSize(const vector2df size)
 		{
 			m_size = size;
 			updateGeometry();
 		}
 
-		void NodeShape::setPointCount(const u32 numPoints)
-		{
-			m_pointCount = numPoints;
-			updateGeometry();
-		}
-
-		void NodeShape::setTexture(sptr<Texture> texture)
+		void NodeQuad::setTexture(sptr<Texture> texture)
 		{
 			if (texture) {
 				// Recompute the texture area if requested, or if there was no texture & rect before
@@ -42,20 +37,20 @@ namespace lib
 			setSize({ static_cast<f32>(texture->getSize().x), static_cast<f32>(texture->getSize().y) });
 		}
 
-		void NodeShape::setTextureRect(const Rects32& rect)
+		void NodeQuad::setTextureRect(const Rects32& rect)
 		{
 			m_textureRect = rect;
 			updateTexCoords();
 		}
 
-		Rects32 NodeShape::getTextureRect() const
+		Rects32 NodeQuad::getTextureRect() const
 		{
 			return m_textureRect;
 		}
 
-		void NodeShape::updateGeometry()
+		void NodeQuad::updateGeometry()
 		{
-			m_bounds = m_vertices.generateShape(m_size, m_pointCount);
+			m_bounds = m_vertices.generateQuad(m_size);
 
 			// Color
 			updateFillColors();
@@ -64,7 +59,7 @@ namespace lib
 			updateTexCoords();
 		}
 
-		void NodeShape::updateTexCoords()
+		void NodeQuad::updateTexCoords()
 		{
 			m_vertices.for_each_vertex([this](Vertex& v)
 			{

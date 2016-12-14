@@ -1,5 +1,5 @@
-#ifndef __LIB_ELLIPSESHAPE_HPP__
-#define __LIB_ELLIPSESHAPE_HPP__
+#ifndef LIB_DRAW_NODEQUAD_HPP__
+#define LIB_DRAW_NODEQUAD_HPP__
 
 #include <lib/include/types.hpp>
 #include <lib/include/vector2d.hpp>
@@ -11,14 +11,13 @@ namespace lib
 	namespace draw
 	{
 		class Texture;
-		class NodeShape : public Renderizable
+		class NodeQuad : public Renderizable
 		{
 		public:
-			explicit NodeShape(const std::string &name, const vector2df& size, const u32 pointCount);
-			virtual ~NodeShape() = default;
+			explicit NodeQuad(const std::string &name, const vector2df& size);
+			virtual ~NodeQuad() = default;
 			void setSize(const vector2df size);
-			u32 getPointCount() const noexcept { return m_pointCount; }
-			void setPointCount(const u32 numPoints);
+			u32 getPointCount() const noexcept { return 4; }
 			void setTexture(sptr<Texture> texture);
 
 			void setTextureRect(const Rects32& rect);
@@ -30,7 +29,6 @@ namespace lib
 
 		private:
 			vector2df m_size;
-			u32 m_pointCount;
 			Rects32 m_textureRect;
 		};
 	}

@@ -12,7 +12,7 @@ namespace zoper
 	{
 	public:
 		MenuScene();
-		virtual ~MenuScene();
+		virtual ~MenuScene() = default;
 
 		constexpr static lib::f32 MenuPosX = 165.0f;
 
@@ -25,8 +25,8 @@ namespace zoper
 
 		virtual const lib::vector2df getDefaultSizeView() override;
 	private:
-		lib::sptr<lib::draw::NodeShape> _logo{ nullptr };
-		lib::sptr<lib::draw::NodeShape> _background{ nullptr };
+		lib::sptr<lib::draw::NodeQuad> m_logo{ nullptr };
+		lib::sptr<lib::draw::NodeQuad> m_background{ nullptr };
 	};
 }
 

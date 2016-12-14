@@ -8,7 +8,7 @@ namespace zoper
 	using namespace lib::draw;
 
 	GameBaseTile::GameBaseTile(BoardTileData data, const vector2df &size, const std::string &baseName)
-		: ITile{ data }, NodeShape{baseName, size, 30, NodeShape::NodeMode::Shape} {}
+		: ITile{ data }, NodeShape{baseName, size, 30} {}
 
 	GameBaseTile::~GameBaseTile() = default;
 

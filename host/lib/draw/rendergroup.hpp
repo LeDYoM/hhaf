@@ -3,7 +3,7 @@
 
 #include <lib/include/types.hpp>
 #include <lib/include/vector2d.hpp>
-#include "HasName.hpp"
+#include "hasname.hpp"
 #include "idrawable.hpp"
 #include "animationmanager.hpp"
 #include "transformable.hpp"
@@ -20,6 +20,7 @@ namespace lib
 		class Scene;
 		class Renderizable;
 		class NodeShape;
+		class NodeQuad;
 		class NodeText;
 		class RenderGroup : public lib::core::HasName, public IDrawable, public anim::AnimationManager, public Transformable
 		{
@@ -30,7 +31,7 @@ namespace lib
 			virtual void onAddedToScene() {}
 			sptr<NodeText> createText(const std::string &name);
 			sptr<NodeShape> createShape(const std::string &name,const vector2df &radius=vector2df(),u32 pointCount=30);
-			sptr<NodeShape> createSpriteShape(const std::string &name, const vector2df &radius = vector2df());
+			sptr<NodeQuad> createSpriteShape(const std::string &name, const vector2df &radius = vector2df());
 			sptr<draw::Renderizable> addRenderizable(sptr<Renderizable> newElement);
 			bool removeRenderizable(sptr<Renderizable> element);
 			void clear();

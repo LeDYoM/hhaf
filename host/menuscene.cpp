@@ -1,5 +1,6 @@
 #include "menuscene.hpp"
 #include <lib/draw/nodeshape.hpp>
+#include <lib/draw/nodequad.hpp>
 #include <lib/draw/nodetext.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/core/host.hpp>
@@ -17,33 +18,26 @@ namespace zoper
 	using namespace zmenu;
 
 	MenuScene::MenuScene()
-		: lib::menu::MenuManager("MenuScene")
-	{
-	}
-
-
-	MenuScene::~MenuScene()
-	{
-	}
+		: lib::menu::MenuManager("MenuScene") {}
 
 	void MenuScene::onInit()
 	{
 		MenuManager::onInit();
-		_background = createSpriteShape("background");
+		m_background = createSpriteShape("background");
 
 		addMenuStep(msptr<MainMenu>(this));
 		addMenuStep(msptr<OptionsMenu>(this));
 //		addMenuStep(msptr<KeyRedefinitionMenu>(this));
 		addMenuStep(msptr<StartLevelMenu>(this));
 
-		_logo = createSpriteShape("mainLogo");
-		_logo->setTexture(host().resourceManager().getTexture("game_menu.logo"));
-		_logo->setSize({ 800, 400 });
-		_logo->setPositionX(getCenterCoordinates().x/*, lib::draw::Alignment::Center*/);
-		_logo->setPositionY(100);
+		m_logo = createSpriteShape("mainLogo");
+		m_logo->setTexture(host().resourceManager().getTexture("game_menu.logo"));
+		m_logo->setSize({ 800, 400 });
+		m_logo->setPositionX(getCenterCoordinates().x/*, lib::draw::Alignment::Center*/);
+		m_logo->setPositionY(100);
 
-		_background->setTexture(host().resourceManager().getTexture("game_menu.background"));
-		_background->setSize({ 2000.0f,2000.f });
+		m_background->setTexture(host().resourceManager().getTexture("game_menu.background"));
+		m_background->setSize({ 2000.0f,2000.f });
 	}
 
 	void MenuScene::onEnterScene()

@@ -1,6 +1,7 @@
 #include "rendergroup.hpp"
 #include "renderizable.hpp"
 #include "nodeshape.hpp"
+#include "nodequad.hpp"
 #include "nodetext.hpp"
 #include "scene.hpp"
 
@@ -30,14 +31,14 @@ namespace lib
 
 		sptr<NodeShape> RenderGroup::createShape(const std::string &name, const vector2df &radius/*=vector2df()*/, u32 pointCount/*=30*/)
 		{
-			auto result = msptr<NodeShape>(name,radius,pointCount, NodeShape::NodeMode::Shape);
+			auto result = msptr<NodeShape>(name,radius,pointCount);
 			addRenderizable(result);
 			return result;
 		}
 
-		sptr<NodeShape> RenderGroup::createSpriteShape(const std::string &name, const vector2df &radius /*= vector2df()*/)
+		sptr<NodeQuad> RenderGroup::createSpriteShape(const std::string &name, const vector2df &radius /*= vector2df()*/)
 		{
-			auto result = msptr<NodeShape>(name,radius, 4,NodeShape::NodeMode::Sprite);
+			auto result = msptr<NodeQuad>(name,radius);
 			addRenderizable(result);
 			return result;
 		}

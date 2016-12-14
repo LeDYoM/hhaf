@@ -154,7 +154,7 @@ namespace zoper
 		lib::sptr<lib::draw::NodeText> _gameText{ nullptr };
 		lib::sptr<lib::draw::NodeText> _overText{ nullptr };
 		lib::sptr<lib::draw::NodeText> _pauseText{ nullptr };
-		std::vector<std::vector<lib::sptr<lib::draw::NodeShape>>> _backgroundTiles;
+		std::vector<std::vector<lib::sptr<lib::draw::NodeQuad>>> m_backgroundTiles;
 	};
 }
 
