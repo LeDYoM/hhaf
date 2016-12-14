@@ -16,9 +16,9 @@ namespace lib
 		public:
 			ISimpleNode(const std::string &name, const vector2df &size, const u32 pointCount);
 			virtual ~ISimpleNode() = default;
-			virtual void setSize(const vector2df size);
-			vector2df size() const noexcept { return m_size; }
-			u32 getPointCount() const noexcept { return m_pointCount; }
+			virtual void setSize(const vector2df &size);
+			inline vector2df size() const noexcept { return m_size; }
+			inline u32 pointCount() const noexcept { return m_pointCount; }
 			void setTexture(sptr<Texture> texture);
 
 			void setTextureRect(const Rects32& rect);

@@ -32,8 +32,7 @@ namespace lib
 		class VertexArray
 		{
 		public:
-			constexpr VertexArray() noexcept;
-			explicit VertexArray(const PrimitiveType type, const std::size_t vertexCount = 0) noexcept;
+			VertexArray(const PrimitiveType type, const u32 vertexCount) noexcept;
 			constexpr VertexArray(const VertexArray&) = default;
 			VertexArray& operator=(const VertexArray&) = default;
 			constexpr VertexArray(VertexArray&&) noexcept = default;

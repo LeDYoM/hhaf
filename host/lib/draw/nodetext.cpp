@@ -8,7 +8,7 @@ namespace lib
 	namespace draw
 	{
 		NodeText::NodeText(const std::string &name, const std::string& string, sptr<Font> font, u32 characterSize) :
-			Renderizable{ name, Triangles }, m_string(string), m_font{ font }, m_characterSize{ characterSize } 
+			Renderizable{ name, Triangles, 0 }, m_string(string), m_font{ font }, m_characterSize{ characterSize } 
 		{
 			updateGeometry();
 		}

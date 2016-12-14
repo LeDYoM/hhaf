@@ -1,32 +1,25 @@
-#ifndef __LIB_IHASNAME_HPP__
-#define __LIB_IHASNAME_HPP__
+#ifndef __LIB_HASNAME_HPP__
+#define __LIB_HASNAME_HPP__
 
 #include <string>
-#include <lib/core/compileconfig.hpp>
 
 namespace lib
 {
 	namespace core
 	{
-		class IHasName
-		{
-		public:
-			IHasName() {}
-			virtual ~IHasName() {}
-
-			virtual const std::string name() const = 0;
-		};
-
 		class HasName
 		{
 		public:
-			HasName(const std::string name) :_name(name) {}
-			HasName(HasName &&other) { _name = std::move(other._name); }
-			virtual ~HasName() {}
+			HasName(std::string name) noexcept : m_name{ std::move(name) } {}
+			constexpr HasName(HasName &&other)  noexcept = default;
+			constexpr HasName(const HasName &other) = default;
+			HasName &operator=(HasName &&other)  noexcept = default;
+			HasName &operator=(const HasName &other) = default;
+			virtual ~HasName() = default;
 			
-			virtual const std::string name() const { return _name; }
+			virtual const std::string name() const noexcept { return m_name; }
 		private:
-			std::string _name;
+			const std::string m_name;
 		};
 	}
 }

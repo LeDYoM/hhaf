@@ -16,7 +16,7 @@ namespace lib
 		class Renderizable : public core::HasName, public IDrawable, public Transformable
 		{
 		public:
-			explicit Renderizable(const std::string &name, PrimitiveType type, std::size_t vertexCount = 0);
+			explicit Renderizable(const std::string &name, PrimitiveType type, u32 vertexCount);
 			virtual ~Renderizable();
 
 			virtual void setColor(const Color color);

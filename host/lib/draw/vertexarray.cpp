@@ -8,11 +8,7 @@ namespace lib
 {
 	namespace draw
 	{
-		constexpr VertexArray::VertexArray() noexcept
-			: m_vertices{}, m_primitiveType{ PrimitiveType::Points } {}
-
-
-		VertexArray::VertexArray(const PrimitiveType type, const std::size_t vertexCount) noexcept
+		VertexArray::VertexArray(const PrimitiveType type, const u32 vertexCount) noexcept
 			: m_vertices{ vertexCount }, m_primitiveType{ type } {}
 
 		Rectf32 VertexArray::generateQuad(const vector2df & size)
