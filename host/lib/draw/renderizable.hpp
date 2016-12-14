@@ -16,10 +16,10 @@ namespace lib
 		class Renderizable : public core::HasName, public IDrawable, public Transformable
 		{
 		public:
-			explicit Renderizable(const std::string &name, PrimitiveType type, u32 vertexCount);
-			virtual ~Renderizable();
+			explicit Renderizable(const std::string &name, PrimitiveType type, u32 vertexCount, const Color &color);
+			virtual ~Renderizable() = default;
 
-			virtual void setColor(const Color color);
+			virtual void setColor(const Color &color);
 			inline Color color() const noexcept { return m_color; }
 			Rectf32 getLocalBounds() const noexcept { return m_bounds; }
 			virtual void draw() override;

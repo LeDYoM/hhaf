@@ -23,7 +23,7 @@ namespace lib
 			};
 
 			virtual ~NodeText() = default;
-			NodeText(const std::string &name, const std::string& string, sptr<Font> font, u32 characterSize);
+			NodeText(const std::string &name, const std::string& string, sptr<Font> font, u32 characterSize, const Color &color);
 			void setString(const std::string &string);
 			void setFont(sptr<Font> font);
 			void setCharacterSize(const u32 size);

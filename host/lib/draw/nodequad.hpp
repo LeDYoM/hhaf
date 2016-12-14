@@ -12,7 +12,7 @@ namespace lib
 		class NodeQuad : public ISimpleNode
 		{
 		public:
-			explicit NodeQuad(const std::string &name, const vector2df& size);
+			explicit NodeQuad(const std::string &name, const vector2df& size, const Color &color);
 			virtual ~NodeQuad() = default;
 
 		protected:

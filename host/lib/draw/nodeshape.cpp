@@ -6,8 +6,8 @@ namespace lib
 {
 	namespace draw
 	{
-		NodeShape::NodeShape(const std::string &name, const vector2df& size, const u32 pointCount)
-			: ISimpleNode{ name, size, pointCount }
+		NodeShape::NodeShape(const std::string &name, const vector2df& size, const u32 pointCount, const Color &color)
+			: ISimpleNode{ name, size, pointCount, color }
 		{
 			updateGeometry();
 		}

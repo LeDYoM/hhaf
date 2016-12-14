@@ -12,7 +12,7 @@ namespace lib
 		class NodeShape : public ISimpleNode
 		{
 		public:
-			explicit NodeShape(const std::string &name, const vector2df& size, const u32 pointCount);
+			explicit NodeShape(const std::string &name, const vector2df& size, const u32 pointCount, const Color &color);
 			virtual ~NodeShape() = default;
 		protected:
 			virtual void updateGeometrySimpleNode() override;

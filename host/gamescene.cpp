@@ -45,32 +45,20 @@ namespace zoper
 
 		auto& resourceManager{ lib::host().resourceManager() };
 		auto scoreFont(resourceManager.getFont("game_scene.scoreFont"));
-		_scoreText = _scorerg->createText("scoretxt", "Score: ", scoreFont, 90);
-		_scoreDisplay = _scorerg->createText("scoredisplay", "", scoreFont, 90);
-		_currentLevelText = _scorerg->createText("currentLevelText", "Level: ", scoreFont, 90);
-		_currentLevelDisplay = _scorerg->createText("currentLevelDisplay", "0", scoreFont, 90);
-		_levelText = _levelrg->createText("leveltxt", "", scoreFont, 90);
-		_levelDisplay = _levelrg->createText("leveldisplay", "", scoreFont, 90);
-		_goalText = _levelrg->createText("goalText", "", scoreFont, 90);
-		_goalDisplay = _levelrg->createText("goalDisplay", "", scoreFont, 90);
-		_pauseText = _pauserg->createText("pausetext", "PAUSE", scoreFont, 180);
+		_scoreText = _scorerg->createText("scoretxt", "Score: ", scoreFont, 90, colors::Blue);
+		_scoreDisplay = _scorerg->createText("scoredisplay", "", scoreFont, 90, colors::White);
+		_currentLevelText = _scorerg->createText("currentLevelText", "Level: ", scoreFont, 90, colors::Blue);
+		_currentLevelDisplay = _scorerg->createText("currentLevelDisplay", "0", scoreFont, 90, colors::White);
+		_levelText = _levelrg->createText("leveltxt", "", scoreFont, 90, colors::Blue);
+		_levelDisplay = _levelrg->createText("leveldisplay", "", scoreFont, 90, colors::White);
+		_goalText = _levelrg->createText("goalText", "", scoreFont, 90, colors::Blue);
+		_goalDisplay = _levelrg->createText("goalDisplay", "", scoreFont, 90, colors::White);
+		_pauseText = _pauserg->createText("pausetext", "PAUSE", scoreFont, 180, colors::White);
 
-		_gameText = _gameOverrg->createText("gameovergame", "GAME", scoreFont, 360);
-		_overText = _gameOverrg->createText("gameoverover", "OVER", scoreFont, 360);
+		_gameText = _gameOverrg->createText("gameovergame", "GAME", scoreFont, 360, colors::White);
+		_overText = _gameOverrg->createText("gameoverover", "OVER", scoreFont, 360, colors::White);
 
 		increaseScore(0);
-
-		_scoreText->setColor(colors::Blue);
-		_scoreDisplay->setColor(colors::White);
-		_currentLevelText->setColor(colors::Blue);
-		_currentLevelDisplay->setColor(colors::White);
-		_gameText->setColor(colors::White);
-		_overText->setColor(colors::White);
-		_levelText->setColor(colors::Blue);
-		_levelDisplay->setColor(colors::White);
-		_goalText->setColor(colors::Blue);
-		_goalDisplay->setColor(colors::White);
-		_pauseText->setColor(colors::White);
 
 		_scoreText->setScale({ 1.0f, 2.0f });
 		_scoreDisplay->setScale({ 1.0f, 2.0f });

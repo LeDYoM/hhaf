@@ -6,8 +6,8 @@ namespace lib
 {
 	namespace draw
 	{
-		ISimpleNode::ISimpleNode(const std::string &name, const vector2df& size, const u32 pointCount)
-			: Renderizable{ name, TriangleFan, pointCount + 2 }, m_textureRect{}, m_size{ size }, m_pointCount{ pointCount } {}
+		ISimpleNode::ISimpleNode(const std::string &name, const vector2df& size, const u32 pointCount, const Color &color)
+			: Renderizable{ name, TriangleFan, pointCount + 2, color }, m_textureRect{}, m_size{ size }, m_pointCount{ pointCount } {}
 
 		void ISimpleNode::setSize(const vector2df &size)
 		{
@@ -23,7 +23,6 @@ namespace lib
 					setTextureRect({ 0, 0, static_cast<s32>(tSize.x), static_cast<s32>(tSize.y) });
 				}
 				setSize({ static_cast<f32>(tSize.x), static_cast<f32>(tSize.y) });
-
 			}
 
 			m_texture = std::move(texture);

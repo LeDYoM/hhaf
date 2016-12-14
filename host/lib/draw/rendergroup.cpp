@@ -22,23 +22,23 @@ namespace lib
 			m_renderNodes.clear();
 		}
 
-		sptr<NodeText> RenderGroup::createText(const std::string &name, const std::string& string, sptr<Font> font, u32 characterSize)
+		sptr<NodeText> RenderGroup::createText(const std::string &name, const std::string& string, sptr<Font> font, u32 characterSize, const Color &color)
 		{
-			auto result = msptr<NodeText>(name,string,font,characterSize);
+			auto result = msptr<NodeText>(name,string,font,characterSize,color);
 			addRenderizable(result);
 			return result;
 		}
 
-		sptr<NodeShape> RenderGroup::createShape(const std::string &name, const vector2df &radius/*=vector2df()*/, u32 pointCount/*=30*/)
+		sptr<NodeShape> RenderGroup::createShape(const std::string &name, const vector2df &radius, u32 pointCount, const Color &color)
 		{
-			auto result = msptr<NodeShape>(name,radius,pointCount);
+			auto result = msptr<NodeShape>(name,radius,pointCount,color);
 			addRenderizable(result);
 			return result;
 		}
 
-		sptr<NodeQuad> RenderGroup::createSpriteShape(const std::string &name, const vector2df &radius /*= vector2df()*/)
+		sptr<NodeQuad> RenderGroup::createSpriteShape(const std::string &name, const vector2df &radius, const Color &color)
 		{
-			auto result = msptr<NodeQuad>(name,radius);
+			auto result = msptr<NodeQuad>(name,radius,color);
 			addRenderizable(result);
 			return result;
 		}

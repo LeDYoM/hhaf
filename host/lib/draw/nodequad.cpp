@@ -5,8 +5,8 @@ namespace lib
 {
 	namespace draw
 	{
-		NodeQuad::NodeQuad(const std::string &name, const vector2df& size)
-			: ISimpleNode{ name, size, 4 }
+		NodeQuad::NodeQuad(const std::string &name, const vector2df& size, const Color &color)
+			: ISimpleNode{ name, size, 4,color }
 		{
 			updateGeometry();
 		}

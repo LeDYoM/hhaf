@@ -29,9 +29,9 @@ namespace lib
 			virtual ~RenderGroup();
 
 			virtual void onAddedToScene() {}
-			sptr<NodeText> createText(const std::string &name, const std::string& string, sptr<Font> font, u32 characterSize);
-			sptr<NodeShape> createShape(const std::string &name,const vector2df &radius=vector2df(),u32 pointCount=30);
-			sptr<NodeQuad> createSpriteShape(const std::string &name, const vector2df &radius = vector2df());
+			sptr<NodeText> createText(const std::string &name, const std::string& string, sptr<Font> font, u32 characterSize, const Color &color);
+			sptr<NodeShape> createShape(const std::string &name,const vector2df &radius=vector2df(),u32 pointCount=30, const Color &color=colors::White);
+			sptr<NodeQuad> createSpriteShape(const std::string &name, const vector2df &radius = vector2df{}, const Color &color=colors::White);
 			sptr<draw::Renderizable> addRenderizable(sptr<Renderizable> newElement);
 			bool removeRenderizable(sptr<Renderizable> element);
 			void clear();
