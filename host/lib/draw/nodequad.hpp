@@ -4,32 +4,22 @@
 #include <lib/include/types.hpp>
 #include <lib/include/vector2d.hpp>
 #include "color.hpp"
-#include "renderizable.hpp"
+#include "isimplenode.hpp"
 
 namespace lib
 {
 	namespace draw
 	{
 		class Texture;
-		class NodeQuad : public Renderizable
+		class NodeQuad : public ISimpleNode
 		{
 		public:
 			explicit NodeQuad(const std::string &name, const vector2df& size);
 			virtual ~NodeQuad() = default;
-			void setSize(const vector2df size);
-			u32 getPointCount() const noexcept { return 4; }
-			void setTexture(sptr<Texture> texture);
-
-			void setTextureRect(const Rects32& rect);
-			Rects32 getTextureRect() const;
 
 		protected:
-			void updateGeometry();
+			virtual void updateGeometrySimpleNode() override;
 			void updateTexCoords();
-
-		private:
-			vector2df m_size;
-			Rects32 m_textureRect;
 		};
 	}
 }

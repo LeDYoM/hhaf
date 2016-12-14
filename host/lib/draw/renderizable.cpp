@@ -18,7 +18,6 @@ namespace lib
 		{
 			if (color != m_color) {
 				m_color = color;
-
 				m_vertices.setColor(m_color);
 			}
 		}

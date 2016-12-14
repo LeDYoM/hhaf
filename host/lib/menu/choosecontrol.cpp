@@ -18,8 +18,7 @@ namespace lib
 		{
 			const auto &cTheme(parent->currentTheme());
 			descriptorCursorSize = cTheme.cursorDescriptor.m_size;
-			m_cursor = createShape("cursor");
-			m_cursor->setPointCount(cTheme.cursorDescriptor.m_nVertex);
+			m_cursor = createShape("cursor", vector2df{}, cTheme.cursorDescriptor.m_nVertex);
 			m_cursor->setColor(cTheme.cursorDescriptor.m_color);
 			m_cursor->setSize(descriptorCursorSize);
 

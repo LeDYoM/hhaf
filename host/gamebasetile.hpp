@@ -9,9 +9,9 @@ namespace zoper
 	class GameBaseTile : public lib::board::ITile, public lib::draw::NodeShape
 	{
 	public:
-		explicit GameBaseTile(lib::board::BoardTileData data, const lib::vector2df &size, const std::string &baseName);
+		explicit GameBaseTile(lib::board::BoardTileData data, const lib::vector2df &size, const std::string &baseName, const lib::u32 pointCount = 30);
 		GameBaseTile(const GameBaseTile &other) = delete;
-		virtual ~GameBaseTile();
+		virtual ~GameBaseTile() = default;
 
 		lib::draw::Color getColorForToken() const;
 	};
