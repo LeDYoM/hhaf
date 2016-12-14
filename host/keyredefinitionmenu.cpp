@@ -15,21 +15,15 @@ namespace zoper
 	{
 		using namespace lib;
 		using namespace lib::draw;
-		KeyRedefinitionMenu::KeyRedefinitionMenu(lib::draw::RenderGroup *parent)
-			: lib::draw::RenderGroup{ ClassName, parent }
-		{
-		}
 
+		KeyRedefinitionMenu::KeyRedefinitionMenu(RenderGroup *parent)
+			: RenderGroup{ ClassName, parent } {}
 
 		KeyRedefinitionMenu::~KeyRedefinitionMenu() = default;
 
 		void KeyRedefinitionMenu::onAddedToScene()
 		{
-			_nextKeyText = createText("pressKey");
-
-			_nextKeyText->setFont(lib::host().resourceManager().getFont("game_menu.mainFont"));
-			_nextKeyText->setCharacterSize(90);
-			_nextKeyText->setString(" ");
+			_nextKeyText = createText("pressKey"," ", lib::host().resourceManager().getFont("game_menu.mainFont"),90);
 			_nextKeyText->setColor(lib::draw::colors::Blue);
 			_nextKeyText->setPositionWithAlignment({ 1000.0f, 1000.0f }, NodeText::Alignment::Center);
 			_indexKey = 0;

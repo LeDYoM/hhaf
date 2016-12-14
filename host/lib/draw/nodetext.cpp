@@ -7,13 +7,11 @@ namespace lib
 {
 	namespace draw
 	{
-		NodeText::NodeText(const std::string &name)
-			:NodeText(name, sf::String{},nullptr,30) {}
-
 		NodeText::NodeText(const std::string &name, const std::string& string, sptr<Font> font, u32 characterSize) :
-			Renderizable{ name, Triangles }, m_string(string), m_font{ font }, m_characterSize{ characterSize } {}
-
-		NodeText::~NodeText() {	}
+			Renderizable{ name, Triangles }, m_string(string), m_font{ font }, m_characterSize{ characterSize } 
+		{
+			updateGeometry();
+		}
 
 		void NodeText::setString(const std::string & string)
 		{

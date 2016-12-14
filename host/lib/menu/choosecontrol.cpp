@@ -31,21 +31,14 @@ namespace lib
 			{
 				const bool hasSubLabels{ !label->_subOptionsLabels.empty() };
 
-				auto text = createText("name" + count);
-				text->setFont(cTheme.font);
-				text->setCharacterSize(cTheme.chSize);
-				text->setString(label->_text);
+				auto text = createText("name" + count, label->_text, cTheme.font, cTheme.chSize);
 				text->setColor(cTheme.textColor);
 				text->setPositionWithAlignmentX(0, normalLabelAlign);
 				text->setPositionY(currentPos.y);
 
 				sptr<draw::NodeText> subtext{ nullptr };
-				if (hasSubLabels)
-				{
-					subtext = createText("sub_name" + count);
-					subtext->setFont(cTheme.font);
-					subtext->setCharacterSize(cTheme.chSize);
-					subtext->setString(label->_subOptionsLabels[label->_startValueIndex]);
+				if (hasSubLabels) {
+					subtext = createText("sub_name" + count, label->_subOptionsLabels[label->_startValueIndex],cTheme.font,cTheme.chSize);
 					subtext->setColor(cTheme.textColor);
 					subtext->setPositionWithAlignmentX(1800, draw::NodeText::Alignment::Right);
 					subtext->setPositionY(currentPos.y);

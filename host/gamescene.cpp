@@ -43,51 +43,22 @@ namespace zoper
 		_levelrg = this->createNewRenderGroup("level");
 		_pauserg = this->createNewRenderGroup("pause");
 
-		_scoreText = _scorerg->createText("scoretxt");
-		_scoreDisplay = _scorerg->createText("scoredisplay");
-		_currentLevelText = _scorerg->createText("scoretxt");
-		_currentLevelDisplay = _scorerg->createText("scoredisplay");
-		_levelText = _levelrg->createText("leveltxt");
-		_levelDisplay = _levelrg->createText("leveldisplay");
-		_goalText = _levelrg->createText("leveltxt");
-		_goalDisplay = _levelrg->createText("leveldisplay");
-		_pauseText = _pauserg->createText("pausetext");
-
-		_gameText = _gameOverrg->createText("gameovergame");
-		_overText = _gameOverrg->createText("gameoverover");
-
 		auto& resourceManager{ lib::host().resourceManager() };
-		_scoreText->setFont(resourceManager.getFont("game_scene.scoreFont"));
-		_scoreDisplay->setFont(resourceManager.getFont("game_scene.scoreFont"));
-		_currentLevelText->setFont(resourceManager.getFont("game_scene.scoreFont"));
-		_currentLevelDisplay->setFont(resourceManager.getFont("game_scene.scoreFont"));
-		_gameText->setFont(resourceManager.getFont("game_scene.scoreFont"));
-		_overText->setFont(resourceManager.getFont("game_scene.scoreFont"));
-		_levelText->setFont(resourceManager.getFont("game_scene.scoreFont"));
-		_levelDisplay->setFont(resourceManager.getFont("game_scene.scoreFont"));
-		_goalText->setFont(resourceManager.getFont("game_scene.scoreFont"));
-		_goalDisplay->setFont(resourceManager.getFont("game_scene.scoreFont"));
-		_pauseText->setFont(resourceManager.getFont("game_scene.scoreFont"));
+		auto scoreFont(resourceManager.getFont("game_scene.scoreFont"));
+		_scoreText = _scorerg->createText("scoretxt", "Score: ", scoreFont, 90);
+		_scoreDisplay = _scorerg->createText("scoredisplay", "", scoreFont, 90);
+		_currentLevelText = _scorerg->createText("currentLevelText", "Level: ", scoreFont, 90);
+		_currentLevelDisplay = _scorerg->createText("currentLevelDisplay", "0", scoreFont, 90);
+		_levelText = _levelrg->createText("leveltxt", "", scoreFont, 90);
+		_levelDisplay = _levelrg->createText("leveldisplay", "", scoreFont, 90);
+		_goalText = _levelrg->createText("goalText", "", scoreFont, 90);
+		_goalDisplay = _levelrg->createText("goalDisplay", "", scoreFont, 90);
+		_pauseText = _pauserg->createText("pausetext", "PAUSE", scoreFont, 180);
 
-		_scoreText->setString("Score: ");
+		_gameText = _gameOverrg->createText("gameovergame", "GAME", scoreFont, 360);
+		_overText = _gameOverrg->createText("gameoverover", "OVER", scoreFont, 360);
+
 		increaseScore(0);
-		_gameText->setString("GAME");
-		_overText->setString("OVER");
-		_pauseText->setString("PAUSE");
-		_currentLevelText->setString("Level: ");
-		_currentLevelDisplay->setString("0");
-
-		_scoreText->setCharacterSize(90);
-		_scoreDisplay->setCharacterSize(90);
-		_currentLevelText->setCharacterSize(90);
-		_currentLevelDisplay->setCharacterSize(90);
-		_gameText->setCharacterSize(360);
-		_overText->setCharacterSize(360);
-		_levelText->setCharacterSize(90);
-		_levelDisplay->setCharacterSize(90);
-		_goalText->setCharacterSize(90);
-		_goalDisplay->setCharacterSize(90);
-		_pauseText->setCharacterSize(180);
 
 		_scoreText->setColor(colors::Blue);
 		_scoreDisplay->setColor(colors::White);

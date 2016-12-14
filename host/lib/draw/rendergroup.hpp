@@ -29,7 +29,7 @@ namespace lib
 			virtual ~RenderGroup();
 
 			virtual void onAddedToScene() {}
-			sptr<NodeText> createText(const std::string &name);
+			sptr<NodeText> createText(const std::string &name, const std::string& string, sptr<Font> font, u32 characterSize);
 			sptr<NodeShape> createShape(const std::string &name,const vector2df &radius=vector2df(),u32 pointCount=30);
 			sptr<NodeQuad> createSpriteShape(const std::string &name, const vector2df &radius = vector2df());
 			sptr<draw::Renderizable> addRenderizable(sptr<Renderizable> newElement);

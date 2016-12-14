@@ -22,9 +22,9 @@ namespace lib
 			m_renderNodes.clear();
 		}
 
-		sptr<NodeText> RenderGroup::createText(const std::string &name)
+		sptr<NodeText> RenderGroup::createText(const std::string &name, const std::string& string, sptr<Font> font, u32 characterSize)
 		{
-			auto result = msptr<NodeText>(name);
+			auto result = msptr<NodeText>(name,string,font,characterSize);
 			addRenderizable(result);
 			return result;
 		}
