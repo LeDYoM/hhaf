@@ -18,30 +18,27 @@ namespace lib
 		{
 			const auto &cTheme(parent->currentTheme());
 			descriptorCursorSize = cTheme.cursorDescriptor.m_size;
-			m_cursor = createShape("cursor", descriptorCursorSize, nullptr, cTheme.cursorDescriptor.m_nVertex, cTheme.cursorDescriptor.m_color);
+			m_cursor = createRenderizable<draw::NodeShape>("cursor", descriptorCursorSize, nullptr, cTheme.cursorDescriptor.m_nVertex, cTheme.cursorDescriptor.m_color);
 
 			const bool menuType{ labels.empty()?false:labels[0]->_subOptionsLabels.empty() };
 
 			const auto normalLabelAlign( menuType ? draw::NodeText::Alignment::Center : draw::NodeText::Alignment::Left );
-			u32 count{ 0 };
-			vector2df currentPos{ 0.0f, 0.0f };
+			u32 count{};
+			vector2df currentPos{};
 			for (const auto& label : labels)
 			{
-				const bool hasSubLabels{ !label->_subOptionsLabels.empty() };
-
-				auto text = createText("name" + count, label->_text, cTheme.font, cTheme.chSize, cTheme.textColor);
+				auto text = createRenderizable<draw::NodeText>("name" + count, label->_text, cTheme.font, cTheme.chSize, cTheme.textColor);
 				text->setPositionWithAlignmentX(0, normalLabelAlign);
 				text->setPositionY(currentPos.y);
 
 				sptr<draw::NodeText> subtext{ nullptr };
-				if (hasSubLabels) {
-					subtext = createText("sub_name" + count, label->_subOptionsLabels[label->_startValueIndex],cTheme.font,cTheme.chSize, cTheme.textColor);
-					subtext->setPositionWithAlignmentX(1800, draw::NodeText::Alignment::Right);
-					subtext->setPositionY(currentPos.y);
+				if (!label->_subOptionsLabels.empty()) {
+					subtext = createRenderizable<draw::NodeText>("sub_name" + count, label->_subOptionsLabels[label->_startValueIndex],cTheme.font,cTheme.chSize, cTheme.textColor);
+					subtext->setPositionWithAlignment({ 1800,currentPos.y }, draw::NodeText::Alignment::Right);
 				}
 
 				currentPos.y += (cTheme.chSize + cTheme.incY);
-				m_labelData.push_back(LabelData(label->_subOptionsLabels,subtext,text, label->_startValueIndex));
+				m_labelData.emplace_back(label->_subOptionsLabels,subtext,text, label->_startValueIndex);
 				++count;
 			}
 

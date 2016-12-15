@@ -29,6 +29,7 @@ namespace lib
 			virtual ~RenderGroup();
 
 			virtual void onAddedToScene() {}
+			/*
 			sptr<NodeText> createText(const std::string &name, const std::string& string, sptr<Font> font, u32 characterSize, const Color &color)
 			{
 				return createRenderizable<NodeText>(name, string, font, characterSize, color);
@@ -41,7 +42,7 @@ namespace lib
 			{
 				return createRenderizable<NodeQuad>(name, size, texture, color);
 			}
-
+			*/
 			template <typename T>
 			sptr<T> addRenderizable(sptr<T> newElement)
 			{

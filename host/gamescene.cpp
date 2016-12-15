@@ -45,18 +45,18 @@ namespace zoper
 
 		auto& resourceManager{ lib::host().resourceManager() };
 		auto scoreFont(resourceManager.getFont("game_scene.scoreFont"));
-		_scoreText = _scorerg->createText("scoretxt", "Score: ", scoreFont, 90, colors::Blue);
-		_scoreDisplay = _scorerg->createText("scoredisplay", "", scoreFont, 90, colors::White);
-		_currentLevelText = _scorerg->createText("currentLevelText", "Level: ", scoreFont, 90, colors::Blue);
-		_currentLevelDisplay = _scorerg->createText("currentLevelDisplay", "0", scoreFont, 90, colors::White);
-		_levelText = _levelrg->createText("leveltxt", "", scoreFont, 90, colors::Blue);
-		_levelDisplay = _levelrg->createText("leveldisplay", "", scoreFont, 90, colors::White);
-		_goalText = _levelrg->createText("goalText", "", scoreFont, 90, colors::Blue);
-		_goalDisplay = _levelrg->createText("goalDisplay", "", scoreFont, 90, colors::White);
-		_pauseText = _pauserg->createText("pausetext", "PAUSE", scoreFont, 180, colors::White);
+		_scoreText = _scorerg->createRenderizable<NodeText>("scoretxt", "Score: ", scoreFont, 90, colors::Blue);
+		_scoreDisplay = _scorerg->createRenderizable<NodeText>("scoredisplay", "", scoreFont, 90, colors::White);
+		_currentLevelText = _scorerg->createRenderizable<NodeText>("currentLevelText", "Level: ", scoreFont, 90, colors::Blue);
+		_currentLevelDisplay = _scorerg->createRenderizable<NodeText>("currentLevelDisplay", "0", scoreFont, 90, colors::White);
+		_levelText = _levelrg->createRenderizable<NodeText>("leveltxt", "", scoreFont, 90, colors::Blue);
+		_levelDisplay = _levelrg->createRenderizable<NodeText>("leveldisplay", "", scoreFont, 90, colors::White);
+		_goalText = _levelrg->createRenderizable<NodeText>("goalText", "", scoreFont, 90, colors::Blue);
+		_goalDisplay = _levelrg->createRenderizable<NodeText>("goalDisplay", "", scoreFont, 90, colors::White);
+		_pauseText = _pauserg->createRenderizable<NodeText>("pausetext", "PAUSE", scoreFont, 180, colors::White);
 
-		_gameText = _gameOverrg->createText("gameovergame", "GAME", scoreFont, 360, colors::White);
-		_overText = _gameOverrg->createText("gameoverover", "OVER", scoreFont, 360, colors::White);
+		_gameText = _gameOverrg->createRenderizable<NodeText>("gameovergame", "GAME", scoreFont, 360, colors::White);
+		_overText = _gameOverrg->createRenderizable<NodeText>("gameoverover", "OVER", scoreFont, 360, colors::White);
 
 		increaseScore(0);
 
@@ -459,7 +459,7 @@ namespace zoper
 			}
 			if (found)
 			{
-				auto node = createShape("pointIncrementScore", vector2df{ 15.0f,15.0f },nullptr,30, colors::White);
+				auto node = createRenderizable<NodeShape>("pointIncrementScore", vector2df{ 15.0f,15.0f },nullptr,30, colors::White);
 				addAnimation(anim::PositionAnimation::create(600, node, lastTokenPosition, lib::vector2df(450,100)));
 			}
 			return result;
@@ -530,18 +530,17 @@ namespace zoper
 
 			for (u32 x = 0; x < _gameData.size.x; ++x)
 			{
-				auto tileBackground = _backgroundTilesrg->createSpriteShape("backgroundTile", tileSize(),nullptr, colors::White);
+				auto tileBackground = _backgroundTilesrg->createRenderizable<NodeQuad>("backgroundTile", tileSize(),nullptr, colors::White);
 				tileBackground->setPosition(board2Scene(vector2du32{ x,y }));
 				column.push_back(std::move(tileBackground));
 
-				auto node = _backgroundTilesrg->createShape("backgroundTilePoint", vector2df{ 10.0f,10.0f },nullptr,30, colors::White);
+				auto node = _backgroundTilesrg->createRenderizable<NodeShape>("backgroundTilePoint", vector2df{ 10.0f,10.0f },nullptr,30, colors::White);
 				vector2df center( board2Scene(vector2du32{ x,y }) );
 				center.x += tileSize().x / 2.0f;
 				center.y += tileSize().y / 2.0f;
 				center.x -= (node->getLocalBounds().width / 2.0f);
 				center.y -= (node->getLocalBounds().height / 2.0f);
 				node->setPosition(center);
-				node->setColor(lib::draw::colors::White);
 			}
 			m_backgroundTiles.push_back(column);
 		}
