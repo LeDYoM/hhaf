@@ -459,7 +459,7 @@ namespace zoper
 			}
 			if (found)
 			{
-				auto node = createShape("pointIncrementScore", vector2df{ 15.0f,15.0f });
+				auto node = createShape("pointIncrementScore", vector2df{ 15.0f,15.0f },nullptr);
 				addAnimation(lib::draw::anim::PositionAnimation::create(600, node, lastTokenPosition, lib::vector2df(450,100)));
 			}
 			return result;
@@ -530,11 +530,11 @@ namespace zoper
 
 			for (u32 x = 0; x < _gameData.size.x; ++x)
 			{
-				auto tileBackground = _backgroundTilesrg->createSpriteShape("backgroundTile", tileSize());
+				auto tileBackground = _backgroundTilesrg->createSpriteShape("backgroundTile", tileSize(),nullptr);
 				tileBackground->setPosition(board2Scene(vector2du32{ x,y }));
 				column.push_back(std::move(tileBackground));
 
-				auto node = _backgroundTilesrg->createShape("backgroundTilePoint", vector2df{ 10.0f,10.0f });
+				auto node = _backgroundTilesrg->createShape("backgroundTilePoint", vector2df{ 10.0f,10.0f },nullptr);
 				vector2df center( board2Scene(vector2du32{ x,y }) );
 				center.x += tileSize().x / 2.0f;
 				center.y += tileSize().y / 2.0f;

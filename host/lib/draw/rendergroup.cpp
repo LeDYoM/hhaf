@@ -29,16 +29,16 @@ namespace lib
 			return result;
 		}
 
-		sptr<NodeShape> RenderGroup::createShape(const std::string &name, const vector2df &radius, u32 pointCount, const Color &color)
+		sptr<NodeShape> RenderGroup::createShape(const std::string &name, const vector2df &size, sptr<Texture> texture, u32 pointCount, const Color &color)
 		{
-			auto result = msptr<NodeShape>(name,radius,pointCount,color);
+			auto result = msptr<NodeShape>(name,size,texture,pointCount,color);
 			addRenderizable(result);
 			return result;
 		}
 
-		sptr<NodeQuad> RenderGroup::createSpriteShape(const std::string &name, const vector2df &radius, const Color &color)
+		sptr<NodeQuad> RenderGroup::createSpriteShape(const std::string &name, const vector2df &size, sptr<Texture> texture, const Color &color)
 		{
-			auto result = msptr<NodeQuad>(name,radius,color);
+			auto result = msptr<NodeQuad>(name,size,texture,color);
 			addRenderizable(result);
 			return result;
 		}

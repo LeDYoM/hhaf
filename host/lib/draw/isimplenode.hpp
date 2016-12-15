@@ -14,7 +14,7 @@ namespace lib
 		class ISimpleNode : public Renderizable
 		{
 		public:
-			ISimpleNode(const std::string &name, const vector2df &size, const u32 pointCount, const Color &color);
+			ISimpleNode(const std::string &name, const vector2df &size, sptr<Texture> texture, const u32 pointCount, const Color &color);
 			virtual ~ISimpleNode() = default;
 			virtual void setSize(const vector2df &size);
 			inline vector2df size() const noexcept { return m_size; }

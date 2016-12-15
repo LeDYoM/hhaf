@@ -18,9 +18,7 @@ namespace lib
 		{
 			const auto &cTheme(parent->currentTheme());
 			descriptorCursorSize = cTheme.cursorDescriptor.m_size;
-			m_cursor = createShape("cursor", vector2df{}, cTheme.cursorDescriptor.m_nVertex);
-			m_cursor->setColor(cTheme.cursorDescriptor.m_color);
-			m_cursor->setSize(descriptorCursorSize);
+			m_cursor = createShape("cursor", descriptorCursorSize, nullptr, cTheme.cursorDescriptor.m_nVertex, cTheme.cursorDescriptor.m_color);
 
 			const bool menuType{ labels.empty()?false:labels[0]->_subOptionsLabels.empty() };
 

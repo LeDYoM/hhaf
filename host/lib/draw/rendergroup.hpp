@@ -30,8 +30,8 @@ namespace lib
 
 			virtual void onAddedToScene() {}
 			sptr<NodeText> createText(const std::string &name, const std::string& string, sptr<Font> font, u32 characterSize, const Color &color);
-			sptr<NodeShape> createShape(const std::string &name,const vector2df &radius,u32 pointCount=30, const Color &color=colors::White);
-			sptr<NodeQuad> createSpriteShape(const std::string &name, const vector2df &radius, const Color &color=colors::White);
+			sptr<NodeShape> createShape(const std::string &name, const vector2df &size, sptr<Texture> texture, u32 pointCount=30, const Color &color=colors::White);
+			sptr<NodeQuad> createSpriteShape(const std::string &name, const vector2df &size , sptr<Texture> texture, const Color &color = colors::White);
 			sptr<draw::Renderizable> addRenderizable(sptr<Renderizable> newElement);
 			bool removeRenderizable(sptr<Renderizable> element);
 			void clear();

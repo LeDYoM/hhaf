@@ -6,8 +6,8 @@ namespace lib
 {
 	namespace draw
 	{
-		Renderizable::Renderizable(const std::string &name, PrimitiveType type, u32 vertexCount, const Color &color)
-			: HasName{ name }, m_vertices{ type, vertexCount }, m_bounds{}, m_texture{ nullptr }, m_color{ color }
+		Renderizable::Renderizable(const std::string &name, sptr<Texture> texture, PrimitiveType type, u32 vertexCount, const Color &color)
+			: HasName{ name }, m_vertices{ type, vertexCount }, m_bounds{}, m_texture{ std::move(texture) }, m_color{ color }
 		{
 			logConstruct("Name: ", name );
 		}
