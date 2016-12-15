@@ -23,14 +23,14 @@ namespace zoper
 	void MenuScene::onInit()
 	{
 		MenuManager::onInit();
-		m_background = createSpriteShape("background", { 2000.0f,2000.0f }, host().resourceManager().getTexture("game_menu.background"));
+		m_background = createSpriteShape("background", { 2000.0f,2000.0f }, host().resourceManager().getTexture("game_menu.background"), draw::colors::White);
 
 		addMenuStep(msptr<MainMenu>(this));
 		addMenuStep(msptr<OptionsMenu>(this));
 //		addMenuStep(msptr<KeyRedefinitionMenu>(this));
 		addMenuStep(msptr<StartLevelMenu>(this));
 
-		m_logo = createSpriteShape("mainLogo", { 800,400 }, host().resourceManager().getTexture("game_menu.logo"));
+		m_logo = createSpriteShape("mainLogo", { 800,400 }, host().resourceManager().getTexture("game_menu.logo"), draw::colors::White);
 		m_logo->setPositionX(getCenterCoordinates().x/*, lib::draw::Alignment::Center*/);
 		m_logo->setPositionY(100);
 	}
