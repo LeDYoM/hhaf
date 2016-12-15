@@ -10,8 +10,10 @@ namespace lib
 	template <typename T> using VecSPtr = std::vector<sptr<T>>;
 
 	template <typename T, class Y>
-	bool removeFromspVector(lib::sptr<T> element, std::vector<lib::sptr<Y>> &container)
+	bool removeFromspVector(sptr<T> element, std::vector<sptr<Y>> &container)
 	{
+		std::remove(container.begin(), container.end(),element);
+		/*
 		auto i = container.begin();
 
 		while (i != container.end()) {
@@ -24,6 +26,7 @@ namespace lib
 				++i;
 			}
 		}
+		*/
 
 		logError("Element ", element , " not found in list");
 		return false;
