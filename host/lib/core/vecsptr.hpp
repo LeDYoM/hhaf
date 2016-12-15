@@ -12,7 +12,7 @@ namespace lib
 	template <typename T, class Y>
 	bool removeFromspVector(sptr<T> element, std::vector<sptr<Y>> &container)
 	{
-		std::remove(container.begin(), container.end(),element);
+		container.erase(std::remove(container.begin(), container.end(), element), container.end());
 		/*
 		auto i = container.begin();
 
