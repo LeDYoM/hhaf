@@ -7,6 +7,9 @@
 #include "idrawable.hpp"
 #include "animationmanager.hpp"
 #include "transformable.hpp"
+#include "nodeshape.hpp"
+#include "nodequad.hpp"
+#include "nodetext.hpp"
 #include <lib/core/vecsptr.hpp>
 
 namespace lib
@@ -19,9 +22,6 @@ namespace lib
 	{
 		class Scene;
 		class Renderizable;
-		class NodeShape;
-		class NodeQuad;
-		class NodeText;
 		class RenderGroup : public lib::core::HasName, public IDrawable, public anim::AnimationManager, public Transformable
 		{
 		public:
@@ -29,10 +29,34 @@ namespace lib
 			virtual ~RenderGroup();
 
 			virtual void onAddedToScene() {}
-			sptr<NodeText> createText(const std::string &name, const std::string& string, sptr<Font> font, u32 characterSize, const Color &color);
-			sptr<NodeShape> createShape(const std::string &name, const vector2df &size, sptr<Texture> texture, u32 pointCount, const Color &color);
-			sptr<NodeQuad> createSpriteShape(const std::string &name, const vector2df &size , sptr<Texture> texture, const Color &color);
-			sptr<draw::Renderizable> addRenderizable(sptr<Renderizable> newElement);
+			sptr<NodeText> createText(const std::string &name, const std::string& string, sptr<Font> font, u32 characterSize, const Color &color)
+			{
+				return createRenderizable<NodeText>(name, string, font, characterSize, color);
+			}
+			sptr<NodeShape> createShape(const std::string &name, const vector2df &size, sptr<Texture> texture, u32 pointCount, const Color &color)
+			{
+				return createRenderizable<NodeShape>(name, size, texture, pointCount, color);
+			}
+			sptr<NodeQuad> createSpriteShape(const std::string &name, const vector2df &size, sptr<Texture> texture, const Color &color)
+			{
+				return createRenderizable<NodeQuad>(name, size, texture, color);
+			}
+
+			template <typename T>
+			sptr<T> addRenderizable(sptr<T> newElement)
+			{
+				m_renderNodes.push_back(newElement);
+				return newElement;
+			}
+
+			template <typename T, typename... Args>
+			sptr<T> createRenderizable(const std::string &name, Args&&... args)
+			{
+				auto result(msptr<T>(name, std::forward<Args>(args)...));
+				m_renderNodes.emplace_back(result);
+				return result;
+			}
+
 			bool removeRenderizable(sptr<Renderizable> element);
 			void clear();
 

@@ -1,8 +1,5 @@
 #include "rendergroup.hpp"
 #include "renderizable.hpp"
-#include "nodeshape.hpp"
-#include "nodequad.hpp"
-#include "nodetext.hpp"
 #include "scene.hpp"
 
 #include <lib/core/window.hpp>
@@ -17,37 +14,7 @@ namespace lib
 		{
 		}
 
-		RenderGroup::~RenderGroup()
-		{
-			m_renderNodes.clear();
-		}
-
-		sptr<NodeText> RenderGroup::createText(const std::string &name, const std::string& string, sptr<Font> font, u32 characterSize, const Color &color)
-		{
-			auto result = msptr<NodeText>(name,string,font,characterSize,color);
-			addRenderizable(result);
-			return result;
-		}
-
-		sptr<NodeShape> RenderGroup::createShape(const std::string &name, const vector2df &size, sptr<Texture> texture, u32 pointCount, const Color &color)
-		{
-			auto result = msptr<NodeShape>(name,size,texture,pointCount,color);
-			addRenderizable(result);
-			return result;
-		}
-
-		sptr<NodeQuad> RenderGroup::createSpriteShape(const std::string &name, const vector2df &size, sptr<Texture> texture, const Color &color)
-		{
-			auto result = msptr<NodeQuad>(name,size,texture,color);
-			addRenderizable(result);
-			return result;
-		}
-
-		sptr<draw::Renderizable> RenderGroup::addRenderizable(sptr<Renderizable> newElement)
-		{
-			m_renderNodes.emplace_back(newElement);
-			return newElement;
-		}
+		RenderGroup::~RenderGroup() = default;
 
 		bool RenderGroup::removeRenderizable(sptr<Renderizable> element)
 		{
