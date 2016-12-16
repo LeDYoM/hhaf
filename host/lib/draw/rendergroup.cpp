@@ -16,7 +16,7 @@ namespace lib
 
 		bool RenderGroup::removeRenderizable(sptr<Renderizable> element)
 		{
-			return removeFromspVector(element, m_renderNodes);
+			return removeFromspVector(m_renderNodes, element);
 		}
 
 		void RenderGroup::draw()
@@ -57,7 +57,7 @@ namespace lib
 
 		bool RenderGroup::removeRenderGroup(sptr<RenderGroup> element)
 		{
-			return removeFromspVector(element, m_renderNodes);
+			return removeFromspVector(m_renderNodes, element);
 		}
 
 		void RenderGroup::clear()

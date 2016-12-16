@@ -14,49 +14,44 @@ namespace lib
 
 			AnimationManager::~AnimationManager()
 			{
-				_animations.clear();
+				m_animations.clear();
 			}
 
 			void AnimationManager::addAnimation(sptr<IAnimation> nanimation)
 			{
-				if (!_animations.empty())
+				if (!m_animations.empty())
 				{
-					auto elemFound = std::find_if(_animations.begin(), _animations.end(), [&nanimation](sptr<IAnimation> canimation)
+					auto elemFound = std::find_if(m_animations.begin(), m_animations.end(), [&nanimation](sptr<IAnimation> canimation)
 					{
 						return nanimation->node() == canimation->node() && canimation->animationType() == nanimation->animationType();
 					});
 
-					if (elemFound != _animations.end())
+					if (elemFound != m_animations.end())
 					{
 						logDebug("Same animation type already in node");
-						removeFromspVector(*elemFound, _animations);
+						removeFromspVector(m_animations, *elemFound);
 					}
 				}
 
-				_animations.push_back(nanimation);
+				m_animations.push_back(nanimation);
 				onAnimationStarted(nanimation, nanimation->node());
 			}
 
 			void AnimationManager::updateAnimations()
 			{
-				if (!_animations.empty())
-				{
-					for (auto &animation : _animations)
-					{
-						if (!animation->animate())
-						{
+				if (!m_animations.empty()) {
+					for (auto &animation : m_animations) {
+						if (!animation->animate()) {
 							onAnimationFinished(animation, animation->node());
-							_animationsToDelete.push_back(animation);
+							m_animationsToDelete.push_back(animation);
 						}
 					}
 
-					if (!_animationsToDelete.empty())
-					{
-						for (auto animation : _animationsToDelete)
-						{
-							removeFromspVector(animation, _animations);
+					if (!m_animationsToDelete.empty()) {
+						for (auto animation : m_animationsToDelete) {
+							removeFromspVector(m_animations, animation);
 						}
-						_animationsToDelete.clear();
+						m_animationsToDelete.clear();
 					}
 				}
 			}

@@ -9,10 +9,10 @@ namespace lib
 {
 	template <typename T> using VecSPtr = std::vector<sptr<T>>;
 
-	template <typename T, class Y>
-	bool removeFromspVector(const sptr<T> &element, std::vector<sptr<Y>> &container)
+	template <typename ContainerType, typename T>
+	bool removeFromspVector(ContainerType &container, const sptr<T> &element)
 	{
-		auto iterator(std::find(container.cbegin(), container.cend(), element));
+		auto iterator(std::find(std::begin(container), std::end(container), element));
 		if (iterator != container.cend()) {
 			container.erase(iterator);
 			return true;
