@@ -3,7 +3,9 @@
 
 #include <cstdint>
 #include <memory>
+#include <vector>
 #include <lib/core/compileconfig.hpp>
+#include <lib/core/log.hpp>
 
 namespace lib
 {
@@ -18,6 +20,26 @@ namespace lib
 
 	template <typename T>
 	using wptr = std::weak_ptr<T>;
+
+	template <typename T> 
+	using vector_shared_pointers = std::vector<sptr<T>>;
+	
+	template <typename T> 
+	using list_shared_pointers = std::vector<sptr<T>>;
+
+	template <typename ContainerType, typename T>
+	bool removespFrom(ContainerType &container, const sptr<T> &element)
+	{
+		auto iterator(std::find(std::cbegin(container), std::cend(container), element));
+		if (iterator != container.cend()) {
+			container.erase(iterator);
+			return true;
+		}
+		else {
+			logError("Element ", element, " not found in list");
+			return false;
+		}
+	}
 
 	using u64 = uint64_t;
 	using s64 = int64_t;

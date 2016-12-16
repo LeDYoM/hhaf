@@ -3,7 +3,7 @@
 
 #include <vector>
 #include "ianimation.hpp"
-#include <lib/core/vecsptr.hpp>
+#include <lib/include/types.hpp>
 
 namespace lib
 {
@@ -22,8 +22,8 @@ namespace lib
 				virtual void onAnimationStarted(sptr<IAnimation> anim, sptr<Renderizable> node);
 				virtual void onAnimationFinished(sptr<IAnimation> anim, sptr<Renderizable> node);
 			private:
-				VecSPtr<IAnimation> m_animations;
-				std::vector<sptr<IAnimation>> m_animationsToDelete;
+				vector_shared_pointers<IAnimation> m_animations;
+				vector_shared_pointers<IAnimation> m_animationsToDelete;
 			};
 		}
 	}

@@ -46,7 +46,7 @@ namespace zoper
 		return 0;
 	}
 
-	VecSPtr<lib::draw::Scene> ZoperProgramController::scenesVector()
+	vector_shared_pointers<lib::draw::Scene> ZoperProgramController::scenesVector()
 	{
 		return{ msptr<MenuScene>(), msptr<GameScene>() };
 	}

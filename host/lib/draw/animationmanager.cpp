@@ -29,7 +29,7 @@ namespace lib
 					if (elemFound != m_animations.end())
 					{
 						logDebug("Same animation type already in node");
-						removeFromspVector(m_animations, *elemFound);
+						removespFrom(m_animations, *elemFound);
 					}
 				}
 
@@ -49,7 +49,7 @@ namespace lib
 
 					if (!m_animationsToDelete.empty()) {
 						for (auto animation : m_animationsToDelete) {
-							removeFromspVector(m_animations, animation);
+							removespFrom(m_animations, animation);
 						}
 						m_animationsToDelete.clear();
 					}

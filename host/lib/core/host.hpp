@@ -3,7 +3,6 @@
 
 #include <lib/include/types.hpp>
 #include <lib/include/iapp.hpp>
-#include <lib/core/vecsptr.hpp>
 #include <vector>
 #include <string>
 
