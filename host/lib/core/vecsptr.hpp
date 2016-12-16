@@ -10,26 +10,17 @@ namespace lib
 	template <typename T> using VecSPtr = std::vector<sptr<T>>;
 
 	template <typename T, class Y>
-	bool removeFromspVector(sptr<T> element, std::vector<sptr<Y>> &container)
+	bool removeFromspVector(const sptr<T> &element, std::vector<sptr<Y>> &container)
 	{
-		container.erase(std::remove(container.begin(), container.end(), element), container.end());
-		/*
-		auto i = container.begin();
-
-		while (i != container.end()) {
-			if ((*i).get() == element.get()) {
-				i = container.erase(i);
-				logDebug("Element was found. Number of left references: ", element.use_count());
-				return true;
-			}
-			else {
-				++i;
-			}
+		auto iterator(std::find(container.cbegin(), container.cend(), element));
+		if (iterator != container.cend()) {
+			container.erase(iterator);
+			return true;
 		}
-		*/
-
-		logError("Element ", element , " not found in list");
-		return false;
+		else {
+			logError("Element ", element, " not found in list");
+			return false;
+		}
 	}
 }
 
