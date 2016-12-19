@@ -68,9 +68,9 @@ namespace zoper
 		_goalDisplay->setScale({ 1.0f, 2.0f });
 
 		_scorerg->setPosition({ 50, 50 });
-		_scoreDisplay->setPositionX(_scoreText->getLocalBounds().width);
+		_scoreDisplay->setPosition({_scoreText->getLocalBounds().width, _scoreDisplay->getPosition().y});
 
-		_currentLevelDisplay->setPositionX(_currentLevelText->getLocalBounds().width);
+		_currentLevelDisplay->setPosition({ _currentLevelText->getLocalBounds().width,_currentLevelDisplay->getPosition().y });
 
 		_levelrg->setPosition({ 1250, 50 });
 		_goalText->setPositionY(200);
@@ -125,7 +125,7 @@ namespace zoper
 			break;
 		}
 
-		_levelDisplay->setPositionX(_levelText->getLocalBounds().width);
+		_levelDisplay->setPosition({_levelText->getLocalBounds().width, _levelDisplay->getPosition().y});
 		_goalDisplay->setPosition(lib::vector2df{ _goalText->getLocalBounds().width, 200 });
 		registerEvents();
 
