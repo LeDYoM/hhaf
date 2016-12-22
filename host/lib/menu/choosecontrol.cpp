@@ -71,9 +71,9 @@ namespace lib
 
 			const auto &cTheme(menuManager()->currentTheme());
 
-			m_labelData[_cursorItemSelected].label->setColor(cTheme.textColor);
+			m_labelData[_cursorItemSelected].label->color.set(cTheme.textColor);
 			if (m_labelData[_cursorItemSelected].subLabel) {
-				m_labelData[_cursorItemSelected].subLabel->setColor(cTheme.textColor);
+				m_labelData[_cursorItemSelected].subLabel->color.set(cTheme.textColor);
 			}
 
 			_cursorItemSelected = nodeIndex;

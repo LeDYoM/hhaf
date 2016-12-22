@@ -32,15 +32,15 @@ namespace lib
 	class NotifableProperty
 	{
 	public:
-		NotifableProperty(const T & iv, std::function<void(const T &)> callback) noexcept 
+		NotifableProperty(T& iv, std::function<void()> callback) noexcept 
 			: m_value{ iv }, m_callback{ callback } {}
 		NotifableProperty(T&&iv) noexcept : m_value{ std::move(iv) } {}
 
 		const T &get() const noexcept { return m_value; }
-		void set(const T&v) noexcept { m_value = v; if (m_callback) m_callback(m_value); }
+		void set(const T&v) noexcept { m_value = v; if (m_callback) m_callback(); }
 	private:
-		T m_value;
-		std::function<void(const T&)> m_callback;
+		T& m_value;
+		std::function<void()> m_callback;
 	};
 }
 
