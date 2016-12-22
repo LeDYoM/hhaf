@@ -17,14 +17,6 @@ namespace lib
 			logConstruct("Name: ", name );
 		}
 
-		void Renderizable::setColor(const Color &c)
-		{
-			if (c != m_color) {
-				m_color = c;
-				m_vertices.setColor(m_color);
-			}
-		}
-
 		void Renderizable::updateFillColors()
 		{
 			m_vertices.setColor(m_color);

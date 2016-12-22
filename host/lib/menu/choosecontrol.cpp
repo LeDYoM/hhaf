@@ -79,9 +79,9 @@ namespace lib
 			_cursorItemSelected = nodeIndex;
 			auto selectedText = m_labelData[nodeIndex].label;
 
-			selectedText->setColor(cTheme.selectedTextColor);
+			selectedText->color.set(cTheme.selectedTextColor);
 			if (m_labelData[_cursorItemSelected].subLabel) {
-				m_labelData[_cursorItemSelected].subLabel->setColor(cTheme.selectedTextColor);
+				m_labelData[_cursorItemSelected].subLabel->color.set(cTheme.selectedTextColor);
 			}
 
 			m_cursor->setRotation(90);

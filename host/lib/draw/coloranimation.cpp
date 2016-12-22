@@ -31,7 +31,7 @@ namespace lib
 				bool result = IAnimation::animate();
 				lib::draw::Color deltaColor{ _endValue - _startValue };
 				lib::draw::Color finalColor{ _startValue + (interpolate(deltaColor,_delta)) };
-				_node->setColor(finalColor);
+				_node->color.set(finalColor);
 				return result;
 			}
 

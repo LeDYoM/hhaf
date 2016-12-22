@@ -7,7 +7,7 @@ namespace zoper
 		: GameBaseTile{ 0, size, "player",3 },
 		playerDirection{ Direction::Up }
 	{
-		setColor(getColorForToken());
+		color.set(getColorForToken());
 		setBoardPosition(bPosition);
 	}
 

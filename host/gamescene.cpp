@@ -202,7 +202,7 @@ namespace zoper
 		{
 			for (lib::u32 x = 0; x < _gameData.size.x; ++x)
 			{
-				m_backgroundTiles[y][x]->setColor(_levelProperties.getBackgroundTileColor(x, y, pointInCenter(lib::vector2du32{ x,y })));
+				m_backgroundTiles[y][x]->color.set(_levelProperties.getBackgroundTileColor(x, y, pointInCenter(lib::vector2du32{ x,y })));
 				
 			}
 		}
@@ -414,7 +414,7 @@ namespace zoper
 		if (anim->animationType() == "ColorAnimation" && node == _pauseText)
 		{
 			_pauserg->setVisible(state()==Pause);
-			_pauseText->setColor(lib::draw::colors::White);
+			_pauseText->color.set(lib::draw::colors::White);
 		}
 		else if (anim->animationType() == "PositionAnimation" && node->name() == "pointIncrementScore")
 		{
@@ -620,7 +620,7 @@ namespace zoper
 		const lib::board::BoardTileData &ov, const lib::board::BoardTileData &nv)
 	{
 		position; nv; ov;
-		tile->setColor(tile->getColorForToken());
+		tile->color.set(tile->getColorForToken());
 	}
 
 	void GameScene::updatePlayer(const lib::vector2du32 &dest, lib::sptr<Player> player_)
@@ -651,7 +651,7 @@ namespace zoper
 		const lib::board::BoardTileData &ov, const lib::board::BoardTileData &nv)
 	{
 		position; nv; ov;
-		player->setColor(player->getColorForToken());
+		player->color.set(player->getColorForToken());
 	}
 
 	void GameScene::increaseScore(lib::u32 scoreIncrement)

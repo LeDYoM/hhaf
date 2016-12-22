@@ -10,13 +10,12 @@ namespace lib
 	class ReadOnlyProperty
 	{
 	public:
-		explicit constexpr ReadOnlyProperty() noexcept : m_value{} {}
-		ReadOnlyProperty(const T&iv) noexcept : m_value{ iv } {}
+		ReadOnlyProperty(T&iv) noexcept : m_value{ iv } {}
 		ReadOnlyProperty(T&&iv) noexcept : m_value{ std::move(iv) } {}
 
 		const T &get() const noexcept { return m_value; }
 	private:
-		T m_value;
+		T& m_value;
 	};
 
 	template <typename T>
