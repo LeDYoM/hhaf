@@ -6,6 +6,7 @@
 #include "transformable.hpp"
 #include "color.hpp"
 #include <lib/include/types.hpp>
+#include <lib/include/properties.hpp>
 #include "vertexarray.hpp"
 
 namespace lib
@@ -20,10 +21,12 @@ namespace lib
 			virtual ~Renderizable() = default;
 
 			virtual void setColor(const Color &color);
-			inline Color color() const noexcept { return m_color; }
+			inline Color getColor() const noexcept { return m_color; }
 			Rectf32 getLocalBounds() const noexcept { return m_bounds; }
 			virtual void draw() override;
 			sptr<Texture> getTexture() const { return m_texture; }
+
+			NotifableProperty<Color> color;
 
 		protected:
 			void updateFillColors();
