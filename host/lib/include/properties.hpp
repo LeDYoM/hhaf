@@ -7,6 +7,9 @@
 namespace lib
 {
 	template <typename T>
+	class Property;
+
+	template <typename T>
 	class ReadOnlyProperty
 	{
 	public:
@@ -16,6 +19,7 @@ namespace lib
 		const T &get() const noexcept { return m_value; }
 	private:
 		T& m_value;
+		friend class Property<T>;
 	};
 
 	template <typename T>
@@ -33,7 +37,6 @@ namespace lib
 	public:
 		NotifableProperty(T& iv, std::function<void()> callback) noexcept 
 			: m_value{ iv }, m_callback{ callback } {}
-		NotifableProperty(T&&iv) noexcept : m_value{ std::move(iv) } {}
 
 		const T &get() const noexcept { return m_value; }
 		void set(const T&v) noexcept { m_value = v; if (m_callback) m_callback(); }

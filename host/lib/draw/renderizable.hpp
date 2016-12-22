@@ -20,20 +20,21 @@ namespace lib
 			explicit Renderizable(const std::string &name, sptr<Texture> texture, PrimitiveType type, u32 vertexCount, const Color &color);
 			virtual ~Renderizable() = default;
 
-			Rectf32 getLocalBounds() const noexcept { return m_bounds; }
 			virtual void draw() override;
 			const sptr<Texture> &getTexture() const { return m_texture; }
 
 			NotifableProperty<Color> color;
+			ReadOnlyProperty<Rectf32> bounds;
 
 		protected:
 			void updateFillColors();
+			Property<Rectf32> protectedBounds;
 
 			VertexArray m_vertices;
 			sptr<Texture> m_texture;
-			Rectf32 m_bounds;
 		private:
 			Color m_color;
+			Rectf32 m_bounds;
 		};
 	}
 }

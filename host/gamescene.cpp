@@ -68,9 +68,9 @@ namespace zoper
 		_goalDisplay->setScale({ 1.0f, 2.0f });
 
 		_scorerg->setPosition({ 50, 50 });
-		_scoreDisplay->setPosition({_scoreText->getLocalBounds().width, _scoreDisplay->getPosition().y});
+		_scoreDisplay->setPosition({_scoreText->bounds.get().width, _scoreDisplay->getPosition().y});
 
-		_currentLevelDisplay->setPosition({ _currentLevelText->getLocalBounds().width,_currentLevelDisplay->getPosition().y });
+		_currentLevelDisplay->setPosition({ _currentLevelText->bounds.get().width,_currentLevelDisplay->getPosition().y });
 
 		_levelrg->setPosition({ 1250, 50 });
 		_goalText->setPositionY(200);
@@ -79,8 +79,8 @@ namespace zoper
 		_currentLevelDisplay->setPositionY(200);
 
 
-		auto _gameBoundingBox = _gameText->getLocalBounds();
-		auto _overBoundingBox = _overText->getLocalBounds();
+		auto _gameBoundingBox = _gameText->bounds.get();
+		auto _overBoundingBox = _overText->bounds.get();
 		auto sceneCenter = getCenterCoordinates();
 		_gameText->setPosition({ sceneCenter.x - (_gameBoundingBox.width / 2.0f), sceneCenter.y - _gameBoundingBox.height });
 		_overText->setPosition({ sceneCenter.x - (_overBoundingBox.width / 2.0f), sceneCenter.y });
@@ -125,8 +125,8 @@ namespace zoper
 			break;
 		}
 
-		_levelDisplay->setPosition({_levelText->getLocalBounds().width, _levelDisplay->getPosition().y});
-		_goalDisplay->setPosition(lib::vector2df{ _goalText->getLocalBounds().width, 200 });
+		_levelDisplay->setPosition({_levelText->bounds.get().width, _levelDisplay->getPosition().y});
+		_goalDisplay->setPosition(lib::vector2df{ _goalText->bounds.get().width, 200 });
 		registerEvents();
 
 		setState(Playing);
@@ -538,8 +538,8 @@ namespace zoper
 				vector2df center( board2Scene(vector2du32{ x,y }) );
 				center.x += tileSize().x / 2.0f;
 				center.y += tileSize().y / 2.0f;
-				center.x -= (node->getLocalBounds().width / 2.0f);
-				center.y -= (node->getLocalBounds().height / 2.0f);
+				center.x -= (node->bounds.get().width / 2.0f);
+				center.y -= (node->bounds.get().height / 2.0f);
 				node->setPosition(center);
 			}
 			m_backgroundTiles.push_back(column);

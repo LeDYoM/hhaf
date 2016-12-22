@@ -7,7 +7,8 @@ namespace lib
 	namespace draw
 	{
 		Renderizable::Renderizable(const std::string &name, sptr<Texture> texture, PrimitiveType type, u32 vertexCount, const Color &color)
-			: HasName{ name }, m_vertices{ type, vertexCount }, m_bounds{}, m_texture{ std::move(texture) }, m_color{ color },
+			: HasName{ name }, m_vertices{ type, vertexCount }, m_bounds{}, 
+			bounds{ m_bounds }, protectedBounds{ m_bounds }, m_texture{ std::move(texture) }, m_color{ color },
 			color{ m_color,[this]() 
 			{
 				m_vertices.setColor(m_color);

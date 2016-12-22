@@ -40,7 +40,7 @@ namespace lib
 
 		void NodeText::updateGeometry()
 		{
-			m_bounds = m_vertices.generateText(m_font, m_string, m_characterSize, m_isBold, m_isUnderlined, m_isStrikeThrough, m_isItalic);
+			protectedBounds.set(m_vertices.generateText(m_font, m_string, m_characterSize, m_isBold, m_isUnderlined, m_isStrikeThrough, m_isItalic));
 			m_texture = msptr<Texture>(m_font->getTexture(m_characterSize));
 			updateFillColors();
 		}
@@ -54,10 +54,10 @@ namespace lib
 				setPosition(pos);
 				break;
 			case Alignment::Center:
-				setPosition({ pos.x - (getLocalBounds().width / 2.0f), pos.y - (getLocalBounds().height / 2.0f) });
+				setPosition({ pos.x - (bounds.get().width / 2.0f), pos.y - (bounds.get().height / 2.0f) });
 				break;
 			case Alignment::Right:
-				setPosition({ pos.x - (getLocalBounds().width), pos.y - (getLocalBounds().height) });
+				setPosition({ pos.x - (bounds.get().width), pos.y - (bounds.get().height) });
 				break;
 			}
 		}
@@ -73,12 +73,12 @@ namespace lib
 				break;
 			case Alignment::Center:
 			{
-				auto a = vector2df{ x - (getLocalBounds().width / 2.0f), position.y };
-				setPosition({ x - (getLocalBounds().width / 2.0f), position.y });
+				auto a = vector2df{ x - (bounds.get().width / 2.0f), position.y };
+				setPosition({ x - (bounds.get().width / 2.0f), position.y });
 			}
 			break;
 			case Alignment::Right:
-				setPosition({ x - (getLocalBounds().width), position.y });
+				setPosition({ x - (bounds.get().width), position.y });
 				break;
 			}
 		}
@@ -93,10 +93,10 @@ namespace lib
 				setPosition({ position.x, y });
 				break;
 			case Alignment::Center:
-				setPosition({ position.x, y - (getLocalBounds().height / 2.0f) });
+				setPosition({ position.x, y - (bounds.get().height / 2.0f) });
 				break;
 			case Alignment::Right:
-				setPosition({ position.x, y - (getLocalBounds().height) });
+				setPosition({ position.x, y - (bounds.get().height) });
 				break;
 			}
 		}

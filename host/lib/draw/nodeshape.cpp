@@ -14,7 +14,7 @@ namespace lib
 
 		void NodeShape::updateGeometrySimpleNode()
 		{
-			m_bounds = m_vertices.generateShape(m_size, m_pointCount);
+			protectedBounds.set(m_vertices.generateShape(m_size, m_pointCount));
 		}
 	}
 }

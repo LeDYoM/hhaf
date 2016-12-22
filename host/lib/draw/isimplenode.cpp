@@ -56,8 +56,8 @@ namespace lib
 		{
 			m_vertices.for_each_vertex([this](Vertex& v)
 			{
-				const f32 xratio = (v.position.x - m_bounds.left) / m_bounds.width;
-				const f32 yratio = (v.position.y - m_bounds.top) / m_bounds.height;
+				const f32 xratio = (v.position.x - bounds.get().left) / bounds.get().width;
+				const f32 yratio = (v.position.y - bounds.get().top) / bounds.get().height;
 				v.texCoords.x = m_textureRect.left + (m_textureRect.width * xratio);
 				v.texCoords.y = m_textureRect.top + (m_textureRect.height * yratio);
 			});
