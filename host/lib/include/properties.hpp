@@ -42,7 +42,6 @@ namespace lib
 		void set(const T&v) noexcept override { m_value = v; }
 	private:
 		T& m_value;
-
 	};
 
 	template <typename T>

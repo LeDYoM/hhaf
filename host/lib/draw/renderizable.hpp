@@ -21,7 +21,7 @@ namespace lib
 			virtual ~Renderizable() = default;
 
 			virtual void draw() override;
-			const sptr<Texture> &getTexture() const { return m_texture; }
+			const sptr<Texture> &texture() const { return m_texture; }
 
 			NotifableProperty<Color> color;
 			ReadOnlyProperty<Rectf32> bounds;
