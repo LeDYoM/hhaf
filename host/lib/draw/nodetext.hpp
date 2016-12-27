@@ -40,6 +40,7 @@ namespace lib
 			inline void setIsItalic(const bool v) noexcept { m_isItalic = v; }
 			inline void setIsUnderlined(const bool v) noexcept { m_isUnderlined = v; }
 			inline void setIsStrikeThrough(const bool v) noexcept { m_isStrikeThrough = v; }
+
 		private:
 			void updateGeometry();
 

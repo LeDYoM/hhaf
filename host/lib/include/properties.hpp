@@ -7,56 +7,30 @@
 namespace lib
 {
 	template <typename T>
-	class IReadOnlyProperty
+	class IProperty
 	{
 		virtual const T &get() const noexcept = 0;
-	};
-
-	template <typename T>
-	class IProperty : public IReadOnlyProperty<T>
-	{
-		virtual void set(const T&v) noexcept = 0;
-	};
-
-	template <typename T>
-	class Property;
-
-	template <typename T>
-	class ReadOnlyProperty : public IReadOnlyProperty<T>
-	{
-	public:
-		ReadOnlyProperty(T&iv) noexcept : m_value{ iv } {}
-
-		const T &get() const noexcept override { return m_value; }
-	private:
-		T& m_value;
+		virtual void set(const T&v) = 0;
+		virtual void set(T&&v) = 0;
 	};
 
 	template <typename T>
 	class Property : public IProperty<T>
 	{
 	public:
-		Property(T&iv) noexcept : m_value{ iv } {}
+		using callback_t = std::function<void(const T &newValue)>;
+		constexpr Property(T iv = T{}, callback_t &&c = nullptr) noexcept : m_value{std::move(iv) }, m_callback{ std::move(c) } {}
+		constexpr Property(T &&iv, callback_t &&c = nullptr) noexcept : m_value{ std::move(iv) }, , m_callback{ std::move(c) } {}
 
+		void setCallback(callback_t&&c) noexcept { m_callback = std::move(c); }
 		const T &get() const noexcept override { return m_value; }
-		void set(const T&v) noexcept override { m_value = v; }
+		void set(const T&v) override { m_value = v; if (m_callback) m_callback(m_value); }
+		void set(T&&v) override { m_value = std::move(v); if (m_callback) m_callback(m_value); }
 	private:
-		T& m_value;
+		T m_value;
+		callback_t m_callback;
 	};
 
-	template <typename T>
-	class NotifableProperty : public IProperty<T>
-	{
-	public:
-		NotifableProperty(T& iv, std::function<void()> callback) noexcept 
-			: m_value{ iv }, m_callback{ callback } {}
-
-		const T &get() const noexcept override { return m_value; }
-		void set(const T&v) noexcept override { m_value = v; if (m_callback) m_callback(); }
-	private:
-		T& m_value;
-		std::function<void()> m_callback;
-	};
 }
 
 #endif

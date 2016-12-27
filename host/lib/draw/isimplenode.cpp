@@ -6,28 +6,27 @@ namespace lib
 {
 	namespace draw
 	{
-		ISimpleNode::ISimpleNode(const std::string &name, const vector2df& size, sptr<Texture> texture, const u32 pointCount, const Color &color)
-			: Renderizable{ name, texture, TriangleFan, pointCount + 2, color },
-			m_textureRect{ {},{},m_texture ? static_cast<s32>(m_texture->getSize().x) : 0,m_texture ? static_cast<s32>(m_texture->getSize().y) : 0 },
-			m_size{ size }, m_pointCount{ pointCount } {}
+		ISimpleNode::ISimpleNode(const std::string &name, const vector2df& size, sptr<Texture> t, const u32 pointCount, const Color &color)
+			: Renderizable{ name, t, TriangleFan, pointCount + 2, color },
+			m_textureRect{ {},{}, t ? static_cast<s32>(t->getSize().x) : 0, t ? static_cast<s32>(t->getSize().y) : 0 },
+			m_size{ size }, m_pointCount{ pointCount } 
+		{
+			texture.setCallback([this](const auto &t)
+			{
+				if (t) {
+					auto tSize(t->getSize());
+					if ((!t.get() && m_textureRect == Rects32{})) {
+						setTextureRect({ 0, 0, static_cast<s32>(tSize.x), static_cast<s32>(tSize.y) });
+					}
+					setSize({ static_cast<f32>(tSize.x), static_cast<f32>(tSize.y) });
+				}
+			});
+		}
 
 		void ISimpleNode::setSize(const vector2df &size)
 		{
 			m_size = size;
 			updateGeometry();
-		}
-
-		void ISimpleNode::setTexture(sptr<Texture> texture)
-		{
-			if (texture) {
-				auto tSize(texture->getSize());
-				if ((!m_texture && m_textureRect == Rects32{})) {
-					setTextureRect({ 0, 0, static_cast<s32>(tSize.x), static_cast<s32>(tSize.y) });
-				}
-				setSize({ static_cast<f32>(tSize.x), static_cast<f32>(tSize.y) });
-			}
-
-			m_texture = std::move(texture);
 		}
 
 		void ISimpleNode::setTextureRect(const Rects32& rect)

@@ -17,23 +17,20 @@ namespace lib
 		class Renderizable : public core::HasName, public IDrawable, public Transformable
 		{
 		public:
-			explicit Renderizable(const std::string &name, sptr<Texture> texture, PrimitiveType type, u32 vertexCount, const Color &color);
+			explicit Renderizable(const std::string &name, sptr<Texture> texture_, PrimitiveType type, u32 vertexCount, const Color &color_);
 			virtual ~Renderizable() = default;
 
 			virtual void draw() override;
-			const sptr<Texture> &texture() const { return m_texture; }
 
-			NotifableProperty<Color> color;
-			ReadOnlyProperty<Rectf32> bounds;
+			Property<Color> color;
+			Property<Rectf32> bounds;
+			Property<sptr<Texture>> texture;
 
 		protected:
 			void updateFillColors();
-			Property<Rectf32> protectedBounds;
-
 			VertexArray m_vertices;
-			sptr<Texture> m_texture;
+
 		private:
-			Color m_color;
 			Rectf32 m_bounds;
 		};
 	}
