@@ -29,9 +29,6 @@ namespace lib
 		protected:
 			void updateFillColors();
 			VertexArray m_vertices;
-
-		private:
-			Rectf32 m_bounds;
 		};
 	}
 }
