@@ -23,6 +23,7 @@ namespace lib
 			void setTextureRect(const Rects32& rect);
 			Rects32 getTextureRect() const;
 
+			ReadOnlyProperty<Rectf32> bounds;
 		protected:
 			void updateGeometry();
 			void updateTexCoords();

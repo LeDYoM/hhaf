@@ -9,7 +9,7 @@ namespace lib
 		ISimpleNode::ISimpleNode(const std::string &name, const vector2df& size, sptr<Texture> t, const u32 pointCount, const Color &color)
 			: Renderizable{ name, t, TriangleFan, pointCount + 2, color },
 			m_textureRect{ {},{}, t ? static_cast<s32>(t->getSize().x) : 0, t ? static_cast<s32>(t->getSize().y) : 0 },
-			m_size{ size }, m_pointCount{ pointCount } 
+			m_size{ size }, m_pointCount{ pointCount }, bounds{ Renderizable::bounds },
 		{
 			texture.setCallback([this](const auto &t)
 			{
