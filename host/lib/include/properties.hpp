@@ -31,7 +31,7 @@ namespace lib
 		inline const T &get() const noexcept { return m_property.get(); }
 
 	private:
-		Property<T> &m_property;
+		const Property<T> &m_property;
 	};
 }
 

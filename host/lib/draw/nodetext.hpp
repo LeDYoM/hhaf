@@ -41,6 +41,8 @@ namespace lib
 			inline void setIsUnderlined(const bool v) noexcept { m_isUnderlined = v; }
 			inline void setIsStrikeThrough(const bool v) noexcept { m_isStrikeThrough = v; }
 
+			ReadOnlyProperty<Rectf32> bounds;
+
 		private:
 			void updateGeometry();
 
