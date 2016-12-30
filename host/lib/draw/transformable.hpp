@@ -20,9 +20,6 @@ namespace lib
 			const vector2df& getPosition() const;
 			f32 getRotation() const;
 			const vector2df& getScale() const;
-			void move(const vector2df& offset);
-			void rotate(const f32 angle);
-			void scale(const vector2df& factor);
 			const Transform& getTransform() const noexcept;
 			void updateTransform();
 

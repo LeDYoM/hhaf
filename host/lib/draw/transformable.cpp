@@ -49,21 +49,6 @@ namespace lib
 			return m_scale;
 		}
 
-		void Transformable::move(const vector2df& offset)
-		{
-			setPosition(m_position + offset);
-		}
-
-		void Transformable::rotate(const f32 angle)
-		{
-			setRotation(m_rotation + angle);
-		}
-
-		void Transformable::scale(const vector2df& factor)
-		{
-			setScale(m_scale * factor);
-		}
-
 		const Transform& Transformable::getTransform() const noexcept
 		{
 			return m_transform;
