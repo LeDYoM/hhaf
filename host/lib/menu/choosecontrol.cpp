@@ -84,7 +84,7 @@ namespace lib
 				m_labelData[_cursorItemSelected].subLabel->color.set(cTheme.selectedTextColor);
 			}
 
-			m_cursor->setRotation(90);
+			m_cursor->rotation.set(90);
 			
 			addAnimation(draw::anim::PositionAnimation::create(120, m_cursor, 
 				vector2df{ selectedText->getPosition().x - descriptorCursorSize.x, selectedText->getPosition().y }));
