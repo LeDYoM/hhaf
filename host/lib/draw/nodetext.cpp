@@ -65,7 +65,7 @@ namespace lib
 
 		void NodeText::setPositionWithAlignmentX(const float x, Alignment alignment /*= Alignment::Left*/)
 		{
-			const vector2df position(getPosition());
+			const vector2df position(position());
 			switch (alignment)
 			{
 			default:
@@ -86,7 +86,7 @@ namespace lib
 
 		void NodeText::setPositionWithAlignmentY(const float y, Alignment alignment /*= Alignment::Left*/)
 		{
-			const vector2df position(getPosition());
+			const vector2df position(position());
 			switch (alignment)
 			{
 			default:
@@ -104,7 +104,7 @@ namespace lib
 
 		void NodeText::setAlignment(Alignment alignment)
 		{
-			setPositionWithAlignment(getPosition(), alignment);
+			setPositionWithAlignment(position(), alignment);
 		}
 
 	}

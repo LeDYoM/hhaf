@@ -29,7 +29,7 @@ namespace lib
 			{
 				auto text = createRenderizable<draw::NodeText>("name" + count, label->_text, cTheme.font, cTheme.chSize, cTheme.textColor);
 				text->setPositionWithAlignmentX(0, normalLabelAlign);
-				text->setPosition({ text->getPosition().x, currentPos.y });
+				text->setPosition({ text->position().x, currentPos.y });
 
 				sptr<draw::NodeText> subtext{ nullptr };
 				if (!label->_subOptionsLabels.empty()) {
@@ -87,7 +87,7 @@ namespace lib
 			m_cursor->rotation.set(90);
 			
 			addAnimation(draw::anim::PositionAnimation::create(120, m_cursor, 
-				vector2df{ selectedText->getPosition().x - descriptorCursorSize.x, selectedText->getPosition().y }));
+				vector2df{ selectedText->position().x - descriptorCursorSize.x, selectedText->position().y }));
 		}
 
 		void ChooseControl::goDown()

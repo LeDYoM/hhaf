@@ -14,16 +14,14 @@ namespace lib
 		public:
 			Transformable() noexcept;
 			virtual ~Transformable();
-			void setPosition(const vector2df& position);
-			const vector2df& getPosition() const;
 			const Transform& getTransform() const noexcept;
 			void updateTransform();
 
 			Property<vector2df> origin;
 			Property<f32> rotation;
 			Property<vector2df> scale;
+			Property<vector2df> position;
 		private:
-			vector2df m_position;
 			Transform m_transform;
 		};
 	}

@@ -67,16 +67,16 @@ namespace zoper
 		_goalText->scale = { 1.0f, 2.0f };
 		_goalDisplay->scale = { 1.0f, 2.0f };
 
-		_scorerg->setPosition({ 50, 50 });
-		_scoreDisplay->setPosition({_scoreText->bounds.get().width, _scoreDisplay->getPosition().y});
+		_scorerg->position = { 50, 50 };
+		_scoreDisplay->position = {_scoreText->bounds().width, _scoreDisplay->position().y};
 
-		_currentLevelDisplay->setPosition({ _currentLevelText->bounds.get().width,_currentLevelDisplay->getPosition().y });
+		_currentLevelDisplay->position = { _currentLevelText->bounds.get().width,_currentLevelDisplay->position().y };
 
-		_levelrg->setPosition({ 1250, 50 });
-		_goalText->setPosition({ _goalText->getPosition().x, 200 });
+		_levelrg->position = { 1250, 50 };
+		_goalText->position = { _goalText->position().x, 200 };
 
-		_currentLevelText->setPosition({ _currentLevelText->getPosition().x, 200 });
-		_currentLevelDisplay->setPosition({ _currentLevelDisplay->getPosition().x, 200 });
+		_currentLevelText->position = { _currentLevelText->position().x, 200 };
+		_currentLevelDisplay->position = { _currentLevelDisplay->position().x, 200 };
 
 
 		auto _gameBoundingBox = _gameText->bounds.get();
@@ -125,8 +125,8 @@ namespace zoper
 			break;
 		}
 
-		_levelDisplay->setPosition({_levelText->bounds.get().width, _levelDisplay->getPosition().y});
-		_goalDisplay->setPosition(lib::vector2df{ _goalText->bounds.get().width, 200 });
+		_levelDisplay->position = {_levelText->bounds().width, _levelDisplay->position().y};
+		_goalDisplay->position = { _goalText->bounds().width, 200 };
 		registerEvents();
 
 		setState(Playing);
@@ -626,8 +626,8 @@ namespace zoper
 	void GameScene::updatePlayer(const lib::vector2du32 &dest, lib::sptr<Player> player_)
 	{
 		player_->origin.set(tileSize() / 2.0f);
-		player_->setPosition(board2Scene(dest) + (tileSize() / 2.0f));
-		player_->rotation.set(player_->currentDirection().angle());
+		player_->position = board2Scene(dest) + (tileSize() / 2.0f);
+		player_->rotation = player_->currentDirection().angle();
 	}
 
 	void GameScene::playerMoved(const lib::vector2du32 &source, const lib::vector2du32 &dest, lib::sptr<Player> player_)
@@ -638,7 +638,7 @@ namespace zoper
 
 	void GameScene::playerAppeared(const lib::vector2du32 &position, lib::sptr<Player> player)
 	{
-		player->setPosition(board2Scene(position));
+		player->position = board2Scene(position);
 	}
 
 	void GameScene::playerDissapeared(const lib::vector2du32 &position, lib::sptr<Player> player)

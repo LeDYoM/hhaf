@@ -16,22 +16,11 @@ namespace lib
 				updateTransform();
 
 			} },
-			m_position{ 0, 0 },
+			position{ {} ,[this](const auto&) {updateTransform(); } },
 			scale{{ 1, 1 },[this](const auto&) {updateTransform(); } },
 			m_transform{} { }
 
 		Transformable::~Transformable() = default;
-
-		void Transformable::setPosition(const vector2df& position)
-		{
-			m_position = position;
-			updateTransform();
-		}
-
-		const vector2df& Transformable::getPosition() const
-		{
-			return m_position;
-		}
 
 		const Transform& Transformable::getTransform() const noexcept
 		{
@@ -48,8 +37,8 @@ namespace lib
 			const f32 syc = scale().y * cosine;
 			const f32 sxs = scale().x * sine;
 			const f32 sys = scale().y * sine;
-			const f32 tx = -origin().x * sxc - origin().y * sys + m_position.x;
-			const f32 ty = origin().x * sxs - origin().y * syc + m_position.y;
+			const f32 tx = -origin().x * sxc - origin().y * sys + position().x;
+			const f32 ty = origin().x * sxs - origin().y * syc + position().y;
 
 			m_transform = Transform(sxc, sys, tx,
 				-sxs, syc, ty,
