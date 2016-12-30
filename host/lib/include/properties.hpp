@@ -18,10 +18,14 @@ namespace lib
 		Property(Property&&) = delete;
 		Property& operator=(Property&&) = delete;
 
+		constexpr const T &operator()() const noexcept { return m_value; }
 		void setCallback(callback_t&&c) noexcept { m_callback = std::move(c); }
 		constexpr const T &get() const noexcept { return m_value; }
-		void set(const T&v) { m_value = v; if (m_callback) m_callback(m_value); }
-		void set(T&&v) { m_value = std::move(v); if (m_callback) m_callback(m_value); }
+		inline void set(const T&v) { m_value = v; if (m_callback) m_callback(m_value); }
+		inline void set(T&&v) { m_value = std::move(v); if (m_callback) m_callback(m_value); }
+		Property &operator=(const T&v) { set(v); return *this; }
+		Property &operator=(T&&v) { set(std::move(v)); return *this; }
+
 	private:
 		T m_value;
 		callback_t m_callback;

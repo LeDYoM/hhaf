@@ -60,12 +60,12 @@ namespace zoper
 
 		increaseScore(0);
 
-		_scoreText->setScale({ 1.0f, 2.0f });
-		_scoreDisplay->setScale({ 1.0f, 2.0f });
-		_levelText->setScale({ 1.0f, 2.0f });
-		_levelDisplay->setScale({ 1.0f, 2.0f });
-		_goalText->setScale({ 1.0f, 2.0f });
-		_goalDisplay->setScale({ 1.0f, 2.0f });
+		_scoreText->scale = { 1.0f, 2.0f };
+		_scoreDisplay->scale = { 1.0f, 2.0f };
+		_levelText->scale = { 1.0f, 2.0f };
+		_levelDisplay->scale = { 1.0f, 2.0f };
+		_goalText->scale = { 1.0f, 2.0f };
+		_goalDisplay->scale = { 1.0f, 2.0f };
 
 		_scorerg->setPosition({ 50, 50 });
 		_scoreDisplay->setPosition({_scoreText->bounds.get().width, _scoreDisplay->getPosition().y});

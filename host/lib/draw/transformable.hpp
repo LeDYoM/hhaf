@@ -15,19 +15,15 @@ namespace lib
 			Transformable() noexcept;
 			virtual ~Transformable();
 			void setPosition(const vector2df& position);
-			void setScale(const vector2df& factors);
 			const vector2df& getPosition() const;
-			const vector2df& getScale() const;
 			const Transform& getTransform() const noexcept;
 			void updateTransform();
 
 			Property<vector2df> origin;
 			Property<f32> rotation;
-
+			Property<vector2df> scale;
 		private:
-
 			vector2df m_position;
-			vector2df m_scale;
 			Transform m_transform;
 		};
 	}
