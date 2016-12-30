@@ -73,10 +73,10 @@ namespace zoper
 		_currentLevelDisplay->setPosition({ _currentLevelText->bounds.get().width,_currentLevelDisplay->getPosition().y });
 
 		_levelrg->setPosition({ 1250, 50 });
-		_goalText->setPositionY(200);
+		_goalText->setPosition({ _goalText->getPosition().x, 200 });
 
-		_currentLevelText->setPositionY(200);
-		_currentLevelDisplay->setPositionY(200);
+		_currentLevelText->setPosition({ _currentLevelText->getPosition().x, 200 });
+		_currentLevelDisplay->setPosition({ _currentLevelDisplay->getPosition().x, 200 });
 
 
 		auto _gameBoundingBox = _gameText->bounds.get();

@@ -14,8 +14,6 @@ namespace lib
 			Transformable() noexcept;
 			virtual ~Transformable();
 			void setPosition(const vector2df& position);
-			void setPositionX(const f32 x);
-			void setPositionY(const f32 y);
 			void setRotation(const f32 angle);
 			void setScale(const vector2df& factors);
 			void setOrigin(const vector2df& origin);

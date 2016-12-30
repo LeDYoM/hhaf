@@ -20,18 +20,6 @@ namespace lib
 			updateTransform();
 		}
 
-		void Transformable::setPositionX(const f32 x)
-		{
-			m_position.x = x;
-			updateTransform();
-		}
-
-		void Transformable::setPositionY(const f32 y)
-		{
-			m_position.y = y;
-			updateTransform();
-		}
-
 		void Transformable::setRotation(const f32 angle)
 		{
 			m_rotation = static_cast<f32>(fmod(angle, 360));

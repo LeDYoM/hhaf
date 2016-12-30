@@ -29,7 +29,7 @@ namespace lib
 			{
 				auto text = createRenderizable<draw::NodeText>("name" + count, label->_text, cTheme.font, cTheme.chSize, cTheme.textColor);
 				text->setPositionWithAlignmentX(0, normalLabelAlign);
-				text->setPositionY(currentPos.y);
+				text->setPosition({ text->getPosition().x, currentPos.y });
 
 				sptr<draw::NodeText> subtext{ nullptr };
 				if (!label->_subOptionsLabels.empty()) {
