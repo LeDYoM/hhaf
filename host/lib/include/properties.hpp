@@ -11,8 +11,7 @@ namespace lib
 	{
 	public:
 		using callback_t = std::function<void(const T &newValue)>;
-		constexpr Property(T iv = T{}, callback_t &&c = nullptr) noexcept : m_value{std::move(iv) }, m_callback{ std::move(c) } {}
-		constexpr Property(T &&iv, callback_t &&c = nullptr) noexcept : m_value{ std::move(iv) }, , m_callback{ std::move(c) } {}
+		constexpr Property(T iv, callback_t c) noexcept : m_value{ std::move(iv) }, m_callback{ std::move(c) } {}
 
 		Property(const Property&) = delete;
 		Property& operator=(const Property&) = delete;
@@ -32,7 +31,7 @@ namespace lib
 	class ReadOnlyProperty
 	{
 	public:
-		constexpr ReadOnlyProperty(const Property<T> &p) : m_property{ p } {}
+		constexpr ReadOnlyProperty(const Property<T> &p) noexcept : m_property{ p } {}
 		constexpr inline const T &get() const noexcept { return m_property.get(); }
 
 	private:

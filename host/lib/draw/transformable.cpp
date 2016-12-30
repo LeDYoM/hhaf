@@ -6,7 +6,7 @@ namespace lib
 	namespace draw
 	{
 		Transformable::Transformable() noexcept :
-			m_origin{ 0, 0 },
+		origin{ {},[this](const auto&) {updateTransform(); } },
 			m_position{ 0, 0 },
 			m_rotation{ 0 },
 			m_scale{ 1, 1 },
@@ -34,12 +34,6 @@ namespace lib
 			updateTransform();
 		}
 
-		void Transformable::setOrigin(const vector2df& origin)
-		{
-			m_origin = origin;
-			updateTransform();
-		}
-
 		const vector2df& Transformable::getPosition() const
 		{
 			return m_position;
@@ -53,11 +47,6 @@ namespace lib
 		const vector2df& Transformable::getScale() const
 		{
 			return m_scale;
-		}
-
-		const vector2df& Transformable::getOrigin() const
-		{
-			return m_origin;
 		}
 
 		void Transformable::move(const vector2df& offset)

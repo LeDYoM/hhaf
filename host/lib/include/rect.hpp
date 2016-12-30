@@ -12,7 +12,7 @@ namespace lib
 		T left, top, width, height;
 
 		inline constexpr Rect(T rectLeft, T rectTop, T rectWidth, T rectHeight) noexcept : left{ rectLeft }, top{ rectTop }, width{ rectWidth }, height{ rectHeight } { }
-		inline constexpr explicit Rect() noexcept : Rect{ {}, {}, {}, {} } {}
+		inline constexpr Rect() noexcept : Rect{ {}, {}, {}, {} } {}
 		inline constexpr Rect(const vector2d<T>& position, const vector2d<T>& size) noexcept : Rect{ position.x, position.y, size.x, size.y } {}
 		inline constexpr Rect(const Rect&) noexcept = default;
 		inline Rect &operator=(const Rect&) noexcept = default;

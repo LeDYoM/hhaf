@@ -625,7 +625,7 @@ namespace zoper
 
 	void GameScene::updatePlayer(const lib::vector2du32 &dest, lib::sptr<Player> player_)
 	{
-		player_->setOrigin(tileSize() / 2.0f);
+		player_->origin.set(tileSize() / 2.0f);
 		player_->setPosition(board2Scene(dest) + (tileSize() / 2.0f));
 		player_->setRotation(player_->currentDirection().angle());
 	}
