@@ -652,7 +652,7 @@ namespace zoper
 		_scoreDisplay->setString(result);
 	}
 
-	const lib::vector2df GameScene::getDefaultSizeView()
+	vector2df GameScene::getDefaultSizeView()
 	{
 		return{ 2000.0f, 2000.0f };
 	}

@@ -39,7 +39,7 @@ namespace lib
 
 			virtual void update() = 0;
 
-			virtual const vector2df getDefaultSizeView() = 0;
+			virtual vector2df getDefaultSizeView() = 0;
 			vector2df getCoordinatesToCenter(const Rectf32 &coordinates) const;
 			vector2df getCenterCoordinates() const;
 

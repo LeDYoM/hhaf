@@ -8,7 +8,7 @@
 
 namespace zoper
 {
-	class MenuScene : public lib::menu::MenuManager, public KeyMapping
+	class MenuScene final : public lib::menu::MenuManager, public KeyMapping
 	{
 	public:
 		MenuScene();
@@ -23,7 +23,7 @@ namespace zoper
 
 		virtual void update() override;
 
-		virtual const lib::vector2df getDefaultSizeView() override;
+		virtual lib::vector2df getDefaultSizeView() override;
 	private:
 		lib::sptr<lib::draw::NodeQuad> m_logo{ nullptr };
 		lib::sptr<lib::draw::NodeQuad> m_background{ nullptr };

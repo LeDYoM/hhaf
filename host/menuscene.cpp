@@ -51,7 +51,7 @@ namespace zoper
 
 	}
 
-	const lib::vector2df MenuScene::getDefaultSizeView()
+	lib::vector2df MenuScene::getDefaultSizeView()
 	{
 		return{ 2000.0f, 2000.0f };
 	}
