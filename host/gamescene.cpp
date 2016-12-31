@@ -82,8 +82,8 @@ namespace zoper
 		auto _gameBoundingBox = _gameText->bounds.get();
 		auto _overBoundingBox = _overText->bounds.get();
 		auto sceneCenter = getCenterCoordinates();
-		_gameText->setPosition({ sceneCenter.x - (_gameBoundingBox.width / 2.0f), sceneCenter.y - _gameBoundingBox.height });
-		_overText->setPosition({ sceneCenter.x - (_overBoundingBox.width / 2.0f), sceneCenter.y });
+		_gameText->position = { sceneCenter.x - (_gameBoundingBox.width / 2.0f), sceneCenter.y - _gameBoundingBox.height };
+		_overText->position = { sceneCenter.x - (_overBoundingBox.width / 2.0f), sceneCenter.y };
 
 		_pauseText->setPositionWithAlignment(vector2df{ 1000.0f, 1000.0f }, NodeText::Alignment::Center);
 
@@ -344,16 +344,16 @@ namespace zoper
 		p_boardModel->setTile(p_player->boardPosition(), std::dynamic_pointer_cast<lib::board::ITile>(_mainBoardrg->addRenderizable(p_player)));
 	}
 
-	void GameScene::addNewToken(const lib::vector2du32 &position, lib::u32 newToken)
+	void GameScene::addNewToken(const lib::vector2du32 &pos, lib::u32 newToken)
 	{
-		logDebug("Adding new tile at ", position.x, ",", position.y, " with value ", newToken);
+		logDebug("Adding new tile at ", pos, " with value ", newToken);
 		// Create a new Tile instance
 		lib::sptr<Tile> newTileToken = lib::sptr<Tile>(new Tile(lib::board::BoardTileData(newToken),tileSize()));
 		// Set the position in the scene depending on the board position
-		newTileToken->setPosition(board2Scene(position));
+		newTileToken->position = board2Scene(pos);
 
 		// Add it to the board and to the scene nodes
-		p_boardModel->setTile(position, std::dynamic_pointer_cast<lib::board::ITile>(_mainBoardrg->addRenderizable(newTileToken)));
+		p_boardModel->setTile(pos, std::dynamic_pointer_cast<lib::board::ITile>(_mainBoardrg->addRenderizable(newTileToken)));
 	}
 
 	void zoper::GameScene::registerEvents()
@@ -469,14 +469,14 @@ namespace zoper
 			updateLevelData();
 	}
 
-	bool GameScene::pointInCenter(const lib::vector2du32 &position) const
+	bool GameScene::pointInCenter(const lib::vector2du32 &pos) const
 	{
-		if (p_boardModel->validCoords(position))
+		if (p_boardModel->validCoords(pos))
 		{
-			if (position.x < _gameData.centerRect.left || position.y < _gameData.centerRect.top)
+			if (pos.x < _gameData.centerRect.left || pos.y < _gameData.centerRect.top)
 				return false;
 
-			if (position.x >= _gameData.centerRect.right() || position.y >= _gameData.centerRect.bottom())
+			if (pos.x >= _gameData.centerRect.right() || pos.y >= _gameData.centerRect.bottom())
 				return false;
 
 			return true;
@@ -531,7 +531,7 @@ namespace zoper
 			for (u32 x = 0; x < _gameData.size.x; ++x)
 			{
 				auto tileBackground = _backgroundTilesrg->createRenderizable<NodeQuad>("backgroundTile", tileSize(),nullptr, colors::White);
-				tileBackground->setPosition(board2Scene(vector2du32{ x,y }));
+				tileBackground->position = board2Scene(vector2du32{ x,y });
 				column.push_back(std::move(tileBackground));
 
 				auto node = _backgroundTilesrg->createRenderizable<NodeShape>("backgroundTilePoint", vector2df{ 10.0f,10.0f },nullptr,30, colors::White);
@@ -540,35 +540,35 @@ namespace zoper
 				center.y += tileSize().y / 2.0f;
 				center.x -= (node->bounds.get().width / 2.0f);
 				center.y -= (node->bounds.get().height / 2.0f);
-				node->setPosition(center);
+				node->position = center;
 			}
 			m_backgroundTiles.push_back(column);
 		}
 	}
 
-	void GameScene::tileAdded(const lib::vector2du32 &position, lib::board::WITilePointer nTile)
+	void GameScene::tileAdded(const lib::vector2du32 &pos, lib::board::WITilePointer nTile)
 	{
 		// Tile appeared
 		if (auto ztile = std::dynamic_pointer_cast<Tile>(nTile.lock()))
 		{
-			tokenAppeared(position, ztile);
+			tokenAppeared(pos, ztile);
 		}
 		else if (auto ztile_ = std::dynamic_pointer_cast<Player>(nTile.lock()))
 		{
 			// Set the position in the scene depending on the board position
-			playerAppeared(position, ztile_);
+			playerAppeared(pos, ztile_);
 		}
 	}
 
-	void GameScene::tileDeleted(const lib::vector2du32 &position, lib::board::WITilePointer nTile)
+	void GameScene::tileDeleted(const lib::vector2du32 &pos, lib::board::WITilePointer nTile)
 	{
 		if (auto ztile = std::dynamic_pointer_cast<Tile>(nTile.lock()))
 		{
-			tokenDissapeared(position,ztile);
+			tokenDissapeared(pos,ztile);
 		}
 		else if (auto ztile_ = std::dynamic_pointer_cast<Player>(nTile.lock()))
 		{
-			playerDissapeared(position,ztile_);
+			playerDissapeared(pos,ztile_);
 		}
 	}
 
@@ -584,77 +584,67 @@ namespace zoper
 		}
 	}
 
-	void GameScene::tileChanged(const lib::vector2du32 &position, lib::board::WITilePointer nTile, 
+	void GameScene::tileChanged(const lib::vector2du32 &pos, lib::board::WITilePointer nTile, 
 		const lib::board::BoardTileData &ov, const lib::board::BoardTileData &nv)
 	{
-		if (auto ztile = std::dynamic_pointer_cast<Tile>(nTile.lock()))
-		{
-			tokenChangedValue(position, ztile, ov, nv);
+		if (auto ztile = std::dynamic_pointer_cast<Tile>(nTile.lock())) {
+			tokenChangedValue(pos, ztile, ov, nv);
 		}
-		else if (auto ztile_ = std::dynamic_pointer_cast<Player>(nTile.lock()))
-		{
-			playerChangedValue(position, ztile_, ov, nv);
+		else if (auto ztile_ = std::dynamic_pointer_cast<Player>(nTile.lock())) {
+			playerChangedValue(pos, ztile_, ov, nv);
 		}
 	}
 
 	void GameScene::tokenMoved(const lib::vector2du32 &source, const lib::vector2du32 &dest, lib::sptr<Tile> tile)
 	{
 		source;
-		addAnimation(lib::draw::anim::PositionAnimation::create(_levelProperties.millisBetweenTokens() / 2, tile, board2Scene(dest)));
+		addAnimation(draw::anim::PositionAnimation::create(_levelProperties.millisBetweenTokens() / 2, tile, board2Scene(dest)));
 	}
 
-	void GameScene::tokenAppeared(const lib::vector2du32 &position, lib::sptr<Tile> tile)
+	void GameScene::tokenAppeared(const lib::vector2du32 &, lib::sptr<Tile>)
 	{
-		position;
-		tile;
 	}
 
-	void GameScene::tokenDissapeared(const lib::vector2du32 &position, lib::sptr<Tile> tile)
+	void GameScene::tokenDissapeared(const lib::vector2du32 &, lib::sptr<Tile> tile)
 	{
-		position;
 		logDebug("Deleting token ", tile->name(), " from scene");
 		_mainBoardrg->removeRenderizable(tile);
 	}
 
-	void GameScene::tokenChangedValue(const lib::vector2du32 &position, lib::sptr<Tile> tile,
-		const lib::board::BoardTileData &ov, const lib::board::BoardTileData &nv)
+	void GameScene::tokenChangedValue(const lib::vector2du32 &, lib::sptr<Tile> tile,
+		const lib::board::BoardTileData &, const lib::board::BoardTileData &)
 	{
-		position; nv; ov;
 		tile->color.set(tile->getColorForToken());
 	}
 
 	void GameScene::updatePlayer(const lib::vector2du32 &dest, lib::sptr<Player> player_)
 	{
-		player_->origin.set(tileSize() / 2.0f);
+		player_->origin = tileSize() / 2.0f;
 		player_->position = board2Scene(dest) + (tileSize() / 2.0f);
 		player_->rotation = player_->currentDirection().angle();
 	}
 
-	void GameScene::playerMoved(const lib::vector2du32 &source, const lib::vector2du32 &dest, lib::sptr<Player> player_)
+	void GameScene::playerMoved(const lib::vector2du32 &, const lib::vector2du32 &dest, lib::sptr<Player> player_)
 	{
-		source;
 		updatePlayer(dest, player_);
 	}
 
-	void GameScene::playerAppeared(const lib::vector2du32 &position, lib::sptr<Player> player)
+	void GameScene::playerAppeared(const vector2du32 &pos, lib::sptr<Player> player)
 	{
-		player->position = board2Scene(position);
+		player->position = board2Scene(pos);
 	}
 
-	void GameScene::playerDissapeared(const lib::vector2du32 &position, lib::sptr<Player> player)
+	void GameScene::playerDissapeared(const lib::vector2du32 &, lib::sptr<Player> player)
 	{
-		position;
-
 	}
 
-	void GameScene::playerChangedValue(const lib::vector2du32 &position, lib::sptr<Player> player,
-		const lib::board::BoardTileData &ov, const lib::board::BoardTileData &nv)
+	void GameScene::playerChangedValue(const vector2du32 &, sptr<Player> player,
+		const board::BoardTileData &, const board::BoardTileData &)
 	{
-		position; nv; ov;
 		player->color.set(player->getColorForToken());
 	}
 
-	void GameScene::increaseScore(lib::u32 scoreIncrement)
+	void GameScene::increaseScore(u32 scoreIncrement)
 	{
 		_score += scoreIncrement;
 		std::string result{ std::to_string(_score) };

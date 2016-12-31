@@ -37,7 +37,7 @@ namespace lib
 	public:
 		constexpr ReadOnlyProperty(const Property<T> &p) noexcept : m_property{ p } {}
 		constexpr inline const T &get() const noexcept { return m_property.get(); }
-		constexpr const T &operator()() const noexcept { return m_value; }
+		constexpr const T &operator()() const noexcept { return m_property.get(); }
 
 	private:
 		const Property<T> &m_property;

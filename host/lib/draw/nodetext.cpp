@@ -52,52 +52,49 @@ namespace lib
 			{
 			default:
 			case Alignment::Left:
-				setPosition(pos);
+				position = pos;
 				break;
 			case Alignment::Center:
-				setPosition({ pos.x - (bounds.get().width / 2.0f), pos.y - (bounds.get().height / 2.0f) });
+				position = { pos.x - (bounds().width / 2.0f), pos.y - (bounds().height / 2.0f) };
 				break;
 			case Alignment::Right:
-				setPosition({ pos.x - (bounds.get().width), pos.y - (bounds.get().height) });
+				position = { pos.x - (bounds().width), pos.y - (bounds().height) };
 				break;
 			}
 		}
 
 		void NodeText::setPositionWithAlignmentX(const float x, Alignment alignment /*= Alignment::Left*/)
 		{
-			const vector2df position(position());
 			switch (alignment)
 			{
 			default:
 			case Alignment::Left:
-				setPosition(vector2df{ x, position.y });
+				position = { x, position().y };
 				break;
 			case Alignment::Center:
 			{
-				auto a = vector2df{ x - (bounds.get().width / 2.0f), position.y };
-				setPosition({ x - (bounds.get().width / 2.0f), position.y });
+				position = { x - (bounds().width / 2.0f), position().y };
 			}
 			break;
 			case Alignment::Right:
-				setPosition({ x - (bounds.get().width), position.y });
+				position = { x - (bounds().width), position().y };
 				break;
 			}
 		}
 
 		void NodeText::setPositionWithAlignmentY(const float y, Alignment alignment /*= Alignment::Left*/)
 		{
-			const vector2df position(position());
 			switch (alignment)
 			{
 			default:
 			case Alignment::Left:
-				setPosition({ position.x, y });
+				position = { position().x, y };
 				break;
 			case Alignment::Center:
-				setPosition({ position.x, y - (bounds.get().height / 2.0f) });
+				position = { position().x, y - (bounds.get().height / 2.0f) };
 				break;
 			case Alignment::Right:
-				setPosition({ position.x, y - (bounds.get().height) });
+				position = { position().x, y - (bounds().height) };
 				break;
 			}
 		}
@@ -106,6 +103,5 @@ namespace lib
 		{
 			setPositionWithAlignment(position(), alignment);
 		}
-
 	}
 }

@@ -52,7 +52,7 @@ namespace zoper
 
 		void MainMenu::onAddedToScene()
 		{
-			setPosition({ menuManager()->getCenterCoordinates().x, 700 });
+			position = { menuManager()->getCenterCoordinates().x, 700 };
 		}
 	}
 }
