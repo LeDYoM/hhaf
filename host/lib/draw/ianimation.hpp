@@ -12,43 +12,42 @@ namespace lib
 		namespace anim
 		{
 			using animation_action_callback = std::function<void()>;
-			static const animation_action_callback noAction{};
+			static const animation_action_callback noAction;
 
 			class IAnimation
 			{
 			public:
-				IAnimation(const u32 duration, animation_action_callback &&onStart, animation_action_callback &&onEnd)
+				IAnimation(const u64 duration, animation_action_callback &&onStart, animation_action_callback &&onEnd) noexcept
 					: m_duration{ duration }, m_onStart{ std::move(onStart) }, m_onEnd{std::move(onEnd) }
 				{
-					_clock.restart();
+					m_timer.restart();
 				}
 				virtual bool animate()
 				{
-					currentTime = _clock.getElapsedTime().asMilliSeconds();
-					if (currentTime > m_duration)
+					m_currentTime = m_timer.getElapsedTime().asMilliSeconds();
+					if (m_currentTime > m_duration)
 					{
-						_delta = 1.0f;
+						m_delta = 1.0f;
 						if (m_onEnd) m_onEnd();
 						return false;
 					}
-					_delta = (static_cast<f32>(currentTime) / m_duration);
+					m_delta = (static_cast<f32>(m_currentTime) / m_duration);
 					return true;
 				}
 				virtual ~IAnimation() = default;
 			protected:
-				u64 currentTime;
+				u64 m_currentTime;
 				u64 m_duration;
-				float _delta{ 0.0f };
-				Timer _clock;
-				animation_action_callback m_onStart;
-				animation_action_callback m_onEnd;
+				f32 m_delta{ 0.0f };
+				Timer m_timer;
+				animation_action_callback m_onStart, m_onEnd;
 			};
 
 			template <typename T>
 			class IPropertyAnimation : public IAnimation
 			{
 			public:
-				IPropertyAnimation(const s32 duration, Property<T> &prop, T start, T end, 
+				IPropertyAnimation(const u64 duration, Property<T> &prop, T start, T end, 
 					animation_action_callback onStart, animation_action_callback onEnd)
 					: IAnimation{ duration, std::move(onStart),std::move(onEnd) },
 					m_property{ prop }, m_startValue { std::move(start)	},
@@ -57,10 +56,7 @@ namespace lib
 				virtual bool animate() override
 				{
 					const bool bResult{ IAnimation::animate() };
-
-					T finalValue{ m_startValue + (m_deltaValue * _delta) };
-					m_property = finalValue;
-
+					m_property = T{ m_startValue + (m_deltaValue * m_delta) };
 					return bResult;
 				}
 
