@@ -411,10 +411,6 @@ namespace zoper
 
 	void GameScene::onAnimationFinished(lib::sptr<lib::draw::anim::IAnimation> anim, lib::sptr<lib::draw::Renderizable> node)
 	{
-		if (anim->animationType() == "PositionAnimation" && node->name() == "pointIncrementScore")
-		{
-			removeRenderizable(node);
-		}
 	}
 
 	void GameScene::launchPlayer()

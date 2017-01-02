@@ -19,22 +19,8 @@ namespace lib
 
 			void AnimationManager::addAnimation(sptr<IAnimation> nanimation)
 			{
-				if (!m_animations.empty())
-				{
-					auto elemFound = std::find_if(m_animations.begin(), m_animations.end(), [&nanimation](sptr<IAnimation> canimation)
-					{
-						return nanimation->node() == canimation->node() && canimation->animationType() == nanimation->animationType();
-					});
-
-					if (elemFound != m_animations.end())
-					{
-						logDebug("Same animation type already in node");
-						removespFrom(m_animations, *elemFound);
-					}
-				}
-
 				m_animations.push_back(nanimation);
-				onAnimationStarted(nanimation, nanimation->node());
+//				onAnimationStarted(nanimation, nanimation->node());
 			}
 
 			void AnimationManager::updateAnimations()
@@ -42,7 +28,6 @@ namespace lib
 				if (!m_animations.empty()) {
 					for (auto &animation : m_animations) {
 						if (!animation->animate()) {
-							onAnimationFinished(animation, animation->node());
 							m_animationsToDelete.push_back(animation);
 						}
 					}

@@ -12,38 +12,33 @@ namespace lib
 		namespace anim
 		{
 			using animation_action_callback = std::function<void()>;
-
 			static const animation_action_callback noAction{};
 
 			class IAnimation
 			{
 			public:
-				IAnimation(const u32 duration, sptr<Renderizable> node, 
-					animation_action_callback &&onStart, animation_action_callback &&onEnd)
-					: _duration{ duration }, _node{ node }, m_onStart{ std::move(onStart) }, m_onEnd{std::move(onEnd) }
+				IAnimation(const u32 duration, animation_action_callback &&onStart, animation_action_callback &&onEnd)
+					: m_duration{ duration }, m_onStart{ std::move(onStart) }, m_onEnd{std::move(onEnd) }
 				{
 					_clock.restart();
 				}
-				virtual const std::string animationType() const { return ""; }
 				virtual bool animate()
 				{
 					currentTime = _clock.getElapsedTime().asMilliSeconds();
-					if (currentTime > _duration)
+					if (currentTime > m_duration)
 					{
 						_delta = 1.0f;
 						if (m_onEnd) m_onEnd();
 						return false;
 					}
-					_delta = (static_cast<f32>(currentTime) / _duration);
+					_delta = (static_cast<f32>(currentTime) / m_duration);
 					return true;
 				}
-				sptr<Renderizable> node() const { return _node; }
 				virtual ~IAnimation() = default;
 			protected:
 				u64 currentTime;
-				u64 _duration;
+				u64 m_duration;
 				float _delta{ 0.0f };
-				sptr<Renderizable> _node;
 				Timer _clock;
 				animation_action_callback m_onStart;
 				animation_action_callback m_onEnd;
@@ -55,7 +50,7 @@ namespace lib
 			public:
 				IPropertyAnimation(const s32 duration, Property<T> &prop, T start, T end, 
 					animation_action_callback onStart, animation_action_callback onEnd)
-					: IAnimation{ duration, nullptr,std::move(onStart),std::move(onEnd) },
+					: IAnimation{ duration, std::move(onStart),std::move(onEnd) },
 					m_property{ prop }, m_startValue { std::move(start)	},
 					m_endValue{ std::move(end) }, m_deltaValue{ m_endValue - m_startValue } {}
 
