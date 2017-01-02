@@ -19,7 +19,7 @@ namespace lib
 		Property& operator=(Property&&) = delete;
 
 		constexpr const T &operator()() const noexcept { return m_value; }
-		void setCallback(callback_t&&c) noexcept { m_callback = std::move(c); }
+		void setCallback(callback_t c) noexcept { m_callback = std::move(c); }
 		constexpr const T &get() const noexcept { return m_value; }
 		inline void set(const T&v) { m_value = v; if (m_callback) m_callback(m_value); }
 		inline void set(T&&v) { m_value = std::move(v); if (m_callback) m_callback(m_value); }

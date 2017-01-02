@@ -170,7 +170,8 @@ namespace zoper
 		{
 			setState(Pause);
 			_pauserg->setVisible(true);
-			addAnimation(msptr<anim::IPropertyAnimation<Color>>(1000, _pauseText->color, Color{ 255, 255, 255, 0 }, Color{ 255, 255, 255, 255 }));
+			addAnimation(msptr<anim::IPropertyAnimation<Color>>(1000, _pauseText->color, Color{ 255, 255, 255, 0 }, Color{ 255, 255, 255, 255 }, 
+				anim::animation_action_callback{}, anim::animation_action_callback{}));
 			gameClock.pause();
 			return true;
 		}
@@ -419,42 +420,39 @@ namespace zoper
 	void GameScene::launchPlayer()
 	{
 		logDebug("Launching player");
-		const Direction loopDirection = p_player->currentDirection();
-		lib::vector2du32 loopPosition{ p_player->boardPosition() };
-		lib::board::BoardTileData tokenType = p_player->getData();
-		lib::u32 inARow{ 0 };
-		for_each_token_in_line(loopPosition, loopDirection, [this,tokenType,&inARow](const lib::vector2du32 &loopPosition, const Direction &direction)
+		const Direction loopDirection{ p_player->currentDirection() };
+		vector2du32 loopPosition{ p_player->boardPosition() };
+		board::BoardTileData tokenType = p_player->getData();
+		u32 inARow{ 0 };
+		for_each_token_in_line(loopPosition, loopDirection, [this,tokenType,&inARow](const vector2du32 &loopPosition, const Direction &direction)
 		{
 			direction;
 			bool result{ true };
 			bool found{ false };
-			lib::vector2df lastTokenPosition;
+			vector2df lastTokenPosition;
 
-			if (!p_boardModel->tileEmpty(loopPosition) && !pointInCenter(loopPosition) && result)
-			{
-				lib::sptr<lib::board::ITile> currentToken{ p_boardModel->getTile(loopPosition).lock() };
-				lib::board::BoardTileData currentTokenType = currentToken->getData();
-				if (currentTokenType == tokenType)
-				{
+			if (!p_boardModel->tileEmpty(loopPosition) && !pointInCenter(loopPosition) && result) {
+				sptr<board::ITile> currentToken{ p_boardModel->getTile(loopPosition).lock() };
+				board::BoardTileData currentTokenType = currentToken->getData();
+				if (currentTokenType == tokenType) {
 					++inARow;
 					increaseScore(inARow*_levelProperties.baseScore());
 					_gameData.consumedTokens++;
 					lastTokenPosition = board2Scene(loopPosition);
 					p_boardModel->deleteTile(loopPosition);
 					found = true;
-				}
-				else
-				{
+				} else {
 					p_boardModel->changeTileData(p_player->boardPosition(), currentTokenType);
 					p_boardModel->changeTileData(loopPosition, tokenType);
 					logDebug("Player type changed to ", p_player->getData());
 					result = false;
 				}
 			}
-			if (found)
-			{
+
+			if (found) {
 				auto node = createRenderizable<NodeShape>("pointIncrementScore", vector2df{ 15.0f,15.0f },nullptr,30, colors::White);
-				addAnimation(msptr<anim::IPropertyAnimation<vector2df>>(600, node->position, lastTokenPosition, vector2df{ 450, 100 }));
+				addAnimation(msptr<anim::IPropertyAnimation<vector2df>>(600, node->position, lastTokenPosition, vector2df{ 450, 100 }, 
+					anim::noAction, anim::animation_action_callback{ [this, node]() { removeRenderizable(node); } }));
 			}
 			return result;
 		});
@@ -592,7 +590,8 @@ namespace zoper
 	void GameScene::tokenMoved(const lib::vector2du32 &, const lib::vector2du32 &dest, lib::sptr<Tile> tile)
 	{
 		addAnimation(msptr<draw::anim::IPropertyAnimation<vector2df>>
-			(_levelProperties.millisBetweenTokens() / 2, tile->position, tile->position(), board2Scene(dest)));
+			(_levelProperties.millisBetweenTokens() / 2, tile->position, tile->position(), board2Scene(dest),
+			anim::noAction, anim::noAction));
 	}
 
 	void GameScene::tokenAppeared(const lib::vector2du32 &, lib::sptr<Tile>)
