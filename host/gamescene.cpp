@@ -9,12 +9,13 @@
 #include <lib/core/resourcemanager.hpp>
 #include <lib/draw/renderizable.hpp>
 #include <lib/draw/positionanimation.hpp>
-#include <lib/draw/coloranimation.hpp>
 #include <lib/draw/nodeshape.hpp>
 #include <lib/draw/nodequad.hpp>
 #include <lib/draw/nodetext.hpp>
 #include <lib/core/host.hpp>
 #include <lib/core/events/inputevent.hpp>
+#include <lib/include/properties.hpp>
+#include <lib/draw/ianimation.hpp>
 
 namespace zoper
 {
@@ -170,8 +171,7 @@ namespace zoper
 		{
 			setState(Pause);
 			_pauserg->setVisible(true);
-			//_pauseText->getAsText()->setColor(lib::draw::Color(255, 255, 255, 20));
-			addAnimation(lib::draw::anim::ColorAnimation::create(1000, _pauseText, lib::draw::Color(255, 255, 255, 0), lib::draw::Color(255, 255, 255, 255)));
+			addAnimation(msptr<anim::IPropertyAnimation<Color>>(1000, _pauseText->color, Color{ 255, 255, 255, 0 }, Color{ 255, 255, 255, 255 }));
 			gameClock.pause();
 			return true;
 		}
@@ -411,12 +411,7 @@ namespace zoper
 
 	void GameScene::onAnimationFinished(lib::sptr<lib::draw::anim::IAnimation> anim, lib::sptr<lib::draw::Renderizable> node)
 	{
-		if (anim->animationType() == "ColorAnimation" && node == _pauseText)
-		{
-			_pauserg->setVisible(state()==Pause);
-			_pauseText->color.set(lib::draw::colors::White);
-		}
-		else if (anim->animationType() == "PositionAnimation" && node->name() == "pointIncrementScore")
+		if (anim->animationType() == "PositionAnimation" && node->name() == "pointIncrementScore")
 		{
 			removeRenderizable(node);
 		}
@@ -460,7 +455,7 @@ namespace zoper
 			if (found)
 			{
 				auto node = createRenderizable<NodeShape>("pointIncrementScore", vector2df{ 15.0f,15.0f },nullptr,30, colors::White);
-				addAnimation(anim::PositionAnimation::create(600, node, lastTokenPosition, lib::vector2df(450,100)));
+				addAnimation(msptr<anim::IPropertyAnimation<vector2df>>(600, node->position, lastTokenPosition, vector2df{ 450, 100 }));
 			}
 			return result;
 		});

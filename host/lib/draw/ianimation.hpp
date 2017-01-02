@@ -19,7 +19,7 @@ namespace lib
 				{
 					_clock.restart();
 				}
-				virtual const std::string animationType() const = 0;
+				virtual const std::string animationType() const { return ""; }
 				virtual bool animate()
 				{
 					currentTime = _clock.getElapsedTime().asMilliSeconds();
@@ -32,7 +32,7 @@ namespace lib
 					return true;
 				}
 				sptr<Renderizable> node() const { return _node; }
-				virtual ~IAnimation(){}
+				virtual ~IAnimation() = default;
 			protected:
 				u64 currentTime;
 				u64 _duration;
@@ -47,10 +47,38 @@ namespace lib
 			public:
 				IValueAnimation(const s32 duration, sptr<Renderizable> node, const T&start, const T&end)
 					: IAnimation(duration, node), _startValue(start), _endValue(end) {}
+
 			protected:
 				T _startValue;
 				T _endValue;
 			};
+
+			template <typename T>
+			class IPropertyAnimation : public IAnimation
+			{
+			public:
+				IPropertyAnimation(const s32 duration, Property<T> &prop, T start, T end)
+					: IAnimation(duration, nullptr), 
+					m_property{ prop }, m_startValue { std::move(start)	},
+					m_endValue{ std::move(end) }, m_deltaValue{ m_endValue - m_startValue } {}
+
+				virtual bool animate() override
+				{
+					const bool bResult{ IAnimation::animate() };
+
+					T finalValue{ m_startValue + (m_deltaValue * _delta) };
+					m_property = finalValue;
+
+					return bResult;
+				}
+
+			protected:
+				T m_startValue;
+				T m_endValue;
+				T m_deltaValue;
+				Property<T> &m_property;
+			};
+
 		}
 	}
 }
