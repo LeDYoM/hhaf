@@ -8,7 +8,6 @@
 #include <lib/core/log.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/draw/renderizable.hpp>
-#include <lib/draw/positionanimation.hpp>
 #include <lib/draw/nodeshape.hpp>
 #include <lib/draw/nodequad.hpp>
 #include <lib/draw/nodetext.hpp>
@@ -590,10 +589,10 @@ namespace zoper
 		}
 	}
 
-	void GameScene::tokenMoved(const lib::vector2du32 &source, const lib::vector2du32 &dest, lib::sptr<Tile> tile)
+	void GameScene::tokenMoved(const lib::vector2du32 &, const lib::vector2du32 &dest, lib::sptr<Tile> tile)
 	{
-		source;
-		addAnimation(draw::anim::PositionAnimation::create(_levelProperties.millisBetweenTokens() / 2, tile, board2Scene(dest)));
+		addAnimation(msptr<draw::anim::IPropertyAnimation<vector2df>>
+			(_levelProperties.millisBetweenTokens() / 2, tile->position, tile->position(), board2Scene(dest)));
 	}
 
 	void GameScene::tokenAppeared(const lib::vector2du32 &, lib::sptr<Tile>)

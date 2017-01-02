@@ -3,7 +3,7 @@
 #include <lib/core/events/eventmanager.hpp>
 #include <lib/core/events/inputevent.hpp>
 #include <lib/draw/scene.hpp>
-#include <lib/draw/positionanimation.hpp>
+#include <lib/draw/ianimation.hpp>
 #include <lib/draw/nodeshape.hpp>
 #include <lib/draw/nodetext.hpp>
 
@@ -86,30 +86,24 @@ namespace lib
 
 			m_cursor->rotation.set(90);
 			
-			addAnimation(draw::anim::PositionAnimation::create(120, m_cursor, 
-				vector2df{ selectedText->position().x - descriptorCursorSize.x, selectedText->position().y }));
+			addAnimation(msptr<draw::anim::IPropertyAnimation<vector2df>>(120,m_cursor->position,
+				m_cursor->position(), vector2df{ selectedText->position().x - descriptorCursorSize.x, selectedText->position().y }));
 		}
 
 		void ChooseControl::goDown()
 		{
-			if (_cursorItemSelected < (m_labelData.size() - 1))
-			{
+			if (_cursorItemSelected < (m_labelData.size() - 1)) {
 				cursorSelectItem(_cursorItemSelected + 1);
-			}
-			else
-			{
+			} else {
 				cursorSelectItem(0);
 			}
 		}
 
 		void ChooseControl::goUp()
 		{
-			if (_cursorItemSelected > 0)
-			{
+			if (_cursorItemSelected > 0) {
 				cursorSelectItem(_cursorItemSelected - 1);
-			}
-			else
-			{
+			} else {
 				cursorSelectItem(m_labelData.size()-1);
 			}
 		}
@@ -118,14 +112,10 @@ namespace lib
 		{
 			auto index = m_labelData[_cursorItemSelected].selectedSublabel;
 
-			if (m_labelData[_cursorItemSelected].textSubLabel.size() > 0)
-			{
-				if (index < 1)
-				{
+			if (m_labelData[_cursorItemSelected].textSubLabel.size() > 0) {
+				if (index < 1) {
 					index = m_labelData[_cursorItemSelected].textSubLabel.size()-1;
-				}
-				else
-				{
+				} else {
 					--index;
 				}
 				m_labelData[_cursorItemSelected].selectedSublabel = index;
@@ -137,19 +127,14 @@ namespace lib
 		{
 			auto index = m_labelData[_cursorItemSelected].selectedSublabel;
 
-			if (m_labelData[_cursorItemSelected].textSubLabel.size() > 0)
-			{
-				if (index >= m_labelData[_cursorItemSelected].textSubLabel.size() - 1)
-				{
+			if (m_labelData[_cursorItemSelected].textSubLabel.size() > 0) {
+				if (index >= m_labelData[_cursorItemSelected].textSubLabel.size() - 1) {
 					index = 0;
-				}
-				else
-				{
+				} else {
 					++index;
 				}
 				m_labelData[_cursorItemSelected].selectedSublabel = index;
 				updateSubLabelText(_cursorItemSelected);
-
 			}
 		}
 	}
