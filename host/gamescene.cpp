@@ -405,20 +405,12 @@ namespace zoper
 		}
 	}
 
-	void GameScene::onAnimationStarted(lib::sptr<lib::draw::anim::IAnimation> anim, lib::sptr<lib::draw::Renderizable> node)
-	{
-	}
-
-	void GameScene::onAnimationFinished(lib::sptr<lib::draw::anim::IAnimation> anim, lib::sptr<lib::draw::Renderizable> node)
-	{
-	}
-
 	void GameScene::launchPlayer()
 	{
 		logDebug("Launching player");
 		const Direction loopDirection{ p_player->currentDirection() };
-		vector2du32 loopPosition{ p_player->boardPosition() };
-		board::BoardTileData tokenType = p_player->getData();
+		const vector2du32 loopPosition{ p_player->boardPosition() };
+		const board::BoardTileData tokenType{ p_player->getData() };
 		u32 inARow{ 0 };
 		for_each_token_in_line(loopPosition, loopDirection, [this,tokenType,&inARow](const vector2du32 &loopPosition, const Direction &direction)
 		{

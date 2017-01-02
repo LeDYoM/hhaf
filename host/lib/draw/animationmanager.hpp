@@ -19,8 +19,6 @@ namespace lib
 				virtual ~AnimationManager();
 				void addAnimation(sptr<IAnimation> nanimation);
 				void updateAnimations();
-				virtual void onAnimationStarted(sptr<IAnimation> anim, sptr<Renderizable> node);
-				virtual void onAnimationFinished(sptr<IAnimation> anim, sptr<Renderizable> node);
 			private:
 				vector_shared_pointers<IAnimation> m_animations;
 				vector_shared_pointers<IAnimation> m_animationsToDelete;

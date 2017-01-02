@@ -122,8 +122,6 @@ namespace zoper
 		void playerDissapeared(const lib::vector2du32 &position, lib::sptr<Player> player);
 
 		virtual lib::vector2df getDefaultSizeView() override;
-		virtual void onAnimationStarted(lib::sptr<lib::draw::anim::IAnimation> anim, lib::sptr<lib::draw::Renderizable> node) override;
-		virtual void onAnimationFinished(lib::sptr<lib::draw::anim::IAnimation> anim, lib::sptr<lib::draw::Renderizable> node) override;
 
 		// Properties
 		lib::PausableTimer gameClock;

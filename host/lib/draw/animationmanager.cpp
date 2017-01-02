@@ -20,7 +20,6 @@ namespace lib
 			void AnimationManager::addAnimation(sptr<IAnimation> nanimation)
 			{
 				m_animations.push_back(nanimation);
-//				onAnimationStarted(nanimation, nanimation->node());
 			}
 
 			void AnimationManager::updateAnimations()
@@ -40,17 +39,6 @@ namespace lib
 					}
 				}
 			}
-
-			void AnimationManager::onAnimationStarted(sptr<IAnimation> anim, sptr<Renderizable> node)
-			{
-
-			}
-
-			void AnimationManager::onAnimationFinished(sptr<IAnimation> anim, sptr<Renderizable> node)
-			{
-
-			}
-
 		}
 	}
 }
