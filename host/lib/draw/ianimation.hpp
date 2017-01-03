@@ -1,9 +1,10 @@
-#ifndef __LIB_IANIMATION_HPP__
-#define __LIB_IANIMATION_HPP__
+#ifndef LIB_IANIMATION_INCLUDE_HPP__
+#define LIB_IANIMATION_INCLUDE_HPP__
 
 #include "renderizable.hpp"
 #include <lib/core/timer.hpp>
 #include <lib/include/types.hpp>
+#include <lib/core/events/event.hpp>
 
 namespace lib
 {
@@ -22,11 +23,11 @@ namespace lib
 				{
 					m_timer.restart();
 				}
+
 				virtual bool animate()
 				{
 					m_currentTime = m_timer.getElapsedTime().asMilliSeconds();
-					if (m_currentTime > m_duration)
-					{
+					if (m_currentTime > m_duration) {
 						m_delta = 1.0f;
 						if (m_onEnd) m_onEnd();
 						return false;
@@ -67,6 +68,13 @@ namespace lib
 				Property<T> &m_property;
 			};
 
+			class UpdateAnimationEvent : public events::EventTemplate<UpdateAnimationEvent>
+			{
+			public:
+				UpdateAnimationEvent(sptr<IAnimation> animation) : m_animation{ std::move(animation) } {}
+
+				sptr<IAnimation> m_animation;
+			};
 		}
 	}
 }
