@@ -21,7 +21,7 @@ namespace lib
 	{
 		class Scene;
 		class Renderizable;
-		class RenderGroup : public lib::core::HasName, public IDrawable, public anim::AnimationManager, public Transformable
+		class RenderGroup : public core::HasName, public IDrawable, public anim::AnimationManager, public Transformable
 		{
 		public:
 			RenderGroup(const std::string &name, RenderGroup *parent=nullptr);
