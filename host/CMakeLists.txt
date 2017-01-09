@@ -23,12 +23,8 @@ if(SFML_FOUND)
 endif()
 
 
-set(LIB_LOCATION ${CMAKE_BINARY_DIR}/bin/Debug)
-
 # Detect and add lib
 include_directories(..)
-#find_library(LIB_LOCATION lib)
-#message(${LIB_LOCATION})
 target_link_libraries(${CURRENT_TARGET} lib)
 
 add_custom_target(copy_sfml)
