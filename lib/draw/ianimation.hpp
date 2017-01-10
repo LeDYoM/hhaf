@@ -15,6 +15,16 @@ namespace lib
 			using animation_action_callback = std::function<void()>;
 			static const animation_action_callback noAction;
 
+			class IAnimation;
+
+			class UpdateAnimationEvent : public events::EventTemplate<UpdateAnimationEvent>
+			{
+			public:
+				UpdateAnimationEvent(sptr<IAnimation> animation) : m_animation{ std::move(animation) } {}
+
+				sptr<IAnimation> m_animation;
+			};
+
 			class IAnimation
 			{
 			public:
@@ -66,14 +76,6 @@ namespace lib
 				T m_endValue;
 				T m_deltaValue;
 				Property<T> &m_property;
-			};
-
-			class UpdateAnimationEvent : public events::EventTemplate<UpdateAnimationEvent>
-			{
-			public:
-				UpdateAnimationEvent(sptr<IAnimation> animation) : m_animation{ std::move(animation) } {}
-
-				sptr<IAnimation> m_animation;
 			};
 		}
 	}

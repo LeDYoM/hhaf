@@ -18,7 +18,7 @@ namespace zoper
 			virtual void onAddedToScene() override;
 
 		private:
-			lib::Configuration _gameConfig;
+			lib::Configuration m_gameConfig;
 		};
 	}
 }

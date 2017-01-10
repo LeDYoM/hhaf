@@ -17,9 +17,12 @@ namespace lib
 			~EventManager();
 
 			void addEvent(sptr<lib::events::Event> event_);
+			void postEvent(sptr<lib::events::Event> event_);
 			void update();
 		private:
-			std::queue<sptr<events::Event>> eventQueue;
+			std::queue<sptr<events::Event>> m_eventQueue;
+			std::queue<sptr<events::Event>> m_secondaryEventQueue;
+			bool m_processing{ false };
 		};
 	}
 }

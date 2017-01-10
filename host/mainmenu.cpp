@@ -21,11 +21,11 @@ namespace zoper
 				switch (index)
 				{
 				case 0:
-					_gameConfig.value(GameModeStr)->set<s32>(0);
+					m_gameConfig.value(GameModeStr)->set<s32>(0);
 					menuManager()->changeStep(StartLevelMenu::ClassName);
 					break;
 				case 1:
-					_gameConfig.value(GameModeStr)->set<s32>(1);
+					m_gameConfig.value(GameModeStr)->set<s32>(1);
 					menuManager()->changeStep("StartLevelMenu");
 					break;
 				case 2:
@@ -43,10 +43,9 @@ namespace zoper
 				msptr<OptionDescriptor>("Options"),
 				msptr<OptionDescriptor>("Exit")
 			}),
-			_gameConfig{ ":NextGame" }
+			m_gameConfig{ ":NextGame" }
 		{
 		}
-
 
 		MainMenu::~MainMenu() = default;
 

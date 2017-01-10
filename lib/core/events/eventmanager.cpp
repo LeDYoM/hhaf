@@ -15,26 +15,42 @@ namespace lib
 		EventManager::~EventManager()
 		{
 			logDebug("Going to destroy event manager...");
-			while (!eventQueue.empty()) {
-				logDebug("Event was still in queue: ", typeid(*(eventQueue.front())).name());
-				eventQueue.pop();
+			while (!m_eventQueue.empty()) {
+				logDebug("Event was still in queue: ", typeid(*(m_eventQueue.front())).name());
+				m_eventQueue.pop();
 			}
 			logDestruct_NOPARAMS;
 		}
 
 		void EventManager::addEvent(sptr<lib::events::Event> event_)
 		{
-			eventQueue.emplace(std::move(event_));
+			m_eventQueue.emplace(std::move(event_));
+		}
+
+		void EventManager::postEvent(sptr<lib::events::Event> event_)
+		{
+			(m_processing?m_secondaryEventQueue:m_eventQueue).emplace(std::move(event_));
 		}
 
 		void EventManager::update()
 		{
-			if (!eventQueue.empty()) {
-				logDebug("Found ", eventQueue.size(), " events in the event queue");
-				do {
-					eventQueue.front()->dispatch();
-					eventQueue.pop();
-				} while (!eventQueue.empty());
+			if (!m_eventQueue.empty() || !m_secondaryEventQueue.empty()) {
+				if (!m_secondaryEventQueue.empty()) {
+					logDebug("Found ", m_secondaryEventQueue.size(), " events in the secondary event queue");
+					do {
+						m_eventQueue.emplace(m_secondaryEventQueue.front());
+						m_secondaryEventQueue.pop();
+					} while (!m_secondaryEventQueue.empty());
+				}
+				if (!m_eventQueue.empty()) {
+					logDebug("Found ", m_eventQueue.size(), " events in the event queue");
+					m_processing = true;
+					do {
+						m_eventQueue.front()->dispatch();
+						m_eventQueue.pop();
+					} while (!m_eventQueue.empty());
+					m_processing = false;
+				}
 			}
 		}
 	}

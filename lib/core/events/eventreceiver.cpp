@@ -4,7 +4,6 @@ namespace lib
 {
 	EventReceiver::EventReceiver() = default;
 
-
 	EventReceiver::~EventReceiver()
 	{
 		unsubscribeAll();
