@@ -17,8 +17,11 @@ namespace lib
 
 	void EventReceiver::unsubscribeAll()
 	{
-		for (auto &subscription : m_subscriptions) {
-			subscription->markForUnsubscription();
+		if (!m_subscriptions.empty()) {
+			logDebug("EventReceiver: Disconnecting ", m_subscriptions.size(), " subscriptions");
+			for (auto &subscription : m_subscriptions) {
+				subscription->markForUnsubscription();
+			}
 		}
 	}
 }
