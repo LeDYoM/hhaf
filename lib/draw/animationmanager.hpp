@@ -18,6 +18,7 @@ namespace lib
 			public:
 				AnimationManager();
 				~AnimationManager();
+			protected:
 				void push_animation(sptr<IAnimation> nanimation);
 			private:
 				EventReceiver m_eventConnector;
