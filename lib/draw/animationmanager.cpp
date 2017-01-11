@@ -21,10 +21,10 @@ namespace lib
 					const auto &aEvent{ dynamic_cast<const UpdateAnimationEvent&>(ev) };
 					const bool _continue{ aEvent.m_animation->animate() };
 					if (_continue) {
-						host().eventManager().postEvent(aEvent);
+						host().eventManager().resendCurrentEvent();
 					}
 				}));
-
+				host().eventManager().addEvent(msptr<UpdateAnimationEvent>(nanimation));
 			}
 
 			void AnimationManager::updateAnimations()

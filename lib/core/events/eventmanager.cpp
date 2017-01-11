@@ -47,6 +47,10 @@ namespace lib
 					m_processing = true;
 					do {
 						m_eventQueue.front()->dispatch();
+						if (m_resend) {
+							m_secondaryEventQueue.emplace(m_eventQueue.front());
+							m_resend = false;
+						}
 						m_eventQueue.pop();
 					} while (!m_eventQueue.empty());
 					m_processing = false;

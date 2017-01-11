@@ -19,10 +19,12 @@ namespace lib
 			void addEvent(sptr<lib::events::Event> event_);
 			void postEvent(sptr<lib::events::Event> event_);
 			void update();
+			inline void resendCurrentEvent() noexcept { m_resend = true; }
 		private:
 			std::queue<sptr<events::Event>> m_eventQueue;
 			std::queue<sptr<events::Event>> m_secondaryEventQueue;
 			bool m_processing{ false };
+			bool m_resend{ false };
 		};
 	}
 }

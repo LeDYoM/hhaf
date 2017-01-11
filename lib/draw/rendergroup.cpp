@@ -22,7 +22,7 @@ namespace lib
 		void RenderGroup::draw()
 		{
 			if (isVisible()) {
-				updateAnimations();
+				//updateAnimations();
 				auto handle = host().rStates().pushChanges(&getTransform(), nullptr);
 
 				for (const auto& renderizable : m_renderNodes) {
