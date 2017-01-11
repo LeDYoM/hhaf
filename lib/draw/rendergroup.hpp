@@ -24,7 +24,7 @@ namespace lib
 		class RenderGroup : public core::HasName, public IDrawable, public anim::AnimationManager, public Transformable
 		{
 		public:
-			RenderGroup(const std::string &name, RenderGroup *parent=nullptr);
+			RenderGroup(const std::string &name, RenderGroup *parent = nullptr);
 			virtual ~RenderGroup();
 
 			virtual void onAddedToScene() {}
