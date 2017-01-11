@@ -13,7 +13,7 @@ namespace lib
 			AnimationManager::AnimationManager() = default;
 			AnimationManager::~AnimationManager() = default;
 
-			void AnimationManager::addAnimation(sptr<IAnimation> nanimation)
+			void AnimationManager::push_animation(sptr<IAnimation> nanimation)
 			{
 				m_eventConnector.addSubscription(UpdateAnimationEvent::subscribe([this](const events::Event&ev) {
 					const auto &aEvent{ dynamic_cast<const UpdateAnimationEvent&>(ev) };

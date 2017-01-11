@@ -18,7 +18,7 @@ namespace lib
 			public:
 				AnimationManager();
 				~AnimationManager();
-				void addAnimation(sptr<IAnimation> nanimation);
+				void push_animation(sptr<IAnimation> nanimation);
 			private:
 				EventReceiver m_eventConnector;
 			};

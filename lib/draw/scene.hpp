@@ -9,6 +9,7 @@
 #include <lib/core/timer.hpp>
 #include <lib/core/events/event.hpp>
 #include <lib/core/events/eventreceiver.hpp>
+#include <lib/draw/animationmanager.hpp>
 #include <string>
 
 namespace lib
@@ -26,7 +27,7 @@ namespace lib
 			class IAnimation;
 		}
 
-		class Scene : public draw::RenderGroup
+		class Scene : public draw::RenderGroup, private anim::AnimationManager
 		{
 		public:
 			Scene(const std::string &_name);
@@ -45,6 +46,7 @@ namespace lib
 
 			inline bool isActiveScene() const noexcept { return m_isActiveScene; }
 			inline void addSubscription(sptr<events::EventSubscription> &&es) noexcept { eventConnector.addSubscription(std::move(es)); }
+			void createAnimation(sptr<anim::IAnimation> nanimation) noexcept { push_animation(std::move(nanimation)); }
 
 		protected:
 

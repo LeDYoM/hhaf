@@ -5,7 +5,6 @@
 #include <lib/include/vector2d.hpp>
 #include "hasname.hpp"
 #include "idrawable.hpp"
-#include "animationmanager.hpp"
 #include "transformable.hpp"
 #include "nodeshape.hpp"
 #include "nodequad.hpp"
@@ -19,9 +18,14 @@ namespace lib
 	}
 	namespace draw
 	{
+		namespace anim
+		{
+			class IAnimation;
+		}
+
 		class Scene;
 		class Renderizable;
-		class RenderGroup : public core::HasName, public IDrawable, public anim::AnimationManager, public Transformable
+		class RenderGroup : public core::HasName, public IDrawable, public Transformable
 		{
 		public:
 			RenderGroup(const std::string &name, RenderGroup *parent = nullptr);
@@ -51,6 +55,7 @@ namespace lib
 			bool removeRenderGroup(sptr<RenderGroup> element);
 
 			void draw() override;
+			void addAnimation(sptr<anim::IAnimation> nanimation) noexcept;
 
 		protected:
 			void addRenderGroup(sptr<RenderGroup> node, const sptr<IDrawable> beforeNode = nullptr);
@@ -69,6 +74,7 @@ namespace lib
 				return m_parent ? dynamic_cast<T*>(m_parent) : nullptr;
 			}
 			virtual Scene *const parentScene() { return m_parent->parentScene(); }
+
 			vector_shared_pointers<IDrawable> m_renderNodes;
 
 		private:

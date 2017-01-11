@@ -1,6 +1,8 @@
 #include "rendergroup.hpp"
 #include "renderizable.hpp"
 #include "scene.hpp"
+#include "animationmanager.hpp"
+#include "ianimation.hpp"
 
 #include <lib/core/window.hpp>
 #include <lib/core/host.hpp>
@@ -28,6 +30,11 @@ namespace lib
 					renderizable->draw();
 				}
 			}
+		}
+
+		void RenderGroup::addAnimation(sptr<anim::IAnimation> nanimation) noexcept
+		{
+			parentScene()->createAnimation(std::move(nanimation));
 		}
 
 		sptr<RenderGroup> RenderGroup::createNewRenderGroup(const std::string & name, sptr<IDrawable> beforeNode)
