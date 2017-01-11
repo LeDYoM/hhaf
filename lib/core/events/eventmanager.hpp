@@ -16,8 +16,8 @@ namespace lib
 			EventManager();
 			~EventManager();
 
-			void addEvent(sptr<lib::events::Event> event_);
-			void postEvent(sptr<lib::events::Event> event_);
+			void addEvent(sptr<events::Event> event_);
+			void postEvent(sptr<events::Event> event_);
 			void update();
 			inline void resendCurrentEvent() noexcept { m_resend = true; }
 		private:

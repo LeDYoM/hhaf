@@ -15,6 +15,11 @@ namespace lib
 		EventManager::~EventManager()
 		{
 			logDebug("Going to destroy event manager...");
+			while (!m_secondaryEventQueue.empty()) {
+				logDebug("Event was still in secondary queue: ", typeid(*(m_secondaryEventQueue.front())).name());
+				m_secondaryEventQueue.pop();
+			}
+
 			while (!m_eventQueue.empty()) {
 				logDebug("Event was still in queue: ", typeid(*(m_eventQueue.front())).name());
 				m_eventQueue.pop();
@@ -22,12 +27,12 @@ namespace lib
 			logDestruct_NOPARAMS;
 		}
 
-		void EventManager::addEvent(sptr<lib::events::Event> event_)
+		void EventManager::addEvent(sptr<events::Event> event_)
 		{
 			m_eventQueue.emplace(std::move(event_));
 		}
 
-		void EventManager::postEvent(sptr<lib::events::Event> event_)
+		void EventManager::postEvent(sptr<events::Event> event_)
 		{
 			(m_processing?m_secondaryEventQueue:m_eventQueue).emplace(std::move(event_));
 		}

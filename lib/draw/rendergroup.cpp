@@ -14,7 +14,7 @@ namespace lib
 
 		RenderGroup::~RenderGroup() = default;
 
-		bool RenderGroup::removeRenderizable(sptr<Renderizable> element)
+		bool RenderGroup::removeRenderizable(const sptr<Renderizable> &element)
 		{
 			return removespFrom(m_renderNodes, element);
 		}
@@ -22,8 +22,7 @@ namespace lib
 		void RenderGroup::draw()
 		{
 			if (isVisible()) {
-				//updateAnimations();
-				auto handle = host().rStates().pushChanges(&getTransform(), nullptr);
+				auto handle(host().rStates().pushChanges(&getTransform(), nullptr));
 
 				for (const auto& renderizable : m_renderNodes) {
 					renderizable->draw();
@@ -38,13 +37,13 @@ namespace lib
 			return rg;
 		}
 
-		void RenderGroup::addRenderGroup(sptr<RenderGroup> node, sptr<IDrawable> beforeNode)
+		void RenderGroup::addRenderGroup(sptr<RenderGroup> node, const sptr<IDrawable> beforeNode)
 		{
 			if (!beforeNode) {
 				m_renderNodes.emplace_back(node);
 			}
 			else {
-				for (auto iterator = m_renderNodes.begin(); iterator != m_renderNodes.end();++iterator) {
+				for (auto iterator = m_renderNodes.cbegin(); iterator != m_renderNodes.cend();++iterator) {
 					if (*iterator == beforeNode) {
 						m_renderNodes.emplace(iterator, node);
 						break;

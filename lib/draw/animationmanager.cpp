@@ -15,8 +15,6 @@ namespace lib
 
 			void AnimationManager::addAnimation(sptr<IAnimation> nanimation)
 			{
-//				m_animations.push_back(nanimation);
-
 				m_eventConnector.addSubscription(UpdateAnimationEvent::subscribe([this](const events::Event&ev) {
 					const auto &aEvent{ dynamic_cast<const UpdateAnimationEvent&>(ev) };
 					const bool _continue{ aEvent.m_animation->animate() };
@@ -25,24 +23,6 @@ namespace lib
 					}
 				}));
 				host().eventManager().addEvent(msptr<UpdateAnimationEvent>(nanimation));
-			}
-
-			void AnimationManager::updateAnimations()
-			{
-				if (!m_animations.empty()) {
-					for (auto &animation : m_animations) {
-						if (!animation->animate()) {
-							m_animationsToDelete.push_back(animation);
-						}
-					}
-
-					if (!m_animationsToDelete.empty()) {
-						for (auto animation : m_animationsToDelete) {
-							removespFrom(m_animations, animation);
-						}
-						m_animationsToDelete.clear();
-					}
-				}
 			}
 		}
 	}

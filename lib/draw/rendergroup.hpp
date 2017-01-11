@@ -44,7 +44,7 @@ namespace lib
 				return result;
 			}
 
-			bool removeRenderizable(sptr<Renderizable> element);
+			bool removeRenderizable(const sptr<Renderizable> &element);
 			void clear();
 
 			sptr<RenderGroup> createNewRenderGroup(const std::string &name,sptr<IDrawable> beforeNode=nullptr);
@@ -53,7 +53,7 @@ namespace lib
 			void draw() override;
 
 		protected:
-			void addRenderGroup(sptr<RenderGroup> node, sptr<IDrawable> beforeNode = nullptr);
+			void addRenderGroup(sptr<RenderGroup> node, const sptr<IDrawable> beforeNode = nullptr);
 
 			inline RenderGroup *parent() const noexcept { return m_parent; }
 

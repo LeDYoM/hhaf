@@ -19,11 +19,8 @@ namespace lib
 				AnimationManager();
 				~AnimationManager();
 				void addAnimation(sptr<IAnimation> nanimation);
-				void updateAnimations();
 			private:
 				EventReceiver m_eventConnector;
-				vector_shared_pointers<IAnimation> m_animations;
-				vector_shared_pointers<IAnimation> m_animationsToDelete;
 			};
 		}
 	}
