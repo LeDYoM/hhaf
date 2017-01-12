@@ -9,15 +9,12 @@ namespace lib
 		{
 			p_tController = tController;
 			logConstruct(" w: ", size.x, " h: ", size.y);
-			for (auto x = 0u; x < size.x; ++x)
-			{
-				std::vector<WITilePointer> column;
-				for (auto y = 0u; y < size.y; ++y)
-				{
-					column.push_back(WITilePointer());
-				}
-				_tiles.push_back(column);
+			_tiles.reserve(size.x);
+			for (auto x = 0u; x < size.x; ++x) {
+				std::vector<WITilePointer> column(size.y);
+				_tiles.emplace_back(std::move(column));
 			}
+			_tiles.shrink_to_fit();
 		}
 
 		BoardModel::~BoardModel()
@@ -27,10 +24,9 @@ namespace lib
 			p_tController = nullptr;
 		}
 
-		WITilePointer BoardModel::getTile(const vector2du32 &position) const
+		WITilePointer BoardModel::getTile(const vector2du32 &position) const noexcept
 		{
-			if (validCoords(position))
-			{
+			if (validCoords(position)) {
 				return _tiles[position.x][position.y];
 			}
 			logError("Error getting tile in coords ", position.x, ",", position.y);
