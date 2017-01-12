@@ -48,7 +48,7 @@ namespace lib
 			inline static auto subscribe(const listener_t &newListener)
 			{
 				auto m_ptr( msptr<EventSubscription>(newListener) );
-				m_subscriptions.emplace_back(m_ptr);
+				m_subscriptions.push_back(m_ptr);
 				return m_ptr;
 			}
 
