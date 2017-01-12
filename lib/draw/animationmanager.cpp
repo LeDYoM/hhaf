@@ -1,4 +1,5 @@
 #include "animationmanager.hpp"
+#include "ianimation.hpp"
 
 #include <lib/core/log.hpp>
 #include <lib/core/host.hpp>
