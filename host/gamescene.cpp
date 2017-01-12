@@ -146,37 +146,31 @@ namespace zoper
 
 	void GameScene::update()
 	{
-		if (state() == Playing)
-		{
-			if (_gameData._gameMode == GameData::GameModes::Time)
+		if (state() == Playing) {
+			if (_gameData._gameMode == GameData::GameModes::Time) {
 				updateLevelData();
+			}
 
-			if (gameClock.getElapsedTime().asMilliSeconds() > static_cast<lib::u64>(_levelProperties.millisBetweenTokens()))
-			{
+			if (gameClock.getElapsedTime().asMilliSeconds() > static_cast<lib::u64>(_levelProperties.millisBetweenTokens())) {
 				// New token
 				generateNextToken();
 				gameClock.restart();
 			}
-		}
-		else
-		{
+		} else {
 			
 		}
 	}
 
 	bool GameScene::switchPause()
 	{
-		if (state() == Playing)
-		{
+		if (state() == Playing) {
 			setState(Pause);
 			_pauserg->setVisible(true);
 			addAnimation(msptr<anim::IPropertyAnimation<Color>>(1000, _pauseText->color, Color{ 255, 255, 255, 0 }, Color{ 255, 255, 255, 255 }, 
 				anim::animation_action_callback{}, anim::animation_action_callback{}));
 			gameClock.pause();
 			return true;
-		}
-		else if (state() == Pause)
-		{
+		} else if (state() == Pause) {
 			setState(Playing);
 			_pauserg->setVisible(false);
 			gameClock.resume();
@@ -262,7 +256,7 @@ namespace zoper
 		_tokenZones[2].direction = Direction::DirectionData::Left;
 
 		// From bottom to top
-		_tokenZones[3].zone = Rectu32{ centerRect.left , size.y, centerRect.right() - 1, centerRect.bottom() - 1 };
+		_tokenZones[3].zone = Rectu32{ centerRect.left , size.y - 1, centerRect.right() - 1, centerRect.bottom() - 1 };
 		_tokenZones[3].direction = Direction::DirectionData::Up;
 
 		for (u32 i = 0; i < NUMWAYS; ++i) {
@@ -282,26 +276,22 @@ namespace zoper
 
 		u32 sizep = 0;// getRandomNumer(currentTokenZone.size);
 
-		u32 newX = currentTokenZone.zone.left + (currentTokenZone.direction.isHorizontal() ? 0 : sizep);
-		lib::u32 newY = currentTokenZone.zone.top + (currentTokenZone.direction.isHorizontal() ? sizep : 0);
+		u32 newX{ currentTokenZone.zone.left + (currentTokenZone.direction.isHorizontal() ? 0 : sizep) };
+		u32 newY{ currentTokenZone.zone.top + (currentTokenZone.direction.isHorizontal() ? sizep : 0) };
 		logDebug("New tile pos: ", newX, ",", newY);
 
 		vector2du32 loopPosition{ (currentTokenZone.direction.isHorizontal() ? currentTokenZone.zone.size().x : newX),
 			(currentTokenZone.direction.isHorizontal() ? newY : currentTokenZone.zone.size().y) };
-//		lib::vector2du32 destPosition;
-		logDebug("Starting at: ", loopPosition.x, ",", loopPosition.y);
+		logDebug("Starting at: ", loopPosition);
 
 		// Now, we have the data for the new token generated, but first, lets start to move the row or col.
 		Direction loopDirection = currentTokenZone.direction.negate();
-		for_each_token_in_line(loopPosition, loopDirection, [this](const vector2du32 &loopPosition, const Direction &direction)
-		{
-			if (!p_boardModel->tileEmpty(loopPosition))
-			{
+		for_each_token_in_line(loopPosition, loopDirection, [this](const vector2du32 &loopPosition, const Direction &direction) {
+			if (!p_boardModel->tileEmpty(loopPosition)) {
 				vector2du32 dest = direction.negate().applyToVector(loopPosition);
 				p_boardModel->moveTile(loopPosition, dest);
 
-				if (pointInCenter(dest))
-				{
+				if (pointInCenter(dest)) {
 					startGameOver();
 				}
 			}
