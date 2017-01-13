@@ -17,10 +17,10 @@ namespace lib
 			const Transform& getTransform() const noexcept;
 			void updateTransform();
 
-			Property<vector2df> origin;
-			Property<f32> rotation;
-			Property<vector2df> scale;
-			Property<vector2df> position;
+			TriggerProperty<vector2df> origin;
+			TriggerProperty<f32> rotation;
+			TriggerProperty<vector2df> scale;
+			TriggerProperty<vector2df> position;
 		private:
 			Transform m_transform;
 		};
