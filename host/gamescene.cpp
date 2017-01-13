@@ -424,7 +424,7 @@ namespace zoper
 			vector2df lastTokenPosition;
 
 			if (!p_boardModel->tileEmpty(loopPosition) && !pointInCenter(loopPosition) && result) {
-				sptr<board::ITile> currentToken{ p_boardModel->getTile(loopPosition).lock() };
+				sptr<board::ITile> currentToken{ p_boardModel->getTile(loopPosition) };
 				board::BoardTileData currentTokenType = currentToken->get();
 				if (currentTokenType == tokenType) {
 					++inARow;
@@ -485,7 +485,7 @@ namespace zoper
 			std::string temp;
 			for (u32 x = 0; x < _gameData.size.x; ++x) {
 				std::string chTemp;
-				auto lp_tile = p_boardModel->getTile(lib::vector2du32(x, y)).lock();
+				auto lp_tile (p_boardModel->getTile(lib::vector2du32(x, y)));
 				if (lp_tile) {
 					chTemp = std::to_string(lp_tile->get());
 				} else {
@@ -526,51 +526,44 @@ namespace zoper
 		}
 	}
 
-	void GameScene::tileAdded(const lib::vector2du32 &pos, board::WITilePointer nTile)
+	void GameScene::tileAdded(const lib::vector2du32 &pos, board::SITilePointer nTile)
 	{
 		// Tile appeared
-		if (auto ztile = std::dynamic_pointer_cast<Tile>(nTile.lock()))
+		if (auto ztile = std::dynamic_pointer_cast<Tile>(nTile))
 		{
 			tokenAppeared(pos, ztile);
 		}
-		else if (auto ztile_ = std::dynamic_pointer_cast<Player>(nTile.lock()))
+		else if (auto ztile_ = std::dynamic_pointer_cast<Player>(nTile))
 		{
 			// Set the position in the scene depending on the board position
 			playerAppeared(pos, ztile_);
 		}
 	}
 
-	void GameScene::tileDeleted(const lib::vector2du32 &pos, lib::board::WITilePointer nTile)
+	void GameScene::tileDeleted(const lib::vector2du32 &pos, lib::board::SITilePointer nTile)
 	{
-		if (auto ztile = std::dynamic_pointer_cast<Tile>(nTile.lock()))
-		{
+		if (auto ztile = std::dynamic_pointer_cast<Tile>(nTile)) {
 			tokenDissapeared(pos,ztile);
-		}
-		else if (auto ztile_ = std::dynamic_pointer_cast<Player>(nTile.lock()))
-		{
+		} else if (auto ztile_ = std::dynamic_pointer_cast<Player>(nTile)) {
 			playerDissapeared(pos,ztile_);
 		}
 	}
 
-	void GameScene::tileMoved(const lib::vector2du32 &source, const lib::vector2du32 &dest, lib::board::WITilePointer tile)
+	void GameScene::tileMoved(const vector2du32 &source, const lib::vector2du32 &dest, board::SITilePointer tile)
 	{
-		if (auto ztile = std::dynamic_pointer_cast<Tile>(tile.lock()))
-		{
+		if (auto ztile = std::dynamic_pointer_cast<Tile>(tile)) {
 			tokenMoved(source, dest, ztile);
-		}
-		else if (auto ztile_ = std::dynamic_pointer_cast<Player>(tile.lock()))
-		{
+		} else if (auto ztile_ = std::dynamic_pointer_cast<Player>(tile)) {
 			playerMoved(source, dest, ztile_);
 		}
 	}
 
-	void GameScene::tileChanged(const lib::vector2du32 &pos, lib::board::WITilePointer nTile, 
+	void GameScene::tileChanged(const lib::vector2du32 &pos, lib::board::SITilePointer nTile, 
 		const lib::board::BoardTileData &ov, const lib::board::BoardTileData &nv)
 	{
-		if (auto ztile = std::dynamic_pointer_cast<Tile>(nTile.lock())) {
+		if (auto ztile = std::dynamic_pointer_cast<Tile>(nTile)) {
 			tokenChangedValue(pos, ztile, ov, nv);
-		}
-		else if (auto ztile_ = std::dynamic_pointer_cast<Player>(nTile.lock())) {
+		} else if (auto ztile_ = std::dynamic_pointer_cast<Player>(nTile)) {
 			playerChangedValue(pos, ztile_, ov, nv);
 		}
 	}

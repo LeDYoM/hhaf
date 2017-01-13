@@ -16,9 +16,9 @@ namespace lib
 			BoardModel(const vector2du32 &size);
 			~BoardModel();
 
-			WITilePointer getTile(const vector2du32 &position) const noexcept;
-			inline bool tileEmpty(const vector2du32 &position) const noexcept { return getTile(position).lock() == nullptr; }
-			void setTile(const vector2du32 &position, WITilePointer newTile);
+			SITilePointer getTile(const vector2du32 &position) const noexcept;
+			inline bool tileEmpty(const vector2du32 &position) const noexcept { return getTile(position) == nullptr; }
+			void setTile(const vector2du32 &position, SITilePointer newTile);
 			void deleteTile(const vector2du32 &position);
 			bool moveTile(const vector2du32 &source, const vector2du32 &dest);
 			void changeTileData(const vector2du32 &source, const BoardTileData &nv);
@@ -28,8 +28,8 @@ namespace lib
 			inline const vector2du32 size() const noexcept { return vector2du32{ _tiles.size(),_tiles[0].size() }; }
 
 		private:
-			void _setTile(const vector2du32 &position, WITilePointer newTile);
-			std::vector<std::vector<WITilePointer>> _tiles;
+			void _setTile(const vector2du32 &position, SITilePointer newTile);
+			std::vector<std::vector<SITilePointer>> _tiles;
 		};
 	}
 }

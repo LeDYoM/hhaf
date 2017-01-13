@@ -102,11 +102,11 @@ namespace zoper
 		void registerEvents();
 
 		// Inherited via ITilesController
-		void tileAdded(const lib::vector2du32 &position, lib::board::WITilePointer nTile);
-		void tileDeleted(const lib::vector2du32 &position, lib::board::WITilePointer nTile);
-		void tileMoved(const lib::vector2du32 &source, const lib::vector2du32 &dest, lib::board::WITilePointer tile);
+		void tileAdded(const lib::vector2du32 &position, lib::board::SITilePointer nTile);
+		void tileDeleted(const lib::vector2du32 &position, lib::board::SITilePointer nTile);
+		void tileMoved(const lib::vector2du32 &source, const lib::vector2du32 &dest, lib::board::SITilePointer tile);
 
-		void tileChanged(const lib::vector2du32 &position, lib::board::WITilePointer nTile,
+		void tileChanged(const lib::vector2du32 &position, lib::board::SITilePointer nTile,
 			const lib::board::BoardTileData &ov, const lib::board::BoardTileData &nv);
 
 		void updatePlayer(const lib::vector2du32 &dest, lib::sptr<Player> player_);
