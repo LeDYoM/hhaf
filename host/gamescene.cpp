@@ -331,19 +331,19 @@ namespace zoper
 		p_player = lib::sptr<Player>(new Player(lib::vector2du32(_gameData.centerRect.leftTop()),tileSize()));
 
 		// Add it to the board and to the scene nodes
-		p_boardModel->setTile(p_player->boardPosition(), std::dynamic_pointer_cast<lib::board::ITile>(_mainBoardrg->addRenderizable(p_player)));
+		p_boardModel->setTile(p_player->boardPosition(), std::dynamic_pointer_cast<board::ITile>(_mainBoardrg->addRenderizable(p_player)));
 	}
 
-	void GameScene::addNewToken(const lib::vector2du32 &pos, lib::u32 newToken)
+	void GameScene::addNewToken(const vector2du32 &pos, u32 newToken)
 	{
 		logDebug("Adding new tile at ", pos, " with value ", newToken);
 		// Create a new Tile instance
-		lib::sptr<Tile> newTileToken = lib::sptr<Tile>(new Tile(lib::board::BoardTileData(newToken),tileSize()));
+		auto newTileToken = msptr<Tile>(lib::board::BoardTileData(newToken),tileSize());
 		// Set the position in the scene depending on the board position
 		newTileToken->position = board2Scene(pos);
 
 		// Add it to the board and to the scene nodes
-		p_boardModel->setTile(pos, std::dynamic_pointer_cast<lib::board::ITile>(_mainBoardrg->addRenderizable(newTileToken)));
+		p_boardModel->setTile(pos, std::dynamic_pointer_cast<board::ITile>(_mainBoardrg->addRenderizable(newTileToken)));
 	}
 
 	void zoper::GameScene::registerEvents()

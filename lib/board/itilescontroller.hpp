@@ -15,21 +15,22 @@ namespace lib
 		{
 		public:
 			ITile(const BoardTileData &data) : _data{ data } {}
-			virtual ~ITile() {}
-			inline const BoardTileData &getData() const { return _data; }
+			virtual ~ITile() = default;
+			inline const BoardTileData &getData() const noexcept { return _data; }
 			inline void setData(const BoardTileData &nv) { _data = nv; }
 		private:
 			BoardTileData _data;
 		};
-		typedef sptr<ITile> SITilePointer;
-		typedef wptr<ITile> WITilePointer;
+
+		using SITilePointer = sptr<ITile>;
+		using WITilePointer = wptr<ITile>;
 
 		class ITilesController
 		{
 		public:
 
-			ITilesController() {}
-			virtual ~ITilesController() {}
+			ITilesController() = default;
+			virtual ~ITilesController() = default;
 
 			virtual void tileAdded(const vector2du32 &position, WITilePointer nTile) = 0;
 			virtual void tileDeleted(const vector2du32 &position, WITilePointer nTile) = 0;
