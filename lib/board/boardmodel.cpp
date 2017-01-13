@@ -1,5 +1,7 @@
 #include "boardmodel.hpp"
 #include <lib/core/log.hpp>
+#include <lib/core/host.hpp>
+#include <lib/core/events/eventmanager.hpp>
 
 namespace lib
 {
@@ -38,6 +40,7 @@ namespace lib
 			__ASSERT(tileEmpty(tPosition), "You can only set data in empty tiles");
 
 			_setTile(tPosition, newTile);
+			host().eventManager().addEvent(msptr<TileAddedEvent>(tPosition, newTile));
 			if (p_tController) p_tController->tileAdded(tPosition, newTile);
 		}
 
@@ -46,6 +49,7 @@ namespace lib
 			__ASSERT(!tileEmpty(position), "You can only delete not empty tiles");
 			WITilePointer current = getTile(position);
 			_tiles[position.x][position.y].reset();
+			host().eventManager().addEvent(msptr<TileDeletedEvent>(position, current));
 			if (p_tController) p_tController->tileDeleted(position,current);
 		}
 
@@ -56,6 +60,7 @@ namespace lib
 			auto tile = getTile(source).lock();
 			BoardTileData ov = tile->getData();
 			tile->setData(nv);
+			host().eventManager().addEvent(msptr<TileChangedEvent>(source, tile, ov, nv));
 			if (p_tController) p_tController->tileChanged(source, tile, ov,nv);
 		}
 
@@ -76,6 +81,7 @@ namespace lib
 					_setTile(source, WITilePointer());
 
 					if (p_tController) p_tController->tileMoved(source, dest, sourceTile);
+					host().eventManager().addEvent(msptr<TileMovedEvent>(source, dest, sourceTile));
 					return true;
 				}
 			}

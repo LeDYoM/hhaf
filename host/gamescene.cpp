@@ -30,9 +30,7 @@ namespace zoper
 		_gameData.generateTokenZones();
 	}
 
-	GameScene::~GameScene()
-	{
-	}
+	GameScene::~GameScene() = default;
 
 	void GameScene::onInit()
 	{
@@ -516,7 +514,7 @@ namespace zoper
 		}
 	}
 
-	void GameScene::tileAdded(const lib::vector2du32 &pos, lib::board::WITilePointer nTile)
+	void GameScene::tileAdded(const lib::vector2du32 &pos, board::WITilePointer nTile)
 	{
 		// Tile appeared
 		if (auto ztile = std::dynamic_pointer_cast<Tile>(nTile.lock()))
