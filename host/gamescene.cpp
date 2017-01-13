@@ -575,13 +575,17 @@ namespace zoper
 			anim::noAction, anim::noAction));
 	}
 
-	void GameScene::tokenAppeared(const lib::vector2du32 &, lib::sptr<Tile>)
+	void GameScene::tokenAppeared(const lib::vector2du32 &_position, lib::sptr<Tile> tile)
 	{
+		_position;
+		tile;
+		logDebug("Token ", tile->name(), " appeared at ", _position);
 	}
 
-	void GameScene::tokenDissapeared(const lib::vector2du32 &, lib::sptr<Tile> tile)
+	void GameScene::tokenDissapeared(const lib::vector2du32 &_position, lib::sptr<Tile> tile)
 	{
-		logDebug("Deleting token ", tile->name(), " from scene");
+		_position;
+		logDebug("Deleting token ", tile->name(), " from scene at position ", _position);
 		_mainBoardrg->removeRenderizable(tile);
 	}
 
@@ -593,8 +597,9 @@ namespace zoper
 
 	void GameScene::updatePlayer(const lib::vector2du32 &dest, lib::sptr<Player> player_)
 	{
-		player_->origin = tileSize() / 2.0f;
-		player_->position = board2Scene(dest) + (tileSize() / 2.0f);
+		auto tileCenter(tileSize() / 2.0f);
+		player_->origin = tileCenter;
+		player_->position = board2Scene(dest) + tileCenter;
 		player_->rotation = player_->currentDirection().angle();
 	}
 
