@@ -7,9 +7,8 @@ namespace lib
 {
 	namespace board
 	{
-		BoardModel::BoardModel(const vector2du32 &size, ITilesController *tController)
+		BoardModel::BoardModel(const vector2du32 &size)
 		{
-			p_tController = tController;
 			logConstruct(" w: ", size.x, " h: ", size.y);
 			_tiles.reserve(size.x);
 			for (auto x = 0u; x < size.x; ++x) {
@@ -21,9 +20,8 @@ namespace lib
 
 		BoardModel::~BoardModel()
 		{
-			logDestruct_NOPARAMS;
 			_tiles.clear();
-			p_tController = nullptr;
+			logDestruct_NOPARAMS;
 		}
 
 		WITilePointer BoardModel::getTile(const vector2du32 &position) const noexcept
@@ -41,7 +39,6 @@ namespace lib
 
 			_setTile(tPosition, newTile);
 			host().eventManager().addEvent(msptr<TileAddedEvent>(tPosition, newTile));
-			if (p_tController) p_tController->tileAdded(tPosition, newTile);
 		}
 
 		void BoardModel::deleteTile(const vector2du32 &position)
@@ -50,7 +47,6 @@ namespace lib
 			WITilePointer current = getTile(position);
 			_tiles[position.x][position.y].reset();
 			host().eventManager().addEvent(msptr<TileDeletedEvent>(position, current));
-			if (p_tController) p_tController->tileDeleted(position,current);
 		}
 
 		void BoardModel::changeTileData(const vector2du32 &source, const BoardTileData &nv)
@@ -58,16 +54,15 @@ namespace lib
 			__ASSERT(!tileEmpty(source), "You can only change data in not empty tiles");
 
 			auto tile = getTile(source).lock();
-			BoardTileData ov = tile->getData();
+			BoardTileData ov{ tile->getData() };
 			tile->setData(nv);
 			host().eventManager().addEvent(msptr<TileChangedEvent>(source, tile, ov, nv));
-			if (p_tController) p_tController->tileChanged(source, tile, ov,nv);
 		}
 
 		bool BoardModel::moveTile(const vector2du32 &source, const vector2du32 &dest)
 		{
 			if (!tileEmpty(source)) {
-				logDebug("Moving tile from ", source.x, ",", source.y, " to ", dest.x , ",", dest.y);
+				logDebug("Moving tile from ", source, " to ", dest);
 
 				SITilePointer sourceTile{ getTile(source) };
 				WITilePointer destTile{ getTile(dest) };
@@ -80,7 +75,6 @@ namespace lib
 					_setTile(dest, sourceTile);
 					_setTile(source, WITilePointer());
 
-					if (p_tController) p_tController->tileMoved(source, dest, sourceTile);
 					host().eventManager().addEvent(msptr<TileMovedEvent>(source, dest, sourceTile));
 					return true;
 				}

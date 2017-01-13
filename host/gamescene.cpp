@@ -97,7 +97,23 @@ namespace zoper
 	void GameScene::onEnterScene()
 	{
 		Scene::onEnterScene();
-		p_boardModel = lib::msptr<lib::board::BoardModel>(_gameData.size, this);
+		using namespace lib::board;
+		using namespace lib::events;
+
+		p_boardModel = lib::msptr<BoardModel>(_gameData.size);
+		m_boardEventConnector.addSubscription(TileAddedEvent::subscribe([this](const events::Event&ev) {
+			auto tEvent{ eventAs<TileAddedEvent>(ev) }; tileAdded(tEvent.position, tEvent.tile); 
+		}));
+		m_boardEventConnector.addSubscription(TileDeletedEvent::subscribe([this](const events::Event&ev) {
+			auto tEvent{ eventAs<TileDeletedEvent>(ev) }; tileDeleted(tEvent.position, tEvent.tile);
+		}));
+		m_boardEventConnector.addSubscription(TileChangedEvent::subscribe([this](const events::Event&ev) {
+			auto tEvent{ eventAs<TileChangedEvent>(ev) }; tileChanged(tEvent.position, tEvent.tile, tEvent.ov, tEvent.nv);
+		}));
+		m_boardEventConnector.addSubscription(TileMovedEvent::subscribe([this](const events::Event&ev) {
+			auto tEvent{ eventAs<TileMovedEvent>(ev) }; tileMoved(tEvent.position, tEvent.dest, tEvent.tile);
+		}));
+
 		tilesCreated();
 		addPlayer();
 		_gameData._gameMode = static_cast<GameData::GameModes>(_gameConfig.value(GameModeStr)->get<int>());

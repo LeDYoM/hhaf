@@ -21,6 +21,12 @@ namespace lib
 			virtual void dispatch() = 0;
 		};
 
+		template <typename T>
+		constexpr const std::remove_reference_t<T>& eventAs(const Event&ev)
+		{
+			return dynamic_cast<const std::remove_reference_t<T>&>(ev);
+		}
+
 		class EventSubscription
 		{
 		public:

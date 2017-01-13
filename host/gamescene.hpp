@@ -1,16 +1,18 @@
 #ifndef __GAMESCENE_HPP__
 #define __GAMESCENE_HPP__
 
+#include "keymapping.hpp"
+#include "direction.hpp"
+#include "levelproperties.hpp"
+
 #include <lib/include/types.hpp>
 #include <lib/core/compileconfig.hpp>
 #include <lib/core/configuration.hpp>
 #include <lib/core/timer.hpp>
+#include <lib/core/events/eventreceiver.hpp>
 #include <lib/draw/scene.hpp>
 #include <lib/board/itilescontroller.hpp>
 #include <lib/board/boardmodel.hpp>
-#include "keymapping.hpp"
-#include "direction.hpp"
-#include "levelproperties.hpp"
 
 #include <array>
 #include <functional>
@@ -48,7 +50,7 @@ namespace zoper
 			Time=1,
 		} _gameMode{ Token };
 	};
-	class GameScene final : public lib::draw::Scene, public lib::board::ITilesController, public lib::Configuration
+	class GameScene final : public lib::draw::Scene, public lib::Configuration
 	{
 	public:
 		GameScene();
@@ -66,6 +68,7 @@ namespace zoper
 	private:
 		KeyMapping _keyMapping;
 		lib::Configuration _gameConfig;
+		lib::EventReceiver m_boardEventConnector;
 		void setLevel(const lib::u32 nv);
 		void updateLevelData();
 		void updateGoals();
@@ -99,12 +102,12 @@ namespace zoper
 		void registerEvents();
 
 		// Inherited via ITilesController
-		virtual void tileAdded(const lib::vector2du32 &position, lib::board::WITilePointer nTile) override;
-		virtual void tileDeleted(const lib::vector2du32 &position, lib::board::WITilePointer nTile) override;
-		virtual void tileMoved(const lib::vector2du32 &source, const lib::vector2du32 &dest, lib::board::WITilePointer tile) override;
+		void tileAdded(const lib::vector2du32 &position, lib::board::WITilePointer nTile);
+		void tileDeleted(const lib::vector2du32 &position, lib::board::WITilePointer nTile);
+		void tileMoved(const lib::vector2du32 &source, const lib::vector2du32 &dest, lib::board::WITilePointer tile);
 
-		virtual void tileChanged(const lib::vector2du32 &position, lib::board::WITilePointer nTile,
-			const lib::board::BoardTileData &ov, const lib::board::BoardTileData &nv) override;
+		void tileChanged(const lib::vector2du32 &position, lib::board::WITilePointer nTile,
+			const lib::board::BoardTileData &ov, const lib::board::BoardTileData &nv);
 
 		void updatePlayer(const lib::vector2du32 &dest, lib::sptr<Player> player_);
 
