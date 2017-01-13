@@ -3,6 +3,7 @@
 
 #include <lib/include/types.hpp>
 #include <lib/include/vector2d.hpp>
+#include <lib/include/properties.hpp>
 #include <lib/core/events/event.hpp>
 
 namespace lib
@@ -11,16 +12,11 @@ namespace lib
 	{
 		using BoardTileData = s32;
 
-
-		class ITile
+		class ITile : public Property<BoardTileData>
 		{
 		public:
-			ITile(const BoardTileData &data) : _data{ data } {}
+			using Property<BoardTileData>::Property;
 			virtual ~ITile() = default;
-			inline const BoardTileData &getData() const noexcept { return _data; }
-			inline void setData(const BoardTileData &nv) { _data = nv; }
-		private:
-			BoardTileData _data;
 		};
 
 		using SITilePointer = sptr<ITile>;

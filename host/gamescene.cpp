@@ -414,7 +414,7 @@ namespace zoper
 		logDebug("Launching player");
 		const Direction loopDirection{ p_player->currentDirection() };
 		const vector2du32 loopPosition{ p_player->boardPosition() };
-		const board::BoardTileData tokenType{ p_player->getData() };
+		const board::BoardTileData tokenType{ p_player->get() };
 		u32 inARow{ 0 };
 		for_each_token_in_line(loopPosition, loopDirection, [this,tokenType,&inARow](const vector2du32 &loopPosition, const Direction &direction)
 		{
@@ -425,7 +425,7 @@ namespace zoper
 
 			if (!p_boardModel->tileEmpty(loopPosition) && !pointInCenter(loopPosition) && result) {
 				sptr<board::ITile> currentToken{ p_boardModel->getTile(loopPosition).lock() };
-				board::BoardTileData currentTokenType = currentToken->getData();
+				board::BoardTileData currentTokenType = currentToken->get();
 				if (currentTokenType == tokenType) {
 					++inARow;
 					increaseScore(inARow*_levelProperties.baseScore());
@@ -436,7 +436,7 @@ namespace zoper
 				} else {
 					p_boardModel->changeTileData(p_player->boardPosition(), currentTokenType);
 					p_boardModel->changeTileData(loopPosition, tokenType);
-					logDebug("Player type changed to ", p_player->getData());
+					logDebug("Player type changed to ", p_player->get());
 					result = false;
 				}
 			}
@@ -481,22 +481,18 @@ namespace zoper
 
 	void GameScene::_debugDisplayBoard() const
 	{
-		for (lib::u32 y = 0; y < _gameData.size.y; ++y)
-		{
+		for (u32 y = 0; y < _gameData.size.y; ++y) {
 			std::string temp;
-			for (lib::u32 x = 0; x < _gameData.size.x; ++x)
-			{
+			for (u32 x = 0; x < _gameData.size.x; ++x) {
 				std::string chTemp;
 				auto lp_tile = p_boardModel->getTile(lib::vector2du32(x, y)).lock();
-				if (lp_tile)
-				{
-					chTemp = std::to_string(lp_tile->getData());
-				}
-				else
-				{
+				if (lp_tile) {
+					chTemp = std::to_string(lp_tile->get());
+				} else {
 					chTemp = "*";
-					if (pointInCenter(lib::vector2du32(x, y)))
+					if (pointInCenter(lib::vector2du32(x, y))) {
 						chTemp = "C";
+					}
 				}
 
 				temp += chTemp;

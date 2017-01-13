@@ -54,8 +54,8 @@ namespace lib
 			__ASSERT(!tileEmpty(source), "You can only change data in not empty tiles");
 
 			auto tile = getTile(source).lock();
-			BoardTileData ov{ tile->getData() };
-			tile->setData(nv);
+			BoardTileData ov{ tile->get() };
+			tile->set(nv);
 			host().eventManager().addEvent(msptr<TileChangedEvent>(source, tile, ov, nv));
 		}
 
@@ -67,10 +67,10 @@ namespace lib
 				SITilePointer sourceTile{ getTile(source) };
 				WITilePointer destTile{ getTile(dest) };
 
-				logDebug("Source Value: ", sourceTile->getData());
+				logDebug("Source Value: ", sourceTile->get());
 
 				if (sourceTile)	{
-					__ASSERT(!destTile.lock(), "Trying to move to a not empty tile: " , dest.x, ",", dest.y, " contains ", destTile.lock()->getData());
+					__ASSERT(!destTile.lock(), "Trying to move to a not empty tile: " , dest, " contains ", destTile.lock()->get());
 
 					_setTile(dest, sourceTile);
 					_setTile(source, WITilePointer());

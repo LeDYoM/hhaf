@@ -11,7 +11,7 @@ namespace lib
 	{
 	public:
 		using callback_t = std::function<void(const T &newValue)>;
-		constexpr Property(T iv, callback_t c) noexcept : m_value{ std::move(iv) }, m_callback{ std::move(c) } {}
+		constexpr Property(T iv, callback_t c = {}) noexcept : m_value{ std::move(iv) }, m_callback{ std::move(c) } {}
 
 		Property(const Property&) = delete;
 		Property& operator=(const Property&) = delete;

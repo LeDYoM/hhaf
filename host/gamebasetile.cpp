@@ -8,11 +8,11 @@ namespace zoper
 	using namespace lib::draw;
 
 	GameBaseTile::GameBaseTile(BoardTileData data, const vector2df &size, const std::string &baseName, const u32 pointCount)
-		: ITile{ data }, NodeShape{baseName, size, nullptr, pointCount, colors::White} {}
+		: ITile{ data, }, NodeShape{baseName, size, nullptr, pointCount, colors::White} {}
 
 	lib::draw::Color GameBaseTile::getColorForToken() const
 	{
-		switch (getData())
+		switch (get())
 		{
 		case 0:
 			return colors::Red;
@@ -30,7 +30,7 @@ namespace zoper
 			return colors::Magenta;
 			break;
 		default:
-			logError("Error value for token: ", getData(), " is not supported");
+			logError("Error value for token: ", get(), " is not supported");
 			return colors::White;
 			break;
 		}
