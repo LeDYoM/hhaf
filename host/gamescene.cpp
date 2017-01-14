@@ -597,10 +597,18 @@ namespace zoper
 
 	void GameScene::updatePlayer(const lib::vector2du32 &dest, lib::sptr<Player> player_)
 	{
-		auto tileCenter(tileSize() / 2.0f);
+		const auto ts(tileSize());
+		const auto tileCenter(ts / 2.0f);
 		player_->origin = tileCenter;
 		player_->position = board2Scene(dest) + tileCenter;
 		player_->rotation = player_->currentDirection().angle();
+		if (player_->currentDirection().value() == Direction::DirectionData::Up ||
+			player_->currentDirection().value() == Direction::DirectionData::Down) {
+			player_->scale = { 1, 1 };
+		}
+		else {
+			player_->scale = { ts.y / ts.x, ts.x / ts.y };
+		}
 	}
 
 	void GameScene::playerMoved(const lib::vector2du32 &, const lib::vector2du32 &dest, lib::sptr<Player> player_)
