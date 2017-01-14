@@ -22,7 +22,7 @@ namespace lib
 			Rects32 getTextureRect() const;
 
 			ReadOnlyProperty<Rectf32> bounds;
-			TriggerProperty<vector2df> size;
+			Property<vector2df> size;
 		protected:
 			void updateGeometry();
 			void updateTexCoords();

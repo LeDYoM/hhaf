@@ -22,11 +22,11 @@ namespace lib
 
 			virtual void draw() override;
 
-			TriggerProperty<Color> color;
+			Property<Color> color;
 
 		protected:
-			TriggerProperty<sptr<Texture>> texture;
-			TriggerProperty<Rectf32> bounds;
+			Property<sptr<Texture>> texture;
+			Property<Rectf32> bounds;
 
 			void updateFillColors();
 			VertexArray m_vertices;
