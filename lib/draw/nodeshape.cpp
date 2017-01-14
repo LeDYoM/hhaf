@@ -14,7 +14,7 @@ namespace lib
 
 		void NodeShape::updateGeometrySimpleNode()
 		{
-			Renderizable::bounds.set(m_vertices.generateShape(m_size, m_pointCount));
+			Renderizable::bounds.set(m_vertices.generateShape(size(), m_pointCount));
 		}
 	}
 }

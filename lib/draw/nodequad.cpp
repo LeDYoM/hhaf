@@ -13,7 +13,7 @@ namespace lib
 
 		void NodeQuad::updateGeometrySimpleNode()
 		{
-			Renderizable::bounds.set(m_vertices.generateQuad(m_size));
+			Renderizable::bounds.set(m_vertices.generateQuad(size()));
 		}
 	}
 }
