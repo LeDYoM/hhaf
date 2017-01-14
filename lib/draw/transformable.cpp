@@ -37,11 +37,9 @@ namespace lib
 			const f32 syc = scale().y * cosine;
 			const f32 sxs = scale().x * sine;
 			const f32 sys = scale().y * sine;
-			const f32 tx = -origin().x * sxc - origin().y * sys + position().x;
-			const f32 ty = origin().x * sxs - origin().y * syc + position().y;
 
-			m_transform = Transform(sxc, sys, tx,
-				-sxs, syc, ty,
+			m_transform = Transform(sxc, sys, -origin().x * sxc - origin().y * sys + position().x,
+				-sxs, syc, origin().x * sxs - origin().y * syc + position().y,
 				0.f, 0.f, 1.f);
 		}
 	}
