@@ -27,7 +27,7 @@ namespace lib
 
 			void AnimationManager::push_animation(sptr<IAnimation> nanimation, sptr<IDrawable> nodeTrack)
 			{
-				host().eventManager().addEvent(msptr<UpdateAnimationEvent>(nanimation));
+				host().eventManager().addEvent(msptr<UpdateAnimationEvent>(std::move(nanimation),std::move(nodeTrack)));
 			}
 		}
 	}

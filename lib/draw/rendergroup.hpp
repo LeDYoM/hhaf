@@ -55,7 +55,7 @@ namespace lib
 			bool removeRenderGroup(sptr<RenderGroup> element);
 
 			void draw() override;
-			void addAnimation(sptr<anim::IAnimation> nanimation) noexcept;
+			void addAnimation(sptr<anim::IAnimation> nanimation, sptr<IDrawable> tracker = {}) noexcept;
 
 		protected:
 			void addRenderGroup(sptr<RenderGroup> node, const sptr<IDrawable> beforeNode = nullptr);

@@ -32,9 +32,9 @@ namespace lib
 			}
 		}
 
-		void RenderGroup::addAnimation(sptr<anim::IAnimation> nanimation) noexcept
+		void RenderGroup::addAnimation(sptr<anim::IAnimation> nanimation, sptr<IDrawable> tracker) noexcept
 		{
-			parentScene()->createAnimation(std::move(nanimation));
+			parentScene()->createAnimation(std::move(nanimation), std::move(tracker));
 		}
 
 		sptr<RenderGroup> RenderGroup::createNewRenderGroup(const std::string & name, sptr<IDrawable> beforeNode)
