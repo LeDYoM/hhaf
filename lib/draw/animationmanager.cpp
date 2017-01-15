@@ -1,5 +1,6 @@
 #include "animationmanager.hpp"
 #include "ianimation.hpp"
+#include "idrawable.hpp"
 
 #include <lib/core/log.hpp>
 #include <lib/core/host.hpp>
@@ -24,7 +25,7 @@ namespace lib
 
 			AnimationManager::~AnimationManager() = default;
 
-			void AnimationManager::push_animation(sptr<IAnimation> nanimation)
+			void AnimationManager::push_animation(sptr<IAnimation> nanimation, sptr<IDrawable> nodeTrack)
 			{
 				host().eventManager().addEvent(msptr<UpdateAnimationEvent>(nanimation));
 			}

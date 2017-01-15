@@ -9,6 +9,7 @@ namespace lib
 {
 	namespace draw
 	{
+		class IDrawable;
 		namespace anim
 		{
 			class IAnimation;
@@ -18,7 +19,7 @@ namespace lib
 				AnimationManager();
 				~AnimationManager();
 			protected:
-				void push_animation(sptr<IAnimation> nanimation);
+				void push_animation(sptr<IAnimation>, sptr <IDrawable> = {});
 			private:
 				EventReceiver m_eventConnector;
 			};

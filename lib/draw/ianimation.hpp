@@ -1,9 +1,11 @@
 #ifndef LIB_IANIMATION_INCLUDE_HPP__
 #define LIB_IANIMATION_INCLUDE_HPP__
 
-#include "renderizable.hpp"
+#include "idrawable.hpp"
+
 #include <lib/core/timer.hpp>
 #include <lib/include/types.hpp>
+#include <lib/include/properties.hpp>
 #include <lib/core/events/event.hpp>
 
 namespace lib
@@ -20,9 +22,11 @@ namespace lib
 			class UpdateAnimationEvent : public events::EventTemplate<UpdateAnimationEvent>
 			{
 			public:
-				UpdateAnimationEvent(sptr<IAnimation> animation) : m_animation{ std::move(animation) } {}
+				UpdateAnimationEvent(sptr<IAnimation> animation, sptr <IDrawable> tracker = {}) 
+					: m_animation{ std::move(animation) }, m_tracker{ std::move(tracker) } {}
 
 				sptr<IAnimation> m_animation;
+				sptr<IDrawable> m_tracker;
 			};
 
 			class IAnimation
