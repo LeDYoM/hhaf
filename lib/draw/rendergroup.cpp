@@ -32,19 +32,19 @@ namespace lib
 			}
 		}
 
-		void RenderGroup::addAnimation(sptr<anim::IAnimation> nanimation, sptr<IDrawable> tracker) noexcept
+		void RenderGroup::addAnimation(sptr<anim::IAnimation> nanimation, sptr<SceneNode> tracker) noexcept
 		{
 			parentScene()->createAnimation(std::move(nanimation), std::move(tracker));
 		}
 
-		sptr<RenderGroup> RenderGroup::createNewRenderGroup(const std::string & name, sptr<IDrawable> beforeNode)
+		sptr<RenderGroup> RenderGroup::createNewRenderGroup(const std::string & name, sptr<SceneNode> beforeNode)
 		{
 			sptr<RenderGroup> rg = std::make_shared<RenderGroup>(name, this);
 			addRenderGroup(rg, beforeNode);
 			return rg;
 		}
 
-		void RenderGroup::addRenderGroup(sptr<RenderGroup> node, const sptr<IDrawable> beforeNode)
+		void RenderGroup::addRenderGroup(sptr<RenderGroup> node, const sptr<SceneNode> beforeNode)
 		{
 			if (!beforeNode) {
 				m_renderNodes.emplace_back(node);

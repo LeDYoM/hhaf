@@ -1,7 +1,7 @@
 #ifndef LIB_IANIMATION_INCLUDE_HPP__
 #define LIB_IANIMATION_INCLUDE_HPP__
 
-#include "idrawable.hpp"
+#include "scenenode.hpp"
 
 #include <lib/core/timer.hpp>
 #include <lib/include/types.hpp>
@@ -22,11 +22,11 @@ namespace lib
 			class UpdateAnimationEvent : public events::EventTemplate<UpdateAnimationEvent>
 			{
 			public:
-				UpdateAnimationEvent(sptr<IAnimation> animation, sptr <IDrawable> tracker = {}) 
+				UpdateAnimationEvent(sptr<IAnimation> animation, sptr <SceneNode> tracker = {}) 
 					: m_animation{ std::move(animation) }, m_tracker{ std::move(tracker) } {}
 
 				sptr<IAnimation> m_animation;
-				sptr<IDrawable> m_tracker;
+				sptr<SceneNode> m_tracker;
 			};
 
 			class IAnimation

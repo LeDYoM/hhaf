@@ -4,7 +4,7 @@
 #include <lib/include/types.hpp>
 #include <lib/include/vector2d.hpp>
 #include "hasname.hpp"
-#include "idrawable.hpp"
+#include "scenenode.hpp"
 #include "transformable.hpp"
 #include "nodeshape.hpp"
 #include "nodequad.hpp"
@@ -25,7 +25,7 @@ namespace lib
 
 		class Scene;
 		class Renderizable;
-		class RenderGroup : public core::HasName, public IDrawable, public Transformable
+		class RenderGroup : public core::HasName, public SceneNode, public Transformable
 		{
 		public:
 			RenderGroup(const std::string &name, RenderGroup *parent = nullptr);
@@ -36,7 +36,7 @@ namespace lib
 			template <typename T>
 			sptr<T> addRenderizable(sptr<T> newElement)
 			{
-				m_renderNodes.push_back(newElement);
+				m_renderNodes.emplace_back(std::move(newElement));
 				return newElement;
 			}
 
@@ -51,14 +51,14 @@ namespace lib
 			bool removeRenderizable(const sptr<Renderizable> &element);
 			void clear();
 
-			sptr<RenderGroup> createNewRenderGroup(const std::string &name,sptr<IDrawable> beforeNode=nullptr);
+			sptr<RenderGroup> createNewRenderGroup(const std::string &name,sptr<SceneNode> beforeNode=nullptr);
 			bool removeRenderGroup(sptr<RenderGroup> element);
 
 			void draw() override;
-			void addAnimation(sptr<anim::IAnimation> nanimation, sptr<IDrawable> tracker = {}) noexcept;
+			void addAnimation(sptr<anim::IAnimation> nanimation, sptr<SceneNode> tracker = {}) noexcept;
 
 		protected:
-			void addRenderGroup(sptr<RenderGroup> node, const sptr<IDrawable> beforeNode = nullptr);
+			void addRenderGroup(sptr<RenderGroup> node, const sptr<SceneNode> beforeNode = nullptr);
 
 			inline RenderGroup *parent() const noexcept { return m_parent; }
 
@@ -75,7 +75,7 @@ namespace lib
 			}
 			virtual Scene *const parentScene() { return m_parent->parentScene(); }
 
-			vector_shared_pointers<IDrawable> m_renderNodes;
+			vector_shared_pointers<SceneNode> m_renderNodes;
 
 		private:
 			RenderGroup *m_parent{ nullptr };

@@ -46,7 +46,7 @@ namespace lib
 
 			inline bool isActiveScene() const noexcept { return m_isActiveScene; }
 			inline void addSubscription(sptr<events::EventSubscription> &&es) noexcept { eventConnector.addSubscription(std::move(es)); }
-			void createAnimation(sptr<anim::IAnimation> nanimation, sptr<IDrawable> tracking = {}) noexcept { push_animation(std::move(nanimation), std::move(tracking)); }
+			void createAnimation(sptr<anim::IAnimation> nanimation, sptr<SceneNode> tracking = {}) noexcept { push_animation(std::move(nanimation), std::move(tracking)); }
 
 		protected:
 

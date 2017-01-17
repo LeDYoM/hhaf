@@ -12,23 +12,11 @@ namespace lib
 	}
 	namespace draw
 	{
-		class IDrawable
+		class SceneNode
 		{
 		public:
-			IDrawable() = default;
-			virtual ~IDrawable() = default;
+			virtual ~SceneNode() = default;
 
-			/*
-			virtual bool canDraw() = 0;
-			virtual void draw()
-			{
-				if (isVisible() && canDraw())
-				{
-
-				}
-			}
-
-			*/
 			virtual void draw() = 0;
 
 			inline bool isVisible() const noexcept { return m_visible; }
