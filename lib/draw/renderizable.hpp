@@ -1,7 +1,6 @@
 #ifndef __LIB_RENDERIZABLE_HPP__
 #define __LIB_RENDERIZABLE_HPP__
 
-#include "hasname.hpp"
 #include "scenenode.hpp"
 #include "transformable.hpp"
 #include "color.hpp"
@@ -14,7 +13,7 @@ namespace lib
 	namespace draw
 	{
 		class Texture;
-		class Renderizable : public core::HasName, public SceneNode, public Transformable
+		class Renderizable : public SceneNode, public Transformable
 		{
 		public:
 			explicit Renderizable(const std::string &name, sptr<Texture> texture_, PrimitiveType type, u32 vertexCount, const Color &color_);

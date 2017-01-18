@@ -2,19 +2,16 @@
 #define __LIB_IDRAWABLE_HPP__
 
 #include <lib/include/types.hpp>
-#include <SFML/Graphics/RenderStates.hpp>
+#include "hasname.hpp"
 
 namespace lib
 {
-	namespace core
-	{
-		class Window;
-	}
 	namespace draw
 	{
-		class SceneNode
+		class SceneNode : public core::HasName
 		{
 		public:
+			SceneNode(const std::string &name) : core::HasName{ name } {}
 			virtual ~SceneNode() = default;
 
 			virtual void draw() = 0;

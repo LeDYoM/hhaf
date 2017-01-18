@@ -3,7 +3,6 @@
 
 #include <lib/include/types.hpp>
 #include <lib/include/vector2d.hpp>
-#include "hasname.hpp"
 #include "scenenode.hpp"
 #include "transformable.hpp"
 #include "nodeshape.hpp"
@@ -25,7 +24,7 @@ namespace lib
 
 		class Scene;
 		class Renderizable;
-		class RenderGroup : public core::HasName, public SceneNode, public Transformable
+		class RenderGroup : public SceneNode, public Transformable
 		{
 		public:
 			RenderGroup(const std::string &name, RenderGroup *parent = nullptr);

@@ -12,7 +12,7 @@ namespace lib
 	namespace draw
 	{
 		RenderGroup::RenderGroup(const std::string &name, RenderGroup *parent)
-			: HasName{ name }, m_parent{ parent } {	}
+			: SceneNode{ name }, m_parent{ parent } {	}
 
 		RenderGroup::~RenderGroup() = default;
 
