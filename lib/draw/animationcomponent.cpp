@@ -1,4 +1,4 @@
-#include "animationmanager.hpp"
+#include "animationcomponent.hpp"
 #include "ianimation.hpp"
 #include "scenenode.hpp"
 
@@ -12,7 +12,7 @@ namespace lib
 	{
 		namespace anim
 		{
-			AnimationManager::AnimationManager()
+			AnimationComponent::AnimationComponent()
 			{
 				m_eventConnector.addSubscription(UpdateAnimationEvent::subscribe([](const events::Event&ev) {
 					const auto &aEvent{ dynamic_cast<const UpdateAnimationEvent&>(ev) };
@@ -23,9 +23,9 @@ namespace lib
 				}));
 			}
 
-			AnimationManager::~AnimationManager() = default;
+			AnimationComponent::~AnimationComponent() = default;
 
-			void AnimationManager::push_animation(sptr<IAnimation> nanimation, sptr<SceneNode> nodeTrack)
+			void AnimationComponent::push_animation(sptr<IAnimation> nanimation, sptr<SceneNode> nodeTrack)
 			{
 				host().eventManager().addEvent(msptr<UpdateAnimationEvent>(std::move(nanimation),std::move(nodeTrack)));
 			}

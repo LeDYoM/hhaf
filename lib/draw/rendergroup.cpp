@@ -1,7 +1,7 @@
 #include "rendergroup.hpp"
 #include "renderizable.hpp"
 #include "scene.hpp"
-#include "animationmanager.hpp"
+#include "animationcomponent.hpp"
 #include "ianimation.hpp"
 
 #include <lib/core/window.hpp>

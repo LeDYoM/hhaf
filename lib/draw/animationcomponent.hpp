@@ -13,11 +13,11 @@ namespace lib
 		namespace anim
 		{
 			class IAnimation;
-			class AnimationManager
+			class AnimationComponent
 			{
 			public:
-				AnimationManager();
-				~AnimationManager();
+				AnimationComponent();
+				~AnimationComponent();
 			protected:
 				void push_animation(sptr<IAnimation>, sptr <SceneNode> = {});
 			private:

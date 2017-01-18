@@ -9,7 +9,7 @@
 #include <lib/core/timer.hpp>
 #include <lib/core/events/event.hpp>
 #include <lib/core/events/eventreceiver.hpp>
-#include <lib/draw/animationmanager.hpp>
+#include <lib/draw/animationcomponent.hpp>
 #include <string>
 
 namespace lib
@@ -27,7 +27,7 @@ namespace lib
 			class IAnimation;
 		}
 
-		class Scene : public draw::RenderGroup, private anim::AnimationManager
+		class Scene : public draw::RenderGroup, private anim::AnimationComponent
 		{
 		public:
 			Scene(const std::string &_name);
