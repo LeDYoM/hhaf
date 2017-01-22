@@ -10,6 +10,7 @@
 #include <lib/core/events/event.hpp>
 #include <lib/core/events/eventreceiver.hpp>
 #include <lib/draw/animationcomponent.hpp>
+#include <lib/draw/view.hpp>
 #include <string>
 
 namespace lib
@@ -51,7 +52,7 @@ namespace lib
 		protected:
 
 			void updateView();
-			sf::View *const getView() const;
+			const uptr<View> &getView() const;
 			inline u32 state() const { return _state; }
 			inline void setState(u32 ns) { _state = ns; }
 			Timer clock;
@@ -60,7 +61,7 @@ namespace lib
 
 			inline void setAsActiveScene(const bool nv) noexcept { m_isActiveScene = nv; }
 
-			uptr<sf::View> p_view;
+			uptr<draw::View> p_view;
 			u32 _state;
 			bool m_isActiveScene{ false };
 

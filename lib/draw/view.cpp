@@ -11,9 +11,15 @@ namespace lib
 			rotation{ {}, [this](const auto) { updateTransform(); } },
 			viewport{ std::move(rectangle), [this](const auto) { updateTransform(); } }
 		{
+			updateTransform();
 		}
 
 		View::View() : View{{0,0,1000.f,1000.f}} {}
+
+		View::View(const sf::View &_view) : View()
+		{
+			m_cachedView = _view;
+		}
 
 		void View::updateTransform()
 		{
@@ -35,11 +41,21 @@ namespace lib
 			m_transform = Transform(a * cosine, a * sine, a * tx + c,
 				-b * sine, b * cosine, b * ty + d,
 				0.f, 0.f, 1.f);
+
+			m_cachedView.reset(sf::FloatRect(perspective.get().left, perspective.get().top, 
+				perspective.get().width, perspective.get().height));
+			m_cachedView.setRotation(rotation());
 		}
 
 		const Transform& View::getTransform() const
 		{
 			return m_transform;
 		}
+
+		const sf::View & View::externalView() const
+		{
+			return m_cachedView;
+		}
+
 	}
 }

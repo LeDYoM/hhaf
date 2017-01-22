@@ -23,13 +23,13 @@ namespace lib
 
 		void Scene::updateView()
 		{
-			core::Host::host().parentWindow().setView(*p_view.get());
-			logDebug("Scene view set to: center: ", p_view->getCenter().x, ",", p_view->getCenter().y, " and size: ", p_view->getSize().x, ",", p_view->getSize().y);
+			core::Host::host().parentWindow().setView(p_view->externalView());
+			logDebug("Scene view set to: center: ", p_view->perspective().center(), " and size: ", p_view->perspective().size());
 		}
 
-		sf::View *const Scene::getView() const
+		const uptr<View> &Scene::getView() const
 		{
-			return p_view.get();
+			return p_view;
 		}
 
 		vector2df Scene::getCoordinatesToCenter(const Rectf32 &coordinates) const
@@ -39,19 +39,18 @@ namespace lib
 
 		vector2df Scene::getCenterCoordinates() const
 		{
-			return{ p_view->getSize().x / 2.0f, p_view->getSize().y / 2.0f };
+			return p_view->perspective().center();
 		}
 
 		void Scene::onInit()
 		{
 			logDebug("Initializing scene ", name());
-			p_view = uptr<sf::View>(new sf::View(core::Host::host().parentWindow().getView()));
+			p_view = std::make_unique<View>(core::Host::host().parentWindow().getView());
 			auto sceneSize = getDefaultSizeView();
-			p_view->setSize(sceneSize.x, sceneSize.y);
-			p_view->setCenter(sceneSize.x / 2, sceneSize.y / 2);
+			p_view->perspective.set({ 0,0,sceneSize.x, sceneSize.y });
 			updateView();
 
-			logDebug("Scene view set to: center: ", p_view->getCenter().x, ",", p_view->getCenter().y, " and size: ", p_view->getSize().x, ",", p_view->getSize().y);
+			logDebug("Scene view set to: center: ", p_view->perspective().center(), " and size: ", p_view->perspective().size());
 		}
 
 		void Scene::onDeinit()
@@ -68,11 +67,10 @@ namespace lib
 			}));
 
 			auto sceneSize = getDefaultSizeView();
-			p_view->setSize(sceneSize.x, sceneSize.y);
-			p_view->setCenter(sceneSize.x / 2, sceneSize.y / 2);
+			p_view->perspective.set({ 0,0,sceneSize.x, sceneSize.y });
 			updateView();
 
-			logDebug("Scene view set to: center: ", p_view->getCenter().x, ",", p_view->getCenter().y, " and size: ", p_view->getSize().x, ",", p_view->getSize().y);
+			logDebug("Scene view set to: center: ", p_view->perspective().center(), " and size: ", p_view->perspective().size());
 
 			clock.restart();
 		}

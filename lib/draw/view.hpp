@@ -7,6 +7,7 @@
 #include <lib/include/rect.hpp>
 #include <lib/include/properties.hpp>
 #include <lib/draw/transformation.hpp>
+#include <SFML/Graphics/View.hpp>
 
 namespace lib
 {
@@ -16,14 +17,18 @@ namespace lib
 		{
 		public:
 			View();
+			explicit View(const sf::View &_view);
 			explicit View(Rectf32 rectangle);
 			void updateTransform();
 			const Transform& getTransform() const;
-		private:
+			const sf::View &externalView() const;
+
 			Property<Rectf32> perspective;
 			Property<f32> rotation;
 			Property<Rectf32> viewport;
+		private:
 			Transform m_transform;
+			sf::View m_cachedView;
 		};
 	}
 }

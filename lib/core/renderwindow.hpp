@@ -1,7 +1,7 @@
 #ifndef __LIB_EXTERNAL_REDNERWINDOW_HPP__
 #define __LIB_EXTERNAL_REDNERWINDOW_HPP__
 
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 
 namespace lib
 {
