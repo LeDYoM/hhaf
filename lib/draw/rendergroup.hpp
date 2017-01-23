@@ -35,7 +35,7 @@ namespace lib
 			template <typename T>
 			sptr<T> addRenderizable(sptr<T> newElement)
 			{
-				m_renderNodes.emplace_back(std::move(newElement));
+				m_renderNodes.push_back(newElement);
 				return newElement;
 			}
 
