@@ -40,10 +40,10 @@ namespace lib
 			}
 
 			template <typename T, typename... Args>
-			sptr<T> createRenderizable(const std::string &name, Args&&... args)
+			sptr<T> createRenderizable(Args&&... args)
 			{
-				auto result(msptr<T>(name, std::forward<Args>(args)...));
-				m_renderNodes.emplace_back(result);
+				auto result(msptr<T>(std::forward<Args>(args)...));
+				m_renderNodes.push_back(result);
 				return result;
 			}
 
