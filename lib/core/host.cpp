@@ -82,18 +82,18 @@ namespace lib
 		{
 			switch (m_state)
 			{
-			case lib::core::Host::AppState::NotInitialized:
+			case AppState::NotInitialized:
 				break;
-			case lib::core::Host::AppState::ReadyToStart:
+			case AppState::ReadyToStart:
 			{
 				// Create the scene manager
 				logDebug(appId(), ": ", " Starting initialization...");
 				m_state = AppState::Executing;
 
 				//TO DO: Ask via requests
-				m_eventManager = uptr<EventManager>(new EventManager());
-				m_window = uptr<Window>(new Window(m_iapp->getAppDescriptor().wcp));
-				m_resourceManager = uptr<ResourceManager>(new core::ResourceManager(m_iapp->getAppDescriptor().resourceFile));
+				m_eventManager = muptr<EventManager>();
+				m_window = muptr<Window>(m_iapp->getAppDescriptor().wcp);
+				m_resourceManager = muptr<core::ResourceManager>(m_iapp->getAppDescriptor().resourceFile);
 				
 				addScenes(m_iapp->scenesVector());
 
@@ -101,7 +101,7 @@ namespace lib
 				logDebug(appId(), ": ", " is now executing");
 			}
 				break;
-			case lib::core::Host::AppState::Executing:
+			case AppState::Executing:
 			{
 				if (loopStep()) {
 					m_state = AppState::ReadyToTerminate;
@@ -112,7 +112,7 @@ namespace lib
 				}
 			}
 				break;
-			case lib::core::Host::AppState::ReadyToTerminate:
+			case AppState::ReadyToTerminate:
 				logDebug(appId(), ": " ," started termination");
 				if (m_currentScene) {
 					m_currentScene->onExitScene();
@@ -131,7 +131,7 @@ namespace lib
 				logDebug(appId(), ": ", " terminated");
 				return true;
 				break;
-			case lib::core::Host::AppState::Terminated:
+			case AppState::Terminated:
 				return true;
 				break;
 			default:
