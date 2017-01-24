@@ -70,8 +70,7 @@ namespace lib
 		bool Window::preLoop()
 		{
 			auto eMs = p_wPrivate->globalClock.getElapsedTime().asMilliSeconds();
-			if ((eMs - p_wPrivate->lastTimeFps) > 1000)
-			{
+			if ((eMs - p_wPrivate->lastTimeFps) > 1000) {
 				p_wPrivate->lastTimeFps = eMs;
 				p_wPrivate->lastFps = p_wPrivate->currentFps;
 				p_wPrivate->currentFps = 0;
@@ -81,19 +80,14 @@ namespace lib
 			clear();
 
 			sf::Event event;
-			while (pollEvent(event))
-			{
-				if (event.type == sf::Event::Closed)
-				{
+			while (pollEvent(event)) {
+				if (event.type == sf::Event::Closed) {
 					return true;
-				}
-				else if (event.type == sf::Event::KeyPressed || event.type == sf::Event::KeyReleased)
-				{
+				} else if (event.type == sf::Event::KeyPressed || event.type == sf::Event::KeyReleased) {
 					keyEvent(event);
 				}
 			}
 
-//			display();
 			return _shouldClose;
 		}
 
