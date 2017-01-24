@@ -210,7 +210,7 @@ namespace lib
 			}
 		}
 
-		void Host::addScenes(const std::vector<sptr<draw::Scene>>&& sceneVector)
+		void Host::addScenes(std::vector<sptr<draw::Scene>>&& sceneVector)
 		{
 			for (auto &&scene : sceneVector) {
 				addScene(std::move(scene));
@@ -227,7 +227,9 @@ namespace lib
 				else {
 					logDebug("Set first scene");
 				}
-				updateActiveSceneStates(m_currentScene, m_nextScene);
+				if (m_currentScene) m_currentScene->setAsActiveScene(false);
+				m_nextScene->setAsActiveScene(true);
+
 				m_currentScene = m_nextScene;
 				m_nextScene = nullptr;
 
@@ -241,12 +243,6 @@ namespace lib
 		void Host::setScene(sptr<draw::Scene> &&scene)
 		{
 			m_nextScene = std::move(scene);
-		}
-
-		void Host::updateActiveSceneStates(const sptr<draw::Scene>&previous, const sptr<draw::Scene>&next) const noexcept
-		{
-			if (previous) previous->setAsActiveScene(false);
-			if (next) next->setAsActiveScene(true);
 		}
 
 		sptr<draw::Scene> Host::getSceneByName(const std::string &name) const

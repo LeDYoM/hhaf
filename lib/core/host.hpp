@@ -17,7 +17,7 @@ namespace lib
 		class Window;
 		class ResourceManager;
 		class EventManager;
-	
+
 		class Host final
 		{
 		public:
@@ -36,7 +36,7 @@ namespace lib
 			void addScene(sptr<draw::Scene> newScene);
 			void setScene(const std::string &name);
 
-			void addScenes(const std::vector<sptr<draw::Scene>> &&sceneVector);
+			void addScenes(std::vector<sptr<draw::Scene>> &&sceneVector);
 			sptr<draw::Scene> getSceneByName(const std::string &name) const;
 
 			void exitProgram();
@@ -57,7 +57,6 @@ namespace lib
 			bool loopStep();
 		private:
 			void updateScene();
-			void updateActiveSceneStates(const sptr<draw::Scene> &, const sptr<draw::Scene> &) const noexcept;
 
 			static Host *m_instance;
 			AppState m_state;
