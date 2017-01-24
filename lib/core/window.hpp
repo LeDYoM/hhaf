@@ -20,18 +20,16 @@ namespace lib
 			Window(const WindowCreationParams &wcp);
 			~Window();
 			bool preLoop();
-			bool postLoop();
+			void postLoop();
 			virtual void onCreate() override;
 			virtual void onDestroy();
 			u32 getRandomNumer(u32 max = 1, u32 min = 0);
-			void exitProgram();
 
 		private:
 			void create(const WindowCreationParams &wcp);
 			void keyEvent(sf::Event e);
 
 			uptr<WindowPrivate> p_wPrivate{ nullptr };
-			bool _shouldClose{ false };
 			std::string _title;
 		};
 	}

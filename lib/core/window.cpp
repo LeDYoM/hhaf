@@ -87,14 +87,12 @@ namespace lib
 					keyEvent(event);
 				}
 			}
-
-			return _shouldClose;
+			return false;
 		}
 
-		bool Window::postLoop()
+		void Window::postLoop()
 		{
 			display();
-			return _shouldClose;
 		}
 
 		void Window::onCreate()
@@ -126,11 +124,6 @@ namespace lib
 			else {
 				host().eventManager().addEvent(uptr<KeyReleasedEvent>(new KeyReleasedEvent{ doCast(e.key.code) }));
 			}
-		}
-
-		void Window::exitProgram()
-		{
-			_shouldClose = true;
 		}
 	}
 }

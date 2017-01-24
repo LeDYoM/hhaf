@@ -167,7 +167,7 @@ namespace lib
 			m_renderStates.newFrame();
 			m_currentScene->draw();
 
-			windowWants2Close |= m_window->postLoop();
+			m_window->postLoop();
 			return windowWants2Close;
 		}
 
