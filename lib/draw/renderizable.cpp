@@ -19,13 +19,13 @@ namespace lib
 
 		void Renderizable::updateFillColors()
 		{
-			m_vertices.setColor(color.get());
+			m_vertices.setColor(color());
 		}
 
 		void Renderizable::draw()
 		{
 			if (m_visible) {
-				auto handle = host().rStates().pushChanges(&getTransform(), texture.get().get());
+				auto handle = host().rStates().pushChanges(&getTransform(), texture().get());
 				m_vertices.draw();
 			}
 		}

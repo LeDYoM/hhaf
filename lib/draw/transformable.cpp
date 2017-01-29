@@ -30,7 +30,7 @@ namespace lib
 		void Transformable::updateTransform()
 		{
 			// Recompute the combined transform
-			const f32 angle = -rotation.get() * 3.141592654f / 180.f;
+			const f32 angle = -rotation() * 3.141592654f / 180.f;
 			const f32 cosine = static_cast<f32>(std::cos(angle));
 			const f32 sine = static_cast<f32>(std::sin(angle));
 			const f32 sxc = scale().x * cosine;

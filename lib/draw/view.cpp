@@ -42,8 +42,8 @@ namespace lib
 				-b * sine, b * cosine, b * ty + d,
 				0.f, 0.f, 1.f);
 
-			m_cachedView.reset(sf::FloatRect(perspective.get().left, perspective.get().top, 
-				perspective.get().width, perspective.get().height));
+			m_cachedView.reset(sf::FloatRect(perspective().left, perspective().top, 
+				perspective().width, perspective().height));
 			m_cachedView.setRotation(rotation());
 		}
 
