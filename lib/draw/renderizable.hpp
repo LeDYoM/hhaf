@@ -22,6 +22,7 @@ namespace lib
 			virtual void draw() override;
 
 			Property<Color> color;
+			Property<Rectf32> bounds;
 
 		protected:
 			Property<sptr<Texture>> texture;

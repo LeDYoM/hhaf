@@ -51,7 +51,7 @@ namespace lib
 		private:
 			BasicVertexArray m_vertices;
 			PrimitiveType m_primitiveType;
-			Property<Rectf32> bounds;
+//			Property<Rectf32> bounds;
 		};
 	}
 }
