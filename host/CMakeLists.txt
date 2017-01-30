@@ -27,6 +27,14 @@ endif()
 include_directories(..)
 target_link_libraries(${CURRENT_TARGET} lib)
 
+
+set(_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/)
+
+set_target_properties(${CURRENT_TARGET}
+    PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${_OUTPUT_DIRECTORY}"
+)
+
 add_custom_target(copy_sfml)
 add_custom_command(TARGET copy_sfml PRE_BUILD
 	COMMAND ${CMAKE_COMMAND} -E copy_directory
@@ -38,14 +46,6 @@ add_custom_command(TARGET copy_zoper_data PRE_BUILD
 	COMMAND ${CMAKE_COMMAND} -E copy_directory
 	${PROJECT_SOURCE_DIR}/zoper/data/
 	$<TARGET_FILE_DIR:${CURRENT_TARGET}>)
-
-
-set(_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/)
-
-set_target_properties(${CURRENT_TARGET}
-    PROPERTIES
-    RUNTIME_OUTPUT_DIRECTORY "${_OUTPUT_DIRECTORY}"
-)
 
 if (MSVC)
 	file( WRITE "${CMAKE_CURRENT_BINARY_DIR}/${CURRENT_TARGET}.vcxproj.user" 
