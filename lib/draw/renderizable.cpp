@@ -14,8 +14,9 @@ namespace lib
 				}
 			}
 		{
-			logConstruct("Name: ", name );
 		}
+
+		Renderizable::~Renderizable() = default;
 
 		void Renderizable::updateFillColors()
 		{

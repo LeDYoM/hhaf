@@ -27,7 +27,7 @@ namespace lib
 			vector2df currentPos{};
 			for (const auto& label : labels)
 			{
-				auto text = createRenderizable<draw::NodeText>("name" + count, label->_text, cTheme.font, cTheme.chSize, cTheme.textColor);
+				auto text = createRenderizable<draw::NodeText>("name" + std::to_string(count), label->_text, cTheme.font, cTheme.chSize, cTheme.textColor);
 				text->setPositionWithAlignmentX(0, normalLabelAlign);
 				text->position = { text->position().x, currentPos.y };
 

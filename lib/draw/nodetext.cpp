@@ -11,7 +11,14 @@ namespace lib
 			Renderizable{ name, nullptr, Triangles, 0, color }, m_string(string), m_font{ font }, m_characterSize{ characterSize },
 			bounds{ Renderizable::bounds }
 		{
+			logConstruct("Name: ", name);
+
 			updateGeometry();
+		}
+
+		NodeText::~NodeText()
+		{
+			logDestruct("Name: ", name());
 		}
 
 		void NodeText::setString(const std::string & string)

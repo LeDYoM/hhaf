@@ -17,7 +17,7 @@ namespace lib
 		{
 		public:
 			explicit Renderizable(const std::string &name, sptr<Texture> texture_, PrimitiveType type, u32 vertexCount, const Color &color_);
-			virtual ~Renderizable() = default;
+			virtual ~Renderizable();
 
 			virtual void draw() override;
 
@@ -25,7 +25,6 @@ namespace lib
 
 		protected:
 			Property<sptr<Texture>> texture;
-			Property<Rectf32> bounds;
 
 			void updateFillColors();
 			VertexArray m_vertices;

@@ -8,7 +8,14 @@ namespace lib
 		NodeQuad::NodeQuad(const std::string &name, const vector2df& size, sptr<Texture> texture, const Color &color)
 			: ISimpleNode{ name, size, texture, 4,color }
 		{
+			logConstruct("Name: ", name);
+
 			updateGeometry();
+		}
+
+		NodeQuad::~NodeQuad()
+		{
+			logDestruct("Name: ", name());
 		}
 
 		void NodeQuad::updateGeometrySimpleNode()

@@ -38,7 +38,7 @@ set_target_properties(${CURRENT_TARGET}
 add_custom_target(copy_sfml)
 add_custom_command(TARGET copy_sfml PRE_BUILD
 	COMMAND ${CMAKE_COMMAND} -E copy_directory
-	${SFML_ROOT}/bin
+	${SFML_ROOT}/bin/$<CONFIGURATION>
 	$<TARGET_FILE_DIR:${CURRENT_TARGET}>)
 
 add_custom_target(copy_zoper_data)

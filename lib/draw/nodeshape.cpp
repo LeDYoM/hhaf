@@ -9,7 +9,14 @@ namespace lib
 		NodeShape::NodeShape(const std::string &name, const vector2df& size, sptr<Texture> texture, const u32 pointCount, const Color &color)
 			: ISimpleNode{ name, size, texture, pointCount, color }
 		{
+			logConstruct("Name: ", name);
+
 			updateGeometry();
+		}
+
+		NodeShape::~NodeShape()
+		{
+			logDestruct("Name: ", name());
 		}
 
 		void NodeShape::updateGeometrySimpleNode()
