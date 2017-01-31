@@ -32,13 +32,6 @@ namespace lib
 
 			virtual void onAddedToScene() {}
 
-			template <typename T>
-			sptr<T> addRenderizable(sptr<T> newElement)
-			{
-				m_renderNodes.push_back(newElement);
-				return newElement;
-			}
-
 			template <typename T, typename... Args>
 			sptr<T> createRenderizable(Args&&... args)
 			{
@@ -57,6 +50,14 @@ namespace lib
 			void addAnimation(sptr<anim::IAnimation> nanimation, sptr<SceneNode> tracker = {}) noexcept;
 
 		protected:
+
+			template <typename T>
+			sptr<T> addRenderizable(sptr<T> newElement)
+			{
+				m_renderNodes.push_back(newElement);
+				return newElement;
+			}
+
 			void addRenderGroup(sptr<RenderGroup> node, const sptr<SceneNode> beforeNode = nullptr);
 
 			inline RenderGroup *parent() const noexcept { return m_parent; }
