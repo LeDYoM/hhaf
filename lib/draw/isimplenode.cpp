@@ -31,7 +31,7 @@ namespace lib
 			color.update();
 
 			// Texture coordinates
-			updateTexCoords();
+			m_vertices.updateTextureCoords(textureRect());
 		}
 
 		void ISimpleNode::updateTexCoords()

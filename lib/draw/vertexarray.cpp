@@ -269,5 +269,18 @@ namespace lib
 		{
 			if (!m_vertices.empty()) for (auto &v : m_vertices) v.color = color;
 		}
+
+		void VertexArray::updateTextureCoords(const Rects32 textureRect)
+		{
+			auto bounds(getBounds());
+			if (!m_vertices.empty()) {
+				for (auto &v : m_vertices) {
+					const f32 xratio((v.position.x - bounds.left) / bounds.width);
+					const f32 yratio((v.position.y - bounds.top) / bounds.height);
+					v.texCoords.x = textureRect.left + (textureRect.width * xratio);
+					v.texCoords.y = textureRect.top + (textureRect.height * yratio);
+				}
+			}
+		}
 	}
 }

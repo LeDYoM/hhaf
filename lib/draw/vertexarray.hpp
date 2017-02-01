@@ -48,6 +48,7 @@ namespace lib
 
 			void draw() const;
 			void setColor(const Color color);
+			void updateTextureCoords(const Rects32 textureRect);
 		private:
 			BasicVertexArray m_vertices;
 			PrimitiveType m_primitiveType;
