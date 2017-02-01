@@ -38,8 +38,6 @@ namespace lib
 			constexpr VertexArray(VertexArray&&) noexcept = default;
 			VertexArray& operator=(VertexArray&&) noexcept = default;
 
-			Rectf32 generateShape(const vector2df &size, const u32 granularity = 10);
-
 			void for_each_vertex(std::function<void(Vertex&)>&&);
 			Rectf32 calculateBounds() const;
 
