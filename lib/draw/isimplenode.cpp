@@ -10,7 +10,7 @@ namespace lib
 			: Renderizable{ name, t, TriangleFan, pointCount + 2, color },
 			textureRect{ {{},{}, t ? static_cast<s32>(t->getSize().x) : 0, t ? static_cast<s32>(t->getSize().y) : 0}, [this](auto) { updateTexCoords(); } },
 			size{ _size,[this](const vector2df&) { updateGeometry(); } },
-			m_pointCount{ pointCount }, bounds{ Renderizable::bounds }
+			pointCount{ pointCount }, bounds{ Renderizable::bounds }
 		{
 			texture.setCallback([this](const auto &t)
 			{
