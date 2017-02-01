@@ -3,16 +3,24 @@
 
 #include <SFML/Graphics/Texture.hpp>
 #include <lib/draw/hasname.hpp>
+#include <lib/include/types.hpp>
+#include <lib/include/vector2d.hpp>
 
 namespace lib
 {
 	namespace draw
 	{
-		class Texture : public sf::Texture, public core::HasName
+		class Texture : public core::HasName
 		{
 		public:
-			Texture(const std::string name) : core::HasName(name) {}
-			Texture(const sf::Texture &texture) : core::HasName("internal"), sf::Texture(texture) {}
+			Texture(const std::string name);
+			Texture(const sf::Texture &texture);
+
+			bool loadFromFile(const std::string& filename);
+			vector2du32 size() const;
+		private:
+			class TexturePrivate;
+			sf::Texture m_texturePrivate;
 		};
 	}
 }

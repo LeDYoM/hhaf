@@ -1,6 +1,8 @@
 #ifndef __LIB_TYPES_HPP__
 #define __LIB_TYPES_HPP__
 
+#pragma once
+
 #include <cstdint>
 #include <memory>
 #include <vector>

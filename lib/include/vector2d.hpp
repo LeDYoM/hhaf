@@ -1,6 +1,8 @@
 #ifndef LIB_VECTOR2D_INCLUDE_HPP
 #define LIB_VECTOR2D_INCLUDE_HPP
 
+#pragma once
+
 #include "types.hpp"
 
 namespace lib

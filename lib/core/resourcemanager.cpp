@@ -15,7 +15,7 @@ namespace lib
 			{
 				auto&& resource(msptr<T>(std::move(id)));
 				resource->loadFromFile(std::move(fileName));
-				container.emplace_back(std::move(resource));
+				container.push_back(std::move(resource));
 			}
 
 		}

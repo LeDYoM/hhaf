@@ -8,6 +8,9 @@ file (GLOB LIB_CORE_SOURCES "${LIB_DIRECTORY}core/*.cpp")
 file (GLOB LIB_CORE_EVENTS_HEADERS "${LIB_DIRECTORY}core/events/*.hpp")
 file (GLOB LIB_CORE_EVENTS_SOURCES "${LIB_DIRECTORY}core/events/*.cpp")
 
+file (GLOB LIB_BACKEND_HEADERS "${LIB_DIRECTORY}backend/*.hpp")
+file (GLOB LIB_BACKEND_SOURCES "${LIB_DIRECTORY}backend/*.cpp")
+
 file (GLOB LIB_DRAW_HEADERS "${LIB_DIRECTORY}draw/*.hpp")
 file (GLOB LIB_DRAW_SOURCES "${LIB_DIRECTORY}draw/*.cpp")
 
@@ -22,6 +25,7 @@ file (GLOB LIB_MENU_SOURCES "${LIB_DIRECTORY}menu/*.cpp")
 file (GLOB LIB_BOARD_HEADERS "${LIB_DIRECTORY}board/*.hpp")
 file (GLOB LIB_BOARD_SOURCES "${LIB_DIRECTORY}board/*.cpp")
 
+#Add all the file from the library to compile
 file (GLOB_RECURSE LIB_HEADERS "${LIB_DIRECTORY}*.hpp")
 file (GLOB_RECURSE LIB_SOURCES "${LIB_DIRECTORY}*.cpp")
 
@@ -35,11 +39,13 @@ add_library(${CURRENT_TARGET} STATIC ${LIB_HEADERS} ${LIB_SOURCES})
 #source_group("lib\\Header Files" FILES ${LIB_HEADERS})
 #source_group("lib\\Source Files" FILES ${LIB_SOURCES})
 source_group("lib\\include" FILES ${LIB_INCLUDE_HEADERS})
+source_group("lib\\backend" FILES ${LIB_BACKEND_HEADERS} ${LIB_BACKEND_SOURCES})
 source_group("lib\\core" FILES ${LIB_CORE_HEADERS} ${LIB_CORE_SOURCES})
 source_group("lib\\core\\events" FILES ${LIB_CORE_EVENTS_HEADERS} ${LIB_CORE_EVENTS_SOURCES})
 source_group("lib\\draw" FILES ${LIB_DRAW_HEADERS} ${LIB_DRAW_SOURCES})
 source_group("lib\\menu" FILES ${LIB_MENU_HEADERS} ${LIB_MENU_SOURCES})
 source_group("lib\\board" FILES ${LIB_BOARD_HEADERS} ${LIB_SOURCES})
+
 
 
 # Detect and add SFML

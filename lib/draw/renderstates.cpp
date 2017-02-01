@@ -15,14 +15,14 @@ namespace lib
 			m_renderStates = sf::RenderStates::Default;
 		}
 
-		sf::RenderStates RenderStates::prepareNewElement(const Transform *transform, const sf::Texture * texture)
+		sf::RenderStates RenderStates::prepareNewElement(const Transform *transform, const Texture *texture)
 		{
 			return sf::RenderStates(m_renderStates.blendMode, 
 				transform ? m_renderStates.transform*(*transform):m_renderStates.transform,
 				texture,
 				m_renderStates.shader);
 		}
-		RenderStatesStackHandle RenderStates::pushChanges(const Transform *transform, const sf::Texture * texture)
+		RenderStatesStackHandle RenderStates::pushChanges(const Transform *transform, const Texture *texture)
 		{
 			m_statesStack.emplace(std::move(m_renderStates));
 			m_renderStates = prepareNewElement(transform, texture);
