@@ -18,11 +18,6 @@ namespace lib
 
 		Renderizable::~Renderizable() = default;
 
-		void Renderizable::updateFillColors()
-		{
-			m_vertices.setColor(color());
-		}
-
 		void Renderizable::draw()
 		{
 			if (m_visible) {

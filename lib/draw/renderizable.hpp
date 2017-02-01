@@ -26,8 +26,6 @@ namespace lib
 
 		protected:
 			Property<sptr<Texture>> texture;
-
-			void updateFillColors();
 			VertexArray m_vertices;
 		};
 	}

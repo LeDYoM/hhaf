@@ -50,7 +50,7 @@ namespace lib
 		{
 			Renderizable::bounds.set(m_vertices.generateText(m_font, m_string, m_characterSize, m_isBold, m_isUnderlined, m_isStrikeThrough, m_isItalic));
 			texture.set(msptr<Texture>(m_font->getTexture(m_characterSize)));
-			updateFillColors();
+			color.update();
 		}
 
 		void NodeText::setPositionWithAlignment(const vector2df &pos, Alignment alignment)

@@ -39,8 +39,7 @@ namespace lib
 		{
 			updateGeometrySimpleNode();
 
-			// Color
-			updateFillColors();
+			color.update();
 
 			// Texture coordinates
 			updateTexCoords();
