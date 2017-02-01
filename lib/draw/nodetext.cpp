@@ -7,11 +7,11 @@ namespace lib
 {
 	namespace draw
 	{
-		NodeText::NodeText(const std::string &name, const std::string& string, sptr<Font> font_, u32 characterSize, const Color &color) :
+		NodeText::NodeText(const std::string &name, const std::string& string, sptr<Font> font_, u32 characterSize_, const Color &color) :
 			Renderizable{ name, nullptr, Triangles, 0, color }, 
 			font{ font_, [this](auto) { updateGeometry(); } },
-			text{ string,[this](auto) { updateGeometry(); } },
-			m_characterSize{ characterSize },
+			text{ string, [this](auto) { updateGeometry(); } },
+			characterSize{ characterSize_, [this](auto) { updateGeometry(); } },
 			bounds{ Renderizable::bounds }
 		{
 			logConstruct("Name: ", name);
@@ -24,18 +24,10 @@ namespace lib
 			logDestruct("Name: ", name());
 		}
 
-		void NodeText::setCharacterSize(const u32 size)
-		{
-			if (m_characterSize != size) {
-				m_characterSize = size;
-				updateGeometry();
-			}
-		}
-
 		void NodeText::updateGeometry()
 		{
-			Renderizable::bounds.set(m_vertices.generateText(font(), text(), m_characterSize, m_isBold, m_isUnderlined, m_isStrikeThrough, m_isItalic));
-			texture.set(msptr<Texture>(font()->getTexture(m_characterSize)));
+			Renderizable::bounds.set(m_vertices.generateText(font(), text(), characterSize(), m_isBold, m_isUnderlined, m_isStrikeThrough, m_isItalic));
+			texture.set(msptr<Texture>(font()->getTexture(characterSize())));
 			color.update();
 		}
 
