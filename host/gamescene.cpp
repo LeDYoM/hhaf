@@ -129,13 +129,13 @@ namespace zoper
 		{
 		default:
 		case GameData::GameModes::Token:
-			_levelText->setString("Tokens: ");
-			_goalText->setString("Goal: ");
+			_levelText->text = "Tokens: ";
+			_goalText->text = "Goal: ";
 			break;
 
 		case GameData::GameModes::Time:
-			_levelText->setString("Time: ");
-			_goalText->setString("Goal: ");
+			_levelText->text = "Time: ";
+			_goalText->text.set("Goal: ");
 			break;
 		}
 
@@ -221,17 +221,17 @@ namespace zoper
 
 	void GameScene::updateGoals()
 	{
-		_currentLevelDisplay->setString(std::to_string(_levelProperties.currentLevel()+1));
+		_currentLevelDisplay->text = std::to_string(_levelProperties.currentLevel()+1);
 
 		switch (_gameData._gameMode)
 		{
 		default:
 		case GameData::GameModes::Token:
-			_goalDisplay->setString(std::to_string(_levelProperties.stayTokens()));
+			_goalDisplay->text = std::to_string(_levelProperties.stayTokens());
 			break;
 
 		case GameData::GameModes::Time:
-			_goalDisplay->setString(std::to_string(_levelProperties.stayTime()));
+			_goalDisplay->text = std::to_string(_levelProperties.stayTime());
 			break;
 		}
 	}
@@ -242,13 +242,13 @@ namespace zoper
 		{
 		default:
 		case GameData::GameModes::Token:
-			_levelDisplay->setString(std::to_string(_gameData.consumedTokens));
+			_levelDisplay->text = std::to_string(_gameData.consumedTokens);
 			if (_gameData.consumedTokens >= _levelProperties.stayTokens())
 				setLevel(_levelProperties.currentLevel() + 1);
 			break;
 
 		case GameData::GameModes::Time:
-			_levelDisplay->setString(std::to_string(static_cast<lib::u16>(_gameData.levelClock.getElapsedTime().asSeconds())));
+			_levelDisplay->text = std::to_string(static_cast<lib::u16>(_gameData.levelClock.getElapsedTime().asSeconds()));
 			if (_gameData.levelClock.getElapsedTime().asSeconds() >= _levelProperties.stayTime())
 				setLevel(_levelProperties.currentLevel() + 1);
 			break;
@@ -636,7 +636,7 @@ namespace zoper
 		_score += scoreIncrement;
 		std::string result{ std::to_string(_score) };
 		while (result.size() < _scoreSize) result = "0" + result;
-		_scoreDisplay->setString(result);
+		_scoreDisplay->text = result;
 	}
 
 	vector2df GameScene::getDefaultSizeView()

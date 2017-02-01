@@ -8,7 +8,9 @@ namespace lib
 	namespace draw
 	{
 		NodeText::NodeText(const std::string &name, const std::string& string, sptr<Font> font, u32 characterSize, const Color &color) :
-			Renderizable{ name, nullptr, Triangles, 0, color }, m_string(string), m_font{ font }, m_characterSize{ characterSize },
+			Renderizable{ name, nullptr, Triangles, 0, color }, 
+			text{ string,[this](auto) {updateGeometry(); } },
+			m_font{ font }, m_characterSize{ characterSize },
 			bounds{ Renderizable::bounds }
 		{
 			logConstruct("Name: ", name);
@@ -19,15 +21,6 @@ namespace lib
 		NodeText::~NodeText()
 		{
 			logDestruct("Name: ", name());
-		}
-
-		void NodeText::setString(const std::string & string)
-		{
-			if (m_string != string)
-			{
-				m_string = string;
-				updateGeometry();
-			}
 		}
 
 		void NodeText::setFont(sptr<Font> font)
@@ -48,7 +41,7 @@ namespace lib
 
 		void NodeText::updateGeometry()
 		{
-			Renderizable::bounds.set(m_vertices.generateText(m_font, m_string, m_characterSize, m_isBold, m_isUnderlined, m_isStrikeThrough, m_isItalic));
+			Renderizable::bounds.set(m_vertices.generateText(m_font, text(), m_characterSize, m_isBold, m_isUnderlined, m_isStrikeThrough, m_isItalic));
 			texture.set(msptr<Texture>(m_font->getTexture(m_characterSize)));
 			color.update();
 		}

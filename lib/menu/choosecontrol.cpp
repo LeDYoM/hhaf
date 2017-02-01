@@ -61,7 +61,7 @@ namespace lib
 	
 		void ChooseControl::updateSubLabelText(const u32 index)
 		{
-			m_labelData[index].subLabel->setString(m_labelData[index].textSubLabel[m_labelData[index].selectedSublabel]);
+			m_labelData[index].subLabel->text.set(m_labelData[index].textSubLabel[m_labelData[index].selectedSublabel]);
 			m_labelData[index].subLabel->setPositionWithAlignmentX(1800.0f, draw::NodeText::Alignment::Right);
 		}
 

@@ -39,7 +39,7 @@ namespace zoper
 			}
 			else
 			{
-				_nextKeyText->setString("Press key for "+getKeyNameStr(_indexKey));
+				_nextKeyText->text = "Press key for "+getKeyNameStr(_indexKey);
 				_nextKeyText->setPositionWithAlignment({ 1000.0,1000.0 }, NodeText::Alignment::Center);
 			}
 		}

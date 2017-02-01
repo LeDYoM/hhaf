@@ -24,11 +24,9 @@ namespace lib
 
 			virtual ~NodeText();
 			NodeText(const std::string &name, const std::string& string, sptr<Font> font, u32 characterSize, const Color &color);
-			void setString(const std::string &string);
 			void setFont(sptr<Font> font);
 			void setCharacterSize(const u32 size);
 			u32 getCharacterSize() const noexcept { return m_characterSize; }
-			const std::string & getString() const { return m_string; }
 			sptr<Font> getFont() const noexcept { return m_font; }
 
 			void setPositionWithAlignment(const vector2df &pos, Alignment alignment);
@@ -42,11 +40,10 @@ namespace lib
 			inline void setIsStrikeThrough(const bool v) noexcept { m_isStrikeThrough = v; }
 
 			ReadOnlyProperty<Rectf32> bounds;
-
+			Property<std::string> text;
 		private:
 			void updateGeometry();
 
-			std::string m_string;
 			sptr<Font> m_font;
 			u32 m_characterSize;
 			bool m_isBold{ false };
