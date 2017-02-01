@@ -21,7 +21,6 @@ namespace lib
 			Property<Rects32> textureRect;
 		protected:
 			void updateGeometry();
-			void updateTexCoords();
 			virtual void updateGeometrySimpleNode() = 0;
 		};
 	}
