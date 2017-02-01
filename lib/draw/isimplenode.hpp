@@ -20,7 +20,6 @@ namespace lib
 			ReadOnlyProperty<Rectf32> bounds;
 			Property<vector2df> size;
 			Property<Rects32> textureRect;
-			Property<u32> pointCount;
 		protected:
 			void updateGeometry();
 			void updateTexCoords();

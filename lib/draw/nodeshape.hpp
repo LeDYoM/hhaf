@@ -14,6 +14,9 @@ namespace lib
 		public:
 			explicit NodeShape(const std::string &name, const vector2df& size, sptr<Texture> texture, const u32 pointCount, const Color &color);
 			virtual ~NodeShape();
+
+			Property<u32> pointCount;
+
 		protected:
 			virtual void updateGeometrySimpleNode() override;
 		};

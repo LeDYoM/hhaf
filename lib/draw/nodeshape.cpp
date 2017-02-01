@@ -6,8 +6,8 @@ namespace lib
 {
 	namespace draw
 	{
-		NodeShape::NodeShape(const std::string &name, const vector2df& size, sptr<Texture> texture, const u32 pointCount, const Color &color)
-			: ISimpleNode{ name, size, texture, pointCount, color }
+		NodeShape::NodeShape(const std::string &name, const vector2df& size, sptr<Texture> texture, const u32 pointCount_, const Color &color)
+			: ISimpleNode{ name, size, texture, pointCount_, color }, pointCount{ pointCount_ }
 		{
 			logConstruct("Name: ", name);
 
