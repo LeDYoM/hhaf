@@ -18,11 +18,9 @@ namespace lib
 			virtual ~ISimpleNode() = default;
 			inline u32 pointCount() const noexcept { return m_pointCount; }
 
-			void setTextureRect(const Rects32& rect);
-			Rects32 getTextureRect() const;
-
 			ReadOnlyProperty<Rectf32> bounds;
 			Property<vector2df> size;
+			Property<Rects32> textureRect;
 		protected:
 			void updateGeometry();
 			void updateTexCoords();
@@ -30,7 +28,6 @@ namespace lib
 
 		protected:
 			u32 m_pointCount;
-			Rects32 m_textureRect;
 		};
 	}
 }
