@@ -22,8 +22,8 @@ namespace lib
 			virtual void draw() override;
 
 			Property<Color> color;
-			Property<Rectf32> bounds;
 
+			inline Rectf32 bounds() const noexcept { return m_vertices.bounds(); }
 		protected:
 			Property<sptr<Texture>> texture;
 			VertexArray m_vertices;

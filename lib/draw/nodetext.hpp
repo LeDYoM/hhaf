@@ -25,7 +25,6 @@ namespace lib
 			NodeText(const std::string &name, const std::string& string, sptr<Font> font, u32 characterSize, const Color &color);
 			virtual ~NodeText();
 
-			ReadOnlyProperty<Rectf32> bounds;
 			Property<std::string> text;
 			Property<sptr<Font>> font;
 			Property<u32> characterSize;
@@ -34,18 +33,8 @@ namespace lib
 			void setPositionWithAlignmentX(const float x, Alignment alignment = Alignment::Left);
 			void setPositionWithAlignmentY(const float y, Alignment alignment = Alignment::Left);
 			void setAlignment(Alignment alignment);
-
-			inline void setIsBold(const bool v) noexcept { m_isBold = v; }
-			inline void setIsItalic(const bool v) noexcept { m_isItalic = v; }
-			inline void setIsUnderlined(const bool v) noexcept { m_isUnderlined = v; }
-			inline void setIsStrikeThrough(const bool v) noexcept { m_isStrikeThrough = v; }
 		private:
 			void updateGeometry();
-
-			bool m_isBold{ false };
-			bool m_isItalic{ false };
-			bool m_isUnderlined{ false };
-			bool m_isStrikeThrough{ false };
 		};
 	}
 }

@@ -17,7 +17,6 @@ namespace lib
 			ISimpleNode(const std::string &name, const vector2df &size, sptr<Texture> texture, const u32 pointCount, const Color &color);
 			virtual ~ISimpleNode() = default;
 
-			ReadOnlyProperty<Rectf32> bounds;
 			Property<vector2df> size;
 			Property<Rects32> textureRect;
 		protected:

@@ -68,7 +68,7 @@ namespace zoper
 		_scorerg->position = { 50, 50 };
 		_scoreDisplay->position = {_scoreText->bounds().width, _scoreDisplay->position().y};
 
-		_currentLevelDisplay->position = { _currentLevelText->bounds.get().width,_currentLevelDisplay->position().y };
+		_currentLevelDisplay->position = { _currentLevelText->bounds().width,_currentLevelDisplay->position().y };
 
 		_levelrg->position = { 1250, 50 };
 		_goalText->position = { _goalText->position().x, 200 };
@@ -77,8 +77,8 @@ namespace zoper
 		_currentLevelDisplay->position = { _currentLevelDisplay->position().x, 200 };
 
 
-		auto _gameBoundingBox = _gameText->bounds.get();
-		auto _overBoundingBox = _overText->bounds.get();
+		auto _gameBoundingBox = _gameText->bounds();
+		auto _overBoundingBox = _overText->bounds();
 		auto sceneCenter = getCenterCoordinates();
 		_gameText->position = { sceneCenter.x - (_gameBoundingBox.width / 2.0f), sceneCenter.y - _gameBoundingBox.height };
 		_overText->position = { sceneCenter.x - (_overBoundingBox.width / 2.0f), sceneCenter.y };
@@ -518,8 +518,8 @@ namespace zoper
 				vector2df center( board2Scene(vector2du32{ x,y }) );
 				center.x += tileSize().x / 2.0f;
 				center.y += tileSize().y / 2.0f;
-				center.x -= (node->bounds.get().width / 2.0f);
-				center.y -= (node->bounds.get().height / 2.0f);
+				center.x -= (node->bounds().width / 2.0f);
+				center.y -= (node->bounds().height / 2.0f);
 				node->position = center;
 			}
 			m_backgroundTiles.push_back(column);

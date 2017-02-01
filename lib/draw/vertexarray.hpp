@@ -38,21 +38,23 @@ namespace lib
 			constexpr VertexArray(VertexArray&&) noexcept = default;
 			VertexArray& operator=(VertexArray&&) noexcept = default;
 
-			Rectf32 generateQuad(const vector2df &size);
 			Rectf32 generateShape(const vector2df &size, const u32 granularity = 10);
-			Rectf32 generateText(const sptr<Font> &, std::string str, const u32 characterSize,
-				const bool bold, const bool underlined, const bool strikeThrough, const bool isItalic);
 
 			void for_each_vertex(std::function<void(Vertex&)>&&);
-			Rectf32 getBounds() const;
+			Rectf32 calculateBounds() const;
 
 			void draw() const;
 			void setColor(const Color color);
 			void updateTextureCoords(const Rects32 textureRect);
+
+			BasicVertexArray &vertices() { return m_vertices; }
+			void setBounds(Rectf32 nBounds) noexcept { m_bounds = std::move(nBounds); }
+			void autoUpdateBounds();
+			inline Rectf32 bounds() const noexcept{ return m_bounds; }
 		private:
 			BasicVertexArray m_vertices;
+			Rectf32 m_bounds;
 			PrimitiveType m_primitiveType;
-//			Property<Rectf32> bounds;
 		};
 	}
 }
