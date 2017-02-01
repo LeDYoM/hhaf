@@ -6,9 +6,9 @@ namespace lib
 	namespace draw
 	{
 		Transformable::Transformable() noexcept :
-			origin{ {},[this](const auto&) {updateTransform(); } },
-			rotation{ {},[this](const auto&angle) {
-				auto temp_rotation = static_cast<f32>(fmod(angle, 360));
+			origin{ {},[this]() {updateTransform(); } },
+			rotation{ {},[this]() {
+				auto temp_rotation = static_cast<f32>(fmod(rotation(), 360));
 				if (temp_rotation < 0) {
 					rotation.set(temp_rotation);
 				}
@@ -16,8 +16,8 @@ namespace lib
 				updateTransform();
 
 			} },
-			position{ {} ,[this](const auto&) {updateTransform(); } },
-			scale{{ 1, 1 },[this](const auto&) {updateTransform(); } },
+			position{ {} ,[this]() {updateTransform(); } },
+			scale{{ 1, 1 },[this]() {updateTransform(); } },
 			m_transform{} { }
 
 		Transformable::~Transformable() = default;

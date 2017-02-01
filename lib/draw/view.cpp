@@ -7,9 +7,9 @@ namespace lib
 	{
 
 		View::View(Rectf32 rectangle) :
-			perspective{ {},[this](const auto) { updateTransform(); } },
-			rotation{ {}, [this](const auto) { updateTransform(); } },
-			viewport{ std::move(rectangle), [this](const auto) { updateTransform(); } }
+			perspective{ {},[this]() { updateTransform(); } },
+			rotation{ {}, [this]() { updateTransform(); } },
+			viewport{ std::move(rectangle), [this]() { updateTransform(); } }
 		{
 			updateTransform();
 		}

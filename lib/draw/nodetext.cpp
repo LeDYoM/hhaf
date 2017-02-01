@@ -9,9 +9,9 @@ namespace lib
 	{
 		NodeText::NodeText(const std::string &name, const std::string& string, sptr<Font> font_, u32 characterSize_, const Color &color) :
 			Renderizable{ name, nullptr, Triangles, 0, color }, 
-			font{ font_, [this](auto) { updateGeometry(); } },
-			text{ string, [this](auto) { updateGeometry(); } },
-			characterSize{ characterSize_, [this](auto) { updateGeometry(); } }
+			font{ font_, [this]() { updateGeometry(); } },
+			text{ string, [this]() { updateGeometry(); } },
+			characterSize{ characterSize_, [this]() { updateGeometry(); } }
 		{
 			logConstruct("Name: ", name);
 
