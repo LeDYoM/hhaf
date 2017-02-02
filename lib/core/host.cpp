@@ -192,7 +192,8 @@ namespace lib
 					m_iapp->getAppDescriptor().Name + ":" + 
 					to_string(m_iapp->getAppDescriptor().Version) + "." + 
 					to_string(m_iapp->getAppDescriptor().SubVersion) + "." + 
-					to_string(m_iapp->getAppDescriptor().Patch));
+					to_string(m_iapp->getAppDescriptor().Patch)
+				);
 			}
 			return "NoApp:0.0.0";
 		}
@@ -217,7 +218,7 @@ namespace lib
 
 		void Host::addScenes(std::vector<sptr<draw::Scene>>&& sceneVector)
 		{
-			for (auto &&scene : sceneVector) {
+			for (auto &scene : sceneVector) {
 				addScene(std::move(scene));
 			}
 		}
