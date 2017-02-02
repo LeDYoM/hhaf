@@ -19,7 +19,7 @@ namespace lib
 		{
 			return sf::RenderStates(m_renderStates.blendMode, 
 				transform ? m_renderStates.transform*(*transform):m_renderStates.transform,
-				texture,
+				texture ? texture->backEndTexture() : nullptr,
 				m_renderStates.shader);
 		}
 		RenderStatesStackHandle RenderStates::pushChanges(const Transform *transform, const Texture *texture)

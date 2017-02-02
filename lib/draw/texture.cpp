@@ -18,5 +18,10 @@ namespace lib
 			return{ static_cast<u32>(m_texturePrivate.getSize().x), static_cast<u32>(m_texturePrivate.getSize().y) };
 		}
 
+		const sf::Texture * Texture::backEndTexture() const
+		{
+			return &m_texturePrivate;
+		}
+
 	}
 }

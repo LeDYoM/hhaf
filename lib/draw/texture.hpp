@@ -18,6 +18,8 @@ namespace lib
 
 			bool loadFromFile(const std::string& filename);
 			vector2du32 size() const;
+
+			const sf::Texture *backEndTexture() const;
 		private:
 			class TexturePrivate;
 			sf::Texture m_texturePrivate;
