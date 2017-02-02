@@ -25,7 +25,6 @@ namespace lib
 
 		void NodeText::updateGeometry()
 		{
-//			Renderizable::bounds.set(m_vertices.generateText(font(), text(), characterSize(), m_isBold, m_isUnderlined, m_isStrikeThrough, m_isItalic));
 			BasicVertexArray &vertices{ m_vertices.vertices() };
 
 			if (!font() || text().empty())
@@ -49,7 +48,7 @@ namespace lib
 			f32 minY = static_cast<f32>(characterSize());
 			f32 maxX = 0.f;
 			f32 maxY = 0.f;
-			sf::Uint32 prevChar = 0;
+			u32 prevChar = 0;
 			for (const auto curChar : text())
 			{
 				// Apply the kerning offset
@@ -72,40 +71,38 @@ namespace lib
 					// Update the current bounds (max coordinates)
 					maxX = std::max(maxX, x);
 					maxY = std::max(maxY, y);
+				} else {
 
-					// Next glyph, no need to create a quad for whitespace
-					continue;
+					// Extract the current glyph's description
+					const sf::Glyph& glyph = font()->getGlyph(curChar, characterSize(), false);
+
+					const f32 left = glyph.bounds.left;
+					const f32 top = glyph.bounds.top;
+					const f32 right = glyph.bounds.left + glyph.bounds.width;
+					const f32 bottom = glyph.bounds.top + glyph.bounds.height;
+
+					const f32 u1 = static_cast<f32>(glyph.textureRect.left);
+					const f32 v1 = static_cast<f32>(glyph.textureRect.top);
+					const f32 u2 = static_cast<f32>(glyph.textureRect.left + glyph.textureRect.width);
+					const f32 v2 = static_cast<f32>(glyph.textureRect.top + glyph.textureRect.height);
+
+					// Add a quad for the current character
+					vertices.emplace_back(vector2df(x + left, y + top), vector2df(u1, v1));
+					vertices.emplace_back(vector2df(x + right, y + top), vector2df(u2, v1));
+					vertices.emplace_back(vector2df(x + left, y + bottom), vector2df(u1, v2));
+					vertices.emplace_back(vector2df(x + left, y + bottom), vector2df(u1, v2));
+					vertices.emplace_back(vector2df(x + right, y + top), vector2df(u2, v1));
+					vertices.emplace_back(vector2df(x + right, y + bottom), vector2df(u2, v2));
+
+					// Update the current bounds
+					minX = std::min(minX, x + left);
+					maxX = std::max(maxX, x + right);
+					minY = std::min(minY, y + top);
+					maxY = std::max(maxY, y + bottom);
+
+					// Advance to the next character
+					x += glyph.advance;
 				}
-
-				// Extract the current glyph's description
-				const sf::Glyph& glyph = font()->getGlyph(curChar, characterSize(), false);
-
-				const f32 left = glyph.bounds.left;
-				const f32 top = glyph.bounds.top;
-				const f32 right = glyph.bounds.left + glyph.bounds.width;
-				const f32 bottom = glyph.bounds.top + glyph.bounds.height;
-
-				const f32 u1 = static_cast<f32>(glyph.textureRect.left);
-				const f32 v1 = static_cast<f32>(glyph.textureRect.top);
-				const f32 u2 = static_cast<f32>(glyph.textureRect.left + glyph.textureRect.width);
-				const f32 v2 = static_cast<f32>(glyph.textureRect.top + glyph.textureRect.height);
-
-				// Add a quad for the current character
-				vertices.emplace_back(vector2df(x + left, y + top), vector2df(u1, v1));
-				vertices.emplace_back(vector2df(x + right, y + top), vector2df(u2, v1));
-				vertices.emplace_back(vector2df(x + left, y + bottom), vector2df(u1, v2));
-				vertices.emplace_back(vector2df(x + left, y + bottom), vector2df(u1, v2));
-				vertices.emplace_back(vector2df(x + right, y + top), vector2df(u2, v1));
-				vertices.emplace_back(vector2df(x + right, y + bottom), vector2df(u2, v2));
-
-				// Update the current bounds
-				minX = std::min(minX, x + left);
-				maxX = std::max(maxX, x + right);
-				minY = std::min(minY, y + top);
-				maxY = std::max(maxY, y + bottom);
-
-				// Advance to the next character
-				x += glyph.advance;
 			}
 
 			// Update the bounding rectangle
