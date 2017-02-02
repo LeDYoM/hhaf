@@ -53,9 +53,9 @@ namespace lib
 			const std::string appId() const;
 
 			draw::RenderStates &rStates() { return m_renderStates; }
-		protected:
-			bool loopStep();
+
 		private:
+			bool loopStep();
 			void updateScene();
 
 			static Host *m_instance;
