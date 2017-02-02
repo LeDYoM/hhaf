@@ -51,8 +51,7 @@ namespace lib
 
 		void VertexArray::draw() const
 		{
-			host().parentWindow().draw((const sf::Vertex*)m_vertices.data(), m_vertices.size(), static_cast<sf::PrimitiveType>(m_primitiveType),
-				host().rStates().internalStates());
+			host().parentWindow().draw(*this, host().rStates().internalStates());
 		}
 
 		void VertexArray::setColor(const Color color)

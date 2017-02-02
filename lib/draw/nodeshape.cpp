@@ -29,7 +29,7 @@ namespace lib
 			const u32 nPoints(pointCount());
 			const u32 nVertex(nPoints + 2);
 
-			BasicVertexArray &vertices(m_vertices.vertices());
+			BasicVertexArray &vertices(m_vertices.verticesArray());
 
 			vertices.resize(nVertex); // + 2 for center and repeated first point
 			const vector2df radius{ size() / 2.0f };

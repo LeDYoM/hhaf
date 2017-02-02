@@ -3,7 +3,7 @@
 
 #include <lib/include/types.hpp>
 #include "appservice.hpp"
-#include "renderwindow.hpp"
+#include <lib/backend/renderwindow.hpp>
 
 namespace lib
 {
@@ -14,7 +14,7 @@ namespace lib
 		struct WindowPrivate;
 		class AppController;
 
-		class Window : public AppService, public external::RenderWindow
+		class Window : public AppService, public backend::RenderWindow
 		{
 		public:
 			Window(const WindowCreationParams &wcp);

@@ -45,10 +45,13 @@ namespace lib
 			void setColor(const Color color);
 			void updateTextureCoords(const Rects32 textureRect);
 
-			BasicVertexArray &vertices() { return m_vertices; }
+			inline BasicVertexArray &verticesArray() noexcept { return m_vertices; }
+			inline const BasicVertexArray &verticesArray() const noexcept { return m_vertices; }
+
 			void setBounds(Rectf32 nBounds) noexcept { m_bounds = std::move(nBounds); }
 			void autoUpdateBounds();
 			inline Rectf32 bounds() const noexcept{ return m_bounds; }
+			inline PrimitiveType primitiveType() const noexcept { return m_primitiveType; }
 		private:
 			BasicVertexArray m_vertices;
 			Rectf32 m_bounds;

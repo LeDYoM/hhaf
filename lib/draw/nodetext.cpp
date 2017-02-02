@@ -25,7 +25,7 @@ namespace lib
 
 		void NodeText::updateGeometry()
 		{
-			BasicVertexArray &vertices{ m_vertices.vertices() };
+			BasicVertexArray &vertices{ m_vertices.verticesArray() };
 
 			if (!font() || text().empty())
 			{

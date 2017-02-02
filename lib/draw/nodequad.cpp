@@ -25,7 +25,7 @@ namespace lib
 			constexpr u32 nPoints = 4;
 			constexpr u32 nVertex = nPoints + 2;
 
-			auto &vertices(m_vertices.vertices());
+			auto &vertices(m_vertices.verticesArray());
 
 			vertices.resize(nVertex); // + 2 for center and repeated first point
 			vertices[0].position = { size().x / 2, size().y / 2 };
