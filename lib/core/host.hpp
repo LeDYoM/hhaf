@@ -5,10 +5,10 @@
 
 #include <lib/include/types.hpp>
 #include <lib/include/iapp.hpp>
+#include <lib/draw/renderstates.hpp>
+
 #include <vector>
 #include <string>
-
-#include <lib/draw/renderstates.hpp>
 
 namespace lib
 {

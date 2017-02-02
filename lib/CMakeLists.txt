@@ -1,7 +1,19 @@
-# Properties->C/C++->General->Additional Include Directories
-set (LIB_BASE_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/")
-set (LIB_DIRECTORY "${LIB_BASE_DIRECTORY}")
 
+# The version number.
+set (LIB_VERSION_MAJOR 1)
+set (LIB_VERSION_MINOR 2)
+set (LIB_VERSION_PATCH 1)
+
+set (LIB_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/")
+
+# configure a header file to pass some of the CMake settings
+# to the source code
+configure_file (
+  "${LIB_DIRECTORY}/config.h.in"
+  "${PROJECT_BINARY_DIR}/config.h"
+  )
+include_directories(${PROJECT_BINARY_DIR})
+  
 file (GLOB LIB_CORE_HEADERS "${LIB_DIRECTORY}core/*.hpp")
 file (GLOB LIB_CORE_SOURCES "${LIB_DIRECTORY}core/*.cpp")
 
@@ -29,7 +41,7 @@ file (GLOB LIB_BOARD_SOURCES "${LIB_DIRECTORY}board/*.cpp")
 file (GLOB_RECURSE LIB_HEADERS "${LIB_DIRECTORY}*.hpp")
 file (GLOB_RECURSE LIB_SOURCES "${LIB_DIRECTORY}*.cpp")
 
-include_directories ("${LIB_BASE_DIRECTORY}..")
+include_directories ("${LIB_DIRECTORY}..")
 
 set (CURRENT_TARGET lib)
 
@@ -45,8 +57,6 @@ source_group("lib\\core\\events" FILES ${LIB_CORE_EVENTS_HEADERS} ${LIB_CORE_EVE
 source_group("lib\\draw" FILES ${LIB_DRAW_HEADERS} ${LIB_DRAW_SOURCES})
 source_group("lib\\menu" FILES ${LIB_MENU_HEADERS} ${LIB_MENU_SOURCES})
 source_group("lib\\board" FILES ${LIB_BOARD_HEADERS} ${LIB_SOURCES})
-
-
 
 # Detect and add SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})

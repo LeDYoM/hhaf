@@ -6,13 +6,15 @@
 #include <lib/core/events/eventmanager.hpp>
 #include <SFML/Config.hpp>
 
+#include "config.h"
+
 #include <algorithm>
 
 namespace lib
 {
 	namespace core
 	{
-		std::vector<std::string> transformParams(int argc, char *argv[])
+		auto transformParams(int argc, char *argv[])
 		{
 			std::vector<std::string> temp;
 
@@ -57,9 +59,10 @@ namespace lib
 		{
 			logConstruct_NOPARAMS;
 			logInfo("Starting HostController...");
-			logInfo("Using SFML version ", SFML_VERSION_MAJOR, ".", SFML_VERSION_MINOR,".", SFML_VERSION_PATCH, " as backend");
+			logInfo("LIB version: ", LIB_VERSION_MAJOR,".", LIB_VERSION_MINOR,".", LIB_VERSION_PATCH);
+			logInfo("Using backend: SFML version ", SFML_VERSION_MAJOR, ".", SFML_VERSION_MINOR,".", SFML_VERSION_PATCH, " as backend");
 			logInfo("Parsing parameters...");
-			m_params = std::move(transformParams(argc, argv));
+			m_params = transformParams(argc, argv);
 		}
 
 		Host::~Host()
