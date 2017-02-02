@@ -43,7 +43,6 @@ namespace lib
 
 			void draw() const;
 			void setColor(const Color color);
-			void updateTextureCoords(const Rects32 textureRect);
 
 			inline BasicVertexArray &verticesArray() noexcept { return m_vertices; }
 			inline const BasicVertexArray &verticesArray() const noexcept { return m_vertices; }
