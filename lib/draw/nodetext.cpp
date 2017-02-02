@@ -27,10 +27,11 @@ namespace lib
 		{
 			BasicVertexArray &vertices{ m_vertices.verticesArray() };
 
+			m_vertices.setBounds({});
+			vertices.clear();
+
 			if (!font() || text().empty())
 			{
-				m_vertices.setBounds({});
-				vertices.clear();
 				return;
 			}
 
