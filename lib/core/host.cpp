@@ -3,7 +3,9 @@
 #include "resourcemanager.hpp"
 #include "log.hpp"
 #include <lib/draw/scene.hpp>
+#include <lib/draw/renderstates.hpp>
 #include <lib/core/events/eventmanager.hpp>
+
 #include <SFML/Config.hpp>
 
 #include "config.h"
@@ -93,10 +95,10 @@ namespace lib
 				logDebug(appId(), ": ", " Starting initialization...");
 				m_state = AppState::Executing;
 
-				//TO DO: Ask via requests
 				m_eventManager = muptr<EventManager>();
 				m_window = muptr<Window>(m_iapp->getAppDescriptor().wcp);
 				m_resourceManager = muptr<core::ResourceManager>(m_iapp->getAppDescriptor().resourceFile);
+				m_renderStates = muptr<draw::RenderStates>();
 				
 				addScenes(m_iapp->scenesVector());
 
@@ -167,7 +169,7 @@ namespace lib
 			__ASSERT(m_currentScene || m_nextScene, "Current scene and nextscene cannot be nullptr at same time");
 			updateScene();
 
-			m_renderStates.newFrame();
+			m_renderStates->newFrame();
 			m_currentScene->draw();
 
 			m_window->postLoop();

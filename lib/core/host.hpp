@@ -5,13 +5,16 @@
 
 #include <lib/include/types.hpp>
 #include <lib/include/iapp.hpp>
-#include <lib/draw/renderstates.hpp>
 
 #include <vector>
 #include <string>
 
 namespace lib
 {
+	namespace draw
+	{
+		class RenderStates;
+	}
 	namespace core
 	{
 		class Window;
@@ -52,7 +55,8 @@ namespace lib
 
 			const std::string appId() const;
 
-			draw::RenderStates &rStates() { return m_renderStates; }
+			inline draw::RenderStates &rStates() const noexcept { return *m_renderStates; }
+			inline draw::RenderStates &rStates() noexcept { return *m_renderStates; }
 
 		private:
 			bool loopStep();
@@ -69,7 +73,7 @@ namespace lib
 			sptr<draw::Scene> m_currentScene{ nullptr };
 			sptr<draw::Scene> m_nextScene{ nullptr };
 			std::vector<std::string> m_params;
-			draw::RenderStates m_renderStates;
+			uptr<draw::RenderStates> m_renderStates;
 		};
 	}
 
