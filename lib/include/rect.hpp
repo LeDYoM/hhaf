@@ -11,6 +11,10 @@ namespace lib
 	{
 		T left, top, width, height;
 
+		static inline Rect fromSize(T sizeX, T sizeY) { return Rect{ {},{}, std::forward<vector2d<T>>({sizeX,sizeY}) }; }
+		static inline Rect fromSize(vector2d<T> size) { return Rect{ {},{}, std::forward<vector2d<T>>(size) }; }
+
+
 		inline constexpr Rect(T rectLeft, T rectTop, T rectWidth, T rectHeight) noexcept : left{ rectLeft }, top{ rectTop }, width{ rectWidth }, height{ rectHeight } { }
 		inline constexpr Rect() noexcept : Rect{ {}, {}, {}, {} } {}
 		inline constexpr Rect(vector2d<T> position, vector2d<T> size) noexcept : Rect{ position.x, position.y, size.x, size.y } {}
