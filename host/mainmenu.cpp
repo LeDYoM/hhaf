@@ -14,8 +14,8 @@ namespace zoper
 		using namespace lib;
 		using namespace lib::menu;
 
-		MainMenu::MainMenu(MenuManager *parent)
-			: lib::menu::ChooseControl( ClassName, parent,
+		MainMenu::MainMenu(MenuManager *parent) 
+			: ChooseControl( ClassName, parent,
 			[this](const u32 index)
 			{
 				switch (index)
@@ -51,7 +51,7 @@ namespace zoper
 
 		void MainMenu::onAddedToScene()
 		{
-			position = { menuManager()->getCenterCoordinates().x, 700 };
+//			position = { menuManager()->getCenterCoordinates().x, 700 };
 		}
 	}
 }
