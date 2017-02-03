@@ -25,6 +25,8 @@ namespace lib
 			NodeText(const std::string &name, const std::string& string, sptr<Font> font, u32 characterSize, const Color &color);
 			virtual ~NodeText();
 
+			Property<vector2df> position;
+
 			Property<std::string> text;
 			Property<sptr<Font>> font;
 			Property<u32> characterSize;

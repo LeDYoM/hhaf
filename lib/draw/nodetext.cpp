@@ -11,6 +11,7 @@ namespace lib
 			Renderizable{ name, nullptr, Triangles, 0, color }, 
 			font{ font_, [this]() { updateGeometry(); } },
 			text{ string, [this]() { updateGeometry(); } },
+			position{ {} ,[]() {} },
 			characterSize{ characterSize_, [this]() { updateGeometry(); } }
 		{
 			logConstruct("Name: ", name);
