@@ -29,6 +29,7 @@ namespace lib
 			inline bool isVisible() const noexcept { return m_visible; }
 			inline void setVisible(bool nv) noexcept { m_visible = nv; }
 
+			Property<vector2df> position;
 			Property<f32> rotation;
 			Property<vector2df> scale;
 

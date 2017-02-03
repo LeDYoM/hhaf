@@ -10,6 +10,7 @@ namespace lib
 		Renderizable::Renderizable(const std::string & name, sptr<Texture> texture_, PrimitiveType type, u32 vertexCount, const Color & color_)
 			: core::HasName{ name }, m_vertices{ type, vertexCount }, texture{ std::move(texture_),{} },
 			color{ color_,[this]() { m_vertices.setColor(color()); } },
+			position{ {} ,[]() {} },
 			rotation{ {} ,[]() {} }, 
 			scale{ {} ,[]() {} } { }
 
