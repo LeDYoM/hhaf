@@ -12,11 +12,6 @@ namespace lib
 			: m_vertices{ vertexCount }, m_primitiveType{ type } {}
 
 
-		void VertexArray::for_each_vertex(std::function<void(Vertex&)>&& f)
-		{
-			std::for_each(m_vertices.begin(), m_vertices.end(), std::move(f));
-		}
-
 		Rectf32 VertexArray::calculateBounds() const
 		{
 			if (!m_vertices.empty()) {

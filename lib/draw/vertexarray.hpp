@@ -5,7 +5,6 @@
 #include <lib/include/rect.hpp>
 #include <lib/draw/vertex.hpp>
 #include <vector>
-#include <functional>
 
 namespace lib
 {
@@ -22,13 +21,7 @@ namespace lib
 			TriangleStrip,
 			TriangleFan,
 		};
-		enum class VertexGeometryType
-		{
-			Quad,
-			Ellipse,
-			Text
-		};
-		class Font;
+
 		class VertexArray
 		{
 		public:
@@ -38,7 +31,6 @@ namespace lib
 			constexpr VertexArray(VertexArray&&) noexcept = default;
 			VertexArray& operator=(VertexArray&&) noexcept = default;
 
-			void for_each_vertex(std::function<void(Vertex&)>&&);
 			Rectf32 calculateBounds() const;
 
 			void draw() const;
