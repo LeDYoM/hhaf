@@ -11,29 +11,31 @@ namespace lib
 {
 	namespace menu
 	{
+		using namespace draw;
+
 		ChooseControl::ChooseControl(const std::string &name, MenuManager *parent,
 			std::function<void(const u32)> onSelected,
 			const std::vector<sptr<OptionDescriptor>> labels)
-			: draw::RenderGroup{ name, parent }, m_onSelected{ onSelected }
+			: RenderGroup{ name, parent }, m_onSelected{ onSelected }
 		{
 			const auto &cTheme(parent->currentTheme());
 			descriptorCursorSize = cTheme.cursorDescriptor.m_size;
-			m_cursor = createRenderizable<draw::NodeShape>("cursor", descriptorCursorSize, nullptr, cTheme.cursorDescriptor.m_nVertex, cTheme.cursorDescriptor.m_color);
+			m_cursor = createRenderizable<NodeShape>("cursor", descriptorCursorSize, nullptr, cTheme.cursorDescriptor.m_nVertex, cTheme.cursorDescriptor.m_color);
 
 			const bool menuType{ labels.empty()?false:labels[0]->_subOptionsLabels.empty() };
 
-			const auto normalLabelAlign( menuType ? draw::NodeText::Alignment::Center : draw::NodeText::Alignment::Left );
+			const auto normalLabelAlign( menuType ? NodeText::Alignment::Center : NodeText::Alignment::Left );
 			u32 count{};
 			vector2df currentPos{};
 			for (const auto& label : labels)
 			{
-				auto text = createRenderizable<draw::NodeText>("name" + std::to_string(count), label->_text, cTheme.font, cTheme.chSize, cTheme.textColor);
+				auto text = createRenderizable<NodeText>("name" + std::to_string(count), label->_text, cTheme.font, cTheme.chSize, cTheme.textColor);
 				text->setPositionWithAlignmentX(0, normalLabelAlign);
 				text->position = { text->position().x, currentPos.y };
 
-				sptr<draw::NodeText> subtext{ nullptr };
+				sptr<NodeText> subtext{ nullptr };
 				if (!label->_subOptionsLabels.empty()) {
-					subtext = createRenderizable<draw::NodeText>("sub_name" + count, label->_subOptionsLabels[label->_startValueIndex],cTheme.font,cTheme.chSize, cTheme.textColor);
+					subtext = createRenderizable<NodeText>("sub_name" + count, label->_subOptionsLabels[label->_startValueIndex],cTheme.font,cTheme.chSize, cTheme.textColor);
 					subtext->setPositionWithAlignment({ 1800,currentPos.y }, draw::NodeText::Alignment::Right);
 				}
 
@@ -62,7 +64,7 @@ namespace lib
 		void ChooseControl::updateSubLabelText(const u32 index)
 		{
 			m_labelData[index].subLabel->text.set(m_labelData[index].textSubLabel[m_labelData[index].selectedSublabel]);
-			m_labelData[index].subLabel->setPositionWithAlignmentX(1800.0f, draw::NodeText::Alignment::Right);
+			m_labelData[index].subLabel->setPositionWithAlignmentX(1800.0f, NodeText::Alignment::Right);
 		}
 
 		void ChooseControl::cursorSelectItem(const u32 nodeIndex)
