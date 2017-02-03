@@ -88,8 +88,6 @@ namespace lib
 
 			m_cursor->rotation.set(90);
 			
-			using namespace lib::draw;
-
 			addAnimation(msptr<anim::IPropertyAnimation<vector2df>>(120,m_cursor->position,
 				m_cursor->position(), vector2df{ selectedText->position().x - descriptorCursorSize.x, selectedText->position().y },
 				anim::noAction, anim::noAction));
