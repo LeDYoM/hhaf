@@ -31,8 +31,7 @@ namespace zoper
 //		addMenuStep(msptr<KeyRedefinitionMenu>(this));
 		addMenuStep(msptr<StartLevelMenu>(this));
 
-		m_logo = createRenderizable<NodeQuad>("mainLogo", Rectf32{ 100, 100, 800,400 }, host().resourceManager().getTexture("game_menu.logo"), colors::White);
-		m_logo->position = { getCenterCoordinates().x, 100 }/*, lib::draw::Alignment::Center*/;
+		m_logo = createRenderizable<NodeQuad>("mainLogo", Rectf32{ 500, 150, 1000, 500 }, host().resourceManager().getTexture("game_menu.logo"), colors::White);
 	}
 
 	void MenuScene::onEnterScene()
