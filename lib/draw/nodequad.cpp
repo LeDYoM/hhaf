@@ -5,13 +5,16 @@ namespace lib
 {
 	namespace draw
 	{
-		NodeQuad::NodeQuad(const std::string &name, const vector2df& size, sptr<Texture> texture, const Color &color)
-			: ISimpleNode{ name, size, texture, 4,color }
+		NodeQuad::NodeQuad(const std::string &name, const Rectf32 &box, sptr<Texture> texture, const Color &color)
+			: ISimpleNode{ name, box, texture, 4,color }
 		{
 			logConstruct("Name: ", name);
 
 			updateGeometry();
 		}
+
+		NodeQuad::NodeQuad(const std::string & name, const vector2df & size, sptr<Texture> texture, const Color & color)
+			: NodeQuad{ name,Rectf32{{},{},size.x,size.y},texture, color } {}
 
 		NodeQuad::~NodeQuad()
 		{
@@ -25,18 +28,20 @@ namespace lib
 			constexpr u32 nPoints = 4;
 			constexpr u32 nVertex = nPoints + 2;
 
+			const Rectf32 &cBox{ box() };
+
 			auto &vertices(m_vertices.verticesArray());
 
 			vertices.resize(nVertex); // + 2 for center and repeated first point
-			vertices[0].position = { size().x / 2, size().y / 2 };
-			vertices[1].position = { 0, 0 };
-			vertices[2].position = vector2df(size().x, 0);
-			vertices[3].position = vector2df(size().x, size().y);
-			vertices[4].position = vector2df(0, size().y);
+			vertices[0].position = { cBox.center().x, cBox.center().y / 2 };
+			vertices[1].position = { cBox.left, cBox.top };
+			vertices[2].position = { cBox.right(), cBox.top };
+			vertices[3].position = { cBox.right(), cBox.bottom() };
+			vertices[4].position = { cBox.left, cBox.bottom() };
 			vertices[5] = vertices[1];
 
 			// Update the bounding rectangle
-			m_vertices.setBounds({ 0,0, size().x, size().y });
+			m_vertices.setBounds(cBox);
 		}
 	}
 }

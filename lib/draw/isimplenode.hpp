@@ -14,10 +14,10 @@ namespace lib
 		class ISimpleNode : public Renderizable
 		{
 		public:
-			ISimpleNode(const std::string &name, const vector2df &size, sptr<Texture> texture, const u32 pointCount, const Color &color);
+			ISimpleNode(const std::string &name, const Rectf32 &box, sptr<Texture> texture, const u32 pointCount, const Color &color);
 			virtual ~ISimpleNode() = default;
 
-			Property<vector2df> size;
+			Property<Rectf32> box;
 			Property<Rects32> textureRect;
 
 		protected:
