@@ -599,7 +599,7 @@ namespace zoper
 	{
 		const auto ts(tileSize());
 		const auto tileCenter(ts / 2.0f);
-		player_->origin = tileCenter;
+//		player_->origin = tileCenter;
 		player_->position = board2Scene(dest) + tileCenter;
 		player_->rotation = player_->currentDirection().angle();
 		if (player_->currentDirection().value() == Direction::DirectionData::Up ||

@@ -40,6 +40,8 @@ namespace lib
 			void setBounds(Rectf32 nBounds) noexcept { m_bounds = std::move(nBounds); }
 			inline Rectf32 bounds() const noexcept{ return m_bounds; }
 			inline PrimitiveType primitiveType() const noexcept { return m_primitiveType; }
+
+			void move(const vector2df &offset);
 		private:
 
 			BasicVertexArray m_vertices;

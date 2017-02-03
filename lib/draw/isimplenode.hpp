@@ -19,6 +19,7 @@ namespace lib
 
 			Property<vector2df> size;
 			Property<Rects32> textureRect;
+
 		protected:
 			void updateGeometry();
 			void updateTextureCoords();

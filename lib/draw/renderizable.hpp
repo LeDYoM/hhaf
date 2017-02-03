@@ -14,7 +14,7 @@ namespace lib
 	namespace draw
 	{
 		class Texture;
-		class Renderizable : public core::HasName, public Transformable
+		class Renderizable : public core::HasName//, public Transformable
 		{
 		public:
 			explicit Renderizable(const std::string &name, sptr<Texture> texture_, PrimitiveType type, u32 vertexCount, const Color &color_);
@@ -28,6 +28,11 @@ namespace lib
 
 			inline bool isVisible() const noexcept { return m_visible; }
 			inline void setVisible(bool nv) noexcept { m_visible = nv; }
+
+			Property<vector2df> position;
+			Property<f32> rotation;
+			Property<vector2df> scale;
+
 		protected:
 			bool m_visible{ true };
 			Property<sptr<Texture>> texture;

@@ -22,5 +22,10 @@ namespace lib
 		{
 			if (!m_vertices.empty()) for (auto &v : m_vertices) v.color = color;
 		}
+
+		void VertexArray::move(const vector2df & offset)
+		{
+			if (!m_vertices.empty()) for (auto &v : m_vertices) v.position += offset;
+		}
 	}
 }
