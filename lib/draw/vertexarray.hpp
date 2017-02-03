@@ -31,19 +31,17 @@ namespace lib
 			constexpr VertexArray(VertexArray&&) noexcept = default;
 			VertexArray& operator=(VertexArray&&) noexcept = default;
 
-			Rectf32 calculateBounds() const;
-
 			void draw() const;
-			void setColor(const Color color);
+			void setColor(const Color &color);
 
 			inline BasicVertexArray &verticesArray() noexcept { return m_vertices; }
 			inline const BasicVertexArray &verticesArray() const noexcept { return m_vertices; }
 
 			void setBounds(Rectf32 nBounds) noexcept { m_bounds = std::move(nBounds); }
-			void autoUpdateBounds();
 			inline Rectf32 bounds() const noexcept{ return m_bounds; }
 			inline PrimitiveType primitiveType() const noexcept { return m_primitiveType; }
 		private:
+
 			BasicVertexArray m_vertices;
 			Rectf32 m_bounds;
 			PrimitiveType m_primitiveType;
