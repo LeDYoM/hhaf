@@ -42,7 +42,7 @@ namespace zoper
 
 	void MenuScene::onExitScene()
 	{
-		lib::menu::MenuManager::onExitScene();
+		MenuManager::onExitScene();
 	}
 
 	void MenuScene::update()
@@ -50,7 +50,7 @@ namespace zoper
 
 	}
 
-	lib::vector2df MenuScene::getDefaultSizeView()
+	vector2df MenuScene::getDefaultSizeView()
 	{
 		return{ 2000.0f, 2000.0f };
 	}
