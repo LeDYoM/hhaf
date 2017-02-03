@@ -29,6 +29,10 @@ namespace lib
 				for (const auto& renderizable : m_renderNodes) {
 					renderizable->draw();
 				}
+
+				for (const auto& group : m_groups) {
+					group->draw();
+				}
 			}
 		}
 
@@ -37,22 +41,22 @@ namespace lib
 			parentScene()->createAnimation(std::move(nanimation), std::move(tracker));
 		}
 
-		sptr<RenderGroup> RenderGroup::createNewRenderGroup(const std::string & name, sptr<SceneNode> beforeNode)
+		sptr<RenderGroup> RenderGroup::createNewRenderGroup(const std::string & name, sptr<RenderGroup> beforeNode)
 		{
 			sptr<RenderGroup> rg = std::make_shared<RenderGroup>(name, this);
 			addRenderGroup(rg, beforeNode);
 			return rg;
 		}
 
-		void RenderGroup::addRenderGroup(sptr<RenderGroup> node, const sptr<SceneNode> beforeNode)
+		void RenderGroup::addRenderGroup(sptr<RenderGroup> node, const sptr<RenderGroup> beforeNode)
 		{
 			if (!beforeNode) {
-				m_renderNodes.emplace_back(node);
+				m_groups.emplace_back(node);
 			}
 			else {
-				for (auto iterator = m_renderNodes.cbegin(); iterator != m_renderNodes.cend();++iterator) {
+				for (auto iterator = m_groups.cbegin(); iterator != m_groups.cend();++iterator) {
 					if (*iterator == beforeNode) {
-						m_renderNodes.emplace(iterator, node);
+						m_groups.emplace(iterator, node);
 						break;
 					}
 				}
@@ -63,11 +67,12 @@ namespace lib
 
 		bool RenderGroup::removeRenderGroup(sptr<RenderGroup> element)
 		{
-			return removespFrom(m_renderNodes, element);
+			return removespFrom(m_groups, element);
 		}
 
 		void RenderGroup::clear()
 		{
+			m_groups.clear();
 			m_renderNodes.clear();
 		}
 	}

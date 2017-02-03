@@ -43,7 +43,7 @@ namespace lib
 			bool removeRenderizable(const sptr<Renderizable> &element);
 			void clear();
 
-			sptr<RenderGroup> createNewRenderGroup(const std::string &name,sptr<SceneNode> beforeNode=nullptr);
+			sptr<RenderGroup> createNewRenderGroup(const std::string &name,sptr<RenderGroup> beforeNode=nullptr);
 			bool removeRenderGroup(sptr<RenderGroup> element);
 
 			void draw() override;
@@ -58,7 +58,7 @@ namespace lib
 				return newElement;
 			}
 
-			void addRenderGroup(sptr<RenderGroup> node, const sptr<SceneNode> beforeNode = nullptr);
+			void addRenderGroup(sptr<RenderGroup> node, const sptr<RenderGroup> beforeNode = nullptr);
 
 			inline RenderGroup *parent() const noexcept { return m_parent; }
 
@@ -75,11 +75,23 @@ namespace lib
 			}
 			virtual Scene *const parentScene() { return m_parent->parentScene(); }
 
-			vector_shared_pointers<SceneNode> m_renderNodes;
+			vector_shared_pointers<Renderizable> m_renderNodes;
+			vector_shared_pointers<RenderGroup> m_groups;
 
 		private:
 			RenderGroup *m_parent{ nullptr };
 		};
+
+		template <class T>
+		class TransformableNode : public RenderGroup
+		{
+		public:
+			T m_node;
+
+			using T::T;
+			operator T() { return m_node; }
+		};
+
 	}
 }
 

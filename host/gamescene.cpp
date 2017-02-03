@@ -181,7 +181,7 @@ namespace zoper
 			setState(Pause);
 			_pauserg->setVisible(true);
 			addAnimation(msptr<anim::IPropertyAnimation<Color>>(1000, _pauseText->color, Color{ 255, 255, 255, 0 }, Color{ 255, 255, 255, 255 }, 
-				anim::animation_action_callback{}, anim::animation_action_callback{}),_pauseText);
+				anim::animation_action_callback{}, anim::animation_action_callback{}),nullptr);
 			gameClock.pause();
 			return true;
 		} else if (state() == Pause) {
@@ -444,7 +444,7 @@ namespace zoper
 			if (found) {
 				auto node = createRenderizable<NodeShape>("pointIncrementScore", vector2df{ 15.0f,15.0f },nullptr,30, colors::White);
 				addAnimation(msptr<anim::IPropertyAnimation<vector2df>>(600, node->position, lastTokenPosition, vector2df{ 450, 100 }, 
-					anim::noAction, anim::animation_action_callback{ [this, node]() { removeRenderizable(node); } }), node);
+					anim::noAction, anim::animation_action_callback{ [this, node]() { removeRenderizable(node); } }), nullptr);
 			}
 			return result;
 		});
@@ -572,7 +572,7 @@ namespace zoper
 	{
 		addAnimation(msptr<draw::anim::IPropertyAnimation<vector2df>>
 			(_levelProperties.millisBetweenTokens() / 2, tile->position, tile->position(), board2Scene(dest),
-			anim::noAction, anim::noAction),tile);
+			anim::noAction, anim::noAction),nullptr);
 	}
 
 	void GameScene::tokenAppeared(const lib::vector2du32 &_position, lib::sptr<Tile> tile)
