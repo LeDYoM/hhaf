@@ -242,7 +242,7 @@ namespace lib
 				m_currentScene->onEnterScene();
 			}
 			else {
-				m_currentScene->update();
+				m_currentScene->updateScene();
 			}
 		}
 

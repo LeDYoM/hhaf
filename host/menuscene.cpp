@@ -45,7 +45,7 @@ namespace zoper
 		MenuManager::onExitScene();
 	}
 
-	void MenuScene::update()
+	void MenuScene::updateScene()
 	{
 
 	}

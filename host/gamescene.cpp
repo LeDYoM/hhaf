@@ -158,7 +158,7 @@ namespace zoper
 		Scene::onExitScene();
 	}
 
-	void GameScene::update()
+	void GameScene::updateScene()
 	{
 		if (state() == Playing) {
 			if (_gameData._gameMode == GameData::GameModes::Time) {

@@ -21,7 +21,7 @@ namespace zoper
 		virtual void onEnterScene() override;
 		virtual void onExitScene() override;
 
-		virtual void update() override;
+		virtual void updateScene() override;
 
 		virtual lib::vector2df getDefaultSizeView() override;
 	private:

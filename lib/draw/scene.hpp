@@ -39,7 +39,7 @@ namespace lib
 			virtual void onEnterScene();
 			virtual void onExitScene();
 
-			virtual void update() = 0;
+			virtual void updateScene() = 0;
 
 			virtual vector2df getDefaultSizeView() = 0;
 			vector2df getCoordinatesToCenter(const Rectf32 &coordinates) const;
