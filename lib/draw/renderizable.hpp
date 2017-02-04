@@ -1,7 +1,6 @@
 #ifndef __LIB_RENDERIZABLE_HPP__
 #define __LIB_RENDERIZABLE_HPP__
 
-#include "scenenode.hpp"
 #include "transformable.hpp"
 #include "color.hpp"
 #include <lib/draw/hasname.hpp>

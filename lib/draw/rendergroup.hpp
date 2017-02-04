@@ -3,7 +3,6 @@
 
 #include <lib/include/types.hpp>
 #include <lib/include/vector2d.hpp>
-#include "scenenode.hpp"
 #include "transformable.hpp"
 #include "nodeshape.hpp"
 #include "nodequad.hpp"

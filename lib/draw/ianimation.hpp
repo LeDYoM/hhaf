@@ -1,8 +1,6 @@
 #ifndef LIB_IANIMATION_INCLUDE_HPP__
 #define LIB_IANIMATION_INCLUDE_HPP__
 
-#include "scenenode.hpp"
-
 #include <lib/core/timer.hpp>
 #include <lib/include/types.hpp>
 #include <lib/include/properties.hpp>

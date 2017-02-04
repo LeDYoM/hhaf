@@ -1,6 +1,5 @@
 #include "animationcomponent.hpp"
 #include "ianimation.hpp"
-#include "scenenode.hpp"
 
 #include <lib/core/log.hpp>
 #include <lib/core/host.hpp>
