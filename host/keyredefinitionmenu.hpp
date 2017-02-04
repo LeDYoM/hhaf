@@ -8,12 +8,12 @@ namespace zoper
 {
 	namespace zmenu
 	{
-		class KeyRedefinitionMenu : public lib::draw::RenderGroup
+		class KeyRedefinitionMenu : public lib::draw::SceneNode
 		{
 		public:
 			constexpr static char* ClassName = "KeyRedefinitionMenu";
 
-			KeyRedefinitionMenu(lib::draw::RenderGroup *parent);
+			KeyRedefinitionMenu(lib::draw::SceneNode *parent);
 			virtual ~KeyRedefinitionMenu();
 			virtual void onAddedToScene() override;
 

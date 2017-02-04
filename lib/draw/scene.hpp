@@ -22,13 +22,13 @@ namespace lib
 	}
 	namespace draw
 	{
-		class RenderGroup;
+		class SceneNode;
 		namespace anim
 		{
 			class IAnimation;
 		}
 
-		class Scene : public draw::RenderGroup, private anim::AnimationComponent
+		class Scene : public draw::SceneNode, private anim::AnimationComponent
 		{
 		public:
 			Scene(const std::string &_name);

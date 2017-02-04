@@ -11,17 +11,17 @@ namespace lib
 {
 	namespace draw
 	{
-		RenderGroup::RenderGroup(const std::string &name, RenderGroup *parent)
-			: SceneNode{ name }, m_parent{ parent } {	}
+		SceneNode::SceneNode(const std::string &name, SceneNode *parent)
+			: core::HasName{ name }, m_parent{ parent } {	}
 
-		RenderGroup::~RenderGroup() = default;
+		SceneNode::~SceneNode() = default;
 
-		bool RenderGroup::removeRenderizable(const sptr<Renderizable> &element)
+		bool SceneNode::removeRenderizable(const sptr<Renderizable> &element)
 		{
 			return removespFrom(m_renderNodes, element);
 		}
 
-		void RenderGroup::draw()
+		void SceneNode::draw()
 		{
 			if (isVisible()) {
 				auto handle(host().rStates().pushChanges(&getTransform(), nullptr));
@@ -36,19 +36,19 @@ namespace lib
 			}
 		}
 
-		void RenderGroup::addAnimation(sptr<anim::IAnimation> nanimation, sptr<SceneNode> tracker) noexcept
+		void SceneNode::addAnimation(sptr<anim::IAnimation> nanimation, sptr<SceneNode> tracker) noexcept
 		{
 			parentScene()->createAnimation(std::move(nanimation), std::move(tracker));
 		}
 
-		sptr<RenderGroup> RenderGroup::createNewRenderGroup(const std::string & name, sptr<RenderGroup> beforeNode)
+		sptr<SceneNode> SceneNode::createNewRenderGroup(const std::string & name, sptr<SceneNode> beforeNode)
 		{
-			sptr<RenderGroup> rg = std::make_shared<RenderGroup>(name, this);
+			sptr<SceneNode> rg = std::make_shared<SceneNode>(name, this);
 			addRenderGroup(rg, beforeNode);
 			return rg;
 		}
 
-		void RenderGroup::addRenderGroup(sptr<RenderGroup> node, const sptr<RenderGroup> beforeNode)
+		void SceneNode::addRenderGroup(sptr<SceneNode> node, const sptr<SceneNode> beforeNode)
 		{
 			if (!beforeNode) {
 				m_groups.emplace_back(node);
@@ -65,12 +65,12 @@ namespace lib
 			node->onAddedToScene();
 		}
 
-		bool RenderGroup::removeRenderGroup(sptr<RenderGroup> element)
+		bool SceneNode::removeRenderGroup(sptr<SceneNode> element)
 		{
 			return removespFrom(m_groups, element);
 		}
 
-		void RenderGroup::clear()
+		void SceneNode::clear()
 		{
 			m_groups.clear();
 			m_renderNodes.clear();

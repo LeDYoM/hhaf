@@ -24,11 +24,11 @@ namespace lib
 
 		class Scene;
 		class Renderizable;
-		class RenderGroup : public SceneNode, public Transformable
+		class SceneNode : public core::HasName, public Transformable
 		{
 		public:
-			RenderGroup(const std::string &name, RenderGroup *parent = nullptr);
-			virtual ~RenderGroup();
+			SceneNode(const std::string &name, SceneNode *parent = nullptr);
+			virtual ~SceneNode();
 
 			virtual void onAddedToScene() {}
 
@@ -43,11 +43,14 @@ namespace lib
 			bool removeRenderizable(const sptr<Renderizable> &element);
 			void clear();
 
-			sptr<RenderGroup> createNewRenderGroup(const std::string &name,sptr<RenderGroup> beforeNode=nullptr);
-			bool removeRenderGroup(sptr<RenderGroup> element);
+			sptr<SceneNode> createNewRenderGroup(const std::string &name,sptr<SceneNode> beforeNode=nullptr);
+			bool removeRenderGroup(sptr<SceneNode> element);
 
-			void draw() override;
+			void draw();
 			void addAnimation(sptr<anim::IAnimation> nanimation, sptr<SceneNode> tracker = {}) noexcept;
+
+			inline bool isVisible() const noexcept { return m_visible; }
+			inline void setVisible(bool nv) noexcept { m_visible = nv; }
 
 		protected:
 
@@ -58,9 +61,9 @@ namespace lib
 				return newElement;
 			}
 
-			void addRenderGroup(sptr<RenderGroup> node, const sptr<RenderGroup> beforeNode = nullptr);
+			void addRenderGroup(sptr<SceneNode> node, const sptr<SceneNode> beforeNode = nullptr);
 
-			inline RenderGroup *parent() const noexcept { return m_parent; }
+			inline SceneNode *parent() const noexcept { return m_parent; }
 
 			template <typename T>
 			inline bool isParentOfType() const noexcept
@@ -76,14 +79,16 @@ namespace lib
 			virtual Scene *const parentScene() { return m_parent->parentScene(); }
 
 			vector_shared_pointers<Renderizable> m_renderNodes;
-			vector_shared_pointers<RenderGroup> m_groups;
+			vector_shared_pointers<SceneNode> m_groups;
 
 		private:
-			RenderGroup *m_parent{ nullptr };
+			SceneNode *m_parent{ nullptr };
+			bool m_visible{ true };
+
 		};
 
 		template <class T>
-		class TransformableNode : public RenderGroup
+		class TransformableNode : public SceneNode
 		{
 		public:
 			T m_node;

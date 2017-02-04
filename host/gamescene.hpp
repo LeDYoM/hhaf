@@ -132,12 +132,12 @@ namespace zoper
 		GameData _gameData;
 		lib::u32 _score{ 0 };
 		lib::u8 _nextTokenPart{ 0 };
-		lib::sptr<lib::draw::RenderGroup> _mainBoardrg{ nullptr };
-		lib::sptr<lib::draw::RenderGroup> _gameOverrg{ nullptr };
-		lib::sptr<lib::draw::RenderGroup> _scorerg{ nullptr };
-		lib::sptr<lib::draw::RenderGroup> _levelrg{ nullptr };
-		lib::sptr<lib::draw::RenderGroup> _pauserg{ nullptr };
-		lib::sptr<lib::draw::RenderGroup> _backgroundTilesrg{ nullptr };
+		lib::sptr<lib::draw::SceneNode> _mainBoardrg{ nullptr };
+		lib::sptr<lib::draw::SceneNode> _gameOverrg{ nullptr };
+		lib::sptr<lib::draw::SceneNode> _scorerg{ nullptr };
+		lib::sptr<lib::draw::SceneNode> _levelrg{ nullptr };
+		lib::sptr<lib::draw::SceneNode> _pauserg{ nullptr };
+		lib::sptr<lib::draw::SceneNode> _backgroundTilesrg{ nullptr };
 		const lib::u8 _scoreSize{ 5 };
 		const lib::u8 _levelDataSize{ 5 };
 		LevelProperties _levelProperties;

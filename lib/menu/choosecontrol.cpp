@@ -16,7 +16,7 @@ namespace lib
 		ChooseControl::ChooseControl(const std::string &name, MenuManager *parent,
 			std::function<void(const u32)> onSelected,
 			const std::vector<sptr<OptionDescriptor>> labels)
-			: RenderGroup{ name, parent }, m_onSelected{ onSelected }
+			: SceneNode{ name, parent }, m_onSelected{ onSelected }
 		{
 			const auto &cTheme(parent->currentTheme());
 			descriptorCursorSize = cTheme.cursorDescriptor.m_size;

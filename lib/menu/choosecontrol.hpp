@@ -28,7 +28,7 @@ namespace lib
 			std::vector<std::string> _subOptionsLabels;
 		};
 		class MenuManager;
-		class ChooseControl : public draw::RenderGroup
+		class ChooseControl : public draw::SceneNode
 		{
 		public:
 			ChooseControl(const std::string &name, MenuManager *parent, std::function<void(const u32)> onSelected,
