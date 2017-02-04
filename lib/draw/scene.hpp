@@ -1,8 +1,10 @@
-#ifndef __LIB_SCENE_HPP__
-#define __LIB_SCENE_HPP__
+#ifndef LIB_DRAW_SCENE_HPP__
+#define LIB_DRAW_SCENE_HPP__
+
+#pragma once
 
 #include "hasname.hpp"
-#include "rendergroup.hpp"
+#include "scenenode.hpp"
 
 #include <lib/core/compileconfig.hpp>
 #include <lib/include/types.hpp>

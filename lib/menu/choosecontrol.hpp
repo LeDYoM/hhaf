@@ -2,7 +2,7 @@
 #define LIB_GUI_CHOOSECONTROL_HPP__
 
 #include <lib/include/types.hpp>
-#include <lib/draw/rendergroup.hpp>
+#include <lib/draw/scenenode.hpp>
 #include <vector>
 #include <functional>
 

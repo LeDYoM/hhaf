@@ -2,7 +2,7 @@
 #include "startlevelmenu.hpp"
 #include <lib/menu/menumanager.hpp>
 #include <lib/menu/choosecontrol.hpp>
-#include <lib/draw/rendergroup.hpp>
+#include <lib/draw/scenenode.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/core/host.hpp>
 #include "common.hpp"

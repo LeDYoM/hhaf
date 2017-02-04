@@ -1,4 +1,4 @@
-#include "rendergroup.hpp"
+#include "scenenode.hpp"
 #include "renderizable.hpp"
 #include "scene.hpp"
 #include "animationcomponent.hpp"
