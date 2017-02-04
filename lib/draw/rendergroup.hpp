@@ -65,17 +65,6 @@ namespace lib
 
 			inline SceneNode *parent() const noexcept { return m_parent; }
 
-			template <typename T>
-			inline bool isParentOfType() const noexcept
-			{
-				return m_parent ? dynamic_cast<T*>(m_parent) != nullptr : false;
-			}
-
-			template <typename T>
-			inline T* parentAs() const noexcept
-			{
-				return m_parent ? dynamic_cast<T*>(m_parent) : nullptr;
-			}
 			virtual Scene *const parentScene() { return m_parent->parentScene(); }
 
 			vector_shared_pointers<Renderizable> m_renderNodes;
