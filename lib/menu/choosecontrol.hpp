@@ -62,6 +62,7 @@ namespace lib
 			};
 
 			std::vector<LabelData> m_labelData;
+			draw::SceneNodeSPtr m_cursorNode;
 			sptr<draw::NodeShape> m_cursor;
 			std::function<void(const u32)> m_onSelected;
 

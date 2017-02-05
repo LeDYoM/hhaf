@@ -75,16 +75,7 @@ namespace lib
 
 		};
 
-		template <class T>
-		class TransformableNode : public SceneNode
-		{
-		public:
-			T m_node;
-
-			using T::T;
-			operator T() { return m_node; }
-		};
-
+		using SceneNodeSPtr = sptr<SceneNode>;
 	}
 }
 

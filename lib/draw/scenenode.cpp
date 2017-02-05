@@ -23,6 +23,10 @@ namespace lib
 
 		void SceneNode::draw()
 		{
+			if (name() == "cursorNode")
+			{
+				int b = 1;
+			}
 			if (isVisible()) {
 				auto handle(host().rStates().pushChanges(&getTransform(), nullptr));
 

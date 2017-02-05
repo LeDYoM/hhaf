@@ -18,6 +18,10 @@ namespace lib
 
 		void Renderizable::draw()
 		{
+			if (name() == "cursor")
+			{
+				int a = 0;
+			}
 			if (m_visible) {
 				auto handle = host().rStates().pushChanges(nullptr, texture().get());
 				m_vertices.draw();

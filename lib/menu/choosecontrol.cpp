@@ -20,7 +20,10 @@ namespace lib
 		{
 			const auto &cTheme(parent->currentTheme());
 			descriptorCursorSize = cTheme.cursorDescriptor.m_size;
-			m_cursor = createRenderizable<NodeShape>("cursor", descriptorCursorSize, nullptr, cTheme.cursorDescriptor.m_nVertex, cTheme.cursorDescriptor.m_color);
+			m_cursorNode = createNewRenderGroup("cursorNode");
+			m_cursor = m_cursorNode->createRenderizable<NodeShape>("cursor",
+				Rectf32{ 1000, 100, descriptorCursorSize.x, descriptorCursorSize.y },
+				nullptr, cTheme.cursorDescriptor.m_nVertex, cTheme.cursorDescriptor.m_color);
 
 			const bool menuType{ labels.empty()?false:labels[0]->_subOptionsLabels.empty() };
 
@@ -86,10 +89,10 @@ namespace lib
 				m_labelData[_cursorItemSelected].subLabel->color.set(cTheme.selectedTextColor);
 			}
 
-			m_cursor->rotation.set(90);
+//			m_cursorNode->rotation.set(90);
 			
-			addAnimation(msptr<anim::IPropertyAnimation<vector2df>>(120,m_cursor->position,
-				m_cursor->position(), vector2df{ selectedText->position().x - descriptorCursorSize.x, selectedText->position().y },
+			addAnimation(msptr<anim::IPropertyAnimation<vector2df>>(120, m_cursorNode->position,
+				m_cursorNode->position(), vector2df{ selectedText->position().x - descriptorCursorSize.x, selectedText->position().y },
 				anim::noAction, anim::noAction));
 		}
 

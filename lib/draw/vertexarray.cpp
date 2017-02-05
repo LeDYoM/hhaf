@@ -11,8 +11,6 @@ namespace lib
 		VertexArray::VertexArray(const PrimitiveType type, const u32 vertexCount) noexcept
 			: m_vertices{ vertexCount }, m_primitiveType{ type } {}
 
-
-
 		void VertexArray::draw() const
 		{
 			host().parentWindow().draw(*this, host().rStates().internalStates());
