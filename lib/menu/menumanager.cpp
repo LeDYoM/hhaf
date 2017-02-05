@@ -56,7 +56,7 @@ namespace lib
 
 		void MenuManager::addMenuStep(sptr<ChooseControl> step)
 		{
-			addRenderGroup(step);
+			addSceneNode(step);
 			m_steps.push_back(step);
 		}
 

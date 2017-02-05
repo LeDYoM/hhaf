@@ -35,11 +35,11 @@ namespace zoper
 	void GameScene::onInit()
 	{
 		Scene::onInit();
-		_mainBoardrg = this->createNewRenderGroup("mainBoard");
-		_gameOverrg = this->createNewRenderGroup("gameOverScreen");
-		_scorerg = this->createNewRenderGroup("score");
-		_levelrg = this->createNewRenderGroup("level");
-		_pauserg = this->createNewRenderGroup("pause");
+		_mainBoardrg = this->createSceneNode("mainBoard");
+		_gameOverrg = this->createSceneNode("gameOverScreen");
+		_scorerg = this->createSceneNode("score");
+		_levelrg = this->createSceneNode("level");
+		_pauserg = this->createSceneNode("pause");
 
 		auto& resourceManager{ lib::host().resourceManager() };
 		auto scoreFont(resourceManager.getFont("game_scene.scoreFont"));
@@ -503,7 +503,7 @@ namespace zoper
 
 	void GameScene::tilesCreated()
 	{
-		_backgroundTilesrg = createNewRenderGroup("backgroundTiles", _mainBoardrg);
+		_backgroundTilesrg = createSceneNode("backgroundTiles", _mainBoardrg);
 		for (u32 y = 0; y < _gameData.size.y; ++y)
 		{
 			std::vector<sptr<NodeQuad>> column;

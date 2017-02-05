@@ -45,14 +45,14 @@ namespace lib
 			parentScene()->createAnimation(std::move(nanimation), std::move(tracker));
 		}
 
-		sptr<SceneNode> SceneNode::createNewRenderGroup(const std::string & name, sptr<SceneNode> beforeNode)
+		sptr<SceneNode> SceneNode::createSceneNode(const std::string & name, sptr<SceneNode> beforeNode)
 		{
 			sptr<SceneNode> rg = std::make_shared<SceneNode>(name, this);
-			addRenderGroup(rg, beforeNode);
+			addSceneNode(rg, beforeNode);
 			return rg;
 		}
 
-		void SceneNode::addRenderGroup(sptr<SceneNode> node, const sptr<SceneNode> beforeNode)
+		void SceneNode::addSceneNode(sptr<SceneNode> node, const sptr<SceneNode> beforeNode)
 		{
 			if (!beforeNode) {
 				m_groups.emplace_back(node);
@@ -69,7 +69,7 @@ namespace lib
 			node->onAddedToScene();
 		}
 
-		bool SceneNode::removeRenderGroup(sptr<SceneNode> element)
+		bool SceneNode::removeSceneNode(sptr<SceneNode> element)
 		{
 			return removespFrom(m_groups, element);
 		}

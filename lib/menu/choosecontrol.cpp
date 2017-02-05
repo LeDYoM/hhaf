@@ -20,7 +20,7 @@ namespace lib
 		{
 			const auto &cTheme(parent->currentTheme());
 			descriptorCursorSize = cTheme.cursorDescriptor.m_size;
-			m_cursorNode = createNewRenderGroup("cursorNode");
+			m_cursorNode = createSceneNode("cursorNode");
 			m_cursor = m_cursorNode->createRenderizable<NodeShape>("cursor",
 				Rectf32{ 1000, 100, descriptorCursorSize.x, descriptorCursorSize.y },
 				nullptr, cTheme.cursorDescriptor.m_nVertex, cTheme.cursorDescriptor.m_color);

@@ -1,6 +1,8 @@
 #ifndef LIB_DRAW_SCENENODE_HPP__
 #define LIB_DRAW_SCENENODE_HPP__
 
+#pragma once
+
 #include <lib/include/types.hpp>
 #include <lib/include/vector2d.hpp>
 #include "transformable.hpp"
@@ -42,8 +44,8 @@ namespace lib
 			bool removeRenderizable(const sptr<Renderizable> &element);
 			void clear();
 
-			sptr<SceneNode> createNewRenderGroup(const std::string &name,sptr<SceneNode> beforeNode=nullptr);
-			bool removeRenderGroup(sptr<SceneNode> element);
+			sptr<SceneNode> createSceneNode(const std::string &name,sptr<SceneNode> beforeNode=nullptr);
+			bool removeSceneNode(sptr<SceneNode> element);
 
 			void draw();
 			void addAnimation(sptr<anim::IAnimation> nanimation, sptr<SceneNode> tracker = {}) noexcept;
@@ -60,7 +62,7 @@ namespace lib
 				return newElement;
 			}
 
-			void addRenderGroup(sptr<SceneNode> node, const sptr<SceneNode> beforeNode = nullptr);
+			void addSceneNode(sptr<SceneNode> node, const sptr<SceneNode> beforeNode = nullptr);
 
 			inline SceneNode *parent() const noexcept { return m_parent; }
 
