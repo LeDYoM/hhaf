@@ -50,16 +50,17 @@ namespace lib
 			inline bool isActiveScene() const noexcept { return m_isActiveScene; }
 			inline void addSubscription(sptr<events::EventSubscription> &&es) noexcept { eventConnector.addSubscription(std::move(es)); }
 			void createAnimation(sptr<anim::IAnimation> nanimation, sptr<SceneNode> tracking = {}) noexcept { push_animation(std::move(nanimation), std::move(tracking)); }
+			const uptr<View> &getView() const;
+			virtual Scene *const parentScene() noexcept override { return this; }
+
 
 		protected:
 
 			void updateView();
-			const uptr<View> &getView() const;
 			inline u32 state() const { return _state; }
 			inline void setState(u32 ns) { _state = ns; }
 			Timer clock;
 			EventReceiver eventConnector;
-			virtual Scene *const parentScene() noexcept override { return this; }
 
 			inline void setAsActiveScene(const bool nv) noexcept { m_isActiveScene = nv; }
 

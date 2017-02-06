@@ -112,76 +112,63 @@ namespace lib
 			color.update();
 		}
 
-		void NodeText::setTextWithAlignment(std::string text_, const Rectf32 &box, const Alignment alignment)
+		void NodeText::setTextWithAlignmentX(std::string text_, const Rectf32 & box, const Alignment alignment)
 		{
 			text = text_;
+			updateAlignmentX(box.left, box.right(), alignment);
+		}
+
+		void NodeText::setTextWithAlignmentY(std::string text_, const Rectf32 & box, const Alignment alignment)
+		{
+			text = text_;
+			updateAlignmentY(box.top, box.bottom(), alignment);
+		}
+
+		void NodeText::setAlignmentX(const Rectf32 & box, const Alignment alignment)
+		{
+			updateAlignmentX(box.left, box.right(), alignment);
+		}
+
+		void NodeText::setAlignmentY(const Rectf32 & box, const Alignment alignment)
+		{
+			updateAlignmentY(box.top, box.bottom(), alignment);
+		}
+
+		void NodeText::updateAlignmentX(const f32 left, const f32 right, const Alignment alignment)
+		{
+			// To be called only after text set
 			switch (alignment)
 			{
 			default:
 			case Alignment::Left:
-				m_vertices.move(box.leftTop());
+				m_vertices.moveX(left);
 				break;
 			case Alignment::Center:
-				m_vertices.move(box.rightBottom() - bounds().center());
+				m_vertices.moveX((right / 2.f) - (bounds().width / 2));
 				break;
 			case Alignment::Right:
-				m_vertices.move(box.rightBottom() - bounds().leftTop());
+				m_vertices.moveX(right - bounds().width);
 				break;
 			}
 		}
 
-		void NodeText::setAlignment(const Rectf32 &box, const Alignment alignment)
+		void NodeText::updateAlignmentY(const f32 top, const f32 bottom, const Alignment alignment)
 		{
-			setTextWithAlignment(text(), box, alignment);
-		}
-
-		void NodeText::setTextWithAlignmentX(std::string text_, const f32 x, const f32 sizeX, Alignment alignment)
-		{
-			text = text_;
+			// To be called only after text set
 			switch (alignment)
 			{
 			default:
 			case Alignment::Left:
-				m_vertices.moveX(x);
+				m_vertices.moveX(top);
 				break;
 			case Alignment::Center:
-			{
-				auto temp2();
-				m_vertices.moveX(((x + sizeX) / 2.f) - (bounds().width / 2));
-			}
-			break;
-			case Alignment::Right:
-				m_vertices.moveX((x+sizeX)-bounds().width);
-				break;
-			}
-		}
-
-		void NodeText::setTextWithAlignmentY(std::string text_, const f32 y, const f32 sizeY, Alignment alignment)
-		{
-			text = text_;
-			switch (alignment)
-			{
-			default:
-			case Alignment::Left:
-				m_vertices.moveY(y);
-				break;
-			case Alignment::Center:
-				m_vertices.moveY(((y + sizeY) / 2.f) - (bounds().height / 2));
+				m_vertices.moveX((bottom / 2.f) - (bounds().width / 2));
 				break;
 			case Alignment::Right:
-				m_vertices.moveX((y + sizeY) - bounds().height);
+				m_vertices.moveX(bottom - bounds().width);
 				break;
 			}
 		}
 
-		void NodeText::setAlignmentX(const f32 x, const f32 sizeX, Alignment alignment)
-		{
-			setTextWithAlignmentX(text(), x, sizeX, alignment);
-		}
-
-		void NodeText::setAlignmentY(const f32 y, const f32 sizeY, Alignment alignment)
-		{
-			setTextWithAlignmentY(text(), y, sizeY, alignment);
-		}
 	}
 }

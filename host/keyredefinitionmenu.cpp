@@ -24,7 +24,7 @@ namespace zoper
 		void KeyRedefinitionMenu::onAddedToScene()
 		{
 			_nextKeyText = createRenderizable<NodeText>("pressKey"," ", lib::host().resourceManager().getFont("game_menu.mainFont"),90, colors::Blue);
-			_nextKeyText->setAlignment(Rectf32{ 0, 0, 1000.0f, 1000.0f }, NodeText::Alignment::Center);
+//			_nextKeyText->setAlignment(Rectf32{ 0, 0, 1000.0f, 1000.0f }, NodeText::Alignment::Center);
 			_indexKey = 0;
 			setTextForKey();
 		}
@@ -40,7 +40,7 @@ namespace zoper
 			else
 			{
 				_nextKeyText->text = "Press key for "+getKeyNameStr(_indexKey);
-				_nextKeyText->setAlignment(Rectf32{ 0, 0, 1000.0f, 1000.0f }, NodeText::Alignment::Center);
+//				_nextKeyText->setAlignment(Rectf32{ 0, 0, 1000.0f, 1000.0f }, NodeText::Alignment::Center);
 
 			}
 		}

@@ -53,6 +53,8 @@ namespace lib
 			inline bool isVisible() const noexcept { return m_visible; }
 			inline void setVisible(bool nv) noexcept { m_visible = nv; }
 
+			virtual Scene *const parentScene() { return m_parent->parentScene(); }
+
 		protected:
 
 			template <typename T>
@@ -65,8 +67,6 @@ namespace lib
 			void addSceneNode(sptr<SceneNode> node, const sptr<SceneNode> beforeNode = nullptr);
 
 			inline SceneNode *parent() const noexcept { return m_parent; }
-
-			virtual Scene *const parentScene() { return m_parent->parentScene(); }
 
 			vector_shared_pointers<Renderizable> m_renderNodes;
 			vector_shared_pointers<SceneNode> m_groups;

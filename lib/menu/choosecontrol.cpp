@@ -33,13 +33,13 @@ namespace lib
 			for (const auto& label : labels)
 			{
 				auto text = createRenderizable<NodeText>("name" + std::to_string(count), label->_text, cTheme.font, cTheme.chSize, cTheme.textColor);
-				text->setAlignmentX(0, 2000, normalLabelAlign);
+				text->setAlignmentX(parentScene()->getView()->perspective(), normalLabelAlign);
 				text->moveY(currentPos.y);
 
 				sptr<NodeText> subtext{ nullptr };
 				if (!label->_subOptionsLabels.empty()) {
 					subtext = createRenderizable<NodeText>("sub_name" + count, label->_subOptionsLabels[label->_startValueIndex],cTheme.font,cTheme.chSize, cTheme.textColor);
-					subtext->setTextWithAlignmentX(label->_subOptionsLabels[label->_startValueIndex], 100, 1800, NodeText::Alignment::Right);
+					subtext->setTextWithAlignmentX(label->_subOptionsLabels[label->_startValueIndex], parentScene()->getView()->perspective(), NodeText::Alignment::Right);
 				}
 
 				currentPos.y += (cTheme.chSize + cTheme.incY);
@@ -66,7 +66,7 @@ namespace lib
 	
 		void ChooseControl::updateSubLabelText(const u32 index)
 		{
-			m_labelData[index].subLabel->setTextWithAlignmentX(m_labelData[index].textSubLabel[m_labelData[index].selectedSublabel], 100, 1800.0f, NodeText::Alignment::Right);
+			m_labelData[index].subLabel->setTextWithAlignmentX(m_labelData[index].textSubLabel[m_labelData[index].selectedSublabel], parentScene()->getView()->perspective(), NodeText::Alignment::Right);
 		}
 
 		void ChooseControl::cursorSelectItem(const u32 nodeIndex)
