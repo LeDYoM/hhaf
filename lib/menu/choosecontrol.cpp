@@ -32,13 +32,14 @@ namespace lib
 			vector2df currentPos{};
 			for (const auto& label : labels)
 			{
-				auto text = createRenderizable<NodeText>("name" + std::to_string(count), label->_text, cTheme.font, cTheme.chSize, cTheme.textColor);
+				auto menuLine = createSceneNode("menuLineText" + std::to_string(count));
+				menuLine->position = currentPos;
+				auto text = menuLine->createRenderizable<NodeText>("name" + std::to_string(count), label->_text, cTheme.font, cTheme.chSize, cTheme.textColor);
 				text->setAlignmentX(parentScene()->getView()->perspective(), normalLabelAlign);
-				text->moveY(currentPos.y);
 
 				sptr<NodeText> subtext{ nullptr };
 				if (!label->_subOptionsLabels.empty()) {
-					subtext = createRenderizable<NodeText>("sub_name" + count, label->_subOptionsLabels[label->_startValueIndex],cTheme.font,cTheme.chSize, cTheme.textColor);
+					subtext = menuLine->createRenderizable<NodeText>("sub_name" + std::to_string(count), label->_subOptionsLabels[label->_startValueIndex],cTheme.font,cTheme.chSize, cTheme.textColor);
 					subtext->setTextWithAlignmentX(label->_subOptionsLabels[label->_startValueIndex], parentScene()->getView()->perspective(), NodeText::Alignment::Right);
 				}
 
