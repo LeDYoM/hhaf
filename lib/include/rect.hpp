@@ -1,6 +1,8 @@
 #ifndef LIB_RECT_INCLUDE_HPP__
 #define LIB_RECT_INCLUDE_HPP__
 
+#pragma once
+
 #include "types.hpp"
 #include <lib/include/vector2d.hpp>
 
@@ -92,17 +94,24 @@ namespace lib
 			return !(operator==(r));
 		}
 
+		inline Rect& operator +=(const vector2d<T> &rhs) noexcept
+		{
+			left += rhs.x;
+			top += rhs.y;
+			return *this;
+		}
+
 		inline void setLeftTop(const vector2d<T>&nleftTop) { setLeft(nleftTop.x); setTop(nleftTop.y); }
 		inline void move(const vector2d<T>&relativePosition) { left += relativePosition.x; top += relativePosition.y; }
 		inline void setSize(const vector2d<T>&nsize) { width = nsize.x; height = nsize.y; }
 
-		inline vector2d<T> leftTop() const { return vector2d<T>{left, top}; }
-		inline vector2d<T> size() const { return vector2d<T>{width, height}; }
-		inline T right() const { return left + width; }
-		inline T bottom() const { return top + height; }
-		inline vector2d<T> rightBottom() const { return vector2d<T>{right(), bottom()}; }
-		inline vector2d<T> rightTop() const { return vector2d<T>{right(), top}; }
-		inline vector2d<T> leftBottom() const { return vector2d<T>{left, bottom()}; }
+		constexpr inline vector2d<T> leftTop() const noexcept { return vector2d<T>{left, top}; }
+		constexpr inline vector2d<T> size() const  noexcept { return vector2d<T>{width, height}; }
+		constexpr inline T right() const  noexcept { return left + width; }
+		constexpr inline T bottom() const  noexcept { return top + height; }
+		constexpr inline vector2d<T> rightBottom() const noexcept { return vector2d<T>{right(), bottom()}; }
+		constexpr inline vector2d<T> rightTop() const  noexcept { return vector2d<T>{right(), top}; }
+		constexpr inline vector2d<T> leftBottom() const  noexcept { return vector2d<T>{left, bottom()}; }
 	};
 
 	using Rects32 = lib::Rect<s32>;

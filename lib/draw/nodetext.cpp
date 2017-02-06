@@ -112,62 +112,76 @@ namespace lib
 			color.update();
 		}
 
-		void NodeText::setPositionWithAlignment(const vector2df &pos, Alignment alignment)
+		void NodeText::setTextWithAlignment(std::string text_, const Rectf32 &box, const Alignment alignment)
 		{
+			text = text_;
 			switch (alignment)
 			{
 			default:
 			case Alignment::Left:
-				position = pos;
+				m_vertices.move(box.leftTop());
 				break;
 			case Alignment::Center:
-				position = { pos.x - (bounds().width / 2.0f), pos.y - (bounds().height / 2.0f) };
+				m_vertices.move(box.rightBottom() - bounds().center());
 				break;
 			case Alignment::Right:
-				position = { pos.x - (bounds().width), pos.y - (bounds().height) };
+				m_vertices.move(box.rightBottom() - bounds().leftTop());
 				break;
 			}
 		}
 
-		void NodeText::setPositionWithAlignmentX(const float x, Alignment alignment /*= Alignment::Left*/)
+		void NodeText::setAlignment(const Rectf32 &box, const Alignment alignment)
 		{
+			setTextWithAlignment(text(), box, alignment);
+		}
+
+		void NodeText::setTextWithAlignmentX(std::string text_, const f32 x, const f32 sizeX, Alignment alignment)
+		{
+			text = text_;
 			switch (alignment)
 			{
 			default:
 			case Alignment::Left:
-				position = { x, position().y };
+				m_vertices.moveX(x);
 				break;
 			case Alignment::Center:
 			{
-				position = { x - (bounds().width / 2.0f), position().y };
+				auto temp2();
+				m_vertices.moveX(((x + sizeX) / 2.f) - (bounds().width / 2));
 			}
 			break;
 			case Alignment::Right:
-				position = { x - (bounds().width), position().y };
+				m_vertices.moveX((x+sizeX)-bounds().width);
 				break;
 			}
 		}
 
-		void NodeText::setPositionWithAlignmentY(const float y, Alignment alignment /*= Alignment::Left*/)
+		void NodeText::setTextWithAlignmentY(std::string text_, const f32 y, const f32 sizeY, Alignment alignment)
 		{
+			text = text_;
 			switch (alignment)
 			{
 			default:
 			case Alignment::Left:
-				position = { position().x, y };
+				m_vertices.moveY(y);
 				break;
 			case Alignment::Center:
-				position = { position().x, y - (bounds().height / 2.0f) };
+				m_vertices.moveY(((y + sizeY) / 2.f) - (bounds().height / 2));
 				break;
 			case Alignment::Right:
-				position = { position().x, y - (bounds().height) };
+				m_vertices.moveX((y + sizeY) - bounds().height);
 				break;
 			}
 		}
 
-		void NodeText::setAlignment(Alignment alignment)
+		void NodeText::setAlignmentX(const f32 x, const f32 sizeX, Alignment alignment)
 		{
-			setPositionWithAlignment(position(), alignment);
+			setTextWithAlignmentX(text(), x, sizeX, alignment);
+		}
+
+		void NodeText::setAlignmentY(const f32 y, const f32 sizeY, Alignment alignment)
+		{
+			setTextWithAlignmentY(text(), y, sizeY, alignment);
 		}
 	}
 }

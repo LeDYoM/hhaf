@@ -32,6 +32,10 @@ namespace lib
 			Property<f32> rotation;
 			Property<vector2df> scale;
 
+			inline void move(const vector2df &offset)  noexcept { m_vertices.move(offset); }
+			inline void moveX(const f32 xOffset)  noexcept { m_vertices.moveX(xOffset); }
+			inline void moveY(const f32 yOffset)  noexcept { m_vertices.moveY(yOffset); }
+
 		protected:
 			bool m_visible{ true };
 			Property<sptr<Texture>> texture;

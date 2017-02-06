@@ -41,7 +41,9 @@ namespace lib
 			inline Rectf32 bounds() const noexcept{ return m_bounds; }
 			inline PrimitiveType primitiveType() const noexcept { return m_primitiveType; }
 
-			void move(const vector2df &offset);
+			void move(const vector2df &offset) noexcept;
+			void moveX(const f32 xOffset) noexcept;
+			void moveY(const f32 yOffset) noexcept;
 		private:
 
 			BasicVertexArray m_vertices;

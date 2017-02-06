@@ -29,10 +29,47 @@ namespace lib
 			Property<sptr<Font>> font;
 			Property<u32> characterSize;
 
-			void setPositionWithAlignment(const vector2df &pos, Alignment alignment);
-			void setPositionWithAlignmentX(const float x, Alignment alignment = Alignment::Left);
-			void setPositionWithAlignmentY(const float y, Alignment alignment = Alignment::Left);
-			void setAlignment(Alignment alignment);
+			void setTextWithAlignment(std::string text, const Rectf32 &box, const Alignment alignment);
+			void setAlignment(const Rectf32 &box, const Alignment alignment);
+
+
+			/**
+			* Sets the position of the text using a provided pair of x coordinates to fit into
+			* @param [in] The new value of the text property
+			* @param [in] The x of the bounds
+			* @param [in] The size of the x of the bounds
+			* @param [in] The alignment to use
+			*/
+			void setTextWithAlignmentX(std::string text, const f32 x, const f32 sizeX, const Alignment alignment);
+
+			/**
+			* Sets the position of the text using a provided pair of y coordinates to fit into
+			* @param [in] The new value of the text property
+			* @param [in] The y of the bounds
+			* @param [in] The size of the y of the bounds
+			* @param [in] The alignment to use
+			*/
+			void setTextWithAlignmentY(std::string text, const f32 y, const f32 sizeY, const Alignment alignment);
+
+			/**
+			* Sets the position of the text using a provided pair of x coordinates to fit into. It maintains the same text
+			* @param [in] The new value of the text property
+			* @param [in] The x of the bounds
+			* @param [in] The size of the x of the bounds
+			* @param [in] The alignment to use
+			*/
+			void setAlignmentX(const f32 x, const f32 sizeX, const Alignment alignment);
+
+			/**
+			* Sets the position of the text using a provided pair of y coordinates to fit into. It maintains the same text
+			* @param [in] The new value of the text property
+			* @param [in] The y of the bounds
+			* @param [in] The size of the y of the bounds
+			* @param [in] The alignment to use
+			*/
+			void setAlignmentY(const f32 y, const f32 sizeY, const Alignment alignment);
+
+
 		private:
 			void updateGeometry();
 		};

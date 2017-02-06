@@ -83,8 +83,8 @@ namespace zoper
 		_gameText->position = { sceneCenter.x - (_gameBoundingBox.width / 2.0f), sceneCenter.y - _gameBoundingBox.height };
 		_overText->position = { sceneCenter.x - (_overBoundingBox.width / 2.0f), sceneCenter.y };
 
-		_pauseText->setPositionWithAlignment(vector2df{ 1000.0f, 1000.0f }, NodeText::Alignment::Center);
-
+		_pauseText->setAlignmentX(0, 2000, NodeText::Alignment::Center);
+		_pauseText->setAlignmentY(0, 2000, NodeText::Alignment::Center);
 	}
 
 	void GameScene::onDeinit()
