@@ -29,7 +29,7 @@ namespace lib
 
 			const auto normalLabelAlign( menuType ? NodeText::Alignment::Center : NodeText::Alignment::Left );
 			u32 count{};
-			vector2df currentPos{0,800};
+			vector2df currentPos{};
 			for (const auto& label : labels)
 			{
 				auto text = createRenderizable<NodeText>("name" + std::to_string(count), label->_text, cTheme.font, cTheme.chSize, cTheme.textColor);
@@ -89,7 +89,7 @@ namespace lib
 			}
 
 //			m_cursorNode->rotation.set(90);
-			
+			auto p(vector2df{ selectedText->position().x - descriptorCursorSize.x, selectedText->position().y });
 			addAnimation(msptr<anim::IPropertyAnimation<vector2df>>(120, m_cursorNode->position,
 				m_cursorNode->position(), vector2df{ selectedText->position().x - descriptorCursorSize.x, selectedText->position().y },
 				anim::noAction, anim::noAction));

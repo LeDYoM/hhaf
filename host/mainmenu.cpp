@@ -45,6 +45,7 @@ namespace zoper
 			}),
 			m_gameConfig{ ":NextGame" }
 		{
+			position.set({ 0,700 });
 		}
 
 		MainMenu::~MainMenu() = default;
