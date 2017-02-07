@@ -45,6 +45,11 @@ namespace lib
 			parentScene()->createAnimation(std::move(nanimation), std::move(tracker));
 		}
 
+		Rectf32 SceneNode::scenePerspective()
+		{
+			return parentScene()->getView()->perspective();
+		}
+
 		sptr<SceneNode> SceneNode::createSceneNode(const std::string & name, sptr<SceneNode> beforeNode)
 		{
 			sptr<SceneNode> rg = std::make_shared<SceneNode>(name, this);

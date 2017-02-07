@@ -54,6 +54,7 @@ namespace lib
 			inline void setVisible(bool nv) noexcept { m_visible = nv; }
 
 			virtual Scene *const parentScene() { return m_parent->parentScene(); }
+			Rectf32 scenePerspective();
 
 		protected:
 

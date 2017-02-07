@@ -112,6 +112,9 @@ namespace lib
 		constexpr inline vector2d<T> rightBottom() const noexcept { return vector2d<T>{right(), bottom()}; }
 		constexpr inline vector2d<T> rightTop() const  noexcept { return vector2d<T>{right(), top}; }
 		constexpr inline vector2d<T> leftBottom() const  noexcept { return vector2d<T>{left, bottom()}; }
+
+		constexpr inline Rect moved(vector2d<T> offset) const noexcept { return Rect{ left + offset.x,top + offset.y,width,height }; };
+		constexpr inline Rect resized(vector2d<T> sSize) const noexcept { return Rect{ left, top, width + sSize.x, height + sSize.y }; };
 	};
 
 	using Rects32 = lib::Rect<s32>;
