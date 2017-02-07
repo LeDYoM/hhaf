@@ -530,7 +530,7 @@ namespace zoper
 		}
 	}
 
-	void GameScene::tileAdded(const lib::vector2du32 &pos, board::SITilePointer nTile)
+	void GameScene::tileAdded(const vector2du32 &pos, board::SITilePointer nTile)
 	{
 		// Tile appeared
 		if (auto ztile = std::dynamic_pointer_cast<Tile>(nTile)) {
@@ -541,7 +541,7 @@ namespace zoper
 		}
 	}
 
-	void GameScene::tileDeleted(const lib::vector2du32 &pos, lib::board::SITilePointer nTile)
+	void GameScene::tileDeleted(const vector2du32 &pos, board::SITilePointer nTile)
 	{
 		if (auto ztile = std::dynamic_pointer_cast<Tile>(nTile)) {
 			tokenDissapeared(pos,ztile);
@@ -550,7 +550,7 @@ namespace zoper
 		}
 	}
 
-	void GameScene::tileMoved(const vector2du32 &source, const lib::vector2du32 &dest, board::SITilePointer tile)
+	void GameScene::tileMoved(const vector2du32 &source, const vector2du32 &dest, board::SITilePointer tile)
 	{
 		if (auto ztile = std::dynamic_pointer_cast<Tile>(tile)) {
 			tokenMoved(source, dest, ztile);
@@ -559,8 +559,8 @@ namespace zoper
 		}
 	}
 
-	void GameScene::tileChanged(const lib::vector2du32 &pos, lib::board::SITilePointer nTile, 
-		const lib::board::BoardTileData &ov, const lib::board::BoardTileData &nv)
+	void GameScene::tileChanged(const vector2du32 &pos, board::SITilePointer nTile, 
+		const board::BoardTileData &ov, const board::BoardTileData &nv)
 	{
 		if (auto ztile = std::dynamic_pointer_cast<Tile>(nTile)) {
 			tokenChangedValue(pos, ztile, ov, nv);
@@ -569,34 +569,34 @@ namespace zoper
 		}
 	}
 
-	void GameScene::tokenMoved(const lib::vector2du32 &, const lib::vector2du32 &dest, lib::sptr<Tile> tile)
+	void GameScene::tokenMoved(const vector2du32 &, const vector2du32 &dest, sptr<Tile> tile)
 	{
 		addAnimation(msptr<draw::anim::IPropertyAnimation<vector2df>>
 			(_levelProperties.millisBetweenTokens() / 2, tile->position, tile->position(), board2Scene(dest),
 			anim::noAction, anim::noAction),nullptr);
 	}
 
-	void GameScene::tokenAppeared(const lib::vector2du32 &_position, lib::sptr<Tile> tile)
+	void GameScene::tokenAppeared(const vector2du32 &_position, sptr<Tile> tile)
 	{
 		_position;
 		tile;
 		logDebug("Token ", tile->name(), " appeared at ", _position);
 	}
 
-	void GameScene::tokenDissapeared(const lib::vector2du32 &_position, lib::sptr<Tile> tile)
+	void GameScene::tokenDissapeared(const vector2du32 &_position, sptr<Tile> tile)
 	{
 		_position;
 		logDebug("Deleting token ", tile->name(), " from scene at position ", _position);
 		_mainBoardrg->removeRenderizable(tile);
 	}
 
-	void GameScene::tokenChangedValue(const lib::vector2du32 &, lib::sptr<Tile> tile,
-		const lib::board::BoardTileData &, const lib::board::BoardTileData &)
+	void GameScene::tokenChangedValue(const vector2du32 &, sptr<Tile> tile,
+		const board::BoardTileData &, const board::BoardTileData &)
 	{
 		tile->color.set(tile->getColorForToken());
 	}
 
-	void GameScene::updatePlayer(const lib::vector2du32 &dest, lib::sptr<Player> player_)
+	void GameScene::updatePlayer(const vector2du32 &dest, sptr<Player> player_)
 	{
 		const auto ts(tileSize());
 		const auto tileCenter(ts / 2.0f);
@@ -612,17 +612,17 @@ namespace zoper
 		}
 	}
 
-	void GameScene::playerMoved(const lib::vector2du32 &, const lib::vector2du32 &dest, lib::sptr<Player> player_)
+	void GameScene::playerMoved(const vector2du32 &, const vector2du32 &dest, sptr<Player> player_)
 	{
 		updatePlayer(dest, player_);
 	}
 
-	void GameScene::playerAppeared(const vector2du32 &pos, lib::sptr<Player> player)
+	void GameScene::playerAppeared(const vector2du32 &pos, sptr<Player> player)
 	{
 		player->position = board2Scene(pos);
 	}
 
-	void GameScene::playerDissapeared(const lib::vector2du32 &, lib::sptr<Player> player)
+	void GameScene::playerDissapeared(const vector2du32 &, sptr<Player> player)
 	{
 	}
 
