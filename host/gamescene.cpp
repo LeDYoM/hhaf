@@ -509,19 +509,19 @@ namespace zoper
 			for (u32 x = 0; x < _gameData.size.x; ++x)
 			{
 				Rectf32 tileBox{ currentx, currenty, tileSize().x,tileSize().y };
+				std::string indexStr(std::to_string(x) + "_" + std::to_string(y));
 
-				auto tileBackground = backgroundTilesrg->createRenderizable<NodeQuad>("backgroundTile_"+std::to_string(x)+"_"+std::to_string(y),
+				auto tileBackground = backgroundTilesrg->createRenderizable<NodeQuad>("backgroundTile_"+indexStr,
 					tileBox,nullptr, colors::White);
-//				tileBackground->position = board2Scene(vector2du32{ x,y });
 				column.push_back(std::move(tileBackground));
 
-//				auto node = backgroundTilesrg->createRenderizable<NodeShape>("backgroundTilePoint", tileBox.resized({ -50,-50 }).moved({ 50,50 }), nullptr, 30, colors::White);
-//				vector2df center( board2Scene(vector2du32{ x,y }) );
-//				center.x += tileSize().x / 2.0f;
-//				center.y += tileSize().y / 2.0f;
-//				center.x -= (node->bounds().width / 2.0f);
-//				center.y -= (node->bounds().height / 2.0f);
-//				node->position = center;
+				// Size of the point in the middle of the tile
+				constexpr vector2df centerPointSize{ 15,15 };
+
+				auto node = backgroundTilesrg->createRenderizable<NodeShape>("backgroundTilePoint_"+indexStr, 
+					Rectf32{ tileBox.center() - (centerPointSize / 2), centerPointSize },
+					nullptr, 30, colors::White);
+
 				currentx += tileSize().x;
 			}
 			currentx = 0;
@@ -533,12 +533,9 @@ namespace zoper
 	void GameScene::tileAdded(const lib::vector2du32 &pos, board::SITilePointer nTile)
 	{
 		// Tile appeared
-		if (auto ztile = std::dynamic_pointer_cast<Tile>(nTile))
-		{
+		if (auto ztile = std::dynamic_pointer_cast<Tile>(nTile)) {
 			tokenAppeared(pos, ztile);
-		}
-		else if (auto ztile_ = std::dynamic_pointer_cast<Player>(nTile))
-		{
+		} else if (auto ztile_ = std::dynamic_pointer_cast<Player>(nTile)) {
 			// Set the position in the scene depending on the board position
 			playerAppeared(pos, ztile_);
 		}
