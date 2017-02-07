@@ -12,8 +12,8 @@ namespace lib
 			logConstruct(" w: ", size.x, " h: ", size.y);
 			_tiles.reserve(size.x);
 			for (auto x = 0u; x < size.x; ++x) {
-				std::vector<SITilePointer> column(size.y);
-				_tiles.emplace_back(std::move(column));
+//				std::vector<SITilePointer> column(size.y);
+				_tiles.emplace_back(size.y);
 			}
 			_tiles.shrink_to_fit();
 		}
