@@ -13,9 +13,6 @@ namespace lib
 			updateGeometry();
 		}
 
-		NodeQuad::NodeQuad(const std::string & name, const vector2df & size, sptr<Texture> texture, const Color & color)
-			: NodeQuad{ name,Rectf32{{},{},size.x,size.y},texture, color } {}
-
 		NodeQuad::~NodeQuad()
 		{
 			logDestruct("Name: ", name());
@@ -23,8 +20,6 @@ namespace lib
 
 		void NodeQuad::updateGeometrySimpleNode()
 		{
-//			Renderizable::bounds.set(m_vertices.generateQuad(size()));
-
 			constexpr u32 nPoints = 4;
 			constexpr u32 nVertex = nPoints + 2;
 
@@ -33,7 +28,7 @@ namespace lib
 			auto &vertices(m_vertices.verticesArray());
 
 			vertices.resize(nVertex); // + 2 for center and repeated first point
-			vertices[0].position = { cBox.center().x, cBox.center().y / 2 };
+			vertices[0].position = { cBox.center().x, cBox.center().y };
 			vertices[1].position = { cBox.left, cBox.top };
 			vertices[2].position = { cBox.right(), cBox.top };
 			vertices[3].position = { cBox.right(), cBox.bottom() };

@@ -13,7 +13,6 @@ namespace lib
 		{
 		public:
 			explicit NodeQuad(const std::string &name, const Rectf32 &box, sptr<Texture> texture, const Color &color);
-			explicit NodeQuad(const std::string &name, const vector2df &size, sptr<Texture> texture, const Color &color);
 			virtual ~NodeQuad();
 
 		protected:
