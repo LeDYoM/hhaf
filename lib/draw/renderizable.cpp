@@ -11,14 +11,15 @@ namespace lib
 			: core::HasName{ name }, m_vertices{ type, vertexCount }, texture{ std::move(texture_),{} },
 			color{ color_,[this]() { m_vertices.setColor(color()); } },
 			position{ {} ,[]() {} },
-			rotation{ {} ,[]() {} }, 
-			scale{ {} ,[]() {} } { }
+			rotation{ {} ,[]() {} }
+		//	scale{ {} ,[]() {} } 
+		{ }
 
 		Renderizable::~Renderizable() = default;
 
 		void Renderizable::draw()
 		{
-			if (name() == "cursor")
+			if (name() == "backgroundTile_0_0")
 			{
 				int a = 0;
 			}

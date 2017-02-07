@@ -153,7 +153,6 @@ namespace zoper
 		_mainBoardrg->clear();
 		p_boardModel = nullptr;
 		p_player = nullptr;
-		_backgroundTilesrg = nullptr;
 		m_backgroundTiles.clear();
 		Scene::onExitScene();
 	}
@@ -193,7 +192,7 @@ namespace zoper
 		return false;
 	}
 
-	void GameScene::setLevel(const lib::u32 nv)
+	void GameScene::setLevel(const u32 nv)
 	{
 		_levelProperties.setLevel(nv);
 		logDebug("Level set: ",_levelProperties.currentLevel());
@@ -206,12 +205,11 @@ namespace zoper
 		_gameData.consumedTokens = 0;
 
 		// Update background tiles
-		for (lib::u32 y = 0; y < _gameData.size.y; ++y)
+		for (u32 y = 0; y < _gameData.size.y; ++y)
 		{
-			for (lib::u32 x = 0; x < _gameData.size.x; ++x)
+			for (u32 x = 0; x < _gameData.size.x; ++x)
 			{
-				m_backgroundTiles[y][x]->color.set(_levelProperties.getBackgroundTileColor(x, y, pointInCenter(lib::vector2du32{ x,y })));
-				
+				m_backgroundTiles[y][x]->color.set(_levelProperties.getBackgroundTileColor(x, y, pointInCenter({ x,y })));				
 			}
 		}
 
@@ -452,8 +450,7 @@ namespace zoper
 
 	bool GameScene::pointInCenter(const lib::vector2du32 &pos) const
 	{
-		if (p_boardModel->validCoords(pos))
-		{
+		if (p_boardModel->validCoords(pos)) {
 			if (pos.x < _gameData.centerRect.left || pos.y < _gameData.centerRect.top)
 				return false;
 
@@ -465,15 +462,15 @@ namespace zoper
 		return false;
 	}
 
-	const lib::vector2df GameScene::board2Scene(const lib::vector2du32 &bPosition) const
+	vector2df GameScene::board2Scene(const lib::vector2du32 &bPosition) const
 	{
-		return lib::vector2df{ (getView()->perspective().size().x * bPosition.x) / static_cast<float>(p_boardModel->size().x),
+		return { (getView()->perspective().size().x * bPosition.x) / static_cast<float>(p_boardModel->size().x),
 			(getView()->perspective().size().y * bPosition.y) / static_cast<float>(p_boardModel->size().y) };
 	}
 
-	const lib::vector2df GameScene::tileSize() const
+	vector2df GameScene::tileSize() const
 	{
-		return board2Scene(lib::vector2du32( 1, 1 ));
+		return board2Scene({ 1, 1 });
 	}
 
 	void GameScene::_debugDisplayBoard() const
@@ -500,25 +497,35 @@ namespace zoper
 
 	void GameScene::tilesCreated()
 	{
-		_backgroundTilesrg = createSceneNode("backgroundTiles", _mainBoardrg);
+		const Rectf32 bBox(scenePerspective());
+
+		auto backgroundTilesrg(createSceneNode("backgroundTiles", _mainBoardrg));
+		f32 currentx{};
+		f32 currenty{};
 		for (u32 y = 0; y < _gameData.size.y; ++y)
 		{
 			std::vector<sptr<NodeQuad>> column;
 
 			for (u32 x = 0; x < _gameData.size.x; ++x)
 			{
-				auto tileBackground = _backgroundTilesrg->createRenderizable<NodeQuad>("backgroundTile", tileSize(),nullptr, colors::White);
-				tileBackground->position = board2Scene(vector2du32{ x,y });
+				Rectf32 tileBox{ currentx, currenty, tileSize().x,tileSize().y };
+
+				auto tileBackground = backgroundTilesrg->createRenderizable<NodeQuad>("backgroundTile_"+std::to_string(x)+"_"+std::to_string(y),
+					tileBox,nullptr, colors::White);
+//				tileBackground->position = board2Scene(vector2du32{ x,y });
 				column.push_back(std::move(tileBackground));
 
-				auto node = _backgroundTilesrg->createRenderizable<NodeShape>("backgroundTilePoint", vector2df{ 10.0f,10.0f },nullptr,30, colors::White);
-				vector2df center( board2Scene(vector2du32{ x,y }) );
-				center.x += tileSize().x / 2.0f;
-				center.y += tileSize().y / 2.0f;
-				center.x -= (node->bounds().width / 2.0f);
-				center.y -= (node->bounds().height / 2.0f);
-				node->position = center;
+//				auto node = backgroundTilesrg->createRenderizable<NodeShape>("backgroundTilePoint", tileBox.resized({ -50,-50 }).moved({ 50,50 }), nullptr, 30, colors::White);
+//				vector2df center( board2Scene(vector2du32{ x,y }) );
+//				center.x += tileSize().x / 2.0f;
+//				center.y += tileSize().y / 2.0f;
+//				center.x -= (node->bounds().width / 2.0f);
+//				center.y -= (node->bounds().height / 2.0f);
+//				node->position = center;
+				currentx += tileSize().x;
 			}
+			currentx = 0;
+			currenty += tileSize().y;
 			m_backgroundTiles.push_back(column);
 		}
 	}

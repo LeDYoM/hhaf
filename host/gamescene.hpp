@@ -76,8 +76,8 @@ namespace zoper
 		void generateNextToken();
 		void addNewToken(const lib::vector2du32 &pos, lib::u32 newToken);
 		bool pointInCenter(const lib::vector2du32 &tPosition) const;
-		const lib::vector2df board2Scene(const lib::vector2du32 &bPosition) const;
-		const lib::vector2df tileSize() const;
+		lib::vector2df board2Scene(const lib::vector2du32 &bPosition) const;
+		lib::vector2df tileSize() const;
 		void for_each_token_in_line(const lib::vector2du32 &startPosition, const Direction &direction,
 			std::function<bool(const lib::vector2du32 &, const Direction &)> updatePredicate);
 
@@ -137,7 +137,6 @@ namespace zoper
 		lib::sptr<lib::draw::SceneNode> _scorerg{ nullptr };
 		lib::sptr<lib::draw::SceneNode> _levelrg{ nullptr };
 		lib::sptr<lib::draw::SceneNode> _pauserg{ nullptr };
-		lib::sptr<lib::draw::SceneNode> _backgroundTilesrg{ nullptr };
 		const lib::u8 _scoreSize{ 5 };
 		const lib::u8 _levelDataSize{ 5 };
 		LevelProperties _levelProperties;
