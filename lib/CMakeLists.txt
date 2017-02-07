@@ -48,8 +48,6 @@ set (CURRENT_TARGET lib)
 add_library(${CURRENT_TARGET} STATIC ${LIB_HEADERS} ${LIB_SOURCES})
 
 # Define source groups for lib
-#source_group("lib\\Header Files" FILES ${LIB_HEADERS})
-#source_group("lib\\Source Files" FILES ${LIB_SOURCES})
 source_group("lib\\include" FILES ${LIB_INCLUDE_HEADERS})
 source_group("lib\\backend" FILES ${LIB_BACKEND_HEADERS} ${LIB_BACKEND_SOURCES})
 source_group("lib\\core" FILES ${LIB_CORE_HEADERS} ${LIB_CORE_SOURCES})

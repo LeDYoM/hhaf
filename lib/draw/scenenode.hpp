@@ -37,12 +37,19 @@ namespace lib
 			sptr<T> createRenderizable(Args&&... args)
 			{
 				auto result(msptr<T>(std::forward<Args>(args)...));
-				m_renderNodes.push_back(result);
-				return result;
+				return addRenderizable(result);
 			}
 
 			bool removeRenderizable(const sptr<Renderizable> &element);
 			void clear();
+
+			template <typename T, typename... Args>
+			sptr<T> createOwnSceneNode(Args&&... args)
+			{
+				auto result(msptr<T>(std::forward<Args>(args)...));
+				addSceneNode(result);
+				return result;
+			}
 
 			sptr<SceneNode> createSceneNode(const std::string &name,sptr<SceneNode> beforeNode=nullptr);
 			bool removeSceneNode(sptr<SceneNode> element);

@@ -340,7 +340,7 @@ namespace zoper
 		logDebug("Adding player tile at ", _gameData.centerRect.left, ",", _gameData.centerRect.top);
 		__ASSERT(!p_player, "Player already initialized");
 		// Create the player instance
-		p_player = _mainBoardrg->createRenderizable<Player>(_gameData.centerRect.leftTop(), Rectf32::fromSize(tileSize() ));
+		p_player = _mainBoardrg->createOwnSceneNode<Player>(_gameData.centerRect.leftTop(), Rectf32::fromSize(tileSize() ));
 
 		// Add it to the board and to the scene nodes
 		p_boardModel->setTile(p_player->boardPosition(), std::dynamic_pointer_cast<board::ITile>(p_player));
@@ -587,13 +587,13 @@ namespace zoper
 	{
 		_position;
 		logDebug("Deleting token ", tile->name(), " from scene at position ", _position);
-		_mainBoardrg->removeRenderizable(tile);
+		_mainBoardrg->removeSceneNode(tile);
 	}
 
 	void GameScene::tokenChangedValue(const vector2du32 &, sptr<Tile> tile,
 		const board::BoardTileData &, const board::BoardTileData &)
 	{
-		tile->color.set(tile->getColorForToken());
+//		tile->color.set(tile->getColorForToken());
 	}
 
 	void GameScene::updatePlayer(const vector2du32 &dest, sptr<Player> player_)
@@ -627,7 +627,7 @@ namespace zoper
 	void GameScene::playerChangedValue(const vector2du32 &, sptr<Player> player,
 		const board::BoardTileData &, const board::BoardTileData &)
 	{
-		player->color.set(player->getColorForToken());
+//		player->color.set(player->getColorForToken());
 	}
 
 	void GameScene::increaseScore(u32 scoreIncrement)

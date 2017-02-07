@@ -8,7 +8,7 @@ namespace zoper
 	Tile::Tile(lib::board::BoardTileData data, const lib::Rectf32 &box) : GameBaseTile{ data, box, "tile" + std::to_string(_tileCounter) }
 	{
 		++_tileCounter;
-		color.set(getColorForToken());
+//		color.set(getColorForToken());
 	}
 
 	Tile::~Tile() = default;

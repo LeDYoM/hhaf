@@ -1,5 +1,5 @@
 #Add SFML directories
-include_directories ("${PROJECT_SOURCE_DIR}/SFML/include")
+
 include_directories (${LIB_BASE_DIRECTORY})
 
 file (GLOB ZOPER_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/*.hpp")
@@ -7,9 +7,11 @@ file (GLOB ZOPER_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
 
 set (CURRENT_TARGET host)
 
-add_executable (${CURRENT_TARGET} ${ZOPER_SOURCES} ${LIB_HEADERS} ${LIB_SOURCES})
+add_executable (${CURRENT_TARGET} ${ZOPER_SOURCES} ${ZOPER_HEADERS})
 
-# Detect and add lib
+source_group("Header Files" FILES ${ZOPER_HEADERS})
+source_group("Source Files" FILES ${ZOPER_SOURCES})
+
 
 # Detect and add SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
