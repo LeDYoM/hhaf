@@ -58,12 +58,12 @@ namespace zoper
 
 		increaseScore(0);
 
-		_scoreText->scale = { 1.0f, 2.0f };
-		_scoreDisplay->scale = { 1.0f, 2.0f };
-		_levelText->scale = { 1.0f, 2.0f };
-		_levelDisplay->scale = { 1.0f, 2.0f };
-		_goalText->scale = { 1.0f, 2.0f };
-		_goalDisplay->scale = { 1.0f, 2.0f };
+//		_scoreText->scale = { 1.0f, 2.0f };
+//		_scoreDisplay->scale = { 1.0f, 2.0f };
+//		_levelText->scale = { 1.0f, 2.0f };
+//		_levelDisplay->scale = { 1.0f, 2.0f };
+//		_goalText->scale = { 1.0f, 2.0f };
+//		_goalDisplay->scale = { 1.0f, 2.0f };
 
 		_scorerg->position = { 50, 50 };
 		_scoreDisplay->position = {_scoreText->bounds().width, _scoreDisplay->position().y};
@@ -371,7 +371,7 @@ namespace zoper
 			{
 				auto dir = _keyMapping.getDirectionFromKey(kEvent.key);
 				if (dir.isValid()) {
-					p_player->setCurrentDirection(dir);
+					p_player->currentDirection = dir;
 					movePlayer(dir);
 				}
 				else if (_keyMapping.isLaunchKey(kEvent.key)) {
@@ -398,13 +398,10 @@ namespace zoper
 	{
 		__ASSERT(dir.isValid(), "Invalid direction passed to move");
 		auto nPosition = dir.applyToVector(p_player->boardPosition());
-		if (pointInCenter(nPosition))
-		{
+		if (pointInCenter(nPosition)) {
 			p_boardModel->moveTile(p_player->boardPosition(), lib::vector2du32(nPosition.x,nPosition.y));
-			p_player->setBoardPosition(lib::vector2du32(nPosition.x, nPosition.y));
-		}
-		else
-		{
+			p_player->boardPosition = { nPosition.x, nPosition.y };
+		} else {
 			updatePlayer(p_player->boardPosition(), p_player);
 		}
 	}
@@ -604,10 +601,10 @@ namespace zoper
 		player_->rotation = player_->currentDirection().angle();
 		if (player_->currentDirection().value() == Direction::DirectionData::Up ||
 			player_->currentDirection().value() == Direction::DirectionData::Down) {
-			player_->scale = { 1, 1 };
+//			player_->scale = { 1, 1 };
 		}
 		else {
-			player_->scale = { ts.y / ts.x, ts.x / ts.y };
+//			player_->scale = { ts.y / ts.x, ts.x / ts.y };
 		}
 	}
 

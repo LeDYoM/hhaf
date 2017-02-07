@@ -1,27 +1,13 @@
 #include "player.hpp"
-#include "gamescene.hpp"
 
 namespace zoper
 {
-	Player::Player(const lib::vector2du32 &bPosition, const lib::vector2df &size)
+	Player::Player(lib::vector2du32 bPosition, lib::vector2df size)
 		: GameBaseTile{ 0, size, "player",3 },
-		playerDirection{ Direction::Up }
+		boardPosition{ bPosition }, currentDirection{ Direction::Up }
 	{
 		color.set(getColorForToken());
-		setBoardPosition(bPosition);
 	}
 
-	Player::~Player()
-	{
-	}
-
-	void Player::setBoardPosition(const lib::vector2du32 &np)
-	{
-		_boardPosition = np;
-	}
-
-	void Player::setCurrentDirection(const Direction & direction)
-	{
-		playerDirection = direction;
-	}
+	Player::~Player() = default;
 }
