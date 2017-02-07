@@ -340,7 +340,7 @@ namespace zoper
 		logDebug("Adding player tile at ", _gameData.centerRect.left, ",", _gameData.centerRect.top);
 		__ASSERT(!p_player, "Player already initialized");
 		// Create the player instance
-		p_player = _mainBoardrg->createRenderizable<Player>( vector2du32{ _gameData.centerRect.leftTop() }, tileSize() );
+		p_player = _mainBoardrg->createRenderizable<Player>(_gameData.centerRect.leftTop(), Rectf32::fromSize(tileSize() ));
 
 		// Add it to the board and to the scene nodes
 		p_boardModel->setTile(p_player->boardPosition(), std::dynamic_pointer_cast<board::ITile>(p_player));
@@ -350,7 +350,7 @@ namespace zoper
 	{
 		logDebug("Adding new tile at ", pos, " with value ", newToken);
 		// Create a new Tile instance
-		auto newTileToken = _mainBoardrg->createRenderizable<Tile>(board::BoardTileData(newToken), tileSize());
+		auto newTileToken = _mainBoardrg->createRenderizable<Tile>(board::BoardTileData(newToken), Rectf32::fromSize(tileSize()));
 		// Set the position in the scene depending on the board position
 		newTileToken->position = board2Scene(pos);
 
@@ -397,7 +397,7 @@ namespace zoper
 		__ASSERT(dir.isValid(), "Invalid direction passed to move");
 		auto nPosition = dir.applyToVector(p_player->boardPosition());
 		if (pointInCenter(nPosition)) {
-			p_boardModel->moveTile(p_player->boardPosition(), lib::vector2du32(nPosition.x,nPosition.y));
+			p_boardModel->moveTile(p_player->boardPosition(), vector2du32(nPosition.x,nPosition.y));
 			p_player->boardPosition = { nPosition.x, nPosition.y };
 		} else {
 			updatePlayer(p_player->boardPosition(), p_player);
@@ -622,9 +622,7 @@ namespace zoper
 		player->position = board2Scene(pos);
 	}
 
-	void GameScene::playerDissapeared(const vector2du32 &, sptr<Player> player)
-	{
-	}
+	void GameScene::playerDissapeared(const vector2du32 &, sptr<Player> player) {}
 
 	void GameScene::playerChangedValue(const vector2du32 &, sptr<Player> player,
 		const board::BoardTileData &, const board::BoardTileData &)

@@ -7,8 +7,8 @@ namespace zoper
 	using namespace lib::board;
 	using namespace lib::draw;
 
-	GameBaseTile::GameBaseTile(BoardTileData data, const vector2df &size, const std::string &baseName, const u32 pointCount)
-		: ITile{ data }, NodeShape{baseName, size, nullptr, pointCount, colors::White} {}
+	GameBaseTile::GameBaseTile(BoardTileData data, const lib::Rectf32 &box, const std::string &baseName, const u32 pointCount)
+		: ITile{ data }, NodeShape{baseName, box, nullptr, pointCount, colors::White} {}
 
 	lib::draw::Color GameBaseTile::getColorForToken() const
 	{

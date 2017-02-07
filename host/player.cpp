@@ -2,8 +2,8 @@
 
 namespace zoper
 {
-	Player::Player(lib::vector2du32 bPosition, lib::vector2df size)
-		: GameBaseTile{ 0, size, "player",3 },
+	Player::Player(lib::vector2du32 bPosition, const lib::Rectf32 &box)
+		: GameBaseTile{ 0, box, "player",3 },
 		boardPosition{ bPosition }, currentDirection{ Direction::Up }
 	{
 		color.set(getColorForToken());
