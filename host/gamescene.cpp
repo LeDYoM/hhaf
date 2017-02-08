@@ -594,7 +594,7 @@ namespace zoper
 	void GameScene::tokenChangedValue(const vector2du32 &, sptr<Tile> tile,
 		const board::BoardTileData &, const board::BoardTileData &)
 	{
-//		tile->color.set(tile->getColorForToken());
+		tile->setColor(tile->getColorForToken());
 	}
 
 	void GameScene::updatePlayer(const vector2du32 &dest, sptr<Player> player_)
@@ -628,7 +628,7 @@ namespace zoper
 	void GameScene::playerChangedValue(const vector2du32 &, sptr<Player> player,
 		const board::BoardTileData &, const board::BoardTileData &)
 	{
-//		player->color.set(player->getColorForToken());
+		player->setColor(player->getColorForToken());
 	}
 
 	void GameScene::increaseScore(u32 scoreIncrement)

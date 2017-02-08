@@ -77,6 +77,14 @@ namespace lib
 			virtual Scene *const parentScene() { return m_parent->parentScene(); }
 			Rectf32 scenePerspective();
 
+			/**
+			* Set a color for all vertex for all child nodes of this node
+			* @param [in] color to be set
+			* @param [in] apply the function to scenenodes too
+			* @
+			*/
+			void setColor(const Color &color, const bool applySceneNodes = true, const u32 deepLevel = {});
+
 		protected:
 
 			inline SceneNode *parent() const noexcept { return m_parent; }

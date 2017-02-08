@@ -50,6 +50,19 @@ namespace lib
 			return parentScene()->getView()->perspective();
 		}
 
+		void SceneNode::setColor(const Color & color, const bool applySceneNodes, const u32 deepLevel)
+		{
+			for (auto &node : m_renderNodes) {
+				node->color = color;
+			}
+
+			if (applySceneNodes && deepLevel > 0) {
+				for (auto &sNode : m_groups) {
+					sNode->setColor(color,true,deepLevel-1);
+				}
+			}
+		}
+
 		sptr<SceneNode> SceneNode::createSceneNode(const std::string & name)
 		{
 			sptr<SceneNode> rg = std::make_shared<SceneNode>(name, this);
