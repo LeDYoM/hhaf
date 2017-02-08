@@ -29,8 +29,6 @@ namespace lib
 			inline void setVisible(bool nv) noexcept { m_visible = nv; }
 
 			Property<vector2df> position;
-			Property<f32> rotation;
-//			Property<vector2df> scale;
 
 			inline void move(const vector2df &offset)  noexcept { m_vertices.move(offset); }
 			inline void moveX(const f32 xOffset)  noexcept { m_vertices.moveX(xOffset); }
