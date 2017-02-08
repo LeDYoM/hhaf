@@ -66,25 +66,24 @@ namespace zoper
 //		_goalDisplay->scale = { 1.0f, 2.0f };
 
 		_scorerg->position = { 50, 50 };
-		_scoreDisplay->position = {_scoreText->bounds().width, _scoreDisplay->position().y};
 
-		_currentLevelDisplay->position = { _currentLevelText->bounds().width,_currentLevelDisplay->position().y };
+		_currentLevelDisplay->moveX( _currentLevelText->bounds().width);
 
 		_levelrg->position = { 1250, 50 };
-		_goalText->position = { _goalText->position().x, 200 };
+		_goalText->moveY(200);
 
-		_currentLevelText->position = { _currentLevelText->position().x, 200 };
-		_currentLevelDisplay->position = { _currentLevelDisplay->position().x, 200 };
+		_currentLevelText->moveY(200);
+		_currentLevelDisplay->moveY(200);
 
 
 		auto _gameBoundingBox = _gameText->bounds();
 		auto _overBoundingBox = _overText->bounds();
 		auto sceneCenter = getCenterCoordinates();
-		_gameText->position = { sceneCenter.x - (_gameBoundingBox.width / 2.0f), sceneCenter.y - _gameBoundingBox.height };
-		_overText->position = { sceneCenter.x - (_overBoundingBox.width / 2.0f), sceneCenter.y };
+		_gameText->move({ sceneCenter.x - (_gameBoundingBox.width / 2.0f), sceneCenter.y - _gameBoundingBox.height });
+		_overText->move({ sceneCenter.x - (_overBoundingBox.width / 2.0f), sceneCenter.y });
 
-		_pauseText->setAlignmentX(parentScene()->getView()->viewport(), NodeText::Alignment::Center);
-		_pauseText->setAlignmentY(parentScene()->getView()->viewport(), NodeText::Alignment::Center);
+		_pauseText->setAlignmentX(scenePerspective(), NodeText::Alignment::Center);
+		_pauseText->setAlignmentY(scenePerspective(), NodeText::Alignment::Center);
 	}
 
 	void GameScene::onDeinit()
@@ -139,8 +138,8 @@ namespace zoper
 			break;
 		}
 
-		_levelDisplay->position = {_levelText->bounds().width, _levelDisplay->position().y};
-		_goalDisplay->position = { _goalText->bounds().width, 200 };
+		_levelDisplay->moveX(_levelText->bounds().width);
+		_goalDisplay->move({ _goalText->bounds().width, 200 });
 		registerEvents();
 
 		setState(Playing);
@@ -637,6 +636,7 @@ namespace zoper
 		std::string result{ std::to_string(_score) };
 		while (result.size() < _scoreSize) result = "0" + result;
 		_scoreDisplay->text = result;
+		_scoreDisplay->moveX(_scoreText->bounds().width);
 	}
 
 	vector2df GameScene::getDefaultSizeView()

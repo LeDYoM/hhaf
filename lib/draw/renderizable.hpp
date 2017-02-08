@@ -13,7 +13,7 @@ namespace lib
 	namespace draw
 	{
 		class Texture;
-		class Renderizable : public core::HasName//, public Transformable
+		class Renderizable : public core::HasName
 		{
 		public:
 			explicit Renderizable(const std::string &name, sptr<Texture> texture_, PrimitiveType type, u32 vertexCount, const Color &color_);
