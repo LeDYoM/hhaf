@@ -43,10 +43,24 @@ namespace zoper
 
 		auto& resourceManager{ lib::host().resourceManager() };
 		auto scoreFont(resourceManager.getFont("game_scene.scoreFont"));
+
+		_scorerg->position = { 50, 50 };
+		
+		auto scoregDisplay = _scorerg->createSceneNode("scoreDisplay");
+		scoregDisplay->position = { 0, 0 };
+
 		_scoreText = _scorerg->createRenderizable<NodeText>("scoretxt", "Score: ", scoreFont, 90, colors::Blue);
-		_scoreDisplay = _scorerg->createRenderizable<NodeText>("scoredisplay", "", scoreFont, 90, colors::White);
-		_currentLevelText = _scorerg->createRenderizable<NodeText>("currentLevelText", "Level: ", scoreFont, 90, colors::Blue);
-		_currentLevelDisplay = _scorerg->createRenderizable<NodeText>("currentLevelDisplay", "0", scoreFont, 90, colors::White);
+		_scoreDisplay = scoregDisplay->createRenderizable<NodeText>("scoredisplay", "", scoreFont, 90, colors::White);
+
+		auto currentLevelTextsn = _scorerg->createSceneNode("currentLevelTextsn");
+		currentLevelTextsn->position = { 0,200 };
+		_currentLevelText = currentLevelTextsn->createRenderizable<NodeText>("currentLevelText", "Level: ", scoreFont, 90, colors::Blue);
+
+		auto currentLevelDisplaysn = currentLevelTextsn->createSceneNode("cldsn");
+		currentLevelDisplaysn->position = { 400,0 };
+		_currentLevelDisplay = currentLevelDisplaysn->createRenderizable<NodeText>("currentLevelDisplay", "0", scoreFont, 90, colors::White);
+
+
 		_levelText = _levelrg->createRenderizable<NodeText>("leveltxt", "", scoreFont, 90, colors::Blue);
 		_levelDisplay = _levelrg->createRenderizable<NodeText>("leveldisplay", "", scoreFont, 90, colors::White);
 		_goalText = _levelrg->createRenderizable<NodeText>("goalText", "", scoreFont, 90, colors::Blue);
@@ -65,16 +79,8 @@ namespace zoper
 //		_goalText->scale = { 1.0f, 2.0f };
 //		_goalDisplay->scale = { 1.0f, 2.0f };
 
-		_scorerg->position = { 50, 50 };
-
-		_currentLevelDisplay->moveX( _currentLevelText->bounds().width);
-
 		_levelrg->position = { 1250, 50 };
 		_goalText->moveY(200);
-
-		_currentLevelText->moveY(200);
-		_currentLevelDisplay->moveY(200);
-
 
 		auto _gameBoundingBox = _gameText->bounds();
 		auto _overBoundingBox = _overText->bounds();
