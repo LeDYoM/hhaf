@@ -14,7 +14,6 @@ namespace zoper
 		virtual ~GameBaseTile() = default;
 
 		lib::draw::Color getColorForToken() const;
-
 		lib::sptr<lib::draw::NodeShape> m_node;
 	};
 }

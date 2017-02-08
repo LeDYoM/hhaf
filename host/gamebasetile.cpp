@@ -11,9 +11,10 @@ namespace zoper
 		: ITile{ data }, SceneNode{baseName,nullptr}
 	{
 		m_node = createRenderizable<NodeShape>(baseName, box, nullptr, pointCount, colors::White);
+		setCallback([this]() {setColor(getColorForToken()); });
 	}
 
-	lib::draw::Color GameBaseTile::getColorForToken() const
+	Color GameBaseTile::getColorForToken() const
 	{
 		switch (get())
 		{
