@@ -33,10 +33,23 @@ namespace lib
 
 			virtual void onAddedToScene() {}
 
+			/**
+			* Method to add a user defined renderizable
+			* @params args Arguments to be passed to the constructor
+			* @returns The created renderizable
+			*/
 			template <typename T, typename... Args>
 			sptr<T> createRenderizable(Args&&... args)
 			{
 				auto result(msptr<T>(std::forward<Args>(args)...));
+				addRenderizable(result);
+				return result;
+			}
+
+			template <typename... Args>
+			sptr<Renderizable> createRenderizable(Args&&... args)
+			{
+				auto result(msptr<Renderizable>(std::forward<Args>(args)...));
 				return addRenderizable(result);
 			}
 
@@ -44,14 +57,15 @@ namespace lib
 			void clear();
 
 			template <typename T, typename... Args>
-			sptr<T> createOwnSceneNode(Args&&... args)
+			sptr<T> createSceneNode(Args&&... args)
 			{
 				auto result(msptr<T>(std::forward<Args>(args)...));
 				addSceneNode(result);
 				return result;
 			}
 
-			sptr<SceneNode> createSceneNode(const std::string &name,sptr<SceneNode> beforeNode=nullptr);
+			sptr<SceneNode> createSceneNode(const std::string &name);
+			bool moveLastBeforeNode(const sptr<SceneNode> &beforeNode);
 			bool removeSceneNode(sptr<SceneNode> element);
 
 			void draw();
@@ -65,21 +79,15 @@ namespace lib
 
 		protected:
 
-			template <typename T>
-			sptr<T> addRenderizable(sptr<T> newElement)
-			{
-				m_renderNodes.push_back(newElement);
-				return newElement;
-			}
-
-			void addSceneNode(sptr<SceneNode> node, const sptr<SceneNode> beforeNode = nullptr);
-
 			inline SceneNode *parent() const noexcept { return m_parent; }
+			void addRenderizable(const sptr<Renderizable> &newElement);
+			void addSceneNode(const sptr<SceneNode> &node);
+
+		private:
 
 			vector_shared_pointers<Renderizable> m_renderNodes;
 			vector_shared_pointers<SceneNode> m_groups;
 
-		private:
 			SceneNode *m_parent{ nullptr };
 			bool m_visible{ true };
 

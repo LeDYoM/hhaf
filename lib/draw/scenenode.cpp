@@ -50,26 +50,45 @@ namespace lib
 			return parentScene()->getView()->perspective();
 		}
 
-		sptr<SceneNode> SceneNode::createSceneNode(const std::string & name, sptr<SceneNode> beforeNode)
+		sptr<SceneNode> SceneNode::createSceneNode(const std::string & name)
 		{
 			sptr<SceneNode> rg = std::make_shared<SceneNode>(name, this);
-			addSceneNode(rg, beforeNode);
+			addSceneNode(rg);
 			return rg;
 		}
 
-		void SceneNode::addSceneNode(sptr<SceneNode> node, const sptr<SceneNode> beforeNode)
+		bool SceneNode::moveLastBeforeNode(const sptr<SceneNode> &beforeNode)
 		{
-			if (!beforeNode) {
-				m_groups.emplace_back(node);
-			}
-			else {
-				for (auto iterator = m_groups.cbegin(); iterator != m_groups.cend();++iterator) {
-					if (*iterator == beforeNode) {
-						m_groups.emplace(iterator, node);
-						break;
-					}
-				}
-			}
+			__ASSERT(!m_groups.empty(), "Cannot moveLastInsertedBeforeNode on empty container");
+			if (!beforeNode) return false;
+
+			// Find the node to swap before to
+			auto iterator (std::find(m_groups.begin(), m_groups.end(),beforeNode));
+
+			// If beforeNode not found, nothing to do
+			if (iterator == m_groups.end()) return false;
+
+			// If beforeNode is the last element, nothing to do
+			if (iterator == std::prev(m_groups.end())) return false;
+
+			auto last(std::prev(m_groups.end()));
+
+			// Do not swap yourself
+			if (*iterator == *last) return false;
+
+			// Swap the iterators
+			std::swap(*iterator, *last);
+			return true;
+		}
+
+		void SceneNode::addRenderizable(const sptr<Renderizable> &newElement)
+		{
+			m_renderNodes.push_back(newElement);
+		}
+
+		void SceneNode::addSceneNode(const sptr<SceneNode> &node)
+		{
+			m_groups.push_back(node);
 			node->m_parent = this;
 			node->onAddedToScene();
 		}
