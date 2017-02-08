@@ -9,7 +9,6 @@ namespace zoper
 	{
 	public:
 		explicit Tile(lib::board::BoardTileData data, const lib::Rectf32 &box);
-		Tile(const Tile &other) = delete;
 		virtual ~Tile();
 
 		static void resetTileCounter();

@@ -350,7 +350,7 @@ namespace zoper
 	{
 		logDebug("Adding new tile at ", pos, " with value ", newToken);
 		// Create a new Tile instance
-		auto newTileToken = _mainBoardrg->createRenderizable<Tile>(board::BoardTileData(newToken), Rectf32::fromSize(tileSize()));
+		auto newTileToken = _mainBoardrg->createOwnSceneNode<Tile>(board::BoardTileData(newToken), Rectf32::fromSize(tileSize()));
 		// Set the position in the scene depending on the board position
 		newTileToken->position = board2Scene(pos);
 
