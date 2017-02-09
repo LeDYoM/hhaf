@@ -11,7 +11,7 @@ namespace lib
 {
 	namespace draw
 	{
-		SceneNode::SceneNode(const std::string &name, SceneNode *parent)
+		SceneNode::SceneNode(std::string name, SceneNode *parent)
 			: core::HasName{ name }, m_parent{ parent } {	}
 
 		SceneNode::~SceneNode() = default;
@@ -63,13 +63,14 @@ namespace lib
 			}
 		}
 
+		/*
 		sptr<SceneNode> SceneNode::createSceneNode(const std::string & name)
 		{
 			sptr<SceneNode> rg = std::make_shared<SceneNode>(name, this);
 			addSceneNode(rg);
 			return rg;
 		}
-
+		*/
 		bool SceneNode::moveLastBeforeNode(const sptr<SceneNode> &beforeNode)
 		{
 			__ASSERT(!m_groups.empty(), "Cannot moveLastInsertedBeforeNode on empty container");

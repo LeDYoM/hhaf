@@ -28,7 +28,7 @@ namespace lib
 		class SceneNode : public core::HasName, public Transformable
 		{
 		public:
-			SceneNode(const std::string &name, SceneNode *parent = nullptr);
+			SceneNode(std::string name, SceneNode *parent);
 			virtual ~SceneNode();
 
 			virtual void onAddedToScene() {}
@@ -56,15 +56,23 @@ namespace lib
 			bool removeRenderizable(const sptr<Renderizable> &element);
 			void clear();
 
-			template <typename T, typename... Args>
-			sptr<T> createSceneNode(Args&&... args)
+			template <typename T = SceneNode, typename... Args>
+			sptr<T> createSceneNode(std::string name, Args&&... args)
 			{
+				auto result(msptr<T>(std::move(name), this, std::forward<Args>(args)...));
+				addSceneNode(result);
+				return result;
+			}
+
+			template <typename T, typename... Args>
+			sptr<T> createSceneNodeWidthRenderizable(Args&&... args)
+			{
+				auto result(createSceneNode<SceneNode>)
 				auto result(msptr<T>(std::forward<Args>(args)...));
 				addSceneNode(result);
 				return result;
 			}
 
-			sptr<SceneNode> createSceneNode(const std::string &name);
 			bool moveLastBeforeNode(const sptr<SceneNode> &beforeNode);
 			bool removeSceneNode(sptr<SceneNode> element);
 
