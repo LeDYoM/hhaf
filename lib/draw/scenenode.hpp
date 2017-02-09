@@ -58,12 +58,11 @@ namespace lib
 			}
 
 			template <typename T, typename... Args>
-			sptr<T> createSceneNodeWidthRenderizable(Args&&... args)
+			std::pair<sptr<SceneNode>,sptr<T>> createSceneNodeWidthRenderizable(str_const name, Args&&... args)
 			{
-				auto result(createSceneNode<SceneNode>)
-				auto result(msptr<T>(std::forward<Args>(args)...));
-				addSceneNode(result);
-				return result;
+				auto result(createSceneNode<SceneNode>(name));
+				auto result2(result->createRenderizable<T>(name + "_node", std::forward<Args>(args)...));
+				return{ result,result2 };
 			}
 
 			bool moveLastBeforeNode(const sptr<SceneNode> &beforeNode);

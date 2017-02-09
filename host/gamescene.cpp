@@ -56,10 +56,9 @@ namespace zoper
 		currentLevelTextsn->position = { 0,200 };
 		_currentLevelText = currentLevelTextsn->createRenderizable<NodeText>("currentLevelText", "Level: ", scoreFont, 90, colors::Blue);
 
-		auto currentLevelDisplaysn = currentLevelTextsn->createSceneNode("cldsn");
-		currentLevelDisplaysn->position = { 400,0 };
-		_currentLevelDisplay = currentLevelDisplaysn->createRenderizable<NodeText>("currentLevelDisplay", "0", scoreFont, 90, colors::White);
-
+		auto currentLevelDisplaysn = currentLevelTextsn->createSceneNodeWidthRenderizable<NodeText>("currentLevelDisplay", "0", scoreFont, 90, colors::White);
+		currentLevelDisplaysn.first->position = { 400,0 };
+		_currentLevelDisplay = std::move(currentLevelDisplaysn.second);
 
 		_levelText = _levelrg->createRenderizable<NodeText>("leveltxt", "", scoreFont, 90, colors::Blue);
 		_levelDisplay = _levelrg->createRenderizable<NodeText>("leveldisplay", "", scoreFont, 90, colors::White);
