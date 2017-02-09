@@ -17,7 +17,7 @@ namespace zoper
 		using namespace lib::draw;
 
 		KeyRedefinitionMenu::KeyRedefinitionMenu(SceneNode *parent)
-			: SceneNode{ ClassName, parent } {}
+			: SceneNode{ parent, ClassName } {}
 
 		KeyRedefinitionMenu::~KeyRedefinitionMenu() = default;
 

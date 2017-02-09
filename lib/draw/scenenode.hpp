@@ -28,7 +28,7 @@ namespace lib
 		class SceneNode : public core::HasName, public Transformable
 		{
 		public:
-			SceneNode(std::string name, SceneNode *parent);
+			SceneNode(SceneNode *parent, std::string name);
 			virtual ~SceneNode();
 
 			virtual void onAddedToScene() {}
@@ -46,20 +46,13 @@ namespace lib
 				return result;
 			}
 
-			template <typename... Args>
-			sptr<Renderizable> createRenderizable(Args&&... args)
-			{
-				auto result(msptr<Renderizable>(std::forward<Args>(args)...));
-				return addRenderizable(result);
-			}
-
 			bool removeRenderizable(const sptr<Renderizable> &element);
 			void clear();
 
 			template <typename T = SceneNode, typename... Args>
 			sptr<T> createSceneNode(std::string name, Args&&... args)
 			{
-				auto result(msptr<T>(std::move(name), this, std::forward<Args>(args)...));
+				auto result(msptr<T>(this, std::move(name), std::forward<Args>(args)...));
 				addSceneNode(result);
 				return result;
 			}

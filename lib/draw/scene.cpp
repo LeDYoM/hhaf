@@ -11,9 +11,9 @@ namespace lib
 {
 	namespace draw
 	{
-		Scene::Scene(const std::string &_name) : SceneNode{ _name,nullptr }
+		Scene::Scene(const std::string name) : SceneNode{ nullptr,std::move(name) }
 		{
-			logConstruct("Name: ", name());
+			logConstruct("Name: ", core::HasName::name());
 		}
 
 		Scene::~Scene()

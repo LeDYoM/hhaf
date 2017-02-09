@@ -11,8 +11,8 @@ namespace lib
 {
 	namespace draw
 	{
-		SceneNode::SceneNode(std::string name, SceneNode *parent)
-			: core::HasName{ name }, m_parent{ parent } {	}
+		SceneNode::SceneNode(SceneNode *parent, std::string name)
+			: core::HasName{ std::move(name) }, m_parent{ parent } {}
 
 		SceneNode::~SceneNode() = default;
 
@@ -23,10 +23,6 @@ namespace lib
 
 		void SceneNode::draw()
 		{
-			if (name() == "cursorNode")
-			{
-				int b = 1;
-			}
 			if (isVisible()) {
 				auto handle(host().rStates().pushChanges(&getTransform(), nullptr));
 

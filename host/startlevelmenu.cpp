@@ -15,7 +15,7 @@ namespace zoper
 		using namespace lib::menu;
 
 		StartLevelMenu::StartLevelMenu(MenuManager *parent)
-			: ChooseControl( ClassName, parent,
+			: ChooseControl( parent, ClassName,
 			[this](const u32 index)
 			{
 				switch (index)

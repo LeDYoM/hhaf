@@ -13,10 +13,10 @@ namespace lib
 	{
 		using namespace draw;
 
-		ChooseControl::ChooseControl(const std::string &name, MenuManager *parent,
+		ChooseControl::ChooseControl(MenuManager *parent, std::string name,
 			std::function<void(const u32)> onSelected,
 			const std::vector<sptr<OptionDescriptor>> labels)
-			: SceneNode{ name, parent }, m_onSelected{ onSelected }
+			: SceneNode{ parent, std::move(name) }, m_onSelected{ onSelected }
 		{
 			const auto &cTheme(parent->currentTheme());
 			descriptorCursorSize = cTheme.cursorDescriptor.m_size;

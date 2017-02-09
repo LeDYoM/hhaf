@@ -31,8 +31,8 @@ namespace lib
 		class ChooseControl : public draw::SceneNode
 		{
 		public:
-			ChooseControl(const std::string &name, MenuManager *parent, std::function<void(const u32)> onSelected,
-				const std::vector<sptr<OptionDescriptor>> labels);
+			ChooseControl(MenuManager *parent, std::string name, 
+				std::function<void(const u32)> onSelected, const std::vector<sptr<OptionDescriptor>> labels);
 			virtual ~ChooseControl();
 
 			MenuManager *menuManager() const;

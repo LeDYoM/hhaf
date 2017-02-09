@@ -15,7 +15,7 @@ namespace zoper
 		using namespace lib::menu;
 
 		OptionsMenu::OptionsMenu(MenuManager *parent)
-			: ChooseControl( ClassName, parent,
+			: ChooseControl( parent, ClassName,
 			[this](u32 index)
 			{
 				switch (index)

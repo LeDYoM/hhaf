@@ -33,7 +33,7 @@ namespace lib
 		class Scene : public draw::SceneNode, private anim::AnimationComponent
 		{
 		public:
-			Scene(const std::string &_name);
+			Scene(std::string name);
 			virtual ~Scene();
 
 			virtual void onInit();
