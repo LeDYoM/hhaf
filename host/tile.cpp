@@ -1,5 +1,5 @@
 #include "tile.hpp"
-#include <lib/draw/NodeShape.hpp>
+#include <lib/draw/nodes/nodeshape.hpp>
 
 namespace zoper
 {

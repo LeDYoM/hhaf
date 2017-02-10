@@ -23,7 +23,7 @@ namespace zoper
 
 			lib::u32 _indexKey;
 			KeyMapping _keyMapping;
-			lib::sptr<lib::draw::NodeText> _nextKeyText{ nullptr };
+			lib::sptr<lib::draw::nodes::NodeText> _nextKeyText{ nullptr };
 		};
 	}
 }

@@ -3,7 +3,7 @@
 #include <lib/menu/choosecontrol.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/draw/renderizable.hpp>
-#include <lib/draw/nodetext.hpp>
+#include <lib/draw/nodes/nodetext.hpp>
 #include <lib/core/host.hpp>
 #include "common.hpp"
 
@@ -15,6 +15,7 @@ namespace zoper
 	{
 		using namespace lib;
 		using namespace lib::draw;
+		using namespace lib::draw::nodes;
 
 		KeyRedefinitionMenu::KeyRedefinitionMenu(SceneNode *parent)
 			: SceneNode{ parent, ClassName } {}

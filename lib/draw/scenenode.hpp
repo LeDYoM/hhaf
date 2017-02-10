@@ -5,10 +5,9 @@
 
 #include <lib/include/types.hpp>
 #include <lib/include/vector2d.hpp>
-#include "transformable.hpp"
-#include "nodeshape.hpp"
-#include "nodequad.hpp"
-#include "nodetext.hpp"
+#include <lib/draw/transformable.hpp>
+#include <lib/draw/color.hpp>
+#include <lib/draw/hasname.hpp>
 
 namespace lib
 {

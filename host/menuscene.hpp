@@ -4,7 +4,7 @@
 #include "keymapping.hpp"
 #include <lib/menu/menumanager.hpp>
 #include <lib/include/types.hpp>
-#include <vector>
+#include <lib/draw/nodes/nodequad.hpp>
 
 namespace zoper
 {
@@ -25,8 +25,8 @@ namespace zoper
 
 		virtual lib::vector2df getDefaultSizeView() override;
 	private:
-		lib::sptr<lib::draw::NodeQuad> m_logo{ nullptr };
-		lib::sptr<lib::draw::NodeQuad> m_background{ nullptr };
+		lib::sptr<lib::draw::nodes::NodeQuad> m_logo;
+		lib::sptr<lib::draw::nodes::NodeQuad> m_background;
 	};
 }
 

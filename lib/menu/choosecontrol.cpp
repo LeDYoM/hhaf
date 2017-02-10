@@ -4,14 +4,15 @@
 #include <lib/core/events/inputevent.hpp>
 #include <lib/draw/scene.hpp>
 #include <lib/draw/ianimation.hpp>
-#include <lib/draw/nodeshape.hpp>
-#include <lib/draw/nodetext.hpp>
+#include <lib/draw/nodes/nodeshape.hpp>
+#include <lib/draw/nodes/nodetext.hpp>
 
 namespace lib
 {
 	namespace menu
 	{
 		using namespace draw;
+		using namespace draw::nodes;
 
 		ChooseControl::ChooseControl(MenuManager *parent, std::string name,
 			std::function<void(const u32)> onSelected,

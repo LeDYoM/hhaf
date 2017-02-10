@@ -1,6 +1,8 @@
 #ifndef __GAMESCENE_HPP__
 #define __GAMESCENE_HPP__
 
+#pragma once
+
 #include "keymapping.hpp"
 #include "direction.hpp"
 #include "levelproperties.hpp"
@@ -13,6 +15,8 @@
 #include <lib/draw/scene.hpp>
 #include <lib/board/itilescontroller.hpp>
 #include <lib/board/boardmodel.hpp>
+#include <lib/draw/nodes/nodetext.hpp>
+#include <lib/draw/nodes/nodequad.hpp>
 
 #include <array>
 #include <functional>
@@ -143,18 +147,18 @@ namespace zoper
 
 		// Nodes from the scene
 		lib::sptr<Player> p_player{ nullptr };
-		lib::sptr<lib::draw::NodeText> _scoreText{ nullptr };
-		lib::sptr<lib::draw::NodeText> _scoreDisplay{ nullptr };
-		lib::sptr<lib::draw::NodeText> _currentLevelText{ nullptr };
-		lib::sptr<lib::draw::NodeText> _currentLevelDisplay{ nullptr };
-		lib::sptr<lib::draw::NodeText> _levelText{ nullptr };
-		lib::sptr<lib::draw::NodeText> _levelDisplay{ nullptr };
-		lib::sptr<lib::draw::NodeText> _goalText{ nullptr };
-		lib::sptr<lib::draw::NodeText> _goalDisplay{ nullptr };
-		lib::sptr<lib::draw::NodeText> _gameText{ nullptr };
-		lib::sptr<lib::draw::NodeText> _overText{ nullptr };
-		lib::sptr<lib::draw::NodeText> _pauseText{ nullptr };
-		std::vector<std::vector<lib::sptr<lib::draw::NodeQuad>>> m_backgroundTiles;
+		lib::sptr<lib::draw::nodes::NodeText> _scoreText{ nullptr };
+		lib::sptr<lib::draw::nodes::NodeText> _scoreDisplay{ nullptr };
+		lib::sptr<lib::draw::nodes::NodeText> _currentLevelText{ nullptr };
+		lib::sptr<lib::draw::nodes::NodeText> _currentLevelDisplay{ nullptr };
+		lib::sptr<lib::draw::nodes::NodeText> _levelText{ nullptr };
+		lib::sptr<lib::draw::nodes::NodeText> _levelDisplay{ nullptr };
+		lib::sptr<lib::draw::nodes::NodeText> _goalText{ nullptr };
+		lib::sptr<lib::draw::nodes::NodeText> _goalDisplay{ nullptr };
+		lib::sptr<lib::draw::nodes::NodeText> _gameText{ nullptr };
+		lib::sptr<lib::draw::nodes::NodeText> _overText{ nullptr };
+		lib::sptr<lib::draw::nodes::NodeText> _pauseText{ nullptr };
+		std::vector<std::vector<lib::sptr<lib::draw::nodes::NodeQuad>>> m_backgroundTiles;
 	};
 }
 

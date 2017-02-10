@@ -6,6 +6,7 @@ namespace zoper
 	using namespace lib;
 	using namespace lib::board;
 	using namespace lib::draw;
+	using namespace lib::draw::nodes;
 
 	GameBaseTile::GameBaseTile(SceneNode *parent, std::string name, BoardTileData data, const lib::Rectf32 &box, const u32 pointCount)
 		: ITile{ data }, SceneNode{parent,std::move(name) }

@@ -3,6 +3,8 @@
 
 #include <lib/include/types.hpp>
 #include <lib/draw/scenenode.hpp>
+#include <lib/draw/nodes/nodetext.hpp>
+#include <lib/draw/nodes/nodeshape.hpp>
 #include <vector>
 #include <functional>
 
@@ -53,17 +55,17 @@ namespace lib
 			struct LabelData
 			{
 				std::vector<std::string> textSubLabel;
-				sptr<draw::NodeText> subLabel{ nullptr };
-				sptr<draw::NodeText> label{ nullptr };
+				sptr<draw::nodes::NodeText> subLabel{ nullptr };
+				sptr<draw::nodes::NodeText> label{ nullptr };
 				u32 selectedSublabel{ 0 };
-				LabelData(const std::vector<std::string> &textSubLevel_, sptr<draw::NodeText> subLabel_,
-					sptr<draw::NodeText> label_, const u32 selectedSubLabel_)
+				LabelData(const std::vector<std::string> &textSubLevel_, sptr<draw::nodes::NodeText> subLabel_,
+					sptr<draw::nodes::NodeText> label_, const u32 selectedSubLabel_)
 					: textSubLabel{ textSubLevel_ }, subLabel{ subLabel_ }, label{ label_ }, selectedSublabel{ selectedSubLabel_ } {}
 			};
 
 			std::vector<LabelData> m_labelData;
 			draw::SceneNodeSPtr m_cursorNode;
-			sptr<draw::NodeShape> m_cursor;
+			sptr<draw::nodes::NodeShape> m_cursor;
 			std::function<void(const u32)> m_onSelected;
 
 			friend class MenuManager;

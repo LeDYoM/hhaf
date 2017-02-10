@@ -3,7 +3,7 @@
 
 #include <lib/board/itilescontroller.hpp>
 #include <lib/draw/scenenode.hpp>
-#include <lib/draw/nodeshape.hpp>
+#include <lib/draw/nodes/nodeshape.hpp>
 
 namespace zoper
 {
@@ -14,7 +14,7 @@ namespace zoper
 		virtual ~GameBaseTile() = default;
 
 		lib::draw::Color getColorForToken() const;
-		lib::sptr<lib::draw::NodeShape> m_node;
+		lib::sptr<lib::draw::nodes::NodeShape> m_node;
 	};
 }
 

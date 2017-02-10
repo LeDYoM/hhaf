@@ -8,9 +8,9 @@
 #include <lib/core/log.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/draw/renderizable.hpp>
-#include <lib/draw/nodeshape.hpp>
-#include <lib/draw/nodequad.hpp>
-#include <lib/draw/nodetext.hpp>
+#include <lib/draw/nodes/nodeshape.hpp>
+#include <lib/draw/nodes/nodequad.hpp>
+#include <lib/draw/nodes/nodetext.hpp>
 #include <lib/core/host.hpp>
 #include <lib/core/events/inputevent.hpp>
 #include <lib/include/properties.hpp>
@@ -20,6 +20,7 @@ namespace zoper
 {
 	using namespace lib;
 	using namespace lib::draw;
+	using namespace lib::draw::nodes;
 
 	GameScene::GameScene()
 		: Scene("GameScene"), Configuration("config.cfg"), _gameConfig{ ":NextGame" }
@@ -46,18 +47,17 @@ namespace zoper
 
 		_scorerg->position = { 50, 50 };
 		
-		auto scoregDisplay = _scorerg->createSceneNode("scoreDisplay");
-		scoregDisplay->position = { 0, 0 };
+		auto scoregDisplay = _scorerg->createSceneNodeWidthRenderizable<NodeText>("scoreDisplay", "", scoreFont, 90, colors::White);
 
 		_scoreText = _scorerg->createRenderizable<NodeText>("scoretxt", "Score: ", scoreFont, 90, colors::Blue);
-		_scoreDisplay = scoregDisplay->createRenderizable<NodeText>("scoredisplay", "", scoreFont, 90, colors::White);
+		_scoreDisplay = std::move(scoregDisplay.second);
 
-		auto currentLevelTextsn = _scorerg->createSceneNode("currentLevelTextsn");
-		currentLevelTextsn->position = { 0,200 };
-		_currentLevelText = currentLevelTextsn->createRenderizable<NodeText>("currentLevelText", "Level: ", scoreFont, 90, colors::Blue);
+		auto currentLevelTextsn = _scorerg->createSceneNodeWidthRenderizable<NodeText>("currentLevelTextsn", "Level: ", scoreFont, 90, colors::Blue);
+		currentLevelTextsn.first->position = { 0,200 };
+		_currentLevelText = std::move(currentLevelTextsn.second);
 
-		auto currentLevelDisplaysn = currentLevelTextsn->createSceneNodeWidthRenderizable<NodeText>("currentLevelDisplay", "0", scoreFont, 90, colors::White);
-		currentLevelDisplaysn.first->position = { 400,0 };
+		auto currentLevelDisplaysn = currentLevelTextsn.first->createSceneNodeWidthRenderizable<NodeText>("currentLevelDisplay", "0", scoreFont, 90, colors::White);
+		currentLevelDisplaysn.first->position = { 600,0 };
 		_currentLevelDisplay = std::move(currentLevelDisplaysn.second);
 
 		_levelText = _levelrg->createRenderizable<NodeText>("leveltxt", "", scoreFont, 90, colors::Blue);
