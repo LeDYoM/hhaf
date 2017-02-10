@@ -77,17 +77,17 @@ namespace lib
 
 			const auto &cTheme(menuManager()->currentTheme());
 
-			m_labelData[_cursorItemSelected].label->color.set(cTheme.textColor);
+			m_labelData[_cursorItemSelected].label->color = cTheme.textColor;
 			if (m_labelData[_cursorItemSelected].subLabel) {
-				m_labelData[_cursorItemSelected].subLabel->color.set(cTheme.textColor);
+				m_labelData[_cursorItemSelected].subLabel->color = cTheme.textColor;
 			}
 
 			_cursorItemSelected = nodeIndex;
 			auto selectedText = m_labelData[nodeIndex].label;
 
-			selectedText->color.set(cTheme.selectedTextColor);
+			selectedText->color = cTheme.selectedTextColor;
 			if (m_labelData[_cursorItemSelected].subLabel) {
-				m_labelData[_cursorItemSelected].subLabel->color.set(cTheme.selectedTextColor);
+				m_labelData[_cursorItemSelected].subLabel->color = cTheme.selectedTextColor;
 			}
 
 //			m_cursorNode->rotation.set(90);

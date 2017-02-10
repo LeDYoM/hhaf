@@ -16,19 +16,19 @@ namespace lib
 		class Renderizable : public core::HasName
 		{
 		public:
-			explicit Renderizable(const std::string &name, sptr<Texture> texture_, PrimitiveType type, u32 vertexCount, const Color &color_);
+			explicit Renderizable(str_const name, sptr<Texture> texture_, PrimitiveType type, u32 vertexCount, const Color &color);
 			virtual ~Renderizable();
 
 			virtual void draw();
 
 			Property<Color> color;
+			Property<vector2df> position;
+			Property<vector2df> nodeOrigin;
 
 			inline Rectf32 bounds() const noexcept { return m_vertices.bounds(); }
 
 			inline bool isVisible() const noexcept { return m_visible; }
 			inline void setVisible(bool nv) noexcept { m_visible = nv; }
-
-			Property<vector2df> position;
 
 			inline void move(const vector2df &offset)  noexcept { m_vertices.move(offset); }
 			inline void moveX(const f32 xOffset)  noexcept { m_vertices.moveX(xOffset); }

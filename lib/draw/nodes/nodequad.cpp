@@ -12,7 +12,7 @@ namespace lib
 			{
 				logConstruct("Name: ", name);
 
-				updateGeometry();
+				//updateGeometry();
 			}
 
 			NodeQuad::~NodeQuad()
