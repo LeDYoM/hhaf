@@ -29,7 +29,6 @@ namespace lib
 				Property<sptr<Font>> font;
 				Property<u32> characterSize;
 
-
 				/**
 				* Sets the position of the text using a provided pair of x coordinates to fit into
 				* @param [in] The new value of the text property
