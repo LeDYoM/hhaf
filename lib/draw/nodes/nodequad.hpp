@@ -1,6 +1,8 @@
 #ifndef LIB_DRAW_NODEQUAD_HPP__
 #define LIB_DRAW_NODEQUAD_HPP__
 
+#pragma once
+
 #include <lib/include/types.hpp>
 #include <lib/include/vector2d.hpp>
 #include "isimplenode.hpp"
@@ -14,7 +16,7 @@ namespace lib
 			class NodeQuad : public ISimpleNode
 			{
 			public:
-				explicit NodeQuad(const std::string &name, const Rectf32 &box, sptr<Texture> texture, const Color &color);
+				explicit NodeQuad(const str_const name, const Rectf32 &box, sptr<Texture> texture, const Color &color);
 				virtual ~NodeQuad();
 
 			protected:

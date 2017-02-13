@@ -16,7 +16,7 @@ namespace lib
 		class Renderizable : public core::HasName
 		{
 		public:
-			explicit Renderizable(str_const name, sptr<Texture> texture_, PrimitiveType type, u32 vertexCount, const Color &color);
+			explicit Renderizable(str_const &&name, sptr<Texture> texture_, PrimitiveType type, u32 vertexCount, const Color &color);
 			virtual ~Renderizable();
 
 			virtual void draw();

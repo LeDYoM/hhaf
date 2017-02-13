@@ -12,7 +12,7 @@ namespace lib
 		namespace nodes
 		{
 			NodeText::NodeText(str_const name, std::string txt, sptr<Font> font_, u32 characterSize_, const Color &color) :
-				Renderizable{ name, nullptr, Triangles, 0, color },
+				Renderizable{ std::move(name), nullptr, Triangles, 0, color },
 				font{ font_, [this]() { updateGeometry(); } },
 				text{ std::move(txt), [this]() { updateGeometry(); } },
 				characterSize{ characterSize_, [this]() { updateGeometry(); } }

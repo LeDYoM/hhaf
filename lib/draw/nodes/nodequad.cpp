@@ -7,8 +7,8 @@ namespace lib
 	{
 		namespace nodes
 		{
-			NodeQuad::NodeQuad(const std::string &name, const Rectf32 &box, sptr<Texture> texture, const Color &color)
-				: ISimpleNode{ name, box, texture, 4,color }
+			NodeQuad::NodeQuad(str_const name, const Rectf32 &box, sptr<Texture> texture, const Color &color)
+				: ISimpleNode{ std::move(name), box, texture, 4,color }
 			{
 				logConstruct("Name: ", name);
 

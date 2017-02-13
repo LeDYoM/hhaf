@@ -7,8 +7,8 @@ namespace lib
 	namespace draw
 	{
 
-		Texture::Texture(const std::string name) : core::HasName(name), m_texturePrivate{ new sf::Texture } {}
-		Texture::Texture(const sf::Texture &texture) : core::HasName("internal"), m_texturePrivate{ new sf::Texture(texture) } {}
+		Texture::Texture(str_const name) : core::HasName{ std::move(name) }, m_texturePrivate{ new sf::Texture } {}
+		Texture::Texture(const sf::Texture &texture) : core::HasName{ "internal" }, m_texturePrivate{ new sf::Texture(texture) } {}
 
 		Texture::~Texture() = default;
 

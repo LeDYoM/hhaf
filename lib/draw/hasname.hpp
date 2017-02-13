@@ -12,7 +12,8 @@ namespace lib
 		class HasName
 		{
 		public:
-			HasName(str_const name) noexcept : m_name{ std::move(name) } {}
+			HasName(str_const &&name) noexcept : m_name{ std::move(name) } {}
+//			HasName(str_const name) noexcept : m_name{ std::move(name) } {}
 			constexpr HasName(HasName &&other)  noexcept = default;
 			constexpr HasName(const HasName &other) = default;
 			HasName &operator=(HasName &&other)  noexcept = default;

@@ -11,7 +11,7 @@ namespace lib
 		class Font final : public sf::Font, public core::HasName
 		{
 		public:
-			Font(std::string name) : core::HasName(name), sf::Font{} {}
+			Font(str_const name) : core::HasName{ std::move(name) }, sf::Font{} {}
 
 			virtual ~Font() {}
 		};
