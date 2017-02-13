@@ -33,9 +33,6 @@ namespace lib
 				NodeAlignedText(str_const name, std::string txt, sptr<Font> font, u32 characterSize, const Color &color, Rectf32 alignBox, AlignmentX alignmentX, AlignmentY alignmentY);
 				virtual ~NodeAlignedText();
 
-				Property<std::string> text;
-				Property<sptr<Font>> font;
-				Property<u32> characterSize;
 				Property<AlignmentX> alignmentX;
 				Property<AlignmentY> alignmentY;
 				Property<Rectf32> alignmentBox;

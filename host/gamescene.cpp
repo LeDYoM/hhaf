@@ -38,28 +38,18 @@ namespace zoper
 		Scene::onInit();
 		_mainBoardrg = this->createSceneNode("mainBoard");
 		_gameOverrg = this->createSceneNode("gameOverScreen");
-		_scorerg = this->createSceneNode("score");
 		_levelrg = this->createSceneNode("level");
 		_pauserg = this->createSceneNode("pause");
 
 		auto& resourceManager{ lib::host().resourceManager() };
 		auto scoreFont(resourceManager.getFont("game_scene.scoreFont"));
 
-		_scorerg->position = { 50, 50 };
+		m_scoreQuad = msptr<TextQuad>(this, "score", scoreFont, 90, colors::White, scenePerspective());
+//		m_scoreQuad->sceneNode()->position = { 50, 50 };
+		m_scoreQuad->text(0)->text = "Level:";
+		m_scoreQuad->text(2)->text = "Score:";
+		m_scoreQuad->text(3)->text = "0000";
 		
-		auto scoregDisplay = _scorerg->createSceneNodeWidthRenderizable<NodeText>("scoreDisplay", "", scoreFont, 90, colors::White);
-
-		_scoreText = _scorerg->createRenderizable<NodeText>("scoretxt", "Score: ", scoreFont, 90, colors::Blue);
-		_scoreDisplay = std::move(scoregDisplay.second);
-
-		auto currentLevelTextsn = _scorerg->createSceneNodeWidthRenderizable<NodeText>("currentLevelTextsn", "Level: ", scoreFont, 90, colors::Blue);
-		currentLevelTextsn.first->position = { 0,200 };
-		_currentLevelText = std::move(currentLevelTextsn.second);
-
-		auto currentLevelDisplaysn = currentLevelTextsn.first->createSceneNodeWidthRenderizable<NodeText>("currentLevelDisplay", "0", scoreFont, 90, colors::White);
-		currentLevelDisplaysn.first->position = { 600,0 };
-		_currentLevelDisplay = std::move(currentLevelDisplaysn.second);
-
 		_levelText = _levelrg->createRenderizable<NodeText>("leveltxt", "", scoreFont, 90, colors::Blue);
 		_levelDisplay = _levelrg->createRenderizable<NodeText>("leveldisplay", "", scoreFont, 90, colors::White);
 		_goalText = _levelrg->createRenderizable<NodeText>("goalText", "", scoreFont, 90, colors::Blue);
@@ -223,7 +213,7 @@ namespace zoper
 
 	void GameScene::updateGoals()
 	{
-		_currentLevelDisplay->text = std::to_string(_levelProperties.currentLevel()+1);
+		m_scoreQuad->text(1)->text = std::to_string(_levelProperties.currentLevel()+1);
 
 		switch (_gameData._gameMode)
 		{
@@ -642,8 +632,7 @@ namespace zoper
 		_score += scoreIncrement;
 		std::string result{ std::to_string(_score) };
 		while (result.size() < _scoreSize) result = "0" + result;
-		_scoreDisplay->text = result;
-		_scoreDisplay->moveX(_scoreText->bounds().width);
+		m_scoreQuad->text(3)->text = result;
 	}
 
 	vector2df GameScene::getDefaultSizeView()

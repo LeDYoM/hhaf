@@ -23,6 +23,10 @@ namespace lib
 
 		void SceneNode::draw()
 		{
+			if (name() == "score")
+			{
+				int a = 0;
+			}
 			if (isVisible()) {
 				auto handle(host().rStates().pushChanges(&getTransform(), nullptr));
 

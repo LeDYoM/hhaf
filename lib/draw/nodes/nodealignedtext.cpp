@@ -17,7 +17,7 @@ namespace lib
 			{
 				logConstruct("Name: ", name);
 
-//				text.setCallback
+				text.setCallback([this]() {updateGeometry(); });
 
 				updateGeometry();
 			}
@@ -62,10 +62,10 @@ namespace lib
 //					m_vertices.moveX(top);
 					break;
 				case AlignmentY::Middle:
-					m_vertices.moveX((alignmentBox().bottom() / 2.f) - (bounds().width / 2));
+					m_vertices.moveY((alignmentBox().bottom() / 2.f) - (bounds().height / 2));
 					break;
 				case AlignmentY::Bottom:
-					m_vertices.moveX(alignmentBox().bottom() - bounds().width);
+					m_vertices.moveY(alignmentBox().bottom() - bounds().height);
 					break;
 				}
 			}

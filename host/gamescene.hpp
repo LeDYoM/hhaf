@@ -18,6 +18,8 @@
 #include <lib/draw/nodes/nodetext.hpp>
 #include <lib/draw/nodes/nodequad.hpp>
 
+#include "textquad.hpp"
+
 #include <array>
 #include <functional>
 
@@ -138,7 +140,6 @@ namespace zoper
 		lib::u8 _nextTokenPart{ 0 };
 		lib::sptr<lib::draw::SceneNode> _mainBoardrg{ nullptr };
 		lib::sptr<lib::draw::SceneNode> _gameOverrg{ nullptr };
-		lib::sptr<lib::draw::SceneNode> _scorerg{ nullptr };
 		lib::sptr<lib::draw::SceneNode> _levelrg{ nullptr };
 		lib::sptr<lib::draw::SceneNode> _pauserg{ nullptr };
 		const lib::u8 _scoreSize{ 5 };
@@ -147,10 +148,7 @@ namespace zoper
 
 		// Nodes from the scene
 		lib::sptr<Player> p_player{ nullptr };
-		lib::sptr<lib::draw::nodes::NodeText> _scoreText{ nullptr };
-		lib::sptr<lib::draw::nodes::NodeText> _scoreDisplay{ nullptr };
-		lib::sptr<lib::draw::nodes::NodeText> _currentLevelText{ nullptr };
-		lib::sptr<lib::draw::nodes::NodeText> _currentLevelDisplay{ nullptr };
+		lib::sptr<zoper::TextQuad> m_scoreQuad;
 		lib::sptr<lib::draw::nodes::NodeText> _levelText{ nullptr };
 		lib::sptr<lib::draw::nodes::NodeText> _levelDisplay{ nullptr };
 		lib::sptr<lib::draw::nodes::NodeText> _goalText{ nullptr };

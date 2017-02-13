@@ -10,10 +10,10 @@ namespace zoper
 		: m_box{ box }
 	{
 		using namespace nodes;
-		m_sceneNode = parent->createSceneNode<SceneNode>(name);
+		sceneNode = parent->createSceneNode<SceneNode>(name);
 		u32 count{};
 		for (auto &nodes : m_texts) {
-			nodes = m_sceneNode->createRenderizable<nodes::NodeAlignedText>(name + "node_"+std::to_string(count++), "", font, characterSize, color, box, NodeAlignedText::AlignmentX::Left, NodeAlignedText::AlignmentY::Top);
+			nodes = sceneNode()->createRenderizable<nodes::NodeAlignedText>(name + "node_"+std::to_string(count++), "", font, characterSize, color, box, NodeAlignedText::AlignmentX::Left, NodeAlignedText::AlignmentY::Top);
 		}
 		
 		// Second text is right aligned
