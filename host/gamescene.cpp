@@ -44,12 +44,13 @@ namespace zoper
 		auto& resourceManager{ lib::host().resourceManager() };
 		auto scoreFont(resourceManager.getFont("game_scene.scoreFont"));
 
-		m_scoreQuad = msptr<TextQuad>(this, "score", scoreFont, 90, colors::White, scenePerspective());
-//		m_scoreQuad->sceneNode()->position = { 50, 50 };
+		m_scoreQuad = msptr<TextQuad>(this, "score", scoreFont, 90, colors::White, Rectf32::fromSize(600,300));
+		m_scoreQuad->sceneNode()->position = { 50, 50 };
 		m_scoreQuad->text(0)->text = "Level:";
+		m_scoreQuad->text(0)->color = colors::Blue;
 		m_scoreQuad->text(2)->text = "Score:";
-		m_scoreQuad->text(3)->text = "0000";
-		
+		m_scoreQuad->text(2)->color = colors::Blue;
+
 		_levelText = _levelrg->createRenderizable<NodeText>("leveltxt", "", scoreFont, 90, colors::Blue);
 		_levelDisplay = _levelrg->createRenderizable<NodeText>("leveldisplay", "", scoreFont, 90, colors::White);
 		_goalText = _levelrg->createRenderizable<NodeText>("goalText", "", scoreFont, 90, colors::Blue);
