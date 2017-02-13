@@ -51,10 +51,13 @@ namespace zoper
 		m_scoreQuad->text(2)->text = "Score:";
 		m_scoreQuad->text(2)->color = colors::Blue;
 
-		_levelText = _levelrg->createRenderizable<NodeText>("leveltxt", "", scoreFont, 90, colors::Blue);
-		_levelDisplay = _levelrg->createRenderizable<NodeText>("leveldisplay", "", scoreFont, 90, colors::White);
-		_goalText = _levelrg->createRenderizable<NodeText>("goalText", "", scoreFont, 90, colors::Blue);
-		_goalDisplay = _levelrg->createRenderizable<NodeText>("goalDisplay", "", scoreFont, 90, colors::White);
+		m_goalQuad = msptr<TextQuad>(this, "goal", scoreFont, 90, colors::White, Rectf32::fromSize(600, 300));
+		m_goalQuad->sceneNode()->position = { 1250, 50 };
+		m_goalQuad->text(0)->text = "Level:";
+		m_goalQuad->text(0)->color = colors::Blue;
+		m_goalQuad->text(2)->text = "Score:";
+		m_goalQuad->text(2)->color = colors::Blue;
+
 		_pauseText = _pauserg->createRenderizable<NodeText>("pausetext", "PAUSE", scoreFont, 180, colors::White);
 
 		_gameText = _gameOverrg->createRenderizable<NodeText>("gameovergame", "GAME", scoreFont, 360, colors::White);
@@ -70,7 +73,6 @@ namespace zoper
 //		_goalDisplay->scale = { 1.0f, 2.0f };
 
 		_levelrg->position = { 1250, 50 };
-		_goalText->moveY(200);
 
 		auto _gameBoundingBox = _gameText->bounds();
 		auto _overBoundingBox = _overText->bounds();
@@ -124,18 +126,16 @@ namespace zoper
 		{
 		default:
 		case GameData::GameModes::Token:
-			_levelText->text = "Tokens: ";
-			_goalText->text = "Goal: ";
+			m_goalQuad->text(0)->text = "Tokens: ";
+			m_goalQuad->text(2)->text = "Goal: ";
 			break;
 
 		case GameData::GameModes::Time:
-			_levelText->text = "Time: ";
-			_goalText->text.set("Goal: ");
+			m_goalQuad->text(0)->text = "Time: ";
+			m_goalQuad->text(2)->text = "Goal: ";
 			break;
 		}
 
-		_levelDisplay->moveX(_levelText->bounds().width);
-		_goalDisplay->move({ _goalText->bounds().width, 200 });
 		registerEvents();
 
 		setState(Playing);
@@ -220,11 +220,11 @@ namespace zoper
 		{
 		default:
 		case GameData::GameModes::Token:
-			_goalDisplay->text = std::to_string(_levelProperties.stayTokens());
+			m_goalQuad->text(3)->text = std::to_string(_levelProperties.stayTokens());
 			break;
 
 		case GameData::GameModes::Time:
-			_goalDisplay->text = std::to_string(_levelProperties.stayTime());
+			m_goalQuad->text(3)->text = std::to_string(_levelProperties.stayTime());
 			break;
 		}
 	}
@@ -235,13 +235,13 @@ namespace zoper
 		{
 		default:
 		case GameData::GameModes::Token:
-			_levelDisplay->text = std::to_string(_gameData.consumedTokens);
+			m_goalQuad->text(1)->text  = std::to_string(_gameData.consumedTokens);
 			if (_gameData.consumedTokens >= _levelProperties.stayTokens())
 				setLevel(_levelProperties.currentLevel() + 1);
 			break;
 
 		case GameData::GameModes::Time:
-			_levelDisplay->text = std::to_string(static_cast<lib::u16>(_gameData.levelClock.getElapsedTime().asSeconds()));
+			m_goalQuad->text(1)->text = std::to_string(static_cast<lib::u16>(_gameData.levelClock.getElapsedTime().asSeconds()));
 			if (_gameData.levelClock.getElapsedTime().asSeconds() >= _levelProperties.stayTime())
 				setLevel(_levelProperties.currentLevel() + 1);
 			break;

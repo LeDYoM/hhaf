@@ -107,7 +107,6 @@ namespace zoper
 
 		void registerEvents();
 
-		// Inherited via ITilesController
 		void tileAdded(const lib::vector2du32 &position, lib::board::SITilePointer nTile);
 		void tileDeleted(const lib::vector2du32 &position, lib::board::SITilePointer nTile);
 		void tileMoved(const lib::vector2du32 &source, const lib::vector2du32 &dest, lib::board::SITilePointer tile);
@@ -117,7 +116,6 @@ namespace zoper
 
 		void updatePlayer(const lib::vector2du32 &dest, lib::sptr<Player> player_);
 
-		// Specializations from ITilesController for our tokens.
 		void tokenChangedValue(const lib::vector2du32 &position, lib::sptr<Tile> tile, 
 			const lib::board::BoardTileData &ov, const lib::board::BoardTileData &nv);
 		void tokenMoved(const lib::vector2du32 &source, const lib::vector2du32 &dest, lib::sptr<Tile> tile);
@@ -149,10 +147,7 @@ namespace zoper
 		// Nodes from the scene
 		lib::sptr<Player> p_player{ nullptr };
 		lib::sptr<zoper::TextQuad> m_scoreQuad;
-		lib::sptr<lib::draw::nodes::NodeText> _levelText{ nullptr };
-		lib::sptr<lib::draw::nodes::NodeText> _levelDisplay{ nullptr };
-		lib::sptr<lib::draw::nodes::NodeText> _goalText{ nullptr };
-		lib::sptr<lib::draw::nodes::NodeText> _goalDisplay{ nullptr };
+		lib::sptr<zoper::TextQuad> m_goalQuad;
 		lib::sptr<lib::draw::nodes::NodeText> _gameText{ nullptr };
 		lib::sptr<lib::draw::nodes::NodeText> _overText{ nullptr };
 		lib::sptr<lib::draw::nodes::NodeText> _pauseText{ nullptr };
