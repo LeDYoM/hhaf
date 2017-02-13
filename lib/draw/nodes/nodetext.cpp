@@ -11,10 +11,10 @@ namespace lib
 	{
 		namespace nodes
 		{
-			NodeText::NodeText(str_const name, const std::string& string, sptr<Font> font_, u32 characterSize_, const Color &color) :
+			NodeText::NodeText(str_const name, std::string txt, sptr<Font> font_, u32 characterSize_, const Color &color) :
 				Renderizable{ name, nullptr, Triangles, 0, color },
 				font{ font_, [this]() { updateGeometry(); } },
-				text{ string, [this]() { updateGeometry(); } },
+				text{ std::move(txt), [this]() { updateGeometry(); } },
 				characterSize{ characterSize_, [this]() { updateGeometry(); } }
 			{
 				logConstruct("Name: ", name);
@@ -115,64 +115,6 @@ namespace lib
 				m_vertices.setBounds({ minX, minY, maxX - minX, maxY - minY });
 				texture.set(msptr<Texture>(font()->getTexture(characterSize())));
 				color.update();
-			}
-
-			void NodeText::setTextWithAlignmentX(std::string text_, const Rectf32 & box, const Alignment alignment)
-			{
-				text = text_;
-				updateAlignmentX(box.left, box.right(), alignment);
-			}
-
-			void NodeText::setTextWithAlignmentY(std::string text_, const Rectf32 & box, const Alignment alignment)
-			{
-				text = text_;
-				updateAlignmentY(box.top, box.bottom(), alignment);
-			}
-
-			void NodeText::setAlignmentX(const Rectf32 & box, const Alignment alignment)
-			{
-				updateAlignmentX(box.left, box.right(), alignment);
-			}
-
-			void NodeText::setAlignmentY(const Rectf32 & box, const Alignment alignment)
-			{
-				updateAlignmentY(box.top, box.bottom(), alignment);
-			}
-
-			void NodeText::updateAlignmentX(const f32 left, const f32 right, const Alignment alignment)
-			{
-				// To be called only after text set
-				switch (alignment)
-				{
-				default:
-				case Alignment::Left:
-					m_vertices.moveX(left);
-					break;
-				case Alignment::Center:
-					m_vertices.moveX((right / 2.f) - (bounds().width / 2));
-					break;
-				case Alignment::Right:
-					m_vertices.moveX(right - bounds().width);
-					break;
-				}
-			}
-
-			void NodeText::updateAlignmentY(const f32 top, const f32 bottom, const Alignment alignment)
-			{
-				// To be called only after text set
-				switch (alignment)
-				{
-				default:
-				case Alignment::Left:
-					m_vertices.moveX(top);
-					break;
-				case Alignment::Center:
-					m_vertices.moveX((bottom / 2.f) - (bounds().width / 2));
-					break;
-				case Alignment::Right:
-					m_vertices.moveX(bottom - bounds().width);
-					break;
-				}
 			}
 		}
 	}

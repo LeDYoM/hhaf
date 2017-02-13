@@ -6,6 +6,7 @@
 #include <lib/draw/ianimation.hpp>
 #include <lib/draw/nodes/nodeshape.hpp>
 #include <lib/draw/nodes/nodetext.hpp>
+#include <lib/draw/nodes/nodealignedtext.hpp>
 
 namespace lib
 {
@@ -28,20 +29,21 @@ namespace lib
 
 			const bool menuType{ labels.empty()?false:labels[0]->_subOptionsLabels.empty() };
 
-			const auto normalLabelAlign( menuType ? NodeText::Alignment::Center : NodeText::Alignment::Left );
+			const auto normalLabelAlign( menuType ? NodeAlignedText::AlignmentX::Center : NodeAlignedText::AlignmentX::Left );
 			u32 count{};
 			vector2df currentPos{};
 			for (const auto& label : labels)
 			{
 				auto menuLine = createSceneNode("menuLineText" + std::to_string(count));
 				menuLine->position = currentPos;
-				auto text = menuLine->createRenderizable<NodeText>("name" + std::to_string(count), label->_text, cTheme.font, cTheme.chSize, cTheme.textColor);
-				text->setAlignmentX(parentScene()->getView()->perspective(), normalLabelAlign);
+				auto text = menuLine->createRenderizable<NodeAlignedText>("name" + std::to_string(count), label->_text, cTheme.font, cTheme.chSize, cTheme.textColor,
+					parentScene()->getView()->perspective(), normalLabelAlign,NodeAlignedText::AlignmentY::Top);
 
 				sptr<NodeText> subtext{ nullptr };
 				if (!label->_subOptionsLabels.empty()) {
-					subtext = menuLine->createRenderizable<NodeText>("sub_name" + std::to_string(count), label->_subOptionsLabels[label->_startValueIndex],cTheme.font,cTheme.chSize, cTheme.textColor);
-					subtext->setTextWithAlignmentX(label->_subOptionsLabels[label->_startValueIndex], scenePerspective().resized({ -300,0 }), NodeText::Alignment::Right);
+					subtext = menuLine->createRenderizable<NodeAlignedText>("sub_name" + std::to_string(count), label->_subOptionsLabels[label->_startValueIndex],
+						cTheme.font, cTheme.chSize, cTheme.textColor,
+						scenePerspective().resized({ -300,0 }), NodeAlignedText::AlignmentX::Right, NodeAlignedText::AlignmentY::Top);
 				}
 
 				currentPos.y += (cTheme.chSize + cTheme.incY);
@@ -68,7 +70,7 @@ namespace lib
 	
 		void ChooseControl::updateSubLabelText(const u32 index)
 		{
-			m_labelData[index].subLabel->setTextWithAlignmentX(m_labelData[index].textSubLabel[m_labelData[index].selectedSublabel], parentScene()->getView()->perspective().resized({ -300,0 }), NodeText::Alignment::Right);
+			m_labelData[index].subLabel->text = m_labelData[index].textSubLabel[m_labelData[index].selectedSublabel];
 		}
 
 		void ChooseControl::cursorSelectItem(const u32 nodeIndex)

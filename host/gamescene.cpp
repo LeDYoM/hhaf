@@ -87,8 +87,8 @@ namespace zoper
 		_gameText->move({ sceneCenter.x - (_gameBoundingBox.width / 2.0f), sceneCenter.y - _gameBoundingBox.height });
 		_overText->move({ sceneCenter.x - (_overBoundingBox.width / 2.0f), sceneCenter.y });
 
-		_pauseText->setAlignmentX(scenePerspective(), NodeText::Alignment::Center);
-		_pauseText->setAlignmentY(scenePerspective(), NodeText::Alignment::Center);
+//		_pauseText->setAlignmentX(scenePerspective(), NodeText::Alignment::Center);
+//		_pauseText->setAlignmentY(scenePerspective(), NodeText::Alignment::Center);
 	}
 
 	void GameScene::onDeinit()

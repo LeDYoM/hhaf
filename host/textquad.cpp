@@ -10,7 +10,7 @@ namespace zoper
 		: m_box{ box }
 	{
 		m_sceneNode = parent->createSceneNode<SceneNode>(name);
-		m_texts[0] = m_sceneNode->createRenderizable<nodes::NodeText>(name+"node_0","",)
+//		m_texts[0] = m_sceneNode->createRenderizable<nodes::NodeText>(name+"node_0","",)
 		
 	}
 }
