@@ -41,13 +41,12 @@ namespace lib
 				{
 				default:
 				case AlignmentX::Left:
-//					m_vertices.moveX(left);
 					break;
 				case AlignmentX::Center:
 					m_vertices.moveX((alignmentBox().right() / 2.f) - (bounds().width / 2));
 					break;
 				case AlignmentX::Right:
-					m_vertices.moveX(alignmentBox().right() - bounds().width);
+					m_vertices.moveX(alignmentBox().right() - bounds().right());
 					break;
 				}
 			}
@@ -59,13 +58,12 @@ namespace lib
 				{
 				default:
 				case AlignmentY::Top:
-//					m_vertices.moveX(top);
 					break;
 				case AlignmentY::Middle:
 					m_vertices.moveY((alignmentBox().bottom() / 2.f) - (bounds().height / 2));
 					break;
 				case AlignmentY::Bottom:
-					m_vertices.moveY(alignmentBox().bottom() - bounds().height);
+					m_vertices.moveY(alignmentBox().bottom() - bounds().bottom());
 					break;
 				}
 			}
