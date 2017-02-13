@@ -434,7 +434,7 @@ namespace zoper
 			}
 
 			if (found) {
-				auto node = createRenderizable<NodeShape>("pointIncrementScore", vector2df{ 15.0f,15.0f },nullptr,30, colors::White);
+				auto node = createRenderizable<NodeShape>("pointIncrementScore", Rectf32::fromSize( 15.0f,15.0f ),nullptr,30, colors::White);
 				addAnimation(msptr<anim::IPropertyAnimation<vector2df>>(600, node->position, lastTokenPosition, vector2df{ 450, 100 }, 
 					anim::noAction, anim::animation_action_callback{ [this, node]() { removeRenderizable(node); } }), nullptr);
 			}
