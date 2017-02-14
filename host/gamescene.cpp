@@ -326,11 +326,10 @@ namespace zoper
 		logDebug("Adding player tile at ", _gameData.centerRect.left, ",", _gameData.centerRect.top);
 		__ASSERT(!p_player, "Player already initialized");
 		// Create the player instance
-		p_player = msptr<Player>(_mainBoardrg, "playerNode", _gameData.centerRect.leftTop(), Rectf32::fromSize(tileSize()));
-//		p_player = _mainBoardrg->createSceneNode<Player>("playerNode", _gameData.centerRect.leftTop(), Rectf32::fromSize(tileSize() ));
+		p_player = msptr<Player>(_mainBoardrg, "playerNode", _gameData.centerRect.leftTop(), Rectf32::fromSize(tileSize()), board2SceneFactor());
 
 		// Add it to the board and to the scene nodes
-		p_boardModel->setTile(p_player->boardPosition(), std::dynamic_pointer_cast<board::ITile>(p_player));
+		p_boardModel->setTile(p_player->boardPosition(), p_player);
 	}
 
 	void GameScene::addNewToken(const vector2du32 &pos, u32 newToken)
@@ -451,10 +450,16 @@ namespace zoper
 		return false;
 	}
 
+	vector2df zoper::GameScene::board2SceneFactor() const
+	{
+		return{ getView()->perspective().size().x / static_cast<f32>(p_boardModel->size().x),
+			getView()->perspective().size().y / static_cast<f32>(p_boardModel->size().y) };
+	}
+
 	vector2df GameScene::board2Scene(const lib::vector2du32 &bPosition) const
 	{
-		return { (getView()->perspective().size().x * bPosition.x) / static_cast<float>(p_boardModel->size().x),
-			(getView()->perspective().size().y * bPosition.y) / static_cast<float>(p_boardModel->size().y) };
+		const auto b2sf{ board2SceneFactor() };
+		return { b2sf.x * bPosition.x, b2sf.y * bPosition.y };
 	}
 
 	vector2df GameScene::tileSize() const
@@ -530,7 +535,7 @@ namespace zoper
 			logDebug("Token ", ztile->name(), " appeared at ", pos);
 		} else if (auto player = std::dynamic_pointer_cast<Player>(nTile)) {
 			// Set the position in the scene depending on the board position
-			player->position = board2Scene(pos);
+			player->boardPosition = pos;
 		}
 	}
 
@@ -575,7 +580,7 @@ namespace zoper
 		const auto ts(tileSize());
 		const auto tileCenter(ts / 2.0f);
 //		player_->origin = tileCenter;
-		player_->position = board2Scene(dest) + tileCenter;
+		player_->boardPosition = dest;
 //		player_->rotation = player_->currentDirection().angle();
 		if (player_->currentDirection().value() == Direction::DirectionData::Up ||
 			player_->currentDirection().value() == Direction::DirectionData::Down) {

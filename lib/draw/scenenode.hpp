@@ -11,10 +11,6 @@
 
 namespace lib
 {
-	namespace core
-	{
-		class Window;
-	}
 	namespace draw
 	{
 		namespace anim
