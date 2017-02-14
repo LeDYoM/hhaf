@@ -487,6 +487,8 @@ namespace zoper
 	void GameScene::tilesCreated()
 	{
 		const Rectf32 bBox(scenePerspective());
+		m_backgroundTiles.clear();
+		m_backgroundTiles.reserve(_gameData.size.y);
 
 		auto backgroundTilesrg(createSceneNode("backgroundTiles"));
 		moveLastBeforeNode(_mainBoardrg);
@@ -495,6 +497,7 @@ namespace zoper
 		for (u32 y = 0; y < _gameData.size.y; ++y)
 		{
 			std::vector<sptr<NodeQuad>> column;
+			column.reserve(_gameData.size.x);
 
 			for (u32 x = 0; x < _gameData.size.x; ++x)
 			{
@@ -516,7 +519,7 @@ namespace zoper
 			}
 			currentx = 0;
 			currenty += tileSize().y;
-			m_backgroundTiles.push_back(column);
+			m_backgroundTiles.push_back(std::move(column));
 		}
 	}
 
