@@ -12,12 +12,12 @@ namespace lib
 		namespace nodes
 		{
 			NodeAlignedText::NodeAlignedText(str_const name, std::string txt, sptr<Font> font_, u32 characterSize_, const Color &color, Rectf32 alignBox, AlignmentX alignmentX_, AlignmentY alignmentY_) :
-				NodeText{ name, txt, font_, characterSize_, color }, 
-				alignmentX{ alignmentX_,[this]() { updateGeometry(); } }, alignmentY{ alignmentY_,[this]() {updateGeometry(); } }, alignmentBox{ alignBox,[this]() {updateGeometry(); } }
+				NodeText{ std::move(name), std::move(txt), font_, characterSize_, color }, 
+				alignmentX{ alignmentX_,[this]() { updateGeometry(); } }, alignmentY{ alignmentY_,[this]() {updateGeometry(); } }, alignmentBox{ std::move(alignBox),[this]() {updateGeometry(); } }
 			{
 				logConstruct("Name: ", name);
 
-				text.setCallback([this]() {updateGeometry(); });
+				text.setCallback([this]() { updateGeometry(); });
 
 				updateGeometry();
 			}
@@ -41,9 +41,13 @@ namespace lib
 				{
 				default:
 				case AlignmentX::Left:
+					m_vertices.moveX(alignmentBox().left);
 					break;
 				case AlignmentX::Center:
-					m_vertices.moveX((alignmentBox().right() / 2.f) - (bounds().right() / 2));
+				{
+					const auto &abox{ alignmentBox() };
+					m_vertices.moveX(abox.left + (abox.width / 2.f) - (bounds().width / 2));
+				}
 					break;
 				case AlignmentX::Right:
 					m_vertices.moveX(alignmentBox().right() - bounds().right());
@@ -58,9 +62,13 @@ namespace lib
 				{
 				default:
 				case AlignmentY::Top:
+					m_vertices.moveY(alignmentBox().top);
 					break;
 				case AlignmentY::Middle:
-					m_vertices.moveY((alignmentBox().bottom() / 2.f) - (bounds().bottom() / 2));
+				{
+					const auto &abox{ alignmentBox() };
+					m_vertices.moveY(abox.top + (abox.height / 2.f) - (bounds().height / 2));
+				}
 					break;
 				case AlignmentY::Bottom:
 					m_vertices.moveY(alignmentBox().bottom() - bounds().bottom());
