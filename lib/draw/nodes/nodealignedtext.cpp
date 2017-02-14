@@ -43,7 +43,7 @@ namespace lib
 				case AlignmentX::Left:
 					break;
 				case AlignmentX::Center:
-					m_vertices.moveX((alignmentBox().right() / 2.f) - (bounds().width / 2));
+					m_vertices.moveX((alignmentBox().right() / 2.f) - (bounds().right() / 2));
 					break;
 				case AlignmentX::Right:
 					m_vertices.moveX(alignmentBox().right() - bounds().right());
@@ -60,7 +60,7 @@ namespace lib
 				case AlignmentY::Top:
 					break;
 				case AlignmentY::Middle:
-					m_vertices.moveY((alignmentBox().bottom() / 2.f) - (bounds().height / 2));
+					m_vertices.moveY((alignmentBox().bottom() / 2.f) - (bounds().bottom() / 2));
 					break;
 				case AlignmentY::Bottom:
 					m_vertices.moveY(alignmentBox().bottom() - bounds().bottom());

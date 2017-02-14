@@ -24,7 +24,7 @@ namespace zoper
 			"Zoper",
 			1,
 			1,
-			2,
+			3,
 			"config.cfg",
 			"res.cfg",
 			WindowCreationParams

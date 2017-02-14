@@ -150,7 +150,7 @@ namespace zoper
 		lib::sptr<zoper::TextQuad> m_goalQuad;
 		lib::sptr<lib::draw::nodes::NodeText> _gameText{ nullptr };
 		lib::sptr<lib::draw::nodes::NodeText> _overText{ nullptr };
-		lib::sptr<lib::draw::nodes::NodeText> _pauseText{ nullptr };
+		lib::sptr<lib::draw::nodes::NodeText> m_pauseText{ nullptr };
 		std::vector<std::vector<lib::sptr<lib::draw::nodes::NodeQuad>>> m_backgroundTiles;
 	};
 }

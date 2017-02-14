@@ -58,7 +58,7 @@ namespace zoper
 		m_goalQuad->text(2)->text = "Score:";
 		m_goalQuad->text(2)->color = colors::Blue;
 
-		_pauseText = _pauserg->createRenderizable<NodeText>("pausetext", "PAUSE", scoreFont, 180, colors::White);
+		m_pauseText = _pauserg->createRenderizable<NodeAlignedText>("pausetext", "PAUSE", scoreFont, 180, colors::White,scenePerspective(),NodeAlignedText::AlignmentX::Center,NodeAlignedText::AlignmentY::Middle);
 
 		_gameText = _gameOverrg->createRenderizable<NodeText>("gameovergame", "GAME", scoreFont, 360, colors::White);
 		_overText = _gameOverrg->createRenderizable<NodeText>("gameoverover", "OVER", scoreFont, 360, colors::White);
@@ -174,7 +174,7 @@ namespace zoper
 		if (state() == Playing) {
 			setState(Pause);
 			_pauserg->setVisible(true);
-			addAnimation(msptr<anim::IPropertyAnimation<Color>>(1000, _pauseText->color, Color{ 255, 255, 255, 0 }, Color{ 255, 255, 255, 255 }, 
+			addAnimation(msptr<anim::IPropertyAnimation<Color>>(1000, m_pauseText->color, Color{ 255, 255, 255, 0 }, Color{ 255, 255, 255, 255 }, 
 				anim::animation_action_callback{}, anim::animation_action_callback{}),nullptr);
 			gameClock.pause();
 			return true;
