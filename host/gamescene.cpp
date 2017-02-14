@@ -58,30 +58,21 @@ namespace zoper
 		m_goalQuad->text(2)->text = "Score:";
 		m_goalQuad->text(2)->color = colors::Blue;
 
-		m_pauseText = _pauserg->createRenderizable<NodeAlignedText>("pausetext", "PAUSE", scoreFont, 180, colors::White,scenePerspective(),NodeAlignedText::AlignmentX::Center,NodeAlignedText::AlignmentY::Middle);
+		vector2df goBoxHalfSize{ 365, 365 };
+		Rectf32 gobox{ scenePerspective().center() - goBoxHalfSize, (goBoxHalfSize * 2)};
 
-		_gameText = _gameOverrg->createRenderizable<NodeText>("gameovergame", "GAME", scoreFont, 360, colors::White);
-		_overText = _gameOverrg->createRenderizable<NodeText>("gameoverover", "OVER", scoreFont, 360, colors::White);
+		m_pauseText = _pauserg->createRenderizable<NodeAlignedText>("pausetext", "PAUSE", scoreFont, 180, colors::White, scenePerspective(),NodeAlignedText::AlignmentX::Center,NodeAlignedText::AlignmentY::Middle);
+
+		_gameOverrg->createRenderizable<NodeAlignedText>("gameovergame", "GAME", scoreFont, 360, colors::White, 
+			gobox,
+			NodeAlignedText::AlignmentX::Center, NodeAlignedText::AlignmentY::Top);
+		_gameOverrg->createRenderizable<NodeAlignedText>("gameoverover", "OVER", scoreFont, 360, colors::White, 
+			gobox,
+			NodeAlignedText::AlignmentX::Center, NodeAlignedText::AlignmentY::Bottom);
 
 		increaseScore(0);
 
-//		_scoreText->scale = { 1.0f, 2.0f };
-//		_scoreDisplay->scale = { 1.0f, 2.0f };
-//		_levelText->scale = { 1.0f, 2.0f };
-//		_levelDisplay->scale = { 1.0f, 2.0f };
-//		_goalText->scale = { 1.0f, 2.0f };
-//		_goalDisplay->scale = { 1.0f, 2.0f };
-
 		_levelrg->position = { 1250, 50 };
-
-		auto _gameBoundingBox = _gameText->bounds();
-		auto _overBoundingBox = _overText->bounds();
-		auto sceneCenter = getCenterCoordinates();
-		_gameText->move({ sceneCenter.x - (_gameBoundingBox.width / 2.0f), sceneCenter.y - _gameBoundingBox.height });
-		_overText->move({ sceneCenter.x - (_overBoundingBox.width / 2.0f), sceneCenter.y });
-
-//		_pauseText->setAlignmentX(scenePerspective(), NodeText::Alignment::Center);
-//		_pauseText->setAlignmentY(scenePerspective(), NodeText::Alignment::Center);
 	}
 
 	void GameScene::onDeinit()

@@ -146,11 +146,10 @@ namespace zoper
 
 		// Nodes from the scene
 		lib::sptr<Player> p_player{ nullptr };
-		lib::sptr<zoper::TextQuad> m_scoreQuad;
-		lib::sptr<zoper::TextQuad> m_goalQuad;
-		lib::sptr<lib::draw::nodes::NodeText> _gameText{ nullptr };
-		lib::sptr<lib::draw::nodes::NodeText> _overText{ nullptr };
-		lib::sptr<lib::draw::nodes::NodeText> m_pauseText{ nullptr };
+		lib::sptr<TextQuad> m_scoreQuad;
+		lib::sptr<TextQuad> m_goalQuad;
+		lib::sptr<lib::draw::SceneNode> m_gameOverText;
+		lib::sptr<lib::draw::nodes::NodeText> m_pauseText;
 		std::vector<std::vector<lib::sptr<lib::draw::nodes::NodeQuad>>> m_backgroundTiles;
 	};
 }
