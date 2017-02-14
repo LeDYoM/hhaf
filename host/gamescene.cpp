@@ -524,7 +524,7 @@ namespace zoper
 	{
 		// Tile appeared
 		if (auto ztile = std::dynamic_pointer_cast<Tile>(nTile)) {
-			tokenAppeared(pos, ztile);
+			logDebug("Token ", ztile->name(), " appeared at ", pos);
 		} else if (auto player = std::dynamic_pointer_cast<Player>(nTile)) {
 			// Set the position in the scene depending on the board position
 			player->position = board2Scene(pos);
@@ -546,7 +546,7 @@ namespace zoper
 		if (auto ztile = std::dynamic_pointer_cast<Tile>(tile)) {
 			tokenMoved(source, dest, ztile);
 		} else if (auto ztile_ = std::dynamic_pointer_cast<Player>(tile)) {
-			playerMoved(source, dest, ztile_);
+			updatePlayer(dest, ztile_);
 		}
 	}
 
@@ -567,13 +567,6 @@ namespace zoper
 //			anim::noAction, anim::noAction),nullptr);
 	}
 
-	void GameScene::tokenAppeared(const vector2du32 &_position, sptr<Tile> tile)
-	{
-		_position;
-		tile;
-		logDebug("Token ", tile->name(), " appeared at ", _position);
-	}
-
 	void GameScene::updatePlayer(const vector2du32 &dest, sptr<Player> player_)
 	{
 		const auto ts(tileSize());
@@ -588,11 +581,6 @@ namespace zoper
 		else {
 //			player_->scale = { ts.y / ts.x, ts.x / ts.y };
 		}
-	}
-
-	void GameScene::playerMoved(const vector2du32 &, const vector2du32 &dest, sptr<Player> player_)
-	{
-		updatePlayer(dest, player_);
 	}
 
 	void GameScene::increaseScore(u32 scoreIncrement)
