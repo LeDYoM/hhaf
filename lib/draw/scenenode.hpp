@@ -24,6 +24,9 @@ namespace lib
 
 		class Scene;
 		class Renderizable;
+		/** \brief Main class representing all SceneNodes from a Scene.
+		* This class is that serves as main entry point in the hierarchy of the scene
+		*/
 		class SceneNode : public core::HasName, public Transformable
 		{
 		public:
@@ -65,7 +68,7 @@ namespace lib
 			}
 
 			bool moveLastBeforeNode(const sptr<SceneNode> &beforeNode);
-			bool removeSceneNode(sptr<SceneNode> element);
+			bool removeSceneNode(const sptr<SceneNode> &element);
 
 			void draw();
 			void addAnimation(sptr<anim::IAnimation> nanimation, sptr<SceneNode> tracker = {}) noexcept;
@@ -83,10 +86,10 @@ namespace lib
 			* @
 			*/
 			void setColor(const Color &color, const bool applySceneNodes = true, const u32 deepLevel = {});
+			inline SceneNode *parent() const noexcept { return m_parent; }
 
 		protected:
 
-			inline SceneNode *parent() const noexcept { return m_parent; }
 			void addRenderizable(const sptr<Renderizable> &newElement);
 			void addSceneNode(const sptr<SceneNode> &node);
 

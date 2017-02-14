@@ -30,25 +30,27 @@ namespace lib
 	};
 
 	template <typename T>
-	class Property<Property<T>>
+	class ForwardProperty
 	{
 	public:
-		using callback_t = std::function<void(const T &newValue)>;
-		constexpr Property(Property<T> &iv, callback_t c = {}) noexcept : m_value{ iv }, m_callback{ std::move(c) } {}
-		Property(const Property&) = delete;
-		Property& operator=(const Property&) = delete;
+		using callback_t = std::function<void()>;
+		constexpr ForwardProperty() noexcept {}
+		constexpr ForwardProperty(Property<T> *const iv, callback_t c = {}) noexcept : m_value{ iv }, m_callback{ std::move(c) } {}
+		ForwardProperty(const ForwardProperty&) = delete;
+		ForwardProperty& operator=(const ForwardProperty&) = delete;
 
-		constexpr inline const T &operator()() const noexcept { return m_value; }
+		constexpr inline const T &operator()() const noexcept { return (*m_value)(); }
 		inline void setCallback(callback_t c) noexcept { m_callback = std::move(c); }
-		constexpr inline const T &get() const noexcept { return m_value; }
-		inline void set(const T&v) { m_value = v; if (m_callback) m_callback(); }
-		inline void set(T&&v) { m_value = std::move(v); if (m_callback) m_callback(); }
-		inline Property &operator=(const T&v) { set(v); return *this; }
-		inline Property &operator=(T&&v) { set(std::move(v)); return *this; }
+		inline void setForwardProperty(Property<T> *const p) noexcept { m_value = p; }
+		constexpr inline const T &get() const noexcept { return (*m_value).get(); }
+		inline void set(const T&v) { (*m_value) = v; if (m_callback) m_callback(); }
+		inline void set(T&&v) { (*m_value) = std::move(v); if (m_callback) m_callback(); }
+		inline ForwardProperty &operator=(const T&v) { set(v); return *this; }
+		inline ForwardProperty &operator=(T&&v) { set(std::move(v)); return *this; }
 
 	private:
-		Property<T> &m_value;
-		callback_t m_callback;
+		Property<T> *m_value{ nullptr };
+		callback_t m_callback{ nullptr };
 	};
 
 	template <typename T>

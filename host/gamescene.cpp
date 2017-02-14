@@ -326,7 +326,8 @@ namespace zoper
 		logDebug("Adding player tile at ", _gameData.centerRect.left, ",", _gameData.centerRect.top);
 		__ASSERT(!p_player, "Player already initialized");
 		// Create the player instance
-		p_player = _mainBoardrg->createSceneNode<Player>("playerNode", _gameData.centerRect.leftTop(), Rectf32::fromSize(tileSize() ));
+		p_player = msptr<Player>(_mainBoardrg, "playerNode", _gameData.centerRect.leftTop(), Rectf32::fromSize(tileSize()));
+//		p_player = _mainBoardrg->createSceneNode<Player>("playerNode", _gameData.centerRect.leftTop(), Rectf32::fromSize(tileSize() ));
 
 		// Add it to the board and to the scene nodes
 		p_boardModel->setTile(p_player->boardPosition(), std::dynamic_pointer_cast<board::ITile>(p_player));
@@ -338,7 +339,7 @@ namespace zoper
 
 		logDebug("Adding new tile at ", pos, " with value ", newToken);
 		// Create a new Tile instance
-		auto newTileToken = _mainBoardrg->createSceneNode<Tile>("tileNode", BoardTileData(newToken), Rectf32::fromSize(tileSize()));
+		auto newTileToken = msptr<Tile>(_mainBoardrg, "tileNode", BoardTileData{ static_cast<BoardTileData>(newToken) }, Rectf32::fromSize(tileSize()));
 		// Set the position in the scene depending on the board position
 		newTileToken->position = board2Scene(pos);
 
@@ -560,9 +561,9 @@ namespace zoper
 
 	void GameScene::tokenMoved(const vector2du32 &, const vector2du32 &dest, sptr<Tile> tile)
 	{
-		addAnimation(msptr<draw::anim::IPropertyAnimation<vector2df>>
-			(_levelProperties.millisBetweenTokens() / 2, tile->position, tile->position(), board2Scene(dest),
-			anim::noAction, anim::noAction),nullptr);
+//		addAnimation(msptr<draw::anim::IPropertyAnimation<vector2df>>
+//			(_levelProperties.millisBetweenTokens() / 2, tile->position, tile->position(), board2Scene(dest),
+//			anim::noAction, anim::noAction),nullptr);
 	}
 
 	void GameScene::tokenAppeared(const vector2du32 &_position, sptr<Tile> tile)
@@ -576,7 +577,7 @@ namespace zoper
 	{
 		_position;
 		logDebug("Deleting token ", tile->name(), " from scene at position ", _position);
-		_mainBoardrg->removeSceneNode(tile);
+		tile->remove();
 	}
 
 	void GameScene::tokenChangedValue(const vector2du32 &, sptr<Tile> tile,
@@ -591,7 +592,7 @@ namespace zoper
 		const auto tileCenter(ts / 2.0f);
 //		player_->origin = tileCenter;
 		player_->position = board2Scene(dest) + tileCenter;
-		player_->rotation = player_->currentDirection().angle();
+//		player_->rotation = player_->currentDirection().angle();
 		if (player_->currentDirection().value() == Direction::DirectionData::Up ||
 			player_->currentDirection().value() == Direction::DirectionData::Down) {
 //			player_->scale = { 1, 1 };

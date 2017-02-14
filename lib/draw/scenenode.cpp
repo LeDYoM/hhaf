@@ -23,10 +23,6 @@ namespace lib
 
 		void SceneNode::draw()
 		{
-			if (name() == "score")
-			{
-				int a = 0;
-			}
 			if (isVisible()) {
 				auto handle(host().rStates().pushChanges(&getTransform(), nullptr));
 
@@ -107,8 +103,9 @@ namespace lib
 			node->onAddedToScene();
 		}
 
-		bool SceneNode::removeSceneNode(sptr<SceneNode> element)
+		bool SceneNode::removeSceneNode(const sptr<SceneNode> &element)
 		{
+			__ASSERT(this != element.get(), "Cannot delete myself from myself");
 			return removespFrom(m_groups, element);
 		}
 
