@@ -525,19 +525,20 @@ namespace zoper
 		// Tile appeared
 		if (auto ztile = std::dynamic_pointer_cast<Tile>(nTile)) {
 			tokenAppeared(pos, ztile);
-		} else if (auto ztile_ = std::dynamic_pointer_cast<Player>(nTile)) {
+		} else if (auto player = std::dynamic_pointer_cast<Player>(nTile)) {
 			// Set the position in the scene depending on the board position
-			playerAppeared(pos, ztile_);
+			player->position = board2Scene(pos);
 		}
 	}
 
 	void GameScene::tileDeleted(const vector2du32 &pos, board::SITilePointer nTile)
 	{
 		if (auto ztile = std::dynamic_pointer_cast<Tile>(nTile)) {
-			tokenDissapeared(pos,ztile);
-		} else if (auto ztile_ = std::dynamic_pointer_cast<Player>(nTile)) {
-			playerDissapeared(pos,ztile_);
-		}
+			logDebug("Deleting token ", ztile->name(), " from scene at position ", pos);
+			ztile->remove();
+		} /*else if (auto ztile_ = std::dynamic_pointer_cast<Player>(nTile)) {
+			// Actually, never used
+		}*/
 	}
 
 	void GameScene::tileMoved(const vector2du32 &source, const vector2du32 &dest, board::SITilePointer tile)
@@ -555,7 +556,7 @@ namespace zoper
 		if (auto ztile = std::dynamic_pointer_cast<Tile>(nTile)) {
 			ztile->set(nv);
 		} else if (auto ztile_ = std::dynamic_pointer_cast<Player>(nTile)) {
-			playerChangedValue(pos, ztile_, ov, nv);
+			ztile->set(nv);
 		}
 	}
 
@@ -571,13 +572,6 @@ namespace zoper
 		_position;
 		tile;
 		logDebug("Token ", tile->name(), " appeared at ", _position);
-	}
-
-	void GameScene::tokenDissapeared(const vector2du32 &_position, sptr<Tile> tile)
-	{
-		_position;
-		logDebug("Deleting token ", tile->name(), " from scene at position ", _position);
-		tile->remove();
 	}
 
 	void GameScene::updatePlayer(const vector2du32 &dest, sptr<Player> player_)
@@ -599,19 +593,6 @@ namespace zoper
 	void GameScene::playerMoved(const vector2du32 &, const vector2du32 &dest, sptr<Player> player_)
 	{
 		updatePlayer(dest, player_);
-	}
-
-	void GameScene::playerAppeared(const vector2du32 &pos, sptr<Player> player)
-	{
-		player->position = board2Scene(pos);
-	}
-
-	void GameScene::playerDissapeared(const vector2du32 &, sptr<Player> player) {}
-
-	void GameScene::playerChangedValue(const vector2du32 &, sptr<Player> player,
-		const board::BoardTileData &, const board::BoardTileData &)
-	{
-//		player->setColor(player->getColorForToken());
 	}
 
 	void GameScene::increaseScore(u32 scoreIncrement)

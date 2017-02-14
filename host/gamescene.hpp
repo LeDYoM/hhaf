@@ -118,13 +118,8 @@ namespace zoper
 
 		void tokenMoved(const lib::vector2du32 &source, const lib::vector2du32 &dest, lib::sptr<Tile> tile);
 		void tokenAppeared(const lib::vector2du32 &position, lib::sptr<Tile> tile);
-		void tokenDissapeared(const lib::vector2du32 &position, lib::sptr<Tile> tile);
 
-		void playerChangedValue(const lib::vector2du32 &position, lib::sptr<Player> player,
-			const lib::board::BoardTileData &ov, const lib::board::BoardTileData &nv);
 		void playerMoved(const lib::vector2du32 &source, const lib::vector2du32 &dest, lib::sptr<Player> player);
-		void playerAppeared(const lib::vector2du32 &position, lib::sptr<Player> player);
-		void playerDissapeared(const lib::vector2du32 &position, lib::sptr<Player> player);
 
 		virtual lib::vector2df getDefaultSizeView() override;
 
