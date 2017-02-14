@@ -116,8 +116,6 @@ namespace zoper
 
 		void updatePlayer(const lib::vector2du32 &dest, lib::sptr<Player> player_);
 
-		void tokenChangedValue(const lib::vector2du32 &position, lib::sptr<Tile> tile, 
-			const lib::board::BoardTileData &ov, const lib::board::BoardTileData &nv);
 		void tokenMoved(const lib::vector2du32 &source, const lib::vector2du32 &dest, lib::sptr<Tile> tile);
 		void tokenAppeared(const lib::vector2du32 &position, lib::sptr<Tile> tile);
 		void tokenDissapeared(const lib::vector2du32 &position, lib::sptr<Tile> tile);

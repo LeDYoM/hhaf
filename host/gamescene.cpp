@@ -553,7 +553,7 @@ namespace zoper
 		const board::BoardTileData &ov, const board::BoardTileData &nv)
 	{
 		if (auto ztile = std::dynamic_pointer_cast<Tile>(nTile)) {
-			tokenChangedValue(pos, ztile, ov, nv);
+			ztile->set(nv);
 		} else if (auto ztile_ = std::dynamic_pointer_cast<Player>(nTile)) {
 			playerChangedValue(pos, ztile_, ov, nv);
 		}
@@ -578,12 +578,6 @@ namespace zoper
 		_position;
 		logDebug("Deleting token ", tile->name(), " from scene at position ", _position);
 		tile->remove();
-	}
-
-	void GameScene::tokenChangedValue(const vector2du32 &, sptr<Tile> tile,
-		const board::BoardTileData &, const board::BoardTileData &)
-	{
-//		tile->setColor(tile->getColorForToken());
 	}
 
 	void GameScene::updatePlayer(const vector2du32 &dest, sptr<Player> player_)
