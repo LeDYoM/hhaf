@@ -586,13 +586,15 @@ namespace zoper
 		player_->m_extraSceneNode->origin = tileCenter;
 		player_->m_extraSceneNode->position = tileCenter;
 		player_->m_extraSceneNode->rotation = player_->currentDirection().angle();
-//		player_->rotation = player_->currentDirection().angle();
+		player_->m_extraSceneNode_2->origin = tileCenter;
+		player_->m_extraSceneNode_2->position = tileCenter;
+
 		if (player_->currentDirection().value() == Direction::DirectionData::Up ||
 			player_->currentDirection().value() == Direction::DirectionData::Down) {
-//			player_->scale = { 1, 1 };
+			player_->m_extraSceneNode_2->scale = { 1, 1 };
 		}
 		else {
-//			player_->scale = { ts.y / ts.x, ts.x / ts.y };
+			player_->m_extraSceneNode_2->scale = { ts.y / ts.x, ts.x / ts.y };
 		}
 	}
 

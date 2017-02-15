@@ -13,8 +13,8 @@ namespace zoper
 		currentDirection{ Direction::Up }, m_board2SceneFactor{ std::move(board2SceneFactor) }
 	{
 		m_extraSceneNode = m_sceneNode->createSceneNode("m_extraSceneNode");
-//		position.setForwardProperty(&(m_extraSceneNode->position));
-		m_node = m_extraSceneNode->createRenderizable<nodes::NodeShape>("Node", box, nullptr, 3, colors::White);
+		m_extraSceneNode_2 = m_extraSceneNode->createSceneNode("sdafasfd");
+		m_node = m_extraSceneNode_2->createRenderizable<nodes::NodeShape>("Node", box, nullptr, 3, colors::White);
 		m_sceneNode->setColor(getColorForToken());
 	}
 
