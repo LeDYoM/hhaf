@@ -97,6 +97,12 @@ namespace lib
 		T y;
 	};
 
+	template <typename T>
+	inline constexpr vector2d<T> operator-(const vector2d<T> &v2d) noexcept
+	{
+		return vector2d<T>{-v2d.x, -v2d.y};
+	}
+
 	// Serialization operators
 	template <typename T>
 	inline std::ostream& operator<<(std::ostream & os, const vector2d<T> &v2d)
