@@ -562,8 +562,10 @@ namespace zoper
 		const board::BoardTileData &ov, const board::BoardTileData &nv)
 	{
 		if (auto ztile = std::dynamic_pointer_cast<Tile>(nTile)) {
+			logDebug("Token at position ", pos, " changed from ", ov, " to ", nv);
 			ztile->set(nv);
 		} else if (auto ztile_ = std::dynamic_pointer_cast<Player>(nTile)) {
+			logDebug("Player (position ", pos, ") changed from ", ov, " to ", nv);
 			ztile->set(nv);
 		}
 	}

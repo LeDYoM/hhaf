@@ -20,7 +20,7 @@ namespace lib
 			HasName &operator=(const HasName &other) = default;
 			virtual ~HasName() = default;
 			
-			inline str_const name() const noexcept { return m_name; }
+			inline const str_const &name() const noexcept { return m_name; }
 		private:
 			const str_const m_name;
 		};

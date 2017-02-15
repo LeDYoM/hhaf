@@ -1,9 +1,11 @@
-#ifndef __GAMEBASETILE_HPP__
-#define __GAMEBASETILE_HPP__
+#ifndef ZOPER_GAMEBASETILE_HPP__
+#define ZOPER_GAMEBASETILE_HPP__
 
-#include <lib/board/itilescontroller.hpp>
+#pragma once
+
 #include <lib/draw/scenenode.hpp>
 #include <lib/draw/nodes/nodeshape.hpp>
+#include <lib/board/itilescontroller.hpp>
 
 namespace zoper
 {
@@ -15,10 +17,11 @@ namespace zoper
 
 		lib::ForwardProperty<lib::vector2df> position;
 
-		lib::str_const name() const { return m_sceneNode->name(); }
+		const lib::str_const &name() const noexcept { return m_sceneNode->name(); }
 
 		lib::draw::Color getColorForToken() const;
 		lib::draw::SceneNodeSPtr m_sceneNode;
+	protected:
 		lib::sptr<lib::draw::nodes::NodeShape> m_node;
 	};
 }
