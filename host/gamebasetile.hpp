@@ -12,7 +12,7 @@ namespace zoper
 	class GameBaseTile : public lib::board::ITile
 	{
 	public:
-		explicit GameBaseTile(const lib::draw::SceneNodeSPtr &parent, lib::str_const name, lib::board::BoardTileData data, const lib::Rectf32 &box, const lib::u32 pointCount = 30);
+		explicit GameBaseTile(const lib::draw::SceneNodeSPtr &parent, lib::str_const name, lib::board::BoardTileData data);
 		virtual ~GameBaseTile() = default;
 
 		lib::ForwardProperty<lib::vector2df> position;

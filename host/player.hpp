@@ -15,7 +15,7 @@ namespace zoper
 		lib::Property<lib::vector2du32> boardPosition;
 		lib::Property<Direction> currentDirection;
 
-	private:
+	public:
 		lib::draw::SceneNodeSPtr m_rotateSceneNode;
 		lib::vector2df m_board2SceneFactor;
 	};

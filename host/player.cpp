@@ -3,12 +3,15 @@
 namespace zoper
 {
 	using namespace lib;
+	using namespace lib::draw;
 
-	Player::Player(const draw::SceneNodeSPtr &parent, str_const name, vector2du32 bPosition, const Rectf32 &box, vector2df board2SceneFactor)
-		: GameBaseTile{ parent, std::move(name), 0, box, 3 },
-		boardPosition{ bPosition, [this]() { this->position = { m_board2SceneFactor.x * boardPosition().x, m_board2SceneFactor.y * boardPosition().y }; } },
+	Player::Player(const SceneNodeSPtr &parent, str_const name, vector2du32 bPosition, const Rectf32 &box, vector2df board2SceneFactor)
+		: GameBaseTile{ parent, std::move(name), 0 },
+		boardPosition{ std::move(bPosition), [this]() { this->position = { m_board2SceneFactor.x * boardPosition().x, m_board2SceneFactor.y * boardPosition().y }; } },
 		currentDirection{ Direction::Up }, m_board2SceneFactor{ std::move(board2SceneFactor) }
 	{
+		m_rotateSceneNode = m_sceneNode->createSceneNode("m_rotateSceneNode");
+		m_node = m_rotateSceneNode->createRenderizable<nodes::NodeShape>("Node", box, nullptr, 3, colors::White);
 		m_sceneNode->setColor(getColorForToken());
 	}
 

@@ -3,12 +3,17 @@
 
 namespace zoper
 {
-	lib::u32 Tile::_tileCounter{ 0 };
+	using namespace lib;
+	using namespace lib::draw;
+	using namespace lib::board;
 
-	Tile::Tile(const lib::draw::SceneNodeSPtr &parent, lib::str_const name, lib::board::BoardTileData data, const lib::Rectf32 &box) :
-		GameBaseTile{ parent, name + std::to_string(_tileCounter) + std::to_string(_tileCounter), data, box }
+	u32 Tile::_tileCounter{ 0 };
+
+	Tile::Tile(const SceneNodeSPtr &parent, str_const name, BoardTileData data, const Rectf32 &box) :
+		GameBaseTile{ parent, name + std::to_string(_tileCounter) + std::to_string(_tileCounter), data }
 	{
 		++_tileCounter;
+		m_node = m_sceneNode->createRenderizable<nodes::NodeShape>("Node", box, nullptr, 30, colors::White);
 		m_sceneNode->setColor(getColorForToken());
 	}
 
