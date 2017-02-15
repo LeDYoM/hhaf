@@ -48,11 +48,16 @@ namespace lib
 			void clear();
 
 			template <typename T = SceneNode, typename... Args>
-			sptr<T> createSceneNode(std::string name, Args&&... args)
+			sptr<T> createSceneNode(str_const name, Args&&... args)
 			{
 				auto result(msptr<T>(this, std::move(name), std::forward<Args>(args)...));
 				addSceneNode(result);
 				return result;
+			}
+
+			sptr<SceneNode> createSceneNode(str_const name)
+			{
+				return createSceneNode<SceneNode>(name);
 			}
 
 			template <typename T, typename... Args>
@@ -81,7 +86,7 @@ namespace lib
 			* @param [in] apply the function to scenenodes too
 			* @
 			*/
-			void setColor(const Color &color, const bool applySceneNodes = true, const u32 deepLevel = {});
+			void setColor(const Color &color, const bool applySceneNodes = true);
 			inline SceneNode *parent() const noexcept { return m_parent; }
 
 		protected:

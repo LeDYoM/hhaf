@@ -24,7 +24,7 @@ namespace lib
 		void SceneNode::draw()
 		{
 			if (isVisible()) {
-				auto handle(host().rStates().pushChanges(&getTransform(), nullptr));
+				auto handle(host().rStates().pushChanges(&transform(), nullptr));
 
 				for (const auto& renderizable : m_renderNodes) {
 					renderizable->draw();
@@ -46,27 +46,19 @@ namespace lib
 			return parentScene()->getView()->perspective();
 		}
 
-		void SceneNode::setColor(const Color & color, const bool applySceneNodes, const u32 deepLevel)
+		void SceneNode::setColor(const Color & color, const bool applySceneNodes)
 		{
 			for (auto &node : m_renderNodes) {
 				node->color = color;
 			}
 
-			if (applySceneNodes && deepLevel > 0) {
+			if (applySceneNodes) {
 				for (auto &sNode : m_groups) {
-					sNode->setColor(color,true,deepLevel-1);
+					sNode->setColor(color,true);
 				}
 			}
 		}
 
-		/*
-		sptr<SceneNode> SceneNode::createSceneNode(const std::string & name)
-		{
-			sptr<SceneNode> rg = std::make_shared<SceneNode>(name, this);
-			addSceneNode(rg);
-			return rg;
-		}
-		*/
 		bool SceneNode::moveLastBeforeNode(const sptr<SceneNode> &beforeNode)
 		{
 			__ASSERT(!m_groups.empty(), "Cannot moveLastInsertedBeforeNode on empty container");
