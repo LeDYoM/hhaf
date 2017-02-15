@@ -34,8 +34,8 @@ namespace lib
 			const vector2df pos{ position() };
 
 			m_transform = Transform{
-				sc.x,		ss.y,	-orig.x * sc.x - orig.y * ss.y + pos.x,
-				-ss.x,		sc.y,	orig.x * ss.y - orig.y * sc.y + pos.y,
+				sc.x,		ss.y,	(-orig.x * sc.x) - (orig.y * ss.y) + pos.x,
+				-ss.x,		sc.y,	( orig.x * ss.y) - (orig.y * sc.y) + pos.y,
 				0.f,		0.f,	1.f };
 		}
 	}

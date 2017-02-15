@@ -581,8 +581,6 @@ namespace zoper
 	{
 		const auto ts(tileSize());
 		const auto tileCenter(ts / 2.0f);
-//		player_->origin = tileCenter;
-//		player_->boardPosition = dest;
 		player_->m_extraSceneNode->origin = tileCenter;
 		player_->m_extraSceneNode->position = tileCenter;
 		player_->m_extraSceneNode->rotation = player_->currentDirection().angle();
