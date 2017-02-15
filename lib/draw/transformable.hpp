@@ -14,8 +14,8 @@ namespace lib
 		public:
 			Transformable() noexcept;
 			virtual ~Transformable();
-			const Transform& getTransform() const noexcept;
-			void updateTransform();
+			inline const Transform& transform() const noexcept { return m_transform; }
+			void updateTransform() noexcept;
 
 			Property<vector2df> origin;
 			Property<f32> rotation;

@@ -22,10 +22,6 @@ namespace lib
 			0.f, 0.f, 1.f, 0.f,
 			a02, a12, 0.f, a22 } 
 		{
-//			m_matrix[0] = a00; m_matrix[4] = a01; m_matrix[8] = 0.f; m_matrix[12] = a02;
-//			m_matrix[1] = a10; m_matrix[5] = a11; m_matrix[9] = 0.f; m_matrix[13] = a12;
-//			m_matrix[2] = 0.f; m_matrix[6] = 0.f; m_matrix[10] = 1.f; m_matrix[14] = 0.f;
-//			m_matrix[3] = a20; m_matrix[7] = a21; m_matrix[11] = 0.f; m_matrix[15] = a22;
 		}
 
 		Transform Transform::getInverse() const noexcept
@@ -37,9 +33,8 @@ namespace lib
 
 			// Compute the inverse if the determinant is not zero
 			// (don't use an epsilon because the determinant may *really* be tiny)
-			if (det != 0.f)
-			{
-				return Transform((m_matrix[15] * m_matrix[5] - m_matrix[7] * m_matrix[13]) / det,
+			if (det != 0.f) {
+				return Transform{ (m_matrix[15] * m_matrix[5] - m_matrix[7] * m_matrix[13]) / det,
 					-(m_matrix[15] * m_matrix[4] - m_matrix[7] * m_matrix[12]) / det,
 					(m_matrix[13] * m_matrix[4] - m_matrix[5] * m_matrix[12]) / det,
 					-(m_matrix[15] * m_matrix[1] - m_matrix[3] * m_matrix[13]) / det,
@@ -47,18 +42,16 @@ namespace lib
 					-(m_matrix[13] * m_matrix[0] - m_matrix[1] * m_matrix[12]) / det,
 					(m_matrix[7] * m_matrix[1] - m_matrix[3] * m_matrix[5]) / det,
 					-(m_matrix[7] * m_matrix[0] - m_matrix[3] * m_matrix[4]) / det,
-					(m_matrix[5] * m_matrix[0] - m_matrix[1] * m_matrix[4]) / det);
-			}
-			else
-			{
+					(m_matrix[5] * m_matrix[0] - m_matrix[1] * m_matrix[4]) / det };
+			} else {
 				return Identity;
 			}
 		}
 
 		constexpr vector2df Transform::transformPoint(const f32 x, const f32 y) const noexcept
 		{
-			return vector2df(m_matrix[0] * x + m_matrix[4] * y + m_matrix[12],
-				m_matrix[1] * x + m_matrix[5] * y + m_matrix[13]);
+			return vector2df{ m_matrix[0] * x + m_matrix[4] * y + m_matrix[12],
+				m_matrix[1] * x + m_matrix[5] * y + m_matrix[13] };
 		}
 
 		constexpr vector2df Transform::transformPoint(const vector2df& point) const noexcept
@@ -98,7 +91,7 @@ namespace lib
 			const std::array<f32,16> &a = m_matrix;
 			const std::array<f32, 16> &b = transform.m_matrix;
 
-			*this = Transform(a[0] * b[0] + a[4] * b[1] + a[12] * b[3],
+			*this = Transform{ a[0] * b[0] + a[4] * b[1] + a[12] * b[3],
 				a[0] * b[4] + a[4] * b[5] + a[12] * b[7],
 				a[0] * b[12] + a[4] * b[13] + a[12] * b[15],
 				a[1] * b[0] + a[5] * b[1] + a[13] * b[3],
@@ -106,7 +99,7 @@ namespace lib
 				a[1] * b[12] + a[5] * b[13] + a[13] * b[15],
 				a[3] * b[0] + a[7] * b[1] + a[15] * b[3],
 				a[3] * b[4] + a[7] * b[5] + a[15] * b[7],
-				a[3] * b[12] + a[7] * b[13] + a[15] * b[15]);
+				a[3] * b[12] + a[7] * b[13] + a[15] * b[15] };
 
 			return *this;
 		}
@@ -133,9 +126,9 @@ namespace lib
 			const f32 cos = std::cos(rad);
 			const f32 sin = std::sin(rad);
 
-			Transform rotation(cos, -sin, 0,
+			Transform rotation{ cos, -sin, 0,
 				sin, cos, 0,
-				0, 0, 1);
+				0, 0, 1 };
 
 			return combine(rotation);
 		}
@@ -160,18 +153,18 @@ namespace lib
 
 		Transform& Transform::scale(const f32 scaleX, const f32 scaleY) noexcept
 		{
-			Transform scaling(scaleX, 0, 0,
+			Transform scaling{ scaleX, 0, 0,
 				0, scaleY, 0,
-				0, 0, 1);
+				0, 0, 1 };
 
 			return combine(scaling);
 		}
 
 		Transform& Transform::scale(const f32 scaleX, const f32 scaleY, const f32 centerX, const f32 centerY) noexcept
 		{
-			Transform scaling(scaleX, 0, centerX * (1 - scaleX),
+			Transform scaling{ scaleX, 0, centerX * (1 - scaleX),
 				0, scaleY, centerY * (1 - scaleY),
-				0, 0, 1);
+				0, 0, 1 };
 
 			return combine(scaling);
 		}
@@ -198,12 +191,12 @@ namespace lib
 			return combine(right);
 		}
 
-		Transform operator *(const Transform& left, const Transform& right)
+		Transform operator *(const Transform& left, const Transform& right) noexcept
 		{
 			return Transform(left).combine(right);
 		}
 
-		vector2df operator *(const Transform& left, const vector2df& right)
+		vector2df operator *(const Transform& left, const vector2df& right) noexcept
 		{
 			return left.transformPoint(right);
 		}

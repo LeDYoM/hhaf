@@ -48,8 +48,8 @@ namespace lib
 			std::array<f32, 16> m_matrix;
 		};
 
-		Transform operator *(const Transform& left, const Transform& right);
-		vector2df operator *(const Transform& left, const vector2df& right);
+		Transform operator *(const Transform& left, const Transform& right) noexcept;
+		vector2df operator *(const Transform& left, const vector2df& right) noexcept;
 	}
 }
 
