@@ -16,6 +16,7 @@ namespace zoper
 		lib::Property<Direction> currentDirection;
 
 	public:
+		void updateDirection();
 		lib::draw::SceneNodeSPtr m_extraSceneNode;
 		lib::draw::SceneNodeSPtr m_extraSceneNode_2;
 		lib::vector2df m_board2SceneFactor;

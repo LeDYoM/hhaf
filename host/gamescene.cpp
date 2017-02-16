@@ -388,7 +388,7 @@ namespace zoper
 			p_boardModel->moveTile(p_player->boardPosition(), vector2du32(nPosition.x,nPosition.y));
 			p_player->boardPosition = { nPosition.x, nPosition.y };
 		} else {
-			updatePlayer(p_player->boardPosition(), p_player);
+			p_player->updateDirection();
 		}
 	}
 
@@ -554,7 +554,7 @@ namespace zoper
 		if (auto ztile = std::dynamic_pointer_cast<Tile>(tile)) {
 			tokenMoved(source, dest, ztile);
 		} else if (auto ztile_ = std::dynamic_pointer_cast<Player>(tile)) {
-			updatePlayer(dest, ztile_);
+			ztile_->updateDirection();
 		}
 	}
 
@@ -575,25 +575,6 @@ namespace zoper
 //		addAnimation(msptr<draw::anim::IPropertyAnimation<vector2df>>
 //			(_levelProperties.millisBetweenTokens() / 2, tile->position, tile->position(), board2Scene(dest),
 //			anim::noAction, anim::noAction),nullptr);
-	}
-
-	void GameScene::updatePlayer(const vector2du32 &dest, sptr<Player> player_)
-	{
-		const auto ts(tileSize());
-		const auto tileCenter(ts / 2.0f);
-		player_->m_extraSceneNode->origin = tileCenter;
-		player_->m_extraSceneNode->position = tileCenter;
-		player_->m_extraSceneNode->rotation = player_->currentDirection().angle();
-		player_->m_extraSceneNode_2->origin = tileCenter;
-		player_->m_extraSceneNode_2->position = tileCenter;
-
-		if (player_->currentDirection().value() == Direction::DirectionData::Up ||
-			player_->currentDirection().value() == Direction::DirectionData::Down) {
-			player_->m_extraSceneNode_2->scale = { 1, 1 };
-		}
-		else {
-			player_->m_extraSceneNode_2->scale = { ts.y / ts.x, ts.x / ts.y };
-		}
 	}
 
 	void GameScene::increaseScore(u32 scoreIncrement)
