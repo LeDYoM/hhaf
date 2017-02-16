@@ -32,6 +32,9 @@ namespace lib
 	template <typename T> 
 	using list_shared_pointers = std::vector<sptr<T>>;
 
+	template <typename T>
+	using vector_unique_pointers = std::vector<uptr<T>>;
+
 	template <typename ContainerType, typename T>
 	bool removespFrom(ContainerType &container, const sptr<T> &element)
 	{

@@ -14,22 +14,18 @@ namespace lib
 		class IComponent
 		{
 		public:
+			/**
+			* Constructor.
+			* Constructs a new IComponent attached to the specified SceneNode
+			*/
+			constexpr IComponent() {}
 			virtual void update() = 0;
 			virtual ~IComponent() {}
-		};
 
-		class IAttachedSceneNodeNodeComponent : public IComponent
-		{
-		public:
-			ReadOnlyRefProperty<SceneNodeSPtr> sceneNode;
-		protected:
-			SceneNodeSPtr m_sceneNode;
-		};
-
-		class ComponentContainer
-		{
-		public:
-			constexpr ComponentContainer()
+			inline SceneNode *const attachedNode() const noexcept { return m_sceneNode; }
+		private:
+			SceneNode *m_sceneNode{};
+			friend class ComponentContainer;
 		};
 	}
 }
