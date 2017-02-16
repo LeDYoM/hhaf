@@ -1,9 +1,10 @@
 #ifndef __LIB_ANIMATIONMANAGER_HPP__
 #define __LIB_ANIMATIONMANAGER_HPP__
 
-#include <vector>
+#pragma once
+
 #include <lib/include/types.hpp>
-#include <lib/core/events/eventreceiver.hpp>
+#include <lib/draw/icomponent.hpp>
 
 namespace lib
 {
@@ -13,15 +14,14 @@ namespace lib
 		namespace anim
 		{
 			class IAnimation;
-			class AnimationComponent
+			class AnimationComponent : public IComponent
 			{
 			public:
 				AnimationComponent();
 				~AnimationComponent();
 			protected:
 				void push_animation(sptr<IAnimation>, sptr <SceneNode> = {});
-			private:
-				EventReceiver m_eventConnector;
+
 			};
 		}
 	}

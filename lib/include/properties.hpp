@@ -54,15 +54,15 @@ namespace lib
 	};
 
 	template <typename T>
-	class ReadOnlyProperty
+	class ReadOnlyRefProperty
 	{
 	public:
-		constexpr ReadOnlyProperty(const Property<T> &p) noexcept : m_property{ p } {}
-		constexpr inline const T &get() const noexcept { return m_property.get(); }
-		constexpr inline const T &operator()() const noexcept { return m_property(); }
+		constexpr ReadOnlyRefProperty(const T&p) noexcept : m_value{ p } {}
+		constexpr inline const T &get() const noexcept { return m_property; }
+		constexpr inline const T &operator()() const noexcept { return m_property; }
 
 	private:
-		const Property<T> &m_property;
+		const T &m_value;
 	};
 }
 
