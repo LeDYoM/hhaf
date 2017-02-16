@@ -1,6 +1,7 @@
 #include "transformable.hpp"
 #include <cmath>
 
+
 namespace lib
 {
 	namespace draw
@@ -22,8 +23,32 @@ namespace lib
 
 		Transformable::~Transformable() = default;
 
+		void Transformable::rotateAround(const vector2df & point, const f32 angle)
+		{
+			Lock l{ this };
+			origin = point;
+			position = point;
+			rotation = angle;
+		}
+
+		void Transformable::scaleAround(const vector2df & point, const vector2df & scale_)
+		{
+			Lock l{ this };
+			origin = point;
+			position = point;
+			scale = scale_;
+		}
+
+		void Transformable::unlocked() noexcept
+		{
+			updateTransform();
+		}
+
 		void Transformable::updateTransform() noexcept
 		{
+			if (locked())
+				return;
+
 			// Recompute the combined transform
 			const f32 angle = -rotation() * 3.141592654f / 180.f;
 			const f32 cosine = static_cast<f32>(std::cos(angle));
