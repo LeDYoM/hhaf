@@ -20,9 +20,9 @@ namespace zoper
 		lib::Property<Direction> currentDirection;
 
 		void movePlayer(const Direction &direction, const std::function<bool(const lib::vector2du32&)> &pointInCenter, const lib::sptr<lib::board::BoardModel> &boardModel);
-
-	public:
 		void updateDirection();
+
+	private:
 		lib::draw::SceneNodeSPtr m_extraSceneNode;
 		lib::draw::SceneNodeSPtr m_extraSceneNode_2;
 		lib::vector2df m_board2SceneFactor;
