@@ -20,6 +20,20 @@ namespace zoper
 
 	Player::~Player() = default;
 
+	void Player::movePlayer(const Direction & direction, const std::function<bool(const vector2du32&)> &pointInCenter, const sptr<board::BoardModel>& boardModel)
+	{
+		__ASSERT(direction.isValid(), "Invalid direction passed to move");
+		currentDirection = direction;
+		auto nPosition = direction.applyToVector(boardPosition());
+		if (pointInCenter(nPosition)) {
+			boardModel->moveTile(boardPosition(), nPosition);
+			boardPosition = { nPosition.x, nPosition.y };
+		}
+		else {
+			updateDirection();
+		}
+	}
+
 	void Player::updateDirection()
 	{
 		const auto tileCenter(m_board2SceneFactor / 2.0f);

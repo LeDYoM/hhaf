@@ -97,7 +97,6 @@ namespace zoper
 
 		void startGameOver();
 
-		void movePlayer(const Direction &dir);
 		void launchPlayer();
 		bool switchPause();
 

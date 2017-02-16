@@ -4,6 +4,10 @@
 #include "gamebasetile.hpp"
 #include "direction.hpp"
 
+#include <lib/include/types.hpp>
+#include <lib/board/boardmodel.hpp>
+#include <functional>
+
 namespace zoper
 {
 	class Player : public GameBaseTile
@@ -14,6 +18,8 @@ namespace zoper
 
 		lib::Property<lib::vector2du32> boardPosition;
 		lib::Property<Direction> currentDirection;
+
+		void movePlayer(const Direction &direction, const std::function<bool(const lib::vector2du32&)> &pointInCenter, const lib::sptr<lib::board::BoardModel> &boardModel);
 
 	public:
 		void updateDirection();

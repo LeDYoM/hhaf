@@ -357,8 +357,7 @@ namespace zoper
 			{
 				auto dir = _keyMapping.getDirectionFromKey(kEvent.key);
 				if (dir.isValid()) {
-					p_player->currentDirection = dir;
-					movePlayer(dir);
+					p_player->movePlayer(dir, [this](const vector2du32&p) { return pointInCenter(p); }, p_boardModel);
 				}
 				else if (_keyMapping.isLaunchKey(kEvent.key)) {
 					launchPlayer();
@@ -378,18 +377,6 @@ namespace zoper
 				break;
 			}
 		}));
-	}
-
-	void GameScene::movePlayer(const Direction & dir)
-	{
-		__ASSERT(dir.isValid(), "Invalid direction passed to move");
-		auto nPosition = dir.applyToVector(p_player->boardPosition());
-		if (pointInCenter(nPosition)) {
-			p_boardModel->moveTile(p_player->boardPosition(), vector2du32(nPosition.x,nPosition.y));
-			p_player->boardPosition = { nPosition.x, nPosition.y };
-		} else {
-			p_player->updateDirection();
-		}
 	}
 
 	void GameScene::launchPlayer()
@@ -450,7 +437,7 @@ namespace zoper
 		return false;
 	}
 
-	vector2df zoper::GameScene::board2SceneFactor() const
+	vector2df GameScene::board2SceneFactor() const
 	{
 		return{ getView()->perspective().size().x / static_cast<f32>(p_boardModel->size().x),
 			getView()->perspective().size().y / static_cast<f32>(p_boardModel->size().y) };
