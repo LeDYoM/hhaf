@@ -17,13 +17,14 @@ namespace lib
 		public:
 			Transformable() noexcept;
 			virtual ~Transformable();
-			inline const Transform& transform() const noexcept { return m_transform; }
 			void updateTransform() noexcept;
 
 			Property<vector2df> origin;
 			Property<f32> rotation;
 			Property<vector2df> scale;
 			Property<vector2df> position;
+
+			Property<Transform> transform;
 
 			/**
 			* Method to set the associated transformation to a rotation around a given point.
@@ -42,11 +43,7 @@ namespace lib
 			* @param [in] scale Scale factor
 			*/
 			void scaleAround(const vector2df &point, const vector2df &scale);
-			void unlocked() noexcept override;
-		protected:
-		private:
-			Transform m_transform;
-			
+			void unlocked() noexcept override;	
 		};
 	}
 }

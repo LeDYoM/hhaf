@@ -19,7 +19,7 @@ namespace lib
 			} },
 			position{ {} ,[this]() { updateTransform(); } },
 			scale{{ 1, 1 },[this]() { updateTransform(); } },
-			m_transform{} { }
+			transform{} { }
 
 		Transformable::~Transformable() = default;
 
@@ -58,10 +58,11 @@ namespace lib
 			const vector2df orig{ origin() };
 			const vector2df pos{ position() };
 
-			m_transform = Transform{
+			transform = {
 				sc.x,		ss.y,	(-orig.x * sc.x) - (orig.y * ss.y) + pos.x,
 				-ss.x,		sc.y,	( orig.x * ss.y) - (orig.y * sc.y) + pos.y,
-				0.f,		0.f,	1.f };
+				0.f,		0.f,	1.f 
+			};
 		}
 	}
 }
