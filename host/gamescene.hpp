@@ -128,7 +128,7 @@ namespace zoper
 		lib::sptr<lib::draw::SceneNode> _mainBoardrg{ nullptr };
 		lib::sptr<lib::draw::SceneNode> _gameOverrg{ nullptr };
 		lib::sptr<lib::draw::SceneNode> _levelrg{ nullptr };
-		lib::sptr<lib::draw::SceneNode> _pauserg{ nullptr };
+		lib::sptr<lib::draw::SceneNode> m_pauseSceneNode{ nullptr };
 		const lib::u8 _scoreSize{ 5 };
 		const lib::u8 _levelDataSize{ 5 };
 		LevelProperties _levelProperties;

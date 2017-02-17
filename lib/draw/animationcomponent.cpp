@@ -11,22 +11,34 @@ namespace lib
 	{
 		namespace anim
 		{
-			AnimationComponent::AnimationComponent()
+			class AnimationComponent::AnimationComponentPrivate
 			{
-				m_eventConnector.addSubscription(UpdateAnimationEvent::subscribe([](const events::Event&ev) {
-					const auto &aEvent{ dynamic_cast<const UpdateAnimationEvent&>(ev) };
-					const bool _continue{ aEvent.m_animation->animate() };
-					if (_continue) {
-						host().eventManager().resendCurrentEvent();
-					}
-				}));
+			public:
+				AnimationComponentPrivate() {}
+				vector_unique_pointers<IAnimation> m_animations;
+			};
+			AnimationComponent::AnimationComponent()
+				: m_private{ new AnimationComponentPrivate }
+			{
 			}
 
-			AnimationComponent::~AnimationComponent() = default;
-
-			void AnimationComponent::push_animation(sptr<IAnimation> nanimation, sptr<SceneNode> nodeTrack)
+			AnimationComponent::~AnimationComponent()
 			{
-				host().eventManager().addEvent(msptr<UpdateAnimationEvent>(std::move(nanimation),std::move(nodeTrack)));
+				__ASSERT(m_private, "Destructing private class that is nullptr");
+				delete m_private;
+			}
+
+			void AnimationComponent::addAnimation(uptr<IAnimation> nanimation)
+			{
+				m_private->m_animations.push_back(std::move(nanimation));
+			}
+
+			void AnimationComponent::update()
+			{
+				for (auto& animation : m_private->m_animations)
+				{
+					animation->animate();
+				}
 			}
 		}
 	}

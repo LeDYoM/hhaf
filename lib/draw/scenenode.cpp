@@ -1,8 +1,7 @@
 #include "scenenode.hpp"
 #include "renderizable.hpp"
 #include "scene.hpp"
-#include "animationcomponent.hpp"
-#include "ianimation.hpp"
+#include "icomponent.hpp"
 
 #include <lib/core/window.hpp>
 #include <lib/core/host.hpp>
@@ -12,7 +11,7 @@ namespace lib
 	namespace draw
 	{
 		SceneNode::SceneNode(SceneNode *parent, std::string name)
-			: core::HasName{ std::move(name) }, m_parent{ parent } {}
+			: core::HasName{ std::move(name) }, ComponentContainer{ this }, m_parent{ parent } {}
 
 		SceneNode::~SceneNode() = default;
 
@@ -34,11 +33,6 @@ namespace lib
 					group->draw();
 				}
 			}
-		}
-
-		void SceneNode::addAnimation(sptr<anim::IAnimation> nanimation, sptr<SceneNode> tracker) noexcept
-		{
-			parentScene()->createAnimation(std::move(nanimation), std::move(tracker));
 		}
 
 		Rectf32 SceneNode::scenePerspective()
@@ -105,6 +99,7 @@ namespace lib
 		{
 			m_groups.clear();
 			m_renderNodes.clear();
+//			m_componentContainer.
 		}
 	}
 }

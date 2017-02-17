@@ -19,9 +19,12 @@ namespace lib
 			public:
 				AnimationComponent();
 				~AnimationComponent();
-			protected:
-				void push_animation(sptr<IAnimation>, sptr <SceneNode> = {});
 
+				virtual void update() override;
+				void addAnimation(uptr<IAnimation>);
+			private:
+				class AnimationComponentPrivate;
+				AnimationComponentPrivate *m_private;
 			};
 		}
 	}

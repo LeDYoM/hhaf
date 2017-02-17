@@ -3,6 +3,7 @@
 #include "tile.hpp"
 #include "player.hpp"
 #include "common.hpp"
+#include <lib/include/types.hpp>
 #include <lib/board/boardmodel.hpp>
 #include <lib/board/itilescontroller.hpp>
 #include <lib/core/log.hpp>
@@ -15,6 +16,7 @@
 #include <lib/core/events/inputevent.hpp>
 #include <lib/include/properties.hpp>
 #include <lib/draw/ianimation.hpp>
+#include <lib/draw/animationcomponent.hpp>
 
 namespace zoper
 {
@@ -39,7 +41,7 @@ namespace zoper
 		_mainBoardrg = this->createSceneNode("mainBoard");
 		_gameOverrg = this->createSceneNode("gameOverScreen");
 		_levelrg = this->createSceneNode("level");
-		_pauserg = this->createSceneNode("pause");
+		m_pauseSceneNode = this->createSceneNode("pause");
 
 		auto& resourceManager{ lib::host().resourceManager() };
 		auto scoreFont(resourceManager.getFont("game_scene.scoreFont"));
@@ -61,7 +63,7 @@ namespace zoper
 		vector2df goBoxHalfSize{ 365, 365 };
 		Rectf32 gobox{ scenePerspective().center() - goBoxHalfSize, (goBoxHalfSize * 2)};
 
-		m_pauseText = _pauserg->createRenderizable<NodeAlignedText>("pausetext", "PAUSE", scoreFont, 180, colors::White, scenePerspective(),NodeAlignedText::AlignmentX::Center,NodeAlignedText::AlignmentY::Middle);
+		m_pauseText = m_pauseSceneNode->createRenderizable<NodeAlignedText>("pausetext", "PAUSE", scoreFont, 180, colors::White, scenePerspective(),NodeAlignedText::AlignmentX::Center,NodeAlignedText::AlignmentY::Middle);
 
 		_gameOverrg->createRenderizable<NodeAlignedText>("gameovergame", "GAME", scoreFont, 360, colors::White, 
 			gobox,
@@ -111,7 +113,7 @@ namespace zoper
 		setLevel(_gameConfig.value(StartLevelStr)->get<int>());
 		_gameOverrg->setVisible(false);
 		_mainBoardrg->setVisible(true);
-		_pauserg->setVisible(false);
+		m_pauseSceneNode->setVisible(false);
 
 		switch (_gameData._gameMode)
 		{
@@ -164,14 +166,15 @@ namespace zoper
 	{
 		if (state() == Playing) {
 			setState(Pause);
-			_pauserg->setVisible(true);
-			addAnimation(msptr<anim::IPropertyAnimation<Color>>(1000, m_pauseText->color, Color{ 255, 255, 255, 0 }, Color{ 255, 255, 255, 255 }, 
-				anim::animation_action_callback{}, anim::animation_action_callback{}),nullptr);
+			m_pauseSceneNode->setVisible(true);
+			auto animationComponent(m_pauseSceneNode->ensureComponentOfType<anim::AnimationComponent>());
+			animationComponent->addAnimation(uptr<anim::IPropertyAnimation<Color>>(1000, m_pauseText->color, Color{ 255, 255, 255, 0 }, Color{ 255, 255, 255, 255 },
+				anim::animation_action_callback{}, anim::animation_action_callback{}));
 			gameClock.pause();
 			return true;
 		} else if (state() == Pause) {
 			setState(Playing);
-			_pauserg->setVisible(false);
+			m_pauseSceneNode->setVisible(false);
 			gameClock.resume();
 			return false;
 		}

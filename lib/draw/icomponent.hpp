@@ -8,6 +8,7 @@ namespace lib
 {
 	namespace draw
 	{
+		class SceneNode;
 		/**
 		* Base class for all components attached to a scene node.
 		*/
