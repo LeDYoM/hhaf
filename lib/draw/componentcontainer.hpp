@@ -37,7 +37,7 @@ namespace lib
 			* @returns A shared pointer to the container or nullptr if not found
 			*/
 			template <typename T>
-			const sptr<T> &componentOfType()
+			sptr<T> componentOfType()
 			{
 				sptr<IComponent> cot(componentOfType(std::type_index(typeid(T))));
 				return cot ? std::dynamic_pointer_cast<T>(cot) : nullptr;

@@ -168,8 +168,8 @@ namespace zoper
 			setState(Pause);
 			m_pauseSceneNode->setVisible(true);
 			auto animationComponent(m_pauseSceneNode->ensureComponentOfType<anim::AnimationComponent>());
-			animationComponent->addAnimation(uptr<anim::IPropertyAnimation<Color>>(1000, m_pauseText->color, Color{ 255, 255, 255, 0 }, Color{ 255, 255, 255, 255 },
-				anim::animation_action_callback{}, anim::animation_action_callback{}));
+//			animationComponent->addAnimation(uptr<anim::IPropertyAnimation<Color>>(1000, m_pauseText->color, Color{ 255, 255, 255, 0 }, Color{ 255, 255, 255, 255 },
+//				anim::animation_action_callback{}, anim::animation_action_callback{}));
 			gameClock.pause();
 			return true;
 		} else if (state() == Pause) {
@@ -416,8 +416,8 @@ namespace zoper
 
 			if (found) {
 				auto node = createRenderizable<NodeShape>("pointIncrementScore", Rectf32::fromSize( 15.0f,15.0f ),nullptr,30, colors::White);
-				addAnimation(msptr<anim::IPropertyAnimation<vector2df>>(600, node->position, lastTokenPosition, vector2df{ 450, 100 }, 
-					anim::noAction, anim::animation_action_callback{ [this, node]() { removeRenderizable(node); } }), nullptr);
+//				addAnimation(msptr<anim::IPropertyAnimation<vector2df>>(600, node->position, lastTokenPosition, vector2df{ 450, 100 }, 
+//					anim::noAction, anim::animation_action_callback{ [this, node]() { removeRenderizable(node); } }), nullptr);
 			}
 			return result;
 		});

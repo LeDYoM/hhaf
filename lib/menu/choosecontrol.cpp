@@ -94,9 +94,9 @@ namespace lib
 
 //			m_cursorNode->rotation.set(90);
 			auto p(vector2df{ selectedText->position().x - descriptorCursorSize.x, selectedText->position().y });
-			addAnimation(msptr<anim::IPropertyAnimation<vector2df>>(120, m_cursorNode->position,
-				m_cursorNode->position(), vector2df{ selectedText->position().x - descriptorCursorSize.x, selectedText->position().y },
-				anim::noAction, anim::noAction));
+//			addAnimation(msptr<anim::IPropertyAnimation<vector2df>>(120, m_cursorNode->position,
+//				m_cursorNode->position(), vector2df{ selectedText->position().x - descriptorCursorSize.x, selectedText->position().y },
+//				anim::noAction, anim::noAction));
 		}
 
 		void ChooseControl::goDown()
