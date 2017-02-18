@@ -168,8 +168,8 @@ namespace zoper
 			setState(Pause);
 			m_pauseSceneNode->setVisible(true);
 			auto animationComponent(m_pauseSceneNode->ensureComponentOfType<anim::AnimationComponent>());
-//			animationComponent->addAnimation(uptr<anim::IPropertyAnimation<Color>>(1000, m_pauseText->color, Color{ 255, 255, 255, 0 }, Color{ 255, 255, 255, 255 },
-//				anim::animation_action_callback{}, anim::animation_action_callback{}));
+			animationComponent->addAnimation(muptr<anim::IPropertyAnimation<Color>>(1000, m_pauseText->color, Color{ 255, 255, 255, 0 }, Color{ 255, 255, 255, 255 },
+				anim::animation_action_callback{}, anim::animation_action_callback{}));
 			gameClock.pause();
 			return true;
 		} else if (state() == Pause) {
