@@ -21,7 +21,7 @@ namespace lib
 		{
 			__ASSERT(m_private, "Destructing private class that is nullptr");
 			delete m_private;
-			m_private _ nullptr;
+			m_private = nullptr;
 		}
 
 		void InputComponent::update()

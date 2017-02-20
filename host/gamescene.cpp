@@ -16,7 +16,7 @@
 #include <lib/core/events/inputevent.hpp>
 #include <lib/include/properties.hpp>
 #include <lib/draw/ianimation.hpp>
-#include <lib/draw/animationcomponent.hpp>
+#include <lib/draw/components/animationcomponent.hpp>
 
 namespace zoper
 {

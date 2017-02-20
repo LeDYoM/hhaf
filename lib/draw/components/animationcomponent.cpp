@@ -1,5 +1,5 @@
 #include "animationcomponent.hpp"
-#include "ianimation.hpp"
+#include <lib/draw/ianimation.hpp>
 
 #include <lib/core/log.hpp>
 #include <algorithm>
@@ -25,7 +25,7 @@ namespace lib
 			{
 				__ASSERT(m_private, "Destructing private class that is nullptr");
 				delete m_private;
-				m_private _ nullptr;
+				m_private = nullptr;
 			}
 
 			void AnimationComponent::addAnimation(uptr<IAnimation> nanimation)
