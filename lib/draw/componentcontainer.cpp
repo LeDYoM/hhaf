@@ -57,7 +57,7 @@ namespace lib
 			return false;
 		}
 
-		void ComponentContainer::update()
+		void ComponentContainer::updateComponents()
 		{
 			for (auto &component : m_components) {
 				component->update();

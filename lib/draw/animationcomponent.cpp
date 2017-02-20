@@ -15,7 +15,8 @@ namespace lib
 			{
 			public:
 				AnimationComponentPrivate() {}
-				vector_unique_pointers<IAnimation> m_animations;
+				vector_shared_pointers<IAnimation> m_animations;
+				vector_shared_pointers<IAnimation> m_finishedAnimations;
 			};
 			AnimationComponent::AnimationComponent()
 				: m_private{ new AnimationComponentPrivate }
@@ -30,14 +31,23 @@ namespace lib
 
 			void AnimationComponent::addAnimation(uptr<IAnimation> nanimation)
 			{
-				m_private->m_animations.push_back(std::move(nanimation));
+				m_private->m_animations.emplace_back(std::move(nanimation));
 			}
 
 			void AnimationComponent::update()
 			{
-				for (auto& animation : m_private->m_animations)
-				{
-					animation->animate();
+				if (!m_private->m_animations.empty()) {
+					bool animsFinished{ false };
+					for (auto& animation : m_private->m_animations) {
+						if (!animation->animate()) {
+							animation = nullptr;
+							animsFinished = true;
+						}
+					}
+
+					if (animsFinished) {
+						m_private->m_animations.erase(std::remove(m_private->m_animations.begin(), m_private->m_animations.end(), nullptr), m_private->m_animations.end());
+					}
 				}
 			}
 		}

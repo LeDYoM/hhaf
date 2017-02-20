@@ -18,7 +18,7 @@ namespace lib
 			~ComponentContainer();
 
 			bool addComponent(sptr<IComponent> nc);
-			void update();
+			void updateComponents();
 
 			template <typename T>
 			sptr<T> ensureComponentOfType()
@@ -44,6 +44,7 @@ namespace lib
 			}
 
 			const sptr<IComponent> componentOfType(const std::type_index& ti);
+			void clearComponents() noexcept { m_components.clear(); m_sceneNode = nullptr; }
 		private:
 			SceneNode *m_sceneNode;
 			vector_shared_pointers<IComponent> m_components;

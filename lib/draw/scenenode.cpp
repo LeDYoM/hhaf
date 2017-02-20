@@ -23,6 +23,9 @@ namespace lib
 		void SceneNode::draw()
 		{
 			if (isVisible()) {
+				// Update the node components
+				updateComponents();
+
 				auto handle(host().rStates().pushChanges(&transform(), nullptr));
 
 				for (const auto& renderizable : m_renderNodes) {
@@ -99,7 +102,7 @@ namespace lib
 		{
 			m_groups.clear();
 			m_renderNodes.clear();
-//			m_componentContainer.
+			clearComponents();
 		}
 	}
 }
