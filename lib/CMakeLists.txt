@@ -29,6 +29,9 @@ file (GLOB LIB_DRAW_SOURCES "${LIB_DIRECTORY}draw/*.cpp")
 file (GLOB LIB_DRAW_NODES_HEADERS "${LIB_DIRECTORY}draw/nodes/*.hpp")
 file (GLOB LIB_DRAW_NODES_SOURCES "${LIB_DIRECTORY}draw/nodes/*.cpp")
 
+file (GLOB LIB_DRAW_COMPONENTS_HEADERS "${LIB_DIRECTORY}draw/components/*.hpp")
+file (GLOB LIB_DRAW_COMPONENTS_SOURCES "${LIB_DIRECTORY}draw/components/*.cpp")
+
 file (GLOB LIB_INCLUDE_HEADERS "${LIB_DIRECTORY}include/*.hpp")
 #file (GLOB LIB_BASE_SOURCES "${LIB_DIRECTORY}include/*.cpp")
 
@@ -57,6 +60,7 @@ source_group("lib\\core" FILES ${LIB_CORE_HEADERS} ${LIB_CORE_SOURCES})
 source_group("lib\\core\\events" FILES ${LIB_CORE_EVENTS_HEADERS} ${LIB_CORE_EVENTS_SOURCES})
 source_group("lib\\draw" FILES ${LIB_DRAW_HEADERS} ${LIB_DRAW_SOURCES})
 source_group("lib\\draw\\nodes" FILES ${LIB_DRAW_NODES_HEADERS} ${LIB_DRAW_NODES_SOURCES})
+source_group("lib\\draw\\components" FILES ${LIB_DRAW_COMPONENTS_HEADERS} ${LIB_DRAW_COMPONENTS_SOURCES})
 source_group("lib\\menu" FILES ${LIB_MENU_HEADERS} ${LIB_MENU_SOURCES})
 source_group("lib\\board" FILES ${LIB_BOARD_HEADERS} ${LIB_SOURCES})
 

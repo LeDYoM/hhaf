@@ -10,7 +10,6 @@ namespace lib
 {
 	namespace draw
 	{
-		class SceneNode;
 		namespace anim
 		{
 			class IAnimation;

@@ -1,5 +1,6 @@
-#ifndef __LIB__KEY_HPP__
-#define __LIB__KEY_HPP__
+#ifndef LIB__KEY_INCLUDE_HPP__
+#define LIB__KEY_INCLUDE_HPP__
+
 
 #include <lib/include/types.hpp>
 
@@ -7,7 +8,7 @@ namespace lib
 {
 	namespace input
 	{
-		enum Key : int
+		enum Key : s32
 		{
 			Unknown = -1, ///< Unhandled key
 			A = 0,        ///< The A key
