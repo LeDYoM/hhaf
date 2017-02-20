@@ -16,7 +16,6 @@ namespace lib
 			public:
 				AnimationComponentPrivate() {}
 				vector_shared_pointers<IAnimation> m_animations;
-				vector_shared_pointers<IAnimation> m_finishedAnimations;
 			};
 			AnimationComponent::AnimationComponent()
 				: m_private{ new AnimationComponentPrivate }
