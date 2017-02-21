@@ -7,17 +7,21 @@ namespace lib
 	{
 		namespace nodes
 		{
-			NodeQuad::NodeQuad(str_const name, const Rectf32 &box, sptr<Texture> texture, const Color &color)
-				: ISimpleNode{ std::move(name), box, texture, 4,color }
+			NodeQuad::NodeQuad(str_const name)
+				: ISimpleNode{ std::move(name), 4 }
 			{
 				logConstruct("Name: ", name);
-
-				updateGeometry();
 			}
 
 			NodeQuad::~NodeQuad()
 			{
 				logDestruct("Name: ", name());
+			}
+
+			void NodeQuad::configure()
+			{
+				ISimpleNode::configure();
+				updateGeometry();
 			}
 
 			void NodeQuad::updateGeometrySimpleNode()

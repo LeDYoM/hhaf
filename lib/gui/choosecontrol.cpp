@@ -23,27 +23,33 @@ namespace lib
 			const auto &cTheme(parent->currentTheme());
 			descriptorCursorSize = cTheme.cursorDescriptor.m_size;
 			m_cursorNode = createSceneNode("cursorNode");
-			m_cursor = m_cursorNode->createRenderizable<NodeShape>("cursor",
-				Rectf32{ 1000, 100, descriptorCursorSize.x, descriptorCursorSize.y },
-				nullptr, cTheme.cursorDescriptor.m_nVertex, cTheme.cursorDescriptor.m_color);
+			m_cursor = m_cursorNode->createRenderizable<NodeShape>("cursor", cTheme.cursorDescriptor.m_nVertex);
+			m_cursor->box = { 1000, 100, descriptorCursorSize.x, descriptorCursorSize.y };
+			m_cursor->color = cTheme.cursorDescriptor.m_color;
+			m_cursor->configure();
 
 			const bool menuType{ labels.empty()?false:labels[0]->_subOptionsLabels.empty() };
 
-			const auto normalLabelAlign( menuType ? NodeAlignedText::AlignmentX::Center : NodeAlignedText::AlignmentX::Left );
+			const auto normalLabelAlign( menuType ? NodeText::AlignmentX::Center : NodeText::AlignmentX::Left );
 			u32 count{};
 			vector2df currentPos{};
 			for (const auto& label : labels)
 			{
 				auto menuLine = createSceneNode("menuLineText" + std::to_string(count));
 				menuLine->position = currentPos;
-				auto text = menuLine->createRenderizable<NodeAlignedText>("name" + std::to_string(count), label->_text, cTheme.font, cTheme.chSize, cTheme.textColor,
-					parentScene()->getView()->perspective(), normalLabelAlign,NodeAlignedText::AlignmentY::Top);
+				auto text = menuLine->createRenderizable<NodeText>("name" + std::to_string(count));
+				text->text = label->_text;
+				text->font = cTheme.font;
+				text->characterSize = cTheme.chSize;
+				text->color = cTheme.textColor;
+				text->
+					parentScene()->getView()->perspective(), normalLabelAlign,NodeText::AlignmentY::Top);
 
 				sptr<NodeText> subtext{ nullptr };
 				if (!label->_subOptionsLabels.empty()) {
-					subtext = menuLine->createRenderizable<NodeAlignedText>("sub_name" + std::to_string(count), label->_subOptionsLabels[label->_startValueIndex],
+					subtext = menuLine->createRenderizable<NodeText>("sub_name" + std::to_string(count), label->_subOptionsLabels[label->_startValueIndex],
 						cTheme.font, cTheme.chSize, cTheme.textColor,
-						scenePerspective().resized({ -300,0 }), NodeAlignedText::AlignmentX::Right, NodeAlignedText::AlignmentY::Top);
+						scenePerspective().resized({ -300,0 }), NodeText::AlignmentX::Right, NodeText::AlignmentY::Top);
 				}
 
 				currentPos.y += (cTheme.chSize + cTheme.incY);
@@ -93,7 +99,7 @@ namespace lib
 			}
 
 //			m_cursorNode->rotation.set(90);
-			auto p(vector2df{ selectedText->position().x - descriptorCursorSize.x, selectedText->position().y });
+//			auto p(vector2df{ selectedText->position().x - descriptorCursorSize.x, selectedText->position().y });
 //			addAnimation(msptr<anim::IPropertyAnimation<vector2df>>(120, m_cursorNode->position,
 //				m_cursorNode->position(), vector2df{ selectedText->position().x - descriptorCursorSize.x, selectedText->position().y },
 //				anim::noAction, anim::noAction));

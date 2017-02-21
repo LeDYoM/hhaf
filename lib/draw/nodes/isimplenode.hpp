@@ -16,9 +16,10 @@ namespace lib
 			class ISimpleNode : public Renderizable
 			{
 			public:
-				ISimpleNode(str_const &&name, const Rectf32 &box, sptr<Texture> texture, const u32 pointCount, const Color &color);
+				ISimpleNode(str_const &&name, const u32 pointCount);
 				virtual ~ISimpleNode() = default;
 
+				virtual void configure() override;
 				Property<Rectf32> box;
 				Property<Rects32> textureRect;
 

@@ -8,17 +8,21 @@ namespace lib
 	{
 		namespace nodes
 		{
-			NodeShape::NodeShape(str_const name, const Rectf32 &box, sptr<Texture> texture, const u32 pointCount_, const Color & color)
-				: ISimpleNode{ std::move(name), box, texture, pointCount_, color }, pointCount{ pointCount_ }
+			NodeShape::NodeShape(str_const &&name, const u32 pointCount_)
+				: ISimpleNode{ std::move(name), pointCount_ }, pointCount{ pointCount_ }
 			{
 				logConstruct("Name: ", name);
-
-				updateGeometry();
 			}
 
 			NodeShape::~NodeShape()
 			{
 				logDestruct("Name: ", name());
+			}
+
+			void NodeShape::configure()
+			{
+				ISimpleNode::configure();
+				updateGeometry();
 			}
 
 			template <typename T>

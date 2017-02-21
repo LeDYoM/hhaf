@@ -9,40 +9,6 @@ namespace lib
 {
 	namespace draw
 	{
-		class Font;
-		class Texture;
-		namespace nodes
-		{
-			class NodeAlignedText : public NodeText
-			{
-			public:
-				enum class AlignmentX : u8
-				{
-					Left = 0,
-					Center,
-					Right
-				};
-
-				enum class AlignmentY : u8
-				{
-					Top = 0,
-					Middle,
-					Bottom
-				};
-
-				NodeAlignedText(str_const name, std::string txt, sptr<Font> font, u32 characterSize, const Color &color, Rectf32 alignBox, AlignmentX alignmentX, AlignmentY alignmentY);
-				virtual ~NodeAlignedText();
-
-				Property<AlignmentX> alignmentX;
-				Property<AlignmentY> alignmentY;
-				Property<Rectf32> alignmentBox;
-
-			private:
-				void updateAlignmentX();
-				void updateAlignmentY();
-				void updateGeometry();
-			};
-		}
 	}
 }
 

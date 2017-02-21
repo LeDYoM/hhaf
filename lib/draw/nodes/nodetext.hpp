@@ -15,14 +15,37 @@ namespace lib
 			class NodeText : public Renderizable
 			{
 			public:
-				NodeText(str_const name, std::string txt, sptr<Font> font, u32 characterSize, const Color &color);
+				enum class AlignmentX : u8
+				{
+					Left = 0,
+					Center,
+					Right
+				};
+
+				enum class AlignmentY : u8
+				{
+					Top = 0,
+					Middle,
+					Bottom
+				};
+
+				NodeText(str_const &&name);
 				virtual ~NodeText();
+
+				virtual void configure() override;
 
 				Property<std::string> text;
 				Property<sptr<Font>> font;
 				Property<u32> characterSize;
+				Property<AlignmentX> alignmentX;
+				Property<AlignmentY> alignmentY;
+				Property<Rectf32> alignmentBox;
+
 			protected:
 				void updateGeometry();
+			private:
+				void updateAlignmentX();
+				void updateAlignmentY();
 			};
 		}
 	}

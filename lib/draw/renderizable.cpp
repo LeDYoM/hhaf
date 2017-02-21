@@ -7,12 +7,17 @@ namespace lib
 {
 	namespace draw
 	{
-		Renderizable::Renderizable(str_const &&name, sptr<Texture> texture_, PrimitiveType type, u32 vertexCount, const Color & color_)
-			: core::HasName{ std::move(name) }, m_vertices{ type, vertexCount }, texture{ std::move(texture_),{} },
-			color{ color_,[this]() { m_vertices.setColor(color()); } }
+		Renderizable::Renderizable(str_const &&name, PrimitiveType type, u32 vertexCount)
+			: core::HasName{ std::move(name) }, m_vertices{ type, vertexCount },
+			color{}
 		{ }
 
 		Renderizable::~Renderizable() = default;
+
+		void Renderizable::configure()
+		{
+			color.setCallback([this]() { m_vertices.setColor(color()); });
+		}
 
 		void Renderizable::draw()
 		{

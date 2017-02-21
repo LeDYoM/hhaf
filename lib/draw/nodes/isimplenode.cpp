@@ -8,12 +8,14 @@ namespace lib
 	{
 		namespace nodes
 		{
-			ISimpleNode::ISimpleNode(str_const &&name, const Rectf32 &bbox, sptr<Texture> t, const u32 pointCount, const Color &color)
-				: Renderizable{ std::move(name), t, TriangleFan, pointCount + 2, color },
-				textureRect{ {{},{}, t ? static_cast<s32>(t->size().x) : 0, t ? static_cast<s32>(t->size().y) : 0},
-					[this]() { updateTextureCoords(); } },
-				box{ bbox,[this]() { updateGeometry(); } }
+			ISimpleNode::ISimpleNode(str_const &&name, const u32 pointCount)
+				: Renderizable{ std::move(name), TriangleFan, pointCount + 2 }
 			{
+			}
+
+			void ISimpleNode::configure()
+			{
+				Renderizable::configure();
 				texture.setCallback([this]()
 				{
 					if (texture()) {
@@ -24,6 +26,8 @@ namespace lib
 						//					size = { static_cast<f32>(tSize.x), static_cast<f32>(tSize.y) };
 					}
 				});
+				textureRect.setCallback([this]() { updateTextureCoords(); });
+				box.setCallback([this]() { updateGeometry(); });
 			}
 
 			void ISimpleNode::updateGeometry()
