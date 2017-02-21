@@ -12,7 +12,7 @@ namespace zoper
 	namespace zmenu
 	{
 		using namespace lib;
-		using namespace lib::menu;
+		using namespace lib::gui;
 
 		StartLevelMenu::StartLevelMenu(MenuManager *parent)
 			: ChooseControl( parent, ClassName,

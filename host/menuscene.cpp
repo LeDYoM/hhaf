@@ -17,10 +17,11 @@ namespace zoper
 	using namespace lib;
 	using namespace lib::draw;
 	using namespace lib::draw::nodes;
+	using namespace lib::gui;
 	using namespace zmenu;
 
 	MenuScene::MenuScene()
-		: lib::menu::MenuManager("MenuScene") {}
+		: MenuManager("MenuScene") {}
 
 	void MenuScene::onInit()
 	{

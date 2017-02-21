@@ -9,7 +9,7 @@
 
 namespace lib
 {
-	namespace menu
+	namespace gui
 	{
 		MenuManager::MenuManager(const std::string &name, Theme theme)
 			: draw::Scene{ name }, m_theme( theme )

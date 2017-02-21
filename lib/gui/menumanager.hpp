@@ -8,7 +8,7 @@
 
 namespace lib
 {
-	namespace menu
+	namespace gui
 	{
 		class ChooseControl;
 		class MenuManager : public draw::Scene

@@ -14,7 +14,7 @@ namespace lib
 	{
 		class Resource;
 	}
-	namespace menu
+	namespace gui
 	{
 		class OptionDescriptor
 		{

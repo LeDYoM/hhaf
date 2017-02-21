@@ -10,7 +10,7 @@
 
 namespace lib
 {
-	namespace menu
+	namespace gui
 	{
 		using namespace draw;
 		using namespace draw::nodes;

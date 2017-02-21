@@ -8,7 +8,7 @@
 
 namespace zoper
 {
-	class MenuScene final : public lib::menu::MenuManager, public KeyMapping
+	class MenuScene final : public lib::gui::MenuManager, public KeyMapping
 	{
 	public:
 		MenuScene();

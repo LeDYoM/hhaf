@@ -8,12 +8,12 @@ namespace zoper
 {
 	namespace zmenu
 	{
-		class OptionsMenu : public lib::menu::ChooseControl, public lib::Configuration
+		class OptionsMenu : public lib::gui::ChooseControl, public lib::Configuration
 		{
 		public:
 			constexpr static char* ClassName = "OptionsMenu";
 
-			OptionsMenu(lib::menu::MenuManager *parent);
+			OptionsMenu(lib::gui::MenuManager *parent);
 			virtual ~OptionsMenu();
 			virtual void onAddedToScene() override;
 		};
