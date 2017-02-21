@@ -26,7 +26,11 @@ namespace zoper
 	void MenuScene::onInit()
 	{
 		MenuManager::onInit();
-		m_background = createRenderizable<NodeQuad>("background", Rectf32::fromSize( 2000.0f,2000.0f ), host().resourceManager().getTexture("game_menu.background"), colors::White);
+		m_background = createRenderizable<NodeQuad>("background");
+		m_background->box = Rectf32::fromSize(2000.0f, 2000.0f);
+		m_background->texture = host().resourceManager().getTexture("game_menu.background");
+		m_background->color = colors::White;
+		m_background->configure();
 
 		addMenuStep(msptr<MainMenu>(this));
 		addMenuStep(msptr<OptionsMenu>(this));

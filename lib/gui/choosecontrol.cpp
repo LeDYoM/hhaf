@@ -42,14 +42,20 @@ namespace lib
 				text->font = cTheme.font;
 				text->characterSize = cTheme.chSize;
 				text->color = cTheme.textColor;
-				text->
-					parentScene()->getView()->perspective(), normalLabelAlign,NodeText::AlignmentY::Top);
+				text->alignmentBox = scenePerspective();
+				text->alignmentX = normalLabelAlign;
+				text->alignmentY = NodeText::AlignmentY::Top;
 
 				sptr<NodeText> subtext{ nullptr };
 				if (!label->_subOptionsLabels.empty()) {
-					subtext = menuLine->createRenderizable<NodeText>("sub_name" + std::to_string(count), label->_subOptionsLabels[label->_startValueIndex],
-						cTheme.font, cTheme.chSize, cTheme.textColor,
-						scenePerspective().resized({ -300,0 }), NodeText::AlignmentX::Right, NodeText::AlignmentY::Top);
+					subtext = menuLine->createRenderizable<NodeText>("sub_name" + std::to_string(count));
+					subtext->text = label->_subOptionsLabels[label->_startValueIndex];
+					subtext->font = cTheme.font;
+					subtext->characterSize = cTheme.chSize;
+					subtext->color = cTheme.textColor;
+					subtext->alignmentBox = scenePerspective().resized({ -300,0 });
+					subtext->alignmentX = NodeText::AlignmentX::Right;
+					subtext->alignmentY = NodeText::AlignmentY::Top;
 				}
 
 				currentPos.y += (cTheme.chSize + cTheme.incY);

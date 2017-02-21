@@ -57,20 +57,40 @@ namespace zoper
 		m_goalQuad->sceneNode()->position = { 1250, 50 };
 		m_goalQuad->text(0)->text = "Level:";
 		m_goalQuad->text(0)->color = colors::Blue;
+		m_goalQuad->text(0)->configure();
 		m_goalQuad->text(2)->text = "Score:";
 		m_goalQuad->text(2)->color = colors::Blue;
+		m_goalQuad->text(2)->configure();
 
 		vector2df goBoxHalfSize{ 365, 365 };
 		Rectf32 gobox{ scenePerspective().center() - goBoxHalfSize, (goBoxHalfSize * 2)};
 
-		m_pauseText = m_pauseSceneNode->createRenderizable<NodeAlignedText>("pausetext", "PAUSE", scoreFont, 180, colors::White, scenePerspective(),NodeAlignedText::AlignmentX::Center,NodeAlignedText::AlignmentY::Middle);
+		m_pauseText = m_pauseSceneNode->createRenderizable<NodeText>("pausetext");
+		m_pauseText->text = "PAUSE";
+		m_pauseText->font = scoreFont;
+		m_pauseText->characterSize = 180;
+		m_pauseText->color = colors::White;
+		m_pauseText->alignmentBox = scenePerspective();
+		m_pauseText->alignmentX = NodeText::AlignmentX::Center;
+		m_pauseText->alignmentY = NodeText::AlignmentY::Middle;
+		m_pauseText->configure();
 
-		_gameOverrg->createRenderizable<NodeAlignedText>("gameovergame", "GAME", scoreFont, 360, colors::White, 
-			gobox,
-			NodeAlignedText::AlignmentX::Center, NodeAlignedText::AlignmentY::Top);
-		_gameOverrg->createRenderizable<NodeAlignedText>("gameoverover", "OVER", scoreFont, 360, colors::White, 
-			gobox,
-			NodeAlignedText::AlignmentX::Center, NodeAlignedText::AlignmentY::Bottom);
+		auto gameText(_gameOverrg->createRenderizable<NodeText>("gameovergame"));
+		gameText->text = "GAME";
+		gameText->font = scoreFont;
+		gameText->characterSize = 360;
+		gameText->color = colors::White;
+		gameText->alignmentBox = gobox;
+		gameText->alignmentX = NodeText::AlignmentX::Center;
+		gameText->alignmentY = NodeText::AlignmentY::Top;
+
+		auto overText(_gameOverrg->createRenderizable<NodeText>("gameoverover"));
+		overText->text = "OVER";
+		overText->font = scoreFont;
+		overText->color = colors::White;
+		overText->alignmentBox = gobox;
+		overText->alignmentX = NodeText::AlignmentX::Center;
+		overText->alignmentY = NodeText::AlignmentY::Bottom;
 
 		increaseScore(0);
 

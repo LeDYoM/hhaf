@@ -2,7 +2,7 @@
 #define ZOPER_TEXTQUAD_HPP__
 
 #include <lib/draw/scenenode.hpp>
-#include <lib/draw/nodes/nodealignedtext.hpp>
+#include <lib/draw/nodes/nodetext.hpp>
 
 namespace zoper
 {
@@ -13,11 +13,11 @@ namespace zoper
 		virtual ~TextQuad() = default;
 
 		lib::Property<lib::sptr<lib::draw::SceneNode>> sceneNode;
-		lib::sptr<lib::draw::nodes::NodeAlignedText> text(lib::u32 index) const noexcept{ return index < 4 ? m_texts[index] : nullptr; }
+		lib::sptr<lib::draw::nodes::NodeText> text(lib::u32 index) const noexcept{ return index < 4 ? m_texts[index] : nullptr; }
 
 	private:
 		lib::Rectf32 m_box;
-		std::array<lib::sptr<lib::draw::nodes::NodeAlignedText>, 4> m_texts;
+		std::array<lib::sptr<lib::draw::nodes::NodeText>, 4> m_texts;
 	};
 }
 

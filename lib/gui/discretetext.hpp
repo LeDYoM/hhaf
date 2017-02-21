@@ -3,7 +3,7 @@
 
 #include <lib/draw/renderizable.hpp>
 #include <lib/include/types.hpp>
-#include <lib/draw/nodes/nodealignedtext.hpp>
+#include <lib/draw/nodes/nodetext.hpp>
 #include <lib/draw/scenenode.hpp>
 
 namespace lib
@@ -16,7 +16,7 @@ namespace lib
 			DiscreteText(const draw::SceneNodeSPtr &parent, str_const name);
 			virtual ~DiscreteText();
 		private:
-			sptr<draw::nodes::NodeAlignedText> m_alignedTextNode;
+			sptr<draw::nodes::NodeText> m_alignedTextNode;
 		};
 	}
 }
