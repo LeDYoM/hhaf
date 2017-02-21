@@ -36,8 +36,8 @@ file (GLOB LIB_INCLUDE_HEADERS "${LIB_DIRECTORY}include/*.hpp")
 #file (GLOB LIB_BASE_SOURCES "${LIB_DIRECTORY}include/*.cpp")
 
 #TO DO: A separated lib?
-file (GLOB LIB_MENU_HEADERS "${LIB_DIRECTORY}menu/*.hpp")
-file (GLOB LIB_MENU_SOURCES "${LIB_DIRECTORY}menu/*.cpp")
+file (GLOB LIB_GUI_HEADERS "${LIB_DIRECTORY}gui/*.hpp")
+file (GLOB LIB_GUI_SOURCES "${LIB_DIRECTORY}gui/*.cpp")
 
 #TO DO: A separated lib?
 file (GLOB LIB_BOARD_HEADERS "${LIB_DIRECTORY}board/*.hpp")
@@ -61,7 +61,7 @@ source_group("lib\\core\\events" FILES ${LIB_CORE_EVENTS_HEADERS} ${LIB_CORE_EVE
 source_group("lib\\draw" FILES ${LIB_DRAW_HEADERS} ${LIB_DRAW_SOURCES})
 source_group("lib\\draw\\nodes" FILES ${LIB_DRAW_NODES_HEADERS} ${LIB_DRAW_NODES_SOURCES})
 source_group("lib\\draw\\components" FILES ${LIB_DRAW_COMPONENTS_HEADERS} ${LIB_DRAW_COMPONENTS_SOURCES})
-source_group("lib\\menu" FILES ${LIB_MENU_HEADERS} ${LIB_MENU_SOURCES})
+source_group("lib\\gui" FILES ${LIB_GUI_HEADERS} ${LIB_GUI_SOURCES})
 source_group("lib\\board" FILES ${LIB_BOARD_HEADERS} ${LIB_SOURCES})
 
 # Detect and add SFML

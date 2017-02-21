@@ -2,7 +2,7 @@
 #define __KEYREDEFINITONMENU_HPP__
 
 #include "keymapping.hpp"
-#include <lib/menu/choosecontrol.hpp>
+#include <lib/gui/choosecontrol.hpp>
 
 namespace zoper
 {

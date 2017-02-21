@@ -1,7 +1,7 @@
 #include "mainmenu.hpp"
 #include "startlevelmenu.hpp"
-#include <lib/menu/menumanager.hpp>
-#include <lib/menu/choosecontrol.hpp>
+#include <lib/gui/menumanager.hpp>
+#include <lib/gui/choosecontrol.hpp>
 #include <lib/draw/scenenode.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/core/host.hpp>

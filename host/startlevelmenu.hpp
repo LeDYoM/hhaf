@@ -1,7 +1,7 @@
 #ifndef __STARTLEVELMENU_HPP__
 #define __STARTLEVELMENU_HPP__
 
-#include <lib/menu/choosecontrol.hpp>
+#include <lib/gui/choosecontrol.hpp>
 #include <lib/core/configuration.hpp>
 
 namespace zoper

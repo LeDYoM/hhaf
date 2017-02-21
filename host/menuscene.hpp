@@ -2,7 +2,7 @@
 #define __MENUSCENE_HPP__
 
 #include "keymapping.hpp"
-#include <lib/menu/menumanager.hpp>
+#include <lib/gui/menumanager.hpp>
 #include <lib/include/types.hpp>
 #include <lib/draw/nodes/nodequad.hpp>
 

@@ -1,6 +1,6 @@
 #include "keyredefinitionmenu.hpp"
-#include <lib/menu/menumanager.hpp>
-#include <lib/menu/choosecontrol.hpp>
+#include <lib/gui/menumanager.hpp>
+#include <lib/gui/choosecontrol.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/draw/renderizable.hpp>
 #include <lib/draw/nodes/nodetext.hpp>
