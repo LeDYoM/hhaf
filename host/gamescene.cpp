@@ -435,7 +435,10 @@ namespace zoper
 			}
 
 			if (found) {
-				auto node = createRenderizable<NodeShape>("pointIncrementScore", Rectf32::fromSize( 15.0f,15.0f ),nullptr,30, colors::White);
+				auto node = createRenderizable<NodeShape>("pointIncrementScore", 30);
+				node->box = Rectf32::fromSize(15.0f, 15.0f);
+				node->color = colors::White;
+				node->configure();
 //				addAnimation(msptr<anim::IPropertyAnimation<vector2df>>(600, node->position, lastTokenPosition, vector2df{ 450, 100 }, 
 //					anim::noAction, anim::animation_action_callback{ [this, node]() { removeRenderizable(node); } }), nullptr);
 			}
@@ -519,16 +522,17 @@ namespace zoper
 				Rectf32 tileBox{ currentx, currenty, tileSize().x,tileSize().y };
 				std::string indexStr(std::to_string(x) + "_" + std::to_string(y));
 
-				auto tileBackground = backgroundTilesrg->createRenderizable<NodeQuad>("backgroundTile_"+indexStr,
-					tileBox,nullptr, colors::White);
+				auto tileBackground = backgroundTilesrg->createRenderizable<NodeQuad>("backgroundTile_"+indexStr);
+				tileBackground->configure();
 				column.push_back(std::move(tileBackground));
 
 				// Size of the point in the middle of the tile
 				constexpr vector2df centerPointSize{ 15,15 };
 
-				auto node = backgroundTilesrg->createRenderizable<NodeShape>("backgroundTilePoint_"+indexStr, 
-					Rectf32{ tileBox.center() - (centerPointSize / 2), centerPointSize },
-					nullptr, 30, colors::White);
+				auto node = backgroundTilesrg->createRenderizable<NodeShape>("backgroundTilePoint_"+indexStr, 30);
+				node->box = Rectf32{ tileBox.center() - (centerPointSize / 2), centerPointSize };
+				node->color = colors::White;
+				node->configure();
 
 				currentx += tileSize().x;
 			}

@@ -13,7 +13,8 @@ namespace zoper
 		GameBaseTile{ parent, name + std::to_string(_tileCounter) + std::to_string(_tileCounter), data }
 	{
 		++_tileCounter;
-		m_node = m_sceneNode->createRenderizable<nodes::NodeShape>("Node", box, nullptr, 30, colors::White);
+		m_node = m_sceneNode->createRenderizable<nodes::NodeShape>("Node", 30);
+		m_node->box = box;
 		m_sceneNode->setColor(getColorForToken());
 	}
 

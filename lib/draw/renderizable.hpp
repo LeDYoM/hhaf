@@ -23,8 +23,6 @@ namespace lib
 			virtual void draw();
 
 			Property<Color> color;
-//			Property<vector2df> position;
-//			Property<vector2df> nodeOrigin;
 
 			inline Rectf32 bounds() const noexcept { return m_vertices.bounds(); }
 

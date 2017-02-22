@@ -37,7 +37,11 @@ namespace zoper
 //		addMenuStep(msptr<KeyRedefinitionMenu>(this));
 		addMenuStep(msptr<StartLevelMenu>(this));
 
-		m_logo = createRenderizable<NodeQuad>("mainLogo", Rectf32{ 500, 150, 1000, 500 }, host().resourceManager().getTexture("game_menu.logo"), colors::White);
+		m_logo = createRenderizable<NodeQuad>("mainLogo");
+		m_logo->box = Rectf32{ 500, 150, 1000, 500 };
+		m_logo->texture = host().resourceManager().getTexture("game_menu.logo");
+		m_logo->color = colors::White;
+		m_logo->configure();
 	}
 
 	void MenuScene::onEnterScene()

@@ -22,6 +22,7 @@ namespace lib
 				virtual void configure() override;
 				Property<Rectf32> box;
 				Property<Rects32> textureRect;
+				ForwardProperty<sptr<Texture>> texture;
 
 			protected:
 				void updateGeometry();
