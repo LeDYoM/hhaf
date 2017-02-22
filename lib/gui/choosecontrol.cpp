@@ -6,7 +6,6 @@
 #include <lib/draw/ianimation.hpp>
 #include <lib/draw/nodes/nodeshape.hpp>
 #include <lib/draw/nodes/nodetext.hpp>
-#include <lib/draw/nodes/nodealignedtext.hpp>
 
 namespace lib
 {
@@ -45,6 +44,7 @@ namespace lib
 				text->alignmentBox = scenePerspective();
 				text->alignmentX = normalLabelAlign;
 				text->alignmentY = NodeText::AlignmentY::Top;
+				text->configure();
 
 				sptr<NodeText> subtext{ nullptr };
 				if (!label->_subOptionsLabels.empty()) {
@@ -56,6 +56,7 @@ namespace lib
 					subtext->alignmentBox = scenePerspective().resized({ -300,0 });
 					subtext->alignmentX = NodeText::AlignmentX::Right;
 					subtext->alignmentY = NodeText::AlignmentY::Top;
+					subtext->configure();
 				}
 
 				currentPos.y += (cTheme.chSize + cTheme.incY);

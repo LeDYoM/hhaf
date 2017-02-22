@@ -21,7 +21,6 @@ namespace lib
 			void NodeQuad::configure()
 			{
 				ISimpleNode::configure();
-				updateGeometry();
 			}
 
 			void NodeQuad::updateGeometrySimpleNode()

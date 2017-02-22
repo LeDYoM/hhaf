@@ -24,13 +24,13 @@ namespace lib
 
 			void NodeText::configure()
 			{
-				Renderizable::configure();
 				font.setCallback([this]() { updateGeometry(); });
 				text.setCallback([this]() { updateGeometry(); });
 				characterSize.setCallback([this]() { updateGeometry(); });
 				alignmentX.setCallback([this]() { updateGeometry(); });
 				alignmentY.setCallback([this]() {updateGeometry(); });
 				alignmentBox.setCallback([this]() {updateGeometry(); });
+				Renderizable::configure();
 
 				updateGeometry();
 			}

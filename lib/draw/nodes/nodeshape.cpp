@@ -22,7 +22,6 @@ namespace lib
 			void NodeShape::configure()
 			{
 				ISimpleNode::configure();
-				updateGeometry();
 			}
 
 			template <typename T>
