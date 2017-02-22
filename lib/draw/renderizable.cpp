@@ -1,6 +1,5 @@
 #include "renderizable.hpp"
 #include "renderstates.hpp"
-#include <lib/core/log.hpp>
 #include <lib/core/host.hpp>
 
 namespace lib

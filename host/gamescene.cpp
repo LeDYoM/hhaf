@@ -523,6 +523,7 @@ namespace zoper
 				std::string indexStr(std::to_string(x) + "_" + std::to_string(y));
 
 				auto tileBackground = backgroundTilesrg->createRenderizable<NodeQuad>("backgroundTile_"+indexStr);
+				tileBackground->box = tileBox;
 				tileBackground->configure();
 				column.push_back(std::move(tileBackground));
 
