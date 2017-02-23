@@ -60,6 +60,9 @@ namespace lib
 	using f32 = float;
 	using f64 = double;
 	using str_const = std::string;
+
+	using string_vector = std::vector<str_const>;
+
 }
 
 #endif

@@ -19,15 +19,11 @@ namespace lib
 		class OptionDescriptor
 		{
 		public:
-			explicit OptionDescriptor(const std::string &text, bool createSubString = false, u32 startValueIndex = 0,
-				const std::vector<std::string> &subOptionsLabels = std::vector<std::string>())
-				: _text(text), _createSubString{ createSubString }, _startValueIndex{ startValueIndex },
-				_subOptionsLabels(subOptionsLabels) {}
+			explicit OptionDescriptor(str_const text, const string_vector &subOptionsLabels = string_vector())
+				: _text{ text }, _subOptionsLabels(subOptionsLabels) {}
 
 			std::string _text;
-			bool _createSubString;
-			u32 _startValueIndex;
-			std::vector<std::string> _subOptionsLabels;
+			string_vector _subOptionsLabels;
 		};
 		class MenuManager;
 		class ChooseControl : public draw::SceneNode

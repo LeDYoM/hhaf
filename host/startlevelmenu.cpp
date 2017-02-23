@@ -34,8 +34,8 @@ namespace zoper
 			},
 			std::vector<sptr<OptionDescriptor>>{
 			msptr<OptionDescriptor>("Start level: ",
-				true, 0, std::vector<std::string>{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" }),
-				msptr<OptionDescriptor>("Back", true)
+				std::vector<std::string>{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" }),
+				msptr<OptionDescriptor>("Back")
 			}), 
 			Configuration("config.cfg"), _gameConfig{ ":NextGame" }
 		{

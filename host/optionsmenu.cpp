@@ -53,13 +53,13 @@ namespace zoper
 			},
 			std::vector<sptr<OptionDescriptor>>{
 				msptr<OptionDescriptor>("Antialiasing",
-					true, 0, std::vector<std::string>{"Worst", "Bad", "Normal", "Good", "Best"}),
+					std::vector<std::string>{"Worst", "Bad", "Normal", "Good", "Best"}),
 				msptr<OptionDescriptor>("Resolution",
-					true, 0, std::vector<std::string>{"Worst", "Bad", "Normal", "Good", "Best"}),
+					std::vector<std::string>{"Worst", "Bad", "Normal", "Good", "Best"}),
 				msptr<OptionDescriptor>("Fullscreen",
-					true, 0, std::vector<std::string>{"No", "Yes"}),
+					std::vector<std::string>{"No", "Yes"}),
 				msptr<OptionDescriptor>("VSync",
-					true, 0, std::vector<std::string>{"No", "Yes"}),
+					std::vector<std::string>{"No", "Yes"}),
 				msptr<OptionDescriptor>("Redefine keyboard"),
 				msptr<OptionDescriptor>("Cancel"),
 				msptr<OptionDescriptor>("Accept")

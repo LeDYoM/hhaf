@@ -6,6 +6,7 @@
 #include <lib/draw/ianimation.hpp>
 #include <lib/draw/nodes/nodeshape.hpp>
 #include <lib/draw/nodes/nodetext.hpp>
+#include <lib/draw/nodes/discretetext.hpp>
 
 namespace lib
 {
@@ -46,10 +47,11 @@ namespace lib
 				text->alignmentY = NodeText::AlignmentY::Top;
 				text->configure();
 
-				sptr<NodeText> subtext{ nullptr };
+				sptr<DiscreteText> subtext{ nullptr };
 				if (!label->_subOptionsLabels.empty()) {
-					subtext = menuLine->createRenderizable<NodeText>("sub_name" + std::to_string(count));
-					subtext->text = label->_subOptionsLabels[label->_startValueIndex];
+					subtext = menuLine->createRenderizable<DiscreteText>("sub_name" + std::to_string(count));
+					subtext->data = label->_subOptionsLabels;
+//					subtext->text = label->_subOptionsLabels[label->_startValueIndex];
 					subtext->font = cTheme.font;
 					subtext->characterSize = cTheme.chSize;
 					subtext->color = cTheme.textColor;
@@ -60,7 +62,7 @@ namespace lib
 				}
 
 				currentPos.y += (cTheme.chSize + cTheme.incY);
-				m_labelData.emplace_back(label->_subOptionsLabels,subtext,text, label->_startValueIndex);
+				m_labelData.emplace_back(label->_subOptionsLabels,subtext,text, 0);
 				++count;
 			}
 

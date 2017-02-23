@@ -18,6 +18,7 @@ namespace lib
 				virtual void configure() override;
 
 				Property<u32> index;
+				Property<string_vector> data;
 			};
 		}
 	}
