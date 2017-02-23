@@ -15,7 +15,7 @@ namespace lib
 		using namespace draw;
 		using namespace draw::nodes;
 
-		ChooseControl::ChooseControl(MenuManager *parent, std::string name,
+		ChooseControl::ChooseControl(MenuManager *parent, str_const&& name,
 			std::function<void(const u32)> onSelected,
 			const std::vector<sptr<OptionDescriptor>> labels)
 			: SceneNode{ parent, std::move(name) }, m_onSelected{ onSelected }
@@ -51,7 +51,6 @@ namespace lib
 				if (!label->_subOptionsLabels.empty()) {
 					subtext = menuLine->createRenderizable<DiscreteText>("sub_name" + std::to_string(count));
 					subtext->data = label->_subOptionsLabels;
-//					subtext->text = label->_subOptionsLabels[label->_startValueIndex];
 					subtext->font = cTheme.font;
 					subtext->characterSize = cTheme.chSize;
 					subtext->color = cTheme.textColor;

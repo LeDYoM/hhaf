@@ -26,10 +26,14 @@ namespace lib
 			string_vector _subOptionsLabels;
 		};
 		class MenuManager;
+		class ChooseControlLine : public draw::SceneNode
+		{
+			ChooseControlLine(draw::SceneNodeSPtr parent, str_const&&name);
+		};
 		class ChooseControl : public draw::SceneNode
 		{
 		public:
-			ChooseControl(MenuManager *parent, std::string name, 
+			ChooseControl(MenuManager *parent, str_const&& name, 
 				std::function<void(const u32)> onSelected, const std::vector<sptr<OptionDescriptor>> labels);
 			virtual ~ChooseControl();
 
