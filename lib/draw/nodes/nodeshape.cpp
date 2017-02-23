@@ -19,9 +19,15 @@ namespace lib
 				logDestruct("Name: ", name());
 			}
 
+			void NodeShape::configureBase()
+			{
+				ISimpleNode::configureBase();
+			}
+
 			void NodeShape::configure()
 			{
-				ISimpleNode::configure();
+				configureBase();
+				updateGeometry();
 			}
 
 			template <typename T>

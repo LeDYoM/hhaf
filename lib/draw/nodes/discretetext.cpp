@@ -16,8 +16,14 @@ namespace lib
 			}
 			void DiscreteText::configure()
 			{
-				index.setCallback([this]() 
-				{ 
+				configureBase();
+				updateGeometry();
+			}
+
+			void DiscreteText::configureBase()
+			{
+				index.setCallback([this]()
+				{
 					if (index() < data().size()) {
 						_internalSetText(this, data(), index());
 					}
@@ -27,7 +33,8 @@ namespace lib
 					if (data().empty()) {
 						// Nothing to show
 						text = "";
-					} else if (index() >= data().size()) {
+					}
+					else if (index() >= data().size()) {
 						index = (data().size() - 1);
 					}
 					else {
@@ -35,7 +42,7 @@ namespace lib
 					}
 				});
 				data.update();
-				NodeText::configure();
+				NodeText::configureBase();
 			}
 		}
 	}

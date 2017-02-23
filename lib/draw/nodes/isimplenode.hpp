@@ -19,12 +19,12 @@ namespace lib
 				ISimpleNode(str_const &&name, const u32 pointCount);
 				virtual ~ISimpleNode() = default;
 
-				virtual void configure() override;
 				Property<Rectf32> box;
 				Property<Rects32> textureRect;
 				ForwardProperty<sptr<Texture>> texture;
 
 			protected:
+				void configureBase();
 				void updateGeometry();
 				void updateTextureCoords();
 

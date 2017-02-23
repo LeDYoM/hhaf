@@ -18,9 +18,15 @@ namespace lib
 				logDestruct("Name: ", name());
 			}
 
+			void NodeQuad::configureBase()
+			{
+				ISimpleNode::configureBase();
+			}
+
 			void NodeQuad::configure()
 			{
-				ISimpleNode::configure();
+				configureBase();
+				updateGeometry();
 			}
 
 			void NodeQuad::updateGeometrySimpleNode()

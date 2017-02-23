@@ -14,7 +14,7 @@ namespace lib
 				texture.setForwardProperty(&(Renderizable::texture));
 			}
 
-			void ISimpleNode::configure()
+			void ISimpleNode::configureBase()
 			{
 				if (texture()) {
 					auto tSize(texture()->size());
@@ -35,8 +35,7 @@ namespace lib
 				});
 				textureRect.setCallback([this]() { updateTextureCoords(); });
 				box.setCallback([this]() { updateGeometry(); });
-				Renderizable::configure();
-				updateGeometry();
+				Renderizable::configureBase();
 			}
 
 			void ISimpleNode::updateGeometry()

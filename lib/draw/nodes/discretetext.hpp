@@ -19,6 +19,8 @@ namespace lib
 
 				Property<u32> index;
 				Property<string_vector> data;
+			protected:
+				void configureBase();
 			};
 		}
 	}
