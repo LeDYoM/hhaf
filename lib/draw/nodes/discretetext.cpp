@@ -20,6 +20,26 @@ namespace lib
 				updateGeometry();
 			}
 
+			void DiscreteText::incrementIndex() noexcept
+			{
+				if (index() < (data().size()-1)) {
+					index = index() + 1;
+				}
+				else {
+					index = 0;
+				}
+			}
+
+			void DiscreteText::decrementIndex() noexcept
+			{
+				if (index() > 0) {
+					index = index() - 1;
+				}
+				else {
+					index = (data().size() - 1);
+				}
+			}
+
 			void DiscreteText::configureBase()
 			{
 				index.setCallback([this]()

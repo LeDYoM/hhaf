@@ -7,6 +7,41 @@
 namespace lib
 {
 	template <typename T>
+	class VirtualPropertyRead
+	{
+	public:
+		using getter_t = std::function<const T&()>;
+		constexpr VirtualPropertyRead(const getter_t &getterp = {}) : getter{ getterp } {}
+		inline void setGetter(const getter_t &getterp) { getter = getterp; }
+		constexpr inline const T&operator()() const noexcept { return getter ? getter() : T{}; }
+		constexpr inline const T&get() const noexcept { return getter ? getter() : T{}; }
+	protected:
+		getter_t getter;
+	};
+
+	template <typename T>
+	class VirtualPropertyWrite
+	{
+	public:
+		using setter_t = std::function<void(const T&)>;
+		constexpr VirtualPropertyWrite(const setter_t &setterp = {}) : setter{ setterp } {}
+		inline void setSetter(const setter_t &setterp) { setter = setterp; }
+		inline void set(const T&v) { setter(v); }
+		inline void set(T&&v) { setter(std::move(v)); }
+		inline void operator=(const T&v) { set(v); }
+		inline void operator=(T&&v) { set(std::move(v)); }
+	protected:
+		setter_t setter;
+	};
+
+	template <typename T>
+	class VirtualProperty : public VirtualPropertyRead<T>, public VirtualPropertyWrite<T>
+	{
+	public:
+		constexpr VirtualProperty(const getter_t &getterp = {}, const setter_t &setterp = {}) : VirtualPropertyRead{ getterp }, VirtualPropertyWrite{ setterp } {}
+	};
+
+	template <typename T>
 	class Property
 	{
 	public:

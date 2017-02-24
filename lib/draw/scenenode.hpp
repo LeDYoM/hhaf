@@ -24,7 +24,8 @@ namespace lib
 		class SceneNode : public core::HasName, public Transformable, public ComponentContainer
 		{
 		public:
-			SceneNode(SceneNode *parent, std::string name);
+			SceneNode(const SceneNode&) = delete;
+			SceneNode(SceneNode *parent, str_const&& name);
 			virtual ~SceneNode();
 
 			virtual void onAddedToScene() {}

@@ -15,6 +15,36 @@ namespace lib
 		using namespace draw;
 		using namespace draw::nodes;
 
+		ChooseControlLine::ChooseControlLine(draw::SceneNode *parent, str_const && name)
+			: draw::SceneNode{ parent, std::move(name) } {}
+
+		void ChooseControlLine::create()
+		{
+			m_mainText = parent()->createRenderizable<NodeText>("m_mainText");
+			m_mainText->text = text();
+			m_mainText->alignmentBox = box();
+
+			if (optionsTexts().empty()) {
+				m_mainText->alignmentX = NodeText::AlignmentX::Center;
+			}
+			else {
+				m_mainText->alignmentX = NodeText::AlignmentX::Left;
+				m_option = parent()->createRenderizable<DiscreteText>("m_option");
+				m_option->data = optionsTexts();
+				m_option->configure();
+			}
+
+			font.setSetter([this](auto&f) { m_mainText->font = f; if (m_option) m_option->font = f; });
+			characterSize.setSetter([this](auto&cs) { m_mainText->characterSize = cs; if (m_option) m_option->characterSize = cs; });
+			color.setSetter([this](auto&c) { m_mainText->color = c; if (m_option) m_option->color = c; });
+		}
+
+		void ChooseControlLine::configure()
+		{
+			m_mainText->configure();
+			if (m_option) m_option->configure();
+		}
+
 		ChooseControl::ChooseControl(MenuManager *parent, str_const&& name,
 			std::function<void(const u32)> onSelected,
 			const std::vector<sptr<OptionDescriptor>> labels)
@@ -35,18 +65,20 @@ namespace lib
 			vector2df currentPos{};
 			for (const auto& label : labels)
 			{
-				auto menuLine = createSceneNode("menuLineText" + std::to_string(count));
+				auto menuLine = msptr<ChooseControlLine>(this,"menuLineText" + std::to_string(count));
 				menuLine->position = currentPos;
-				auto text = menuLine->createRenderizable<NodeText>("name" + std::to_string(count));
-				text->text = label->_text;
-				text->font = cTheme.font;
-				text->characterSize = cTheme.chSize;
-				text->color = cTheme.textColor;
-				text->alignmentBox = scenePerspective();
-				text->alignmentX = normalLabelAlign;
-				text->alignmentY = NodeText::AlignmentY::Top;
-				text->configure();
-
+				menuLine->text = label->_text;
+				menuLine->create();
+//				auto text = menuLine->createRenderizable<NodeText>("name" + std::to_string(count));
+//				text->text = label->_text;
+				menuLine->font = cTheme.font;
+				menuLine->characterSize = cTheme.chSize;
+				menuLine->color = cTheme.textColor;
+				menuLine->box = scenePerspective();
+//				text->alignmentX = normalLabelAlign;
+//				text->alignmentY = NodeText::AlignmentY::Top;
+				menuLine->configure();
+				/*
 				sptr<DiscreteText> subtext{ nullptr };
 				if (!label->_subOptionsLabels.empty()) {
 					subtext = menuLine->createRenderizable<DiscreteText>("sub_name" + std::to_string(count));
@@ -59,9 +91,9 @@ namespace lib
 					subtext->alignmentY = NodeText::AlignmentY::Top;
 					subtext->configure();
 				}
-
+				*/
 				currentPos.y += (cTheme.chSize + cTheme.incY);
-				m_labelData.emplace_back(label->_subOptionsLabels,subtext,text, 0);
+				m_labelData.emplace_back(menuLine);
 				++count;
 			}
 
@@ -78,13 +110,13 @@ namespace lib
 		u32 ChooseControl::selectedSubLabel(const u32 index) const
 		{
 			__ASSERT(index < m_labelData.size(), "Invalid index");
-			return m_labelData[index].selectedSublabel;
+			return m_labelData[index].node->m_option->index();
 		}
 
 	
 		void ChooseControl::updateSubLabelText(const u32 index)
 		{
-			m_labelData[index].subLabel->text = m_labelData[index].textSubLabel[m_labelData[index].selectedSublabel];
+		//	m_labelData[index].subLabel->text = m_labelData[index].textSubLabel[m_labelData[index].selectedSublabel];
 		}
 
 		void ChooseControl::cursorSelectItem(const u32 nodeIndex)
@@ -93,18 +125,15 @@ namespace lib
 
 			const auto &cTheme(menuManager()->currentTheme());
 
-			m_labelData[_cursorItemSelected].label->color = cTheme.textColor;
-			if (m_labelData[_cursorItemSelected].subLabel) {
-				m_labelData[_cursorItemSelected].subLabel->color = cTheme.textColor;
-			}
-
+			m_labelData[_cursorItemSelected].node->color = cTheme.textColor;
 			_cursorItemSelected = nodeIndex;
-			auto selectedText = m_labelData[nodeIndex].label;
+			m_labelData[_cursorItemSelected].node->color = cTheme.selectedTextColor;
+//			auto selectedText = m_labelData[nodeIndex].label;
 
-			selectedText->color = cTheme.selectedTextColor;
-			if (m_labelData[_cursorItemSelected].subLabel) {
-				m_labelData[_cursorItemSelected].subLabel->color = cTheme.selectedTextColor;
-			}
+//			selectedText->color = cTheme.selectedTextColor;
+//			if (m_labelData[_cursorItemSelected].subLabel) {
+//				m_labelData[_cursorItemSelected].subLabel->color = cTheme.selectedTextColor;
+//			}
 
 //			m_cursorNode->rotation.set(90);
 //			auto p(vector2df{ selectedText->position().x - descriptorCursorSize.x, selectedText->position().y });
@@ -133,32 +162,12 @@ namespace lib
 
 		void ChooseControl::goLeft()
 		{
-			auto index = m_labelData[_cursorItemSelected].selectedSublabel;
-
-			if (m_labelData[_cursorItemSelected].textSubLabel.size() > 0) {
-				if (index < 1) {
-					index = m_labelData[_cursorItemSelected].textSubLabel.size()-1;
-				} else {
-					--index;
-				}
-				m_labelData[_cursorItemSelected].selectedSublabel = index;
-				updateSubLabelText(_cursorItemSelected);
-			}
+			m_labelData[_cursorItemSelected].node->m_option->decrementIndex();
 		}
 
 		void ChooseControl::goRight()
 		{
-			auto index = m_labelData[_cursorItemSelected].selectedSublabel;
-
-			if (m_labelData[_cursorItemSelected].textSubLabel.size() > 0) {
-				if (index >= m_labelData[_cursorItemSelected].textSubLabel.size() - 1) {
-					index = 0;
-				} else {
-					++index;
-				}
-				m_labelData[_cursorItemSelected].selectedSublabel = index;
-				updateSubLabelText(_cursorItemSelected);
-			}
+			m_labelData[_cursorItemSelected].node->m_option->incrementIndex();
 		}
 	}
 }

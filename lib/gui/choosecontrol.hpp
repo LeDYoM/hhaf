@@ -4,6 +4,7 @@
 #include <lib/include/types.hpp>
 #include <lib/draw/scenenode.hpp>
 #include <lib/draw/nodes/nodetext.hpp>
+#include <lib/draw/nodes/discretetext.hpp>
 #include <lib/draw/nodes/nodeshape.hpp>
 #include <vector>
 #include <functional>
@@ -13,6 +14,10 @@ namespace lib
 	namespace core
 	{
 		class Resource;
+	}
+	namespace draw
+	{
+		class Font;
 	}
 	namespace gui
 	{
@@ -28,7 +33,20 @@ namespace lib
 		class MenuManager;
 		class ChooseControlLine : public draw::SceneNode
 		{
-			ChooseControlLine(draw::SceneNodeSPtr parent, str_const&&name);
+		public:
+			ChooseControlLine(draw::SceneNode* parent, str_const&&name);
+			Property<std::string> text;
+			Property<string_vector> optionsTexts;
+			Property<Rectf32> box;
+			VirtualPropertyWrite<sptr<draw::Font>> font;
+			VirtualPropertyWrite<u32> characterSize;
+			VirtualPropertyWrite<draw::Color> color;
+			void create();
+			void configure();
+
+		public:
+			sptr<draw::nodes::NodeText> m_mainText;
+			sptr<draw::nodes::DiscreteText> m_option;
 		};
 		class ChooseControl : public draw::SceneNode
 		{
@@ -54,13 +72,9 @@ namespace lib
 
 			struct LabelData
 			{
-				std::vector<std::string> textSubLabel;
-				sptr<draw::nodes::NodeText> subLabel{ nullptr };
-				sptr<draw::nodes::NodeText> label{ nullptr };
-				u32 selectedSublabel{ 0 };
-				LabelData(const std::vector<std::string> &textSubLevel_, sptr<draw::nodes::NodeText> subLabel_,
-					sptr<draw::nodes::NodeText> label_, const u32 selectedSubLabel_)
-					: textSubLabel{ textSubLevel_ }, subLabel{ subLabel_ }, label{ label_ }, selectedSublabel{ selectedSubLabel_ } {}
+				sptr<ChooseControlLine> node;
+				LabelData(const sptr<ChooseControlLine> &nodep)
+					: node{ nodep } {}
 			};
 
 			std::vector<LabelData> m_labelData;
