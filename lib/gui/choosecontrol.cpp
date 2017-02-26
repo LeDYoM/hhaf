@@ -21,7 +21,7 @@ namespace lib
 		void ChooseControlLine::create()
 		{
 			m_mainText = parent()->createRenderizable<NodeText>("m_mainText");
-			m_mainText->text = text();
+			text.setForwardProperty(&(m_mainText->text));
 			m_mainText->alignmentBox = box();
 
 			if (optionsTexts().empty()) {
@@ -31,7 +31,6 @@ namespace lib
 				m_mainText->alignmentX = NodeText::AlignmentX::Left;
 				m_option = parent()->createRenderizable<DiscreteText>("m_option");
 				m_option->data = optionsTexts();
-				m_option->configure();
 			}
 
 			font.setSetter([this](auto&f) { m_mainText->font = f; if (m_option) m_option->font = f; });
