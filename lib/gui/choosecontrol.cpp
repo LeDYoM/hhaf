@@ -22,7 +22,7 @@ namespace lib
 		{
 			m_mainText = parent()->createRenderizable<NodeText>("m_mainText");
 			text.setForwardProperty(&(m_mainText->text));
-			m_mainText->alignmentBox = box();
+			alignmentBox.setSetter([this](const auto&abox) { m_mainText->alignmentBox = abox; if (m_option) m_option->alignmentBox = abox; });
 
 			if (optionsTexts().empty()) {
 				m_mainText->alignmentX = NodeText::AlignmentX::Center;
@@ -57,40 +57,19 @@ namespace lib
 			m_cursor->color = cTheme.cursorDescriptor.m_color;
 			m_cursor->configure();
 
-			const bool menuType{ labels.empty()?false:labels[0]->_subOptionsLabels.empty() };
-
-			const auto normalLabelAlign( menuType ? NodeText::AlignmentX::Center : NodeText::AlignmentX::Left );
 			u32 count{};
 			vector2df currentPos{};
 			for (const auto& label : labels)
 			{
 				auto menuLine = msptr<ChooseControlLine>(this,"menuLineText" + std::to_string(count));
-				menuLine->position = currentPos;
-				menuLine->text = label->_text;
 				menuLine->create();
-//				auto text = menuLine->createRenderizable<NodeText>("name" + std::to_string(count));
-//				text->text = label->_text;
+				menuLine->text = label->_text;
 				menuLine->font = cTheme.font;
 				menuLine->characterSize = cTheme.chSize;
 				menuLine->color = cTheme.textColor;
-				menuLine->box = scenePerspective();
-//				text->alignmentX = normalLabelAlign;
-//				text->alignmentY = NodeText::AlignmentY::Top;
+				menuLine->alignmentBox = scenePerspective().moved(currentPos);
 				menuLine->configure();
-				/*
-				sptr<DiscreteText> subtext{ nullptr };
-				if (!label->_subOptionsLabels.empty()) {
-					subtext = menuLine->createRenderizable<DiscreteText>("sub_name" + std::to_string(count));
-					subtext->data = label->_subOptionsLabels;
-					subtext->font = cTheme.font;
-					subtext->characterSize = cTheme.chSize;
-					subtext->color = cTheme.textColor;
-					subtext->alignmentBox = scenePerspective().resized({ -300,0 });
-					subtext->alignmentX = NodeText::AlignmentX::Right;
-					subtext->alignmentY = NodeText::AlignmentY::Top;
-					subtext->configure();
-				}
-				*/
+
 				currentPos.y += (cTheme.chSize + cTheme.incY);
 				m_labelData.emplace_back(menuLine);
 				++count;
