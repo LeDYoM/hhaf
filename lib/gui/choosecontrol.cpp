@@ -21,27 +21,29 @@ namespace lib
 		void ChooseControlLine::create()
 		{
 			m_mainText = parent()->createRenderizable<NodeText>("m_mainText");
+			m_option = parent()->createRenderizable<DiscreteText>("m_option");
+
 			text.setForwardProperty(&(m_mainText->text));
 			alignmentBox.setSetter([this](const auto&abox) { m_mainText->alignmentBox = abox; if (m_option) m_option->alignmentBox = abox; });
-
-			if (optionsTexts().empty()) {
-				m_mainText->alignmentX = NodeText::AlignmentX::Center;
-			}
-			else {
-				m_mainText->alignmentX = NodeText::AlignmentX::Left;
-				m_option = parent()->createRenderizable<DiscreteText>("m_option");
-				m_option->data = optionsTexts();
-			}
 
 			font.setSetter([this](auto&f) { m_mainText->font = f; if (m_option) m_option->font = f; });
 			characterSize.setSetter([this](auto&cs) { m_mainText->characterSize = cs; if (m_option) m_option->characterSize = cs; });
 			color.setSetter([this](auto&c) { m_mainText->color = c; if (m_option) m_option->color = c; });
+			options.setForwardProperty(&(m_option->data));
 		}
 
 		void ChooseControlLine::configure()
 		{
+			if (options().empty()) {
+				m_mainText->alignmentX = NodeText::AlignmentX::Center;
+			}
+			else {
+				m_mainText->alignmentX = NodeText::AlignmentX::Left;
+				m_option->alignmentX = NodeText::AlignmentX::Right;
+			}
+
 			m_mainText->configure();
-			if (m_option) m_option->configure();
+			m_option->configure();
 		}
 
 		ChooseControl::ChooseControl(MenuManager *parent, str_const&& name,
@@ -68,6 +70,7 @@ namespace lib
 				menuLine->characterSize = cTheme.chSize;
 				menuLine->color = cTheme.textColor;
 				menuLine->alignmentBox = scenePerspective().moved(currentPos);
+				menuLine->options = label->_subOptionsLabels;
 				menuLine->configure();
 
 				currentPos.y += (cTheme.chSize + cTheme.incY);
