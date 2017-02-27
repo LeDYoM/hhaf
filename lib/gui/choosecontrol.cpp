@@ -15,13 +15,15 @@ namespace lib
 		using namespace draw;
 		using namespace draw::nodes;
 
-		ChooseControlLine::ChooseControlLine(draw::SceneNode *parent, str_const && name)
-			: draw::SceneNode{ parent, std::move(name) } {}
+		ChooseControlLine::ChooseControlLine(draw::SceneNodeSPtr parent, str_const && name)
+		{
+			m_sceneNode = parent->createSceneNode("ChooseControlLine");
+		}
 
 		void ChooseControlLine::create()
 		{
-			m_mainText = parent()->createRenderizable<NodeText>("m_mainText");
-			m_option = parent()->createRenderizable<DiscreteText>("m_option");
+			m_mainText = m_sceneNode->createRenderizable<NodeText>("m_mainText");
+			m_option = m_sceneNode->createRenderizable<DiscreteText>("m_option");
 
 			text.setForwardProperty(&(m_mainText->text));
 			alignmentBox.setSetter([this](const auto&abox) { m_mainText->alignmentBox = abox; if (m_option) m_option->alignmentBox = abox; });
@@ -46,14 +48,18 @@ namespace lib
 			m_option->configure();
 		}
 
-		ChooseControl::ChooseControl(MenuManager *parent, str_const&& name,
+		ChooseControl::ChooseControl(MenuManager *parent,
 			std::function<void(const u32)> onSelected,
 			const std::vector<sptr<OptionDescriptor>> labels)
-			: SceneNode{ parent, std::move(name) }, m_onSelected{ onSelected }
+			: m_onSelected{ onSelected }
 		{
 			const auto &cTheme(parent->currentTheme());
 			descriptorCursorSize = cTheme.cursorDescriptor.m_size;
-			m_cursorNode = createSceneNode("cursorNode");
+			m_sceneNode = parent->createSceneNode("chooseControl");
+
+			// Set the virtual al forwarded properties
+			visible.setForwardProperty(&m_sceneNode->visible);
+			m_cursorNode = m_sceneNode->createSceneNode("cursorNode");
 			m_cursor = m_cursorNode->createRenderizable<NodeShape>("cursor", cTheme.cursorDescriptor.m_nVertex);
 			m_cursor->box = { 1000, 100, descriptorCursorSize.x, descriptorCursorSize.y };
 			m_cursor->color = cTheme.cursorDescriptor.m_color;
@@ -63,13 +69,13 @@ namespace lib
 			vector2df currentPos{};
 			for (const auto& label : labels)
 			{
-				auto menuLine = msptr<ChooseControlLine>(this,"menuLineText" + std::to_string(count));
+				auto menuLine = msptr<ChooseControlLine>(m_sceneNode,"menuLineText" + std::to_string(count));
 				menuLine->create();
 				menuLine->text = label->_text;
 				menuLine->font = cTheme.font;
 				menuLine->characterSize = cTheme.chSize;
 				menuLine->color = cTheme.textColor;
-				menuLine->alignmentBox = scenePerspective().moved(currentPos);
+				menuLine->alignmentBox = m_sceneNode->scenePerspective().moved(currentPos);
 				menuLine->options = label->_subOptionsLabels;
 				menuLine->configure();
 
@@ -85,7 +91,7 @@ namespace lib
 
 		MenuManager * ChooseControl::menuManager() const
 		{
-			return dynamic_cast<MenuManager*>(parent());
+			return dynamic_cast<MenuManager*>(m_sceneNode->parent());
 		}
 
 		u32 ChooseControl::selectedSubLabel(const u32 index) const
@@ -104,12 +110,6 @@ namespace lib
 			m_labelData[_cursorItemSelected].node->color = cTheme.textColor;
 			_cursorItemSelected = nodeIndex;
 			m_labelData[_cursorItemSelected].node->color = cTheme.selectedTextColor;
-//			auto selectedText = m_labelData[nodeIndex].label;
-
-//			selectedText->color = cTheme.selectedTextColor;
-//			if (m_labelData[_cursorItemSelected].subLabel) {
-//				m_labelData[_cursorItemSelected].subLabel->color = cTheme.selectedTextColor;
-//			}
 
 //			m_cursorNode->rotation.set(90);
 //			auto p(vector2df{ selectedText->position().x - descriptorCursorSize.x, selectedText->position().y });

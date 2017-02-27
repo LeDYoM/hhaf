@@ -131,9 +131,9 @@ namespace zoper
 		_score = 0;
 		_nextTokenPart = 0;
 		setLevel(_gameConfig.value(StartLevelStr)->get<int>());
-		_gameOverrg->setVisible(false);
-		_mainBoardrg->setVisible(true);
-		m_pauseSceneNode->setVisible(false);
+		_gameOverrg->visible = false;
+		_mainBoardrg->visible = true;
+		m_pauseSceneNode->visible = false;
 
 		switch (_gameData._gameMode)
 		{
@@ -186,7 +186,7 @@ namespace zoper
 	{
 		if (state() == Playing) {
 			setState(Pause);
-			m_pauseSceneNode->setVisible(true);
+			m_pauseSceneNode->visible = true;
 			auto animationComponent(m_pauseSceneNode->ensureComponentOfType<anim::AnimationComponent>());
 			animationComponent->addAnimation(muptr<anim::IPropertyAnimation<Color>>(1000, m_pauseText->color, Color{ 255, 255, 255, 0 }, Color{ 255, 255, 255, 255 },
 				anim::animation_action_callback{}, anim::animation_action_callback{}));
@@ -194,7 +194,7 @@ namespace zoper
 			return true;
 		} else if (state() == Pause) {
 			setState(Playing);
-			m_pauseSceneNode->setVisible(false);
+			m_pauseSceneNode->visible = false;
 			gameClock.resume();
 			return false;
 		}
@@ -328,7 +328,7 @@ namespace zoper
 	void GameScene::startGameOver()
 	{
 		setState(GameOver);
-		_gameOverrg->setVisible(true);
+		_gameOverrg->visible = true;
 	}
 
 	void GameScene::for_each_token_in_line(const lib::vector2du32 &startPosition, const Direction &direction,

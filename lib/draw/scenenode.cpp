@@ -22,7 +22,7 @@ namespace lib
 
 		void SceneNode::draw()
 		{
-			if (isVisible()) {
+			if (visible()) {
 				// Update the node components
 				updateComponents();
 

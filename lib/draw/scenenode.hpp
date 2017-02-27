@@ -72,8 +72,7 @@ namespace lib
 
 			void draw();
 
-			inline bool isVisible() const noexcept { return m_visible; }
-			inline void setVisible(bool nv) noexcept { m_visible = nv; }
+			Property<bool> visible;
 
 			virtual Scene *const parentScene() { return m_parent->parentScene(); }
 			Rectf32 scenePerspective();

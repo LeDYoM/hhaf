@@ -31,10 +31,10 @@ namespace lib
 			string_vector _subOptionsLabels;
 		};
 		class MenuManager;
-		class ChooseControlLine : public draw::SceneNode
+		class ChooseControlLine
 		{
 		public:
-			ChooseControlLine(draw::SceneNode* parent, str_const&&name);
+			ChooseControlLine(draw::SceneNodeSPtr parent, str_const&&name);
 			ForwardProperty<std::string> text;
 			ForwardProperty<string_vector> options;
 			VirtualPropertyWrite<Rectf32> alignmentBox;
@@ -47,17 +47,20 @@ namespace lib
 		public:
 			sptr<draw::nodes::NodeText> m_mainText;
 			sptr<draw::nodes::DiscreteText> m_option;
+			draw::SceneNodeSPtr m_sceneNode;
 		};
-		class ChooseControl : public draw::SceneNode
+		class ChooseControl
 		{
 		public:
-			ChooseControl(MenuManager *parent, str_const&& name, 
+			ChooseControl(MenuManager *parent,
 				std::function<void(const u32)> onSelected, const std::vector<sptr<OptionDescriptor>> labels);
 			virtual ~ChooseControl();
 
 			MenuManager *menuManager() const;
 
 			u32 selectedSubLabel(const u32 index) const;
+
+			ForwardProperty<bool> visible;
 
 		private:
 			void cursorSelectItem(const u32 nodeIndex);
@@ -66,6 +69,7 @@ namespace lib
 			void goLeft();
 			void goRight();
 
+			draw::SceneNodeSPtr m_sceneNode;
 			vector2df descriptorCursorSize;
 			u32 _cursorItemSelected{ 0 };
 
