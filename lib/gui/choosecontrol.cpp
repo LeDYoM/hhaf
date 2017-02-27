@@ -95,11 +95,6 @@ namespace lib
 		}
 
 	
-		void ChooseControl::updateSubLabelText(const u32 index)
-		{
-		//	m_labelData[index].subLabel->text = m_labelData[index].textSubLabel[m_labelData[index].selectedSublabel];
-		}
-
 		void ChooseControl::cursorSelectItem(const u32 nodeIndex)
 		{
 			__ASSERT(nodeIndex < m_labelData.size(), "Invalid select index for cursor");

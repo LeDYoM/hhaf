@@ -60,7 +60,6 @@ namespace lib
 			u32 selectedSubLabel(const u32 index) const;
 
 		private:
-			void updateSubLabelText(const u32 index);
 			void cursorSelectItem(const u32 nodeIndex);
 			void goDown();
 			void goUp();
