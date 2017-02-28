@@ -8,17 +8,16 @@ namespace zoper
 {
 	namespace zmenu
 	{
-		class MainMenu : public lib::gui::ChooseControl
+		class MainMenuController
 		{
 		public:
 			constexpr static char* ClassName = "MainMenu";
-			MainMenu(lib::gui::MenuManager *parent);
-			virtual ~MainMenu();
-
-			virtual void onAddedToScene() override;
+			MainMenuController(lib::gui::MenuManager *parent);
+			virtual ~MainMenuController();
 
 		private:
 			lib::Configuration m_gameConfig;
+			lib::sptr<lib::gui::ChooseControl> m_chooseControl;
 		};
 	}
 }

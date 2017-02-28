@@ -17,7 +17,8 @@ namespace lib
 
 		ChooseControlLine::ChooseControlLine(draw::SceneNodeSPtr parent, str_const && name)
 		{
-			m_sceneNode = parent->createSceneNode("ChooseControlLine");
+			m_sceneNode = parent->createSceneNode(name);
+			this->name.setGetter([this]() { return m_sceneNode->name(); });
 		}
 
 		void ChooseControlLine::create()
@@ -48,14 +49,15 @@ namespace lib
 			m_option->configure();
 		}
 
-		ChooseControl::ChooseControl(MenuManager *parent,
+		ChooseControl::ChooseControl(MenuManager *parent, str_const &&name,
 			std::function<void(const u32)> onSelected,
 			const std::vector<sptr<OptionDescriptor>> labels)
 			: m_onSelected{ onSelected }
 		{
 			const auto &cTheme(parent->currentTheme());
 			descriptorCursorSize = cTheme.cursorDescriptor.m_size;
-			m_sceneNode = parent->createSceneNode("chooseControl");
+			m_sceneNode = parent->createSceneNode(std::move(name));
+			this->name.setGetter([this]() { return m_sceneNode->name(); });
 
 			// Set the virtual al forwarded properties
 			visible.setForwardProperty(&m_sceneNode->visible);

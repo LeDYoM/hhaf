@@ -15,7 +15,6 @@ namespace zoper
 
 			OptionsMenu(lib::gui::MenuManager *parent);
 			virtual ~OptionsMenu();
-			virtual void onAddedToScene() override;
 		};
 	}
 }

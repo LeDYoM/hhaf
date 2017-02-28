@@ -14,7 +14,6 @@ namespace zoper
 			constexpr static char* ClassName = "StartLevelMenu";
 			StartLevelMenu(lib::gui::MenuManager *parent);
 			virtual ~StartLevelMenu();
-			virtual void onAddedToScene() override;
 
 		private:
 			lib::Configuration _gameConfig;

@@ -69,10 +69,5 @@ namespace zoper
 		}
 
 		OptionsMenu::~OptionsMenu() = default;
-
-		void OptionsMenu::onAddedToScene()
-		{
-			position = { MenuScene::MenuPosX, 700 };
-		}
 	}
 }

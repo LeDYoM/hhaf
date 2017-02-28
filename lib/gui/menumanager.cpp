@@ -56,7 +56,7 @@ namespace lib
 
 		void MenuManager::addMenuStep(sptr<ChooseControl> step)
 		{
-			addSceneNode(step);
+//			addSceneNode(step);
 			m_steps.push_back(step);
 		}
 
@@ -66,9 +66,19 @@ namespace lib
 			changeStep(firstStep);
 		}
 
-		void MenuManager::start(const sptr<ChooseControl> &step)
+		void MenuManager::start(const std::string &firstStep)
 		{
 			changeStep(firstStep);
+		}
+
+		void MenuManager::changeStep(const std::string &step)
+		{
+			for (auto& nstep : m_steps) {
+				if (nstep->name() == step) {
+					changeStep(nstep);
+					break;
+				}
+			}
 		}
 
 		const Theme & MenuManager::currentTheme() const noexcept
@@ -76,12 +86,12 @@ namespace lib
 			return m_theme;
 		}
 
-		void MenuManager::changeStep(const sptr<ChooseControl> &step)
+		void MenuManager::changeStep(sptr<ChooseControl> &step)
 		{
 			setActiveStep(step);
 		}
 
-		void MenuManager::setActiveStep(const sptr<ChooseControl> &step)
+		void MenuManager::setActiveStep(sptr<ChooseControl> &step)
 		{
 			m_activeMenuStep = step;
 

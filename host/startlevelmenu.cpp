@@ -43,9 +43,9 @@ namespace zoper
 
 		StartLevelMenu::~StartLevelMenu() = default;
 
-		void StartLevelMenu::onAddedToScene()
-		{
+//		void StartLevelMenu::onAddedToScene()
+//		{
 //			position = { MenuScene::MenuPosX, 700 };
-		}
+//		}
 	}
 }

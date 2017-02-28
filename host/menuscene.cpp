@@ -32,7 +32,7 @@ namespace zoper
 		m_background->color = colors::White;
 		m_background->configure();
 
-		addMenuStep(msptr<MainMenu>(this));
+//		addMenuStep(msptr<MainMenuController>(this));
 		addMenuStep(msptr<OptionsMenu>(this));
 //		addMenuStep(msptr<KeyRedefinitionMenu>(this));
 		addMenuStep(msptr<StartLevelMenu>(this));
@@ -47,7 +47,7 @@ namespace zoper
 	void MenuScene::onEnterScene()
 	{
 		MenuManager::onEnterScene();
-		start(MainMenu::ClassName);
+//		start(MainMenu::ClassName);
 	}
 
 	void MenuScene::onExitScene()

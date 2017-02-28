@@ -37,6 +37,7 @@ namespace lib
 			ChooseControlLine(draw::SceneNodeSPtr parent, str_const&&name);
 			ForwardProperty<std::string> text;
 			ForwardProperty<string_vector> options;
+			VirtualPropertyRead<str_const> name;
 			VirtualPropertyWrite<Rectf32> alignmentBox;
 			VirtualPropertyWrite<sptr<draw::Font>> font;
 			VirtualPropertyWrite<u32> characterSize;
@@ -52,11 +53,12 @@ namespace lib
 		class ChooseControl
 		{
 		public:
-			ChooseControl(MenuManager *parent,
+			ChooseControl(MenuManager *parent, str_const &&name,
 				std::function<void(const u32)> onSelected, const std::vector<sptr<OptionDescriptor>> labels);
 			virtual ~ChooseControl();
 
 			MenuManager *menuManager() const;
+			VirtualPropertyRead<str_const> name;
 
 			u32 selectedSubLabel(const u32 index) const;
 
