@@ -12,7 +12,7 @@ namespace zoper
 		{
 		public:
 			constexpr static char* ClassName = "MainMenu";
-			MainMenuController(lib::gui::MenuManager *parent);
+			MainMenuController(lib::gui::ChooseControlGroup *parent);
 			virtual ~MainMenuController();
 
 		private:

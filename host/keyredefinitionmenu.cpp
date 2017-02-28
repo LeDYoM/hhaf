@@ -1,5 +1,5 @@
 #include "keyredefinitionmenu.hpp"
-#include <lib/gui/menumanager.hpp>
+#include <lib/gui/ChooseControlGroup.hpp>
 #include <lib/gui/choosecontrol.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/draw/renderizable.hpp>
@@ -41,7 +41,7 @@ namespace zoper
 			{
 				_indexKey = 0;
 				_keyMapping.apply();
-//				menuManager()->changeStep("OptionsMenu");
+//				ChooseControlGroup()->changeStep("OptionsMenu");
 			}
 			else
 			{

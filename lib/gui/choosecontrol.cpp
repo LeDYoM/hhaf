@@ -1,5 +1,5 @@
 #include "choosecontrol.hpp"
-#include "menumanager.hpp"
+#include "choosecontrolgroup.hpp"
 #include <lib/core/events/eventmanager.hpp>
 #include <lib/core/events/inputevent.hpp>
 #include <lib/draw/scene.hpp>
@@ -49,7 +49,7 @@ namespace lib
 			m_option->configure();
 		}
 
-		ChooseControl::ChooseControl(MenuManager *parent, str_const &&name,
+		ChooseControl::ChooseControl(ChooseControlGroup *parent, str_const &&name,
 			std::function<void(const u32)> onSelected,
 			const std::vector<sptr<OptionDescriptor>> labels)
 			: m_onSelected{ onSelected }
@@ -91,9 +91,9 @@ namespace lib
 
 		ChooseControl::~ChooseControl() = default;
 
-		MenuManager * ChooseControl::menuManager() const
+		ChooseControlGroup * ChooseControl::chooseControlGroup() const
 		{
-			return dynamic_cast<MenuManager*>(m_sceneNode->parent());
+			return dynamic_cast<ChooseControlGroup*>(m_sceneNode->parent());
 		}
 
 		u32 ChooseControl::selectedSubLabel(const u32 index) const
@@ -107,7 +107,7 @@ namespace lib
 		{
 			__ASSERT(nodeIndex < m_labelData.size(), "Invalid select index for cursor");
 
-			const auto &cTheme(menuManager()->currentTheme());
+			const auto &cTheme(chooseControlGroup()->currentTheme());
 
 			m_labelData[_cursorItemSelected].node->color = cTheme.textColor;
 			_cursorItemSelected = nodeIndex;

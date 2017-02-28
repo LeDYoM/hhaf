@@ -1,6 +1,6 @@
 #include "mainmenu.hpp"
 #include "startlevelmenu.hpp"
-#include <lib/gui/menumanager.hpp>
+#include <lib/gui/ChooseControlGroup.hpp>
 #include <lib/gui/choosecontrol.hpp>
 #include <lib/draw/scenenode.hpp>
 #include <lib/core/resourcemanager.hpp>
@@ -14,7 +14,7 @@ namespace zoper
 		using namespace lib;
 		using namespace lib::gui;
 
-		MainMenuController::MainMenuController(MenuManager *parent)
+		MainMenuController::MainMenuController(ChooseControlGroup *parent)
 			: m_gameConfig{ ":NextGame" }
 		{
 			m_chooseControl = msptr<ChooseControl>(parent, ClassName,
@@ -24,14 +24,14 @@ namespace zoper
 				{
 				case 0:
 					m_gameConfig.value(GameModeStr)->set<s32>(0);
-					m_chooseControl->menuManager()->changeStep(StartLevelMenu::ClassName);
+					m_chooseControl->chooseControlGroup()->changeStep(StartLevelMenu::ClassName);
 					break;
 				case 1:
 					m_gameConfig.value(GameModeStr)->set<s32>(1);
-					m_chooseControl->menuManager()->changeStep("StartLevelMenu");
+					m_chooseControl->chooseControlGroup()->changeStep("StartLevelMenu");
 					break;
 				case 2:
-					m_chooseControl->menuManager()->changeStep("OptionsMenu");
+					m_chooseControl->chooseControlGroup()->changeStep("OptionsMenu");
 					break;
 				case 3:
 				default:

@@ -1,5 +1,5 @@
 #include "optionsmenu.hpp"
-#include <lib/gui/menumanager.hpp>
+#include <lib/gui/ChooseControlGroup.hpp>
 #include <lib/gui/choosecontrol.hpp>
 #include <lib/draw/renderizable.hpp>
 #include <lib/core/resourcemanager.hpp>
@@ -14,7 +14,7 @@ namespace zoper
 		using namespace lib;
 		using namespace lib::gui;
 
-		OptionsMenu::OptionsMenu(MenuManager *parent)
+		OptionsMenu::OptionsMenu(ChooseControlGroup *parent)
 			: ChooseControl( parent, ClassName,
 			[this](u32 index)
 			{
@@ -29,10 +29,10 @@ namespace zoper
 				case 3:
 					break;
 				case 4:
-					menuManager()->changeStep("KeyRedefinitionMenu");
+					chooseControlGroup()->changeStep("KeyRedefinitionMenu");
 					break;
 				case 5:
-					menuManager()->changeStep("MainMenu");
+					chooseControlGroup()->changeStep("MainMenu");
 					break;
 				case 6:
 				default:
@@ -47,7 +47,7 @@ namespace zoper
 					value(FulscreenStr)->set(selectedSubLabel(2));
 					value(VSyncStr)->set(selectedSubLabel(3));
 					saveConfig();
-					menuManager()->changeStep("MainMenu");
+					chooseControlGroup()->changeStep("MainMenu");
 					break;
 				}
 			},

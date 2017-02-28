@@ -1,5 +1,5 @@
 #include "startlevelmenu.hpp"
-#include <lib/gui/menumanager.hpp>
+#include <lib/gui/ChooseControlGroup.hpp>
 #include <lib/gui/choosecontrol.hpp>
 #include <lib/draw/renderizable.hpp>
 #include <lib/core/resourcemanager.hpp>
@@ -14,7 +14,7 @@ namespace zoper
 		using namespace lib;
 		using namespace lib::gui;
 
-		StartLevelMenu::StartLevelMenu(MenuManager *parent)
+		StartLevelMenu::StartLevelMenu(ChooseControlGroup *parent)
 			: ChooseControl( parent, ClassName,
 			[this](const u32 index)
 			{
@@ -28,7 +28,7 @@ namespace zoper
 					break;
 				default:
 				case 1:
-					menuManager()->changeStep("MainMenu");
+					chooseControlGroup()->changeStep("MainMenu");
 					break;
 				}
 			},

@@ -30,7 +30,7 @@ namespace lib
 			std::string _text;
 			string_vector _subOptionsLabels;
 		};
-		class MenuManager;
+		class ChooseControlGroup;
 		class ChooseControlLine
 		{
 		public:
@@ -53,11 +53,11 @@ namespace lib
 		class ChooseControl
 		{
 		public:
-			ChooseControl(MenuManager *parent, str_const &&name,
+			ChooseControl(ChooseControlGroup *parent, str_const &&name,
 				std::function<void(const u32)> onSelected, const std::vector<sptr<OptionDescriptor>> labels);
 			virtual ~ChooseControl();
 
-			MenuManager *menuManager() const;
+			ChooseControlGroup *chooseControlGroup() const;
 			VirtualPropertyRead<str_const> name;
 
 			u32 selectedSubLabel(const u32 index) const;

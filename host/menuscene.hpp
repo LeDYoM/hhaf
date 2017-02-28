@@ -2,13 +2,13 @@
 #define __MENUSCENE_HPP__
 
 #include "keymapping.hpp"
-#include <lib/gui/menumanager.hpp>
+#include <lib/gui/ChooseControlGroup.hpp>
 #include <lib/include/types.hpp>
 #include <lib/draw/nodes/nodequad.hpp>
 
 namespace zoper
 {
-	class MenuScene final : public lib::gui::MenuManager, public KeyMapping
+	class MenuScene final : public lib::gui::ChooseControlGroup, public KeyMapping
 	{
 	public:
 		MenuScene();

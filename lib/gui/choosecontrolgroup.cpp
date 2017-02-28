@@ -22,7 +22,7 @@ namespace lib
 			m_theme.cursorDescriptor = CursorDescriptor{ 3, vector2df{ 90.0f, 90.0f },draw::colors::Red };
 
 			addSubscription(events::KeyPressedEvent::subscribe([this](const events::Event&ev) {
-				logDebug("Key pressed toMenuManager");
+				logDebug("Key pressed toChooseControlGroup");
 				const auto &kEvent{ dynamic_cast<const events::KeyPressedEvent&>(ev) };
 				if (kEvent.key == input::Key::Down || kEvent.key == input::Key::Numpad2) {
 					m_activeMenuStep->goDown();
