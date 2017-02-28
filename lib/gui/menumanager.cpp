@@ -9,10 +9,10 @@
 
 namespace lib
 {
-	namespace menu
+	namespace gui
 	{
-		MenuManager::MenuManager(const std::string &name, Theme theme)
-			: draw::Scene{ name }, m_theme( theme )
+		MenuManager::MenuManager(str_const&& name, Theme theme)
+			: draw::Scene{ std::move(name) }, m_theme( theme )
 		{
 			m_theme.font = host().resourceManager().getFont("game_menu.mainFont");
 			m_theme.textColor = draw::colors::Blue;
@@ -56,7 +56,7 @@ namespace lib
 
 		void MenuManager::addMenuStep(sptr<ChooseControl> step)
 		{
-			addSceneNode(step);
+//			addSceneNode(step);
 			m_steps.push_back(step);
 		}
 
@@ -96,7 +96,7 @@ namespace lib
 			m_activeMenuStep = step;
 
 			for (const auto &_step : m_steps) {
-				_step->setVisible(_step == step);
+				_step->visible = (_step == step);
 			}
 		}
 	}

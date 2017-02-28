@@ -12,18 +12,25 @@ namespace zoper
 		using namespace nodes;
 		sceneNode = parent->createSceneNode<SceneNode>(name);
 		u32 count{};
-		for (auto &nodes : m_texts) {
-			nodes = sceneNode()->createRenderizable<nodes::NodeAlignedText>(name + "node_"+std::to_string(count++), "", font, characterSize, color, box, NodeAlignedText::AlignmentX::Left, NodeAlignedText::AlignmentY::Top);
+		for (auto &node : m_texts) {
+			node = sceneNode()->createRenderizable<NodeText>(name + "node_" + std::to_string(count++));
+			node->font = font;
+			node->characterSize = characterSize;
+			node->alignmentBox = box;
+			node->alignmentX = NodeText::AlignmentX::Left;
+			node->alignmentY = NodeText::AlignmentY::Top;
+			node->color = color;
+			node->configure();
 		}
 		
 		// Second text is right aligned
-		m_texts[1]->alignmentX = NodeAlignedText::AlignmentX::Right;
+		m_texts[1]->alignmentX = NodeText::AlignmentX::Right;
 
 		// Third text is bottom aligned
-		m_texts[2]->alignmentY = NodeAlignedText::AlignmentY::Bottom;
+		m_texts[2]->alignmentY = NodeText::AlignmentY::Bottom;
 
 		// Fourth text is right and bottom aligned
-		m_texts[3]->alignmentX = NodeAlignedText::AlignmentX::Right;
-		m_texts[3]->alignmentY = NodeAlignedText::AlignmentY::Bottom;
+		m_texts[3]->alignmentX = NodeText::AlignmentX::Right;
+		m_texts[3]->alignmentY = NodeText::AlignmentY::Bottom;
 	}
 }

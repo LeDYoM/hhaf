@@ -8,25 +8,24 @@
 #include <lib/draw/transformable.hpp>
 #include <lib/draw/color.hpp>
 #include <lib/draw/hasname.hpp>
+#include "componentcontainer.hpp"
 
 namespace lib
 {
 	namespace draw
 	{
-		namespace anim
-		{
-			class IAnimation;
-		}
-
+		class IComponent;
 		class Scene;
 		class Renderizable;
+
 		/** \brief Main class representing all SceneNodes from a Scene.
 		* This class is that serves as main entry point in the hierarchy of the scene
 		*/
-		class SceneNode : public core::HasName, public Transformable
+		class SceneNode : public core::HasName, public Transformable, public ComponentContainer
 		{
 		public:
-			SceneNode(SceneNode *parent, std::string name);
+			SceneNode(const SceneNode&) = delete;
+			SceneNode(SceneNode *parent, str_const&& name);
 			virtual ~SceneNode();
 
 			virtual void onAddedToScene() {}
@@ -72,10 +71,8 @@ namespace lib
 			bool removeSceneNode(const sptr<SceneNode> &element);
 
 			void draw();
-			void addAnimation(sptr<anim::IAnimation> nanimation, sptr<SceneNode> tracker = {}) noexcept;
 
-			inline bool isVisible() const noexcept { return m_visible; }
-			inline void setVisible(bool nv) noexcept { m_visible = nv; }
+			Property<bool> visible;
 
 			virtual Scene *const parentScene() { return m_parent->parentScene(); }
 			Rectf32 scenePerspective();
@@ -96,6 +93,7 @@ namespace lib
 
 		private:
 
+			void addComponent(uptr<IComponent> component);
 			vector_shared_pointers<Renderizable> m_renderNodes;
 			vector_shared_pointers<SceneNode> m_groups;
 

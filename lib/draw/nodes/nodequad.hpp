@@ -16,10 +16,13 @@ namespace lib
 			class NodeQuad : public ISimpleNode
 			{
 			public:
-				explicit NodeQuad(const str_const name, const Rectf32 &box, sptr<Texture> texture, const Color &color);
+				explicit NodeQuad(const str_const name);
 				virtual ~NodeQuad();
 
+				virtual void configure() override;
+
 			protected:
+				void configureBase();
 				virtual void updateGeometrySimpleNode() override;
 			};
 		}

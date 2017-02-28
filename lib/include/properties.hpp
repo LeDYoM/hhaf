@@ -7,6 +7,41 @@
 namespace lib
 {
 	template <typename T>
+	class VirtualPropertyRead
+	{
+	public:
+		using getter_t = std::function<const T&()>;
+		constexpr VirtualPropertyRead(const getter_t &getterp = {}) : getter{ getterp } {}
+		inline void setGetter(const getter_t &getterp) { getter = getterp; }
+		constexpr inline const T&operator()() const noexcept { return getter ? getter() : T{}; }
+		constexpr inline const T&get() const noexcept { return getter ? getter() : T{}; }
+	protected:
+		getter_t getter;
+	};
+
+	template <typename T>
+	class VirtualPropertyWrite
+	{
+	public:
+		using setter_t = std::function<void(const T&)>;
+		constexpr VirtualPropertyWrite(const setter_t &setterp = {}) : setter{ setterp } {}
+		inline void setSetter(const setter_t &setterp) { setter = setterp; }
+		inline void set(const T&v) { setter(v); }
+		inline void set(T&&v) { setter(std::move(v)); }
+		inline void operator=(const T&v) { set(v); }
+		inline void operator=(T&&v) { set(std::move(v)); }
+	protected:
+		setter_t setter;
+	};
+
+	template <typename T>
+	class VirtualProperty : public VirtualPropertyRead<T>, public VirtualPropertyWrite<T>
+	{
+	public:
+		constexpr VirtualProperty(const getter_t &getterp = {}, const setter_t &setterp = {}) : VirtualPropertyRead{ getterp }, VirtualPropertyWrite{ setterp } {}
+	};
+
+	template <typename T>
 	class Property
 	{
 	public:
@@ -35,34 +70,36 @@ namespace lib
 	public:
 		using callback_t = std::function<void()>;
 		constexpr ForwardProperty() noexcept {}
-		constexpr ForwardProperty(Property<T> *const iv, callback_t c = {}) noexcept : m_value{ iv }, m_callback{ std::move(c) } {}
+		constexpr ForwardProperty(Property<T> *const iv) noexcept : m_value{ iv } {}
 		ForwardProperty(const ForwardProperty&) = delete;
 		ForwardProperty& operator=(const ForwardProperty&) = delete;
 
 		constexpr inline const T &operator()() const noexcept { return (*m_value)(); }
-		inline void setCallback(callback_t c) noexcept { m_callback = std::move(c); }
 		inline void setForwardProperty(Property<T> *const p) noexcept { m_value = p; }
+		inline void setCallback(callback_t nc) noexcept { m_callback = nc; }
 		constexpr inline const T &get() const noexcept { return (*m_value).get(); }
-		inline void set(const T&v) { (*m_value) = v; if (m_callback) m_callback(); }
-		inline void set(T&&v) { (*m_value) = std::move(v); if (m_callback) m_callback(); }
+		inline void set(const T&v) { (*m_value) = v; update(); }
+		inline void set(T&&v) { (*m_value) = std::move(v); update(); }
 		inline ForwardProperty &operator=(const T&v) { set(v); return *this; }
 		inline ForwardProperty &operator=(T&&v) { set(std::move(v)); return *this; }
+		inline Property<T> *const innerProperty() const { return m_value; }
+		inline void update() { if (m_callback) m_callback(); }
 
 	private:
 		Property<T> *m_value{ nullptr };
-		callback_t m_callback{ nullptr };
+		callback_t m_callback;
 	};
 
 	template <typename T>
-	class ReadOnlyProperty
+	class ReadOnlyRefProperty
 	{
 	public:
-		constexpr ReadOnlyProperty(const Property<T> &p) noexcept : m_property{ p } {}
-		constexpr inline const T &get() const noexcept { return m_property.get(); }
-		constexpr inline const T &operator()() const noexcept { return m_property(); }
+		constexpr ReadOnlyRefProperty(const T&p) noexcept : m_value{ p } {}
+		constexpr inline const T &get() const noexcept { return m_property; }
+		constexpr inline const T &operator()() const noexcept { return m_property; }
 
 	private:
-		const Property<T> &m_property;
+		const T &m_value;
 	};
 }
 

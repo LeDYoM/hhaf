@@ -11,20 +11,32 @@ namespace lib
 	{
 		namespace nodes
 		{
-			NodeText::NodeText(str_const name, std::string txt, sptr<Font> font_, u32 characterSize_, const Color &color) :
-				Renderizable{ std::move(name), nullptr, Triangles, 0, color },
-				font{ font_, [this]() { updateGeometry(); } },
-				text{ std::move(txt), [this]() { updateGeometry(); } },
-				characterSize{ characterSize_, [this]() { updateGeometry(); } }
+			NodeText::NodeText(str_const &&name) :
+				Renderizable{ std::move(name), Triangles, 0 }
 			{
 				logConstruct("Name: ", name);
-
-				updateGeometry();
 			}
 
 			NodeText::~NodeText()
 			{
 				logDestruct("Name: ", name());
+			}
+
+			void NodeText::configure()
+			{
+				configureBase();
+				updateGeometry();
+			}
+
+			void NodeText::configureBase()
+			{
+				font.setCallback([this]() { updateGeometry(); });
+				text.setCallback([this]() { updateGeometry(); });
+				characterSize.setCallback([this]() { updateGeometry(); });
+				alignmentX.setCallback([this]() { updateGeometry(); });
+				alignmentY.setCallback([this]() {updateGeometry(); });
+				alignmentBox.setCallback([this]() {updateGeometry(); });
+				Renderizable::configureBase();
 			}
 
 			void NodeText::updateGeometry()
@@ -115,6 +127,50 @@ namespace lib
 				m_vertices.setBounds({ minX, minY, maxX - minX, maxY - minY });
 				texture.set(msptr<Texture>(font()->getTexture(characterSize())));
 				color.update();
+				updateAlignmentX();
+				updateAlignmentY();
+			}
+
+			void NodeText::updateAlignmentX()
+			{
+				// To be called only after text set
+				switch (alignmentX())
+				{
+				default:
+				case AlignmentX::Left:
+					m_vertices.moveX(alignmentBox().left);
+					break;
+				case AlignmentX::Center:
+				{
+					const auto &abox{ alignmentBox() };
+					m_vertices.moveX(abox.left + (abox.width / 2.f) - (bounds().width / 2));
+				}
+				break;
+				case AlignmentX::Right:
+					m_vertices.moveX(alignmentBox().right() - bounds().right());
+					break;
+				}
+			}
+
+			void NodeText::updateAlignmentY()
+			{
+				// To be called only after text set
+				switch (alignmentY())
+				{
+				default:
+				case AlignmentY::Top:
+					m_vertices.moveY(alignmentBox().top);
+					break;
+				case AlignmentY::Middle:
+				{
+					const auto &abox{ alignmentBox() };
+					m_vertices.moveY(abox.top + (abox.height / 2.f) - (bounds().height / 2));
+				}
+				break;
+				case AlignmentY::Bottom:
+					m_vertices.moveY(alignmentBox().bottom() - bounds().bottom());
+					break;
+				}
 			}
 		}
 	}

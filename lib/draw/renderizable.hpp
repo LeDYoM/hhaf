@@ -16,14 +16,14 @@ namespace lib
 		class Renderizable : public core::HasName
 		{
 		public:
-			explicit Renderizable(str_const &&name, sptr<Texture> texture_, PrimitiveType type, u32 vertexCount, const Color &color);
+			explicit Renderizable(str_const &&name, PrimitiveType type, u32 vertexCount);
 			virtual ~Renderizable();
 
+			void configureBase();
+			virtual void configure() = 0;
 			virtual void draw();
 
 			Property<Color> color;
-			Property<vector2df> position;
-			Property<vector2df> nodeOrigin;
 
 			inline Rectf32 bounds() const noexcept { return m_vertices.bounds(); }
 
@@ -35,6 +35,7 @@ namespace lib
 			inline void moveY(const f32 yOffset)  noexcept { m_vertices.moveY(yOffset); }
 
 		protected:
+
 			bool m_visible{ true };
 			Property<sptr<Texture>> texture;
 			VertexArray m_vertices;

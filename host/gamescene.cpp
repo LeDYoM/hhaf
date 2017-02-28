@@ -3,6 +3,7 @@
 #include "tile.hpp"
 #include "player.hpp"
 #include "common.hpp"
+#include <lib/include/types.hpp>
 #include <lib/board/boardmodel.hpp>
 #include <lib/board/itilescontroller.hpp>
 #include <lib/core/log.hpp>
@@ -15,6 +16,7 @@
 #include <lib/core/events/inputevent.hpp>
 #include <lib/include/properties.hpp>
 #include <lib/draw/ianimation.hpp>
+#include <lib/draw/components/animationcomponent.hpp>
 
 namespace zoper
 {
@@ -39,7 +41,7 @@ namespace zoper
 		_mainBoardrg = this->createSceneNode("mainBoard");
 		_gameOverrg = this->createSceneNode("gameOverScreen");
 		_levelrg = this->createSceneNode("level");
-		_pauserg = this->createSceneNode("pause");
+		m_pauseSceneNode = this->createSceneNode("pause");
 
 		auto& resourceManager{ lib::host().resourceManager() };
 		auto scoreFont(resourceManager.getFont("game_scene.scoreFont"));
@@ -55,20 +57,40 @@ namespace zoper
 		m_goalQuad->sceneNode()->position = { 1250, 50 };
 		m_goalQuad->text(0)->text = "Level:";
 		m_goalQuad->text(0)->color = colors::Blue;
+		m_goalQuad->text(0)->configure();
 		m_goalQuad->text(2)->text = "Score:";
 		m_goalQuad->text(2)->color = colors::Blue;
+		m_goalQuad->text(2)->configure();
 
 		vector2df goBoxHalfSize{ 365, 365 };
 		Rectf32 gobox{ scenePerspective().center() - goBoxHalfSize, (goBoxHalfSize * 2)};
 
-		m_pauseText = _pauserg->createRenderizable<NodeAlignedText>("pausetext", "PAUSE", scoreFont, 180, colors::White, scenePerspective(),NodeAlignedText::AlignmentX::Center,NodeAlignedText::AlignmentY::Middle);
+		m_pauseText = m_pauseSceneNode->createRenderizable<NodeText>("pausetext");
+		m_pauseText->text = "PAUSE";
+		m_pauseText->font = scoreFont;
+		m_pauseText->characterSize = 180;
+		m_pauseText->color = colors::White;
+		m_pauseText->alignmentBox = scenePerspective();
+		m_pauseText->alignmentX = NodeText::AlignmentX::Center;
+		m_pauseText->alignmentY = NodeText::AlignmentY::Middle;
+		m_pauseText->configure();
 
-		_gameOverrg->createRenderizable<NodeAlignedText>("gameovergame", "GAME", scoreFont, 360, colors::White, 
-			gobox,
-			NodeAlignedText::AlignmentX::Center, NodeAlignedText::AlignmentY::Top);
-		_gameOverrg->createRenderizable<NodeAlignedText>("gameoverover", "OVER", scoreFont, 360, colors::White, 
-			gobox,
-			NodeAlignedText::AlignmentX::Center, NodeAlignedText::AlignmentY::Bottom);
+		auto gameText(_gameOverrg->createRenderizable<NodeText>("gameovergame"));
+		gameText->text = "GAME";
+		gameText->font = scoreFont;
+		gameText->characterSize = 360;
+		gameText->color = colors::White;
+		gameText->alignmentBox = gobox;
+		gameText->alignmentX = NodeText::AlignmentX::Center;
+		gameText->alignmentY = NodeText::AlignmentY::Top;
+
+		auto overText(_gameOverrg->createRenderizable<NodeText>("gameoverover"));
+		overText->text = "OVER";
+		overText->font = scoreFont;
+		overText->color = colors::White;
+		overText->alignmentBox = gobox;
+		overText->alignmentX = NodeText::AlignmentX::Center;
+		overText->alignmentY = NodeText::AlignmentY::Bottom;
 
 		increaseScore(0);
 
@@ -109,9 +131,9 @@ namespace zoper
 		_score = 0;
 		_nextTokenPart = 0;
 		setLevel(_gameConfig.value(StartLevelStr)->get<int>());
-		_gameOverrg->setVisible(false);
-		_mainBoardrg->setVisible(true);
-		_pauserg->setVisible(false);
+		_gameOverrg->visible = false;
+		_mainBoardrg->visible = true;
+		m_pauseSceneNode->visible = false;
 
 		switch (_gameData._gameMode)
 		{
@@ -164,14 +186,15 @@ namespace zoper
 	{
 		if (state() == Playing) {
 			setState(Pause);
-			_pauserg->setVisible(true);
-			addAnimation(msptr<anim::IPropertyAnimation<Color>>(1000, m_pauseText->color, Color{ 255, 255, 255, 0 }, Color{ 255, 255, 255, 255 }, 
-				anim::animation_action_callback{}, anim::animation_action_callback{}),nullptr);
+			m_pauseSceneNode->visible = true;
+			auto animationComponent(m_pauseSceneNode->ensureComponentOfType<anim::AnimationComponent>());
+			animationComponent->addAnimation(muptr<anim::IPropertyAnimation<Color>>(1000, m_pauseText->color, Color{ 255, 255, 255, 0 }, Color{ 255, 255, 255, 255 },
+				anim::animation_action_callback{}, anim::animation_action_callback{}));
 			gameClock.pause();
 			return true;
 		} else if (state() == Pause) {
 			setState(Playing);
-			_pauserg->setVisible(false);
+			m_pauseSceneNode->visible = false;
 			gameClock.resume();
 			return false;
 		}
@@ -305,7 +328,7 @@ namespace zoper
 	void GameScene::startGameOver()
 	{
 		setState(GameOver);
-		_gameOverrg->setVisible(true);
+		_gameOverrg->visible = true;
 	}
 
 	void GameScene::for_each_token_in_line(const lib::vector2du32 &startPosition, const Direction &direction,
@@ -412,9 +435,12 @@ namespace zoper
 			}
 
 			if (found) {
-				auto node = createRenderizable<NodeShape>("pointIncrementScore", Rectf32::fromSize( 15.0f,15.0f ),nullptr,30, colors::White);
-				addAnimation(msptr<anim::IPropertyAnimation<vector2df>>(600, node->position, lastTokenPosition, vector2df{ 450, 100 }, 
-					anim::noAction, anim::animation_action_callback{ [this, node]() { removeRenderizable(node); } }), nullptr);
+				auto node = createRenderizable<NodeShape>("pointIncrementScore", 30);
+				node->box = Rectf32::fromSize(15.0f, 15.0f);
+				node->color = colors::White;
+				node->configure();
+//				addAnimation(msptr<anim::IPropertyAnimation<vector2df>>(600, node->position, lastTokenPosition, vector2df{ 450, 100 }, 
+//					anim::noAction, anim::animation_action_callback{ [this, node]() { removeRenderizable(node); } }), nullptr);
 			}
 			return result;
 		});
@@ -496,16 +522,18 @@ namespace zoper
 				Rectf32 tileBox{ currentx, currenty, tileSize().x,tileSize().y };
 				std::string indexStr(std::to_string(x) + "_" + std::to_string(y));
 
-				auto tileBackground = backgroundTilesrg->createRenderizable<NodeQuad>("backgroundTile_"+indexStr,
-					tileBox,nullptr, colors::White);
+				auto tileBackground = backgroundTilesrg->createRenderizable<NodeQuad>("backgroundTile_"+indexStr);
+				tileBackground->box = tileBox;
+				tileBackground->configure();
 				column.push_back(std::move(tileBackground));
 
 				// Size of the point in the middle of the tile
 				constexpr vector2df centerPointSize{ 15,15 };
 
-				auto node = backgroundTilesrg->createRenderizable<NodeShape>("backgroundTilePoint_"+indexStr, 
-					Rectf32{ tileBox.center() - (centerPointSize / 2), centerPointSize },
-					nullptr, 30, colors::White);
+				auto node = backgroundTilesrg->createRenderizable<NodeShape>("backgroundTilePoint_"+indexStr, 30);
+				node->box = Rectf32{ tileBox.center() - (centerPointSize / 2), centerPointSize };
+				node->color = colors::White;
+				node->configure();
 
 				currentx += tileSize().x;
 			}

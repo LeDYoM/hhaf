@@ -1,24 +1,23 @@
 #ifndef __MAINMENU_HPP__
 #define __MAINMENU_HPP__
 
-#include <lib/menu/choosecontrol.hpp>
+#include <lib/gui/choosecontrol.hpp>
 #include <lib/core/configuration.hpp>
 
 namespace zoper
 {
 	namespace zmenu
 	{
-		class MainMenu : public lib::menu::ChooseControl
+		class MainMenuController
 		{
 		public:
 			constexpr static char* ClassName = "MainMenu";
-			MainMenu(lib::menu::MenuManager *parent);
-			virtual ~MainMenu();
-
-			virtual void onAddedToScene() override;
+			MainMenuController(lib::gui::MenuManager *parent);
+			virtual ~MainMenuController();
 
 		private:
 			lib::Configuration m_gameConfig;
+			lib::sptr<lib::gui::ChooseControl> m_chooseControl;
 		};
 	}
 }

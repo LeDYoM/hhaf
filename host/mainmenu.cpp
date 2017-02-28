@@ -1,7 +1,7 @@
 #include "mainmenu.hpp"
 #include "startlevelmenu.hpp"
-#include <lib/menu/menumanager.hpp>
-#include <lib/menu/choosecontrol.hpp>
+#include <lib/gui/menumanager.hpp>
+#include <lib/gui/choosecontrol.hpp>
 #include <lib/draw/scenenode.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/core/host.hpp>
@@ -12,24 +12,26 @@ namespace zoper
 	namespace zmenu
 	{
 		using namespace lib;
-		using namespace lib::menu;
+		using namespace lib::gui;
 
-		MainMenu::MainMenu(MenuManager *parent) 
-			: ChooseControl( parent, ClassName, 
+		MainMenuController::MainMenuController(MenuManager *parent)
+			: m_gameConfig{ ":NextGame" }
+		{
+			m_chooseControl = msptr<ChooseControl>(parent, ClassName,
 			[this](const u32 index)
 			{
 				switch (index)
 				{
 				case 0:
 					m_gameConfig.value(GameModeStr)->set<s32>(0);
-					menuManager()->changeStep(StartLevelMenu::ClassName);
+					m_chooseControl->menuManager()->changeStep(StartLevelMenu::ClassName);
 					break;
 				case 1:
 					m_gameConfig.value(GameModeStr)->set<s32>(1);
-					menuManager()->changeStep("StartLevelMenu");
+					m_chooseControl->menuManager()->changeStep("StartLevelMenu");
 					break;
 				case 2:
-					menuManager()->changeStep("OptionsMenu");
+					m_chooseControl->menuManager()->changeStep("OptionsMenu");
 					break;
 				case 3:
 				default:
@@ -38,21 +40,15 @@ namespace zoper
 				}
 			},
 			std::vector<sptr<OptionDescriptor>>{
-			msptr<OptionDescriptor>("Play token mode"),
+				msptr<OptionDescriptor>("Play token mode"),
 				msptr<OptionDescriptor>("Play time mode"),
 				msptr<OptionDescriptor>("Options"),
 				msptr<OptionDescriptor>("Exit")
-			}),
-			m_gameConfig{ ":NextGame" }
-		{
-			position.set({ 0,700 });
+			});
+
+//			position.set({ 0,700 });
 		}
 
-		MainMenu::~MainMenu() = default;
-
-		void MainMenu::onAddedToScene()
-		{
-//			position = { menuManager()->getCenterCoordinates().x, 700 };
-		}
+		MainMenuController::~MainMenuController() = default;
 	}
 }

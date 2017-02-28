@@ -4,7 +4,6 @@
 #include <lib/core/timer.hpp>
 #include <lib/include/types.hpp>
 #include <lib/include/properties.hpp>
-#include <lib/core/events/event.hpp>
 
 namespace lib
 {
@@ -14,18 +13,6 @@ namespace lib
 		{
 			using animation_action_callback = std::function<void()>;
 			static const animation_action_callback noAction;
-
-			class IAnimation;
-
-			class UpdateAnimationEvent : public events::EventTemplate<UpdateAnimationEvent>
-			{
-			public:
-				UpdateAnimationEvent(sptr<IAnimation> animation, sptr <SceneNode> tracker = {}) 
-					: m_animation{ std::move(animation) }, m_tracker{ std::move(tracker) } {}
-
-				sptr<IAnimation> m_animation;
-				sptr<SceneNode> m_tracker;
-			};
 
 			class IAnimation
 			{

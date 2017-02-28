@@ -8,13 +8,13 @@
 
 namespace lib
 {
-	namespace menu
+	namespace gui
 	{
 		class ChooseControl;
 		class MenuManager : public draw::Scene
 		{
 		public:
-			MenuManager(const std::string &name, Theme theme = Theme{});
+			MenuManager(str_const&& name, Theme theme = Theme{});
 			virtual ~MenuManager();
 
 			void setTheme(Theme theme) { m_theme = theme; }

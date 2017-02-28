@@ -11,29 +11,22 @@
 #include <lib/core/timer.hpp>
 #include <lib/core/events/event.hpp>
 #include <lib/core/events/eventreceiver.hpp>
-#include <lib/draw/animationcomponent.hpp>
 #include <lib/draw/view.hpp>
-#include <string>
 
 namespace lib
 {
 	namespace core
 	{
-		class ResourceManager;
 		class Host;
 	}
 	namespace draw
 	{
 		class SceneNode;
-		namespace anim
-		{
-			class IAnimation;
-		}
 
-		class Scene : public draw::SceneNode, private anim::AnimationComponent
+		class Scene : public draw::SceneNode
 		{
 		public:
-			Scene(std::string name);
+			Scene(str_const &&name);
 			virtual ~Scene();
 
 			virtual void onInit();
@@ -49,7 +42,6 @@ namespace lib
 
 			inline bool isActiveScene() const noexcept { return m_isActiveScene; }
 			inline void addSubscription(sptr<events::EventSubscription> &&es) noexcept { eventConnector.addSubscription(std::move(es)); }
-			void createAnimation(sptr<anim::IAnimation> nanimation, sptr<SceneNode> tracking = {}) noexcept { push_animation(std::move(nanimation), std::move(tracking)); }
 			const uptr<View> &getView() const;
 			virtual Scene *const parentScene() noexcept override { return this; }
 

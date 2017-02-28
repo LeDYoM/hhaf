@@ -14,12 +14,15 @@ namespace lib
 			class NodeShape : public ISimpleNode
 			{
 			public:
-				explicit NodeShape(str_const name, const Rectf32 &box, sptr<Texture> texture, const u32 pointCount, const Color &color);
+				explicit NodeShape(str_const &&name, const u32 pointCount);
 				virtual ~NodeShape();
+
+				virtual void configure() override;
 
 				Property<u32> pointCount;
 
 			protected:
+				void configureBase();
 				virtual void updateGeometrySimpleNode() override;
 			};
 		}

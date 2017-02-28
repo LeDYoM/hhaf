@@ -1,6 +1,6 @@
 #include "startlevelmenu.hpp"
-#include <lib/menu/menumanager.hpp>
-#include <lib/menu/choosecontrol.hpp>
+#include <lib/gui/menumanager.hpp>
+#include <lib/gui/choosecontrol.hpp>
 #include <lib/draw/renderizable.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/core/host.hpp>
@@ -12,7 +12,7 @@ namespace zoper
 	namespace zmenu
 	{
 		using namespace lib;
-		using namespace lib::menu;
+		using namespace lib::gui;
 
 		StartLevelMenu::StartLevelMenu(MenuManager *parent)
 			: ChooseControl( parent, ClassName,
@@ -34,8 +34,8 @@ namespace zoper
 			},
 			std::vector<sptr<OptionDescriptor>>{
 			msptr<OptionDescriptor>("Start level: ",
-				true, 0, std::vector<std::string>{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" }),
-				msptr<OptionDescriptor>("Back", true)
+				std::vector<std::string>{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" }),
+				msptr<OptionDescriptor>("Back")
 			}), 
 			Configuration("config.cfg"), _gameConfig{ ":NextGame" }
 		{
@@ -43,9 +43,9 @@ namespace zoper
 
 		StartLevelMenu::~StartLevelMenu() = default;
 
-		void StartLevelMenu::onAddedToScene()
-		{
-			position = { MenuScene::MenuPosX, 700 };
-		}
+//		void StartLevelMenu::onAddedToScene()
+//		{
+//			position = { MenuScene::MenuPosX, 700 };
+//		}
 	}
 }
