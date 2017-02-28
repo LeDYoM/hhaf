@@ -87,7 +87,7 @@ namespace lib
 			sptr<draw::nodes::NodeShape> m_cursor;
 			std::function<void(const u32)> m_onSelected;
 
-			friend class MenuManager;
+			friend class ChooseControlGroup;
 		};
 	}
 }
