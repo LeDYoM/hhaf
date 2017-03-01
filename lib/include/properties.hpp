@@ -13,8 +13,8 @@ namespace lib
 		using getter_t = std::function<const T&()>;
 		constexpr VirtualPropertyRead(const getter_t &getterp = {}) : getter{ getterp } {}
 		inline void setGetter(const getter_t &getterp) { getter = getterp; }
-		constexpr inline const T&operator()() const noexcept { return getter ? getter() : T{}; }
-		constexpr inline const T&get() const noexcept { return getter ? getter() : T{}; }
+		constexpr inline const T&get() const noexcept { return getter(); }
+		constexpr inline const T&operator()() const noexcept { return get(); }
 	protected:
 		getter_t getter;
 	};
