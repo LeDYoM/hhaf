@@ -46,7 +46,7 @@ namespace lib
 
 		ChooseControlGroup::~ChooseControlGroup() = default;
 
-		void ChooseControlGroup::addMenuSteps(const std::vector<sptr<ChooseControl>> &steps)
+		void ChooseControlGroup::addChooseControl(const std::vector<sptr<ChooseControl>> &steps)
 		{
 			for (auto& menuStep : steps)
 			{
