@@ -33,9 +33,9 @@ namespace zoper
 		m_background->configure();
 
 //		addMenuStep(msptr<MainMenuController>(this));
-		addMenuStep(msptr<OptionsMenu>(this));
+		addChooseControl(msptr<OptionsMenu>(this));
 //		addMenuStep(msptr<KeyRedefinitionMenu>(this));
-		addMenuStep(msptr<StartLevelMenu>(this));
+		addChooseControl(msptr<StartLevelMenu>(this));
 
 		m_logo = createRenderizable<NodeQuad>("mainLogo");
 		m_logo->box = Rectf32{ 500, 150, 1000, 500 };

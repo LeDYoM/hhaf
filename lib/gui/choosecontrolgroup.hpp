@@ -20,11 +20,12 @@ namespace lib
 			virtual ~ChooseControlGroup();
 
 			void setTheme(Theme theme) { m_theme = theme; }
-			void addChooseControl(const std::vector<sptr<ChooseControl>> &steps);
-			void addMenuStep(sptr<ChooseControl> step);
+			void addChooseControls(const std::vector<sptr<ChooseControl>> &steps);
+			void addChooseControl(sptr<ChooseControl> step);
 
-						void start(const std::string &firstStep);
+			void start(const std::string &firstStep);
 			void changeStep(const std::string &step);
+			Property<vector_shared_pointers<ChooseControl>> chooseControls;
 
 			const Theme &currentTheme() const noexcept;
 
