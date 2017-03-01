@@ -13,7 +13,7 @@ namespace lib
 		using namespace draw;
 		using namespace draw::nodes;
 
-		ChooseControlLine::ChooseControlLine(ChooseControl* parent, str_const && name)
+		ChooseControlLine::ChooseControlLine(SceneNode* parent, str_const && name)
 			: SceneNode{parent,std::move(name)} {}
 
 		void ChooseControlLine::create()

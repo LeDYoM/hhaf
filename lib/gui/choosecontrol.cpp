@@ -15,14 +15,14 @@ namespace lib
 	{
 		using namespace draw;
 
-		ChooseControl::ChooseControl(ChooseControlGroup *parent, str_const &&name, 	std::function<void(const u32)> onSelected,
+		ChooseControl::ChooseControl(lib::draw::SceneNode *parent, str_const &&name, 	std::function<void(const u32)> onSelected,
 			const std::vector<sptr<OptionDescriptor>> labels)
-			: SceneNode{ static_cast<SceneNode*>(parent),std::move(name) }, m_onSelected { onSelected }
+			: SceneNode{ parent, std::move(name) }, m_onSelected { onSelected }
 		{
-			const auto &cTheme(parent->currentTheme());
+			const auto &cTheme(dynamic_cast<ChooseControlGroup*>(parent)->currentTheme());
 			descriptorCursorSize = cTheme.cursorDescriptor.m_size;
 
-			// Set the virtual al forwarded properties
+			// Set the virtual forwarded properties
 			m_cursorNode = createSceneNode("cursorNode");
 			m_cursor = m_cursorNode->createRenderizable<nodes::NodeShape>("cursor", cTheme.cursorDescriptor.m_nVertex);
 			m_cursor->box = { 1000, 100, descriptorCursorSize.x, descriptorCursorSize.y };
@@ -33,7 +33,7 @@ namespace lib
 			vector2df currentPos{};
 			for (const auto& label : labels)
 			{
-				auto menuLine = createSceneNode<ChooseControlLine>("menuLineText" + std::to_string(count));
+				auto menuLine = createSceneNode<ChooseControlLine>("menuLineText");
 				menuLine->create();
 				menuLine->text = label->_text;
 				menuLine->font = cTheme.font;
