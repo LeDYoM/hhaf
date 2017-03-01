@@ -85,7 +85,7 @@ namespace lib
 			m_renderNodes.push_back(newElement);
 		}
 
-		void SceneNode::addSceneNode(const sptr<SceneNode> &node)
+		void SceneNode::addSceneNode(sptr<SceneNode> node)
 		{
 			m_groups.push_back(node);
 			node->m_parent = this;

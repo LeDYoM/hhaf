@@ -11,8 +11,8 @@ namespace lib
 {
 	namespace gui
 	{
-		ChooseControlGroup::ChooseControlGroup(str_const&& name, Theme theme)
-			: draw::Scene{ std::move(name) }, m_theme( theme )
+		ChooseControlGroup::ChooseControlGroup(draw::SceneNode *parent, str_const&& name, Theme theme)
+			: draw::SceneNode{ parent, std::move(name) }, m_theme( theme )
 		{
 			m_theme.font = host().resourceManager().getFont("game_menu.mainFont");
 			m_theme.textColor = draw::colors::Blue;
@@ -21,7 +21,7 @@ namespace lib
 			m_theme.incY = 1;
 			m_theme.cursorDescriptor = CursorDescriptor{ 3, vector2df{ 90.0f, 90.0f },draw::colors::Red };
 
-			addSubscription(events::KeyPressedEvent::subscribe([this](const events::Event&ev) {
+			parentScene()->addSubscription(events::KeyPressedEvent::subscribe([this](const events::Event&ev) {
 				logDebug("Key pressed toChooseControlGroup");
 				const auto &kEvent{ dynamic_cast<const events::KeyPressedEvent&>(ev) };
 				if (kEvent.key == input::Key::Down || kEvent.key == input::Key::Numpad2) {

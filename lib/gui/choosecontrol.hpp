@@ -21,6 +21,8 @@ namespace lib
 	}
 	namespace gui
 	{
+		class ChooseControlLine;
+		class ChooseControlGroup;
 		class OptionDescriptor
 		{
 		public:
@@ -30,27 +32,8 @@ namespace lib
 			std::string _text;
 			string_vector _subOptionsLabels;
 		};
-		class ChooseControlGroup;
-		class ChooseControlLine
-		{
-		public:
-			ChooseControlLine(draw::SceneNodeSPtr parent, str_const&&name);
-			ForwardProperty<std::string> text;
-			ForwardProperty<string_vector> options;
-			VirtualPropertyRead<str_const> name;
-			VirtualPropertyWrite<Rectf32> alignmentBox;
-			VirtualPropertyWrite<sptr<draw::Font>> font;
-			VirtualPropertyWrite<u32> characterSize;
-			VirtualPropertyWrite<draw::Color> color;
-			void create();
-			void configure();
 
-		public:
-			sptr<draw::nodes::NodeText> m_mainText;
-			sptr<draw::nodes::DiscreteText> m_option;
-			draw::SceneNodeSPtr m_sceneNode;
-		};
-		class ChooseControl
+		class ChooseControl : public draw::SceneNode
 		{
 		public:
 			ChooseControl(ChooseControlGroup *parent, str_const &&name,
@@ -58,7 +41,6 @@ namespace lib
 			virtual ~ChooseControl();
 
 			ChooseControlGroup *chooseControlGroup() const;
-			VirtualPropertyRead<str_const> name;
 
 			u32 selectedSubLabel(const u32 index) const;
 
@@ -71,7 +53,6 @@ namespace lib
 			void goLeft();
 			void goRight();
 
-			draw::SceneNodeSPtr m_sceneNode;
 			vector2df descriptorCursorSize;
 			u32 _cursorItemSelected{ 0 };
 

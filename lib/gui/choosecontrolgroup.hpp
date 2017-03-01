@@ -13,10 +13,10 @@ namespace lib
 	namespace gui
 	{
 		class ChooseControl;
-		class ChooseControlGroup : public draw::Scene
+		class ChooseControlGroup : public draw::SceneNode
 		{
 		public:
-			ChooseControlGroup(str_const&& name, Theme theme = Theme{});
+			ChooseControlGroup(draw::SceneNode *parent, str_const&& name, Theme theme = Theme{});
 			virtual ~ChooseControlGroup();
 
 			void setTheme(Theme theme) { m_theme = theme; }

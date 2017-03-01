@@ -14,10 +14,10 @@ namespace zoper
 		using namespace lib;
 		using namespace lib::gui;
 
-		MainMenuController::MainMenuController(ChooseControlGroup *parent)
-			: m_gameConfig{ ":NextGame" }
+		MainMenu::MainMenu(lib::draw::SceneNode *parent, str_const &&name)
+			: ChooseControlGroup{ parent, std::move(name) }, m_gameConfig { ":NextGame" }
 		{
-			m_chooseControl = msptr<ChooseControl>(parent, ClassName,
+			m_chooseControl = createSceneNode<ChooseControl>(ClassName,
 			[this](const u32 index)
 			{
 				switch (index)
@@ -49,6 +49,6 @@ namespace zoper
 //			position.set({ 0,700 });
 		}
 
-		MainMenuController::~MainMenuController() = default;
+		MainMenu::~MainMenu() = default;
 	}
 }

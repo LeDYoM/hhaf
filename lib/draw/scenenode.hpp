@@ -89,7 +89,7 @@ namespace lib
 		protected:
 
 			void addRenderizable(const sptr<Renderizable> &newElement);
-			void addSceneNode(const sptr<SceneNode> &node);
+			void addSceneNode(sptr<SceneNode> node);
 
 		private:
 
