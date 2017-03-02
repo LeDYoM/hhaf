@@ -12,7 +12,7 @@ namespace zoper
 		{
 		public:
 			constexpr static char* ClassName = "StartLevelMenu";
-			StartLevelMenu(lib::gui::ChooseControlGroup *parent);
+			StartLevelMenu(lib::draw::SceneNode *parent, lib::str_const &&name);
 			virtual ~StartLevelMenu();
 
 		private:

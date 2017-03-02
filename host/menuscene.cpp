@@ -21,22 +21,22 @@ namespace zoper
 	using namespace zmenu;
 
 	MenuScene::MenuScene()
-		: ChooseControlGroup("MenuScene") {}
+		: Scene{ "MenuScene" } {}
 
 	void MenuScene::onInit()
 	{
-		ChooseControlGroup::onInit();
+		Scene::onInit();
 		m_background = createRenderizable<NodeQuad>("background");
 		m_background->box = Rectf32::fromSize(2000.0f, 2000.0f);
 		m_background->texture = host().resourceManager().getTexture("game_menu.background");
 		m_background->color = colors::White;
 		m_background->configure();
 
-		createSceneNode<MainMenu>(this);
+		createSceneNode<MainMenu>(MainMenu::ClassName);
 //		addChooseControl(msptr<MainMenu>(this));
-		addChooseControl(msptr<OptionsMenu>(this));
+		createSceneNode<OptionsMenu>(OptionsMenu::ClassName);
 //		addMenuStep(msptr<KeyRedefinitionMenu>(this));
-		addChooseControl(msptr<StartLevelMenu>(this));
+		createSceneNode<StartLevelMenu>(StartLevelMenu::ClassName);
 
 		m_logo = createRenderizable<NodeQuad>("mainLogo");
 		m_logo->box = Rectf32{ 500, 150, 1000, 500 };
@@ -47,13 +47,13 @@ namespace zoper
 
 	void MenuScene::onEnterScene()
 	{
-		ChooseControlGroup::onEnterScene();
+//		ChooseControlGroup::onEnterScene();
 //		start(MainMenu::ClassName);
 	}
 
 	void MenuScene::onExitScene()
 	{
-		ChooseControlGroup::onExitScene();
+//		ChooseControlGroup::onExitScene();
 	}
 
 	void MenuScene::updateScene()

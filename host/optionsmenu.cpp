@@ -14,8 +14,8 @@ namespace zoper
 		using namespace lib;
 		using namespace lib::gui;
 
-		OptionsMenu::OptionsMenu(ChooseControlGroup *parent)
-			: ChooseControl( parent, ClassName,
+		OptionsMenu::OptionsMenu(lib::draw::SceneNode *parent, lib::str_const &&name)
+			: ChooseControl( parent, std::move(name),
 			[this](u32 index)
 			{
 				switch (index)

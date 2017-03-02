@@ -13,7 +13,7 @@ namespace zoper
 		public:
 			constexpr static char* ClassName = "OptionsMenu";
 
-			OptionsMenu(lib::gui::ChooseControlGroup *parent);
+			OptionsMenu(lib::draw::SceneNode *parent, lib::str_const &&name);
 			virtual ~OptionsMenu();
 		};
 	}
