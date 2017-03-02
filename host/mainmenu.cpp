@@ -17,8 +17,8 @@ namespace zoper
 		MainMenu::MainMenu(lib::draw::SceneNode *parent, str_const &&name)
 			: ChooseControlGroup{ parent, std::move(name) }, m_gameConfig { ":NextGame" }
 		{
-			m_chooseControl = createSceneNode<ChooseControl>(ClassName,
-			[this](const u32 index)
+			m_chooseControl = createSceneNode<ChooseControl>(ClassName);
+/*			[this](const u32 index)
 			{
 				switch (index)
 				{
@@ -45,7 +45,7 @@ namespace zoper
 				msptr<OptionDescriptor>("Options"),
 				msptr<OptionDescriptor>("Exit")
 			});
-
+			*/
 //			position.set({ 0,700 });
 		}
 

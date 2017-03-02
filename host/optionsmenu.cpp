@@ -15,8 +15,8 @@ namespace zoper
 		using namespace lib::gui;
 
 		OptionsMenu::OptionsMenu(lib::draw::SceneNode *parent, lib::str_const &&name)
-			: ChooseControl( parent, std::move(name),
-			[this](u32 index)
+			: ChooseControl( parent, std::move(name)),
+/*			[this](u32 index)
 			{
 				switch (index)
 				{
@@ -63,7 +63,7 @@ namespace zoper
 				msptr<OptionDescriptor>("Redefine keyboard"),
 				msptr<OptionDescriptor>("Cancel"),
 				msptr<OptionDescriptor>("Accept")
-			} ),
+			} ),*/
 			lib::Configuration("config.cfg")
 		{
 		}

@@ -15,8 +15,8 @@ namespace zoper
 		using namespace lib::gui;
 
 		StartLevelMenu::StartLevelMenu(lib::draw::SceneNode *parent, lib::str_const &&name)
-			: ChooseControl( parent, std::move(name),
-			[this](const u32 index)
+			: ChooseControl( parent, std::move(name)),
+/*			[this](const u32 index)
 			{
 				switch (index)
 				{
@@ -36,7 +36,7 @@ namespace zoper
 			msptr<OptionDescriptor>("Start level: ",
 				std::vector<std::string>{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" }),
 				msptr<OptionDescriptor>("Back")
-			}), 
+			}), */
 			Configuration("config.cfg"), _gameConfig{ ":NextGame" }
 		{
 		}
