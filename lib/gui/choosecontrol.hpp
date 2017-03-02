@@ -36,15 +36,15 @@ namespace lib
 		class ChooseControl : public draw::SceneNode
 		{
 		public:
-			ChooseControl(lib::draw::SceneNode *parent, str_const &&name,
-				std::function<void(const u32)> onSelected, const std::vector<sptr<OptionDescriptor>> labels);
+			ChooseControl(lib::draw::SceneNode *parent, str_const &&name);
 			virtual ~ChooseControl();
 
+			void configure();
 			ChooseControlGroup *chooseControlGroup() const;
 
+			Property<std::function<void(const u32)>> onSelected;
+			Property <std::vector<sptr<OptionDescriptor>>> options;
 			u32 selectedSubLabel(const u32 index) const;
-
-			ForwardProperty<bool> visible;
 
 		private:
 			void cursorSelectItem(const u32 nodeIndex);

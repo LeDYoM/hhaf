@@ -19,7 +19,7 @@ namespace lib
 			ChooseControlGroup(draw::SceneNode *parent, str_const&& name, Theme theme = Theme{});
 			virtual ~ChooseControlGroup();
 
-			void setTheme(Theme theme) { m_theme = theme; }
+			void setTheme(const Theme &theme) { m_theme = theme; }
 			void addChooseControls(const std::vector<sptr<ChooseControl>> &steps);
 			void addChooseControl(sptr<ChooseControl> step);
 
