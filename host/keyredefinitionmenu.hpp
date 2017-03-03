@@ -15,7 +15,7 @@ namespace zoper
 
 			KeyRedefinitionMenu(lib::draw::SceneNode *parent);
 			virtual ~KeyRedefinitionMenu();
-			virtual void onAddedToScene() override;
+			virtual void create() override;
 
 		private:
 			const std::string getKeyNameStr(const lib::u32 index) const;

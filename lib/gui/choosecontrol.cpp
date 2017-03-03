@@ -38,14 +38,14 @@ namespace lib
 			vector2df currentPos{};
 			for (const auto& label : options())
 			{
-				auto menuLine = createSceneNode<ChooseControlLine>("menuLineText");
+				auto menuLine = createSceneNode<ChooseControlLine>("menuLineText"+std::to_string(count));
 				menuLine->create();
-				menuLine->text = label->_text;
+				menuLine->text = label.text;
 				menuLine->font = cTheme.font;
 				menuLine->characterSize = cTheme.chSize;
 				menuLine->color = cTheme.textColor;
 				menuLine->alignmentBox = scenePerspective().moved(currentPos);
-				menuLine->options = label->_subOptionsLabels;
+				menuLine->options = label.subOptionsLabels;
 				menuLine->configure();
 
 				currentPos.y += (cTheme.chSize + cTheme.incY);

@@ -6,6 +6,7 @@
 #include <lib/draw/nodes/nodetext.hpp>
 #include <lib/draw/nodes/discretetext.hpp>
 #include <lib/draw/nodes/nodeshape.hpp>
+#include "optionmodel.hpp"
 #include <vector>
 #include <functional>
 
@@ -23,16 +24,6 @@ namespace lib
 	{
 		class ChooseControlLine;
 		class ChooseControlGroup;
-		class OptionDescriptor
-		{
-		public:
-			explicit OptionDescriptor(str_const text, const string_vector &subOptionsLabels = string_vector())
-				: _text{ text }, _subOptionsLabels(subOptionsLabels) {}
-
-			std::string _text;
-			string_vector _subOptionsLabels;
-		};
-
 		class ChooseControl : public draw::SceneNode
 		{
 		public:
@@ -43,7 +34,7 @@ namespace lib
 			ChooseControlGroup *chooseControlGroup() const;
 
 			Property<std::function<void(const u32)>> onSelected;
-			Property <std::vector<sptr<OptionDescriptor>>> options;
+			Property <std::vector<OptionModel>> options;
 			u32 selectedSubLabel(const u32 index) const;
 
 		private:

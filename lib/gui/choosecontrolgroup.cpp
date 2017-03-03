@@ -14,13 +14,10 @@ namespace lib
 		ChooseControlGroup::ChooseControlGroup(draw::SceneNode *parent, str_const&& name, Theme theme)
 			: draw::SceneNode{ parent, std::move(name) }, m_theme( theme )
 		{
-			m_theme.font = host().resourceManager().getFont("game_menu.mainFont");
-			m_theme.textColor = draw::colors::Blue;
-			m_theme.selectedTextColor = draw::colors::Red;
-			m_theme.chSize = 70;
-			m_theme.incY = 1;
-			m_theme.cursorDescriptor = CursorDescriptor{ 3, vector2df{ 90.0f, 90.0f },draw::colors::Red };
+		}
 
+		void ChooseControlGroup::create()
+		{
 			parentScene()->addSubscription(events::KeyPressedEvent::subscribe([this](const events::Event&ev) {
 				logDebug("Key pressed toChooseControlGroup");
 				const auto &kEvent{ dynamic_cast<const events::KeyPressedEvent&>(ev) };
@@ -44,8 +41,19 @@ namespace lib
 			}));
 		}
 
+		void ChooseControlGroup::configure()
+		{
+			m_theme.font = host().resourceManager().getFont("game_menu.mainFont");
+			m_theme.textColor = draw::colors::Blue;
+			m_theme.selectedTextColor = draw::colors::Red;
+			m_theme.chSize = 70;
+			m_theme.incY = 1;
+			m_theme.cursorDescriptor = CursorDescriptor{ 3, vector2df{ 90.0f, 90.0f },draw::colors::Red };
+		}
+
 		ChooseControlGroup::~ChooseControlGroup() = default;
 
+		/*
 		void ChooseControlGroup::addChooseControls(const std::vector<sptr<ChooseControl>> &steps)
 		{
 			for (auto& menuStep : steps)
@@ -81,11 +89,6 @@ namespace lib
 			}
 		}
 
-		const Theme & ChooseControlGroup::currentTheme() const noexcept
-		{
-			return m_theme;
-		}
-
 		void ChooseControlGroup::changeStep(sptr<ChooseControl> &step)
 		{
 			setActiveStep(step);
@@ -98,6 +101,12 @@ namespace lib
 			for (const auto &_step : m_steps) {
 				_step->visible = (_step == step);
 			}
+		}
+
+		*/
+		const Theme & ChooseControlGroup::currentTheme() const noexcept
+		{
+			return m_theme;
 		}
 	}
 }

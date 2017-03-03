@@ -28,7 +28,8 @@ namespace lib
 			SceneNode(SceneNode *parent, str_const&& name);
 			virtual ~SceneNode();
 
-			virtual void onAddedToScene() {}
+			virtual void create() {}
+			virtual void configure() {}
 
 			/**
 			* Method to add a user defined renderizable

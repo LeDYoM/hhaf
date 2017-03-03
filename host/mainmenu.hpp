@@ -16,6 +16,9 @@ namespace zoper
 			MainMenu(lib::draw::SceneNode *parent, lib::str_const&& name);
 			virtual ~MainMenu();
 
+			virtual void create() override;
+			virtual void configure() override;
+
 		private:
 			lib::Configuration m_gameConfig;
 			lib::sptr<lib::gui::ChooseControl> m_chooseControl;

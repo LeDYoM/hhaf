@@ -89,7 +89,7 @@ namespace lib
 		{
 			m_groups.push_back(node);
 			node->m_parent = this;
-			node->onAddedToScene();
+			node->create();
 		}
 
 		bool SceneNode::removeSceneNode(const sptr<SceneNode> &element)

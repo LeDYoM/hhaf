@@ -32,7 +32,8 @@ namespace zoper
 		m_background->color = colors::White;
 		m_background->configure();
 
-		createSceneNode<MainMenu>(MainMenu::ClassName);
+		auto mainMenu = createSceneNode<MainMenu>(MainMenu::ClassName);
+//		mainMenu->
 //		addChooseControl(msptr<MainMenu>(this));
 //		createSceneNode<OptionsMenu>(OptionsMenu::ClassName);
 //		addMenuStep(msptr<KeyRedefinitionMenu>(this));

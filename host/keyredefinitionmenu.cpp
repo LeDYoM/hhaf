@@ -22,7 +22,7 @@ namespace zoper
 
 		KeyRedefinitionMenu::~KeyRedefinitionMenu() = default;
 
-		void KeyRedefinitionMenu::onAddedToScene()
+		void KeyRedefinitionMenu::create()
 		{
 			_nextKeyText = createRenderizable<NodeText>("pressKey");
 			_nextKeyText->text = " ";
