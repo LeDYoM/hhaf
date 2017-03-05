@@ -32,7 +32,6 @@ namespace zoper
 		m_background->color = colors::White;
 		m_background->configure();
 
-		auto mainMenu = createSceneNode<MainMenu>(MainMenu::ClassName);
 //		mainMenu->
 //		addChooseControl(msptr<MainMenu>(this));
 //		createSceneNode<OptionsMenu>(OptionsMenu::ClassName);
@@ -44,6 +43,10 @@ namespace zoper
 		m_logo->texture = host().resourceManager().getTexture("game_menu.logo");
 		m_logo->color = colors::White;
 		m_logo->configure();
+
+		auto mainMenu = createSceneNode<MainMenu>(MainMenu::ClassName);
+		mainMenu->configure();
+
 	}
 
 	void MenuScene::onEnterScene()
