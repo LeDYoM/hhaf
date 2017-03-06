@@ -33,12 +33,12 @@
 	#else
 		// Unsupported UNIX system
 		#define LIB_SYSTEM_UNIX_UNSUPPORTED
-		#error This UNIX operating system is not supported by SFML library
+		#error This UNIX operating system is not supported by lib library
 	#endif
 #else
 		// Unsupported system
 		#define LIB_SYSTEM_UNSUPPORTED
-		#error This operating system is not supported by SFML library
+		#error This operating system is not supported by lib library
 #endif
 
 // Define a portable debug macro
