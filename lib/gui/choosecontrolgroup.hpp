@@ -4,6 +4,7 @@
 #pragma once
 
 #include "theme.hpp"
+#include "statescontroller.hpp"
 #include <vector>
 #include <lib/include/types.hpp>
 #include <lib/draw/scene.hpp>
@@ -27,19 +28,14 @@ namespace lib
 			void addChooseControl(sptr<ChooseControl> step);
 
 			void start(const std::string &firstStep);
-			void changeStep(const std::string &step);
-			Property<vector_shared_pointers<ChooseControl>> chooseControls;
-			Property<std::vector<OptionModel>> options;
+//			void changeStep(const std::string &step);
+			Property<std::vector<std::vector<OptionModel>>> options;
+			Property<std::vector<std::function<void(const u32)>>> onSelected;
 
 			const Theme &currentTheme() const noexcept;
 
 		private:
-/*			void start(sptr<ChooseControl> &firstStep);
-			void changeStep(sptr<ChooseControl> &step);
-			void setActiveStep(sptr<ChooseControl> &step);
-			*/
-			std::vector<sptr<ChooseControl>> m_steps;
-			sptr<ChooseControl> m_activeMenuStep{ nullptr };
+			uptr<StatesController> m_sController;
 			Theme m_theme;
 		};
 	}

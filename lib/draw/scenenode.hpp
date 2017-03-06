@@ -87,6 +87,12 @@ namespace lib
 			void setColor(const Color &color, const bool applySceneNodes = true);
 			inline SceneNode *parent() const noexcept { return m_parent; }
 
+			template <typename T>
+			inline T *const snCast() { 
+				__ASSERT(dynamic_cast<T *const>(this) != nullptr, "Error trying to convert this sceneNode");
+				return dynamic_cast<T *const>(this); 
+			}
+
 		protected:
 
 			void addRenderizable(const sptr<Renderizable> &newElement);

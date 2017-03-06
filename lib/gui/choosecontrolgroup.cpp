@@ -21,21 +21,22 @@ namespace lib
 			parentScene()->addSubscription(events::KeyPressedEvent::subscribe([this](const events::Event&ev) {
 				logDebug("Key pressed toChooseControlGroup");
 				const auto &kEvent{ dynamic_cast<const events::KeyPressedEvent&>(ev) };
+				auto node(m_sController->activeNode()->snCast<ChooseControl>());
 				if (kEvent.key == input::Key::Down || kEvent.key == input::Key::Numpad2) {
-					m_activeMenuStep->goDown();
+					node->goDown();
 				}
 				else if (kEvent.key == input::Key::Up || kEvent.key == input::Key::Numpad8) {
-					m_activeMenuStep->goUp();
+					node->goUp();
 				}
 				else if (kEvent.key == input::Key::Left || kEvent.key == input::Key::Numpad4) {
-					m_activeMenuStep->goLeft();
+					node->goLeft();
 				}
 				else if (kEvent.key == input::Key::Right || kEvent.key == input::Key::Numpad8) {
-					m_activeMenuStep->goRight();
+					node->goRight();
 				}
 				else if (kEvent.key == input::Key::Return || kEvent.key == input::Key::Space) {
-					if (m_activeMenuStep->m_onSelected) {
-						m_activeMenuStep->m_onSelected(m_activeMenuStep->_cursorItemSelected);
+					if (node->m_onSelected) {
+						node->m_onSelected(node->_cursorItemSelected);
 					}
 				}
 			}));
@@ -49,6 +50,27 @@ namespace lib
 			m_theme.chSize = 70;
 			m_theme.incY = 1;
 			m_theme.cursorDescriptor = CursorDescriptor{ 3, vector2df{ 90.0f, 90.0f },draw::colors::Red };
+			u32 count{ 0 };
+
+			vector_shared_pointers<SceneNode> nodes;
+			nodes.reserve(options().size());
+
+			for (const auto& option : options()) {
+				auto chooseControl = createSceneNode<ChooseControl>("chooseControl"+std::to_string(count));
+				chooseControl->options = option;
+				chooseControl->onSelected = onSelected()[count];
+				chooseControl->configure();
+				nodes.push_back(std::move(chooseControl));
+				++count;
+			}
+
+			__ASSERT(count > 0 && !nodes.empty(), "The choose control group must be created with at least one element");
+			// Use an state controller to manager which node is active
+			m_sController = muptr<StatesController>();
+			// Set the nodes to it
+			m_sController->nodes = std::move(nodes);
+			// Set the index 0 as start node
+			m_sController->activeNodeIndex = 0;
 		}
 
 		ChooseControlGroup::~ChooseControlGroup() = default;

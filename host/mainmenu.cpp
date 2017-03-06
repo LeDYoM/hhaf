@@ -58,11 +58,35 @@ namespace zoper
 
 		void MainMenu::configure()
 		{
-			options = std::vector<OptionModel>{
-				OptionModel("Play token mode"),
+			options = std::vector<std::vector<OptionModel>>{
+				{OptionModel("Play token mode"),
 				OptionModel("Play time mode"),
 				OptionModel("Options"),
-				OptionModel("Exit")
+				OptionModel("Exit")}
+			};
+
+			onSelected = std::vector<std::function<void(const u32)>>{
+				[this](const u32 index)
+				{
+					switch (index)
+					{
+					case 0:
+						m_gameConfig.value(GameModeStr)->set<s32>(0);
+//						m_chooseControl->chooseControlGroup()->changeStep(StartLevelMenu::ClassName);
+					break;
+					case 1:
+						m_gameConfig.value(GameModeStr)->set<s32>(1);
+//						m_chooseControl->chooseControlGroup()->changeStep("StartLevelMenu");
+					break;
+					case 2:
+//						m_chooseControl->chooseControlGroup()->changeStep("OptionsMenu");
+					break;
+					case 3:
+					default:
+						host().exitProgram();
+					break;
+					}
+				}
 			};
 
 			ChooseControlGroup::configure();
