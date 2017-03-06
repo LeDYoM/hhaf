@@ -28,11 +28,11 @@ namespace lib
 			void addChooseControl(sptr<ChooseControl> step);
 
 			void start(const std::string &firstStep);
-//			void changeStep(const std::string &step);
 			Property<std::vector<std::vector<OptionModel>>> options;
 			Property<std::vector<std::function<void(const u32)>>> onSelected;
 
 			const Theme &currentTheme() const noexcept;
+			Property<u32> currentControlIndex;
 
 		private:
 			uptr<StatesController> m_sController;

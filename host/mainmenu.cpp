@@ -58,11 +58,20 @@ namespace zoper
 
 		void MainMenu::configure()
 		{
-			options = std::vector<std::vector<OptionModel>>{
-				{OptionModel("Play token mode"),
-				OptionModel("Play time mode"),
-				OptionModel("Options"),
-				OptionModel("Exit")}
+			options = std::vector<std::vector<OptionModel>>
+			{
+				// Main menu
+				{
+					OptionModel("Play token mode"),
+					OptionModel("Play time mode"),
+					OptionModel("Options"),
+					OptionModel("Exit")
+				},
+				// Start level menu
+				{
+					OptionModel("Start level: ", std::vector<str_const>{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" }),
+					OptionModel("Back")
+				}
 			};
 
 			onSelected = std::vector<std::function<void(const u32)>>{
@@ -90,6 +99,7 @@ namespace zoper
 			};
 
 			ChooseControlGroup::configure();
+			currentControlIndex = 1;
 		}
 	}
 }

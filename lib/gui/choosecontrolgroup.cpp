@@ -58,7 +58,7 @@ namespace lib
 			for (const auto& option : options()) {
 				auto chooseControl = createSceneNode<ChooseControl>("chooseControl"+std::to_string(count));
 				chooseControl->options = option;
-				chooseControl->onSelected = onSelected()[count];
+				chooseControl->onSelected = onSelected()[0]; // <- TO DO: Change it
 				chooseControl->configure();
 				nodes.push_back(std::move(chooseControl));
 				++count;
@@ -71,6 +71,11 @@ namespace lib
 			m_sController->nodes = std::move(nodes);
 			// Set the index 0 as start node
 			m_sController->activeNodeIndex = 0;
+			// Set it ready to work
+			m_sController->configure();
+
+			// Set the user visible property able to modify the internal state
+			currentControlIndex.setCallback([this]() { m_sController->activeNodeIndex = currentControlIndex(); });
 		}
 
 		ChooseControlGroup::~ChooseControlGroup() = default;
