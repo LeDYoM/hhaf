@@ -89,7 +89,6 @@ namespace lib
 
 			template <typename T>
 			inline T *const snCast() { 
-				__ASSERT(dynamic_cast<T *const>(this) != nullptr, "Error trying to convert this sceneNode");
 				return dynamic_cast<T *const>(this); 
 			}
 

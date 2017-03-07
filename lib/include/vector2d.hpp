@@ -105,7 +105,7 @@ namespace lib
 
 	// Serialization operators
 	template <typename T>
-	inline std::ostream& operator<<(std::ostream & os, const vector2d<T> &v2d)
+	inline write_stream& operator<<(write_stream & os, const vector2d<T> &v2d)
 	{
 		os << "{" << v2d.x << "," << v2d.y << "}";
 		return os;

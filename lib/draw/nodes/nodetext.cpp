@@ -3,6 +3,8 @@
 #include <lib/draw/font.hpp>
 #include <lib/draw/texture.hpp>
 
+#include <lib/core/log.hpp>
+
 #include <cmath>
 
 namespace lib

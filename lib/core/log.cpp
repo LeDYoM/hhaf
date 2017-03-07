@@ -66,7 +66,7 @@ void finishLog()
 #endif
 }
 
-std::ostream & log_stream()
+lib::write_stream & log_stream() noexcept
 {
 	return log_output_stream;
 }

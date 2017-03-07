@@ -6,8 +6,8 @@
 #include <cstdint>
 #include <memory>
 #include <vector>
+#include <iostream>
 #include <lib/core/compileconfig.hpp>
-#include <lib/core/log.hpp>
 
 namespace lib
 {
@@ -44,7 +44,7 @@ namespace lib
 			return true;
 		}
 		else {
-			logError("Element ", element, " not found in list");
+//			logError("Element ", element, " not found in list");
 			return false;
 		}
 	}
@@ -60,9 +60,9 @@ namespace lib
 	using f32 = float;
 	using f64 = double;
 	using str_const = std::string;
+	using write_stream = std::ostream;
 
 	using string_vector = std::vector<str_const>;
-
 }
 
 #endif

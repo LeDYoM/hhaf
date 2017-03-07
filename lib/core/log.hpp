@@ -2,7 +2,7 @@
 #define LIB_LOG_INCLUDE_HPP__
 
 #include "compileconfig.hpp"
-#include <iostream>
+#include <lib/include/types.hpp>
 
 void initLog();
 void finishLog();
@@ -17,15 +17,15 @@ void finishLog();
 		Error,
 	};
 
-	std::ostream &log_stream();
+	lib::write_stream &log_stream() noexcept;
 
 	void print_impl();
 
 	template<typename T, typename ...Args>
-	inline void print_impl(T&& value, Args&&... args)
+	inline void print_impl(T&& value, Args... args)
 	{
 		log_stream() << value;
-		print_impl(std::forward<Args>(args)...);
+		print_impl(std::forward<Args&&>(args)...);
 	}
 
 	template<LogType log_type, typename ...Args>

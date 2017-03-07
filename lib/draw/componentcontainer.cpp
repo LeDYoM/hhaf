@@ -1,4 +1,5 @@
 #include "componentcontainer.hpp"
+#include <lib/core/log.hpp>
 #include <algorithm>
 
 namespace lib
