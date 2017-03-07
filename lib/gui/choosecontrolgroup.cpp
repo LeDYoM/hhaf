@@ -1,11 +1,11 @@
 #include "choosecontrolgroup.hpp"
 #include "choosecontrol.hpp"
-
+#include "optionmodel.hpp"
 #include <lib/core/log.hpp>
 #include <lib/core/host.hpp>
 #include <lib/core/resourcemanager.hpp>
-
 #include <lib/core/events/inputevent.hpp>
+
 
 namespace lib
 {
@@ -35,9 +35,15 @@ namespace lib
 					node->goRight();
 				}
 				else if (kEvent.key == input::Key::Return || kEvent.key == input::Key::Space) {
-					if (node->m_onSelected) {
-						node->m_onSelected(node->_cursorItemSelected);
+					const OptionModelIndex resultIndices(onSelected({ m_sController->activeNodeIndex() }));
+					logDebug("The onSelect returned ", resultIndices);
+					if (!resultIndices.empty()) {
+						if (resultIndices[0] != m_sController->activeNodeIndex())
+						{
+							m_sController->activeNodeIndex = resultIndices[0];
+						}
 					}
+
 				}
 			}));
 		}
@@ -58,7 +64,7 @@ namespace lib
 			for (const auto& option : options()) {
 				auto chooseControl = createSceneNode<ChooseControl>("chooseControl"+std::to_string(count));
 				chooseControl->options = option;
-				chooseControl->onSelected = onSelected()[0]; // <- TO DO: Change it
+//				chooseControl->onSelected = onSelected()[0]; // <- TO DO: Change it
 				chooseControl->configure();
 				nodes.push_back(std::move(chooseControl));
 				++count;
@@ -80,57 +86,6 @@ namespace lib
 
 		ChooseControlGroup::~ChooseControlGroup() = default;
 
-		/*
-		void ChooseControlGroup::addChooseControls(const std::vector<sptr<ChooseControl>> &steps)
-		{
-			for (auto& menuStep : steps)
-			{
-				addChooseControl(menuStep);
-			}
-		}
-
-		void ChooseControlGroup::addChooseControl(sptr<ChooseControl> step)
-		{
-//			addSceneNode(step);
-			m_steps.push_back(step);
-		}
-
-		void ChooseControlGroup::start(sptr<ChooseControl> &firstStep)
-		{
-			__ASSERT(firstStep, "Cannot start in nullptr step");
-			changeStep(firstStep);
-		}
-
-		void ChooseControlGroup::start(const std::string &firstStep)
-		{
-			changeStep(firstStep);
-		}
-
-		void ChooseControlGroup::changeStep(const std::string &step)
-		{
-			for (auto& nstep : m_steps) {
-				if (nstep->name() == step) {
-					changeStep(nstep);
-					break;
-				}
-			}
-		}
-
-		void ChooseControlGroup::changeStep(sptr<ChooseControl> &step)
-		{
-			setActiveStep(step);
-		}
-
-		void ChooseControlGroup::setActiveStep(sptr<ChooseControl> &step)
-		{
-			m_activeMenuStep = step;
-
-			for (const auto &_step : m_steps) {
-				_step->visible = (_step == step);
-			}
-		}
-
-		*/
 		const Theme & ChooseControlGroup::currentTheme() const noexcept
 		{
 			return m_theme;

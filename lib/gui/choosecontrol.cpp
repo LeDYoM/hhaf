@@ -49,7 +49,7 @@ namespace lib
 				menuLine->configure();
 
 				currentPos.y += (cTheme.chSize + cTheme.incY);
-				m_labelData.emplace_back(menuLine);
+				lines.emplace_back(menuLine);
 				++count;
 			}
 
@@ -61,22 +61,28 @@ namespace lib
 			return dynamic_cast<ChooseControlGroup*>(parent());
 		}
 
+		std::vector<u32> ChooseControl::selection() const
+		{
+			std::vector<u32> temp{_cursorItemSelected};
+			return temp;
+		}
+
 		u32 ChooseControl::selectedSubLabel(const u32 index) const
 		{
-			__ASSERT(index < m_labelData.size(), "Invalid index");
-			return m_labelData[index].node->m_option->index();
+			__ASSERT(index < lines.size(), "Invalid index");
+			return lines[index]->m_option->index();
 		}
 
 	
 		void ChooseControl::cursorSelectItem(const u32 nodeIndex)
 		{
-			__ASSERT(nodeIndex < m_labelData.size(), "Invalid select index for cursor");
+			__ASSERT(nodeIndex < lines.size(), "Invalid select index for cursor");
 
 			const auto &cTheme(chooseControlGroup()->currentTheme());
 
-			m_labelData[_cursorItemSelected].node->color = cTheme.textColor;
+			lines[_cursorItemSelected]->color = cTheme.textColor;
 			_cursorItemSelected = nodeIndex;
-			m_labelData[_cursorItemSelected].node->color = cTheme.selectedTextColor;
+			lines[_cursorItemSelected]->color = cTheme.selectedTextColor;
 
 //			m_cursorNode->rotation.set(90);
 //			auto p(vector2df{ selectedText->position().x - descriptorCursorSize.x, selectedText->position().y });
@@ -87,7 +93,7 @@ namespace lib
 
 		void ChooseControl::goDown()
 		{
-			if (_cursorItemSelected < (m_labelData.size() - 1)) {
+			if (_cursorItemSelected < (lines.size() - 1)) {
 				cursorSelectItem(_cursorItemSelected + 1);
 			} else {
 				cursorSelectItem(0);
@@ -99,18 +105,18 @@ namespace lib
 			if (_cursorItemSelected > 0) {
 				cursorSelectItem(_cursorItemSelected - 1);
 			} else {
-				cursorSelectItem(m_labelData.size()-1);
+				cursorSelectItem(lines.size()-1);
 			}
 		}
 
 		void ChooseControl::goLeft()
 		{
-			m_labelData[_cursorItemSelected].node->m_option->decrementIndex();
+			lines[_cursorItemSelected]->m_option->decrementIndex();
 		}
 
 		void ChooseControl::goRight()
 		{
-			m_labelData[_cursorItemSelected].node->m_option->incrementIndex();
+			lines[_cursorItemSelected]->m_option->incrementIndex();
 		}
 	}
 }

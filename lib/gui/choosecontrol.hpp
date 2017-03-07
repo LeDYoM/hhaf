@@ -33,8 +33,9 @@ namespace lib
 			void configure();
 			ChooseControlGroup *chooseControlGroup() const;
 
-			Property<std::function<void(const u32)>> onSelected;
 			Property <std::vector<OptionModel>> options;
+			std::vector<u32> selection() const;
+
 			u32 selectedSubLabel(const u32 index) const;
 
 		private:
@@ -54,7 +55,7 @@ namespace lib
 					: node{ nodep } {}
 			};
 
-			std::vector<LabelData> m_labelData;
+			std::vector<sptr<ChooseControlLine>> lines;
 			draw::SceneNodeSPtr m_cursorNode;
 			sptr<draw::nodes::NodeShape> m_cursor;
 			std::function<void(const u32)> m_onSelected;

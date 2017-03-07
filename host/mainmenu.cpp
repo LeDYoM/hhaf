@@ -74,32 +74,31 @@ namespace zoper
 				}
 			};
 
-			onSelected = std::vector<std::function<void(const u32)>>{
-				[this](const u32 index)
+			onSelected = std::function<const OptionModelIndex(const std::vector<u32> &indices)>(
+				[this](const std::vector<u32> &indices)
 				{
-					switch (index)
+					switch (indices[0])
 					{
 					case 0:
-						m_gameConfig.value(GameModeStr)->set<s32>(0);
-//						m_chooseControl->chooseControlGroup()->changeStep(StartLevelMenu::ClassName);
-					break;
 					case 1:
-						m_gameConfig.value(GameModeStr)->set<s32>(1);
-//						m_chooseControl->chooseControlGroup()->changeStep("StartLevelMenu");
+						m_gameConfig.value(GameModeStr)->set<s32>(static_cast<s32>(indices[0]));
+						return OptionModelIndex{ indices[0] };
 					break;
 					case 2:
 //						m_chooseControl->chooseControlGroup()->changeStep("OptionsMenu");
-					break;
+						return OptionModelIndex{};
+						break;
 					case 3:
 					default:
 						host().exitProgram();
-					break;
+						return OptionModelIndex{};
+						break;
 					}
 				}
-			};
+			);
 
 			ChooseControlGroup::configure();
-			currentControlIndex = 1;
+			currentControlIndex = 0;
 		}
 	}
 }

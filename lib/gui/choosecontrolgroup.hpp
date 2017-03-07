@@ -23,13 +23,12 @@ namespace lib
 
 			virtual void create() override;
 			virtual void configure() override;
-			void setTheme(const Theme &theme) { m_theme = theme; }
-			void addChooseControls(const std::vector<sptr<ChooseControl>> &steps);
-			void addChooseControl(sptr<ChooseControl> step);
 
-			void start(const std::string &firstStep);
+			bool changeState(const OptionModelIndex&);
+			void setTheme(const Theme &theme) { m_theme = theme; }
+
 			Property<std::vector<std::vector<OptionModel>>> options;
-			Property<std::vector<std::function<void(const u32)>>> onSelected;
+			std::function<const OptionModelIndex(const OptionModelIndex&)> onSelected;
 
 			const Theme &currentTheme() const noexcept;
 			Property<u32> currentControlIndex;

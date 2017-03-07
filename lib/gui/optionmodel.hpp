@@ -18,7 +18,29 @@ namespace lib
 			str_const text;
 			string_vector subOptionsLabels;
 		};
+
+		class OptionModelIndex : public std::vector<u32> 
+		{
+		public:
+			using std::vector<u32>::vector;
+		};
+
+		inline write_stream& operator<<(write_stream & os, const OptionModelIndex &mIndex)
+		{
+			os << "{";
+			for (std::size_t i = 0; i < mIndex.size(); ++i) {
+				os << mIndex[i];
+				if (i < (mIndex.size() - 1)) {
+					os << ",";
+				}
+			}
+			os << "}";
+			return os;
+		}
+
 	}
+
+
 }
 
 #endif
