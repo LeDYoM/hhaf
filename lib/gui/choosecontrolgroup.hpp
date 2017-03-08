@@ -29,6 +29,7 @@ namespace lib
 
 			Property<std::vector<std::vector<OptionModel>>> options;
 			std::function<const OptionModelIndex(const OptionModelIndex&)> onSelected;
+			const std::vector<u32> currentSelection() const noexcept;
 
 			const Theme &currentTheme() const noexcept;
 			Property<u32> currentControlIndex;

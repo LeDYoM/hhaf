@@ -35,7 +35,7 @@ namespace lib
 					node->goRight();
 				}
 				else if (kEvent.key == input::Key::Return || kEvent.key == input::Key::Space) {
-					const OptionModelIndex resultIndices(onSelected({ m_sController->activeNodeIndex() }));
+					const OptionModelIndex resultIndices(onSelected(OptionModelIndex(currentSelection())));
 					logDebug("The onSelect returned ", resultIndices);
 					if (!resultIndices.empty()) {
 						if (resultIndices[0] != m_sController->activeNodeIndex())
@@ -85,6 +85,15 @@ namespace lib
 		}
 
 		ChooseControlGroup::~ChooseControlGroup() = default;
+
+		const std::vector<u32> ChooseControlGroup::currentSelection() const noexcept
+		{
+			std::vector<u32> temp{ m_sController->activeNodeIndex() };
+			std::vector<u32> controlSelection{m_sController->activeNode()->snCast<ChooseControl>()->currentSelection() };
+			temp.reserve(temp.size() + controlSelection.size());
+			std::copy(temp.end(), controlSelection.begin(), controlSelection.end());
+			return temp;
+		}
 
 		const Theme & ChooseControlGroup::currentTheme() const noexcept
 		{

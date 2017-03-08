@@ -22,7 +22,7 @@ namespace lib
 		class OptionModelIndex : public std::vector<u32> 
 		{
 		public:
-			using std::vector<u32>::vector;
+			OptionModelIndex(std::vector<u32>&&rhs) : std::vector<u32>{ std::move(rhs) } {}
 		};
 
 		inline write_stream& operator<<(write_stream & os, const OptionModelIndex &mIndex)
