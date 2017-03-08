@@ -24,19 +24,14 @@ namespace lib
 			virtual void draw();
 
 			Property<Color> color;
-
+			Property<bool> visible{ true };
 			inline Rectf32 bounds() const noexcept { return m_vertices.bounds(); }
-
-			inline bool isVisible() const noexcept { return m_visible; }
-			inline void setVisible(bool nv) noexcept { m_visible = nv; }
 
 			inline void move(const vector2df &offset)  noexcept { m_vertices.move(offset); }
 			inline void moveX(const f32 xOffset)  noexcept { m_vertices.moveX(xOffset); }
 			inline void moveY(const f32 yOffset)  noexcept { m_vertices.moveY(yOffset); }
 
 		protected:
-
-			bool m_visible{ true };
 			Property<sptr<Texture>> texture;
 			VertexArray m_vertices;
 		};

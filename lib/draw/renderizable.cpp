@@ -20,7 +20,7 @@ namespace lib
 
 		void Renderizable::draw()
 		{
-			if (m_visible) {
+			if (visible()) {
 				auto handle = host().rStates().pushChanges(nullptr, texture().get());
 				m_vertices.draw();
 			}
