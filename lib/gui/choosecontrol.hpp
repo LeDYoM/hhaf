@@ -34,7 +34,7 @@ namespace lib
 			ChooseControlGroup *chooseControlGroup() const;
 
 			Property <std::vector<OptionModel>> options;
-			std::vector<u32> selection() const;
+			const std::vector<u32> currentSelection() const noexcept;
 
 			u32 selectedSubLabel(const u32 index) const;
 

@@ -56,7 +56,7 @@ namespace zoper
 			return DirectionData::Invalid;
 		}
 
-		lib::vector2du32 applyToVector(const lib::vector2du32 &v,const lib::u32 scale = 1) const
+		lib::vector2du32 applyToVector(const lib::vector2du32 &v, const lib::u32 scale = 1) const
 		{
 			lib::vector2ds32 dv{ directionVector(scale) };
 			lib::vector2du32 result(v.x + dv.x, v.y + dv.y);

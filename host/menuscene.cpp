@@ -32,11 +32,11 @@ namespace zoper
 		m_background->color = colors::White;
 		m_background->configure();
 
-//		mainMenu->
-//		addChooseControl(msptr<MainMenu>(this));
-//		createSceneNode<OptionsMenu>(OptionsMenu::ClassName);
-//		addMenuStep(msptr<KeyRedefinitionMenu>(this));
-//		createSceneNode<StartLevelMenu>(StartLevelMenu::ClassName);
+		//		mainMenu->
+		//		addChooseControl(msptr<MainMenu>(this));
+		//		createSceneNode<OptionsMenu>(OptionsMenu::ClassName);
+		//		addMenuStep(msptr<KeyRedefinitionMenu>(this));
+		//		createSceneNode<StartLevelMenu>(StartLevelMenu::ClassName);
 
 		m_logo = createRenderizable<NodeQuad>("mainLogo");
 		m_logo->box = Rectf32{ 500, 150, 1000, 500 };
@@ -46,23 +46,21 @@ namespace zoper
 
 		auto mainMenu = createSceneNode<MainMenu>(MainMenu::ClassName);
 		mainMenu->configure();
-
 	}
 
 	void MenuScene::onEnterScene()
 	{
-//		ChooseControlGroup::onEnterScene();
-//		start(MainMenu::ClassName);
+		//		ChooseControlGroup::onEnterScene();
+		//		start(MainMenu::ClassName);
 	}
 
 	void MenuScene::onExitScene()
 	{
-//		ChooseControlGroup::onExitScene();
+		//		ChooseControlGroup::onExitScene();
 	}
 
 	void MenuScene::updateScene()
 	{
-
 	}
 
 	vector2df MenuScene::getDefaultSizeView()

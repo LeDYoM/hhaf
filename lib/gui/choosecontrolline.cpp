@@ -33,6 +33,7 @@ namespace lib
 		void ChooseControlLine::configure()
 		{
 			if (options().empty()) {
+				m_option->visible = false;
 				m_mainText->alignmentX = NodeText::AlignmentX::Center;
 			}
 			else {
@@ -42,6 +43,10 @@ namespace lib
 
 			m_mainText->configure();
 			m_option->configure();
+		}
+		const std::vector<u32> ChooseControlLine::currentSelection() const noexcept
+		{
+			return options().empty() ? std::vector<u32>{} : std::vector<u32>{m_option->index()};
 		}
 	}
 }

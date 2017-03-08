@@ -30,7 +30,7 @@ namespace zoper
 			_nextKeyText->characterSize = 90;
 			_nextKeyText->color = colors::Blue;
 			_nextKeyText->configure();
-//			_nextKeyText->setAlignment(Rectf32{ 0, 0, 1000.0f, 1000.0f }, NodeText::Alignment::Center);
+			//			_nextKeyText->setAlignment(Rectf32{ 0, 0, 1000.0f, 1000.0f }, NodeText::Alignment::Center);
 			_indexKey = 0;
 			setTextForKey();
 		}
@@ -41,13 +41,12 @@ namespace zoper
 			{
 				_indexKey = 0;
 				_keyMapping.apply();
-//				ChooseControlGroup()->changeStep("OptionsMenu");
+				//				ChooseControlGroup()->changeStep("OptionsMenu");
 			}
 			else
 			{
-				_nextKeyText->text = "Press key for "+getKeyNameStr(_indexKey);
-//				_nextKeyText->setAlignment(Rectf32{ 0, 0, 1000.0f, 1000.0f }, NodeText::Alignment::Center);
-
+				_nextKeyText->text = "Press key for " + getKeyNameStr(_indexKey);
+				//				_nextKeyText->setAlignment(Rectf32{ 0, 0, 1000.0f, 1000.0f }, NodeText::Alignment::Center);
 			}
 		}
 

@@ -46,7 +46,7 @@ namespace zoper
 		auto& resourceManager{ lib::host().resourceManager() };
 		auto scoreFont(resourceManager.getFont("game_scene.scoreFont"));
 
-		m_scoreQuad = msptr<TextQuad>(this, "score", scoreFont, 90, colors::White, Rectf32::fromSize(600,300));
+		m_scoreQuad = msptr<TextQuad>(this, "score", scoreFont, 90, colors::White, Rectf32::fromSize(600, 300));
 		m_scoreQuad->sceneNode()->position = { 50, 50 };
 		m_scoreQuad->text(0)->text = "Level:";
 		m_scoreQuad->text(0)->color = colors::Blue;
@@ -63,7 +63,7 @@ namespace zoper
 		m_goalQuad->text(2)->configure();
 
 		vector2df goBoxHalfSize{ 365, 365 };
-		Rectf32 gobox{ scenePerspective().center() - goBoxHalfSize, (goBoxHalfSize * 2)};
+		Rectf32 gobox{ scenePerspective().center() - goBoxHalfSize, (goBoxHalfSize * 2) };
 
 		m_pauseText = m_pauseSceneNode->createRenderizable<NodeText>("pausetext");
 		m_pauseText->text = "PAUSE";
@@ -112,7 +112,7 @@ namespace zoper
 
 		p_boardModel = lib::msptr<BoardModel>(_gameData.size);
 		m_boardEventConnector.addSubscription(TileAddedEvent::subscribe([this](const events::Event&ev) {
-			auto tEvent{ eventAs<TileAddedEvent>(ev) }; tileAdded(tEvent.position, tEvent.tile); 
+			auto tEvent{ eventAs<TileAddedEvent>(ev) }; tileAdded(tEvent.position, tEvent.tile);
 		}));
 		m_boardEventConnector.addSubscription(TileDeletedEvent::subscribe([this](const events::Event&ev) {
 			auto tEvent{ eventAs<TileDeletedEvent>(ev) }; tileDeleted(tEvent.position, tEvent.tile);
@@ -177,8 +177,8 @@ namespace zoper
 				generateNextToken();
 				gameClock.restart();
 			}
-		} else {
-			
+		}
+		else {
 		}
 	}
 
@@ -192,7 +192,8 @@ namespace zoper
 				anim::animation_action_callback{}, anim::animation_action_callback{}));
 			gameClock.pause();
 			return true;
-		} else if (state() == Pause) {
+		}
+		else if (state() == Pause) {
 			setState(Playing);
 			m_pauseSceneNode->visible = false;
 			gameClock.resume();
@@ -204,11 +205,11 @@ namespace zoper
 	void GameScene::setLevel(const u32 nv)
 	{
 		_levelProperties.setLevel(nv);
-		logDebug("Level set: ",_levelProperties.currentLevel());
+		logDebug("Level set: ", _levelProperties.currentLevel());
 		logDebug("Millis between tokens: ", _levelProperties.millisBetweenTokens());
 		logDebug("Current base score: ", _levelProperties.baseScore());
 		logDebug("Seconds to next level: ", _levelProperties.stayTime());
-		logDebug("Tokens to next level: ",_levelProperties.stayTokens());
+		logDebug("Tokens to next level: ", _levelProperties.stayTokens());
 
 		_gameData.levelClock.restart();
 		_gameData.consumedTokens = 0;
@@ -218,7 +219,7 @@ namespace zoper
 		{
 			for (u32 x = 0; x < _gameData.size.x; ++x)
 			{
-				m_backgroundTiles[y][x]->color.set(_levelProperties.getBackgroundTileColor(x, y, pointInCenter({ x,y })));				
+				m_backgroundTiles[y][x]->color.set(_levelProperties.getBackgroundTileColor(x, y, pointInCenter({ x,y })));
 			}
 		}
 
@@ -228,7 +229,7 @@ namespace zoper
 
 	void GameScene::updateGoals()
 	{
-		m_scoreQuad->text(1)->text = std::to_string(_levelProperties.currentLevel()+1);
+		m_scoreQuad->text(1)->text = std::to_string(_levelProperties.currentLevel() + 1);
 
 		switch (_gameData._gameMode)
 		{
@@ -249,7 +250,7 @@ namespace zoper
 		{
 		default:
 		case GameData::GameModes::Token:
-			m_goalQuad->text(1)->text  = std::to_string(_gameData.consumedTokens);
+			m_goalQuad->text(1)->text = std::to_string(_gameData.consumedTokens);
 			if (_gameData.consumedTokens >= _levelProperties.stayTokens())
 				setLevel(_levelProperties.currentLevel() + 1);
 			break;
@@ -409,7 +410,7 @@ namespace zoper
 		const vector2du32 loopPosition{ p_player->boardPosition() };
 		const board::BoardTileData tokenType{ p_player->get() };
 		u32 inARow{ 0 };
-		for_each_token_in_line(loopPosition, loopDirection, [this,tokenType,&inARow](const vector2du32 &loopPosition, const Direction &direction)
+		for_each_token_in_line(loopPosition, loopDirection, [this, tokenType, &inARow](const vector2du32 &loopPosition, const Direction &direction)
 		{
 			direction;
 			bool result{ true };
@@ -426,7 +427,8 @@ namespace zoper
 					lastTokenPosition = board2Scene(loopPosition);
 					p_boardModel->deleteTile(loopPosition);
 					found = true;
-				} else {
+				}
+				else {
 					p_boardModel->changeTileData(p_player->boardPosition(), currentTokenType);
 					p_boardModel->changeTileData(loopPosition, tokenType);
 					logDebug("Player type changed to ", p_player->get());
@@ -439,8 +441,8 @@ namespace zoper
 				node->box = Rectf32::fromSize(15.0f, 15.0f);
 				node->color = colors::White;
 				node->configure();
-//				addAnimation(msptr<anim::IPropertyAnimation<vector2df>>(600, node->position, lastTokenPosition, vector2df{ 450, 100 }, 
-//					anim::noAction, anim::animation_action_callback{ [this, node]() { removeRenderizable(node); } }), nullptr);
+				//				addAnimation(msptr<anim::IPropertyAnimation<vector2df>>(600, node->position, lastTokenPosition, vector2df{ 450, 100 },
+				//					anim::noAction, anim::animation_action_callback{ [this, node]() { removeRenderizable(node); } }), nullptr);
 			}
 			return result;
 		});
@@ -486,10 +488,11 @@ namespace zoper
 			std::string temp;
 			for (u32 x = 0; x < _gameData.size.x; ++x) {
 				std::string chTemp;
-				auto lp_tile (p_boardModel->getTile(lib::vector2du32(x, y)));
+				auto lp_tile(p_boardModel->getTile(lib::vector2du32(x, y)));
 				if (lp_tile) {
 					chTemp = std::to_string(lp_tile->get());
-				} else {
+				}
+				else {
 					chTemp = "*";
 					if (pointInCenter(lib::vector2du32(x, y))) {
 						chTemp = "C";
@@ -522,7 +525,7 @@ namespace zoper
 				Rectf32 tileBox{ currentx, currenty, tileSize().x,tileSize().y };
 				std::string indexStr(std::to_string(x) + "_" + std::to_string(y));
 
-				auto tileBackground = backgroundTilesrg->createRenderizable<NodeQuad>("backgroundTile_"+indexStr);
+				auto tileBackground = backgroundTilesrg->createRenderizable<NodeQuad>("backgroundTile_" + indexStr);
 				tileBackground->box = tileBox;
 				tileBackground->configure();
 				column.push_back(std::move(tileBackground));
@@ -530,7 +533,7 @@ namespace zoper
 				// Size of the point in the middle of the tile
 				constexpr vector2df centerPointSize{ 15,15 };
 
-				auto node = backgroundTilesrg->createRenderizable<NodeShape>("backgroundTilePoint_"+indexStr, 30);
+				auto node = backgroundTilesrg->createRenderizable<NodeShape>("backgroundTilePoint_" + indexStr, 30);
 				node->box = Rectf32{ tileBox.center() - (centerPointSize / 2), centerPointSize };
 				node->color = colors::White;
 				node->configure();
@@ -548,7 +551,8 @@ namespace zoper
 		// Tile appeared
 		if (auto ztile = std::dynamic_pointer_cast<Tile>(nTile)) {
 			logDebug("Token ", ztile->name(), " appeared at ", pos);
-		} else if (auto player = std::dynamic_pointer_cast<Player>(nTile)) {
+		}
+		else if (auto player = std::dynamic_pointer_cast<Player>(nTile)) {
 			// Set the position in the scene depending on the board position
 			player->boardPosition = pos;
 		}
@@ -568,18 +572,20 @@ namespace zoper
 	{
 		if (auto ztile = std::dynamic_pointer_cast<Tile>(tile)) {
 			tokenMoved(source, dest, ztile);
-		} else if (auto ztile_ = std::dynamic_pointer_cast<Player>(tile)) {
+		}
+		else if (auto ztile_ = std::dynamic_pointer_cast<Player>(tile)) {
 			ztile_->updateDirection();
 		}
 	}
 
-	void GameScene::tileChanged(const vector2du32 &pos, board::SITilePointer nTile, 
+	void GameScene::tileChanged(const vector2du32 &pos, board::SITilePointer nTile,
 		const board::BoardTileData &ov, const board::BoardTileData &nv)
 	{
 		if (auto ztile = std::dynamic_pointer_cast<Tile>(nTile)) {
 			logDebug("Token at position ", pos, " changed from ", ov, " to ", nv);
 			ztile->set(nv);
-		} else if (auto ztile_ = std::dynamic_pointer_cast<Player>(nTile)) {
+		}
+		else if (auto ztile_ = std::dynamic_pointer_cast<Player>(nTile)) {
 			logDebug("Player (position ", pos, ") changed from ", ov, " to ", nv);
 			ztile->set(nv);
 		}
@@ -587,9 +593,9 @@ namespace zoper
 
 	void GameScene::tokenMoved(const vector2du32 &, const vector2du32 &dest, sptr<Tile> tile)
 	{
-//		addAnimation(msptr<draw::anim::IPropertyAnimation<vector2df>>
-//			(_levelProperties.millisBetweenTokens() / 2, tile->position, tile->position(), board2Scene(dest),
-//			anim::noAction, anim::noAction),nullptr);
+		//		addAnimation(msptr<draw::anim::IPropertyAnimation<vector2df>>
+		//			(_levelProperties.millisBetweenTokens() / 2, tile->position, tile->position(), board2Scene(dest),
+		//			anim::noAction, anim::noAction),nullptr);
 	}
 
 	void GameScene::increaseScore(u32 scoreIncrement)

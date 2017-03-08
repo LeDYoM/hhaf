@@ -33,7 +33,7 @@ namespace lib
 			VirtualPropertyWrite<draw::Color> color;
 			void create();
 			void configure();
-
+			const std::vector<u32> currentSelection() const noexcept;
 		public:
 			sptr<draw::nodes::NodeText> m_mainText;
 			sptr<draw::nodes::DiscreteText> m_option;

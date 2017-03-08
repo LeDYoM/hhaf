@@ -22,7 +22,7 @@ namespace zoper
 			node->color = color;
 			node->configure();
 		}
-		
+
 		// Second text is right aligned
 		m_texts[1]->alignmentX = NodeText::AlignmentX::Right;
 

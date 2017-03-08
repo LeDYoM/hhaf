@@ -52,8 +52,8 @@ namespace zoper
 
 		enum GameModes : lib::u8
 		{
-			Token=0,
-			Time=1,
+			Token = 0,
+			Time = 1,
 		} _gameMode{ Token };
 	};
 	class GameScene final : public lib::draw::Scene, public lib::Configuration
@@ -115,7 +115,6 @@ namespace zoper
 			const lib::board::BoardTileData &ov, const lib::board::BoardTileData &nv);
 
 		void tokenMoved(const lib::vector2du32 &source, const lib::vector2du32 &dest, lib::sptr<Tile> tile);
-
 
 		virtual lib::vector2df getDefaultSizeView() override;
 

@@ -13,7 +13,6 @@ namespace zoper
 	static const char *const FulscreenStr("Fullscreen");
 	static const char *const BPPStr("bpp");
 	static const char *const VSyncStr("VSync");
-
 }
 
 #endif

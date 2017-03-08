@@ -11,7 +11,7 @@ namespace zoper
 	ZoperProgramController::ZoperProgramController() = default;
 
 	ZoperProgramController::~ZoperProgramController() = default;
-		
+
 	void ZoperProgramController::onInit()
 	{
 		host().setScene("MenuScene");
@@ -50,6 +50,4 @@ namespace zoper
 	{
 		return{ msptr<MenuScene>(), msptr<GameScene>() };
 	}
-
-
 }

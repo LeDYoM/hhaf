@@ -61,9 +61,12 @@ namespace lib
 			return dynamic_cast<ChooseControlGroup*>(parent());
 		}
 
-		std::vector<u32> ChooseControl::selection() const
+		const std::vector<u32> ChooseControl::currentSelection() const noexcept
 		{
+			std::vector<u32> lineSelection{ lines[_cursorItemSelected]->currentSelection() };
 			std::vector<u32> temp{_cursorItemSelected};
+			temp.reserve(temp.size() + lineSelection.size());
+			std::copy(temp.end(),lineSelection.begin(), lineSelection.end());
 			return temp;
 		}
 

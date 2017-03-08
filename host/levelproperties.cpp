@@ -32,10 +32,10 @@ namespace zoper
 		{
 			if (isCenter) {
 				if (_level < 9) {
-					if (_level%2) {
+					if (_level % 2) {
 						return{ 10, 200, 50 };
 					}
-					else if (!(_level%3)) {
+					else if (!(_level % 3)) {
 						return{ 255, 70, 200 };
 					}
 					else {
@@ -44,10 +44,10 @@ namespace zoper
 				}
 				else {
 					if (!(x % 2)) {
-						return (_level < 15)?lib::draw::Color{ 128, 128, 128 }:lib::draw::Color{ 255, 100, 100 };
+						return (_level < 15) ? lib::draw::Color{ 128, 128, 128 } : lib::draw::Color{ 255, 100, 100 };
 					}
 					else {
-						return ((_level < 15)?lib::draw::Color{ 225, 255, 255 }:lib::draw::Color{ 100, 200, 200 });
+						return ((_level < 15) ? lib::draw::Color{ 225, 255, 255 } : lib::draw::Color{ 100, 200, 200 });
 					}
 				}
 			}
@@ -86,7 +86,7 @@ namespace zoper
 				}
 				else if (_level < maxLevelWithProperties)
 				{
-					return lib::draw::Color(static_cast<lib::u8>(_randomizer.getUInt(255, 0)), 
+					return lib::draw::Color(static_cast<lib::u8>(_randomizer.getUInt(255, 0)),
 						static_cast<lib::u8>(_randomizer.getUInt(255, 0)),
 						static_cast<lib::u8>(_randomizer.getUInt(255, 0)));
 				}

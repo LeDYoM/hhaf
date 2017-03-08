@@ -15,37 +15,37 @@ namespace zoper
 		using namespace lib::gui;
 
 		StartLevelMenu::StartLevelMenu(lib::draw::SceneNode *parent, lib::str_const &&name)
-			: ChooseControl( parent, std::move(name)),
-/*			[this](const u32 index)
-			{
-				switch (index)
-				{
-				case 0:
-					_gameConfig.value(StartLevelStr)->set(selectedSubLabel(0));
-					logDebug("Starting at level:", selectedSubLabel(0));
-					host().setScene("GameScene");
+			: ChooseControl(parent, std::move(name)),
+			/*			[this](const u32 index)
+						{
+							switch (index)
+							{
+							case 0:
+								_gameConfig.value(StartLevelStr)->set(selectedSubLabel(0));
+								logDebug("Starting at level:", selectedSubLabel(0));
+								host().setScene("GameScene");
 
-					break;
-				default:
-				case 1:
-					chooseControlGroup()->changeStep("MainMenu");
-					break;
-				}
-			},
-			std::vector<sptr<OptionDescriptor>>{
-			msptr<OptionDescriptor>("Start level: ",
-				std::vector<std::string>{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" }),
-				msptr<OptionDescriptor>("Back")
-			}), */
+								break;
+							default:
+							case 1:
+								chooseControlGroup()->changeStep("MainMenu");
+								break;
+							}
+						},
+						std::vector<sptr<OptionDescriptor>>{
+						msptr<OptionDescriptor>("Start level: ",
+							std::vector<std::string>{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" }),
+							msptr<OptionDescriptor>("Back")
+						}), */
 			Configuration("config.cfg"), _gameConfig{ ":NextGame" }
 		{
 		}
 
 		StartLevelMenu::~StartLevelMenu() = default;
 
-//		void StartLevelMenu::onAddedToScene()
-//		{
-//			position = { MenuScene::MenuPosX, 700 };
-//		}
+		//		void StartLevelMenu::onAddedToScene()
+		//		{
+		//			position = { MenuScene::MenuPosX, 700 };
+		//		}
 	}
 }

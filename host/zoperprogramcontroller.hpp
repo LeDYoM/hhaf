@@ -10,7 +10,7 @@ namespace zoper
 	public:
 		ZoperProgramController();
 		virtual ~ZoperProgramController();
-		
+
 		void onInit() override;
 		virtual lib::vector_shared_pointers<lib::draw::Scene> scenesVector() override;
 		virtual const lib::IAppDescriptor getAppDescriptor() const override;
