@@ -5,6 +5,7 @@
 
 #include <lib/include/types.hpp>
 #include <lib/draw/scenenode.hpp>
+#include <lib/gui/optionmodel.hpp>
 
 namespace lib
 {
@@ -33,7 +34,7 @@ namespace lib
 			VirtualPropertyWrite<draw::Color> color;
 			void create();
 			void configure();
-			const std::vector<u32> currentSelection() const noexcept;
+			const OptionModelIndex currentSelection() const noexcept;
 		public:
 			sptr<draw::nodes::NodeText> m_mainText;
 			sptr<draw::nodes::DiscreteText> m_option;

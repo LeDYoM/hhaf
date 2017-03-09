@@ -34,7 +34,7 @@ namespace lib
 			ChooseControlGroup *chooseControlGroup() const;
 
 			Property <std::vector<OptionModel>> options;
-			const std::vector<u32> currentSelection() const noexcept;
+			const OptionModelIndex currentSelection() const noexcept;
 
 			u32 selectedSubLabel(const u32 index) const;
 
@@ -44,18 +44,12 @@ namespace lib
 			void goUp();
 			void goLeft();
 			void goRight();
+			const sptr<ChooseControlLine> currentLine() const;
 
 			vector2df descriptorCursorSize;
-			u32 _cursorItemSelected{ 0 };
+			Property<u32> selectedItem;
 
-			struct LabelData
-			{
-				sptr<ChooseControlLine> node;
-				LabelData(const sptr<ChooseControlLine> &nodep)
-					: node{ nodep } {}
-			};
-
-			std::vector<sptr<ChooseControlLine>> lines;
+			vector_shared_pointers<ChooseControlLine> lines;
 			draw::SceneNodeSPtr m_cursorNode;
 			sptr<draw::nodes::NodeShape> m_cursor;
 			std::function<void(const u32)> m_onSelected;

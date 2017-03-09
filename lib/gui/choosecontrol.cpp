@@ -61,12 +61,13 @@ namespace lib
 			return dynamic_cast<ChooseControlGroup*>(parent());
 		}
 
-		const std::vector<u32> ChooseControl::currentSelection() const noexcept
+		const OptionModelIndex ChooseControl::currentSelection() const noexcept
 		{
-			std::vector<u32> lineSelection{ lines[_cursorItemSelected]->currentSelection() };
-			std::vector<u32> temp{_cursorItemSelected};
+			std::vector<u32> lineSelection{ lines[selectedItem()]->currentSelection() };
+			std::vector<u32> temp{ selectedItem() };
 			temp.reserve(temp.size() + lineSelection.size());
-			std::copy(temp.end(),lineSelection.begin(), lineSelection.end());
+			if (!lineSelection.empty())
+				std::copy(temp.end(),lineSelection.begin(), lineSelection.end());
 			return temp;
 		}
 
@@ -83,9 +84,9 @@ namespace lib
 
 			const auto &cTheme(chooseControlGroup()->currentTheme());
 
-			lines[_cursorItemSelected]->color = cTheme.textColor;
-			_cursorItemSelected = nodeIndex;
-			lines[_cursorItemSelected]->color = cTheme.selectedTextColor;
+			currentLine()->color = cTheme.textColor;
+			selectedItem = nodeIndex;
+			currentLine()->color = cTheme.selectedTextColor;
 
 //			m_cursorNode->rotation.set(90);
 //			auto p(vector2df{ selectedText->position().x - descriptorCursorSize.x, selectedText->position().y });
@@ -96,8 +97,8 @@ namespace lib
 
 		void ChooseControl::goDown()
 		{
-			if (_cursorItemSelected < (lines.size() - 1)) {
-				cursorSelectItem(_cursorItemSelected + 1);
+			if (selectedItem() < (lines.size() - 1)) {
+				cursorSelectItem(selectedItem() + 1);
 			} else {
 				cursorSelectItem(0);
 			}
@@ -105,8 +106,8 @@ namespace lib
 
 		void ChooseControl::goUp()
 		{
-			if (_cursorItemSelected > 0) {
-				cursorSelectItem(_cursorItemSelected - 1);
+			if (selectedItem() > 0) {
+				cursorSelectItem(selectedItem() - 1);
 			} else {
 				cursorSelectItem(lines.size()-1);
 			}
@@ -114,12 +115,16 @@ namespace lib
 
 		void ChooseControl::goLeft()
 		{
-			lines[_cursorItemSelected]->m_option->decrementIndex();
+			currentLine()->m_option->decrementIndex();
 		}
 
 		void ChooseControl::goRight()
 		{
-			lines[_cursorItemSelected]->m_option->incrementIndex();
+			currentLine()->m_option->incrementIndex();
+		}
+		const sptr<ChooseControlLine> ChooseControl::currentLine() const
+		{
+			return lines[selectedItem()];
 		}
 	}
 }

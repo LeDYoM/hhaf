@@ -40,8 +40,18 @@ namespace zoper
 				},
 				// Start level menu
 				{
-					OptionModel("Start level: ", std::vector<str_const>{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" }),
+					OptionModel("Start level: ", string_vector{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" }),
 					OptionModel("Back")
+				},
+				// Options menu
+				{
+					OptionModel("Antialiasing", string_vector{"Worst", "Bad", "Normal", "Good", "Best"}),
+					OptionModel("Resolution", string_vector{"Worst", "Bad", "Normal", "Good", "Best"}),
+					OptionModel("Fullscreen", string_vector{"No", "Yes"}),
+					OptionModel("VSync", string_vector{"No", "Yes"}),
+					OptionModel("Redefine keyboard"),
+					OptionModel("Cancel"),
+					OptionModel("Accept")
 				}
 			};
 
@@ -51,12 +61,56 @@ namespace zoper
 				switch (indices[0])
 				{
 				case 0:
+					// Main menu page
 					__ASSERT(indices.size() > 1, "Error in the indices parameter");
-					m_gameConfig.value(GameModeStr)->set<s32>(static_cast<s32>(indices[1]));
-					return OptionModelIndex{ 1 };
+					switch (indices[1])
+					{
+					case 0:
+					case 1:
+						// Go to start level (token or time)
+						m_gameConfig.value(GameModeStr)->set<s32>(static_cast<s32>(indices[1]));
+						return OptionModelIndex{ 1 };
+						break;
+
+					case 2:
+						// Go to Options menu
+						return OptionModelIndex{ 2 };
+						break;
+
+					case 3:
+						// Exit
+						// TO DO
+						break;
+					default:
+						__ASSERT(false, "Unexpected switch value ");
+					}
 					break;
 				case 1:
+					// Start level (token or time)
+					__ASSERT(indices.size() > 1, "Error in the indices parameter");
+					switch (indices[1])
+					{
+					case 0:
+						// Start level option
+						__ASSERT(indices.size() > 2, "Error in indices parameter");
+						m_gameConfig.value(StartLevelStr)->set(indices[2]);
+						logDebug("Starting at level:", indices[2]);
+						break;
+					default:
+						// Back option
+						logDebug("Going back from Start Level menu to main menu");
+						return OptionModelIndex{ 0 };
+						break;
+					}
+					break;
+
 				case 2:
+					// Options menu
+					__ASSERT(indices.size() > 1, "Error in the indices parameter");
+					switch (indices[1])
+					{
+
+					}
 					//						m_chooseControl->chooseControlGroup()->changeStep("OptionsMenu");
 					return OptionModelIndex{};
 					break;

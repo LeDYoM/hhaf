@@ -4,6 +4,7 @@
 #include <lib/include/types.hpp>
 #include <vector>
 #include <functional>
+#include <initializer_list>
 
 namespace lib
 {
@@ -22,6 +23,9 @@ namespace lib
 		class OptionModelIndex : public std::vector<u32> 
 		{
 		public:
+			OptionModelIndex() : std::vector<u32>{} {}
+			OptionModelIndex(std::initializer_list<u32> il) : std::vector<u32>{ std::move(il) } {}
+			OptionModelIndex(const std::vector<u32>&rhs) : std::vector<u32>{ rhs } {}
 			OptionModelIndex(std::vector<u32>&&rhs) : std::vector<u32>{ std::move(rhs) } {}
 		};
 

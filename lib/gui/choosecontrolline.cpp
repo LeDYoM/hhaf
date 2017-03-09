@@ -44,9 +44,9 @@ namespace lib
 			m_mainText->configure();
 			m_option->configure();
 		}
-		const std::vector<u32> ChooseControlLine::currentSelection() const noexcept
+		const OptionModelIndex ChooseControlLine::currentSelection() const noexcept
 		{
-			return options().empty() ? std::vector<u32>{} : std::vector<u32>{m_option->index()};
+			return options().empty() ? OptionModelIndex{} : OptionModelIndex{m_option->index()};
 		}
 	}
 }
