@@ -42,6 +42,9 @@ namespace lib
 						if (resultIndices[0] != m_sController->activeNodeIndex()) {
 							m_sController->activeNodeIndex = resultIndices[0];
 						}
+						if (resultIndices.size() > 1) {
+//							m_sController->activeNode()->snCast<ChooseControl>()->
+						}
 					}
 
 				}

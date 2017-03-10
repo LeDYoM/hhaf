@@ -39,14 +39,15 @@ namespace lib
 			u32 selectedSubLabel(const u32 index) const;
 
 		private:
-			void cursorSelectItem(const u32 nodeIndex);
 			void goDown();
 			void goUp();
 			void goLeft();
 			void goRight();
 			const sptr<ChooseControlLine> currentLine() const;
+			const sptr<ChooseControlLine> previouscurrentLine() const;
 
 			vector2df descriptorCursorSize;
+			u32 previouslySelectedItem;
 			Property<u32> selectedItem;
 
 			vector_shared_pointers<ChooseControlLine> lines;

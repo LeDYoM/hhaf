@@ -109,9 +109,27 @@ namespace zoper
 					__ASSERT(indices.size() > 1, "Error in the indices parameter");
 					switch (indices[1])
 					{
-
+						// Antialiasing, Resolution, Fullscreen, VSync
+					case 0:
+					case 1:
+					case 2:
+					case 3:
+						break;
+					case 4:
+						// Redefine keyboard
+						// TO DO
+						break;
+					case 5:
+						// Cancel
+						// TO DO
+						// Avoid modifying options
+						return OptionModelIndex{ 0 };
+					case 6:
+						// Accept
+						return OptionModelIndex{ 0 };
+					default:
+						__ASSERT(false, "Invalid option");
 					}
-					//						m_chooseControl->chooseControlGroup()->changeStep("OptionsMenu");
 					return OptionModelIndex{};
 					break;
 				case 3:

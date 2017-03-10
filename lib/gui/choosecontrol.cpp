@@ -53,7 +53,24 @@ namespace lib
 				++count;
 			}
 
-			cursorSelectItem(0);
+			previouslySelectedItem = 0;
+			selectedItem.setCallback([this]() {
+				__ASSERT(previouslySelectedItem < lines.size(), "Invalid previously selected index for cursor");
+				__ASSERT(selectedItem() < lines.size(), "Invalid select index for cursor");
+
+				const auto &cTheme(chooseControlGroup()->currentTheme());
+
+				previouscurrentLine()->color = cTheme.textColor;
+				currentLine()->color = cTheme.selectedTextColor;
+				previouslySelectedItem = selectedItem();
+
+				//			m_cursorNode->rotation.set(90);
+				//			auto p(vector2df{ selectedText->position().x - descriptorCursorSize.x, selectedText->position().y });
+				//			addAnimation(msptr<anim::IPropertyAnimation<vector2df>>(120, m_cursorNode->position,
+				//				m_cursorNode->position(), vector2df{ selectedText->position().x - descriptorCursorSize.x, selectedText->position().y },
+				//				anim::noAction, anim::noAction));
+			});
+			selectedItem = 0;
 		}
 
 		ChooseControlGroup * ChooseControl::chooseControlGroup() const
@@ -67,7 +84,7 @@ namespace lib
 			std::vector<u32> temp{ selectedItem() };
 			temp.reserve(temp.size() + lineSelection.size());
 			if (!lineSelection.empty())
-				std::copy(temp.end(),lineSelection.begin(), lineSelection.end());
+				temp.insert(temp.end(), lineSelection.begin(), lineSelection.end());
 			return temp;
 		}
 
@@ -77,39 +94,21 @@ namespace lib
 			return lines[index]->m_option->index();
 		}
 
-	
-		void ChooseControl::cursorSelectItem(const u32 nodeIndex)
-		{
-			__ASSERT(nodeIndex < lines.size(), "Invalid select index for cursor");
-
-			const auto &cTheme(chooseControlGroup()->currentTheme());
-
-			currentLine()->color = cTheme.textColor;
-			selectedItem = nodeIndex;
-			currentLine()->color = cTheme.selectedTextColor;
-
-//			m_cursorNode->rotation.set(90);
-//			auto p(vector2df{ selectedText->position().x - descriptorCursorSize.x, selectedText->position().y });
-//			addAnimation(msptr<anim::IPropertyAnimation<vector2df>>(120, m_cursorNode->position,
-//				m_cursorNode->position(), vector2df{ selectedText->position().x - descriptorCursorSize.x, selectedText->position().y },
-//				anim::noAction, anim::noAction));
-		}
-
 		void ChooseControl::goDown()
 		{
 			if (selectedItem() < (lines.size() - 1)) {
-				cursorSelectItem(selectedItem() + 1);
+				selectedItem = selectedItem() + 1;
 			} else {
-				cursorSelectItem(0);
+				selectedItem = 0;
 			}
 		}
 
 		void ChooseControl::goUp()
 		{
 			if (selectedItem() > 0) {
-				cursorSelectItem(selectedItem() - 1);
+				selectedItem = selectedItem() - 1;
 			} else {
-				cursorSelectItem(lines.size()-1);
+				selectedItem = lines.size() - 1;
 			}
 		}
 
@@ -122,9 +121,15 @@ namespace lib
 		{
 			currentLine()->m_option->incrementIndex();
 		}
+
 		const sptr<ChooseControlLine> ChooseControl::currentLine() const
 		{
 			return lines[selectedItem()];
+		}
+
+		const sptr<ChooseControlLine> ChooseControl::previouscurrentLine() const
+		{
+			return lines[previouslySelectedItem];
 		}
 	}
 }
