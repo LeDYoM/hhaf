@@ -33,25 +33,25 @@ namespace zoper
 			{
 				// Main menu
 				{
-					OptionModel("Play token mode"),
-					OptionModel("Play time mode"),
-					OptionModel("Options"),
+					OptionModel("Play token mode",{}, OptionModelIndex{ 1 }),
+					OptionModel("Play time mode", {}, OptionModelIndex{ 1 }),
+					OptionModel("Options", {}, OptionModelIndex{ 2 }),
 					OptionModel("Exit")
 				},
 				// Start level menu
 				{
-					OptionModel("Start level: ", string_vector{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" }),
-					OptionModel("Back")
+					OptionModel("Start level: ", {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" }),
+					OptionModel("Back",{},{ 0 })
 				},
 				// Options menu
 				{
-					OptionModel("Antialiasing", string_vector{"Worst", "Bad", "Normal", "Good", "Best"}),
-					OptionModel("Resolution", string_vector{"Worst", "Bad", "Normal", "Good", "Best"}),
-					OptionModel("Fullscreen", string_vector{"No", "Yes"}),
-					OptionModel("VSync", string_vector{"No", "Yes"}),
+					OptionModel("Antialiasing", {"Worst", "Bad", "Normal", "Good", "Best"}),
+					OptionModel("Resolution", {"Worst", "Bad", "Normal", "Good", "Best"}),
+					OptionModel("Fullscreen", {"No", "Yes"}),
+					OptionModel("VSync", {"No", "Yes"}),
 					OptionModel("Redefine keyboard"),
-					OptionModel("Cancel"),
-					OptionModel("Accept")
+					OptionModel("Cancel", {}, OptionModelIndex{ 0 }),
+					OptionModel("Accept", {}, OptionModelIndex{ 0 })
 				}
 			};
 
@@ -69,12 +69,6 @@ namespace zoper
 					case 1:
 						// Go to start level (token or time)
 						m_gameConfig.value(GameModeStr)->set<s32>(static_cast<s32>(indices[1]));
-						return OptionModelIndex{ 1 };
-						break;
-
-					case 2:
-						// Go to Options menu
-						return OptionModelIndex{ 2 };
 						break;
 
 					case 3:
@@ -82,7 +76,7 @@ namespace zoper
 						// TO DO
 						break;
 					default:
-						__ASSERT(false, "Unexpected switch value ");
+						break;
 					}
 					break;
 				case 1:
@@ -99,7 +93,6 @@ namespace zoper
 					default:
 						// Back option
 						logDebug("Going back from Start Level menu to main menu");
-						return OptionModelIndex{ 0 };
 						break;
 					}
 					break;
@@ -110,11 +103,6 @@ namespace zoper
 					switch (indices[1])
 					{
 						// Antialiasing, Resolution, Fullscreen, VSync
-					case 0:
-					case 1:
-					case 2:
-					case 3:
-						break;
 					case 4:
 						// Redefine keyboard
 						// TO DO
@@ -123,23 +111,19 @@ namespace zoper
 						// Cancel
 						// TO DO
 						// Avoid modifying options
-						return OptionModelIndex{ 0 };
 					case 6:
 						// Accept
-						return OptionModelIndex{ 0 };
 					default:
-						__ASSERT(false, "Invalid option");
+						break;
 					}
-					return OptionModelIndex{};
 					break;
 				case 3:
 				default:
 					host().exitProgram();
-					return OptionModelIndex{};
 					break;
 				}
-			}
-			);
+				return OptionModelIndex{};
+			});
 
 			ChooseControlGroup::configure();
 			currentControlIndex = 0;

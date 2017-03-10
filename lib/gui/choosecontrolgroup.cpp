@@ -36,17 +36,22 @@ namespace lib
 				}
 				else if (kEvent.key == input::Key::Return || kEvent.key == input::Key::Space) {
 					logDebug("Calling onSelected with currentSelection(): ", currentSelection());
-					const OptionModelIndex resultIndices(onSelected(OptionModelIndex(currentSelection())));
+/*					OptionModelIndex currentSelected{ currentSelection() };
+					__ASSERT(currentSelected.size() > 1, "currentSelected size must be > 1");
+					OptionModelIndex predefinedPath{ options()[currentSelected[0]][currentSelected[1]].next };
+					OptionModelIndex resultIndices(onSelected(OptionModelIndex(currentSelection())));
 					logDebug("The onSelect returned ", resultIndices);
+					if (resultIndices.empty()) {
+						resultIndices = std::move(predefinedPath);
+					}
 					if (!resultIndices.empty()) {
 						if (resultIndices[0] != m_sController->activeNodeIndex()) {
 							m_sController->activeNodeIndex = resultIndices[0];
 						}
 						if (resultIndices.size() > 1) {
-//							m_sController->activeNode()->snCast<ChooseControl>()->
+							m_sController->activeNode()->snCast<ChooseControl>()->selectedItem = resultIndices[1];
 						}
-					}
-
+					}*/
 				}
 			}));
 		}

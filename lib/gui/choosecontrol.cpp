@@ -36,7 +36,7 @@ namespace lib
 
 			u32 count{};
 			vector2df currentPos{};
-			for (const auto& label : options())
+			for (const auto& label : options)
 			{
 				auto menuLine = createSceneNode<ChooseControlLine>("menuLineText"+std::to_string(count));
 				menuLine->create();

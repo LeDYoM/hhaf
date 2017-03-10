@@ -10,23 +10,34 @@ namespace lib
 {
 	namespace gui
 	{
+		class OptionModelIndex : public std::vector<u32>
+		{
+		public:
+			OptionModelIndex() = default;
+			constexpr OptionModelIndex(const OptionModelIndex&rhs) = default;
+			constexpr OptionModelIndex(OptionModelIndex&&rhs) = default;
+			OptionModelIndex& operator=(OptionModelIndex&&) = default;
+			OptionModelIndex& operator=(const OptionModelIndex&) = default;
+
+			constexpr OptionModelIndex(std::initializer_list<u32> il) : std::vector<u32>{ std::move(il) } {}
+			constexpr OptionModelIndex(const std::vector<u32>&rhs) : std::vector<u32>{ rhs } {}
+			constexpr OptionModelIndex(std::vector<u32>&&rhs) : std::vector<u32>{ std::move(rhs) } {}
+
+		};
+
 		class OptionModel
 		{
 		public:
-			explicit OptionModel(str_const&& text, string_vector subOptionsLabels = string_vector{})
-				: text{ std::move(text) }, subOptionsLabels{ std::move(subOptionsLabels) } {}
+			explicit OptionModel(str_const&& text, string_vector subOptionsLabels = {}, OptionModelIndex next = {})
+				: text{ std::move(text) }, subOptionsLabels{ std::move(subOptionsLabels) }, next{std::move(next)} {}
+			constexpr OptionModel(const OptionModel&rhs) = default;
+			constexpr OptionModel(OptionModel&&) = default;
+			OptionModel &operator=(const OptionModel&) = default;
+			OptionModel &operator=(OptionModel&&) = default;
 
 			str_const text;
 			string_vector subOptionsLabels;
-		};
-
-		class OptionModelIndex : public std::vector<u32> 
-		{
-		public:
-			OptionModelIndex() : std::vector<u32>{} {}
-			OptionModelIndex(std::initializer_list<u32> il) : std::vector<u32>{ std::move(il) } {}
-			OptionModelIndex(const std::vector<u32>&rhs) : std::vector<u32>{ rhs } {}
-			OptionModelIndex(std::vector<u32>&&rhs) : std::vector<u32>{ std::move(rhs) } {}
+			OptionModelIndex next;
 		};
 
 		inline write_stream& operator<<(write_stream & os, const OptionModelIndex &mIndex)

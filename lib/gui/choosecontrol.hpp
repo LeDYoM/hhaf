@@ -33,7 +33,7 @@ namespace lib
 			void configure();
 			ChooseControlGroup *chooseControlGroup() const;
 
-			Property <std::vector<OptionModel>> options;
+			std::vector<OptionModel> options;
 			const OptionModelIndex currentSelection() const noexcept;
 
 			u32 selectedSubLabel(const u32 index) const;
