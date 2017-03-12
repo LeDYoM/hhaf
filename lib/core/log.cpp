@@ -2,7 +2,7 @@
 #include "compileconfig.hpp"
 #include "exceptions.hpp"
 
-#ifdef __USE_LOGS__
+#ifdef USE_LOGS
 #ifdef __MULTITHREAD_LOG__
 	#include <thread>
 	#include <mutex>
@@ -19,15 +19,15 @@ log_output_stream_t log_output_stream;
 
 #include <iostream>
 
-#ifdef __LOGFILE__
+#ifdef LOG_FILE
 	#include <fstream>
 	std::ofstream logFile;
 #endif
 
 void initLog()
 {
-#ifdef __LOGFILE__
-	logFile.open(__LOGFILE__);
+#ifdef LOG_FILE
+	logFile.open(LOG_FILE);
 #endif
 }
 
@@ -35,7 +35,7 @@ void commitLog()
 {
 	auto outstr(log_output_stream.str());
 	log_output_stream.str(std::string());
-#ifdef __LOGFILE__
+#ifdef LOG_FILE
 	if (logFile.is_open())
 		logFile << outstr;
 #endif
@@ -61,7 +61,7 @@ void print_impl()
 
 void finishLog()
 {
-#ifdef __LOGFILE__
+#ifdef LOG_FILE
 	logFile.close();
 #endif
 }

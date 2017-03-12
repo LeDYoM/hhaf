@@ -2,16 +2,12 @@
 #define __LIB_COMPILECONFIG_HPP__
 
 #include <lib/include/compconfig.hpp>
+#include "config.h"
 
-#ifndef LIB_DEBUG
-//	#define USE_MEM_MANAGER
-
-//	#define __USE_LOGS__
-//	#define __LOGFILE__		"log.txt"
-#else
+#ifdef LIB_DEBUG
 #define USE_MEM_MANAGER
-#define __USE_LOGS__
-#define __LOGFILE__		"log.txt"
+#define USE_LOGS
+#define LOG_FILE	"log.txt"
 #define USE_IDE_CONSOLE_FOR_LOGS
 #define USE_COUT_FOR_LOGS
 #endif

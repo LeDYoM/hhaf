@@ -7,7 +7,7 @@
 void initLog();
 void finishLog();
 
-#ifdef __USE_LOGS__
+#ifdef USE_LOGS
 	#include <sstream>
 	enum class LogType
 	{
