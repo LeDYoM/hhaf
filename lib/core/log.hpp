@@ -22,14 +22,14 @@ void finishLog();
 	void print_impl();
 
 	template<typename T, typename ...Args>
-	inline void print_impl(T&& value, Args... args)
+	constexpr inline void print_impl(T&& value, Args... args)
 	{
 		log_stream() << value;
-		print_impl(std::forward<Args&&>(args)...);
+		print_impl(std::forward<Args>(args)...);
 	}
 
 	template<LogType log_type, typename ...Args>
-	inline void logprint(Args&&...args)
+	constexpr inline void logprint(Args&&...args)
 	{
 		switch (log_type)
 		{
