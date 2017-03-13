@@ -29,12 +29,6 @@ namespace zoper
 		m_background->color = colors::White;
 		m_background->configure();
 
-		//		mainMenu->
-		//		addChooseControl(msptr<MainMenu>(this));
-		//		createSceneNode<OptionsMenu>(OptionsMenu::ClassName);
-		//		addMenuStep(msptr<KeyRedefinitionMenu>(this));
-		//		createSceneNode<StartLevelMenu>(StartLevelMenu::ClassName);
-
 		m_logo = createRenderizable<NodeQuad>("mainLogo");
 		m_logo->box = Rectf32{ 500, 150, 1000, 500 };
 		m_logo->texture = host().resourceManager().getTexture("game_menu.logo");
