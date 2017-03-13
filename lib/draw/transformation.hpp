@@ -59,7 +59,7 @@ namespace lib
 
 		inline const Transform operator *(const Transform& left, const Transform& right) noexcept
 		{
-			return Transform{ left }.combine(right);
+			return Transform(left).combine(right);
 		}
 
 		inline const vector2df operator *(const Transform& left, const vector2df& right) noexcept
