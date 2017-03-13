@@ -8,22 +8,6 @@ namespace lib
 	{
 		const Transform Transform::Identity = Transform{};
 
-		constexpr Transform::Transform() noexcept
-			: m_matrix{ 1.f, 0.f, 0.f, 0.f,
-			0.f, 1.f, 0.f, 0.f,
-			0.f, 0.f, 1.f, 0.f,
-			0.f, 0.f, 0.f, 1.f } {}
-
-		constexpr Transform::Transform(const f32 a00, const f32 a01, const f32 a02,
-			const f32 a10, const f32 a11, const f32 a12,
-			const f32 a20, const f32 a21, const f32 a22) noexcept
-			: m_matrix{ a00, a10, 0.f, a20,
-			a01, a11, 0.f, a21,
-			0.f, 0.f, 1.f, 0.f,
-			a02, a12, 0.f, a22 } 
-		{
-		}
-
 		Transform Transform::getInverse() const noexcept
 		{
 			// Compute the determinant
@@ -48,18 +32,18 @@ namespace lib
 			}
 		}
 
-		constexpr vector2df Transform::transformPoint(const f32 x, const f32 y) const noexcept
+		constexpr const vector2df Transform::transformPoint(const f32 x, const f32 y) const noexcept
 		{
 			return vector2df{ m_matrix[0] * x + m_matrix[4] * y + m_matrix[12],
 				m_matrix[1] * x + m_matrix[5] * y + m_matrix[13] };
 		}
 
-		constexpr vector2df Transform::transformPoint(const vector2df& point) const noexcept
+		constexpr const vector2df Transform::transformPoint(const vector2df& point) const noexcept
 		{
 			return transformPoint(point.x, point.y);
 		}
 
-		Rectf32 Transform::transformRect(const Rectf32& rectangle) const noexcept
+		const Rectf32 Transform::transformRect(const Rectf32& rectangle) const noexcept
 		{
 			// Transform the 4 corners of the rectangle
 			const std::array<vector2df,4> points =
@@ -71,10 +55,10 @@ namespace lib
 			};
 
 			// Compute the bounding rectangle of the transformed points
-			f32 left = points[0].x;
-			f32 top = points[0].y;
-			f32 right = points[0].x;
-			f32 bottom = points[0].y;
+			f32 left{ points[0].x };
+			f32 top{ points[0].y };
+			f32 right{ points[0].x };
+			f32 bottom{ points[0].y };
 			for (const auto& point : points)
 			{
 				if (point.x < left)   left = point.x;
@@ -189,16 +173,6 @@ namespace lib
 		Transform & Transform::operator*=(const Transform & right)
 		{
 			return combine(right);
-		}
-
-		Transform operator *(const Transform& left, const Transform& right) noexcept
-		{
-			return Transform(left).combine(right);
-		}
-
-		vector2df operator *(const Transform& left, const vector2df& right) noexcept
-		{
-			return left.transformPoint(right);
 		}
 	}
 }

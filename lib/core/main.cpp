@@ -2,7 +2,6 @@
 #include "config.h"
 #include <lib/core/memmanager.hpp>
 #include <lib/core/log.hpp>
-#include <lib/core/exceptions.hpp>
 #include <lib/core/host.hpp>
 
 namespace lib
@@ -20,10 +19,6 @@ namespace lib
 			core::Host::host().setApplication(std::move(app));
 			result = core::Host::host().run();
 			core::Host::destroyHost();
-		}
-		catch (lib::excp::BaseException e)
-		{
-			logDebug("BaseException: ", e.what());
 		}
 		catch (std::exception e)
 		{

@@ -25,7 +25,7 @@ namespace lib
 			using std::string;
 
 			if (resourceFile.size() > 0 && !configFileExists(resourceFile)) {
-				throw ResourceNotFoundException(resourceFile);
+				__ASSERT("Resource not found: ", resourceFile);
 			}
 			else
 			{

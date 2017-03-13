@@ -1,12 +1,7 @@
 #include "log.hpp"
-#include "exceptions.hpp"
 #include "config.h"
 
 #ifdef USE_LOGS
-#ifdef __MULTITHREAD_LOG__
-	#include <thread>
-	#include <mutex>
-#endif
 
 using log_output_stream_t = std::ostringstream;
 

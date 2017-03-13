@@ -2,7 +2,6 @@
 #define __LIB_RESOURCEMANAGER_HPP__
 
 #include <lib/include/types.hpp>
-#include "exceptions.hpp"
 #include "configuration.hpp"
 #include "appservice.hpp"
 #include <list>
@@ -17,12 +16,6 @@ namespace lib
 	namespace core
 	{
 		class Resource;
-
-		class ResourceNotFoundException : public excp::BaseException
-		{
-		public:
-			ResourceNotFoundException(const std::string &resourcefn) : BaseException(excp::Severity::FinishApp, "Could not find " + resourcefn) {}
-		};
 
 		class ResourceManager : public AppService, public Configuration
 		{
