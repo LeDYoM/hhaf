@@ -8,9 +8,6 @@
 #include <lib/core/events/inputevent.hpp>
 
 #include "mainmenu.hpp"
-#include "optionsmenu.hpp"
-#include "keyredefinitionmenu.hpp"
-#include "startlevelmenu.hpp"
 
 namespace zoper
 {
