@@ -7,7 +7,6 @@
 #include <memory>
 #include <vector>
 #include <iostream>
-#include <lib/core/compileconfig.hpp>
 
 namespace lib
 {

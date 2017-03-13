@@ -26,7 +26,7 @@ namespace zoper
 
 			void Player::movePlayer(const Direction & direction, const std::function<bool(const vector2du32&)> &pointInCenter, const sptr<board::BoardModel>& boardModel)
 			{
-				__ASSERT(direction.isValid(), "Invalid direction passed to move");
+				CLIENT_ASSERT(direction.isValid(), "Invalid direction passed to move");
 				currentDirection = direction;
 				auto nPosition = direction.applyToVector(boardPosition());
 				if (pointInCenter(nPosition)) {

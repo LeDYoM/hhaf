@@ -3,6 +3,7 @@
 #include "choosecontrolgroup.hpp"
 #include <lib/core/events/eventmanager.hpp>
 #include <lib/core/events/inputevent.hpp>
+#include <lib/core/log.hpp>
 #include <lib/draw/scene.hpp>
 #include <lib/draw/ianimation.hpp>
 #include <lib/draw/nodes/nodeshape.hpp>

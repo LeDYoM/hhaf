@@ -20,7 +20,6 @@ namespace lib
 			Property<u32> activeNodeIndex;
 
 			const sptr<draw::SceneNode> &activeNode() const noexcept { 
-				__ASSERT(nodes().size() > activeNodeIndex(), "Accessing invalid index");
 				return nodes()[activeNodeIndex()]; 
 			}
 		private:

@@ -8,7 +8,6 @@
 #include "levelproperties.hpp"
 
 #include <lib/include/types.hpp>
-#include <lib/core/compileconfig.hpp>
 #include <lib/core/configuration.hpp>
 #include <lib/core/timer.hpp>
 #include <lib/core/events/eventreceiver.hpp>

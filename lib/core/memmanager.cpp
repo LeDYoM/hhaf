@@ -1,9 +1,10 @@
 #include "memmanager.hpp"
-#include "compileconfig.hpp"
+#include "config.h"
 
 #ifdef USE_MEM_MANAGER
 #ifdef _MSC_VER
 #include <windows.h>
+#include <crtdbg.h>
 
 static int crtDebugMemAllocHook(int allocType, void *userData, size_t size, int blockType, long requestIndex, const unsigned char *fileName, int lineIndex){
 

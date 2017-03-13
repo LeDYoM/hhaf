@@ -1,5 +1,5 @@
 #include <lib/include/main.hpp>
-#include <lib/core/compileconfig.hpp>
+#include "config.h"
 #include <lib/core/memmanager.hpp>
 #include <lib/core/log.hpp>
 #include <lib/core/exceptions.hpp>

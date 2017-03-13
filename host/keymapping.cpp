@@ -60,7 +60,7 @@ namespace zoper
 
 	bool KeyMapping::setKey(const lib::u32 index, const lib::input::Key key)
 	{
-		__ASSERT(index < TotalKeys, "Invalid index");
+		CLIENT_ASSERT(index < TotalKeys, "Invalid index");
 
 		for (lib::u32 i = 0u; i < index; ++i) {
 			if (m_keys[i] == key) {

@@ -1,6 +1,6 @@
 #include "log.hpp"
-#include "compileconfig.hpp"
 #include "exceptions.hpp"
+#include "config.h"
 
 #ifdef USE_LOGS
 #ifdef __MULTITHREAD_LOG__
@@ -27,7 +27,9 @@ log_output_stream_t log_output_stream;
 void initLog()
 {
 #ifdef LOG_FILE
-	logFile.open(LOG_FILE);
+	#define STRINGIFY(x) #x
+	#define TOSTRING(x) STRINGIFY(x)
+	logFile.open( TOSTRING(LOG_FILE) );
 #endif
 }
 

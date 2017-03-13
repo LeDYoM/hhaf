@@ -62,7 +62,7 @@ namespace zoper
 				{
 				case 0:
 					// Main menu page
-					__ASSERT(indices.size() > 1, "Error in the indices parameter");
+//					__ASSERT(indices.size() > 1, "Error in the indices parameter");
 					switch (indices[1])
 					{
 					case 0:
@@ -81,25 +81,25 @@ namespace zoper
 					break;
 				case 1:
 					// Start level (token or time)
-					__ASSERT(indices.size() > 1, "Error in the indices parameter");
+//					__ASSERT(indices.size() > 1, "Error in the indices parameter");
 					switch (indices[1])
 					{
 					case 0:
 						// Start level option
-						__ASSERT(indices.size() > 2, "Error in indices parameter");
+//						__ASSERT(indices.size() > 2, "Error in indices parameter");
 						m_gameConfig.value(StartLevelStr)->set(indices[2]);
-						logDebug("Starting at level:", indices[2]);
+//						logDebug("Starting at level:", indices[2]);
 						break;
 					default:
 						// Back option
-						logDebug("Going back from Start Level menu to main menu");
+//						logDebug("Going back from Start Level menu to main menu");
 						break;
 					}
 					break;
 
 				case 2:
 					// Options menu
-					__ASSERT(indices.size() > 1, "Error in the indices parameter");
+//					__ASSERT(indices.size() > 1, "Error in the indices parameter");
 					switch (indices[1])
 					{
 						// Antialiasing, Resolution, Fullscreen, VSync

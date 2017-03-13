@@ -1,5 +1,5 @@
 #include "gamebasetile.hpp"
-#include <lib/core/log.hpp>
+#include <lib/include/logcl.hpp>
 
 namespace zoper
 {
@@ -36,7 +36,7 @@ namespace zoper
 			return colors::Magenta;
 			break;
 		default:
-			logError("Error value for token: ", get(), " is not supported");
+			logClError("Error value for token: ", get(), " is not supported");
 			return colors::White;
 			break;
 		}

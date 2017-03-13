@@ -3,7 +3,6 @@
 
 #include <vector>
 #include <lib/include/types.hpp>
-#include <lib/core/compileconfig.hpp>
 #include "itilescontroller.hpp"
 
 namespace lib

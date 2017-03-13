@@ -4,7 +4,6 @@
 #include <functional>
 #include <list>
 #include <lib/include/types.hpp>
-#include <lib/core/log.hpp>
 
 namespace lib
 {
@@ -60,8 +59,6 @@ namespace lib
 
 			inline static void unsubscribeMarked()
 			{
-				__ASSERT(!m_dispatching, "Cannot disconnect while processing the event!");
-
 				for (auto it = m_subscriptions.begin(); it != m_subscriptions.end();) {
 					auto itTemp(it++);
 					if ((*itTemp)->m_markedForUnsubscription) {

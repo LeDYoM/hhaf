@@ -1,6 +1,6 @@
 #include <locale>
 #include "window.hpp"
-#include "compileconfig.hpp"
+#include "config.h"
 #include "log.hpp"
 #include "randomizer.hpp"
 #include "timer.hpp"

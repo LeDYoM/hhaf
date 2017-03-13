@@ -2,7 +2,7 @@
 #include <random>
 
 #include "log.hpp"
-#include "compileconfig.hpp"
+#include "config.h"
 
 namespace lib
 {

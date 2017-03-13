@@ -5,7 +5,7 @@ set (LIB_VERSION_MINOR 2)
 set (LIB_VERSION_PATCH 2)
 
 # Activate mem maanager?
-SET (USE_MEM_MANAGER "")
+SET (USE_MEM_MANAGER 1)
 
 # Log configuration
 SET (USE_LOGS 1)

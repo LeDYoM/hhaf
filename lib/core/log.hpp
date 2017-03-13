@@ -1,56 +1,15 @@
 #ifndef LIB_LOG_INCLUDE_HPP__
 #define LIB_LOG_INCLUDE_HPP__
 
-#include "compileconfig.hpp"
 #include <lib/include/types.hpp>
+#include "config.h"
+#include <lib/include/logcl.hpp>
 
 void initLog();
 void finishLog();
 
 #ifdef USE_LOGS
 	#include <sstream>
-	enum class LogType
-	{
-		Debug,
-		Info,
-		Warning,
-		Error,
-	};
-
-	lib::write_stream &log_stream() noexcept;
-
-	void print_impl();
-
-	template<typename T, typename ...Args>
-	constexpr inline void print_impl(T&& value, Args... args)
-	{
-		log_stream() << value;
-		print_impl(std::forward<Args>(args)...);
-	}
-
-	template<LogType log_type, typename ...Args>
-	constexpr inline void logprint(Args&&...args)
-	{
-		switch (log_type)
-		{
-		case LogType::Debug:
-			log_stream() << "<DEBUG> :";
-			break;
-		case LogType::Info:
-			log_stream() << "<INFO> :";
-			break;
-		case LogType::Warning:
-			log_stream() << "<WARNING> :";
-			break;
-		case LogType::Error:
-			log_stream() << "<ERROR> :";
-			break;
-		default:
-			log_stream() << "<UNKNOWN> :";
-			break;
-		}
-		print_impl(std::forward<Args>(args)...);
-	}
 
 	#define EXECUTE_IN_DEBUG(x)		x
 	template <typename... Args>
