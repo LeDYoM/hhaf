@@ -1,10 +1,10 @@
 #include "mainmenu.hpp"
-#include "startlevelmenu.hpp"
 #include <lib/gui/ChooseControlGroup.hpp>
 #include <lib/gui/choosecontrol.hpp>
 #include <lib/draw/scenenode.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/core/host.hpp>
+#include <lib/include/logcl.hpp>
 #include "common.hpp"
 
 namespace zoper
@@ -62,7 +62,7 @@ namespace zoper
 				{
 				case 0:
 					// Main menu page
-//					__ASSERT(indices.size() > 1, "Error in the indices parameter");
+					CLIENT_ASSERT(indices.size() > 1, "Error in the indices parameter");
 					switch (indices[1])
 					{
 					case 0:
@@ -74,6 +74,7 @@ namespace zoper
 					case 3:
 						// Exit
 						// TO DO
+						host().exitProgram();
 						break;
 					default:
 						break;
@@ -81,25 +82,25 @@ namespace zoper
 					break;
 				case 1:
 					// Start level (token or time)
-//					__ASSERT(indices.size() > 1, "Error in the indices parameter");
+					CLIENT_ASSERT(indices.size() > 1, "Error in the indices parameter");
 					switch (indices[1])
 					{
 					case 0:
 						// Start level option
-//						__ASSERT(indices.size() > 2, "Error in indices parameter");
+						CLIENT_ASSERT(indices.size() > 2, "Error in indices parameter");
 						m_gameConfig.value(StartLevelStr)->set(indices[2]);
-//						logDebug("Starting at level:", indices[2]);
+						logClDebug("Starting at level:", indices[2]);
 						break;
 					default:
 						// Back option
-//						logDebug("Going back from Start Level menu to main menu");
+						logClDebug("Going back from Start Level menu to main menu");
 						break;
 					}
 					break;
 
 				case 2:
 					// Options menu
-//					__ASSERT(indices.size() > 1, "Error in the indices parameter");
+					CLIENT_ASSERT(indices.size() > 1, "Error in the indices parameter");
 					switch (indices[1])
 					{
 						// Antialiasing, Resolution, Fullscreen, VSync
@@ -119,7 +120,6 @@ namespace zoper
 					break;
 				case 3:
 				default:
-					host().exitProgram();
 					break;
 				}
 				return OptionModelIndex{};
