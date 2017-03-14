@@ -37,6 +37,7 @@ namespace zoper
 
 		auto mainMenu = createSceneNode<MainMenu>(MainMenu::ClassName);
 		mainMenu->configure();
+		mainMenu->position = { 0, 700 };
 	}
 
 	void MenuScene::onEnterScene()
