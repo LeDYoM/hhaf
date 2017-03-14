@@ -16,7 +16,7 @@ namespace lib
 			class NodeQuad : public ISimpleNode
 			{
 			public:
-				explicit NodeQuad(const str_const name);
+				explicit NodeQuad(str_const&& name);
 				virtual ~NodeQuad();
 
 				virtual void configure() override;

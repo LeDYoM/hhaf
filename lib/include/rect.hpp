@@ -117,10 +117,22 @@ namespace lib
 		constexpr inline Rect resized(vector2d<T> sSize) const noexcept { return Rect{ left, top, width + sSize.x, height + sSize.y }; };
 	};
 
-	using Rects32 = lib::Rect<s32>;
-	using Rectf32 = lib::Rect<f32>;
-	using Rectu32 = lib::Rect<u32>;
+	// Serialization operators
+	template <typename T>
+	inline write_stream& operator<<(write_stream & os, const Rect<T> &rect)
+	{
+		os << "{ {" << rect.left << "," << rect.top << "}, {" << rect.width << "," << rect.height << "} }";
+		return os;
+	}
 
+	using Rectu8 = Rect<u8>;
+	using Rects8 = Rect<s8>;
+	using Rectu16 = Rect<u16>;
+	using Rects16 = Rect<s16>;
+	using Rects32 = Rect<s32>;
+	using Rectu32 = Rect<u32>;
+	using Rectf32 = Rect<f32>;
+	using Rectf64 = Rect<f64>;
 }
 
 #endif

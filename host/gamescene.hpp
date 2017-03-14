@@ -123,7 +123,7 @@ namespace zoper
 		GameData _gameData;
 		lib::u32 _score{ 0 };
 		lib::u8 _nextTokenPart{ 0 };
-		lib::sptr<lib::draw::SceneNode> _mainBoardrg{ nullptr };
+		lib::sptr<lib::draw::SceneNode> m_mainBoardrg{ nullptr };
 		lib::sptr<lib::draw::SceneNode> _gameOverrg{ nullptr };
 		lib::sptr<lib::draw::SceneNode> _levelrg{ nullptr };
 		lib::sptr<lib::draw::SceneNode> m_pauseSceneNode{ nullptr };

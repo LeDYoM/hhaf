@@ -108,18 +108,6 @@ namespace lib
 
 		};
 
-		template <typename T, typename... Args >
-		class SceneNodeRenderizable : public SceneNode
-		{
-		public:
-			SceneNodeRenderizable(const std::string &name, SceneNode *parent, Args&&... args) : SceneNode(name, parent)
-			{
-				m_node = createRenderizable<T>(name, std::forward<Args>(args)...);
-			}
-
-			sptr<T> m_node;
-		};
-
 		using SceneNodeSPtr = sptr<SceneNode>;
 	}
 }

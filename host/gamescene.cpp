@@ -38,7 +38,7 @@ namespace zoper
 	void GameScene::onInit()
 	{
 		Scene::onInit();
-		_mainBoardrg = this->createSceneNode("mainBoard");
+		m_mainBoardrg = this->createSceneNode("mainBoard");
 		_gameOverrg = this->createSceneNode("gameOverScreen");
 		_levelrg = this->createSceneNode("level");
 		m_pauseSceneNode = this->createSceneNode("pause");
@@ -132,7 +132,7 @@ namespace zoper
 		_nextTokenPart = 0;
 		setLevel(_gameConfig.value(StartLevelStr)->get<int>());
 		_gameOverrg->visible = false;
-		_mainBoardrg->visible = true;
+		m_mainBoardrg->visible = true;
 		m_pauseSceneNode->visible = false;
 
 		switch (_gameData._gameMode)
@@ -158,7 +158,7 @@ namespace zoper
 
 	void GameScene::onExitScene()
 	{
-		_mainBoardrg->clear();
+		m_mainBoardrg->clear();
 		p_boardModel = nullptr;
 		p_player = nullptr;
 		m_backgroundTiles.clear();
@@ -290,16 +290,18 @@ namespace zoper
 	{
 		const GameData::TokenZone &currentTokenZone{ _gameData._tokenZones[_nextTokenPart] };
 
-		logClDebug("NextTokenPart: ", std::to_string(_nextTokenPart));
-		logClDebug("left: ", currentTokenZone.zone.left, " top: ", currentTokenZone.zone.top,
-			" size: ", currentTokenZone.zone.size().x, " y2: ", currentTokenZone.zone.size().y);
+		logClDebug("NextTokenPart: ", _nextTokenPart);
+		logClDebug("zone: ", currentTokenZone.zone);
 
-		u32 newToken = 0;// getRandomNumer(NUMTOKENS);
+		// Generate the new token type
+		const u32 newToken = 0;// getRandomNumer(NUMTOKENS);
 
-		u32 sizep = 0;// getRandomNumer(currentTokenZone.size);
+		// Calculate in wich tile zone offset is going to appear
+		const u32 sizep = 0;// getRandomNumer(currentTokenZone.size);
 
-		u32 newX{ currentTokenZone.zone.left + (currentTokenZone.direction.isHorizontal() ? 0 : sizep) };
-		u32 newY{ currentTokenZone.zone.top + (currentTokenZone.direction.isHorizontal() ? sizep : 0) };
+		// Prepare the position for the new token
+		const u32 newX{ currentTokenZone.zone.left + (currentTokenZone.direction.isHorizontal() ? 0 : sizep) };
+		const u32 newY{ currentTokenZone.zone.top + (currentTokenZone.direction.isHorizontal() ? sizep : 0) };
 		logClDebug("New tile pos: ", newX, ",", newY);
 
 		vector2du32 loopPosition{ (currentTokenZone.direction.isHorizontal() ? currentTokenZone.zone.size().x : newX),
@@ -350,7 +352,7 @@ namespace zoper
 		logClDebug("Adding player tile at ", _gameData.centerRect.left, ",", _gameData.centerRect.top);
 		CLIENT_ASSERT(!p_player, "Player already initialized");
 		// Create the player instance
-		p_player = msptr<Player>(_mainBoardrg, "playerNode", _gameData.centerRect.leftTop(), Rectf32::fromSize(tileSize()), board2SceneFactor());
+		p_player = m_mainBoardrg->createSceneNode<Player>("playerNode", _gameData.centerRect.leftTop(), Rectf32::fromSize(tileSize()), board2SceneFactor());
 
 		// Add it to the board and to the scene nodes
 		p_boardModel->setTile(p_player->boardPosition(), p_player);
@@ -362,12 +364,12 @@ namespace zoper
 
 		logClDebug("Adding new tile at ", pos, " with value ", newToken);
 		// Create a new Tile instance
-		auto newTileToken = msptr<Tile>(_mainBoardrg, "tileNode", BoardTileData{ static_cast<BoardTileData>(newToken) }, Rectf32::fromSize(tileSize()));
+		auto newTileToken = m_mainBoardrg->createSceneNode<Tile>("tileNode", BoardTileData{ static_cast<BoardTileData>(newToken) }, Rectf32::fromSize(tileSize()));
 		// Set the position in the scene depending on the board position
 		newTileToken->position = board2Scene(pos);
 
 		// Add it to the board and to the scene nodes
-		p_boardModel->setTile(pos, std::dynamic_pointer_cast<board::ITile>(newTileToken));
+		p_boardModel->setTile(pos, newTileToken);
 	}
 
 	void zoper::GameScene::registerEvents()
@@ -512,7 +514,7 @@ namespace zoper
 		m_backgroundTiles.reserve(_gameData.size.y);
 
 		auto backgroundTilesrg(createSceneNode("backgroundTiles"));
-		moveLastBeforeNode(_mainBoardrg);
+		moveLastBeforeNode(m_mainBoardrg);
 		f32 currentx{};
 		f32 currenty{};
 		for (u32 y = 0; y < _gameData.size.y; ++y)
@@ -562,7 +564,6 @@ namespace zoper
 	{
 		if (auto ztile = std::dynamic_pointer_cast<Tile>(nTile)) {
 			logClDebug("Deleting token ", ztile->name(), " from scene at position ", pos);
-			ztile->remove();
 		} /*else if (auto ztile_ = std::dynamic_pointer_cast<Player>(nTile)) {
 			// Actually, never used
 		}*/

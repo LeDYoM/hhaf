@@ -9,13 +9,14 @@ namespace zoper
 
 	u32 Tile::_tileCounter{ 0 };
 
-	Tile::Tile(const SceneNodeSPtr &parent, str_const name, BoardTileData data, const Rectf32 &box) :
+	Tile::Tile(lib::draw::SceneNode* const parent, str_const&& name, BoardTileData data, const Rectf32 &box) :
 		GameBaseTile{ parent, name + std::to_string(_tileCounter) + std::to_string(_tileCounter), data }
 	{
 		++_tileCounter;
-		m_node = m_sceneNode->createRenderizable<nodes::NodeShape>("Node", 30);
+		m_node = createRenderizable<nodes::NodeShape>("Node", 30);
 		m_node->box = box;
-		m_sceneNode->setColor(getColorForToken());
+		m_node->configure();
+		setColor(getColorForToken());
 	}
 
 	Tile::~Tile() = default;
@@ -23,11 +24,5 @@ namespace zoper
 	void Tile::resetTileCounter()
 	{
 		_tileCounter = 0;
-	}
-
-	void Tile::remove()
-	{
-		m_sceneNode->parent()->removeSceneNode(m_sceneNode);
-		m_sceneNode.reset();
 	}
 }

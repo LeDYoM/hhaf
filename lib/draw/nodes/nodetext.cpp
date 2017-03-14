@@ -16,7 +16,7 @@ namespace lib
 			NodeText::NodeText(str_const &&name) :
 				Renderizable{ std::move(name), Triangles, 0 }
 			{
-				logConstruct("Name: ", name);
+				logConstruct("Name: ", this->name());
 			}
 
 			NodeText::~NodeText()

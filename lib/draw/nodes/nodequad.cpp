@@ -7,10 +7,10 @@ namespace lib
 	{
 		namespace nodes
 		{
-			NodeQuad::NodeQuad(str_const name)
+			NodeQuad::NodeQuad(str_const&& name)
 				: ISimpleNode{ std::move(name), 4 }
 			{
-				logConstruct("Name: ", name);
+				logConstruct("Name: ", this->name());
 			}
 
 			NodeQuad::~NodeQuad()

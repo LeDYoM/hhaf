@@ -9,18 +9,14 @@
 
 namespace zoper
 {
-	class GameBaseTile : public lib::board::ITile
+	class GameBaseTile : public lib::board::ITile, public lib::draw::SceneNode
 	{
 	public:
-		explicit GameBaseTile(const lib::draw::SceneNodeSPtr &parent, lib::str_const name, lib::board::BoardTileData data);
+		explicit GameBaseTile(lib::draw::SceneNode* const parent, lib::str_const name, lib::board::BoardTileData data);
 		virtual ~GameBaseTile() = default;
 
-		lib::ForwardProperty<lib::vector2df> position;
-
-		const lib::str_const &name() const noexcept { return m_sceneNode->name(); }
-
 		lib::draw::Color getColorForToken() const;
-		lib::draw::SceneNodeSPtr m_sceneNode;
+
 	protected:
 		lib::sptr<lib::draw::nodes::NodeShape> m_node;
 	};
