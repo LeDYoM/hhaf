@@ -86,10 +86,12 @@ namespace zoper
 					switch (indices[1])
 					{
 					case 0:
+					case 1:
 						// Start level option
 						CLIENT_ASSERT(indices.size() > 2, "Error in indices parameter");
 						m_gameConfig.value(StartLevelStr)->set(indices[2]);
 						logClDebug("Starting at level:", indices[2]);
+						lib::host().setScene("GameScene");
 						break;
 					default:
 						// Back option
