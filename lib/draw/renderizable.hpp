@@ -31,6 +31,17 @@ namespace lib
 			inline void moveX(const f32 xOffset)  noexcept { m_vertices.moveX(xOffset); }
 			inline void moveY(const f32 yOffset)  noexcept { m_vertices.moveY(yOffset); }
 
+			template <typename T>
+			inline T *const rnCast() {
+				return dynamic_cast<T *const>(this);
+			}
+
+			template <typename T>
+			inline const T *const rnCast() const {
+				return dynamic_cast<const T *const>(this);
+			}
+
+
 		protected:
 			Property<sptr<Texture>> texture;
 			VertexArray m_vertices;
