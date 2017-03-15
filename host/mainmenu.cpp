@@ -15,10 +15,7 @@ namespace zoper
 		using namespace lib::gui;
 
 		MainMenu::MainMenu(lib::draw::SceneNode *parent, str_const &&name)
-			: ChooseControlGroup{ parent, std::move(name) }, m_gameConfig{ ":NextGame" }
-		{
-						//			position.set({ 0,700 });
-		}
+			: ChooseControlGroup{ parent, std::move(name) }, m_gameConfig{ ":NextGame" } {}
 
 		MainMenu::~MainMenu() = default;
 
@@ -125,6 +122,9 @@ namespace zoper
 				}
 				return OptionModelIndex{};
 			});
+
+			position = { 0, 700 };
+			box = scenePerspective();
 
 			ChooseControlGroup::configure();
 			currentControlIndex = 0;
