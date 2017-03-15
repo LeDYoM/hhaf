@@ -57,7 +57,7 @@ namespace lib
 
 			sptr<SceneNode> createSceneNode(str_const name)
 			{
-				return createSceneNode<SceneNode>(name);
+				return createSceneNode<SceneNode>(std::move(name));
 			}
 
 			template <typename T, typename... Args>

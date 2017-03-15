@@ -24,7 +24,6 @@ namespace lib
 			virtual void create() override;
 			virtual void configure() override;
 
-			bool changeState(const OptionModelIndex&);
 			void setTheme(const Theme &theme) { m_theme = theme; }
 
 			Property<std::vector<std::vector<OptionModel>>> options;
