@@ -16,11 +16,11 @@ namespace lib
 		public:
 			void configure();
 
-			Property<vector_shared_pointers<draw::SceneNode>> nodes;
+			Property<const vector_shared_pointers<draw::SceneNode>*> nodes;
 			Property<u32> activeNodeIndex;
 
 			const sptr<draw::SceneNode> &activeNode() const noexcept { 
-				return nodes()[activeNodeIndex()]; 
+				return (*(nodes()))[activeNodeIndex()]; 
 			}
 		private:
 			u32 m_lastActiveNodeIndex{};

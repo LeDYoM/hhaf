@@ -8,11 +8,10 @@ namespace lib
 		{
 			activeNodeIndex.setCallback([this]() 
 			{
-				for (auto& node : nodes()) {
+				for (auto& node : *nodes()) {
 					node->visible = false;
 				}
-//				nodes()[m_lastActiveNodeIndex]->visible = false;
-				nodes()[activeNodeIndex()]->visible = true;
+				(*(nodes()))[activeNodeIndex()]->visible = true;
 			});
 		}
 	}
