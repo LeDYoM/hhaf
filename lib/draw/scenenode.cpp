@@ -81,6 +81,16 @@ namespace lib
 			return true;
 		}
 
+		void SceneNode::for_each_node(std::function<void(const sptr<Renderizable>&)> action)
+		{
+			std::for_each(m_renderNodes.cbegin(), m_renderNodes.cend(), action);
+		}
+
+		void SceneNode::for_each_group(std::function<void(const sptr<SceneNode>&)> action)
+		{
+			std::for_each(m_groups.cbegin(), m_groups.cend(), action);
+		}
+
 		void SceneNode::addRenderizable(const sptr<Renderizable> &newElement)
 		{
 			m_renderNodes.push_back(newElement);
@@ -91,6 +101,10 @@ namespace lib
 			m_groups.push_back(node);
 			node->m_parent = this;
 			node->create();
+		}
+
+		void SceneNode::addComponent(uptr<IComponent> component)
+		{
 		}
 
 		bool SceneNode::removeSceneNode(const sptr<SceneNode> &element)

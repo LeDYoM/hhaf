@@ -61,7 +61,7 @@ namespace lib
 			}
 
 			template <typename T, typename... Args>
-			std::pair<sptr<SceneNode>,sptr<T>> createSceneNodeWidthRenderizable(str_const name, Args&&... args)
+			std::pair<sptr<SceneNode>, sptr<T>> createSceneNodeWidthRenderizable(str_const name, Args&&... args)
 			{
 				auto result(createSceneNode<SceneNode>(name));
 				auto result2(result->createRenderizable<T>(name + "_node", std::forward<Args>(args)...));
@@ -85,14 +85,26 @@ namespace lib
 			* @
 			*/
 			void setColor(const Color &color, const bool applySceneNodes = true);
-			inline SceneNode *parent() const noexcept { return m_parent; }
+			inline SceneNode *parent() noexcept { return m_parent; }
+			inline const SceneNode *parent() const noexcept { return m_parent; }
 
 			template <typename T>
-			inline T *const snCast() { 
-				return dynamic_cast<T *const>(this); 
+			inline T *const snCast() {
+				return dynamic_cast<T *const>(this);
 			}
 
+			template <typename T>
+			inline const T *const snCast() const {
+				return dynamic_cast<const T *const>(this);
+			}
+
+			void for_each_node(std::function<void(const sptr<Renderizable> &)> action);
+			void for_each_group(std::function<void(const sptr<SceneNode> &)> action);
+
 		protected:
+
+			const vector_shared_pointers<Renderizable> &renderNodes() const noexcept { return m_renderNodes; }
+			const vector_shared_pointers<SceneNode> &sceneNodes() const noexcept { return m_groups; }
 
 			void addRenderizable(const sptr<Renderizable> &newElement);
 			void addSceneNode(sptr<SceneNode> node);
