@@ -27,7 +27,7 @@ namespace lib
 				// Update the node components
 				updateComponents();
 
-				auto handle(host().rStates().pushChanges(&transform(), nullptr));
+				const auto handle(host().rStates().pushChanges(&transform(), nullptr));
 
 				for (const auto& renderizable : m_renderNodes) {
 					renderizable->draw();
