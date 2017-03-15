@@ -31,8 +31,8 @@ namespace lib
 			virtual ~ChooseControl();
 
 			void configure();
-			ChooseControlGroup *chooseControlGroup() const;
 
+			Property<Rectf32> box;
 			std::vector<OptionModel> options;
 			const OptionModelIndex currentSelection() const noexcept;
 

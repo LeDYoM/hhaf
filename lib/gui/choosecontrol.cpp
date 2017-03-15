@@ -25,6 +25,13 @@ namespace lib
 
 		void ChooseControl::configure()
 		{
+			box.setCallback([this]() {
+				for_each_node([this](const sptr<Renderizable>&node) {
+					if (auto chControlLine = node->rnCast<ChooseControlLine>()) {
+						chControlLine->alignmentBox = box();
+					}
+				});
+			});
 			const auto &cTheme(dynamic_cast<ChooseControlGroup*>(parent())->currentTheme());
 			descriptorCursorSize = cTheme.cursorDescriptor.m_size;
 
@@ -45,7 +52,7 @@ namespace lib
 				menuLine->font = cTheme.font;
 				menuLine->characterSize = cTheme.chSize;
 				menuLine->color = cTheme.textColor;
-				menuLine->alignmentBox = scenePerspective().moved(currentPos);
+				menuLine->alignmentBox = box().moved(currentPos);
 				menuLine->options = label.subOptionsLabels;
 				menuLine->configure();
 
@@ -59,7 +66,7 @@ namespace lib
 				__ASSERT(previouslySelectedItem < lines.size(), "Invalid previously selected index for cursor");
 				__ASSERT(selectedItem() < lines.size(), "Invalid select index for cursor");
 
-				const auto &cTheme(chooseControlGroup()->currentTheme());
+				const auto &cTheme(parent()->snCast<ChooseControlGroup>()->currentTheme());
 
 				previouscurrentLine()->color = cTheme.textColor;
 				currentLine()->color = cTheme.selectedTextColor;
@@ -72,11 +79,6 @@ namespace lib
 				//				anim::noAction, anim::noAction));
 			});
 			selectedItem = 0;
-		}
-
-		ChooseControlGroup * ChooseControl::chooseControlGroup() const
-		{
-			return dynamic_cast<ChooseControlGroup*>(parent());
 		}
 
 		const OptionModelIndex ChooseControl::currentSelection() const noexcept

@@ -12,9 +12,7 @@ namespace lib
 	namespace gui
 	{
 		ChooseControlGroup::ChooseControlGroup(draw::SceneNode *parent, str_const&& name, Theme theme)
-			: draw::SceneNode{ parent, std::move(name) }, m_theme( theme )
-		{
-		}
+			: draw::SceneNode{ parent, std::move(name) }, m_theme( theme ) { }
 
 		void ChooseControlGroup::create()
 		{
@@ -58,6 +56,13 @@ namespace lib
 
 		void ChooseControlGroup::configure()
 		{
+			box.setCallback([this]() {
+				for_each_group([this](const sptr<SceneNode>&sceneNode) {
+					if (auto chControl = sceneNode->snCast<ChooseControl>()) {
+						chControl->box = box();
+					}
+				});
+			});
 			m_theme.font = host().resourceManager().getFont("game_menu.mainFont");
 			m_theme.textColor = draw::colors::Blue;
 			m_theme.selectedTextColor = draw::colors::Red;
@@ -66,23 +71,18 @@ namespace lib
 			m_theme.cursorDescriptor = CursorDescriptor{ 3, vector2df{ 90.0f, 90.0f },draw::colors::Red };
 			u32 count{ 0 };
 
-			vector_shared_pointers<SceneNode> nodes;
-			nodes.reserve(options().size());
-
 			for (const auto& option : options()) {
 				auto chooseControl = createSceneNode<ChooseControl>("chooseControl"+std::to_string(count));
 				chooseControl->options = option;
-//				chooseControl->onSelected = onSelected()[0]; // <- TO DO: Change it
+				chooseControl->box = box();
 				chooseControl->configure();
-				nodes.push_back(std::move(chooseControl));
 				++count;
 			}
 
-			__ASSERT(count > 0 && !nodes.empty(), "The choose control group must be created with at least one element");
 			// Use an state controller to manager which node is active
 			m_sController = muptr<StatesController>();
 			// Set the nodes to it
-			m_sController->nodes = std::move(nodes);
+			m_sController->nodes = &sceneNodes();
 			// Set the index 0 as start node
 			m_sController->activeNodeIndex = 0;
 			// Set it ready to work

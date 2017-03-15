@@ -24,6 +24,7 @@ namespace lib
 			virtual void create() override;
 			virtual void configure() override;
 
+			Property<Rectf32> box;
 			void setTheme(const Theme &theme) { m_theme = theme; }
 
 			Property<std::vector<std::vector<OptionModel>>> options;
