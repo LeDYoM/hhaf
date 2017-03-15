@@ -14,8 +14,9 @@ namespace lib
 		T left, top, width, height;
 
 		static inline Rect fromSize(T sizeX, T sizeY) { return Rect{ {},{}, std::forward<vector2d<T>>({sizeX,sizeY}) }; }
-		static inline Rect fromSize(vector2d<T> size) { return Rect{ {},{}, size }; }
-
+		static inline Rect fromSize(const vector2d<T> &size) { return Rect{ {},{}, size }; }
+		static inline Rect fromCenterAndRadius(const vector2d<T> &center, const vector2d<T> &radius) { return Rect{ center.x - radius.x,center.y - radius.y, center.x + radius.x, center.y + radius.y }; }
+		static inline Rect fromCenterAndSize(const vector2d<T> &center, const vector2d<T> &size) { return fromCenterAndRadius(center, size * static_cast<T>(2)); }
 
 		inline constexpr Rect(T rectLeft, T rectTop, T rectWidth, T rectHeight) noexcept : left{ rectLeft }, top{ rectTop }, width{ rectWidth }, height{ rectHeight } { }
 		inline constexpr Rect() noexcept : Rect{ {}, {}, {}, {} } {}
@@ -77,26 +78,38 @@ namespace lib
 			}
 		}
 
-		inline constexpr bool intersects(const Rect<T>& rectangle) const noexcept
+		constexpr inline bool intersects(const Rect<T>& rectangle) const noexcept
 		{
 			return intersects(rectangle, std::move(Rect<T>()));
 		}
 
-		inline constexpr bool operator==(const Rect &r) const noexcept
+		constexpr inline bool operator==(const Rect &r) const noexcept
 		{
 			return (left == r.left && width == r.width && top == r.top && height == r.height);
 		}
 
-		inline constexpr bool operator!=(const Rect &r) const noexcept
+		constexpr inline bool operator!=(const Rect &r) const noexcept
 		{
 			return !(operator==(r));
 		}
 
-		inline constexpr Rect& operator +=(const vector2d<T> &rhs) noexcept
+		constexpr inline Rect& operator +=(const vector2d<T> &rhs) noexcept
 		{
 			left += rhs.x;
 			top += rhs.y;
 			return *this;
+		}
+
+		constexpr inline Rect& operator +=(const Rect &rhs) noexcept
+		{
+			left += rhs.left;
+			top += rhs.top;
+			return *this;
+		}
+
+		constexpr inline Rect& move(const Rect &rhs) noexcept
+		{
+			return (*this) += rhs;
 		}
 
 		constexpr inline void setLeftTop(const vector2d<T>&nleftTop) noexcept { left = nleftTop.x; top = nleftTop.y; }
@@ -111,8 +124,12 @@ namespace lib
 		constexpr inline const vector2d<T> rightTop() const  noexcept { return vector2d<T>{right(), top}; }
 		constexpr inline const vector2d<T> leftBottom() const  noexcept { return vector2d<T>{left, bottom()}; }
 
-		constexpr inline const Rect moved(vector2d<T> offset) const noexcept { return Rect{ left + offset.x,top + offset.y,width,height }; };
-		constexpr inline const Rect resized(vector2d<T> sSize) const noexcept { return Rect{ left, top, width + sSize.x, height + sSize.y }; };
+		constexpr inline const Rect moved(const vector2d<T> &offset) const noexcept { return (Rect( *this ) += offset); };
+		constexpr inline const Rect resized(const vector2d<T> &sSize) const noexcept { return Rect{ left, top, width + sSize.x, height + sSize.y }; };
+		constexpr inline const Rect resized_from_center(const vector2d<T> &sSize) const noexcept { 
+			auto center = center();
+			return Rect{ left, top, width + sSize.x, height + sSize.y }; 
+		};
 	};
 
 	// Serialization operators
