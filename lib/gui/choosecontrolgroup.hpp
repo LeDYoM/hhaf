@@ -18,7 +18,7 @@ namespace lib
 		class ChooseControlGroup : public draw::SceneNode
 		{
 		public:
-			ChooseControlGroup(draw::SceneNode *parent, str_const&& name, Theme theme = Theme{});
+			ChooseControlGroup(draw::SceneNode *parent, str_const name, Theme theme = Theme{});
 			virtual ~ChooseControlGroup();
 
 			virtual void create() override;

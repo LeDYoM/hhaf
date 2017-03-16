@@ -50,9 +50,9 @@ namespace lib
 		Property(const Property&) = delete;
 		Property& operator=(const Property&) = delete;
 
-		constexpr const T &operator()() const noexcept { return m_value; }
-		inline void setCallback(callback_t c) noexcept { m_callback = std::move(c); }
-		constexpr const T &get() const noexcept { return m_value; }
+		constexpr const T &operator()() const { return m_value; }
+		inline void setCallback(callback_t c) { m_callback = std::move(c); }
+		constexpr const T &get() const { return m_value; }
 		inline void set(const T&v) { m_value = v; update(); }
 		inline void set(T&&v) { m_value = std::move(v); update(); }
 		inline Property &operator=(const T&v) { set(v); return *this; }

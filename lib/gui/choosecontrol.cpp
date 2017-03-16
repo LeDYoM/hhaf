@@ -52,7 +52,7 @@ namespace lib
 				menuLine->font = cTheme.font;
 				menuLine->characterSize = cTheme.chSize;
 				menuLine->color = cTheme.textColor;
-				menuLine->alignmentBox = box().moved(currentPos);
+				menuLine->alignmentBox = box().move(currentPos);
 				menuLine->options = label.subOptionsLabels;
 				menuLine->configure();
 

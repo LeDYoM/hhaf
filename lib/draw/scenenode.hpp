@@ -60,14 +60,6 @@ namespace lib
 				return createSceneNode<SceneNode>(std::move(name));
 			}
 
-			template <typename T, typename... Args>
-			std::pair<sptr<SceneNode>, sptr<T>> createSceneNodeWidthRenderizable(str_const name, Args&&... args)
-			{
-				auto result(createSceneNode<SceneNode>(name));
-				auto result2(result->createRenderizable<T>(name + "_node", std::forward<Args>(args)...));
-				return{ result,result2 };
-			}
-
 			bool moveLastBeforeNode(const sptr<SceneNode> &beforeNode);
 			bool removeSceneNode(const sptr<SceneNode> &element);
 
@@ -76,7 +68,7 @@ namespace lib
 			Property<bool> visible;
 
 			virtual Scene *const parentScene() { return m_parent->parentScene(); }
-			Rectf32 scenePerspective();
+			const Rectf32 &scenePerspective();
 
 			/**
 			* Set a color for all vertex for all child nodes of this node

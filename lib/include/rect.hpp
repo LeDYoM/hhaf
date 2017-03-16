@@ -65,9 +65,16 @@ namespace lib
 			return (*this) += rhs;
 		}
 
-		constexpr void setLeftTop(const vector2d<T>&nleftTop) noexcept { left = nleftTop.x; top = nleftTop.y; }
-		constexpr void move(const vector2d<T>&relativePosition)  noexcept { left += relativePosition.x; top += relativePosition.y; }
-		constexpr void setSize(const vector2d<T>&nsize) noexcept { width = nsize.x; height = nsize.y; }
+		constexpr void setLeftTop(const vector2d<T>&nleftTop) { left = nleftTop.x; top = nleftTop.y; }
+		constexpr void move(const vector2d<T>&relativePosition)  { left += relativePosition.x; top += relativePosition.y; }
+		constexpr void setSize(const vector2d<T>&nsize) { width = nsize.x; height = nsize.y; }
+		constexpr void setRadiusFromCenter(const vector2d<T> &radius) {
+			auto c(center());
+			left = static_cast<T>(c.x - radius.x);
+			top = static_cast<T>(c.y - radius.y);
+			width = static_cast<T>(radius.x * static_cast<T>(2));
+			height = static_cast<T>(radius.x * static_cast<T>(2));
+		}
 
 		constexpr const vector2d<T> leftTop() const noexcept { return vector2d<T>{left, top}; }
 		constexpr const vector2d<T> size() const  noexcept { return vector2d<T>{width, height}; }
@@ -77,12 +84,9 @@ namespace lib
 		constexpr const vector2d<T> rightTop() const  noexcept { return vector2d<T>{right(), top}; }
 		constexpr const vector2d<T> leftBottom() const  noexcept { return vector2d<T>{left, bottom()}; }
 
-		constexpr const Rect moved(const vector2d<T> &offset) const noexcept { return (Rect( *this ) += offset); };
-		constexpr const Rect resized(const vector2d<T> &sSize) const noexcept { return Rect{ left, top, width + sSize.x, height + sSize.y }; };
-		constexpr const Rect resized_from_center(const vector2d<T> &sSize) const noexcept { 
-			auto center = center();
-			return Rect{ left, top, width + sSize.x, height + sSize.y }; 
-		};
+		constexpr const Rect move(const vector2d<T> &offset) const { return (Rect( *this ) += offset); };
+		constexpr const Rect resize(const vector2d<T> &sSize) const { return Rect{ left, top, width + sSize.x, height + sSize.y }; };
+		constexpr const Rect setRadiusFromCenter(const vector2d<T> &radius) const { Rect temp{ *this }; temp.setRadiusFromCenter(radius); return temp; }
 	};
 
 	// Serialization operators

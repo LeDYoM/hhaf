@@ -39,7 +39,7 @@ namespace lib
 			}
 		}
 
-		Rectf32 SceneNode::scenePerspective()
+		const Rectf32 &SceneNode::scenePerspective()
 		{
 			return parentScene()->getView()->perspective();
 		}

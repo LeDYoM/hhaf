@@ -9,9 +9,8 @@ namespace lib
 {
 	namespace draw
 	{
-		class Vertex
+		struct Vertex
 		{
-		public:
 			constexpr Vertex(vector2df p, Color c, vector2df tc) noexcept : position{ std::move(p) }, color{ std::move(c) }, texCoords{ std::move(tc) } {}
 			constexpr Vertex(vector2df p, vector2df tc) noexcept : position{ std::move(p) }, color{}, texCoords{ std::move(tc) } {}
 			constexpr Vertex() = default;
@@ -22,7 +21,10 @@ namespace lib
 			vector2df position;
 			Color color;
 			vector2df texCoords;
+//			int a;
 		};
+
+//		static_assert(std::is_pod<Vertex>::value, "Vertex is not a pod");
 	}
 }
 
