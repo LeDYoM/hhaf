@@ -75,8 +75,8 @@ namespace lib
 		virtual const T &get() const noexcept override { return m_value; }
 		virtual void set(const T&v) override { m_value = v; update(); }
 		virtual void set(T&&v) override { m_value = std::move(v); update(); }
-		virtual void operator=(const T&v) override { set(v); }
-		virtual void operator=(T&&v) override { set(std::move(v)); }
+		virtual void operator=(const T&v) override { m_value = std::move(v); update(); }
+		virtual void operator=(T&&v) override { m_value = std::move(v); update(); }
 
 		void update() { if (m_callback) m_callback(); }
 	private:
