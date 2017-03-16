@@ -124,7 +124,7 @@ namespace zoper
 			});
 
 			position = { 0, 700 };
-			box = scenePerspective();
+//			box = scenePerspective().fromCenterAndSize()
 
 			ChooseControlGroup::configure();
 			currentControlIndex = 0;

@@ -34,7 +34,7 @@ namespace lib
 			constexpr Transform(Transform&&) noexcept = default;
 			Transform& operator=(Transform&&) noexcept = default;
 
-			constexpr inline const f32* const getMatrix() const noexcept { return &m_matrix[0]; }
+			constexpr const f32* const getMatrix() const noexcept { return &m_matrix[0]; }
 			Transform getInverse() const noexcept;
 			constexpr const vector2df transformPoint(const f32 x, const f32 y) const noexcept;
 			constexpr const vector2df transformPoint(const vector2df& point) const noexcept;

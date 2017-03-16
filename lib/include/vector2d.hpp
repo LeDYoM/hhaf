@@ -11,13 +11,13 @@ namespace lib
 	class vector2d
 	{
 	public:
-		constexpr inline vector2d()  noexcept : x{}, y{} {}
-		constexpr inline vector2d(T X, T Y)  noexcept : x{ X }, y{ Y } {}
-		constexpr inline vector2d(const vector2d<T> &) = default;
+		constexpr vector2d()  : x{}, y{} {}
+		constexpr vector2d(T X, T Y)  : x{ X }, y{ Y } {}
+		constexpr vector2d(const vector2d<T> &) = default;
 		inline vector2d &operator=(const vector2d<T> &) = default;
 
 		template <typename U>
-		constexpr inline explicit vector2d(const vector2d<U>& vector)  noexcept : x{ static_cast<T>(vector.x) }, y{ static_cast<T>(vector.y) } {}
+		constexpr explicit vector2d(const vector2d<U>& vector)  noexcept : x{ static_cast<T>(vector.x) }, y{ static_cast<T>(vector.y) } {}
 
 		inline vector2d &operator+=(const vector2d &right) noexcept
 		{
@@ -84,21 +84,21 @@ namespace lib
 			return normal;
 		}
 
-		inline constexpr vector2d operator+(const vector2d &right) const noexcept { return (vector2d(*this) += right); }
-		inline constexpr vector2d operator-(const vector2d &right) const noexcept { return (vector2d(*this) -= right); }
-		inline constexpr vector2d operator*(const vector2d &right) const noexcept { return (vector2d(*this) *= right); }
-		inline constexpr vector2d operator/(const vector2d &right) const noexcept { return (vector2d(*this) /= right); }
-		inline constexpr vector2d operator*(const T &right) const noexcept { return (vector2d(*this) *= right);	}
-		inline constexpr vector2d operator/(const T &right) const noexcept { return (vector2d(*this) /= right); }
-		inline constexpr bool operator ==(const vector2d &right) const noexcept { return (x == right.x && y == right.y); }
-		inline constexpr bool operator !=(const vector2d &right) const noexcept {	return !(*operator==(right)); }
+		constexpr vector2d operator+(const vector2d &right) const noexcept { return (vector2d(*this) += right); }
+		constexpr vector2d operator-(const vector2d &right) const noexcept { return (vector2d(*this) -= right); }
+		constexpr vector2d operator*(const vector2d &right) const noexcept { return (vector2d(*this) *= right); }
+		constexpr vector2d operator/(const vector2d &right) const noexcept { return (vector2d(*this) /= right); }
+		constexpr vector2d operator*(const T &right) const noexcept { return (vector2d(*this) *= right);	}
+		constexpr vector2d operator/(const T &right) const noexcept { return (vector2d(*this) /= right); }
+		constexpr bool operator ==(const vector2d &right) const noexcept { return (x == right.x && y == right.y); }
+		constexpr bool operator !=(const vector2d &right) const noexcept {	return !(*operator==(right)); }
 
 		T x;
 		T y;
 	};
 
 	template <typename T>
-	inline constexpr vector2d<T> operator-(const vector2d<T> &v2d) noexcept
+	constexpr vector2d<T> operator-(const vector2d<T> &v2d) noexcept
 	{
 		return vector2d<T>{-v2d.x, -v2d.y};
 	}

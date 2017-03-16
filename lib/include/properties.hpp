@@ -13,8 +13,8 @@ namespace lib
 		using getter_t = std::function<const T&()>;
 		constexpr VirtualPropertyRead(const getter_t &getterp = {}) : getter{ getterp } {}
 		inline void setGetter(const getter_t &getterp) { getter = getterp; }
-		constexpr inline const T&get() const noexcept { return getter(); }
-		constexpr inline const T&operator()() const noexcept { return get(); }
+		constexpr const T&get() const noexcept { return getter(); }
+		constexpr const T&operator()() const noexcept { return get(); }
 	protected:
 		getter_t getter;
 	};
@@ -50,9 +50,9 @@ namespace lib
 		Property(const Property&) = delete;
 		Property& operator=(const Property&) = delete;
 
-		constexpr inline const T &operator()() const noexcept { return m_value; }
+		constexpr const T &operator()() const noexcept { return m_value; }
 		inline void setCallback(callback_t c) noexcept { m_callback = std::move(c); }
-		constexpr inline const T &get() const noexcept { return m_value; }
+		constexpr const T &get() const noexcept { return m_value; }
 		inline void set(const T&v) { m_value = v; update(); }
 		inline void set(T&&v) { m_value = std::move(v); update(); }
 		inline Property &operator=(const T&v) { set(v); return *this; }
@@ -74,10 +74,10 @@ namespace lib
 		ForwardProperty(const ForwardProperty&) = delete;
 		ForwardProperty& operator=(const ForwardProperty&) = delete;
 
-		constexpr inline const T &operator()() const noexcept { return (*m_value)(); }
+		constexpr const T &operator()() const noexcept { return (*m_value)(); }
 		inline void setForwardProperty(Property<T> *const p) noexcept { m_value = p; }
 		inline void setCallback(callback_t nc) noexcept { m_callback = nc; }
-		constexpr inline const T &get() const noexcept { return (*m_value).get(); }
+		constexpr const T &get() const noexcept { return (*m_value).get(); }
 		inline void set(const T&v) { (*m_value) = v; update(); }
 		inline void set(T&&v) { (*m_value) = std::move(v); update(); }
 		inline ForwardProperty &operator=(const T&v) { set(v); return *this; }
@@ -95,8 +95,8 @@ namespace lib
 	{
 	public:
 		constexpr ReadOnlyRefProperty(const T&p) noexcept : m_value{ p } {}
-		constexpr inline const T &get() const noexcept { return m_property; }
-		constexpr inline const T &operator()() const noexcept { return m_property; }
+		constexpr const T &get() const noexcept { return m_property; }
+		constexpr const T &operator()() const noexcept { return m_property; }
 
 	private:
 		const T &m_value;
