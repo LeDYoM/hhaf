@@ -124,7 +124,7 @@ namespace zoper
 			});
 
 			position = { 0, 700 };
-			box.set(scenePerspective().setRadiusFromCenter({ 750, 1000 }));
+			box.set(scenePerspective().setRadiusFromCenter({ 800, 1000 }));
 
 			ChooseControlGroup::configure();
 			currentControlIndex = 0;

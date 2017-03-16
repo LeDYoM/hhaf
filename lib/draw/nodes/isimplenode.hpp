@@ -21,7 +21,6 @@ namespace lib
 
 				Property<Rectf32> box;
 				Property<Rects32> textureRect;
-				ForwardProperty<sptr<Texture>> texture;
 
 			protected:
 				void configureBase();

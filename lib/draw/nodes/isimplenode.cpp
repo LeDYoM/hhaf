@@ -9,10 +9,7 @@ namespace lib
 		namespace nodes
 		{
 			ISimpleNode::ISimpleNode(str_const &&name, const u32 pointCount)
-				: Renderizable{ std::move(name), TriangleFan, pointCount + 2 }
-			{
-				texture.setForwardProperty(&(Renderizable::texture));
-			}
+				: Renderizable{ std::move(name), TriangleFan, pointCount + 2 } {}
 
 			void ISimpleNode::configureBase()
 			{
@@ -30,7 +27,6 @@ namespace lib
 						if ((!texture().get() && textureRect() == Rects32{})) {
 							textureRect = { 0, 0, static_cast<s32>(tSize.x), static_cast<s32>(tSize.y) };
 						}
-						//					size = { static_cast<f32>(tSize.x), static_cast<f32>(tSize.y) };
 					}
 				});
 				textureRect.setCallback([this]() { updateTextureCoords(); });

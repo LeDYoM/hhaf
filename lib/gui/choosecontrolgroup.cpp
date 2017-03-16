@@ -11,7 +11,7 @@ namespace lib
 {
 	namespace gui
 	{
-		ChooseControlGroup::ChooseControlGroup(draw::SceneNode *parent, str_const&& name, Theme theme)
+		ChooseControlGroup::ChooseControlGroup(draw::SceneNode *parent, str_const name, Theme theme)
 			: draw::SceneNode{ parent, std::move(name) }, m_theme( theme ) { }
 
 		void ChooseControlGroup::create()

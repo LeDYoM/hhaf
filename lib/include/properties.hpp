@@ -69,7 +69,7 @@ namespace lib
 	{
 	public:
 		using callback_t = std::function<void()>;
-		constexpr ForwardProperty() noexcept {}
+		constexpr ForwardProperty() {}
 		constexpr ForwardProperty(Property<T> *const iv) noexcept : m_value{ iv } {}
 		ForwardProperty(const ForwardProperty&) = delete;
 		ForwardProperty& operator=(const ForwardProperty&) = delete;
@@ -77,7 +77,7 @@ namespace lib
 		constexpr const T &operator()() const noexcept { return (*m_value)(); }
 		inline void setForwardProperty(Property<T> *const p) noexcept { m_value = p; }
 		inline void setCallback(callback_t nc) noexcept { m_callback = nc; }
-		constexpr const T &get() const noexcept { return (*m_value).get(); }
+		constexpr const T &get() const { return (*m_value).get(); }
 		inline void set(const T&v) { (*m_value) = v; update(); }
 		inline void set(T&&v) { (*m_value) = std::move(v); update(); }
 		inline ForwardProperty &operator=(const T&v) { set(v); return *this; }
@@ -88,18 +88,6 @@ namespace lib
 	private:
 		Property<T> *m_value{ nullptr };
 		callback_t m_callback;
-	};
-
-	template <typename T>
-	class ReadOnlyRefProperty
-	{
-	public:
-		constexpr ReadOnlyRefProperty(const T&p) noexcept : m_value{ p } {}
-		constexpr const T &get() const noexcept { return m_property; }
-		constexpr const T &operator()() const noexcept { return m_property; }
-
-	private:
-		const T &m_value;
 	};
 }
 

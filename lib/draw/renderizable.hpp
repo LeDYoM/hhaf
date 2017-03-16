@@ -41,9 +41,9 @@ namespace lib
 				return dynamic_cast<const T *const>(this);
 			}
 
+			Property<sptr<Texture>> texture;
 
 		protected:
-			Property<sptr<Texture>> texture;
 			VertexArray m_vertices;
 		};
 	}
