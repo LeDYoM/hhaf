@@ -118,12 +118,12 @@ namespace lib
 
 		inline write_stream& operator<<(write_stream & os, const Key &key)
 		{
-			os << static_cast<int>(key);
+			os << static_cast<std::underlying_type_t<Key>>(key);
 		}
 
 		inline std::istream& operator>>(std::istream & is, Key &key)
 		{
-			int p;
+			std::underlying_type_t<Key> p;
 			is >> p;
 			key = static_cast<Key>(p);
 			return is;
