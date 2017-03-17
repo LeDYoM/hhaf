@@ -2,7 +2,6 @@
 #define __LEVELPROPERTIES_HPP__
 
 #include <lib/include/types.hpp>
-#include <lib/core/randomizer.hpp>
 #include <lib/draw/color.hpp>
 
 namespace zoper
@@ -23,7 +22,6 @@ namespace zoper
 		static constexpr lib::u32 maxLevelWithProperties{ 25u };
 		lib::draw::Color getBackgroundTileColor(const lib::u32 x, const lib::u32 y, const bool isCenter) const;
 	private:
-		lib::Randomizer _randomizer;
 		lib::u32 _level;
 		lib::u32 _millisBetweenTokens;
 		lib::u32 _baseScore;

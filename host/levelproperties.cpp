@@ -1,8 +1,13 @@
 #include "levelproperties.hpp"
+#include <lib/core/host.hpp>
 #include <lib/core/randomizer.hpp>
 
 namespace zoper
 {
+	using namespace lib;
+	using namespace lib::draw;
+	using namespace lib::core;
+
 	LevelProperties::LevelProperties(const lib::u32 level)
 	{
 		setLevel(level);
@@ -26,7 +31,7 @@ namespace zoper
 		}
 	}
 
-	lib::draw::Color LevelProperties::getBackgroundTileColor(const lib::u32 x, const lib::u32 y, const bool isCenter) const
+	Color LevelProperties::getBackgroundTileColor(const u32 x, const u32 y, const bool isCenter) const
 	{
 		if (_level <= maxLevelWithProperties)
 		{
@@ -86,9 +91,10 @@ namespace zoper
 				}
 				else if (_level < maxLevelWithProperties)
 				{
-					return lib::draw::Color(static_cast<lib::u8>(_randomizer.getUInt(255, 0)),
-						static_cast<lib::u8>(_randomizer.getUInt(255, 0)),
-						static_cast<lib::u8>(_randomizer.getUInt(255, 0)));
+					const auto &rnd(host().randomizer());
+					return lib::draw::Color(static_cast<lib::u8>(rnd.getUInt(255, 0)),
+						static_cast<lib::u8>(rnd.getUInt(255, 0)),
+						static_cast<lib::u8>(rnd.getUInt(255, 0)));
 				}
 			}
 		}

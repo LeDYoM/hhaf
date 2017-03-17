@@ -20,6 +20,7 @@ namespace lib
 		class Window;
 		class ResourceManager;
 		class EventManager;
+		class Randomizer;
 
 		class Host final
 		{
@@ -58,6 +59,8 @@ namespace lib
 			inline draw::RenderStates &rStates() const noexcept { return *m_renderStates; }
 			inline draw::RenderStates &rStates() noexcept { return *m_renderStates; }
 
+			inline const Randomizer &randomizer() const noexcept { return *m_randomizer; }
+
 		private:
 			bool loopStep();
 			void updateScene();
@@ -68,6 +71,7 @@ namespace lib
 			uptr<IApp> m_iapp{ nullptr };
 			uptr<ResourceManager> m_resourceManager{ nullptr };
 			uptr<EventManager> m_eventManager{ nullptr };
+			uptr<Randomizer> m_randomizer;
 			bool exit{ false };
 			std::vector<sptr<draw::Scene>> m_scenes;
 			sptr<draw::Scene> m_currentScene{ nullptr };

@@ -2,6 +2,7 @@
 #include "window.hpp"
 #include "resourcemanager.hpp"
 #include "log.hpp"
+#include "randomizer.hpp"
 #include <lib/draw/scene.hpp>
 #include <lib/draw/renderstates.hpp>
 #include <lib/core/events/eventmanager.hpp>
@@ -95,6 +96,7 @@ namespace lib
 				logDebug(appId(), ": ", " Starting initialization...");
 				m_state = AppState::Executing;
 
+				m_randomizer = muptr<Randomizer>();
 				m_eventManager = muptr<EventManager>();
 				m_window = muptr<Window>(m_iapp->getAppDescriptor().wcp);
 				m_resourceManager = muptr<core::ResourceManager>(m_iapp->getAppDescriptor().resourceFile);
@@ -132,6 +134,7 @@ namespace lib
 				m_window = nullptr;
 				m_resourceManager = nullptr;
 				m_eventManager = nullptr;
+				m_randomizer = nullptr;
 				m_params.clear();
 				logDebug(appId(), ": ", " terminated");
 				return true;

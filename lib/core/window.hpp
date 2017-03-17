@@ -23,7 +23,6 @@ namespace lib
 			void postLoop();
 			virtual void onCreate() override;
 			virtual void onDestroy();
-			u32 getRandomNumer(u32 max = 1, u32 min = 0);
 
 		private:
 			void create(const WindowCreationParams &wcp);
