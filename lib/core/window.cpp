@@ -39,7 +39,7 @@ namespace lib
 		};
 
 		Window::Window(const WindowCreationParams &wcp)
-			: p_wPrivate{ new WindowPrivate() }, _title(wcp.windowTitle)
+			: p_wPrivate{ new WindowPrivate() }, m_title(wcp.windowTitle)
 		{
 			logConstruct_NOPARAMS;
 			create(wcp);
@@ -62,7 +62,7 @@ namespace lib
 				style = sf::Style::Fullscreen;
 
 			// Deal with SFML bug
-			sf::Window::create(sf::VideoMode(wcp.width, wcp.height, wcp.bpp), getAsString(_title), style,sf::ContextSettings(0,0,wcp.antialiasing));
+			sf::Window::create(sf::VideoMode(wcp.width, wcp.height, wcp.bpp), getAsString(m_title), style,sf::ContextSettings(0,0,wcp.antialiasing));
 
 			this->setVerticalSyncEnabled(wcp.vsync);
 		}
@@ -74,7 +74,7 @@ namespace lib
 				p_wPrivate->lastTimeFps = eMs;
 				p_wPrivate->lastFps = p_wPrivate->currentFps;
 				p_wPrivate->currentFps = 0;
-				setTitle(getAsString(_title + " FPS:" + std::to_string(p_wPrivate->lastFps)));
+				setTitle(getAsString(m_title + " FPS:" + std::to_string(p_wPrivate->lastFps)));
 			}
 			++(p_wPrivate->currentFps);
 			clear();

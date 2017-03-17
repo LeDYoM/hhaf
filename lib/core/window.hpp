@@ -30,7 +30,7 @@ namespace lib
 			void keyEvent(sf::Event e);
 
 			uptr<WindowPrivate> p_wPrivate{ nullptr };
-			std::string _title;
+			std::string m_title;
 		};
 	}
 }
