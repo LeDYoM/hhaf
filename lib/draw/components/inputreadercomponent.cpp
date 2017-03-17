@@ -1,7 +1,7 @@
 #include "inputreadercomponent.hpp"
 
 #include <lib/core/log.hpp>
-#include <algorithm>
+#include <lib/include/key.hpp>
 
 namespace lib
 {
@@ -13,9 +13,7 @@ namespace lib
 			InputComponentPrivate() {}
 		};
 		InputComponent::InputComponent()
-			: m_private{ new InputComponentPrivate }
-		{
-		}
+			: m_private{ new InputComponentPrivate } {}
 
 		InputComponent::~InputComponent()
 		{

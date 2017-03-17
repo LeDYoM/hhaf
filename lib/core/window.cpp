@@ -34,6 +34,7 @@ namespace lib
 			u64 lastTimeFps{ 0 };
 			s32 lastFps{ 0 };
 			s32 currentFps{ 0 };
+			input::KeyStates m_keyStates;
 		};
 
 		Window::Window(const WindowCreationParams &wcp)
@@ -103,6 +104,11 @@ namespace lib
 			logDebug("Going to close Window");
 			close();
 			logDebug("Window closed");
+		}
+
+		const input::KeyStates & Window::currentKeyStates() const noexcept
+		{
+			return p_wPrivate->m_keyStates;
 		}
 
 		void Window::keyEvent(sf::Event e)

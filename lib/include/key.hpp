@@ -128,6 +128,8 @@ namespace lib
 			key = static_cast<Key>(p);
 			return is;
 		}
+
+		using KeyStates = std::array<bool, KeyCount>;
 	}
 }
 

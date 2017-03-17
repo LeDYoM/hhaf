@@ -4,6 +4,7 @@
 #include <lib/include/types.hpp>
 #include "appservice.hpp"
 #include <lib/backend/renderwindow.hpp>
+#include <lib/include/key.hpp>
 
 namespace lib
 {
@@ -23,6 +24,8 @@ namespace lib
 			void postLoop();
 			virtual void onCreate() override;
 			virtual void onDestroy();
+
+			const input::KeyStates &currentKeyStates() const noexcept;
 
 		private:
 			void create(const WindowCreationParams &wcp);
