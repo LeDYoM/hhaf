@@ -16,17 +16,24 @@ namespace lib
 		{
 		public:
 			/**
-			* Constructor.
-			* Constructs a new IComponent attached to the specified SceneNode
+			* Interface to be implemented to update the component
 			*/
-			constexpr IComponent() {}
 			virtual void update() = 0;
-			virtual ~IComponent() {}
+
+			/**
+			* Destructor
+			*/
+			virtual ~IComponent() = default;
 
 			inline SceneNode *const attachedNode() const noexcept { return m_sceneNode; }
 		private:
 			SceneNode *m_sceneNode{};
 			friend class ComponentContainer;
+		};
+
+		class DataOnlyComponent : public IComponent
+		{
+			virtual void update() override final {}
 		};
 	}
 }
