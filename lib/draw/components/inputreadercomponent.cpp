@@ -2,6 +2,8 @@
 
 #include <lib/core/log.hpp>
 #include <lib/include/key.hpp>
+#include <lib/core/host.hpp>
+#include <lib/core/window.hpp>
 
 namespace lib
 {
@@ -9,8 +11,6 @@ namespace lib
 	{
 		class InputComponent::InputComponentPrivate
 		{
-		public:
-			InputComponentPrivate() {}
 		};
 		InputComponent::InputComponent()
 			: m_private{ new InputComponentPrivate } {}
@@ -24,6 +24,11 @@ namespace lib
 
 		void InputComponent::update()
 		{
+		}
+
+		bool InputComponent::isPressed(const input::Key key)
+		{
+			return host().parentWindow().currentKeyStates()[key];
 		}
 	}
 }

@@ -5,6 +5,7 @@
 
 #include <lib/include/types.hpp>
 #include <lib/draw/icomponent.hpp>
+#include <lib/include/key.hpp>
 
 namespace lib
 {
@@ -17,6 +18,8 @@ namespace lib
 			~InputComponent();
 
 			virtual void update() override;
+			
+			bool isPressed(const input::Key key);
 		private:
 			class InputComponentPrivate;
 			InputComponentPrivate *m_private;
