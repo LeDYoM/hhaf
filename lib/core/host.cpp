@@ -260,7 +260,7 @@ namespace lib
 			{
 				return scene->name() == name;
 			}));
-			return iterator == m_scenes.end() ? nullptr : *iterator;
+			return iterator == m_scenes.cend() ? nullptr : *iterator;
 		}
 	}
 }
