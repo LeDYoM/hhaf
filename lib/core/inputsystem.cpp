@@ -6,5 +6,11 @@ namespace lib
 {
 	namespace core
 	{
+		InputSystem::InputSystem()
+		{
+		}
+		InputSystem::~InputSystem()
+		{
+		}
 	}
 }

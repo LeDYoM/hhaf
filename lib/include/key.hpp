@@ -3,6 +3,7 @@
 
 
 #include <lib/include/types.hpp>
+#include <array>
 
 namespace lib
 {
