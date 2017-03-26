@@ -4,18 +4,26 @@
 #include <lib/include/types.hpp>
 #include <lib/include/key.hpp>
 #include "appservice.hpp"
+#include <list>
 
 namespace lib
 {
-	namespace core
+	namespace input
 	{
 		class InputSystem final : public AppService
 		{
 		public:
 			InputSystem();
 			~InputSystem();
+
+			void keyPressed(const Key key);
+			void keyReleased(const Key key);
+			void preUpdate();
+			void postUpdate();
 		private:
-			input::KeyStates m_keyStates;
+			KeyStates m_keyStates;
+			std::list<Key> m_pressedKeys;
+			std::list<Key> m_releasedKeys;
 		};
 	}
 }

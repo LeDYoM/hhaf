@@ -6,6 +6,7 @@
 #include <lib/draw/scene.hpp>
 #include <lib/draw/renderstates.hpp>
 #include <lib/core/events/eventmanager.hpp>
+#include <lib/core/inputsystem.hpp>
 
 #include <SFML/Config.hpp>
 
@@ -96,6 +97,7 @@ namespace lib
 				logDebug(appId(), ": ", " Starting initialization...");
 				m_state = AppState::Executing;
 
+				m_inputSystem = muptr<input::InputSystem>();
 				m_randomizer = muptr<Randomizer>();
 				m_eventManager = muptr<EventManager>();
 				m_window = muptr<Window>(m_iapp->getAppDescriptor().wcp);
@@ -135,6 +137,7 @@ namespace lib
 				m_resourceManager = nullptr;
 				m_eventManager = nullptr;
 				m_randomizer = nullptr;
+				m_inputSystem = nullptr;
 				m_params.clear();
 				logDebug(appId(), ": ", " terminated");
 				return true;
@@ -168,6 +171,7 @@ namespace lib
 		{
 			bool windowWants2Close = m_window->preLoop();
 			m_eventManager->update();
+			m_inputSystem->preUpdate();
 
 			__ASSERT(m_currentScene || m_nextScene, "Current scene and nextscene cannot be nullptr at same time");
 			updateScene();
@@ -176,6 +180,7 @@ namespace lib
 			m_currentScene->draw();
 
 			m_window->postLoop();
+			m_inputSystem->postUpdate();
 			return windowWants2Close;
 		}
 

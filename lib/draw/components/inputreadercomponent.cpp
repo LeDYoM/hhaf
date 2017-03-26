@@ -4,6 +4,7 @@
 #include <lib/include/key.hpp>
 #include <lib/core/host.hpp>
 #include <lib/core/window.hpp>
+#include <lib/core/inputsystem.hpp>
 
 namespace lib
 {

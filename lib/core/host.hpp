@@ -11,6 +11,10 @@
 
 namespace lib
 {
+	namespace input
+	{
+		class InputSystem;
+	}
 	namespace draw
 	{
 		class RenderStates;
@@ -53,6 +57,8 @@ namespace lib
 			inline ResourceManager &resourceManager()  noexcept { return *m_resourceManager; }
 			inline EventManager const &eventManager() const  noexcept { return *m_eventManager; }
 			inline EventManager &eventManager()  noexcept { return *m_eventManager; }
+			inline input::InputSystem const &inputSystem() const noexcept { return *m_inputSystem; }
+			inline input::InputSystem &inputSystem() noexcept { return *m_inputSystem; }
 
 			const std::string appId() const;
 
@@ -72,6 +78,7 @@ namespace lib
 			uptr<ResourceManager> m_resourceManager{ nullptr };
 			uptr<EventManager> m_eventManager{ nullptr };
 			uptr<Randomizer> m_randomizer;
+			uptr<input::InputSystem> m_inputSystem{ nullptr };
 			bool exit{ false };
 			std::vector<sptr<draw::Scene>> m_scenes;
 			sptr<draw::Scene> m_currentScene{ nullptr };
