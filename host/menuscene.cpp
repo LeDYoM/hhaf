@@ -5,7 +5,6 @@
 #include <lib/core/resourcemanager.hpp>
 #include <lib/core/host.hpp>
 #include <lib/core/events/eventmanager.hpp>
-#include <lib/core/events/inputevent.hpp>
 
 #include "mainmenu.hpp"
 

@@ -4,7 +4,6 @@
 #include <lib/core/log.hpp>
 #include <lib/core/host.hpp>
 #include <lib/core/resourcemanager.hpp>
-#include <lib/core/events/inputevent.hpp>
 #include <lib/draw/components/inputcomponent.hpp>
 
 namespace lib
@@ -16,43 +15,6 @@ namespace lib
 
 		void ChooseControlGroup::create()
 		{
-			parentScene()->addSubscription(events::KeyPressedEvent::subscribe([this](const events::Event&ev) {
-				logDebug("Key pressed toChooseControlGroup");
-				const auto &kEvent{ dynamic_cast<const events::KeyPressedEvent&>(ev) };
-				auto node(m_sController->activeNode()->snCast<ChooseControl>());
-				if (kEvent.key == input::Key::Down || kEvent.key == input::Key::Numpad2) {
-					node->goDown();
-				}
-				else if (kEvent.key == input::Key::Up || kEvent.key == input::Key::Numpad8) {
-					node->goUp();
-				}
-				else if (kEvent.key == input::Key::Left || kEvent.key == input::Key::Numpad4) {
-					node->goLeft();
-				}
-				else if (kEvent.key == input::Key::Right || kEvent.key == input::Key::Numpad8) {
-					node->goRight();
-				}
-				else if (kEvent.key == input::Key::Return || kEvent.key == input::Key::Space) {
-					logDebug("Calling onSelected with currentSelection(): ", currentSelection());
-					OptionModelIndex currentSelected{ currentSelection() };
-					__ASSERT(currentSelected.size() > 1, "currentSelected size must be > 1");
-					OptionModelIndex predefinedPath{ options()[currentSelected[0]][currentSelected[1]].next };
-					OptionModelIndex resultIndices(onSelected(OptionModelIndex(currentSelection())));
-					logDebug("The onSelect returned ", resultIndices);
-					if (resultIndices.empty()) {
-						resultIndices = std::move(predefinedPath);
-					}
-					if (!resultIndices.empty()) {
-						if (resultIndices[0] != m_sController->activeNodeIndex()) {
-							m_sController->activeNodeIndex = resultIndices[0];
-						}
-						if (resultIndices.size() > 1) {
-							m_sController->activeNode()->snCast<ChooseControl>()->selectedItem = resultIndices[1];
-						}
-					}
-				}
-			}));
-
 			auto inputComponent(ensureComponentOfType<draw::InputComponent>());
 			inputComponent->setOnKeyPressedHandler([this](const lib::input::Key&key) {
 				logDebug("Key pressed toChooseControlGroup");

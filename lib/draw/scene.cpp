@@ -5,7 +5,6 @@
 #include <lib/core/host.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/core/events/eventmanager.hpp>
-#include <lib/core/events/inputevent.hpp>
 
 namespace lib
 {
@@ -62,9 +61,6 @@ namespace lib
 		{
 			using namespace events;
 			logDebug("Entered in scene ", name());
-			eventConnector.addSubscription(KeyPressedEvent::subscribe([this](const Event&) {
-				logDebug("Key pressed from Scene: ", name());
-			}));
 
 			auto sceneSize = getDefaultSizeView();
 			p_view->perspective.set({ 0,0,sceneSize.x, sceneSize.y });

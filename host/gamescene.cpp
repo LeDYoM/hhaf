@@ -13,10 +13,10 @@
 #include <lib/draw/nodes/nodequad.hpp>
 #include <lib/draw/nodes/nodetext.hpp>
 #include <lib/core/host.hpp>
-#include <lib/core/events/inputevent.hpp>
 #include <lib/include/properties.hpp>
 #include <lib/draw/ianimation.hpp>
 #include <lib/draw/components/animationcomponent.hpp>
+#include <lib/draw/components/inputcomponent.hpp>
 
 namespace zoper
 {
@@ -150,6 +150,35 @@ namespace zoper
 		}
 
 		registerEvents();
+		auto inputComponent(ensureComponentOfType<draw::InputComponent>());
+		inputComponent->setOnKeyPressedHandler([this](const lib::input::Key&key) {
+			logClDebug("Key pressed in GameScene");
+			switch (state())
+			{
+			case Playing:
+			{
+				auto dir = _keyMapping.getDirectionFromKey(key);
+				if (dir.isValid()) {
+					p_player->movePlayer(dir, [this](const vector2du32&p) { return pointInCenter(p); }, p_boardModel);
+				}
+				else if (_keyMapping.isLaunchKey(key)) {
+					launchPlayer();
+				}
+				else if (_keyMapping.isPauseKey(key)) {
+					switchPause();
+				}
+			}
+			break;
+			case GameOver:
+				lib::host().setScene("MenuScene");
+				break;
+			case Pause:
+				if (_keyMapping.isPauseKey(key)) {
+					switchPause();
+				}
+				break;
+			}
+		});
 
 		setState(Playing);
 
@@ -374,6 +403,7 @@ namespace zoper
 
 	void zoper::GameScene::registerEvents()
 	{
+		/*
 		addSubscription(events::KeyPressedEvent::subscribe([this](const events::Event&ev) {
 			logClDebug("Key pressed in GameScene");
 			const auto &kEvent{ dynamic_cast<const events::KeyPressedEvent&>(ev) };
@@ -403,6 +433,7 @@ namespace zoper
 				break;
 			}
 		}));
+		*/
 	}
 
 	void GameScene::launchPlayer()
