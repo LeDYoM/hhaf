@@ -60,10 +60,13 @@ namespace lib
 
 		void ComponentContainer::updateComponents()
 		{
-			for (auto &component : m_components) {
-				component->update();
+			if (!m_components.empty()) {
+				for (auto &component : m_components) {
+					component->update();
+				}
 			}
 		}
+
 		const sptr<IComponent> ComponentContainer::componentOfType(const std::type_index & ti)
 		{
 			return getComponentFromTypeIndex(ti, m_components);

@@ -8,6 +8,7 @@
 #include <lib/core/events/event.hpp>
 #include <lib/core/events/inputevent.hpp>
 #include <lib/core/events/eventmanager.hpp>
+#include <lib/core/inputsystem.hpp>
 
 namespace lib
 {
@@ -118,10 +119,12 @@ namespace lib
 			using namespace lib::events;
 
 			if (e.type == sf::Event::KeyPressed) {
-				host().eventManager().addEvent(uptr<KeyPressedEvent>(new KeyPressedEvent{doCast(e.key.code)}));
+//				host().eventManager().addEvent(uptr<KeyPressedEvent>(new KeyPressedEvent{doCast(e.key.code)}));
+				host().inputSystem().keyPressed(doCast(e.key.code));
 			}
 			else {
-				host().eventManager().addEvent(uptr<KeyReleasedEvent>(new KeyReleasedEvent{ doCast(e.key.code) }));
+//				host().eventManager().addEvent(uptr<KeyReleasedEvent>(new KeyReleasedEvent{ doCast(e.key.code) }));
+				host().inputSystem().keyReleased(doCast(e.key.code));
 			}
 		}
 	}

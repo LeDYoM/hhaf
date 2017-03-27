@@ -5,7 +5,7 @@
 #include <lib/core/host.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/core/events/inputevent.hpp>
-
+#include <lib/draw/components/inputcomponent.hpp>
 
 namespace lib
 {
@@ -52,6 +52,43 @@ namespace lib
 					}
 				}
 			}));
+
+			auto inputComponent(ensureComponentOfType<draw::InputComponent>());
+			inputComponent->setOnKeyPressedHandler([this](const lib::input::Key&key) {
+				logDebug("Key pressed toChooseControlGroup");
+				auto node(m_sController->activeNode()->snCast<ChooseControl>());
+				if (key == input::Key::Down || key == input::Key::Numpad2) {
+					node->goDown();
+				}
+				else if (key == input::Key::Up || key == input::Key::Numpad8) {
+					node->goUp();
+				}
+				else if (key == input::Key::Left || key == input::Key::Numpad4) {
+					node->goLeft();
+				}
+				else if (key == input::Key::Right || key == input::Key::Numpad8) {
+					node->goRight();
+				}
+				else if (key == input::Key::Return || key == input::Key::Space) {
+					logDebug("Calling onSelected with currentSelection(): ", currentSelection());
+					OptionModelIndex currentSelected{ currentSelection() };
+					__ASSERT(currentSelected.size() > 1, "currentSelected size must be > 1");
+					OptionModelIndex predefinedPath{ options()[currentSelected[0]][currentSelected[1]].next };
+					OptionModelIndex resultIndices(onSelected(OptionModelIndex(currentSelection())));
+					logDebug("The onSelect returned ", resultIndices);
+					if (resultIndices.empty()) {
+						resultIndices = std::move(predefinedPath);
+					}
+					if (!resultIndices.empty()) {
+						if (resultIndices[0] != m_sController->activeNodeIndex()) {
+							m_sController->activeNodeIndex = resultIndices[0];
+						}
+						if (resultIndices.size() > 1) {
+							m_sController->activeNode()->snCast<ChooseControl>()->selectedItem = resultIndices[1];
+						}
+					}
+				}
+			});
 		}
 
 		void ChooseControlGroup::configure()

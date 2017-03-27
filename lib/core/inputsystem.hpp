@@ -5,9 +5,14 @@
 #include <lib/include/key.hpp>
 #include "appservice.hpp"
 #include <list>
+#include <functional>
 
 namespace lib
 {
+	namespace draw
+	{
+		class InputComponent;
+	}
 	namespace input
 	{
 		class InputSystem final : public AppService
@@ -21,9 +26,13 @@ namespace lib
 			void preUpdate();
 			void postUpdate();
 		private:
+			const std::vector<Key> &pressedKeys() const noexcept;
+			const std::vector<Key> &releasedKeys() const noexcept;
+
+			friend class lib::draw::InputComponent;
 			KeyStates m_keyStates;
-			std::list<Key> m_pressedKeys;
-			std::list<Key> m_releasedKeys;
+			std::vector<Key> m_pressedKeys;
+			std::vector<Key> m_releasedKeys;
 		};
 	}
 }

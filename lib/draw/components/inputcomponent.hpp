@@ -17,10 +17,19 @@ namespace lib
 			InputComponent();
 			~InputComponent();
 
+			using KeyHandler_t = std::function<void(const input::Key&)>;
+
+			void setOnKeyPressedHandler(KeyHandler_t keyHandlerPressed) noexcept;
+			void setOnKeyReleasedHandler(KeyHandler_t keyHandlerReleased) noexcept;
+
 			virtual void update() override;
 			
 			bool isPressed(const input::Key key);
+
 		private:
+			KeyHandler_t m_onKeyPressed{ nullptr };
+			std::function<void(const input::Key&)> m_onKeyReleased{ nullptr };
+
 			class InputComponentPrivate;
 			InputComponentPrivate *m_private;
 		};
