@@ -397,7 +397,7 @@ namespace zoper
 		// Set the position in the scene depending on the board position
 		newTileToken->position = board2Scene(pos);
 
-		// Add it to the board and to the scene nodes
+		// Add it to the board
 		p_boardModel->setTile(pos, newTileToken);
 	}
 
@@ -595,6 +595,7 @@ namespace zoper
 	{
 		if (auto ztile = std::dynamic_pointer_cast<Tile>(nTile)) {
 			logClDebug("Deleting token ", ztile->name(), " from scene at position ", pos);
+			m_mainBoardrg->removeSceneNode(ztile);
 		} /*else if (auto ztile_ = std::dynamic_pointer_cast<Player>(nTile)) {
 			// Actually, never used
 		}*/
