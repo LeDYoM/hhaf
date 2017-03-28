@@ -32,8 +32,8 @@ namespace lib
 	{
 	public:
 		using getter_t = std::function<const T&()>;
-		constexpr VirtualPropertyRead(const getter_t &getterp = {}) : getter{ getterp } {}
-		inline void setGetter(const getter_t &getterp) { getter = getterp; }
+		constexpr VirtualPropertyRead(getter_t getterp = {}) : getter{ std::move(getterp) } {}
+		inline void setGetter(getter_t getterp) { getter = std::move(getterp); }
 		virtual const T&get() const noexcept override { return getter(); }
 		virtual const T&operator()() const noexcept override { return get(); }
 	protected:
@@ -45,8 +45,8 @@ namespace lib
 	{
 	public:
 		using setter_t = std::function<void(const T&)>;
-		constexpr VirtualPropertyWrite(const setter_t &setterp = {}) : setter{ setterp } {}
-		inline void setSetter(const setter_t &setterp) { setter = setterp; }
+		constexpr VirtualPropertyWrite(setter_t setterp = {}) : setter{ std::move(setterp) } {}
+		inline void setSetter(setter_t setterp) { setter = std::move(setterp); }
 		virtual void set(const T&v) override { setter(v); }
 		virtual void set(T&&v) override { setter(std::move(v)); }
 		virtual void operator=(const T&v) override { set(v); }
@@ -56,10 +56,17 @@ namespace lib
 	};
 
 	template <typename T>
-	class VirtualProperty : public VirtualPropertyRead<T>, public VirtualPropertyWrite<T>
+	class VirtualProperty : public VirtualPropertyRead<T>, public VirtualPropertyWrite<T>, public IProperty<T>
 	{
 	public:
-		constexpr VirtualProperty(const getter_t &getterp = {}, const setter_t &setterp = {}) : VirtualPropertyRead{ getterp }, VirtualPropertyWrite{ setterp } {}
+		constexpr VirtualProperty(const getter_t getterp = {}, const setter_t &setterp = {}) : VirtualPropertyRead{ getterp }, VirtualPropertyWrite{ setterp } {}
+		inline void setGettterSetter(getter_t getterp, setter_t setterp) { setGetter(std::move(getterp)); setSetter(std::move(setterp)); }
+		virtual void set(const T&v) override { setter(v); }
+		virtual void set(T&&v) override { setter(std::move(v)); }
+		virtual void operator=(const T&v) override { set(v); }
+		virtual void operator=(T&&v) override { set(std::move(v)); }
+		virtual const T&get() const noexcept override { return getter(); }
+		virtual const T&operator()() const noexcept override { return get(); }
 	};
 
 	template <typename T>
@@ -67,7 +74,8 @@ namespace lib
 	{
 	public:
 		using callback_t = std::function<void()>;
-		constexpr Property(T iv = {}, callback_t c = {}) noexcept : m_value{ std::move(iv) }, m_callback{ std::move(c) } {}
+		constexpr Property(callback_t c) : m_value{ }, m_callback{ std::move(c) } {}
+		constexpr Property(T iv = {}, callback_t c = {}) : m_value{ std::move(iv) }, m_callback{ std::move(c) } {}
 
 		inline void setCallback(callback_t c) { m_callback = std::move(c); }
 
@@ -88,25 +96,21 @@ namespace lib
 	class ForwardProperty : public IProperty<T>
 	{
 	public:
-		using callback_t = std::function<void()>;
 		constexpr ForwardProperty() {}
-		constexpr ForwardProperty(Property<T> *const iv) noexcept : m_value{ iv } {}
+		constexpr ForwardProperty(IProperty<T> *const iv) noexcept : m_value{ iv } {}
 
-		inline void setForwardProperty(Property<T> *const p) noexcept { m_value = p; }
-		inline void setCallback(callback_t nc) noexcept { m_callback = nc; }
+		inline void setForwardProperty(IProperty<T> *const p) noexcept { m_value = p; }
 
 		virtual const T &operator()() const noexcept override { return (*m_value)(); }
 		virtual const T &get() const noexcept override { return (*m_value).get(); }
-		virtual void set(const T&v) override { (*m_value) = v; update(); }
-		virtual void set(T&&v) override { (*m_value) = std::move(v); update(); }
+		virtual void set(const T&v) override { (*m_value).set(v); }
+		virtual void set(T&&v) override { (*m_value).set(std::move(v)); }
 		virtual void operator=(const T&v) override { set(v); }
 		virtual void operator=(T&&v) override { set(std::move(v)); }
-		inline Property<T> *const innerProperty() const { return m_value; }
-		inline void update() { if (m_callback) m_callback(); }
+		inline IProperty<T> *const innerProperty() const { return m_value; }
 
 	private:
-		Property<T> *m_value{ nullptr };
-		callback_t m_callback;
+		IProperty<T> *m_value{ nullptr };
 	};
 }
 

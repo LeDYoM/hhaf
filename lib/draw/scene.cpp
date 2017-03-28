@@ -10,7 +10,9 @@ namespace lib
 {
 	namespace draw
 	{
-		Scene::Scene(str_const&& name) : SceneNode{ nullptr,std::move(name) }
+		Scene::Scene(str_const name) : SceneNode{ nullptr,std::move(name) },
+			viewPort{ dynamic_cast<IProperty<Rectf32>*>(&(host().parentWindow().viewPort)) },
+			viewRect{ dynamic_cast<IProperty<Rectf32>*>(&(host().parentWindow().viewRect)) }
 		{
 			logConstruct("Name: ", core::HasName::name());
 		}
@@ -46,8 +48,9 @@ namespace lib
 			logDebug("Initializing scene ", name());
 			p_view = std::make_unique<View>(core::Host::host().parentWindow().getView());
 			auto sceneSize = getDefaultSizeView();
-			p_view->perspective.set({ 0,0,sceneSize.x, sceneSize.y });
-			updateView();
+//			p_view->perspective.set({ 0,0,sceneSize.x, sceneSize.y });
+//			updateView();
+			viewRect = Rectf32::fromSize(sceneSize);
 
 			logDebug("Scene view set to: center: ", p_view->perspective().center(), " and size: ", p_view->perspective().size());
 		}

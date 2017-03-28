@@ -62,6 +62,8 @@ namespace lib
 			sf::Window::create(sf::VideoMode(wcp.width, wcp.height, wcp.bpp), getAsString(m_title), style,sf::ContextSettings(0,0,wcp.antialiasing));
 
 			this->setVerticalSyncEnabled(wcp.vsync);
+			viewPort.setGettterSetter([this]() { return backend::RenderWindow::viewPort(); }, [this](const Rectf32&v) {backend::RenderWindow::setViewport(v); });
+			viewRect.setGettterSetter([this]() { return backend::RenderWindow::viewRect(); }, [this](const Rectf32&v) {backend::RenderWindow::setViewRect(v); });
 		}
 
 		bool Window::preLoop()

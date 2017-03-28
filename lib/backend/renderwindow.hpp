@@ -23,10 +23,13 @@ namespace lib
 			virtual ~RenderWindow();
 
 			virtual sf::Vector2u getSize() const override;
-
 			virtual bool activate(bool active = true) override { return setActive(active); }
-
 			void draw(const draw::VertexArray &vertices, const sf::RenderStates& states);
+
+			void setViewport(const Rectf32 &nviewport);
+			const Rectf32 viewPort() const;
+			void setViewRect(const Rectf32 &nviewRect);
+			const Rectf32 viewRect() const;
 
 		protected:
 

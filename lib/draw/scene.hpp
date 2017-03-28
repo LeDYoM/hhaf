@@ -25,7 +25,7 @@ namespace lib
 		class Scene : public draw::SceneNode
 		{
 		public:
-			Scene(str_const &&name);
+			Scene(str_const name);
 			virtual ~Scene();
 
 			virtual void onInit();
@@ -43,7 +43,8 @@ namespace lib
 			inline void addSubscription(sptr<events::EventSubscription> &&es) noexcept { eventConnector.addSubscription(std::move(es)); }
 			const uptr<View> &getView() const;
 			virtual Scene *const parentScene() noexcept override { return this; }
-
+			ForwardProperty<Rectf32> viewPort;
+			ForwardProperty<Rectf32> viewRect;
 
 		protected:
 

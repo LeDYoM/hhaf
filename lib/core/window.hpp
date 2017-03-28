@@ -5,6 +5,7 @@
 #include "appservice.hpp"
 #include <lib/backend/renderwindow.hpp>
 #include <lib/include/key.hpp>
+#include <lib/include/properties.hpp>
 
 namespace lib
 {
@@ -26,6 +27,8 @@ namespace lib
 			virtual void onDestroy();
 
 			const input::KeyStates &currentKeyStates() const noexcept;
+			VirtualProperty<Rectf32> viewPort;
+			VirtualProperty<Rectf32> viewRect;
 
 		private:
 			void create(const WindowCreationParams &wcp);
