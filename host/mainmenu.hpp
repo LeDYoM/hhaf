@@ -13,7 +13,7 @@ namespace zoper
 		{
 		public:
 			constexpr static char* ClassName = "MainMenu";
-			MainMenu(lib::draw::SceneNode *parent, lib::str_const&& name);
+			MainMenu(lib::draw::SceneNode *parent, lib::str_const name);
 			virtual ~MainMenu();
 
 			virtual void create() override;
