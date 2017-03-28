@@ -34,7 +34,6 @@ namespace lib
 	private:
 		Lockable& m_lockable;
 	};
-
 }
 
 #endif

@@ -32,7 +32,6 @@ namespace lib
 			Rectf32 viewRect() const;
 
 		protected:
-
 			virtual void onCreate();
 			virtual void onResize();
 		};

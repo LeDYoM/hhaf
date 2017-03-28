@@ -36,7 +36,7 @@ namespace lib
 		};
 
 		Window::Window(const WindowCreationParams &wcp)
-			: p_wPrivate{ new WindowPrivate() }, m_title(wcp.windowTitle)
+			: p_wPrivate{ new WindowPrivate() }, m_title{ wcp.windowTitle }
 		{
 			logConstruct_NOPARAMS;
 			create(wcp);
@@ -62,15 +62,11 @@ namespace lib
 			sf::Window::create(sf::VideoMode(wcp.width, wcp.height, wcp.bpp), getAsString(m_title), style,sf::ContextSettings(0,0,wcp.antialiasing));
 
 			this->setVerticalSyncEnabled(wcp.vsync);
-			viewPort.setGettterSetter(
-				[this]() { return backend::RenderWindow::viewPort(); }, 
-				[this](const Rectf32&v) {backend::RenderWindow::setViewport(v); }
-			);
-			
-			viewRect.setGettterSetter(
-				[this]() { return backend::RenderWindow::viewRect(); }, 
-				[this](const Rectf32&v) {backend::RenderWindow::setViewRect(v); }
-			);
+
+			viewPort = backend::RenderWindow::viewPort();
+			viewRect = backend::RenderWindow::viewRect();
+			viewPort.setCallback([this]() {backend::RenderWindow::setViewport(viewPort()); });
+			viewRect.setCallback([this]() {backend::RenderWindow::setViewRect(viewRect()); });
 		}
 
 		bool Window::preLoop()
