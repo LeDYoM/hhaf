@@ -16,13 +16,13 @@ namespace lib
 		static constexpr Rect fromSize(T sizeX, T sizeY) { return Rect{ {},{}, vector2d<T>{sizeX,sizeY} }; }
 		static constexpr Rect fromSize(const vector2d<T> &size) { return Rect{ {},{}, size }; }
 		static constexpr Rect fromCenterAndRadius(const vector2d<T> &center, const vector2d<T> &radius) { return Rect{ center.x - radius.x,center.y - radius.y, center.x + radius.x, center.y + radius.y }; }
-		static constexpr Rect fromCenterAndSize(const vector2d<T> &center, const vector2d<T> &size) { return fromCenterAndRadius(center, size * static_cast<T>(2)); }
+		static constexpr Rect fromCenterAndSize(const vector2d<T> &center, const vector2d<T> &size) { return fromCenterAndRadius(center, size / static_cast<T>(2)); }
 
 		constexpr Rect(T rectLeft, T rectTop, T rectWidth, T rectHeight) noexcept : left{ rectLeft }, top{ rectTop }, width{ rectWidth }, height{ rectHeight } { }
 		constexpr Rect() = default;
-		constexpr Rect(vector2d<T> position, vector2d<T> size) noexcept : Rect{ position.x, position.y, size.x, size.y } {}
-		constexpr Rect(vector2d<T> position, T sizeX, T sizeY) noexcept : Rect{ position.x, position.y, sizeX, sizeY } {}
-		constexpr Rect(T positionX, T positionY, vector2d<T> size) noexcept : Rect{ positionX, positionY, size.x, size.y } {}
+		constexpr Rect(const vector2d<T> &position, const vector2d<T> &size) noexcept : Rect{ position.x, position.y, size.x, size.y } {}
+		constexpr Rect(const vector2d<T> &position, T sizeX, T sizeY) noexcept : Rect{ position.x, position.y, sizeX, sizeY } {}
+		constexpr Rect(T positionX, T positionY, const vector2d<T> &size) noexcept : Rect{ positionX, positionY, size.x, size.y } {}
 
 		constexpr Rect(const Rect&) noexcept = default;
 		Rect &operator=(const Rect&) noexcept = default;

@@ -40,12 +40,14 @@ namespace zoper
 
 	void MenuScene::onEnterScene()
 	{
+		Scene::onEnterScene();
 		//		ChooseControlGroup::onEnterScene();
 		//		start(MainMenu::ClassName);
 	}
 
 	void MenuScene::onExitScene()
 	{
+		Scene::onExitScene();
 		//		ChooseControlGroup::onExitScene();
 	}
 

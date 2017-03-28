@@ -49,7 +49,7 @@ namespace lib
 			setView(currentView);
 		}
 
-		const Rectf32 RenderWindow::viewPort() const
+		Rectf32 RenderWindow::viewPort() const
 		{
 			sf::View currentView(getView());
 			return toRect(currentView.getViewport());
@@ -63,7 +63,7 @@ namespace lib
 			setView(currentView);
 		}
 
-		const Rectf32 RenderWindow::viewRect() const
+		Rectf32 RenderWindow::viewRect() const
 		{
 			sf::View currentView(getView());
 			return Rectf32::fromCenterAndSize(toVector2d(currentView.getCenter()), toVector2d(currentView.getSize()));

@@ -41,14 +41,12 @@ namespace lib
 
 			inline bool isActiveScene() const noexcept { return m_isActiveScene; }
 			inline void addSubscription(sptr<events::EventSubscription> &&es) noexcept { eventConnector.addSubscription(std::move(es)); }
-			const uptr<View> &getView() const;
 			virtual Scene *const parentScene() noexcept override { return this; }
 			ForwardProperty<Rectf32> viewPort;
 			ForwardProperty<Rectf32> viewRect;
 
 		protected:
 
-			void updateView();
 			inline u32 state() const { return _state; }
 			inline void setState(u32 ns) { _state = ns; }
 			Timer clock;
@@ -56,7 +54,6 @@ namespace lib
 
 			inline void setAsActiveScene(const bool nv) noexcept { m_isActiveScene = nv; }
 
-			uptr<draw::View> p_view;
 			u32 _state;
 			bool m_isActiveScene{ false };
 

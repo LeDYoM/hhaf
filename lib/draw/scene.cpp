@@ -22,17 +22,6 @@ namespace lib
 			logDestruct("Name: ", name());
 		}
 
-		void Scene::updateView()
-		{
-			core::Host::host().parentWindow().setView(p_view->externalView());
-			logDebug("Scene view set to: center: ", p_view->perspective().center(), " and size: ", p_view->perspective().size());
-		}
-
-		const uptr<View> &Scene::getView() const
-		{
-			return p_view;
-		}
-
 		vector2df Scene::getCoordinatesToCenter(const Rectf32 &coordinates) const
 		{
 			return{ getCenterCoordinates().x - (coordinates.width / 2.0f), getCenterCoordinates().y - (coordinates.height / 2.0f) };
@@ -40,19 +29,19 @@ namespace lib
 
 		vector2df Scene::getCenterCoordinates() const
 		{
-			return p_view->perspective().center();
+			return viewRect().center();
 		}
 
 		void Scene::onInit()
 		{
 			logDebug("Initializing scene ", name());
-			p_view = std::make_unique<View>(core::Host::host().parentWindow().getView());
+//			p_view = std::make_unique<View>(core::Host::host().parentWindow().getView());
 			auto sceneSize = getDefaultSizeView();
 //			p_view->perspective.set({ 0,0,sceneSize.x, sceneSize.y });
 //			updateView();
 			viewRect = Rectf32::fromSize(sceneSize);
 
-			logDebug("Scene view set to: center: ", p_view->perspective().center(), " and size: ", p_view->perspective().size());
+			logDebug("Scene view set to:", viewRect());
 		}
 
 		void Scene::onDeinit()
@@ -66,10 +55,8 @@ namespace lib
 			logDebug("Entered in scene ", name());
 
 			auto sceneSize = getDefaultSizeView();
-			p_view->perspective.set({ 0,0,sceneSize.x, sceneSize.y });
-			updateView();
-
-			logDebug("Scene view set to: center: ", p_view->perspective().center(), " and size: ", p_view->perspective().size());
+			viewRect = Rectf32::fromSize(sceneSize);
+			logDebug("Scene view set to:", viewRect());
 
 			clock.restart();
 		}

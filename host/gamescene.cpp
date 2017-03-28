@@ -500,8 +500,8 @@ namespace zoper
 
 	vector2df GameScene::board2SceneFactor() const
 	{
-		return{ getView()->perspective().size().x / static_cast<f32>(p_boardModel->size().x),
-			getView()->perspective().size().y / static_cast<f32>(p_boardModel->size().y) };
+		return{ viewRect().size().x / static_cast<f32>(p_boardModel->size().x),
+			viewRect().size().y / static_cast<f32>(p_boardModel->size().y) };
 	}
 
 	vector2df GameScene::board2Scene(const lib::vector2du32 &bPosition) const

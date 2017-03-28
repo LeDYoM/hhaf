@@ -27,9 +27,9 @@ namespace lib
 			void draw(const draw::VertexArray &vertices, const sf::RenderStates& states);
 
 			void setViewport(const Rectf32 &nviewport);
-			const Rectf32 viewPort() const;
+			Rectf32 viewPort() const;
 			void setViewRect(const Rectf32 &nviewRect);
-			const Rectf32 viewRect() const;
+			Rectf32 viewRect() const;
 
 		protected:
 

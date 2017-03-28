@@ -41,7 +41,7 @@ namespace lib
 
 		const Rectf32 &SceneNode::scenePerspective()
 		{
-			return parentScene()->getView()->perspective();
+			return parentScene()->viewRect();
 		}
 
 		void SceneNode::setColor(const Color & color, const bool applySceneNodes)
