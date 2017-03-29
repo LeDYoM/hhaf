@@ -14,7 +14,6 @@ namespace lib
 	namespace core
 	{
 		struct WindowPrivate;
-		class AppController;
 
 		class Window : public AppService, public backend::RenderWindow
 		{
@@ -32,7 +31,6 @@ namespace lib
 
 		private:
 			void create(const WindowCreationParams &wcp);
-
 			uptr<WindowPrivate> p_wPrivate{ nullptr };
 			std::string m_title;
 		};

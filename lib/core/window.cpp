@@ -1,4 +1,3 @@
-#include <locale>
 #include "window.hpp"
 #include "config.h"
 #include "log.hpp"
@@ -39,12 +38,12 @@ namespace lib
 			logDebug("Fullscreen:" , wcp.fullScreen);
 			logDebug("Antialiasing:", wcp.antialiasing);
 
-			createWindow(wcp);
-
-			viewPort = backend::RenderWindow::viewPort();
-			viewRect = backend::RenderWindow::viewRect();
-			viewPort.setCallback([this]() {backend::RenderWindow::setViewport(viewPort()); });
-			viewRect.setCallback([this]() {backend::RenderWindow::setViewRect(viewRect()); });
+			if (const bool result{ createWindow(wcp) }) {
+				viewPort = backend::RenderWindow::viewPort();
+				viewRect = backend::RenderWindow::viewRect();
+				viewPort.setCallback([this]() {backend::RenderWindow::setViewport(viewPort()); });
+				viewRect.setCallback([this]() {backend::RenderWindow::setViewRect(viewRect()); });
+			}
 		}
 
 		bool Window::preLoop()
