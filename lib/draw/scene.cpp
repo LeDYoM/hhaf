@@ -35,10 +35,7 @@ namespace lib
 		void Scene::onInit()
 		{
 			logDebug("Initializing scene ", name());
-//			p_view = std::make_unique<View>(core::Host::host().parentWindow().getView());
 			auto sceneSize = getDefaultSizeView();
-//			p_view->perspective.set({ 0,0,sceneSize.x, sceneSize.y });
-//			updateView();
 			viewRect = Rectf32::fromSize(sceneSize);
 
 			logDebug("Scene view set to:", viewRect());

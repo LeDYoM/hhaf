@@ -10,7 +10,6 @@
 #include <lib/core/timer.hpp>
 #include <lib/core/events/event.hpp>
 #include <lib/core/events/eventreceiver.hpp>
-#include <lib/draw/view.hpp>
 
 namespace lib
 {
