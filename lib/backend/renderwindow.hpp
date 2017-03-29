@@ -31,9 +31,15 @@ namespace lib
 			void setViewRect(const Rectf32 &nviewRect);
 			Rectf32 viewRect() const;
 
+			virtual bool processEvents();
+
 		protected:
 			virtual void onCreate();
 			virtual void onResize();
+
+		private:
+			void keyEvent(sf::Event e);
+
 		};
 	}
 }

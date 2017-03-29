@@ -19,12 +19,6 @@ namespace lib
 				sf::String temp(wsTmp);
 				return temp;
 			}
-
-			lib::input::Key doCast(const sf::Keyboard::Key &k)
-			{
-				int temp = k;
-				return static_cast<lib::input::Key>(temp);
-			}
 		}
 		struct WindowPrivate
 		{
@@ -81,15 +75,7 @@ namespace lib
 			++(p_wPrivate->currentFps);
 			clear();
 
-			sf::Event event;
-			while (pollEvent(event)) {
-				if (event.type == sf::Event::Closed) {
-					return true;
-				} else if (event.type == sf::Event::KeyPressed || event.type == sf::Event::KeyReleased) {
-					keyEvent(event);
-				}
-			}
-			return false;
+			return backend::RenderWindow::processEvents();
 		}
 
 		void Window::postLoop()
@@ -112,22 +98,6 @@ namespace lib
 		const input::KeyStates & Window::currentKeyStates() const noexcept
 		{
 			return p_wPrivate->m_keyStates;
-		}
-
-		void Window::keyEvent(sf::Event e)
-		{
-			_ASSERT(e.type == sf::Event::KeyPressed || e.type == sf::Event::KeyReleased);
-
-			using namespace lib::events;
-
-			if (e.type == sf::Event::KeyPressed) {
-//				host().eventManager().addEvent(uptr<KeyPressedEvent>(new KeyPressedEvent{doCast(e.key.code)}));
-				host().inputSystem().keyPressed(doCast(e.key.code));
-			}
-			else {
-//				host().eventManager().addEvent(uptr<KeyReleasedEvent>(new KeyReleasedEvent{ doCast(e.key.code) }));
-				host().inputSystem().keyReleased(doCast(e.key.code));
-			}
 		}
 	}
 }

@@ -32,7 +32,6 @@ namespace lib
 
 		private:
 			void create(const WindowCreationParams &wcp);
-			void keyEvent(sf::Event e);
 
 			uptr<WindowPrivate> p_wPrivate{ nullptr };
 			std::string m_title;
