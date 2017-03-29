@@ -47,7 +47,7 @@ namespace lib
 			class IPropertyAnimation : public IAnimation
 			{
 			public:
-				IPropertyAnimation(const u64 duration, Property<T> &prop, T start, T end, 
+				IPropertyAnimation(const u64 duration, IProperty<T> &prop, T start, T end, 
 					animation_action_callback onStart, animation_action_callback onEnd)
 					: IAnimation{ duration, std::move(onStart),std::move(onEnd) },
 					m_property{ prop }, m_startValue { std::move(start)	},
@@ -64,7 +64,7 @@ namespace lib
 				T m_startValue;
 				T m_endValue;
 				T m_deltaValue;
-				Property<T> &m_property;
+				IProperty<T> &m_property;
 			};
 		}
 	}

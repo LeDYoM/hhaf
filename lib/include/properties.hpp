@@ -25,7 +25,10 @@ namespace lib
 	};
 
 	template <typename T>
-	class IProperty : public IPropertyRead<T>, public IPropertyWrite<T> {};
+	class IProperty : public IPropertyRead<T>, public IPropertyWrite<T> {
+	public:
+		using IPropertyWrite::operator=;
+	};
 
 	template <typename T>
 	class VirtualPropertyRead : public IPropertyRead<T>
