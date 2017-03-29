@@ -474,8 +474,13 @@ namespace zoper
 				node->box = Rectf32::fromSize(15.0f, 15.0f);
 				node->color = colors::White;
 				node->configure();
-				//				addAnimation(msptr<anim::IPropertyAnimation<vector2df>>(600, node->position, lastTokenPosition, vector2df{ 450, 100 },
-				//					anim::noAction, anim::animation_action_callback{ [this, node]() { removeRenderizable(node); } }), nullptr);
+				/*
+				auto animationComponent(node->ensureComponentOfType<anim::AnimationComponent>());
+				animationComponent->
+					addAnimation(msptr<anim::IPropertyAnimation<vector2df>>(600, node->position, lastTokenPosition, vector2df{ 450, 100 },
+					anim::noAction, anim::animation_action_callback{ [this, node]() { removeRenderizable(node); } }));
+				*/
+
 			}
 			return result;
 		});
@@ -626,9 +631,10 @@ namespace zoper
 
 	void GameScene::tokenMoved(const vector2du32 &, const vector2du32 &dest, sptr<Tile> tile)
 	{
-		//		addAnimation(msptr<draw::anim::IPropertyAnimation<vector2df>>
-		//			(_levelProperties.millisBetweenTokens() / 2, tile->position, tile->position(), board2Scene(dest),
-		//			anim::noAction, anim::noAction),nullptr);
+		auto animationComponent(tile->ensureComponentOfType<anim::AnimationComponent>());
+		animationComponent->addAnimation(muptr<anim::IPropertyAnimation<vector2df>>
+			(_levelProperties.millisBetweenTokens() / 2, tile->position, tile->position(), board2Scene(dest),
+			anim::noAction, anim::noAction));
 	}
 
 	void GameScene::increaseScore(u32 scoreIncrement)
