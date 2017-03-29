@@ -24,12 +24,12 @@ namespace zoper
 			"Zoper",
 			1,
 			1,
-			3,
+			4,
 			"config.cfg",
 			"res.cfg",
 			WindowCreationParams
-			(
-				std::string("ZOPER"),
+			{
+				"ZOPER",
 				1024,
 				768,
 				32,
@@ -37,7 +37,7 @@ namespace zoper
 				false,
 				false,
 				false
-				)
+			}
 		};
 	}
 
