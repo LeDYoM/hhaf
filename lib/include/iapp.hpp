@@ -3,13 +3,13 @@
 
 #include "compconfig.hpp"
 #include "types.hpp"
-#include <vector>
-
-// TO Delete:
-#include <lib/draw/scene.hpp>
 
 namespace lib
 {
+	namespace draw
+	{
+		class Scene;
+	}
 	struct WindowCreationParams
 	{
 		const char *const windowTitle;

@@ -197,7 +197,7 @@ namespace lib
 
 			if (m_iapp) {
 				return string(
-					m_iapp->getAppDescriptor().Name + ":" + 
+					string(m_iapp->getAppDescriptor().Name) + ":" + 
 					to_string(m_iapp->getAppDescriptor().Version) + "." + 
 					to_string(m_iapp->getAppDescriptor().SubVersion) + "." + 
 					to_string(m_iapp->getAppDescriptor().Patch)

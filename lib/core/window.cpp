@@ -11,15 +11,6 @@ namespace lib
 {
 	namespace core
 	{
-		namespace
-		{
-			sf::String getAsString(const std::string &other)
-			{
-				std::wstring wsTmp(other.begin(), other.end());
-				sf::String temp(wsTmp);
-				return temp;
-			}
-		}
 		struct WindowPrivate
 		{
 			Timer globalClock;
@@ -48,14 +39,7 @@ namespace lib
 			logDebug("Fullscreen:" , wcp.fullScreen);
 			logDebug("Antialiasing:", wcp.antialiasing);
 
-			sf::Uint32 style{ sf::Style::Titlebar | sf::Style::Close };
-			if (wcp.fullScreen)
-				style = sf::Style::Fullscreen;
-
-			// Deal with SFML bug
-			sf::Window::create(sf::VideoMode(wcp.width, wcp.height, wcp.bpp), getAsString(m_title), style,sf::ContextSettings(0,0,wcp.antialiasing));
-
-			this->setVerticalSyncEnabled(wcp.vsync);
+			createWindow(wcp);
 
 			viewPort = backend::RenderWindow::viewPort();
 			viewRect = backend::RenderWindow::viewRect();
@@ -70,7 +54,7 @@ namespace lib
 				p_wPrivate->lastTimeFps = eMs;
 				p_wPrivate->lastFps = p_wPrivate->currentFps;
 				p_wPrivate->currentFps = 0;
-				setTitle(getAsString(m_title + " FPS:" + std::to_string(p_wPrivate->lastFps)));
+				setTitle(m_title + " FPS:" + std::to_string(p_wPrivate->lastFps));
 			}
 			++(p_wPrivate->currentFps);
 			clear();

@@ -27,6 +27,19 @@ namespace lib
 				int temp = k;
 				return static_cast<input::Key>(temp);
 			}
+
+			sf::String getAsString(const std::string &other)
+			{
+				std::wstring wsTmp(other.begin(), other.end());
+				sf::String temp(wsTmp);
+				return temp;
+			}
+
+			sf::String getAsString(const char *const other)
+			{
+				std::string temp(other);
+				return getAsString(temp);
+			}
 		}
 		RenderWindow::RenderWindow() = default;
 
@@ -41,6 +54,19 @@ namespace lib
 		}
 
 		RenderWindow::~RenderWindow() = default;
+
+		bool RenderWindow::createWindow(const WindowCreationParams & wcp)
+		{
+			sf::Uint32 style{ sf::Style::Titlebar | sf::Style::Close };
+			if (wcp.fullScreen)
+				style = sf::Style::Fullscreen;
+
+			// Deal with SFML bug
+			sf::Window::create(sf::VideoMode(wcp.width, wcp.height, wcp.bpp), getAsString(wcp.windowTitle), style, sf::ContextSettings(0, 0, wcp.antialiasing));
+
+			this->setVerticalSyncEnabled(wcp.vsync);
+			return true;
+		}
 
 		sf::Vector2u RenderWindow::getSize() const
 		{
