@@ -41,18 +41,6 @@ namespace lib
 				return getAsString(temp);
 			}
 		}
-		RenderWindow::RenderWindow() = default;
-
-		RenderWindow::RenderWindow(sf::VideoMode mode, const std::string& title, sf::Uint32 style, const sf::ContextSettings& settings)
-		{
-			create(mode, title, style, settings);
-		}
-
-		RenderWindow::RenderWindow(sf::WindowHandle handle, const sf::ContextSettings& settings)
-		{
-			create(handle, settings);
-		}
-
 		RenderWindow::~RenderWindow() = default;
 
 		bool RenderWindow::createWindow(const WindowCreationParams & wcp)
@@ -73,9 +61,9 @@ namespace lib
 			return Window::getSize();
 		}
 
-		void RenderWindow::draw(const draw::VertexArray & vertices, const sf::RenderStates & states)
+		void RenderWindow::draw(const draw::VertexArray & vertices, const draw::RenderStates & states)
 		{
-			RenderTarget::draw((const sf::Vertex*)vertices.verticesArray().data(), vertices.verticesArray().size(), static_cast<sf::PrimitiveType>(vertices.primitiveType()), states);
+			RenderTarget::draw((const sf::Vertex*)vertices.verticesArray().data(), vertices.verticesArray().size(), static_cast<sf::PrimitiveType>(vertices.primitiveType()), states.internalStates());
 		}
 
 		void RenderWindow::setViewport(const Rectf32 & nviewport)

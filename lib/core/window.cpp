@@ -17,10 +17,11 @@ namespace lib
 			s32 lastFps{ 0 };
 			s32 currentFps{ 0 };
 			input::KeyStates m_keyStates;
+			uptr<backend::RenderWindow> m_backendWindow;
 		};
 
 		Window::Window(const WindowCreationParams &wcp)
-			: p_wPrivate{ new WindowPrivate() }, m_title{ wcp.windowTitle }
+			: m_wPrivate{ new WindowPrivate() }, m_title{ wcp.windowTitle }
 		{
 			logConstruct_NOPARAMS;
 			create(wcp);
@@ -31,6 +32,11 @@ namespace lib
 			logDestruct_NOPARAMS;
 		}
 
+		void Window::draw(const draw::VertexArray & va, const draw::RenderStates & rs)
+		{
+			m_wPrivate->m_backendWindow->draw(va, rs);
+		}
+
 		void Window::create(const WindowCreationParams &wcp)
 		{
 			logDebug("Going to create Window");
@@ -38,32 +44,41 @@ namespace lib
 			logDebug("Fullscreen:" , wcp.fullScreen);
 			logDebug("Antialiasing:", wcp.antialiasing);
 
-			if (const bool result{ createWindow(wcp) }) {
-				viewPort = backend::RenderWindow::viewPort();
-				viewRect = backend::RenderWindow::viewRect();
-				viewPort.setCallback([this]() {backend::RenderWindow::setViewport(viewPort()); });
-				viewRect.setCallback([this]() {backend::RenderWindow::setViewRect(viewRect()); });
+			__ASSERT(!m_wPrivate->m_backendWindow, "Cannot create window twice");
+			logDebug("Creating window...");
+			m_wPrivate->m_backendWindow = muptr<backend::RenderWindow>();
+			logDebug("Window created");
+			logDebug("Registering for view changes...");
+			backend::RenderWindow &bw(*m_wPrivate->m_backendWindow);
+
+			if (const bool result{ bw.createWindow(wcp) }) {
+				viewPort = bw.viewPort();
+				viewRect = bw.viewRect();
+				viewPort.setCallback([this]() {m_wPrivate->m_backendWindow->setViewport(viewPort()); });
+				viewRect.setCallback([this]() {m_wPrivate->m_backendWindow->setViewRect(viewRect()); });
 			}
+			logDebug("Window creation completed");
 		}
 
 		bool Window::preLoop()
 		{
-			auto eMs = p_wPrivate->globalClock.getElapsedTime().asMilliSeconds();
-			if ((eMs - p_wPrivate->lastTimeFps) > 1000) {
-				p_wPrivate->lastTimeFps = eMs;
-				p_wPrivate->lastFps = p_wPrivate->currentFps;
-				p_wPrivate->currentFps = 0;
-				setTitle(m_title + " FPS:" + std::to_string(p_wPrivate->lastFps));
+			backend::RenderWindow &bw(*m_wPrivate->m_backendWindow);
+			auto eMs = m_wPrivate->globalClock.getElapsedTime().asMilliSeconds();
+			if ((eMs - m_wPrivate->lastTimeFps) > 1000) {
+				m_wPrivate->lastTimeFps = eMs;
+				m_wPrivate->lastFps = m_wPrivate->currentFps;
+				m_wPrivate->currentFps = 0;
+				bw.setTitle(m_title + " FPS:" + std::to_string(m_wPrivate->lastFps));
 			}
-			++(p_wPrivate->currentFps);
-			clear();
+			++(m_wPrivate->currentFps);
+			bw.clear();
 
-			return backend::RenderWindow::processEvents();
+			return bw.processEvents();
 		}
 
 		void Window::postLoop()
 		{
-			display();
+			m_wPrivate->m_backendWindow->display();
 		}
 
 		void Window::onCreate()
@@ -74,13 +89,13 @@ namespace lib
 		void Window::onDestroy()
 		{
 			logDebug("Going to close Window");
-			close();
+			m_wPrivate->m_backendWindow->close();
 			logDebug("Window closed");
 		}
 
 		const input::KeyStates & Window::currentKeyStates() const noexcept
 		{
-			return p_wPrivate->m_keyStates;
+			return m_wPrivate->m_keyStates;
 		}
 	}
 }

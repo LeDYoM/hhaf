@@ -34,7 +34,7 @@ namespace lib
 			RenderStates();
 			~RenderStates();
 
-			sf::RenderStates const &internalStates() { return m_renderStates; }
+			sf::RenderStates const &internalStates() const { return m_renderStates; }
 			void newFrame() noexcept;
 			RenderStatesStackHandle pushChanges(const Transform *transform, const Texture *texture);
 			void popChanges();

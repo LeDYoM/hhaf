@@ -13,7 +13,7 @@ namespace lib
 
 		void VertexArray::draw() const
 		{
-			host().parentWindow().draw(*this, host().rStates().internalStates());
+			host().parentWindow().draw(*this, host().rStates());
 		}
 
 		void VertexArray::setColor(const Color &color)

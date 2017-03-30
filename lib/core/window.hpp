@@ -15,23 +15,25 @@ namespace lib
 	{
 		struct WindowPrivate;
 
-		class Window : public AppService, public backend::RenderWindow
+		class Window : public AppService
 		{
 		public:
 			Window(const WindowCreationParams &wcp);
 			~Window();
 			bool preLoop();
 			void postLoop();
-			virtual void onCreate() override;
+			virtual void onCreate();
 			virtual void onDestroy();
 
 			const input::KeyStates &currentKeyStates() const noexcept;
 			Property<Rectf32> viewPort;
 			Property<Rectf32> viewRect;
 
+			void draw(const draw::VertexArray &va, const draw::RenderStates &rs);
+
 		private:
 			void create(const WindowCreationParams &wcp);
-			uptr<WindowPrivate> p_wPrivate{ nullptr };
+			uptr<WindowPrivate> m_wPrivate{ nullptr };
 			std::string m_title;
 		};
 	}
