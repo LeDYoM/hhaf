@@ -25,7 +25,7 @@ namespace lib
 		{
 		public:
 			SceneNode(const SceneNode&) = delete;
-			SceneNode(SceneNode *parent, str_const&& name);
+			SceneNode(SceneNode *const parent, str_const name);
 			virtual ~SceneNode();
 
 			virtual void create() {}
@@ -103,7 +103,6 @@ namespace lib
 
 		private:
 
-			void addComponent(uptr<IComponent> component);
 			vector_shared_pointers<Renderizable> m_renderNodes;
 			vector_shared_pointers<SceneNode> m_groups;
 

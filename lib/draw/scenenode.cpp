@@ -11,15 +11,10 @@ namespace lib
 {
 	namespace draw
 	{
-		SceneNode::SceneNode(SceneNode *const parent, str_const&& name)
+		SceneNode::SceneNode(SceneNode *const parent, str_const name)
 			: core::HasName{ std::move(name) }, ComponentContainer{ this }, m_parent{ parent }, visible{ true } {}
 
-		SceneNode::~SceneNode() = default;
-
-		bool SceneNode::removeRenderizable(const sptr<Renderizable> &element)
-		{
-			return removespFrom(m_renderNodes, element);
-		}
+		SceneNode::~SceneNode() { clear(); };
 
 		void SceneNode::draw()
 		{
@@ -103,14 +98,15 @@ namespace lib
 			node->create();
 		}
 
-		void SceneNode::addComponent(uptr<IComponent> component)
-		{
-		}
-
 		bool SceneNode::removeSceneNode(const sptr<SceneNode> &element)
 		{
 			__ASSERT(this != element.get(), "Cannot delete myself from myself");
 			return removespFrom(m_groups, element);
+		}
+
+		bool SceneNode::removeRenderizable(const sptr<Renderizable> &element)
+		{
+			return removespFrom(m_renderNodes, element);
 		}
 
 		void SceneNode::clear()
