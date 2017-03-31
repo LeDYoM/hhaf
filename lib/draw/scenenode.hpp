@@ -81,14 +81,10 @@ namespace lib
 			inline const SceneNode *parent() const noexcept { return m_parent; }
 
 			template <typename T>
-			inline T *const snCast() {
-				return dynamic_cast<T *const>(this);
-			}
+			constexpr T *const snCast() { return dynamic_cast<T *const>(this); }
 
 			template <typename T>
-			inline const T *const snCast() const {
-				return dynamic_cast<const T *const>(this);
-			}
+			constexpr const T *const snCast() const { return dynamic_cast<const T *const>(this); }
 
 			void for_each_node(std::function<void(const sptr<Renderizable> &)> action);
 			void for_each_group(std::function<void(const sptr<SceneNode> &)> action);
