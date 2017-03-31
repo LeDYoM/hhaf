@@ -81,7 +81,7 @@ namespace lib
 			// Use an state controller to manager which node is active
 			m_sController = muptr<StatesController>();
 			// Set the nodes to it
-			m_sController->nodes = &sceneNodes();
+			m_sController->nodes = &sceneNodes().nodes;
 			// Set the index 0 as start node
 			m_sController->activeNodeIndex = 0;
 			// Set it ready to work

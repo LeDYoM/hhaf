@@ -44,8 +44,6 @@ namespace lib
 				return result;
 			}
 
-			bool removeRenderizable(const sptr<Renderizable> &element);
-			void clear();
 
 			template <typename T = SceneNode, typename... Args>
 			sptr<T> createSceneNode(str_const name, Args&&... args)
@@ -61,7 +59,9 @@ namespace lib
 			}
 
 			bool moveLastBeforeNode(const sptr<SceneNode> &beforeNode);
-			bool removeSceneNode(const sptr<SceneNode> &element);
+			void removeSceneNode(const sptr<SceneNode> &element);
+			void removeRenderizable(const sptr<Renderizable> &element);
+			void clear();
 
 			void draw();
 
@@ -91,16 +91,18 @@ namespace lib
 
 		protected:
 
-			const vector_shared_pointers<Renderizable> &renderNodes() const noexcept { return m_renderNodes; }
-			const vector_shared_pointers<SceneNode> &sceneNodes() const noexcept { return m_groups; }
+			const vsp_with_deferred_delete<Renderizable> &renderNodes() const noexcept { return m_renderNodes; }
+			const vsp_with_deferred_delete<SceneNode> &sceneNodes() const noexcept { return m_groups; }
 
 			void addRenderizable(const sptr<Renderizable> &newElement);
 			void addSceneNode(sptr<SceneNode> node);
 
 		private:
 
-			vector_shared_pointers<Renderizable> m_renderNodes;
-			vector_shared_pointers<SceneNode> m_groups;
+			vsp_with_deferred_delete<Renderizable> m_renderNodes;
+			vsp_with_deferred_delete<SceneNode> m_groups;
+
+			void updateRemoves();
 
 			SceneNode *m_parent{ nullptr };
 			bool m_visible{ true };
