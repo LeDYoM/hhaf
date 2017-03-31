@@ -9,7 +9,7 @@ SET (USE_MEM_MANAGER 1)
 
 # Log configuration
 SET (USE_LOGS 1)
-SET (LOG_FILE "log.txt")
+#SET (LOG_FILE "log.txt")
 SET (USE_IDE_CONSOLE_FOR_LOGS 1)
 SET (USE_COUT_FOR_LOGS 1)
 
