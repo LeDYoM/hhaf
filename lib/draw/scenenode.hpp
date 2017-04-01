@@ -5,6 +5,7 @@
 
 #include <lib/include/types.hpp>
 #include <lib/include/vector2d.hpp>
+#include <lib/include/vsp.hpp>
 #include <lib/draw/transformable.hpp>
 #include <lib/draw/color.hpp>
 #include <lib/draw/hasname.hpp>
