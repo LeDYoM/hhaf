@@ -24,7 +24,7 @@ namespace lib
 		_timePrivate = std::move(rh._timePrivate);
 	}
 
-	Time::~Time() {	}
+	Time::~Time() = default;
 
 	Time &Time::operator+=(const Time &rh)
 	{
@@ -78,14 +78,13 @@ namespace lib
 		}
 	};
 
-	Timer::Timer()
-		: _timerPrivate{ new TimerPrivate } {}
+	Timer::Timer() : m_timerPrivate{ new TimerPrivate } {}
 
-	Timer::~Timer() {}
+	Timer::~Timer() = default;
 
 	const Time Timer::getElapsedTime() const
 	{
-		std::chrono::microseconds ellapsed = std::chrono::duration_cast<std::chrono::microseconds>(clock_t::now() - _timerPrivate->start);
+		std::chrono::microseconds ellapsed = std::chrono::duration_cast<std::chrono::microseconds>(clock_t::now() - m_timerPrivate->start);
 		Time t;
 		t._timePrivate = std::make_unique<TimePrivate>(ellapsed);
 		return t;
@@ -93,46 +92,44 @@ namespace lib
 
 	void Timer::restart()
 	{
-		_timerPrivate->start = clock_t::now();
+		m_timerPrivate->start = clock_t::now();
 	}
 
 	void PausableTimer::pause()
 	{
-		if (!_paused)
+		if (!m_paused)
 		{
-			_paused = true;
-			_pausedTimer.restart();
+			m_paused = true;
+			m_pausedTimer.restart();
 		}
 	}
 
 	void PausableTimer::resume()
 	{
-		if (_paused)
-		{
-			_paused = false;
-			_pausedTime += _pausedTimer.getElapsedTime();
+		if (m_paused) {
+			m_paused = false;
+			m_pausedTime += m_pausedTimer.getElapsedTime();
 		}
 	}
 
 	bool PausableTimer::switchPause()
 	{
-		_paused ? resume() : pause();
-		return _paused;
+		m_paused ? resume() : pause();
+		return m_paused;
 	}
 
 	const Time PausableTimer::getElapsedTime() const
 	{
-		Time t = (Timer::getElapsedTime() - _pausedTime);
-		if (_paused)
-			t = t - _pausedTimer.getElapsedTime();
+		Time t = (Timer::getElapsedTime() - m_pausedTime);
+		if (m_paused)
+			t = t - m_pausedTimer.getElapsedTime();
 		return t;
 	}
 
 	void PausableTimer::restart()
 	{
-		_pausedTime.setZero();
-		_paused = false;
+		m_pausedTime.setZero();
+		m_paused = false;
 		Timer::restart();
 	}
-
 }

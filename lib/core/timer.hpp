@@ -34,7 +34,7 @@ namespace lib
 		virtual const Time getElapsedTime() const;
 		virtual void restart();
 	private:
-		uptr<TimerPrivate> _timerPrivate;
+		uptr<TimerPrivate> m_timerPrivate;
 	};
 
 	class PausableTimer : public Timer
@@ -47,9 +47,9 @@ namespace lib
 		virtual void restart() override;
 
 	private:
-		Timer _pausedTimer;
-		Time _pausedTime;
-		bool _paused{ false };
+		Timer m_pausedTimer;
+		Time m_pausedTime;
+		bool m_paused{ false };
 	};
 }
 
