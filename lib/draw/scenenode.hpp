@@ -29,7 +29,16 @@ namespace lib
 			SceneNode(SceneNode *const parent, str_const name);
 			virtual ~SceneNode();
 
+			/**
+			* Method called when adding a new node just after creation.
+			* Override it to add code on creation
+			* @see configure
+			*/
 			virtual void create() {}
+
+			/**
+			* This method is called just before completing the initialization
+			*/
 			virtual void configure() {}
 
 			/**
