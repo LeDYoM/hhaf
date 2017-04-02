@@ -8,62 +8,61 @@ namespace lib
 
 	struct TimePrivate
 	{
-	public:
-		std::chrono::microseconds _micrseconds;
+		std::chrono::microseconds m_micrseconds;
 		TimePrivate::TimePrivate(std::chrono::microseconds microseconds)
-			: _micrseconds{microseconds} {}
+			: m_micrseconds{microseconds} {}
 
-		TimePrivate::TimePrivate(TimePrivate &&rh) : _micrseconds{ std::move(rh._micrseconds) } { }
+		TimePrivate::TimePrivate(TimePrivate &&rh) = default;
 	};
 
 	Time::Time()
-		: _timePrivate{ std::make_unique<TimePrivate>(std::chrono::microseconds::zero()) } { }
+		: m_timePrivate{ std::make_unique<TimePrivate>(std::chrono::microseconds::zero()) } { }
 
 	Time::Time(Time &&rh)
 	{
-		_timePrivate = std::move(rh._timePrivate);
+		m_timePrivate = std::move(rh.m_timePrivate);
 	}
 
 	Time::~Time() = default;
 
 	Time &Time::operator+=(const Time &rh)
 	{
-		_timePrivate->_micrseconds += rh._timePrivate->_micrseconds;
+		m_timePrivate->m_micrseconds += rh.m_timePrivate->m_micrseconds;
 		return *this;
 	}
 
 	Time Time::operator-(const Time &rh) const
 	{
 		Time t;
-		t._timePrivate = std::make_unique<TimePrivate>(this->_timePrivate->_micrseconds - rh._timePrivate->_micrseconds);
+		t.m_timePrivate = std::make_unique<TimePrivate>(this->m_timePrivate->m_micrseconds - rh.m_timePrivate->m_micrseconds);
 		return t;
 	}
 
 	Time & Time::operator=(const Time &other)
 	{
-		_timePrivate->_micrseconds = other._timePrivate->_micrseconds;
+		m_timePrivate->m_micrseconds = other.m_timePrivate->m_micrseconds;
 		return *this;
 	}
 
 	u64 Time::asMicroSeconds() const
 	{
-		return _timePrivate->_micrseconds.count();
+		return m_timePrivate->m_micrseconds.count();
 	}
 
 	u64 Time::asMilliSeconds() const
 	{
-		return std::chrono::duration_cast<std::chrono::milliseconds>(_timePrivate->_micrseconds).count();
+		return std::chrono::duration_cast<std::chrono::milliseconds>(m_timePrivate->m_micrseconds).count();
 	}
 
 	u64 Time::asSeconds() const
 	{
-		return std::chrono::duration_cast<std::chrono::seconds>(_timePrivate->_micrseconds).count();
+		return std::chrono::duration_cast<std::chrono::seconds>(m_timePrivate->m_micrseconds).count();
 	}
 
 	void Time::setZero()
 	{
-		if (_timePrivate)
-			_timePrivate->_micrseconds = std::chrono::microseconds::zero();
+		if (m_timePrivate)
+			m_timePrivate->m_micrseconds = std::chrono::microseconds::zero();
 	}
 
 	struct TimerPrivate
@@ -86,7 +85,7 @@ namespace lib
 	{
 		std::chrono::microseconds ellapsed = std::chrono::duration_cast<std::chrono::microseconds>(clock_t::now() - m_timerPrivate->start);
 		Time t;
-		t._timePrivate = std::make_unique<TimePrivate>(ellapsed);
+		t.m_timePrivate = std::make_unique<TimePrivate>(ellapsed);
 		return t;
 	}
 

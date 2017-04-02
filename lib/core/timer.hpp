@@ -22,7 +22,7 @@ namespace lib
 		void setZero();
 
 	private:
-		uptr<TimePrivate> _timePrivate{ nullptr };
+		uptr<TimePrivate> m_timePrivate{ nullptr };
 		friend class Timer;
 	};
 	class Timer
