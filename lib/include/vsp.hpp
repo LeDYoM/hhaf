@@ -8,19 +8,6 @@
 namespace lib
 {
 	template <typename T>
-	bool remove1_vsp(vector_shared_pointers<T> &container, const sptr<T> &element)
-	{
-		auto iterator(container.cbegin(), container.cend(), element);
-		if (iterator != container.cend()) {
-			container.erase(iterator);
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	template <typename T>
 	class vsp_with_deferred_delete
 	{
 	public:
