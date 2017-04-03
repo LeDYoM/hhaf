@@ -4,12 +4,15 @@
 #include <lib/include/types.hpp>
 #include <lib/include/vector2d.hpp>
 #include <lib/include/rect.hpp>
-#include <lib/draw/vertexarray.hpp>
-#include <lib/draw/renderstates.hpp>
-#include <lib/include/iapp.hpp>
 
 namespace lib
 {
+	struct WindowCreationParams;
+	namespace draw
+	{
+		class VertexArray;
+		class RenderStates;
+	}
 	namespace backend
 	{
 		class IWindow
