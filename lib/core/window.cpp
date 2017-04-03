@@ -5,6 +5,7 @@
 #include "host.hpp"
 #include <lib/include/iapp.hpp>
 #include <lib/core/inputsystem.hpp>
+#include <lib/backend/backendfactory.hpp>
 
 namespace lib
 {
@@ -46,7 +47,8 @@ namespace lib
 
 			__ASSERT(!m_wPrivate->m_backendWindow, "Cannot create window twice");
 			logDebug("Creating window...");
-			m_wPrivate->m_backendWindow = muptr<backend::RenderWindow>();
+			backend::BackendFactory bf;
+			m_wPrivate->m_backendWindow = bf.getOrCreateWindow();
 			logDebug("Window created");
 			logDebug("Registering for view changes...");
 			backend::IWindow &bw(*m_wPrivate->m_backendWindow);

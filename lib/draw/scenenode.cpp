@@ -6,6 +6,7 @@
 #include <lib/core/window.hpp>
 #include <lib/core/host.hpp>
 #include <lib/core/log.hpp>
+#include <lib/draw/renderstates.hpp>
 
 namespace lib
 {

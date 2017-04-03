@@ -9,7 +9,7 @@
 #include <lib/draw/vertexarray.hpp>
 #include <lib/draw/renderstates.hpp>
 #include <lib/include/iapp.hpp>
-#include "iwindow.hpp"
+#include <lib/backend/iwindow.hpp>
 
 namespace lib
 {

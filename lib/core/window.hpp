@@ -3,13 +3,17 @@
 
 #include <lib/include/types.hpp>
 #include "appservice.hpp"
-#include <lib/backend/renderwindow.hpp>
+#include <lib/backend/iwindow.hpp>
 #include <lib/include/key.hpp>
 #include <lib/include/properties.hpp>
 
 namespace lib
 {
 	struct WindowCreationParams;
+	namespace draw
+	{
+		class VertexArray;
+	}
 
 	namespace core
 	{

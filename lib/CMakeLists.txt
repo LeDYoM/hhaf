@@ -31,6 +31,8 @@ file (GLOB LIB_CORE_EVENTS_SOURCES "${LIB_DIRECTORY}core/events/*.cpp")
 
 file (GLOB LIB_BACKEND_HEADERS "${LIB_DIRECTORY}backend/*.hpp")
 file (GLOB LIB_BACKEND_SOURCES "${LIB_DIRECTORY}backend/*.cpp")
+file (GLOB LIB_BACKEND_SFML_IMPL_HEADERS "${LIB_DIRECTORY}backend/sfml/*.hpp")
+file (GLOB LIB_BACKEND_SFML_IMPL_SOURCES "${LIB_DIRECTORY}backend/sfml/*.cpp")
 
 file (GLOB LIB_DRAW_HEADERS "${LIB_DIRECTORY}draw/*.hpp")
 file (GLOB LIB_DRAW_SOURCES "${LIB_DIRECTORY}draw/*.cpp")
@@ -42,9 +44,7 @@ file (GLOB LIB_DRAW_COMPONENTS_HEADERS "${LIB_DIRECTORY}draw/components/*.hpp")
 file (GLOB LIB_DRAW_COMPONENTS_SOURCES "${LIB_DIRECTORY}draw/components/*.cpp")
 
 file (GLOB LIB_INCLUDE_HEADERS "${LIB_DIRECTORY}include/*.hpp")
-#file (GLOB LIB_BASE_SOURCES "${LIB_DIRECTORY}include/*.cpp")
 
-#TO DO: A separated lib?
 file (GLOB LIB_GUI_HEADERS "${LIB_DIRECTORY}gui/*.hpp")
 file (GLOB LIB_GUI_SOURCES "${LIB_DIRECTORY}gui/*.cpp")
 
@@ -65,6 +65,7 @@ add_library(${CURRENT_TARGET} STATIC ${LIB_HEADERS} ${LIB_SOURCES})
 # Define source groups for lib
 source_group("lib\\include" FILES ${LIB_INCLUDE_HEADERS})
 source_group("lib\\backend" FILES ${LIB_BACKEND_HEADERS} ${LIB_BACKEND_SOURCES})
+source_group("lib\\backend\sfml" FILES ${LIB_BACKEND_SFML_IMPL_HEADERS} ${LIB_BACKEND_SFML_IMPL_SOURCES})
 source_group("lib\\core" FILES ${LIB_CORE_HEADERS} ${LIB_CORE_SOURCES})
 source_group("lib\\core\\events" FILES ${LIB_CORE_EVENTS_HEADERS} ${LIB_CORE_EVENTS_SOURCES})
 source_group("lib\\draw" FILES ${LIB_DRAW_HEADERS} ${LIB_DRAW_SOURCES})
