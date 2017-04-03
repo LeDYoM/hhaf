@@ -62,7 +62,7 @@ namespace lib
 
 			const std::string appId() const;
 
-			inline draw::RenderStates &rStates() const noexcept { return *m_renderStates; }
+			inline const draw::RenderStates &rStates() const noexcept { return *m_renderStates; }
 			inline draw::RenderStates &rStates() noexcept { return *m_renderStates; }
 
 			inline const Randomizer &randomizer() const noexcept { return *m_randomizer; }
