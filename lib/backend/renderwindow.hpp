@@ -32,6 +32,10 @@ namespace lib
 			virtual Rectf32 viewRect() const override;
 
 			virtual bool processEvents() override;
+			virtual void display() override;
+			virtual void clear() override;
+			virtual void setWindowTitle(const str_const newTitle) override;
+			virtual void closeWindow() override;
 
 		protected:
 			virtual void onCreate();

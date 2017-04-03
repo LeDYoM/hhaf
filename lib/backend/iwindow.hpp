@@ -27,6 +27,11 @@ namespace lib
 			virtual Rectf32 viewRect() const = 0;
 
 			virtual bool processEvents() = 0;
+
+			virtual void display() = 0;
+			virtual void clear() = 0;
+			virtual void setWindowTitle(const str_const newTitle) = 0;
+			virtual void closeWindow() = 0;
 		};
 	}
 }

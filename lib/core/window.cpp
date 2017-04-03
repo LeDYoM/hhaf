@@ -17,7 +17,7 @@ namespace lib
 			s32 lastFps{ 0 };
 			s32 currentFps{ 0 };
 			input::KeyStates m_keyStates;
-			uptr<backend::RenderWindow> m_backendWindow;
+			uptr<backend::IWindow> m_backendWindow;
 		};
 
 		Window::Window(const WindowCreationParams &wcp)
@@ -49,7 +49,7 @@ namespace lib
 			m_wPrivate->m_backendWindow = muptr<backend::RenderWindow>();
 			logDebug("Window created");
 			logDebug("Registering for view changes...");
-			backend::RenderWindow &bw(*m_wPrivate->m_backendWindow);
+			backend::IWindow &bw(*m_wPrivate->m_backendWindow);
 
 			if (const bool result{ bw.createWindow(wcp) }) {
 				viewPort = bw.viewPort();
@@ -62,13 +62,13 @@ namespace lib
 
 		bool Window::preLoop()
 		{
-			backend::RenderWindow &bw(*m_wPrivate->m_backendWindow);
+			backend::IWindow &bw(*m_wPrivate->m_backendWindow);
 			auto eMs = m_wPrivate->globalClock.getElapsedTime().asMilliSeconds();
 			if ((eMs - m_wPrivate->lastTimeFps) > 1000) {
 				m_wPrivate->lastTimeFps = eMs;
 				m_wPrivate->lastFps = m_wPrivate->currentFps;
 				m_wPrivate->currentFps = 0;
-				bw.setTitle(m_title + " FPS:" + std::to_string(m_wPrivate->lastFps));
+				bw.setWindowTitle(m_title + " FPS:" + std::to_string(m_wPrivate->lastFps));
 			}
 			++(m_wPrivate->currentFps);
 			bw.clear();
@@ -89,7 +89,7 @@ namespace lib
 		void Window::onDestroy()
 		{
 			logDebug("Going to close Window");
-			m_wPrivate->m_backendWindow->close();
+			m_wPrivate->m_backendWindow->closeWindow();
 			logDebug("Window closed");
 		}
 

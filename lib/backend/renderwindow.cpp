@@ -28,7 +28,7 @@ namespace lib
 				return static_cast<input::Key>(temp);
 			}
 
-			sf::String getAsString(const std::string &other)
+			sf::String getAsString(const str_const &other)
 			{
 				std::wstring wsTmp(other.begin(), other.end());
 				sf::String temp(wsTmp);
@@ -117,6 +117,26 @@ namespace lib
 				}
 			}
 			return false;
+		}
+
+		void RenderWindow::display()
+		{
+			Window::display();
+		}
+
+		void RenderWindow::clear()
+		{
+			RenderTarget::clear();
+		}
+
+		void RenderWindow::setWindowTitle(const str_const newTitle)
+		{
+			Window::setTitle(getAsString(newTitle));
+		}
+
+		void RenderWindow::closeWindow()
+		{
+			Window::close();
 		}
 
 		void RenderWindow::onCreate()
