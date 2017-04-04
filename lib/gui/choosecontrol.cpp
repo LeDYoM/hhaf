@@ -33,13 +33,14 @@ namespace lib
 			const auto &cTheme(dynamic_cast<ChooseControlGroup*>(parent())->currentTheme());
 			descriptorCursorSize = cTheme.cursorDescriptor.m_size;
 
-			// Set the virtual forwarded properties
+			/*
+			// Disable cursor
 			m_cursorNode = createSceneNode("cursorNode");
 			m_cursor = m_cursorNode->createRenderizable<nodes::NodeShape>("cursor", cTheme.cursorDescriptor.m_nVertex);
 			m_cursor->box = { 1000, 100, descriptorCursorSize.x, descriptorCursorSize.y };
 			m_cursor->color = cTheme.cursorDescriptor.m_color;
 			m_cursor->configure();
-
+			*/
 			u32 count{};
 			vector2df currentPos{};
 			for (const auto& label : options)
