@@ -17,7 +17,7 @@ namespace lib
 	}
 	namespace draw
 	{
-		class RenderStates;
+		class RenderStatesStack;
 	}
 	namespace core
 	{
@@ -62,8 +62,8 @@ namespace lib
 
 			const std::string appId() const;
 
-			inline const draw::RenderStates &rStates() const noexcept { return *m_renderStates; }
-			inline draw::RenderStates &rStates() noexcept { return *m_renderStates; }
+			inline const draw::RenderStatesStack &rStates() const noexcept { return *m_renderStates; }
+			inline draw::RenderStatesStack &rStates() noexcept { return *m_renderStates; }
 
 			inline const Randomizer &randomizer() const noexcept { return *m_randomizer; }
 
@@ -84,7 +84,7 @@ namespace lib
 			sptr<draw::Scene> m_currentScene{ nullptr };
 			sptr<draw::Scene> m_nextScene{ nullptr };
 			std::vector<std::string> m_params;
-			uptr<draw::RenderStates> m_renderStates;
+			uptr<draw::RenderStatesStack> m_renderStates;
 		};
 	}
 

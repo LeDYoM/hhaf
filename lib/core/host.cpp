@@ -4,7 +4,7 @@
 #include "log.hpp"
 #include "randomizer.hpp"
 #include <lib/draw/scene.hpp>
-#include <lib/draw/renderstates.hpp>
+#include <lib/draw/renderstatesstack.hpp>
 #include <lib/core/events/eventmanager.hpp>
 #include <lib/core/inputsystem.hpp>
 
@@ -102,7 +102,7 @@ namespace lib
 				m_eventManager = muptr<EventManager>();
 				m_window = muptr<Window>(m_iapp->getAppDescriptor().wcp);
 				m_resourceManager = muptr<core::ResourceManager>(m_iapp->getAppDescriptor().resourceFile);
-				m_renderStates = muptr<draw::RenderStates>();
+				m_renderStates = muptr<draw::RenderStatesStack>();
 				
 				addScenes(m_iapp->scenesVector());
 

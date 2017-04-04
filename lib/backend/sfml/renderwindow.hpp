@@ -7,7 +7,7 @@
 #include <lib/include/types.hpp>
 #include <lib/include/vector2d.hpp>
 #include <lib/draw/vertexarray.hpp>
-#include <lib/draw/renderstates.hpp>
+#include <lib/draw/renderstatesstack.hpp>
 #include <lib/include/iapp.hpp>
 #include <lib/backend/iwindow.hpp>
 
@@ -24,7 +24,7 @@ namespace lib
 			virtual bool createWindow(const WindowCreationParams &wcp) override;
 			virtual sf::Vector2u getSize() const override;
 			virtual bool activate(bool active = true) override { return setActive(active); }
-			virtual void draw(const draw::VertexArray &vertices, const draw::RenderStates& states) override;
+			virtual void draw(const draw::VertexArray &vertices, const draw::RenderStatesStack& states) override;
 
 			virtual void setViewport(const Rectf32 &nviewport) override;
 			virtual Rectf32 viewPort() const override;

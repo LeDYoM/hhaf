@@ -11,7 +11,7 @@ namespace lib
 	namespace draw
 	{
 		class VertexArray;
-		class RenderStates;
+		class RenderStatesStack;
 	}
 	namespace backend
 	{
@@ -22,7 +22,7 @@ namespace lib
 			virtual ~IWindow() {}
 
 			virtual bool createWindow(const WindowCreationParams &wcp) = 0;
-			virtual void draw(const draw::VertexArray &vertices, const draw::RenderStates& states) = 0;
+			virtual void draw(const draw::VertexArray &vertices, const draw::RenderStatesStack& states) = 0;
 
 			virtual void setViewport(const Rectf32 &nviewport) = 0;
 			virtual Rectf32 viewPort() const = 0;

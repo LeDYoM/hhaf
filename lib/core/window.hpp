@@ -33,7 +33,7 @@ namespace lib
 			Property<Rectf32> viewPort;
 			Property<Rectf32> viewRect;
 
-			void draw(const draw::VertexArray &va, const draw::RenderStates &rs);
+			void draw(const draw::VertexArray &va, const draw::RenderStatesStack &rs);
 
 		private:
 			void create(const WindowCreationParams &wcp);

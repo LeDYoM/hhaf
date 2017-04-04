@@ -17,29 +17,28 @@ namespace lib
 	{
 		class Transform;
 		class Texture;
-		class RenderStates;
+		class RenderStatesStack;
 		class RenderStatesStackHandle final
 		{
 		public:
 			~RenderStatesStackHandle();
 		private:
-			constexpr RenderStatesStackHandle(RenderStates &stack);
-			RenderStates &m_stack;
-			friend class RenderStates;
+			constexpr RenderStatesStackHandle(RenderStatesStack &stack);
+			RenderStatesStack &m_stack;
+			friend class RenderStatesStack;
 		};
 
-		class RenderStates final
+		class RenderStatesStack final
 		{
 		public:
-			RenderStates();
-			~RenderStates();
+			RenderStatesStack();
+			~RenderStatesStack();
 
 			sf::RenderStates const &internalStates() const { return m_renderStates; }
 			void newFrame() noexcept;
 			RenderStatesStackHandle pushChanges(const Transform *transform, const Texture *texture);
 			void popChanges();
 		private:
-			sf::RenderStates prepareNewElement(const Transform *transform, const Texture *texture);
 			sf::RenderStates m_renderStates;
 			std::stack<sf::RenderStates> m_statesStack;
 			friend class RenderStatesStackHandle;
