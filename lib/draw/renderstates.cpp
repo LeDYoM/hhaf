@@ -2,6 +2,8 @@
 #include <cstddef>
 #include "renderstates.hpp"
 
+#include <lib/draw/texture.hpp>
+
 namespace lib
 {
 	namespace draw
