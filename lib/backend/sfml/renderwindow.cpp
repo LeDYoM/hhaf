@@ -40,6 +40,13 @@ namespace lib
 				std::string temp(other);
 				return getAsString(temp);
 			}
+
+			sf::RenderStates asRenderStates(const draw::RenderStates &renderStates) {
+				return sf::RenderStates(sf::RenderStates::Default.blendMode,
+					renderStates.m_transform,
+					renderStates.m_texture ? renderStates.m_texture->backEndTexture() : nullptr,
+					nullptr);
+			}
 		}
 		RenderWindow::~RenderWindow() = default;
 
@@ -63,7 +70,9 @@ namespace lib
 
 		void RenderWindow::draw(const draw::VertexArray & vertices, const draw::RenderStatesStack & states)
 		{
-			RenderTarget::draw((const sf::Vertex*)vertices.verticesArray().data(), vertices.verticesArray().size(), static_cast<sf::PrimitiveType>(vertices.primitiveType()), states.top().internalStates());
+			RenderTarget::draw((const sf::Vertex*)vertices.verticesArray().data(), vertices.verticesArray().size(), 
+				static_cast<sf::PrimitiveType>(vertices.primitiveType()), 
+				asRenderStates(states.top()));
 		}
 
 		void RenderWindow::setViewport(const Rectf32 & nviewport)

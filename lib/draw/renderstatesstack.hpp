@@ -8,8 +8,6 @@
 #include <lib/include/types.hpp>
 #include <lib/draw/renderstates.hpp>
 
-#include <SFML/Graphics/RenderStates.hpp>
-
 #include <stack>
 
 namespace lib
