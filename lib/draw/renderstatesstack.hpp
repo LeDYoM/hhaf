@@ -33,7 +33,7 @@ namespace lib
 			RenderStatesStack();
 			~RenderStatesStack();
 
-			RenderStates top() const;
+			const RenderStates &top() const noexcept;
 			void newFrame() noexcept;
 			RenderStatesStackHandle pushChanges(const Transform *transform, const Texture *texture);
 			void popChanges();

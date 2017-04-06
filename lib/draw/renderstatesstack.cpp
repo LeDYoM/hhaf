@@ -10,7 +10,7 @@ namespace lib
 		RenderStatesStack::RenderStatesStack() = default;
 		RenderStatesStack::~RenderStatesStack() = default;
 
-		RenderStates RenderStatesStack::top() const
+		const RenderStates &RenderStatesStack::top() const noexcept
 		{
 			return m_renderStates;
 		}

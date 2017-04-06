@@ -14,11 +14,18 @@ namespace lib
 		class RenderStates final
 		{
 		public:
-			RenderStates();
-			RenderStates(const Transform &transform, const Texture *texture);
+			constexpr RenderStates() : RenderStates{ {},{} } { }
+			constexpr RenderStates(const Transform &transform, const Texture *texture)
+				: m_transform{ transform }, m_texture{ texture } {}
+
+			constexpr RenderStates(RenderStates &&) noexcept = default;
+			RenderStates &operator=(RenderStates&&) noexcept = default;
 
 			Transform m_transform;
 			const Texture *m_texture;
+		private:
+			RenderStates &operator=(const RenderStates&) noexcept = default;
+			friend class RenderStatesStack;
 		};
 	}
 }
