@@ -10,18 +10,21 @@ namespace lib
 		RenderStatesStack::RenderStatesStack() = default;
 		RenderStatesStack::~RenderStatesStack() = default;
 
+		RenderStates RenderStatesStack::top() const
+		{
+			return m_renderStates;
+		}
+
 		void RenderStatesStack::newFrame() noexcept
 		{
-			m_renderStates = sf::RenderStates::Default;
+			m_renderStates = RenderStates();
 		}
 
 		RenderStatesStackHandle RenderStatesStack::pushChanges(const Transform *transform, const Texture *texture)
 		{
 			m_statesStack.emplace(std::move(m_renderStates));
-			m_renderStates = sf::RenderStates(m_renderStates.blendMode,
-				transform ? m_renderStates.transform*(*transform) : m_renderStates.transform,
-				texture ? texture->backEndTexture() : nullptr,
-				m_renderStates.shader);
+			m_renderStates = RenderStates(transform ? m_renderStates.m_transform*(*transform) : m_renderStates.m_transform,
+				texture );
 			return RenderStatesStackHandle(*this);
 		}
 		void RenderStatesStack::popChanges()

@@ -1,11 +1,12 @@
-#ifndef LIB_DRAW_RENDERSTATES_INCLUDE_HPP__
-#define LIB_DRAW_RENDERSTATES_INCLUDE_HPP__
+#ifndef LIB_DRAW_RENDERSTATESSTACK_INCLUDE_HPP__
+#define LIB_DRAW_RENDERSTATESSTACK_INCLUDE_HPP__
 
 #pragma  once
 
 #include "texture.hpp"
 
 #include <lib/include/types.hpp>
+#include <lib/draw/renderstates.hpp>
 
 #include <SFML/Graphics/RenderStates.hpp>
 
@@ -34,13 +35,13 @@ namespace lib
 			RenderStatesStack();
 			~RenderStatesStack();
 
-			sf::RenderStates const &internalStates() const { return m_renderStates; }
+			RenderStates top() const;
 			void newFrame() noexcept;
 			RenderStatesStackHandle pushChanges(const Transform *transform, const Texture *texture);
 			void popChanges();
 		private:
-			sf::RenderStates m_renderStates;
-			std::stack<sf::RenderStates> m_statesStack;
+			RenderStates m_renderStates;
+			std::stack<RenderStates> m_statesStack;
 			friend class RenderStatesStackHandle;
 		};
 	}

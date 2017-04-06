@@ -63,7 +63,7 @@ namespace lib
 
 		void RenderWindow::draw(const draw::VertexArray & vertices, const draw::RenderStatesStack & states)
 		{
-			RenderTarget::draw((const sf::Vertex*)vertices.verticesArray().data(), vertices.verticesArray().size(), static_cast<sf::PrimitiveType>(vertices.primitiveType()), states.internalStates());
+			RenderTarget::draw((const sf::Vertex*)vertices.verticesArray().data(), vertices.verticesArray().size(), static_cast<sf::PrimitiveType>(vertices.primitiveType()), states.top().internalStates());
 		}
 
 		void RenderWindow::setViewport(const Rectf32 & nviewport)
