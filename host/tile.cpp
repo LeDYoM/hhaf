@@ -9,12 +9,12 @@ namespace zoper
 	using namespace lib::draw;
 	using namespace lib::board;
 
-	u32 Tile::_tileCounter{ 0 };
+	u32 Tile::m_tileCounter{ 0 };
 
-	Tile::Tile(lib::draw::SceneNode* const parent, str_const&& name, BoardTileData data, const Rectf32 &box) :
-		GameBaseTile{ parent, name + std::to_string(_tileCounter) + std::to_string(_tileCounter), data }
+	Tile::Tile(lib::draw::SceneNode* const parent, str_const name, BoardTileData data, const Rectf32 &box) :
+		GameBaseTile{ parent, name + std::to_string(m_tileCounter) + std::to_string(m_tileCounter), data }
 	{
-		++_tileCounter;
+		++m_tileCounter;
 		m_node = createRenderizable<nodes::NodeShape>("Node", 30);
 		m_node->box = box;
 		m_node->configure();
@@ -25,6 +25,6 @@ namespace zoper
 
 	void Tile::resetTileCounter()
 	{
-		_tileCounter = 0;
+		m_tileCounter = 0;
 	}
 }
