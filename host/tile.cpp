@@ -1,6 +1,8 @@
 #include "tile.hpp"
 #include <lib/draw/nodes/nodeshape.hpp>
 
+#include <string>
+
 namespace zoper
 {
 	using namespace lib;

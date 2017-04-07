@@ -3,7 +3,6 @@
 
 #include <lib/include/vector2d.hpp>
 #include <lib/include/rect.hpp>
-#include <SFML/Graphics.hpp>
 
 #include <array>
 
@@ -49,7 +48,6 @@ namespace lib
 			Transform& scale(const f32 scaleX, const f32 scaleY, const f32 centerX, const f32 centerY) noexcept;
 			Transform& scale(const vector2df& factors) noexcept;
 			Transform& scale(const vector2df& factors, const vector2df& center) noexcept;
-			operator const sf::Transform() const noexcept;
 			static const Transform Identity;
 			Transform& operator *=(const Transform& right);
 
