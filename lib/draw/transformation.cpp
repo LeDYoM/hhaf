@@ -8,30 +8,6 @@ namespace lib
 	{
 		const Transform Transform::Identity = Transform{};
 
-		Transform Transform::getInverse() const noexcept
-		{
-			// Compute the determinant
-			const f32 det = m_matrix[0] * (m_matrix[15] * m_matrix[5] - m_matrix[7] * m_matrix[13]) -
-				m_matrix[1] * (m_matrix[15] * m_matrix[4] - m_matrix[7] * m_matrix[12]) +
-				m_matrix[3] * (m_matrix[13] * m_matrix[4] - m_matrix[5] * m_matrix[12]);
-
-			// Compute the inverse if the determinant is not zero
-			// (don't use an epsilon because the determinant may *really* be tiny)
-			if (det != 0.f) {
-				return Transform{ (m_matrix[15] * m_matrix[5] - m_matrix[7] * m_matrix[13]) / det,
-					-(m_matrix[15] * m_matrix[4] - m_matrix[7] * m_matrix[12]) / det,
-					(m_matrix[13] * m_matrix[4] - m_matrix[5] * m_matrix[12]) / det,
-					-(m_matrix[15] * m_matrix[1] - m_matrix[3] * m_matrix[13]) / det,
-					(m_matrix[15] * m_matrix[0] - m_matrix[3] * m_matrix[12]) / det,
-					-(m_matrix[13] * m_matrix[0] - m_matrix[1] * m_matrix[12]) / det,
-					(m_matrix[7] * m_matrix[1] - m_matrix[3] * m_matrix[5]) / det,
-					-(m_matrix[7] * m_matrix[0] - m_matrix[3] * m_matrix[4]) / det,
-					(m_matrix[5] * m_matrix[0] - m_matrix[1] * m_matrix[4]) / det };
-			} else {
-				return Identity;
-			}
-		}
-
 		constexpr const vector2df Transform::transformPoint(const f32 x, const f32 y) const noexcept
 		{
 			return vector2df{ m_matrix[0] * x + m_matrix[4] * y + m_matrix[12],
