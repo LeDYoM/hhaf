@@ -66,11 +66,9 @@ namespace lib
 
 		Transform& Transform::translate(const f32 x, const f32 y) noexcept
 		{
-			Transform translation(1, 0, x,
+			return combine(Transform{ 1, 0, x,
 				0, 1, y,
-				0, 0, 1);
-
-			return combine(translation);
+				0, 0, 1 });
 		}
 
 		Transform& Transform::translate(const vector2df& offset) noexcept
@@ -86,11 +84,9 @@ namespace lib
 			const f32 cos = std::cos(rad);
 			const f32 sin = std::sin(rad);
 
-			Transform rotation{ cos, -sin, 0,
+			return combine(Transform{ cos, -sin, 0,
 				sin, cos, 0,
-				0, 0, 1 };
-
-			return combine(rotation);
+				0, 0, 1 });
 		}
 
 		Transform& Transform::rotate(const f32 angle, const f32 centerX, const f32 centerY) noexcept
@@ -99,11 +95,9 @@ namespace lib
 			const f32 cos = std::cos(rad);
 			const f32 sin = std::sin(rad);
 
-			Transform rotation(cos, -sin, centerX * (1 - cos) + centerY * sin,
+			return combine(Transform{ cos, -sin, centerX * (1 - cos) + centerY * sin,
 				sin, cos, centerY * (1 - cos) - centerX * sin,
-				0, 0, 1);
-
-			return combine(rotation);
+				0, 0, 1});
 		}
 
 		Transform& Transform::rotate(const f32 angle, const vector2df& center) noexcept
@@ -122,11 +116,9 @@ namespace lib
 
 		Transform& Transform::scale(const f32 scaleX, const f32 scaleY, const f32 centerX, const f32 centerY) noexcept
 		{
-			Transform scaling{ scaleX, 0, centerX * (1 - scaleX),
+			return combine(Transform{ scaleX, 0, centerX * (1 - scaleX),
 				0, scaleY, centerY * (1 - scaleY),
-				0, 0, 1 };
-
-			return combine(scaling);
+				0, 0, 1 });
 		}
 
 		Transform& Transform::scale(const vector2df& factors) noexcept
@@ -137,11 +129,6 @@ namespace lib
 		Transform& Transform::scale(const vector2df& factors, const vector2df& center) noexcept
 		{
 			return scale(factors.x, factors.y, center.x, center.y);
-		}
-
-		Transform & Transform::operator*=(const Transform & right)
-		{
-			return combine(right);
 		}
 	}
 }

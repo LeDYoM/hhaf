@@ -35,7 +35,11 @@ namespace lib
 
 			constexpr const f32* const getMatrix() const noexcept { return &m_matrix[0]; }
 			static const Transform Identity;
-			Transform& operator *=(const Transform& right);
+			inline Transform& operator *=(const Transform& right) noexcept
+			{
+				return combine(right);
+			}
+
 			const Transform operator *(const Transform& right) const noexcept
 			{
 				Transform copy{ *this };
