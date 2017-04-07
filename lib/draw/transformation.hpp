@@ -10,7 +10,7 @@ namespace lib
 {
 	namespace draw
 	{
-		class Transform
+		class Transform final
 		{
 		public:
 			constexpr Transform() noexcept
@@ -34,6 +34,20 @@ namespace lib
 			Transform& operator=(Transform&&) noexcept = default;
 
 			constexpr const f32* const getMatrix() const noexcept { return &m_matrix[0]; }
+			static const Transform Identity;
+			Transform& operator *=(const Transform& right);
+			const Transform operator *(const Transform& right) const noexcept
+			{
+				Transform copy{ *this };
+				copy.combine(right);
+				return copy;
+			}
+
+			constexpr const vector2df operator *(const vector2df& right) const noexcept
+			{
+				return this->transformPoint(right);
+			}
+
 			constexpr const vector2df transformPoint(const f32 x, const f32 y) const noexcept;
 			constexpr const vector2df transformPoint(const vector2df& point) const noexcept;
 			const Rectf32 transformRect(const Rectf32& rectangle) const noexcept;
@@ -47,22 +61,10 @@ namespace lib
 			Transform& scale(const f32 scaleX, const f32 scaleY, const f32 centerX, const f32 centerY) noexcept;
 			Transform& scale(const vector2df& factors) noexcept;
 			Transform& scale(const vector2df& factors, const vector2df& center) noexcept;
-			static const Transform Identity;
-			Transform& operator *=(const Transform& right);
 
 		private:
 			std::array<f32, 16> m_matrix;
 		};
-
-		inline const Transform operator *(const Transform& left, const Transform& right) noexcept
-		{
-			return Transform(left).combine(right);
-		}
-
-		inline const vector2df operator *(const Transform& left, const vector2df& right) noexcept
-		{
-			return left.transformPoint(right);
-		}
 	}
 }
 
