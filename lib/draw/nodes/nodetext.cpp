@@ -13,7 +13,7 @@ namespace lib
 	{
 		namespace nodes
 		{
-			NodeText::NodeText(str_const &&name) :
+			NodeText::NodeText(str_const name) :
 				Renderizable{ std::move(name), Triangles, 0 }
 			{
 				logConstruct("Name: ", this->name());
