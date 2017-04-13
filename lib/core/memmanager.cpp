@@ -1,5 +1,5 @@
 #include "memmanager.hpp"
-#include "config.h"
+#include <lib/include/compconfig.hpp>
 
 #ifdef USE_MEM_MANAGER
 #ifdef _MSC_VER

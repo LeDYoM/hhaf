@@ -107,8 +107,8 @@ namespace lib
 					}
 				});
 			}
-			void for_each_node(std::function<void(const sptr<Renderizable> &)> action);
-			void for_each_group(std::function<void(const sptr<SceneNode> &)> action);
+			void for_each_node(std::function<void(const sptr<Renderizable> &)> action) const;
+			void for_each_group(std::function<void(const sptr<SceneNode> &)> action) const;
 
 		protected:
 

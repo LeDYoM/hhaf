@@ -4,15 +4,6 @@ set (LIB_VERSION_MAJOR 1)
 set (LIB_VERSION_MINOR 2)
 set (LIB_VERSION_PATCH 2)
 
-# Activate mem maanager?
-SET (USE_MEM_MANAGER 1)
-
-# Log configuration
-SET (USE_LOGS 1)
-#SET (LOG_FILE "log.txt")
-SET (USE_IDE_CONSOLE_FOR_LOGS 1)
-SET (USE_COUT_FOR_LOGS 1)
-
 set (LIB_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/")
 
 # configure a header file to pass some of the CMake settings

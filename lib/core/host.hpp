@@ -89,6 +89,8 @@ namespace lib
 	}
 
 	inline core::Host &host() noexcept { return core::Host::host(); }
+	inline core::Window &window() noexcept { return core::Host::host().parentWindow(); }
+	inline core::ResourceManager &resourceManager() noexcept { return core::Host::host().resourceManager(); }
 }
 
 #endif

@@ -17,8 +17,6 @@ namespace lib
 
 		void TextGroup::create()
 		{
-//			characterSize.setSetter([this](auto&cs) { m_mainText->characterSize = cs; if (m_option) m_option->characterSize = cs; });
-//			color.setSetter([this](auto&c) { m_mainText->color = c; if (m_option) m_option->color = c; });
 		}
 
 		void TextGroup::configure()
@@ -40,26 +38,12 @@ namespace lib
 					node->color = color();
 				});
 			});
-
-
-			/*
-			if (options().empty()) {
-				m_option->visible = false;
-				m_mainText->alignmentX = NodeText::AlignmentX::Center;
-			}
-			else {
-				m_mainText->alignmentX = NodeText::AlignmentX::Left;
-				m_option->alignmentX = NodeText::AlignmentX::Right;
-			}
-
-			m_mainText->configure();
-			m_option->configure();
-			*/
 		}
 
-		void TextGroup::addTextLine(str_const text)
+		sptr<NodeText> TextGroup::addTextLine(str_const text)
 		{
-			auto ptext = createRenderizable<NodeText>(text);
+			const auto bbox(boxForNextLine());
+			const auto ptext = createRenderizable<NodeText>(text);
 			ptext->text = std::move(text);
 			ptext->font = font;
 			ptext->characterSize = characterSize;
@@ -68,15 +52,31 @@ namespace lib
 			ptext->alignmentX = NodeText::AlignmentX::Left;
 			ptext->alignmentY = NodeText::AlignmentY::Top;
 			ptext->configure();
+			return ptext;
 		}
 
-		void TextGroup::for_each_text(std::function<void(const sptr<NodeText>&)> action)
+		void TextGroup::for_each_text(std::function<void(const sptr<NodeText>&)> action) const
 		{
 			for_each_node([&action](const sptr<Renderizable>&node) {
 				if (auto tnode = std::dynamic_pointer_cast<NodeText>(node)) {
 					action(tnode);
 				}
 			});
+		}
+
+		Rectf32 TextGroup::boxForNextLine() const
+		{
+			const f32 delta{ static_cast<f32>(characterSize()*numLines()) };
+			return alignmentBox().moveResize({0,delta}, {0,-delta});
+		}
+		u32 TextGroup::numLines() const
+		{
+			u32 count{};
+			for_each_text([&count](const sptr<NodeText> &) {
+				++count;
+			});
+
+			return count;
 		}
 	}
 }

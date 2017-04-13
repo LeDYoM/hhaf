@@ -31,10 +31,11 @@ namespace lib
 			void create();
 			void configure();
 
-			void addTextLine(str_const text);
+			sptr<draw::nodes::NodeText> addTextLine(str_const text);
 		private:
-			void for_each_text(std::function<void(const sptr<draw::nodes::NodeText>&)> action);
-
+			void for_each_text(std::function<void(const sptr<draw::nodes::NodeText>&)> action) const;
+			Rectf32 boxForNextLine() const;
+			u32 numLines() const;
 		};
 	}
 }
