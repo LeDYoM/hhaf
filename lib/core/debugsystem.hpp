@@ -6,6 +6,10 @@
 
 namespace lib
 {
+	namespace gui
+	{
+		class TextGroup;
+	}
 	namespace core
 	{
 		class DebugSystem final : public AppService
@@ -13,7 +17,8 @@ namespace lib
 		public:
 			DebugSystem();
 			~DebugSystem();
-
+		private:
+			sptr<gui::TextGroup> m_debugVarsNode;
 		};
 	}
 }

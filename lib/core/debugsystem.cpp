@@ -1,6 +1,7 @@
 #include "debugsystem.hpp"
-
 #include "log.hpp"
+#include <lib/gui/textgroup.hpp>
+#include <lib/draw/scenenode.hpp>
 
 namespace lib
 {
@@ -9,6 +10,8 @@ namespace lib
 		DebugSystem::DebugSystem()
 		{
 			logConstruct_NOPARAMS;
+
+//			m_debugVarsNode = 
 		}
 
 		DebugSystem::~DebugSystem()
