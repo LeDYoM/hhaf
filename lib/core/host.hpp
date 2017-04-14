@@ -25,6 +25,7 @@ namespace lib
 		class ResourceManager;
 		class EventManager;
 		class Randomizer;
+		class DebugSystem;
 
 		class Host final
 		{
@@ -59,6 +60,8 @@ namespace lib
 			inline EventManager &eventManager()  noexcept { return *m_eventManager; }
 			inline input::InputSystem const &inputSystem() const noexcept { return *m_inputSystem; }
 			inline input::InputSystem &inputSystem() noexcept { return *m_inputSystem; }
+			inline DebugSystem const &debugSystem() const noexcept { return *m_debugSystem; }
+			inline DebugSystem &debugSystem() noexcept { return *m_debugSystem; }
 
 			const std::string appId() const;
 
@@ -78,6 +81,7 @@ namespace lib
 			uptr<ResourceManager> m_resourceManager{ nullptr };
 			uptr<EventManager> m_eventManager{ nullptr };
 			uptr<Randomizer> m_randomizer;
+			uptr<DebugSystem> m_debugSystem{ nullptr };
 			uptr<input::InputSystem> m_inputSystem{ nullptr };
 			bool exit{ false };
 			std::vector<sptr<draw::Scene>> m_scenes;
@@ -91,6 +95,7 @@ namespace lib
 	inline core::Host &host() noexcept { return core::Host::host(); }
 	inline core::Window &window() noexcept { return core::Host::host().parentWindow(); }
 	inline core::ResourceManager &resourceManager() noexcept { return core::Host::host().resourceManager(); }
+	inline core::DebugSystem &debugSystem() noexcept { return core::Host::host().debugSystem(); }
 }
 
 #endif

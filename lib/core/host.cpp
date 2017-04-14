@@ -7,6 +7,7 @@
 #include <lib/draw/renderstatesstack.hpp>
 #include <lib/core/events/eventmanager.hpp>
 #include <lib/core/inputsystem.hpp>
+#include <lib/core/debugsystem.hpp>
 
 #include <SFML/Config.hpp>
 
