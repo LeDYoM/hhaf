@@ -7,11 +7,18 @@ namespace lib
 {
 	namespace backend
 	{
-		class BackendFactory
+		class BackendFactory final
 		{
 		public:
+			static bool initilialize();
+			static bool destroy();
 			uptr<IWindowProviderInfo> getWindowProviderInfo();
 			uptr<IWindow> getOrCreateWindow();
+			static inline BackendFactory *const instance() noexcept { return m_instance; }
+		private:
+			BackendFactory();
+			~BackendFactory();
+			static BackendFactory *m_instance;
 		};
 	}
 }

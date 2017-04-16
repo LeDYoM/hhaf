@@ -47,8 +47,7 @@ namespace lib
 
 			__ASSERT(!m_wPrivate->m_backendWindow, "Cannot create window twice");
 			logDebug("Creating window...");
-			backend::BackendFactory bf;
-			m_wPrivate->m_backendWindow = bf.getOrCreateWindow();
+			m_wPrivate->m_backendWindow = backend::BackendFactory::instance()->getOrCreateWindow();
 			logDebug("Window created");
 			logDebug("Registering for view changes...");
 			backend::IWindow &bw(*m_wPrivate->m_backendWindow);

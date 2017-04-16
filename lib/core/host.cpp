@@ -44,6 +44,7 @@ namespace lib
 		{
 			if (!m_instance) {
 				m_instance = new Host(argc, argv);
+				backend::BackendFactory::initilialize();
 				return true;
 			}
 			return false;
@@ -54,6 +55,7 @@ namespace lib
 			if (m_instance) {
 				delete m_instance;
 				m_instance = nullptr;
+				backend::BackendFactory::destroy();
 				return true;
 			}
 			return false;
@@ -65,9 +67,8 @@ namespace lib
 			logConstruct_NOPARAMS;
 			logInfo("Starting HostController...");
 			logInfo("LIB version: ", LIB_VERSION_MAJOR,".", LIB_VERSION_MINOR,".", LIB_VERSION_PATCH);
-			backend::BackendFactory bf;
 			logInfo("Using backend: ");
-			logInfo(bf.getWindowProviderInfo()->info());
+			logInfo(backend::BackendFactory::instance()->getWindowProviderInfo()->info());
 			logInfo("Parsing parameters...");
 			m_params = transformParams(argc, argv);
 		}
