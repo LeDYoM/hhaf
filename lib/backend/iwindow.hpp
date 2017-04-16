@@ -36,6 +36,12 @@ namespace lib
 			virtual void setWindowTitle(const str_const newTitle) = 0;
 			virtual void closeWindow() = 0;
 		};
+
+		class IWindowProviderInfo
+		{
+		public:
+			virtual const char *const info() = 0;
+		};
 	}
 }
 #endif

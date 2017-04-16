@@ -10,6 +10,7 @@ namespace lib
 		class BackendFactory
 		{
 		public:
+			uptr<IWindowProviderInfo> getWindowProviderInfo();
 			uptr<IWindow> getOrCreateWindow();
 		};
 	}

@@ -43,7 +43,11 @@ namespace lib
 
 		private:
 			void keyEvent(sf::Event e);
-
+		};
+		class WindowBackendInfo : public IWindowProviderInfo
+		{
+		public:
+			virtual const char *const info() override;
 		};
 	}
 }

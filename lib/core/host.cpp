@@ -7,9 +7,8 @@
 #include <lib/draw/renderstatesstack.hpp>
 #include <lib/core/events/eventmanager.hpp>
 #include <lib/core/inputsystem.hpp>
-
-#include <SFML/Config.hpp>
-
+#include <lib/backend/backendfactory.hpp>
+#include <lib/backend/iwindow.hpp>
 #include "config.h"
 
 #include <algorithm>
@@ -64,7 +63,9 @@ namespace lib
 			logConstruct_NOPARAMS;
 			logInfo("Starting HostController...");
 			logInfo("LIB version: ", LIB_VERSION_MAJOR,".", LIB_VERSION_MINOR,".", LIB_VERSION_PATCH);
-			logInfo("Using backend: SFML version ", SFML_VERSION_MAJOR, ".", SFML_VERSION_MINOR,".", SFML_VERSION_PATCH, " as backend");
+			backend::BackendFactory bf;
+			logInfo("Using backend: ");
+			logInfo(bf.getWindowProviderInfo()->info());
 			logInfo("Parsing parameters...");
 			m_params = transformParams(argc, argv);
 		}
@@ -93,7 +94,6 @@ namespace lib
 				break;
 			case AppState::ReadyToStart:
 			{
-				// Create the scene manager
 				logDebug(appId(), ": ", " Starting initialization...");
 				m_state = AppState::Executing;
 
