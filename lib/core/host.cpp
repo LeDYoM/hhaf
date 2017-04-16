@@ -106,6 +106,7 @@ namespace lib
 				m_window = muptr<Window>(m_iapp->getAppDescriptor().wcp);
 				m_resourceManager = muptr<core::ResourceManager>(m_iapp->getAppDescriptor().resourceFile);
 				m_renderStates = muptr<draw::RenderStatesStack>();
+				m_debugSystem = muptr<DebugSystem>();
 				
 				addScenes(m_iapp->scenesVector());
 
@@ -136,6 +137,7 @@ namespace lib
 				m_scenes.clear();
 				m_state = AppState::Terminated;
 //				m_iapp->onFinish();
+				m_debugSystem = nullptr;
 				m_window = nullptr;
 				m_resourceManager = nullptr;
 				m_eventManager = nullptr;
@@ -181,6 +183,7 @@ namespace lib
 
 			m_renderStates->newFrame();
 			m_currentScene->draw();
+			m_debugSystem->update();
 
 			m_window->postLoop();
 			m_inputSystem->postUpdate();

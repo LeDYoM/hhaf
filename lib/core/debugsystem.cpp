@@ -18,5 +18,12 @@ namespace lib
 		{
 			logDestruct_NOPARAMS;
 		}
+
+		void DebugSystem::update()
+		{
+			if (m_debugVarsNode) {
+				m_debugVarsNode->draw();
+			}
+		}
 	}
 }

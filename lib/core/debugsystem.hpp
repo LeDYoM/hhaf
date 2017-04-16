@@ -17,6 +17,8 @@ namespace lib
 		public:
 			DebugSystem();
 			~DebugSystem();
+
+			void update();
 		private:
 			sptr<gui::TextGroup> m_debugVarsNode;
 		};
