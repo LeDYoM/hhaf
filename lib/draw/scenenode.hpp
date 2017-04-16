@@ -54,7 +54,6 @@ namespace lib
 				return result;
 			}
 
-
 			template <typename T = SceneNode, typename... Args>
 			sptr<T> createSceneNode(str_const name, Args&&... args)
 			{
@@ -96,8 +95,20 @@ namespace lib
 			template <typename T>
 			constexpr const T *const snCast() const { return dynamic_cast<const T *const>(this); }
 
-			void for_each_node(std::function<void(const sptr<Renderizable> &)> action);
-			void for_each_group(std::function<void(const sptr<SceneNode> &)> action);
+//			template <typename T, typename U>
+//			void apply_property_value_nodes(const T &value)
+
+			template <typename T>
+			void for_each_node_as(std::function<void(const sptr<T> &)> action)
+			{
+				for_each_node([&action](const sptr<Renderizable>&node) {
+					if (auto tnode = std::dynamic_pointer_cast<NodeText>(node)) {
+						action(tnode);
+					}
+				});
+			}
+			void for_each_node(std::function<void(const sptr<Renderizable> &)> action) const;
+			void for_each_group(std::function<void(const sptr<SceneNode> &)> action) const;
 
 		protected:
 

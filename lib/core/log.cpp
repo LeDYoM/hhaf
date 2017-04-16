@@ -1,5 +1,5 @@
 #include "log.hpp"
-#include "config.h"
+#include <lib/include/compconfig.hpp>
 
 #ifdef USE_LOGS
 

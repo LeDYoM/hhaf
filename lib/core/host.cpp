@@ -9,6 +9,8 @@
 #include <lib/core/inputsystem.hpp>
 #include <lib/backend/backendfactory.hpp>
 #include <lib/backend/iwindow.hpp>
+#include <lib/core/debugsystem.hpp>
+
 #include "config.h"
 
 #include <algorithm>

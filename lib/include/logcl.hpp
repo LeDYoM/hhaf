@@ -2,6 +2,7 @@
 #define LIB_LOG_CLIENT_INCLUDE_HPP__
 
 #include <lib/include/types.hpp>
+#include <lib/include/compconfig.hpp>
 
 enum class LogType
 {
@@ -47,8 +48,6 @@ constexpr void logprint(Args&&...args)
 	}
 	print_impl(std::forward<Args>(args)...);
 }
-
-#define CLIENT_USE_LOGS
 
 #ifdef CLIENT_USE_LOGS
 

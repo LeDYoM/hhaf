@@ -2,7 +2,7 @@
 #define LIB_LOG_INCLUDE_HPP__
 
 #include <lib/include/types.hpp>
-#include "config.h"
+#include <lib/include/compconfig.hpp>
 #include <lib/include/logcl.hpp>
 
 void initLog();

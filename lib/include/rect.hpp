@@ -84,9 +84,10 @@ namespace lib
 		constexpr const vector2d<T> rightTop() const  noexcept { return vector2d<T>{right(), top}; }
 		constexpr const vector2d<T> leftBottom() const  noexcept { return vector2d<T>{left, bottom()}; }
 
-		constexpr const Rect move(const vector2d<T> &offset) const { return (Rect( *this ) += offset); };
-		constexpr const Rect resize(const vector2d<T> &sSize) const { return Rect{ left, top, width + sSize.x, height + sSize.y }; };
-		constexpr const Rect setRadiusFromCenter(const vector2d<T> &radius) const { Rect temp{ *this }; temp.setRadiusFromCenter(radius); return temp; }
+		constexpr Rect move(const vector2d<T> &offset) const { return (Rect( *this ) += offset); };
+		constexpr Rect resize(const vector2d<T> &sSize) const { return Rect{ left, top, width + sSize.x, height + sSize.y }; };
+		constexpr Rect setRadiusFromCenter(const vector2d<T> &radius) const { Rect temp{ *this }; temp.setRadiusFromCenter(radius); return temp; }
+		constexpr Rect moveResize(const vector2d<T> &offset, const vector2d<T> &sSize) const { return move(offset).resize(sSize); };
 	};
 
 	// Serialization operators
@@ -107,4 +108,4 @@ namespace lib
 	using Rectf64 = Rect<f64>;
 }
 
-#endif
+#endif*

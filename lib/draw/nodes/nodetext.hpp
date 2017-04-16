@@ -29,7 +29,7 @@ namespace lib
 					Bottom
 				};
 
-				NodeText(str_const &&name);
+				NodeText(str_const name);
 				virtual ~NodeText();
 
 				virtual void configure() override;
