@@ -13,6 +13,7 @@ namespace lib
 		{
 		public:
 
+
 			virtual ~ITexture() {}
 
 		};

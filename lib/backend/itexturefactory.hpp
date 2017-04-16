@@ -5,6 +5,8 @@
 #include <lib/include/vector2d.hpp>
 #include <lib/include/rect.hpp>
 
+#include "itexture.hpp"
+
 namespace lib
 {
 	namespace backend
@@ -12,9 +14,7 @@ namespace lib
 		class ITextureFactory
 		{
 		public:
-
 			virtual ~ITextureFactory() {}
-
 		};
 	}
 }
