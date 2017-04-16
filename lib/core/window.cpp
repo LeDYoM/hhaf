@@ -47,11 +47,14 @@ namespace lib
 
 			__ASSERT(!m_wPrivate->m_backendWindow, "Cannot create window twice");
 			logDebug("Creating window...");
+
+			// Create window object
 			m_wPrivate->m_backendWindow = backend::BackendFactory::instance()->getOrCreateWindow();
 			logDebug("Window created");
 			logDebug("Registering for view changes...");
 			backend::IWindow &bw(*m_wPrivate->m_backendWindow);
 
+			// Create physical window
 			if (const bool result{ bw.createWindow(wcp) }) {
 				viewPort = bw.viewPort();
 				viewRect = bw.viewRect();

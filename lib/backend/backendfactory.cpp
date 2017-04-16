@@ -8,8 +8,14 @@ namespace lib
 	{
 		BackendFactory *BackendFactory::m_instance = nullptr;
 
-		BackendFactory::BackendFactory() {}
-		BackendFactory::~BackendFactory() {}
+		BackendFactory::BackendFactory()
+		{
+			logConstruct_NOPARAMS;
+		}
+		BackendFactory::~BackendFactory() 
+		{
+			logDestruct_NOPARAMS;
+		}
 
 		bool BackendFactory::initilialize()
 		{

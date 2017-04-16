@@ -53,9 +53,9 @@ namespace lib
 		bool Host::destroyHost() noexcept
 		{
 			if (m_instance) {
+				backend::BackendFactory::destroy();
 				delete m_instance;
 				m_instance = nullptr;
-				backend::BackendFactory::destroy();
 				return true;
 			}
 			return false;
