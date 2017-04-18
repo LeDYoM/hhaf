@@ -10,6 +10,10 @@ namespace lib
 	{
 		class TextGroup;
 	}
+	namespace draw
+	{
+		class Scene;
+	}
 	namespace core
 	{
 		class DebugSystem final : public AppService
@@ -19,8 +23,12 @@ namespace lib
 			~DebugSystem();
 
 			void update();
+			void addDebugVars(const sptr<draw::Scene> &scene);
+			void addStandardDebugVars();
 		private:
-			sptr<gui::TextGroup> m_debugVarsNode;
+			void activeSceneChanged(const sptr<draw::Scene> &currentScene);
+			sptr<gui::TextGroup> debugVarsNodeForScene(const sptr<draw::Scene> &currentScene);
+			sptr<gui::TextGroup> m_currentDebugVarsNode;
 		};
 	}
 }
