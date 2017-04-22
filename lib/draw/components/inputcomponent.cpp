@@ -50,7 +50,7 @@ namespace lib
 
 		bool InputComponent::isPressed(const input::Key key)
 		{
-			return host().parentWindow().currentKeyStates()[key];
+			return host().inputSystem().keyStates()[key];
 		}
 	}
 }

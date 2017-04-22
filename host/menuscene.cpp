@@ -5,12 +5,14 @@
 #include <lib/core/resourcemanager.hpp>
 #include <lib/core/host.hpp>
 #include <lib/core/events/eventmanager.hpp>
+#include <lib/core/debugsystem.hpp>
 
 #include "mainmenu.hpp"
 
 namespace zoper
 {
 	using namespace lib;
+	using namespace lib::core;
 	using namespace lib::draw;
 	using namespace lib::draw::nodes;
 	using namespace lib::gui;

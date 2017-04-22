@@ -42,7 +42,7 @@ namespace lib
 			virtual void onResize();
 
 		private:
-			void keyEvent(sf::Event e);
+			void keyEvent(const sf::Event &e);
 		};
 		class WindowBackendInfo : public IWindowProviderInfo
 		{

@@ -27,13 +27,23 @@ namespace lib
 
 			inline SceneNode *const attachedNode() const noexcept { return m_sceneNode; }
 		private:
-			SceneNode *m_sceneNode{};
+			SceneNode *m_sceneNode;
 			friend class ComponentContainer;
 		};
 
 		class DataOnlyComponent : public IComponent
 		{
 			virtual void update() override final {}
+		};
+
+		template <typename T1, typename T2>
+		class IComponentMixin : public IComponent
+		{
+			virtual void update() override
+			{
+				T1::update();
+				T2::update();
+			}
 		};
 	}
 }

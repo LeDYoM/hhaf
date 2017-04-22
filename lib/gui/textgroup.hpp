@@ -15,7 +15,6 @@ namespace lib
 		namespace nodes
 		{
 			class NodeText;
-			class DiscreteText;
 		}
 	}
 	namespace gui

@@ -6,13 +6,8 @@ namespace lib
 {
 	namespace input
 	{
-		InputSystem::InputSystem()
-		{
-		}
-
-		InputSystem::~InputSystem()
-		{
-		}
+		InputSystem::InputSystem() : m_keyStates{} {}
+		InputSystem::~InputSystem() = default;
 
 		void InputSystem::keyPressed(const Key key)
 		{

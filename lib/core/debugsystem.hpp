@@ -3,56 +3,87 @@
 
 #include <lib/include/types.hpp>
 #include <lib/core/appservice.hpp>
+#include <lib/core/log.hpp>
 #include <lib/draw/icomponent.hpp>
+#include <lib/draw/components/inputcomponent.hpp>
 
-#include <map>
+#include <vector>
 
 namespace lib
 {
-	namespace gui
-	{
-		class TextGroup;
-	}
 	namespace draw
 	{
 		class Scene;
+		namespace nodes
+		{
+			class NodeText;
+		}
 	}
 
 	class DebugVarIterator
 	{
-		DebugVarIterator(str_const id, str_const data, const sptr<gui::TextGroup> tg) : data{ data }, linkedTextGroup{tg->addTextLine()}
+	public:
+		DebugVarIterator() = default;
+		DebugVarIterator(str_const id, str_const data) 
+			: m_id{ std::move(id) }, m_data{ std::move(data) } {}
+
+		void setValue(const str_const nv) 
 		{
+			m_data = nv;
 		}
+
+		const str_const operator()() const noexcept {
+			return { m_id + ": " + m_data };
+		}
+
+		inline const str_const id() const noexcept { return m_id; }
 	private:
 		str_const m_id;
 		str_const m_data;
-		sptr<draw::nodes::NodeText> linkedTextGroup;
 	};
-	class DebugVarsComponent : public draw::IComponent
+
+	class DebugVarsComponent : public draw::InputComponent
 	{
+	public:
+		bool m_displayVarsNextFrame{ false };
+
+		void displayDebugVars()
+		{
+			for (auto&& dv : m_varsData) {
+				logDebug(dv());
+			}
+		}
 		virtual void update() override
 		{
+			draw::InputComponent::update();
 
+			if (isPressed(input::Key::Num1)) {
+				m_displayVarsNextFrame = true;
+			}
+
+			if (m_displayVarsNextFrame) {
+				m_displayVarsNextFrame = false;
+				displayDebugVars();
+			}
 		}
 
 		void addOrUpdateDebugVar(const str_const &id, str_const data)
 		{
-			const auto iterator(m_varsData.find(id));
+			const auto iterator(std::find_if(m_varsData.begin(), m_varsData.end(), 
+				[&id](const auto &dvi) { return dvi.id() == id; }
+			));
 			if (iterator != m_varsData.end()) {
 				// Update
-				iterator->second.data = std::move(data);
+				iterator->setValue(data);
 			}
 			else {
 				// Add
-				auto textLine = _attachedNode()->addTextLine(id + ":" + data);
-				m_varsData[id] = DebugVarIterator{std::move(data),std::move(textLine)};
+				m_varsData.emplace_back(std::move(id),std::move(data) );
 			}
 		}
 
-		gui::TextGroup *const _attachedNode() { return dynamic_cast<gui::TextGroup*const>(attachedNode()); }
-
 	private:
-		std::map<str_const, DebugVarIterator> m_varsData;
+		std::vector<DebugVarIterator> m_varsData;
 	};
 
 	namespace core
@@ -63,14 +94,7 @@ namespace lib
 			DebugSystem();
 			~DebugSystem();
 
-			void update();
 			void addDebugVars(const sptr<draw::Scene> &scene);
-			void addStandardDebugVars();
-		private:
-			void activeSceneChanged(const sptr<draw::Scene> &currentScene);
-			sptr<gui::TextGroup> debugVarsNodeForScene(const sptr<draw::Scene> &currentScene);
-			sptr<gui::TextGroup> m_currentDebugVarsNode;
-			bool m_activeSceneChanged{ true };
 		};
 	}
 }

@@ -17,7 +17,6 @@ namespace lib
 			u64 lastTimeFps{ 0 };
 			s32 lastFps{ 0 };
 			s32 currentFps{ 0 };
-			input::KeyStates m_keyStates;
 			uptr<backend::IWindow> m_backendWindow;
 		};
 
@@ -95,11 +94,6 @@ namespace lib
 			logDebug("Going to close Window");
 			m_wPrivate->m_backendWindow->closeWindow();
 			logDebug("Window closed");
-		}
-
-		const input::KeyStates & Window::currentKeyStates() const noexcept
-		{
-			return m_wPrivate->m_keyStates;
 		}
 	}
 }

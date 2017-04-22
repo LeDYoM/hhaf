@@ -28,7 +28,7 @@ namespace lib
 		private:
 			const std::vector<Key> &pressedKeys() const noexcept;
 			const std::vector<Key> &releasedKeys() const noexcept;
-
+			const KeyStates &keyStates() const noexcept { return m_keyStates; }
 			friend class lib::draw::InputComponent;
 			KeyStates m_keyStates;
 			std::vector<Key> m_pressedKeys;

@@ -29,7 +29,6 @@ namespace lib
 			virtual void onCreate();
 			virtual void onDestroy();
 
-			const input::KeyStates &currentKeyStates() const noexcept;
 			Property<Rectf32> viewPort;
 			Property<Rectf32> viewRect;
 

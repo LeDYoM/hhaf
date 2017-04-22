@@ -183,7 +183,6 @@ namespace lib
 
 			m_renderStates->newFrame();
 			m_currentScene->draw();
-			m_debugSystem->update();
 
 			m_window->postLoop();
 			m_inputSystem->postUpdate();
@@ -217,6 +216,8 @@ namespace lib
 			__ASSERT(newScene, "Cannot add a null scene");
 			m_scenes.push_back(newScene);
 			newScene->onInit();
+
+			m_debugSystem->addDebugVars(newScene);
 		}
 
 		void Host::setScene(const std::string &name)

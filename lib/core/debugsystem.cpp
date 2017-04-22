@@ -18,20 +18,13 @@ namespace lib
 			logDestruct_NOPARAMS;
 		}
 
-		void DebugSystem::update()
+		void DebugSystem::addDebugVars(const sptr<draw::Scene>&scene)
 		{
+			auto dbc(scene->ensureComponentOfType<DebugVarsComponent>());
+			dbc->addOrUpdateDebugVar("", "");
 		}
 
-		void DebugSystem::addDebugVars(const sptr<draw::Scene>& scene)
-		{
-			scene->createSceneNode<gui::TextGroup>("DebugVars_"+scene->name());
-		}
-
-		void DebugSystem::addStandardDebugVars()
-		{
-			m_currentDebugVarsNode->addTextLine("Test: 0");
-		}
-
+/*
 		void DebugSystem::activeSceneChanged(const sptr<draw::Scene>& currentScene)
 		{
 			if (m_currentDebugVarsNode && m_currentDebugVarsNode->parentScene()->isActiveScene()) {
@@ -39,10 +32,6 @@ namespace lib
 			}
 
 		}
-
-		sptr<gui::TextGroup> DebugSystem::debugVarsNodeForScene(const sptr<draw::Scene>& currentScene)
-		{
-			return sptr<gui::TextGroup>();
-		}
+*/
 	}
 }

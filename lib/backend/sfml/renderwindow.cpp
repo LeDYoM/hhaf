@@ -3,6 +3,7 @@
 #include <lib/core/inputsystem.hpp>
 #include <lib/include/key.hpp>
 #include "conversions.hpp"
+#include <lib/core/log.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/Config.hpp>
 
@@ -64,15 +65,22 @@ namespace lib
 			return Rectf32::fromCenterAndSize(toVector2d(currentView.getCenter()), toVector2d(currentView.getSize()));
 		}
 
-		void RenderWindow::keyEvent(sf::Event e)
+		void RenderWindow::keyEvent(const sf::Event &e)
 		{
 			_ASSERT(e.type == sf::Event::KeyPressed || e.type == sf::Event::KeyReleased);
 
-			if (e.type == sf::Event::KeyPressed) {
-				host().inputSystem().keyPressed(doCast(e.key.code));
+			const auto k(doCast(e.key.code));
+			logDebug("Backend key event. Type: ", (int)(e.type), " Key: ", (int)(e.key.code));
+			if (k != input::Key::Unknown) {
+				if (e.type == sf::Event::KeyPressed) {
+					host().inputSystem().keyPressed(k);
+				}
+				else {
+					host().inputSystem().keyReleased(k);
+				}
 			}
 			else {
-				host().inputSystem().keyReleased(doCast(e.key.code));
+				logWarning("Unknow keycode");
 			}
 		}
 
