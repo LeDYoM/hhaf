@@ -24,14 +24,5 @@ namespace lib
 			dbc->addOrUpdateDebugVar("", "");
 		}
 
-/*
-		void DebugSystem::activeSceneChanged(const sptr<draw::Scene>& currentScene)
-		{
-			if (m_currentDebugVarsNode && m_currentDebugVarsNode->parentScene()->isActiveScene()) {
-				return;
-			}
-
-		}
-*/
 	}
 }

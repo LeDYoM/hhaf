@@ -74,7 +74,7 @@ namespace lib
 			));
 			if (iterator != m_varsData.end()) {
 				// Update
-				iterator->setValue(data);
+				iterator->setValue(std::move(data));
 			}
 			else {
 				// Add
