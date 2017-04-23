@@ -19,9 +19,6 @@ namespace lib
 
 		void SceneNode::draw()
 		{
-			if (name() == "DebugVars_MenuScene") {
-				int a = 4;
-			}
 			if (visible()) {
 				// Update the node components
 				updateComponents();

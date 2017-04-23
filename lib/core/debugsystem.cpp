@@ -1,8 +1,8 @@
 #include "debugsystem.hpp"
 #include "log.hpp"
-#include <lib/gui/textgroup.hpp>
 #include <lib/draw/scenenode.hpp>
 #include <lib/draw/scene.hpp>
+#include <lib/draw/components/debugvarscomponent.hpp>
 
 namespace lib
 {
@@ -20,7 +20,7 @@ namespace lib
 
 		void DebugSystem::addDebugVars(const sptr<draw::Scene>&scene)
 		{
-			auto dbc(scene->ensureComponentOfType<DebugVarsComponent>());
+			auto dbc(scene->ensureComponentOfType<draw::DebugVarsComponent>());
 			dbc->addOrUpdateDebugVar("", "");
 		}
 
