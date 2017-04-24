@@ -1,6 +1,8 @@
 #include "transformation.hpp"
-#include <cmath>
 #include <math.h>
+
+#include <lib/core/debugsystem.hpp>
+#include <lib/core/host.hpp>
 
 namespace lib
 {
@@ -46,8 +48,12 @@ namespace lib
 			return Rectf32{left, top, right - left, bottom - top};
 		}
 
+		static u32 combinations{ 0 };
+
 		Transform& Transform::combine(const Transform& transform) noexcept
 		{
+			++combinations;
+
 			const std::array<f32,16> &a = m_matrix;
 			const std::array<f32, 16> &b = transform.m_matrix;
 

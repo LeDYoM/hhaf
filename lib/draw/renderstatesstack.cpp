@@ -27,6 +27,7 @@ namespace lib
 				texture );
 			return RenderStatesStackHandle(*this);
 		}
+
 		void RenderStatesStack::popChanges()
 		{
 			__ASSERT(!m_statesStack.empty(), "RenderStates stack is empty");
@@ -39,7 +40,6 @@ namespace lib
 			m_stack.popChanges();
 		}
 
-		constexpr RenderStatesStackHandle::RenderStatesStackHandle(RenderStatesStack & stack)
-			: m_stack{ stack } {}
+		constexpr RenderStatesStackHandle::RenderStatesStackHandle(RenderStatesStack & stack) : m_stack{ stack } {}
 	}
 }

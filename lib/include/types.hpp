@@ -46,6 +46,8 @@ namespace lib
 	using f64 = double;
 	using str_const = std::string;
 	using write_stream = std::ostream;
+	using read_stream = std::istream;
+
 
 	using string_vector = std::vector<str_const>;
 }

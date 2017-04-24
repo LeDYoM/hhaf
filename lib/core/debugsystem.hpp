@@ -18,6 +18,7 @@ namespace lib
 
 	namespace core
 	{
+
 		class DebugSystem final : public AppService
 		{
 		public:
@@ -25,6 +26,9 @@ namespace lib
 			~DebugSystem();
 
 			void addDebugVars(const sptr<draw::Scene> &scene);
+			void setMatrixMultiplicationPerFrame(u32 &var);
+		private:
+			draw::DebugVarAccessor m_matrixMultiplicationPerFrame;
 		};
 	}
 }
