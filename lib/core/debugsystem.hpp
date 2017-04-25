@@ -34,7 +34,7 @@ namespace lib
 
 			void showVarsNextFrame();
 		private:
-			draw::DebugVarAccessor m_matrixMultiplicationPerFrame;
+			DebugVarAccessor m_matrixMultiplicationPerFrame;
 		};
 	}
 }
