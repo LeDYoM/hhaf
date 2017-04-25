@@ -70,6 +70,8 @@ namespace lib
 
 			inline const Randomizer &randomizer() const noexcept { return *m_randomizer; }
 
+			inline const sptr<draw::Scene> &currentScene() const noexcept { return m_currentScene; }
+
 		private:
 			bool loopStep();
 			void updateScene();
@@ -96,6 +98,7 @@ namespace lib
 	inline core::Window &window() noexcept { return core::Host::host().parentWindow(); }
 	inline core::ResourceManager &resourceManager() noexcept { return core::Host::host().resourceManager(); }
 	inline core::DebugSystem &debugSystem() noexcept { return core::Host::host().debugSystem(); }
+
 }
 
 #endif

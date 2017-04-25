@@ -3,6 +3,7 @@
 #include <lib/draw/scenenode.hpp>
 #include <lib/draw/scene.hpp>
 #include <lib/draw/components/debugvarscomponent.hpp>
+#include "host.hpp"
 
 namespace lib
 {
@@ -26,7 +27,8 @@ namespace lib
 
 		void DebugSystem::setMatrixMultiplicationPerFrame(u32 & var)
 		{
-
+			auto dbc(host().currentScene()->ensureComponentOfType<draw::DebugVarsComponent>());
+			dbc->addOrUpdateDebugVar(m_matrixMultiplicationPerFrame,"Matrix mul per Frame:",std::to_string(var));
 		}
 
 	}

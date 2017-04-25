@@ -5,7 +5,7 @@
 #include <lib/core/appservice.hpp>
 #include <lib/core/log.hpp>
 #include <lib/draw/icomponent.hpp>
-#include <lib/draw/components/inputcomponent.hpp>
+#include <lib/draw/components/debugvarscomponent.hpp>
 
 #include <vector>
 
