@@ -34,6 +34,7 @@ namespace lib
 			void addOrUpdateDebugVar(DebugVarAccessor & dba, const str_const &id, str_const data);
 			void addOrUpdateDebugVar(DebugVarAccessor & dba, const str_const &id, const u32 data);
 
+			inline void showVarsNextFrame() noexcept { m_displayVarsNextFrame = true; }
 		private:
 			void displayDebugVars();
 

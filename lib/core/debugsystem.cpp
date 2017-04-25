@@ -31,5 +31,11 @@ namespace lib
 			dbc->addOrUpdateDebugVar(m_matrixMultiplicationPerFrame,"Matrix mul per Frame:",std::to_string(var));
 		}
 
+		void DebugSystem::showVarsNextFrame()
+		{
+			auto dbc(host().currentScene()->ensureComponentOfType<draw::DebugVarsComponent>());
+			dbc->showVarsNextFrame();
+		}
+
 	}
 }

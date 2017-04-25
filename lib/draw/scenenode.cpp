@@ -120,6 +120,7 @@ namespace lib
 
 		void SceneNode::clear()
 		{
+			updateRemoves();
 			m_groups.nodes.clear();
 			m_renderNodes.nodes.clear();
 			clearComponents();

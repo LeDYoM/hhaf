@@ -3,11 +3,15 @@
 
 #include <lib/include/types.hpp>
 #include <lib/core/appservice.hpp>
-#include <lib/core/log.hpp>
-#include <lib/draw/icomponent.hpp>
 #include <lib/draw/components/debugvarscomponent.hpp>
+#include <lib/include/compconfig.hpp>
 
-#include <vector>
+#ifdef USE_DEBUG_VARIABLES
+	#define DV_ONLY(x)	x
+#else
+	#define DV_ONLY(x)
+#endif
+
 
 namespace lib
 {
@@ -27,6 +31,8 @@ namespace lib
 
 			void addDebugVars(const sptr<draw::Scene> &scene);
 			void setMatrixMultiplicationPerFrame(u32 &var);
+
+			void showVarsNextFrame();
 		private:
 			draw::DebugVarAccessor m_matrixMultiplicationPerFrame;
 		};

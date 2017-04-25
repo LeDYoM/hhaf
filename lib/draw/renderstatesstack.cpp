@@ -2,6 +2,8 @@
 #include "transformation.hpp"
 #include "texture.hpp"
 #include <lib/core/log.hpp>
+#include <lib/core/debugsystem.hpp>
+#include <lib/core/host.hpp>
 
 namespace lib
 {
@@ -15,14 +17,20 @@ namespace lib
 			return m_renderStates;
 		}
 
+		static u32 multiplications{ 0 };
 		void RenderStatesStack::newFrame() noexcept
 		{
+			debugSystem().setMatrixMultiplicationPerFrame(multiplications);
+			multiplications = 0;
 			m_renderStates = RenderStates();
 		}
 
 		RenderStatesStackHandle RenderStatesStack::pushChanges(const Transform *transform, const Texture *texture)
 		{
 			m_statesStack.emplace(std::move(m_renderStates));
+			if (transform) {
+				++multiplications;
+			}
 			m_renderStates = RenderStates(transform ? m_renderStates.m_transform*(*transform) : m_renderStates.m_transform,
 				texture );
 			return RenderStatesStackHandle(*this);
