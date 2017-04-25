@@ -6,6 +6,7 @@
 #include <lib/draw/components/inputcomponent.hpp>
 #include <lib/core/log.hpp>
 #include <lib/include/debugvar.hpp>
+#include <lib/include/str.hpp>
 #include <vector>
 
 namespace lib
@@ -16,8 +17,8 @@ namespace lib
 		{
 		public:
 			virtual void update() override;
-			void addOrUpdateDebugVar(DebugVarAccessor & dba, const str_const &id, str_const data);
-			void addOrUpdateDebugVar(DebugVarAccessor & dba, const str_const &id, const u32 data);
+			void addOrUpdateDebugVar(DebugVarAccessor & dba, str_const_ id, str_const_ data);
+			void addOrUpdateDebugVar(DebugVarAccessor & dba, str_const_ id, const u32 data);
 
 			inline void showVarsNextFrame() noexcept { m_displayVarsNextFrame = true; }
 		private:
