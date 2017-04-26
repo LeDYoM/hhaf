@@ -24,7 +24,7 @@ namespace lib
 		const Rectf32 Transform::transformRect(const Rectf32& rectangle) const noexcept
 		{
 			// Transform the 4 corners of the rectangle
-			const std::array<vector2df,4> points =
+			const vector2df points[4] =
 			{
 				transformPoint(rectangle.left, rectangle.top),
 				transformPoint(rectangle.left, rectangle.top + rectangle.height),
@@ -50,8 +50,8 @@ namespace lib
 
 		Transform& Transform::combine(const Transform& transform) noexcept
 		{
-			const std::array<f32,16> &a = m_matrix;
-			const std::array<f32, 16> &b = transform.m_matrix;
+			const f32* a = &(m_matrix[0]);
+			const f32* b = &(transform.m_matrix[0]);
 
 			*this = Transform{ a[0] * b[0] + a[4] * b[1] + a[12] * b[3],
 				a[0] * b[4] + a[4] * b[5] + a[12] * b[7],

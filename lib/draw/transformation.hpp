@@ -4,8 +4,6 @@
 #include <lib/include/vector2d.hpp>
 #include <lib/include/rect.hpp>
 
-#include <array>
-
 namespace lib
 {
 	namespace draw
@@ -67,7 +65,7 @@ namespace lib
 			Transform& scale(const vector2df& factors, const vector2df& center) noexcept;
 
 		private:
-			std::array<f32, 16> m_matrix;
+			f32 m_matrix[16];
 		};
 	}
 }

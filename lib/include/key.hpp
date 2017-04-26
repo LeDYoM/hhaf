@@ -2,7 +2,6 @@
 #define LIB__KEY_INCLUDE_HPP__
 
 #include <lib/include/types.hpp>
-#include <array>
 
 namespace lib
 {
@@ -129,7 +128,7 @@ namespace lib
 			return is;
 		}
 
-		using KeyStates = std::array<bool, KeyCount>;
+		using KeyStates = bool[KeyCount];
 	}
 }
 

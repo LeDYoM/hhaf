@@ -38,11 +38,6 @@ namespace lib
 	private:
 		std::basic_string<char> m_data;
 	};
-
-	str_ operator+(const str_ &lhs, const str_ &rhs) {
-		return { lhs + rhs };
-	}
-
 }
 
 #endif

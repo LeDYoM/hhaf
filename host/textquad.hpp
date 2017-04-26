@@ -17,7 +17,7 @@ namespace zoper
 
 	private:
 		lib::Rectf32 m_box;
-		std::array<lib::sptr<lib::draw::nodes::NodeText>, 4> m_texts;
+		lib::sptr<lib::draw::nodes::NodeText> m_texts[4];
 	};
 }
 
