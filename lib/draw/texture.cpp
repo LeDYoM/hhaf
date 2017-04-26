@@ -19,7 +19,7 @@ namespace lib
 
 		Texture::~Texture() = default;
 
-		bool Texture::loadFromFile(const std::string& filename)
+		bool Texture::loadFromFile(const str& filename)
 		{
 			return m_texturePrivateOld->loadFromFile(filename);
 		}

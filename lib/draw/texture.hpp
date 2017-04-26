@@ -22,7 +22,7 @@ namespace lib
 
 			virtual ~Texture();
 
-			bool loadFromFile(const std::string& filename);
+			bool loadFromFile(const str& filename);
 			vector2du32 size() const;
 
 			const sf::Texture *backEndTexture() const;
