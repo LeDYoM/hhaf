@@ -12,7 +12,7 @@ namespace zoper
 	class GameBaseTile : public lib::board::ITile, public lib::draw::SceneNode
 	{
 	public:
-		explicit GameBaseTile(lib::draw::SceneNode* const parent, lib::str_const name, lib::board::BoardTileData data);
+		explicit GameBaseTile(lib::draw::SceneNode* const parent, lib::str name, lib::board::BoardTileData data);
 		virtual ~GameBaseTile() = default;
 
 		lib::draw::Color getColorForToken() const;

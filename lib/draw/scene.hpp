@@ -24,7 +24,7 @@ namespace lib
 		class Scene : public draw::SceneNode
 		{
 		public:
-			Scene(str_const name);
+			Scene(str name);
 			virtual ~Scene();
 
 			virtual void onInit();

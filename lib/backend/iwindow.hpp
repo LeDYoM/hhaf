@@ -33,7 +33,7 @@ namespace lib
 
 			virtual void display() = 0;
 			virtual void clear() = 0;
-			virtual void setWindowTitle(const str_const newTitle) = 0;
+			virtual void setWindowTitle(const str newTitle) = 0;
 			virtual void closeWindow() = 0;
 		};
 

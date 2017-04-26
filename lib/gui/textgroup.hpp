@@ -22,7 +22,7 @@ namespace lib
 		class TextGroup : public draw::SceneNode
 		{
 		public:
-			TextGroup(SceneNode* parent, str_const name);
+			TextGroup(SceneNode* parent, str name);
 			Property<Rectf32> alignmentBox;
 			Property<sptr<draw::Font>> font;
 			Property<u32> characterSize;
@@ -30,7 +30,7 @@ namespace lib
 			void create();
 			void configure();
 
-			sptr<draw::nodes::NodeText> addTextLine(str_const text);
+			sptr<draw::nodes::NodeText> addTextLine(str text);
 		private:
 			void for_each_text(std::function<void(const sptr<draw::nodes::NodeText>&)> action) const;
 			Rectf32 boxForNextLine() const;

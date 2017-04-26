@@ -14,7 +14,7 @@ namespace lib
 	{
 		using namespace draw;
 
-		ChooseControl::ChooseControl(lib::draw::SceneNode *parent, str_const &&name)
+		ChooseControl::ChooseControl(lib::draw::SceneNode *parent, str &&name)
 			: SceneNode{ parent, std::move(name) }
 		{
 		}

@@ -12,7 +12,7 @@ namespace lib
 		using namespace draw;
 		using namespace draw::nodes;
 
-		TextGroup::TextGroup(SceneNode* parent, str_const name)
+		TextGroup::TextGroup(SceneNode* parent, str name)
 			: SceneNode{parent,std::move(name)} {}
 
 		void TextGroup::create()
@@ -40,7 +40,7 @@ namespace lib
 			});
 		}
 
-		sptr<NodeText> TextGroup::addTextLine(str_const text)
+		sptr<NodeText> TextGroup::addTextLine(str text)
 		{
 			const auto bbox(boxForNextLine());
 			const auto ptext = createRenderizable<NodeText>(text);

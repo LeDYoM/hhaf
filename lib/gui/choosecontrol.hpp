@@ -27,7 +27,7 @@ namespace lib
 		class ChooseControl : public draw::SceneNode
 		{
 		public:
-			ChooseControl(lib::draw::SceneNode *parent, str_const &&name);
+			ChooseControl(lib::draw::SceneNode *parent, str &&name);
 			virtual ~ChooseControl();
 
 			void configure();

@@ -10,7 +10,7 @@ namespace lib
 {
 	namespace draw
 	{
-		Scene::Scene(str_const name) : SceneNode{ nullptr,std::move(name) },
+		Scene::Scene(str name) : SceneNode{ nullptr,std::move(name) },
 			viewPort{ dynamic_cast<IProperty<Rectf32>*>(&(host().parentWindow().viewPort)) },
 			viewRect{ dynamic_cast<IProperty<Rectf32>*>(&(host().parentWindow().viewRect)) }
 		{

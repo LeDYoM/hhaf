@@ -12,7 +12,7 @@ namespace lib
 {
 	namespace draw
 	{
-		SceneNode::SceneNode(SceneNode *const parent, str_const name)
+		SceneNode::SceneNode(SceneNode *const parent, str name)
 			: core::HasName{ std::move(name) }, ComponentContainer{ this }, m_parent{ parent }, visible{ true } {}
 
 		SceneNode::~SceneNode() { clear(); };

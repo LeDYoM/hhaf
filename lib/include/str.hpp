@@ -7,12 +7,12 @@
 
 namespace lib
 {
-	class str_const_ {
+	class str_const {
 	public:
 		using size_t = unsigned int;
 
 		template<size_t N>
-		constexpr str_const_(const char(&a)[N]) noexcept : m_data{ a }, m_size{ N - 1 } {}
+		constexpr str_const(const char(&a)[N]) noexcept : m_data{ a }, m_size{ N - 1 } {}
 
 		constexpr char operator[](const size_t n) const noexcept { return m_data[n]; }
 		constexpr size_t size() const noexcept { return m_size; }

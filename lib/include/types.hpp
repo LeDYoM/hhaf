@@ -44,12 +44,12 @@ namespace lib
 	using s8 = int8_t;
 	using f32 = float;
 	using f64 = double;
-	using str_const = std::string;
+	using str = std::string;
 	using write_stream = std::ostream;
 	using read_stream = std::istream;
 
 
-	using string_vector = std::vector<str_const>;
+	using string_vector = std::vector<str>;
 }
 
 #endif

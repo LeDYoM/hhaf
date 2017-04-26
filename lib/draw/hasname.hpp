@@ -12,7 +12,7 @@ namespace lib
 		class HasName
 		{
 		public:
-			HasName(str_const &&name) noexcept : m_name{ std::move(name) } {}
+			HasName(str &&name) noexcept : m_name{ std::move(name) } {}
 //			HasName(str_const name) noexcept : m_name{ std::move(name) } {}
 			constexpr HasName(HasName &&other) = default;
 			constexpr HasName(const HasName &other) = default;
@@ -20,9 +20,9 @@ namespace lib
 			HasName &operator=(const HasName &other) = default;
 			virtual ~HasName() = default;
 			
-			inline const str_const &name() const noexcept { return m_name; }
+			inline const str &name() const noexcept { return m_name; }
 		private:
-			const str_const m_name;
+			const str m_name;
 		};
 	}
 }

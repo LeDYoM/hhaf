@@ -8,7 +8,7 @@ namespace zoper
 	using namespace lib::draw;
 	using namespace lib::draw::nodes;
 
-	GameBaseTile::GameBaseTile(SceneNode* const parent, str_const name, BoardTileData data)
+	GameBaseTile::GameBaseTile(SceneNode* const parent, str name, BoardTileData data)
 		: ITile{ data }, SceneNode{ parent, std::move(name) }
 	{
 		setCallback([this]() {setColor(getColorForToken()); });

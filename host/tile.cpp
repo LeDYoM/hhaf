@@ -11,7 +11,7 @@ namespace zoper
 
 	u32 Tile::m_tileCounter{ 0 };
 
-	Tile::Tile(lib::draw::SceneNode* const parent, str_const name, BoardTileData data, const Rectf32 &box) :
+	Tile::Tile(lib::draw::SceneNode* const parent, str name, BoardTileData data, const Rectf32 &box) :
 		GameBaseTile{ parent, name + std::to_string(m_tileCounter) + std::to_string(m_tileCounter), data }
 	{
 		++m_tileCounter;

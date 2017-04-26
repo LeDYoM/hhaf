@@ -16,7 +16,7 @@ namespace lib
 		class Renderizable : public core::HasName
 		{
 		public:
-			explicit Renderizable(str_const &&name, PrimitiveType type, u32 vertexCount);
+			explicit Renderizable(str &&name, PrimitiveType type, u32 vertexCount);
 			virtual ~Renderizable();
 
 			void configureBase();

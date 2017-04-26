@@ -27,7 +27,7 @@ namespace lib
 			return static_cast<input::Key>(temp);
 		}
 
-		sf::String getAsString(const str_const &other)
+		sf::String getAsString(const str &other)
 		{
 			std::wstring wsTmp(other.begin(), other.end());
 			sf::String temp(wsTmp);

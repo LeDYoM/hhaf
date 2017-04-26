@@ -14,7 +14,7 @@ namespace lib
 			class NodeShape : public ISimpleNode
 			{
 			public:
-				explicit NodeShape(str_const &&name, const u32 pointCount);
+				explicit NodeShape(str &&name, const u32 pointCount);
 				virtual ~NodeShape();
 
 				virtual void configure() override;

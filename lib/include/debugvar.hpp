@@ -11,14 +11,14 @@ namespace lib
 	class DebugVar
 	{
 	public:
-		DebugVar(str_const_ id, str_const data) : m_id{ std::move(id) }, m_data{ std::move(data) } {}
+		DebugVar(str_const id, str data) : m_id{ std::move(id) }, m_data{ std::move(data) } {}
 
-		inline void setValue(const str_const &nv) noexcept { m_data = nv; }
-		inline const str_const operator()() const noexcept { return str_const{ m_id } +": " + m_data; };
-		inline const str_const_ id() const noexcept { return m_id; }
+		inline void setValue(const str &nv) noexcept { m_data = nv; }
+		inline const str operator()() const noexcept { return str{ m_id } +": " + m_data; };
+		inline const str_const id() const noexcept { return m_id; }
 	private:
-		str_const_ m_id;
-		str_const m_data;
+		str_const m_id;
+		str m_data;
 	};
 
 	using DebugVarAccessor = sptr<DebugVar>;

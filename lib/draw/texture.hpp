@@ -17,7 +17,7 @@ namespace lib
 		class Texture : public core::HasName
 		{
 		public:
-			Texture(str_const name);
+			Texture(str name);
 			Texture(const sf::Texture &texture);
 
 			virtual ~Texture();

@@ -26,7 +26,7 @@ namespace lib
 		{
 		public:
 			SceneNode(const SceneNode&) = delete;
-			SceneNode(SceneNode *const parent, str_const name);
+			SceneNode(SceneNode *const parent, str name);
 			virtual ~SceneNode();
 
 			/**
@@ -55,14 +55,14 @@ namespace lib
 			}
 
 			template <typename T = SceneNode, typename... Args>
-			sptr<T> createSceneNode(str_const name, Args&&... args)
+			sptr<T> createSceneNode(str name, Args&&... args)
 			{
 				auto result(msptr<T>(this, std::move(name), std::forward<Args>(args)...));
 				addSceneNode(result);
 				return result;
 			}
 
-			sptr<SceneNode> createSceneNode(str_const name)
+			sptr<SceneNode> createSceneNode(str name)
 			{
 				return createSceneNode<SceneNode>(std::move(name));
 			}

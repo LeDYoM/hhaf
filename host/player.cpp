@@ -5,7 +5,7 @@ namespace zoper
 	using namespace lib;
 	using namespace lib::draw;
 
-	Player::Player(SceneNode* const parent, str_const&& name, vector2du32 bPosition, const Rectf32 &box, vector2df board2SceneFactor)
+	Player::Player(SceneNode* const parent, str&& name, vector2du32 bPosition, const Rectf32 &box, vector2df board2SceneFactor)
 		: GameBaseTile{ parent, std::move(name), 0 },
 		boardPosition{ std::move(bPosition), [this]() {
 			this->position = { m_board2SceneFactor.x * boardPosition().x, m_board2SceneFactor.y * boardPosition().y }; }

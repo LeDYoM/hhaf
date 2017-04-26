@@ -14,7 +14,7 @@ namespace lib
 			~TexturePrivate() {}
 			uptr<backend::ITexture> m_backendTexture{ nullptr };
 		};
-		Texture::Texture(str_const name) : core::HasName{ std::move(name) }, m_texturePrivate{ new TexturePrivate }, m_texturePrivateOld{ new sf::Texture } {}
+		Texture::Texture(str name) : core::HasName{ std::move(name) }, m_texturePrivate{ new TexturePrivate }, m_texturePrivateOld{ new sf::Texture } {}
 		Texture::Texture(const sf::Texture &texture) : core::HasName{ "internal" }, m_texturePrivate{ new TexturePrivate }, m_texturePrivateOld{ new sf::Texture(texture) } {}
 
 		Texture::~Texture() = default;

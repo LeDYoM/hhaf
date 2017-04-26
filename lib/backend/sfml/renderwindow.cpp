@@ -108,7 +108,7 @@ namespace lib
 			RenderTarget::clear();
 		}
 
-		void RenderWindow::setWindowTitle(const str_const newTitle)
+		void RenderWindow::setWindowTitle(const str newTitle)
 		{
 			Window::setTitle(getAsString(newTitle));
 		}

@@ -15,7 +15,7 @@ namespace zoper
 		using namespace lib::gui;
 		using namespace lib::draw;
 
-		MainMenu::MainMenu(SceneNode *parent, str_const name)
+		MainMenu::MainMenu(SceneNode *parent, str name)
 			: ChooseControlGroup{ parent, std::move(name) }, m_gameConfig{ ":NextGame" } {}
 
 		MainMenu::~MainMenu() = default;

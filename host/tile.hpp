@@ -8,7 +8,7 @@ namespace zoper
 	class Tile : public GameBaseTile
 	{
 	public:
-		explicit Tile(lib::draw::SceneNode* const parent, lib::str_const name, lib::board::BoardTileData data, const lib::Rectf32 &box);
+		explicit Tile(lib::draw::SceneNode* const parent, lib::str name, lib::board::BoardTileData data, const lib::Rectf32 &box);
 		virtual ~Tile();
 
 		static void resetTileCounter();

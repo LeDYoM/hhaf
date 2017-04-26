@@ -24,7 +24,7 @@ namespace lib
 		class ChooseControlLine : public draw::SceneNode
 		{
 		public:
-			ChooseControlLine(SceneNode* parent, str_const name);
+			ChooseControlLine(SceneNode* parent, str name);
 			ForwardProperty<std::string> text;
 			ForwardProperty<string_vector> options;
 			VirtualPropertyWrite<Rectf32> alignmentBox;
