@@ -25,7 +25,7 @@ namespace lib
 			}
 		}
 
-		void DebugVarsComponent::addOrUpdateDebugVar(DebugVarAccessor & dba, str_const_ id, str_const_ data)
+		void DebugVarsComponent::addOrUpdateDebugVar(DebugVarAccessor & dba, str_const_ id, str_const data)
 		{
 			const auto iterator(std::find(m_varsData.begin(), m_varsData.end(), dba));
 			if (iterator != m_varsData.end()) {
