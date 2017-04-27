@@ -3,9 +3,13 @@
 
 #include <lib/include/types.hpp>
 #include <lib/include/vector2d.hpp>
-#include <lib/include/rect.hpp>
 
 #include "itexture.hpp"
+
+namespace sf
+{
+	class Texture;
+}
 
 namespace lib
 {
@@ -14,7 +18,9 @@ namespace lib
 		class ITextureFactory
 		{
 		public:
-			virtual ~ITextureFactory() {}
+			virtual sptr<ITexture> loadTextureFromDisk(const str &file) = 0;
+			// Temporary
+			virtual sptr<ITexture> getITexture(const sf::Texture &texture) = 0;
 		};
 	}
 }
