@@ -4,6 +4,7 @@
 #include <lib/include/types.hpp>
 #include <lib/include/vector2d.hpp>
 #include <lib/include/rect.hpp>
+#include <lib/draw/hasname.hpp>
 
 namespace lib
 {

@@ -1,6 +1,5 @@
 #include "texture.hpp"
 #include <lib/backend/itexture.hpp>
-#include <SFML/Graphics/Texture.hpp>
 
 namespace lib
 {

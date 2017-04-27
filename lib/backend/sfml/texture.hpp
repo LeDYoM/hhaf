@@ -5,11 +5,7 @@
 #include <lib/include/types.hpp>
 #include <lib/include/vector2d.hpp>
 #include <lib/backend/itexture.hpp>
-
-namespace sf
-{
-	class Texture;
-}
+#include <SFML/Graphics/Texture.hpp>
 
 namespace lib
 {
