@@ -9,15 +9,15 @@ namespace lib
 {
 	namespace backend
 	{
-		class ITexture
+		class ITexture : public core::HasName
 		{
 		public:
-
+			using core::HasName::HasName;
 
 			virtual ~ITexture() {}
 
+			virtual vector2du32 size() const = 0;
 		};
 	}
 }
 #endif
-

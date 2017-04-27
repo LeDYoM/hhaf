@@ -1,6 +1,6 @@
 #include "texturefactory.hpp"
 #include <SFML/Graphics/Texture.hpp>
-
+#include "texture.hpp"
 
 namespace lib
 {
@@ -8,7 +8,7 @@ namespace lib
 	{
 		sptr<ITexture> TextureFactory::loadTextureFromDisk(const str & file)
 		{
-			return sptr<ITexture>();
+			return sptr<Texture>();
 		}
 
 		sptr<ITexture> TextureFactory::getITexture(const sf::Texture & texture)
