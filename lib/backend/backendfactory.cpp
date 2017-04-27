@@ -1,6 +1,8 @@
 #include "backendfactory.hpp"
-#include "sfml/renderwindow.hpp"
 #include <lib/core/log.hpp>
+
+#include "sfml/renderwindow.hpp"
+#include "sfml/texturefactory.hpp"
 
 namespace lib
 {
@@ -44,6 +46,10 @@ namespace lib
 		uptr<IWindow> lib::backend::BackendFactory::getOrCreateWindow()
 		{
 			return muptr<RenderWindow>();
+		}
+		uptr<ITextureFactory> BackendFactory::getTextureFactory()
+		{
+			return uptr<TextureFactory>();
 		}
 	}
 }
