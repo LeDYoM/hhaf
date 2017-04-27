@@ -10,19 +10,19 @@ namespace lib
 {
 	namespace draw
 	{
-		class Texture;
+		class TextureV1;
 		class RenderStates final
 		{
 		public:
 			constexpr RenderStates() : RenderStates{ {},{} } { }
-			constexpr RenderStates(const Transform &transform, const Texture *texture)
+			constexpr RenderStates(const Transform &transform, const TextureV1 *texture)
 				: m_transform{ transform }, m_texture{ texture } {}
 
 			constexpr RenderStates(RenderStates &&) noexcept = default;
 			RenderStates &operator=(RenderStates&&) noexcept = default;
 
 			Transform m_transform;
-			const Texture *m_texture;
+			const TextureV1 *m_texture;
 		private:
 			RenderStates &operator=(const RenderStates&) noexcept = default;
 			friend class RenderStatesStack;

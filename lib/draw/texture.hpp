@@ -14,13 +14,13 @@ namespace lib
 {
 	namespace draw
 	{
-		class Texture : public core::HasName
+		class TextureV1 : public core::HasName
 		{
 		public:
-			Texture(str name);
-			Texture(const sf::Texture &texture);
+			TextureV1(str name);
+			TextureV1(const sf::Texture &texture);
 
-			virtual ~Texture();
+			virtual ~TextureV1();
 
 			bool loadFromFile(const str& filename);
 			vector2du32 size() const;

@@ -12,7 +12,7 @@ namespace lib
 {
 	namespace draw
 	{
-		class Texture;
+		class TextureV1;
 		class Renderizable : public core::HasName
 		{
 		public:
@@ -41,7 +41,7 @@ namespace lib
 				return dynamic_cast<const T *const>(this);
 			}
 
-			Property<sptr<Texture>> texture;
+			Property<sptr<TextureV1>> texture;
 
 		protected:
 			VertexArray m_vertices;

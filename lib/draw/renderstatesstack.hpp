@@ -15,7 +15,7 @@ namespace lib
 	namespace draw
 	{
 		class Transform;
-		class Texture;
+		class TextureV1;
 		class RenderStatesStack;
 		class RenderStatesStackHandle final
 		{
@@ -35,7 +35,7 @@ namespace lib
 
 			const RenderStates &top() const noexcept;
 			void newFrame() noexcept;
-			RenderStatesStackHandle pushChanges(const Transform *transform, const Texture *texture);
+			RenderStatesStackHandle pushChanges(const Transform *transform, const TextureV1 *texture);
 			void popChanges();
 		private:
 			RenderStates m_renderStates;

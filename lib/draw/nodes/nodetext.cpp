@@ -127,7 +127,7 @@ namespace lib
 
 				// Update the bounding rectangle
 				m_vertices.setBounds({ minX, minY, maxX - minX, maxY - minY });
-				texture.set(msptr<Texture>(font()->getTexture(characterSize())));
+				texture.set(msptr<TextureV1>(font()->getTexture(characterSize())));
 				color.update();
 				updateAlignmentX();
 				updateAlignmentY();

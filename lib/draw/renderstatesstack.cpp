@@ -26,7 +26,7 @@ namespace lib
 			m_renderStates = RenderStates{};
 		}
 
-		RenderStatesStackHandle RenderStatesStack::pushChanges(const Transform *transform, const Texture *texture)
+		RenderStatesStackHandle RenderStatesStack::pushChanges(const Transform *transform, const TextureV1 *texture)
 		{
 			DV_ONLY(if (transform) {
 				++multiplications;

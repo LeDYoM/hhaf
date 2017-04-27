@@ -9,7 +9,7 @@ namespace lib
 	namespace draw
 	{
 		class Font;
-		class Texture;
+		class TextureV1;
 		namespace nodes
 		{
 			class NodeText : public Renderizable

@@ -11,7 +11,7 @@ namespace lib
 	namespace draw
 	{
 		class Font;
-		class Texture;
+		class TextureV1;
 	}
 	namespace core
 	{
@@ -34,10 +34,10 @@ namespace lib
 				}
 			}
 			sptr<draw::Font> getFont(const std::string rid) const;
-			sptr<draw::Texture> getTexture(const std::string rid) const;
+			sptr<draw::TextureV1> getTexture(const std::string rid) const;
 		private:
 			std::list<sptr<draw::Font>> m_fonts;
-			std::list<sptr<draw::Texture>> m_textures;
+			std::list<sptr<draw::TextureV1>> m_textures;
 		};
 	}
 }
