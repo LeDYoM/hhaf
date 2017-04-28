@@ -3,7 +3,7 @@
 #include <lib/core/log.hpp>
 #include <lib/core/window.hpp>
 #include <lib/core/host.hpp>
-#include <lib/core/resourcemanager.hpp>
+#include <lib/core/resourcemanagerv1.hpp>
 #include <lib/core/events/eventmanager.hpp>
 
 namespace lib

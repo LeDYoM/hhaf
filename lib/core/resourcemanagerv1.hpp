@@ -17,11 +17,11 @@ namespace lib
 	{
 		class Resource;
 
-		class ResourceManager : public AppService, public Configuration
+		class ResourceManagerV1 : public AppService, public Configuration
 		{
 		public:
-			ResourceManager(const std::string &resourceFile);
-			~ResourceManager();
+			ResourceManagerV1(const std::string &resourceFile);
+			~ResourceManagerV1();
 
 			template <typename T>
 			sptr<T> getResource(const std::string rid) const
