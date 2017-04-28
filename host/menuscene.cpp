@@ -26,13 +26,13 @@ namespace zoper
 		Scene::onInit();
 		m_background = createRenderizable<NodeQuad>("background");
 		m_background->box = Rectf32::fromSize(2000.0f, 2000.0f);
-		m_background->texture = host().resourceManager().getTexture("game_menu.background");
+		m_background->texture = host().resourceManager().getTextureV1("game_menu.background");
 		m_background->color = colors::White;
 		m_background->configure();
 
 		m_logo = createRenderizable<NodeQuad>("mainLogo");
 		m_logo->box = Rectf32{ 500, 150, 1000, 500 };
-		m_logo->texture = host().resourceManager().getTexture("game_menu.logo");
+		m_logo->texture = host().resourceManager().getTextureV1("game_menu.logo");
 		m_logo->color = colors::White;
 		m_logo->configure();
 
