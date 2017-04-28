@@ -11,7 +11,7 @@ namespace lib
 {
 	namespace core
 	{
-		struct WindowPrivate
+		struct Window::WindowPrivate
 		{
 			Timer globalClock;
 			u64 lastTimeFps{ 0 };
@@ -21,7 +21,7 @@ namespace lib
 		};
 
 		Window::Window(const WindowCreationParams &wcp)
-			: m_wPrivate{ new WindowPrivate() }, m_title{ wcp.windowTitle }
+			: m_wPrivate{ muptr<WindowPrivate>() }, m_title{ wcp.windowTitle }
 		{
 			logConstruct_NOPARAMS;
 			create(wcp);

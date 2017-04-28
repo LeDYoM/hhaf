@@ -17,8 +17,6 @@ namespace lib
 
 	namespace core
 	{
-		struct WindowPrivate;
-
 		class Window : public AppService
 		{
 		public:
@@ -36,7 +34,8 @@ namespace lib
 
 		private:
 			void create(const WindowCreationParams &wcp);
-			uptr<WindowPrivate> m_wPrivate{ nullptr };
+			struct WindowPrivate;
+			uptr<WindowPrivate> m_wPrivate;
 			std::string m_title;
 		};
 	}
