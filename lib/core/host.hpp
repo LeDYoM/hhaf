@@ -22,7 +22,7 @@ namespace lib
 	namespace core
 	{
 		class Window;
-		class ResourceManagerV1;
+		class ResourceManager;
 		class EventManager;
 		class Randomizer;
 		class DebugSystem;
@@ -54,8 +54,8 @@ namespace lib
 
 			inline Window const &parentWindow() const noexcept { return *m_window; }
 			inline Window &parentWindow()  noexcept { return *m_window; }
-			inline ResourceManagerV1 const &resourceManager() const  noexcept { return *m_resourceManager; }
-			inline ResourceManagerV1 &resourceManager()  noexcept { return *m_resourceManager; }
+			inline ResourceManager const &resourceManager() const  noexcept { return *m_resourceManager; }
+			inline ResourceManager &resourceManager()  noexcept { return *m_resourceManager; }
 			inline EventManager const &eventManager() const  noexcept { return *m_eventManager; }
 			inline EventManager &eventManager()  noexcept { return *m_eventManager; }
 			inline input::InputSystem const &inputSystem() const noexcept { return *m_inputSystem; }
@@ -80,7 +80,7 @@ namespace lib
 			AppState m_state;
 			uptr<Window> m_window{ nullptr };
 			uptr<IApp> m_iapp{ nullptr };
-			uptr<ResourceManagerV1> m_resourceManager{ nullptr };
+			uptr<ResourceManager> m_resourceManager{ nullptr };
 			uptr<EventManager> m_eventManager{ nullptr };
 			uptr<Randomizer> m_randomizer;
 			uptr<DebugSystem> m_debugSystem{ nullptr };
@@ -96,7 +96,7 @@ namespace lib
 
 	inline core::Host &host() noexcept { return core::Host::host(); }
 	inline core::Window &window() noexcept { return core::Host::host().parentWindow(); }
-	inline core::ResourceManagerV1 &resourceManager() noexcept { return core::Host::host().resourceManager(); }
+	inline core::ResourceManager &resourceManager() noexcept { return core::Host::host().resourceManager(); }
 	inline core::DebugSystem &debugSystem() noexcept { return core::Host::host().debugSystem(); }
 
 }

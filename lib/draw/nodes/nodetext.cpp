@@ -1,7 +1,7 @@
 #include "nodetext.hpp"
 
 #include <lib/draw/font.hpp>
-#include <lib/draw/texturev1.hpp>
+#include <lib/draw/texture.hpp>
 
 #include <lib/core/log.hpp>
 
@@ -127,7 +127,7 @@ namespace lib
 
 				// Update the bounding rectangle
 				m_vertices.setBounds({ minX, minY, maxX - minX, maxY - minY });
-				texture.set(msptr<TextureV1>(font()->getTexture(characterSize())));
+				texture.set(msptr<Texture>(font()->getTexture(characterSize())));
 				color.update();
 				updateAlignmentX();
 				updateAlignmentY();

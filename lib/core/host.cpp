@@ -1,6 +1,6 @@
 #include "host.hpp"
 #include "window.hpp"
-#include "resourcemanagerv1.hpp"
+#include "resourcemanager.hpp"
 #include "log.hpp"
 #include "randomizer.hpp"
 #include <lib/draw/scene.hpp>
@@ -104,7 +104,7 @@ namespace lib
 				m_randomizer = muptr<Randomizer>();
 				m_eventManager = muptr<EventManager>();
 				m_window = muptr<Window>(m_iapp->getAppDescriptor().wcp);
-				m_resourceManager = muptr<core::ResourceManagerV1>(m_iapp->getAppDescriptor().resourceFile);
+				m_resourceManager = muptr<core::ResourceManager>(m_iapp->getAppDescriptor().resourceFile);
 				m_renderStates = muptr<draw::RenderStatesStack>();
 				m_debugSystem = muptr<DebugSystem>();
 				

@@ -1,26 +1,43 @@
-#ifndef LIB_RESOURCEMANAGER_INCLUDE_HPP__
-#define LIB_RESOURCEMANAGER_INCLUDE_HPP__
-
-#pragma once
+#ifndef __LIB_RESOURCEMANAGER_HPP__
+#define __LIB_RESOURCEMANAGER_HPP__
 
 #include <lib/include/types.hpp>
+#include "configuration.hpp"
 #include "appservice.hpp"
-#include <lib/include/iresourceloader.hpp>
+#include <list>
 
 namespace lib
 {
+	namespace draw
+	{
+		class Font;
+		class Texture;
+	}
 	namespace core
 	{
-		class ResourceManager : public AppService
+		class Resource;
+
+		class ResourceManager : public AppService, public Configuration
 		{
 		public:
-			ResourceManager();
+			ResourceManager(const std::string &resourceFile);
 			~ResourceManager();
 
-			bool registerResourceLoader(str name, sptr<IResourceLoader> rlClass);
+			template <typename T>
+			sptr<T> getResource(const std::string rid) const
+			{
+				if (typeid(T) == typeid(draw::Font)) {
+					return getFont(rid);
+				}
+				else {
+					return getTexture(rid);
+				}
+			}
+			sptr<draw::Font> getFont(const std::string rid) const;
+			sptr<draw::Texture> getTexture(const std::string rid) const;
 		private:
-			struct ResourceManagerPrivate;
-			uptr<ResourceManagerPrivate> m_private;
+			std::list<sptr<draw::Font>> m_fonts;
+			std::list<sptr<draw::Texture>> m_textures;
 		};
 	}
 }

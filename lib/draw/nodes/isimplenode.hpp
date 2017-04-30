@@ -10,7 +10,7 @@ namespace lib
 {
 	namespace draw
 	{
-		class TextureV1;
+		class Texture;
 		namespace nodes
 		{
 			class ISimpleNode : public Renderizable

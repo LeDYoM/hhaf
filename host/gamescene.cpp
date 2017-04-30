@@ -7,7 +7,7 @@
 #include <lib/board/boardmodel.hpp>
 #include <lib/board/itilescontroller.hpp>
 #include <lib/include/logcl.hpp>
-#include <lib/core/resourcemanagerv1.hpp>
+#include <lib/core/resourcemanager.hpp>
 #include <lib/draw/renderizable.hpp>
 #include <lib/draw/nodes/nodeshape.hpp>
 #include <lib/draw/nodes/nodequad.hpp>

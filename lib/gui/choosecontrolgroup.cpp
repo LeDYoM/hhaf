@@ -3,7 +3,7 @@
 #include "optionmodel.hpp"
 #include <lib/core/log.hpp>
 #include <lib/core/host.hpp>
-#include <lib/core/resourcemanagerv1.hpp>
+#include <lib/core/resourcemanager.hpp>
 #include <lib/draw/components/inputcomponent.hpp>
 
 namespace lib

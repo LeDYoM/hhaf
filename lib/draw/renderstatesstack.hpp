@@ -3,7 +3,7 @@
 
 #pragma  once
 
-#include "texturev1.hpp"
+#include "texture.hpp"
 
 #include <lib/include/types.hpp>
 #include <lib/draw/renderstates.hpp>
@@ -15,7 +15,7 @@ namespace lib
 	namespace draw
 	{
 		class Transform;
-		class TextureV1;
+		class Texture;
 		class RenderStatesStack;
 		class RenderStatesStackHandle final
 		{
@@ -35,7 +35,7 @@ namespace lib
 
 			const RenderStates &top() const noexcept;
 			void newFrame() noexcept;
-			RenderStatesStackHandle pushChanges(const Transform *transform, const TextureV1 *texture);
+			RenderStatesStackHandle pushChanges(const Transform *transform, const Texture *texture);
 			void popChanges();
 		private:
 			RenderStates m_renderStates;

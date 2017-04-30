@@ -1,6 +1,6 @@
 #include "renderstatesstack.hpp"
 #include "transformation.hpp"
-#include "texturev1.hpp"
+#include "texture.hpp"
 #include <lib/core/log.hpp>
 #include <lib/core/debugsystem.hpp>
 #include <lib/core/host.hpp>
@@ -26,7 +26,7 @@ namespace lib
 			m_renderStates = RenderStates{};
 		}
 
-		RenderStatesStackHandle RenderStatesStack::pushChanges(const Transform *transform, const TextureV1 *texture)
+		RenderStatesStackHandle RenderStatesStack::pushChanges(const Transform *transform, const Texture *texture)
 		{
 			DV_ONLY(if (transform) {
 				++multiplications;

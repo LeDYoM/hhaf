@@ -2,7 +2,7 @@
 #include <lib/gui/ChooseControlGroup.hpp>
 #include <lib/gui/choosecontrol.hpp>
 #include <lib/draw/scenenode.hpp>
-#include <lib/core/resourcemanagerv1.hpp>
+#include <lib/core/resourcemanager.hpp>
 #include <lib/core/host.hpp>
 #include <lib/include/logcl.hpp>
 #include "common.hpp"
