@@ -5,6 +5,10 @@
 
 namespace lib
 {
+	struct ResourceForLoading
+	{
+		const str name;
+	};
 	class IResourceLoader {
 	public:
 		virtual void loadResources() = 0;

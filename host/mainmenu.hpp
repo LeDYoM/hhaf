@@ -12,7 +12,7 @@ namespace zoper
 		class MainMenu : public lib::gui::ChooseControlGroup
 		{
 		public:
-			constexpr static char* ClassName = "MainMenu";
+			constexpr static const char*ClassName = "MainMenu";
 			MainMenu(lib::draw::SceneNode *parent, lib::str name);
 			virtual ~MainMenu();
 

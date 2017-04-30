@@ -1,6 +1,6 @@
 #include "renderstatesstack.hpp"
 #include "transformation.hpp"
-#include "texture.hpp"
+#include "texturev1.hpp"
 #include <lib/core/log.hpp>
 #include <lib/core/debugsystem.hpp>
 #include <lib/core/host.hpp>
