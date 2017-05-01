@@ -14,7 +14,7 @@ namespace lib
 {
 	namespace draw
 	{
-		class Texture : public core::HasName
+		class Texture final : public core::HasName
 		{
 		public:
 			Texture(str name);
