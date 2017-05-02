@@ -12,9 +12,10 @@ namespace lib
 		{
 			sf::Texture* m_backendTexture;
 			TexturePrivate(sf::Texture*t) : m_backendTexture{ t } {}
+			~TexturePrivate() { if (m_backendTexture) { delete m_backendTexture; } }
 		};
 		Texture::Texture(str name) : core::HasName{ std::move(name) }, m_texturePrivate{ muptr<TexturePrivate>(new sf::Texture) } {}
-		Texture::Texture(const sf::Texture &texture) : core::HasName{ "internal" }, m_texturePrivate{ muptr<TexturePrivate>(new sf::Texture(texture)) }, m_texturePrivateOld{ new sf::Texture(texture) } {}
+		Texture::Texture(const sf::Texture &texture) : core::HasName{ "internal" }, m_texturePrivate{ muptr<TexturePrivate>(new sf::Texture(texture)) } {}
 
 		Texture::~Texture() = default;
 
