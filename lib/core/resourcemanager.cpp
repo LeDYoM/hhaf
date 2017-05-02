@@ -34,7 +34,7 @@ namespace lib
 					const auto resourcesDirectory = value(resourcesDirectoryKey)->get<string>();
 					for_each_property([&resourcesDirectory, this](const Configuration::CMapLine &dataLine) {
 						if (dataLine.first != resourcesDirectoryKey) {
-							auto completeId = splitString(dataLine.first, '@');
+							auto completeId (splitString(dataLine.first, '@'));
 							if (completeId.size() > 1) {
 								string resourceTypeStr = completeId[0];
 								string id = completeId[1];
@@ -46,7 +46,7 @@ namespace lib
 									add(m_textures, std::move(id), std::move(filename));
 
 								}
-								logDebug("Resource with id ", dataLine.second, " from file ", dataLine.first, " added");
+								logDebug("Resource with id ", dataLine.second->get<string>(), " from file ", dataLine.first, " added");
 							}
 							else {
 								logError("Malformed resource file");
