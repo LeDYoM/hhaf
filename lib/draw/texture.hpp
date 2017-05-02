@@ -12,6 +12,10 @@ namespace sf
 
 namespace lib
 {
+	namespace backend
+	{
+		class ITexture;
+	}
 	namespace draw
 	{
 		class Texture final : public core::HasName
@@ -25,10 +29,9 @@ namespace lib
 			bool loadFromFile(const str& filename);
 			vector2du32 size() const;
 
-			const sf::Texture *backEndTexture() const;
+			const sf::Texture &backEndTexture() const;
 		private:
-			struct TexturePrivate;
-			uptr<TexturePrivate> m_texturePrivate;
+			sptr<backend::ITexture> m_texturePrivate;
 		};
 	}
 }

@@ -13,13 +13,16 @@ namespace lib
 		public:
 			static bool initilialize();
 			static bool destroy();
-			uptr<IWindowProviderInfo> getWindowProviderInfo();
-			uptr<IWindow> getOrCreateWindow();
-			uptr<ITextureFactory> getTextureFactory();
+			sptr<IWindowProviderInfo> getWindowProviderInfo();
+			sptr<IWindow> getOrCreateWindow();
+			sptr<ITextureFactory> getTextureFactory();
 			static inline BackendFactory *const instance() noexcept { return m_instance; }
 		private:
 			BackendFactory();
 			~BackendFactory();
+			sptr<IWindowProviderInfo> m_windowProviderInfo;
+			sptr<IWindow> m_window;
+			sptr<ITextureFactory> m_textureFactory;
 			static BackendFactory *m_instance;
 		};
 

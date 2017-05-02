@@ -4,34 +4,35 @@
 #include <lib/backend/backendfactory.hpp>
 #include <SFML/Graphics/Texture.hpp>
 
+#include <lib/backend/sfml/texture.hpp>
+
 namespace lib
 {
 	namespace draw
 	{
-		struct Texture::TexturePrivate final
-		{
-			sf::Texture* m_backendTexture;
-			TexturePrivate(sf::Texture*t) : m_backendTexture{ t } {}
-			~TexturePrivate() { if (m_backendTexture) { delete m_backendTexture; } }
-		};
-		Texture::Texture(str name) : core::HasName{ std::move(name) }, m_texturePrivate{ muptr<TexturePrivate>(new sf::Texture) } {}
-		Texture::Texture(const sf::Texture &texture) : core::HasName{ "internal" }, m_texturePrivate{ muptr<TexturePrivate>(new sf::Texture(texture)) } {}
+		using namespace backend;
+
+		Texture::Texture(str name) : core::HasName{ std::move(name) }, m_texturePrivate{ } {}
+		Texture::Texture(const sf::Texture &texture) : core::HasName{ "internal" }, m_texturePrivate{ textureFactory().getITexture(texture) } {}
 
 		Texture::~Texture() = default;
 
 		bool Texture::loadFromFile(const str& filename)
 		{
-			return m_texturePrivate->m_backendTexture->loadFromFile(filename);
+			m_texturePrivate = textureFactory().loadTextureFromDisk(filename);
+			return m_texturePrivate != nullptr;
 		}
 
 		vector2du32 Texture::size() const
 		{
-			return{ static_cast<u32>(m_texturePrivate->m_backendTexture->getSize().x), static_cast<u32>(m_texturePrivate->m_backendTexture->getSize().y) };
+			return m_texturePrivate->size();
 		}
 
-		const sf::Texture * Texture::backEndTexture() const
+		const sf::Texture &Texture::backEndTexture() const
 		{
-			return m_texturePrivate->m_backendTexture;
+			ITexture*t = m_texturePrivate.get();
+			backend::Texture *t2 = dynamic_cast<backend::Texture*>(t);
+			return t2->backEndTexture();
 		}
 	}
 }

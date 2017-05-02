@@ -17,7 +17,7 @@ namespace lib
 			u64 lastTimeFps{ 0 };
 			s32 lastFps{ 0 };
 			s32 currentFps{ 0 };
-			uptr<backend::IWindow> m_backendWindow;
+			sptr<backend::IWindow> m_backendWindow;
 		};
 
 		Window::Window(const WindowCreationParams &wcp)

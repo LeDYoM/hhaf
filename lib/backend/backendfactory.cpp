@@ -13,6 +13,9 @@ namespace lib
 		BackendFactory::BackendFactory()
 		{
 			logConstruct_NOPARAMS;
+			m_windowProviderInfo = msptr<WindowBackendInfo>();
+			m_window = msptr<RenderWindow>();
+			m_textureFactory = msptr<TextureFactory>();
 		}
 		BackendFactory::~BackendFactory() 
 		{
@@ -23,6 +26,8 @@ namespace lib
 		{
 			if (!m_instance) {
 				m_instance = new BackendFactory;
+				logInfo("Using backend: ");
+				logInfo(m_instance->m_windowProviderInfo->info());
 				return true;
 			}
 
@@ -39,17 +44,17 @@ namespace lib
 			return false;
 		}
 
-		uptr<IWindowProviderInfo> BackendFactory::getWindowProviderInfo()
+		sptr<IWindowProviderInfo> BackendFactory::getWindowProviderInfo()
 		{
-			return muptr<WindowBackendInfo>();
+			return m_windowProviderInfo;
 		}
-		uptr<IWindow> lib::backend::BackendFactory::getOrCreateWindow()
+		sptr<IWindow> lib::backend::BackendFactory::getOrCreateWindow()
 		{
-			return muptr<RenderWindow>();
+			return m_window;
 		}
-		uptr<ITextureFactory> BackendFactory::getTextureFactory()
+		sptr<ITextureFactory> BackendFactory::getTextureFactory()
 		{
-			return uptr<TextureFactory>();
+			return m_textureFactory;
 		}
 	}
 }

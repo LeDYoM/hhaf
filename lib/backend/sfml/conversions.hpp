@@ -52,7 +52,7 @@ namespace lib
 		sf::RenderStates asRenderStates(const draw::RenderStates &renderStates) {
 			return sf::RenderStates(sf::RenderStates::Default.blendMode,
 				asTransform(renderStates.m_transform),
-				renderStates.m_texture ? renderStates.m_texture->backEndTexture() : nullptr,
+				renderStates.m_texture ? &(renderStates.m_texture->backEndTexture()) : nullptr,
 				nullptr);
 		}
 	}

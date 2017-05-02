@@ -67,8 +67,6 @@ namespace lib
 			logConstruct_NOPARAMS;
 			logInfo("Starting HostController...");
 			logInfo("LIB version: ", LIB_VERSION_MAJOR,".", LIB_VERSION_MINOR,".", LIB_VERSION_PATCH);
-			logInfo("Using backend: ");
-			logInfo(backend::BackendFactory::instance()->getWindowProviderInfo()->info());
 			logInfo("Parsing parameters...");
 			m_params = transformParams(argc, argv);
 		}
