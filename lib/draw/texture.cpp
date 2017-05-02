@@ -22,7 +22,6 @@ namespace lib
 		bool Texture::loadFromFile(const str& filename)
 		{
 			return m_texturePrivate->m_backendTexture->loadFromFile(filename);
-//			return m_texturePrivateOld->loadFromFile(filename);
 		}
 
 		vector2du32 Texture::size() const
