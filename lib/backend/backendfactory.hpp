@@ -22,6 +22,9 @@ namespace lib
 			~BackendFactory();
 			static BackendFactory *m_instance;
 		};
+
+		static inline BackendFactory &backendFactory() { return *(BackendFactory::instance()); }
+		static inline ITextureFactory &textureFactory() { return *(BackendFactory::instance()->getTextureFactory()); }
 	}
 }
 #endif

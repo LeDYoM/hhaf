@@ -27,7 +27,7 @@ namespace lib
 
 			const sf::Texture *backEndTexture() const;
 		private:
-			class TexturePrivate;
+			struct TexturePrivate;
 			uptr<sf::Texture> m_texturePrivateOld;
 			uptr<TexturePrivate> m_texturePrivate;
 		};
