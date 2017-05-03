@@ -29,7 +29,7 @@ namespace lib
 			bool loadFromFile(const str& filename);
 			vector2du32 size() const;
 
-			const sf::Texture &backEndTexture() const;
+			const sptr<backend::ITexture> backEndTexture() const { return m_texturePrivate; }
 		private:
 			sptr<backend::ITexture> m_texturePrivate;
 		};

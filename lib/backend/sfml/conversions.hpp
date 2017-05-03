@@ -2,8 +2,12 @@
 #include <lib/core/host.hpp>
 #include <lib/core/inputsystem.hpp>
 #include <lib/include/key.hpp>
-#include <SFML/Window.hpp>
 #include <lib/draw/transformation.hpp>
+
+#include <lib/backend/itexture.hpp>
+#include "texture.hpp"
+#include <SFML/Window.hpp>
+#include <SFML/Graphics/Texture.hpp>
 
 namespace lib
 {
@@ -49,10 +53,19 @@ namespace lib
 
 		}
 
-		sf::RenderStates asRenderStates(const draw::RenderStates &renderStates) {
+		sf::RenderStates asRenderStates(const draw::RenderStates &renderStates) 
+		{
+			const backend::Texture*bTexture{ nullptr };
+			if (renderStates.m_texture) {
+				ITexture*t = renderStates.m_texture->backEndTexture().get();
+				if (t) {
+					bTexture = dynamic_cast<backend::Texture*>(t);
+				}
+			}
+
 			return sf::RenderStates(sf::RenderStates::Default.blendMode,
 				asTransform(renderStates.m_transform),
-				renderStates.m_texture ? &(renderStates.m_texture->backEndTexture()) : nullptr,
+				bTexture? &(bTexture->backEndTexture()):nullptr,
 				nullptr);
 		}
 	}
