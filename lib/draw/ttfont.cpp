@@ -9,9 +9,7 @@ namespace lib
 		{
 		}
 
-		TTFont::~TTFont()
-		{
-		}
+		TTFont::~TTFont() = default;
 
 		bool TTFont::loadFromFile(const std::string & filename)
 		{
@@ -36,10 +34,24 @@ namespace lib
 		{
 			return m_font->getTexture(characterSize);
 		}
+
 		const Rectf32 TTFont::getGlyphRect(u32 codePoint, u32 characterSize, bool bold, f32 outlineThickness) const
 		{
-			sf::FloatRect glyphRect(m_font->getGlyph(codePoint, characterSize, bold, outlineThickness).bounds);
+			sf::FloatRect glyphRect(getGlyph(codePoint, characterSize, bold, outlineThickness).bounds);
 			return { glyphRect.left, glyphRect.top, glyphRect.width, glyphRect.height };
 		}
+
+		const Rectf32 TTFont::getGlyphTextureRect(u32 codePoint, u32 characterSize, bool bold, f32 outlineThickness) const
+		{
+			sf::IntRect glyphTextureRect(getGlyph(codePoint, characterSize, bold, outlineThickness).textureRect);
+			return { static_cast<f32>(glyphTextureRect.left), static_cast<f32>(glyphTextureRect.top), 
+				static_cast<f32>(glyphTextureRect.width), static_cast<f32>(glyphTextureRect.height) };
+		}
+
+		f32 TTFont::getGlyphAdvance(u32 codePoint, u32 characterSize, bool bold, f32 outlineThickness) const
+		{
+			return getGlyph(codePoint, characterSize, bold, outlineThickness).advance;
+		}
+
 	}
 }

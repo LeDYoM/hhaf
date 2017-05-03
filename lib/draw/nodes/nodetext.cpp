@@ -48,8 +48,7 @@ namespace lib
 				m_vertices.setBounds({});
 				vertices.clear();
 
-				if (!font() || text().empty())
-				{
+				if (!font() || text().empty()) {
 					return;
 				}
 
@@ -94,13 +93,14 @@ namespace lib
 					}
 					else {
 						// Extract the current glyph's description
-						const sf::Glyph& glyph = font()->getGlyph(curChar, characterSize(), false);
+//						const sf::Glyph& glyph = font()->getGlyph(curChar, characterSize(), false);
 						const Rectf32 glyphbound{ font()->getGlyphRect(curChar, characterSize(), false) };
+						const Rectf32 glyphTextureRect{ font()->getGlyphTextureRect(curChar, characterSize(), false) };
 
-						const f32 u1 = static_cast<f32>(glyph.textureRect.left);
-						const f32 v1 = static_cast<f32>(glyph.textureRect.top);
-						const f32 u2 = static_cast<f32>(glyph.textureRect.left + glyph.textureRect.width);
-						const f32 v2 = static_cast<f32>(glyph.textureRect.top + glyph.textureRect.height);
+						const f32 u1 = static_cast<f32>(glyphTextureRect.left);
+						const f32 v1 = static_cast<f32>(glyphTextureRect.top);
+						const f32 u2 = static_cast<f32>(glyphTextureRect.left + glyphTextureRect.width);
+						const f32 v2 = static_cast<f32>(glyphTextureRect.top + glyphTextureRect.height);
 
 						const f32 gleft{ x + glyphbound.left };
 						const f32 gright{ x + glyphbound.right() };
@@ -122,7 +122,7 @@ namespace lib
 						maxY = max(maxY, gbottom);
 
 						// Advance to the next character
-						x += glyph.advance;
+						x += font()->getGlyphAdvance(curChar, characterSize(), false);
 					}
 				}
 
