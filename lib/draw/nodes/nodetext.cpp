@@ -102,19 +102,24 @@ namespace lib
 						const f32 u2 = static_cast<f32>(glyph.textureRect.left + glyph.textureRect.width);
 						const f32 v2 = static_cast<f32>(glyph.textureRect.top + glyph.textureRect.height);
 
+						const f32 gleft{ x + glyphbound.left };
+						const f32 gright{ x + glyphbound.right() };
+						const f32 gtop{ y + glyphbound.top };
+						const f32 gbottom{ y + glyphbound.bottom() };
 						// Add a quad for the current character
-						vertices.emplace_back(vector2df(x + glyphbound.left, y + glyphbound.top), vector2df(u1, v1));
-						vertices.emplace_back(vector2df(x + glyphbound.right(), y + glyphbound.top), vector2df(u2, v1));
-						vertices.emplace_back(vector2df(x + glyphbound.left, y + glyphbound.bottom()), vector2df(u1, v2));
-						vertices.emplace_back(vector2df(x + glyphbound.left, y + glyphbound.bottom()), vector2df(u1, v2));
-						vertices.emplace_back(vector2df(x + glyphbound.right(), y + glyphbound.top), vector2df(u2, v1));
-						vertices.emplace_back(vector2df(x + glyphbound.right(), y + glyphbound.bottom()), vector2df(u2, v2));
+						vertices.emplace_back(vector2df{ gleft,  gtop }, vector2df{ u1, v1 });
+						vertices.emplace_back(vector2df{ gright, gtop }, vector2df{ u2, v1 });
+						vertices.emplace_back(vector2df{ gleft,  gbottom }, vector2df{ u1, v2 });
+						vertices.emplace_back(vector2df{ gleft,  gbottom }, vector2df{ u1, v2 });
+						vertices.emplace_back(vector2df{ gright, gtop }, vector2df{ u2, v1 });
+						vertices.emplace_back(vector2df{ gright, gbottom }, vector2df{ u2, v2 });
 
 						// Update the current bounds
-						minX = std::min(minX, x + glyphbound.left);
-						maxX = std::max(maxX, x + glyphbound.right());
-						minY = std::min(minY, y + glyphbound.top);
-						maxY = std::max(maxY, y + glyphbound.bottom());
+						using namespace std;
+						minX = min(minX, gleft);
+						maxX = max(maxX, gright);
+						minY = min(minY, gtop);
+						maxY = max(maxY, gbottom);
 
 						// Advance to the next character
 						x += glyph.advance;
