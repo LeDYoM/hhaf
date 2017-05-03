@@ -2,9 +2,6 @@
 #include <lib/backend/itexture.hpp>
 #include <lib/backend/itexturefactory.hpp>
 #include <lib/backend/backendfactory.hpp>
-#include <SFML/Graphics/Texture.hpp>
-
-#include <lib/backend/sfml/texture.hpp>
 
 namespace lib
 {
@@ -27,13 +24,5 @@ namespace lib
 		{
 			return m_texturePrivate->size();
 		}
-		/*
-		const sf::Texture &Texture::backEndTexture() const
-		{
-			ITexture*t = m_texturePrivate.get();
-			backend::Texture *t2 = dynamic_cast<backend::Texture*>(t);
-			return t2->backEndTexture();
-		}
-*/
 	}
 }
