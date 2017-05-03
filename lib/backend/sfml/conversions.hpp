@@ -53,19 +53,25 @@ namespace lib
 
 		}
 
-		sf::RenderStates asRenderStates(const draw::RenderStates &renderStates) 
+		const sf::Texture *const asTexture(const draw::Texture*texture)
 		{
-			const backend::Texture*bTexture{ nullptr };
-			if (renderStates.m_texture) {
-				ITexture*t = renderStates.m_texture->backEndTexture().get();
+			if (texture) {
+				ITexture*t = texture->backEndTexture().get();
 				if (t) {
-					bTexture = dynamic_cast<backend::Texture*>(t);
+					auto tmp(dynamic_cast<backend::Texture*>(t));
+					if (tmp) {
+						return &(tmp->backEndTexture());
+					}
 				}
 			}
+			return nullptr;
+		}
 
+		const sf::RenderStates asRenderStates(const draw::RenderStates &renderStates) 
+		{
 			return sf::RenderStates(sf::RenderStates::Default.blendMode,
 				asTransform(renderStates.m_transform),
-				bTexture? &(bTexture->backEndTexture()):nullptr,
+				asTexture(renderStates.m_texture),
 				nullptr);
 		}
 	}
