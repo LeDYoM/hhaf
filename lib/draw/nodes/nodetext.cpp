@@ -53,21 +53,21 @@ namespace lib
 					return;
 				}
 
-				sf::FloatRect glyphRect(font()->getGlyph(L'x', characterSize(), false).bounds);
-				Rectf32 xBounds{ glyphRect.left,glyphRect.top,glyphRect.width,glyphRect.height };
+				const Rectf32 glyphRect{ font()->getGlyphRect(L'x', characterSize(), false) };
+				const Rectf32 xBounds{ glyphRect.left,glyphRect.top,glyphRect.width,glyphRect.height };
 				const f32 strikeThroughOffset = xBounds.top + xBounds.height / 2.f;
 
-				const f32 hspace = static_cast<f32>(font()->getGlyph(L' ', characterSize(), false).advance);
-				const f32 vspace = static_cast<f32>(font()->getLineSpacing(characterSize()));
-				f32 x = 0.f;
-				f32 y = static_cast<f32>(characterSize());
+				const f32 hspace{ static_cast<f32>(font()->getGlyph(L' ', characterSize(), false).advance) };
+				const f32 vspace{ static_cast<f32>(font()->getLineSpacing(characterSize())) };
+				f32 x{ 0.f };
+				f32 y{ static_cast<f32>(characterSize()) };
 
 				// Create one quad for each character
-				f32 minX = static_cast<f32>(characterSize());
-				f32 minY = static_cast<f32>(characterSize());
-				f32 maxX = 0.f;
-				f32 maxY = 0.f;
-				u32 prevChar = 0;
+				f32 minX{ y }; // static_cast<f32>(characterSize());
+				f32 minY{ y }; // static_cast<f32>(characterSize());
+				f32 maxX{ 0.f };
+				f32 maxY{ 0.f };
+				u32 prevChar{ 0 };
 				for (const auto curChar : text())
 				{
 					// Apply the kerning offset
@@ -76,9 +76,10 @@ namespace lib
 
 					// Handle special characters
 					if ((curChar == ' ') || (curChar == '\t') || (curChar == '\n')) {
+						using namespace std;
 						// Update the current bounds (min coordinates)
-						minX = std::min(minX, x);
-						minY = std::min(minY, y);
+						minX = min(minX, x);
+						minY = min(minY, y);
 
 						switch (curChar)
 						{
@@ -88,14 +89,13 @@ namespace lib
 						}
 
 						// Update the current bounds (max coordinates)
-						maxX = std::max(maxX, x);
-						maxY = std::max(maxY, y);
+						maxX = max(maxX, x);
+						maxY = max(maxY, y);
 					}
 					else {
-
 						// Extract the current glyph's description
 						const sf::Glyph& glyph = font()->getGlyph(curChar, characterSize(), false);
-
+						const Rectf32 glyphbound{ font()->getGlyphRect(curChar, characterSize(), false) };
 						const f32 left = glyph.bounds.left;
 						const f32 top = glyph.bounds.top;
 						const f32 right = glyph.bounds.left + glyph.bounds.width;

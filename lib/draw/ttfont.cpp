@@ -17,7 +17,7 @@ namespace lib
 		{
 			return m_font->loadFromFile(filename);
 		}
-		const sf::Glyph & TTFont::getGlyph(u32 codePoint, u32 characterSize, bool bold, float outlineThickness) const
+		const sf::Glyph & TTFont::getGlyph(u32 codePoint, u32 characterSize, bool bold, f32 outlineThickness) const
 		{
 			return m_font->getGlyph(codePoint, characterSize, bold, outlineThickness);
 		}
@@ -35,6 +35,11 @@ namespace lib
 		const sf::Texture & TTFont::getTexture(u32 characterSize) const
 		{
 			return m_font->getTexture(characterSize);
+		}
+		const Rectf32 TTFont::getGlyphRect(u32 codePoint, u32 characterSize, bool bold, f32 outlineThickness) const
+		{
+			sf::FloatRect glyphRect(m_font->getGlyph(codePoint, characterSize, bold, outlineThickness).bounds);
+			return { glyphRect.left, glyphRect.top, glyphRect.width, glyphRect.height };
 		}
 	}
 }
