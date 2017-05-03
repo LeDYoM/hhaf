@@ -1,6 +1,5 @@
 #include "vertexarray.hpp"
 
-#include "font.hpp"
 #include <lib/core/window.hpp>
 #include <lib/core/host.hpp>
 

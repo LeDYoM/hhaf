@@ -1,6 +1,6 @@
 #include "nodetext.hpp"
 
-#include <lib/draw/font.hpp>
+#include <lib/draw/ttfont.hpp>
 #include <lib/draw/texture.hpp>
 
 #include <lib/core/log.hpp>

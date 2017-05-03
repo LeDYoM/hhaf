@@ -4,7 +4,7 @@
 #include <lib/include/types.hpp>
 #include <lib/include/vector2d.hpp>
 #include <lib/draw/color.hpp>
-#include <lib/draw/font.hpp>
+#include <lib/draw/ttfont.hpp>
 
 namespace lib
 {

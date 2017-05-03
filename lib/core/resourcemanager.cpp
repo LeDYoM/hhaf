@@ -1,7 +1,7 @@
 #include "resourcemanager.hpp"
 #include "log.hpp"
 
-#include <lib/draw/font.hpp>
+#include <lib/draw/ttfont.hpp>
 #include <lib/draw/texture.hpp>
 
 namespace lib
