@@ -4,10 +4,10 @@ namespace lib
 {
 	namespace draw
 	{
+		TTGlyph::TTGlyph(const sf::Glyph & glyph) : m_glyph{ glyph } {}
+
 		TTFont::TTFont(str name) 
-			: core::HasName{ std::move(name) }, m_font{ msptr<sf::Font>() } 
-		{
-		}
+			: core::HasName{ std::move(name) }, m_font{ msptr<sf::Font>() } {}
 
 		TTFont::~TTFont() = default;
 
@@ -52,6 +52,5 @@ namespace lib
 		{
 			return getGlyph(codePoint, characterSize, bold, outlineThickness).advance;
 		}
-
 	}
 }

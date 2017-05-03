@@ -12,6 +12,14 @@ namespace lib
 {
 	namespace draw
 	{
+		class TTGlyph final
+		{
+		public:
+			TTGlyph(const sf::Glyph &glyph);
+		private:
+			const sf::Glyph &m_glyph;
+		};
+
 		class TTFont final : public core::HasName
 		{
 		public:

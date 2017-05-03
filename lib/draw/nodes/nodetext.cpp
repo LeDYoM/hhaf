@@ -93,7 +93,6 @@ namespace lib
 					}
 					else {
 						// Extract the current glyph's description
-//						const sf::Glyph& glyph = font()->getGlyph(curChar, characterSize(), false);
 						const Rectf32 glyphbound{ font()->getGlyphRect(curChar, characterSize(), false) };
 						const Rectf32 glyphTextureRect{ font()->getGlyphTextureRect(curChar, characterSize(), false) };
 
