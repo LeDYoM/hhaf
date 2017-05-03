@@ -6,7 +6,7 @@ namespace zoper
 	using namespace lib;
 	using namespace lib::draw;
 
-	TextQuad::TextQuad(SceneNode * parent, str name, lib::sptr<lib::draw::Font> font, u32 characterSize, const Color &color, const Rectf32 & box)
+	TextQuad::TextQuad(SceneNode * parent, str name, lib::sptr<lib::draw::TTFont> font, u32 characterSize, const Color &color, const Rectf32 & box)
 		: m_box{ box }
 	{
 		using namespace nodes;

@@ -9,7 +9,7 @@ namespace zoper
 	class TextQuad
 	{
 	public:
-		TextQuad(lib::draw::SceneNode *parent, lib::str name, lib::sptr<lib::draw::Font> font, lib::u32 characterSize, const lib::draw::Color &color, const lib::Rectf32 &box);
+		TextQuad(lib::draw::SceneNode *parent, lib::str name, lib::sptr<lib::draw::TTFont> font, lib::u32 characterSize, const lib::draw::Color &color, const lib::Rectf32 &box);
 		virtual ~TextQuad() = default;
 
 		lib::Property<lib::sptr<lib::draw::SceneNode>> sceneNode;

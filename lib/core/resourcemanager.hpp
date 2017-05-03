@@ -10,7 +10,7 @@ namespace lib
 {
 	namespace draw
 	{
-		class Font;
+		class TTFont;
 		class Texture;
 	}
 	namespace core
@@ -26,17 +26,17 @@ namespace lib
 			template <typename T>
 			sptr<T> getResource(const std::string rid) const
 			{
-				if (typeid(T) == typeid(draw::Font)) {
+				if (typeid(T) == typeid(draw::TTFont)) {
 					return getFont(rid);
 				}
 				else {
 					return getTexture(rid);
 				}
 			}
-			sptr<draw::Font> getFont(const std::string rid) const;
+			sptr<draw::TTFont> getFont(const std::string rid) const;
 			sptr<draw::Texture> getTexture(const std::string rid) const;
 		private:
-			std::list<sptr<draw::Font>> m_fonts;
+			std::list<sptr<draw::TTFont>> m_fonts;
 			std::list<sptr<draw::Texture>> m_textures;
 		};
 	}

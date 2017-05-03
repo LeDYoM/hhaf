@@ -62,9 +62,9 @@ namespace lib
 
 		ResourceManager::~ResourceManager() = default;
 
-		sptr<draw::Font> ResourceManager::getFont(const std::string rid) const
+		sptr<draw::TTFont> ResourceManager::getFont(const std::string rid) const
 		{
-			auto iterator(std::find_if(m_fonts.begin(), m_fonts.end(), [&rid](const sptr<draw::Font> &font) {return font->name() == rid; }));
+			auto iterator(std::find_if(m_fonts.begin(), m_fonts.end(), [&rid](const sptr<draw::TTFont> &font) {return font->name() == rid; }));
 			return iterator == m_fonts.end() ? nullptr : *iterator;
 		}
 		sptr<draw::Texture> ResourceManager::getTexture(const std::string rid) const

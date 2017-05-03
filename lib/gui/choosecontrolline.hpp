@@ -11,7 +11,7 @@ namespace lib
 {
 	namespace draw
 	{
-		class Font;
+		class TTFont;
 		namespace nodes
 		{
 			class NodeText;
@@ -28,7 +28,7 @@ namespace lib
 			ForwardProperty<std::string> text;
 			ForwardProperty<string_vector> options;
 			VirtualPropertyWrite<Rectf32> alignmentBox;
-			VirtualPropertyWrite<sptr<draw::Font>> font;
+			VirtualPropertyWrite<sptr<draw::TTFont>> font;
 			VirtualPropertyWrite<u32> characterSize;
 			VirtualPropertyWrite<draw::Color> color;
 			void create();

@@ -18,7 +18,7 @@ namespace lib
 	}
 	namespace draw
 	{
-		class Font;
+		class TTFont;
 	}
 	namespace gui
 	{

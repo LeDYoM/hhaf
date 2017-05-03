@@ -19,7 +19,7 @@ namespace lib
 
 		struct Theme
 		{
-			sptr<draw::Font> font;
+			sptr<draw::TTFont> font;
 			draw::Color textColor;
 			draw::Color selectedTextColor;
 			u32 chSize;

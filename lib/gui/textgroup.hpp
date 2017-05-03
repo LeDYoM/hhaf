@@ -11,7 +11,7 @@ namespace lib
 {
 	namespace draw
 	{
-		class Font;
+		class TTFont;
 		namespace nodes
 		{
 			class NodeText;
@@ -24,7 +24,7 @@ namespace lib
 		public:
 			TextGroup(SceneNode* parent, str name);
 			Property<Rectf32> alignmentBox;
-			Property<sptr<draw::Font>> font;
+			Property<sptr<draw::TTFont>> font;
 			Property<u32> characterSize;
 			Property<draw::Color> color;
 			void create();

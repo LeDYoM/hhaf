@@ -8,7 +8,7 @@ namespace lib
 {
 	namespace draw
 	{
-		class Font;
+		class TTFont;
 		class Texture;
 		namespace nodes
 		{
@@ -35,7 +35,7 @@ namespace lib
 				virtual void configure() override;
 
 				Property<std::string> text;
-				Property<sptr<Font>> font;
+				Property<sptr<TTFont>> font;
 				Property<u32> characterSize;
 				Property<AlignmentX> alignmentX;
 				Property<AlignmentY> alignmentY;
