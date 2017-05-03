@@ -31,10 +31,10 @@ namespace lib
 		{
 			return m_font->getKerning(first, second, characterSize);
 		}
+
 		const sf::Texture & TTFont::getTexture(u32 characterSize) const
 		{
 			return m_font->getTexture(characterSize);
-			// TODO: insert return statement here
 		}
 	}
 }
