@@ -56,5 +56,10 @@ namespace lib
 		{
 			return m_textureFactory;
 		}
+
+		sptr<ITTFontFactory> BackendFactory::getTTFontFactory()
+		{
+			return m_ttfontFactory;
+		}
 	}
 }

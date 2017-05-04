@@ -3,23 +3,29 @@
 
 #include <SFML/Graphics/Font.hpp>
 
+#include <lib/backend/ittfont.hpp>
+#include <lib/backend/ittfontfactory.hpp>
+#include <lib/backend/backendfactory.hpp>
+
 namespace lib
 {
 	namespace draw
 	{
-		TTFont::TTFont(str name) : core::HasName{ std::move(name) }, m_font{ msptr<sf::Font>() } {}
+		using namespace backend;
+
+		TTFont::TTFont(str name) : core::HasName{ std::move(name) }, m_font{ } {}
 
 		TTFont::~TTFont() = default;
 
 		bool TTFont::loadFromFile(const std::string & filename)
 		{
-			return m_font->loadFromFile(filename);
+			m_font = ttfontFactory().loadFromFile(filename);
+			return m_font != nullptr;
 		}
 
 		const TTGlyph TTFont::getGlyph(u32 codePoint, u32 characterSize, bool bold, f32 outlineThickness) const
 		{
-			const sf::Glyph &glyph(m_font->getGlyph(codePoint, characterSize, bold, outlineThickness));
-			return TTGlyph{ backend::toRect<f32>(glyph.bounds), backend::toRect<s32>(glyph.textureRect), glyph.advance };
+			return static_cast<TTGlyph>(m_font->getGlyph(codePoint, characterSize, bold, outlineThickness));
 		}
 
 		f32 TTFont::getLineSpacing(u32 characterSize) const

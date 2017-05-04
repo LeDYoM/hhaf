@@ -5,6 +5,7 @@
 #include <lib/include/rect.hpp>
 #include <lib/draw/texture.hpp>
 #include <lib/draw/hasname.hpp>
+#include <lib/backend/ittfont.hpp>
 
 namespace sf
 {
@@ -13,20 +14,22 @@ namespace sf
 
 namespace lib
 {
+	namespace backend
+	{
+		class IFont;
+	}
+
 	namespace draw
 	{
-		struct TTGlyph final
+		struct TTGlyph final : public backend::ITTGlyph
 		{
-			Rectf32 bounds;
-			Rectf32 textureBounds;
-			f32 advance;
 		};
 
 		class TTFont final : public core::HasName
 		{
 		public:
 			TTFont(str name);
-			virtual ~TTFont();
+			~TTFont();
 
 			bool loadFromFile(const std::string& filename);
 			const TTGlyph getGlyph(u32 codePoint, u32 characterSize, bool bold, f32 outlineThickness) const;
@@ -35,7 +38,7 @@ namespace lib
 			const Texture getTexture(u32 characterSize) const;
 
 		private:
-			sptr<sf::Font> m_font;
+			sptr<backend::ITTFont> m_font;
 		};
 	}
 }
