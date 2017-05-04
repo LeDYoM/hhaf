@@ -4,6 +4,8 @@
 #include <lib/draw/ttfont.hpp>
 #include <lib/draw/texture.hpp>
 
+#include <algorithm>
+
 namespace lib
 {
 	namespace core

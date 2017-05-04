@@ -7,8 +7,7 @@ namespace lib
 {
 	namespace draw
 	{
-		TTFont::TTFont(str name) 
-			: core::HasName{ std::move(name) }, m_font{ msptr<sf::Font>() } {}
+		TTFont::TTFont(str name) : core::HasName{ std::move(name) }, m_font{ msptr<sf::Font>() } {}
 
 		TTFont::~TTFont() = default;
 
@@ -33,7 +32,7 @@ namespace lib
 			return m_font->getKerning(first, second, characterSize);
 		}
 
-		const sf::Texture & TTFont::getTexture(u32 characterSize) const
+		const Texture TTFont::getTexture(u32 characterSize) const
 		{
 			return m_font->getTexture(characterSize);
 		}
