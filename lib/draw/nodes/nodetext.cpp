@@ -52,12 +52,10 @@ namespace lib
 					return;
 				}
 
-				const Rectf32 glyphRect{ font()->getGlyph(L'x', characterSize(), false).bounds };
-				const Rectf32 xBounds{ glyphRect.left,glyphRect.top,glyphRect.width,glyphRect.height };
-				const f32 strikeThroughOffset = xBounds.top + xBounds.height / 2.f;
-
-				const f32 hspace{ static_cast<f32>(font()->getGlyph(L' ', characterSize(), false).advance) };
+				const Rectf32 glyphRect{ font()->getGlyph(L'x', characterSize(), false, 0).bounds };
+				const f32 hspace{ static_cast<f32>(font()->getGlyph(L' ', characterSize(), false, 0).advance) };
 				const f32 vspace{ static_cast<f32>(font()->getLineSpacing(characterSize())) };
+
 				f32 x{ 0.f };
 				f32 y{ static_cast<f32>(characterSize()) };
 
@@ -70,7 +68,7 @@ namespace lib
 				for (const auto curChar : text())
 				{
 					// Apply the kerning offset
-					x += static_cast<f32>(font()->getKerning(prevChar, curChar, characterSize()));
+					x += font()->getKerning(prevChar, curChar, characterSize());
 					prevChar = curChar;
 
 					// Handle special characters

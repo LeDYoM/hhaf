@@ -1,6 +1,8 @@
 #include "ttfont.hpp"
-
 #include <lib/backend/sfml/conversions.hpp>
+
+#include <SFML/Graphics/Font.hpp>
+
 namespace lib
 {
 	namespace draw
@@ -13,10 +15,6 @@ namespace lib
 		bool TTFont::loadFromFile(const std::string & filename)
 		{
 			return m_font->loadFromFile(filename);
-		}
-		const sf::Glyph& TTFont::getGlyph_(u32 codePoint, u32 characterSize, bool bold, f32 outlineThickness) const
-		{
-			return m_font->getGlyph(codePoint, characterSize, bold, outlineThickness);
 		}
 
 		const TTGlyph TTFont::getGlyph(u32 codePoint, u32 characterSize, bool bold, f32 outlineThickness) const
@@ -39,25 +37,5 @@ namespace lib
 		{
 			return m_font->getTexture(characterSize);
 		}
-
-		/*
-		const Rectf32 TTFont::getGlyphRect(u32 codePoint, u32 characterSize, bool bold, f32 outlineThickness) const
-		{
-			sf::FloatRect glyphRect(getGlyph_(codePoint, characterSize, bold, outlineThickness).bounds);
-			return { glyphRect.left, glyphRect.top, glyphRect.width, glyphRect.height };
-		}
-
-		const Rectf32 TTFont::getGlyphTextureRect(u32 codePoint, u32 characterSize, bool bold, f32 outlineThickness) const
-		{
-			sf::IntRect glyphTextureRect(getGlyph_(codePoint, characterSize, bold, outlineThickness).textureRect);
-			return { static_cast<f32>(glyphTextureRect.left), static_cast<f32>(glyphTextureRect.top),
-				static_cast<f32>(glyphTextureRect.width), static_cast<f32>(glyphTextureRect.height) };
-		}
-
-		f32 TTFont::getGlyphAdvance(u32 codePoint, u32 characterSize, bool bold, f32 outlineThickness) const
-		{
-			return getGlyph_(codePoint, characterSize, bold, outlineThickness).advance;
-		}
-		*/
 	}
 }
