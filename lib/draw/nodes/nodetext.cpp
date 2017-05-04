@@ -52,7 +52,7 @@ namespace lib
 					return;
 				}
 
-				const Rectf32 glyphRect{ font()->getGlyphRect(L'x', characterSize(), false) };
+				const Rectf32 glyphRect{ font()->getGlyph(L'x', characterSize(), false).bounds };
 				const Rectf32 xBounds{ glyphRect.left,glyphRect.top,glyphRect.width,glyphRect.height };
 				const f32 strikeThroughOffset = xBounds.top + xBounds.height / 2.f;
 
@@ -93,8 +93,9 @@ namespace lib
 					}
 					else {
 						// Extract the current glyph's description
-						const Rectf32 glyphbound{ font()->getGlyphRect(curChar, characterSize(), false) };
-						const Rectf32 glyphTextureRect{ font()->getGlyphTextureRect(curChar, characterSize(), false) };
+						const TTGlyph glyph{ font()->getGlyph(curChar, characterSize(), false, 0) };
+						const Rectf32 glyphbound{ glyph.bounds };
+						const Rectf32 glyphTextureRect{ glyph.textureBounds };
 
 						const f32 u1 = static_cast<f32>(glyphTextureRect.left);
 						const f32 v1 = static_cast<f32>(glyphTextureRect.top);
@@ -121,7 +122,7 @@ namespace lib
 						maxY = max(maxY, gbottom);
 
 						// Advance to the next character
-						x += font()->getGlyphAdvance(curChar, characterSize(), false);
+						x += glyph.advance;
 					}
 				}
 

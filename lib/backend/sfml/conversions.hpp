@@ -25,26 +25,26 @@ namespace lib
 		template <typename T>
 		constexpr const vector2d<T> toVector2d(const sf::Vector2<T> &v) { return vector2d<T>{v.x, v.y}; }
 
-		input::Key doCast(const sf::Keyboard::Key &k)
+		inline input::Key doCast(const sf::Keyboard::Key &k)
 		{
 			int temp = k;
 			return static_cast<input::Key>(temp);
 		}
 
-		sf::String getAsString(const str &other)
+		inline sf::String getAsString(const str &other)
 		{
 			std::wstring wsTmp(other.begin(), other.end());
 			sf::String temp(wsTmp);
 			return temp;
 		}
 
-		sf::String getAsString(const char *const other)
+		inline sf::String getAsString(const char *const other)
 		{
 			std::string temp(other);
 			return getAsString(temp);
 		}
 
-		sf::Transform asTransform(const draw::Transform &transform)
+		inline sf::Transform asTransform(const draw::Transform &transform)
 		{
 			const f32 *const matrix{ transform.getMatrix() };
 			return sf::Transform{ matrix[0], matrix[4], matrix[12],
@@ -53,7 +53,7 @@ namespace lib
 
 		}
 
-		const sf::Texture *const asTexture(const draw::Texture*texture)
+		inline const sf::Texture *const asTexture(const draw::Texture*texture)
 		{
 			if (texture) {
 				ITexture*t = texture->backEndTexture().get();
@@ -67,7 +67,7 @@ namespace lib
 			return nullptr;
 		}
 
-		const sf::RenderStates asRenderStates(const draw::RenderStates &renderStates) 
+		inline const sf::RenderStates asRenderStates(const draw::RenderStates &renderStates) 
 		{
 			return sf::RenderStates(sf::RenderStates::Default.blendMode,
 				asTransform(renderStates.m_transform),

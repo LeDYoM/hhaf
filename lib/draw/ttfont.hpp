@@ -12,12 +12,11 @@ namespace lib
 {
 	namespace draw
 	{
-		class TTGlyph final
+		struct TTGlyph final
 		{
-		public:
-			TTGlyph(const sf::Glyph &glyph);
-		private:
-			const sf::Glyph &m_glyph;
+			Rectf32 bounds;
+			Rectf32 textureBounds;
+			f32 advance;
 		};
 
 		class TTFont final : public core::HasName
@@ -27,13 +26,15 @@ namespace lib
 			virtual ~TTFont();
 
 			bool loadFromFile(const std::string& filename);
-			const sf::Glyph& getGlyph(u32 codePoint, u32 characterSize, bool bold, f32 outlineThickness = 0) const;
+			const sf::Glyph& getGlyph_(u32 codePoint, u32 characterSize, bool bold, f32 outlineThickness = 0) const;
+			const TTGlyph getGlyph(u32 codePoint, u32 characterSize, bool bold, f32 outlineThickness = 0) const;
 			f32 getLineSpacing(u32 characterSize) const;
 			f32 getKerning(u32 first, u32 second, u32 characterSize) const;
 			const sf::Texture& getTexture(u32 characterSize) const;
-			const Rectf32 getGlyphRect(u32 codePoint, u32 characterSize, bool bold, f32 outlineThickness = 0) const;
-			const Rectf32 getGlyphTextureRect(u32 codePoint, u32 characterSize, bool bold, f32 outlineThickness = 0) const;
-			f32 getGlyphAdvance(u32 codePoint, u32 characterSize, bool bold, f32 outlineThickness = 0) const;
+//			const Rectf32 getGlyphRect(u32 codePoint, u32 characterSize, bool bold, f32 outlineThickness = 0) const;
+//			const Rectf32 getGlyphTextureRect(u32 codePoint, u32 characterSize, bool bold, f32 outlineThickness = 0) const;
+//			f32 getGlyphAdvance(u32 codePoint, u32 characterSize, bool bold, f32 outlineThickness = 0) const;
+
 		private:
 			sptr<sf::Font> m_font;
 		};
