@@ -1,8 +1,6 @@
 #ifndef LIB_DRAW_TTFONT_INCLUDE_HPP__
 #define LIB_DRAW_TTFONT_INCLUDE_HPP__
 
-//#include <SFML/Graphics/Texture.hpp>
-
 #include <lib/include/types.hpp>
 #include <lib/include/rect.hpp>
 #include <lib/draw/texture.hpp>

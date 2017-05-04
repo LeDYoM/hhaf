@@ -1,6 +1,8 @@
 #ifndef LIB_DRAW_VERTEX_HPP
 #define LIB_DRAW_VERTEX_HPP
 
+#pragma once
+
 #include <lib/include/types.hpp>
 #include <lib/include/vector2d.hpp>
 #include <lib/draw/color.hpp>
@@ -9,7 +11,7 @@ namespace lib
 {
 	namespace draw
 	{
-		struct Vertex
+		struct Vertex final
 		{
 			constexpr Vertex(vector2df p, Color c, vector2df tc) noexcept : position{ std::move(p) }, color{ std::move(c) }, texCoords{ std::move(tc) } {}
 			constexpr Vertex(vector2df p, vector2df tc) noexcept : position{ std::move(p) }, color{}, texCoords{ std::move(tc) } {}
@@ -23,7 +25,7 @@ namespace lib
 			vector2df texCoords;
 		};
 
-		static_assert(std::is_standard_layout<Vertex>::value, "Vertex must have the standard layout not a pod");
+		static_assert(std::is_standard_layout<Vertex>::value, "Vertex must have the standard layout");
 	}
 }
 
