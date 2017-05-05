@@ -3,6 +3,7 @@
 
 #include "sfml/renderwindow.hpp"
 #include "sfml/texturefactory.hpp"
+#include "sfml/ttfontfactory.hpp"
 
 namespace lib
 {
@@ -16,6 +17,7 @@ namespace lib
 			m_windowProviderInfo = msptr<WindowBackendInfo>();
 			m_window = msptr<RenderWindow>();
 			m_textureFactory = msptr<TextureFactory>();
+			m_ttfontFactory = msptr<TTFontFactory>();
 		}
 		BackendFactory::~BackendFactory() 
 		{

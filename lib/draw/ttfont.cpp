@@ -25,7 +25,7 @@ namespace lib
 
 		const TTGlyph TTFont::getGlyph(u32 codePoint, u32 characterSize, bool bold, f32 outlineThickness) const
 		{
-			return static_cast<TTGlyph>(m_font->getGlyph(codePoint, characterSize, bold, outlineThickness));
+			return TTGlyph(m_font->getGlyph(codePoint, characterSize, bold, outlineThickness));
 		}
 
 		f32 TTFont::getLineSpacing(u32 characterSize) const
@@ -38,9 +38,9 @@ namespace lib
 			return m_font->getKerning(first, second, characterSize);
 		}
 
-		const Texture TTFont::getTexture(u32 characterSize) const
+		sptr<Texture> TTFont::getTexture(u32 characterSize) const
 		{
-			return m_font->getTexture(characterSize);
+			return msptr<Texture>(m_font->getTexture(characterSize));
 		}
 	}
 }

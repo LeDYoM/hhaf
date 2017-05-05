@@ -23,6 +23,7 @@ namespace lib
 	{
 		struct TTGlyph final : public backend::ITTGlyph
 		{
+			TTGlyph(const backend::ITTGlyph &rhs) : backend::ITTGlyph{ rhs } {}
 		};
 
 		class TTFont final : public core::HasName
@@ -35,7 +36,7 @@ namespace lib
 			const TTGlyph getGlyph(u32 codePoint, u32 characterSize, bool bold, f32 outlineThickness) const;
 			f32 getLineSpacing(u32 characterSize) const;
 			f32 getKerning(u32 first, u32 second, u32 characterSize) const;
-			const Texture getTexture(u32 characterSize) const;
+			sptr<Texture> getTexture(u32 characterSize) const;
 
 		private:
 			sptr<backend::ITTFont> m_font;

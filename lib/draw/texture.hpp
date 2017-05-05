@@ -23,7 +23,7 @@ namespace lib
 		public:
 			Texture(str name);
 			Texture(const sf::Texture &texture);
-
+			Texture(sptr<backend::ITexture> texture);
 			virtual ~Texture();
 
 			bool loadFromFile(const str& filename);
