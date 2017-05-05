@@ -4,7 +4,6 @@
 #include <lib/include/types.hpp>
 #include <lib/include/rect.hpp>
 #include <lib/draw/texture.hpp>
-#include <lib/draw/hasname.hpp>
 #include <lib/backend/ittfont.hpp>
 
 namespace sf
@@ -26,11 +25,9 @@ namespace lib
 			TTGlyph(const backend::ITTGlyph &rhs) : backend::ITTGlyph{ rhs } {}
 		};
 
-		class TTFont final : public core::HasName
+		class TTFont final
 		{
 		public:
-			TTFont(str name);
-			~TTFont();
 
 			bool loadFromFile(const std::string& filename);
 			const TTGlyph getGlyph(u32 codePoint, u32 characterSize, bool bold, f32 outlineThickness) const;

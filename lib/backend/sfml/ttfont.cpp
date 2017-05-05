@@ -26,7 +26,7 @@ namespace lib
 
 		sptr<ITexture> TTFont::getTexture(u32 characterSize) const
 		{
-			return msptr<Texture>( "internal", m_font.getTexture(characterSize) );
+			return msptr<Texture>( m_font.getTexture(characterSize) );
 		}
 
 	}

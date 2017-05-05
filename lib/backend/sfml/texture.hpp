@@ -1,10 +1,10 @@
 #ifndef LIB_BACKEND_SFML_TEXTURE_INCLUDE_HPP__
 #define LIB_BACKEND_SFML_TEXTURE_INCLUDE_HPP__
 
-#include <lib/draw/hasname.hpp>
 #include <lib/include/types.hpp>
 #include <lib/include/vector2d.hpp>
 #include <lib/backend/itexture.hpp>
+
 #include <SFML/Graphics/Texture.hpp>
 
 namespace lib
@@ -14,7 +14,7 @@ namespace lib
 		class Texture : public ITexture
 		{
 		public:
-			Texture(str name, const sf::Texture &texture);
+			Texture(const sf::Texture &texture);
 			virtual ~Texture();
 
 			virtual vector2du32 size() const override;

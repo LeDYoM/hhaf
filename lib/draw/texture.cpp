@@ -9,9 +9,9 @@ namespace lib
 	{
 		using namespace backend;
 
-		Texture::Texture(str name) : core::HasName{ std::move(name) }, m_texturePrivate{ } {}
-		Texture::Texture(const sf::Texture &texture) : core::HasName{ "internal" }, m_texturePrivate{ textureFactory().getITexture(texture) } {}
-		Texture::Texture(sptr<backend::ITexture> texture) : core::HasName{ "internal" }, m_texturePrivate{ std::move(texture) } {}
+		Texture::Texture() = default;
+		Texture::Texture(const sf::Texture &texture) : m_texturePrivate{ textureFactory().getITexture(texture) } {}
+		Texture::Texture(sptr<backend::ITexture> texture) : m_texturePrivate{ std::move(texture) } {}
 
 		Texture::~Texture() = default;
 

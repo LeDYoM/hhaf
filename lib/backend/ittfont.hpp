@@ -4,7 +4,6 @@
 #include <lib/include/types.hpp>
 #include <lib/include/vector2d.hpp>
 #include <lib/include/rect.hpp>
-#include <lib/draw/hasname.hpp>
 #include "itexture.hpp"
 
 namespace lib
@@ -18,11 +17,10 @@ namespace lib
 			f32 advance;
 		};
 
-		class ITTFont : public core::HasName
+		class ITTFont
 		{
 		public:
-			ITTFont() : core::HasName{ "l" } {}
-			using core::HasName::HasName;
+			ITTFont() {}
 			virtual ~ITTFont() {}
 
 			virtual const ITTGlyph getGlyph(u32 codePoint, u32 characterSize, bool bold, f32 outlineThickness) const = 0;

@@ -5,7 +5,7 @@ namespace lib
 {
 	namespace backend
 	{
-		Texture::Texture(str name, const sf::Texture &texture) : ITexture{ std::move(name) }, m_texturePrivate{ texture } {}
+		Texture::Texture(const sf::Texture &texture) : m_texturePrivate{ texture } {}
 
 		Texture::~Texture() = default;
 

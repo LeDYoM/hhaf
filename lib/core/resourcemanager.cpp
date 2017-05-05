@@ -15,7 +15,7 @@ namespace lib
 			template <typename T>
 			inline void add(ResourceManager::ResourceList<sptr<T>> &container, const std::string &id, const std::string &fileName)
 			{
-				auto&& resource(msptr<T>(id));
+				auto&& resource(msptr<T>());
 				resource->loadFromFile(fileName);
 				container.push_back(ResourceManager::NamedIndex<sptr<T>>(id,std::move(resource)));
 			}

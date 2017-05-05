@@ -1,7 +1,6 @@
 #ifndef LIB_DRAW_TEXTURE_INCLUDE_HPP__
 #define LIB_DRAW_TEXTURE_INCLUDE_HPP__
 
-#include <lib/draw/hasname.hpp>
 #include <lib/include/types.hpp>
 #include <lib/include/vector2d.hpp>
 
@@ -18,13 +17,13 @@ namespace lib
 	}
 	namespace draw
 	{
-		class Texture final : public core::HasName
+		class Texture final
 		{
 		public:
-			Texture(str name);
+			Texture();
 			Texture(const sf::Texture &texture);
 			Texture(sptr<backend::ITexture> texture);
-			virtual ~Texture();
+			~Texture();
 
 			bool loadFromFile(const str& filename);
 			vector2du32 size() const;

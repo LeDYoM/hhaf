@@ -6,6 +6,7 @@
 #include <lib/include/rect.hpp>
 #include <lib/backend/ittfont.hpp>
 #include <lib/backend/itexture.hpp>
+
 #include <SFML/Graphics/Font.hpp>
 
 namespace lib

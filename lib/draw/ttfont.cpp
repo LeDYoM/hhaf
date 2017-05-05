@@ -10,10 +10,6 @@ namespace lib
 	{
 		using namespace backend;
 
-		TTFont::TTFont(str name) : core::HasName{ std::move(name) }, m_font{ } {}
-
-		TTFont::~TTFont() = default;
-
 		bool TTFont::loadFromFile(const std::string & filename)
 		{
 			m_font = ttfontFactory().loadFromFile(filename);

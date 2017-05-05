@@ -3,18 +3,15 @@
 
 #include <lib/include/types.hpp>
 #include <lib/include/vector2d.hpp>
-#include <lib/include/rect.hpp>
-#include <lib/draw/hasname.hpp>
 
 namespace lib
 {
 	namespace backend
 	{
-		class ITexture : public core::HasName
+		class ITexture
 		{
 		public:
-			using core::HasName::HasName;
-
+			ITexture() {}
 			virtual ~ITexture() {}
 
 			virtual vector2du32 size() const = 0;

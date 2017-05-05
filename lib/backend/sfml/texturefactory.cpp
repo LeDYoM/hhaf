@@ -10,12 +10,12 @@ namespace lib
 		{
 			sf::Texture texture;
 			texture.loadFromFile(file);
-			return msptr<Texture>(file,texture);
+			return msptr<Texture>(texture);
 		}
 
 		sptr<ITexture> TextureFactory::getITexture(const sf::Texture & texture)
 		{
-			return msptr<Texture>("internal",texture);
+			return msptr<Texture>(texture);
 		}
 	}
 }
