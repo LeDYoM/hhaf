@@ -1,7 +1,4 @@
 #include "ttfont.hpp"
-#include <lib/backend/sfml/conversions.hpp>
-
-#include <SFML/Graphics/Font.hpp>
 
 #include <lib/backend/ittfont.hpp>
 #include <lib/backend/ittfontfactory.hpp>
