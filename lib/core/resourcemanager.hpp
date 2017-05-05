@@ -33,11 +33,18 @@ namespace lib
 					return getTexture(rid);
 				}
 			}
-			sptr<draw::TTFont> getFont(const std::string rid) const;
-			sptr<draw::Texture> getTexture(const std::string rid) const;
+			sptr<draw::TTFont> getFont(const str &rid) const;
+			sptr<draw::Texture> getTexture(const str &rid) const;
+
+			template <typename T>
+			using NamedIndex = std::pair<const str, T>;
+
+			template <typename T>
+			using ResourceList = std::list<NamedIndex<T>>;
+
 		private:
-			std::list<sptr<draw::TTFont>> m_fonts;
-			std::list<sptr<draw::Texture>> m_textures;
+			ResourceList<sptr<draw::TTFont>> m_fonts;
+			ResourceList<sptr<draw::Texture>> m_textures;
 		};
 	}
 }

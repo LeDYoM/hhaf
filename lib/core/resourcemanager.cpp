@@ -13,11 +13,11 @@ namespace lib
 		namespace
 		{
 			template <typename T>
-			inline void add(std::list<sptr<T>> &container, std::string &&id, std::string &&fileName)
+			inline void add(ResourceManager::ResourceList<sptr<T>> &container, const std::string &id, const std::string &fileName)
 			{
-				auto&& resource(msptr<T>(std::move(id)));
-				resource->loadFromFile(std::move(fileName));
-				container.push_back(std::move(resource));
+				auto&& resource(msptr<T>(id));
+				resource->loadFromFile(fileName);
+				container.push_back(ResourceManager::NamedIndex<sptr<T>>(id,std::move(resource)));
 			}
 
 		}
@@ -42,10 +42,10 @@ namespace lib
 								string id = completeId[1];
 								string filename(resourcesDirectory + dataLine.second->get<string>());
 								if (resourceTypeStr[0] == 'f' || resourceTypeStr[0] == 'F') {
-									add(m_fonts, std::move(id), std::move(filename));
+									add(m_fonts, id, filename);
 								}
 								else {
-									add(m_textures, std::move(id), std::move(filename));
+									add(m_textures, id, filename);
 
 								}
 								logDebug("Resource with id ", dataLine.second->get<string>(), " from file ", dataLine.first, " added");
@@ -64,15 +64,19 @@ namespace lib
 
 		ResourceManager::~ResourceManager() = default;
 
-		sptr<draw::TTFont> ResourceManager::getFont(const std::string rid) const
+		sptr<draw::TTFont> ResourceManager::getFont(const str &rid) const
 		{
-			auto iterator(std::find_if(m_fonts.begin(), m_fonts.end(), [&rid](const sptr<draw::TTFont> &font) {return font->name() == rid; }));
-			return iterator == m_fonts.end() ? nullptr : *iterator;
+			auto iterator(std::find_if(m_fonts.begin(), m_fonts.end(), 
+				[rid](const auto &node) {return node.first == rid; })
+			);
+			return iterator == m_fonts.end() ? nullptr : (*iterator).second;
 		}
-		sptr<draw::Texture> ResourceManager::getTexture(const std::string rid) const
+		sptr<draw::Texture> ResourceManager::getTexture(const str &rid) const
 		{
-			auto iterator(std::find_if(m_textures.begin(), m_textures.end(), [&rid](const sptr<draw::Texture> &texture) {return texture->name() == rid; }));
-			return iterator == m_textures.end() ? nullptr : *iterator;
+			auto iterator(std::find_if(m_textures.begin(), m_textures.end(),
+				[rid](const auto &node) {return node.first == rid; })
+			);
+			return iterator == m_textures.end() ? nullptr : (*iterator).second;
 		}
 	}
 }
