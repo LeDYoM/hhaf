@@ -3,7 +3,7 @@
 
 #include <lib/draw/ttfont.hpp>
 #include <lib/draw/texture.hpp>
-
+#include <lib/backend/backendfactory.hpp>
 #include <algorithm>
 
 namespace lib
@@ -12,11 +12,10 @@ namespace lib
 	{
 		namespace
 		{
-			template <typename T>
-			inline void add(ResourceManager::ResourceList<sptr<T>> &container, const std::string &id, const std::string &fileName)
+			template <typename T, typename A>
+			inline void add(A& factory, ResourceManager::ResourceList<sptr<T>> &container, const std::string &id, const std::string &fileName)
 			{
-				auto&& resource(msptr<T>());
-				resource->loadFromFile(fileName);
+				sptr<T> resource(msptr<T>(factory.loadFromFile(fileName)));
 				container.push_back(ResourceManager::NamedIndex<sptr<T>>(id,std::move(resource)));
 			}
 
@@ -42,10 +41,10 @@ namespace lib
 								string id = completeId[1];
 								string filename(resourcesDirectory + dataLine.second->get<string>());
 								if (resourceTypeStr[0] == 'f' || resourceTypeStr[0] == 'F') {
-									add(m_fonts, id, filename);
+									add(backend::ttfontFactory(), m_fonts, id, filename);
 								}
 								else {
-									add(m_textures, id, filename);
+									add(backend::textureFactory(), m_textures, id, filename);
 
 								}
 								logDebug("Resource with id ", dataLine.second->get<string>(), " from file ", dataLine.first, " added");

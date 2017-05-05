@@ -6,7 +6,7 @@ namespace lib
 {
 	namespace backend
 	{
-		sptr<ITexture> TextureFactory::loadTextureFromDisk(const str & file)
+		sptr<ITexture> TextureFactory::loadFromFile(const str & file)
 		{
 			sf::Texture texture;
 			texture.loadFromFile(file);

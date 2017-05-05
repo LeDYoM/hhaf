@@ -9,15 +9,14 @@ namespace lib
 	{
 		using namespace backend;
 
-		Texture::Texture() = default;
-		Texture::Texture(const sf::Texture &texture) : m_texturePrivate{ textureFactory().getITexture(texture) } {}
+//		Texture::Texture() = default;
 		Texture::Texture(sptr<backend::ITexture> texture) : m_texturePrivate{ std::move(texture) } {}
 
 		Texture::~Texture() = default;
 
 		bool Texture::loadFromFile(const str& filename)
 		{
-			m_texturePrivate = textureFactory().loadTextureFromDisk(filename);
+			m_texturePrivate = textureFactory().loadFromFile(filename);
 			return m_texturePrivate != nullptr;
 		}
 

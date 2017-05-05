@@ -4,11 +4,6 @@
 #include <lib/include/types.hpp>
 #include <lib/include/vector2d.hpp>
 
-namespace sf
-{
-	class Texture;
-}
-
 namespace lib
 {
 	namespace backend
@@ -20,8 +15,7 @@ namespace lib
 		class Texture final
 		{
 		public:
-			Texture();
-			Texture(const sf::Texture &texture);
+//			Texture();
 			Texture(sptr<backend::ITexture> texture);
 			~Texture();
 

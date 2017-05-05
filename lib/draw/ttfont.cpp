@@ -10,6 +10,8 @@ namespace lib
 	{
 		using namespace backend;
 
+		TTFont::TTFont(sptr<backend::ITTFont> font) : m_font{ std::move(font) } {}
+
 		bool TTFont::loadFromFile(const std::string & filename)
 		{
 			m_font = ttfontFactory().loadFromFile(filename);
