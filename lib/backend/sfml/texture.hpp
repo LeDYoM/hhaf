@@ -14,14 +14,14 @@ namespace lib
 		class Texture : public ITexture
 		{
 		public:
-			Texture(const sf::Texture &texture);
+			Texture(uptr<sf::Texture> &&texture);
 			virtual ~Texture();
 
 			virtual vector2du32 size() const override;
 
-			const sf::Texture &backEndTexture() const { return m_texturePrivate; }
+			const sf::Texture &backEndTexture() const { return *m_texturePrivate; }
 		private:
-			sf::Texture m_texturePrivate;
+			uptr<sf::Texture> m_texturePrivate;
 		};
 	}
 }

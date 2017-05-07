@@ -25,12 +25,12 @@ namespace lib
 		{
 			using std::string;
 
-			if (resourceFile.size() > 0 && !configFileExists(resourceFile)) {
-				__ASSERT("Resource not found: ", resourceFile);
-			}
-			else
-			{
-				if (!resourceFile.empty()) {
+			if (!resourceFile.empty()) {
+				if (!configFileExists(resourceFile)) {
+					__ASSERT("Resource file not found: ", resourceFile);
+				}
+				else
+				{
 					static const char *const resourcesDirectoryKey = "resources_directory";
 					const auto resourcesDirectory = value(resourcesDirectoryKey)->get<string>();
 					for_each_property([&resourcesDirectory, this](const Configuration::CMapLine &dataLine) {
@@ -55,9 +55,9 @@ namespace lib
 						}
 					});
 				}
-				else {
-					logDebug("Empty resources file. No resources loaded or used");
-				}
+			}
+			else {
+				logDebug("Empty resources file. No resources loaded or used");
 			}
 		}
 

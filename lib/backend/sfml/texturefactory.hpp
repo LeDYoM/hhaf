@@ -19,8 +19,6 @@ namespace lib
 		{
 		public:
 			virtual sptr<ITexture> loadFromFile(const str &file) override;
-			// Temporary
-			virtual sptr<ITexture> getITexture(const sf::Texture &texture) override;
 		};
 	}
 }

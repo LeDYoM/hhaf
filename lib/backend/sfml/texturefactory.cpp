@@ -8,14 +8,9 @@ namespace lib
 	{
 		sptr<ITexture> TextureFactory::loadFromFile(const str & file)
 		{
-			sf::Texture texture;
-			texture.loadFromFile(file);
-			return msptr<Texture>(texture);
-		}
-
-		sptr<ITexture> TextureFactory::getITexture(const sf::Texture & texture)
-		{
-			return msptr<Texture>(texture);
+			uptr<sf::Texture> texture(muptr<sf::Texture>());
+			texture->loadFromFile(file);
+			return msptr<Texture>(std::move(texture));
 		}
 	}
 }
