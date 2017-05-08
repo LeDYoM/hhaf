@@ -119,7 +119,7 @@ namespace zoper
 
 		// Properties
 		lib::PausableTimer gameClock;
-		lib::sptr<lib::board::BoardModel> p_boardModel{ nullptr };
+		lib::sptr<lib::board::BoardModelComponent> p_boardModel{ nullptr };
 		GameData _gameData;
 		lib::u32 _score{ 0 };
 		lib::u8 _nextTokenPart{ 0 };

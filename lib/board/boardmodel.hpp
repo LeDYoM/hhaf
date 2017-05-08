@@ -4,16 +4,19 @@
 #include <vector>
 #include <lib/include/types.hpp>
 #include "itilescontroller.hpp"
+#include <lib/draw/icomponent.hpp>
 
 namespace lib
 {
 	namespace board
 	{
-		class BoardModel
+		class BoardModelComponent : public draw::DataOnlyComponent
 		{
 		public:
-			BoardModel(const vector2du32 &size);
-			~BoardModel();
+			BoardModelComponent();
+			~BoardModelComponent();
+
+			void initialize(const vector2du32 &size);
 
 			SITilePointer getTile(const vector2du32 &position) const noexcept;
 			inline bool tileEmpty(const vector2du32 &position) const noexcept { return getTile(position) == nullptr; }

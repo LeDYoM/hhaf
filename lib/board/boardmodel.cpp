@@ -7,24 +7,29 @@ namespace lib
 {
 	namespace board
 	{
-		BoardModel::BoardModel(const vector2du32 &size)
+		BoardModelComponent::BoardModelComponent()
 		{
-			logConstruct(" w: ", size.x, " h: ", size.y);
-			_tiles.reserve(size.x);
-			for (auto x = 0u; x < size.x; ++x) {
-//				std::vector<SITilePointer> column(size.y);
-				_tiles.emplace_back(size.y);
-			}
-			_tiles.shrink_to_fit();
+			logConstruct_NOPARAMS;
 		}
 
-		BoardModel::~BoardModel()
+		BoardModelComponent::~BoardModelComponent()
 		{
 			_tiles.clear();
 			logDestruct_NOPARAMS;
 		}
 
-		SITilePointer BoardModel::getTile(const vector2du32 &position) const noexcept
+		void BoardModelComponent::initialize(const vector2du32 &size)
+		{
+			logDebug("BoardModelComponent initialize with size: ", size);
+			_tiles.reserve(size.x);
+			for (auto x = 0u; x < size.x; ++x) {
+				//				std::vector<SITilePointer> column(size.y);
+				_tiles.emplace_back(size.y);
+			}
+			_tiles.shrink_to_fit();
+		}
+
+		SITilePointer BoardModelComponent::getTile(const vector2du32 &position) const noexcept
 		{
 			if (validCoords(position)) {
 				return _tiles[position.x][position.y];
@@ -33,7 +38,7 @@ namespace lib
 			return SITilePointer();
 		}
 
-		void BoardModel::setTile(const lib::vector2du32 &tPosition, SITilePointer newTile)
+		void BoardModelComponent::setTile(const lib::vector2du32 &tPosition, SITilePointer newTile)
 		{
 			__ASSERT(tileEmpty(tPosition), "You can only set data in empty tiles");
 
@@ -41,7 +46,7 @@ namespace lib
 			host().eventManager().addEvent(msptr<TileAddedEvent>(tPosition, newTile));
 		}
 
-		void BoardModel::deleteTile(const vector2du32 &position)
+		void BoardModelComponent::deleteTile(const vector2du32 &position)
 		{
 			__ASSERT(!tileEmpty(position), "You can only delete not empty tiles");
 			SITilePointer current = getTile(position);
@@ -49,7 +54,7 @@ namespace lib
 			host().eventManager().addEvent(msptr<TileDeletedEvent>(position, current));
 		}
 
-		void BoardModel::changeTileData(const vector2du32 &source, const BoardTileData &nv)
+		void BoardModelComponent::changeTileData(const vector2du32 &source, const BoardTileData &nv)
 		{
 			__ASSERT(!tileEmpty(source), "You can only change data in not empty tiles");
 
@@ -59,7 +64,7 @@ namespace lib
 			host().eventManager().addEvent(msptr<TileChangedEvent>(source, tile, ov, nv));
 		}
 
-		bool BoardModel::moveTile(const vector2du32 &source, const vector2du32 &dest)
+		bool BoardModelComponent::moveTile(const vector2du32 &source, const vector2du32 &dest)
 		{
 			if (!tileEmpty(source)) {
 				logDebug("Moving tile from ", source, " to ", dest);
@@ -85,7 +90,7 @@ namespace lib
 			return false;
 		}
 
-		void BoardModel::_setTile(const vector2du32 &position, SITilePointer newTile)
+		void BoardModelComponent::_setTile(const vector2du32 &position, SITilePointer newTile)
 		{
 			_tiles[position.x][position.y] = newTile;
 		}

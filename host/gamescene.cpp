@@ -110,7 +110,8 @@ namespace zoper
 		using namespace lib::board;
 		using namespace lib::events;
 
-		p_boardModel = lib::msptr<BoardModel>(_gameData.size);
+		p_boardModel = this->ensureComponentOfType<BoardModelComponent>();
+		p_boardModel->initialize(_gameData.size);
 		m_boardEventConnector.addSubscription(TileAddedEvent::subscribe([this](const events::Event&ev) {
 			auto tEvent{ eventAs<TileAddedEvent>(ev) }; tileAdded(tEvent.position, tEvent.tile);
 		}));
