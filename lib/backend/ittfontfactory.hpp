@@ -6,11 +6,6 @@
 
 #include "ittfont.hpp"
 
-namespace sf
-{
-	class Font;
-}
-
 namespace lib
 {
 	namespace backend
@@ -19,8 +14,6 @@ namespace lib
 		{
 		public:
 			virtual sptr<ITTFont> loadFromFile(const str &file) = 0;
-			// Temporary
-			virtual sptr<ITTFont> getITTFont(const sf::Font &font) = 0;
 		};
 	}
 }

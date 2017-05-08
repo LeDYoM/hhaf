@@ -15,11 +15,6 @@ namespace lib
 				font.loadFromFile(file);
 				return msptr<TTFont>(font);
 			}
-
-			sptr<ITTFont> TTFontFactory::getITTFont(const sf::Font & font)
-			{
-				return msptr<TTFont>(font);
-			}
 		}
 	}
 }

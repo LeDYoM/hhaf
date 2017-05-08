@@ -7,11 +7,6 @@
 #include <lib/backend/ittfontfactory.hpp>
 #include "ttfont.hpp"
 
-namespace sf
-{
-	class Font;
-}
-
 namespace lib
 {
 	namespace backend
@@ -22,8 +17,6 @@ namespace lib
 			{
 			public:
 				virtual sptr<ITTFont> loadFromFile(const str &file) override;
-				// Temporary
-				virtual sptr<ITTFont> getITTFont(const sf::Font &font) override;
 			};
 		}
 	}

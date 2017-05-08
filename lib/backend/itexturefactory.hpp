@@ -6,11 +6,6 @@
 
 #include "itexture.hpp"
 
-namespace sf
-{
-	class Texture;
-}
-
 namespace lib
 {
 	namespace backend
