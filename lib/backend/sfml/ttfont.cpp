@@ -1,4 +1,5 @@
 #include "ttfont.hpp"
+#include "texturettfont.hpp"
 #include "conversions.hpp"
 
 namespace lib
@@ -26,7 +27,10 @@ namespace lib
 
 		sptr<ITexture> TTFont::getTexture(u32 characterSize) const
 		{
-			return msptr<Texture>( &m_font.getTexture(characterSize) );
+			const sf::Texture &text(m_font.getTexture(characterSize));
+			sptr<TextureTTFont> tf(new TextureTTFont(text));
+			return tf;
+//			return msptr<TextureTTFont>( m_font.getTexture(characterSize) );
 		}
 
 	}

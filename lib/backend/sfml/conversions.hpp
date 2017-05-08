@@ -6,6 +6,7 @@
 
 #include <lib/backend/itexture.hpp>
 #include "texture.hpp"
+#include "texturettfont.hpp"
 #include <SFML/Window.hpp>
 #include <SFML/Graphics/Texture.hpp>
 
@@ -58,8 +59,10 @@ namespace lib
 			if (texture) {
 				ITexture*t = texture->backEndTexture().get();
 				if (t) {
-					auto tmp(dynamic_cast<backend::Texture*>(t));
-					if (tmp) {
+					if (auto tmp = dynamic_cast<backend::Texture*>(t)) {
+						return &(tmp->backEndTexture());
+					}
+					if (auto tmp = dynamic_cast<backend::TextureTTFont*>(t)) {
 						return &(tmp->backEndTexture());
 					}
 				}
