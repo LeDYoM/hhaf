@@ -6,20 +6,18 @@
 
 #include <lib/backend/itexturefactory.hpp>
 
-namespace sf
-{
-	class Texture;
-}
-
 namespace lib
 {
 	namespace backend
 	{
-		class TextureFactory : public ITextureFactory
+		namespace sfmlb
 		{
-		public:
-			virtual sptr<ITexture> loadFromFile(const str &file) override;
-		};
+			class TextureFactory : public ITextureFactory
+			{
+			public:
+				virtual sptr<ITexture> loadFromFile(const str &file) override;
+			};
+		}
 	}
 }
 

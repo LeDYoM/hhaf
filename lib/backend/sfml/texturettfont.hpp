@@ -11,18 +11,21 @@ namespace lib
 {
 	namespace backend
 	{
-		class TextureTTFont : public ITexture
+		namespace sfmlb
 		{
-		public:
-			TextureTTFont(const sf::Texture &texture);
-			virtual ~TextureTTFont();
+			class TextureTTFont : public ITexture
+			{
+			public:
+				TextureTTFont(const sf::Texture &texture);
+				virtual ~TextureTTFont();
 
-			virtual vector2du32 size() const override;
+				virtual vector2du32 size() const override;
 
-			const sf::Texture &backEndTexture() const { return m_texturePrivate; }
-		private:
-			const sf::Texture &m_texturePrivate;
-		};
+				const sf::Texture &backEndTexture() const { return m_texturePrivate; }
+			private:
+				const sf::Texture &m_texturePrivate;
+			};
+		}
 	}
 }
 

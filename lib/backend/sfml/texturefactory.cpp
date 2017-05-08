@@ -6,11 +6,14 @@ namespace lib
 {
 	namespace backend
 	{
-		sptr<ITexture> TextureFactory::loadFromFile(const str & file)
+		namespace sfmlb
 		{
-			uptr<sf::Texture> texture(muptr<sf::Texture>());
-			texture->loadFromFile(file);
-			return msptr<Texture>(std::move(texture));
+			sptr<ITexture> TextureFactory::loadFromFile(const str & file)
+			{
+				uptr<sf::Texture> texture(muptr<sf::Texture>());
+				texture->loadFromFile(file);
+				return msptr<Texture>(std::move(texture));
+			}
 		}
 	}
 }

@@ -16,13 +16,16 @@ namespace lib
 {
 	namespace backend
 	{
-		class TTFontFactory : public ITTFontFactory
+		namespace sfmlb
 		{
-		public:
-			virtual sptr<ITTFont> loadFromFile(const str &file) override;
-			// Temporary
-			virtual sptr<ITTFont> getITTFont(const sf::Font &font) override;
-		};
+			class TTFontFactory : public ITTFontFactory
+			{
+			public:
+				virtual sptr<ITTFont> loadFromFile(const str &file) override;
+				// Temporary
+				virtual sptr<ITTFont> getITTFont(const sf::Font &font) override;
+			};
+		}
 	}
 }
 #endif

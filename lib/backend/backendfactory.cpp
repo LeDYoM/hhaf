@@ -14,10 +14,10 @@ namespace lib
 		BackendFactory::BackendFactory()
 		{
 			logConstruct_NOPARAMS;
-			m_windowProviderInfo = msptr<WindowBackendInfo>();
-			m_window = msptr<RenderWindow>();
-			m_textureFactory = msptr<TextureFactory>();
-			m_ttfontFactory = msptr<TTFontFactory>();
+			m_windowProviderInfo = msptr<sfmlb::WindowBackendInfo>();
+			m_window = msptr<sfmlb::RenderWindow>();
+			m_textureFactory = msptr<sfmlb::TextureFactory>();
+			m_ttfontFactory = msptr<sfmlb::TTFontFactory>();
 		}
 		BackendFactory::~BackendFactory() 
 		{

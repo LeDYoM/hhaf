@@ -11,18 +11,21 @@ namespace lib
 {
 	namespace backend
 	{
-		class Texture : public ITexture
+		namespace sfmlb
 		{
-		public:
-			Texture(uptr<sf::Texture> &&texture);
-			virtual ~Texture();
+			class Texture : public ITexture
+			{
+			public:
+				Texture(uptr<sf::Texture> &&texture);
+				virtual ~Texture();
 
-			virtual vector2du32 size() const override;
+				virtual vector2du32 size() const override;
 
-			const sf::Texture &backEndTexture() const { return *m_texturePrivate; }
-		private:
-			uptr<sf::Texture> m_texturePrivate;
-		};
+				const sf::Texture &backEndTexture() const { return *m_texturePrivate; }
+			private:
+				uptr<sf::Texture> m_texturePrivate;
+			};
+		}
 	}
 }
 
