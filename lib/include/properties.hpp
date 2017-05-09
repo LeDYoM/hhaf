@@ -115,6 +115,29 @@ namespace lib
 	private:
 		IProperty<T> *m_value{ nullptr };
 	};
+
+	class IPropertyOwner
+	{
+		virtual void onPropertySet() = 0;
+	};
+	template <typename T>
+	class Property_ : public IProperty<T>
+	{
+	public:
+		constexpr Property(TIPropertyOwner &propOwner, iv = {}) : m_propertyOwner{ propOwner }, m_value{ std::move(iv) } {}
+
+		virtual const T &operator()() const noexcept override { return m_value; }
+		virtual const T &get() const noexcept override { return m_value; }
+		virtual void set(const T&v) override { m_value = v; update(); }
+		virtual void set(T&&v) override { m_value = std::move(v); update(); }
+		virtual void operator=(const T&v) override { m_value = std::move(v); update(); }
+		virtual void operator=(T&&v) override { m_value = std::move(v); update(); }
+
+		void update() { m_propertyOwner.onPropertySet(); }
+	private:
+		IPropertyOwner &m_propertyOwner;
+		T m_value;
+	};
 }
 
 #endif

@@ -25,7 +25,7 @@ namespace lib
 
 		void Transformable::rotateAround(const vector2df & point, const f32 angle)
 		{
-			Lock l{ this };
+			Lock l{ *this };
 			origin = point;
 			position = point;
 			rotation = angle;
@@ -33,7 +33,7 @@ namespace lib
 
 		void Transformable::scaleAround(const vector2df & point, const vector2df & scale_)
 		{
-			Lock l{ this };
+			Lock l{ *this };
 			origin = point;
 			position = point;
 			scale = scale_;
@@ -50,9 +50,9 @@ namespace lib
 				return;
 
 			// Recompute the combined transform
-			const f32 angle = -rotation() * 3.141592654f / 180.f;
-			const f32 cosine = static_cast<f32>(std::cos(angle));
-			const f32 sine = static_cast<f32>(std::sin(angle));
+			const f32 angle{ -rotation() * 3.141592654f / 180.f };
+			const f32 cosine{ static_cast<f32>(std::cos(angle)) };
+			const f32 sine{ static_cast<f32>(std::sin(angle)) };
 			const vector2df sc{ scale() * cosine };
 			const vector2df ss{ scale() * sine };
 			const vector2df orig{ origin() };

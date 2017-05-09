@@ -29,7 +29,7 @@ namespace lib
 	class Lock
 	{
 	public:
-		inline Lock(Lockable *const lockable) : m_lockable{ *lockable } { m_lockable.lock(); }
+		inline Lock(Lockable &lockable) : m_lockable{ lockable } { m_lockable.lock(); }
 		inline ~Lock() { m_lockable.unlock(); }
 	private:
 		Lockable& m_lockable;
