@@ -120,11 +120,12 @@ namespace lib
 	{
 		virtual void onPropertySet() = 0;
 	};
+
 	template <typename T>
 	class Property_ : public IProperty<T>
 	{
 	public:
-		constexpr Property(TIPropertyOwner &propOwner, iv = {}) : m_propertyOwner{ propOwner }, m_value{ std::move(iv) } {}
+		constexpr Property_(IPropertyOwner &propOwner, T iv = {}) : m_propertyOwner{ propOwner }, m_value{ std::move(iv) } {}
 
 		virtual const T &operator()() const noexcept override { return m_value; }
 		virtual const T &get() const noexcept override { return m_value; }
