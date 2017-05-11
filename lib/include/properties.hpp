@@ -18,15 +18,14 @@ namespace lib
 	class IPropertyWrite
 	{
 	public:
-		virtual void set(const T&v) = 0;
-		inline void operator=(const T&v) { set(v); }
+		virtual void set(T v) = 0;
+		inline void operator=(T v) { set(std::move(v)); }
 	};
 
 	template <typename T>
 	class IProperty : public IPropertyRead<T>, public IPropertyWrite<T> {
 	public:
 		using IPropertyWrite::operator=;
-		using IPropertyWrite::set;
 	};
 
 	template <typename T>
@@ -45,10 +44,10 @@ namespace lib
 	class VirtualPropertyWrite : public IPropertyWrite<T>
 	{
 	public:
-		using setter_t = std::function<void(const T&)>;
+		using setter_t = std::function<void(T)>;
 		constexpr VirtualPropertyWrite(setter_t setterp = {}) : setter{ std::move(setterp) } {}
 		inline void setSetter(setter_t setterp) { setter = std::move(setterp); }
-		virtual void set(const T&v) override { setter(v); }
+		virtual void set(T v) override { setter(std::move(v)); }
 		using IPropertyWrite::operator=;
 	protected:
 		setter_t setter;
@@ -60,8 +59,6 @@ namespace lib
 	public:
 		constexpr VirtualProperty(const getter_t getterp = {}, const setter_t &setterp = {}) : VirtualPropertyRead{ getterp }, VirtualPropertyWrite{ setterp } {}
 		inline void setGettterSetter(getter_t getterp, setter_t setterp) { setGetter(std::move(getterp)); setSetter(std::move(setterp)); }
-		virtual void set(const T&v) override { setter(v); }
-		virtual const T&get() const noexcept override { return getter(); }
 	};
 
 	template <typename T>
@@ -76,7 +73,7 @@ namespace lib
 		inline void setCallback(callback_t c) { m_callback = std::move(c); }
 
 		virtual const T &get() const noexcept override { return m_value; }
-		virtual void set(const T&v) override { m_value = v; update(); }
+		virtual void set(T v) override { m_value = std::move(v); update(); }
 
 		void update() { if (m_callback) m_callback(); }
 	private:
@@ -94,7 +91,7 @@ namespace lib
 		inline void setForwardProperty(IProperty<T> *const p) noexcept { m_value = p; }
 
 		virtual const T &get() const noexcept override { return (*m_value).get(); }
-		virtual void set(const T&v) override { (*m_value).set(v); }
+		virtual void set(T v) override { (*m_value).set(std::move(v)); }
 		using IProperty::operator=;
 		inline IProperty<T> *const innerProperty() const { return m_value; }
 
@@ -114,7 +111,7 @@ namespace lib
 		constexpr Property_(IPropertyOwner &propOwner, T iv = {}) : m_propertyOwner{ propOwner }, m_value{ std::move(iv) } {}
 
 		virtual const T &get() const noexcept override { return m_value; }
-		virtual void set(const T&v) override { m_value = v; update(); }
+		virtual void set(T v) override { m_value = v; update(); }
 		virtual void operator=(const T&v) override { m_value = std::move(v); update(); }
 
 		void update() { m_propertyOwner.onPropertySet(); }
