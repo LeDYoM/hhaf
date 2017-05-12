@@ -7,8 +7,17 @@ namespace lib
 		void DebugVarsComponent::displayDebugVars()
 		{
 			for (auto&& dv : m_varsData) {
-				logDebug((*dv)());
+				logDebug(dv.first,": ",dv.second);
 			}
+		}
+
+		DebugVarsComponent::DebugVarsComponent()
+		{
+			draw::InputComponent::setOnKeyPressedHandler([this](const auto&key) {
+				if (key == input::Key::Num2) {
+					m_displayVarsNextFrame = true;
+				}
+			});
 		}
 
 		void DebugVarsComponent::update()
@@ -25,25 +34,14 @@ namespace lib
 			}
 		}
 
-		void DebugVarsComponent::addOrUpdateDebugVar(DebugVarAccessor & dba, str_const id, str data)
+		void DebugVarsComponent::addOrUpdateDebugVar(const str &id, const str &data)
 		{
-			const auto iterator(std::find(m_varsData.begin(), m_varsData.end(), dba));
-			if (iterator != m_varsData.end()) {
-				// Update
-				(*iterator)->setValue(std::move(data));
-				//return *iterator;
-			}
-			else {
-				// Add
-				m_varsData.emplace_back(msptr<DebugVar>(std::move(id), std::move(data)));
-				dba = m_varsData[m_varsData.size() - 1];
-				//return m_varsData[m_varsData.size() - 1];
-			}
+			m_varsData[id] = data;
 		}
 
-		void DebugVarsComponent::addOrUpdateDebugVar(DebugVarAccessor & dba, const str_const id, const u32 data)
+		void DebugVarsComponent::addOrUpdateDebugVar(const str &id, const u32 data)
 		{
-			addOrUpdateDebugVar(dba, std::move(id), std::to_string(data));
+			addOrUpdateDebugVar(id, std::to_string(data));
 		}
 	}
 }

@@ -31,10 +31,7 @@ namespace lib
 
 			void addDebugVars(const sptr<draw::Scene> &scene);
 			void setMatrixMultiplicationPerFrame(u32 &var);
-
 			void showVarsNextFrame();
-		private:
-			DebugVarAccessor m_matrixMultiplicationPerFrame;
 		};
 	}
 }

@@ -5,9 +5,8 @@
 #include <lib/draw/icomponent.hpp>
 #include <lib/draw/components/inputcomponent.hpp>
 #include <lib/core/log.hpp>
-#include <lib/include/debugvar.hpp>
 #include <lib/include/str.hpp>
-#include <vector>
+#include <map>
 
 namespace lib
 {
@@ -16,15 +15,16 @@ namespace lib
 		class DebugVarsComponent final : public draw::InputComponent
 		{
 		public:
+			DebugVarsComponent();
 			virtual void update() override;
-			void addOrUpdateDebugVar(DebugVarAccessor & dba, str_const id, str data);
-			void addOrUpdateDebugVar(DebugVarAccessor & dba, str_const id, const u32 data);
+			void addOrUpdateDebugVar(const str &id, const str &data);
+			void addOrUpdateDebugVar(const str &id, const u32 data);
 
 			inline void showVarsNextFrame() noexcept { m_displayVarsNextFrame = true; }
 		private:
 			void displayDebugVars();
 
-			std::vector<sptr<DebugVar>> m_varsData;
+			std::map<str,str> m_varsData;
 			bool m_displayVarsNextFrame{ false };
 		};
 	}

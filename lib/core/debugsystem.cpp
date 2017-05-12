@@ -22,13 +22,12 @@ namespace lib
 		void DebugSystem::addDebugVars(const sptr<draw::Scene>&scene)
 		{
 			auto dbc(scene->ensureComponentOfType<draw::DebugVarsComponent>());
-//			dbc->addOrUpdateDebugVar(nullptr,"", "");
 		}
 
 		void DebugSystem::setMatrixMultiplicationPerFrame(u32 & var)
 		{
 			auto dbc(host().currentScene()->ensureComponentOfType<draw::DebugVarsComponent>());
-			dbc->addOrUpdateDebugVar(m_matrixMultiplicationPerFrame,"Matrix mul per Frame:",std::to_string(var));
+			dbc->addOrUpdateDebugVar("Matrix mul per Frame:",std::to_string(var));
 		}
 
 		void DebugSystem::showVarsNextFrame()
