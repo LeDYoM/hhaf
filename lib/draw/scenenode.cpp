@@ -15,7 +15,7 @@ namespace lib
 		SceneNode::SceneNode(SceneNode *const parent, str name)
 			: core::HasName{ std::move(name) }, ComponentContainer{ this }, m_parent{ parent }, visible{ true } {}
 
-		SceneNode::~SceneNode() { clear(); };
+		SceneNode::~SceneNode() { clearAll(); };
 
 		void SceneNode::draw()
 		{
@@ -118,12 +118,27 @@ namespace lib
 			m_renderNodes.m_nodesToDelete.push_back(element);
 		}
 
-		void SceneNode::clear()
+		void SceneNode::clearAll()
+		{
+			clearNodes();
+			clearComponents();
+		}
+		void SceneNode::clearRenderizables()
+		{
+			updateRemoves();
+			m_renderNodes.nodes.clear();
+		}
+
+		void SceneNode::clearSceneNodes()
 		{
 			updateRemoves();
 			m_groups.nodes.clear();
-			m_renderNodes.nodes.clear();
-			clearComponents();
+		}
+
+		void SceneNode::clearNodes()
+		{
+			clearRenderizables();
+			clearSceneNodes();
 		}
 	}
 }

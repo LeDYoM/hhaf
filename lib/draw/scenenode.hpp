@@ -70,7 +70,10 @@ namespace lib
 			bool moveLastBeforeNode(const sptr<SceneNode> &beforeNode);
 			void removeSceneNode(const sptr<SceneNode> &element);
 			void removeRenderizable(const sptr<Renderizable> &element);
-			void clear();
+			void clearAll();
+			void clearRenderizables();
+			void clearSceneNodes();
+			void clearNodes();
 
 			void draw();
 

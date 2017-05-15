@@ -100,7 +100,7 @@ namespace zoper
 	void GameScene::onDeinit()
 	{
 		// Remove instances from all nodes.
-		clear();
+		clearAll();
 		Scene::onDeinit();
 	}
 
@@ -188,7 +188,7 @@ namespace zoper
 
 	void GameScene::onExitScene()
 	{
-		m_mainBoardrg->clear();
+		m_mainBoardrg->clearAll();
 		p_boardModel = nullptr;
 		p_player = nullptr;
 		m_backgroundTiles.clear();
