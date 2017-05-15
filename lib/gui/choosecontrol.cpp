@@ -14,14 +14,12 @@ namespace lib
 	{
 		using namespace draw;
 
-		ChooseControl::ChooseControl(lib::draw::SceneNode *parent, str &&name)
-			: SceneNode{ parent, std::move(name) }
-		{
-		}
+		ChooseControl::ChooseControl(lib::draw::SceneNode *parent, str name)
+			: SceneNode{ parent, std::move(name) } {}
 
 		ChooseControl::~ChooseControl() = default;
 
-		void ChooseControl::configure()
+		void ChooseControl::create()
 		{
 			box.setCallback([this]() {
 				for_each_node([this](const sptr<Renderizable>&node) {
@@ -32,52 +30,9 @@ namespace lib
 			});
 			const auto &cTheme(dynamic_cast<ChooseControlGroup*>(parent())->currentTheme());
 			descriptorCursorSize = cTheme.cursorDescriptor.m_size;
-
-			/*
-			// Disable cursor
-			m_cursorNode = createSceneNode("cursorNode");
-			m_cursor = m_cursorNode->createRenderizable<nodes::NodeShape>("cursor", cTheme.cursorDescriptor.m_nVertex);
-			m_cursor->box = { 1000, 100, descriptorCursorSize.x, descriptorCursorSize.y };
-			m_cursor->color = cTheme.cursorDescriptor.m_color;
-			m_cursor->configure();
-			*/
-			u32 count{};
-			vector2df currentPos{};
-			for (const auto& label : options)
-			{
-				auto menuLine = createSceneNode<ChooseControlLine>("menuLineText"+std::to_string(count));
-				menuLine->create();
-				menuLine->text = label.text;
-				menuLine->font = cTheme.font;
-				menuLine->characterSize = cTheme.chSize;
-				menuLine->color = cTheme.textColor;
-				menuLine->alignmentBox = box().move(currentPos);
-				menuLine->options = label.subOptionsLabels;
-				menuLine->configure();
-
-				currentPos.y += (cTheme.chSize + cTheme.incY);
-				lines.emplace_back(menuLine);
-				++count;
-			}
-
-			previouslySelectedItem = 0;
-			selectedItem.setCallback([this]() {
-				__ASSERT(previouslySelectedItem < lines.size(), "Invalid previously selected index for cursor");
-				__ASSERT(selectedItem() < lines.size(), "Invalid select index for cursor");
-
-				const auto &cTheme(parent()->snCast<ChooseControlGroup>()->currentTheme());
-
-				previouscurrentLine()->color = cTheme.textColor;
-				currentLine()->color = cTheme.selectedTextColor;
-				previouslySelectedItem = selectedItem();
-
-				//			m_cursorNode->rotation.set(90);
-				//			auto p(vector2df{ selectedText->position().x - descriptorCursorSize.x, selectedText->position().y });
-				//			addAnimation(msptr<anim::IPropertyAnimation<vector2df>>(120, m_cursorNode->position,
-				//				m_cursorNode->position(), vector2df{ selectedText->position().x - descriptorCursorSize.x, selectedText->position().y },
-				//				anim::noAction, anim::noAction));
+			optionModel.setCallback([this]() {
+				modelChanged();
 			});
-			selectedItem = 0;
 		}
 
 		const OptionModelIndex ChooseControl::currentSelection() const noexcept
@@ -132,6 +87,59 @@ namespace lib
 		const sptr<ChooseControlLine> ChooseControl::previouscurrentLine() const
 		{
 			return lines[previouslySelectedItem];
+		}
+
+		void ChooseControl::modelChanged()
+		{
+			clearNodes();
+			/*
+			// Disable cursor
+			m_cursorNode = createSceneNode("cursorNode");
+			m_cursor = m_cursorNode->createRenderizable<nodes::NodeShape>("cursor", cTheme.cursorDescriptor.m_nVertex);
+			m_cursor->box = { 1000, 100, descriptorCursorSize.x, descriptorCursorSize.y };
+			m_cursor->color = cTheme.cursorDescriptor.m_color;
+			m_cursor->configure();
+			*/
+			u32 count{};
+			vector2df currentPos{};
+			const auto &cTheme(dynamic_cast<ChooseControlGroup*>(parent())->currentTheme());
+			for (const auto& label : optionModel())
+			{
+				auto menuLine = createSceneNode<ChooseControlLine>("menuLineText" + std::to_string(count));
+				menuLine->create();
+				menuLine->text = label.text;
+				menuLine->font = cTheme.font;
+				menuLine->characterSize = cTheme.chSize;
+				menuLine->color = cTheme.textColor;
+				menuLine->alignmentBox = box().move(currentPos);
+				menuLine->options = label.subOptionsLabels;
+				menuLine->configure();
+
+				currentPos.y += (cTheme.chSize + cTheme.incY);
+				lines.emplace_back(menuLine);
+				++count;
+			}
+
+			previouslySelectedItem = 0;
+			selectedItem.setCallback([this]() {
+				if (!lines.empty()) {
+					__ASSERT(previouslySelectedItem < lines.size(), "Invalid previously selected index for cursor");
+					__ASSERT(selectedItem() < lines.size(), "Invalid select index for cursor");
+
+					const auto &cTheme(parent()->snCast<ChooseControlGroup>()->currentTheme());
+
+					previouscurrentLine()->color = cTheme.textColor;
+					currentLine()->color = cTheme.selectedTextColor;
+					previouslySelectedItem = selectedItem();
+
+					//			m_cursorNode->rotation.set(90);
+					//			auto p(vector2df{ selectedText->position().x - descriptorCursorSize.x, selectedText->position().y });
+					//			addAnimation(msptr<anim::IPropertyAnimation<vector2df>>(120, m_cursorNode->position,
+					//				m_cursorNode->position(), vector2df{ selectedText->position().x - descriptorCursorSize.x, selectedText->position().y },
+					//				anim::noAction, anim::noAction));
+				}
+			});
+			selectedItem = 0;
 		}
 	}
 }

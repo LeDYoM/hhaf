@@ -72,9 +72,9 @@ namespace lib
 
 			for (const auto& option : options()) {
 				auto chooseControl = createSceneNode<ChooseControl>("chooseControl"+std::to_string(count));
-				chooseControl->options = option;
 				chooseControl->box = box();
-				chooseControl->configure();
+				chooseControl->optionModel = option;
+//				chooseControl->configure();
 				++count;
 			}
 

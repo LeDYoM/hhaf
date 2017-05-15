@@ -27,13 +27,14 @@ namespace lib
 		class ChooseControl : public draw::SceneNode
 		{
 		public:
-			ChooseControl(lib::draw::SceneNode *parent, str &&name);
+			ChooseControl(lib::draw::SceneNode *parent, str name);
 			virtual ~ChooseControl();
 
-			void configure();
+			void create() override;
 
 			Property<Rectf32> box;
-			std::vector<OptionModel> options;
+			using CompleteOptionModel = std::vector<OptionModel>;
+			Property<CompleteOptionModel> optionModel;
 			const OptionModelIndex currentSelection() const noexcept;
 
 			u32 selectedSubLabel(const u32 index) const;
@@ -45,7 +46,7 @@ namespace lib
 			void goRight();
 			const sptr<ChooseControlLine> currentLine() const;
 			const sptr<ChooseControlLine> previouscurrentLine() const;
-
+			void modelChanged();
 			vector2df descriptorCursorSize;
 			u32 previouslySelectedItem;
 			Property<u32> selectedItem;
@@ -54,7 +55,6 @@ namespace lib
 			draw::SceneNodeSPtr m_cursorNode;
 			sptr<draw::nodes::NodeShape> m_cursor;
 			std::function<void(const u32)> m_onSelected;
-
 			friend class ChooseControlGroup;
 		};
 	}

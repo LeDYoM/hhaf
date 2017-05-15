@@ -28,7 +28,7 @@ namespace lib
 		class OptionModel
 		{
 		public:
-			explicit OptionModel(str&& text, string_vector subOptionsLabels = {}, OptionModelIndex next = {})
+			explicit OptionModel(str text, string_vector subOptionsLabels = {}, OptionModelIndex next = {})
 				: text{ std::move(text) }, subOptionsLabels{ std::move(subOptionsLabels) }, next{std::move(next)} {}
 			constexpr OptionModel(const OptionModel&rhs) = default;
 			constexpr OptionModel(OptionModel&&) = default;
