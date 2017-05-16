@@ -2,7 +2,7 @@
 # The version number.
 set (LIB_VERSION_MAJOR 1)
 set (LIB_VERSION_MINOR 2)
-set (LIB_VERSION_PATCH 2)
+set (LIB_VERSION_PATCH 3)
 
 set (LIB_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/")
 
@@ -68,9 +68,10 @@ source_group("lib\\board" FILES ${LIB_BOARD_HEADERS} ${LIB_SOURCES})
 # Detect and add SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 set (SFML_ROOT "${CMAKE_SOURCE_DIR}/SFML")
+#set(SFML_STATIC_LIBRARIES TRUE)
 #Find any version 2.X of SFML
 #See the FindSFML.cmake file for additional details and instructions
-find_package(SFML 2 REQUIRED system window graphics network audio)
+find_package(SFML 2 REQUIRED system window graphics)
 if(SFML_FOUND)
   include_directories(${SFML_INCLUDE_DIR})
   target_link_libraries(${CURRENT_TARGET} ${SFML_LIBRARIES})
@@ -84,4 +85,4 @@ set(_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/)
 #    ARCHIVE_OUTPUT_DIRECTORY "${_OUTPUT_DIRECTORY}"
 #)
 
-install (TARGETS ${CURRENT_TARGET} ARCHIVE DESTINATION ${_OUTPUT_DIRECTORY})
+#install (TARGETS ${CURRENT_TARGET} ARCHIVE DESTINATION ${_OUTPUT_DIRECTORY})
