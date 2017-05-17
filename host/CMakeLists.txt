@@ -1,4 +1,3 @@
-#Add SFML directories
 
 include_directories (${LIB_BASE_DIRECTORY})
 
@@ -30,7 +29,6 @@ endif()
 include_directories(..)
 target_link_libraries(${CURRENT_TARGET} lib)
 
-
 add_custom_command(TARGET ${CURRENT_TARGET} POST_BUILD
 	COMMAND ${CMAKE_COMMAND} -E copy_directory
 	${SFML_ROOT}/bin/$<CONFIGURATION>
@@ -58,17 +56,8 @@ endif()
 
 set(_INSTALL_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 
-#set_target_properties(${CURRENT_TARGET}
-#    PROPERTIES
-#    RUNTIME_OUTPUT_DIRECTORY "${_OUTPUT_DIRECTORY}"
-#)
-
-file(GLOB SFML_DLLS "${SFML_ROOT}/bin/Release/*.dll")
-message("dlls directories: ${SFML_ROOT}/bin/${CONFIGURATION}")
-message("dlls: ${SFML_DLLS}")
-install(FILES ${SFML_DLLS} DESTINATION ${_INSTALL_OUTPUT_DIRECTORY})
-	
 install (TARGETS ${CURRENT_TARGET} DESTINATION ${_INSTALL_OUTPUT_DIRECTORY})
+install(DIRECTORY ${SFML_ROOT}/bin/$<CONFIGURATION>/ DESTINATION ${_INSTALL_OUTPUT_DIRECTORY})
 
 # now comes everything we need, to create a package
 # there are a lot more variables you can set, and some
