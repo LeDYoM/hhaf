@@ -56,15 +56,19 @@ if (MSVC)
     </Project>")
 endif()
 
-set(_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/)
+set(_INSTALL_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 
 #set_target_properties(${CURRENT_TARGET}
 #    PROPERTIES
 #    RUNTIME_OUTPUT_DIRECTORY "${_OUTPUT_DIRECTORY}"
 #)
 
-install (TARGETS ${CURRENT_TARGET} RUNTIME DESTINATION bin)
-install(DIRECTORY ${SFML_ROOT}/bin/$<CONFIGURATION> DESTINATION bin)
+file(GLOB SFML_DLLS "${SFML_ROOT}/bin/Release/*.dll")
+message("dlls directories: ${SFML_ROOT}/bin/${CONFIGURATION}")
+message("dlls: ${SFML_DLLS}")
+install(FILES ${SFML_DLLS} DESTINATION ${_INSTALL_OUTPUT_DIRECTORY})
+	
+install (TARGETS ${CURRENT_TARGET} DESTINATION ${_INSTALL_OUTPUT_DIRECTORY})
 
 # now comes everything we need, to create a package
 # there are a lot more variables you can set, and some
