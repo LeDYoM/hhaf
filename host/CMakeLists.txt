@@ -54,11 +54,8 @@ if (MSVC)
     </Project>")
 endif()
 
-set(_INSTALL_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
-set(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR})
-message("CMAKE_INSTALL_PREFIX: " ${CMAKE_INSTALL_PREFIX})
-install (TARGETS ${CURRENT_TARGET} DESTINATION bin)
-install(DIRECTORY ${SFML_ROOT}/bin/$<CONFIGURATION>/ DESTINATION bin)
+install (TARGETS ${CURRENT_TARGET} DESTINATION  .)
+install(DIRECTORY ${SFML_ROOT}/bin/$<CONFIGURATION>/ DESTINATION .)
 
 # now comes everything we need, to create a package
 # there are a lot more variables you can set, and some
