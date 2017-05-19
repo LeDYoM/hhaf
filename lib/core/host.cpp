@@ -3,8 +3,8 @@
 #include "resourcemanager.hpp"
 #include "log.hpp"
 #include "randomizer.hpp"
-#include <lib/draw/scene.hpp>
-#include <lib/draw/renderstatesstack.hpp>
+#include <lib/scene/scene.hpp>
+#include <lib/scene/renderstatesstack.hpp>
 #include <lib/core/events/eventmanager.hpp>
 #include <lib/core/inputsystem.hpp>
 #include <lib/backend/backendfactory.hpp>
@@ -103,7 +103,7 @@ namespace lib
 				m_eventManager = muptr<EventManager>();
 				m_window = muptr<Window>(m_iapp->getAppDescriptor().wcp);
 				m_resourceManager = muptr<core::ResourceManager>(m_iapp->getAppDescriptor().resourceFile);
-				m_renderStates = muptr<draw::RenderStatesStack>();
+				m_renderStates = muptr<scene::RenderStatesStack>();
 				m_debugSystem = muptr<DebugSystem>();
 				
 				addScenes(m_iapp->scenesVector());
@@ -209,7 +209,7 @@ namespace lib
 			return "NoApp:0.0.0";
 		}
 
-		void Host::addScene(sptr<draw::Scene> newScene)
+		void Host::addScene(sptr<scene::Scene> newScene)
 		{
 			__ASSERT(newScene, "Cannot add a null scene");
 			m_scenes.push_back(newScene);
@@ -220,7 +220,7 @@ namespace lib
 
 		void Host::setScene(const std::string &name)
 		{
-			if (sptr<draw::Scene> scene = getSceneByName(name)) {
+			if (sptr<scene::Scene> scene = getSceneByName(name)) {
 				setScene(std::move(scene));
 				logDebug("Changed scene to ", name);
 			}
@@ -229,7 +229,7 @@ namespace lib
 			}
 		}
 
-		void Host::addScenes(std::vector<sptr<draw::Scene>>&& sceneVector)
+		void Host::addScenes(std::vector<sptr<scene::Scene>>&& sceneVector)
 		{
 			for (auto &scene : sceneVector) {
 				addScene(std::move(scene));
@@ -259,12 +259,12 @@ namespace lib
 			}
 		}
 
-		void Host::setScene(sptr<draw::Scene> &&scene)
+		void Host::setScene(sptr<scene::Scene> &&scene)
 		{
 			m_nextScene = std::move(scene);
 		}
 
-		sptr<draw::Scene> Host::getSceneByName(const std::string &name) const
+		sptr<scene::Scene> Host::getSceneByName(const std::string &name) const
 		{
 			const auto iterator(std::find_if(m_scenes.cbegin(), m_scenes.cend(), [&name](const auto&scene)
 			{

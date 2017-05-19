@@ -1,7 +1,7 @@
 #include "menuscene.hpp"
-#include <lib/draw/nodes/nodeshape.hpp>
-#include <lib/draw/nodes/nodequad.hpp>
-#include <lib/draw/nodes/nodetext.hpp>
+#include <lib/scene/nodes/nodeshape.hpp>
+#include <lib/scene/nodes/nodequad.hpp>
+#include <lib/scene/nodes/nodetext.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/core/host.hpp>
 #include <lib/core/events/eventmanager.hpp>
@@ -13,8 +13,8 @@ namespace zoper
 {
 	using namespace lib;
 	using namespace lib::core;
-	using namespace lib::draw;
-	using namespace lib::draw::nodes;
+	using namespace lib::scene;
+	using namespace lib::scene::nodes;
 	using namespace lib::gui;
 	using namespace zmenu;
 

@@ -2,7 +2,7 @@
 #include <lib/core/host.hpp>
 #include <lib/core/inputsystem.hpp>
 #include <lib/include/key.hpp>
-#include <lib/draw/transformation.hpp>
+#include <lib/scene/transformation.hpp>
 
 #include <lib/backend/itexture.hpp>
 #include "texture.hpp"
@@ -47,7 +47,7 @@ namespace lib
 				return getAsString(temp);
 			}
 
-			inline sf::Transform asTransform(const draw::Transform &transform)
+			inline sf::Transform asTransform(const scene::Transform &transform)
 			{
 				const f32 *const matrix{ transform.getMatrix() };
 				return sf::Transform{ matrix[0], matrix[4], matrix[12],
@@ -56,7 +56,7 @@ namespace lib
 
 			}
 
-			inline const sf::Texture *const asTexture(const draw::Texture*texture)
+			inline const sf::Texture *const asTexture(const scene::Texture*texture)
 			{
 				if (texture) {
 					ITexture*t = texture->backEndTexture().get();
@@ -72,7 +72,7 @@ namespace lib
 				return nullptr;
 			}
 
-			inline const sf::RenderStates asRenderStates(const draw::RenderStates &renderStates)
+			inline const sf::RenderStates asRenderStates(const scene::RenderStates &renderStates)
 			{
 				return sf::RenderStates(sf::RenderStates::Default.blendMode,
 					asTransform(renderStates.m_transform),

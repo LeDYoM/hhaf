@@ -3,8 +3,8 @@
 
 #include <lib/include/types.hpp>
 #include <lib/include/vector2d.hpp>
-#include <lib/draw/color.hpp>
-#include <lib/draw/ttfont.hpp>
+#include <lib/scene/color.hpp>
+#include <lib/scene/ttfont.hpp>
 
 namespace lib
 {
@@ -14,14 +14,14 @@ namespace lib
 		{
 			u32 m_nVertex;
 			vector2df m_size;
-			draw::Color m_color;
+			scene::Color m_color;
 		};
 
 		struct Theme
 		{
-			sptr<draw::TTFont> font;
-			draw::Color textColor;
-			draw::Color selectedTextColor;
+			sptr<scene::TTFont> font;
+			scene::Color textColor;
+			scene::Color selectedTextColor;
 			u32 chSize;
 			f32 incY;
 			CursorDescriptor cursorDescriptor;

@@ -2,10 +2,10 @@
 #define LIB_GUI_CHOOSECONTROL_HPP__
 
 #include <lib/include/types.hpp>
-#include <lib/draw/scenenode.hpp>
-#include <lib/draw/nodes/nodetext.hpp>
-#include <lib/draw/nodes/discretetext.hpp>
-#include <lib/draw/nodes/nodeshape.hpp>
+#include <lib/scene/scenenode.hpp>
+#include <lib/scene/nodes/nodetext.hpp>
+#include <lib/scene/nodes/discretetext.hpp>
+#include <lib/scene/nodes/nodeshape.hpp>
 #include "optionmodel.hpp"
 #include <vector>
 #include <functional>
@@ -16,7 +16,7 @@ namespace lib
 	{
 		class Resource;
 	}
-	namespace draw
+	namespace scene
 	{
 		class TTFont;
 	}
@@ -24,10 +24,10 @@ namespace lib
 	{
 		class ChooseControlLine;
 		class ChooseControlGroup;
-		class ChooseControl : public draw::SceneNode
+		class ChooseControl : public scene::SceneNode
 		{
 		public:
-			ChooseControl(lib::draw::SceneNode *parent, str name);
+			ChooseControl(lib::scene::SceneNode *parent, str name);
 			virtual ~ChooseControl();
 
 			void create() override;
@@ -52,8 +52,8 @@ namespace lib
 			Property<u32> selectedItem;
 
 			vector_shared_pointers<ChooseControlLine> lines;
-			draw::SceneNodeSPtr m_cursorNode;
-			sptr<draw::nodes::NodeShape> m_cursor;
+			scene::SceneNodeSPtr m_cursorNode;
+			sptr<scene::nodes::NodeShape> m_cursor;
 			std::function<void(const u32)> m_onSelected;
 			friend class ChooseControlGroup;
 		};

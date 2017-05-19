@@ -8,7 +8,7 @@
 namespace lib
 {
 	struct WindowCreationParams;
-	namespace draw
+	namespace scene
 	{
 		class VertexArray;
 		class RenderStatesStack;
@@ -22,7 +22,7 @@ namespace lib
 			virtual ~IWindow() {}
 
 			virtual bool createWindow(const WindowCreationParams &wcp) = 0;
-			virtual void draw(const draw::VertexArray &vertices, const draw::RenderStatesStack& states) = 0;
+			virtual void draw(const scene::VertexArray &vertices, const scene::RenderStatesStack& states) = 0;
 
 			virtual void setViewport(const Rectf32 &nviewport) = 0;
 			virtual Rectf32 viewPort() const = 0;

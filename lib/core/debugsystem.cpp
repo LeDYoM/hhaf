@@ -1,8 +1,8 @@
 #include "debugsystem.hpp"
 #include "log.hpp"
-#include <lib/draw/scenenode.hpp>
-#include <lib/draw/scene.hpp>
-#include <lib/draw/components/debugvarscomponent.hpp>
+#include <lib/scene/scenenode.hpp>
+#include <lib/scene/scene.hpp>
+#include <lib/scene/components/debugvarscomponent.hpp>
 #include "host.hpp"
 
 namespace lib
@@ -19,20 +19,20 @@ namespace lib
 			logDestruct_NOPARAMS;
 		}
 
-		void DebugSystem::addDebugVars(const sptr<draw::Scene>&scene)
+		void DebugSystem::addDebugVars(const sptr<scene::Scene>&scene)
 		{
-			auto dbc(scene->ensureComponentOfType<draw::DebugVarsComponent>());
+			auto dbc(scene->ensureComponentOfType<scene::DebugVarsComponent>());
 		}
 
 		void DebugSystem::setMatrixMultiplicationPerFrame(u32 & var)
 		{
-			auto dbc(host().currentScene()->ensureComponentOfType<draw::DebugVarsComponent>());
+			auto dbc(host().currentScene()->ensureComponentOfType<scene::DebugVarsComponent>());
 			dbc->addOrUpdateDebugVar("Matrix mul per Frame:",std::to_string(var));
 		}
 
 		void DebugSystem::showVarsNextFrame()
 		{
-			auto dbc(host().currentScene()->ensureComponentOfType<draw::DebugVarsComponent>());
+			auto dbc(host().currentScene()->ensureComponentOfType<scene::DebugVarsComponent>());
 			dbc->showVarsNextFrame();
 		}
 

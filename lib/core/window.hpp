@@ -10,7 +10,7 @@
 namespace lib
 {
 	struct WindowCreationParams;
-	namespace draw
+	namespace scene
 	{
 		class VertexArray;
 	}
@@ -30,7 +30,7 @@ namespace lib
 			Property<Rectf32> viewPort;
 			Property<Rectf32> viewRect;
 
-			void draw(const draw::VertexArray &va, const draw::RenderStatesStack &rs);
+			void draw(const scene::VertexArray &va, const scene::RenderStatesStack &rs);
 
 		private:
 			void create(const WindowCreationParams &wcp);

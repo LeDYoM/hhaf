@@ -4,12 +4,12 @@
 #pragma once
 
 #include <lib/include/types.hpp>
-#include <lib/draw/scenenode.hpp>
+#include <lib/scene/scenenode.hpp>
 #include <lib/gui/optionmodel.hpp>
 
 namespace lib
 {
-	namespace draw
+	namespace scene
 	{
 		class TTFont;
 		namespace nodes
@@ -21,22 +21,22 @@ namespace lib
 	namespace gui
 	{
 		class ChooseControl;
-		class ChooseControlLine : public draw::SceneNode
+		class ChooseControlLine : public scene::SceneNode
 		{
 		public:
 			ChooseControlLine(SceneNode* parent, str name);
 			ForwardProperty<std::string> text;
 			ForwardProperty<string_vector> options;
 			VirtualPropertyWrite<Rectf32> alignmentBox;
-			VirtualPropertyWrite<sptr<draw::TTFont>> font;
+			VirtualPropertyWrite<sptr<scene::TTFont>> font;
 			VirtualPropertyWrite<u32> characterSize;
-			VirtualPropertyWrite<draw::Color> color;
+			VirtualPropertyWrite<scene::Color> color;
 			void create();
 			void configure();
 			const OptionModelIndex currentSelection() const noexcept;
 		public:
-			sptr<draw::nodes::NodeText> m_mainText;
-			sptr<draw::nodes::DiscreteText> m_option;
+			sptr<scene::nodes::NodeText> m_mainText;
+			sptr<scene::nodes::DiscreteText> m_option;
 		};
 	}
 }

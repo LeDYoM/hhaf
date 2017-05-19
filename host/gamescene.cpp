@@ -9,21 +9,21 @@
 #include <lib/include/logcl.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/core/randomizer.hpp>
-#include <lib/draw/renderizable.hpp>
-#include <lib/draw/nodes/nodeshape.hpp>
-#include <lib/draw/nodes/nodequad.hpp>
-#include <lib/draw/nodes/nodetext.hpp>
+#include <lib/scene/renderizable.hpp>
+#include <lib/scene/nodes/nodeshape.hpp>
+#include <lib/scene/nodes/nodequad.hpp>
+#include <lib/scene/nodes/nodetext.hpp>
 #include <lib/core/host.hpp>
 #include <lib/include/properties.hpp>
-#include <lib/draw/ianimation.hpp>
-#include <lib/draw/components/animationcomponent.hpp>
-#include <lib/draw/components/inputcomponent.hpp>
+#include <lib/scene/ianimation.hpp>
+#include <lib/scene/components/animationcomponent.hpp>
+#include <lib/scene/components/inputcomponent.hpp>
 
 namespace zoper
 {
 	using namespace lib;
-	using namespace lib::draw;
-	using namespace lib::draw::nodes;
+	using namespace lib::scene;
+	using namespace lib::scene::nodes;
 
 	GameScene::GameScene()
 		: Scene("GameScene"), Configuration("config.cfg"), _gameConfig{ ":NextGame" }
@@ -152,7 +152,7 @@ namespace zoper
 		}
 
 		registerEvents();
-		auto inputComponent(ensureComponentOfType<draw::InputComponent>());
+		auto inputComponent(ensureComponentOfType<scene::InputComponent>());
 		inputComponent->setOnKeyPressedHandler([this](const lib::input::Key&key) {
 			logClDebug("Key pressed in GameScene");
 			switch (state())

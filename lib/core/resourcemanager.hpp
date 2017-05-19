@@ -8,7 +8,7 @@
 
 namespace lib
 {
-	namespace draw
+	namespace scene
 	{
 		class TTFont;
 		class Texture;
@@ -26,15 +26,15 @@ namespace lib
 			template <typename T>
 			sptr<T> getResource(const std::string rid) const
 			{
-				if (typeid(T) == typeid(draw::TTFont)) {
+				if (typeid(T) == typeid(scene::TTFont)) {
 					return getFont(rid);
 				}
 				else {
 					return getTexture(rid);
 				}
 			}
-			sptr<draw::TTFont> getFont(const str &rid) const;
-			sptr<draw::Texture> getTexture(const str &rid) const;
+			sptr<scene::TTFont> getFont(const str &rid) const;
+			sptr<scene::Texture> getTexture(const str &rid) const;
 
 			template <typename T>
 			using NamedIndex = std::pair<const str, T>;
@@ -43,8 +43,8 @@ namespace lib
 			using ResourceList = std::list<NamedIndex<T>>;
 
 		private:
-			ResourceList<sptr<draw::TTFont>> m_fonts;
-			ResourceList<sptr<draw::Texture>> m_textures;
+			ResourceList<sptr<scene::TTFont>> m_fonts;
+			ResourceList<sptr<scene::Texture>> m_textures;
 		};
 	}
 }

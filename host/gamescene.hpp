@@ -11,11 +11,11 @@
 #include <lib/core/configuration.hpp>
 #include <lib/core/timer.hpp>
 #include <lib/core/events/eventreceiver.hpp>
-#include <lib/draw/scene.hpp>
+#include <lib/scene/scene.hpp>
 #include <lib/board/itilescontroller.hpp>
 #include <lib/board/boardmodel.hpp>
-#include <lib/draw/nodes/nodetext.hpp>
-#include <lib/draw/nodes/nodequad.hpp>
+#include <lib/scene/nodes/nodetext.hpp>
+#include <lib/scene/nodes/nodequad.hpp>
 
 #include "textquad.hpp"
 
@@ -55,7 +55,7 @@ namespace zoper
 			Time = 1,
 		} _gameMode{ Token };
 	};
-	class GameScene final : public lib::draw::Scene, public lib::Configuration
+	class GameScene final : public lib::scene::Scene, public lib::Configuration
 	{
 	public:
 		GameScene();
@@ -123,10 +123,10 @@ namespace zoper
 		GameData _gameData;
 		lib::u32 _score{ 0 };
 		lib::u8 _nextTokenPart{ 0 };
-		lib::sptr<lib::draw::SceneNode> m_mainBoardrg{ nullptr };
-		lib::sptr<lib::draw::SceneNode> _gameOverrg{ nullptr };
-		lib::sptr<lib::draw::SceneNode> _levelrg{ nullptr };
-		lib::sptr<lib::draw::SceneNode> m_pauseSceneNode{ nullptr };
+		lib::sptr<lib::scene::SceneNode> m_mainBoardrg{ nullptr };
+		lib::sptr<lib::scene::SceneNode> _gameOverrg{ nullptr };
+		lib::sptr<lib::scene::SceneNode> _levelrg{ nullptr };
+		lib::sptr<lib::scene::SceneNode> m_pauseSceneNode{ nullptr };
 		const lib::u8 _scoreSize{ 5 };
 		const lib::u8 _levelDataSize{ 5 };
 		LevelProperties _levelProperties;
@@ -135,9 +135,9 @@ namespace zoper
 		lib::sptr<Player> p_player{ nullptr };
 		lib::sptr<TextQuad> m_scoreQuad;
 		lib::sptr<TextQuad> m_goalQuad;
-		lib::sptr<lib::draw::SceneNode> m_gameOverText;
-		lib::sptr<lib::draw::nodes::NodeText> m_pauseText;
-		std::vector<std::vector<lib::sptr<lib::draw::nodes::NodeQuad>>> m_backgroundTiles;
+		lib::sptr<lib::scene::SceneNode> m_gameOverText;
+		lib::sptr<lib::scene::nodes::NodeText> m_pauseText;
+		std::vector<std::vector<lib::sptr<lib::scene::nodes::NodeQuad>>> m_backgroundTiles;
 	};
 }
 

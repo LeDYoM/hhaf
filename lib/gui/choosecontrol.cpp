@@ -2,19 +2,19 @@
 #include "choosecontrolline.hpp"
 #include "choosecontrolgroup.hpp"
 #include <lib/core/log.hpp>
-#include <lib/draw/scene.hpp>
-#include <lib/draw/ianimation.hpp>
-#include <lib/draw/nodes/nodeshape.hpp>
-#include <lib/draw/nodes/nodetext.hpp>
-#include <lib/draw/nodes/discretetext.hpp>
+#include <lib/scene/scene.hpp>
+#include <lib/scene/ianimation.hpp>
+#include <lib/scene/nodes/nodeshape.hpp>
+#include <lib/scene/nodes/nodetext.hpp>
+#include <lib/scene/nodes/discretetext.hpp>
 
 namespace lib
 {
 	namespace gui
 	{
-		using namespace draw;
+		using namespace scene;
 
-		ChooseControl::ChooseControl(lib::draw::SceneNode *parent, str name)
+		ChooseControl::ChooseControl(lib::scene::SceneNode *parent, str name)
 			: SceneNode{ parent, std::move(name) } {}
 
 		ChooseControl::~ChooseControl() = default;

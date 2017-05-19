@@ -7,7 +7,7 @@
 #include "statescontroller.hpp"
 #include <vector>
 #include <lib/include/types.hpp>
-#include <lib/draw/scene.hpp>
+#include <lib/scene/scene.hpp>
 #include <lib/gui/optionmodel.hpp>
 
 namespace lib
@@ -15,10 +15,10 @@ namespace lib
 	namespace gui
 	{
 		class ChooseControl;
-		class ChooseControlGroup : public draw::SceneNode
+		class ChooseControlGroup : public scene::SceneNode
 		{
 		public:
-			ChooseControlGroup(draw::SceneNode *parent, str name, Theme theme = Theme{});
+			ChooseControlGroup(scene::SceneNode *parent, str name, Theme theme = Theme{});
 			virtual ~ChooseControlGroup();
 
 			virtual void create() override;

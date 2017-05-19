@@ -15,7 +15,7 @@ namespace lib
 	{
 		class InputSystem;
 	}
-	namespace draw
+	namespace scene
 	{
 		class RenderStatesStack;
 	}
@@ -42,15 +42,15 @@ namespace lib
 			int run();
 			bool update();
 
-			void addScene(sptr<draw::Scene> newScene);
+			void addScene(sptr<scene::Scene> newScene);
 			void setScene(const std::string &name);
 
-			void addScenes(std::vector<sptr<draw::Scene>> &&sceneVector);
-			sptr<draw::Scene> getSceneByName(const std::string &name) const;
+			void addScenes(std::vector<sptr<scene::Scene>> &&sceneVector);
+			sptr<scene::Scene> getSceneByName(const std::string &name) const;
 
 			void exitProgram();
 
-			void setScene(sptr<draw::Scene> &&scene);
+			void setScene(sptr<scene::Scene> &&scene);
 
 			inline Window const &parentWindow() const noexcept { return *m_window; }
 			inline Window &parentWindow()  noexcept { return *m_window; }
@@ -65,11 +65,11 @@ namespace lib
 
 			const std::string appId() const;
 
-			inline const draw::RenderStatesStack &rStates() const noexcept { return *m_renderStates; }
-			inline draw::RenderStatesStack &rStates() noexcept { return *m_renderStates; }
+			inline const scene::RenderStatesStack &rStates() const noexcept { return *m_renderStates; }
+			inline scene::RenderStatesStack &rStates() noexcept { return *m_renderStates; }
 
 			inline Randomizer &randomizer() const noexcept { return *m_randomizer; }
-			inline const sptr<draw::Scene> &currentScene() const noexcept { return m_currentScene; }
+			inline const sptr<scene::Scene> &currentScene() const noexcept { return m_currentScene; }
 
 		private:
 			bool loopStep();
@@ -85,11 +85,11 @@ namespace lib
 			uptr<DebugSystem> m_debugSystem{ nullptr };
 			uptr<input::InputSystem> m_inputSystem{ nullptr };
 			bool exit{ false };
-			std::vector<sptr<draw::Scene>> m_scenes;
-			sptr<draw::Scene> m_currentScene{ nullptr };
-			sptr<draw::Scene> m_nextScene{ nullptr };
+			std::vector<sptr<scene::Scene>> m_scenes;
+			sptr<scene::Scene> m_currentScene{ nullptr };
+			sptr<scene::Scene> m_nextScene{ nullptr };
 			std::vector<std::string> m_params;
-			uptr<draw::RenderStatesStack> m_renderStates;
+			uptr<scene::RenderStatesStack> m_renderStates;
 		};
 	}
 

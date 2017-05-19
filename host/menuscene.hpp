@@ -4,12 +4,12 @@
 #include "keymapping.hpp"
 #include <lib/gui/choosecontrolgroup.hpp>
 #include <lib/include/types.hpp>
-#include <lib/draw/nodes/nodequad.hpp>
-#include <lib/draw/scene.hpp>
+#include <lib/scene/nodes/nodequad.hpp>
+#include <lib/scene/scene.hpp>
 
 namespace zoper
 {
-	class MenuScene final : public lib::draw::Scene, public KeyMapping
+	class MenuScene final : public lib::scene::Scene, public KeyMapping
 	{
 	public:
 		MenuScene();
@@ -27,8 +27,8 @@ namespace zoper
 		virtual lib::vector2df getDefaultSizeView() override;
 	private:
 		lib::sptr<lib::gui::ChooseControlGroup> m_chooseControlGroup;
-		lib::sptr<lib::draw::nodes::NodeQuad> m_logo;
-		lib::sptr<lib::draw::nodes::NodeQuad> m_background;
+		lib::sptr<lib::scene::nodes::NodeQuad> m_logo;
+		lib::sptr<lib::scene::nodes::NodeQuad> m_background;
 	};
 }
 

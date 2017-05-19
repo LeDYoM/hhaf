@@ -1,8 +1,8 @@
 #include "resourcemanager.hpp"
 #include "log.hpp"
 
-#include <lib/draw/ttfont.hpp>
-#include <lib/draw/texture.hpp>
+#include <lib/scene/ttfont.hpp>
+#include <lib/scene/texture.hpp>
 #include <lib/backend/backendfactory.hpp>
 #include <algorithm>
 
@@ -63,14 +63,14 @@ namespace lib
 
 		ResourceManager::~ResourceManager() = default;
 
-		sptr<draw::TTFont> ResourceManager::getFont(const str &rid) const
+		sptr<scene::TTFont> ResourceManager::getFont(const str &rid) const
 		{
 			auto iterator(std::find_if(m_fonts.begin(), m_fonts.end(), 
 				[rid](const auto &node) {return node.first == rid; })
 			);
 			return iterator == m_fonts.end() ? nullptr : (*iterator).second;
 		}
-		sptr<draw::Texture> ResourceManager::getTexture(const str &rid) const
+		sptr<scene::Texture> ResourceManager::getTexture(const str &rid) const
 		{
 			auto iterator(std::find_if(m_textures.begin(), m_textures.end(),
 				[rid](const auto &node) {return node.first == rid; })

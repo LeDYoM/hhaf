@@ -1,17 +1,17 @@
 #include "choosecontrolline.hpp"
 #include "choosecontrol.hpp"
 
-#include <lib/draw/ianimation.hpp>
-#include <lib/draw/nodes/nodeshape.hpp>
-#include <lib/draw/nodes/nodetext.hpp>
-#include <lib/draw/nodes/discretetext.hpp>
+#include <lib/scene/ianimation.hpp>
+#include <lib/scene/nodes/nodeshape.hpp>
+#include <lib/scene/nodes/nodetext.hpp>
+#include <lib/scene/nodes/discretetext.hpp>
 
 namespace lib
 {
 	namespace gui
 	{
-		using namespace draw;
-		using namespace draw::nodes;
+		using namespace scene;
+		using namespace scene::nodes;
 
 		ChooseControlLine::ChooseControlLine(SceneNode* parent, str name)
 			: SceneNode{parent,std::move(name)} {}

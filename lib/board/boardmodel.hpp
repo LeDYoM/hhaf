@@ -4,13 +4,13 @@
 #include <vector>
 #include <lib/include/types.hpp>
 #include "itilescontroller.hpp"
-#include <lib/draw/icomponent.hpp>
+#include <lib/scene/icomponent.hpp>
 
 namespace lib
 {
 	namespace board
 	{
-		class BoardModelComponent : public draw::DataOnlyComponent
+		class BoardModelComponent : public scene::DataOnlyComponent
 		{
 		public:
 			BoardModelComponent();

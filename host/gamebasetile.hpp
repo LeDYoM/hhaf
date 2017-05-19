@@ -3,22 +3,22 @@
 
 #pragma once
 
-#include <lib/draw/scenenode.hpp>
-#include <lib/draw/nodes/nodeshape.hpp>
+#include <lib/scene/scenenode.hpp>
+#include <lib/scene/nodes/nodeshape.hpp>
 #include <lib/board/itilescontroller.hpp>
 
 namespace zoper
 {
-	class GameBaseTile : public lib::board::ITile, public lib::draw::SceneNode
+	class GameBaseTile : public lib::board::ITile, public lib::scene::SceneNode
 	{
 	public:
-		explicit GameBaseTile(lib::draw::SceneNode* const parent, lib::str name, lib::board::BoardTileData data);
+		explicit GameBaseTile(lib::scene::SceneNode* const parent, lib::str name, lib::board::BoardTileData data);
 		virtual ~GameBaseTile() = default;
 
-		lib::draw::Color getColorForToken() const;
+		lib::scene::Color getColorForToken() const;
 
 	protected:
-		lib::sptr<lib::draw::nodes::NodeShape> m_node;
+		lib::sptr<lib::scene::nodes::NodeShape> m_node;
 	};
 }
 

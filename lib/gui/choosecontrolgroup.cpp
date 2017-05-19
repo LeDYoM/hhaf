@@ -4,18 +4,18 @@
 #include <lib/core/log.hpp>
 #include <lib/core/host.hpp>
 #include <lib/core/resourcemanager.hpp>
-#include <lib/draw/components/inputcomponent.hpp>
+#include <lib/scene/components/inputcomponent.hpp>
 
 namespace lib
 {
 	namespace gui
 	{
-		ChooseControlGroup::ChooseControlGroup(draw::SceneNode *parent, str name, Theme theme)
-			: draw::SceneNode{ parent, std::move(name) }, m_theme( theme ) { }
+		ChooseControlGroup::ChooseControlGroup(scene::SceneNode *parent, str name, Theme theme)
+			: scene::SceneNode{ parent, std::move(name) }, m_theme( theme ) { }
 
 		void ChooseControlGroup::create()
 		{
-			auto inputComponent(ensureComponentOfType<draw::InputComponent>());
+			auto inputComponent(ensureComponentOfType<scene::InputComponent>());
 			inputComponent->setOnKeyPressedHandler([this](const lib::input::Key&key) {
 				logDebug("Key pressed toChooseControlGroup");
 				auto node(m_sController->activeNode()->snCast<ChooseControl>());
@@ -63,11 +63,11 @@ namespace lib
 				});
 			});
 			m_theme.font = host().resourceManager().getFont("game_menu.mainFont");
-			m_theme.textColor = draw::colors::Blue;
-			m_theme.selectedTextColor = draw::colors::Red;
+			m_theme.textColor = scene::colors::Blue;
+			m_theme.selectedTextColor = scene::colors::Red;
 			m_theme.chSize = 70;
 			m_theme.incY = 1;
-			m_theme.cursorDescriptor = CursorDescriptor{ 3, vector2df{ 90.0f, 90.0f },draw::colors::Red };
+			m_theme.cursorDescriptor = CursorDescriptor{ 3, vector2df{ 90.0f, 90.0f },scene::colors::Red };
 			u32 count{ 0 };
 
 			for (const auto& option : options()) {

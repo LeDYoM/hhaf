@@ -3,7 +3,7 @@
 
 #include <lib/include/types.hpp>
 #include <lib/core/appservice.hpp>
-#include <lib/draw/components/debugvarscomponent.hpp>
+#include <lib/scene/components/debugvarscomponent.hpp>
 #include <lib/include/compconfig.hpp>
 
 #ifdef USE_DEBUG_VARIABLES
@@ -15,7 +15,7 @@
 
 namespace lib
 {
-	namespace draw
+	namespace scene
 	{
 		class Scene;
 	}
@@ -29,7 +29,7 @@ namespace lib
 			DebugSystem();
 			~DebugSystem();
 
-			void addDebugVars(const sptr<draw::Scene> &scene);
+			void addDebugVars(const sptr<scene::Scene> &scene);
 			void setMatrixMultiplicationPerFrame(u32 &var);
 			void showVarsNextFrame();
 		};

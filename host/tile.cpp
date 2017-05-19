@@ -1,17 +1,17 @@
 #include "tile.hpp"
-#include <lib/draw/nodes/nodeshape.hpp>
+#include <lib/scene/nodes/nodeshape.hpp>
 
 #include <string>
 
 namespace zoper
 {
 	using namespace lib;
-	using namespace lib::draw;
+	using namespace lib::scene;
 	using namespace lib::board;
 
 	u32 Tile::m_tileCounter{ 0 };
 
-	Tile::Tile(lib::draw::SceneNode* const parent, str name, BoardTileData data, const Rectf32 &box) :
+	Tile::Tile(lib::scene::SceneNode* const parent, str name, BoardTileData data, const Rectf32 &box) :
 		GameBaseTile{ parent, name + std::to_string(m_tileCounter) + std::to_string(m_tileCounter), data }
 	{
 		++m_tileCounter;

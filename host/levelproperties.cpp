@@ -5,7 +5,7 @@
 namespace zoper
 {
 	using namespace lib;
-	using namespace lib::draw;
+	using namespace lib::scene;
 	using namespace lib::core;
 
 	LevelProperties::LevelProperties(const lib::u32 level)
@@ -49,16 +49,16 @@ namespace zoper
 				}
 				else {
 					if (!(x % 2)) {
-						return (_level < 15) ? lib::draw::Color{ 128, 128, 128 } : lib::draw::Color{ 255, 100, 100 };
+						return (_level < 15) ? lib::scene::Color{ 128, 128, 128 } : lib::scene::Color{ 255, 100, 100 };
 					}
 					else {
-						return ((_level < 15) ? lib::draw::Color{ 225, 255, 255 } : lib::draw::Color{ 100, 200, 200 });
+						return ((_level < 15) ? lib::scene::Color{ 225, 255, 255 } : lib::scene::Color{ 100, 200, 200 });
 					}
 				}
 			}
 			else {
 				if (_level < 2) {
-					return lib::draw::colors::Black;
+					return lib::scene::colors::Black;
 				}
 				else if (_level < 3) {
 					return{ 255, 128, 0 };
@@ -68,36 +68,36 @@ namespace zoper
 				}
 				else if (_level < 10) {
 					if (_level % 2) {
-						return (x % 2) ? lib::draw::Color{ 0, 255, 255 } : lib::draw::Color{ 255, 100, 200 };
+						return (x % 2) ? lib::scene::Color{ 0, 255, 255 } : lib::scene::Color{ 255, 100, 200 };
 					}
 					else {
-						return (y % 2) ? lib::draw::Color{ 0, 255, 255 } : lib::draw::Color{ 255, 100, 200 };
+						return (y % 2) ? lib::scene::Color{ 0, 255, 255 } : lib::scene::Color{ 255, 100, 200 };
 					}
 				}
 				else if (_level < 15) {
 					if (_level % 2) {
 						if (x % 2) {
-							return (y % 2) ? lib::draw::colors::White : lib::draw::Color{ 100,100,100 };
+							return (y % 2) ? lib::scene::colors::White : lib::scene::Color{ 100,100,100 };
 						}
 						else {
-							return (y % 2) ? lib::draw::Color{ 0, 128, 255 } : lib::draw::Color{ 10, 250, 100 };
+							return (y % 2) ? lib::scene::Color{ 0, 128, 255 } : lib::scene::Color{ 10, 250, 100 };
 						}
 					}
 					else {
 						return (x % 2) ?
-							((y % 2) ? lib::draw::Color{ 25,25,25 } : lib::draw::Color{ 10, 12, 250 }) :
-							((y % 2) ? lib::draw::Color{ 250, 50, 10 } : lib::draw::Color{ 10, 200, 10 });
+							((y % 2) ? lib::scene::Color{ 25,25,25 } : lib::scene::Color{ 10, 12, 250 }) :
+							((y % 2) ? lib::scene::Color{ 250, 50, 10 } : lib::scene::Color{ 10, 200, 10 });
 					}
 				}
 				else if (_level < maxLevelWithProperties)
 				{
 					const auto &rnd(host().randomizer());
-					return lib::draw::Color(static_cast<lib::u8>(rnd.getUInt(255, 0)),
+					return lib::scene::Color(static_cast<lib::u8>(rnd.getUInt(255, 0)),
 						static_cast<lib::u8>(rnd.getUInt(255, 0)),
 						static_cast<lib::u8>(rnd.getUInt(255, 0)));
 				}
 			}
 		}
-		return lib::draw::colors::Black;
+		return lib::scene::colors::Black;
 	}
 }

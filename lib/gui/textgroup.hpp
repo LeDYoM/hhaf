@@ -4,12 +4,12 @@
 #pragma once
 
 #include <lib/include/types.hpp>
-#include <lib/draw/scenenode.hpp>
+#include <lib/scene/scenenode.hpp>
 #include <functional>
 
 namespace lib
 {
-	namespace draw
+	namespace scene
 	{
 		class TTFont;
 		namespace nodes
@@ -19,20 +19,20 @@ namespace lib
 	}
 	namespace gui
 	{
-		class TextGroup : public draw::SceneNode
+		class TextGroup : public scene::SceneNode
 		{
 		public:
 			TextGroup(SceneNode* parent, str name);
 			Property<Rectf32> alignmentBox;
-			Property<sptr<draw::TTFont>> font;
+			Property<sptr<scene::TTFont>> font;
 			Property<u32> characterSize;
-			Property<draw::Color> color;
+			Property<scene::Color> color;
 			void create();
 			void configure();
 
-			sptr<draw::nodes::NodeText> addTextLine(str text);
+			sptr<scene::nodes::NodeText> addTextLine(str text);
 		private:
-			void for_each_text(std::function<void(const sptr<draw::nodes::NodeText>&)> action) const;
+			void for_each_text(std::function<void(const sptr<scene::nodes::NodeText>&)> action) const;
 			Rectf32 boxForNextLine() const;
 			u32 numLines() const;
 		};

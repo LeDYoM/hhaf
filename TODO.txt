@@ -1,0 +1,10 @@
+TODO:
+
+- Add Resource loader integrated for loading resources
+- Add SceneManager
+- Add loader for backend
+- Use configuration (command parameters)
+- Use configuration (from file)
+
+Done recently:
+- Rename draw for scene namespace

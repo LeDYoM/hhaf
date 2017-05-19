@@ -1,7 +1,7 @@
 #include "mainmenu.hpp"
 #include <lib/gui/ChooseControlGroup.hpp>
 #include <lib/gui/choosecontrol.hpp>
-#include <lib/draw/scenenode.hpp>
+#include <lib/scene/scenenode.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/core/host.hpp>
 #include <lib/include/logcl.hpp>
@@ -13,7 +13,7 @@ namespace zoper
 	{
 		using namespace lib;
 		using namespace lib::gui;
-		using namespace lib::draw;
+		using namespace lib::scene;
 
 		MainMenu::MainMenu(SceneNode *parent, str name)
 			: ChooseControlGroup{ parent, std::move(name) }, m_gameConfig{ ":NextGame" } {}

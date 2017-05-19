@@ -5,7 +5,7 @@
 
 #include <vector>
 #include <lib/include/types.hpp>
-#include <lib/draw/scene.hpp>
+#include <lib/scene/scene.hpp>
 
 namespace lib
 {
@@ -16,10 +16,10 @@ namespace lib
 		public:
 			void configure();
 
-			Property<const vector_shared_pointers<draw::SceneNode>*> nodes;
+			Property<const vector_shared_pointers<scene::SceneNode>*> nodes;
 			Property<u32> activeNodeIndex;
 
-			const sptr<draw::SceneNode> &activeNode() const noexcept { 
+			const sptr<scene::SceneNode> &activeNode() const noexcept { 
 				return (*(nodes()))[activeNodeIndex()]; 
 			}
 		private:
