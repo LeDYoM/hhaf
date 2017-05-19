@@ -8,6 +8,7 @@
 #include <lib/board/itilescontroller.hpp>
 #include <lib/include/logcl.hpp>
 #include <lib/core/resourcemanager.hpp>
+#include <lib/core/randomizer.hpp>
 #include <lib/draw/renderizable.hpp>
 #include <lib/draw/nodes/nodeshape.hpp>
 #include <lib/draw/nodes/nodequad.hpp>
@@ -324,10 +325,10 @@ namespace zoper
 		logClDebug("zone: ", currentTokenZone.zone);
 
 		// Generate the new token type
-		const u32 newToken = 0;// getRandomNumer(NUMTOKENS);
+		const u32 newToken{ randomizer().getUInt(NUMTOKENS) };
 
 		// Calculate in wich tile zone offset is going to appear
-		const u32 sizep = 0;// getRandomNumer(currentTokenZone.size);
+		const u32 sizep{ randomizer().getUInt(currentTokenZone.size) };
 
 		// Prepare the position for the new token
 		const u32 newX{ currentTokenZone.zone.left + (currentTokenZone.direction.isHorizontal() ? 0 : sizep) };
@@ -622,10 +623,9 @@ namespace zoper
 		if (auto ztile = std::dynamic_pointer_cast<Tile>(nTile)) {
 			logClDebug("Token at position ", pos, " changed from ", ov, " to ", nv);
 			ztile->set(nv);
-		}
-		else if (auto ztile_ = std::dynamic_pointer_cast<Player>(nTile)) {
+		} else if (auto ztile_ = std::dynamic_pointer_cast<Player>(nTile)) {
 			logClDebug("Player (position ", pos, ") changed from ", ov, " to ", nv);
-			ztile->set(nv);
+			ztile_->set(nv);
 		}
 	}
 

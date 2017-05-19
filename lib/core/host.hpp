@@ -68,8 +68,7 @@ namespace lib
 			inline const draw::RenderStatesStack &rStates() const noexcept { return *m_renderStates; }
 			inline draw::RenderStatesStack &rStates() noexcept { return *m_renderStates; }
 
-			inline const Randomizer &randomizer() const noexcept { return *m_randomizer; }
-
+			inline Randomizer &randomizer() const noexcept { return *m_randomizer; }
 			inline const sptr<draw::Scene> &currentScene() const noexcept { return m_currentScene; }
 
 		private:
@@ -97,8 +96,8 @@ namespace lib
 	inline core::Host &host() noexcept { return core::Host::host(); }
 	inline core::Window &window() noexcept { return core::Host::host().parentWindow(); }
 	inline core::ResourceManager &resourceManager() noexcept { return core::Host::host().resourceManager(); }
+	inline core::Randomizer &randomizer() noexcept { return core::Host::host().randomizer(); }
 	inline core::DebugSystem &debugSystem() noexcept { return core::Host::host().debugSystem(); }
-
 }
 
 #endif
