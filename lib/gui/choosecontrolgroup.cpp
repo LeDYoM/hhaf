@@ -15,6 +15,10 @@ namespace lib
 
 		void ChooseControlGroup::create()
 		{
+		}
+
+		void ChooseControlGroup::configure()
+		{
 			auto inputComponent(ensureComponentOfType<scene::InputComponent>());
 			inputComponent->setOnKeyPressedHandler([this](const lib::input::Key&key) {
 				logDebug("Key pressed toChooseControlGroup");
@@ -51,10 +55,7 @@ namespace lib
 					}
 				}
 			});
-		}
 
-		void ChooseControlGroup::configure()
-		{
 			box.setCallback([this]() {
 				for_each_group([this](const sptr<SceneNode>&sceneNode) {
 					if (auto chControl = sceneNode->snCast<ChooseControl>()) {
