@@ -25,7 +25,19 @@ namespace lib
 			*/
 			virtual ~IComponent() = default;
 
+			/**
+			* Method called after the component is attached to a node.
+			* Override it to perform initialization
+			*/
+			virtual void onAttached() {}
+
 			inline SceneNode *const attachedNode() const noexcept { return m_sceneNode; }
+			
+			/**
+			* Shortcut method to cast to another scenenode type
+			*/
+			template <typename T>
+			inline T*const attachedNodeAs() const { return m_sceneNode->snCast<T>(); }
 		private:
 			SceneNode *m_sceneNode;
 			friend class ComponentContainer;

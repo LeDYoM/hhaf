@@ -1,10 +1,13 @@
 TODO:
 
+- Move menu to models
+- Move menu to components
 - Add Resource loader integrated for loading resources
 - Add SceneManager
 - Add loader for backend
 - Use configuration (command parameters)
 - Use configuration (from file)
+- Separate systems
 
 Done recently:
 - Rename draw for scene namespace
