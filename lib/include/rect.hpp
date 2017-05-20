@@ -33,7 +33,7 @@ namespace lib
 			left{ static_cast<T>(rectangle.left) }, top{ static_cast<T>(rectangle.top) },
 			width{ static_cast<T>(rectangle.width) }, height{ static_cast<T>(rectangle.height) } {}
 
-		constexpr vector2d<T> center() const { return vector2d<T> {left + (width / static_cast<T>(2)), 
+		constexpr const vector2d<T> center() const { return vector2d<T> {left + (width / static_cast<T>(2)), 
 			top + (height / static_cast<T>(2))}; }
 
 		constexpr const bool operator==(const Rect &r) const
@@ -60,20 +60,15 @@ namespace lib
 			return *this;
 		}
 
-		constexpr Rect& move(const Rect &rhs)
-		{
-			return (*this) += rhs;
-		}
-
 		constexpr void setLeftTop(const vector2d<T>&nleftTop) { left = nleftTop.x; top = nleftTop.y; }
 		constexpr void move(const vector2d<T>&relativePosition)  { left += relativePosition.x; top += relativePosition.y; }
 		constexpr void setSize(const vector2d<T>&nsize) { width = nsize.x; height = nsize.y; }
 		constexpr void setRadiusFromCenter(const vector2d<T> &radius) {
-			auto c(center());
+			const auto c(center());
 			left = static_cast<T>(c.x - radius.x);
 			top = static_cast<T>(c.y - radius.y);
 			width = static_cast<T>(radius.x * static_cast<T>(2));
-			height = static_cast<T>(radius.x * static_cast<T>(2));
+			height = static_cast<T>(radius.y * static_cast<T>(2));
 		}
 
 		constexpr const vector2d<T> leftTop() const noexcept { return vector2d<T>{left, top}; }
@@ -84,10 +79,11 @@ namespace lib
 		constexpr const vector2d<T> rightTop() const  noexcept { return vector2d<T>{right(), top}; }
 		constexpr const vector2d<T> leftBottom() const  noexcept { return vector2d<T>{left, bottom()}; }
 
-		constexpr Rect move(const vector2d<T> &offset) const { return (Rect( *this ) += offset); };
+		constexpr void move(const vector2d<T> &offset) const { ( *this ) += offset; };
+		constexpr Rect moved(const vector2d<T> &offset) const { return (Rect(*this) += offset); };
 		constexpr Rect resize(const vector2d<T> &sSize) const { return Rect{ left, top, width + sSize.x, height + sSize.y }; };
 		constexpr Rect setRadiusFromCenter(const vector2d<T> &radius) const { Rect temp{ *this }; temp.setRadiusFromCenter(radius); return temp; }
-		constexpr Rect moveResize(const vector2d<T> &offset, const vector2d<T> &sSize) const { return move(offset).resize(sSize); };
+		constexpr Rect moveResize(const vector2d<T> &offset, const vector2d<T> &sSize) const { return moved(offset).resize(sSize); };
 	};
 
 	// Serialization operators
