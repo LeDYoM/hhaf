@@ -1,5 +1,6 @@
 #include "configuration.hpp"
 #include "log.hpp"
+#include <string>
 
 #include <regex>
 
@@ -12,14 +13,17 @@ namespace lib
 
 	std::vector<std::string> split_helper(const std::string& input, const std::string& regex)
 	{
-		// passing -1 as the sub match index parameter performs splitting
-		if (input.find(regex[0]) != std::string::npos)
-		{
-			std::regex re(regex);
-			std::sregex_token_iterator first(input.begin(), input.end(), re, -1), last;
-			return{ first,last };
+		using std::vector;
+		using std::string;
+		using std::stringstream;
+		vector<string> result;
+		stringstream ss(input); // Turn the string into a stream.
+		string tok;
+
+		while (getline(ss, tok, regex[0])) {
+			result.push_back(tok);
 		}
-		return{ };
+		return result;
 	}
 
 	CMapRawLine split(const std::string& input, const std::string& regex)
@@ -37,19 +41,18 @@ namespace lib
 		}
 	}
 
-	std::vector<std::string> Configuration::splitString(const std::string &input, const char separator)
+	std::vector<std::string> Configuration::splitString(const std::string &input, char separator)
 	{
-		std::string rest{ input };
-		std::vector<std::string> result;
+		using std::vector;
+		using std::string;
+		using std::stringstream;
+		vector<string> result;
+		stringstream ss(input); // Turn the string into a stream.
+		string tok;
 
-		while (rest.find(separator) != std::string::npos)
-		{
-			auto tResult = split_helper(input, std::string{ separator });
-			rest = tResult[1];
-			result.push_back(tResult[0]);
+		while (getline(ss, tok, separator)) {
+			result.push_back(tok);
 		}
-
-		result.push_back(rest);
 		return result;
 	}
 

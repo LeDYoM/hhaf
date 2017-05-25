@@ -28,7 +28,7 @@ namespace lib
 
 	protected:
 		using CMap = std::map<std::string, sptr<ConfigurationProperty>>;
-		using CMapLine = std::pair<const CMap::key_type, sptr<ConfigurationProperty>>;
+		using CMapLine = CMap::value_type;
 		using CDataMap = std::map<std::string, CMap>;
 
 		bool configFileExists(const std::string &file);

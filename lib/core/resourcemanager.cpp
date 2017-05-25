@@ -28,9 +28,7 @@ namespace lib
 			if (!resourceFile.empty()) {
 				if (!configFileExists(resourceFile)) {
 					__ASSERT("Resource file not found: ", resourceFile);
-				}
-				else
-				{
+				} else {
 					static const char *const resourcesDirectoryKey = "resources_directory";
 					const auto resourcesDirectory = value(resourcesDirectoryKey)->get<string>();
 					for_each_property([&resourcesDirectory, this](const Configuration::CMapLine &dataLine) {
@@ -45,7 +43,6 @@ namespace lib
 								}
 								else {
 									add(backend::textureFactory(), m_textures, id, filename);
-
 								}
 								logDebug("Resource with id ", dataLine.second->get<string>(), " from file ", dataLine.first, " added");
 							}
