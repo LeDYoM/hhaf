@@ -9,23 +9,23 @@ set (LIB_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/")
 # configure a header file to pass some of the CMake settings
 # to the source code
 configure_file (
-  "${LIB_DIRECTORY}/config.h.in"
+  "config.h.in"
   "${PROJECT_BINARY_DIR}/config.h"
   )
 include_directories(${PROJECT_BINARY_DIR})
   
-file (GLOB LIB_CORE_HEADERS "${LIB_DIRECTORY}core/*.hpp")
-file (GLOB LIB_CORE_SOURCES "${LIB_DIRECTORY}core/*.cpp")
+file (GLOB LIB_CORE_HEADERS "core/*.hpp")
+file (GLOB LIB_CORE_SOURCES "core/*.cpp")
 
-file (GLOB LIB_CORE_EVENTS_HEADERS "${LIB_DIRECTORY}core/events/*.hpp")
-file (GLOB LIB_CORE_EVENTS_SOURCES "${LIB_DIRECTORY}core/events/*.cpp")
+file (GLOB LIB_CORE_EVENTS_HEADERS "core/events/*.hpp")
+file (GLOB LIB_CORE_EVENTS_SOURCES "core/events/*.cpp")
 
-file (GLOB LIB_BACKEND_HEADERS "${LIB_DIRECTORY}backend/*.hpp")
-file (GLOB LIB_BACKEND_SOURCES "${LIB_DIRECTORY}backend/*.cpp")
-file (GLOB LIB_BACKEND_SFML_IMPL_HEADERS "${LIB_DIRECTORY}backend/sfml/*.hpp")
-file (GLOB LIB_BACKEND_SFML_IMPL_SOURCES "${LIB_DIRECTORY}backend/sfml/*.cpp")
+file (GLOB LIB_BACKEND_HEADERS "backend/*.hpp")
+file (GLOB LIB_BACKEND_SOURCES "backend/*.cpp")
+file (GLOB LIB_BACKEND_SFML_IMPL_HEADERS "backend/sfml/*.hpp")
+file (GLOB LIB_BACKEND_SFML_IMPL_SOURCES "backend/sfml/*.cpp")
 
-set (SCENE_NAMESPACEBASE_DIRECTORY "${LIB_DIRECTORY}scene")
+set (SCENE_NAMESPACEBASE_DIRECTORY "scene")
 file (GLOB LIB_SCENE_HEADERS "${SCENE_NAMESPACEBASE_DIRECTORY}/*.hpp")
 file (GLOB LIB_SCENE_SOURCES "${SCENE_NAMESPACEBASE_DIRECTORY}/*.cpp")
 
@@ -35,20 +35,20 @@ file (GLOB LIB_SCENE_SCENE_SOURCES "${SCENE_NAMESPACEBASE_DIRECTORY}/nodes/*.cpp
 file (GLOB LIB_SCENE_COMPONENTS_HEADERS "${SCENE_NAMESPACEBASE_DIRECTORY}/components/*.hpp")
 file (GLOB LIB_SCENE_COMPONENTS_SOURCES "${SCENE_NAMESPACEBASE_DIRECTORY}/components/*.cpp")
 
-file (GLOB LIB_INCLUDE_HEADERS "${LIB_DIRECTORY}include/*.hpp")
+file (GLOB LIB_INCLUDE_HEADERS "include/*.hpp")
 
-file (GLOB LIB_GUI_HEADERS "${LIB_DIRECTORY}gui/*.hpp")
-file (GLOB LIB_GUI_SOURCES "${LIB_DIRECTORY}gui/*.cpp")
+file (GLOB LIB_GUI_HEADERS "gui/*.hpp")
+file (GLOB LIB_GUI_SOURCES "gui/*.cpp")
 
 #TO DO: A separated lib?
-file (GLOB LIB_BOARD_HEADERS "${LIB_DIRECTORY}board/*.hpp")
-file (GLOB LIB_BOARD_SOURCES "${LIB_DIRECTORY}board/*.cpp")
+file (GLOB LIB_BOARD_HEADERS "board/*.hpp")
+file (GLOB LIB_BOARD_SOURCES "board/*.cpp")
 
 #Add all the file from the library to compile
-file (GLOB_RECURSE LIB_HEADERS "${LIB_DIRECTORY}*.hpp")
-file (GLOB_RECURSE LIB_SOURCES "${LIB_DIRECTORY}*.cpp")
+file (GLOB_RECURSE LIB_HEADERS "*.hpp")
+file (GLOB_RECURSE LIB_SOURCES "*.cpp")
 
-include_directories ("${LIB_DIRECTORY}..")
+include_directories ("..")
 
 set (CURRENT_TARGET lib)
 
