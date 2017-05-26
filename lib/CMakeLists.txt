@@ -40,6 +40,9 @@ file (GLOB LIB_INCLUDE_HEADERS "include/*.hpp")
 file (GLOB LIB_GUI_HEADERS "gui/*.hpp")
 file (GLOB LIB_GUI_SOURCES "gui/*.cpp")
 
+file (GLOB LIB_UTT_HEADERS "utt/*.hpp")
+file (GLOB LIB_UTT_SOURCES "utt/*.cpp")
+
 #TO DO: A separated lib?
 file (GLOB LIB_BOARD_HEADERS "board/*.hpp")
 file (GLOB LIB_BOARD_SOURCES "board/*.cpp")
@@ -64,7 +67,8 @@ source_group("lib\\scene" FILES ${LIB_SCENE_HEADERS} ${LIB_SCENE_SOURCES})
 source_group("lib\\scene\\nodes" FILES ${LIB_SCENE_NODES_HEADERS} ${LIB_SCENE_NODES_SOURCES})
 source_group("lib\\scene\\components" FILES ${LIB_SCENE_COMPONENTS_HEADERS} ${LIB_SCENE_COMPONENTS_SOURCES})
 source_group("lib\\gui" FILES ${LIB_GUI_HEADERS} ${LIB_GUI_SOURCES})
-source_group("lib\\board" FILES ${LIB_BOARD_HEADERS} ${LIB_SOURCES})
+source_group("lib\\board" FILES ${LIB_BOARD_HEADERS} ${LIB_BOARD_SOURCES})
+source_group("lib\\utt" FILES ${LIB_UTT_HEADERS} ${LIB_UTT_SOURCES})
 
 # Detect and add SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
