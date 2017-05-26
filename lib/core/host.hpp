@@ -43,10 +43,10 @@ namespace lib
 			bool update();
 
 			void addScene(sptr<scene::Scene> newScene);
-			void setScene(const std::string &name);
+			void setScene(const str &name);
 
 			void addScenes(std::vector<sptr<scene::Scene>> &&sceneVector);
-			sptr<scene::Scene> getSceneByName(const std::string &name) const;
+			sptr<scene::Scene> getSceneByName(const str &name) const;
 
 			void exitProgram();
 
@@ -63,7 +63,7 @@ namespace lib
 			inline DebugSystem const &debugSystem() const noexcept { return *m_debugSystem; }
 			inline DebugSystem &debugSystem() noexcept { return *m_debugSystem; }
 
-			const std::string appId() const;
+			const str appId() const;
 
 			inline const scene::RenderStatesStack &rStates() const noexcept { return *m_renderStates; }
 			inline scene::RenderStatesStack &rStates() noexcept { return *m_renderStates; }
@@ -88,7 +88,7 @@ namespace lib
 			std::vector<sptr<scene::Scene>> m_scenes;
 			sptr<scene::Scene> m_currentScene{ nullptr };
 			sptr<scene::Scene> m_nextScene{ nullptr };
-			std::vector<std::string> m_params;
+			std::vector<str> m_params;
 			uptr<scene::RenderStatesStack> m_renderStates;
 		};
 	}

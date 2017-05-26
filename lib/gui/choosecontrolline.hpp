@@ -25,7 +25,7 @@ namespace lib
 		{
 		public:
 			ChooseControlLine(SceneNode* parent, str name);
-			ForwardProperty<std::string> text;
+			ForwardProperty<str> text;
 			ForwardProperty<string_vector> options;
 			VirtualPropertyWrite<Rectf32> alignmentBox;
 			VirtualPropertyWrite<sptr<scene::TTFont>> font;

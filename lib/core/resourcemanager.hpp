@@ -20,11 +20,11 @@ namespace lib
 		class ResourceManager : public AppService, public Configuration
 		{
 		public:
-			ResourceManager(const std::string &resourceFile);
+			ResourceManager(const str &resourceFile);
 			~ResourceManager();
 
 			template <typename T>
-			sptr<T> getResource(const std::string rid) const
+			sptr<T> getResource(const str rid) const
 			{
 				if (typeid(T) == typeid(scene::TTFont)) {
 					return getFont(rid);

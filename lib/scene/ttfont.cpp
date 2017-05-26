@@ -12,7 +12,7 @@ namespace lib
 
 		TTFont::TTFont(sptr<backend::ITTFont> font) : m_font{ std::move(font) } {}
 
-		bool TTFont::loadFromFile(const std::string & filename)
+		bool TTFont::loadFromFile(const str & filename)
 		{
 			m_font = ttfontFactory().loadFromFile(filename);
 			return m_font != nullptr;

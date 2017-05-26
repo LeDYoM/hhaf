@@ -524,9 +524,9 @@ namespace zoper
 	void GameScene::_debugDisplayBoard() const
 	{
 		for (u32 y = 0; y < _gameData.size.y; ++y) {
-			std::string temp;
+			str temp;
 			for (u32 x = 0; x < _gameData.size.x; ++x) {
-				std::string chTemp;
+				str chTemp;
 				auto lp_tile(p_boardModel->getTile(lib::vector2du32(x, y)));
 				if (lp_tile) {
 					chTemp = std::to_string(lp_tile->get());
@@ -562,7 +562,7 @@ namespace zoper
 			for (u32 x = 0; x < _gameData.size.x; ++x)
 			{
 				Rectf32 tileBox{ currentx, currenty, tileSize().x,tileSize().y };
-				std::string indexStr(std::to_string(x) + "_" + std::to_string(y));
+				str indexStr(std::to_string(x) + "_" + std::to_string(y));
 
 				auto tileBackground = backgroundTilesrg->createRenderizable<NodeQuad>("backgroundTile_" + indexStr);
 				tileBackground->box = tileBox;
@@ -640,7 +640,7 @@ namespace zoper
 	void GameScene::increaseScore(u32 scoreIncrement)
 	{
 		_score += scoreIncrement;
-		std::string result{ std::to_string(_score) };
+		str result{ std::to_string(_score) };
 		while (result.size() < _scoreSize) result = "0" + result;
 		m_scoreQuad->text(3)->text = result;
 	}

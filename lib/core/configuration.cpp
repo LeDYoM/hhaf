@@ -7,62 +7,17 @@
 namespace lib
 {
 
-	using CMapRawLine = std::pair<std::string, std::string>;
+	using CMapRawLine = std::pair<str, str>;
 
 	Configuration::CDataMap Configuration::m_data;
 
-	std::vector<std::string> split_helper(const std::string& input, const std::string& regex)
-	{
-		using std::vector;
-		using std::string;
-		using std::stringstream;
-		vector<string> result;
-		stringstream ss(input); // Turn the string into a stream.
-		string tok;
-
-		while (getline(ss, tok, regex[0])) {
-			result.push_back(tok);
-		}
-		return result;
-	}
-
-	CMapRawLine split(const std::string& input, const std::string& regex)
-	{
-		const auto splitted = split_helper(input, regex);
-
-		if (splitted.size() < 1) {
-			return { "","" };
-		}
-		else if (splitted.size() < 2) {
-			return{ splitted[0],"" };
-		}
-		else {
-			return{ splitted[0],splitted[1] };
-		}
-	}
-
-	std::vector<std::string> Configuration::splitString(const std::string &input, char separator)
-	{
-		using std::vector;
-		using std::string;
-		using std::stringstream;
-		vector<string> result;
-		stringstream ss(input); // Turn the string into a stream.
-		string tok;
-
-		while (getline(ss, tok, separator)) {
-			result.push_back(tok);
-		}
-		return result;
-	}
-
-	Configuration::Configuration(const std::string &file)
+	Configuration::Configuration(const str &file)
 		: currentFile(file)
 	{
 		loadFile(file);
 	}
 
-	void Configuration::loadFile(const std::string &file)
+	void Configuration::loadFile(const str &file)
 	{
 		CDataMap::iterator fIterator{ m_data.find(currentFile) };
 
@@ -81,10 +36,13 @@ namespace lib
 
 				if (f.is_open()) {
 					while (f) {
-						std::string line;
+						str line;
 						f >> line;
 						if (!line.empty()) {
-							CMapRawLine lineData(split(line, "="));
+							auto vsplited(line.split('='));
+							CMapRawLine lineData(
+								vsplited.empty() ? str{} : vsplited[0], 
+								vsplited.size() < 2 ? str{}:vsplited[1]);
 							logDebug("Adding key", lineData.first, " with value ", lineData.second);
 							cMap.emplace(lineData.first, msptr<ConfigurationProperty>(std::move(lineData.second)));
 						}
@@ -100,7 +58,7 @@ namespace lib
 		}
 	}
 
-	bool Configuration::configFileExists(const std::string &file)
+	bool Configuration::configFileExists(const str &file)
 	{
 		std::ifstream f(file);
 		return f.is_open();
@@ -111,7 +69,7 @@ namespace lib
 		std::for_each(currentMap->begin(), currentMap->end(), callback);
 	}
 
-	sptr<ConfigurationProperty> Configuration::value(const std::string & name) const
+	sptr<ConfigurationProperty> Configuration::value(const str & name) const
 	{
 		const auto &it(currentMap->find(name));
 		if (it != currentMap->end()) {
@@ -132,8 +90,8 @@ namespace lib
 		if (f.is_open())
 		{
 			for_each_property([&f](const CMapLine &line) {
-				f << line.first << "=" << line.second->str() << std::endl;
-				logDebug("Written: ", line.first, "=", line.second->str());
+				f << line.first << "=" << line.second->getstr() << std::endl;
+				logDebug("Written: ", line.first, "=", line.second->getstr());
 			});
 			return true;
 		}

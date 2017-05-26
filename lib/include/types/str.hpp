@@ -15,11 +15,11 @@ namespace lib
 		using std::string::string;
 		constexpr str() : std::string{} {}
 		constexpr str(const std::string &source) : std::string{ source } {}
-//		str(str&&rhs) = default;
-//		str &operator=(const std::string &source) { static_cast<std::string>(*this) = source; return *this; }
-//		str &operator=(const str &source) = default;
+		//		str(str&&rhs) = default;
+		//		str &operator=(const std::string &source) { static_cast<std::string>(*this) = source; return *this; }
+		//		str &operator=(const str &source) = default;
 
-
+		std::vector<str> split(const char separator) const;
 	};
 
 	static_assert(std::is_move_constructible_v<str>, "str must be movable");

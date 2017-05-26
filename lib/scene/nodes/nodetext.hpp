@@ -34,7 +34,7 @@ namespace lib
 
 				virtual void configure() override;
 
-				Property<std::string> text;
+				Property<str> text;
 				Property<sptr<TTFont>> font;
 				Property<u32> characterSize;
 				Property<AlignmentX> alignmentX;

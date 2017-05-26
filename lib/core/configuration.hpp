@@ -1,13 +1,14 @@
-#ifndef __LIB_CONFIGURATION_HPP__
-#define __LIB_CONFIGURATION_HPP__
+#pragma once
 
-#include <string>
+#ifndef LIB_CONFIGURATION_HPP__
+#define LIB_CONFIGURATION_HPP__
+
 #include <map>
 #include <fstream>
 #include <functional>
 #include <vector>
-#include <sstream>
 #include <lib/include/types.hpp>
+#include <lib/include/types/str.hpp>
 
 namespace lib
 {
@@ -19,27 +20,26 @@ namespace lib
 		Configuration() = delete;
 		Configuration &operator=(const Configuration &other) = delete;
 		Configuration(const Configuration &other) = delete;
-		Configuration(const std::string &file);
+		Configuration(const str &file);
 
 		~Configuration() {}
 
-		sptr<ConfigurationProperty> value(const std::string &) const;
+		sptr<ConfigurationProperty> value(const str &) const;
 
 
 	protected:
-		using CMap = std::map<std::string, sptr<ConfigurationProperty>>;
+		using CMap = std::map<str, sptr<ConfigurationProperty>>;
 		using CMapLine = CMap::value_type;
-		using CDataMap = std::map<std::string, CMap>;
+		using CDataMap = std::map<str, CMap>;
 
-		bool configFileExists(const std::string &file);
+		bool configFileExists(const str &file);
 
 		void for_each_property(std::function<void(const CMapLine&)> callback);
 		bool saveConfig();
-		std::vector<std::string> splitString(const std::string &input, const char separator);
 
 	private:
-		void loadFile(const std::string &file);
-		const std::string currentFile;
+		void loadFile(const str &file);
+		const str currentFile;
 		CMap *currentMap;
 		static CDataMap m_data;
 	};
@@ -48,7 +48,7 @@ namespace lib
 	{
 	public:
 		constexpr ConfigurationProperty() noexcept : m_data("") {}
-		constexpr ConfigurationProperty(std::string &&t) noexcept : m_data(std::move(t)) {}
+		constexpr ConfigurationProperty(str &&t) noexcept : m_data(std::move(t)) {}
 
 		ConfigurationProperty(const ConfigurationProperty&) = delete;
 		ConfigurationProperty& operator=(const ConfigurationProperty&) = delete;
@@ -74,10 +74,10 @@ namespace lib
 			return tmpstream.fail();
 		}
 
-		const std::string &str() const noexcept { return m_data; }
+		const str &getstr() const noexcept { return m_data; }
 		bool empty() const noexcept { return m_data == ""; }
 	private:
-		std::string m_data;
+		str m_data;
 
 	};
 

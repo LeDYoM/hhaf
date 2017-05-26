@@ -13,38 +13,36 @@ namespace lib
 		namespace
 		{
 			template <typename T, typename A>
-			inline void add(A& factory, ResourceManager::ResourceList<sptr<T>> &container, const std::string &id, const std::string &fileName)
+			inline void add(A& factory, ResourceManager::ResourceList<sptr<T>> &container, const str &id, const str &fileName)
 			{
 				sptr<T> resource(msptr<T>(factory.loadFromFile(fileName)));
 				container.push_back(ResourceManager::NamedIndex<sptr<T>>(id,std::move(resource)));
 			}
 
 		}
-		ResourceManager::ResourceManager(const std::string &resourceFile)
+		ResourceManager::ResourceManager(const str &resourceFile)
 			: AppService{}, Configuration{ resourceFile }
 		{
-			using std::string;
-
 			if (!resourceFile.empty()) {
 				if (!configFileExists(resourceFile)) {
 					__ASSERT("Resource file not found: ", resourceFile);
 				} else {
 					static const char *const resourcesDirectoryKey = "resources_directory";
-					const auto resourcesDirectory = value(resourcesDirectoryKey)->get<string>();
+					const auto resourcesDirectory = value(resourcesDirectoryKey)->get<str>();
 					for_each_property([&resourcesDirectory, this](const Configuration::CMapLine &dataLine) {
 						if (dataLine.first != resourcesDirectoryKey) {
-							auto completeId (splitString(dataLine.first, '@'));
+							auto completeId (dataLine.first.split('@'));
 							if (completeId.size() > 1) {
-								string resourceTypeStr = completeId[0];
-								string id = completeId[1];
-								string filename(resourcesDirectory + dataLine.second->get<string>());
+								str resourceTypeStr(completeId[0]);
+								str id(completeId[1]);
+								str filename(resourcesDirectory + dataLine.second->get<str>());
 								if (resourceTypeStr[0] == 'f' || resourceTypeStr[0] == 'F') {
 									add(backend::ttfontFactory(), m_fonts, id, filename);
 								}
 								else {
 									add(backend::textureFactory(), m_textures, id, filename);
 								}
-								logDebug("Resource with id ", dataLine.second->get<string>(), " from file ", dataLine.first, " added");
+								logDebug("Resource with id ", dataLine.second->get<str>(), " from file ", dataLine.first, " added");
 							}
 							else {
 								logError("Malformed resource file");

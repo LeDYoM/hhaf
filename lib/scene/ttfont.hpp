@@ -24,7 +24,7 @@ namespace lib
 		{
 		public:
 			TTFont(sptr<backend::ITTFont> font);
-			bool loadFromFile(const std::string& filename);
+			bool loadFromFile(const str& filename);
 			const TTGlyph getGlyph(u32 codePoint, u32 characterSize, bool bold, f32 outlineThickness) const;
 			f32 getLineSpacing(u32 characterSize) const;
 			f32 getKerning(u32 first, u32 second, u32 characterSize) const;

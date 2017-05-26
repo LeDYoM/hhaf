@@ -1,5 +1,6 @@
 #include "log.hpp"
 #include <lib/include/compconfig.hpp>
+#include <lib/include/types/str.hpp>
 
 #ifdef USE_LOGS
 
@@ -31,7 +32,7 @@ void initLog()
 void commitLog()
 {
 	auto outstr(log_output_stream.str());
-	log_output_stream.str(std::string());
+	log_output_stream.str(lib::str());
 #ifdef LOG_FILE
 	if (logFile.is_open())
 		logFile << outstr;

@@ -36,7 +36,7 @@ namespace lib
 			void create(const WindowCreationParams &wcp);
 			struct WindowPrivate;
 			uptr<WindowPrivate> m_wPrivate;
-			std::string m_title;
+			str m_title;
 		};
 	}
 }

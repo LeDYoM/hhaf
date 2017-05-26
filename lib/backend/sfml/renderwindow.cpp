@@ -132,7 +132,7 @@ namespace lib
 
 			const char * const WindowBackendInfo::info()
 			{
-				static const std::string info("SFML Backend: 1.0 Using SFML Version : " + std::to_string(SFML_VERSION_MAJOR)
+				static const str info("SFML Backend: 1.0 Using SFML Version : " + std::to_string(SFML_VERSION_MAJOR)
 					+ "." + std::to_string(SFML_VERSION_MINOR) + "." + std::to_string(SFML_VERSION_PATCH));
 
 				return info.c_str();

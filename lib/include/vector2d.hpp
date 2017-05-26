@@ -114,7 +114,7 @@ namespace lib
 	template <typename T>
 	inline std::istream& operator >> (read_stream & is, const vector2d<T> &v2d)
 	{
-//		std::string p;
+//		str p;
 //		is >> p;	// "{"
 //		is >> v.x;
 //		is >> p;	// ","

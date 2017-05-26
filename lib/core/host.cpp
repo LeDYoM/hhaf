@@ -21,7 +21,7 @@ namespace lib
 	{
 		auto transformParams(int argc, char *argv[])
 		{
-			std::vector<std::string> temp;
+			std::vector<str> temp;
 
 			for (int i = 1; i<argc; ++i) {
 				temp.push_back(argv[i]);
@@ -193,14 +193,13 @@ namespace lib
 			m_state = AppState::ReadyToTerminate;
 		}
 
-		const std::string Host::appId() const
+		const str Host::appId() const
 		{
-			using std::string;
 			using std::to_string;
 
 			if (m_iapp) {
-				return string(
-					string(m_iapp->getAppDescriptor().Name) + ":" + 
+				return str(
+					str(m_iapp->getAppDescriptor().Name) + ":" + 
 					to_string(m_iapp->getAppDescriptor().Version) + "." + 
 					to_string(m_iapp->getAppDescriptor().SubVersion) + "." + 
 					to_string(m_iapp->getAppDescriptor().Patch)
@@ -218,7 +217,7 @@ namespace lib
 			m_debugSystem->addDebugVars(newScene);
 		}
 
-		void Host::setScene(const std::string &name)
+		void Host::setScene(const str &name)
 		{
 			if (sptr<scene::Scene> scene = getSceneByName(name)) {
 				setScene(std::move(scene));
@@ -264,7 +263,7 @@ namespace lib
 			m_nextScene = std::move(scene);
 		}
 
-		sptr<scene::Scene> Host::getSceneByName(const std::string &name) const
+		sptr<scene::Scene> Host::getSceneByName(const str &name) const
 		{
 			const auto iterator(std::find_if(m_scenes.cbegin(), m_scenes.cend(), [&name](const auto&scene)
 			{
