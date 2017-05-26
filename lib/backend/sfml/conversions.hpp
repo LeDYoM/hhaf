@@ -43,7 +43,7 @@ namespace lib
 
 			inline sf::String getAsString(const char *const other)
 			{
-				std::string temp(other);
+				const str temp(other);
 				return getAsString(temp);
 			}
 

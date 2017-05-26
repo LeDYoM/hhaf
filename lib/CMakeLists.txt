@@ -35,17 +35,21 @@ file (GLOB LIB_SCENE_SCENE_SOURCES "${SCENE_NAMESPACEBASE_DIRECTORY}/nodes/*.cpp
 file (GLOB LIB_SCENE_COMPONENTS_HEADERS "${SCENE_NAMESPACEBASE_DIRECTORY}/components/*.hpp")
 file (GLOB LIB_SCENE_COMPONENTS_SOURCES "${SCENE_NAMESPACEBASE_DIRECTORY}/components/*.cpp")
 
-file (GLOB LIB_INCLUDE_HEADERS "include/*.hpp")
-
 file (GLOB LIB_GUI_HEADERS "gui/*.hpp")
 file (GLOB LIB_GUI_SOURCES "gui/*.cpp")
-
-file (GLOB LIB_UTT_HEADERS "utt/*.hpp")
-file (GLOB LIB_UTT_SOURCES "utt/*.cpp")
 
 #TO DO: A separated lib?
 file (GLOB LIB_BOARD_HEADERS "board/*.hpp")
 file (GLOB LIB_BOARD_SOURCES "board/*.cpp")
+
+set (INCLUDE_DIRECTORY "include")
+file (GLOB LIB_INCLUDE_HEADERS "${INCLUDE_DIRECTORY}/*.hpp")
+
+file (GLOB LIB_CONTAINERS_HEADERS "${INCLUDE_DIRECTORY}/containers/*.hpp")
+#file (GLOB LIB_CONTAINERS_SOURCES "${INCLUDE_DIRECTORY}/containers/*.cpp")
+
+file (GLOB LIB_TYPES_HEADERS "${INCLUDE_DIRECTORY}/types/*.hpp")
+file (GLOB LIB_TYPES_SOURCES "types/*.cpp")
 
 #Add all the file from the library to compile
 file (GLOB_RECURSE LIB_HEADERS "*.hpp")
@@ -59,6 +63,8 @@ add_library(${CURRENT_TARGET} STATIC ${LIB_HEADERS} ${LIB_SOURCES})
 
 # Define source groups for lib
 source_group("lib\\include" FILES ${LIB_INCLUDE_HEADERS})
+source_group("lib\\containers" FILES ${LIB_CONTAINERS_HEADERS} ${LIB_CONTAINERS_SOURCES})
+source_group("lib\\types" FILES ${LIB_TYPES_HEADERS} ${LIB_TYPES_SOURCES})
 source_group("lib\\backend" FILES ${LIB_BACKEND_HEADERS} ${LIB_BACKEND_SOURCES})
 source_group("lib\\backend\\sfml" FILES ${LIB_BACKEND_SFML_IMPL_HEADERS} ${LIB_BACKEND_SFML_IMPL_SOURCES})
 source_group("lib\\core" FILES ${LIB_CORE_HEADERS} ${LIB_CORE_SOURCES})
@@ -68,7 +74,6 @@ source_group("lib\\scene\\nodes" FILES ${LIB_SCENE_NODES_HEADERS} ${LIB_SCENE_NO
 source_group("lib\\scene\\components" FILES ${LIB_SCENE_COMPONENTS_HEADERS} ${LIB_SCENE_COMPONENTS_SOURCES})
 source_group("lib\\gui" FILES ${LIB_GUI_HEADERS} ${LIB_GUI_SOURCES})
 source_group("lib\\board" FILES ${LIB_BOARD_HEADERS} ${LIB_BOARD_SOURCES})
-source_group("lib\\utt" FILES ${LIB_UTT_HEADERS} ${LIB_UTT_SOURCES})
 
 # Detect and add SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})

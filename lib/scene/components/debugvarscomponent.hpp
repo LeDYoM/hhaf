@@ -5,7 +5,7 @@
 #include <lib/scene/icomponent.hpp>
 #include <lib/scene/components/inputcomponent.hpp>
 #include <lib/core/log.hpp>
-#include <lib/include/str.hpp>
+#include <lib/include/types/str.hpp>
 #include <map>
 
 namespace lib

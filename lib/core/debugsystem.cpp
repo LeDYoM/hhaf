@@ -27,7 +27,7 @@ namespace lib
 		void DebugSystem::setMatrixMultiplicationPerFrame(u32 & var)
 		{
 			auto dbc(host().currentScene()->ensureComponentOfType<scene::DebugVarsComponent>());
-			dbc->addOrUpdateDebugVar("Matrix mul per Frame:",std::to_string(var));
+			dbc->addOrUpdateDebugVar("Matrix mul per Frame:", std::to_string(var) );
 		}
 
 		void DebugSystem::showVarsNextFrame()

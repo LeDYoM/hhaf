@@ -8,6 +8,8 @@
 #include <vector>
 #include <iostream>
 
+#include "types/str.hpp"
+
 namespace lib
 {
 	template <typename T>
@@ -44,12 +46,8 @@ namespace lib
 	using s8 = int8_t;
 	using f32 = float;
 	using f64 = double;
-	using str = std::string;
 	using write_stream = std::ostream;
 	using read_stream = std::istream;
-
-
-	using string_vector = std::vector<str>;
 }
 
 #endif
