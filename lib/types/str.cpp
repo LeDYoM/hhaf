@@ -10,7 +10,7 @@ namespace lib
 		str tok;
 
 		while (getline(ss, tok, separator)) {
-			result.push_back(tok);
+			result.push_back(std::move(tok));
 		}
 		return result;
 	}
