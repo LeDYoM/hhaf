@@ -3,6 +3,7 @@
 #include <lib/core/memmanager.hpp>
 #include <lib/core/log.hpp>
 #include <lib/core/host.hpp>
+#include <loader.hpp>
 
 namespace lib
 {
@@ -10,8 +11,10 @@ namespace lib
 	{
 		int result = -1;
 
+
 		try
 		{
+			auto *a = loader::createLoader();
 			initLog();
 			installMemManager();
 

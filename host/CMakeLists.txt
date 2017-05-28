@@ -24,7 +24,6 @@ if(SFML_FOUND)
   target_link_libraries(${CURRENT_TARGET} ${SFML_LIBRARIES})
 endif()
 
-
 # Detect and add lib
 include_directories(..)
 target_link_libraries(${CURRENT_TARGET} lib)

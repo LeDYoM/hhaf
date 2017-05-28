@@ -87,6 +87,9 @@ if(SFML_FOUND)
   target_link_libraries(${CURRENT_TARGET} ${SFML_LIBRARIES})
 endif()
 
+include_directories(${CURRENT_TARGET} ${LOADER_INCLUDE})
+target_link_libraries(${CURRENT_TARGET} loader)
+
 
 set(_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/)
 

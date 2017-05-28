@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 2.6)
+cmake_minimum_required (VERSION 3.3)
 
 # Maps to a solution file (Tutorial.sln). The solution will 
 # have all targets (exe, lib, dll) as projects (.vcproj)
@@ -25,6 +25,10 @@ endif()
 
 message ("cxx Flags: " ${CMAKE_CXX_FLAGS})
 
+SET(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/Bin/${CMAKE_BUILD_TYPE})
+SET(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/Bin/${CMAKE_BUILD_TYPE})
+
 # Sub-directories where more CMakeLists.txt exist
+add_subdirectory(loader)
 add_subdirectory(lib)
 add_subdirectory(host)
