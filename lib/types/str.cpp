@@ -29,4 +29,19 @@ namespace lib
 		*this += n;
 		return *this;
 	}
+	str & str::append(const char * n)
+	{
+		*this += n;
+		return *this;
+	}
+	str & str::append(const float n)
+	{
+		*this += std::to_string(n);
+		return *this;
+	}
+	str & str::append(const double n)
+	{
+		*this += std::to_string(n);
+		return *this;
+	}
 }

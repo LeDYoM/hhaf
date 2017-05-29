@@ -23,7 +23,15 @@ namespace lib
 		str &append(const unsigned int n);
 		str &append(const signed int n);
 		str &append(const str &n);
+		str &append(const char *n);
+		str &append(const float n);
+		str &append(const double n);
 
+		template <typename T>
+		str &operator<<(const T&n)
+		{
+			return append(n);
+		}
 	};
 
 	static_assert(std::is_move_constructible_v<str>, "str must be movable");
