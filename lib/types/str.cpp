@@ -3,6 +3,13 @@
 
 namespace lib
 {
+	str::str(const unsigned int n) : std::string{ std::to_string(n) } {}
+	str::str(const signed int n) : std::string{ std::to_string(n) } {}
+	str::str(const str & n) : std::string{ n } {}
+	str::str(const char * n) : std::string{ n } {}
+	str::str(const float n) : std::string{ std::to_string(n) } {}
+	str::str(const double n) : std::string{ std::to_string(n) } {}
+
 	std::vector<str> str::split(const char separator) const
 	{
 		std::vector<str> result;
