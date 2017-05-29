@@ -1,7 +1,7 @@
+#pragma once
+
 #ifndef LIB_TYPES_HPP__
 #define LIB_TYPES_HPP__
-
-#pragma once
 
 #include <cstdint>
 #include <memory>

@@ -20,6 +20,10 @@ namespace lib
 		//		str &operator=(const str &source) = default;
 
 		std::vector<str> split(const char separator) const;
+		str &append(const unsigned int n);
+		str &append(const signed int n);
+		str &append(const str &n);
+
 	};
 
 	static_assert(std::is_move_constructible_v<str>, "str must be movable");

@@ -14,4 +14,19 @@ namespace lib
 		}
 		return result;
 	}
+	str & str::append(const unsigned int n)
+	{
+		*this += std::to_string(n);
+		return *this;
+	}
+	str & str::append(const signed int n)
+	{
+		*this += std::to_string(n);
+		return *this;
+	}
+	str & str::append(const str & n)
+	{
+		*this += n;
+		return *this;
+	}
 }
