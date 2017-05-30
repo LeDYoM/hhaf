@@ -1,6 +1,5 @@
 #include "configuration.hpp"
 #include "log.hpp"
-#include <string>
 
 #include <regex>
 

@@ -260,17 +260,17 @@ namespace zoper
 
 	void GameScene::updateGoals()
 	{
-		m_scoreQuad->text(1)->text = std::to_string(_levelProperties.currentLevel() + 1);
+		m_scoreQuad->text(1)->text = str(_levelProperties.currentLevel() + 1);
 
 		switch (_gameData._gameMode)
 		{
 		default:
 		case GameData::GameModes::Token:
-			m_goalQuad->text(3)->text = std::to_string(_levelProperties.stayTokens());
+			m_goalQuad->text(3)->text = str(_levelProperties.stayTokens());
 			break;
 
 		case GameData::GameModes::Time:
-			m_goalQuad->text(3)->text = std::to_string(_levelProperties.stayTime());
+			m_goalQuad->text(3)->text = str(_levelProperties.stayTime());
 			break;
 		}
 	}
@@ -281,13 +281,13 @@ namespace zoper
 		{
 		default:
 		case GameData::GameModes::Token:
-			m_goalQuad->text(1)->text = std::to_string(_gameData.consumedTokens);
+			m_goalQuad->text(1)->text = _gameData.consumedTokens;
 			if (_gameData.consumedTokens >= _levelProperties.stayTokens())
 				setLevel(_levelProperties.currentLevel() + 1);
 			break;
 
 		case GameData::GameModes::Time:
-			m_goalQuad->text(1)->text = std::to_string(static_cast<lib::u16>(_gameData.levelClock.getElapsedTime().asSeconds()));
+			m_goalQuad->text(1)->text = static_cast<lib::u16>(_gameData.levelClock.getElapsedTime().asSeconds());
 			if (_gameData.levelClock.getElapsedTime().asSeconds() >= _levelProperties.stayTime())
 				setLevel(_levelProperties.currentLevel() + 1);
 			break;
@@ -529,7 +529,7 @@ namespace zoper
 				str chTemp;
 				auto lp_tile(p_boardModel->getTile(lib::vector2du32(x, y)));
 				if (lp_tile) {
-					chTemp = std::to_string(lp_tile->get());
+					chTemp = lp_tile->get();
 				}
 				else {
 					chTemp = "*";
@@ -559,12 +559,11 @@ namespace zoper
 			std::vector<sptr<NodeQuad>> column;
 			column.reserve(_gameData.size.x);
 
-			for (u32 x = 0; x < _gameData.size.x; ++x)
-			{
-				Rectf32 tileBox{ currentx, currenty, tileSize().x,tileSize().y };
-				str indexStr(std::to_string(x) + "_" + std::to_string(y));
+			for (u32 x = 0; x < _gameData.size.x; ++x) {
+				const Rectf32 tileBox{ currentx, currenty, tileSize().x,tileSize().y };
+				const str indexStr(x + "_" + y);
 
-				auto tileBackground = backgroundTilesrg->createRenderizable<NodeQuad>("backgroundTile_" + indexStr);
+				auto tileBackground(backgroundTilesrg->createRenderizable<NodeQuad>("backgroundTile_" + indexStr));
 				tileBackground->box = tileBox;
 				tileBackground->configure();
 				column.push_back(std::move(tileBackground));
@@ -640,7 +639,7 @@ namespace zoper
 	void GameScene::increaseScore(u32 scoreIncrement)
 	{
 		_score += scoreIncrement;
-		str result{ std::to_string(_score) };
+		str result( _score );
 		while (result.size() < _scoreSize) result = "0" + result;
 		m_scoreQuad->text(3)->text = result;
 	}

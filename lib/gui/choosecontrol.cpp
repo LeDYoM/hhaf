@@ -105,7 +105,7 @@ namespace lib
 			const auto &cTheme(dynamic_cast<ChooseControlGroup*>(parent())->currentTheme());
 			for (const auto& label : optionModel())
 			{
-				auto menuLine = createSceneNode<ChooseControlLine>("menuLineText" + std::to_string(count));
+				auto menuLine = createSceneNode<ChooseControlLine>("menuLineText" + str(count));
 				menuLine->create();
 				menuLine->text = label.text;
 				menuLine->font = cTheme.font;

@@ -38,10 +38,10 @@ namespace lib
 			return append(n);
 		}
 
-		template <typename... T>
-		str &operator<<(T... n)
+		template <typename T>
+		str operator+(const T&n) const
 		{
-			return append(n...);
+			return str(*this).append(n);
 		}
 
 	};

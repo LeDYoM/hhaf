@@ -1,8 +1,6 @@
 #include "tile.hpp"
 #include <lib/scene/nodes/nodeshape.hpp>
 
-#include <string>
-
 namespace zoper
 {
 	using namespace lib;
@@ -12,7 +10,7 @@ namespace zoper
 	u32 Tile::m_tileCounter{ 0 };
 
 	Tile::Tile(lib::scene::SceneNode* const parent, str name, BoardTileData data, const Rectf32 &box) :
-		GameBaseTile{ parent, name + std::to_string(m_tileCounter) + std::to_string(m_tileCounter), data }
+		GameBaseTile{ parent, name + str(m_tileCounter) + str(m_tileCounter), data }
 	{
 		++m_tileCounter;
 		m_node = createRenderizable<nodes::NodeShape>("Node", 30);

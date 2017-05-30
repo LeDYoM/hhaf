@@ -10,13 +10,13 @@ namespace zoper
 		std::array<lib::input::Key, TotalKeys> defaults{ Key::Left, Key::Right, Key::Up, Key::Down, Key::Space, Key::Escape };
 
 		for (auto i = 0u; i < Direction::Total; ++i) {
-			auto configProperty(value("key" + std::to_string(i)));
+			auto configProperty(value("key" + i));
 			m_keys[i] = configProperty->empty() ? defaults[i] : configProperty->get<Key>();
 		}
 
-		auto configProperty(value("key_launch" + std::to_string(Direction::Total)));
+		auto configProperty(value("key_launch" + Direction::Total));
 		m_keys[Direction::Total] = configProperty->empty() ? defaults[Direction::Total] : configProperty->get<lib::input::Key>();
-		configProperty = value("key_pause" + std::to_string(Direction::Total + 1));
+		configProperty = value("key_pause" + str(Direction::Total + 1));
 		m_keys[Direction::Total + 1] = configProperty->empty() ? defaults[Direction::Total + 1] : configProperty->get<lib::input::Key>();
 	}
 
@@ -75,10 +75,10 @@ namespace zoper
 	{
 		for (auto i = 0u; i < Direction::Total; ++i)
 		{
-			//			addConfigInt("key" + std::to_string(i), _keys[i],true);
+			//			addConfigInt("key" + str(i), _keys[i],true);
 		}
 
-		//		addConfigInt("key_launch" + std::to_string(Direction::Total), _keys[Direction::Total]);
-		//		addConfigInt("key_pause" + std::to_string(Direction::Total + 1), _keys[Direction::Total + 1]);
+		//		addConfigInt("key_launch" + str(Direction::Total), _keys[Direction::Total]);
+		//		addConfigInt("key_pause" + str(Direction::Total + 1), _keys[Direction::Total + 1]);
 	}
 }
