@@ -13,16 +13,36 @@ namespace lib
 	{
 	public:
 		using std::string::string;
-		constexpr str() : std::string{} {}
-		constexpr str(const std::string &source) : std::string{ source } {}
-		//		str(str&&rhs) = default;
-		//		str &operator=(const std::string &source) { static_cast<std::string>(*this) = source; return *this; }
-		//		str &operator=(const str &source) = default;
+
+		str() = default;
+		str(const std::string &source) : std::string{ source } {}
+		str(const unsigned int n);
+		str(const signed int n);
+		str(const str &n);
+		str(const char *n);
+		str(const float n);
+		str(const double n);
 
 		std::vector<str> split(const char separator) const;
+		str &append() { return *this; }
 		str &append(const unsigned int n);
 		str &append(const signed int n);
 		str &append(const str &n);
+		str &append(const char *n);
+		str &append(const float n);
+		str &append(const double n);
+
+		template <typename T>
+		str &operator<<(const T&n)
+		{
+			return append(n);
+		}
+
+		template <typename T>
+		str operator+(const T&n) const
+		{
+			return str(*this).append(n);
+		}
 
 	};
 

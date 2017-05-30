@@ -72,7 +72,7 @@ namespace lib
 			u32 count{ 0 };
 
 			for (const auto& option : options()) {
-				auto chooseControl = createSceneNode<ChooseControl>("chooseControl"+std::to_string(count));
+				auto chooseControl = createSceneNode<ChooseControl>("chooseControl"+str(count));
 				chooseControl->box = box();
 				chooseControl->optionModel = option;
 //				chooseControl->configure();

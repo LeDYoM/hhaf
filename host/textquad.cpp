@@ -13,7 +13,7 @@ namespace zoper
 		sceneNode = parent->createSceneNode<SceneNode>(name);
 		u32 count{};
 		for (auto &node : m_texts) {
-			node = sceneNode()->createRenderizable<NodeText>(name + "node_" + std::to_string(count++));
+			node = sceneNode()->createRenderizable<NodeText>(name + "node_" + str(count++));
 			node->font = font;
 			node->characterSize = characterSize;
 			node->alignmentBox = box;

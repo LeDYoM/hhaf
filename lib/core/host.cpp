@@ -195,15 +195,13 @@ namespace lib
 
 		const str Host::appId() const
 		{
-			using std::to_string;
-
 			if (m_iapp) {
-				return str(
+				return 
 					str(m_iapp->getAppDescriptor().Name) + ":" + 
-					to_string(m_iapp->getAppDescriptor().Version) + "." + 
-					to_string(m_iapp->getAppDescriptor().SubVersion) + "." + 
-					to_string(m_iapp->getAppDescriptor().Patch)
-				);
+					(m_iapp->getAppDescriptor().Version) + "." + 
+					(m_iapp->getAppDescriptor().SubVersion) + "." + 
+					(m_iapp->getAppDescriptor().Patch)
+				;
 			}
 			return "NoApp:0.0.0";
 		}

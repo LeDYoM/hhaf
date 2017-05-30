@@ -71,7 +71,7 @@ namespace lib
 				m_wPrivate->lastTimeFps = eMs;
 				m_wPrivate->lastFps = m_wPrivate->currentFps;
 				m_wPrivate->currentFps = 0;
-				bw.setWindowTitle(m_title + " FPS:" + std::to_string(m_wPrivate->lastFps));
+				bw.setWindowTitle(m_title + " FPS:" + str(m_wPrivate->lastFps));
 			}
 			++(m_wPrivate->currentFps);
 			bw.clear();

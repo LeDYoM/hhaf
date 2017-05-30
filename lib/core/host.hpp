@@ -7,7 +7,6 @@
 #include <lib/include/iapp.hpp>
 
 #include <vector>
-#include <string>
 
 namespace lib
 {
