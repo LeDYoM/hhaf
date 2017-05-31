@@ -4,6 +4,7 @@
 #include "sfml/renderwindow.hpp"
 #include "sfml/texturefactory.hpp"
 #include "sfml/ttfontfactory.hpp"
+#include "sfml/main.hpp"
 
 namespace lib
 {
@@ -15,12 +16,18 @@ namespace lib
 		{
 			logConstruct_NOPARAMS;
 			m_windowProviderInfo = msptr<sfmlb::WindowBackendInfo>();
-			m_window = msptr<sfmlb::RenderWindow>();
-			m_textureFactory = msptr<sfmlb::TextureFactory>();
-			m_ttfontFactory = msptr<sfmlb::TTFontFactory>();
+			m_window = sptr<IWindow>(createWindow());
+//			m_window = msptr<sfmlb::RenderWindow>();
+			m_textureFactory = sptr<ITextureFactory>(createTextureFactory());
+//			m_textureFactory = msptr<sfmlb::TextureFactory>();
+			m_ttfontFactory = sptr<ITTFontFactory>(createTTFontFactory());
+//			m_ttfontFactory = msptr<sfmlb::TTFontFactory>();
 		}
 		BackendFactory::~BackendFactory() 
 		{
+			m_textureFactory.reset();
+			m_ttfontFactory.reset();
+			m_window.reset();
 			logDestruct_NOPARAMS;
 		}
 

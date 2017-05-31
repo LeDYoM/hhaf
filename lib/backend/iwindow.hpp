@@ -42,7 +42,9 @@ namespace lib
 		public:
 			virtual const char *const info() = 0;
 		};
+
 	}
 }
+
 #endif
 
