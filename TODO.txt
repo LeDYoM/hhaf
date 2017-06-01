@@ -1,5 +1,6 @@
 TODO:
 
+- Separate Backend in shared library
 - MiniTL (MTL)
 - Move menu to models
 - Move menu to components
