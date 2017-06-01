@@ -18,8 +18,3 @@ namespace lib
 		}
 	}
 }
-
-lib::backend::ITTFontFactory *createTTFontFactory()
-{
-	return new lib::backend::sfmlb::TTFontFactory;
-}
