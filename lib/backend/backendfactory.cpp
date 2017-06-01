@@ -15,7 +15,8 @@ namespace lib
 		BackendFactory::BackendFactory()
 		{
 			logConstruct_NOPARAMS;
-			m_windowProviderInfo = msptr<sfmlb::WindowBackendInfo>();
+//			m_windowProviderInfo = msptr<sfmlb::WindowBackendInfo>();
+			m_windowProviderInfo = sptr<IWindowProviderInfo>(createWindowProviderInfo());
 //			m_window = sptr<IWindow>(new sfmlb::RenderWindow);
 			m_window = sptr<IWindow>(createWindow());
 //			m_textureFactory = sptr<ITextureFactory>(new sfmlb::TextureFactory);

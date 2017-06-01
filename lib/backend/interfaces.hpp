@@ -7,7 +7,7 @@
 #include "ittfontfactory.hpp"
 #include "itexturefactory.hpp"
 
-
+lib::backend::IWindowProviderInfo * __stdcall createWindowProviderInfo();
 lib::backend::IWindow * __stdcall createWindow();
 lib::backend::ITTFontFactory * __stdcall createTTFontFactory();
 lib::backend::ITextureFactory * __stdcall createTextureFactory();

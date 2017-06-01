@@ -5,6 +5,10 @@
 #include "../interfaces.hpp"
 
 
+lib::backend::IWindowProviderInfo * __stdcall createWindowProviderInfo() {
+	return new lib::backend::sfmlb::WindowBackendInfo;
+}
+
 lib::backend::IWindow * __stdcall createWindow() {
 	return new lib::backend::sfmlb::RenderWindow;
 }
@@ -16,4 +20,3 @@ lib::backend::ITTFontFactory * __stdcall createTTFontFactory() {
 lib::backend::ITextureFactory * __stdcall createTextureFactory() {
 	return new lib::backend::sfmlb::TextureFactory;
 }
-
