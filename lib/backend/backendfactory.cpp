@@ -16,18 +16,19 @@ namespace lib
 		{
 			logConstruct_NOPARAMS;
 			m_windowProviderInfo = msptr<sfmlb::WindowBackendInfo>();
-			m_window = sptr<IWindow>(createWindow());
-//			m_window = msptr<sfmlb::RenderWindow>();
-			m_textureFactory = sptr<ITextureFactory>(createTextureFactory());
-//			m_textureFactory = msptr<sfmlb::TextureFactory>();
+			m_window = sptr<IWindow>(new sfmlb::RenderWindow);
+			m_textureFactory = sptr<ITextureFactory>(new sfmlb::TextureFactory);
+//			m_ttfontFactory = sptr<ITTFontFactory>(new sfmlb::TTFontFactory);
 			m_ttfontFactory = sptr<ITTFontFactory>(createTTFontFactory());
-//			m_ttfontFactory = msptr<sfmlb::TTFontFactory>();
 		}
 		BackendFactory::~BackendFactory() 
 		{
-			m_textureFactory.reset();
-			m_ttfontFactory.reset();
-			m_window.reset();
+			// Not necessary, but make sure the pointers are deleted before the descructor finishes
+			m_windowProviderInfo = nullptr;
+			m_window = nullptr;
+			m_textureFactory = nullptr;
+			m_ttfontFactory = nullptr;
+
 			logDestruct_NOPARAMS;
 		}
 

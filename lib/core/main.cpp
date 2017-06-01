@@ -3,7 +3,7 @@
 #include <lib/core/memmanager.hpp>
 #include <lib/core/log.hpp>
 #include <lib/core/host.hpp>
-#include <loader.hpp>
+//#include <loader.hpp>
 
 namespace lib
 {
@@ -14,7 +14,7 @@ namespace lib
 
 		try
 		{
-			auto *a = loader::createLoader();
+//			auto *a = loader::createLoader();
 			initLog();
 			installMemManager();
 

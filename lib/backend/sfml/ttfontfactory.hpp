@@ -21,4 +21,7 @@ namespace lib
 		}
 	}
 }
+
+lib::backend::ITTFontFactory *createTTFontFactory();
+
 #endif
