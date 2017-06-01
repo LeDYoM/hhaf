@@ -16,8 +16,10 @@ namespace lib
 		{
 			logConstruct_NOPARAMS;
 			m_windowProviderInfo = msptr<sfmlb::WindowBackendInfo>();
-			m_window = sptr<IWindow>(new sfmlb::RenderWindow);
-			m_textureFactory = sptr<ITextureFactory>(new sfmlb::TextureFactory);
+//			m_window = sptr<IWindow>(new sfmlb::RenderWindow);
+			m_window = sptr<IWindow>(createWindow());
+//			m_textureFactory = sptr<ITextureFactory>(new sfmlb::TextureFactory);
+			m_textureFactory = sptr<ITextureFactory>(createTextureFactory());
 //			m_ttfontFactory = sptr<ITTFontFactory>(new sfmlb::TTFontFactory);
 			m_ttfontFactory = sptr<ITTFontFactory>(createTTFontFactory());
 		}
