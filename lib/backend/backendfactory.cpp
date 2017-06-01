@@ -4,7 +4,7 @@
 #include "sfml/renderwindow.hpp"
 #include "sfml/texturefactory.hpp"
 #include "sfml/ttfontfactory.hpp"
-#include "sfml/main.hpp"
+#include "interfaces.hpp"
 
 namespace lib
 {
