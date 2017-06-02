@@ -29,7 +29,7 @@ namespace zoper
 			"res.cfg",
 			WindowCreationParams
 			{
-				"ZOPER",
+				{"ZOPER", 5},
 				1024,
 				768,
 				32,

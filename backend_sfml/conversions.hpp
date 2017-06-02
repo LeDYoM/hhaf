@@ -34,17 +34,11 @@ namespace lib
 				return static_cast<input::Key>(temp);
 			}
 
-			inline sf::String getAsString(const str &other)
+			inline sf::String getAsString(const inline_str &other)
 			{
-				std::wstring wsTmp(other.begin(), other.end());
+				std::wstring wsTmp(other.str, other.str + other.size);
 				sf::String temp(wsTmp);
 				return temp;
-			}
-
-			inline sf::String getAsString(const char *const other)
-			{
-				const str temp(other);
-				return getAsString(temp);
 			}
 
 			inline sf::Transform asTransform(const scene::Transform &transform)

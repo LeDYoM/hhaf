@@ -1,9 +1,6 @@
 #include "backendfactory.hpp"
 #include <lib/core/log.hpp>
 
-#include "sfml/renderwindow.hpp"
-#include "sfml/texturefactory.hpp"
-#include "sfml/ttfontfactory.hpp"
 #include "interfaces.hpp"
 
 namespace lib

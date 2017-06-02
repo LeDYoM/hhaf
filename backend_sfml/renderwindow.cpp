@@ -22,7 +22,8 @@ namespace lib
 					style = sf::Style::Fullscreen;
 
 				// Deal with SFML bug
-				sf::Window::create(sf::VideoMode(wcp.width, wcp.height, wcp.bpp), getAsString(wcp.windowTitle), style, sf::ContextSettings(0, 0, wcp.antialiasing));
+				sf::Window::create(sf::VideoMode(wcp.width, wcp.height, wcp.bpp), getAsString(wcp.windowTitle),
+					style, sf::ContextSettings(0, 0, wcp.antialiasing));
 
 				this->setVerticalSyncEnabled(wcp.vsync);
 				return true;
@@ -112,7 +113,7 @@ namespace lib
 				RenderTarget::clear();
 			}
 
-			void RenderWindow::setWindowTitle(const str newTitle)
+			void RenderWindow::setWindowTitle(const inline_str &newTitle)
 			{
 				Window::setTitle(getAsString(newTitle));
 			}

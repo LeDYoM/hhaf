@@ -9,12 +9,22 @@
 
 namespace lib
 {
-	class LIB_API str : public std::string
+	struct LIB_API inline_str
+	{
+		inline_str(const char *_str, unsigned int _size) : str{_str}, size{_size} {}
+
+		const char *str;
+		unsigned int size;
+
+	};
+
+	class LIB_API str : public ::std::string
 	{
 	public:
 		using std::string::string;
 
 		str() = default;
+		str(const inline_str &source) : std::string{ source.str } {}
 		str(const std::string &source) : std::string{ source } {}
 		str(const unsigned int n);
 		str(const signed int n);
@@ -32,6 +42,7 @@ namespace lib
 		str &append(const float n);
 		str &append(const double n);
 
+		inline_str ic_str() const noexcept { return {c_str(), size()}; }
 		template <typename T>
 		str &operator<<(const T&n)
 		{
