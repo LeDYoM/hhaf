@@ -52,7 +52,7 @@ namespace lib
 			void setScene(sptr<scene::Scene> &&scene);
 
 			inline Window const &parentWindow() const noexcept { return *m_window; }
-			inline Window &parentWindow()  noexcept { return *m_window; }
+			inline Window &parentWindow() noexcept { return *m_window; }
 			inline ResourceManager const &resourceManager() const  noexcept { return *m_resourceManager; }
 			inline ResourceManager &resourceManager()  noexcept { return *m_resourceManager; }
 			inline EventManager const &eventManager() const  noexcept { return *m_eventManager; }

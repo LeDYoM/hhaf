@@ -11,6 +11,8 @@
 #include <lib/include/iapp.hpp>
 #include <lib/backend/iwindow.hpp>
 
+#include <queue>
+
 namespace lib
 {
 	namespace backend
@@ -23,21 +25,28 @@ namespace lib
 
 				virtual ~RenderWindow();
 
-				virtual bool createWindow(const WindowCreationParams &wcp) override;
-				virtual sf::Vector2u getSize() const override;
-				virtual bool activate(bool active = true) override { return setActive(active); }
-				virtual void draw(const scene::VertexArray &vertices, const scene::RenderStatesStack& states) override;
+				bool createWindow(const WindowCreationParams &wcp) override;
+				sf::Vector2u getSize() const override;
+				bool activate(bool active = true) override { return setActive(active); }
+				void draw(const scene::VertexArray &vertices, const scene::RenderStatesStack& states) override;
 
-				virtual void setViewport(const Rectf32 &nviewport) override;
-				virtual Rectf32 viewPort() const override;
-				virtual void setViewRect(const Rectf32 &nviewRect) override;
-				virtual Rectf32 viewRect() const override;
+				void setViewport(const Rectf32 &nviewport) override;
+				Rectf32 viewPort() const override;
+				void setViewRect(const Rectf32 &nviewRect) override;
+				Rectf32 viewRect() const override;
 
-				virtual bool processEvents() override;
-				virtual void display() override;
-				virtual void clear() override;
-				virtual void setWindowTitle(const str newTitle) override;
-				virtual void closeWindow() override;
+				bool processEvents() override;
+				void display() override;
+				void clear() override;
+				void setWindowTitle(const str newTitle) override;
+				void closeWindow() override;
+
+				// Input part
+				bool arePendingKeyPresses() const override;
+				bool arePendingKeyReleases() const override;
+
+				input::Key popKeyPress() override;
+				input::Key popKeyRelease() override;
 
 			protected:
 				virtual void onCreate();
@@ -45,7 +54,11 @@ namespace lib
 
 			private:
 				void keyEvent(const sf::Event &e);
+
+				std::queue<input::Key> m_keysPressed;
+				std::queue<input::Key> m_keysReleased;
 			};
+
 			class WindowBackendInfo : public IWindowProviderInfo
 			{
 			public:

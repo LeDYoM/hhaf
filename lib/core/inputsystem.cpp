@@ -1,6 +1,8 @@
 #include "inputsystem.hpp"
 #include "log.hpp"
-
+#include <lib/backend/iwindow.hpp>
+#include <lib/core/host.hpp>
+#include <lib/core/window.hpp>
 
 namespace lib
 {
@@ -25,6 +27,15 @@ namespace lib
 
 		void InputSystem::preUpdate()
 		{
+			auto &window( host().parentWindow() );
+			if (window.arePendingKeyPresses() || window.arePendingKeyReleases()) {
+				while (window.arePendingKeyPresses()) {
+					keyPressed(window.popKeyPress());
+				}
+				while (window.arePendingKeyReleases()) {
+					keyReleased(window.popKeyRelease());
+				}
+			}
 		}
 
 		void InputSystem::postUpdate()

@@ -1,9 +1,9 @@
-#include <iwindow.hpp>
+#include <lib/backend/iwindow.hpp>
+#include <lib/backend/interfaces.hpp>
+
 #include "renderwindow.hpp"
 #include "ttfontfactory.hpp"
 #include "texturefactory.hpp"
-#include <interfaces.hpp>
-
 
 lib::backend::IWindowProviderInfo * __stdcall createWindowProviderInfo() {
 	return new lib::backend::sfmlb::WindowBackendInfo;

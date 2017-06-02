@@ -4,6 +4,7 @@
 #include <lib/include/types.hpp>
 #include <lib/include/vector2d.hpp>
 #include <lib/include/rect.hpp>
+#include <lib/include/key.hpp>
 
 namespace lib
 {
@@ -35,6 +36,13 @@ namespace lib
 			virtual void clear() = 0;
 			virtual void setWindowTitle(const str newTitle) = 0;
 			virtual void closeWindow() = 0;
+
+			// Input part
+			virtual bool arePendingKeyPresses() const = 0;
+			virtual bool arePendingKeyReleases() const = 0;
+
+			virtual input::Key popKeyPress() = 0;
+			virtual input::Key popKeyRelease() = 0;
 		};
 
 		class IWindowProviderInfo

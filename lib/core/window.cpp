@@ -37,6 +37,26 @@ namespace lib
 			m_wPrivate->m_backendWindow->draw(va, rs);
 		}
 
+		bool Window::arePendingKeyPresses() const
+		{
+			return m_wPrivate->m_backendWindow->arePendingKeyPresses();
+		}
+
+		bool Window::arePendingKeyReleases() const
+		{
+			return m_wPrivate->m_backendWindow->arePendingKeyReleases();
+		}
+
+		input::Key Window::popKeyPress()
+		{
+			return m_wPrivate->m_backendWindow->popKeyPress();
+		}
+
+		input::Key Window::popKeyRelease()
+		{
+			return m_wPrivate->m_backendWindow->popKeyRelease();
+		}
+
 		void Window::create(const WindowCreationParams &wcp)
 		{
 			logDebug("Going to create Window");

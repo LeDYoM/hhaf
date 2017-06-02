@@ -1,9 +1,9 @@
-#include "renderwindow.hpp"
-#include <lib/core/host.hpp>
-#include <lib/core/inputsystem.hpp>
 #include <lib/include/key.hpp>
-#include "conversions.hpp"
 #include <lib/core/log.hpp>
+
+#include "renderwindow.hpp"
+#include "conversions.hpp"
+
 #include <SFML/Window.hpp>
 #include <SFML/Config.hpp>
 
@@ -75,10 +75,12 @@ namespace lib
 				logDebug("Backend key event. Type: ", (int)(e.type), " Key: ", (int)(e.key.code));
 				if (k != input::Key::Unknown) {
 					if (e.type == sf::Event::KeyPressed) {
-						host().inputSystem().keyPressed(k);
+						m_keysPressed.push(k);
+//						host().inputSystem().keyPressed(k);
 					}
 					else {
-						host().inputSystem().keyReleased(k);
+						m_keysReleased.push(k);
+//						host().inputSystem().keyReleased(k);
 					}
 				}
 				else {
@@ -118,6 +120,36 @@ namespace lib
 			void RenderWindow::closeWindow()
 			{
 				Window::close();
+			}
+
+			bool RenderWindow::arePendingKeyPresses() const
+			{
+				return !m_keysPressed.empty();
+			}
+
+			bool RenderWindow::arePendingKeyReleases() const
+			{
+				return !m_keysReleased.empty();
+			}
+
+			template <typename T>
+			decltype(auto) popKey(T &container) {
+				input::Key k(input::Key::Unknown);
+				if (!container.empty()) {
+					k = container.front();
+					container.pop();
+				}
+				return k;
+			}
+
+			input::Key RenderWindow::popKeyPress()
+			{
+				return popKey(m_keysPressed);
+			}
+
+			input::Key RenderWindow::popKeyRelease()
+			{
+				return popKey(m_keysReleased);
 			}
 
 			void RenderWindow::onCreate()

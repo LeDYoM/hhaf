@@ -32,6 +32,12 @@ namespace lib
 
 			void draw(const scene::VertexArray &va, const scene::RenderStatesStack &rs);
 
+			bool arePendingKeyPresses() const;
+			bool arePendingKeyReleases() const;
+
+			input::Key popKeyPress();
+			input::Key popKeyRelease();
+
 		private:
 			void create(const WindowCreationParams &wcp);
 			struct WindowPrivate;
