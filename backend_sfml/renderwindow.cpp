@@ -7,6 +7,8 @@
 #include <SFML/Window.hpp>
 #include <SFML/Config.hpp>
 
+#include <string>
+
 namespace lib
 {
 	namespace backend
@@ -165,7 +167,12 @@ namespace lib
 
 			const char * const WindowBackendInfo::info()
 			{
-				static const str info(str("SFML Backend: 1.0 Using SFML Version : ") << SFML_VERSION_MAJOR << "." << SFML_VERSION_MINOR << "." << SFML_VERSION_PATCH);
+				std::string info("SFML Backend: 1.0 Using SFML Version : ");
+				info += SFML_VERSION_MAJOR;
+				info += ".";
+				info += SFML_VERSION_MINOR;
+				info += ".";
+				info += SFML_VERSION_PATCH;
 
 				return info.c_str();
 			}

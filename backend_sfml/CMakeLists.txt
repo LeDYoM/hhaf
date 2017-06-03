@@ -11,7 +11,7 @@ source_group("Headers" FILES ${_HEADERS})
 #source_group("Includes" FILES ${_INCLUDES})
 #set(CMAKE_DEBUG_POSTFIX  "d") 
 
-add_library(${CURRENT_TARGET}  
+add_library(${CURRENT_TARGET}  SHARED
 	${_SOURCES} 
 	${_HEADERS}
 #	${_INCLUDES}
