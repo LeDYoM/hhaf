@@ -32,7 +32,7 @@ namespace lib
 			logDestruct_NOPARAMS;
 		}
 
-		void Window::draw(const scene::VertexArray & va, const scene::RenderStatesStack & rs)
+		void Window::draw(const scene::VertexArray & va, const scene::RenderStates& rs)
 		{
 			m_wPrivate->m_backendWindow->draw(va, rs);
 		}

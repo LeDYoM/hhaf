@@ -2,6 +2,7 @@
 
 #include <lib/core/window.hpp>
 #include <lib/core/host.hpp>
+#include <lib/scene/renderstatesstack.hpp>
 
 namespace lib
 {
@@ -12,7 +13,7 @@ namespace lib
 
 		void VertexArray::draw() const
 		{
-			host().parentWindow().draw(*this, host().rStates());
+			host().parentWindow().draw(*this, host().rStates().top());
 		}
 
 		void VertexArray::setColor(const Color &color)

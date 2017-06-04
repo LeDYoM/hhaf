@@ -36,11 +36,11 @@ namespace lib
 				return Window::getSize();
 			}
 
-			void RenderWindow::draw(const scene::VertexArray & vertices, const scene::RenderStatesStack & states)
+			void RenderWindow::draw(const scene::VertexArray & vertices, const scene::RenderStates& states)
 			{
 				RenderTarget::draw((const sf::Vertex*)vertices.verticesArray().data(), vertices.verticesArray().size(),
 					static_cast<sf::PrimitiveType>(vertices.primitiveType()),
-					asRenderStates(states.top()));
+					asRenderStates(states));
 			}
 
 			void RenderWindow::setViewport(const Rectf32 & nviewport)

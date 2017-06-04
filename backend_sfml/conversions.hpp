@@ -41,9 +41,8 @@ namespace lib
 				return temp;
 			}
 
-			inline sf::Transform asTransform(const scene::Transform &transform)
+			inline sf::Transform asTransform(const f32* matrix)
 			{
-				const f32 *const matrix{ transform.getMatrix() };
 				return sf::Transform{ matrix[0], matrix[4], matrix[12],
 					matrix[1], matrix[5], matrix[13],
 					matrix[3], matrix[7], matrix[15] };
@@ -69,7 +68,7 @@ namespace lib
 			inline const sf::RenderStates asRenderStates(const scene::RenderStates &renderStates)
 			{
 				return sf::RenderStates(sf::RenderStates::Default.blendMode,
-					asTransform(renderStates.m_transform),
+					asTransform(renderStates.m_transform.getMatrix()),
 					asTexture(renderStates.m_texture),
 					nullptr);
 			}
