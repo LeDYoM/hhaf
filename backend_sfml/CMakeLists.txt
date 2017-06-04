@@ -11,7 +11,7 @@ source_group("Headers" FILES ${_HEADERS})
 #source_group("Includes" FILES ${_INCLUDES})
 #set(CMAKE_DEBUG_POSTFIX  "d") 
 
-add_library(${CURRENT_TARGET}  SHARED
+add_library(${CURRENT_TARGET}
 	${_SOURCES} 
 	${_HEADERS}
 #	${_INCLUDES}
@@ -21,7 +21,7 @@ add_library(${CURRENT_TARGET}  SHARED
 #TO DO: Remove it (use a variable)
 include_directories ("../lib/backend")
 include_directories ("..")
-#target_link_libraries(${CURRENT_TARGET} lib)
+target_link_libraries(${CURRENT_TARGET} lib)
 
 # Detect and add SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
