@@ -12,8 +12,6 @@ enum class LogType
 	Error,
 };
 
-#include <sstream>
-
 lib::write_stream &log_stream() noexcept;
 
 void print_impl();

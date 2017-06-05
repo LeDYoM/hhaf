@@ -9,8 +9,6 @@ void initLog();
 void finishLog();
 
 #ifdef USE_LOGS
-	#include <sstream>
-
 	#define EXECUTE_IN_DEBUG(x)		x
 	template <typename... Args>
 	constexpr void logDebug(Args&&... args) { logprint<LogType::Debug>(std::forward<Args>(args)...); }

@@ -10,6 +10,8 @@
 #include <lib/include/types.hpp>
 #include <lib/include/types/str.hpp>
 
+#include <sstream>
+
 namespace lib
 {
 	class ConfigurationProperty;

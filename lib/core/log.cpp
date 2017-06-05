@@ -4,7 +4,7 @@
 
 #ifdef USE_LOGS
 
-using log_output_stream_t = std::ostringstream;
+using log_output_stream_t = lib::str;
 
 log_output_stream_t log_output_stream;
 
@@ -31,8 +31,8 @@ void initLog()
 
 void commitLog()
 {
-	auto outstr(log_output_stream.str());
-	log_output_stream.str(lib::str());
+	auto outstr(log_output_stream);
+	log_output_stream = "";
 #ifdef LOG_FILE
 	if (logFile.is_open())
 		logFile << outstr;
