@@ -28,11 +28,12 @@ namespace lib
 
 		bool BackendLoader::load(const str & filename)
 		{
-			void* hGetProcIDDLL = LoadLibrary(filename.c_str());
+			instance = LoadLibrary(filename.c_str());
 
-			if (!hGetProcIDDLL) {
-				return false;
+			if (instance) {
+				return true;
 			}
+			return false;
 
 		}
 	}
