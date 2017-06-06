@@ -12,4 +12,6 @@ lib::backend::IWindow * __stdcall createWindow();
 lib::backend::ITTFontFactory * __stdcall createTTFontFactory();
 lib::backend::ITextureFactory * __stdcall createTextureFactory();
 
+typedef lib::backend::IWindow * (__stdcall *p_createWindow)();
+
 #endif

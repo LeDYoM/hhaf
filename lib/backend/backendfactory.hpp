@@ -12,7 +12,7 @@ namespace lib
 		class BackendFactory final
 		{
 		public:
-			static bool initilialize();
+			static bool initilialize(const str&file);
 			static bool destroy();
 			sptr<IWindowProviderInfo> getWindowProviderInfo();
 			sptr<IWindow> getOrCreateWindow();
