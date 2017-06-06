@@ -1,4 +1,5 @@
 #include "backendfactory.hpp"
+#include "backendloader.hpp"
 #include <lib/core/log.hpp>
 
 #include "interfaces.hpp"
@@ -12,6 +13,12 @@ namespace lib
 		BackendFactory::BackendFactory()
 		{
 			logConstruct_NOPARAMS;
+			BackendLoader bloader;
+			if (bloader.load("bsfml")) {
+				auto p = bloader.loadFunc("createWindow");
+				p_createWindow f = (p_createWindow)p;
+				f;
+			}
 //			m_windowProviderInfo = msptr<sfmlb::WindowBackendInfo>();
 			m_windowProviderInfo = sptr<IWindowProviderInfo>(createWindowProviderInfo());
 //			m_window = sptr<IWindow>(new sfmlb::RenderWindow);
@@ -21,6 +28,7 @@ namespace lib
 //			m_ttfontFactory = sptr<ITTFontFactory>(new sfmlb::TTFontFactory);
 			m_ttfontFactory = sptr<ITTFontFactory>(createTTFontFactory());
 		}
+
 		BackendFactory::~BackendFactory() 
 		{
 			// Not necessary, but make sure the pointers are deleted before the descructor finishes
@@ -32,7 +40,7 @@ namespace lib
 			logDestruct_NOPARAMS;
 		}
 
-		bool BackendFactory::initilialize()
+		bool BackendFactory::initilialize(const str&file)
 		{
 			if (!m_instance) {
 				m_instance = new BackendFactory;

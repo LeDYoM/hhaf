@@ -44,7 +44,7 @@ namespace lib
 		{
 			if (!m_instance) {
 				m_instance = new Host(argc, argv);
-				backend::BackendFactory::initilialize();
+				backend::BackendFactory::initilialize("bsfml");
 				return true;
 			}
 			return false;
