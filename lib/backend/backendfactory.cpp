@@ -22,15 +22,18 @@ namespace lib
 				auto fp_createWindowProviderInfo = (p_createWindowProviderInfo)bloader.loadFunc("createWindowProviderInfo");
 				auto fp_createWindow = (p_createWindow)bloader.loadFunc("createWindow");
 				auto fp_createTTFontFactory = (p_createTTFontFactory)bloader.loadFunc("createTTFontFactory");
-				auto fp_createTextureFactory = (p_createTTFontFactory)bloader.loadFunc("createTextureFactory");
+				auto fp_createTextureFactory = (p_createTextureFactory)bloader.loadFunc("createTextureFactory");
 				if (fp_createWindowProviderInfo && fp_createWindow && fp_createTTFontFactory && fp_createTextureFactory) {
+					wpitemp = (*fp_createWindowProviderInfo)();
 					wtemp = (*fp_createWindow)();
+					ttfftemp = (*fp_createTTFontFactory)();
+					tftemp = (*fp_createTextureFactory)();
 				}
 			}
-//			m_windowProviderInfo = sptr<IWindowProviderInfo>(createWindowProviderInfo());
+			m_windowProviderInfo = sptr<IWindowProviderInfo>(wpitemp);
 			m_window = sptr<IWindow>(wtemp);
-//			m_textureFactory = sptr<ITextureFactory>(createTextureFactory());
-//			m_ttfontFactory = sptr<ITTFontFactory>(createTTFontFactory());
+			m_textureFactory = sptr<ITextureFactory>(tftemp);
+			m_ttfontFactory = sptr<ITTFontFactory>(ttfftemp);
 		}
 
 		BackendFactory::~BackendFactory() 
