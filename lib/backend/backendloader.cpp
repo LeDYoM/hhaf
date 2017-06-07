@@ -1,9 +1,5 @@
 #include "backendloader.hpp"
 
-#define WIN32_LEAN_AND_MEAN
-#include <windows.h>
-#include <iostream>
-
 namespace lib
 {
 	namespace backend
@@ -16,9 +12,9 @@ namespace lib
 		{
 		}
 
-		void * BackendLoader::loadFunc(const str&fname)
+		void* BackendLoader::loadFunc(const str&fname)
 		{
-			void *funci = GetProcAddress((HINSTANCE)instance, fname.c_str());
+			void* funci = GetProcAddress(instance, fname.c_str());
 			if (!funci) {
 				return nullptr;
 			}
@@ -28,7 +24,7 @@ namespace lib
 
 		bool BackendLoader::load(const str & filename)
 		{
-			instance = LoadLibrary(filename.c_str());
+			instance = LoadLibrary("bsfml.dll");
 
 			if (instance) {
 				return true;

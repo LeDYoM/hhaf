@@ -13,20 +13,24 @@ namespace lib
 		BackendFactory::BackendFactory()
 		{
 			logConstruct_NOPARAMS;
+			lib::backend::IWindowProviderInfo * wpitemp{ nullptr };
+			lib::backend::IWindow * wtemp{ nullptr };
+			lib::backend::ITTFontFactory *ttfftemp{ nullptr };
+			lib::backend::ITextureFactory *tftemp{ nullptr };
 			BackendLoader bloader;
 			if (bloader.load("bsfml")) {
-				auto p = bloader.loadFunc("createWindow");
-				p_createWindow f = (p_createWindow)p;
-				f;
+				auto fp_createWindowProviderInfo = (p_createWindowProviderInfo)bloader.loadFunc("createWindowProviderInfo");
+				auto fp_createWindow = (p_createWindow)bloader.loadFunc("createWindow");
+				auto fp_createTTFontFactory = (p_createTTFontFactory)bloader.loadFunc("createTTFontFactory");
+				auto fp_createTextureFactory = (p_createTTFontFactory)bloader.loadFunc("createTextureFactory");
+				if (fp_createWindowProviderInfo && fp_createWindow && fp_createTTFontFactory && fp_createTextureFactory) {
+					wtemp = (*fp_createWindow)();
+				}
 			}
-//			m_windowProviderInfo = msptr<sfmlb::WindowBackendInfo>();
-			m_windowProviderInfo = sptr<IWindowProviderInfo>(createWindowProviderInfo());
-//			m_window = sptr<IWindow>(new sfmlb::RenderWindow);
-			m_window = sptr<IWindow>(createWindow());
-//			m_textureFactory = sptr<ITextureFactory>(new sfmlb::TextureFactory);
-			m_textureFactory = sptr<ITextureFactory>(createTextureFactory());
-//			m_ttfontFactory = sptr<ITTFontFactory>(new sfmlb::TTFontFactory);
-			m_ttfontFactory = sptr<ITTFontFactory>(createTTFontFactory());
+//			m_windowProviderInfo = sptr<IWindowProviderInfo>(createWindowProviderInfo());
+			m_window = sptr<IWindow>(wtemp);
+//			m_textureFactory = sptr<ITextureFactory>(createTextureFactory());
+//			m_ttfontFactory = sptr<ITTFontFactory>(createTTFontFactory());
 		}
 
 		BackendFactory::~BackendFactory() 

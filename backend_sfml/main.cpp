@@ -5,18 +5,20 @@
 #include "ttfontfactory.hpp"
 #include "texturefactory.hpp"
 
-lib::backend::IWindowProviderInfo * __stdcall createWindowProviderInfo() {
+#define EXPORT extern "C" __declspec(dllexport)
+
+EXPORT lib::backend::IWindowProviderInfo * createWindowProviderInfo() {
 	return new lib::backend::sfmlb::WindowBackendInfo;
 }
 
-lib::backend::IWindow * __stdcall createWindow() {
+EXPORT lib::backend::IWindow * createWindow() {
 	return new lib::backend::sfmlb::RenderWindow;
 }
 
-lib::backend::ITTFontFactory * __stdcall createTTFontFactory() {
+EXPORT lib::backend::ITTFontFactory * createTTFontFactory() {
 	return new lib::backend::sfmlb::TTFontFactory;
 }
 
-lib::backend::ITextureFactory * __stdcall createTextureFactory() {
+EXPORT lib::backend::ITextureFactory * createTextureFactory() {
 	return new lib::backend::sfmlb::TextureFactory;
 }

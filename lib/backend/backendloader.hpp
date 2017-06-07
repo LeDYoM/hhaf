@@ -5,6 +5,9 @@
 
 #include <lib/include/types/str.hpp>
 #include "interfaces.hpp"
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#include <iostream>
 
 namespace lib
 {
@@ -17,9 +20,9 @@ namespace lib
 			~BackendLoader();
 
 			bool load(const str&filename);
-			void *loadFunc(const str&fname);
+			void* loadFunc(const str&fname);
 		private:
-			void *instance;
+			HINSTANCE instance;
 			
 		};
 
