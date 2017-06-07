@@ -5,6 +5,7 @@ namespace lib
 {
 	str::str(const unsigned int n) : std::string{ std::to_string(n) } {}
 	str::str(const signed int n) : std::string{ std::to_string(n) } {}
+	str::str(const char c) : std::string{ 1, c } {}
 	str::str(const str & n) : std::string{ n } {}
 	str::str(const char * n) : std::string{ n } {}
 	str::str(const float n) : std::string{ std::to_string(n) } {}
@@ -29,6 +30,11 @@ namespace lib
 	str & str::append(const signed int n)
 	{
 		*this += std::to_string(n);
+		return *this;
+	}
+	str & str::append(const char c)
+	{
+		this->push_back(c);
 		return *this;
 	}
 	str & str::append(const str & n)

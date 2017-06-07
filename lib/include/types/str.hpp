@@ -26,6 +26,7 @@ namespace lib
 		str() = default;
 		str(const inline_str &source) : std::string{ source.str } {}
 		str(const std::string &source) : std::string{ source } {}
+		str(const char c);
 		str(const unsigned int n);
 		str(const signed int n);
 		str(const str &n);
@@ -35,6 +36,7 @@ namespace lib
 
 		std::vector<str> split(const char separator) const;
 		str &append() { return *this; }
+		str &append(const char c);
 		str &append(const unsigned int n);
 		str &append(const signed int n);
 		str &append(const str &n);
