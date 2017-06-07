@@ -12,18 +12,6 @@ source_group("Header Files" FILES ${ZOPER_HEADERS})
 source_group("Source Files" FILES ${ZOPER_SOURCES})
 
 
-# Detect and add SFML
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
-set (SFML_ROOT "${CMAKE_SOURCE_DIR}/SFML")
-#set(SFML_STATIC_LIBRARIES TRUE)
-#Find any version 2.X of SFML
-#See the FindSFML.cmake file for additional details and instructions
-find_package(SFML 2 REQUIRED system window graphics)
-if(SFML_FOUND)
-#  include_directories(${SFML_INCLUDE_DIR})
-  target_link_libraries(${CURRENT_TARGET} ${SFML_LIBRARIES})
-endif()
-
 # Detect and add lib
 include_directories(..)
 target_link_libraries(${CURRENT_TARGET} lib)
