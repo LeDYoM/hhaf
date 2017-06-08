@@ -22,7 +22,7 @@ add_library(${CURRENT_TARGET}
 #TO DO: Remove it (use a variable)
 include_directories ("../lib/backend")
 include_directories ("..")
-target_link_libraries(${CURRENT_TARGET} lib)
+target_link_libraries(${CURRENT_TARGET} PRIVATE lib)
 
 # Detect and add SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
@@ -33,8 +33,13 @@ set (SFML_ROOT "${CMAKE_SOURCE_DIR}/SFML")
 find_package(SFML 2 REQUIRED system window graphics)
 if(SFML_FOUND)
   include_directories(${SFML_INCLUDE_DIR})
-  target_link_libraries(${CURRENT_TARGET} ${SFML_LIBRARIES})
+  target_link_libraries(${CURRENT_TARGET} PRIVATE ${SFML_LIBRARIES})
 endif()
+
+add_custom_command(TARGET ${CURRENT_TARGET} POST_BUILD
+	COMMAND ${CMAKE_COMMAND} -E copy_directory
+	${SFML_ROOT}/bin/$<CONFIGURATION>
+	$<TARGET_FILE_DIR:${CURRENT_TARGET}>)
 
 #install (TARGETS ${CURRENT_TARGET} RUNTIME DESTINATION .)
 

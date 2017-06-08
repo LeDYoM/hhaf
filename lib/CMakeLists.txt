@@ -4,8 +4,6 @@ set (LIB_VERSION_MAJOR 1)
 set (LIB_VERSION_MINOR 2)
 set (LIB_VERSION_PATCH 3)
 
-set (LIB_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/")
-
 # configure a header file to pass some of the CMake settings
 # to the source code
 configure_file (
@@ -76,14 +74,4 @@ source_group("lib\\gui" FILES ${LIB_GUI_HEADERS} ${LIB_GUI_SOURCES})
 source_group("lib\\board" FILES ${LIB_BOARD_HEADERS} ${LIB_BOARD_SOURCES})
 
 include_directories(${CURRENT_TARGET} ${LOADER_INCLUDE})
-target_link_libraries(${CURRENT_TARGET} loader)
-
-
-set(_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/)
-
-#set_target_properties(${CURRENT_TARGET}
-#    PROPERTIES
-#    ARCHIVE_OUTPUT_DIRECTORY "${_OUTPUT_DIRECTORY}"
-#)
-
-#install (TARGETS ${CURRENT_TARGET} ARCHIVE DESTINATION ${_OUTPUT_DIRECTORY})
+target_link_libraries(${CURRENT_TARGET} PRIVATE loader)
