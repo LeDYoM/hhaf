@@ -23,17 +23,24 @@ namespace lib
 				auto fp_createWindow = (p_createWindow)bloader.loadFunc("createWindow");
 				auto fp_createTTFontFactory = (p_createTTFontFactory)bloader.loadFunc("createTTFontFactory");
 				auto fp_createTextureFactory = (p_createTextureFactory)bloader.loadFunc("createTextureFactory");
-				if (fp_createWindowProviderInfo && fp_createWindow && fp_createTTFontFactory && fp_createTextureFactory) {
+				auto fp_destroyWindowProviderInfo = (p_destroyWindowProviderInfo)bloader.loadFunc("destroyWindowProviderInfo");
+				auto fp_destroyWindow = (p_destroyWindow)bloader.loadFunc("destroyWindow");
+				auto fp_destroyTTFontFactory = (p_destroyTTFontFactory)bloader.loadFunc("destroyTTFontFactory");
+				auto fp_destroyTextureFactory = (p_destroyTextureFactory)bloader.loadFunc("destroyTextureFactory");
+
+				if (fp_createWindowProviderInfo && fp_createWindow && fp_createTTFontFactory && fp_createTextureFactory &&
+					fp_destroyWindowProviderInfo && fp_destroyWindow && fp_destroyTTFontFactory && fp_destroyTextureFactory) {
 					wpitemp = (*fp_createWindowProviderInfo)();
 					wtemp = (*fp_createWindow)();
 					ttfftemp = (*fp_createTTFontFactory)();
 					tftemp = (*fp_createTextureFactory)();
+
+					m_windowProviderInfo = sptr<IWindowProviderInfo>(wpitemp,*fp_destroyWindowProviderInfo);
+					m_window = sptr<IWindow>(wtemp, *fp_destroyWindow);
+					m_textureFactory = sptr<ITextureFactory>(tftemp,*fp_destroyTextureFactory);
+					m_ttfontFactory = sptr<ITTFontFactory>(ttfftemp,*fp_destroyTTFontFactory);
 				}
 			}
-			m_windowProviderInfo = sptr<IWindowProviderInfo>(wpitemp);
-			m_window = sptr<IWindow>(wtemp);
-			m_textureFactory = sptr<ITextureFactory>(tftemp);
-			m_ttfontFactory = sptr<ITTFontFactory>(ttfftemp);
 		}
 
 		BackendFactory::~BackendFactory() 

@@ -24,7 +24,7 @@ namespace lib
 
 		bool BackendLoader::load(const str & filename)
 		{
-			instance = LoadLibrary("bsfml.dll");
+			instance = LoadLibrary(filename.c_str());
 
 			if (instance) {
 				return true;
