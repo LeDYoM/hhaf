@@ -28,13 +28,7 @@ namespace loader
 	class LoadedInstancePrivate
 	{
 	public:
-		LoadedInstancePrivate() {}
-		~LoadedInstancePrivate() 
-		{
-			m_methods.clear();
-		}
-
-		void *m_sharedFileHandle;
+		void *m_sharedFileHandle{ nullptr };
 		map<string, void*> m_methods;
 	};
 
@@ -78,13 +72,14 @@ namespace loader
 
 	bool LoadedInstance::unload()
 	{
+		bool result{ false };
+
 		if (loaded()) {
-			bool result(freeSharedObject(m_private->m_sharedFileHandle));
-			m_private->m_sharedFileHandle = nullptr;
-			m_private->m_methods.clear();
-			return result;
+			result = freeSharedObject(m_private->m_sharedFileHandle);
 		}
-		return false;
+		m_private->m_sharedFileHandle = nullptr;
+		m_private->m_methods.clear();
+		return result;
 	}
 
 	void *LoadedInstance::loadedData() const
