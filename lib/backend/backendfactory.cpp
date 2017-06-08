@@ -3,6 +3,7 @@
 #include <lib/core/log.hpp>
 
 #include "interfaces.hpp"
+#include <loader/include/loader.hpp>
 
 namespace lib
 {
@@ -13,20 +14,23 @@ namespace lib
 		BackendFactory::BackendFactory()
 		{
 			logConstruct_NOPARAMS;
+			using namespace loader;
+			auto *loader(createLoader());
 			lib::backend::IWindowProviderInfo * wpitemp{ nullptr };
 			lib::backend::IWindow * wtemp{ nullptr };
 			lib::backend::ITTFontFactory *ttfftemp{ nullptr };
 			lib::backend::ITextureFactory *tftemp{ nullptr };
-			BackendLoader bloader;
-			if (bloader.load("bsfml")) {
-				auto fp_createWindowProviderInfo = (p_createWindowProviderInfo)bloader.loadFunc("createWindowProviderInfo");
-				auto fp_createWindow = (p_createWindow)bloader.loadFunc("createWindow");
-				auto fp_createTTFontFactory = (p_createTTFontFactory)bloader.loadFunc("createTTFontFactory");
-				auto fp_createTextureFactory = (p_createTextureFactory)bloader.loadFunc("createTextureFactory");
-				auto fp_destroyWindowProviderInfo = (p_destroyWindowProviderInfo)bloader.loadFunc("destroyWindowProviderInfo");
-				auto fp_destroyWindow = (p_destroyWindow)bloader.loadFunc("destroyWindow");
-				auto fp_destroyTTFontFactory = (p_destroyTTFontFactory)bloader.loadFunc("destroyTTFontFactory");
-				auto fp_destroyTextureFactory = (p_destroyTextureFactory)bloader.loadFunc("destroyTextureFactory");
+
+			static const char *sh_name = "bsfml";
+			if (loader->loadModule(sh_name)) {
+				auto fp_createWindowProviderInfo = (p_createWindowProviderInfo)loader->loadMethod(sh_name, "createWindowProviderInfo");
+				auto fp_createWindow = (p_createWindow)loader->loadMethod(sh_name, "createWindow");
+				auto fp_createTTFontFactory = (p_createTTFontFactory)loader->loadMethod(sh_name, "createTTFontFactory");
+				auto fp_createTextureFactory = (p_createTextureFactory)loader->loadMethod(sh_name, "createTextureFactory");
+				auto fp_destroyWindowProviderInfo = (p_destroyWindowProviderInfo)loader->loadMethod(sh_name, "destroyWindowProviderInfo");
+				auto fp_destroyWindow = (p_destroyWindow)loader->loadMethod(sh_name, "destroyWindow");
+				auto fp_destroyTTFontFactory = (p_destroyTTFontFactory)loader->loadMethod(sh_name, "destroyTTFontFactory");
+				auto fp_destroyTextureFactory = (p_destroyTextureFactory)loader->loadMethod(sh_name, "destroyTextureFactory");
 
 				if (fp_createWindowProviderInfo && fp_createWindow && fp_createTTFontFactory && fp_createTextureFactory &&
 					fp_destroyWindowProviderInfo && fp_destroyWindow && fp_destroyTTFontFactory && fp_destroyTextureFactory) {
@@ -51,10 +55,11 @@ namespace lib
 			m_textureFactory = nullptr;
 			m_ttfontFactory = nullptr;
 
+			loader::destroyLoader();
 			logDestruct_NOPARAMS;
 		}
 
-		bool BackendFactory::initilialize(const str&file)
+		bool BackendFactory::initilialize(const str&)
 		{
 			if (!m_instance) {
 				m_instance = new BackendFactory;
