@@ -8,14 +8,12 @@ file (GLOB _HEADERS "*.hpp")
 set (CURRENT_TARGET bsfml) 
 source_group("Sources" FILES ${_SOURCES})
 source_group("Headers" FILES ${_HEADERS})
-#source_group("Includes" FILES ${_INCLUDES})
-#set(CMAKE_DEBUG_POSTFIX  "d") 
+
 
 add_library(${CURRENT_TARGET} 
 	SHARED
 	${_SOURCES} 
 	${_HEADERS}
-#	${_INCLUDES}
 )
 
 #Patch for testing

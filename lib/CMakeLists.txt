@@ -75,3 +75,6 @@ source_group("lib\\board" FILES ${LIB_BOARD_HEADERS} ${LIB_BOARD_SOURCES})
 
 include_directories(${CURRENT_TARGET} ${LOADER_INCLUDE})
 target_link_libraries(${CURRENT_TARGET} PRIVATE loader)
+
+include_directories(${CURRENT_TARGET} ${MTYPES_INCLUDE})
+target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)

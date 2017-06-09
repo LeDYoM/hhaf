@@ -1,4 +1,4 @@
-#include "../include/types/str.hpp"
+#include "../include/str.hpp"
 #include <sstream>
 
 namespace lib

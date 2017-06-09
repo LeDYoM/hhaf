@@ -14,11 +14,14 @@ source_group("Source Files" FILES ${ZOPER_SOURCES})
 
 # Detect and add lib
 include_directories(..)
-target_link_libraries(${CURRENT_TARGET} lib)
+target_link_libraries(${CURRENT_TARGET} PRIVATE lib)
 
 #Temp
 include_directories(../backend_sfml)
-target_link_libraries(${CURRENT_TARGET} bsfml)
+target_link_libraries(${CURRENT_TARGET} PRIVATE bsfml)
+
+include_directories(${CURRENT_TARGET} ${MTYPES_INCLUDE})
+target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
 
 add_custom_command(TARGET ${CURRENT_TARGET} POST_BUILD
 	COMMAND ${CMAKE_COMMAND} -E copy_directory

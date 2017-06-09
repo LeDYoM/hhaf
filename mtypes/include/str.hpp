@@ -5,11 +5,10 @@
 
 #include <string>
 #include <vector>
-#include "../lib.hpp"
 
 namespace lib
 {
-	struct LIB_API inline_str
+	struct inline_str
 	{
 		inline_str(const char *_str, unsigned int _size) : str{_str}, size{_size} {}
 
@@ -18,7 +17,7 @@ namespace lib
 
 	};
 
-	class LIB_API str : public ::std::string
+	class str : public ::std::string
 	{
 	public:
 		using std::string::string;
