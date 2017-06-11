@@ -1,6 +1,6 @@
 project (mtypes)
 
-set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+#set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
 file (GLOB _SOURCES "src/*.cpp")
 #file (GLOB _HEADERS "*.hpp")
@@ -8,9 +8,6 @@ file (GLOB _SOURCES "src/*.cpp")
 file (GLOB _INCLUDES "include/*.hpp")
 
 set (CURRENT_TARGET mtypes) 
-source_group("Sources" FILES ${_SOURCES})
-#source_group("Headers" FILES ${_HEADERS})
-source_group("Includes" FILES ${_INCLUDES})
 
 add_library(${CURRENT_TARGET} 
 	SHARED 
@@ -18,6 +15,9 @@ add_library(${CURRENT_TARGET}
 	#${_HEADERS} 
 	${_INCLUDES}
 	)
+
+include(GenerateExportHeader)
+generate_export_header( ${CURRENT_TARGET})
 
 install (TARGETS ${CURRENT_TARGET} RUNTIME DESTINATION .)
 
