@@ -1,8 +1,8 @@
 #ifndef LIB_BACKEND_ITTFONTFACTORY_HPP
 #define LIB_BACKEND_ITTFONTFACTORY_HPP
 
-#include <lib/include/types.hpp>
-#include <lib/include/vector2d.hpp>
+#include <mtypes/include/types.hpp>
+#include <mtypes/include/vector2d.hpp>
 
 #include "ittfont.hpp"
 

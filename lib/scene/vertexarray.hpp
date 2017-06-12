@@ -1,8 +1,8 @@
 #ifndef LIB_DRAW_VERTEXARRAY_HPP
 #define LIB_DRAW_VERTEXARRAY_HPP
 
-#include <lib/include/types.hpp>
-#include <lib/include/rect.hpp>
+#include <mtypes/include/types.hpp>
+#include <mtypes/include/rect.hpp>
 #include <lib/scene/vertex.hpp>
 #include <vector>
 

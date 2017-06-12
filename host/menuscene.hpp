@@ -3,7 +3,7 @@
 
 #include "keymapping.hpp"
 #include <lib/gui/choosecontrolgroup.hpp>
-#include <lib/include/types.hpp>
+#include <mtypes/include/types.hpp>
 #include <lib/scene/nodes/nodequad.hpp>
 #include <lib/scene/scene.hpp>
 

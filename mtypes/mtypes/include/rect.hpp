@@ -4,7 +4,7 @@
 #pragma once
 
 #include "types.hpp"
-#include <lib/include/vector2d.hpp>
+#include "vector2d.hpp"
 
 namespace lib
 {

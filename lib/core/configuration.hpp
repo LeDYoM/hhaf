@@ -7,8 +7,8 @@
 #include <fstream>
 #include <functional>
 #include <vector>
-#include <lib/include/types.hpp>
-#include <lib/include/types/str.hpp>
+#include <mtypes/include/types.hpp>
+#include <mtypes/include/str.hpp>
 
 #include <sstream>
 

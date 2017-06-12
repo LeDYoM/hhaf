@@ -1,7 +1,7 @@
 #ifndef LIB_LOCKABLE_HPP__
 #define LIB_LOCKABLE_HPP__
 
-#include "types.hpp"
+#include <mtypes/include/types.hpp>
 
 #pragma once
 

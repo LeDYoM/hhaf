@@ -4,7 +4,7 @@
 #include <lib/scene/scenenode.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/core/host.hpp>
-#include <lib/include/logcl.hpp>
+#include <mtypes/include/logcl.hpp>
 #include "common.hpp"
 
 namespace zoper

@@ -1,7 +1,7 @@
 #ifndef __LIB_WINDOW_HPP__
 #define __LIB_WINDOW_HPP__
 
-#include <lib/include/types.hpp>
+#include <mtypes/include/types.hpp>
 #include "appservice.hpp"
 #include <lib/backend/iwindow.hpp>
 #include <lib/include/key.hpp>

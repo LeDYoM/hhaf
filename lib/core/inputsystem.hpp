@@ -1,7 +1,7 @@
 #ifndef LIB__INPUTSYSTEM_HPP__
 #define LIB__INPUTSYSTEM_HPP__
 
-#include <lib/include/types.hpp>
+#include <mtypes/include/types.hpp>
 #include <lib/include/key.hpp>
 #include "appservice.hpp"
 #include <list>

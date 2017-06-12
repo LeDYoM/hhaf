@@ -5,10 +5,11 @@
 
 #include <string>
 #include <vector>
+#include <mtypes_export.h>
 
 namespace lib
 {
-	struct inline_str
+	struct MTYPES_EXPORT inline_str
 	{
 		inline_str(const char *_str, unsigned int _size) : str{_str}, size{_size} {}
 
@@ -17,11 +18,9 @@ namespace lib
 
 	};
 
-	class str : public ::std::string
+	class MTYPES_EXPORT str : public ::std::string
 	{
 	public:
-		using std::string::string;
-
 		str() = default;
 		str(const inline_str &source) : std::string{ source.str } {}
 		str(const std::string &source) : std::string{ source } {}

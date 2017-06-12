@@ -1,9 +1,9 @@
 #ifndef LIB_BACKEND_ITTFONT_HPP
 #define LIB_BACKEND_ITTFONT_HPP
 
-#include <lib/include/types.hpp>
-#include <lib/include/vector2d.hpp>
-#include <lib/include/rect.hpp>
+#include <mtypes/include/types.hpp>
+#include <mtypes/include/vector2d.hpp>
+#include <mtypes/include/rect.hpp>
 #include "itexture.hpp"
 
 namespace lib

@@ -1,7 +1,7 @@
 #ifndef LIB_RANDOMIZER_HPP__
 #define LIB_RANDOMIZER_HPP__
 
-#include <lib/include/types.hpp>
+#include <mtypes/include/types.hpp>
 
 namespace lib
 {

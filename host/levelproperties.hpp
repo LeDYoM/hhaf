@@ -1,7 +1,7 @@
 #ifndef __LEVELPROPERTIES_HPP__
 #define __LEVELPROPERTIES_HPP__
 
-#include <lib/include/types.hpp>
+#include <mtypes/include/types.hpp>
 #include <lib/scene/color.hpp>
 
 namespace zoper

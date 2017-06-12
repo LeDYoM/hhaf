@@ -1,7 +1,7 @@
 #ifndef LIB_DEBUGSYSTEM_INCLUDE_HPP
 #define LIB_DEBUGSYSTEM_INCLUDE_HPP
 
-#include <lib/include/types.hpp>
+#include <mtypes/include/types.hpp>
 #include <lib/core/appservice.hpp>
 #include <lib/scene/components/debugvarscomponent.hpp>
 #include <lib/include/compconfig.hpp>

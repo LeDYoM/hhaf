@@ -1,8 +1,8 @@
 #ifndef __LIB_ITILESCONTROLLER_HPP__
 #define __LIB_ITILESCONTROLLER_HPP__
 
-#include <lib/include/types.hpp>
-#include <lib/include/vector2d.hpp>
+#include <mtypes/include/types.hpp>
+#include <mtypes/include/vector2d.hpp>
 #include <lib/include/properties.hpp>
 #include <lib/core/events/event.hpp>
 

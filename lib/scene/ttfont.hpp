@@ -1,8 +1,8 @@
 #ifndef LIB_DRAW_TTFONT_INCLUDE_HPP__
 #define LIB_DRAW_TTFONT_INCLUDE_HPP__
 
-#include <lib/include/types.hpp>
-#include <lib/include/rect.hpp>
+#include <mtypes/include/types.hpp>
+#include <mtypes/include/rect.hpp>
 #include <lib/scene/texture.hpp>
 #include <lib/backend/ittfont.hpp>
 

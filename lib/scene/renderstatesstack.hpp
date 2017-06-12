@@ -5,7 +5,7 @@
 
 #include "texture.hpp"
 
-#include <lib/include/types.hpp>
+#include <mtypes/include/types.hpp>
 #include <lib/scene/renderstates.hpp>
 
 #include <stack>

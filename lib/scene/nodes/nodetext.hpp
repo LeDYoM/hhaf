@@ -2,7 +2,7 @@
 #define _LIB_NODETEXT_HPP__
 
 #include <lib/scene/renderizable.hpp>
-#include <lib/include/types.hpp>
+#include <mtypes/include/types.hpp>
 
 namespace lib
 {

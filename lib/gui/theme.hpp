@@ -1,8 +1,8 @@
 #ifndef LIB_MENU_THEME_INCLUDE_HPP__
 #define LIB_MENU_THEME_INCLUDE_HPP__
 
-#include <lib/include/types.hpp>
-#include <lib/include/vector2d.hpp>
+#include <mtypes/include/types.hpp>
+#include <mtypes/include/vector2d.hpp>
 #include <lib/scene/color.hpp>
 #include <lib/scene/ttfont.hpp>
 

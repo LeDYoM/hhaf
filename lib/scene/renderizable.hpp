@@ -4,7 +4,7 @@
 #include "transformable.hpp"
 #include "color.hpp"
 #include <lib/scene/hasname.hpp>
-#include <lib/include/types.hpp>
+#include <mtypes/include/types.hpp>
 #include <lib/include/properties.hpp>
 #include "vertexarray.hpp"
 

@@ -1,7 +1,7 @@
 #ifndef LIB_COLOR_HPP
 #define LIB_COLOR_HPP
 
-#include <lib/include/types.hpp>
+#include <mtypes/include/types.hpp>
 #include <algorithm>
 
 namespace lib

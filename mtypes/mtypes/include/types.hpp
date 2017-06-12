@@ -8,7 +8,7 @@
 #include <vector>
 #include <iostream>
 
-#include "types/str.hpp"
+#include "str.hpp"
 
 namespace lib
 {

@@ -6,7 +6,7 @@
 #include "theme.hpp"
 #include "statescontroller.hpp"
 #include <vector>
-#include <lib/include/types.hpp>
+#include <mtypes/include/types.hpp>
 #include <lib/scene/scene.hpp>
 #include <lib/gui/optionmodel.hpp>
 

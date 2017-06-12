@@ -2,7 +2,7 @@
 #define __LIB_BOARDMODEL_HPP__
 
 #include <vector>
-#include <lib/include/types.hpp>
+#include <mtypes/include/types.hpp>
 #include "itilescontroller.hpp"
 #include <lib/scene/icomponent.hpp>
 

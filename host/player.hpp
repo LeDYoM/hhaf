@@ -4,7 +4,7 @@
 #include "gamebasetile.hpp"
 #include "direction.hpp"
 
-#include <lib/include/types.hpp>
+#include <mtypes/include/types.hpp>
 #include <lib/board/boardmodel.hpp>
 #include <functional>
 

@@ -20,7 +20,6 @@ target_link_libraries(${CURRENT_TARGET} PRIVATE lib)
 include_directories(../backend_sfml)
 target_link_libraries(${CURRENT_TARGET} PRIVATE bsfml)
 
-include_directories(${CURRENT_TARGET} ${MTYPES_INCLUDE})
 target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
 
 add_custom_command(TARGET ${CURRENT_TARGET} POST_BUILD

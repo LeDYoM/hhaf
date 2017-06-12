@@ -4,7 +4,7 @@
 #pragma once
 
 #include <vector>
-#include <lib/include/types.hpp>
+#include <mtypes/include/types.hpp>
 #include <lib/scene/scene.hpp>
 
 namespace lib

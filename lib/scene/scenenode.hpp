@@ -3,9 +3,9 @@
 
 #pragma once
 
-#include <lib/include/types.hpp>
-#include <lib/include/vector2d.hpp>
-#include <lib/include/containers/vsp.hpp>
+#include <mtypes/include/types.hpp>
+#include <mtypes/include/vector2d.hpp>
+#include <mtypes/include/containers/vsp.hpp>
 #include <lib/scene/transformable.hpp>
 #include <lib/scene/color.hpp>
 #include <lib/scene/hasname.hpp>

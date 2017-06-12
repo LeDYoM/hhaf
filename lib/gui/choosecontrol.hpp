@@ -1,7 +1,7 @@
 #ifndef LIB_GUI_CHOOSECONTROL_HPP__
 #define LIB_GUI_CHOOSECONTROL_HPP__
 
-#include <lib/include/types.hpp>
+#include <mtypes/include/types.hpp>
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/nodes/nodetext.hpp>
 #include <lib/scene/nodes/discretetext.hpp>

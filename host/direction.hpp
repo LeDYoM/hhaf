@@ -1,9 +1,9 @@
 #ifndef __DIRECTION_HPP__
 #define __DIRECTION_HPP__
 
-#include <lib/include/types.hpp>
-#include <lib/include/vector2d.hpp>
-#include <lib/include/logcl.hpp>
+#include <mtypes/include/types.hpp>
+#include <mtypes/include/vector2d.hpp>
+#include <mtypes/include/logcl.hpp>
 
 namespace zoper
 {

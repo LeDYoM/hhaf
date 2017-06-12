@@ -6,7 +6,7 @@
 #include "hasname.hpp"
 #include "scenenode.hpp"
 
-#include <lib/include/types.hpp>
+#include <mtypes/include/types.hpp>
 #include <lib/core/timer.hpp>
 #include <lib/core/events/event.hpp>
 #include <lib/core/events/eventreceiver.hpp>

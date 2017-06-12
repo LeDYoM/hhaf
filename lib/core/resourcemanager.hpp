@@ -1,7 +1,7 @@
 #ifndef __LIB_RESOURCEMANAGER_HPP__
 #define __LIB_RESOURCEMANAGER_HPP__
 
-#include <lib/include/types.hpp>
+#include <mtypes/include/types.hpp>
 #include "configuration.hpp"
 #include "appservice.hpp"
 #include <list>

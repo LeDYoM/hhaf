@@ -2,7 +2,7 @@
 #define LIB_GUI_DISCRETETEXT_INCLUDE_HPP__
 
 #include <lib/scene/renderizable.hpp>
-#include <lib/include/types.hpp>
+#include <mtypes/include/types.hpp>
 #include <lib/scene/nodes/nodetext.hpp>
 
 namespace lib

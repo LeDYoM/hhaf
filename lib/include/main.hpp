@@ -2,7 +2,7 @@
 #define __LIB_MAIN_HPP__
 
 #include "compconfig.hpp"
-#include "types.hpp"
+#include <mtypes/include/types.hpp>
 #include "iapp.hpp"
 
 namespace lib

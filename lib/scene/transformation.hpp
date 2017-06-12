@@ -1,8 +1,8 @@
 #ifndef LIB_TRANSFORMATION_INCLUDE_HPP__
 #define LIB_TRANSFORMATION_INCLUDE_HPP__
 
-#include <lib/include/vector2d.hpp>
-#include <lib/include/rect.hpp>
+#include <mtypes/include/vector2d.hpp>
+#include <mtypes/include/rect.hpp>
 
 namespace lib
 {

@@ -4,8 +4,8 @@
 #include <SFML/Window/Window.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 
-#include <lib/include/types.hpp>
-#include <lib/include/vector2d.hpp>
+#include <mtypes/include/types.hpp>
+#include <mtypes/include/vector2d.hpp>
 #include <lib/scene/vertexarray.hpp>
 #include <lib/scene/renderstatesstack.hpp>
 #include <lib/include/iapp.hpp>

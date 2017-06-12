@@ -1,6 +1,6 @@
 #include "log.hpp"
 #include <lib/include/compconfig.hpp>
-#include <lib/include/types/str.hpp>
+#include <mtypes/include/str.hpp>
 
 #ifdef USE_LOGS
 
