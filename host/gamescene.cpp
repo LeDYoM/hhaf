@@ -6,7 +6,7 @@
 #include <mtypes/include/types.hpp>
 #include <lib/board/boardmodel.hpp>
 #include <lib/board/itilescontroller.hpp>
-#include <mtypes/include/logcl.hpp>
+#include <lib/include/logcl.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/core/randomizer.hpp>
 #include <lib/scene/renderizable.hpp>

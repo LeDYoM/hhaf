@@ -22,6 +22,8 @@ include_directories ("../lib/backend")
 include_directories ("..")
 target_link_libraries(${CURRENT_TARGET} PRIVATE lib)
 
+target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
+
 # Detect and add SFML
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 set (SFML_ROOT "${CMAKE_SOURCE_DIR}/SFML")
