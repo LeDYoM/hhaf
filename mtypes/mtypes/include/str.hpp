@@ -18,8 +18,12 @@ namespace lib
 
 	};
 
+// Temporary code
+#pragma warning(push)
+#pragma warning(disable:4251)
 	class MTYPES_EXPORT str : public ::std::string
 	{
+#pragma warning(pop)
 	public:
 		str() = default;
 		str(const inline_str &source) : std::string{ source.str } {}

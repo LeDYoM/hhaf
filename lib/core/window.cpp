@@ -34,7 +34,7 @@ namespace lib
 
 		void Window::draw(const scene::VertexArray & va, const scene::RenderStates& rs)
 		{
-			m_wPrivate->m_backendWindow->draw(va, rs);
+			m_wPrivate->m_backendWindow->draw(&(va.verticesArray()[0]), va.verticesArray().size(), va.primitiveType(), rs);
 		}
 
 		bool Window::arePendingKeyPresses() const

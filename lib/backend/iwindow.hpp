@@ -4,14 +4,15 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
 #include <mtypes/include/rect.hpp>
+#include <lib/scene/vertex.hpp>
 #include <lib/include/key.hpp>
+#include <lib/scene/vertexarray.hpp>
 
 namespace lib
 {
 	struct WindowCreationParams;
 	namespace scene
 	{
-		class VertexArray;
 		class RenderStates;
 	}
 	namespace backend
@@ -23,7 +24,7 @@ namespace lib
 			virtual ~IWindow() {}
 
 			virtual bool createWindow(const WindowCreationParams &wcp) = 0;
-			virtual void draw(const scene::VertexArray &vertices, const scene::RenderStates& states) = 0;
+			virtual void draw(const scene::Vertex *vertices, const u32 nVertex, const scene::PrimitiveType pType, const scene::RenderStates& states) = 0;
 
 			virtual void setViewport(const Rectf32 &nviewport) = 0;
 			virtual Rectf32 viewPort() const = 0;

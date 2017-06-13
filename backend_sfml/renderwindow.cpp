@@ -36,10 +36,10 @@ namespace lib
 				return Window::getSize();
 			}
 
-			void RenderWindow::draw(const scene::VertexArray & vertices, const scene::RenderStates& states)
+			void RenderWindow::draw(const scene::Vertex *vertices, const u32 nVertex, const scene::PrimitiveType pType, const scene::RenderStates& states)
 			{
-				RenderTarget::draw((const sf::Vertex*)vertices.verticesArray().data(), vertices.verticesArray().size(),
-					static_cast<sf::PrimitiveType>(vertices.primitiveType()),
+				RenderTarget::draw((const sf::Vertex*)vertices, nVertex,
+					static_cast<sf::PrimitiveType>(pType),
 					asRenderStates(states));
 			}
 
