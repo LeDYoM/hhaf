@@ -7,7 +7,7 @@
 #include <lib/scene/vertex.hpp>
 #include <lib/include/key.hpp>
 #include <lib/scene/vertexarray.hpp>
-#include <lib/backend/itexture.hpp>
+#include "itexture.hpp"
 
 namespace lib
 {
