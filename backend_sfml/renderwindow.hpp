@@ -7,7 +7,6 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
 #include <lib/scene/vertexarray.hpp>
-#include <lib/scene/renderstatesstack.hpp>
 #include <lib/include/iapp.hpp>
 #include <lib/backend/iwindow.hpp>
 
@@ -28,7 +27,7 @@ namespace lib
 				bool createWindow(const WindowCreationParams &wcp) override;
 				sf::Vector2u getSize() const override;
 				bool activate(bool active = true) override { return setActive(active); }
-				void draw(const scene::Vertex *vertices, const u32 nVertex, const scene::PrimitiveType pType, const scene::RenderStates& states) override;
+				void draw(const scene::Vertex *vertices, const u32 nVertex, const scene::PrimitiveType pType, const f32 *transform, const ITexture *texture) override;
 
 				void setViewport(const Rectf32 &nviewport) override;
 				Rectf32 viewPort() const override;

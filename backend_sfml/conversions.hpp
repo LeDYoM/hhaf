@@ -3,7 +3,7 @@
 #include <lib/core/inputsystem.hpp>
 #include <lib/include/key.hpp>
 #include <lib/scene/transformation.hpp>
-
+#include <lib/scene/texture.hpp>
 #include <lib/backend/itexture.hpp>
 #include "texture.hpp"
 #include "texturettfont.hpp"
@@ -49,27 +49,24 @@ namespace lib
 
 			}
 
-			inline const sf::Texture *const asTexture(const scene::Texture*texture)
+			inline const sf::Texture *const asTexture(const ITexture*t)
 			{
-				if (texture) {
-					ITexture*t = texture->backEndTexture().get();
-					if (t) {
-						if (auto tmp = dynamic_cast<Texture*>(t)) {
-							return &(tmp->backEndTexture());
-						}
-						if (auto tmp = dynamic_cast<TextureTTFont*>(t)) {
-							return &(tmp->backEndTexture());
-						}
+				if (t) {
+					if (auto tmp = dynamic_cast<const Texture*>(t)) {
+						return &(tmp->backEndTexture());
+					}
+					if (auto tmp = dynamic_cast<const TextureTTFont*>(t)) {
+						return &(tmp->backEndTexture());
 					}
 				}
 				return nullptr;
 			}
 
-			inline const sf::RenderStates asRenderStates(const scene::RenderStates &renderStates)
+			inline const sf::RenderStates asRenderStates(const f32 *matrix, const ITexture *texture)
 			{
 				return sf::RenderStates(sf::RenderStates::Default.blendMode,
-					asTransform(renderStates.m_transform.getMatrix()),
-					asTexture(renderStates.m_texture),
+					asTransform(matrix),
+					asTexture(texture),
 					nullptr);
 			}
 		}
