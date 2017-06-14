@@ -1,13 +1,17 @@
 project (mtypes)
 
 #set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
-set (CURRENT_TARGET mtypes) 
 
 file (GLOB _SOURCES "src/*.cpp")
 file (GLOB _HEADERS "*.hpp")
  
 file (GLOB _INCLUDES "mtypes/include/*.hpp")
 
+set (CURRENT_TARGET mtypes) 
+
+message("A ${_SOURCES}")
+message("B ${_HEADERS}")
+message("C ${_INCLUDES}")
 add_library(${CURRENT_TARGET} 
 	SHARED 
 	${_SOURCES}
