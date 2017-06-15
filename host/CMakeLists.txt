@@ -1,8 +1,9 @@
+project(host)
 
 include_directories (${LIB_BASE_DIRECTORY})
 
-file (GLOB ZOPER_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/*.hpp")
-file (GLOB ZOPER_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp")
+file (GLOB ZOPER_HEADERS "*.hpp")
+file (GLOB ZOPER_SOURCES "*.cpp")
 
 set (CURRENT_TARGET host)
 
@@ -15,10 +16,6 @@ source_group("Source Files" FILES ${ZOPER_SOURCES})
 # Detect and add lib
 include_directories(..)
 target_link_libraries(${CURRENT_TARGET} PRIVATE lib)
-
-#Temp
-include_directories(../backend_sfml)
-target_link_libraries(${CURRENT_TARGET} PRIVATE bsfml)
 
 target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
 

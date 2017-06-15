@@ -20,8 +20,6 @@ file (GLOB LIB_CORE_EVENTS_SOURCES "core/events/*.cpp")
 
 file (GLOB LIB_BACKEND_HEADERS "backend/*.hpp")
 file (GLOB LIB_BACKEND_SOURCES "backend/*.cpp")
-file (GLOB LIB_BACKEND_SFML_IMPL_HEADERS "backend/sfml/*.hpp")
-file (GLOB LIB_BACKEND_SFML_IMPL_SOURCES "backend/sfml/*.cpp")
 
 set (SCENE_NAMESPACEBASE_DIRECTORY "scene")
 file (GLOB LIB_SCENE_HEADERS "${SCENE_NAMESPACEBASE_DIRECTORY}/*.hpp")
@@ -61,10 +59,7 @@ add_library(${CURRENT_TARGET} STATIC ${LIB_HEADERS} ${LIB_SOURCES})
 
 # Define source groups for lib
 source_group("lib\\include" FILES ${LIB_INCLUDE_HEADERS})
-source_group("lib\\containers" FILES ${LIB_CONTAINERS_HEADERS} ${LIB_CONTAINERS_SOURCES})
-source_group("lib\\types" FILES ${LIB_TYPES_HEADERS} ${LIB_TYPES_SOURCES})
 source_group("lib\\backend" FILES ${LIB_BACKEND_HEADERS} ${LIB_BACKEND_SOURCES})
-source_group("lib\\backend\\sfml" FILES ${LIB_BACKEND_SFML_IMPL_HEADERS} ${LIB_BACKEND_SFML_IMPL_SOURCES})
 source_group("lib\\core" FILES ${LIB_CORE_HEADERS} ${LIB_CORE_SOURCES})
 source_group("lib\\core\\events" FILES ${LIB_CORE_EVENTS_HEADERS} ${LIB_CORE_EVENTS_SOURCES})
 source_group("lib\\scene" FILES ${LIB_SCENE_HEADERS} ${LIB_SCENE_SOURCES})
@@ -73,7 +68,5 @@ source_group("lib\\scene\\components" FILES ${LIB_SCENE_COMPONENTS_HEADERS} ${LI
 source_group("lib\\gui" FILES ${LIB_GUI_HEADERS} ${LIB_GUI_SOURCES})
 source_group("lib\\board" FILES ${LIB_BOARD_HEADERS} ${LIB_BOARD_SOURCES})
 
-include_directories(${CURRENT_TARGET} ${LOADER_INCLUDE})
 target_link_libraries(${CURRENT_TARGET} PRIVATE loader)
-
 target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)

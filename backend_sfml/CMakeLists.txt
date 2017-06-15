@@ -3,12 +3,7 @@ project (bsfml)
 file (GLOB _SOURCES "*.cpp")
 file (GLOB _HEADERS "*.hpp")
  
-#file (GLOB _INCLUDES "include/*.hpp")
-
 set (CURRENT_TARGET bsfml) 
-source_group("Sources" FILES ${_SOURCES})
-source_group("Headers" FILES ${_HEADERS})
-
 
 add_library(${CURRENT_TARGET} 
 	SHARED
@@ -20,8 +15,8 @@ add_library(${CURRENT_TARGET}
 #TO DO: Remove it (use a variable)
 include_directories ("../lib/backend")
 include_directories ("..")
-target_link_libraries(${CURRENT_TARGET} PRIVATE lib)
 
+target_link_libraries(${CURRENT_TARGET} PRIVATE lib)
 target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
 
 # Detect and add SFML
@@ -41,7 +36,4 @@ add_custom_command(TARGET ${CURRENT_TARGET} POST_BUILD
 	${SFML_ROOT}/bin/$<CONFIGURATION>
 	$<TARGET_FILE_DIR:${CURRENT_TARGET}>)
 
-#install (TARGETS ${CURRENT_TARGET} RUNTIME DESTINATION .)
-
-#set(LOADER_INCLUDE "${PROJECT_SOURCE_DIR}/include" PARENT_SCOPE)
-#message("loader include directory: " ${LOADER_INCLUDE})
+install (TARGETS ${CURRENT_TARGET} RUNTIME DESTINATION .)
