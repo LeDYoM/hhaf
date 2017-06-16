@@ -556,7 +556,7 @@ namespace zoper
 		f32 currenty{};
 		for (u32 y = 0; y < _gameData.size.y; ++y)
 		{
-			std::vector<sptr<NodeQuad>> column;
+			vector<sptr<NodeQuad>> column;
 			column.reserve(_gameData.size.x);
 
 			for (u32 x = 0; x < _gameData.size.x; ++x) {

@@ -6,8 +6,6 @@
 #include <mtypes/include/types.hpp>
 #include <lib/include/iapp.hpp>
 
-#include <vector>
-
 namespace lib
 {
 	namespace input
@@ -44,7 +42,7 @@ namespace lib
 			void addScene(sptr<scene::Scene> newScene);
 			void setScene(const str &name);
 
-			void addScenes(std::vector<sptr<scene::Scene>> &&sceneVector);
+			void addScenes(vector<sptr<scene::Scene>> &&sceneVector);
 			sptr<scene::Scene> getSceneByName(const str &name) const;
 
 			void exitProgram();
@@ -84,10 +82,10 @@ namespace lib
 			uptr<DebugSystem> m_debugSystem{ nullptr };
 			uptr<input::InputSystem> m_inputSystem{ nullptr };
 			bool exit{ false };
-			std::vector<sptr<scene::Scene>> m_scenes;
+			vector<sptr<scene::Scene>> m_scenes;
 			sptr<scene::Scene> m_currentScene{ nullptr };
 			sptr<scene::Scene> m_nextScene{ nullptr };
-			std::vector<str> m_params;
+			vector<str> m_params;
 			uptr<scene::RenderStatesStack> m_renderStates;
 		};
 	}

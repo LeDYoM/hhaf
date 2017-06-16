@@ -6,7 +6,6 @@
 #include <map>
 #include <fstream>
 #include <functional>
-#include <vector>
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
 

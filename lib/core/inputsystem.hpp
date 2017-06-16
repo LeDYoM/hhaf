@@ -26,13 +26,13 @@ namespace lib
 			void preUpdate();
 			void postUpdate();
 		private:
-			const std::vector<Key> &pressedKeys() const noexcept;
-			const std::vector<Key> &releasedKeys() const noexcept;
+			const vector<Key> &pressedKeys() const noexcept;
+			const vector<Key> &releasedKeys() const noexcept;
 			const KeyStates &keyStates() const noexcept { return m_keyStates; }
 			friend class lib::scene::InputComponent;
 			KeyStates m_keyStates;
-			std::vector<Key> m_pressedKeys;
-			std::vector<Key> m_releasedKeys;
+			vector<Key> m_pressedKeys;
+			vector<Key> m_releasedKeys;
 		};
 	}
 }

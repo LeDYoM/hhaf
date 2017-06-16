@@ -43,12 +43,12 @@ namespace lib
 			m_pressedKeys.clear();
 			m_releasedKeys.clear();
 		}
-		const std::vector<Key>& InputSystem::pressedKeys() const noexcept
+		const vector<Key>& InputSystem::pressedKeys() const noexcept
 		{
 			return m_pressedKeys;
 		}
 
-		const std::vector<Key>& InputSystem::releasedKeys() const noexcept
+		const vector<Key>& InputSystem::releasedKeys() const noexcept
 		{
 			return m_releasedKeys;
 		}

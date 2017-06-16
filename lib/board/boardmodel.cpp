@@ -23,7 +23,7 @@ namespace lib
 			logDebug("BoardModelComponent initialize with size: ", size);
 			_tiles.reserve(size.x);
 			for (auto x = 0u; x < size.x; ++x) {
-				//				std::vector<SITilePointer> column(size.y);
+				//				vector<SITilePointer> column(size.y);
 				_tiles.emplace_back(size.y);
 			}
 			_tiles.shrink_to_fit();

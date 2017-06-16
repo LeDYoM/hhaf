@@ -27,7 +27,7 @@ namespace zoper
 
 		void MainMenu::configure()
 		{
-			options = std::vector<std::vector<OptionModel>>
+			options = vector<vector<OptionModel>>
 			{
 				// Main menu
 				{
@@ -53,8 +53,8 @@ namespace zoper
 				}
 			};
 
-			onSelected = std::function<const OptionModelIndex(const std::vector<u32> &indices)>(
-				[this](const std::vector<u32> &indices)
+			onSelected = std::function<const OptionModelIndex(const vector<u32> &indices)>(
+				[this](const vector<u32> &indices)
 			{
 				switch (indices[0])
 				{

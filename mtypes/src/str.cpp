@@ -11,9 +11,9 @@ namespace lib
 	str::str(const float n) : std::string{ std::to_string(n) } {}
 	str::str(const double n) : std::string{ std::to_string(n) } {}
 
-	std::vector<str> str::split(const char separator) const
+	vector<str> str::split(const char separator) const
 	{
-		std::vector<str> result;
+		vector<str> result;
 		std::stringstream ss(*this);
 		str tok;
 

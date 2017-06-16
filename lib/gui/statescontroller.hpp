@@ -3,7 +3,6 @@
 
 #pragma once
 
-#include <vector>
 #include <mtypes/include/types.hpp>
 #include <lib/scene/scene.hpp>
 

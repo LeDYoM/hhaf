@@ -7,7 +7,6 @@
 #include <lib/scene/nodes/discretetext.hpp>
 #include <lib/scene/nodes/nodeshape.hpp>
 #include "optionmodel.hpp"
-#include <vector>
 #include <functional>
 
 namespace lib
@@ -33,7 +32,7 @@ namespace lib
 			void create() override;
 
 			Property<Rectf32> box;
-			using CompleteOptionModel = std::vector<OptionModel>;
+			using CompleteOptionModel = vector<OptionModel>;
 			Property<CompleteOptionModel> optionModel;
 			const OptionModelIndex currentSelection() const noexcept;
 

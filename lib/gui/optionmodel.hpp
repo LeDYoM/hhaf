@@ -2,7 +2,6 @@
 #define LIB_GUI_OPTIONS_MODEL_INCLUDE_HPP__
 
 #include <mtypes/include/types.hpp>
-#include <vector>
 #include <functional>
 #include <initializer_list>
 
@@ -10,7 +9,7 @@ namespace lib
 {
 	namespace gui
 	{
-		class OptionModelIndex : public std::vector<u32>
+		class OptionModelIndex : public vector<u32>
 		{
 		public:
 			OptionModelIndex() = default;
@@ -19,9 +18,9 @@ namespace lib
 			OptionModelIndex& operator=(OptionModelIndex&&) = default;
 			OptionModelIndex& operator=(const OptionModelIndex&) = default;
 
-			constexpr OptionModelIndex(std::initializer_list<u32> il) : std::vector<u32>{ std::move(il) } {}
-			constexpr OptionModelIndex(const std::vector<u32>&rhs) : std::vector<u32>{ rhs } {}
-			constexpr OptionModelIndex(std::vector<u32>&&rhs) : std::vector<u32>{ std::move(rhs) } {}
+			constexpr OptionModelIndex(std::initializer_list<u32> il) : vector<u32>{ std::move(il) } {}
+			constexpr OptionModelIndex(const vector<u32>&rhs) : vector<u32>{ rhs } {}
+			constexpr OptionModelIndex(vector<u32>&&rhs) : vector<u32>{ std::move(rhs) } {}
 
 		};
 

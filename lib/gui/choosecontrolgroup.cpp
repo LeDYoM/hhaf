@@ -96,8 +96,8 @@ namespace lib
 
 		const OptionModelIndex ChooseControlGroup::currentSelection() const noexcept
 		{
-			std::vector<u32> temp{ m_sController->activeNodeIndex() };
-			std::vector<u32> controlSelection{m_sController->activeNode()->snCast<ChooseControl>()->currentSelection() };
+			vector<u32> temp{ m_sController->activeNodeIndex() };
+			vector<u32> controlSelection{m_sController->activeNode()->snCast<ChooseControl>()->currentSelection() };
 			temp.reserve(temp.size() + controlSelection.size());
 			temp.insert(temp.end(), controlSelection.begin(), controlSelection.end());
 			return temp;

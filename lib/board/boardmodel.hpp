@@ -1,7 +1,6 @@
 #ifndef __LIB_BOARDMODEL_HPP__
 #define __LIB_BOARDMODEL_HPP__
 
-#include <vector>
 #include <mtypes/include/types.hpp>
 #include "itilescontroller.hpp"
 #include <lib/scene/icomponent.hpp>
@@ -31,7 +30,7 @@ namespace lib
 
 		private:
 			void _setTile(const vector2du32 &position, SITilePointer newTile);
-			std::vector<std::vector<SITilePointer>> _tiles;
+			vector<vector<SITilePointer>> _tiles;
 		};
 	}
 }

@@ -21,7 +21,7 @@ namespace lib
 	{
 		auto transformParams(int argc, char *argv[])
 		{
-			std::vector<str> temp;
+			vector<str> temp;
 
 			for (int i = 1; i<argc; ++i) {
 				temp.push_back(argv[i]);
@@ -226,7 +226,7 @@ namespace lib
 			}
 		}
 
-		void Host::addScenes(std::vector<sptr<scene::Scene>>&& sceneVector)
+		void Host::addScenes(vector<sptr<scene::Scene>>&& sceneVector)
 		{
 			for (auto &scene : sceneVector) {
 				addScene(std::move(scene));

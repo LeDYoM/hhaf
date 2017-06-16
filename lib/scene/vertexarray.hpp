@@ -4,13 +4,12 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/rect.hpp>
 #include <lib/scene/vertex.hpp>
-#include <vector>
 
 namespace lib
 {
 	namespace scene
 	{
-		using BasicVertexArray = std::vector<Vertex>;
+		using BasicVertexArray = vector<Vertex>;
 
 		enum PrimitiveType
 		{

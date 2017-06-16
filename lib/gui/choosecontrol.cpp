@@ -37,8 +37,8 @@ namespace lib
 
 		const OptionModelIndex ChooseControl::currentSelection() const noexcept
 		{
-			std::vector<u32> lineSelection{ lines[selectedItem()]->currentSelection() };
-			std::vector<u32> temp{ selectedItem() };
+			vector<u32> lineSelection{ lines[selectedItem()]->currentSelection() };
+			vector<u32> temp{ selectedItem() };
 			temp.reserve(temp.size() + lineSelection.size());
 			if (!lineSelection.empty())
 				temp.insert(temp.end(), lineSelection.begin(), lineSelection.end());

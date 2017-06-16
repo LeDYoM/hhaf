@@ -4,8 +4,8 @@
 #define LIB_STR_INCLUDE_HPP
 
 #include <string>
-#include <vector>
 #include "mtypes_export.h"
+#include "vector.hpp"
 
 namespace lib
 {
@@ -36,7 +36,7 @@ namespace lib
 		str(const float n);
 		str(const double n);
 
-		std::vector<str> split(const char separator) const;
+		vector<str> split(const char separator) const;
 		str &append() { return *this; }
 		str &append(const char c);
 		str &append(const unsigned int n);
@@ -63,7 +63,7 @@ namespace lib
 
 	static_assert(std::is_move_constructible_v<str>, "str must be movable");
 	static_assert(std::is_move_assignable_v<str>, "str must be movable");
-	using string_vector = std::vector<str>;
+	using string_vector = vector<str>;
 }
 
 #endif

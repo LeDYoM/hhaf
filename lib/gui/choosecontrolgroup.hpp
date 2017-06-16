@@ -5,7 +5,6 @@
 
 #include "theme.hpp"
 #include "statescontroller.hpp"
-#include <vector>
 #include <mtypes/include/types.hpp>
 #include <lib/scene/scene.hpp>
 #include <lib/gui/optionmodel.hpp>
@@ -27,7 +26,7 @@ namespace lib
 			Property<Rectf32> box;
 			void setTheme(const Theme &theme) { m_theme = theme; }
 
-			Property<std::vector<std::vector<OptionModel>>> options;
+			Property<vector<vector<OptionModel>>> options;
 			std::function<const OptionModelIndex(const OptionModelIndex&)> onSelected;
 			const OptionModelIndex currentSelection() const noexcept;
 
