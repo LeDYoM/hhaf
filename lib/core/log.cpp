@@ -39,7 +39,7 @@ void commitLog()
 #endif
 
 #ifdef USE_COUT_FOR_LOGS
-	std::cout << outstr;
+	std::cout << outstr.c_str();
 #endif
 
 #ifdef USE_IDE_CONSOLE_FOR_LOGS

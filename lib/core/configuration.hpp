@@ -77,7 +77,7 @@ namespace lib
 		}
 
 		const str &getstr() const noexcept { return m_data; }
-		bool empty() const noexcept { return m_data == ""; }
+		bool empty() const noexcept { return m_data.empty(); }
 	private:
 		str m_data;
 

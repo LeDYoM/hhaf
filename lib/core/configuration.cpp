@@ -31,7 +31,7 @@ namespace lib
 
 			if (file[0] != ':') {
 				logDebug("Trying to read file");
-				std::ifstream f(currentFile);
+				std::ifstream f(currentFile.c_str());
 
 				if (f.is_open()) {
 					while (f) {
@@ -59,7 +59,7 @@ namespace lib
 
 	bool Configuration::configFileExists(const str &file)
 	{
-		std::ifstream f(file);
+		std::ifstream f(file.c_str());
 		return f.is_open();
 	}
 
@@ -84,12 +84,12 @@ namespace lib
 		__ASSERT(!currentFile.empty(), "Empty file name");
 		__ASSERT(currentFile[0] != ':', "Cannot save memory streams");
 		logDebug("Saving configuration file ", currentFile);
-		std::ofstream f(currentFile);
+		std::ofstream f(currentFile.c_str());
 
 		if (f.is_open())
 		{
 			for_each_property([&f](const CMapLine &line) {
-				f << line.first << "=" << line.second->getstr() << std::endl;
+				f << line.first.c_str() << "=" << line.second->getstr().c_str() << std::endl;
 				logDebug("Written: ", line.first, "=", line.second->getstr());
 			});
 			return true;
