@@ -99,7 +99,7 @@ namespace lib
 			vector<u32> temp{ m_sController->activeNodeIndex() };
 			vector<u32> controlSelection{m_sController->activeNode()->snCast<ChooseControl>()->currentSelection() };
 			temp.reserve(temp.size() + controlSelection.size());
-			temp.insert(temp.end(), controlSelection.begin(), controlSelection.end());
+			temp.insert(std::move(controlSelection));
 			return temp;
 		}
 

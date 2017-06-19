@@ -18,15 +18,16 @@ namespace lib
 			OptionModelIndex& operator=(OptionModelIndex&&) = default;
 			OptionModelIndex& operator=(const OptionModelIndex&) = default;
 
-			constexpr OptionModelIndex(std::initializer_list<u32> il) : vector<u32>{ std::move(il) } {}
-			constexpr OptionModelIndex(const vector<u32>&rhs) : vector<u32>{ rhs } {}
-			constexpr OptionModelIndex(vector<u32>&&rhs) : vector<u32>{ std::move(rhs) } {}
+			OptionModelIndex(std::initializer_list<u32> il) : vector<u32>{ std::move(il) } {}
+			OptionModelIndex(const vector<u32>&rhs) : vector<u32>{ rhs } {}
+			OptionModelIndex(vector<u32>&&rhs) : vector<u32>{ std::move(rhs) } {}
 
 		};
 
 		class OptionModel
 		{
 		public:
+			OptionModel() = default;
 			explicit OptionModel(str text, string_vector subOptionsLabels = {}, OptionModelIndex next = {})
 				: text{ std::move(text) }, subOptionsLabels{ std::move(subOptionsLabels) }, next{std::move(next)} {}
 			constexpr OptionModel(const OptionModel&rhs) = default;

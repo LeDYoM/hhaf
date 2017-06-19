@@ -137,7 +137,7 @@ namespace zoper
 		lib::sptr<TextQuad> m_goalQuad;
 		lib::sptr<lib::scene::SceneNode> m_gameOverText;
 		lib::sptr<lib::scene::nodes::NodeText> m_pauseText;
-		vector<vector<lib::sptr<lib::scene::nodes::NodeQuad>>> m_backgroundTiles;
+		lib::vector<lib::vector<lib::sptr<lib::scene::nodes::NodeQuad>>> m_backgroundTiles;
 	};
 }
 

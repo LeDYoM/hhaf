@@ -45,7 +45,7 @@ namespace lib
 					}
 
 					if (animsFinished) {
-						m_private->m_animations.erase(std::remove(m_private->m_animations.begin(), m_private->m_animations.end(), nullptr), m_private->m_animations.end());
+						m_private->m_animations.remove_values(nullptr);
 					}
 				}
 			}

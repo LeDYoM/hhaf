@@ -41,7 +41,7 @@ namespace lib
 			vector<u32> temp{ selectedItem() };
 			temp.reserve(temp.size() + lineSelection.size());
 			if (!lineSelection.empty())
-				temp.insert(temp.end(), lineSelection.begin(), lineSelection.end());
+				temp.insert(std::move(lineSelection));
 			return temp;
 		}
 
