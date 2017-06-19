@@ -12,7 +12,11 @@ namespace lib
 //		Texture::Texture() = default;
 		Texture::Texture(sptr<backend::ITexture> texture) : m_texturePrivate{ std::move(texture) } {}
 
-		Texture::~Texture() = default;
+		Texture::~Texture() {
+			m_texturePrivate = nullptr;
+			int b = 0;
+			b;
+		}
 
 		bool Texture::loadFromFile(const str& filename)
 		{

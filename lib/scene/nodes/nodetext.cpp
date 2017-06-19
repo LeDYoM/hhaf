@@ -125,8 +125,12 @@ namespace lib
 				}
 
 				// Update the bounding rectangle
+				if (name() == "goalnode_2") {
+					int c = 0;
+					c;
+				}
 				m_vertices.setBounds({ minX, minY, maxX - minX, maxY - minY });
-				texture.set((font()->getTexture(characterSize())));
+				texture = font()->getTexture(characterSize());
 				color.update();
 				updateAlignmentX();
 				updateAlignmentY();

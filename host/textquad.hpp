@@ -10,7 +10,8 @@ namespace zoper
 	{
 	public:
 		TextQuad(lib::scene::SceneNode *parent, lib::str name, lib::sptr<lib::scene::TTFont> font, lib::u32 characterSize, const lib::scene::Color &color, const lib::Rectf32 &box);
-		virtual ~TextQuad() = default;
+		virtual ~TextQuad();
+			
 
 		lib::Property<lib::sptr<lib::scene::SceneNode>> sceneNode;
 		lib::sptr<lib::scene::nodes::NodeText> text(lib::u32 index) const noexcept { return index < 4 ? m_texts[index] : nullptr; }

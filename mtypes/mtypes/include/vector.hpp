@@ -18,7 +18,7 @@ namespace lib
 		using size_t = unsigned int;
 
 		constexpr vector() noexcept : m_capacity{ 0 }, m_size{ 0 }, m_buffer{ nullptr } {}
-		vector(size_t size) : m_capacity{ size }, m_size{ size }, m_buffer{ new T[size] } {}
+		vector(size_t size) : m_capacity{ size }, m_size{ size }, m_buffer{ size?new T[size] :nullptr} {}
 		constexpr vector(std::initializer_list<T> ilist) noexcept : m_capacity{ ilist.size() }, m_size{ m_capacity }, m_buffer{ new T[m_capacity] }
 		{
 			size_t c{ 0 };
@@ -29,7 +29,7 @@ namespace lib
 
 		vector(const vector&other) : m_capacity{ other.m_capacity }, m_size{ other.m_size }, m_buffer{new T[m_capacity]}
 		{
-			for (unsigned int i{ 0 }; i < other.m_size; ++i) {
+			for (size_t i{ 0 }; i < other.m_size; ++i) {
 				m_buffer[i] = other.m_buffer[i];
 			}
 		}
@@ -125,7 +125,7 @@ namespace lib
 		const_reference operator[](const size_t index) const { return m_buffer[index]; }
 		constexpr unsigned int capacity() const noexcept { return m_capacity; }
 		constexpr unsigned int size() const noexcept { return m_size; }
-		constexpr bool empty() const noexcept { return m_size > 0; }
+		constexpr bool empty() const noexcept { return m_size == 0; }
 		constexpr iterator begin() noexcept { return m_buffer; }
 		constexpr const_iterator begin() const noexcept { return m_buffer; }
 		constexpr iterator end() noexcept { return m_buffer + m_size; }

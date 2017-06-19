@@ -56,11 +56,11 @@ namespace zoper
 
 		m_goalQuad = msptr<TextQuad>(this, "goal", scoreFont, 90, colors::White, Rectf32::fromSize(600, 300));
 		m_goalQuad->sceneNode()->position = { 1250, 50 };
-		m_goalQuad->text(0)->text = "Level:";
-		m_goalQuad->text(0)->color = colors::Blue;
+//		m_goalQuad->text(0)->text = "Level:";
+//		m_goalQuad->text(0)->color = colors::Blue;
 		m_goalQuad->text(0)->configure();
 		m_goalQuad->text(2)->text = "Score:";
-		m_goalQuad->text(2)->color = colors::Blue;
+//		m_goalQuad->text(2)->color = colors::Blue;
 		m_goalQuad->text(2)->configure();
 
 		vector2df goBoxHalfSize{ 365, 365 };

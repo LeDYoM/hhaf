@@ -33,4 +33,7 @@ namespace zoper
 		m_texts[3]->alignmentX = NodeText::AlignmentX::Right;
 		m_texts[3]->alignmentY = NodeText::AlignmentY::Bottom;
 	}
+	TextQuad::~TextQuad()
+	{
+	}
 }
