@@ -14,6 +14,7 @@ namespace lib
 				for (auto&& texture : m_fontTexturesCache) {
 					delete texture.second;
 				}
+				m_fontTexturesCache.clear();
 			}
 
 			const ITTGlyph TTFont::getGlyph(u32 codePoint, u32 characterSize, bool bold, f32 outlineThickness) const

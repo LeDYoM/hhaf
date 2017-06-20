@@ -7,6 +7,8 @@
 #include <lib/backend/ittfontfactory.hpp>
 #include "ttfont.hpp"
 
+#include <vector>
+
 namespace lib
 {
 	namespace backend
@@ -17,6 +19,9 @@ namespace lib
 			{
 			public:
 				virtual ITTFont* loadFromFile(const str &file) override;
+				virtual ~TTFontFactory();
+			private:
+				std::vector<TTFont*> m_fontCache;
 			};
 		}
 	}

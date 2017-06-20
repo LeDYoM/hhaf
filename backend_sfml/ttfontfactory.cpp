@@ -13,7 +13,17 @@ namespace lib
 			{
 				sf::Font font;
 				font.loadFromFile(file);
-				return new TTFont(font);
+				auto *ttffont(new TTFont(font));
+				m_fontCache.push_back(ttffont);
+				return ttffont;
+			}
+
+			TTFontFactory::~TTFontFactory()
+			{
+				for (auto *font : m_fontCache) {
+					delete font;
+				}
+				m_fontCache.clear();
 			}
 		}
 	}

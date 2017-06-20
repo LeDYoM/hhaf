@@ -14,6 +14,7 @@ namespace lib
 		{
 		public:
 			virtual ITTFont* loadFromFile(const str &file) = 0;
+			virtual ~ITTFontFactory() {}
 		};
 	}
 }
