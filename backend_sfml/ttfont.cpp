@@ -27,9 +27,9 @@ namespace lib
 				return m_font.getKerning(first, second, characterSize);
 			}
 
-			sptr<ITexture> TTFont::getTexture(u32 characterSize) const
+			ITexture *TTFont::getTexture(u32 characterSize) const
 			{
-				return msptr<TextureTTFont>( m_font.getTexture(characterSize) );
+				return new TextureTTFont( m_font.getTexture(characterSize) );
 			}
 		}
 	}

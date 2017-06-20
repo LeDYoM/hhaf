@@ -8,11 +8,11 @@ namespace lib
 	{
 		namespace sfmlb
 		{
-			sptr<ITexture> TextureFactory::loadFromFile(const str & file)
+			ITexture *TextureFactory::loadFromFile(const str & file)
 			{
 				uptr<sf::Texture> texture(muptr<sf::Texture>());
 				texture->loadFromFile(file);
-				return msptr<Texture>(std::move(texture));
+				return new Texture(std::move(texture));
 			}
 		}
 	}

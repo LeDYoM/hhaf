@@ -15,7 +15,7 @@ namespace lib
 			class TextureFactory : public ITextureFactory
 			{
 			public:
-				virtual sptr<ITexture> loadFromFile(const str &file) override;
+				virtual ITexture *loadFromFile(const str &file) override;
 			};
 		}
 	}

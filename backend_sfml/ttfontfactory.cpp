@@ -9,11 +9,11 @@ namespace lib
 	{
 		namespace sfmlb
 		{
-			sptr<ITTFont> TTFontFactory::loadFromFile(const str & file)
+			ITTFont* TTFontFactory::loadFromFile(const str & file)
 			{
 				sf::Font font;
 				font.loadFromFile(file);
-				return msptr<TTFont>(font);
+				return new TTFont(font);
 			}
 		}
 	}

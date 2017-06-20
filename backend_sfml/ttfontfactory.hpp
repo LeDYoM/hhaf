@@ -16,7 +16,7 @@ namespace lib
 			class TTFontFactory : public ITTFontFactory
 			{
 			public:
-				virtual sptr<ITTFont> loadFromFile(const str &file) override;
+				virtual ITTFont* loadFromFile(const str &file) override;
 			};
 		}
 	}

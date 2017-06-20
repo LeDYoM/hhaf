@@ -38,7 +38,7 @@ namespace lib
 		{
 			m_wPrivate->m_backendWindow->draw(&(va.verticesArray()[0]), va.verticesArray().size(), va.primitiveType(), 
 				rs.m_transform.getMatrix(), 
-				rs.m_texture?rs.m_texture->backEndTexture().get():nullptr);
+				rs.m_texture?rs.m_texture->backEndTexture():nullptr);
 		}
 
 		bool Window::arePendingKeyPresses() const

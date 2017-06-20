@@ -13,7 +13,7 @@ namespace lib
 		class ITextureFactory
 		{
 		public:
-			virtual sptr<ITexture> loadFromFile(const str &file) = 0;
+			virtual ITexture *loadFromFile(const str &file) = 0;
 		};
 	}
 }
