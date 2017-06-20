@@ -9,7 +9,12 @@ namespace lib
 		namespace sfmlb
 		{
 			TTFont::TTFont(const sf::Font & f) : m_font{ f } {}
-			TTFont::~TTFont() = default;
+			TTFont::~TTFont() 
+			{
+				for (auto&& texture : m_fontTexturesCache) {
+					delete texture.second;
+				}
+			}
 
 			const ITTGlyph TTFont::getGlyph(u32 codePoint, u32 characterSize, bool bold, f32 outlineThickness) const
 			{
@@ -27,9 +32,16 @@ namespace lib
 				return m_font.getKerning(first, second, characterSize);
 			}
 
-			ITexture *TTFont::getTexture(u32 characterSize) const
+			ITexture *TTFont::getTexture(u32 characterSize)
 			{
-				return new TextureTTFont( m_font.getTexture(characterSize) );
+				auto iterator(m_fontTexturesCache.find(characterSize));
+				if (iterator != m_fontTexturesCache.end()) {
+					return iterator->second;
+				}
+
+				auto *nTexture(new TextureTTFont( m_font.getTexture(characterSize) ));
+				m_fontTexturesCache[characterSize] = nTexture;
+				return nTexture;
 			}
 		}
 	}
