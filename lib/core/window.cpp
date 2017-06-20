@@ -36,7 +36,9 @@ namespace lib
 
 		void Window::draw(const scene::VertexArray & va, const scene::RenderStates& rs)
 		{
-			m_wPrivate->m_backendWindow->draw(&(va.verticesArray()[0]), va.verticesArray().size(), va.primitiveType(), rs.m_transform.getMatrix(), rs.m_texture->backEndTexture().get());
+			m_wPrivate->m_backendWindow->draw(&(va.verticesArray()[0]), va.verticesArray().size(), va.primitiveType(), 
+				rs.m_transform.getMatrix(), 
+				rs.m_texture?rs.m_texture->backEndTexture().get():nullptr);
 		}
 
 		bool Window::arePendingKeyPresses() const
