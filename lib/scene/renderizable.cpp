@@ -7,8 +7,7 @@ namespace lib
 	namespace scene
 	{
 		Renderizable::Renderizable(str &&name, PrimitiveType type, u32 vertexCount)
-			: core::HasName{ std::move(name) }, m_vertices{ type, vertexCount },
-			color{}
+			: core::HasName{ std::move(name) }, m_vertices{ type, vertexCount }, color{}
 		{ }
 
 		Renderizable::~Renderizable() = default;
