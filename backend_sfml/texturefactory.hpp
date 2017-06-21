@@ -5,6 +5,7 @@
 #include <mtypes/include/vector2d.hpp>
 
 #include <lib/backend/itexturefactory.hpp>
+#include "texture.hpp"
 
 namespace lib
 {
@@ -19,7 +20,7 @@ namespace lib
 				virtual ITexture *loadFromFile(const str &file) override;
 				virtual ~TextureFactory();
 			private:
-				std::vector<Texture*> m_textureCache;
+				vector<uptr<Texture>> m_textureCache;
 			};
 		}
 	}

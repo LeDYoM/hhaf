@@ -43,35 +43,43 @@ namespace lib
 
 		vector& operator=(const vector&other)
 		{
-			m_size = other.m_size;
+			if (this != &other) {
 
-			if (m_capacity < other.m_size) {
-				delete[] m_buffer;
-				m_buffer = new T[other.m_size];
-				m_capacity = other.m_size;
-				m_size = other.m_size;
-			}
+				if (m_capacity < other.m_size) {
+					_destroy();
+					m_buffer = new T[other.m_size];
+					m_capacity = other.m_size;
+					m_size = other.m_size;
+				}
 
-			for (unsigned int i{ 0 }; i < other.m_size; ++i) {
-				m_buffer[i] = other.m_buffer[i];
+				_copyElements(other.m_buffer, m_size);
 			}
 			return *this;
 		}
 
 		vector& operator=(vector&&other) noexcept
 		{
-			m_capacity = other.m_capacity;
-			m_size = other.m_size;
-			m_buffer = other.m_buffer;
-			other.m_capacity = 0;
-			other.m_size = 0;
-			other.m_buffer = nullptr;
+			if (this != &other) {
+				_destroy();
+				m_capacity = other.m_capacity;
+				m_size = other.m_size;
+				m_buffer = other.m_buffer;
+				other.m_capacity = 0;
+				other.m_size = 0;
+				other.m_buffer = nullptr;
+			}
 			return *this;
 		}
 
 		~vector() { 
+			_destroy();
+		}
+
+		void _destroy()
+		{
 			if (m_buffer) {
 				delete[] m_buffer;
+				m_buffer = nullptr;
 				m_size = 0;
 				m_capacity = 0;
 			}
@@ -116,8 +124,26 @@ namespace lib
 		}
 
 		void shrink_to_fit() {
-			if (m_size != m_capacity) {
-				*this = vector(*this);
+			if (m_size < m_capacity) {
+				T*oldBuffer{ m_buffer };
+				m_buffer = new T[m_size];
+				_moveElements(oldBuffer,m_size);
+
+				delete[] oldBuffer;
+			}
+		}
+
+		void _copyElements(const T*source, const size_t s)
+		{
+			for (size_t i{ 0 }; i < s; ++i) {
+				m_buffer[i] = source[i];
+			}
+		}
+
+		void _moveElements(T*source, const size_t s)
+		{
+			for (size_t i{ 0 }; i < s; ++i) {
+				m_buffer[i] = std::move(source[i]);
 			}
 		}
 
@@ -157,7 +183,7 @@ namespace lib
 
 		void pop_back() noexcept { if (m_size > 0) --m_size; }
 
-		void reserve(const unsigned int capacity)
+		void reserve(const size_t capacity)
 		{
 			if (m_capacity < capacity)
 			{
@@ -171,7 +197,7 @@ namespace lib
 				m_capacity = capacity;
 			}
 		}
-		void resize(unsigned int size)
+		void resize(const size_t size)
 		{
 			if (size != m_size) {
 				// Delete to shrink

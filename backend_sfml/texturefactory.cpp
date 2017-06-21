@@ -1,6 +1,7 @@
+#include <mtypes/include/types.hpp>
+
 #include "texturefactory.hpp"
 #include <SFML/Graphics/Texture.hpp>
-#include "texture.hpp"
 
 namespace lib
 {
@@ -12,18 +13,15 @@ namespace lib
 			{
 				uptr<sf::Texture> texture(muptr<sf::Texture>());
 				texture->loadFromFile(file);
-				Texture *t{ new Texture(std::move(texture)) };
-				m_textureCache.push_back(t);
-				return t;
+				uptr<Texture> t{ muptr<Texture>(std::move(texture)) };
+				m_textureCache.push_back(std::move(t));
+				return (*(m_textureCache.end()-1)).get();
 			}
 
 			TextureFactory::~TextureFactory()
 			{
-				for (Texture *texture : m_textureCache) {
-					delete texture;
-				}
-
 				m_textureCache.clear();
+				m_textureCache.shrink_to_fit();
 			}
 		}
 	}
