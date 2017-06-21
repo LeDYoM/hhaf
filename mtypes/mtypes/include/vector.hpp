@@ -18,7 +18,7 @@ namespace lib
 		using size_t = unsigned int;
 
 		constexpr vector() noexcept : m_capacity{ 0 }, m_size{ 0 }, m_buffer{ nullptr } {}
-		vector(size_t size) : m_capacity{ size }, m_size{ size }, m_buffer{ size?new T[size] :nullptr} {}
+		explicit constexpr vector(size_t size) : m_capacity{ size }, m_size{ size }, m_buffer{ size?new T[size] :nullptr} {}
 		constexpr vector(std::initializer_list<T> ilist) noexcept : m_capacity{ ilist.size() }, m_size{ m_capacity }, m_buffer{ new T[m_capacity] }
 		{
 			size_t c{ 0 };
@@ -27,11 +27,9 @@ namespace lib
 			}
 		}
 
-		vector(const vector&other) : m_capacity{ other.m_capacity }, m_size{ other.m_size }, m_buffer{new T[m_capacity]}
+		vector(const vector&other) noexcept : m_capacity{ other.m_capacity }, m_size{ other.m_size }, m_buffer{new T[m_capacity]}
 		{
-			for (size_t i{ 0 }; i < other.m_size; ++i) {
-				m_buffer[i] = other.m_buffer[i];
-			}
+			_copyElements(other.m_buffer, other.m_size);
 		}
 
 		vector(vector&&other) noexcept : m_capacity{ other.m_capacity }, m_size{ other.m_size }, m_buffer{ other.m_buffer }
@@ -73,16 +71,6 @@ namespace lib
 
 		~vector() { 
 			_destroy();
-		}
-
-		void _destroy()
-		{
-			if (m_buffer) {
-				delete[] m_buffer;
-				m_buffer = nullptr;
-				m_size = 0;
-				m_capacity = 0;
-			}
 		}
 
 		iterator remove_value(const T &value) {
@@ -133,20 +121,6 @@ namespace lib
 			}
 		}
 
-		void _copyElements(const T*source, const size_t s)
-		{
-			for (size_t i{ 0 }; i < s; ++i) {
-				m_buffer[i] = source[i];
-			}
-		}
-
-		void _moveElements(T*source, const size_t s)
-		{
-			for (size_t i{ 0 }; i < s; ++i) {
-				m_buffer[i] = std::move(source[i]);
-			}
-		}
-
 		reference operator[](const size_t index) { return m_buffer[index]; }
 		const_reference operator[](const size_t index) const { return m_buffer[index]; }
 		constexpr unsigned int capacity() const noexcept { return m_capacity; }
@@ -187,16 +161,14 @@ namespace lib
 		{
 			if (m_capacity < capacity)
 			{
-				T *newBuffer{ new T[capacity] };
-				for (unsigned int i{ 0 }; i < m_size; ++i) {
-					newBuffer[i] = std::move(m_buffer[i]);
-				}
-				if (m_buffer)
-					delete[] m_buffer;
-				m_buffer = newBuffer;
+				T *oldBuffer{ m_buffer };
 				m_capacity = capacity;
+				m_buffer = new T[m_capacity];
+				_moveElements(oldBuffer, m_size);
+				delete[] oldBuffer;
 			}
 		}
+
 		void resize(const size_t size)
 		{
 			if (size != m_size) {
@@ -216,17 +188,49 @@ namespace lib
 		void clear()
 		{
 			m_size = 0;
-			/*
+		}
+
+	private:
+
+		void _ensure_reserved(const size_t capacity)
+		{
+			if (m_capacity < capacity)
+			{
+				T *newBuffer{ new T[capacity] };
+				for (unsigned int i{ 0 }; i < m_size; ++i) {
+					newBuffer[i] = std::move(m_buffer[i]);
+				}
+				if (m_buffer)
+					delete[] m_buffer;
+				m_buffer = newBuffer;
+				m_capacity = capacity;
+			}
+		}
+
+		void _copyElements(const T*source, const size_t s)
+		{
+			for (size_t i{ 0 }; i < s; ++i) {
+				m_buffer[i] = source[i];
+			}
+		}
+
+		void _moveElements(T*source, const size_t s)
+		{
+			for (size_t i{ 0 }; i < s; ++i) {
+				m_buffer[i] = std::move(source[i]);
+			}
+		}
+
+		void _destroy()
+		{
 			if (m_buffer) {
 				delete[] m_buffer;
 				m_buffer = nullptr;
 				m_size = 0;
 				m_capacity = 0;
 			}
-			*/
 		}
 
-	private:
 		size_t m_capacity;
 		size_t m_size;
 		T* m_buffer;
