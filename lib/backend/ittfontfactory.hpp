@@ -13,7 +13,8 @@ namespace lib
 		class ITTFontFactory
 		{
 		public:
-			virtual sptr<ITTFont> loadFromFile(const str &file) = 0;
+			virtual ITTFont* loadFromFile(const str &file) = 0;
+			virtual ~ITTFontFactory() {}
 		};
 	}
 }

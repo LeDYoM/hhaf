@@ -10,7 +10,7 @@ namespace lib
 		using namespace backend;
 
 //		Texture::Texture() = default;
-		Texture::Texture(sptr<backend::ITexture> texture) : m_texturePrivate{ std::move(texture) } {}
+		Texture::Texture(backend::ITexture *texture) : m_texturePrivate{ texture } {}
 
 		Texture::~Texture() {
 			m_texturePrivate = nullptr;
