@@ -12,10 +12,14 @@ namespace lib
 	{
 		namespace sfmlb
 		{
+			class Texture;
 			class TextureFactory : public ITextureFactory
 			{
 			public:
 				virtual ITexture *loadFromFile(const str &file) override;
+				virtual ~TextureFactory();
+			private:
+				std::vector<Texture*> m_textureCache;
 			};
 		}
 	}

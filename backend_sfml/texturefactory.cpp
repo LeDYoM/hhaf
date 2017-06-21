@@ -12,7 +12,18 @@ namespace lib
 			{
 				uptr<sf::Texture> texture(muptr<sf::Texture>());
 				texture->loadFromFile(file);
-				return new Texture(std::move(texture));
+				Texture *t{ new Texture(std::move(texture)) };
+				m_textureCache.push_back(t);
+				return t;
+			}
+
+			TextureFactory::~TextureFactory()
+			{
+				for (Texture *texture : m_textureCache) {
+					delete texture;
+				}
+
+				m_textureCache.clear();
 			}
 		}
 	}

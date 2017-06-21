@@ -14,6 +14,7 @@ namespace lib
 		{
 		public:
 			virtual ITexture *loadFromFile(const str &file) = 0;
+			virtual ~ITextureFactory() {}
 		};
 	}
 }
