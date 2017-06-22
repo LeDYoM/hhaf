@@ -149,7 +149,7 @@ namespace lib
 
 		void insert(const vector &other) {
 			//TO DO: Optimize
-			reserve(m_size + other.size());
+			reserve(m_size + other.m_size);
 			for (auto&& element : other) {
 				push_back(element);
 			}
