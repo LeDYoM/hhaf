@@ -19,8 +19,8 @@ void print_impl();
 template<typename T, typename ...Args>
 constexpr void print_impl(T&& value, Args&&... args)
 {
-	log_stream() << value;
-	print_impl(std::forward<Args>(args)...);
+	log_stream() << lib::make_str(value, std::forward<Args>(args)...);
+//	print_impl(std::forward<Args>(args)...);
 }
 
 template<LogType log_type, typename ...Args>

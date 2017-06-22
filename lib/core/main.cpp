@@ -3,7 +3,7 @@
 #include <lib/core/memmanager.hpp>
 #include <lib/core/log.hpp>
 #include <lib/core/host.hpp>
-//#include <loader.hpp>
+#include <mtypes/include/log.hpp>
 
 namespace lib
 {
@@ -11,7 +11,8 @@ namespace lib
 	{
 		int result = -1;
 
-
+		log::Logger<log::severity_type::info> linfo;
+		linfo.log("this is a test", 3);
 		try
 		{
 //			auto *a = loader::createLoader();

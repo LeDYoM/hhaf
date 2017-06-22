@@ -82,8 +82,35 @@ namespace lib
 //		return !operator==(std::string(lhs.c_str()), std::string(rhs.c_str()));
 //	}
 
+	template<typename ...Args>
+	constexpr str make_str(Args&&... args)
+	{
+		str t;
+		make_str_internal(t, std::forward<Args>(args)...);
+		return t;
+	}
+
+	template<typename T>
+	constexpr str make_str(T&& arg)
+	{
+		return str(arg);
+	}
+
+	template<typename T, typename ...Args>
+	constexpr void make_str_internal(str &buffer, T&& arg, Args&&... args)
+	{
+		make_str_internal(buffer, arg);
+		make_str_internal(buffer, std::forward<Args>(args)...);
+	}
+
+	template<typename T>
+	constexpr void make_str_internal(str &buffer, T&& arg)
+	{
+		buffer<< arg;
+	}
+
 	static_assert(std::is_move_constructible_v<str>, "str must be movable");
-	static_assert(std::is_move_assignable_v<str>, "str must be movable");
+	static_assert(std::is_move_assignable_v<str>, "str must be movable assignable");
 	using string_vector = vector<str>;
 }
 
