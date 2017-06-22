@@ -61,7 +61,7 @@ namespace lib
 		const char *c_str() const noexcept { return std::string::c_str(); }
 		bool empty() const noexcept { return std::string::empty(); }
 		template <typename T>
-		str &operator<<(const T&n)
+		constexpr str &operator<<(const T&n)
 		{
 			return append(n);
 		}

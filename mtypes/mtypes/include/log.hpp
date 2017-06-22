@@ -16,42 +16,42 @@ namespace lib
 			error,
 		};
 
-		template<severity_type severity>
-		class Logger
+		template<severity_type severity, typename...Args >
+		constexpr void log(Args...args)
 		{
-		public:
-			template<typename...Args >
-			constexpr void log(Args...args)
+			str log_stream(detail::severity_txt<severity>());
+			log_stream << detail::print_impl(args...);
+			detail::commitlog(log_stream);
+		}
+
+		namespace detail
+		{
+			template<severity_type severity>
+			constexpr const char*const severity_txt()
 			{
 				switch (severity)
 				{
 				default:
 				case severity_type::info:
-					log_stream << "<INFO> :";
+					return "<INFO> :";
 					break;
 				case severity_type::error:
-					log_stream << "<ERROR> :";
+					return "<ERROR> :";
 					break;
-				};
-				print_impl(args...);
+				}
 			}
-
-		private:
-			str log_stream;
 
 			template<typename T, typename ...Args>
-			constexpr void print_impl(T&& value, Args&&... args)
+			constexpr const str print_impl(T&& value, Args&&... args)
 			{
-				log_stream << lib::make_str(value, std::forward<Args>(args)...);
-				commitlog();
+				return lib::make_str(value, std::forward<Args>(args)...);
 			}
 
-			constexpr void commitlog() {
+			inline void commitlog(str& log_stream) {
 				log_stream << '\n';
 				std::cout << log_stream;
-				log_stream = "";
 			}
-		};
+		}
 	}
 }
 

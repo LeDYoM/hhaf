@@ -11,8 +11,7 @@ namespace lib
 	{
 		int result = -1;
 
-		log::Logger<log::severity_type::info> linfo;
-		linfo.log("this is a test", 3);
+		log::log<log::severity_type::info>("this is a test", 3);
 		try
 		{
 //			auto *a = loader::createLoader();
