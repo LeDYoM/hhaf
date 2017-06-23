@@ -10,19 +10,21 @@ namespace lib
 {
 	namespace log
 	{
-		enum severity_type
-		{
-			info,
-			error,
-		};
+		enum severity_type { info, error };
+		enum level_type { debug, release };
 
-		template<severity_type severity, typename...Args >
-		constexpr void log(Args...args)
+		constexpr level_type compiled_log_level_type = level_type::debug;
+
+		template<level_type level, severity_type severity, typename...Args, typename std::enable_if<compiled_log_level_type >= level>::type* = nullptr >
+		constexpr void log(Args&&...args)
 		{
 			str log_stream(detail::severity_txt<severity>());
 			log_stream << detail::print_impl(args...);
 			detail::commitlog(log_stream);
 		}
+
+		template<level_type level, severity_type severity, typename...Args, typename std::enable_if<compiled_log_level_type < level>::type* = nullptr >
+		constexpr void log(Args&&...) {}
 
 		namespace detail
 		{

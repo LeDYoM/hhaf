@@ -11,7 +11,9 @@ namespace lib
 	{
 		int result = -1;
 
-		log::log<log::severity_type::info>("this is a test", 3);
+		log::log<log::level_type::debug, log::severity_type::info>("this is a test", 4);
+		log::log<log::level_type::release, log::severity_type::info>("this is a test", 3);
+
 		try
 		{
 //			auto *a = loader::createLoader();
