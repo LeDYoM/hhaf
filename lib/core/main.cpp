@@ -11,8 +11,8 @@ namespace lib
 	{
 		int result = -1;
 
-		log::log<log::level_type::debug, log::severity_type::info>("this is a test", 4);
-		log::log<log::level_type::release, log::severity_type::info>("this is a test", 3);
+		log_debug_info("this is a test", 4);
+		log_release_info("this is a test", 3);
 
 		try
 		{

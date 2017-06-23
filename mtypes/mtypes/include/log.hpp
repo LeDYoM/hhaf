@@ -6,6 +6,8 @@
 #include "mtypes_export.h"
 #include "str.hpp"
 
+#define LOG_EXPORT	MTYPES_EXPORT
+
 namespace lib
 {
 	namespace log
@@ -15,16 +17,19 @@ namespace lib
 
 		constexpr level_type compiled_log_level_type = level_type::debug;
 
-		template<level_type level, severity_type severity, typename...Args, typename std::enable_if<compiled_log_level_type >= level>::type* = nullptr >
-		constexpr void log(Args&&...args)
+		template <level_type level>
+		constexpr bool compile_logs = compiled_log_level_type >= level;
+
+		template<level_type level, severity_type severity, typename...Args, typename std::enable_if<compile_logs<level>>::type* = nullptr >
+		inline constexpr void log(Args&&...args)
 		{
 			str log_stream(detail::severity_txt<severity>());
 			log_stream << detail::print_impl(args...);
 			detail::commitlog(log_stream);
 		}
 
-		template<level_type level, severity_type severity, typename...Args, typename std::enable_if<compiled_log_level_type < level>::type* = nullptr >
-		constexpr void log(Args&&...) {}
+		template<level_type level, severity_type severity, typename...Args, typename std::enable_if<!compile_logs<level>>::type* = nullptr >
+		inline constexpr void log(Args&&...) {}
 
 		namespace detail
 		{
@@ -44,7 +49,7 @@ namespace lib
 			}
 
 			template<typename T, typename ...Args>
-			constexpr const str print_impl(T&& value, Args&&... args)
+			inline constexpr const str print_impl(T&& value, Args&&... args)
 			{
 				return lib::make_str(value, std::forward<Args>(args)...);
 			}
@@ -55,6 +60,27 @@ namespace lib
 			}
 		}
 	}
+
+	template<typename ...Args>
+	inline constexpr void log_debug_info(Args&&... args) {
+		log::log<log::level_type::debug, log::severity_type::info>(std::forward<Args>(args)...);
+	}
+
+	template<typename ...Args>
+	inline constexpr void log_debug_error(Args&&... args) {
+		log::log<log::level_type::debug, log::severity_type::error>(std::forward<Args>(args)...);
+	}
+
+	template<typename ...Args>
+	inline constexpr void log_release_info(Args&&... args) {
+		log::log<log::level_type::release, log::severity_type::info>(std::forward<Args>(args)...);
+	}
+
+	template<typename ...Args>
+	inline constexpr void log_release_error(Args&&... args) {
+		log::log<log::level_type::release, log::severity_type::error>(std::forward<Args>(args)...);
+	}
+
 }
 
 #endif
