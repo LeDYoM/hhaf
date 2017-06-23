@@ -1,5 +1,5 @@
 #include <lib/include/key.hpp>
-#include <lib/core/log.hpp>
+#include <mtypes/include/log.hpp>
 
 #include "renderwindow.hpp"
 #include "conversions.hpp"
@@ -75,7 +75,7 @@ namespace lib
 				_ASSERT(e.type == sf::Event::KeyPressed || e.type == sf::Event::KeyReleased);
 
 				const auto k(doCast(e.key.code));
-				logDebug("Backend key event. Type: ", (int)(e.type), " Key: ", (int)(e.key.code));
+				log_debug_info("Backend key event. Type: ", (int)(e.type), " Key: ", (int)(e.key.code));
 				if (k != input::Key::Unknown) {
 					if (e.type == sf::Event::KeyPressed) {
 						m_keysPressed.push(k);
@@ -87,7 +87,7 @@ namespace lib
 					}
 				}
 				else {
-					logWarning("Unknow keycode");
+					log_debug_error("Unknow keycode");
 				}
 			}
 

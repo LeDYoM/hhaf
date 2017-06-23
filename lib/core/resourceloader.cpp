@@ -1,5 +1,5 @@
 #include "resourceloader.hpp"
-#include "log.hpp"
+#include <mtypes/include/log.hpp>
 
 #include <map>
 

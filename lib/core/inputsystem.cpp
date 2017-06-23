@@ -1,5 +1,5 @@
 #include "inputsystem.hpp"
-#include "log.hpp"
+#include <mtypes/include/log.hpp>
 #include <lib/backend/iwindow.hpp>
 #include <lib/core/host.hpp>
 #include <lib/core/window.hpp>

@@ -16,7 +16,6 @@ source_group("Source Files" FILES ${ZOPER_SOURCES})
 # Detect and add lib
 include_directories(..)
 target_link_libraries(${CURRENT_TARGET} PRIVATE lib)
-
 target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
 
 add_custom_command(TARGET ${CURRENT_TARGET} POST_BUILD

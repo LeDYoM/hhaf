@@ -1,5 +1,5 @@
 #include "resourcemanager.hpp"
-#include "log.hpp"
+#include <mtypes/include/log.hpp>
 
 #include <lib/scene/ttfont.hpp>
 #include <lib/scene/texture.hpp>
@@ -42,17 +42,17 @@ namespace lib
 								else {
 									add(backend::textureFactory(), m_textures, id, filename);
 								}
-								logDebug("Resource with id ", dataLine.second->get<str>(), " from file ", dataLine.first, " added");
+								log_debug_info("Resource with id ", dataLine.second->get<str>(), " from file ", dataLine.first, " added");
 							}
 							else {
-								logError("Malformed resource file");
+								log_debug_error("Malformed resource file");
 							}
 						}
 					});
 				}
 			}
 			else {
-				logDebug("Empty resources file. No resources loaded or used");
+				log_debug_info("Empty resources file. No resources loaded or used");
 			}
 		}
 

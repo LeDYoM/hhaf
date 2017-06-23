@@ -1,6 +1,6 @@
 #include "window.hpp"
 #include "config.h"
-#include "log.hpp"
+#include <mtypes/include/log.hpp>
 #include "timer.hpp"
 #include "host.hpp"
 #include <lib/include/iapp.hpp>
@@ -63,18 +63,18 @@ namespace lib
 
 		void Window::create(const WindowCreationParams &wcp)
 		{
-			logDebug("Going to create Window");
-			logDebug("Resolution:", wcp.width, "x", wcp.height ,"x", wcp.bpp);
-			logDebug("Fullscreen:" , wcp.fullScreen);
-			logDebug("Antialiasing:", wcp.antialiasing);
+			log_debug_info("Going to create Window");
+			log_debug_info("Resolution:", wcp.width, "x", wcp.height ,"x", wcp.bpp);
+			log_debug_info("Fullscreen:" , wcp.fullScreen);
+			log_debug_info("Antialiasing:", wcp.antialiasing);
 
 			__ASSERT(!m_wPrivate->m_backendWindow, "Cannot create window twice");
-			logDebug("Creating window...");
+			log_debug_info("Creating window...");
 
 			// Create window object
 			m_wPrivate->m_backendWindow = backend::BackendFactory::instance()->getOrCreateWindow();
-			logDebug("Window created");
-			logDebug("Registering for view changes...");
+			log_debug_info("Window created");
+			log_debug_info("Registering for view changes...");
 			backend::IWindow &bw(*m_wPrivate->m_backendWindow);
 
 			// Create physical window
@@ -84,7 +84,7 @@ namespace lib
 				viewPort.setCallback([this]() {m_wPrivate->m_backendWindow->setViewport(viewPort()); });
 				viewRect.setCallback([this]() {m_wPrivate->m_backendWindow->setViewRect(viewRect()); });
 			}
-			logDebug("Window creation completed");
+			log_debug_info("Window creation completed");
 		}
 
 		bool Window::preLoop()
@@ -111,14 +111,14 @@ namespace lib
 
 		void Window::onCreate()
 		{
-			logDebug("Window created");
+			log_debug_info("Window created");
 		}
 
 		void Window::onDestroy()
 		{
-			logDebug("Going to close Window");
+			log_debug_info("Going to close Window");
 			m_wPrivate->m_backendWindow->closeWindow();
-			logDebug("Window closed");
+			log_debug_info("Window closed");
 		}
 	}
 }

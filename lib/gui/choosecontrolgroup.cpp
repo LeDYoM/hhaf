@@ -1,7 +1,7 @@
 #include "choosecontrolgroup.hpp"
 #include "choosecontrol.hpp"
 #include "optionmodel.hpp"
-#include <lib/core/log.hpp>
+#include <mtypes/include/log.hpp>
 #include <lib/core/host.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/scene/components/inputcomponent.hpp>
@@ -21,7 +21,7 @@ namespace lib
 		{
 			auto inputComponent(ensureComponentOfType<scene::InputComponent>());
 			inputComponent->setOnKeyPressedHandler([this](const lib::input::Key&key) {
-				logDebug("Key pressed toChooseControlGroup");
+				log_debug_info("Key pressed toChooseControlGroup");
 				auto node(m_sController->activeNode()->snCast<ChooseControl>());
 				if (key == input::Key::Down || key == input::Key::Numpad2) {
 					node->goDown();
@@ -36,12 +36,12 @@ namespace lib
 					node->goRight();
 				}
 				else if (key == input::Key::Return || key == input::Key::Space) {
-					logDebug("Calling onSelected with currentSelection(): ", currentSelection());
+					log_debug_info("Calling onSelected with currentSelection(): ", currentSelection());
 					OptionModelIndex currentSelected{ currentSelection() };
 					__ASSERT(currentSelected.size() > 1, "currentSelected size must be > 1");
 					OptionModelIndex predefinedPath{ options()[currentSelected[0]][currentSelected[1]].next };
 					OptionModelIndex resultIndices(onSelected(OptionModelIndex(currentSelection())));
-					logDebug("The onSelect returned ", resultIndices);
+					log_debug_info("The onSelect returned ", resultIndices);
 					if (resultIndices.empty()) {
 						resultIndices = std::move(predefinedPath);
 					}

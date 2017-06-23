@@ -1,8 +1,9 @@
-#include <lib/include/main.hpp>
 #include "config.h"
+
+#include <lib/include/main.hpp>
 #include <lib/core/memmanager.hpp>
-#include <lib/core/log.hpp>
 #include <lib/core/host.hpp>
+
 #include <mtypes/include/log.hpp>
 
 namespace lib
@@ -11,13 +12,13 @@ namespace lib
 	{
 		int result = -1;
 
-		log_debug_info("this is a test", 4);
-		log_release_info("this is a test", 3);
-
 		try
 		{
-//			auto *a = loader::createLoader();
-			initLog();
+			log::init_log();
+
+			log_debug_info("this is a test", 4);
+			log_release_info("this is a test", 3);
+
 			installMemManager();
 
 			core::Host::createHost(argc, argv);
@@ -27,14 +28,14 @@ namespace lib
 		}
 		catch (std::exception e)
 		{
-			logDebug("std::Exception: ", e.what());
+			log_release_error("std::Exception: ", e.what());
 		}
 		catch (...)
 		{
-			logDebug("Unexpected exception");
+			log_release_info("Unexpected exception");
 		}
 		finishMemManager();
-		finishLog();
+		log::finish_log();
 
 		return result;
 	}

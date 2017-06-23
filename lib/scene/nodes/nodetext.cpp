@@ -3,7 +3,7 @@
 #include <lib/scene/ttfont.hpp>
 #include <lib/scene/texture.hpp>
 
-#include <lib/core/log.hpp>
+#include <mtypes/include/log.hpp>
 
 #include <cmath>
 

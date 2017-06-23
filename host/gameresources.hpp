@@ -3,7 +3,7 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
-#include <lib/include/logcl.hpp>
+#include <mtypes/include/log.hpp>
 #include <lib/include/iresourceloader.hpp>
 
 namespace zoper

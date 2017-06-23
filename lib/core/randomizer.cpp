@@ -1,7 +1,7 @@
 #include "randomizer.hpp"
 #include <random>
 
-#include "log.hpp"
+#include <mtypes/include/log.hpp>
 #include "config.h"
 
 namespace lib
@@ -34,12 +34,12 @@ namespace lib
 
 		u32 Randomizer::getUInt(u32 max, u32 min) const
 		{
-			logDebug("Asked for random number between ", min, " and ", max);
+			log_debug_info("Asked for random number between ", min, " and ", max);
 			__ASSERT(min != max, "The min and max parameters must be different");
 			__ASSERT(max > min, "The max paramter must be greater than min");
 			auto g = p_rPriv->dist(p_rPriv->mt) % (max - min);
-			logDebug("\tGot ", g);
-			logDebug("\tReturning ", min + g);
+			log_debug_info("\tGot ", g);
+			log_debug_info("\tReturning ", min + g);
 			return min + g;
 		}
 	}

@@ -1,5 +1,5 @@
 #include "debugsystem.hpp"
-#include "log.hpp"
+#include <mtypes/include/log.hpp>
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/scene.hpp>
 #include <lib/scene/components/debugvarscomponent.hpp>

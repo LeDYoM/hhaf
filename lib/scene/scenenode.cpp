@@ -5,7 +5,7 @@
 
 #include <lib/core/window.hpp>
 #include <lib/core/host.hpp>
-#include <lib/core/log.hpp>
+#include <mtypes/include/log.hpp>
 #include <lib/scene/renderstatesstack.hpp>
 
 namespace lib

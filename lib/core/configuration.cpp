@@ -1,5 +1,5 @@
 #include "configuration.hpp"
-#include "log.hpp"
+#include <mtypes/include/log.hpp>
 
 #include <regex>
 
@@ -22,15 +22,15 @@ namespace lib
 
 		if (fIterator != m_data.end()) {
 			// Configuration file already in use.
-			logDebug("Map data for ", currentFile, " found. Using it");
+			log_debug_info("Map data for ", currentFile, " found. Using it");
 			currentMap = &(fIterator->second);
 		}
 		else {
-			logDebug("Map data for ", currentFile, " not created.");
+			log_debug_info("Map data for ", currentFile, " not created.");
 			CMap cMap;
 
 			if (file[0] != ':') {
-				logDebug("Trying to read file");
+				log_debug_info("Trying to read file");
 				std::ifstream f(currentFile.c_str());
 
 				if (f.is_open()) {
@@ -42,13 +42,13 @@ namespace lib
 							CMapRawLine lineData(
 								vsplited.empty() ? str{} : vsplited[0], 
 								vsplited.size() < 2 ? str{}:vsplited[1]);
-							logDebug("Adding key", lineData.first, " with value ", lineData.second);
+							log_debug_info("Adding key", lineData.first, " with value ", lineData.second);
 							cMap.emplace(lineData.first, msptr<ConfigurationProperty>(std::move(lineData.second)));
 						}
 					}
 				}
 				else {
-					logDebug("File ", file , " not found. Associating empty data to file");
+					log_debug_info("File ", file , " not found. Associating empty data to file");
 				}
 			}
 
@@ -83,19 +83,19 @@ namespace lib
 	{
 		__ASSERT(!currentFile.empty(), "Empty file name");
 		__ASSERT(currentFile[0] != ':', "Cannot save memory streams");
-		logDebug("Saving configuration file ", currentFile);
+		log_debug_info("Saving configuration file ", currentFile);
 		std::ofstream f(currentFile.c_str());
 
 		if (f.is_open())
 		{
 			for_each_property([&f](const CMapLine &line) {
 				f << line.first.c_str() << "=" << line.second->getstr().c_str() << std::endl;
-				logDebug("Written: ", line.first, "=", line.second->getstr());
+				log_debug_info("Written: ", line.first, "=", line.second->getstr());
 			});
 			return true;
 		}
 		else {
-			logError("Cannot write file ", currentFile);
+			log_debug_error("Cannot write file ", currentFile);
 			return false;
 		}
 	}

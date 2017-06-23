@@ -1,6 +1,6 @@
 #include "inputcomponent.hpp"
 
-#include <lib/core/log.hpp>
+#include <mtypes/include/log.hpp>
 #include <lib/include/key.hpp>
 #include <lib/core/host.hpp>
 #include <lib/core/window.hpp>

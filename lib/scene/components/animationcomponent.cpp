@@ -1,7 +1,7 @@
 #include "animationcomponent.hpp"
 #include <lib/scene/ianimation.hpp>
 
-#include <lib/core/log.hpp>
+#include <mtypes/include/log.hpp>
 #include <algorithm>
 
 namespace lib

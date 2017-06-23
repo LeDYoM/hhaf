@@ -1,5 +1,5 @@
 #include "nodequad.hpp"
-#include <lib/core/log.hpp>
+#include <mtypes/include/log.hpp>
 
 namespace lib
 {

@@ -4,7 +4,7 @@
 #include <lib/scene/scenenode.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/core/host.hpp>
-#include <lib/include/logcl.hpp>
+#include <mtypes/include/log.hpp>
 #include "common.hpp"
 
 namespace zoper
@@ -87,12 +87,12 @@ namespace zoper
 						// Start level option
 						CLIENT_ASSERT(indices.size() > 2, "Error in indices parameter");
 						m_gameConfig.value(StartLevelStr)->set(indices[2]);
-						logClDebug("Starting at level:", indices[2]);
+						lib::log_debug_info("Starting at level:", indices[2]);
 						lib::host().setScene("GameScene");
 						break;
 					default:
 						// Back option
-						logClDebug("Going back from Start Level menu to main menu");
+						lib::log_debug_info("Going back from Start Level menu to main menu");
 						break;
 					}
 					break;

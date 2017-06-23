@@ -1,7 +1,7 @@
 #include "host.hpp"
 #include "window.hpp"
 #include "resourcemanager.hpp"
-#include "log.hpp"
+#include <mtypes/include/log.hpp>
 #include "randomizer.hpp"
 #include <lib/scene/scene.hpp>
 #include <lib/scene/renderstatesstack.hpp>
@@ -65,9 +65,9 @@ namespace lib
 			: m_state{ AppState::NotInitialized }
 		{
 			logConstruct_NOPARAMS;
-			logInfo("Starting HostController...");
-			logInfo("LIB version: ", LIB_VERSION_MAJOR,".", LIB_VERSION_MINOR,".", LIB_VERSION_PATCH);
-			logInfo("Parsing parameters...");
+			log_release_info("Starting HostController...");
+			log_release_info("LIB version: ", LIB_VERSION_MAJOR,".", LIB_VERSION_MINOR,".", LIB_VERSION_PATCH);
+			log_release_info("Parsing parameters...");
 			m_params = transformParams(argc, argv);
 		}
 
@@ -80,7 +80,7 @@ namespace lib
 		{
 			if (!m_iapp && iapp) {
 				std::swap(m_iapp, iapp);
-				logDebug("Starting app ", appId(), "...");
+				log_debug_info("Starting app ", appId(), "...");
 				m_state = AppState::ReadyToStart;
 				return true;
 			}
@@ -95,7 +95,7 @@ namespace lib
 				break;
 			case AppState::ReadyToStart:
 			{
-				logDebug(appId(), ": ", " Starting initialization...");
+				log_debug_info(appId(), ": ", " Starting initialization...");
 				m_state = AppState::Executing;
 
 				m_inputSystem = muptr<input::InputSystem>();
@@ -109,22 +109,22 @@ namespace lib
 				addScenes(m_iapp->scenesVector());
 
 				m_iapp->onInit();
-				logDebug(appId(), ": ", " is now executing");
+				log_debug_info(appId(), ": ", " is now executing");
 			}
 				break;
 			case AppState::Executing:
 			{
 				if (loopStep()) {
 					m_state = AppState::ReadyToTerminate;
-					logDebug(appId(), ": ", " is now ready to terminate");
+					log_debug_info(appId(), ": ", " is now ready to terminate");
 				}
 				else if (m_state == AppState::ReadyToTerminate) {
-					logDebug(appId(), ": ", " requested to terminate");
+					log_debug_info(appId(), ": ", " requested to terminate");
 				}
 			}
 				break;
 			case AppState::ReadyToTerminate:
-				logDebug(appId(), ": " ," started termination");
+				log_debug_info(appId(), ": " ," started termination");
 				if (m_currentScene) {
 					m_currentScene->onExitScene();
 				}
@@ -142,7 +142,7 @@ namespace lib
 				m_randomizer = nullptr;
 				m_inputSystem = nullptr;
 				m_params.clear();
-				logDebug(appId(), ": ", " terminated");
+				log_debug_info(appId(), ": ", " terminated");
 				return true;
 				break;
 			case AppState::Terminated:
@@ -165,7 +165,7 @@ namespace lib
 			}
 
 			if (!m_iapp) {
-				logInfo("App destroyed. Exiting normally");
+				log_release_info("App destroyed. Exiting normally");
 			}
 			return 0;
 		}
@@ -219,10 +219,10 @@ namespace lib
 		{
 			if (sptr<scene::Scene> scene = getSceneByName(name)) {
 				setScene(std::move(scene));
-				logDebug("Changed scene to ", name);
+				log_debug_info("Changed scene to ", name);
 			}
 			else {
-				logError("Scene ", name, " not found in scenes");
+				log_debug_error("Scene ", name, " not found in scenes");
 			}
 		}
 
@@ -241,7 +241,7 @@ namespace lib
 					m_currentScene->onExitScene();
 				}
 				else {
-					logDebug("Set first scene");
+					log_debug_info("Set first scene");
 				}
 				if (m_currentScene) m_currentScene->setAsActiveScene(false);
 				m_nextScene->setAsActiveScene(true);

@@ -1,6 +1,6 @@
 #include "scene.hpp"
 #include "renderizable.hpp"
-#include <lib/core/log.hpp>
+#include <mtypes/include/log.hpp>
 #include <lib/core/window.hpp>
 #include <lib/core/host.hpp>
 #include <lib/core/resourcemanager.hpp>
@@ -34,26 +34,26 @@ namespace lib
 
 		void Scene::onInit()
 		{
-			logDebug("Initializing scene ", name());
+			log_debug_info("Initializing scene ", name());
 			auto sceneSize = getDefaultSizeView();
 			viewRect = Rectf32::fromSize(sceneSize);
 
-			logDebug("Scene view set to:", viewRect());
+			log_debug_info("Scene view set to:", viewRect());
 		}
 
 		void Scene::onDeinit()
 		{
-			logDebug("Deinitializing scene ", name());
+			log_debug_info("Deinitializing scene ", name());
 		}
 
 		void Scene::onEnterScene()
 		{
 			using namespace events;
-			logDebug("Entered in scene ", name());
+			log_debug_info("Entered in scene ", name());
 
 			auto sceneSize = getDefaultSizeView();
 			viewRect = Rectf32::fromSize(sceneSize);
-			logDebug("Scene view set to:", viewRect());
+			log_debug_info("Scene view set to:", viewRect());
 
 			clock.restart();
 		}
@@ -61,7 +61,7 @@ namespace lib
 		void Scene::onExitScene()
 		{
 			eventConnector.unsubscribeAll();
-			logDebug("Exited from scene ", name());
+			log_debug_info("Exited from scene ", name());
 		}
 	}
 }

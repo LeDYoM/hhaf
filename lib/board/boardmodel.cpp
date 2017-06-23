@@ -1,5 +1,5 @@
 #include "boardmodel.hpp"
-#include <lib/core/log.hpp>
+#include <mtypes/include/log.hpp>
 #include <lib/core/host.hpp>
 #include <lib/core/events/eventmanager.hpp>
 
@@ -20,7 +20,7 @@ namespace lib
 
 		void BoardModelComponent::initialize(const vector2du32 &size)
 		{
-			logDebug("BoardModelComponent initialize with size: ", size);
+			log_debug_info("BoardModelComponent initialize with size: ", size);
 			_tiles.reserve(size.x);
 			for (auto x = 0u; x < size.x; ++x) {
 				//				vector<SITilePointer> column(size.y);
@@ -34,7 +34,7 @@ namespace lib
 			if (validCoords(position)) {
 				return _tiles[position.x][position.y];
 			}
-			logError("Error getting tile in coords ", position.x, ",", position.y);
+			log_debug_error("Error getting tile in coords ", position.x, ",", position.y);
 			return SITilePointer();
 		}
 
@@ -67,12 +67,12 @@ namespace lib
 		bool BoardModelComponent::moveTile(const vector2du32 &source, const vector2du32 &dest)
 		{
 			if (!tileEmpty(source)) {
-				logDebug("Moving tile from ", source, " to ", dest);
+				log_debug_info("Moving tile from ", source, " to ", dest);
 
 				SITilePointer sourceTile{ getTile(source) };
 				SITilePointer destTile{ getTile(dest) };
 
-				logDebug("Source Value: ", sourceTile->get());
+				log_debug_info("Source Value: ", sourceTile->get());
 
 				if (sourceTile)	{
 					__ASSERT(!destTile, "Trying to move to a not empty tile: " , dest, " contains ", destTile->get());
@@ -85,7 +85,7 @@ namespace lib
 				}
 			}
 			else {
-				logDebug("Trying to move empty tile: ", source.x , ",", source.y, " ignoring it");
+				log_debug_info("Trying to move empty tile: ", source.x , ",", source.y, " ignoring it");
 			}
 			return false;
 		}

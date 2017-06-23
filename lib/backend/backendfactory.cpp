@@ -1,6 +1,6 @@
 #include "backendfactory.hpp"
 #include "backendloader.hpp"
-#include <lib/core/log.hpp>
+#include <mtypes/include/log.hpp>
 
 #include "interfaces.hpp"
 #include <loader/include/loader.hpp>
@@ -63,8 +63,8 @@ namespace lib
 		{
 			if (!m_instance) {
 				m_instance = new BackendFactory;
-				logInfo("Using backend: ");
-				logInfo(m_instance->m_windowProviderInfo->info());
+				log_release_info("Using backend: ");
+				log_release_info(m_instance->m_windowProviderInfo->info());
 				return true;
 			}
 

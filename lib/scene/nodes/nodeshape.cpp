@@ -1,5 +1,5 @@
 #include "nodeshape.hpp"
-#include <lib/core/log.hpp>
+#include <mtypes/include/log.hpp>
 #include <lib/scene/texture.hpp>
 
 namespace lib

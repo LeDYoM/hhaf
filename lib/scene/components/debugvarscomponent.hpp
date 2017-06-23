@@ -4,7 +4,7 @@
 #include <mtypes/include/types.hpp>
 #include <lib/scene/icomponent.hpp>
 #include <lib/scene/components/inputcomponent.hpp>
-#include <lib/core/log.hpp>
+#include <mtypes/include/log.hpp>
 #include <mtypes/include/str.hpp>
 #include <map>
 

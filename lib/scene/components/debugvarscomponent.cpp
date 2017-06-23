@@ -7,7 +7,7 @@ namespace lib
 		void DebugVarsComponent::displayDebugVars()
 		{
 			for (auto&& dv : m_varsData) {
-				logDebug(dv.first,": ",dv.second);
+				log_debug_info(dv.first,": ",dv.second);
 			}
 		}
 

@@ -3,7 +3,7 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
-#include <lib/include/logcl.hpp>
+#include <mtypes/include/log.hpp>
 
 namespace zoper
 {
@@ -51,7 +51,7 @@ namespace zoper
 				break;
 			case DirectionData::Invalid:
 			default:
-				logClError("Invalid direction. Cannot convert");
+				lib::log_debug_error("Invalid direction. Cannot convert");
 			}
 			return DirectionData::Invalid;
 		}
@@ -83,7 +83,7 @@ namespace zoper
 				break;
 			case DirectionData::Invalid:
 			default:
-				logClError("Invalid direction. Cannot convert");
+				lib::log_debug_error("Invalid direction. Cannot convert");
 			}
 
 			result *= (lib::s32)scale;
@@ -117,7 +117,7 @@ namespace zoper
 				break;
 			case DirectionData::Invalid:
 			default:
-				logClError("Invalid direction. Cannot convert");
+				lib::log_debug_error("Invalid direction. Cannot convert");
 			}
 
 			return result;

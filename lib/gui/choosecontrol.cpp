@@ -1,7 +1,7 @@
 #include "choosecontrol.hpp"
 #include "choosecontrolline.hpp"
 #include "choosecontrolgroup.hpp"
-#include <lib/core/log.hpp>
+#include <mtypes/include/log.hpp>
 #include <lib/scene/scene.hpp>
 #include <lib/scene/ianimation.hpp>
 #include <lib/scene/nodes/nodeshape.hpp>

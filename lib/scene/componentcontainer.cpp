@@ -1,5 +1,5 @@
 #include "componentcontainer.hpp"
-#include <lib/core/log.hpp>
+#include <mtypes/include/log.hpp>
 #include <algorithm>
 
 namespace lib
@@ -44,8 +44,8 @@ namespace lib
 			const auto& tinfo(typeid(*nc));
 			const std::type_index tindex(tinfo);
 			
-			logDebug("Adding component of type ", tinfo.name()," wich has an index of ",tindex.hash_code());
-			logDebug("Searching for another component of the same type...");
+			log_debug_info("Adding component of type ", tinfo.name()," wich has an index of ",tindex.hash_code());
+			log_debug_info("Searching for another component of the same type...");
 			
 			sptr<IComponent> component(std::move(nc));
 			const bool alreadyInConainer(containsComponentOfType(component,m_components));

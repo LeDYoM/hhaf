@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_LOG_INCLUDE_HPP
-#define LIB_LOG_INCLUDE_HPP
+#ifndef LIB_MTYPES_LOG_INCLUDE_HPP
+#define LIB_MTYPES_LOG_INCLUDE_HPP
 
 #include "mtypes_export.h"
 #include "str.hpp"
@@ -12,6 +12,9 @@ namespace lib
 {
 	namespace log
 	{
+		void LOG_EXPORT init_log();
+		void LOG_EXPORT finish_log();
+
 		enum severity_type { info, error };
 		enum level_type { debug, release };
 
@@ -21,7 +24,7 @@ namespace lib
 		constexpr bool compile_logs = compiled_log_level_type >= level;
 
 		template<level_type level, severity_type severity, typename...Args, typename std::enable_if<compile_logs<level>>::type* = nullptr >
-		inline constexpr void log(Args&&...args)
+		inline constexpr void log(Args&&...args) noexcept
 		{
 			str log_stream(detail::severity_txt<severity>());
 			log_stream << detail::print_impl(args...);
@@ -29,7 +32,7 @@ namespace lib
 		}
 
 		template<level_type level, severity_type severity, typename...Args, typename std::enable_if<!compile_logs<level>>::type* = nullptr >
-		inline constexpr void log(Args&&...) {}
+		inline constexpr void log(Args&&...) noexcept {}
 
 		namespace detail
 		{
@@ -54,10 +57,7 @@ namespace lib
 				return lib::make_str(value, std::forward<Args>(args)...);
 			}
 
-			inline void commitlog(str& log_stream) {
-				log_stream << '\n';
-				std::cout << log_stream;
-			}
+			void LOG_EXPORT commitlog(str& log_stream);
 		}
 	}
 
@@ -80,7 +80,14 @@ namespace lib
 	inline constexpr void log_release_error(Args&&... args) {
 		log::log<log::level_type::release, log::severity_type::error>(std::forward<Args>(args)...);
 	}
-
 }
+
+#define logConstruct_NOPARAMS
+#define logDestruct_NOPARAMS
+#define __ASSERT(...)
+#define CLIENT_ASSERT(...)
+#define logConstruct(...)
+#define logDestruct(...)
+#define CLIENT_EXECUTE_IN_DEBUG(x)	x
 
 #endif
