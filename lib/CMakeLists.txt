@@ -2,8 +2,8 @@ project (lib)
 
 # The version number.
 set (LIB_VERSION_MAJOR 1)
-set (LIB_VERSION_MINOR 2)
-set (LIB_VERSION_PATCH 4)
+set (LIB_VERSION_MINOR 3)
+set (LIB_VERSION_PATCH 0)
 
 # configure a header file to pass some of the CMake settings
 # to the source code
