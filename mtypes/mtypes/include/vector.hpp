@@ -153,6 +153,12 @@ namespace lib
 			}
 		}
 
+		vector& operator+=(const vector &other)
+		{
+			insert(other);
+			return *this;
+		}
+
 		void pop_back() noexcept { if (m_size > 0) --m_size; }
 
 		void reserve(const size_t capacity)

@@ -22,7 +22,7 @@ namespace lib
 	{
 		vector<str> result;
 		std::stringstream ss((*this).c_str());
-		str tok;
+		std::string tok;
 
 		while (std::getline(ss, tok, separator)) {
 			result.push_back(std::move(tok));
@@ -31,17 +31,17 @@ namespace lib
 	}
 	str & str::append(const unsigned int n)
 	{
-		*this += std::to_string(n);
+		append(str(n));
 		return *this;
 	}
 	str & str::append(const signed int n)
 	{
-		*this += std::to_string(n);
+		append(str(n));
 		return *this;
 	}
 	str & str::append(const char c)
 	{
-		this->push_back(c);
+		m_data.push_back(c);
 		return *this;
 	}
 	str & str::append(const str & n)
@@ -56,12 +56,12 @@ namespace lib
 	}
 	str & str::append(const float n)
 	{
-		*this += std::to_string(n);
+		append(str(n));
 		return *this;
 	}
 	str & str::append(const double n)
 	{
-		*this += std::to_string(n);
+		append(str(n));
 		return *this;
 	}
 }
