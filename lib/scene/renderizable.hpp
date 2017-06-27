@@ -19,8 +19,7 @@ namespace lib
 			explicit Renderizable(str &&name, PrimitiveType type, u32 vertexCount);
 			virtual ~Renderizable();
 
-			void configureBase();
-			virtual void configure() = 0;
+			virtual void configure();
 			virtual void draw();
 
 			Property<Color> color;

@@ -26,19 +26,14 @@ namespace lib
 
 			void NodeText::configure()
 			{
-				configureBase();
-				updateGeometry();
-			}
-
-			void NodeText::configureBase()
-			{
 				font.setCallback([this]() { updateGeometry(); });
 				text.setCallback([this]() { updateGeometry(); });
 				characterSize.setCallback([this]() { updateGeometry(); });
 				alignmentX.setCallback([this]() { updateGeometry(); });
 				alignmentY.setCallback([this]() {updateGeometry(); });
 				alignmentBox.setCallback([this]() {updateGeometry(); });
-				Renderizable::configureBase();
+				Renderizable::configure();
+				updateGeometry();
 			}
 
 			void NodeText::updateGeometry()

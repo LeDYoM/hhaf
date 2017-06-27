@@ -21,8 +21,6 @@ namespace lib
 				Property<string_vector> data;
 				void incrementIndex() noexcept;
 				void decrementIndex() noexcept;
-			protected:
-				void configureBase();
 			};
 		}
 	}

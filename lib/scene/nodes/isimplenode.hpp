@@ -23,7 +23,7 @@ namespace lib
 				Property<Rects32> textureRect;
 
 			protected:
-				void configureBase();
+				void configure() override;
 				void updateGeometry();
 				void updateTextureCoords();
 

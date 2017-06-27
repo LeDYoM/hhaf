@@ -19,14 +19,9 @@ namespace lib
 				logDestruct("Name: ", name());
 			}
 
-			void NodeShape::configureBase()
-			{
-				ISimpleNode::configureBase();
-			}
-
 			void NodeShape::configure()
 			{
-				configureBase();
+				ISimpleNode::configure();
 				updateGeometry();
 			}
 

@@ -22,7 +22,6 @@ namespace lib
 				Property<u32> pointCount;
 
 			protected:
-				void configureBase();
 				virtual void updateGeometrySimpleNode() override;
 			};
 		}

@@ -42,7 +42,6 @@ namespace lib
 				Property<Rectf32> alignmentBox;
 
 			protected:
-				void configureBase();
 				void updateGeometry();
 			private:
 				void updateAlignmentX();

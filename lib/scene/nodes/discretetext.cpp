@@ -14,11 +14,6 @@ namespace lib
 					t->text = v[index];
 				}
 			}
-			void DiscreteText::configure()
-			{
-				configureBase();
-				updateGeometry();
-			}
 
 			void DiscreteText::incrementIndex() noexcept
 			{
@@ -40,7 +35,7 @@ namespace lib
 				}
 			}
 
-			void DiscreteText::configureBase()
+			void DiscreteText::configure()
 			{
 				index.setCallback([this]()
 				{
@@ -62,7 +57,8 @@ namespace lib
 					}
 				});
 				data.update();
-				NodeText::configureBase();
+				NodeText::configure();
+				updateGeometry();
 			}
 		}
 	}

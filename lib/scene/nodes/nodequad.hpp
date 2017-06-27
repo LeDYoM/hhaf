@@ -22,7 +22,6 @@ namespace lib
 				virtual void configure() override;
 
 			protected:
-				void configureBase();
 				virtual void updateGeometrySimpleNode() override;
 			};
 		}

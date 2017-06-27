@@ -12,7 +12,7 @@ namespace lib
 
 		Renderizable::~Renderizable() = default;
 
-		void Renderizable::configureBase()
+		void Renderizable::configure()
 		{
 			color.setCallback([this]() { m_vertices.setColor(color()); });
 		}
