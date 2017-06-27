@@ -17,7 +17,7 @@ namespace lib
 		{
 			void commitlog(str& log_stream) {
 				log_stream << '\n';
-				std::cout << log_stream;
+				std::cout << log_stream.c_str();
 			}
 		}
 	}

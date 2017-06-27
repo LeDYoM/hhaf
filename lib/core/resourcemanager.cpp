@@ -30,7 +30,7 @@ namespace lib
 					static const char *const resourcesDirectoryKey = "resources_directory";
 					const auto resourcesDirectory = value(resourcesDirectoryKey)->get<str>();
 					for_each_property([&resourcesDirectory, this](const Configuration::CMapLine &dataLine) {
-						if (dataLine.first != resourcesDirectoryKey) {
+						if (dataLine.first.c_str() != resourcesDirectoryKey) {
 							auto completeId (dataLine.first.split('@'));
 							if (completeId.size() > 1) {
 								str resourceTypeStr(completeId[0]);

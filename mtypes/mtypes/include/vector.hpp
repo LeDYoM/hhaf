@@ -19,12 +19,10 @@ namespace lib
 
 		constexpr vector() noexcept : m_capacity{ 0 }, m_size{ 0 }, m_buffer{ nullptr } {}
 		explicit constexpr vector(size_t size) : m_capacity{ size }, m_size{ size }, m_buffer{ size?new T[size] :nullptr} {}
-		constexpr vector(std::initializer_list<T> ilist) noexcept : m_capacity{ ilist.size() }, m_size{ m_capacity }, m_buffer{ new T[m_capacity] }
+		constexpr vector(const T *ilistBegin, const T*ilistEnd) noexcept : m_capacity{ ilistEnd-ilistBegin }, m_size{ m_capacity }, m_buffer{ new T[m_capacity] }
 		{
 			size_t c{ 0 };
-			for (const auto& element : ilist) {
-				m_buffer[c++] = element;
-			}
+			_copyElements(ilistBegin, m_size);
 		}
 
 		vector(const vector&other) noexcept : m_capacity{ other.m_capacity }, m_size{ other.m_size }, m_buffer{new T[m_capacity]}

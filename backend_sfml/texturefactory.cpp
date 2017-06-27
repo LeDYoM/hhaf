@@ -12,7 +12,7 @@ namespace lib
 			ITexture *TextureFactory::loadFromFile(const str & file)
 			{
 				uptr<sf::Texture> texture(muptr<sf::Texture>());
-				texture->loadFromFile(file);
+				texture->loadFromFile(file.c_str());
 				uptr<Texture> t{ muptr<Texture>(std::move(texture)) };
 				m_textureCache.push_back(std::move(t));
 				return (*(m_textureCache.end()-1)).get();

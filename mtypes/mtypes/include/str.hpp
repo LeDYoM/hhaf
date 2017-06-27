@@ -12,23 +12,31 @@ namespace lib
 	struct MTYPES_EXPORT inline_str
 	{
 		inline_str(const char *_str, unsigned int _size) : str{_str}, size{_size} {}
-
+		const char *begin() const { return str; }
+		const char *end() const { return str + size; }
 		const char *str;
 		unsigned int size;
 
 	};
 
-// Temporary code
-#pragma warning(push)
-#pragma warning(disable:4251)
-	class MTYPES_EXPORT str : public ::std::string
+	using char_type = char;
+
+	class MTYPES_EXPORT str
 	{
-#pragma warning(pop)
+		using reference = char_type&;
+		using const_reference = const char_type&;
+		using iterator = char_type*;
+		using const_iterator = const char_type*;
+		using size_type = unsigned int;
+		vector<char_type> m_data;
 	public:
-		str() = default;
-		str(const inline_str &source) : std::string{ source.str } {}
-		str(const std::string &source) : std::string{ source } {}
-		str(std::string &&source) : std::string{ std::move(source) } {}
+		str();
+		str(inline_str);
+		template<size_t N>
+		constexpr str(const char_type(&a)[N]) : str(inline_str{ a,N }) {}
+		str(const std::string &);
+//		str(std::string &&);
+		str(str&&);
 
 		str(const char c);
 		str(const unsigned int n);
@@ -48,18 +56,19 @@ namespace lib
 		str &append(const float n);
 		str &append(const double n);
 
-		reference operator[](const size_type index) { return std::string::operator[](index); }
-		const_reference operator[](const size_type index) const { return std::string::operator[](index); }
-		iterator begin() { return std::string::begin(); }
-		const_iterator begin() const { return std::string::begin(); }
-		const_iterator cbegin() const { return std::string::cbegin(); }
-		iterator end() { return std::string::end(); }
-		const_iterator end() const { return std::string::end(); }
-		const_iterator cend() const { return std::string::cend(); }
+		size_t size() const noexcept{ return m_data.size(); }
+		reference operator[](const size_type index) { return m_data[index]; }
+		const_reference operator[](const size_type index) const { return m_data[index]; }
+		iterator begin() { return m_data.begin(); }
+		const_iterator begin() const { return m_data.begin(); }
+		const_iterator cbegin() const { return m_data.cbegin(); }
+		iterator end() { return m_data.end(); }
+		const_iterator end() const { return m_data.end(); }
+		const_iterator cend() const { return m_data.cend(); }
 
 		inline_str ic_str() const noexcept { return {c_str(), size()}; }
-		const char *c_str() const noexcept { return std::string::c_str(); }
-		bool empty() const noexcept { return std::string::empty(); }
+		const char *c_str() const noexcept { return m_data.cbegin(); }
+		bool empty() const noexcept { return m_data.empty(); }
 		template <typename T>
 		constexpr str &operator<<(const T&n)
 		{
