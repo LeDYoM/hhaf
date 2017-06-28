@@ -9,12 +9,14 @@
 
 namespace lib
 {
+	using char_type = char;
+
 	struct MTYPES_EXPORT inline_str
 	{
-		inline_str(const char *_str, unsigned int _size) : str{_str}, size{_size} {}
-		const char *begin() const { return str; }
-		const char *end() const { return str + size; }
-		const char *str;
+		constexpr inline_str(const char *_str, unsigned int _size) : str{_str}, size{_size} {}
+		constexpr const char_type *begin() const noexcept { return str; }
+		constexpr const char_type *end() const noexcept { return str + size; }
+		const char_type *str;
 		unsigned int size;
 
 	};
@@ -28,15 +30,20 @@ namespace lib
 		using iterator = char_type*;
 		using const_iterator = const char_type*;
 		using size_type = unsigned int;
+		// Temporary code
+		#pragma warning(push)
+		#pragma warning(disable:4251)
 		vector<char_type> m_data;
+		#pragma warning(pop)
 	public:
-		str();
-		str(inline_str);
+		constexpr str() noexcept = default;
+		constexpr str(inline_str source) noexcept : str{ source.str } {}
+
 		template<size_t N>
-		constexpr str(const char_type(&a)[N]) : str(inline_str{ a,N }) {}
-		str(const std::string &);
-//		str(std::string &&);
-		str(str&&);
+		constexpr str(const char_type(&a)[N]) noexcept : str(inline_str{ a,N }) {}
+		str(std::string &&) noexcept;
+		str(const std::string &) noexcept;
+		str(str&&) noexcept;
 
 		str(const char c);
 		str(const unsigned int n);
@@ -46,6 +53,8 @@ namespace lib
 		str(const float n);
 		str(const double n);
 
+		str&operator=(const str&);
+		str&operator=(str&&) noexcept;
 		vector<str> split(const char separator) const;
 		str &append() { return *this; }
 		str &append(const char c);
@@ -56,7 +65,12 @@ namespace lib
 		str &append(const float n);
 		str &append(const double n);
 
-		size_t size() const noexcept{ return m_data.size(); }
+		template <typename T>
+		str &operator+=(T&&source) {
+			return append(std::forward<T>(source));
+		}
+
+		constexpr size_t size() const noexcept{ return m_data.size(); }
 		reference operator[](const size_type index) { return m_data[index]; }
 		const_reference operator[](const size_type index) const { return m_data[index]; }
 		iterator begin() { return m_data.begin(); }
@@ -75,21 +89,37 @@ namespace lib
 			return append(n);
 		}
 
-		template <typename T>
-		str operator+(const T&n) const
-		{
-			return str(*this).append(n);
-		}
-
+		friend constexpr bool operator==(const str& lhs, const str&rhs) noexcept;
+		friend constexpr bool operator!=(const str& lhs, const str&rhs) noexcept;
+		friend constexpr bool operator<(const str& lhs, const str&rhs) noexcept;
+		friend str operator+(const str& lhs, const str&rhs) noexcept;
 	};
 
-//	bool operator==(const str& lhs, const str&rhs) noexcept { 
-//		return operator==(std::string(lhs.c_str()), std::string(rhs.c_str())); 
-//	}
+	constexpr bool operator==(const str& lhs, const str&rhs) noexcept { 
+		return lhs.m_data == rhs.m_data;
+	}
 
-//	bool operator!=(const str& lhs, const str&rhs) noexcept {
-//		return !operator==(std::string(lhs.c_str()), std::string(rhs.c_str()));
-//	}
+	constexpr bool operator!=(const str& lhs, const str&rhs) noexcept {
+		return lhs.m_data != rhs.m_data;
+	}
+
+	constexpr bool operator<(const str& lhs, const str&rhs) noexcept {
+		size_t i{ 0 };
+		while (i < lhs.size() && i < rhs.size()) {
+			if (lhs[i] < rhs[i]) {
+				return true;
+			}
+			else if (lhs[i] > rhs[i]) {
+				return false;
+			}
+			++i;
+		}
+		return lhs.size() < rhs.size();
+	}
+
+	inline str operator+(const str& lhs, const str&rhs) noexcept {
+		return str(lhs).append(rhs);
+	}
 
 	template<typename ...Args>
 	constexpr str make_str(Args&&... args)

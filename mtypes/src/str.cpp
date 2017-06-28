@@ -4,19 +4,36 @@
 
 namespace lib
 {
-	str::str() {}
-	str::str(inline_str source) : m_data(source.begin,source.end()) {}
-	str::str(const std::string &source) : m_data(source.cbegin(),source.cend())	{}
-	/* str::str(std::string &&source) : m_data(std::move(source.m_data)) {} */
-	str::str(str &&source) : m_data{ source.m_data } {}
+    str::str(std::string &&source) noexcept : str(source.c_str()) {}
+	str::str(const std::string &source) noexcept : str(source.c_str()) {}
+	str::str(str &&source) noexcept : m_data{ std::move(source.m_data) } {}
 
-	str::str(const unsigned int n) : str{ std::to_string(n) } {}
-	str::str(const signed int n) : str{ std::to_string(n) } {}
-	str::str(const char c) : str{ 1, c } {}
-	str::str(const str & n) : str{ n } {}
-	str::str(const char * n) : str{ n } {}
+	str::str(const unsigned int n) : str{ std::to_string(n).c_str() } {}
+	str::str(const signed int n) : str{ std::to_string(n).c_str() } {}
 	str::str(const float n) : str{ std::to_string(n) } {}
 	str::str(const double n) : str{ std::to_string(n) } {}
+
+	str & str::operator=(const str &source)
+	{
+		m_data = source.m_data;
+		return *this;
+	}
+	str & str::operator=(str &&source) noexcept
+	{
+		m_data = std::move(source.m_data);
+		return *this;
+	}
+
+	str::str(const char c) { m_data.push_back(c); }
+
+	str::str(const str & n) : m_data{ n.m_data } {}
+	str::str(const char * n) 
+	{
+		while (const char_type c{ *n }) {
+			m_data.push_back(c);
+			++n;
+		}
+	}
 
 	vector<str> str::split(const char separator) const
 	{
@@ -46,12 +63,12 @@ namespace lib
 	}
 	str & str::append(const str & n)
 	{
-		*this += n;
+		m_data.insert(n.m_data);
 		return *this;
 	}
 	str & str::append(const char * n)
 	{
-		*this += n;
+		append(str(n));
 		return *this;
 	}
 	str & str::append(const float n)

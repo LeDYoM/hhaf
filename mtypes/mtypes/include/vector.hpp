@@ -4,6 +4,7 @@
 #define MTYPES_VECTOR_INCLUDE_HPP
 
 #include <initializer_list>
+#include "mtypes_export.h"
 
 namespace lib
 {
@@ -19,10 +20,9 @@ namespace lib
 
 		constexpr vector() noexcept : m_capacity{ 0 }, m_size{ 0 }, m_buffer{ nullptr } {}
 		explicit constexpr vector(size_t size) : m_capacity{ size }, m_size{ size }, m_buffer{ size?new T[size] :nullptr} {}
-		constexpr vector(const T *ilistBegin, const T*ilistEnd) noexcept : m_capacity{ ilistEnd-ilistBegin }, m_size{ m_capacity }, m_buffer{ new T[m_capacity] }
+		constexpr vector(std::initializer_list<T> ilist) noexcept : vector( ilist.size() )
 		{
-			size_t c{ 0 };
-			_copyElements(ilistBegin, m_size);
+			_copyElements(ilist.begin(), m_size);
 		}
 
 		vector(const vector&other) noexcept : m_capacity{ other.m_capacity }, m_size{ other.m_size }, m_buffer{new T[m_capacity]}
@@ -238,7 +238,35 @@ namespace lib
 		size_t m_capacity;
 		size_t m_size;
 		T* m_buffer;
+
+		template <typename A>
+		friend constexpr bool operator==(const vector<A>& lhs, const vector<A>& rhs) noexcept;
+
+		template <typename A>
+		friend constexpr bool operator!=(const vector<A>& lhs, const vector<A>& rhs) noexcept;
 	};
+
+	template <typename A>
+	constexpr bool operator==(const vector<A>& lhs, const vector<A>& rhs) noexcept
+	{
+		if (lhs.m_size != rhs.m_size) {
+			return false;
+		} else {
+			for (size_t i{ 0 }; i < lhs.m_size;++i) {
+				if (lhs.m_buffer[i] != rhs.m_buffer[i]) {
+					return false;
+				}
+			}
+			return true;
+		}
+	}
+
+	template <typename A>
+	constexpr bool operator!=(const vector<A>& lhs, const vector<A>& rhs) noexcept
+	{
+		return !(lhs == rhs);
+	}
+
 }
 
 #endif
