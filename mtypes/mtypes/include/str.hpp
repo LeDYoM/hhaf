@@ -41,6 +41,7 @@ namespace lib
 
 		template<size_t N>
 		constexpr str(const char_type(&a)[N]) noexcept : str(inline_str{ a,N }) {}
+
 		str(std::string &&) noexcept;
 		str(const std::string &) noexcept;
 		str(str&&) noexcept;
@@ -70,7 +71,7 @@ namespace lib
 			return append(std::forward<T>(source));
 		}
 
-		constexpr size_t size() const noexcept{ return m_data.size(); }
+		constexpr size_t size() const noexcept{ return m_data.empty()?0:m_data.size()-1; }
 		reference operator[](const size_type index) { return m_data[index]; }
 		const_reference operator[](const size_type index) const { return m_data[index]; }
 		iterator begin() { return m_data.begin(); }

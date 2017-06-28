@@ -60,9 +60,9 @@ namespace lib
 		template <typename T>
 		const T get() const noexcept
 		{
-//			std::istringstream tmpstream(m_data);
+			std::istringstream tmpstream(m_data.c_str());
 			T tmp;
-//			tmpstream >> tmp;
+			tmpstream >> tmp;
 			return tmp;
 		}
 

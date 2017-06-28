@@ -119,8 +119,8 @@ namespace lib
 			}
 		}
 
-		reference operator[](const size_t index) { return m_buffer[index]; }
-		const_reference operator[](const size_t index) const { return m_buffer[index]; }
+		constexpr reference operator[](const size_t index) { return m_buffer[index]; }
+		constexpr const_reference operator[](const size_t index) const { return m_buffer[index]; }
 		constexpr unsigned int capacity() const noexcept { return m_capacity; }
 		constexpr unsigned int size() const noexcept { return m_size; }
 		constexpr bool empty() const noexcept { return m_size == 0; }
@@ -130,8 +130,8 @@ namespace lib
 		constexpr const_iterator end() const noexcept { return m_buffer + m_size; }
 		constexpr const_iterator cbegin() const noexcept { return m_buffer; }
 		constexpr const_iterator cend() const noexcept { return m_buffer + m_size; }
-		T& front() { return m_buffer[0]; }
-		T& back() { return m_buffer[m_size > 0 ? (m_size - 1) : 0]; }
+		constexpr T& front() { return m_buffer[0]; }
+		constexpr T& back() { return m_buffer[m_size > 0 ? (m_size - 1) : 0]; }
 
 		void push_back(const T& value)
 		{
