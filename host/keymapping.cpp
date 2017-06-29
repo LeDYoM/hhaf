@@ -15,9 +15,9 @@ namespace zoper
 		}
 
 		auto configProperty(value("key_launch" + Direction::Total));
-		m_keys[Direction::Total] = configProperty->empty() ? defaults[Direction::Total] : configProperty->get<lib::input::Key>();
+		m_keys[Direction::Total] = configProperty->empty() ? defaults[Direction::Total] : configProperty->get<Key>();
 		configProperty = value("key_pause" + str(Direction::Total + 1));
-		m_keys[Direction::Total + 1] = configProperty->empty() ? defaults[Direction::Total + 1] : configProperty->get<lib::input::Key>();
+		m_keys[Direction::Total + 1] = configProperty->empty() ? defaults[Direction::Total + 1] : configProperty->get<Key>();
 	}
 
 	KeyMapping::~KeyMapping() = default;

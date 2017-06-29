@@ -1,7 +1,9 @@
+#pragma once
+
 #ifndef LIB_IRESOURCELOADER_INCLUDE_HPP
 #define LIB_IRESOURCELOADER_INCLUDE_HPP
 
-#pragma once
+#include <mtypes/include/str.hpp>
 
 namespace lib
 {

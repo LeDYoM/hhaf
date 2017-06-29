@@ -6,6 +6,7 @@
 #include <string>
 #include "mtypes_export.h"
 #include "vector.hpp"
+#include "types.hpp"
 
 namespace lib
 {
@@ -39,32 +40,37 @@ namespace lib
 		constexpr str() noexcept = default;
 		constexpr str(inline_str source) noexcept : str{ source.str } {}
 
-		template<size_t N>
-		constexpr str(const char_type(&a)[N]) noexcept : str(inline_str{ a,N }) {}
+//		template<size_t N>
+//		constexpr str(const char_type(&a)[N]) noexcept : str(inline_str{ a,N }) {}
 
 		str(std::string &&) noexcept;
 		str(const std::string &) noexcept;
 		str(str&&) noexcept;
 
-		str(const char c);
+		str(const char_type c);
 		str(const unsigned int n);
-		str(const signed int n);
+		str(const int n);
 		str(const str &n);
-		str(const char *n);
+		str(const char_type *n);
 		str(const float n);
 		str(const double n);
 
 		str&operator=(const str&);
 		str&operator=(str&&) noexcept;
-		vector<str> split(const char separator) const;
+		vector<str> split(const char_type separator) const;
 		str &append() { return *this; }
-		str &append(const char c);
-		str &append(const unsigned int n);
-		str &append(const signed int n);
+		str &append(const char_type c);
+		str &append(const u32 n);
+		str &append(const s32 n);
 		str &append(const str &n);
-		str &append(const char *n);
-		str &append(const float n);
-		str &append(const double n);
+		str &append(const char_type *n);
+		str &append(const f32 n);
+		str &append(const f64 n);
+		void convert(u32 &n);
+		void convert(s32 &n);
+		void convert(f32 &n);
+		void convert(f64 &n);
+
 
 		template <typename T>
 		str &operator+=(T&&source) {
@@ -90,11 +96,34 @@ namespace lib
 			return append(n);
 		}
 
+		template <typename enum_type>
+		std::enable_if_t<std::is_enum<enum_type>::value>
+		operator>>(enum_type&n)
+		{
+			std::underlying_type_t<enum_type> tmp{};
+			convert(tmp);
+			n = static_cast<typename enum_type>(tmp);
+		}
+
+		template <typename T>
+		std::enable_if_t<!std::is_enum<T>::value>
+		operator>>(T&n)
+		{
+			convert(n);
+		}
+
+		template <>
+		void operator>>(str&n)
+		{
+			*this = n;
+		}
+
 		friend constexpr bool operator==(const str& lhs, const str&rhs) noexcept;
 		friend constexpr bool operator!=(const str& lhs, const str&rhs) noexcept;
 		friend constexpr bool operator<(const str& lhs, const str&rhs) noexcept;
 		friend str operator+(const str& lhs, const str&rhs) noexcept;
 	};
+
 
 	constexpr bool operator==(const str& lhs, const str&rhs) noexcept { 
 		return lhs.m_data == rhs.m_data;
