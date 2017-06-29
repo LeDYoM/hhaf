@@ -8,10 +8,32 @@ namespace lib
 	str::str(const std::string &source) noexcept : str(source.c_str()) {}
 	str::str(str &&source) noexcept : m_data{ std::move(source.m_data) } {}
 
-	str::str(const unsigned  n) : str{ std::to_string(n).c_str() } {}
+	str::str(const u32  n) : str{ std::to_string(n).c_str() } {}
 	str::str(const s32 n) : str{ std::to_string(n).c_str() } {}
 	str::str(const f32 n) : str{ std::to_string(n) } {}
 	str::str(const f64 n) : str{ std::to_string(n) } {}
+
+	str::str(const char_type c) { m_data.push_back(c); m_data.push_back(0); }
+	str::str(const str & n) : m_data{ n.m_data } {}
+
+	namespace detail
+	{
+		constexpr size_t _str_len(const char_type *const p_str) noexcept
+		{
+			const char_type *p_str_copy{ p_str };
+			while (*p_str_copy++);
+			return p_str_copy - p_str;
+		}
+	}
+	str::str(const char_type * n)
+	{
+		m_data.reserve(detail::_str_len(n));
+		while (const char_type c{ *n }) {
+			m_data.push_back(c);
+			++n;
+		}
+		m_data.push_back(0);
+	}
 
 	str & str::operator=(const str &source)
 	{
@@ -22,17 +44,6 @@ namespace lib
 	{
 		m_data = std::move(source.m_data);
 		return *this;
-	}
-
-	str::str(const char_type c) { m_data.push_back(c); }
-
-	str::str(const str & n) : m_data{ n.m_data } {}
-	str::str(const char_type * n) 
-	{
-		while (const char_type c{ *n }) {
-			m_data.push_back(c);
-			++n;
-		}
 	}
 
 	vector<str> str::split(const char_type separator) const
@@ -58,11 +69,14 @@ namespace lib
 	}
 	str & str::append(const char_type c)
 	{
+		m_data.pop_back();
 		m_data.push_back(c);
+		m_data.push_back(0);
 		return *this;
 	}
 	str & str::append(const str & n)
 	{
+		m_data.pop_back();
 		m_data.insert(n.m_data);
 		return *this;
 	}

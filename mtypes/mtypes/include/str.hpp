@@ -40,8 +40,8 @@ namespace lib
 		constexpr str() noexcept = default;
 		constexpr str(inline_str source) noexcept : str{ source.str } {}
 
-//		template<size_t N>
-//		constexpr str(const char_type(&a)[N]) noexcept : str(inline_str{ a,N }) {}
+		template<size_t N>
+		constexpr str(const char_type(&a)[N]) noexcept : str(inline_str{ a,N }) {}
 
 		str(std::string &&) noexcept;
 		str(const std::string &) noexcept;
