@@ -33,7 +33,6 @@ namespace lib
 			m_data.push_back(c);
 			++n;
 		}
-		m_data.push_back(0);
 	}
 
 	vector<str> str::split(const char_type separator) const
