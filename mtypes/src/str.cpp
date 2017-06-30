@@ -24,10 +24,9 @@ namespace lib
 	}
 	str::str(const char_type * n)
 	{
-		m_data.reserve(detail::_str_len(n));
-		while (const char_type c{ *n }) {
-			m_data.push_back(c);
-			++n;
+		m_data.reserve(detail::_str_len(n)+1);
+		while (*n) {
+			m_data.push_back(*n++);
 		}
 		m_data.push_back(0);
 	}
