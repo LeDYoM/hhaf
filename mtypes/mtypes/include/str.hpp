@@ -83,9 +83,9 @@ namespace lib
 		iterator begin() { return m_data.begin(); }
 		const_iterator begin() const { return m_data.begin(); }
 		const_iterator cbegin() const { return m_data.cbegin(); }
-		iterator end() { return m_data.end(); }
-		const_iterator end() const { return m_data.end(); }
-		const_iterator cend() const { return m_data.cend(); }
+		iterator end() { return m_data.begin()+size(); }
+		const_iterator end() const { return m_data.begin()+size(); }
+		const_iterator cend() const { return m_data.cbegin()+size(); }
 
 		inline_str ic_str() const noexcept { return {c_str(), size()}; }
 		const char *c_str() const noexcept { return m_data.cbegin(); }
