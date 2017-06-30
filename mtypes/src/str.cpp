@@ -13,9 +13,6 @@ namespace lib
 	str::str(const f32 n) : str{ std::to_string(n) } {}
 	str::str(const f64 n) : str{ std::to_string(n) } {}
 
-	str::str(const char_type c) { m_data.push_back(c); m_data.push_back(0); }
-	str::str(const str & n) : m_data{ n.m_data } {}
-
 	namespace detail
 	{
 		constexpr size_t _str_len(const char_type *const p_str) noexcept

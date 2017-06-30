@@ -47,13 +47,13 @@ namespace lib
 		str(const std::string &) noexcept;
 		str(str&&) noexcept;
 
-		str(const char_type c);
-		str(const unsigned int n);
-		str(const int n);
-		str(const str &n);
+		constexpr str(const char_type c) : m_data{ c,0 } {}
+		constexpr str(const str & n) : m_data{ n.m_data } {}
+		str(const u32 n);
+		str(const s32 n);
 		str(const char_type *n);
-		str(const float n);
-		str(const double n);
+		str(const f32 n);
+		str(const f64 n);
 
 		str&operator=(const str&);
 		str&operator=(str&&) noexcept;
@@ -98,7 +98,7 @@ namespace lib
 
 		template <typename enum_type>
 		std::enable_if_t<std::is_enum<enum_type>::value>
-		operator>>(enum_type&n)
+		 constexpr operator>>(enum_type&n)
 		{
 			std::underlying_type_t<enum_type> tmp{};
 			convert(tmp);
@@ -107,7 +107,7 @@ namespace lib
 
 		template <typename T>
 		std::enable_if_t<!std::is_enum<T>::value>
-		operator>>(T&n)
+		constexpr operator>>(T&n)
 		{
 			convert(n);
 		}

@@ -211,21 +211,21 @@ namespace lib
 			}
 		}
 
-		void _copyElements(const T*source, const size_t s)
+		constexpr void _copyElements(const T*source, const size_t s)
 		{
 			for (size_t i{ 0 }; i < s; ++i) {
 				m_buffer[i] = source[i];
 			}
 		}
 
-		void _moveElements(T*source, const size_t s)
+		constexpr void _moveElements(T*source, const size_t s)
 		{
 			for (size_t i{ 0 }; i < s; ++i) {
 				m_buffer[i] = std::move(source[i]);
 			}
 		}
 
-		void _destroy()
+		constexpr void _destroy()
 		{
 			if (m_buffer) {
 				delete[] m_buffer;
