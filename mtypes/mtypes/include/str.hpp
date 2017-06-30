@@ -115,7 +115,7 @@ namespace lib
 		template <>
 		void operator>>(str&n)
 		{
-			*this = n;
+			n = *this;
 		}
 
 		friend constexpr bool operator==(const str& lhs, const str&rhs) noexcept;

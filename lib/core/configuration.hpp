@@ -65,6 +65,12 @@ namespace lib
 			return tmp;
 		}
 
+		template <>
+		str get<str>() const noexcept
+		{
+			return m_data;
+		}
+
 		template <typename T>
 		bool set(T&& v) noexcept
 		{

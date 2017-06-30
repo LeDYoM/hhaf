@@ -10,7 +10,7 @@ namespace zoper
 		std::array<lib::input::Key, TotalKeys> defaults{ Key::Left, Key::Right, Key::Up, Key::Down, Key::Space, Key::Escape };
 
 		for (auto i = 0u; i < Direction::Total; ++i) {
-			auto configProperty(value("key" + i));
+			auto configProperty(value("key" + str(i)));
 			m_keys[i] = configProperty->empty() ? defaults[i] : configProperty->get<Key>();
 		}
 
