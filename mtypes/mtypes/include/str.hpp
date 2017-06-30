@@ -6,81 +6,150 @@
 #include <string>
 #include "mtypes_export.h"
 #include "vector.hpp"
+#include "types.hpp"
 
 namespace lib
 {
+	using char_type = char;
+
 	struct MTYPES_EXPORT inline_str
 	{
-		inline_str(const char *_str, unsigned int _size) : str{_str}, size{_size} {}
-
-		const char *str;
+		constexpr inline_str(const char *_str, unsigned int _size) : str{_str}, size{_size} {}
+		constexpr const char_type *begin() const noexcept { return str; }
+		constexpr const char_type *end() const noexcept { return str + size; }
+		const char_type *str;
 		unsigned int size;
 
 	};
 
-// Temporary code
-#pragma warning(push)
-#pragma warning(disable:4251)
-	class MTYPES_EXPORT str : public ::std::string
-	{
-#pragma warning(pop)
-	public:
-		str() = default;
-		str(const inline_str &source) : std::string{ source.str } {}
-		str(const std::string &source) : std::string{ source } {}
-		str(std::string &&source) : std::string{ std::move(source) } {}
+	using char_type = char;
 
-		str(const char c);
+	class MTYPES_EXPORT str
+	{
+		using reference = char_type&;
+		using const_reference = const char_type&;
+		using iterator = char_type*;
+		using const_iterator = const char_type*;
+		using size_type = unsigned int;
+		// Temporary code
+		#pragma warning(push)
+		#pragma warning(disable:4251)
+		vector<char_type> m_data;
+		#pragma warning(pop)
+	public:
+		constexpr str() noexcept = default;
+		constexpr str(inline_str source) noexcept : str{ source.str } {}
+
+		template<size_t N>
+		constexpr str(const char_type(&a)[N]) noexcept : str(inline_str{ a,N }) {}
+
+		str(std::string &&) noexcept;
+		str(const std::string &) noexcept;
+		str(str&&) noexcept;
+
+		str(const char_type c);
 		str(const unsigned int n);
-		str(const signed int n);
+		str(const int n);
 		str(const str &n);
-		str(const char *n);
+		str(const char_type *n);
 		str(const float n);
 		str(const double n);
 
-		vector<str> split(const char separator) const;
+		str&operator=(const str&);
+		str&operator=(str&&) noexcept;
+		vector<str> split(const char_type separator) const;
 		str &append() { return *this; }
-		str &append(const char c);
-		str &append(const unsigned int n);
-		str &append(const signed int n);
+		str &append(const char_type c);
+		str &append(const u32 n);
+		str &append(const s32 n);
 		str &append(const str &n);
-		str &append(const char *n);
-		str &append(const float n);
-		str &append(const double n);
+		str &append(const char_type *n);
+		str &append(const f32 n);
+		str &append(const f64 n);
+		void convert(u32 &n);
+		void convert(s32 &n);
+		void convert(f32 &n);
+		void convert(f64 &n);
 
-		reference operator[](const size_type index) { return std::string::operator[](index); }
-		const_reference operator[](const size_type index) const { return std::string::operator[](index); }
-		iterator begin() { return std::string::begin(); }
-		const_iterator begin() const { return std::string::begin(); }
-		const_iterator cbegin() const { return std::string::cbegin(); }
-		iterator end() { return std::string::end(); }
-		const_iterator end() const { return std::string::end(); }
-		const_iterator cend() const { return std::string::cend(); }
+
+		template <typename T>
+		str &operator+=(T&&source) {
+			return append(std::forward<T>(source));
+		}
+
+		constexpr size_t size() const noexcept{ return m_data.empty()?0:m_data.size()-1; }
+		reference operator[](const size_type index) { return m_data[index]; }
+		const_reference operator[](const size_type index) const { return m_data[index]; }
+		iterator begin() { return m_data.begin(); }
+		const_iterator begin() const { return m_data.begin(); }
+		const_iterator cbegin() const { return m_data.cbegin(); }
+		iterator end() { return m_data.begin()+size(); }
+		const_iterator end() const { return m_data.begin()+size(); }
+		const_iterator cend() const { return m_data.cbegin()+size(); }
 
 		inline_str ic_str() const noexcept { return {c_str(), size()}; }
-		const char *c_str() const noexcept { return std::string::c_str(); }
-		bool empty() const noexcept { return std::string::empty(); }
+		const char *c_str() const noexcept { return m_data.cbegin(); }
+		bool empty() const noexcept { return m_data.empty(); }
 		template <typename T>
 		constexpr str &operator<<(const T&n)
 		{
 			return append(n);
 		}
 
-		template <typename T>
-		str operator+(const T&n) const
+		template <typename enum_type>
+		std::enable_if_t<std::is_enum<enum_type>::value>
+		operator>>(enum_type&n)
 		{
-			return str(*this).append(n);
+			std::underlying_type_t<enum_type> tmp{};
+			convert(tmp);
+			n = static_cast<typename enum_type>(tmp);
 		}
 
+		template <typename T>
+		std::enable_if_t<!std::is_enum<T>::value>
+		operator>>(T&n)
+		{
+			convert(n);
+		}
+
+		template <>
+		void operator>>(str&n)
+		{
+			n = *this;
+		}
+
+		friend constexpr bool operator==(const str& lhs, const str&rhs) noexcept;
+		friend constexpr bool operator!=(const str& lhs, const str&rhs) noexcept;
+		friend constexpr bool operator<(const str& lhs, const str&rhs) noexcept;
+		friend str operator+(const str& lhs, const str&rhs) noexcept;
 	};
 
-//	bool operator==(const str& lhs, const str&rhs) noexcept { 
-//		return operator==(std::string(lhs.c_str()), std::string(rhs.c_str())); 
-//	}
 
-//	bool operator!=(const str& lhs, const str&rhs) noexcept {
-//		return !operator==(std::string(lhs.c_str()), std::string(rhs.c_str()));
-//	}
+	constexpr bool operator==(const str& lhs, const str&rhs) noexcept { 
+		return lhs.m_data == rhs.m_data;
+	}
+
+	constexpr bool operator!=(const str& lhs, const str&rhs) noexcept {
+		return lhs.m_data != rhs.m_data;
+	}
+
+	constexpr bool operator<(const str& lhs, const str&rhs) noexcept {
+		size_t i{ 0 };
+		while (i < lhs.size() && i < rhs.size()) {
+			if (lhs[i] < rhs[i]) {
+				return true;
+			}
+			else if (lhs[i] > rhs[i]) {
+				return false;
+			}
+			++i;
+		}
+		return lhs.size() < rhs.size();
+	}
+
+	inline str operator+(const str& lhs, const str&rhs) noexcept {
+		return str(lhs).append(rhs);
+	}
 
 	template<typename ...Args>
 	constexpr str make_str(Args&&... args)

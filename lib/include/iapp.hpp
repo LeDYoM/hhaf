@@ -3,6 +3,7 @@
 
 #include "compconfig.hpp"
 #include <mtypes/include/types.hpp>
+#include <mtypes/include/str.hpp>
 
 namespace lib
 {

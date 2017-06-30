@@ -2,6 +2,7 @@
 #define LIB__KEY_INCLUDE_HPP__
 
 #include <mtypes/include/types.hpp>
+#include <mtypes/include/types_ext.hpp>
 
 namespace lib
 {

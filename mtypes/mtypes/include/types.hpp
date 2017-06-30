@@ -5,10 +5,7 @@
 
 #include <cstdint>
 #include <memory>
-#include <iostream>
 #include "vector.hpp"
-
-#include "str.hpp"
 
 namespace lib
 {
@@ -46,8 +43,6 @@ namespace lib
 	using s8 = int8_t;
 	using f32 = float;
 	using f64 = double;
-	using write_stream = str;
-	using read_stream = std::istream;
 }
 
 #endif

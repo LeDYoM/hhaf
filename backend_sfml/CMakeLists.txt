@@ -16,7 +16,6 @@ add_library(${CURRENT_TARGET}
 include_directories ("../lib/backend")
 include_directories ("..")
 
-target_link_libraries(${CURRENT_TARGET} PRIVATE lib)
 target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
 
 # Detect and add SFML

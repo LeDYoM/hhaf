@@ -1,9 +1,9 @@
+#pragma once
+
 #ifndef LIB_CORE_HASNAME_HPP__
 #define LIB_CORE_HASNAME_HPP__
 
-#pragma once
-
-#include <mtypes/include/types.hpp>
+#include <mtypes/include/str.hpp>
 
 namespace lib
 {

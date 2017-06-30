@@ -4,6 +4,7 @@
 #define MTYPES_VECTOR_INCLUDE_HPP
 
 #include <initializer_list>
+#include "mtypes_export.h"
 
 namespace lib
 {
@@ -19,12 +20,9 @@ namespace lib
 
 		constexpr vector() noexcept : m_capacity{ 0 }, m_size{ 0 }, m_buffer{ nullptr } {}
 		explicit constexpr vector(size_t size) : m_capacity{ size }, m_size{ size }, m_buffer{ size?new T[size] :nullptr} {}
-		constexpr vector(std::initializer_list<T> ilist) noexcept : m_capacity{ ilist.size() }, m_size{ m_capacity }, m_buffer{ new T[m_capacity] }
+		constexpr vector(std::initializer_list<T> ilist) noexcept : vector( ilist.size() )
 		{
-			size_t c{ 0 };
-			for (const auto& element : ilist) {
-				m_buffer[c++] = element;
-			}
+			_copyElements(ilist.begin(), m_size);
 		}
 
 		vector(const vector&other) noexcept : m_capacity{ other.m_capacity }, m_size{ other.m_size }, m_buffer{new T[m_capacity]}
@@ -50,7 +48,7 @@ namespace lib
 					m_size = other.m_size;
 				}
 
-				_copyElements(other.m_buffer, m_size);
+				_copyElements(other.m_buffer, other.m_size);
 			}
 			return *this;
 		}
@@ -121,8 +119,8 @@ namespace lib
 			}
 		}
 
-		reference operator[](const size_t index) { return m_buffer[index]; }
-		const_reference operator[](const size_t index) const { return m_buffer[index]; }
+		constexpr reference operator[](const size_t index) { return m_buffer[index]; }
+		constexpr const_reference operator[](const size_t index) const { return m_buffer[index]; }
 		constexpr unsigned int capacity() const noexcept { return m_capacity; }
 		constexpr unsigned int size() const noexcept { return m_size; }
 		constexpr bool empty() const noexcept { return m_size == 0; }
@@ -132,8 +130,8 @@ namespace lib
 		constexpr const_iterator end() const noexcept { return m_buffer + m_size; }
 		constexpr const_iterator cbegin() const noexcept { return m_buffer; }
 		constexpr const_iterator cend() const noexcept { return m_buffer + m_size; }
-		T& front() { return m_buffer[0]; }
-		T& back() { return m_buffer[m_size > 0 ? (m_size - 1) : 0]; }
+		constexpr T& front() { return m_buffer[0]; }
+		constexpr T& back() { return m_buffer[m_size > 0 ? (m_size - 1) : 0]; }
 
 		void push_back(const T& value)
 		{
@@ -153,6 +151,12 @@ namespace lib
 			for (auto&& element : other) {
 				push_back(element);
 			}
+		}
+
+		vector& operator+=(const vector &other)
+		{
+			insert(other);
+			return *this;
 		}
 
 		void pop_back() noexcept { if (m_size > 0) --m_size; }
@@ -234,7 +238,35 @@ namespace lib
 		size_t m_capacity;
 		size_t m_size;
 		T* m_buffer;
+
+		template <typename A>
+		friend constexpr bool operator==(const vector<A>& lhs, const vector<A>& rhs) noexcept;
+
+		template <typename A>
+		friend constexpr bool operator!=(const vector<A>& lhs, const vector<A>& rhs) noexcept;
 	};
+
+	template <typename A>
+	constexpr bool operator==(const vector<A>& lhs, const vector<A>& rhs) noexcept
+	{
+		if (lhs.m_size != rhs.m_size) {
+			return false;
+		} else {
+			for (size_t i{ 0 }; i < lhs.m_size;++i) {
+				if (lhs.m_buffer[i] != rhs.m_buffer[i]) {
+					return false;
+				}
+			}
+			return true;
+		}
+	}
+
+	template <typename A>
+	constexpr bool operator!=(const vector<A>& lhs, const vector<A>& rhs) noexcept
+	{
+		return !(lhs == rhs);
+	}
+
 }
 
 #endif

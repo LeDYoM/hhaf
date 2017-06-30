@@ -58,12 +58,17 @@ namespace lib
 		ConfigurationProperty& operator=(ConfigurationProperty&&) = delete;
 
 		template <typename T>
-		const T get() const noexcept
+		T get() const noexcept
 		{
-			std::istringstream tmpstream(m_data);
 			T tmp;
-			tmpstream >> tmp;
+			(str(m_data)) >> tmp;
 			return tmp;
+		}
+
+		template <>
+		str get<str>() const noexcept
+		{
+			return m_data;
 		}
 
 		template <typename T>

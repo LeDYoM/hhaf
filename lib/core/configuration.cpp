@@ -35,10 +35,10 @@ namespace lib
 
 				if (f.is_open()) {
 					while (f) {
-						str line;
+						std::string line;
 						f >> line;
 						if (!line.empty()) {
-							auto vsplited(line.split('='));
+							auto vsplited(str(line).split('='));
 							CMapRawLine lineData(
 								vsplited.empty() ? str{} : vsplited[0], 
 								vsplited.size() < 2 ? str{}:vsplited[1]);

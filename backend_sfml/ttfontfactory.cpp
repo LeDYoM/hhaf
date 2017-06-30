@@ -12,7 +12,7 @@ namespace lib
 			ITTFont* TTFontFactory::loadFromFile(const str & file)
 			{
 				sf::Font font;
-				font.loadFromFile(file);
+				font.loadFromFile(file.c_str());
 				auto *ttffont(new TTFont(font));
 				m_fontCache.push_back(ttffont);
 				return ttffont;
