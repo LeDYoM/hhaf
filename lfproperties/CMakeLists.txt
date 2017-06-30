@@ -1,6 +1,6 @@
-project (lfilesystem)
+project (lfproperties)
 
-set (CURRENT_TARGET lfilesystem)
+set (CURRENT_TARGET lfproperties)
 
 file (GLOB _SOURCES "src/*.cpp")
 file (GLOB _HEADERS "*.hpp")
