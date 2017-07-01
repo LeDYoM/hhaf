@@ -25,19 +25,19 @@ namespace lib
 			_copyElements(ilist.begin(), m_size);
 		}
 
-		vector(const vector&other) noexcept : m_capacity{ other.m_capacity }, m_size{ other.m_size }, m_buffer{new T[m_capacity]}
+		constexpr vector(const vector&other) noexcept : m_capacity{ other.m_capacity }, m_size{ other.m_size }, m_buffer{new T[m_capacity]}
 		{
 			_copyElements(other.m_buffer, other.m_size);
 		}
 
-		vector(vector&&other) noexcept : m_capacity{ other.m_capacity }, m_size{ other.m_size }, m_buffer{ other.m_buffer }
+		constexpr vector(vector&&other) noexcept : m_capacity{ other.m_capacity }, m_size{ other.m_size }, m_buffer{ other.m_buffer }
 		{
 			other.m_capacity = 0;
 			other.m_size = 0;
 			other.m_buffer = nullptr;
 		}
 
-		vector& operator=(const vector&other)
+		constexpr vector& operator=(const vector&other)
 		{
 			if (this != &other) {
 
@@ -53,7 +53,7 @@ namespace lib
 			return *this;
 		}
 
-		vector& operator=(vector&&other) noexcept
+		constexpr vector& operator=(vector&&other) noexcept
 		{
 			if (this != &other) {
 				_destroy();
@@ -67,11 +67,11 @@ namespace lib
 			return *this;
 		}
 
-		~vector() { 
+		~vector() {
 			_destroy();
 		}
 
-		iterator remove_value(const T &value) {
+		constexpr iterator remove_value(const T &value) {
 			bool moving{ false };
 			iterator where_it_was{ end() };
 			for (size_t i{ 0 }; i < m_size; ++i) {
@@ -89,7 +89,7 @@ namespace lib
 			return where_it_was;
 		}
 
-		size_t remove_values(const T&value) {
+		constexpr size_t remove_values(const T&value) {
 			iterator last_removed{ end() };
 			do
 			{
@@ -99,7 +99,7 @@ namespace lib
 		}
 
 		template<typename ...Args>
-		void emplace_back(Args&&... args)
+		constexpr void emplace_back(Args&&... args)
 		{
 			if (m_size == m_capacity) {
 				reserve(m_size + 1);
@@ -109,7 +109,7 @@ namespace lib
 
 		}
 
-		void shrink_to_fit() {
+		constexpr void shrink_to_fit() {
 			if (m_size < m_capacity) {
 				T*oldBuffer{ m_buffer };
 				m_buffer = new T[m_size];
@@ -133,7 +133,7 @@ namespace lib
 		constexpr T& front() { return m_buffer[0]; }
 		constexpr T& back() { return m_buffer[m_size > 0 ? (m_size - 1) : 0]; }
 
-		void push_back(const T& value)
+		constexpr void push_back(const T& value)
 		{
 			reserve(m_size + 1);
 			m_buffer[m_size++] = value;
@@ -153,15 +153,15 @@ namespace lib
 			}
 		}
 
-		vector& operator+=(const vector &other)
+		constexpr vector& operator+=(const vector &other)
 		{
 			insert(other);
 			return *this;
 		}
 
-		void pop_back() noexcept { if (m_size > 0) --m_size; }
+		constexpr void pop_back() noexcept { if (m_size > 0) --m_size; }
 
-		void reserve(const size_t capacity)
+		constexpr void reserve(const size_t capacity)
 		{
 			if (m_capacity < capacity)
 			{
@@ -173,7 +173,7 @@ namespace lib
 			}
 		}
 
-		void resize(const size_t size)
+		constexpr void resize(const size_t size)
 		{
 			if (size != m_size) {
 				// Delete to shrink
@@ -189,14 +189,14 @@ namespace lib
 			}
 		}
 
-		void clear()
+		constexpr void clear()
 		{
 			m_size = 0;
 		}
 
 	private:
 
-		void _ensure_reserved(const size_t capacity)
+		constexpr void _ensure_reserved(const size_t capacity)
 		{
 			if (m_capacity < capacity)
 			{
@@ -211,27 +211,26 @@ namespace lib
 			}
 		}
 
-		void _copyElements(const T*source, const size_t s)
+		constexpr void _copyElements(const T*const source, const size_t s)
 		{
 			for (size_t i{ 0 }; i < s; ++i) {
 				m_buffer[i] = source[i];
 			}
 		}
 
-		void _moveElements(T*source, const size_t s)
+		constexpr void _moveElements(T*source, const size_t s)
 		{
 			for (size_t i{ 0 }; i < s; ++i) {
 				m_buffer[i] = std::move(source[i]);
 			}
 		}
 
-		void _destroy()
+		constexpr void _destroy()
 		{
 			if (m_buffer) {
 				delete[] m_buffer;
 				m_buffer = nullptr;
-				m_size = 0;
-				m_capacity = 0;
+				m_size = m_capacity = 0;
 			}
 		}
 
@@ -266,7 +265,6 @@ namespace lib
 	{
 		return !(lhs == rhs);
 	}
-
 }
 
 #endif
