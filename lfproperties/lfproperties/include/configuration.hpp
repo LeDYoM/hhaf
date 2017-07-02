@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_CONFIGURATION_HPP__
-#define LIB_CONFIGURATION_HPP__
+#ifndef LIB_LFPROPERTIES_HPP__
+#define LIB_LFPROPERTIES_HPP__
 
 #include <map>
 #include <fstream>
@@ -13,23 +13,23 @@
 
 namespace lib
 {
-	class ConfigurationProperty;
+	class FProperty;
 
-	class Configuration
+	class PropertiesReader
 	{
 	public:
-		Configuration() = delete;
-		Configuration &operator=(const Configuration &other) = delete;
-		Configuration(const Configuration &other) = delete;
-		Configuration(const str &file);
+		PropertiesReader() = delete;
+		PropertiesReader &operator=(const PropertiesReader &other) = delete;
+		PropertiesReader(const PropertiesReader &other) = delete;
+		PropertiesReader(const str &file);
 
-		~Configuration() {}
+		~PropertiesReader() {}
 
-		sptr<ConfigurationProperty> value(const str &) const;
+		sptr<FProperty> value(const str &) const;
 
 
 	protected:
-		using CMap = std::map<str, sptr<ConfigurationProperty>>;
+		using CMap = std::map<str, sptr<FProperty>>;
 		using CMapLine = CMap::value_type;
 		using CDataMap = std::map<str, CMap>;
 
@@ -45,17 +45,17 @@ namespace lib
 		static CDataMap m_data;
 	};
 
-	class ConfigurationProperty
+	class FProperty
 	{
 	public:
-		constexpr ConfigurationProperty() noexcept : m_data{} {}
-		constexpr ConfigurationProperty(str &&t) noexcept : m_data(std::move(t)) {}
+		constexpr FProperty() noexcept : m_data{} {}
+		constexpr FProperty(str &&t) noexcept : m_data(std::move(t)) {}
 
-		ConfigurationProperty(const ConfigurationProperty&) = delete;
-		ConfigurationProperty& operator=(const ConfigurationProperty&) = delete;
+		FProperty(const FProperty&) = delete;
+		FProperty& operator=(const FProperty&) = delete;
 
-		ConfigurationProperty(ConfigurationProperty&&) = default;
-		ConfigurationProperty& operator=(ConfigurationProperty&&) = delete;
+		FProperty(FProperty&&) = default;
+		FProperty& operator=(FProperty&&) = delete;
 
 		template <typename T>
 		T get() const noexcept
@@ -86,7 +86,6 @@ namespace lib
 		str m_data;
 
 	};
-
 }
 
 #endif
