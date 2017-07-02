@@ -27,7 +27,6 @@ namespace lib
 
 		sptr<ConfigurationProperty> value(const str &) const;
 
-
 	protected:
 		using CMap = std::map<str, sptr<ConfigurationProperty>>;
 		using CMapLine = CMap::value_type;

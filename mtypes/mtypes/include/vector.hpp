@@ -4,14 +4,13 @@
 #define MTYPES_VECTOR_INCLUDE_HPP
 
 #include <initializer_list>
-#include "mtypes_export.h"
+#include "mtypes_export.hpp"
 
 namespace lib
 {
 	template <class T>
 	class  vector {
 	public:
-
 		using iterator = T*;
 		using const_iterator = const T*;
 		using reference = T&;
@@ -40,7 +39,6 @@ namespace lib
 		constexpr vector& operator=(const vector&other)
 		{
 			if (this != &other) {
-
 				if (m_capacity < other.m_size) {
 					_destroy();
 					m_buffer = new T[other.m_size];

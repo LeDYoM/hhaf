@@ -3,7 +3,7 @@
 #ifndef LIB_MTYPES_LOG_INCLUDE_HPP
 #define LIB_MTYPES_LOG_INCLUDE_HPP
 
-#include "mtypes_export.h"
+#include "mtypes_export.hpp"
 #include "str.hpp"
 
 #define LOG_EXPORT	MTYPES_EXPORT

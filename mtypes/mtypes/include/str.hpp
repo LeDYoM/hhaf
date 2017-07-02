@@ -4,7 +4,7 @@
 #define LIB_STR_INCLUDE_HPP
 
 #include <string>
-#include "mtypes_export.h"
+#include "mtypes_export.hpp"
 #include "vector.hpp"
 #include "types.hpp"
 
