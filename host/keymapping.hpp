@@ -2,18 +2,20 @@
 #define __KEYMAPPING_HPP__
 
 #include <lib/core/configuration.hpp>
+#include <lib/core/iuserproperties.hpp>
 #include <lib/include/key.hpp>
 #include "direction.hpp"
 #include <array>
 
 namespace zoper
 {
-	class KeyMapping : public lib::Configuration
+	class KeyMapping : public lib::IUserProperties
 	{
 	public:
 		KeyMapping();
 		virtual ~KeyMapping();
 
+		void setProperties(const lib::Configuration &config) override;
 		static const lib::u32 TotalKeys = Direction::Total + 2;
 
 		lib::input::Key getKey(const Direction d) const;

@@ -1,6 +1,6 @@
 #include "configuration.hpp"
 #include <mtypes/include/log.hpp>
-
+#include "file.hpp"
 #include <regex>
 
 namespace lib
@@ -31,12 +31,11 @@ namespace lib
 
 			if (file[0] != ':') {
 				log_debug_info("Trying to read file");
-				std::ifstream f(currentFile.c_str());
+				File f(currentFile);
+				if (f.exists()) {
+					auto fLines(f.readAsText());
 
-				if (f.is_open()) {
-					while (f) {
-						std::string line;
-						f >> line;
+					for (auto&& line : fLines) {
 						if (!line.empty()) {
 							auto vsplited(str(line).split('='));
 							CMapRawLine lineData(

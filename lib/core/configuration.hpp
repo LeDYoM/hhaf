@@ -4,7 +4,6 @@
 #define LIB_CONFIGURATION_HPP__
 
 #include <map>
-#include <fstream>
 #include <functional>
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
@@ -26,6 +25,12 @@ namespace lib
 		~Configuration() {}
 
 		sptr<ConfigurationProperty> value(const str &) const;
+
+		template <typename T>
+		void valueOrDefault(const str&id, T&value, const T&defValue)
+		{
+
+		}
 
 	protected:
 		using CMap = std::map<str, sptr<ConfigurationProperty>>;
@@ -85,7 +90,6 @@ namespace lib
 		str m_data;
 
 	};
-
 }
 
 #endif
