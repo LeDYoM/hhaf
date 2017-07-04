@@ -1,6 +1,7 @@
 #include "configuration.hpp"
 #include <mtypes/include/log.hpp>
 #include "file.hpp"
+#include <fstream>
 #include <regex>
 
 namespace lib
@@ -14,6 +15,12 @@ namespace lib
 		: currentFile(file)
 	{
 		loadFile(file);
+	}
+
+	bool Configuration::propertyExists(const str & id) const
+	{
+		const auto it(currentMap->find(id));
+		return it != currentMap->end();
 	}
 
 	void Configuration::loadFile(const str &file)
@@ -75,6 +82,18 @@ namespace lib
 		}
 		else {
 			return (currentMap->emplace(name, msptr<ConfigurationProperty>())).first->second;
+		}
+	}
+
+	sptr<ConfigurationProperty> Configuration::_registerProperty(const str & id, const str & defValue)
+	{
+		if (propertyExists(id)) {
+			return value(id);
+		}
+		else {
+			auto newProperty(msptr<ConfigurationProperty>());
+			newProperty->set(defValue);
+			return newProperty;
 		}
 	}
 

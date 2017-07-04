@@ -26,10 +26,13 @@ namespace lib
 
 		sptr<ConfigurationProperty> value(const str &) const;
 
-		template <typename T>
-		void valueOrDefault(const str&id, T&value, const T&defValue)
-		{
+		sptr<ConfigurationProperty> _registerProperty(const str&id, const str&defValue);
 
+		template <typename T>
+		T registerProperty(const str&id, const T&defValue)
+		{
+			auto prop(_registerProperty(id, str(defValue)));
+			return prop->get<T>();
 		}
 
 	protected:
@@ -43,6 +46,8 @@ namespace lib
 		bool saveConfig();
 
 	private:
+		vector<ConfigurationProperty> m_properties;
+		bool propertyExists(const str&id) const;
 		void loadFile(const str &file);
 		const str currentFile;
 		CMap *currentMap;
@@ -76,10 +81,19 @@ namespace lib
 		}
 
 		template <typename T>
-		bool set(T&& v) noexcept
+		bool set(const T &v) noexcept
 		{
 			std::ostringstream tmpstream;
 			tmpstream << v;
+			m_data = tmpstream.str();
+			return tmpstream.fail();
+		}
+
+		template <>
+		bool set<str>(const str &v) noexcept
+		{
+			std::ostringstream tmpstream;
+			tmpstream << v.c_str();
 			m_data = tmpstream.str();
 			return tmpstream.fail();
 		}

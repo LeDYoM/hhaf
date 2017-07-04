@@ -4,6 +4,7 @@ namespace zoper
 {
 	KeyMapping::KeyMapping() : lib::IUserProperties("config.cfg")
 	{
+		/*
 		using namespace lib;
 		using namespace lib::input;
 
@@ -18,11 +19,12 @@ namespace zoper
 		m_keys[Direction::Total] = configProperty->empty() ? defaults[Direction::Total] : configProperty->get<Key>();
 		configProperty = value("key_pause" + str(Direction::Total + 1));
 		m_keys[Direction::Total + 1] = configProperty->empty() ? defaults[Direction::Total + 1] : configProperty->get<Key>();
+		*/
 	}
 
 	KeyMapping::~KeyMapping() = default;
 
-	void KeyMapping::setProperties(const lib::Configuration & config)
+	void KeyMapping::setProperties(lib::Configuration & config)
 	{
 		using namespace lib;
 		using namespace lib::input;
@@ -30,14 +32,11 @@ namespace zoper
 		std::array<lib::input::Key, TotalKeys> defaults{ Key::Left, Key::Right, Key::Up, Key::Down, Key::Space, Key::Escape };
 
 		for (auto i = 0u; i < Direction::Total; ++i) {
-			auto configProperty(value("key" + str(i)));
-			m_keys[i] = configProperty->empty() ? defaults[i] : configProperty->get<Key>();
+			m_keys[i] = config.registerProperty("key" + str(i),defaults[i]);
 		}
 
-		auto configProperty(value("key_launch" + Direction::Total));
-		m_keys[Direction::Total] = configProperty->empty() ? defaults[Direction::Total] : configProperty->get<Key>();
-		configProperty = value("key_pause" + str(Direction::Total + 1));
-		m_keys[Direction::Total + 1] = configProperty->empty() ? defaults[Direction::Total + 1] : configProperty->get<Key>();
+		m_keys[Direction::Total] = config.registerProperty("key_launch" + str(Direction::Total), defaults[Direction::Total]);
+		m_keys[Direction::Total + 1] = config.registerProperty("key_pause" + str(Direction::Total+1), defaults[Direction::Total+1]);
 	}
 
 	lib::input::Key KeyMapping::getKey(const Direction d) const

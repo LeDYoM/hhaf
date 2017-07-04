@@ -14,7 +14,7 @@ namespace lib
 	public:
 		IUserProperties(str fName) : m_fileName{ fName } {}
 		virtual ~IUserProperties() {}
-		virtual void setProperties(const Configuration &config) = 0;
+		virtual void setProperties(Configuration &config) = 0;
 	private:
 		str m_fileName;
 	};

@@ -15,7 +15,7 @@ namespace zoper
 		KeyMapping();
 		virtual ~KeyMapping();
 
-		void setProperties(const lib::Configuration &config) override;
+		void setProperties(lib::Configuration &config) override;
 		static const lib::u32 TotalKeys = Direction::Total + 2;
 
 		lib::input::Key getKey(const Direction d) const;
