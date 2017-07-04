@@ -10,12 +10,10 @@ namespace lib
 		PropertiesFileManager::PropertiesFileManager() = default;
 		PropertiesFileManager::~PropertiesFileManager() = default;
 
-		void PropertiesFileManager::initialize(IUserProperties * source)
+		void PropertiesFileManager::initialize(const str &file, IUserProperties *source)
 		{
-			Configuration config("config.cfg");
+			Configuration config(file);
 			source->setProperties(config);
 		}
-
-
 	}
 }

@@ -17,13 +17,13 @@ namespace lib
 			virtual ~PropertiesFileManager();
 
 			template <typename T>
-			sptr<T> create() {
+			sptr<T> create(const str &fileName) {
 				auto result(msptr<T>());
-				initialize(result.get());
+				initialize(fileName, result.get());
 				return result;
 			}
 		private:
-			void initialize(IUserProperties *source);
+			void initialize(const str &file, IUserProperties *source);
 		};
 	}
 }

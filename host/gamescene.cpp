@@ -112,7 +112,7 @@ namespace zoper
 		using namespace lib::board;
 		using namespace lib::events;
 
-		m_keyMapping = propertiesFileManager().create<KeyMapping>();
+		m_keyMapping = propertiesFileManager().create<KeyMapping>("config.cfg");
 
 		p_boardModel = this->ensureComponentOfType<BoardModelComponent>();
 		p_boardModel->initialize(_gameData.size);
