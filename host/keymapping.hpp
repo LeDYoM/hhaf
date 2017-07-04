@@ -18,12 +18,12 @@ namespace zoper
 		void setProperties(lib::Configuration &config) override;
 		static const lib::u32 TotalKeys = Direction::Total + 2;
 
-		lib::input::Key getKey(const Direction d) const;
-		Direction getDirectionFromKey(const lib::input::Key k) const;
-		lib::input::Key getLaunchKey() const;
-		bool isLaunchKey(const lib::input::Key key) const;
-		lib::input::Key getPauseKey() const;
-		bool isPauseKey(const lib::input::Key key) const;
+		lib::input::Key getKey(const Direction d) const noexcept;
+		Direction getDirectionFromKey(const lib::input::Key k) const noexcept;
+		lib::input::Key getLaunchKey() const noexcept;
+		bool isLaunchKey(const lib::input::Key key) const noexcept;
+		lib::input::Key getPauseKey() const noexcept;
+		bool isPauseKey(const lib::input::Key key) const noexcept;
 
 		bool setKey(const lib::u32 index, const lib::input::Key key);
 		void apply();
