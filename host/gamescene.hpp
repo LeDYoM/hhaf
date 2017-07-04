@@ -71,7 +71,7 @@ namespace zoper
 		virtual void updateScene();
 
 	private:
-		KeyMapping _keyMapping;
+		lib::sptr<KeyMapping> m_keyMapping;
 		lib::Configuration _gameConfig;
 		lib::EventReceiver m_boardEventConnector;
 		void setLevel(const lib::u32 nv);

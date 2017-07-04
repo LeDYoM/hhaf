@@ -9,6 +9,7 @@
 #include <mtypes/include/log.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/core/randomizer.hpp>
+#include <lib/core/propertiesfilemanager.hpp>
 #include <lib/scene/renderizable.hpp>
 #include <lib/scene/nodes/nodeshape.hpp>
 #include <lib/scene/nodes/nodequad.hpp>
@@ -111,6 +112,8 @@ namespace zoper
 		using namespace lib::board;
 		using namespace lib::events;
 
+		m_keyMapping = propertiesFileManager().create<KeyMapping>();
+
 		p_boardModel = this->ensureComponentOfType<BoardModelComponent>();
 		p_boardModel->initialize(_gameData.size);
 		m_boardEventConnector.addSubscription(TileAddedEvent::subscribe([this](const events::Event&ev) {
@@ -159,14 +162,14 @@ namespace zoper
 			{
 			case Playing:
 			{
-				auto dir = _keyMapping.getDirectionFromKey(key);
+				auto dir = m_keyMapping->getDirectionFromKey(key);
 				if (dir.isValid()) {
 					p_player->movePlayer(dir, [this](const vector2du32&p) { return pointInCenter(p); }, p_boardModel);
 				}
-				else if (_keyMapping.isLaunchKey(key)) {
+				else if (m_keyMapping->isLaunchKey(key)) {
 					launchPlayer();
 				}
-				else if (_keyMapping.isPauseKey(key)) {
+				else if (m_keyMapping->isPauseKey(key)) {
 					switchPause();
 				}
 			}
@@ -175,7 +178,7 @@ namespace zoper
 				lib::host().setScene("MenuScene");
 				break;
 			case Pause:
-				if (_keyMapping.isPauseKey(key)) {
+				if (m_keyMapping->isPauseKey(key)) {
 					switchPause();
 				}
 				break;

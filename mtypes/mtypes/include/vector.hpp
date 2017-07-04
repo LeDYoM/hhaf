@@ -24,6 +24,11 @@ namespace lib
 			_copyElements(ilist.begin(), m_size);
 		}
 
+		constexpr vector(const T*elements, const size_t size) noexcept : vector(size)
+		{
+			_copyElements(elements, m_size);
+		}
+
 		constexpr vector(const vector&other) noexcept : m_capacity{ other.m_capacity }, m_size{ other.m_size }, m_buffer{new T[m_capacity]}
 		{
 			_copyElements(other.m_buffer, other.m_size);

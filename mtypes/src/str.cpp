@@ -18,18 +18,11 @@ namespace lib
 		constexpr size_t _str_len(const char_type *const p_str) noexcept
 		{
 			const char_type *p_str_copy{ p_str };
-			while (*p_str_copy++);
+			while (*p_str_copy) ++p_str_copy;
 			return p_str_copy - p_str;
 		}
 	}
-	str::str(const char_type * n)
-	{
-		m_data.reserve(detail::_str_len(n)+1);
-		while (*n) {
-			m_data.push_back(*n++);
-		}
-		m_data.push_back(0);
-	}
+	str::str(const char_type * n) noexcept : m_data(n, detail::_str_len(n) + 1) {}
 
 	str & str::operator=(const str &source)
 	{

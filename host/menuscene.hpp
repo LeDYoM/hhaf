@@ -1,7 +1,6 @@
 #ifndef __MENUSCENE_HPP__
 #define __MENUSCENE_HPP__
 
-#include "keymapping.hpp"
 #include <lib/gui/choosecontrolgroup.hpp>
 #include <mtypes/include/types.hpp>
 #include <lib/scene/nodes/nodequad.hpp>
@@ -9,7 +8,7 @@
 
 namespace zoper
 {
-	class MenuScene final : public lib::scene::Scene, public KeyMapping
+	class MenuScene final : public lib::scene::Scene
 	{
 	public:
 		MenuScene();

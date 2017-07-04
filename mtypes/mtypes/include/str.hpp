@@ -51,7 +51,7 @@ namespace lib
 		constexpr str(const str & n) noexcept : m_data{ n.m_data } {}
 		str(const u32 n);
 		str(const s32 n);
-		str(const char_type *n);
+		str(const char_type *n) noexcept;
 		str(const f32 n);
 		str(const f64 n);
 
