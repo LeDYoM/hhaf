@@ -55,7 +55,7 @@ namespace zoper
 			Time = 1,
 		} _gameMode{ Token };
 	};
-	class GameScene final : public lib::scene::Scene, public lib::Configuration
+	class GameScene final : public lib::scene::Scene
 	{
 	public:
 		GameScene();

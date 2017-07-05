@@ -24,7 +24,7 @@ namespace lib
 
 		~Configuration() {}
 
-		sptr<ConfigurationProperty> value(const str &) const;
+		sptr<ConfigurationProperty> value(const str &);
 
 		sptr<ConfigurationProperty> _registerProperty(const str&id, const str&defValue);
 
@@ -50,8 +50,7 @@ namespace lib
 		bool propertyExists(const str&id) const;
 		void loadFile(const str &file);
 		const str currentFile;
-		CMap *currentMap;
-		static CDataMap m_data;
+		CMap m_currentMap;
 	};
 
 	class ConfigurationProperty

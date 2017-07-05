@@ -9,8 +9,6 @@ namespace lib
 
 	using CMapRawLine = std::pair<str, str>;
 
-	Configuration::CDataMap Configuration::m_data;
-
 	Configuration::Configuration(const str &file)
 		: currentFile(file)
 	{
@@ -19,47 +17,34 @@ namespace lib
 
 	bool Configuration::propertyExists(const str & id) const
 	{
-		const auto it(currentMap->find(id));
-		return it != currentMap->end();
+		const auto it(m_currentMap.find(id));
+		return it != m_currentMap.end();
 	}
 
 	void Configuration::loadFile(const str &file)
 	{
-		CDataMap::iterator fIterator{ m_data.find(currentFile) };
+		log_debug_info("Reading file: ", file);
 
-		if (fIterator != m_data.end()) {
-			// Configuration file already in use.
-			log_debug_info("Map data for ", currentFile, " found. Using it");
-			currentMap = &(fIterator->second);
-		}
-		else {
-			log_debug_info("Map data for ", currentFile, " not created.");
-			CMap cMap;
+		if (file[0] != ':') {
+			log_debug_info("Trying to read file");
+			File f(file);
+			if (f.exists()) {
+				auto fLines(f.readAsText());
 
-			if (file[0] != ':') {
-				log_debug_info("Trying to read file");
-				File f(currentFile);
-				if (f.exists()) {
-					auto fLines(f.readAsText());
-
-					for (auto&& line : fLines) {
-						if (!line.empty()) {
-							auto vsplited(str(line).split('='));
-							CMapRawLine lineData(
-								vsplited.empty() ? str{} : vsplited[0], 
-								vsplited.size() < 2 ? str{}:vsplited[1]);
-							log_debug_info("Adding key", lineData.first, " with value ", lineData.second);
-							cMap.emplace(lineData.first, msptr<ConfigurationProperty>(std::move(lineData.second)));
-						}
+				for (auto&& line : fLines) {
+					if (!line.empty()) {
+						auto vsplited(str(line).split('='));
+						CMapRawLine lineData(
+							vsplited.empty() ? str{} : vsplited[0], 
+							vsplited.size() < 2 ? str{}:vsplited[1]);
+						log_debug_info("Adding key", lineData.first, " with value ", lineData.second);
+						m_currentMap.emplace(lineData.first, msptr<ConfigurationProperty>(std::move(lineData.second)));
 					}
 				}
-				else {
-					log_debug_info("File ", file , " not found. Associating empty data to file");
-				}
 			}
-
-			m_data[file] = std::move(cMap);
-			currentMap = &(m_data[currentFile]);
+			else {
+				log_debug_info("File ", file , " not found. Associating empty data to file");
+			}
 		}
 	}
 
@@ -71,17 +56,17 @@ namespace lib
 
 	void Configuration::for_each_property(std::function<void(const CMapLine&)> callback)
 	{
-		std::for_each(currentMap->begin(), currentMap->end(), callback);
+		std::for_each(m_currentMap.begin(), m_currentMap.end(), callback);
 	}
 
-	sptr<ConfigurationProperty> Configuration::value(const str & name) const
+	sptr<ConfigurationProperty> Configuration::value(const str & name)
 	{
-		const auto &it(currentMap->find(name));
-		if (it != currentMap->end()) {
+		const auto it(m_currentMap.find(name));
+		if (it != m_currentMap.end()) {
 			return it->second;
 		}
 		else {
-			return (currentMap->emplace(name, msptr<ConfigurationProperty>())).first->second;
+			return (m_currentMap.emplace(name, msptr<ConfigurationProperty>())).first->second;
 		}
 	}
 

@@ -27,7 +27,7 @@ namespace zoper
 	using namespace lib::scene::nodes;
 
 	GameScene::GameScene()
-		: Scene("GameScene"), Configuration("config.cfg"), _gameConfig{ ":NextGame" }
+		: Scene("GameScene"), _gameConfig{ ":NextGame" }
 	{
 		_gameData.size.x = 18;
 		_gameData.size.y = 12;
