@@ -4,14 +4,11 @@
 #define LIB_IRESOURCELOADER_INCLUDE_HPP
 
 #include <mtypes/include/str.hpp>
+#include <lib/core/iuserproperties.hpp>
 
 namespace lib
 {
-	struct ResourceForLoading
-	{
-		const str name;
-	};
-	class IResourceLoader {
+	class IResourceLoader : public IUserProperties {
 	public:
 		virtual void loadResources() = 0;
 	};

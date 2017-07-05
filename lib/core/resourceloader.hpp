@@ -1,21 +1,23 @@
+#pragma once
+
 #ifndef LIB_RESOURCELOADER_INCLUDE_HPP__
 #define LIB_RESOURCELOADER_INCLUDE_HPP__
 
-#pragma once
-
 #include <mtypes/include/types.hpp>
 #include <lib/include/iresourceloader.hpp>
+#include "iuserproperties.hpp"
 
 namespace lib
 {
 	namespace core
 	{
-		class ResourceLoader
+		class ResourceLoader : IUserProperties
 		{
 		public:
-			ResourceLoader();
+			ResourceLoader(str fileName);
 			~ResourceLoader();
 
+			virtual void loadResources() = 0;
 		private:
 			struct ResourceLoaderPrivate;
 			uptr<ResourceLoaderPrivate> m_private;

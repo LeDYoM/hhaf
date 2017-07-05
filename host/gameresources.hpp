@@ -11,6 +11,7 @@ namespace zoper
 	class GameResourcesLoader : public lib::IResourceLoader
 	{
 	public:
+		virtual void setProperties(lib::Configuration &config) override;
 		virtual void loadResources() override;
 	};
 }

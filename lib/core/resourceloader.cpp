@@ -11,7 +11,7 @@ namespace lib
 		{
 			std::map<str,sptr<IResourceLoader>> loaders;
 		};
-		ResourceLoader::ResourceLoader() : m_private{ muptr<ResourceLoaderPrivate>() } {}
+		ResourceLoader::ResourceLoader(str fileName) : m_private{ muptr<ResourceLoaderPrivate>() }, IUserProperties{ std::move(fileName) } {}
 
 		ResourceLoader::~ResourceLoader() = default;
 
