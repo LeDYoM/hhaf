@@ -2,10 +2,11 @@
 
 namespace zoper
 {
-	void GameResourcesLoader::setProperties(lib::Configuration & config)
+	void GameResourcesLoader::setProperties(lib::Configuration &)
 	{
 	}
-	void GameResourcesLoader::loadResources()
+
+	void GameResourcesLoader::loadResources(lib::core::ResourceManager &resourceManager)
 	{
 	}
 }
