@@ -13,10 +13,10 @@ namespace lib
 		namespace
 		{
 			template <typename T, typename A>
-			inline void add(A& factory, ResourceManager::ResourceList<sptr<T>> &container, const str &id, const str &fileName)
+			inline void add(A& factory, ResourceList<sptr<T>> &container, const str &id, const str &fileName)
 			{
 				sptr<T> resource(msptr<T>(factory.loadFromFile(fileName)));
-				container.push_back(ResourceManager::NamedIndex<sptr<T>>(id,std::move(resource)));
+				container.push_back(NamedIndex<sptr<T>>(id,std::move(resource)));
 			}
 
 		}

@@ -1,4 +1,5 @@
 #include "gameresources.hpp"
+#include <mtypes/include/str.hpp>
 
 namespace zoper
 {
@@ -6,7 +7,11 @@ namespace zoper
 	{
 	}
 
-	void GameResourcesLoader::loadResources(lib::core::ResourceManager &resourceManager)
+	void GameResourcesLoader::loadResources(lib::core::ResourceLoader &resourceLoader)
 	{
+		using namespace lib;
+
+		const str resources_directory("resources/");
+		resourceLoader.addToLoadList(resources_directory + "score.ttf",m_scoreFont);
 	}
 }

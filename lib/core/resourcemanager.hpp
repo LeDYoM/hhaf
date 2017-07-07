@@ -16,13 +16,10 @@ namespace lib
 	namespace core
 	{
 		template <typename T>
-		struct ResourceLoadStateNode
-		{
-			sptr<T> m_resource;
-			str fileName;
-		};
-		using TTFontLoadStateNode = ResourceLoadStateNode<scene::TTFont>;
-		using TextureLoadStateNode = ResourceLoadStateNode<scene::Texture>;
+		using NamedIndex = std::pair<const str, T>;
+
+		template <typename T>
+		using ResourceList = std::list<NamedIndex<T>>;
 
 		class ResourceManager : public AppService, public Configuration
 		{
@@ -48,20 +45,11 @@ namespace lib
 			sptr<scene::TTFont> getFont(const str &rid) const;
 			sptr<scene::Texture> getTexture(const str &rid) const;
 
-			template <typename T>
-			using NamedIndex = std::pair<const str, T>;
-
-			template <typename T>
-			using ResourceList = std::list<NamedIndex<T>>;
-
-
 			///// New API
 			u32 loadFontList(const string_vector &fileList);
 			u32 loadTextureList(const string_vector &fileList);
 
-			bool addToLoadList(const str&fileName);
 		private:
-
 			ResourceList<sptr<scene::TTFont>> m_fonts;
 			ResourceList<sptr<scene::Texture>> m_textures;
 		};
