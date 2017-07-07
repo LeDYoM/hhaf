@@ -5,7 +5,6 @@
 
 #include <mtypes/include/types.hpp>
 #include "iuserproperties.hpp"
-#include "resourcemanager.hpp"
 
 namespace lib
 {
@@ -16,12 +15,10 @@ namespace lib
 	}
 	namespace core
 	{
-		class ResourceLoader
+		class ResourceManager;
+		class ResourceLoader final
 		{
 		public:
-			ResourceLoader(str fileName);
-			~ResourceLoader();
-
 			template <typename T>
 			inline void addToLoadList(const str&fileName, sptr<T>);
 
@@ -38,11 +35,16 @@ namespace lib
 			}
 
 		private:
+			ResourceLoader();
+			~ResourceLoader();
+
 			void addToTTFontLoadList(const str&fileName, sptr<scene::TTFont> pFont);
 			void addToTextureLoadList(const str&fileName, sptr<scene::Texture> pFont);
 
 			struct ResourceLoaderPrivate;
 			uptr<ResourceLoaderPrivate> m_private;
+
+			friend class ResourceManager;
 		};
 	}
 }

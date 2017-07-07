@@ -12,7 +12,7 @@ namespace lib
 			ResourceList<sptr<scene::TTFont>> m_fonts;
 			ResourceList<sptr<scene::Texture>> m_textures;
 		};
-		ResourceLoader::ResourceLoader(str fileName) : m_private{ muptr<ResourceLoaderPrivate>() } {}
+		ResourceLoader::ResourceLoader() : m_private{ muptr<ResourceLoaderPrivate>() } {}
 
 		ResourceLoader::~ResourceLoader() = default;
 
