@@ -3,6 +3,7 @@
 
 #include <mtypes/include/types.hpp>
 #include "configuration.hpp"
+#include <lib/include/iresourceslist.hpp>
 #include "appservice.hpp"
 #include <list>
 
@@ -15,12 +16,6 @@ namespace lib
 	}
 	namespace core
 	{
-		template <typename T>
-		using NamedIndex = std::pair<const str, T>;
-
-		template <typename T>
-		using ResourceList = std::list<NamedIndex<T>>;
-
 		class ResourceManager : public AppService, public Configuration
 		{
 		public:
@@ -46,8 +41,17 @@ namespace lib
 			sptr<scene::Texture> getTexture(const str &rid) const;
 
 			///// New API
-			u32 loadFontList(const string_vector &fileList);
-			u32 loadTextureList(const string_vector &fileList);
+			u32 loadFontList(ResourceLoader &rLoader);
+			u32 loadTextureList(ResourceLoader &rLoader);
+
+			template <typename T>
+			sptr<T> createResourceList() {
+				IResourcesList *pResourceList(msptr<T>());
+				ResourceLoader loader;
+				pResourceList->registerResources(loader);
+				loadFontList(loader.m_fonts);
+				loadTextureList(loader.m_textures);
+			}
 
 		private:
 			ResourceList<sptr<scene::TTFont>> m_fonts;
