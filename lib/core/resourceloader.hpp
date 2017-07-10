@@ -5,7 +5,6 @@
 
 #include <mtypes/include/types.hpp>
 #include "iuserproperties.hpp"
-#include <list>
 
 namespace lib
 {
@@ -17,45 +16,35 @@ namespace lib
 	namespace core
 	{
 		class ResourceManager;
-		
-		template <typename T>
-		using NamedIndex = std::pair<const str, T>;
-
-		template <typename T>
-		using ResourceIdentification = std::pair<const str, NamedIndex<T>>;
-
-		template <typename T>
-		using ResourceList = std::list<NamedIndex<T>>;
-
 		class ResourceLoader final
 		{
 		public:
 			template <typename T>
-			inline void addToLoadList(const str&fileName, const str&id, sptr<T>);
+			inline void addToLoadList(const str&fileName, sptr<T>);
 
 			template <>
-			inline void addToLoadList(const str&fileName, const str&id, sptr<scene::TTFont> pFont)
+			inline void addToLoadList(const str&fileName, sptr<scene::TTFont> pFont)
 			{
-				addToTTFontLoadList(fileName, id, std::move(pFont));
+				addToTTFontLoadList(fileName, std::move(pFont));
 			}
 
 			template <>
-			inline void addToLoadList(const str&fileName, const str&id, sptr<scene::Texture> pFont)
+			inline void addToLoadList(const str&fileName, sptr<scene::Texture> pFont)
 			{
-				addToTextureLoadList(fileName, id, std::move(pFont));
+				addToTextureLoadList(fileName, std::move(pFont));
 			}
 
 		private:
-			ResourceLoader(ResourceManager&);
+			ResourceLoader();
 			~ResourceLoader();
 
-			void addToTTFontLoadList(const str&fileName, const str&id, sptr<scene::TTFont> pFont);
-			void addToTextureLoadList(const str&fileName, const str&id, sptr<scene::Texture> pTexture);
-			std::list<ResourceIdentification<sptr<scene::TTFont>>> m_fonts;
-			std::list<ResourceIdentification<sptr<scene::Texture>>> m_textures;
+			void addToTTFontLoadList(const str&fileName, sptr<scene::TTFont> pFont);
+			void addToTextureLoadList(const str&fileName, sptr<scene::Texture> pFont);
+
+			struct ResourceLoaderPrivate;
+			uptr<ResourceLoaderPrivate> m_private;
 
 			friend class ResourceManager;
-			ResourceManager &rManager;
 		};
 	}
 }

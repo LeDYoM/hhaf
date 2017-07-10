@@ -1,12 +1,11 @@
-#pragma once
+#ifndef __GAMESCENE_HPP__
+#define __GAMESCENE_HPP__
 
-#ifndef ZOPER_GAMESCENE_HPP__
-#define ZOPER_GAMESCENE_HPP__
+#pragma once
 
 #include "keymapping.hpp"
 #include "direction.hpp"
 #include "levelproperties.hpp"
-#include "gameresources.hpp"
 
 #include <mtypes/include/types.hpp>
 #include <lib/core/configuration.hpp>
@@ -139,9 +138,6 @@ namespace zoper
 		lib::sptr<lib::scene::SceneNode> m_gameOverText;
 		lib::sptr<lib::scene::nodes::NodeText> m_pauseText;
 		lib::vector<lib::vector<lib::sptr<lib::scene::nodes::NodeQuad>>> m_backgroundTiles;
-
-		// Resources
-		lib::sptr<GameResources> m_gameResources;
 	};
 }
 

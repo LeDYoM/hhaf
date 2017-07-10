@@ -18,6 +18,7 @@ namespace lib
 				sptr<T> resource(msptr<T>(factory.loadFromFile(fileName)));
 				container.push_back(NamedIndex<sptr<T>>(id,std::move(resource)));
 			}
+
 		}
 		ResourceManager::ResourceManager(const str &resourceFile)
 			: AppService{}, Configuration{ resourceFile }
@@ -70,24 +71,6 @@ namespace lib
 				[rid](const auto &node) {return node.first == rid; })
 			);
 			return iterator == m_textures.end() ? nullptr : (*iterator).second;
-		}
-		u32 ResourceManager::loadFontList(ResourceLoader &rLoader)
-		{
-			u32 nRead{ 0 };
-			std::for_each(rLoader.m_fonts.cbegin(), rLoader.m_fonts.cend(), [this,&nRead](const ResourceIdentification<sptr<scene::TTFont>>&rIdentification) {
-				add(backend::ttfontFactory(), m_fonts, rIdentification.second.first, rIdentification.first);
-				++nRead;
-			});
-			return nRead;
-		}
-		u32 ResourceManager::loadTextureList(ResourceLoader &rLoader)
-		{
-			u32 nRead{ 0 };
-			std::for_each(rLoader.m_textures.cbegin(), rLoader.m_textures.cend(), [this, &nRead](const ResourceIdentification<sptr<scene::Texture>>&rIdentification) {
-				add(backend::ttfontFactory(), m_fonts, rIdentification.second.first, rIdentification.first);
-				++nRead;
-			});
-			return nRead;
 		}
 	}
 }
