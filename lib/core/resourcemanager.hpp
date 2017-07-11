@@ -9,7 +9,7 @@
 namespace lib
 {
 	class IResourcesList;
-	class ResourceLoader;
+
 	namespace scene
 	{
 		class TTFont;
@@ -17,6 +17,8 @@ namespace lib
 	}
 	namespace core
 	{
+		class ResourceLoader;
+
 		template <typename T>
 		using NamedIndex = std::pair<const str, T>;
 
