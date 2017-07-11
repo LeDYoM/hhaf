@@ -16,6 +16,10 @@ namespace lib
 	namespace core
 	{
 		class ResourceManager;
+		/**
+		* This class acts as a controller for loading resources. The @IResourceList will receive it as parameter.
+		* Call the public methods to add your petitions of loading resources to the queue.
+		*/
 		class ResourceLoader final
 		{
 		public:
@@ -34,9 +38,10 @@ namespace lib
 				addToTextureLoadList(fileName, std::move(pFont));
 			}
 
-		private:
 			ResourceLoader();
 			~ResourceLoader();
+
+		private:
 
 			void addToTTFontLoadList(const str&fileName, sptr<scene::TTFont> pFont);
 			void addToTextureLoadList(const str&fileName, sptr<scene::Texture> pFont);

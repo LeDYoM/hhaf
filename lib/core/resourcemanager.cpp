@@ -1,4 +1,6 @@
 #include "resourcemanager.hpp"
+#include "resourceloader.hpp"
+#include <lib/include/iresourceslist.hpp>
 #include <mtypes/include/log.hpp>
 
 #include <lib/scene/ttfont.hpp>
@@ -71,6 +73,22 @@ namespace lib
 				[rid](const auto &node) {return node.first == rid; })
 			);
 			return iterator == m_textures.end() ? nullptr : (*iterator).second;
+		}
+
+		void ResourceManager::registerResourceList(sptr<IResourcesList> newList)
+		{
+			// Create a new resource loader to be used with the new list
+			auto resourceLoader{ msptr<ResourceLoader>() };
+
+			// Make the new list register its resources
+			newList->registerResources(*resourceLoader);
+
+			// Add both classes as a pair in our list of resourcelists
+			m_resourceListList.emplace_back(( resourceLoader, std::move(newList) ));
+		}
+		bool ResourceManager::ensureLoaded(sptr<IResourcesList>)
+		{
+			return false;
 		}
 	}
 }

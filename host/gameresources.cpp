@@ -3,7 +3,7 @@
 
 namespace zoper
 {
-	void GameResourcesLoader::loadResources(lib::core::ResourceLoader &resourceLoader)
+	void GameResourcesLoader::registerResources(lib::core::ResourceLoader &resourceLoader)
 	{
 		using namespace lib;
 

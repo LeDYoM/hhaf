@@ -25,6 +25,5 @@ namespace lib
 		{
 			m_private->m_textures.emplace_back(fileName, std::move(pTexture));
 		}
-
 	}
 }

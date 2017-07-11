@@ -2,6 +2,7 @@
 
 #include "tile.hpp"
 #include "player.hpp"
+#include "gameresources.hpp"
 #include "common.hpp"
 #include <mtypes/include/types.hpp>
 #include <lib/board/boardmodel.hpp>
@@ -45,8 +46,9 @@ namespace zoper
 		_levelrg = this->createSceneNode("level");
 		m_pauseSceneNode = this->createSceneNode("pause");
 
-		auto& resourceManager{ lib::host().resourceManager() };
-		auto scoreFont(resourceManager.getFont("game_scene.scoreFont"));
+		m_gameResources.reset(new GameResourcesLoader);
+		resourceManager().registerResourceList(m_gameResources);
+		auto scoreFont(resourceManager().getFont("game_scene.scoreFont"));
 
 		m_scoreQuad = msptr<TextQuad>(this, "score", scoreFont, 90, colors::White, Rectf32::fromSize(600, 300));
 		m_scoreQuad->sceneNode()->position = { 50, 50 };

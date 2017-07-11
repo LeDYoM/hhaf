@@ -10,7 +10,7 @@ namespace lib
 {
 	class IResourcesList {
 	public:
-		virtual void loadResources(core::ResourceLoader &resourceLoader) = 0;
+		virtual void registerResources(core::ResourceLoader &resourceLoader) = 0;
 	};
 }
 

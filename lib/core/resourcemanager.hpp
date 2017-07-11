@@ -8,6 +8,8 @@
 
 namespace lib
 {
+	class IResourcesList;
+	class ResourceLoader;
 	namespace scene
 	{
 		class TTFont;
@@ -49,9 +51,12 @@ namespace lib
 			u32 loadFontList(const string_vector &fileList);
 			u32 loadTextureList(const string_vector &fileList);
 
+			void registerResourceList(sptr<IResourcesList>);
+			bool ensureLoaded(sptr<IResourcesList>);
 		private:
 			ResourceList<sptr<scene::TTFont>> m_fonts;
 			ResourceList<sptr<scene::Texture>> m_textures;
+			std::list<std::pair<sptr<ResourceLoader>,sptr<IResourcesList>>> m_resourceListList;
 		};
 	}
 }
