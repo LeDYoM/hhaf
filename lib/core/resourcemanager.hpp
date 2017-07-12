@@ -62,12 +62,12 @@ namespace lib
 			}
 
 			template <>
-			sptr<scene::TTFont> getOrLoadResource(const str&address) {
+			sptr<scene::Texture> getOrLoadResource(const str&address) {
 				return getOrLoadTexture(address);
 			}
 
 			sptr<scene::TTFont> getOrLoadTTFont(const str&address);
-			sptr<scene::TTFont> getOrLoadTexture(const str&address);
+			sptr<scene::Texture> getOrLoadTexture(const str&address);
 
 			bool ensureLoadedInternal(sptr<IResourcesList>&);
 			ResourceList<sptr<scene::TTFont>> m_fonts;
