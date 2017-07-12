@@ -82,13 +82,18 @@ namespace lib
 
 			// Make the new list register its resources
 			newList->registerResources(*resourceLoader);
-			std::pair<sptr<ResourceLoader>, sptr<IResourcesList>> temp 
-				= std::pair<sptr<ResourceLoader>, sptr<IResourcesList>>( resourceLoader,newList );
 			// Add both classes as a pair in our list of resourcelists
 			m_resourceListList.emplace_back(resourceLoader, newList);
 		}
-		bool ResourceManager::ensureLoaded(sptr<IResourcesList>)
+
+		bool ResourceManager::ensureLoaded(sptr<IResourcesList> &list)
 		{
+			for (auto&& listNode : m_resourceListList)
+			{
+				if (listNode.second == list) {
+					
+				}
+			}
 			return false;
 		}
 	}

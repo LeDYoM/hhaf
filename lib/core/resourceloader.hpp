@@ -5,6 +5,7 @@
 
 #include <mtypes/include/types.hpp>
 #include "iuserproperties.hpp"
+#include "resourcetypes.hpp"
 
 namespace lib
 {
@@ -42,6 +43,9 @@ namespace lib
 			~ResourceLoader();
 
 		private:
+
+			ResourceList<sptr<scene::TTFont>>& fontsToLoad();
+			ResourceList<sptr<scene::Texture>>& texturesToLoad();
 
 			void addToTTFontLoadList(const str&fileName, sptr<scene::TTFont> pFont);
 			void addToTextureLoadList(const str&fileName, sptr<scene::Texture> pFont);

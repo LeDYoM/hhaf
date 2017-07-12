@@ -4,7 +4,7 @@
 #include <mtypes/include/types.hpp>
 #include "configuration.hpp"
 #include "appservice.hpp"
-#include <list>
+#include "resourcetypes.hpp"
 
 namespace lib
 {
@@ -18,12 +18,6 @@ namespace lib
 	namespace core
 	{
 		class ResourceLoader;
-
-		template <typename T>
-		using NamedIndex = std::pair<const str, T>;
-
-		template <typename T>
-		using ResourceList = std::list<NamedIndex<T>>;
 
 		class ResourceManager : public AppService, public Configuration
 		{
@@ -54,7 +48,7 @@ namespace lib
 			u32 loadTextureList(const string_vector &fileList);
 
 			void registerResourceList(sptr<IResourcesList>);
-			bool ensureLoaded(sptr<IResourcesList>);
+			bool ensureLoaded(sptr<IResourcesList>&);
 		private:
 			ResourceList<sptr<scene::TTFont>> m_fonts;
 			ResourceList<sptr<scene::Texture>> m_textures;
