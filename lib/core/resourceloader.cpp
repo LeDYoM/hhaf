@@ -18,14 +18,11 @@ namespace lib
 
 		ResourceLoader::~ResourceLoader() = default;
 
-		ResourceList<sptr<scene::TTFont>>& ResourceLoader::fontsToLoad()
+		bool ResourceLoader::ensureLoad(ResourceManager &resourceManager)
 		{
-			return m_private->m_fonts;
-		}
-
-		ResourceList<sptr<scene::Texture>>& ResourceLoader::texturesToLoad()
-		{
-			return m_private->m_textures;
+			resourceManager.loadFontList(m_private->m_fonts);
+			resourceManager.loadTextureList(m_private->m_textures);
+			return true;
 		}
 
 		void ResourceLoader::addToTTFontLoadList(const str & fileName, sptr<scene::TTFont> pFont)

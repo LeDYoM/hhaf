@@ -21,6 +21,13 @@ namespace lib
 				container.push_back(NamedIndex<sptr<T>>(id,std::move(resource)));
 			}
 
+			template <typename T, typename A>
+			inline void add(A& factory, ResourceList<sptr<T>> &container, const str &id, const str &fileName)
+			{
+				sptr<T> resource(msptr<T>(factory.loadFromFile(fileName)));
+				container.push_back(NamedIndex<sptr<T>>(id, std::move(resource)));
+			}
+
 		}
 		ResourceManager::ResourceManager(const str &resourceFile)
 			: AppService{}, Configuration{ resourceFile }
@@ -75,6 +82,16 @@ namespace lib
 			return iterator == m_textures.end() ? nullptr : (*iterator).second;
 		}
 
+		u32 ResourceManager::loadFontList(ResourceList<sptr<scene::TTFont>>& fileList)
+		{
+			return u32();
+		}
+
+		u32 ResourceManager::loadTextureList(ResourceList<sptr<scene::Texture>>& fileList)
+		{
+			return u32();
+		}
+
 		void ResourceManager::registerResourceList(sptr<IResourcesList> newList)
 		{
 			// Create a new resource loader to be used with the new list
@@ -86,12 +103,26 @@ namespace lib
 			m_resourceListList.emplace_back(resourceLoader, newList);
 		}
 
-		bool ResourceManager::ensureLoaded(sptr<IResourcesList> &list)
+		sptr<scene::TTFont> ResourceManager::getOrLoadTTFont(const str & address)
+		{
+			if (auto cachedFont = getFont(address)) {
+
+			}
+
+			return sptr<scene::TTFont>();
+		}
+
+		sptr<scene::TTFont> ResourceManager::getOrLoadTexture(const str & address)
+		{
+			return sptr<scene::TTFont>();
+		}
+
+		bool ResourceManager::ensureLoadedInternal(sptr<IResourcesList> &list)
 		{
 			for (auto&& listNode : m_resourceListList)
 			{
 				if (listNode.second == list) {
-					
+					listNode.first->ensureLoad(*this);
 				}
 			}
 			return false;

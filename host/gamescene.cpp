@@ -48,6 +48,7 @@ namespace zoper
 
 		m_gameResources.reset(new GameResourcesLoader);
 		resourceManager().registerResourceList(m_gameResources);
+		resourceManager().ensureLoaded(m_gameResources);
 		auto scoreFont(resourceManager().getFont("game_scene.scoreFont"));
 
 		m_scoreQuad = msptr<TextQuad>(this, "score", scoreFont, 90, colors::White, Rectf32::fromSize(600, 300));

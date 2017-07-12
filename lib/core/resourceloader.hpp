@@ -44,9 +44,7 @@ namespace lib
 
 		private:
 
-			ResourceList<sptr<scene::TTFont>>& fontsToLoad();
-			ResourceList<sptr<scene::Texture>>& texturesToLoad();
-
+			bool ensureLoad(ResourceManager &);
 			void addToTTFontLoadList(const str&fileName, sptr<scene::TTFont> pFont);
 			void addToTextureLoadList(const str&fileName, sptr<scene::Texture> pFont);
 
