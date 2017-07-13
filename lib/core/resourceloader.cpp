@@ -9,30 +9,30 @@ namespace lib
 {
 	namespace core
 	{
-		struct ResourceLoader::ResourceLoaderPrivate
-		{
-			ResourceList<sptr<scene::TTFont>> m_fonts;
-			ResourceList<sptr<scene::Texture>> m_textures;
-		};
-		ResourceLoader::ResourceLoader() : m_private{ muptr<ResourceLoaderPrivate>() } {}
-
+		ResourceLoader::ResourceLoader() = default;
 		ResourceLoader::~ResourceLoader() = default;
 
 		bool ResourceLoader::ensureLoad(ResourceManager &resourceManager)
 		{
-			resourceManager.loadFontList(m_private->m_fonts);
-			resourceManager.loadTextureList(m_private->m_textures);
+//			resourceManager.loadFontList(m_private->m_fonts);
+//			resourceManager.loadTextureList(m_private->m_textures);
 			return true;
 		}
 
-		void ResourceLoader::addToTTFontLoadList(const str & fileName, sptr<scene::TTFont> pFont)
+		void ResourceLoader::addToLoadList(const str & fileName)
 		{
-			m_private->m_fonts.emplace_back(fileName, std::move(pFont));
+			m_fileNames.push_back(fileName);
 		}
 
-		void ResourceLoader::addToTextureLoadList(const str & fileName, sptr<scene::Texture> pTexture)
+		sptr<scene::Texture> ResourceLoader::getLoadedResourceTexture(const str&fileName)
 		{
-			m_private->m_textures.emplace_back(fileName, std::move(pTexture));
+
 		}
+
+		sptr<scene::Texture> ResourceLoader::getLoadedResourceTTFont(const str&fileName)
+		{
+
+		}
+
 	}
 }

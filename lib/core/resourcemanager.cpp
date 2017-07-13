@@ -22,10 +22,11 @@ namespace lib
 			}
 
 			template <typename T, typename A>
-			inline void add(A& factory, ResourceList<sptr<T>> &container, const str &id, const str &fileName)
+			inline sptr<T> add(A& factory, ResourceList<sptr<T>> &container, const str &fileName)
 			{
 				sptr<T> resource(msptr<T>(factory.loadFromFile(fileName)));
-				container.push_back(NamedIndex<sptr<T>>(id, std::move(resource)));
+				container.push_back(NamedIndex<sptr<T>>(fileName, resource));
+				return resource;
 			}
 
 		}
@@ -84,12 +85,22 @@ namespace lib
 
 		u32 ResourceManager::loadFontList(ResourceList<sptr<scene::TTFont>>& fileList)
 		{
-			return u32();
+			u32 counter{ 0 };
+			for (auto& listNode : fileList) {
+				listNode.second = getOrLoadResource<scene::TTFont>(listNode.first);
+				++counter;
+			}
+			return counter;
 		}
 
 		u32 ResourceManager::loadTextureList(ResourceList<sptr<scene::Texture>>& fileList)
 		{
-			return u32();
+			u32 counter{ 0 };
+			for (auto& listNode : fileList) {
+				listNode.second = getOrLoadResource<scene::Texture>(listNode.first);
+				++counter;
+			}
+			return counter;
 		}
 
 		void ResourceManager::registerResourceList(sptr<IResourcesList> newList)
@@ -105,19 +116,23 @@ namespace lib
 
 		sptr<scene::TTFont> ResourceManager::getOrLoadTTFont(const str & address)
 		{
-			if (auto cachedFont = getFont(address)) {
-
+			if (auto cached_resource = getFont(address)) {
+				return cached_resource;
 			}
 
-			return sptr<scene::TTFont>();
+			return add(backend::ttfontFactory(), m_fonts, address);
 		}
 
-		sptr<scene::TTFont> ResourceManager::getOrLoadTexture(const str & address)
+		sptr<scene::Texture> ResourceManager::getOrLoadTexture(const str & address)
 		{
-			return sptr<scene::TTFont>();
+			if (auto cached_resource = getTexture(address)) {
+				return cached_resource;
+			}
+
+			return add(backend::textureFactory(), m_textures, address);
 		}
 
-		bool ResourceManager::ensureLoadedInternal(sptr<IResourcesList> &list)
+		bool ResourceManager::ensureLoadedInternal(sptr<IResourcesList> list)
 		{
 			for (auto&& listNode : m_resourceListList)
 			{

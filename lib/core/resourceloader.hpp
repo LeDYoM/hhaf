@@ -24,33 +24,19 @@ namespace lib
 		class ResourceLoader final
 		{
 		public:
-			template <typename T>
-			inline void addToLoadList(const str&fileName, sptr<T>);
-
-			template <>
-			inline void addToLoadList(const str&fileName, sptr<scene::TTFont> pFont)
-			{
-				addToTTFontLoadList(fileName, std::move(pFont));
-			}
-
-			template <>
-			inline void addToLoadList(const str&fileName, sptr<scene::Texture> pFont)
-			{
-				addToTextureLoadList(fileName, std::move(pFont));
-			}
-
 			ResourceLoader();
 			~ResourceLoader();
+
+			void addToLoadList(const str&fileName);
+
+			sptr<scene::Texture> getLoadedResourceTexture(const str&fileName);
+			sptr<scene::Texture> getLoadedResourceTTFont(const str&fileName);
 
 		private:
 
 			bool ensureLoad(ResourceManager &);
-			void addToTTFontLoadList(const str&fileName, sptr<scene::TTFont> pFont);
-			void addToTextureLoadList(const str&fileName, sptr<scene::Texture> pFont);
 
-			struct ResourceLoaderPrivate;
-			uptr<ResourceLoaderPrivate> m_private;
-
+			vector<str> m_fileNames;
 			friend class ResourceManager;
 		};
 	}

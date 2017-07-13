@@ -48,7 +48,7 @@ namespace lib
 			void registerResourceList(sptr<IResourcesList>);
 
 			template <typename T>
-			bool ensureLoaded(sptr<T>&iilist) {
+			bool ensureLoaded(sptr<T>iilist) {
 				return ensureLoadedInternal(std::dynamic_pointer_cast<IResourcesList>(iilist));
 			}
 
@@ -69,7 +69,7 @@ namespace lib
 			sptr<scene::TTFont> getOrLoadTTFont(const str&address);
 			sptr<scene::Texture> getOrLoadTexture(const str&address);
 
-			bool ensureLoadedInternal(sptr<IResourcesList>&);
+			bool ensureLoadedInternal(sptr<IResourcesList>);
 			ResourceList<sptr<scene::TTFont>> m_fonts;
 			ResourceList<sptr<scene::Texture>> m_textures;
 			std::list<std::pair<sptr<ResourceLoader>,sptr<IResourcesList>>> m_resourceListList;

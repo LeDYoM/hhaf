@@ -13,7 +13,8 @@ namespace zoper
 	class GameResourcesLoader : public lib::IResourcesList
 	{
 	public:
-		virtual void registerResources(lib::core::ResourceLoader &resourceManager) override;
+		void registerResources(lib::core::ResourceLoader &resourceManager) override;
+		void aquireResources(lib::core::ResourceLoader &resourceLoader) override;
 
 		lib::sptr<lib::scene::TTFont> m_scoreFont;
 	};

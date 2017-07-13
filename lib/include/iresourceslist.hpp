@@ -11,6 +11,7 @@ namespace lib
 	class IResourcesList {
 	public:
 		virtual void registerResources(core::ResourceLoader &resourceLoader) = 0;
+		virtual void aquireResources(core::ResourceLoader &resourceLoader) = 0;
 	};
 }
 

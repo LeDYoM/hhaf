@@ -3,11 +3,18 @@
 
 namespace zoper
 {
-	void GameResourcesLoader::registerResources(lib::core::ResourceLoader &resourceLoader)
-	{
-		using namespace lib;
+	using namespace lib;
 
-		const str resources_directory("resources/");
-		resourceLoader.addToLoadList(resources_directory + "score.ttf",m_scoreFont);
+	static const str resources_directory("resources/");
+	static const str scoreFontPath(resources_directory + "score.ttf");
+
+	void GameResourcesLoader::registerResources(core::ResourceLoader &resourceLoader)
+	{
+		resourceLoader.addToLoadList(scoreFontPath);
+	}
+
+	void GameResourcesLoader::aquireResources(core::ResourceLoader & resourceLoader)
+	{
+		m_scoreFont = resourceLoader.
 	}
 }
