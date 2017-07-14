@@ -80,21 +80,15 @@ namespace lib
 		}
 
 		template <typename T>
-		bool set(const T &v) noexcept
+		void set(const T &v) noexcept
 		{
-			std::ostringstream tmpstream;
-			tmpstream << v;
-			m_data = tmpstream.str();
-			return tmpstream.fail();
+			m_data = str(v);
 		}
 
 		template <>
-		bool set<str>(const str &v) noexcept
+		void set<str>(const str &v) noexcept
 		{
-			std::ostringstream tmpstream;
-			tmpstream << v.c_str();
-			m_data = tmpstream.str();
-			return tmpstream.fail();
+			m_data = v;
 		}
 
 		const str &getstr() const noexcept { return m_data; }
