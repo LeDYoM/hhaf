@@ -30,6 +30,7 @@ namespace zoper
 {
 	class Player;
 	class Tile;
+	class GameResourcesLoader;
 
 	struct GameData
 	{
@@ -138,6 +139,9 @@ namespace zoper
 		lib::sptr<lib::scene::SceneNode> m_gameOverText;
 		lib::sptr<lib::scene::nodes::NodeText> m_pauseText;
 		lib::vector<lib::vector<lib::sptr<lib::scene::nodes::NodeQuad>>> m_backgroundTiles;
+
+		// Resources lists
+		lib::sptr<GameResourcesLoader> m_gameResources;
 	};
 }
 

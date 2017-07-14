@@ -16,7 +16,7 @@ namespace zoper
 			m_keys[i] = config.registerProperty("key" + str(i),defaults[i]);
 		}
 
-		m_keys[Direction::Total] = config.registerProperty("key_launch0", defaults[Direction::Total]);
+		m_keys[Direction::Total] = config.registerProperty("key_launch", defaults[Direction::Total]);
 		m_keys[Direction::Total + 1] = config.registerProperty("key_pause", defaults[Direction::Total+1]);
 	}
 
@@ -27,7 +27,7 @@ namespace zoper
 
 	Direction KeyMapping::getDirectionFromKey(const lib::input::Key k) const noexcept
 	{
-		for (lib::u8 i = 0; i < Direction::Total; ++i) {
+		for (lib::u8 i{ 0 }; i < Direction::Total; ++i) {
 			if (m_keys[i] == k) {
 				return static_cast<Direction>(i);
 			}
