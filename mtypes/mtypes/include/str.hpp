@@ -66,10 +66,10 @@ namespace lib
 		str &append(const char_type *n);
 		str &append(const f32 n);
 		str &append(const f64 n);
-		void convert(u32 &n);
-		void convert(s32 &n);
-		void convert(f32 &n);
-		void convert(f64 &n);
+		void convert(u32 &n) const;
+		void convert(s32 &n) const;
+		void convert(f32 &n) const;
+		void convert(f64 &n) const;
 
 		template <typename T>
 		str &operator+=(T&&source) {
@@ -77,14 +77,14 @@ namespace lib
 		}
 
 		constexpr size_t size() const noexcept{ return m_data.empty()?0:m_data.size()-1; }
-		constexpr reference operator[](const size_type index) { return m_data[index]; }
-		constexpr const_reference operator[](const size_type index) const { return m_data[index]; }
-		constexpr iterator begin() { return m_data.begin(); }
-		constexpr const_iterator begin() const { return m_data.begin(); }
-		constexpr const_iterator cbegin() const { return m_data.cbegin(); }
-		constexpr iterator end() { return m_data.begin()+size(); }
-		constexpr const_iterator end() const { return m_data.begin()+size(); }
-		constexpr const_iterator cend() const { return m_data.cbegin()+size(); }
+		constexpr reference operator[](const size_type index) noexcept { return m_data[index]; }
+		constexpr const_reference operator[](const size_type index) const noexcept { return m_data[index]; }
+		constexpr iterator begin() noexcept { return m_data.begin(); }
+		constexpr const_iterator begin() const noexcept { return m_data.begin(); }
+		constexpr const_iterator cbegin() const noexcept { return m_data.cbegin(); }
+		constexpr iterator end() noexcept { return m_data.begin()+size(); }
+		constexpr const_iterator end() const noexcept { return m_data.begin()+size(); }
+		constexpr const_iterator cend() const noexcept { return m_data.cbegin()+size(); }
 
 		constexpr inline_str ic_str() const noexcept { return {c_str(), size()}; }
 		constexpr const char *c_str() const noexcept { return m_data.cbegin(); }
@@ -97,7 +97,7 @@ namespace lib
 
 		template <typename enum_type>
 		std::enable_if_t<std::is_enum<enum_type>::value>
-		 constexpr operator>>(enum_type&n)
+		constexpr operator>>(enum_type&n) const
 		{
 			std::underlying_type_t<enum_type> tmp{};
 			convert(tmp);
@@ -106,13 +106,13 @@ namespace lib
 
 		template <typename T>
 		std::enable_if_t<!std::is_enum<T>::value>
-		constexpr operator>>(T&n)
+		constexpr operator>>(T&n) const
 		{
 			convert(n);
 		}
 
 		template <>
-		void operator>>(str&n)
+		void operator>>(str&n) const
 		{
 			n = *this;
 		}
@@ -161,20 +161,20 @@ namespace lib
 	template<typename T>
 	constexpr str make_str(T&& arg)
 	{
-		return str(arg);
+		return str(std::forward<T>(arg));
 	}
 
 	template<typename T, typename ...Args>
 	constexpr void make_str_internal(str &buffer, T&& arg, Args&&... args)
 	{
-		make_str_internal(buffer, arg);
+		make_str_internal(buffer, std::forward<T>(arg));
 		make_str_internal(buffer, std::forward<Args>(args)...);
 	}
 
 	template<typename T>
 	constexpr void make_str_internal(str &buffer, T&& arg)
 	{
-		buffer<< arg;
+		buffer << std::forward<T>(arg);
 	}
 
 	static_assert(std::is_move_constructible_v<str>, "str must be movable");

@@ -84,22 +84,22 @@ namespace lib
 		append(str(n));
 		return *this;
 	}
-	void str::convert(u32 & n)
+	void str::convert(u32 & n) const
 	{
 		std::istringstream tmpstream(c_str());
 		tmpstream >> n;
 	}
-	void str::convert(s32 & n)
+	void str::convert(s32 & n) const
 	{
 		std::istringstream tmpstream(c_str());
 		tmpstream >> n;
 	}
-	void str::convert(f32 & n)
+	void str::convert(f32 & n) const
 	{
 		std::istringstream tmpstream(c_str());
 		tmpstream >> n;
 	}
-	void str::convert(f64 & n)
+	void str::convert(f64 & n) const
 	{
 		std::istringstream tmpstream(c_str());
 		tmpstream >> n;
