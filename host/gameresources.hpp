@@ -4,19 +4,14 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
 #include <mtypes/include/log.hpp>
-#include <lib/include/iresourceslist.hpp>
-#include <lib/scene/ttfont.hpp>
-#include <lib/scene/texture.hpp>
+#include <lib/include/iresourceloader.hpp>
 
 namespace zoper
 {
-	class GameResourcesLoader : public lib::IResourcesList
+	class GameResourcesLoader : public lib::IResourceLoader
 	{
 	public:
-		void registerResources(lib::core::ResourceLoader &resourceManager) override;
-		void aquireResources(lib::core::ResourceLoader &resourceLoader) override;
-
-		lib::sptr<lib::scene::TTFont> m_scoreFont;
+		virtual void loadResources() override;
 	};
 }
 

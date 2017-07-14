@@ -1,6 +1,4 @@
 #include "resourcemanager.hpp"
-#include "resourceloader.hpp"
-#include <lib/include/iresourceslist.hpp>
 #include <mtypes/include/log.hpp>
 
 #include <lib/scene/ttfont.hpp>
@@ -15,18 +13,10 @@ namespace lib
 		namespace
 		{
 			template <typename T, typename A>
-			inline void add(A& factory, ResourceList<sptr<T>> &container, const str &id, const str &fileName)
+			inline void add(A& factory, ResourceManager::ResourceList<sptr<T>> &container, const str &id, const str &fileName)
 			{
 				sptr<T> resource(msptr<T>(factory.loadFromFile(fileName)));
-				container.push_back(NamedIndex<sptr<T>>(id,std::move(resource)));
-			}
-
-			template <typename T, typename A>
-			inline sptr<T> add(A& factory, ResourceList<sptr<T>> &container, const str &fileName)
-			{
-				sptr<T> resource(msptr<T>(factory.loadFromFile(fileName)));
-				container.push_back(NamedIndex<sptr<T>>(fileName, resource));
-				return resource;
+				container.push_back(ResourceManager::NamedIndex<sptr<T>>(id,std::move(resource)));
 			}
 
 		}
@@ -81,66 +71,6 @@ namespace lib
 				[rid](const auto &node) {return node.first == rid; })
 			);
 			return iterator == m_textures.end() ? nullptr : (*iterator).second;
-		}
-
-		u32 ResourceManager::loadFontList(ResourceList<sptr<scene::TTFont>>& fileList)
-		{
-			u32 counter{ 0 };
-			for (auto& listNode : fileList) {
-				listNode.second = getOrLoadResource<scene::TTFont>(listNode.first);
-				++counter;
-			}
-			return counter;
-		}
-
-		u32 ResourceManager::loadTextureList(ResourceList<sptr<scene::Texture>>& fileList)
-		{
-			u32 counter{ 0 };
-			for (auto& listNode : fileList) {
-				listNode.second = getOrLoadResource<scene::Texture>(listNode.first);
-				++counter;
-			}
-			return counter;
-		}
-
-		void ResourceManager::registerResourceList(sptr<IResourcesList> newList)
-		{
-			// Create a new resource loader to be used with the new list
-			auto resourceLoader{ msptr<ResourceLoader>() };
-
-			// Make the new list register its resources
-			newList->registerResources(*resourceLoader);
-			// Add both classes as a pair in our list of resourcelists
-			m_resourceListList.emplace_back(resourceLoader, newList);
-		}
-
-		sptr<scene::TTFont> ResourceManager::getOrLoadTTFont(const str & address)
-		{
-			if (auto cached_resource = getFont(address)) {
-				return cached_resource;
-			}
-
-			return add(backend::ttfontFactory(), m_fonts, address);
-		}
-
-		sptr<scene::Texture> ResourceManager::getOrLoadTexture(const str & address)
-		{
-			if (auto cached_resource = getTexture(address)) {
-				return cached_resource;
-			}
-
-			return add(backend::textureFactory(), m_textures, address);
-		}
-
-		bool ResourceManager::ensureLoadedInternal(sptr<IResourcesList> list)
-		{
-			for (auto&& listNode : m_resourceListList)
-			{
-				if (listNode.second == list) {
-					listNode.first->ensureLoad(*this);
-				}
-			}
-			return false;
 		}
 	}
 }
