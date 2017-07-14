@@ -58,15 +58,13 @@ namespace lib
 
 		constexpr vector& operator=(vector&&other) noexcept
 		{
-			if (this != &other) {
-				_destroy();
-				m_capacity = other.m_capacity;
-				m_size = other.m_size;
-				m_buffer = other.m_buffer;
-				other.m_capacity = 0;
-				other.m_size = 0;
-				other.m_buffer = nullptr;
-			}
+			_destroy();
+			m_capacity = other.m_capacity;
+			m_size = other.m_size;
+			m_buffer = other.m_buffer;
+			other.m_capacity = 0;
+			other.m_size = 0;
+			other.m_buffer = nullptr;
 			return *this;
 		}
 
@@ -116,14 +114,15 @@ namespace lib
 			if (m_size < m_capacity) {
 				T*oldBuffer{ m_buffer };
 				m_buffer = new T[m_size];
+				m_capacity = m_size;
 				_moveElements(oldBuffer,m_size);
 
 				delete[] oldBuffer;
 			}
 		}
 
-		constexpr reference operator[](const size_t index) { return m_buffer[index]; }
-		constexpr const_reference operator[](const size_t index) const { return m_buffer[index]; }
+		constexpr reference operator[](const size_t index) noexcept { return m_buffer[index]; }
+		constexpr const_reference operator[](const size_t index) const noexcept { return m_buffer[index]; }
 		constexpr unsigned int capacity() const noexcept { return m_capacity; }
 		constexpr unsigned int size() const noexcept { return m_size; }
 		constexpr bool empty() const noexcept { return m_size == 0; }
@@ -133,8 +132,8 @@ namespace lib
 		constexpr const_iterator end() const noexcept { return m_buffer + m_size; }
 		constexpr const_iterator cbegin() const noexcept { return m_buffer; }
 		constexpr const_iterator cend() const noexcept { return m_buffer + m_size; }
-		constexpr T& front() { return m_buffer[0]; }
-		constexpr T& back() { return m_buffer[m_size > 0 ? (m_size - 1) : 0]; }
+		constexpr T& front() noexcept { return m_buffer[0]; }
+		constexpr T& back() noexcept { return m_buffer[m_size > 0 ? (m_size - 1) : 0]; }
 
 		constexpr void push_back(const T& value)
 		{
@@ -151,7 +150,7 @@ namespace lib
 		void insert(const vector &other) {
 			//TO DO: Optimize
 			reserve(m_size + other.m_size);
-			for (auto&& element : other) {
+			for (const auto& element : other) {
 				push_back(element);
 			}
 		}
@@ -184,10 +183,8 @@ namespace lib
 					pop_back();
 				}
 
-				T temp;
-
 				while (m_size > size) {
-					push_back(temp);
+					emplace_back();
 				}
 			}
 		}
