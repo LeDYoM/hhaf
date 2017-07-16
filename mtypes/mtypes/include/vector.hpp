@@ -189,7 +189,7 @@ namespace lib
 			}
 		}
 
-		constexpr void clear()
+		constexpr void clear() noexcept
 		{
 			m_size = 0;
 		}
@@ -218,7 +218,7 @@ namespace lib
 			}
 		}
 
-		constexpr void _moveElements(T*source, const size_t s)
+		constexpr void _moveElements(T*source, const size_t s) noexcept
 		{
 			for (size_t i{ 0 }; i < s; ++i) {
 				m_buffer[i] = std::move(source[i]);
