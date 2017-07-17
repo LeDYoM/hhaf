@@ -15,5 +15,11 @@ namespace lib
 			Configuration config(file);
 			source->setProperties(config);
 		}
+
+		void PropertiesFileManager::initialize(IUserProperties * source)
+		{
+			Configuration config(":");
+			source->setProperties(config);
+		}
 	}
 }

@@ -1,11 +1,11 @@
 #include "mainmenu.hpp"
+#include "gameconfig.hpp"
 #include <lib/gui/ChooseControlGroup.hpp>
 #include <lib/gui/choosecontrol.hpp>
 #include <lib/scene/scenenode.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/core/host.hpp>
 #include <mtypes/include/log.hpp>
-#include "common.hpp"
 
 namespace zoper
 {
@@ -16,7 +16,7 @@ namespace zoper
 		using namespace lib::scene;
 
 		MainMenu::MainMenu(SceneNode *parent, str name)
-			: ChooseControlGroup{ parent, std::move(name) }, m_gameConfig{ ":NextGame" } {}
+			: ChooseControlGroup{ parent, std::move(name) } {}
 
 		MainMenu::~MainMenu() = default;
 
@@ -66,9 +66,8 @@ namespace zoper
 					case 0:
 					case 1:
 						// Go to start level (token or time)
-						m_gameConfig.value(GameModeStr)->set<s32>(static_cast<s32>(indices[1]));
+						m_gameConfig->gameMode  = static_cast<s32>(indices[1]);
 						break;
-
 					case 3:
 						// Exit
 						// TO DO
@@ -86,7 +85,7 @@ namespace zoper
 					case 0:
 						// Start level option
 						CLIENT_ASSERT(indices.size() > 2, "Error in indices parameter");
-						m_gameConfig.value(StartLevelStr)->set(indices[2]);
+						m_gameConfig->startLevel = indices[2];
 						lib::log_debug_info("Starting at level:", indices[2]);
 						lib::host().setScene("GameScene");
 						break;

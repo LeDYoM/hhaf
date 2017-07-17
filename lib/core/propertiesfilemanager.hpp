@@ -22,8 +22,17 @@ namespace lib
 				initialize(fileName, result.get());
 				return result;
 			}
+
+			template <typename T>
+			sptr<T> createInMemory() {
+				auto result(msptr<T>());
+				initialize(result.get());
+				return result;
+			}
+
 		private:
 			void initialize(const str &file, IUserProperties *source);
+			void initialize(IUserProperties *source);
 		};
 	}
 }

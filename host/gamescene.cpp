@@ -3,6 +3,7 @@
 #include "tile.hpp"
 #include "player.hpp"
 #include "common.hpp"
+#include "gameconfig.hpp"
 #include <mtypes/include/types.hpp>
 #include <lib/board/boardmodel.hpp>
 #include <lib/board/itilescontroller.hpp>
@@ -27,7 +28,7 @@ namespace zoper
 	using namespace lib::scene::nodes;
 
 	GameScene::GameScene()
-		: Scene("GameScene"), _gameConfig{ ":NextGame" }
+		: Scene("GameScene")
 	{
 		_gameData.size.x = 18;
 		_gameData.size.y = 12;
@@ -131,11 +132,10 @@ namespace zoper
 
 		tilesCreated();
 		addPlayer();
-		_gameData._gameMode = static_cast<GameData::GameModes>(_gameConfig.value(GameModeStr)->get<int>());
 
 		_score = 0;
 		_nextTokenPart = 0;
-		setLevel(_gameConfig.value(StartLevelStr)->get<int>());
+		setLevel(_gameConfig->startLevel);
 		_gameOverrg->visible = false;
 		m_mainBoardrg->visible = true;
 		m_pauseSceneNode->visible = false;

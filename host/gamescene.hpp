@@ -30,6 +30,7 @@ namespace zoper
 {
 	class Player;
 	class Tile;
+	class GameConfig;
 
 	struct GameData
 	{
@@ -72,7 +73,7 @@ namespace zoper
 
 	private:
 		lib::sptr<KeyMapping> m_keyMapping;
-		lib::Configuration _gameConfig;
+		lib::sptr<GameConfig> _gameConfig;
 		lib::EventReceiver m_boardEventConnector;
 		void setLevel(const lib::u32 nv);
 		void updateLevelData();
