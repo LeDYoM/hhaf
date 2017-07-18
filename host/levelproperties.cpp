@@ -8,9 +8,9 @@ namespace zoper
 	using namespace lib::scene;
 	using namespace lib::core;
 
-	LevelProperties::LevelProperties(const lib::u32 level)
+	LevelProperties::LevelProperties()
 	{
-		setLevel(level);
+		setLevel(0);
 	}
 
 	void LevelProperties::setLevel(const lib::u32 level)

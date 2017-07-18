@@ -9,7 +9,7 @@ namespace zoper
 	class LevelProperties
 	{
 	public:
-		LevelProperties(const lib::u32 level = 0);
+		LevelProperties();
 		virtual ~LevelProperties() = default;
 
 		void setLevel(const lib::u32 level);
