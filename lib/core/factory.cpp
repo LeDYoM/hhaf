@@ -3,11 +3,4 @@
 
 namespace lib
 {
-	Factory::Factory()
-	{
-	}
-
-	Factory::~Factory()
-	{
-	}
 }

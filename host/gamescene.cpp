@@ -109,12 +109,14 @@ namespace zoper
 
 	void GameScene::onEnterScene()
 	{
-		Scene::onEnterScene();
 		using namespace lib::board;
 		using namespace lib::events;
 
-		m_keyMapping = propertiesFileManager().create<KeyMapping>("keys.cfg");
+		Scene::onEnterScene();
 
+		_gameConfig = propertiesFileManager().getSingleton<GameConfig>();
+		m_keyMapping = propertiesFileManager().initializeFromFile<KeyMapping>("keys.cfg");
+		m_keyMapping = propertiesFileManager().getSingleton<KeyMapping>();
 		p_boardModel = this->ensureComponentOfType<BoardModelComponent>();
 		p_boardModel->initialize(_gameData.size);
 		m_boardEventConnector.addSubscription(TileAddedEvent::subscribe([this](const events::Event&ev) {

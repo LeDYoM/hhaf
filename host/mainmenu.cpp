@@ -5,6 +5,7 @@
 #include <lib/scene/scenenode.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/core/host.hpp>
+#include <lib/core/propertiesfilemanager.hpp>
 #include <mtypes/include/log.hpp>
 
 namespace zoper
@@ -16,7 +17,10 @@ namespace zoper
 		using namespace lib::scene;
 
 		MainMenu::MainMenu(SceneNode *parent, str name)
-			: ChooseControlGroup{ parent, std::move(name) } {}
+			: ChooseControlGroup{ parent, std::move(name) } 
+		{
+			m_gameConfig = propertiesFileManager().initializeInMemory<GameConfig>();
+		}
 
 		MainMenu::~MainMenu() = default;
 

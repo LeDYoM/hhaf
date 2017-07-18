@@ -4,30 +4,32 @@
 #include <mtypes/include/types.hpp>
 #include "configuration.hpp"
 #include "appservice.hpp"
+#include "factory.hpp"
 
 namespace lib
 {
 	class IUserProperties;
 	namespace core
 	{
-		class PropertiesFileManager : public AppService
+		class PropertiesFileManager : public AppService, public FactoryOfSingletons<IUserProperties>
 		{
 		public:
 			PropertiesFileManager();
 			virtual ~PropertiesFileManager();
 
 			template <typename T>
-			sptr<T> create(const str &fileName) {
-				auto result(msptr<T>());
+			sptr<T> initializeFromFile(const str &fileName) {
+				if (typeRegistered<T>()) {
+					return getSingleton<T>();
+				}
+				auto result(registerAndCreateSingleton<T>());
 				initialize(fileName, result.get());
 				return result;
 			}
 
 			template <typename T>
-			sptr<T> createInMemory() {
-				auto result(msptr<T>());
-				initialize(result.get());
-				return result;
+			sptr<T> initializeInMemory() {
+				return initializeFromFile<T>("");
 			}
 
 		private:

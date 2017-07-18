@@ -99,6 +99,27 @@ namespace lib
 			return m_size;
 		}
 
+		constexpr iterator find(const T&element) noexcept
+		{
+			auto finder( begin() );
+			while (finder != end() && !(*finder == element)) ++finder;
+			return finder;
+		}
+
+		constexpr const_iterator find(const T&element) const noexcept
+		{
+			auto finder{ cbegin() };
+			while (finder != cend() && !(*finder == element)) ++finder;
+			return finder;
+		}
+
+		constexpr const_iterator cfind(const T&element) const noexcept
+		{
+			auto finder{ cbegin() };
+			while (finder != cend() && !(*finder == element)) ++finder;
+			return finder;
+		}
+
 		template<typename ...Args>
 		constexpr void emplace_back(Args&&... args)
 		{
