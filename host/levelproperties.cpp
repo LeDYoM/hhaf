@@ -15,32 +15,32 @@ namespace zoper
 
 	void LevelProperties::setLevel(const lib::u32 level)
 	{
-		_level = level;
+		m_level = level;
 
-		_baseScore = 10 + _level;
+		m_baseScore = 10 + m_level;
 
-		if (_level <= maxLevelWithProperties) {
-			_millisBetweenTokens = 2600 - (_level * 100);
-			_stayTime = 180 + (_level * 30);
-			_stayTokens = 25 + (10 * _level);
+		if (m_level <= maxLevelWithProperties) {
+			m_millisBetweenTokens = 2600 - (m_level * 100);
+			m_stayTime = 180 + (m_level * 30);
+			m_stayTokens = 25 + (10 * m_level);
 		}
 		else {
-			_millisBetweenTokens = 250;
-			_stayTime = 1200;
-			_stayTokens = 400;
+			m_millisBetweenTokens = 250;
+			m_stayTime = 1200;
+			m_stayTokens = 400;
 		}
 	}
 
 	Color LevelProperties::getBackgroundTileColor(const u32 x, const u32 y, const bool isCenter) const
 	{
-		if (_level <= maxLevelWithProperties)
+		if (m_level <= maxLevelWithProperties)
 		{
 			if (isCenter) {
-				if (_level < 9) {
-					if (_level % 2) {
+				if (m_level < 9) {
+					if (m_level % 2) {
 						return{ 10, 200, 50 };
 					}
-					else if (!(_level % 3)) {
+					else if (!(m_level % 3)) {
 						return{ 255, 70, 200 };
 					}
 					else {
@@ -49,33 +49,33 @@ namespace zoper
 				}
 				else {
 					if (!(x % 2)) {
-						return (_level < 15) ? lib::scene::Color{ 128, 128, 128 } : lib::scene::Color{ 255, 100, 100 };
+						return (m_level < 15) ? lib::scene::Color{ 128, 128, 128 } : lib::scene::Color{ 255, 100, 100 };
 					}
 					else {
-						return ((_level < 15) ? lib::scene::Color{ 225, 255, 255 } : lib::scene::Color{ 100, 200, 200 });
+						return ((m_level < 15) ? lib::scene::Color{ 225, 255, 255 } : lib::scene::Color{ 100, 200, 200 });
 					}
 				}
 			}
 			else {
-				if (_level < 2) {
+				if (m_level < 2) {
 					return lib::scene::colors::Black;
 				}
-				else if (_level < 3) {
+				else if (m_level < 3) {
 					return{ 255, 128, 0 };
 				}
-				else if (_level < 5) {
+				else if (m_level < 5) {
 					return{ 100, 128, 255 };
 				}
-				else if (_level < 10) {
-					if (_level % 2) {
+				else if (m_level < 10) {
+					if (m_level % 2) {
 						return (x % 2) ? lib::scene::Color{ 0, 255, 255 } : lib::scene::Color{ 255, 100, 200 };
 					}
 					else {
 						return (y % 2) ? lib::scene::Color{ 0, 255, 255 } : lib::scene::Color{ 255, 100, 200 };
 					}
 				}
-				else if (_level < 15) {
-					if (_level % 2) {
+				else if (m_level < 15) {
+					if (m_level % 2) {
 						if (x % 2) {
 							return (y % 2) ? lib::scene::colors::White : lib::scene::Color{ 100,100,100 };
 						}
@@ -89,7 +89,7 @@ namespace zoper
 							((y % 2) ? lib::scene::Color{ 250, 50, 10 } : lib::scene::Color{ 10, 200, 10 });
 					}
 				}
-				else if (_level < maxLevelWithProperties)
+				else if (m_level < maxLevelWithProperties)
 				{
 					const auto &rnd(host().randomizer());
 					return lib::scene::Color(static_cast<lib::u8>(rnd.getUInt(255, 0)),
