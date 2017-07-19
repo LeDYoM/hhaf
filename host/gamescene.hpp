@@ -119,18 +119,16 @@ namespace zoper
 		virtual lib::vector2df getDefaultSizeView() override;
 
 		// Properties
-		lib::PausableTimer gameClock;
+		lib::PausableTimer m_gameClock;
 		lib::sptr<lib::board::BoardModelComponent> p_boardModel{ nullptr };
-		GameData _gameData;
-		lib::u32 _score{ 0 };
-		lib::u8 _nextTokenPart{ 0 };
+		GameData m_gameData;
+		lib::u32 m_score{ 0 };
+		lib::u8 m_nextTokenPart{ 0 };
 		lib::scene::SceneNodeSPtr m_mainBoardrg{ nullptr };
 		lib::scene::SceneNodeSPtr m_gameOverrg{ nullptr };
 		lib::scene::SceneNodeSPtr m_levelrg{ nullptr };
 		lib::scene::SceneNodeSPtr m_pauseSceneNode{ nullptr };
-		const lib::u8 _scoreSize{ 5 };
-		const lib::u8 _levelDataSize{ 5 };
-		LevelProperties _levelProperties;
+		LevelProperties levelProperties;
 
 		// Nodes from the scene
 		lib::sptr<Player> p_player{ nullptr };

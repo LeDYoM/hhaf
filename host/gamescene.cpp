@@ -30,10 +30,10 @@ namespace zoper
 	GameScene::GameScene()
 		: Scene("GameScene")
 	{
-		_gameData.size.x = 18;
-		_gameData.size.y = 12;
-		_gameData.centerRect = Rectu32{ 7,4,4,4 };
-		_gameData.generateTokenZones();
+		m_gameData.size.x = 18;
+		m_gameData.size.y = 12;
+		m_gameData.centerRect = Rectu32{ 7,4,4,4 };
+		m_gameData.generateTokenZones();
 	}
 
 	GameScene::~GameScene() = default;
@@ -118,7 +118,7 @@ namespace zoper
 		m_keyMapping = propertiesFileManager().initializeFromFile<KeyMapping>("keys.cfg");
 		m_keyMapping = propertiesFileManager().getSingleton<KeyMapping>();
 		p_boardModel = this->ensureComponentOfType<BoardModelComponent>();
-		p_boardModel->initialize(_gameData.size);
+		p_boardModel->initialize(m_gameData.size);
 		m_boardEventConnector.addSubscription(TileAddedEvent::subscribe([this](const events::Event&ev) {
 			auto tEvent{ eventAs<TileAddedEvent>(ev) }; tileAdded(tEvent.position, tEvent.tile);
 		}));
@@ -135,14 +135,14 @@ namespace zoper
 		tilesCreated();
 		addPlayer();
 
-		_score = 0;
-		_nextTokenPart = 0;
+		m_score = 0;
+		m_nextTokenPart = 0;
 		setLevel(_gameConfig->startLevel);
 		m_gameOverrg->visible = false;
 		m_mainBoardrg->visible = true;
 		m_pauseSceneNode->visible = false;
 
-		switch (_gameData._gameMode)
+		switch (m_gameData._gameMode)
 		{
 		default:
 		case GameData::GameModes::Token:
@@ -189,7 +189,7 @@ namespace zoper
 
 		setState(Playing);
 
-		gameClock.restart();
+		m_gameClock.restart();
 	}
 
 	void GameScene::onExitScene()
@@ -204,14 +204,14 @@ namespace zoper
 	void GameScene::updateScene()
 	{
 		if (state() == Playing) {
-			if (_gameData._gameMode == GameData::GameModes::Time) {
+			if (m_gameData._gameMode == GameData::GameModes::Time) {
 				updateLevelData();
 			}
 
-			if (gameClock.getElapsedTime().asMilliSeconds() > static_cast<lib::u64>(_levelProperties.millisBetweenTokens())) {
+			if (m_gameClock.getElapsedTime().asMilliSeconds() > static_cast<lib::u64>(levelProperties.millisBetweenTokens())) {
 				// New token
 				generateNextToken();
-				gameClock.restart();
+				m_gameClock.restart();
 			}
 		}
 		else {
@@ -226,13 +226,13 @@ namespace zoper
 			auto animationComponent(m_pauseSceneNode->ensureComponentOfType<anim::AnimationComponent>());
 			animationComponent->addAnimation(muptr<anim::IPropertyAnimation<Color>>(1000, m_pauseText->color, Color{ 255, 255, 255, 0 }, Color{ 255, 255, 255, 255 },
 				anim::animation_action_callback{}, anim::animation_action_callback{}));
-			gameClock.pause();
+			m_gameClock.pause();
 			return true;
 		}
 		else if (state() == Pause) {
 			setState(Playing);
 			m_pauseSceneNode->visible = false;
-			gameClock.resume();
+			m_gameClock.resume();
 			return false;
 		}
 		return false;
@@ -240,22 +240,22 @@ namespace zoper
 
 	void GameScene::setLevel(const u32 nv)
 	{
-		_levelProperties.setLevel(nv);
-		lib::log_debug_info("Level set: ", _levelProperties.currentLevel());
-		lib::log_debug_info("Millis between tokens: ", _levelProperties.millisBetweenTokens());
-		lib::log_debug_info("Current base score: ", _levelProperties.baseScore());
-		lib::log_debug_info("Seconds to next level: ", _levelProperties.stayTime());
-		lib::log_debug_info("Tokens to next level: ", _levelProperties.stayTokens());
+		levelProperties.setLevel(nv);
+		lib::log_debug_info("Level set: ", levelProperties.currentLevel());
+		lib::log_debug_info("Millis between tokens: ", levelProperties.millisBetweenTokens());
+		lib::log_debug_info("Current base score: ", levelProperties.baseScore());
+		lib::log_debug_info("Seconds to next level: ", levelProperties.stayTime());
+		lib::log_debug_info("Tokens to next level: ", levelProperties.stayTokens());
 
-		_gameData.levelClock.restart();
-		_gameData.consumedTokens = 0;
+		m_gameData.levelClock.restart();
+		m_gameData.consumedTokens = 0;
 
 		// Update background tiles
-		for (u32 y = 0; y < _gameData.size.y; ++y)
+		for (u32 y = 0; y < m_gameData.size.y; ++y)
 		{
-			for (u32 x = 0; x < _gameData.size.x; ++x)
+			for (u32 x = 0; x < m_gameData.size.x; ++x)
 			{
-				m_backgroundTiles[y][x]->color.set(_levelProperties.getBackgroundTileColor(x, y, pointInCenter({ x,y })));
+				m_backgroundTiles[y][x]->color.set(levelProperties.getBackgroundTileColor(x, y, pointInCenter({ x,y })));
 			}
 		}
 
@@ -265,36 +265,36 @@ namespace zoper
 
 	void GameScene::updateGoals()
 	{
-		m_scoreQuad->text(1)->text = str(_levelProperties.currentLevel() + 1);
+		m_scoreQuad->text(1)->text = str(levelProperties.currentLevel() + 1);
 
-		switch (_gameData._gameMode)
+		switch (m_gameData._gameMode)
 		{
 		default:
 		case GameData::GameModes::Token:
-			m_goalQuad->text(3)->text = str(_levelProperties.stayTokens());
+			m_goalQuad->text(3)->text = str(levelProperties.stayTokens());
 			break;
 
 		case GameData::GameModes::Time:
-			m_goalQuad->text(3)->text = str(_levelProperties.stayTime());
+			m_goalQuad->text(3)->text = str(levelProperties.stayTime());
 			break;
 		}
 	}
 
 	void GameScene::updateLevelData()
 	{
-		switch (_gameData._gameMode)
+		switch (m_gameData._gameMode)
 		{
 		default:
 		case GameData::GameModes::Token:
-			m_goalQuad->text(1)->text = _gameData.consumedTokens;
-			if (_gameData.consumedTokens >= _levelProperties.stayTokens())
-				setLevel(_levelProperties.currentLevel() + 1);
+			m_goalQuad->text(1)->text = m_gameData.consumedTokens;
+			if (m_gameData.consumedTokens >= levelProperties.stayTokens())
+				setLevel(levelProperties.currentLevel() + 1);
 			break;
 
 		case GameData::GameModes::Time:
-			m_goalQuad->text(1)->text = static_cast<lib::u16>(_gameData.levelClock.getElapsedTime().asSeconds());
-			if (_gameData.levelClock.getElapsedTime().asSeconds() >= _levelProperties.stayTime())
-				setLevel(_levelProperties.currentLevel() + 1);
+			m_goalQuad->text(1)->text = static_cast<lib::u16>(m_gameData.levelClock.getElapsedTime().asSeconds());
+			if (m_gameData.levelClock.getElapsedTime().asSeconds() >= levelProperties.stayTime())
+				setLevel(levelProperties.currentLevel() + 1);
 			break;
 		}
 	}
@@ -324,9 +324,9 @@ namespace zoper
 
 	void GameScene::generateNextToken()
 	{
-		const GameData::TokenZone &currentTokenZone{ _gameData._tokenZones[_nextTokenPart] };
+		const GameData::TokenZone &currentTokenZone{ m_gameData._tokenZones[m_nextTokenPart] };
 
-		lib::log_debug_info("NextTokenPart: ", _nextTokenPart);
+		lib::log_debug_info("NextTokenPart: ", m_nextTokenPart);
 		lib::log_debug_info("zone: ", currentTokenZone.zone);
 
 		// Generate the new token type
@@ -359,7 +359,7 @@ namespace zoper
 		});
 		// Set the new token
 		addNewToken(vector2du32{ newX, newY }, newToken);
-		_nextTokenPart = (_nextTokenPart + 1) % NUMWAYS;
+		m_nextTokenPart = (m_nextTokenPart + 1) % NUMWAYS;
 
 		CLIENT_EXECUTE_IN_DEBUG(_debugDisplayBoard());
 	}
@@ -385,10 +385,10 @@ namespace zoper
 
 	void GameScene::addPlayer()
 	{
-		lib::log_debug_info("Adding player tile at ", _gameData.centerRect.left, ",", _gameData.centerRect.top);
+		lib::log_debug_info("Adding player tile at ", m_gameData.centerRect.left, ",", m_gameData.centerRect.top);
 		CLIENT_ASSERT(!p_player, "Player already initialized");
 		// Create the player instance
-		p_player = m_mainBoardrg->createSceneNode<Player>("playerNode", _gameData.centerRect.leftTop(), Rectf32::fromSize(tileSize()), board2SceneFactor());
+		p_player = m_mainBoardrg->createSceneNode<Player>("playerNode", m_gameData.centerRect.leftTop(), Rectf32::fromSize(tileSize()), board2SceneFactor());
 
 		// Add it to the board and to the scene nodes
 		p_boardModel->setTile(p_player->boardPosition(), p_player);
@@ -462,8 +462,8 @@ namespace zoper
 				board::BoardTileData currentTokenType = currentToken->get();
 				if (currentTokenType == tokenType) {
 					++inARow;
-					increaseScore(inARow*_levelProperties.baseScore());
-					_gameData.consumedTokens++;
+					increaseScore(inARow*levelProperties.baseScore());
+					m_gameData.consumedTokens++;
 					lastTokenPosition = board2Scene(loopPosition);
 					p_boardModel->deleteTile(loopPosition);
 					found = true;
@@ -491,17 +491,17 @@ namespace zoper
 			return result;
 		});
 
-		if (_gameData._gameMode == GameData::GameModes::Token)
+		if (m_gameData._gameMode == GameData::GameModes::Token)
 			updateLevelData();
 	}
 
 	bool GameScene::pointInCenter(const lib::vector2du32 &pos) const
 	{
 		if (p_boardModel->validCoords(pos)) {
-			if (pos.x < _gameData.centerRect.left || pos.y < _gameData.centerRect.top)
+			if (pos.x < m_gameData.centerRect.left || pos.y < m_gameData.centerRect.top)
 				return false;
 
-			if (pos.x >= _gameData.centerRect.right() || pos.y >= _gameData.centerRect.bottom())
+			if (pos.x >= m_gameData.centerRect.right() || pos.y >= m_gameData.centerRect.bottom())
 				return false;
 
 			return true;
@@ -528,9 +528,9 @@ namespace zoper
 
 	void GameScene::_debugDisplayBoard() const
 	{
-		for (u32 y = 0; y < _gameData.size.y; ++y) {
+		for (u32 y = 0; y < m_gameData.size.y; ++y) {
 			str temp;
-			for (u32 x = 0; x < _gameData.size.x; ++x) {
+			for (u32 x = 0; x < m_gameData.size.x; ++x) {
 				str chTemp;
 				auto lp_tile(p_boardModel->getTile(lib::vector2du32(x, y)));
 				if (lp_tile) {
@@ -553,18 +553,18 @@ namespace zoper
 	{
 		const Rectf32 bBox(scenePerspective());
 		m_backgroundTiles.clear();
-		m_backgroundTiles.reserve(_gameData.size.y);
+		m_backgroundTiles.reserve(m_gameData.size.y);
 
 		auto backgroundTilesrg(createSceneNode("backgroundTiles"));
 		moveLastBeforeNode(m_mainBoardrg);
 		f32 currentx{};
 		f32 currenty{};
-		for (u32 y = 0; y < _gameData.size.y; ++y)
+		for (u32 y = 0; y < m_gameData.size.y; ++y)
 		{
 			vector<sptr<NodeQuad>> column;
-			column.reserve(_gameData.size.x);
+			column.reserve(m_gameData.size.x);
 
-			for (u32 x = 0; x < _gameData.size.x; ++x) {
+			for (u32 x = 0; x < m_gameData.size.x; ++x) {
 				const Rectf32 tileBox{ currentx, currenty, tileSize().x,tileSize().y };
 				const str indexStr(x + "_" + y);
 
@@ -637,15 +637,17 @@ namespace zoper
 	{
 		auto animationComponent(tile->ensureComponentOfType<anim::AnimationComponent>());
 		animationComponent->addAnimation(muptr<anim::IPropertyAnimation<vector2df>>
-			(_levelProperties.millisBetweenTokens() / 2, tile->position, tile->position(), board2Scene(dest),
+			(levelProperties.millisBetweenTokens() / 2, tile->position, tile->position(), board2Scene(dest),
 			anim::noAction, anim::noAction));
 	}
 
+	constexpr u8 scoreSize = 5;
+
 	void GameScene::increaseScore(u32 scoreIncrement)
 	{
-		_score += scoreIncrement;
-		str result( _score );
-		while (result.size() < _scoreSize) result = "0" + result;
+		m_score += scoreIncrement;
+		str result( m_score );
+		while (result.size() < scoreSize) result = "0" + result;
 		m_scoreQuad->text(3)->text = result;
 	}
 
