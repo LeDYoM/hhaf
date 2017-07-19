@@ -42,8 +42,8 @@ namespace zoper
 	{
 		Scene::onInit();
 		m_mainBoardrg = this->createSceneNode("mainBoard");
-		_gameOverrg = this->createSceneNode("gameOverScreen");
-		_levelrg = this->createSceneNode("level");
+		m_gameOverrg = this->createSceneNode("gameOverScreen");
+		m_levelrg = this->createSceneNode("level");
 		m_pauseSceneNode = this->createSceneNode("pause");
 
 		auto& resourceManager{ lib::host().resourceManager() };
@@ -78,7 +78,7 @@ namespace zoper
 		m_pauseText->alignmentY = NodeText::AlignmentY::Middle;
 		m_pauseText->configure();
 
-		auto gameText(_gameOverrg->createRenderizable<NodeText>("gameovergame"));
+		auto gameText(m_gameOverrg->createRenderizable<NodeText>("gameovergame"));
 		gameText->text = "GAME";
 		gameText->font = scoreFont;
 		gameText->characterSize = 360;
@@ -87,7 +87,7 @@ namespace zoper
 		gameText->alignmentX = NodeText::AlignmentX::Center;
 		gameText->alignmentY = NodeText::AlignmentY::Top;
 
-		auto overText(_gameOverrg->createRenderizable<NodeText>("gameoverover"));
+		auto overText(m_gameOverrg->createRenderizable<NodeText>("gameoverover"));
 		overText->text = "OVER";
 		overText->font = scoreFont;
 		overText->color = colors::White;
@@ -97,7 +97,7 @@ namespace zoper
 
 		increaseScore(0);
 
-		_levelrg->position = { 1250, 50 };
+		m_levelrg->position = { 1250, 50 };
 	}
 
 	void GameScene::onDeinit()
@@ -138,7 +138,7 @@ namespace zoper
 		_score = 0;
 		_nextTokenPart = 0;
 		setLevel(_gameConfig->startLevel);
-		_gameOverrg->visible = false;
+		m_gameOverrg->visible = false;
 		m_mainBoardrg->visible = true;
 		m_pauseSceneNode->visible = false;
 
@@ -367,7 +367,7 @@ namespace zoper
 	void GameScene::startGameOver()
 	{
 		setState(GameOver);
-		_gameOverrg->visible = true;
+		m_gameOverrg->visible = true;
 	}
 
 	void GameScene::for_each_token_in_line(const lib::vector2du32 &startPosition, const Direction &direction,

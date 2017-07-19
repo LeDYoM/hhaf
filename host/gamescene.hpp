@@ -124,10 +124,10 @@ namespace zoper
 		GameData _gameData;
 		lib::u32 _score{ 0 };
 		lib::u8 _nextTokenPart{ 0 };
-		lib::sptr<lib::scene::SceneNode> m_mainBoardrg{ nullptr };
-		lib::sptr<lib::scene::SceneNode> _gameOverrg{ nullptr };
-		lib::sptr<lib::scene::SceneNode> _levelrg{ nullptr };
-		lib::sptr<lib::scene::SceneNode> m_pauseSceneNode{ nullptr };
+		lib::scene::SceneNodeSPtr m_mainBoardrg{ nullptr };
+		lib::scene::SceneNodeSPtr m_gameOverrg{ nullptr };
+		lib::scene::SceneNodeSPtr m_levelrg{ nullptr };
+		lib::scene::SceneNodeSPtr m_pauseSceneNode{ nullptr };
 		const lib::u8 _scoreSize{ 5 };
 		const lib::u8 _levelDataSize{ 5 };
 		LevelProperties _levelProperties;
@@ -136,7 +136,7 @@ namespace zoper
 		lib::sptr<Player> p_player{ nullptr };
 		lib::sptr<TextQuad> m_scoreQuad;
 		lib::sptr<TextQuad> m_goalQuad;
-		lib::sptr<lib::scene::SceneNode> m_gameOverText;
+		lib::scene::SceneNodeSPtr m_gameOverText;
 		lib::sptr<lib::scene::nodes::NodeText> m_pauseText;
 		lib::vector<lib::vector<lib::sptr<lib::scene::nodes::NodeQuad>>> m_backgroundTiles;
 	};
