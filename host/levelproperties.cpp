@@ -13,7 +13,7 @@ namespace zoper
 		setLevel(0);
 	}
 
-	void LevelProperties::setLevel(const lib::u32 level)
+	void LevelProperties::setLevel(const u32 level)
 	{
 		m_level = level;
 
@@ -23,42 +23,36 @@ namespace zoper
 			m_millisBetweenTokens = 2600 - (m_level * 100);
 			m_stayTime = 180 + (m_level * 30);
 			m_stayTokens = 25 + (10 * m_level);
-		}
-		else {
-			m_millisBetweenTokens = 250;
+		} else {
+			m_millisBetweenTokens = 50;
 			m_stayTime = 1200;
 			m_stayTokens = 400;
 		}
 	}
 
-	Color LevelProperties::getBackgroundTileColor(const u32 x, const u32 y, const bool isCenter) const
+	Color LevelProperties::getBackgroundTileColor(vector2du32 position, const bool isCenter) const
 	{
-		if (m_level <= maxLevelWithProperties)
-		{
+		if (m_level <= maxLevelWithProperties) {
 			if (isCenter) {
 				if (m_level < 9) {
 					if (m_level % 2) {
 						return{ 10, 200, 50 };
-					}
-					else if (!(m_level % 3)) {
+					} else if (!(m_level % 3)) {
 						return{ 255, 70, 200 };
-					}
-					else {
+					} else {
 						return{ 255,100,100 };
 					}
-				}
-				else {
-					if (!(x % 2)) {
-						return (m_level < 15) ? lib::scene::Color{ 128, 128, 128 } : lib::scene::Color{ 255, 100, 100 };
-					}
-					else {
-						return ((m_level < 15) ? lib::scene::Color{ 225, 255, 255 } : lib::scene::Color{ 100, 200, 200 });
+				} else {
+					if (!(position.x % 2)) {
+						return (m_level < 15) ? Color{ 128, 128, 128 } : Color{ 255, 100, 100 };
+					} else {
+						return ((m_level < 15) ? Color{ 225, 255, 255 } : Color{ 100, 200, 200 });
 					}
 				}
 			}
 			else {
 				if (m_level < 2) {
-					return lib::scene::colors::Black;
+					return colors::Black;
 				}
 				else if (m_level < 3) {
 					return{ 255, 128, 0 };
@@ -68,31 +62,28 @@ namespace zoper
 				}
 				else if (m_level < 10) {
 					if (m_level % 2) {
-						return (x % 2) ? lib::scene::Color{ 0, 255, 255 } : lib::scene::Color{ 255, 100, 200 };
-					}
-					else {
-						return (y % 2) ? lib::scene::Color{ 0, 255, 255 } : lib::scene::Color{ 255, 100, 200 };
+						return (position.x % 2) ? Color{ 0, 255, 255 } : Color{ 255, 100, 200 };
+					} else {
+						return (position.y % 2) ? Color{ 0, 255, 255 } : Color{ 255, 100, 200 };
 					}
 				}
 				else if (m_level < 15) {
 					if (m_level % 2) {
-						if (x % 2) {
-							return (y % 2) ? lib::scene::colors::White : lib::scene::Color{ 100,100,100 };
-						}
-						else {
-							return (y % 2) ? lib::scene::Color{ 0, 128, 255 } : lib::scene::Color{ 10, 250, 100 };
+						if (position.x % 2) {
+							return (position.y % 2) ? colors::White : Color{ 100,100,100 };
+						} else {
+							return (position.y % 2) ? Color{ 0, 128, 255 } : Color{ 10, 250, 100 };
 						}
 					}
 					else {
-						return (x % 2) ?
-							((y % 2) ? lib::scene::Color{ 25,25,25 } : lib::scene::Color{ 10, 12, 250 }) :
-							((y % 2) ? lib::scene::Color{ 250, 50, 10 } : lib::scene::Color{ 10, 200, 10 });
+						return (position.x % 2) ?
+							((position.y % 2) ? Color{ 25,25,25 } : Color{ 10, 12, 250 }) :
+							((position.y % 2) ? Color{ 250, 50, 10 } : Color{ 10, 200, 10 });
 					}
 				}
-				else if (m_level < maxLevelWithProperties)
-				{
+				else if (m_level < maxLevelWithProperties) {
 					const auto &rnd(host().randomizer());
-					return lib::scene::Color(static_cast<lib::u8>(rnd.getUInt(255, 0)),
+					return Color(static_cast<lib::u8>(rnd.getUInt(255, 0)),
 						static_cast<lib::u8>(rnd.getUInt(255, 0)),
 						static_cast<lib::u8>(rnd.getUInt(255, 0)));
 				}

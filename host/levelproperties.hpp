@@ -2,6 +2,7 @@
 #define __LEVELPROPERTIES_HPP__
 
 #include <mtypes/include/types.hpp>
+#include <mtypes/include/vector2d.hpp>
 #include <lib/scene/color.hpp>
 
 namespace zoper
@@ -20,7 +21,7 @@ namespace zoper
 		inline lib::u32 currentLevel() const { return m_level; }
 		inline lib::u32 stayTokens() const { return m_stayTokens; }
 		static constexpr lib::u32 maxLevelWithProperties{ 25u };
-		lib::scene::Color getBackgroundTileColor(const lib::u32 x, const lib::u32 y, const bool isCenter) const;
+		lib::scene::Color getBackgroundTileColor(lib::vector2du32 position, const bool isCenter) const;
 	private:
 		lib::u32 m_level;
 		lib::u32 m_millisBetweenTokens;

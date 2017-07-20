@@ -255,7 +255,7 @@ namespace zoper
 		{
 			for (u32 x = 0; x < m_gameData.size.x; ++x)
 			{
-				m_backgroundTiles[y][x]->color.set(levelProperties.getBackgroundTileColor(x, y, pointInCenter({ x,y })));
+				m_backgroundTiles[y][x]->color.set(levelProperties.getBackgroundTileColor({ x, y }, pointInCenter({ x,y })));
 			}
 		}
 
