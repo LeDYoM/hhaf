@@ -162,13 +162,13 @@ namespace lib
 			m_buffer[m_size++] = value;
 		}
 
-		void push_back(T&& value)
+		constexpr void push_back(T&& value)
 		{
 			reserve(m_size + 1);
 			m_buffer[m_size++] = std::move(value);
 		}
 
-		void insert(const vector &other) {
+		constexpr void insert(const vector &other) {
 			//TO DO: Optimize
 			reserve(m_size + other.m_size);
 			for (const auto& element : other) {

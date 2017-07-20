@@ -1,6 +1,7 @@
 #include "file.hpp"
 #include <mtypes/include/log.hpp>
 #include <fstream>
+#include <string>
 
 namespace lib
 {
@@ -22,7 +23,7 @@ namespace lib
 				std::string line;
 				infile >> line;
 				if (!line.empty()) {
-					result.emplace_back(std::move(line));
+					result.emplace_back(line.c_str());
 				}
 			}
 			return result;

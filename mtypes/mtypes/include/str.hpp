@@ -3,7 +3,6 @@
 #ifndef LIB_STR_INCLUDE_HPP
 #define LIB_STR_INCLUDE_HPP
 
-#include <string>
 #include "mtypes_export.hpp"
 #include "vector.hpp"
 #include "types.hpp"
@@ -43,8 +42,6 @@ namespace lib
 		template<size_t N>
 		constexpr str(const char_type(&a)[N]) noexcept : str(inline_str{ a,N }) {}
 
-		str(std::string &&) noexcept;
-		str(const std::string &) noexcept;
 		str(str&&) noexcept;
 
 		constexpr str(const char_type c) noexcept : m_data{ c,0 } {}

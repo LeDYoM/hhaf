@@ -4,14 +4,12 @@
 
 namespace lib
 {
-    str::str(std::string &&source) noexcept : str(source.c_str()) {}
-	str::str(const std::string &source) noexcept : str(source.c_str()) {}
 	str::str(str &&source) noexcept : m_data{ std::move(source.m_data) } {}
 
 	str::str(const u32  n) : str{ std::to_string(n).c_str() } {}
 	str::str(const s32 n) : str{ std::to_string(n).c_str() } {}
-	str::str(const f32 n) : str{ std::to_string(n) } {}
-	str::str(const f64 n) : str{ std::to_string(n) } {}
+	str::str(const f32 n) : str{ std::to_string(n).c_str() } {}
+	str::str(const f64 n) : str{ std::to_string(n).c_str() } {}
 
 	namespace detail
 	{
@@ -42,7 +40,7 @@ namespace lib
 		std::string tok;
 
 		while (std::getline(ss, tok, separator)) {
-			result.push_back(std::move(tok));
+			result.push_back(tok.c_str());
 		}
 		return result;
 	}
