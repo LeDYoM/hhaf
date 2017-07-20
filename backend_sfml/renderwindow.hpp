@@ -37,7 +37,7 @@ namespace lib
 				bool processEvents() override;
 				void display() override;
 				void clear() override;
-				void setWindowTitle(const inline_str &newTitle) override;
+				void setWindowTitle(str newTitle) override;
 				void closeWindow() override;
 
 				// Input part

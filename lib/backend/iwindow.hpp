@@ -36,7 +36,7 @@ namespace lib
 
 			virtual void display() = 0;
 			virtual void clear() = 0;
-			virtual void setWindowTitle(const inline_str &newTitle) = 0;
+			virtual void setWindowTitle(str newTitle) = 0;
 			virtual void closeWindow() = 0;
 
 			// Input part

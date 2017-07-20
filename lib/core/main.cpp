@@ -16,9 +16,6 @@ namespace lib
 		{
 			log::init_log();
 
-			log_debug_info("this is a test", 4);
-			log_release_info("this is a test", 3);
-
 			installMemManager();
 
 			core::Host::createHost(argc, argv);

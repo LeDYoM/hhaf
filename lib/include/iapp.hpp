@@ -13,7 +13,7 @@ namespace lib
 	}
 	struct WindowCreationParams
 	{
-		const inline_str windowTitle;
+		const str windowTitle;
 		u32 width{ 1024 };
 		u32 height{ 768 };
 		u32 bpp{ 16 };
@@ -25,7 +25,7 @@ namespace lib
 
 	struct IAppDescriptor
 	{
-		const char *const Name;
+		const str Name;
 		u32 Version;
 		u32 SubVersion;
 		u32 Patch;

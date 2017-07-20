@@ -11,16 +11,6 @@ namespace lib
 {
 	using char_type = char;
 
-	struct MTYPES_EXPORT inline_str
-	{
-		constexpr inline_str(const char *_str, unsigned int _size) : str{_str}, size{_size} {}
-		constexpr const char_type *begin() const noexcept { return str; }
-		constexpr const char_type *end() const noexcept { return str + size; }
-		const char_type *str;
-		unsigned int size;
-
-	};
-
 	using char_type = char;
 
 	class MTYPES_EXPORT str
@@ -37,12 +27,11 @@ namespace lib
 		#pragma warning(pop)
 	public:
 		constexpr str() noexcept = default;
-		constexpr str(inline_str source) noexcept : str{ source.str } {}
 
 		template<size_t N>
 		constexpr str(const char_type(&a)[N]) noexcept : str(inline_str{ a,N }) {}
 
-		str(str&&) noexcept;
+		str(str&&) noexcept = default;
 
 		constexpr str(const char_type c) noexcept : m_data{ c,0 } {}
 		constexpr str(const str & n) noexcept : m_data{ n.m_data } {}
@@ -83,7 +72,6 @@ namespace lib
 		constexpr const_iterator end() const noexcept { return m_data.begin()+size(); }
 		constexpr const_iterator cend() const noexcept { return m_data.cbegin()+size(); }
 
-		constexpr inline_str ic_str() const noexcept { return {c_str(), size()}; }
 		constexpr const char *c_str() const noexcept { return m_data.cbegin(); }
 		constexpr bool empty() const noexcept { return m_data.empty(); }
 		template <typename T>

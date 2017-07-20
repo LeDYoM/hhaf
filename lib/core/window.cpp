@@ -96,7 +96,7 @@ namespace lib
 				m_wPrivate->lastFps = m_wPrivate->currentFps;
 				m_wPrivate->currentFps = 0;
 				str wtitle(m_title + " FPS:" + str(m_wPrivate->lastFps));
-				bw.setWindowTitle(wtitle.ic_str());
+				bw.setWindowTitle(wtitle);
 			}
 			++(m_wPrivate->currentFps);
 			bw.clear();

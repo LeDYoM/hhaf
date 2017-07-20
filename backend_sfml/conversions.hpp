@@ -28,9 +28,9 @@ namespace lib
 				return static_cast<input::Key>((int)k);
 			}
 
-			inline sf::String getAsString(const inline_str &other) noexcept
+			inline sf::String getAsString(const str& other) noexcept
 			{
-				std::wstring wsTmp(other.str, other.str + other.size);
+				std::wstring wsTmp(other.cbegin(), other.cend());
 				return sf::String(wsTmp);
 			}
 

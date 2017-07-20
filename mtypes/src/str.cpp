@@ -4,8 +4,6 @@
 
 namespace lib
 {
-	str::str(str &&source) noexcept : m_data{ std::move(source.m_data) } {}
-
 	str::str(const u32  n) : str{ std::to_string(n).c_str() } {}
 	str::str(const s32 n) : str{ std::to_string(n).c_str() } {}
 	str::str(const f32 n) : str{ std::to_string(n).c_str() } {}

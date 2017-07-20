@@ -14,7 +14,7 @@ namespace lib
 
 		void* BackendLoader::loadFunc(const str&fname)
 		{
-			void* funci = GetProcAddress(instance, fname.ic_str().str);
+			void* funci = GetProcAddress(instance, fname.c_str());
 			if (!funci) {
 				return nullptr;
 			}
