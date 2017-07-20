@@ -92,7 +92,7 @@ namespace lib
 		}
 
 		const str &getstr() const noexcept { return m_data; }
-		constexpr bool empty() const noexcept { return m_data.empty(); }
+		bool empty() const noexcept { return m_data.empty(); }
 	private:
 		str m_data;
 

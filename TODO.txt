@@ -1,7 +1,5 @@
 TODO:
 
-- Separate Backend in shared library
-- MiniTL (MTL)
 - Move menu to models
 - Move menu to components
 - Add Resource loader integrated for loading resources
@@ -12,4 +10,6 @@ TODO:
 - Separate systems
 
 Done recently:
+- Separate Backend in shared library
+- MiniTL (MTL)
 - Rename draw for scene namespace
