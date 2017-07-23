@@ -15,6 +15,7 @@ namespace lib
 	namespace scene
 	{
 		class RenderStatesStack;
+		class SceneManager;
 	}
 	namespace core
 	{
@@ -62,6 +63,8 @@ namespace lib
 			inline DebugSystem &debugSystem() noexcept { return *m_debugSystem; }
 			inline PropertiesFileManager &propertiesFileManager() noexcept { return *m_propertiesFileManager; }
 			inline const PropertiesFileManager &propertiesFileManager() const noexcept { return *m_propertiesFileManager; }
+			inline scene::SceneManager &sceneManager() noexcept { return *m_sceneManager; }
+			inline const scene::SceneManager &sceneManager() const noexcept { return *m_sceneManager; }
 
 			const str appId() const;
 
@@ -85,6 +88,7 @@ namespace lib
 			uptr<DebugSystem> m_debugSystem{ nullptr };
 			uptr<input::InputSystem> m_inputSystem{ nullptr };
 			uptr<PropertiesFileManager> m_propertiesFileManager{ nullptr };
+			uptr<scene::SceneManager> m_sceneManager{ nullptr };
 			bool exit{ false };
 			vector<sptr<scene::Scene>> m_scenes;
 			sptr<scene::Scene> m_currentScene{ nullptr };

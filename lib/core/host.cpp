@@ -6,6 +6,7 @@
 #include "randomizer.hpp"
 #include <lib/scene/scene.hpp>
 #include <lib/scene/renderstatesstack.hpp>
+#include <lib/scene/scenemanager.hpp>
 #include <lib/core/events/eventmanager.hpp>
 #include <lib/core/inputsystem.hpp>
 #include <lib/backend/backendfactory.hpp>
@@ -104,6 +105,7 @@ namespace lib
 				m_randomizer = muptr<Randomizer>();
 				m_eventManager = muptr<EventManager>();
 				m_window = muptr<Window>(m_iapp->getAppDescriptor().wcp);
+				m_sceneManager = muptr<scene::SceneManager>();
 				m_resourceManager = muptr<core::ResourceManager>(m_iapp->getAppDescriptor().resourceFile);
 				m_renderStates = muptr<scene::RenderStatesStack>();
 				m_debugSystem = muptr<DebugSystem>();
@@ -138,6 +140,7 @@ namespace lib
 				m_state = AppState::Terminated;
 //				m_iapp->onFinish();
 				m_debugSystem = nullptr;
+				m_sceneManager = nullptr;
 				m_window = nullptr;
 				m_resourceManager = nullptr;
 				m_eventManager = nullptr;

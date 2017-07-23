@@ -13,7 +13,6 @@ namespace lib
 		public:
 			SceneManager();
 			~SceneManager();
-
 		};
 	}
 }
