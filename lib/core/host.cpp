@@ -2,9 +2,8 @@
 #include "window.hpp"
 #include "resourcemanager.hpp"
 #include "propertiesfilemanager.hpp"
-#include <mtypes/include/log.hpp>
 #include "randomizer.hpp"
-#include <lib/scene/scene.hpp>
+#include <mtypes/include/log.hpp>
 #include <lib/scene/scenemanager.hpp>
 #include <lib/core/events/eventmanager.hpp>
 #include <lib/core/inputsystem.hpp>
@@ -154,7 +153,7 @@ namespace lib
 		int Host::run()
 		{
 			while (!exit) {
-				bool terminated{ update() };
+				const bool terminated{ update() };
 				if (terminated) {
 					m_iapp.reset();
 					exit = true;
@@ -169,7 +168,7 @@ namespace lib
 
 		bool Host::loopStep()
 		{
-			bool windowWants2Close = m_window->preLoop();
+			const bool windowWants2Close{ m_window->preLoop() };
 			m_eventManager->update();
 			m_inputSystem->preUpdate();
 			m_sceneManager->update();
@@ -190,12 +189,8 @@ namespace lib
 		const str Host::appId() const
 		{
 			if (m_iapp) {
-				return 
-					str(m_iapp->getAppDescriptor().Name) + ":" + 
-					(m_iapp->getAppDescriptor().Version) + "." + 
-					(m_iapp->getAppDescriptor().SubVersion) + "." + 
-					(m_iapp->getAppDescriptor().Patch)
-				;
+				const auto &cAppDescriptor(m_iapp->getAppDescriptor());
+				return make_str(cAppDescriptor.Name, ":", cAppDescriptor.Version, ".", cAppDescriptor.SubVersion, ".", cAppDescriptor.Patch);
 			}
 			return "NoApp:0.0.0";
 		}

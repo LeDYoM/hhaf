@@ -7,10 +7,7 @@ namespace lib
 {
 	namespace scene
 	{
-		SceneManager::SceneManager()
-		{
-			m_renderStates.reset(new RenderStatesStack);
-		}
+		SceneManager::SceneManager() = default;
 		SceneManager::~SceneManager() = default;
 
 		void SceneManager::updateScene()
@@ -38,7 +35,7 @@ namespace lib
 
 		void SceneManager::setScene(const str &name)
 		{
-			if (sptr<scene::Scene> scene = getSceneByName(name)) {
+			if (sptr<Scene> scene = getSceneByName(name)) {
 				setScene(std::move(scene));
 				log_debug_info("Changed scene to ", name);
 			}
@@ -47,14 +44,14 @@ namespace lib
 			}
 		}
 
-		void SceneManager::addScenes(vector<sptr<scene::Scene>>&& sceneVector)
+		void SceneManager::addScenes(vector<sptr<Scene>>&& sceneVector)
 		{
 			for (auto &scene : sceneVector) {
 				addScene(std::move(scene));
 			}
 		}
 
-		void SceneManager::setScene(sptr<scene::Scene> &&scene)
+		void SceneManager::setScene(sptr<Scene> &&scene)
 		{
 			m_nextScene = std::move(scene);
 		}
@@ -72,11 +69,11 @@ namespace lib
 		{
 			updateScene();
 
-			m_renderStates->newFrame();
+			m_renderStates.newFrame();
 			m_currentScene->draw();
 		}
 
-		void SceneManager::addScene(sptr<scene::Scene> newScene)
+		void SceneManager::addScene(sptr<Scene> newScene)
 		{
 			__ASSERT(newScene, "Cannot add a null scene");
 			m_scenes.push_back(newScene);
