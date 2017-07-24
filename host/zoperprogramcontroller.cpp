@@ -3,6 +3,7 @@
 #include "gamescene.hpp"
 #include "common.hpp"
 #include <lib/core/host.hpp>
+#include <lib/scene/scenemanager.hpp>
 
 namespace zoper
 {
@@ -14,7 +15,7 @@ namespace zoper
 
 	void ZoperProgramController::onInit()
 	{
-		host().setScene("MenuScene");
+		sceneManager().setScene("MenuScene");
 	}
 
 	const IAppDescriptor ZoperProgramController::getAppDescriptor() const

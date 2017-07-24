@@ -5,7 +5,6 @@
 #include <mtypes/include/log.hpp>
 #include "randomizer.hpp"
 #include <lib/scene/scene.hpp>
-#include <lib/scene/renderstatesstack.hpp>
 #include <lib/scene/scenemanager.hpp>
 #include <lib/core/events/eventmanager.hpp>
 #include <lib/core/inputsystem.hpp>
@@ -107,10 +106,9 @@ namespace lib
 				m_window = muptr<Window>(m_iapp->getAppDescriptor().wcp);
 				m_sceneManager = muptr<scene::SceneManager>();
 				m_resourceManager = muptr<core::ResourceManager>(m_iapp->getAppDescriptor().resourceFile);
-				m_renderStates = muptr<scene::RenderStatesStack>();
 				m_debugSystem = muptr<DebugSystem>();
 				
-				addScenes(m_iapp->scenesVector());
+				m_sceneManager->addScenes(m_iapp->scenesVector());
 
 				m_iapp->onInit();
 				log_debug_info(appId(), ": ", " is now executing");
@@ -129,14 +127,7 @@ namespace lib
 				break;
 			case AppState::ReadyToTerminate:
 				log_debug_info(appId(), ": " ," started termination");
-				if (m_currentScene) {
-					m_currentScene->onExitScene();
-				}
-				m_currentScene = nullptr;
-				for (auto &scene : m_scenes) {
-					scene->onDeinit();
-				}
-				m_scenes.clear();
+				m_sceneManager->finish();
 				m_state = AppState::Terminated;
 //				m_iapp->onFinish();
 				m_debugSystem = nullptr;
@@ -181,12 +172,9 @@ namespace lib
 			bool windowWants2Close = m_window->preLoop();
 			m_eventManager->update();
 			m_inputSystem->preUpdate();
+			m_sceneManager->update();
 
 			__ASSERT(m_currentScene || m_nextScene, "Current scene and nextscene cannot be nullptr at same time");
-			updateScene();
-
-			m_renderStates->newFrame();
-			m_currentScene->draw();
 
 			m_window->postLoop();
 			m_inputSystem->postUpdate();
@@ -210,70 +198,6 @@ namespace lib
 				;
 			}
 			return "NoApp:0.0.0";
-		}
-
-		void Host::addScene(sptr<scene::Scene> newScene)
-		{
-			__ASSERT(newScene, "Cannot add a null scene");
-			m_scenes.push_back(newScene);
-			newScene->onInit();
-
-			m_debugSystem->addDebugVars(newScene);
-		}
-
-		void Host::setScene(const str &name)
-		{
-			if (sptr<scene::Scene> scene = getSceneByName(name)) {
-				setScene(std::move(scene));
-				log_debug_info("Changed scene to ", name);
-			}
-			else {
-				log_debug_error("Scene ", name, " not found in scenes");
-			}
-		}
-
-		void Host::addScenes(vector<sptr<scene::Scene>>&& sceneVector)
-		{
-			for (auto &scene : sceneVector) {
-				addScene(std::move(scene));
-			}
-		}
-
-		void Host::updateScene()
-		{
-			if (m_nextScene)
-			{
-				if (m_currentScene) {
-					m_currentScene->onExitScene();
-				}
-				else {
-					log_debug_info("Set first scene");
-				}
-				if (m_currentScene) m_currentScene->setAsActiveScene(false);
-				m_nextScene->setAsActiveScene(true);
-
-				m_currentScene = m_nextScene;
-				m_nextScene = nullptr;
-
-				m_currentScene->onEnterScene();
-			}
-			else {
-				m_currentScene->updateScene();
-			}
-		}
-
-		void Host::setScene(sptr<scene::Scene> &&scene)
-		{
-			m_nextScene = std::move(scene);
-		}
-
-		sptr<scene::Scene> Host::getSceneByName(const str &name) const
-		{
-			const auto iterator(std::find_if(m_scenes.cbegin(), m_scenes.cend(), [&name](const auto&scene)
-			{
-				return scene->name() == name;
-			}));
-			return iterator == m_scenes.cend() ? nullptr : *iterator;
 		}
 	}
 }

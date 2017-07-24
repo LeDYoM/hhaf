@@ -6,7 +6,8 @@
 #include <lib/core/window.hpp>
 #include <lib/core/host.hpp>
 #include <mtypes/include/log.hpp>
-#include <lib/scene/renderstatesstack.hpp>
+#include "renderstatesstack.hpp"
+#include "scenemanager.hpp"
 
 namespace lib
 {
@@ -23,7 +24,7 @@ namespace lib
 				// Update the node components
 				updateComponents();
 
-				const auto handle(host().rStates().pushChanges(&transform(), nullptr));
+				const auto handle(sceneManager().rStates().pushChanges(&transform(), nullptr));
 
 				for (const auto& renderizable : m_renderNodes.nodes) {
 					renderizable->draw();

@@ -41,15 +41,7 @@ namespace lib
 			int run();
 			bool update();
 
-			void addScene(sptr<scene::Scene> newScene);
-			void setScene(const str &name);
-
-			void addScenes(vector<sptr<scene::Scene>> &&sceneVector);
-			sptr<scene::Scene> getSceneByName(const str &name) const;
-
 			void exitProgram();
-
-			void setScene(sptr<scene::Scene> &&scene);
 
 			inline Window const &parentWindow() const noexcept { return *m_window; }
 			inline Window &parentWindow() noexcept { return *m_window; }
@@ -68,15 +60,10 @@ namespace lib
 
 			const str appId() const;
 
-			inline const scene::RenderStatesStack &rStates() const noexcept { return *m_renderStates; }
-			inline scene::RenderStatesStack &rStates() noexcept { return *m_renderStates; }
-
 			inline Randomizer &randomizer() const noexcept { return *m_randomizer; }
-			inline const sptr<scene::Scene> &currentScene() const noexcept { return m_currentScene; }
 
 		private:
 			bool loopStep();
-			void updateScene();
 
 			static Host *m_instance;
 			AppState m_state;
@@ -90,11 +77,7 @@ namespace lib
 			uptr<PropertiesFileManager> m_propertiesFileManager{ nullptr };
 			uptr<scene::SceneManager> m_sceneManager{ nullptr };
 			bool exit{ false };
-			vector<sptr<scene::Scene>> m_scenes;
-			sptr<scene::Scene> m_currentScene{ nullptr };
-			sptr<scene::Scene> m_nextScene{ nullptr };
 			vector<str> m_params;
-			uptr<scene::RenderStatesStack> m_renderStates;
 		};
 	}
 
@@ -104,6 +87,7 @@ namespace lib
 	inline core::Randomizer &randomizer() noexcept { return core::Host::host().randomizer(); }
 	inline core::DebugSystem &debugSystem() noexcept { return core::Host::host().debugSystem(); }
 	inline core::PropertiesFileManager &propertiesFileManager() noexcept { return core::Host::host().propertiesFileManager(); }
+	inline scene::SceneManager &sceneManager() noexcept { return core::Host::host().sceneManager(); }
 
 }
 

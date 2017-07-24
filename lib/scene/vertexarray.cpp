@@ -3,6 +3,7 @@
 #include <lib/core/window.hpp>
 #include <lib/core/host.hpp>
 #include <lib/scene/renderstatesstack.hpp>
+#include <lib/scene/scenemanager.hpp>
 
 namespace lib
 {
@@ -13,7 +14,7 @@ namespace lib
 
 		void VertexArray::draw() const
 		{
-			if (!m_vertices.empty()) host().parentWindow().draw(*this, host().rStates().top());
+			if (!m_vertices.empty()) host().parentWindow().draw(*this, sceneManager().rStates().top());
 		}
 
 		void VertexArray::setColor(const Color &color)

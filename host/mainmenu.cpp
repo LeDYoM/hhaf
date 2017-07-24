@@ -3,6 +3,7 @@
 #include <lib/gui/ChooseControlGroup.hpp>
 #include <lib/gui/choosecontrol.hpp>
 #include <lib/scene/scenenode.hpp>
+#include <lib/scene/scenemanager.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/core/host.hpp>
 #include <lib/core/propertiesfilemanager.hpp>
@@ -90,7 +91,7 @@ namespace zoper
 						CLIENT_ASSERT(indices.size() > 2, "Error in indices parameter");
 						m_gameConfig->startLevel = indices[2];
 						lib::log_debug_info("Starting at level:", indices[2]);
-						lib::host().setScene("GameScene");
+						sceneManager().setScene("GameScene");
 						break;
 					default:
 						// Back option

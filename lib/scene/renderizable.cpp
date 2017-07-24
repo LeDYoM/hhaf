@@ -1,6 +1,7 @@
 #include "renderizable.hpp"
 #include <lib/scene/renderstatesstack.hpp>
 #include <lib/core/host.hpp>
+#include <lib/scene/scenemanager.hpp>
 
 namespace lib
 {
@@ -20,7 +21,7 @@ namespace lib
 		void Renderizable::draw()
 		{
 			if (visible()) {
-				auto handle = host().rStates().pushChanges(nullptr, texture().get());
+				auto handle = sceneManager().rStates().pushChanges(nullptr, texture().get());
 				m_vertices.draw();
 			}
 		}

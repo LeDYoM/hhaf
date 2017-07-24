@@ -56,7 +56,8 @@ namespace lib
 			u32 _state;
 			bool m_isActiveScene{ false };
 
-			friend class lib::core::Host;
+			friend class core::Host;
+			friend class SceneManager;
 		};
 	}
 }

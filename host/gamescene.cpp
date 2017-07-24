@@ -12,6 +12,7 @@
 #include <lib/core/randomizer.hpp>
 #include <lib/core/propertiesfilemanager.hpp>
 #include <lib/scene/renderizable.hpp>
+#include <lib/scene/scenemanager.hpp>
 #include <lib/scene/nodes/nodeshape.hpp>
 #include <lib/scene/nodes/nodequad.hpp>
 #include <lib/scene/nodes/nodetext.hpp>
@@ -177,7 +178,7 @@ namespace zoper
 			}
 			break;
 			case GameOver:
-				lib::host().setScene("MenuScene");
+				sceneManager().setScene("MenuScene");
 				break;
 			case Pause:
 				if (m_keyMapping->isPauseKey(key)) {
