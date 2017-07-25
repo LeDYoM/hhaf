@@ -56,9 +56,4 @@ namespace zoper
 	void MenuScene::updateScene()
 	{
 	}
-
-	vector2df MenuScene::getDefaultSizeView()
-	{
-		return{ 2000.0f, 2000.0f };
-	}
 }

@@ -2,12 +2,18 @@
 #include <mtypes/include/log.hpp>
 #include "scene.hpp"
 #include "renderstatesstack.hpp"
+#include <lib/core/window.hpp>
 
 namespace lib
 {
 	namespace scene
 	{
-		SceneManager::SceneManager() = default;
+		SceneManager::SceneManager(core::Window &window) : m_parentWindow{ window }, 
+			viewPort{ dynamic_cast<IProperty<Rectf32>*>(&(window.viewPort)) },
+			viewRect{ dynamic_cast<IProperty<Rectf32>*>(&(window.viewRect)) }
+		{
+		}
+
 		SceneManager::~SceneManager() = default;
 
 		void SceneManager::updateScene()

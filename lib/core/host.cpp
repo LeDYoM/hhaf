@@ -103,12 +103,10 @@ namespace lib
 				m_randomizer = muptr<Randomizer>();
 				m_eventManager = muptr<EventManager>();
 				m_window = muptr<Window>(m_iapp->getAppDescriptor().wcp);
-				m_sceneManager = muptr<scene::SceneManager>();
+				m_sceneManager = muptr<scene::SceneManager>(*m_window);
 				m_resourceManager = muptr<core::ResourceManager>(m_iapp->getAppDescriptor().resourceFile);
 				m_debugSystem = muptr<DebugSystem>();
 				
-				m_sceneManager->addScenes(m_iapp->scenesVector());
-
 				m_iapp->onInit();
 				log_debug_info(appId(), ": ", " is now executing");
 			}

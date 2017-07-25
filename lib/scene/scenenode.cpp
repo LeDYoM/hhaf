@@ -40,7 +40,7 @@ namespace lib
 
 		const Rectf32 &SceneNode::scenePerspective()
 		{
-			return parentScene()->viewRect();
+			return sceneManager().viewRect();
 		}
 
 		void SceneNode::setColor(const Color & color, const bool applySceneNodes)

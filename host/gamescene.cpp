@@ -512,8 +512,8 @@ namespace zoper
 
 	vector2df GameScene::board2SceneFactor() const
 	{
-		return{ viewRect().size().x / static_cast<f32>(p_boardModel->size().x),
-			viewRect().size().y / static_cast<f32>(p_boardModel->size().y) };
+		return{ sceneManager().viewRect().size().x / static_cast<f32>(p_boardModel->size().x),
+			sceneManager().viewRect().size().y / static_cast<f32>(p_boardModel->size().y) };
 	}
 
 	vector2df GameScene::board2Scene(const lib::vector2du32 &bPosition) const
@@ -650,10 +650,5 @@ namespace zoper
 		str result( m_score );
 		while (result.size() < scoreSize) result = "0" + result;
 		m_scoreQuad->text(3)->text = result;
-	}
-
-	vector2df GameScene::getDefaultSizeView()
-	{
-		return{ 2000.0f, 2000.0f };
 	}
 }

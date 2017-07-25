@@ -23,7 +23,6 @@ namespace zoper
 
 		virtual void updateScene() override;
 
-		virtual lib::vector2df getDefaultSizeView() override;
 	private:
 		lib::sptr<lib::gui::ChooseControlGroup> m_chooseControlGroup;
 		lib::sptr<lib::scene::nodes::NodeQuad> m_logo;

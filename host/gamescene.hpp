@@ -116,8 +116,6 @@ namespace zoper
 
 		void tokenMoved(const lib::vector2du32 &source, const lib::vector2du32 &dest, lib::sptr<Tile> tile);
 
-		virtual lib::vector2df getDefaultSizeView() override;
-
 		// Properties
 		lib::PausableTimer m_gameClock;
 		lib::sptr<lib::board::BoardModelComponent> p_boardModel{ nullptr };

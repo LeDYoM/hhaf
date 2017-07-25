@@ -34,15 +34,9 @@ namespace lib
 
 			virtual void updateScene() = 0;
 
-			virtual vector2df getDefaultSizeView() = 0;
-			vector2df getCoordinatesToCenter(const Rectf32 &coordinates) const;
-			vector2df getCenterCoordinates() const;
-
 			inline bool isActiveScene() const noexcept { return m_isActiveScene; }
 			inline void addSubscription(sptr<events::EventSubscription> &&es) noexcept { eventConnector.addSubscription(std::move(es)); }
 			virtual Scene *const parentScene() noexcept override { return this; }
-			ForwardProperty<Rectf32> viewPort;
-			ForwardProperty<Rectf32> viewRect;
 
 		protected:
 

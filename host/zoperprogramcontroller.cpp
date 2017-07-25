@@ -15,7 +15,8 @@ namespace zoper
 
 	void ZoperProgramController::onInit()
 	{
-		sceneManager().setScene("MenuScene");
+		sceneManager().viewRect = Rectf32{0,0,2000,2000};
+		sceneManager().setScene(msptr<MenuScene>());
 	}
 
 	const IAppDescriptor ZoperProgramController::getAppDescriptor() const
@@ -45,10 +46,5 @@ namespace zoper
 	int ZoperProgramController::loop()
 	{
 		return 0;
-	}
-
-	vector_shared_pointers<lib::scene::Scene> ZoperProgramController::scenesVector()
-	{
-		return{ msptr<MenuScene>(), msptr<GameScene>() };
 	}
 }
