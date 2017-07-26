@@ -27,7 +27,6 @@ namespace lib
 			Scene(str name);
 			virtual ~Scene();
 
-			virtual void onInit();
 			virtual void onDeinit();
 			virtual void onEnterScene();
 			virtual void onExitScene();

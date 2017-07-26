@@ -60,6 +60,7 @@ namespace lib
 		void SceneManager::setScene(sptr<Scene> &&scene)
 		{
 			m_nextScene = std::move(scene);
+			m_nextScene->create();
 		}
 
 		sptr<Scene> SceneManager::getSceneByName(const str &name) const
@@ -83,7 +84,7 @@ namespace lib
 		{
 			__ASSERT(newScene, "Cannot add a null scene");
 			m_scenes.push_back(newScene);
-			newScene->onInit();
+			newScene->create();
 
 //			m_debugSystem->addDebugVars(newScene);
 		}

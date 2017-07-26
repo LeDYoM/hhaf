@@ -63,7 +63,7 @@ namespace zoper
 		~GameScene();
 
 		// Inherited via Scene
-		virtual void onInit() override;
+		virtual void create() override;
 		virtual void onDeinit() override;
 
 		virtual void onEnterScene() override;

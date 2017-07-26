@@ -17,7 +17,7 @@ namespace zoper
 		constexpr static lib::f32 MenuPosX = 165.0f;
 
 		// Inherited via Scene
-		virtual void onInit() override;
+		virtual void create() override;
 		virtual void onEnterScene() override;
 		virtual void onExitScene() override;
 

@@ -21,9 +21,9 @@ namespace zoper
 	MenuScene::MenuScene()
 		: Scene{ "MenuScene" } {}
 
-	void MenuScene::onInit()
+	void MenuScene::create()
 	{
-		Scene::onInit();
+		Scene::create();
 		m_background = createRenderizable<NodeQuad>("background");
 		m_background->box = Rectf32::fromSize(2000.0f, 2000.0f);
 		m_background->texture = host().resourceManager().getTexture("game_menu.background");

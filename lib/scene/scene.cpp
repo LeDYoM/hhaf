@@ -14,11 +14,6 @@ namespace lib
 		Scene::~Scene() = default;
 
 
-		void Scene::onInit()
-		{
-			log_debug_info("Initializing scene ", name());
-		}
-
 		void Scene::onDeinit()
 		{
 			log_debug_info("Deinitializing scene ", name());

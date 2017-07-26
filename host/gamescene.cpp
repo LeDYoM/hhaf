@@ -39,9 +39,9 @@ namespace zoper
 
 	GameScene::~GameScene() = default;
 
-	void GameScene::onInit()
+	void GameScene::create()
 	{
-		Scene::onInit();
+		Scene::create();
 		m_mainBoardrg = this->createSceneNode("mainBoard");
 		m_gameOverrg = this->createSceneNode("gameOverScreen");
 		m_levelrg = this->createSceneNode("level");
