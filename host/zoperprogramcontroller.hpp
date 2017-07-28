@@ -12,6 +12,7 @@ namespace zoper
 		virtual ~ZoperProgramController();
 
 		void onInit() override;
+		void sceneFinished();
 		virtual const lib::IAppDescriptor getAppDescriptor() const override;
 		virtual int loop() override;
 	};

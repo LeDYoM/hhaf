@@ -39,6 +39,7 @@ namespace lib
 			}
 		}
 
+		/*
 		void SceneManager::setScene(const str &name)
 		{
 			if (sptr<Scene> scene = getSceneByName(name)) {
@@ -49,7 +50,7 @@ namespace lib
 				log_debug_error("Scene ", name, " not found in scenes");
 			}
 		}
-
+		*/
 		void SceneManager::addScenes(vector<sptr<Scene>>&& sceneVector)
 		{
 			for (auto &scene : sceneVector) {
@@ -57,10 +58,15 @@ namespace lib
 			}
 		}
 
-		void SceneManager::setScene(sptr<Scene> &&scene)
+		void SceneManager::setScene(sptr<Scene> scene)
 		{
 			m_nextScene = std::move(scene);
 			m_nextScene->create();
+		}
+
+		void SceneManager::terminateScene()
+		{
+			setScene(nullptr);
 		}
 
 		sptr<Scene> SceneManager::getSceneByName(const str &name) const

@@ -40,6 +40,7 @@ namespace lib
 		constexpr IApp() = default;
 		virtual ~IApp() = default;
 
+		virtual void sceneFinished() {}
 		virtual const IAppDescriptor getAppDescriptor() const = 0;
 		virtual void onInit() = 0;
 		virtual int loop() = 0;

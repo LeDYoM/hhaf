@@ -17,11 +17,16 @@ namespace lib
 	class FactoryOfSingletons
 	{
 	public:
+		template <typename T>
+		constexpr void registerSingletonType() noexcept
+		{
+			m_registeredTypes.emplace(typeid(T), nullptr);
+		}
 
 		template <typename T>
-		constexpr sptr<T> registerSingleton(sptr<T> pElement) noexcept
+		constexpr sptr<T> registerSingletonInstance(sptr<T> pElement) noexcept
 		{
-			m_registeredTypes[typeid(T)] = pElement;
+			m_registeredTypes.emplace(typeid(T), pElement);
 			return pElement;
 		}
 
@@ -34,21 +39,27 @@ namespace lib
 		template <typename T>
 		constexpr sptr<T> registerAndCreateSingleton()
 		{
-			return typeRegistered<T>() ? getSingleton<T>() : registerSingleton<T>(msptr<T>());
+			return typeRegistered<T>() ? getSingleton<T>() : registerSingletonInstance<T>(msptr<T>());
 		}
 
 		template <typename T>
-		sptr<interface_type> getSingletonInterface()
+		constexpr sptr<interface_type> getSingletonInterface()
 		{
 			auto iterator(m_registeredTypes.find(typeid(T)));
-			return iterator != m_registeredTypes.end() ? *iterator : nullptr;
+			if (iterator != m_registeredTypes.end()) {
+				// If the instance of the type is still not created
+				if (!(*iterator).second) {
+					(*iterator).second = msptr<T>();
+				}
+				return (*iterator).second;
+			}
+			return nullptr;
 		}
 
 		template <typename T>
-		sptr<T> getSingleton()
+		constexpr sptr<T> getSingleton()
 		{
-			auto iterator(m_registeredTypes.find(typeid(T)));
-			return (iterator != m_registeredTypes.end()) ? std::dynamic_pointer_cast<T>((*iterator).second) : nullptr;
+			return std::dynamic_pointer_cast<T>(getSingletonInterface<T>());
 		}
 
 	private:
