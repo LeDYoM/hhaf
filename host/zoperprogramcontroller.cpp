@@ -16,6 +16,8 @@ namespace zoper
 	void ZoperProgramController::onInit()
 	{
 		sceneManager().viewRect = Rectf32{0,0,2000,2000};
+
+		sceneManager().addScene(msptr<GameScene>());
 		sceneManager().setScene(msptr<MenuScene>());
 	}
 
