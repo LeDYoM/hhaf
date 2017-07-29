@@ -64,7 +64,7 @@ namespace zoper
 				switch (indices[0])
 				{
 				case 0:
-		9			// Main menu page
+					// Main menu page
 					CLIENT_ASSERT(indices.size() > 1, "Error in the indices parameter");
 					switch (indices[1])
 					{

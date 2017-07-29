@@ -33,7 +33,6 @@ namespace lib
 
 			virtual void updateScene() = 0;
 
-			inline bool isActiveScene() const noexcept { return m_isActiveScene; }
 			inline void addSubscription(sptr<events::EventSubscription> &&es) noexcept { eventConnector.addSubscription(std::move(es)); }
 			virtual Scene *const parentScene() noexcept override { return this; }
 
@@ -44,10 +43,7 @@ namespace lib
 			Timer clock;
 			EventReceiver eventConnector;
 
-			inline void setAsActiveScene(const bool nv) noexcept { m_isActiveScene = nv; }
-
 			u32 _state;
-			bool m_isActiveScene{ false };
 
 			friend class core::Host;
 			friend class SceneManager;

@@ -4,10 +4,25 @@
 #include "common.hpp"
 #include <lib/core/host.hpp>
 #include <lib/scene/scenemanager.hpp>
+#include <lib/scene/iscenescontroller.hpp>
 
 namespace zoper
 {
 	using namespace lib;
+	using namespace lib::scene;
+
+	class ScenesController : public IScenesController
+	{
+		sptr<Scene> scenedFinished(SceneManager &sceneManager, sptr<Scene> sceneTerminated) override
+		{
+			if (!sceneTerminated) {
+				return msptr<MenuScene>();
+			}
+
+			return nullptr;
+		}
+
+	};
 
 	ZoperProgramController::ZoperProgramController() = default;
 
@@ -17,10 +32,11 @@ namespace zoper
 	{
 		sceneManager().viewRect = Rectf32{0,0,2000,2000};
 
-		sceneManager().addSceneType<GameScene>();
-		sceneManager().addSceneType<MenuScene>();
+		sceneManager().setScenesController(muptr<ScenesController>());
+//		sceneManager().addSceneType<GameScene>();
+//		sceneManager().addSceneType<MenuScene>();
 
-		sceneManager().setCurrentSceneType<MenuScene>();
+//		sceneManager().setCurrentSceneType<MenuScene>();
 	}
 
 	const IAppDescriptor ZoperProgramController::getAppDescriptor() const

@@ -1,6 +1,7 @@
 #include "scenemanager.hpp"
 #include <mtypes/include/log.hpp>
 #include "scene.hpp"
+#include "iscenescontroller.hpp"
 #include "renderstatesstack.hpp"
 #include <lib/core/window.hpp>
 
@@ -16,6 +17,12 @@ namespace lib
 
 		SceneManager::~SceneManager() = default;
 
+		void SceneManager::setScenesController(uptr<IScenesController> scenesController)
+		{
+			m_scenesController = std::move(scenesController);
+			m_nextScene = m_scenesController->scenedFinished(*this, nullptr);
+		}
+
 		void SceneManager::updateScene()
 		{
 			if (m_nextScene) {
@@ -25,12 +32,11 @@ namespace lib
 				else {
 					log_debug_info("Set first scene");
 				}
-				if (m_currentScene) m_currentScene->setAsActiveScene(false);
-				m_nextScene->setAsActiveScene(true);
 
 				m_currentScene = m_nextScene;
 				m_nextScene = nullptr;
 
+				m_currentScene->create();
 				m_currentScene->onEnterScene();
 			}
 			else {
@@ -53,7 +59,7 @@ namespace lib
 
 		void SceneManager::terminateScene()
 		{
-			setScene(nullptr);
+			setScene(m_scenesController->scenedFinished(*this, m_currentScene));
 		}
 
 		sptr<Scene> SceneManager::getSceneByName(const str &name) const
