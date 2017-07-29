@@ -18,8 +18,7 @@ namespace lib
 
 		void SceneManager::updateScene()
 		{
-			if (m_nextScene)
-			{
+			if (m_nextScene) {
 				if (m_currentScene) {
 					m_currentScene->onExitScene();
 				}
@@ -39,18 +38,6 @@ namespace lib
 			}
 		}
 
-		/*
-		void SceneManager::setScene(const str &name)
-		{
-			if (sptr<Scene> scene = getSceneByName(name)) {
-				setScene(std::move(scene));
-				log_debug_info("Changed scene to ", name);
-			}
-			else {
-				log_debug_error("Scene ", name, " not found in scenes");
-			}
-		}
-		*/
 		void SceneManager::addScenes(vector<sptr<Scene>>&& sceneVector)
 		{
 			for (auto &scene : sceneVector) {
@@ -61,7 +48,7 @@ namespace lib
 		void SceneManager::setScene(sptr<Scene> scene)
 		{
 			m_nextScene = std::move(scene);
-			m_nextScene->create();
+			if (m_nextScene) m_nextScene->create();
 		}
 
 		void SceneManager::terminateScene()
