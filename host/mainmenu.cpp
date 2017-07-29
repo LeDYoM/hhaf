@@ -91,7 +91,7 @@ namespace zoper
 						CLIENT_ASSERT(indices.size() > 2, "Error in indices parameter");
 						m_gameConfig->startLevel = indices[2];
 						lib::log_debug_info("Starting at level:", indices[2]);
-						sceneManager().setScene("GameScene");
+						sceneManager().terminateScene();
 						break;
 					default:
 						// Back option
