@@ -14,23 +14,19 @@ namespace lib
 		Scene::~Scene() = default;
 
 
+
 		void Scene::onDeinit()
 		{
 			log_debug_info("Deinitializing scene ", name());
+			eventConnector.unsubscribeAll();
 		}
 
-		void Scene::onEnterScene()
+		void Scene::create()
 		{
 			using namespace events;
 			log_debug_info("Entered in scene ", name());
 
 			clock.restart();
-		}
-
-		void Scene::onExitScene()
-		{
-			eventConnector.unsubscribeAll();
-			log_debug_info("Exited from scene ", name());
 		}
 	}
 }

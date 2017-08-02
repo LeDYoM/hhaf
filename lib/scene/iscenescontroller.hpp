@@ -12,10 +12,13 @@ namespace lib
 		class IScenesController
 		{
 		public:
-			IScenesController() {};
+			IScenesController(SceneManager &scnManager) : sceneManager{ scnManager } {}
 			virtual ~IScenesController() {};
 
-			virtual sptr<Scene> scenedFinished(SceneManager &sceneManager, sptr<Scene>) = 0;
+			virtual sptr<Scene> startScene() = 0;
+			virtual sptr<Scene> scenedFinished(sptr<Scene>) = 0;
+		private:
+			SceneManager &sceneManager;
 		};
 	}
 }

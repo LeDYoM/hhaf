@@ -5,7 +5,6 @@
 #include <mtypes/include/str.hpp>
 #include <lib/include/properties.hpp>
 #include <lib/core/appservice.hpp>
-#include <lib/core/factory.hpp>
 #include "renderstatesstack.hpp"
 
 namespace lib
@@ -27,24 +26,8 @@ namespace lib
 
 			void setScenesController(uptr<IScenesController> scenesController);
 
-			template <typename T>
-			constexpr void addSceneType()
-			{
-				m_sceneFactory.registerSingletonType<T>();
-			}
-
-			template <typename T>
-			constexpr void setCurrentSceneType()
-			{
-				setScene(m_sceneFactory.getSingletonInterface<T>());
-			}
-
-			void addScene(sptr<Scene> newScene);
 			void setScene(sptr<Scene> scene);
 			void terminateScene();
-
-			void addScenes(vector<sptr<Scene>> &&sceneVector);
-			sptr<Scene> getSceneByName(const str &name) const;
 
 			void update();
 
@@ -57,7 +40,6 @@ namespace lib
 			ForwardProperty<Rectf32> viewRect;
 		private:
 
-			FactoryOfSingletons<Scene> m_sceneFactory;
 			void updateScene();
 			friend class core::Host;
 

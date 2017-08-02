@@ -99,21 +99,11 @@ namespace zoper
 		increaseScore(0);
 
 		m_levelrg->position = { 1250, 50 };
-	}
 
-	void GameScene::onDeinit()
-	{
-		// Remove instances from all nodes.
-		clearAll();
-		Scene::onDeinit();
-	}
-
-	void GameScene::onEnterScene()
-	{
 		using namespace lib::board;
 		using namespace lib::events;
 
-		Scene::onEnterScene();
+		Scene::create();
 
 		_gameConfig = propertiesFileManager().getSingleton<GameConfig>();
 		m_keyMapping = propertiesFileManager().initializeFromFile<KeyMapping>("keys.cfg");
@@ -193,13 +183,15 @@ namespace zoper
 		m_gameClock.restart();
 	}
 
-	void GameScene::onExitScene()
+	void GameScene::onDeinit()
 	{
+		Scene::onDeinit();
+		// Remove instances from all nodes.
+		clearAll();
 		m_mainBoardrg->clearAll();
 		p_boardModel = nullptr;
 		p_player = nullptr;
 		m_backgroundTiles.clear();
-		Scene::onExitScene();
 	}
 
 	void GameScene::updateScene()

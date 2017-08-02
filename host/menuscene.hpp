@@ -18,8 +18,7 @@ namespace zoper
 
 		// Inherited via Scene
 		virtual void create() override;
-		virtual void onEnterScene() override;
-		virtual void onExitScene() override;
+		virtual void onDeinit() override;
 
 		virtual void updateScene() override;
 

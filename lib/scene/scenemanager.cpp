@@ -20,14 +20,19 @@ namespace lib
 		void SceneManager::setScenesController(uptr<IScenesController> scenesController)
 		{
 			m_scenesController = std::move(scenesController);
-			m_nextScene = m_scenesController->scenedFinished(*this, nullptr);
+			setScene(m_scenesController->startScene());
+		}
+
+		void SceneManager::terminateScene()
+		{
+			setScene(m_scenesController->scenedFinished(m_currentScene));
 		}
 
 		void SceneManager::updateScene()
 		{
 			if (m_nextScene) {
 				if (m_currentScene) {
-					m_currentScene->onExitScene();
+					m_currentScene->onDeinit();
 				}
 				else {
 					log_debug_info("Set first scene");
@@ -37,38 +42,15 @@ namespace lib
 				m_nextScene = nullptr;
 
 				m_currentScene->create();
-				m_currentScene->onEnterScene();
 			}
 			else {
 				m_currentScene->updateScene();
 			}
 		}
 
-		void SceneManager::addScenes(vector<sptr<Scene>>&& sceneVector)
-		{
-			for (auto &scene : sceneVector) {
-				addScene(std::move(scene));
-			}
-		}
-
 		void SceneManager::setScene(sptr<Scene> scene)
 		{
 			m_nextScene = std::move(scene);
-			if (m_nextScene) m_nextScene->create();
-		}
-
-		void SceneManager::terminateScene()
-		{
-			setScene(m_scenesController->scenedFinished(*this, m_currentScene));
-		}
-
-		sptr<Scene> SceneManager::getSceneByName(const str &name) const
-		{
-			const auto iterator(std::find_if(m_scenes.cbegin(), m_scenes.cend(), [&name](const auto&scene)
-			{
-				return scene->name() == name;
-			}));
-			return iterator == m_scenes.cend() ? nullptr : *iterator;
 		}
 
 		void SceneManager::update()
@@ -79,19 +61,10 @@ namespace lib
 			m_currentScene->draw();
 		}
 
-		void SceneManager::addScene(sptr<Scene> newScene)
-		{
-			__ASSERT(newScene, "Cannot add a null scene");
-			m_scenes.push_back(newScene);
-			newScene->create();
-
-//			m_debugSystem->addDebugVars(newScene);
-		}
-
 		void SceneManager::finish()
 		{
 			if (m_currentScene) {
-				m_currentScene->onExitScene();
+				m_currentScene->onDeinit();
 			}
 			m_currentScene = nullptr;
 			for (auto &scene : m_scenes) {

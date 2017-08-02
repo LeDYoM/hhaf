@@ -13,15 +13,21 @@ namespace zoper
 
 	class ScenesController : public IScenesController
 	{
-		sptr<Scene> scenedFinished(SceneManager &sceneManager, sptr<Scene> sceneTerminated) override
+		using IScenesController::IScenesController;
+
+		sptr<Scene> startScene() override
 		{
-			if (!sceneTerminated) {
-				return msptr<MenuScene>();
+			return msptr<MenuScene>();
+		}
+
+		sptr<Scene> scenedFinished(sptr<Scene> sceneTerminated) override
+		{
+			if (typeid(*sceneTerminated)==typeid(MenuScene)) {
+				return msptr<GameScene>();
 			}
 
 			return nullptr;
 		}
-
 	};
 
 	ZoperProgramController::ZoperProgramController() = default;
@@ -32,7 +38,7 @@ namespace zoper
 	{
 		sceneManager().viewRect = Rectf32{0,0,2000,2000};
 
-		sceneManager().setScenesController(muptr<ScenesController>());
+		sceneManager().setScenesController(muptr<ScenesController>(sceneManager()));
 //		sceneManager().addSceneType<GameScene>();
 //		sceneManager().addSceneType<MenuScene>();
 
