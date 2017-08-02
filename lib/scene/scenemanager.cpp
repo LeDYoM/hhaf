@@ -28,7 +28,12 @@ namespace lib
 			setScene(m_scenesController->scenedFinished(m_currentScene));
 		}
 
-		void SceneManager::updateScene()
+		void SceneManager::setScene(sptr<Scene> scene)
+		{
+			m_nextScene = std::move(scene);
+		}
+
+		void SceneManager::update()
 		{
 			if (m_nextScene) {
 				if (m_currentScene) {
@@ -46,16 +51,6 @@ namespace lib
 			else {
 				m_currentScene->updateScene();
 			}
-		}
-
-		void SceneManager::setScene(sptr<Scene> scene)
-		{
-			m_nextScene = std::move(scene);
-		}
-
-		void SceneManager::update()
-		{
-			updateScene();
 
 			m_renderStates.newFrame();
 			m_currentScene->draw();
@@ -67,11 +62,6 @@ namespace lib
 				m_currentScene->onDeinit();
 			}
 			m_currentScene = nullptr;
-			for (auto &scene : m_scenes) {
-				scene->onDeinit();
-			}
-			m_scenes.clear();
 		}
-
 	}
 }

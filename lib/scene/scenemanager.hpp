@@ -39,12 +39,7 @@ namespace lib
 			ForwardProperty<Rectf32> viewPort;
 			ForwardProperty<Rectf32> viewRect;
 		private:
-
-			void updateScene();
-			friend class core::Host;
-
 			RenderStatesStack m_renderStates;
-			vector<sptr<Scene>> m_scenes;
 			sptr<Scene> m_currentScene{ nullptr };
 			sptr<Scene> m_nextScene{ nullptr };
 			core::Window &m_parentWindow;

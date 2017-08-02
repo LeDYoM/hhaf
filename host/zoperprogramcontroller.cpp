@@ -25,6 +25,9 @@ namespace zoper
 			if (typeid(*sceneTerminated)==typeid(MenuScene)) {
 				return msptr<GameScene>();
 			}
+			else if (typeid(*sceneTerminated) == typeid(GameScene)) {
+				return msptr<MenuScene>();
+			}
 
 			return nullptr;
 		}
