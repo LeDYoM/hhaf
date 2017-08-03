@@ -47,7 +47,7 @@ namespace lib
 
 			constexpr const vector2df operator *(const vector2df& right) const noexcept
 			{
-				return this->transformPoint(right);
+				return transformPoint(right);
 			}
 
 			constexpr const vector2df transformPoint(const f32 x, const f32 y) const noexcept;

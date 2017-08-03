@@ -31,12 +31,12 @@ namespace lib
 			inline void moveY(const f32 yOffset)  noexcept { m_vertices.moveY(yOffset); }
 
 			template <typename T>
-			inline T *const rnCast() {
+			constexpr T *const rnCast() {
 				return dynamic_cast<T *const>(this);
 			}
 
 			template <typename T>
-			inline const T *const rnCast() const {
+			constexpr const T *const rnCast() const {
 				return dynamic_cast<const T *const>(this);
 			}
 

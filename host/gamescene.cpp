@@ -150,7 +150,7 @@ namespace zoper
 		registerEvents();
 		auto inputComponent(ensureComponentOfType<scene::InputComponent>());
 		inputComponent->setOnKeyPressedHandler([this](const lib::input::Key&key) {
-			lib::log_debug_info("Key pressed in GameScene");
+			log_debug_info("Key pressed in GameScene");
 			switch (state())
 			{
 			case Playing:
