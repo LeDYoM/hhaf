@@ -24,7 +24,7 @@ namespace lib
 			box.setCallback([this]() {
 				for_each_node([this](const sptr<Renderizable>&node) {
 					if (auto chControlLine = node->rnCast<ChooseControlLine>()) {
-						chControlLine->alignmentBox = box();
+						chControlLine->setAlignmentBox(box());
 					}
 				});
 			});
@@ -101,22 +101,22 @@ namespace lib
 			m_cursor->configure();
 			*/
 			u32 count{};
-			vector2df currentPos{};
-			const auto &cTheme(dynamic_cast<ChooseControlGroup*>(parent())->currentTheme());
+			vector2df currentPos{};		
+			const auto &cTheme(parent()->snCast<ChooseControlGroup>()->currentTheme());
 			for (const auto& label : optionModel())
 			{
 				auto menuLine = createSceneNode<ChooseControlLine>("menuLineText" + str(count));
 				menuLine->create();
-				menuLine->text = label.text;
-				menuLine->font = cTheme.font;
-				menuLine->characterSize = cTheme.chSize;
-				menuLine->color = cTheme.textColor;
-				menuLine->alignmentBox = box().moved(currentPos);
-				menuLine->options = label.subOptionsLabels;
+				menuLine->mainText()->text = label.text;
+				menuLine->setFont(cTheme.font);
+				menuLine->setCharacterSize(cTheme.chSize);
+				menuLine->setColor(cTheme.textColor);
+				menuLine->setAlignmentBox(box().moved(currentPos));
+				menuLine->option()->data = label.subOptionsLabels;
 				menuLine->configure();
 
 				currentPos.y += (cTheme.chSize + cTheme.incY);
-				lines.emplace_back(menuLine);
+				lines.push_back(std::move(menuLine));
 				++count;
 			}
 
@@ -128,8 +128,8 @@ namespace lib
 
 					const auto &cTheme(parent()->snCast<ChooseControlGroup>()->currentTheme());
 
-					previouscurrentLine()->color = cTheme.textColor;
-					currentLine()->color = cTheme.selectedTextColor;
+					previouscurrentLine()->setColor(cTheme.textColor);
+					currentLine()->setColor(cTheme.selectedTextColor);
 					previouslySelectedItem = selectedItem();
 
 					//			m_cursorNode->rotation.set(90);

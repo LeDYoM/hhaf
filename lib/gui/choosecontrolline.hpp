@@ -25,12 +25,17 @@ namespace lib
 		{
 		public:
 			ChooseControlLine(SceneNode* parent, str name);
-			ForwardProperty<str> text;
-			ForwardProperty<string_vector> options;
-			VirtualPropertyWrite<Rectf32> alignmentBox;
-			VirtualPropertyWrite<sptr<scene::TTFont>> font;
-			VirtualPropertyWrite<u32> characterSize;
-			VirtualPropertyWrite<scene::Color> color;
+			void setAlignmentBox(Rectf32 albox) noexcept;
+			void setFont(sptr<scene::TTFont> f) noexcept;
+			void setColor(const scene::Color c) noexcept;
+			void setCharacterSize(const u32 cs) noexcept;
+
+			inline sptr<scene::nodes::NodeText> mainText() noexcept { return m_mainText; }
+			inline const sptr<scene::nodes::NodeText> mainText() const noexcept { return m_mainText; }
+
+			inline sptr<scene::nodes::DiscreteText> option() noexcept { return m_option; }
+			inline const sptr<scene::nodes::DiscreteText> option() const noexcept { return m_option; }
+
 			void create();
 			void configure();
 			const OptionModelIndex currentSelection() const noexcept;

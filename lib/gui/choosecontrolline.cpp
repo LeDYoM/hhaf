@@ -20,19 +20,35 @@ namespace lib
 		{
 			m_mainText = createRenderizable<NodeText>("m_mainText");
 			m_option = createRenderizable<DiscreteText>("m_option");
+		}
 
-			text.setForwardProperty(&(m_mainText->text));
-			alignmentBox.setSetter([this](const auto&abox) { m_mainText->alignmentBox = abox; if (m_option) m_option->alignmentBox = abox; });
+		void ChooseControlLine::setAlignmentBox(Rectf32 albox) noexcept
+		{
+			m_mainText->alignmentBox = albox; 
+			if (m_option) m_option->alignmentBox = albox;
+		}
 
-			font.setSetter([this](auto f) { m_mainText->font = f; if (m_option) m_option->font = f; });
-			characterSize.setSetter([this](auto cs) { m_mainText->characterSize = cs; if (m_option) m_option->characterSize = cs; });
-			color.setSetter([this](auto c) { m_mainText->color = c; if (m_option) m_option->color = c; });
-			options.setForwardProperty(&(m_option->data));
+		void ChooseControlLine::setFont(sptr<scene::TTFont> f) noexcept
+		{
+			m_mainText->font = f; 
+			if (m_option) m_option->font = f;
+		}
+
+		void ChooseControlLine::setColor(const Color c) noexcept
+		{
+			m_mainText->color = c;
+			if (m_option) m_option->color = c;
+		}
+
+		void ChooseControlLine::setCharacterSize(const u32 cs) noexcept
+		{
+			m_mainText->characterSize = cs; 
+			if (m_option) m_option->characterSize = cs;
 		}
 
 		void ChooseControlLine::configure()
 		{
-			if (options().empty()) {
+			if (m_option->data().empty()) {
 				m_option->visible = false;
 				m_mainText->alignmentX = NodeText::AlignmentX::Center;
 			}
@@ -44,9 +60,10 @@ namespace lib
 			m_mainText->configure();
 			m_option->configure();
 		}
+
 		const OptionModelIndex ChooseControlLine::currentSelection() const noexcept
 		{
-			return options().empty() ? OptionModelIndex{} : OptionModelIndex{m_option->index()};
+			return m_option->data().empty() ? OptionModelIndex{} : OptionModelIndex{m_option->index()};
 		}
 	}
 }
