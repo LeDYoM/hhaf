@@ -341,7 +341,7 @@ namespace zoper
 		Direction loopDirection = currentTokenZone.direction.negate();
 		for_each_token_in_line(loopPosition, loopDirection, [this](const vector2du32 &loopPosition, const Direction &direction) {
 			if (!p_boardModel->tileEmpty(loopPosition)) {
-				vector2du32 dest = direction.negate().applyToVector(loopPosition);
+				vector2du32 dest{ direction.negate().applyToVector(loopPosition) };
 				p_boardModel->moveTile(loopPosition, dest);
 
 				if (pointInCenter(dest)) {
@@ -363,10 +363,10 @@ namespace zoper
 		m_gameOverrg->visible = true;
 	}
 
-	void GameScene::for_each_token_in_line(const lib::vector2du32 &startPosition, const Direction &direction,
-		std::function<bool(const lib::vector2du32 &, const Direction &)> updatePredicate)
+	void GameScene::for_each_token_in_line(const vector2du32 &startPosition, const Direction &direction,
+		std::function<bool(const vector2du32 &, const Direction &)> updatePredicate)
 	{
-		lib::vector2du32 loopPosition{ startPosition };
+		vector2du32 loopPosition{ startPosition };
 		// Now, we have the data for the new token generated, but first, lets start to move the row or col.
 		bool stay{ true };
 		do {

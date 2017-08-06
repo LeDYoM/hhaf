@@ -60,7 +60,6 @@ namespace lib
 
 			auto tile (getTile(source));
 			BoardTileData ov{ tile->get() };
-			tile->set(nv);
 			host().eventManager().addEvent(msptr<TileChangedEvent>(source, tile, ov, nv));
 		}
 

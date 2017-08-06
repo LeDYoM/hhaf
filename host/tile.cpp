@@ -9,14 +9,14 @@ namespace zoper
 
 	u32 Tile::m_tileCounter{ 0 };
 
-	Tile::Tile(lib::scene::SceneNode* const parent, str name, BoardTileData data, const Rectf32 &box) :
+	Tile::Tile(SceneNode* const parent, str name, BoardTileData data, const Rectf32 &box) :
 		GameBaseTile{ parent, name + str(m_tileCounter) + str(m_tileCounter), data }
 	{
 		++m_tileCounter;
 		m_node = createRenderizable<nodes::NodeShape>("Node", 30);
 		m_node->box = box;
+		m_node->color = getColorForToken();
 		m_node->configure();
-		setColor(getColorForToken());
 	}
 
 	Tile::~Tile() = default;

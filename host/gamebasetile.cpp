@@ -11,7 +11,7 @@ namespace zoper
 	GameBaseTile::GameBaseTile(SceneNode* const parent, str name, BoardTileData data)
 		: ITile{ data }, SceneNode{ parent, std::move(name) }
 	{
-		setCallback([this]() {setColor(getColorForToken()); });
+		setCallback([this]() {m_node->color = getColorForToken(); });
 	}
 
 	Color GameBaseTile::getColorForToken() const

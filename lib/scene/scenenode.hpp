@@ -68,8 +68,8 @@ namespace lib
 			}
 
 			bool moveLastBeforeNode(const sptr<SceneNode> &beforeNode);
-			void removeSceneNode(const sptr<SceneNode> &element);
-			void removeRenderizable(const sptr<Renderizable> &element);
+			void removeSceneNode(sptr<SceneNode> element);
+			void removeRenderizable(sptr<Renderizable> element);
 			void clearAll();
 			void clearRenderizables();
 			void clearSceneNodes();
@@ -82,13 +82,6 @@ namespace lib
 			virtual Scene *const parentScene() { return m_parent->parentScene(); }
 			const Rectf32 &scenePerspective();
 
-			/**
-			* Set a color for all vertex for all child nodes of this node
-			* @param [in] color to be set
-			* @param [in] apply the function to scenenodes too
-			* @
-			*/
-			void setColor(const Color &color, const bool applySceneNodes = true);
 			inline SceneNode *parent() noexcept { return m_parent; }
 			inline const SceneNode *parent() const noexcept { return m_parent; }
 
@@ -118,7 +111,7 @@ namespace lib
 			const vsp_with_deferred_delete<Renderizable> &renderNodes() const noexcept { return m_renderNodes; }
 			const vsp_with_deferred_delete<SceneNode> &sceneNodes() const noexcept { return m_groups; }
 
-			void addRenderizable(const sptr<Renderizable> &newElement);
+			void addRenderizable(sptr<Renderizable> newElement);
 			void addSceneNode(sptr<SceneNode> node);
 
 		private:

@@ -43,19 +43,6 @@ namespace lib
 			return sceneManager().viewRect();
 		}
 
-		void SceneNode::setColor(const Color & color, const bool applySceneNodes)
-		{
-			for (auto &node : m_renderNodes.nodes) {
-				node->color = color;
-			}
-
-			if (applySceneNodes) {
-				for (auto &sNode : m_groups.nodes) {
-					sNode->setColor(color,true);
-				}
-			}
-		}
-
 		bool SceneNode::moveLastBeforeNode(const sptr<SceneNode> &beforeNode)
 		{
 			__ASSERT(!m_groups.nodes.empty(), "Cannot moveLastInsertedBeforeNode on empty container");
@@ -90,9 +77,9 @@ namespace lib
 			std::for_each(m_groups.nodes.cbegin(), m_groups.nodes.cend(), action);
 		}
 
-		void SceneNode::addRenderizable(const sptr<Renderizable> &newElement)
+		void SceneNode::addRenderizable(sptr<Renderizable> newElement)
 		{
-			m_renderNodes.nodes.push_back(newElement);
+			m_renderNodes.nodes.push_back(std::move(newElement));
 		}
 
 		void SceneNode::addSceneNode(sptr<SceneNode> node)
@@ -108,15 +95,15 @@ namespace lib
 			m_renderNodes.deferred_remove();
 		}
 
-		void SceneNode::removeSceneNode(const sptr<SceneNode> &element)
+		void SceneNode::removeSceneNode(sptr<SceneNode> element)
 		{
 			__ASSERT(this != element.get(), "Cannot delete myself from myself");
-			m_groups.m_nodesToDelete.push_back(element);
+			m_groups.m_nodesToDelete.push_back(std::move(element));
 		}
 
-		void SceneNode::removeRenderizable(const sptr<Renderizable> &element)
+		void SceneNode::removeRenderizable(sptr<Renderizable> element)
 		{
-			m_renderNodes.m_nodesToDelete.push_back(element);
+			m_renderNodes.m_nodesToDelete.push_back(std::move(element));
 		}
 
 		void SceneNode::clearAll()

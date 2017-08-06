@@ -19,7 +19,7 @@ namespace zoper
 		m_node->pointCount = 3;
 		m_node->configure();
 
-		setColor(getColorForToken());
+		m_node->color = getColorForToken();
 	}
 
 	Player::~Player() = default;
