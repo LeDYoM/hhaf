@@ -22,11 +22,15 @@
 #include <lib/scene/components/animationcomponent.hpp>
 #include <lib/scene/components/inputcomponent.hpp>
 
+
 namespace zoper
 {
 	using namespace lib;
 	using namespace lib::scene;
 	using namespace lib::scene::nodes;
+
+	constexpr u32 NumTokens = 5;
+	constexpr u32 PlayerToken = NumTokens;
 
 	GameScene::GameScene()
 		: Scene("GameScene")
@@ -310,7 +314,7 @@ namespace zoper
 		_tokenZones[3].zone = Rectu32{ centerRect.left , size.y - 1, centerRect.right() - 1, centerRect.bottom() - 1 };
 		_tokenZones[3].direction = Direction::DirectionData::Up;
 
-		for (u32 i = 0; i < NUMWAYS; ++i) {
+		for (u32 i = 0; i < NumWays; ++i) {
 			_tokenZones[i].size = _tokenZones[i].direction.isHorizontal() ? centerRect.size().y : centerRect.size().x;
 		}
 	}
@@ -319,11 +323,11 @@ namespace zoper
 	{
 		const GameData::TokenZone &currentTokenZone{ m_gameData._tokenZones[m_nextTokenPart] };
 
-		lib::log_debug_info("NextTokenPart: ", m_nextTokenPart);
-		lib::log_debug_info("zone: ", currentTokenZone.zone);
+		log_debug_info("NextTokenPart: ", m_nextTokenPart);
+		log_debug_info("zone: ", currentTokenZone.zone);
 
 		// Generate the new token type
-		const u32 newToken{ randomizer().getUInt(NUMTOKENS) };
+		const u32 newToken{ randomizer().getUInt(NumTokens) };
 
 		// Calculate in wich tile zone offset is going to appear
 		const u32 sizep{ randomizer().getUInt(currentTokenZone.size) };
@@ -345,6 +349,7 @@ namespace zoper
 				p_boardModel->moveTile(loopPosition, dest);
 
 				if (pointInCenter(dest)) {
+					log_debug_info("Found point in center: ", dest);
 					startGameOver();
 				}
 			}
@@ -352,7 +357,7 @@ namespace zoper
 		});
 		// Set the new token
 		addNewToken(vector2du32{ newX, newY }, newToken);
-		m_nextTokenPart = (m_nextTokenPart + 1) % NUMWAYS;
+		m_nextTokenPart = (m_nextTokenPart + 1) % NumWays;
 
 		CLIENT_EXECUTE_IN_DEBUG(_debugDisplayBoard());
 	}
@@ -378,7 +383,7 @@ namespace zoper
 
 	void GameScene::addPlayer()
 	{
-		lib::log_debug_info("Adding player tile at ", m_gameData.centerRect.left, ",", m_gameData.centerRect.top);
+		log_debug_info("Adding player tile at ", m_gameData.centerRect.left, ",", m_gameData.centerRect.top);
 		CLIENT_ASSERT(!p_player, "Player already initialized");
 		// Create the player instance
 		p_player = m_mainBoardrg->createSceneNode<Player>("playerNode", m_gameData.centerRect.leftTop(), Rectf32::fromSize(tileSize()), board2SceneFactor());

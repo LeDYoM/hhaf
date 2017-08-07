@@ -22,19 +22,17 @@
 #include <array>
 #include <functional>
 
-#define NUMWAYS			4
-#define NUMTOKENS		5
-#define PLAYER_TOKEN	NUMTOKENS
-
 namespace zoper
 {
 	class Player;
 	class Tile;
 	class GameConfig;
 
+	constexpr lib::u32 NumWays = 4;
+
 	struct GameData
 	{
-		lib::vector2du32 size{ 0u, 0u };
+		lib::vector2du32 size;
 		lib::Rectu32 centerRect;
 
 		struct TokenZone
@@ -45,7 +43,7 @@ namespace zoper
 		};
 
 		void generateTokenZones();
-		std::array<TokenZone, NUMWAYS> _tokenZones;
+		std::array<TokenZone, NumWays> _tokenZones;
 
 		lib::Timer levelClock;
 		lib::u32 consumedTokens;
