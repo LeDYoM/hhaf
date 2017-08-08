@@ -46,10 +46,10 @@ namespace zoper
 	void GameScene::create()
 	{
 		Scene::create();
-		m_mainBoardrg = this->createSceneNode("mainBoard");
-		m_gameOverrg = this->createSceneNode("gameOverScreen");
-		m_levelrg = this->createSceneNode("level");
-		m_pauseSceneNode = this->createSceneNode("pause");
+		m_mainBoardrg = createSceneNode("mainBoard");
+		m_gameOverrg = createSceneNode("gameOverScreen");
+		m_levelrg = createSceneNode("level");
+		m_pauseSceneNode = createSceneNode("pause");
 
 		auto& resourceManager{ lib::host().resourceManager() };
 		auto scoreFont(resourceManager.getFont("game_scene.scoreFont"));

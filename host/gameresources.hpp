@@ -2,8 +2,6 @@
 #define ZOOPER_GAME_RESOURCES_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <mtypes/include/vector2d.hpp>
-#include <mtypes/include/log.hpp>
 #include <lib/include/iresourceloader.hpp>
 
 namespace zoper
@@ -12,6 +10,8 @@ namespace zoper
 	{
 	public:
 		virtual void loadResources() override;
+
+		lib::str scoreFont{ "game_scene.scoreFont" };
 	};
 }
 
