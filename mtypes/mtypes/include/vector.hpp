@@ -3,6 +3,7 @@
 #ifndef MTYPES_VECTOR_INCLUDE_HPP
 #define MTYPES_VECTOR_INCLUDE_HPP
 
+#include <utility>
 #include <initializer_list>
 #include "mtypes_export.hpp"
 
@@ -272,7 +273,7 @@ namespace lib
 		if (lhs.m_size != rhs.m_size) {
 			return false;
 		} else {
-			for (size_t i{ 0 }; i < lhs.m_size;++i) {
+			for (decltype(lhs.m_size) i{ 0 }; i < lhs.m_size;++i) {
 				if (lhs.m_buffer[i] != rhs.m_buffer[i]) {
 					return false;
 				}

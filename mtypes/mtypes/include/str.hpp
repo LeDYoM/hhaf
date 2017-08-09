@@ -6,6 +6,7 @@
 #include "mtypes_export.hpp"
 #include "vector.hpp"
 #include "types.hpp"
+#include <type_traits>
 
 namespace lib
 {
@@ -99,7 +100,7 @@ namespace lib
 
 		const char *c_str() const noexcept { return m_data.cbegin(); }
 		bool empty() const noexcept { return m_data.empty(); }
-		
+
 		template <typename T>
 		constexpr str &operator<<(const T&n)
 		{
@@ -112,7 +113,7 @@ namespace lib
 		{
 			std::underlying_type_t<enum_type> tmp{};
 			convert(tmp);
-			n = static_cast<typename enum_type>(tmp);
+			n = static_cast<enum_type>(tmp);
 		}
 
 		template <typename T>
@@ -123,7 +124,7 @@ namespace lib
 		}
 
 		template <>
-		void operator>>(str&n) const
+		void operator>><str>(str&n) const
 		{
 			n = *this;
 		}
@@ -135,7 +136,7 @@ namespace lib
 	};
 
 
-	constexpr bool operator==(const str& lhs, const str&rhs) noexcept { 
+	constexpr bool operator==(const str& lhs, const str&rhs) noexcept {
 		return lhs.m_data == rhs.m_data;
 	}
 

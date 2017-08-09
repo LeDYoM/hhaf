@@ -58,9 +58,8 @@ namespace zoper
 
 		lib::vector2du32 applyToVector(const lib::vector2du32 &v, const lib::u32 scale = 1) const
 		{
-			lib::vector2ds32 dv{ directionVector(scale) };
-			lib::vector2du32 result(v.x + dv.x, v.y + dv.y);
-			return result;
+			const lib::vector2ds32 dv{ directionVector(scale) };
+			return { v.x + dv.x, v.y + dv.y };
 		}
 
 		const lib::vector2ds32 directionVector(const lib::u32 scale = 1) const
@@ -70,23 +69,23 @@ namespace zoper
 			switch (data)
 			{
 			case DirectionData::Left:
-				result = lib::vector2ds32(-1, 0);
+				result = { -1, 0 };
 				break;
 			case DirectionData::Right:
-				result = lib::vector2ds32(1, 0);
+				result = { 1, 0 };
 				break;
 			case DirectionData::Up:
-				result = lib::vector2ds32(0, -1);
+				result = { 0, -1 };
 				break;
 			case DirectionData::Down:
-				result = lib::vector2ds32(0, 1);
+				result = { 0, 1 };
 				break;
 			case DirectionData::Invalid:
 			default:
 				lib::log_debug_error("Invalid direction. Cannot convert");
 			}
 
-			result *= (lib::s32)scale;
+			result *= static_cast<lib::s32>(scale);
 			return result;
 		}
 

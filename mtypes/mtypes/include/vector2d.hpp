@@ -12,64 +12,64 @@ namespace lib
 	class vector2d
 	{
 	public:
-		constexpr vector2d()  : x{}, y{} {}
-		constexpr vector2d(T X, T Y)  : x{ X }, y{ Y } {}
-		constexpr vector2d(const vector2d<T> &) = default;
-		inline vector2d &operator=(const vector2d<T> &) = default;
+//		constexpr vector2d()  : x{}, y{} {}
+//		constexpr vector2d(T X, T Y)  : x{ X }, y{ Y } {}
+//		constexpr vector2d(const vector2d<T> &) = default;
+//		inline vector2d &operator=(const vector2d<T> &) = default;
 
-		template <typename U>
-		constexpr explicit vector2d(const vector2d<U>& vector)  noexcept : x{ static_cast<T>(vector.x) }, y{ static_cast<T>(vector.y) } {}
+//		template <typename U>
+//		constexpr explicit vector2d(const vector2d<U>& vector)  noexcept : x{ static_cast<T>(vector.x) }, y{ static_cast<T>(vector.y) } {}
 
-		inline vector2d &operator+=(const vector2d &right) noexcept
+		constexpr vector2d &operator+=(const vector2d &right) noexcept
 		{
 			x += right.x;
 			y += right.y;
 			return *this;
 		}
 
-		inline vector2d &operator-=(const vector2d &right) noexcept
+		constexpr vector2d &operator-=(const vector2d &right) noexcept
 		{
 			x -= right.x;
 			y -= right.y;
 			return *this;
 		}
 
-		inline vector2d &operator*=(const vector2d &right) noexcept
+		constexpr vector2d &operator*=(const vector2d &right) noexcept
 		{
 			x *= right.x;
 			y *= right.y;
 			return *this;
 		}
 
-		inline vector2d &operator*=(const T &scalar) noexcept
+		constexpr vector2d &operator*=(const T &scalar) noexcept
 		{
 			x *= scalar;
 			y *= scalar;
 			return *this;
 		}
 
-		inline vector2d &operator/=(const vector2d &right)
+		constexpr vector2d &operator/=(const vector2d &right)
 		{
 			x /= right.x;
 			y /= right.y;
 			return *this;
 		}
 
-		inline vector2d &operator/=(const T &scalar)
+		constexpr vector2d &operator/=(const T &scalar)
 		{
 			x /= scalar;
 			y /= scalar;
 			return *this;
 		}
 
-		inline vector2d &operator-() noexcept
+		constexpr vector2d &operator-() noexcept
 		{
 			x = -x;
 			y = -y;
 			return *this;
 		}
 
-		T dotProduct(const vector2d& p2) const noexcept
+		constexpr T dotProduct(const vector2d& p2) const noexcept
 		{
 			auto r(*this * p2);
 			return r.x + r.y;
@@ -106,7 +106,7 @@ namespace lib
 
 	// Serialization operators
 	template <typename T>
-	inline write_stream& operator<<(write_stream & os, const vector2d<T> &v2d)
+	constexpr write_stream& operator<<(write_stream & os, const vector2d<T> &v2d)
 	{
 		os << "{" << v2d.x << "," << v2d.y << "}";
 		return os;
@@ -123,6 +123,8 @@ namespace lib
 //		is >> p;	// "}"
 		return is;
 	}
+
+	static_assert(std::is_pod_v < vector2d<u8> >, "vector2d is not a pod");
 
 	using vector2du8 = vector2d<u8>;
 	using vector2ds8 = vector2d<s8>;

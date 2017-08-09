@@ -526,17 +526,16 @@ namespace zoper
 
 	void GameScene::_debugDisplayBoard() const
 	{
-		for (u32 y = 0; y < m_gameData.size.y; ++y) {
+		for (u32 y{ 0 }; y < m_gameData.size.y; ++y) {
 			str temp;
-			for (u32 x = 0; x < m_gameData.size.x; ++x) {
+			for (u32 x{ 0 }; x < m_gameData.size.x; ++x) {
 				str chTemp;
-				auto lp_tile(p_boardModel->getTile(lib::vector2du32(x, y)));
+				auto lp_tile(p_boardModel->getTile({ x, y }));
 				if (lp_tile) {
 					chTemp = lp_tile->get();
-				}
-				else {
+				} else {
 					chTemp = "*";
-					if (pointInCenter(lib::vector2du32(x, y))) {
+					if (pointInCenter({ x, y })) {
 						chTemp = "C";
 					}
 				}
@@ -557,12 +556,11 @@ namespace zoper
 		moveLastBeforeNode(m_mainBoardrg);
 		f32 currentx{};
 		f32 currenty{};
-		for (u32 y = 0; y < m_gameData.size.y; ++y)
-		{
+		for (u32 y{ 0 }; y < m_gameData.size.y; ++y) {
 			vector<sptr<NodeQuad>> column;
 			column.reserve(m_gameData.size.x);
 
-			for (u32 x = 0; x < m_gameData.size.x; ++x) {
+			for (u32 x{ 0 }; x < m_gameData.size.x; ++x) {
 				const Rectf32 tileBox{ currentx, currenty, tileSize().x,tileSize().y };
 				const str indexStr(x + "_" + y);
 
@@ -573,9 +571,11 @@ namespace zoper
 
 				// Size of the point in the middle of the tile
 				constexpr vector2df centerPointSize{ 15,15 };
+				constexpr vector2df centerPointSizeHalf{ centerPointSize / 2 };
 
-				auto node = backgroundTilesrg->createRenderizable<NodeShape>("backgroundTilePoint_" + indexStr, 30);
-				node->box = Rectf32{ tileBox.center() - (centerPointSize / 2), centerPointSize };
+
+				auto node(backgroundTilesrg->createRenderizable<NodeShape>("backgroundTilePoint_" + indexStr, 30));
+				node->box = { tileBox.center() - (centerPointSize / 2), centerPointSize };
 				node->color = colors::White;
 				node->configure();
 
