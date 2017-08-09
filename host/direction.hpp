@@ -89,7 +89,7 @@ namespace zoper
 			return result;
 		}
 
-		const lib::vector2ds32 negatedDirectionVector(const lib::u32 scale = 1) const
+		lib::vector2ds32 negatedDirectionVector(const lib::u32 scale = 1) const
 		{
 			lib::vector2ds32 result{ directionVector(scale) };
 			result *= (lib::s32) - 1;
