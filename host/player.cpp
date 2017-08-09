@@ -10,7 +10,7 @@ namespace zoper
 		boardPosition{ std::move(bPosition), [this]() {
 			this->position = { m_board2SceneFactor.x * boardPosition().x, m_board2SceneFactor.y * boardPosition().y }; }
 		},
-		currentDirection{ Direction::Up }, m_board2SceneFactor{ std::move(board2SceneFactor) }
+		currentDirection{ Direction::DirectionData::Up }, m_board2SceneFactor{ std::move(board2SceneFactor) }
 	{
 		m_extraSceneNode = createSceneNode("m_extraSceneNode");
 		m_extraSceneNode_2 = m_extraSceneNode->createSceneNode("m_extraSceneNode_2");

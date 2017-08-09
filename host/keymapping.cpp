@@ -32,7 +32,7 @@ namespace zoper
 				return static_cast<Direction>(i);
 			}
 		}
-		return Direction::Invalid;
+		return Direction::DirectionData::Invalid;
 	}
 
 	lib::input::Key KeyMapping::getLaunchKey() const noexcept

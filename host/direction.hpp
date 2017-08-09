@@ -10,7 +10,7 @@ namespace zoper
 	class Direction
 	{
 	public:
-		enum DirectionData : lib::u8
+		enum class DirectionData : lib::u8
 		{
 			Left = 0,
 			Right = 1,
@@ -18,23 +18,24 @@ namespace zoper
 			Down = 3,
 			Invalid = 4
 		};
-		Direction() { data = DirectionData::Up; }
-		Direction(DirectionData d) : data{ d } {}
-		Direction(lib::u8 d) : data{ (DirectionData)(d) } {}
-		Direction(const Direction &other) { data = other.data; }
-		Direction &operator=(const Direction &other) { data = other.data; return *this; }
-		Direction(Direction &&other) { data = std::move(other.data); }
-		Direction &operator=(Direction &&other) { data = std::move(other.data); return *this; }
-		operator lib::u8() const { return data; }
+		constexpr Direction(DirectionData d) : data{ d } {}
+		constexpr Direction() : Direction{ DirectionData::Up } {}
+		constexpr Direction(lib::u8 d) : data{ static_cast<DirectionData>(d) } {}
+		constexpr Direction(const Direction &other) = default;
+		constexpr Direction &operator=(const Direction &other) = default;
+		constexpr Direction(Direction &&other) = default;
+		constexpr Direction &operator=(Direction &&other) = default;
 
-		DirectionData value() const { return data; }
-		bool isValid() const { return data < Invalid; }
+		constexpr operator lib::u8() const noexcept { return static_cast<lib::u8>(data); }
 
-		static const lib::u8 Total = DirectionData::Invalid;
+		constexpr DirectionData value() const noexcept { return data; }
+		constexpr bool isValid() const noexcept { return data < DirectionData::Invalid; }
 
-		inline bool isHorizontal() const { return data == DirectionData::Left || data == DirectionData::Right; }
+		static constexpr lib::u8 Total = static_cast<lib::u8>(DirectionData::Invalid);
 
-		inline Direction negate() const {
+		constexpr bool isHorizontal() const noexcept { return data == DirectionData::Left || data == DirectionData::Right; }
+
+		constexpr  Direction negate() const noexcept {
 			switch (data)
 			{
 			case DirectionData::Left:
@@ -56,70 +57,61 @@ namespace zoper
 			return DirectionData::Invalid;
 		}
 
-		lib::vector2du32 applyToVector(const lib::vector2du32 &v, const lib::u32 scale = 1) const
+		constexpr lib::vector2du32 applyToVector(const lib::vector2du32 &v, const lib::u32 scale = 1) const noexcept
 		{
 			const lib::vector2ds32 dv{ directionVector(scale) };
 			return { v.x + dv.x, v.y + dv.y };
 		}
 
-		const lib::vector2ds32 directionVector(const lib::u32 scale = 1) const
+		constexpr lib::vector2ds32 directionVector(const lib::s32 scale = 1) const noexcept
 		{
-			lib::vector2ds32 result{ 0,0 };
-
 			switch (data)
 			{
 			case DirectionData::Left:
-				result = { -1, 0 };
+				return { -scale, 0 };
 				break;
 			case DirectionData::Right:
-				result = { 1, 0 };
+				return { scale, 0 };
 				break;
 			case DirectionData::Up:
-				result = { 0, -1 };
+				return { 0, -scale };
 				break;
 			case DirectionData::Down:
-				result = { 0, 1 };
+				return { 0, scale };
 				break;
 			case DirectionData::Invalid:
 			default:
 				lib::log_debug_error("Invalid direction. Cannot convert");
+				return {};
 			}
-
-			result *= static_cast<lib::s32>(scale);
-			return result;
 		}
 
-		lib::vector2ds32 negatedDirectionVector(const lib::u32 scale = 1) const
+		constexpr lib::vector2ds32 negatedDirectionVector(const lib::u32 scale = 1) const noexcept
 		{
-			lib::vector2ds32 result{ directionVector(scale) };
-			result *= (lib::s32) - 1;
-			return result;
+			return directionVector(scale) * - 1;
 		}
 
-		lib::f32 angle() const
+		constexpr lib::f32 angle() const noexcept
 		{
-			lib::f32 result{ 0.f };
-
 			switch (data)
 			{
 			case DirectionData::Left:
-				result = 270.f;
+				return 270.f;
 				break;
 			case DirectionData::Right:
-				result = 90.f;
+				return  90.f;
 				break;
 			case DirectionData::Up:
-				result = 0.f;
+				return 0.f;
 				break;
 			case DirectionData::Down:
-				result = 180.f;
+				return 180.f;
 				break;
 			case DirectionData::Invalid:
 			default:
 				lib::log_debug_error("Invalid direction. Cannot convert");
+				return 0.f;
 			}
-
-			return result;
 		}
 
 	private:
