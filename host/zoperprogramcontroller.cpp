@@ -34,12 +34,11 @@ namespace zoper
 	};
 
 	ZoperProgramController::ZoperProgramController() = default;
-
 	ZoperProgramController::~ZoperProgramController() = default;
 
 	void ZoperProgramController::onInit()
 	{
-		sceneManager().viewRect = Rectf32{0,0,2000,2000};
+		sceneManager().setViewRect({0,0,2000,2000});
 
 		sceneManager().setScenesController(muptr<ScenesController>(sceneManager()));
 //		sceneManager().addSceneType<GameScene>();

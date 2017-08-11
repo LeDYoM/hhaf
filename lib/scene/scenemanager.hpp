@@ -5,6 +5,7 @@
 #include <mtypes/include/str.hpp>
 #include <lib/include/properties.hpp>
 #include <lib/core/appservice.hpp>
+#include <lib/core/window.hpp>
 #include "renderstatesstack.hpp"
 
 namespace lib
@@ -36,8 +37,11 @@ namespace lib
 			inline const RenderStatesStack &rStates() const noexcept { return m_renderStates; }
 			inline RenderStatesStack &rStates() noexcept { return m_renderStates; }
 
-			ForwardProperty<Rectf32> viewPort;
-			ForwardProperty<Rectf32> viewRect;
+			inline const Rectf32 &viewPort() const noexcept { return m_parentWindow.viewPort(); }
+			inline void setViewPort(Rectf32 vp) noexcept { m_parentWindow.viewPort = std::move(vp); }
+			inline const Rectf32 &viewRect() const noexcept { return m_parentWindow.viewRect(); }
+			inline void setViewRect(Rectf32 vr) noexcept { m_parentWindow.viewRect = std::move(vr); }
+
 		private:
 			RenderStatesStack m_renderStates;
 			sptr<Scene> m_currentScene{ nullptr };

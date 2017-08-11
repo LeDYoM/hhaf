@@ -91,9 +91,6 @@ namespace lib
 			template <typename T>
 			constexpr const T *const snCast() const { return dynamic_cast<const T *const>(this); }
 
-//			template <typename T, typename U>
-//			void apply_property_value_nodes(const T &value)
-
 			template <typename T>
 			void for_each_node_as(std::function<void(const sptr<T> &)> action)
 			{

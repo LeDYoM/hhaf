@@ -3,18 +3,12 @@
 #include "scene.hpp"
 #include "iscenescontroller.hpp"
 #include "renderstatesstack.hpp"
-#include <lib/core/window.hpp>
 
 namespace lib
 {
 	namespace scene
 	{
-		SceneManager::SceneManager(core::Window &window) : m_parentWindow{ window }, 
-			viewPort{ dynamic_cast<IProperty<Rectf32>*>(&(window.viewPort)) },
-			viewRect{ dynamic_cast<IProperty<Rectf32>*>(&(window.viewRect)) }
-		{
-		}
-
+		SceneManager::SceneManager(core::Window &window) : m_parentWindow{ window } {}
 		SceneManager::~SceneManager() = default;
 
 		void SceneManager::setScenesController(uptr<IScenesController> scenesController)
