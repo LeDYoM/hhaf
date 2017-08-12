@@ -51,22 +51,21 @@ namespace zoper
 		m_levelrg = createSceneNode("level");
 		m_pauseSceneNode = createSceneNode("pause");
 
-		auto& resourceManager{ lib::host().resourceManager() };
-		auto scoreFont(resourceManager.getFont("game_scene.scoreFont"));
+		m_gameresources.loadResources(lib::host().resourceManager());
 
-		m_scoreQuad = msptr<TextQuad>(this, "score", scoreFont, 90, colors::White, Rectf32::fromSize(600, 300));
+		m_scoreQuad = msptr<TextQuad>(this, "score", m_gameresources.scoreFont, 90, colors::White, Rectf32::fromSize(600, 300));
 		m_scoreQuad->sceneNode()->position = { 50, 50 };
 		m_scoreQuad->text(0)->text = "Level:";
 		m_scoreQuad->text(0)->color = colors::Blue;
 		m_scoreQuad->text(2)->text = "Score:";
 		m_scoreQuad->text(2)->color = colors::Blue;
 
-		m_goalQuad = msptr<TextQuad>(this, "goal", scoreFont, 90, colors::White, Rectf32::fromSize(600, 300));
+		m_goalQuad = msptr<TextQuad>(this, "goal", m_gameresources.scoreFont, 90, colors::White, Rectf32::fromSize(600, 300));
 		m_goalQuad->sceneNode()->position = { 1250, 50 };
 //		m_goalQuad->text(0)->text = "Level:";
 		m_goalQuad->text(0)->color = colors::Blue;
 //		m_goalQuad->text(0)->configure();
-		m_goalQuad->text(2)->text = "Score:";
+//		m_goalQuad->text(2)->text = "Score:";
 		m_goalQuad->text(2)->color = colors::Blue;
 //		m_goalQuad->text(2)->configure();
 
@@ -75,7 +74,7 @@ namespace zoper
 
 		m_pauseText = m_pauseSceneNode->createRenderizable<NodeText>("pausetext");
 		m_pauseText->text = "PAUSE";
-		m_pauseText->font = scoreFont;
+		m_pauseText->font = m_gameresources.scoreFont;
 		m_pauseText->characterSize = 180;
 		m_pauseText->color = colors::White;
 		m_pauseText->alignmentBox = scenePerspective();
@@ -85,7 +84,7 @@ namespace zoper
 
 		auto gameText(m_gameOverrg->createRenderizable<NodeText>("gameovergame"));
 		gameText->text = "GAME";
-		gameText->font = scoreFont;
+		gameText->font = m_gameresources.scoreFont;
 		gameText->characterSize = 360;
 		gameText->color = colors::White;
 		gameText->alignmentBox = gobox;
@@ -94,7 +93,7 @@ namespace zoper
 
 		auto overText(m_gameOverrg->createRenderizable<NodeText>("gameoverover"));
 		overText->text = "OVER";
-		overText->font = scoreFont;
+		overText->font = m_gameresources.scoreFont;
 		overText->color = colors::White;
 		overText->alignmentBox = gobox;
 		overText->alignmentX = NodeText::AlignmentX::Center;

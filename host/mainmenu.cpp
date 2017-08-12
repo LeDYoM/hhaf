@@ -1,10 +1,10 @@
 #include "mainmenu.hpp"
 #include "gameconfig.hpp"
-#include <lib/gui/ChooseControlGroup.hpp>
+
+#include <lib/gui/choosecontrolgroup.hpp>
 #include <lib/gui/choosecontrol.hpp>
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/scenemanager.hpp>
-#include <lib/core/resourcemanager.hpp>
 #include <lib/core/host.hpp>
 #include <lib/core/propertiesfilemanager.hpp>
 #include <mtypes/include/log.hpp>

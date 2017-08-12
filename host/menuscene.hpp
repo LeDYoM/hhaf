@@ -6,6 +6,8 @@
 #include <lib/scene/nodes/nodequad.hpp>
 #include <lib/scene/scene.hpp>
 
+#include "mainmenuresources.hpp"
+
 namespace zoper
 {
 	class MenuScene final : public lib::scene::Scene
@@ -23,6 +25,7 @@ namespace zoper
 		virtual void updateScene() override;
 
 	private:
+		lib::sptr<MainMenuResources> mainMenuResources;
 		lib::sptr<lib::gui::ChooseControlGroup> m_chooseControlGroup;
 		lib::sptr<lib::scene::nodes::NodeQuad> m_logo;
 		lib::sptr<lib::scene::nodes::NodeQuad> m_background;

@@ -10,23 +10,25 @@ namespace lib
 		{
 			inline callback_t updateTransformCallback(Transformable *t) noexcept
 			{
-				return lambdaToMethod<Transformable, &Transformable::updateTransform>(*t);
+				return lambdaToMethod<Transformable, &Transformable::setNeedsUpdate>(*t);
 			}
 		}
 		Transformable::Transformable() noexcept : m_needsUpdate{ true },
 			origin{ {}, updateTransformCallback(this) },
-			rotation{ {},[this]() {
-				auto temp_rotation = static_cast<f32>(fmod(rotation(), 360));
-				if (temp_rotation < 0) {
-					rotation.set(temp_rotation);
+			rotation{ {},
+				[this]() {
+					auto temp_rotation(static_cast<f32>(fmod(rotation(), 360.f)));
+					if (temp_rotation != rotation()) {
+						rotation.set(temp_rotation);
+					}
+
+					setNeedsUpdate();
 				}
-
-				updateTransform();
-
-			} },
+			},
 			position{ {} , updateTransformCallback(this) },
-				scale{ { 1, 1 }, updateTransformCallback(this) },
-				m_transform{} {}
+			scale{ { 1, 1 }, updateTransformCallback(this) },
+			m_transform{} 
+		{}
 
 		Transformable::~Transformable() = default;
 
@@ -46,6 +48,8 @@ namespace lib
 
 		void Transformable::updateTransform() noexcept
 		{
+			if (!m_needsUpdate) return;
+
 			// Recompute the combined transform
 			const f32 angle{ -rotation() * 3.141592654f / 180.f };
 			const f32 cosine{ static_cast<f32>(std::cos(angle)) };
@@ -60,6 +64,7 @@ namespace lib
 				-ss.x,		sc.y,	( orig.x * ss.y) - (orig.y * sc.y) + pos.y,
 				0.f,		0.f,	1.f 
 			};
+			m_needsUpdate = false;
 		}
 	}
 }
