@@ -6,11 +6,17 @@
 
 namespace lib
 {
+	using callback_t = std::function<void()>;
+
+	template<typename T, void (T::*sm)()>
+	constexpr callback_t lambdaToMethod(T& d) {
+		return [&d]() {(d.*sm)(); };
+	}
+
 	template <typename T>
 	class Property
 	{
 	public:
-		using callback_t = std::function<void()>;
 
 		constexpr Property(T iv = {}, callback_t c = {}) : m_value{ std::move(iv) }, m_callback{ std::move(c) } {}
 

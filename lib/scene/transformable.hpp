@@ -6,13 +6,12 @@
 #include "transformation.hpp"
 #include <mtypes/include/vector2d.hpp>
 #include <lib/include/properties.hpp>
-#include <lib/include/lockable.hpp>
 
 namespace lib
 {
 	namespace scene
 	{
-		class Transformable : public Lockable
+		class Transformable
 		{
 		public:
 			Transformable() noexcept;
@@ -24,7 +23,9 @@ namespace lib
 			Property<vector2df> scale;
 			Property<vector2df> position;
 
-			Property<Transform> transform;
+//			Property<Transform> transform;
+
+			inline const Transform transform() const noexcept { return m_transform; }
 
 			/**
 			* Method to set the associated transformation to a rotation around a given point.
@@ -43,7 +44,11 @@ namespace lib
 			* @param [in] scale Scale factor
 			*/
 			void scaleAround(const vector2df &point, const vector2df &scale);
-			void unlocked() noexcept override;	
+
+			void setNeedsUpdate() noexcept { m_needsUpdate; }
+		private:
+			bool m_needsUpdate;
+			Transform m_transform;
 		};
 	}
 }

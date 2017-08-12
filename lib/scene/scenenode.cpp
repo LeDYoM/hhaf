@@ -26,11 +26,11 @@ namespace lib
 
 				const auto handle(sceneManager().rStates().pushChanges(&transform(), nullptr));
 
-				for (const auto& renderizable : m_renderNodes.nodes) {
+				for (auto&& renderizable : m_renderNodes.nodes) {
 					renderizable->draw();
 				}
 
-				for (const auto& group : m_groups.nodes) {
+				for (auto&& group : m_groups.nodes) {
 					group->draw();
 				}
 
