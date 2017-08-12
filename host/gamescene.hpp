@@ -6,6 +6,8 @@
 #include "keymapping.hpp"
 #include "direction.hpp"
 #include "levelproperties.hpp"
+#include "gameresources.hpp"
+#include "textquad.hpp"
 
 #include <mtypes/include/types.hpp>
 #include <lib/core/configuration.hpp>
@@ -16,8 +18,6 @@
 #include <lib/board/boardmodel.hpp>
 #include <lib/scene/nodes/nodetext.hpp>
 #include <lib/scene/nodes/nodequad.hpp>
-
-#include "textquad.hpp"
 
 #include <array>
 #include <functional>
@@ -112,6 +112,7 @@ namespace zoper
 		void tokenMoved(const lib::vector2du32 &source, const lib::vector2du32 &dest, lib::sptr<Tile> tile);
 
 		// Properties
+		GameResourcesLoader m_gameresources;
 		lib::PausableTimer m_gameClock;
 		lib::sptr<lib::board::BoardModelComponent> p_boardModel{ nullptr };
 		GameData m_gameData;

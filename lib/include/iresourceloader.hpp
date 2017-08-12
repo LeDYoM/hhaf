@@ -7,13 +7,14 @@
 
 namespace lib
 {
-	struct ResourceForLoading
+	namespace core
 	{
-		const str name;
-	};
+		class ResourceManager;
+	}
+
 	class IResourceLoader {
 	public:
-		virtual void loadResources() = 0;
+		virtual void loadResources(core::ResourceManager&) = 0;
 	};
 }
 

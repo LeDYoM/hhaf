@@ -24,15 +24,20 @@ namespace lib
 			~ResourceManager();
 
 			template <typename T>
-			sptr<T> getResource(const str rid) const
+			sptr<T> getResource(const str &rid) const;
+
+			template <>
+			sptr<scene::TTFont> getResource(const str &rid) const
 			{
-				if (typeid(T) == typeid(scene::TTFont)) {
-					return getFont(rid);
-				}
-				else {
-					return getTexture(rid);
-				}
+				return getFont(rid);
 			}
+
+			template <>
+			sptr<scene::Texture> getResource(const str &rid) const
+			{
+				return getTexture(rid);
+			}
+
 			sptr<scene::TTFont> getFont(const str &rid) const;
 			sptr<scene::Texture> getTexture(const str &rid) const;
 
