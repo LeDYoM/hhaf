@@ -8,6 +8,8 @@
 #include <lib/scene/renderstates.hpp>
 #include <lib/backend/backendfactory.hpp>
 #include <lib/scene/texture.hpp>
+#include <lib/scene/renderdata.hpp>
+#include <lib/scene/vertexarray.hpp>
 
 namespace lib
 {
@@ -39,6 +41,16 @@ namespace lib
 			m_wPrivate->m_backendWindow->draw(&(va.verticesArray()[0]), va.verticesArray().size(), va.primitiveType(), 
 				rs.m_transform.getMatrix(), 
 				rs.m_texture?rs.m_texture->backEndTexture():nullptr);
+		}
+
+		void Window::draw(const scene::RenderData & renderData)
+		{
+			m_wPrivate->m_backendWindow->draw(
+				&(renderData.vArray.verticesArray()[0]), 
+				renderData.vArray.verticesArray().size(),
+				renderData.vArray.primitiveType(),
+				renderData.transform.getMatrix(),
+				renderData.texture ? renderData.texture->backEndTexture() : nullptr);
 		}
 
 		bool Window::arePendingKeyPresses() const

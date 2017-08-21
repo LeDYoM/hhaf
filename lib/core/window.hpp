@@ -13,6 +13,7 @@ namespace lib
 	namespace scene
 	{
 		class VertexArray;
+		class RenderData;
 	}
 
 	namespace core
@@ -31,6 +32,7 @@ namespace lib
 			Property<Rectf32> viewRect;
 
 			void draw(const scene::VertexArray &va, const scene::RenderStates &rs);
+			void draw(const scene::RenderData &renderData);
 
 			bool arePendingKeyPresses() const;
 			bool arePendingKeyReleases() const;

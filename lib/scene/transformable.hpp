@@ -25,6 +25,9 @@ namespace lib
 			inline const Transform &transform() const noexcept { return m_transform; }
 			inline const Transform &updatedTransform() { updateTransform(); return m_transform; }
 
+			void updateGlobalTransformation(const Transform&);
+			inline const Transform &globalTransform() const noexcept { return m_globalTransform; }
+
 			/**
 			* Method to set the associated transformation to a rotation around a given point.
 			* Note: this method overwrites the properties.
@@ -49,6 +52,7 @@ namespace lib
 
 			bool m_needsUpdate;
 			Transform m_transform;
+			Transform m_globalTransform;
 		};
 	}
 }

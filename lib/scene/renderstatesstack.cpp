@@ -33,7 +33,10 @@ namespace lib
 			})
 
 			m_statesStack.emplace(std::move(m_renderStates));
-			m_renderStates = RenderStates{ transform ? m_renderStates.m_transform*(*transform) : m_renderStates.m_transform, texture };
+			m_renderStates = RenderStates{ transform ? 
+					(*transform) 
+					: m_renderStates.m_transform, 
+				texture };
 			return RenderStatesStackHandle(*this);
 		}
 

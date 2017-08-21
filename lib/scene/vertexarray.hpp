@@ -32,6 +32,7 @@ namespace lib
 
 			void draw() const;
 			void setColor(const Color &color);
+			inline bool empty() const noexcept { return m_vertices.empty(); }
 
 			inline BasicVertexArray &verticesArray() noexcept { return m_vertices; }
 			inline const BasicVertexArray &verticesArray() const noexcept { return m_vertices; }

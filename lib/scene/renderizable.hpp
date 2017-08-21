@@ -20,7 +20,7 @@ namespace lib
 			virtual ~Renderizable();
 
 			virtual void configure();
-			virtual void draw();
+			virtual void draw() const;
 
 			Property<Color> color;
 			Property<bool> visible{ true };

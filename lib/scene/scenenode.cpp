@@ -24,8 +24,8 @@ namespace lib
 				// Update the node components
 				updateComponents();
 
-				const auto handle(sceneManager().rStates().pushChanges(&updatedTransform(), nullptr));
-
+				updateGlobalTransformation(sceneManager().rStates().top().m_transform);
+				const auto handle(sceneManager().rStates().pushChanges(&globalTransform(), nullptr));
 				for (auto&& renderizable : m_renderNodes.nodes) {
 					renderizable->draw();
 				}

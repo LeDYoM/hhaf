@@ -32,6 +32,11 @@ namespace lib
 
 		Transformable::~Transformable() = default;
 
+		void Transformable::updateGlobalTransformation(const Transform &currentGlobalTransformation)
+		{
+			m_globalTransform = updatedTransform() * currentGlobalTransformation;
+		}
+
 		void Transformable::rotateAround(const vector2df & point, const f32 angle)
 		{
 			origin = point;

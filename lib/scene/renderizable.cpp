@@ -1,7 +1,8 @@
 #include "renderizable.hpp"
-#include <lib/scene/renderstatesstack.hpp>
+#include "renderstatesstack.hpp"
 #include <lib/core/host.hpp>
-#include <lib/scene/scenemanager.hpp>
+#include "scenemanager.hpp"
+#include "renderdata.hpp"
 
 namespace lib
 {
@@ -18,11 +19,14 @@ namespace lib
 			color.setCallback([this]() { m_vertices.setColor(color()); });
 		}
 
-		void Renderizable::draw()
+		void Renderizable::draw() const
 		{
-			if (visible()) {
-				auto handle = sceneManager().rStates().pushChanges(nullptr, texture().get());
-				m_vertices.draw();
+			if (visible() && !m_vertices.empty()) {
+				host().parentWindow().draw({
+					m_vertices,
+					sceneManager().rStates().top().m_transform,
+					texture().get()
+				});
 			}
 		}
 	}
