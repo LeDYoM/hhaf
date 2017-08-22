@@ -24,21 +24,23 @@ namespace lib
 		class VertexArray
 		{
 		public:
-			VertexArray(const PrimitiveType type, const u32 vertexCount) noexcept;
+			constexpr VertexArray(const PrimitiveType type, const u32 vertexCount) noexcept
+				: m_vertices{ vertexCount }, m_primitiveType{ type } {}
+
 			constexpr VertexArray(const VertexArray&) = default;
-			VertexArray& operator=(const VertexArray&) = default;
+			constexpr VertexArray& operator=(const VertexArray&) = default;
 			constexpr VertexArray(VertexArray&&) noexcept = default;
-			VertexArray& operator=(VertexArray&&) noexcept = default;
+			constexpr VertexArray& operator=(VertexArray&&) noexcept = default;
 
 			void setColor(const Color &color);
-			inline bool empty() const noexcept { return m_vertices.empty(); }
+			constexpr bool empty() const noexcept { return m_vertices.empty(); }
 
-			inline BasicVertexArray &verticesArray() noexcept { return m_vertices; }
-			inline const BasicVertexArray &verticesArray() const noexcept { return m_vertices; }
+			constexpr BasicVertexArray &verticesArray() noexcept { return m_vertices; }
+			constexpr const BasicVertexArray &verticesArray() const noexcept { return m_vertices; }
 
-			void setBounds(Rectf32 nBounds) noexcept { m_bounds = std::move(nBounds); }
-			inline Rectf32 bounds() const noexcept{ return m_bounds; }
-			inline PrimitiveType primitiveType() const noexcept { return m_primitiveType; }
+			constexpr void setBounds(Rectf32 nBounds) noexcept { m_bounds = std::move(nBounds); }
+			constexpr Rectf32 bounds() const noexcept{ return m_bounds; }
+			constexpr PrimitiveType primitiveType() const noexcept { return m_primitiveType; }
 
 			void move(const vector2df &offset) noexcept;
 			void moveX(const f32 xOffset) noexcept;

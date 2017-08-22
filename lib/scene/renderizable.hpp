@@ -17,7 +17,7 @@ namespace lib
 		class Renderizable : public core::HasName
 		{
 		public:
-			Renderizable(SceneNode *const parent, const str &name, const PrimitiveType type, const u32 vertexCount)
+			constexpr Renderizable(SceneNode *const parent, const str &name, const PrimitiveType type, const u32 vertexCount)
 				: core::HasName{ name }, m_parent{ parent }, m_vertices{ type, vertexCount }, color{} {}
 
 			virtual ~Renderizable() = default;
@@ -28,7 +28,7 @@ namespace lib
 			Property<Color> color;
 			Property<sptr<Texture>> texture;
 			Property<bool> visible{ true };
-			inline Rectf32 bounds() const noexcept { return m_vertices.bounds(); }
+			constexpr Rectf32 bounds() const noexcept { return m_vertices.bounds(); }
 
 			template <typename T>
 			constexpr T *const rnCast() {
