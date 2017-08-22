@@ -2,7 +2,6 @@
 
 #include <lib/core/window.hpp>
 #include <lib/core/host.hpp>
-#include <lib/scene/renderstatesstack.hpp>
 #include <lib/scene/scenemanager.hpp>
 #include <lib/scene/renderdata.hpp>
 
@@ -12,17 +11,6 @@ namespace lib
 	{
 		VertexArray::VertexArray(const PrimitiveType type, const u32 vertexCount) noexcept
 			: m_vertices{ vertexCount }, m_primitiveType{ type } {}
-
-		void VertexArray::draw() const
-		{
-//			if (!m_vertices.empty()) host().parentWindow().draw(*this, sceneManager().rStates().top());
-
-			if (!m_vertices.empty()) host().parentWindow().draw(scene::RenderData(
-				*this,
-				sceneManager().rStates().top().m_transform,
-				sceneManager().rStates().top().m_texture
-			));
-		}
 
 		void VertexArray::setColor(const Color &color)
 		{

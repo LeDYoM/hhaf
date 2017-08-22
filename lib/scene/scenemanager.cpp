@@ -2,7 +2,6 @@
 #include <mtypes/include/log.hpp>
 #include "scene.hpp"
 #include "iscenescontroller.hpp"
-#include "renderstatesstack.hpp"
 
 namespace lib
 {
@@ -46,7 +45,6 @@ namespace lib
 				m_currentScene->updateScene();
 			}
 
-			m_renderStates.newFrame();
 			m_currentScene->draw();
 		}
 

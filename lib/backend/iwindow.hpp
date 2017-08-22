@@ -12,10 +12,6 @@
 namespace lib
 {
 	struct WindowCreationParams;
-	namespace scene
-	{
-		class RenderStates;
-	}
 	namespace backend
 	{
 		class IWindow

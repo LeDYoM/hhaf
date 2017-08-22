@@ -30,7 +30,6 @@ namespace lib
 			constexpr VertexArray(VertexArray&&) noexcept = default;
 			VertexArray& operator=(VertexArray&&) noexcept = default;
 
-			void draw() const;
 			void setColor(const Color &color);
 			inline bool empty() const noexcept { return m_vertices.empty(); }
 

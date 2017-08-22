@@ -5,7 +5,6 @@
 #include "host.hpp"
 #include <lib/include/iapp.hpp>
 #include <lib/core/inputsystem.hpp>
-#include <lib/scene/renderstates.hpp>
 #include <lib/backend/backendfactory.hpp>
 #include <lib/scene/texture.hpp>
 #include <lib/scene/renderdata.hpp>
@@ -34,13 +33,6 @@ namespace lib
 		Window::~Window()
 		{
 			logDestruct_NOPARAMS;
-		}
-
-		void Window::draw(const scene::VertexArray & va, const scene::RenderStates& rs)
-		{
-			m_wPrivate->m_backendWindow->draw(&(va.verticesArray()[0]), va.verticesArray().size(), va.primitiveType(), 
-				rs.m_transform.getMatrix(), 
-				rs.m_texture?rs.m_texture->backEndTexture():nullptr);
 		}
 
 		void Window::draw(const scene::RenderData & renderData)
