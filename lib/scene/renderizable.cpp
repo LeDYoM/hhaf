@@ -1,8 +1,8 @@
 #include "renderizable.hpp"
-#include "renderstatesstack.hpp"
 #include <lib/core/host.hpp>
 #include "scenemanager.hpp"
 #include "renderdata.hpp"
+#include "scenenode.hpp"
 
 namespace lib
 {
@@ -18,7 +18,7 @@ namespace lib
 			if (visible() && !m_vertices.empty()) {
 				host().parentWindow().draw({
 					m_vertices,
-					sceneManager().rStates().top().m_transform,
+					m_parent->globalTransform(),
 					texture().get()
 				});
 			}
