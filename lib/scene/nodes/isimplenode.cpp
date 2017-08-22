@@ -8,8 +8,8 @@ namespace lib
 	{
 		namespace nodes
 		{
-			ISimpleNode::ISimpleNode(str &&name, const u32 pointCount)
-				: Renderizable{ std::move(name), TriangleFan, pointCount + 2 } {}
+			ISimpleNode::ISimpleNode(SceneNode *const parent, const str &name, const u32 pointCount)
+				: Renderizable{ parent, name, TriangleFan, pointCount + 2 } {}
 
 			void ISimpleNode::configure()
 			{

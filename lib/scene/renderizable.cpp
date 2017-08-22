@@ -8,12 +8,6 @@ namespace lib
 {
 	namespace scene
 	{
-		Renderizable::Renderizable(str &&name, PrimitiveType type, u32 vertexCount)
-			: core::HasName{ std::move(name) }, m_vertices{ type, vertexCount }, color{}
-		{ }
-
-		Renderizable::~Renderizable() = default;
-
 		void Renderizable::configure()
 		{
 			color.setCallback([this]() { m_vertices.setColor(color()); });

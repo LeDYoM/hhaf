@@ -7,17 +7,6 @@ namespace lib
 	{
 		namespace nodes
 		{
-			NodeQuad::NodeQuad(str&& name)
-				: ISimpleNode{ std::move(name), 4 }
-			{
-				logConstruct("Name: ", this->name());
-			}
-
-			NodeQuad::~NodeQuad()
-			{
-				logDestruct("Name: ", name());
-			}
-
 			void NodeQuad::configure()
 			{
 				ISimpleNode::configure();

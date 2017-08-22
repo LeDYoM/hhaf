@@ -8,16 +8,6 @@ namespace lib
 	{
 		namespace nodes
 		{
-			NodeShape::NodeShape(str &&name, const u32 pointCount_)
-				: ISimpleNode{ std::move(name), pointCount_ }, pointCount{ pointCount_ }
-			{
-				logConstruct("Name: ", this->name());
-			}
-
-			NodeShape::~NodeShape()
-			{
-				logDestruct("Name: ", name());
-			}
 
 			void NodeShape::configure()
 			{

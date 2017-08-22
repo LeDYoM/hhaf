@@ -16,7 +16,7 @@ namespace lib
 			class ISimpleNode : public Renderizable
 			{
 			public:
-				ISimpleNode(str &&name, const u32 pointCount);
+				ISimpleNode(SceneNode *const parent, const str &name, const u32 pointCount);
 				virtual ~ISimpleNode() = default;
 
 				Property<Rectf32> box;

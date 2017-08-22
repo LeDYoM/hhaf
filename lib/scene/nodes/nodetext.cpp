@@ -13,17 +13,6 @@ namespace lib
 	{
 		namespace nodes
 		{
-			NodeText::NodeText(str name) :
-				Renderizable{ std::move(name), Triangles, 0 }
-			{
-				logConstruct("Name: ", this->name());
-			}
-
-			NodeText::~NodeText()
-			{
-				logDestruct("Name: ", name());
-			}
-
 			void NodeText::configure()
 			{
 				font.setCallback([this]() { updateGeometry(); });

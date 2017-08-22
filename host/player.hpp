@@ -13,7 +13,7 @@ namespace zoper
 	class Player : public GameBaseTile
 	{
 	public:
-		Player(lib::scene::SceneNode* const parent, lib::str&& name, lib::vector2du32 bPosition, const lib::Rectf32 &box, lib::vector2df board2SceneFactor);
+		Player(lib::scene::SceneNode* const parent, const lib::str &name, lib::vector2du32 bPosition, lib::Rectf32 box, lib::vector2df board2SceneFactor);
 		virtual ~Player();
 
 		lib::Property<lib::vector2du32> boardPosition;

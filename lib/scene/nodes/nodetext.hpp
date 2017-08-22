@@ -29,8 +29,9 @@ namespace lib
 					Bottom
 				};
 
-				NodeText(str name);
-				virtual ~NodeText();
+				NodeText(SceneNode *const parent, const str &name) : Renderizable{ parent, name, Triangles, 0 } {}
+
+				virtual ~NodeText() = default;
 
 				virtual void configure() override;
 

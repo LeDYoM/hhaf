@@ -13,11 +13,14 @@ namespace lib
 	namespace scene
 	{
 		class Texture;
+		class SceneNode;
 		class Renderizable : public core::HasName
 		{
 		public:
-			explicit Renderizable(str &&name, PrimitiveType type, u32 vertexCount);
-			virtual ~Renderizable();
+			Renderizable(SceneNode *const parent, const str &name, const PrimitiveType type, const u32 vertexCount)
+				: core::HasName{ name }, m_parent{ parent }, m_vertices{ type, vertexCount }, color{} {}
+
+			virtual ~Renderizable() = default;
 
 			virtual void configure();
 			void draw() const;
@@ -39,6 +42,8 @@ namespace lib
 
 		protected:
 			VertexArray m_vertices;
+		private:
+			SceneNode *m_parent{ nullptr };
 		};
 	}
 }

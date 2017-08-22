@@ -14,8 +14,10 @@ namespace lib
 			class NodeShape : public ISimpleNode
 			{
 			public:
-				explicit NodeShape(str &&name, const u32 pointCount);
-				virtual ~NodeShape();
+				explicit NodeShape(SceneNode *const parent, const str &name, const u32 pointC)
+					: ISimpleNode{ parent, name, pointC }, pointCount{ pointC } {}
+
+				virtual ~NodeShape() = default;
 
 				virtual void configure() override;
 
