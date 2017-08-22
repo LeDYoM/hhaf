@@ -20,9 +20,10 @@ namespace lib
 			virtual ~Renderizable();
 
 			virtual void configure();
-			virtual void draw() const;
+			void draw() const;
 
 			Property<Color> color;
+			Property<sptr<Texture>> texture;
 			Property<bool> visible{ true };
 			inline Rectf32 bounds() const noexcept { return m_vertices.bounds(); }
 
@@ -35,8 +36,6 @@ namespace lib
 			constexpr const T *const rnCast() const {
 				return dynamic_cast<const T *const>(this);
 			}
-
-			Property<sptr<Texture>> texture;
 
 		protected:
 			VertexArray m_vertices;
