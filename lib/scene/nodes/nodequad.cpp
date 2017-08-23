@@ -31,7 +31,7 @@ namespace lib
 				vertices[5] = vertices[1];
 
 				// Update the bounding rectangle
-				m_vertices.setBounds(cBox);
+				m_vertices.bounds = cBox;
 			}
 		}
 	}

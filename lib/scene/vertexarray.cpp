@@ -1,10 +1,5 @@
 #include "vertexarray.hpp"
 
-#include <lib/core/window.hpp>
-#include <lib/core/host.hpp>
-#include <lib/scene/scenemanager.hpp>
-#include <lib/scene/renderdata.hpp>
-
 namespace lib
 {
 	namespace scene
@@ -18,7 +13,7 @@ namespace lib
 		{
 			if (!m_vertices.empty()) {
 				for (auto &v : m_vertices) v.position += offset;
-				m_bounds += offset;
+				bounds = bounds() + offset;
 			}
 		}
 
@@ -26,7 +21,7 @@ namespace lib
 		{
 			if (!m_vertices.empty()) {
 				for (auto &v : m_vertices) v.position.x += xOffset;
-				m_bounds += vector2df{ xOffset, 0 };
+				bounds = bounds() + vector2df{ xOffset, 0 };
 			}
 		}
 
@@ -34,7 +29,7 @@ namespace lib
 		{
 			if (!m_vertices.empty()) {
 				for (auto &v : m_vertices) v.position.y += yOffset;
-				m_bounds += vector2df{ 0, yOffset };
+				bounds = bounds() + vector2df{ 0, yOffset };
 			}
 		}
 	}

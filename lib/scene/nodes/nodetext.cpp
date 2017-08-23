@@ -29,7 +29,7 @@ namespace lib
 			{
 				BasicVertexArray &vertices{ m_vertices.verticesArray() };
 
-				m_vertices.setBounds(Rectf32{});
+				m_vertices.bounds = Rectf32{};
 				vertices.clear();
 
 				if (!font() || text().empty()) {
@@ -109,7 +109,7 @@ namespace lib
 				}
 
 				// Update the bounding rectangle
-				m_vertices.setBounds({ minX, minY, maxX - minX, maxY - minY });
+				m_vertices.bounds = { minX, minY, maxX - minX, maxY - minY };
 				texture = font()->getTexture(currentCharacterSize);
 				color.update();
 				updateAlignmentX();
