@@ -17,19 +17,24 @@ namespace lib
 
 		SceneNode::~SceneNode() { clearAll(); };
 
-		void SceneNode::draw()
+		void SceneNode::render(bool parentTransformationChanged)
 		{
 			if (visible()) {
 				// Update the node components
 				updateComponents();
 
-				updateGlobalTransformation(m_parent ? m_parent->globalTransform() : Transform{});
+				if (transformationNeedsUpdate())
+					parentTransformationChanged = true;
+
+				if (parentTransformationChanged)
+					updateGlobalTransformation(m_parent ? m_parent->globalTransform() : Transform{});
+
 				for (auto&& renderizable : m_renderNodes.nodes) {
-					renderizable->draw();
+					renderizable->render();
 				}
 
 				for (auto&& group : m_groups.nodes) {
-					group->draw();
+					group->render(parentTransformationChanged);
 				}
 
 				updateRemoves();

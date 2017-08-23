@@ -47,6 +47,7 @@ namespace lib
 			void scaleAround(const vector2df &point, const vector2df &scale);
 
 			void setNeedsUpdate() noexcept { m_needsUpdate = true; }
+			inline bool transformationNeedsUpdate() const noexcept { return m_needsUpdate; }
 		private:
 			void updateTransform() noexcept;
 

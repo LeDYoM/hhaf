@@ -23,7 +23,7 @@ namespace lib
 			virtual ~Renderizable() = default;
 
 			virtual void configure();
-			void draw() const;
+			void render() const;
 
 			Property<Color> color;
 			Property<sptr<Texture>> texture;

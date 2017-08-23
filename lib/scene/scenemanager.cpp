@@ -45,7 +45,7 @@ namespace lib
 				m_currentScene->updateScene();
 			}
 
-			m_currentScene->draw();
+			m_currentScene->render(false);
 		}
 
 		void SceneManager::finish()

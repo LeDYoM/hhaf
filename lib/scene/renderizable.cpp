@@ -13,7 +13,7 @@ namespace lib
 			color.setCallback([this]() { m_vertices.setColor(color()); });
 		}
 
-		void Renderizable::draw() const
+		void Renderizable::render() const
 		{
 			if (visible() && !m_vertices.empty()) {
 				host().parentWindow().draw({

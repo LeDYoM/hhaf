@@ -75,7 +75,7 @@ namespace lib
 			void clearSceneNodes();
 			void clearNodes();
 
-			void draw();
+			void render(bool parentTransformationChanged);
 
 			Property<bool> visible;
 
