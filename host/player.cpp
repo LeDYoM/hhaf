@@ -17,7 +17,6 @@ namespace zoper
 		m_node = m_extraSceneNode_2->createRenderizable<nodes::NodeShape>("Node", 3);
 
 		m_node->box = std::move(box);
-		m_node->pointCount = 3;
 		m_node->color = getColorForToken();
 	}
 
