@@ -15,10 +15,6 @@ namespace lib
 
 		void ChooseControlGroup::create()
 		{
-		}
-
-		void ChooseControlGroup::configure()
-		{
 			auto inputComponent(ensureComponentOfType<scene::InputComponent>());
 			inputComponent->setOnKeyPressedHandler([this](const lib::input::Key&key) {
 				log_debug_info("Key pressed toChooseControlGroup");
@@ -55,7 +51,6 @@ namespace lib
 					}
 				}
 			});
-
 			box.setCallback([this]() {
 				for_each_group([this](const sptr<SceneNode>&sceneNode) {
 					if (auto chControl = sceneNode->snCast<ChooseControl>()) {
@@ -69,13 +64,15 @@ namespace lib
 			m_theme.chSize = 70;
 			m_theme.incY = 1;
 			m_theme.cursorDescriptor = CursorDescriptor{ 3, vector2df{ 90.0f, 90.0f },scene::colors::Red };
-			u32 count{ 0 };
+		}
 
+		void ChooseControlGroup::configure()
+		{
+			u32 count{ 0 };
 			for (const auto& option : options()) {
 				auto chooseControl = createSceneNode<ChooseControl>("chooseControl"+str(count));
 				chooseControl->box = box();
 				chooseControl->optionModel = option;
-//				chooseControl->configure();
 				++count;
 			}
 
