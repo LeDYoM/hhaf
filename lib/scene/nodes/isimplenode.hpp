@@ -23,11 +23,12 @@ namespace lib
 				Property<Rects32> textureRect;
 
 			protected:
-				void configure() override;
 				void updateGeometry();
 				void updateTextureCoords();
 
 				virtual void updateGeometrySimpleNode() = 0;
+				bool m_textureRectNeedsUpdate{ true };
+
 			};
 		}
 	}

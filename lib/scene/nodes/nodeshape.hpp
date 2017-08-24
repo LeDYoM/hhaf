@@ -19,8 +19,6 @@ namespace lib
 
 				virtual ~NodeShape() = default;
 
-				virtual void configure() override;
-
 				Property<u32> pointCount;
 
 			protected:

@@ -17,13 +17,10 @@ namespace lib
 		class Renderizable : public core::HasName
 		{
 		public:
-			constexpr Renderizable(SceneNode *const parent, const str &name, const PrimitiveType type, const u32 vertexCount)
-				: core::HasName{ name }, m_parent{ parent }, m_vertices{ type, vertexCount }, color{} {}
-
+			Renderizable(SceneNode *const parent, const str &name, const PrimitiveType type, const u32 vertexCount);
 			virtual ~Renderizable() = default;
 
-			virtual void configure();
-			void render() const;
+			void render();
 
 			Property<Color> color;
 			Property<sptr<Texture>> texture;
@@ -41,7 +38,11 @@ namespace lib
 			}
 
 		protected:
+			virtual void updateGeometry() = 0;
 			VertexArray m_vertices;
+			bool m_geometryNeedsUpdate{ true };
+			bool m_colorNeedsUpdate{ true };
+
 		private:
 			SceneNode *m_parent{ nullptr };
 		};

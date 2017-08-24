@@ -7,12 +7,6 @@ namespace lib
 	{
 		namespace nodes
 		{
-			void NodeQuad::configure()
-			{
-				ISimpleNode::configure();
-				updateGeometry();
-			}
-
 			void NodeQuad::updateGeometrySimpleNode()
 			{
 				constexpr u32 nPoints = 4;

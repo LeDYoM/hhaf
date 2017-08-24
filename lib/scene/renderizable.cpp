@@ -8,13 +8,13 @@ namespace lib
 {
 	namespace scene
 	{
-		void Renderizable::configure()
-		{
-			color.setCallback([this]() { m_vertices.setColor(color()); });
-		}
+		Renderizable::Renderizable(SceneNode * const parent, const str & name, const PrimitiveType type, const u32 vertexCount)
+			: core::HasName{ name }, m_parent{ parent }, m_vertices{ type, vertexCount },
+			color([this]() { m_vertices.setColor(color()); }) {}
 
-		void Renderizable::render() const
+		void Renderizable::render()
 		{
+			updateGeometry();
 			if (visible() && !m_vertices.empty()) {
 				host().parentWindow().draw({
 					m_vertices,

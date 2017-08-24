@@ -8,13 +8,6 @@ namespace lib
 	{
 		namespace nodes
 		{
-
-			void NodeShape::configure()
-			{
-				ISimpleNode::configure();
-				updateGeometry();
-			}
-
 			template <typename T>
 			constexpr T PIConstant = 3.14159265358979323846;
 			template <typename T>

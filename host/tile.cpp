@@ -16,7 +16,6 @@ namespace zoper
 		m_node = createRenderizable<nodes::NodeShape>("Node", 30);
 		m_node->box = box;
 		m_node->color = getColorForToken();
-		m_node->configure();
 	}
 
 	Tile::~Tile() = default;

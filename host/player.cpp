@@ -15,7 +15,6 @@ namespace zoper
 		m_extraSceneNode = createSceneNode("m_extraSceneNode");
 		m_extraSceneNode_2 = m_extraSceneNode->createSceneNode("m_extraSceneNode_2");
 		m_node = m_extraSceneNode_2->createRenderizable<nodes::NodeShape>("Node", 3);
-		m_node->configure();
 
 		m_node->box = std::move(box);
 		m_node->pointCount = 3;

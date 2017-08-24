@@ -62,12 +62,8 @@ namespace zoper
 
 		m_goalQuad = msptr<TextQuad>(this, "goal", m_gameresources.scoreFont, 90, colors::White, Rectf32::fromSize(600, 300));
 		m_goalQuad->sceneNode()->position = { 1250, 50 };
-//		m_goalQuad->text(0)->text = "Level:";
 		m_goalQuad->text(0)->color = colors::Blue;
-//		m_goalQuad->text(0)->configure();
-//		m_goalQuad->text(2)->text = "Score:";
 		m_goalQuad->text(2)->color = colors::Blue;
-//		m_goalQuad->text(2)->configure();
 
 		vector2df goBoxHalfSize{ 365, 365 };
 		Rectf32 gobox{ scenePerspective().center() - goBoxHalfSize, (goBoxHalfSize * 2) };
@@ -80,7 +76,6 @@ namespace zoper
 		m_pauseText->alignmentBox = scenePerspective();
 		m_pauseText->alignmentX = NodeText::AlignmentX::Center;
 		m_pauseText->alignmentY = NodeText::AlignmentY::Middle;
-		m_pauseText->configure();
 
 		auto gameText(m_gameOverrg->createRenderizable<NodeText>("gameovergame"));
 		gameText->text = "GAME";
@@ -478,7 +473,6 @@ namespace zoper
 				auto node = sceneNode->createRenderizable<NodeShape>("pointIncrementScore", 30);
 				node->box = Rectf32::fromSize(15.0f, 15.0f);
 				node->color = colors::White;
-				node->configure();
 
 				auto animationComponent(sceneNode->ensureComponentOfType<anim::AnimationComponent>());
 				animationComponent->
@@ -565,7 +559,6 @@ namespace zoper
 
 				auto tileBackground(backgroundTilesrg->createRenderizable<NodeQuad>("backgroundTile_" + indexStr));
 				tileBackground->box = tileBox;
-				tileBackground->configure();
 				column.push_back(std::move(tileBackground));
 
 				// Size of the point in the middle of the tile
@@ -576,7 +569,6 @@ namespace zoper
 				auto node(backgroundTilesrg->createRenderizable<NodeShape>("backgroundTilePoint_" + indexStr, 30));
 				node->box = { tileBox.center() - (centerPointSize / 2), centerPointSize };
 				node->color = colors::White;
-				node->configure();
 
 				currentx += tileSize().x;
 			}

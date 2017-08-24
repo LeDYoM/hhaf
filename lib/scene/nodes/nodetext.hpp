@@ -29,11 +29,8 @@ namespace lib
 					Bottom
 				};
 
-				NodeText(SceneNode *const parent, const str &name) : Renderizable{ parent, name, Triangles, 0 } {}
-
+				NodeText(SceneNode *const parent, const str &name);
 				virtual ~NodeText() = default;
-
-				virtual void configure() override;
 
 				Property<str> text;
 				Property<sptr<TTFont>> font;
