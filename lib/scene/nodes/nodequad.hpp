@@ -16,10 +16,8 @@ namespace lib
 			class NodeQuad : public ISimpleNode
 			{
 			public:
-				explicit NodeQuad(str&& name);
-				virtual ~NodeQuad();
-
-				virtual void configure() override;
+				explicit NodeQuad(SceneNode *const parent, const str &name) : ISimpleNode{ parent, name, 4 } {}
+				virtual ~NodeQuad() = default;
 
 			protected:
 				virtual void updateGeometrySimpleNode() override;

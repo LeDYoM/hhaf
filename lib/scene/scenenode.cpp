@@ -6,7 +6,6 @@
 #include <lib/core/window.hpp>
 #include <lib/core/host.hpp>
 #include <mtypes/include/log.hpp>
-#include "renderstatesstack.hpp"
 #include "scenemanager.hpp"
 
 namespace lib
@@ -18,20 +17,24 @@ namespace lib
 
 		SceneNode::~SceneNode() { clearAll(); };
 
-		void SceneNode::draw()
+		void SceneNode::render(bool parentTransformationChanged)
 		{
 			if (visible()) {
 				// Update the node components
 				updateComponents();
 
-				const auto handle(sceneManager().rStates().pushChanges(&transform(), nullptr));
+				if (transformationNeedsUpdate())
+					parentTransformationChanged = true;
+
+				if (parentTransformationChanged)
+					updateGlobalTransformation(m_parent ? m_parent->globalTransform() : Transform{});
 
 				for (auto&& renderizable : m_renderNodes.nodes) {
-					renderizable->draw();
+					renderizable->render();
 				}
 
 				for (auto&& group : m_groups.nodes) {
-					group->draw();
+					group->render(parentTransformationChanged);
 				}
 
 				updateRemoves();

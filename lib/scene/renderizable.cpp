@@ -1,28 +1,26 @@
 #include "renderizable.hpp"
-#include <lib/scene/renderstatesstack.hpp>
 #include <lib/core/host.hpp>
-#include <lib/scene/scenemanager.hpp>
+#include "scenemanager.hpp"
+#include "renderdata.hpp"
+#include "scenenode.hpp"
 
 namespace lib
 {
 	namespace scene
 	{
-		Renderizable::Renderizable(str &&name, PrimitiveType type, u32 vertexCount)
-			: core::HasName{ std::move(name) }, m_vertices{ type, vertexCount }, color{}
-		{ }
+		Renderizable::Renderizable(SceneNode * const parent, const str & name, const PrimitiveType type, const u32 vertexCount)
+			: core::HasName{ name }, m_parent{ parent }, m_vertices{ type, vertexCount },
+			color([this]() { m_vertices.setColor(color()); }) {}
 
-		Renderizable::~Renderizable() = default;
-
-		void Renderizable::configure()
+		void Renderizable::render()
 		{
-			color.setCallback([this]() { m_vertices.setColor(color()); });
-		}
-
-		void Renderizable::draw()
-		{
-			if (visible()) {
-				auto handle = sceneManager().rStates().pushChanges(nullptr, texture().get());
-				m_vertices.draw();
+			updateGeometry();
+			if (visible() && !m_vertices.empty()) {
+				host().parentWindow().draw({
+					m_vertices,
+					m_parent->globalTransform(),
+					texture().get()
+				});
 			}
 		}
 	}

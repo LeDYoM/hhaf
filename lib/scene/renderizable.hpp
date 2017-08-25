@@ -13,18 +13,19 @@ namespace lib
 	namespace scene
 	{
 		class Texture;
+		class SceneNode;
 		class Renderizable : public core::HasName
 		{
 		public:
-			explicit Renderizable(str &&name, PrimitiveType type, u32 vertexCount);
-			virtual ~Renderizable();
+			Renderizable(SceneNode *const parent, const str &name, const PrimitiveType type, const u32 vertexCount);
+			virtual ~Renderizable() = default;
 
-			virtual void configure();
-			virtual void draw();
+			void render();
 
 			Property<Color> color;
+			Property<sptr<Texture>> texture;
 			Property<bool> visible{ true };
-			inline Rectf32 bounds() const noexcept { return m_vertices.bounds(); }
+			constexpr Rectf32 bounds() const noexcept { return m_vertices.bounds(); }
 
 			template <typename T>
 			constexpr T *const rnCast() {
@@ -36,10 +37,14 @@ namespace lib
 				return dynamic_cast<const T *const>(this);
 			}
 
-			Property<sptr<Texture>> texture;
-
 		protected:
+			virtual void updateGeometry() = 0;
 			VertexArray m_vertices;
+			bool m_geometryNeedsUpdate{ true };
+			bool m_colorNeedsUpdate{ true };
+
+		private:
+			SceneNode *m_parent{ nullptr };
 		};
 	}
 }

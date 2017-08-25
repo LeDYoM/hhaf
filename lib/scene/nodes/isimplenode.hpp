@@ -16,18 +16,19 @@ namespace lib
 			class ISimpleNode : public Renderizable
 			{
 			public:
-				ISimpleNode(str &&name, const u32 pointCount);
+				ISimpleNode(SceneNode *const parent, const str &name, const u32 pointCount);
 				virtual ~ISimpleNode() = default;
 
 				Property<Rectf32> box;
 				Property<Rects32> textureRect;
 
 			protected:
-				void configure() override;
 				void updateGeometry();
 				void updateTextureCoords();
 
 				virtual void updateGeometrySimpleNode() = 0;
+				bool m_textureRectNeedsUpdate{ true };
+
 			};
 		}
 	}

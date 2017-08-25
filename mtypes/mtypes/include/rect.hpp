@@ -13,21 +13,22 @@ namespace lib
 	{
 		T left, top, width, height;
 
-		static constexpr Rect fromSize(T sizeX, T sizeY) { return Rect{ {},{}, vector2d<T>{sizeX,sizeY} }; }
+		static constexpr Rect fromSize(const T sizeX, const T sizeY) { return Rect{ {},{}, vector2d<T>{sizeX,sizeY} }; }
 		static constexpr Rect fromSize(const vector2d<T> &size) { return Rect{ {},{}, size }; }
 		static constexpr Rect fromCenterAndRadius(const vector2d<T> &center, const vector2d<T> &radius) { return Rect{ center.x - radius.x,center.y - radius.y, center.x + radius.x, center.y + radius.y }; }
 		static constexpr Rect fromCenterAndSize(const vector2d<T> &center, const vector2d<T> &size) { return fromCenterAndRadius(center, size / static_cast<T>(2)); }
 
-		constexpr Rect(T rectLeft, T rectTop, T rectWidth, T rectHeight) noexcept : left{ rectLeft }, top{ rectTop }, width{ rectWidth }, height{ rectHeight } { }
-		constexpr Rect() = default;
+		constexpr Rect() noexcept = default;
+		constexpr Rect(const T rectLeft, const T rectTop, const T rectWidth, const T rectHeight) noexcept : left{ rectLeft }, top{ rectTop }, width{ rectWidth }, height{ rectHeight } { }
 		constexpr Rect(const vector2d<T> &position, const vector2d<T> &size) noexcept : Rect{ position.x, position.y, size.x, size.y } {}
 		constexpr Rect(const vector2d<T> &position, T sizeX, T sizeY) noexcept : Rect{ position.x, position.y, sizeX, sizeY } {}
-		constexpr Rect(T positionX, T positionY, const vector2d<T> &size) noexcept : Rect{ positionX, positionY, size.x, size.y } {}
+		constexpr Rect(const T positionX, const T positionY, const vector2d<T> &size) noexcept : Rect{ positionX, positionY, size.x, size.y } {}
 
 		constexpr Rect(const Rect&) noexcept = default;
-		Rect &operator=(const Rect&) noexcept = default;
+		constexpr Rect &operator=(const Rect&) noexcept = default;
 		constexpr Rect(Rect&&) noexcept = default;
-		Rect &operator=(Rect&&) noexcept = default;
+		constexpr Rect &operator=(Rect&&) noexcept = default;
+
 		template <typename U>
 		constexpr Rect(const Rect<U>& rectangle) :
 			left{ static_cast<T>(rectangle.left) }, top{ static_cast<T>(rectangle.top) },
@@ -85,6 +86,12 @@ namespace lib
 		constexpr Rect setRadiusFromCenter(const vector2d<T> &radius) const { Rect temp{ *this }; temp.setRadiusFromCenter(radius); return temp; }
 		constexpr Rect moveResize(const vector2d<T> &offset, const vector2d<T> &sSize) const { return moved(offset).resize(sSize); };
 	};
+
+	template <typename T>
+	constexpr Rect<T> operator +(const Rect<T> &lhs, const vector2d<T> &rhs) noexcept
+	{
+		return { lhs.left + rhs.x,lhs.top + rhs.y,lhs.width,lhs.height };
+	}
 
 	// Serialization operators
 	template <typename T>

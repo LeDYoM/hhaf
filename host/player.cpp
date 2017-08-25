@@ -5,8 +5,8 @@ namespace zoper
 	using namespace lib;
 	using namespace lib::scene;
 
-	Player::Player(SceneNode* const parent, str&& name, vector2du32 bPosition, const Rectf32 &box, vector2df board2SceneFactor)
-		: GameBaseTile{ parent, std::move(name), 0 },
+	Player::Player(SceneNode* const parent, const str& name, vector2du32 bPosition, Rectf32 box, vector2df board2SceneFactor)
+		: GameBaseTile{ parent, name, 0 },
 		boardPosition{ std::move(bPosition), [this]() {
 			this->position = { m_board2SceneFactor.x * boardPosition().x, m_board2SceneFactor.y * boardPosition().y }; }
 		},
@@ -15,10 +15,8 @@ namespace zoper
 		m_extraSceneNode = createSceneNode("m_extraSceneNode");
 		m_extraSceneNode_2 = m_extraSceneNode->createSceneNode("m_extraSceneNode_2");
 		m_node = m_extraSceneNode_2->createRenderizable<nodes::NodeShape>("Node", 3);
-		m_node->box = box;
-		m_node->pointCount = 3;
-		m_node->configure();
 
+		m_node->box = std::move(box);
 		m_node->color = getColorForToken();
 	}
 

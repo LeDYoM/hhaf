@@ -16,16 +16,17 @@ namespace lib
 		public:
 			Transformable() noexcept;
 			virtual ~Transformable();
-			void updateTransform() noexcept;
 
 			Property<vector2df> origin;
 			Property<f32> rotation;
 			Property<vector2df> scale;
 			Property<vector2df> position;
 
-//			Property<Transform> transform;
+			inline const Transform &transform() const noexcept { return m_transform; }
+			inline const Transform &updatedTransform() { updateTransform(); return m_transform; }
 
-			inline const Transform transform() const noexcept { return m_transform; }
+			void updateGlobalTransformation(const Transform&);
+			inline const Transform &globalTransform() const noexcept { return m_globalTransform; }
 
 			/**
 			* Method to set the associated transformation to a rotation around a given point.
@@ -45,10 +46,16 @@ namespace lib
 			*/
 			void scaleAround(const vector2df &point, const vector2df &scale);
 
-			void setNeedsUpdate() noexcept { m_needsUpdate; }
+			void rotateScaleAround(const vector2df &point, const f32 angle, const vector2df &scale);
+
+			void setNeedsUpdate() noexcept { m_needsUpdate = true; }
+			inline bool transformationNeedsUpdate() const noexcept { return m_needsUpdate; }
 		private:
+			void updateTransform() noexcept;
+
 			bool m_needsUpdate;
 			Transform m_transform;
+			Transform m_globalTransform;
 		};
 	}
 }

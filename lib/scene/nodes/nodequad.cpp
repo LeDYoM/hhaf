@@ -7,23 +7,6 @@ namespace lib
 	{
 		namespace nodes
 		{
-			NodeQuad::NodeQuad(str&& name)
-				: ISimpleNode{ std::move(name), 4 }
-			{
-				logConstruct("Name: ", this->name());
-			}
-
-			NodeQuad::~NodeQuad()
-			{
-				logDestruct("Name: ", name());
-			}
-
-			void NodeQuad::configure()
-			{
-				ISimpleNode::configure();
-				updateGeometry();
-			}
-
 			void NodeQuad::updateGeometrySimpleNode()
 			{
 				constexpr u32 nPoints = 4;
@@ -42,7 +25,7 @@ namespace lib
 				vertices[5] = vertices[1];
 
 				// Update the bounding rectangle
-				m_vertices.setBounds(cBox);
+				m_vertices.bounds = cBox;
 			}
 		}
 	}

@@ -14,8 +14,7 @@ namespace lib
 			class DiscreteText : public NodeText
 			{
 			public:
-				using NodeText::NodeText;
-				virtual void configure() override;
+				DiscreteText(SceneNode *const parent, const str &name);
 
 				Property<u32> index;
 				Property<string_vector> data;

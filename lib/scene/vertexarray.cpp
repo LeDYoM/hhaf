@@ -1,22 +1,9 @@
 #include "vertexarray.hpp"
 
-#include <lib/core/window.hpp>
-#include <lib/core/host.hpp>
-#include <lib/scene/renderstatesstack.hpp>
-#include <lib/scene/scenemanager.hpp>
-
 namespace lib
 {
 	namespace scene
 	{
-		VertexArray::VertexArray(const PrimitiveType type, const u32 vertexCount) noexcept
-			: m_vertices{ vertexCount }, m_primitiveType{ type } {}
-
-		void VertexArray::draw() const
-		{
-			if (!m_vertices.empty()) host().parentWindow().draw(*this, sceneManager().rStates().top());
-		}
-
 		void VertexArray::setColor(const Color &color)
 		{
 			if (!m_vertices.empty()) for (auto &v : m_vertices) v.color = color;
@@ -26,7 +13,7 @@ namespace lib
 		{
 			if (!m_vertices.empty()) {
 				for (auto &v : m_vertices) v.position += offset;
-				m_bounds += offset;
+				bounds = bounds() + offset;
 			}
 		}
 
@@ -34,7 +21,7 @@ namespace lib
 		{
 			if (!m_vertices.empty()) {
 				for (auto &v : m_vertices) v.position.x += xOffset;
-				m_bounds += vector2df{ xOffset, 0 };
+				bounds = bounds() + vector2df{ xOffset, 0 };
 			}
 		}
 
@@ -42,7 +29,7 @@ namespace lib
 		{
 			if (!m_vertices.empty()) {
 				for (auto &v : m_vertices) v.position.y += yOffset;
-				m_bounds += vector2df{ 0, yOffset };
+				bounds = bounds() + vector2df{ 0, yOffset };
 			}
 		}
 	}

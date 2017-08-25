@@ -28,33 +28,29 @@ namespace zoper
 		void MainMenu::create()
 		{
 			ChooseControlGroup::create();
-		}
-
-		void MainMenu::configure()
-		{
 			options = vector<vector<OptionModel>>
 			{
 				// Main menu
 				{
 					OptionModel("Play token mode",{}, OptionModelIndex{ 1 }),
-					OptionModel("Play time mode", {}, OptionModelIndex{ 1 }),
-					OptionModel("Options", {}, OptionModelIndex{ 2 }),
+					OptionModel("Play time mode",{}, OptionModelIndex{ 1 }),
+					OptionModel("Options",{}, OptionModelIndex{ 2 }),
 					OptionModel("Exit")
 				},
 				// Start level menu
 				{
-					OptionModel("Start level: ", {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" }),
+					OptionModel("Start level: ",{ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20" }),
 					OptionModel("Back",{},{ 0 })
 				},
 				// Options menu
 				{
-					OptionModel("Antialiasing", {"Worst", "Bad", "Normal", "Good", "Best"}),
-					OptionModel("Resolution", {"Worst", "Bad", "Normal", "Good", "Best"}),
-					OptionModel("Fullscreen", {"No", "Yes"}),
-					OptionModel("VSync", {"No", "Yes"}),
+					OptionModel("Antialiasing",{ "Worst", "Bad", "Normal", "Good", "Best" }),
+					OptionModel("Resolution",{ "Worst", "Bad", "Normal", "Good", "Best" }),
+					OptionModel("Fullscreen",{ "No", "Yes" }),
+					OptionModel("VSync",{ "No", "Yes" }),
 					OptionModel("Redefine keyboard"),
-					OptionModel("Cancel", {}, OptionModelIndex{ 0 }),
-					OptionModel("Accept", {}, OptionModelIndex{ 0 })
+					OptionModel("Cancel",{}, OptionModelIndex{ 0 }),
+					OptionModel("Accept",{}, OptionModelIndex{ 0 })
 				}
 			};
 
@@ -71,7 +67,7 @@ namespace zoper
 					case 0:
 					case 1:
 						// Go to start level (token or time)
-						m_gameConfig->gameMode  = static_cast<s32>(indices[1]);
+						m_gameConfig->gameMode = static_cast<s32>(indices[1]);
 						break;
 					case 3:
 						// Exit
@@ -132,6 +128,11 @@ namespace zoper
 
 			ChooseControlGroup::configure();
 			currentControlIndex = 0;
+
+		}
+
+		void MainMenu::configure()
+		{
 		}
 	}
 }

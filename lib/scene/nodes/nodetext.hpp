@@ -29,10 +29,8 @@ namespace lib
 					Bottom
 				};
 
-				NodeText(str name);
-				virtual ~NodeText();
-
-				virtual void configure() override;
+				NodeText(SceneNode *const parent, const str &name);
+				virtual ~NodeText() = default;
 
 				Property<str> text;
 				Property<sptr<TTFont>> font;

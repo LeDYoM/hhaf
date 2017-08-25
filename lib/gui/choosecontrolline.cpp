@@ -56,9 +56,6 @@ namespace lib
 				m_mainText->alignmentX = NodeText::AlignmentX::Left;
 				m_option->alignmentX = NodeText::AlignmentX::Right;
 			}
-
-			m_mainText->configure();
-			m_option->configure();
 		}
 
 		const OptionModelIndex ChooseControlLine::currentSelection() const noexcept

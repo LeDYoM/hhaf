@@ -35,7 +35,8 @@ namespace lib
 				}
 			}
 
-			void DiscreteText::configure()
+			DiscreteText::DiscreteText(SceneNode * const parent, const str & name)
+				: NodeText{ parent, name }
 			{
 				index.setCallback([this]()
 				{
@@ -56,9 +57,6 @@ namespace lib
 						index.update();
 					}
 				});
-				data.update();
-				NodeText::configure();
-				updateGeometry();
 			}
 		}
 	}
