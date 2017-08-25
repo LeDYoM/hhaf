@@ -51,6 +51,14 @@ namespace lib
 			scale = scale_;
 		}
 
+		void Transformable::rotateScaleAround(const vector2df & point, const f32 angle, const vector2df & scale_)
+		{
+			origin = point;
+			position = point;
+			rotation = angle;
+			scale = scale_;
+		}
+
 		void Transformable::updateTransform() noexcept
 		{
 			if (!m_needsUpdate) return;
