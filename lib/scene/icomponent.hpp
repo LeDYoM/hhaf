@@ -2,7 +2,7 @@
 #define LIB_DRAW_ICOMPONENT_INCLUDE_HPP__
 
 #include <mtypes/include/types.hpp>
-#include <lib/include/properties.hpp>
+#include <mtypes/include/properties.hpp>
 
 namespace lib
 {

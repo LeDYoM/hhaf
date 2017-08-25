@@ -5,7 +5,7 @@
 #include "color.hpp"
 #include <lib/scene/hasname.hpp>
 #include <mtypes/include/types.hpp>
-#include <lib/include/properties.hpp>
+#include <mtypes/include/properties.hpp>
 #include "vertexarray.hpp"
 
 namespace lib

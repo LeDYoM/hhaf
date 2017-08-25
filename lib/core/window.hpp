@@ -5,7 +5,7 @@
 #include "appservice.hpp"
 #include <lib/backend/iwindow.hpp>
 #include <lib/include/key.hpp>
-#include <lib/include/properties.hpp>
+#include <mtypes/include/properties.hpp>
 
 namespace lib
 {

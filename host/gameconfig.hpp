@@ -16,6 +16,7 @@ namespace zoper
 
 		lib::s32 gameMode;
 		lib::u32 startLevel;
+		lib::u32 score;
 	};
 }
 

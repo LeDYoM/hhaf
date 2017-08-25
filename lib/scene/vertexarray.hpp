@@ -4,7 +4,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/rect.hpp>
 #include <lib/scene/vertex.hpp>
-#include <lib/include/properties.hpp>
+#include <mtypes/include/properties.hpp>
 
 namespace lib
 {

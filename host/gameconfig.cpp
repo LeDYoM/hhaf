@@ -11,6 +11,7 @@ namespace zoper
 
 		gameMode = config.registerProperty("GameMode", 0);
 		startLevel = config.registerProperty("StartLevel", 0u);
+		score = config.registerProperty("Score", 0u);
 
 	}
 

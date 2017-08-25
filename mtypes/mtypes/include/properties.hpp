@@ -1,7 +1,6 @@
 #ifndef LIB_PROPERTIES_HPP
 #define LIB_PROPERTIES_HPP
 
-#include "compconfig.hpp"
 #include <functional>
 
 namespace lib

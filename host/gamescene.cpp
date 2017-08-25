@@ -17,7 +17,7 @@
 #include <lib/scene/nodes/nodequad.hpp>
 #include <lib/scene/nodes/nodetext.hpp>
 #include <lib/core/host.hpp>
-#include <lib/include/properties.hpp>
+#include <mtypes/include/properties.hpp>
 #include <lib/scene/ianimation.hpp>
 #include <lib/scene/components/animationcomponent.hpp>
 #include <lib/scene/components/inputcomponent.hpp>
@@ -124,9 +124,9 @@ namespace zoper
 		tilesCreated();
 		addPlayer();
 
-		m_score = 0;
 		m_nextTokenPart = 0;
 		setLevel(_gameConfig->startLevel);
+		_gameConfig->score = 0;
 		m_gameOverrg->visible = false;
 		m_mainBoardrg->visible = true;
 		m_pauseSceneNode->visible = false;
@@ -634,8 +634,8 @@ namespace zoper
 
 	void GameScene::increaseScore(u32 scoreIncrement)
 	{
-		m_score += scoreIncrement;
-		str result( m_score );
+		_gameConfig->score += scoreIncrement;
+		str result(_gameConfig->score);
 		while (result.size() < scoreSize) result = "0" + result;
 		m_scoreQuad->text(3)->text = result;
 	}

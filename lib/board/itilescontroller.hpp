@@ -3,7 +3,7 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
-#include <lib/include/properties.hpp>
+#include <mtypes/include/properties.hpp>
 #include <lib/core/events/event.hpp>
 
 namespace lib

@@ -5,7 +5,7 @@
 
 #include "transformation.hpp"
 #include <mtypes/include/vector2d.hpp>
-#include <lib/include/properties.hpp>
+#include <mtypes/include/properties.hpp>
 
 namespace lib
 {

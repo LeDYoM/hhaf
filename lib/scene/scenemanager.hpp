@@ -3,7 +3,7 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
-#include <lib/include/properties.hpp>
+#include <mtypes/include/properties.hpp>
 #include <lib/core/appservice.hpp>
 #include <lib/core/window.hpp>
 
