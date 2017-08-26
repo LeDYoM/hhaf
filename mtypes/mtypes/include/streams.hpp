@@ -12,31 +12,40 @@ namespace lib
 	class SerializationStreamIn
 	{
 	public:
-		friend SerializationStreamIn& operator<<(SerializationStreamIn&ssi, const u32 data);
+		SerializationStreamIn(string_vector data) : m_data{ std::move(data) } {}
+
+		template <typename T>
+		friend SerializationStreamIn& operator>>(SerializationStreamIn&ssi, T &data);
 	private:
-		str m_data;
+		string_vector m_data;
+		u32 read{ 0 };
 	};
 
-	SerializationStreamIn& operator<<(SerializationStreamIn&ssi, const u32 data)
+	template <typename T>
+	SerializationStreamIn& operator>>(SerializationStreamIn&ssi, T &data)
 	{
-		ssi.m_data += str(data);
-		return ssi;
+		ssi.m_data[sso.read++] >> data;
+		return sso;
 	}
 
 	class SerializationStreamOut
 	{
 	public:
-		friend SerializationStreamOut& operator>>(SerializationStreamOut&sso, u32 &data);
+
+		template <typename T>
+		friend SerializationStreamOut& operator<<(SerializationStreamOut&ssi, const T&data);
 	private:
-		str m_data;
+		string_vector m_data;
 	};
 
-	SerializationStreamOut& operator>>(SerializationStreamOut&sso, u32 &data)
+	template <typename T>
+	SerializationStreamOut& operator<<(SerializationStreamOut&sso, const T&data)
 	{
-		sso.m_data += str(data);
+		str t{ " " };
+		t << data;
+		sso.m_data.push_back(std::move(t));
 		return sso;
 	}
-
 }
 
 #endif

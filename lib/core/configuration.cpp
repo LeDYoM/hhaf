@@ -27,7 +27,7 @@ namespace lib
 
 		if (file[0] != ':') {
 			log_debug_info("Trying to read file");
-			File f(file);
+			FileInput f(file);
 			if (f.exists()) {
 				auto fLines(f.readAsText());
 

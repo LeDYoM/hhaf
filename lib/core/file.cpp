@@ -5,16 +5,13 @@
 
 namespace lib
 {
-	File::File(str file) : m_fileName{ std::move(file) }
-	{
-	}
-	bool File::exists() const
+	bool FileInput::exists() const
 	{
 		std::ifstream infile(m_fileName.c_str());
 		return infile.good();
 	}
 
-	string_vector File::readAsText()
+	string_vector FileInput::readAsText()
 	{
 		std::ifstream infile(m_fileName.c_str());
 		if (infile.good() && infile.is_open()) {
@@ -35,7 +32,25 @@ namespace lib
 		return string_vector{};
 	}
 
-	File::~File()
+	SerializationStreamOut FileInput::getAsStream()
 	{
+		auto data(readAsText());
+		return SerializationStreamOut();
+	}
+
+	bool FileOutput::write(const string_vector & data)
+	{
+		std::ofstream outfile(m_fileName.c_str());
+		if (outfile.good() && outfile.is_open()) {
+			for (auto&& line : data) {
+				outfile << line.c_str() << "\n";
+			}
+			return true;
+		}
+		else {
+			log_debug_error("The file ", m_fileName, " cannot be open");
+		}
+
+		return false;
 	}
 }
