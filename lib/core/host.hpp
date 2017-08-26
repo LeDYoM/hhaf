@@ -57,6 +57,9 @@ namespace lib
 			inline scene::SceneManager &sceneManager() noexcept { return *m_sceneManager; }
 			inline const scene::SceneManager &sceneManager() const noexcept { return *m_sceneManager; }
 
+			template <typename T>
+			T &app() { return *(dynamic_cast<T*>(m_iapp.get())); }
+
 			const str appId() const;
 
 			inline Randomizer &randomizer() const noexcept { return *m_randomizer; }

@@ -38,13 +38,9 @@ namespace zoper
 
 	void ZoperProgramController::onInit()
 	{
+		gameData = msptr<GameData>();
 		sceneManager().setViewRect({0,0,2000,2000});
-
 		sceneManager().setScenesController(muptr<ScenesController>(sceneManager()));
-//		sceneManager().addSceneType<GameScene>();
-//		sceneManager().addSceneType<MenuScene>();
-
-//		sceneManager().setCurrentSceneType<MenuScene>();
 	}
 
 	const IAppDescriptor ZoperProgramController::getAppDescriptor() const

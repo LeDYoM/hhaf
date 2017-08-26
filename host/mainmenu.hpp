@@ -7,7 +7,7 @@
 
 namespace zoper
 {
-	class GameConfig;
+	class GameData;
 	namespace zmenu
 	{
 		class MainMenu : public lib::gui::ChooseControlGroup
@@ -21,7 +21,7 @@ namespace zoper
 			virtual void configure() override;
 
 		private:
-			lib::sptr<GameConfig> m_gameConfig;
+			lib::sptr<GameData> m_gameData;
 			lib::sptr<lib::gui::ChooseControl> m_chooseControl;
 		};
 	}

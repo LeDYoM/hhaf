@@ -3,7 +3,8 @@
 #include "tile.hpp"
 #include "player.hpp"
 #include "common.hpp"
-#include "gameconfig.hpp"
+#include "gamedata.hpp"
+#include "zoperprogramcontroller.hpp"
 #include <mtypes/include/types.hpp>
 #include <lib/board/boardmodel.hpp>
 #include <lib/board/itilescontroller.hpp>
@@ -35,10 +36,6 @@ namespace zoper
 	GameScene::GameScene()
 		: Scene("GameScene")
 	{
-		m_gameData.size.x = 18;
-		m_gameData.size.y = 12;
-		m_gameData.centerRect = Rectu32{ 7,4,4,4 };
-		m_gameData.generateTokenZones();
 	}
 
 	GameScene::~GameScene() = default;
@@ -46,6 +43,8 @@ namespace zoper
 	void GameScene::create()
 	{
 		Scene::create();
+		m_gameData = host().app<ZoperProgramController>().gameData;
+
 		m_mainBoardrg = createSceneNode("mainBoard");
 		m_gameOverrg = createSceneNode("gameOverScreen");
 		m_levelrg = createSceneNode("level");
@@ -101,13 +100,12 @@ namespace zoper
 		using namespace lib::board;
 		using namespace lib::events;
 
-		Scene::create();
+		m_gameData->generateTokenZones();
 
-		_gameConfig = propertiesFileManager().getSingleton<GameConfig>();
 		m_keyMapping = propertiesFileManager().initializeFromFile<KeyMapping>("keys.cfg");
 		m_keyMapping = propertiesFileManager().getSingleton<KeyMapping>();
 		p_boardModel = this->ensureComponentOfType<BoardModelComponent>();
-		p_boardModel->initialize(m_gameData.size);
+		p_boardModel->initialize(m_gameData->size);
 		m_boardEventConnector.addSubscription(TileAddedEvent::subscribe([this](const events::Event&ev) {
 			auto tEvent{ eventAs<TileAddedEvent>(ev) }; tileAdded(tEvent.position, tEvent.tile);
 		}));
@@ -125,13 +123,13 @@ namespace zoper
 		addPlayer();
 
 		m_nextTokenPart = 0;
-		setLevel(_gameConfig->startLevel);
-		_gameConfig->score = 0;
+		setLevel(m_gameData->startLevel);
+		m_gameData->score = 0;
 		m_gameOverrg->visible = false;
 		m_mainBoardrg->visible = true;
 		m_pauseSceneNode->visible = false;
 
-		switch (m_gameData._gameMode)
+		switch (m_gameData->_gameMode)
 		{
 		default:
 		case GameData::GameModes::Token:
@@ -195,7 +193,7 @@ namespace zoper
 	void GameScene::updateScene()
 	{
 		if (state() == Playing) {
-			if (m_gameData._gameMode == GameData::GameModes::Time) {
+			if (m_gameData->_gameMode == GameData::GameModes::Time) {
 				updateLevelData();
 			}
 
@@ -238,13 +236,13 @@ namespace zoper
 		lib::log_debug_info("Seconds to next level: ", levelProperties.stayTime());
 		lib::log_debug_info("Tokens to next level: ", levelProperties.stayTokens());
 
-		m_gameData.levelClock.restart();
-		m_gameData.consumedTokens = 0;
+		m_gameData->levelClock.restart();
+		m_gameData->consumedTokens = 0;
 
 		// Update background tiles
-		for (u32 y = 0; y < m_gameData.size.y; ++y)
+		for (u32 y = 0; y < m_gameData->size.y; ++y)
 		{
-			for (u32 x = 0; x < m_gameData.size.x; ++x)
+			for (u32 x = 0; x < m_gameData->size.x; ++x)
 			{
 				m_backgroundTiles[y][x]->color.set(levelProperties.getBackgroundTileColor({ x, y }, pointInCenter({ x,y })));
 			}
@@ -258,7 +256,7 @@ namespace zoper
 	{
 		m_scoreQuad->text(1)->text = str(levelProperties.currentLevel() + 1);
 
-		switch (m_gameData._gameMode)
+		switch (m_gameData->_gameMode)
 		{
 		default:
 		case GameData::GameModes::Token:
@@ -273,49 +271,26 @@ namespace zoper
 
 	void GameScene::updateLevelData()
 	{
-		switch (m_gameData._gameMode)
+		switch (m_gameData->_gameMode)
 		{
 		default:
 		case GameData::GameModes::Token:
-			m_goalQuad->text(1)->text = m_gameData.consumedTokens;
-			if (m_gameData.consumedTokens >= levelProperties.stayTokens())
+			m_goalQuad->text(1)->text = m_gameData->consumedTokens;
+			if (m_gameData->consumedTokens >= levelProperties.stayTokens())
 				setLevel(levelProperties.currentLevel() + 1);
 			break;
 
 		case GameData::GameModes::Time:
-			m_goalQuad->text(1)->text = static_cast<lib::u16>(m_gameData.levelClock.getElapsedTime().asSeconds());
-			if (m_gameData.levelClock.getElapsedTime().asSeconds() >= levelProperties.stayTime())
+			m_goalQuad->text(1)->text = static_cast<lib::u16>(m_gameData->levelClock.getElapsedTime().asSeconds());
+			if (m_gameData->levelClock.getElapsedTime().asSeconds() >= levelProperties.stayTime())
 				setLevel(levelProperties.currentLevel() + 1);
 			break;
-		}
-	}
-
-	void GameData::generateTokenZones()
-	{
-		// From left to right
-		_tokenZones[0].zone = Rectu32{ 0,centerRect.top,centerRect.left - 1, centerRect.bottom() - 1 };
-		_tokenZones[0].direction = Direction::DirectionData::Right;
-
-		// From top to bottom
-		_tokenZones[1].zone = Rectu32{ centerRect.left , 0, centerRect.right() - 1, centerRect.top - 1 };
-		_tokenZones[1].direction = Direction::DirectionData::Down;
-
-		// From right to left
-		_tokenZones[2].zone = Rectu32{ size.x - 1 , centerRect.top,  centerRect.right(), centerRect.bottom() - 1 };
-		_tokenZones[2].direction = Direction::DirectionData::Left;
-
-		// From bottom to top
-		_tokenZones[3].zone = Rectu32{ centerRect.left , size.y - 1, centerRect.right() - 1, centerRect.bottom() - 1 };
-		_tokenZones[3].direction = Direction::DirectionData::Up;
-
-		for (u32 i = 0; i < NumWays; ++i) {
-			_tokenZones[i].size = _tokenZones[i].direction.isHorizontal() ? centerRect.size().y : centerRect.size().x;
 		}
 	}
 
 	void GameScene::generateNextToken()
 	{
-		const GameData::TokenZone &currentTokenZone{ m_gameData._tokenZones[m_nextTokenPart] };
+		const GameData::TokenZone &currentTokenZone{ m_gameData->_tokenZones[m_nextTokenPart] };
 
 		log_debug_info("NextTokenPart: ", m_nextTokenPart);
 		log_debug_info("zone: ", currentTokenZone.zone);
@@ -377,10 +352,10 @@ namespace zoper
 
 	void GameScene::addPlayer()
 	{
-		log_debug_info("Adding player tile at ", m_gameData.centerRect.left, ",", m_gameData.centerRect.top);
+		log_debug_info("Adding player tile at ", m_gameData->centerRect);
 		CLIENT_ASSERT(!p_player, "Player already initialized");
 		// Create the player instance
-		p_player = m_mainBoardrg->createSceneNode<Player>("playerNode", m_gameData.centerRect.leftTop(), Rectf32::fromSize(tileSize()), board2SceneFactor());
+		p_player = m_mainBoardrg->createSceneNode<Player>("playerNode", m_gameData->centerRect.leftTop(), Rectf32::fromSize(tileSize()), board2SceneFactor());
 
 		// Add it to the board and to the scene nodes
 		p_boardModel->setTile(p_player->boardPosition(), p_player);
@@ -455,7 +430,7 @@ namespace zoper
 				if (currentTokenType == tokenType) {
 					++inARow;
 					increaseScore(inARow*levelProperties.baseScore());
-					m_gameData.consumedTokens++;
+					++(m_gameData->consumedTokens);
 					lastTokenPosition = board2Scene(loopPosition);
 					p_boardModel->deleteTile(loopPosition);
 					found = true;
@@ -482,17 +457,17 @@ namespace zoper
 			return result;
 		});
 
-		if (m_gameData._gameMode == GameData::GameModes::Token)
+		if (m_gameData->_gameMode == GameData::GameModes::Token)
 			updateLevelData();
 	}
 
 	bool GameScene::pointInCenter(const lib::vector2du32 &pos) const
 	{
 		if (p_boardModel->validCoords(pos)) {
-			if (pos.x < m_gameData.centerRect.left || pos.y < m_gameData.centerRect.top)
+			if (pos.x < m_gameData->centerRect.left || pos.y < m_gameData->centerRect.top)
 				return false;
 
-			if (pos.x >= m_gameData.centerRect.right() || pos.y >= m_gameData.centerRect.bottom())
+			if (pos.x >= m_gameData->centerRect.right() || pos.y >= m_gameData->centerRect.bottom())
 				return false;
 
 			return true;
@@ -519,9 +494,9 @@ namespace zoper
 
 	void GameScene::_debugDisplayBoard() const
 	{
-		for (u32 y{ 0 }; y < m_gameData.size.y; ++y) {
+		for (u32 y{ 0 }; y < m_gameData->size.y; ++y) {
 			str temp;
-			for (u32 x{ 0 }; x < m_gameData.size.x; ++x) {
+			for (u32 x{ 0 }; x < m_gameData->size.x; ++x) {
 				str chTemp;
 				auto lp_tile(p_boardModel->getTile({ x, y }));
 				if (lp_tile) {
@@ -543,17 +518,17 @@ namespace zoper
 	{
 		const Rectf32 bBox(scenePerspective());
 		m_backgroundTiles.clear();
-		m_backgroundTiles.reserve(m_gameData.size.y);
+		m_backgroundTiles.reserve(m_gameData->size.y);
 
 		auto backgroundTilesrg(createSceneNode("backgroundTiles"));
 		moveLastBeforeNode(m_mainBoardrg);
 		f32 currentx{};
 		f32 currenty{};
-		for (u32 y{ 0 }; y < m_gameData.size.y; ++y) {
+		for (u32 y{ 0 }; y < m_gameData->size.y; ++y) {
 			vector<sptr<NodeQuad>> column;
-			column.reserve(m_gameData.size.x);
+			column.reserve(m_gameData->size.x);
 
-			for (u32 x{ 0 }; x < m_gameData.size.x; ++x) {
+			for (u32 x{ 0 }; x < m_gameData->size.x; ++x) {
 				const Rectf32 tileBox{ currentx, currenty, tileSize().x,tileSize().y };
 				const str indexStr(x + "_" + y);
 
@@ -634,8 +609,8 @@ namespace zoper
 
 	void GameScene::increaseScore(u32 scoreIncrement)
 	{
-		_gameConfig->score += scoreIncrement;
-		str result(_gameConfig->score);
+		m_gameData->score += scoreIncrement;
+		str result(m_gameData->score);
 		while (result.size() < scoreSize) result = "0" + result;
 		m_scoreQuad->text(3)->text = result;
 	}

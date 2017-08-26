@@ -1,13 +1,14 @@
-#ifndef __GAMESCENE_HPP__
-#define __GAMESCENE_HPP__
-
 #pragma once
+
+#ifndef ZOOPER_GAMESCENE_INCLUDE_HPP__
+#define ZOOPER_GAMESCENE_INCLUDE_HPP__
 
 #include "keymapping.hpp"
 #include "direction.hpp"
 #include "levelproperties.hpp"
 #include "gameresources.hpp"
 #include "textquad.hpp"
+#include "gamedata.hpp"
 
 #include <mtypes/include/types.hpp>
 #include <lib/core/configuration.hpp>
@@ -26,34 +27,7 @@ namespace zoper
 {
 	class Player;
 	class Tile;
-	class GameConfig;
 
-	constexpr lib::u32 NumWays = 4;
-
-	struct GameData
-	{
-		lib::vector2du32 size;
-		lib::Rectu32 centerRect;
-
-		struct TokenZone
-		{
-			lib::Rectu32 zone;
-			Direction direction;
-			lib::u32 size;
-		};
-
-		void generateTokenZones();
-		std::array<TokenZone, NumWays> _tokenZones;
-
-		lib::Timer levelClock;
-		lib::u32 consumedTokens;
-
-		enum GameModes : lib::u8
-		{
-			Token = 0,
-			Time = 1,
-		} _gameMode{ Token };
-	};
 	class GameScene final : public lib::scene::Scene
 	{
 	public:
@@ -68,7 +42,6 @@ namespace zoper
 
 	private:
 		lib::sptr<KeyMapping> m_keyMapping;
-		lib::sptr<GameConfig> _gameConfig;
 		lib::EventReceiver m_boardEventConnector;
 		void setLevel(const lib::u32 nv);
 		void updateLevelData();
@@ -115,7 +88,7 @@ namespace zoper
 		GameResourcesLoader m_gameresources;
 		lib::PausableTimer m_gameClock;
 		lib::sptr<lib::board::BoardModelComponent> p_boardModel{ nullptr };
-		GameData m_gameData;
+		lib::sptr<GameData> m_gameData{ nullptr };
 		lib::u8 m_nextTokenPart{ 0 };
 		lib::scene::SceneNodeSPtr m_mainBoardrg{ nullptr };
 		lib::scene::SceneNodeSPtr m_gameOverrg{ nullptr };

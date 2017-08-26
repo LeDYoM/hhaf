@@ -5,6 +5,7 @@
 
 namespace zoper
 {
+	class GameData;
 	class ZoperProgramController : public lib::IApp
 	{
 	public:
@@ -15,6 +16,8 @@ namespace zoper
 		void sceneFinished() {};
 		virtual const lib::IAppDescriptor getAppDescriptor() const override;
 		virtual int loop() override;
+
+		lib::sptr<GameData> gameData;
 	};
 }
 
