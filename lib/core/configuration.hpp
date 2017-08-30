@@ -3,17 +3,41 @@
 #ifndef LIB_CONFIGURATION_HPP__
 #define LIB_CONFIGURATION_HPP__
 
+#include "file.hpp"
+
 #include <map>
 #include <functional>
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
-
+#include "file.hpp"
 #include <sstream>
 
 namespace lib
 {
 	class ConfigurationProperty;
 
+	template <typename T>
+	class Serializer
+	{
+	public:
+		bool serialize(const str&fileName, T&data) {
+			SerializationStreamOut sso;
+			sso << data;
+			FileOutput fout(fileName);
+			return fout.write(sso.data());
+		}
+
+		bool deserialize(const str&fileName, T&data) {
+			FileInput fin(fileName);
+			if (fin.exists()) {
+				auto ssi(fin.getAsStream());
+				ssi >> data;
+				return true;
+			}
+			return false;
+		}
+
+	};
 	class Configuration
 	{
 	public:
@@ -26,8 +50,6 @@ namespace lib
 
 		sptr<ConfigurationProperty> value(const str &);
 
-		sptr<ConfigurationProperty> _registerProperty(const str&id, const str&defValue);
-
 		template <typename T>
 		T registerProperty(const str&id, const T&defValue)
 		{
@@ -36,6 +58,8 @@ namespace lib
 		}
 
 	protected:
+		sptr<ConfigurationProperty> _registerProperty(const str&id, const str&defValue);
+
 		using CMap = std::map<str, sptr<ConfigurationProperty>>;
 		using CMapLine = CMap::value_type;
 		using CDataMap = std::map<str, CMap>;

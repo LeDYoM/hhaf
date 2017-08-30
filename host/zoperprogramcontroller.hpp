@@ -6,6 +6,7 @@
 namespace zoper
 {
 	class GameData;
+	class KeyMapping;
 	class ZoperProgramController : public lib::IApp
 	{
 	public:
@@ -18,6 +19,7 @@ namespace zoper
 		virtual int loop() override;
 
 		lib::sptr<GameData> gameData;
+		lib::uptr<KeyMapping> keyMapping;
 	};
 }
 

@@ -3,6 +3,7 @@
 #include "gamescene.hpp"
 #include "common.hpp"
 #include <lib/core/host.hpp>
+#include <lib/core/configuration.hpp>
 #include <lib/scene/scenemanager.hpp>
 #include <lib/scene/iscenescontroller.hpp>
 
@@ -39,6 +40,13 @@ namespace zoper
 	void ZoperProgramController::onInit()
 	{
 		gameData = msptr<GameData>();
+		Serializer<HighScoreList> sHScoreList;
+		sHScoreList.serialize("hscores.txt", gameData->highScores);
+		sHScoreList.deserialize("hscores.txt", gameData->highScores);
+
+		keyMapping = muptr<KeyMapping>();
+		Serializer<KeyMapping> kmSerializer;
+		kmSerializer.deserialize("keyboard.txt", *keyMapping);
 		sceneManager().setViewRect({0,0,2000,2000});
 		sceneManager().setScenesController(muptr<ScenesController>(sceneManager()));
 	}

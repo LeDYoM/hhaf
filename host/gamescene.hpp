@@ -11,7 +11,6 @@
 #include "gamedata.hpp"
 
 #include <mtypes/include/types.hpp>
-#include <lib/core/configuration.hpp>
 #include <lib/core/timer.hpp>
 #include <lib/core/events/eventreceiver.hpp>
 #include <lib/scene/scene.hpp>
@@ -41,7 +40,6 @@ namespace zoper
 		virtual void updateScene();
 
 	private:
-		lib::sptr<KeyMapping> m_keyMapping;
 		lib::EventReceiver m_boardEventConnector;
 		void setLevel(const lib::u32 nv);
 		void updateLevelData();

@@ -24,16 +24,36 @@ namespace lib
 	template <typename T>
 	SerializationStreamIn& operator>>(SerializationStreamIn&ssi, T &data)
 	{
-		ssi.m_data[sso.read++] >> data;
-		return sso;
+		ssi.m_data[ssi.read++] >> data;
+		return ssi;
+	}
+
+	template <typename T, u32 size>
+	SerializationStreamIn& operator>>(SerializationStreamIn&ssi, std::array<T,size> &data)
+	{
+		for (u32 i{ 0 }; i < size; ++i) {
+			ssi >> data[i];
+		}
+		return ssi;
+	}
+
+	template <typename T, u32 size>
+	SerializationStreamIn& operator>>(SerializationStreamIn&ssi, T data[size])
+	{
+		for (u32 i{ 0 }; n < size; ++i) {
+			ssi >> data[i];
+		}
+		return ssi;
 	}
 
 	class SerializationStreamOut
 	{
 	public:
 
+		const string_vector &data() const { return m_data; }
+
 		template <typename T>
-		friend SerializationStreamOut& operator<<(SerializationStreamOut&ssi, const T&data);
+		friend SerializationStreamOut& operator<<(SerializationStreamOut&sso, const T&data);
 	private:
 		string_vector m_data;
 	};
@@ -41,9 +61,27 @@ namespace lib
 	template <typename T>
 	SerializationStreamOut& operator<<(SerializationStreamOut&sso, const T&data)
 	{
-		str t{ " " };
+		str t;
 		t << data;
 		sso.m_data.push_back(std::move(t));
+		return sso;
+	}
+
+	template <typename T, u32 size>
+	SerializationStreamOut& operator<<(SerializationStreamOut&sso, const std::array<T,size> &data)
+	{
+		for (u32 i{ 0 }; i < size; ++i) {
+			sso << data[i];
+		}
+		return sso;
+	}
+
+	template <typename T, u32 size>
+	SerializationStreamOut& operator<<(SerializationStreamOut&sso, const T data[size])
+	{
+		for (u32 i{ 0 }; n < size; ++i) {
+			sso << data[i];
+		}
 		return sso;
 	}
 }

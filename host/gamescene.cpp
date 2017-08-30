@@ -102,8 +102,6 @@ namespace zoper
 
 		m_gameData->generateTokenZones();
 
-		m_keyMapping = propertiesFileManager().initializeFromFile<KeyMapping>("keys.cfg");
-		m_keyMapping = propertiesFileManager().getSingleton<KeyMapping>();
 		p_boardModel = this->ensureComponentOfType<BoardModelComponent>();
 		p_boardModel->initialize(m_gameData->size);
 		m_boardEventConnector.addSubscription(TileAddedEvent::subscribe([this](const events::Event&ev) {
@@ -147,18 +145,19 @@ namespace zoper
 		auto inputComponent(ensureComponentOfType<scene::InputComponent>());
 		inputComponent->setOnKeyPressedHandler([this](const lib::input::Key&key) {
 			log_debug_info("Key pressed in GameScene");
+			const auto &keyMapping = host().app<ZoperProgramController>().keyMapping;
 			switch (state())
 			{
 			case Playing:
 			{
-				auto dir = m_keyMapping->getDirectionFromKey(key);
+				auto dir = keyMapping->getDirectionFromKey(key);
 				if (dir.isValid()) {
 					p_player->movePlayer(dir, [this](const vector2du32&p) { return pointInCenter(p); }, p_boardModel);
 				}
-				else if (m_keyMapping->isLaunchKey(key)) {
+				else if (keyMapping->isLaunchKey(key)) {
 					launchPlayer();
 				}
-				else if (m_keyMapping->isPauseKey(key)) {
+				else if (keyMapping->isPauseKey(key)) {
 					switchPause();
 				}
 			}
@@ -167,7 +166,7 @@ namespace zoper
 				sceneManager().terminateScene();
 				break;
 			case Pause:
-				if (m_keyMapping->isPauseKey(key)) {
+				if (keyMapping->isPauseKey(key)) {
 					switchPause();
 				}
 				break;

@@ -20,7 +20,11 @@ namespace lib
 				std::string line;
 				infile >> line;
 				if (!line.empty()) {
-					result.emplace_back(line.c_str());
+					str sline(line.c_str());
+					auto parsedLine(sline.split(m_separator));
+					for (auto&& data : parsedLine) {
+						result.push_back(std::move(data));
+					}
 				}
 			}
 			return result;
@@ -32,10 +36,9 @@ namespace lib
 		return string_vector{};
 	}
 
-	SerializationStreamOut FileInput::getAsStream()
+	SerializationStreamIn FileInput::getAsStream()
 	{
-		auto data(readAsText());
-		return SerializationStreamOut();
+		return SerializationStreamIn(readAsText());
 	}
 
 	bool FileOutput::write(const string_vector & data)
@@ -43,7 +46,10 @@ namespace lib
 		std::ofstream outfile(m_fileName.c_str());
 		if (outfile.good() && outfile.is_open()) {
 			for (auto&& line : data) {
-				outfile << line.c_str() << "\n";
+				outfile << (line.empty()?"":line.c_str());
+				if (&line != std::prev(data.end())) {
+					outfile << m_separator;
+				}
 			}
 			return true;
 		}
@@ -52,5 +58,10 @@ namespace lib
 		}
 
 		return false;
+	}
+
+	bool FileOutput::write(const SerializationStreamOut data)
+	{
+		return write(data.data());
 	}
 }
