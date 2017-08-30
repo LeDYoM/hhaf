@@ -1,7 +1,6 @@
 #include "host.hpp"
 #include "window.hpp"
 #include "resourcemanager.hpp"
-#include "propertiesfilemanager.hpp"
 #include "randomizer.hpp"
 #include <mtypes/include/log.hpp>
 #include <lib/scene/scenemanager.hpp>
@@ -98,7 +97,6 @@ namespace lib
 				log_debug_info(appId(), ": ", " Starting initialization...");
 				m_state = AppState::Executing;
 
-				m_propertiesFileManager = muptr<PropertiesFileManager>();
 				m_inputSystem = muptr<input::InputSystem>();
 				m_randomizer = muptr<Randomizer>();
 				m_eventManager = muptr<EventManager>();
@@ -134,7 +132,6 @@ namespace lib
 				m_eventManager = nullptr;
 				m_randomizer = nullptr;
 				m_inputSystem = nullptr;
-				m_propertiesFileManager = nullptr;
 				m_params.clear();
 				log_debug_info(appId(), ": ", " terminated");
 				return true;

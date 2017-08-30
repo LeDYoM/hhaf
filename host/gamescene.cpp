@@ -11,7 +11,6 @@
 #include <mtypes/include/log.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/core/randomizer.hpp>
-#include <lib/core/propertiesfilemanager.hpp>
 #include <lib/scene/renderizable.hpp>
 #include <lib/scene/scenemanager.hpp>
 #include <lib/scene/nodes/nodeshape.hpp>

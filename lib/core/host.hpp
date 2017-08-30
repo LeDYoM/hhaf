@@ -23,7 +23,6 @@ namespace lib
 		class EventManager;
 		class Randomizer;
 		class DebugSystem;
-		class PropertiesFileManager;
 
 		class Host final
 		{
@@ -52,8 +51,6 @@ namespace lib
 			inline input::InputSystem &inputSystem() noexcept { return *m_inputSystem; }
 			inline DebugSystem const &debugSystem() const noexcept { return *m_debugSystem; }
 			inline DebugSystem &debugSystem() noexcept { return *m_debugSystem; }
-			inline PropertiesFileManager &propertiesFileManager() noexcept { return *m_propertiesFileManager; }
-			inline const PropertiesFileManager &propertiesFileManager() const noexcept { return *m_propertiesFileManager; }
 			inline scene::SceneManager &sceneManager() noexcept { return *m_sceneManager; }
 			inline const scene::SceneManager &sceneManager() const noexcept { return *m_sceneManager; }
 
@@ -76,7 +73,6 @@ namespace lib
 			uptr<Randomizer> m_randomizer;
 			uptr<DebugSystem> m_debugSystem{ nullptr };
 			uptr<input::InputSystem> m_inputSystem{ nullptr };
-			uptr<PropertiesFileManager> m_propertiesFileManager{ nullptr };
 			uptr<scene::SceneManager> m_sceneManager{ nullptr };
 			bool exit{ false };
 			vector<str> m_params;
@@ -88,9 +84,7 @@ namespace lib
 	inline core::ResourceManager &resourceManager() noexcept { return core::Host::host().resourceManager(); }
 	inline core::Randomizer &randomizer() noexcept { return core::Host::host().randomizer(); }
 	inline core::DebugSystem &debugSystem() noexcept { return core::Host::host().debugSystem(); }
-	inline core::PropertiesFileManager &propertiesFileManager() noexcept { return core::Host::host().propertiesFileManager(); }
 	inline scene::SceneManager &sceneManager() noexcept { return core::Host::host().sceneManager(); }
-
 }
 
 #endif

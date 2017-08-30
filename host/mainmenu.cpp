@@ -7,7 +7,6 @@
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/scenemanager.hpp>
 #include <lib/core/host.hpp>
-#include <lib/core/propertiesfilemanager.hpp>
 #include <mtypes/include/log.hpp>
 
 namespace zoper
