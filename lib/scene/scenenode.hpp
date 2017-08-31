@@ -10,6 +10,7 @@
 #include <lib/scene/color.hpp>
 #include <lib/scene/hasname.hpp>
 #include "componentcontainer.hpp"
+#include <functional>
 
 namespace lib
 {

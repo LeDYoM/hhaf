@@ -4,6 +4,7 @@
 #include <lib/core/timer.hpp>
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/properties.hpp>
+#include <functional>
 
 namespace lib
 {

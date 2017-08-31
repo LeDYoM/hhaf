@@ -6,6 +6,7 @@
 #include <mtypes/include/types.hpp>
 #include <lib/scene/icomponent.hpp>
 #include <lib/include/key.hpp>
+#include <functional>
 
 namespace lib
 {

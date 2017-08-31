@@ -1,11 +1,13 @@
+#pragma once
+
 #ifndef LIB_PROPERTIES_HPP
 #define LIB_PROPERTIES_HPP
 
-#include <functional>
+#include "function.hpp"
 
 namespace lib
 {
-	using callback_t = std::function<void()>;
+	using callback_t = function<void()>;
 
 	template<typename T, void (T::*sm)()>
 	constexpr callback_t lambdaToMethod(T& d) {
