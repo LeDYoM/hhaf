@@ -20,17 +20,6 @@ namespace lib
 	}
 	str::str(const char_type * n) noexcept : m_data(n, detail::_str_len(n) + 1) {}
 
-	str & str::operator=(const str &source)
-	{
-		m_data = source.m_data;
-		return *this;
-	}
-	str & str::operator=(str &&source) noexcept
-	{
-		m_data = std::move(source.m_data);
-		return *this;
-	}
-
 	vector<str> str::split(const char_type separator) const
 	{
 		vector<str> result;

@@ -32,7 +32,7 @@ namespace lib
 		template<size_t N>
 		constexpr str(const char_type(&a)[N]) noexcept : m_data( a,N ) {}
 
-		str(str&&) noexcept = default;
+		constexpr str(str&&) noexcept = default;
 
 		constexpr str(const str & n) noexcept : m_data{ n.m_data } {}
 		constexpr str(const char_type *n, const size_t N) noexcept : m_data(n, N+1) {}
@@ -43,15 +43,19 @@ namespace lib
 		str(const f32 n);
 		str(const f64 n);
 
-		str&operator=(const str&);
-		str&operator=(str&&) noexcept;
+		constexpr str&operator=(const str&) = default;
+		constexpr str&operator=(str&&) noexcept = default;
+
 		vector<str> split(const char_type separator) const;
-		str &append() { return *this; }
+
+		constexpr str &append() { return *this; }
+
 		str & append(const u32 n)
 		{
 			append(str(n));
 			return *this;
 		}
+
 		str & append(const s32 n)
 		{
 			append(str(n));
@@ -88,18 +92,18 @@ namespace lib
 			return append(std::forward<T>(source));
 		}
 
-		size_t size() const noexcept{ return m_data.empty()?0:m_data.size()-1; }
-		reference operator[](const size_type index) noexcept { return m_data[index]; }
-		const_reference operator[](const size_type index) const noexcept { return m_data[index]; }
-		iterator begin() noexcept { return m_data.begin(); }
-		const_iterator begin() const noexcept { return m_data.begin(); }
-		const_iterator cbegin() const noexcept { return m_data.cbegin(); }
-		iterator end() noexcept { return m_data.begin()+size(); }
-		const_iterator end() const noexcept { return m_data.begin()+size(); }
-		const_iterator cend() const noexcept { return m_data.cbegin()+size(); }
+		constexpr size_t size() const noexcept{ return m_data.empty()?0:m_data.size()-1; }
+		constexpr reference operator[](const size_type index) noexcept { return m_data[index]; }
+		constexpr const_reference operator[](const size_type index) const noexcept { return m_data[index]; }
+		constexpr iterator begin() noexcept { return m_data.begin(); }
+		constexpr const_iterator begin() const noexcept { return m_data.begin(); }
+		constexpr const_iterator cbegin() const noexcept { return m_data.cbegin(); }
+		constexpr iterator end() noexcept { return m_data.begin()+size(); }
+		constexpr const_iterator end() const noexcept { return m_data.begin()+size(); }
+		constexpr const_iterator cend() const noexcept { return m_data.cbegin()+size(); }
 
-		const char *c_str() const noexcept { return m_data.cbegin(); }
-		bool empty() const noexcept { return m_data.empty(); }
+		constexpr const char *c_str() const noexcept { return m_data.cbegin(); }
+		constexpr bool empty() const noexcept { return m_data.empty(); }
 
 		template <typename T>
 		constexpr str &operator<<(const T&n)
