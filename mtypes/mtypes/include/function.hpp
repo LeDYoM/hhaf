@@ -46,6 +46,7 @@ namespace lib
 		public:
 			template <typename Y>
 			constexpr CallableT(Y &&t) noexcept : m_t{ std::forward<Y>(t) } {}
+
 			constexpr CallableT(const CallableT&)  noexcept = default;
 			constexpr CallableT& operator=(const CallableT&)  noexcept = default;
 			constexpr CallableT(CallableT&&)  noexcept = default;

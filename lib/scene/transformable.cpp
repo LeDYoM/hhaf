@@ -8,13 +8,13 @@ namespace lib
 	{
 		namespace
 		{
-			inline callback_t updateTransformCallback(Transformable *t) noexcept
+			inline callback_t updateTransformCallback(Transformable &t) noexcept
 			{
-				return lambdaToMethod<Transformable, &Transformable::setNeedsUpdate>(*t);
+				return lambdaToMethod<Transformable, &Transformable::setNeedsUpdate>(t);
 			}
 		}
 		Transformable::Transformable() noexcept : m_needsUpdate{ true },
-			origin{ {}, updateTransformCallback(this) },
+			origin{ {}, updateTransformCallback(*this) },
 			rotation{ {},
 				[this]() {
 					auto temp_rotation(static_cast<f32>(fmod(rotation(), 360.f)));
@@ -25,8 +25,8 @@ namespace lib
 					setNeedsUpdate();
 				}
 			},
-			position{ {} , updateTransformCallback(this) },
-			scale{ { 1, 1 }, updateTransformCallback(this) },
+			position{ {} , updateTransformCallback(*this) },
+			scale{ { 1, 1 }, updateTransformCallback(*this) },
 			m_transform{} 
 		{}
 
