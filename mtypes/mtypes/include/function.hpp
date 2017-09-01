@@ -1,7 +1,5 @@
 #pragma once
 
-#include <iostream>
-#include <memory>
 #include <cassert>
 
 #ifndef MTYPES_FUNCTION_INCLUDE_HPP__
@@ -13,55 +11,57 @@ namespace lib
 	class function;
 
 	template <typename ReturnValue, typename... Args>
-	class function<ReturnValue(Args...)> {
+	class function<ReturnValue(Args...)> final {
 	public:
 
-		constexpr function() : callable_{ nullptr } {}
-		constexpr function(const function&) = default;
-		constexpr function& operator=(const function&) = default;
-		constexpr function(function&&) = default;
-		constexpr function& operator=(function&&) = default;
+		constexpr function() noexcept : m_callable{ nullptr } {}
+		constexpr function(std::nullptr_t) noexcept : m_callable{ nullptr } {}
+		constexpr function(const function&) noexcept = default;
+		constexpr function& operator=(const function&) noexcept = default;
+		constexpr function(function&&) noexcept = default;
+		constexpr function& operator=(function&&) noexcept = default;
 
-		constexpr operator bool() const { return callable_ != nullptr; }
+		constexpr operator bool() const noexcept { return m_callable != nullptr; }
 
 		template <typename T>
-		constexpr function(T t) {
-			callable_ = msptr<CallableT<T>>(t);
+		constexpr function(T&& t) {
+			m_callable = msptr<CallableT<T>>(std::forward<T>(t));
 		}
 
-		ReturnValue operator()(Args... args) const {
-			assert(callable_);
-			return callable_->Invoke(args...);
+		template <typename... Args_>
+		constexpr ReturnValue operator()(Args_&&... args) const {
+			assert(m_callable);
+			return m_callable->Invoke(std::forward<Args_>(args)...);
 		}
 
 	private:
 		class ICallable {
 		public:
 			virtual ~ICallable() = default;
-			virtual ReturnValue Invoke(Args...) = 0;
+			virtual constexpr ReturnValue Invoke(Args...) = 0;
 		};
 
 		template <typename T>
 		class CallableT final : public ICallable {
 		public:
-			constexpr CallableT(const T& t) : t_(t) {}
-
-			constexpr CallableT(const CallableT&) = default;
-			constexpr CallableT& operator=(const CallableT&) = default;
-			constexpr CallableT(CallableT&&) = default;
-			constexpr CallableT& operator=(CallableT&&) = default;
+			template <typename Y>
+			constexpr CallableT(Y &&t) noexcept : m_t{ std::forward<Y>(t) } {}
+			constexpr CallableT(const CallableT&)  noexcept = default;
+			constexpr CallableT& operator=(const CallableT&)  noexcept = default;
+			constexpr CallableT(CallableT&&)  noexcept = default;
+			constexpr CallableT& operator=(CallableT&&)  noexcept = default;
 
 			~CallableT() override = default;
 
-			constexpr ReturnValue Invoke(Args... args) {
-				return t_(args...);
+			constexpr ReturnValue Invoke(Args... args) override {
+				return m_t(args...);
 			}
 
 		private:
-			T t_;
+			T m_t;
 		};
 
-		sptr<ICallable> callable_;
+		sptr<ICallable> m_callable;
 	};
 }
 

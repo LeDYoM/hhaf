@@ -6,8 +6,8 @@
 #include "file.hpp"
 
 #include <map>
-#include <functional>
 #include <mtypes/include/types.hpp>
+#include <mtypes/include/function.hpp>
 #include <mtypes/include/str.hpp>
 #include "file.hpp"
 #include <sstream>
@@ -66,7 +66,7 @@ namespace lib
 
 		bool configFileExists(const str &file);
 
-		void for_each_property(std::function<void(const CMapLine&)> callback);
+		void for_each_property(function<void(const CMapLine&)> callback);
 		bool saveConfig();
 
 	private:

@@ -8,6 +8,7 @@
 #include <lib/scene/scenemanager.hpp>
 #include <lib/core/host.hpp>
 #include <mtypes/include/log.hpp>
+#include <mtypes/include/function.hpp>
 
 namespace zoper
 {
@@ -54,7 +55,7 @@ namespace zoper
 				}
 			};
 
-			onSelected = std::function<const OptionModelIndex(const vector<u32> &indices)>(
+			onSelected = lib::function<const OptionModelIndex(const vector<u32> &indices)>(
 				[this](const vector<u32> &indices)
 			{
 				switch (indices[0])

@@ -54,7 +54,7 @@ namespace lib
 		return f.is_open();
 	}
 
-	void Configuration::for_each_property(std::function<void(const CMapLine&)> callback)
+	void Configuration::for_each_property(function<void(const CMapLine&)> callback)
 	{
 		std::for_each(m_currentMap.begin(), m_currentMap.end(), callback);
 	}

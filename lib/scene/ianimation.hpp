@@ -4,7 +4,6 @@
 #include <lib/core/timer.hpp>
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/properties.hpp>
-#include <functional>
 
 namespace lib
 {
@@ -12,7 +11,7 @@ namespace lib
 	{
 		namespace anim
 		{
-			using animation_action_callback = std::function<void()>;
+			using animation_action_callback = function<void()>;
 			static const animation_action_callback noAction;
 
 			class IAnimation

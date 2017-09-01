@@ -6,6 +6,7 @@
 #include "theme.hpp"
 #include "statescontroller.hpp"
 #include <mtypes/include/types.hpp>
+#include <mtypes/include/function.hpp>
 #include <lib/scene/scene.hpp>
 #include <lib/gui/optionmodel.hpp>
 
@@ -27,7 +28,7 @@ namespace lib
 			void setTheme(const Theme &theme) { m_theme = theme; }
 
 			Property<vector<vector<OptionModel>>> options;
-			std::function<const OptionModelIndex(const OptionModelIndex&)> onSelected;
+			lib::function<const OptionModelIndex(const OptionModelIndex&)> onSelected;
 			const OptionModelIndex currentSelection() const noexcept;
 
 			const Theme &currentTheme() const noexcept;

@@ -5,7 +5,6 @@
 #include <lib/include/key.hpp>
 #include "appservice.hpp"
 #include <list>
-#include <functional>
 
 namespace lib
 {

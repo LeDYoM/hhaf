@@ -11,6 +11,7 @@
 #include "gamedata.hpp"
 
 #include <mtypes/include/types.hpp>
+#include <mtypes/include/function.hpp>
 #include <lib/core/timer.hpp>
 #include <lib/core/events/eventreceiver.hpp>
 #include <lib/scene/scene.hpp>
@@ -20,7 +21,6 @@
 #include <lib/scene/nodes/nodequad.hpp>
 
 #include <array>
-#include <functional>
 
 namespace zoper
 {
@@ -52,7 +52,7 @@ namespace zoper
 		lib::vector2df board2Scene(const lib::vector2du32 &bPosition) const;
 		lib::vector2df tileSize() const;
 		void for_each_token_in_line(const lib::vector2du32 &startPosition, const Direction &direction,
-			std::function<bool(const lib::vector2du32 &, const Direction &)> updatePredicate);
+			lib::function<bool(const lib::vector2du32 &, const Direction &)> updatePredicate);
 
 		enum
 		{

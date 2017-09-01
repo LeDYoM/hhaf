@@ -2,7 +2,6 @@
 #define LIB_GUI_OPTIONS_MODEL_INCLUDE_HPP__
 
 #include <mtypes/include/types.hpp>
-#include <functional>
 #include <initializer_list>
 
 namespace lib

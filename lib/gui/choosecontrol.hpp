@@ -7,7 +7,6 @@
 #include <lib/scene/nodes/discretetext.hpp>
 #include <lib/scene/nodes/nodeshape.hpp>
 #include "optionmodel.hpp"
-#include <functional>
 
 namespace lib
 {
@@ -53,7 +52,7 @@ namespace lib
 			vector_shared_pointers<ChooseControlLine> lines;
 			scene::SceneNodeSPtr m_cursorNode;
 			sptr<scene::nodes::NodeShape> m_cursor;
-			std::function<void(const u32)> m_onSelected;
+			function<void(const u32)> m_onSelected;
 			friend class ChooseControlGroup;
 		};
 	}

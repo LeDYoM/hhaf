@@ -10,7 +10,6 @@
 #include <lib/scene/color.hpp>
 #include <lib/scene/hasname.hpp>
 #include "componentcontainer.hpp"
-#include <functional>
 
 namespace lib
 {
@@ -93,7 +92,7 @@ namespace lib
 			constexpr const T *const snCast() const { return dynamic_cast<const T *const>(this); }
 
 			template <typename T>
-			void for_each_node_as(std::function<void(const sptr<T> &)> action)
+			void for_each_node_as(function<void(const sptr<T> &)> action)
 			{
 				for_each_node([&action](const sptr<Renderizable>&node) {
 					if (auto tnode = std::dynamic_pointer_cast<NodeText>(node)) {
@@ -101,8 +100,8 @@ namespace lib
 					}
 				});
 			}
-			void for_each_node(std::function<void(const sptr<Renderizable> &)> action) const;
-			void for_each_group(std::function<void(const sptr<SceneNode> &)> action) const;
+			void for_each_node(function<void(const sptr<Renderizable> &)> action) const;
+			void for_each_group(function<void(const sptr<SceneNode> &)> action) const;
 
 		protected:
 

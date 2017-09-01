@@ -1,9 +1,10 @@
 #ifndef LIB_EVENT_HPP__
 #define LIB_EVENT_HPP__
 
-#include <functional>
-#include <list>
 #include <mtypes/include/types.hpp>
+#include <mtypes/include/function.hpp>
+
+#include <list>
 
 namespace lib
 {
@@ -13,7 +14,7 @@ namespace lib
 		class Event
 		{
 		public:
-			using listener_t = std::function<void(const Event &)>;
+			using listener_t = lib::function<void(const Event &)>;
 			using listener_container_t = std::list<sptr<EventSubscription>>;
 
 			virtual const listener_container_t &subscriptions() const noexcept = 0;

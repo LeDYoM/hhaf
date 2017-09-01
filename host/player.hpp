@@ -5,8 +5,8 @@
 #include "direction.hpp"
 
 #include <mtypes/include/types.hpp>
+#include <mtypes/include/function.hpp>
 #include <lib/board/boardmodel.hpp>
-#include <functional>
 
 namespace zoper
 {
@@ -19,7 +19,7 @@ namespace zoper
 		lib::Property<lib::vector2du32> boardPosition;
 		lib::Property<Direction> currentDirection;
 
-		void movePlayer(const Direction &direction, const std::function<bool(const lib::vector2du32&)> &pointInCenter, const lib::sptr<lib::board::BoardModelComponent> &boardModel);
+		void movePlayer(const Direction &direction, const lib::function<bool(const lib::vector2du32&)> &pointInCenter, const lib::sptr<lib::board::BoardModelComponent> &boardModel);
 		void updateDirection();
 
 	private:

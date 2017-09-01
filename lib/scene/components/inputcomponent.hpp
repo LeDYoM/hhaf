@@ -6,7 +6,6 @@
 #include <mtypes/include/types.hpp>
 #include <lib/scene/icomponent.hpp>
 #include <lib/include/key.hpp>
-#include <functional>
 
 namespace lib
 {
@@ -18,7 +17,7 @@ namespace lib
 			InputComponent();
 			~InputComponent();
 
-			using KeyHandler_t = std::function<void(const input::Key&)>;
+			using KeyHandler_t = function<void(const input::Key&)>;
 
 			void setOnKeyPressedHandler(KeyHandler_t keyHandlerPressed) noexcept;
 			void setOnKeyReleasedHandler(KeyHandler_t keyHandlerReleased) noexcept;
@@ -29,7 +28,7 @@ namespace lib
 
 		private:
 			KeyHandler_t m_onKeyPressed{ nullptr };
-			std::function<void(const input::Key&)> m_onKeyReleased{ nullptr };
+			function<void(const input::Key&)> m_onKeyReleased{ nullptr };
 
 			class InputComponentPrivate;
 			InputComponentPrivate *m_private;

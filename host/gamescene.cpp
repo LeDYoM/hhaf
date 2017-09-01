@@ -336,7 +336,7 @@ namespace zoper
 	}
 
 	void GameScene::for_each_token_in_line(const vector2du32 &startPosition, const Direction &direction,
-		std::function<bool(const vector2du32 &, const Direction &)> updatePredicate)
+		function<bool(const vector2du32 &, const Direction &)> updatePredicate)
 	{
 		vector2du32 loopPosition{ startPosition };
 		// Now, we have the data for the new token generated, but first, lets start to move the row or col.

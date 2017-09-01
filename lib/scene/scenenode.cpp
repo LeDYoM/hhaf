@@ -70,12 +70,12 @@ namespace lib
 			return true;
 		}
 
-		void SceneNode::for_each_node(std::function<void(const sptr<Renderizable>&)> action) const
+		void SceneNode::for_each_node(function<void(const sptr<Renderizable>&)> action) const
 		{
 			std::for_each(m_renderNodes.nodes.cbegin(), m_renderNodes.nodes.cend(), action);
 		}
 
-		void SceneNode::for_each_group(std::function<void(const sptr<SceneNode>&)> action) const
+		void SceneNode::for_each_group(function<void(const sptr<SceneNode>&)> action) const
 		{
 			std::for_each(m_groups.nodes.cbegin(), m_groups.nodes.cend(), action);
 		}

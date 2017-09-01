@@ -27,7 +27,7 @@ namespace lib
 		vector<char_type> m_data;
 		#pragma warning(pop)
 	public:
-		constexpr str() noexcept = default;
+		constexpr str() noexcept : m_data{} {};
 
 		template<size_t N>
 		constexpr str(const char_type(&a)[N]) noexcept : m_data( a,N ) {}
