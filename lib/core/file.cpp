@@ -11,7 +11,7 @@ namespace lib
 		return infile.good();
 	}
 
-	string_vector FileInput::readAsText()
+	string_vector FileInput::readAsText(const char_type separator)
 	{
 		std::ifstream infile(m_fileName.c_str());
 		if (infile.good() && infile.is_open()) {
@@ -21,7 +21,7 @@ namespace lib
 				infile >> line;
 				if (!line.empty()) {
 					str sline(line.c_str());
-					auto parsedLine(sline.split(m_separator));
+					auto parsedLine(sline.split(separator));
 					for (auto&& data : parsedLine) {
 						result.push_back(std::move(data));
 					}
@@ -36,19 +36,42 @@ namespace lib
 		return string_vector{};
 	}
 
-	SerializationStreamIn FileInput::getAsStream()
+	SerializationStreamIn FileInput::getAsStream(const char_type separator)
 	{
-		return SerializationStreamIn(readAsText());
+		return SerializationStreamIn(readAsText(separator));
 	}
 
-	bool FileOutput::write(const string_vector & data)
+	vector<char> FileInput::readBinary()
+	{
+		std::ifstream is(m_fileName.c_str(), std::ios::binary);
+		if (is) {
+			auto fl(fileLength());
+			vector<char> result(fl);
+			is.read(&(result[0]), fl);
+			return result;
+		}
+
+		return vector<char>();
+	}
+
+	u32 FileInput::fileLength()
+	{
+		std::ifstream is(m_fileName.c_str(), std::ios::binary);
+		if (is) {
+			is.seekg(0, std::ios::end);
+			return is.tellg();
+		}
+		return 0;
+	}
+
+	bool FileOutput::write(const string_vector & data, const char_type separator)
 	{
 		std::ofstream outfile(m_fileName.c_str());
 		if (outfile.good() && outfile.is_open()) {
 			for (auto&& line : data) {
 				outfile << (line.empty()?"":line.c_str());
 				if (&line != std::prev(data.end())) {
-					outfile << m_separator;
+					outfile << separator;
 				}
 			}
 			return true;
@@ -60,8 +83,8 @@ namespace lib
 		return false;
 	}
 
-	bool FileOutput::write(const SerializationStreamOut data)
+	bool FileOutput::write(const SerializationStreamOut data, const char_type separator)
 	{
-		return write(data.data());
+		return write(data.data(), separator);
 	}
 }

@@ -50,6 +50,8 @@ namespace lib
 		private:
 			ResourceList<sptr<scene::TTFont>> m_fonts;
 			ResourceList<sptr<scene::Texture>> m_textures;
+
+
 		};
 	}
 }
