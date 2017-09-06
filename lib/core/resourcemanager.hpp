@@ -29,16 +29,10 @@ namespace lib
 			sptr<T> getResource(const str &rid, const str &fileName="");
 
 			template <>
-			sptr<scene::TTFont> getResource(const str &rid, const str &fileName)
-			{
-				return getFont(rid, fileName);
-			}
+			sptr<scene::TTFont> getResource(const str &rid, const str &fileName) { return getFont(rid, fileName); }
 
 			template <>
-			sptr<scene::Texture> getResource(const str &rid, const str &fileName)
-			{
-				return getTexture(rid, fileName);
-			}
+			sptr<scene::Texture> getResource(const str &rid, const str &fileName) { return getTexture(rid, fileName); }
 
 			sptr<scene::TTFont> getFont(const str &rid, const str &fileName);
 			sptr<scene::Texture> getTexture(const str &rid, const str &fileName);
@@ -52,8 +46,6 @@ namespace lib
 		private:
 			ResourceList<sptr<scene::TTFont>> m_fonts;
 			ResourceList<sptr<scene::Texture>> m_textures;
-
-
 		};
 	}
 }
