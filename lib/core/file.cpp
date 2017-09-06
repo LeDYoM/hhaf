@@ -59,7 +59,7 @@ namespace lib
 		std::ifstream is(m_fileName.c_str(), std::ios::binary);
 		if (is) {
 			is.seekg(0, std::ios::end);
-			return is.tellg();
+			return static_cast<u32>(is.tellg());
 		}
 		return 0;
 	}

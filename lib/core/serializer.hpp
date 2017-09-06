@@ -13,15 +13,15 @@ namespace lib
 	class Serializer
 	{
 	public:
-		bool serialize(const str&fileName, T&data) {
+		constexpr bool serialize(const str&fileName, T&data) {
 			SerializationStreamOut sso;
 			sso << data;
-			FileOutput fout(fileName);
+			FileOutput fout{ fileName };
 			return fout.write(sso.data());
 		}
 
-		bool deserialize(const str&fileName, T&data) {
-			FileInput fin(fileName);
+		constexpr bool deserialize(const str&fileName, T&data) {
+			FileInput fin{ fileName };
 			if (fin.exists()) {
 				auto ssi(fin.getAsStream());
 				ssi >> data;

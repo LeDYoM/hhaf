@@ -24,7 +24,7 @@ namespace lib
 			auto dbc(scene->ensureComponentOfType<scene::DebugVarsComponent>());
 		}
 
-		void DebugSystem::setMatrixMultiplicationPerFrame(u32 & var)
+		void DebugSystem::setMatrixMultiplicationPerFrame(u32 &)
 		{
 //			auto dbc(host().currentScene()->ensureComponentOfType<scene::DebugVarsComponent>());
 //			dbc->addOrUpdateDebugVar("Matrix mul per Frame:", str(var) );

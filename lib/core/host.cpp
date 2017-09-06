@@ -10,9 +10,11 @@
 #include <lib/backend/iwindow.hpp>
 #include <lib/core/debugsystem.hpp>
 
-#include "config.h"
-
 #include <algorithm>
+
+#define LIB_VERSION_MAJOR 1
+#define LIB_VERSION_MINOR 4
+#define LIB_VERSION_PATCH 1
 
 namespace lib
 {

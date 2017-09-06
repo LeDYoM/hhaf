@@ -1,5 +1,4 @@
 #include "window.hpp"
-#include "config.h"
 #include <mtypes/include/log.hpp>
 #include "timer.hpp"
 #include "host.hpp"

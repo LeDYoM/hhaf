@@ -2,7 +2,6 @@
 #include <random>
 
 #include <mtypes/include/log.hpp>
-#include "config.h"
 
 namespace lib
 {
