@@ -1,8 +1,10 @@
+#pragma once
+
 #ifndef __LIB_RESOURCEMANAGER_HPP__
 #define __LIB_RESOURCEMANAGER_HPP__
 
 #include <mtypes/include/types.hpp>
-#include "configuration.hpp"
+#include <mtypes/include/str.hpp>
 #include "appservice.hpp"
 #include <list>
 
@@ -17,29 +19,29 @@ namespace lib
 	{
 		class Resource;
 
-		class ResourceManager : public AppService, public Configuration
+		class ResourceManager final : public AppService
 		{
 		public:
-			ResourceManager(const str &resourceFile);
+			ResourceManager();
 			~ResourceManager();
 
 			template <typename T>
-			sptr<T> getResource(const str &rid) const;
+			sptr<T> getResource(const str &rid, const str &fileName="");
 
 			template <>
-			sptr<scene::TTFont> getResource(const str &rid) const
+			sptr<scene::TTFont> getResource(const str &rid, const str &fileName)
 			{
-				return getFont(rid);
+				return getFont(rid, fileName);
 			}
 
 			template <>
-			sptr<scene::Texture> getResource(const str &rid) const
+			sptr<scene::Texture> getResource(const str &rid, const str &fileName)
 			{
-				return getTexture(rid);
+				return getTexture(rid, fileName);
 			}
 
-			sptr<scene::TTFont> getFont(const str &rid) const;
-			sptr<scene::Texture> getTexture(const str &rid) const;
+			sptr<scene::TTFont> getFont(const str &rid, const str &fileName);
+			sptr<scene::Texture> getTexture(const str &rid, const str &fileName);
 
 			template <typename T>
 			using NamedIndex = std::pair<const str, T>;

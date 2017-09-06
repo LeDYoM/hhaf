@@ -102,7 +102,7 @@ namespace lib
 				m_eventManager = muptr<EventManager>();
 				m_window = muptr<Window>(m_iapp->getAppDescriptor().wcp);
 				m_sceneManager = muptr<scene::SceneManager>(*m_window);
-				m_resourceManager = muptr<core::ResourceManager>(m_iapp->getAppDescriptor().resourceFile);
+				m_resourceManager = muptr<core::ResourceManager>();
 				m_debugSystem = muptr<DebugSystem>();
 				
 				m_iapp->onInit();

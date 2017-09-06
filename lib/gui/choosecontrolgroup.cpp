@@ -58,7 +58,7 @@ namespace lib
 					}
 				});
 			});
-			m_theme.font = host().resourceManager().getFont("game_menu.mainFont");
+			m_theme.font = host().resourceManager().getResource<scene::TTFont>("game_menu.mainFont","resources/oldct.ttf");
 			m_theme.textColor = scene::colors::Blue;
 			m_theme.selectedTextColor = scene::colors::Red;
 			m_theme.chSize = 70;

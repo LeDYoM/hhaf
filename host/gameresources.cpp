@@ -8,6 +8,6 @@ namespace zoper
 
 	void GameResourcesLoader::loadResources(core::ResourceManager&resourceManager)
 	{
-		scoreFont = resourceManager.getResource<TTFont>("game_scene.scoreFont");
+		scoreFont = resourceManager.getResource<TTFont>("game_scene.scoreFont","resources/score.ttf");
 	}
 }
