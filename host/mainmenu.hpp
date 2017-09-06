@@ -2,7 +2,6 @@
 #define __MAINMENU_HPP__
 
 #include <lib/gui/choosecontrolgroup.hpp>
-#include <lib/core/configuration.hpp>
 #include <lib/scene/scenenode.hpp>
 
 namespace zoper

@@ -3,7 +3,7 @@
 #include "gamescene.hpp"
 #include "common.hpp"
 #include <lib/core/host.hpp>
-#include <lib/core/configuration.hpp>
+#include <lib/core/serializer.hpp>
 #include <lib/scene/scenemanager.hpp>
 #include <lib/scene/iscenescontroller.hpp>
 
