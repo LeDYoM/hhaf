@@ -9,7 +9,7 @@
 
 namespace lib
 {
-	template <class T>
+	template <class T, bool optimizeCopy = true>
 	class  vector {
 	public:
 		using iterator = T*;
@@ -45,16 +45,20 @@ namespace lib
 		constexpr vector& operator=(const vector&other)
 		{
 			if (this != &other) {
-				if (m_capacity < other.m_size) {
-					_destroy();
-					m_buffer = new T[other.m_size];
-					m_capacity = other.m_size;
-					m_size = other.m_size;
-				}
+				if constexpr (optimizeCopy) { if (m_capacity < other.m_size) _copyStructure(other); }
+				else _copyStructure(other);
 
 				_copyElements(other.m_buffer, other.m_size);
 			}
 			return *this;
+		}
+
+		constexpr void _copyStructure(const vector&other)
+		{
+			_destroy();
+			m_buffer = new T[other.m_size];
+			m_capacity = other.m_size;
+			m_size = other.m_size;
 		}
 
 		constexpr vector& operator=(vector&&other) noexcept
@@ -260,15 +264,15 @@ namespace lib
 		size_t m_size;
 		T* m_buffer;
 
-		template <typename A>
-		friend constexpr bool operator==(const vector<A>& lhs, const vector<A>& rhs) noexcept;
+		template <class A, bool oc>
+		friend constexpr bool operator==(const vector<A, oc>& lhs, const vector<A, oc>& rhs) noexcept;
 
-		template <typename A>
-		friend constexpr bool operator!=(const vector<A>& lhs, const vector<A>& rhs) noexcept;
+		template <class A, bool oc>
+		friend constexpr bool operator!=(const vector<A, oc>& lhs, const vector<A, oc>& rhs) noexcept;
 	};
 
-	template <typename A>
-	constexpr bool operator==(const vector<A>& lhs, const vector<A>& rhs) noexcept
+	template <class A, bool oc>
+	constexpr bool operator==(const vector<A, oc>& lhs, const vector<A, oc>& rhs) noexcept
 	{
 		if (lhs.m_size != rhs.m_size) {
 			return false;
@@ -282,8 +286,8 @@ namespace lib
 		}
 	}
 
-	template <typename A>
-	constexpr bool operator!=(const vector<A>& lhs, const vector<A>& rhs) noexcept
+	template <class A, bool oc>
+	constexpr bool operator!=(const vector<A, oc>& lhs, const vector<A, oc>& rhs) noexcept
 	{
 		return !(lhs == rhs);
 	}

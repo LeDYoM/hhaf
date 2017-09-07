@@ -24,7 +24,7 @@ namespace lib
 		// Temporary code
 		#pragma warning(push)
 		#pragma warning(disable:4251)
-		vector<char_type> m_data;
+		vector<char_type,false> m_data;
 		#pragma warning(pop)
 	public:
 		constexpr str() noexcept : m_data{} {};
