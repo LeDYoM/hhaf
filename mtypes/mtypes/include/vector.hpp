@@ -9,7 +9,7 @@
 
 namespace lib
 {
-	template <class T, bool optimizeCopy = true>
+	template <class T>
 	class  vector {
 	public:
 		using iterator = T*;
@@ -35,6 +35,9 @@ namespace lib
 			_copyElements(other.m_buffer, other.m_size);
 		}
 
+		constexpr vector(const vector&other, const size_t size)
+			: vector(other.m_buffer, size) {}
+
 		constexpr vector(vector&&other) noexcept : m_capacity{ other.m_capacity }, m_size{ other.m_size }, m_buffer{ other.m_buffer }
 		{
 			other.m_capacity = 0;
@@ -45,9 +48,18 @@ namespace lib
 		constexpr vector& operator=(const vector&other)
 		{
 			if (this != &other) {
-				if constexpr (optimizeCopy) { if (m_capacity < other.m_size) _copyStructure(other); }
-				else _copyStructure(other);
+				if (m_capacity < other.m_size) 
+					_copyStructure(other);
 
+				_copyElements(other.m_buffer, other.m_size);
+			}
+			return *this;
+		}
+
+		constexpr vector& copyExact(const vector&other)
+		{
+			if (this != &other) {
+				_copyStructure(other);
 				_copyElements(other.m_buffer, other.m_size);
 			}
 			return *this;
@@ -264,15 +276,15 @@ namespace lib
 		size_t m_size;
 		T* m_buffer;
 
-		template <class A, bool oc>
-		friend constexpr bool operator==(const vector<A, oc>& lhs, const vector<A, oc>& rhs) noexcept;
+		template <class A>
+		friend constexpr bool operator==(const vector<A>& lhs, const vector<A>& rhs) noexcept;
 
-		template <class A, bool oc>
-		friend constexpr bool operator!=(const vector<A, oc>& lhs, const vector<A, oc>& rhs) noexcept;
+		template <class A>
+		friend constexpr bool operator!=(const vector<A>& lhs, const vector<A>& rhs) noexcept;
 	};
 
-	template <class A, bool oc>
-	constexpr bool operator==(const vector<A, oc>& lhs, const vector<A, oc>& rhs) noexcept
+	template <class A>
+	constexpr bool operator==(const vector<A>& lhs, const vector<A>& rhs) noexcept
 	{
 		if (lhs.m_size != rhs.m_size) {
 			return false;
@@ -286,8 +298,8 @@ namespace lib
 		}
 	}
 
-	template <class A, bool oc>
-	constexpr bool operator!=(const vector<A, oc>& lhs, const vector<A, oc>& rhs) noexcept
+	template <class A>
+	constexpr bool operator!=(const vector<A>& lhs, const vector<A>& rhs) noexcept
 	{
 		return !(lhs == rhs);
 	}

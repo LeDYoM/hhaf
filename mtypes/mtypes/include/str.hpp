@@ -24,7 +24,7 @@ namespace lib
 		// Temporary code
 		#pragma warning(push)
 		#pragma warning(disable:4251)
-		vector<char_type,false> m_data;
+		vector<char_type> m_data;
 		#pragma warning(pop)
 	public:
 		constexpr str() noexcept : m_data{} {};
@@ -43,7 +43,10 @@ namespace lib
 		str(const f32 n);
 		str(const f64 n);
 
-		constexpr str&operator=(const str&) = default;
+		constexpr str&operator=(const str&rhs) {
+			*this = str(rhs);
+			return *this;
+		}
 		constexpr str&operator=(str&&) noexcept = default;
 
 		vector<str> split(const char_type separator) const;
