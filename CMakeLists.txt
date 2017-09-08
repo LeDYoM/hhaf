@@ -35,7 +35,6 @@ SET(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin/${CMAKE_BUILD_TYPE})
 # Sub-directories where more CMakeLists.txt exist
 add_subdirectory(mtypes)
 add_subdirectory(loader)
-#add_subdirectory(lfproperties)
 add_subdirectory(lib)
 add_subdirectory(backend_sfml)
 add_subdirectory(host)
