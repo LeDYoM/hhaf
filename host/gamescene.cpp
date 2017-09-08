@@ -51,15 +51,15 @@ namespace zoper
 
 		m_gameresources.loadResources(lib::host().resourceManager());
 
-		m_scoreQuad = msptr<TextQuad>(this, "score", m_gameresources.scoreFont, 90, colors::White, Rectf32::fromSize(600, 300));
-		m_scoreQuad->sceneNode()->position = { 50, 50 };
+		m_scoreQuad = createSceneNode<TextQuad>("score", m_gameresources.scoreFont, 90, colors::White, Rectf32::fromSize(600, 300));
+		m_scoreQuad->position = { 50, 50 };
 		m_scoreQuad->text(0)->text = "Level:";
 		m_scoreQuad->text(0)->color = colors::Blue;
 		m_scoreQuad->text(2)->text = "Score:";
 		m_scoreQuad->text(2)->color = colors::Blue;
 
-		m_goalQuad = msptr<TextQuad>(this, "goal", m_gameresources.scoreFont, 90, colors::White, Rectf32::fromSize(600, 300));
-		m_goalQuad->sceneNode()->position = { 1250, 50 };
+		m_goalQuad = createSceneNode<TextQuad>("goal", m_gameresources.scoreFont, 90, colors::White, Rectf32::fromSize(600, 300));
+		m_goalQuad->position = { 1250, 50 };
 		m_goalQuad->text(0)->color = colors::Blue;
 		m_goalQuad->text(2)->color = colors::Blue;
 

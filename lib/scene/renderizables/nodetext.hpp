@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef _LIB_NODETEXT_HPP__
 #define _LIB_NODETEXT_HPP__
 

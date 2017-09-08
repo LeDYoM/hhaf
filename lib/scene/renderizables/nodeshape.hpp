@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef LIB_DRAW_NODESHAPE_HPP__
 #define LIB_DRAW_NODESHAPE_HPP__
 

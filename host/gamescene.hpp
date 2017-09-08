@@ -7,7 +7,6 @@
 #include "direction.hpp"
 #include "levelproperties.hpp"
 #include "gameresources.hpp"
-#include "textquad.hpp"
 #include "gamedata.hpp"
 
 #include <mtypes/include/types.hpp>
@@ -17,6 +16,7 @@
 #include <lib/scene/scene.hpp>
 #include <lib/board/itilescontroller.hpp>
 #include <lib/board/boardmodel.hpp>
+#include <lib/scene/nodes/textquad.hpp>
 #include <lib/scene/renderizables/nodetext.hpp>
 #include <lib/scene/renderizables/nodequad.hpp>
 
@@ -88,17 +88,12 @@ namespace zoper
 		lib::sptr<lib::board::BoardModelComponent> p_boardModel{ nullptr };
 		lib::sptr<GameData> m_gameData{ nullptr };
 		lib::u8 m_nextTokenPart{ 0 };
-		lib::scene::SceneNodeSPtr m_mainBoardrg{ nullptr };
-		lib::scene::SceneNodeSPtr m_gameOverrg{ nullptr };
-		lib::scene::SceneNodeSPtr m_levelrg{ nullptr };
-		lib::scene::SceneNodeSPtr m_pauseSceneNode{ nullptr };
+		lib::scene::SceneNodeSPtr m_mainBoardrg, m_gameOverrg, m_levelrg, m_pauseSceneNode, m_gameOverText;
 		LevelProperties levelProperties;
 
 		// Nodes from the scene
 		lib::sptr<Player> p_player{ nullptr };
-		lib::sptr<TextQuad> m_scoreQuad;
-		lib::sptr<TextQuad> m_goalQuad;
-		lib::scene::SceneNodeSPtr m_gameOverText;
+		lib::sptr<lib::scene::nodes::TextQuad> m_scoreQuad, m_goalQuad;
 		lib::sptr<lib::scene::nodes::NodeText> m_pauseText;
 		lib::vector<lib::vector<lib::sptr<lib::scene::nodes::NodeQuad>>> m_backgroundTiles;
 	};
