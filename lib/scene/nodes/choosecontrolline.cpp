@@ -1,7 +1,7 @@
 #include "choosecontrolline.hpp"
-#include "choosecontrol.hpp"
 
 #include <lib/scene/ianimation.hpp>
+#include <lib/scene/nodes/choosecontrolline.hpp>
 #include <lib/scene/renderizables/nodeshape.hpp>
 #include <lib/scene/renderizables/nodetext.hpp>
 #include <lib/scene/renderizables/discretetext.hpp>
