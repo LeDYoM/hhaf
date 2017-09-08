@@ -3,7 +3,7 @@
 
 #include <lib/gui/choosecontrolgroup.hpp>
 #include <mtypes/include/types.hpp>
-#include <lib/scene/nodes/nodequad.hpp>
+#include <lib/scene/renderizables/nodequad.hpp>
 #include <lib/scene/scene.hpp>
 
 #include "mainmenuresources.hpp"

@@ -4,9 +4,9 @@
 #include <mtypes/include/log.hpp>
 #include <lib/scene/scene.hpp>
 #include <lib/scene/ianimation.hpp>
-#include <lib/scene/nodes/nodeshape.hpp>
-#include <lib/scene/nodes/nodetext.hpp>
-#include <lib/scene/nodes/discretetext.hpp>
+#include <lib/scene/renderizables/nodeshape.hpp>
+#include <lib/scene/renderizables/nodetext.hpp>
+#include <lib/scene/renderizables/discretetext.hpp>
 
 namespace lib
 {

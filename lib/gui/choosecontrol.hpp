@@ -3,9 +3,9 @@
 
 #include <mtypes/include/types.hpp>
 #include <lib/scene/scenenode.hpp>
-#include <lib/scene/nodes/nodetext.hpp>
-#include <lib/scene/nodes/discretetext.hpp>
-#include <lib/scene/nodes/nodeshape.hpp>
+#include <lib/scene/renderizables/nodetext.hpp>
+#include <lib/scene/renderizables/discretetext.hpp>
+#include <lib/scene/renderizables/nodeshape.hpp>
 #include "optionmodel.hpp"
 
 namespace lib

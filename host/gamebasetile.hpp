@@ -4,7 +4,7 @@
 #pragma once
 
 #include <lib/scene/scenenode.hpp>
-#include <lib/scene/nodes/nodeshape.hpp>
+#include <lib/scene/renderizables/nodeshape.hpp>
 #include <lib/board/itilescontroller.hpp>
 
 namespace zoper

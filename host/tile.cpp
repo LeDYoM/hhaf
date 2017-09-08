@@ -1,5 +1,5 @@
 #include "tile.hpp"
-#include <lib/scene/nodes/nodeshape.hpp>
+#include <lib/scene/renderizables/nodeshape.hpp>
 
 namespace zoper
 {

@@ -17,8 +17,8 @@
 #include <lib/scene/scene.hpp>
 #include <lib/board/itilescontroller.hpp>
 #include <lib/board/boardmodel.hpp>
-#include <lib/scene/nodes/nodetext.hpp>
-#include <lib/scene/nodes/nodequad.hpp>
+#include <lib/scene/renderizables/nodetext.hpp>
+#include <lib/scene/renderizables/nodequad.hpp>
 
 #include <array>
 

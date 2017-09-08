@@ -2,7 +2,7 @@
 #define ZOPER_TEXTQUAD_HPP__
 
 #include <lib/scene/scenenode.hpp>
-#include <lib/scene/nodes/nodetext.hpp>
+#include <lib/scene/renderizables/nodetext.hpp>
 
 namespace zoper
 {

@@ -1,9 +1,11 @@
+#pragma once
+
 #ifndef LIB_GUI_DISCRETETEXT_INCLUDE_HPP__
 #define LIB_GUI_DISCRETETEXT_INCLUDE_HPP__
 
 #include <lib/scene/renderizable.hpp>
 #include <mtypes/include/types.hpp>
-#include <lib/scene/nodes/nodetext.hpp>
+#include "nodetext.hpp"
 
 namespace lib
 {
