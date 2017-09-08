@@ -1,9 +1,9 @@
 #include "choosecontrol.hpp"
-#include "choosecontrolline.hpp"
 #include "choosecontrolgroup.hpp"
 #include <mtypes/include/log.hpp>
 #include <lib/scene/scene.hpp>
 #include <lib/scene/ianimation.hpp>
+#include <lib/scene/nodes/choosecontrolline.hpp>
 #include <lib/scene/renderizables/nodeshape.hpp>
 #include <lib/scene/renderizables/nodetext.hpp>
 #include <lib/scene/renderizables/discretetext.hpp>

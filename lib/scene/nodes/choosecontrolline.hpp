@@ -20,7 +20,6 @@ namespace lib
 	}
 	namespace gui
 	{
-		class ChooseControl;
 		class ChooseControlLine : public scene::SceneNode
 		{
 		public:
