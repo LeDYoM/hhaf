@@ -15,7 +15,6 @@ namespace zoper
 	using namespace lib::core;
 	using namespace lib::scene;
 	using namespace lib::scene::nodes;
-	using namespace lib::gui;
 	using namespace zmenu;
 
 	MenuScene::MenuScene()

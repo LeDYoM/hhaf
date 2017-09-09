@@ -1,9 +1,11 @@
-#ifndef __MENUSCENE_HPP__
-#define __MENUSCENE_HPP__
+#pragma once
 
-#include <lib/gui/choosecontrolgroup.hpp>
+#ifndef ZOPER_MENUSCENE_INCLUDE_HPP__
+#define ZOPER_MENUSCENE_INCLUDE_HPP__
+
 #include <mtypes/include/types.hpp>
 #include <lib/scene/renderizables/nodequad.hpp>
+#include <lib/scene/nodes/choosecontrolgroup.hpp>
 #include <lib/scene/scene.hpp>
 
 #include "mainmenuresources.hpp"
@@ -26,7 +28,7 @@ namespace zoper
 
 	private:
 		lib::sptr<MainMenuResources> mainMenuResources;
-		lib::sptr<lib::gui::ChooseControlGroup> m_chooseControlGroup;
+		lib::sptr<lib::scene::nodes::ChooseControlGroup> m_chooseControlGroup;
 		lib::sptr<lib::scene::nodes::NodeQuad> m_logo;
 		lib::sptr<lib::scene::nodes::NodeQuad> m_background;
 	};

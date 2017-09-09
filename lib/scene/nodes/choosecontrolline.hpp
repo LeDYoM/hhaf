@@ -5,7 +5,7 @@
 
 #include <mtypes/include/types.hpp>
 #include <lib/scene/scenenode.hpp>
-#include <lib/gui/optionmodel.hpp>
+#include "optionmodel.hpp"
 
 namespace lib
 {
@@ -16,32 +16,30 @@ namespace lib
 		{
 			class NodeText;
 			class DiscreteText;
+
+			class ChooseControlLine : public scene::SceneNode
+			{
+			public:
+				ChooseControlLine(SceneNode* parent, str name);
+				void setAlignmentBox(Rectf32 albox) noexcept;
+				void setFont(sptr<scene::TTFont> f) noexcept;
+				void setColor(const scene::Color c) noexcept;
+				void setCharacterSize(const u32 cs) noexcept;
+
+				inline sptr<scene::nodes::NodeText> mainText() noexcept { return m_mainText; }
+				inline const sptr<scene::nodes::NodeText> mainText() const noexcept { return m_mainText; }
+
+				inline sptr<scene::nodes::DiscreteText> option() noexcept { return m_option; }
+				inline const sptr<scene::nodes::DiscreteText> option() const noexcept { return m_option; }
+
+				void create();
+				void configure();
+				const OptionModelIndex currentSelection() const noexcept;
+			public:
+				sptr<NodeText> m_mainText;
+				sptr<DiscreteText> m_option;
+			};
 		}
-	}
-	namespace gui
-	{
-		class ChooseControlLine : public scene::SceneNode
-		{
-		public:
-			ChooseControlLine(SceneNode* parent, str name);
-			void setAlignmentBox(Rectf32 albox) noexcept;
-			void setFont(sptr<scene::TTFont> f) noexcept;
-			void setColor(const scene::Color c) noexcept;
-			void setCharacterSize(const u32 cs) noexcept;
-
-			inline sptr<scene::nodes::NodeText> mainText() noexcept { return m_mainText; }
-			inline const sptr<scene::nodes::NodeText> mainText() const noexcept { return m_mainText; }
-
-			inline sptr<scene::nodes::DiscreteText> option() noexcept { return m_option; }
-			inline const sptr<scene::nodes::DiscreteText> option() const noexcept { return m_option; }
-
-			void create();
-			void configure();
-			const OptionModelIndex currentSelection() const noexcept;
-		public:
-			sptr<scene::nodes::NodeText> m_mainText;
-			sptr<scene::nodes::DiscreteText> m_option;
-		};
 	}
 }
 

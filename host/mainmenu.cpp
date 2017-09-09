@@ -2,8 +2,8 @@
 #include "gamedata.hpp"
 #include "zoperprogramcontroller.hpp"
 
-#include <lib/gui/choosecontrolgroup.hpp>
-#include <lib/gui/choosecontrol.hpp>
+#include <lib/scene/nodes/choosecontrolgroup.hpp>
+#include <lib/scene/nodes/choosecontrol.hpp>
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/scenemanager.hpp>
 #include <lib/core/host.hpp>
@@ -15,8 +15,8 @@ namespace zoper
 	namespace zmenu
 	{
 		using namespace lib;
-		using namespace lib::gui;
 		using namespace lib::scene;
+		using namespace lib::scene::nodes;
 
 		MainMenu::MainMenu(SceneNode *parent, str name)
 			: ChooseControlGroup{ parent, std::move(name) } 

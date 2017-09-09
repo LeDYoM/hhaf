@@ -1,7 +1,9 @@
-#ifndef __MAINMENU_HPP__
-#define __MAINMENU_HPP__
+#pragma once
 
-#include <lib/gui/choosecontrolgroup.hpp>
+#ifndef ZOPER_MAINMENU_INCLUDE_HPP__
+#define ZOPER_MAINMENU_INCLUDE_HPP__
+
+#include <lib/scene/nodes/choosecontrolgroup.hpp>
 #include <lib/scene/scenenode.hpp>
 
 namespace zoper
@@ -9,7 +11,7 @@ namespace zoper
 	class GameData;
 	namespace zmenu
 	{
-		class MainMenu : public lib::gui::ChooseControlGroup
+		class MainMenu : public lib::scene::nodes::ChooseControlGroup
 		{
 		public:
 			constexpr static const char*ClassName = "MainMenu";
@@ -21,7 +23,7 @@ namespace zoper
 
 		private:
 			lib::sptr<GameData> m_gameData;
-			lib::sptr<lib::gui::ChooseControl> m_chooseControl;
+			lib::sptr<lib::scene::nodes::ChooseControl> m_chooseControl;
 		};
 	}
 }
