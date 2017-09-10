@@ -47,6 +47,23 @@ namespace lib
 	private:
 		callback_t m_callback;
 	};
+
+	template <typename T>
+	class PropertyObservable : public BasicProperty<T>
+	{
+	public:
+		constexpr PropertyObservable() noexcept : BasicProperty{}, m_hasChanged{false} {}
+		constexpr PropertyObservable(T iv) noexcept : BasicProperty{ std::move(iv) }, m_hasChanged{false} {}
+
+		constexpr void set(const T&v) noexcept { m_hasChanged = true; = v; update(); }
+		constexpr void operator=(const T&v) noexcept { set(v); }
+
+		bool hasChanged() const noexcept { return m_hasChanged; }
+		bool rr_hasChanged() const noexcept { const bool v{ m_hasChanged }; m_hasChanged = false; return v;	}
+	private:
+		bool m_hasChanged;
+	};
+
 }
 
 #endif
