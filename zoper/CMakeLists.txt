@@ -1,17 +1,15 @@
-project(host)
+project(zoper)
 
-include_directories (${LIB_BASE_DIRECTORY})
+#include_directories (${LIB_BASE_DIRECTORY})
 
 file (GLOB ZOPER_HEADERS "*.hpp")
 file (GLOB ZOPER_SOURCES "*.cpp")
 
-set (CURRENT_TARGET host)
+set (CURRENT_TARGET zoper)
 
 add_executable (${CURRENT_TARGET} ${ZOPER_SOURCES} ${ZOPER_HEADERS})
 
-source_group("Header Files" FILES ${ZOPER_HEADERS})
-source_group("Source Files" FILES ${ZOPER_SOURCES})
-
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${ZOPER_HEADERS} ${ZOPER_SOURCES})
 
 # Detect and add lib
 include_directories(..)
@@ -20,7 +18,7 @@ target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
 
 add_custom_command(TARGET ${CURRENT_TARGET} POST_BUILD
 	COMMAND ${CMAKE_COMMAND} -E copy_directory
-	${PROJECT_SOURCE_DIR}/zoper/data/
+	${PROJECT_SOURCE_DIR}/zoper_data/
 	$<TARGET_FILE_DIR:${CURRENT_TARGET}>)
 
 if (MSVC)
