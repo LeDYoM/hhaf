@@ -68,7 +68,7 @@ namespace lib
 		bool m_hasChanged;
 	};
 
-	template <typename class <typename T>>
+	template <typename class A<typename T>>
 	class PropertyWrapper
 	{
 	public:
