@@ -17,10 +17,10 @@ namespace lib
 			Transformable() noexcept;
 			virtual ~Transformable();
 
-			Property<vector2df> origin;
-			Property<f32> rotation;
-			Property<vector2df> scale;
-			Property<vector2df> position;
+			PropertyObservable<vector2df> origin;
+			PropertyObservable<f32> rotation;
+			PropertyObservable<vector2df> scale;
+			PropertyObservable<vector2df> position;
 
 			inline const Transform &transform() const noexcept { return m_transform; }
 			inline const Transform &updatedTransform() { updateTransform(); return m_transform; }

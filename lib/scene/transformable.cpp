@@ -14,19 +14,19 @@ namespace lib
 			}
 		}
 		Transformable::Transformable() noexcept : m_needsUpdate{ true },
-			origin{ {}, updateTransformCallback(*this) },
-			rotation{ {},
-				[this]() {
+			origin{ },
+			rotation{
+/*				[this]() {
 					auto temp_rotation(static_cast<f32>(fmod(rotation(), 360.f)));
 					if (temp_rotation != rotation()) {
 						rotation.set(temp_rotation);
 					}
 
 					setNeedsUpdate();
-				}
+				}*/
 			},
-			position{ {} , updateTransformCallback(*this) },
-			scale{ { 1, 1 }, updateTransformCallback(*this) },
+			position{ },
+			scale{ { 1, 1 } },
 			m_transform{} 
 		{}
 
@@ -61,7 +61,15 @@ namespace lib
 
 		void Transformable::updateTransform() noexcept
 		{
-			if (!m_needsUpdate) return;
+			if (!position.hasChanged() && !rotation.hasChanged() && !scale.hasChanged() && !origin.hasChanged())
+				return;
+			else
+			{
+				position.resetHasChanged();
+				rotation.resetHasChanged();
+				scale.resetHasChanged();
+				origin.resetHasChanged();
+			}
 
 			// Recompute the combined transform
 			const f32 angle{ -rotation() * 3.141592654f / 180.f };

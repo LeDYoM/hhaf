@@ -52,18 +52,34 @@ namespace lib
 	class PropertyObservable : public BasicProperty<T>
 	{
 	public:
-		constexpr PropertyObservable() noexcept : BasicProperty{}, m_hasChanged{false} {}
-		constexpr PropertyObservable(T iv) noexcept : BasicProperty{ std::move(iv) }, m_hasChanged{false} {}
+		constexpr PropertyObservable() noexcept : BasicProperty{}, m_hasChanged{true} {}
+		constexpr PropertyObservable(T iv) noexcept : BasicProperty{ std::move(iv) }, m_hasChanged{true} {}
 
-		constexpr void set(const T&v) noexcept { m_hasChanged = true; = v; update(); }
+		constexpr void set(const T&v) noexcept { m_hasChanged = true; m_value = v; }
 		constexpr void operator=(const T&v) noexcept { set(v); }
 
 		bool hasChanged() const noexcept { return m_hasChanged; }
 		bool rr_hasChanged() const noexcept { const bool v{ m_hasChanged }; m_hasChanged = false; return v;	}
+
+		constexpr void resetHasChanged() noexcept { m_hasChanged = true; }
+
+
 	private:
 		bool m_hasChanged;
 	};
 
+	template <typename class <typename T>>
+	class PropertyWrapper
+	{
+	public:
+		constexpr VirtualProperty(T&orig) noexcept : m_value{orig} {}
+
+		constexpr const T &get() const noexcept { return m_value(); }
+		constexpr void set(const T&v) noexcept { m_value.set(v); }
+
+	protected:
+		T m_value;
+	};
 }
 
 #endif

@@ -6,6 +6,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
 #include <mtypes/include/rect.hpp>
+#include <mtypes/include/array.hpp>
 #include <mtypes/include/streams.hpp>
 #include <lib/core/timer.hpp>
 
@@ -42,7 +43,7 @@ namespace zoper
 		lib::vector2du32 size{ 18,12 };
 		lib::Rectu32 centerRect{ 7,4,4,4 };
 
-		std::array<TokenZone, NumWays> _tokenZones;
+		lib::array<TokenZone, NumWays> _tokenZones;
 
 		lib::Timer levelClock;
 		lib::u32 consumedTokens{ 0 };
