@@ -33,7 +33,6 @@ namespace lib
 			constexpr VertexArray(VertexArray&&) = default;
 			constexpr VertexArray& operator=(VertexArray&&) = default;
 
-			void setColor(const Color &color);
 			constexpr bool empty() const noexcept { return m_vertices.empty(); }
 
 			constexpr BasicVertexArray &verticesArray() noexcept { return m_vertices; }

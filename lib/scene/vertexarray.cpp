@@ -4,11 +4,6 @@ namespace lib
 {
 	namespace scene
 	{
-		void VertexArray::setColor(const Color &color)
-		{
-			if (!m_vertices.empty()) for (auto &v : m_vertices) v.color = color;
-		}
-
 		void VertexArray::move(const vector2df & offset) noexcept
 		{
 			if (!m_vertices.empty()) {

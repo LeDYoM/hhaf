@@ -10,7 +10,14 @@ namespace lib
 	{
 		Renderizable::Renderizable(SceneNode * const parent, const str & name, const PrimitiveType type, const u32 vertexCount)
 			: core::HasName{ name }, m_parent{ parent }, m_vertices{ type, vertexCount },
-			color([this]() { m_vertices.setColor(color()); }) {}
+			color([this]() {
+				if (!m_vertices.empty()) {
+					for (auto& v : m_vertices.verticesArray()) {
+						v.color = color();
+					}
+				}
+			})
+		{}
 
 		void Renderizable::render()
 		{

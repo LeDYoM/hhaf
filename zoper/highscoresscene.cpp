@@ -4,8 +4,6 @@
 #include <lib/scene/renderizables/nodetext.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/core/host.hpp>
-#include <lib/core/events/eventmanager.hpp>
-#include <lib/core/debugsystem.hpp>
 
 namespace zoper
 {
@@ -20,6 +18,8 @@ namespace zoper
 	{
 		Scene::create();
 
+		mainMenuResources = msptr<MainMenuResources>();
+		mainMenuResources->loadResources(resourceManager());
 	}
 
 	void HighScoresScene::onDeinit()

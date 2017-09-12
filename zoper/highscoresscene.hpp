@@ -6,6 +6,8 @@
 #include <mtypes/include/types.hpp>
 #include <lib/scene/scene.hpp>
 
+#include "mainmenuresources.hpp"
+
 namespace zoper
 {
 	class HighScoresScene final : public lib::scene::Scene
@@ -15,12 +17,14 @@ namespace zoper
 		virtual ~HighScoresScene() = default;
 
 		// Inherited via Scene
-		virtual void create() override;
-		virtual void onDeinit() override;
+		void create() override;
+		void onDeinit() override;
 
-		virtual void updateScene() override;
+		void updateScene() override;
 
 	private:
+		lib::sptr<MainMenuResources> mainMenuResources;
+		lib::sptr<lib::scene::nodes::NodeQuad> m_background;
 	};
 }
 

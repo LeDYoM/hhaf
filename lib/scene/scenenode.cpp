@@ -19,9 +19,6 @@ namespace lib
 
 		void SceneNode::render(bool parentTransformationChanged)
 		{
-			if (name() == "playerNode") {
-				int b = 0;
-			}
 			if (visible()) {
 				// Update the node components
 				updateComponents();

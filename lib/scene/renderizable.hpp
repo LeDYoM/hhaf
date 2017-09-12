@@ -25,7 +25,8 @@ namespace lib
 			Property<Color> color;
 			Property<sptr<Texture>> texture;
 			Property<bool> visible{ true };
-			constexpr Rectf32 bounds() const noexcept { return m_vertices.bounds(); }
+
+			Rectf32 bounds() const noexcept { return m_vertices.bounds(); }
 
 			template <typename T>
 			constexpr T *const rnCast() {
