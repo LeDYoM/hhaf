@@ -8,7 +8,7 @@ namespace zoper
 	Player::Player(SceneNode* const parent, const str& name, vector2du32 bPosition, Rectf32 box, vector2df board2SceneFactor)
 		: GameBaseTile{ parent, name, 0 },
 		boardPosition{ std::move(bPosition), [this]() {
-			this->position = { m_board2SceneFactor.x * boardPosition().x, m_board2SceneFactor.y * boardPosition().y }; }
+			position = { m_board2SceneFactor.x * boardPosition().x, m_board2SceneFactor.y * boardPosition().y }; }
 		},
 		currentDirection( Direction(Direction::DirectionData::Up) ), m_board2SceneFactor{ std::move(board2SceneFactor) }
 	{

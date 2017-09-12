@@ -6,14 +6,7 @@ namespace lib
 {
 	namespace scene
 	{
-		namespace
-		{
-			inline callback_t updateTransformCallback(Transformable &t) noexcept
-			{
-				return lambdaToMethod<Transformable, &Transformable::setNeedsUpdate>(t);
-			}
-		}
-		Transformable::Transformable() noexcept : m_needsUpdate{ true },
+		Transformable::Transformable() noexcept : 
 			origin{ },
 			rotation{
 /*				[this]() {
@@ -61,7 +54,7 @@ namespace lib
 
 		void Transformable::updateTransform() noexcept
 		{
-			if (!position.hasChanged() && !rotation.hasChanged() && !scale.hasChanged() && !origin.hasChanged())
+			if (!transformationNeedsUpdate())
 				return;
 			else
 			{
@@ -85,7 +78,6 @@ namespace lib
 				-ss.x,		sc.y,	( orig.x * ss.y) - (orig.y * sc.y) + pos.y,
 				0.f,		0.f,	1.f 
 			};
-			m_needsUpdate = false;
 		}
 	}
 }
