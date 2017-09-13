@@ -51,10 +51,12 @@ namespace lib
 			const bool alreadyInConainer(containsComponentOfType(component,m_components));
 
 			if (!alreadyInConainer) {
+				log_debug_info("Not found. Adding it");
 				component->m_sceneNode = m_sceneNode;
 				m_components.push_back(std::move(component));
 				return true;
 			}
+			log_debug_info("Component type already present");
 			return false;
 		}
 
