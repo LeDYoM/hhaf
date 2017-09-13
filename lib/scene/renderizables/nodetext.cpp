@@ -16,17 +16,12 @@ namespace lib
 			NodeText::NodeText(SceneNode * const parent, const str & name)
 				: Renderizable{ parent, name, Triangles, 0 }
 			{
-				font.setCallback([this]() { m_geometryNeedsUpdate = true; });
-				text.setCallback([this]() { m_geometryNeedsUpdate = true; });
-				characterSize.setCallback([this]() { m_geometryNeedsUpdate = true; });
-				alignmentX.setCallback([this]() { m_geometryNeedsUpdate = true; });
-				alignmentY.setCallback([this]() { m_geometryNeedsUpdate = true; });
-				alignmentBox.setCallback([this]() { m_geometryNeedsUpdate = true; });
 			}
 
 			void NodeText::updateGeometry()
 			{
-				if (m_geometryNeedsUpdate) {
+				if (NodeTextPropertyGroup::hasChanged()) {
+					NodeTextPropertyGroup::resetHasChanged();
 					BasicVertexArray &vertices{ m_vertices.verticesArray() };
 
 					m_vertices.bounds = Rectf32{};
@@ -114,7 +109,6 @@ namespace lib
 					texture = font()->getTexture(currentCharacterSize);
 					updateAlignmentX();
 					updateAlignmentY();
-					m_geometryNeedsUpdate = false;
 					m_colorNeedsUpdate = true;
 				}
 

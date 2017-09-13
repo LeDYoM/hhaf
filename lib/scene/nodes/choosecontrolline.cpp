@@ -49,11 +49,11 @@ namespace lib
 			{
 				if (m_option->data().empty()) {
 					m_option->visible = false;
-					m_mainText->alignmentX = NodeText::AlignmentX::Center;
+					m_mainText->alignmentX = AlignmentX::Center;
 				}
 				else {
-					m_mainText->alignmentX = NodeText::AlignmentX::Left;
-					m_option->alignmentX = NodeText::AlignmentX::Right;
+					m_mainText->alignmentX = AlignmentX::Left;
+					m_option->alignmentX = AlignmentX::Right;
 				}
 			}
 

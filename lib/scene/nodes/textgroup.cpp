@@ -1,4 +1,4 @@
-#include "textquad.hpp"
+#include "textgroup.hpp"
 
 namespace lib
 {
@@ -6,7 +6,7 @@ namespace lib
 	{
 		namespace nodes
 		{
-			TextQuad::TextQuad(SceneNode * parent, str name, sptr<TTFont> font, const u32 characterSize, const Color &color, const Rectf32 & box) 
+			TextGroup::TextGroup(SceneNode * parent, str name, sptr<TTFont> font, const u32 characterSize, const Color &color, const Rectf32 & box)
 				: SceneNode{ parent, std::move(name) }, m_box { box }
 			{
 				u32 count{};
@@ -31,7 +31,7 @@ namespace lib
 				m_texts[3]->alignmentY = AlignmentY::Bottom;
 			}
 
-			TextQuad::~TextQuad() = default;
+			TextGroup::~TextGroup() = default;
 		}
 	}
 }

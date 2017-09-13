@@ -72,8 +72,8 @@ namespace zoper
 		m_pauseText->characterSize = 180;
 		m_pauseText->color = colors::White;
 		m_pauseText->alignmentBox = scenePerspective();
-		m_pauseText->alignmentX = NodeText::AlignmentX::Center;
-		m_pauseText->alignmentY = NodeText::AlignmentY::Middle;
+		m_pauseText->alignmentX = AlignmentX::Center;
+		m_pauseText->alignmentY = AlignmentY::Middle;
 
 		auto gameText(m_gameOverrg->createRenderizable<NodeText>("gameovergame"));
 		gameText->text = "GAME";
@@ -81,16 +81,16 @@ namespace zoper
 		gameText->characterSize = 360;
 		gameText->color = colors::White;
 		gameText->alignmentBox = gobox;
-		gameText->alignmentX = NodeText::AlignmentX::Center;
-		gameText->alignmentY = NodeText::AlignmentY::Top;
+		gameText->alignmentX = AlignmentX::Center;
+		gameText->alignmentY = AlignmentY::Top;
 
 		auto overText(m_gameOverrg->createRenderizable<NodeText>("gameoverover"));
 		overText->text = "OVER";
 		overText->font = m_gameresources.scoreFont;
 		overText->color = colors::White;
 		overText->alignmentBox = gobox;
-		overText->alignmentX = NodeText::AlignmentX::Center;
-		overText->alignmentY = NodeText::AlignmentY::Bottom;
+		overText->alignmentX = AlignmentX::Center;
+		overText->alignmentY = AlignmentY::Bottom;
 
 		increaseScore(0);
 

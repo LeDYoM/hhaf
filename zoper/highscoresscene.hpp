@@ -5,7 +5,7 @@
 
 #include <mtypes/include/types.hpp>
 #include <lib/scene/scene.hpp>
-
+#include <lib/scene/renderizables/nodequad.hpp>
 #include "mainmenuresources.hpp"
 
 namespace zoper
@@ -23,8 +23,11 @@ namespace zoper
 		void updateScene() override;
 
 	private:
-		lib::sptr<MainMenuResources> mainMenuResources;
-		lib::sptr<lib::scene::nodes::NodeQuad> m_background;
+		template <typename T>
+		using sptr = std::shared_ptr<T>;
+
+		sptr<MainMenuResources> mainMenuResources;
+		sptr<lib::scene::nodes::NodeQuad> m_background;
 	};
 }
 
