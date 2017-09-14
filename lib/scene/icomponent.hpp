@@ -31,13 +31,15 @@ namespace lib
 			*/
 			virtual void onAttached() {}
 
-			inline SceneNode *const attachedNode() const noexcept { return m_sceneNode; }
-			
 			/**
 			* Shortcut method to cast to another scenenode type
 			*/
 			template <typename T>
-			inline T*const attachedNodeAs() const { return m_sceneNode->snCast<T>(); }
+			inline T*const attachedNode() const { return dynamic_cast<T*>(m_sceneNode); }
+
+			template <>
+			inline SceneNode *const attachedNode() const noexcept { return m_sceneNode; }
+			
 		private:
 			SceneNode *m_sceneNode;
 			friend class ComponentContainer;

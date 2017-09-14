@@ -14,17 +14,30 @@ namespace lib
 	{
 		class Texture;
 		class SceneNode;
-		class Renderizable : public core::HasName
+
+		class RenderizablePropertyGroup
+		{
+		public:
+			Property<Color> color;
+			Property<sptr<Texture>> texture;
+			Property<bool> visible{ true };
+
+			RenderizablePropertyGroup() = default;
+			RenderizablePropertyGroup(Color color, sptr<Texture> texture)
+				: color{ std::move(color) }, texture{ std::move(texture) } {}
+
+			RenderizablePropertyGroup(const RenderizablePropertyGroup &) = default;
+			RenderizablePropertyGroup &operator=(const RenderizablePropertyGroup &) = default;
+			RenderizablePropertyGroup(RenderizablePropertyGroup &&) = default;
+			RenderizablePropertyGroup &operator=(RenderizablePropertyGroup &&) = default;
+		};
+		class Renderizable : public core::HasName, public RenderizablePropertyGroup
 		{
 		public:
 			Renderizable(SceneNode *const parent, const str &name, const PrimitiveType type, const u32 vertexCount);
 			virtual ~Renderizable() = default;
 
 			void render();
-
-			Property<Color> color;
-			Property<sptr<Texture>> texture;
-			Property<bool> visible{ true };
 
 			Rectf32 bounds() const noexcept { return m_vertices.bounds(); }
 

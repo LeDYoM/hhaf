@@ -1,10 +1,11 @@
+#pragma once
+
 #ifndef LIB_GUI_CHOOSECONTROL_LINE_INCLUDE_HPP__
 #define LIB_GUI_CHOOSECONTROL_LINE_INCLUDE_HPP__
 
-#pragma once
-
 #include <mtypes/include/types.hpp>
 #include <lib/scene/scenenode.hpp>
+#include <lib/scene/color.hpp>
 #include "optionmodel.hpp"
 
 namespace lib
@@ -23,7 +24,7 @@ namespace lib
 				ChooseControlLine(SceneNode* parent, str name);
 				void setAlignmentBox(Rectf32 albox) noexcept;
 				void setFont(sptr<scene::TTFont> f) noexcept;
-				void setColor(const scene::Color c) noexcept;
+				void setColor(const Color c) noexcept;
 				void setCharacterSize(const u32 cs) noexcept;
 
 				inline sptr<scene::nodes::NodeText> mainText() noexcept { return m_mainText; }

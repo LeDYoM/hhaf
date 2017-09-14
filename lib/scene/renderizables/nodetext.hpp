@@ -38,6 +38,15 @@ namespace lib
 				Property<AlignmentY> alignmentY;
 				Property<Rectf32> alignmentBox;
 
+				NodeTextPropertyGroup() = default;
+				NodeTextPropertyGroup(const NodeTextPropertyGroup&) = default;
+				NodeTextPropertyGroup &operator=(const NodeTextPropertyGroup&) = default;
+				NodeTextPropertyGroup(NodeTextPropertyGroup&&) = default;
+				NodeTextPropertyGroup &operator=(NodeTextPropertyGroup&&) = default;
+
+				NodeTextPropertyGroup(str _text, sptr<TTFont> font, u32 characterSize, AlignmentX alignmentX, AlignmentY alignmentY, Rectf32 alignmentBox)
+					: text{ std::move(text) }, font{ std::move(font) }, characterSize{ characterSize }, alignmentX{ alignmentX }, alignmentY{ alignmentY }, alignmentBox{ std::move(alignmentBox) } {}
+
 				bool hasChanged() const {
 					return text.hasChanged() || font.hasChanged() || characterSize.hasChanged() || alignmentX.hasChanged() || alignmentY.hasChanged() || alignmentBox.hasChanged();
 				}

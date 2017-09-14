@@ -7,7 +7,6 @@
 #include <mtypes/include/vector2d.hpp>
 #include <mtypes/include/vsp.hpp>
 #include <lib/scene/transformable.hpp>
-#include <lib/scene/color.hpp>
 #include <lib/scene/hasname.hpp>
 #include "componentcontainer.hpp"
 

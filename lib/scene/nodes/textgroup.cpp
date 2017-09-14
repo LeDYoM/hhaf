@@ -6,15 +6,15 @@ namespace lib
 	{
 		namespace nodes
 		{
-			TextGroup::TextGroup(SceneNode * parent, str name, sptr<TTFont> font, const u32 characterSize, const Color &color, const Rectf32 & box)
-				: SceneNode{ parent, std::move(name) }, m_box { box }
+			TextGroup::TextGroup(SceneNode *parent, str name, Color color, nodes::NodeTextPropertyGroup  initValues)
+				: SceneNode{ parent, std::move(name) }, NodeTextPropertyGroup{ std::move(initValues) }
 			{
 				u32 count{};
 				for (auto &node : m_texts) {
 					node = createRenderizable<NodeText>(name + "node_" + str(count++));
 					node->font = font;
 					node->characterSize = characterSize;
-					node->alignmentBox = box;
+//					node->alignmentBox = box;
 					node->alignmentX = AlignmentX::Left;
 					node->alignmentY = AlignmentY::Top;
 					node->color = color;

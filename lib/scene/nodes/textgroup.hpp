@@ -12,10 +12,10 @@ namespace lib
 	{
 		namespace nodes
 		{
-			class TextGroup : public SceneNode
+			class TextGroup : public SceneNode, public nodes::NodeTextPropertyGroup
 			{
 			public:
-				TextGroup(SceneNode *parent, str name, sptr<TTFont> font, const u32 characterSize, const Color &color, const Rectf32 &box);
+				TextGroup(SceneNode *parent, str name, Color color, nodes::NodeTextPropertyGroup  initValues);
 				virtual ~TextGroup();
 
 				inline sptr<NodeText> text(const u32 index) const noexcept { return m_texts[index]; }
