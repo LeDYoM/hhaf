@@ -18,7 +18,7 @@ target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
 
 add_custom_command(TARGET ${CURRENT_TARGET} POST_BUILD
 	COMMAND ${CMAKE_COMMAND} -E copy_directory
-	${PROJECT_SOURCE_DIR}/zoper_data/
+	${PROJECT_SOURCE_DIR}/../zoper_data/
 	$<TARGET_FILE_DIR:${CURRENT_TARGET}>)
 
 if (MSVC)
