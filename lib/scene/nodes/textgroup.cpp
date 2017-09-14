@@ -4,6 +4,9 @@
 											param -> prop = value;	\
 											});
 
+#define SET_CALLBACK_FOREACH_PROPERTY(prop)	prop .setCallback([this]() {m_texts.for_each([this](const auto&param) { param-> prop = prop (); }); });
+
+
 namespace lib
 {
 	namespace scene
@@ -11,27 +14,28 @@ namespace lib
 		namespace nodes
 		{
 			TextGroup::TextGroup(SceneNode *parent, str name)
-				: SceneNode{ parent, std::move(name) } {}
+				: SceneNode{ parent, std::move(name) } 
+			{
+				SET_CALLBACK_FOREACH_PROPERTY(font);
+				SET_CALLBACK_FOREACH_PROPERTY(characterSize);
+				SET_CALLBACK_FOREACH_PROPERTY(color);
+			}
 
 			TextGroup::~TextGroup() = default;
 
-			void TextGroup::create()
+			void TextGroup::addText(str nTexttext)
 			{
+				auto nText (createRenderizable<NodeText>(make_str(name(),m_texts.size())));
+				setGroupProperties(nText);
+				nText->text = nTexttext;
+				m_texts.push_back(std::move(nText));
 			}
 
-			void TextGroup::setFont(sptr<scene::TTFont> value) noexcept
+			void TextGroup::setGroupProperties(const sptr<NodeText>& nText)
 			{
-				FOR_EACH_NODETEXT_PROPERTY(font);
-			}
-
-			void TextGroup::setColor(const Color &value) noexcept
-			{
-				FOR_EACH_NODETEXT_PROPERTY(color);
-			}
-
-			void TextGroup::setCharacterSize(const u32 value) noexcept
-			{
-				FOR_EACH_NODETEXT_PROPERTY(characterSize);
+				nText->font = font();
+				nText->characterSize = characterSize();
+				nText->color = color();
 			}
 
 			/*

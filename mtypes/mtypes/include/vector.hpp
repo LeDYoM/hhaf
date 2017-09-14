@@ -106,12 +106,10 @@ namespace lib
 
 		void for_each(function<void(const T&)> f) {
 			if (m_size) {
-
 				iterator current{ begin() };
-				do
-				{
+				do {
 					f(*current);
-				} while (iterator++ != end());
+				} while (current++ != end());
 			}
 		}
 

@@ -12,18 +12,22 @@ namespace lib
 	{
 		namespace nodes
 		{
+
 			class TextGroup : public SceneNode
 			{
 			public:
 				TextGroup(SceneNode *parent, str name);
 				virtual ~TextGroup();
 
-				void create() override;
-				inline sptr<NodeText> text(const u32 index) const noexcept { return m_texts[index]; }
+				void addText(str nText);
+				inline sptr<NodeText> operator[](u32 index) const noexcept { return m_texts[index]; }
+				
+				Property<sptr<scene::TTFont>> font;
+				Property<Color> color;
+				Property<u32> characterSize;
 
-				void setFont(sptr<scene::TTFont> f) noexcept;
-				void setColor(const Color &c) noexcept;
-				void setCharacterSize(const u32 cs) noexcept;
+			protected:
+				void setGroupProperties(const sptr<NodeText> &nText);
 			private:
 				Rectf32 m_box;
 				vector<sptr<NodeText>> m_texts;

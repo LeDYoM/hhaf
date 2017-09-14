@@ -32,7 +32,7 @@ namespace lib
 					addComponent(nc);
 					return std::move(nc);
 				}
-				return std::move(component);
+				return component;
 			}
 			/**
 			* Returns the component of the specified type if exists
