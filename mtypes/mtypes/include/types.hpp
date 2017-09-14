@@ -5,7 +5,6 @@
 
 #include <cstdint>
 #include <memory>
-#include "vector.hpp"
 
 namespace lib
 {
@@ -23,12 +22,6 @@ namespace lib
 
 	template <typename T>
 	using wptr = std::weak_ptr<T>;
-
-	template <typename T> 
-	using vector_shared_pointers = vector<sptr<T>>;
-	
-	template <typename T>
-	using vector_unique_pointers = vector<uptr<T>>;
 
 	using u64 = uint64_t;
 	using s64 = int64_t;

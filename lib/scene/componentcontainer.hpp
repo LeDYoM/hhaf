@@ -1,7 +1,10 @@
+#pragma once
+
 #ifndef LIB_SCENE_COMPONENTCONTAINER_INCLUDE_HPP__
 #define LIB_SCENE_COMPONENTCONTAINER_INCLUDE_HPP__
 
 #include <mtypes/include/types.hpp>
+#include <mtypes/include/vector.hpp>
 #include "icomponent.hpp"
 #include <typeinfo>
 #include <typeindex>

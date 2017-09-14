@@ -6,6 +6,7 @@
 #include <utility>
 #include <initializer_list>
 #include "mtypes_export.hpp"
+#include "function.hpp"
 
 namespace lib
 {
@@ -89,6 +90,31 @@ namespace lib
 			_destroy();
 		}
 
+		constexpr reference operator[](const size_t index) noexcept { return m_buffer[index]; }
+		constexpr const_reference operator[](const size_t index) const noexcept { return m_buffer[index]; }
+		constexpr unsigned int capacity() const noexcept { return m_capacity; }
+		constexpr unsigned int size() const noexcept { return m_size; }
+		constexpr bool empty() const noexcept { return m_size == 0; }
+		constexpr iterator begin() noexcept { return m_buffer; }
+		constexpr const_iterator begin() const noexcept { return m_buffer; }
+		constexpr iterator end() noexcept { return m_buffer + m_size; }
+		constexpr const_iterator end() const noexcept { return m_buffer + m_size; }
+		constexpr const_iterator cbegin() const noexcept { return m_buffer; }
+		constexpr const_iterator cend() const noexcept { return m_buffer + m_size; }
+		constexpr T& front() noexcept { return m_buffer[0]; }
+		constexpr T& back() noexcept { return m_buffer[m_size > 0 ? (m_size - 1) : 0]; }
+
+		void for_each(function<void(const T&)> f) {
+			if (m_size) {
+
+				iterator current{ begin() };
+				do
+				{
+					f(*current);
+				} while (iterator++ != end());
+			}
+		}
+
 		constexpr iterator remove_value(const T &value) {
 			bool moving{ false };
 			iterator where_it_was{ end() };
@@ -158,20 +184,6 @@ namespace lib
 				delete[] oldBuffer;
 			}
 		}
-
-		constexpr reference operator[](const size_t index) noexcept { return m_buffer[index]; }
-		constexpr const_reference operator[](const size_t index) const noexcept { return m_buffer[index]; }
-		constexpr unsigned int capacity() const noexcept { return m_capacity; }
-		constexpr unsigned int size() const noexcept { return m_size; }
-		constexpr bool empty() const noexcept { return m_size == 0; }
-		constexpr iterator begin() noexcept { return m_buffer; }
-		constexpr const_iterator begin() const noexcept { return m_buffer; }
-		constexpr iterator end() noexcept { return m_buffer + m_size; }
-		constexpr const_iterator end() const noexcept { return m_buffer + m_size; }
-		constexpr const_iterator cbegin() const noexcept { return m_buffer; }
-		constexpr const_iterator cend() const noexcept { return m_buffer + m_size; }
-		constexpr T& front() noexcept { return m_buffer[0]; }
-		constexpr T& back() noexcept { return m_buffer[m_size > 0 ? (m_size - 1) : 0]; }
 
 		constexpr void push_back(const T& value)
 		{
@@ -303,6 +315,12 @@ namespace lib
 	{
 		return !(lhs == rhs);
 	}
+
+	template <typename T>
+	using vector_shared_pointers = vector<sptr<T>>;
+
+	template <typename T>
+	using vector_unique_pointers = vector<uptr<T>>;
 }
 
 #endif

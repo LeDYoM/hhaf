@@ -1,9 +1,10 @@
 #pragma once
 
-#include <cassert>
-
 #ifndef MTYPES_FUNCTION_INCLUDE_HPP__
 #define MTYPES_FUNCTION_INCLUDE_HPP__
+
+#include <cassert>
+#include "types.hpp"
 
 namespace lib
 {

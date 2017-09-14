@@ -1,14 +1,40 @@
 #include "textgroup.hpp"
 
+#define FOR_EACH_NODETEXT_PROPERTY(prop)	m_texts.for_each([&value](const auto&param) {	\
+											param -> prop = value;	\
+											});
+
 namespace lib
 {
 	namespace scene
 	{
 		namespace nodes
 		{
-			TextGroup::TextGroup(SceneNode *parent, str name, Color color, nodes::NodeTextPropertyGroup  initValues)
-				: SceneNode{ parent, std::move(name) }, NodeTextPropertyGroup{ std::move(initValues) }
+			TextGroup::TextGroup(SceneNode *parent, str name)
+				: SceneNode{ parent, std::move(name) } {}
+
+			TextGroup::~TextGroup() = default;
+
+			void TextGroup::create()
 			{
+			}
+
+			void TextGroup::setFont(sptr<scene::TTFont> value) noexcept
+			{
+				FOR_EACH_NODETEXT_PROPERTY(font);
+			}
+
+			void TextGroup::setColor(const Color &value) noexcept
+			{
+				FOR_EACH_NODETEXT_PROPERTY(color);
+			}
+
+			void TextGroup::setCharacterSize(const u32 value) noexcept
+			{
+				FOR_EACH_NODETEXT_PROPERTY(characterSize);
+			}
+
+			/*
 				u32 count{};
 				for (auto &node : m_texts) {
 					node = createRenderizable<NodeText>(name + "node_" + str(count++));
@@ -30,8 +56,7 @@ namespace lib
 				m_texts[3]->alignmentX = AlignmentX::Right;
 				m_texts[3]->alignmentY = AlignmentY::Bottom;
 			}
-
-			TextGroup::~TextGroup() = default;
+			*/
 		}
 	}
 }
