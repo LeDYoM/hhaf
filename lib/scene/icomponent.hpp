@@ -35,11 +35,11 @@ namespace lib
 			* Shortcut method to cast to another scenenode type
 			*/
 			template <typename T>
-			inline T*const attachedNode() const { return dynamic_cast<T*>(m_sceneNode); }
+			inline T*const attachedNodeAs() const { return dynamic_cast<T*>(m_sceneNode); }
 
-			template <>
-			inline SceneNode *const attachedNode() const noexcept { return m_sceneNode; }
-			
+			inline const SceneNode *const attachedNode() const noexcept { return m_sceneNode; }
+			inline SceneNode *const attachedNode() noexcept { return m_sceneNode; }
+
 		private:
 			SceneNode *m_sceneNode;
 			friend class ComponentContainer;

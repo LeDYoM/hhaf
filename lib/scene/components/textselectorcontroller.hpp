@@ -25,9 +25,14 @@ namespace lib
 			void onAttached() override;
 			void update() override;
 			void addText(str text);
+
+			void selectNext(const bool goBack);
+			void selectPrevious(const bool goLast);
+			void selectIndex(const s32 index);
 		private:
-			nodes::TextGroup*m_textGroup;
+			sptr<nodes::TextGroup> m_textGroup;
 			sptr<nodes::NodeText> m_selectedText;
+			s32 m_selected{ -1 };
 		};
 	}
 }

@@ -35,15 +35,19 @@ namespace lib
 
 		void InputComponent::update()
 		{
-			if (!host().inputSystem().pressedKeys().empty() && m_onKeyPressed) {
+			if (!host().inputSystem().pressedKeys().empty()) {
 				for (const auto pressedKey : host().inputSystem().pressedKeys()) {
-					m_onKeyPressed(pressedKey);
+					if (m_onKeyPressed)
+						m_onKeyPressed(pressedKey);
+					KeyPressed(pressedKey);
 				}
 			}
 
-			if (!host().inputSystem().releasedKeys().empty() && m_onKeyReleased) {
+			if (!host().inputSystem().releasedKeys().empty()) {
 				for (const auto releasedKey : host().inputSystem().releasedKeys()) {
-					m_onKeyReleased(releasedKey);
+					if (m_onKeyReleased)
+						m_onKeyReleased(releasedKey);
+					KeyReleased(releasedKey);
 				}
 			}
 		}

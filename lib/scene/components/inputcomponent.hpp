@@ -4,6 +4,7 @@
 #pragma once
 
 #include <mtypes/include/types.hpp>
+#include <mtypes/include/connection.hpp>
 #include <lib/scene/icomponent.hpp>
 #include <lib/include/key.hpp>
 
@@ -25,6 +26,9 @@ namespace lib
 			virtual void update() override;
 			
 			bool isPressed(const input::Key key);
+
+			connection<const input::Key&> KeyPressed;
+			connection<const input::Key&> KeyReleased;
 
 		private:
 			KeyHandler_t m_onKeyPressed{ nullptr };

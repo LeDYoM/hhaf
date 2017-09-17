@@ -21,7 +21,8 @@ namespace lib
 
 				void addText(str nText);
 				inline sptr<NodeText> operator[](u32 index) const noexcept { return m_texts[index]; }
-				
+				inline u32 numTexts() const noexcept { return m_texts.size(); }
+
 				Property<sptr<scene::TTFont>> font;
 				Property<Color> color;
 				Property<u32> characterSize;

@@ -16,11 +16,9 @@ namespace lib
 
 		void TextSelectorController::onAttached()
 		{
-			m_textGroup = attachedNode<nodes::TextGroup>();
-			assert_release_error(m_textGroup, "You need to attach a TextSelectorController to a TextGroup node");
-			if (m_textGroup) {
-
-			}
+			m_textGroup = attachedNode()->createSceneNode<nodes::TextGroup>("textGroup");
+			m_textGroup->addText("Text1");
+			m_textGroup->addText("Text2");
 		}
 
 		void TextSelectorController::update()
@@ -29,7 +27,26 @@ namespace lib
 
 		void TextSelectorController::addText(str text)
 		{
+			m_textGroup->addText(std::move(text));
+		}
 
+		void TextSelectorController::selectNext(const bool goBack)
+		{
+			++m_selected;
+			if (m_selected >= static_cast<s32>(m_textGroup->numTexts())) {
+				m_selected = goBack ? 0 : (m_textGroup->numTexts() - 1);
+			}
+		}
+		void TextSelectorController::selectPrevious(const bool goLast)
+		{
+			--m_selected;
+			if (m_selected < 0) {
+				m_selected = goLast ? (m_textGroup->numTexts() - 1) : 0;
+			}
+		}
+		void TextSelectorController::selectIndex(const s32 index)
+		{
+			m_selected = index;
 		}
 	}
 }

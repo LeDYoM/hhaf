@@ -4,6 +4,7 @@
 #include <lib/scene/renderizables/nodetext.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/core/host.hpp>
+#include <lib/scene/components/textselectorcontroller.hpp>
 
 namespace zoper
 {
