@@ -9,16 +9,16 @@
 namespace lib
 {
 	template <typename> 
-	class connection;
+	class emmiter;
 
 	template <typename... Args>
-	class connection<Args...> final {
+	class emmiter<Args...> final {
 	public:
-		constexpr connection() = default;
-		constexpr connection (const connection &) = default;
-		constexpr connection & operator=(const connection &) = default;
-		constexpr connection(connection &&) = default;
-		constexpr connection & operator=(connection &&) = default;
+		constexpr emmiter() = default;
+		constexpr emmiter (const emmiter &) = default;
+		constexpr emmiter & operator=(const emmiter &) = default;
+		constexpr emmiter(emmiter &&) = default;
+		constexpr emmiter & operator=(emmiter &&) = default;
 
 		constexpr void operator()(Args... args) {
 			if (!m_receivers.empty()) {

@@ -27,8 +27,8 @@ namespace lib
 			
 			bool isPressed(const input::Key key);
 
-			connection<const input::Key&> KeyPressed;
-			connection<const input::Key&> KeyReleased;
+			emmiter<const input::Key&> KeyPressed;
+			emmiter<const input::Key&> KeyReleased;
 
 		private:
 			KeyHandler_t m_onKeyPressed{ nullptr };

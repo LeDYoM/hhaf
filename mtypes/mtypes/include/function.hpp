@@ -8,7 +8,7 @@
 
 namespace lib
 {
-	template <typename T>
+	template <typename>
 	class function;
 
 	template <typename ReturnValue, typename... Args>
