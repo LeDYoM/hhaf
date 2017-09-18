@@ -8,17 +8,17 @@
 
 namespace lib
 {
-	template <typename> 
-	class emmiter;
+	template <typename>
+	class emitter;
 
 	template <typename... Args>
-	class emmiter<Args...> final {
+	class emitter<Args...> final {
 	public:
-		constexpr emmiter() = default;
-		constexpr emmiter (const emmiter &) = default;
-		constexpr emmiter & operator=(const emmiter &) = default;
-		constexpr emmiter(emmiter &&) = default;
-		constexpr emmiter & operator=(emmiter &&) = default;
+		constexpr emitter() = default;
+		constexpr emitter(const emitter &) = default;
+		constexpr emitter & operator=(const emitter &) = default;
+		constexpr emitter(emitter &&) = default;
+		constexpr emitter & operator=(emitter &&) = default;
 
 		constexpr void operator()(Args... args) {
 			if (!m_receivers.empty()) {
@@ -29,7 +29,7 @@ namespace lib
 		}
 
 		constexpr bool connect(function<void(Args...)> f) {
-			m_receivers.emplace_back(ir,std::move(f));
+			m_receivers.emplace_back(std::move(f));
 			return true;
 		}
 
@@ -37,15 +37,19 @@ namespace lib
 		vector<function<void(Args...)>> m_receivers;
 	};
 
+	template <typename>
+	class connection;
+
 	template <typename... Args>
 	class connection<Args...> final {
 	public:
-		constexpr connection(emmiter<Args...> &e, function<void(Args...)> f) : m_emmiter{ e }, m_function{ f } {
+		constexpr connection(emitter<Args...> &e, function<void(Args...)> f) : m_emitter{ e }, m_function{ f } {
 			m_emitter.connect(m_function);
 		}
 	private:
 		emitter<Args...> &m_emmiter;
 		function<void(Args...)> &m_function;
 	};
+}
 
 #endif
