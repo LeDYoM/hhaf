@@ -66,14 +66,6 @@ namespace lib
 			return *this;
 		}
 
-		constexpr void _copyStructure(const vector&other)
-		{
-			_destroy();
-			m_buffer = new T[other.m_size];
-			m_capacity = other.m_size;
-			m_size = other.m_size;
-		}
-
 		constexpr vector& operator=(vector&&other) noexcept
 		{
 			_destroy();
@@ -138,6 +130,12 @@ namespace lib
 				last_removed = remove_value(value);
 			} while (last_removed != end());
 			return m_size;
+		}
+
+		constexpr size_t remove_all_from(const vector &other) {
+			for (auto&& node : other) {
+				remove_value(std::forward<T>(node));
+			}
 		}
 
 		constexpr iterator find(const T&element) noexcept
@@ -243,6 +241,14 @@ namespace lib
 		}
 
 	private:
+
+		constexpr void _copyStructure(const vector&other)
+		{
+			_destroy();
+			m_buffer = new T[other.m_size];
+			m_capacity = other.m_size;
+			m_size = other.m_size;
+		}
 
 		constexpr void _ensure_reserved(const size_t capacity)
 		{

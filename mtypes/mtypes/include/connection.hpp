@@ -29,13 +29,23 @@ namespace lib
 		}
 
 		constexpr bool connect(function<void(Args...)> f) {
-			m_receivers.push_back(std::move(f));
+			m_receivers.emplace_back(ir,std::move(f));
 			return true;
 		}
 
 	private:
 		vector<function<void(Args...)>> m_receivers;
 	};
-}
+
+	template <typename... Args>
+	class connection<Args...> final {
+	public:
+		constexpr connection(emmiter<Args...> &e, function<void(Args...)> f) : m_emmiter{ e }, m_function{ f } {
+			m_emitter.connect(m_function);
+		}
+	private:
+		emitter<Args...> &m_emmiter;
+		function<void(Args...)> &m_function;
+	};
 
 #endif
