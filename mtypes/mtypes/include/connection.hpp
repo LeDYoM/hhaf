@@ -28,9 +28,13 @@ namespace lib
 			}
 		}
 
-		constexpr bool connect(function<void(Args...)> f) {
+		constexpr void connect(function<void(Args...)> f) {
 			m_receivers.emplace_back(std::move(f));
-			return true;
+		}
+
+		constexpr bool disconnect(function<void(Args...)>& f) {
+			auto where_it_was = m_receivers.remove_value(f);
+			return where_it_was != m_receivers.end();
 		}
 
 	private:
@@ -46,8 +50,12 @@ namespace lib
 		constexpr connection(emitter<Args...> &e, function<void(Args...)> f) : m_emitter{ e }, m_function{ f } {
 			m_emitter.connect(m_function);
 		}
+
+		bool disconnect() {
+			return m_emitter.disconnect(m_function);
+		}
 	private:
-		emitter<Args...> &m_emmiter;
+		emitter<Args...> &m_emitter;
 		function<void(Args...)> &m_function;
 	};
 }
