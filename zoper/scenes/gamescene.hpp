@@ -3,11 +3,11 @@
 #ifndef ZOOPER_GAMESCENE_INCLUDE_HPP__
 #define ZOOPER_GAMESCENE_INCLUDE_HPP__
 
-#include "keymapping.hpp"
-#include "direction.hpp"
-#include "levelproperties.hpp"
-#include "gameresources.hpp"
-#include "gamedata.hpp"
+#include "../keymapping.hpp"
+#include "../direction.hpp"
+#include "../levelproperties.hpp"
+#include "../gamedata.hpp"
+#include "../loaders/gameresources.hpp"
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/function.hpp>

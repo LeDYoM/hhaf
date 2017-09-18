@@ -7,7 +7,7 @@
 #include <lib/core/events/eventmanager.hpp>
 #include <lib/core/debugsystem.hpp>
 
-#include "mainmenu.hpp"
+#include "../mainmenu.hpp"
 
 namespace zoper
 {

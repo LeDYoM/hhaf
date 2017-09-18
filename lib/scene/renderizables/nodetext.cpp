@@ -75,10 +75,10 @@ namespace lib
 							const Rectf32 glyphbound{ glyph.bounds };
 							const Rectf32 glyphTextureRect{ glyph.textureBounds };
 
-							const f32 u1 = static_cast<f32>(glyphTextureRect.left);
-							const f32 v1 = static_cast<f32>(glyphTextureRect.top);
-							const f32 u2 = static_cast<f32>(glyphTextureRect.left + glyphTextureRect.width);
-							const f32 v2 = static_cast<f32>(glyphTextureRect.top + glyphTextureRect.height);
+							const f32 u1{ static_cast<f32>(glyphTextureRect.left) };
+							const f32 v1{ static_cast<f32>(glyphTextureRect.top) };
+							const f32 u2{ static_cast<f32>(glyphTextureRect.left + glyphTextureRect.width) };
+							const f32 v2{ static_cast<f32>(glyphTextureRect.top + glyphTextureRect.height) };
 
 							const f32 gleft{ x + glyphbound.left };
 							const f32 gright{ x + glyphbound.right() };
@@ -93,11 +93,13 @@ namespace lib
 							vertices.emplace_back(vector2df{ gright, gbottom }, vector2df{ u2, v2 });
 
 							// Update the current bounds
-							using namespace std;
-							minX = min(minX, gleft);
-							maxX = max(maxX, gright);
-							minY = min(minY, gtop);
-							maxY = max(maxY, gbottom);
+							{
+								using namespace std;
+								minX = min(minX, gleft);
+								maxX = max(maxX, gright);
+								minY = min(minY, gtop);
+								maxY = max(maxY, gbottom);
+							}
 
 							// Advance to the next character
 							x += glyph.advance;

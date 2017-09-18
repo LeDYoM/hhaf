@@ -1,7 +1,9 @@
 #include "zoperprogramcontroller.hpp"
-#include "menuscene.hpp"
-#include "gamescene.hpp"
+#include "scenes/menuscene.hpp"
+#include "scenes/gamescene.hpp"
+#include "scenes/highscoresscene.hpp"
 #include "common.hpp"
+
 #include <lib/core/host.hpp>
 #include <lib/core/serializer.hpp>
 #include <lib/scene/scenemanager.hpp>

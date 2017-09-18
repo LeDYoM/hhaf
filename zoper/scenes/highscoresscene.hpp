@@ -6,7 +6,7 @@
 #include <mtypes/include/types.hpp>
 #include <lib/scene/scene.hpp>
 #include <lib/scene/renderizables/nodequad.hpp>
-#include "mainmenuresources.hpp"
+#include "../loaders/mainmenuresources.hpp"
 
 namespace zoper
 {

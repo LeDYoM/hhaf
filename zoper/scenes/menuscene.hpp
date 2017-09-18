@@ -8,7 +8,7 @@
 #include <lib/scene/nodes/choosecontrolgroup.hpp>
 #include <lib/scene/scene.hpp>
 
-#include "mainmenuresources.hpp"
+#include "../loaders/mainmenuresources.hpp"
 
 namespace zoper
 {

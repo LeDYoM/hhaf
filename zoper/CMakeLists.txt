@@ -1,9 +1,7 @@
 project(zoper)
 
-#include_directories (${LIB_BASE_DIRECTORY})
-
-file (GLOB ZOPER_HEADERS "*.hpp")
-file (GLOB ZOPER_SOURCES "*.cpp")
+file (GLOB_RECURSE ZOPER_HEADERS "*.hpp")
+file (GLOB_RECURSE ZOPER_SOURCES "*.cpp")
 
 set (CURRENT_TARGET zoper)
 

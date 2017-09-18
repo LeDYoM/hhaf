@@ -1,10 +1,10 @@
 #include "gamescene.hpp"
 
-#include "tile.hpp"
-#include "player.hpp"
-#include "common.hpp"
-#include "gamedata.hpp"
-#include "zoperprogramcontroller.hpp"
+#include "../tile.hpp"
+#include "../player.hpp"
+#include "../common.hpp"
+#include "../gamedata.hpp"
+#include "../zoperprogramcontroller.hpp"
 #include <mtypes/include/types.hpp>
 #include <lib/board/boardmodel.hpp>
 #include <lib/board/itilescontroller.hpp>
