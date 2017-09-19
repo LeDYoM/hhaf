@@ -8,6 +8,7 @@
 #include "optionmodel.hpp"
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/function.hpp>
+#include <mtypes/include/connection.hpp>
 #include <lib/scene/scene.hpp>
 
 namespace lib
@@ -37,6 +38,7 @@ namespace lib
 				Property<u32> currentControlIndex;
 
 			private:
+				Receiver m_receiver;
 				uptr<StatesController> m_sController;
 				Theme m_theme;
 			};

@@ -96,13 +96,19 @@ namespace lib
 		constexpr T& front() noexcept { return m_buffer[0]; }
 		constexpr T& back() noexcept { return m_buffer[m_size > 0 ? (m_size - 1) : 0]; }
 
-		void for_each(function<void(const T&)> f) {
+		constexpr void for_each(function<void(const T&)> f) {
 			if (m_size) {
 				iterator current{ begin() };
 				do {
 					f(*current);
 				} while (current++ != end());
 			}
+		}
+
+		constexpr void swap(vector& other) {
+			std::swap(m_buffer, other.m_buffer);
+			std::swap(m_size, other.m_size);
+			std::swap(m_capacity, other.m_capacity);
 		}
 
 		constexpr iterator remove_value(const T &value) {
