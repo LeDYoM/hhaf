@@ -17,22 +17,24 @@ namespace lib
 
 		constexpr function() noexcept : m_callable{ nullptr } {}
 		constexpr function(std::nullptr_t) noexcept : m_callable{ nullptr } {}
-		constexpr function(const function&) noexcept = default;
+		constexpr function(const function&t) noexcept = default;
 		constexpr function& operator=(const function&) noexcept = default;
 		constexpr function(function&&) noexcept = default;
 		constexpr function& operator=(function&&) noexcept = default;
 
 		constexpr operator bool() const noexcept { return m_callable != nullptr; }
 
-		template <typename T>
+		template <typename T, typename = typename std::enable_if< std::is_same_v<T, function> >::type >
+		constexpr function(const T&t) noexcept : m_callable{ t.m_callable } {}
+
+		template <typename T, typename = typename std::enable_if< !std::is_same_v<T,function> >::type >
 		constexpr function(T&& t) {
 			m_callable = msptr<CallableT<T>>(std::forward<T>(t));
 		}
 
-		template <typename... Args_>
-		constexpr ReturnValue operator()(Args_&&... args) const {
+		constexpr ReturnValue operator()(Args&&... args) const {
 			assert(m_callable);
-			return m_callable->Invoke(std::forward<Args_>(args)...);
+			return m_callable->Invoke(std::forward<Args>(args)...);
 		}
 
 	private:

@@ -81,14 +81,11 @@ namespace lib
 	public:
 		template <typename... Args>
 		void connect(emitter<Args...> &e, function<void(Args...)> f) {
-			decltype(f) t{ f };
-
-			sptr<IConnection> conn = msptr<connection<Args...>>(e, msptr<function<void(Args...)>>(t));
-			m_connections.push_back(conn);
+			m_connections.push_back(muptr<connection<Args...>>(e, msptr<function<void(Args...)>>(f)));
 		}
 
 	private:
-		vector<sptr<IConnection>> m_connections;
+		vector<uptr<IConnection>> m_connections;
 	};
 }
 
