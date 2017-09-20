@@ -18,7 +18,9 @@ namespace lib
 			void ChooseControlGroup::create()
 			{
 				auto inputComponent(ensureComponentOfType<scene::InputComponent>());
-				m_receiver.connect<const input::Key&>(inputComponent->KeyPressed, [this](const input::Key&key) {
+				connection<const lib::input::Key&> m_connection(inputComponent->KeyPressed, [this](const lib::input::Key&key) {
+
+//				m_receiver.connect<const input::Key&>(inputComponent->KeyPressed, [this](const input::Key&key) {
 //				inputComponent->KeyPressed.connect([this](const lib::input::Key&key) {
 					log_debug_info("Key pressed toChooseControlGroup");
 					auto node(m_sController->activeNode()->snCast<ChooseControl>());

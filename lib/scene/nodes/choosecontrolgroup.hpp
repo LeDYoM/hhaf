@@ -13,6 +13,10 @@
 
 namespace lib
 {
+	namespace input
+	{
+		enum Key;
+	}
 	namespace scene
 	{
 		namespace nodes
@@ -38,7 +42,6 @@ namespace lib
 				Property<u32> currentControlIndex;
 
 			private:
-				Receiver m_receiver;
 				uptr<StatesController> m_sController;
 				Theme m_theme;
 			};
