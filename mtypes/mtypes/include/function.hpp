@@ -25,7 +25,7 @@ namespace lib
 		constexpr operator bool() const noexcept { return m_callable != nullptr; }
 
 		template <typename T>
-		constexpr function(T&& t) : m_callable { msptr<CallableT<T>>(std::forward<T>(t)) } {}
+		constexpr function(T t) : m_callable { msptr<CallableT<T>>(std::move(t)) } {}
 
 		constexpr ReturnValue operator()(Args&&... args) const {
 			assert(m_callable);
