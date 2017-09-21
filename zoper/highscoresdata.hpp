@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef ZOPER_GAMEDATA_INCLUDE_HPP__
-#define ZOPER_GAMEDATA_INCLUDE_HPP__
+#ifndef ZOPER_HIGHSCORESDATA_INCLUDE_HPP__
+#define ZOPER_HIGHSCORESDATA_INCLUDE_HPP__
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/array.hpp>
