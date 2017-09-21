@@ -44,6 +44,7 @@ namespace lib
 			private:
 				uptr<StatesController> m_sController;
 				Theme m_theme;
+				ireceiver m_receiver;
 			};
 		}
 	}

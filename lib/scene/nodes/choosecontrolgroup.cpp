@@ -18,7 +18,8 @@ namespace lib
 			void ChooseControlGroup::create()
 			{
 				auto inputComponent(ensureComponentOfType<scene::InputComponent>());
-				connection<const lib::input::Key&> m_connection(inputComponent->KeyPressed, [this](const lib::input::Key&key) {
+				m_receiver.connect<const lib::input::Key&>(inputComponent->KeyPressed, [this](const lib::input::Key&key) {
+//				connection<const lib::input::Key&> m_connection(inputComponent->KeyPressed, [this](const lib::input::Key&key) {
 
 //				m_receiver.connect<const input::Key&>(inputComponent->KeyPressed, [this](const input::Key&key) {
 //				inputComponent->KeyPressed.connect([this](const lib::input::Key&key) {

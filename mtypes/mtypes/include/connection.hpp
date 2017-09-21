@@ -41,22 +41,40 @@ namespace lib
 		vector<function<void(Args...)>> m_receivers;
 	};
 
+	class iconnection
+	{
+	public:
+		virtual bool disconnect() = 0;
+		virtual ~iconnection() {}
+	};
 	template <typename>
 	class connection;
 
 	template <typename... Args>
-	class connection<Args...> final {
+	class connection<Args...> final : public iconnection {
 	public:
-		constexpr connection(emitter<Args...> &e, function<void(Args...)> &&f) : m_emitter{ e }, m_function{ std::move(f) } {
+		constexpr connection(emitter<Args...> &e, function<void(Args...)> f) : m_emitter{ e }, m_function{ std::move(f) } {
 			m_emitter.connect(m_function);
 		}
 
-		bool disconnect() {
+		bool disconnect() override {
 			return m_emitter.disconnect(m_function);
 		}
 	private:
 		emitter<Args...> &m_emitter;
 		function<void(Args...)> m_function;
+	};
+
+	class ireceiver
+	{
+	public:
+		template <typename... Args>
+		constexpr void connect(emitter<Args...> &e, function<void(Args...)> f) {
+			m_connections.push_back(msptr<connection<Args...>>(e, std::move(f)));
+		}
+		virtual ~ireceiver() {}
+	private:
+		vector<sptr<iconnection>> m_connections;
 	};
 }
 
