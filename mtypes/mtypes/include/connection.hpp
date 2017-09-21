@@ -72,7 +72,12 @@ namespace lib
 		constexpr void connect(emitter<Args...> &e, function<void(Args...)> f) {
 			m_connections.push_back(msptr<connection<Args...>>(e, std::move(f)));
 		}
-		virtual ~ireceiver() {}
+		virtual ~ireceiver() 
+		{
+			for (auto &connection : m_connections) {
+				connection->disconnect();
+			}
+		}
 	private:
 		vector<sptr<iconnection>> m_connections;
 	};
