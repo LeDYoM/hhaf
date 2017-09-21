@@ -17,9 +17,15 @@ namespace lib
 		using const_reference = const T&;
 		using size_t = unsigned int;
 
+		array() = default;
+		constexpr array(std::initializer_list<T> iList) noexcept {
+			for (size_t i{ 0 }; i < iList.size() && i < array_size;++i) {
+				m_buffer[i] = std::move(*(iList.begin()+i));
+			}
+		}
 		constexpr reference operator[](const size_t index) noexcept { return m_buffer[index]; }
 		constexpr const_reference operator[](const size_t index) const noexcept { return m_buffer[index]; }
-		constexpr unsigned int size() const noexcept { return size; }
+		constexpr size_t size() const noexcept { return size; }
 		constexpr bool empty() const noexcept { return size == 0; }
 		constexpr iterator begin() noexcept { return m_buffer; }
 		constexpr const_iterator begin() const noexcept { return m_buffer; }
