@@ -6,6 +6,7 @@
 
 #include "types.hpp"
 #include "str.hpp"
+#include "array.hpp"
 
 namespace lib
 {
@@ -29,7 +30,7 @@ namespace lib
 	}
 
 	template <typename T, u32 size>
-	SerializationStreamIn& operator>>(SerializationStreamIn&ssi, std::array<T,size> &data)
+	SerializationStreamIn& operator>>(SerializationStreamIn&ssi, array<T,size> &data)
 	{
 		for (u32 i{ 0 }; i < size; ++i) {
 			ssi >> data[i];
@@ -68,7 +69,7 @@ namespace lib
 	}
 
 	template <typename T, u32 size>
-	SerializationStreamOut& operator<<(SerializationStreamOut&sso, const std::array<T,size> &data)
+	SerializationStreamOut& operator<<(SerializationStreamOut&sso, const array<T,size> &data)
 	{
 		for (u32 i{ 0 }; i < size; ++i) {
 			sso << data[i];

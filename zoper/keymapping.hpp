@@ -2,9 +2,9 @@
 #define __KEYMAPPING_HPP__
 
 #include <mtypes/include/streams.hpp>
+#include <mtypes/include/array.hpp>
 #include <lib/include/key.hpp>
 #include "direction.hpp"
-#include <array>
 
 namespace zoper
 {
@@ -30,7 +30,7 @@ namespace zoper
 		friend lib::SerializationStreamIn& operator>>(lib::SerializationStreamIn&ssi, KeyMapping &data);
 		friend lib::SerializationStreamOut& operator<<(lib::SerializationStreamOut&sso, const KeyMapping&data);
 	private:
-		std::array<lib::input::Key, KeyMapping::TotalKeys> m_keys;
+		lib::array<lib::input::Key, KeyMapping::TotalKeys> m_keys;
 
 	};
 

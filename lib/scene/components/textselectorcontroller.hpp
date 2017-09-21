@@ -19,6 +19,7 @@ namespace lib
 		class TextSelectorController : public IComponent
 		{
 		public:
+
 			TextSelectorController();
 			~TextSelectorController();
 
