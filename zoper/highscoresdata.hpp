@@ -17,27 +17,15 @@ namespace zoper
 		lib::u32 score{ 0 };
 	};
 
-	using HighScoreList = lib::array<HighScore, 10>;
-
-	class HighScoreList
+	class HighScoresData
 	{
 	public:
-
+		using HighScoresList = lib::array<HighScore, NumHighScore>;
+		void read();
+		void store();
+	private:
+		HighScoresList m_highScoreList;
 	};
-
-	inline lib::SerializationStreamIn& operator>>(lib::SerializationStreamIn&ssi, HighScore &data)
-	{
-		ssi >> data.name;
-		ssi >> data.score;
-		return ssi;
-	}
-
-	inline lib::SerializationStreamOut& operator<<(lib::SerializationStreamOut&sso, const HighScore&data)
-	{
-		sso << data.name;
-		sso << data.score;
-		return sso;
-	}
 
 }
 

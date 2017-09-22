@@ -23,18 +23,19 @@ namespace lib
 				m_buffer[i] = std::move(*(iList.begin()+i));
 			}
 		}
+
 		constexpr reference operator[](const size_t index) noexcept { return m_buffer[index]; }
 		constexpr const_reference operator[](const size_t index) const noexcept { return m_buffer[index]; }
 		constexpr size_t size() const noexcept { return size; }
 		constexpr bool empty() const noexcept { return size == 0; }
 		constexpr iterator begin() noexcept { return m_buffer; }
 		constexpr const_iterator begin() const noexcept { return m_buffer; }
-		constexpr iterator end() noexcept { return m_buffer + m_size; }
-		constexpr const_iterator end() const noexcept { return m_buffer + m_size; }
+		constexpr iterator end() noexcept { return m_buffer + array_size; }
+		constexpr const_iterator end() const noexcept { return m_buffer + array_size; }
 		constexpr const_iterator cbegin() const noexcept { return m_buffer; }
-		constexpr const_iterator cend() const noexcept { return m_buffer + m_size; }
+		constexpr const_iterator cend() const noexcept { return m_buffer + array_size; }
 		constexpr T& front() noexcept { return m_buffer[0]; }
-		constexpr T& back() noexcept { return m_buffer[size > 0 ? (size - 1) : 0]; }
+		constexpr T& back() noexcept { return m_buffer[array_size > 0 ? (array_size - 1) : 0]; }
 
 	private:
 		T m_buffer[array_size];

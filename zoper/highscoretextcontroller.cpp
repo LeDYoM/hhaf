@@ -1,4 +1,5 @@
 #include "highscoretextcontroller.hpp"
+#include "highscoresdata.hpp"
 
 namespace zoper
 {
@@ -13,6 +14,9 @@ namespace zoper
 		ParentClassType::onAttached();
 
 		// Request the highscores.
-
+		HighScoresData hsData;
+		hsData.read();
+		
+		add
 	}
 }

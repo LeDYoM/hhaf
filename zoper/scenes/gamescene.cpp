@@ -288,7 +288,7 @@ namespace zoper
 
 	void GameScene::generateNextToken()
 	{
-		const GameData::TokenZone &currentTokenZone{ m_gameData->_tokenZones[m_nextTokenPart] };
+		const GameData::TokenZone &currentTokenZone{ m_gameData->tokenZones[m_nextTokenPart] };
 
 		log_debug_info("NextTokenPart: ", m_nextTokenPart);
 		log_debug_info("zone: ", currentTokenZone.zone);

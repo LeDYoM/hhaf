@@ -5,6 +5,7 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
+#include <mtypes/include/log.hpp>
 #include "file.hpp"
 
 namespace lib
@@ -26,6 +27,9 @@ namespace lib
 				auto ssi(fin.getAsStream());
 				ssi >> data;
 				return true;
+			}
+			else {
+				log_debug_info("File ", fileName, " cannot be opened for reading");
 			}
 			return false;
 		}

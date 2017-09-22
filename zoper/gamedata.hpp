@@ -15,15 +15,6 @@
 namespace zoper
 {
 	constexpr lib::u32 NumWays = 4;
-	constexpr lib::u32 NumHighScore = 10;
-
-	struct HighScore
-	{
-		lib::str name{};
-		lib::u32 score{ 0 };
-	};
-
-	using HighScoreList = lib::array<HighScore, 10>;
 
 	class GameData
 	{
@@ -41,7 +32,7 @@ namespace zoper
 		lib::vector2du32 size{ 18,12 };
 		lib::Rectu32 centerRect{ 7,4,4,4 };
 
-		lib::array<TokenZone, NumWays> _tokenZones;
+		lib::array<TokenZone, NumWays> tokenZones;
 
 		lib::Timer levelClock;
 		lib::u32 consumedTokens{ 0 };
@@ -56,24 +47,8 @@ namespace zoper
 			Time = 1,
 		} _gameMode{ Token };
 
-
-		HighScoreList highScores;
 		void generateTokenZones();
 	};
-
-	inline lib::SerializationStreamIn& operator>>(lib::SerializationStreamIn&ssi, HighScore &data)
-	{
-		ssi >> data.name;
-		ssi >> data.score;
-		return ssi;
-	}
-
-	inline lib::SerializationStreamOut& operator<<(lib::SerializationStreamOut&sso, const HighScore&data)
-	{
-		sso << data.name;
-		sso << data.score;
-		return sso;
-	}
 
 }
 

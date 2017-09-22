@@ -42,9 +42,6 @@ namespace zoper
 	void ZoperProgramController::onInit()
 	{
 		gameData = msptr<GameData>();
-		Serializer<HighScoreList> sHScoreList;
-		sHScoreList.serialize("hscores.txt", gameData->highScores);
-		sHScoreList.deserialize("hscores.txt", gameData->highScores);
 
 		keyMapping = muptr<KeyMapping>();
 		Serializer<KeyMapping> kmSerializer;
