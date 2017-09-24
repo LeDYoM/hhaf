@@ -20,7 +20,8 @@ namespace zoper
 
 		sptr<Scene> startScene() override
 		{
-			return msptr<MenuScene>();
+//			return msptr<MenuScene>();
+			return msptr<HighScoresScene>();
 		}
 
 		sptr<Scene> scenedFinished(sptr<Scene> sceneTerminated) override
