@@ -1,5 +1,6 @@
 #include "highscoretextcontroller.hpp"
 #include "highscoresdata.hpp"
+#include <lib/scene/nodes/textgroup.hpp>
 
 namespace zoper
 {
@@ -17,6 +18,9 @@ namespace zoper
 		HighScoresData hsData;
 		hsData.read();
 		
-		add
+		textGroup()->characterSize = 30;
+		addText("Example1");
+		addText("Example2");
+
 	}
 }

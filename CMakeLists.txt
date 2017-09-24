@@ -11,7 +11,11 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF) # -std=c++11 instead of -std=gnu++11
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+if(MSVC)
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17")
+endif(MSVC)
 
 # Set compiler flags and options. 
 # Here it is setting the Visual Studio warning level to 4

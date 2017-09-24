@@ -30,6 +30,11 @@ namespace lib
 			void selectNext(const bool goBack);
 			void selectPrevious(const bool goLast);
 			void selectIndex(const s32 index);
+
+		protected:
+			inline sptr<nodes::TextGroup> textGroup() noexcept { return m_textGroup; }
+			inline const sptr<nodes::TextGroup> textGroup() const noexcept { return m_textGroup; }
+
 		private:
 			sptr<nodes::TextGroup> m_textGroup;
 			sptr<nodes::NodeText> m_selectedText;
