@@ -7,6 +7,7 @@
 #include <lib/scene/scene.hpp>
 #include <lib/scene/renderizables/nodequad.hpp>
 #include "../loaders/mainmenuresources.hpp"
+#include "../highscoretextcontroller.hpp"
 
 namespace zoper
 {
@@ -28,6 +29,7 @@ namespace zoper
 
 		sptr<MainMenuResources> mainMenuResources;
 		sptr<lib::scene::nodes::NodeQuad> m_background;
+		sptr<HighScoreTextController> m_highScoreTextController;
 	};
 }
 

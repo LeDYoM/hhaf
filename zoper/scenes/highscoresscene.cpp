@@ -4,7 +4,8 @@
 #include <lib/scene/renderizables/nodetext.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/core/host.hpp>
-#include <lib/scene/components/textselectorcontroller.hpp>
+#include "../highscoresdata.hpp"
+#include "../highscoretextcontroller.hpp"
 
 namespace zoper
 {
@@ -21,6 +22,14 @@ namespace zoper
 
 		mainMenuResources = msptr<MainMenuResources>();
 		mainMenuResources->loadResources(resourceManager());
+
+		m_background = createRenderizable<NodeQuad>("background");
+		m_background->box = Rectf32::fromSize(2000.0f, 2000.0f);
+		m_background->texture = mainMenuResources->background;
+		m_background->color = colors::White;
+
+		m_highScoreTextController = ensureComponentOfType<HighScoreTextController>();
+		
 	}
 
 	void HighScoresScene::onDeinit()

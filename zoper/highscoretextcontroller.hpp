@@ -5,6 +5,7 @@
 
 #include <lib/scene/icomponent.hpp>
 #include <lib/scene/components/textselectorcontroller.hpp>
+#include <lib/scene/ttfont.hpp>
 
 namespace zoper
 {
@@ -17,6 +18,9 @@ namespace zoper
 
 		virtual void onAttached() override;
 
+	private:
+		lib::sptr<lib::scene::TTFont> m_font;
+		lib::u32 m_characterSize;
 	};
 }
 

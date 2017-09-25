@@ -18,7 +18,8 @@ namespace zoper
 		HighScoresData hsData;
 		hsData.read();
 		
-		textGroup()->characterSize = 30;
+		textGroup()->characterSize = m_characterSize;
+		textGroup()->font = m_font;
 		addText("Example1");
 		addText("Example2");
 
