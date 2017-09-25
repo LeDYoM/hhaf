@@ -28,8 +28,7 @@ namespace zoper
 		m_background->texture = mainMenuResources->background;
 		m_background->color = colors::White;
 
-		m_highScoreTextController = ensureComponentOfType<HighScoreTextController>();
-		
+		createSceneNode<HighScoreTextController>();
 	}
 
 	void HighScoresScene::onDeinit()

@@ -46,17 +46,17 @@ namespace lib
 			* @returns The created renderizable
 			*/
 			template <typename T, typename... Args>
-			sptr<T> createRenderizable(const str &name, Args&&... args)
+			sptr<T> createRenderizable(Args&&... args)
 			{
-				auto result(msptr<T>(this, name, std::forward<Args>(args)...));
+				auto result(msptr<T>(this, std::forward<Args>(args)...));
 				addRenderizable(result);
 				return result;
 			}
 
 			template <typename T = SceneNode, typename... Args>
-			sptr<T> createSceneNode(const str &name, Args&&... args)
+			sptr<T> createSceneNode(Args&&... args)
 			{
-				auto result(msptr<T>(this, name, std::forward<Args>(args)...));
+				auto result(msptr<T>(this, std::forward<Args>(args)...));
 				addSceneNode(result);
 				return result;
 			}

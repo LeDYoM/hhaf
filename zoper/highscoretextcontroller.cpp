@@ -7,21 +7,23 @@ namespace zoper
 	using namespace lib;
 	using namespace lib::scene;
 
-	HighScoreTextController::HighScoreTextController() = default;
+	HighScoreTextController::HighScoreTextController(SceneNode *parent) : SceneNode{ parent, "HighScreTextController" } {}
 	HighScoreTextController::~HighScoreTextController() = default;
 
-	void HighScoreTextController::onAttached()
+	void HighScoreTextController::create()
 	{
-		ParentClassType::onAttached();
+		ParentClassType::create();
 
 		// Request the highscores.
 		HighScoresData hsData;
 		hsData.read();
 		
-		textGroup()->characterSize = m_characterSize;
-		textGroup()->font = m_font;
-		addText("Example1");
-		addText("Example2");
-
+		m_textGroup = createSceneNode<nodes::TextGroup>("HighScoresTextGroup");
+		m_textGroup->characterSize = m_characterSize;
+		m_textGroup->font = m_font;
+		m_textGroup->color = colors::Green;
+		m_textGroup->position = { 200,200 };
+		m_textGroup->addText("Example1");
+		m_textGroup->addText("Example2");
 	}
 }

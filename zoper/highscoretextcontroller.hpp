@@ -3,24 +3,27 @@
 #ifndef ZOPER_HIGHSCORETEXTCONTROLLER_INCLUDE_HPP__
 #define ZOPER_HIGHSCORETEXTCONTROLLER_INCLUDE_HPP__
 
-#include <lib/scene/icomponent.hpp>
-#include <lib/scene/components/textselectorcontroller.hpp>
+#include <lib/scene/scenenode.hpp>
+#include <lib/scene/nodes/textgroup.hpp>
 #include <lib/scene/ttfont.hpp>
 
 namespace zoper
 {
-	class HighScoreTextController : public lib::scene::TextSelectorController
+	using namespace lib;
+
+	class HighScoreTextController : public scene::SceneNode
 	{
 	public:
-		using ParentClassType = lib::scene::TextSelectorController;
-		HighScoreTextController();
+		using ParentClassType = scene::SceneNode;
+		HighScoreTextController(scene::SceneNode *parent);
 		virtual ~HighScoreTextController();
 
-		virtual void onAttached() override;
+		virtual void create() override;
 
 	private:
-		lib::sptr<lib::scene::TTFont> m_font;
-		lib::u32 m_characterSize;
+		sptr<scene::nodes::TextGroup> m_textGroup;
+		sptr<scene::TTFont> m_font;
+		u32 m_characterSize;
 	};
 }
 
