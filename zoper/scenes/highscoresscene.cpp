@@ -20,15 +20,15 @@ namespace zoper
 	{
 		Scene::create();
 
-		mainMenuResources = msptr<MainMenuResources>();
-		mainMenuResources->loadResources(resourceManager());
+		m_resources = msptr<HighScoresResources>();
+		m_resources->loadResources(resourceManager());
 
 		m_background = createRenderizable<NodeQuad>("background");
 		m_background->box = Rectf32::fromSize(2000.0f, 2000.0f);
-		m_background->texture = mainMenuResources->background;
+		m_background->texture = m_resources->background;
 		m_background->color = colors::White;
 
-		createSceneNode<HighScoreTextController>();
+		createSceneNode<HighScoreTextController>(m_resources);
 	}
 
 	void HighScoresScene::onDeinit()

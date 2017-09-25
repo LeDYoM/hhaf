@@ -15,7 +15,7 @@ namespace zoper
 	{
 	public:
 		using ParentClassType = scene::SceneNode;
-		HighScoreTextController(scene::SceneNode *parent);
+		HighScoreTextController(scene::SceneNode *parent, sptr<scene::TTFont> font, const u32 characterSize);
 		virtual ~HighScoreTextController();
 
 		virtual void create() override;

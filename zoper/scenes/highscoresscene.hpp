@@ -6,7 +6,7 @@
 #include <mtypes/include/types.hpp>
 #include <lib/scene/scene.hpp>
 #include <lib/scene/renderizables/nodequad.hpp>
-#include "../loaders/mainmenuresources.hpp"
+#include "../loaders/highscoresresources.hpp"
 #include "../highscoretextcontroller.hpp"
 
 namespace zoper
@@ -27,7 +27,7 @@ namespace zoper
 		template <typename T>
 		using sptr = std::shared_ptr<T>;
 
-		sptr<MainMenuResources> mainMenuResources;
+		sptr<HighScoresResources> m_resources;
 		sptr<lib::scene::nodes::NodeQuad> m_background;
 		sptr<HighScoreTextController> m_highScoreTextController;
 	};

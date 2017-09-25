@@ -7,7 +7,8 @@ namespace zoper
 	using namespace lib;
 	using namespace lib::scene;
 
-	HighScoreTextController::HighScoreTextController(SceneNode *parent) : SceneNode{ parent, "HighScreTextController" } {}
+	HighScoreTextController::HighScoreTextController(SceneNode *parent, sptr<scene::TTFont> font, const u32 characterSize)
+		: SceneNode{ parent, "HighScreTextController" }, m_font{ std::move(font) }, m_characterSize{ characterSize } {}
 	HighScoreTextController::~HighScoreTextController() = default;
 
 	void HighScoreTextController::create()
