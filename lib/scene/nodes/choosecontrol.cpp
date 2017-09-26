@@ -111,13 +111,13 @@ namespace lib
 					menuLine->create();
 					menuLine->mainText()->text = label.text;
 					menuLine->setFont(cTheme.font);
-					menuLine->setCharacterSize(cTheme.chSize);
+					menuLine->setCharacterSize(cTheme.characterSize);
 					menuLine->setColor(cTheme.textColor);
 					menuLine->setAlignmentBox(box().moved(currentPos));
 					menuLine->option()->data = label.subOptionsLabels;
 					menuLine->configure();
 
-					currentPos.y += (cTheme.chSize + cTheme.incY);
+					currentPos.y += (cTheme.characterSize + cTheme.lineHeight);
 					lines.push_back(std::move(menuLine));
 					++count;
 				}

@@ -4,8 +4,12 @@
 #define ZOPER_HIGHSCORETEXTCONTROLLER_INCLUDE_HPP__
 
 #include <lib/scene/scenenode.hpp>
-#include <lib/scene/nodes/textgroup.hpp>
 #include <lib/scene/ttfont.hpp>
+#include <lib/scene/nodes/theme.hpp>
+#include <lib/scene/renderizables/nodetext.hpp>
+
+#include "loaders/highscoresresources.hpp"
+#include "highscoresdata.hpp"
 
 namespace zoper
 {
@@ -15,15 +19,14 @@ namespace zoper
 	{
 	public:
 		using ParentClassType = scene::SceneNode;
-		HighScoreTextController(scene::SceneNode *parent, sptr<scene::TTFont> font, const u32 characterSize);
+		HighScoreTextController(scene::SceneNode *parent, sptr<scene::nodes::Theme> theme);
 		virtual ~HighScoreTextController();
 
 		virtual void create() override;
 
 	private:
-		sptr<scene::nodes::TextGroup> m_textGroup;
-		sptr<scene::TTFont> m_font;
-		u32 m_characterSize;
+		array<sptr<nodes::NodeText>,10> m_textGroup;
+		sptr<scene::nodes::Theme> m_theme;
 	};
 }
 

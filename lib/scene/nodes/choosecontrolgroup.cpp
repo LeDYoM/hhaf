@@ -67,8 +67,8 @@ namespace lib
 				m_theme.font = host().resourceManager().getResource<scene::TTFont>("game_menu.mainFont", "resources/oldct.ttf");
 				m_theme.textColor = scene::colors::Blue;
 				m_theme.selectedTextColor = scene::colors::Red;
-				m_theme.chSize = 70;
-				m_theme.incY = 1;
+				m_theme.characterSize = 70;
+				m_theme.lineHeight = 1;
 				m_theme.cursorDescriptor = CursorDescriptor{ 3, vector2df{ 90.0f, 90.0f },scene::colors::Red };
 			}
 

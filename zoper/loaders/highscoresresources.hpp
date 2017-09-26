@@ -14,7 +14,8 @@ namespace zoper
 		virtual void loadResources(lib::core::ResourceManager&) override;
 
 		lib::sptr<lib::scene::Texture> background;
-		lib::sptr<lib::scene::Texture> logo;
+		lib::sptr<lib::scene::TTFont> mainFont;
+		
 	};
 }
 

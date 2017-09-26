@@ -21,11 +21,11 @@ namespace lib
 
 			struct Theme
 			{
-				sptr<scene::TTFont> font;
-				scene::Color textColor;
-				scene::Color selectedTextColor;
-				u32 chSize;
-				f32 incY;
+				sptr<TTFont> font;
+				Color textColor;
+				Color selectedTextColor;
+				u32 characterSize;
+				f32 lineHeight;
 				CursorDescriptor cursorDescriptor;
 			};
 		}

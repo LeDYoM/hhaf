@@ -9,18 +9,20 @@
 
 namespace zoper
 {
-	constexpr lib::u32 NumHighScore = 10;
+	using namespace lib;
+
+	constexpr u32 NumHighScore = 10;
 
 	struct HighScore
 	{
-		lib::str name{};
-		lib::u32 score{ 0 };
+		str name{};
+		u32 score{ 0 };
 	};
 
 	class HighScoresData
 	{
 	public:
-		using HighScoresList = lib::array<HighScore, NumHighScore>;
+		using HighScoresList = array<HighScore, NumHighScore>;
 		void read();
 		void store();
 	private:
