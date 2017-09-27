@@ -1,7 +1,6 @@
-#include "choosecontrolline.hpp"
+#include "labeltext.hpp"
 
 #include <lib/scene/ianimation.hpp>
-#include <lib/scene/nodes/choosecontrolline.hpp>
 #include <lib/scene/renderizables/nodeshape.hpp>
 #include <lib/scene/renderizables/nodetext.hpp>
 #include <lib/scene/renderizables/discretetext.hpp>
@@ -12,40 +11,40 @@ namespace lib
 	{
 		namespace nodes
 		{
-			ChooseControlLine::ChooseControlLine(SceneNode* parent, str name)
+			LabelText::LabelText(SceneNode* parent, str name)
 				: SceneNode{ parent,std::move(name) } {}
 
-			void ChooseControlLine::create()
+			void LabelText::create()
 			{
 				m_mainText = createRenderizable<NodeText>("m_mainText");
 				m_option = createRenderizable<DiscreteText>("m_option");
 			}
 
-			void ChooseControlLine::setAlignmentBox(Rectf32 albox) noexcept
+			void LabelText::setAlignmentBox(Rectf32 albox) noexcept
 			{
 				m_mainText->alignmentBox = albox;
 				if (m_option) m_option->alignmentBox = albox;
 			}
 
-			void ChooseControlLine::setFont(sptr<scene::TTFont> f) noexcept
+			void LabelText::setFont(sptr<scene::TTFont> f) noexcept
 			{
 				m_mainText->font = f;
 				if (m_option) m_option->font = f;
 			}
 
-			void ChooseControlLine::setColor(const Color c) noexcept
+			void LabelText::setColor(const Color c) noexcept
 			{
 				m_mainText->color = c;
 				if (m_option) m_option->color = c;
 			}
 
-			void ChooseControlLine::setCharacterSize(const u32 cs) noexcept
+			void LabelText::setCharacterSize(const u32 cs) noexcept
 			{
 				m_mainText->characterSize = cs;
 				if (m_option) m_option->characterSize = cs;
 			}
 
-			void ChooseControlLine::configure()
+			void LabelText::configure()
 			{
 				if (m_option->data().empty()) {
 					m_option->visible = false;
@@ -57,9 +56,27 @@ namespace lib
 				}
 			}
 
-			const OptionModelIndex ChooseControlLine::currentSelection() const noexcept
+			void LabelText::setModel(const str &text, const vector<str> &options)
+			{
+				m_mainText->text = text;
+				m_mainText->alignmentX = options.empty() ? AlignmentX::Left : AlignmentX::Center;
+				m_option->visible = !options.empty();
+				m_option->alignmentX = AlignmentX::Right;
+				m_option->data = options;
+			}
+
+			const OptionModelIndex LabelText::currentSelection() const noexcept
 			{
 				return m_option->data().empty() ? OptionModelIndex{} : OptionModelIndex{ m_option->index() };
+			}
+
+			vector<u32> LabelText::selection()
+			{
+				return m_option->data().empty() ? vector<u32>{} : vector<u32>{ m_option->index() };
+			}
+
+			void LabelText::enableReceiveInput(const bool enable)
+			{
 			}
 		}
 	}

@@ -94,7 +94,7 @@ namespace lib
 			void for_each_node_as(function<void(const sptr<T> &)> action)
 			{
 				for_each_node([&action](const sptr<Renderizable>&node) {
-					if (auto tnode = std::dynamic_pointer_cast<NodeText>(node)) {
+					if (auto tnode = std::dynamic_pointer_cast<T>(node)) {
 						action(tnode);
 					}
 				});

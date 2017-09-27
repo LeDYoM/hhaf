@@ -14,11 +14,9 @@ namespace lib
 {
 	namespace scene
 	{
-		class TTFont;
 		namespace nodes
 		{
-			class ChooseControlLine;
-			class ChooseControlGroup;
+			class LabelText;
 			class ChooseControl : public scene::SceneNode
 			{
 			public:
@@ -32,25 +30,20 @@ namespace lib
 				Property<CompleteOptionModel> optionModel;
 				const OptionModelIndex currentSelection() const noexcept;
 
-				u32 selectedSubLabel(const u32 index) const;
-
-			private:
 				void goDown();
 				void goUp();
 				void goLeft();
 				void goRight();
-				const sptr<ChooseControlLine> currentLine() const;
-				const sptr<ChooseControlLine> previouscurrentLine() const;
-				void modelChanged();
-				vector2df descriptorCursorSize;
-				u32 previouslySelectedItem;
+
 				Property<u32> selectedItem;
 
-				vector_shared_pointers<ChooseControlLine> lines;
-				SceneNodeSPtr m_cursorNode;
-				sptr<NodeShape> m_cursor;
-				function<void(const u32)> m_onSelected;
-				friend class ChooseControlGroup;
+			private:
+				const sptr<LabelText> currentLine() const;
+				const sptr<LabelText> previouscurrentLine() const;
+				void modelChanged();
+				u32 previouslySelectedItem;
+
+				vector_shared_pointers<LabelText> lines;
 			};
 		}
 	}

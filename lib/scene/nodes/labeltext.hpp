@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_GUI_CHOOSECONTROL_LINE_INCLUDE_HPP__
-#define LIB_GUI_CHOOSECONTROL_LINE_INCLUDE_HPP__
+#ifndef LIB_SCENE_NODE_LABELTEXT_INCLUDE_HPP__
+#define LIB_SCENE_NODE_LABELTEXT_INCLUDE_HPP__
 
 #include <mtypes/include/types.hpp>
 #include <lib/scene/scenenode.hpp>
@@ -18,10 +18,10 @@ namespace lib
 			class NodeText;
 			class DiscreteText;
 
-			class ChooseControlLine : public scene::SceneNode
+			class LabelText : public scene::SceneNode
 			{
 			public:
-				ChooseControlLine(SceneNode* parent, str name);
+				LabelText(SceneNode* parent, str name);
 				void setAlignmentBox(Rectf32 albox) noexcept;
 				void setFont(sptr<scene::TTFont> f) noexcept;
 				void setColor(const Color c) noexcept;
@@ -35,7 +35,11 @@ namespace lib
 
 				void create();
 				void configure();
+
+				void setModel(const str &text, const vector<str> &options = {});
 				const OptionModelIndex currentSelection() const noexcept;
+				vector<u32> selection();
+				void enableReceiveInput(const bool enable);
 			public:
 				sptr<NodeText> m_mainText;
 				sptr<DiscreteText> m_option;
