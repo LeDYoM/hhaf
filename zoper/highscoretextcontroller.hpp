@@ -3,6 +3,7 @@
 #ifndef ZOPER_HIGHSCORETEXTCONTROLLER_INCLUDE_HPP__
 #define ZOPER_HIGHSCORETEXTCONTROLLER_INCLUDE_HPP__
 
+#include <mtypes/include/types.hpp>
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/ttfont.hpp>
 #include <lib/scene/nodes/theme.hpp>
@@ -25,7 +26,7 @@ namespace zoper
 		virtual void create() override;
 
 	private:
-		array<sptr<nodes::NodeText>,10> m_textGroup;
+		array<sptr<scene::nodes::NodeText>,10> m_textGroup;
 		sptr<scene::nodes::Theme> m_theme;
 	};
 }

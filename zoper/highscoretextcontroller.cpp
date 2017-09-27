@@ -18,7 +18,7 @@ namespace zoper
 		// Request the highscores.
 		HighScoresData hsData;
 		hsData.read();
-		
+/*		
 		m_textGroup = createSceneNode<nodes::TextGroup>("HighScoresTextGroup");
 		m_textGroup->characterSize = 36;
 		m_textGroup->font = m_resources->mainFont;
@@ -26,5 +26,6 @@ namespace zoper
 		m_textGroup->position = { 200,200 };
 		m_textGroup->addText("Example1");
 		m_textGroup->addText("Example2");
+		*/
 	}
 }
