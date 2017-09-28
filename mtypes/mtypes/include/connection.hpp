@@ -8,13 +8,11 @@
 
 namespace lib
 {
-	template <typename>
-	class emitter;
-
 	template <typename... Args>
-	class emitter<Args...> final {
+	class emitter final {
 	public:
 		constexpr emitter() = default;
+		constexpr emitter(function<void(Args...)> f) : m_receivers{ std::move(f) } {}
 		constexpr emitter(const emitter &) = default;
 		constexpr emitter & operator=(const emitter &) = default;
 		constexpr emitter(emitter &&) = default;

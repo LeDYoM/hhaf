@@ -4,7 +4,7 @@
 #define __LIB_SCENE_CHOOSECONTROL_GROUP_INCLUDE_HPP__
 
 #include "theme.hpp"
-#include "statescontroller.hpp"
+#include <lib/scene/components/statescontroller.hpp>
 #include "optionmodel.hpp"
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/function.hpp>
@@ -42,7 +42,6 @@ namespace lib
 				Property<u32> currentControlIndex;
 
 			private:
-				uptr<StatesController> m_sController;
 				Theme m_theme;
 				ireceiver m_receiver;
 			};
