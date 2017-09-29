@@ -21,19 +21,26 @@ namespace lib
 			~ComponentContainer();
 
 			bool addComponent(sptr<IComponent> nc);
-			void updateComponents();
+
+			template <typename T, typename... Args>
+			sptr<T> emplaceComponentOfType(Args&&... args) {
+				auto component(componentOfType<T>());
+				if (!component) {
+					auto nc(msptr<T>(std::forward<Args>(args)...));
+					addComponent(nc);
+					return nc;
+				}
+				return component;
+			}
 
 			template <typename T>
 			sptr<T> ensureComponentOfType()
 			{
-				auto component(componentOfType<T>());
-				if (!component) {
-					auto nc(msptr<T>());
-					addComponent(nc);
-					return std::move(nc);
-				}
-				return component;
+				return emplaceComponentOfType<T>();
 			}
+
+			void updateComponents();
+
 			/**
 			* Returns the component of the specified type if exists
 			* @param T type of the component to be retrieved

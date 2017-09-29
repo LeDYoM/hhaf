@@ -18,7 +18,7 @@ namespace lib
 		constexpr emitter(emitter &&) = default;
 		constexpr emitter & operator=(emitter &&) = default;
 
-		constexpr void operator()(Args... args) {
+		constexpr void operator()(Args&&... args) {
 			if (!m_receivers.empty()) {
 				for (auto &f : m_receivers) {
 					f(std::forward<Args>(args)...);
@@ -28,6 +28,11 @@ namespace lib
 
 		constexpr void connect(function<void(Args...)> f) {
 			m_receivers.emplace_back(std::move(f));
+		}
+
+		template <typename T, typename V>
+		constexpr void connect(T&& t, V&& b) {
+			m_receivers.emplace_back(std::forward<T>(t),std::forward<V>(v));
 		}
 
 		constexpr bool disconnect(function<void(Args...)>& f) {
@@ -45,6 +50,7 @@ namespace lib
 		virtual bool disconnect() = 0;
 		virtual ~iconnection() {}
 	};
+
 	template <typename>
 	class connection;
 

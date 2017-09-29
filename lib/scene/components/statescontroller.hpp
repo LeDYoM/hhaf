@@ -15,7 +15,7 @@ namespace lib
 		class StatesController : DataOnlyComponent
 		{
 		public:
-			constexpr StatesController(const T&initialStatek) noexcept : m_currentState{ initialState } {}
+			constexpr StatesController(const T&initialState) noexcept : m_currentState{ initialState } {}
 			constexpr StatesController(const T&initialState, function<void(const T&, const T&)> stateChangedCallback) noexcept
 				: m_currentState{ initialState }, stateChanged{ std::move(stateChangedCallback) } {}
 
@@ -30,7 +30,7 @@ namespace lib
 			/// Emit when the state changed. The new state and the previous state are sent
 			emitter<const T&,const T&> stateChanged;
 		private:
-			const T& m_currentState;
+			T m_currentState;
 		};
 	}
 }

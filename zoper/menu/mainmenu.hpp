@@ -4,11 +4,21 @@
 #define ZOPER_MAINMENU_INCLUDE_HPP__
 
 #include <lib/scene/scenenode.hpp>
+#include <lib/scene/nodes/choosecontrol.hpp>
 
 namespace zoper
 {
 	class GameData;
 	using namespace lib;
+
+	enum class MenuPage
+	{
+		Main,
+		SelectLevelToken,
+		SelectLevelSpeed,
+		Options
+	};
+
 	class MainMenu : public scene::SceneNode
 	{
 	public:
@@ -19,6 +29,7 @@ namespace zoper
 		virtual void create() override;
 		virtual void configure() override;
 
+		void mainMenuPageChanged(const MenuPage&newPage, const MenuPage&oldPage);
 	private:
 		sptr<GameData> m_gameData;
 		vector_shared_pointers<scene::nodes::ChooseControl> m_menuSteps;
