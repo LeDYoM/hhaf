@@ -1,4 +1,4 @@
-#include "choosecontrol.hpp"
+#include "menupage.hpp"
 #include <mtypes/include/log.hpp>
 #include <lib/scene/scene.hpp>
 #include <lib/scene/ianimation.hpp>
@@ -14,11 +14,11 @@ namespace lib
 		namespace nodes
 		{
 
-			ChooseControl::ChooseControl(lib::scene::SceneNode *parent, str name) : SceneNode{ parent, std::move(name) } {}
+			MenuPage::MenuPage(lib::scene::SceneNode *parent, str name) : SceneNode{ parent, std::move(name) } {}
 
-			ChooseControl::~ChooseControl() = default;
+			MenuPage::~MenuPage() = default;
 
-			void ChooseControl::create()
+			void MenuPage::create()
 			{
 				box.setCallback([this]() {
 					for_each_node_as<LabelText>([this](const sptr<LabelText>&node) {
@@ -26,62 +26,39 @@ namespace lib
 					});
 				});
 //				const auto &cTheme(dynamic_cast<ChooseControlGroup*>(parent())->currentTheme());
-				optionModel.setCallback([this]() {
-					modelChanged();
-				});
 			}
 
-			const OptionModelIndex ChooseControl::currentSelection() const noexcept
+			void MenuPage::goDown()
 			{
-				vector<u32> lineSelection{ lines[selectedItem()]->currentSelection() };
-				vector<u32> temp{ selectedItem() };
-				temp.reserve(temp.size() + lineSelection.size());
-				if (!lineSelection.empty())
-					temp.insert(std::move(lineSelection));
-				return temp;
-			}
-
-			void ChooseControl::goDown()
-			{
-				if (selectedItem() < (lines.size() - 1)) {
-					selectedItem = selectedItem() + 1;
+				if (m_selectedItem < (lines.size() - 1)) {
+					++m_selectedItem;
 				}
 				else {
-					selectedItem = 0;
+					m_selectedItem = 0;
 				}
 			}
 
-			void ChooseControl::goUp()
+			void MenuPage::goUp()
 			{
-				if (selectedItem() > 0) {
-					selectedItem = selectedItem() - 1;
+				if (m_selectedItem > 0) {
+					--m_selectedItem;
 				}
 				else {
-					selectedItem = lines.size() - 1;
+					m_selectedItem = lines.size() - 1;
 				}
 			}
 
-			void ChooseControl::goLeft()
+			void MenuPage::goLeft()
 			{
 				currentLine()->m_option->decrementIndex();
 			}
 
-			void ChooseControl::goRight()
+			void MenuPage::goRight()
 			{
 				currentLine()->m_option->incrementIndex();
 			}
 
-			const sptr<LabelText> ChooseControl::currentLine() const
-			{
-				return lines[selectedItem()];
-			}
-
-			const sptr<LabelText> ChooseControl::previouscurrentLine() const
-			{
-				return lines[previouslySelectedItem];
-			}
-
-			void ChooseControl::modelChanged()
+			void MenuPage::modelChanged()
 			{
 				clearNodes();
 				/*

@@ -6,9 +6,6 @@
 #include <mtypes/include/types.hpp>
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/renderizables/nodetext.hpp>
-#include <lib/scene/renderizables/discretetext.hpp>
-#include <lib/scene/renderizables/nodeshape.hpp>
-#include "optionmodel.hpp"
 
 namespace lib
 {
@@ -17,31 +14,30 @@ namespace lib
 		namespace nodes
 		{
 			class LabelText;
-			class ChooseControl : public scene::SceneNode
+			class MenuPage : public scene::SceneNode
 			{
 			public:
-				ChooseControl(lib::scene::SceneNode *parent, str name);
-				virtual ~ChooseControl();
+				MenuPage(lib::scene::SceneNode *parent, str name);
+				virtual ~MenuPage();
+
+				void addLabel(const str &title, const str &option);
 
 				void create() override;
 
 				Property<Rectf32> box;
-				using CompleteOptionModel = vector<OptionModel>;
-				Property<CompleteOptionModel> optionModel;
-				const OptionModelIndex currentSelection() const noexcept;
 
 				void goDown();
 				void goUp();
 				void goLeft();
 				void goRight();
 
-				Property<u32> selectedItem;
+				inline u32 selectedItem() const noexcept { return m_selectedItem; }
 
 			private:
-				const sptr<LabelText> currentLine() const;
-				const sptr<LabelText> previouscurrentLine() const;
-				void modelChanged();
-				u32 previouslySelectedItem;
+				inline const sptr<LabelText> currentLine() const { return lines[m_selectedItem]; }
+				inline const sptr<LabelText> previouscurrentLine() const { return lines[m_previouslySelectedItem]; }
+				u32 m_previouslySelectedItem;
+				u32 m_selectedItem;
 
 				vector_shared_pointers<LabelText> lines;
 			};
