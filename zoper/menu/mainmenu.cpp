@@ -1,7 +1,8 @@
 #include "mainmenu.hpp"
 #include "../gamedata.hpp"
 #include "../zoperprogramcontroller.hpp"
-
+#include "menupage.hpp"
+#include "menupage_main.hpp"
 
 #include <lib/scene/nodes/choosecontrol.hpp>
 #include <lib/scene/scenenode.hpp>
@@ -10,6 +11,7 @@
 #include <mtypes/include/log.hpp>
 #include <mtypes/include/function.hpp>
 #include <lib/scene/components/statescontroller.hpp>
+
 
 namespace zoper
 {
@@ -33,9 +35,9 @@ namespace zoper
 
 	MainMenu::~MainMenu() = default;
 
-	template<typename T, void (T::*sm)(const MenuPage&p1,const MenuPage&p2)>
-	function<void(const MenuPage&, const MenuPage&)> ml(T&obj) {
-		return [&obj](const MenuPage&p1, const MenuPage&p2) {(obj.(*sm))(p1,p2); };
+	template<typename T, void (T::*sm)(const MenuPageType&p1,const MenuPageType&p2)>
+	function<void(const MenuPageType&, const MenuPageType&)> ml(T&obj) {
+		return [&obj](const MenuPageType&p1, const MenuPageType&p2) {(obj.(*sm))(p1,p2); };
 	}
 
 	void MainMenu::create()
@@ -46,10 +48,17 @@ namespace zoper
 //		statesController->stateChanged.connect(ml<MainMenu,&MainMenu::mainMenuPageChanged>(*this));
 //		statesController->stateChanged.connect([this](const auto a1, const auto a2) { mainMenuPageChanged(a1, a2); });
 		statesController->stateChanged.connect(this, &MainMenu::mainMenuPageChanged);
+		auto mainMenu = createSceneNode<MenuPageMain>("menuPageMain");
+		m_menuSteps.push_back(mainMenu);
 
-		EventHandlerImpl<MainMenu, const MenuPage&, const MenuPage&> a(this, &MainMenu::mainMenuPageChanged);
-		function<void(const MenuPage&, const MenuPage&)> b(this, &MainMenu::mainMenuPageChanged);
+		mainMenu->addLabel("Play token mode", {});
+		mainMenu->addLabel("Play time mode", {});
+		mainMenu->addLabel("Options", {});
+		mainMenu->addLabel("Exit", {});
+
+
 //			statesController->stateChanged.connect
+/*
 		options = vector<vector<OptionModel>>
 		{
 			// Main menu
@@ -150,7 +159,7 @@ namespace zoper
 
 		ChooseControlGroup::configure();
 		currentControlIndex = 0;
-
+		*/
 	}
 
 	/*
@@ -265,7 +274,7 @@ namespace zoper
 	{
 	}
 
-	void MainMenu::mainMenuPageChanged(const MenuPage &, const MenuPage &)
+	void MainMenu::mainMenuPageChanged(const MenuPageType & newPage, const MenuPageType & oldPage)
 	{
 	}
 }

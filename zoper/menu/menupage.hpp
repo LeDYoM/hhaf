@@ -1,48 +1,44 @@
 #pragma once
 
-#ifndef LIB_SCENE_CHOOSECONTROL_HPP__
-#define LIB_SCENE_CHOOSECONTROL_HPP__
+#ifndef ZOPER_MENU_MENUPAGE_INCLUDE_HPP__
+#define ZOPER_MENU_MENUPAGE_INCLUDE_HPP__
 
 #include <mtypes/include/types.hpp>
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/renderizables/nodetext.hpp>
+#include <lib/scene/nodes/labeltext.hpp>
 
-namespace lib
+namespace zoper
 {
-	namespace scene
+	using namespace lib;
+
+	class MenuPage : public scene::SceneNode
 	{
-		namespace nodes
-		{
-			class LabelText;
-			class MenuPage : public scene::SceneNode
-			{
-			public:
-				MenuPage(lib::scene::SceneNode *parent, str name);
-				virtual ~MenuPage();
+	public:
+		MenuPage(lib::scene::SceneNode *parent, str name);
+		virtual ~MenuPage();
 
-				void addLabel(const str &title, const str &option);
+		void addLabel(const str &title, const vector<str> &option);
 
-				void create() override;
+		void create() override;
 
-				Property<Rectf32> box;
+		Property<Rectf32> box;
 
-				void goDown();
-				void goUp();
-				void goLeft();
-				void goRight();
+		void goDown();
+		void goUp();
+		void goLeft();
+		void goRight();
 
-				inline u32 selectedItem() const noexcept { return m_selectedItem; }
+		inline u32 selectedItem() const noexcept { return m_selectedItem; }
 
-			private:
-				inline const sptr<LabelText> currentLine() const { return lines[m_selectedItem]; }
-				inline const sptr<LabelText> previouscurrentLine() const { return lines[m_previouslySelectedItem]; }
-				u32 m_previouslySelectedItem;
-				u32 m_selectedItem;
+	private:
+		inline const sptr<scene::nodes::LabelText> currentLine() const { return options[m_selectedItem]; }
+		inline const sptr<scene::nodes::LabelText> previouscurrentLine() const { return options[m_previouslySelectedItem]; }
+		u32 m_previouslySelectedItem;
+		u32 m_selectedItem;
 
-				vector_shared_pointers<LabelText> lines;
-			};
-		}
-	}
+		vector_shared_pointers<scene::nodes::LabelText> options;
+	};
 }
 
 #endif
