@@ -7,14 +7,13 @@
 #include <lib/core/events/eventmanager.hpp>
 #include <lib/core/debugsystem.hpp>
 
-#include "../mainmenu.hpp"
+#include "../menu/mainmenu.hpp"
 
 namespace zoper
 {
 	using namespace lib;
 	using namespace lib::scene;
 	using namespace lib::scene::nodes;
-	using namespace zmenu;
 
 	MenuScene::MenuScene()
 		: Scene{ "MenuScene" } {}

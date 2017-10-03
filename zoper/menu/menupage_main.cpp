@@ -1,22 +1,13 @@
+#include "menupage_main.hpp"
 #include "menupage.hpp"
 #include <mtypes/include/log.hpp>
 #include <lib/scene/scene.hpp>
 #include <lib/scene/ianimation.hpp>
 
-namespace lib
+namespace zoper
 {
-	namespace scene
-	{
-		namespace nodes
-		{
+	MenuPageMain::MenuPageMain(lib::scene::SceneNode *parent, str name) : MenuPage{ parent, std::move(name) } {}
 
-			MenuPageMain::MenuPageMain(lib::scene::SceneNode *parent, str name) : SceneNode{ parent, std::move(name) } {}
+	MenuPageMain::~MenuPageMain() = default;
 
-			MenuPage::~MenuPage() = default;
-
-			void MenuPage::create()
-			{
-			}
-		}
-	}
 }

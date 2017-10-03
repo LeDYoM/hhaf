@@ -13,13 +13,13 @@ namespace zoper
 	using namespace lib::scene;
 	using namespace lib::scene::nodes;
 
-	MenuPage::MenuPage(lib::scene::SceneNode *parent, str name) : SceneNode{ parent, std::move(name) } {}
+	MenuPage::MenuPage(SceneNode *parent, str name) : SceneNode{ parent, std::move(name) } {}
 
 	MenuPage::~MenuPage() = default;
 
 	void MenuPage::addLabel(const str & title, const vector<str>& option)
 	{
-		auto *newOption = createSceneNode<LabelText>("label");
+		auto newOption = createSceneNode<LabelText>("label");
 //		newOption 
 //		options.push_back();
 	}
@@ -36,7 +36,7 @@ namespace zoper
 
 	void MenuPage::goDown()
 	{
-		if (m_selectedItem < (lines.size() - 1)) {
+		if (m_selectedItem < (options.size() - 1)) {
 			++m_selectedItem;
 		}
 		else {
@@ -50,7 +50,7 @@ namespace zoper
 			--m_selectedItem;
 		}
 		else {
-			m_selectedItem = lines.size() - 1;
+			m_selectedItem = options.size() - 1;
 		}
 	}
 
@@ -64,16 +64,10 @@ namespace zoper
 		currentLine()->m_option->incrementIndex();
 	}
 
+	/*
 	void MenuPage::modelChanged()
 	{
 		clearNodes();
-		/*
-		// Disable cursor
-		m_cursorNode = createSceneNode("cursorNode");
-		m_cursor = m_cursorNode->createRenderizable<nodes::NodeShape>("cursor", cTheme.cursorDescriptor.m_nVertex);
-		m_cursor->box = { 1000, 100, descriptorCursorSize.x, descriptorCursorSize.y };
-		m_cursor->color = cTheme.cursorDescriptor.m_color;
-		*/
 		u32 count{};
 		vector2df currentPos{};
 //				const auto &cTheme(parent()->snCast<ChooseControlGroup>()->currentTheme());
@@ -115,4 +109,5 @@ namespace zoper
 		});
 		selectedItem = 0;
 	}
+	*/
 }
