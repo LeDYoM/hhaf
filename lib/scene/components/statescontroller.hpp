@@ -12,7 +12,7 @@ namespace lib
 	namespace scene
 	{
 		template <class T>
-		class StatesController : DataOnlyComponent
+		class StatesController : public DataOnlyComponent
 		{
 		public:
 			constexpr StatesController(const T&initialState) noexcept : m_currentState{ initialState } {}

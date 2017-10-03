@@ -19,14 +19,6 @@ namespace zoper
 	using namespace lib::scene;
 	using namespace lib::scene::nodes;
 
-	enum class MenuPages
-	{
-		Main,
-		SelectLevelToken,
-		SelectLevelSpeed,
-		Options
-	};
-
 	MainMenu::MainMenu(SceneNode *parent, str name)
 		: SceneNode{ parent, std::move(name) } 
 	{
@@ -44,7 +36,7 @@ namespace zoper
 	{
 		using namespace nodes;
 		SceneNode::create();
-		auto statesController = emplaceComponentOfType<StatesController<MenuPages>>(MenuPages::Main);
+		auto statesController = emplaceComponentOfType<StatesController<MenuPageType>>(MenuPageType::Main);
 //		statesController->stateChanged.connect(ml<MainMenu,&MainMenu::mainMenuPageChanged>(*this));
 //		statesController->stateChanged.connect([this](const auto a1, const auto a2) { mainMenuPageChanged(a1, a2); });
 		statesController->stateChanged.connect(this, &MainMenu::mainMenuPageChanged);
@@ -274,7 +266,7 @@ namespace zoper
 	{
 	}
 
-	void MainMenu::mainMenuPageChanged(const MenuPageType & newPage, const MenuPageType & oldPage)
+	void MainMenu::mainMenuPageChanged(const MenuPageType & , const MenuPageType & )
 	{
 	}
 }

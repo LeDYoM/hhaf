@@ -32,7 +32,7 @@ namespace lib
 
 		template <typename T, typename V>
 		constexpr void connect(T&& t, V&& b) {
-			m_receivers.emplace_back(std::forward<T>(t),std::forward<V>(v));
+			m_receivers.emplace_back(std::forward<T>(t),std::forward<V>(b));
 		}
 
 		constexpr bool disconnect(function<void(Args...)>& f) {
