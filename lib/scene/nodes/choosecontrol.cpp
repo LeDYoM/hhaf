@@ -63,12 +63,12 @@ namespace lib
 
 			void ChooseControl::goLeft()
 			{
-				currentLine()->m_option->decrementIndex();
+//				currentLine()->m_option->decrementIndex();
 			}
 
 			void ChooseControl::goRight()
 			{
-				currentLine()->m_option->incrementIndex();
+//				currentLine()->m_option->incrementIndex();
 			}
 
 			const sptr<LabelText> ChooseControl::currentLine() const

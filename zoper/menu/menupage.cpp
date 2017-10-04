@@ -6,13 +6,15 @@
 #include <lib/scene/renderizables/nodeshape.hpp>
 #include <lib/scene/renderizables/nodetext.hpp>
 #include <lib/scene/renderizables/discretetext.hpp>
+#include <lib/core/host.hpp>
+#include <lib/core/resourcemanager.hpp>
 
 namespace zoper
 {
 	using namespace lib;
 	using namespace lib::scene;
 	using namespace lib::scene::nodes;
-
+	using namespace lib::core;
 	MenuPage::MenuPage(SceneNode *parent, str name) : SceneNode{ parent, std::move(name) } {}
 
 	MenuPage::~MenuPage() = default;
@@ -20,8 +22,11 @@ namespace zoper
 	void MenuPage::addLabel(const str & title, const vector<str>& option)
 	{
 		auto newOption = createSceneNode<LabelText>("label");
-//		newOption 
-//		options.push_back();
+		newOption->setFont(resourceManager().getResource<TTFont>("menu.mainFont", "resources/oldct.ttf"));
+		newOption->setCharacterSize(64);
+		newOption->setColor(colors::Blue);
+		newOption->mainText()->text = title;
+		options.push_back(std::move(newOption));
 	}
 
 	void MenuPage::create()
@@ -56,12 +61,12 @@ namespace zoper
 
 	void MenuPage::goLeft()
 	{
-		currentLine()->m_option->decrementIndex();
+//		currentLine()->m_option->decrementIndex();
 	}
 
 	void MenuPage::goRight()
 	{
-		currentLine()->m_option->incrementIndex();
+//		currentLine()->m_option->incrementIndex();
 	}
 
 	/*

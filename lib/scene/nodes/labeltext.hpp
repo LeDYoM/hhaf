@@ -40,7 +40,7 @@ namespace lib
 				const OptionModelIndex currentSelection() const noexcept;
 				vector<u32> selection();
 				void enableReceiveInput(const bool enable);
-			public:
+			private:
 				sptr<NodeText> m_mainText;
 				sptr<DiscreteText> m_option;
 			};
