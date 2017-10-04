@@ -19,13 +19,13 @@ namespace zoper
 
 	MenuPage::~MenuPage() = default;
 
-	void MenuPage::addLabel(const str & title, const vector<str>& option)
+	void MenuPage::addModelLabel(OptionType oType)
 	{
 		auto newOption = createSceneNode<LabelText>("label");
 		newOption->setFont(resourceManager().getResource<TTFont>("menu.mainFont", "resources/oldct.ttf"));
 		newOption->setCharacterSize(64);
 		newOption->setColor(colors::Blue);
-		newOption->mainText()->text = title;
+		newOption->mainText()->text = oType.first;
 		options.push_back(std::move(newOption));
 	}
 

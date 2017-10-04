@@ -43,10 +43,10 @@ namespace zoper
 		auto mainMenu = createSceneNode<MenuPageMain>("menuPageMain");
 		m_menuSteps.push_back(mainMenu);
 
-		mainMenu->addLabel("Play token mode", {});
-		mainMenu->addLabel("Play time mode", {});
-		mainMenu->addLabel("Options", {});
-		mainMenu->addLabel("Exit", {});
+		mainMenu->addModelLabel({ "Play token mode", {} });
+		mainMenu->addModelLabel({ "Play time mode", {} });
+		mainMenu->addModelLabel({ "Options", {} });
+		mainMenu->addModelLabel({ "Exit", {} });
 
 
 //			statesController->stateChanged.connect

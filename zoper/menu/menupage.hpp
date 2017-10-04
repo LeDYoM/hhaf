@@ -15,10 +15,11 @@ namespace zoper
 	class MenuPage : public scene::SceneNode
 	{
 	public:
+		using OptionType = std::pair<str, vector<str>>;
 		MenuPage(lib::scene::SceneNode *parent, str name);
 		virtual ~MenuPage();
 
-		void addLabel(const str &title, const vector<str> &option);
+		void addModelLabel(OptionType oType);
 
 		void create() override;
 
@@ -37,6 +38,7 @@ namespace zoper
 		u32 m_previouslySelectedItem;
 		u32 m_selectedItem;
 
+		vector<OptionType> m_model;
 		vector_shared_pointers<scene::nodes::LabelText> options;
 	};
 }
