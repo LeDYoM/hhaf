@@ -32,6 +32,9 @@ namespace zoper
 
 		inline u32 selectedItem() const noexcept { return m_selectedItem; }
 
+	protected:
+		void repositionControls();
+
 	private:
 		inline const sptr<scene::nodes::LabelText> currentLine() const { return options[m_selectedItem]; }
 		inline const sptr<scene::nodes::LabelText> previouscurrentLine() const { return options[m_previouslySelectedItem]; }
@@ -40,6 +43,7 @@ namespace zoper
 
 		vector<OptionType> m_model;
 		vector_shared_pointers<scene::nodes::LabelText> options;
+		sptr<scene::TTFont> m_normalFont;
 	};
 }
 

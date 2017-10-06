@@ -10,13 +10,15 @@
 
 namespace zoper
 {
-	class LabelText;
 	class MenuPageMain : public MenuPage
 	{
 	public:
+		using BaseClass = MenuPage;
+
 		MenuPageMain(lib::scene::SceneNode *parent, str name);
 		virtual ~MenuPageMain();
 
+		void create() override;
 	};
 }
 

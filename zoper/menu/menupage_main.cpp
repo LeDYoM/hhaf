@@ -10,4 +10,16 @@ namespace zoper
 
 	MenuPageMain::~MenuPageMain() = default;
 
+	void MenuPageMain::create()
+	{
+		BaseClass::create();
+
+		addModelLabel({ "Play token mode",{} });
+		addModelLabel({ "Play time mode",{} });
+		addModelLabel({ "Options",{} });
+		addModelLabel({ "Exit",{} });
+
+		repositionControls();
+	}
+
 }

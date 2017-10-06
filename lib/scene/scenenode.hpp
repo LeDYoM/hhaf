@@ -91,7 +91,7 @@ namespace lib
 			constexpr const T *const snCast() const { return dynamic_cast<const T *const>(this); }
 
 			template <typename T>
-			void for_each_node_as(function<void(const sptr<T> &)> action)
+			constexpr void for_each_node_as(function<void(const sptr<T> &)> action)
 			{
 				for_each_node([&action](const sptr<Renderizable>&node) {
 					if (auto tnode = std::dynamic_pointer_cast<T>(node)) {
@@ -101,7 +101,7 @@ namespace lib
 			}
 
 			template <typename T>
-			void setNodeProperty(const T data, function<void(const sptr<T> &)> action)
+			constexpr void setNodeProperty(const T data, function<void(const sptr<T> &)> action)
 			{
 				for_each_node([&action](const sptr<Renderizable>&node) {
 					if (auto tnode = std::dynamic_pointer_cast<NodeText>(node)) {
@@ -111,6 +111,17 @@ namespace lib
 			}
 
 			void for_each_node(function<void(const sptr<Renderizable> &)> action) const;
+
+			template <typename T>
+			constexpr void for_each_group_as(function<void(const sptr<T> &)> action)
+			{
+				for_each_group([&action](const sptr<SceneNode>&node) {
+					if (auto tnode = std::dynamic_pointer_cast<T>(node)) {
+						action(tnode);
+					}
+				});
+			}
+
 			void for_each_group(function<void(const sptr<SceneNode> &)> action) const;
 
 		protected:

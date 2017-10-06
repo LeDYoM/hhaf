@@ -19,11 +19,14 @@ namespace zoper
 
 	MenuPage::~MenuPage() = default;
 
+	constexpr u32 LineSize = 64;
+	constexpr u32 LineSeparation = 32;
+
 	void MenuPage::addModelLabel(OptionType oType)
 	{
 		auto newOption = createSceneNode<LabelText>("label");
-		newOption->setFont(resourceManager().getResource<TTFont>("menu.mainFont", "resources/oldct.ttf"));
-		newOption->setCharacterSize(64);
+		newOption->setFont(m_normalFont);
+		newOption->setCharacterSize(LineSize);
 		newOption->setColor(colors::Blue);
 		newOption->mainText()->text = oType.first;
 		options.push_back(std::move(newOption));
@@ -32,11 +35,22 @@ namespace zoper
 	void MenuPage::create()
 	{
 		box.setCallback([this]() {
-			for_each_node_as<LabelText>([this](const sptr<LabelText>&node) {
+			for_each_group_as<LabelText>([this](const sptr<LabelText>&node) {
 				node->setAlignmentBox(box());
 			});
 		});
 //				const auto &cTheme(dynamic_cast<ChooseControlGroup*>(parent())->currentTheme());
+		m_normalFont = resourceManager().getResource<TTFont>("menu.mainFont", "resources/oldct.ttf");
+	}
+
+	void MenuPage::repositionControls()
+	{
+		f32 center{ 0 };
+		f32 posY{ 0 };
+		for_each_group_as<LabelText>([&posY](const auto &node) {
+			node->position = vector2df{ 0, static_cast<f32>(posY) };
+			posY += (node->font()-> + LineSeparation);
+		});
 	}
 
 	void MenuPage::goDown()
