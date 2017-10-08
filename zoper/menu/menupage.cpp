@@ -8,6 +8,7 @@
 #include <lib/scene/renderizables/discretetext.hpp>
 #include <lib/core/host.hpp>
 #include <lib/core/resourcemanager.hpp>
+#include <lib/scene/ttfont.hpp>
 
 namespace zoper
 {
@@ -19,8 +20,8 @@ namespace zoper
 
 	MenuPage::~MenuPage() = default;
 
-	constexpr u32 LineSize = 64;
-	constexpr u32 LineSeparation = 32;
+	constexpr u32 LineSize = 72;
+	constexpr u32 LineSeparation = 16;
 
 	void MenuPage::addModelLabel(OptionType oType)
 	{
@@ -47,9 +48,11 @@ namespace zoper
 	{
 		f32 center{ 0 };
 		f32 posY{ 0 };
-		for_each_group_as<LabelText>([&posY](const auto &node) {
+		const f32 spacing{ m_normalFont->getLineSpacing(LineSize) };
+
+		for_each_group_as<LabelText>([&posY,spacing](const auto &node) {
 			node->position = vector2df{ 0, static_cast<f32>(posY) };
-			posY += (node->font()-> + LineSeparation);
+			posY += (spacing + LineSeparation);
 		});
 	}
 
