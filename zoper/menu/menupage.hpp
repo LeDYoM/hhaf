@@ -7,6 +7,7 @@
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/renderizables/nodetext.hpp>
 #include <lib/scene/nodes/labeltext.hpp>
+#include <mtypes/include/connection.hpp>
 
 namespace zoper
 {
@@ -15,11 +16,10 @@ namespace zoper
 	class MenuPage : public scene::SceneNode
 	{
 	public:
-		using OptionType = std::pair<str, vector<str>>;
 		MenuPage(lib::scene::SceneNode *parent, str name);
 		virtual ~MenuPage();
 
-		void addModelLabel(OptionType oType);
+		void addLabel(str title);
 
 		void create() override;
 
@@ -33,7 +33,7 @@ namespace zoper
 		inline u32 selectedItem() const noexcept { return m_selectedItem; }
 
 	protected:
-		void repositionControls();
+		void update();
 
 	private:
 		inline const sptr<scene::nodes::LabelText> currentLine() const { return options[m_selectedItem]; }
@@ -41,9 +41,9 @@ namespace zoper
 		u32 m_previouslySelectedItem;
 		u32 m_selectedItem;
 
-		vector<OptionType> m_model;
 		vector_shared_pointers<scene::nodes::LabelText> options;
 		sptr<scene::TTFont> m_normalFont;
+		ireceiver m_receiver;
 	};
 }
 

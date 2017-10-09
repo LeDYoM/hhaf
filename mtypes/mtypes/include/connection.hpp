@@ -51,17 +51,14 @@ namespace lib
 		virtual ~iconnection() {}
 	};
 
-	template <typename>
-	class connection;
-
 	template <typename... Args>
-	class connection<Args...> final : public iconnection {
+	class connection final : public iconnection {
 	public:
 		constexpr connection(emitter<Args...> &e, function<void(Args...)> f) : m_emitter{ e }, m_function{ std::move(f) } {
 			m_emitter.connect(m_function);
 		}
 
-		bool disconnect() override {
+		inline bool disconnect() override {
 			return m_emitter.disconnect(m_function);
 		}
 	private:
@@ -76,7 +73,8 @@ namespace lib
 		constexpr void connect(emitter<Args...> &e, function<void(Args...)> f) {
 			m_connections.push_back(msptr<connection<Args...>>(e, std::move(f)));
 		}
-		virtual ~ireceiver() 
+		
+		~ireceiver() 
 		{
 			for (auto &connection : m_connections) {
 				connection->disconnect();

@@ -14,12 +14,12 @@ namespace zoper
 	{
 		BaseClass::create();
 
-		addModelLabel({ "Play token mode",{} });
-		addModelLabel({ "Play time mode",{} });
-		addModelLabel({ "Options",{} });
-		addModelLabel({ "Exit",{} });
+		addLabel("Play token mode");
+		addLabel("Play time mode");
+		addLabel("Options");
+		addLabel("Exit");
 
-		repositionControls();
+		update();
 	}
 
 }

@@ -39,7 +39,10 @@ namespace zoper
 		auto statesController = emplaceComponentOfType<StatesController<MenuPageType>>(MenuPageType::Main);
 //		statesController->stateChanged.connect(ml<MainMenu,&MainMenu::mainMenuPageChanged>(*this));
 //		statesController->stateChanged.connect([this](const auto a1, const auto a2) { mainMenuPageChanged(a1, a2); });
-		statesController->stateChanged.connect(this, &MainMenu::mainMenuPageChanged);
+//		statesController->stateChanged.connect(this, &MainMenu::mainMenuPageChanged);
+
+		ireceiver t;
+		t.connect(statesController->stateChanged, [](auto t1, auto t2) {});
 		auto mainMenu = createSceneNode<MenuPageMain>("menuPageMain");
 		m_menuSteps.push_back(mainMenu);
 
