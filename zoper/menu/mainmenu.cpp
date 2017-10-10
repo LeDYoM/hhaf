@@ -42,7 +42,7 @@ namespace zoper
 //		statesController->stateChanged.connect(this, &MainMenu::mainMenuPageChanged);
 
 		ireceiver t;
-		t.connect(statesController->stateChanged, [](auto t1, auto t2) {});
+		t.connect(statesController->stateChanged, [](auto, auto) {});
 		auto mainMenu = createSceneNode<MenuPageMain>("menuPageMain");
 		m_menuSteps.push_back(mainMenu);
 

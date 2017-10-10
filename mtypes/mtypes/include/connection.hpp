@@ -69,8 +69,8 @@ namespace lib
 	class ireceiver
 	{
 	public:
-		template <typename... Args>
-		constexpr void connect(emitter<Args...> &e, function<void(Args...)> f) {
+		template <typename R, typename... Args>
+		constexpr void connect(emitter<Args...> &e, R f) {
 			m_connections.push_back(msptr<connection<Args...>>(e, std::move(f)));
 		}
 		
