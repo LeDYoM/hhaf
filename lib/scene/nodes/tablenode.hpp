@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_SCENE_TEXTQUAD_HPP__
-#define LIB_SCENE_TEXTQUAD_HPP__
+#ifndef LIB_SCENE_TABLENODE_INCLUDE_HPP__
+#define LIB_SCENE_TABLENODE_INCLUDE_HPP__
 
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/renderizables/nodetext.hpp>
@@ -12,11 +12,11 @@ namespace lib
 	{
 		namespace nodes
 		{
-			class TextQuad : public SceneNode
+			class TableNode : public SceneNode
 			{
 			public:
-				TextQuad(SceneNode *parent, str name, sptr<TTFont> font, const u32 characterSize, const Color &color, const Rectf32 &box);
-				virtual ~TextQuad();
+				TableNode(SceneNode *parent, str name, sptr<TTFont> font, const u32 characterSize, const Color &color, const Rectf32 &box);
+				virtual ~TableNode();
 
 				inline sptr<NodeText> text(const u32 index) const noexcept { return m_texts[index]; }
 
