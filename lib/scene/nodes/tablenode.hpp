@@ -12,17 +12,36 @@ namespace lib
 	{
 		namespace nodes
 		{
+			template <typename T>
 			class TableNode : public SceneNode
 			{
 			public:
-				TableNode(SceneNode *parent, str name, sptr<TTFont> font, const u32 characterSize, const Color &color, const Rectf32 &box);
-				virtual ~TableNode();
+				TableNode(SceneNode *parent, str name) : SceneNode{ parent, name } {}
+				virtual ~TableNode() = default;
 
-				inline sptr<NodeText> text(const u32 index) const noexcept { return m_texts[index]; }
+				inline void setSize(const vector2du32 &nSize)
+				{
+					m_nodes.resize(nSize.x);
+					for (auto nodeColumn : m_nodes) {
+						nodeColumn.resize(nSize.y);
+					}
+				}
+
+				template <typename... Args>
+				sptr<T> createNodeAt(const vector2du32 &index, Args&&... args)
+				{
+					auto result(createSceneNode<T>(std::forward<Args>(args)...));
+					m_nodes[index.x][index.y] = result;
+					auto result(msptr<T>(this, std::forward<Args>(args)...));
+					addSceneNode(result);
+					return result;
+				}
+
+				inline sptr<T> operator()(const vector2du32 &index) noexcept { return m_nodes[index.x][index.y]; }
+				inline const sptr<T> operator()(const vector2du32 &index) const noexcept { return m_nodes[index.x][index.y]; }
 
 			private:
-				Rectf32 m_box;
-				sptr<NodeText> m_texts[4];
+				vector<vector_shared_pointers<T>> m_nodes;
 			};
 		}
 	}
