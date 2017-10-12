@@ -75,7 +75,7 @@ namespace lib
 			void clearNodes();
 
 			void render(bool parentTransformationChanged);
-
+			virtual void update() {}
 			Property<bool> visible;
 
 			virtual Scene *const parentScene() { return m_parent->parentScene(); }
@@ -124,6 +124,9 @@ namespace lib
 
 			void for_each_group(function<void(const sptr<SceneNode> &)> action) const;
 
+			inline void setNeedsUpdate(const bool nv) noexcept { m_needsUpdate = true; }
+			inline bool needsUpdate() const noexcept { return m_needsUpdate; }
+			inline void clearNeedsUpdate() noexcept { m_needsUpdate = false; }
 		protected:
 
 			const vsp_with_deferred_delete<Renderizable> &renderNodes() const noexcept { return m_renderNodes; }
@@ -134,6 +137,13 @@ namespace lib
 
 		private:
 
+			void internalUpdate() {
+				if (m_needsUpdate) {
+					m_needsUpdate = false;
+					update();
+				}
+			}
+
 			vsp_with_deferred_delete<Renderizable> m_renderNodes;
 			vsp_with_deferred_delete<SceneNode> m_groups;
 
@@ -141,7 +151,7 @@ namespace lib
 
 			SceneNode *m_parent{ nullptr };
 			bool m_visible{ true };
-
+			bool m_needsUpdate{ true };
 		};
 
 		using SceneNodeSPtr = sptr<SceneNode>;

@@ -23,6 +23,9 @@ namespace lib
 				// Update the node components
 				updateComponents();
 
+				// Update node
+				internalUpdate();
+
 				if (transformationNeedsUpdate())
 					parentTransformationChanged = true;
 

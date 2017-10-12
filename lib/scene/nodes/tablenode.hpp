@@ -5,6 +5,7 @@
 
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/renderizables/nodetext.hpp>
+#include <lib/scene/scenemanager.hpp>
 
 namespace lib
 {
@@ -21,6 +22,8 @@ namespace lib
 
 				inline void setSize(const vector2du32 &nSize)
 				{
+					setNeedsUpdate();
+
 					m_nodes.resize(nSize.x);
 					for (auto nodeColumn : m_nodes) {
 						nodeColumn.resize(nSize.y);
@@ -30,16 +33,22 @@ namespace lib
 				template <typename... Args>
 				sptr<T> createNodeAt(const vector2du32 &index, Args&&... args)
 				{
+					setNeedsUpdate();
 					auto result(createSceneNode<T>(std::forward<Args>(args)...));
 					m_nodes[index.x][index.y] = result;
-					auto result(msptr<T>(this, std::forward<Args>(args)...));
 					addSceneNode(result);
 					return result;
 				}
 
+
 				inline sptr<T> operator()(const vector2du32 &index) noexcept { return m_nodes[index.x][index.y]; }
 				inline const sptr<T> operator()(const vector2du32 &index) const noexcept { return m_nodes[index.x][index.y]; }
 
+				virtual void update() override {
+
+				}
+
+				Property<Rectf32> bound
 			private:
 				vector<vector_shared_pointers<T>> m_nodes;
 			};
