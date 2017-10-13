@@ -17,7 +17,6 @@ namespace lib
 		using const_iterator = const T*;
 		using reference = T&;
 		using const_reference = const T&;
-		using size_t = unsigned int;
 
 		constexpr vector() noexcept : m_capacity{ 0 }, m_size{ 0 }, m_buffer{ nullptr } {}
 		explicit constexpr vector(size_t size) : m_capacity{ size }, m_size{ size }, m_buffer{ size?new T[size] :nullptr} {}

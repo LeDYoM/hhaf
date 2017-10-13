@@ -12,14 +12,6 @@ namespace lib
 	class vector2d
 	{
 	public:
-//		constexpr vector2d()  : x{}, y{} {}
-//		constexpr vector2d(T X, T Y)  : x{ X }, y{ Y } {}
-//		constexpr vector2d(const vector2d<T> &) = default;
-//		inline vector2d &operator=(const vector2d<T> &) = default;
-
-//		template <typename U>
-//		constexpr explicit vector2d(const vector2d<U>& vector)  noexcept : x{ static_cast<T>(vector.x) }, y{ static_cast<T>(vector.y) } {}
-
 		constexpr vector2d &operator+=(const vector2d &right) noexcept
 		{
 			x += right.x;
@@ -94,9 +86,19 @@ namespace lib
 		constexpr bool operator ==(const vector2d &right) const noexcept { return (x == right.x && y == right.y); }
 		constexpr bool operator !=(const vector2d &right) const noexcept {	return !(*operator==(right)); }
 
+		// Conversion operator
+		template <typename Y>
+		constexpr explicit operator vector2d<Y>() const noexcept { return vector2d<Y>{static_cast<Y>(x), static_cast<Y>(y) }; }
+
 		T x;
 		T y;
 	};
+
+	template <typename T>
+	constexpr vector2d<T> operator/(const vector2d<T> &lhs, const vector2d<T> &rhs) noexcept
+	{
+		return lhs / rhs;
+	}
 
 	template <typename T>
 	constexpr vector2d<T> operator-(const vector2d<T> &v2d) noexcept

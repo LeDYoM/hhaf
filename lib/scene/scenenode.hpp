@@ -124,7 +124,7 @@ namespace lib
 
 			void for_each_group(function<void(const sptr<SceneNode> &)> action) const;
 
-			inline void setNeedsUpdate(const bool nv) noexcept { m_needsUpdate = true; }
+			inline void setNeedsUpdate() noexcept { m_needsUpdate = true; }
 			inline bool needsUpdate() const noexcept { return m_needsUpdate; }
 			inline void clearNeedsUpdate() noexcept { m_needsUpdate = false; }
 		protected:

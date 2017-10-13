@@ -8,15 +8,18 @@
 #include <lib/scene/renderizables/nodetext.hpp>
 #include <lib/scene/nodes/labeltext.hpp>
 #include <mtypes/include/connection.hpp>
+#include <lib/scene/nodes/tablenode.hpp>
+#include <lib/scene/scenenodetypes.hpp>
 
 namespace zoper
 {
 	using namespace lib;
 
-	class MenuPage : public scene::SceneNode
+	class MenuPage : public scene::nodes::TableNode<scene::TextSceneNode>
 	{
 	public:
-		MenuPage(lib::scene::SceneNode *parent, str name);
+		using BaseClass = scene::nodes::TableNode<scene::TextSceneNode>;
+		MenuPage(scene::SceneNode *parent, str name);
 		virtual ~MenuPage();
 
 		void addLabel(str title);
@@ -36,12 +39,11 @@ namespace zoper
 		void update();
 
 	private:
-		inline const sptr<scene::nodes::LabelText> currentLine() const { return options[m_selectedItem]; }
-		inline const sptr<scene::nodes::LabelText> previouscurrentLine() const { return options[m_previouslySelectedItem]; }
+		inline vector_shared_pointers<scene::TextSceneNode> currentLine() const { return getX(m_selectedItem); }
+		inline vector_shared_pointers<scene::TextSceneNode> previouscurrentLine() const { return getX(m_previouslySelectedItem); }
 		u32 m_previouslySelectedItem;
 		u32 m_selectedItem;
 
-		vector_shared_pointers<scene::nodes::LabelText> options;
 		sptr<scene::TTFont> m_normalFont;
 		ireceiver m_receiver;
 	};

@@ -19,7 +19,8 @@ namespace zoper
 	using namespace lib::scene;
 	using namespace lib::scene::nodes;
 	using namespace lib::core;
-	MenuPage::MenuPage(SceneNode *parent, str name) : SceneNode{ parent, std::move(name) } {}
+
+	MenuPage::MenuPage(SceneNode *parent, str name) : BaseClass{ parent, std::move(name) } {}
 
 	MenuPage::~MenuPage() = default;
 
@@ -28,7 +29,7 @@ namespace zoper
 
 	void MenuPage::addLabel(str title)
 	{
-		auto newOption = createSceneNode<LabelText>("label");
+		auto newOption = createSceneNode<TextSceneNode>("label");
 		newOption->setFont(m_normalFont);
 		newOption->setCharacterSize(LineSize);
 		newOption->setColor(colors::Blue);

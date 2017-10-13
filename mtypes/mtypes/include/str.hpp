@@ -20,7 +20,6 @@ namespace lib
 		using const_reference = const char_type&;
 		using iterator = char_type*;
 		using const_iterator = const char_type*;
-		using size_type = unsigned int;
 		// Temporary code
 		#pragma warning(push)
 		#pragma warning(disable:4251)

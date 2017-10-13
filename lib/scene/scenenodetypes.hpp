@@ -21,7 +21,7 @@ namespace lib
 			}
 
 			sptr<T> operator()() noexcept { return m_node; }
-			const sptr<T> operator()() const noecept { return m_node; }
+			const sptr<T> operator()() const noexcept { return m_node; }
 
 		private:
 			sptr<T> m_node;
