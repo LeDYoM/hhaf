@@ -4,7 +4,6 @@
 #include "menupage.hpp"
 #include "menupage_main.hpp"
 
-#include <lib/scene/nodes/choosecontrol.hpp>
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/scenemanager.hpp>
 #include <lib/core/host.hpp>

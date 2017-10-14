@@ -15,13 +15,14 @@ namespace lib
 		class RenderizableSceneNode : public SceneNode
 		{
 		public:
+			using SceneNode::SceneNode;
 
 			void create() override {
 				createRenderizable<T>(name()+"_node");
 			}
 
-			sptr<T> operator()() noexcept { return m_node; }
-			const sptr<T> operator()() const noexcept { return m_node; }
+			sptr<T> node() noexcept { return m_node; }
+			const sptr<T> node() const noexcept { return m_node; }
 
 		private:
 			sptr<T> m_node;

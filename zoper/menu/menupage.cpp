@@ -2,7 +2,6 @@
 #include <mtypes/include/log.hpp>
 #include <lib/scene/scene.hpp>
 #include <lib/scene/ianimation.hpp>
-#include <lib/scene/nodes/labeltext.hpp>
 #include <lib/scene/renderizables/nodeshape.hpp>
 #include <lib/scene/renderizables/nodetext.hpp>
 #include <lib/scene/renderizables/discretetext.hpp>
@@ -30,20 +29,14 @@ namespace zoper
 	void MenuPage::addLabel(str title)
 	{
 		auto newOption = createSceneNode<TextSceneNode>("label");
-		newOption->setFont(m_normalFont);
-		newOption->setCharacterSize(LineSize);
-		newOption->setColor(colors::Blue);
-		newOption->mainText()->text = title;
-		options.push_back(std::move(newOption));
+		newOption->node()->font = m_normalFont;
+		newOption->node()->characterSize = LineSize;
+		newOption->node()->color = colors::Blue;
+		newOption->node()->text = title;
 	}
 
 	void MenuPage::create()
 	{
-		box.setCallback([this]() {
-			for_each_group_as<LabelText>([this](const sptr<LabelText>&node) {
-				node->setAlignmentBox(box());
-			});
-		});
 //				const auto &cTheme(dynamic_cast<ChooseControlGroup*>(parent())->currentTheme());
 		m_normalFont = resourceManager().getResource<TTFont>("menu.mainFont", "resources/oldct.ttf");
 
@@ -62,30 +55,34 @@ namespace zoper
 		f32 posY{ 0 };
 		const f32 spacing{ m_normalFont->getLineSpacing(LineSize) };
 
-		for_each_group_as<LabelText>([&posY,spacing](const auto &node) {
-			node->position = vector2df{ 0, static_cast<f32>(posY) };
-			posY += (spacing + LineSeparation);
-		});
+//		for_each_group_as<LabelText>([&posY,spacing](const auto &node) {
+//			node->position = vector2df{ 0, static_cast<f32>(posY) };
+//			posY += (spacing + LineSeparation);
+//		});
 	}
 
 	void MenuPage::goDown()
 	{
+/*
 		if (m_selectedItem < (options.size() - 1)) {
 			++m_selectedItem;
 		}
 		else {
 			m_selectedItem = 0;
 		}
+		*/
 	}
 
 	void MenuPage::goUp()
 	{
+		/*
 		if (m_selectedItem > 0) {
 			--m_selectedItem;
 		}
 		else {
 			m_selectedItem = options.size() - 1;
 		}
+		*/
 	}
 
 	void MenuPage::goLeft()

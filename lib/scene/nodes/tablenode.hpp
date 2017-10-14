@@ -54,10 +54,11 @@ namespace lib
 
 				constexpr vector_shared_pointers<T> getY(const size_type indexx) const noexcept { return m_nodes[indexx]; }
 				constexpr vector_shared_pointers<T> getX(const size_type indexy) const noexcept { 
-					vector_shared_pointers<T> result(tableSize.y);
-					for (auto &&nodeRow : m_nodes) {
+					vector_shared_pointers<T> result(tableSize().y);
+					for (auto &nodeRow : m_nodes[indexy]) {
 						result.push_back(nodeRow);
 					}
+
 					return result;
 				}
 
@@ -75,8 +76,9 @@ namespace lib
 					// Update row and column size
 					const vector2df nodeSize{ sceneNodeSize() / static_cast<vector2df>(tableSize()) };
 					
-					for_each_tableSceneNode([this, &nodeSize](const auto &p, const auto &n) {
-						n->position = nodesSize * static_cast<vector2df>(p);
+					for_each_tableSceneNode([this, nodeSize](const vector2du32 &, const sptr<T> &) {
+//						n->pos
+//						n->position = nodesSize * static_cast<vector2df>(p);
 					});
 				}
 
