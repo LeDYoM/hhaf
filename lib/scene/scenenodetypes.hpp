@@ -15,10 +15,11 @@ namespace lib
 		class RenderizableSceneNode : public SceneNode
 		{
 		public:
-			using SceneNode::SceneNode;
+
+			RenderizableSceneNode(SceneNode *const parent, str name) : SceneNode{ parent, name } {}
 
 			void create() override {
-				createRenderizable<T>(name()+"_node");
+				m_node = createRenderizable<T>(name()+"_node");
 			}
 
 			sptr<T> node() noexcept { return m_node; }

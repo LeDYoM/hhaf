@@ -40,12 +40,11 @@ namespace lib
 				sptr<T> createNodeAt(const vector2du32 &index, Args&&... args)
 				{
 					setNeedsUpdate();
-					auto result(createSceneNode<T>(std::forward<Args>(args)...));
+					sptr<T> result(createSceneNode<T>(std::forward<Args>(args)...));
 					m_nodes[index.x][index.y] = result;
 					addSceneNode(result);
 					return result;
 				}
-
 
 				constexpr sptr<T> operator()(const vector2du32 &index) noexcept { return m_nodes[index.x][index.y]; }
 				constexpr const sptr<T> operator()(const vector2du32 &index) const noexcept { return m_nodes[index.x][index.y]; }

@@ -26,15 +26,6 @@ namespace zoper
 	constexpr u32 LineSize = 72;
 	constexpr u32 LineSeparation = 16;
 
-	void MenuPage::addLabel(str title)
-	{
-		auto newOption = createSceneNode<TextSceneNode>("label");
-		newOption->node()->font = m_normalFont;
-		newOption->node()->characterSize = LineSize;
-		newOption->node()->color = colors::Blue;
-		newOption->node()->text = title;
-	}
-
 	void MenuPage::create()
 	{
 //				const auto &cTheme(dynamic_cast<ChooseControlGroup*>(parent())->currentTheme());
@@ -47,6 +38,18 @@ namespace zoper
 				int a;
 			}
 		});
+	}
+
+	void MenuPage::setMainLabels(const vector<str>& texts)
+	{
+		size_type c{ 0 };
+		for (const str t : texts) {
+			auto newOption = createNodeAt(vector2du32{ 0,c }, str("label" + c));
+			newOption->node()->font = m_normalFont;
+			newOption->node()->characterSize = LineSize;
+			newOption->node()->color = colors::Blue;
+			newOption->node()->text = t;
+		}
 	}
 
 	void MenuPage::update()
