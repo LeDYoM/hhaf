@@ -38,13 +38,17 @@ namespace zoper
 				int a;
 			}
 		});
+
 	}
 
 	void MenuPage::setMainLabels(const vector<str>& texts)
 	{
+		sceneNodeSize = parentScene()->scenePerspective().size();
+		tableSize = { 1,texts.size() };
 		size_type c{ 0 };
 		for (const str t : texts) {
 			auto newOption = createNodeAt(vector2du32{ 0,c }, str("label" + c));
+			++c;
 			newOption->node()->font = m_normalFont;
 			newOption->node()->characterSize = LineSize;
 			newOption->node()->color = colors::Blue;
@@ -54,6 +58,8 @@ namespace zoper
 
 	void MenuPage::update()
 	{
+		BaseClass::update();
+
 		f32 center{ 0 };
 		f32 posY{ 0 };
 		const f32 spacing{ m_normalFont->getLineSpacing(LineSize) };

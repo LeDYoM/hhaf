@@ -26,7 +26,7 @@ namespace lib
 					setNeedsUpdate();
 
 					m_nodes.resize(tableSize().x);
-					for (auto nodeColumn : m_nodes) {
+					for (auto& nodeColumn : m_nodes) {
 						nodeColumn.resize(tableSize().y);
 					}
 				};
@@ -65,19 +65,20 @@ namespace lib
 				{
 					for (size_t x{ 0 }; x < m_nodes.size(); ++x) {
 						for (size_t y{ 0 }; y < m_nodes[x].size(); ++y) {
-							action({ x,y }, m_nodes[x][y]);
+							if (sptr<T> node = m_nodes[x][y]) {
+								action({ x,y }, node);
+							}
 						}
 					}
 				}
 
-				virtual void update() override {
+				void update() override {
 					SceneNode::update();
 					// Update row and column size
 					const vector2df nodeSize{ sceneNodeSize() / static_cast<vector2df>(tableSize()) };
 					
-					for_each_tableSceneNode([this, nodeSize](const vector2du32 &, const sptr<T> &) {
-//						n->pos
-//						n->position = nodesSize * static_cast<vector2df>(p);
+					for_each_tableSceneNode([this, nodeSize](const vector2du32 &p, const sptr<T> &n) {
+						n->position = nodeSize * static_cast<vector2df>(p);
 					});
 				}
 

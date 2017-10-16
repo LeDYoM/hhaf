@@ -234,7 +234,8 @@ namespace lib
 					pop_back();
 				}
 
-				while (m_size > size) {
+				// Append the necessary
+				while (m_size < size) {
 					emplace_back();
 				}
 			}
