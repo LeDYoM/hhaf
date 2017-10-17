@@ -67,7 +67,7 @@ namespace lib
 			Rectf32 RenderWindow::viewRect() const
 			{
 				sf::View currentView(getView());
-				return Rectf32::fromCenterAndSize(toVector2d(currentView.getCenter()), toVector2d(currentView.getSize()));
+				return rectFromCenterAndSize(toVector2d(currentView.getCenter()), toVector2d(currentView.getSize()));
 			}
 
 			void RenderWindow::keyEvent(const sf::Event &e)

@@ -126,7 +126,8 @@ namespace lib
 		return is;
 	}
 
-	static_assert(std::is_pod_v < vector2d<u8> >, "vector2d is not a pod");
+	static_assert(std::is_pod_v < vector2d<u8> >, "vector2du8 is not a pod");
+	static_assert(std::is_pod_v < vector2d<f64> >, "vector2df64 is not a pod");
 
 	using vector2du8 = vector2d<u8>;
 	using vector2ds8 = vector2d<s8>;
@@ -136,6 +137,7 @@ namespace lib
 	using vector2ds32 = vector2d<s32>;
 	using vector2df = vector2d<f32>;
 	using vector2dd = vector2d<f64>;
+	using vector2dst = vector2d<size_type>;
 }
 
 #endif

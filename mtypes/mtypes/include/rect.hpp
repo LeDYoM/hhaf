@@ -13,11 +13,6 @@ namespace lib
 	{
 		T left, top, width, height;
 
-		static constexpr Rect fromSize(const T sizeX, const T sizeY) { return Rect{ {},{}, vector2d<T>{sizeX,sizeY} }; }
-		static constexpr Rect fromSize(const vector2d<T> &size) { return Rect{ {},{}, size }; }
-		static constexpr Rect fromCenterAndRadius(const vector2d<T> &center, const vector2d<T> &radius) { return Rect{ center.x - radius.x,center.y - radius.y, center.x + radius.x, center.y + radius.y }; }
-		static constexpr Rect fromCenterAndSize(const vector2d<T> &center, const vector2d<T> &size) { return fromCenterAndRadius(center, size / static_cast<T>(2)); }
-
 		constexpr Rect() noexcept = default;
 		constexpr Rect(const T rectLeft, const T rectTop, const T rectWidth, const T rectHeight) noexcept : left{ rectLeft }, top{ rectTop }, width{ rectWidth }, height{ rectHeight } { }
 		constexpr Rect(const vector2d<T> &position, const vector2d<T> &size) noexcept : Rect{ position.x, position.y, size.x, size.y } {}
@@ -86,6 +81,18 @@ namespace lib
 		constexpr Rect setRadiusFromCenter(const vector2d<T> &radius) const { Rect temp{ *this }; temp.setRadiusFromCenter(radius); return temp; }
 		constexpr Rect moveResize(const vector2d<T> &offset, const vector2d<T> &sSize) const { return moved(offset).resize(sSize); };
 	};
+
+	template <typename T>
+	constexpr Rect<T> rectFromSize(const T sizeX, const T sizeY) noexcept { return { {},{}, vector2d<T>{sizeX,sizeY} }; }
+
+	template <typename T>
+	constexpr Rect<T> rectFromSize(const vector2d<T> &size) noexcept { return { {},{}, size }; }
+
+	template <typename T>
+	constexpr Rect<T> rectFromCenterAndRadius(const vector2d<T> &center, const vector2d<T> &radius) noexcept { return { center.x - radius.x,center.y - radius.y, center.x + radius.x, center.y + radius.y }; }
+
+	template <typename T>
+	constexpr Rect<T> rectFromCenterAndSize(const vector2d<T> &center, const vector2d<T> &size) noexcept { return rectFromCenterAndRadius<T>(center, size / static_cast<T>(2)); }
 
 	template <typename T>
 	constexpr Rect<T> operator +(const Rect<T> &lhs, const vector2d<T> &rhs) noexcept

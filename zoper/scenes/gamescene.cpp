@@ -51,14 +51,14 @@ namespace zoper
 
 		m_gameresources.loadResources(lib::host().resourceManager());
 
-		m_scoreQuad = createSceneNode<TextQuad>("score", m_gameresources.scoreFont, 90, colors::White, Rectf32::fromSize(600, 300));
+		m_scoreQuad = createSceneNode<TextQuad>("score", m_gameresources.scoreFont, 90, colors::White, rectFromSize(600, 300));
 		m_scoreQuad->position = { 50, 50 };
 		m_scoreQuad->text(0)->text = "Level:";
 		m_scoreQuad->text(0)->color = colors::Blue;
 		m_scoreQuad->text(2)->text = "Score:";
 		m_scoreQuad->text(2)->color = colors::Blue;
 
-		m_goalQuad = createSceneNode<TextQuad>("goal", m_gameresources.scoreFont, 90, colors::White, Rectf32::fromSize(600, 300));
+		m_goalQuad = createSceneNode<TextQuad>("goal", m_gameresources.scoreFont, 90, colors::White, rectFromSize(600, 300));
 		m_goalQuad->position = { 1250, 50 };
 		m_goalQuad->text(0)->color = colors::Blue;
 		m_goalQuad->text(2)->color = colors::Blue;
@@ -353,7 +353,7 @@ namespace zoper
 		log_debug_info("Adding player tile at ", m_gameData->centerRect);
 		CLIENT_ASSERT(!p_player, "Player already initialized");
 		// Create the player instance
-		p_player = m_mainBoardrg->createSceneNode<Player>("playerNode", m_gameData->centerRect.leftTop(), Rectf32::fromSize(tileSize()), board2SceneFactor());
+		p_player = m_mainBoardrg->createSceneNode<Player>("playerNode", m_gameData->centerRect.leftTop(), rectFromSize(tileSize()), board2SceneFactor());
 
 		// Add it to the board and to the scene nodes
 		p_boardModel->setTile(p_player->boardPosition(), p_player);
@@ -365,7 +365,7 @@ namespace zoper
 
 		lib::log_debug_info("Adding new tile at ", pos, " with value ", newToken);
 		// Create a new Tile instance
-		auto newTileToken = m_mainBoardrg->createSceneNode<Tile>("tileNode", BoardTileData{ static_cast<BoardTileData>(newToken) }, Rectf32::fromSize(tileSize()));
+		auto newTileToken = m_mainBoardrg->createSceneNode<Tile>("tileNode", BoardTileData{ static_cast<BoardTileData>(newToken) }, rectFromSize(tileSize()));
 		// Set the position in the scene depending on the board position
 		newTileToken->position = board2Scene(pos);
 
@@ -444,7 +444,7 @@ namespace zoper
 			if (found) {
 				auto sceneNode = createSceneNode("pointIncrementScore_SceneNode");
 				auto node = sceneNode->createRenderizable<NodeShape>("pointIncrementScore", 30);
-				node->box = Rectf32::fromSize(15.0f, 15.0f);
+				node->box = rectFromSize(15.0f, 15.0f);
 				node->color = colors::White;
 
 				auto animationComponent(sceneNode->ensureComponentOfType<anim::AnimationComponent>());

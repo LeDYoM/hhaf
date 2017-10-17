@@ -25,7 +25,7 @@ namespace zoper
 		mainMenuResources = msptr<MainMenuResources>();
 		mainMenuResources->loadResources(resourceManager());
 		m_background = createRenderizable<NodeQuad>("background");
-		m_background->box = Rectf32::fromSize(2000.0f, 2000.0f);
+		m_background->box = rectFromSize(2000.0f, 2000.0f);
 		m_background->texture = mainMenuResources->background;
 		m_background->color = colors::White;
 
