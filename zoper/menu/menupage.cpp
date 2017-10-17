@@ -43,7 +43,7 @@ namespace zoper
 
 	void MenuPage::setMainLabels(const vector<str>& texts)
 	{
-		sceneNodeSize = parentScene()->scenePerspective().size();
+		sceneNodeSize = scenePerspective().size();
 		tableSize = { 1,texts.size() };
 		size_type c{ 0 };
 		for (const str&t : texts) {

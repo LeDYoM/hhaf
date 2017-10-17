@@ -15,7 +15,6 @@ namespace zoper
 		BaseClass::create();
 
 		setMainLabels({ "Play token mode","Play time mode", "Options", "Exit" });
-		update();
 	}
 
 }
