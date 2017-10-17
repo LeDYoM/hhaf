@@ -28,7 +28,6 @@ namespace zoper
 
 	void MenuPage::create()
 	{
-//				const auto &cTheme(dynamic_cast<ChooseControlGroup*>(parent())->currentTheme());
 		m_normalFont = resourceManager().getResource<TTFont>("menu.mainFont", "resources/oldct.ttf");
 
 		auto input = ensureComponentOfType<InputComponent>();
@@ -41,9 +40,10 @@ namespace zoper
 
 	}
 
-	void MenuPage::setMainLabels(const vector<str>& texts)
+	void MenuPage::setMainLabels(const vector<str>& texts, const Rectf32 &textBox)
 	{
-		sceneNodeSize = scenePerspective().size();
+		position = textBox.leftTop();
+		sceneNodeSize = textBox.size();
 		tableSize = { 1,texts.size() };
 		size_type c{ 0 };
 		for (const str&t : texts) {

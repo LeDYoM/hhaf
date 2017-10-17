@@ -21,7 +21,7 @@ namespace zoper
 		MenuPage(scene::SceneNode *parent, str name);
 		virtual ~MenuPage();
 
-		void setMainLabels(const vector<str>& texts);
+		void setMainLabels(const vector<str>& texts, const Rectf32 &textBox);
 
 		void create() override;
 

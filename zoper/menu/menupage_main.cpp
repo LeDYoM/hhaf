@@ -14,7 +14,10 @@ namespace zoper
 	{
 		BaseClass::create();
 
-		setMainLabels({ "Play token mode","Play time mode", "Options", "Exit" });
+		Rectf32 r(rectFromSize(scenePerspective().size()));
+		r.setLeftTop({ 0,750 });
+		r.setSize({ 2000,4*150 });
+		setMainLabels({ "Play token mode","Play time mode", "Options", "Exit" },r);
 	}
 
 }
