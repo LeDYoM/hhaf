@@ -30,6 +30,9 @@ namespace lib
 			emitter<const input::Key&> KeyPressed;
 			emitter<const input::Key&> KeyReleased;
 
+			virtual void keyPressed(const input::Key&) {}
+			virtual void keyReleased(const input::Key&) {}
+
 		private:
 			KeyHandler_t m_onKeyPressed{ nullptr };
 			function<void(const input::Key&)> m_onKeyReleased{ nullptr };
