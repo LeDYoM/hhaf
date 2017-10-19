@@ -23,7 +23,7 @@ namespace lib
 			bool addComponent(sptr<IComponent> nc);
 
 			template <typename T, typename... Args>
-			sptr<T> emplaceComponentOfType(Args&&... args) {
+			sptr<T> ensureComponentOfType(Args&&... args) {
 				auto component(componentOfType<T>());
 				if (!component) {
 					auto nc(msptr<T>(std::forward<Args>(args)...));
@@ -33,11 +33,6 @@ namespace lib
 				return component;
 			}
 
-			template <typename T>
-			sptr<T> ensureComponentOfType()
-			{
-				return emplaceComponentOfType<T>();
-			}
 
 			void updateComponents();
 

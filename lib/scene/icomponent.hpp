@@ -1,8 +1,11 @@
-#ifndef LIB_DRAW_ICOMPONENT_INCLUDE_HPP__
-#define LIB_DRAW_ICOMPONENT_INCLUDE_HPP__
+#pragma once
+
+#ifndef LIB_SCENE_ICOMPONENT_INCLUDE_HPP__
+#define LIB_SCENE_ICOMPONENT_INCLUDE_HPP__
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/properties.hpp>
+#include <mtypes/include/log.hpp>
 
 namespace lib
 {
@@ -40,6 +43,11 @@ namespace lib
 			inline const SceneNode *const attachedNode() const noexcept { return m_sceneNode; }
 			inline SceneNode *const attachedNode() noexcept { return m_sceneNode; }
 
+			template <typename T, typename... Args>
+			sptr<T> ensureSiblingComponentOfType(Args&&... args) {
+				assert_release(m_sceneNode != nullptr, "You need to have a node attached before calling this method");
+				return m_sceneNode->ensureComponentOfType<T>(std::forward<Args>(args)...);
+			}
 		private:
 			SceneNode *m_sceneNode;
 			friend class ComponentContainer;

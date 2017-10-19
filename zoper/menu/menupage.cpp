@@ -1,14 +1,13 @@
 #include "menupage.hpp"
+#include "menupageinputcomponent.hpp"
 #include <mtypes/include/log.hpp>
 #include <lib/scene/scene.hpp>
-#include <lib/scene/ianimation.hpp>
 #include <lib/scene/renderizables/nodeshape.hpp>
 #include <lib/scene/renderizables/nodetext.hpp>
 #include <lib/scene/renderizables/discretetext.hpp>
 #include <lib/core/host.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/scene/ttfont.hpp>
-#include <lib/scene/components/inputcomponent.hpp>
 #include <lib/include/key.hpp>
 #include <mtypes/include/function.hpp>
 
@@ -30,14 +29,8 @@ namespace zoper
 	{
 		m_normalFont = resourceManager().getResource<TTFont>("menu.mainFont", "resources/oldct.ttf");
 
-		auto input = ensureComponentOfType<InputComponent>();
-		input->KeyPressed.connect([this](const input::Key& key) {
-//		m_receiver.connect(input->KeyPressed, function<const input::Key&>([this](const input::Key& key) {
-			if (key == input::Left) {
-				int a;
-			}
-		});
-
+		auto input = ensureComponentOfType<MenuPageInputComponent>();
+		input->Up.connect()
 	}
 
 	void MenuPage::setMainLabels(const vector<str>& texts, const Rectf32 &textBox)

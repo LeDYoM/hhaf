@@ -19,13 +19,16 @@ namespace zoper
 		using InputComponent::InputComponent;
 		virtual ~MenuPageInputComponent() = default;
 
-		void keyPressed(const input::Key&) override;
-		void keyReleased(const input::Key&) override;
+		void onAttached() override;
 
-		emitter<> goDown;
-		emitter<> goUp;
-		emitter<> goLeft;
-		emitter<> goRight;
+		function<void(const input::Key&)> keyPressed;
+		function<void(const input::Key&)> keyReleased;
+
+		emitter<> Up;
+		emitter<> Down;
+		emitter<> Left;
+		emitter<> Right;
+		emitter<> Selected;
 
 		inline u32 selectedItem() const noexcept { return m_selectedItem; }
 

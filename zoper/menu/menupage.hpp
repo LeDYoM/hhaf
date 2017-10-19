@@ -40,8 +40,9 @@ namespace zoper
 	private:
 		inline vector_shared_pointers<scene::TextSceneNode> currentLine() const { return getX(m_selectedItem); }
 		inline vector_shared_pointers<scene::TextSceneNode> previouscurrentLine() const { return getX(m_previouslySelectedItem); }
-		u32 m_previouslySelectedItem;
-		u32 m_selectedItem;
+		bool previouslySelectedExists{ false };
+		size_t m_previouslySelectedItem{ 0 };
+		size_t m_selectedItem{ 0 };
 
 		sptr<scene::TTFont> m_normalFont;
 		ireceiver m_receiver;

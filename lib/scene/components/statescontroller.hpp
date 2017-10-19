@@ -16,21 +16,26 @@ namespace lib
 		{
 		public:
 			constexpr StatesController(const T&initialState) noexcept : m_currentState{ initialState } {}
-			constexpr StatesController(const T&initialState, function<void(const T&, const T&)> stateChangedCallback) noexcept
-				: m_currentState{ initialState }, stateChanged{ std::move(stateChangedCallback) } {}
 
-			virtual void onAttached() override {}
-
-			void changeState(const T& newState) {
-				const T&oldState{ m_currentState };
-				m_currentState = newState;
-				stateChanded(m_currentState, oldState);
+			constexpr void setState(const T& newState)
+			{
+				changeState(newState);
 			}
 
+			inline const T&currentState() const noexcept { return m_currentState; }
+			inline firstChangeCompleted() const noexcept { return m_firstStateChangedCompleted; }
 			/// Emit when the state changed. The new state and the previous state are sent
 			emitter<const T&,const T&> stateChanged;
 		private:
+			inline void changeState(const T& newState) {
+				const T oldState{ m_currentState };
+				m_currentState = newState;
+				stateChanded(m_currentState, oldState);
+				m_firstStateChangedCompleted = true;
+			}
+
 			T m_currentState;
+			bool m_firstStateChangedCompleted{ false };
 		};
 	}
 }

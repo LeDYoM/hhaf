@@ -82,12 +82,12 @@ namespace lib
 	}
 
 	template<typename ...Args>
-	inline constexpr void assert_debug_error(const bool condition, const char *message) noexcept {
+	inline constexpr void assert_debug(const bool condition, const char *message) noexcept {
 		if (!condition) { log::log<log::level_type::debug, log::severity_type::error>(message); }
 	}
 
 	template<typename ...Args>
-	inline constexpr void assert_release_error(const bool condition, const char *message) noexcept {
+	inline constexpr void assert_release(const bool condition, const char *message) noexcept {
 		if (!condition) { log::log<log::level_type::release, log::severity_type::error>(message); }
 	}
 
