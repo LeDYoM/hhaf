@@ -30,7 +30,11 @@ namespace zoper
 		m_normalFont = resourceManager().getResource<TTFont>("menu.mainFont", "resources/oldct.ttf");
 
 		auto input = ensureComponentOfType<MenuPageInputComponent>();
-//		input->Up.connect()
+		input->Up.connect({ this, &MenuPage::goUp });
+		input->Down.connect({ this, &MenuPage::goDown });
+		input->Left.connect({ this, &MenuPage::goLeft });
+		input->Right.connect({ this, &MenuPage::goRight });
+
 	}
 
 	void MenuPage::setMainLabels(const vector<str>& texts, const Rectf32 &textBox)

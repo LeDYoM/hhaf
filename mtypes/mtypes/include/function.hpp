@@ -23,8 +23,8 @@ namespace lib
 
 		constexpr operator bool() const noexcept { return m_callable != nullptr; }
 
-//		template <typename T, typename V>
-//		constexpr function(T*const t, V function) : m_callable{ msptr<CallableMethodPointerT<T>>(t, function) } {}
+		template <typename T, typename V>
+		constexpr function(T*const t, V function) : m_callable{ msptr<CallableMethodPointerT<T>>(t, function) } {}
 
 		template <typename T>
 		constexpr function(T t) : m_callable { msptr<CallableT<T>>(std::move(t)) } {}

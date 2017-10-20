@@ -30,11 +30,6 @@ namespace lib
 			m_receivers.emplace_back(std::move(f));
 		}
 
-		template <typename T, typename V>
-		constexpr void connect(T&& t, V&& b) {
-			m_receivers.emplace_back(std::forward<T>(t),std::forward<V>(b));
-		}
-
 		constexpr bool disconnect(function<void(Args...)>& f) {
 			auto where_it_was = m_receivers.remove_value(f);
 			return where_it_was != m_receivers.end();
