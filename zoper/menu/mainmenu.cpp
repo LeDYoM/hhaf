@@ -35,7 +35,7 @@ namespace zoper
 	{
 		using namespace nodes;
 		SceneNode::create();
-		auto statesController = emplaceComponentOfType<StatesController<MenuPageType>>(MenuPageType::Main);
+		auto statesController = ensureComponentOfType<StatesController<MenuPageType>>(MenuPageType::Main);
 //		statesController->stateChanged.connect(ml<MainMenu,&MainMenu::mainMenuPageChanged>(*this));
 //		statesController->stateChanged.connect([this](const auto a1, const auto a2) { mainMenuPageChanged(a1, a2); });
 //		statesController->stateChanged.connect(this, &MainMenu::mainMenuPageChanged);

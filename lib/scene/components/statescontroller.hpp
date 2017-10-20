@@ -23,7 +23,7 @@ namespace lib
 			}
 
 			inline const T&currentState() const noexcept { return m_currentState; }
-			inline firstChangeCompleted() const noexcept { return m_firstStateChangedCompleted; }
+			inline bool firstChangeCompleted() const noexcept { return m_firstStateChangedCompleted; }
 			/// Emit when the state changed. The new state and the previous state are sent
 			emitter<const T&,const T&> stateChanged;
 		private:
