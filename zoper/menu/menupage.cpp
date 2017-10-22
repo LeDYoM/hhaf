@@ -67,28 +67,37 @@ namespace zoper
 //		});
 	}
 
+	void MenuPage::updateSelection()
+	{
+		auto previousLine = previouscurrentLine();
+		previousLine.for_each([](const sptr<TextSceneNode> &t) {
+			t->
+		});
+	}
+
+	void MenuPage::setColorToLine(const size_t index, const Color &color)
+	{
+		getL
+	}
+
 	void MenuPage::goDown()
 	{
-/*
-		if (m_selectedItem < (options.size() - 1)) {
+		if (m_selectedItem < (tableSize().y - 1)) {
 			++m_selectedItem;
 		}
 		else {
 			m_selectedItem = 0;
 		}
-		*/
 	}
 
 	void MenuPage::goUp()
 	{
-		/*
 		if (m_selectedItem > 0) {
 			--m_selectedItem;
 		}
 		else {
-			m_selectedItem = options.size() - 1;
+			m_selectedItem = tableSize().y - 1;
 		}
-		*/
 	}
 
 	void MenuPage::goLeft()

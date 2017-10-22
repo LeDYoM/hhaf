@@ -9,6 +9,7 @@
 #include <mtypes/include/connection.hpp>
 #include <lib/scene/nodes/tablenode.hpp>
 #include <lib/scene/scenenodetypes.hpp>
+#include <lib/scene/color.hpp>
 
 namespace zoper
 {
@@ -38,9 +39,10 @@ namespace zoper
 		void update();
 
 	private:
+		void updateSelection();
+		void setColorToLine(const size_t, const Color&);
 		inline vector_shared_pointers<scene::TextSceneNode> currentLine() const { return getX(m_selectedItem); }
 		inline vector_shared_pointers<scene::TextSceneNode> previouscurrentLine() const { return getX(m_previouslySelectedItem); }
-		bool previouslySelectedExists{ false };
 		size_t m_previouslySelectedItem{ 0 };
 		size_t m_selectedItem{ 0 };
 

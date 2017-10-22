@@ -51,18 +51,8 @@ namespace lib
 				constexpr sptr<T> operator()(const size_type indexx, const size_type &indexy) noexcept { return m_nodes[indexx][indexy]; }
 				constexpr const sptr<T> operator()(const size_type indexx, const size_type &indexy) const noexcept { return m_nodes[indexx][indexy]; }
 
-				constexpr vector_shared_pointers<T> getY(const size_type indexx) const noexcept { return m_nodes[indexx]; }
-				constexpr vector_shared_pointers<T> getX(const size_type indexy) const noexcept { 
-					vector_shared_pointers<T> result(tableSize().y);
-					for (auto &nodeRow : m_nodes[indexy]) {
-						result.push_back(nodeRow);
-					}
 
-					return result;
-				}
-
-				constexpr void for_each_tableSceneNode(function<void(const vector2du32 &, const sptr<T> &)> action)
-				{
+				constexpr void for_each_tableSceneNode(function<void(const vector2du32 &, const sptr<T> &)> action) {
 					for (size_t x{ 0 }; x < m_nodes.size(); ++x) {
 						for (size_t y{ 0 }; y < m_nodes[x].size(); ++y) {
 							if (sptr<T> node = m_nodes[x][y]) {
@@ -70,6 +60,12 @@ namespace lib
 							}
 						}
 					}
+				}
+
+				constexpr void for_each_tableSceneNode_in_x(size_t x, function<void(const size_t, const sptr<T> &)> action) {
+					for_each_tableSceneNode([action](const vector2du32 &pos, const sptr<T> &node) {
+
+					});
 				}
 
 				void update() override {
