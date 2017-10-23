@@ -53,8 +53,8 @@ namespace lib
 
 
 				constexpr void for_each_tableSceneNode(function<void(const vector2du32 &, const sptr<T> &)> action) {
-					for (size_t x{ 0 }; x < m_nodes.size(); ++x) {
-						for (size_t y{ 0 }; y < m_nodes[x].size(); ++y) {
+					for (size_type x{ 0 }; x < m_nodes.size(); ++x) {
+						for (size_type y{ 0 }; y < m_nodes[x].size(); ++y) {
 							if (sptr<T> node = m_nodes[x][y]) {
 								action({ x,y }, node);
 							}
@@ -62,7 +62,7 @@ namespace lib
 					}
 				}
 
-				constexpr void for_each_tableSceneNode_in_x(size_t x, function<void(const size_t, const sptr<T> &)> action) {
+				constexpr void for_each_tableSceneNode_in_x(const size_type x, function<void(const size_t, const sptr<T> &)> action) {
 					for_each_tableSceneNode([action,x](const vector2du32 &pos, const sptr<T> &node) {
 						if (pos.x == x) {
 							action(pos.y, node);
@@ -70,7 +70,7 @@ namespace lib
 					});
 				}
 
-				constexpr void for_each_tableSceneNode_in_y(size_t y, function<void(const size_t, const sptr<T> &)> action) {
+				constexpr void for_each_tableSceneNode_in_y(const size_type y, function<void(const size_type, const sptr<T> &)> action) {
 					for_each_tableSceneNode([action, y](const vector2du32 &pos, const sptr<T> &node) {
 						if (pos.y == y) {
 							action(pos.x, node);

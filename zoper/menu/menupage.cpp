@@ -69,13 +69,11 @@ namespace zoper
 
 	void MenuPage::updateSelection()
 	{
-		auto previousLine = previouscurrentLine();
-		previousLine.for_each([](const sptr<TextSceneNode> &t) {
-			t->
-		});
+		setColorToLine(m_previouslySelectedItem, colors::Blue);
+		setColorToLine(m_selectedItem, colors::Red);
 	}
 
-	void MenuPage::setColorToLine(const size_t index, const Color &color)
+	void MenuPage::setColorToLine(const size_type index, const Color &color)
 	{
 		for_each_tableSceneNode_in_y(index, [&color](const sptr<TextSceneNode> &node) {
 			node->node()->color = color;
@@ -84,6 +82,7 @@ namespace zoper
 
 	void MenuPage::goDown()
 	{
+		m_previouslySelectedItem = m_selectedItem;
 		if (m_selectedItem < (tableSize().y - 1)) {
 			++m_selectedItem;
 		}
@@ -94,6 +93,7 @@ namespace zoper
 
 	void MenuPage::goUp()
 	{
+		m_previouslySelectedItem = m_selectedItem;
 		if (m_selectedItem > 0) {
 			--m_selectedItem;
 		}
