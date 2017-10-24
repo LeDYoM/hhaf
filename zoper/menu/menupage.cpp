@@ -75,7 +75,7 @@ namespace zoper
 
 	void MenuPage::setColorToLine(const size_type index, const Color &color)
 	{
-		for_each_tableSceneNode_in_y(index, [&color](const sptr<TextSceneNode> &node) {
+		for_each_tableSceneNode_in_y(index, [&color](const size_type x, const sptr<TextSceneNode> &node) {
 			node->node()->color = color;
 		});
 	}

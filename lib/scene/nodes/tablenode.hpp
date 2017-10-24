@@ -62,7 +62,7 @@ namespace lib
 					}
 				}
 
-				constexpr void for_each_tableSceneNode_in_x(const size_type x, function<void(const size_t, const sptr<T> &)> action) {
+				constexpr void for_each_tableSceneNode_in_x(const size_type x, function<void(const size_type, const sptr<T> &)> action) {
 					for_each_tableSceneNode([action,x](const vector2du32 &pos, const sptr<T> &node) {
 						if (pos.x == x) {
 							action(pos.y, node);

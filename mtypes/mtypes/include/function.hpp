@@ -29,7 +29,7 @@ namespace lib
 		template <typename T>
 		constexpr function(T t) : m_callable { msptr<CallableT<T>>(std::move(t)) } {}
 
-		constexpr ReturnValue operator()(Args&&... args) const {
+		constexpr ReturnValue operator()(Args... args) const {
 			assert(m_callable);
 			return m_callable->Invoke(std::forward<Args>(args)...);
 		}
@@ -55,7 +55,7 @@ namespace lib
 			~CallableT() override = default;
 
 			constexpr ReturnValue Invoke(Args... args) override {
-				return m_t(args...);
+				return m_t(std::forward<Args>(args)...);
 			}
 
 		private:
