@@ -53,7 +53,8 @@ namespace lib
 			if (!alreadyInConainer) {
 				log_debug_info("Not found. Adding it");
 				component->m_sceneNode = m_sceneNode;
-				m_components.push_back(std::move(component));
+				m_components.push_back(component);
+				component->onAttached();
 				return true;
 			}
 			log_debug_info("Component type already present");

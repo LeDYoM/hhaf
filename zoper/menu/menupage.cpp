@@ -34,7 +34,6 @@ namespace zoper
 		input->Down.connect({ this, &MenuPage::goDown });
 		input->Left.connect({ this, &MenuPage::goLeft });
 		input->Right.connect({ this, &MenuPage::goRight });
-
 	}
 
 	void MenuPage::setMainLabels(const vector<str>& texts, const Rectf32 &textBox)
@@ -51,6 +50,7 @@ namespace zoper
 			newOption->node()->color = colors::Blue;
 			newOption->node()->text = t;
 		}
+		setSelectedItem(0);
 	}
 
 	void MenuPage::update()
@@ -65,6 +65,13 @@ namespace zoper
 //			node->position = vector2df{ 0, static_cast<f32>(posY) };
 //			posY += (spacing + LineSeparation);
 //		});
+	}
+
+	void MenuPage::setSelectedItem(const size_type index)
+	{
+		m_previouslySelectedItem = m_selectedItem;
+		m_selectedItem = index;
+		updateSelection();
 	}
 
 	void MenuPage::updateSelection()
@@ -84,10 +91,10 @@ namespace zoper
 	{
 		m_previouslySelectedItem = m_selectedItem;
 		if (m_selectedItem < (tableSize().y - 1)) {
-			++m_selectedItem;
+			setSelectedItem(m_selectedItem + 1);
 		}
 		else {
-			m_selectedItem = 0;
+			setSelectedItem(0);
 		}
 	}
 
@@ -95,10 +102,10 @@ namespace zoper
 	{
 		m_previouslySelectedItem = m_selectedItem;
 		if (m_selectedItem > 0) {
-			--m_selectedItem;
+			setSelectedItem(m_selectedItem - 1);
 		}
 		else {
-			m_selectedItem = tableSize().y - 1;
+			setSelectedItem(tableSize().y - 1);
 		}
 	}
 

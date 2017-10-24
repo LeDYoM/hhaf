@@ -33,12 +33,13 @@ namespace zoper
 		void goLeft();
 		void goRight();
 
-		inline u32 selectedItem() const noexcept { return m_selectedItem; }
+		inline size_type selectedItem() const noexcept { return m_selectedItem; }
 
 	protected:
 		void update();
 
 	private:
+		void setSelectedItem(const size_type index);
 		void updateSelection();
 		void setColorToLine(const size_type, const scene::Color&);
 		size_type m_previouslySelectedItem{ 0 };
