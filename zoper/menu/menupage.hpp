@@ -26,19 +26,17 @@ namespace zoper
 
 		void create() override;
 
-		Property<Rectf32> box;
-
-		void goDown();
-		void goUp();
-		void goLeft();
-		void goRight();
-
 		inline size_type selectedItem() const noexcept { return m_selectedItem; }
 
 	protected:
 		void update();
 
 	private:
+		void goDown();
+		void goUp();
+		void goLeft();
+		void goRight();
+
 		void setSelectedItem(const size_type index);
 		void updateSelection();
 		void setColorToLine(const size_type, const scene::Color&);
