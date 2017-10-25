@@ -56,15 +56,16 @@ namespace lib
 			return *this;
 		}
 
-		constexpr void setLeftTop(const vector2d<T>&nleftTop) { left = nleftTop.x; top = nleftTop.y; }
-		constexpr void move(const vector2d<T>&relativePosition)  { left += relativePosition.x; top += relativePosition.y; }
-		constexpr void setSize(const vector2d<T>&nsize) { width = nsize.x; height = nsize.y; }
-		constexpr void setRadiusFromCenter(const vector2d<T> &radius) {
+		constexpr Rect& setLeftTop(const vector2d<T>&nleftTop) { left = nleftTop.x; top = nleftTop.y; return *this; }
+		constexpr Rect& move(const vector2d<T>&relativePosition)  { left += relativePosition.x; top += relativePosition.y; return *this; }
+		constexpr Rect& setSize(const vector2d<T>&nsize) { width = nsize.x; height = nsize.y; return *this;	}
+		constexpr Rect& setRadiusFromCenter(const vector2d<T> &radius) {
 			const auto c(center());
 			left = static_cast<T>(c.x - radius.x);
 			top = static_cast<T>(c.y - radius.y);
 			width = static_cast<T>(radius.x * static_cast<T>(2));
 			height = static_cast<T>(radius.y * static_cast<T>(2));
+			return *this;
 		}
 
 		constexpr const vector2d<T> leftTop() const noexcept { return vector2d<T>{left, top}; }
