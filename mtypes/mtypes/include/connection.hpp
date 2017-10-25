@@ -18,7 +18,8 @@ namespace lib
 		constexpr emitter(emitter &&) = default;
 		constexpr emitter & operator=(emitter &&) = default;
 
-		constexpr void operator()(Args&&... args) {
+		template <typename... Args_>
+		constexpr void operator()(Args_&&... args) {
 			if (!m_receivers.empty()) {
 				for (auto &f : m_receivers) {
 					f(std::forward<Args>(args)...);
