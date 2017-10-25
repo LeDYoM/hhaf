@@ -23,19 +23,17 @@ namespace zoper
 		virtual ~MenuPage();
 
 		void setMainLabels(const vector<str>& texts, const Rectf32 &textBox);
-
 		void create() override;
 
-		inline size_type selectedItem() const noexcept { return m_selectedItem; }
-
-	protected:
-		void update();
-
+		emitter<size_type> Selection;
 	private:
 		void goDown();
 		void goUp();
 		void goLeft();
 		void goRight();
+		void goSelected();
+		void goPrevious();
+
 
 		void setSelectedItem(const size_type index);
 		void updateSelection();

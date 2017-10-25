@@ -23,7 +23,6 @@ namespace zoper
 	MenuPage::~MenuPage() = default;
 
 	constexpr u32 LineSize = 72;
-	constexpr u32 LineSeparation = 16;
 
 	void MenuPage::create()
 	{
@@ -34,6 +33,7 @@ namespace zoper
 		input->Down.connect({ this, &MenuPage::goDown });
 		input->Left.connect({ this, &MenuPage::goLeft });
 		input->Right.connect({ this, &MenuPage::goRight });
+		input->Selected.connect({ this, &MenuPage::goSelected });
 	}
 
 	void MenuPage::setMainLabels(const vector<str>& texts, const Rectf32 &textBox)
@@ -53,20 +53,6 @@ namespace zoper
 		setSelectedItem(0);
 	}
 
-	void MenuPage::update()
-	{
-		BaseClass::update();
-
-		f32 center{ 0 };
-		f32 posY{ 0 };
-		const f32 spacing{ m_normalFont->getLineSpacing(LineSize) };
-
-//		for_each_group_as<LabelText>([&posY,spacing](const auto &node) {
-//			node->position = vector2df{ 0, static_cast<f32>(posY) };
-//			posY += (spacing + LineSeparation);
-//		});
-	}
-
 	void MenuPage::setSelectedItem(const size_type index)
 	{
 		m_previouslySelectedItem = m_selectedItem;
@@ -82,7 +68,7 @@ namespace zoper
 
 	void MenuPage::setColorToLine(const size_type index, const Color &color)
 	{
-		for_each_tableSceneNode_in_y(index, [&color](const size_type x, const sptr<TextSceneNode> &node) {
+		for_each_tableSceneNode_in_y(index, [&color](const size_type, const sptr<TextSceneNode> &node) {
 			node->node()->color = color;
 		});
 	}
@@ -117,6 +103,14 @@ namespace zoper
 	void MenuPage::goRight()
 	{
 //		currentLine()->m_option->incrementIndex();
+	}
+
+	void MenuPage::goSelected()
+	{
+	}
+
+	void MenuPage::goPrevious()
+	{
 	}
 
 	/*
