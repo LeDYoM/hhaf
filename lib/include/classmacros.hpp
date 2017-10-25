@@ -1,6 +1,4 @@
-#ifdef _MSC_VER
-	#pragma once
-#endif
+#pragma once
 
 #ifndef LIB_CLASSMACROS_INCLUDE_
 #define LIB_CLASSMACROS_INCLUDE_
