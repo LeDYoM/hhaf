@@ -26,9 +26,8 @@ namespace zoper
 
 	MainMenu::~MainMenu() = default;
 
-	template<typename T, void (T::*sm)(const MenuPageType&p1,const MenuPageType&p2)>
-	function<void(const MenuPageType&, const MenuPageType&)> ml(T&obj) {
-		return [&obj](const MenuPageType&p1, const MenuPageType&p2) {(obj.(*sm))(p1,p2); };
+	void MainMenu::mainMenuPageChanged(const MenuPageType &, const MenuPageType &)
+	{
 	}
 
 	void MainMenu::create()
@@ -258,12 +257,4 @@ namespace zoper
 
 	}
 	*/
-
-	void MainMenu::configure()
-	{
-	}
-
-	void MainMenu::mainMenuPageChanged(const MenuPageType & , const MenuPageType & )
-	{
-	}
 }

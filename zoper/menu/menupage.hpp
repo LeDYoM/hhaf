@@ -10,6 +10,7 @@
 #include <lib/scene/nodes/tablenode.hpp>
 #include <lib/scene/scenenodetypes.hpp>
 #include <lib/scene/color.hpp>
+#include "menupagetype.hpp"
 
 namespace zoper
 {
@@ -25,15 +26,17 @@ namespace zoper
 		void setMainLabels(const vector<str>& texts, const Rectf32 &textBox);
 		void create() override;
 
-		emitter<size_type> Selection;
+		emitter<const MenuPageType> Forward;
+		emitter<> Back;
+
+	protected:
+		emitter<const size_type> Selection;
 	private:
 		void goDown();
 		void goUp();
 		void goLeft();
 		void goRight();
 		void goSelected();
-		void goPrevious();
-
 
 		void setSelectedItem(const size_type index);
 		void updateSelection();

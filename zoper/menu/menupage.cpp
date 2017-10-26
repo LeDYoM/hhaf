@@ -107,10 +107,7 @@ namespace zoper
 
 	void MenuPage::goSelected()
 	{
-	}
-
-	void MenuPage::goPrevious()
-	{
+		Selection(m_selectedItem);
 	}
 
 	/*

@@ -4,20 +4,14 @@
 #define ZOPER_MAINMENU_INCLUDE_HPP__
 
 #include <lib/scene/scenenode.hpp>
+#include "menupagetype.hpp"
 #include "menupage.hpp"
+#include <stack>
 
 namespace zoper
 {
 	class GameData;
 	using namespace lib;
-
-	enum class MenuPageType
-	{
-		Main,
-		SelectLevelToken,
-		SelectLevelSpeed,
-		Options
-	};
 
 	class MainMenu : public scene::SceneNode
 	{
@@ -33,6 +27,7 @@ namespace zoper
 	private:
 		sptr<GameData> m_gameData;
 		vector_shared_pointers<MenuPage> m_menuSteps;
+		std::stack<MenuPageType> m_pagesStack;
 	};
 }
 
