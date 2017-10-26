@@ -53,9 +53,8 @@ namespace zoper
 			case MenuPageType::Options:
 				statesController->push_state(MenuPageType::Options);
 				break;
-			case 4:
-				statesController->pop_state();
 			default:
+				statesController->pop_state();
 				break;
 			}
 		});
