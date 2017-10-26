@@ -21,7 +21,6 @@ namespace zoper
 		virtual ~MainMenu();
 
 		virtual void create() override;
-		virtual void configure() override;
 
 		void mainMenuPageChanged(const MenuPageType&newPage, const MenuPageType&oldPage);
 	private:

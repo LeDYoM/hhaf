@@ -34,15 +34,39 @@ namespace zoper
 	{
 		using namespace nodes;
 		SceneNode::create();
-		auto statesController = ensureComponentOfType<StatesController<MenuPageType>>(MenuPageType::Main);
+
+		auto statesController = ensureComponentOfType<StatesController<MenuPageType>>();
+
+		// Create and register menu pages
+		auto menuPageMain(createSceneNode<MenuPageMain>("menuPageMain"));
+		m_menuSteps.push_back(menuPageMain);
+
+		menuPageMain->Forward.connect([statesController](const MenuPageType selectedIndex) {
+			switch (selectedIndex)
+			{
+			case MenuPageType::SelectLevelToken:
+				statesController->push_state(MenuPageType::SelectLevelToken);
+				break;
+			case MenuPageType::SelectLevelSpeed:
+				statesController->push_state(MenuPageType::SelectLevelSpeed);
+				break;
+			case MenuPageType::Options:
+				statesController->push_state(MenuPageType::Options);
+				break;
+			case 4:
+				statesController->pop_state();
+			default:
+				break;
+			}
+		});
+//		statesController->s
+		statesController->start(MenuPageType::Main);
 //		statesController->stateChanged.connect(ml<MainMenu,&MainMenu::mainMenuPageChanged>(*this));
 //		statesController->stateChanged.connect([this](const auto a1, const auto a2) { mainMenuPageChanged(a1, a2); });
 //		statesController->stateChanged.connect(this, &MainMenu::mainMenuPageChanged);
 
-		ireceiver t;
-		t.connect(statesController->stateChanged, [](auto, auto) {});
-		auto mainMenu = createSceneNode<MenuPageMain>("menuPageMain");
-		m_menuSteps.push_back(mainMenu);
+//		ireceiver t;
+//		t.connect(statesController->stateChanged, [](auto, auto) {});
 
 
 //			statesController->stateChanged.connect
