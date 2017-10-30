@@ -3,7 +3,7 @@
 #include "../zoperprogramcontroller.hpp"
 #include "menupage.hpp"
 #include "menupage_main.hpp"
-
+#include "menupage_bytoken.hpp"
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/scenemanager.hpp>
 #include <lib/core/host.hpp>
@@ -26,8 +26,14 @@ namespace zoper
 
 	MainMenu::~MainMenu() = default;
 
-	void MainMenu::mainMenuPageChanged(const MenuPageType &, const MenuPageType &)
+	void MainMenu::showPage(const MenuPageType &newPage)
 	{
+		m_menuSteps[static_cast<int>(newPage)]->visible = true;
+	}
+
+	void MainMenu::hidePage(const MenuPageType &page)
+	{
+		m_menuSteps[static_cast<int>(page)]->visible = false;
 	}
 
 	void MainMenu::create()
@@ -40,6 +46,8 @@ namespace zoper
 		// Create and register menu pages
 		auto menuPageMain(createSceneNode<MenuPageMain>("menuPageMain"));
 		m_menuSteps.push_back(menuPageMain);
+		auto menuPageByToken(createSceneNode<MenuPageByToken>("menuPageByToken"));
+		m_menuSteps.push_back(menuPageByToken);
 
 		menuPageMain->Forward.connect([statesController](const MenuPageType selectedIndex) {
 			switch (selectedIndex)
@@ -58,7 +66,17 @@ namespace zoper
 				break;
 			}
 		});
-//		statesController->s
+		statesController->StatePushed.connect([this](const MenuPageType menuPage) {
+			showPage(menuPage);
+		});
+		statesController->StatePaused.connect([this](const MenuPageType menuPage) {
+			hidePage(menuPage);
+		});
+		statesController->BeforeStart.connect([this](const MenuPageType menuPage) {
+			for (auto&& menuStep : m_menuSteps) {
+				menuStep->visible = false;
+			}
+		});
 		statesController->start(MenuPageType::Main);
 //		statesController->stateChanged.connect(ml<MainMenu,&MainMenu::mainMenuPageChanged>(*this));
 //		statesController->stateChanged.connect([this](const auto a1, const auto a2) { mainMenuPageChanged(a1, a2); });

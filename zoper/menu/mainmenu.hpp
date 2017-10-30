@@ -22,7 +22,8 @@ namespace zoper
 
 		virtual void create() override;
 
-		void mainMenuPageChanged(const MenuPageType&newPage, const MenuPageType&oldPage);
+		void showPage(const MenuPageType&newPage);
+		void hidePage(const MenuPageType&page);
 	private:
 		sptr<GameData> m_gameData;
 		vector_shared_pointers<MenuPage> m_menuSteps;
