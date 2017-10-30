@@ -58,7 +58,7 @@ namespace lib
 		bool hasChanged() const noexcept { return m_hasChanged; }
 		bool rr_hasChanged() const noexcept { const bool v{ m_hasChanged }; m_hasChanged = false; return v; }
 
-		constexpr void resetHasChanged() noexcept { m_hasChanged = true; }
+		constexpr void resetHasChanged() noexcept { m_hasChanged = false; }
 
 	private:
 		callback_t m_callback{};
