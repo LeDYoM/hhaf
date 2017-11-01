@@ -26,8 +26,9 @@ namespace lib
 				// Update node
 				internalUpdate();
 
-				if (transformationNeedsUpdate())
+				if (transformationNeedsUpdate()) {
 					parentTransformationChanged = true;
+				}
 
 				if (parentTransformationChanged)
 					updateGlobalTransformation(m_parent ? m_parent->globalTransform() : Transform{});

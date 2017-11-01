@@ -5,6 +5,8 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/connection.hpp>
+#include <mtypes/include/stack.hpp>
+#include <mtypes/include/log.hpp>
 #include <lib/scene/icomponent.hpp>
 
 namespace lib
@@ -15,27 +17,60 @@ namespace lib
 		class StatesController : public DataOnlyComponent
 		{
 		public:
-			constexpr StatesController(const T&initialState) noexcept : m_currentState{ initialState } {}
+			constexpr StatesController() noexcept = default;
 
-			constexpr void setState(const T& newState)
-			{
+			constexpr void start(const T& firstState) noexcept {
+				assert_debug(m_statesStack.size() == 0, "You cannot call start if the stack is not empty");
+				BeforeStart(firstState);
+				push_state(firstState);
+			}
+
+			constexpr void push_state(const T& firstState) noexcept {
+				if (m_statesStack.size() > 0) {
+					StatePaused(m_statesStack.back());
+				}
+				m_statesStack.push_back(firstState);
+				StatePushed(firstState);
+			}
+
+			constexpr void pop_state() noexcept {
+				assert_debug(m_statesStack.size() > 0, "m_statesStack.size() is 0");
+				StateFinished(m_statesStack.back());
+				if (m_statesStack.size() > 1) {
+					m_statesStack.pop_back();
+					StateResumed(m_statesStack.back());
+				} else {
+					BeforeFinish(m_statesStack.back());
+					m_statesStack.pop_back();
+				}
+			}
+
+			constexpr void setState(const T& newState) {
 				changeState(newState);
 			}
 
-			inline const T&currentState() const noexcept { return m_currentState; }
-			inline bool firstChangeCompleted() const noexcept { return m_firstStateChangedCompleted; }
-			/// Emit when the state changed. The new state and the previous state are sent
-			emitter<const T&,const T&> stateChanged;
+			constexpr const T&currentState() const noexcept { return m_statesStack.back(); }
+
+			emitter<const T&> StateFinished;
+			emitter<const T&> StateStarted;
+			emitter<const T&> StatePushed;
+			emitter<const T&> StatePopped;
+			emitter<const T&> StatePaused;
+			emitter<const T&> StateResumed;
+			emitter<const T&> BeforeStart;
+			emitter<const T&> BeforeFinish;
+
 		private:
 			inline void changeState(const T& newState) {
-				const T oldState{ m_currentState };
-				m_currentState = newState;
-				stateChanded(m_currentState, oldState);
-				m_firstStateChangedCompleted = true;
+				assert_debug(m_statesStack.size() != 0, "States stack size is 0");
+				const T&oldState{ m_statesStack.back() };
+				m_statesStack.pop_back();
+				StateFinished(oldState);
+				m_statesStack.push_back(newState);
+				StateStarted(newState);
 			}
 
-			T m_currentState;
-			bool m_firstStateChangedCompleted{ false };
+			stack<T> m_statesStack;
 		};
 	}
 }

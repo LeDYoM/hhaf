@@ -3,7 +3,7 @@
 #include "../zoperprogramcontroller.hpp"
 #include "menupage.hpp"
 #include "menupage_main.hpp"
-
+#include "menupage_bytoken.hpp"
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/scenemanager.hpp>
 #include <lib/core/host.hpp>
@@ -26,23 +26,64 @@ namespace zoper
 
 	MainMenu::~MainMenu() = default;
 
-	void MainMenu::mainMenuPageChanged(const MenuPageType &, const MenuPageType &)
+	void MainMenu::showPage(const MenuPageType &newPage)
 	{
+		m_menuSteps[static_cast<int>(newPage)]->visible = true;
+	}
+
+	void MainMenu::hidePage(const MenuPageType &page)
+	{
+		m_menuSteps[static_cast<int>(page)]->visible = false;
 	}
 
 	void MainMenu::create()
 	{
 		using namespace nodes;
 		SceneNode::create();
-		auto statesController = ensureComponentOfType<StatesController<MenuPageType>>(MenuPageType::Main);
+
+		auto statesController = ensureComponentOfType<StatesController<MenuPageType>>();
+
+		// Create and register menu pages
+		auto menuPageMain(createSceneNode<MenuPageMain>("menuPageMain"));
+		m_menuSteps.push_back(menuPageMain);
+		auto menuPageByToken(createSceneNode<MenuPageByToken>("menuPageByToken"));
+		m_menuSteps.push_back(menuPageByToken);
+
+		menuPageMain->Forward.connect([statesController](const MenuPageType selectedIndex) {
+			switch (selectedIndex)
+			{
+			case MenuPageType::SelectLevelToken:
+				statesController->push_state(MenuPageType::SelectLevelToken);
+				break;
+			case MenuPageType::SelectLevelSpeed:
+				statesController->push_state(MenuPageType::SelectLevelSpeed);
+				break;
+			case MenuPageType::Options:
+				statesController->push_state(MenuPageType::Options);
+				break;
+			default:
+				statesController->pop_state();
+				break;
+			}
+		});
+		statesController->StatePushed.connect([this](const MenuPageType menuPage) {
+			showPage(menuPage);
+		});
+		statesController->StatePaused.connect([this](const MenuPageType menuPage) {
+			hidePage(menuPage);
+		});
+		statesController->BeforeStart.connect([this](const MenuPageType menuPage) {
+			for (auto&& menuStep : m_menuSteps) {
+				menuStep->visible = false;
+			}
+		});
+		statesController->start(MenuPageType::Main);
 //		statesController->stateChanged.connect(ml<MainMenu,&MainMenu::mainMenuPageChanged>(*this));
 //		statesController->stateChanged.connect([this](const auto a1, const auto a2) { mainMenuPageChanged(a1, a2); });
 //		statesController->stateChanged.connect(this, &MainMenu::mainMenuPageChanged);
 
-		ireceiver t;
-		t.connect(statesController->stateChanged, [](auto, auto) {});
-		auto mainMenu = createSceneNode<MenuPageMain>("menuPageMain");
-		m_menuSteps.push_back(mainMenu);
+//		ireceiver t;
+//		t.connect(statesController->stateChanged, [](auto, auto) {});
 
 
 //			statesController->stateChanged.connect

@@ -56,7 +56,7 @@ namespace lib
 					for (size_type x{ 0 }; x < m_nodes.size(); ++x) {
 						for (size_type y{ 0 }; y < m_nodes[x].size(); ++y) {
 							if (sptr<T> node = m_nodes[x][y]) {
-								action({ x,y }, node);
+								action(vector2du32{ x,y }, node);
 							}
 						}
 					}
