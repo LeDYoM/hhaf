@@ -3,18 +3,19 @@
 
 #include <mtypes/include/types.hpp>
 #include "itilescontroller.hpp"
-#include <lib/scene/icomponent.hpp>
+#include <lib/scene/components/icomponent.hpp>
 
 namespace lib
 {
 	namespace board
 	{
-		class BoardModelComponent : public scene::DataOnlyComponent
+		class BoardModelComponent : public scene::IComponent
 		{
 		public:
 			BoardModelComponent();
 			~BoardModelComponent();
 
+			virtual void update() override final {}
 			void initialize(const vector2du32 &size);
 
 			SITilePointer getTile(const vector2du32 &position) const noexcept;

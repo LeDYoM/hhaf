@@ -1,7 +1,6 @@
 #include "scenenode.hpp"
 #include "renderizable.hpp"
 #include "scene.hpp"
-#include "icomponent.hpp"
 
 #include <lib/core/window.hpp>
 #include <lib/core/host.hpp>

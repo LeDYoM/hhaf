@@ -53,11 +53,6 @@ namespace lib
 			friend class ComponentContainer;
 		};
 
-		class DataOnlyComponent : public IComponent
-		{
-			virtual void update() override final {}
-		};
-
 		template <typename T1, typename T2>
 		class IComponentMixin : public IComponent
 		{

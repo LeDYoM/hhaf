@@ -72,7 +72,7 @@ namespace zoper
 		statesController->StatePaused.connect([this](const MenuPageType menuPage) {
 			hidePage(menuPage);
 		});
-		statesController->BeforeStart.connect([this](const MenuPageType menuPage) {
+		statesController->BeforeStart.connect([this](const MenuPageType) {
 			for (auto&& menuStep : m_menuSteps) {
 				menuStep->visible = false;
 			}

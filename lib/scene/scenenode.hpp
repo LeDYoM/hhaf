@@ -1,14 +1,15 @@
+#pragma once
+
 #ifndef LIB_DRAW_SCENENODE_HPP__
 #define LIB_DRAW_SCENENODE_HPP__
-
-#pragma once
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
 #include <mtypes/include/vsp.hpp>
 #include <lib/scene/transformable.hpp>
 #include <lib/scene/hasname.hpp>
-#include "componentcontainer.hpp"
+#include <lib/scene/components/icomponent.hpp>
+#include <lib/scene/components/componentcontainer.hpp>
 
 namespace lib
 {

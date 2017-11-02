@@ -4,7 +4,7 @@
 #pragma once
 
 #include <mtypes/include/types.hpp>
-#include <lib/scene/icomponent.hpp>
+#include <lib/scene/components/icomponent.hpp>
 
 namespace lib
 {

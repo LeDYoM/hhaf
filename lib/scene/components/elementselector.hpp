@@ -6,7 +6,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/connection.hpp>
 #include <lib/scene/scenenode.hpp>
-#include <lib/scene/icomponent.hpp>
+#include <lib/scene/components/icomponent.hpp>
 
 namespace lib
 {

@@ -7,17 +7,19 @@
 #include <mtypes/include/connection.hpp>
 #include <mtypes/include/stack.hpp>
 #include <mtypes/include/log.hpp>
-#include <lib/scene/icomponent.hpp>
+#include <lib/scene/components/icomponent.hpp>
 
 namespace lib
 {
 	namespace scene
 	{
 		template <class T>
-		class StatesController : public DataOnlyComponent
+		class StatesController : public IComponent
 		{
 		public:
 			constexpr StatesController() noexcept = default;
+
+			constexpr virtual void update() override final {}
 
 			constexpr void start(const T& firstState) noexcept {
 				assert_debug(m_statesStack.size() == 0, "You cannot call start if the stack is not empty");
