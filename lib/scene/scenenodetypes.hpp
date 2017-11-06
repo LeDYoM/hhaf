@@ -6,31 +6,37 @@
 #include <mtypes/include/types.hpp>
 #include "scenenode.hpp"
 #include <lib/scene/renderizables/nodetext.hpp>
+#include <lib/scene/components/parentrendercomponent.hpp>
 
-namespace lib
+namespace lib::scene
 {
-	namespace scene
+	template <typename T>
+	class RenderizableSceneNode : public SceneNode
 	{
-		template <typename T>
-		class RenderizableSceneNode : public SceneNode
-		{
-		public:
+	public:
+		RenderizableSceneNode(SceneNode *const parent, str name) : SceneNode{ parent, name } {}
 
-			RenderizableSceneNode(SceneNode *const parent, str name) : SceneNode{ parent, name } {}
+		void create() override {
+			m_node = createRenderizable<T>(name()+"_node");
+		}
 
-			void create() override {
-				m_node = createRenderizable<T>(name()+"_node");
-			}
+		sptr<T> node() noexcept { return m_node; }
+		const sptr<T> node() const noexcept { return m_node; }
 
-			sptr<T> node() noexcept { return m_node; }
-			const sptr<T> node() const noexcept { return m_node; }
+	private:
+		sptr<T> m_node;
+	};
 
-		private:
-			sptr<T> m_node;
-		};
+	template <typename RenderizableT>
+	class RenderizableSceneNodeComponent : public ParentRenderComponent<RenderizableT>
+	{
+	private:
+		virtual sptr<RenderizableT> getRenderNodeToAttach() override {
+			return node();
+		}
+	};
 
-		using TextSceneNode = RenderizableSceneNode<nodes::NodeText>;
-	}
+	using TextSceneNode = RenderizableSceneNode<nodes::NodeText>;
 }
 
 #endif
