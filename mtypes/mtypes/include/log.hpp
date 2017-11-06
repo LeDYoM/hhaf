@@ -21,7 +21,7 @@ namespace lib
 		constexpr level_type compiled_log_level_type = level_type::debug;
 
 		template <level_type level>
-		constexpr bool compile_logs = compiled_log_level_type >= level;
+		constexpr bool compile_logs = compiled_log_level_type <= level;
 
 		template<level_type level, severity_type severity, typename...Args, typename std::enable_if<compile_logs<level>>::type* = nullptr >
 		inline constexpr void log(Args&&...args) noexcept

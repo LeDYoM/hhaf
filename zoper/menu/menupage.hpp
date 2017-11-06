@@ -24,6 +24,7 @@ namespace zoper
 		virtual ~MenuPage();
 
 		void setMainLabels(const vector<str>& texts, const Rectf32 &textBox);
+		void setOptionsAt(const size_type index, const vector<str>& texts);
 		void create() override;
 
 		emitter<const MenuPageType> Forward;

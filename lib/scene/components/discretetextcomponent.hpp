@@ -22,10 +22,12 @@ namespace lib::scene
 		}
 
 		Property<bool> circleAroud{ true };
-		Property<u32> index;
+		Property<u32> index{ 0 };
 		Property<string_vector> data;
 		void incrementIndex() noexcept;
 		void decrementIndex() noexcept;
+
+		virtual void update() override final;
 	private:
 		void _setText(const str&nText);
 	};

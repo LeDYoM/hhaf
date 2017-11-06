@@ -17,6 +17,7 @@ namespace zoper
 
 		Rectf32 r(rectFromSize(scenePerspective().size()).setLeftTop({ 0,750 }).setSize({ 2000,4 * 150 }));
 		setMainLabels({ "Startlevel token mode", "Back" }, r);
+		setOptionsAt(0, { "0","1","2" });
 
 		Selection.connect([this](const size_type index) {
 			switch (index) {

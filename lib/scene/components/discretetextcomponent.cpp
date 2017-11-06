@@ -12,8 +12,6 @@ namespace lib::scene
 				index = 0;
 			}
 		}
-
-		_setText(data()[index()]);
 	}
 
 	void DiscreteTextComponent::decrementIndex() noexcept
@@ -27,6 +25,13 @@ namespace lib::scene
 			if (circleAroud()) {
 				index = (data().size() - 1);
 			}
+		}
+	}
+
+	void DiscreteTextComponent::update()
+	{
+		if (index.hasChanged()) {
+			_setText(data()[index()]);
 		}
 	}
 

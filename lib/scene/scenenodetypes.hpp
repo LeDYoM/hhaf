@@ -30,10 +30,20 @@ namespace lib::scene
 	template <typename RenderizableT>
 	class RenderizableSceneNodeComponent : public ParentRenderComponent<RenderizableT>
 	{
-	private:
-		virtual sptr<RenderizableT> getRenderNodeToAttach() override {
-			return node();
+	public:
+		using BaseClass = ParentRenderComponent<RenderizableT>;
+		void onAttached() override {
+			if (auto parentNode = attachedNodeAs<RenderizableSceneNode<nodes::NodeText>>()) {
+				m_renderizableNode = parentNode->node();
+			}
+			BaseClass::onAttached();
 		}
+	private:
+		sptr<RenderizableT> getRenderNodeToAttach() override {
+			return m_renderizableNode;
+		}
+
+		sptr<RenderizableT> m_renderizableNode;
 	};
 
 	using TextSceneNode = RenderizableSceneNode<nodes::NodeText>;

@@ -9,6 +9,7 @@
 #include <lib/core/resourcemanager.hpp>
 #include <lib/scene/ttfont.hpp>
 #include <lib/include/key.hpp>
+#include <lib/scene/components/discretetextcomponent.hpp>
 #include <mtypes/include/function.hpp>
 
 namespace zoper
@@ -43,7 +44,7 @@ namespace zoper
 		tableSize = { 1,texts.size() };
 		size_type c{ 0 };
 		for (const str&t : texts) {
-			auto newOption = createNodeAt(vector2du32{ 0,c }, str("label" + c));
+			auto newOption ( createNodeAt(vector2du32{ 0,c }, str("label" + c)));
 			++c;
 			newOption->node()->font = m_normalFont;
 			newOption->node()->characterSize = LineSize;
@@ -51,6 +52,16 @@ namespace zoper
 			newOption->node()->text = t;
 		}
 		setSelectedItem(0);
+	}
+
+	void MenuPage::setOptionsAt(const size_type index, const vector<str>& texts)
+	{
+		auto newOption( createNodeAt(vector2du32{ 2, index }, str("label" + index)) );
+		newOption->node()->font = m_normalFont;
+		newOption->node()->characterSize = LineSize;
+		newOption->node()->color = colors::Blue;
+//		auto discreteTextComponent = newOption->ensureComponentOfType<DiscreteTextComponent>();
+//		discreteTextComponent->data.set(texts);
 	}
 
 	void MenuPage::setSelectedItem(const size_type index)
