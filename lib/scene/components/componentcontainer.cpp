@@ -61,8 +61,7 @@ namespace lib
 			return false;
 		}
 
-		void ComponentContainer::updateComponents()
-		{
+		void ComponentContainer::updateComponents() {
 			if (!m_components.empty()) {
 				for (auto &component : m_components) {
 					component->update();
@@ -70,7 +69,7 @@ namespace lib
 			}
 		}
 
-		const sptr<IComponent> ComponentContainer::componentOfType(const std::type_index & ti)
+		const sptr<IComponent> ComponentContainer::componentOfType(const std::type_index & ti) const
 		{
 			return getComponentFromTypeIndex(ti, m_components);
 		}

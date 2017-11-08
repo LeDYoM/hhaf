@@ -49,9 +49,8 @@ namespace lib
 
 				constexpr sptr<T> operator()(const vector2du32 &index) noexcept { return m_nodes[index.x][index.y]; }
 				constexpr const sptr<T> operator()(const vector2du32 &index) const noexcept { return m_nodes[index.x][index.y]; }
-				constexpr sptr<T> operator()(const size_type indexx, const size_type &indexy) noexcept { return m_nodes[indexx][indexy]; }
-				constexpr const sptr<T> operator()(const size_type indexx, const size_type &indexy) const noexcept { return m_nodes[indexx][indexy]; }
-
+				constexpr sptr<T> nodeAt(const vector2du32 &index) noexcept { return m_nodes[index.x][index.y]; }
+				constexpr const sptr<T> nodeAt(const vector2du32 &index) const noexcept { return m_nodes[index.x][index.y]; }
 
 				constexpr void for_each_tableSceneNode(function<void(const vector2du32 &, const sptr<T> &)> action) {
 					for (size_type x{ 0 }; x < m_nodes.size(); ++x) {

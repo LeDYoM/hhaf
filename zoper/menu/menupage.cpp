@@ -9,7 +9,6 @@
 #include <lib/core/resourcemanager.hpp>
 #include <lib/scene/ttfont.hpp>
 #include <lib/include/key.hpp>
-#include <lib/scene/components/discretetextcomponent.hpp>
 #include <mtypes/include/function.hpp>
 
 namespace zoper
@@ -23,6 +22,7 @@ namespace zoper
 
 	MenuPage::~MenuPage() = default;
 
+	constexpr size_type columnForOptions = 3;
 	void MenuPage::create()
 	{
 		m_normalFont = resourceManager().getResource<TTFont>("menu.mainFont", "resources/oldct.ttf");
@@ -71,7 +71,7 @@ namespace zoper
 			newOption->node()->text = title;
 
 			if (options.size() > counter) {
-				auto discreteTextLabel(createNodeAt(vector2du32{ 3,counter }, str("option" + counter)));
+				auto discreteTextLabel(createNodeAt(vector2du32{ columnForOptions, counter }, str("option" + counter)));
 				standarizeText(discreteTextLabel->node());
 				auto discreteTextComponent = discreteTextLabel->ensureComponentOfType<DiscreteTextComponent>();
 				discreteTextComponent->data.set(options[counter]);
@@ -133,17 +133,38 @@ namespace zoper
 
 	void MenuPage::goLeft()
 	{
-//		currentLine()->m_option->decrementIndex();
+		if (nodeHasOptions(m_selectedItem))
+			optionsLabelAt(m_selectedItem)->decrementIndex();
 	}
 
 	void MenuPage::goRight()
 	{
-//		currentLine()->m_option->incrementIndex();
+		if (nodeHasOptions(m_selectedItem))
+			optionsLabelAt(m_selectedItem)->incrementIndex();
 	}
 
 	void MenuPage::goSelected()
 	{
 		Selection(m_selectedItem);
+	}
+
+	bool MenuPage::nodeHasOptions(const size_type y) const noexcept
+	{
+		if (m_pageMode != MenuPageMode::Optioner)
+			return false;
+
+		if (auto node = nodeAt({ columnForOptions , y })) {
+			return node->componentOfType<DiscreteTextComponent>() != nullptr;
+		}
+		return false;
+	}
+
+	sptr<DiscreteTextComponent> MenuPage::optionsLabelAt(const size_type y)
+	{
+		assert_debug(m_pageMode == MenuPageMode::Optioner, "This page does not have options");
+		auto node = nodeAt({ columnForOptions , y });
+		assert_debug(node != nullptr, "This node does not have options");
+		return node->componentOfType<DiscreteTextComponent>();
 	}
 
 	/*

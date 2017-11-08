@@ -10,6 +10,7 @@
 #include <lib/scene/nodes/tablenode.hpp>
 #include <lib/scene/scenenodetypes.hpp>
 #include <lib/scene/color.hpp>
+#include <lib/scene/components/discretetextcomponent.hpp>
 #include "menupagetype.hpp"
 
 namespace zoper
@@ -25,7 +26,7 @@ namespace zoper
 	class MenuPage : public nodes::TableNode<TextSceneNode>
 	{
 	public:
-		using BaseClass = scene::nodes::TableNode<scene::TextSceneNode>;
+		using BaseClass = nodes::TableNode<TextSceneNode>;
 		MenuPage(SceneNode *parent, str name);
 		virtual ~MenuPage();
 
@@ -45,6 +46,8 @@ namespace zoper
 		void goRight();
 		void goSelected();
 
+		bool nodeHasOptions(const size_type y) const noexcept;
+		sptr<DiscreteTextComponent> optionsLabelAt(const size_type y);
 		void setSelectedItem(const size_type index);
 		void updateSelection();
 		void setColorToLine(const size_type, const scene::Color&);
