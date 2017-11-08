@@ -23,11 +23,12 @@ namespace zoper
 
 	MenuPage::~MenuPage() = default;
 
-	constexpr u32 LineSize = 72;
-
 	void MenuPage::create()
 	{
 		m_normalFont = resourceManager().getResource<TTFont>("menu.mainFont", "resources/oldct.ttf");
+		m_normalColor = colors::Blue;
+		m_selectedColor = colors::Red;
+		m_normalCharacterSize = 72;
 
 		auto input = ensureComponentOfType<MenuPageInputComponent>();
 		input->Up.connect({ this, &MenuPage::goUp });
@@ -37,31 +38,48 @@ namespace zoper
 		input->Selected.connect({ this, &MenuPage::goSelected });
 	}
 
-	void MenuPage::setMainLabels(const vector<str>& texts, const Rectf32 &textBox)
+	void MenuPage::configure(MenuPageMode pageMode, const Rectf32 &textBox, 
+		const string_vector &titles, const vector<string_vector> options)
 	{
+		m_pageMode = pageMode;
 		position = textBox.leftTop();
 		sceneNodeSize = textBox.size();
-		tableSize = { 1,texts.size() };
-		size_type c{ 0 };
-		for (const str&t : texts) {
-			auto newOption ( createNodeAt(vector2du32{ 0,c }, str("label" + c)));
-			++c;
-			newOption->node()->font = m_normalFont;
-			newOption->node()->characterSize = LineSize;
-			newOption->node()->color = colors::Blue;
-			newOption->node()->text = t;
+
+		size_type titleColumn{ 0 };
+
+		switch (m_pageMode)
+		{
+		case zoper::MenuPageMode::Selector:
+			tableSize = { 2, titles.size() };
+			titleColumn = 1;
+			break;
+		case zoper::MenuPageMode::Optioner:
+			tableSize = { 4, titles.size() };
+			titleColumn = 0;
+			break;
+		default:
+			assert_release(false, "Invalid enum value");
+			break;
+		}
+
+		assert_debug(titles.size() >= options.size() || options.size() == 0, "Invalid number of options");
+		assert_debug(titles.size() > 0, "Titles cannot be empty");
+		size_type counter{ 0 };
+		for (auto&& title : titles) {
+			auto newOption(createNodeAt(vector2du32{ titleColumn,counter }, str("label" + counter)));
+			standarizeText(newOption->node());
+			newOption->node()->text = title;
+
+			if (options.size() > counter) {
+				auto discreteTextLabel(createNodeAt(vector2du32{ 3,counter }, str("option" + counter)));
+				standarizeText(discreteTextLabel->node());
+				auto discreteTextComponent = discreteTextLabel->ensureComponentOfType<DiscreteTextComponent>();
+				discreteTextComponent->data.set(options[counter]);
+			}
+
+			++counter;
 		}
 		setSelectedItem(0);
-	}
-
-	void MenuPage::setOptionsAt(const size_type index, const vector<str>& texts)
-	{
-		auto newOption( createNodeAt(vector2du32{ 2, index }, str("label" + index)) );
-		newOption->node()->font = m_normalFont;
-		newOption->node()->characterSize = LineSize;
-		newOption->node()->color = colors::Blue;
-//		auto discreteTextComponent = newOption->ensureComponentOfType<DiscreteTextComponent>();
-//		discreteTextComponent->data.set(texts);
 	}
 
 	void MenuPage::setSelectedItem(const size_type index)
@@ -82,6 +100,13 @@ namespace zoper
 		for_each_tableSceneNode_in_y(index, [&color](const size_type, const sptr<TextSceneNode> &node) {
 			node->node()->color = color;
 		});
+	}
+
+	void MenuPage::standarizeText(sptr<scene::nodes::NodeText> ntext)
+	{
+		ntext->color = m_normalColor;
+		ntext->font = m_normalFont;
+		ntext->characterSize = m_normalCharacterSize;
 	}
 
 	void MenuPage::goDown()

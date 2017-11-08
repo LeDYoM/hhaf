@@ -15,8 +15,8 @@ namespace zoper
 	{
 		BaseClass::create();
 
-		Rectf32 r(rectFromSize(scenePerspective().size()).setLeftTop({ 0,750 }).setSize({ 2000,4 * 150 }));
-		setMainLabels({ "Play token mode","Play time mode", "Options", "Exit" }, r);
+		configure(MenuPageMode::Selector, rectFromSize(scenePerspective().size()).setLeftTop({ 0,750 }).setSize({ 2000,4 * 150 }),
+		{ "Play token mode","Play time mode", "Options", "Exit" });
 
 		Selection.connect([this](const size_type index) {
 			switch (index) {

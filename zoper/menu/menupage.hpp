@@ -15,16 +15,21 @@
 namespace zoper
 {
 	using namespace lib;
+	using namespace lib::scene;
 
-	class MenuPage : public scene::nodes::TableNode<scene::TextSceneNode>
+	enum class MenuPageMode {
+		Selector,
+		Optioner
+	};
+
+	class MenuPage : public nodes::TableNode<TextSceneNode>
 	{
 	public:
 		using BaseClass = scene::nodes::TableNode<scene::TextSceneNode>;
-		MenuPage(scene::SceneNode *parent, str name);
+		MenuPage(SceneNode *parent, str name);
 		virtual ~MenuPage();
 
-		void setMainLabels(const vector<str>& texts, const Rectf32 &textBox);
-		void setOptionsAt(const size_type index, const vector<str>& texts);
+		void configure(MenuPageMode pageMode, const Rectf32 &textBox, const string_vector &titles, const vector<string_vector> options = {});
 		void create() override;
 
 		emitter<const MenuPageType> Forward;
@@ -33,6 +38,7 @@ namespace zoper
 	protected:
 		emitter<const size_type> Selection;
 	private:
+		void standarizeText(sptr<nodes::NodeText> ntext);
 		void goDown();
 		void goUp();
 		void goLeft();
@@ -45,8 +51,12 @@ namespace zoper
 		size_type m_previouslySelectedItem{ 0 };
 		size_type m_selectedItem{ 0 };
 
-		sptr<scene::TTFont> m_normalFont;
+		sptr<TTFont> m_normalFont;
+		Color m_normalColor;
+		Color m_selectedColor;
+		size_type m_normalCharacterSize;
 		ireceiver m_receiver;
+		MenuPageMode m_pageMode;
 	};
 }
 
