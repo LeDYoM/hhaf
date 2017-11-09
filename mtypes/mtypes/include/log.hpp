@@ -23,21 +23,20 @@ namespace lib
 		template <level_type level>
 		constexpr bool compile_logs = compiled_log_level_type <= level;
 
-		template<level_type level, severity_type severity, typename...Args, typename std::enable_if<compile_logs<level>>::type* = nullptr >
-		inline constexpr void log(Args&&...args) noexcept
+		template<level_type level, severity_type severity, typename...Args>
+		constexpr void log(Args&&...args) noexcept
 		{
-			str log_stream(detail::severity_txt<severity>());
-			log_stream << detail::print_impl(args...);
-			detail::commitlog(log_stream);
+			if constexpr (compile_logs<level>) {
+				str log_stream(detail::severity_txt<severity>());
+				log_stream << detail::print_impl(args...);
+				detail::commitlog(log_stream);
+			}
 		}
-
-		template<level_type level, severity_type severity, typename...Args, typename std::enable_if<!compile_logs<level>>::type* = nullptr >
-		inline constexpr void log(Args&&...) noexcept {}
 
 		namespace detail
 		{
 			template<severity_type severity>
-			constexpr const char*const severity_txt()
+			constexpr const auto severity_txt()
 			{
 				switch (severity)
 				{
@@ -54,7 +53,7 @@ namespace lib
 			template<typename T, typename ...Args>
 			inline constexpr const str print_impl(T&& value, Args&&... args)
 			{
-				return lib::make_str(value, std::forward<Args>(args)...);
+				return make_str(value, std::forward<Args>(args)...);
 			}
 
 			void LOG_EXPORT commitlog(str& log_stream);
@@ -72,22 +71,22 @@ namespace lib
 	}
 
 	template<typename ...Args>
-	inline constexpr void log_release_info(Args&&... args) noexcept {
+	constexpr void log_release_info(Args&&... args) noexcept {
 		log::log<log::level_type::release, log::severity_type::info>(std::forward<Args>(args)...);
 	}
 
 	template<typename ...Args>
-	inline constexpr void log_release_error(Args&&... args) noexcept {
+	constexpr void log_release_error(Args&&... args) noexcept {
 		log::log<log::level_type::release, log::severity_type::error>(std::forward<Args>(args)...);
 	}
 
 	template<typename ...Args>
-	inline constexpr void assert_debug(const bool condition, const char *message) noexcept {
+	constexpr void assert_debug(const bool condition, const char *message) noexcept {
 		if (!condition) { log::log<log::level_type::debug, log::severity_type::error>(message); }
 	}
 
 	template<typename ...Args>
-	inline constexpr void assert_release(const bool condition, const char *message) noexcept {
+	constexpr void assert_release(const bool condition, const char *message) noexcept {
 		if (!condition) { log::log<log::level_type::release, log::severity_type::error>(message); }
 	}
 
