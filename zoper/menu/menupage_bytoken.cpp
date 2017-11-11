@@ -15,14 +15,14 @@ namespace zoper
 	{
 		BaseClass::create();
 
-		configure(MenuPageMode::Optioner, rectFromSize(scenePerspective().size()).setLeftTop({ 0,750 }).setSize({ 2000,4 * 150 }),
-		{ "Start level token mode", "Play", "Back" }, { { "0","1","2" } });
+		configure(MenuPageMode::Optioner, 
+		{ "Start level token mode", "Play", "Back" }, { { "0","1","2", "3", "4", "5", "6", "7", "8", "9", "10" } });
 
 		Selection.connect([this](const size_type index) {
 			switch (index) {
 			// Play
 			case 1:
-				Forward(MenuPageType::SelectLevelToken);
+//				Forward(MenuPageType::SelectLevelToken);
 				break;
 			// Back
 			case 2:

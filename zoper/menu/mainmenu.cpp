@@ -67,12 +67,25 @@ namespace zoper
 				break;
 			}
 		});
+
+		menuPageByToken->Back.connect([statesController]() {
+			statesController->pop_state();
+		});
+
 		statesController->StatePushed.connect([this](const MenuPageType menuPage) {
 			showPage(menuPage);
 		});
+		statesController->StateResumed.connect([this](const MenuPageType menuPage) {
+			showPage(menuPage);
+		});
+
 		statesController->StatePaused.connect([this](const MenuPageType menuPage) {
 			hidePage(menuPage);
 		});
+		statesController->StatePopped.connect([this](const MenuPageType menuPage) {
+			hidePage(menuPage);
+		});
+
 		statesController->BeforeStart.connect([this](const MenuPageType) {
 			for (auto&& menuStep : m_menuSteps) {
 				menuStep->visible = false;

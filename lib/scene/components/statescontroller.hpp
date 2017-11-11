@@ -8,6 +8,7 @@
 #include <mtypes/include/connection.hpp>
 #include <mtypes/include/stack.hpp>
 #include <mtypes/include/log.hpp>
+#include <mtypes/include/auxcontainer.hpp>
 #include <lib/scene/components/icomponent.hpp>
 
 namespace lib
@@ -23,19 +24,13 @@ namespace lib
 			constexpr void UseDeferred() noexcept { m_useDeferred = true; }
 			constexpr void UseDirect() noexcept { m_useDeferred = false; }
 			constexpr virtual void update() override final {
-				if (!m_pendingActions[0].empty()) {
-					auto oldSize = m_pendingActions[0].size();
-					m_inLoop = true;
-					for (auto&& action : m_pendingActions[0]) {
+				if (!m_pendingActions.conainer().empty()) {
+					m_pendingActions.swap();
+					for (auto&& action : m_pendingActions.auxContainer()) {
 						action();
 					}
-					m_inLoop = false;
-					for (auto&& action : m_pendingActions[1]) {
-						action();
-					}
-					assert_debug(m_pendingActions[0].size() == oldSize, "Action vector varied while processing");
-					m_pendingActions[0].clear();
-					m_pendingActions[1].clear();
+					m_pendingActions.auxContainer().clear();
+					m_pendingActions.swap();
 				}
 			}
 
@@ -58,7 +53,7 @@ namespace lib
 			constexpr void pop_state() noexcept {
 				postAction([this]() {
 					assert_debug(m_statesStack.size() > 0, "m_statesStack.size() is 0");
-					StateFinished(m_statesStack.back());
+					StatePopped(m_statesStack.back());
 					if (m_statesStack.size() > 1) {
 						m_statesStack.pop_back();
 						StateResumed(m_statesStack.back());
@@ -99,18 +94,15 @@ namespace lib
 
 			constexpr void postAction(Action action) {
 				if (m_useDeferred) {
-					const size_type index{ m_inLoop ? 1u : 0u };
-					m_pendingActions[index].push_back(std::move(action));
-				}
-				else {
+					m_pendingActions.conainer().push_back(std::move(action));
+				} else {
 					action();
 				}
 			}
 
 			bool m_useDeferred{ false };
 			stack<T> m_statesStack;
-			vector<Action> m_pendingActions[2];
-			bool m_inLoop{ false };
+			AuxContainer<vector<Action>> m_pendingActions;
 		};
 	}
 }

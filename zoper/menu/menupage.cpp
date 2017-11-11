@@ -38,10 +38,10 @@ namespace zoper
 		input->Selected.connect({ this, &MenuPage::goSelected });
 	}
 
-	void MenuPage::configure(MenuPageMode pageMode, const Rectf32 &textBox, 
-		const string_vector &titles, const vector<string_vector> options)
+	void MenuPage::configure(MenuPageMode pageMode, const string_vector &titles, const vector<string_vector> options)
 	{
 		m_pageMode = pageMode;
+		Rectf32 textBox{ rectFromSize(scenePerspective().size()).setLeftTop({ 0,750 }).setSize({ 2000,4 * 150 }) };
 		position = textBox.leftTop();
 		sceneNodeSize = textBox.size();
 

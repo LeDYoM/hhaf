@@ -30,7 +30,7 @@ namespace zoper
 		MenuPage(SceneNode *parent, str name);
 		virtual ~MenuPage();
 
-		void configure(MenuPageMode pageMode, const Rectf32 &textBox, const string_vector &titles, const vector<string_vector> options = {});
+		void configure(MenuPageMode pageMode, const string_vector &titles, const vector<string_vector> options = {});
 		void create() override;
 
 		emitter<const MenuPageType> Forward;
