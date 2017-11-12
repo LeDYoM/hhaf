@@ -4,6 +4,8 @@
 #include "menupage.hpp"
 #include "menupage_main.hpp"
 #include "menupage_bytoken.hpp"
+#include "menupage_bytime.hpp"
+#include "menupage_options.hpp"
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/scenemanager.hpp>
 #include <lib/core/host.hpp>
@@ -49,6 +51,11 @@ namespace zoper
 		m_menuSteps.push_back(menuPageMain);
 		auto menuPageByToken(createSceneNode<MenuPageByToken>("menuPageByToken"));
 		m_menuSteps.push_back(menuPageByToken);
+		auto menuPageByTime(createSceneNode<MenuPageByTime>("menuPageByTime"));
+		m_menuSteps.push_back(menuPageByTime);
+		auto menuPageOptions(createSceneNode<MenuPageOptions>("menuPageOptions"));
+		m_menuSteps.push_back(menuPageOptions);
+
 
 		menuPageMain->Forward.connect([statesController](const MenuPageType selectedIndex) {
 			switch (selectedIndex)
@@ -69,6 +76,9 @@ namespace zoper
 		});
 
 		menuPageByToken->Back.connect([statesController]() {
+			statesController->pop_state();
+		});
+		menuPageByTime->Back.connect([statesController]() {
 			statesController->pop_state();
 		});
 
