@@ -29,7 +29,6 @@ namespace lib
 
 			void startScene(sptr<Scene> scene);
 			void setScene(sptr<Scene> scene);
-			void terminateScene();
 
 			void update();
 

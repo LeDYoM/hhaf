@@ -28,7 +28,6 @@ namespace lib
 			virtual ~Scene();
 
 			void create() override;
-			virtual void onDeinit();
 			virtual void updateScene() = 0;
 
 			inline void addSubscription(sptr<events::EventSubscription> &&es) noexcept { eventConnector.addSubscription(std::move(es)); }

@@ -11,21 +11,15 @@ namespace lib
 	namespace scene
 	{
 		Scene::Scene(str name) : SceneNode{ nullptr,std::move(name) } {}
-		Scene::~Scene() = default;
 
-
-
-		void Scene::onDeinit()
+		Scene::~Scene()
 		{
-			log_debug_info("Deinitializing scene ", name());
 			eventConnector.unsubscribeAll();
 		}
 
 		void Scene::create()
 		{
 			using namespace events;
-			log_debug_info("Entered in scene ", name());
-
 			clock.restart();
 		}
 	}

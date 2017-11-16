@@ -19,7 +19,6 @@ namespace zoper
 
 		// Inherited via Scene
 		void create() override;
-		void onDeinit() override;
 
 		void updateScene() override;
 

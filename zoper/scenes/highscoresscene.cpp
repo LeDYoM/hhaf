@@ -31,11 +31,6 @@ namespace zoper
 //		createSceneNode<HighScoreTextController>(m_resources);
 	}
 
-	void HighScoresScene::onDeinit()
-	{
-		Scene::onDeinit();
-	}
-
 	void HighScoresScene::updateScene()
 	{
 	}

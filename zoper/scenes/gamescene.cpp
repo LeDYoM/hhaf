@@ -162,7 +162,7 @@ namespace zoper
 			}
 			break;
 			case GameOver:
-				sceneManager().terminateScene();
+				sceneManager().setScene(nullptr);
 				break;
 			case Pause:
 				if (keyMapping->isPauseKey(key)) {
@@ -179,7 +179,6 @@ namespace zoper
 
 	void GameScene::onDeinit()
 	{
-		Scene::onDeinit();
 		// Remove instances from all nodes.
 		clearAll();
 		m_mainBoardrg->clearAll();

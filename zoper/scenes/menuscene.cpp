@@ -37,12 +37,6 @@ namespace zoper
 		auto mainMenu = createSceneNode<MainMenu>(MainMenu::ClassName);
 	}
 
-	void MenuScene::onDeinit()
-	{
-		Scene::onDeinit();
-		//		ChooseControlGroup::onExitScene();
-	}
-
 	void MenuScene::updateScene()
 	{
 	}

@@ -12,9 +12,15 @@ namespace lib
 	namespace scene
 	{
 		SceneNode::SceneNode(SceneNode *const parent, str name)
-			: core::HasName{ std::move(name) }, ComponentContainer{ this }, m_parent{ parent }, visible{ true } {}
+			: core::HasName{ std::move(name) }, ComponentContainer{ this }, m_parent{ parent }, visible{ true } 
+		{
+			log_debug_info("Creating object: ", typeid(*this).name());
+		}
 
-		SceneNode::~SceneNode() { clearAll(); };
+		SceneNode::~SceneNode() { 
+			log_debug_info("Destroying ", typeid(*this).name());
+			clearAll();
+		};
 
 		void SceneNode::render(bool parentTransformationChanged)
 		{

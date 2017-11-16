@@ -17,11 +17,6 @@ namespace lib
 			m_statesController->start(std::move(scene));
 		}
 
-		void SceneManager::terminateScene()
-		{
-//			setScene(m_scenesController->scenedFinished(m_currentScene));
-		}
-
 		void SceneManager::setScene(sptr<Scene> scene)
 		{
 			m_statesController->setState(std::move(scene));
@@ -54,7 +49,7 @@ namespace lib
 		void SceneManager::finish()
 		{
 			if (m_currentScene) {
-				m_currentScene->onDeinit();
+//				m_currentScene->onDeinit();
 			}
 			m_currentScene = nullptr;
 		}
