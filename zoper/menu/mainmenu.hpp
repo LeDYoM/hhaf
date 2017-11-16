@@ -24,6 +24,7 @@ namespace zoper
 
 		void showPage(const MenuPageType&newPage);
 		void hidePage(const MenuPageType&page);
+		emitter<bool> MenuFinished;
 	private:
 		sptr<GameData> m_gameData;
 		vector_shared_pointers<MenuPage> m_menuSteps;

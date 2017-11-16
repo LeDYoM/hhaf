@@ -39,6 +39,7 @@ namespace zoper
 
 		virtual void updateScene();
 
+		Property<sptr<StartGameData>> startGameData;
 	private:
 		lib::EventReceiver m_boardEventConnector;
 		void setLevel(const lib::u32 nv);

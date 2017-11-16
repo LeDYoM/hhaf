@@ -17,13 +17,12 @@ namespace lib
 	namespace scene
 	{
 		template <class T>
-		class StatesController : public IComponent
+		class StatesControllerRaw
 		{
 		public:
-			constexpr StatesController() noexcept = default;
 			constexpr void UseDeferred() noexcept { m_useDeferred = true; }
 			constexpr void UseDirect() noexcept { m_useDeferred = false; }
-			constexpr virtual void update() override final {
+			constexpr void update() {
 				if (!m_pendingActions.conainer().empty()) {
 					m_pendingActions.swap();
 					for (auto&& action : m_pendingActions.auxContainer()) {
@@ -103,6 +102,14 @@ namespace lib
 			bool m_useDeferred{ false };
 			stack<T> m_statesStack;
 			AuxContainer<vector<Action>> m_pendingActions;
+		};
+
+		template <typename T>
+		class StatesController : public StatesControllerRaw<T>, public IComponent
+		{
+			virtual constexpr void update() override final {
+				StatesControllerRaw::update();
+			}
 		};
 	}
 }

@@ -18,21 +18,7 @@ namespace lib
 				ElementSelector();
 				virtual ~ElementSelector();
 
-/*				void goDown();
-				void goUp();
-				void goLeft();
-				void goRight();
 
-				Property<u32> selectedItem;
-
-			private:
-				const sptr<ChooseControlLine> currentLine() const;
-				const sptr<ChooseControlLine> previouscurrentLine() const;
-				void modelChanged();
-				u32 previouslySelectedItem;
-
-				vector_shared_pointers<ChooseControlLine> lines;
-				*/
 			};
 	}
 }

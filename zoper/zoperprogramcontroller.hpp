@@ -5,21 +5,30 @@
 
 namespace zoper
 {
+	using namespace lib;
+	class StartGameData;
 	class GameData;
 	class KeyMapping;
-	class ZoperProgramController : public lib::IApp
+	class MenuScene;
+	class GameScene;
+	class HighScoresScene;
+	class ZoperProgramController : public IApp
 	{
 	public:
 		ZoperProgramController();
 		virtual ~ZoperProgramController();
 
+		sptr<MenuScene> createMenuScene();
+		sptr<GameScene> createGameScene();
+		sptr<HighScoresScene> createHighScoresScene();
 		void onInit() override;
 		void sceneFinished() {};
-		virtual const lib::IAppDescriptor getAppDescriptor() const override;
+		virtual const IAppDescriptor getAppDescriptor() const override;
 		virtual int loop() override;
 
-		lib::sptr<GameData> gameData;
-		lib::uptr<KeyMapping> keyMapping;
+		sptr<GameData> gameData;
+		uptr<KeyMapping> keyMapping;
+		sptr<StartGameData> startGameData;
 	};
 }
 

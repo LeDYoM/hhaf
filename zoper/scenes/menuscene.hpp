@@ -4,14 +4,17 @@
 #define ZOPER_MENUSCENE_INCLUDE_HPP__
 
 #include <mtypes/include/types.hpp>
+#include <mtypes/include/connection.hpp>
 #include <lib/scene/renderizables/nodequad.hpp>
 #include <lib/scene/scene.hpp>
 
+#include "../gamedata.hpp"
 #include "../loaders/mainmenuresources.hpp"
 
 namespace zoper
 {
-	class MenuScene final : public lib::scene::Scene
+	using namespace lib;
+	class MenuScene final : public scene::Scene
 	{
 	public:
 		MenuScene();
@@ -25,10 +28,12 @@ namespace zoper
 
 		virtual void updateScene() override;
 
+		Property<sptr<StartGameData>> startGameData;
 	private:
-		lib::sptr<MainMenuResources> mainMenuResources;
-		lib::sptr<lib::scene::nodes::NodeQuad> m_logo;
-		lib::sptr<lib::scene::nodes::NodeQuad> m_background;
+		ireceiver m_receiver;
+		sptr<MainMenuResources> mainMenuResources;
+		sptr<scene::nodes::NodeQuad> m_logo;
+		sptr<scene::nodes::NodeQuad> m_background;
 	};
 }
 

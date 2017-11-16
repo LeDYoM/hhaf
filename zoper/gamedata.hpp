@@ -14,7 +14,14 @@
 
 namespace zoper
 {
-	constexpr lib::u32 NumWays = 4;
+	using namespace lib;
+	constexpr size_type NumWays = 4;
+
+	enum class GameMode : u8
+	{
+		Token = 0,
+		Time = 1,
+	};
 
 	class GameData
 	{
@@ -24,32 +31,32 @@ namespace zoper
 
 		struct TokenZone
 		{
-			lib::Rectu32 zone;
+			Rectu32 zone;
 			Direction direction;
-			lib::u32 size;
+			size_type size;
 		};
 
-		lib::vector2du32 size{ 18,12 };
-		lib::Rectu32 centerRect{ 7,4,4,4 };
+		vector2du32 size{ 18,12 };
+		Rectu32 centerRect{ 7,4,4,4 };
 
-		lib::array<TokenZone, NumWays> tokenZones;
+		array<TokenZone, NumWays> tokenZones;
 
-		lib::Timer levelClock;
-		lib::u32 consumedTokens{ 0 };
+		Timer levelClock;
+		u32 consumedTokens{ 0 };
 
-		lib::s32 gameMode{ 0 };
-		lib::u32 startLevel{ 0 };
-		lib::u32 score{ 0 };
-
-		enum GameModes : lib::u8
-		{
-			Token = 0,
-			Time = 1,
-		} _gameMode{ Token };
+		GameMode gameMode{ GameMode::Token };
+		u32 startLevel{ 0 };
+		u32 score{ 0 };
 
 		void generateTokenZones();
 	};
 
+	class StartGameData
+	{
+	public:
+		GameMode gameMode{ GameMode::Token };
+		u32 startLevel{ 0 };
+	};
 }
 
 #endif

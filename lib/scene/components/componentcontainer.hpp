@@ -17,22 +17,26 @@ namespace lib
 		class ComponentContainer
 		{
 		public:
-			ComponentContainer(SceneNode *sceneNode) noexcept;
-			~ComponentContainer();
+			constexpr ComponentContainer(SceneNode *sceneNode = nullptr) noexcept : m_sceneNode{ sceneNode } {}
+			inline ~ComponentContainer() = default;
 
 			bool addComponent(sptr<IComponent> nc);
 
-			template <typename T, typename... Args>
-			sptr<T> ensureComponentOfType(Args&&... args) {
+			template <typename T>
+			sptr<T> ensureComponentOfType() {
 				auto component(componentOfType<T,false>());
 				if (!component) {
-					auto nc(msptr<T>(std::forward<Args>(args)...));
+					auto nc(msptr<T>());
 					addComponent(nc);
 					return nc;
 				}
 				return component;
 			}
 
+			template <typename T>
+			void ensureComponentOfType(sptr<T> &component) {
+				component = ensureComponentOfType<T>();
+			}
 
 			void updateComponents();
 

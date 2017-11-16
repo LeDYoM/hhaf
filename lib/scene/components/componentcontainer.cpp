@@ -29,14 +29,6 @@ namespace lib
 				return containsComponentOfType(tindexOf(c),v);
 			}
 		}
-		ComponentContainer::ComponentContainer(SceneNode *sceneNode) noexcept
-			: m_sceneNode{ sceneNode } {}
-
-		ComponentContainer::~ComponentContainer() 
-		{ 
-			m_sceneNode = nullptr; 
-			m_components.clear();
-		}
 
 		bool ComponentContainer::addComponent(sptr<IComponent> nc)
 		{

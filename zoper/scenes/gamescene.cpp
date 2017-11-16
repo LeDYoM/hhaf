@@ -126,15 +126,15 @@ namespace zoper
 		m_mainBoardrg->visible = true;
 		m_pauseSceneNode->visible = false;
 
-		switch (m_gameData->_gameMode)
+		switch (m_gameData->gameMode)
 		{
 		default:
-		case GameData::GameModes::Token:
+		case GameMode::Token:
 			m_goalQuad->text(0)->text = "Tokens: ";
 			m_goalQuad->text(2)->text = "Goal: ";
 			break;
 
-		case GameData::GameModes::Time:
+		case GameMode::Time:
 			m_goalQuad->text(0)->text = "Time: ";
 			m_goalQuad->text(2)->text = "Goal: ";
 			break;
@@ -191,7 +191,7 @@ namespace zoper
 	void GameScene::updateScene()
 	{
 		if (state() == Playing) {
-			if (m_gameData->_gameMode == GameData::GameModes::Time) {
+			if (m_gameData->gameMode == GameMode::Time) {
 				updateLevelData();
 			}
 
@@ -254,14 +254,14 @@ namespace zoper
 	{
 		m_scoreQuad->text(1)->text = str(levelProperties.currentLevel() + 1);
 
-		switch (m_gameData->_gameMode)
+		switch (m_gameData->gameMode)
 		{
 		default:
-		case GameData::GameModes::Token:
+		case GameMode::Token:
 			m_goalQuad->text(3)->text = str(levelProperties.stayTokens());
 			break;
 
-		case GameData::GameModes::Time:
+		case GameMode::Time:
 			m_goalQuad->text(3)->text = str(levelProperties.stayTime());
 			break;
 		}
@@ -269,16 +269,16 @@ namespace zoper
 
 	void GameScene::updateLevelData()
 	{
-		switch (m_gameData->_gameMode)
+		switch (m_gameData->gameMode)
 		{
 		default:
-		case GameData::GameModes::Token:
+		case GameMode::Token:
 			m_goalQuad->text(1)->text = m_gameData->consumedTokens;
 			if (m_gameData->consumedTokens >= levelProperties.stayTokens())
 				setLevel(levelProperties.currentLevel() + 1);
 			break;
 
-		case GameData::GameModes::Time:
+		case GameMode::Time:
 			m_goalQuad->text(1)->text = static_cast<lib::u16>(m_gameData->levelClock.getElapsedTime().asSeconds());
 			if (m_gameData->levelClock.getElapsedTime().asSeconds() >= levelProperties.stayTime())
 				setLevel(levelProperties.currentLevel() + 1);
@@ -455,7 +455,7 @@ namespace zoper
 			return result;
 		});
 
-		if (m_gameData->_gameMode == GameData::GameModes::Token)
+		if (m_gameData->gameMode == GameMode::Token)
 			updateLevelData();
 	}
 

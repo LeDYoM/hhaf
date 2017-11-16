@@ -75,10 +75,16 @@ namespace zoper
 			}
 		});
 
+		menuPageMain->Back.connect([statesController]() {
+			statesController->pop_state();
+		});
 		menuPageByToken->Back.connect([statesController]() {
 			statesController->pop_state();
 		});
 		menuPageByTime->Back.connect([statesController]() {
+			statesController->pop_state();
+		});
+		menuPageOptions->Back.connect([statesController]() {
 			statesController->pop_state();
 		});
 
