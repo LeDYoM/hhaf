@@ -26,6 +26,7 @@ namespace lib
 		{
 		public:
 			SceneNode(const SceneNode&) = delete;
+			SceneNode &operator=(const SceneNode&) = delete;
 			SceneNode(SceneNode *const parent, str name);
 			virtual ~SceneNode();
 

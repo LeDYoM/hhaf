@@ -18,11 +18,7 @@ namespace zoper
 		ZoperProgramController();
 		virtual ~ZoperProgramController();
 
-		sptr<MenuScene> createMenuScene();
-		sptr<GameScene> createGameScene();
-		sptr<HighScoresScene> createHighScoresScene();
 		void onInit() override;
-		void sceneFinished() {};
 		virtual const IAppDescriptor getAppDescriptor() const override;
 		virtual int loop() override;
 

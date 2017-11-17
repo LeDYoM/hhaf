@@ -6,6 +6,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
 #include <mtypes/include/properties.hpp>
+#include <mtypes/include/function.hpp>
 #include <lib/scene/components/componentcontainer.hpp>
 #include <lib/scene/components/statescontroller.hpp>
 #include <lib/core/appservice.hpp>
@@ -21,14 +22,17 @@ namespace lib
 	namespace scene
 	{
 		class Scene;
+		using SceneDirectorType = function<sptr<Scene>(sptr<Scene>)>;
+
 		class SceneManager : public AppService
 		{
 		public:
 			SceneManager(core::Window &);
 			~SceneManager();
 
-			void startScene(sptr<Scene> scene);
-			void setScene(sptr<Scene> scene);
+			void start(sptr<Scene> scene);
+			void terminateScene();
+			void setSceneDirector(SceneDirectorType sceneDirector);
 
 			void update();
 
@@ -42,8 +46,7 @@ namespace lib
 		private:
 			ComponentContainer m_componentContainer;
 			sptr<StatesController<sptr<Scene>>> m_statesController;
-			sptr<Scene> m_currentScene{ nullptr };
-			sptr<Scene> m_nextScene{ nullptr };
+			SceneDirectorType m_sceneDirector;
 			core::Window &m_parentWindow;
 		};
 	}

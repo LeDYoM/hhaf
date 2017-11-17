@@ -69,6 +69,7 @@ namespace lib
 			}
 
 			constexpr const T&currentState() const noexcept { return m_statesStack.back(); }
+			constexpr T&currentState() noexcept { return m_statesStack.back(); }
 
 			emitter<const T&> StateFinished;
 			emitter<const T&> StateStarted;

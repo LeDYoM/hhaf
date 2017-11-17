@@ -10,20 +10,41 @@ namespace lib
 
 		SceneManager::~SceneManager() = default;
 
-		void SceneManager::startScene(sptr<Scene> scene)
+		void SceneManager::start(sptr<Scene> scene)
 		{
 			m_componentContainer.ensureComponentOfType(m_statesController);
 			m_statesController->UseDeferred();
+			scene->create();
 			m_statesController->start(std::move(scene));
 		}
 
-		void SceneManager::setScene(sptr<Scene> scene)
+		void SceneManager::terminateScene()
 		{
-			m_statesController->setState(std::move(scene));
+			sptr<Scene> nextScene;
+			if (m_sceneDirector) {
+				nextScene = m_sceneDirector(m_statesController->currentState());
+			}
+			m_statesController->setState(nextScene);
+		}
+
+		void SceneManager::setSceneDirector(SceneDirectorType sceneDirector)
+		{
+			m_sceneDirector = [sceneDirector = std::move(sceneDirector)](sptr<Scene> scene) {
+				auto nScene(sceneDirector(std::move(scene)));
+				if (nScene) {
+					nScene->create();
+				}
+				return nScene;
+			};
 		}
 
 		void SceneManager::update()
 		{
+			m_componentContainer.updateComponents();
+			if (auto&& currentScene = m_statesController->currentState(); currentScene) {
+				currentScene->updateScene();
+				currentScene->render(false);
+			}
 			/*
 			if (m_nextScene) {
 				if (m_currentScene) {
@@ -48,10 +69,7 @@ namespace lib
 
 		void SceneManager::finish()
 		{
-			if (m_currentScene) {
-//				m_currentScene->onDeinit();
-			}
-			m_currentScene = nullptr;
+			m_statesController->pop_state();
 		}
 	}
 }
