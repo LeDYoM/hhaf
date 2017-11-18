@@ -26,7 +26,7 @@ namespace zoper
 		kmSerializer.deserialize("keyboard.txt", *keyMapping);
 		sceneManager().setViewRect({0,0,2000,2000});
 		sceneManager().setSceneDirector([](sptr<Scene> scene) {
-			return msptr<MenuScene>();
+			return sceneManager().createScene<MenuScene>();
 		});
 		sceneManager().start(msptr<MenuScene>());
 	}

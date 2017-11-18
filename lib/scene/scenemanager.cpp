@@ -29,13 +29,7 @@ namespace lib
 
 		void SceneManager::setSceneDirector(SceneDirectorType sceneDirector)
 		{
-			m_sceneDirector = [sceneDirector = std::move(sceneDirector)](sptr<Scene> scene) {
-				auto nScene(sceneDirector(std::move(scene)));
-				if (nScene) {
-					nScene->create();
-				}
-				return nScene;
-			};
+			m_sceneDirector = std::move(sceneDirector);
 		}
 
 		void SceneManager::update()

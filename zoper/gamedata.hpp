@@ -54,6 +54,7 @@ namespace zoper
 	class StartGameData
 	{
 	public:
+		bool exitGame;
 		GameMode gameMode{ GameMode::Token };
 		u32 startLevel{ 0 };
 	};

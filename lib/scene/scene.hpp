@@ -20,6 +20,7 @@ namespace lib
 	namespace scene
 	{
 		class SceneNode;
+		class SceneManager;
 
 		class Scene : public scene::SceneNode
 		{
@@ -33,15 +34,21 @@ namespace lib
 			inline void addSubscription(sptr<events::EventSubscription> &&es) noexcept { eventConnector.addSubscription(std::move(es)); }
 			virtual Scene *const parentScene() noexcept override { return this; }
 
+			inline SceneManager &sceneManager() noexcept { return *m_sceneManager; }
+			inline const SceneManager &sceneManager() const noexcept { return *m_sceneManager; }
+
 		protected:
 
 			inline u32 state() const { return _state; }
 			inline void setState(u32 ns) { _state = ns; }
+
 			Timer clock;
 			EventReceiver eventConnector;
 
 			u32 _state;
 
+		private:
+			SceneManager *m_sceneManager{ nullptr };
 			friend class core::Host;
 			friend class SceneManager;
 		};

@@ -60,6 +60,7 @@ namespace lib
 					else {
 						BeforeFinish(m_statesStack.back());
 						m_statesStack.pop_back();
+						AfterFinish();
 					}
 				});
 			}
@@ -79,6 +80,7 @@ namespace lib
 			emitter<const T&> StateResumed;
 			emitter<const T&> BeforeStart;
 			emitter<const T&> BeforeFinish;
+			emitter<>		  AfterFinish;
 
 		private:
 			inline void changeState(T newState) {

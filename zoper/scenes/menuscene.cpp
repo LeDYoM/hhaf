@@ -34,7 +34,10 @@ namespace zoper
 		m_logo->texture = mainMenuResources->logo;
 		m_logo->color = colors::White;
 
-		auto mainMenu = createSceneNode<MainMenu>(MainMenu::ClassName);
+		auto mainMenu (createSceneNode<MainMenu>(MainMenu::ClassName));
+		mainMenu->MenuFinished.connect([](bool exit) {
+
+		});
 	}
 
 	void MenuScene::updateScene()

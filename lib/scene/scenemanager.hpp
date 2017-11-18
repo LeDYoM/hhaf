@@ -43,6 +43,13 @@ namespace lib
 			inline const Rectf32 &viewRect() const noexcept { return m_parentWindow.viewRect(); }
 			inline void setViewRect(Rectf32 vr) noexcept { m_parentWindow.viewRect = std::move(vr); }
 
+			template <typename T>
+			sptr<T> createScene() {
+				sptr<Scene> scene(msptr<T>());
+				scene->m_sceneManager = this;
+				scene->create();
+				return std::dynamic_pointer_cast<T>(scene);
+			}
 		private:
 			ComponentContainer m_componentContainer;
 			sptr<StatesController<sptr<Scene>>> m_statesController;
