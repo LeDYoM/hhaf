@@ -58,53 +58,18 @@ namespace lib
 		{
 		public:
 			typedef ReturnValue (T::*HandlerFunctionPtr)(Args...);
-
-			CallableMethodPointerT(T* receiver, HandlerFunctionPtr function) : obj{ receiver }, function_{ function } {}
-
-			constexpr ReturnValue Invoke(Args... args) override
-			{
+			constexpr CallableMethodPointerT(T*const receiver, const HandlerFunctionPtr function) : obj{ receiver }, function_{ function } {}
+			constexpr ReturnValue Invoke(Args... args) override {
 				return (obj->*function_)(std::forward<Args>(args)...);
 			}
 
 		private:
 			T*const obj;
-			HandlerFunctionPtr function_;
+			const HandlerFunctionPtr function_;
 		};
-
 
 		sptr<ICallable> m_callable;
 	};
-
-	template <class T, typename... Args>
-	class EventHandlerImpl
-	{
-	public:
-		typedef void (T::*HandlerFunctionPtr)(Args...);
-
-		/// Construct with receiver and function pointers.
-		EventHandlerImpl(T* receiver, HandlerFunctionPtr function) :
-			obj(receiver),
-			function_(function)
-		{
-		}
-
-		virtual void Invoke(Args... args)
-		{
-			(obj->*function_)(std::forward<Args>(args)...);
-		}
-
-	private:
-		T*obj;
-		/// Class-specific pointer to handler function.
-		HandlerFunctionPtr function_;
-	};
-
-	template <class T, typename R, typename... Args>
-	function<R(Args...)> EventHandler(T*obj, typename EventHandlerImpl<T, R, Args...>::HandlerFunctionPtr f)
-	{
-		EventHandlerImpl<T, R, Args...> p(obj, f);
-		return [&p](Args...) { return p.Invoke(std::forward<Args>(args)...); }
-	}
 
 }
 
