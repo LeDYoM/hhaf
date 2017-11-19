@@ -35,8 +35,8 @@ namespace zoper
 		m_logo->color = colors::White;
 
 		auto mainMenu (createSceneNode<MainMenu>(MainMenu::ClassName));
-		mainMenu->MenuFinished.connect([](bool exit) {
-
+		mainMenu->MenuFinished.connect([this](bool exit) {
+			sceneManager().terminateScene();
 		});
 	}
 

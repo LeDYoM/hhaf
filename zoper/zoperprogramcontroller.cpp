@@ -26,9 +26,11 @@ namespace zoper
 		kmSerializer.deserialize("keyboard.txt", *keyMapping);
 		sceneManager().setViewRect({0,0,2000,2000});
 		sceneManager().setSceneDirector([](sptr<Scene> scene) {
-			return sceneManager().createScene<MenuScene>();
+//			return sceneManager().createScene<MenuScene>();
+			return nullptr;
 		});
-		sceneManager().start(msptr<MenuScene>());
+		sceneManager().start();
+		sceneManager().startFirstScene<MenuScene>();
 	}
 
 	const IAppDescriptor ZoperProgramController::getAppDescriptor() const

@@ -30,7 +30,7 @@ namespace lib
 			SceneManager(core::Window &);
 			~SceneManager();
 
-			void start(sptr<Scene> scene);
+			void start();
 			void terminateScene();
 			void setSceneDirector(SceneDirectorType sceneDirector);
 
@@ -42,6 +42,14 @@ namespace lib
 			inline void setViewPort(Rectf32 vp) noexcept { m_parentWindow.viewPort = std::move(vp); }
 			inline const Rectf32 &viewRect() const noexcept { return m_parentWindow.viewRect(); }
 			inline void setViewRect(Rectf32 vr) noexcept { m_parentWindow.viewRect = std::move(vr); }
+
+			template <typename T>
+			void startFirstScene()
+			{
+				sptr<T> scene = createScene<T>();
+				scene->create();
+				m_statesController->start(std::move(scene));
+			}
 
 			template <typename T>
 			sptr<T> createScene() {

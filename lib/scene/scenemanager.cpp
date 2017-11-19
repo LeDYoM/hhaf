@@ -10,12 +10,10 @@ namespace lib
 
 		SceneManager::~SceneManager() = default;
 
-		void SceneManager::start(sptr<Scene> scene)
+		void SceneManager::start()
 		{
 			m_componentContainer.ensureComponentOfType(m_statesController);
 			m_statesController->UseDeferred();
-			scene->create();
-			m_statesController->start(std::move(scene));
 		}
 
 		void SceneManager::terminateScene()
