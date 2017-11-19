@@ -16,10 +16,6 @@ namespace lib
 	public:
 		constexpr function() noexcept : m_callable{ nullptr } {}
 		constexpr function(std::nullptr_t) noexcept : m_callable{ nullptr } {}
-		constexpr function(const function&) = default;
-		constexpr function& operator=(const function&) = default;
-		constexpr function(function&&) noexcept = default;
-		constexpr function& operator=(function&&) noexcept = default;
 
 		constexpr operator bool() const noexcept { return m_callable != nullptr; }
 
@@ -46,11 +42,6 @@ namespace lib
 		public:
 			template <typename Y>
 			constexpr CallableT(Y &&t) noexcept : m_t{ std::forward<Y>(t) } {}
-
-			constexpr CallableT(const CallableT&)  noexcept = default;
-			constexpr CallableT& operator=(const CallableT&)  noexcept = default;
-			constexpr CallableT(CallableT&&)  noexcept = default;
-			constexpr CallableT& operator=(CallableT&&)  noexcept = default;
 
 			~CallableT() override = default;
 
