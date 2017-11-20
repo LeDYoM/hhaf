@@ -19,8 +19,7 @@ include_directories ("..")
 target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
 
 # Detect and add SFML
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
-set (SFML_ROOT "${CMAKE_SOURCE_DIR}/SFML")
+set (SFML_ROOT "${L3RD_PARTY_DIR}/SFML")
 #set(SFML_STATIC_LIBRARIES TRUE)
 #Find any version 2.X of SFML
 #See the FindSFML.cmake file for additional details and instructions

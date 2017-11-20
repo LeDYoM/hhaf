@@ -35,6 +35,8 @@ message ("cxx Flags: " ${CMAKE_CXX_FLAGS})
 
 SET(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin/${CMAKE_BUILD_TYPE})
 SET(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin/${CMAKE_BUILD_TYPE})
+set(L3RD_PARTY_DIR "${CMAKE_SOURCE_DIR}/3rdparty")
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 
 # Sub-directories where more CMakeLists.txt exist
 add_subdirectory(mtypes)
