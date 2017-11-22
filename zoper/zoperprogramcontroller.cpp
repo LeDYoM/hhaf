@@ -19,7 +19,6 @@ namespace zoper
 	void ZoperProgramController::onInit()
 	{
 		gameData = msptr<GameData>();
-		startGameData = msptr<StartGameData>();
 
 		keyMapping = muptr<KeyMapping>();
 		Serializer<KeyMapping> kmSerializer;

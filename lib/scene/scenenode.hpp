@@ -81,6 +81,8 @@ namespace lib
 			Property<bool> visible;
 
 			virtual Scene *const parentScene() { return m_parent->parentScene(); }
+            template <typename SceneType>
+            SceneType *const parentSceneAs() { return dynamic_cast<SceneType*>(parentScene()); }
 			const Rectf32 &scenePerspective();
 
 			inline SceneNode *parent() noexcept { return m_parent; }

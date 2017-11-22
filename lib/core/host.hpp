@@ -79,6 +79,11 @@ namespace lib
 		};
 	}
 
+    template <typename AppType>
+    inline AppType &app() {
+        return core::Host::host().app<AppType>();
+    }
+
 	inline core::Host &host() noexcept { return core::Host::host(); }
 	inline core::Window &window() noexcept { return core::Host::host().parentWindow(); }
 	inline core::ResourceManager &resourceManager() noexcept { return core::Host::host().resourceManager(); }

@@ -61,7 +61,7 @@ namespace lib
 			class WindowBackendInfo : public IWindowProviderInfo
 			{
 			public:
-				virtual const char *const info() override;
+				const str info() override;
 			};
 		}
 	}

@@ -36,11 +36,9 @@ namespace zoper
 
 		auto mainMenu (createSceneNode<MainMenu>(MainMenu::ClassName));
 		mainMenu->MenuFinished.connect([this](bool exit) {
+            if (!exit) {
+            }
 			sceneManager().terminateScene();
 		});
-	}
-
-	void MenuScene::updateScene()
-	{
 	}
 }

@@ -46,7 +46,7 @@ namespace lib
 		class IWindowProviderInfo
 		{
 		public:
-			virtual const char *const info() = 0;
+			virtual const str info() = 0;
 		};
 
 	}

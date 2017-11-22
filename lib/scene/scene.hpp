@@ -29,7 +29,7 @@ namespace lib
 			virtual ~Scene();
 
 			void create() override;
-			virtual void updateScene() = 0;
+			virtual void updateScene() {}
 
 			inline void addSubscription(sptr<events::EventSubscription> &&es) noexcept { eventConnector.addSubscription(std::move(es)); }
 			virtual Scene *const parentScene() noexcept override { return this; }
