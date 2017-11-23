@@ -45,7 +45,7 @@ namespace zoper
 		u32 consumedTokens{ 0 };
 
 		GameMode gameMode{ GameMode::Token };
-		u32 startLevel{ 0 };
+        size_type startLevel{ 0 };
 		u32 score{ 0 };
 
         class StartGameData
@@ -53,7 +53,7 @@ namespace zoper
         public:
             bool exitGame{ false };
             GameMode gameMode{ GameMode::Token };
-            u32 startLevel{ 0 };
+            size_type startLevel{ 0 };
         };
 
         StartGameData startGameData;
