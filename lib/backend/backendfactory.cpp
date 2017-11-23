@@ -44,12 +44,17 @@ namespace lib
 					m_textureFactory = sptr<ITextureFactory>(tftemp,*fp_destroyTextureFactory);
 					m_ttfontFactory = sptr<ITTFontFactory>(ttfftemp,*fp_destroyTTFontFactory);
 				}
-			}
+            }
+            else {
+                // Cannot load shared library dynamically.
+                log_release_error("Fatal: Cannot load shared library ", sh_name);
+            }
+
 		}
 
 		BackendFactory::~BackendFactory() 
 		{
-			// Not necessary, but make sure the pointers are deleted before the descructor finishes
+			// Not necessary, but make sure the pointers are deleted before the destructor finishes
 			m_windowProviderInfo = nullptr;
 			m_window = nullptr;
 			m_textureFactory = nullptr;
@@ -63,8 +68,7 @@ namespace lib
 		{
 			if (!m_instance) {
 				m_instance = new BackendFactory;
-				log_release_info("Using backend: ");
-				log_release_info(m_instance->m_windowProviderInfo->info());
+				log_release_info("Using backend: ", m_instance->m_windowProviderInfo->info());
 				return true;
 			}
 
