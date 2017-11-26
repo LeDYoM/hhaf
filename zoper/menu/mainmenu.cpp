@@ -60,7 +60,6 @@ namespace zoper
 			switch (selectedIndex)
 			{
 			case MenuPageType::SelectLevelToken:
-                m_gameData->startGameData.gameMode = GameMode::Token;
 				statesController->push_state(MenuPageType::SelectLevelToken);
 				break;
 			case MenuPageType::SelectLevelSpeed:
