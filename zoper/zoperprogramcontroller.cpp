@@ -24,9 +24,15 @@ namespace zoper
 		Serializer<KeyMapping> kmSerializer;
 		kmSerializer.deserialize("keyboard.txt", *keyMapping);
 		sceneManager().setViewRect({0,0,2000,2000});
-		sceneManager().setSceneDirector([](sptr<Scene> scene) {
-//			return sceneManager().createScene<MenuScene>();
-			return nullptr;
+		sceneManager().setSceneDirector([this](sptr<Scene> scene) -> sptr<Scene> {
+            if (typeid(*scene) == typeid(MenuScene)) {
+                // Did the user selected exit?
+                if (gameData->startGameData.exitGame) {
+                    return nullptr;
+                }
+                return sceneManager().createScene<GameScene>();
+            }
+			return sceneManager().createScene<MenuScene>();
 		});
 		sceneManager().start();
 		sceneManager().startFirstScene<MenuScene>();

@@ -55,7 +55,6 @@ namespace zoper
 		auto menuPageOptions(createSceneNode<MenuPageOptions>("menuPageOptions"));
 		m_menuSteps.push_back(menuPageOptions);
 
-
 		menuPageMain->Forward.connect([this,statesController](const MenuPageType selectedIndex) {
 			switch (selectedIndex)
 			{

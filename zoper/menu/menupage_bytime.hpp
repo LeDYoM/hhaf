@@ -1,24 +1,26 @@
 #pragma once
 
-#ifndef ZOPER_MENU_MENUPAGE_BYNAME_INCLUDE_HPP__
-#define ZOPER_MENU_MENUPAGE_BYNAME_INCLUDE_HPP__
+#ifndef ZOPER_MENU_MENUPAGE_BYTIME_INCLUDE_HPP__
+#define ZOPER_MENU_MENUPAGE_BYTIME_INCLUDE_HPP__
 
-#include "menupage.hpp"
+#include "menupage_bybase.hpp"
 #include <mtypes/include/types.hpp>
 #include <lib/scene/scenenode.hpp>
-#include <lib/scene/renderizables/nodetext.hpp>
 
 namespace zoper
 {
-	class MenuPageByTime : public MenuPage
+	class MenuPageByTime : public MenuPageByBase
 	{
 	public:
-		using BaseClass = MenuPage;
+		using BaseClass = MenuPageByBase;
 
-		MenuPageByTime(lib::scene::SceneNode *parent, str name);
-		virtual ~MenuPageByTime();
+        MenuPageByTime(lib::scene::SceneNode *parent, str name)
+            : BaseClass(parent, name) {
+            setType(GameMode::Time);
+        }
 
-		void create() override;
+        virtual ~MenuPageByTime() = default;
+
 	};
 }
 
