@@ -1,12 +1,13 @@
-#ifndef __LIB_ZOPERPROGRAMCONTROLLER_HPP__
-#define __LIB_ZOPERPROGRAMCONTROLLER_HPP__
+#pragma once
+
+#ifndef LIB_ZOPERPROGRAMCONTROLLER_HPP__
+#define LIB_ZOPERPROGRAMCONTROLLER_HPP__
 
 #include <lib/include/iapp.hpp>
 
 namespace zoper
 {
 	using namespace lib;
-	class StartGameData;
 	class GameData;
 	class KeyMapping;
 	class MenuScene;
@@ -24,7 +25,6 @@ namespace zoper
 
 		sptr<GameData> gameData;
 		uptr<KeyMapping> keyMapping;
-		sptr<StartGameData> startGameData;
 	};
 }
 

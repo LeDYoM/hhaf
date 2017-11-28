@@ -24,7 +24,7 @@ namespace lib
 
 			template <typename T>
 			sptr<T> ensureComponentOfType() {
-				auto component(componentOfType<T,false>());
+				auto component(componentOfType<T>());
 				if (!component) {
 					auto nc(msptr<T>());
 					addComponent(nc);
@@ -43,20 +43,19 @@ namespace lib
 			/**
 			* Returns the component of the specified type if exists
 			* @param T type of the component to be retrieved
-			* @returns A shared pointer to the container or nullptr if not found
+			* @return A shared pointer to the container or nullptr if not found
 			*/
-			template <typename T,bool showLog=true>
+			template <typename T>
 			sptr<T> componentOfType() const
 			{
 				sptr<IComponent> cot(componentOfType(std::type_index(typeid(T))));
-				if constexpr (showLog)
-					assert_debug(cot != nullptr, "Component not found");
 				return cot ? std::dynamic_pointer_cast<T>(cot) : nullptr;
 			}
 
-			const sptr<IComponent> componentOfType(const std::type_index& ti) const;
 			void clearComponents() noexcept { m_components.clear(); m_sceneNode = nullptr; }
 		private:
+			const sptr<IComponent> componentOfType(const std::type_index& ti) const;
+
 			SceneNode *m_sceneNode;
 			vector_shared_pointers<IComponent> m_components;
 		};

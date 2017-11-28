@@ -33,6 +33,7 @@ namespace zoper
 		void configure(MenuPageMode pageMode, const string_vector &titles, const vector<string_vector> options = {});
 		void create() override;
 
+		size_type SelectedOptionAtRow(const size_type row) const;
 		emitter<const MenuPageType> Forward;
 		emitter<> Back;
 

@@ -22,12 +22,8 @@ namespace zoper
 
 		constexpr static f32 MenuPosX = 165.0f;
 
-		// Inherited via Scene
 		virtual void create() override;
 
-		virtual void updateScene() override;
-
-		Property<sptr<StartGameData>> startGameData;
 	private:
 		ireceiver m_receiver;
 		sptr<MainMenuResources> mainMenuResources;

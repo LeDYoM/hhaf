@@ -53,6 +53,18 @@ namespace lib
 			m_emitter.connect(m_function);
 		}
 
+        /// Constructor to forward the connection to another connection (of the same signature). That is, when the original emitter e
+        /// is called, it will generate a call to the second emitter.
+        constexpr connection(emitter<Args...> &e, emitter<Args...> &r) : m_emitter{ e }, 
+            m_function {
+                [&r](Args... args) {
+                    r(std::forward<Args>(args)...);
+                }
+            } 
+        {
+            m_emitter.connect(m_function);
+        }
+
 		inline bool disconnect() override {
 			return m_emitter.disconnect(m_function);
 		}
@@ -68,10 +80,14 @@ namespace lib
 		constexpr void connect(emitter<Args...> &e, R f) {
 			m_connections.push_back(msptr<connection<Args...>>(e, std::move(f)));
 		}
+
+        template <typename... Args>
+        constexpr void connect(emitter<Args...> &e, emitter<Args...> &r) {
+            m_connections.push_back(msptr<connection<Args...>>(e, r));
+        }
 		
-		~ireceiver() 
-		{
-			for (auto &connection : m_connections) {
+		~ireceiver() {
+			for (auto &&connection : m_connections) {
 				connection->disconnect();
 			}
 		}

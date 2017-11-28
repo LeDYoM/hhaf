@@ -64,8 +64,8 @@ namespace lib
 			}
 
 		private:
-			T* obj;
-			HandlerFunctionPtr function_;
+			T*const obj;
+			const HandlerFunctionPtr function_;
 		};
 
 		sptr<ICallable> m_callable;

@@ -22,7 +22,7 @@ namespace zoper
 	MainMenu::MainMenu(SceneNode *parent, str name)
 		: SceneNode{ parent, std::move(name) } 
 	{
-		m_gameData = host().app<ZoperProgramController>().gameData;
+		m_gameData = app<ZoperProgramController>().gameData;
 	}
 
 	MainMenu::~MainMenu() = default;
@@ -55,15 +55,15 @@ namespace zoper
 		auto menuPageOptions(createSceneNode<MenuPageOptions>("menuPageOptions"));
 		m_menuSteps.push_back(menuPageOptions);
 
-
-		menuPageMain->Forward.connect([statesController](const MenuPageType selectedIndex) {
+		menuPageMain->Forward.connect([this,statesController](const MenuPageType selectedIndex) {
 			switch (selectedIndex)
 			{
 			case MenuPageType::SelectLevelToken:
 				statesController->push_state(MenuPageType::SelectLevelToken);
 				break;
 			case MenuPageType::SelectLevelSpeed:
-				statesController->push_state(MenuPageType::SelectLevelSpeed);
+                m_gameData->startGameData.gameMode = GameMode::Time;
+                statesController->push_state(MenuPageType::SelectLevelSpeed);
 				break;
 			case MenuPageType::Options:
 				statesController->push_state(MenuPageType::Options);
@@ -108,7 +108,7 @@ namespace zoper
 		});
 
 		statesController->AfterFinish.connect([this]() {
-			MenuFinished(true);
+			MenuFinished();
 		});
 		statesController->start(MenuPageType::Main);
 	}

@@ -82,6 +82,19 @@ namespace zoper
 		setSelectedItem(0);
 	}
 
+	size_type MenuPage::SelectedOptionAtRow(const size_type row) const
+	{
+		assert_debug(row < tableSize().y, "Invalid row index parameter");
+		auto node(nodeAt({ columnForOptions, row }));
+		if (auto discreteText = node->componentOfType<DiscreteTextComponent>()) {
+			return discreteText->index();
+		}
+		else {
+			log_debug_error("The is no discrete text at ", vector2du32{ columnForOptions, row });
+		}
+		return static_cast<size_type>(-1);
+	}
+
 	void MenuPage::setSelectedItem(const size_type index)
 	{
 		m_previouslySelectedItem = m_selectedItem;
