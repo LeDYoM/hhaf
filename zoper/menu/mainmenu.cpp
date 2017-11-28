@@ -108,7 +108,7 @@ namespace zoper
 		});
 
 		statesController->AfterFinish.connect([this]() {
-			MenuFinished(true);
+			MenuFinished();
 		});
 		statesController->start(MenuPageType::Main);
 	}

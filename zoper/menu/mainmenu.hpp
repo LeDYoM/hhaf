@@ -6,7 +6,6 @@
 #include <lib/scene/scenenode.hpp>
 #include "menupagetype.hpp"
 #include "menupage.hpp"
-#include <stack>
 
 namespace zoper
 {
@@ -24,11 +23,10 @@ namespace zoper
 
 		void showPage(const MenuPageType&newPage);
 		void hidePage(const MenuPageType&page);
-		emitter<bool> MenuFinished;
+		emitter<> MenuFinished;
 	private:
 		sptr<GameData> m_gameData;
 		vector_shared_pointers<MenuPage> m_menuSteps;
-		std::stack<MenuPageType> m_pagesStack;
 	};
 }
 
