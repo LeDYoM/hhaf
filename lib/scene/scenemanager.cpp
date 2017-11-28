@@ -22,7 +22,7 @@ namespace lib
 			if (m_sceneDirector) {
 				nextScene = m_sceneDirector(m_statesController->currentState());
 			}
-			m_statesController->setState(nextScene);
+			m_statesController->setState(std::move(nextScene));
 		}
 
 		void SceneManager::setSceneDirector(SceneDirectorType sceneDirector)
@@ -36,27 +36,8 @@ namespace lib
 			if (auto&& currentScene = m_statesController->currentState(); currentScene) {
 				currentScene->updateScene();
 				currentScene->render(false);
+                int b = 0;
 			}
-			/*
-			if (m_nextScene) {
-				if (m_currentScene) {
-					m_currentScene->onDeinit();
-				}
-				else {
-					log_debug_info("Set first scene");
-				}
-
-				m_currentScene = m_nextScene;
-				m_nextScene = nullptr;
-
-				m_currentScene->create();
-			}
-			else {
-				m_currentScene->updateScene();
-			}
-
-			m_currentScene->render(false);
-			*/
 		}
 
 		void SceneManager::finish()
