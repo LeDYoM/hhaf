@@ -36,7 +36,6 @@ namespace lib
 			if (auto&& currentScene = m_statesController->currentState(); currentScene) {
 				currentScene->updateScene();
 				currentScene->render(false);
-                int b = 0;
 			}
 		}
 

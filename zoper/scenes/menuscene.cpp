@@ -8,6 +8,7 @@
 #include <lib/core/debugsystem.hpp>
 
 #include "../menu/mainmenu.hpp"
+#include "../common.hpp"
 
 namespace zoper
 {
@@ -35,9 +36,8 @@ namespace zoper
 		m_logo->color = colors::White;
 
 		auto mainMenu (createSceneNode<MainMenu>(MainMenu::ClassName));
-		mainMenu->MenuFinished.connect([this](bool exit) {
-            if (!exit) {
-            }
+		mainMenu->MenuFinished.connect([this]() {
+			zApp().gameData->startGameData.exitGame = true;
 			sceneManager().terminateScene();
 		});
 	}
