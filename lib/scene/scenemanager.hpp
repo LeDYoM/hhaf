@@ -47,7 +47,6 @@ namespace lib
 			void startFirstScene()
 			{
 				sptr<T> scene = createScene<T>();
-				scene->create();
 				m_statesController->start(std::move(scene));
 			}
 
