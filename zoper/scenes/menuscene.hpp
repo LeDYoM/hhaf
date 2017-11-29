@@ -17,6 +17,7 @@ namespace zoper
 	class MenuScene final : public scene::Scene
 	{
 	public:
+        using BaseClass = scene::Scene;
 		MenuScene();
 		virtual ~MenuScene() = default;
 

@@ -14,11 +14,11 @@ namespace zoper
 	using namespace lib::scene::nodes;
 
 	HighScoresScene::HighScoresScene()
-		: Scene{ "HighScoresScene" } {}
+		: BaseClass{ "HighScoresScene" } {}
 
 	void HighScoresScene::create()
 	{
-		Scene::create();
+		BaseClass::create();
 
 		m_resources = msptr<HighScoresResources>();
 		m_resources->loadResources(resourceManager());

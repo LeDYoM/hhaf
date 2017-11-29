@@ -23,6 +23,7 @@ namespace zoper
 		void updateScene() override;
 
 	private:
+        using BaseClass = lib::scene::Scene;
 		template <typename T>
 		using sptr = std::shared_ptr<T>;
 

@@ -16,12 +16,11 @@ namespace zoper
 	using namespace lib::scene;
 	using namespace lib::scene::nodes;
 
-	MenuScene::MenuScene()
-		: Scene{ "MenuScene" } {}
+	MenuScene::MenuScene() : BaseClass{ "MenuScene" } {}
 
 	void MenuScene::create()
 	{
-		Scene::create();
+        BaseClass::create();
 
 		mainMenuResources = msptr<MainMenuResources>();
 		mainMenuResources->loadResources(resourceManager());

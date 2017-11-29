@@ -14,15 +14,6 @@ namespace zoper
 	void MenuPageOptions::create()
 	{
 		BaseClass::create();
-/*
-		OptionModel("Antialiasing", { "Worst", "Bad", "Normal", "Good", "Best" }),
-			OptionModel("Resolution", { "Worst", "Bad", "Normal", "Good", "Best" }),
-			OptionModel("Fullscreen", { "No", "Yes" }),
-			OptionModel("VSync", { "No", "Yes" }),
-			OptionModel("Redefine keyboard"),
-			OptionModel("Cancel", {}, OptionModelIndex{ 0 }),
-			OptionModel("Accept", {}, OptionModelIndex{ 0 })
-			*/
 		configure(MenuPageMode::Optioner, 
 		{ "Anti aliasing", "Resolution", "Fullscreen",  "VSync", "Redefine keyboard", "Cancel", "Accept" },
 		{ 

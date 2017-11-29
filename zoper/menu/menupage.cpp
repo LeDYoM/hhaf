@@ -25,6 +25,7 @@ namespace zoper
 	constexpr size_type columnForOptions = 3;
 	void MenuPage::create()
 	{
+        BaseClass::create();
 		m_normalFont = resourceManager().getResource<TTFont>("menu.mainFont", "resources/oldct.ttf");
 		m_normalColor = colors::Blue;
 		m_selectedColor = colors::Red;
@@ -66,12 +67,12 @@ namespace zoper
 		assert_debug(titles.size() > 0, "Titles cannot be empty");
 		size_type counter{ 0 };
 		for (auto&& title : titles) {
-			auto newOption(createNodeAt(vector2du32{ titleColumn,counter }, str("label" + counter)));
+			auto newOption(createNodeAt(vector2du32{ titleColumn,counter }, make_str("label",counter)));
 			standarizeText(newOption->node());
 			newOption->node()->text = title;
 
 			if (options.size() > counter) {
-				auto discreteTextLabel(createNodeAt(vector2du32{ columnForOptions, counter }, str("option" + counter)));
+				auto discreteTextLabel(createNodeAt(vector2du32{ columnForOptions, counter }, make_str("option",counter)));
 				standarizeText(discreteTextLabel->node());
 				auto discreteTextComponent = discreteTextLabel->ensureComponentOfType<DiscreteTextComponent>();
 				discreteTextComponent->data.set(options[counter]);
