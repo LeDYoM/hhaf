@@ -35,11 +35,11 @@ namespace zoper
 
 		// Inherited via Scene
 		virtual void create() override;
-		virtual void onDeinit();
 
 		virtual void updateScene();
 
 	private:
+		using BaseClass = SceneNode;
 		lib::EventReceiver m_boardEventConnector;
 		void setLevel(const lib::u32 nv);
 		void updateLevelData();

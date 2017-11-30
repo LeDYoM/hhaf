@@ -177,16 +177,6 @@ namespace zoper
 		m_gameClock.restart();
 	}
 
-	void GameScene::onDeinit()
-	{
-		// Remove instances from all nodes.
-		clearAll();
-		m_mainBoardrg->clearAll();
-		p_boardModel = nullptr;
-		p_player = nullptr;
-		m_backgroundTiles.clear();
-	}
-
 	void GameScene::updateScene()
 	{
 		if (state() == Playing) {
