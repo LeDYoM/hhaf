@@ -7,8 +7,8 @@
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/ttfont.hpp>
 #include <lib/scene/nodes/theme.hpp>
-#include <lib/scene/renderizables/nodetext.hpp>
-
+#include <lib/scene/nodes/tablenode.hpp>
+#include <lib/scene/scenenodetypes.hpp>
 #include "loaders/highscoresresources.hpp"
 #include "highscoresdata.hpp"
 
@@ -16,18 +16,16 @@ namespace zoper
 {
 	using namespace lib;
 
-	class HighScoreTextController : public scene::SceneNode
+	class HighScoreTextController : public scene::nodes::TableNode<TextSceneNode>
 	{
+	private:
+		using BaseClass = scene::nodes::TableNode<TextSceneNode>;
 	public:
-		using ParentClassType = scene::SceneNode;
-		HighScoreTextController(scene::SceneNode *parent, sptr<scene::nodes::Theme> theme);
+		HighScoreTextController(scene::SceneNode *parent, str name);
 		virtual ~HighScoreTextController();
 
 		virtual void create() override;
 
-	private:
-		array<sptr<scene::nodes::NodeText>,10> m_textGroup;
-		sptr<scene::nodes::Theme> m_theme;
 	};
 }
 

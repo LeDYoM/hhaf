@@ -25,8 +25,9 @@ namespace zoper
 
 	class MenuPage : public nodes::TableNode<TextSceneNode>
 	{
-	public:
+	private:
 		using BaseClass = nodes::TableNode<TextSceneNode>;
+	public:
 		MenuPage(SceneNode *parent, str name);
 		virtual ~MenuPage();
 

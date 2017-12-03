@@ -7,15 +7,16 @@ namespace zoper
 	using namespace lib;
 	using namespace lib::scene;
 
-	HighScoreTextController::HighScoreTextController(SceneNode *parent, sptr<scene::nodes::Theme> theme)
-		: SceneNode{ parent, "HighScreTextController" }, m_theme{ std::move(theme) } {}
+	HighScoreTextController::HighScoreTextController(SceneNode *parent, str name)
+		: BaseClass{ parent, "HighScreTextController" } {}
+
 	HighScoreTextController::~HighScoreTextController() = default;
 
 	void HighScoreTextController::create()
 	{
-		ParentClassType::create();
+		BaseClass::create();
 
-		// Request the highscores.
+		// Request the high scores.
 		HighScoresData hsData;
 		hsData.read();
 /*		
