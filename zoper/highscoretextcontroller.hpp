@@ -16,10 +16,10 @@ namespace zoper
 {
 	using namespace lib;
 
-	class HighScoreTextController : public scene::nodes::TableNode<TextSceneNode>
+	class HighScoreTextController : public scene::nodes::TableNode<scene::TextSceneNode>
 	{
 	private:
-		using BaseClass = scene::nodes::TableNode<TextSceneNode>;
+		using BaseClass = scene::nodes::TableNode<scene::TextSceneNode>;
 	public:
 		HighScoreTextController(scene::SceneNode *parent, str name);
 		virtual ~HighScoreTextController();

@@ -20,6 +20,12 @@ namespace zoper
 	{
 		BaseClass::create();
 
+		BaseClass::create();
+		m_normalFont = resourceManager().getResource<TTFont>("menu.mainFont", "resources/oldct.ttf");
+		m_normalColor = colors::Blue;
+		m_selectedColor = colors::Red;
+		m_normalCharacterSize = 72;
+
 		m_resources = msptr<HighScoresResources>();
 		m_resources->loadResources(resourceManager());
 
