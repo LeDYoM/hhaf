@@ -7,11 +7,12 @@
 #include <mtypes/include/properties.hpp>
 #include <mtypes/include/log.hpp>
 
+#include <lib/scene/scenenode.hpp>
+
 namespace lib
 {
 	namespace scene
 	{
-		class SceneNode;
 		/**
 		* Base class for all components attached to a scene node.
 		*/

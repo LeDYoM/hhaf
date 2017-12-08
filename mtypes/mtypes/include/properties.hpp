@@ -15,16 +15,6 @@ namespace lib
 	}
 
 	template <typename T>
-	class IProperty
-	{
-	public:
-		virtual constexpr const T&operator()() const noexcept = 0;
-		virtual constexpr const T &get() const noexcept = 0;
-		virtual constexpr void set(const T&v) noexcept = 0;
-		virtual constexpr void operator=(const T&v) noexcept = 0;
-	};
-
-	template <typename T>
 	class BasicProperty
 	{
 	public:
@@ -43,14 +33,15 @@ namespace lib
 	template <typename T>
 	class Property : public BasicProperty<T>
 	{
+        using BaseClass = BasicProperty<T>;
 	public:
 		constexpr Property() noexcept = default;
-		constexpr Property(T iv) noexcept : BasicProperty{ std::move(iv) }, m_callback{} {}
-		constexpr Property(callback_t c) noexcept : BasicProperty{}, m_callback{ std::move(c) } {}
-		constexpr Property(T iv, callback_t c) noexcept : BasicProperty{ std::move(iv) }, m_callback{ std::move(c) } {}
+		constexpr Property(T iv) noexcept : BaseClass{ std::move(iv) }, m_callback{} {}
+		constexpr Property(callback_t c) noexcept : BaseClass{}, m_callback{ std::move(c) } {}
+		constexpr Property(T iv, callback_t c) noexcept : BaseClass{ std::move(iv) }, m_callback{ std::move(c) } {}
 
 		constexpr void setCallback(callback_t c) noexcept { m_callback = std::move(c); }
-		constexpr void set(const T&v) noexcept { m_value = v; m_hasChanged = true; update(); }
+		constexpr void set(const T&v) noexcept { BaseClass::m_value = v; m_hasChanged = true; update(); }
 		constexpr void operator=(const T&v) noexcept { set(v); }
 
 		constexpr void update() { if (m_callback) m_callback(); }

@@ -28,10 +28,7 @@ namespace lib
 			template <typename T>
 			sptr<T> getResource(const str &rid, const str &fileName="");
 
-			template <>
 			sptr<scene::TTFont> getResource(const str &rid, const str &fileName) { return getFont(rid, fileName); }
-
-			template <>
 			sptr<scene::Texture> getResource(const str &rid, const str &fileName) { return getTexture(rid, fileName); }
 
 			sptr<scene::TTFont> getFont(const str &rid, const str &fileName);

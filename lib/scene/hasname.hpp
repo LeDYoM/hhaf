@@ -11,7 +11,7 @@ namespace lib::core
 	class HasName
 	{
 	public:
-		constexpr HasName(const str &name) noexcept : m_name{ name }
+		constexpr HasName(const str &name) noexcept : m_name( name )
 		{
 			log_debug_info("Creating object with name: ", m_name);
 		}
