@@ -25,11 +25,6 @@ namespace lib
 			HINSTANCE instance;
 			
 		};
-
-		class LoadedFunction
-		{
-
-		};
 	}
 }
 

@@ -23,16 +23,6 @@ namespace lib
 		template <level_type level>
 		constexpr bool compile_logs = compiled_log_level_type <= level;
 
-		template<level_type level, severity_type severity, typename...Args>
-		constexpr void log(Args&&...args) noexcept
-		{
-			if constexpr (compile_logs<level>) {
-				str log_stream(detail::severity_txt<severity>());
-				log_stream << detail::print_impl(args...);
-				detail::commitlog(log_stream);
-			}
-		}
-
 		namespace detail
 		{
 			template<severity_type severity>
@@ -58,6 +48,17 @@ namespace lib
 
 			void LOG_EXPORT commitlog(str& log_stream);
 		}
+        
+   		template<level_type level, severity_type severity, typename...Args>
+		constexpr void log(Args&&...args) noexcept
+		{
+			if constexpr (compile_logs<level>) {
+				str log_stream(detail::severity_txt<severity>());
+				log_stream << detail::print_impl(args...);
+				detail::commitlog(log_stream);
+			}
+		}
+
 	}
 
 	template<typename ...Args>

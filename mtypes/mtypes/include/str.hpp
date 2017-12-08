@@ -26,14 +26,14 @@ namespace lib
 		vector<char_type> m_data;
 		#pragma warning(pop)
 	public:
-		constexpr str() noexcept : m_data{} {};
+		constexpr str() noexcept : m_data() {}
 
 		template<size_t N>
 		constexpr str(const char_type(&a)[N]) noexcept : m_data( a,N ) {}
 
 		constexpr str(str&&) noexcept = default;
 
-		constexpr str(const str & n) noexcept : m_data{ n.m_data } {}
+		constexpr str(const str & n) noexcept : m_data( n.m_data ) {}
 		constexpr str(const char_type *n, const size_t N) noexcept : m_data(n, N+1) {}
 
 		str(const u32 n);
@@ -42,10 +42,7 @@ namespace lib
 		str(const f32 n);
 		str(const f64 n);
 
-		constexpr str&operator=(const str&rhs) {
-			*this = str(rhs);
-			return *this;
-		}
+		constexpr str&operator=(const str&rhs) noexcept = default;
 		constexpr str&operator=(str&&) noexcept = default;
 
 		vector<str> split(const char_type separator) const;
@@ -113,28 +110,22 @@ namespace lib
 			return append(n);
 		}
 
-		template <typename enum_type>
-		std::enable_if_t<std::is_enum<enum_type>::value>
-		constexpr operator>>(enum_type&n) const
-		{
-			std::underlying_type_t<enum_type> tmp{};
-			convert(tmp);
-			n = static_cast<enum_type>(tmp);
-		}
 
 		template <typename T>
-		std::enable_if_t<!std::is_enum<T>::value>
-		constexpr operator>>(T&n) const
+		constexpr str& operator>>(T n) const
 		{
-			convert(n);
-		}
-
-		template <>
-		void operator>><str>(str&n) const
-		{
-			n = *this;
-		}
-
+            if constexpr (std::is_enum_v<T>) {
+       			std::underlying_type_t<T> tmp{};
+                convert(tmp);
+                n = static_cast<T>(tmp); 
+            } else if constexpr (std::is_same_v<T,str>) {
+                n = *this;
+            } else {
+                convert(n);
+            }
+            return *this;
+        }
+        
 		friend constexpr bool operator==(const str& lhs, const str&rhs) noexcept;
 		friend constexpr bool operator!=(const str& lhs, const str&rhs) noexcept;
 		friend bool operator<(const str& lhs, const str&rhs) noexcept;

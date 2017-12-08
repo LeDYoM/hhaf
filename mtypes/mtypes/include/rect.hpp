@@ -119,4 +119,4 @@ namespace lib
 	using Rectf64 = Rect<f64>;
 }
 
-#endif*
+#endif

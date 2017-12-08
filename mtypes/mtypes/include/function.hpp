@@ -34,7 +34,7 @@ namespace lib
 		class ICallable {
 		public:
 			virtual ~ICallable() = default;
-			virtual constexpr ReturnValue Invoke(Args...) = 0;
+			virtual ReturnValue Invoke(Args...) = 0;
 		};
 
 		template <typename T>

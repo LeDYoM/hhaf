@@ -71,7 +71,9 @@ namespace lib
 		}
 
 		~vector() {
-			_destroy();
+            if (m_buffer) {
+                _destroy();
+            }
 		}
 
 		constexpr reference operator[](const size_type index) noexcept { return m_buffer[index]; }
@@ -134,6 +136,7 @@ namespace lib
 			for (auto&& node : other) {
 				remove_value(std::forward<T>(node));
 			}
+            return m_size;
 		}
 
 		constexpr iterator find(const T&element) noexcept {

@@ -60,7 +60,7 @@ namespace loader
 		return false;
 	}
 
-	Loader * loader::createLoader()
+	Loader *createLoader()
 	{
 		if (!loaderInstance)
 			loaderInstance = new Loader;

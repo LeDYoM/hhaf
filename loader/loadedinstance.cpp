@@ -19,6 +19,23 @@
 	{
 		return (FreeLibrary(static_cast<HMODULE>(handle)) != 0);
 	}
+#else
+    // For now, windows or linux
+    #include <dlfcn.h>
+	inline void *getMethod(void *handle, const char *methodName)
+	{
+		return static_cast<void*>(dlsym(handle, methodName));
+	}
+
+	inline void *loadSharedObject(const char *fileName)
+	{
+		return static_cast<void*>(dlopen(fileName, RTLD_NOW));
+	}
+
+	inline bool freeSharedObject(void *handle)
+	{
+		return (dlclose(handle) != 0);
+	}   
 #endif
 
 namespace loader

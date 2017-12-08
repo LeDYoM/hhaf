@@ -15,7 +15,7 @@ namespace lib
 		{
 			constexpr Vertex(vector2df p, Color c, vector2df tc) noexcept : position{ std::move(p) }, color{ std::move(c) }, texCoords{ std::move(tc) } {}
 			constexpr Vertex(vector2df p, vector2df tc) noexcept : position{ std::move(p) }, color{}, texCoords{ std::move(tc) } {}
-			constexpr Vertex() = default;
+			constexpr Vertex() {}
 			constexpr Vertex(Vertex&&) noexcept = default;
 			Vertex& operator=(Vertex&&) noexcept = default;
 			constexpr Vertex(const Vertex&) noexcept = default;

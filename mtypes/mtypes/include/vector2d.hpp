@@ -67,7 +67,7 @@ namespace lib
 			return r.x + r.y;
 		}
 
-		// Compute the normal of a segment
+		/*
 		vector2d computeNormal( const vector2d& p2) const noexcept
 		{
 			vector2d<T> normal{ *this - p2 };
@@ -76,7 +76,7 @@ namespace lib
 				normal /= length;
 			return normal;
 		}
-
+        */
 		constexpr vector2d operator+(const vector2d &right) const noexcept { return (vector2d(*this) += right); }
 		constexpr vector2d operator-(const vector2d &right) const noexcept { return (vector2d(*this) -= right); }
 		constexpr vector2d operator*(const vector2d &right) const noexcept { return (vector2d(*this) *= right); }
