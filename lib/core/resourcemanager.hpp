@@ -25,14 +25,17 @@ namespace lib
 			ResourceManager();
 			~ResourceManager();
 
+			sptr<scene::TTFont> getFont(const str &rid, const str &fileName);
+			sptr<scene::Texture> getTexture(const str &rid, const str &fileName);
+
 			template <typename T>
 			sptr<T> getResource(const str &rid, const str &fileName="");
 
+			template <>
 			sptr<scene::TTFont> getResource(const str &rid, const str &fileName) { return getFont(rid, fileName); }
-			sptr<scene::Texture> getResource(const str &rid, const str &fileName) { return getTexture(rid, fileName); }
 
-			sptr<scene::TTFont> getFont(const str &rid, const str &fileName);
-			sptr<scene::Texture> getTexture(const str &rid, const str &fileName);
+			template <>
+			sptr<scene::Texture> getResource(const str &rid, const str &fileName) { return getTexture(rid, fileName); }
 
 			template <typename T>
 			using NamedIndex = std::pair<const str, T>;

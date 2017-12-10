@@ -42,7 +42,11 @@ namespace lib
 		str(const f32 n);
 		str(const f64 n);
 
-		constexpr str&operator=(const str&rhs) noexcept = default;
+		inline str&operator=(const str&rhs) noexcept {
+			m_data = rhs.m_data;
+			return *this;
+		}
+
 		constexpr str&operator=(str&&) noexcept = default;
 
 		vector<str> split(const char_type separator) const;
@@ -105,15 +109,12 @@ namespace lib
 		constexpr bool empty() const noexcept { return m_data.empty(); }
 
 		template <typename T>
-		constexpr str &operator<<(const T&n)
-		{
+		constexpr str &operator<<(const T&n) {
 			return append(n);
 		}
 
-
 		template <typename T>
-		constexpr str& operator>>(T n) const
-		{
+		constexpr str& operator>>(T &n) {
             if constexpr (std::is_enum_v<T>) {
        			std::underlying_type_t<T> tmp{};
                 convert(tmp);
