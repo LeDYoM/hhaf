@@ -66,14 +66,14 @@ namespace lib
 
 			static Host *m_instance;
 			AppState m_state;
-			uptr<Window> m_window{ nullptr };
-			uptr<IApp> m_iapp{ nullptr };
-			uptr<ResourceManager> m_resourceManager{ nullptr };
-			uptr<EventManager> m_eventManager{ nullptr };
+			uptr<Window> m_window;
+			uptr<IApp> m_iapp;
+			uptr<ResourceManager> m_resourceManager;
+			uptr<EventManager> m_eventManager;
 			uptr<Randomizer> m_randomizer;
-			uptr<DebugSystem> m_debugSystem{ nullptr };
-			uptr<input::InputSystem> m_inputSystem{ nullptr };
-			uptr<scene::SceneManager> m_sceneManager{ nullptr };
+			uptr<DebugSystem> m_debugSystem;
+			uptr<input::InputSystem> m_inputSystem;
+			uptr<scene::SceneManager> m_sceneManager;
 			bool exit{ false };
 			vector<str> m_params;
 		};

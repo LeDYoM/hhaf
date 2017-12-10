@@ -29,13 +29,13 @@ namespace lib
 			sptr<scene::Texture> getTexture(const str &rid, const str &fileName);
 
 			template <typename T>
-			sptr<T> getResource(const str &rid, const str &fileName="");
-
-			template <>
-			sptr<scene::TTFont> getResource(const str &rid, const str &fileName) { return getFont(rid, fileName); }
-
-			template <>
-			sptr<scene::Texture> getResource(const str &rid, const str &fileName) { return getTexture(rid, fileName); }
+			sptr<T> getResource(const str &rid, const str &fileName="") {
+                if constexpr (std::is_same_v<T,scene::TTFont>) {
+                    return getFont(rid, fileName);
+                } else {
+                    return getTexture(rid, fileName);
+                }
+            }
 
 			template <typename T>
 			using NamedIndex = std::pair<const str, T>;

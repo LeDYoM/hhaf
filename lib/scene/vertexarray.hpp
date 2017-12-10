@@ -25,13 +25,9 @@ namespace lib
 		class VertexArray
 		{
 		public:
-			constexpr VertexArray(const PrimitiveType type, const u32 vertexCount) noexcept
-				: m_vertices{ vertexCount }, bounds{ {}, {} }, m_primitiveType{ type } {}
-
-			constexpr VertexArray(const VertexArray&) = default;
-			constexpr VertexArray& operator=(const VertexArray&) = default;
-			constexpr VertexArray(VertexArray&&) = default;
-			constexpr VertexArray& operator=(VertexArray&&) = default;
+            constexpr VertexArray() = default;
+			inline VertexArray(const PrimitiveType type, const u32 vertexCount) noexcept
+				: m_vertices( vertexCount ), bounds(), m_primitiveType{ type } {}
 
 			constexpr bool empty() const noexcept { return m_vertices.empty(); }
 
@@ -44,11 +40,11 @@ namespace lib
 			void moveX(const f32 xOffset) noexcept;
 			void moveY(const f32 yOffset) noexcept;
 
-			Property<Rectf32> bounds;
+			Property<Rectf32> bounds{};
 
 		private:
-			BasicVertexArray m_vertices;
-			PrimitiveType m_primitiveType;
+			BasicVertexArray m_vertices{};
+			PrimitiveType m_primitiveType = PrimitiveType::Triangles;
 		};
 	}
 }
