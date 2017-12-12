@@ -1,6 +1,7 @@
 #include "nodeshape.hpp"
 #include <mtypes/include/log.hpp>
 #include <lib/scene/texture.hpp>
+#include <cmath>
 
 namespace lib
 {

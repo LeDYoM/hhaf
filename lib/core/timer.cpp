@@ -9,10 +9,10 @@ namespace lib
 	struct TimePrivate
 	{
 		std::chrono::microseconds m_micrseconds;
-		TimePrivate::TimePrivate(std::chrono::microseconds microseconds)
+		TimePrivate(std::chrono::microseconds microseconds)
 			: m_micrseconds{microseconds} {}
 
-		TimePrivate::TimePrivate(TimePrivate &&rh) = default;
+		TimePrivate(TimePrivate &&rh) = default;
 	};
 
 	Time::Time()

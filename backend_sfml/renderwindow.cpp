@@ -68,7 +68,7 @@ namespace lib::backend::sfmlb
 
 	void RenderWindow::keyEvent(const sf::Event &e)
 	{
-		_ASSERT(e.type == sf::Event::KeyPressed || e.type == sf::Event::KeyReleased);
+		__ASSERT(e.type == sf::Event::KeyPressed || e.type == sf::Event::KeyReleased);
 
 		const auto k(doCast(e.key.code));
 		log_debug_info("Backend key event. Type: ", (int)(e.type), " Key: ", (int)(e.key.code));

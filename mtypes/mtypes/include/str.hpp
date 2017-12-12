@@ -41,6 +41,7 @@ namespace lib
 		str(const char_type *n) noexcept;
 		str(const f32 n);
 		str(const f64 n);
+		str(const long unsigned n);       
 
 		inline str&operator=(const str&rhs) noexcept {
 			m_data = rhs.m_data;
@@ -53,38 +54,42 @@ namespace lib
 
 		constexpr str &append() { return *this; }
 
-		str & append(const u32 n)
-		{
+		str & append(const u32 n) {
 			append(str(n));
 			return *this;
 		}
 
-		str & append(const s32 n)
-		{
+		str & append(const s32 n) {
 			append(str(n));
 			return *this;
 		}
-		str & append(const str & n)
-		{
+
+		str & append(const str & n) {
 			m_data.pop_back();
 			m_data.insert(n.m_data);
-			return *this;
+			return *this        ;
 		}
-		str & append(const char_type * n)
-		{
+
+		str & append(const char_type * n) {
 			append(str(n));
 			return *this;
 		}
-		str & append(const f32 n)
-		{
+
+		str & append(const f32 n) {
 			append(str(n));
 			return *this;
 		}
-		str & append(const f64 n)
-		{
+
+		str & append(const f64 n) {
 			append(str(n));
 			return *this;
 		}
+        
+		str & append(const long unsigned n) {
+			append(str(n));
+			return *this;
+		}
+
 		void convert(u32 &n) const;
 		void convert(s32 &n) const;
 		void convert(f32 &n) const;

@@ -119,6 +119,7 @@ namespace lib
 		inline write_stream& operator<<(write_stream & os, const Key &key)
 		{
 			os << static_cast<std::underlying_type_t<Key>>(key);
+            return os;
 		}
 
 		inline std::istream& operator>>(std::istream & is, Key &key)
