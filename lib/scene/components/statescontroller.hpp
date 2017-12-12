@@ -110,8 +110,8 @@ namespace lib
 		template <typename T>
 		class StatesController : public StatesControllerRaw<T>, public IComponent
 		{
-			virtual constexpr void update() override final {
-				StatesControllerRaw::update();
+			constexpr void update() override final {
+				StatesControllerRaw<T>::update();
 			}
 		};
 	}

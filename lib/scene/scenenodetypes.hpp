@@ -4,9 +4,10 @@
 #define LIB_SCENE_SCENENODETYPES_INCLUDE_HPP__
 
 #include <mtypes/include/types.hpp>
-#include "scenenode.hpp"
-#include <lib/scene/renderizables/nodetext.hpp>
 #include <lib/scene/components/parentrendercomponent.hpp>
+#include <lib/scene/components/icomponent.hpp>
+#include <lib/scene/renderizables/nodetext.hpp>
+#include "scenenode.hpp"
 
 namespace lib::scene
 {
@@ -33,7 +34,7 @@ namespace lib::scene
 	public:
 		using BaseClass = ParentRenderComponent<RenderizableT>;
 		void onAttached() override {
-			if (auto parentNode = attachedNodeAs<RenderizableSceneNode<nodes::NodeText>>()) {
+			if (auto parentNode = BaseClass::attachedNodeAs<RenderizableSceneNode<RenderizableT>>()) {
 				m_renderizableNode = parentNode->node();
 			}
 			BaseClass::onAttached();

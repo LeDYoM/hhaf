@@ -8,6 +8,7 @@ namespace lib
 	str::str(const s32 n) : str{ std::to_string(n).c_str() } {}
 	str::str(const f32 n) : str{ std::to_string(n).c_str() } {}
 	str::str(const f64 n) : str{ std::to_string(n).c_str() } {}
+	str::str(const unsigned long n) : str{ std::to_string(n).c_str() } {}   
 
 	namespace detail
 	{

@@ -15,10 +15,13 @@ namespace lib::scene
 		ParentRenderComponent() {}
 		virtual ~ParentRenderComponent() {}
 
-		virtual void onAttached() override {
+		void onAttached() override {
 			m_node = getRenderNodeToAttach();
 		}
 
+        template <typename T>
+        using IComponent::attachedNodeAs();
+        
 		sptr<RenderizableT> node() noexcept { return m_node; }
 		const sptr<RenderizableT> node() const noexcept { return m_node; }
 
