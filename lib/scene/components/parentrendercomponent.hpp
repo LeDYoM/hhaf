@@ -18,7 +18,6 @@ namespace lib::scene
 		void onAttached() override {
 			m_node = getRenderNodeToAttach();
 		}
-
 		sptr<RenderizableT> node() noexcept { return m_node; }
 		const sptr<RenderizableT> node() const noexcept { return m_node; }
 
