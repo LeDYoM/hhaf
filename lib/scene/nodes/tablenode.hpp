@@ -4,6 +4,7 @@
 #define LIB_SCENE_TABLENODE_INCLUDE_HPP__
 
 #include <mtypes/include/types.hpp>
+#include <mtypes/include/properties.hpp>
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/renderizables/nodetext.hpp>
 #include <lib/scene/scenemanager.hpp>
@@ -17,7 +18,9 @@ namespace lib::scene::nodes
 		TableNode(SceneNode *parent, str name) : SceneNode{ parent, name } {}
 		virtual ~TableNode() = default;
 
-		Property<vector2du32> tableSize = [this]()
+		Property<vector2du32> tableSize;
+        /*
+        = [this]()
 		{
 			setNeedsUpdate();
 
@@ -25,7 +28,7 @@ namespace lib::scene::nodes
 			for (auto& nodeColumn : m_nodes) {
 				nodeColumn.resize(tableSize().y);
 			}
-		};
+		};*/
 
 		Property<vector2df> sceneNodeSize = [this]()
 		{

@@ -43,6 +43,7 @@ namespace lib
 		constexpr void setCallback(callback_t c) noexcept { m_callback = std::move(c); }
 		constexpr void set(const T&v) noexcept { BaseClass::m_value = v; m_hasChanged = true; update(); }
 		constexpr void operator=(const T&v) noexcept { set(v); }
+		constexpr void operator=(callback_t c) noexcept { setCallback(c); }
 
 		constexpr void update() { if (m_callback) m_callback(); }
 
