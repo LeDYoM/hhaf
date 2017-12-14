@@ -1,11 +1,17 @@
 #pragma once
 
-#ifndef LIB_BACKEND_SFML_MAIN_INCLUDE_HPP__
-#define LIB_BACKEND_SFML_MAIN_INCLUDE_HPP__
+#ifndef LIB_BACKEND_INCLUDE_INLUDE_HPP__
+#define LIB_BACKEND_INCLUDE_INLUDE_HPP__
 
 #include "iwindow.hpp"
 #include "ittfontfactory.hpp"
 #include "itexturefactory.hpp"
+
+#if defined(_MSC_VER)
+	#define SPECIFIC_EXPORT	__declspec(dllexport)
+#else
+	#define SPECIFIC_EXPORT
+#endif
 
 using p_createWindowProviderInfo = lib::backend::IWindowProviderInfo * (*)();
 using p_destroyWindowProviderInfo = bool(*)(lib::backend::IWindowProviderInfo *);

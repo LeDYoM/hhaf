@@ -18,21 +18,6 @@ namespace lib::scene
 		void onAttached() override {
 			m_node = getRenderNodeToAttach();
 		}
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-
-=======
-<<<<<<< HEAD
-       
-=======
-
-        template <typename T>
-        using IComponent::attachedNodeAs();
-        
->>>>>>> development_1.4_linux_compile_and_scripting
->>>>>>> 4f8c61645b145159198cccb23cd63049da16ac7f
->>>>>>> development_1.4_linux_compile_and_scripting
 		sptr<RenderizableT> node() noexcept { return m_node; }
 		const sptr<RenderizableT> node() const noexcept { return m_node; }
 

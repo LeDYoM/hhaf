@@ -5,7 +5,7 @@
 #include "ttfontfactory.hpp"
 #include "texturefactory.hpp"
 
-#define EXPORT extern "C" __declspec(dllexport)
+#define EXPORT extern "C" SPECIFIC_EXPORT
 
 EXPORT lib::backend::IWindowProviderInfo * createWindowProviderInfo() {
 	return new lib::backend::sfmlb::WindowBackendInfo;
