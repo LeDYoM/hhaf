@@ -31,7 +31,7 @@ namespace loader
 
 	void *Loader::loadModule(const char *fileName)
 	{
-		auto loadedInstace = std::shared_ptr<LoadedInstance>(new LoadedInstance());
+		auto loadedInstace(std::make_shared<LoadedInstance>());
 		loadedInstace->load(fileName);
 
 		if (loadedInstace->loaded()) {
