@@ -61,10 +61,10 @@ namespace lib
 				}
 
 			protected:
+				Property<T> &m_property;
 				T m_startValue;
 				T m_endValue;
 				T m_deltaValue;
-				Property<T> &m_property;
 			};
 		}
 	}
