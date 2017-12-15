@@ -29,6 +29,8 @@ namespace lib
 				bool activate(bool active = true) override { return sf::Window::setActive(active); }
 				void draw(const scene::Vertex *vertices, const u32 nVertex, const scene::PrimitiveType pType, const f32 *transform, const ITexture *texture) override;
 
+                // Not necessary, but the headers of sf::RenderTarget in Linux, contain this definition
+                bool setActive(bool active = true) { return IWindow::activate(active); }
 				void setViewport(const Rectf32 &nviewport) override;
 				Rectf32 viewPort() const override;
 				void setViewRect(const Rectf32 &nviewRect) override;
