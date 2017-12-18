@@ -27,16 +27,6 @@ namespace zoper
 
 	MainMenu::~MainMenu() = default;
 
-	void MainMenu::showPage(const MenuPageType &newPage)
-	{
-		m_menuSteps[static_cast<int>(newPage)]->visible = true;
-	}
-
-	void MainMenu::hidePage(const MenuPageType &page)
-	{
-		m_menuSteps[static_cast<int>(page)]->visible = false;
-	}
-
 	void MainMenu::create()
 	{
 		using namespace nodes;
@@ -111,5 +101,15 @@ namespace zoper
 			MenuFinished();
 		});
 		statesController->start(MenuPageType::Main);
+	}
+
+	void MainMenu::showPage(const MenuPageType &newPage)
+	{
+		m_menuSteps[static_cast<int>(newPage)]->visible = true;
+	}
+
+	void MainMenu::hidePage(const MenuPageType &page)
+	{
+		m_menuSteps[static_cast<int>(page)]->visible = false;
 	}
 }
