@@ -18,9 +18,10 @@ namespace lib
 					setNeedsUpdate();
 				}*/
 			},
-			position{ },
 			scale{ { 1, 1 } },
-			m_transform{} 
+			position{ },
+			m_transform{},
+            m_globalTransform{}
 		{}
 
 		Transformable::~Transformable() = default;

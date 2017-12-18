@@ -51,14 +51,15 @@ namespace lib
 				return dynamic_cast<const T *const>(this);
 			}
 
+		private:
+			SceneNode *m_parent;
+
 		protected:
 			virtual void updateGeometry() = 0;
 			VertexArray m_vertices;
 			bool m_geometryNeedsUpdate{ true };
 			bool m_colorNeedsUpdate{ true };
 
-		private:
-			SceneNode *m_parent{ nullptr };
 		};
 	}
 }

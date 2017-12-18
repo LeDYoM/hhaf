@@ -9,6 +9,7 @@
 #include <mtypes/include/function.hpp>
 #include <lib/scene/components/componentcontainer.hpp>
 #include <lib/scene/components/statescontroller.hpp>
+#include <lib/scene/scene.hpp>
 #include <lib/core/appservice.hpp>
 #include <lib/core/window.hpp>
 
@@ -21,7 +22,6 @@ namespace lib
 	}
 	namespace scene
 	{
-		class Scene;
 		using SceneDirectorType = function<sptr<Scene>(sptr<Scene>)>;
 
 		class SceneManager : public AppService

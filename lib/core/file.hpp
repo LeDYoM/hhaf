@@ -49,8 +49,8 @@ namespace lib
 		bool write(SerializationStreamOut data, const char_type separator = ',');
 		~FileOutput() = default;
 	private:
-		u32 m_maxLineSize;
 		str m_fileName;
+		u32 m_maxLineSize;
 	};
 
 }

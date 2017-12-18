@@ -81,7 +81,7 @@ namespace lib
 			backend::IWindow &bw(*m_wPrivate->m_backendWindow);
 
 			// Create physical window
-			if (const bool result{ bw.createWindow(wcp) }) {
+			if (bw.createWindow(wcp)) {
 				viewPort = bw.viewPort();
 				viewRect = bw.viewRect();
 				viewPort.setCallback([this]() {m_wPrivate->m_backendWindow->setViewport(viewPort()); });

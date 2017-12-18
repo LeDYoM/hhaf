@@ -48,6 +48,7 @@ namespace lib
 		{
 		public:
 			virtual const str info() = 0;
+			virtual ~IWindowProviderInfo();
 		};
 
 	}

@@ -21,10 +21,14 @@ namespace lib
 		using iterator = char_type*;
 		using const_iterator = const char_type*;
 		// Temporary code
+#ifdef _MSC_VER
 		#pragma warning(push)
 		#pragma warning(disable:4251)
+#endif
 		vector<char_type> m_data;
+#ifdef _MSC_VER
 		#pragma warning(pop)
+#endif
 	public:
 		constexpr str() noexcept : m_data() {}
 
@@ -41,7 +45,7 @@ namespace lib
 		str(const char_type *n) noexcept;
 		str(const f32 n);
 		str(const f64 n);
-		str(const long unsigned n);       
+		str(const long unsigned n);
 
 		inline str&operator=(const str&rhs) noexcept {
 			m_data = rhs.m_data;
@@ -84,7 +88,7 @@ namespace lib
 			append(str(n));
 			return *this;
 		}
-        
+
 		str & append(const long unsigned n) {
 			append(str(n));
 			return *this;
@@ -123,7 +127,7 @@ namespace lib
             if constexpr (std::is_enum_v<T>) {
        			std::underlying_type_t<T> tmp{};
                 convert(tmp);
-                n = static_cast<T>(tmp); 
+                n = static_cast<T>(tmp);
             } else if constexpr (std::is_same_v<T,str>) {
                 n = *this;
             } else {
@@ -131,7 +135,7 @@ namespace lib
             }
             return *this;
         }
-        
+
 		friend constexpr bool operator==(const str& lhs, const str&rhs) noexcept;
 		friend constexpr bool operator!=(const str& lhs, const str&rhs) noexcept;
 		friend bool operator<(const str& lhs, const str&rhs) noexcept;

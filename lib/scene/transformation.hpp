@@ -32,27 +32,28 @@ namespace lib
 			Transform& operator=(Transform&&) noexcept = default;
 
 			constexpr const f32* const getMatrix() const noexcept { return &m_matrix[0]; }
+
 			static const Transform Identity;
-			inline Transform& operator *=(const Transform& right) noexcept
-			{
+
+			inline Transform& operator *=(const Transform& right) noexcept {
 				return combine(right);
 			}
 
-			const Transform operator *(const Transform& right) const noexcept
+			inline Transform operator *(const Transform& right) const noexcept
 			{
 				Transform copy{ *this };
 				copy.combine(right);
 				return copy;
 			}
 
-			constexpr const vector2df operator *(const vector2df& right) const noexcept
+			inline const vector2df operator *(const vector2df& right) const noexcept
 			{
 				return transformPoint(right);
 			}
 
-			constexpr const vector2df transformPoint(const f32 x, const f32 y) const noexcept;
-			constexpr const vector2df transformPoint(const vector2df& point) const noexcept;
-			const Rectf32 transformRect(const Rectf32& rectangle) const noexcept;
+			vector2df transformPoint(const f32 x, const f32 y) const noexcept;
+			vector2df transformPoint(const vector2df& point) const noexcept;
+			Rectf32 transformRect(const Rectf32& rectangle) const noexcept;
 			Transform& combine(const Transform& transform) noexcept;
 			Transform& translate(const f32 x, const f32 y) noexcept;
 			Transform& translate(const vector2df& offset) noexcept;

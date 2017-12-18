@@ -27,7 +27,7 @@ namespace lib
 		public:
             constexpr VertexArray() = default;
 			inline VertexArray(const PrimitiveType type, const u32 vertexCount) noexcept
-				: m_vertices( vertexCount ), bounds(), m_primitiveType{ type } {}
+				: bounds(), m_vertices( vertexCount ), m_primitiveType{ type } {}
 
 			constexpr bool empty() const noexcept { return m_vertices.empty(); }
 

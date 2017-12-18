@@ -10,18 +10,18 @@ namespace lib
 	{
 		const Transform Transform::Identity = Transform{};
 
-		constexpr const vector2df Transform::transformPoint(const f32 x, const f32 y) const noexcept
+		vector2df Transform::transformPoint(const f32 x, const f32 y) const noexcept
 		{
 			return vector2df{ m_matrix[0] * x + m_matrix[4] * y + m_matrix[12],
 				m_matrix[1] * x + m_matrix[5] * y + m_matrix[13] };
 		}
 
-		constexpr const vector2df Transform::transformPoint(const vector2df& point) const noexcept
+		vector2df Transform::transformPoint(const vector2df& point) const noexcept
 		{
 			return transformPoint(point.x, point.y);
 		}
 
-		const Rectf32 Transform::transformRect(const Rectf32& rectangle) const noexcept
+		Rectf32 Transform::transformRect(const Rectf32& rectangle) const noexcept
 		{
 			// Transform the 4 corners of the rectangle
 			const vector2df points[4] =
@@ -37,8 +37,8 @@ namespace lib
 			f32 top{ points[0].y };
 			f32 right{ points[0].x };
 			f32 bottom{ points[0].y };
-			for (const auto& point : points)
-			{
+
+			for (const auto& point : points) {
 				if (point.x < left)   left = point.x;
 				else if (point.x > right)  right = point.x;
 				if (point.y < top)    top = point.y;
