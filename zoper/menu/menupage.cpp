@@ -90,7 +90,7 @@ namespace zoper
 			return discreteText->index();
 		}
 		else {
-			log_debug_error("The is no discrete text at ", vector2du32{ columnForOptions, row });
+			log_debug_error("The is no discrete text at ", vector2dst{ columnForOptions, row });
 		}
 		return static_cast<size_type>(-1);
 	}

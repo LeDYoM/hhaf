@@ -406,7 +406,6 @@ namespace zoper
 		u32 inARow{ 0 };
 		for_each_token_in_line(loopPosition, loopDirection, [this, tokenType, &inARow](const vector2du32 &loopPosition, const Direction &direction)
 		{
-			direction;
 			bool result{ true };
 			bool found{ false };
 			vector2df lastTokenPosition;
@@ -525,8 +524,6 @@ namespace zoper
 
 				// Size of the point in the middle of the tile
 				constexpr vector2df centerPointSize{ 15,15 };
-				constexpr vector2df centerPointSizeHalf{ centerPointSize / 2 };
-
 
 				auto node(backgroundTilesrg->createRenderizable<NodeShape>("backgroundTilePoint_" + indexStr, 30));
 				node->box = { tileBox.center() - (centerPointSize / 2), centerPointSize };
