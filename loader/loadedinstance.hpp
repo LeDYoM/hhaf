@@ -1,8 +1,6 @@
 #ifndef LOADER_LOADEDINSTANCE_HPP
 #define LOADER_LOADEDINSTANCE_HPP
 
-#include <memory>
-
 namespace loader
 {
 	class LoadedInstancePrivate;
@@ -20,7 +18,7 @@ namespace loader
 		bool unload();
 		void *loadedData() const;
 	private:
-		std::unique_ptr<LoadedInstancePrivate> m_private;
+		LoadedInstancePrivate* m_private;
 	};
 }
 #endif

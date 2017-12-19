@@ -1,6 +1,7 @@
 #include "include/loader.hpp"
 #include "loadedinstance.hpp"
 #include <map>
+#include <memory>
 
 namespace loader
 {

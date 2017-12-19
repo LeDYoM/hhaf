@@ -19,6 +19,8 @@
 	{
 		return (FreeLibrary(static_cast<HMODULE>(handle)) != 0);
 	}
+    
+    constexpr const char *const extension = ".dll";
 #else
     // For now, windows or linux
     #include <dlfcn.h>
@@ -36,17 +38,33 @@
 	{
 		return (dlclose(handle) != 0);
 	}   
+    constexpr const char *const extension = ".so";
 #endif
 
 namespace loader
 {
-	using namespace std;
+    namespace
+    {
+        inline bool endsWith (const std::string &fullString, const std::string &ending) {
+            return fullString.length() >= ending.length() ? 
+                fullString.compare (fullString.length() - ending.length(), ending.length(), ending) == 0 :
+                false;
+        }
+    }
 
 	class LoadedInstancePrivate
 	{
 	public:
+        std::string updateFileExtension(const char *filename) {
+            std::string fileName{filename};
+            if (!endsWith(fileName, extension)) {
+                fileName += extension;
+            }
+            return fileName;
+        }
+
 		void *m_sharedFileHandle{ nullptr };
-		map<string, void*> m_methods;
+		std::map<std::string, void*> m_methods;
 	};
 
 	LoadedInstance::LoadedInstance() : m_private{ new LoadedInstancePrivate } {}
@@ -54,18 +72,19 @@ namespace loader
 	LoadedInstance::~LoadedInstance()
 	{
 		unload();
+        delete m_private;
 	}
 
 	bool LoadedInstance::load(const char * fileName)
 	{
-		m_private->m_sharedFileHandle = loadSharedObject(fileName);
+		m_private->m_sharedFileHandle = loadSharedObject(m_private->updateFileExtension(fileName).c_str());
 		return loaded();
 	}
 
 	void *LoadedInstance::loadMethod(const char *methodName)
 	{
 		if (loaded()) {
-			auto node(m_private->m_methods.find(methodName));
+            auto node = m_private->m_methods.find(methodName);
 			if (node == m_private->m_methods.end()) {
 				auto methodAddress(getMethod(m_private->m_sharedFileHandle, methodName));
 
