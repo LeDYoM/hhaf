@@ -18,9 +18,7 @@ namespace lib::scene::nodes
 		TableNode(SceneNode *parent, str name) : SceneNode{ parent, name } {}
 		virtual ~TableNode() = default;
 
-		Property<vector2dst> tableSize
-        /*
-        = [this]()
+		Property<vector2dst> tableSize {[this]()
 		{
 			setNeedsUpdate();
 
@@ -28,14 +26,12 @@ namespace lib::scene::nodes
 			for (auto& nodeColumn : m_nodes) {
 				nodeColumn.resize(tableSize().y);
 			}
-		}*/;
+		}};
 
-		Property<vector2df> sceneNodeSize 
-        /*
-        = [this]()
+		Property<vector2df> sceneNodeSize {[this]()
 		{
 			setNeedsUpdate();
-		}*/;
+		}};
         
 		template <typename... Args>
 		sptr<T> createNodeAt(const vector2dst &index, Args&&... args)
