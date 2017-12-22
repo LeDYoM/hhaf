@@ -53,7 +53,7 @@ namespace
 
 	inline void *loadSharedObject(const char *fileName)
 	{
-		return static_cast<void*>(dlopen(fileName, RTLD_LAZY));
+		return static_cast<void*>(dlopen(fileName, RTLD_NOW));
 	}
 
 	inline bool freeSharedObject(void *handle)
