@@ -32,7 +32,7 @@ namespace lib
 					}
 
 					const u32 currentCharacterSize{ characterSize() };
-					const Rectf32 glyphRect{ font()->getGlyph(L'x', currentCharacterSize, false, 0).bounds };
+					const Rectf32 glyphRect{ font()->getGlyph(L'x', currentCharacterSize).bounds };
 					const f32 vspace{ font()->getLineSpacing(currentCharacterSize) };
 
 					f32 x{ 0.f };
@@ -56,7 +56,7 @@ namespace lib
 							// Update the current bounds (min coordinates)
 							minX = min(minX, x);
 							minY = min(minY, y);
-							const f32 hspace{ font()->getGlyph(L' ', currentCharacterSize, false, 0).advance };
+							const f32 hspace{ font()->getGlyph(L' ', currentCharacterSize).advance };
 
 							switch (curChar)
 							{
@@ -71,7 +71,7 @@ namespace lib
 						}
 						else {
 							// Extract the current glyph's description
-							const TTGlyph glyph{ font()->getGlyph(curChar, currentCharacterSize, false, 0) };
+							const TTGlyph glyph{ font()->getGlyph(curChar, currentCharacterSize) };
 							const Rectf32 glyphbound{ glyph.bounds };
 							const Rectf32 glyphTextureRect{ glyph.textureBounds };
 

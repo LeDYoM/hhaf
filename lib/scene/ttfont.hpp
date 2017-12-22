@@ -25,10 +25,10 @@ namespace lib
 		public:
 			TTFont(backend::ITTFont *font);
 			bool loadFromFile(const str& filename);
-			const TTGlyph getGlyph(u32 codePoint, u32 characterSize, bool bold, f32 outlineThickness) const;
-			f32 getLineSpacing(u32 characterSize) const;
-			f32 getKerning(u32 first, u32 second, u32 characterSize) const;
-			sptr<Texture> getTexture(u32 characterSize) const;
+			TTGlyph getGlyph(const u32 codePoint, const u32 characterSize) const;
+			f32 getLineSpacing(const u32 characterSize) const;
+			f32 getKerning(const u32 first, const u32 second, const u32 characterSize) const;
+			sptr<Texture> getTexture(const u32 characterSize) const;
 		private:
 			backend::ITTFont* m_font;
 		};

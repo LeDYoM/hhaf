@@ -18,22 +18,22 @@ namespace lib
 			return m_font != nullptr;
 		}
 
-		const TTGlyph TTFont::getGlyph(u32 codePoint, u32 characterSize, bool bold, f32 outlineThickness) const
+		TTGlyph TTFont::getGlyph(const u32 codePoint, const u32 characterSize) const
 		{
-			return TTGlyph(m_font->getGlyph(codePoint, characterSize, bold, outlineThickness));
+			return TTGlyph(m_font->getGlyph(codePoint, characterSize));
 		}
 
-		f32 TTFont::getLineSpacing(u32 characterSize) const
+		f32 TTFont::getLineSpacing(const u32 characterSize) const
 		{
 			return m_font->getLineSpacing(characterSize);
 		}
 
-		f32 TTFont::getKerning(u32 first, u32 second, u32 characterSize) const
+		f32 TTFont::getKerning(const u32 first, const u32 second, const u32 characterSize) const
 		{
 			return m_font->getKerning(first, second, characterSize);
 		}
 
-		sptr<Texture> TTFont::getTexture(u32 characterSize) const
+		sptr<Texture> TTFont::getTexture(const u32 characterSize) const
 		{
 			return msptr<Texture>(m_font->getTexture(characterSize));
 		}
