@@ -4,13 +4,14 @@
 #include "renderwindow.hpp"
 #include "conversions.hpp"
 
-#include <SFML/Window.hpp>
 #include <SFML/Config.hpp>
 
 #include <string>
 
 namespace lib::backend::sfmlb
 {
+    RenderWindow::RenderWindow() = default;
+
 	RenderWindow::~RenderWindow() = default;
 
 	bool RenderWindow::createWindow(const WindowCreationParams & wcp)
