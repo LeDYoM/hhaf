@@ -19,8 +19,10 @@ include_directories ("..")
 target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
 
 # Detect and add SFML
+
+#Set fallback directory for SFML
 set (SFML_ROOT "${L3RD_PARTY_DIR}/SFML")
-#set(SFML_STATIC_LIBRARIES TRUE)
+
 #Find any version 2.X of SFML
 #See the FindSFML.cmake file for additional details and instructions
 find_package(SFML 2 REQUIRED system window graphics)
