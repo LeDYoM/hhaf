@@ -115,7 +115,7 @@ namespace zoper
 		});
 	}
 
-	void MenuPage::standarizeText(sptr<scene::nodes::NodeText> ntext)
+	void MenuPage::standarizeText(const sptr<scene::nodes::NodeText> &ntext)
 	{
 		ntext->color = m_normalColor;
 		ntext->font = m_normalFont;

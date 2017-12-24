@@ -41,7 +41,7 @@ namespace zoper
 	protected:
 		emitter<const size_type> Selection;
 	private:
-		void standarizeText(sptr<nodes::NodeText> ntext);
+		void standarizeText(const sptr<nodes::NodeText> &ntext);
 		void goDown();
 		void goUp();
 		void goLeft();

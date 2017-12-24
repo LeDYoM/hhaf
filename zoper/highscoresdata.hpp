@@ -22,6 +22,7 @@ namespace zoper
 	class HighScoresData
 	{
 	public:
+
 		using HighScoresList = array<HighScore, NumHighScore>;
 		void read();
 		void store();

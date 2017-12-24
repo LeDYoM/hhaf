@@ -9,12 +9,15 @@
 #include <lib/scene/nodes/theme.hpp>
 #include <lib/scene/nodes/tablenode.hpp>
 #include <lib/scene/scenenodetypes.hpp>
+#include <lib/scene/renderizables/nodetext.hpp>
+
 #include "loaders/highscoresresources.hpp"
 #include "highscoresdata.hpp"
 
 namespace zoper
 {
 	using namespace lib;
+	using namespace lib::scene;
 
 	class HighScoreTextController : public scene::nodes::TableNode<scene::TextSceneNode>
 	{
@@ -26,6 +29,13 @@ namespace zoper
 
 		virtual void create() override;
 
+	private:
+		void standarizeText(const sptr<nodes::NodeText> &ntext);
+
+		sptr<TTFont> m_normalFont;
+		Color m_normalColor;
+		Color m_selectedColor;
+		size_type m_normalCharacterSize;
 	};
 }
 
