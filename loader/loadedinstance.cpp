@@ -42,7 +42,6 @@ namespace
     
     constexpr const char *const extension = ".dll";
     constexpr const char *const prefix = "";
-    const
 #else
     // For now, windows or linux
     #include <dlfcn.h>
