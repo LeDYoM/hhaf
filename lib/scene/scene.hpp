@@ -28,7 +28,7 @@ namespace lib
 			Scene(str name);
 			virtual ~Scene();
 
-			void create() override;
+			void onCreated() override;
 			virtual void updateScene() {}
 
 			inline void addSubscription(sptr<events::EventSubscription> &&es) noexcept { eventConnector.addSubscription(std::move(es)); }

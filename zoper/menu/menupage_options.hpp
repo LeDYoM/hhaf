@@ -18,7 +18,7 @@ namespace zoper
 		MenuPageOptions(lib::scene::SceneNode *parent, str name);
 		virtual ~MenuPageOptions();
 
-		void create() override;
+		void onCreated() override;
 	};
 }
 

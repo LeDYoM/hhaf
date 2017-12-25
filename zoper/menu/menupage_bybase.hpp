@@ -18,7 +18,7 @@ namespace zoper
 		MenuPageByBase(lib::scene::SceneNode *parent, str name);
 		virtual ~MenuPageByBase();
 
-		void create() override;
+		void onCreated() override;
     protected:
         constexpr void setType(const GameMode gameModePage) noexcept { m_gameModePage = gameModePage; }
 

@@ -13,9 +13,9 @@ namespace zoper
 
 	MenuPageByBase::~MenuPageByBase() = default;
 
-	void MenuPageByBase::create()
+	void MenuPageByBase::onCreated()
 	{
-		BaseClass::create();
+		BaseClass::onCreated();
 
         const str FirstOption(str("Start level ") + str(m_gameModePage == GameMode::Token?"token":"time") + str(" mode"));
 		configure(MenuPageMode::Optioner, 

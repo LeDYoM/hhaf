@@ -17,8 +17,7 @@ namespace zoper
 		HighScoresScene();
 		virtual ~HighScoresScene() = default;
 
-		// Inherited via Scene
-		void create() override;
+		void onCreated() override;
 
 		void updateScene() override;
 

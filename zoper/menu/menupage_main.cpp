@@ -11,9 +11,9 @@ namespace zoper
 
 	MenuPageMain::~MenuPageMain() = default;
 
-	void MenuPageMain::create()
+	void MenuPageMain::onCreated()
 	{
-		BaseClass::create();
+		BaseClass::onCreated();
 
 		configure(MenuPageMode::Selector, 
 		{ "Play token mode","Play time mode", "Options", "Exit" });

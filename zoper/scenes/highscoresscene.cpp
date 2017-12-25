@@ -16,11 +16,11 @@ namespace zoper
 	HighScoresScene::HighScoresScene()
 		: BaseClass{ "HighScoresScene" } {}
 
-	void HighScoresScene::create()
+	void HighScoresScene::onCreated()
 	{
-		BaseClass::create();
+		BaseClass::onCreated();
 
-		BaseClass::create();
+		BaseClass::onCreated();
 		m_normalFont = resourceManager().getResource<TTFont>("menu.mainFont", "resources/oldct.ttf");
 		m_normalColor = colors::Blue;
 		m_selectedColor = colors::Red;

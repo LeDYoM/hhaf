@@ -17,7 +17,7 @@ namespace lib::scene
 	public:
 		RenderizableSceneNode(SceneNode *const parent, str name) : SceneNode{ parent, name } {}
 
-		void create() override {
+		void onCreated() override {
 			m_node = createRenderizable<T>(name()+"_node");
 		}
 

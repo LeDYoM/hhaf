@@ -15,9 +15,9 @@ namespace zoper
 
 	HighScoreTextController::~HighScoreTextController() = default;
 
-	void HighScoreTextController::create()
+	void HighScoreTextController::onCreated()
 	{
-		BaseClass::create();
+		BaseClass::onCreated();
 
 		m_normalFont = resourceManager().getResource<TTFont>("menu.mainFont", "resources/oldct.ttf");
 		m_normalColor = colors::Blue;

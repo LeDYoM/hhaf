@@ -97,7 +97,7 @@ namespace lib::scene
     {
         m_groups.nodes.push_back(node);
         node->m_parent = this;
-        node->create();
+        node->onCreated();
     }
 
     void SceneNode::updateRemoves()

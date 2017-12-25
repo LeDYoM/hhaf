@@ -39,9 +39,9 @@ namespace zoper
 
 	GameScene::~GameScene() = default;
 
-	void GameScene::create()
+	void GameScene::onCreated()
 	{
-		BaseClass::create();
+		BaseClass::onCreated();
 		m_gameData = host().app<ZoperProgramController>().gameData;
 
 		m_mainBoardrg = createSceneNode("mainBoard");

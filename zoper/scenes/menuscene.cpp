@@ -18,9 +18,9 @@ namespace zoper
 
 	MenuScene::MenuScene() : BaseClass{ "MenuScene" } {}
 
-	void MenuScene::create()
+	void MenuScene::onCreated()
 	{
-        BaseClass::create();
+        BaseClass::onCreated();
 
 		mainMenuResources = msptr<MainMenuResources>();
 		mainMenuResources->loadResources(resourceManager());

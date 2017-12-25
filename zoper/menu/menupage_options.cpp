@@ -11,9 +11,9 @@ namespace zoper
 
 	MenuPageOptions::~MenuPageOptions() = default;
 
-	void MenuPageOptions::create()
+	void MenuPageOptions::onCreated()
 	{
-		BaseClass::create();
+		BaseClass::onCreated();
 		configure(MenuPageMode::Optioner, 
 		{ "Anti aliasing", "Resolution", "Fullscreen",  "VSync", "Redefine keyboard", "Cancel", "Accept" },
 		{ 

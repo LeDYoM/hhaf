@@ -23,7 +23,7 @@ namespace zoper
 
 		constexpr static f32 MenuPosX = 165.0f;
 
-		virtual void create() override;
+		virtual void onCreated() override;
 
 	private:
 		ireceiver m_receiver;

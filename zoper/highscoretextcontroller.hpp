@@ -27,7 +27,7 @@ namespace zoper
 		HighScoreTextController(scene::SceneNode *parent, str name);
 		virtual ~HighScoreTextController();
 
-		virtual void create() override;
+		virtual void onCreated() override;
 
 	private:
 		void standarizeText(const sptr<nodes::NodeText> &ntext);

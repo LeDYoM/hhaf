@@ -19,7 +19,7 @@ namespace zoper
 		MainMenu(scene::SceneNode *parent, str name);
 		virtual ~MainMenu();
 
-		virtual void create() override;
+		virtual void onCreated() override;
 
 		void showPage(const MenuPageType&newPage);
 		void hidePage(const MenuPageType&page);

@@ -17,7 +17,7 @@ namespace lib
 			eventConnector.unsubscribeAll();
 		}
 
-		void Scene::create()
+		void Scene::onCreated()
 		{
 			using namespace events;
 			clock.restart();

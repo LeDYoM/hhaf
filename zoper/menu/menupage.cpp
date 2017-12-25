@@ -22,9 +22,9 @@ namespace zoper
 	MenuPage::~MenuPage() = default;
 
 	constexpr size_type columnForOptions = 3;
-	void MenuPage::create()
+	void MenuPage::onCreated()
 	{
-        BaseClass::create();
+        BaseClass::onCreated();
 		m_normalFont = resourceManager().getResource<TTFont>("menu.mainFont", "resources/oldct.ttf");
 		m_normalColor = colors::Blue;
 		m_selectedColor = colors::Red;

@@ -27,10 +27,10 @@ namespace zoper
 
 	MainMenu::~MainMenu() = default;
 
-	void MainMenu::create()
+	void MainMenu::onCreated()
 	{
 		using namespace nodes;
-		SceneNode::create();
+		SceneNode::onCreated();
 
 		auto statesController = ensureComponentOfType<StatesController<MenuPageType>>();
 		statesController->UseDeferred();

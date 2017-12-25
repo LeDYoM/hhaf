@@ -54,7 +54,7 @@ namespace lib
 			sptr<T> createScene() {
 				sptr<Scene> scene(msptr<T>());
 				scene->m_sceneManager = this;
-				scene->create();
+				scene->onCreated();
 				return std::dynamic_pointer_cast<T>(scene);
 			}
 		private:

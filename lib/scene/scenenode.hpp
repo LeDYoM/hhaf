@@ -33,7 +33,7 @@ namespace lib::scene
         * Override it to add code on creation
         * @see configure
         */
-        virtual void create() {}
+        virtual void onCreated() {}
 
         /**
         * This method is called just before completing the initialization
