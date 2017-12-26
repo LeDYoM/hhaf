@@ -10,10 +10,10 @@
 
 namespace lib::scene
 {
-	class DiscreteTextComponent : public RenderizableSceneNodeComponent<nodes::NodeText>
+	class DiscreteTextComponent : public RenderizableSceneNodeComponent<nodes::NodeText, IComponent>
 	{
 	public:
-		using BaseClass = RenderizableSceneNodeComponent<nodes::NodeText>;
+		using BaseClass = RenderizableSceneNodeComponent<nodes::NodeText, IComponent>;
 		DiscreteTextComponent() {}
 		virtual ~DiscreteTextComponent() {}
 

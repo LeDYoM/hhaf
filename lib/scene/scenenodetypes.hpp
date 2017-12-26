@@ -28,17 +28,20 @@ namespace lib::scene
 		sptr<T> m_node;
 	};
 
-	template <typename RenderizableT>
-	class RenderizableSceneNodeComponent : public ParentRenderComponent<RenderizableT>
+	template <typename RenderizableT, typename BaseComponent>
+	class RenderizableSceneNodeComponent : public ParentRenderComponent<RenderizableT, BaseComponent>
 	{
 	public:
-		using BaseClass = ParentRenderComponent<RenderizableT>;
+		using BaseClass = ParentRenderComponent<RenderizableT,BaseComponent>;
         using ParentNodeClass = RenderizableSceneNode<RenderizableT>;
 		void onAttached() override {
 			if (auto parentNode = BaseClass::template attachedNodeAs<ParentNodeClass>()) {
 				m_renderizableNode = parentNode->node();
 			}
 			BaseClass::onAttached();
+		}
+		void update() override {
+			BaseClass::update();
 		}
 	private:
 		sptr<RenderizableT> getRenderNodeToAttach() override {

@@ -1,6 +1,8 @@
 #include "highscoretextcontroller.hpp"
 #include "highscoresdata.hpp"
 #include "loaders/highscoresresources.hpp"
+#include "gamedata.hpp"
+#include "zoperprogramcontroller.hpp"
 
 #include <lib/core/resourcemanager.hpp>
 #include <lib/core/host.hpp>
@@ -28,23 +30,34 @@ namespace zoper
 		HighScoresData hsData;
 		hsData.read();
 
-		Rectf32 textBox{ rectFromSize(scenePerspective().size()).setLeftTop({ 0,750 }).setSize({ 2000,4 * 150 }) };
+		// Request game score
+		Score gameScore = app<ZoperProgramController>().gameData->score;
+
+		Rectf32 textBox{ rectFromSize(scenePerspective().size()).setLeftTop({ 0,250 }).setSize({ 2000, 1500 }) };
 		position = textBox.leftTop();
 		sceneNodeSize = textBox.size();
 		tableSize.set({ 3, NumHighScore });
 
-		for (auto i{ 0UL }; i < NumHighScore; ++i) {
-			auto label(createNodeAt(vector2dst{ 0, i }, make_str("label", 0, i)));
-			standarizeText(label->node());
-			label->node()->text.set(make_str(i, "."));
+		size_type positionInTable;
+		const bool isInserting{ hsData.tryInsetHighScore(gameScore, positionInTable) };
 
-			label = createNodeAt(vector2dst{ 1, i }, make_str("label", 1, i));
-			standarizeText(label->node());
-			label->node()->text.set(make_str("100000"));
+		{
+			size_type counter{ 0 };
+			for (const auto &element : hsData.highScoresList()) {
+				auto label(createNodeAt(vector2dst{ 0, counter }, make_str("label", 0, counter)));
+				standarizeText(label->node());
+				label->node()->text.set(make_str(counter, "."));
 
-			label = createNodeAt(vector2dst{ 2, i }, make_str("label", 2, i));
-			standarizeText(label->node());
-			label->node()->text.set(make_str("AAA"));
+				label = createNodeAt(vector2dst{ 1, counter }, make_str("label", 1, counter));
+				standarizeText(label->node());
+				label->node()->text.set(make_str(element.score));
+
+				label = createNodeAt(vector2dst{ 2, counter }, make_str("label", 2, counter));
+				standarizeText(label->node());
+				label->node()->text.set(element.name);
+
+				++counter;
+			}
 		}
 	}
 

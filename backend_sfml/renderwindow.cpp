@@ -76,15 +76,13 @@ namespace lib::backend::sfmlb
 		if (k != input::Key::Unknown) {
 			if (e.type == sf::Event::KeyPressed) {
 				m_keysPressed.push(k);
-//						host().inputSystem().keyPressed(k);
 			}
 			else {
 				m_keysReleased.push(k);
-//						host().inputSystem().keyReleased(k);
 			}
 		}
 		else {
-			log_debug_error("Unknow keycode");
+			log_debug_error("Unknown key code");
 		}
 	}
 

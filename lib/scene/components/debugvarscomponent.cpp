@@ -13,11 +13,12 @@ namespace lib
 
 		DebugVarsComponent::DebugVarsComponent()
 		{
-			scene::InputComponent::setOnKeyPressedHandler([this](const auto&key) {
+/*			scene::InputComponent::setOnKeyPressedHandler([this](const auto&key) {
 				if (key == input::Key::Num2) {
 					m_displayVarsNextFrame = true;
 				}
 			});
+			*/
 		}
 
 		void DebugVarsComponent::update()

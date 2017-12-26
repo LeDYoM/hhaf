@@ -142,7 +142,7 @@ namespace zoper
 
 		registerEvents();
 		auto inputComponent(ensureComponentOfType<scene::InputComponent>());
-		inputComponent->setOnKeyPressedHandler([this](const lib::input::Key&key) {
+		inputComponent->KeyPressed.connect([this](const lib::input::Key&key) {
 			log_debug_info("Key pressed in GameScene");
 			const auto &keyMapping = host().app<ZoperProgramController>().keyMapping;
 			switch (state())
@@ -404,7 +404,7 @@ namespace zoper
 		const vector2du32 loopPosition{ p_player->boardPosition() };
 		const board::BoardTileData tokenType{ p_player->get() };
 		u32 inARow{ 0 };
-		for_each_token_in_line(loopPosition, loopDirection, [this, tokenType, &inARow](const vector2du32 &loopPosition, const Direction &direction)
+		for_each_token_in_line(loopPosition, loopDirection, [this, tokenType, &inARow](const vector2du32 &loopPosition, const Direction &)
 		{
 			bool result{ true };
 			bool found{ false };

@@ -9,7 +9,9 @@ namespace zoper
 
 	void MenuPageInputComponent::onAttached()
 	{
-		InputComponent::KeyPressed.connect([this](const input::Key&key) {
+		BaseClass::onAttached();
+
+		m_receiver.connect(InputComponent::KeyPressed, [this](const input::Key&key) {
 			switch (key) {
 			case input::Key::Left:
 				Left();

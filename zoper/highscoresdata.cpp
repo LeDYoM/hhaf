@@ -7,6 +7,26 @@ namespace zoper
 	using namespace lib;
 	constexpr char hsfile[] = "hscores.txt";
 
+	bool HighScoresData::positionForScore(const Score score, size_type & positionInTable)
+	{
+		for (u32 i{ 0U }; i < NumHighScore; ++i) {
+			if (score > m_highScoreList[i].score) {
+				positionInTable = i;
+				return true;
+			}
+		}
+		return false;
+	}
+
+	bool HighScoresData::tryInsetHighScore(const Score score, size_type &positionInTable)
+	{
+		if (positionForScore(score, positionInTable)) {
+			m_highScoreList.insert(positionInTable, { "",score });
+			return true;
+		}
+		return false;
+	}
+
 	void HighScoresData::read()
 	{
 		log_debug_info("Reading high scores files...");
@@ -21,14 +41,14 @@ namespace zoper
 		sHScoreList.serialize(hsfile, m_highScoreList);
 	}
 
-	inline lib::SerializationStreamIn& operator>>(lib::SerializationStreamIn&ssi, HighScore &data)
+	inline SerializationStreamIn& operator>>(SerializationStreamIn&ssi, HighScore &data)
 	{
 		ssi >> data.name;
 		ssi >> data.score;
 		return ssi;
 	}
 
-	inline lib::SerializationStreamOut& operator<<(lib::SerializationStreamOut&sso, const HighScore&data)
+	inline SerializationStreamOut& operator<<(SerializationStreamOut&sso, const HighScore&data)
 	{
 		sso << data.name;
 		sso << data.score;

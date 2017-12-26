@@ -18,11 +18,6 @@ namespace lib
 			InputComponent();
 			~InputComponent();
 
-			using KeyHandler_t = function<void(const input::Key&)>;
-
-			void setOnKeyPressedHandler(KeyHandler_t keyHandlerPressed) noexcept;
-			void setOnKeyReleasedHandler(KeyHandler_t keyHandlerReleased) noexcept;
-
 			virtual void update() override;
 			
 			bool isPressed(const input::Key key);
@@ -30,13 +25,16 @@ namespace lib
 			emitter<const input::Key&> KeyPressed;
 			emitter<const input::Key&> KeyReleased;
 
+			static inline bool isAscii(const input::Key key) noexcept {
+				return key >= input::Key::A && key <= input::Key::Z;
+			}
+
+			char toAscii(const input::Key key) noexcept;
+
+			bool isShiftPressed() const;
 			virtual void keyPressed(const input::Key&) {}
 			virtual void keyReleased(const input::Key&) {}
-
 		private:
-			KeyHandler_t m_onKeyPressed{ nullptr };
-			function<void(const input::Key&)> m_onKeyReleased{ nullptr };
-
 			class InputComponentPrivate;
 			InputComponentPrivate *m_private;
 		};

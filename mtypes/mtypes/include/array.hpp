@@ -16,11 +16,22 @@ namespace lib
 		using reference = T&;
 		using const_reference = const T&;
 		using size_t = unsigned int;
+		using value_type = T;
+		using const_value_type = const T;
 
 		array() = default;
-		constexpr array(std::initializer_list<T> iList) noexcept {
+		constexpr array(std::initializer_list<value_type> iList) noexcept {
 			for (size_t i{ 0 }; i < iList.size() && i < array_size;++i) {
 				m_buffer[i] = std::move(*(iList.begin()+i));
+			}
+		}
+
+		constexpr void insert(const size_type index, value_type element) noexcept {
+			if (index < array_size) {
+				for (size_type i{ array_size - 2 }; i > index; --i) {
+					m_buffer[i + 1] = std::move(m_buffer[i]);
+				}
+				m_buffer[index] = std::move(element);
 			}
 		}
 
@@ -32,10 +43,14 @@ namespace lib
 		constexpr const_iterator begin() const noexcept { return m_buffer; }
 		constexpr iterator end() noexcept { return m_buffer + array_size; }
 		constexpr const_iterator end() const noexcept { return m_buffer + array_size; }
-		constexpr const_iterator cbegin() const noexcept { return m_buffer; }
-		constexpr const_iterator cend() const noexcept { return m_buffer + array_size; }
-		constexpr T& front() noexcept { return m_buffer[0]; }
-		constexpr T& back() noexcept { return m_buffer[array_size > 0 ? (array_size - 1) : 0]; }
+		constexpr const_iterator cbegin() const noexcept { return begin(); }
+		constexpr const_iterator cend() const noexcept { return end(); }
+		constexpr reference front() noexcept { return m_buffer[0]; }
+		constexpr reference back() noexcept { return m_buffer[array_size > 0 ? (array_size - 1) : 0]; }
+		constexpr const_reference front() const noexcept { return m_buffer[0]; }
+		constexpr const_reference back() const noexcept { return m_buffer[array_size > 0 ? (array_size - 1) : 0]; }
+		constexpr const_reference cfront() const noexcept { return front(); }
+		constexpr const_reference cback() const noexcept { return back(); }
 
 	private:
 		T m_buffer[array_size];

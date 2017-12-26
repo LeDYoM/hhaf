@@ -20,7 +20,6 @@ namespace zoper
 	{
 		BaseClass::onCreated();
 
-		BaseClass::onCreated();
 		m_normalFont = resourceManager().getResource<TTFont>("menu.mainFont", "resources/oldct.ttf");
 		m_normalColor = colors::Blue;
 		m_selectedColor = colors::Red;
@@ -34,7 +33,7 @@ namespace zoper
 		m_background->texture = m_resources->background;
 		m_background->color = colors::White;
 
-//		createSceneNode<HighScoreTextController>(m_resources);
+		createSceneNode<HighScoreTextController>("HishScoreTextController");
 	}
 
 	void HighScoresScene::updateScene()

@@ -22,7 +22,7 @@ namespace lib
 			/**
 			* Interface to be implemented to update the component
 			*/
-			virtual void update() = 0;
+			virtual void update() {}
 
 			/**
 			* Destructor
