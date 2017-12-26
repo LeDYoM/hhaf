@@ -73,7 +73,7 @@ namespace zoper
 			if (options.size() > counter) {
 				auto discreteTextLabel(createNodeAt(vector2dst{ columnForOptions, counter }, make_str("option",counter)));
 				standarizeText(discreteTextLabel->node());
-				auto discreteTextComponent = discreteTextLabel->ensureComponentOfType<DiscreteTextComponent>();
+				auto discreteTextComponent(discreteTextLabel->ensureComponentOfType<DiscreteTextComponent>());
 				discreteTextComponent->data.set(options[counter]);
 			}
 

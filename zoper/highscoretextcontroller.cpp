@@ -1,9 +1,11 @@
 #include "highscoretextcontroller.hpp"
 #include "highscoresdata.hpp"
+#include "highscorevalidator.hpp"
 #include "loaders/highscoresresources.hpp"
 #include "gamedata.hpp"
 #include "zoperprogramcontroller.hpp"
 
+#include <lib/scene/components/texteditorcomponent.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/core/host.hpp>
 
@@ -40,7 +42,6 @@ namespace zoper
 
 		size_type positionInTable;
 		const bool isInserting{ hsData.tryInsetHighScore(gameScore, positionInTable) };
-
 		{
 			size_type counter{ 0 };
 			for (const auto &element : hsData.highScoresList()) {
@@ -54,8 +55,13 @@ namespace zoper
 
 				label = createNodeAt(vector2dst{ 2, counter }, make_str("label", 2, counter));
 				standarizeText(label->node());
-				label->node()->text.set(element.name);
 
+				if (isInserting && positionInTable == counter) {
+					auto editor(label->ensureComponentOfType<TextEditorComponent>());
+					editor->setTextValidator(msptr<HighScoreValidator>());
+				} else {
+					label->node()->text.set(element.name);
+				}
 				++counter;
 			}
 		}

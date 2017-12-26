@@ -24,6 +24,7 @@ namespace zoper
 	{
 	public:
 		using HighScoresList = array<HighScore, NumHighScore>;
+		HighScoresData();
 		bool positionForScore(const Score score, size_type &positionInTable);
 		bool tryInsetHighScore(const Score score, size_type &positionInTable);
 		void read();

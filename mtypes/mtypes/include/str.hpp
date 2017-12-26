@@ -56,6 +56,10 @@ namespace lib
 
 		vector<str> split(const char_type separator) const;
 
+		constexpr void pop_char() noexcept{
+			m_data.pop_back();
+		}
+
 		constexpr str &append() { return *this; }
 
 		str & append(const u32 n) {

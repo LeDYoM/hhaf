@@ -6,6 +6,7 @@
 #include <lib/core/host.hpp>
 #include "../highscoresdata.hpp"
 #include "../highscoretextcontroller.hpp"
+#include "../highscoresscenestates.hpp"
 
 namespace zoper
 {
@@ -13,8 +14,7 @@ namespace zoper
 	using namespace lib::scene;
 	using namespace lib::scene::nodes;
 
-	HighScoresScene::HighScoresScene()
-		: BaseClass{ "HighScoresScene" } {}
+	HighScoresScene::HighScoresScene() : BaseClass{ "HighScoresScene" } {}
 
 	void HighScoresScene::onCreated()
 	{
@@ -33,7 +33,10 @@ namespace zoper
 		m_background->texture = m_resources->background;
 		m_background->color = colors::White;
 
+		auto statesController = ensureComponentOfType<StatesController<HighScoresSceneStates>>();
+		statesController->UseDeferred();
 		createSceneNode<HighScoreTextController>("HishScoreTextController");
+		statesController->start(HighScoresSceneStates::Show);
 	}
 
 	void HighScoresScene::updateScene()

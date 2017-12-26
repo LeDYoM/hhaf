@@ -7,6 +7,16 @@ namespace zoper
 	using namespace lib;
 	constexpr char hsfile[] = "hscores.txt";
 
+	HighScoresData::HighScoresData()
+	{
+		size_type counter{ 1 };
+		for (auto &element : m_highScoreList) {
+			element.name = "AAA";
+			element.score = counter * 100;
+			++counter;
+		}
+	}
+
 	bool HighScoresData::positionForScore(const Score score, size_type & positionInTable)
 	{
 		for (u32 i{ 0U }; i < NumHighScore; ++i) {
