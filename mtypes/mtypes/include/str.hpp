@@ -45,7 +45,8 @@ namespace lib
 		str(const char_type *n) noexcept;
 		str(const f32 n);
 		str(const f64 n);
-		str(const long unsigned n);
+		str(const char_type c) : str{ &c,1 } {}
+		str(const unsigned long n);
 
 		inline str&operator=(const str&rhs) noexcept {
 			m_data = rhs.m_data;
