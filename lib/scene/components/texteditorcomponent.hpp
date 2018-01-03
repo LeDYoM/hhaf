@@ -49,7 +49,7 @@ namespace lib::scene
 	private:
 		ireceiver m_receiver;
 		sptr<TextValidator> m_textValidator;
-		str m_text;
+		str m_originalText;
 	};
 }
 

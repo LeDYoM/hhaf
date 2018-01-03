@@ -7,6 +7,9 @@ namespace lib::scene
 	void TextEditorComponent::onAttached()
 	{
 		BaseClass::onAttached();
+		
+		m_originalText = node()->text();
+		node()->text.set("");
 
 		m_receiver.connect(InputComponent::KeyPressed, [this](const Key&key) {
 			if (isAscii(key)) {
@@ -16,25 +19,26 @@ namespace lib::scene
 					success = m_textValidator->canAddChar(c_ascii);
 				}
 				if (success) {
-					m_text += make_str(c_ascii);
+					node()->text.set(node()->text() + make_str(c_ascii));
 				}
-			} else if (key == Key::BackSpace && !m_text.empty()) {
-				m_text.pop_char();
+			} else if (key == Key::BackSpace && !node()->text().empty()) {
+				node()->text.set(node()->text().substr(0, node()->text().size() - 1));
 			} else if (key == Key::Return) {
 				bool success{ true };
 				if (m_textValidator) {
-					success = m_textValidator->isValidText(m_text);
+					success = m_textValidator->isValidText(node()->text());
 				}
 				if (success) {
-					accepted(m_text);
+					accepted(node()->text());
 				}
 			}
 			else if (key == Key::Escape) {
+				node()->text.set(m_originalText);
 				rejected();
 			}
 		});
-		//		InputComponent::KeyReleased.connect(keyReleased);
 	}
+
 	void TextEditorComponent::update()
 	{
 		BaseClass::update();
