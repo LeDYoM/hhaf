@@ -72,13 +72,16 @@ namespace lib::backend::sfmlb
 		__ASSERT(e.type == sf::Event::KeyPressed || e.type == sf::Event::KeyReleased);
 
 		const auto k(doCast(e.key.code));
-		log_debug_info("Backend key event. Type: ", (int)(e.type), " Key: ", (int)(e.key.code));
 		if (k != input::Key::Unknown) {
 			if (e.type == sf::Event::KeyPressed) {
+				log_debug_info("Key pressed: ", static_cast<int>(e.key.code));
 				m_keysPressed.push(k);
 			}
-			else {
+			else if (e.type == sf::Event::KeyReleased) {
+				log_debug_info("Key Released: ", static_cast<int>(e.key.code));
 				m_keysReleased.push(k);
+			} else {
+				log_debug_error("Unknown key event with key ", static_cast<int>(e.key.code));
 			}
 		}
 		else {
