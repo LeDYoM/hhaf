@@ -33,6 +33,20 @@ namespace lib
 		return result;
 	}
 
+	str str::substr(const size_type start, const size_type len) const
+	{
+		if (start >= size())
+			return "";
+
+		str temp{ make_str(this[start]) };
+		size_type count{ 1 };
+		while (count < len && count + len <= size()) {
+			temp += make_str(this[start + count]);
+			++count;
+		}
+		return temp;
+	}
+
 	void str::convert(u32 & n) const
 	{
 		std::istringstream tmpstream(c_str());
