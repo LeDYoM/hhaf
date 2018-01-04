@@ -40,9 +40,6 @@ namespace lib::scene
 			}
 			BaseClass::onAttached();
 		}
-		void update() override {
-			BaseClass::update();
-		}
 	private:
 		sptr<RenderizableT> getRenderNodeToAttach() override {
 			return m_renderizableNode;

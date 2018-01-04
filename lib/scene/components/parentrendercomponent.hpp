@@ -24,9 +24,6 @@ namespace lib::scene
 		sptr<RenderizableT> node() noexcept { return m_node; }
 		const sptr<RenderizableT> node() const noexcept { return m_node; }
 
-		void update() override {
-			BaseClass::update();
-		}
 	private:
 		virtual sptr<RenderizableT> getRenderNodeToAttach() = 0;
 		sptr<RenderizableT> m_node;

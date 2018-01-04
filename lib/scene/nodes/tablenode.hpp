@@ -40,7 +40,6 @@ namespace lib::scene::nodes
 			sptr<T> result(createSceneNode<T>(std::forward<Args>(args)...));
 			assert_release(index.x < tableSize().x && index.y < tableSize().y,"Out of bounds");
 			m_nodes[index.x][index.y] = result;
-			addSceneNode(result);
 			return result;
 		}
 

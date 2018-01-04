@@ -39,7 +39,6 @@ namespace lib::scene
 		using BaseClass = BaseClass_;
 
 		virtual void onAttached() override;
-		virtual void update() override final;
 
 		emitter<const str&> accepted;
 		emitter<> rejected;

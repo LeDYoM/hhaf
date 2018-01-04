@@ -38,9 +38,4 @@ namespace lib::scene
 			}
 		});
 	}
-
-	void TextEditorComponent::update()
-	{
-		BaseClass::update();
-	}
 }
