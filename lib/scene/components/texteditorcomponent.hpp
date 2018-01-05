@@ -17,18 +17,6 @@ namespace lib::scene
 		virtual bool canAddChar(const char) = 0;
 		virtual bool isValidText(const str&) = 0;
 	};
-
-	class DefaultTextValidator : public TextValidator
-	{
-	public:
-		virtual bool canAddChar(const char) override {
-			return true;
-		}
-
-		virtual bool isValidText(const str&) override {
-			return true;
-		}
-	};
 	namespace
 	{
 		using BaseClass_ = RenderizableSceneNodeComponent<nodes::NodeText, InputComponent>;
