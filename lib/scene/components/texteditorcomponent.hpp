@@ -14,7 +14,7 @@ namespace lib::scene
 	class TextValidator
 	{
 	public:
-		virtual bool canAddChar(const char) = 0;
+		virtual bool canAddChar(const str&, const char) = 0;
 		virtual bool isValidText(const str&) = 0;
 	};
 	namespace

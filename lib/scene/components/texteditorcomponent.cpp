@@ -16,7 +16,7 @@ namespace lib::scene
 				const char c_ascii{ toAscii(key) };
 				bool success{ true };
 				if (m_textValidator) {
-					success = m_textValidator->canAddChar(c_ascii);
+					success = m_textValidator->canAddChar(node()->text(), c_ascii);
 				}
 				if (success) {
 					node()->text.set(node()->text() + make_str(c_ascii));

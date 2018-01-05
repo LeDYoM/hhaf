@@ -12,7 +12,7 @@ namespace zoper
 	class HighScoreValidator : public lib::scene::TextValidator
 	{
 	public:
-		bool canAddChar(const char) override {
+		bool canAddChar(const str&,const char) override {
 			return true;
 		}
 
