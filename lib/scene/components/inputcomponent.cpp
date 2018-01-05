@@ -26,13 +26,13 @@ namespace lib::scene
 	void InputComponent::update()
 	{
 		if (!host().inputSystem().pressedKeys().empty()) {
-			for (const auto pressedKey : host().inputSystem().pressedKeys()) {
+			for (const auto &pressedKey : host().inputSystem().pressedKeys()) {
 				KeyPressed(pressedKey);
 			}
 		}
 
 		if (!host().inputSystem().releasedKeys().empty()) {
-			for (const auto releasedKey : host().inputSystem().releasedKeys()) {
+			for (const auto &releasedKey : host().inputSystem().releasedKeys()) {
 				KeyReleased(releasedKey);
 			}
 		}
