@@ -28,8 +28,8 @@ namespace lib::scene
 
 		virtual void onAttached() override;
 
-		emitter<const str&> accepted;
-		emitter<> rejected;
+		emitter<const str&> Accepted;
+		emitter<> Rejected;
 		inline void setTextValidator(sptr<TextValidator> nTextValidator) {
 			m_textValidator = std::move(nTextValidator);
 		}

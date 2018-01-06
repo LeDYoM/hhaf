@@ -59,6 +59,11 @@ namespace zoper
 				if (isInserting && positionInTable == counter) {
 					auto editor(label->ensureComponentOfType<TextEditorComponent>());
 					editor->setTextValidator(msptr<HighScoreValidator>());
+					editor->Accepted.connect([this,&element](const str&entry)) {
+						element.name = entry;
+						saveHighScores();
+						Finished();
+					}
 				} else {
 					label->node()->text.set(element.name);
 				}
@@ -73,4 +78,10 @@ namespace zoper
 		ntext->font = m_normalFont;
 		ntext->characterSize = m_normalCharacterSize;
 	}
+
+	void HighScoreTextController::saveHighScores()
+	{
+
+	}
+
 }

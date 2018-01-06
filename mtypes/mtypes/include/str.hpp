@@ -48,12 +48,11 @@ namespace lib
 		str(const char_type c) : str{ &c,1 } {}
 		str(const unsigned long n);
 
-		inline str&operator=(const str&rhs) noexcept {
+		constexpr str&operator=(str&&) noexcept = default;
+		constexpr str&operator=(const str&rhs) noexcept {
 			m_data = rhs.m_data;
 			return *this;
 		}
-
-		constexpr str&operator=(str&&) noexcept = default;
 
 		vector<str> split(const char_type separator) const;
 

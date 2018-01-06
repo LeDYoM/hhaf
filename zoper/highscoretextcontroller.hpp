@@ -29,9 +29,11 @@ namespace zoper
 
 		virtual void onCreated() override;
 
+		emitter<> Finished;
+
 	private:
 		void standarizeText(const sptr<nodes::NodeText> &ntext);
-
+		void saveHighScores();
 		sptr<TTFont> m_normalFont;
 		Color m_normalColor;
 		Color m_selectedColor;

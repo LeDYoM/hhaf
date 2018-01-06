@@ -18,7 +18,6 @@ namespace zoper
 		virtual ~HighScoresScene() = default;
 
 		void onCreated() override;
-
 		void updateScene() override;
 
 	private:
