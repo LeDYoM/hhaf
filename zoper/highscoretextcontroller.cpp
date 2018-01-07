@@ -29,8 +29,7 @@ namespace zoper
 		m_normalCharacterSize = 72;
 
 		// Request the high scores.
-		HighScoresData hsData;
-		hsData.read();
+		m_hsData.read();
 
 		// Request game score
 		Score gameScore = app<ZoperProgramController>().gameData->score;
@@ -41,10 +40,10 @@ namespace zoper
 		tableSize.set({ 3, NumHighScore });
 
 		size_type positionInTable;
-		const bool isInserting{ hsData.tryInsetHighScore(gameScore, positionInTable) };
+		const bool isInserting{ m_hsData.tryInsertHighScore(gameScore, positionInTable) };
 		{
 			size_type counter{ 0 };
-			for (const auto &element : hsData.highScoresList()) {
+			for (const auto &element : m_hsData.highScoresList()) {
 				auto label(createNodeAt(vector2dst{ 0, counter }, make_str("label", 0, counter)));
 				standarizeText(label->node());
 				label->node()->text.set(make_str(counter, "."));
@@ -59,11 +58,11 @@ namespace zoper
 				if (isInserting && positionInTable == counter) {
 					auto editor(label->ensureComponentOfType<TextEditorComponent>());
 					editor->setTextValidator(msptr<HighScoreValidator>());
-					editor->Accepted.connect([this,&element](const str&entry)) {
+					editor->Accepted.connect([this,element](const str&entry) mutable {
 						element.name = entry;
 						saveHighScores();
 						Finished();
-					}
+					});
 				} else {
 					label->node()->text.set(element.name);
 				}

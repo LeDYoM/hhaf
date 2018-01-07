@@ -28,7 +28,7 @@ namespace zoper
 		return false;
 	}
 
-	bool HighScoresData::tryInsetHighScore(const Score score, size_type &positionInTable)
+	bool HighScoresData::tryInsertHighScore(const Score score, size_type &positionInTable)
 	{
 		if (positionForScore(score, positionInTable)) {
 			m_highScoreList.insert(positionInTable, { "",score });

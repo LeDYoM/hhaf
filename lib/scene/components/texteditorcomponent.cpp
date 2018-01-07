@@ -29,12 +29,12 @@ namespace lib::scene
 					success = m_textValidator->isValidText(node()->text());
 				}
 				if (success) {
-					accepted(node()->text());
+					Accepted(node()->text());
 				}
 			}
 			else if (key == Key::Escape) {
 				node()->text.set(m_originalText);
-				rejected();
+				Rejected();
 			}
 		});
 	}

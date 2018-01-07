@@ -34,6 +34,7 @@ namespace zoper
 	private:
 		void standarizeText(const sptr<nodes::NodeText> &ntext);
 		void saveHighScores();
+		HighScoresData m_hsData;
 		sptr<TTFont> m_normalFont;
 		Color m_normalColor;
 		Color m_selectedColor;
