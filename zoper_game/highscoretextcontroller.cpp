@@ -59,7 +59,7 @@ namespace zoper
 					auto editor(label->ensureComponentOfType<TextEditorComponent>());
 					editor->setTextValidator(msptr<HighScoreValidator>());
 					editor->Accepted.connect([this,element](const str&entry) mutable {
-						element.name = entry;
+//						element.name = entry;
 						saveHighScores();
 						Finished();
 					});

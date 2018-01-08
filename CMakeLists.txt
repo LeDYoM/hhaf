@@ -1,21 +1,15 @@
-cmake_minimum_required (VERSION 3.8)
+cmake_minimum_required (VERSION 3.10)
 
-# Maps to a solution file (Tutorial.sln). The solution will 
-# have all targets (exe, lib, dll) as projects (.vcproj)
-project (Zoper)
+project (Zoper CXX)
 
 # Turn on the ability to create folders to organize projects (.vcproj)
 # It creates "CMakePredefinedTargets" folder by default and adds CMake
 # defined projects like INSTALL.vcproj and ZERO_CHECK.vcproj
-set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+#set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
-
-#if(MSVC)
-#	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17")
-#endif(MSVC)
 
 # Set compiler flags and options. 
 # Here it is setting the Visual Studio warning level to 4
@@ -27,7 +21,6 @@ if(MSVC)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
   endif()
 elseif(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
-  # Update if necessary
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-long-long -pedantic")
 endif()
 
@@ -43,4 +36,4 @@ add_subdirectory(mtypes)
 add_subdirectory(loader)
 add_subdirectory(lib)
 add_subdirectory(backend_sfml)
-add_subdirectory(zoper)
+add_subdirectory(zoper_game)

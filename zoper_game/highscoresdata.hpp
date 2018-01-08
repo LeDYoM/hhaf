@@ -31,7 +31,6 @@ namespace zoper
 		void read();
 		void store();
 		const HighScore &operator[](const size_type index) const { return m_highScoreList[index]; }
-		HighScore &operator[](const size_type index) { return m_highScoreList[index]; }
 		const HighScoresList &highScoresList() const noexcept { return m_highScoreList; }
 	private:
 		HighScoresList m_highScoreList;

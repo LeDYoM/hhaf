@@ -1,9 +1,9 @@
-project(zoper)
+project(zoper_game)
 
 file (GLOB_RECURSE ZOPER_HEADERS "*.hpp")
 file (GLOB_RECURSE ZOPER_SOURCES "*.cpp")
 
-set (CURRENT_TARGET zoper)
+set (CURRENT_TARGET zoper_game)
 
 add_executable (${CURRENT_TARGET} ${ZOPER_SOURCES} ${ZOPER_HEADERS})
 
