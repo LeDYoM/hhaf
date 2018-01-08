@@ -29,14 +29,14 @@ namespace lib
 		return ssi;
 	}
 
-	template <typename T, u32 size>
+	template <typename T, size_type size>
 	SerializationStreamIn& operator>>(SerializationStreamIn&ssi, array<T,size> &data)
 	{
 		for (T& element : data) ssi >> element;
 		return ssi;
 	}
 
-	template <typename T, u32 size>
+	template <typename T, size_type size>
 	SerializationStreamIn& operator>>(SerializationStreamIn&ssi, T data[size])
 	{
 		for (T& element : data) ssi >> element;
@@ -64,14 +64,14 @@ namespace lib
 		return sso;
 	}
 
-	template <typename T, u32 size>
+	template <typename T, size_type size>
 	SerializationStreamOut& operator<<(SerializationStreamOut&sso, const array<T,size> &data)
 	{
 		for (const auto& element : data) sso << element;
 		return sso;
 	}
 
-	template <typename T, u32 size>
+	template <typename T, size_type size>
 	SerializationStreamOut& operator<<(SerializationStreamOut&sso, const T data[size])
 	{
 		for (const auto& element : data) sso << element;

@@ -32,13 +32,13 @@ namespace lib
 	public:
 		constexpr str() noexcept : m_data() {}
 
-		template<size_t N>
+		template<size_type N>
 		constexpr str(const char_type(&a)[N]) noexcept : m_data( a,N ) {}
 
 		constexpr str(str&&) noexcept = default;
 
 		constexpr str(const str & n) noexcept : m_data( n.m_data ) {}
-		constexpr str(const char_type *n, const size_t N) noexcept : m_data(n, N+1) {}
+		constexpr str(const char_type *n, const size_type N) noexcept : m_data(n, N+1) {}
 
 		str(const u32 n);
 		str(const s32 n);
@@ -110,7 +110,7 @@ namespace lib
 			return append(std::forward<T>(source));
 		}
 
-		constexpr size_t size() const noexcept{ return m_data.empty()?0:m_data.size()-1; }
+		constexpr size_type size() const noexcept{ return m_data.empty()?0:m_data.size()-1; }
 		constexpr reference operator[](const size_type index) noexcept { return m_data[index]; }
 		constexpr const_reference operator[](const size_type index) const noexcept { return m_data[index]; }
 		constexpr iterator begin() noexcept { return m_data.begin(); }
@@ -158,7 +158,7 @@ namespace lib
 	}
 
 	inline bool operator<(const str& lhs, const str&rhs) noexcept {
-		size_t i{ 0 };
+		size_type i{ 0 };
 		while (i < lhs.size() && i < rhs.size()) {
 			if (lhs[i] < rhs[i]) {
 				return true;

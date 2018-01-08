@@ -27,6 +27,7 @@ namespace zoper
 		HighScoresData();
 		bool positionForScore(const Score score, size_type &positionInTable);
 		bool tryInsertHighScore(const Score score, size_type &positionInTable);
+		void setHighScoreName(const size_type positionInTable, const str&nName);
 		void read();
 		void store();
 		const HighScore &operator[](const size_type index) const { return m_highScoreList[index]; }

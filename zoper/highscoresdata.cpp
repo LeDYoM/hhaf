@@ -28,6 +28,12 @@ namespace zoper
 		return false;
 	}
 
+    void HighScoresData::setHighScoreName(const size_type positionInTable, const str&nName)
+    {
+        assert_release(positionInTable < m_highScoreList.size(),"Invalid index");
+        m_highScoreList[positionInTable].name = nName;
+    }
+
 	bool HighScoresData::tryInsertHighScore(const Score score, size_type &positionInTable)
 	{
 		if (positionForScore(score, positionInTable)) {

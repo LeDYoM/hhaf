@@ -8,14 +8,14 @@
 
 namespace lib
 {
-	template <class T, unsigned int array_size>
+	template <class T, size_type array_size>
 	class  array {
 	public:
 		using iterator = T*;
 		using const_iterator = const T*;
 		using reference = T&;
 		using const_reference = const T&;
-		using size_t = unsigned int;
+		using size_t = size_type;
 		using value_type = T;
 		using const_value_type = const T;
 
@@ -37,8 +37,8 @@ namespace lib
 
 		constexpr reference operator[](const size_t index) noexcept { return m_buffer[index]; }
 		constexpr const_reference operator[](const size_t index) const noexcept { return m_buffer[index]; }
-		constexpr size_t size() const noexcept { return size; }
-		constexpr bool empty() const noexcept { return size == 0; }
+		constexpr size_t size() const noexcept { return array_size; }
+		constexpr bool empty() const noexcept { return array_size == 0; }
 		constexpr iterator begin() noexcept { return m_buffer; }
 		constexpr const_iterator begin() const noexcept { return m_buffer; }
 		constexpr iterator end() noexcept { return m_buffer + array_size; }
