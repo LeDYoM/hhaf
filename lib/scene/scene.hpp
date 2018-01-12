@@ -7,6 +7,7 @@
 #include "scenenode.hpp"
 
 #include <mtypes/include/types.hpp>
+#include <lib/scene/components/statescontroller.hpp>
 #include <lib/core/timer.hpp>
 #include <lib/core/events/event.hpp>
 #include <lib/core/events/eventreceiver.hpp>
@@ -19,7 +20,6 @@ namespace lib
 	}
 	namespace scene
 	{
-		class SceneNode;
 		class SceneManager;
 
 		class Scene : public scene::SceneNode
@@ -39,16 +39,15 @@ namespace lib
 
 		protected:
 
-			inline u32 state() const { return _state; }
-			inline void setState(u32 ns) { _state = ns; }
+            u32 state();
+            void setState(const size_type ns);
 
 			Timer clock;
 			EventReceiver eventConnector;
 
-			u32 _state;
-
 		private:
-			SceneManager *m_sceneManager{ nullptr };
+            sptr<StatesController<size_type>> m_sceneStates;
+            SceneManager *m_sceneManager{ nullptr };
 			friend class core::Host;
 			friend class SceneManager;
 		};

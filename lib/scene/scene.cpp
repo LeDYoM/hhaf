@@ -20,7 +20,20 @@ namespace lib
 		void Scene::onCreated()
 		{
 			using namespace events;
-			clock.restart();
-		}
+            clock.restart();
+
+            m_sceneStates = ensureComponentOfType<StatesController<size_type>>();
+            m_sceneStates->UseDeferred();
+        }
+
+        u32 Scene::state()
+        {
+            return m_sceneStates->currentState();
+        }
+
+        void Scene::setState(const size_type ns)
+        {
+            m_sceneStates->setState(ns);
+        }
 	}
 }

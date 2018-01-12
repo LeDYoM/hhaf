@@ -149,7 +149,7 @@ namespace zoper
 			{
 			case Playing:
 			{
-				auto dir = keyMapping->getDirectionFromKey(key);
+                auto dir(keyMapping->getDirectionFromKey(key));
 				if (dir.isValid()) {
 					p_player->movePlayer(dir, [this](const vector2du32&p) { return pointInCenter(p); }, p_boardModel);
 				}
