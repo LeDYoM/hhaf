@@ -1,9 +1,9 @@
 #include "highscoretextcontroller.hpp"
 #include "highscoresdata.hpp"
 #include "highscorevalidator.hpp"
-#include "loaders/highscoresresources.hpp"
-#include "gamedata.hpp"
-#include "zoperprogramcontroller.hpp"
+#include "../loaders/highscoresresources.hpp"
+#include "../gamedata.hpp"
+#include "../zoperprogramcontroller.hpp"
 
 #include <lib/scene/components/texteditorcomponent.hpp>
 #include <lib/core/resourcemanager.hpp>
@@ -58,8 +58,8 @@ namespace zoper
 				if (isInserting && positionInTable == counter) {
 					auto editor(label->ensureComponentOfType<TextEditorComponent>());
 					editor->setTextValidator(msptr<HighScoreValidator>());
-					editor->Accepted.connect([this,element](const str&entry) mutable {
-//						element.name = entry;
+                    editor->Accepted.connect([this,positionInTable,element](const str&entry) mutable {
+                        m_hsData.setHighScoreName(positionInTable, entry);
 						saveHighScores();
 						Finished();
 					});
@@ -80,7 +80,7 @@ namespace zoper
 
 	void HighScoreTextController::saveHighScores()
 	{
-
+        log_debug_error("Saving highscores is still not implemented");
 	}
 
 }

@@ -4,9 +4,9 @@
 #include <lib/scene/renderizables/nodetext.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/core/host.hpp>
-#include "../highscoresdata.hpp"
-#include "../highscoretextcontroller.hpp"
-#include "../highscoresscenestates.hpp"
+#include "../highscores/highscoresdata.hpp"
+#include "../highscores/highscoretextcontroller.hpp"
+#include "../highscores/highscoresscenestates.hpp"
 
 namespace zoper
 {
@@ -19,6 +19,9 @@ namespace zoper
 	void HighScoresScene::onCreated()
 	{
 		BaseClass::onCreated();
+
+        auto statesController( ensureComponentOfType<StatesController<HighScoresSceneStates>>());
+        statesController->UseDeferred();
 
 		m_normalFont = resourceManager().getResource<TTFont>("menu.mainFont", "resources/oldct.ttf");
 		m_normalColor = colors::Blue;
@@ -33,9 +36,9 @@ namespace zoper
 		m_background->texture = m_resources->background;
 		m_background->color = colors::White;
 
-		auto statesController = ensureComponentOfType<StatesController<HighScoresSceneStates>>();
-		statesController->UseDeferred();
-		createSceneNode<HighScoreTextController>("HishScoreTextController");
+        auto highScoreTextController(createSceneNode<HighScoreTextController>("HishScoreTextController"));
+        highScoreTextController->Finished.connect([this,statesController]() { sceneManager().terminateScene(); });
+
 		statesController->start(HighScoresSceneStates::Show);
 	}
 

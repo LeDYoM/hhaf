@@ -11,7 +11,7 @@
 #include <lib/scene/scenenodetypes.hpp>
 #include <lib/scene/renderizables/nodetext.hpp>
 
-#include "loaders/highscoresresources.hpp"
+#include "../loaders/highscoresresources.hpp"
 #include "highscoresdata.hpp"
 
 namespace zoper

@@ -4,13 +4,17 @@
 #define ZOPER_HIGHSCORESSCENE_INCLUDE_HPP__
 
 #include <mtypes/include/types.hpp>
+#include <mtypes/include/connection.hpp>
+
 #include <lib/scene/scene.hpp>
 #include <lib/scene/renderizables/nodequad.hpp>
+
 #include "../loaders/highscoresresources.hpp"
-#include "../highscoretextcontroller.hpp"
 
 namespace zoper
 {
+    using namespace lib;
+    class HighScoreTextController;
 	class HighScoresScene final : public lib::scene::Scene
 	{
 	public:
@@ -22,8 +26,6 @@ namespace zoper
 
 	private:
         using BaseClass = lib::scene::Scene;
-		template <typename T>
-		using sptr = std::shared_ptr<T>;
 
 		sptr<HighScoresResources> m_resources;
 		sptr<lib::scene::nodes::NodeQuad> m_background;
@@ -33,7 +35,6 @@ namespace zoper
 		scene::Color m_selectedColor;
 		size_type m_normalCharacterSize;
 		ireceiver m_receiver;
-
 	};
 }
 
