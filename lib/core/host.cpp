@@ -96,7 +96,7 @@ namespace lib
 				break;
 			case AppState::ReadyToStart:
 			{
-				log_debug_info(appId(), ": ", " Starting initialization...");
+                log_debug_info(appId(), ": Starting initialization...");
 				m_state = AppState::Executing;
 
 				m_inputSystem = muptr<input::InputSystem>();
@@ -108,7 +108,7 @@ namespace lib
 				m_debugSystem = muptr<DebugSystem>();
 				
 				m_iapp->onInit();
-				log_debug_info(appId(), ": ", " is now executing");
+                log_debug_info(appId(), ": Starting execution...");
 			}
 				break;
 			case AppState::Executing:
@@ -123,7 +123,7 @@ namespace lib
 			}
 				break;
 			case AppState::ReadyToTerminate:
-				log_debug_info(appId(), ": " ," started termination");
+                log_debug_info(appId(), ": started termination");
 				m_sceneManager->finish();
 				m_state = AppState::Terminated;
 //				m_iapp->onFinish();
@@ -135,7 +135,7 @@ namespace lib
 				m_randomizer = nullptr;
 				m_inputSystem = nullptr;
 				m_params.clear();
-				log_debug_info(appId(), ": ", " terminated");
+                log_debug_info(appId(), ": terminated");
 				return true;
 				break;
 			case AppState::Terminated:
