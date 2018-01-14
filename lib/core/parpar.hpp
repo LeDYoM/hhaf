@@ -8,51 +8,77 @@
 
 namespace parpar
 {
-    class Parameter
-    {
-    public:
-        constexpr Parameter(std::string param) : m_rawParam{std::move(param)} {}
-
-        constexpr bool empty() const { return m_rawParam.empty(); }
-
-        inline std::string cleanName() const
-        {
-        }
-
-    private:
-        std::string m_rawParam;
-    };
-
-    class Parameters
-    {
-    public:
-        constexpr void addParamter(const char*const param_str)
-        {
-            std::string param(param_str);
-            //TODO: Parse
-            m_parameters.push_back(std::move(param));
-        }
-
-        constexpr auto numParameters() const { return m_parameters.size(); }
-        constexpr bool hasParameters() const { return !m_parameters.empty(); }
-
-    private:
-        std::vector<Parameter> m_parameters;
-    };
-
     class ParametersParser
     {
-    public:
+    private:
 
-        Parameters setParameters(int argc, char *argv[])
+		enum class ParserErrorCodes
+		{
+
+		};
+		struct ParserError
+		{
+
+		};
+
+		enum class ParameterType
+		{
+			Positional,
+			Switch,
+			Option
+		};
+
+		/// Method that returns the type of a parameter.
+		/// @see ParameterType
+		/// @param param The string representation of the parameter
+		/// @return The enum value of the parameter parameter.
+		static ParameterType getParameterType(const std::string &param)
+		{
+			if (param[0] == '-') {
+				if (param[1] == '-') {
+					return ParameterType::Option;
+				}
+				return ParameterType::Switch;
+			}
+			return ParameterType::Positional;
+		}
+		inline ParametersParser(int argc, char *argv[])
         {
+			bool searchingForPositionalParameters{ false };
             for (auto i=1;i<argc;++i) {
-                m_parameters.addParamter(argv[i]);
+				std::string param(argv[i]);
+
+				if (!param.empty())
+				{
+					if (searchingForPositionalParameters)
+					{
+						ParameterType paramType{ getParameterType(param) };
+						if (param[0] != '-')
+						{
+							m_PositionalParameters.emplace_back(std::move(param));
+						}
+						else
+						{
+							searchingForPositionalParameters = false;
+						}
+					}
+				}
             }
         }
-    private:
-        Parameters m_parameters;
+
+	public:
+		constexpr auto numParameters() const { return m_PositionalParameters.size(); }
+		constexpr bool hasParameters() const { return !m_PositionalParameters.empty(); }
+
+		std::vector<std::string> m_PositionalParameters;
+
+		friend ParametersParser create(int argc, char *argv[]);
     };
+
+	ParametersParser create(int argc, char *argv[])
+	{
+		return ParametersParser(argc, argv);
+	}
 }
 
 #endif
