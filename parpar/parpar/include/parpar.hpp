@@ -28,6 +28,7 @@ namespace parpar
 			Option
 		};
 
+        constexpr ParametersParser() 'default;
 		/// Method that returns the type of a parameter.
 		/// @see ParameterType
 		/// @param param The string representation of the parameter
