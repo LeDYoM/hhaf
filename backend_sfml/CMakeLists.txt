@@ -33,7 +33,7 @@ endif()
 
 add_custom_command(TARGET ${CURRENT_TARGET} POST_BUILD
 	COMMAND ${CMAKE_COMMAND} -E copy_directory
-	${SFML_ROOT}/bin/$<CONFIGURATION>
+	${SFML_ROOT}/bin
 	$<TARGET_FILE_DIR:${CURRENT_TARGET}>)
 
 install (TARGETS ${CURRENT_TARGET} 
