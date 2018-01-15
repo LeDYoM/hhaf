@@ -9,7 +9,7 @@ add_library(${CURRENT_TARGET} INTERFACE)
 target_include_directories(${CURRENT_TARGET} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/)
 
 target_sources(${CURRENT_TARGET} INTERFACE
-  ${CMAKE_CURRENT_SOURCE_DIR}/parpar/include/parpar.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/${CURRENT_TARGET}/include/parpar.hpp
 )
 
 add_subdirectory(tests)

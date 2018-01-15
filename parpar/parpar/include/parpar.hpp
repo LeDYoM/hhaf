@@ -28,7 +28,7 @@ namespace parpar
 			Option
 		};
 
-        constexpr ParametersParser() 'default;
+        ParametersParser() = default;
 		/// Method that returns the type of a parameter.
 		/// @see ParameterType
 		/// @param param The string representation of the parameter
@@ -68,9 +68,9 @@ namespace parpar
         }
 
 	public:
-		constexpr auto numParameters() const { return m_PositionalParameters.size(); }
-		constexpr bool hasParameters() const { return !m_PositionalParameters.empty(); }
-
+		inline auto numParameters() const { return m_PositionalParameters.size(); }
+		inline bool hasParameters() const { return !m_PositionalParameters.empty(); }
+	private:
 		std::vector<std::string> m_PositionalParameters;
 
 		friend ParametersParser create(int argc, char *argv[]);

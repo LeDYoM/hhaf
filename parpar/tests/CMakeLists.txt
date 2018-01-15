@@ -15,7 +15,7 @@ target_link_libraries(${TARGET_NAME}
   PRIVATE parpar)
 
 target_include_directories(${TARGET_NAME}
-  PRIVATE ../externals/catch2/)
+  PRIVATE ../3rdparty/catch2/)
 
 add_test(
   NAME ${TARGET_NAME}
