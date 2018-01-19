@@ -11,6 +11,22 @@
 
 namespace parpar
 {
+    /**
+     * \class ParametersParser
+     *
+     * \brief Help to collect, read and check command line parameters
+     *
+     * This class in the main block of this library. The library is done as
+     * a hobby and learning purposes. It does not have a lot of super
+     * features, it trys to be compant and easy to be understood and user.
+     * Of course, no warranty is provided.
+     *
+     * \note Attempts at zen rarely work.
+     *
+     * \author (last to touch it) $Author: bv $
+     *
+     * \version $Revision: 0.9 $
+     */
     class ParametersParser
     {
     public:
