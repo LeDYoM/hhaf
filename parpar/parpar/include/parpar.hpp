@@ -5,6 +5,7 @@
 
 #include <string>
 #include <vector>
+#include <map>
 #include <utility>
 #include <algorithm>
 
@@ -12,24 +13,32 @@ namespace parpar
 {
     class ParametersParser
     {
-    private:
-
-        using PositionalParameter = std::string;
-        using SwitchParameter = PositionalParameter;
-        using OptionParameter = std::pair<const std::string, const std::string>;
-
+    public:
         enum class SyntaxParserErrorCodes
         {
             NoError,
             OptionWithoutEqual,
             EmptyOptionName,
             EmptyOptionValue,
+            IncorrectPositionalPosition,
+            OptionAlreadySet,
 
             // Exceptional cases, might never be reached
             EmptyParameter,
             UnknownParameterType
 
         };
+
+    private:
+
+        using PositionalParameter = std::string;
+        using SwitchParameter = PositionalParameter;
+        using OptionParameter = std::pair<std::string,std::string>;
+
+        using PositionalParameterVector = std::vector<PositionalParameter>;
+        using SwitchParameterVector = std::vector<SwitchParameter>;
+        using OptionParameterVector = std::vector<OptionParameter>;
+
         struct SintaxParserError
         {
             SyntaxParserErrorCodes errorCode{SyntaxParserErrorCodes::NoError};
@@ -74,30 +83,28 @@ namespace parpar
 
             if (equalSign != std::string::npos)
             {
-                if (equalSign != 0)
-                {
-                    const std::string name(param.substr(0,equalSign-1));
-                    const std::string value(param.substr(equalSign+1));
+                const std::string name(param.substr(1,equalSign-1));
+                const std::string value(param.substr(equalSign+1));
 
-                    if (name.empty())
-                    {
-                        return COptionResult(SyntaxParserErrorCodes::EmptyOptionName, {});
-                    }
-                    if (value.empty())
-                    {
-                        return COptionResult(SyntaxParserErrorCodes::EmptyOptionValue, {});
-                    }
-                    return COptionResult(SyntaxParserErrorCodes::NoError,
-                        { std::move(name), std::move(value) });
+                if (name.empty())
+                {
+                    return COptionResult(SyntaxParserErrorCodes::EmptyOptionName, {});
                 }
-                return COptionResult(SyntaxParserErrorCodes::EmptyOptionName, {});
+                if (value.empty())
+                {
+                    return COptionResult(SyntaxParserErrorCodes::EmptyOptionValue, {param.substr(1),{}});
+                }
+                return COptionResult(SyntaxParserErrorCodes::NoError,
+                    { std::move(name), std::move(value) });
             }
             // No '=' found
-            return COptionResult{ SyntaxParserErrorCodes::OptionWithoutEqual,{} };
+            return COptionResult{ SyntaxParserErrorCodes::OptionWithoutEqual, {param.substr(1),{}} };
         }
 
         inline ParametersParser(std::vector<std::string> argv)
         {
+            bool searchForPositional{true};
+
             for (decltype(argv.size()) i{1};i<argv.size();++i) {
                 std::string param{std::move(argv[i])};
 
@@ -108,19 +115,31 @@ namespace parpar
                     case ParameterType::Positional:
                     {
                         m_positionalParameters.push_back(std::move(param));
-                        m_syntaxErrors.push_back(SyntaxParserErrorCodes::NoError);
+                        m_syntaxErrors.push_back(
+                            searchForPositional?
+                                SyntaxParserErrorCodes::NoError :
+                                SyntaxParserErrorCodes::IncorrectPositionalPosition
+                            );
                     }
                     break;
                     case ParameterType::Switch:
                     {
-                        m_switchParameters.push_back(std::move(param));
+                        searchForPositional = false;
+                        m_switchParameters.push_back(param.substr(2));
                         m_syntaxErrors.push_back(SyntaxParserErrorCodes::NoError);
                     }
                     break;
                     case ParameterType::Option:
                     {
+                        searchForPositional = false;
                         auto result(checkOptionParameter(param));
-                        m_syntaxErrors.push_back(std::get<0>(result));
+
+                        // Check for duplicates
+                        m_syntaxErrors.push_back(
+                                    optionExists(std::get<1>(result).first)?
+                                    SyntaxParserErrorCodes::OptionAlreadySet:
+                                    std::get<0>(result));
+
                         m_optionParameters.emplace_back(
                             std::get<1>(result).first,
                             std::get<1>(result).second);
@@ -144,6 +163,28 @@ namespace parpar
         }
 
     public:
+        inline auto errorAtParameter(const std::size_t position) const noexcept
+        {
+            return (position < m_syntaxErrors.size()?
+                        m_syntaxErrors[position]:
+                        SyntaxParserErrorCodes::NoError);
+        }
+
+        inline auto numPositionalParameters() const noexcept
+        {
+            return m_positionalParameters.size();
+        }
+
+        inline auto numSwitchParameters() const noexcept
+        {
+            return m_switchParameters.size();
+        }
+
+        inline auto numOptionParameters() const noexcept
+        {
+            return m_optionParameters.size();
+        }
+
         inline auto numParameters() const noexcept
         {
             return m_positionalParameters.size() +
@@ -151,11 +192,16 @@ namespace parpar
             m_optionParameters.size();
         }
 
+        inline bool emptyParameters() const noexcept
+        {
+            return m_positionalParameters.empty() &&
+                m_switchParameters.empty() &&
+                m_optionParameters.empty();
+        }
+
         inline bool hasParameters() const noexcept
         {
-            return !(m_positionalParameters.empty() ||
-                m_switchParameters.empty() ||
-                m_optionParameters.empty());
+            return !(emptyParameters());
         }
 
         inline auto numSyntaxErrors() const
@@ -171,11 +217,53 @@ namespace parpar
         {
             return numSyntaxErrors() == 0;
         }
+
+        inline std::string positionalParameterAt(const std::size_t position) const
+        {
+            return (position < m_positionalParameters.size()) ?
+                m_positionalParameters[position] : "";
+        }
+
+        inline bool switchExists(const std::string &swPar) const
+        {
+            return std::find(
+                m_switchParameters.cbegin(),
+                m_switchParameters.cend(),
+                SwitchParameter{swPar}) != m_switchParameters.cend();
+        }
+
+        inline bool optionExists(const std::string &opPar) const
+        {
+            return optionValue(opPar).first;
+        }
+
+        inline std::pair<bool,std::string> optionValue(const std::string &opPar) const
+        {
+            auto iterator(std::find_if(
+                m_optionParameters.cbegin(),
+                m_optionParameters.cend(),
+                [opPar](const OptionParameter &node)
+                {
+                    return node.first == opPar;
+                }));
+
+                return iterator == m_optionParameters.cend()?
+                    std::make_pair(false,""):
+                    std::make_pair(true,iterator->second);
+        }
+
+        inline std::string optionValueOrDefault(const std::string &opPar,
+                                                const std::string &def) const
+        {
+            auto ov(optionValue(opPar));
+            return ov.first?ov.second:def;
+        }
+
     private:
         std::vector<SyntaxParserErrorCodes> m_syntaxErrors;
-        std::vector<PositionalParameter> m_positionalParameters;
-        std::vector<SwitchParameter> m_switchParameters;
-        std::vector<OptionParameter> m_optionParameters;
+        PositionalParameterVector m_positionalParameters;
+        SwitchParameterVector m_switchParameters;
+        OptionParameterVector m_optionParameters;
 
         friend ParametersParser create(int argc, char *argv[]);
         friend ParametersParser create(std::vector<std::string> commandLine);
