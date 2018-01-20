@@ -69,8 +69,8 @@ namespace lib
 							maxX = max(maxX, x);
 							maxY = max(maxY, y);
 						}
-						else {
-							// Extract the current glyph's description
+						else 
+						{
 							const TTGlyph glyph{ font()->getGlyph(curChar, currentCharacterSize) };
 							const Rectf32 glyphbound{ glyph.bounds };
 							const Rectf32 glyphTextureRect{ glyph.textureBounds };
