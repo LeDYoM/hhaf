@@ -30,6 +30,8 @@ namespace parpar
     class ParametersParser
     {
     public:
+		/// Enum to describe the possible errors of the parser.
+		/// Could be checked with the corresponding functions.
         enum class SyntaxParserErrorCodes
         {
             NoError,
@@ -42,7 +44,6 @@ namespace parpar
             // Exceptional cases, might never be reached
             EmptyParameter,
             UnknownParameterType
-
         };
 
     private:
@@ -54,12 +55,6 @@ namespace parpar
         using PositionalParameterVector = std::vector<PositionalParameter>;
         using SwitchParameterVector = std::vector<SwitchParameter>;
         using OptionParameterVector = std::vector<OptionParameter>;
-
-        struct SintaxParserError
-        {
-            SyntaxParserErrorCodes errorCode{SyntaxParserErrorCodes::NoError};
-            unsigned int paramIndex{};
-        };
 
         enum class ParameterType
         {
@@ -179,23 +174,33 @@ namespace parpar
         }
 
     public:
-        inline auto errorAtParameter(const std::size_t position) const noexcept
+		/// Check if there is an error in a parameter selected by index.
+		/// @param position The index of the parameter to check.
+		/// @returns The enum value containing the error or SyntaxParserErrorCodes::NoError
+		/// if the index of parameter is out of bounds.
+		inline auto errorAtParameter(const std::size_t position) const noexcept
         {
-            return (position < m_syntaxErrors.size()?
+            return position < m_syntaxErrors.size()?
                         m_syntaxErrors[position]:
-                        SyntaxParserErrorCodes::NoError);
+                        SyntaxParserErrorCodes::NoError;
         }
 
+		/// Retrieve the number of positional parameters.
+		/// @returns The value.
         inline auto numPositionalParameters() const noexcept
         {
             return m_positionalParameters.size();
         }
 
+		/// Retrieve the number of switch parameters.
+		/// @returns The value.
         inline auto numSwitchParameters() const noexcept
         {
             return m_switchParameters.size();
         }
 
+		/// Retrieve the number of option parameters.
+		/// @returns The value.
         inline auto numOptionParameters() const noexcept
         {
             return m_optionParameters.size();
