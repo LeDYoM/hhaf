@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef _LIB_NODETEXT_HPP__
-#define _LIB_NODETEXT_HPP__
+#ifndef LIB_SCENE_RENDERIZABLES_NODETEXT_HPP__
+#define LIB_SCENE_RENDERIZABLES_NODETEXT_HPP__
 
 #include <lib/scene/renderizable.hpp>
 #include <mtypes/include/types.hpp>

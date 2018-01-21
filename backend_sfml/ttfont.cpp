@@ -37,6 +37,10 @@ namespace lib
 				}
 
 				auto *nTexture(new TextureTTFont( m_font.getTexture(characterSize)));
+
+				for (u32 i = 0; i < 0xff; ++i)
+					getGlyph(i, characterSize);
+
 				m_fontTexturesCache[characterSize] = nTexture;
 				return nTexture;
 			}
