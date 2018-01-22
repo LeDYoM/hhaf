@@ -1,0 +1,30 @@
+#pragma once
+
+#ifndef MTYPES_DICTY_INCLUDE_HPP
+#define MTYPES_DICTY_INCLUDE_HPP
+
+#include "types.hpp"
+
+namespace lib
+{
+    class Dictionary
+    {
+    public:
+        void add(str name, str value, const bool overwrite = true)
+        {
+            if (!overwrite)
+            {
+                const auto iterator(m_data.find())
+            }
+        }
+    private:
+        bool addInternal(str name, str value)
+        {
+            
+        }
+          
+        map<str,str> m_data;
+    };
+}
+
+#endif
