@@ -38,16 +38,16 @@ namespace lib
             return msptr<Texture>(m_font->getTexture(characterSize));
         }
 
-        void TTFont::ensureLoadGlyphs(const u32 first, const u32 last)
+        void TTFont::ensureLoadGlyphs(const u32 first, const u32 last, const u32 characterSize)
         {
-            for (u32 codePoint = first;i <= last; ++i) {
+            for (u32 codePoint = first; codePoint <= last; ++codePoint) {
                 (void)(m_font->getGlyph(codePoint, characterSize));
             }
         }
 
-        void TTFont::ensureLoadASCIIGlyps()
+        void TTFont::ensureLoadASCIIGlyps(const u32 characterSize)
         {
-            ensureLoadGlyphs(0,255);
+            ensureLoadGlyphs(0,255, characterSize);
         }
     }
 }

@@ -14,13 +14,21 @@ namespace lib
         namespace nodes
         {
             NodeText::NodeText(SceneNode * const parent, const str & name)
-                : Renderizable{ parent, name, Triangles, 0 }
-            {
+                : Renderizable{ parent, name, Triangles, 0 },
+
                 font{[this]() {
-                        if (font) {
-                            font->ensureLoadASCIIGlyps();
-                        }
-                     }};
+                        if (font() && characterSize() > 0) {
+                            font()->ensureLoadASCIIGlyps(characterSize());
+							texture = font()->getTexture(characterSize());
+						}
+                     }},
+				characterSize{ [this]() {
+						 if (font() && characterSize() > 0) {
+							 font()->ensureLoadASCIIGlyps(characterSize());
+							 texture = font()->getTexture(characterSize());
+						 }
+					 }}
+			{
             }
 
             void NodeText::updateGeometry()
@@ -113,7 +121,6 @@ namespace lib
 
                     // Update the bounding rectangle
                     m_vertices.bounds = { minX, minY, maxX - minX, maxY - minY };
-//					texture = font()->getTexture(currentCharacterSize);
                     updateAlignmentX();
                     updateAlignmentY();
                     m_colorNeedsUpdate = true;
