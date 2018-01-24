@@ -8,45 +8,45 @@
 
 namespace lib
 {
-	namespace scene
-	{
-		using BasicVertexArray = vector<Vertex>;
+    namespace scene
+    {
+        using BasicVertexArray = vector<Vertex>;
 
-		enum PrimitiveType
-		{
-			Points,
-			Lines,
-			LineStrip,
-			Triangles,
-			TriangleStrip,
-			TriangleFan
-		};
+        enum PrimitiveType
+        {
+            Points,
+            Lines,
+            LineStrip,
+            Triangles,
+            TriangleStrip,
+            TriangleFan
+        };
 
-		class VertexArray
-		{
-		public:
+        class VertexArray
+        {
+        public:
             constexpr VertexArray() = default;
-			inline VertexArray(const PrimitiveType type, const u32 vertexCount) noexcept
-				: bounds(), m_vertices( vertexCount ), m_primitiveType{ type } {}
+            inline VertexArray(const PrimitiveType type, const u32 vertexCount) noexcept
+                : bounds(), m_vertices( vertexCount ), m_primitiveType{ type } {}
 
-			constexpr bool empty() const noexcept { return m_vertices.empty(); }
+            constexpr bool empty() const noexcept { return m_vertices.empty(); }
 
-			constexpr BasicVertexArray &verticesArray() noexcept { return m_vertices; }
-			constexpr const BasicVertexArray &verticesArray() const noexcept { return m_vertices; }
+            constexpr BasicVertexArray &verticesArray() noexcept { return m_vertices; }
+            constexpr const BasicVertexArray &verticesArray() const noexcept { return m_vertices; }
 
-			constexpr PrimitiveType primitiveType() const noexcept { return m_primitiveType; }
+            constexpr PrimitiveType primitiveType() const noexcept { return m_primitiveType; }
 
-			void move(const vector2df &offset) noexcept;
-			void moveX(const f32 xOffset) noexcept;
-			void moveY(const f32 yOffset) noexcept;
+            void move(const vector2df &offset) noexcept;
+            void moveX(const f32 xOffset) noexcept;
+            void moveY(const f32 yOffset) noexcept;
 
-			Property<Rectf32> bounds{};
+            BasicProperty<Rectf32> bounds{};
 
-		private:
-			BasicVertexArray m_vertices{};
-			PrimitiveType m_primitiveType = PrimitiveType::Triangles;
-		};
-	}
+        private:
+            BasicVertexArray m_vertices{};
+            PrimitiveType m_primitiveType = PrimitiveType::Triangles;
+        };
+    }
 }
 
 #endif

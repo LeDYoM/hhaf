@@ -34,12 +34,12 @@ namespace lib
                 NodeText(SceneNode *const parent, const str &name);
                 virtual ~NodeText() = default;
 
-                Property<str> text;
-                Property<sptr<TTFont>> font;
-                Property<u32> characterSize;
-                Property<AlignmentX> alignmentX;
-                Property<AlignmentY> alignmentY;
-                Property<Rectf32> alignmentBox;
+                PropertyState<str> text;
+                PropertyState<sptr<TTFont>> font;
+                PropertyState<u32> characterSize;
+                PropertyState<AlignmentX> alignmentX;
+                PropertyState<AlignmentY> alignmentY;
+                PropertyState<Rectf32> alignmentBox;
 
                 bool hasChanged() const {
                     return text.hasChanged() || font.hasChanged() || characterSize.hasChanged() || alignmentX.hasChanged() || alignmentY.hasChanged() || alignmentBox.hasChanged();

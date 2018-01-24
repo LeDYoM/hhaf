@@ -7,54 +7,69 @@
 
 namespace lib
 {
-	using callback_t = function<void()>;
+    using callback_t = function<void()>;
 
-	template<typename T, void (T::*sm)()>
-	constexpr callback_t lambdaToMethod(T& d) {
-		return [&d]() {(d.*sm)(); };
-	}
+    template <typename T>
+    class IProperty
+    {
+        virtual const T &get() const noexcept = 0;
+        virtual void set(const T&v) noexcept = 0;
+    };
 
-	template <typename T>
-	class BasicProperty
-	{
-	public:
-		constexpr BasicProperty() noexcept = default;
-		constexpr BasicProperty(T iv) noexcept : m_value{ std::move(iv) } {}
+    template <typename T>
+    class BasicProperty : public IProperty<T>
+    {
+    public:
+        constexpr BasicProperty() noexcept = default;
+        constexpr BasicProperty(T iv) noexcept : m_value{ std::move(iv) } {}
 
-		constexpr const T&operator()() const noexcept { return m_value; }
-		constexpr const T &get() const noexcept { return m_value; }
-		constexpr void set(const T&v) noexcept { m_value = v; }
-		constexpr void operator=(const T&v) noexcept { set(v); }
+        constexpr const T&operator()() const noexcept { return m_value; }
+        constexpr void operator=(const T&v) noexcept { set(v); }
+        const T &get() const noexcept override { return m_value; }
+        void set(const T&v) noexcept override { m_value = v; }
 
-	protected:
-		T m_value{};
-	};
+    protected:
+        T m_value{};
+    };
 
-	template <typename T>
-	class Property : public BasicProperty<T>
-	{
+    template <typename T>
+    class PropertyTrigger : public BasicProperty<T>
+    {
         using BaseClass = BasicProperty<T>;
-	public:
-		constexpr Property() noexcept = default;
-		constexpr Property(T iv) noexcept : BaseClass{ std::move(iv) }, m_callback{} {}
-		constexpr Property(callback_t c) noexcept : BaseClass{}, m_callback{ std::move(c) } {}
-		constexpr Property(T iv, callback_t c) noexcept : BaseClass{ std::move(iv) }, m_callback{ std::move(c) } {}
+    public:
+        constexpr PropertyTrigger() noexcept = default;
+        constexpr PropertyTrigger(T iv) noexcept : BaseClass{ std::move(iv) }, m_callback{} {}
+        constexpr PropertyTrigger(callback_t c) noexcept : BaseClass{}, m_callback{ std::move(c) } {}
+        constexpr PropertyTrigger(T iv, callback_t c) noexcept : BaseClass{ std::move(iv) }, m_callback{ std::move(c) } {}
 
-		constexpr void setCallback(callback_t c) noexcept { m_callback = std::move(c); }
-		constexpr void set(const T&v) noexcept { BaseClass::m_value = v; m_hasChanged = true; update(); }
-		constexpr void operator=(const T&v) noexcept { set(v); }
+        void set(const T&v) noexcept override { BaseClass::m_value = v; update(); }
 
-		constexpr void update() { if (m_callback) m_callback(); }
+        constexpr void setCallback(callback_t c) noexcept { m_callback = std::move(c); }
+        constexpr void operator=(const T&v) noexcept { set(v); }
 
-		bool hasChanged() const noexcept { return m_hasChanged; }
-		bool rr_hasChanged() const noexcept { const bool v{ m_hasChanged }; m_hasChanged = false; return v; }
+        constexpr void update() { if (m_callback) m_callback(); }
 
-		constexpr void resetHasChanged() noexcept { m_hasChanged = false; }
+    private:
+        callback_t m_callback{};
+    };
 
-	private:
-		callback_t m_callback{};
-		bool m_hasChanged{ true };
-	};
+    template <typename T>
+    class PropertyState : public PropertyTrigger<T>
+    {
+        using BaseClass = PropertyTrigger<T>;
+    public:
+        constexpr PropertyState() noexcept : PropertyState{T{}} {}
+        constexpr PropertyState(T iv) noexcept : BaseClass{ std::move(iv), [this]() { m_hasChanged = true; } } {}
+
+        bool hasChanged() const noexcept { return m_hasChanged; }
+        bool readReset_hasChanged() const noexcept { const bool v{ m_hasChanged }; resetHasChanged(); return v; }
+        constexpr void resetHasChanged() noexcept { m_hasChanged = false; }
+        constexpr void setChanged() noexcept { BaseClass::update(); }
+
+    private:
+        bool m_hasChanged{ true };
+    };
+
 }
 
 #endif

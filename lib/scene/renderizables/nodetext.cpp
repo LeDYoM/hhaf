@@ -17,18 +17,18 @@ namespace lib
                 : Renderizable{ parent, name, Triangles, 0 },
 
                 font{[this]() {
-                        if (font() && characterSize() > 0) {
-                            font()->ensureLoadASCIIGlyps(characterSize());
-							texture = font()->getTexture(characterSize());
-						}
-                     }},
-				characterSize{ [this]() {
-						 if (font() && characterSize() > 0) {
-							 font()->ensureLoadASCIIGlyps(characterSize());
-							 texture = font()->getTexture(characterSize());
-						 }
-					 }}
-			{
+                    if (font() && characterSize() > 0) {
+                        font()->ensureLoadASCIIGlyps(characterSize());
+                        texture = font()->getTexture(characterSize());
+                    }
+                }},
+                characterSize{ [this]() {
+                    if (font() && characterSize() > 0) {
+                        font()->ensureLoadASCIIGlyps(characterSize());
+                        texture = font()->getTexture(characterSize());
+                    }
+                }}
+            {
             }
 
             void NodeText::updateGeometry()
@@ -52,8 +52,8 @@ namespace lib
                     f32 y{ static_cast<f32>(currentCharacterSize) };
 
                     // Create one quad for each character
-                    f32 minX{ y }; // static_cast<f32>(characterSize());
-                    f32 minY{ y }; // static_cast<f32>(characterSize());
+                    f32 minX{ y };
+                    f32 minY{ y };
                     f32 maxX{ 0.f };
                     f32 maxY{ 0.f };
                     u32 prevChar{ 0 };
@@ -121,8 +121,6 @@ namespace lib
 
                     // Update the bounding rectangle
                     m_vertices.bounds = { minX, minY, maxX - minX, maxY - minY };
-                    updateAlignmentX();
-                    updateAlignmentY();
                     m_colorNeedsUpdate = true;
                 }
 
@@ -130,6 +128,9 @@ namespace lib
                     color.update();
                     m_colorNeedsUpdate = false;
                 }
+
+                updateAlignmentX();
+                updateAlignmentY();
             }
 
             void NodeText::updateAlignmentX()

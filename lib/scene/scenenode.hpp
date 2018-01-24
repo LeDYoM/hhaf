@@ -141,7 +141,7 @@ namespace lib::scene
         void updateRemoves();
 
     public:
-        Property<bool> visible;
+        BasicProperty<bool> visible;
 
     private:
         SceneNode *m_parent;

@@ -10,58 +10,48 @@
 
 namespace lib
 {
-	namespace scene
-	{
-		class Texture;
-		class SceneNode;
+    namespace scene
+    {
+        class Texture;
+        class SceneNode;
 
-		class RenderizablePropertyGroup
-		{
-		public:
-			Property<Color> color;
-			Property<sptr<Texture>> texture;
-			Property<bool> visible{ true };
+        class Renderizable : public core::HasName
+        {
+        public:
+            Renderizable(SceneNode *const parent, const str &name, const PrimitiveType type, const u32 vertexCount);
+            virtual ~Renderizable() = default;
 
-			RenderizablePropertyGroup() = default;
-			RenderizablePropertyGroup(Color color, sptr<Texture> texture)
-				: color{ std::move(color) }, texture{ std::move(texture) } {}
+            void render();
 
-			RenderizablePropertyGroup(const RenderizablePropertyGroup &) = default;
-			RenderizablePropertyGroup &operator=(const RenderizablePropertyGroup &) = default;
-			RenderizablePropertyGroup(RenderizablePropertyGroup &&) = default;
-			RenderizablePropertyGroup &operator=(RenderizablePropertyGroup &&) = default;
-		};
-		class Renderizable : public core::HasName, public RenderizablePropertyGroup
-		{
-		public:
-			Renderizable(SceneNode *const parent, const str &name, const PrimitiveType type, const u32 vertexCount);
-			virtual ~Renderizable() = default;
+            Rectf32 bounds() const noexcept { return m_vertices.bounds(); }
 
-			void render();
+            PropertyState<Color> color;
+            PropertyState<sptr<Texture>> texture;
+            BasicProperty<bool> visible{ true };
 
-			Rectf32 bounds() const noexcept { return m_vertices.bounds(); }
+            template <typename T>
+            constexpr T *const rnCast() {
+                return dynamic_cast<T *const>(this);
+            }
 
-			template <typename T>
-			constexpr T *const rnCast() {
-				return dynamic_cast<T *const>(this);
-			}
+            template <typename T>
+            constexpr const T *const rnCast() const {
+                return dynamic_cast<const T *const>(this);
+            }
 
-			template <typename T>
-			constexpr const T *const rnCast() const {
-				return dynamic_cast<const T *const>(this);
-			}
+        private:
+            SceneNode *m_parent;
 
-		private:
-			SceneNode *m_parent;
+        protected:
+            virtual void updateGeometry() = 0;
+            VertexArray m_vertices;
+            bool m_geometryNeedsUpdate{ true };
+            bool m_colorNeedsUpdate{ true };
 
-		protected:
-			virtual void updateGeometry() = 0;
-			VertexArray m_vertices;
-			bool m_geometryNeedsUpdate{ true };
-			bool m_colorNeedsUpdate{ true };
-
-		};
-	}
+        private:
+            void fillWithColor(const Color&);
+        };
+    }
 }
 
 #endif
