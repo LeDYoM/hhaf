@@ -36,7 +36,8 @@ namespace lib
     using f64 = double;
     using size_type = uint_fast32_t;
 
-    using map = std::map;
+	template <typename Key, typename Value>
+    using map = std::map<Key,Value>;
 }
 
 #endif
