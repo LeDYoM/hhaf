@@ -56,7 +56,7 @@ namespace lib
                 virtual bool animate() override
                 {
                     const bool bResult{ IAnimation::animate() };
-                    m_property = T{ m_startValue + (m_deltaValue * m_delta) };
+                    m_property.set(T{ m_startValue + (m_deltaValue * m_delta) });
                     return bResult;
                 }
 

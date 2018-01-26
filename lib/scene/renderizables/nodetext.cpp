@@ -14,25 +14,19 @@ namespace lib
         namespace nodes
         {
             NodeText::NodeText(SceneNode * const parent, const str & name)
-                : Renderizable{ parent, name, Triangles, 0 },
-
-                font{[this]() {
-                    if (font() && characterSize() > 0) {
-                        font()->ensureLoadASCIIGlyps(characterSize());
-                        texture = font()->getTexture(characterSize());
-                    }
-                }},
-                characterSize{ [this]() {
-                    if (font() && characterSize() > 0) {
-                        font()->ensureLoadASCIIGlyps(characterSize());
-                        texture = font()->getTexture(characterSize());
-                    }
-                }}
+                : Renderizable{ parent, name, Triangles, 0 }
             {
             }
 
             void NodeText::updateGeometry()
             {
+                if (font.hasChanged() || characterSize.hasChanged()) {
+                    if (font() && characterSize() > 0) {
+                        font()->ensureLoadASCIIGlyps(characterSize());
+                        texture = font()->getTexture(characterSize());
+                    }
+                }
+
                 if (hasChanged()) {
                     resetHasChanged();
                     BasicVertexArray &vertices{ m_vertices.verticesArray() };

@@ -9,25 +9,25 @@
 
 namespace lib
 {
-	namespace scene
-	{
-		namespace nodes
-		{
-			class NodeShape : public ISimpleNode
-			{
-			public:
-				explicit NodeShape(SceneNode *const parent, const str &name, const u32 pointC)
-					: ISimpleNode{ parent, name, pointC }, pointCount{ pointC } {}
+    namespace scene
+    {
+        namespace nodes
+        {
+            class NodeShape : public ISimpleNode
+            {
+            public:
+                explicit NodeShape(SceneNode *const parent, const str &name, const u32 pointC)
+                    : ISimpleNode{ parent, name, pointC }, pointCount{ pointC } {}
 
-				virtual ~NodeShape() = default;
+                virtual ~NodeShape() = default;
 
-				Property<u32> pointCount;
+                BasicProperty<u32> pointCount;
 
-			protected:
-				virtual void updateGeometrySimpleNode() override;
-			};
-		}
-	}
+            protected:
+                virtual void updateGeometrySimpleNode() override;
+            };
+        }
+    }
 }
 
 #endif

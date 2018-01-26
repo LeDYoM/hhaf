@@ -12,10 +12,10 @@ namespace lib
     {
         using BoardTileData = s32;
 
-        class ITile : public BasicProperty<BoardTileData>
+        class ITile : public PropertyTrigger<BoardTileData>
         {
         public:
-            using BasicProperty<BoardTileData>::BasicProperty;
+            using PropertyTrigger<BoardTileData>::PropertyTrigger;
             virtual ~ITile() = default;
         };
 

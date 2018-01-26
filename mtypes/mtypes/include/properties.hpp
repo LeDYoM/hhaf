@@ -12,6 +12,7 @@ namespace lib
     template <typename T>
     class IProperty
     {
+    public:
         virtual const T &get() const noexcept = 0;
         virtual void set(const T&v) noexcept = 0;
     };
@@ -60,6 +61,8 @@ namespace lib
     public:
         constexpr PropertyState() noexcept : PropertyState{T{}} {}
         constexpr PropertyState(T iv) noexcept : BaseClass{ std::move(iv), [this]() { m_hasChanged = true; } } {}
+
+        using BaseClass::operator=;
 
         bool hasChanged() const noexcept { return m_hasChanged; }
         bool readReset_hasChanged() const noexcept { const bool v{ m_hasChanged }; resetHasChanged(); return v; }
