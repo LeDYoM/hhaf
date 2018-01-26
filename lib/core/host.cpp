@@ -2,7 +2,7 @@
 #include "window.hpp"
 #include "resourcemanager.hpp"
 #include "randomizer.hpp"
-#include <mtypes/include/log.hpp>
+
 #include <lib/scene/scenemanager.hpp>
 #include <lib/core/events/eventmanager.hpp>
 #include <lib/core/inputsystem.hpp>
@@ -10,11 +10,14 @@
 #include <lib/backend/iwindow.hpp>
 #include <lib/core/debugsystem.hpp>
 
+#include <mtypes/include/log.hpp>
+
+#include <parpar/include/parpar.hpp>
 #include <algorithm>
 
 #define LIB_VERSION_MAJOR 1
 #define LIB_VERSION_MINOR 4
-#define LIB_VERSION_PATCH 1
+#define LIB_VERSION_PATCH 2
 
 namespace lib
 {

@@ -14,3 +14,4 @@ source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${LIB_HEADERS} ${LIB_SOURC
 
 target_link_libraries(${CURRENT_TARGET} PRIVATE loader)
 target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
+target_link_libraries(${CURRENT_TARGET} PRIVATE parpar)
