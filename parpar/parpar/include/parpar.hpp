@@ -280,6 +280,10 @@ namespace parpar
             return ov.first?ov.second:def;
         }
 
+		inline std::vector<std::pair<std::string, std::string>> getOptions() const noexcept
+		{
+			return m_optionParameters;
+		}
     private:
         std::vector<SyntaxParserErrorCodes> m_syntaxErrors;
         PositionalParameterVector m_positionalParameters;

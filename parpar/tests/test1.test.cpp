@@ -80,6 +80,11 @@ TEST_CASE("program -abc=2 -abc=3", "[parpar][option][errors]")
     CHECK(paramParser.errorAtParameter(1) ==
         parpar::ParametersParser::
             SyntaxParserErrorCodes::OptionAlreadySet);
+
+	CHECK(paramParser.getOptions() == std::vector<std::pair<std::string, std::string>>{
+		{ "abc", "2" },
+		{ "abc", "3" }
+	});
 }
 
 TEST_CASE("program -abc -=3 -def=", "[parpar][syntax][option][errors]")
@@ -128,6 +133,11 @@ TEST_CASE("program filename --doit -abc=sdf", "[parpar][positional][option][swit
     CHECK(paramParser.positionalParameterAt(1) == "");
     CHECK(paramParser.switchExists("doit"));
     CHECK_FALSE(paramParser.switchExists("doitasd"));
+	CHECK(paramParser.getOptions() == std::vector<std::pair<std::string, std::string>>{
+		{ "abc", "sdf" }
+	});
+
+
 }
 
 TEST_CASE("program sourcef.dat targetf.dat --nope -abc=sdf -this=other", "[parpar][positional][option][switch]")
@@ -160,4 +170,9 @@ TEST_CASE("program sourcef.dat targetf.dat --nope -abc=sdf -this=other", "[parpa
     CHECK(paramParser.optionValueOrDefault("thisother","") == "");
     CHECK(paramParser.optionValueOrDefault("another","42") == "42");
     CHECK(paramParser.optionValueOrDefault("another","false") == "false");
+
+	CHECK(paramParser.getOptions() == std::vector<std::pair<std::string, std::string>>{
+		{ "abc", "sdf" },
+		{ "this", "other" }
+	});
 }
