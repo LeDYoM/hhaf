@@ -3,27 +3,42 @@
 #ifndef MTYPES_DICTY_INCLUDE_HPP
 #define MTYPES_DICTY_INCLUDE_HPP
 
-namespace lib
+#include "types.hpp"
+#include "str.hpp"
+#include "vector.hpp"
+
+namespace mtypes::dicty
 {
-    template <typename str_type>
     class BasicDictionary
     {
     public:
-        using element = std::pair<str_type, str_type>;
-        using content = vector<element>;
+        using element = std::pair<lib::str, lib::str>;
+        using content = lib::vector<element>;
         using iterator = content::iterator;
         using const_iterator = content::const_iterator;
 
-        bool add(std::initializer_list<element> eList, const bool overwrite=true)
+		constexpr BasicDictionary(std::initializer_list<element> eList)
+			: m_data{ eList } {}
+
+		bool add(content eList, const bool overwrite = true)
+		{
+			bool result{ true };
+			for (const element& elems : eList) {
+				result &= add(elems.first, elems.second, overwrite);
+			}
+			return result;
+		}
+
+        constexpr bool add(std::initializer_list<element> eList, const bool overwrite = true)
         {
             bool result{true};
-            for (element&& elems : eList) {
+            for (const element& elems : eList) {
                 result &= add(elems.first, elems.second, overwrite);
             }
             return result;
         }
 
-        bool add(str_type key, str_type value, const bool overwrite = true)
+        bool add(lib::str key, lib::str value, const bool overwrite = true)
         {
             auto it(find(key));
 
@@ -38,23 +53,26 @@ namespace lib
             return false;
         }
 
-        void clear() {
+        constexpr void clear() {
             m_data.clear();
         }
 
+		const content &data() const noexcept {
+			return m_data;
+		}
 
     private:
-        const_iterator find(const str_type &key) const noexcept {
-            for (const auto& element : m_data) {
-                if (element.first == key) {
-                    return &element;
-                }
-            }
-            return m_data.cend();
+        constexpr const_iterator find(const lib::str &key) const noexcept {
+			for (auto &element : m_data) {
+				if (element.first == key) {
+					return &element;
+				}
+			}
+			return m_data.cend();
         }
 
-        iterator find(const str_type &key) noexcept {
-            for (auto& element : m_data) {
+        constexpr iterator find(const lib::str &key) noexcept {
+            for (auto &element : m_data) {
                 if (element.first == key) {
                     return &element;
                 }
