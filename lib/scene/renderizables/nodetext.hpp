@@ -41,17 +41,9 @@ namespace lib
                 PropertyState<AlignmentY> alignmentY;
                 PropertyState<Rectf32> alignmentBox;
 
-                bool hasChanged() const {
-                    return text.hasChanged() || font.hasChanged() || characterSize.hasChanged() || alignmentX.hasChanged() || alignmentY.hasChanged() || alignmentBox.hasChanged();
-                }
-
-                void resetHasChanged() {
-                    text.resetHasChanged();
-                    font.resetHasChanged();
-                    characterSize.resetHasChanged();
-                    alignmentX.resetHasChanged();
-                    alignmentY.resetHasChanged();
-                    alignmentBox.resetHasChanged();
+                bool hasChanged() {
+                    return text.readReset_hasChanged() || alignmentX.readReset_hasChanged() ||
+						alignmentY.readReset_hasChanged() || alignmentBox.readReset_hasChanged();
                 }
 
             protected:

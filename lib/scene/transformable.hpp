@@ -48,8 +48,10 @@ namespace lib
 
             void rotateScaleAround(const vector2df &point, const f32 angle, const vector2df &scale);
 
-            inline bool transformationNeedsUpdate() const noexcept {
-                return position.hasChanged() || origin.hasChanged() || scale.hasChanged() || rotation.hasChanged();
+		protected:
+            inline bool transformationNeedsUpdate() noexcept {
+                return position.readReset_hasChanged() || origin.readReset_hasChanged() ||
+					scale.readReset_hasChanged() || rotation.readReset_hasChanged();
             }
 
         private:

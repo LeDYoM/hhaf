@@ -20,7 +20,7 @@ namespace lib
 
             void NodeText::updateGeometry()
             {
-                if (font.hasChanged() || characterSize.hasChanged()) {
+                if (font.readReset_hasChanged() || characterSize.readReset_hasChanged()) {
                     if (font() && characterSize() > 0) {
                         font()->ensureLoadASCIIGlyps(characterSize());
                         texture = font()->getTexture(characterSize());
@@ -28,7 +28,6 @@ namespace lib
                 }
 
                 if (hasChanged()) {
-                    resetHasChanged();
                     BasicVertexArray &vertices{ m_vertices.verticesArray() };
 
                     m_vertices.bounds = Rectf32{};

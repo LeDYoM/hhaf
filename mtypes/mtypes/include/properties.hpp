@@ -64,8 +64,8 @@ namespace lib
 
         using BaseClass::operator=;
 
-        bool hasChanged() const noexcept { return m_hasChanged; }
-        bool readReset_hasChanged() const noexcept { const bool v{ m_hasChanged }; resetHasChanged(); return v; }
+//        bool hasChanged() const noexcept { return m_hasChanged; }
+        bool readReset_hasChanged() noexcept { const bool v{ m_hasChanged }; resetHasChanged(); return v; }
         constexpr void resetHasChanged() noexcept { m_hasChanged = false; }
         constexpr void setChanged() noexcept { BaseClass::update(); }
 
