@@ -24,10 +24,12 @@ namespace lib
                     if (font() && characterSize() > 0) {
                         font()->ensureLoadASCIIGlyps(characterSize());
                         texture = font()->getTexture(characterSize());
+						text.setChanged();
                     }
                 }
 
-                if (hasChanged()) {
+                if (text.readReset_hasChanged() || alignmentBox.readReset_hasChanged() || 
+					alignmentX.readReset_hasChanged() || alignmentY.readReset_hasChanged()) {
                     BasicVertexArray &vertices{ m_vertices.verticesArray() };
 
                     m_vertices.bounds = Rectf32{};
@@ -115,6 +117,7 @@ namespace lib
                     // Update the bounding rectangle
                     m_vertices.bounds = { minX, minY, maxX - minX, maxY - minY };
                     m_colorNeedsUpdate = true;
+					alignmentBox.setChanged();
                 }
 
                 if (m_colorNeedsUpdate) {
@@ -122,8 +125,17 @@ namespace lib
                     m_colorNeedsUpdate = false;
                 }
 
-                updateAlignmentX();
-                updateAlignmentY();
+				const bool ab_rr_hasChanged{ alignmentBox.readReset_hasChanged() };
+
+				if (ab_rr_hasChanged || alignmentX.readReset_hasChanged())
+				{
+					updateAlignmentX();
+				}
+
+				if (ab_rr_hasChanged || alignmentY.readReset_hasChanged())
+				{
+					updateAlignmentY();
+				}
             }
 
             void NodeText::updateAlignmentX()
