@@ -11,7 +11,7 @@
 #include <lib/core/debugsystem.hpp>
 
 #include <mtypes/include/log.hpp>
-#include <parpar/include/parpar.hpp>
+#include <mtypes/include/parpar.hpp>
 
 #include <algorithm>
 
@@ -25,7 +25,7 @@ namespace lib::core
     {
     public:
         HostPrivate(const int argc, char *argv[]) : m_params{parpar::create(argc,argv)} {}
-        parpar::ParametersParser m_params;
+        ParametersParser m_params;
     };
 
     auto transformParams(int argc, char *argv[])
@@ -87,7 +87,7 @@ namespace lib::core
     bool Host::setApplication(uptr<IApp> iapp)
     {
         if (!m_iapp && iapp) {
-            std::swap(m_iapp, iapp);
+            m_iapp = std::move(iapp);
             log_debug_info("Starting app ", appId(), "...");
             m_state = AppState::ReadyToStart;
             return true;
