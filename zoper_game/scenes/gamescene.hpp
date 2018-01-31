@@ -39,7 +39,7 @@ namespace zoper
 		virtual void updateScene();
 
 	private:
-		using BaseClass = SceneNode;
+		using BaseClass = lib::scene::Scene;
 		lib::EventReceiver m_boardEventConnector;
 		void setLevel(const lib::u32 nv);
 		void updateLevelData();
