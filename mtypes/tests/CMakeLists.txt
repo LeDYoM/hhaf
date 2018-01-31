@@ -1,5 +1,6 @@
 set(UNIT_TEST_LIST
-  test1)
+  dicty
+  parpar)
 
 foreach(NAME IN LISTS UNIT_TEST_LIST)
   list(APPEND UNIT_TEST_SOURCE_LIST ${NAME}.test.cpp)

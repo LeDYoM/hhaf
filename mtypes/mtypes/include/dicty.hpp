@@ -17,19 +17,19 @@ namespace mtypes::dicty
         using iterator = content::iterator;
         using const_iterator = content::const_iterator;
 
-		constexpr BasicDictionary(std::initializer_list<element> eList)
-			: m_data{ eList } {}
+        BasicDictionary(std::initializer_list<element> eList)
+            : m_data{ std::move(eList) } {}
 
-		bool add(content eList, const bool overwrite = true)
-		{
-			bool result{ true };
-			for (const element& elems : eList) {
-				result &= add(elems.first, elems.second, overwrite);
-			}
-			return result;
-		}
+        bool add(content eList, const bool overwrite = true)
+        {
+            bool result{ true };
+            for (const element& elems : eList) {
+                result &= add(elems.first, elems.second, overwrite);
+            }
+            return result;
+        }
 
-        constexpr bool add(std::initializer_list<element> eList, const bool overwrite = true)
+        bool add(std::initializer_list<element> eList, const bool overwrite = true)
         {
             bool result{true};
             for (const element& elems : eList) {
@@ -57,18 +57,18 @@ namespace mtypes::dicty
             m_data.clear();
         }
 
-		const content &data() const noexcept {
-			return m_data;
-		}
+        const content &data() const noexcept {
+            return m_data;
+        }
 
     private:
         constexpr const_iterator find(const lib::str &key) const noexcept {
-			for (auto &element : m_data) {
-				if (element.first == key) {
-					return &element;
-				}
-			}
-			return m_data.cend();
+            for (auto &element : m_data) {
+                if (element.first == key) {
+                    return &element;
+                }
+            }
+            return m_data.cend();
         }
 
         constexpr iterator find(const lib::str &key) noexcept {

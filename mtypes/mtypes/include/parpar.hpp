@@ -9,8 +9,15 @@
 #include <utility>
 #include <algorithm>
 
-namespace parpar
+namespace lib
 {
+    class ParametersParser;
+    namespace parpar
+    {
+        ParametersParser create(std::vector<std::string> commandLine);
+        ParametersParser create(int argc, char *argv[]);
+    }
+
     /**
      * \class ParametersParser
      *
@@ -30,8 +37,8 @@ namespace parpar
     class ParametersParser
     {
     public:
-		/// Enum to describe the possible errors of the parser.
-		/// Could be checked with the corresponding functions.
+        /// Enum to describe the possible errors of the parser.
+        /// Could be checked with the corresponding functions.
         enum class SyntaxParserErrorCodes
         {
             NoError,
@@ -174,33 +181,33 @@ namespace parpar
         }
 
     public:
-		/// Check if there is an error in a parameter selected by index.
-		/// @param position The index of the parameter to check.
-		/// @returns The enum value containing the error or SyntaxParserErrorCodes::NoError
-		/// if the index of parameter is out of bounds.
-		inline auto errorAtParameter(const std::size_t position) const noexcept
+        /// Check if there is an error in a parameter selected by index.
+        /// @param position The index of the parameter to check.
+        /// @returns The enum value containing the error or SyntaxParserErrorCodes::NoError
+        /// if the index of parameter is out of bounds.
+        inline auto errorAtParameter(const std::size_t position) const noexcept
         {
             return position < m_syntaxErrors.size()?
                         m_syntaxErrors[position]:
                         SyntaxParserErrorCodes::NoError;
         }
 
-		/// Retrieve the number of positional parameters.
-		/// @returns The value.
+        /// Retrieve the number of positional parameters.
+        /// @returns The value.
         inline auto numPositionalParameters() const noexcept
         {
             return m_positionalParameters.size();
         }
 
-		/// Retrieve the number of switch parameters.
-		/// @returns The value.
+        /// Retrieve the number of switch parameters.
+        /// @returns The value.
         inline auto numSwitchParameters() const noexcept
         {
             return m_switchParameters.size();
         }
 
-		/// Retrieve the number of option parameters.
-		/// @returns The value.
+        /// Retrieve the number of option parameters.
+        /// @returns The value.
         inline auto numOptionParameters() const noexcept
         {
             return m_optionParameters.size();
@@ -280,33 +287,36 @@ namespace parpar
             return ov.first?ov.second:def;
         }
 
-		inline std::vector<std::pair<std::string, std::string>> getOptions() const noexcept
-		{
-			return m_optionParameters;
-		}
+        inline std::vector<std::pair<std::string, std::string>> getOptions() const noexcept
+        {
+            return m_optionParameters;
+        }
     private:
         std::vector<SyntaxParserErrorCodes> m_syntaxErrors;
         PositionalParameterVector m_positionalParameters;
         SwitchParameterVector m_switchParameters;
         OptionParameterVector m_optionParameters;
 
-        friend ParametersParser create(int argc, char *argv[]);
-        friend ParametersParser create(std::vector<std::string> commandLine);
+        friend ParametersParser parpar::create(int argc, char *argv[]);
+        friend ParametersParser parpar::create(std::vector<std::string> commandLine);
     };
 
-    ParametersParser create(std::vector<std::string> commandLine)
+    namespace parpar
     {
-        return ParametersParser(std::move(commandLine));
-    }
-
-    ParametersParser create(int argc, char *argv[])
-    {
-        std::vector<std::string> params(argc);
-        for (int i=0;i<argc;++i)
+        ParametersParser create(std::vector<std::string> commandLine)
         {
-            params.emplace_back(argv[i]);
+            return ParametersParser(std::move(commandLine));
         }
-        return create(std::move(params));
+
+        ParametersParser create(int argc, char *argv[])
+        {
+            std::vector<std::string> params(argc);
+            for (int i=0;i<argc;++i)
+            {
+                params.emplace_back(argv[i]);
+            }
+            return parpar::create(std::move(params));
+        }
     }
 }
 
