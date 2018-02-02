@@ -4,67 +4,65 @@
 
 namespace lib
 {
-	str::str(const u32  n) : str{ std::to_string(n).c_str() } {}
-	str::str(const s32 n) : str{ std::to_string(n).c_str() } {}
-	str::str(const f32 n) : str{ std::to_string(n).c_str() } {}
-	str::str(const f64 n) : str{ std::to_string(n).c_str() } {}
-	str::str(const unsigned long n) : str{ std::to_string(n).c_str() } {}   
+    str::str(const u32  n) : str{ std::to_string(n).c_str() } {}
+    str::str(const s32 n) : str{ std::to_string(n).c_str() } {}
+    str::str(const f32 n) : str{ std::to_string(n).c_str() } {}
+    str::str(const f64 n) : str{ std::to_string(n).c_str() } {}
+    str::str(const unsigned long n) : str{ std::to_string(n).c_str() } {}
 
-	namespace detail
-	{
-		constexpr size_t _str_len(const char_type *const p_str) noexcept
-		{
-			const char_type *p_str_copy{ p_str };
-			while (*p_str_copy) ++p_str_copy;
-			return p_str_copy - p_str;
-		}
-	}
-	str::str(const char_type * n) noexcept : m_data(n, detail::_str_len(n) + 1) {}
+    namespace detail
+    {
+        constexpr size_t _str_len(const char_type *const p_str) noexcept
+        {
+            const char_type *p_str_copy{ p_str };
+            while (*p_str_copy) ++p_str_copy;
+            return p_str_copy - p_str;
+        }
+    }
+    str::str(const char_type * n) noexcept : m_data(n, detail::_str_len(n) + 1) {}
 
-	vector<str> str::split(const char_type separator) const
-	{
-		vector<str> result;
-		std::stringstream ss((*this).c_str());
-		std::string tok;
+    vector<str> str::split(const char_type separator) const
+    {
+        vector<str> result;
+        std::stringstream ss((*this).c_str());
+        std::string tok;
 
-		while (std::getline(ss, tok, separator)) {
-			result.push_back(tok.c_str());
-		}
-		return result;
-	}
+        while (std::getline(ss, tok, separator)) {
+            result.push_back(tok.c_str());
+        }
+        return result;
+    }
 
-	str str::substr(const size_type start, const size_type len) const
-	{
-		if (start >= size())
-			return "";
+    str str::substr(size_type start, const size_type len) const
+    {
+        if (start >= size() || len < 1)
+            return "";
 
-		str temp{ make_str(this[start]) };
-		size_type count{ 1 };
-		while (count < len && count + len <= size()) {
-			temp += make_str(this[start + count]);
-			++count;
-		}
-		return temp;
-	}
+        str temp;
+        while (start + len <= size()) {
+            temp.m_data.push_back(m_data[(start++)+len]);
+        }
+        return temp;
+    }
 
-	void str::convert(u32 & n) const
-	{
-		std::istringstream tmpstream(c_str());
-		tmpstream >> n;
-	}
-	void str::convert(s32 & n) const
-	{
-		std::istringstream tmpstream(c_str());
-		tmpstream >> n;
-	}
-	void str::convert(f32 & n) const
-	{
-		std::istringstream tmpstream(c_str());
-		tmpstream >> n;
-	}
-	void str::convert(f64 & n) const
-	{
-		std::istringstream tmpstream(c_str());
-		tmpstream >> n;
-	}
+    void str::convert(u32 & n) const
+    {
+        std::istringstream tmpstream(c_str());
+        tmpstream >> n;
+    }
+    void str::convert(s32 & n) const
+    {
+        std::istringstream tmpstream(c_str());
+        tmpstream >> n;
+    }
+    void str::convert(f32 & n) const
+    {
+        std::istringstream tmpstream(c_str());
+        tmpstream >> n;
+    }
+    void str::convert(f64 & n) const
+    {
+        std::istringstream tmpstream(c_str());
+        tmpstream >> n;
+    }
 }

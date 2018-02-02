@@ -7,20 +7,23 @@
 #include "str.hpp"
 #include "vector.hpp"
 
-namespace mtypes::dicty
+namespace lib::dicty
 {
     class BasicDictionary
     {
     public:
-        using element = std::pair<lib::str, lib::str>;
-        using content = lib::vector<element>;
+        using element = std::pair<str, str>;
+        using content = vector<element>;
         using iterator = content::iterator;
         using const_iterator = content::const_iterator;
 
         BasicDictionary(std::initializer_list<element> eList)
             : m_data{ std::move(eList) } {}
 
-        bool add(content eList, const bool overwrite = true)
+        BasicDictionary(const content &eList)
+            : m_data{ std::move(eList) } {}
+
+        bool add(const content &eList, const bool overwrite = true)
         {
             bool result{ true };
             for (const element& elems : eList) {
@@ -38,7 +41,7 @@ namespace mtypes::dicty
             return result;
         }
 
-        bool add(lib::str key, lib::str value, const bool overwrite = true)
+        bool add(str key, str value, const bool overwrite = true)
         {
             auto it(find(key));
 
@@ -62,7 +65,7 @@ namespace mtypes::dicty
         }
 
     private:
-        constexpr const_iterator find(const lib::str &key) const noexcept {
+        constexpr const_iterator find(const str &key) const noexcept {
             for (auto &element : m_data) {
                 if (element.first == key) {
                     return &element;
@@ -71,7 +74,7 @@ namespace mtypes::dicty
             return m_data.cend();
         }
 
-        constexpr iterator find(const lib::str &key) noexcept {
+        constexpr iterator find(const str &key) noexcept {
             for (auto &element : m_data) {
                 if (element.first == key) {
                     return &element;

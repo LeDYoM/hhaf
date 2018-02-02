@@ -12,6 +12,7 @@
 
 #include <mtypes/include/log.hpp>
 #include <mtypes/include/parpar.hpp>
+#include <mtypes/include/dicty.hpp>
 
 #include <algorithm>
 
@@ -19,24 +20,38 @@
 #define LIB_VERSION_MINOR 4
 #define LIB_VERSION_PATCH 2
 
+#define ACCEPT_PARAMETERS
+
 namespace lib::core
 {
     class HostPrivate final
     {
     public:
-        HostPrivate(const int argc, char *argv[]) : m_params{parpar::create(argc,argv)} {}
-        ParametersParser m_params;
-    };
+        HostPrivate(const int argc, char *argv[]) :
+#ifdef ACCEPT_PARAMETERS
+            m_params{parpar::create(argc,argv)},
+#endif
+            // Hardcoded default configuration
+            // TODO
+            m_configuration{
+                {}
+            }
+        {
 
-    auto transformParams(int argc, char *argv[])
-    {
-        vector<str> temp;
-
-        for (int i = 1; i<argc; ++i) {
-            temp.push_back(argv[i]);
         }
-        return temp;
-    }
+
+#ifdef ACCEPT_PARAMETERS
+        bool parseCommandLineParameters()
+        {
+            if (m_params.hasParameters()) {
+
+            }
+            return true;
+        }
+        parpar::ParametersParser m_params;
+#endif
+        dicty::BasicDictionary m_configuration;
+    };
 
     enum class Host::AppState : u8
     {
@@ -76,7 +91,10 @@ namespace lib::core
         logConstruct_NOPARAMS;
         log_release_info("Starting HostController...");
         log_release_info("LIB version: ", LIB_VERSION_MAJOR,".", LIB_VERSION_MINOR,".", LIB_VERSION_PATCH);
+#ifdef ACCEPT_PARAMETERS
         log_release_info("Parsing parameters...");
+        m_private->parseCommandLineParameters();
+#endif
     }
 
     Host::~Host()

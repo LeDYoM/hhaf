@@ -3,20 +3,30 @@
 #ifndef PARPAR_LIB_INCLUDE_HPP__
 #define PARPAR_LIB_INCLUDE_HPP__
 
-#include <string>
-#include <vector>
-#include <map>
+#include "types.hpp"
+#include "str.hpp"
 #include <utility>
 #include <algorithm>
 
-namespace lib
+namespace lib::parpar
 {
     class ParametersParser;
-    namespace parpar
-    {
-        ParametersParser create(std::vector<std::string> commandLine);
-        ParametersParser create(int argc, char *argv[]);
-    }
+    using str_t = str;
+
+    template <typename T>
+    using vector_t = vector<T>;
+
+    using ParameterName = str_t;
+    using PositionalParameter = str_t;
+    using SwitchParameter = str_t;
+    using OptionParameter = std::pair<str_t,str_t>;
+
+    using PositionalParameterVector = vector_t<PositionalParameter>;
+    using SwitchParameterVector = vector_t<SwitchParameter>;
+    using OptionParameterVector = vector_t<OptionParameter>;
+
+    ParametersParser create(vector_t<str_t> commandLine);
+    ParametersParser create(int argc, char *argv[]);
 
     /**
      * \class ParametersParser
@@ -34,7 +44,7 @@ namespace lib
      *
      * \version $Revision: 0.9 $
      */
-    class ParametersParser
+    class ParametersParser final
     {
     public:
         /// Enum to describe the possible errors of the parser.
@@ -55,14 +65,6 @@ namespace lib
 
     private:
 
-        using PositionalParameter = std::string;
-        using SwitchParameter = PositionalParameter;
-        using OptionParameter = std::pair<std::string,std::string>;
-
-        using PositionalParameterVector = std::vector<PositionalParameter>;
-        using SwitchParameterVector = std::vector<SwitchParameter>;
-        using OptionParameterVector = std::vector<OptionParameter>;
-
         enum class ParameterType
         {
             Positional,
@@ -74,7 +76,7 @@ namespace lib
         /// @see ParameterType
         /// @param param The string representation of the parameter
         /// @return The enum value of the parameter parameter.
-        static ParameterType getParameterType(const std::string &param)
+        static ParameterType getParameterType(const ParameterName &param)
         {
             if (param[0] == '-') {
                 if (param[1] == '-') {
@@ -86,7 +88,7 @@ namespace lib
         }
 
         using COptionResult
-            = std::pair<SyntaxParserErrorCodes,std::pair<std::string,std::string>>;
+            = std::pair<SyntaxParserErrorCodes,std::pair<str_t,str_t>>;
 
         /// Method that given a parameter assumed as option,
         /// checks if it is well formed.
@@ -94,15 +96,15 @@ namespace lib
         /// @return A tuple with an error code and two strings.
         /// If the error code is no error, the two strings are filled with
         /// name and value.
-        static COptionResult checkOptionParameter(const std::string &param)
+        static COptionResult checkOptionParameter(const ParameterName &param)
         {
             // Find '=' sign
             const auto equalSign(param.find_first_of('='));
 
             if (equalSign != std::string::npos)
             {
-                const std::string name(param.substr(1,equalSign-1));
-                const std::string value(param.substr(equalSign+1));
+                const str_t name(param.substr(1,equalSign-1));
+                const str_t value(param.substr(equalSign+1));
 
                 if (name.empty())
                 {
@@ -119,12 +121,12 @@ namespace lib
             return COptionResult{ SyntaxParserErrorCodes::OptionWithoutEqual, {param.substr(1),{}} };
         }
 
-        inline ParametersParser(std::vector<std::string> argv)
+        inline ParametersParser(vector_t<str_t> argv)
         {
             bool searchForPositional{true};
 
             for (decltype(argv.size()) i{1};i<argv.size();++i) {
-                std::string param{std::move(argv[i])};
+                str_t param{std::move(argv[i])};
 
                 if (!param.empty())
                 {
@@ -246,13 +248,13 @@ namespace lib
             return numSyntaxErrors() == 0;
         }
 
-        inline std::string positionalParameterAt(const std::size_t position) const
+        inline str positionalParameterAt(const std::size_t position) const
         {
             return (position < m_positionalParameters.size()) ?
                 m_positionalParameters[position] : "";
         }
 
-        inline bool switchExists(const std::string &swPar) const
+        inline bool switchExists(const str &swPar) const
         {
             return std::find(
                 m_switchParameters.cbegin(),
@@ -260,12 +262,12 @@ namespace lib
                 SwitchParameter{swPar}) != m_switchParameters.cend();
         }
 
-        inline bool optionExists(const std::string &opPar) const
+        inline bool optionExists(const str &opPar) const
         {
             return optionValue(opPar).first;
         }
 
-        inline std::pair<bool,std::string> optionValue(const std::string &opPar) const
+        inline std::pair<bool,str> optionValue(const str_t &opPar) const
         {
             auto iterator(std::find_if(
                 m_optionParameters.cbegin(),
@@ -280,14 +282,14 @@ namespace lib
                     std::make_pair(true,iterator->second);
         }
 
-        inline std::string optionValueOrDefault(const std::string &opPar,
-                                                const std::string &def) const
+        inline str_t optionValueOrDefault(const str_t &opPar,
+                                                const str &def) const
         {
             auto ov(optionValue(opPar));
             return ov.first?ov.second:def;
         }
 
-        inline std::vector<std::pair<std::string, std::string>> getOptions() const noexcept
+        inline const auto& getOptions() const noexcept
         {
             return m_optionParameters;
         }
@@ -298,25 +300,22 @@ namespace lib
         OptionParameterVector m_optionParameters;
 
         friend ParametersParser parpar::create(int argc, char *argv[]);
-        friend ParametersParser parpar::create(std::vector<std::string> commandLine);
+        friend ParametersParser parpar::create(vector_t<str_t> commandLine);
     };
 
-    namespace parpar
+    ParametersParser create(vector_t<str_t> commandLine)
     {
-        ParametersParser create(std::vector<std::string> commandLine)
-        {
-            return ParametersParser(std::move(commandLine));
-        }
+        return ParametersParser(std::move(commandLine));
+    }
 
-        ParametersParser create(int argc, char *argv[])
+    ParametersParser create(int argc, char *argv[])
+    {
+        vector_t<str> params(argc);
+        for (int i=0;i<argc;++i)
         {
-            std::vector<std::string> params(argc);
-            for (int i=0;i<argc;++i)
-            {
-                params.emplace_back(argv[i]);
-            }
-            return parpar::create(std::move(params));
+            params.emplace_back(argv[i]);
         }
+        return create(std::move(params));
     }
 }
 

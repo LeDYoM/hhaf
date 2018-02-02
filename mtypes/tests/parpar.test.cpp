@@ -4,10 +4,11 @@
 #include <mtypes/include/parpar.hpp>
 
 using namespace lib;
+using namespace lib::parpar;
 
 TEST_CASE("program", "[parpar]")
 {
-    const ParametersParser paramParser (parpar::create(
+    const ParametersParser paramParser (create(
         {"program"}
     ));
 
@@ -23,7 +24,7 @@ TEST_CASE("program", "[parpar]")
 
 TEST_CASE("program -", "[parpar][errors]")
 {
-    const ParametersParser paramParser (parpar::create(
+    const ParametersParser paramParser (create(
         {"program ", "-"}
     ));
 
@@ -42,7 +43,7 @@ TEST_CASE("program -", "[parpar][errors]")
 
 TEST_CASE("program --abc file", "[parpar][positional][switch][errors]")
 {
-    const ParametersParser paramParser (parpar::create(
+    const ParametersParser paramParser (create(
         {"program ", "--abc", "file"}
     ));
 
@@ -62,7 +63,7 @@ TEST_CASE("program --abc file", "[parpar][positional][switch][errors]")
 
 TEST_CASE("program -abc=2 -abc=3", "[parpar][option][errors]")
 {
-    const ParametersParser paramParser (parpar::create(
+    const ParametersParser paramParser (create(
         {"program ", "-abc=2", "-abc=3"}
     ));
 
@@ -79,7 +80,7 @@ TEST_CASE("program -abc=2 -abc=3", "[parpar][option][errors]")
     CHECK(paramParser.errorAtParameter(1) ==
         ParametersParser::SyntaxParserErrorCodes::OptionAlreadySet);
 
-    CHECK(paramParser.getOptions() == std::vector<std::pair<std::string, std::string>>{
+    CHECK(paramParser.getOptions() == OptionParameterVector{
         { "abc", "2" },
         { "abc", "3" }
     });
@@ -87,7 +88,7 @@ TEST_CASE("program -abc=2 -abc=3", "[parpar][option][errors]")
 
 TEST_CASE("program -abc -=3 -def=", "[parpar][syntax][option][errors]")
 {
-    const ParametersParser paramParser (parpar::create(
+    const ParametersParser paramParser (create(
         {"program", "-abc", "-=3", "-def="}
     ));
 
@@ -112,7 +113,7 @@ TEST_CASE("program -abc -=3 -def=", "[parpar][syntax][option][errors]")
 
 TEST_CASE("program filename --doit -abc=sdf", "[parpar][positional][option][switch]")
 {
-    const ParametersParser paramParser (parpar::create(
+    const ParametersParser paramParser (create(
         {"program", "filename", "--doit", "-abc=sdf"}
     ));
 
@@ -128,7 +129,7 @@ TEST_CASE("program filename --doit -abc=sdf", "[parpar][positional][option][swit
     CHECK(paramParser.positionalParameterAt(1) == "");
     CHECK(paramParser.switchExists("doit"));
     CHECK_FALSE(paramParser.switchExists("doitasd"));
-    CHECK(paramParser.getOptions() == std::vector<std::pair<std::string, std::string>>{
+    CHECK(paramParser.getOptions() == OptionParameterVector{
         { "abc", "sdf" }
     });
 
@@ -137,7 +138,7 @@ TEST_CASE("program filename --doit -abc=sdf", "[parpar][positional][option][swit
 
 TEST_CASE("program sourcef.dat targetf.dat --nope -abc=sdf -this=other", "[parpar][positional][option][switch]")
 {
-    const ParametersParser paramParser (parpar::create(
+    const ParametersParser paramParser (create(
         {"program", "sourcef.dat", "targetf.dat", "--nope", "--ok", "-abc=sdf", "-this=other"}
     ));
 
@@ -166,7 +167,7 @@ TEST_CASE("program sourcef.dat targetf.dat --nope -abc=sdf -this=other", "[parpa
     CHECK(paramParser.optionValueOrDefault("another","42") == "42");
     CHECK(paramParser.optionValueOrDefault("another","false") == "false");
 
-    CHECK(paramParser.getOptions() == std::vector<std::pair<std::string, std::string>>{
+    CHECK(paramParser.getOptions() == OptionParameterVector{
         { "abc", "sdf" },
         { "this", "other" }
     });
