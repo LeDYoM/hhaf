@@ -22,7 +22,7 @@ namespace lib
 	{
 		class SceneManager;
 
-		class Scene : public scene::SceneNode
+		class Scene : public SceneNode
 		{
 		public:
 			Scene(str name);

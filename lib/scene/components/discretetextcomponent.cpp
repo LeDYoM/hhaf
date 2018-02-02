@@ -30,7 +30,7 @@ namespace lib::scene
 
 	void DiscreteTextComponent::update()
 	{
-		if (index.hasChanged()) {
+		if (index.readReset_hasChanged()) {
 			_setText(data()[index()]);
 		}
 	}

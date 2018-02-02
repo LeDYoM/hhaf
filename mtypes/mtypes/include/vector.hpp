@@ -47,6 +47,7 @@ namespace lib
 					_copyStructure(other);
 
 				_copyElements(other.m_buffer, other.m_size);
+				m_size = other.m_size;
 			}
 			return *this;
 		}

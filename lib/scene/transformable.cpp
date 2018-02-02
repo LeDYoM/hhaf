@@ -57,13 +57,6 @@ namespace lib
 		{
 			if (!transformationNeedsUpdate())
 				return;
-			else
-			{
-				position.resetHasChanged();
-				rotation.resetHasChanged();
-				scale.resetHasChanged();
-				origin.resetHasChanged();
-			}
 
 			// Recompute the combined transform
 			const f32 angle{ -rotation() * 3.141592654f / 180.f };

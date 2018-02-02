@@ -10,27 +10,27 @@
 
 namespace lib::scene
 {
-	class DiscreteTextComponent : public RenderizableSceneNodeComponent<nodes::NodeText, IComponent>
-	{
-	public:
-		using BaseClass = RenderizableSceneNodeComponent<nodes::NodeText, IComponent>;
-		DiscreteTextComponent() {}
-		virtual ~DiscreteTextComponent() {}
+    class DiscreteTextComponent : public RenderizableSceneNodeComponent<nodes::NodeText, IComponent>
+    {
+    public:
+        using BaseClass = RenderizableSceneNodeComponent<nodes::NodeText, IComponent>;
+        DiscreteTextComponent() {}
+        virtual ~DiscreteTextComponent() {}
 
-		virtual void onAttached() override {
-			BaseClass::onAttached();
-		}
+        virtual void onAttached() override {
+            BaseClass::onAttached();
+        }
 
-		Property<bool> circleAroud{ true };
-		Property<u32> index{ 0 };
-		Property<string_vector> data;
-		void incrementIndex() noexcept;
-		void decrementIndex() noexcept;
+        BasicProperty<bool> circleAroud{ true };
+        BasicProperty<string_vector> data;
+        void incrementIndex() noexcept;
+        void decrementIndex() noexcept;
+        PropertyState<u32> index{ 0 };
 
-		virtual void update() override final;
-	private:
-		void _setText(const str&nText);
-	};
+        virtual void update() override final;
+    private:
+        void _setText(const str&nText);
+    };
 }
 
 #endif

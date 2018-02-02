@@ -8,59 +8,59 @@
 
 namespace lib
 {
-	namespace board
-	{
-		using BoardTileData = s32;
+    namespace board
+    {
+        using BoardTileData = s32;
 
-		class ITile : public Property<BoardTileData>
-		{
-		public:
-			using Property<BoardTileData>::Property;
-			virtual ~ITile() = default;
-		};
+        class ITile : public PropertyTrigger<BoardTileData>
+        {
+        public:
+            using PropertyTrigger<BoardTileData>::PropertyTrigger;
+            virtual ~ITile() = default;
+        };
 
-		using SITilePointer = sptr<ITile>;
+        using SITilePointer = sptr<ITile>;
 
-		class TileEvent
-		{
-		public:
-			TileEvent(vector2du32 &&_position, SITilePointer&& nTile)
-				: position{ std::move(_position) }, tile{ std::move(nTile) } {}
+        class TileEvent
+        {
+        public:
+            TileEvent(vector2du32 &&_position, SITilePointer&& nTile)
+                : position{ std::move(_position) }, tile{ std::move(nTile) } {}
 
-			const vector2du32 position;
-			const SITilePointer tile;
-		};
+            const vector2du32 position;
+            const SITilePointer tile;
+        };
 
-		class TileAddedEvent : public TileEvent, public events::EventTemplate<TileAddedEvent>
-		{
-		public:
-			TileAddedEvent(vector2du32 _position, SITilePointer nTile)
-				: TileEvent{ std::move(_position), std::move(nTile) } {}
-		};
+        class TileAddedEvent : public TileEvent, public events::EventTemplate<TileAddedEvent>
+        {
+        public:
+            TileAddedEvent(vector2du32 _position, SITilePointer nTile)
+                : TileEvent{ std::move(_position), std::move(nTile) } {}
+        };
 
-		class TileDeletedEvent : public TileEvent, public events::EventTemplate<TileDeletedEvent>
-		{
-		public:
-			TileDeletedEvent(vector2du32 _position, SITilePointer nTile)
-				: TileEvent{ std::move(_position), std::move(nTile) } {}
-		};
+        class TileDeletedEvent : public TileEvent, public events::EventTemplate<TileDeletedEvent>
+        {
+        public:
+            TileDeletedEvent(vector2du32 _position, SITilePointer nTile)
+                : TileEvent{ std::move(_position), std::move(nTile) } {}
+        };
 
-		class TileMovedEvent : public TileEvent, public events::EventTemplate<TileMovedEvent>
-		{
-		public:
-			TileMovedEvent(vector2du32 _position, vector2du32 _dest, SITilePointer nTile)
-				: TileEvent{ std::move(_position), std::move(nTile) }, dest{ std::move(_dest) } {}
-			const vector2du32 dest;
-		};
+        class TileMovedEvent : public TileEvent, public events::EventTemplate<TileMovedEvent>
+        {
+        public:
+            TileMovedEvent(vector2du32 _position, vector2du32 _dest, SITilePointer nTile)
+                : TileEvent{ std::move(_position), std::move(nTile) }, dest{ std::move(_dest) } {}
+            const vector2du32 dest;
+        };
 
-		class TileChangedEvent : public TileEvent, public events::EventTemplate<TileChangedEvent>
-		{
-		public:
-			TileChangedEvent(vector2du32 _position, SITilePointer nTile, BoardTileData _ov, BoardTileData _nv)
-				: TileEvent{ std::move(_position), std::move(nTile) }, ov{ std::move(_ov) }, nv{ std::move(_nv) } {}
-			BoardTileData ov, nv;
-		};
-	}
+        class TileChangedEvent : public TileEvent, public events::EventTemplate<TileChangedEvent>
+        {
+        public:
+            TileChangedEvent(vector2du32 _position, SITilePointer nTile, BoardTileData _ov, BoardTileData _nv)
+                : TileEvent{ std::move(_position), std::move(nTile) }, ov{ std::move(_ov) }, nv{ std::move(_nv) } {}
+            BoardTileData ov, nv;
+        };
+    }
 }
 
 #endif

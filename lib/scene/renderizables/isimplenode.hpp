@@ -1,5 +1,7 @@
-#ifndef LIB_DRAW_ISIMPLENODE_HPP__
-#define LIB_DRAW_ISIMPLENODE_HPP__
+#pragma once
+
+#ifndef LIB_SCENE_ISIMPLENODE_HPP__
+#define LIB_SCENE_ISIMPLENODE_HPP__
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
@@ -8,30 +10,30 @@
 
 namespace lib
 {
-	namespace scene
-	{
-		class Texture;
-		namespace nodes
-		{
-			class ISimpleNode : public Renderizable
-			{
-			public:
-				ISimpleNode(SceneNode *const parent, const str &name, const u32 pointCount);
-				virtual ~ISimpleNode() = default;
+    namespace scene
+    {
+        class Texture;
+        namespace nodes
+        {
+            class ISimpleNode : public Renderizable
+            {
+            public:
+                ISimpleNode(SceneNode *const parent, const str &name, const u32 pointCount);
+                virtual ~ISimpleNode() = default;
 
-				Property<Rectf32> box;
-				Property<Rects32> textureRect;
+                PropertyTrigger<Rectf32> box;
+                PropertyTrigger<Rects32> textureRect;
 
-			protected:
-				void updateGeometry();
-				void updateTextureCoords();
+            protected:
+                void updateGeometry();
+                void updateTextureCoords();
 
-				virtual void updateGeometrySimpleNode() = 0;
-				bool m_textureRectNeedsUpdate{ true };
+                virtual void updateGeometrySimpleNode() = 0;
+                bool m_textureRectNeedsUpdate{ true };
 
-			};
-		}
-	}
+            };
+        }
+    }
 }
 
 #endif

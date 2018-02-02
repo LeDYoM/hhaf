@@ -8,31 +8,33 @@
 
 namespace lib
 {
-	namespace backend
-	{
-		class IFont;
-	}
+    namespace backend
+    {
+        class IFont;
+    }
 
-	namespace scene
-	{
-		struct TTGlyph final : public backend::ITTGlyph
-		{
-			TTGlyph(const backend::ITTGlyph &rhs) : backend::ITTGlyph{ rhs } {}
-		};
+    namespace scene
+    {
+        struct TTGlyph final : public backend::ITTGlyph
+        {
+            TTGlyph(const backend::ITTGlyph &rhs) : backend::ITTGlyph{ rhs } {}
+        };
 
-		class TTFont final
-		{
-		public:
-			TTFont(backend::ITTFont *font);
-			bool loadFromFile(const str& filename);
-			TTGlyph getGlyph(const u32 codePoint, const u32 characterSize) const;
-			f32 getLineSpacing(const u32 characterSize) const;
-			f32 getKerning(const u32 first, const u32 second, const u32 characterSize) const;
-			sptr<Texture> getTexture(const u32 characterSize) const;
-		private:
-			backend::ITTFont* m_font;
-		};
-	}
+        class TTFont final
+        {
+        public:
+            TTFont(backend::ITTFont *font);
+            bool loadFromFile(const str& filename);
+            TTGlyph getGlyph(const u32 codePoint, const u32 characterSize) const;
+            f32 getLineSpacing(const u32 characterSize) const;
+            f32 getKerning(const u32 first, const u32 second, const u32 characterSize) const;
+            sptr<Texture> getTexture(const u32 characterSize) const;
+            void ensureLoadGlyphs(const u32 first, const u32 last, const u32 characterSize);
+            void ensureLoadASCIIGlyps(const u32 characterSize);
+        private:
+            backend::ITTFont* m_font;
+        };
+    }
 }
 
 #endif
