@@ -2,7 +2,7 @@
 
 #include <mtypes/include/dicty.hpp>
 
-using namespace lib::dicty;
+using namespace lib;
 
 TEST_CASE("dicty test1", "[dicty]")
 {

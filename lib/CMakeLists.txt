@@ -1,5 +1,20 @@
 project (lib)
 
+set(SOURCE_FILES_LIST
+    backend/backendfactory.cpp
+    backend/backendfactory.hpp
+    backend/interfaces.hpp
+    backend/itexturefactory.hpp
+    backend/itexture.hpp
+    backend/ittfontfactory.hpp
+    backend/ittfont.hpp
+    backend/iwindow.hpp
+
+    board/boardmodel.cpp
+    board/boardmodel.hpp
+    board/itilescontroller.hpp
+)
+
 #Add all the file from the library to compile
 file (GLOB_RECURSE LIB_HEADERS "*.hpp")
 file (GLOB_RECURSE LIB_SOURCES "*.cpp")
