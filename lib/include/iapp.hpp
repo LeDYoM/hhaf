@@ -22,11 +22,13 @@ namespace lib
         WindowCreationParams wcp;
     };
 
-    class IApp
-    {
-    public:
-        constexpr IApp() {}
-        virtual ~IApp() {}
+	class IApp
+	{
+	public:
+		constexpr IApp() : m_hostContext{ nullptr } {}
+		virtual ~IApp() {}
+
+		inline void setHostContext(HostContext*hs) noexcept { m_hostContext = hs; }
 
         virtual void sceneFinished() {}
         virtual const IAppDescriptor getAppDescriptor() const = 0;
@@ -34,7 +36,7 @@ namespace lib
         virtual int loop() = 0;
 
 private:
-        HostContext m_context;
+        HostContext *m_hostContext;
     };
 }
 
