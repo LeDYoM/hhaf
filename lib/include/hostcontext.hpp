@@ -13,8 +13,10 @@ namespace lib
     public:
         const BasicDictionary &appParameters() const
         {
-
+            return m_appParameters;
         }
+    private:
+        BasicDictionary m_appParameters;
     };
 }
 

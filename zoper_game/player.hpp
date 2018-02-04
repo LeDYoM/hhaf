@@ -10,22 +10,24 @@
 
 namespace zoper
 {
+    using namespace lib;
     class Player : public GameBaseTile
     {
     public:
-        Player(lib::scene::SceneNode* const parent, const lib::str &name, lib::vector2du32 bPosition, lib::Rectf32 box, lib::vector2df board2SceneFactor);
+        Player(scene::SceneNode* const parent, const str &name,
+               vector2dst bPosition, Rectf32 box, vector2df board2SceneFactor);
         virtual ~Player();
 
-        lib::PropertyTrigger<lib::vector2du32> boardPosition;
-        lib::PropertyTrigger<Direction> currentDirection;
+        PropertyTrigger<lib::vector2dst> boardPosition;
+        PropertyTrigger<Direction> currentDirection;
 
-        void movePlayer(const Direction &direction, const lib::function<bool(const lib::vector2du32&)> &pointInCenter, const lib::sptr<lib::board::BoardModelComponent> &boardModel);
+        void movePlayer(const Direction &direction, const lib::function<bool(const lib::vector2dst&)> &pointInCenter, const lib::sptr<lib::board::BoardModelComponent> &boardModel);
         void updateDirection();
 
     private:
-        lib::scene::SceneNodeSPtr m_extraSceneNode;
-        lib::scene::SceneNodeSPtr m_extraSceneNode_2;
-        lib::vector2df m_board2SceneFactor;
+        scene::SceneNodeSPtr m_extraSceneNode;
+        scene::SceneNodeSPtr m_extraSceneNode_2;
+        vector2df m_board2SceneFactor;
     };
 }
 

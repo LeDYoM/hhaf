@@ -103,18 +103,39 @@ namespace zoper
 
         p_boardModel = this->ensureComponentOfType<BoardModelComponent>();
         p_boardModel->initialize(m_gameData->size);
-        m_boardEventConnector.addSubscription(TileAddedEvent::subscribe([this](const events::Event&ev) {
-            auto tEvent{ eventAs<TileAddedEvent>(ev) }; tileAdded(tEvent.position, tEvent.tile);
-        }));
-        m_boardEventConnector.addSubscription(TileDeletedEvent::subscribe([this](const events::Event&ev) {
-            auto tEvent{ eventAs<TileDeletedEvent>(ev) }; tileDeleted(tEvent.position, tEvent.tile);
-        }));
-        m_boardEventConnector.addSubscription(TileChangedEvent::subscribe([this](const events::Event&ev) {
-            auto tEvent{ eventAs<TileChangedEvent>(ev) }; tileChanged(tEvent.position, tEvent.tile, tEvent.ov, tEvent.nv);
-        }));
-        m_boardEventConnector.addSubscription(TileMovedEvent::subscribe([this](const events::Event&ev) {
-            auto tEvent{ eventAs<TileMovedEvent>(ev) }; tileMoved(tEvent.position, tEvent.dest, tEvent.tile);
-        }));
+
+        p_boardModel->TileAdded.connect([this](const vector2dst position, SITilePointer tile) {
+            tileAdded(position, tile);
+        });
+
+//        m_boardEventConnector.addSubscription(TileAddedEvent::subscribe([this](const events::Event&ev) {
+//            auto tEvent{ eventAs<TileAddedEvent>(ev) }; tileAdded(tEvent.position, tEvent.tile);
+//        }));
+
+        p_boardModel->TileRemoved.connect([this](const vector2dst position, SITilePointer tile) {
+            tileAdded(position, tile);
+        });
+
+//        m_boardEventConnector.addSubscription(TileDeletedEvent::subscribe([this](const events::Event&ev) {
+//            auto tEvent{ eventAs<TileDeletedEvent>(ev) }; tileDeleted(tEvent.position, tEvent.tile);
+//        }));
+
+        p_boardModel->TileChanged.connect([this](const vector2dst position, SITilePointer tile,
+                                          const BoardTileData oldValue, const BoardTileData newValue) {
+            tileChanged(position, tile, oldValue, newValue);
+        });
+
+//        m_boardEventConnector.addSubscription(TileChangedEvent::subscribe([this](const events::Event&ev) {
+//            auto tEvent{ eventAs<TileChangedEvent>(ev) }; tileChanged(tEvent.position, tEvent.tile, tEvent.ov, tEvent.nv);
+//        }));
+
+        p_boardModel->TileMoved.connect([this](const vector2dst source, const vector2dst dest, SITilePointer tile) {
+            tileMoved(source, dest, tile);
+        });
+
+//        m_boardEventConnector.addSubscription(TileMovedEvent::subscribe([this](const events::Event&ev) {
+//            auto tEvent{ eventAs<TileMovedEvent>(ev) }; tileMoved(tEvent.position, tEvent.dest, tEvent.tile);
+//        }));
 
         tilesCreated();
         addPlayer();
@@ -151,7 +172,7 @@ namespace zoper
             {
                 auto dir(keyMapping->getDirectionFromKey(key));
                 if (dir.isValid()) {
-                    p_player->movePlayer(dir, [this](const vector2du32&p) { return pointInCenter(p); }, p_boardModel);
+                    p_player->movePlayer(dir, [this](const vector2dst&p) { return pointInCenter(p); }, p_boardModel);
                 }
                 else if (keyMapping->isLaunchKey(key)) {
                     launchPlayer();
@@ -283,25 +304,25 @@ namespace zoper
         log_debug_info("zone: ", currentTokenZone.zone);
 
         // Generate the new token type
-        const u32 newToken{ randomizer().getUInt(NumTokens) };
+        const size_type newToken{ randomizer().getUInt(NumTokens) };
 
         // Calculate in wich tile zone offset is going to appear
-        const u32 sizep{ randomizer().getUInt(currentTokenZone.size) };
+        const size_type sizep{ randomizer().getUInt(currentTokenZone.size) };
 
         // Prepare the position for the new token
-        const u32 newX{ currentTokenZone.zone.left + (currentTokenZone.direction.isHorizontal() ? 0 : sizep) };
-        const u32 newY{ currentTokenZone.zone.top + (currentTokenZone.direction.isHorizontal() ? sizep : 0) };
+        const size_type newX{ currentTokenZone.zone.left + (currentTokenZone.direction.isHorizontal() ? 0 : sizep) };
+        const size_type newY{ currentTokenZone.zone.top + (currentTokenZone.direction.isHorizontal() ? sizep : 0) };
         lib::log_debug_info("New tile pos: ", newX, ",", newY);
 
-        vector2du32 loopPosition{ (currentTokenZone.direction.isHorizontal() ? currentTokenZone.zone.size().x : newX),
+        vector2dst loopPosition{ (currentTokenZone.direction.isHorizontal() ? currentTokenZone.zone.size().x : newX),
             (currentTokenZone.direction.isHorizontal() ? newY : currentTokenZone.zone.size().y) };
         lib::log_debug_info("Starting at: ", loopPosition);
 
         // Now, we have the data for the new token generated, but first, lets start to move the row or col.
         Direction loopDirection = currentTokenZone.direction.negate();
-        for_each_token_in_line(loopPosition, loopDirection, [this](const vector2du32 &loopPosition, const Direction &direction) {
+        for_each_token_in_line(loopPosition, loopDirection, [this](const vector2dst &loopPosition, const Direction &direction) {
             if (!p_boardModel->tileEmpty(loopPosition)) {
-                vector2du32 dest{ direction.negate().applyToVector(loopPosition) };
+                const auto dest( direction.negate().applyToVector(loopPosition) );
                 p_boardModel->moveTile(loopPosition, dest);
 
                 if (pointInCenter(dest)) {
@@ -312,7 +333,7 @@ namespace zoper
             return true;
         });
         // Set the new token
-        addNewToken(vector2du32{ newX, newY }, newToken);
+        addNewToken(vector2dst{ newX, newY }, newToken);
         m_nextTokenPart = (m_nextTokenPart + 1) % NumWays;
 
         CLIENT_EXECUTE_IN_DEBUG(_debugDisplayBoard());
@@ -324,10 +345,10 @@ namespace zoper
         m_gameOverrg->visible = true;
     }
 
-    void GameScene::for_each_token_in_line(const vector2du32 &startPosition, const Direction &direction,
-        function<bool(const vector2du32 &, const Direction &)> updatePredicate)
+    void GameScene::for_each_token_in_line(const vector2dst &startPosition, const Direction &direction,
+        function<bool(const vector2dst &, const Direction &)> updatePredicate)
     {
-        vector2du32 loopPosition{ startPosition };
+        vector2dst loopPosition{ startPosition };
         // Now, we have the data for the new token generated, but first, lets start to move the row or col.
         bool stay{ true };
         do {
@@ -348,7 +369,7 @@ namespace zoper
         p_boardModel->setTile(p_player->boardPosition(), p_player);
     }
 
-    void GameScene::addNewToken(const vector2du32 &pos, u32 newToken)
+    void GameScene::addNewToken(const vector2dst &pos, u32 newToken)
     {
         using namespace lib::board;
 
@@ -401,10 +422,10 @@ namespace zoper
     {
         lib::log_debug_info("Launching player");
         const Direction loopDirection{ p_player->currentDirection() };
-        const vector2du32 loopPosition{ p_player->boardPosition() };
+        const vector2dst loopPosition{ p_player->boardPosition() };
         const board::BoardTileData tokenType{ p_player->get() };
         u32 inARow{ 0 };
-        for_each_token_in_line(loopPosition, loopDirection, [this, tokenType, &inARow](const vector2du32 &loopPosition, const Direction &)
+        for_each_token_in_line(loopPosition, loopDirection, [this, tokenType, &inARow](const vector2dst &loopPosition, const Direction &)
         {
             bool result{ true };
             bool found{ false };
@@ -447,7 +468,7 @@ namespace zoper
             updateLevelData();
     }
 
-    bool GameScene::pointInCenter(const lib::vector2du32 &pos) const
+    bool GameScene::pointInCenter(const vector2dst &pos) const
     {
         if (p_boardModel->validCoords(pos)) {
             if (pos.x < m_gameData->centerRect.left || pos.y < m_gameData->centerRect.top)
@@ -467,7 +488,7 @@ namespace zoper
             sceneManager().viewRect().size().y / static_cast<f32>(p_boardModel->size().y) };
     }
 
-    vector2df GameScene::board2Scene(const lib::vector2du32 &bPosition) const
+    vector2df GameScene::board2Scene(const lib::vector2dst &bPosition) const
     {
         const auto b2sf{ board2SceneFactor() };
         return { b2sf.x * bPosition.x, b2sf.y * bPosition.y };
@@ -537,7 +558,7 @@ namespace zoper
         }
     }
 
-    void GameScene::tileAdded(const vector2du32 &pos, board::SITilePointer nTile)
+    void GameScene::tileAdded(const vector2dst &pos, board::SITilePointer nTile)
     {
         // Tile appeared
         if (auto ztile = std::dynamic_pointer_cast<Tile>(nTile)) {
@@ -549,7 +570,7 @@ namespace zoper
         }
     }
 
-    void GameScene::tileDeleted(const vector2du32 &pos, board::SITilePointer nTile)
+    void GameScene::tileDeleted(const vector2dst &pos, board::SITilePointer nTile)
     {
         if (auto ztile = std::dynamic_pointer_cast<Tile>(nTile)) {
             lib::log_debug_info("Deleting token ", ztile->name(), " from scene at position ", pos);
@@ -559,7 +580,7 @@ namespace zoper
         }*/
     }
 
-    void GameScene::tileMoved(const vector2du32 &source, const vector2du32 &dest, board::SITilePointer tile)
+    void GameScene::tileMoved(const vector2dst &source, const vector2dst &dest, board::SITilePointer tile)
     {
         if (auto ztile = std::dynamic_pointer_cast<Tile>(tile)) {
             tokenMoved(source, dest, ztile);
@@ -569,7 +590,7 @@ namespace zoper
         }
     }
 
-    void GameScene::tileChanged(const vector2du32 &pos, board::SITilePointer nTile,
+    void GameScene::tileChanged(const vector2dst &pos, board::SITilePointer nTile,
         const board::BoardTileData &ov, const board::BoardTileData &nv)
     {
         if (auto ztile = std::dynamic_pointer_cast<Tile>(nTile)) {
@@ -581,7 +602,7 @@ namespace zoper
         }
     }
 
-    void GameScene::tokenMoved(const vector2du32 &, const vector2du32 &dest, sptr<Tile> tile)
+    void GameScene::tokenMoved(const vector2dst &, const vector2dst &dest, sptr<Tile> tile)
     {
         auto animationComponent(tile->ensureComponentOfType<anim::AnimationComponent>());
         animationComponent->addAnimation(muptr<anim::IPropertyAnimation<vector2df>>

@@ -5,7 +5,7 @@ namespace zoper
     using namespace lib;
     using namespace lib::scene;
 
-    Player::Player(SceneNode* const parent, const str& name, vector2du32 bPosition, Rectf32 box, vector2df board2SceneFactor)
+    Player::Player(SceneNode* const parent, const str& name, vector2dst bPosition, Rectf32 box, vector2df board2SceneFactor)
         : GameBaseTile{ parent, name, 0 },
         boardPosition{ std::move(bPosition), [this]() {
             position = vector2df{ m_board2SceneFactor.x * boardPosition().x, m_board2SceneFactor.y * boardPosition().y }; }
@@ -22,7 +22,7 @@ namespace zoper
 
     Player::~Player() = default;
 
-    void Player::movePlayer(const Direction & direction, const function<bool(const vector2du32&)> &pointInCenter, const sptr<board::BoardModelComponent>& boardModel)
+    void Player::movePlayer(const Direction & direction, const function<bool(const vector2dst&)> &pointInCenter, const sptr<board::BoardModelComponent>& boardModel)
     {
         CLIENT_ASSERT(direction.isValid(), "Invalid direction passed to move");
         currentDirection = direction;

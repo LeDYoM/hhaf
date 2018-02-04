@@ -7,7 +7,7 @@
 #include "str.hpp"
 #include "vector.hpp"
 
-namespace lib::dicty
+namespace lib
 {
     class BasicDictionary
     {
@@ -16,6 +16,8 @@ namespace lib::dicty
         using content = vector<element>;
         using iterator = content::iterator;
         using const_iterator = content::const_iterator;
+
+        BasicDictionary() = default;
 
         BasicDictionary(std::initializer_list<element> eList)
             : m_data{ std::move(eList) } {}

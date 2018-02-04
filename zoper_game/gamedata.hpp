@@ -14,39 +14,39 @@
 
 namespace zoper
 {
-	using namespace lib;
-	constexpr size_type NumWays = 4;
+    using namespace lib;
+    constexpr size_type NumWays = 4;
 
-	enum class GameMode : u8
-	{
-		Token = 0,
-		Time = 1,
-	};
+    enum class GameMode : u8
+    {
+        Token = 0,
+        Time = 1,
+    };
 
-	class GameData
-	{
-	public:
-		GameData();
-		virtual ~GameData();
+    class GameData
+    {
+    public:
+        GameData();
+        virtual ~GameData();
 
-		struct TokenZone
-		{
-			Rectu32 zone;
-			Direction direction;
-			size_type size;
-		};
+        struct TokenZone
+        {
+            Rectst zone;
+            Direction direction;
+            size_type size;
+        };
 
-		vector2du32 size{ 18,12 };
-		Rectu32 centerRect{ 7,4,4,4 };
+        vector2dst size{ 18,12 };
+        Rectst centerRect{ 7,4,4,4 };
 
-		array<TokenZone, NumWays> tokenZones;
+        array<TokenZone, NumWays> tokenZones;
 
-		Timer levelClock;
-		u32 consumedTokens{ 0 };
+        Timer levelClock;
+        size_type consumedTokens{ 0 };
 
-		GameMode gameMode{ GameMode::Token };
+        GameMode gameMode{ GameMode::Token };
         size_type startLevel{ 0 };
-		u32 score{ 0 };
+        size_type score{ 0 };
 
         class StartGameData
         {
@@ -57,8 +57,8 @@ namespace zoper
         };
 
         StartGameData startGameData;
-		void generateTokenZones();
-	};
+        void generateTokenZones();
+    };
 }
 
 #endif
