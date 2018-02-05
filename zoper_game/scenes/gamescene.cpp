@@ -49,7 +49,7 @@ namespace zoper
         m_levelrg = createSceneNode("level");
         m_pauseSceneNode = createSceneNode("pause");
 
-        m_gameresources.loadResources(lib::host().resourceManager());
+        m_gameresources.loadResources(host().resourceManager());
 
         m_scoreQuad = createSceneNode<TextQuad>("score", m_gameresources.scoreFont, 90, colors::White, rectFromSize(600, 300));
         m_scoreQuad->position = vector2df{ 50, 50 };
@@ -238,11 +238,11 @@ namespace zoper
     void GameScene::setLevel(const u32 nv)
     {
         levelProperties.setLevel(nv);
-        lib::log_debug_info("Level set: ", levelProperties.currentLevel());
-        lib::log_debug_info("Millis between tokens: ", levelProperties.millisBetweenTokens());
-        lib::log_debug_info("Current base score: ", levelProperties.baseScore());
-        lib::log_debug_info("Seconds to next level: ", levelProperties.stayTime());
-        lib::log_debug_info("Tokens to next level: ", levelProperties.stayTokens());
+        log_debug_info("Level set: ", levelProperties.currentLevel());
+        log_debug_info("Millis between tokens: ", levelProperties.millisBetweenTokens());
+        log_debug_info("Current base score: ", levelProperties.baseScore());
+        log_debug_info("Seconds to next level: ", levelProperties.stayTime());
+        log_debug_info("Tokens to next level: ", levelProperties.stayTokens());
 
         m_gameData->levelClock.restart();
         m_gameData->consumedTokens = 0;

@@ -18,7 +18,7 @@ namespace zoper
                vector2dst bPosition, Rectf32 box, vector2df board2SceneFactor);
         virtual ~Player();
 
-        PropertyTrigger<lib::vector2dst> boardPosition;
+        PropertyTrigger<vector2dst> boardPosition;
         PropertyTrigger<Direction> currentDirection;
 
         void movePlayer(const Direction &direction, const lib::function<bool(const lib::vector2dst&)> &pointInCenter, const lib::sptr<lib::board::BoardModelComponent> &boardModel);

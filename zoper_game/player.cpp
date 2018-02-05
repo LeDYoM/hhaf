@@ -1,4 +1,5 @@
 #include "player.hpp"
+#include <mtypes/include/log.hpp>
 
 namespace zoper
 {
@@ -7,8 +8,12 @@ namespace zoper
 
     Player::Player(SceneNode* const parent, const str& name, vector2dst bPosition, Rectf32 box, vector2df board2SceneFactor)
         : GameBaseTile{ parent, name, 0 },
-        boardPosition{ std::move(bPosition), [this]() {
-            position = vector2df{ m_board2SceneFactor.x * boardPosition().x, m_board2SceneFactor.y * boardPosition().y }; }
+        boardPosition{ std::move(bPosition),
+            [this]() {
+                log_debug_info("Player board position: ",boardPosition());
+                position = vector2df{ m_board2SceneFactor.x * boardPosition().x, m_board2SceneFactor.y * boardPosition().y };
+                log_debug_info("Player scene position: ",position());
+            }
         },
         currentDirection( Direction(Direction::DirectionData::Up) ), m_board2SceneFactor{ std::move(board2SceneFactor) }
     {
