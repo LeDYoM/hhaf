@@ -34,8 +34,9 @@ namespace lib::scene
                 parentTransformationChanged = true;
             }
 
-            if (parentTransformationChanged)
-                updateGlobalTransformation(m_parent ? m_parent->globalTransform() : Transform{});
+			if (parentTransformationChanged) {
+				updateGlobalTransformation(m_parent ? m_parent->globalTransform() : Transform{});
+			}
 
             for (auto&& renderizable : m_renderNodes.nodes) {
                 renderizable->render();

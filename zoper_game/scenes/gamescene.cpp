@@ -104,25 +104,25 @@ namespace zoper
         p_boardModel = this->ensureComponentOfType<BoardModelComponent>();
         p_boardModel->initialize(m_gameData->size);
 
-        p_boardModel->TileAdded.connect([this](const vector2dst position, SITilePointer tile) {
-            tileAdded(position, tile);
+        p_boardModel->TileAdded.connect([this](const vector2dst position_, SITilePointer tile) {
+            tileAdded(position_, tile);
         });
 
 //        m_boardEventConnector.addSubscription(TileAddedEvent::subscribe([this](const events::Event&ev) {
 //            auto tEvent{ eventAs<TileAddedEvent>(ev) }; tileAdded(tEvent.position, tEvent.tile);
 //        }));
 
-        p_boardModel->TileRemoved.connect([this](const vector2dst position, SITilePointer tile) {
-            tileAdded(position, tile);
+        p_boardModel->TileRemoved.connect([this](const vector2dst position_, SITilePointer tile) {
+            tileAdded(position_, tile);
         });
 
 //        m_boardEventConnector.addSubscription(TileDeletedEvent::subscribe([this](const events::Event&ev) {
 //            auto tEvent{ eventAs<TileDeletedEvent>(ev) }; tileDeleted(tEvent.position, tEvent.tile);
 //        }));
 
-        p_boardModel->TileChanged.connect([this](const vector2dst position, SITilePointer tile,
+        p_boardModel->TileChanged.connect([this](const vector2dst position_, SITilePointer tile,
                                           const BoardTileData oldValue, const BoardTileData newValue) {
-            tileChanged(position, tile, oldValue, newValue);
+            tileChanged(position_, tile, oldValue, newValue);
         });
 
 //        m_boardEventConnector.addSubscription(TileChangedEvent::subscribe([this](const events::Event&ev) {
