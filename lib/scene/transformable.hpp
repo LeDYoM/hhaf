@@ -50,8 +50,8 @@ namespace lib
 
 		protected:
             inline bool transformationNeedsUpdate() noexcept {
-                return position.readReset_hasChanged() || origin.readReset_hasChanged() ||
-					scale.readReset_hasChanged() || rotation.readReset_hasChanged();
+                return !(position.readReset_hasChanged() && origin.readReset_hasChanged() &&
+					scale.readReset_hasChanged() && rotation.readReset_hasChanged());
             }
 
         private:

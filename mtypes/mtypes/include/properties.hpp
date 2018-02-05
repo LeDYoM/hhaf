@@ -69,7 +69,26 @@ namespace lib
         constexpr void resetHasChanged() noexcept { m_hasChanged = false; }
         constexpr void setChanged() noexcept { BaseClass::update(); }
 
-    private:
+		template<typename T, typename ...Args>
+		static constexpr bool readReset_hasChanged(PropertyState<T> &arg, Args&&... args)
+		{
+			const bool result{ arg.readReset_hasChanged() };
+			return result_rest = readReset_hasChanged(args)...;
+			return result || result_rest;
+		}
+
+		template<typename T>
+		static constexpr bool readReset_hasChanged(PropertyState<T> &arg)
+		{
+			return arg.readReset_hasChanged();
+		}
+
+		static constexpr bool readReset_hasChanged()
+		{
+			return false;
+		}
+
+	private:
         bool m_hasChanged{ true };
     };
 
