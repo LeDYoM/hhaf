@@ -113,7 +113,7 @@ namespace zoper
 //        }));
 
         p_boardModel->TileRemoved.connect([this](const vector2dst position_, SITilePointer tile) {
-            tileAdded(position_, tile);
+            tileDeleted(position_, tile);
         });
 
 //        m_boardEventConnector.addSubscription(TileDeletedEvent::subscribe([this](const events::Event&ev) {
