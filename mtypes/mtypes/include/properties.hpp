@@ -64,34 +64,53 @@ namespace lib
 
         using BaseClass::operator=;
 
-//        bool hasChanged() const noexcept { return m_hasChanged; }
-        bool readReset_hasChanged() noexcept { const bool v{ m_hasChanged }; resetHasChanged(); return v; }
+        constexpr bool hasChanged() const noexcept { return m_hasChanged; }
         constexpr void resetHasChanged() noexcept { m_hasChanged = false; }
         constexpr void setChanged() noexcept { BaseClass::update(); }
+        constexpr bool readResetHasChanged() noexcept { const bool v{ m_hasChanged }; resetHasChanged(); return v; }
 
-		template<typename T, typename ...Args>
-		static constexpr bool readReset_hasChanged(PropertyState<T> &arg, Args&&... args)
-		{
-			const bool result{ arg.readReset_hasChanged() };
-			return result_rest = readReset_hasChanged(args)...;
-			return result || result_rest;
-		}
-
-		template<typename T>
-		static constexpr bool readReset_hasChanged(PropertyState<T> &arg)
-		{
-			return arg.readReset_hasChanged();
-		}
-
-		static constexpr bool readReset_hasChanged()
-		{
-			return false;
-		}
-
-	private:
+    private:
         bool m_hasChanged{ true };
     };
 
+    template<typename T, typename ...Args>
+    constexpr bool ps_hasChanged(const PropertyState<T> &arg, Args&&... args)
+    {
+        return arg.hasChanged() || ps_hasChanged(std::forward<Args>(args)...);
+    }
+
+    template<typename T>
+    constexpr bool ps_hasChanged(PropertyState<T> &arg)
+    {
+        return arg.hasChanged();
+    }
+
+    template<typename T, typename ...Args>
+    constexpr void ps_resetHasChanged(PropertyState<T> &arg, Args&&... args)
+    {
+        arg.resetHasChanged();
+        ps_resetHasChanged(std::forward<Args>(args)...);
+    }
+
+    template<typename T>
+    constexpr void ps_resetHasChanged(PropertyState<T> &arg)
+    {
+        return arg.resetHasChanged();
+    }
+
+    template<typename T, typename ...Args>
+    constexpr bool ps_readResetHasChanged(PropertyState<T> &arg, Args&&... args)
+    {
+        const bool result_unary{arg.readResetHasChanged()};
+        const bool result_rest{ps_readResetHasChanged(std::forward<Args>(args)...)};
+        return result_unary || result_rest;
+    }
+
+    template<typename T>
+    constexpr bool ps_readResetHasChanged(PropertyState<T> &arg)
+    {
+        return arg.readResetHasChanged();
+    }
 }
 
 #endif

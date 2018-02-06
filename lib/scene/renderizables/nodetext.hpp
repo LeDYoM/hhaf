@@ -41,11 +41,6 @@ namespace lib
                 PropertyState<AlignmentY> alignmentY;
                 PropertyState<Rectf32> alignmentBox;
 
-                bool hasChanged() {
-                    return text.readReset_hasChanged() || alignmentX.readReset_hasChanged() ||
-						alignmentY.readReset_hasChanged() || alignmentBox.readReset_hasChanged();
-                }
-
             protected:
                 void updateGeometry();
             private:

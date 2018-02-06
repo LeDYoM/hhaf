@@ -20,16 +20,15 @@ namespace lib
 
             void NodeText::updateGeometry()
             {
-                if (font.readReset_hasChanged() || characterSize.readReset_hasChanged()) {
+                if (ps_readResetHasChanged(font, characterSize)) {
                     if (font() && characterSize() > 0) {
                         font()->ensureLoadASCIIGlyps(characterSize());
                         texture = font()->getTexture(characterSize());
-						text.setChanged();
+                        text.setChanged();
                     }
                 }
 
-                if (text.readReset_hasChanged() || alignmentBox.readReset_hasChanged() || 
-					alignmentX.readReset_hasChanged() || alignmentY.readReset_hasChanged()) {
+                if (ps_readResetHasChanged(text, alignmentBox, alignmentX, alignmentY)) {
                     BasicVertexArray &vertices{ m_vertices.verticesArray() };
 
                     m_vertices.bounds = Rectf32{};
@@ -117,7 +116,7 @@ namespace lib
                     // Update the bounding rectangle
                     m_vertices.bounds = { minX, minY, maxX - minX, maxY - minY };
                     m_colorNeedsUpdate = true;
-					alignmentBox.setChanged();
+                    alignmentBox.setChanged();
                 }
 
                 if (m_colorNeedsUpdate) {
@@ -125,17 +124,17 @@ namespace lib
                     m_colorNeedsUpdate = false;
                 }
 
-				const bool ab_rr_hasChanged{ alignmentBox.readReset_hasChanged() };
+                const bool ab_rr_hasChanged{ alignmentBox.readResetHasChanged() };
 
-				if (ab_rr_hasChanged || alignmentX.readReset_hasChanged())
-				{
-					updateAlignmentX();
-				}
+                if (ab_rr_hasChanged || alignmentX.readResetHasChanged())
+                {
+                    updateAlignmentX();
+                }
 
-				if (ab_rr_hasChanged || alignmentY.readReset_hasChanged())
-				{
-					updateAlignmentY();
-				}
+                if (ab_rr_hasChanged || alignmentY.readResetHasChanged())
+                {
+                    updateAlignmentY();
+                }
             }
 
             void NodeText::updateAlignmentX()
