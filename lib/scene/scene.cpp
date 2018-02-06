@@ -12,7 +12,6 @@ namespace lib::scene
 
 	Scene::~Scene()
 	{
-		eventConnector.unsubscribeAll();
 	}
 
 	void Scene::onCreated()

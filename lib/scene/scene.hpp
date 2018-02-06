@@ -9,8 +9,6 @@
 #include <mtypes/include/types.hpp>
 #include <lib/scene/components/statescontroller.hpp>
 #include <lib/core/timer.hpp>
-#include <lib/core/events/event.hpp>
-#include <lib/core/events/eventreceiver.hpp>
 
 namespace lib
 {
@@ -31,7 +29,6 @@ namespace lib
 			void onCreated() override;
 			virtual void updateScene() {}
 
-			inline void addSubscription(sptr<events::EventSubscription> &&es) noexcept { eventConnector.addSubscription(std::move(es)); }
 			virtual Scene *const parentScene() noexcept override { return this; }
 
 			inline SceneManager &sceneManager() noexcept { return *m_sceneManager; }
@@ -43,7 +40,6 @@ namespace lib
             void setState(const size_type ns);
 
 			Timer clock;
-			EventReceiver eventConnector;
 
 		private:
             sptr<StatesController<size_type>> m_sceneStates;
