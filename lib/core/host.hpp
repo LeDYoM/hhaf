@@ -20,7 +20,6 @@ namespace lib
     {
         class Window;
         class ResourceManager;
-        class EventManager;
         class Randomizer;
         class DebugSystem;
         class HostPrivate;
@@ -46,8 +45,6 @@ namespace lib
             inline Window &parentWindow() noexcept { return *m_window; }
             inline ResourceManager const &resourceManager() const  noexcept { return *m_resourceManager; }
             inline ResourceManager &resourceManager()  noexcept { return *m_resourceManager; }
-            inline EventManager const &eventManager() const  noexcept { return *m_eventManager; }
-            inline EventManager &eventManager()  noexcept { return *m_eventManager; }
             inline input::InputSystem const &inputSystem() const noexcept { return *m_inputSystem; }
             inline input::InputSystem &inputSystem() noexcept { return *m_inputSystem; }
             inline DebugSystem const &debugSystem() const noexcept { return *m_debugSystem; }
@@ -74,7 +71,6 @@ namespace lib
             uptr<Window> m_window;
             uptr<IApp> m_iapp;
             uptr<ResourceManager> m_resourceManager;
-            uptr<EventManager> m_eventManager;
             uptr<Randomizer> m_randomizer;
             uptr<DebugSystem> m_debugSystem;
             uptr<input::InputSystem> m_inputSystem;

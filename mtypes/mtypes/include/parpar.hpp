@@ -294,7 +294,7 @@ namespace lib::parpar
             return m_optionParameters;
         }
     private:
-        std::vector<SyntaxParserErrorCodes> m_syntaxErrors;
+        vector_t<SyntaxParserErrorCodes> m_syntaxErrors;
         PositionalParameterVector m_positionalParameters;
         SwitchParameterVector m_switchParameters;
         OptionParameterVector m_optionParameters;

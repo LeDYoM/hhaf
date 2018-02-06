@@ -4,7 +4,6 @@
 #include "randomizer.hpp"
 
 #include <lib/scene/scenemanager.hpp>
-#include <lib/core/events/eventmanager.hpp>
 #include <lib/core/inputsystem.hpp>
 #include <lib/backend/backendfactory.hpp>
 #include <lib/backend/iwindow.hpp>
@@ -126,7 +125,6 @@ namespace lib::core
 
             m_inputSystem = muptr<input::InputSystem>();
             m_randomizer = muptr<Randomizer>();
-            m_eventManager = muptr<EventManager>();
             m_window = muptr<Window>(m_iapp->getAppDescriptor().wcp);
             m_sceneManager = muptr<scene::SceneManager>(*m_window);
             m_resourceManager = muptr<core::ResourceManager>();
@@ -156,7 +154,6 @@ namespace lib::core
             m_sceneManager = nullptr;
             m_window = nullptr;
             m_resourceManager = nullptr;
-            m_eventManager = nullptr;
             m_randomizer = nullptr;
             m_inputSystem = nullptr;
             m_private = nullptr;
@@ -190,7 +187,6 @@ namespace lib::core
     bool Host::loopStep()
     {
         const bool windowWants2Close{ m_window->preLoop() };
-        m_eventManager->update();
         m_inputSystem->preUpdate();
         m_sceneManager->update();
 
