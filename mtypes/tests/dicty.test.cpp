@@ -8,5 +8,5 @@ TEST_CASE("dicty test1", "[dicty]")
 {
     BasicDictionary bdictionary{ {"key1", "value1"} };
     CHECK(bdictionary.data() == BasicDictionary::content{ BasicDictionary::element("key1", "value1")});
-    CHECK_FALSE(bdictionary.add("key1", "asd"));
+    CHECK_FALSE(bdictionary.add("key1", "asd",false));
 }

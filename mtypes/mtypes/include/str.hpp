@@ -125,12 +125,12 @@ namespace lib
         constexpr const_iterator cend() const noexcept { return m_data.cbegin()+size(); }
 
         constexpr const char_type *const c_str() const noexcept { return m_data.cbegin(); }
-        constexpr bool empty() const noexcept { return m_data.size() == 0; }
+        constexpr bool empty() const noexcept { return size() == 0; }
 
         constexpr size_type find_first_of(const char_type chValue) const noexcept {
             const auto iterator(m_data.find(chValue));
             if (iterator!=m_data.cend()) {
-                return *iterator;
+                return iterator - m_data.cbegin();
             }
             return npos;
         }
@@ -158,6 +158,12 @@ namespace lib
 
         friend constexpr bool operator==(const str& lhs, const str&rhs) noexcept;
         friend constexpr bool operator!=(const str& lhs, const str&rhs) noexcept;
+
+        template<size_type N>
+        friend constexpr bool operator==(const str& lhs, const char_type(&a)[N]) noexcept;
+        template<size_type N>
+        friend constexpr bool operator!=(const str& lhs, const char_type(&a)[N]) noexcept;
+
         friend bool operator<(const str& lhs, const str&rhs) noexcept;
         friend str operator+(const str& lhs, const str&rhs) noexcept;
     };
@@ -169,6 +175,27 @@ namespace lib
 
     constexpr bool operator!=(const str& lhs, const str&rhs) noexcept {
         return lhs.m_data != rhs.m_data;
+    }
+
+    template<size_type N>
+    constexpr bool operator==(const str& lhs, const char_type(&a)[N]) noexcept
+    {
+        if (lhs.size() != (N-1))
+            return false;
+
+        size_type counter{0};
+        for (const char_type c : lhs.m_data) {
+            if (c != a[counter]) return false;
+            ++counter;
+        }
+        return true;
+    }
+
+
+    template<size_type N>
+    constexpr bool operator!=(const str& lhs, const char_type(&a)[N]) noexcept
+    {
+        return !(operator==(lhs,a));
     }
 
     inline bool operator<(const str& lhs, const str&rhs) noexcept {

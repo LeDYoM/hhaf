@@ -40,8 +40,13 @@ namespace lib
 
         str temp;
         while (start + len <= size()) {
-            temp.m_data.push_back(m_data[(start++)+len]);
+            if (m_data[start] != 0) {
+                temp.m_data.push_back(m_data[start]);
+            }
+            ++start;
         }
+
+        temp.m_data.push_back(0);
         return temp;
     }
 
