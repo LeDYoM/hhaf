@@ -7,15 +7,19 @@
 #include "str.hpp"
 #include "vector.hpp"
 
-namespace lib
+namespace lib::dicty
 {
+    class Object;
+
+    template <typename T>
     class BasicDictionary
     {
     public:
-        using element = std::pair<str, str>;
+        using value = T;
+        using element = std::pair<str, value>;
         using content = vector<element>;
-        using iterator = content::iterator;
-        using const_iterator = content::const_iterator;
+        using iterator = typename content::iterator;
+        using const_iterator = typename content::const_iterator;
 
         BasicDictionary() = default;
 
@@ -43,7 +47,7 @@ namespace lib
             return result;
         }
 
-        bool add(str key, str value, const bool overwrite = true)
+        bool add(str key, T value, const bool overwrite = true)
         {
             auto it(find(key));
 
@@ -66,8 +70,6 @@ namespace lib
             return m_data;
         }
 
-
-
     private:
         constexpr const_iterator find(const str &key) const noexcept {
             for (auto &element : m_data) {
@@ -87,7 +89,79 @@ namespace lib
             return m_data.end();
         }
 
+        constexpr bool exists(const str &key) noexcept {
+            return find(key) != m_data.end();
+        }
+
+        constexpr bool exists(const str &key) const noexcept {
+            return find(key) != m_data.cend();
+        }
+
+        std::pair<bool,iterator> findChecked(const str&key) noexcept
+        {
+            auto iterator(find(key));
+            return {iterator != m_data.end(), iterator};
+        }
+
+        std::pair<bool,const_iterator> findChecked(const str&key) const noexcept
+        {
+            auto iterator(find(key));
+            return {iterator != m_data.cend(), iterator};
+        }
+
         content m_data;
+        friend class Object;
+    };
+
+    class Value
+    {
+    public:
+        constexpr Value() = default;
+        constexpr Value(Object *obj) : m_object{obj} {}
+        constexpr Value(str *data) : m_data{data} {}
+
+        constexpr bool isValid() const noexcept { return m_object || m_data; }
+    private:
+        Object *m_object{nullptr};
+        str *m_data{nullptr};
+    };
+
+    class Object
+    {
+    public:
+        using ObjectDictionary = BasicDictionary<Object>;
+        using ValueDictionary = BasicDictionary<str>;
+
+        Object() {}
+
+        Object(std::initializer_list<std::pair<str,str>> iList) {
+            for (auto element : iList) {
+                m_values.add(element.first,element.second, false);
+            }
+        }
+
+        Object(std::initializer_list<std::pair<str,Object>> iList) {
+            for (auto element : iList) {
+            }
+        }
+
+        Value getObject(const str&key) {
+            auto token(m_objects.findChecked(key));
+            return (token.first?
+                Value(&(token.second->second)):
+                Value());
+        }
+
+        Value getValue(const str&key) {
+            auto token(m_values.findChecked(key));
+            return (token.first?
+                Value(&(token.second->second)):
+                Value());
+        }
+
+    private:
+        ValueDictionary m_values;
+        ObjectDictionary m_objects;
     };
 }
 

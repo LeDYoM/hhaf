@@ -33,17 +33,18 @@ namespace lib
         return result;
     }
 
-    str str::substr(size_type start, const size_type len) const
+    str str::substr(size_type start, size_type len) const
     {
         if (start >= size() || len < 1)
             return "";
 
         str temp;
-        while (start + len <= size()) {
+        while (start < size() && len > 0) {
             if (m_data[start] != 0) {
                 temp.m_data.push_back(m_data[start]);
             }
             ++start;
+            --len;
         }
 
         temp.m_data.push_back(0);

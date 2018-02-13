@@ -60,7 +60,7 @@ namespace lib
             m_data.pop_back();
         }
 
-        str substr(size_type start, const size_type len = npos) const;
+        str substr(size_type start, size_type len = npos) const;
 
         constexpr str &append() { return *this; }
 

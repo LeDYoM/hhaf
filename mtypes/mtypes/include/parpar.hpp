@@ -101,7 +101,7 @@ namespace lib::parpar
             // Find '=' sign
             const auto equalSign(param.find_first_of('='));
 
-            if (equalSign != std::string::npos)
+            if (equalSign != str_t::npos)
             {
                 const str_t name(param.substr(1,equalSign-1));
                 const str_t value(param.substr(equalSign+1));

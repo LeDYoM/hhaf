@@ -49,7 +49,7 @@ namespace lib::core
         }
         parpar::ParametersParser m_params;
 #endif
-        BasicDictionary m_configuration;
+        dicty::BasicDictionary<str> m_configuration;
     };
 
     enum class Host::AppState : u8

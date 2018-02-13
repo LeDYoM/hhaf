@@ -129,9 +129,9 @@ TEST_CASE("program filename --doit -abc=sdf", "[parpar][positional][option][swit
     CHECK(paramParser.positionalParameterAt(1) == "");
     CHECK(paramParser.switchExists("doit"));
     CHECK_FALSE(paramParser.switchExists("doitasd"));
-    CHECK(paramParser.getOptions() == OptionParameterVector{
+    paramParser.getOptions() == OptionParameterVector{
         { "abc", "sdf" }
-    });
+    };
 
 
 }

@@ -11,12 +11,12 @@ namespace lib
     class HostContext final
     {
     public:
-        const BasicDictionary &appParameters() const
+        const dicty::BasicDictionary<str> &appParameters() const
         {
             return m_appParameters;
         }
     private:
-        BasicDictionary m_appParameters;
+        dicty::BasicDictionary<str> m_appParameters;
     };
 }
 
