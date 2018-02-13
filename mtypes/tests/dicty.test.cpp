@@ -12,10 +12,30 @@ TEST_CASE("basic values", "[dicty][vd]")
     CHECK_FALSE(bdictionary.add("key1", "asd",false));
 }
 
-TEST_CASE("dicty test1", "[dicty][vd]")
+TEST_CASE("dicty create", "[dicty][vd]")
 {
+	Object tester{ {"subkey","subValue"} };
     Object obj{
         {"key1", "value1"},
         {"key2", "value1"}
     };
+
+	Object obj2{
+		{ "key1", Object{{
+				"subkey1", "subvalue1"
+			}}
+		},
+		{ "key2", Object{ {
+				"subkey2", "subvalue2"
+			} }
+		},
+		{ "key3", Object{ {
+				Object{ {
+					"subsubkey1", "subsubvalue"
+				} }
+			} }
+		},
+		Object{ {"key4", "value4"} }
+	};
+
 }

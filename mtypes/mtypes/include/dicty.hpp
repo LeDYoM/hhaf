@@ -142,8 +142,13 @@ namespace lib::dicty
 
         Object(std::initializer_list<std::pair<str,Object>> iList) {
             for (auto element : iList) {
+				m_objects.add(element.first, element.second);
             }
         }
+
+		Object(std::initializer_list<std::pair<str, Object>> iListObjects,
+			std::initializer_list<std::pair<str, str>> iListValues) {
+		}
 
         Value getObject(const str&key) {
             auto token(m_objects.findChecked(key));
