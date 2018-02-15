@@ -134,21 +134,23 @@ namespace lib::dicty
 
         Object() {}
 
-        Object(std::initializer_list<std::pair<str,str>> iList) {
-            for (auto element : iList) {
-                m_values.add(element.first,element.second, false);
-            }
+        Object(const std::initializer_list<std::pair<str,str>> iListValues) {
+            set(iListValues);
         }
 
         Object(std::initializer_list<std::pair<str,Object>> iList) {
             for (auto element : iList) {
-				m_objects.add(element.first, element.second);
+                m_objects.add(element.first, element.second);
             }
         }
 
-		Object(std::initializer_list<std::pair<str, Object>> iListObjects,
-			std::initializer_list<std::pair<str, str>> iListValues) {
-		}
+        Object(std::initializer_list<std::pair<str, Object>> iListObjects,
+            std::initializer_list<std::pair<str, str>> iListValues) {
+        }
+
+        Object(std::initializer_list<std::pair<str, str>> iListValues,
+               std::initializer_list<std::pair<str, Object>> iListObjects) {
+        }
 
         Value getObject(const str&key) {
             auto token(m_objects.findChecked(key));
@@ -165,6 +167,25 @@ namespace lib::dicty
         }
 
     private:
+        constexpr bool set(const std::initializer_list<std::pair<str, str>> iListValues, bool overwrite = true)
+        {
+            bool ok{true};
+            for (auto&& element : iListValues) {
+                ok &= m_values.add(element.first,element.second, false);
+            }
+            return ok;
+        }
+
+        constexpr bool set(const std::initializer_list<std::pair<str,Object>> iListObject, bool overwrite = true)
+        {
+            bool ok{true};
+
+            for (auto element : iListObject) {
+                ok &= m_objects.add(element.first, element.second);
+            }
+            return ok;
+        }
+
         ValueDictionary m_values;
         ObjectDictionary m_objects;
     };

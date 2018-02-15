@@ -14,28 +14,52 @@ TEST_CASE("basic values", "[dicty][vd]")
 
 TEST_CASE("dicty create", "[dicty][vd]")
 {
-	Object tester{ {"subkey","subValue"} };
+    Object tester{ {"subkey","subValue"} };
     Object obj{
         {"key1", "value1"},
         {"key2", "value1"}
     };
 
-	Object obj2{
-		{ "key1", Object{{
-				"subkey1", "subvalue1"
-			}}
-		},
-		{ "key2", Object{ {
-				"subkey2", "subvalue2"
-			} }
-		},
-		{ "key3", Object{ {
-				Object{ {
-					"subsubkey1", "subsubvalue"
-				} }
-			} }
-		},
-		Object{ {"key4", "value4"} }
-	};
+    // Initialize with initializer list of objects
+    Object obj2{
+        { "key1", Object{{
+                "subkey1", "subvalue1"
+            }}
+        },
+        { "key2", Object{ {
+                "subkey2", "subvalue2"
+            } }
+        },
+        { "key3", Object{ {
+                Object{ {
+                    "subsubkey1", "subsubvalue"
+                } }
+            } }
+        }
+    };
+
+    // Initialize with initializer list of objects and initializer list of
+    // properties.
+    Object obj3{
+        {
+            { "key1", Object{{
+                    "subkey1", "subvalue1"
+                }}
+            },
+            { "key2", Object{ {
+                    "subkey2", "subvalue2"
+                } }
+            },
+            { "key3", Object{ {
+                    Object{ {
+                        "subsubkey1", "subsubvalue"
+                    } }
+                } }
+            },
+        },
+        {
+            {"key4", "value4"}
+        }
+    };
 
 }
