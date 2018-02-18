@@ -38,7 +38,7 @@ namespace lib
             }
 
 			template <typename T>
-			using NamedIndex = std::pair<const str, T>;
+			using NamedIndex = pair<const str, T>;
 
 			template <typename T>
 			using ResourceList = std::list<NamedIndex<T>>;

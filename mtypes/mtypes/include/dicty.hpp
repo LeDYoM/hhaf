@@ -16,7 +16,7 @@ namespace lib::dicty
     {
     public:
         using value = T;
-        using element = std::pair<str, value>;
+        using element = pair<str, value>;
         using content = vector<element>;
         using iterator = typename content::iterator;
         using const_iterator = typename content::const_iterator;
@@ -97,13 +97,13 @@ namespace lib::dicty
             return find(key) != m_data.cend();
         }
 
-        constexpr std::pair<bool,iterator> findChecked(const str&key) noexcept
+        constexpr pair<bool,iterator> findChecked(const str&key) noexcept
         {
             auto iterator(find(key));
             return {iterator != m_data.end(), iterator};
         }
 
-        constexpr std::pair<bool,const_iterator> findChecked(const str&key) const noexcept
+        constexpr pair<bool,const_iterator> findChecked(const str&key) const noexcept
         {
             auto iterator(find(key));
             return {iterator != m_data.cend(), iterator};
@@ -145,24 +145,24 @@ namespace lib::dicty
 
         constexpr Object() {}
 
-        constexpr Object(const std::initializer_list<std::pair<str,str>> iListValues) {
-            set(iListValues);
+        constexpr Object(std::initializer_list<pair<str,str>> iListValues) {
+            set(std::move(iListValues), false);
         }
 
-        constexpr Object(const std::initializer_list<std::pair<str,Object>> iListObjects) {
-            set(iListObjects);
+        constexpr Object(std::initializer_list<pair<str,Object>> iListObjects) {
+            set(std::move(iListObjects), false);
         }
 
-        constexpr Object(std::initializer_list<std::pair<str, Object>> iListObjects,
-                std::initializer_list<std::pair<str, str>> iListValues) {
-            set(iListObjects);
-            set(iListValues);
+        constexpr Object(std::initializer_list<pair<str, Object>> iListObjects,
+                std::initializer_list<pair<str, str>> iListValues) {
+            set(std::move(iListObjects), false);
+            set(std::move(iListValues), false);
         }
 
-        constexpr Object(std::initializer_list<std::pair<str, str>> iListValues,
-               std::initializer_list<std::pair<str, Object>> iListObjects) {
-            set(iListValues);
-            set(iListObjects);
+        constexpr Object(std::initializer_list<pair<str, str>> iListValues,
+               std::initializer_list<pair<str, Object>> iListObjects) {
+            set(std::move(iListValues), false);
+            set(std::move(iListObjects), false);
         }
 
         constexpr bool operator==(const Object &obj) const noexcept {
@@ -219,7 +219,6 @@ namespace lib::dicty
                 else {
                     return (*m_object)[key];
                 }
-                return *this;
             }
 
         private:
@@ -265,7 +264,7 @@ namespace lib::dicty
         }
 
     private:
-        bool set(const std::initializer_list<std::pair<str, str>> iListValues, bool overwrite = true)
+        constexpr bool set(std::initializer_list<pair<str, str>> iListValues, bool overwrite = true)
         {
             bool ok{true};
             for (auto&& element : iListValues) {
@@ -274,7 +273,7 @@ namespace lib::dicty
             return ok;
         }
 
-        bool set(const std::initializer_list<std::pair<str,Object>> iListObject, bool overwrite = true)
+        constexpr bool set(std::initializer_list<pair<str,Object>> iListObject, bool overwrite = true)
         {
             bool ok{true};
             for (auto&& element : iListObject) {

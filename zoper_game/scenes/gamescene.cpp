@@ -266,13 +266,13 @@ namespace zoper
         {
         default:
         case GameMode::Token:
-            m_goalQuad->text(1)->text = m_gameData->consumedTokens;
+            m_goalQuad->text(1)->text = str(m_gameData->consumedTokens);
             if (m_gameData->consumedTokens >= levelProperties.stayTokens())
                 setLevel(levelProperties.currentLevel() + 1);
             break;
 
         case GameMode::Time:
-            m_goalQuad->text(1)->text = static_cast<lib::u16>(m_gameData->levelClock.getElapsedTime().asSeconds());
+            m_goalQuad->text(1)->text = str(static_cast<u16>(m_gameData->levelClock.getElapsedTime().asSeconds()));
             if (m_gameData->levelClock.getElapsedTime().asSeconds() >= levelProperties.stayTime())
                 setLevel(levelProperties.currentLevel() + 1);
             break;

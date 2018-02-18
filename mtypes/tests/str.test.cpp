@@ -43,3 +43,54 @@ TEST_CASE("str test3", "[str]")
     sub3 += make_str(3);
     CHECK(sub3 == " this3");
 }
+
+TEST_CASE("str substr", "[str]")
+{
+	str test("String to test substr=!other tests");
+	CHECK(test.substr(str::npos) == "");
+	CHECK(test.substr(str::npos).empty());
+	CHECK(test.substr(str::npos).size() == 0);
+	CHECK(test.substr(0) == test);
+	CHECK(test.substr(7, 21) == "to test substr=!other");
+	CHECK(test.substr(7, 21).substr(8,50) == "substr=!other");
+	CHECK(test.substr(7, 21).substr(8, 2) == "su");
+}
+
+TEST_CASE("str find_first_of", "[str]")
+{
+	str test("Try to=test! some parsing&&now");
+
+	CHECK(test.find_first_of(' ') == 3);
+	CHECK(test.find_first_of('=') == 6);
+	CHECK(test.find_first_of('!') == 11);
+	CHECK(test.find_first_of('&') == 25);
+	test[25] = '/';
+	CHECK(test.find_first_of('/') == 25);
+	CHECK(test.find_first_of('&') == 26);
+}
+
+TEST_CASE("str conversions", "[str]")
+{
+	str test = 1234567890L;
+	CHECK(test == "1234567890");
+	test = 'A';
+	CHECK(test == "A");
+	test.append(9876543210);
+	CHECK(test == "A9876543210");
+	test += "_";
+	test += 1;
+	CHECK(test == "A9876543210_1");
+	test += 01;
+	CHECK(test == "A9876543210_11");
+	test += 0xf;
+	CHECK(test == "A9876543210_1115");
+}
+
+TEST_CASE("str operations", "[str]")
+{
+	str f("the test");
+	str f2("hello ");
+	CHECK(f2 + f == "hello the test");
+	CHECK((f2 += f) == "hello the test");
+	CHECK(f2 == "hello the test");
+}

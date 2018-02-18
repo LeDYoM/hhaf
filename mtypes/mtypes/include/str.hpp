@@ -12,8 +12,6 @@ namespace lib
 {
     using char_type = char;
 
-    using char_type = char;
-
     class MTYPES_EXPORT str
     {
         using reference = char_type&;
@@ -33,20 +31,21 @@ namespace lib
         constexpr str() noexcept : m_data() {}
 
         template<size_type N>
-        constexpr str(const char_type(&a)[N]) noexcept : m_data( a,N ) {}
+		constexpr str(const char_type(&a)[N]) noexcept : m_data( a,N ) {}
 
         constexpr str(str&&) noexcept = default;
 
-        constexpr str(const str & n) noexcept : m_data( n.m_data ) {}
-        constexpr str(const char_type *n, const size_type N) noexcept : m_data(n, N+1) {}
+		constexpr str(const str & n) noexcept : m_data( n.m_data ) {}
+		str(const char_type *n) noexcept;
+		constexpr str(const char_type *n, const size_type N) noexcept : m_data(n, N+1) {}
 
-        str(const u32 n);
-        str(const s32 n);
-        str(const char_type *n) noexcept;
-        str(const f32 n);
-        str(const f64 n);
+        str(const u64 n);
+		str(const s64 n);
+		str(const u32 n);
+		str(const s32 n);	
+		str(const f32 n);
+		str(const f64 n);
         str(const char_type c) : str{ &c,1 } {}
-        str(const unsigned long n);
 
         constexpr str&operator=(str&&) noexcept = default;
         constexpr str&operator=(const str&rhs) noexcept {
@@ -64,16 +63,6 @@ namespace lib
 
         constexpr str &append() { return *this; }
 
-        str & append(const u32 n) {
-            append(str(n));
-            return *this;
-        }
-
-        str & append(const s32 n) {
-            append(str(n));
-            return *this;
-        }
-
         str & append(const str & n) {
             m_data.pop_back();
             m_data.insert(n.m_data);
@@ -85,6 +74,26 @@ namespace lib
             return *this;
         }
 
+		str & append(const u64 n) {
+			append(str(n));
+			return *this;
+		}
+
+		str & append(const s64 n) {
+			append(str(n));
+			return *this;
+		}
+
+		str & append(const u32 n) {
+			append(str(n));
+			return *this;
+		}
+
+		str & append(const s32 n) {
+			append(str(n));
+			return *this;
+		}
+
         str & append(const f32 n) {
             append(str(n));
             return *this;
@@ -95,11 +104,8 @@ namespace lib
             return *this;
         }
 
-        str & append(const long unsigned n) {
-            append(str(n));
-            return *this;
-        }
-
+		void convert(u64 &n) const;
+		void convert(s64 &n) const;
         void convert(u32 &n) const;
         void convert(s32 &n) const;
         void convert(f32 &n) const;

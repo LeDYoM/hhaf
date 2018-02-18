@@ -4,11 +4,12 @@
 
 namespace lib
 {
-    str::str(const u32  n) : str{ std::to_string(n).c_str() } {}
+    str::str(const u64  n) : str{ std::to_string(n).c_str() } {}
+	str::str(const s64  n) : str{ std::to_string(n).c_str() } {}
+	str::str(const u32  n) : str{ std::to_string(n).c_str() } {}
     str::str(const s32 n) : str{ std::to_string(n).c_str() } {}
     str::str(const f32 n) : str{ std::to_string(n).c_str() } {}
     str::str(const f64 n) : str{ std::to_string(n).c_str() } {}
-    str::str(const unsigned long n) : str{ std::to_string(n).c_str() } {}
 
     namespace detail
     {
@@ -51,17 +52,31 @@ namespace lib
         return temp;
     }
 
+	void str::convert(u64 & n) const
+	{
+		std::istringstream tmpstream(c_str());
+		tmpstream >> n;
+	}
+
+	void str::convert(s64 & n) const
+	{
+		std::istringstream tmpstream(c_str());
+		tmpstream >> n;
+	}
+
     void str::convert(u32 & n) const
     {
         std::istringstream tmpstream(c_str());
         tmpstream >> n;
     }
-    void str::convert(s32 & n) const
+
+	void str::convert(s32 & n) const
     {
         std::istringstream tmpstream(c_str());
         tmpstream >> n;
     }
-    void str::convert(f32 & n) const
+
+	void str::convert(f32 & n) const
     {
         std::istringstream tmpstream(c_str());
         tmpstream >> n;
