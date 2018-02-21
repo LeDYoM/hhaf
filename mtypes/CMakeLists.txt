@@ -11,6 +11,8 @@ add_library(${CURRENT_TARGET} SHARED ${_SOURCES} ${_HEADERS} ${_INCLUDES})
 
 target_include_directories(${CURRENT_TARGET} PUBLIC ${PROJECT_SOURCE_DIR})
 
+enable_testing()
+
 #IDE
 file (GLOB_RECURSE LIB_HEADERS "*.hpp")
 file (GLOB_RECURSE LIB_SOURCES "*.cpp")

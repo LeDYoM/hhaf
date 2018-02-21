@@ -1,3 +1,5 @@
+enable_testing()
+
 set(UNIT_TEST_LIST
     str
     dicty
