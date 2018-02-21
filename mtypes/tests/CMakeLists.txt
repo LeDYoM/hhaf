@@ -16,8 +16,8 @@ add_executable(${TARGET_NAME}
 target_link_libraries(${TARGET_NAME}
   PRIVATE mtypes)
 
-target_include_directories(${TARGET_NAME}
-  PRIVATE ../3rdparty/catch2/)
+include_directories(${TARGET_NAME}
+  INTERFACE ${CATCH_INCLUDE_DIR})
 
 add_test(
   NAME ${TARGET_NAME}

@@ -27,6 +27,7 @@ message ("cxx Flags: " ${CMAKE_CXX_FLAGS})
 SET(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
 SET(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
 set(L3RD_PARTY_DIR "${CMAKE_SOURCE_DIR}/3rdparty")
+set(CATCH_INCLUDE_DIR  "${L3RD_PARTY_DIR}/catch2")
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 
 # Sub-directories where more CMakeLists.txt exist
