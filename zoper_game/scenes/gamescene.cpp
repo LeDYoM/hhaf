@@ -104,21 +104,45 @@ namespace zoper
         p_boardModel->initialize(m_gameData->size);
 
         p_boardModel->TileAdded.connect([this](const vector2dst position_, SITilePointer tile) {
-            tileAdded(position_, tile);
+			// Tile appeared
+			if (auto ztile = std::dynamic_pointer_cast<Tile>(tile)) {
+				lib::log_debug_info("Token ", ztile->name(), " appeared at ", position_);
+			}
+			else if (auto player = std::dynamic_pointer_cast<Player>(tile)) {
+				// Set the position in the scene depending on the board position
+				player->boardPosition = position_;
+			}
         });
 
         p_boardModel->TileRemoved.connect([this](const vector2dst position_, SITilePointer tile) {
-            tileDeleted(position_, tile);
-        });
+			if (auto ztile = std::dynamic_pointer_cast<Tile>(tile)) {
+				lib::log_debug_info("Deleting token ", ztile->name(), " from scene at position ", position_);
+				m_mainBoardrg->removeSceneNode(ztile);
+			} /*else if (auto ztile_ = std::dynamic_pointer_cast<Player>(tile)) {
+			  // Actually, never used
+			  }*/
+		});
 
         p_boardModel->TileChanged.connect([this](const vector2dst position_, SITilePointer tile,
                                           const BoardTileData oldValue, const BoardTileData newValue) {
-            tileChanged(position_, tile, oldValue, newValue);
-        });
+			if (auto ztile = std::dynamic_pointer_cast<Tile>(tile)) {
+				lib::log_debug_info("Token at position ", position_, " changed from ", oldValue, " to ", newValue);
+				ztile->set(newValue);
+			}
+			else if (auto ztile_ = std::dynamic_pointer_cast<Player>(tile)) {
+				lib::log_debug_info("Player (position ", position_, ") changed from ", oldValue, " to ", newValue);
+				ztile_->set(newValue);
+			}
+		});
 
         p_boardModel->TileMoved.connect([this](const vector2dst source, const vector2dst dest, SITilePointer tile) {
-            tileMoved(source, dest, tile);
-        });
+			if (auto ztile = std::dynamic_pointer_cast<Tile>(tile)) {
+				tokenMoved(source, dest, ztile);
+			}
+			else if (auto ztile_ = std::dynamic_pointer_cast<Player>(tile)) {
+				ztile_->updateDirection();
+			}
+		});
 
         tilesCreated();
         addPlayer();
@@ -538,50 +562,6 @@ namespace zoper
             currentx = 0;
             currenty += tileSize().y;
             m_backgroundTiles.push_back(std::move(column));
-        }
-    }
-
-    void GameScene::tileAdded(const vector2dst &pos, board::SITilePointer nTile)
-    {
-        // Tile appeared
-        if (auto ztile = std::dynamic_pointer_cast<Tile>(nTile)) {
-            lib::log_debug_info("Token ", ztile->name(), " appeared at ", pos);
-        }
-        else if (auto player = std::dynamic_pointer_cast<Player>(nTile)) {
-            // Set the position in the scene depending on the board position
-            player->boardPosition = pos;
-        }
-    }
-
-    void GameScene::tileDeleted(const vector2dst &pos, board::SITilePointer nTile)
-    {
-        if (auto ztile = std::dynamic_pointer_cast<Tile>(nTile)) {
-            lib::log_debug_info("Deleting token ", ztile->name(), " from scene at position ", pos);
-            m_mainBoardrg->removeSceneNode(ztile);
-        } /*else if (auto ztile_ = std::dynamic_pointer_cast<Player>(nTile)) {
-            // Actually, never used
-        }*/
-    }
-
-    void GameScene::tileMoved(const vector2dst &source, const vector2dst &dest, board::SITilePointer tile)
-    {
-        if (auto ztile = std::dynamic_pointer_cast<Tile>(tile)) {
-            tokenMoved(source, dest, ztile);
-        }
-        else if (auto ztile_ = std::dynamic_pointer_cast<Player>(tile)) {
-            ztile_->updateDirection();
-        }
-    }
-
-    void GameScene::tileChanged(const vector2dst &pos, board::SITilePointer nTile,
-        const board::BoardTileData &ov, const board::BoardTileData &nv)
-    {
-        if (auto ztile = std::dynamic_pointer_cast<Tile>(nTile)) {
-            lib::log_debug_info("Token at position ", pos, " changed from ", ov, " to ", nv);
-            ztile->set(nv);
-        } else if (auto ztile_ = std::dynamic_pointer_cast<Player>(nTile)) {
-            lib::log_debug_info("Player (position ", pos, ") changed from ", ov, " to ", nv);
-            ztile_->set(nv);
         }
     }
 

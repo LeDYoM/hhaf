@@ -11,11 +11,15 @@
 
 namespace lib::scene::nodes
 {
+	/**
+	* Class representing a SceneNode with table layout.
+	* Properties of the table can be configured like size and so on.
+	*/
     template <typename T>
     class TableNode : public SceneNode
     {
     public:
-        TableNode(SceneNode *parent, str name) : SceneNode{ parent, name } {}
+        TableNode(SceneNode *parent, str name) : SceneNode{ parent, std::move(name) } {}
         virtual ~TableNode() = default;
 
         PropertyTrigger<vector2dst> tableSize {[this]()

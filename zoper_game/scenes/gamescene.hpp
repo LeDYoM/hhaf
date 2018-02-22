@@ -73,13 +73,6 @@ namespace zoper
 
         void registerEvents();
 
-        void tileAdded(const vector2dst &position, board::SITilePointer nTile);
-        void tileDeleted(const vector2dst &position, board::SITilePointer nTile);
-        void tileMoved(const vector2dst &source, const vector2dst &dest, board::SITilePointer tile);
-
-        void tileChanged(const vector2dst &position, board::SITilePointer nTile,
-            const board::BoardTileData &ov, const board::BoardTileData &nv);
-
         void tokenMoved(const vector2dst &source, const vector2dst &dest, sptr<Tile> tile);
 
         // Properties
