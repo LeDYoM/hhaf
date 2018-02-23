@@ -94,3 +94,45 @@ TEST_CASE("dicty create 3", "[dicty]")
     CHECK_FALSE(obj3["adf"].isValid());
     CHECK_FALSE(obj3["adf"] == "");
 }
+
+TEST_CASE("dicty create 3", "[dicty]")
+{
+	// Initialize with initializer list of objects and initializer list of
+	// properties.
+	Object obj4
+	{
+		{
+			{ "key1",
+				{
+					{ "subkey1", "subvalue1" }
+				}
+			},
+			{ "key2",
+				{
+					{ "subkey2", "subvalue2" }
+				}
+			},
+			{ "key3",
+				Object{ { "subkey1",
+					Object{
+						{ "subsubkey1", "subsubvalue" }
+					}
+				}
+			}
+		}
+		},
+		{
+			{ "key4","value4" }
+		}
+	};
+
+	CHECK(obj4["key1"]["subkey1"] == "subvalue1");
+	CHECK(obj4["key2"]["subkey2"] == "subvalue2");
+	CHECK(obj4["key3"]["subkey1"]["subsubkey1"] == "subsubvalue");
+	CHECK_FALSE(obj4["key4"]["subkey2"] == "subvalue2");
+	CHECK(obj4["key4"] == "value4");
+	CHECK_FALSE(obj4["adf"].isValid());
+	CHECK_FALSE(obj4["adf"] == "");
+
+
+}

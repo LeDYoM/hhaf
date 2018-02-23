@@ -255,9 +255,9 @@ namespace zoper
         m_gameData->consumedTokens = 0;
 
         // Update background tiles
-        for (u32 y = 0; y < m_gameData->size.y; ++y)
+        for (decltype(m_gameData->size.y) y = 0; y < m_gameData->size.y; ++y)
         {
-            for (u32 x = 0; x < m_gameData->size.x; ++x)
+            for (decltype(m_gameData->size.x) x = 0; x < m_gameData->size.x; ++x)
             {
                 m_backgroundTiles[y][x]->color.set(levelProperties.getBackgroundTileColor({ x, y }, pointInCenter({ x,y })));
             }
@@ -548,7 +548,7 @@ namespace zoper
 
                 auto tileBackground(backgroundTilesrg->createRenderizable<NodeQuad>("backgroundTile_" + indexStr));
                 tileBackground->box = tileBox;
-                column.push_back(std::move(tileBackground));
+                column.emplace_back(std::move(tileBackground));
 
                 // Size of the point in the middle of the tile
                 constexpr vector2df centerPointSize{ 15,15 };
