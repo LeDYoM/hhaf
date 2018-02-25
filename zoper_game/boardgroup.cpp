@@ -1,27 +1,54 @@
 #include "boardgroup.hpp"
+
+#include <lib/scene/scenenode.hpp>
+#include <lib/scene/nodes/tablenode.hpp>
+#include <lib/scene/renderizables/nodequad.hpp>
 #include <lib/scene/renderizables/nodeshape.hpp>
+
+using namespace lib::scene;
+using namespace lib::scene::nodes;
 
 namespace zoper
 {
-	using namespace lib;
-	using namespace lib::scene;
-	using namespace lib::board;
+	BoardGroup::BoardGroup(SceneNode* parent, str name, sptr<GameData> gameData) :
+		BaseClass{ parent, std::move(name) }, m_gameData{ std::move(gameData) } {}
 
-	u32 Tile::m_tileCounter{ 0 };
+	BoardGroup::~BoardGroup() = default;
 
-	Tile::Tile(SceneNode* const parent, str name, BoardTileData data, const Rectf32 &box) :
-		GameBaseTile{ parent, name + str(m_tileCounter) + str(m_tileCounter), data }
+	void BoardGroup::onCreated()
 	{
-		++m_tileCounter;
-		m_node = createRenderizable<nodes::NodeShape>("Node", 30);
-		m_node->box = box;
-		m_node->color = getColorForToken();
+		BaseClass::onCreated();
+
+		Rectf32 textBox{ scenePerspective() };
+		position = textBox.leftTop();
+		sceneNodeSize = textBox.size();
+
+		const Rectf32 bBox(scenePerspective());
+
+//		f32 currentx{};
+//		f32 currenty{};
+		Rectf32 tileBox({},cellSize());
+		for (u32 y{ 0 }; y < m_gameData->size.y; ++y) {
+			for (u32 x{ 0 }; x < m_gameData->size.x; ++x) {
+				auto tileParentNode (createNodeAt({ x,y }, make_str("BoardGroupTile_", x, y)));
+
+				auto tileBackground(tileParentNode->createRenderizable<NodeQuad>("backgroundTile"));
+				tileBackground->box = tileBox;
+
+				// Size of the point in the middle of the tile
+				constexpr vector2df centerPointSize{ 15,15 };
+
+				auto node(tileParentNode->createRenderizable<NodeShape>("backgroundTilePoint_", 30));
+				node->box = { tileBox.center() - (centerPointSize / 2), centerPointSize };
+				node->color = colors::White;
+
+//				currentx += tileSize().x;
+			}
+//			currentx = 0;
+//			currenty += tileSize().y;
+//			m_backgroundTiles.push_back(std::move(column));
+		}
+
 	}
 
-	Tile::~Tile() = default;
-
-	void Tile::resetTileCounter()
-	{
-		m_tileCounter = 0;
-	}
 }

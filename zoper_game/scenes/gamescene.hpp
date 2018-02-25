@@ -8,6 +8,7 @@
 #include "../levelproperties.hpp"
 #include "../gamedata.hpp"
 #include "../loaders/gameresources.hpp"
+#include "../boardgroup.hpp"
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/function.hpp>
@@ -88,7 +89,8 @@ namespace zoper
         sptr<Player> p_player{ nullptr };
         sptr<scene::nodes::TextQuad> m_scoreQuad, m_goalQuad;
         sptr<scene::nodes::NodeText> m_pauseText;
-        vector<vector<sptr<scene::nodes::NodeQuad>>> m_backgroundTiles;
+//        vector<vector<sptr<scene::nodes::NodeQuad>>> m_backgroundTiles;
+		sptr<BoardGroup> m_boardGroup;
     };
 }
 
