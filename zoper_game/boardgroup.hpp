@@ -5,21 +5,25 @@
 
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/nodes/tablenode.hpp>
-#include <lib/scene/renderizables/nodequad.hpp>
+#include <lib/scene/scenenode.hpp>
+
+#include "gamedata.hpp"
 
 using namespace lib;
 
 namespace zoper
 {
-	class BoardGroup : public scene::nodes::TableNode<scene::nodes::NodeQuad>
+	class BoardGroup : public scene::nodes::TableNode<scene::SceneNode>
 	{
 	private:
-		using BaseClass = scene::nodes::TableNode<scene::nodes::NodeQuad>;
+		using BaseClass = scene::nodes::TableNode<scene::SceneNode>;
 	public:
-		BoardGroup(scene::SceneNode* parent, str name);
+		BoardGroup(scene::SceneNode* parent, str name, sptr<GameData> gameData);
 		virtual ~BoardGroup();
 
 		void onCreated() override;
+	private:
+		sptr<GameData> m_gameData;
 	};
 }
 
