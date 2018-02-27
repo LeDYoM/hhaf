@@ -25,25 +25,26 @@ namespace zoper
 
 		const Rectf32 bBox(scenePerspective());
 
-		f32 currentx{};
-		f32 currenty{};
+//		f32 currentx{};
+//		f32 currenty{};
+		Rectf32 tileBox({},cellSize());
 		for (u32 y{ 0 }; y < m_gameData->size.y; ++y) {
 			for (u32 x{ 0 }; x < m_gameData->size.x; ++x) {
 				auto tileParentNode (createNodeAt({ x,y }, make_str("BoardGroupTile_", x, y)));
 
 				auto tileBackground(tileParentNode->createRenderizable<NodeQuad>("backgroundTile"));
-//				tileBackground->box = tileBox;
+				tileBackground->box = tileBox;
 
 				// Size of the point in the middle of the tile
 				constexpr vector2df centerPointSize{ 15,15 };
 
 				auto node(tileParentNode->createRenderizable<NodeShape>("backgroundTilePoint_", 30));
-//				node->box = { tileBox.center() - (centerPointSize / 2), centerPointSize };
+				node->box = { tileBox.center() - (centerPointSize / 2), centerPointSize };
 				node->color = colors::White;
 
 //				currentx += tileSize().x;
 			}
-			currentx = 0;
+//			currentx = 0;
 //			currenty += tileSize().y;
 //			m_backgroundTiles.push_back(std::move(column));
 		}

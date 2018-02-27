@@ -47,6 +47,10 @@ namespace lib::scene::nodes
             return result;
         }
 
+		constexpr vector2df cellSize() const {
+			return vector2df{ sceneNodeSize() / static_cast<vector2df>(tableSize()) };
+		}
+
         constexpr sptr<T> operator()(const vector2dst &index) noexcept { return m_nodes[index.x][index.y]; }
         constexpr const sptr<T> operator()(const vector2dst &index) const noexcept { return m_nodes[index.x][index.y]; }
         constexpr sptr<T> nodeAt(const vector2dst &index) noexcept { return m_nodes[index.x][index.y]; }
