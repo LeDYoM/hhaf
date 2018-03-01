@@ -259,7 +259,7 @@ namespace zoper
         {
             for (decltype(m_gameData->size.x) x = 0; x < m_gameData->size.x; ++x)
             {
-				(*m_boardGroup)({ x,y })->color.set(levelProperties.getBackgroundTileColor({ x, y }, pointInCenter({ x,y })));
+				(*m_boardGroup)({ x,y })->setTileColor(levelProperties.getBackgroundTileColor({ x, y }, pointInCenter({ x,y })));
             }
         }
 
@@ -524,58 +524,18 @@ namespace zoper
 
                 temp += chTemp;
             }
-            lib::log_debug_info(temp);
+            log_debug_info(temp);
         }
     }
 
     void GameScene::tilesCreated()
     {
-        const Rectf32 bBox(scenePerspective());
 		assert_debug(!m_boardGroup, "m_boardGroup is not empty");
-		m_boardGroup = createSceneNode<BoardGroup>("BoardGroup");
+		m_boardGroup = createSceneNode<BoardGroup>("BoardGroup", m_gameData);
 
-        auto backgroundTilesrg(createSceneNode("backgroundTiles"));
-        moveLastBeforeNode(m_boardGroup);
+        moveLastBeforeNode(m_mainBoardrg);
     }
 
-/*
-	void GameScene::tilesCreated()
-	{
-		const Rectf32 bBox(scenePerspective());
-		m_backgroundTiles.clear();
-		m_backgroundTiles.reserve(m_gameData->size.y);
-
-		auto backgroundTilesrg(createSceneNode("backgroundTiles"));
-		moveLastBeforeNode(m_mainBoardrg);
-		f32 currentx{};
-		f32 currenty{};
-		for (u32 y{ 0 }; y < m_gameData->size.y; ++y) {
-			vector<sptr<NodeQuad>> column;
-			column.reserve(m_gameData->size.x);
-
-			for (u32 x{ 0 }; x < m_gameData->size.x; ++x) {
-				const Rectf32 tileBox{ currentx, currenty, tileSize().x,tileSize().y };
-				const str indexStr(x + "_" + y);
-
-				auto tileBackground(backgroundTilesrg->createRenderizable<NodeQuad>("backgroundTile_" + indexStr));
-				tileBackground->box = tileBox;
-				column.emplace_back(std::move(tileBackground));
-
-				// Size of the point in the middle of the tile
-				constexpr vector2df centerPointSize{ 15,15 };
-
-				auto node(backgroundTilesrg->createRenderizable<NodeShape>("backgroundTilePoint_" + indexStr, 30));
-				node->box = { tileBox.center() - (centerPointSize / 2), centerPointSize };
-				node->color = colors::White;
-
-				currentx += tileSize().x;
-			}
-			currentx = 0;
-			currenty += tileSize().y;
-			m_backgroundTiles.push_back(std::move(column));
-		}
-	}
-*/
     void GameScene::tokenMoved(const vector2dst &, const vector2dst &dest, sptr<Tile> tile)
     {
         auto animationComponent(tile->ensureComponentOfType<anim::AnimationComponent>());

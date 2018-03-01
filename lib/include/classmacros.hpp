@@ -9,7 +9,7 @@
 #define QUOTE__TEXT__(x)	#x
 
 #define LOBJECT_CLASS_DECLARE(className,baseClass)		class className : public baseClass		\
-														public:	\
+														private:	\
 															using BaseClass = baseClass;	\
 															constexpr static char[] BaseClassString = "QUOTE__TEXT__(x)"	\
 														private:

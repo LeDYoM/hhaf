@@ -19,7 +19,13 @@ namespace lib::scene::nodes
     class TableNode : public SceneNode
     {
     public:
-        TableNode(SceneNode *parent, str name) : SceneNode{ parent, std::move(name) } {}
+        TableNode(SceneNode *parent, str name, 
+			vector2dst tableSize_ = vector2dst{})
+			: SceneNode{ parent, std::move(name) } 
+		{
+			tableSize = tableSize_;
+		}
+
         virtual ~TableNode() = default;
 
         PropertyTrigger<vector2dst> tableSize {[this]()

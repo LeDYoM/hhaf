@@ -11,7 +11,7 @@ using namespace lib::scene::nodes;
 namespace zoper
 {
 	BoardGroup::BoardGroup(SceneNode* parent, str name, sptr<GameData> gameData) :
-		BaseClass{ parent, std::move(name) }, m_gameData{ std::move(gameData) } {}
+		BaseClass{ parent, std::move(name), gameData->size }, m_gameData{ std::move(gameData) } {}
 
 	BoardGroup::~BoardGroup() = default;
 
@@ -25,28 +25,11 @@ namespace zoper
 
 		const Rectf32 bBox(scenePerspective());
 
-//		f32 currentx{};
-//		f32 currenty{};
 		Rectf32 tileBox({},cellSize());
-		for (u32 y{ 0 }; y < m_gameData->size.y; ++y) {
-			for (u32 x{ 0 }; x < m_gameData->size.x; ++x) {
-				auto tileParentNode (createNodeAt({ x,y }, make_str("BoardGroupTile_", x, y)));
-
-				auto tileBackground(tileParentNode->createRenderizable<NodeQuad>("backgroundTile"));
-				tileBackground->box = tileBox;
-
-				// Size of the point in the middle of the tile
-				constexpr vector2df centerPointSize{ 15,15 };
-
-				auto node(tileParentNode->createRenderizable<NodeShape>("backgroundTilePoint_", 30));
-				node->box = { tileBox.center() - (centerPointSize / 2), centerPointSize };
-				node->color = colors::White;
-
-//				currentx += tileSize().x;
+		for (size_type y{ 0U }; y < m_gameData->size.y; ++y) {
+			for (size_type x{ 0U }; x < m_gameData->size.x; ++x) {
+				static_cast<void>(createNodeAt({ x,y }, make_str("BoardGroupTile_", x, y), tileBox));
 			}
-//			currentx = 0;
-//			currenty += tileSize().y;
-//			m_backgroundTiles.push_back(std::move(column));
 		}
 
 	}
