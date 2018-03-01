@@ -1,5 +1,7 @@
-#ifndef LIB_COLOR_HPP
-#define LIB_COLOR_HPP
+#pragma once
+
+#ifndef LIB_SCENE_COLOR_HPP
+#define LIB_SCENE_COLOR_HPP
 
 #include <mtypes/include/types.hpp>
 #include <algorithm>
