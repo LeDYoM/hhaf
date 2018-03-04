@@ -84,6 +84,8 @@ TEST_CASE("str conversions", "[str]")
 	CHECK(test == "A9876543210_11");
 	test += 0xf;
 	CHECK(test == "A9876543210_1115");
+	test += 010;
+	CHECK(test == "A9876543210_11158");
 }
 
 TEST_CASE("str operations", "[str]")
@@ -93,4 +95,12 @@ TEST_CASE("str operations", "[str]")
 	CHECK(f2 + f == "hello the test");
 	CHECK((f2 += f) == "hello the test");
 	CHECK(f2 == "hello the test");
+}
+
+TEST_CASE("str split", "[str]")
+{
+	str foo("hello. This. To Split string. Lets see");
+	auto strSplitted = foo.split('.');
+	CHECK(strSplitted.size() == 4);
+	foo[0]
 }

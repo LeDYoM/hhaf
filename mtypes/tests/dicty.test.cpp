@@ -95,7 +95,7 @@ TEST_CASE("dicty create 3", "[dicty]")
     CHECK_FALSE(obj3["adf"] == "");
 }
 
-TEST_CASE("dicty create 3", "[dicty]")
+TEST_CASE("dicty create 4", "[dicty]")
 {
 	// Initialize with initializer list of objects and initializer list of
 	// properties.
