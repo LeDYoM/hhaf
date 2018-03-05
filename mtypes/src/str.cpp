@@ -29,7 +29,7 @@ namespace lib
         std::string tok;
 
         while (std::getline(ss, tok, separator)) {
-            result.push_back(tok.c_str());
+            result.push_back(str(tok.c_str()));
         }
         return result;
     }

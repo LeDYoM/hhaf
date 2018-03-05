@@ -102,5 +102,13 @@ TEST_CASE("str split", "[str]")
 	str foo("hello. This. To Split string. Lets see");
 	auto strSplitted = foo.split('.');
 	CHECK(strSplitted.size() == 4);
-	foo[0]
+	CHECK(strSplitted[0] == "hello");
+	CHECK(strSplitted[1] == " This");
+	CHECK(strSplitted[2] == " To Split string");
+	CHECK(strSplitted[3] == " Lets see");
+
+	auto moreSplitted(strSplitted[2].substr(4).split('s'));
+	CHECK(moreSplitted.size() == 2);
+	CHECK(moreSplitted[0] == "Split ");
+	CHECK(moreSplitted[1] == "tring");
 }

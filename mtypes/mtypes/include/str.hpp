@@ -36,7 +36,7 @@ namespace lib
         constexpr str(str&&) noexcept = default;
 
 		constexpr str(const str & n) noexcept : m_data( n.m_data ) {}
-		str(const char_type *n) noexcept;
+		explicit str(const char_type *n) noexcept;
 		constexpr str(const char_type *n, const size_type N) noexcept : m_data(n, N+1) {}
 
         str(const u64 n);

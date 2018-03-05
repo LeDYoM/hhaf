@@ -278,8 +278,8 @@ namespace lib::parpar
                 }));
 
                 return iterator == m_optionParameters.cend()?
-                    std::make_pair(false,""):
-                    std::make_pair(true,iterator->second);
+                    std::make_pair(false,str("")):
+                    std::make_pair(true,str(iterator->second));
         }
 
         inline str_t optionValueOrDefault(const str_t &opPar,
