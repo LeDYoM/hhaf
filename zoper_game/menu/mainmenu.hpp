@@ -15,7 +15,7 @@ namespace zoper
 	class MainMenu : public scene::SceneNode
 	{
 	public:
-		constexpr static const char*ClassName = "MainMenu";
+		static constexpr char ClassName[] = "MainMenu";
 		MainMenu(scene::SceneNode *parent, str name);
 		virtual ~MainMenu();
 
