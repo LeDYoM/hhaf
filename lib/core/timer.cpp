@@ -12,15 +12,32 @@ namespace lib
 		TimePrivate(std::chrono::microseconds microseconds)
 			: m_microseconds{microseconds} {}
 
-		TimePrivate(TimePrivate &&rh) = default;
+		TimePrivate(TimePrivate &&) = default;
+		TimePrivate(const TimePrivate &) = default;
+		TimePrivate&operator=(TimePrivate &&) = default;
+		TimePrivate&operator=(const TimePrivate &) = default;
 	};
 
 	Time::Time()
-		: m_timePrivate{ std::make_unique<TimePrivate>(std::chrono::microseconds::zero()) } { }
+		: m_timePrivate{ muptr<TimePrivate>(std::chrono::microseconds::zero()) } { }
 
 	Time::Time(Time &&rh)
 	{
 		m_timePrivate = std::move(rh.m_timePrivate);
+	}
+
+	Time::Time(const Time & rhs) : m_timePrivate{ muptr<TimePrivate>(*(rhs.m_timePrivate)) } { }
+
+	Time & Time::operator=(const Time &rhs)
+	{
+		this->m_timePrivate.reset(new TimePrivate(*(rhs.m_timePrivate)));
+		return *this;
+	}
+
+	Time & Time::operator=(Time && rhs)
+	{
+		std::swap(this->m_timePrivate, rhs.m_timePrivate);
+		return *this;
 	}
 
 	Time::~Time() = default;
@@ -36,12 +53,6 @@ namespace lib
 		Time t;
 		t.m_timePrivate = std::make_unique<TimePrivate>(this->m_timePrivate->m_microseconds - rh.m_timePrivate->m_microseconds);
 		return t;
-	}
-
-	Time & Time::operator=(const Time &other)
-	{
-		m_timePrivate->m_microseconds = other.m_timePrivate->m_microseconds;
-		return *this;
 	}
 
 	u64 Time::asMicroSeconds() const

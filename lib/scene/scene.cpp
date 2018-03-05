@@ -10,9 +10,7 @@ namespace lib::scene
 	{
 	Scene::Scene(str name) : SceneNode{ nullptr,std::move(name) } {}
 
-	Scene::~Scene()
-	{
-	}
+	Scene::~Scene() = default;
 
 	void Scene::onCreated()
 	{

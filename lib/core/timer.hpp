@@ -2,20 +2,24 @@
 #define __LIB_TIMER_HPP__
 
 #include <mtypes/include/types.hpp>
+#include <mtypes/include/connection.hpp>
 
 namespace lib
 {
 	struct TimerPrivate;
 	struct TimePrivate;
+
 	class Time
 	{
 	public:
 		Time();
 		Time(Time &&rh);
+		Time&operator=(Time&&rhs);
+		explicit Time(const Time&rhs);
+		Time &operator=(const Time&rhs);
 		~Time();
 		Time &operator+=(const Time &rh);
 		Time operator-(const Time &rh) const;
-		Time &operator=(const Time &other);
 		u64 asMicroSeconds() const;
 		u64 asMilliSeconds() const;
 		u64 asSeconds() const;
@@ -51,6 +55,17 @@ namespace lib
 		Time m_pausedTime;
 		bool m_paused{ false };
 	};
+
+	/*
+	class TimerTrigger
+	{
+	public:
+		TimerTrigger(Timer& timer) : m_internalTimer{ timer } {}
+		emitter<Time>
+	private:
+		Timer & m_internalTimer;
+	};
+	*/
 }
 
 #endif

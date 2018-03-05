@@ -38,11 +38,11 @@ namespace lib
 
             u32 state();
             void setState(const size_type ns);
-
-			Timer clock;
+			PausableTimer clock;
 
 		private:
-            sptr<StatesController<size_type>> m_sceneStates;
+
+			sptr<StatesController<size_type>> m_sceneStates;
             SceneManager *m_sceneManager{ nullptr };
 			friend class core::Host;
 			friend class SceneManager;

@@ -76,7 +76,6 @@ namespace zoper
 
         // Properties
         GameResourcesLoader m_gameresources;
-        PausableTimer m_gameClock;
         sptr<board::BoardModelComponent> p_boardModel{ nullptr };
         sptr<GameData> m_gameData{ nullptr };
         u8 m_nextTokenPart{ 0 };

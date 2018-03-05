@@ -201,7 +201,7 @@ namespace zoper
 
         setState(Playing);
 
-        m_gameClock.restart();
+        clock.restart();
     }
 
     void GameScene::updateScene()
@@ -211,10 +211,10 @@ namespace zoper
                 updateLevelData();
             }
 
-            if (m_gameClock.getElapsedTime().asMilliSeconds() > static_cast<lib::u64>(levelProperties.millisBetweenTokens())) {
+            if (clock.getElapsedTime().asMilliSeconds() > static_cast<u64>(levelProperties.millisBetweenTokens())) {
                 // New token
                 generateNextToken();
-                m_gameClock.restart();
+				clock.restart();
             }
         }
         else {
@@ -229,13 +229,13 @@ namespace zoper
             auto animationComponent(m_pauseSceneNode->ensureComponentOfType<anim::AnimationComponent>());
             animationComponent->addAnimation(muptr<anim::IPropertyAnimation<Color>>(1000, m_pauseText->color, Color{ 255, 255, 255, 0 }, Color{ 255, 255, 255, 255 },
                 anim::animation_action_callback{}, anim::animation_action_callback{}));
-            m_gameClock.pause();
+            clock.pause();
             return true;
         }
         else if (state() == Pause) {
             setState(Playing);
             m_pauseSceneNode->visible = false;
-            m_gameClock.resume();
+			clock.resume();
             return false;
         }
         return false;
