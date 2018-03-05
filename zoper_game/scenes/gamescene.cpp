@@ -168,7 +168,6 @@ namespace zoper
             break;
         }
 
-        registerEvents();
         auto inputComponent(ensureComponentOfType<scene::InputComponent>());
         inputComponent->KeyPressed.connect([this](const lib::input::Key&key) {
             log_debug_info("Key pressed in GameScene");
