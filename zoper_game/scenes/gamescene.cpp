@@ -390,41 +390,6 @@ namespace zoper
         p_boardModel->setTile(pos, newTileToken);
     }
 
-    void zoper::GameScene::registerEvents()
-    {
-        /*
-        addSubscription(events::KeyPressedEvent::subscribe([this](const events::Event&ev) {
-            lib::log_debug_info("Key pressed in GameScene");
-            const auto &kEvent{ dynamic_cast<const events::KeyPressedEvent&>(ev) };
-            switch (state())
-            {
-            case Playing:
-            {
-                auto dir = _keyMapping.getDirectionFromKey(kEvent.key);
-                if (dir.isValid()) {
-                    p_player->movePlayer(dir, [this](const vector2du32&p) { return pointInCenter(p); }, p_boardModel);
-                }
-                else if (_keyMapping.isLaunchKey(kEvent.key)) {
-                    launchPlayer();
-                }
-                else if (_keyMapping.isPauseKey(kEvent.key)) {
-                    switchPause();
-                }
-            }
-            break;
-            case GameOver:
-                lib::host().setScene("MenuScene");
-                break;
-            case Pause:
-                if (_keyMapping.isPauseKey(kEvent.key)) {
-                    switchPause();
-                }
-                break;
-            }
-        }));
-        */
-    }
-
     void GameScene::launchPlayer()
     {
         lib::log_debug_info("Launching player");

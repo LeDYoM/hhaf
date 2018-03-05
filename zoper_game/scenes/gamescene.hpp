@@ -72,8 +72,6 @@ namespace zoper
         void addPlayer();
         void tilesCreated();
 
-        void registerEvents();
-
         void tokenMoved(const vector2dst &source, const vector2dst &dest, sptr<Tile> tile);
 
         // Properties
@@ -89,7 +87,6 @@ namespace zoper
         sptr<Player> p_player{ nullptr };
         sptr<scene::nodes::TextQuad> m_scoreQuad, m_goalQuad;
         sptr<scene::nodes::NodeText> m_pauseText;
-//        vector<vector<sptr<scene::nodes::NodeQuad>>> m_backgroundTiles;
 		sptr<BoardGroup> m_boardGroup;
     };
 }
