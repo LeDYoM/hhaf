@@ -1,6 +1,6 @@
 #include "window.hpp"
 #include <mtypes/include/log.hpp>
-#include "timer.hpp"
+#include <mtypes/include/timer.hpp>
 #include "host.hpp"
 #include <lib/include/iapp.hpp>
 #include <lib/core/inputsystem.hpp>

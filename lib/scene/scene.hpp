@@ -7,8 +7,8 @@
 #include "scenenode.hpp"
 
 #include <mtypes/include/types.hpp>
+#include <mtypes/include/timer.hpp>
 #include <lib/scene/components/statescontroller.hpp>
-#include <lib/core/timer.hpp>
 
 namespace lib
 {
@@ -37,7 +37,7 @@ namespace lib
 		protected:
 
             u32 state();
-            void setState(const size_type ns);
+			void setState(const size_type);
 			PausableTimer clock;
 
 		private:

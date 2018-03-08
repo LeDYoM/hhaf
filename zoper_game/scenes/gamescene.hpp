@@ -12,7 +12,7 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/function.hpp>
-#include <lib/core/timer.hpp>
+#include <mtypes/include/timer.hpp>
 #include <lib/scene/scene.hpp>
 #include <lib/board/itilescontroller.hpp>
 #include <lib/board/boardmodel.hpp>

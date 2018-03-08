@@ -58,7 +58,7 @@ namespace lib
         /// is called, it will generate a call to the second emitter.
         constexpr connection(emitter<Args...> &e, emitter<Args...> &r) : m_emitter{ e },
             m_function {
-                [&r](Args... args) {
+                [&r](Args&&... args) {
                     r(std::forward<Args>(args)...);
                 }
             }
@@ -78,8 +78,8 @@ namespace lib
     {
     public:
         template <typename R, typename... Args>
-        constexpr void connect(emitter<Args...> &e, R f) {
-            m_connections.push_back(msptr<connection<Args...>>(e, std::move(f)));
+        constexpr void connect(emitter<Args...> &e, R r) {
+            m_connections.push_back(msptr<connection<Args...>>(e, std::move(r)));
         }
 
         template <typename... Args>

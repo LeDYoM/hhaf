@@ -8,7 +8,7 @@
 #include <mtypes/include/vector2d.hpp>
 #include <mtypes/include/rect.hpp>
 #include <mtypes/include/streams.hpp>
-#include <lib/core/timer.hpp>
+#include <mtypes/include/timer.hpp>
 
 #include "direction.hpp"
 

@@ -3,10 +3,10 @@
 #ifndef LIB_STR_INCLUDE_HPP
 #define LIB_STR_INCLUDE_HPP
 
-#include "mtypes_export.hpp"
 #include "vector.hpp"
 #include "types.hpp"
 #include <type_traits>
+#include "mtypes_export.hpp"
 
 namespace lib
 {

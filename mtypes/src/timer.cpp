@@ -1,4 +1,4 @@
-#include "timer.hpp"
+#include "../mtypes/include/timer.hpp"
 #include <chrono>
 
 namespace lib
@@ -48,11 +48,17 @@ namespace lib
 		return *this;
 	}
 
+	Time & Time::operator-=(const Time & rh)
+	{
+		m_timePrivate->m_microseconds -= rh.m_timePrivate->m_microseconds;
+		return *this;
+	}
+
 	Time Time::operator-(const Time &rh) const
 	{
-		Time t;
-		t.m_timePrivate = std::make_unique<TimePrivate>(this->m_timePrivate->m_microseconds - rh.m_timePrivate->m_microseconds);
-		return t;
+		Time t(*this);
+		t -= rh;
+        return t;
 	}
 
 	u64 Time::asMicroSeconds() const
@@ -72,20 +78,20 @@ namespace lib
 
 	void Time::setZero()
 	{
-		if (m_timePrivate)
-			m_timePrivate->m_microseconds = std::chrono::microseconds::zero();
+		m_timePrivate->m_microseconds = std::chrono::microseconds::zero();
 	}
 
 	struct TimerPrivate
 	{
-
 		clock_t::time_point start;
 		std::chrono::microseconds pausedTime;
-		TimerPrivate()
-		{
-			start = clock_t::now();
-			pausedTime = std::chrono::microseconds::zero();
-		}
+        f32 acceleration;
+        
+		TimerPrivate() :
+            start{ clock_t::now() },
+            pausedTime{ std::chrono::microseconds::zero() },
+            acceleration{ 1.0f }
+        {}
 	};
 
 	Timer::Timer() : m_timerPrivate{ new TimerPrivate } {}
@@ -94,9 +100,8 @@ namespace lib
 
 	const Time Timer::getElapsedTime() const
 	{
-		std::chrono::microseconds ellapsed = std::chrono::duration_cast<std::chrono::microseconds>(clock_t::now() - m_timerPrivate->start);
 		Time t;
-		t.m_timePrivate = std::make_unique<TimePrivate>(ellapsed);
+		*(t.m_timePrivate) = std::chrono::duration_cast<std::chrono::microseconds>(clock_t::now() - m_timerPrivate->start);
 		return t;
 	}
 
@@ -107,8 +112,7 @@ namespace lib
 
 	void PausableTimer::pause()
 	{
-		if (!m_paused)
-		{
+		if (!m_paused) {
 			m_paused = true;
 			m_pausedTimer.restart();
 		}
@@ -130,9 +134,11 @@ namespace lib
 
 	const Time PausableTimer::getElapsedTime() const
 	{
-		Time t = (Timer::getElapsedTime() - m_pausedTime);
+		Time t{ Timer::getElapsedTime() - m_pausedTime };
 		if (m_paused)
-			t = t - m_pausedTimer.getElapsedTime();
+		{
+			t -= m_pausedTimer.getElapsedTime();
+		}
 		return t;
 	}
 

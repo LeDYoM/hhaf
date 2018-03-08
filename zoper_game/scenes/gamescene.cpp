@@ -212,9 +212,11 @@ namespace zoper
             }
 
             if (clock.getElapsedTime().asMilliSeconds() > static_cast<u64>(levelProperties.millisBetweenTokens())) {
+                log_debug_info("Ellapsed between tokens: ", clock.getElapsedTime().asMilliSeconds());
                 // New token
                 generateNextToken();
 				clock.restart();
+                log_debug_info("Ellapsed between tokens: ", clock.getElapsedTime().asMilliSeconds());
             }
         }
         else {
