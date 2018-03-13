@@ -23,6 +23,5 @@ target_link_libraries(${TARGET_NAME}
 include_directories(${TARGET_NAME}
   INTERFACE ${CATCH_INCLUDE_DIR})
 
-add_test(
-  NAME ${TARGET_NAME}
-  COMMAND ${TARGET_NAME} -o report.xml -r junit)
+include (Catch)
+catch_discover_tests(${TARGET_NAME})

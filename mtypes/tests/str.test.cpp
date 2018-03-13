@@ -112,3 +112,26 @@ TEST_CASE("str split", "[str]")
 	CHECK(moreSplitted[0] == "Split ");
 	CHECK(moreSplitted[1] == "tring");
 }
+
+TEST_CASE("str convert", "[str]")
+{
+	str sInt("-42");
+	str sIntCopy(sInt);
+	str longStr(12345678900);
+	str slongStr(-12345678900);
+	s32 i{ 0 };
+	f32 j{ 0 };
+	u64 k{ 0 };
+
+	CHECK(sInt.convert(i));
+	CHECK(i == 42);
+	CHECK_FALSE(sInt.convert(j));
+
+	CHECK(sInt == sIntCopy);
+
+	CHECK_FALSE(longStr.convert(i));
+	CHECK_FALSE(longStr.convert(j));
+	CHECK(longStr.convert(k));
+	CHECK(k == 1234567890);
+	CHECK_FALSE(slongStr.convert(k));
+}

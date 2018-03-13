@@ -18,7 +18,6 @@ namespace lib
         using const_reference = const char_type&;
         using iterator = char_type*;
         using const_iterator = const char_type*;
-        // Temporary code
 #ifdef _MSC_VER
         #pragma warning(push)
         #pragma warning(disable:4251)
@@ -66,8 +65,14 @@ namespace lib
         str & append(const str & n) {
             m_data.pop_back();
             m_data.insert(n.m_data);
-            return *this        ;
+            return *this;
         }
+
+		template<size_type N>
+		constexpr str &append(const char_type(&n)[N]) {
+			append(str(std::forward<const char_type(&)[N]>(n)));
+			return *this;
+		}
 
         str & append(const char_type * n) {
             append(str(n));
@@ -104,12 +109,14 @@ namespace lib
             return *this;
         }
 
-		void convert(u64 &n) const;
-		void convert(s64 &n) const;
-        void convert(u32 &n) const;
-        void convert(s32 &n) const;
-        void convert(f32 &n) const;
-        void convert(f64 &n) const;
+		bool convert(u64 &n) const;
+		bool convert(s64 &n) const;
+		bool convert(u32 &n) const;
+		bool convert(s32 &n) const;
+		bool convert(u16 &n) const;
+		bool convert(s16 &n) const;
+		bool convert(f32 &n) const;
+		bool convert(f64 &n) const;
 
         template <typename T>
         str &operator+=(T&&source) {
