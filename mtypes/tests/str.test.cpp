@@ -124,14 +124,21 @@ TEST_CASE("str convert", "[str]")
 	u64 k{ 0 };
 
 	CHECK(sInt.convert(i));
-	CHECK(i == 42);
-	CHECK_FALSE(sInt.convert(j));
+	CHECK(i == -42);
+
+    // Int string to f32 works
+	CHECK(sInt.convert(j));
 
 	CHECK(sInt == sIntCopy);
 
 	CHECK_FALSE(longStr.convert(i));
-	CHECK_FALSE(longStr.convert(j));
+
+    // 64bits signed int to f32 works
+	CHECK(longStr.convert(j));
 	CHECK(longStr.convert(k));
-	CHECK(k == 1234567890);
-	CHECK_FALSE(slongStr.convert(k));
+    CHECK(j == 12345678900.f);
+	CHECK(k == 12345678900);
+
+    // Warning: sign mismatch, but works
+	CHECK(slongStr.convert(k));
 }
