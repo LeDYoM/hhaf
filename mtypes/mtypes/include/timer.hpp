@@ -76,30 +76,6 @@ namespace lib
 		Time m_pausedTime;
 		bool m_paused{ false };
 	};
-
-    struct TimerConnection
-    {
-        Time period;
-        Time lastCheck;
-        emitter<Time> TimerEmitter;
-    };
-
-	class TimerTrigger
-	{
-	public:
-		TimerTrigger(Timer& timer) : m_internalTimer{ timer } {}
-
-        template <typename T>
-        void addConnection(Time period, T&& callback) {
-            m_timerConnections.emplace_back(
-                std::move(period),
-                m_internalTimer.getElapsedTime(),
-                std::forward<T>(callback));
-        }
-	private:
-		Timer & m_internalTimer;
-        vector<TimerConnection> m_timerConnections;
-	};
 }
 
 #endif

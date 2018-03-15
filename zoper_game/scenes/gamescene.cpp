@@ -216,7 +216,6 @@ namespace zoper
                 // New token
                 generateNextToken();
 				clock.restart();
-                log_debug_info("Ellapsed between tokens: ", clock.getElapsedTime().asMilliSeconds());
             }
         }
         else {
