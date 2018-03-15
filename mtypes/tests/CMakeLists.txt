@@ -23,5 +23,7 @@ target_link_libraries(${TARGET_NAME}
 include_directories(${TARGET_NAME}
   INTERFACE ${CATCH_INCLUDE_DIR})
 
-include (Catch)
-catch_discover_tests(${TARGET_NAME})
+
+add_test( dicty ${TARGET_NAME} [dicty])
+#include (Catch)
+#catch_discover_tests(${TARGET_NAME})
