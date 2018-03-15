@@ -52,38 +52,43 @@ namespace lib
         return temp;
     }
 
-	void str::convert(u64 & n) const
+	bool str::convert(u64 & n) const
 	{
-		std::istringstream tmpstream(c_str());
-		tmpstream >> n;
+		return static_cast<bool>(std::istringstream(c_str()) >> n);
 	}
 
-	void str::convert(s64 & n) const
+	bool str::convert(s64 & n) const
 	{
-		std::istringstream tmpstream(c_str());
-		tmpstream >> n;
+		return static_cast<bool>(std::istringstream(c_str()) >> n);
 	}
 
-    void str::convert(u32 & n) const
+	bool str::convert(u32 & n) const
     {
-        std::istringstream tmpstream(c_str());
-        tmpstream >> n;
-    }
+		return static_cast<bool>(std::istringstream(c_str()) >> n);
+	}
 
-	void str::convert(s32 & n) const
+	bool str::convert(s32 & n) const
     {
-        std::istringstream tmpstream(c_str());
-        tmpstream >> n;
-    }
+		return static_cast<bool>(std::istringstream(c_str()) >> n);
+	}
 
-	void str::convert(f32 & n) const
+	bool str::convert(u16 & n) const
+	{
+		return static_cast<bool>(std::istringstream(c_str()) >> n);
+	}
+
+	bool str::convert(s16 & n) const
+	{
+		return static_cast<bool>(std::istringstream(c_str()) >> n);
+	}
+
+	bool str::convert(f32 & n) const
     {
-        std::istringstream tmpstream(c_str());
-        tmpstream >> n;
-    }
-    void str::convert(f64 & n) const
+		return static_cast<bool>(std::istringstream(c_str()) >> n);
+	}
+
+	bool str::convert(f64 & n) const
     {
-        std::istringstream tmpstream(c_str());
-        tmpstream >> n;
-    }
+		return static_cast<bool>(std::istringstream(c_str()) >> n);
+	}
 }

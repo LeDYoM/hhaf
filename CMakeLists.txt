@@ -4,7 +4,7 @@ cmake_minimum_required (VERSION 3.9.2)
 # It creates "CMakePredefinedTargets" folder by default and adds CMake
 # defined projects like INSTALL.vcproj and ZERO_CHECK.vcproj
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-
+enable_testing()
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
