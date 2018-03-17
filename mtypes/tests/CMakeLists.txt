@@ -24,6 +24,6 @@ include_directories(${TARGET_NAME}
   INTERFACE ${CATCH_INCLUDE_DIR})
 
 
-add_test( dicty ${TARGET_NAME} [dicty])
-#include (Catch)
-#catch_discover_tests(${TARGET_NAME})
+# add_test( NAME all COMMAND CTest)
+include (Catch)
+catch_discover_tests(${TARGET_NAME})

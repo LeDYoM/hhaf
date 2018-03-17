@@ -3,6 +3,17 @@
 
 namespace lib
 {
+    namespace time
+    {
+        using clock_t = std::chrono::high_resolution_clock;
+
+        TimePoint Clock::now() const 
+        {
+            auto now_micros = std::chrono::duration_cast<std::chrono::microseconds>
+                (clock_t::now().time_since_epoch());
+            return TimePoint{ static_cast<TimePoint::time_rep_t>(now_micros.count()) };
+        }
+    }
 	typedef std::chrono::high_resolution_clock clock_t;
 	static clock_t::time_point globalStart;
 

@@ -38,10 +38,10 @@ namespace lib
 
 			void finish();
 
-			inline const Rectf32 &viewPort() const noexcept { return m_parentWindow.viewPort(); }
-			inline void setViewPort(Rectf32 vp) noexcept { m_parentWindow.viewPort = std::move(vp); }
-			inline const Rectf32 &viewRect() const noexcept { return m_parentWindow.viewRect(); }
-			inline void setViewRect(Rectf32 vr) noexcept { m_parentWindow.viewRect = std::move(vr); }
+			constexpr const Rectf32 &viewPort() const noexcept { return m_parentWindow.viewPort(); }
+            constexpr void setViewPort(Rectf32 vp) noexcept { m_parentWindow.viewPort = std::move(vp); }
+            constexpr const Rectf32 &viewRect() const noexcept { return m_parentWindow.viewRect(); }
+            constexpr void setViewRect(Rectf32 vr) noexcept { m_parentWindow.viewRect = std::move(vr); }
 
 			template <typename T>
 			void startFirstScene()
@@ -57,6 +57,16 @@ namespace lib
 				scene->onCreated();
 				return std::dynamic_pointer_cast<T>(scene);
 			}
+
+            /**
+            * Method returning the current time point for the frame.
+            *
+            * @returns A TimePoint containing the data.
+            **/
+            inline time::TimePoint frameNow() const {
+                return time::Clock().now();
+            }
+
 		private:
 			ComponentContainer m_componentContainer;
 			sptr<StatesController<sptr<Scene>>> m_statesController;

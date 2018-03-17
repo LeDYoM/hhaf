@@ -6,11 +6,71 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/connection.hpp>
 #include "mtypes_export.hpp"
+#include <chrono>
 
 namespace lib
 {
+    namespace time
+    {
+        class TimePoint
+        {
+        public:
+            using time_rep_t = s64;
+            using millis_rep_t = s64;
+            using seconds_rep_t = f32;
+
+            constexpr TimePoint(time_rep_t representation)
+                : m_representation{ representation } {}
+            
+            constexpr time_rep_t micro() const noexcept {
+                return m_representation;
+            }
+
+            constexpr millis_rep_t millis() const noexcept {
+                return static_cast<millis_rep_t>(m_representation / 1000);
+            }
+
+            constexpr seconds_rep_t seconds() const noexcept {
+                return static_cast<seconds_rep_t>(millis() / 1000);
+            }
+        private:
+            time_rep_t m_representation;
+        };
+
+        class MTYPES_EXPORT Clock
+        {
+        public:
+            TimePoint now() const;
+        };
+    }
+
 	struct TimerPrivate;
 	struct TimePrivate;
+
+    namespace time2
+    {
+        using clock_t = std::chrono::high_resolution_clock;
+        using time_point = clock_t::time_point;
+        using minimum_resolution = std::chrono::microseconds;
+
+        class MTYPES_EXPORT Clock
+        {
+            Clock() {
+                if (!m_initialized) {
+                    initialize();
+                    m_initialized = true;
+                }
+            }
+
+        private:
+            void initialize() {
+                m_startingPoint = clock_t::now();
+            }
+
+            time_point m_startingPoint;
+            static bool m_initialized{ false };
+        };
+    }
 
 	class MTYPES_EXPORT Time
 	{
