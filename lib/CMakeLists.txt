@@ -64,6 +64,8 @@ set(SOURCE_FILES_LIST
 	scene/components/statescontroller.hpp
 	scene/components/texteditorcomponent.cpp
 	scene/components/texteditorcomponent.hpp
+	scene/components/timercomponent.cpp
+	scene/components/timercomponent.hpp
 
 	scene/hasname.hpp
 	scene/ianimation.hpp
