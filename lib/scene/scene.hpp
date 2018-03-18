@@ -34,15 +34,6 @@ namespace lib
 			inline SceneManager &sceneManager() noexcept { return *m_sceneManager; }
 			inline const SceneManager &sceneManager() const noexcept { return *m_sceneManager; }
 
-            /**
-            * Method returning the current time point for the frame.
-            *
-            * @returns A TimePoint containing the data.
-            **/
-            inline time::TimePoint frameNow() const {
-                return sceneManager().frameNow();
-            }
-
 		protected:
 
             u32 state();

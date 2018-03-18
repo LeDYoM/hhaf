@@ -47,31 +47,6 @@ namespace lib
 	struct TimerPrivate;
 	struct TimePrivate;
 
-    namespace time2
-    {
-        using clock_t = std::chrono::high_resolution_clock;
-        using time_point = clock_t::time_point;
-        using minimum_resolution = std::chrono::microseconds;
-
-        class MTYPES_EXPORT Clock
-        {
-            Clock() {
-                if (!m_initialized) {
-                    initialize();
-                    m_initialized = true;
-                }
-            }
-
-        private:
-            void initialize() {
-                m_startingPoint = clock_t::now();
-            }
-
-            time_point m_startingPoint;
-            static bool m_initialized{ false };
-        };
-    }
-
 	class MTYPES_EXPORT Time
 	{
 	public:
