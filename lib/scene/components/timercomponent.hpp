@@ -13,14 +13,16 @@
 
 namespace lib::scene
 {
-    using timer_callback_t = function<time::TimePoint>;
+    using timer_emitter_t = emitter<time::TimePoint>;
+    using timer_callback_t = timer_emitter_t::emitter_callback_t;
 
     class ITimer
     {
     private:
-        constexpr ITimer(time::TimePoint timePoint, timer_callback_t callback)
-            : m_deltaTime{ timePoint }, m_callback{ std::move(callback) } noexcept {}
-        time::TimePoint m_deltaTime;
+        ITimer(time::TimePoint timePoint, time::TimePoint currentTime, timer_callback_t callback)
+            : m_delta{ timePoint }, m_lastCheck{ currentTime }, m_callback { std::move(callback) } {}
+        time::TimePoint m_delta;
+        time::TimePoint m_lastCheck;
         timer_callback_t m_callback;
     };
 
@@ -28,11 +30,13 @@ namespace lib::scene
 	{
 	public:
         sptr<ITimer> addTimer(time::TimePoint deltaTime, timer_callback_t callback) {
-            m_activeTimers.push_back(mwptr<ITimer>(deltaTime, std::move(callback)));
+            auto timer(msptr<ITimer>(deltaTime, std::move(callback)));
+            m_activeTimers.push_back(timer);
+            return timer;
         }
 	private:
-        vector_of_weak_pointers<ITimer> m_activeTimers;
-        vector<wptr<ITimer>> m_oneShotTimers;
+        vector_weak_pointers<ITimer> m_activeTimers;
+        vector_weak_pointers<ITimer> m_oneShotTimers;
 	};
 }
 

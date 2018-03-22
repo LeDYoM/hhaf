@@ -11,6 +11,7 @@ namespace lib
     template <typename... Args>
     class emitter final {
     public:
+        using emitter_callback_t = function<void(Args...)>;
         constexpr emitter() = default;
         constexpr emitter(function<void(Args...)> f) : m_receivers{ std::move(f) } {}
         constexpr emitter(const emitter &) = default;
@@ -26,17 +27,16 @@ namespace lib
             }
         }
 
-        constexpr void connect(function<void(Args...)> f) {
+        constexpr void connect(emitter_callback_t f) {
             m_receivers.emplace_back(std::move(f));
         }
 
-        constexpr bool disconnect(function<void(Args...)>& f) {
-            auto where_it_was = m_receivers.remove_value(f);
-            return where_it_was != m_receivers.end();
+        constexpr bool disconnect(emitter_callback_t& f) {
+            return m_receivers.remove_value(f) != m_receivers.end();
         }
 
     private:
-        vector<function<void(Args...)>> m_receivers;
+        vector<emitter_callback_t> m_receivers;
     };
 
     class iconnection
