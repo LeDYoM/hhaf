@@ -19,11 +19,12 @@ namespace lib::scene
     class ITimer
     {
     private:
-        ITimer(time::TimePoint timePoint, time::TimePoint currentTime, timer_callback_t callback)
-            : m_delta{ timePoint }, m_lastCheck{ currentTime }, m_callback { std::move(callback) } {}
-        time::TimePoint m_delta;
-        time::TimePoint m_lastCheck;
-        timer_callback_t m_callback;
+        ITimer(time::TimePoint timePoint, timer_callback_t callback)
+            : delta{ timePoint }, lastCheck{ time::Clock().now() }, callback { std::move(callback) } {}
+        time::TimePoint delta;
+        time::TimePoint lastCheck;
+        timer_callback_t callback;
+        friend class TimerComponent;
     };
 
     class TimerComponent : public IComponent
@@ -34,6 +35,9 @@ namespace lib::scene
             m_activeTimers.push_back(timer);
             return timer;
         }
+
+        void update() override;
+
 	private:
         vector_weak_pointers<ITimer> m_activeTimers;
         vector_weak_pointers<ITimer> m_oneShotTimers;

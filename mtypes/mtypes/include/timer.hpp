@@ -33,9 +33,36 @@ namespace lib
             constexpr seconds_rep_t seconds() const noexcept {
                 return static_cast<seconds_rep_t>(millis() / 1000);
             }
+
+            friend constexpr TimePoint operator-(const TimePoint &lhs, const TimePoint &rhs) noexcept;
+            friend constexpr bool operator>(const TimePoint &lhs, const TimePoint &rhs) noexcept;
+            friend constexpr bool operator<(const TimePoint &lhs, const TimePoint &rhs) noexcept;
+            friend constexpr bool operator==(const TimePoint &lhs, const TimePoint &rhs) noexcept;
+            friend constexpr bool operator!=(const TimePoint &lhs, const TimePoint &rhs) noexcept;
+
         private:
             time_rep_t m_representation;
         };
+
+        constexpr TimePoint operator-(const TimePoint &lhs, const TimePoint &rhs) noexcept {
+            return TimePoint(lhs.m_representation - rhs.m_representation);
+        }
+
+        constexpr bool operator>(const TimePoint &lhs, const TimePoint &rhs) noexcept {
+            return lhs.m_representation > rhs.m_representation;
+        }
+
+        constexpr bool operator<(const TimePoint &lhs, const TimePoint &rhs) noexcept {
+            return lhs.m_representation < rhs.m_representation;
+        }
+
+        constexpr bool operator==(const TimePoint &lhs, const TimePoint &rhs) noexcept {
+            return lhs.m_representation == rhs.m_representation;
+        }
+
+        constexpr bool operator!=(const TimePoint &lhs, const TimePoint &rhs) noexcept {
+            return lhs.m_representation != rhs.m_representation;
+        }
 
         class MTYPES_EXPORT Clock
         {
