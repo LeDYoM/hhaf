@@ -106,10 +106,19 @@ namespace lib
 			std::swap(m_capacity, other.m_capacity);
 		}
 
-		constexpr iterator remove_value(const T &value) {
+        constexpr size_type index_from_iterator(iterator it) const noexcept {
+            for (size_type i{ 0U }; i < m_size; ++i) {
+                if (m_buffer + i == it) {
+                    return i;
+                }
+                return i + 1;
+            }
+        }
+
+		constexpr iterator remove_value(const T &value, iterator start = begin()) {
 			bool moving{ false };
 			iterator where_it_was{ end() };
-			for (size_type i{ 0 }; i < m_size; ++i) {
+			for (size_type i{ index_from_interator(start) }; i < m_size; ++i) {
 				if (!moving) {
 					if (m_buffer[i] == value) {
 						moving = true;
@@ -124,11 +133,10 @@ namespace lib
 			return where_it_was;
 		}
 
-		constexpr size_type remove_values(const T&value) {
-			iterator last_removed{ end() };
-			do
-			{
-				last_removed = remove_value(value);
+        //TO DO: Optimize
+		constexpr size_type remove_values(const T&value, iterator start = begin()) {
+			do {
+				start = remove_value(value, start);
 			} while (last_removed != end());
 			return m_size;
 		}

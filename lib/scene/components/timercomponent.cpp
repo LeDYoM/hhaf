@@ -1,15 +1,40 @@
 #include "timercomponent.hpp"
 #include <mtypes/include/log.hpp>
+#include <mtypes/include/function.hpp>
 #include <lib/scene/scene.hpp>
 
 namespace lib::scene
 {
+    void update_and_remove(vector<wptr<ITimer>> &activeTimers,
+        function<bool(sptr<ITimer>)> updateFunction)
+    {
+        using namespace time;
+        if (!(activeTimers.empty())) {
+            for (auto &wptr_timer : activeTimers) {
+                // Get the shared pointer
+                sptr<ITimer> sptr_timer(wptr_timer.lock());
+                // If the pointer exists, use it
+                if (sptr_timer) {
+                    updateFunction(std::move(sptr_timer));
+                }
+                else {
+                    // The object does not exist anymore
+                    wptr_timer.reset();
+                }
+            }
+
+            // Now, delete the elements
+            activeTimers.remove_values(wptr<ITimer>());
+        }
+    }
+
     void TimerComponent::update()
     {
         using namespace time;
         if (!(m_activeTimers.empty())) {
             Clock clock;
             TimePoint t(clock.now());
+            update_and_remove(m_activeTimers,[](auto t))
             for (auto &uptr_timer : m_activeTimers) {
                 // Get the shared pointer
                 sptr<ITimer> sptr_timer(uptr_timer.lock());
