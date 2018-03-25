@@ -107,20 +107,44 @@ namespace lib
 		}
 
         constexpr size_type index_from_iterator(iterator it) const noexcept {
-            for (size_type i{ 0U }; i < m_size; ++i) {
+            for (size_type i{ 0 }; i < m_size; ++i) {
                 if (m_buffer + i == it) {
                     return i;
                 }
-                return i + 1;
             }
+			return m_size;
         }
 
-		constexpr iterator remove_value(const T &value, iterator start = begin()) {
+		constexpr iterator remove_value(const T &value, iterator start) {
+			return remove_if([&value](const T p) { return p == value; }, start);
+		}
+
+		constexpr iterator remove_value(const T &value) {
+			return remove_value(value, begin());
+		}
+
+        //TO DO: Optimize
+		constexpr size_type remove_values(const T&value, iterator start) {
+			return remove_all_if([&value](const T p) { return p == value; } , start);
+		}
+
+		constexpr size_type remove_values(const T&value) {
+			return remove_values(value, begin());
+		}
+
+		constexpr size_type remove_all_from(const vector &other) {
+			for (auto&& node : other) {
+				remove_value(std::forward<T>(node));
+			}
+            return m_size;
+		}
+
+		constexpr iterator remove_if(function<bool(const T&)> condition, iterator start) {
 			bool moving{ false };
 			iterator where_it_was{ end() };
-			for (size_type i{ index_from_interator(start) }; i < m_size; ++i) {
+			for (size_type i{ index_from_iterator(start) }; i < m_size; ++i) {
 				if (!moving) {
-					if (m_buffer[i] == value) {
+					if (condition(m_buffer[i])) {
 						moving = true;
 						--m_size;
 						where_it_was = m_buffer + i;
@@ -133,19 +157,19 @@ namespace lib
 			return where_it_was;
 		}
 
-        //TO DO: Optimize
-		constexpr size_type remove_values(const T&value, iterator start = begin()) {
+		constexpr iterator remove_if(function<bool(const T&)> condition) {
+			return remove_if(std::move(condition), begin);
+		}
+
+		constexpr size_type remove_all_if(function<bool(const T&)> condition, iterator start) {
 			do {
-				start = remove_value(value, start);
-			} while (last_removed != end());
+				start = remove_if(condition, start);
+			} while (start != end());
 			return m_size;
 		}
 
-		constexpr size_type remove_all_from(const vector &other) {
-			for (auto&& node : other) {
-				remove_value(std::forward<T>(node));
-			}
-            return m_size;
+		constexpr size_type remove_all_if(function<bool(const T&)> condition) {
+			return remove_all_if(condition, begin());
 		}
 
 		constexpr iterator find(const T&element) noexcept {
