@@ -6,7 +6,7 @@
 namespace lib::scene
 {
     void update_and_remove(vector<wptr<ITimer>> &activeTimers,
-        function<bool(sptr<ITimer>)> updateFunction)
+        function<void(sptr<ITimer>)> updateFunction)
     {
         using namespace time;
         if (!(activeTimers.empty())) {
@@ -24,7 +24,7 @@ namespace lib::scene
             }
 
             // Now, delete the elements
-            activeTimers.remove_values(wptr<ITimer>());
+			activeTimers.remove_all_if([](const wptr<ITimer>& p) -> bool { return false; });
         }
     }
 

@@ -18,9 +18,10 @@ namespace lib::scene
 
     class ITimer
     {
-    private:
+    public:
         ITimer(time::TimePoint timePoint, timer_callback_t callback)
             : delta{ timePoint }, lastCheck{ time::Clock().now() }, callback { std::move(callback) } {}
+	private:
         time::TimePoint delta;
         time::TimePoint lastCheck;
         timer_callback_t callback;
