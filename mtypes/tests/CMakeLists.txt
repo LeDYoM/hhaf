@@ -5,6 +5,7 @@ set(UNIT_TEST_LIST
     parpar
     str
 	timer
+	vector
 )
 
 foreach(NAME IN LISTS UNIT_TEST_LIST)

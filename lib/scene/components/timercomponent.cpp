@@ -24,7 +24,7 @@ namespace lib::scene
             }
 
             // Now, delete the elements
-			activeTimers.remove_all_if([](const wptr<ITimer>& p) -> bool { return false; });
+            activeTimers.remove_all_if([](const wptr<ITimer>& p) { return p.expired(); });
         }
     }
 
@@ -34,15 +34,18 @@ namespace lib::scene
         if (!(m_activeTimers.empty())) {
             Clock clock;
             TimePoint t(clock.now());
-			update_and_remove(m_activeTimers, [t](sptr<ITimer> sptr_timer) {
-				ITimer &timer(*sptr_timer);
-				if (timer.lastCheck - t > timer.delta) {
-					// Delta time has passed, so trigger
-					// the callback and update the timer
-					timer.callback(t);
-					timer.lastCheck = t;
-				}
-			});
+            const auto updateFunction([t](sptr<ITimer> sptr_timer) {
+                ITimer &timer(*sptr_timer);
+                if (timer.lastCheck - t > timer.delta) {
+                    // Delta time has passed, so trigger
+                    // the callback and update the timer
+                    timer.callback(t);
+                    timer.lastCheck = t;
+                }
+            });
+
+			update_and_remove(m_activeTimers, updateFunction);
+            update_and_remove(m_oneShotTimers, updateFunction);
         }
     }
 }
