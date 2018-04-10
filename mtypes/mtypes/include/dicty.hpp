@@ -145,21 +145,21 @@ namespace lib::dicty
 
         constexpr Object() {}
 
-        constexpr Object(std::initializer_list<pair<str,str>> iListValues) {
+        inline Object(std::initializer_list<pair<str,str>> iListValues) {
             set(std::move(iListValues), false);
         }
 
-        constexpr Object(std::initializer_list<pair<str,Object>> iListObjects) {
+         inline Object(std::initializer_list<pair<str,Object>> iListObjects) {
             set(std::move(iListObjects), false);
         }
 
-        constexpr Object(std::initializer_list<pair<str, Object>> iListObjects,
+        inline Object(std::initializer_list<pair<str, Object>> iListObjects,
                 std::initializer_list<pair<str, str>> iListValues) {
             set(std::move(iListObjects), false);
             set(std::move(iListValues), false);
         }
 
-        constexpr Object(std::initializer_list<pair<str, str>> iListValues,
+        inline Object(std::initializer_list<pair<str, str>> iListValues,
                std::initializer_list<pair<str, Object>> iListObjects) {
             set(std::move(iListValues), false);
             set(std::move(iListObjects), false);
