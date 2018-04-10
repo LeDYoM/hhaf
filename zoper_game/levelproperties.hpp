@@ -7,27 +7,29 @@
 
 namespace zoper
 {
+    using namespace lib;
+
 	class LevelProperties
 	{
 	public:
 		LevelProperties();
 		virtual ~LevelProperties() = default;
 
-		void setLevel(const lib::u32 level);
+        void setLevel(const u32 level);
 
-		inline lib::u32 millisBetweenTokens() const { return m_millisBetweenTokens; }
-		inline lib::u32 baseScore() const { return m_baseScore; }
-		inline lib::u32 stayTime() const { return m_stayTime; }
-		inline lib::u32 currentLevel() const { return m_level; }
-		inline lib::u32 stayTokens() const { return m_stayTokens; }
-		static constexpr lib::u32 maxLevelWithProperties{ 25u };
-		lib::scene::Color getBackgroundTileColor(lib::vector2du32 position, const bool isCenter) const;
+        inline u32 millisBetweenTokens() const { return m_millisBetweenTokens; }
+        inline u32 baseScore() const { return m_baseScore; }
+        inline u32 stayTime() const { return m_stayTime; }
+        inline u32 currentLevel() const { return m_level; }
+        inline u32 stayTokens() const { return m_stayTokens; }
+        static constexpr u32 maxLevelWithProperties{ 25u };
+        scene::Color getBackgroundTileColor(vector2dst position, const bool isCenter) const;
 	private:
-		lib::u32 m_level;
-		lib::u32 m_millisBetweenTokens;
-		lib::u32 m_baseScore;
-		lib::u32 m_stayTime;
-		lib::u32 m_stayTokens;
+        u32 m_level;
+        u32 m_millisBetweenTokens;
+        u32 m_baseScore;
+        u32 m_stayTime;
+        u32 m_stayTokens;
 	};
 }
 

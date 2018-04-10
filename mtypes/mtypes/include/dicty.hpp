@@ -264,7 +264,7 @@ namespace lib::dicty
         }
 
     private:
-        constexpr bool set(std::initializer_list<pair<str, str>> iListValues, bool overwrite = true)
+        bool set(std::initializer_list<pair<str, str>> iListValues, bool overwrite = true)
         {
             bool ok{true};
             for (auto&& element : iListValues) {
@@ -273,7 +273,7 @@ namespace lib::dicty
             return ok;
         }
 
-        constexpr bool set(std::initializer_list<pair<str,Object>> iListObject, bool overwrite = true)
+        bool set(std::initializer_list<pair<str,Object>> iListObject, bool overwrite = true)
         {
             bool ok{true};
             for (auto&& element : iListObject) {

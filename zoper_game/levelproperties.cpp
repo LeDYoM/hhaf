@@ -30,7 +30,7 @@ namespace zoper
 		}
 	}
 
-	Color LevelProperties::getBackgroundTileColor(vector2du32 position, const bool isCenter) const
+    Color LevelProperties::getBackgroundTileColor(vector2dst position, const bool isCenter) const
 	{
 		if (m_level <= maxLevelWithProperties) {
 			if (isCenter) {
