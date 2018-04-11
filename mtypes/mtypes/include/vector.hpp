@@ -9,6 +9,10 @@
 
 namespace lib
 {
+	/** Vector class to store a sequence of elements
+	* This class is a container to store sequences of Ts. It can be resized.
+	* Other use cases include search, replacement, etc...
+	*/
 	template <typename T>
 	class  vector {
 	public:
@@ -16,6 +20,7 @@ namespace lib
 		using const_iterator = const T*;
 		using reference = T&;
 		using const_reference = const T&;
+
 
 		constexpr vector() noexcept : m_capacity{ 0 }, m_size{ 0 }, m_buffer{ nullptr } {}
 		explicit constexpr vector(const size_type size) : m_capacity{ size }, m_size{ size }, m_buffer{ size?new T[size] :nullptr} {}
@@ -36,8 +41,8 @@ namespace lib
 			: vector(other.m_buffer, size) {}
 
 		constexpr vector(vector&&other) noexcept : m_capacity{ other.m_capacity }, m_size{ other.m_size }, m_buffer{ other.m_buffer } {
-			other.m_capacity = 0;
-			other.m_size = 0;
+			other.m_capacity = 0U;
+			other.m_size = 0U;
 			other.m_buffer = nullptr;
 		}
 
@@ -61,20 +66,12 @@ namespace lib
 		}
 
 		constexpr vector& operator=(vector&&other) noexcept {
-			_destroy();
-			m_capacity = other.m_capacity;
-			m_size = other.m_size;
-			m_buffer = other.m_buffer;
-			other.m_capacity = 0;
-			other.m_size = 0;
-			other.m_buffer = nullptr;
+			swap(other);
 			return *this;
 		}
 
 		~vector() {
-            if (m_buffer) {
-                _destroy();
-            }
+            _destroy();
 		}
 
 		constexpr reference operator[](const size_type index) noexcept { return m_buffer[index]; }
@@ -91,8 +88,8 @@ namespace lib
 		constexpr T& front() noexcept { return m_buffer[0]; }
 		constexpr T& back() noexcept { return m_buffer[m_size > 0 ? (m_size - 1) : 0]; }
 
-		constexpr void for_each(function<void(const T&)> f) {
-			if (m_size) {
+		constexpr void for_each(const function<void(const T&)> f) {
+			if (!empty()) {
 				iterator current{ begin() };
 				do {
 					f(*current);
@@ -100,7 +97,7 @@ namespace lib
 			}
 		}
 
-		constexpr void swap(vector& other) {
+		constexpr void swap(vector& other) noexcept {
 			std::swap(m_buffer, other.m_buffer);
 			std::swap(m_size, other.m_size);
 			std::swap(m_capacity, other.m_capacity);
@@ -228,8 +225,21 @@ namespace lib
 			}
 		}
 
+		constexpr void insert(vector &&other) {
+			//TO DO: Optimize
+			reserve(m_size + other.m_size);
+			for (auto&& element : other) {
+				push_back(std::move(element));
+			}
+		}
+
 		constexpr vector& operator+=(const vector &other) {
 			insert(other);
+			return *this;
+		}
+
+		constexpr vector& operator+=(vector &&other) {
+			insert(std::move(other));
 			return *this;
 		}
 
@@ -270,19 +280,6 @@ namespace lib
 			m_buffer = new T[other.m_size];
 			m_capacity = other.m_size;
 			m_size = other.m_size;
-		}
-
-		constexpr void _ensure_reserved(const size_type capacity) {
-			if (m_capacity < capacity) {
-				T *newBuffer{ new T[capacity] };
-				for (unsigned int i{ 0 }; i < m_size; ++i) {
-					newBuffer[i] = std::move(m_buffer[i]);
-				}
-				if (m_buffer)
-					delete[] m_buffer;
-				m_buffer = newBuffer;
-				m_capacity = capacity;
-			}
 		}
 
 		constexpr void _copyElements(const T*const source, const size_type s) {
