@@ -7,7 +7,7 @@ namespace lib
     {
         using clock_t = std::chrono::high_resolution_clock;
 
-        TimePoint Clock::now() const 
+        TimePoint Clock::now() const
         {
             auto now_micros = std::chrono::duration_cast<std::chrono::microseconds>
                 (clock_t::now().time_since_epoch());
