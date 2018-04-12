@@ -64,10 +64,26 @@ namespace lib
             return lhs.m_representation != rhs.m_representation;
         }
 
-        class MTYPES_EXPORT Clock
+        class IClock
         {
         public:
-            TimePoint now() const;
+            virtual TimePoint now() const = 0;
+        };
+        class MTYPES_EXPORT Clock : public IClock
+        {
+        public:
+            TimePoint now() const override;
+        };
+
+         class MTYPES_EXPORT Timer
+        {
+        public:
+            Timer(Clock cl) : m_clock{ std::move(cl) }, m_start { m_clock.now() } {}
+            TimePoint ellapsed() const { return m_clock.now() - m_start; }
+
+        private:
+            Clock m_clock;
+            TimePoint m_start;
         };
     }
 
@@ -112,7 +128,6 @@ namespace lib
 
 		virtual const Time getElapsedTime() const;
 		virtual void restart();
-        void setAcceleration(f32 accel);
 	private:
 #ifdef _MSC_VER
         #pragma warning(push)
