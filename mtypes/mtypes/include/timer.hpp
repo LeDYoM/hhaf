@@ -10,6 +10,83 @@
 
 namespace lib
 {
+    namespace time
+    {
+        class TimePoint
+        {
+        public:
+            using time_rep_t = s64;
+            using millis_rep_t = s64;
+            using seconds_rep_t = f32;
+
+            constexpr TimePoint(time_rep_t representation)
+                : m_representation{ representation } {}
+            
+            constexpr time_rep_t micro() const noexcept {
+                return m_representation;
+            }
+
+            constexpr millis_rep_t millis() const noexcept {
+                return static_cast<millis_rep_t>(m_representation / 1000);
+            }
+
+            constexpr seconds_rep_t seconds() const noexcept {
+                return static_cast<seconds_rep_t>(millis() / 1000);
+            }
+
+            friend constexpr TimePoint operator-(const TimePoint &lhs, const TimePoint &rhs) noexcept;
+            friend constexpr bool operator>(const TimePoint &lhs, const TimePoint &rhs) noexcept;
+            friend constexpr bool operator<(const TimePoint &lhs, const TimePoint &rhs) noexcept;
+            friend constexpr bool operator==(const TimePoint &lhs, const TimePoint &rhs) noexcept;
+            friend constexpr bool operator!=(const TimePoint &lhs, const TimePoint &rhs) noexcept;
+
+        private:
+            time_rep_t m_representation;
+        };
+
+        constexpr TimePoint operator-(const TimePoint &lhs, const TimePoint &rhs) noexcept {
+            return TimePoint(lhs.m_representation - rhs.m_representation);
+        }
+
+        constexpr bool operator>(const TimePoint &lhs, const TimePoint &rhs) noexcept {
+            return lhs.m_representation > rhs.m_representation;
+        }
+
+        constexpr bool operator<(const TimePoint &lhs, const TimePoint &rhs) noexcept {
+            return lhs.m_representation < rhs.m_representation;
+        }
+
+        constexpr bool operator==(const TimePoint &lhs, const TimePoint &rhs) noexcept {
+            return lhs.m_representation == rhs.m_representation;
+        }
+
+        constexpr bool operator!=(const TimePoint &lhs, const TimePoint &rhs) noexcept {
+            return lhs.m_representation != rhs.m_representation;
+        }
+
+        class IClock
+        {
+        public:
+            virtual TimePoint now() const = 0;
+        };
+        class MTYPES_EXPORT Clock : public IClock
+        {
+        public:
+            TimePoint now() const override;
+        };
+
+         class MTYPES_EXPORT Timer
+        {
+        public:
+            Timer(Clock cl) : m_clock{ std::move(cl) }, m_start { m_clock.now() } {}
+            TimePoint ellapsed() const { return m_clock.now() - m_start; }
+
+        private:
+            Clock m_clock;
+            TimePoint m_start;
+        };
+    }
+
 	struct TimerPrivate;
 	struct TimePrivate;
 
@@ -43,7 +120,6 @@ namespace lib
 #endif
 		friend class Timer;
 	};
-
 	class MTYPES_EXPORT Timer
 	{
 	public:
