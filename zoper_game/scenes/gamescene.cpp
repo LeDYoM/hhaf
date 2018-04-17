@@ -21,7 +21,7 @@
 #include <lib/scene/ianimation.hpp>
 #include <lib/scene/components/animationcomponent.hpp>
 #include <lib/scene/components/inputcomponent.hpp>
-
+#include <lib/scene/components/timercomponent.hpp>
 
 namespace zoper
 {
@@ -168,6 +168,7 @@ namespace zoper
             break;
         }
 
+        auto timerComponent(ensureComponentOfType<scene::TimerComponent>());
         auto inputComponent(ensureComponentOfType<scene::InputComponent>());
         inputComponent->KeyPressed.connect([this](const lib::input::Key&key) {
             log_debug_info("Key pressed in GameScene");
