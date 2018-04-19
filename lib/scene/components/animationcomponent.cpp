@@ -30,7 +30,7 @@ namespace lib
 
 			void AnimationComponent::addAnimation(uptr<IAnimation> nanimation)
 			{
-				m_private->m_animations.emplace_back(std::move(nanimation));
+				m_private->m_animations.push_back(std::move(nanimation));
 			}
 
 			void AnimationComponent::update()

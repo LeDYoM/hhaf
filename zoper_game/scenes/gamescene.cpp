@@ -169,6 +169,10 @@ namespace zoper
         }
 
         auto timerComponent(ensureComponentOfType<scene::TimerComponent>());
+
+        timerComponent->addTimer(Time(2, TimeInitializationTag::Milliseconds), [](Time realEllapsed) {
+            log_debug_info("Hello");
+        });
         auto inputComponent(ensureComponentOfType<scene::InputComponent>());
         inputComponent->KeyPressed.connect([this](const lib::input::Key&key) {
             log_debug_info("Key pressed in GameScene");

@@ -20,28 +20,41 @@ namespace lib
 	struct TimePrivate
 	{
 		std::chrono::microseconds m_microseconds;
-		TimePrivate(std::chrono::microseconds microseconds)
+		TimePrivate(std::chrono::microseconds microseconds = std::chrono::microseconds::zero())
 			: m_microseconds{microseconds} {}
 
 		TimePrivate(TimePrivate &&) = default;
 		TimePrivate(const TimePrivate &) = default;
 		TimePrivate&operator=(TimePrivate &&) = default;
 		TimePrivate&operator=(const TimePrivate &) = default;
+        ~TimePrivate() = default;
 	};
 
-	Time::Time()
-		: m_timePrivate{ muptr<TimePrivate>(std::chrono::microseconds::zero()) } { }
+	Time::Time(const u64 quantity, TimeInitializationTag initTag)
+        : m_timePrivate{ muptr<TimePrivate>() } 
+    {
+        switch (initTag)
+        {
+        default:
+        case TimeInitializationTag::Microseconds:
+            m_timePrivate->m_microseconds = std::chrono::microseconds(quantity);
+            break;
+        case TimeInitializationTag::Milliseconds:
+            m_timePrivate->m_microseconds = std::chrono::milliseconds(quantity);
+            break;
+        case TimeInitializationTag::Seconds:
+            m_timePrivate->m_microseconds = std::chrono::seconds(quantity);
+            break;
+        }
+    }
 
-	Time::Time(Time &&rh)
-	{
-		m_timePrivate = std::move(rh.m_timePrivate);
-	}
+    Time::Time(Time &&rh) : m_timePrivate{ std::move(rh.m_timePrivate) } {}
 
 	Time::Time(const Time & rhs) : m_timePrivate{ muptr<TimePrivate>(*(rhs.m_timePrivate)) } { }
 
 	Time & Time::operator=(const Time &rhs)
 	{
-		this->m_timePrivate.reset(new TimePrivate(*(rhs.m_timePrivate)));
+		m_timePrivate.reset(new TimePrivate(*(rhs.m_timePrivate)));
 		return *this;
 	}
 
@@ -72,22 +85,52 @@ namespace lib
         return t;
 	}
 
-	u64 Time::asMicroSeconds() const
+    bool Time::operator>(const Time &rh) const noexcept
+    {
+        return m_timePrivate->m_microseconds > rh.m_timePrivate->m_microseconds;
+    }
+
+    bool Time::operator<(const Time &rh) const noexcept
+    {
+        return m_timePrivate->m_microseconds > rh.m_timePrivate->m_microseconds;
+    }
+
+    bool Time::operator>=(const Time &rh) const noexcept
+    {
+        return m_timePrivate->m_microseconds >= rh.m_timePrivate->m_microseconds;
+    }
+
+    bool Time::operator<=(const Time &rh) const noexcept
+    {
+        return m_timePrivate->m_microseconds >= rh.m_timePrivate->m_microseconds;
+    }
+
+    bool Time::operator==(const Time &rh) const noexcept
+    {
+        return m_timePrivate->m_microseconds == rh.m_timePrivate->m_microseconds;
+    }
+
+    bool Time::operator!=(const Time &rh) const noexcept
+    {
+        return m_timePrivate->m_microseconds != rh.m_timePrivate->m_microseconds;
+    }
+
+	u64 Time::asMicroSeconds() const noexcept
 	{
 		return m_timePrivate->m_microseconds.count();
 	}
 
-	u64 Time::asMilliSeconds() const
+	u64 Time::asMilliSeconds() const noexcept
 	{
 		return std::chrono::duration_cast<std::chrono::milliseconds>(m_timePrivate->m_microseconds).count();
 	}
 
-	u64 Time::asSeconds() const
+	u64 Time::asSeconds() const noexcept
 	{
 		return std::chrono::duration_cast<std::chrono::seconds>(m_timePrivate->m_microseconds).count();
 	}
 
-	void Time::setZero()
+	void Time::setZero() noexcept
 	{
 		m_timePrivate->m_microseconds = std::chrono::microseconds::zero();
 	}
@@ -103,6 +146,7 @@ namespace lib
             pausedTime{ std::chrono::microseconds::zero() },
             acceleration{ 1.0f }
         {}
+        ~TimerPrivate() = default;
 	};
 
 	Timer::Timer() : m_timerPrivate{ new TimerPrivate } {}
@@ -111,7 +155,8 @@ namespace lib
 
 	const Time Timer::getElapsedTime() const
 	{
-		Time t;
+		Time t((std::chrono::duration_cast<std::chrono::microseconds>(clock_t::now() - m_timerPrivate->start)).count(),
+            TimeInitializationTag::Microseconds);
 		*(t.m_timePrivate) = std::chrono::duration_cast<std::chrono::microseconds>(clock_t::now() - m_timerPrivate->start);
 		return t;
 	}

@@ -13,35 +13,38 @@
 
 namespace lib::scene
 {
-    using timer_emitter_t = emitter<time::TimePoint>;
+    using timer_emitter_t = emitter<Time>;
     using timer_callback_t = timer_emitter_t::emitter_callback_t;
 
-    class ITimer
+    class TimerConnector
     {
     public:
-        ITimer(time::TimePoint timePoint, timer_callback_t callback)
-            : delta{ timePoint }, lastCheck{ time::Clock().now() }, callback { std::move(callback) } {}
-	private:
-        time::TimePoint delta;
-        time::TimePoint lastCheck;
-        timer_callback_t callback;
+        TimerConnector(Time timeOut, timer_callback_t emitter)
+            : m_timer{ }, m_timeOut{ std::move(timeOut) },
+            m_emitter { std::move(emitter) } {}
+
+        inline bool timeOut() const { return m_timer.getElapsedTime() >= m_timeOut; }
+    private:
+        Timer m_timer;
+        Time m_timeOut;
+        timer_emitter_t m_emitter;
         friend class TimerComponent;
     };
 
     class TimerComponent : public IComponent
 	{
 	public:
-        sptr<ITimer> addTimer(time::TimePoint deltaTime, timer_callback_t callback) {
-            auto timer(msptr<ITimer>(deltaTime, std::move(callback)));
-            m_activeTimers.push_back(timer);
-            return timer;
+        sptr<TimerConnector> addTimer(Time timeOut, timer_callback_t callback) {
+            auto timerConnector(msptr<TimerConnector>(std::move(timeOut), std::move(callback)));
+            m_activeTimers.push_back(timerConnector);
+            return timerConnector;
         }
 
         void update() override;
 
 	private:
-        vector_weak_pointers<ITimer> m_activeTimers;
-        vector_weak_pointers<ITimer> m_oneShotTimers;
+        vector_weak_pointers<TimerConnector> m_activeTimers;
+        vector_weak_pointers<TimerConnector> m_oneShotTimers;
 	};
 }
 

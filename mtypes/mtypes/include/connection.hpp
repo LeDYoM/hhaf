@@ -13,7 +13,7 @@ namespace lib
     public:
         using emitter_callback_t = function<void(Args...)>;
         constexpr emitter() = default;
-        constexpr emitter(function<void(Args...)> f) : m_receivers{ std::move(f) } {}
+        constexpr emitter(emitter_callback_t f) : m_receivers{ std::move(f) } {}
         constexpr emitter(const emitter &) = default;
         constexpr emitter & operator=(const emitter &) = default;
         constexpr emitter(emitter &&) = default;

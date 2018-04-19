@@ -12,7 +12,7 @@ namespace lib
 {
     namespace time
     {
-        class TimePoint
+        class MTYPES_EXPORT TimePoint
         {
         public:
             using time_rep_t = s64;
@@ -90,24 +90,36 @@ namespace lib
 	struct TimerPrivate;
 	struct TimePrivate;
 
+    enum class TimeInitializationTag
+    {
+        Microseconds,
+        Milliseconds,
+        Seconds
+    };
 	class MTYPES_EXPORT Time
 	{
 	public:
-		Time();
+        Time(const u64 quantity = 0, TimeInitializationTag initTag = TimeInitializationTag::Microseconds);
 		Time(Time &&rh);
-		Time&operator=(Time&&rhs);
-		Time(const Time&rhs);
-		Time &operator=(const Time&rhs);
+        Time(const Time&rhs);
+        Time&operator=(Time&&rhs);
+		Time&operator=(const Time&rhs);
 		~Time();
 
 		Time &operator+=(const Time &rh);
 		Time &operator-=(const Time &rh);
-
 		Time operator-(const Time &rh) const;
-		u64 asMicroSeconds() const;
-		u64 asMilliSeconds() const;
-		u64 asSeconds() const;
-		void setZero();
+        bool operator>(const Time&rhs) const noexcept;
+        bool operator<(const Time&rhs) const noexcept;
+        bool operator>=(const Time&rhs) const noexcept;
+        bool operator<=(const Time&rhs) const noexcept;
+        bool operator==(const Time&rhs) const noexcept;
+        bool operator!=(const Time&rhs) const noexcept;
+
+        u64 asMicroSeconds() const noexcept;
+        u64 asMilliSeconds() const noexcept;
+        u64 asSeconds() const noexcept;
+        void setZero() noexcept;
 
 	private:
 #ifdef _MSC_VER
@@ -125,6 +137,9 @@ namespace lib
 	public:
 		Timer();
 		virtual ~Timer();
+
+        Timer(Timer&&) = default;
+        Timer& operator=(Timer&&) = default;
 
 		virtual const Time getElapsedTime() const;
 		virtual void restart();

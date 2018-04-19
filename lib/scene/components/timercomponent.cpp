@@ -5,42 +5,38 @@
 
 namespace lib::scene
 {
-    void update_and_remove(vector<wptr<ITimer>> &activeTimers,
-        function<void(sptr<ITimer>)> updateFunction)
+    void update_and_remove(vector<wptr<TimerConnector>> &activeTimers,
+        function<void(sptr<TimerConnector>)> updateFunction)
     {
-        using namespace time;
         if (!(activeTimers.empty())) {
-            for (auto &wptr_timer : activeTimers) {
+            for (auto &wptr_timerConnector : activeTimers) {
                 // Get the shared pointer
-                sptr<ITimer> sptr_timer(wptr_timer.lock());
+                sptr<TimerConnector> sptr_timerConnector(wptr_timerConnector.lock());
                 // If the pointer exists, use it
-                if (sptr_timer) {
-                    updateFunction(std::move(sptr_timer));
+                if (sptr_timerConnector) {
+                    updateFunction(std::move(sptr_timerConnector));
                 }
                 else {
                     // The object does not exist anymore
-                    wptr_timer.reset();
+                    wptr_timerConnector.reset();
                 }
             }
 
             // Now, delete the elements
-            activeTimers.remove_all_if([](const wptr<ITimer>& p) { return p.expired(); });
+            activeTimers.remove_all_if([](const wptr<TimerConnector>& p) { return p.expired(); });
         }
     }
 
     void TimerComponent::update()
     {
-        using namespace time;
         if (!(m_activeTimers.empty())) {
-            Clock clock;
-            TimePoint t(clock.now());
-            const auto updateFunction([t](sptr<ITimer> sptr_timer) {
-                ITimer &timer(*sptr_timer);
-                if (timer.lastCheck - t > timer.delta) {
+            const auto updateFunction([](sptr<TimerConnector> sptr_timer) {
+                TimerConnector &timerConnector(*sptr_timer);
+                if (timerConnector.timeOut()) {
                     // Delta time has passed, so trigger
                     // the callback and update the timer
-                    timer.callback(t);
-                    timer.lastCheck = t;
+                    timerConnector.m_emitter(timerConnector.m_timer.getElapsedTime());
+                    timerConnector.m_timer.restart();
                 }
             });
 
