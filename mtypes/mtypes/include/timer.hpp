@@ -4,7 +4,6 @@
 #define LIB_TIMER_INCLUDE_HPP__
 
 #include <mtypes/include/types.hpp>
-#include <mtypes/include/connection.hpp>
 #include "mtypes_export.hpp"
 
 namespace lib
