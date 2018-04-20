@@ -43,8 +43,8 @@ namespace lib::scene
         void update() override;
 
 	private:
-        vector_weak_pointers<TimerConnector> m_activeTimers;
-        vector_weak_pointers<TimerConnector> m_oneShotTimers;
+        vector_shared_pointers<TimerConnector> m_activeTimers;
+        vector_shared_pointers<TimerConnector> m_oneShotTimers;
 	};
 }
 

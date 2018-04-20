@@ -170,7 +170,7 @@ namespace zoper
 
         auto timerComponent(ensureComponentOfType<scene::TimerComponent>());
 
-        timerComponent->addTimer(Time(2, TimeInitializationTag::Milliseconds), [](Time realEllapsed) {
+        timerComponent->addTimer(Time(4000, TimeInitializationTag::Milliseconds), [](Time realEllapsed) {
             log_debug_info("Hello");
         });
         auto inputComponent(ensureComponentOfType<scene::InputComponent>());

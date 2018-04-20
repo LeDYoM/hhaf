@@ -5,25 +5,13 @@
 
 namespace lib::scene
 {
-    void update_and_remove(vector<wptr<TimerConnector>> &activeTimers,
+    void update_(vector_shared_pointers<TimerConnector> &activeTimers,
         function<void(sptr<TimerConnector>)> updateFunction)
     {
         if (!(activeTimers.empty())) {
-            for (auto &wptr_timerConnector : activeTimers) {
-                // Get the shared pointer
-                sptr<TimerConnector> sptr_timerConnector(wptr_timerConnector.lock());
-                // If the pointer exists, use it
-                if (sptr_timerConnector) {
-                    updateFunction(std::move(sptr_timerConnector));
-                }
-                else {
-                    // The object does not exist anymore
-                    wptr_timerConnector.reset();
-                }
+            for (auto &sptr_timerConnector : activeTimers) {
+                updateFunction(sptr_timerConnector);
             }
-
-            // Now, delete the elements
-            activeTimers.remove_all_if([](const wptr<TimerConnector>& p) { return p.expired(); });
         }
     }
 
@@ -40,8 +28,8 @@ namespace lib::scene
                 }
             });
 
-			update_and_remove(m_activeTimers, updateFunction);
-            update_and_remove(m_oneShotTimers, updateFunction);
+			update_(m_activeTimers, updateFunction);
+            update_(m_oneShotTimers, updateFunction);
         }
     }
 }
