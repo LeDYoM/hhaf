@@ -33,7 +33,7 @@ namespace lib
 	private:
 		class ICallable {
 		public:
-			virtual ~ICallable() = default;
+			virtual ~ICallable() {}
 			virtual ReturnValue Invoke(Args...) = 0;
 		};
 
@@ -42,8 +42,6 @@ namespace lib
 		public:
 			template <typename Y>
 			constexpr CallableT(Y &&t) noexcept : m_t{ std::forward<Y>(t) } {}
-
-			~CallableT() override = default;
 
 			constexpr ReturnValue Invoke(Args... args) override {
 				return m_t(std::forward<Args>(args)...);
@@ -54,11 +52,14 @@ namespace lib
 		};
 
 		template <class T>
-		class CallableMethodPointerT : public ICallable
+		class CallableMethodPointerT final : public ICallable
 		{
 		public:
 			typedef ReturnValue (T::*HandlerFunctionPtr)(Args...);
-			constexpr CallableMethodPointerT(T*const receiver, const HandlerFunctionPtr function) : obj{ receiver }, function_{ function } {}
+
+			constexpr CallableMethodPointerT(T*const receiver, const HandlerFunctionPtr function) 
+				: obj{ receiver }, function_{ function } {}
+
 			constexpr ReturnValue Invoke(Args... args) override {
 				return (obj->*function_)(std::forward<Args>(args)...);
 			}

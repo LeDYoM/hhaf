@@ -204,7 +204,7 @@ namespace zoper
         timerComponent->addTimer(
             Time(levelProperties.millisBetweenTokens(), TimeInitializationTag::Milliseconds),
             [this](Time realEllapsed) {
-                log_debug_info("Ellapsed between tokens: ", realEllapsed.asMilliSeconds());
+                log_debug_info("Elapsed between tokens: ", realEllapsed.asMilliSeconds());
                 // New token
                 generateNextToken();
             }
@@ -246,6 +246,7 @@ namespace zoper
 
     void GameScene::pauseGame()
     {
+		assert_release(state() == Playing, "You can only go to pause state from playing state");
         setState(Pause);
         m_pauseSceneNode->visible = true;
         auto animationComponent(m_pauseSceneNode->ensureComponentOfType<anim::AnimationComponent>());
@@ -255,7 +256,8 @@ namespace zoper
 
     void GameScene::continueGame()
     {
-        setState(Playing);
+		assert_release(state() == Pause, "You can only go to playing state from pause state");
+		setState(Playing);
         m_pauseSceneNode->visible = false;
     }
 
