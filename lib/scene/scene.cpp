@@ -21,7 +21,7 @@ namespace lib::scene
 		m_sceneStates->UseDeferred();
     }
 
-    u32 Scene::state()
+    size_type Scene::state()
     {
         return m_sceneStates->currentState();
     }

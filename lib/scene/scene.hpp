@@ -36,7 +36,7 @@ namespace lib
 
 		protected:
 
-            u32 state();
+            size_type state();
 			void setState(const size_type);
 			PausableTimer clock;
 
