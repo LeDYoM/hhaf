@@ -12,24 +12,23 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/function.hpp>
-#include <mtypes/include/timer.hpp>
 #include <lib/scene/scene.hpp>
 #include <lib/board/itilescontroller.hpp>
 #include <lib/board/boardmodel.hpp>
 #include <lib/scene/nodes/textquad.hpp>
 #include <lib/scene/renderizables/nodetext.hpp>
 #include <lib/scene/renderizables/nodequad.hpp>
-
-#include <array>
-
-using namespace lib;
+#include <lib/scene/components/timercomponent.hpp>
+#include <lib/scene/components/statescontroller.hpp>
 
 namespace zoper
 {
+    using namespace lib;
+
     class Player;
     class Tile;
 
-    class GameScene final : public scene::Scene
+    class GameScene final : public scene::Scene, public scene::StatesControllerActuator<size_type>
     {
     public:
         GameScene();
@@ -37,8 +36,10 @@ namespace zoper
 
         // Inherited via Scene
         virtual void onCreated() override;
-
         virtual void updateScene();
+
+        void onEnterState(const size_type&) override;
+        void onExitState(const size_type&) override;
 
     private:
         using BaseClass = scene::Scene;
@@ -47,7 +48,7 @@ namespace zoper
         void updateGoals();
         void increaseScore(u32 scoreIncrement);
         void generateNextToken();
-        void addNewToken(const vector2dst &pos, lib::u32 newToken);
+        void addNewToken(const vector2dst &pos, u32 newToken);
         bool pointInCenter(const vector2dst &tPosition) const;
         vector2df board2SceneFactor() const;
         vector2df board2Scene(const lib::vector2dst &bPosition) const;
@@ -55,17 +56,19 @@ namespace zoper
         void for_each_token_in_line(const vector2dst &startPosition, const Direction &direction,
             function<bool(const vector2dst &, const Direction &)> updatePredicate);
 
-        enum
+        enum : size_type
         {
-            Playing = 0,
-            GameOver = 1,
-            Pause = 2
-        } _sceneStates{ Playing };
+            Initialize = 0,
+            Playing = 1,
+            GameOver = 2,
+            Pause = 3
+        } _sceneStates{ Initialize };
 
         void startGameOver();
 
         void launchPlayer();
-        bool switchPause();
+        void pauseGame();
+        void continueGame();
 
         void _debugDisplayBoard() const;
 
@@ -75,6 +78,8 @@ namespace zoper
         void tokenMoved(const vector2dst &source, const vector2dst &dest, sptr<Tile> tile);
 
         // Properties
+        scene::TimerConnectorSPtr m_nextTokenTimer;
+
         GameResourcesLoader m_gameresources;
         sptr<board::BoardModelComponent> p_boardModel{ nullptr };
         sptr<GameData> m_gameData{ nullptr };

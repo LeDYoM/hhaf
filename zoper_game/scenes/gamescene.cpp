@@ -168,11 +168,6 @@ namespace zoper
             break;
         }
 
-        auto timerComponent(ensureComponentOfType<scene::TimerComponent>());
-
-        timerComponent->addTimer(Time(4000, TimeInitializationTag::Milliseconds), [](Time realEllapsed) {
-            log_debug_info("Hello");
-        });
         auto inputComponent(ensureComponentOfType<scene::InputComponent>());
         inputComponent->KeyPressed.connect([this](const lib::input::Key&key) {
             log_debug_info("Key pressed in GameScene");
@@ -189,7 +184,7 @@ namespace zoper
                     launchPlayer();
                 }
                 else if (keyMapping->isPauseKey(key)) {
-                    switchPause();
+                    pauseGame();
                 }
             }
             break;
@@ -198,14 +193,26 @@ namespace zoper
                 break;
             case Pause:
                 if (keyMapping->isPauseKey(key)) {
-                    switchPause();
+                    continueGame();
                 }
                 break;
             }
         });
 
-        setState(Playing);
+        auto timerComponent(ensureComponentOfType<scene::TimerComponent>());
 
+        timerComponent->addTimer(
+            Time(levelProperties.millisBetweenTokens(), TimeInitializationTag::Milliseconds),
+            [this](Time realEllapsed) {
+                log_debug_info("Ellapsed between tokens: ", realEllapsed.asMilliSeconds());
+                // New token
+                generateNextToken();
+            }
+        );
+
+        StatesControllerActuatorRegister<size_type> gameSceneActuatorRegister;
+        gameSceneActuatorRegister.registerStatesControllerActuator(*m_sceneStates, *this);
+        setState(Playing);
         clock.restart();
     }
 
@@ -217,34 +224,39 @@ namespace zoper
             }
 
             if (clock.getElapsedTime().asMilliSeconds() > static_cast<u64>(levelProperties.millisBetweenTokens())) {
-                log_debug_info("Ellapsed between tokens: ", clock.getElapsedTime().asMilliSeconds());
+ //               log_debug_info("Ellapsed// between tokens: ", clock.getElapsedTime().asMilliSeconds());
                 // New token
-                generateNextToken();
-				clock.restart();
+//                generateNextToken();
+//				clock.restart();
             }
         }
         else {
         }
     }
 
-    bool GameScene::switchPause()
+    void GameScene::onEnterState(const size_type &state)
     {
-        if (state() == Playing) {
-            setState(Pause);
-            m_pauseSceneNode->visible = true;
-            auto animationComponent(m_pauseSceneNode->ensureComponentOfType<anim::AnimationComponent>());
-            animationComponent->addAnimation(muptr<anim::IPropertyAnimation<Color>>(1000, m_pauseText->color, Color{ 255, 255, 255, 0 }, Color{ 255, 255, 255, 255 },
-                anim::animation_action_callback{}, anim::animation_action_callback{}));
-            clock.pause();
-            return true;
-        }
-        else if (state() == Pause) {
-            setState(Playing);
-            m_pauseSceneNode->visible = false;
-			clock.resume();
-            return false;
-        }
-        return false;
+        log_debug_info("Entered state: ", state);
+    }
+
+    void GameScene::onExitState(const size_type &state)
+    {
+        log_debug_info("Exited state: ", state);
+    }
+
+    void GameScene::pauseGame()
+    {
+        setState(Pause);
+        m_pauseSceneNode->visible = true;
+        auto animationComponent(m_pauseSceneNode->ensureComponentOfType<anim::AnimationComponent>());
+        animationComponent->addAnimation(muptr<anim::IPropertyAnimation<Color>>(1000, m_pauseText->color, Color{ 255, 255, 255, 0 }, Color{ 255, 255, 255, 255 },
+            anim::animation_action_callback{}, anim::animation_action_callback{}));
+    }
+
+    void GameScene::continueGame()
+    {
+        setState(Playing);
+        m_pauseSceneNode->visible = false;
     }
 
     void GameScene::setLevel(const u32 nv)

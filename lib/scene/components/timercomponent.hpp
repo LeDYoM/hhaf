@@ -31,10 +31,12 @@ namespace lib::scene
         friend class TimerComponent;
     };
 
+    using TimerConnectorSPtr = sptr<TimerConnector>;
+
     class TimerComponent : public IComponent
 	{
 	public:
-        sptr<TimerConnector> addTimer(Time timeOut, timer_callback_t callback) {
+        TimerConnectorSPtr addTimer(Time timeOut, timer_callback_t callback) {
             auto timerConnector(msptr<TimerConnector>(std::move(timeOut), std::move(callback)));
             m_activeTimers.push_back(timerConnector);
             return timerConnector;
