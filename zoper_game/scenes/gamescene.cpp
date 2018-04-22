@@ -184,8 +184,8 @@ namespace zoper
                     launchPlayer();
                 }
                 else if (keyMapping->isPauseKey(key)) {
-                    pauseGame();
-                }
+					setState(Pause);
+				}
             }
             break;
             case GameOver:
@@ -193,8 +193,8 @@ namespace zoper
                 break;
             case Pause:
                 if (keyMapping->isPauseKey(key)) {
-                    continueGame();
-                }
+					setState(Playing);
+				}
                 break;
             }
         });
@@ -234,31 +234,35 @@ namespace zoper
         }
     }
 
-    void GameScene::onEnterState(const size_type &state)
-    {
+	void GameScene::onEnterState(const size_type &state)
+	{
+		switch (state) {
+		case Pause:
+		{
+			m_pauseSceneNode->visible = true;
+			auto animationComponent(m_pauseSceneNode->ensureComponentOfType<anim::AnimationComponent>());
+			animationComponent->addAnimation(muptr<anim::IPropertyAnimation<Color>>(1000, m_pauseText->color, Color{ 255, 255, 255, 0 }, Color{ 255, 255, 255, 255 },
+				anim::animation_action_callback{}, anim::animation_action_callback{}));
+		}
+		break;
+		default:
+			break;
+		}
         log_debug_info("Entered state: ", state);
     }
 
     void GameScene::onExitState(const size_type &state)
     {
-        log_debug_info("Exited state: ", state);
-    }
-
-    void GameScene::pauseGame()
-    {
-		assert_release(state() == Playing, "You can only go to pause state from playing state");
-        setState(Pause);
-        m_pauseSceneNode->visible = true;
-        auto animationComponent(m_pauseSceneNode->ensureComponentOfType<anim::AnimationComponent>());
-        animationComponent->addAnimation(muptr<anim::IPropertyAnimation<Color>>(1000, m_pauseText->color, Color{ 255, 255, 255, 0 }, Color{ 255, 255, 255, 255 },
-            anim::animation_action_callback{}, anim::animation_action_callback{}));
-    }
-
-    void GameScene::continueGame()
-    {
-		assert_release(state() == Pause, "You can only go to playing state from pause state");
-		setState(Playing);
-        m_pauseSceneNode->visible = false;
+		switch (state) {
+		case Pause:
+		{
+			m_pauseSceneNode->visible = false;
+		}
+		break;
+		default:
+			break;
+		}
+		log_debug_info("Exited state: ", state);
     }
 
     void GameScene::setLevel(const u32 nv)

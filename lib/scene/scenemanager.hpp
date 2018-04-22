@@ -58,15 +58,6 @@ namespace lib
 				return std::dynamic_pointer_cast<T>(scene);
 			}
 
-            /**
-            * Method returning the current time point for the frame.
-            *
-            * @returns A TimePoint containing the data.
-            **/
-            inline time::TimePoint frameNow() const {
-                return time::Clock().now();
-            }
-
 		private:
 			ComponentContainer m_componentContainer;
 			sptr<StatesController<sptr<Scene>>> m_statesController;

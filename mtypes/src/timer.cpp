@@ -37,7 +37,7 @@ namespace lib
         }
     }
 
-    Time::Time(Time &&rh) : m_timePrivate{ std::move(rh.m_timePrivate) } {}
+    Time::Time(Time &&rh) noexcept : m_timePrivate{ std::move(rh.m_timePrivate) } {}
 
 	Time::Time(const Time & rhs) : m_timePrivate{ muptr<TimePrivate>(*(rhs.m_timePrivate)) } { }
 
@@ -47,13 +47,13 @@ namespace lib
 		return *this;
 	}
 
-	Time & Time::operator=(Time && rhs)
+	Time & Time::operator=(Time && rhs) noexcept
 	{
-		std::swap(this->m_timePrivate, rhs.m_timePrivate);
+		std::swap(m_timePrivate, rhs.m_timePrivate);
 		return *this;
 	}
 
-	Time::~Time() = default;
+	Time::~Time() {}
 
 	Time &Time::operator+=(const Time &rh)
 	{
@@ -142,11 +142,10 @@ namespace lib
 
 	Timer::~Timer() = default;
 
-	const Time Timer::getElapsedTime() const
+	Time Timer::getElapsedTime() const
 	{
 		Time t((std::chrono::duration_cast<std::chrono::microseconds>(clock_t::now() - m_timerPrivate->start)).count(),
             TimeInitializationTag::Microseconds);
-		*(t.m_timePrivate) = std::chrono::duration_cast<std::chrono::microseconds>(clock_t::now() - m_timerPrivate->start);
 		return t;
 	}
 
@@ -177,7 +176,7 @@ namespace lib
 		return m_paused;
 	}
 
-	const Time PausableTimer::getElapsedTime() const
+	Time PausableTimer::getElapsedTime() const
 	{
 		Time t{ Timer::getElapsedTime() - m_pausedTime };
 		if (m_paused)

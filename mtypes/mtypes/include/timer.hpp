@@ -17,13 +17,14 @@ namespace lib
         Milliseconds,
         Seconds
     };
-	class MTYPES_EXPORT Time
+
+	class MTYPES_EXPORT Time final
 	{
 	public:
         Time(const u64 quantity = 0, TimeInitializationTag initTag = TimeInitializationTag::Microseconds);
-		Time(Time &&rh);
+		Time(Time &&rh) noexcept;
         Time(const Time&rhs);
-        Time&operator=(Time&&rhs);
+        Time&operator=(Time&&rhs) noexcept;
 		Time&operator=(const Time&rhs);
 		~Time();
 
@@ -62,7 +63,7 @@ namespace lib
         Timer(Timer&&) = default;
         Timer& operator=(Timer&&) = default;
 
-		virtual const Time getElapsedTime() const;
+		virtual Time getElapsedTime() const;
 		virtual void restart();
 	private:
 #ifdef _MSC_VER
@@ -81,7 +82,7 @@ namespace lib
 		void pause();
 		void resume();
 		bool switchPause();
-		virtual const Time getElapsedTime() const override;
+		virtual Time getElapsedTime() const override;
 		virtual void restart() override;
 
 	private:

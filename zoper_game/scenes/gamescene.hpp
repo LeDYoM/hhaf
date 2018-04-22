@@ -67,8 +67,6 @@ namespace zoper
         void startGameOver();
 
         void launchPlayer();
-        void pauseGame();
-        void continueGame();
 
         void _debugDisplayBoard() const;
 
