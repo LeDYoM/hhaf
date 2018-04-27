@@ -139,7 +139,8 @@ namespace lib
 		constexpr iterator remove_if(function<bool(const T&)> condition, iterator start) {
 			bool moving{ false };
 			iterator where_it_was{ end() };
-			for (size_type i{ index_from_iterator(start) }; i < m_size; ++i) {
+            auto old_size(m_size);
+			for (size_type i{ index_from_iterator(start) }; i < old_size; ++i) {
 				if (!moving) {
 					if (condition(m_buffer[i])) {
 						moving = true;
