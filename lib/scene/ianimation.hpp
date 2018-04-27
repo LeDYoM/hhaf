@@ -14,25 +14,27 @@ namespace lib
             class IAnimation
             {
             public:
-                IAnimation(const u64 duration) noexcept
-                    : m_duration{ duration }, m_timer{} 
+                IAnimation(Time duration) noexcept
+                    : m_duration{ std::move(duration) }, m_timer{} 
                 {
                 }
 
                 virtual bool animate()
                 {
-                    m_currentTime = m_timer.getElapsedTime().asMilliSeconds();
+                    m_currentTime = m_timer.getElapsedTime();
                     if (m_currentTime > m_duration) {
                         m_delta = 1.0f;
                         return false;
                     }
-                    m_delta = (static_cast<f32>(m_currentTime) / m_duration);
+                    m_delta = (static_cast<decltype(m_delta)>(
+                            m_currentTime.asMilliSeconds()) / m_duration.asMilliSeconds()
+                        );
                     return true;
                 }
                 virtual ~IAnimation() = default;
             protected:
-                u64 m_currentTime;
-                u64 m_duration;
+                Time m_duration;
+                Time m_currentTime;
                 f32 m_delta{ 0.0f };
                 Timer m_timer;
             };
@@ -41,8 +43,8 @@ namespace lib
             class IPropertyAnimation : public IAnimation
             {
             public:
-                IPropertyAnimation(const u64 duration, IProperty<T> &prop, T start, T end)
-                    : IAnimation{ duration }, m_property{ prop }, m_startValue { std::move(start)	},
+                IPropertyAnimation(Time duration, IProperty<T> &prop, T start, T end)
+                    : IAnimation{ std::move(duration) }, m_property{ prop }, m_startValue { std::move(start)	},
                     m_endValue{ std::move(end) }, m_deltaValue{ m_endValue - m_startValue } {}
 
                 virtual bool animate() override

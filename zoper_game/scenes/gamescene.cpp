@@ -202,7 +202,7 @@ namespace zoper
 
         m_nextTokenTimer = m_sceneTimerComponent->addTimer(
             TimerType::Continuous,
-            Time(levelProperties.millisBetweenTokens(), TimeInitializationTag::Milliseconds),
+            TimeFromMillis(levelProperties.millisBetweenTokens()),
             [this](Time realEllapsed) {
                 log_debug_info("Elapsed between tokens: ", realEllapsed.asMilliSeconds());
                 // New token
@@ -235,7 +235,8 @@ namespace zoper
             m_sceneTimerComponent->pause();
 			m_pauseSceneNode->visible = true;
 			auto animationComponent(m_pauseSceneNode->ensureComponentOfType<anim::AnimationComponent>());
-			animationComponent->addAnimation(muptr<anim::IPropertyAnimation<Color>>(1000, 
+			animationComponent->addAnimation(muptr<anim::IPropertyAnimation<Color>>(
+                TimeFromMillis(1000), 
                 m_pauseText->color, Color{ 255, 255, 255, 0 }, Color{ 255, 255, 255, 255 }));
 		}
 		break;
@@ -448,9 +449,11 @@ namespace zoper
 
                 auto animationComponent(sceneNode->ensureComponentOfType<anim::AnimationComponent>());
                 animationComponent->
-                    addAnimation(muptr<anim::IPropertyAnimation<vector2df>>(600, sceneNode->position, 
+                    addAnimation(muptr<anim::IPropertyAnimation<vector2df>>(
+                        TimeFromMillis(600), sceneNode->position, 
                         lastTokenPosition, vector2df{ 450, 100 }));
-                m_sceneTimerComponent->addTimer(TimerType::OneShot, 600, 
+                m_sceneTimerComponent->addTimer(TimerType::OneShot, 
+                    TimeFromMillis(600),
                     [this, sceneNode](auto) { removeSceneNode(sceneNode); } );
             }
             return result;
@@ -525,7 +528,7 @@ namespace zoper
     {
         auto animationComponent(tile->ensureComponentOfType<anim::AnimationComponent>());
         animationComponent->addAnimation(muptr<anim::IPropertyAnimation<vector2df>>
-            (levelProperties.millisBetweenTokens() / 2, 
+            (TimeFromMillis(levelProperties.millisBetweenTokens() / 2), 
                 tile->position, tile->position(), board2Scene(dest)));
     }
 

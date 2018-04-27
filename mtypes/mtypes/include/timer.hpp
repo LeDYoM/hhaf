@@ -21,7 +21,7 @@ namespace lib
 	class MTYPES_EXPORT Time final
 	{
 	public:
-        Time(const u64 quantity = 0, TimeInitializationTag initTag = TimeInitializationTag::Microseconds);
+        explicit Time(const u64 quantity = 0, TimeInitializationTag initTag = TimeInitializationTag::Microseconds);
 		Time(Time &&rh) noexcept;
         Time(const Time&rhs);
         Time&operator=(Time&&rhs) noexcept;
@@ -90,6 +90,11 @@ namespace lib
 		Time m_pausedTime;
 		bool m_paused{ false };
 	};
+
+    inline Time TimeFromMillis(const u64 millis) noexcept {
+        return Time{ millis, TimeInitializationTag::Milliseconds };
+    }
+
 }
 
 #endif
