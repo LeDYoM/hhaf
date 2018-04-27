@@ -21,7 +21,6 @@
 #include <lib/scene/ianimation.hpp>
 #include <lib/scene/components/animationcomponent.hpp>
 #include <lib/scene/components/inputcomponent.hpp>
-#include <lib/scene/components/timercomponent.hpp>
 
 namespace zoper
 {
@@ -199,9 +198,9 @@ namespace zoper
             }
         });
 
-        auto timerComponent(ensureComponentOfType<scene::TimerComponent>());
+        m_sceneTimerComponent = ensureComponentOfType<scene::TimerComponent>();
 
-        m_nextTokenTimer = timerComponent->addTimer(
+        m_nextTokenTimer = m_sceneTimerComponent->addTimer(
             TimerType::Continuous,
             Time(levelProperties.millisBetweenTokens(), TimeInitializationTag::Milliseconds),
             [this](Time realEllapsed) {
@@ -223,13 +222,6 @@ namespace zoper
             if (m_gameData->gameMode == GameMode::Time) {
                 updateLevelData();
             }
-
-            if (clock.getElapsedTime().asMilliSeconds() > static_cast<u64>(levelProperties.millisBetweenTokens())) {
- //               log_debug_info("Ellapsed// between tokens: ", clock.getElapsedTime().asMilliSeconds());
-                // New token
-//                generateNextToken();
-//				clock.restart();
-            }
         }
         else {
         }
@@ -240,7 +232,7 @@ namespace zoper
 		switch (state) {
 		case Pause:
 		{
-            m_nextTokenTimer->pause();
+            m_sceneTimerComponent->pause();
 			m_pauseSceneNode->visible = true;
 			auto animationComponent(m_pauseSceneNode->ensureComponentOfType<anim::AnimationComponent>());
 			animationComponent->addAnimation(muptr<anim::IPropertyAnimation<Color>>(1000, 
@@ -258,7 +250,7 @@ namespace zoper
 		switch (state) {
 		case Pause:
 		{
-            m_nextTokenTimer->resume();
+            m_sceneTimerComponent->resume();
 			m_pauseSceneNode->visible = false;
 		}
 		break;
@@ -458,8 +450,7 @@ namespace zoper
                 animationComponent->
                     addAnimation(muptr<anim::IPropertyAnimation<vector2df>>(600, sceneNode->position, 
                         lastTokenPosition, vector2df{ 450, 100 }));
-                auto timerComponent(sceneNode->ensureComponentOfType<TimerComponent>());
-                timerComponent->addTimer(TimerType::OneShot, 600, 
+                m_sceneTimerComponent->addTimer(TimerType::OneShot, 600, 
                     [this, sceneNode](auto) { removeSceneNode(sceneNode); } );
             }
             return result;

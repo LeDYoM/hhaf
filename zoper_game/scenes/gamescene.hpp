@@ -20,6 +20,7 @@
 #include <lib/scene/renderizables/nodequad.hpp>
 #include <lib/scene/components/timercomponent.hpp>
 #include <lib/scene/components/statescontroller.hpp>
+#include <lib/scene/components/timercomponent.hpp>
 
 namespace zoper
 {
@@ -65,28 +66,27 @@ namespace zoper
         } _sceneStates{ Initialize };
 
         void startGameOver();
-
         void launchPlayer();
-
-        void _debugDisplayBoard() const;
-
         void addPlayer();
         void tilesCreated();
+        void _debugDisplayBoard() const;
 
         void tokenMoved(const vector2dst &source, const vector2dst &dest, sptr<Tile> tile);
 
-        // Properties
+        // Timer related properties
+        sptr<scene::TimerComponent> m_sceneTimerComponent;
         scene::TimerConnectorSPtr m_nextTokenTimer;
 
+        // General properties.
         GameResourcesLoader m_gameresources;
         sptr<board::BoardModelComponent> p_boardModel{ nullptr };
         sptr<GameData> m_gameData{ nullptr };
         u8 m_nextTokenPart{ 0 };
-        scene::SceneNodeSPtr m_mainBoardrg, m_gameOverrg, m_levelrg, m_pauseSceneNode, m_gameOverText;
         LevelProperties levelProperties;
+        sptr<Player> p_player{ nullptr };
 
         // Nodes from the scene
-        sptr<Player> p_player{ nullptr };
+        sptr<scene::SceneNode> m_mainBoardrg, m_gameOverrg, m_levelrg, m_pauseSceneNode, m_gameOverText;
         sptr<scene::nodes::TextQuad> m_scoreQuad, m_goalQuad;
         sptr<scene::nodes::NodeText> m_pauseText;
 		sptr<BoardGroup> m_boardGroup;
