@@ -23,7 +23,7 @@ namespace lib
 			constexpr void UseDeferred() noexcept { m_useDeferred = true; }
 			constexpr void UseDirect() noexcept { m_useDeferred = false; }
 			constexpr void update() {
-				if (!m_pendingActions.conainer().empty()) {
+				if (!m_pendingActions.container().empty()) {
 					m_pendingActions.swap();
 					for (auto&& action : m_pendingActions.auxContainer()) {
 						action();
@@ -96,7 +96,7 @@ namespace lib
 
 			constexpr void postAction(Action action) {
 				if (m_useDeferred) {
-					m_pendingActions.conainer().push_back(std::move(action));
+					m_pendingActions.container().push_back(std::move(action));
 				} else {
 					action();
 				}

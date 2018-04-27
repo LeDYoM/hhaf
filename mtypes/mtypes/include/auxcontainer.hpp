@@ -11,8 +11,8 @@ namespace lib
 	public:
 		constexpr AuxContainer() = default;
 		
-		constexpr Container &conainer() noexcept { return (*m_pContainer[0]); }
-		constexpr const Container &conainer() const noexcept { return (*m_pContainer[0]); }
+		constexpr Container &container() noexcept { return (*m_pContainer[0]); }
+		constexpr const Container &container() const noexcept { return (*m_pContainer[0]); }
 
 		constexpr Container &auxContainer() noexcept { return (*m_pContainer[1]); }
 		constexpr const Container &auxContainer() const noexcept { return (*m_pContainer[1]); }
@@ -28,6 +28,10 @@ namespace lib
 				m_normalMode = true;
 			}
 		}
+
+        constexpr bool empties() const noexcept {
+
+        }
 	private:
 		Container m_container[2];
 		Container *m_pContainer[2] = { &m_container[0], &m_container[1] };
