@@ -18,18 +18,48 @@ namespace lib::scene
     void TimerComponent::update()
     {
         if (!(m_activeTimers.empty())) {
-            const auto updateFunction([](sptr<TimerConnector> sptr_timer) {
-                TimerConnector &timerConnector(*sptr_timer);
+            decltype(m_activeTimers) activeTimerstoDelete(m_activeTimers.size());
+
+            bool someDeleted{ false };
+            for (auto &sptr_timerConnector : m_activeTimers) {
+                TimerConnector &timerConnector{ *sptr_timerConnector };
                 if (timerConnector.timeOut()) {
                     // Delta time has passed, so trigger
                     // the callback and update the timer
                     timerConnector.m_emitter(timerConnector.m_timer.getElapsedTime());
-                    timerConnector.m_timer.restart();
+                    if (timerConnector.m_timerType == TimerType::Continuous) {
+                        timerConnector.m_timer.restart();
+                    } else {
+                        sptr_timerConnector.reset();
+                        someDeleted = true;
+                    }
                 }
-            });
+            }
 
-			update_(m_activeTimers, updateFunction);
-            update_(m_oneShotTimers, updateFunction);
+            if (someDeleted) {
+                m_activeTimers.remove_values(nullptr);
+            }
         }
+    }
+
+    void TimerComponent::pause()
+    {
+        m_activeTimers.for_each([](const sptr<TimerConnector>&timerConnector) {
+            timerConnector->m_timer.pause();
+        });
+    }
+
+    void TimerComponent::resume()
+    {
+        m_activeTimers.for_each([](const sptr<TimerConnector>&timerConnector) {
+            timerConnector->m_timer.resume();
+        });
+    }
+
+    void TimerComponent::switchPause()
+    {
+        m_activeTimers.for_each([](const sptr<TimerConnector>&timerConnector) {
+            timerConnector->m_timer.switchPause();
+        });
     }
 }

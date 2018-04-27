@@ -201,7 +201,8 @@ namespace zoper
 
         auto timerComponent(ensureComponentOfType<scene::TimerComponent>());
 
-        timerComponent->addTimer(
+        m_nextTokenTimer = timerComponent->addTimer(
+            TimerType::Continuous,
             Time(levelProperties.millisBetweenTokens(), TimeInitializationTag::Milliseconds),
             [this](Time realEllapsed) {
                 log_debug_info("Elapsed between tokens: ", realEllapsed.asMilliSeconds());
@@ -239,6 +240,7 @@ namespace zoper
 		switch (state) {
 		case Pause:
 		{
+            m_nextTokenTimer->pause();
 			m_pauseSceneNode->visible = true;
 			auto animationComponent(m_pauseSceneNode->ensureComponentOfType<anim::AnimationComponent>());
 			animationComponent->addAnimation(muptr<anim::IPropertyAnimation<Color>>(1000, m_pauseText->color, Color{ 255, 255, 255, 0 }, Color{ 255, 255, 255, 255 },
@@ -256,6 +258,7 @@ namespace zoper
 		switch (state) {
 		case Pause:
 		{
+            m_nextTokenTimer->resume();
 			m_pauseSceneNode->visible = false;
 		}
 		break;
