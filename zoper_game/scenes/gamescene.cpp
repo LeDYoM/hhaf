@@ -243,8 +243,8 @@ namespace zoper
             m_nextTokenTimer->pause();
 			m_pauseSceneNode->visible = true;
 			auto animationComponent(m_pauseSceneNode->ensureComponentOfType<anim::AnimationComponent>());
-			animationComponent->addAnimation(muptr<anim::IPropertyAnimation<Color>>(1000, m_pauseText->color, Color{ 255, 255, 255, 0 }, Color{ 255, 255, 255, 255 },
-				anim::animation_action_callback{}, anim::animation_action_callback{}));
+			animationComponent->addAnimation(muptr<anim::IPropertyAnimation<Color>>(1000, 
+                m_pauseText->color, Color{ 255, 255, 255, 0 }, Color{ 255, 255, 255, 255 }));
 		}
 		break;
 		default:
@@ -449,15 +449,18 @@ namespace zoper
             }
 
             if (found) {
-                auto sceneNode = createSceneNode("pointIncrementScore_SceneNode");
-                auto node = sceneNode->createRenderizable<NodeShape>("pointIncrementScore", 30);
+                auto sceneNode(createSceneNode("pointIncrementScore_SceneNode"));
+                auto node(sceneNode->createRenderizable<NodeShape>("pointIncrementScore", 30));
                 node->box = rectFromSize(15.0f, 15.0f);
                 node->color = colors::White;
 
                 auto animationComponent(sceneNode->ensureComponentOfType<anim::AnimationComponent>());
                 animationComponent->
-                    addAnimation(muptr<anim::IPropertyAnimation<vector2df>>(600, sceneNode->position, lastTokenPosition, vector2df{ 450, 100 },
-                    anim::noAction, anim::animation_action_callback{ [this, sceneNode]() { removeSceneNode(sceneNode); } }));
+                    addAnimation(muptr<anim::IPropertyAnimation<vector2df>>(600, sceneNode->position, 
+                        lastTokenPosition, vector2df{ 450, 100 }));
+                auto timerComponent(sceneNode->ensureComponentOfType<TimerComponent>());
+                timerComponent->addTimer(TimerType::OneShot, 600, 
+                    [this, sceneNode](auto) { removeSceneNode(sceneNode); } );
             }
             return result;
         });
@@ -531,8 +534,8 @@ namespace zoper
     {
         auto animationComponent(tile->ensureComponentOfType<anim::AnimationComponent>());
         animationComponent->addAnimation(muptr<anim::IPropertyAnimation<vector2df>>
-            (levelProperties.millisBetweenTokens() / 2, tile->position, tile->position(), board2Scene(dest),
-            anim::noAction, anim::noAction));
+            (levelProperties.millisBetweenTokens() / 2, 
+                tile->position, tile->position(), board2Scene(dest)));
     }
 
     constexpr u8 scoreSize = 5;

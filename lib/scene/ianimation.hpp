@@ -11,16 +11,12 @@ namespace lib
     {
         namespace anim
         {
-            using animation_action_callback = function<void()>;
-            static const animation_action_callback noAction;
-
             class IAnimation
             {
             public:
-                IAnimation(const u64 duration, animation_action_callback &&onStart, animation_action_callback &&onEnd) noexcept
-                    : m_duration{ duration }, m_onStart{ std::move(onStart) }, m_onEnd{std::move(onEnd) }
+                IAnimation(const u64 duration) noexcept
+                    : m_duration{ duration }, m_timer{} 
                 {
-                    m_timer.restart();
                 }
 
                 virtual bool animate()
@@ -28,7 +24,6 @@ namespace lib
                     m_currentTime = m_timer.getElapsedTime().asMilliSeconds();
                     if (m_currentTime > m_duration) {
                         m_delta = 1.0f;
-                        if (m_onEnd) m_onEnd();
                         return false;
                     }
                     m_delta = (static_cast<f32>(m_currentTime) / m_duration);
@@ -40,17 +35,14 @@ namespace lib
                 u64 m_duration;
                 f32 m_delta{ 0.0f };
                 Timer m_timer;
-                animation_action_callback m_onStart, m_onEnd;
             };
 
             template <typename T>
             class IPropertyAnimation : public IAnimation
             {
             public:
-                IPropertyAnimation(const u64 duration, IProperty<T> &prop, T start, T end,
-                    animation_action_callback onStart, animation_action_callback onEnd)
-                    : IAnimation{ duration, std::move(onStart),std::move(onEnd) },
-                    m_property{ prop }, m_startValue { std::move(start)	},
+                IPropertyAnimation(const u64 duration, IProperty<T> &prop, T start, T end)
+                    : IAnimation{ duration }, m_property{ prop }, m_startValue { std::move(start)	},
                     m_endValue{ std::move(end) }, m_deltaValue{ m_endValue - m_startValue } {}
 
                 virtual bool animate() override
