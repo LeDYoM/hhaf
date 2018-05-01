@@ -20,7 +20,7 @@ namespace zoper
 		virtual ~ZoperProgramController();
 
 		void onInit() override;
-		virtual const IAppDescriptor getAppDescriptor() const override;
+		virtual IAppDescriptor getAppDescriptor() const override;
 		virtual int loop() override;
 
 		sptr<GameData> gameData;

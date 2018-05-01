@@ -5,7 +5,7 @@
 
 #include "compconfig.hpp"
 #include "windowcreationparams.hpp"
-#include "hostcontext.hpp"
+#include <lib/include/core/hostcontext.hpp>
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
 
@@ -28,15 +28,15 @@ namespace lib
 		constexpr IApp() : m_hostContext{ nullptr } {}
 		virtual ~IApp() {}
 
-		inline void setHostContext(HostContext*hs) noexcept { m_hostContext = hs; }
+		inline void setHostContext(core::HostContext*hs) noexcept { m_hostContext = hs; }
 
         virtual void sceneFinished() {}
-        virtual const IAppDescriptor getAppDescriptor() const = 0;
+        virtual IAppDescriptor getAppDescriptor() const = 0;
         virtual void onInit() = 0;
         virtual int loop() = 0;
 
 private:
-        HostContext *m_hostContext;
+        core::HostContext *m_hostContext;
     };
 }
 

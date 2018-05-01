@@ -22,6 +22,7 @@ set(SOURCE_FILES_LIST
 	core/file.hpp
 	core/host.cpp
 	core/host.hpp
+	core/hostcontext.cpp
 	core/inputsystem.cpp
 	core/inputsystem.hpp
 	core/main.cpp
@@ -37,7 +38,7 @@ set(SOURCE_FILES_LIST
 
 	include/classmacros.hpp
 	include/compconfig.hpp
-	include/hostcontext.hpp
+	include/core/hostcontext.hpp
 	include/iapp.hpp
 	include/iresourceloader.hpp
 	include/key.hpp
@@ -108,18 +109,12 @@ set(SOURCE_FILES_LIST
 	scene/vertexarray.hpp
 )
 
-#Add all the file from the library to compile
-file (GLOB_RECURSE LIB_HEADERS "*.hpp")
-file (GLOB_RECURSE LIB_SOURCES "*.cpp")
 
 include_directories ("..")
 
 set (CURRENT_TARGET lib)
 
-message("files: ${SOURCE_FILES_LIST}")
 add_library(${CURRENT_TARGET} STATIC ${SOURCE_FILES_LIST})
-
-#source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${LIB_HEADERS} ${LIB_SOURCES})
 
 target_link_libraries(${CURRENT_TARGET} PRIVATE loader)
 target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)

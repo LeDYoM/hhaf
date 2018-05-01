@@ -1,7 +1,7 @@
-#ifndef __LIB_HOST_MAIN_INCLUDE_HPP__
-#define __LIB_APPCONTROLLER_HPP__
-
 #pragma once
+
+#ifndef LIB_HOST_MAIN_INCLUDE_HPP__
+#define LIB_HOST_MAIN_INCLUDE_HPP__
 
 #include <mtypes/include/types.hpp>
 #include <lib/include/iapp.hpp>

@@ -46,22 +46,6 @@
 	#define LIB_DEBUG
 #endif
 
-#ifdef LIB_SYSTEM_WINDOWS
-	#define LIB_API_EXPORT __declspec(dllexport)
-	#define LIB_API_IMPORT __declspec(dllimport)
-#else // Linux, FreeBSD, Mac OS X
-	#if __GNUC__ >= 4
-		// GCC 4 has special keywords for showing/hidding symbols,
-		// the same keyword is used for both importing and exporting
-		#define LIB_API_EXPORT __attribute__ ((__visibility__ ("default")))
-		#define LIB_API_IMPORT __attribute__ ((__visibility__ ("default")))
-	#else
-		// GCC < 4 has no mechanism to explicitely hide symbols, everything's exported
-		#define LIB_API_EXPORT
-		#define LIB_API_IMPORT
-	#endif
-#endif
-
 #define USE_MEM_MANAGER
 
 #define USE_LOGS

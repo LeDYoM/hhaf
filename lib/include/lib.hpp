@@ -46,16 +46,17 @@
 #ifdef LIB_SYSTEM_WINDOWS
 	#ifdef DYNAMIC_LINKING
 		#ifdef LIB_EXPORTS
-			#define LIB_API __declspec(dllexport)
+			#define LIB_API_EXPORT __declspec(dllexport)
 		#else
-			#define LIB_API __declspec(dllimport)
+			#define LIB_API_IMPORT __declspec(dllimport)
 		#endif
 	#else
-		#define LIB_API
+		#define LIB_API_EXPORT
+		#define LIB_API_IMPORT
 	#endif
 #else // Linux, FreeBSD, Mac OS X
 	#if __GNUC__ >= 4
-		// GCC 4 has special keywords for showing/hidding symbols,
+		// GCC 4 has special keywords for showing/hiding symbols,
 		// the same keyword is used for both importing and exporting
 		#define LIB_API_EXPORT __attribute__ ((__visibility__ ("default")))
 		#define LIB_API_IMPORT __attribute__ ((__visibility__ ("default")))

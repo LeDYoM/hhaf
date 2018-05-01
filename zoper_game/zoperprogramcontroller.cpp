@@ -44,7 +44,7 @@ namespace zoper
 		sceneManager().startFirstScene<MenuScene>();
 	}
 
-	const IAppDescriptor ZoperProgramController::getAppDescriptor() const
+	IAppDescriptor ZoperProgramController::getAppDescriptor() const
 	{
 		return IAppDescriptor
 		{
