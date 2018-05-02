@@ -10,7 +10,7 @@
 
 namespace lib::core
 {
-    class LIB_API HostContext final
+    class LIB_API_EXPORT HostContext final
     {
     public:
         const dicty::BasicDictionary<str> &appParameters() const
