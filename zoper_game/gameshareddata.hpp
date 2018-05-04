@@ -25,8 +25,6 @@ namespace zoper
     class GameSharedData
     {
     public:
-        Timer levelClock;
-
         size_type startLevel{ 0 };
         size_type endLevel{ 0 };
         size_type score{ 0 };
