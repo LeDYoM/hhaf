@@ -7,8 +7,9 @@
 #include "../direction.hpp"
 #include "../levelproperties.hpp"
 #include "../gameshareddata.hpp"
-#include "../loaders/gameresources.hpp"
 #include "../boardgroup.hpp"
+#include "../tokenzones.hpp"
+#include "../loaders/gameresources.hpp"
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/function.hpp>
@@ -65,6 +66,8 @@ namespace zoper
             Pause = 3
         } _sceneStates{ Initialize };
 
+        void importGameSharedData();
+        void exportGameSharedData();
         void startGameOver();
         void launchPlayer();
         void addPlayer();
@@ -76,17 +79,18 @@ namespace zoper
         // Timer related properties
         sptr<scene::TimerComponent> m_sceneTimerComponent;
         scene::TimerConnectorSPtr m_nextTokenTimer;
+        Timer m_levelTimer;
         scene::TimerConnectorSPtr m_updateLevelDataTimer;
 
         // General properties.
         GameResourcesLoader m_gameresources;
         sptr<board::BoardModelComponent> p_boardModel{ nullptr };
-        sptr<GameSharedData> m_gameSharedData{ nullptr };
         size_type m_consumedTokens{ 0 };
         size_type m_score{ 0 };
         u8 m_nextTokenPart{ 0 };
         GameMode m_gameMode{ GameMode::Token };
         LevelProperties levelProperties;
+        TokenZones m_tokenZones;
         sptr<Player> p_player{ nullptr };
 
         // Nodes from the scene

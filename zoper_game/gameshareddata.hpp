@@ -15,7 +15,6 @@
 namespace zoper
 {
     using namespace lib;
-    constexpr size_type NumWays = 4;
 
     enum class GameMode : u8
     {
@@ -26,21 +25,6 @@ namespace zoper
     class GameSharedData
     {
     public:
-        GameSharedData() {}
-        ~GameSharedData() {}
-
-        struct TokenZone
-        {
-            Rectst zone;
-            Direction direction;
-            size_type size;
-        };
-
-        vector2dst size{ 18,12 };
-        Rectst centerRect{ 7,4,4,4 };
-
-        array<TokenZone, NumWays> tokenZones;
-
         Timer levelClock;
 
         size_type startLevel{ 0 };
