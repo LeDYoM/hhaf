@@ -13,11 +13,11 @@ namespace lib::scene
         : core::HasName{ std::move(name) }, ComponentContainer{ this }, 
         visible{ true }, m_parent{ parent }
     {
-        log_debug_info("Creating object: ", typeid(*this).name());
+//        log_debug_info("Creating object: ", typeid(*this).name());
     }
 
     SceneNode::~SceneNode() { 
-        log_debug_info("Destroying ", typeid(*this).name());
+//        log_debug_info("Destroying ", typeid(*this).name());
         clearAll();
     }
 

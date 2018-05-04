@@ -13,7 +13,7 @@ namespace lib::core
 	public:
 		constexpr HasName(const str &name) noexcept : m_name( name )
 		{
-			log_debug_info("Creating object with name: ", m_name);
+//			log_debug_info("Creating object with name: ", m_name);
 		}
 		constexpr HasName(HasName &&other) = default;
 		constexpr HasName(const HasName &other) = default;
