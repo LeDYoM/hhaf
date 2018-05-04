@@ -6,7 +6,7 @@
 #include <mtypes/include/types.hpp>
 #include <lib/scene/scenenode.hpp>
 #include "menupage.hpp"
-#include "../gamedata.hpp"
+#include "../gameshareddata.hpp"
 
 namespace zoper
 {

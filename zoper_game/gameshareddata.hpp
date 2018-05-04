@@ -23,11 +23,11 @@ namespace zoper
         Time = 1,
     };
 
-    class GameData
+    class GameSharedData
     {
     public:
-        GameData();
-        virtual ~GameData();
+        GameSharedData() {}
+        ~GameSharedData() {}
 
         struct TokenZone
         {
@@ -42,21 +42,14 @@ namespace zoper
         array<TokenZone, NumWays> tokenZones;
 
         Timer levelClock;
-        size_type consumedTokens{ 0 };
 
-        GameMode gameMode{ GameMode::Token };
         size_type startLevel{ 0 };
+        size_type endLevel{ 0 };
         size_type score{ 0 };
 
-        class StartGameData
-        {
-        public:
-            bool exitGame{ false };
-            GameMode gameMode{ GameMode::Token };
-            size_type startLevel{ 0 };
-        };
+        bool exitGame{ false };
+        GameMode gameMode{ GameMode::Token };
 
-        StartGameData startGameData;
         void generateTokenZones();
     };
 }

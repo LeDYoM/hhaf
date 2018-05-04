@@ -9,7 +9,7 @@
 
 namespace zoper
 {
-	class GameData;
+	class GameSharedData;
 	using namespace lib;
 
 	class MainMenu : public scene::SceneNode
@@ -25,7 +25,7 @@ namespace zoper
 		void hidePage(const MenuPageType&page);
 		emitter<> MenuFinished;
 	private:
-		sptr<GameData> m_gameData;
+		sptr<GameSharedData> m_gameSharedData;
 		vector_shared_pointers<MenuPage> m_menuSteps;
 	};
 }

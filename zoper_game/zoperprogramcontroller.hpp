@@ -8,7 +8,7 @@
 namespace zoper
 {
 	using namespace lib;
-	class GameData;
+	class GameSharedData;
 	class KeyMapping;
 	class MenuScene;
 	class GameScene;
@@ -23,7 +23,7 @@ namespace zoper
 		virtual IAppDescriptor getAppDescriptor() const override;
 		virtual int loop() override;
 
-		sptr<GameData> gameData;
+		sptr<GameSharedData> gameSharedData;
 		uptr<KeyMapping> keyMapping;
 	};
 }

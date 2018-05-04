@@ -1,13 +1,10 @@
-#include "gamedata.hpp"
+#include "gameshareddata.hpp"
 
 namespace zoper
 {
     using namespace lib;
 
-    GameData::GameData() {}
-    GameData::~GameData() = default;
-
-    void GameData::generateTokenZones()
+    void GameSharedData::generateTokenZones()
     {
         // From left to right
         tokenZones[0].zone = Rectst{ 0,centerRect.top,centerRect.left - 1, centerRect.bottom() - 1 };

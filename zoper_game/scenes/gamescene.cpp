@@ -3,7 +3,7 @@
 #include "../tile.hpp"
 #include "../player.hpp"
 #include "../common.hpp"
-#include "../gamedata.hpp"
+#include "../gameshareddata.hpp"
 #include "../zoperprogramcontroller.hpp"
 #include <mtypes/include/types.hpp>
 #include <lib/board/boardmodel.hpp>
@@ -32,16 +32,14 @@ namespace zoper
     constexpr u32 PlayerToken = NumTokens;
 
     GameScene::GameScene()
-        : Scene("GameScene")
-    {
-    }
+        : Scene("GameScene") {}
 
-    GameScene::~GameScene() = default;
+    GameScene::~GameScene() {}
 
     void GameScene::onCreated()
     {
         BaseClass::onCreated();
-        m_gameData = host().app<ZoperProgramController>().gameData;
+        m_gameSharedData = host().app<ZoperProgramController>().gameSharedData;
 
         m_mainBoardrg = createSceneNode("mainBoard");
         m_gameOverrg = createSceneNode("gameOverScreen");
@@ -97,10 +95,10 @@ namespace zoper
 
         using namespace lib::board;
 
-        m_gameData->generateTokenZones();
+        m_gameSharedData->generateTokenZones();
 
         p_boardModel = this->ensureComponentOfType<BoardModelComponent>();
-        p_boardModel->initialize(m_gameData->size);
+        p_boardModel->initialize(m_gameSharedData->size);
 
         p_boardModel->TileAdded.connect([this](const vector2dst position_, SITilePointer tile) {
 			// Tile appeared
@@ -147,13 +145,13 @@ namespace zoper
         addPlayer();
 
         m_nextTokenPart = 0;
-        setLevel(m_gameData->startLevel);
-        m_gameData->score = 0;
+        setLevel(m_gameSharedData->startLevel);
+        m_score = 0;
         m_gameOverrg->visible = false;
         m_mainBoardrg->visible = true;
         m_pauseSceneNode->visible = false;
 
-        switch (m_gameData->gameMode)
+        switch (m_gameMode)
         {
         default:
         case GameMode::Token:
@@ -210,6 +208,14 @@ namespace zoper
             }
         );
 
+        m_updateLevelDataTimer = m_sceneTimerComponent->addTimer(
+            TimerType::Continuous,
+            TimeFromMillis(120),
+            [this](Time realEllapsed) {
+                updateLevelData();
+            }
+        );
+
         StatesControllerActuatorRegister<size_type> gameSceneActuatorRegister;
         gameSceneActuatorRegister.registerStatesControllerActuator(*m_sceneStates, *this);
         setState(Playing);
@@ -218,13 +224,6 @@ namespace zoper
 
     void GameScene::updateScene()
     {
-        if (state() == Playing) {
-            if (m_gameData->gameMode == GameMode::Time) {
-                updateLevelData();
-            }
-        }
-        else {
-        }
     }
 
 	void GameScene::onEnterState(const size_type &state)
@@ -270,13 +269,13 @@ namespace zoper
         log_debug_info("Seconds to next level: ", levelProperties.stayTime());
         log_debug_info("Tokens to next level: ", levelProperties.stayTokens());
 
-        m_gameData->levelClock.restart();
-        m_gameData->consumedTokens = 0;
+        m_gameSharedData->levelClock.restart();
+        m_consumedTokens = 0;
 
         // Update background tiles
-        for (decltype(m_gameData->size.y) y = 0; y < m_gameData->size.y; ++y)
+        for (decltype(m_gameSharedData->size.y) y = 0; y < m_gameSharedData->size.y; ++y)
         {
-            for (decltype(m_gameData->size.x) x = 0; x < m_gameData->size.x; ++x)
+            for (decltype(m_gameSharedData->size.x) x = 0; x < m_gameSharedData->size.x; ++x)
             {
 				(*m_boardGroup)({ x,y })->setTileColor(levelProperties.getBackgroundTileColor({ x, y }, pointInCenter({ x,y })));
             }
@@ -290,7 +289,7 @@ namespace zoper
     {
         m_scoreQuad->text(1)->text = str(levelProperties.currentLevel() + 1);
 
-        switch (m_gameData->gameMode)
+        switch (m_gameMode)
         {
         default:
         case GameMode::Token:
@@ -305,18 +304,18 @@ namespace zoper
 
     void GameScene::updateLevelData()
     {
-        switch (m_gameData->gameMode)
+        switch (m_gameMode)
         {
         default:
         case GameMode::Token:
-            m_goalQuad->text(1)->text = str(m_gameData->consumedTokens);
-            if (m_gameData->consumedTokens >= levelProperties.stayTokens())
+            m_goalQuad->text(1)->text = str(m_consumedTokens);
+            if (m_consumedTokens >= levelProperties.stayTokens())
                 setLevel(levelProperties.currentLevel() + 1);
             break;
 
         case GameMode::Time:
-            m_goalQuad->text(1)->text = str(static_cast<u16>(m_gameData->levelClock.getElapsedTime().asSeconds()));
-            if (m_gameData->levelClock.getElapsedTime().asSeconds() >= levelProperties.stayTime())
+            m_goalQuad->text(1)->text = str(static_cast<u16>(m_gameSharedData->levelClock.getElapsedTime().asSeconds()));
+            if (m_gameSharedData->levelClock.getElapsedTime().asSeconds() >= levelProperties.stayTime())
                 setLevel(levelProperties.currentLevel() + 1);
             break;
         }
@@ -324,7 +323,7 @@ namespace zoper
 
     void GameScene::generateNextToken()
     {
-        const GameData::TokenZone &currentTokenZone{ m_gameData->tokenZones[m_nextTokenPart] };
+        const GameSharedData::TokenZone &currentTokenZone{ m_gameSharedData->tokenZones[m_nextTokenPart] };
 
         log_debug_info("NextTokenPart: ", m_nextTokenPart);
         log_debug_info("zone: ", currentTokenZone.zone);
@@ -386,10 +385,10 @@ namespace zoper
 
     void GameScene::addPlayer()
     {
-        log_debug_info("Adding player tile at ", m_gameData->centerRect);
+        log_debug_info("Adding player tile at ", m_gameSharedData->centerRect);
         CLIENT_ASSERT(!p_player, "Player already initialized");
         // Create the player instance
-        p_player = m_mainBoardrg->createSceneNode<Player>("playerNode", m_gameData->centerRect.leftTop(), rectFromSize(tileSize()), board2SceneFactor());
+        p_player = m_mainBoardrg->createSceneNode<Player>("playerNode", m_gameSharedData->centerRect.leftTop(), rectFromSize(tileSize()), board2SceneFactor());
 
         // Add it to the board and to the scene nodes
         p_boardModel->setTile(p_player->boardPosition(), p_player);
@@ -428,7 +427,7 @@ namespace zoper
                 if (currentTokenType == tokenType) {
                     ++inARow;
                     increaseScore(inARow*levelProperties.baseScore());
-                    ++(m_gameData->consumedTokens);
+                    ++m_consumedTokens;
                     lastTokenPosition = board2Scene(loopPosition);
                     p_boardModel->deleteTile(loopPosition);
                     found = true;
@@ -459,17 +458,17 @@ namespace zoper
             return result;
         });
 
-        if (m_gameData->gameMode == GameMode::Token)
+        if (m_gameMode == GameMode::Token)
             updateLevelData();
     }
 
     bool GameScene::pointInCenter(const vector2dst &pos) const
     {
         if (p_boardModel->validCoords(pos)) {
-            if (pos.x < m_gameData->centerRect.left || pos.y < m_gameData->centerRect.top)
+            if (pos.x < m_gameSharedData->centerRect.left || pos.y < m_gameSharedData->centerRect.top)
                 return false;
 
-            if (pos.x >= m_gameData->centerRect.right() || pos.y >= m_gameData->centerRect.bottom())
+            if (pos.x >= m_gameSharedData->centerRect.right() || pos.y >= m_gameSharedData->centerRect.bottom())
                 return false;
 
             return true;
@@ -496,9 +495,9 @@ namespace zoper
 
     void GameScene::_debugDisplayBoard() const
     {
-        for (u32 y{ 0 }; y < m_gameData->size.y; ++y) {
+        for (u32 y{ 0 }; y < m_gameSharedData->size.y; ++y) {
             str temp;
-            for (u32 x{ 0 }; x < m_gameData->size.x; ++x) {
+            for (u32 x{ 0 }; x < m_gameSharedData->size.x; ++x) {
                 str chTemp;
                 auto lp_tile(p_boardModel->getTile({ x, y }));
                 if (lp_tile) {
@@ -519,7 +518,7 @@ namespace zoper
     void GameScene::tilesCreated()
     {
 		assert_debug(!m_boardGroup, "m_boardGroup is not empty");
-		m_boardGroup = createSceneNode<BoardGroup>("BoardGroup", m_gameData);
+		m_boardGroup = createSceneNode<BoardGroup>("BoardGroup", m_gameSharedData->size);
 
         moveLastBeforeNode(m_mainBoardrg);
     }
@@ -536,8 +535,8 @@ namespace zoper
 
     void GameScene::increaseScore(u32 scoreIncrement)
     {
-        m_gameData->score += scoreIncrement;
-        str result(m_gameData->score);
+        m_score += scoreIncrement;
+        str result(m_score);
         while (result.size() < scoreSize) result = "0" + result;
         m_scoreQuad->text(3)->text = result;
     }

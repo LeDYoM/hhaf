@@ -18,7 +18,7 @@ namespace zoper
 
 	void ZoperProgramController::onInit()
 	{
-		gameData = msptr<GameData>();
+		gameSharedData = msptr<GameSharedData>();
 
 		keyMapping = muptr<KeyMapping>();
 		Serializer<KeyMapping> kmSerializer;
@@ -27,7 +27,7 @@ namespace zoper
 		sceneManager().setSceneDirector([this](sptr<Scene> scene) -> sptr<Scene> {
             if (typeid(*scene) == typeid(MenuScene)) {
                 // Did the user selected exit?
-                if (gameData->startGameData.exitGame) {
+                if (gameSharedData->exitGame) {
                     return nullptr;
                 }
                 return sceneManager().createScene<GameScene>();

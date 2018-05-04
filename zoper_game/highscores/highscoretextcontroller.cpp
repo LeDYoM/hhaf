@@ -2,7 +2,7 @@
 #include "highscoresdata.hpp"
 #include "highscorevalidator.hpp"
 #include "../loaders/highscoresresources.hpp"
-#include "../gamedata.hpp"
+#include "../gameshareddata.hpp"
 #include "../zoperprogramcontroller.hpp"
 
 #include <lib/scene/components/texteditorcomponent.hpp>
@@ -32,7 +32,7 @@ namespace zoper
 		m_hsData.read();
 
 		// Request game score
-		Score gameScore = app<ZoperProgramController>().gameData->score;
+		Score gameScore = app<ZoperProgramController>().gameSharedData->score;
 
 		Rectf32 textBox{ rectFromSize(scenePerspective().size()).setLeftTop({ 0,250 }).setSize({ 2000, 1500 }) };
 		position = textBox.leftTop();

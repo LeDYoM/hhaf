@@ -1,5 +1,5 @@
 #include "mainmenu.hpp"
-#include "../gamedata.hpp"
+#include "../gameshareddata.hpp"
 #include "../zoperprogramcontroller.hpp"
 #include "menupage.hpp"
 #include "menupage_main.hpp"
@@ -22,7 +22,7 @@ namespace zoper
 	MainMenu::MainMenu(SceneNode *parent, str name)
 		: SceneNode{ parent, std::move(name) } 
 	{
-		m_gameData = app<ZoperProgramController>().gameData;
+		m_gameSharedData = app<ZoperProgramController>().gameSharedData;
 	}
 
 	MainMenu::~MainMenu() = default;
@@ -52,7 +52,6 @@ namespace zoper
 				statesController->push_state(MenuPageType::SelectLevelToken);
 				break;
 			case MenuPageType::SelectLevelSpeed:
-                m_gameData->startGameData.gameMode = GameMode::Time;
                 statesController->push_state(MenuPageType::SelectLevelSpeed);
 				break;
 			case MenuPageType::Options:

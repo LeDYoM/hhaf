@@ -6,7 +6,7 @@
 #include "../keymapping.hpp"
 #include "../direction.hpp"
 #include "../levelproperties.hpp"
-#include "../gamedata.hpp"
+#include "../gameshareddata.hpp"
 #include "../loaders/gameresources.hpp"
 #include "../boardgroup.hpp"
 
@@ -24,10 +24,10 @@
 
 namespace zoper
 {
-    using namespace lib;
-
     class Player;
     class Tile;
+
+    using namespace lib;
 
     class GameScene final : public scene::Scene, public scene::StatesControllerActuator<size_type>
     {
@@ -76,12 +76,16 @@ namespace zoper
         // Timer related properties
         sptr<scene::TimerComponent> m_sceneTimerComponent;
         scene::TimerConnectorSPtr m_nextTokenTimer;
+        scene::TimerConnectorSPtr m_updateLevelDataTimer;
 
         // General properties.
         GameResourcesLoader m_gameresources;
         sptr<board::BoardModelComponent> p_boardModel{ nullptr };
-        sptr<GameData> m_gameData{ nullptr };
+        sptr<GameSharedData> m_gameSharedData{ nullptr };
+        size_type m_consumedTokens{ 0 };
+        size_type m_score{ 0 };
         u8 m_nextTokenPart{ 0 };
+        GameMode m_gameMode{ GameMode::Token };
         LevelProperties levelProperties;
         sptr<Player> p_player{ nullptr };
 

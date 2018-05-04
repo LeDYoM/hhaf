@@ -10,10 +10,10 @@ using namespace lib::scene::nodes;
 
 namespace zoper
 {
-	BoardGroup::BoardGroup(SceneNode* parent, str name, sptr<GameData> gameData) :
-		BaseClass{ parent, std::move(name), gameData->size }, m_gameData{ std::move(gameData) } {}
+	BoardGroup::BoardGroup(SceneNode* parent, str name, vector2dst size) :
+		BaseClass{ parent, std::move(name), size } {}
 
-	BoardGroup::~BoardGroup() = default;
+    BoardGroup::~BoardGroup() {}
 
 	void BoardGroup::onCreated()
 	{
@@ -26,8 +26,8 @@ namespace zoper
 		const Rectf32 bBox(scenePerspective());
 
 		Rectf32 tileBox({},cellSize());
-		for (size_type y{ 0U }; y < m_gameData->size.y; ++y) {
-			for (size_type x{ 0U }; x < m_gameData->size.x; ++x) {
+		for (size_type y{ 0U }; y < tableSize().y; ++y) {
+			for (size_type x{ 0U }; x < tableSize().x; ++x) {
 				static_cast<void>(createNodeAt({ x,y }, make_str("BoardGroupTile_", x, y), tileBox));
 			}
 		}

@@ -7,24 +7,21 @@
 #include <lib/scene/nodes/tablenode.hpp>
 #include <lib/scene/scenenode.hpp>
 
-#include "gamedata.hpp"
 #include "boardscenenode.hpp"
-
-using namespace lib;
 
 namespace zoper
 {
-	class BoardGroup : public scene::nodes::TableNode<BoardSceneNode>
+    using namespace lib;
+
+    class BoardGroup : public scene::nodes::TableNode<BoardSceneNode>
 	{
 	private:
 		using BaseClass = scene::nodes::TableNode<BoardSceneNode>;
 	public:
-		BoardGroup(scene::SceneNode* parent, str name, sptr<GameData> gameData);
+		BoardGroup(scene::SceneNode* parent, str name, vector2dst size);
 		virtual ~BoardGroup();
 
 		void onCreated() override;
-	private:
-		sptr<GameData> m_gameData;
 	};
 }
 

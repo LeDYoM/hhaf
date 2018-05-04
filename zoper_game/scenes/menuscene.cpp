@@ -8,6 +8,7 @@
 
 #include "../menu/mainmenu.hpp"
 #include "../common.hpp"
+#include "../gameshareddata.hpp"
 
 namespace zoper
 {
@@ -35,7 +36,7 @@ namespace zoper
 
         auto mainMenu (createSceneNode<MainMenu>(MainMenu::ClassName));
         mainMenu->MenuFinished.connect([this]() {
-            zApp().gameData->startGameData.exitGame = true;
+            zApp().gameSharedData->exitGame = true;
             sceneManager().terminateScene();
         });
     }
