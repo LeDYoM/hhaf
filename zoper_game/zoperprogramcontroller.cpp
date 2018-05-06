@@ -13,8 +13,8 @@ namespace zoper
 	using namespace lib;
 	using namespace lib::scene;
 
-	ZoperProgramController::ZoperProgramController() = default;
-	ZoperProgramController::~ZoperProgramController() = default;
+	ZoperProgramController::ZoperProgramController() {}
+	ZoperProgramController::~ZoperProgramController() {}
 
 	void ZoperProgramController::onInit()
 	{
