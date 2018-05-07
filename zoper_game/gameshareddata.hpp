@@ -31,8 +31,6 @@ namespace zoper
 
         bool exitGame{ false };
         GameMode gameMode{ GameMode::Token };
-
-        void generateTokenZones();
     };
 }
 
