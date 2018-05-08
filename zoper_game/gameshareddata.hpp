@@ -10,7 +10,7 @@
 #include <mtypes/include/streams.hpp>
 #include <mtypes/include/timer.hpp>
 
-#include "direction.hpp"
+#include "gameplay/direction.hpp"
 
 namespace zoper
 {

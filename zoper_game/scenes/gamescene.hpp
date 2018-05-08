@@ -4,11 +4,11 @@
 #define ZOOPER_GAMESCENE_INCLUDE_HPP__
 
 #include "../keymapping.hpp"
-#include "../direction.hpp"
-#include "../levelproperties.hpp"
+#include "../gameplay/direction.hpp"
+#include "../gameplay/levelproperties.hpp"
 #include "../gameshareddata.hpp"
-#include "../boardgroup.hpp"
-#include "../tokenzones.hpp"
+#include "../gameplay/boardgroup.hpp"
+#include "../gameplay/tokenzones.hpp"
 #include "../loaders/gameresources.hpp"
 
 #include <mtypes/include/types.hpp>
@@ -68,7 +68,6 @@ namespace zoper
 
         void importGameSharedData();
         void exportGameSharedData();
-        void startGameOver();
         void launchPlayer();
         void addPlayer();
         void tilesCreated();

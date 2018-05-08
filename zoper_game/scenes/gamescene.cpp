@@ -1,7 +1,7 @@
 #include "gamescene.hpp"
 
-#include "../tile.hpp"
-#include "../player.hpp"
+#include "../gameplay/tile.hpp"
+#include "../gameplay/player.hpp"
 #include "../common.hpp"
 #include "../gameshareddata.hpp"
 #include "../zoperprogramcontroller.hpp"
@@ -238,6 +238,9 @@ namespace zoper
                 m_pauseText->color, Color{ 255, 255, 255, 0 }, Color{ 255, 255, 255, 255 }));
 		}
 		break;
+        case GameOver:
+            m_gameOverrg->visible = true;
+            break;
 		default:
 			break;
 		}
@@ -272,13 +275,9 @@ namespace zoper
         m_consumedTokens = 0;
 
         // Update background tiles
-        for (decltype(m_tokenZones.size.y) y = 0; y < m_tokenZones.size.y; ++y)
-        {
-            for (decltype(m_tokenZones.size.x) x = 0; x < m_tokenZones.size.x; ++x)
-            {
-				(*m_boardGroup)({ x,y })->setTileColor(levelProperties.getBackgroundTileColor({ x, y }, pointInCenter({ x,y })));
-            }
-        }
+        m_boardGroup->for_each_tableSceneNode([this](const auto position, auto node) {
+            node->setTileColor(levelProperties.getBackgroundTileColor(position, pointInCenter(position)));
+        });
 
         updateGoals();
         updateLevelData();
@@ -351,7 +350,8 @@ namespace zoper
 
                 if (pointInCenter(dest)) {
                     log_debug_info("Found point in center: ", dest);
-                    startGameOver();
+                    // Collided with the center. Game over
+                    setState(GameOver);
                 }
             }
             return true;
@@ -373,12 +373,6 @@ namespace zoper
 
     void GameScene::exportGameSharedData()
     {
-    }
-
-    void GameScene::startGameOver()
-    {
-        setState(GameOver);
-        m_gameOverrg->visible = true;
     }
 
     void GameScene::for_each_token_in_line(const vector2dst &startPosition, const Direction &direction,
