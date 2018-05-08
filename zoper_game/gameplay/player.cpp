@@ -46,12 +46,12 @@ namespace zoper
         }
     }
 
-    void Player::updateDirection()
+    void Player::updateDirection(const Direction destDirection)
     {
         const auto tileCenter(m_board2SceneFactor / 2.0f);
-        m_extraSceneNode->rotateAround(tileCenter, currentDirection().angle());
+        m_extraSceneNode->rotateAround(tileCenter, destDirection.angle());
 
-        if (currentDirection().value() == Direction::DirectionData::Up ||
+        if (destDirection.value() == Direction::DirectionData::Up ||
             currentDirection().value() == Direction::DirectionData::Down) {
             m_extraSceneNode_2->scaleAround(tileCenter, { 1, 1 });
         }
