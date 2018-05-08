@@ -12,7 +12,7 @@ namespace zoper
     class Direction
     {
     public:
-        enum class DirectionData : lib::u8
+        enum class DirectionData : u8
         {
             Left = 0,
             Right = 1,
@@ -28,7 +28,7 @@ namespace zoper
         constexpr Direction(Direction &&other) = default;
         constexpr Direction &operator=(Direction &&other) = default;
 
-        constexpr operator u8() const noexcept { return static_cast<lib::u8>(data); }
+        constexpr operator u8() const noexcept { return static_cast<u8>(data); }
 
         constexpr DirectionData value() const noexcept { return data; }
         constexpr bool isValid() const noexcept { return data < DirectionData::Invalid; }

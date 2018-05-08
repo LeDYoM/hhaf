@@ -46,13 +46,18 @@ namespace zoper
         }
     }
 
-    void Player::updateDirection(const Direction destDirection)
+    void Player::updateDirection()
+    {
+        updateDirectionFromParameter(currentDirection());
+    }
+
+    void Player::updateDirectionFromParameter(const Direction destDirection)
     {
         const auto tileCenter(m_board2SceneFactor / 2.0f);
         m_extraSceneNode->rotateAround(tileCenter, destDirection.angle());
 
         if (destDirection.value() == Direction::DirectionData::Up ||
-            currentDirection().value() == Direction::DirectionData::Down) {
+            destDirection.value() == Direction::DirectionData::Down) {
             m_extraSceneNode_2->scaleAround(tileCenter, { 1, 1 });
         }
         else {
@@ -69,13 +74,14 @@ namespace zoper
             addAnimation(muptr<anim::IPropertyAnimation<vector2df>>(
                 TimeFromMillis(gameplay::constants::MillisAnimationLaunchPlayerStep),
                 position, 
-                position(), toWhere
-                /*[this,currentPosition = std::move(currentPosition)]() { launchAnimationBack(currentPosition); })*/
-                ));
+                position(), toWhere,
+                [this,currentPosition = std::move(currentPosition)]() { launchAnimationBack(currentPosition); }
+            ));
     }
 
     void Player::launchAnimationBack(vector2df toWhere)
     {
+        updateDirectionFromParameter(currentDirection().negate());
         auto animationComponent(ensureComponentOfType<anim::AnimationComponent>());
         animationComponent->
             addAnimation(muptr<anim::IPropertyAnimation<vector2df>>(
