@@ -13,7 +13,7 @@ namespace zoper::gameplay::constants
     constexpr u32 MillisAnimationPointsToScore = 600;
     constexpr vector2df EndPositionPointsToScore = vector2df{ 450, 100 };
 
-    constexpr u32 MillisAnimationLaunchPlayerStep = 1000;
+    constexpr u32 MillisAnimationLaunchPlayerStep = 125;
 }
 
 #endif

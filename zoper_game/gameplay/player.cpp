@@ -87,7 +87,9 @@ namespace zoper
             addAnimation(muptr<anim::IPropertyAnimation<vector2df>>(
                 TimeFromMillis(gameplay::constants::MillisAnimationLaunchPlayerStep),
                 position,
-                position(), toWhere)
-            );
+                position(), toWhere,
+                [this]() { updateDirection(); }
+                
+            ));
     }
 }
