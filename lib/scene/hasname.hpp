@@ -20,7 +20,7 @@ namespace lib::core
 		HasName &operator=(HasName &&other) noexcept = default;
 		HasName &operator=(const HasName &other) = default;
 		virtual ~HasName() {
-			log_debug_info("Destroying object with name: ", m_name);
+//			log_debug_info("Destroying object with name: ", m_name);
 		}
 			
 		inline const str &name() const noexcept { return m_name; }

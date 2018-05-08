@@ -2,7 +2,7 @@
 #include <lib/scene/ianimation.hpp>
 
 #include <mtypes/include/log.hpp>
-#include <algorithm>
+#include <mtypes/include/lockablevector.hpp>
 
 namespace lib
 {
@@ -14,12 +14,10 @@ namespace lib
 			{
 			public:
 				AnimationComponentPrivate() {}
-				vector_shared_pointers<IAnimation> m_animations;
+                LockableVector<IAnimation> m_animations;
 			};
 			AnimationComponent::AnimationComponent()
-				: m_private{ muptr<AnimationComponentPrivate> }
-			{
-			}
+				: m_private{ muptr<AnimationComponentPrivate>() } {}
 
 			AnimationComponent::~AnimationComponent() {}
 
@@ -30,19 +28,13 @@ namespace lib
 
 			void AnimationComponent::update()
 			{
-				if (!m_private->m_animations.empty()) {
-					bool animsFinished{ false };
-					for (auto& animation : m_private->m_animations) {
-						if (!animation->animate()) {
-							animation = nullptr;
-							animsFinished = true;
-						}
-					}
-
-					if (animsFinished) {
-						m_private->m_animations.remove_values(nullptr);
-					}
-				}
+                m_private->m_animations.update([](auto animation) {
+                    if (!animation->animate()) {
+                        animation->executeEndAction();
+                        return false;
+                    }
+                    return true;
+                });
 			}
 		}
 	}

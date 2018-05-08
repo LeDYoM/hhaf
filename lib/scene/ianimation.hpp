@@ -11,13 +11,12 @@ namespace lib
     {
         namespace anim
         {
+            using ActionFunc = function<void()>;
             class IAnimation
             {
             public:
-                IAnimation(Time duration) noexcept
-                    : m_duration{ std::move(duration) }, m_timer{} 
-                {
-                }
+                IAnimation(Time duration, ActionFunc endAction = {}) noexcept
+                    : m_duration{ std::move(duration) }, m_timer{}, m_endAction{ std::move(endAction) } {}
 
                 virtual bool animate()
                 {
@@ -31,20 +30,29 @@ namespace lib
                         );
                     return true;
                 }
-                virtual ~IAnimation() = default;
+
+                constexpr void executeEndAction() {
+                    if (m_endAction) {
+                        m_endAction();
+                    }
+                }
+
+                virtual ~IAnimation() {}
             protected:
                 Time m_duration;
                 Time m_currentTime;
                 f32 m_delta{ 0.0f };
                 Timer m_timer;
+                ActionFunc m_endAction;
             };
 
             template <typename T>
             class IPropertyAnimation : public IAnimation
             {
             public:
-                IPropertyAnimation(Time duration, IProperty<T> &prop, T start, T end)
-                    : IAnimation{ std::move(duration) }, m_property{ prop }, m_startValue { std::move(start)	},
+                IPropertyAnimation(Time duration, IProperty<T> &prop, 
+                    T start, T end, ActionFunc endAction = {})
+                    : IAnimation{ std::move(duration), std::move(endAction) }, m_property{ prop }, m_startValue { std::move(start)	},
                     m_endValue{ std::move(end) }, m_deltaValue{ m_endValue - m_startValue } {}
 
                 virtual bool animate() override

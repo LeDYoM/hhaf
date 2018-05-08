@@ -18,7 +18,6 @@ namespace lib::scene
 
         m_sceneStates = ensureComponentOfType<std::remove_reference_t<decltype(*m_sceneStates)>>();
 		m_sceneStates->start(0);
-		m_sceneStates->UseDeferred();
     }
 
     size_type Scene::state()

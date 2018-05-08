@@ -90,7 +90,7 @@ namespace zoper
         GameMode m_gameMode{ GameMode::Token };
         LevelProperties levelProperties;
         TokenZones m_tokenZones;
-        sptr<Player> p_player{ nullptr };
+        sptr<Player> m_player{ nullptr };
 
         // Nodes from the scene
         sptr<scene::SceneNode> m_mainBoardrg, m_gameOverrg, m_levelrg, m_pauseSceneNode, m_gameOverText;

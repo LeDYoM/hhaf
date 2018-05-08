@@ -18,8 +18,6 @@ namespace lib::scene
     void TimerComponent::update()
     {
         if (!(m_activeTimers.empty())) {
-            decltype(m_activeTimers) activeTimerstoDelete(m_activeTimers.size());
-
             bool someDeleted{ false };
             for (auto &sptr_timerConnector : m_activeTimers) {
                 TimerConnector &timerConnector{ *sptr_timerConnector };

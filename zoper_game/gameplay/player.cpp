@@ -1,5 +1,10 @@
 #include "player.hpp"
+#include "constants.hpp"
+
 #include <mtypes/include/log.hpp>
+
+#include <lib/scene/ianimation.hpp>
+#include <lib/scene/components/animationcomponent.hpp>
 
 namespace zoper
 {
@@ -34,7 +39,7 @@ namespace zoper
         auto nPosition = direction.applyToVector(boardPosition());
         if (pointInCenter(nPosition)) {
             boardModel->moveTile(boardPosition(), nPosition);
-            boardPosition = { nPosition.x, nPosition.y };
+            boardPosition.set(nPosition);
         }
         else {
             updateDirection();
@@ -53,5 +58,30 @@ namespace zoper
         else {
             m_extraSceneNode_2->scaleAround(tileCenter, { m_board2SceneFactor.y / m_board2SceneFactor.x, m_board2SceneFactor.x / m_board2SceneFactor.y });
         }
+    }
+
+    void Player::launchAnimation(vector2df toWhere)
+    {
+        auto currentPosition(position());
+
+        auto animationComponent(ensureComponentOfType<anim::AnimationComponent>());
+        animationComponent->
+            addAnimation(muptr<anim::IPropertyAnimation<vector2df>>(
+                TimeFromMillis(gameplay::constants::MillisAnimationLaunchPlayerStep),
+                position, 
+                position(), toWhere
+                /*[this,currentPosition = std::move(currentPosition)]() { launchAnimationBack(currentPosition); })*/
+                ));
+    }
+
+    void Player::launchAnimationBack(vector2df toWhere)
+    {
+        auto animationComponent(ensureComponentOfType<anim::AnimationComponent>());
+        animationComponent->
+            addAnimation(muptr<anim::IPropertyAnimation<vector2df>>(
+                TimeFromMillis(gameplay::constants::MillisAnimationLaunchPlayerStep),
+                position,
+                position(), toWhere)
+            );
     }
 }

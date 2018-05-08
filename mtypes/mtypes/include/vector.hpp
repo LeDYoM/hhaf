@@ -91,9 +91,9 @@ namespace lib
 		constexpr void for_each(const function<void(const T&)> f) {
 			if (!empty()) {
 				iterator current{ begin() };
-				do {
+                do {
 					f(*current);
-				} while (current++ != end());
+				} while (++current != end());
 			}
 		}
 
@@ -194,7 +194,6 @@ namespace lib
 			}
 
 			m_buffer[m_size++] = T(std::forward<Args>(args)...);
-
 		}
 
 		constexpr void shrink_to_fit() {

@@ -8,7 +8,7 @@
 #include <mtypes/include/connection.hpp>
 #include <mtypes/include/timer.hpp>
 #include <mtypes/include/vector.hpp>
-#include <mtypes/include/auxcontainer.hpp>
+#include <mtypes/include/lockablevector.hpp>
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/components/icomponent.hpp>
 

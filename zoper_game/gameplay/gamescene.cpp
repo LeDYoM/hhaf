@@ -1,14 +1,19 @@
 #include "gamescene.hpp"
 
-#include "../gameplay/tile.hpp"
-#include "../gameplay/player.hpp"
+#include "tile.hpp"
+#include "player.hpp"
+#include "constants.hpp"
+
 #include "../common.hpp"
 #include "../gameshareddata.hpp"
 #include "../zoperprogramcontroller.hpp"
+
 #include <mtypes/include/types.hpp>
+#include <mtypes/include/log.hpp>
+#include <mtypes/include/properties.hpp>
+
 #include <lib/board/boardmodel.hpp>
 #include <lib/board/itilescontroller.hpp>
-#include <mtypes/include/log.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/core/randomizer.hpp>
 #include <lib/scene/renderizable.hpp>
@@ -17,7 +22,6 @@
 #include <lib/scene/renderizables/nodequad.hpp>
 #include <lib/scene/renderizables/nodetext.hpp>
 #include <lib/core/host.hpp>
-#include <mtypes/include/properties.hpp>
 #include <lib/scene/ianimation.hpp>
 #include <lib/scene/components/animationcomponent.hpp>
 #include <lib/scene/components/inputcomponent.hpp>
@@ -31,8 +35,7 @@ namespace zoper
     constexpr u32 NumTokens = 5;
     constexpr u32 PlayerToken = NumTokens;
 
-    GameScene::GameScene()
-        : Scene("GameScene") {}
+    GameScene::GameScene() : Scene("GameScene") {}
 
     GameScene::~GameScene() {}
 
@@ -174,7 +177,7 @@ namespace zoper
             {
                 auto dir(keyMapping->getDirectionFromKey(key));
                 if (dir.isValid()) {
-                    p_player->movePlayer(dir, [this](const vector2dst&p) { return pointInCenter(p); }, p_boardModel);
+                    m_player->movePlayer(dir, [this](const vector2dst&p) { return pointInCenter(p); }, p_boardModel);
                 }
                 else if (keyMapping->isLaunchKey(key)) {
                     launchPlayer();
@@ -391,12 +394,12 @@ namespace zoper
     void GameScene::addPlayer()
     {
         log_debug_info("Adding player tile at ", m_tokenZones.centerRect);
-        CLIENT_ASSERT(!p_player, "Player already initialized");
+        CLIENT_ASSERT(!m_player, "Player already initialized");
         // Create the player instance
-        p_player = m_mainBoardrg->createSceneNode<Player>("playerNode", m_tokenZones.centerRect.leftTop(), rectFromSize(tileSize()), board2SceneFactor());
+        m_player = m_mainBoardrg->createSceneNode<Player>("playerNode", m_tokenZones.centerRect.leftTop(), rectFromSize(tileSize()), board2SceneFactor());
 
         // Add it to the board and to the scene nodes
-        p_boardModel->setTile(p_player->boardPosition(), p_player);
+        p_boardModel->setTile(m_player->boardPosition(), m_player);
     }
 
     void GameScene::addNewToken(const vector2dst &pos, u32 newToken)
@@ -416,9 +419,9 @@ namespace zoper
     void GameScene::launchPlayer()
     {
         lib::log_debug_info("Launching player");
-        const Direction loopDirection{ p_player->currentDirection() };
-        const vector2dst loopPosition{ p_player->boardPosition() };
-        const board::BoardTileData tokenType{ p_player->get() };
+        const Direction loopDirection{ m_player->currentDirection() };
+        const vector2dst loopPosition{ m_player->boardPosition() };
+        const board::BoardTileData tokenType{ m_player->get() };
         u32 inARow{ 0 };
         for_each_token_in_line(loopPosition, loopDirection, [this, tokenType, &inARow](const vector2dst &loopPosition, const Direction &)
         {
@@ -438,9 +441,9 @@ namespace zoper
                     found = true;
                 }
                 else {
-                    p_boardModel->changeTileData(p_player->boardPosition(), currentTokenType);
+                    p_boardModel->changeTileData(m_player->boardPosition(), currentTokenType);
                     p_boardModel->changeTileData(loopPosition, tokenType);
-                    lib::log_debug_info("Player type changed to ", p_player->get());
+                    log_debug_info("Player type changed to ", m_player->get());
                     result = false;
                 }
             }
@@ -454,11 +457,14 @@ namespace zoper
                 auto animationComponent(sceneNode->ensureComponentOfType<anim::AnimationComponent>());
                 animationComponent->
                     addAnimation(muptr<anim::IPropertyAnimation<vector2df>>(
-                        TimeFromMillis(600), sceneNode->position, 
-                        lastTokenPosition, vector2df{ 450, 100 }));
+                        TimeFromMillis(gameplay::constants::MillisAnimationPointsToScore),
+                        sceneNode->position,
+                        lastTokenPosition, gameplay::constants::EndPositionPointsToScore));
                 m_sceneTimerComponent->addTimer(TimerType::OneShot, 
-                    TimeFromMillis(600),
+                    TimeFromMillis(gameplay::constants::MillisAnimationPointsToScore),
                     [this, sceneNode](auto) { removeSceneNode(sceneNode); } );
+
+                m_player->launchAnimation(lastTokenPosition);
             }
             return result;
         });

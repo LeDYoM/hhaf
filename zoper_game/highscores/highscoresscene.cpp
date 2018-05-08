@@ -21,7 +21,6 @@ namespace zoper
 		BaseClass::onCreated();
 
         auto statesController( ensureComponentOfType<StatesController<HighScoresSceneStates>>());
-        statesController->UseDeferred();
 
 		m_normalFont = resourceManager().getResource<TTFont>("menu.mainFont", "resources/oldct.ttf");
 		m_normalColor = colors::Blue;

@@ -8,7 +8,7 @@
 #include <mtypes/include/connection.hpp>
 #include <mtypes/include/stack.hpp>
 #include <mtypes/include/log.hpp>
-#include <mtypes/include/auxcontainer.hpp>
+#include <mtypes/include/lockablevector.hpp>
 #include <lib/scene/components/icomponent.hpp>
 
 namespace lib
@@ -20,17 +20,11 @@ namespace lib
 		class StatesControllerRaw
 		{
 		public:
-			constexpr void UseDeferred() noexcept { m_useDeferred = true; }
-			constexpr void UseDirect() noexcept { m_useDeferred = false; }
 			constexpr void update() {
-				if (!m_pendingActions.container().empty()) {
-					m_pendingActions.swap();
-					for (auto&& action : m_pendingActions.auxContainer()) {
-						action();
-					}
-					m_pendingActions.auxContainer().clear();
-					m_pendingActions.swap();
-				}
+                m_pendingActions.update([](auto action) {
+					(*action)();
+                    return false;
+                });
 			}
 
 			constexpr void start(T firstState) noexcept {
@@ -95,16 +89,11 @@ namespace lib
 			}
 
 			constexpr void postAction(Action action) {
-				if (m_useDeferred) {
-					m_pendingActions.container().push_back(std::move(action));
-				} else {
-					action();
-				}
+				m_pendingActions.push_back(msptr<Action>(std::move(action)));
 			}
 
-			bool m_useDeferred{ false };
 			stack<T> m_statesStack;
-			AuxContainer<vector<Action>> m_pendingActions;
+			LockableVector<Action> m_pendingActions;
 		};
 
 		template <typename T>

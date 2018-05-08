@@ -24,7 +24,9 @@ namespace zoper
         void movePlayer(const Direction &direction, const lib::function<bool(const lib::vector2dst&)> &pointInCenter, const lib::sptr<lib::board::BoardModelComponent> &boardModel);
         void updateDirection();
 
+        void launchAnimation(vector2df toWhere);
     private:
+        void launchAnimationBack(vector2df toWhere);
         scene::SceneNodeSPtr m_extraSceneNode;
         scene::SceneNodeSPtr m_extraSceneNode_2;
         vector2df m_board2SceneFactor;

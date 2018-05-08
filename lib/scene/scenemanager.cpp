@@ -13,7 +13,6 @@ namespace lib
 		void SceneManager::start()
 		{
 			m_componentContainer.ensureComponentOfType(m_statesController);
-			m_statesController->UseDeferred();
 		}
 
 		void SceneManager::terminateScene()
