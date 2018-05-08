@@ -1,7 +1,7 @@
 #include "zoperprogramcontroller.hpp"
-#include "scenes/menuscene.hpp"
-#include "scenes/gamescene.hpp"
-#include "scenes/highscoresscene.hpp"
+#include "menu/menuscene.hpp"
+#include "gameplay/gamescene.hpp"
+#include "highscores/highscoresscene.hpp"
 #include "common.hpp"
 
 #include <lib/core/host.hpp>

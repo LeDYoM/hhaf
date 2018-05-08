@@ -24,7 +24,7 @@ namespace lib
 
 			private:
 				class AnimationComponentPrivate;
-				AnimationComponentPrivate *m_private;
+				uptr<AnimationComponentPrivate> m_private;
 			};
 		}
 	}

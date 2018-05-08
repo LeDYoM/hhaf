@@ -17,16 +17,11 @@ namespace lib
 				vector_shared_pointers<IAnimation> m_animations;
 			};
 			AnimationComponent::AnimationComponent()
-				: m_private{ new AnimationComponentPrivate }
+				: m_private{ muptr<AnimationComponentPrivate> }
 			{
 			}
 
-			AnimationComponent::~AnimationComponent()
-			{
-				__ASSERT(m_private, "Destructing private class that is nullptr");
-				delete m_private;
-				m_private = nullptr;
-			}
+			AnimationComponent::~AnimationComponent() {}
 
 			void AnimationComponent::addAnimation(uptr<IAnimation> nanimation)
 			{
