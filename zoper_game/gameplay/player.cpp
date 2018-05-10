@@ -12,25 +12,25 @@ namespace zoper
     using namespace lib::scene;
 
     Player::Player(SceneNode* const parent, const str& name, vector2dst bPosition, Rectf32 box, vector2df board2SceneFactor)
-        : GameBaseTile{ parent, name, 0 },
-        boardPosition{ std::move(bPosition),
-            [this]() {
-                log_debug_info("Player board position: ",boardPosition());
-                position = vector2df{ m_board2SceneFactor.x * boardPosition().x, m_board2SceneFactor.y * boardPosition().y };
-                log_debug_info("Player scene position: ",position());
-            }
-        },
-        currentDirection( Direction(Direction::DirectionData::Up) ), m_board2SceneFactor{ std::move(board2SceneFactor) }
+          :	GameBaseTile{ parent, name, 0 },
+	        boardPosition{ std::move(bPosition),
+	            [this]() {
+		            log_debug_info("Player board position: ",boardPosition());
+	                position = vector2df{ m_board2SceneFactor.x * boardPosition().x, m_board2SceneFactor.y * boardPosition().y };
+	                log_debug_info("Player scene position: ",position());
+	            }
+		    },
+		currentDirection{ Direction{Direction::DirectionData::Up} }, m_board2SceneFactor{ std::move(board2SceneFactor) }
     {
         m_extraSceneNode = createSceneNode("m_extraSceneNode");
         m_extraSceneNode_2 = m_extraSceneNode->createSceneNode("m_extraSceneNode_2");
         m_node = m_extraSceneNode_2->createRenderizable<nodes::NodeShape>("Node", 3);
 
-        m_node->box = std::move(box);
-        m_node->color = getColorForToken();
+        m_node->box.set(box);
+        m_node->color.set(getColorForToken());
     }
 
-    Player::~Player() = default;
+	Player::~Player() {}
 
     void Player::movePlayer(const Direction & direction, const function<bool(const vector2dst&)> &pointInCenter, const sptr<board::BoardModelComponent>& boardModel)
     {
@@ -56,13 +56,11 @@ namespace zoper
         const auto tileCenter(m_board2SceneFactor / 2.0f);
         m_extraSceneNode->rotateAround(tileCenter, destDirection.angle());
 
-        if (destDirection.value() == Direction::DirectionData::Up ||
-            destDirection.value() == Direction::DirectionData::Down) {
-            m_extraSceneNode_2->scaleAround(tileCenter, { 1, 1 });
-        }
-        else {
-            m_extraSceneNode_2->scaleAround(tileCenter, { m_board2SceneFactor.y / m_board2SceneFactor.x, m_board2SceneFactor.x / m_board2SceneFactor.y });
-        }
+		m_extraSceneNode_2->scaleAround(tileCenter, 
+			(destDirection.isVertical())?
+				vector2df{ 1, 1 }:
+				vector2df{ m_board2SceneFactor.y / m_board2SceneFactor.x, m_board2SceneFactor.x / m_board2SceneFactor.y }
+		);
     }
 
     void Player::launchAnimation(vector2df toWhere)
@@ -89,7 +87,6 @@ namespace zoper
                 position,
                 position(), toWhere,
                 [this]() { updateDirection(); }
-                
             ));
     }
 }

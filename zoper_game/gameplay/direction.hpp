@@ -36,6 +36,7 @@ namespace zoper
         static constexpr u8 Total = static_cast<u8>(DirectionData::Invalid);
 
         constexpr bool isHorizontal() const noexcept { return data == DirectionData::Left || data == DirectionData::Right; }
+		constexpr bool isVertical() const noexcept { return data == DirectionData::Up || data == DirectionData::Down; }
 
         constexpr  Direction negate() const noexcept {
             switch (data)
