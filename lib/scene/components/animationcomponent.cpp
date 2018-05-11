@@ -14,7 +14,7 @@ namespace lib
 			{
 			public:
 				AnimationComponentPrivate() {}
-                LockableVector<IAnimation> m_animations;
+                LockableVector<sptr<IAnimation>> m_animations;
 			};
 			AnimationComponent::AnimationComponent()
 				: m_private{ muptr<AnimationComponentPrivate>() } {}

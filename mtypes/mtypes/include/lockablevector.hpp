@@ -49,28 +49,32 @@ namespace lib
     class LockableVector
     {
     public:
-        constexpr void push_back(const sptr<T>&element) {
+        constexpr void push_back(const T &element) {
             m_supportContainer.push_back(element);
+        }
+
+        constexpr void push_back(T &&element) {
+            m_supportContainer.push_back(std::move(element));
         }
 
         template<typename ...Args>
         constexpr void emplace_back(Args&&... args) {
-            m_supportContainer.emplace_back(msptr<T>(std::forward<Args>(args)...));
+            m_supportContainer.emplace_back(std::forward<Args>(args)...);
         }
 
-        constexpr void update(function<bool(sptr<T> &)> f) {
+        constexpr void update(function<bool(T &)> f) {
             addSupportContainerToMainContainer();
             if (!m_mainContainer.empty()) {
                 bool isDirty{ false };
-                for (sptr<T> &element : m_mainContainer) {
+                for (T &element : m_mainContainer) {
                     if (!f(element)) {
-                        element.reset();
+                        element = T();
                         isDirty = true;
                     }
                 }
 
                 if (isDirty) {
-                    m_mainContainer.remove_values(nullptr);
+                    m_mainContainer.remove_values(T());
                 }
                 addSupportContainerToMainContainer();
             }
@@ -84,8 +88,8 @@ namespace lib
         }
 
     private:
-        vector<sptr<T>> m_mainContainer;
-        vector<sptr<T>> m_supportContainer;
+        vector<T> m_mainContainer;
+        vector<T> m_supportContainer;
     };
 }
 

@@ -22,7 +22,7 @@ namespace lib
 		public:
 			constexpr void update() {
                 m_pendingActions.update([](auto action) {
-					(*action)();
+					action();
                     return false;
                 });
 			}
@@ -89,7 +89,7 @@ namespace lib
 			}
 
 			constexpr void postAction(Action action) {
-				m_pendingActions.push_back(msptr<Action>(std::move(action)));
+				m_pendingActions.push_back(std::move(action));
 			}
 
 			stack<T> m_statesStack;
