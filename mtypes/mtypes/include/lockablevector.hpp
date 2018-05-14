@@ -1,12 +1,12 @@
 #pragma once
 
-#ifndef LIB_MTYPES_AUX_CONTAINER_INCLUDE_HPP__
-#define LIB_MTYPES_AUX_CONTAINER_INCLUDE_HPP__
+#ifndef LIB_MTYPES_LOCKABLE_VECTOR_CONTAINER_INCLUDE_HPP__
+#define LIB_MTYPES_LOCKABLE_VECTOR_CONTAINER_INCLUDE_HPP__
 
 namespace lib
 {
     template <class T>
-    class LockableVector
+    class LockableVector final
     {
     public:
         constexpr void push_back(const T &element) {
