@@ -14,10 +14,7 @@
 #include <mtypes/include/dicty.hpp>
 
 #include <algorithm>
-
-#define LIB_VERSION_MAJOR 1
-#define LIB_VERSION_MINOR 4
-#define LIB_VERSION_PATCH 2
+#include "config.hpp"
 
 #define ACCEPT_PARAMETERS
 

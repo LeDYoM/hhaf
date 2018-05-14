@@ -112,6 +112,13 @@ set(SOURCE_FILES_LIST
 
 include_directories ("..")
 
+set(LIB_VERSION_MAJOR "1")
+set(LIB_VERSION_MINOR "5")
+set(LIB_VERSION_PATCH "1")
+
+configure_file(config.hpp.in config.hpp)
+include_directories(${CMAKE_CURRENT_BINARY_DIR})
+
 set (CURRENT_TARGET lib)
 
 add_library(${CURRENT_TARGET} STATIC ${SOURCE_FILES_LIST})
