@@ -3,7 +3,6 @@
 #ifndef LIB_IAPP_INCLUDE_HPP__
 #define LIB_IAPP_INCLUDE_HPP__
 
-#include "compconfig.hpp"
 #include "windowcreationparams.hpp"
 #include <lib/include/core/hostcontext.hpp>
 #include <mtypes/include/types.hpp>

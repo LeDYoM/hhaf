@@ -4,7 +4,7 @@
 #include <mtypes/include/types.hpp>
 #include <lib/core/appservice.hpp>
 #include <lib/scene/components/debugvarscomponent.hpp>
-#include <lib/include/compconfig.hpp>
+#include <lib/include/lib.hpp>
 
 #ifdef USE_DEBUG_VARIABLES
 	#define DV_ONLY(x)	x

@@ -1,7 +1,7 @@
 #ifndef __LIB_MAIN_HPP__
 #define __LIB_MAIN_HPP__
 
-#include "compconfig.hpp"
+#include "lib.hpp"
 #include <mtypes/include/types.hpp>
 #include "iapp.hpp"
 

@@ -15,6 +15,7 @@ set(SOURCE_FILES_LIST
     board/itilescontroller.hpp
 
 	core/appservice.hpp
+	core/compconfig.hpp
 	core/debugsystem.cpp
 	core/debugsystem.hpp
 	core/factory.hpp
@@ -37,7 +38,6 @@ set(SOURCE_FILES_LIST
 	core/window.hpp
 
 	include/classmacros.hpp
-	include/compconfig.hpp
 	include/core/hostcontext.hpp
 	include/iapp.hpp
 	include/iresourceloader.hpp
