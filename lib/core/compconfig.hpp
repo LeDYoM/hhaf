@@ -46,14 +46,4 @@
 	#define LIB_DEBUG
 #endif
 
-#define USE_MEM_MANAGER
-
-#define USE_LOGS
-//#define LOG_FILE "log.txt"
-#define USE_IDE_CONSOLE_FOR_LOGS
-#define USE_COUT_FOR_LOGS
-#define CLIENT_USE_LOGS
-
-#define USE_DEBUG_VARIABLES
-
 #endif
