@@ -7,8 +7,8 @@
 #include <mtypes/include/function.hpp>
 #include <mtypes/include/connection.hpp>
 #include <mtypes/include/stack.hpp>
-#include <mtypes/include/log.hpp>
 #include <mtypes/include/lockablevector.hpp>
+#include <lib/include/core/log.hpp>
 #include <lib/scene/components/icomponent.hpp>
 
 namespace lib

@@ -4,7 +4,6 @@ set(UNIT_TEST_LIST
     dicty
     parpar
     str
-	timer
 	vector
 )
 

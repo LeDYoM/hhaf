@@ -3,16 +3,17 @@
 #ifndef LIB_MTYPES_LOG_INCLUDE_HPP
 #define LIB_MTYPES_LOG_INCLUDE_HPP
 
-#include "mtypes_export.hpp"
-#include "str.hpp"
+#include <lib/include/lib.hpp>
+#include <mtypes/include/str.hpp>
+#include <mtypes/include/function.hpp>
 
-#define LOG_EXPORT	MTYPES_EXPORT
+#define LOG_EXPORT	LIB_API_EXPORT
 
 namespace lib
 {
 	namespace log
 	{
-		void LOG_EXPORT init_log();
+        void LOG_EXPORT init_log(function<void(const char*const)> f = {});
 		void LOG_EXPORT finish_log();
 
 		enum severity_type { info, error };
@@ -26,7 +27,7 @@ namespace lib
 		namespace detail
 		{
 			template<severity_type severity>
-			constexpr const auto severity_txt()
+			constexpr const auto severity_txt() noexcept
 			{
 				switch (severity)
 				{
@@ -40,12 +41,6 @@ namespace lib
 				}
 			}
 
-			template<typename T, typename ...Args>
-			inline constexpr const str print_impl(T&& value, Args&&... args)
-			{
-				return make_str(value, std::forward<Args>(args)...);
-			}
-
 			void LOG_EXPORT commitlog(str& log_stream);
 		}
         
@@ -54,11 +49,10 @@ namespace lib
 		{
 			if constexpr (compile_logs<level>) {
 				str log_stream(detail::severity_txt<severity>());
-				log_stream << detail::print_impl(args...);
+				log_stream << make_str(std::forward<Args>(args)...);
 				detail::commitlog(log_stream);
 			}
 		}
-
 	}
 
 	template<typename ...Args>

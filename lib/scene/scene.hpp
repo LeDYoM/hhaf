@@ -7,7 +7,7 @@
 #include "scenenode.hpp"
 
 #include <mtypes/include/types.hpp>
-#include <mtypes/include/timer.hpp>
+#include <lib/include/core/timer.hpp>
 #include <lib/scene/components/statescontroller.hpp>
 
 namespace lib

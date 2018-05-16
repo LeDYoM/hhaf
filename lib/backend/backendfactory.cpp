@@ -1,5 +1,7 @@
 #include "backendfactory.hpp"
-#include <mtypes/include/log.hpp>
+
+#include <lib/include/core/log.hpp>
+
 
 #include "interfaces.hpp"
 #include <loader/include/loader.hpp>
@@ -12,7 +14,6 @@ namespace lib
 
 		BackendFactory::BackendFactory()
 		{
-			logConstruct_NOPARAMS;
 			using namespace loader;
 			auto *loader(createLoader());
 			lib::backend::IWindowProviderInfo * wpitemp{ nullptr };

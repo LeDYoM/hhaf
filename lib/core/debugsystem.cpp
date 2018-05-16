@@ -1,5 +1,5 @@
 #include "debugsystem.hpp"
-#include <mtypes/include/log.hpp>
+#include <lib/include/core/log.hpp>
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/scene.hpp>
 #include <lib/scene/components/debugvarscomponent.hpp>
@@ -11,12 +11,10 @@ namespace lib
 	{
 		DebugSystem::DebugSystem()
 		{
-			logConstruct_NOPARAMS;
 		}
 
 		DebugSystem::~DebugSystem()
 		{
-			logDestruct_NOPARAMS;
 		}
 
 		void DebugSystem::addDebugVars(const sptr<scene::Scene>&scene)
@@ -35,6 +33,5 @@ namespace lib
 //			auto dbc(host().currentScene()->ensureComponentOfType<scene::DebugVarsComponent>());
 //			dbc->showVarsNextFrame();
 		}
-
 	}
 }

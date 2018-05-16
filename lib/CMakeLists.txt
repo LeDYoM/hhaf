@@ -26,6 +26,7 @@ set(SOURCE_FILES_LIST
 	core/hostcontext.cpp
 	core/inputsystem.cpp
 	core/inputsystem.hpp
+	core/log.cpp
 	core/main.cpp
 	core/memmanager.cpp
 	core/memmanager.hpp
@@ -34,11 +35,15 @@ set(SOURCE_FILES_LIST
 	core/resourcemanager.cpp
 	core/resourcemanager.hpp
 	core/serializer.hpp
+	core/timer.cpp
 	core/window.cpp
 	core/window.hpp
 
-	include/classmacros.hpp
 	include/core/hostcontext.hpp
+	include/core/log.hpp
+	include/core/timer.hpp
+
+	include/classmacros.hpp
 	include/iapp.hpp
 	include/iresourceloader.hpp
 	include/key.hpp

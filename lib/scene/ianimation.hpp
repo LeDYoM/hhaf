@@ -1,7 +1,7 @@
 #ifndef LIB_IANIMATION_INCLUDE_HPP__
 #define LIB_IANIMATION_INCLUDE_HPP__
 
-#include <mtypes/include/timer.hpp>
+#include <lib/include/core/timer.hpp>
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/properties.hpp>
 

@@ -1,5 +1,6 @@
 #include "elementselector.hpp"
-#include <mtypes/include/log.hpp>
+#include <lib/scene/components/inputcomponent.hpp>
+#include <lib/include/core/log.hpp>
 #include <lib/scene/scene.hpp>
 
 namespace lib

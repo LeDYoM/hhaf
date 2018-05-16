@@ -1,8 +1,7 @@
 #include <lib/include/main.hpp>
 #include <lib/core/memmanager.hpp>
 #include <lib/core/host.hpp>
-
-#include <mtypes/include/log.hpp>
+#include <lib/include/core/log.hpp>
 
 namespace lib
 {

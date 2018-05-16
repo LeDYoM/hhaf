@@ -1,5 +1,5 @@
 #include "resourcemanager.hpp"
-#include <mtypes/include/log.hpp>
+#include <lib/include/core/log.hpp>
 
 #include <lib/scene/ttfont.hpp>
 #include <lib/scene/texture.hpp>

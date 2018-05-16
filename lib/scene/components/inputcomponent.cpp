@@ -1,6 +1,6 @@
 #include "inputcomponent.hpp"
 
-#include <mtypes/include/log.hpp>
+#include <lib/include/core/log.hpp>
 #include <lib/include/key.hpp>
 #include <lib/core/host.hpp>
 #include <lib/core/window.hpp>
@@ -52,5 +52,4 @@ namespace lib::scene
 	{
 		return static_cast<char>(key + (isShiftPressed() ? 127 : 65));
 	}
-
 }

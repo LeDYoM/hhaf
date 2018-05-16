@@ -1,20 +1,12 @@
 #include "boardmodel.hpp"
-#include <mtypes/include/log.hpp>
+#include <lib/include/core/log.hpp>
 
 namespace lib
 {
     namespace board
     {
-        BoardModelComponent::BoardModelComponent()
-        {
-            logConstruct_NOPARAMS;
-        }
-
-        BoardModelComponent::~BoardModelComponent()
-        {
-            _tiles.clear();
-            logDestruct_NOPARAMS;
-        }
+        BoardModelComponent::BoardModelComponent() {}
+        BoardModelComponent::~BoardModelComponent() {}
 
         void BoardModelComponent::initialize(const vector2dst &size)
         {
