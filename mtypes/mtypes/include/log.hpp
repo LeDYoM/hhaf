@@ -62,12 +62,12 @@ namespace lib
 	}
 
 	template<typename ...Args>
-	inline constexpr void log_debug_info(Args&&... args) noexcept {
+	constexpr void log_debug_info(Args&&... args) noexcept {
 		log::log<log::level_type::debug, log::severity_type::info>(std::forward<Args>(args)...);
 	}
 
 	template<typename ...Args>
-	inline constexpr void log_debug_error(Args&&... args) noexcept {
+	constexpr void log_debug_error(Args&&... args) noexcept {
 		log::log<log::level_type::debug, log::severity_type::error>(std::forward<Args>(args)...);
 	}
 
@@ -82,13 +82,13 @@ namespace lib
 	}
 
 	template<typename ...Args>
-	constexpr void assert_debug(const bool condition, const char *message) noexcept {
-		if (!condition) { log::log<log::level_type::debug, log::severity_type::error>(message); }
+	constexpr void assert_debug(const bool condition, Args&&... args) noexcept {
+		if (!condition) { log_debug_error(std::forward<Args>(args)...); }
 	}
 
 	template<typename ...Args>
-	constexpr void assert_release(const bool condition, const char *message) noexcept {
-		if (!condition) { log::log<log::level_type::release, log::severity_type::error>(message); }
+	constexpr void assert_release(const bool condition, Args&&... args) noexcept {
+		if (!condition) { log_release_error(std::forward<Args>(args)...); }
 	}
 
 }
