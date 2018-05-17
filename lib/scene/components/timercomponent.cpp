@@ -1,6 +1,8 @@
 #include "timercomponent.hpp"
-#include <mtypes/include/log.hpp>
+
 #include <mtypes/include/function.hpp>
+
+#include <lib/include/core/log.hpp>
 #include <lib/scene/scene.hpp>
 
 namespace lib::scene

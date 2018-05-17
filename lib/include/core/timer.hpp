@@ -4,7 +4,7 @@
 #define LIB_TIMER_INCLUDE_HPP__
 
 #include <mtypes/include/types.hpp>
-#include "mtypes_export.hpp"
+#include <lib/include/lib.hpp>
 
 namespace lib
 {
@@ -18,7 +18,7 @@ namespace lib
         Seconds
     };
 
-	class MTYPES_EXPORT Time final
+	class LIB_API_EXPORT Time final
 	{
 	public:
         explicit Time(const u64 quantity = 0, TimeInitializationTag initTag = TimeInitializationTag::Microseconds);
@@ -54,7 +54,7 @@ namespace lib
 #endif
 		friend class Timer;
 	};
-	class MTYPES_EXPORT Timer
+	class LIB_API_EXPORT Timer
 	{
 	public:
 		Timer();
@@ -76,7 +76,7 @@ namespace lib
 #endif
 	};
 
-	class MTYPES_EXPORT PausableTimer : public Timer
+	class LIB_API_EXPORT PausableTimer : public Timer
 	{
 	public:
 		void pause();

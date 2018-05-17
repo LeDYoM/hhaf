@@ -6,7 +6,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/function.hpp>
 #include <mtypes/include/connection.hpp>
-#include <mtypes/include/timer.hpp>
+#include <lib/include/core/timer.hpp>
 #include <mtypes/include/vector.hpp>
 #include <mtypes/include/lockablevector.hpp>
 #include <lib/scene/scenenode.hpp>

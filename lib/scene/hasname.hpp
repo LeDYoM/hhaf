@@ -16,10 +16,11 @@ namespace lib::core
 		HasName &operator=(HasName &&other) noexcept = default;
 		HasName &operator=(const HasName &other) = default;
 
+		inline const str &name() const noexcept { return m_name; }
+
     protected:
 		~HasName() {}
 
-		inline const str &name() const noexcept { return m_name; }
 	private:
 		const str m_name;
 	};

@@ -1,6 +1,7 @@
 #include "scene.hpp"
 #include "renderizable.hpp"
-#include <mtypes/include/log.hpp>
+
+#include <lib/include/core/log.hpp>
 #include <lib/core/window.hpp>
 #include <lib/core/host.hpp>
 

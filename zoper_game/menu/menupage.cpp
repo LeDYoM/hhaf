@@ -1,6 +1,7 @@
 #include "menupage.hpp"
 #include "menupageinputcomponent.hpp"
-#include <mtypes/include/log.hpp>
+
+#include <lib/include/core/log.hpp>
 #include <lib/scene/scene.hpp>
 #include <lib/scene/renderizables/nodeshape.hpp>
 #include <lib/scene/renderizables/nodetext.hpp>
@@ -8,6 +9,7 @@
 #include <lib/core/resourcemanager.hpp>
 #include <lib/scene/ttfont.hpp>
 #include <lib/include/key.hpp>
+
 #include <mtypes/include/function.hpp>
 
 namespace zoper

@@ -9,7 +9,7 @@
 #include <lib/backend/iwindow.hpp>
 #include <lib/core/debugsystem.hpp>
 
-#include <mtypes/include/log.hpp>
+#include <lib/include/core/log.hpp>
 #include <mtypes/include/parpar.hpp>
 #include <mtypes/include/dicty.hpp>
 

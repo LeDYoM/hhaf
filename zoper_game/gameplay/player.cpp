@@ -1,7 +1,7 @@
 #include "player.hpp"
 #include "constants.hpp"
 
-#include <mtypes/include/log.hpp>
+#include <lib/include/core/log.hpp>
 
 #include <lib/scene/ianimation.hpp>
 #include <lib/scene/components/animationcomponent.hpp>

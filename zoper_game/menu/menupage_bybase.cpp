@@ -1,6 +1,6 @@
 #include "menupage_bybase.hpp"
 #include "menupagetype.hpp"
-#include <mtypes/include/log.hpp>
+#include <lib/include/core/log.hpp>
 #include <lib/scene/scene.hpp>
 #include <lib/scene/ianimation.hpp>
 #include "../common.hpp"

@@ -9,11 +9,11 @@
 #include "../zoperprogramcontroller.hpp"
 
 #include <mtypes/include/types.hpp>
-#include <mtypes/include/log.hpp>
 #include <mtypes/include/properties.hpp>
 
 #include <lib/board/boardmodel.hpp>
 #include <lib/board/itilescontroller.hpp>
+#include <lib/include/core/log.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/core/randomizer.hpp>
 #include <lib/scene/renderizable.hpp>

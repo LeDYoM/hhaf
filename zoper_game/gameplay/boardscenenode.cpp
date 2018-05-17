@@ -1,5 +1,7 @@
 #include "boardscenenode.hpp"
 
+#include <lib/include/core/log.hpp>
+
 namespace zoper
 {
 	using namespace lib::scene;

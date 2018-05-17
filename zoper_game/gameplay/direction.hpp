@@ -1,15 +1,18 @@
-#ifndef __DIRECTION_HPP__
-#define __DIRECTION_HPP__
+#pragma once
+
+#ifndef ZOPER_DIRECTION_INCLUDE_HPP__
+#define ZOPER_DIRECTION_INCLUDE_HPP__
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
-#include <mtypes/include/log.hpp>
 
-using namespace lib;
+#include <lib/include/core/log.hpp>
 
 namespace zoper
 {
-    class Direction
+	using namespace lib;
+
+	class Direction
     {
     public:
         enum class DirectionData : u8
@@ -84,7 +87,7 @@ namespace zoper
                 break;
             case DirectionData::Invalid:
             default:
-                lib::log_debug_error("Invalid direction. Cannot convert");
+                log_debug_error("Invalid direction. Cannot convert");
                 return {};
             }
         }

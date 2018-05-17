@@ -4,7 +4,8 @@
 
 #include <lib/core/window.hpp>
 #include <lib/core/host.hpp>
-#include <mtypes/include/log.hpp>
+#include <lib/include/core/log.hpp>
+
 #include "scenemanager.hpp"
 
 namespace lib::scene
@@ -16,7 +17,8 @@ namespace lib::scene
 //        log_debug_info("Creating object: ", typeid(*this).name());
     }
 
-    SceneNode::~SceneNode() { 
+    SceneNode::~SceneNode() 
+	{ 
 //        log_debug_info("Destroying ", typeid(*this).name());
         clearAll();
     }

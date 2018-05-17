@@ -1,7 +1,8 @@
 #include "menupage_main.hpp"
 #include "menupage.hpp"
 #include "menupagetype.hpp"
-#include <mtypes/include/log.hpp>
+
+#include <lib/include/core/log.hpp>
 #include <lib/scene/scene.hpp>
 #include <lib/scene/ianimation.hpp>
 
