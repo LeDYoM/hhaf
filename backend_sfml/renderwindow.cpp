@@ -1,5 +1,6 @@
 #include <lib/include/key.hpp>
-#include <mtypes/include/log.hpp>
+
+#include <lib/include/core/log.hpp>
 
 #include "renderwindow.hpp"
 #include "conversions.hpp"
