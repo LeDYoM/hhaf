@@ -1,7 +1,5 @@
 #include <lib/include/key.hpp>
 
-#include <lib/include/core/log.hpp>
-
 #include "renderwindow.hpp"
 #include "conversions.hpp"
 
@@ -70,23 +68,14 @@ namespace lib::backend::sfmlb
 
 	void RenderWindow::keyEvent(const sf::Event &e)
 	{
-		__ASSERT(e.type == sf::Event::KeyPressed || e.type == sf::Event::KeyReleased);
-
 		const auto k(doCast(e.key.code));
 		if (k != input::Key::Unknown) {
 			if (e.type == sf::Event::KeyPressed) {
-				log_debug_info("Key pressed: ", static_cast<int>(e.key.code));
 				m_keysPressed.push(k);
 			}
 			else if (e.type == sf::Event::KeyReleased) {
-				log_debug_info("Key Released: ", static_cast<int>(e.key.code));
 				m_keysReleased.push(k);
-			} else {
-				log_debug_error("Unknown key event with key ", static_cast<int>(e.key.code));
 			}
-		}
-		else {
-			log_debug_error("Unknown key code");
 		}
 	}
 
@@ -135,7 +124,7 @@ namespace lib::backend::sfmlb
 	}
 
 	template <typename T>
-	decltype(auto) popKey(T &container) {
+	input::Key popKey(T &container) {
 		input::Key k(input::Key::Unknown);
 		if (!container.empty()) {
 			k = container.front();
