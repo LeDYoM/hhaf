@@ -18,6 +18,7 @@ set(SOURCE_FILES_LIST
 	core/compconfig.hpp
 	core/debugsystem.cpp
 	core/debugsystem.hpp
+
 	core/factory.hpp
 	core/file.cpp
 	core/file.hpp
@@ -51,8 +52,6 @@ set(SOURCE_FILES_LIST
 	include/main.hpp
 	include/windowcreationparams.hpp
 
-	scene/color.hpp
-
 	scene/components/animationcomponent.cpp
 	scene/components/animationcomponent.hpp
 	scene/components/componentcontainer.cpp
@@ -73,17 +72,10 @@ set(SOURCE_FILES_LIST
 	scene/components/timercomponent.cpp
 	scene/components/timercomponent.hpp
 
-	scene/hasname.hpp
-	scene/ianimation.hpp
-
 	scene/nodes/tablenode.hpp
 	scene/nodes/textquad.cpp
 	scene/nodes/textquad.hpp
 	scene/nodes/theme.hpp
-
-	scene/renderdata.hpp
-	scene/renderizable.cpp
-	scene/renderizable.hpp
 
 	scene/renderizables/isimplenode.cpp
 	scene/renderizables/isimplenode.hpp
@@ -94,6 +86,14 @@ set(SOURCE_FILES_LIST
 	scene/renderizables/nodetext.cpp
 	scene/renderizables/nodetext.hpp
 
+	scene/color.hpp
+	scene/geometry.cpp
+	scene/geometry.hpp
+	scene/hasname.hpp
+	scene/ianimation.hpp
+	scene/renderdata.hpp
+	scene/renderizable.cpp
+	scene/renderizable.hpp
 	scene/scene.cpp
 	scene/scene.hpp
 	scene/scenemanager.cpp
