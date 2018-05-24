@@ -1,4 +1,4 @@
-#include "geomtry.hpp"
+#include "geometry.hpp"
 #include <cmath>
 
 namespace lib::scene
