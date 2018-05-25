@@ -1,6 +1,7 @@
 #include "nodeshape.hpp"
 
 #include <lib/include/core/log.hpp>
+#include <lib/scene/geometry.hpp>
 #include <lib/scene/texture.hpp>
 
 #include <cmath>

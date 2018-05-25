@@ -1,9 +1,0 @@
-files.txt
-isimplenode.cpp
-isimplenode.hpp
-nodequad.cpp
-nodequad.hpp
-nodeshape.cpp
-nodeshape.hpp
-nodetext.cpp
-nodetext.hpp
