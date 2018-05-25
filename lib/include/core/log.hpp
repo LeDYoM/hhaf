@@ -13,7 +13,9 @@ namespace lib
 {
 	namespace log
 	{
-        void LOG_EXPORT init_log(function<void(const char*const)> f = {});
+        using log_function = function<void(const char*const)>;
+
+        void LOG_EXPORT init_log(log_function f = {});
 		void LOG_EXPORT finish_log();
 
 		enum severity_type { info, error };
@@ -57,6 +59,7 @@ namespace lib
 
 	template<typename ...Args>
 	constexpr void log_debug_info(Args&&... args) noexcept {
+        using namespace log;
 		log::log<log::level_type::debug, log::severity_type::info>(std::forward<Args>(args)...);
 	}
 
@@ -67,12 +70,14 @@ namespace lib
 
 	template<typename ...Args>
 	constexpr void log_release_info(Args&&... args) noexcept {
-		log::log<log::level_type::release, log::severity_type::info>(std::forward<Args>(args)...);
+        using namespace log;
+		log::log<level_type::release, severity_type::info>(std::forward<Args>(args)...);
 	}
 
 	template<typename ...Args>
 	constexpr void log_release_error(Args&&... args) noexcept {
-		log::log<log::level_type::release, log::severity_type::error>(std::forward<Args>(args)...);
+        using namespace log;
+        log::log<level_type::release, severity_type::error>(std::forward<Args>(args)...);
 	}
 
 	template<typename ...Args>

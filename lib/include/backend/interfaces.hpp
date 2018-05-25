@@ -7,12 +7,6 @@
 #include "ittfontfactory.hpp"
 #include "itexturefactory.hpp"
 
-#if defined(_MSC_VER)
-	#define SPECIFIC_EXPORT	__declspec(dllexport)
-#else
-	#define SPECIFIC_EXPORT
-#endif
-
 using p_createWindowProviderInfo = lib::backend::IWindowProviderInfo * (*)();
 using p_destroyWindowProviderInfo = bool(*)(lib::backend::IWindowProviderInfo *);
 

@@ -2,6 +2,7 @@
 #include <lib/core/memmanager.hpp>
 #include <lib/core/host.hpp>
 #include <lib/include/core/log.hpp>
+#include <lib/core/logcallback.hpp>
 
 namespace lib
 {
@@ -11,14 +12,15 @@ namespace lib
 
 		try
 		{
-			log::init_log();
+			log::init_log(defaultUserLogFunction);
 
 			installMemManager();
 
 			core::Host::createHost(argc, argv);
 			core::Host::host().setApplication(std::move(app));
-			result = core::Host::host().run();
+            int run_result(result = core::Host::host().run());
 			core::Host::destroyHost();
+            result = run_result;
 		}
 		catch (std::exception e)
 		{

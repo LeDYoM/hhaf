@@ -5,7 +5,7 @@
 #include <lib/include/core/timer.hpp>
 #include <lib/include/iapp.hpp>
 #include <lib/core/inputsystem.hpp>
-#include <lib/backend/backendfactory.hpp>
+#include <lib/core/backendfactory.hpp>
 #include <lib/scene/texture.hpp>
 #include <lib/scene/renderdata.hpp>
 #include <lib/scene/vertexarray.hpp>

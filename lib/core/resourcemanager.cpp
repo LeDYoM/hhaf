@@ -3,7 +3,7 @@
 
 #include <lib/scene/ttfont.hpp>
 #include <lib/scene/texture.hpp>
-#include <lib/backend/backendfactory.hpp>
+#include <lib/core/backendfactory.hpp>
 #include <algorithm>
 
 namespace lib

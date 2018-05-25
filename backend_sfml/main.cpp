@@ -1,11 +1,11 @@
-#include <lib/backend/iwindow.hpp>
-#include <lib/backend/interfaces.hpp>
+#include <lib/include/backend/iwindow.hpp>
+#include <lib/include/backend/interfaces.hpp>
 
 #include "renderwindow.hpp"
 #include "ttfontfactory.hpp"
 #include "texturefactory.hpp"
 
-#define EXPORT extern "C" SPECIFIC_EXPORT
+#define EXPORT extern "C"
 
 EXPORT lib::backend::IWindowProviderInfo * createWindowProviderInfo() {
 	return new lib::backend::sfmlb::WindowBackendInfo;

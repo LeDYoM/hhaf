@@ -3,13 +3,13 @@
 #include "resourcemanager.hpp"
 #include "randomizer.hpp"
 
-#include <lib/scene/scenemanager.hpp>
-#include <lib/core/inputsystem.hpp>
-#include <lib/backend/backendfactory.hpp>
-#include <lib/backend/iwindow.hpp>
-#include <lib/core/debugsystem.hpp>
-
+#include <lib/include/backend/iwindow.hpp>
 #include <lib/include/core/log.hpp>
+#include <lib/core/inputsystem.hpp>
+#include <lib/core/debugsystem.hpp>
+#include <lib/core/backendfactory.hpp>
+#include <lib/scene/scenemanager.hpp>
+
 #include <mtypes/include/parpar.hpp>
 #include <mtypes/include/dicty.hpp>
 

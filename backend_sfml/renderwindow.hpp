@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef LIB_BACKEND_REDNERWINDOW_HPP__
 #define LIB_BACKEND_REDNERWINDOW_HPP__
 
@@ -8,7 +10,7 @@
 #include <mtypes/include/vector2d.hpp>
 #include <lib/scene/vertexarray.hpp>
 #include <lib/include/iapp.hpp>
-#include <lib/backend/iwindow.hpp>
+#include <lib/include/backend/iwindow.hpp>
 
 #include <queue>
 

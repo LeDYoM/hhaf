@@ -1,28 +1,23 @@
 #include "texture.hpp"
-#include <lib/backend/itexture.hpp>
-#include <lib/backend/itexturefactory.hpp>
-#include <lib/backend/backendfactory.hpp>
 
-namespace lib
+#include <lib/include/backend/itexture.hpp>
+#include <lib/include/backend/itexturefactory.hpp>
+#include <lib/core/backendfactory.hpp>
+
+namespace lib::scene
 {
-	namespace scene
+	Texture::Texture(backend::ITexture *texture) : m_texturePrivate{ texture } {}
+
+	Texture::~Texture() {}
+
+	bool Texture::loadFromFile(const str& filename)
 	{
-		using namespace backend;
+		m_texturePrivate = backend::textureFactory().loadFromFile(filename);
+		return m_texturePrivate != nullptr;
+	}
 
-//		Texture::Texture() = default;
-		Texture::Texture(backend::ITexture *texture) : m_texturePrivate{ texture } {}
-
-		Texture::~Texture() = default;
-
-		bool Texture::loadFromFile(const str& filename)
-		{
-			m_texturePrivate = textureFactory().loadFromFile(filename);
-			return m_texturePrivate != nullptr;
-		}
-
-		vector2du32 Texture::size() const
-		{
-			return m_texturePrivate->size();
-		}
+	vector2du32 Texture::size() const
+	{
+		return m_texturePrivate->size();
 	}
 }

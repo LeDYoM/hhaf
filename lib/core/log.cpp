@@ -12,21 +12,23 @@ namespace lib
     {
         namespace
         {
-            function<void(const char*const log_str)> userLogFunction{
-                [](const char*const log_str) 
-                {
-                    std::cout << log_str;
-                    std::cout.flush();
+            void userLogFunction(const char*const log_str)
+            {
+                std::cout << log_str;
+                std::cout.flush();
 #ifdef _MSC_VER
-                    OutputDebugString(log_str);
+                OutputDebugString(log_str);
 #endif
-                }
-            };
+            }
+
+            log_function log_function_callback{ userLogFunction };
         }
 
-        void init_log(function<void(const char*const)> f)
+        void init_log(log_function f)
         {
-            std::swap(userLogFunction, f);
+            if (f) {
+                std::swap(log_function_callback, f);
+            }
         }
 
         void finish_log()

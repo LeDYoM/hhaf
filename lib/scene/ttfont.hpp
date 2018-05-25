@@ -1,10 +1,12 @@
-#ifndef LIB_DRAW_TTFONT_INCLUDE_HPP__
-#define LIB_DRAW_TTFONT_INCLUDE_HPP__
+#pragma once
+
+#ifndef LIB_SCENE_TTFONT_INCLUDE_HPP__
+#define LIB_SCENE_TTFONT_INCLUDE_HPP__
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/rect.hpp>
 #include <lib/scene/texture.hpp>
-#include <lib/backend/ittfont.hpp>
+#include <lib/include/backend/ittfont.hpp>
 
 namespace lib
 {

@@ -9,9 +9,8 @@
 
 namespace lib::backend::sfmlb
 {
-    RenderWindow::RenderWindow() = default;
-
-	RenderWindow::~RenderWindow() = default;
+    RenderWindow::RenderWindow() {}
+	RenderWindow::~RenderWindow() {}
 
 	bool RenderWindow::createWindow(const WindowCreationParams & wcp)
 	{

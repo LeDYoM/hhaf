@@ -1,10 +1,14 @@
-#ifndef __LIB_WINDOW_HPP__
-#define __LIB_WINDOW_HPP__
+#pragma once
+
+#ifndef LIB_WINDOW_INCLUDE_HPP__
+#define LIB_WINDOW_INCLUDE_HPP__
+
+#include "appservice.hpp"
+
+#include <lib/include/backend/iwindow.hpp>
+#include <lib/include/key.hpp>
 
 #include <mtypes/include/types.hpp>
-#include "appservice.hpp"
-#include <lib/backend/iwindow.hpp>
-#include <lib/include/key.hpp>
 #include <mtypes/include/properties.hpp>
 
 namespace lib

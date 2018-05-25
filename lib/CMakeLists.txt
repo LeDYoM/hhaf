@@ -1,24 +1,16 @@
 project (lib)
 
 set(SOURCE_FILES_LIST
-    backend/backendfactory.cpp
-    backend/backendfactory.hpp
-    backend/interfaces.hpp
-    backend/itexturefactory.hpp
-    backend/itexture.hpp
-    backend/ittfontfactory.hpp
-    backend/ittfont.hpp
-    backend/iwindow.hpp
-
     board/boardmodel.cpp
     board/boardmodel.hpp
     board/itilescontroller.hpp
 
 	core/appservice.hpp
+    core/backendfactory.cpp
+    core/backendfactory.hpp
 	core/compconfig.hpp
 	core/debugsystem.cpp
 	core/debugsystem.hpp
-
 	core/factory.hpp
 	core/file.cpp
 	core/file.hpp
@@ -28,6 +20,7 @@ set(SOURCE_FILES_LIST
 	core/inputsystem.cpp
 	core/inputsystem.hpp
 	core/log.cpp
+	core/logcallback.hpp
 	core/main.cpp
 	core/memmanager.cpp
 	core/memmanager.hpp
@@ -39,6 +32,13 @@ set(SOURCE_FILES_LIST
 	core/timer.cpp
 	core/window.cpp
 	core/window.hpp
+
+    include/backend/interfaces.hpp
+    include/backend/itexturefactory.hpp
+    include/backend/itexture.hpp
+    include/backend/ittfontfactory.hpp
+    include/backend/ittfont.hpp
+    include/backend/iwindow.hpp
 
 	include/core/hostcontext.hpp
 	include/core/log.hpp
