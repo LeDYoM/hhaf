@@ -19,7 +19,6 @@ EXPORT bool destroyWindowProviderInfo(lib::backend::IWindowProviderInfo *iwpi) {
 	return false;
 }
 
-
 EXPORT lib::backend::IWindow * createWindow() {
 	return new lib::backend::sfmlb::RenderWindow;
 }
