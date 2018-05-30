@@ -68,6 +68,10 @@ namespace lib
             return *this;
         }
 
+        constexpr vector2d<T> radius() const noexcept {
+            return { width / static_cast<T>(2) , height / static_cast<T>(2) };
+        }
+
         constexpr const vector2d<T> leftTop() const noexcept { return vector2d<T>{left, top}; }
         constexpr const vector2d<T> size() const  noexcept { return vector2d<T>{width, height}; }
         constexpr const T right() const  noexcept { return left + width; }

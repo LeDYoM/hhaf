@@ -1,6 +1,6 @@
 #include "renderwindow.hpp"
 #include <lib/include/key.hpp>
-#include <lib/backend/itexture.hpp>
+#include <lib/include/backend/itexture.hpp>
 #include "texture.hpp"
 #include "texturettfont.hpp"
 #include <SFML/Window.hpp>

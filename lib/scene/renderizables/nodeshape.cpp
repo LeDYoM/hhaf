@@ -8,11 +8,6 @@
 
 namespace lib::scene::nodes
 {
-	template <typename T>
-	constexpr T PiConstant = 3.14159265358979323846;
-	template <typename T>
-	constexpr T PiD2Constant = PiConstant<T> / static_cast<T>(2);
-
 	void NodeShape::updateGeometrySimpleNode()
 	{
 		if (pointCount()) {
@@ -23,12 +18,13 @@ namespace lib::scene::nodes
 
 			BasicVertexArray &vertices(m_vertices.verticesArray());
 			const vector2df radius{ size / 2.0f };
+            const vector2df radius2{ box().center() };
 
 			vertices.resize(nVertex); // + 2 for center and repeated first point
-			const f64 baseAngle((2 * PiConstant<f64>) / static_cast<f64>(nPoints));
+			const f64 baseAngle((2 * GeometryGenerator::PiConstant<f64>) / static_cast<f64>(nPoints));
 			const auto leftTop(box().leftTop());
 			for (u32 i{ 0 }; i < nPoints; ++i) {
-				const f64 angle{ (i*baseAngle) - (PiD2Constant<f64>) };
+				const f64 angle{ (i*baseAngle) - (GeometryGenerator::PiD2Constant<f64>) };
 				const vector2dd r{ std::cos(angle) * radius.x, std::sin(angle) * radius.y };
 				vertices[i + 1].position = { static_cast<f32>(radius.x + r.x), static_cast<f32>(radius.y + r.y) };
 				vertices[i + 1].position += leftTop;

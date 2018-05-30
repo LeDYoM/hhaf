@@ -18,6 +18,11 @@ namespace lib::scene
     public:
         using vector_type = vector2df;
 
+        template <typename T>
+        static constexpr T PiConstant = 3.14159265358979323846;
+        template <typename T>
+        static constexpr T PiD2Constant = PiConstant<T> / static_cast<T>(2);
+
         constexpr GeometryGenerator(vector<Vertex> &vertexArray,
             vector_type center, vector_type radius) noexcept
             : m_vertexArray{ vertexArray }, m_center{ std::move(center) },

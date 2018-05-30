@@ -8,10 +8,10 @@
 #include <lib/scene/renderizables/nodeshape.hpp>
 #include <lib/scene/renderizables/nodequad.hpp>
 
-using namespace lib;
-
 namespace zoper
 {
+    using namespace lib;
+
 	class BoardSceneNode : public scene::SceneNode
 	{
 	private:
