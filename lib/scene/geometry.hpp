@@ -23,39 +23,29 @@ namespace lib::scene
         template <typename T>
         static constexpr T PiD2Constant = PiConstant<T> / static_cast<T>(2);
 
-        constexpr GeometryGenerator(vector<Vertex> &vertexArray,
-            vector_type center, vector_type radius) noexcept
-            : m_vertexArray{ vertexArray }, m_center{ std::move(center) },
-            m_radius{ std::move(radius) } {}
+        constexpr GeometryGenerator(vector<Vertex> &vertexArray) noexcept
+            : m_vertices{ vertexArray } {}
 
         constexpr void resetIndex() noexcept { m_index = 0U; }
 
-        constexpr void addTriangle(const vector_type v0, 
-            const vector_type v1, 
-            const vector_type v2)
+        constexpr void addQuad(const Rectf32& box) 
         {
-            m_vertexArray[m_index++].position = std::move(v0);
-            m_vertexArray[m_index++].position = std::move(v1);
-            m_vertexArray[m_index++].position = std::move(v2);
-        }
+            constexpr u32 nPoints = 4;
+            constexpr u32 nVertex = nPoints + 2;
 
-        constexpr void addTriangleFromCenter(const vector_type v0,
-            const vector_type v1)
-        {
-            addTriangle(m_center, std::move(v0), std::move(v1));
-        }
+            m_vertices.resize(nVertex); // + 2 for center and repeated first point
+            m_vertices[0].position = { box.center().x, box.center().y };
+            m_vertices[1].position = { box.left, box.top };
+            m_vertices[2].position = { box.right(), box.top };
+            m_vertices[3].position = { box.right(), box.bottom() };
+            m_vertices[4].position = { box.left, box.bottom() };
+            m_vertices[5] = m_vertices[1];
 
-        constexpr void addTriangleFromCenterAndLast(const vector_type v0)
-        {
-            assert_debug(m_index > 0U, "There is no vertex in buffer");
-            addTriangle(m_center, m_vertexArray[m_index-1].position, std::move(v0));
+            m_index = 6;
         }
-
     private:
         size_type m_index{ 0U };
-        vector<Vertex> &m_vertexArray;
-        vector_type m_center;
-        vector_type m_radius;
+        vector<Vertex> &m_vertices;
     };
 }
 
