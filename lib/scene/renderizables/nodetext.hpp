@@ -42,7 +42,7 @@ namespace lib
                 PropertyState<Rectf32> alignmentBox;
 
             protected:
-                void updateGeometry();
+                void updateGeometry() override;
             private:
                 void updateAlignmentX();
                 void updateAlignmentY();
