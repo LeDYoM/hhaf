@@ -70,12 +70,12 @@ namespace lib::scene
         //TO DO: Just experiment to maintain compatibility
         constexpr void addQuad(const Rectf32& box, const Rectf32 textureUV)
         {
-            m_vertices.emplace_back(vector2df{ gleft,  gtop }, vector2df{ u1, v1 });
-            m_vertices.emplace_back(vector2df{ gright, gtop }, vector2df{ u2, v1 });
-            m_vertices.emplace_back(vector2df{ gleft,  gbottom }, vector2df{ u1, v2 });
-            m_vertices.emplace_back(vector2df{ gleft,  gbottom }, vector2df{ u1, v2 });
-            m_vertices.emplace_back(vector2df{ gright, gtop }, vector2df{ u2, v1 });
-            m_vertices.emplace_back(vector2df{ gright, gbottom }, vector2df{ u2, v2 });
+            m_vertices.emplace_back(vector2df{ box.left, box.top }, vector2df{ textureUV.left, textureUV.top });
+            m_vertices.emplace_back(vector2df{ box.right(), box.top }, vector2df{ textureUV.right(), textureUV.top });
+            m_vertices.emplace_back(vector2df{ box.left,  box.bottom() }, vector2df{ textureUV.left, textureUV.bottom() });
+            m_vertices.emplace_back(vector2df{ box.left,  box.bottom() }, vector2df{ textureUV.left, textureUV.bottom() });
+            m_vertices.emplace_back(vector2df{ box.right(), box.top }, vector2df{ textureUV.right(), textureUV.top });
+            m_vertices.emplace_back(vector2df{ box.right(), box.bottom() }, vector2df{ textureUV.right(), textureUV.bottom() });
         }
 
     private:
