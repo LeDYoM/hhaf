@@ -1,5 +1,7 @@
 #include "nodetext.hpp"
 
+#include <lib/scene/geometry.hpp>
+
 #include <lib/scene/ttfont.hpp>
 #include <lib/scene/texture.hpp>
 #include <lib/include/core/log.hpp>
@@ -83,11 +85,14 @@ namespace lib::scene::nodes
                     const f32 u2{ static_cast<f32>(glyphTextureRect.left + glyphTextureRect.width) };
                     const f32 v2{ static_cast<f32>(glyphTextureRect.top + glyphTextureRect.height) };
 
+//                    const Rectf32 letterBox()
                     const f32 gleft{ x + glyphbound.left };
                     const f32 gright{ x + glyphbound.right() };
                     const f32 gtop{ y + glyphbound.top };
                     const f32 gbottom{ y + glyphbound.bottom() };
                     // Add a quad for the current character
+                    GeometryGenerator geomtery_generator(vertices);
+//                    geomtery_generator.addQuad
                     vertices.emplace_back(vector2df{ gleft,  gtop }, vector2df{ u1, v1 });
                     vertices.emplace_back(vector2df{ gright, gtop }, vector2df{ u2, v1 });
                     vertices.emplace_back(vector2df{ gleft,  gbottom }, vector2df{ u1, v2 });
