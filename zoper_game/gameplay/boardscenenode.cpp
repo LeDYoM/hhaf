@@ -10,7 +10,8 @@ namespace zoper
 	BoardSceneNode::BoardSceneNode(SceneNode* parent, str name, const Rectf32 &tileBox) :
 		BaseClass{ parent, std::move(name) }, 
 		m_backgroundTile(createRenderizable<NodeQuad>("backgroundTile")),
-		m_pointInCenter(createRenderizable<NodeShape>("backgroundTilePoint", 30))
+//		m_pointInCenter(createRenderizable<NodeShape>("backgroundTilePoint", 30))
+        m_pointInCenter{createSceneNode<ShapeSceneNode>("backgroundTilePoint")}
 	{
 		m_backgroundTile->box = tileBox;
 
@@ -23,7 +24,7 @@ namespace zoper
 
 	BoardSceneNode::~BoardSceneNode() = default;
 
-	void BoardSceneNode::setTileColor(scene::Color color)
+	void BoardSceneNode::setTileColor(Color color)
 	{
 		assert_debug(m_backgroundTile != nullptr, "This node is not correctly initialized");
 		m_backgroundTile->color = std::move(color);

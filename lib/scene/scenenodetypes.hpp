@@ -7,6 +7,7 @@
 #include <lib/scene/components/parentrendercomponent.hpp>
 #include <lib/scene/components/icomponent.hpp>
 #include <lib/scene/renderizables/nodetext.hpp>
+#include <lib/scene/renderizables/nodeshape.hpp>
 #include "scenenode.hpp"
 
 namespace lib::scene
@@ -49,6 +50,7 @@ namespace lib::scene
 	};
 
 	using TextSceneNode = RenderizableSceneNode<nodes::NodeText>;
+    using ShapeSceneNode = RenderizableSceneNode<nodes::NodeShape>;
 }
 
 #endif
