@@ -18,8 +18,10 @@ namespace zoper
 		// Size of the point in the middle of the tile
 		static constexpr vector2df centerPointSize{ 15,15 };
 
-		m_pointInCenter->box = { tileBox.center() - (centerPointSize / 2), centerPointSize };
-		m_pointInCenter->color = colors::White;
+        const Rectf32 b{ tileBox.center() - (centerPointSize / 2), centerPointSize };
+        m_pointInCenter->position.set(b.leftTop());
+		m_pointInCenter->node()->box = { 0,0,b.width,b.height };
+		m_pointInCenter->node()->color = colors::White;
 	}
 
 	BoardSceneNode::~BoardSceneNode() = default;

@@ -16,25 +16,24 @@ namespace lib::scene
 	class RenderizableSceneNode : public SceneNode
 	{
 	public:
-		RenderizableSceneNode(SceneNode *const parent, str name) : SceneNode{ parent, name } {}
+		constexpr RenderizableSceneNode(SceneNode *const parent, str name) : 
+            SceneNode{ parent, name }, m_node{ SceneNode::createRenderizable<T>(name + "_node") }
+        {
+        }
 
-		void onCreated() override {
-			m_node = createRenderizable<T>(name()+"_node");
-		}
-
-		sptr<T> node() noexcept { return m_node; }
-		const sptr<T> node() const noexcept { return m_node; }
+		constexpr sptr<T> node() noexcept { return m_node; }
+		constexpr const sptr<T> node() const noexcept { return m_node; }
 
 	private:
-		sptr<T> m_node;
+		const sptr<T> m_node;
 	};
 
-	template <typename RenderizableT, typename BaseComponent>
-	class RenderizableSceneNodeComponent : public ParentRenderComponent<RenderizableT, BaseComponent>
+	template <typename Renderizable_t, typename BaseComponent>
+	class RenderizableSceneNodeComponent : public ParentRenderComponent<Renderizable_t, BaseComponent>
 	{
 	public:
-		using BaseClass = ParentRenderComponent<RenderizableT,BaseComponent>;
-        using ParentNodeClass = RenderizableSceneNode<RenderizableT>;
+		using BaseClass = ParentRenderComponent<Renderizable_t,BaseComponent>;
+        using ParentNodeClass = RenderizableSceneNode<Renderizable_t>;
 		void onAttached() override {
 			if (auto parentNode = BaseClass::template attachedNodeAs<ParentNodeClass>()) {
 				m_renderizableNode = parentNode->node();
@@ -42,11 +41,11 @@ namespace lib::scene
 			BaseClass::onAttached();
 		}
 	private:
-		sptr<RenderizableT> getRenderNodeToAttach() override {
+		sptr<Renderizable_t> getRenderNodeToAttach() override {
 			return m_renderizableNode;
 		}
 
-		sptr<RenderizableT> m_renderizableNode;
+		sptr<Renderizable_t> m_renderizableNode;
 	};
 
 	using TextSceneNode = RenderizableSceneNode<nodes::NodeText>;
