@@ -8,31 +8,47 @@
 #include <lib/scene/color.hpp>
 #include <lib/scene/renderizable.hpp>
 
-namespace lib
+namespace lib::scene
 {
-    namespace scene
+    class Texture;
+    namespace nodes
     {
-        class Texture;
-        namespace nodes
+        class ISimpleNode : public Renderizable
         {
-            class ISimpleNode : public Renderizable
-            {
-            public:
-                ISimpleNode(SceneNode *const parent, const str &name, const u32 pointCount);
-                virtual ~ISimpleNode() = default;
+        public:
+            ISimpleNode(SceneNode *const parent, const str &name, const u32 pointCount);
+            virtual ~ISimpleNode() {};
 
-                PropertyTrigger<Rectf32> box;
-                PropertyTrigger<Rects32> textureRect;
+            PropertyTrigger<Rectf32> box;
+            PropertyTrigger<Rects32> textureRect;
 
-            protected:
-                void updateGeometry();
-                void updateTextureCoords();
+        protected:
+            void updateGeometry();
+            void updateTextureCoords();
 
-                virtual void updateGeometrySimpleNode() = 0;
-                bool m_textureRectNeedsUpdate{ true };
+            virtual void updateGeometrySimpleNode() = 0;
+            bool m_textureRectNeedsUpdate{ true };
 
-            };
-        }
+        };
+/*
+        class ISimpleNode : public Renderizable
+        {
+        public:
+            ISimpleNode(SceneNode *const parent, const str &name, const u32 pointCount);
+            virtual ~ISimpleNode() {};
+
+            PropertyTrigger<Rectf32> box;
+            PropertyTrigger<Rects32> textureRect;
+
+        protected:
+            void updateGeometry();
+            void updateTextureCoords();
+
+            virtual void updateGeometrySimpleNode() = 0;
+            bool m_textureRectNeedsUpdate{ true };
+
+        };
+        */
     }
 }
 

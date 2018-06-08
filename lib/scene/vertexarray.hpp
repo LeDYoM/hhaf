@@ -41,7 +41,6 @@ namespace lib::scene
         void moveY(const f32 yOffset) noexcept;
 
         BasicProperty<Rectf32> bounds{};
-
     private:
         BasicVertexArray m_vertices{};
         PrimitiveType m_primitiveType = PrimitiveType::Triangles;

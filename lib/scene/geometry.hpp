@@ -23,64 +23,94 @@ namespace lib::scene
         template <typename T>
         static constexpr T PiD2Constant = PiConstant<T> / static_cast<T>(2);
 
-        constexpr GeometryGenerator(vector<Vertex> &vertexArray) noexcept
-            : m_vertices{ vertexArray } {}
+        constexpr GeometryGenerator(VertexArray &vertexArray) noexcept
+            : m_verticesArray{ vertexArray } {}
 
         constexpr void resetIndex() noexcept { m_index = 0U; }
 
-        constexpr void addQuad(const Rectf32& box) 
+        constexpr void addQuad(const Rectf32& box, const Rectf32& textureRect)
         {
             constexpr u32 nPoints = 4;
             constexpr u32 nVertex = nPoints + 2;
+            auto& vertices(m_verticesArray.verticesArray());
 
-            m_vertices.resize(nVertex); // + 2 for center and repeated first point
-            m_vertices[0].position = { box.center().x, box.center().y };
-            m_vertices[1].position = { box.left, box.top };
-            m_vertices[2].position = { box.right(), box.top };
-            m_vertices[3].position = { box.right(), box.bottom() };
-            m_vertices[4].position = { box.left, box.bottom() };
-            m_vertices[5] = m_vertices[1];
+            vertices.resize(nVertex); // + 2 for center and repeated first point
+            vertices[0].position = { box.center().x, box.center().y };
+            updateTextureVertex(vertices[0], box, textureRect);
+            vertices[1].position = { box.left, box.top };
+            updateTextureVertex(vertices[1], box, textureRect);
+            vertices[2].position = { box.right(), box.top };
+            updateTextureVertex(vertices[2], box, textureRect);
+            vertices[3].position = { box.right(), box.bottom() };
+            updateTextureVertex(vertices[3], box, textureRect);
+            vertices[4].position = { box.left, box.bottom() };
+            updateTextureVertex(vertices[4], box, textureRect);
+            vertices[5] = vertices[1];
+            updateTextureVertex(vertices[5], box, textureRect);
 
             m_index = 6;
         }
 
-        constexpr void addShape(const Rectf32& box, const size_type nPoints)
+        constexpr void addShape(const Rectf32& box, const size_type nPoints, 
+            const Rectf32& textureRect)
         {
             if (nPoints) {
+                auto& vertices(m_verticesArray.verticesArray());
+
                 const u32 nVertex(nPoints + 2);
 
                 const vector2df size{ box.size() };
                 const vector2df radius{ size / 2.0f };
 
-                m_vertices.resize(nVertex); // + 2 for center and repeated first point
-                const f64 baseAngle((2 * GeometryGenerator::PiConstant<f64>) / static_cast<f64>(nPoints));
+                vertices.resize(nVertex); // + 2 for center and repeated first point
+                const f64 baseAngle((2 * PiConstant<f64>) / static_cast<f64>(nPoints));
                 const auto leftTop(box.leftTop());
                 for (u32 i{ 0 }; i < nPoints; ++i) {
                     const f64 angle{ (i*baseAngle) - (GeometryGenerator::PiD2Constant<f64>) };
                     const vector2dd r{ std::cos(angle) * radius.x, std::sin(angle) * radius.y };
-                    m_vertices[i + 1].position = { static_cast<f32>(radius.x + r.x), static_cast<f32>(radius.y + r.y) };
-                    m_vertices[i + 1].position += leftTop;
+                    auto& vertex(vertices[i + 1]);
+                    vertex.position = { static_cast<f32>(radius.x + r.x), static_cast<f32>(radius.y + r.y) };
+                    vertex.position += leftTop;
+
+                    updateTextureVertex(vertex, box, textureRect);
                 }
 
-                m_vertices[nPoints + 1].position = m_vertices[1].position;
-                m_vertices[0].position = (box.size() / 2) + leftTop;
+                vertices[nPoints + 1].position = vertices[1].position;
+                vertices[0].position = (box.size() / 2) + leftTop;
             }
         }
 
-        //TO DO: Just experiment to maintain compatibility
-        constexpr void addQuad(const Rectf32& box, const Rectf32 textureUV)
+        constexpr vector2df textureVertex(const vector2df &position, 
+            const Rectf32 &box, const Rectf32 &textureRect) noexcept 
         {
-            m_vertices.emplace_back(vector2df{ box.left, box.top }, vector2df{ textureUV.left, textureUV.top });
-            m_vertices.emplace_back(vector2df{ box.right(), box.top }, vector2df{ textureUV.right(), textureUV.top });
-            m_vertices.emplace_back(vector2df{ box.left,  box.bottom() }, vector2df{ textureUV.left, textureUV.bottom() });
-            m_vertices.emplace_back(vector2df{ box.left,  box.bottom() }, vector2df{ textureUV.left, textureUV.bottom() });
-            m_vertices.emplace_back(vector2df{ box.right(), box.top }, vector2df{ textureUV.right(), textureUV.top });
-            m_vertices.emplace_back(vector2df{ box.right(), box.bottom() }, vector2df{ textureUV.right(), textureUV.bottom() });
+            const f32 xratio((position.x - box.left) / box.width);
+            const f32 yratio((position.y - box.top) / box.height);
+            return { textureRect.left + (textureRect.width * xratio),
+                textureRect.top + (textureRect.height * yratio) };
+        }
+
+        constexpr void updateTextureVertex(Vertex &v,
+            const Rectf32 &box, const Rectf32 &textureRect) noexcept
+        {
+            v.texCoords = textureVertex(v.position, box, textureRect);
+        }
+
+        //TO DO: Just experiment to maintain compatibility
+        constexpr void addQuad2(const Rectf32& box, const Rectf32 textureUV)
+        {
+            auto& vertices(m_verticesArray.verticesArray());
+
+            vertices.emplace_back(vector2df{ box.left, box.top }, vector2df{ textureUV.left, textureUV.top });
+            vertices.emplace_back(vector2df{ box.right(), box.top }, vector2df{ textureUV.right(), textureUV.top });
+            vertices.emplace_back(vector2df{ box.left,  box.bottom() }, vector2df{ textureUV.left, textureUV.bottom() });
+            vertices.emplace_back(vector2df{ box.left,  box.bottom() }, vector2df{ textureUV.left, textureUV.bottom() });
+            vertices.emplace_back(vector2df{ box.right(), box.top }, vector2df{ textureUV.right(), textureUV.top });
+            vertices.emplace_back(vector2df{ box.right(), box.bottom() }, vector2df{ textureUV.right(), textureUV.bottom() });
         }
 
     private:
         size_type m_index{ 0U };
-        vector<Vertex> &m_vertices;
+        VertexArray &m_verticesArray;
     };
 }
 

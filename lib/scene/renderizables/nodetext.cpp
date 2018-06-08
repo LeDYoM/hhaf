@@ -80,8 +80,8 @@ namespace lib::scene::nodes
                     const Rectf32 letterBox{ glyph.bounds + vector2df{ x,y } };
 
                     // Add a quad for the current character
-                    GeometryGenerator geomtery_generator(vertices);
-                    geomtery_generator.addQuad(letterBox, glyph.textureBounds);
+                    GeometryGenerator geometry_generator(m_vertices);
+                    geometry_generator.addQuad2(letterBox, glyph.textureBounds);
 
                     // Update the current bounds
                     {

@@ -10,14 +10,11 @@ namespace lib::scene::nodes
 {
 	void NodeShape::updateGeometrySimpleNode()
 	{
-		if (pointCount())
-        {
-            const Rectf32 &cBox{ box() };
-            GeometryGenerator geometry_generator(m_vertices.verticesArray());
-            geometry_generator.addShape(cBox, pointCount());
+        const Rectf32 &cBox{ box() };
+        GeometryGenerator geometry_generator(m_vertices);
+        geometry_generator.addShape(cBox, pointCount(), textureRect());
 
-            // Update the bounding rectangle
-            m_vertices.bounds = cBox;
-		}
+        // Update the bounding rectangle
+        m_vertices.bounds = cBox;
 	}
 }
