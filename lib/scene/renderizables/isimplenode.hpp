@@ -30,25 +30,6 @@ namespace lib::scene
             bool m_textureRectNeedsUpdate{ true };
 
         };
-/*
-        class ISimpleNode : public Renderizable
-        {
-        public:
-            ISimpleNode(SceneNode *const parent, const str &name, const u32 pointCount);
-            virtual ~ISimpleNode() {};
-
-            PropertyTrigger<Rectf32> box;
-            PropertyTrigger<Rects32> textureRect;
-
-        protected:
-            void updateGeometry();
-            void updateTextureCoords();
-
-            virtual void updateGeometrySimpleNode() = 0;
-            bool m_textureRectNeedsUpdate{ true };
-
-        };
-        */
     }
 }
 
