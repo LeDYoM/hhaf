@@ -19,9 +19,11 @@ namespace lib::scene::nodes
     class TableNode : public SceneNode
     {
     public:
+        using BaseClass = SceneNode;
+
         TableNode(SceneNode *parent, str name, 
 			vector2dst tableSize_ = vector2dst{})
-			: SceneNode{ parent, std::move(name) } 
+			: BaseClass{ parent, std::move(name) } 
 		{
 			tableSize = tableSize_;
 		}
@@ -89,7 +91,7 @@ namespace lib::scene::nodes
         }
 
         void update() override {
-            SceneNode::update();
+            BaseClass::update();
             // Update row and column size
             const vector2df nodeSize{ sceneNodeSize() / static_cast<vector2df>(tableSize()) };
 

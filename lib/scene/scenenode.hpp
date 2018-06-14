@@ -119,7 +119,8 @@ namespace lib::scene
 
         inline void setNeedsUpdate() noexcept { m_needsUpdate = true; }
         inline bool needsUpdate() const noexcept { return m_needsUpdate; }
-        inline void clearNeedsUpdate() noexcept { m_needsUpdate = false; }
+
+        BasicProperty<bool> visible;
 
     protected:
 
@@ -140,10 +141,8 @@ namespace lib::scene
 
         void updateRemoves();
 
-    public:
-        BasicProperty<bool> visible;
+        inline void clearNeedsUpdate() noexcept { m_needsUpdate = false; }
 
-    private:
         SceneNode *m_parent;
 
         vsp_with_deferred_delete<Renderizable> m_renderNodes;

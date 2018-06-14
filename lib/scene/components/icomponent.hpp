@@ -4,7 +4,6 @@
 #define LIB_SCENE_ICOMPONENT_INCLUDE_HPP__
 
 #include <mtypes/include/types.hpp>
-#include <mtypes/include/properties.hpp>
 
 namespace lib::scene
 {
