@@ -99,13 +99,7 @@ namespace lib::scene::nodes
 
             // Update the bounding rectangle
             m_vertices.bounds = { minX, minY, maxX - minX, maxY - minY };
-            m_colorNeedsUpdate = true;
             alignmentBox.setChanged();
-        }
-
-        if (m_colorNeedsUpdate) {
-            color.update();
-            m_colorNeedsUpdate = false;
         }
 
         const bool ab_rr_hasChanged{ alignmentBox.readResetHasChanged() };

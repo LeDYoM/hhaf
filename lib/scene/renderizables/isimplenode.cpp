@@ -24,13 +24,8 @@ namespace lib::scene::nodes
 		if (m_geometryNeedsUpdate) {
 			m_geometryNeedsUpdate = false;
 			updateGeometrySimpleNode();
-			m_colorNeedsUpdate = true;
+            color.setChanged();
 			m_textureRectNeedsUpdate = true;
-		}
-
-		if (m_colorNeedsUpdate) {
-			m_colorNeedsUpdate = false;
-			color.update();
 		}
 
 		if (m_textureRectNeedsUpdate) {

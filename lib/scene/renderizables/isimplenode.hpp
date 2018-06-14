@@ -17,7 +17,7 @@ namespace lib::scene
         {
         public:
             ISimpleNode(SceneNode *const parent, const str &name, const u32 pointCount);
-            virtual ~ISimpleNode() {};
+            virtual ~ISimpleNode() {}
 
             PropertyTrigger<Rectf32> box;
             PropertyTrigger<Rects32> textureRect;

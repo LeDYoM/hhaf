@@ -46,7 +46,9 @@ namespace lib
             virtual void updateGeometry() = 0;
             VertexArray m_vertices;
             bool m_geometryNeedsUpdate{ true };
-            bool m_colorNeedsUpdate{ true };
+
+        private:
+            void updateColor();
         };
     }
 }
