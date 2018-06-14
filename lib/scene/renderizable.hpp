@@ -19,7 +19,7 @@ namespace lib
         {
         public:
             Renderizable(SceneNode *const parent, const str &name, const PrimitiveType type, const u32 vertexCount);
-            virtual ~Renderizable() = default;
+            virtual ~Renderizable();
 
             void render();
 

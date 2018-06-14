@@ -10,24 +10,30 @@ namespace lib
 	{
 		Renderizable::Renderizable(SceneNode * const parent, const str & name, const PrimitiveType type, const u32 vertexCount)
 			: core::HasName{ name }, m_parent{ parent }, m_vertices{ type, vertexCount }
-		{
-		}
+        {
+        }
+
+        Renderizable::~Renderizable()
+        {
+        }
 
 		void Renderizable::render()
 		{
-            updateGeometry();
+            if (visible()) {
+                updateGeometry();
 
-            if (visible() && !m_vertices.empty()) {
+                if (!m_vertices.empty()) {
 
-                if (color.readResetHasChanged()) {
-                    updateColor();
+                    if (color.readResetHasChanged()) {
+                        updateColor();
+                    }
+
+                    host().parentWindow().draw({
+                        m_vertices,
+                        m_parent->globalTransform(),
+                        texture().get()
+                    });
                 }
-
-                host().parentWindow().draw({
-					m_vertices,
-					m_parent->globalTransform(),
-					texture().get()
-				});
             }
         }
 
