@@ -10,6 +10,7 @@
 
 #include <lib/scene/vertexarray.hpp>
 #include <lib/scene/vertex.hpp>
+#include <cmath>
 
 namespace lib::scene
 {

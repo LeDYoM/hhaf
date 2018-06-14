@@ -21,7 +21,7 @@ namespace lib
 
                 virtual ~NodeShape() = default;
 
-                BasicProperty<u32> pointCount;
+                BasicProperty<size_type> pointCount;
 
             protected:
                 virtual void updateGeometrySimpleNode() override;
