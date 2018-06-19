@@ -72,6 +72,8 @@ set(SOURCE_FILES_LIST
     scene/components/timercomponent.cpp
     scene/components/timercomponent.hpp
 
+    scene/nodes/scenenodetext.cpp
+    scene/nodes/scenenodetext.hpp
     scene/nodes/tablenode.hpp
     scene/nodes/textquad.cpp
     scene/nodes/textquad.hpp
