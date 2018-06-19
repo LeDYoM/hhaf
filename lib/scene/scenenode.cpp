@@ -40,11 +40,11 @@ namespace lib::scene
 				updateGlobalTransformation(m_parent ? m_parent->globalTransform() : Transform{});
 			}
 
-            for (auto&& renderizable : m_renderNodes.nodes) {
+            for (auto&& renderizable : m_renderNodes) {
                 renderizable->render();
             }
 
-            for (auto&& group : m_groups.nodes) {
+            for (auto&& group : m_groups) {
                 group->render(parentTransformationChanged);
             }
 
@@ -59,19 +59,19 @@ namespace lib::scene
 
     bool SceneNode::moveLastBeforeNode(const sptr<SceneNode> &beforeNode)
     {
-        __ASSERT(!m_groups.nodes.empty(), "Cannot moveLastInsertedBeforeNode on empty container");
+        __ASSERT(!m_groups.empty(), "Cannot moveLastInsertedBeforeNode on empty container");
         if (!beforeNode) return false;
 
         // Find the node to swap before to
-        auto iterator (std::find(m_groups.nodes.begin(), m_groups.nodes.end(),beforeNode));
+        auto iterator (std::find(m_groups.begin(), m_groups.end(),beforeNode));
 
         // If beforeNode not found, nothing to do
-        if (iterator == m_groups.nodes.end()) return false;
+        if (iterator == m_groups.end()) return false;
 
         // If beforeNode is the last element, nothing to do
-        if (iterator == std::prev(m_groups.nodes.end())) return false;
+        if (iterator == std::prev(m_groups.end())) return false;
 
-        auto last(std::prev(m_groups.nodes.end()));
+        auto last(std::prev(m_groups.end()));
 
         // Do not swap yourself
         if (*iterator == *last) return false;
@@ -83,7 +83,7 @@ namespace lib::scene
 
     void SceneNode::for_each_node(function<void(const sptr<Renderizable>&)> action) const
     {
-        std::for_each(m_renderNodes.nodes.cbegin(), m_renderNodes.nodes.cend(), action);
+        std::for_each(m_renderNodes.cbegin(), m_renderNodes.cend(), action);
     }
 
     void SceneNode::for_each_group(function<void(const sptr<SceneNode>&)> action) const

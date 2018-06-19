@@ -46,7 +46,7 @@ namespace lib
             virtual void updateGeometry() = 0;
             VertexArray m_vertices;
             bool m_geometryNeedsUpdate{ true };
-
+            Rectf32 m_nativeTextureRect;
         private:
             void updateColor();
         };

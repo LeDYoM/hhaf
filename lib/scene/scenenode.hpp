@@ -124,8 +124,10 @@ namespace lib::scene
 
     protected:
 
-        const vsp_with_deferred_delete<Renderizable> &renderNodes() const noexcept { return m_renderNodes; }
-        const vsp_with_deferred_delete<SceneNode> &sceneNodes() const noexcept { return m_groups; }
+        constexpr const auto &renderNodes() const noexcept { return m_renderNodes; }
+        constexpr auto renderNodesSize() const noexcept { return renderNodes().size(); }
+        constexpr const auto &sceneNodes() const noexcept { return m_groups; }
+        constexpr auto sceneNodesSize() const noexcept { return sceneNodes().size(); }
 
         void addRenderizable(sptr<Renderizable> newElement);
         void addSceneNode(sptr<SceneNode> node);
@@ -145,8 +147,8 @@ namespace lib::scene
 
         SceneNode *m_parent;
 
-        vsp_with_deferred_delete<Renderizable> m_renderNodes;
-        vsp_with_deferred_delete<SceneNode> m_groups;
+        vector<sptr<Renderizable>> m_renderNodes;
+        vector<sptr<SceneNode>> m_groups;
 
         bool m_needsUpdate{ true };
     };
