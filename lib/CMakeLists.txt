@@ -133,3 +133,5 @@ add_library(${CURRENT_TARGET} STATIC ${SOURCE_FILES_LIST})
 
 target_link_libraries(${CURRENT_TARGET} PRIVATE loader)
 target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
+
+add_subdirectory(tests)

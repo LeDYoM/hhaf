@@ -122,28 +122,21 @@ namespace lib::scene
 
         BasicProperty<bool> visible;
 
-    protected:
-
         constexpr const auto &renderNodes() const noexcept { return m_renderNodes; }
         constexpr auto renderNodesSize() const noexcept { return renderNodes().size(); }
         constexpr const auto &sceneNodes() const noexcept { return m_groups; }
         constexpr auto sceneNodesSize() const noexcept { return sceneNodes().size(); }
+
+    protected:
 
         void addRenderizable(sptr<Renderizable> newElement);
         void addSceneNode(sptr<SceneNode> node);
 
     private:
 
-        void internalUpdate() {
-            if (m_needsUpdate) {
-                m_needsUpdate = false;
-                update();
-            }
-        }
+        void internalUpdate();
 
-        void updateRemoves();
-
-        inline void clearNeedsUpdate() noexcept { m_needsUpdate = false; }
+        constexpr void clearNeedsUpdate() noexcept { m_needsUpdate = false; }
 
         SceneNode *m_parent;
 

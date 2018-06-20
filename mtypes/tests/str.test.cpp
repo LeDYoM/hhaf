@@ -4,7 +4,7 @@
 
 using namespace lib;
 
-TEST_CASE("str test1", "[str]")
+TEST_CASE("constructors", "[str]")
 {
     str test;
     CHECK(test == "");
@@ -20,7 +20,7 @@ TEST_CASE("str test1", "[str]")
     CHECK(test.size() == sizeof(test_str)-1);
 }
 
-TEST_CASE("str test2", "[str]")
+TEST_CASE("test2", "[str]")
 {
     str test("This");
     test += " is a";
@@ -29,7 +29,7 @@ TEST_CASE("str test2", "[str]")
     CHECK(test.size() == sizeof("This is a test")-1);
 }
 
-TEST_CASE("str test3", "[str]")
+TEST_CASE("test3", "[str]")
 {
     str test("Lets play this");
     auto sep{test.find_first_of(' ')};
@@ -44,7 +44,7 @@ TEST_CASE("str test3", "[str]")
     CHECK(sub3 == " this3");
 }
 
-TEST_CASE("str substr", "[str]")
+TEST_CASE("substr", "[str]")
 {
 	str test("String to test substr=!other tests");
 	CHECK(test.substr(str::npos) == "");
@@ -69,12 +69,14 @@ TEST_CASE("str find_first_of", "[str]")
 	CHECK(test.find_first_of('&') == 26);
 }
 
-TEST_CASE("str conversions", "[str]")
+TEST_CASE("conversions", "[str]")
 {
 	str test = 1234567890L;
 	CHECK(test == "1234567890");
 	test = 'A';
-	CHECK(test == "A");
+    CHECK(test == "65");
+    test = "A";
+    CHECK(test == "A");
 	test.append(9876543210);
 	CHECK(test == "A9876543210");
 	test += "_";

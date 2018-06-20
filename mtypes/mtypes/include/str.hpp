@@ -44,7 +44,6 @@ namespace lib
 		str(const s32 n);	
 		str(const f32 n);
 		str(const f64 n);
-        str(const char_type c) : str{ &c,1 } {}
 
         constexpr str&operator=(str&&) noexcept = default;
         constexpr str&operator=(const str&rhs) noexcept {

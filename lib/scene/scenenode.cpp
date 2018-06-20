@@ -47,8 +47,6 @@ namespace lib::scene
             for (auto&& group : m_groups) {
                 group->render(parentTransformationChanged);
             }
-
-            updateRemoves();
         }
     }
 
@@ -88,36 +86,43 @@ namespace lib::scene
 
     void SceneNode::for_each_group(function<void(const sptr<SceneNode>&)> action) const
     {
-        std::for_each(m_groups.nodes.cbegin(), m_groups.nodes.cend(), action);
+        std::for_each(m_groups.cbegin(), m_groups.cend(), action);
     }
 
     void SceneNode::addRenderizable(sptr<Renderizable> newElement)
     {
-        m_renderNodes.nodes.push_back(std::move(newElement));
+        m_renderNodes.push_back(std::move(newElement));
     }
 
     void SceneNode::addSceneNode(sptr<SceneNode> node)
     {
-        m_groups.nodes.push_back(node);
+        m_groups.push_back(node);
         node->m_parent = this;
         node->onCreated();
     }
 
-    void SceneNode::updateRemoves()
+    void SceneNode::internalUpdate()
     {
-        m_groups.deferred_remove();
-        m_renderNodes.deferred_remove();
+        if (m_needsUpdate) {
+            m_needsUpdate = false;
+            update();
+        }
     }
 
     void SceneNode::removeSceneNode(sptr<SceneNode> element)
     {
-        __ASSERT(this != element.get(), "Cannot delete myself from myself");
-        m_groups.m_nodesToDelete.push_back(std::move(element));
+        assert_debug(element.get() != nullptr, "Received empty scene node to be deleted");
+        assert_release(this != element.get(), "Cannot delete myself from myself");
+        assert_debug(this == element->parent()," You must call removeSceneNode from the parent node");
+
+        m_groups.remove_value(element);
     }
 
     void SceneNode::removeRenderizable(sptr<Renderizable> element)
     {
-        m_renderNodes.m_nodesToDelete.push_back(std::move(element));
+        assert_debug(element.get() != nullptr, "Received empty renderizable node to be deleted");
+
+        m_renderNodes.remove_value(element);
     }
 
     void SceneNode::clearAll()
@@ -125,16 +130,15 @@ namespace lib::scene
         clearNodes();
         clearComponents();
     }
+
     void SceneNode::clearRenderizables()
     {
-        updateRemoves();
-        m_renderNodes.nodes.clear();
+        m_renderNodes.clear();
     }
 
     void SceneNode::clearSceneNodes()
     {
-        updateRemoves();
-        m_groups.nodes.clear();
+        m_groups.clear();
     }
 
     void SceneNode::clearNodes()
