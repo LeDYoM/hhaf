@@ -10,7 +10,7 @@
 
 namespace lib::scene::nodes
 {
-    class SceneNodeText
+    class SceneNodeText : public SceneNode
     {
         using BaseClass = SceneNode;
     public:
