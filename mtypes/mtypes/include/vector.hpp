@@ -87,6 +87,8 @@ namespace lib
 		constexpr const_iterator cend() const noexcept { return m_buffer + m_size; }
 		constexpr T& front() noexcept { return m_buffer[0]; }
 		constexpr T& back() noexcept { return m_buffer[m_size > 0 ? (m_size - 1) : 0]; }
+        constexpr const T& cfront() const noexcept { return m_buffer[0]; }
+        constexpr const T& cback() const noexcept { return m_buffer[m_size > 0 ? (m_size - 1) : 0]; }
 
 		constexpr void for_each(const function<void(const T&)> f) {
 			if (!empty()) {

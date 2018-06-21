@@ -90,8 +90,6 @@ set(SOURCE_FILES_LIST
     scene/renderizables/nodetext.hpp
 
     scene/color.hpp
-    scene/geometry.cpp
-    scene/geometry.hpp
     scene/hasname.hpp
     scene/ianimation.hpp
     scene/renderdata.hpp

@@ -1,7 +1,5 @@
 #include "nodetext.hpp"
 
-#include <lib/scene/geometry.hpp>
-
 #include <lib/scene/ttfont.hpp>
 #include <lib/scene/texture.hpp>
 #include <lib/include/core/log.hpp>
@@ -77,11 +75,16 @@ namespace lib::scene::nodes
                 else
                 {
                     const TTGlyph glyph{ font()->getGlyph(curChar, currentCharacterSize) };
+                    const Rectf32 textureUV{ glyph.textureBounds};
                     const Rectf32 letterBox{ glyph.bounds + vector2df{ x,y } };
 
                     // Add a quad for the current character
-                    GeometryGenerator geometry_generator(m_vertices);
-                    geometry_generator.addQuad2(letterBox, glyph.textureBounds);
+                    vertices.emplace_back(vector2df{ letterBox.left,    letterBox.top }, vector2df{ textureUV.left, textureUV.top });
+                    vertices.emplace_back(vector2df{ letterBox.right(), letterBox.top }, vector2df{ textureUV.right(), textureUV.top });
+                    vertices.emplace_back(vector2df{ letterBox.left,    letterBox.bottom() }, vector2df{ textureUV.left, textureUV.bottom() });
+                    vertices.emplace_back(vector2df{ letterBox.left,    letterBox.bottom() }, vector2df{ textureUV.left, textureUV.bottom() });
+                    vertices.emplace_back(vector2df{ letterBox.right(), letterBox.top }, vector2df{ textureUV.right(), textureUV.top });
+                    vertices.emplace_back(vector2df{ letterBox.right(), letterBox.bottom() }, vector2df{ textureUV.right(), textureUV.bottom() });
 
                     // Update the current bounds
                     {

@@ -28,7 +28,8 @@ namespace lib
 		constexpr size_type capacity() const noexcept { return m_data.capacity(); }
 		constexpr size_type size() const noexcept { return m_data.size(); }
 		constexpr bool empty() const noexcept { return m_data.empty(); }
-		constexpr T& back() noexcept { return m_data.back(); }
+        constexpr T& back() noexcept { return m_data.back(); }
+        constexpr const T& cback() const noexcept { return m_data.back(); }
 
 		constexpr void swap(stack& other) {
 			swap(m_data, other.m_data);
@@ -48,7 +49,7 @@ namespace lib
 		}
 
 		constexpr void push_back(T&& value) {
-			m_data.push_back(value);
+            m_data.push_back(std::move(value));
 		}
 
 		constexpr void pop_back() noexcept { m_data.pop_back(); }
