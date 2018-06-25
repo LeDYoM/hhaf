@@ -30,7 +30,8 @@ namespace lib
     {
     public:
         constexpr BasicProperty() noexcept = default;
-        constexpr BasicProperty(T iv) noexcept : m_value{ std::move(iv) } {}
+        constexpr BasicProperty(T&& iv) noexcept : m_value{ std::move(iv) } {}
+        constexpr BasicProperty(const T& iv) noexcept : m_value{ iv } {}
 
         constexpr const T&operator()() const noexcept { return m_value; }
         constexpr void operator=(const T&v) noexcept { set(v); }
