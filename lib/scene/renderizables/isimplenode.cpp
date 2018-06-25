@@ -8,13 +8,6 @@ namespace lib::scene::nodes
 	ISimpleNode::ISimpleNode(SceneNode *const parent, const str &name, const u32 pointCount)
 		: Renderizable{ parent, name, TriangleFan, pointCount + 2 } 
 	{
-		texture.setCallback([this]()
-		{
-			if (texture()) {
-				auto tSize(texture()->size());
-				textureRect = { 0, 0, static_cast<s32>(tSize.x), static_cast<s32>(tSize.y) };
-			}
-		});
 		textureRect.setCallback([this]() { updateTextureCoords(); });
 		box.setCallback([this]() { m_geometryNeedsUpdate = true; });
 	}
@@ -25,11 +18,10 @@ namespace lib::scene::nodes
 			m_geometryNeedsUpdate = false;
 			updateGeometrySimpleNode();
             color.setChanged();
-			m_textureRectNeedsUpdate = true;
+            textureRect.setChanged();
 		}
 
-		if (m_textureRectNeedsUpdate) {
-			m_textureRectNeedsUpdate = false;
+        if (textureRect.readResetHasChanged()) {
 			updateTextureCoords();
 		}
 	}
@@ -46,5 +38,30 @@ namespace lib::scene::nodes
 				v.texCoords.y = textureRect().top + (textureRect().height * yratio);
 			}
 		}
-	}
+    }
+
+
+    void nodes::ISimpleNode::setTextureAndTextureRect
+    (sptr<Texture> texture_, const Rectf32& textRect)
+    {
+        texture.set(texture_);
+        if (texture_) {
+            auto tSize(texture_->size());
+            textureRect = {
+                static_cast<s32>(textRect.left),
+                static_cast<s32>(textRect.top),
+                static_cast<s32>(textRect.width),
+                static_cast<s32>(textRect.height)
+            };
+        }
+    }
+
+    void nodes::ISimpleNode::setTextureFill(sptr<Texture> texture_)
+    {
+        if (texture_)
+        {
+            setTextureAndTextureRect(std::move(texture_),
+                { 0.0f, 0.0f, static_cast<vector2df>(texture_->size()) } );
+        }
+    }
 }

@@ -26,7 +26,6 @@ namespace lib
             constexpr Rectf32 bounds() const noexcept { return m_vertices.bounds(); }
 
             PropertyState<Color> color;
-            PropertyState<sptr<Texture>> texture;
             BasicProperty<bool> visible{ true };
 
             template <typename T>
@@ -44,9 +43,9 @@ namespace lib
 
         protected:
             virtual void updateGeometry() = 0;
+            PropertyState<sptr<Texture>> texture;
             VertexArray m_vertices;
             bool m_geometryNeedsUpdate{ true };
-            Rectf32 m_nativeTextureRect;
         private:
             void updateColor();
         };

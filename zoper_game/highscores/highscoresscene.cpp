@@ -32,7 +32,7 @@ namespace zoper
 
 		m_background = createRenderizable<NodeQuad>("background");
 		m_background->box = rectFromSize(2000.0f, 2000.0f);
-		m_background->texture = m_resources->background;
+        m_background->setTextureFill(m_resources->background);
 		m_background->color = colors::White;
 
         auto highScoreTextController(createSceneNode<HighScoreTextController>("HishScoreTextController"));

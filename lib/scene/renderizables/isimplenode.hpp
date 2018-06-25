@@ -20,15 +20,17 @@ namespace lib::scene
             virtual ~ISimpleNode() {}
 
             PropertyTrigger<Rectf32> box;
-            PropertyTrigger<Rects32> textureRect;
+            PropertyState<Rects32> textureRect;
 
+            void setTextureAndTextureRect(sptr<Texture> texture_,
+                                          const Rectf32& textRect);
+
+            void setTextureFill(sptr<Texture> texture_);
         protected:
             void updateGeometry();
             void updateTextureCoords();
 
             virtual void updateGeometrySimpleNode() = 0;
-            bool m_textureRectNeedsUpdate{ true };
-
         };
     }
 }
