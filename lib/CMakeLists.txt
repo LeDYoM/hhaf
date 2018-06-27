@@ -50,6 +50,7 @@ set(SOURCE_FILES_LIST
     include/key.hpp
     include/lib.hpp
     include/main.hpp
+    include/properties.hpp
     include/windowcreationparams.hpp
 
     scene/components/animationcomponent.cpp

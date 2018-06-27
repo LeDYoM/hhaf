@@ -3,8 +3,11 @@
 #include <lib/scene/ttfont.hpp>
 #include <lib/scene/texture.hpp>
 #include <lib/include/core/log.hpp>
+#include <lib/scene/vertexarray.hpp>
+#include <lib/scene/scenenodetypes.hpp>
 
-
+// Temp
+#include <lib/scene/renderizables/nodetext.hpp>
 #include <cmath>
 
 namespace lib::scene::nodes
@@ -14,111 +17,125 @@ namespace lib::scene::nodes
     {
     }
 
-    /*
-    void SceneNodeText::updateGeometry()
+    void SceneNodeText::update()
     {
-        if (ps_readResetHasChanged(font, characterSize)) {
-            if (font() && characterSize() > 0) {
-                font()->ensureLoadASCIIGlyps(characterSize());
-                texture = font()->getTexture(characterSize());
-                text.setChanged();
-            }
-        }
+        BaseClass::update();
 
-        if (ps_readResetHasChanged(text, alignmentBox, alignmentX, alignmentY)) {
-            BasicVertexArray &vertices{ m_vertices.verticesArray() };
-
-            m_vertices.bounds = Rectf32{};
-            vertices.clear();
-
-            if (!font() || text().empty()) {
-                return;
+        if (font() && characterSize() && !text()().empty())
+        {
+            clearRenderizables();
+            auto texture(font()->getTexture(characterSize()));
+            if (ps_readResetHasChanged(font, characterSize)) {
+                if (font() && characterSize() > 0) {
+                    font()->ensureLoadASCIIGlyps(characterSize());
+                    texture = font()->getTexture(characterSize());
+                    text.setChanged();
+                }
             }
 
-            const u32 currentCharacterSize{ characterSize() };
-            const Rectf32 glyphRect{ font()->getGlyph(L'x', currentCharacterSize).bounds };
-            const f32 vspace{ font()->getLineSpacing(currentCharacterSize) };
-
-            f32 x{ 0.f };
-            f32 y{ static_cast<f32>(currentCharacterSize) };
-
-            // Create one quad for each character
-            f32 minX{ y };
-            f32 minY{ y };
-            f32 maxX{ 0.f };
-            f32 maxY{ 0.f };
-            u32 prevChar{ 0 };
-            for (auto&& curChar : text())
+            if (ps_readResetHasChanged(text, alignmentBox,
+                                       alignmentX, alignmentY))
             {
-                // Apply the kerning offset
-                x += font()->getKerning(prevChar, curChar, currentCharacterSize);
-                prevChar = curChar;
 
-                // Handle special characters
-                if ((curChar == ' ') || (curChar == '\t') || (curChar == '\n')) {
-                    using namespace std;
-                    // Update the current bounds (min coordinates)
-                    minX = min(minX, x);
-                    minY = min(minY, y);
-                    const f32 hspace{ font()->getGlyph(L' ', currentCharacterSize).advance };
+//                BasicVertexArray &vertices{ m_vertices.verticesArray() };
 
-                    switch (curChar)
-                    {
-                    case ' ':  x += hspace;        break;
-                    case '\t': x += hspace * 4;    break;
-                    case '\n': y += vspace; x = 0; break;
-                    }
+//                m_vertices.bounds = Rectf32{};
+//                vertices.clear();
 
-                    // Update the current bounds (max coordinates)
-                    maxX = max(maxX, x);
-                    maxY = max(maxY, y);
-                }
-                else
+//                if (!font() || text().empty()) {
+//                    return;
+//                }
+
+                const u32 currentCharacterSize{ characterSize() };
+                const Rectf32 glyphRect{ font()->getGlyph(L'x', currentCharacterSize).bounds };
+                const f32 vspace{ font()->getLineSpacing(currentCharacterSize) };
+
+                f32 x{ 0.f };
+                f32 y{ static_cast<f32>(currentCharacterSize) };
+
+                // Create one quad for each character
+                f32 minX{ y };
+                f32 minY{ y };
+                f32 maxX{ 0.f };
+                f32 maxY{ 0.f };
+                u32 prevChar{ 0 };
+                for (auto&& curChar : text()())
                 {
-                    const TTGlyph glyph{ font()->getGlyph(curChar, currentCharacterSize) };
-                    const Rectf32 textureUV{ glyph.textureBounds};
-                    const Rectf32 letterBox{ glyph.bounds + vector2df{ x,y } };
+                    // Apply the kerning offset
+                    x += font()->getKerning(prevChar, curChar, currentCharacterSize);
+                    prevChar = curChar;
 
-                    // Add a quad for the current character
-                    vertices.emplace_back(vector2df{ letterBox.left,    letterBox.top }, vector2df{ textureUV.left, textureUV.top });
-                    vertices.emplace_back(vector2df{ letterBox.right(), letterBox.top }, vector2df{ textureUV.right(), textureUV.top });
-                    vertices.emplace_back(vector2df{ letterBox.left,    letterBox.bottom() }, vector2df{ textureUV.left, textureUV.bottom() });
-                    vertices.emplace_back(vector2df{ letterBox.left,    letterBox.bottom() }, vector2df{ textureUV.left, textureUV.bottom() });
-                    vertices.emplace_back(vector2df{ letterBox.right(), letterBox.top }, vector2df{ textureUV.right(), textureUV.top });
-                    vertices.emplace_back(vector2df{ letterBox.right(), letterBox.bottom() }, vector2df{ textureUV.right(), textureUV.bottom() });
-
-                    // Update the current bounds
-                    {
+                    // Handle special characters
+                    if ((curChar == ' ') || (curChar == '\t') || (curChar == '\n')) {
                         using namespace std;
-                        minX = min(minX, letterBox.left);
-                        maxX = max(maxX, letterBox.right());
-                        minY = min(minY, letterBox.top);
-                        maxY = max(maxY, letterBox.bottom());
-            NodeText        }
+                        // Update the current bounds (min coordinates)
+                        minX = min(minX, x);
+                        minY = min(minY, y);
+                        const f32 hspace{ font()->getGlyph(L' ', currentCharacterSize).advance };
 
-                    // Advance to the next character
-                    x += glyph.advance;
+                        switch (curChar)
+                        {
+                        case ' ':  x += hspace;        break;
+                        case '\t': x += hspace * 4;    break;
+                        case '\n': y += vspace; x = 0; break;
+                        }
+
+                        // Update the current bounds (max coordinates)
+                        maxX = max(maxX, x);
+                        maxY = max(maxY, y);
+                    }
+                    else
+                    {
+                        const TTGlyph glyph{ font()->getGlyph(curChar, currentCharacterSize) };
+                        const Rectf32 textureUV{ glyph.textureBounds};
+                        const Rectf32 letterBox{ glyph.bounds + vector2df{ x,y } };
+
+                        auto letterNode(createSceneNode
+                                        <QuadSceneNode>("text_"+str(curChar)));
+                        letterNode->node()->box.set(letterBox);
+                        letterNode->node()->setTextureAndTextureRect(texture,
+                                    textureUV);
+
+                        /*
+                        // Add a quad for the current character
+                        vertices.emplace_back(vector2df{ letterBox.left,    letterBox.top }, vector2df{ textureUV.left, textureUV.top });
+                        vertices.emplace_back(vector2df{ letterBox.right(), letterBox.top }, vector2df{ textureUV.right(), textureUV.top });
+                        vertices.emplace_back(vector2df{ letterBox.left,    letterBox.bottom() }, vector2df{ textureUV.left, textureUV.bottom() });
+                        vertices.emplace_back(vector2df{ letterBox.left,    letterBox.bottom() }, vector2df{ textureUV.left, textureUV.bottom() });
+                        vertices.emplace_back(vector2df{ letterBox.right(), letterBox.top }, vector2df{ textureUV.right(), textureUV.top });
+                        vertices.emplace_back(vector2df{ letterBox.right(), letterBox.bottom() }, vector2df{ textureUV.right(), textureUV.bottom() });
+                        */
+                        // Update the current bounds
+                        {
+                            using namespace std;
+                            minX = min(minX, letterBox.left);
+                            maxX = max(maxX, letterBox.right());
+                            minY = min(minY, letterBox.top);
+                            maxY = max(maxY, letterBox.bottom());
+                        }
+
+                        // Advance to the next character
+                        x += glyph.advance;
+                    }
                 }
+
+                // Update the bounding rectangle
+                alignmentBox.setChanged();
             }
 
-            // Update the bounding rectangle
-            m_vertices.bounds = { minX, minY, maxX - minX, maxY - minY };
-            alignmentBox.setChanged();
-        }
+            const bool ab_rr_hasChanged{ alignmentBox.readResetHasChanged() };
 
-        const bool ab_rr_hasChanged{ alignmentBox.readResetHasChanged() };
+            if (ab_rr_hasChanged || alignmentX.readResetHasChanged())
+            {
+                updateAlignmentX();
+            }
 
-        if (ab_rr_hasChanged || alignmentX.readResetHasChanged())
-        {
-            updateAlignmentX();
-        }
-
-        if (ab_rr_hasChanged || alignmentY.readResetHasChanged())
-        {
-            updateAlignmentY();
+            if (ab_rr_hasChanged || alignmentY.readResetHasChanged())
+            {
+                updateAlignmentY();
+            }
         }
     }
-    */
 
     /*
     void NodeText::updateAlignmentX()
