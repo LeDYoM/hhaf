@@ -29,7 +29,7 @@ namespace lib::scene
             PropertyState<AlignmentX> alignmentX;
             PropertyState<AlignmentY> alignmentY;
             PropertyState<Rectf32> alignmentBox;
-
+            PropertyState<FillColor_t> textColor;
         protected:
             void update() override;
         private:

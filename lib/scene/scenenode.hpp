@@ -123,8 +123,10 @@ namespace lib::scene
         BasicProperty<bool> visible;
 
         constexpr const auto &renderNodes() const noexcept { return m_renderNodes; }
+        constexpr auto &renderNodes() noexcept { return m_renderNodes; }
         constexpr auto renderNodesSize() const noexcept { return renderNodes().size(); }
         constexpr const auto &sceneNodes() const noexcept { return m_groups; }
+        constexpr auto &sceneNodes() noexcept { return m_groups; }
         constexpr auto sceneNodesSize() const noexcept { return sceneNodes().size(); }
 
     protected:

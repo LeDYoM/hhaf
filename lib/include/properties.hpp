@@ -6,6 +6,8 @@
 #include <mtypes/include/properties.hpp>
 #include <mtypes/include/str.hpp>
 
+#include <lib/scene/color.hpp>
+
 namespace lib
 {
     template <typename Tag, typename T>
@@ -15,14 +17,14 @@ namespace lib
         strong_typedef() noexcept(std::is_nothrow_default_constructible_v<T>)
             : value_{} { }
 
-        explicit strong_typedef(const T& value) : value_{value} { }
+        explicit constexpr strong_typedef(const T& value) : value_{value} { }
 
         explicit strong_typedef(T&& value)
         noexcept(/*std::is_nothrow_move_constructible_t<T>*/true)
             : value_{std::move(value)} { }
 
         template <typename... Args>
-        explicit strong_typedef(Args&&... args)
+        explicit constexpr strong_typedef(Args&&... args)
             : value_{std::forward<Args>(args)...} { }
 
         explicit operator T&() noexcept { return value_; }
@@ -42,6 +44,8 @@ namespace lib
 
     struct TextTag;
     using Text_t = strong_typedef<TextTag, str>;
+    struct FillColorTag;
+    using FillColor_t = strong_typedef<FillColorTag, scene::Color>;
 }
 
 #endif

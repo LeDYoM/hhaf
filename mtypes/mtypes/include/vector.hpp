@@ -21,7 +21,6 @@ namespace lib
 		using reference = T&;
 		using const_reference = const T&;
 
-
 		constexpr vector() noexcept : m_capacity{ 0 }, m_size{ 0 }, m_buffer{ nullptr } {}
 		explicit constexpr vector(const size_type size) : m_capacity{ size }, m_size{ size }, m_buffer{ size?new T[size] :nullptr} {}
 
@@ -90,7 +89,7 @@ namespace lib
         constexpr const T& cfront() const noexcept { return m_buffer[0]; }
         constexpr const T& cback() const noexcept { return m_buffer[m_size > 0 ? (m_size - 1) : 0]; }
 
-		constexpr void for_each(const function<void(const T&)> f) {
+        constexpr void for_each(const function<void(const T&)> f) {
 			if (!empty()) {
 				iterator current{ begin() };
                 do {

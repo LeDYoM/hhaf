@@ -14,7 +14,7 @@ namespace lib::scene
 
     enum PrimitiveType
     {
-        Points,
+        Points = 0,
         Lines,
         LineStrip,
         Triangles,
@@ -26,24 +26,22 @@ namespace lib::scene
     {
     public:
         constexpr VertexArray() = default;
-        inline VertexArray(const PrimitiveType type, const u32 vertexCount) noexcept
-            : bounds(), m_vertices( vertexCount ), m_primitiveType{ type } {}
+        constexpr VertexArray(const PrimitiveType type, const u32 vertexCount) noexcept
+            : m_vertices( vertexCount ), m_primitiveType{ type } {}
 
         constexpr bool empty() const noexcept { return m_vertices.empty(); }
 
-        constexpr BasicVertexArray &verticesArray() noexcept { return m_vertices; }
         constexpr const BasicVertexArray &verticesArray() const noexcept { return m_vertices; }
+        constexpr BasicVertexArray &verticesArray() noexcept { return m_vertices; }
 
         constexpr PrimitiveType primitiveType() const noexcept { return m_primitiveType; }
 
         void move(const vector2df &offset) noexcept;
         void moveX(const f32 xOffset) noexcept;
         void moveY(const f32 yOffset) noexcept;
-
-        BasicProperty<Rectf32> bounds{};
     private:
-        BasicVertexArray m_vertices{};
-        PrimitiveType m_primitiveType = PrimitiveType::Triangles;
+        BasicVertexArray m_vertices;
+        PrimitiveType m_primitiveType{Triangles};
     };
 }
 

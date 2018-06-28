@@ -22,6 +22,6 @@ namespace lib::scene::nodes
         vertices[5] = vertices[1];
 
 		// Update the bounding rectangle
-		m_vertices.bounds = cBox;
+        setBounds(cBox);
 	}
 }

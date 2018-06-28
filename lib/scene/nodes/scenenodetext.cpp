@@ -119,27 +119,35 @@ namespace lib::scene::nodes
                     }
                 }
 
-                // Update the bounding rectangle
+                // Force update the bounding rectangle
                 alignmentBox.setChanged();
+
+                // Force update color
+                textColor.setChanged();
             }
 
             const bool ab_rr_hasChanged{ alignmentBox.readResetHasChanged() };
 
-            if (ab_rr_hasChanged || alignmentX.readResetHasChanged())
-            {
+            if (ab_rr_hasChanged || alignmentX.readResetHasChanged()) {
                 updateAlignmentX();
             }
 
-            if (ab_rr_hasChanged || alignmentY.readResetHasChanged())
-            {
+            if (ab_rr_hasChanged || alignmentY.readResetHasChanged()) {
                 updateAlignmentY();
+            }
+
+            if (textColor.readResetHasChanged()) {
+                const Color &tc{textColor()()};
+                sceneNodes().for_each([&tc](const SceneNodeSPtr& sNode) {
+                    sNode->snCast<QuadSceneNode>()->node()->color.set(tc);
+                });
             }
         }
     }
 
-    /*
-    void NodeText::updateAlignmentX()
+    void SceneNodeText::updateAlignmentX()
     {
+        /*
         // To be called only after text set
         switch (alignmentX())
         {
@@ -157,10 +165,12 @@ namespace lib::scene::nodes
             m_vertices.moveX(alignmentBox().right() - bounds().right());
             break;
         }
+        */
     }
 
-    void NodeText::updateAlignmentY()
+    void SceneNodeText::updateAlignmentY()
     {
+        /*
         // To be called only after text set
         switch (alignmentY())
         {
@@ -178,6 +188,6 @@ namespace lib::scene::nodes
             m_vertices.moveY(alignmentBox().bottom() - bounds().bottom());
             break;
         }
+        */
     }
-    */
 }

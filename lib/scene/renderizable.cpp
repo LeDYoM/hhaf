@@ -37,6 +37,11 @@ namespace lib
             }
         }
 
+        void Renderizable::setBounds(Rectf32 bounds)
+        {
+            m_bounds = std::move(bounds);
+        }
+
         void Renderizable::updateColor()
         {
             const Color c{color()};

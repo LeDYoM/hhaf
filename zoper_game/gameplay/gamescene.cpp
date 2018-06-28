@@ -26,6 +26,8 @@
 #include <lib/scene/components/animationcomponent.hpp>
 #include <lib/scene/components/inputcomponent.hpp>
 
+#include <lib/scene/nodes/scenenodetext.hpp>
+
 namespace zoper
 {
     using namespace lib;
@@ -64,6 +66,16 @@ namespace zoper
 
         vector2df goBoxHalfSize{ 365, 365 };
         Rectf32 gobox{ scenePerspective().center() - goBoxHalfSize, (goBoxHalfSize * 2) };
+
+//        auto t_demo = createRenderizable<NodeText>("demo");
+        auto t_demo = createSceneNode<SceneNodeText>("demo");
+        t_demo->text.set(Text_t{"Demo Text"});
+        t_demo->font = m_gameresources.scoreFont;
+        t_demo->characterSize = 180;
+        t_demo->textColor.set(FillColor_t{colors::White});
+        t_demo->alignmentBox = scenePerspective();
+//        t_demo->alignmentX = AlignmentX::Center;
+//        t_demo->alignmentY = AlignmentY::Middle;
 
         m_pauseText = m_pauseSceneNode->createRenderizable<NodeText>("pausetext");
         m_pauseText->text.set("PAUSE");

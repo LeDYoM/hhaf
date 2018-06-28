@@ -27,7 +27,7 @@ namespace lib::scene::nodes
         if (ps_readResetHasChanged(text, alignmentBox, alignmentX, alignmentY)) {
             BasicVertexArray &vertices{ m_vertices.verticesArray() };
 
-            m_vertices.bounds = Rectf32{};
+            setBounds(Rectf32{});
             vertices.clear();
 
             if (!font() || text().empty()) {
@@ -101,7 +101,7 @@ namespace lib::scene::nodes
             }
 
             // Update the bounding rectangle
-            m_vertices.bounds = { minX, minY, maxX - minX, maxY - minY };
+            setBounds({ minX, minY, maxX - minX, maxY - minY });
             alignmentBox.setChanged();
         }
 

@@ -6,7 +6,9 @@ namespace lib::scene
 	{
 		if (!m_vertices.empty()) {
 			for (auto &v : m_vertices) v.position += offset;
-			bounds = bounds() + offset;
+//            std::transform(m_vertices.begin(), m_vertices.end(),
+//                           m_vertices.begin(),
+//                           [&offset](const auto &v) { return v + offset;} );
 		}
 	}
 
@@ -14,7 +16,6 @@ namespace lib::scene
 	{
 		if (!m_vertices.empty()) {
 			for (auto &v : m_vertices) v.position.x += xOffset;
-			bounds = bounds() + vector2df{ xOffset, 0 };
 		}
 	}
 
@@ -22,7 +23,6 @@ namespace lib::scene
 	{
 		if (!m_vertices.empty()) {
 			for (auto &v : m_vertices) v.position.y += yOffset;
-			bounds = bounds() + vector2df{ 0, yOffset };
 		}
 	}
 }

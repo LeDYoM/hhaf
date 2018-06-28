@@ -23,7 +23,7 @@ namespace lib
 
             void render();
 
-            constexpr Rectf32 bounds() const noexcept { return m_vertices.bounds(); }
+            constexpr Rectf32 bounds() const noexcept { return m_bounds; }
 
             PropertyState<Color> color;
             BasicProperty<bool> visible{ true };
@@ -43,10 +43,12 @@ namespace lib
 
         protected:
             virtual void updateGeometry() = 0;
+            void setBounds(Rectf32 bounds);
             PropertyState<sptr<Texture>> texture;
             VertexArray m_vertices;
             bool m_geometryNeedsUpdate{ true };
         private:
+            Rectf32 m_bounds{};
             void updateColor();
         };
     }

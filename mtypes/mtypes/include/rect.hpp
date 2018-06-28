@@ -11,7 +11,7 @@ namespace lib
     template <typename T>
     struct Rect
     {
-        T left, top, width, height;
+        T left{}, top{}, width{}, height{};
 
         constexpr Rect() noexcept = default;
         constexpr Rect(const T rectLeft, const T rectTop, const T rectWidth, const T rectHeight) noexcept : left{ rectLeft }, top{ rectTop }, width{ rectWidth }, height{ rectHeight } { }
