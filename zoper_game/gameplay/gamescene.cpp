@@ -25,6 +25,7 @@
 #include <lib/scene/ianimation.hpp>
 #include <lib/scene/components/animationcomponent.hpp>
 #include <lib/scene/components/inputcomponent.hpp>
+#include <lib/scene/components/alignedtextcomponent.hpp>
 
 #include <lib/scene/nodes/scenenodetext.hpp>
 
@@ -73,9 +74,11 @@ namespace zoper
         t_demo->font = m_gameresources.scoreFont;
         t_demo->characterSize = 180;
         t_demo->textColor.set(FillColor_t{colors::White});
-        t_demo->alignmentBox = scenePerspective();
-//        t_demo->alignmentX = AlignmentX::Center;
-//        t_demo->alignmentY = AlignmentY::Middle;
+        auto align(t_demo->ensureComponentOfType<AlignedTextComponent>());
+        align->alignmentBox.set(scenePerspective());
+        align->alignmentX.set(AlignedTextComponent::AlignmentX::Center);
+        align->alignmentY.set(AlignedTextComponent::AlignmentY::Middle);
+        t_demo->text.set(Text_t{"yolo"});
 
         m_pauseText = m_pauseSceneNode->createRenderizable<NodeText>("pausetext");
         m_pauseText->text.set("PAUSE");

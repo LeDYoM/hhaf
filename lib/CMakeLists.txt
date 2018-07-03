@@ -53,6 +53,8 @@ set(SOURCE_FILES_LIST
     include/properties.hpp
     include/windowcreationparams.hpp
 
+    scene/components/alignedtextcomponent.cpp
+    scene/components/alignedtextcomponent.hpp
     scene/components/animationcomponent.cpp
     scene/components/animationcomponent.hpp
     scene/components/componentcontainer.cpp

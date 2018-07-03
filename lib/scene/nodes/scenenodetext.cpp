@@ -17,6 +17,8 @@ namespace lib::scene::nodes
     {
     }
 
+    nodes::SceneNodeText::~SceneNodeText() = default;
+
     void SceneNodeText::update()
     {
         BaseClass::update();
@@ -33,8 +35,7 @@ namespace lib::scene::nodes
                 }
             }
 
-            if (ps_readResetHasChanged(text, alignmentBox,
-                                       alignmentX, alignmentY))
+            if (ps_readResetHasChanged(text))
             {
 
 //                BasicVertexArray &vertices{ m_vertices.verticesArray() };
@@ -119,21 +120,8 @@ namespace lib::scene::nodes
                     }
                 }
 
-                // Force update the bounding rectangle
-                alignmentBox.setChanged();
-
                 // Force update color
                 textColor.setChanged();
-            }
-
-            const bool ab_rr_hasChanged{ alignmentBox.readResetHasChanged() };
-
-            if (ab_rr_hasChanged || alignmentX.readResetHasChanged()) {
-                updateAlignmentX();
-            }
-
-            if (ab_rr_hasChanged || alignmentY.readResetHasChanged()) {
-                updateAlignmentY();
             }
 
             if (textColor.readResetHasChanged()) {
@@ -143,51 +131,5 @@ namespace lib::scene::nodes
                 });
             }
         }
-    }
-
-    void SceneNodeText::updateAlignmentX()
-    {
-        /*
-        // To be called only after text set
-        switch (alignmentX())
-        {
-        default:
-        case AlignmentX::Left:
-            m_vertices.moveX(alignmentBox().left);
-            break;
-        case AlignmentX::Center:
-        {
-            const auto &abox{ alignmentBox() };
-            m_vertices.moveX(abox.left + (abox.width / 2.f) - (bounds().width / 2));
-        }
-        break;
-        case AlignmentX::Right:
-            m_vertices.moveX(alignmentBox().right() - bounds().right());
-            break;
-        }
-        */
-    }
-
-    void SceneNodeText::updateAlignmentY()
-    {
-        /*
-        // To be called only after text set
-        switch (alignmentY())
-        {
-        default:
-        case AlignmentY::Top:
-            m_vertices.moveY(alignmentBox().top);
-            break;
-        case AlignmentY::Middle:
-        {
-            const auto &abox{ alignmentBox() };
-            m_vertices.moveY(abox.top + (abox.height / 2.f) - (bounds().height / 2));
-        }
-        break;
-        case AlignmentY::Bottom:
-            m_vertices.moveY(alignmentBox().bottom() - bounds().bottom());
-            break;
-        }
-        */
     }
 }

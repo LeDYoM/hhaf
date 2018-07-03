@@ -13,28 +13,19 @@ namespace lib::scene
     class Texture;
     namespace nodes
     {
-        enum class AlignmentX : u8;
-        enum class AlignmentY : u8;
-
         class SceneNodeText : public SceneNode
         {
             using BaseClass = SceneNode;
         public:
             SceneNodeText(SceneNode *const parent, const str &name);
-            virtual ~SceneNodeText() = default;
+            virtual ~SceneNodeText();
 
             PropertyState<Text_t> text;
             PropertyState<sptr<TTFont>> font;
             PropertyState<u32> characterSize;
-            PropertyState<AlignmentX> alignmentX;
-            PropertyState<AlignmentY> alignmentY;
-            PropertyState<Rectf32> alignmentBox;
             PropertyState<FillColor_t> textColor;
         protected:
             void update() override;
-        private:
-            void updateAlignmentX();
-            void updateAlignmentY();
         };
     }
 }
