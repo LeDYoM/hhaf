@@ -79,6 +79,7 @@ namespace zoper
         align->alignmentX.set(AlignedTextComponent::AlignmentX::Center);
         align->alignmentY.set(AlignedTextComponent::AlignmentY::Middle);
         t_demo->text.set(Text_t{"yolo"});
+        t_demo->textColor.set(FillColor_t{colors::Yellow});
 
         m_pauseText = m_pauseSceneNode->createRenderizable<NodeText>("pausetext");
         m_pauseText->text.set("PAUSE");

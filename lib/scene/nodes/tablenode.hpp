@@ -20,35 +20,36 @@ namespace lib::scene::nodes
     {
     public:
         using BaseClass = SceneNode;
+        using ContainedElement = T;
 
         TableNode(SceneNode *parent, str name, 
 			vector2dst tableSize_ = vector2dst{})
 			: BaseClass{ parent, std::move(name) } 
 		{
-			tableSize = tableSize_;
+            setTableSize(std::move(tableSize_));
 		}
 
         virtual ~TableNode() = default;
 
-        PropertyTrigger<vector2dst> tableSize {[this]()
+        void setTableSize(vector2dst ntableSize)
         {
-            setNeedsUpdate();
+//            setNeedsUpdate();
+            m_tableSize.set(std::move(ntableSize));
 
-            m_nodes.resize(tableSize().x);
+            m_nodes.resize(m_tableSize().x);
             for (auto& nodeColumn : m_nodes) {
-                nodeColumn.resize(tableSize().y);
+                nodeColumn.resize(m_tableSize().y);
             }
-        }};
+        }
 
-        PropertyTrigger<vector2df> sceneNodeSize {[this]()
-        {
-            setNeedsUpdate();
-        }};
+        vector2dst tableSize() const { return m_tableSize(); }
+
+        PropertyState<vector2df> sceneNodeSize;
 
         template <typename... Args>
         sptr<T> createNodeAt(const vector2dst &index, Args&&... args)
         {
-            setNeedsUpdate();
+//            setNeedsUpdate();
             sptr<T> result(createSceneNode<T>(std::forward<Args>(args)...));
             assert_release(index.x < tableSize().x && index.y < tableSize().y,"Out of bounds");
             m_nodes[index.x][index.y] = result;
@@ -93,15 +94,20 @@ namespace lib::scene::nodes
         void update() override {
             BaseClass::update();
             // Update row and column size
-            const vector2df nodeSize{ sceneNodeSize() / static_cast<vector2df>(tableSize()) };
 
-            for_each_tableSceneNode([this, nodeSize](const vector2dst &p, const sptr<T> &n) {
-                n->position = nodeSize * static_cast<vector2df>(p);
-            });
+            if (ps_readResetHasChanged(sceneNodeSize, m_tableSize))
+            {
+                const vector2df nodeSize{ sceneNodeSize() / static_cast<vector2df>(tableSize()) };
+
+                for_each_tableSceneNode([this, nodeSize](const vector2dst &p, const sptr<T> &n) {
+                    n->position = nodeSize * static_cast<vector2df>(p);
+                });
+            }
         }
 
     private:
         vector<vector_shared_pointers<T>> m_nodes;
+        PropertyState<vector2dst> m_tableSize;
     };
 }
 

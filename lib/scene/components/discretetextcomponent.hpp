@@ -4,16 +4,15 @@
 #define LIB_COMPONENT_DISCRETE_TEXT_INCLUDE_HPP__
 
 #include <mtypes/include/types.hpp>
-#include "parentrendercomponent.hpp"
-#include <lib/scene/scenenodetypes.hpp>
-#include <lib/scene/renderizables/nodetext.hpp>
+#include <lib/scene/nodes/scenenodetext.hpp>
+#include <lib/scene/components/icomponent.hpp>
 
 namespace lib::scene
 {
-    class DiscreteTextComponent : public RenderizableSceneNodeComponent<nodes::NodeText, IComponent>
+    class DiscreteTextComponent : public IComponent
     {
     public:
-        using BaseClass = RenderizableSceneNodeComponent<nodes::NodeText, IComponent>;
+        using BaseClass = IComponent;
         DiscreteTextComponent() {}
         virtual ~DiscreteTextComponent() {}
 

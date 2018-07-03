@@ -117,9 +117,6 @@ namespace lib::scene
 
         void for_each_group(function<void(const sptr<SceneNode> &)> action) const;
 
-        inline void setNeedsUpdate() noexcept { m_needsUpdate = true; }
-        inline bool needsUpdate() const noexcept { return m_needsUpdate; }
-
         BasicProperty<bool> visible;
 
         constexpr const auto &renderNodes() const noexcept { return m_renderNodes; }
@@ -135,17 +132,10 @@ namespace lib::scene
         void addSceneNode(sptr<SceneNode> node);
 
     private:
-
-        void internalUpdate();
-
-        constexpr void clearNeedsUpdate() noexcept { m_needsUpdate = false; }
-
         SceneNode *m_parent;
 
         vector<sptr<Renderizable>> m_renderNodes;
         vector<sptr<SceneNode>> m_groups;
-
-        bool m_needsUpdate{ true };
     };
 
     using SceneNodeSPtr = sptr<SceneNode>;

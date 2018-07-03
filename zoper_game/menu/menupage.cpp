@@ -52,11 +52,11 @@ namespace zoper
 		switch (m_pageMode)
 		{
 		case zoper::MenuPageMode::Selector:
-			tableSize = { 2, titles.size() };
+            setTableSize( { 2, titles.size() } );
 			titleColumn = 1;
 			break;
 		case zoper::MenuPageMode::Optioner:
-			tableSize = { 4, titles.size() };
+            setTableSize( { 4, titles.size() } );
 			titleColumn = 0;
 			break;
 		default:
@@ -69,12 +69,12 @@ namespace zoper
 		size_type counter{ 0 };
 		for (auto&& title : titles) {
 			auto newOption(createNodeAt(vector2dst{ titleColumn,counter }, make_str("label",counter)));
-			standarizeText(newOption->node());
-			newOption->node()->text = title;
+            standarizeText(newOption);
+            newOption->text.set(Text_t(title));
 
 			if (options.size() > counter) {
 				auto discreteTextLabel(createNodeAt(vector2dst{ columnForOptions, counter }, make_str("option",counter)));
-				standarizeText(discreteTextLabel->node());
+                standarizeText(discreteTextLabel);
 				auto discreteTextComponent(discreteTextLabel->ensureComponentOfType<DiscreteTextComponent>());
 				discreteTextComponent->data.set(options[counter]);
 			}
@@ -112,16 +112,18 @@ namespace zoper
 
 	void MenuPage::setColorToLine(const size_type index, const Color &color)
 	{
-		for_each_tableSceneNode_in_y(index, [&color](const size_type, const sptr<TextSceneNode> &node) {
-			node->node()->color = color;
+        for_each_tableSceneNode_in_y(index, [&color](const size_type, const
+                                     sptr<BaseClass::ContainedElement> &node)
+        {
+            node->textColor.set(FillColor_t(color));
 		});
 	}
 
-	void MenuPage::standarizeText(const sptr<scene::nodes::NodeText> &ntext)
+    void MenuPage::standarizeText(const sptr<ContainedElement> &ntext)
 	{
-		ntext->color = m_normalColor;
-		ntext->font = m_normalFont;
-		ntext->characterSize = m_normalCharacterSize;
+        ntext->textColor.set(FillColor_t(m_normalColor));
+        ntext->font.set(m_normalFont);
+        ntext->characterSize.set(m_normalCharacterSize);
 	}
 
 	void MenuPage::goDown()

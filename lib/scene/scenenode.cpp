@@ -30,7 +30,7 @@ namespace lib::scene
             updateComponents();
 
             // Update node
-            internalUpdate();
+            update();
 
             if (transformationNeedsUpdate()) {
                 parentTransformationChanged = true;
@@ -99,14 +99,6 @@ namespace lib::scene
         m_groups.push_back(node);
         node->m_parent = this;
         node->onCreated();
-    }
-
-    void SceneNode::internalUpdate()
-    {
-        if (m_needsUpdate) {
-            m_needsUpdate = false;
-            update();
-        }
     }
 
     void SceneNode::removeSceneNode(sptr<SceneNode> element)

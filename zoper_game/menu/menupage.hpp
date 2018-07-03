@@ -8,7 +8,7 @@
 #include <lib/scene/renderizables/nodetext.hpp>
 #include <mtypes/include/connection.hpp>
 #include <lib/scene/nodes/tablenode.hpp>
-#include <lib/scene/scenenodetypes.hpp>
+#include <lib/scene/nodes/scenenodetext.hpp>
 #include <lib/scene/color.hpp>
 #include <lib/scene/components/discretetextcomponent.hpp>
 #include "menupagetype.hpp"
@@ -23,10 +23,11 @@ namespace zoper
 		Optioner
 	};
 
-	class MenuPage : public nodes::TableNode<TextSceneNode>
+    class MenuPage : public nodes::TableNode<nodes::SceneNodeText>
 	{
 	private:
-		using BaseClass = nodes::TableNode<TextSceneNode>;
+        using BaseClass = nodes::TableNode<nodes::SceneNodeText>;
+        using ContainedElement = BaseClass::ContainedElement;
 	public:
 		MenuPage(SceneNode *parent, str name);
 		virtual ~MenuPage();
@@ -41,7 +42,7 @@ namespace zoper
 	protected:
 		emitter<const size_type> Selection;
 	private:
-		void standarizeText(const sptr<nodes::NodeText> &ntext);
+        void standarizeText(const sptr<ContainedElement> &ntext);
 		void goDown();
 		void goUp();
 		void goLeft();
