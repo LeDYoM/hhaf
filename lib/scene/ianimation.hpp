@@ -1,7 +1,11 @@
-#ifndef LIB_IANIMATION_INCLUDE_HPP__
-#define LIB_IANIMATION_INCLUDE_HPP__
+#pragma once
+
+#ifndef LIB_SCENE_IANIMATION_INCLUDE_HPP__
+#define LIB_SCENE_IANIMATION_INCLUDE_HPP__
 
 #include <lib/include/core/timer.hpp>
+#include <lib/include/properties.hpp>
+
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/properties.hpp>
 
@@ -50,7 +54,7 @@ namespace lib
             class IPropertyAnimation : public IAnimation
             {
             public:
-                IPropertyAnimation(Time duration, IProperty<T> &prop, 
+                IPropertyAnimation(Time duration, IProperty<T> &prop,
                     T start, T end, ActionFunc endAction = {})
                     : IAnimation{ std::move(duration), std::move(endAction) }, m_property{ prop }, m_startValue { std::move(start)	},
                     m_endValue{ std::move(end) }, m_deltaValue{ m_endValue - m_startValue } {}
@@ -68,6 +72,34 @@ namespace lib
                 T m_endValue;
                 T m_deltaValue;
             };
+
+            template <typename RealT, typename Tag>
+            class IPropertyAnimation<strong_typedef<Tag,RealT>> : public IAnimation
+            {
+            public:
+                using T = strong_typedef<Tag,RealT>;
+
+                IPropertyAnimation(Time duration, IProperty<T> &prop, 
+                    T start, T end, ActionFunc endAction = {})
+                    : IAnimation{ std::move(duration), std::move(endAction) }, m_property{ prop }, m_startValue { std::move(start)	},
+                    m_endValue{ std::move(end) }, m_deltaValue{ m_endValue() - m_startValue() } {}
+
+                virtual bool animate() override
+                {
+                    const bool bResult{ IAnimation::animate() };
+                    m_property.set(T{ m_startValue() +
+                                          (m_deltaValue() * m_delta)
+                                   });
+                    return bResult;
+                }
+
+            protected:
+                IProperty<T> &m_property;
+                T m_startValue;
+                T m_endValue;
+                T m_deltaValue;
+            };
+
         }
     }
 }
