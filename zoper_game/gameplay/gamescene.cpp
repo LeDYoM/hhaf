@@ -27,8 +27,6 @@
 #include <lib/scene/components/inputcomponent.hpp>
 #include <lib/scene/components/alignedtextcomponent.hpp>
 
-#include <lib/scene/nodes/scenenodetext.hpp>
-
 namespace zoper
 {
     using namespace lib;
@@ -65,47 +63,44 @@ namespace zoper
         m_goalQuad->text(0)->color = colors::Blue;
         m_goalQuad->text(2)->color = colors::Blue;
 
+        m_pauseText = m_pauseSceneNode->createSceneNode<SceneNodeText>("pausetext");
+        m_pauseText->text.set(Text_t("PAUSE"));
+        m_pauseText->font.set(m_gameresources.scoreFont);
+        m_pauseText->characterSize.set(180);
+        m_pauseText->textColor.set(FillColor_t{colors::White});
+        {
+            auto align(m_pauseText->ensureComponentOfType<AlignedTextComponent>());
+            align->alignmentBox.set(scenePerspective());
+            align->alignmentX.set(AlignedTextComponent::AlignmentX::Center);
+            align->alignmentY.set(AlignedTextComponent::AlignmentY::Middle);
+        }
+
         vector2df goBoxHalfSize{ 365, 365 };
         Rectf32 gobox{ scenePerspective().center() - goBoxHalfSize, (goBoxHalfSize * 2) };
 
-//        auto t_demo = createRenderizable<NodeText>("demo");
-        auto t_demo = createSceneNode<SceneNodeText>("demo");
-        t_demo->text.set(Text_t{"Demo Text"});
-        t_demo->font = m_gameresources.scoreFont;
-        t_demo->characterSize = 180;
-        t_demo->textColor.set(FillColor_t{colors::White});
-        auto align(t_demo->ensureComponentOfType<AlignedTextComponent>());
-        align->alignmentBox.set(scenePerspective());
-        align->alignmentX.set(AlignedTextComponent::AlignmentX::Center);
-        align->alignmentY.set(AlignedTextComponent::AlignmentY::Middle);
-        t_demo->text.set(Text_t{"yolo"});
-        t_demo->textColor.set(FillColor_t{colors::Yellow});
+        auto gameText(m_gameOverrg->createSceneNode<SceneNodeText>("gameovergame"));
+        gameText->text.set(Text_t("GAME"));
+        gameText->font.set(m_gameresources.scoreFont);
+        gameText->characterSize.set(360);
+        gameText->textColor.set(FillColor_t{colors::White});
+        {
+            auto align(gameText->ensureComponentOfType<AlignedTextComponent>());
+            align->alignmentBox.set(gobox);
+            align->alignmentX.set(AlignedTextComponent::AlignmentX::Center);
+            align->alignmentY.set(AlignedTextComponent::AlignmentY::Top);
+        }
 
-        m_pauseText = m_pauseSceneNode->createRenderizable<NodeText>("pausetext");
-        m_pauseText->text.set("PAUSE");
-        m_pauseText->font = m_gameresources.scoreFont;
-        m_pauseText->characterSize = 180;
-        m_pauseText->color = colors::White;
-        m_pauseText->alignmentBox = scenePerspective();
-        m_pauseText->alignmentX = AlignmentX::Center;
-        m_pauseText->alignmentY = AlignmentY::Middle;
-
-        auto gameText(m_gameOverrg->createRenderizable<NodeText>("gameovergame"));
-        gameText->text.set("GAME");
-        gameText->font = m_gameresources.scoreFont;
-        gameText->characterSize = 360;
-        gameText->color = colors::White;
-        gameText->alignmentBox = gobox;
-        gameText->alignmentX = AlignmentX::Center;
-        gameText->alignmentY = AlignmentY::Top;
-
-        auto overText(m_gameOverrg->createRenderizable<NodeText>("gameoverover"));
-        overText->text.set("OVER");
-        overText->font = m_gameresources.scoreFont;
-        overText->color = colors::White;
-        overText->alignmentBox = gobox;
-        overText->alignmentX = AlignmentX::Center;
-        overText->alignmentY = AlignmentY::Bottom;
+        auto overText(m_gameOverrg->createSceneNode<SceneNodeText>("gameoverover"));
+        overText->text.set(Text_t("OVER"));
+        overText->font.set(m_gameresources.scoreFont);
+        overText->characterSize.set(360);
+        overText->textColor.set(FillColor_t{colors::White});
+        {
+            auto align(overText->ensureComponentOfType<AlignedTextComponent>());
+            align->alignmentBox.set(gobox);
+            align->alignmentX.set(AlignedTextComponent::AlignmentX::Center);
+            align->alignmentY.set(AlignedTextComponent::AlignmentY::Bottom);
+        }
 
         increaseScore(0);
 
@@ -165,7 +160,7 @@ namespace zoper
         m_nextTokenPart = 0;
         importGameSharedData();
         m_score = 0;
-        m_gameOverrg->visible = false;
+        m_gameOverrg->visible = true;
         m_mainBoardrg->visible = true;
         m_pauseSceneNode->visible = false;
 
@@ -252,9 +247,10 @@ namespace zoper
             m_sceneTimerComponent->pause();
 			m_pauseSceneNode->visible = true;
 			auto animationComponent(m_pauseSceneNode->ensureComponentOfType<anim::AnimationComponent>());
-			animationComponent->addAnimation(muptr<anim::IPropertyAnimation<Color>>(
+            animationComponent->addAnimation(muptr<anim::IPropertyAnimation<FillColor_t>>(
                 TimeFromMillis(1000), 
-                m_pauseText->color, Color{ 255, 255, 255, 0 }, Color{ 255, 255, 255, 255 }));
+                m_pauseText->textColor, FillColor_t{Color{ 255, 255, 255, 0 } },
+                                 FillColor_t{Color{ 255, 255, 255, 255 } }));
 		}
 		break;
         case GameOver:

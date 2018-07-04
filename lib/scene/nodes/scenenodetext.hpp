@@ -10,7 +10,6 @@
 namespace lib::scene
 {
     class TTFont;
-    class Texture;
     namespace nodes
     {
         class SceneNodeText : public SceneNode

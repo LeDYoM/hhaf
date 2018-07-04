@@ -17,6 +17,7 @@
 #include <lib/board/itilescontroller.hpp>
 #include <lib/board/boardmodel.hpp>
 #include <lib/scene/nodes/textquad.hpp>
+#include <lib/scene/nodes/scenenodetext.hpp>
 #include <lib/scene/renderizables/nodetext.hpp>
 #include <lib/scene/renderizables/nodequad.hpp>
 #include <lib/scene/components/timercomponent.hpp>
@@ -95,7 +96,7 @@ namespace zoper
         // Nodes from the scene
         sptr<scene::SceneNode> m_mainBoardrg, m_gameOverrg, m_levelrg, m_pauseSceneNode, m_gameOverText;
         sptr<scene::nodes::TextQuad> m_scoreQuad, m_goalQuad;
-        sptr<scene::nodes::NodeText> m_pauseText;
+        sptr<scene::nodes::SceneNodeText> m_pauseText;
 		sptr<BoardGroup> m_boardGroup;
     };
 }
