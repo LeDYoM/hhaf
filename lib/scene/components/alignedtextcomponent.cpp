@@ -8,72 +8,64 @@ namespace lib::scene
 
     void AlignedTextComponent::update()
     {
-        const bool ab_rr_hasChanged{ alignmentBox.readResetHasChanged() };
+        const bool as_rr_hasChanged{ alignmentSize.readResetHasChanged() };
 
         const auto nodeText(
                     attachedNodeAs<nodes::SceneNodeText>());
-        if (ab_rr_hasChanged || alignmentX.readResetHasChanged()) {
-            updateAlignmentX(nodeText->font()->textBox(
+        if (as_rr_hasChanged || alignmentX.readResetHasChanged()) {
+            updateAlignmentX(nodeText->font()->textSize(
                                  nodeText->text()(),
-                                 nodeText->characterSize()));
+                                 nodeText->characterSize()).x);
         }
 
-        if (ab_rr_hasChanged || alignmentY.readResetHasChanged())
+        if (as_rr_hasChanged || alignmentY.readResetHasChanged())
         {
-            updateAlignmentY(nodeText->font()->textBox(
+            updateAlignmentY(nodeText->font()->textSize(
                                  nodeText->text()(),
-                                 nodeText->characterSize()));
+                                 nodeText->characterSize()).y);
         }
     }
 
-    void AlignedTextComponent::updateAlignmentX(const Rectf32 textSize)
+    void AlignedTextComponent::updateAlignmentX(const f32 textSizeX)
     {
+        f32 newPosX{0.f};
+
         switch (alignmentX())
         {
         default:
         case AlignmentX::Left:
-            attachedNode()->position.set(vector2df{0,
-                                               attachedNode()->position().y});
             break;
         case AlignmentX::Center:
-        {
-            const auto &abox( alignmentBox() );
-            attachedNode()->position.set(
-                        {abox.left + (abox.width / 2.f) - (textSize.width / 2),
-                        attachedNode()->position().y});
-        }
-        break;
+            newPosX = (alignmentSize().x / 2) - (textSizeX / 2);
+            break;
         case AlignmentX::Right:
-            attachedNode()->position.set(
-                        {alignmentBox().right() - textSize.right(),
-                         attachedNode()->position().y});
+            newPosX = alignmentSize().x - textSizeX;
             break;
         }
+
+        attachedNode()->position.set(vector2df{newPosX,
+                                               attachedNode()->position().y});
+
     }
 
-    void AlignedTextComponent::updateAlignmentY(const Rectf32 textSize)
+    void AlignedTextComponent::updateAlignmentY(const f32 textSizeY)
     {
+        f32 newPosY{0.f};
+
         switch (alignmentY())
         {
         default:
         case AlignmentY::Top:
-            attachedNode()->position.set(
-                        vector2df{attachedNode()->position().x, 0});
             break;
         case AlignmentY::Middle:
-        {
-            const auto &abox{ alignmentBox() };
-            attachedNode()->position.set(
-                        vector2df{attachedNode()->position().x,
-                        abox.top + (abox.height / 2.f) - (textSize.height / 2)
-                        });
-        }
-        break;
+            newPosY = (alignmentSize().y / 2) - (textSizeY / 2);
+            break;
         case AlignmentY::Bottom:
-            attachedNode()->position.set(
-                        vector2df{attachedNode()->position().x,
-                        alignmentBox().bottom() - textSize.bottom()});
+            newPosY = alignmentSize().y - textSizeY;
             break;
         }
+
+        attachedNode()->position.set(
+                    vector2df{attachedNode()->position().x, newPosY});
     }
 }

@@ -70,13 +70,13 @@ namespace zoper
         m_pauseText->textColor.set(FillColor_t{colors::White});
         {
             auto align(m_pauseText->ensureComponentOfType<AlignedTextComponent>());
-            align->alignmentBox.set(scenePerspective());
+            align->alignmentSize.set(scenePerspective().size());
             align->alignmentX.set(AlignedTextComponent::AlignmentX::Center);
             align->alignmentY.set(AlignedTextComponent::AlignmentY::Middle);
         }
 
-        vector2df goBoxHalfSize{ 365, 365 };
-        Rectf32 gobox{ scenePerspective().center() - goBoxHalfSize, (goBoxHalfSize * 2) };
+        vector2df gosize{ scenePerspective().width, 715 };
+        m_gameOverrg->position.set({0, 575});
 
         auto gameText(m_gameOverrg->createSceneNode<SceneNodeText>("gameovergame"));
         gameText->text.set(Text_t("GAME"));
@@ -85,7 +85,7 @@ namespace zoper
         gameText->textColor.set(FillColor_t{colors::White});
         {
             auto align(gameText->ensureComponentOfType<AlignedTextComponent>());
-            align->alignmentBox.set(gobox);
+            align->alignmentSize.set(gosize);
             align->alignmentX.set(AlignedTextComponent::AlignmentX::Center);
             align->alignmentY.set(AlignedTextComponent::AlignmentY::Top);
         }
@@ -97,7 +97,7 @@ namespace zoper
         overText->textColor.set(FillColor_t{colors::White});
         {
             auto align(overText->ensureComponentOfType<AlignedTextComponent>());
-            align->alignmentBox.set(gobox);
+            align->alignmentSize.set(gosize);
             align->alignmentX.set(AlignedTextComponent::AlignmentX::Center);
             align->alignmentY.set(AlignedTextComponent::AlignmentY::Bottom);
         }
@@ -160,7 +160,7 @@ namespace zoper
         m_nextTokenPart = 0;
         importGameSharedData();
         m_score = 0;
-        m_gameOverrg->visible = true;
+        m_gameOverrg->visible = false;
         m_mainBoardrg->visible = true;
         m_pauseSceneNode->visible = false;
 

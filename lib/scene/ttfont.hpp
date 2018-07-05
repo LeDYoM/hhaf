@@ -33,7 +33,7 @@ namespace lib
             sptr<Texture> getTexture(const u32 characterSize) const;
             void ensureLoadGlyphs(const u32 first, const u32 last, const u32 characterSize);
             void ensureLoadASCIIGlyps(const u32 characterSize);
-            Rectf32 textBox(const str& text, const u32 characterSize) const;
+            vector2df textSize(const str& text, const u32 characterSize) const;
         private:
             backend::ITTFont* m_font;
         };

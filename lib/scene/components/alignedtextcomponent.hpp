@@ -35,13 +35,13 @@ namespace lib::scene
 
         PropertyState<AlignmentX> alignmentX;
         PropertyState<AlignmentY> alignmentY;
-        PropertyState<Rectf32> alignmentBox;
+        PropertyState<vector2df> alignmentSize;
 
     protected:
         virtual void update() override final;
     private:
-        void updateAlignmentX(const Rectf32 textSize);
-        void updateAlignmentY(const Rectf32 textSize);
+        void updateAlignmentX(const f32 textSizeX);
+        void updateAlignmentY(const f32 textSizeY);
     };
 }
 
