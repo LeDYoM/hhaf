@@ -1,30 +1,46 @@
 #include "textquad.hpp"
 
+#include <lib/scene/components/alignedtextcomponent.hpp>
+
 namespace lib::scene::nodes
 {
-    TextQuad::TextQuad(SceneNode * parent, str name, sptr<TTFont> font, const u32 characterSize, const Color &color, const Rectf32 & box)
-        : SceneNode{ parent, std::move(name) }, m_box { box }
+    TextQuad::TextQuad(SceneNode * parent, str name, sptr<TTFont> font,
+                       const u32 characterSize, const Color &color,
+                       const vector2df & size)
+        : BaseClass{ parent, std::move(name) }, m_size { size }
     {
-        u32 count{};
-        for (auto &node : m_texts) {
-            node = createRenderizable<NodeText>(name + "node_" + str(count++));
+        setTableSize({2,2});
+        for (size_type count{0}; count < 4; ++count)
+        {
+            auto node = createNodeAt({count%2, count/2}, name + "node_" + make_str(count));
             node->font = font;
             node->characterSize = characterSize;
-            node->alignmentBox = box;
-            node->alignmentX = AlignmentX::Left;
-            node->alignmentY = AlignmentY::Top;
-            node->color = color;
+            node->textColor.set(FillColor_t(color));
         }
 
         // Second text is right aligned
-        m_texts[1]->alignmentX = AlignmentX::Right;
+        {
+            auto align(nodeAt({1,0})->ensureComponentOfType<AlignedTextComponent>());
+            align->alignmentSize.set(size);
+            align->alignmentX.set(AlignedTextComponent::AlignmentX::Right);
+            align->alignmentY.set(AlignedTextComponent::AlignmentY::Top);
+        }
 
         // Third text is bottom aligned
-        m_texts[2]->alignmentY = AlignmentY::Bottom;
+        {
+            auto align(nodeAt({0,1})->ensureComponentOfType<AlignedTextComponent>());
+            align->alignmentSize.set(size);
+            align->alignmentX.set(AlignedTextComponent::AlignmentX::Left);
+            align->alignmentY.set(AlignedTextComponent::AlignmentY::Bottom);
+        }
 
         // Fourth text is right and bottom aligned
-        m_texts[3]->alignmentX = AlignmentX::Right;
-        m_texts[3]->alignmentY = AlignmentY::Bottom;
+        {
+            auto align(nodeAt({1,1})->ensureComponentOfType<AlignedTextComponent>());
+            align->alignmentSize.set(size);
+            align->alignmentX.set(AlignedTextComponent::AlignmentX::Right);
+            align->alignmentY.set(AlignedTextComponent::AlignmentY::Bottom);
+        }
     }
 
     TextQuad::~TextQuad() = default;
