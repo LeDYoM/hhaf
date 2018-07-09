@@ -4,13 +4,16 @@ namespace lib::scene
 {
 	using namespace input;
 
-	void TextEditorComponent::onAttached()
+    void TextEditorComponent::onCreated()
 	{
-		BaseClass::onAttached();
+        BaseClass::onCreated();
 		
-		m_originalText = node()->text();
-		node()->text.set("");
+        m_originalText = text()();
+        text.set(Text_t(""));
 
+        auto input_component(ensureComponentOfType<InputComponent>());
+/*
+        input_component->keyPressed
 		m_receiver.connect(InputComponent::KeyPressed, [this](const Key&key) {
 			if (isAscii(key)) {
 				const char c_ascii{ toAscii(key) };
@@ -37,5 +40,6 @@ namespace lib::scene
 				Rejected();
 			}
 		});
+        */
 	}
 }
