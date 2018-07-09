@@ -53,6 +53,21 @@ namespace lib::scene
 	using TextSceneNode = RenderizableSceneNode<nodes::NodeText>;
     using ShapeSceneNode = RenderizableSceneNode<nodes::NodeShape>;
     using QuadSceneNode = RenderizableSceneNode<nodes::NodeQuad>;
+
+    template <typename BaseSceneNode, typename MixedComponent>
+    class SceneNodeWithComponents : public BaseSceneNode
+    {
+    public:
+        constexpr SceneNodeWithComponents(SceneNode *const parent, str name)
+            : BaseSceneNode{parent, std::move(name)}, MixedComponent{} {}
+
+        void onCreated() override
+        {
+//            m_component = ensureComponentOfType<MixedComponent>();
+        }
+    private:
+        sptr<MixedComponent> m_component;
+    };
 }
 
 #endif

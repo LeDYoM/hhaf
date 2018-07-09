@@ -45,15 +45,15 @@ namespace zoper
 			size_type counter{ 0 };
 			for (const auto &element : m_hsData.highScoresList()) {
 				auto label(createNodeAt(vector2dst{ 0, counter }, make_str("label", 0, counter)));
-				standarizeText(label->node());
-				label->node()->text.set(make_str(counter, "."));
+                standarizeText(label);
+                label->text.set(Text_t(make_str(counter, ".")));
 
 				label = createNodeAt(vector2dst{ 1, counter }, make_str("label", 1, counter));
-				standarizeText(label->node());
-				label->node()->text.set(make_str(element.score));
+                standarizeText(label);
+                label->text.set(Text_t(make_str(element.score)));
 
 				label = createNodeAt(vector2dst{ 2, counter }, make_str("label", 2, counter));
-				standarizeText(label->node());
+                standarizeText(label);
 
 				if (isInserting && positionInTable == counter) {
 					auto editor(label->ensureComponentOfType<TextEditorComponent>());
@@ -64,18 +64,18 @@ namespace zoper
 						Finished();
 					});
 				} else {
-					label->node()->text.set(element.name);
+                    label->text.set(Text_t(element.name));
 				}
 				++counter;
 			}
 		}
 	}
 
-	void HighScoreTextController::standarizeText(const sptr<scene::nodes::NodeText> &ntext)
+    void HighScoreTextController::standarizeText(const sptr<nodes::SceneNodeText> &ntext)
 	{
-		ntext->color = m_normalColor;
-		ntext->font = m_normalFont;
-		ntext->characterSize = m_normalCharacterSize;
+        ntext->textColor.set(FillColor_t(m_normalColor));
+        ntext->font.set(m_normalFont);
+        ntext->characterSize.set(m_normalCharacterSize);
 	}
 
 	void HighScoreTextController::saveHighScores()

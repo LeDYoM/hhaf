@@ -37,11 +37,11 @@ namespace zoper
 		sceneManager().start();
 		// Hack to test high scores
 		{
-//			gameData->score = 10000;
-//			sceneManager().startFirstScene<HighScoresScene>();
+//            gameData->score = 10000;
+            sceneManager().startFirstScene<HighScoresScene>();
 		}
 
-		sceneManager().startFirstScene<MenuScene>();
+//		sceneManager().startFirstScene<MenuScene>();
 	}
 
 	IAppDescriptor ZoperProgramController::getAppDescriptor() const
