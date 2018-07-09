@@ -4,7 +4,6 @@
 #define LIB_COMPONENT_ALIGNED_TEXT_INCLUDE_HPP__
 
 #include <mtypes/include/types.hpp>
-#include "parentrendercomponent.hpp"
 #include <lib/scene/scenenodetypes.hpp>
 #include <lib/scene/renderizables/nodetext.hpp>
 
