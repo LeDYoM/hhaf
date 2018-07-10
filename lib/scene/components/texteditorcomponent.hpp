@@ -3,7 +3,6 @@
 #ifndef LIB_COMPONENT_TEXTEDITOR_INCLUDE_HPP__
 #define LIB_COMPONENT_TEXTEDITOR_INCLUDE_HPP__
 
-#include "parentrendercomponent.hpp"
 #include "inputcomponent.hpp"
 #include <mtypes/include/types.hpp>
 #include <lib/scene/scenenodetypes.hpp>

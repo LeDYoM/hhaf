@@ -68,7 +68,6 @@ set(SOURCE_FILES_LIST
     scene/components/icomponent.hpp
     scene/components/inputcomponent.cpp
     scene/components/inputcomponent.hpp
-    scene/components/parentrendercomponent.hpp
     scene/components/statescontroller.hpp
     scene/components/texteditorcomponent.cpp
     scene/components/texteditorcomponent.hpp

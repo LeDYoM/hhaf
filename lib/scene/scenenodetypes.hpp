@@ -4,7 +4,6 @@
 #define LIB_SCENE_SCENENODETYPES_INCLUDE_HPP__
 
 #include <mtypes/include/types.hpp>
-#include <lib/scene/components/parentrendercomponent.hpp>
 #include <lib/scene/components/icomponent.hpp>
 #include <lib/scene/renderizables/nodeshape.hpp>
 #include <lib/scene/renderizables/nodequad.hpp>
@@ -27,26 +26,6 @@ namespace lib::scene
 
 	private:
 		const sptr<T> m_node;
-	};
-
-	template <typename Renderizable_t, typename BaseComponent>
-	class RenderizableSceneNodeComponent : public ParentRenderComponent<Renderizable_t, BaseComponent>
-	{
-	public:
-		using BaseClass = ParentRenderComponent<Renderizable_t,BaseComponent>;
-        using ParentNodeClass = RenderizableSceneNode<Renderizable_t>;
-		void onAttached() override {
-			if (auto parentNode = BaseClass::template attachedNodeAs<ParentNodeClass>()) {
-				m_renderizableNode = parentNode->node();
-			}
-			BaseClass::onAttached();
-		}
-	private:
-		sptr<Renderizable_t> getRenderNodeToAttach() override {
-			return m_renderizableNode;
-		}
-
-		sptr<Renderizable_t> m_renderizableNode;
 	};
 
     using ShapeSceneNode = RenderizableSceneNode<nodes::NodeShape>;
