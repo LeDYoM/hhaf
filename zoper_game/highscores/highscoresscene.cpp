@@ -1,7 +1,6 @@
 #include "highscoresscene.hpp"
 #include <lib/scene/renderizables/nodeshape.hpp>
 #include <lib/scene/renderizables/nodequad.hpp>
-#include <lib/scene/renderizables/nodetext.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/core/host.hpp>
 #include "../highscores/highscoresdata.hpp"

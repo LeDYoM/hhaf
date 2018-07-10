@@ -4,7 +4,6 @@
 #include <lib/include/core/log.hpp>
 #include <lib/scene/scene.hpp>
 #include <lib/scene/renderizables/nodeshape.hpp>
-#include <lib/scene/renderizables/nodetext.hpp>
 #include <lib/core/host.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/scene/ttfont.hpp>

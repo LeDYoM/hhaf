@@ -7,7 +7,6 @@
 #include <lib/scene/scenenodetypes.hpp>
 
 // Temp
-#include <lib/scene/renderizables/nodetext.hpp>
 #include <cmath>
 
 namespace lib::scene::nodes

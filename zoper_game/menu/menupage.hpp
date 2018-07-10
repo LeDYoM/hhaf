@@ -5,7 +5,6 @@
 
 #include <mtypes/include/types.hpp>
 #include <lib/scene/scenenode.hpp>
-#include <lib/scene/renderizables/nodetext.hpp>
 #include <mtypes/include/connection.hpp>
 #include <lib/scene/nodes/tablenode.hpp>
 #include <lib/scene/nodes/scenenodetext.hpp>

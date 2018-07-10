@@ -5,7 +5,6 @@
 
 #include <mtypes/include/types.hpp>
 #include <lib/scene/scenenodetypes.hpp>
-#include <lib/scene/renderizables/nodetext.hpp>
 
 
 namespace lib::scene

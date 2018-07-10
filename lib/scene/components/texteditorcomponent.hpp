@@ -19,7 +19,7 @@ namespace lib::scene
 	};
 	namespace
 	{
-        using BaseClass_ = InputComponent;//RenderizableSceneNodeComponent<nodes::NodeText, InputComponent>;
+        using BaseClass_ = InputComponent;
 	}
     class TextEditorComponent : public BaseClass_
 	{

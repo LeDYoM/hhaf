@@ -6,7 +6,6 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/properties.hpp>
 #include <lib/scene/scenenode.hpp>
-#include <lib/scene/renderizables/nodetext.hpp>
 #include <lib/scene/scenemanager.hpp>
 
 namespace lib::scene::nodes

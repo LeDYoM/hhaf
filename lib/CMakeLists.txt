@@ -89,8 +89,6 @@ set(SOURCE_FILES_LIST
     scene/renderizables/nodequad.hpp
     scene/renderizables/nodeshape.cpp
     scene/renderizables/nodeshape.hpp
-    scene/renderizables/nodetext.cpp
-    scene/renderizables/nodetext.hpp
 
     scene/color.hpp
     scene/hasname.hpp

@@ -18,7 +18,6 @@
 #include <lib/board/boardmodel.hpp>
 #include <lib/scene/nodes/textquad.hpp>
 #include <lib/scene/nodes/scenenodetext.hpp>
-#include <lib/scene/renderizables/nodetext.hpp>
 #include <lib/scene/renderizables/nodequad.hpp>
 #include <lib/scene/components/timercomponent.hpp>
 #include <lib/scene/components/statescontroller.hpp>

@@ -20,7 +20,6 @@
 #include <lib/scene/scenemanager.hpp>
 #include <lib/scene/renderizables/nodeshape.hpp>
 #include <lib/scene/renderizables/nodequad.hpp>
-#include <lib/scene/renderizables/nodetext.hpp>
 #include <lib/core/host.hpp>
 #include <lib/scene/ianimation.hpp>
 #include <lib/scene/components/animationcomponent.hpp>

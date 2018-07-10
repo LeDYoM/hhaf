@@ -6,7 +6,6 @@
 #include <mtypes/include/types.hpp>
 #include <lib/scene/components/parentrendercomponent.hpp>
 #include <lib/scene/components/icomponent.hpp>
-#include <lib/scene/renderizables/nodetext.hpp>
 #include <lib/scene/renderizables/nodeshape.hpp>
 #include <lib/scene/renderizables/nodequad.hpp>
 
@@ -52,21 +51,6 @@ namespace lib::scene
 
     using ShapeSceneNode = RenderizableSceneNode<nodes::NodeShape>;
     using QuadSceneNode = RenderizableSceneNode<nodes::NodeQuad>;
-
-    template <typename BaseSceneNode, typename MixedComponent>
-    class SceneNodeWithComponents : public BaseSceneNode
-    {
-    public:
-        constexpr SceneNodeWithComponents(SceneNode *const parent, str name)
-            : BaseSceneNode{parent, std::move(name)}, MixedComponent{} {}
-
-        void onCreated() override
-        {
-//            m_component = ensureComponentOfType<MixedComponent>();
-        }
-    private:
-        sptr<MixedComponent> m_component;
-    };
 }
 
 #endif
