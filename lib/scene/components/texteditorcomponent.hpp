@@ -19,14 +19,14 @@ namespace lib::scene
 	};
 	namespace
 	{
-        using BaseClass_ = nodes::SceneNodeText;//RenderizableSceneNodeComponent<nodes::NodeText, InputComponent>;
+        using BaseClass_ = InputComponent;//RenderizableSceneNodeComponent<nodes::NodeText, InputComponent>;
 	}
     class TextEditorComponent : public BaseClass_
 	{
     private:
         using BaseClass = BaseClass_;
 	public:
-        virtual void onCreated() override;
+        virtual void onAttached() override;
 
 		emitter<const str&> Accepted;
 		emitter<> Rejected;

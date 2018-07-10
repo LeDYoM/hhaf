@@ -1,45 +1,48 @@
 #include "texteditorcomponent.hpp"
+#include <lib/scene/nodes/scenenodetext.hpp>
 
 namespace lib::scene
 {
 	using namespace input;
 
-    void TextEditorComponent::onCreated()
+    void TextEditorComponent::onAttached()
 	{
-        BaseClass::onCreated();
+        BaseClass::onAttached();
 		
-        m_originalText = text()();
-        text.set(Text_t(""));
+        m_originalText = attachedNodeAs<nodes::SceneNodeText>()->text()();
+        attachedNodeAs<nodes::SceneNodeText>()->text.set(Text_t(""));
 
-        auto input_component(ensureComponentOfType<InputComponent>());
-/*
-        input_component->keyPressed
 		m_receiver.connect(InputComponent::KeyPressed, [this](const Key&key) {
-			if (isAscii(key)) {
+            auto attachedTextNode(attachedNodeAs<nodes::SceneNodeText>());
+            if (isAscii(key)) {
 				const char c_ascii{ toAscii(key) };
 				bool success{ true };
 				if (m_textValidator) {
-					success = m_textValidator->canAddChar(node()->text(), c_ascii);
+					success = m_textValidator->canAddChar(attachedTextNode->text()(), c_ascii);
 				}
 				if (success) {
-					node()->text.set(node()->text() + make_str(c_ascii));
+                    attachedTextNode->text.set(Text_t(attachedTextNode->text()() + make_str(c_ascii)));
 				}
-			} else if (key == Key::BackSpace && !node()->text().empty()) {
-				node()->text.set(node()->text().substr(0, node()->text().size() - 1));
-			} else if (key == Key::Return) {
+			}
+            else if (key == Key::BackSpace && !attachedTextNode->text()().empty()) 
+            {
+                attachedTextNode->text.set(
+                    Text_t(attachedTextNode->text()().substr(0, 
+                        attachedTextNode->text()().size() - 1)));
+			}
+            else if (key == Key::Return) {
 				bool success{ true };
 				if (m_textValidator) {
-					success = m_textValidator->isValidText(node()->text());
+					success = m_textValidator->isValidText(attachedTextNode->text()());
 				}
 				if (success) {
-					Accepted(node()->text());
+					Accepted(attachedTextNode->text()());
 				}
 			}
 			else if (key == Key::Escape) {
-				node()->text.set(m_originalText);
+                attachedTextNode->text.set(Text_t(m_originalText));
 				Rejected();
 			}
 		});
-        */
 	}
 }

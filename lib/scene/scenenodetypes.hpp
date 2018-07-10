@@ -50,7 +50,6 @@ namespace lib::scene
 		sptr<Renderizable_t> m_renderizableNode;
 	};
 
-	using TextSceneNode = RenderizableSceneNode<nodes::NodeText>;
     using ShapeSceneNode = RenderizableSceneNode<nodes::NodeShape>;
     using QuadSceneNode = RenderizableSceneNode<nodes::NodeQuad>;
 
