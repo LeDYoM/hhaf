@@ -1,5 +1,7 @@
-#ifndef LIB_BACKEND_IWINDOW_HPP
-#define LIB_BACKEND_IWINDOW_HPP
+#pragma once
+
+#ifndef LIB_BACKEND_IWINDOW_INCLUDE_HPP
+#define LIB_BACKEND_IWINDOW_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
