@@ -34,6 +34,7 @@ set(SOURCE_FILES_LIST
     core/window.hpp
 
     include/backend/interfaces.hpp
+    include/backend/irendertarget.hpp
     include/backend/itexturefactory.hpp
     include/backend/itexture.hpp
     include/backend/ittfontfactory.hpp
