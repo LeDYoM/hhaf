@@ -82,7 +82,7 @@ namespace lib::scene
         template <typename SceneType>
         SceneType *const parentSceneAs() { return dynamic_cast<SceneType*>(parentScene()); }
 
-        const Rectf32 &scenePerspective();
+        Rectf32 scenePerspective();
 
         inline SceneNode *parent() noexcept { return m_parent; }
         inline const SceneNode *parent() const noexcept { return m_parent; }

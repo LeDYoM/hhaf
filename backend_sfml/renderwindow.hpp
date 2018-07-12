@@ -31,7 +31,7 @@ namespace lib::backend::sfmlb
 
         // Not necessary, but the headers of sf::RenderTarget in Linux, contain this definition
         bool setActive(bool active = true) { return IWindow::activate(active); }
-        void setViewport(const Rectf32 &nviewport) override;
+        void setViewPort(const Rectf32 &nviewport) override;
         Rectf32 viewPort() const override;
         void setViewRect(const Rectf32 &nviewRect) override;
         Rectf32 viewRect() const override;

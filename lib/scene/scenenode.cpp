@@ -50,7 +50,7 @@ namespace lib::scene
         }
     }
 
-    const Rectf32 &SceneNode::scenePerspective()
+    Rectf32 SceneNode::scenePerspective()
     {
         return sceneManager().viewRect();
     }

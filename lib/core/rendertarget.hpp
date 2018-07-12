@@ -26,8 +26,10 @@ namespace lib
             RenderTarget(backend::IRenderTarget *renderTarget);
             ~RenderTarget();
 
-            PropertyTrigger<Rectf32> viewPort;
-            PropertyTrigger<Rectf32> viewRect;
+            void setViewPort(const Rectf32 &nviewport);
+            Rectf32 viewPort() const;
+            void setViewRect(const Rectf32 &nviewRect);
+            Rectf32 viewRect() const;
 
             void draw(const scene::RenderData &renderData);
             void clear();

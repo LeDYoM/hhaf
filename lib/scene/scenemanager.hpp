@@ -40,24 +40,24 @@ namespace lib
 
 			void finish();
 
-            inline const Rectf32 &viewPort() const noexcept
+            inline Rectf32 viewPort() const noexcept
             {
                 return m_parentWindow.renderTarget()->viewPort();
             }
 
-            inline void setViewPort(Rectf32 vp) noexcept
+            inline void setViewPort(const Rectf32& vp) noexcept
             {
-                m_parentWindow.renderTarget()->viewPort = std::move(vp);
+                m_parentWindow.renderTarget()->setViewPort(vp);
             }
 
-            inline const Rectf32 &viewRect() const noexcept
+            Rectf32 viewRect() const noexcept
             {
                 return m_parentWindow.renderTarget()->viewRect();
             }
 
-            inline void setViewRect(Rectf32 vr) noexcept
+            inline void setViewRect(const Rectf32& vr) noexcept
             {
-                m_parentWindow.renderTarget()->viewRect = std::move(vr);
+                m_parentWindow.renderTarget()->setViewRect(vr);
             }
 
 			template <typename T>

@@ -32,23 +32,23 @@ namespace lib::core
         m_renderTarget->clear();
     }
 
-    const lib::Rectf32&lib::core::RenderTarget::viewPort()
+    Rectf32 RenderTarget::viewPort() const
     {
-
+        return m_renderTarget->viewPort();
     }
 
-    void lib::core::RenderTarget::setViewPort(lib::Rectf32 nViewPort)
+    void RenderTarget::setViewPort(const Rectf32& nViewPort)
     {
-
+        m_renderTarget->setViewPort(nViewPort);
     }
 
-    const lib::Rectf32&lib::core::RenderTarget::viewRect()
+    Rectf32 RenderTarget::viewRect() const
     {
-
+        return m_renderTarget->viewRect();
     }
 
-    void lib::core::RenderTarget::setViewRect(lib::Rectf32 nViewRect)
+    void RenderTarget::setViewRect(const Rectf32& nViewRect)
     {
-
+        m_renderTarget->setViewRect(nViewRect);
     }
 }

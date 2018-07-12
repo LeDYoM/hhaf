@@ -38,7 +38,7 @@ namespace lib::backend::sfmlb
 			asRenderStates(transform,texture));
 	}
 
-	void RenderWindow::setViewport(const Rectf32 & nviewport)
+    void RenderWindow::setViewPort(const Rectf32 & nviewport)
 	{
 		sf::View currentView(getView());
 		currentView.setViewport(fromRect(nviewport));
