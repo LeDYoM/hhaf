@@ -16,6 +16,7 @@ namespace lib
 	struct WindowCreationParams;
 	namespace backend
 	{
+        class IRenderTarget;
 		class IWindow
 		{
 		public:
@@ -23,20 +24,15 @@ namespace lib
 			virtual ~IWindow() {}
 
 			virtual bool createWindow(const WindowCreationParams &wcp) = 0;
-			virtual void draw(const scene::Vertex *vertices, const u32 nVertex, const scene::PrimitiveType pType, const f32 *transform, const ITexture *texture) = 0;
-
             virtual bool activate(const bool activate = true) = 0;
-			virtual void setViewport(const Rectf32 &nviewport) = 0;
-			virtual Rectf32 viewPort() const = 0;
-			virtual void setViewRect(const Rectf32 &nviewRect) = 0;
-			virtual Rectf32 viewRect() const = 0;
 
 			virtual bool processEvents() = 0;
 
 			virtual void display() = 0;
-			virtual void clear() = 0;
 			virtual void setWindowTitle(str newTitle) = 0;
 			virtual void closeWindow() = 0;
+
+            virtual IRenderTarget *renderTarget() = 0;
 
 			// Input part
 			virtual bool arePendingKeyPresses() const = 0;

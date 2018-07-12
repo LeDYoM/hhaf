@@ -62,8 +62,13 @@ namespace lib::backend::sfmlb
 	Rectf32 RenderWindow::viewRect() const
 	{
 		sf::View currentView(getView());
-		return rectFromCenterAndSize(toVector2d(currentView.getCenter()), toVector2d(currentView.getSize()));
-	}
+        return rectFromCenterAndSize(toVector2d(currentView.getCenter()), toVector2d(currentView.getSize()));
+    }
+
+    IRenderTarget* RenderWindow::renderTarget()
+    {
+        return this;
+    }
 
 	void RenderWindow::keyEvent(const sf::Event &e)
 	{

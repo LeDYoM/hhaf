@@ -11,12 +11,13 @@
 #include <lib/scene/vertexarray.hpp>
 #include <lib/include/iapp.hpp>
 #include <lib/include/backend/iwindow.hpp>
+#include <lib/include/backend/irendertarget.hpp>
 
 #include <queue>
 
 namespace lib::backend::sfmlb
 {
-    class RenderWindow : public IWindow, public sf::Window, public sf::RenderTarget
+    class RenderWindow : public IWindow, public IRenderTarget, public sf::Window, public sf::RenderTarget
     {
     public:
 
@@ -34,6 +35,8 @@ namespace lib::backend::sfmlb
         Rectf32 viewPort() const override;
         void setViewRect(const Rectf32 &nviewRect) override;
         Rectf32 viewRect() const override;
+
+        IRenderTarget *renderTarget() override;
 
         bool processEvents() override;
         void display() override;

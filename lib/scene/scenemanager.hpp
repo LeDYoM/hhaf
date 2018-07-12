@@ -10,8 +10,10 @@
 #include <lib/scene/components/componentcontainer.hpp>
 #include <lib/scene/components/statescontroller.hpp>
 #include <lib/scene/scene.hpp>
+
 #include <lib/core/appservice.hpp>
 #include <lib/core/window.hpp>
+#include <lib/core/rendertarget.hpp>
 
 namespace lib
 {
@@ -38,10 +40,25 @@ namespace lib
 
 			void finish();
 
-			constexpr const Rectf32 &viewPort() const noexcept { return m_parentWindow.viewPort(); }
-            constexpr void setViewPort(Rectf32 vp) noexcept { m_parentWindow.viewPort = std::move(vp); }
-            constexpr const Rectf32 &viewRect() const noexcept { return m_parentWindow.viewRect(); }
-            constexpr void setViewRect(Rectf32 vr) noexcept { m_parentWindow.viewRect = std::move(vr); }
+            inline const Rectf32 &viewPort() const noexcept
+            {
+                return m_parentWindow.renderTarget()->viewPort();
+            }
+
+            inline void setViewPort(Rectf32 vp) noexcept
+            {
+                m_parentWindow.renderTarget()->viewPort = std::move(vp);
+            }
+
+            inline const Rectf32 &viewRect() const noexcept
+            {
+                return m_parentWindow.renderTarget()->viewRect();
+            }
+
+            inline void setViewRect(Rectf32 vr) noexcept
+            {
+                m_parentWindow.renderTarget()->viewRect = std::move(vr);
+            }
 
 			template <typename T>
 			void startFirstScene()

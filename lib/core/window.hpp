@@ -6,6 +6,7 @@
 #include "appservice.hpp"
 
 #include <lib/include/backend/iwindow.hpp>
+
 #include <lib/include/key.hpp>
 
 #include <mtypes/include/types.hpp>
@@ -22,6 +23,7 @@ namespace lib
 
     namespace core
     {
+        class RenderTarget;
         class Window : public AppService
         {
         public:
@@ -32,10 +34,7 @@ namespace lib
             virtual void onCreate();
             virtual void onDestroy();
 
-            PropertyTrigger<Rectf32> viewPort;
-            PropertyTrigger<Rectf32> viewRect;
-
-            void draw(const scene::RenderData &renderData);
+            sptr<RenderTarget> renderTarget();
 
             bool arePendingKeyPresses() const;
             bool arePendingKeyReleases() const;

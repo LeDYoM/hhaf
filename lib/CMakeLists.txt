@@ -26,6 +26,8 @@ set(SOURCE_FILES_LIST
     core/memmanager.hpp
     core/randomizer.cpp
     core/randomizer.hpp
+    core/rendertarget.hpp
+    core/rendertarget.cpp
     core/resourcemanager.cpp
     core/resourcemanager.hpp
     core/serializer.hpp

@@ -28,7 +28,8 @@ namespace lib
                         updateColor();
                     }
 
-                    host().parentWindow().draw({
+                    host().parentWindow().renderTarget()->
+                            draw({
                         m_vertices,
                         m_parent->globalTransform(),
                         texture().get()
