@@ -12,12 +12,13 @@ namespace lib
 	class SerializationStreamIn
 	{
 	public:
-		SerializationStreamIn(string_vector data) : m_data{ std::move(data) } {}
+        SerializationStreamIn() = default;
+        SerializationStreamIn(string_vector&& data) : m_data{ std::move(data) } {}
 
 		template <typename T>
 		friend SerializationStreamIn& operator>>(SerializationStreamIn&ssi, T &data);
 	private:
-		string_vector m_data;
+        string_vector m_data;
 		u32 read{ 0 };
 	};
 

@@ -153,7 +153,8 @@ namespace lib
         }
 
         template <typename T>
-        constexpr str& operator>>(T &n) {
+        constexpr str& operator>>(T &n)
+        {
             if constexpr (std::is_enum_v<T>) {
                 std::underlying_type_t<T> tmp{};
                 convert(tmp);

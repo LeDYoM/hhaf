@@ -4,14 +4,15 @@ set(UNIT_TEST_LIST
     dicty
     parpar
     str
-	vector
+    streams
+    vector
 )
 
 foreach(NAME IN LISTS UNIT_TEST_LIST)
   list(APPEND UNIT_TEST_SOURCE_LIST ${NAME}.test.cpp)
 endforeach()
 
-set(TARGET_NAME mtypes_tests)
+set(TARGET_NAME mtypes_utests)
 set(CMAKE_CXX_STANDARD 17)
 
 add_executable(${TARGET_NAME}
