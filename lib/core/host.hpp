@@ -41,16 +41,16 @@ namespace lib
 
             void exitProgram();
 
-            inline Window const &parentWindow() const noexcept { return *m_window; }
+            inline const Window &parentWindow() const noexcept { return *m_window; }
             inline Window &parentWindow() noexcept { return *m_window; }
-            inline ResourceManager const &resourceManager() const  noexcept { return *m_resourceManager; }
+            inline const ResourceManager &resourceManager() const  noexcept { return *m_resourceManager; }
             inline ResourceManager &resourceManager()  noexcept { return *m_resourceManager; }
-            inline input::InputSystem const &inputSystem() const noexcept { return *m_inputSystem; }
+            inline const input::InputSystem &inputSystem() const noexcept { return *m_inputSystem; }
             inline input::InputSystem &inputSystem() noexcept { return *m_inputSystem; }
-            inline DebugSystem const &debugSystem() const noexcept { return *m_debugSystem; }
+            inline const DebugSystem &debugSystem() const noexcept { return *m_debugSystem; }
             inline DebugSystem &debugSystem() noexcept { return *m_debugSystem; }
-            inline scene::SceneManager &sceneManager() noexcept { return *m_sceneManager; }
             inline const scene::SceneManager &sceneManager() const noexcept { return *m_sceneManager; }
+            inline scene::SceneManager &sceneManager() noexcept { return *m_sceneManager; }
 
             template <typename T>
             T &app() { return *(dynamic_cast<T*>(m_iapp.get())); }
