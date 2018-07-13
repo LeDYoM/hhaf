@@ -26,7 +26,7 @@ namespace lib
 		constexpr bool deserialize(const str&fileName, T&data) {
 			FileInput fin{ fileName };
 			if (fin.exists()) {
-				auto ssi(fin.getAsStream());
+                SerializationStreamIn ssi(fin.getAsStream());
 				ssi >> data;
 				return true;
 			}

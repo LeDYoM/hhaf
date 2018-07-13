@@ -1,6 +1,5 @@
 #pragma once
 
-
 #ifndef LIB_MTYPES_STREAMS_INCLUDE_HPP__
 #define LIB_MTYPES_STREAMS_INCLUDE_HPP__
 
