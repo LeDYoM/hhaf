@@ -17,7 +17,17 @@
 
 namespace lib::backend::sfmlb
 {
-    class RenderWindow : public IWindow, public IRenderTarget, public sf::Window, public sf::RenderTarget
+    class RenderTarget : public IRenderTarget, public sf::RenderTarget
+    {
+        void draw(const scene::Vertex *vertices, const u32 nVertex, const scene::PrimitiveType pType, const f32 *transform, const ITexture *texture) override;
+        void setViewPort(const Rectf32 &nviewport) override;
+        Rectf32 viewPort() const override;
+        void setViewRect(const Rectf32 &nviewRect) override;
+        Rectf32 viewRect() const override;
+        void clear() override;
+    };
+
+    class RenderWindow : public IWindow, public RenderTarget, public sf::Window
     {
     public:
 
@@ -25,22 +35,17 @@ namespace lib::backend::sfmlb
         virtual ~RenderWindow();
 
         bool createWindow(const WindowCreationParams &wcp) override;
-        sf::Vector2u getSize() const override;
+        sf::Vector2u getSize() const;
+
         bool activate(bool active = true) override { return sf::Window::setActive(active); }
-        void draw(const scene::Vertex *vertices, const u32 nVertex, const scene::PrimitiveType pType, const f32 *transform, const ITexture *texture) override;
 
         // Not necessary, but the headers of sf::RenderTarget in Linux, contain this definition
         bool setActive(bool active = true) { return IWindow::activate(active); }
-        void setViewPort(const Rectf32 &nviewport) override;
-        Rectf32 viewPort() const override;
-        void setViewRect(const Rectf32 &nviewRect) override;
-        Rectf32 viewRect() const override;
 
         IRenderTarget *renderTarget() override;
 
         bool processEvents() override;
         void display() override;
-        void clear() override;
         void setWindowTitle(str newTitle) override;
         void closeWindow() override;
 
@@ -60,6 +65,7 @@ namespace lib::backend::sfmlb
 
         std::queue<input::Key> m_keysPressed;
         std::queue<input::Key> m_keysReleased;
+
     };
 
     class WindowBackendInfo : public IWindowProviderInfo

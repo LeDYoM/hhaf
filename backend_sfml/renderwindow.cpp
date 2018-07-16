@@ -9,6 +9,45 @@
 
 namespace lib::backend::sfmlb
 {
+    void RenderTarget::draw(const scene::Vertex *vertices, const u32 nVertex, const scene::PrimitiveType pType, const f32 *transform, const ITexture *texture)
+    {
+        sf::RenderTarget::draw((const sf::Vertex*)vertices, nVertex,
+            static_cast<sf::PrimitiveType>(pType),
+            asRenderStates(transform,texture));
+    }
+
+    void RenderTarget::setViewPort(const Rectf32 & nviewport)
+    {
+        sf::View currentView(getView());
+        currentView.setViewport(fromRect(nviewport));
+        setView(currentView);
+    }
+
+    Rectf32 RenderTarget::viewPort() const
+    {
+        sf::View currentView(getView());
+        return toRect(currentView.getViewport());
+    }
+
+    void RenderTarget::setViewRect(const Rectf32 & nviewRect)
+    {
+        sf::View currentView(getView());
+        currentView.setCenter(fromVector2d(nviewRect.center()));
+        currentView.setSize(fromVector2d(nviewRect.size()));
+        setView(currentView);
+    }
+
+    Rectf32 RenderTarget::viewRect() const
+    {
+        sf::View currentView(getView());
+        return rectFromCenterAndSize(toVector2d(currentView.getCenter()), toVector2d(currentView.getSize()));
+    }
+
+    void RenderTarget::clear()
+    {
+        sf::RenderTarget::clear();
+    }
+
     RenderWindow::RenderWindow() {}
 	RenderWindow::~RenderWindow() {}
 
@@ -30,40 +69,6 @@ namespace lib::backend::sfmlb
 	{
 		return Window::getSize();
 	}
-
-	void RenderWindow::draw(const scene::Vertex *vertices, const u32 nVertex, const scene::PrimitiveType pType, const f32 *transform, const ITexture *texture)
-	{
-		RenderTarget::draw((const sf::Vertex*)vertices, nVertex,
-			static_cast<sf::PrimitiveType>(pType),
-			asRenderStates(transform,texture));
-	}
-
-    void RenderWindow::setViewPort(const Rectf32 & nviewport)
-	{
-		sf::View currentView(getView());
-		currentView.setViewport(fromRect(nviewport));
-		setView(currentView);
-	}
-
-	Rectf32 RenderWindow::viewPort() const
-	{
-		sf::View currentView(getView());
-		return toRect(currentView.getViewport());
-	}
-
-	void RenderWindow::setViewRect(const Rectf32 & nviewRect)
-	{
-		sf::View currentView(getView());
-		currentView.setCenter(fromVector2d(nviewRect.center()));
-		currentView.setSize(fromVector2d(nviewRect.size()));
-		setView(currentView);
-	}
-
-	Rectf32 RenderWindow::viewRect() const
-	{
-		sf::View currentView(getView());
-        return rectFromCenterAndSize(toVector2d(currentView.getCenter()), toVector2d(currentView.getSize()));
-    }
 
     IRenderTarget* RenderWindow::renderTarget()
     {
@@ -100,11 +105,6 @@ namespace lib::backend::sfmlb
 	void RenderWindow::display()
 	{
 		Window::display();
-	}
-
-	void RenderWindow::clear()
-	{
-		RenderTarget::clear();
 	}
 
 	void RenderWindow::setWindowTitle(str newTitle)
