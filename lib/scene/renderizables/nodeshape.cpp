@@ -35,9 +35,6 @@ namespace lib::scene::nodes
 
             vertices[nPoints + 1].position = vertices[1].position;
             vertices[0].position = (cBox.size() / 2) + leftTop;
-
-            // Update the bounding rectangle
-            setBounds(cBox);
         }
 	}
 }

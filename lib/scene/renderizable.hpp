@@ -23,32 +23,30 @@ namespace lib
 
             void render();
 
-            constexpr Rectf32 bounds() const noexcept { return m_bounds; }
+            PropertyTrigger<Rectf32> box;
 
             PropertyState<Color> color;
             BasicProperty<bool> visible{ true };
 
-            template <typename T>
-            constexpr T *const rnCast() {
-                return dynamic_cast<T *const>(this);
-            }
+            void setTextureAndTextureRect(sptr<Texture> texture_,
+                                          const Rectf32& textRect);
 
-            template <typename T>
-            constexpr const T *const rnCast() const {
-                return dynamic_cast<const T *const>(this);
-            }
+            void setTextureFill(sptr<Texture> texture_);
 
         private:
             SceneNode *m_parent;
 
         protected:
-            virtual void updateGeometry() = 0;
-            void setBounds(Rectf32 bounds);
+            PropertyState<Rects32> textureRect;
             PropertyState<sptr<Texture>> texture;
+
             VertexArray m_vertices;
             bool m_geometryNeedsUpdate{ true };
         private:
-            Rectf32 m_bounds{};
+            virtual void updateGeometrySimpleNode() = 0;
+            void updateTextureCoords();
+
+            void updateGeometry();
             void updateColor();
         };
     }

@@ -18,19 +18,6 @@ namespace lib::scene
         public:
             ISimpleNode(SceneNode *const parent, const str &name, const u32 pointCount);
             virtual ~ISimpleNode() {}
-
-            PropertyTrigger<Rectf32> box;
-
-            void setTextureAndTextureRect(sptr<Texture> texture_,
-                                          const Rectf32& textRect);
-
-            void setTextureFill(sptr<Texture> texture_);
-        protected:
-            PropertyState<Rects32> textureRect;
-            void updateGeometry();
-            void updateTextureCoords();
-
-            virtual void updateGeometrySimpleNode() = 0;
         };
     }
 }
