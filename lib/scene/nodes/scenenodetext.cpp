@@ -1,6 +1,6 @@
 #include "scenenodetext.hpp"
 
-#include <lib/scene/ttfont.hpp>
+#include <lib/scene/font.hpp>
 #include <lib/scene/texture.hpp>
 #include <lib/include/core/log.hpp>
 #include <lib/scene/vertexarray.hpp>
@@ -22,28 +22,25 @@ namespace lib::scene::nodes
     {
         BaseClass::update();
 
-        if (font.hasChanged() || characterSize.hasChanged()
-                || text.hasChanged())
+        if (font.hasChanged() || text.hasChanged())
         {
             clearSceneNodes();
 
-            if (font() && characterSize() && !(text()().empty()))
+            if (font() && !(text()().empty()))
             {
-                auto texture(font()->getTexture(characterSize()));
-                if (ps_readResetHasChanged(font, characterSize))
+                auto texture(font()->getTexture());
+                if (ps_readResetHasChanged(font))
                 {
-                        font()->ensureLoadASCIIGlyps(characterSize());
-                        texture = font()->getTexture(characterSize());
+                        texture = font()->getTexture();
                         text.setChanged();
                 }
 
                 if (ps_readResetHasChanged(text))
                 {
-                    const u32 currentCharacterSize{ characterSize() };
-                    const f32 vspace{ font()->getLineSpacing(currentCharacterSize) };
+                    const f32 vspace{ font()->getLineSpacing() };
 
                     f32 x{ 0.f };
-                    f32 y{ static_cast<f32>(currentCharacterSize) };
+                    f32 y{ 0.f };
 
                     // Create one quad for each character
                     f32 minX{ y };
@@ -54,7 +51,7 @@ namespace lib::scene::nodes
                     for (auto&& curChar : text()())
                     {
                         // Apply the kerning offset
-                        x += font()->getKerning(prevChar, curChar, currentCharacterSize);
+                        x += font()->getKerning(prevChar, curChar);
                         prevChar = curChar;
 
                         // Handle special characters
@@ -63,7 +60,7 @@ namespace lib::scene::nodes
                             // Update the current bounds (min coordinates)
                             minX = min(minX, x);
                             minY = min(minY, y);
-                            const f32 hspace{ font()->getGlyph(L' ', currentCharacterSize).advance };
+                            const f32 hspace{ font()->getGlyph(L' ').advance };
 
                             switch (curChar)
                             {
@@ -78,7 +75,7 @@ namespace lib::scene::nodes
                         }
                         else
                         {
-                            const TTGlyph glyph{ font()->getGlyph(curChar, currentCharacterSize) };
+                            const TTGlyph glyph{ font()->getGlyph(curChar) };
                             const Rectf32 textureUV{ glyph.textureBounds};
                             const Rectf32 letterBox{ glyph.bounds + vector2df{ x,y } };
 

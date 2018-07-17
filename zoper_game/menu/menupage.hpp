@@ -56,10 +56,9 @@ namespace zoper
 		size_type m_previouslySelectedItem{ 0 };
 		size_type m_selectedItem{ 0 };
 
-		sptr<TTFont> m_normalFont;
+        sptr<Font> m_normalFont;
 		Color m_normalColor;
 		Color m_selectedColor;
-		size_type m_normalCharacterSize;
 		ireceiver m_receiver;
 		MenuPageMode m_pageMode;
 	};

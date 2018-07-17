@@ -21,10 +21,10 @@ namespace zoper
 
         auto statesController( ensureComponentOfType<StatesController<HighScoresSceneStates>>());
 
-		m_normalFont = resourceManager().getResource<TTFont>("menu.mainFont", "resources/oldct.ttf");
+        m_normalFont = resourceManager().getResource<TTFont>
+                       ("menu.mainFont", "resources/oldct.ttf")->font(72);
 		m_normalColor = colors::Blue;
 		m_selectedColor = colors::Red;
-		m_normalCharacterSize = 72;
 
 		m_resources = msptr<HighScoresResources>();
 		m_resources->loadResources(resourceManager());

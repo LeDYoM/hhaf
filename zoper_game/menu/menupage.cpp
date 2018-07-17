@@ -7,6 +7,7 @@
 #include <lib/core/host.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/scene/ttfont.hpp>
+#include <lib/scene/font.hpp>
 #include <lib/include/key.hpp>
 
 #include <mtypes/include/function.hpp>
@@ -26,10 +27,10 @@ namespace zoper
 	void MenuPage::onCreated()
 	{
         BaseClass::onCreated();
-		m_normalFont = resourceManager().getResource<TTFont>("menu.mainFont", "resources/oldct.ttf");
+        m_normalFont = resourceManager().getResource<TTFont>
+                       ("menu.mainFont", "resources/oldct.ttf")->font(72);
 		m_normalColor = colors::Blue;
 		m_selectedColor = colors::Red;
-		m_normalCharacterSize = 72;
 
 		auto input = ensureComponentOfType<MenuPageInputComponent>();
 		input->Up.connect({ this, &MenuPage::goUp });
@@ -122,7 +123,6 @@ namespace zoper
 	{
         ntext->textColor.set(FillColor_t(m_normalColor));
         ntext->font.set(m_normalFont);
-        ntext->characterSize.set(m_normalCharacterSize);
 	}
 
 	void MenuPage::goDown()

@@ -5,42 +5,53 @@
 
 #include <lib/core/backendfactory.hpp>
 
+#include <map>
+
 namespace lib::scene
 {
     using namespace backend;
 
-    TTFont::TTFont(backend::ITTFont* font) : m_font{ std::move(font) } {}
+    struct TTFont::FontPrivate
+    {
+        ITTFont *m_font;
+        std::map<u32,sptr<TTFontInstance>> m_fontMap;
+    };
+
+    TTFont::TTFont(backend::ITTFont* font) :
+        m_private{ new FontPrivate{ std::move(font) } } {}
+
+    TTFont::~TTFont() = default;
 
     bool TTFont::loadFromFile(const str & filename)
     {
-        m_font = ttfontFactory().loadFromFile(filename);
-        return m_font != nullptr;
+        m_private->m_font = ttfontFactory().loadFromFile(filename);
+        return m_private->m_font != nullptr;
     }
 
     TTGlyph TTFont::getGlyph(const u32 codePoint, const u32 characterSize) const
     {
-        return TTGlyph(m_font->getGlyph(codePoint, characterSize));
+        return TTGlyph(m_private->m_font->getGlyph(codePoint, characterSize));
     }
 
     f32 TTFont::getLineSpacing(const u32 characterSize) const
     {
-        return m_font->getLineSpacing(characterSize);
+        return m_private->m_font->getLineSpacing(characterSize);
     }
 
     f32 TTFont::getKerning(const u32 first, const u32 second, const u32 characterSize) const
     {
-        return m_font->getKerning(first, second, characterSize);
+        return m_private->m_font->getKerning(first, second, characterSize);
     }
 
     sptr<Texture> TTFont::getTexture(const u32 characterSize) const
     {
-        return msptr<Texture>(m_font->getTexture(characterSize));
+        return msptr<Texture>(m_private->m_font->getTexture(characterSize));
     }
 
     void TTFont::ensureLoadGlyphs(const u32 first, const u32 last, const u32 characterSize)
     {
         for (u32 codePoint = first; codePoint <= last; ++codePoint) {
-            (void)(m_font->getGlyph(codePoint, characterSize));
+            (void)(m_private->m_font->getGlyph(codePoint, characterSize));
         }
     }
 
@@ -104,5 +115,51 @@ namespace lib::scene
             }
         }
         return max;
+    }
+
+    sptr<Font> TTFont::font(const u32 charactersize)
+    {
+        if (auto iterator = m_private->m_fontMap.find(charactersize);
+                iterator == m_private->m_fontMap.end())
+        {
+            sptr<TTFontInstance> newFont{new TTFontInstance{*this,charactersize}};
+            m_private->m_fontMap[charactersize] = newFont;
+            ensureLoadASCIIGlyps(charactersize);
+            return newFont;
+        }
+        else
+        {
+            return (*iterator).second;
+        }
+    }
+
+    TTFontInstance::TTFontInstance(const TTFont &parent, u32 characterSize)
+        : m_parentInstance{parent}, m_characterSize{characterSize}
+    {
+    }
+
+    TTGlyph TTFontInstance::getGlyph(const u32 codePoint) const
+    {
+        return m_parentInstance.getGlyph(codePoint, m_characterSize);
+    }
+
+    f32 TTFontInstance::getLineSpacing() const
+    {
+        return m_parentInstance.getLineSpacing(m_characterSize);
+    }
+
+    f32 TTFontInstance::getKerning(const u32 first, const u32 second) const
+    {
+        return m_parentInstance.getKerning(first, second, m_characterSize);
+    }
+
+    sptr<Texture> TTFontInstance::getTexture() const
+    {
+        return m_parentInstance.getTexture(m_characterSize);
+    }
+
+    vector2df TTFontInstance::textSize(const str&text) const
+    {
+        return m_parentInstance.textSize(text, m_characterSize);
     }
 }

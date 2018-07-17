@@ -30,10 +30,9 @@ namespace zoper
 		sptr<HighScoresResources> m_resources;
 		sptr<lib::scene::nodes::NodeQuad> m_background;
 		sptr<HighScoreTextController> m_highScoreTextController;
-		sptr<scene::TTFont> m_normalFont;
+        sptr<scene::Font> m_normalFont;
 		scene::Color m_normalColor;
 		scene::Color m_selectedColor;
-		size_type m_normalCharacterSize;
 		ireceiver m_receiver;
 	};
 }

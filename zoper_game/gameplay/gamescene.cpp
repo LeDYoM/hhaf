@@ -50,22 +50,21 @@ namespace zoper
 
         m_gameresources.loadResources(host().resourceManager());
 
-        m_scoreQuad = createSceneNode<TextQuad>("score", m_gameresources.scoreFont, 90, colors::White, vector2df{600, 300});
+        m_scoreQuad = createSceneNode<TextQuad>("score", m_gameresources.scoreFont->font(90), colors::White, vector2df{600, 300});
         m_scoreQuad->position.set(vector2df{ 50, 50 });
         m_scoreQuad->text(vector2dst{0,0})->text.set(Text_t("Level:"));
         m_scoreQuad->text(vector2dst{0,0})->textColor = FillColor_t(colors::Blue);
         m_scoreQuad->text(vector2dst{0,1})->text.set(Text_t("Score:"));
         m_scoreQuad->text(vector2dst{0,1})->textColor = FillColor_t(colors::Blue);
 
-        m_goalQuad = createSceneNode<TextQuad>("goal", m_gameresources.scoreFont, 90, colors::White, vector2df{600, 300});
+        m_goalQuad = createSceneNode<TextQuad>("goal", m_gameresources.scoreFont->font(90), colors::White, vector2df{600, 300});
         m_goalQuad->position.set(vector2df{ 1250, 50 });
         m_goalQuad->text(vector2dst{0,0})->textColor = FillColor_t(colors::Blue);
         m_goalQuad->text(vector2dst{0,1})->textColor = FillColor_t(colors::Blue);
 
         m_pauseText = m_pauseSceneNode->createSceneNode<SceneNodeText>("pausetext");
         m_pauseText->text.set(Text_t("PAUSE"));
-        m_pauseText->font.set(m_gameresources.scoreFont);
-        m_pauseText->characterSize.set(180);
+        m_pauseText->font.set(m_gameresources.scoreFont->font(180));
         m_pauseText->textColor.set(FillColor_t{colors::White});
         {
             auto align(m_pauseText->ensureComponentOfType<AlignedTextComponent>());
@@ -79,8 +78,7 @@ namespace zoper
 
         auto gameText(m_gameOverrg->createSceneNode<SceneNodeText>("gameovergame"));
         gameText->text.set(Text_t("GAME"));
-        gameText->font.set(m_gameresources.scoreFont);
-        gameText->characterSize.set(360);
+        gameText->font.set(m_gameresources.scoreFont->font(360));
         gameText->textColor.set(FillColor_t{colors::White});
         {
             auto align(gameText->ensureComponentOfType<AlignedTextComponent>());
@@ -91,8 +89,7 @@ namespace zoper
 
         auto overText(m_gameOverrg->createSceneNode<SceneNodeText>("gameoverover"));
         overText->text.set(Text_t("OVER"));
-        overText->font.set(m_gameresources.scoreFont);
-        overText->characterSize.set(360);
+        overText->font.set(m_gameresources.scoreFont->font(360));
         overText->textColor.set(FillColor_t{colors::White});
         {
             auto align(overText->ensureComponentOfType<AlignedTextComponent>());

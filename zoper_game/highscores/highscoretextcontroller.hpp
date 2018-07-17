@@ -35,10 +35,9 @@ namespace zoper
         void standarizeText(const sptr<nodes::SceneNodeText>&ntext);
 		void saveHighScores();
 		HighScoresData m_hsData;
-		sptr<TTFont> m_normalFont;
+        sptr<Font> m_normalFont;
 		Color m_normalColor;
 		Color m_selectedColor;
-		size_type m_normalCharacterSize;
 	};
 }
 

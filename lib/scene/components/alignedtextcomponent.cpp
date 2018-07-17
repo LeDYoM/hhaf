@@ -1,7 +1,7 @@
 #include "alignedtextcomponent.hpp"
 
 #include <lib/scene/nodes/scenenodetext.hpp>
-#include <lib/scene/ttfont.hpp>
+#include <lib/scene/font.hpp>
 
 namespace lib::scene
 {
@@ -14,15 +14,13 @@ namespace lib::scene
                     attachedNodeAs<nodes::SceneNodeText>());
         if (as_rr_hasChanged || alignmentX.readResetHasChanged()) {
             updateAlignmentX(nodeText->font()->textSize(
-                                 nodeText->text()(),
-                                 nodeText->characterSize()).x);
+                                 nodeText->text()()).x);
         }
 
         if (as_rr_hasChanged || alignmentY.readResetHasChanged())
         {
             updateAlignmentY(nodeText->font()->textSize(
-                                 nodeText->text()(),
-                                 nodeText->characterSize()).y);
+                                 nodeText->text()()).y);
         }
     }
 

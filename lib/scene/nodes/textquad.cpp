@@ -4,8 +4,7 @@
 
 namespace lib::scene::nodes
 {
-    TextQuad::TextQuad(SceneNode * parent, str name, sptr<TTFont> font,
-                       const u32 characterSize, const Color &color,
+    TextQuad::TextQuad(SceneNode * parent, str name, sptr<Font> font, const Color &color,
                        const vector2df & size)
         : BaseClass{ parent, std::move(name) }, m_size { size }
     {
@@ -14,7 +13,6 @@ namespace lib::scene::nodes
         {
             auto node = createNodeAt({count%2, count/2}, name + "node_" + make_str(count));
             node->font = font;
-            node->characterSize = characterSize;
             node->textColor.set(FillColor_t(color));
         }
 

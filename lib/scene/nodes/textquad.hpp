@@ -13,8 +13,7 @@ namespace lib::scene::nodes
     public:
         using BaseClass = TableNode<SceneNodeText>;
         TextQuad(SceneNode *parent, str name,
-                 sptr<TTFont> font, const u32 characterSize,
-                 const Color &color, const vector2df &size);
+                 sptr<Font> font, const Color &color, const vector2df &size);
         virtual ~TextQuad();
 
         inline sptr<SceneNodeText> text(vector2dst index) const noexcept

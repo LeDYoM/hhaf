@@ -92,6 +92,7 @@ set(SOURCE_FILES_LIST
     scene/renderizables/nodeshape.hpp
 
     scene/color.hpp
+    scene/font.hpp
     scene/hasname.hpp
     scene/ianimation.hpp
     scene/renderdata.hpp

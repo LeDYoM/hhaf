@@ -23,10 +23,10 @@ namespace zoper
 	{
 		BaseClass::onCreated();
 
-		m_normalFont = resourceManager().getResource<TTFont>("menu.mainFont", "resources/oldct.ttf");
+        m_normalFont = resourceManager().getResource<TTFont>
+                       ("menu.mainFont", "resources/oldct.ttf")->font(72);
 		m_normalColor = colors::Blue;
 		m_selectedColor = colors::Red;
-		m_normalCharacterSize = 72;
 
 		// Request the high scores.
 		m_hsData.read();
@@ -75,7 +75,6 @@ namespace zoper
 	{
         ntext->textColor.set(FillColor_t(m_normalColor));
         ntext->font.set(m_normalFont);
-        ntext->characterSize.set(m_normalCharacterSize);
 	}
 
 	void HighScoreTextController::saveHighScores()

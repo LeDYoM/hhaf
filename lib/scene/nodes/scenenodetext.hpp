@@ -9,7 +9,7 @@
 
 namespace lib::scene
 {
-    class TTFont;
+    class Font;
     namespace nodes
     {
         class SceneNodeText : public SceneNode
@@ -20,8 +20,7 @@ namespace lib::scene
             virtual ~SceneNodeText();
 
             PropertyState<Text_t> text;
-            PropertyState<sptr<TTFont>> font;
-            PropertyState<u32> characterSize;
+            PropertyState<sptr<Font>> font;
             PropertyState<FillColor_t> textColor;
         protected:
             void update() override;
