@@ -30,6 +30,19 @@ namespace zoper
 
     using namespace lib;
 
+    class GameSceneData
+    {
+    public:
+        GameSceneData() {}
+        ~GameSceneData() {}
+
+        void createData(SceneNode&sceneNode);
+
+        sptr<scene::SceneNode> m_mainBoardrg, m_gameOverrg, m_levelrg, m_pauseSceneNode, m_gameOverText;
+        sptr<scene::nodes::TextQuad> m_scoreQuad, m_goalQuad;
+        sptr<scene::nodes::SceneNodeText> m_pauseText;
+    };
+
     class GameScene final : public scene::Scene, public scene::StatesControllerActuator<size_type>
     {
     public:
@@ -44,6 +57,7 @@ namespace zoper
         void onExitState(const size_type&) override;
 
     private:
+        sptr<GameSceneData> m_data;
         using BaseClass = scene::Scene;
         void setLevel(const u32 nv);
         void updateLevelData();
@@ -92,11 +106,7 @@ namespace zoper
         TokenZones m_tokenZones;
         sptr<Player> m_player{ nullptr };
 
-        // Nodes from the scene
-        sptr<scene::SceneNode> m_mainBoardrg, m_gameOverrg, m_levelrg, m_pauseSceneNode, m_gameOverText;
-        sptr<scene::nodes::TextQuad> m_scoreQuad, m_goalQuad;
-        sptr<scene::nodes::SceneNodeText> m_pauseText;
-		sptr<BoardGroup> m_boardGroup;
+        // Nodes from the scene		sptr<BoardGroup> m_boardGroup;
     };
 }
 

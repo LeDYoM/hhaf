@@ -37,27 +37,23 @@ namespace zoper
 
     GameScene::GameScene() : Scene("GameScene") {}
 
-    GameScene::~GameScene() {}
+    GameScene::~GameScene() = default;
 
-    void GameScene::onCreated()
+    void GameSceneData::createData(SceneNode& sceneNode)
     {
-        BaseClass::onCreated();
+        m_mainBoardrg = sceneNode.createSceneNode("mainBoard");
+        m_gameOverrg = sceneNode.createSceneNode("gameOverScreen");
+        m_levelrg = sceneNode.createSceneNode("level");
+        m_pauseSceneNode = sceneNode.createSceneNode("pause");
 
-        m_mainBoardrg = createSceneNode("mainBoard");
-        m_gameOverrg = createSceneNode("gameOverScreen");
-        m_levelrg = createSceneNode("level");
-        m_pauseSceneNode = createSceneNode("pause");
-
-        m_gameresources.loadResources(host().resourceManager());
-
-        m_scoreQuad = createSceneNode<TextQuad>("score", m_gameresources.scoreFont->font(90), colors::White, vector2df{600, 300});
+        m_scoreQuad = sceneNode.createSceneNode<TextQuad>("score", m_gameresources.scoreFont->font(90), colors::White, vector2df{600, 300});
         m_scoreQuad->position.set(vector2df{ 50, 50 });
         m_scoreQuad->text(vector2dst{0,0})->text.set(Text_t("Level:"));
         m_scoreQuad->text(vector2dst{0,0})->textColor = FillColor_t(colors::Blue);
         m_scoreQuad->text(vector2dst{0,1})->text.set(Text_t("Score:"));
         m_scoreQuad->text(vector2dst{0,1})->textColor = FillColor_t(colors::Blue);
 
-        m_goalQuad = createSceneNode<TextQuad>("goal", m_gameresources.scoreFont->font(90), colors::White, vector2df{600, 300});
+        m_goalQuad = sceneNode.createSceneNode<TextQuad>("goal", m_gameresources.scoreFont->font(90), colors::White, vector2df{600, 300});
         m_goalQuad->position.set(vector2df{ 1250, 50 });
         m_goalQuad->text(vector2dst{0,0})->textColor = FillColor_t(colors::Blue);
         m_goalQuad->text(vector2dst{0,1})->textColor = FillColor_t(colors::Blue);
@@ -68,12 +64,12 @@ namespace zoper
         m_pauseText->textColor.set(FillColor_t{colors::White});
         {
             auto align(m_pauseText->ensureComponentOfType<AlignedTextComponent>());
-            align->alignmentSize.set(scenePerspective().size());
+            align->alignmentSize.set(sceneNode.scenePerspective().size());
             align->alignmentX.set(AlignedTextComponent::AlignmentX::Center);
             align->alignmentY.set(AlignedTextComponent::AlignmentY::Middle);
         }
 
-        vector2df gosize{ scenePerspective().width, 715 };
+        vector2df gosize{ sceneNode.scenePerspective().width, 715 };
         m_gameOverrg->position.set({0, 575});
 
         auto gameText(m_gameOverrg->createSceneNode<SceneNodeText>("gameovergame"));
@@ -98,9 +94,23 @@ namespace zoper
             align->alignmentY.set(AlignedTextComponent::AlignmentY::Bottom);
         }
 
-        increaseScore(0);
-
         m_levelrg->position = vector2df{ 1250, 50 };
+
+        m_gameOverrg->visible = false;
+        m_mainBoardrg->visible = true;
+        m_pauseSceneNode->visible = false;
+    }
+
+    void GameScene::onCreated()
+    {
+        BaseClass::onCreated();
+
+        m_data = msptr<GameSceneData>();
+        m_data->createData(*this);
+
+        m_gameresources.loadResources(host().resourceManager());
+
+        increaseScore(0);
 
         using namespace lib::board;
 
@@ -123,7 +133,7 @@ namespace zoper
         p_boardModel->TileRemoved.connect([this](const vector2dst position_, SITilePointer tile) {
 			if (auto ztile = std::dynamic_pointer_cast<Tile>(tile)) {
 				lib::log_debug_info("Deleting token ", ztile->name(), " from scene at position ", position_);
-				m_mainBoardrg->removeSceneNode(ztile);
+                m_data->m_mainBoardrg->removeSceneNode(ztile);
 			} /*else if (auto ztile_ = std::dynamic_pointer_cast<Player>(tile)) {
 			  // Actually, never used
 			  }*/
@@ -156,9 +166,6 @@ namespace zoper
         m_nextTokenPart = 0;
         importGameSharedData();
         m_score = 0;
-        m_gameOverrg->visible = false;
-        m_mainBoardrg->visible = true;
-        m_pauseSceneNode->visible = false;
 
         switch (m_gameMode)
         {
