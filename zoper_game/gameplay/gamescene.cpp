@@ -121,7 +121,7 @@ namespace zoper
 
         m_tokenZones.generateTokenZones();
 
-        p_boardModel = this->ensureComponentOfType<BoardModelComponent>();
+        p_boardModel = ensureComponentOfType<BoardModelComponent>();
         p_boardModel->initialize(m_tokenZones.size);
 
         p_boardModel->TileAdded.connect([this](const vector2dst position_, SITilePointer tile) {
@@ -284,7 +284,7 @@ namespace zoper
         m_consumedTokens = 0;
 
         // Update background tiles
-        m_boardGroup->for_each_tableSceneNode([this](const auto position, auto node) {
+        m_data->m_boardGroup->for_each_tableSceneNode([this](const auto position, auto node) {
             node->setTileColor(levelProperties.getBackgroundTileColor(position, pointInCenter(position)));
         });
 
@@ -536,8 +536,8 @@ namespace zoper
 
     void GameScene::tilesCreated()
     {
-        assert_debug(!m_boardGroup, "m_boardGroup is not empty");
-        m_boardGroup = createSceneNode<BoardGroup>("BoardGroup", m_tokenZones.size);
+        assert_debug(!m_data->m_boardGroup, "m_boardGroup is not empty");
+        m_data->m_boardGroup = createSceneNode<BoardGroup>("BoardGroup", m_tokenZones.size);
 
         moveLastBeforeNode(m_data->m_mainBoardrg);
     }

@@ -38,9 +38,14 @@ namespace zoper
 
         void createData(SceneNode&sceneNode, const GameMode gameMode);
 
-        sptr<scene::SceneNode> m_mainBoardrg, m_gameOverrg, m_levelrg, m_pauseSceneNode, m_gameOverText;
+        sptr<scene::SceneNode> m_mainBoardrg;
+        sptr<scene::SceneNode> m_gameOverrg;
+        sptr<scene::SceneNode> m_levelrg;
+        sptr<scene::SceneNode> m_pauseSceneNode;
+        sptr<scene::SceneNode> m_gameOverText;
         sptr<scene::nodes::TextQuad> m_scoreQuad, m_goalQuad;
         sptr<scene::nodes::SceneNodeText> m_pauseText;
+        sptr<BoardGroup> m_boardGroup;
         GameResourcesLoader m_gameresources;
     };
 
@@ -105,9 +110,6 @@ namespace zoper
         LevelProperties levelProperties;
         TokenZones m_tokenZones;
         sptr<Player> m_player{ nullptr };
-
-        // Nodes from the scene
-        sptr<BoardGroup> m_boardGroup;
     };
 }
 
