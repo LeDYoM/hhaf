@@ -1,5 +1,5 @@
 #include "scene.hpp"
-#include "renderizable.hpp"
+#include <lib/scene/renderizables/renderizable.hpp>
 
 #include <lib/include/core/log.hpp>
 #include <lib/core/window.hpp>
@@ -8,7 +8,7 @@
 #include <type_traits>
 
 namespace lib::scene
-	{
+{
 	Scene::Scene(str name) : SceneNode{ nullptr,std::move(name) } {}
 
 	Scene::~Scene() = default;

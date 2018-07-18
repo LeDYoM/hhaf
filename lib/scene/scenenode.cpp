@@ -1,5 +1,5 @@
 #include "scenenode.hpp"
-#include "renderizable.hpp"
+#include <lib/scene/renderizables/renderizable.hpp>
 #include "scene.hpp"
 
 #include <lib/core/window.hpp>

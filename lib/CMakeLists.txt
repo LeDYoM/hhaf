@@ -88,14 +88,14 @@ set(SOURCE_FILES_LIST
     scene/renderizables/nodequad.hpp
     scene/renderizables/nodeshape.cpp
     scene/renderizables/nodeshape.hpp
+    scene/renderizables/renderizable.cpp
+    scene/renderizables/renderizable.hpp
 
     scene/color.hpp
     scene/font.hpp
     scene/hasname.hpp
     scene/ianimation.hpp
     scene/renderdata.hpp
-    scene/renderizable.cpp
-    scene/renderizable.hpp
     scene/scene.cpp
     scene/scene.hpp
     scene/scenemanager.cpp

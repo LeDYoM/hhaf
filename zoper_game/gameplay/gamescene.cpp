@@ -16,7 +16,7 @@
 #include <lib/include/core/log.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/core/randomizer.hpp>
-#include <lib/scene/renderizable.hpp>
+#include <lib/scene/renderizables/renderizable.hpp>
 #include <lib/scene/scenemanager.hpp>
 #include <lib/scene/renderizables/nodeshape.hpp>
 #include <lib/scene/renderizables/nodequad.hpp>

@@ -1,9 +1,10 @@
 #include "renderizable.hpp"
 #include <lib/core/host.hpp>
-#include "scenemanager.hpp"
-#include "renderdata.hpp"
-#include "scenenode.hpp"
-#include "texture.hpp"
+
+#include <lib/scene/scenemanager.hpp>
+#include <lib/scene/renderdata.hpp>
+#include <lib/scene/scenenode.hpp>
+#include <lib/scene/texture.hpp>
 
 namespace lib::scene
 {

@@ -1,12 +1,15 @@
-#ifndef __LIB_RENDERIZABLE_HPP__
-#define __LIB_RENDERIZABLE_HPP__
+#pragma once
 
-#include "transformable.hpp"
-#include "color.hpp"
-#include <lib/scene/hasname.hpp>
+#ifndef LIB_SCENE_RENDERIZABLE_INCLUDE_HPP__
+#define LIB_SCENE_RENDERIZABLE_INCLUDE_HPP__
+
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/properties.hpp>
-#include "vertexarray.hpp"
+
+#include <lib/scene/transformable.hpp>
+#include <lib/scene/color.hpp>
+#include <lib/scene/hasname.hpp>
+#include <lib/scene/vertexarray.hpp>
 
 namespace lib
 {

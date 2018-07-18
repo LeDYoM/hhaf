@@ -5,7 +5,8 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
-#include <lib/scene/renderizable.hpp>
+
+#include <lib/scene/renderizables/renderizable.hpp>
 
 namespace lib::scene::nodes
 {
