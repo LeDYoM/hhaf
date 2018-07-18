@@ -36,11 +36,12 @@ namespace zoper
         GameSceneData() {}
         ~GameSceneData() {}
 
-        void createData(SceneNode&sceneNode);
+        void createData(SceneNode&sceneNode, const GameMode gameMode);
 
         sptr<scene::SceneNode> m_mainBoardrg, m_gameOverrg, m_levelrg, m_pauseSceneNode, m_gameOverText;
         sptr<scene::nodes::TextQuad> m_scoreQuad, m_goalQuad;
         sptr<scene::nodes::SceneNodeText> m_pauseText;
+        GameResourcesLoader m_gameresources;
     };
 
     class GameScene final : public scene::Scene, public scene::StatesControllerActuator<size_type>
@@ -96,7 +97,6 @@ namespace zoper
         scene::TimerConnectorSPtr m_updateLevelDataTimer;
 
         // General properties.
-        GameResourcesLoader m_gameresources;
         sptr<board::BoardModelComponent> p_boardModel{ nullptr };
         size_type m_consumedTokens{ 0 };
         size_type m_score{ 0 };
@@ -106,7 +106,8 @@ namespace zoper
         TokenZones m_tokenZones;
         sptr<Player> m_player{ nullptr };
 
-        // Nodes from the scene		sptr<BoardGroup> m_boardGroup;
+        // Nodes from the scene
+        sptr<BoardGroup> m_boardGroup;
     };
 }
 
