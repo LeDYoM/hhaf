@@ -84,8 +84,6 @@ set(SOURCE_FILES_LIST
     scene/nodes/textquad.hpp
 
     scene/renderizables/geometry_math.hpp
-    scene/renderizables/isimplenode.cpp
-    scene/renderizables/isimplenode.hpp
     scene/renderizables/nodequad.cpp
     scene/renderizables/nodequad.hpp
     scene/renderizables/nodeshape.cpp

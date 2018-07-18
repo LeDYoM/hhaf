@@ -7,8 +7,8 @@
 
 namespace lib::scene
 {
-    Renderizable::Renderizable(SceneNode * const parent, const str & name, const PrimitiveType type, const u32 vertexCount)
-        : core::HasName{ name }, m_parent{ parent }, m_vertices{ type, vertexCount }
+    Renderizable::Renderizable(SceneNode * const parent, const str & name, const u32 vertexCount)
+        : core::HasName{ name }, m_parent{ parent }, m_vertices{ TriangleFan, vertexCount }
     {
         box.setCallback([this]() { m_geometryNeedsUpdate = true; });
         textureRect.setCallback([this]() { updateTextureCoords(); });

@@ -18,7 +18,7 @@ namespace lib
         class Renderizable : public core::HasName
         {
         public:
-            Renderizable(SceneNode *const parent, const str &name, const PrimitiveType type, const u32 vertexCount);
+            Renderizable(SceneNode *const parent, const str &name, const u32 vertexCount);
             virtual ~Renderizable();
 
             void render();

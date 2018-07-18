@@ -1,18 +1,19 @@
 #pragma once
 
-#ifndef LIB_SCENE_NODEQUAD_HPP__
-#define LIB_SCENE_NODEQUAD_HPP__
+#ifndef LIB_SCENE_NODEQUAD_INCLUDE_HPP__
+#define LIB_SCENE_NODEQUAD_INCLUDE_HPP__
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
-#include "isimplenode.hpp"
+#include <lib/scene/renderizable.hpp>
 
 namespace lib::scene::nodes
 {
-	class NodeQuad : public ISimpleNode
+    class NodeQuad : public Renderizable
 	{
 	public:
-		explicit NodeQuad(SceneNode *const parent, const str &name) : ISimpleNode{ parent, name, 4 } {}
+        NodeQuad(SceneNode *const parent, const str &name)
+            : Renderizable{ parent, name, 4 + 2 } {}
 		virtual ~NodeQuad() = default;
 
 	protected:
