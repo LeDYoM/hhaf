@@ -1,14 +1,15 @@
 #pragma once
 
-#ifndef ZOOPER_GAMESCENE_INCLUDE_HPP__
-#define ZOOPER_GAMESCENE_INCLUDE_HPP__
+#ifndef ZOOPER_GAMESCENE_INCLUDE_HPP
+#define ZOOPER_GAMESCENE_INCLUDE_HPP
+
+#include "direction.hpp"
+#include "levelproperties.hpp"
+#include "boardgroup.hpp"
+#include "tokenzones.hpp"
 
 #include "../keymapping.hpp"
-#include "../gameplay/direction.hpp"
-#include "../gameplay/levelproperties.hpp"
 #include "../gameshareddata.hpp"
-#include "../gameplay/boardgroup.hpp"
-#include "../gameplay/tokenzones.hpp"
 #include "../loaders/gameresources.hpp"
 
 #include <mtypes/include/types.hpp>
@@ -27,37 +28,19 @@ namespace zoper
 {
     class Player;
     class Tile;
+    class GameSceneData;
 
     using namespace lib;
-
-    class GameSceneData
-    {
-    public:
-        GameSceneData() {}
-        ~GameSceneData() {}
-
-        void createData(SceneNode&sceneNode, const GameMode gameMode);
-
-        sptr<scene::SceneNode> m_mainBoardrg;
-        sptr<scene::SceneNode> m_gameOverrg;
-        sptr<scene::SceneNode> m_levelrg;
-        sptr<scene::SceneNode> m_pauseSceneNode;
-        sptr<scene::SceneNode> m_gameOverText;
-        sptr<scene::nodes::TextQuad> m_scoreQuad, m_goalQuad;
-        sptr<scene::nodes::SceneNodeText> m_pauseText;
-        sptr<BoardGroup> m_boardGroup;
-        GameResourcesLoader m_gameresources;
-    };
 
     class GameScene final : public scene::Scene, public scene::StatesControllerActuator<size_type>
     {
     public:
         GameScene();
-        ~GameScene();
+        ~GameScene() override;
 
         // Inherited via Scene
         virtual void onCreated() override;
-        virtual void updateScene();
+        void updateScene() override;
 
         void onEnterState(const size_type&) override;
         void onExitState(const size_type&) override;

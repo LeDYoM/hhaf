@@ -39,74 +39,6 @@ namespace zoper
 
     GameScene::~GameScene() = default;
 
-    void GameSceneData::createData(SceneNode& sceneNode, const GameMode gameMode)
-    {
-        m_gameresources.loadResources(host().resourceManager());
-
-        m_mainBoardrg = sceneNode.createSceneNode("mainBoard");
-        m_gameOverrg = sceneNode.createSceneNode("gameOverScreen");
-        m_levelrg = sceneNode.createSceneNode("level");
-        m_pauseSceneNode = sceneNode.createSceneNode("pause");
-
-        m_scoreQuad = sceneNode.createSceneNode<TextQuad>("score", m_gameresources.scoreFont->font(90), colors::White, vector2df{600, 300});
-        m_scoreQuad->position.set(vector2df{ 50, 50 });
-        m_scoreQuad->text(vector2dst{0,0})->text.set(Text_t("Level:"));
-        m_scoreQuad->text(vector2dst{0,0})->textColor = FillColor_t(colors::Blue);
-        m_scoreQuad->text(vector2dst{0,1})->text.set(Text_t("Score:"));
-        m_scoreQuad->text(vector2dst{0,1})->textColor = FillColor_t(colors::Blue);
-
-        m_goalQuad = sceneNode.createSceneNode<TextQuad>("goal", m_gameresources.scoreFont->font(90), colors::White, vector2df{600, 300});
-        m_goalQuad->position.set(vector2df{ 1250, 50 });
-        m_goalQuad->text(vector2dst{0,0})->textColor = FillColor_t(colors::Blue);
-        m_goalQuad->text(vector2dst{0,1})->textColor = FillColor_t(colors::Blue);
-
-        m_pauseText = m_pauseSceneNode->createSceneNode<SceneNodeText>("pausetext");
-        m_pauseText->text.set(Text_t("PAUSE"));
-        m_pauseText->font.set(m_gameresources.scoreFont->font(180));
-        m_pauseText->textColor.set(FillColor_t{colors::White});
-        {
-            auto align(m_pauseText->ensureComponentOfType<AlignedTextComponent>());
-            align->alignmentSize.set(sceneNode.scenePerspective().size());
-            align->alignmentX.set(AlignedTextComponent::AlignmentX::Center);
-            align->alignmentY.set(AlignedTextComponent::AlignmentY::Middle);
-        }
-
-        vector2df gosize{ sceneNode.scenePerspective().width, 715 };
-        m_gameOverrg->position.set({0, 575});
-
-        auto gameText(m_gameOverrg->createSceneNode<SceneNodeText>("gameovergame"));
-        gameText->text.set(Text_t("GAME"));
-        gameText->font.set(m_gameresources.scoreFont->font(360));
-        gameText->textColor.set(FillColor_t{colors::White});
-        {
-            auto align(gameText->ensureComponentOfType<AlignedTextComponent>());
-            align->alignmentSize.set(gosize);
-            align->alignmentX.set(AlignedTextComponent::AlignmentX::Center);
-            align->alignmentY.set(AlignedTextComponent::AlignmentY::Top);
-        }
-
-        auto overText(m_gameOverrg->createSceneNode<SceneNodeText>("gameoverover"));
-        overText->text.set(Text_t("OVER"));
-        overText->font.set(m_gameresources.scoreFont->font(360));
-        overText->textColor.set(FillColor_t{colors::White});
-        {
-            auto align(overText->ensureComponentOfType<AlignedTextComponent>());
-            align->alignmentSize.set(gosize);
-            align->alignmentX.set(AlignedTextComponent::AlignmentX::Center);
-            align->alignmentY.set(AlignedTextComponent::AlignmentY::Bottom);
-        }
-
-        m_levelrg->position = vector2df{ 1250, 50 };
-
-        m_gameOverrg->visible = false;
-        m_mainBoardrg->visible = true;
-        m_pauseSceneNode->visible = false;
-
-        m_goalQuad->text(vector2dst{0,0})->text.set(Text_t(
-                gameMode == GameMode::Token?"Tokens: ":"Time: ")
-                );
-        m_goalQuad->text(vector2dst{0,1})->text.set(Text_t("Goal: "));
-    }
 
     void GameScene::onCreated()
     {
@@ -273,12 +205,8 @@ namespace zoper
 
     void GameScene::setLevel(const u32 nv)
     {
+        levelProperties.setMode(m_gameMode);
         levelProperties.setLevel(nv);
-        log_debug_info("Level set: ", levelProperties.currentLevel());
-        log_debug_info("Millis between tokens: ", levelProperties.millisBetweenTokens());
-        log_debug_info("Current base score: ", levelProperties.baseScore());
-        log_debug_info("Seconds to next level: ", levelProperties.stayTime());
-        log_debug_info("Tokens to next level: ", levelProperties.stayTokens());
 
         m_levelTimer.restart();
         m_consumedTokens = 0;
@@ -295,18 +223,7 @@ namespace zoper
     void GameScene::updateGoals()
     {
         m_data->m_scoreQuad->text(vector2dst{1,0})->text.set(Text_t(make_str(levelProperties.currentLevel() + 1)));
-
-        switch (m_gameMode)
-        {
-        default:
-        case GameMode::Token:
-            m_data->m_goalQuad->text(vector2dst{1,1})->text.set(Text_t(make_str(levelProperties.stayTokens())));
-            break;
-
-        case GameMode::Time:
-            m_data->m_goalQuad->text(vector2dst{1,1})->text.set(Text_t(make_str(levelProperties.stayTime())));
-            break;
-        }
+        m_data->m_goalQuad->text(vector2dst{1,1})->text.set(Text_t(make_str(levelProperties.stayCounter())));
     }
 
     void GameScene::updateLevelData()
@@ -316,7 +233,7 @@ namespace zoper
         default:
         case GameMode::Token:
             m_data->m_goalQuad->text(vector2dst{1,0})->text.set(Text_t(m_consumedTokens));
-            if (m_consumedTokens >= levelProperties.stayTokens())
+            if (m_consumedTokens >= levelProperties.stayCounter())
                 setLevel(levelProperties.currentLevel() + 1);
             break;
 
@@ -324,7 +241,7 @@ namespace zoper
             m_data->m_goalQuad->text(vector2dst{1,0})->text.set(
                         Text_t(static_cast<u16>(
                                    m_levelTimer.getElapsedTime().asSeconds())));
-            if (m_levelTimer.getElapsedTime().asSeconds() >= levelProperties.stayTime())
+            if (m_levelTimer.getElapsedTime().asSeconds() >= levelProperties.stayCounter())
                 setLevel(levelProperties.currentLevel() + 1);
             break;
         }
