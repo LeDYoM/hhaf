@@ -45,7 +45,7 @@ namespace lib
 		str(const f32 n);
 		str(const f64 n);
 
-        constexpr str&operator=(str&&) noexcept = default;
+        str&operator=(str&&) noexcept = default;
         constexpr str&operator=(const str&rhs) noexcept {
             m_data = rhs.m_data;
             return *this;

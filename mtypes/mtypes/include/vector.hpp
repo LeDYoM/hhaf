@@ -157,7 +157,7 @@ namespace lib
 		}
 
 		constexpr iterator remove_if(function<bool(const T&)> condition) {
-			return remove_if(std::move(condition), begin);
+            return remove_if(std::move(condition), begin());
 		}
 
 		constexpr size_type remove_all_if(function<bool(const T&)> condition, iterator start) {

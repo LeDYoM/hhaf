@@ -1,14 +1,15 @@
 #pragma once
 
-#ifndef ZOOPER_GAMESCENE_INCLUDE_HPP__
-#define ZOOPER_GAMESCENE_INCLUDE_HPP__
+#ifndef ZOOPER_GAMESCENE_INCLUDE_HPP
+#define ZOOPER_GAMESCENE_INCLUDE_HPP
+
+#include "direction.hpp"
+#include "levelproperties.hpp"
+#include "boardgroup.hpp"
+#include "tokenzones.hpp"
 
 #include "../keymapping.hpp"
-#include "../gameplay/direction.hpp"
-#include "../gameplay/levelproperties.hpp"
 #include "../gameshareddata.hpp"
-#include "../gameplay/boardgroup.hpp"
-#include "../gameplay/tokenzones.hpp"
 #include "../loaders/gameresources.hpp"
 
 #include <mtypes/include/types.hpp>
@@ -27,6 +28,7 @@ namespace zoper
 {
     class Player;
     class Tile;
+    class GameSceneData;
 
     using namespace lib;
 
@@ -34,16 +36,17 @@ namespace zoper
     {
     public:
         GameScene();
-        ~GameScene();
+        ~GameScene() override;
 
         // Inherited via Scene
         virtual void onCreated() override;
-        virtual void updateScene();
+        void updateScene() override;
 
         void onEnterState(const size_type&) override;
         void onExitState(const size_type&) override;
 
     private:
+        sptr<GameSceneData> m_data;
         using BaseClass = scene::Scene;
         void setLevel(const u32 nv);
         void updateLevelData();
@@ -82,7 +85,6 @@ namespace zoper
         scene::TimerConnectorSPtr m_updateLevelDataTimer;
 
         // General properties.
-        GameResourcesLoader m_gameresources;
         sptr<board::BoardModelComponent> p_boardModel{ nullptr };
         size_type m_consumedTokens{ 0 };
         size_type m_score{ 0 };
@@ -91,12 +93,6 @@ namespace zoper
         LevelProperties levelProperties;
         TokenZones m_tokenZones;
         sptr<Player> m_player{ nullptr };
-
-        // Nodes from the scene
-        sptr<scene::SceneNode> m_mainBoardrg, m_gameOverrg, m_levelrg, m_pauseSceneNode, m_gameOverText;
-        sptr<scene::nodes::TextQuad> m_scoreQuad, m_goalQuad;
-        sptr<scene::nodes::SceneNodeText> m_pauseText;
-		sptr<BoardGroup> m_boardGroup;
     };
 }
 

@@ -10,8 +10,18 @@ namespace zoper
 
 	LevelProperties::LevelProperties()
 	{
-		setLevel(0);
-	}
+        setLevel(0);
+    }
+
+    LevelProperties::~LevelProperties()
+    {
+
+    }
+
+    void LevelProperties::setMode(GameMode gameMode)
+    {
+        m_gameMode = gameMode;
+    }
 
 	void LevelProperties::setLevel(const u32 level)
 	{
@@ -21,13 +31,22 @@ namespace zoper
 
 		if (m_level <= maxLevelWithProperties) {
 			m_millisBetweenTokens = 2600 - (m_level * 100);
-			m_stayTime = 180 + (m_level * 30);
-			m_stayTokens = 25 + (10 * m_level);
+            m_stayCounter = ((m_gameMode == GameMode::Time)?
+                                 180 + (m_level * 30)
+                                :
+                                 25 + (10 * m_level));
 		} else {
 			m_millisBetweenTokens = 50;
-			m_stayTime = 1200;
-			m_stayTokens = 400;
+            m_stayCounter = ((m_gameMode == GameMode::Time)?
+                                 1200
+                               :
+                                 400);
 		}
+
+        log_debug_info("Level set: ", currentLevel());
+        log_debug_info("Millis between tokens: ", millisBetweenTokens());
+        log_debug_info("Current base score: ", baseScore());
+        log_debug_info("Seconds or tokensto next level: ", stayCounter());
 	}
 
     Color LevelProperties::getBackgroundTileColor(vector2dst position, const bool isCenter) const

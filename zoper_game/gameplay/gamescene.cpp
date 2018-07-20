@@ -1,4 +1,5 @@
 #include "gamescene.hpp"
+#include "gamescenedata.hpp"
 
 #include "tile.hpp"
 #include "player.hpp"
@@ -37,76 +38,23 @@ namespace zoper
 
     GameScene::GameScene() : Scene("GameScene") {}
 
-    GameScene::~GameScene() {}
+    GameScene::~GameScene() = default;
+
 
     void GameScene::onCreated()
     {
         BaseClass::onCreated();
 
-        m_mainBoardrg = createSceneNode("mainBoard");
-        m_gameOverrg = createSceneNode("gameOverScreen");
-        m_levelrg = createSceneNode("level");
-        m_pauseSceneNode = createSceneNode("pause");
-
-        m_gameresources.loadResources(host().resourceManager());
-
-        m_scoreQuad = createSceneNode<TextQuad>("score", m_gameresources.scoreFont->font(90), colors::White, vector2df{600, 300});
-        m_scoreQuad->position.set(vector2df{ 50, 50 });
-        m_scoreQuad->text(vector2dst{0,0})->text.set(Text_t("Level:"));
-        m_scoreQuad->text(vector2dst{0,0})->textColor = FillColor_t(colors::Blue);
-        m_scoreQuad->text(vector2dst{0,1})->text.set(Text_t("Score:"));
-        m_scoreQuad->text(vector2dst{0,1})->textColor = FillColor_t(colors::Blue);
-
-        m_goalQuad = createSceneNode<TextQuad>("goal", m_gameresources.scoreFont->font(90), colors::White, vector2df{600, 300});
-        m_goalQuad->position.set(vector2df{ 1250, 50 });
-        m_goalQuad->text(vector2dst{0,0})->textColor = FillColor_t(colors::Blue);
-        m_goalQuad->text(vector2dst{0,1})->textColor = FillColor_t(colors::Blue);
-
-        m_pauseText = m_pauseSceneNode->createSceneNode<SceneNodeText>("pausetext");
-        m_pauseText->text.set(Text_t("PAUSE"));
-        m_pauseText->font.set(m_gameresources.scoreFont->font(180));
-        m_pauseText->textColor.set(FillColor_t{colors::White});
-        {
-            auto align(m_pauseText->ensureComponentOfType<AlignedTextComponent>());
-            align->alignmentSize.set(scenePerspective().size());
-            align->alignmentX.set(AlignedTextComponent::AlignmentX::Center);
-            align->alignmentY.set(AlignedTextComponent::AlignmentY::Middle);
-        }
-
-        vector2df gosize{ scenePerspective().width, 715 };
-        m_gameOverrg->position.set({0, 575});
-
-        auto gameText(m_gameOverrg->createSceneNode<SceneNodeText>("gameovergame"));
-        gameText->text.set(Text_t("GAME"));
-        gameText->font.set(m_gameresources.scoreFont->font(360));
-        gameText->textColor.set(FillColor_t{colors::White});
-        {
-            auto align(gameText->ensureComponentOfType<AlignedTextComponent>());
-            align->alignmentSize.set(gosize);
-            align->alignmentX.set(AlignedTextComponent::AlignmentX::Center);
-            align->alignmentY.set(AlignedTextComponent::AlignmentY::Top);
-        }
-
-        auto overText(m_gameOverrg->createSceneNode<SceneNodeText>("gameoverover"));
-        overText->text.set(Text_t("OVER"));
-        overText->font.set(m_gameresources.scoreFont->font(360));
-        overText->textColor.set(FillColor_t{colors::White});
-        {
-            auto align(overText->ensureComponentOfType<AlignedTextComponent>());
-            align->alignmentSize.set(gosize);
-            align->alignmentX.set(AlignedTextComponent::AlignmentX::Center);
-            align->alignmentY.set(AlignedTextComponent::AlignmentY::Bottom);
-        }
+        m_data = msptr<GameSceneData>();
+        m_data->createData(*this, m_gameMode);
 
         increaseScore(0);
-
-        m_levelrg->position = vector2df{ 1250, 50 };
 
         using namespace lib::board;
 
         m_tokenZones.generateTokenZones();
 
-        p_boardModel = this->ensureComponentOfType<BoardModelComponent>();
+        p_boardModel = ensureComponentOfType<BoardModelComponent>();
         p_boardModel->initialize(m_tokenZones.size);
 
         p_boardModel->TileAdded.connect([this](const vector2dst position_, SITilePointer tile) {
@@ -123,7 +71,7 @@ namespace zoper
         p_boardModel->TileRemoved.connect([this](const vector2dst position_, SITilePointer tile) {
 			if (auto ztile = std::dynamic_pointer_cast<Tile>(tile)) {
 				lib::log_debug_info("Deleting token ", ztile->name(), " from scene at position ", position_);
-				m_mainBoardrg->removeSceneNode(ztile);
+                m_data->m_mainBoardrg->removeSceneNode(ztile);
 			} /*else if (auto ztile_ = std::dynamic_pointer_cast<Player>(tile)) {
 			  // Actually, never used
 			  }*/
@@ -156,23 +104,6 @@ namespace zoper
         m_nextTokenPart = 0;
         importGameSharedData();
         m_score = 0;
-        m_gameOverrg->visible = false;
-        m_mainBoardrg->visible = true;
-        m_pauseSceneNode->visible = false;
-
-        switch (m_gameMode)
-        {
-        default:
-        case GameMode::Token:
-            m_goalQuad->text(vector2dst{0,0})->text.set(Text_t("Tokens: "));
-            m_goalQuad->text(vector2dst{0,1})->text.set(Text_t("Goal: "));
-            break;
-
-        case GameMode::Time:
-            m_goalQuad->text(vector2dst{0,0})->text.set(Text_t("Time: "));
-            m_goalQuad->text(vector2dst{0,1})->text.set(Text_t("Goal: "));
-            break;
-        }
 
         auto inputComponent(ensureComponentOfType<scene::InputComponent>());
         inputComponent->KeyPressed.connect([this](const lib::input::Key&key) {
@@ -241,16 +172,16 @@ namespace zoper
 		case Pause:
 		{
             m_sceneTimerComponent->pause();
-			m_pauseSceneNode->visible = true;
-			auto animationComponent(m_pauseSceneNode->ensureComponentOfType<anim::AnimationComponent>());
+            m_data->m_pauseSceneNode->visible = true;
+            auto animationComponent(m_data->m_pauseSceneNode->ensureComponentOfType<anim::AnimationComponent>());
             animationComponent->addAnimation(muptr<anim::IPropertyAnimation<FillColor_t>>(
                 TimeFromMillis(1000), 
-                m_pauseText->textColor, FillColor_t{Color{ 255, 255, 255, 0 } },
+                m_data->m_pauseText->textColor, FillColor_t{Color{ 255, 255, 255, 0 } },
                                  FillColor_t{Color{ 255, 255, 255, 255 } }));
 		}
 		break;
         case GameOver:
-            m_gameOverrg->visible = true;
+            m_data->m_gameOverrg->visible = true;
             break;
 		default:
 			break;
@@ -264,7 +195,7 @@ namespace zoper
 		case Pause:
 		{
             m_sceneTimerComponent->resume();
-			m_pauseSceneNode->visible = false;
+            m_data->m_pauseSceneNode->visible = false;
 		}
 		break;
 		default:
@@ -275,18 +206,14 @@ namespace zoper
 
     void GameScene::setLevel(const u32 nv)
     {
+        levelProperties.setMode(m_gameMode);
         levelProperties.setLevel(nv);
-        log_debug_info("Level set: ", levelProperties.currentLevel());
-        log_debug_info("Millis between tokens: ", levelProperties.millisBetweenTokens());
-        log_debug_info("Current base score: ", levelProperties.baseScore());
-        log_debug_info("Seconds to next level: ", levelProperties.stayTime());
-        log_debug_info("Tokens to next level: ", levelProperties.stayTokens());
 
         m_levelTimer.restart();
         m_consumedTokens = 0;
 
         // Update background tiles
-        m_boardGroup->for_each_tableSceneNode([this](const auto position, auto node) {
+        m_data->m_boardGroup->for_each_tableSceneNode([this](const auto position, auto node) {
             node->setTileColor(levelProperties.getBackgroundTileColor(position, pointInCenter(position)));
         });
 
@@ -296,19 +223,8 @@ namespace zoper
 
     void GameScene::updateGoals()
     {
-        m_scoreQuad->text(vector2dst{1,0})->text.set(Text_t(make_str(levelProperties.currentLevel() + 1)));
-
-        switch (m_gameMode)
-        {
-        default:
-        case GameMode::Token:
-            m_goalQuad->text(vector2dst{1,1})->text.set(Text_t(make_str(levelProperties.stayTokens())));
-            break;
-
-        case GameMode::Time:
-            m_goalQuad->text(vector2dst{1,1})->text.set(Text_t(make_str(levelProperties.stayTime())));
-            break;
-        }
+        m_data->m_scoreQuad->text(vector2dst{1,0})->text.set(Text_t(make_str(levelProperties.currentLevel() + 1)));
+        m_data->m_goalQuad->text(vector2dst{1,1})->text.set(Text_t(make_str(levelProperties.stayCounter())));
     }
 
     void GameScene::updateLevelData()
@@ -317,16 +233,16 @@ namespace zoper
         {
         default:
         case GameMode::Token:
-            m_goalQuad->text(vector2dst{1,0})->text.set(Text_t(m_consumedTokens));
-            if (m_consumedTokens >= levelProperties.stayTokens())
+            m_data->m_goalQuad->text(vector2dst{1,0})->text.set(Text_t(m_consumedTokens));
+            if (m_consumedTokens >= levelProperties.stayCounter())
                 setLevel(levelProperties.currentLevel() + 1);
             break;
 
         case GameMode::Time:
-            m_goalQuad->text(vector2dst{1,0})->text.set(
+            m_data->m_goalQuad->text(vector2dst{1,0})->text.set(
                         Text_t(static_cast<u16>(
                                    m_levelTimer.getElapsedTime().asSeconds())));
-            if (m_levelTimer.getElapsedTime().asSeconds() >= levelProperties.stayTime())
+            if (m_levelTimer.getElapsedTime().asSeconds() >= levelProperties.stayCounter())
                 setLevel(levelProperties.currentLevel() + 1);
             break;
         }
@@ -406,7 +322,7 @@ namespace zoper
         log_debug_info("Adding player tile at ", m_tokenZones.centerRect);
         CLIENT_ASSERT(!m_player, "Player already initialized");
         // Create the player instance
-        m_player = m_mainBoardrg->createSceneNode<Player>("playerNode", m_tokenZones.centerRect.leftTop(), rectFromSize(tileSize()), board2SceneFactor());
+        m_player = m_data->m_mainBoardrg->createSceneNode<Player>("playerNode", m_tokenZones.centerRect.leftTop(), rectFromSize(tileSize()), board2SceneFactor());
 
         // Add it to the board and to the scene nodes
         p_boardModel->setTile(m_player->boardPosition(), m_player);
@@ -418,7 +334,7 @@ namespace zoper
 
         lib::log_debug_info("Adding new tile at ", pos, " with value ", newToken);
         // Create a new Tile instance
-        auto newTileToken = m_mainBoardrg->createSceneNode<Tile>("tileNode", BoardTileData{ static_cast<BoardTileData>(newToken) }, rectFromSize(tileSize()));
+        auto newTileToken = m_data->m_mainBoardrg->createSceneNode<Tile>("tileNode", BoardTileData{ static_cast<BoardTileData>(newToken) }, rectFromSize(tileSize()));
         // Set the position in the scene depending on the board position
         newTileToken->position = board2Scene(pos);
 
@@ -538,10 +454,10 @@ namespace zoper
 
     void GameScene::tilesCreated()
     {
-		assert_debug(!m_boardGroup, "m_boardGroup is not empty");
-		m_boardGroup = createSceneNode<BoardGroup>("BoardGroup", m_tokenZones.size);
+        assert_debug(!m_data->m_boardGroup, "m_boardGroup is not empty");
+        m_data->m_boardGroup = createSceneNode<BoardGroup>("BoardGroup", m_tokenZones.size);
 
-        moveLastBeforeNode(m_mainBoardrg);
+        moveLastBeforeNode(m_data->m_mainBoardrg);
     }
 
     void GameScene::tokenMoved(const vector2dst &, const vector2dst &dest, sptr<Tile> tile)
@@ -559,6 +475,6 @@ namespace zoper
         m_score += scoreIncrement;
         str result(m_score);
         while (result.size() < scoreSize) result = "0" + result;
-        m_scoreQuad->text(vector2dst{1,1})->text.set(Text_t(result));
+        m_data->m_scoreQuad->text(vector2dst{1,1})->text.set(Text_t(result));
     }
 }
