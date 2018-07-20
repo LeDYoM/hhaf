@@ -17,6 +17,7 @@ set(SOURCE_FILES_LIST
     core/host.cpp
     core/host.hpp
     core/hostcontext.cpp
+    core/hostcontext.hpp
     core/inputsystem.cpp
     core/inputsystem.hpp
     core/log.cpp
@@ -43,7 +44,7 @@ set(SOURCE_FILES_LIST
     include/backend/ittfont.hpp
     include/backend/iwindow.hpp
 
-    include/core/hostcontext.hpp
+    include/core/ihostcontext.hpp
     include/core/log.hpp
     include/core/timer.hpp
 

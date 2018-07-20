@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_ZOPERPROGRAMCONTROLLER_HPP__
-#define LIB_ZOPERPROGRAMCONTROLLER_HPP__
+#ifndef LIB_ZOPERPROGRAMCONTROLLER_HPP
+#define LIB_ZOPERPROGRAMCONTROLLER_HPP
 
 #include <lib/include/iapp.hpp>
 
@@ -20,8 +20,8 @@ namespace zoper
 		virtual ~ZoperProgramController();
 
 		void onInit() override;
-		virtual IAppDescriptor getAppDescriptor() const override;
-		virtual int loop() override;
+		IAppDescriptor getAppDescriptor() const override;
+		int loop() override;
 
 		sptr<GameSharedData> gameSharedData;
 		uptr<KeyMapping> keyMapping;

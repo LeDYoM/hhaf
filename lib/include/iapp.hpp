@@ -1,10 +1,10 @@
 #pragma once
 
-#ifndef LIB_IAPP_INCLUDE_HPP__
-#define LIB_IAPP_INCLUDE_HPP__
+#ifndef LIB_IAPP_INCLUDE_HPP
+#define LIB_IAPP_INCLUDE_HPP
 
 #include "windowcreationparams.hpp"
-#include <lib/include/core/hostcontext.hpp>
+#include <lib/include/core/ihostcontext.hpp>
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
 
@@ -27,7 +27,7 @@ namespace lib
 		constexpr IApp() : m_hostContext{ nullptr } {}
 		virtual ~IApp() {}
 
-		inline void setHostContext(core::HostContext*hs) noexcept { m_hostContext = hs; }
+		inline void setHostContext(core::IHostContext*hs) noexcept { m_hostContext = hs; }
 
         virtual void sceneFinished() {}
         virtual IAppDescriptor getAppDescriptor() const = 0;
@@ -35,7 +35,7 @@ namespace lib
         virtual int loop() = 0;
 
 private:
-        core::HostContext *m_hostContext;
+        core::IHostContext *m_hostContext;
     };
 }
 
