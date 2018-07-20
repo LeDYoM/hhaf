@@ -1,6 +1,10 @@
 #include "gamescenedata.hpp"
 #include "gamescene.hpp"
 
+#include <lib/scene/nodes/scenenodetext.hpp>
+#include <lib/scene/components/alignedtextcomponent.hpp>
+
+#include <lib/core/host.hpp>
 
 namespace zoper
 {

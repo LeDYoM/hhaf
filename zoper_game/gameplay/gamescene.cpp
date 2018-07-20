@@ -1,4 +1,5 @@
 #include "gamescene.hpp"
+#include "gamescenedata.hpp"
 
 #include "tile.hpp"
 #include "player.hpp"
