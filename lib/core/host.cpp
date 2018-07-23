@@ -8,6 +8,8 @@
 #include <lib/core/inputsystem.hpp>
 #include <lib/core/debugsystem.hpp>
 #include <lib/core/backendfactory.hpp>
+#include <lib/core/appcontext.hpp>
+#include <lib/core/hostcontext.hpp>
 #include <lib/scene/scenemanager.hpp>
 
 #include <mtypes/include/parpar.hpp>
@@ -20,6 +22,13 @@
 
 namespace lib::core
 {
+    struct ApplicationGroup
+    {
+        uptr<IApp> m_iapp;
+        uptr<HostContext> m_hostContext;
+        uptr<AppContext> m_appContext;
+    };
+
     class HostPrivate final
     {
     public:
@@ -46,7 +55,10 @@ namespace lib::core
         }
         parpar::ParametersParser m_params;
 #endif
+
         dicty::BasicDictionary<str> m_configuration;
+
+        ApplicationGroup m_appGroup;
     };
 
     enum class Host::AppState : u8
@@ -100,9 +112,15 @@ namespace lib::core
 
     bool Host::setApplication(uptr<IApp> iapp)
     {
-        if (!m_iapp && iapp) {
-            m_iapp = std::move(iapp);
-            log_debug_info("Starting app ", appId(), "...");
+        if (!m_private->m_appGroup.m_iapp && iapp) 
+        {
+            log_debug_info("StartingRegistering app...");
+            m_private->m_appGroup.m_iapp = std::move(iapp);
+            m_private->m_appGroup.m_hostContext = muptr<HostContext>(this);
+            m_private->m_appGroup.m_appContext = muptr<AppContext>(this);
+            m_private->m_appGroup.m_iapp->setHostContext(&(*(m_private->m_appGroup.m_hostContext)));
+            m_private->m_appGroup.m_iapp->setAppContext(&(*(m_private->m_appGroup.m_appContext)));
+            log_debug_info("Starting app ", m_private->m_appGroup.m_appContext->appId(), "...");
             m_state = AppState::ReadyToStart;
             return true;
         }
@@ -117,33 +135,33 @@ namespace lib::core
             break;
         case AppState::ReadyToStart:
         {
-            log_debug_info(appId(), ": Starting initialization...");
+            log_debug_info(m_private->m_appGroup.m_appContext->appId(), ": Starting initialization...");
             m_state = AppState::Executing;
 
             m_inputSystem = muptr<input::InputSystem>();
             m_randomizer = muptr<Randomizer>();
-            m_window = muptr<Window>(m_iapp->getAppDescriptor().wcp);
+            m_window = muptr<Window>(m_private->m_appGroup.m_iapp->getAppDescriptor().wcp);
             m_sceneManager = muptr<scene::SceneManager>(*m_window);
             m_resourceManager = muptr<core::ResourceManager>();
             m_debugSystem = muptr<DebugSystem>();
 
-            m_iapp->onInit();
-            log_debug_info(appId(), ": Starting execution...");
+            m_private->m_appGroup.m_iapp->onInit();
+            log_debug_info(m_private->m_appGroup.m_appContext->appId(), ": Starting execution...");
         }
         break;
         case AppState::Executing:
         {
             if (loopStep()) {
                 m_state = AppState::ReadyToTerminate;
-                log_debug_info(appId(), ": ", " is now ready to terminate");
+                log_debug_info(m_private->m_appGroup.m_appContext->appId(), ": ", " is now ready to terminate");
             }
             else if (m_state == AppState::ReadyToTerminate) {
-                log_debug_info(appId(), ": ", " requested to terminate");
+                log_debug_info(m_private->m_appGroup.m_appContext->appId(), ": ", " requested to terminate");
             }
         }
         break;
         case AppState::ReadyToTerminate:
-            log_debug_info(appId(), ": started termination");
+            log_debug_info(m_private->m_appGroup.m_appContext->appId(), ": started termination");
             m_sceneManager->finish();
             m_state = AppState::Terminated;
 //				m_iapp->onFinish();
@@ -153,8 +171,6 @@ namespace lib::core
             m_resourceManager = nullptr;
             m_randomizer = nullptr;
             m_inputSystem = nullptr;
-            m_private = nullptr;
-            log_debug_info(appId(), ": terminated");
             return true;
             break;
         case AppState::Terminated:
@@ -170,12 +186,14 @@ namespace lib::core
     {
         while (!exit) {
             if (update()) {
-                m_iapp.reset();
+                m_private->m_appGroup.m_hostContext.reset();
+                m_private->m_appGroup.m_appContext.reset();
+                m_private->m_appGroup.m_iapp.reset();
                 exit = true;
             }
         }
 
-        if (!m_iapp) {
+        if (!m_private->m_appGroup.m_iapp) {
             log_release_info("App destroyed. Exiting normally");
         }
         return 0;
@@ -200,12 +218,9 @@ namespace lib::core
         m_state = AppState::ReadyToTerminate;
     }
 
-    const str Host::appId() const
+    IApp &Host::app()
     {
-        if (m_iapp) {
-            const auto &cAppDescriptor(m_iapp->getAppDescriptor());
-            return make_str(cAppDescriptor.Name, ":", cAppDescriptor.Version, ".", cAppDescriptor.SubVersion, ".", cAppDescriptor.Patch);
-        }
-        return "NoApp:0.0.0";
+        return *(m_private->m_appGroup.m_iapp);
     }
+
 }

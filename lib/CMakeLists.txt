@@ -5,6 +5,8 @@ set(SOURCE_FILES_LIST
     board/boardmodel.hpp
     board/itilescontroller.hpp
 
+	core/appcontext.cpp
+	core/appcontext.hpp
     core/appservice.hpp
     core/backendfactory.cpp
     core/backendfactory.hpp
@@ -44,6 +46,7 @@ set(SOURCE_FILES_LIST
     include/backend/ittfont.hpp
     include/backend/iwindow.hpp
 
+    include/core/iappcontext.hpp
     include/core/ihostcontext.hpp
     include/core/log.hpp
     include/core/timer.hpp

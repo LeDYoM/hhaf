@@ -53,9 +53,8 @@ namespace lib
             inline scene::SceneManager &sceneManager() noexcept { return *m_sceneManager; }
 
             template <typename T>
-            T &app() { return *(dynamic_cast<T*>(m_iapp.get())); }
-
-            const str appId() const;
+            T &app() { return *(dynamic_cast<T*>(&app())); }
+            IApp &app();
 
             inline Randomizer &randomizer() const noexcept { return *m_randomizer; }
 
@@ -69,7 +68,6 @@ namespace lib
 
             AppState m_state;
             uptr<Window> m_window;
-            uptr<IApp> m_iapp;
             uptr<ResourceManager> m_resourceManager;
             uptr<Randomizer> m_randomizer;
             uptr<DebugSystem> m_debugSystem;

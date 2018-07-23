@@ -220,10 +220,13 @@ namespace lib
 
 		constexpr void insert(const vector &other) {
 			//TO DO: Optimize
-			reserve(m_size + other.m_size);
-			for (const auto& element : other) {
-				push_back(element);
-			}
+            if (!other.empty())
+            {
+                reserve(m_size + other.m_size);
+                for (const auto& element : other) {
+                    push_back(element);
+                }
+            }
 		}
 
 		constexpr void insert(vector &&other) {

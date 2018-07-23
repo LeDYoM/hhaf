@@ -18,6 +18,10 @@ namespace zoper
 
 	void ZoperProgramController::onInit()
 	{
+        appContext().setApplicationName("Zoper");
+        appContext().setApplicationVersion(1);
+        appContext().setApplicationSubVersion(2);
+        appContext().setApplicationPatch(2);
 		gameSharedData = msptr<GameSharedData>();
 
 		keyMapping = muptr<KeyMapping>();
@@ -48,10 +52,6 @@ namespace zoper
 	{
 		return IAppDescriptor
 		{
-			"Zoper",
-			1,
-			1,
-			4,
 			"config.cfg",
 			"res.cfg",
 			WindowCreationParams
