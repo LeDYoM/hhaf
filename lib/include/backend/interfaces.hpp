@@ -19,4 +19,7 @@ using p_destroyTTFontFactory = bool (*)(lib::backend::ITTFontFactory *);
 using p_createTextureFactory = lib::backend::ITextureFactory * (*)();
 using p_destroyTextureFactory = bool (*)(lib::backend::ITextureFactory *);
 
+using p_createShaderFactory = lib::backend::ITextureFactory * (*)();
+using p_destroyShaderTextureFactory = bool(*)(lib::backend::ITextureFactory *);
+
 #endif

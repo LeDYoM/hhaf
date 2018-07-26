@@ -6,6 +6,7 @@
 #include <lib/include/backend/iwindow.hpp>
 #include <lib/include/backend/itexturefactory.hpp>
 #include <lib/include/backend/ittfontfactory.hpp>
+#include <lib/include/backend/ishaderfactory.hpp>
 
 namespace lib::backend
 {
@@ -18,6 +19,7 @@ namespace lib::backend
 		sptr<IWindow> getOrCreateWindow();
 		sptr<ITextureFactory> getTextureFactory();
 		sptr<ITTFontFactory> getTTFontFactory();
+        sptr<IShaderFactory> getShaderFactory();
 		static inline BackendFactory *const instance() noexcept { return m_instance; }
 	private:
 		BackendFactory();
@@ -26,12 +28,14 @@ namespace lib::backend
 		sptr<IWindow> m_window;
 		sptr<ITextureFactory> m_textureFactory;
 		sptr<ITTFontFactory> m_ttfontFactory;
+        sptr<IShaderFactory> m_shaderFactory;
 		static BackendFactory *m_instance;
 	};
 
 	static inline BackendFactory &backendFactory() { return *(BackendFactory::instance()); }
 	static inline ITextureFactory &textureFactory() { return *(BackendFactory::instance()->getTextureFactory()); }
 	static inline ITTFontFactory &ttfontFactory() { return *(BackendFactory::instance()->getTTFontFactory()); }
+    static inline IShaderFactory &shaderFactory() { return *(BackendFactory::instance()->getShaderFactory()); }
 }
 
 #endif
