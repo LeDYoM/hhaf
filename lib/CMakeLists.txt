@@ -1,138 +1,20 @@
 project (lib)
 
-set(SOURCE_FILES_LIST
-    board/boardmodel.cpp
-    board/boardmodel.hpp
-    board/itilescontroller.hpp
-
-	core/appcontext.cpp
-	core/appcontext.hpp
-    core/appservice.hpp
-    core/backendfactory.cpp
-    core/backendfactory.hpp
-    core/compconfig.hpp
-    core/debugsystem.cpp
-    core/debugsystem.hpp
-    core/factory.hpp
-    core/file.cpp
-    core/file.hpp
-    core/host.cpp
-    core/host.hpp
-    core/hostcontext.cpp
-    core/hostcontext.hpp
-    core/inputsystem.cpp
-    core/inputsystem.hpp
-    core/log.cpp
-    core/logcallback.hpp
-    core/main.cpp
-    core/memmanager.cpp
-    core/memmanager.hpp
-    core/randomizer.cpp
-    core/randomizer.hpp
-    core/rendertarget.hpp
-    core/rendertarget.cpp
-    core/resourcemanager.cpp
-    core/resourcemanager.hpp
-    core/serializer.hpp
-    core/timer.cpp
-    core/window.cpp
-    core/window.hpp
-
-    include/backend/interfaces.hpp
-    include/backend/irendertarget.hpp
-    include/backend/itexturefactory.hpp
-    include/backend/itexture.hpp
-    include/backend/ittfontfactory.hpp
-    include/backend/ittfont.hpp
-    include/backend/iwindow.hpp
-
-    include/core/iappcontext.hpp
-    include/core/ihostcontext.hpp
-    include/core/log.hpp
-    include/core/timer.hpp
-
-    include/classmacros.hpp
-    include/iapp.hpp
-    include/iresourceloader.hpp
-    include/key.hpp
-    include/lib.hpp
-    include/main.hpp
-    include/properties.hpp
-    include/windowcreationparams.hpp
-
-    scene/components/alignedtextcomponent.cpp
-    scene/components/alignedtextcomponent.hpp
-    scene/components/animationcomponent.cpp
-    scene/components/animationcomponent.hpp
-    scene/components/componentcontainer.cpp
-    scene/components/componentcontainer.hpp
-    scene/components/debugvarscomponent.cpp
-    scene/components/debugvarscomponent.hpp
-    scene/components/discretetextcomponent.cpp
-    scene/components/discretetextcomponent.hpp
-    scene/components/elementselector.cpp
-    scene/components/elementselector.hpp
-    scene/components/icomponent.hpp
-    scene/components/inputcomponent.cpp
-    scene/components/inputcomponent.hpp
-    scene/components/statescontroller.hpp
-    scene/components/texteditorcomponent.cpp
-    scene/components/texteditorcomponent.hpp
-    scene/components/timercomponent.cpp
-    scene/components/timercomponent.hpp
-
-    scene/nodes/scenenodetext.cpp
-    scene/nodes/scenenodetext.hpp
-    scene/nodes/tablenode.hpp
-    scene/nodes/textquad.cpp
-    scene/nodes/textquad.hpp
-
-    scene/renderizables/geometry_math.hpp
-    scene/renderizables/nodequad.cpp
-    scene/renderizables/nodequad.hpp
-    scene/renderizables/nodeshape.cpp
-    scene/renderizables/nodeshape.hpp
-    scene/renderizables/renderizable.cpp
-    scene/renderizables/renderizable.hpp
-
-    scene/color.hpp
-    scene/font.hpp
-    scene/hasname.hpp
-    scene/ianimation.hpp
-    scene/renderdata.hpp
-    scene/scene.cpp
-    scene/scene.hpp
-    scene/scenemanager.cpp
-    scene/scenemanager.hpp
-    scene/scenenode.cpp
-    scene/scenenode.hpp
-    scene/scenenodetypes.hpp
-    scene/texture.cpp
-    scene/texture.hpp
-    scene/transformable.cpp
-    scene/transformable.hpp
-    scene/transformation.cpp
-    scene/transformation.hpp
-    scene/ttfont.cpp
-    scene/ttfont.hpp
-    scene/vertex.hpp
-    scene/vertexarray.cpp
-    scene/vertexarray.hpp
-)
-
-
 include_directories ("..")
 
 set(LIB_VERSION_MAJOR "1")
-set(LIB_VERSION_MINOR "5")
+set(LIB_VERSION_MINOR "6")
 set(LIB_VERSION_PATCH "1")
+
+file (GLOB_RECURSE _SOURCES "board/*.cpp" "core/*.cpp" "scene/*.cpp")
+file (GLOB_RECURSE _HEADERS "board/*.hpp" "core/*.hpp" "include/*.hpp" "scene/*.hpp")
 
 configure_file(config.hpp.in config.hpp)
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 set (CURRENT_TARGET lib)
 
-add_library(${CURRENT_TARGET} STATIC ${SOURCE_FILES_LIST})
+add_library(${CURRENT_TARGET} STATIC ${_SOURCES} ${_HEADERS})
 
 target_link_libraries(${CURRENT_TARGET} PRIVATE loader)
 target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)

@@ -4,6 +4,7 @@
 #include "renderwindow.hpp"
 #include "ttfontfactory.hpp"
 #include "texturefactory.hpp"
+#include "shaderfactory.hpp"
 
 #ifdef _WIN32
     #define EXPORT   extern "C" __declspec( dllexport )
@@ -59,4 +60,16 @@ EXPORT bool destroyTextureFactory(lib::backend::ITextureFactory *itf) {
 		return true;
 	}
 	return false;
+}
+
+EXPORT lib::backend::IShaderFactory * createShaderFactory() {
+    return new lib::backend::sfmlb::ShaderFactory;
+}
+
+EXPORT bool destroyShaderFactory(lib::backend::IShaderFactory *isf) {
+    if (isf) {
+        delete isf;
+        return true;
+    }
+    return false;
 }
