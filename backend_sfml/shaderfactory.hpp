@@ -17,7 +17,7 @@ namespace lib::backend::sfmlb
 		virtual IShader* loadFromFile(const str &file) override;
         ~ShaderFactory() override;
 	private:
-		vector<TTFont*> m_fontCache;
+        vector<uptr<Shader>> m_shaderCache;
 	};
 }
 

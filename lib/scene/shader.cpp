@@ -23,7 +23,7 @@ namespace lib::scene
 
     bool Shader::loadFromFile(const str & filename)
     {
-        m_private->m_shader = ttfontFactory().loadFromFile(filename);
+        m_private->m_shader = shaderFactory().loadFromFile(filename);
         return m_private->m_shader != nullptr;
     }
 }

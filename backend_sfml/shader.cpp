@@ -3,9 +3,5 @@
 
 namespace lib::backend::sfmlb
 {
-    Shader::Shader(const sf::Shader & s) : m_shader{ s } {}
-
-    Shader::~Shader()
-    {
-	}
+    Shader::Shader(uptr<sf::Shader> shader) : m_shaderPrivate{ std::move(shader) } {}
 }

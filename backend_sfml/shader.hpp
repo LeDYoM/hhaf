@@ -16,10 +16,9 @@ namespace lib::backend::sfmlb
 	class Shader : public IShader
 	{
 	public:
-        Shader(const sf::Shader &s);
-		virtual ~Shader();
+        Shader(uptr<sf::Shader> shader);
 	private:
-        sf::Shader m_shader;
+        uptr<sf::Shader> m_shaderPrivate;
 	};
 }
 

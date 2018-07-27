@@ -7,18 +7,16 @@ namespace lib::backend::sfmlb
 {
 	IShader* ShaderFactory::loadFromFile(const str & file)
 	{
-		sf::Font font;
-		font.loadFromFile(file.c_str());
-		auto *ttffont(new TTFont(font));
-		m_fontCache.push_back(ttffont);
-		return ttffont;
-	}
+        uptr<sf::Shader> shader(muptr<sf::Shader>());
+        shader->loadFromFile(file.c_str(), sf::Shader::Vertex);
+        uptr<Shader> t{ muptr<Shader>(std::move(shader)) };
+        m_shaderCache.push_back(std::move(t));
+        return (*(m_shaderCache.end() - 1)).get();
+    }
 
     ShaderFactory::~ShaderFactory()
 	{
-		for (auto *font : m_fontCache) {
-			delete font;
-		}
-		m_fontCache.clear();
-	}
+        m_shaderCache.clear();
+        m_shaderCache.shrink_to_fit();
+    }
 }
