@@ -28,8 +28,6 @@ namespace lib
             f32 getLineSpacing(const u32 characterSize) const;
             f32 getKerning(const u32 first, const u32 second, const u32 characterSize) const;
             sptr<Texture> getTexture(const u32 characterSize) const;
-            void ensureLoadGlyphs(const u32 first, const u32 last, const u32 characterSize);
-            void ensureLoadASCIIGlyps(const u32 characterSize);
             vector2df textSize(const str& text, const u32 characterSize) const;
             sptr<Font> font(const u32 charactersize);
         private:

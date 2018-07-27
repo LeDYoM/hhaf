@@ -2,7 +2,7 @@
 
 namespace lib::backend::sfmlb
 {
-    Texture::Texture(uptr<sf::Texture> &&texture) : m_texturePrivate{ std::move(texture) } {}
+    Texture::Texture(uptr<sf::Texture> texture) : m_texturePrivate{ std::move(texture) } {}
 
     Texture::~Texture() {}
 
