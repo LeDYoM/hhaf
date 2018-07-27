@@ -15,7 +15,6 @@ namespace lib
 		class Texture final
 		{
 		public:
-//			Texture();
 			Texture(backend::ITexture* texture);
 			~Texture();
 

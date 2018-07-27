@@ -15,7 +15,7 @@ namespace lib::backend::sfmlb
 	class Texture : public ITexture
 	{
 	public:
-		Texture(uptr<sf::Texture> &&texture);
+		Texture(uptr<sf::Texture> texture);
 		virtual ~Texture();
 
 		virtual vector2du32 size() const override;

@@ -17,7 +17,7 @@ namespace lib::backend::sfmlb
 		virtual ITTFont* loadFromFile(const str &file) override;
 		virtual ~TTFontFactory();
 	private:
-		vector<TTFont*> m_fontCache;
+		vector<uptr<TTFont>> m_fontCache;
 	};
 }
 

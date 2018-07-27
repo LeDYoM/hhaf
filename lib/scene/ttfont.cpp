@@ -48,18 +48,6 @@ namespace lib::scene
         return msptr<Texture>(m_private->m_font->getTexture(characterSize));
     }
 
-    void TTFont::ensureLoadGlyphs(const u32 first, const u32 last, const u32 characterSize)
-    {
-        for (u32 codePoint = first; codePoint <= last; ++codePoint) {
-            (void)(m_private->m_font->getGlyph(codePoint, characterSize));
-        }
-    }
-
-    void TTFont::ensureLoadASCIIGlyps(const u32 characterSize)
-    {
-        ensureLoadGlyphs(0,255, characterSize);
-    }
-
     vector2df TTFont::textSize(const lib::str& text,
                                            const u32 characterSize) const
     {
@@ -123,9 +111,7 @@ namespace lib::scene
                 iterator == m_private->m_fontMap.end())
         {
             sptr<TTFontInstance> newFont{new TTFontInstance{*this,charactersize}};
-            m_private->m_fontMap[charactersize] = newFont;
-            ensureLoadASCIIGlyps(charactersize);
-            return newFont;
+            return m_private->m_fontMap[charactersize] = newFont;
         }
         else
         {
