@@ -5,50 +5,52 @@
 #include <lib/scene/texture.hpp>
 #include <lib/core/backendfactory.hpp>
 #include <algorithm>
+#include <list>
 
-namespace lib
+namespace lib::core
 {
-	namespace core
+    template <typename T>
+    using NamedIndex = pair<const str, T>;
+
+    template <typename T>
+    using ResourceList = std::list<NamedIndex<T>>;
+
+    namespace
 	{
-		namespace
-		{
-			template <typename T, typename A>
-			inline auto add(A& factory, ResourceManager::ResourceList<sptr<T>> &container, const str &id, const str &fileName)
-			{
-				auto resource(msptr<T>(factory.loadFromFile(fileName)));
-				container.push_back(ResourceManager::NamedIndex<sptr<T>>(id,resource));
-				return resource;
-			}
+        template <typename T, typename A>
+        inline auto get_or_add(A& factory, ResourceList<sptr<T>> &container, const str &rid, const str &fileName)
+        {
+            if (!fileName.empty()) 
+            {
+                auto resource(msptr<T>(factory.loadFromFile(fileName)));
+                container.push_back(NamedIndex<sptr<T>>(rid, resource));
+                return resource;
+            }
+            else 
+            {
+                auto iterator(std::find_if(container.begin(), container.end(),
+                    [rid](const auto &node) {return node.first == rid; }));
+                return iterator == container.end() ? nullptr : (*iterator).second;
+            }
+        }
+	}
 
-		}
+    struct ResourceManager::ResourceManagerPrivate
+    {
+        ResourceList<sptr<scene::TTFont>> m_fonts;
+        ResourceList<sptr<scene::Texture>> m_textures;
+    };
 
-		ResourceManager::ResourceManager() : AppService{}
-		{
-		}
+    ResourceManager::ResourceManager() : AppService{}, m_private{ muptr<ResourceManagerPrivate>() } {}
+	ResourceManager::~ResourceManager() = default;
 
-		ResourceManager::~ResourceManager() = default;
+	sptr<scene::TTFont> ResourceManager::getFont(const str &rid, const str &fileName)
+	{
+        return get_or_add(backend::ttfontFactory(), m_private->m_fonts, rid, fileName);
+    }
 
-		sptr<scene::TTFont> ResourceManager::getFont(const str &rid, const str &fileName)
-		{
-			if (!fileName.empty()) {
-				return add(backend::ttfontFactory(), m_fonts, rid, fileName);
-			} else {
-				auto iterator(std::find_if(m_fonts.begin(), m_fonts.end(),
-					[rid](const auto &node) {return node.first == rid; })
-				);
-				return iterator == m_fonts.end() ? nullptr : (*iterator).second;
-			}
-		}
-		sptr<scene::Texture> ResourceManager::getTexture(const str &rid, const str& fileName)
-		{
-			if (!fileName.empty()) {
-				return add(backend::textureFactory(), m_textures, rid, fileName);
-			} else {
-				auto iterator(std::find_if(m_textures.begin(), m_textures.end(),
-					[rid](const auto &node) {return node.first == rid; })
-				);
-				return iterator == m_textures.end() ? nullptr : (*iterator).second;
-			}
-		}
+	sptr<scene::Texture> ResourceManager::getTexture(const str &rid, const str& fileName)
+	{
+        return get_or_add(backend::textureFactory(), m_private->m_textures, rid, fileName);
 	}
 }

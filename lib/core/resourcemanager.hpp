@@ -6,7 +6,6 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
 #include "appservice.hpp"
-#include <list>
 
 namespace lib
 {
@@ -15,10 +14,9 @@ namespace lib
 		class TTFont;
 		class Texture;
 	}
+
 	namespace core
 	{
-		class Resource;
-
 		class ResourceManager final : public AppService
 		{
 		public:
@@ -36,16 +34,9 @@ namespace lib
                     return getTexture(rid, fileName);
                 }
             }
-
-			template <typename T>
-			using NamedIndex = pair<const str, T>;
-
-			template <typename T>
-			using ResourceList = std::list<NamedIndex<T>>;
-
 		private:
-			ResourceList<sptr<scene::TTFont>> m_fonts;
-			ResourceList<sptr<scene::Texture>> m_textures;
+            struct ResourceManagerPrivate;
+            uptr<ResourceManagerPrivate> m_private;
 		};
 	}
 }
