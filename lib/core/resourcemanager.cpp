@@ -39,6 +39,7 @@ namespace lib::core
     {
         ResourceList<sptr<scene::TTFont>> m_fonts;
         ResourceList<sptr<scene::Texture>> m_textures;
+		ResourceList<sptr<scene::S>> m_textures;
     };
 
     ResourceManager::ResourceManager() : AppService{}, m_private{ muptr<ResourceManagerPrivate>() } {}

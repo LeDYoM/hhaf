@@ -25,6 +25,7 @@ namespace lib
 
 			sptr<scene::TTFont> getFont(const str &rid, const str &fileName);
 			sptr<scene::Texture> getTexture(const str &rid, const str &fileName);
+			sptr<scene::Shader> getShader(const str &rid, const str &fileName);
 
 			template <typename T>
 			sptr<T> getResource(const str &rid, const str &fileName="") {
