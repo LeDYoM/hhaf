@@ -3,6 +3,8 @@
 
 #include <lib/scene/ttfont.hpp>
 #include <lib/scene/texture.hpp>
+#include <lib/scene/shader.hpp>
+
 #include <lib/core/backendfactory.hpp>
 #include <algorithm>
 #include <list>
@@ -39,7 +41,7 @@ namespace lib::core
     {
         ResourceList<sptr<scene::TTFont>> m_fonts;
         ResourceList<sptr<scene::Texture>> m_textures;
-		ResourceList<sptr<scene::S>> m_textures;
+		ResourceList<sptr<scene::Shader>> m_shaders;
     };
 
     ResourceManager::ResourceManager() : AppService{}, m_private{ muptr<ResourceManagerPrivate>() } {}
@@ -54,4 +56,9 @@ namespace lib::core
 	{
         return get_or_add(backend::textureFactory(), m_private->m_textures, rid, fileName);
 	}
+
+    sptr<scene::Shader> ResourceManager::getShader(const str &rid, const str& fileName)
+    {
+        return get_or_add(backend::shaderFactory(), m_private->m_shaders, rid, fileName);
+    }
 }

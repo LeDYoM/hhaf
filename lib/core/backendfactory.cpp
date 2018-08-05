@@ -105,4 +105,9 @@ namespace lib::backend
 	{
 		return m_ttfontFactory;
 	}
+
+    sptr<IShaderFactory> BackendFactory::getShaderFactory()
+    {
+        return m_shaderFactory;
+    }
 }

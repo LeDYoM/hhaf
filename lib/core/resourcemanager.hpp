@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef __LIB_RESOURCEMANAGER_HPP__
-#define __LIB_RESOURCEMANAGER_HPP__
+#ifndef LIB_RESOURCEMANAGER_INCLUDE_HPP__
+#define LIB_RESOURCEMANAGER_HPP__
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
@@ -13,6 +13,7 @@ namespace lib
 	{
 		class TTFont;
 		class Texture;
+        class Shader;
 	}
 
 	namespace core
