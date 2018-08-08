@@ -4,9 +4,7 @@
 #define LIB_BACKEND_FACTORY_HPP
 
 #include <lib/include/backend/iwindow.hpp>
-#include <lib/include/backend/itexturefactory.hpp>
-#include <lib/include/backend/ittfontfactory.hpp>
-#include <lib/include/backend/ishaderfactory.hpp>
+#include <lib/include/backend/iresourcefactories.hpp>
 
 namespace lib::backend
 {

@@ -1,8 +1,6 @@
 #include "shader.hpp"
 
 #include <lib/include/backend/ishader.hpp>
-#include <lib/include/backend/ishaderfactory.hpp>
-
 #include <lib/core/backendfactory.hpp>
 
 #include <map>

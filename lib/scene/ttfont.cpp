@@ -1,8 +1,6 @@
 #include "ttfont.hpp"
 
 #include <lib/include/backend/ittfont.hpp>
-#include <lib/include/backend/ittfontfactory.hpp>
-
 #include <lib/core/backendfactory.hpp>
 
 #include <map>

@@ -4,9 +4,9 @@
 #define LIB_BACKEND_SFML_TEXTUREFACTORY_HPP
 
 #include <mtypes/include/types.hpp>
-#include <mtypes/include/vector2d.hpp>
+#include <mtypes/include/str.hpp>
 
-#include <lib/include/backend/itexturefactory.hpp>
+#include <lib/include/backend/iresourcefactories.hpp>
 #include "texture.hpp"
 
 namespace lib::backend::sfmlb

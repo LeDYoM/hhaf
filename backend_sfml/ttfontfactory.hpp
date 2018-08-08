@@ -6,7 +6,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
 
-#include <lib/include/backend/ittfontfactory.hpp>
+#include <lib/include/backend/iresourcefactories.hpp>
 #include "ttfont.hpp"
 
 namespace lib::backend::sfmlb
