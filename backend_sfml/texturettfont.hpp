@@ -22,13 +22,18 @@ namespace lib::backend::sfmlb
 		TextureTTFont(const sf::Texture &texture) 
             : m_texturePrivate{ texture } {}
 
+        /// Empty destructor
         ~TextureTTFont() override {}
 
+        /// Returns the size of the texture in pixels
+        /// @return A vector2du containing the size
         vector2du32 size() const override
         {
             return{ static_cast<u32>(m_texturePrivate.getSize().x), static_cast<u32>(m_texturePrivate.getSize().y) };
         }
 
+        /// Method to retrieve the internal texture.
+        /// @returns The internal texture.
 		inline const sf::Texture &backEndTexture() const { return m_texturePrivate; }
 	private:
 		const sf::Texture &m_texturePrivate;

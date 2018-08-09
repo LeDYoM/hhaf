@@ -25,7 +25,7 @@ namespace lib::backend::sfmlb
 		virtual ITexture *getTexture(u32 characterSize) override;
 	private:
 		uptr<sf::Font> m_font;
-		std::map<u32,TextureTTFont*> m_fontTexturesCache;
+		std::map<u32, uptr<TextureTTFont>> m_fontTexturesCache;
 	};
 }
 
