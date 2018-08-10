@@ -23,10 +23,10 @@ namespace lib
 			ITTFont() {}
 			virtual ~ITTFont() {}
 
-			virtual ITTGlyph getGlyph(u32 codePoint, u32 characterSize) const = 0;
-			virtual f32 getLineSpacing(u32 characterSize) const = 0;
-			virtual f32 getKerning(u32 first, u32 second, u32 characterSize) const = 0;
-			virtual ITexture* getTexture(u32 characterSize) = 0;
+			virtual ITTGlyph getGlyph(const u32 codePoint, const u32 characterSize) const = 0;
+			virtual f32 getLineSpacing(const u32 characterSize) const = 0;
+			virtual f32 getKerning(const u32 first, const u32 second, const u32 characterSize) const = 0;
+			virtual ITexture* getTexture(const u32 characterSize) = 0;
 		};
 	}
 }

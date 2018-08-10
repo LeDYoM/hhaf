@@ -7,18 +7,16 @@ namespace lib::backend::sfmlb
 {
 	ITTFont* TTFontFactory::loadFromFile(const str & file)
 	{
-		sf::Font font;
-		font.loadFromFile(file.c_str());
-		auto *ttffont(new TTFont(font));
-		m_fontCache.push_back(ttffont);
-		return ttffont;
+        uptr<sf::Font> font(muptr<sf::Font>());
+        font->loadFromFile(file.c_str());
+        uptr<TTFont> t{ muptr<TTFont>(std::move(font)) };
+        m_fontCache.push_back(std::move(t));
+        return (*(m_fontCache.end() - 1)).get();
 	}
 
 	TTFontFactory::~TTFontFactory()
 	{
-		for (auto *font : m_fontCache) {
-			delete font;
-		}
-		m_fontCache.clear();
-	}
+        m_fontCache.clear();
+        m_fontCache.shrink_to_fit();
+    }
 }

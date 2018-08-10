@@ -1,12 +1,11 @@
 #pragma once
 
-#ifndef __LIB_RESOURCEMANAGER_HPP__
-#define __LIB_RESOURCEMANAGER_HPP__
+#ifndef LIB_RESOURCEMANAGER_INCLUDE_HPP
+#define LIB_RESOURCEMANAGER_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
 #include "appservice.hpp"
-#include <list>
 
 namespace lib
 {
@@ -14,11 +13,11 @@ namespace lib
 	{
 		class TTFont;
 		class Texture;
+        class Shader;
 	}
+
 	namespace core
 	{
-		class Resource;
-
 		class ResourceManager final : public AppService
 		{
 		public:
@@ -27,6 +26,7 @@ namespace lib
 
 			sptr<scene::TTFont> getFont(const str &rid, const str &fileName);
 			sptr<scene::Texture> getTexture(const str &rid, const str &fileName);
+			sptr<scene::Shader> getShader(const str &rid, const str &fileName);
 
 			template <typename T>
 			sptr<T> getResource(const str &rid, const str &fileName="") {
@@ -36,16 +36,9 @@ namespace lib
                     return getTexture(rid, fileName);
                 }
             }
-
-			template <typename T>
-			using NamedIndex = pair<const str, T>;
-
-			template <typename T>
-			using ResourceList = std::list<NamedIndex<T>>;
-
 		private:
-			ResourceList<sptr<scene::TTFont>> m_fonts;
-			ResourceList<sptr<scene::Texture>> m_textures;
+            struct ResourceManagerPrivate;
+            uptr<ResourceManagerPrivate> m_private;
 		};
 	}
 }

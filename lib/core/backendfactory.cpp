@@ -20,34 +20,55 @@ namespace lib::backend
         IShaderFactory *sftemp{ nullptr };
 
 		static const char *sh_name = "bsfml";
-		if (loader->loadModule(sh_name)) {
+		if (loader->loadModule(sh_name)) 
+        {
 			auto fp_createWindowProviderInfo = (p_createWindowProviderInfo)loader->loadMethod(sh_name, "createWindowProviderInfo");
-			auto fp_createWindow = (p_createWindow)loader->loadMethod(sh_name, "createWindow");
-			auto fp_createTTFontFactory = (p_createTTFontFactory)loader->loadMethod(sh_name, "createTTFontFactory");
-			auto fp_createTextureFactory = (p_createTextureFactory)loader->loadMethod(sh_name, "createTextureFactory");
+            auto fp_destroyWindowProviderInfo = (p_destroyWindowProviderInfo)loader->loadMethod(sh_name, "destroyWindowProviderInfo");
+
+            if (fp_createWindowProviderInfo && fp_destroyWindowProviderInfo)
+            {
+                wpitemp = (*fp_createWindowProviderInfo)();
+                m_windowProviderInfo = sptr<IWindowProviderInfo>(wpitemp, *fp_destroyWindowProviderInfo);
+            }
+
+            auto fp_createWindow = (p_createWindow)loader->loadMethod(sh_name, "createWindow");
+            auto fp_destroyWindow = (p_destroyWindow)loader->loadMethod(sh_name, "destroyWindow");
+
+            if (fp_createWindow && fp_destroyWindow)
+            {
+                wtemp = (*fp_createWindow)();
+                m_window = sptr<IWindow>(wtemp, *fp_destroyWindow);
+            }
+
+            auto fp_createTTFontFactory = (p_createTTFontFactory)loader->loadMethod(sh_name, "createTTFontFactory");
+            auto fp_destroyTTFontFactory = (p_destroyTTFontFactory)loader->loadMethod(sh_name, "destroyTTFontFactory");
+
+            if (fp_createTTFontFactory && fp_destroyTTFontFactory)
+            {
+                ttfftemp = (*fp_createTTFontFactory)();
+                m_ttfontFactory = sptr<ITTFontFactory>(ttfftemp, *fp_destroyTTFontFactory);
+            }
+
+            auto fp_createTextureFactory = (p_createTextureFactory)loader->loadMethod(sh_name, "createTextureFactory");
+            auto fp_destroyTextureFactory = (p_destroyTextureFactory)loader->loadMethod(sh_name, "destroyTextureFactory");
+
+            if (fp_createTextureFactory && fp_destroyTextureFactory)
+            {
+                tftemp = (*fp_createTextureFactory)();
+                m_textureFactory = sptr<ITextureFactory>(tftemp, *fp_destroyTextureFactory);
+            }
+
             auto fp_createShaderFactory = (p_createShaderFactory)loader->loadMethod(sh_name, "createShaderFactory");
-			auto fp_destroyWindowProviderInfo = (p_destroyWindowProviderInfo)loader->loadMethod(sh_name, "destroyWindowProviderInfo");
-			auto fp_destroyWindow = (p_destroyWindow)loader->loadMethod(sh_name, "destroyWindow");
-			auto fp_destroyTTFontFactory = (p_destroyTTFontFactory)loader->loadMethod(sh_name, "destroyTTFontFactory");
-			auto fp_destroyTextureFactory = (p_destroyTextureFactory)loader->loadMethod(sh_name, "destroyTextureFactory");
             auto fp_destroyShaderFactory = (p_destroyShaderFactory)loader->loadMethod(sh_name, "destroyShaderFactory");
 
-			if (fp_createWindowProviderInfo && fp_createWindow && fp_createTTFontFactory && fp_createTextureFactory &&
-				fp_destroyWindowProviderInfo && fp_destroyWindow && fp_destroyTTFontFactory && fp_destroyTextureFactory) {
-				wpitemp = (*fp_createWindowProviderInfo)();
-				wtemp = (*fp_createWindow)();
-				ttfftemp = (*fp_createTTFontFactory)();
-				tftemp = (*fp_createTextureFactory)();
+			if (fp_createShaderFactory && fp_destroyShaderFactory)
+            {
                 sftemp = (*fp_createShaderFactory)();
-
-				m_windowProviderInfo = sptr<IWindowProviderInfo>(wpitemp,*fp_destroyWindowProviderInfo);
-				m_window = sptr<IWindow>(wtemp, *fp_destroyWindow);
-				m_textureFactory = sptr<ITextureFactory>(tftemp,*fp_destroyTextureFactory);
-				m_ttfontFactory = sptr<ITTFontFactory>(ttfftemp,*fp_destroyTTFontFactory);
                 m_shaderFactory = sptr<IShaderFactory>(sftemp, *fp_destroyShaderFactory);
 			}
         }
-        else {
+        else 
+        {
             // Cannot load shared library dynamically.
             log_release_error("Fatal: Cannot load shared library ", sh_name);
         }
@@ -105,4 +126,9 @@ namespace lib::backend
 	{
 		return m_ttfontFactory;
 	}
+
+    sptr<IShaderFactory> BackendFactory::getShaderFactory()
+    {
+        return m_shaderFactory;
+    }
 }

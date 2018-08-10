@@ -1,12 +1,10 @@
 #pragma once
 
-#ifndef LIB_BACKEND_INCLUDE_INLUDE_HPP__
-#define LIB_BACKEND_INCLUDE_INLUDE_HPP__
+#ifndef LIB_BACKEND_INTERFACES_INLUDE_HPP
+#define LIB_BACKEND_INTERFACES_INLUDE_HPP
 
 #include "iwindow.hpp"
-#include "ittfontfactory.hpp"
-#include "itexturefactory.hpp"
-#include "ishaderfactory.hpp"
+#include "iresourcefactories.hpp"
 
 using p_createWindowProviderInfo = lib::backend::IWindowProviderInfo * (*)();
 using p_destroyWindowProviderInfo = bool(*)(lib::backend::IWindowProviderInfo *);
