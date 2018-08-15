@@ -17,7 +17,7 @@ namespace zoper
 		LevelProperties();
         virtual ~LevelProperties();
         void setMode(GameMode gameMode);
-        void setLevel(const u32 level);
+        void setLevel(const size_type level);
 
         inline size_t millisBetweenTokens() const { return m_millisBetweenTokens; }
         inline size_t baseScore() const { return m_baseScore; }

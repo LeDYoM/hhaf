@@ -10,7 +10,7 @@ namespace lib::backend::sfmlb
 	ITTGlyph TTFont::getGlyph(const u32 codePoint, const u32 characterSize) const
     {
 		const sf::Glyph &glyph(m_font->getGlyph(codePoint, characterSize, false));
-		return ITTGlyph{ toRect<f32>(glyph.bounds), toRect<s32>(glyph.textureRect), glyph.advance };
+		return ITTGlyph{ from_sft_type<f32>(glyph.bounds), from_sft_type<s32>(glyph.textureRect), glyph.advance };
 	}
 
 	f32 TTFont::getLineSpacing(const u32 characterSize) const

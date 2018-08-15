@@ -11,8 +11,8 @@ namespace zoper
 {
 	using namespace lib;
 
-	constexpr u32 NumHighScore = 10;
-	using Score = u32;
+	constexpr size_type NumHighScore = 10;
+	using Score = size_type;
 
 	struct HighScore
 	{
