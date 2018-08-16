@@ -23,7 +23,7 @@ namespace zoper
         m_gameMode = gameMode;
     }
 
-	void LevelProperties::setLevel(const u32 level)
+	void LevelProperties::setLevel(const size_type level)
 	{
 		m_level = level;
 

@@ -24,7 +24,7 @@ namespace lib::scene
         BasicProperty<string_vector> data;
         void incrementIndex() noexcept;
         void decrementIndex() noexcept;
-        PropertyState<u32> index{ 0 };
+        PropertyState<size_type> index{ 0 };
 
         virtual void update() override final;
     private:

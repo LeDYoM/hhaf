@@ -204,7 +204,7 @@ namespace zoper
 		log_debug_info("Exited state: ", state);
     }
 
-    void GameScene::setLevel(const u32 nv)
+    void GameScene::setLevel(const size_type nv)
     {
         levelProperties.setMode(m_gameMode);
         levelProperties.setLevel(nv);
@@ -328,7 +328,7 @@ namespace zoper
         p_boardModel->setTile(m_player->boardPosition(), m_player);
     }
 
-    void GameScene::addNewToken(const vector2dst &pos, u32 newToken)
+    void GameScene::addNewToken(const vector2dst &pos, const size_type newToken)
     {
         using namespace lib::board;
 
@@ -470,7 +470,7 @@ namespace zoper
 
     constexpr u8 scoreSize = 5;
 
-    void GameScene::increaseScore(u32 scoreIncrement)
+    void GameScene::increaseScore(const size_type scoreIncrement)
     {
         m_score += scoreIncrement;
         str result(m_score);

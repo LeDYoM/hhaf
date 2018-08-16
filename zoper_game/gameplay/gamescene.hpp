@@ -48,12 +48,12 @@ namespace zoper
     private:
         sptr<GameSceneData> m_data;
         using BaseClass = scene::Scene;
-        void setLevel(const u32 nv);
+        void setLevel(const size_type nv);
         void updateLevelData();
         void updateGoals();
-        void increaseScore(u32 scoreIncrement);
+        void increaseScore(const size_type scoreIncrement);
         void generateNextToken();
-        void addNewToken(const vector2dst &pos, u32 newToken);
+        void addNewToken(const vector2dst &pos, const size_type newToken);
         bool pointInCenter(const vector2dst &tPosition) const;
         vector2df board2SceneFactor() const;
         vector2df board2Scene(const lib::vector2dst &bPosition) const;

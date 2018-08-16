@@ -9,29 +9,33 @@
 namespace lib::backend::sfmlb
 {
     template <typename T>
-    constexpr const sf::Rect<T> fromRect(const Rect<T> &rect) noexcept { return sf::Rect<T>{rect.left, rect.top, rect.width, rect.height}; }
+    constexpr const sf::Rect<T> to_sf_type(const Rect<T> &rect) noexcept { return sf::Rect<T>{rect.left, rect.top, rect.width, rect.height}; }
 
     template <typename T>
-    constexpr const Rect<T> toRect(const sf::Rect<T> &rect) noexcept { return Rect<T>{rect.left, rect.top, rect.width, rect.height}; }
+    constexpr const Rect<T> from_sft_type(const sf::Rect<T> &rect) noexcept { return Rect<T>{rect.left, rect.top, rect.width, rect.height}; }
 
     template <typename T>
-    constexpr const sf::Vector2<T> fromVector2d(const vector2d<T> &v) noexcept { return sf::Vector2<T>{v.x, v.y}; }
+    constexpr const sf::Vector2<T> to_sf_type(const vector2d<T> &v) noexcept { return sf::Vector2<T>{v.x, v.y}; }
 
     template <typename T>
-    constexpr const vector2d<T> toVector2d(const sf::Vector2<T> &v) noexcept { return vector2d<T>{v.x, v.y}; }
+    constexpr const vector2d<T> from_sf_type(const sf::Vector2<T> &v) noexcept { return vector2d<T>{v.x, v.y}; }
 
     constexpr input::Key doCast(const sf::Keyboard::Key &k) noexcept
     {
         return static_cast<input::Key>((int)k);
     }
 
-    inline sf::String getAsString(const str& other) noexcept
+    inline sf::String to_sf_type(const str& other) noexcept
     {
-//        std::wstring wsTmp(other.cbegin(), other.cend());
         return sf::String(other.c_str());
     }
 
-    inline sf::Transform asTransform(const f32* matrix) noexcept
+    inline sf::String to_sf_type(const char* other) noexcept
+    {
+        return sf::String(other);
+    }
+
+    inline sf::Transform to_sf_type(const f32* matrix) noexcept
     {
         return sf::Transform{ matrix[0], matrix[4], matrix[12],
             matrix[1], matrix[5], matrix[13],
@@ -39,7 +43,7 @@ namespace lib::backend::sfmlb
 
     }
 
-    constexpr const sf::Texture *const asTexture(const ITexture*t)
+    constexpr const sf::Texture *const to_sf_type(const ITexture*t)
     {
         if (t) {
             if (auto tmp = dynamic_cast<const Texture*>(t)) {
@@ -52,11 +56,11 @@ namespace lib::backend::sfmlb
         return nullptr;
     }
 
-    inline const sf::RenderStates asRenderStates(const f32 *matrix, const ITexture *texture) noexcept
+    inline const sf::RenderStates to_sf_type(const f32 *matrix, const ITexture *texture) noexcept
     {
         return sf::RenderStates(sf::RenderStates::Default.blendMode,
-            asTransform(matrix),
-            asTexture(texture),
+            to_sf_type(matrix),
+            to_sf_type(texture),
             nullptr);
     }
 }

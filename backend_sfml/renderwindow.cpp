@@ -13,34 +13,34 @@ namespace lib::backend::sfmlb
     {
         sf::RenderTarget::draw((const sf::Vertex*)vertices, nVertex,
             static_cast<sf::PrimitiveType>(pType),
-            asRenderStates(transform,texture));
+            to_sf_type(transform,texture));
     }
 
     void RenderTarget::setViewPort(const Rectf32 & nviewport)
     {
         sf::View currentView(getView());
-        currentView.setViewport(fromRect(nviewport));
+        currentView.setViewport(to_sf_type(nviewport));
         setView(currentView);
     }
 
     Rectf32 RenderTarget::viewPort() const
     {
         sf::View currentView(getView());
-        return toRect(currentView.getViewport());
+        return from_sft_type(currentView.getViewport());
     }
 
     void RenderTarget::setViewRect(const Rectf32 & nviewRect)
     {
         sf::View currentView(getView());
-        currentView.setCenter(fromVector2d(nviewRect.center()));
-        currentView.setSize(fromVector2d(nviewRect.size()));
+        currentView.setCenter(to_sf_type(nviewRect.center()));
+        currentView.setSize(to_sf_type(nviewRect.size()));
         setView(currentView);
     }
 
     Rectf32 RenderTarget::viewRect() const
     {
         sf::View currentView(getView());
-        return rectFromCenterAndSize(toVector2d(currentView.getCenter()), toVector2d(currentView.getSize()));
+        return rectFromCenterAndSize(from_sf_type(currentView.getCenter()), from_sf_type(currentView.getSize()));
     }
 
     void RenderTarget::clear()
@@ -58,7 +58,7 @@ namespace lib::backend::sfmlb
 			style = sf::Style::Fullscreen;
 
 		// Deal with SFML bug
-		sf::Window::create(sf::VideoMode(wcp.width, wcp.height, wcp.bpp), getAsString(wcp.windowTitle),
+		sf::Window::create(sf::VideoMode(wcp.width, wcp.height, wcp.bpp), to_sf_type(wcp.windowTitle),
 			style, sf::ContextSettings(0, 0, wcp.antialiasing));
 
 		this->setVerticalSyncEnabled(wcp.vsync);
@@ -109,7 +109,7 @@ namespace lib::backend::sfmlb
 
 	void RenderWindow::setWindowTitle(str newTitle)
 	{
-		Window::setTitle(getAsString(newTitle));
+		Window::setTitle(to_sf_type(newTitle));
 	}
 
 	void RenderWindow::closeWindow()
