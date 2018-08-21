@@ -49,8 +49,6 @@ namespace zoper
         sptr<GameSceneData> m_data;
         using BaseClass = scene::Scene;
         void setLevel(const size_type nv);
-        void updateLevelData();
-        void updateGoals();
         void increaseScore(const size_type scoreIncrement);
         void generateNextToken();
         void addNewToken(const vector2dst &pos, const size_type newToken);
@@ -86,10 +84,8 @@ namespace zoper
 
         // General properties.
         sptr<board::BoardModelComponent> p_boardModel{ nullptr };
-        size_type m_consumedTokens{ 0 };
-        size_type m_score{ 0 };
+        InGameData m_inGameData;
         u8 m_nextTokenPart{ 0 };
-        GameMode m_gameMode{ GameMode::Token };
         LevelProperties levelProperties;
         TokenZones m_tokenZones;
         sptr<Player> m_player{ nullptr };

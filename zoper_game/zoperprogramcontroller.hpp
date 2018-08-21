@@ -8,7 +8,7 @@
 namespace zoper
 {
 	using namespace lib;
-	class GameSharedData;
+	struct GameSharedData;
 	class KeyMapping;
 	class MenuScene;
 	class GameScene;
