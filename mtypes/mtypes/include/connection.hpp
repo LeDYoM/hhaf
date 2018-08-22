@@ -50,7 +50,8 @@ namespace lib
     class connection final : public iconnection {
     public:
         constexpr connection(emitter<Args...> &e, function<void(Args...)> f)
-                : m_emitter{ e }, m_function{ std::move(f) } {
+                : m_emitter{ e }, m_function{ std::move(f) }
+        {
             m_emitter.connect(m_function);
         }
 
@@ -69,6 +70,11 @@ namespace lib
         inline bool disconnect() override {
             return m_emitter.disconnect(m_function);
         }
+
+        ~connection()
+        {
+            /*bool return is ignored*/m_emitter.disconnect(m_function);
+        }
     private:
         emitter<Args...> &m_emitter;
         function<void(Args...)> m_function;
@@ -85,12 +91,6 @@ namespace lib
         template <typename... Args>
         constexpr void connect(emitter<Args...> &e, emitter<Args...> &r) {
             m_connections.push_back(msptr<connection<Args...>>(e, r));
-        }
-
-        ~ireceiver() {
-            for (auto &&connection : m_connections) {
-                connection->disconnect();
-            }
         }
     private:
         vector<sptr<iconnection>> m_connections;

@@ -11,25 +11,43 @@ namespace zoper
 	using namespace lib::scene;
 	using namespace lib::core;
 
-    void LevelProperties::setGameData(const size_type currentLevel, 
-        const GameMode gameMode, sptr<GameSceneData> gameSceneData)
+    void LevelProperties::setUp(const size_type currentLevel,
+        const GameMode gameMode, sptr<GameSceneData> gameSceneData,
+        sptr<scene::TimerComponent> sceneTimerComponent)
     {
-        m_currentLevel = currentLevel;
         m_gameMode = gameMode;
         m_gameSceneData.swap(gameSceneData);
+        m_sceneTimerComponent.swap(sceneTimerComponent);
+
+        assert_debug(m_sceneTimerComponent != nullptr, "Passed nullptr sceneTimerComponent");
         assert_debug(m_gameSceneData != nullptr, "Passed nullptr gameSceneData");
 
+        m_updateLevelDataTimer = m_sceneTimerComponent->addTimer(
+            TimerType::Continuous,
+            TimeFromMillis(120),
+            [this](Time realEllapsed) {
+            updateLevelData();
+        });
+
+        setLevel(currentLevel);
+    }
+
+    void LevelProperties::setLevel(const size_type currentLevel)
+    {
 		m_baseScore = 10 + currentLevel;
 
         m_consumedTokens = 0U;
 
-		if (m_currentLevel <= maxLevelWithProperties) {
+		if (m_currentLevel <= maxLevelWithProperties) 
+        {
 			m_millisBetweenTokens = 2600 - (m_currentLevel * 100);
             m_stayCounter = ((m_gameMode == GameMode::Time)?
                                  180 + (m_currentLevel * 30)
                                 :
                                  25 + (10 * m_currentLevel));
-		} else {
+		}
+        else
+        {
 			m_millisBetweenTokens = 50;
             m_stayCounter = ((m_gameMode == GameMode::Time)?
                                  1200
@@ -48,7 +66,8 @@ namespace zoper
 
     Color LevelProperties::getBackgroundTileColor(vector2dst position, const bool isCenter) const
 	{
-		if (m_currentLevel <= maxLevelWithProperties) {
+		if (m_currentLevel <= maxLevelWithProperties) 
+        {
 			if (isCenter) {
 				if (m_currentLevel < 9) {
 					if (m_currentLevel % 2) {
@@ -66,7 +85,8 @@ namespace zoper
 					}
 				}
 			}
-			else {
+			else 
+            {
 				if (m_currentLevel < 2) {
 					return colors::Black;
 				}
@@ -133,4 +153,5 @@ namespace zoper
                 setLevel(m_currentLevel + 1);
             break;
         }
+    }
 }

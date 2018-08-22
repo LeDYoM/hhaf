@@ -147,13 +147,7 @@ namespace zoper
             }
         );
 
-        m_updateLevelDataTimer = m_sceneTimerComponent->addTimer(
-            TimerType::Continuous,
-            TimeFromMillis(120),
-            [this](Time realEllapsed) {
-                updateLevelData();
-            }
-        );
+        levelProperties.setUp(m_inGameData.currentLevel, m_inGameData.gameMode, m_data, m_sceneTimerComponent);
 
         StatesControllerActuatorRegister<size_type> gameSceneActuatorRegister;
         gameSceneActuatorRegister.registerStatesControllerActuator(*m_sceneStates, *this);
@@ -205,7 +199,7 @@ namespace zoper
 
     void GameScene::setLevel(const size_type nv)
     {
-        levelProperties.setGameData(m_inGameData.currentLevel, m_inGameData.gameMode);
+        levelProperties.setLevel(m_inGameData.currentLevel);
 
         m_levelTimer.restart();
 

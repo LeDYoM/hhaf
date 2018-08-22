@@ -5,6 +5,8 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
+
+#include<lib/scene/components/timercomponent.hpp>
 #include <lib/scene/color.hpp>
 
 #include "../gameshareddata.hpp"
@@ -18,7 +20,11 @@ namespace zoper
 	class LevelProperties
 	{
 	public:
-        void setGameData(const size_type currentLevel, const GameMode gameMode, sptr<GameSceneData> gameSceneData);
+        void setUp(const size_type currentLevel, 
+            const GameMode gameMode, sptr<GameSceneData> gameSceneData,
+            sptr<scene::TimerComponent> m_sceneTimerComponent);
+
+        void setLevel(const size_type currentLevel);
 
         inline size_t millisBetweenTokens() const { return m_millisBetweenTokens; }
         inline size_t baseScore() const { return m_baseScore; }
@@ -30,6 +36,10 @@ namespace zoper
 	private:
         void updateGoals();
         void updateLevelData();
+
+        Timer m_levelTimer;
+        scene::TimerConnectorSPtr m_updateLevelDataTimer;
+        sptr<scene::TimerComponent> m_sceneTimerComponent;
 
         size_type m_currentLevel{ 0U };
         size_t m_millisBetweenTokens{ 0U };

@@ -79,8 +79,6 @@ namespace zoper
         // Timer related properties
         sptr<scene::TimerComponent> m_sceneTimerComponent;
         scene::TimerConnectorSPtr m_nextTokenTimer;
-        Timer m_levelTimer;
-        scene::TimerConnectorSPtr m_updateLevelDataTimer;
 
         // General properties.
         sptr<board::BoardModelComponent> p_boardModel{ nullptr };
