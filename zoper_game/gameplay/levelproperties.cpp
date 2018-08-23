@@ -34,8 +34,9 @@ namespace zoper
 
     void LevelProperties::setLevel(const size_type currentLevel)
     {
-		m_baseScore = 10 + currentLevel;
+        m_levelTimer.restart();
 
+		m_baseScore = 10 + currentLevel;
         m_consumedTokens = 0U;
 
 		if (m_currentLevel <= maxLevelWithProperties) 
@@ -127,6 +128,12 @@ namespace zoper
 		}
 		return lib::scene::colors::Black;
 	}
+
+    void LevelProperties::tokenConsumed()
+    {
+        ++m_consumedTokens;
+        updateLevelData();
+    }
 
     void LevelProperties::updateGoals()
     {

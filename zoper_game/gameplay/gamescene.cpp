@@ -102,7 +102,6 @@ namespace zoper
         addPlayer();
 
         m_nextTokenPart = 0;
-        importGameSharedData();
 
         auto inputComponent(ensureComponentOfType<scene::InputComponent>());
         inputComponent->KeyPressed.connect([this](const lib::input::Key&key) {
@@ -137,21 +136,23 @@ namespace zoper
 
         m_sceneTimerComponent = ensureComponentOfType<scene::TimerComponent>();
 
+        levelProperties.setUp(m_inGameData.currentLevel, m_inGameData.gameMode, m_data, m_sceneTimerComponent);
+
         m_nextTokenTimer = m_sceneTimerComponent->addTimer(
             TimerType::Continuous,
             TimeFromMillis(levelProperties.millisBetweenTokens()),
             [this](Time realEllapsed) {
-                log_debug_info("Elapsed between tokens: ", realEllapsed.asMilliSeconds());
-                // New token
-                generateNextToken();
-            }
-        );
+            log_debug_info("Elapsed between tokens: ", realEllapsed.asMilliSeconds());
+            // New token
+            generateNextToken();
+        });
 
-        levelProperties.setUp(m_inGameData.currentLevel, m_inGameData.gameMode, m_data, m_sceneTimerComponent);
+        importGameSharedData();
 
         StatesControllerActuatorRegister<size_type> gameSceneActuatorRegister;
         gameSceneActuatorRegister.registerStatesControllerActuator(*m_sceneStates, *this);
         setState(Playing);
+
         clock.restart();
     }
 
@@ -200,8 +201,6 @@ namespace zoper
     void GameScene::setLevel(const size_type nv)
     {
         levelProperties.setLevel(m_inGameData.currentLevel);
-
-        m_levelTimer.restart();
 
         // Update background tiles
         m_data->m_boardGroup->for_each_tableSceneNode([this](const auto position, auto node) {
@@ -321,7 +320,7 @@ namespace zoper
                 if (currentTokenType == tokenType) {
                     ++inARow;
                     increaseScore(inARow*levelProperties.baseScore());
-                    ++m_consumedTokens;
+                    levelProperties.tokenConsumed();
                     lastTokenPosition = board2Scene(loopPosition);
                     p_boardModel->deleteTile(loopPosition);
                     found = true;
@@ -354,9 +353,6 @@ namespace zoper
             }
             return result;
         });
-
-        if (m_inGameData.gameMode == GameMode::Token)
-            updateLevelData();
     }
 
     bool GameScene::pointInCenter(const vector2dst &pos) const

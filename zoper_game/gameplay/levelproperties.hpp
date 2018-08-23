@@ -29,10 +29,12 @@ namespace zoper
         inline size_t millisBetweenTokens() const { return m_millisBetweenTokens; }
         inline size_t baseScore() const { return m_baseScore; }
         inline size_t stayCounter() const { return m_stayCounter; }
+        
+
         static constexpr size_t maxLevelWithProperties{ 25U };
         scene::Color getBackgroundTileColor(vector2dst position, const bool isCenter) const;
 
-        size_type m_consumedTokens{ 0U };
+        void tokenConsumed();
 	private:
         void updateGoals();
         void updateLevelData();
@@ -41,6 +43,7 @@ namespace zoper
         scene::TimerConnectorSPtr m_updateLevelDataTimer;
         sptr<scene::TimerComponent> m_sceneTimerComponent;
 
+        size_type m_consumedTokens{ 0U };
         size_type m_currentLevel{ 0U };
         size_t m_millisBetweenTokens{ 0U };
         size_t m_baseScore{ 0U };
