@@ -134,8 +134,11 @@ namespace zoper
             }
         });
 
+        // Create the general timer component for the scene.
         m_sceneTimerComponent = ensureComponentOfType<scene::TimerComponent>();
 
+        // At this point, we setup level properties.
+        // levelProperties should not be used before this point.
         levelProperties.setUp(m_inGameData.currentLevel, m_inGameData.gameMode, m_data, m_sceneTimerComponent);
 
         m_nextTokenTimer = m_sceneTimerComponent->addTimer(
@@ -147,13 +150,15 @@ namespace zoper
             generateNextToken();
         });
 
+        // Import game shared data. Basically, the menu selected options.
         importGameSharedData();
 
-        StatesControllerActuatorRegister<size_type> gameSceneActuatorRegister;
-        gameSceneActuatorRegister.registerStatesControllerActuator(*m_sceneStates, *this);
+        // Set state controll.
+        {
+            StatesControllerActuatorRegister<size_type> gameSceneActuatorRegister;
+            gameSceneActuatorRegister.registerStatesControllerActuator(*m_sceneStates, *this);
+        }
         setState(Playing);
-
-        clock.restart();
     }
 
     void GameScene::updateScene()
