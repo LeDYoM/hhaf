@@ -15,12 +15,12 @@ namespace zoper
         const GameMode gameMode, sptr<GameSceneData> gameSceneData,
         sptr<scene::TimerComponent> sceneTimerComponent)
     {
+        assert_debug(m_sceneTimerComponent != nullptr, "Passed nullptr sceneTimerComponent");
+        assert_debug(m_gameSceneData != nullptr, "Passed nullptr gameSceneData");
+
         m_gameMode = gameMode;
         m_gameSceneData.swap(gameSceneData);
         m_sceneTimerComponent.swap(sceneTimerComponent);
-
-        assert_debug(m_sceneTimerComponent != nullptr, "Passed nullptr sceneTimerComponent");
-        assert_debug(m_gameSceneData != nullptr, "Passed nullptr gameSceneData");
 
         m_updateLevelDataTimer = m_sceneTimerComponent->addTimer(
             TimerType::Continuous,
@@ -36,7 +36,8 @@ namespace zoper
     {
         m_levelTimer.restart();
 
-		m_baseScore = 10 + currentLevel;
+        m_currentLevel = currentLevel;
+		m_baseScore = 10 + m_currentLevel;
         m_consumedTokens = 0U;
 
 		if (m_currentLevel <= maxLevelWithProperties) 
@@ -155,8 +156,8 @@ namespace zoper
         case GameMode::Time:
             m_gameSceneData->m_goalQuad->text(vector2dst{ 1,0 })->text.set(
                 Text_t(static_cast<u16>(
-                    m_levelTimer.getElapsedTime().asSeconds())));
-            if (m_levelTimer.getElapsedTime().asSeconds() >= m_stayCounter)
+                    m_levelTimer.ellapsed().asSeconds())));
+            if (m_levelTimer.ellapsed().asSeconds() >= m_stayCounter)
                 setLevel(m_currentLevel + 1);
             break;
         }

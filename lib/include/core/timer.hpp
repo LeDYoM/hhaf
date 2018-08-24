@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_TIMER_INCLUDE_HPP__
-#define LIB_TIMER_INCLUDE_HPP__
+#ifndef LIB_TIMER_INCLUDE_HPP
+#define LIB_TIMER_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <lib/include/lib.hpp>
@@ -13,9 +13,9 @@ namespace lib
 
     enum class TimeInitializationTag
     {
-        Microseconds,
-        Milliseconds,
-        Seconds
+        Microseconds    = 0,
+        Milliseconds    = 1,
+        Seconds         = 2
     };
 
 	class LIB_API_EXPORT Time final
@@ -60,10 +60,10 @@ namespace lib
 		Timer();
 		virtual ~Timer();
 
-        Timer(Timer&&) = default;
-        Timer& operator=(Timer&&) = default;
+        Timer(Timer&&);
+        Timer& operator=(Timer&&);
 
-		virtual Time getElapsedTime() const;
+		virtual Time ellapsed() const;
 		virtual void restart();
 	private:
 #ifdef _MSC_VER
@@ -82,7 +82,7 @@ namespace lib
 		void pause();
 		void resume();
 		bool switchPause();
-		virtual Time getElapsedTime() const override;
+		virtual Time ellapsed() const override;
 		virtual void restart() override;
 
 	private:

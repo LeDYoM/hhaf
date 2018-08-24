@@ -22,7 +22,7 @@ namespace zoper
         m_pauseSceneNode = gameScene.createSceneNode("pause");
 
         m_scoreQuad = gameScene.createSceneNode<TextQuad>("score", m_gameresources.scoreFont->font(90), colors::White, vector2df{600, 300});
-        m_scoreQuad->position.set(vector2df{ 50, 50 });
+        m_scoreQuad->position.set(vector2df{ 50, 150 });
         m_scoreQuad->text(vector2dst{0,0})->text.set(Text_t("Level:"));
         m_scoreQuad->text(vector2dst{0,0})->textColor = FillColor_t(colors::Blue);
         m_scoreQuad->text(vector2dst{0,1})->text.set(Text_t("Score:"));

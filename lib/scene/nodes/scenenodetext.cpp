@@ -44,6 +44,7 @@ namespace lib::scene::nodes
                 f32 maxX{ 0.f };
                 f32 maxY{ 0.f };
                 u32 prevChar{ 0 };
+
                 for (auto&& curChar : text()())
                 {
                     // Apply the kerning offset
@@ -100,7 +101,8 @@ namespace lib::scene::nodes
             }
         }
 
-        if (textColor.readResetHasChanged()) {
+        if (textColor.readResetHasChanged()) 
+        {
             const Color &tc{textColor()()};
             sceneNodes().for_each([&tc](const SceneNodeSPtr& sNode) {
                 sNode->snCast<QuadSceneNode>()->node()->color.set(tc);

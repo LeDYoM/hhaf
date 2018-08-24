@@ -94,7 +94,7 @@ namespace lib::core
     bool Window::preLoop()
     {
         backend::IWindow &bw(*m_wPrivate->m_backendWindow);
-        auto eMs = m_wPrivate->globalClock.getElapsedTime().asMilliSeconds();
+        auto eMs = m_wPrivate->globalClock.ellapsed().asMilliSeconds();
         if ((eMs - m_wPrivate->lastTimeFps) > 1000) {
             m_wPrivate->lastTimeFps = eMs;
             m_wPrivate->lastFps = m_wPrivate->currentFps;
