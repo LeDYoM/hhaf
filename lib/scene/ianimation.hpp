@@ -24,7 +24,7 @@ namespace lib
 
                 virtual bool animate()
                 {
-                    m_currentTime = m_timer.getElapsedTime();
+                    m_currentTime = m_timer.ellapsed();
                     if (m_currentTime > m_duration) {
                         m_delta = 1.0f;
                         return false;

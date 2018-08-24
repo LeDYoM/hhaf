@@ -128,21 +128,20 @@ namespace lib
 	{
 		clock_t::time_point start;
 		std::chrono::microseconds pausedTime;
-        f32 acceleration;
         
 		TimerPrivate() :
             start{ clock_t::now() },
-            pausedTime{ std::chrono::microseconds::zero() },
-            acceleration{ 1.0f }
-        {}
+            pausedTime{ std::chrono::microseconds::zero() } {}
         ~TimerPrivate() = default;
 	};
 
 	Timer::Timer() : m_timerPrivate{ new TimerPrivate } {}
 
 	Timer::~Timer() = default;
+    Timer::Timer(Timer &&) = default;
+    Timer & Timer::operator=(Timer &&) = default;
 
-	Time Timer::getElapsedTime() const
+	Time Timer::ellapsed() const
 	{
 		Time t((std::chrono::duration_cast<std::chrono::microseconds>(clock_t::now() - m_timerPrivate->start)).count(),
             TimeInitializationTag::Microseconds);
@@ -166,7 +165,7 @@ namespace lib
 	{
 		if (m_paused) {
 			m_paused = false;
-			m_pausedTime += m_pausedTimer.getElapsedTime();
+			m_pausedTime += m_pausedTimer.ellapsed();
 		}
 	}
 
@@ -176,12 +175,12 @@ namespace lib
 		return m_paused;
 	}
 
-	Time PausableTimer::getElapsedTime() const
+	Time PausableTimer::ellapsed() const
 	{
-		Time t{ Timer::getElapsedTime() - m_pausedTime };
+		Time t{ Timer::ellapsed() - m_pausedTime };
 		if (m_paused)
 		{
-			t -= m_pausedTimer.getElapsedTime();
+			t -= m_pausedTimer.ellapsed();
 		}
 		return t;
 	}

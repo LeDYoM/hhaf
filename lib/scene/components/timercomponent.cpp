@@ -26,7 +26,7 @@ namespace lib::scene
                 if (timerConnector.timeOut()) {
                     // Delta time has passed, so trigger
                     // the callback and update the timer
-                    timerConnector.m_emitter(timerConnector.m_timer.getElapsedTime());
+                    timerConnector.m_emitter(timerConnector.m_timer.ellapsed());
                     if (timerConnector.m_timerType == TimerType::Continuous) {
                         timerConnector.m_timer.restart();
                     } else {

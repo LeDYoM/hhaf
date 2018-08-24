@@ -15,8 +15,6 @@ namespace lib::scene
 
 	void Scene::onCreated()
 	{
-        clock.restart();
-
         m_sceneStates = ensureComponentOfType<std::remove_reference_t<decltype(*m_sceneStates)>>();
 		m_sceneStates->start(0);
     }

@@ -9,8 +9,8 @@
 
 namespace zoper
 {
-	class GameSharedData;
 	using namespace lib;
+    struct GameSharedData;
 
 	class MainMenu : public scene::SceneNode
 	{

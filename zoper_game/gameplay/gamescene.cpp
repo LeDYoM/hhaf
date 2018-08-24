@@ -46,7 +46,7 @@ namespace zoper
         BaseClass::onCreated();
 
         m_data = msptr<GameSceneData>();
-        m_data->createData(*this, m_gameMode);
+        m_data->createData(*this, m_inGameData.gameMode);
 
         increaseScore(0);
 
@@ -102,8 +102,6 @@ namespace zoper
         addPlayer();
 
         m_nextTokenPart = 0;
-        importGameSharedData();
-        m_score = 0;
 
         auto inputComponent(ensureComponentOfType<scene::InputComponent>());
         inputComponent->KeyPressed.connect([this](const lib::input::Key&key) {
@@ -136,30 +134,31 @@ namespace zoper
             }
         });
 
+        // Create the general timer component for the scene.
         m_sceneTimerComponent = ensureComponentOfType<scene::TimerComponent>();
+
+        // At this point, we setup level properties.
+        // levelProperties should not be used before this point.
+        levelProperties.setUp(m_inGameData.currentLevel, m_inGameData.gameMode, m_data, m_sceneTimerComponent);
 
         m_nextTokenTimer = m_sceneTimerComponent->addTimer(
             TimerType::Continuous,
             TimeFromMillis(levelProperties.millisBetweenTokens()),
             [this](Time realEllapsed) {
-                log_debug_info("Elapsed between tokens: ", realEllapsed.asMilliSeconds());
-                // New token
-                generateNextToken();
-            }
-        );
+            log_debug_info("Elapsed between tokens: ", realEllapsed.asMilliSeconds());
+            // New token
+            generateNextToken();
+        });
 
-        m_updateLevelDataTimer = m_sceneTimerComponent->addTimer(
-            TimerType::Continuous,
-            TimeFromMillis(120),
-            [this](Time realEllapsed) {
-                updateLevelData();
-            }
-        );
+        // Import game shared data. Basically, the menu selected options.
+        importGameSharedData();
 
-        StatesControllerActuatorRegister<size_type> gameSceneActuatorRegister;
-        gameSceneActuatorRegister.registerStatesControllerActuator(*m_sceneStates, *this);
+        // Set state controll.
+        {
+            StatesControllerActuatorRegister<size_type> gameSceneActuatorRegister;
+            gameSceneActuatorRegister.registerStatesControllerActuator(*m_sceneStates, *this);
+        }
         setState(Playing);
-        clock.restart();
     }
 
     void GameScene::updateScene()
@@ -206,46 +205,12 @@ namespace zoper
 
     void GameScene::setLevel(const size_type nv)
     {
-        levelProperties.setMode(m_gameMode);
-        levelProperties.setLevel(nv);
-
-        m_levelTimer.restart();
-        m_consumedTokens = 0;
+        levelProperties.setLevel(m_inGameData.currentLevel);
 
         // Update background tiles
         m_data->m_boardGroup->for_each_tableSceneNode([this](const auto position, auto node) {
             node->setTileColor(levelProperties.getBackgroundTileColor(position, pointInCenter(position)));
         });
-
-        updateGoals();
-        updateLevelData();
-    }
-
-    void GameScene::updateGoals()
-    {
-        m_data->m_scoreQuad->text(vector2dst{1,0})->text.set(Text_t(make_str(levelProperties.currentLevel() + 1)));
-        m_data->m_goalQuad->text(vector2dst{1,1})->text.set(Text_t(make_str(levelProperties.stayCounter())));
-    }
-
-    void GameScene::updateLevelData()
-    {
-        switch (m_gameMode)
-        {
-        default:
-        case GameMode::Token:
-            m_data->m_goalQuad->text(vector2dst{1,0})->text.set(Text_t(m_consumedTokens));
-            if (m_consumedTokens >= levelProperties.stayCounter())
-                setLevel(levelProperties.currentLevel() + 1);
-            break;
-
-        case GameMode::Time:
-            m_data->m_goalQuad->text(vector2dst{1,0})->text.set(
-                        Text_t(static_cast<u16>(
-                                   m_levelTimer.getElapsedTime().asSeconds())));
-            if (m_levelTimer.getElapsedTime().asSeconds() >= levelProperties.stayCounter())
-                setLevel(levelProperties.currentLevel() + 1);
-            break;
-        }
     }
 
     void GameScene::generateNextToken()
@@ -294,14 +259,13 @@ namespace zoper
 
     void GameScene::importGameSharedData()
     {
-        auto gameSharedData(host().app<ZoperProgramController>().gameSharedData);
-        m_gameMode = gameSharedData->gameMode;
-        setLevel(gameSharedData->startLevel);
-
+        (*host().app<ZoperProgramController>().gameSharedData) >> m_inGameData;
+        setLevel(m_inGameData.currentLevel);
     }
 
     void GameScene::exportGameSharedData()
     {
+        m_inGameData >> (*host().app<ZoperProgramController>().gameSharedData);
     }
 
     void GameScene::for_each_token_in_line(const vector2dst &startPosition, const Direction &direction,
@@ -361,7 +325,7 @@ namespace zoper
                 if (currentTokenType == tokenType) {
                     ++inARow;
                     increaseScore(inARow*levelProperties.baseScore());
-                    ++m_consumedTokens;
+                    levelProperties.tokenConsumed();
                     lastTokenPosition = board2Scene(loopPosition);
                     p_boardModel->deleteTile(loopPosition);
                     found = true;
@@ -394,9 +358,6 @@ namespace zoper
             }
             return result;
         });
-
-        if (m_gameMode == GameMode::Token)
-            updateLevelData();
     }
 
     bool GameScene::pointInCenter(const vector2dst &pos) const
@@ -472,8 +433,8 @@ namespace zoper
 
     void GameScene::increaseScore(const size_type scoreIncrement)
     {
-        m_score += scoreIncrement;
-        str result(m_score);
+        m_inGameData.score += scoreIncrement;
+        str result(m_inGameData.score);
         while (result.size() < scoreSize) result = "0" + result;
         m_data->m_scoreQuad->text(vector2dst{1,1})->text.set(Text_t(result));
     }

@@ -38,7 +38,6 @@ namespace lib
 
             size_type state();
 			void setState(const size_type);
-			PausableTimer clock;
             sptr<StatesController<size_type>> m_sceneStates;
 
 		private:

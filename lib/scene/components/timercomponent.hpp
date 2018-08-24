@@ -30,7 +30,7 @@ namespace lib::scene
             : m_timer{ }, m_timeOut{ std::move(timeOut) },
             m_emitter{ std::move(emitter) }, m_timerType{ timerType } {}
 
-        inline bool timeOut() const { return m_timer.getElapsedTime() >= m_timeOut; }
+        inline bool timeOut() const { return m_timer.ellapsed() >= m_timeOut; }
         inline void pause() { m_timer.pause(); }
         inline void resume() { m_timer.resume(); }
         inline void switchPause() { m_timer.switchPause(); }
