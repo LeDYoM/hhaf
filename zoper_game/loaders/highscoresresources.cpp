@@ -8,7 +8,7 @@ namespace zoper
 
 	void HighScoresResources::loadResources(core::ResourceManager&resourceManager)
 	{
-		background = resourceManager.getResource<Texture>("game_menu.background","resources/gr_ms.png");
-		mainFont = resourceManager.getResource<TTFont>("highScores.mainFont", "resources/oldct.ttf");
+		background = resourceManager.loadResource<Texture>("game_menu.background","resources/gr_ms.png");
+		mainFont = resourceManager.loadResource<TTFont>("highScores.mainFont", "resources/oldct.ttf");
 	}
 }

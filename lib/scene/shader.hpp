@@ -1,10 +1,9 @@
 #pragma once
 
-#ifndef LIB_SCENE_SHADER_INCLUDE_HPP__
-#define LIB_SCENE_SHADER_INCLUDE_HPP__
+#ifndef LIB_SCENE_SHADER_INCLUDE_HPP
+#define LIB_SCENE_SHADER_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <lib/include/backend/ishader.hpp>
 
 namespace lib
 {
@@ -20,7 +19,6 @@ namespace lib
         public:
             Shader(backend::IShader *shader);
             ~Shader();
-            bool loadFromFile(const str& filename);
         private:
             struct ShaderPrivate;
             uptr<ShaderPrivate> m_private;

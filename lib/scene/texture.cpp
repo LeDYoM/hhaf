@@ -9,12 +9,6 @@ namespace lib::scene
 
 	Texture::~Texture() {}
 
-	bool Texture::loadFromFile(const str& filename)
-	{
-		m_texturePrivate = backend::textureFactory().loadFromFile(filename);
-		return m_texturePrivate != nullptr;
-	}
-
 	vector2du32 Texture::size() const
 	{
 		return m_texturePrivate->size();

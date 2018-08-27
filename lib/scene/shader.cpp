@@ -18,10 +18,4 @@ namespace lib::scene
         m_private{ new ShaderPrivate{ std::move(shader) } } {}
 
     Shader::~Shader() = default;
-
-    bool Shader::loadFromFile(const str & filename)
-    {
-        m_private->m_shader = shaderFactory().loadFromFile(filename);
-        return m_private->m_shader != nullptr;
-    }
 }
