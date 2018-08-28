@@ -13,11 +13,10 @@ namespace zoper
 	class HighScoresResources : public lib::IResourceLoader
 	{
 	public:
-		virtual void loadResources(lib::core::ResourceManager&) override;
+        constexpr static char BackgroundTextureId[] = "game_menu.background";
+        constexpr static char MenuFontId[] = "highScores.mainFont";
 
-		lib::sptr<lib::scene::Texture> background;
-		lib::sptr<lib::scene::TTFont> mainFont;
-		
+		void loadResources(lib::core::ResourceManager&) override;		
 	};
 }
 

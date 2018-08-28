@@ -1,11 +1,14 @@
 #include "highscoresscene.hpp"
+#include "highscoresdata.hpp"
+#include "highscoretextcontroller.hpp"
+#include "highscoresscenestates.hpp"
+
+#include "../loaders/highscoresresources.hpp"
+
 #include <lib/scene/renderizables/nodeshape.hpp>
 #include <lib/scene/renderizables/nodequad.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/core/host.hpp>
-#include "../highscores/highscoresdata.hpp"
-#include "../highscores/highscoretextcontroller.hpp"
-#include "../highscores/highscoresscenestates.hpp"
 
 namespace zoper
 {
@@ -31,10 +34,10 @@ namespace zoper
 
 		m_background = createRenderizable<NodeQuad>("background");
 		m_background->box = rectFromSize(2000.0f, 2000.0f);
-        m_background->setTextureFill(m_resources->background);
+        m_background->setTextureFill(resourceManager().getTexture(HighScoresResources::BackgroundTextureId));
 		m_background->color = colors::White;
 
-        auto highScoreTextController(createSceneNode<HighScoreTextController>("HishScoreTextController"));
+        auto highScoreTextController(createSceneNode<HighScoreTextController>("HighScoreTextController"));
         highScoreTextController->Finished.connect([this,statesController]() { sceneManager().terminateScene(); });
 
 		statesController->start(HighScoresSceneStates::Show);
