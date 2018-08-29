@@ -5,6 +5,9 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
+
+#include <lib/include/resources/iresourcehandler.hpp>
+#include <lib/include/resources/iresourceretriever.hpp>
 #include "appservice.hpp"
 
 namespace lib
@@ -18,19 +21,19 @@ namespace lib
 
 	namespace core
 	{
-		class ResourceManager final : public AppService
+		class ResourceManager final : public AppService, public IResourceHandler, public IResourceRetriever
 		{
 		public:
 			ResourceManager();
 			~ResourceManager();
 
-			sptr<scene::TTFont> getFont(const str &rid);
-			sptr<scene::Texture> getTexture(const str &rid);
-			sptr<scene::Shader> getShader(const str &rid);
+			sptr<scene::TTFont> getFont(const str &rid) override;
+			sptr<scene::Texture> getTexture(const str &rid) override;
+			sptr<scene::Shader> getShader(const str &rid) override;
 
-            sptr<scene::TTFont> loadFont(const str &rid, const str &fileName);
-            sptr<scene::Texture> loadTexture(const str &rid, const str &fileName);
-            sptr<scene::Shader> loadShader(const str &rid, const str &fileName);
+            sptr<scene::TTFont> loadFont(const str &rid, const str &fileName) override;
+            sptr<scene::Texture> loadTexture(const str &rid, const str &fileName) override;
+            sptr<scene::Shader> loadShader(const str &rid, const str &fileName) override;
 
 			template <typename T>
 			sptr<T> loadResource(const str &rid, const str &fileName) {
