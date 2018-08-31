@@ -31,7 +31,7 @@ namespace lib
 		class SceneManager : public AppService
 		{
 		public:
-			SceneManager(core::Window &);
+			SceneManager(core::Host& host, core::Window &window);
 			~SceneManager();
 
 			void terminateScene();

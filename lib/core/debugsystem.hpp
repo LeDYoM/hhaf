@@ -22,12 +22,12 @@ namespace lib
 
 	namespace core
 	{
-
+        class Host;
 		class DebugSystem final : public AppService
 		{
 		public:
-			DebugSystem();
-			~DebugSystem();
+			DebugSystem(Host& host);
+			~DebugSystem() override;
 
 			void addDebugVars(const sptr<scene::Scene> &scene);
 			void setMatrixMultiplicationPerFrame(u32 &var);

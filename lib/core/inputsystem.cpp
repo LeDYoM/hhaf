@@ -7,7 +7,9 @@
 
 namespace lib::input
 {
-	InputSystem::InputSystem() : m_keyStates{} {}
+	InputSystem::InputSystem(core::Host& host) 
+        : AppService{ host }, m_keyStates {} {}
+
 	InputSystem::~InputSystem() = default;
 
 	void InputSystem::keyPressed(const Key key)

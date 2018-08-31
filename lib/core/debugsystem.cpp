@@ -5,33 +5,27 @@
 #include <lib/scene/components/debugvarscomponent.hpp>
 #include "host.hpp"
 
-namespace lib
+namespace lib::core
 {
-	namespace core
+    DebugSystem::DebugSystem(Host& host)
+        : AppService{ host } {}
+
+    DebugSystem::~DebugSystem() = default;
+
+	void DebugSystem::addDebugVars(const sptr<scene::Scene>&scene)
 	{
-		DebugSystem::DebugSystem()
-		{
-		}
+		auto dbc(scene->ensureComponentOfType<scene::DebugVarsComponent>());
+	}
 
-		DebugSystem::~DebugSystem()
-		{
-		}
-
-		void DebugSystem::addDebugVars(const sptr<scene::Scene>&scene)
-		{
-			auto dbc(scene->ensureComponentOfType<scene::DebugVarsComponent>());
-		}
-
-		void DebugSystem::setMatrixMultiplicationPerFrame(u32 &)
-		{
+	void DebugSystem::setMatrixMultiplicationPerFrame(u32 &)
+	{
 //			auto dbc(host().currentScene()->ensureComponentOfType<scene::DebugVarsComponent>());
 //			dbc->addOrUpdateDebugVar("Matrix mul per Frame:", str(var) );
-		}
+	}
 
-		void DebugSystem::showVarsNextFrame()
-		{
+	void DebugSystem::showVarsNextFrame()
+	{
 //			auto dbc(host().currentScene()->ensureComponentOfType<scene::DebugVarsComponent>());
 //			dbc->showVarsNextFrame();
-		}
 	}
 }

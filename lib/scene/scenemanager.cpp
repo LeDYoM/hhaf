@@ -5,7 +5,8 @@
 
 namespace lib::scene
 {
-	SceneManager::SceneManager(core::Window &window) : m_parentWindow{ window } {}
+	SceneManager::SceneManager(core::Host& host, core::Window &window) 
+        : AppService{ host }, m_parentWindow { window } {}
 
 	SceneManager::~SceneManager() = default;
 

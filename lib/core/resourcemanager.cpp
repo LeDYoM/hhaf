@@ -58,7 +58,9 @@ namespace lib::core
 		ResourceList<sptr<scene::Shader>> m_shaders;
     };
 
-    ResourceManager::ResourceManager() : AppService{}, m_private{ muptr<ResourceManagerPrivate>() } {}
+    ResourceManager::ResourceManager(Host &host) : AppService{ host },
+        m_private{ muptr<ResourceManagerPrivate>() } {}
+
 	ResourceManager::~ResourceManager() = default;
 
 	sptr<scene::TTFont> ResourceManager::getFont(const str &rid)
