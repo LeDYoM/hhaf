@@ -12,6 +12,8 @@
 
 namespace lib
 {
+    class IResourceLoader;
+
 	namespace core
 	{
 		class Host;
@@ -34,6 +36,7 @@ namespace lib
 			inline SceneManager &sceneManager() noexcept { return *m_sceneManager; }
 			inline const SceneManager &sceneManager() const noexcept { return *m_sceneManager; }
 
+            void loadResources(const sptr<IResourceLoader> &resourceloader);
 		protected:
 
             size_type state();

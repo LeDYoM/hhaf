@@ -19,7 +19,8 @@ namespace lib::scene
         log_debug_info("Terminating scene ", m_statesController->currentState()->name());
         assert_debug(m_statesController != nullptr, "terminateScene with no current scene");
         sptr<Scene> nextScene;
-		if (m_sceneDirector) {
+		if (m_sceneDirector)
+        {
 			nextScene = m_sceneDirector(m_statesController->currentState());
 		}
 

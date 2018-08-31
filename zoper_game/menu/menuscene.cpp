@@ -22,7 +22,7 @@ namespace zoper
         BaseClass::onCreated();
 
         mainMenuResources = msptr<MainMenuResources>();
-        mainMenuResources->loadResources(resourceManager());
+        loadResources(mainMenuResources);
         m_background = createRenderizable<NodeQuad>("background");
         m_background->box = rectFromSize(2000.0f, 2000.0f);
         m_background->setTextureFill(resourceManager().getTexture(MainMenuResources::BackgroundTextureId));

@@ -34,7 +34,6 @@ namespace lib
 			SceneManager(core::Window &);
 			~SceneManager();
 
-			void start();
 			void terminateScene();
 			void setSceneDirector(SceneDirectorType sceneDirector);
 
@@ -65,18 +64,20 @@ namespace lib
 			template <typename T>
 			void startFirstScene()
 			{
-                sptr<T> scene{ createScene<T>() };
+                auto scene( createScene<T>() );
+                start();
 				m_statesController->start(std::move(scene));
 			}
 
 			template <typename T>
 			sptr<T> createScene() {
-				sptr<Scene> scene(msptr<T>());
+				auto scene(msptr<T>());
                 startScene(scene);
 				return std::dynamic_pointer_cast<T>(scene);
 			}
 
 		private:
+            void start();
             void startScene(sptr<Scene> scene);
 			ComponentContainer m_componentContainer;
 			sptr<StatesController<sptr<Scene>>> m_statesController;

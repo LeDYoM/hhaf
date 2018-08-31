@@ -31,11 +31,7 @@ namespace zoper
 		
         sceneManager().setSceneDirector([this](sptr<Scene> scene) -> sptr<Scene> 
         {
-            if (!scene)
-            {
-                return sceneManager().createScene<MenuScene>();
-            }
-            else if (typeid(*scene) == typeid(MenuScene)) 
+            if (typeid(*scene) == typeid(MenuScene)) 
             {
                 // Did the user selected exit?
                 if (gameSharedData->exitGame) {
@@ -46,7 +42,6 @@ namespace zoper
 			return sceneManager().createScene<MenuScene>();
 		});
 
-        sceneManager().start();
 		// Hack to test high scores
 		{
 //            gameData->score = 10000;
