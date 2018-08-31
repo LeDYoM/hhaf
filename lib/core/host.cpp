@@ -138,12 +138,12 @@ namespace lib::core
             log_debug_info(m_private->m_appGroup.m_appContext->appId(), ": Starting initialization...");
             m_state = AppState::Executing;
 
-            m_inputSystem = muptr<input::InputSystem>();
-            m_randomizer = muptr<Randomizer>();
-            m_window = muptr<Window>(m_private->m_appGroup.m_iapp->getAppDescriptor().wcp);
-            m_sceneManager = muptr<scene::SceneManager>(*m_window);
-            m_resourceManager = muptr<core::ResourceManager>();
-            m_debugSystem = muptr<DebugSystem>();
+            m_inputSystem = muptr<input::InputSystem>(*this);
+            m_randomizer = muptr<Randomizer>(*this);
+            m_window = muptr<Window>(*this, m_private->m_appGroup.m_iapp->getAppDescriptor().wcp);
+            m_sceneManager = muptr<scene::SceneManager>(*this, *m_window);
+            m_resourceManager = muptr<core::ResourceManager>(*this);
+            m_debugSystem = muptr<DebugSystem>(*this);
 
             m_private->m_appGroup.m_iapp->onInit();
             log_debug_info(m_private->m_appGroup.m_appContext->appId(), ": Starting execution...");

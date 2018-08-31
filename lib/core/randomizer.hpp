@@ -5,23 +5,23 @@
 
 #include <mtypes/include/types.hpp>
 
-namespace lib
+#include <lib/core/appservice.hpp>
+
+namespace lib::core
 {
-	namespace core
+    class Host;
+
+	class Randomizer : public AppService
 	{
-		class RandomizerPrivate;
+	public:
+		Randomizer(Host &host);
+		~Randomizer() override;
 
-		class Randomizer
-		{
-		public:
-			Randomizer();
-			virtual ~Randomizer();
-
-			u32 getUInt(const size_type max = 1U, const size_type min = 0U) const;
-		private:
-			uptr<RandomizerPrivate> p_rPriv;
-		};
-	}
+		u32 getUInt(const size_type max = 1U, const size_type min = 0U) const;
+	private:
+        class RandomizerPrivate;
+		uptr<RandomizerPrivate> p_rPriv;
+	};
 }
 
 #endif

@@ -1,5 +1,6 @@
 #include "menupage.hpp"
 #include "menupageinputcomponent.hpp"
+#include "../loaders/mainmenuresources.hpp"
 
 #include <lib/include/core/log.hpp>
 #include <lib/scene/scene.hpp>
@@ -28,7 +29,7 @@ namespace zoper
 	{
         BaseClass::onCreated();
         m_normalFont = resourceManager().getResource<TTFont>
-                       ("menu.mainFont", "resources/oldct.ttf")->font(72);
+                       (MainMenuResources::MenuFontId)->font(72);
 		m_normalColor = colors::Blue;
 		m_selectedColor = colors::Red;
 

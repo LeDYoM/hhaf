@@ -24,11 +24,12 @@ namespace lib
     namespace core
     {
         class RenderTarget;
-        class Window : public AppService
+        class Host;
+        class Window final : public AppService
         {
         public:
-            Window(const WindowCreationParams &wcp);
-            ~Window();
+            Window(Host &host, const WindowCreationParams &wcp);
+            ~Window() override;
             bool preLoop();
             void postLoop();
             virtual void onCreate();

@@ -1,5 +1,7 @@
-#ifndef LIB_DRAW_TEXTURE_INCLUDE_HPP__
-#define LIB_DRAW_TEXTURE_INCLUDE_HPP__
+#pragma once
+
+#ifndef LIB_SCENE_TEXTURE_INCLUDE_HPP
+#define LIB_SCENE_TEXTURE_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
@@ -18,7 +20,6 @@ namespace lib
 			Texture(backend::ITexture* texture);
 			~Texture();
 
-			bool loadFromFile(const str& filename);
 			vector2du32 size() const;
 
 			const backend::ITexture* backEndTexture() const noexcept { return m_texturePrivate; }

@@ -1,5 +1,7 @@
-#ifndef LIB__INPUTSYSTEM_HPP__
-#define LIB__INPUTSYSTEM_HPP__
+#pragma once
+
+#ifndef LIB_INPUTSYSTEM_INCLUDE_HPP
+#define LIB_INPUTSYSTEM_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <lib/include/key.hpp>
@@ -8,6 +10,10 @@
 
 namespace lib
 {
+    namespace core
+    {
+        class Host;
+    }
 	namespace scene
 	{
 		class InputComponent;
@@ -17,7 +23,8 @@ namespace lib
 		class InputSystem final : public AppService
 		{
 		public:
-			InputSystem();
+            InputSystem(core::Host& host);
+            using AppService::AppService;
 			~InputSystem();
 
 			void keyPressed(const Key key);

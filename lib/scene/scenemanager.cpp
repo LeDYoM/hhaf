@@ -5,7 +5,8 @@
 
 namespace lib::scene
 {
-	SceneManager::SceneManager(core::Window &window) : m_parentWindow{ window } {}
+	SceneManager::SceneManager(core::Host& host, core::Window &window) 
+        : AppService{ host }, m_parentWindow { window } {}
 
 	SceneManager::~SceneManager() = default;
 
@@ -19,7 +20,8 @@ namespace lib::scene
         log_debug_info("Terminating scene ", m_statesController->currentState()->name());
         assert_debug(m_statesController != nullptr, "terminateScene with no current scene");
         sptr<Scene> nextScene;
-		if (m_sceneDirector) {
+		if (m_sceneDirector)
+        {
 			nextScene = m_sceneDirector(m_statesController->currentState());
 		}
 
@@ -35,7 +37,9 @@ namespace lib::scene
 	void SceneManager::update()
 	{
 		m_componentContainer.updateComponents();
-        if (auto&& currentScene = m_statesController->currentState()) {
+
+        if (auto&& currentScene = m_statesController->currentState()) 
+        {
 			currentScene->updateScene();
 			currentScene->render(false);
 		}
@@ -45,4 +49,10 @@ namespace lib::scene
 	{
 		m_statesController->pop_state();
 	}
+
+    void SceneManager::startScene(sptr<Scene> scene)
+    {
+        scene->m_sceneManager = this;
+        scene->onCreated();
+    }
 }

@@ -26,17 +26,14 @@ namespace lib::core
         sptr<RenderTarget> m_renderTarget{nullptr};
     };
 
-    Window::Window(const WindowCreationParams &wcp)
-        : m_wPrivate{ muptr<WindowPrivate>() }, m_title{ wcp.windowTitle }
+    Window::Window(Host &host, const WindowCreationParams &wcp)
+        : AppService{ host },
+        m_wPrivate{ muptr<WindowPrivate>() }, m_title{ wcp.windowTitle }
     {
-        logConstruct_NOPARAMS;
         create(wcp);
     }
 
-    Window::~Window()
-    {
-        logDestruct_NOPARAMS;
-    }
+    Window::~Window() = default;
 
     sptr<RenderTarget> Window::renderTarget()
     {

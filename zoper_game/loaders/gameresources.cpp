@@ -6,8 +6,10 @@ namespace zoper
 	using namespace lib;
 	using namespace lib::scene;
 
-	void GameResourcesLoader::loadResources(core::ResourceManager&resourceManager)
+    constexpr char ScoreFontFile[] = "resources/score.ttf";
+
+	void GameResources::loadResources(core::ResourceManager&resourceManager)
 	{
-		scoreFont = resourceManager.getResource<TTFont>("game_scene.scoreFont","resources/score.ttf");
+		resourceManager.loadResource<TTFont>(ScoreFontId, ScoreFontFile);
 	}
 }
