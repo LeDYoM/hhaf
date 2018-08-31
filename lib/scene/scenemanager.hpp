@@ -24,6 +24,8 @@ namespace lib
 	}
 	namespace scene
 	{
+        class Scene;
+
 		using SceneDirectorType = function<sptr<Scene>(sptr<Scene>)>;
 
 		class SceneManager : public AppService
@@ -63,19 +65,19 @@ namespace lib
 			template <typename T>
 			void startFirstScene()
 			{
-				sptr<T> scene = createScene<T>();
+                sptr<T> scene{ createScene<T>() };
 				m_statesController->start(std::move(scene));
 			}
 
 			template <typename T>
 			sptr<T> createScene() {
 				sptr<Scene> scene(msptr<T>());
-				scene->m_sceneManager = this;
-				scene->onCreated();
+                startScene(scene);
 				return std::dynamic_pointer_cast<T>(scene);
 			}
 
 		private:
+            void startScene(sptr<Scene> scene);
 			ComponentContainer m_componentContainer;
 			sptr<StatesController<sptr<Scene>>> m_statesController;
 			SceneDirectorType m_sceneDirector;

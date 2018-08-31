@@ -35,7 +35,9 @@ namespace lib::scene
 	void SceneManager::update()
 	{
 		m_componentContainer.updateComponents();
-        if (auto&& currentScene = m_statesController->currentState()) {
+
+        if (auto&& currentScene = m_statesController->currentState()) 
+        {
 			currentScene->updateScene();
 			currentScene->render(false);
 		}
@@ -45,4 +47,10 @@ namespace lib::scene
 	{
 		m_statesController->pop_state();
 	}
+
+    void SceneManager::startScene(sptr<Scene> scene)
+    {
+        scene->m_sceneManager = this;
+        scene->onCreated();
+    }
 }
