@@ -15,7 +15,7 @@ namespace zoper
 {
     using namespace lib;
     class HighScoreTextController;
-	class HighScoresScene final : public lib::scene::Scene
+	class HighScoresScene final : public scene::Scene
 	{
 	public:
 		HighScoresScene();
@@ -28,7 +28,7 @@ namespace zoper
         using BaseClass = lib::scene::Scene;
 
 		sptr<HighScoresResources> m_resources;
-		sptr<lib::scene::nodes::NodeQuad> m_background;
+		sptr<scene::nodes::NodeQuad> m_background;
 		sptr<HighScoreTextController> m_highScoreTextController;
         sptr<scene::Font> m_normalFont;
 		scene::Color m_normalColor;

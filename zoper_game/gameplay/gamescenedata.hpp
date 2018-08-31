@@ -34,7 +34,7 @@ namespace zoper
         sptr<scene::nodes::TextQuad> m_scoreQuad, m_goalQuad;
         sptr<scene::nodes::SceneNodeText> m_pauseText;
         sptr<BoardGroup> m_boardGroup;
-        GameResourcesLoader m_gameresources;
+        GameResources m_gameresources;
     };
 }
 

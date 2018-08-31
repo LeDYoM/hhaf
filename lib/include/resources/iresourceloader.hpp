@@ -12,10 +12,11 @@ namespace lib
 		class ResourceManager;
 	}
 
-	class IResourceLoader {
-	public:
-		virtual void loadResources(core::ResourceManager&) = 0;
-	};
+    class IResourceLoader
+    {
+    public:
+        virtual void loadResources(core::ResourceManager&) = 0;
+    };
 }
 
 #endif

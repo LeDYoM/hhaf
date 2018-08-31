@@ -20,12 +20,6 @@ namespace lib::scene
 
     TTFont::~TTFont() = default;
 
-    bool TTFont::loadFromFile(const str & filename)
-    {
-        m_private->m_font = ttfontFactory().loadFromFile(filename);
-        return m_private->m_font != nullptr;
-    }
-
     TTGlyph TTFont::getGlyph(const u32 codePoint, const u32 characterSize) const
     {
         return TTGlyph(m_private->m_font->getGlyph(codePoint, characterSize));

@@ -28,8 +28,11 @@ namespace zoper
 		Serializer<KeyMapping> kmSerializer;
 		kmSerializer.deserialize("keyboard.txt", *keyMapping);
 		sceneManager().setViewRect({0,0,2000,2000});
-		sceneManager().setSceneDirector([this](sptr<Scene> scene) -> sptr<Scene> {
-            if (typeid(*scene) == typeid(MenuScene)) {
+		
+        sceneManager().setSceneDirector([this](sptr<Scene> scene) -> sptr<Scene> 
+        {
+            if (typeid(*scene) == typeid(MenuScene)) 
+            {
                 // Did the user selected exit?
                 if (gameSharedData->exitGame) {
                     return nullptr;
@@ -38,7 +41,7 @@ namespace zoper
             }
 			return sceneManager().createScene<MenuScene>();
 		});
-		sceneManager().start();
+
 		// Hack to test high scores
 		{
 //            gameData->score = 10000;
