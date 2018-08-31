@@ -1,9 +1,11 @@
 #include "scene.hpp"
 #include <lib/scene/renderizables/renderizable.hpp>
 
-#include <lib/include/core/log.hpp>
 #include <lib/core/window.hpp>
 #include <lib/core/host.hpp>
+
+#include <lib/include/core/log.hpp>
+#include <lib/include/resources/iresourceloader.hpp>
 
 #include <type_traits>
 
@@ -27,5 +29,10 @@ namespace lib::scene
     void Scene::setState(const size_type ns)
     {
         m_sceneStates->setState(ns);
+    }
+
+    void Scene::loadResources(const sptr<IResourceLoader>& resourceLoader)
+    {
+        resourceLoader->loadResources(resourceManager());
     }
 }
