@@ -2,6 +2,9 @@
 
 #include <lib/include/resources/iresourcehandler.hpp>
 
+#include <lib/scene/texture.hpp>
+#include <lib/scene/ttfont.hpp>
+
 namespace zoper
 {
 	using namespace lib;

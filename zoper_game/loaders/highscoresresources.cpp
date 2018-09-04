@@ -1,5 +1,9 @@
 #include "highscoresresources.hpp"
-#include <lib/core/resourcemanager.hpp>
+
+#include <lib/include/resources/iresourcehandler.hpp>
+
+#include <lib/scene/texture.hpp>
+#include <lib/scene/ttfont.hpp>
 
 namespace zoper
 {

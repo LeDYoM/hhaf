@@ -4,6 +4,9 @@
 #include <lib/scene/nodes/scenenodetext.hpp>
 #include <lib/scene/components/alignedtextcomponent.hpp>
 
+#include <lib/scene/texture.hpp>
+#include <lib/scene/ttfont.hpp>
+
 #include <lib/core/host.hpp>
 #include <lib/core/resourcemanager.hpp>
 

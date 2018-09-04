@@ -8,6 +8,8 @@
 
 #include <lib/scene/scene.hpp>
 #include <lib/scene/renderizables/nodequad.hpp>
+#include <lib/scene/texture.hpp>
+#include <lib/scene/ttfont.hpp>
 
 #include "../loaders/highscoresresources.hpp"
 
