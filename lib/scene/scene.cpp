@@ -3,9 +3,11 @@
 
 #include <lib/core/window.hpp>
 #include <lib/core/host.hpp>
+#include <lib/core/resourcemanager.hpp>
 
 #include <lib/include/core/log.hpp>
 #include <lib/include/resources/iresourceloader.hpp>
+#include <lib/include/resources/iresourcehandler.hpp>
 
 #include <type_traits>
 

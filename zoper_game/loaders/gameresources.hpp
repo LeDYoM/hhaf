@@ -14,7 +14,7 @@ namespace zoper
 	{
 	public:
         static constexpr char ScoreFontId[] = "game_scene.scoreFont";
-		void loadResources(lib::core::ResourceManager&) override;
+		void loadResources(lib::IResourceHandler&) override;
 	};
 }
 

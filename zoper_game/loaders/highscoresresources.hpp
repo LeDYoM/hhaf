@@ -16,7 +16,7 @@ namespace zoper
         constexpr static char BackgroundTextureId[] = "game_menu.background";
         constexpr static char MenuFontId[] = "highScores.mainFont";
 
-		void loadResources(lib::core::ResourceManager&) override;		
+		void loadResources(lib::IResourceHandler&) override;		
 	};
 }
 
