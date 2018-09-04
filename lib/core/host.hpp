@@ -1,10 +1,12 @@
 #pragma once
 
-#ifndef LIB_HOST_MAIN_INCLUDE_HPP__
-#define LIB_HOST_MAIN_INCLUDE_HPP__
+#ifndef LIB_HOST_MAIN_INCLUDE_HPP
+#define LIB_HOST_MAIN_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
+
 #include <lib/include/iapp.hpp>
+#include <lib/include/core/ihostcontext.hpp>
 
 namespace lib
 {
@@ -82,7 +84,7 @@ namespace lib
         return core::Host::host().app<AppType>();
     }
 
-    inline core::Host &host() noexcept { return core::Host::host(); }
+//    inline core::Host &host() noexcept { return core::Host::host(); }
     inline core::Window &window() noexcept { return core::Host::host().parentWindow(); }
     inline core::ResourceManager &resourceManager() noexcept { return core::Host::host().resourceManager(); }
     inline core::Randomizer &randomizer() noexcept { return core::Host::host().randomizer(); }

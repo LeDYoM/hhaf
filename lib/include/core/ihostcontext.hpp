@@ -13,6 +13,7 @@ namespace lib::core
     class IHostContext
     {
     public:
+        virtual ~IHostContext() {}
         virtual const dicty::BasicDictionary<str> &appParameters() const = 0;
     };
 }

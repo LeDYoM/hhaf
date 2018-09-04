@@ -16,9 +16,9 @@ namespace lib
 		{
 		public:
 			InputComponent();
-			~InputComponent();
+			~InputComponent() override;
 
-			virtual void update() override;
+			void update() override;
 			
 			bool isPressed(const input::Key key);
 

@@ -119,11 +119,15 @@ namespace zoper
 							((position.y % 2) ? Color{ 250, 50, 10 } : Color{ 10, 200, 10 });
 					}
 				}
-				else if (m_currentLevel < maxLevelWithProperties) {
-					const auto &rnd(host().randomizer());
+				else if (m_currentLevel < maxLevelWithProperties) 
+                {
+                    /*
+                    const auto &rnd(host().randomizer());
 					return Color(static_cast<lib::u8>(rnd.getUInt(255, 0)),
 						static_cast<lib::u8>(rnd.getUInt(255, 0)),
 						static_cast<lib::u8>(rnd.getUInt(255, 0)));
+                        */
+                    return Color{ 0U,0U,0U };
 				}
 			}
 		}
