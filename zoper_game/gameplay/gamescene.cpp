@@ -237,8 +237,10 @@ namespace zoper
 
         // Now, we have the data for the new token generated, but first, lets start to move the row or col.
         Direction loopDirection = currentTokenZone.direction.negate();
-        for_each_token_in_line(loopPosition, loopDirection, [this](const vector2dst &loopPosition, const Direction &direction) {
-            if (!p_boardModel->tileEmpty(loopPosition)) {
+        for_each_token_in_line(loopPosition, loopDirection, [this](const vector2dst &loopPosition, const Direction &direction) 
+        {
+            if (!p_boardModel->tileEmpty(loopPosition)) 
+            {
                 const auto dest( direction.negate().applyToVector(loopPosition) );
                 p_boardModel->moveTile(loopPosition, dest);
 

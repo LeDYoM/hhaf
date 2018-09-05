@@ -23,18 +23,16 @@ namespace zoper
 		BaseClass::onCreated();
 
         auto statesController( ensureComponentOfType<StatesController<HighScoresSceneStates>>());
+        loadResources(HighScoresResources{});
 
-        m_normalFont = resourceManager().getResource<TTFont>
+        m_normalFont = sceneManager().host().resourceManager().getResource<TTFont>
                        ("menu.mainFont")->font(72);
 		m_normalColor = colors::Blue;
 		m_selectedColor = colors::Red;
 
-		m_resources = msptr<HighScoresResources>();
-		m_resources->loadResources(resourceManager());
-
 		m_background = createRenderizable<NodeQuad>("background");
 		m_background->box = rectFromSize(2000.0f, 2000.0f);
-        m_background->setTextureFill(resourceManager().getTexture(HighScoresResources::BackgroundTextureId));
+        m_background->setTextureFill(sceneManager().host().resourceManager().getTexture(HighScoresResources::BackgroundTextureId));
 		m_background->color = colors::White;
 
         auto highScoreTextController(createSceneNode<HighScoreTextController>("HighScoreTextController"));

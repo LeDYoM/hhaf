@@ -11,8 +11,6 @@
 #include <lib/scene/texture.hpp>
 #include <lib/scene/ttfont.hpp>
 
-#include "../loaders/highscoresresources.hpp"
-
 namespace zoper
 {
     using namespace lib;
@@ -29,7 +27,6 @@ namespace zoper
 	private:
         using BaseClass = lib::scene::Scene;
 
-		sptr<HighScoresResources> m_resources;
 		sptr<scene::nodes::NodeQuad> m_background;
 		sptr<HighScoreTextController> m_highScoreTextController;
         sptr<scene::Font> m_normalFont;

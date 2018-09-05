@@ -8,8 +8,6 @@
 #include <lib/scene/renderizables/nodequad.hpp>
 #include <lib/scene/scene.hpp>
 
-#include "../loaders/mainmenuresources.hpp"
-
 namespace zoper
 {
 	using namespace lib;
@@ -26,7 +24,6 @@ namespace zoper
 
 	private:
 		ireceiver m_receiver;
-		sptr<MainMenuResources> mainMenuResources;
 		sptr<scene::nodes::NodeQuad> m_logo;
 		sptr<scene::nodes::NodeQuad> m_background;
 	};

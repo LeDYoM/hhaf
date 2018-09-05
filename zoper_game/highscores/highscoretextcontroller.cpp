@@ -23,7 +23,7 @@ namespace zoper
 	{
 		BaseClass::onCreated();
 
-        m_normalFont = resourceManager().getResource<TTFont>
+        m_normalFont = sceneManager().host().resourceManager().getResource<TTFont>
                        ("menu.mainFont")->font(72);
 		m_normalColor = colors::Blue;
 		m_selectedColor = colors::Red;
@@ -81,5 +81,4 @@ namespace zoper
 	{
         log_debug_error("Saving highscores is still not implemented");
 	}
-
 }
