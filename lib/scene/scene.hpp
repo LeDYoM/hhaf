@@ -36,7 +36,7 @@ namespace lib
 			inline SceneManager &sceneManager() noexcept { return *m_sceneManager; }
 			inline const SceneManager &sceneManager() const noexcept { return *m_sceneManager; }
 
-            void loadResources(const sptr<IResourceLoader> &resourceloader);
+            void loadResources(IResourceLoader &&resourceloader);
 		protected:
 
             size_type state();

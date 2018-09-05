@@ -4,6 +4,7 @@
 #include <lib/core/window.hpp>
 #include <lib/core/host.hpp>
 #include <lib/core/resourcemanager.hpp>
+#include <lib/scene/scenemanager.hpp>
 
 #include <lib/include/core/log.hpp>
 #include <lib/include/resources/iresourceloader.hpp>
@@ -33,8 +34,8 @@ namespace lib::scene
         m_sceneStates->setState(ns);
     }
 
-    void Scene::loadResources(const sptr<IResourceLoader>& resourceLoader)
+    void Scene::loadResources(IResourceLoader&& resourceLoader)
     {
-        resourceLoader->loadResources(resourceManager());
+        resourceLoader.loadResources(sceneManager().host().resourceManager());
     }
 }
