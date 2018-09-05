@@ -27,11 +27,16 @@ namespace lib::core
 
             if (iterator != container.end())
             {
+                log_debug_info(rid, " found on resource list. Returning instance.");
+
                 return (*iterator).second;
             }
             else
             {
                 // Not found, try to load it.
+                log_debug_info(rid, " not found on resource list.");
+
+                log_debug_info("Going to load file: ", fileName);
                 auto resource(msptr<T>(factory.loadFromFile(fileName)));
                 container.push_back(NamedIndex<sptr<T>>(rid, resource));
                 return resource;
@@ -42,7 +47,7 @@ namespace lib::core
         inline auto get_or_default(A& /*factory*/, ResourceList<sptr<T>> &container, const str &rid)
         {
             auto iterator(std::find_if(container.begin(), container.end(),
-                [rid](const auto &node) {return node.first == rid; }));
+                [rid](const auto &node) { return node.first == rid; }));
 
             return (iterator != container.end()) ?
                 (*iterator).second
