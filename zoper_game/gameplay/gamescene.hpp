@@ -71,7 +71,6 @@ namespace zoper
         void exportGameSharedData();
         void launchPlayer();
         void addPlayer();
-        void tilesCreated();
         void _debugDisplayBoard() const;
 
         void tokenMoved(const vector2dst &source, const vector2dst &dest, sptr<Tile> tile);

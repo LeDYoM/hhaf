@@ -52,6 +52,11 @@ namespace zoper
 
         using namespace lib::board;
 
+        assert_debug(!m_data->m_boardGroup, "m_boardGroup is not empty");
+        m_data->m_boardGroup = createSceneNode<BoardGroup>("BoardGroup", m_tokenZones.size);
+
+        moveLastBeforeNode(m_data->m_mainBoardrg);
+
         p_boardModel = ensureComponentOfType<BoardModelComponent>();
         p_boardModel->initialize(m_tokenZones.size);
 
@@ -96,7 +101,6 @@ namespace zoper
 			}
 		});
 
-        tilesCreated();
         addPlayer();
 
         m_nextTokenPart = 0;
@@ -439,14 +443,6 @@ namespace zoper
             }
             log_debug_info(temp);
         }
-    }
-
-    void GameScene::tilesCreated()
-    {
-        assert_debug(!m_data->m_boardGroup, "m_boardGroup is not empty");
-        m_data->m_boardGroup = createSceneNode<BoardGroup>("BoardGroup", m_tokenZones.size);
-
-        moveLastBeforeNode(m_data->m_mainBoardrg);
     }
 
     void GameScene::tokenMoved(const vector2dst &, const vector2dst &dest, sptr<Tile> tile)
