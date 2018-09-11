@@ -8,8 +8,8 @@
 
 #include <lib/scene/scene.hpp>
 #include <lib/scene/renderizables/nodequad.hpp>
-
-#include "../loaders/highscoresresources.hpp"
+#include <lib/scene/texture.hpp>
+#include <lib/scene/ttfont.hpp>
 
 namespace zoper
 {
@@ -27,7 +27,6 @@ namespace zoper
 	private:
         using BaseClass = lib::scene::Scene;
 
-		sptr<HighScoresResources> m_resources;
 		sptr<scene::nodes::NodeQuad> m_background;
 		sptr<HighScoreTextController> m_highScoreTextController;
         sptr<scene::Font> m_normalFont;

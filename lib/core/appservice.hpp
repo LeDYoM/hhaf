@@ -25,6 +25,10 @@ namespace lib
 		AppService &operator=(const AppService &rh) = delete;
 
         virtual ~AppService() = default;
+
+        constexpr core::Host& host() noexcept { return m_host; }
+        constexpr const core::Host& host() const noexcept { return m_host; }
+
     private:
         core::Host &m_host;
 	};

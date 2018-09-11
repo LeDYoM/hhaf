@@ -5,6 +5,7 @@
 #include <lib/scene/renderdata.hpp>
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/texture.hpp>
+#include <lib/scene/scenenode.hpp>
 
 namespace lib::scene
 {
@@ -28,7 +29,7 @@ namespace lib::scene
                     updateColor();
                 }
 
-                host().parentWindow().renderTarget()->
+                m_parent->parentScene()->sceneManager().host().parentWindow().renderTarget()->
                         draw({
                     m_vertices,
                     m_parent->globalTransform(),

@@ -7,15 +7,12 @@
 
 namespace lib
 {
-	namespace core
-	{
-		class ResourceManager;
-	}
+    class IResourceHandler;
 
     class IResourceLoader
     {
     public:
-        virtual void loadResources(core::ResourceManager&) = 0;
+        virtual void loadResources(IResourceHandler&) = 0;
     };
 }
 

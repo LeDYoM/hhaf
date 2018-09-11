@@ -222,5 +222,4 @@ namespace lib::core
     {
         return *(m_private->m_appGroup.m_iapp);
     }
-
 }

@@ -9,7 +9,6 @@
 #include <lib/scene/nodes/textquad.hpp>
 
 #include "../gameshareddata.hpp"
-#include "../loaders/gameresources.hpp"
 #include "boardgroup.hpp"
 
 namespace zoper
@@ -34,7 +33,6 @@ namespace zoper
         sptr<scene::nodes::TextQuad> m_scoreQuad, m_goalQuad;
         sptr<scene::nodes::SceneNodeText> m_pauseText;
         sptr<BoardGroup> m_boardGroup;
-        GameResources m_gameresources;
     };
 }
 

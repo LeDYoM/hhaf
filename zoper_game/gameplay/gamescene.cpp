@@ -52,8 +52,6 @@ namespace zoper
 
         using namespace lib::board;
 
-        m_tokenZones.generateTokenZones();
-
         p_boardModel = ensureComponentOfType<BoardModelComponent>();
         p_boardModel->initialize(m_tokenZones.size);
 
@@ -106,7 +104,7 @@ namespace zoper
         auto inputComponent(ensureComponentOfType<scene::InputComponent>());
         inputComponent->KeyPressed.connect([this](const lib::input::Key&key) {
             log_debug_info("Key pressed in GameScene");
-            const auto &keyMapping = host().app<ZoperProgramController>().keyMapping;
+            const auto &keyMapping = sceneManager().host().app<ZoperProgramController>().keyMapping;
             switch (state())
             {
             case Playing:
@@ -237,8 +235,10 @@ namespace zoper
 
         // Now, we have the data for the new token generated, but first, lets start to move the row or col.
         Direction loopDirection = currentTokenZone.direction.negate();
-        for_each_token_in_line(loopPosition, loopDirection, [this](const vector2dst &loopPosition, const Direction &direction) {
-            if (!p_boardModel->tileEmpty(loopPosition)) {
+        for_each_token_in_line(loopPosition, loopDirection, [this](const vector2dst &loopPosition, const Direction &direction) 
+        {
+            if (!p_boardModel->tileEmpty(loopPosition)) 
+            {
                 const auto dest( direction.negate().applyToVector(loopPosition) );
                 p_boardModel->moveTile(loopPosition, dest);
 
@@ -259,19 +259,20 @@ namespace zoper
 
     void GameScene::importGameSharedData()
     {
-        (*host().app<ZoperProgramController>().gameSharedData) >> m_inGameData;
+        (*sceneManager().host().app<ZoperProgramController>().gameSharedData) >> m_inGameData;
         setLevel(m_inGameData.currentLevel);
     }
 
     void GameScene::exportGameSharedData()
     {
-        m_inGameData >> (*host().app<ZoperProgramController>().gameSharedData);
+        m_inGameData >> (*sceneManager().host().app<ZoperProgramController>().gameSharedData);
     }
 
     void GameScene::for_each_token_in_line(const vector2dst &startPosition, const Direction &direction,
         function<bool(const vector2dst &, const Direction &)> updatePredicate)
     {
         vector2dst loopPosition{ startPosition };
+
         // Now, we have the data for the new token generated, but first, lets start to move the row or col.
         bool stay{ true };
         do {
@@ -319,26 +320,52 @@ namespace zoper
             bool found{ false };
             vector2df lastTokenPosition;
 
-            if (!p_boardModel->tileEmpty(loopPosition) && !pointInCenter(loopPosition) && result) {
+            if (!p_boardModel->tileEmpty(loopPosition) && !pointInCenter(loopPosition) && result) 
+            {
                 sptr<board::ITile> currentToken{ p_boardModel->getTile(loopPosition) };
                 board::BoardTileData currentTokenType = currentToken->get();
-                if (currentTokenType == tokenType) {
+
+                if (currentTokenType == tokenType) 
+                {
+                    // If we found a token with the same color than the player:
+
+                    // Increment the number of tokens deleted in a row
                     ++inARow;
-                    increaseScore(inARow*levelProperties.baseScore());
+
+                    // Increase the score accordingly
+                    increaseScore(inARow * levelProperties.baseScore());
+
+                    // Inform that a token has been consumed
                     levelProperties.tokenConsumed();
+
+                    // Store the position of this last cosumed token
                     lastTokenPosition = board2Scene(loopPosition);
+
+                    // Delete the token
                     p_boardModel->deleteTile(loopPosition);
+
+                    // At least you found one token
                     found = true;
                 }
-                else {
+                else 
+                {
+                    // If we found a token, but it is from another color:
+
+                    // Change the type of the player to this new one
                     p_boardModel->changeTileData(m_player->boardPosition(), currentTokenType);
+
+                    // Change the type of the token for the previous type of the player
                     p_boardModel->changeTileData(loopPosition, tokenType);
+
                     log_debug_info("Player type changed to ", m_player->get());
+
+                    // Exit the loop
                     result = false;
                 }
             }
 
-            if (found) {
+            if (found) 
+            {
                 auto sceneNode(createSceneNode("pointIncrementScore_SceneNode"));
                 auto node(sceneNode->createRenderizable<NodeShape>("pointIncrementScore", 30));
                 node->box = rectFromSize(15.0f, 15.0f);
@@ -362,7 +389,8 @@ namespace zoper
 
     bool GameScene::pointInCenter(const vector2dst &pos) const
     {
-        if (p_boardModel->validCoords(pos)) {
+        if (p_boardModel->validCoords(pos)) 
+        {
             if (pos.x < m_tokenZones.centerRect.left || pos.y < m_tokenZones.centerRect.top)
                 return false;
 

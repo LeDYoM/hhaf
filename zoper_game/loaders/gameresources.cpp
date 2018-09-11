@@ -1,5 +1,9 @@
 #include "gameresources.hpp"
-#include <lib/core/resourcemanager.hpp>
+
+#include <lib/include/resources/iresourcehandler.hpp>
+
+#include <lib/scene/texture.hpp>
+#include <lib/scene/ttfont.hpp>
 
 namespace zoper
 {
@@ -8,8 +12,8 @@ namespace zoper
 
     constexpr char ScoreFontFile[] = "resources/score.ttf";
 
-	void GameResources::loadResources(core::ResourceManager&resourceManager)
+	void GameResources::loadResources(IResourceHandler&resourceHandler)
 	{
-		resourceManager.loadResource<TTFont>(ScoreFontId, ScoreFontFile);
+        resourceHandler.loadFont(ScoreFontId, ScoreFontFile);
 	}
 }
