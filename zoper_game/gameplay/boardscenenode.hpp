@@ -25,7 +25,7 @@ namespace zoper
 
 		void setTileColor(Color color);
 
-        sptr<board::BoardModelComponent> p_boardModel;
+//        sptr<board::BoardModelComponent> p_boardModel;
 
 	private:
 		sptr<nodes::NodeQuad> m_backgroundTile;
