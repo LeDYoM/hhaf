@@ -8,6 +8,7 @@
 #include <lib/scene/renderizables/nodeshape.hpp>
 #include <lib/scene/renderizables/nodequad.hpp>
 #include <lib/scene/scenenodetypes.hpp>
+#include <lib/board/boardmodel.hpp>
 
 namespace zoper
 {
@@ -23,6 +24,8 @@ namespace zoper
 		virtual ~BoardSceneNode();
 
 		void setTileColor(Color color);
+
+        sptr<board::BoardModelComponent> p_boardModel;
 
 	private:
 		sptr<nodes::NodeQuad> m_backgroundTile;

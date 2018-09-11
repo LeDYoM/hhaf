@@ -71,7 +71,6 @@ namespace zoper
         void exportGameSharedData();
         void launchPlayer();
         void addPlayer();
-        void tilesCreated();
         void _debugDisplayBoard() const;
 
         void tokenMoved(const vector2dst &source, const vector2dst &dest, sptr<Tile> tile);
@@ -81,7 +80,7 @@ namespace zoper
         scene::TimerConnectorSPtr m_nextTokenTimer;
 
         // General properties.
-        sptr<board::BoardModelComponent> p_boardModel{ nullptr };
+//        sptr<board::BoardModelComponent> p_boardModel{ nullptr };
         InGameData m_inGameData;
         u8 m_nextTokenPart{ 0 };
         LevelProperties levelProperties;
