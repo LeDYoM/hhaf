@@ -5,6 +5,8 @@
 #include <lib/scene/renderizables/nodequad.hpp>
 #include <lib/scene/renderizables/nodeshape.hpp>
 
+#include <lib/board/boardmodel.hpp>
+
 using namespace lib::scene;
 using namespace lib::scene::nodes;
 
@@ -19,6 +21,8 @@ namespace zoper
 	{
 		BaseClass::onCreated();
 
+        m_mainBoardrg = parent()->createSceneNode("mainBoard");
+
 		Rectf32 textBox{ scenePerspective() };
 		position = textBox.leftTop();
 		sceneNodeSize = textBox.size();
@@ -31,6 +35,8 @@ namespace zoper
 				static_cast<void>(createNodeAt({ x,y }, make_str("BoardGroupTile_", x, y), tileBox));
 			}
 		}
+
+        p_boardModel = ensureComponentOfType<board::BoardModelComponent>();
 
 	}
 

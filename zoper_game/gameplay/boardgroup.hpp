@@ -26,6 +26,7 @@ namespace zoper
 		void onCreated() override;
 
         sptr<board::BoardModelComponent> p_boardModel;
+        sptr<scene::SceneNode> m_mainBoardrg;
 
 	};
 }
