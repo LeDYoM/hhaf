@@ -57,13 +57,7 @@ namespace zoper
 
         m_data->m_boardGroup->p_boardModel->TileAdded.connect([this](const vector2dst position_, SITilePointer tile) {
 			// Tile appeared
-			if (auto ztile = std::dynamic_pointer_cast<Tile>(tile)) {
-				lib::log_debug_info("Token ", ztile->name(), " appeared at ", position_);
-			}
-			else if (auto player = std::dynamic_pointer_cast<Player>(tile)) {
-				// Set the position in the scene depending on the board position
-				player->boardPosition = position_;
-			}
+            tile->tileAdded(position_);
         });
 
         m_data->m_boardGroup->p_boardModel->TileRemoved.connect([this](const vector2dst position_, SITilePointer tile) {

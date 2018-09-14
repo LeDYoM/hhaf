@@ -1,6 +1,8 @@
 #include "tile.hpp"
 #include <lib/scene/renderizables/nodeshape.hpp>
 
+#include <lib/include/core/log.hpp>
+
 namespace zoper
 {
 	using namespace lib;
@@ -24,4 +26,11 @@ namespace zoper
 	{
 		m_tileCounter = 0;
 	}
+
+    void Tile::tileAdded(const vector2dst & position_)
+    {
+        log_debug_info("Token ", name(), " appeared at ", position_);
+        // Set the position in the scene depending on the board position
+//        setBoardPosition(position);
+    }
 }

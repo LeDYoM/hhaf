@@ -77,6 +77,13 @@ namespace zoper
             ));
     }
 
+    void Player::tileAdded(const vector2dst & position_)
+    {
+        log_debug_info("TokenPlayer appeared at ", position_);
+        // Set the position in the scene depending on the board position
+        boardPosition.set(position_);
+    }
+
     void Player::launchAnimationBack(vector2df toWhere)
     {
         updateDirectionFromParameter(currentDirection().negate());
