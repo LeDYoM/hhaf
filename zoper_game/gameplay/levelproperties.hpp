@@ -6,7 +6,8 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
 
-#include<lib/scene/components/timercomponent.hpp>
+#include <lib/scene/components/timercomponent.hpp>
+#include <lib/scene/components/icomponent.hpp>
 #include <lib/scene/color.hpp>
 
 #include "../gameshareddata.hpp"
@@ -17,7 +18,7 @@ namespace zoper
 
     class GameSceneData;
 
-	class LevelProperties
+	class LevelProperties : public scene::IComponent
 	{
 	public:
         void setUp(const size_type currentLevel, 

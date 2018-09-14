@@ -123,11 +123,12 @@ namespace zoper
 
         // At this point, we setup level properties.
         // levelProperties should not be used before this point.
-        levelProperties.setUp(m_inGameData.currentLevel, m_inGameData.gameMode, m_data, m_sceneTimerComponent);
+        levelProperties = ensureComponentOfType<LevelProperties>();
+        levelProperties->setUp(m_inGameData.currentLevel, m_inGameData.gameMode, m_data, m_sceneTimerComponent);
 
         m_nextTokenTimer = m_sceneTimerComponent->addTimer(
             TimerType::Continuous,
-            TimeFromMillis(levelProperties.millisBetweenTokens()),
+            TimeFromMillis(levelProperties->millisBetweenTokens()),
             [this](Time realEllapsed) {
             log_debug_info("Elapsed between tokens: ", realEllapsed.asMilliSeconds());
             // New token
@@ -189,11 +190,11 @@ namespace zoper
 
     void GameScene::setLevel(const size_type nv)
     {
-        levelProperties.setLevel(m_inGameData.currentLevel);
+        levelProperties->setLevel(m_inGameData.currentLevel);
 
         // Update background tiles
         m_data->m_boardGroup->for_each_tableSceneNode([this](const auto position, auto node) {
-            node->setTileColor(levelProperties.getBackgroundTileColor(position, pointInCenter(position)));
+            node->setTileColor(levelProperties->getBackgroundTileColor(position, pointInCenter(position)));
         });
     }
 
@@ -319,10 +320,10 @@ namespace zoper
                     ++inARow;
 
                     // Increase the score accordingly
-                    increaseScore(inARow * levelProperties.baseScore());
+                    increaseScore(inARow * levelProperties->baseScore());
 
                     // Inform that a token has been consumed
-                    levelProperties.tokenConsumed();
+                    levelProperties->tokenConsumed();
 
                     // Store the position of this last cosumed token
                     lastTokenPosition = board2Scene(loopPosition);
@@ -431,7 +432,7 @@ namespace zoper
     {
         auto animationComponent(tile->ensureComponentOfType<anim::AnimationComponent>());
         animationComponent->addAnimation(muptr<anim::IPropertyAnimation<vector2df>>
-            (TimeFromMillis(levelProperties.millisBetweenTokens() / 2), 
+            (TimeFromMillis(levelProperties->millisBetweenTokens() / 2), 
                 tile->position, tile->position(), board2Scene(dest)));
     }
 

@@ -83,7 +83,7 @@ namespace zoper
 //        sptr<board::BoardModelComponent> p_boardModel{ nullptr };
         InGameData m_inGameData;
         u8 m_nextTokenPart{ 0 };
-        LevelProperties levelProperties;
+        sptr<LevelProperties> levelProperties;
         TokenZones m_tokenZones;
         sptr<Player> m_player{ nullptr };
     };
