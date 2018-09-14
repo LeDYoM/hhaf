@@ -45,6 +45,8 @@ namespace zoper
         void onEnterState(const size_type&) override;
         void onExitState(const size_type&) override;
 
+        vector2df board2Scene(const lib::vector2dst &bPosition) const;
+
     private:
         sptr<GameSceneData> m_data;
         using BaseClass = scene::Scene;
@@ -54,7 +56,6 @@ namespace zoper
         void addNewToken(const vector2dst &pos, const size_type newToken);
         bool pointInCenter(const vector2dst &tPosition) const;
         vector2df board2SceneFactor() const;
-        vector2df board2Scene(const lib::vector2dst &bPosition) const;
         vector2df tileSize() const;
         void for_each_token_in_line(const vector2dst &startPosition, const Direction &direction,
             function<bool(const vector2dst &, const Direction &)> updatePredicate);
@@ -72,8 +73,6 @@ namespace zoper
         void launchPlayer();
         void addPlayer();
         void _debugDisplayBoard() const;
-
-        void tokenMoved(const vector2dst &source, const vector2dst &dest, sptr<Tile> tile);
 
         // Timer related properties
         sptr<scene::TimerComponent> m_sceneTimerComponent;

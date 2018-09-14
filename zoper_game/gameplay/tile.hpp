@@ -30,6 +30,8 @@ namespace zoper
         void tileMoved(const vector2dst& source,
             const vector2dst& dest) override;
 
+        void tokenMoved(const vector2dst &source, const vector2dst &dest, sptr<Tile> tile);
+
 	private:
 		static u32 m_tileCounter;
 	};

@@ -77,10 +77,6 @@ namespace zoper
         m_data->m_boardGroup->p_boardModel->TileMoved.connect([this](const vector2dst source, const vector2dst dest, SITilePointer tile) 
         {
             tile->tileMoved(source, dest);
-			if (auto ztile = std::dynamic_pointer_cast<Tile>(tile)) 
-            {
-				tokenMoved(source, dest, ztile);
-			}
 		});
 
         addPlayer();
@@ -426,14 +422,6 @@ namespace zoper
             }
             log_debug_info(temp);
         }
-    }
-
-    void GameScene::tokenMoved(const vector2dst &, const vector2dst &dest, sptr<Tile> tile)
-    {
-        auto animationComponent(tile->ensureComponentOfType<anim::AnimationComponent>());
-        animationComponent->addAnimation(muptr<anim::IPropertyAnimation<vector2df>>
-            (TimeFromMillis(levelProperties->millisBetweenTokens() / 2), 
-                tile->position, tile->position(), board2Scene(dest)));
     }
 
     constexpr u8 scoreSize = 5;

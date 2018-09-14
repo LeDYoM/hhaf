@@ -1,7 +1,13 @@
 #include "tile.hpp"
+
 #include <lib/scene/renderizables/nodeshape.hpp>
+#include <lib/scene/ianimation.hpp>
+#include <lib/scene/components/animationcomponent.hpp>
 
 #include <lib/include/core/log.hpp>
+
+#include "gamescene.hpp"
+#include "levelproperties.hpp"
 
 namespace zoper
 {
@@ -45,7 +51,16 @@ namespace zoper
         set(newValue);
     }
 
-    void Tile::tileMoved(const vector2dst & source, const vector2dst & dest)
+    void Tile::tileMoved(const vector2dst & /*source*/, const vector2dst & dest)
     {
+        auto animationComponent(ensureComponentOfType<anim::AnimationComponent>());
+        animationComponent->addAnimation(muptr<anim::IPropertyAnimation<vector2df>>
+            (
+                TimeFromMillis(
+                    parentSceneAs<GameScene>()->
+                        ensureComponentOfType<LevelProperties>()->millisBetweenTokens() / 2
+                ),
+                position, position(),
+                parentSceneAs<GameScene>()->board2Scene(dest)));
     }
 }
