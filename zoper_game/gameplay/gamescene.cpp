@@ -55,8 +55,6 @@ namespace zoper
         assert_debug(!m_data->m_boardGroup, "m_boardGroup is not empty");
         m_data->m_boardGroup = createSceneNode<BoardGroup>("BoardGroup", m_tokenZones.size);
 
-        m_data->m_boardGroup->p_boardModel->initialize(m_tokenZones.size);
-
         m_data->m_boardGroup->p_boardModel->TileAdded.connect([this](const vector2dst position_, SITilePointer tile) {
 			// Tile appeared
 			if (auto ztile = std::dynamic_pointer_cast<Tile>(tile)) {

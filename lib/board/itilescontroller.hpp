@@ -5,21 +5,28 @@
 #include <mtypes/include/vector2d.hpp>
 #include <mtypes/include/properties.hpp>
 
-namespace lib
+namespace lib::board
 {
-    namespace board
+    using BoardTileData = s32;
+
+    class ITile : public PropertyTrigger<BoardTileData>
     {
-        using BoardTileData = s32;
+    public:
+        using PropertyTrigger<BoardTileData>::PropertyTrigger;
+        virtual ~ITile() = default;
 
-        class ITile : public PropertyTrigger<BoardTileData>
-        {
-        public:
-            using PropertyTrigger<BoardTileData>::PropertyTrigger;
-            virtual ~ITile() = default;
-        };
+        virtual void tileAdded(const vector2dst & /* position */) {}
+        virtual void tileRemoved(const vector2dst & /* position */) {}
+        virtual void tileChanged(const vector2dst & /*position */,
+            const BoardTileData /* oldValue */,
+            const BoardTileData /* newValue */)
+        {}
 
-        using SITilePointer = sptr<ITile>;
-    }
+        virtual void tileMoved(const vector2dst& /* source */, 
+            const vector2dst& /* dest */) {}
+    };
+
+    using SITilePointer = sptr<ITile>;
 }
 
 #endif
