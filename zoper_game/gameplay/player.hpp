@@ -22,18 +22,17 @@ namespace zoper
         PropertyTrigger<Direction> currentDirection;
 
         void movePlayer(const Direction &direction, const lib::function<bool(const lib::vector2dst&)> &pointInCenter, const lib::sptr<lib::board::BoardModelComponent> &boardModel);
-        void updateDirection();
         void updateDirectionFromParameter(const Direction destDirection);
 
         void launchAnimation(vector2df toWhere);
 
         void tileAdded(const vector2dst &position) override;
         void tileRemoved(const vector2dst & /* position */) override {}
-        void tileChanged(const vector2dst & /*position */,
-            const board::BoardTileData /* oldValue */,
-            const board::BoardTileData /* newValue */) override {}
-        void tileMoved(const vector2dst& /* source */,
-            const vector2dst& /* dest */) override {}
+        void tileChanged(const vector2dst & position,
+            const board::BoardTileData oldValue,
+            const board::BoardTileData newValue) override;
+        void tileMoved(const vector2dst& source,
+            const vector2dst& dest) override;
 
     private:
         void launchAnimationBack(vector2df toWhere);

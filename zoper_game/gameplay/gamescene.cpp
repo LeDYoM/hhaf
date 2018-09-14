@@ -55,38 +55,31 @@ namespace zoper
         assert_debug(!m_data->m_boardGroup, "m_boardGroup is not empty");
         m_data->m_boardGroup = createSceneNode<BoardGroup>("BoardGroup", m_tokenZones.size);
 
-        m_data->m_boardGroup->p_boardModel->TileAdded.connect([this](const vector2dst position_, SITilePointer tile) {
+        m_data->m_boardGroup->p_boardModel->TileAdded.connect([this](const vector2dst position_, SITilePointer tile) 
+        {
 			// Tile appeared
             tile->tileAdded(position_);
         });
 
-        m_data->m_boardGroup->p_boardModel->TileRemoved.connect([this](const vector2dst position_, SITilePointer tile) {
-			if (auto ztile = std::dynamic_pointer_cast<Tile>(tile)) {
-				lib::log_debug_info("Deleting token ", ztile->name(), " from scene at position ", position_);
-                m_data->m_boardGroup->m_mainBoardrg->removeSceneNode(ztile);
-			} /*else if (auto ztile_ = std::dynamic_pointer_cast<Player>(tile)) {
-			  // Actually, never used
-			  }*/
+        m_data->m_boardGroup->p_boardModel->TileRemoved.connect([this](const vector2dst position_, SITilePointer tile) 
+        {
+            assert_release(std::dynamic_pointer_cast<Tile>(tile) != nullptr, "Trying to delete invalid type from board");
+            tile->tileRemoved(position_);
+            m_data->m_boardGroup->m_mainBoardrg->removeSceneNode(std::dynamic_pointer_cast<Tile>(tile));
 		});
 
         m_data->m_boardGroup->p_boardModel->TileChanged.connect([this](const vector2dst position_, SITilePointer tile,
-                                          const BoardTileData oldValue, const BoardTileData newValue) {
-			if (auto ztile = std::dynamic_pointer_cast<Tile>(tile)) {
-				lib::log_debug_info("Token at position ", position_, " changed from ", oldValue, " to ", newValue);
-				ztile->set(newValue);
-			}
-			else if (auto ztile_ = std::dynamic_pointer_cast<Player>(tile)) {
-				lib::log_debug_info("Player (position ", position_, ") changed from ", oldValue, " to ", newValue);
-				ztile_->set(newValue);
-			}
+                                          const BoardTileData oldValue, const BoardTileData newValue) 
+        {
+            tile->tileChanged(position_, oldValue, newValue);
 		});
 
-        m_data->m_boardGroup->p_boardModel->TileMoved.connect([this](const vector2dst source, const vector2dst dest, SITilePointer tile) {
-			if (auto ztile = std::dynamic_pointer_cast<Tile>(tile)) {
+        m_data->m_boardGroup->p_boardModel->TileMoved.connect([this](const vector2dst source, const vector2dst dest, SITilePointer tile) 
+        {
+            tile->tileMoved(source, dest);
+			if (auto ztile = std::dynamic_pointer_cast<Tile>(tile)) 
+            {
 				tokenMoved(source, dest, ztile);
-			}
-			else if (auto ztile_ = std::dynamic_pointer_cast<Player>(tile)) {
-				ztile_->updateDirection();
 			}
 		});
 

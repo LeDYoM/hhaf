@@ -33,4 +33,19 @@ namespace zoper
         // Set the position in the scene depending on the board position
 //        setBoardPosition(position);
     }
+
+    void Tile::tileRemoved(const vector2dst &position_)
+    {
+        log_debug_info("Deleting token ", name(), " from scene at position ", position_);
+    }
+
+    void Tile::tileChanged(const vector2dst &position_, const board::BoardTileData oldValue, const board::BoardTileData newValue)
+    {
+        log_debug_info("Token at position ", position_, " changed from ", oldValue, " to ", newValue);
+        set(newValue);
+    }
+
+    void Tile::tileMoved(const vector2dst & source, const vector2dst & dest)
+    {
+    }
 }

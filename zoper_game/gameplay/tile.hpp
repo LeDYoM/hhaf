@@ -23,12 +23,12 @@ namespace zoper
 		static void resetTileCounter();
 
         void tileAdded(const vector2dst &position) override;
-        void tileRemoved(const vector2dst & /* position */) override {}
+        void tileRemoved(const vector2dst & /* position */) override;
         void tileChanged(const vector2dst & /*position */,
-            const board::BoardTileData /* oldValue */,
-            const board::BoardTileData /* newValue */) override {}
-        void tileMoved(const vector2dst& /* source */,
-            const vector2dst& /* dest */) override {}
+            const board::BoardTileData oldValue,
+            const board::BoardTileData newValue) override;
+        void tileMoved(const vector2dst& source,
+            const vector2dst& dest) override;
 
 	private:
 		static u32 m_tileCounter;
