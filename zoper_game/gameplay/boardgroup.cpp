@@ -19,51 +19,57 @@ namespace zoper
 
     BoardGroup::~BoardGroup() {}
 
-	void BoardGroup::onCreated()
-	{
-		BaseClass::onCreated();
+    void BoardGroup::onCreated()
+    {
+        BaseClass::onCreated();
 
         m_mainBoardrg = parent()->createSceneNode("mainBoard");
 
-		Rectf32 textBox{ scenePerspective() };
-		position = textBox.leftTop();
-		sceneNodeSize = textBox.size();
+        Rectf32 textBox{ scenePerspective() };
+        position = textBox.leftTop();
+        sceneNodeSize = textBox.size();
 
-		const Rectf32 bBox(scenePerspective());
+        const Rectf32 bBox(scenePerspective());
 
-		Rectf32 tileBox({},cellSize());
-		for (size_type y{ 0U }; y < tableSize().y; ++y) {
-			for (size_type x{ 0U }; x < tableSize().x; ++x) {
-				static_cast<void>(createNodeAt({ x,y }, make_str("BoardGroupTile_", x, y), tileBox));
-			}
-		}
+        Rectf32 tileBox({}, cellSize());
+        for (size_type y{ 0U }; y < tableSize().y; ++y) {
+            for (size_type x{ 0U }; x < tableSize().x; ++x) {
+                static_cast<void>(createNodeAt({ x,y }, make_str("BoardGroupTile_", x, y), tileBox));
+            }
+        }
 
         p_boardModel = ensureComponentOfType<board::BoardModelComponent>();
         p_boardModel->initialize(tableSize());
 
+        /*
+        * Delete someday.
         p_boardModel->TileAdded.connect([this](const vector2dst position_, board::SITilePointer tile)
         {
             // Tile appeared
-            tile->tileAdded(position_);
+//            tile->tileAdded(position_);
         });
 
+        */
         p_boardModel->TileRemoved.connect([this](const vector2dst position_, board::SITilePointer tile)
         {
             assert_release(std::dynamic_pointer_cast<Tile>(tile) != nullptr, "Trying to delete invalid type from board");
-            tile->tileRemoved(position_);
+//            tile->tileRemoved(position_);
             m_mainBoardrg->removeSceneNode(std::dynamic_pointer_cast<Tile>(tile));
         });
 
+        /*
+        * Delete someday.
         p_boardModel->TileChanged.connect([this](const vector2dst position_, board::SITilePointer tile,
             const board::BoardTileData oldValue, const board::BoardTileData newValue)
         {
-            tile->tileChanged(position_, oldValue, newValue);
+//            tile->tileChanged(position_, oldValue, newValue);
         });
 
         p_boardModel->TileMoved.connect([this](const vector2dst source, const vector2dst dest, board::SITilePointer tile)
         {
-            tile->tileMoved(source, dest);
+//            tile->tileMoved(source, dest);
         });
+        */
 	}
 
 }
