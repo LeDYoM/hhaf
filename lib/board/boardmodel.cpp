@@ -1,4 +1,5 @@
 #include "boardmodel.hpp"
+#include "iboardmodelactuator.hpp"
 #include <lib/include/core/log.hpp>
 
 namespace lib
@@ -8,9 +9,12 @@ namespace lib
         BoardModelComponent::BoardModelComponent() {}
         BoardModelComponent::~BoardModelComponent() {}
 
-        void BoardModelComponent::initialize(const vector2dst &size)
+        void BoardModelComponent::initialize(const vector2dst &size, sptr<IBoardModelActuator> boardModelActuator)
         {
             log_debug_info("BoardModelComponent initialize with size: ", size);
+            log_debug_info("IBoardModelActuator received ", boardModelActuator != nullptr);
+
+            std::swap(m_actuator, boardModelActuator);
             _tiles.reserve(size.x);
             for (auto x = 0u; x < size.x; ++x) {
                 _tiles.emplace_back(size.y);
@@ -33,7 +37,11 @@ namespace lib
 
             _setTile(tPosition, newTile);
             newTile->tileAdded(tPosition);
-            TileAdded(tPosition, newTile);
+
+            if (m_actuator)
+            {
+                m_actuator->tileAdded(tPosition, newTile);
+            }
         }
 
         void BoardModelComponent::deleteTile(const vector2dst &position)
@@ -43,8 +51,11 @@ namespace lib
             SITilePointer current(getTile(position));
             current->tileRemoved(position);
 
+            if (m_actuator)
+            {
+                m_actuator->tileRemoved(position, current);
+            }
             _tiles[position.x][position.y].reset();
-            TileRemoved(position, current);
         }
 
         void BoardModelComponent::changeTileData(const vector2dst &source, const BoardTileData &nv)
@@ -54,8 +65,11 @@ namespace lib
             auto tile (getTile(source));
             BoardTileData ov{ tile->get() };
 
+            if (m_actuator)
+            {
+                m_actuator->tileChanged(source, tile, ov, nv);
+            }
             tile->tileChanged(source, ov, nv);
-            TileChanged(source, tile, ov, nv);
         }
 
         bool BoardModelComponent::moveTile(const vector2dst &source, const vector2dst &dest)
@@ -76,7 +90,10 @@ namespace lib
                     _setTile(dest, sourceTile);
                     _setTile(source, SITilePointer());
 
-                    TileMoved(source, dest, sourceTile);
+                    if (m_actuator)
+                    {
+                        m_actuator->tileMoved(source, dest, sourceTile);
+                    }
                     sourceTile->tileMoved(source, dest);
                     return true;
                 }

@@ -4,12 +4,13 @@
 #define LIB_BOARD_BOARDMODEL_HPP
 
 #include <mtypes/include/types.hpp>
-#include <mtypes/include/connection.hpp>
 #include "itilescontroller.hpp"
 #include <lib/scene/components/icomponent.hpp>
 
 namespace lib::board
 {
+    class IBoardModelActuator;
+
     class BoardModelComponent : public scene::IComponent
     {
     public:
@@ -17,7 +18,7 @@ namespace lib::board
         ~BoardModelComponent() override;
 
         virtual void update() override final {}
-        void initialize(const vector2dst &size);
+        void initialize(const vector2dst &size, sptr<IBoardModelActuator> boardModelActuator);
 
         SITilePointer getTile(const vector2dst &position) const noexcept;
         inline bool tileEmpty(const vector2dst &position) const noexcept { return getTile(position) == nullptr; }
@@ -29,13 +30,10 @@ namespace lib::board
         inline bool validCoords(const vector2dst &tPosition) const noexcept { return _tiles.size() > tPosition.x && _tiles[0].size() > tPosition.y; }
         inline const vector2dst size() const noexcept { return vector2dst{ _tiles.size(),_tiles[0].size() }; }
 
-        emitter<const vector2dst, SITilePointer> TileAdded;
-        emitter<const vector2dst, SITilePointer> TileRemoved;
-        emitter<const vector2dst, const vector2dst, SITilePointer> TileMoved;
-        emitter<const vector2dst, SITilePointer, const BoardTileData, const BoardTileData> TileChanged;
-
     private:
         void _setTile(const vector2dst &position, SITilePointer newTile);
+
+        sptr<IBoardModelActuator> m_actuator;
         vector<vector<SITilePointer>> _tiles;
     };
 }

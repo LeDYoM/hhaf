@@ -10,12 +10,13 @@
 #include "boardscenenode.hpp"
 
 #include <lib/board/boardmodel.hpp>
+#include <lib/board/iboardmodelactuator.hpp>
 
 namespace zoper
 {
     using namespace lib;
 
-    class BoardGroup : public scene::nodes::TableNode<BoardSceneNode>
+    class BoardGroup : public scene::nodes::TableNode<BoardSceneNode>, public board::IBoardModelActuator
 	{
 	private:
 		using BaseClass = scene::nodes::TableNode<BoardSceneNode>;
@@ -24,6 +25,7 @@ namespace zoper
 		virtual ~BoardGroup();
 
 		void onCreated() override;
+        void 
 
         sptr<board::BoardModelComponent> p_boardModel;
         sptr<scene::SceneNode> m_mainBoardrg;
