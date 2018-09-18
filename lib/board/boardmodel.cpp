@@ -29,32 +29,39 @@ namespace lib
 
         void BoardModelComponent::setTile(const lib::vector2dst &tPosition, SITilePointer newTile)
         {
-            __ASSERT(tileEmpty(tPosition), "You can only set data in empty tiles");
+            assert_release(tileEmpty(tPosition), "You can only set data in empty tiles");
 
             _setTile(tPosition, newTile);
+            newTile->tileAdded(tPosition);
             TileAdded(tPosition, newTile);
         }
 
         void BoardModelComponent::deleteTile(const vector2dst &position)
         {
-            __ASSERT(!tileEmpty(position), "You can only delete not empty tiles");
-            SITilePointer current = getTile(position);
+            assert_release(!tileEmpty(position), "You can only delete not empty tiles");
+
+            SITilePointer current(getTile(position));
+            current->tileRemoved(position);
+
             _tiles[position.x][position.y].reset();
             TileRemoved(position, current);
         }
 
         void BoardModelComponent::changeTileData(const vector2dst &source, const BoardTileData &nv)
         {
-            __ASSERT(!tileEmpty(source), "You can only change data in not empty tiles");
+            assert_release(!tileEmpty(source), "You can only change data in not empty tiles");
 
             auto tile (getTile(source));
             BoardTileData ov{ tile->get() };
+
+            tile->tileChanged(source, ov, nv);
             TileChanged(source, tile, ov, nv);
         }
 
         bool BoardModelComponent::moveTile(const vector2dst &source, const vector2dst &dest)
         {
-            if (!tileEmpty(source)) {
+            if (!tileEmpty(source))
+            {
                 log_debug_info("Moving tile from ", source, " to ", dest);
 
                 SITilePointer sourceTile{ getTile(source) };
@@ -62,17 +69,20 @@ namespace lib
 
                 log_debug_info("Source Value: ", sourceTile->get());
 
-                if (sourceTile)	{
-                    __ASSERT(!destTile, "Trying to move to a not empty tile: " , dest, " contains ", destTile->get());
+                if (sourceTile)
+                {
+                    assert_release(!destTile, "Trying to move to a not empty tile: " , dest);
 
                     _setTile(dest, sourceTile);
                     _setTile(source, SITilePointer());
 
                     TileMoved(source, dest, sourceTile);
+                    sourceTile->tileMoved(source, dest);
                     return true;
                 }
             }
-            else {
+            else
+            {
                 log_debug_info("Trying to move empty tile: ", source.x , ",", source.y, " ignoring it");
             }
             return false;

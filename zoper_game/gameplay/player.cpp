@@ -42,13 +42,8 @@ namespace zoper
             boardPosition.set(nPosition);
         }
         else {
-            updateDirection();
+            updateDirectionFromParameter(currentDirection());
         }
-    }
-
-    void Player::updateDirection()
-    {
-        updateDirectionFromParameter(currentDirection());
     }
 
     void Player::updateDirectionFromParameter(const Direction destDirection)
@@ -77,6 +72,24 @@ namespace zoper
             ));
     }
 
+    void Player::tileAdded(const vector2dst & position_)
+    {
+        log_debug_info("TokenPlayer appeared at ", position_);
+        // Set the position in the scene depending on the board position
+        boardPosition.set(position_);
+    }
+
+    void Player::tileChanged(const vector2dst &position_, const board::BoardTileData oldValue, const board::BoardTileData newValue)
+    {
+        log_debug_info("Player (position ", position_, ") changed from ", oldValue, " to ", newValue);
+        set(newValue);
+    }
+
+    void Player::tileMoved(const vector2dst &, const vector2dst &)
+    {
+        updateDirectionFromParameter(currentDirection());
+    }
+
     void Player::launchAnimationBack(vector2df toWhere)
     {
         updateDirectionFromParameter(currentDirection().negate());
@@ -86,7 +99,7 @@ namespace zoper
                 TimeFromMillis(gameplay::constants::MillisAnimationLaunchPlayerStep),
                 position,
                 position(), toWhere,
-                [this]() { updateDirection(); }
+                [this]() { updateDirectionFromParameter(currentDirection()); }
             ));
     }
 }

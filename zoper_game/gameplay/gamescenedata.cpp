@@ -22,7 +22,6 @@ namespace zoper
     {
         gameScene.loadResources(GameResources{});
 
-        m_mainBoardrg = gameScene.createSceneNode("mainBoard");
         m_gameOverrg = gameScene.createSceneNode("gameOverScreen");
         m_levelrg = gameScene.createSceneNode("level");
         m_pauseSceneNode = gameScene.createSceneNode("pause");
@@ -82,7 +81,6 @@ namespace zoper
         m_levelrg->position = vector2df{ 1250, 50 };
 
         m_gameOverrg->visible = false;
-        m_mainBoardrg->visible = true;
         m_pauseSceneNode->visible = false;
 
         m_goalQuad->text(vector2dst{0,0})->text.set(Text_t(
