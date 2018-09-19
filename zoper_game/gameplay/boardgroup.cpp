@@ -39,37 +39,12 @@ namespace zoper
         }
 
         p_boardModel = ensureComponentOfType<board::BoardModelComponent>();
-        p_boardModel->initialize(tableSize(), nullptr);
-
-        /*
-        * Delete someday.
-        p_boardModel->TileAdded.connect([this](const vector2dst position_, board::SITilePointer tile)
-        {
-            // Tile appeared
-//            tile->tileAdded(position_);
-        });
-
-        */
-        p_boardModel->TileRemoved.connect([this](const vector2dst position_, board::SITilePointer tile)
-        {
-            assert_release(std::dynamic_pointer_cast<Tile>(tile) != nullptr, "Trying to delete invalid type from board");
-//            tile->tileRemoved(position_);
-            m_mainBoardrg->removeSceneNode(std::dynamic_pointer_cast<Tile>(tile));
-        });
-
-        /*
-        * Delete someday.
-        p_boardModel->TileChanged.connect([this](const vector2dst position_, board::SITilePointer tile,
-            const board::BoardTileData oldValue, const board::BoardTileData newValue)
-        {
-//            tile->tileChanged(position_, oldValue, newValue);
-        });
-
-        p_boardModel->TileMoved.connect([this](const vector2dst source, const vector2dst dest, board::SITilePointer tile)
-        {
-//            tile->tileMoved(source, dest);
-        });
-        */
+        p_boardModel->initialize(tableSize(), this);
 	}
 
+	void BoardGroup::tileRemoved(const vector2dst, board::SITilePointer tile)
+	{
+		assert_release(std::dynamic_pointer_cast<Tile>(tile) != nullptr, "Trying to delete invalid type from board");
+		m_mainBoardrg->removeSceneNode(std::dynamic_pointer_cast<Tile>(tile));
+	}
 }

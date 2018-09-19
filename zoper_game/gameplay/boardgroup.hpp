@@ -25,7 +25,8 @@ namespace zoper
 		virtual ~BoardGroup();
 
 		void onCreated() override;
-        void 
+
+		void tileRemoved(const vector2dst, board::SITilePointer) override;
 
         sptr<board::BoardModelComponent> p_boardModel;
         sptr<scene::SceneNode> m_mainBoardrg;

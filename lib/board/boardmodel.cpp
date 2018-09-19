@@ -9,11 +9,12 @@ namespace lib
         BoardModelComponent::BoardModelComponent() {}
         BoardModelComponent::~BoardModelComponent() {}
 
-        void BoardModelComponent::initialize(const vector2dst &size, sptr<IBoardModelActuator> boardModelActuator)
+        void BoardModelComponent::initialize(const vector2dst &size, IBoardModelActuator* boardModelActuator)
         {
             log_debug_info("BoardModelComponent initialize with size: ", size);
             log_debug_info("IBoardModelActuator received ", boardModelActuator != nullptr);
 
+			assert_release(m_actuator == nullptr, "m_actuator already contains a value");
             std::swap(m_actuator, boardModelActuator);
             _tiles.reserve(size.x);
             for (auto x = 0u; x < size.x; ++x) {
@@ -24,10 +25,12 @@ namespace lib
 
         SITilePointer BoardModelComponent::getTile(const vector2dst &position) const noexcept
         {
-            if (validCoords(position)) {
+            if (validCoords(position))
+			{
                 return _tiles[position.x][position.y];
             }
-            log_debug_error("Error getting tile in coords ", position.x, ",", position.y);
+
+            log_debug_error("Error getting tile in coordinates ", position.x, ",", position.y);
             return SITilePointer();
         }
 

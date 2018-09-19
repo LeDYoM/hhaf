@@ -18,7 +18,7 @@ namespace lib::board
         ~BoardModelComponent() override;
 
         virtual void update() override final {}
-        void initialize(const vector2dst &size, sptr<IBoardModelActuator> boardModelActuator);
+        void initialize(const vector2dst &size, IBoardModelActuator* boardModelActuator);
 
         SITilePointer getTile(const vector2dst &position) const noexcept;
         inline bool tileEmpty(const vector2dst &position) const noexcept { return getTile(position) == nullptr; }
@@ -33,7 +33,7 @@ namespace lib::board
     private:
         void _setTile(const vector2dst &position, SITilePointer newTile);
 
-        sptr<IBoardModelActuator> m_actuator;
+        IBoardModelActuator* m_actuator;
         vector<vector<SITilePointer>> _tiles;
     };
 }
