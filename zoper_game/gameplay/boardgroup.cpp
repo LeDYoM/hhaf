@@ -8,7 +8,7 @@
 #include <lib/scene/renderizables/nodeshape.hpp>
 
 #include <lib/board/boardmodel.hpp>
-#include <lib/board/itilescontroller.hpp>
+#include <lib/board/itile.hpp>
 
 namespace zoper
 {

@@ -1,14 +1,14 @@
 #pragma once
 
-#ifndef ZOPER_TILE_HPP__
-#define ZOPER_TILE_HPP__
+#ifndef ZOPER_TILE_HPP
+#define ZOPER_TILE_HPP
 
 #include "gamebasetile.hpp"
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
 
-#include <lib/board/itilescontroller.hpp>
+#include <lib/board/itile.hpp>
 
 namespace zoper
 {

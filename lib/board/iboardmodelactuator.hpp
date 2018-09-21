@@ -4,7 +4,7 @@
 #define LIB_BOARD_IBOARDMODEL_ACTUATOR_HPP
 
 #include <mtypes/include/types.hpp>
-#include "itilescontroller.hpp"
+#include "itile.hpp"
 
 namespace lib::board
 {

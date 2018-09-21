@@ -4,7 +4,7 @@
 #define LIB_BOARD_BOARDMODEL_HPP
 
 #include <mtypes/include/types.hpp>
-#include "itilescontroller.hpp"
+#include "itile.hpp"
 #include <lib/scene/components/icomponent.hpp>
 
 namespace lib::board

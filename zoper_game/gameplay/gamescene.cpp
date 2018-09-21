@@ -13,7 +13,6 @@
 #include <mtypes/include/properties.hpp>
 
 #include <lib/board/boardmodel.hpp>
-#include <lib/board/itilescontroller.hpp>
 #include <lib/include/core/log.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/core/randomizer.hpp>
@@ -239,7 +238,7 @@ namespace zoper
 
     void GameScene::addPlayer()
     {
-        log_debug_info("Adding player tile at ", TokenZones::centerRect);
+        log_debug_info("Adding player tile at ", TokenZones::centerRect.leftTop());
         assert_release(!m_player, "Player already initialized");
         // Create the player instance
         m_player = m_data->m_boardGroup->m_mainBoardrg->createSceneNode<Player>("playerNode", TokenZones::centerRect.leftTop(), rectFromSize(tileSize()), board2SceneFactor());
