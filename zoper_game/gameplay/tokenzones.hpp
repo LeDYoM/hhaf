@@ -1,20 +1,17 @@
 #pragma once
 
-#ifndef ZOPER_TOKENZONES_INCLUDE_HPP__
-#define ZOPER_TOKENZONES_INCLUDE_HPP__
+#ifndef ZOPER_TOKENZONES_INCLUDE_HPP
+#define ZOPER_TOKENZONES_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <mtypes/include/array.hpp>
-#include <mtypes/include/vector2d.hpp>
 #include <mtypes/include/rect.hpp>
-#include <mtypes/include/streams.hpp>
 
 #include "direction.hpp"
 
 namespace zoper
 {
     using namespace lib;
-    constexpr size_type NumWays = 4;
+    constexpr size_type NumWays(4);
 
     struct TokenZones
     {
@@ -25,10 +22,10 @@ namespace zoper
             size_type size;
         };
 
-        const vector2dst size{ 18,12 };
-        const Rectst centerRect{ 7,4,4,4 };
+        constexpr static vector2dst size{ 18,12 };
+        constexpr static Rectst centerRect{ 7,4,4,4 };
 
-        const array<TokenZone, NumWays> tokenZones
+        constexpr static TokenZone tokenZones[NumWays] =
         {
             // From left to right
             TokenZone
@@ -59,6 +56,11 @@ namespace zoper
                 centerRect.size().x
             }
         };
+
+        static bool pointInCenter(const vector2dst &position)
+        {
+            return TokenZones::centerRect.inside(position);
+        }
     };
 }
 

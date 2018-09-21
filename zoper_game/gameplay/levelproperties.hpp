@@ -33,7 +33,6 @@ namespace zoper
         
 
         static constexpr size_t maxLevelWithProperties{ 25U };
-        scene::Color getBackgroundTileColor(vector2dst position, const bool isCenter) const;
 
         void tokenConsumed();
 	private:

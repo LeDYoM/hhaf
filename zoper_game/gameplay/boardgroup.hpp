@@ -5,7 +5,6 @@
 
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/nodes/tablenode.hpp>
-#include <lib/scene/scenenode.hpp>
 
 #include "boardscenenode.hpp"
 
@@ -27,6 +26,11 @@ namespace zoper
 		void onCreated() override;
 
 		void tileRemoved(const vector2dst, board::SITilePointer) override;
+
+        void setLevel(const size_type level);
+
+        scene::Color getBackgroundTileColor(const size_type level, 
+            vector2dst position, const bool isCenter) const;
 
         sptr<board::BoardModelComponent> p_boardModel;
         sptr<scene::SceneNode> m_mainBoardrg;

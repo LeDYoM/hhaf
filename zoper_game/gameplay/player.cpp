@@ -1,5 +1,6 @@
 #include "player.hpp"
 #include "constants.hpp"
+#include "tokenzones.hpp"
 
 #include <lib/include/core/log.hpp>
 
@@ -32,12 +33,13 @@ namespace zoper
 
 	Player::~Player() {}
 
-    void Player::movePlayer(const Direction & direction, const function<bool(const vector2dst&)> &pointInCenter, const sptr<board::BoardModelComponent>& boardModel)
+    void Player::movePlayer(const Direction & direction, const sptr<board::BoardModelComponent>& boardModel)
     {
         CLIENT_ASSERT(direction.isValid(), "Invalid direction passed to move");
         currentDirection = direction;
         auto nPosition = direction.applyToVector(boardPosition());
-        if (pointInCenter(nPosition)) {
+        if (TokenZones::pointInCenter(nPosition)) 
+        {
             boardModel->moveTile(boardPosition(), nPosition);
             boardPosition.set(nPosition);
         }
@@ -100,6 +102,6 @@ namespace zoper
                 position,
                 position(), toWhere,
                 [this]() { updateDirectionFromParameter(currentDirection()); }
-            ));
+        ));
     }
 }

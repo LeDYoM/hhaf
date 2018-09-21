@@ -19,9 +19,16 @@ namespace lib
 		using value_type = T;
 		using const_value_type = const T;
 
+
 		array() = default;
-		constexpr array(std::initializer_list<value_type> iList) noexcept {
-			for (size_t i{ 0 }; i < iList.size() && i < array_size;++i) {
+        array(const array&) = default;
+        array(array&&) = default;
+        array &operator=(const array&) = default;
+        array &operator=(array&&) = default;
+
+		constexpr array(std::initializer_list<value_type> iList) noexcept 
+        {
+			for (decltype(iList.size()) i{ 0U }; i < iList.size() && i < array_size; ++i) {
 				m_buffer[i] = std::move(*(iList.begin()+i));
 			}
 		}
