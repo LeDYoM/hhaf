@@ -55,12 +55,13 @@ namespace zoper
     {
         auto animationComponent(ensureComponentOfType<anim::AnimationComponent>());
         animationComponent->addAnimation(muptr<anim::IPropertyAnimation<vector2df>>
-            (
-                TimeFromMillis(
-                    parentSceneAs<GameScene>()->
-                        ensureComponentOfType<LevelProperties>()->millisBetweenTokens() / 2
-                ),
-                position, position(),
-                parentSceneAs<GameScene>()->board2Scene(dest)));
+        (
+            TimeFromMillis(
+                parentSceneAs<GameScene>()->
+                    ensureComponentOfType<LevelProperties>()->millisBetweenTokens() / 2
+            ),
+            position, position(),
+            parentSceneAs<GameScene>()->board2Scene(dest))
+        );
     }
 }
