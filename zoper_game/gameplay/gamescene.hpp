@@ -26,7 +26,7 @@
 namespace zoper
 {
     class Player;
-    class Tile;
+    class Token;
     class GameSceneData;
 
     using namespace lib;

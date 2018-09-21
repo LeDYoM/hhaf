@@ -1,7 +1,7 @@
 #include "gamescene.hpp"
 #include "gamescenedata.hpp"
 
-#include "tile.hpp"
+#include "token.hpp"
 #include "player.hpp"
 #include "constants.hpp"
 
@@ -253,7 +253,7 @@ namespace zoper
 
         log_debug_info("Adding new tile at ", pos, " with value ", newToken);
         // Create a new Tile instance
-        auto newTileToken = m_data->m_boardGroup->m_mainBoardrg->createSceneNode<Tile>("tileNode", BoardTileData{ static_cast<BoardTileData>(newToken) }, rectFromSize(tileSize()));
+        auto newTileToken = m_data->m_boardGroup->m_mainBoardrg->createSceneNode<Token>("tileNode", BoardTileData{ static_cast<BoardTileData>(newToken) }, rectFromSize(tileSize()));
         // Set the position in the scene depending on the board position
         newTileToken->position = board2Scene(pos);
 

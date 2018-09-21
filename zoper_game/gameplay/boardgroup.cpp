@@ -1,5 +1,5 @@
 #include "boardgroup.hpp"
-#include "tile.hpp"
+#include "token.hpp"
 #include "tokenzones.hpp"
 
 #include <lib/scene/scenenode.hpp>
@@ -45,8 +45,8 @@ namespace zoper
 
 	void BoardGroup::tileRemoved(const vector2dst, board::SITilePointer tile)
 	{
-		assert_release(std::dynamic_pointer_cast<Tile>(tile) != nullptr, "Trying to delete invalid type from board");
-		m_mainBoardrg->removeSceneNode(std::dynamic_pointer_cast<Tile>(tile));
+		assert_release(std::dynamic_pointer_cast<Token>(tile) != nullptr, "Trying to delete invalid type from board");
+		m_mainBoardrg->removeSceneNode(std::dynamic_pointer_cast<Token>(tile));
 	}
 
     void BoardGroup::setLevel(const size_type level)
