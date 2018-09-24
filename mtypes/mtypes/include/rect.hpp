@@ -88,12 +88,12 @@ namespace lib
 
         constexpr bool insideX(const vector2d<T>& v) const noexcept
         {
-            return (v.x >= left || v.x <= right());
+            return (v.x >= left && v.x < right());
         }
 
         constexpr bool insideY(const vector2d<T>& v) const noexcept
         {
-            return (v.y >= top || v.x <= bottom());
+            return (v.y >= top && v.y < bottom());
         }
 
         constexpr bool inside(const vector2d<T>& v) const noexcept
