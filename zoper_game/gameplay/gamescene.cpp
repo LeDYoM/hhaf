@@ -92,9 +92,17 @@ namespace zoper
         // Create the general timer component for the scene.
         m_sceneTimerComponent = ensureComponentOfType<scene::TimerComponent>();
 
+        // Import game shared data. Basically, the menu selected options.
+        importGameSharedData();
+
         // At this point, we setup level properties.
         // levelProperties should not be used before this point.
         levelProperties = ensureComponentOfType<LevelProperties>();
+        levelProperties->levelChanged.connect([&m_data = m_data](const auto level)
+        {
+            // Forward current level where necessary.
+            m_data->m_boardGroup->setLevel(level);
+        });
         levelProperties->setUp(m_inGameData.currentLevel, m_inGameData.gameMode, m_data, m_sceneTimerComponent);
 
         m_nextTokenTimer = m_sceneTimerComponent->addTimer(
@@ -105,9 +113,6 @@ namespace zoper
             // New token
             generateNextToken();
         });
-
-        // Import game shared data. Basically, the menu selected options.
-        importGameSharedData();
 
         // Set state controll.
         {
@@ -161,7 +166,6 @@ namespace zoper
 
     void GameScene::setLevel(const size_type)
     {
-        levelProperties->setLevel(m_inGameData.currentLevel);
         m_data->m_boardGroup->setLevel(m_inGameData.currentLevel);
     }
 
@@ -214,7 +218,6 @@ namespace zoper
     void GameScene::importGameSharedData()
     {
         (*sceneManager().host().app<ZoperProgramController>().gameSharedData) >> m_inGameData;
-        setLevel(m_inGameData.currentLevel);
     }
 
     void GameScene::exportGameSharedData()

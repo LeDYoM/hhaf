@@ -32,7 +32,7 @@ namespace zoper
         setLevel(currentLevel);
     }
 
-    void LevelProperties::setLevel(const size_type currentLevel)
+    void LevelProperties::setLevel(const LevelType currentLevel)
     {
         m_levelTimer.restart();
 
@@ -57,6 +57,7 @@ namespace zoper
                                  400);
 		}
 
+        levelChanged(currentLevel);
         updateGoals();
         updateLevelData();
 
