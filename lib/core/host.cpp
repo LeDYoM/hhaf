@@ -6,7 +6,6 @@
 #include <lib/include/backend/iwindow.hpp>
 #include <lib/include/core/log.hpp>
 #include <lib/core/inputsystem.hpp>
-#include <lib/core/debugsystem.hpp>
 #include <lib/core/backendfactory.hpp>
 #include <lib/core/appcontext.hpp>
 #include <lib/core/hostcontext.hpp>
@@ -143,7 +142,6 @@ namespace lib::core
             m_window = muptr<Window>(*this, m_private->m_appGroup.m_iapp->getAppDescriptor().wcp);
             m_sceneManager = muptr<scene::SceneManager>(*this, *m_window);
             m_resourceManager = muptr<core::ResourceManager>(*this);
-            m_debugSystem = muptr<DebugSystem>(*this);
 
             m_private->m_appGroup.m_iapp->onInit();
             log_debug_info(m_private->m_appGroup.m_appContext->appId(), ": Starting execution...");
@@ -165,7 +163,6 @@ namespace lib::core
             m_sceneManager->finish();
             m_state = AppState::Terminated;
 //				m_iapp->onFinish();
-            m_debugSystem = nullptr;
             m_sceneManager = nullptr;
             m_window = nullptr;
             m_resourceManager = nullptr;

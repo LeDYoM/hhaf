@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef ZOPER_GAME_SHARED_DATA_INCLUDE_HPP__
-#define ZOPER_GAME_SHARED_DATA_INCLUDE_HPP__
+#ifndef ZOPER_GAME_SHARED_DATA_INCLUDE_HPP
+#define ZOPER_GAME_SHARED_DATA_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/array.hpp>
