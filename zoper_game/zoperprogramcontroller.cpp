@@ -70,9 +70,4 @@ namespace zoper
 			}
 		};
 	}
-
-	int ZoperProgramController::loop()
-	{
-		return 0;
-	}
 }
