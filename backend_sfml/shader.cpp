@@ -12,7 +12,7 @@ namespace lib::backend::sfmlb
         m_shaderPrivate->setUniform(to_sf_type(name), to_sf_type(v));
     }
 
-    void Shader::setUniform(const str &name, ITexture *texture)
+    void Shader::setUniform(const str &, ITexture *)
     {
 
     }

@@ -23,7 +23,6 @@ namespace lib
         class Window;
         class ResourceManager;
         class Randomizer;
-        class DebugSystem;
         class HostPrivate;
 
         class Host final
@@ -49,8 +48,6 @@ namespace lib
             inline ResourceManager &resourceManager()  noexcept { return *m_resourceManager; }
             inline const input::InputSystem &inputSystem() const noexcept { return *m_inputSystem; }
             inline input::InputSystem &inputSystem() noexcept { return *m_inputSystem; }
-            inline const DebugSystem &debugSystem() const noexcept { return *m_debugSystem; }
-            inline DebugSystem &debugSystem() noexcept { return *m_debugSystem; }
             inline const scene::SceneManager &sceneManager() const noexcept { return *m_sceneManager; }
             inline scene::SceneManager &sceneManager() noexcept { return *m_sceneManager; }
 
@@ -72,7 +69,6 @@ namespace lib
             uptr<Window> m_window;
             uptr<ResourceManager> m_resourceManager;
             uptr<Randomizer> m_randomizer;
-            uptr<DebugSystem> m_debugSystem;
             uptr<input::InputSystem> m_inputSystem;
             uptr<scene::SceneManager> m_sceneManager;
             bool exit{ false };
@@ -88,7 +84,6 @@ namespace lib
     inline core::Window &window() noexcept { return core::Host::host().parentWindow(); }
 //    inline core::ResourceManager &resourceManager() noexcept { return core::Host::host().resourceManager(); }
     inline core::Randomizer &randomizer() noexcept { return core::Host::host().randomizer(); }
-    inline core::DebugSystem &debugSystem() noexcept { return core::Host::host().debugSystem(); }
     inline scene::SceneManager &sceneManager() noexcept { return core::Host::host().sceneManager(); }
 }
 

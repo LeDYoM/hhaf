@@ -5,20 +5,22 @@
 
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/renderizables/nodeshape.hpp>
-#include <lib/board/itilescontroller.hpp>
+#include <lib/board/itile.hpp>
 
 namespace zoper
 {
-	class GameBaseTile : public lib::board::ITile, public lib::scene::SceneNode
+    using namespace lib;
+
+	class GameBaseTile : public board::ITile, public scene::SceneNode
 	{
 	public:
-		explicit GameBaseTile(lib::scene::SceneNode* const parent, lib::str name, lib::board::BoardTileData data);
-		virtual ~GameBaseTile() = default;
+		GameBaseTile(scene::SceneNode* const parent, str name, board::BoardTileData data);
+		~GameBaseTile() override = default;
 
-		lib::scene::Color getColorForToken() const;
+		scene::Color getColorForToken() const;
 
 	protected:
-		lib::sptr<lib::scene::nodes::NodeShape> m_node;
+		sptr<scene::nodes::NodeShape> m_node;
 	};
 }
 

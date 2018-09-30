@@ -1,24 +1,30 @@
 #pragma once
 
-#ifndef ZOPER_TILE_HPP__
-#define ZOPER_TILE_HPP__
+#ifndef ZOPER_TILE_HPP
+#define ZOPER_TILE_HPP
 
 #include "gamebasetile.hpp"
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
 
-#include <lib/board/itilescontroller.hpp>
+#include <lib/board/itile.hpp>
 
 namespace zoper
 {
     using namespace lib;
 
-	class Tile : public GameBaseTile
+    /**
+    * This class represents one of the enemies in the board of the game.
+    * 
+    * The clas contains internal data like the token type inherited from
+    * the base class. It also provides the required graphical information.
+    * */
+	class Token : public GameBaseTile
 	{
 	public:
-		explicit Tile(scene::SceneNode* const parent, str name, board::BoardTileData data, const Rectf32 &box);
-		virtual ~Tile();
+		Token(scene::SceneNode* const parent, str name, board::BoardTileData data, const Rectf32 &box);
+		~Token() override;
 
 		static void resetTileCounter();
 
@@ -30,10 +36,8 @@ namespace zoper
         void tileMoved(const vector2dst& source,
             const vector2dst& dest) override;
 
-        void tokenMoved(const vector2dst &source, const vector2dst &dest, sptr<Tile> tile);
-
 	private:
-		static u32 m_tileCounter;
+        static u32 m_tileCounter;
 	};
 }
 

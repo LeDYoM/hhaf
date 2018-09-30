@@ -21,7 +21,7 @@ namespace zoper
         PropertyTrigger<vector2dst> boardPosition;
         PropertyTrigger<Direction> currentDirection;
 
-        void movePlayer(const Direction &direction, const lib::function<bool(const lib::vector2dst&)> &pointInCenter, const lib::sptr<lib::board::BoardModelComponent> &boardModel);
+        void movePlayer(const Direction &direction, const sptr<board::BoardModelComponent> &boardModel);
         void updateDirectionFromParameter(const Direction destDirection);
 
         void launchAnimation(vector2df toWhere);

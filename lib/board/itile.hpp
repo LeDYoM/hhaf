@@ -1,5 +1,7 @@
-#ifndef __LIB_ITILESCONTROLLER_HPP__
-#define __LIB_ITILESCONTROLLER_HPP__
+#pragma once
+
+#ifndef LIB_BOARD_ITILE_HPP
+#define LIB_BOARD_ITILE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>

@@ -15,7 +15,6 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/function.hpp>
 #include <lib/scene/scene.hpp>
-#include <lib/board/itilescontroller.hpp>
 #include <lib/board/boardmodel.hpp>
 #include <lib/scene/nodes/textquad.hpp>
 #include <lib/scene/nodes/scenenodetext.hpp>
@@ -27,7 +26,7 @@
 namespace zoper
 {
     class Player;
-    class Tile;
+    class Token;
     class GameSceneData;
 
     using namespace lib;
@@ -54,7 +53,6 @@ namespace zoper
         void increaseScore(const size_type scoreIncrement);
         void generateNextToken();
         void addNewToken(const vector2dst &pos, const size_type newToken);
-        bool pointInCenter(const vector2dst &tPosition) const;
         vector2df board2SceneFactor() const;
         vector2df tileSize() const;
         void for_each_token_in_line(const vector2dst &startPosition, const Direction &direction,
@@ -83,7 +81,6 @@ namespace zoper
         InGameData m_inGameData;
         u8 m_nextTokenPart{ 0 };
         sptr<LevelProperties> levelProperties;
-        TokenZones m_tokenZones;
         sptr<Player> m_player{ nullptr };
     };
 }

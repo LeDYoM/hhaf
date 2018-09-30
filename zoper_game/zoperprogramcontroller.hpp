@@ -21,7 +21,6 @@ namespace zoper
 
 		void onInit() override;
 		IAppDescriptor getAppDescriptor() const override;
-		int loop() override;
 
 		sptr<GameSharedData> gameSharedData;
 		uptr<KeyMapping> keyMapping;

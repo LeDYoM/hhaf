@@ -3,7 +3,6 @@
 #include <lib/scene/renderizables/nodequad.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/core/host.hpp>
-#include <lib/core/debugsystem.hpp>
 
 #include "../menu/mainmenu.hpp"
 #include "../common.hpp"

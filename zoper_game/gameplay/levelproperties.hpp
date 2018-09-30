@@ -18,6 +18,8 @@ namespace zoper
 
     class GameSceneData;
 
+    using LevelType = size_type;
+
 	class LevelProperties : public scene::IComponent
 	{
 	public:
@@ -25,27 +27,27 @@ namespace zoper
             const GameMode gameMode, sptr<GameSceneData> gameSceneData,
             sptr<scene::TimerComponent> m_sceneTimerComponent);
 
-        void setLevel(const size_type currentLevel);
-
         inline size_t millisBetweenTokens() const { return m_millisBetweenTokens; }
         inline size_t baseScore() const { return m_baseScore; }
         inline size_t stayCounter() const { return m_stayCounter; }
         
 
         static constexpr size_t maxLevelWithProperties{ 25U };
-        scene::Color getBackgroundTileColor(vector2dst position, const bool isCenter) const;
 
         void tokenConsumed();
+        emitter<const LevelType> levelChanged;
+
 	private:
         void updateGoals();
         void updateLevelData();
+        void setLevel(const LevelType currentLevel);
 
         Timer m_levelTimer;
         scene::TimerConnectorSPtr m_updateLevelDataTimer;
         sptr<scene::TimerComponent> m_sceneTimerComponent;
 
         size_type m_consumedTokens{ 0U };
-        size_type m_currentLevel{ 0U };
+        LevelType m_currentLevel{ 0U };
         size_t m_millisBetweenTokens{ 0U };
         size_t m_baseScore{ 0U };
         size_t m_stayCounter{ 0U };

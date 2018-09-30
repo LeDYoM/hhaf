@@ -27,7 +27,7 @@ namespace lib
         virtual void sceneFinished() {}
         virtual IAppDescriptor getAppDescriptor() const = 0;
         virtual void onInit() = 0;
-        virtual int loop() = 0;
+
         inline void setHostContext(core::IHostContext*hostContext) noexcept { m_hostContext = hostContext; }
         inline void setAppContext(core::IAppContext*appContext) noexcept { m_iappContext = appContext; }
 
