@@ -118,7 +118,7 @@ namespace lib::core
             m_private->m_appGroup.m_appContext = muptr<AppContext>(this);
             m_private->m_appGroup.m_iapp->setHostContext(&(*(m_private->m_appGroup.m_hostContext)));
             m_private->m_appGroup.m_iapp->setAppContext(&(*(m_private->m_appGroup.m_appContext)));
-            log_debug_info("Starting app ", m_private->m_appGroup.m_appContext->appId(), "...");
+            log_debug_info("Starting new app...");
             m_state = AppState::ReadyToStart;
             return true;
         }
@@ -133,7 +133,7 @@ namespace lib::core
             break;
         case AppState::ReadyToStart:
         {
-            log_debug_info(m_private->m_appGroup.m_appContext->appId(), ": Starting initialization...");
+            log_debug_info("Starting initialization of new App...");
             m_state = AppState::Executing;
 
             m_inputSystem = muptr<input::InputSystem>(*this);
