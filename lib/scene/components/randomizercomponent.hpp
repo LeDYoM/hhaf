@@ -8,16 +8,19 @@
 
 namespace lib::scene
 {
-
-    class RandomizerComponent : public IComponent
+    /**
+    * This component class is intended to be used to generate
+    * a series of random numbers.
+    */
+    class RandomizerComponent final : public IComponent
 	{
 	public:
-
-        void update() override;
-        void pause();
-        void resume();
-        void switchPause();
-
+        RandomizerComponent();
+        ~RandomizerComponent() override;
+        u32 getUInt(const size_type max = 1U, const size_type min = 0U) const;
+    private:
+        class RandomizerPrivate;
+        uptr<RandomizerPrivate> p_rPriv;
 	};
 }
 

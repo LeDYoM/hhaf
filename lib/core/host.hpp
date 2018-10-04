@@ -22,7 +22,6 @@ namespace lib
     {
         class Window;
         class ResourceManager;
-        class Randomizer;
         class HostPrivate;
 
         class Host final
@@ -55,8 +54,6 @@ namespace lib
             T &app() { return *(dynamic_cast<T*>(&app())); }
             IApp &app();
 
-            inline Randomizer &randomizer() const noexcept { return *m_randomizer; }
-
         private:
             friend class lib::core::HostPrivate;
             uptr<HostPrivate> m_private;
@@ -68,7 +65,6 @@ namespace lib
             AppState m_state;
             uptr<Window> m_window;
             uptr<ResourceManager> m_resourceManager;
-            uptr<Randomizer> m_randomizer;
             uptr<input::InputSystem> m_inputSystem;
             uptr<scene::SceneManager> m_sceneManager;
             bool exit{ false };
@@ -80,10 +76,7 @@ namespace lib
         return core::Host::host().app<AppType>();
     }
 
-//    inline core::Host &host() noexcept { return core::Host::host(); }
     inline core::Window &window() noexcept { return core::Host::host().parentWindow(); }
-//    inline core::ResourceManager &resourceManager() noexcept { return core::Host::host().resourceManager(); }
-//    inline core::Randomizer &randomizer() noexcept { return core::Host::host().randomizer(); }
     inline scene::SceneManager &sceneManager() noexcept { return core::Host::host().sceneManager(); }
 }
 

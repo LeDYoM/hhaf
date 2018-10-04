@@ -1,65 +1,37 @@
-#include "timercomponent.hpp"
-
-#include <mtypes/include/function.hpp>
+#include "randomizercomponent.hpp"
 
 #include <lib/include/core/log.hpp>
 #include <lib/scene/scene.hpp>
 
+#include <random>
+
 namespace lib::scene
 {
-    void update_(vector_shared_pointers<TimerConnector> &activeTimers,
-        function<void(sptr<TimerConnector>)> updateFunction)
+    class RandomizerComponent::RandomizerPrivate
     {
-        if (!(activeTimers.empty())) {
-            for (auto &sptr_timerConnector : activeTimers) {
-                updateFunction(sptr_timerConnector);
-            }
-        }
-    }
+    public:
+        std::random_device rd;
+        std::mt19937 mt;
 
-    void TimerComponent::update()
+        RandomizerPrivate()
+            : mt{ rd() } {}
+
+        std::uniform_int_distribution<int> dist;
+    };
+
+    RandomizerComponent::RandomizerComponent()
+        : p_rPriv{ muptr<RandomizerPrivate>() } {}
+
+    RandomizerComponent::~RandomizerComponent() = default;
+
+    u32 RandomizerComponent::getUInt(const size_type max, const size_type min) const
     {
-        if (!(m_activeTimers.empty())) {
-            bool someDeleted{ false };
-            for (auto &sptr_timerConnector : m_activeTimers) {
-                TimerConnector &timerConnector{ *sptr_timerConnector };
-                if (timerConnector.timeOut()) {
-                    // Delta time has passed, so trigger
-                    // the callback and update the timer
-                    timerConnector.m_emitter(timerConnector.m_timer.ellapsed());
-                    if (timerConnector.m_timerType == TimerType::Continuous) {
-                        timerConnector.m_timer.restart();
-                    } else {
-                        sptr_timerConnector.reset();
-                        someDeleted = true;
-                    }
-                }
-            }
-
-            if (someDeleted) {
-                m_activeTimers.remove_values(nullptr);
-            }
-        }
-    }
-
-    void TimerComponent::pause()
-    {
-        m_activeTimers.for_each([](const sptr<TimerConnector>&timerConnector) {
-            timerConnector->m_timer.pause();
-        });
-    }
-
-    void TimerComponent::resume()
-    {
-        m_activeTimers.for_each([](const sptr<TimerConnector>&timerConnector) {
-            timerConnector->m_timer.resume();
-        });
-    }
-
-    void TimerComponent::switchPause()
-    {
-        m_activeTimers.for_each([](const sptr<TimerConnector>&timerConnector) {
-            timerConnector->m_timer.switchPause();
-        });
+        log_debug_info("Asked for random number between ", min, " and ", max);
+        assert_release(min != max, "The min and max parameters must be different");
+        assert_release(max > min, "The max paramter must be greater than min");
+        auto g(p_rPriv->dist(p_rPriv->mt) % (max - min));
+        log_debug_info("\tGot ", g);
+        log_debug_info("\tReturning ", min + g);
+        return min + g;
     }
 }
