@@ -25,6 +25,7 @@
 #include <lib/scene/components/animationcomponent.hpp>
 #include <lib/scene/components/inputcomponent.hpp>
 #include <lib/scene/components/alignedtextcomponent.hpp>
+#include <lib/scene/components/randomizercomponent.hpp>
 
 namespace zoper
 {
@@ -177,10 +178,10 @@ namespace zoper
         log_debug_info("zone: ", currentTokenZone.zone);
 
         // Generate the new token type
-        const size_type newToken{ randomizer().getUInt(NumTokens) };
+        const size_type newToken{ ensureComponentOfType<RandomizerComponent>()->getUInt(NumTokens) };
 
         // Calculate in wich tile zone offset is going to appear
-        const size_type sizep{ randomizer().getUInt(currentTokenZone.size) };
+        const size_type sizep{ ensureComponentOfType<RandomizerComponent>()->getUInt(currentTokenZone.size) };
 
         // Prepare the position for the new token
         const size_type newX{ currentTokenZone.zone.left + (currentTokenZone.direction.isHorizontal() ? 0 : sizep) };

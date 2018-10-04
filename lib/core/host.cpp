@@ -1,7 +1,6 @@
 #include "host.hpp"
 #include "window.hpp"
 #include "resourcemanager.hpp"
-#include "randomizer.hpp"
 
 #include <lib/include/backend/iwindow.hpp>
 #include <lib/include/core/log.hpp>
@@ -138,7 +137,6 @@ namespace lib::core
             m_state = AppState::Executing;
 
             m_inputSystem = muptr<input::InputSystem>(*this);
-            m_randomizer = muptr<Randomizer>(*this);
             m_window = muptr<Window>(*this, m_private->m_appGroup.m_iapp->getAppDescriptor().wcp);
             m_sceneManager = muptr<scene::SceneManager>(*this, *m_window);
             m_resourceManager = muptr<core::ResourceManager>(*this);
@@ -166,7 +164,6 @@ namespace lib::core
             m_sceneManager = nullptr;
             m_window = nullptr;
             m_resourceManager = nullptr;
-            m_randomizer = nullptr;
             m_inputSystem = nullptr;
             return true;
             break;
