@@ -4,7 +4,7 @@ include_directories ("..")
 
 set(LIB_VERSION_MAJOR "1")
 set(LIB_VERSION_MINOR "6")
-set(LIB_VERSION_PATCH "1")
+set(LIB_VERSION_PATCH "2")
 
 file (GLOB_RECURSE _SOURCES "board/*.cpp" "core/*.cpp" "scene/*.cpp")
 file (GLOB_RECURSE _HEADERS "board/*.hpp" "core/*.hpp" "include/*.hpp" "scene/*.hpp")
