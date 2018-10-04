@@ -76,7 +76,6 @@ namespace lib
         return core::Host::host().app<AppType>();
     }
 
-    inline core::Window &window() noexcept { return core::Host::host().parentWindow(); }
     inline scene::SceneManager &sceneManager() noexcept { return core::Host::host().sceneManager(); }
 }
 
