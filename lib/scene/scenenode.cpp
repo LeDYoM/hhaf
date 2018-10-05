@@ -52,7 +52,7 @@ namespace lib::scene
 
     Rectf32 SceneNode::scenePerspective()
     {
-        return sceneManager().viewRect();
+        return parentScene()->sceneManager().viewRect();
     }
 
     bool SceneNode::moveLastBeforeNode(const sptr<SceneNode> &beforeNode)

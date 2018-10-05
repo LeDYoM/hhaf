@@ -22,7 +22,6 @@ namespace zoper
     {
         gameScene.loadResources(GameResources{});
 
-        m_gameOverrg = gameScene.createSceneNode("gameOverScreen");
         m_levelrg = gameScene.createSceneNode("level");
         m_pauseSceneNode = gameScene.createSceneNode("pause");
 
@@ -53,34 +52,8 @@ namespace zoper
             align->alignmentY.set(AlignedTextComponent::AlignmentY::Middle);
         }
 
-        vector2df gosize{ gameScene.scenePerspective().width, 715 };
-        m_gameOverrg->position.set({0, 575});
-
-        auto gameText(m_gameOverrg->createSceneNode<SceneNodeText>("gameovergame"));
-        gameText->text.set(Text_t("GAME"));
-        gameText->font.set(sceneManager().host().resourceManager().getFont(GameResources::ScoreFontId)->font(360));
-        gameText->textColor.set(FillColor_t{colors::White});
-        {
-            auto align(gameText->ensureComponentOfType<AlignedTextComponent>());
-            align->alignmentSize.set(gosize);
-            align->alignmentX.set(AlignedTextComponent::AlignmentX::Center);
-            align->alignmentY.set(AlignedTextComponent::AlignmentY::Top);
-        }
-
-        auto overText(m_gameOverrg->createSceneNode<SceneNodeText>("gameoverover"));
-        overText->text.set(Text_t("OVER"));
-        overText->font.set(sceneManager().host().resourceManager().getFont(GameResources::ScoreFontId)->font(360));
-        overText->textColor.set(FillColor_t{colors::White});
-        {
-            auto align(overText->ensureComponentOfType<AlignedTextComponent>());
-            align->alignmentSize.set(gosize);
-            align->alignmentX.set(AlignedTextComponent::AlignmentX::Center);
-            align->alignmentY.set(AlignedTextComponent::AlignmentY::Bottom);
-        }
-
         m_levelrg->position = vector2df{ 1250, 50 };
 
-        m_gameOverrg->visible = false;
         m_pauseSceneNode->visible = false;
 
         m_goalQuad->text(vector2dst{0,0})->text.set(Text_t(
