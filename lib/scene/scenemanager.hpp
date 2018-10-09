@@ -17,6 +17,8 @@
 
 namespace lib
 {
+    class IResourceRetriever;
+
 	namespace core
 	{
 		class Host;
@@ -40,6 +42,8 @@ namespace lib
 			void update();
 
 			void finish();
+
+            IResourceRetriever &resources();
 
             inline Rectf32 viewPort() const noexcept
             {
@@ -75,6 +79,7 @@ namespace lib
                 startScene(scene);
 				return std::dynamic_pointer_cast<T>(scene);
 			}
+
 
 		private:
             void start();

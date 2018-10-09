@@ -26,7 +26,7 @@ namespace zoper
         m_pauseSceneNode = gameScene.createSceneNode("pause");
 
         m_scoreQuad = gameScene.createSceneNode<TextQuad>("score", 
-            sceneManager().host().resourceManager().getFont(GameResources::ScoreFontId)->font(90), 
+            gameScene.parentScene()->sceneManager().resources().getFont(GameResources::ScoreFontId)->font(90), 
             colors::White, vector2df{600, 300});
         m_scoreQuad->position.set(vector2df{ 50, 150 });
         m_scoreQuad->text(vector2dst{0,0})->text.set(Text_t("Level:"));
@@ -35,7 +35,7 @@ namespace zoper
         m_scoreQuad->text(vector2dst{0,1})->textColor = FillColor_t(colors::Blue);
 
         m_goalQuad = gameScene.createSceneNode<TextQuad>("goal", 
-            sceneManager().host().resourceManager().getFont(GameResources::ScoreFontId)->font(90), 
+            gameScene.parentScene()->sceneManager().resources().getFont(GameResources::ScoreFontId)->font(90),
             colors::White, vector2df{600, 300});
         m_goalQuad->position.set(vector2df{ 1250, 50 });
         m_goalQuad->text(vector2dst{0,0})->textColor = FillColor_t(colors::Blue);
@@ -43,7 +43,7 @@ namespace zoper
 
         m_pauseText = m_pauseSceneNode->createSceneNode<SceneNodeText>("pausetext");
         m_pauseText->text.set(Text_t("PAUSE"));
-        m_pauseText->font.set(sceneManager().host().resourceManager().getFont(GameResources::ScoreFontId)->font(180));
+        m_pauseText->font.set(gameScene.parentScene()->sceneManager().resources().getFont(GameResources::ScoreFontId)->font(180));
         m_pauseText->textColor.set(FillColor_t{colors::White});
         {
             auto align(m_pauseText->ensureComponentOfType<AlignedTextComponent>());

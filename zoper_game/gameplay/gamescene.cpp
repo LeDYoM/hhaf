@@ -141,7 +141,7 @@ namespace zoper
 		}
 		break;
         case GameOver:
-            m_data->m_gameOverrg->visible = true;
+//            m_data->m_gameOverrg->visible = true;
             break;
 		default:
 			break;

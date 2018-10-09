@@ -75,8 +75,6 @@ namespace lib
     inline AppType &app() {
         return core::Host::host().app<AppType>();
     }
-
-//    inline scene::SceneManager &sceneManager() noexcept { return core::Host::host().sceneManager(); }
 }
 
 #endif

@@ -9,6 +9,8 @@
 #include <lib/scene/components/alignedtextcomponent.hpp>
 
 #include <lib/include/core/log.hpp>
+#include <lib/include/resources/iresourceretriever.hpp>
+#include <lib/scene/ttfont.hpp>
 
 namespace zoper
 {
@@ -26,7 +28,7 @@ namespace zoper
 
         auto gameText(m_gameOverrg->createSceneNode<SceneNodeText>("gameovergame"));
         gameText->text.set(Text_t("GAME"));
-        gameText->font.set(parentScene()->sceneManager().host().resourceManager().getFont(GameResources::ScoreFontId)->font(360));
+        gameText->font.set(parentScene()->sceneManager().resources().getFont(GameResources::ScoreFontId)->font(360));
         gameText->textColor.set(FillColor_t{ colors::White });
         {
             auto align(gameText->ensureComponentOfType<AlignedTextComponent>());
@@ -37,7 +39,7 @@ namespace zoper
 
         auto overText(m_gameOverrg->createSceneNode<SceneNodeText>("gameoverover"));
         overText->text.set(Text_t("OVER"));
-        overText->font.set(sceneManager().host().resourceManager().getFont(GameResources::ScoreFontId)->font(360));
+        overText->font.set(parentScene()->sceneManager().resources().getFont(GameResources::ScoreFontId)->font(360));
         overText->textColor.set(FillColor_t{ colors::White });
         {
             auto align(overText->ensureComponentOfType<AlignedTextComponent>());
