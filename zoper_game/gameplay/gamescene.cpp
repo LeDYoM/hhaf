@@ -46,8 +46,7 @@ namespace zoper
 
         m_data = msptr<GameSceneData>();
         m_data->createData(*this, m_inGameData.gameMode);
-
-        increaseScore(0);
+        m_gameOver = createSceneNode<GameOverSceneNode>("gameOverSceneNode");
 
         using namespace lib::board;
 
@@ -178,9 +177,11 @@ namespace zoper
 
         // Generate the new token type
         const size_type newToken{ ensureComponentOfType<RandomizerComponent>()->getUInt(NumTokens) };
+//        const size_type newToken{ 1 };
 
         // Calculate in wich tile zone offset is going to appear
-        const size_type sizep{ ensureComponentOfType<RandomizerComponent>()->getUInt(currentTokenZone.size) };
+//        const size_type sizep{ ensureComponentOfType<RandomizerComponent>()->getUInt(currentTokenZone.size) };
+        const size_type sizep{ 0 };
 
         // Prepare the position for the new token
         const size_type newX{ currentTokenZone.zone.left + (currentTokenZone.direction.isHorizontal() ? 0 : sizep) };
@@ -209,7 +210,7 @@ namespace zoper
             return true;
         });
         // Set the new token
-        addNewToken(vector2dst{ newX, newY }, newToken);
+//        addNewToken(vector2dst{ newX, newY }, newToken);
         m_nextTokenPart = (m_nextTokenPart + 1) % NumWays;
 
         CLIENT_EXECUTE_IN_DEBUG(_debugDisplayBoard());
@@ -290,7 +291,7 @@ namespace zoper
                     ++inARow;
 
                     // Increase the score accordingly
-                    increaseScore(inARow * levelProperties->baseScore());
+                    levelProperties->increaseScore(inARow * levelProperties->baseScore());
 
                     // Inform that a token has been consumed
                     levelProperties->tokenConsumed();
@@ -381,15 +382,5 @@ namespace zoper
             }
             log_debug_info(temp);
         }
-    }
-
-    constexpr u8 scoreSize = 5;
-
-    void GameScene::increaseScore(const size_type scoreIncrement)
-    {
-        m_inGameData.score += scoreIncrement;
-        str result(m_inGameData.score);
-        while (result.size() < scoreSize) result = "0" + result;
-        m_data->m_scoreQuad->text(vector2dst{1,1})->text.set(Text_t(result));
     }
 }

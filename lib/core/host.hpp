@@ -71,10 +71,12 @@ namespace lib
         };
     }
 
+    
     template <typename AppType>
     inline AppType &app() {
         return core::Host::host().app<AppType>();
     }
+    
 }
 
 #endif

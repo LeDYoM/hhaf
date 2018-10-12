@@ -28,6 +28,8 @@ namespace zoper
             updateLevelData();
         });
 
+        m_gameHud = attachedNode()->createSceneNode<GameHudSceneNode>("hud");
+        
         setLevel(currentLevel);
     }
 
@@ -74,8 +76,8 @@ namespace zoper
 
     void LevelProperties::updateGoals()
     {
-        m_gameSceneData->m_scoreQuad->text(vector2dst{ 1,0 })->text.set(Text_t(make_str(m_currentLevel + 1)));
-        m_gameSceneData->m_goalQuad->text(vector2dst{ 1,1 })->text.set(Text_t(make_str(m_stayCounter)));
+        m_gameHud->setLevel(m_currentLevel + 1);
+        m_gameHud->setStayCounter(m_stayCounter);
     }
 
     void LevelProperties::updateLevelData()
@@ -84,18 +86,29 @@ namespace zoper
         {
         default:
         case GameMode::Token:
-            m_gameSceneData->m_goalQuad->text(vector2dst{ 1,0 })->text.set(Text_t(m_consumedTokens));
+            m_gameHud->setConsumedTokens(m_consumedTokens);
+
             if (m_consumedTokens >= m_stayCounter)
+            {
                 setLevel(m_currentLevel + 1);
+            }
             break;
 
         case GameMode::Time:
-            m_gameSceneData->m_goalQuad->text(vector2dst{ 1,0 })->text.set(
-                Text_t(static_cast<u16>(
-                    m_levelTimer.ellapsed().asSeconds())));
+            m_gameHud->setEllapsedTimeInSeconds(m_levelTimer.ellapsed().asSeconds());
+            
             if (m_levelTimer.ellapsed().asSeconds() >= m_stayCounter)
+            {
                 setLevel(m_currentLevel + 1);
+            }
             break;
         }
     }
+
+    void LevelProperties::increaseScore(const size_type scoreIncrement)
+    {
+        m_currentScore += scoreIncrement;
+        m_gameHud->setScore(m_currentScore);
+    }
+
 }

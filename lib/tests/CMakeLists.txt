@@ -1,7 +1,8 @@
 enable_testing()
 
 set(UNIT_TEST_LIST
-    scenenode
+    scene/scenenode
+	scene/components/componentcontainer
 )
 
 foreach(NAME IN LISTS UNIT_TEST_LIST)

@@ -25,22 +25,6 @@ namespace zoper
         m_levelrg = gameScene.createSceneNode("level");
         m_pauseSceneNode = gameScene.createSceneNode("pause");
 
-        m_scoreQuad = gameScene.createSceneNode<TextQuad>("score", 
-            gameScene.parentScene()->sceneManager().resources().getFont(GameResources::ScoreFontId)->font(90), 
-            colors::White, vector2df{600, 300});
-        m_scoreQuad->position.set(vector2df{ 50, 150 });
-        m_scoreQuad->text(vector2dst{0,0})->text.set(Text_t("Level:"));
-        m_scoreQuad->text(vector2dst{0,0})->textColor = FillColor_t(colors::Blue);
-        m_scoreQuad->text(vector2dst{0,1})->text.set(Text_t("Score:"));
-        m_scoreQuad->text(vector2dst{0,1})->textColor = FillColor_t(colors::Blue);
-
-        m_goalQuad = gameScene.createSceneNode<TextQuad>("goal", 
-            gameScene.parentScene()->sceneManager().resources().getFont(GameResources::ScoreFontId)->font(90),
-            colors::White, vector2df{600, 300});
-        m_goalQuad->position.set(vector2df{ 1250, 50 });
-        m_goalQuad->text(vector2dst{0,0})->textColor = FillColor_t(colors::Blue);
-        m_goalQuad->text(vector2dst{0,1})->textColor = FillColor_t(colors::Blue);
-
         m_pauseText = m_pauseSceneNode->createSceneNode<SceneNodeText>("pausetext");
         m_pauseText->text.set(Text_t("PAUSE"));
         m_pauseText->font.set(gameScene.parentScene()->sceneManager().resources().getFont(GameResources::ScoreFontId)->font(180));
@@ -55,10 +39,5 @@ namespace zoper
         m_levelrg->position = vector2df{ 1250, 50 };
 
         m_pauseSceneNode->visible = false;
-
-        m_goalQuad->text(vector2dst{0,0})->text.set(Text_t(
-                gameMode == GameMode::Token?"Tokens: ":"Time: ")
-                );
-        m_goalQuad->text(vector2dst{0,1})->text.set(Text_t("Goal: "));
     }
 }

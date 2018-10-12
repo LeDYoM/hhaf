@@ -7,6 +7,8 @@
 #include "levelproperties.hpp"
 #include "boardgroup.hpp"
 #include "tokenzones.hpp"
+#include "gameover.hpp"
+#include "gamehud.hpp"
 
 #include "../keymapping.hpp"
 #include "../gameshareddata.hpp"
@@ -50,7 +52,6 @@ namespace zoper
         sptr<GameSceneData> m_data;
         using BaseClass = scene::Scene;
         void setLevel(const size_type nv);
-        void increaseScore(const size_type scoreIncrement);
         void generateNextToken();
         void addNewToken(const vector2dst &pos, const size_type newToken);
         vector2df board2SceneFactor() const;
@@ -82,6 +83,7 @@ namespace zoper
         u8 m_nextTokenPart{ 0 };
         sptr<LevelProperties> levelProperties;
         sptr<Player> m_player{ nullptr };
+        sptr<GameOverSceneNode> m_gameOver;
     };
 }
 

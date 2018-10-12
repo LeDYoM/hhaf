@@ -25,7 +25,8 @@ namespace lib::scene
 
     void SceneNode::render(bool parentTransformationChanged)
     {
-        if (visible()) {
+        if (visible()) 
+        {
             // Update the node components
             updateComponents();
 

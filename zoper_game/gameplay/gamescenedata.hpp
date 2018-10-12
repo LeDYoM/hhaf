@@ -27,8 +27,6 @@ namespace zoper
 
         sptr<scene::SceneNode> m_levelrg;
         sptr<scene::SceneNode> m_pauseSceneNode;
-        sptr<scene::SceneNode> m_gameOverText;
-        sptr<scene::nodes::TextQuad> m_scoreQuad, m_goalQuad;
         sptr<scene::nodes::SceneNodeText> m_pauseText;
         sptr<BoardGroup> m_boardGroup;
     };

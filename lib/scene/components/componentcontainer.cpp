@@ -55,12 +55,28 @@ namespace lib
 			return false;
 		}
 
-		void ComponentContainer::updateComponents() {
-			if (!m_components.empty()) {
-				for (auto &component : m_components) {
+		void ComponentContainer::updateComponents() 
+        {
+			if (!m_components.empty()) 
+            {
+#ifdef NDEBUG
+                for (auto &component : m_components) 
+                {
 					component->update();
 				}
-			}
+#else
+                std::for_each(m_components.begin(), m_components.end(),
+                    [](const auto component) 
+                    { 
+                        component->update(); 
+                    }
+                );
+/*                for (size_type i = 0; i < m_components.size(); ++i)
+                {
+                    m_components[i]->update();
+                }*/
+#endif
+            }
 		}
 
 		const sptr<IComponent> ComponentContainer::componentOfType(const std::type_index & ti) const
