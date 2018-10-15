@@ -57,26 +57,17 @@ namespace lib
 
 		void ComponentContainer::updateComponents() 
         {
+            /*
 			if (!m_components.empty()) 
             {
-#ifdef NDEBUG
-                for (auto &component : m_components) 
+                vector<decltype(m_components)::value_type> copy(m_components);
+
+                for (auto &component : copy)
                 {
 					component->update();
 				}
-#else
-                std::for_each(m_components.begin(), m_components.end(),
-                    [](const auto component) 
-                    { 
-                        component->update(); 
-                    }
-                );
-/*                for (size_type i = 0; i < m_components.size(); ++i)
-                {
-                    m_components[i]->update();
-                }*/
-#endif
             }
+            */
 		}
 
 		const sptr<IComponent> ComponentContainer::componentOfType(const std::type_index & ti) const

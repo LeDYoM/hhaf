@@ -5,9 +5,10 @@
 
 namespace lib
 {
-    /// Vector that must not change during the iteration.
     /**
-    * This class encapsulates two vectors of T, providing a wrapper
+    * Vector that must not change during the iteration.
+
+    *    This class encapsulates two vectors of T, providing a wrapper
     * to one of them to modify and doing the update in the other one.
     * The logic to hide the vectors internally is part of the provided
     * functionality.
@@ -51,7 +52,8 @@ namespace lib
         * New values will be processed the next call to update.
         * @param f A callable object receiving a T& as parameter and returning a bool
         */
-        constexpr void update(function<bool(T &)> f) {
+        constexpr void update(function<bool(T &)> f) 
+        {
             addSupportContainerToMainContainer();
             if (!m_mainContainer.empty()) {
                 bool isDirty{ false };
@@ -67,6 +69,17 @@ namespace lib
                 }
                 addSupportContainerToMainContainer();
             }
+        }
+
+        constexpr void clear()
+        {
+            m_mainContainer.clear();
+            m_supportContainer.clear();
+        }
+
+        constexpr explicit const operator vector<T>&() const noexcept
+        {
+            return m_supportContainer;
         }
 
     private:
