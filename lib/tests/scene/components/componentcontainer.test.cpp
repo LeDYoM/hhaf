@@ -2,6 +2,7 @@
 
 #include <mtypes/include/types.hpp>
 #include <lib/scene/scenenode.hpp>
+#include <lib/scene/scene.hpp>
 #include <lib/scene/components/componentcontainer.hpp>
 #include <lib/scene/components/icomponent.hpp>
 

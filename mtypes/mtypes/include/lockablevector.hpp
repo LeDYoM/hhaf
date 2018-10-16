@@ -21,16 +21,18 @@ namespace lib
         * Add a new element. Overload for const references.
         * @param element The new element.
         */
-        constexpr void push_back(const T &element) {
-            m_supportContainer.push_back(element);
+        constexpr void push_back(const T &element) 
+        {
+            current().push_back(element);
         }
 
         /**
         * Add a new element. Overload for rvalues.
         * @param element The new element.
         */
-        constexpr void push_back(T &&element) {
-            m_supportContainer.push_back(std::move(element));
+        constexpr void push_back(T &&element)
+        {
+            current().push_back(std::move(element));
         }
 
         /**
@@ -38,8 +40,9 @@ namespace lib
         * @param args Arguments forwarded to the constructor of T.
         */
         template<typename ...Args>
-        constexpr void emplace_back(Args&&... args) {
-            m_supportContainer.emplace_back(std::forward<Args>(args)...);
+        constexpr void emplace_back(Args&&... args) 
+        {
+            current().emplace_back(std::forward<Args>(args)...);
         }
 
         /**
@@ -52,21 +55,13 @@ namespace lib
         * New values will be processed the next call to update.
         * @param f A callable object receiving a T& as parameter and returning a bool
         */
-        constexpr void update(function<bool(T &)> f) 
-        {
+        constexpr void update(function<bool(T &)> f) {
             addSupportContainerToMainContainer();
-            if (!m_mainContainer.empty()) {
-                bool isDirty{ false };
-                for (T &element : m_mainContainer) {
-                    if (!f(element)) {
-                        element = T();
-                        isDirty = true;
-                    }
-                }
-
-                if (isDirty) {
-                    m_mainContainer.remove_values(T());
-                }
+            if (!m_mainContainer.empty()) 
+            {
+                lock();
+                updateInternal(f);
+                unlock();
                 addSupportContainerToMainContainer();
             }
         }
@@ -77,9 +72,44 @@ namespace lib
             m_supportContainer.clear();
         }
 
-        constexpr explicit const operator vector<T>&() const noexcept
+        constexpr const vector<T>& ccurrent() const noexcept
         {
-            return m_supportContainer;
+            return m_locked ? m_supportContainer : m_mainContainer;
+        }
+
+        constexpr bool lock() noexcept
+        {
+            return setLock(true);
+        }
+
+        constexpr bool unlock() noexcept
+        {
+            return setLock(false);
+        }
+
+    private:
+
+        constexpr bool setLock(const bool lock) noexcept
+        {
+            const bool wasLocked{ m_locked };
+            m_locked = lock;
+            return wasLocked;
+        }
+
+        constexpr void updateInternal(function<bool(T &)> f)
+        {
+            bool isDirty{ false };
+            for (T &element : m_mainContainer) {
+                if (!f(element)) {
+                    element = T();
+                    isDirty = true;
+                }
+            }
+
+            if (isDirty)
+            {
+                m_mainContainer.remove_values(T());
+            }
         }
 
     private:
@@ -92,6 +122,7 @@ namespace lib
 
         vector<T> m_mainContainer;
         vector<T> m_supportContainer;
+        bool m_locked{ false };
     };
 }
 

@@ -42,7 +42,7 @@ namespace lib
 			log_debug_info("Searching for another component of the same type...");
 			
 			sptr<IComponent> component(std::move(nc));
-			const bool alreadyInConainer(containsComponentOfType(component,m_components));
+			const bool alreadyInConainer(containsComponentOfType(component, m_components.ccurrent()));
 
 			if (!alreadyInConainer) {
 				log_debug_info("Not found. Adding it");
@@ -72,7 +72,7 @@ namespace lib
 
 		const sptr<IComponent> ComponentContainer::componentOfType(const std::type_index & ti) const
 		{
-			return getComponentFromTypeIndex(ti, m_components);
+			return getComponentFromTypeIndex(ti, m_components.ccurrent());
 		}
 	}
 }
