@@ -2,6 +2,8 @@ enable_testing()
 
 set(UNIT_TEST_LIST
     dicty
+	lockablevector
+    main
     parpar
     str
     streams
@@ -23,7 +25,6 @@ target_link_libraries(${TARGET_NAME}
 
 include_directories(${TARGET_NAME}
   INTERFACE ${CATCH_INCLUDE_DIR})
-
 
 # add_test( NAME all COMMAND CTest)
 include (Catch)

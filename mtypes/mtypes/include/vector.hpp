@@ -20,6 +20,7 @@ namespace lib
 		using const_iterator = const T*;
 		using reference = T&;
 		using const_reference = const T&;
+        using value_type = T;
 
 		constexpr vector() noexcept : m_capacity{ 0 }, m_size{ 0 }, m_buffer{ nullptr } {}
 		explicit constexpr vector(const size_type size) : m_capacity{ size }, m_size{ size }, m_buffer{ size?new T[size] :nullptr} {}

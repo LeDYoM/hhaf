@@ -42,7 +42,7 @@ namespace lib
 			log_debug_info("Searching for another component of the same type...");
 			
 			sptr<IComponent> component(std::move(nc));
-			const bool alreadyInConainer(containsComponentOfType(component,m_components));
+			const bool alreadyInConainer(containsComponentOfType(component, m_components.ccurrent()));
 
 			if (!alreadyInConainer) {
 				log_debug_info("Not found. Adding it");
@@ -55,17 +55,21 @@ namespace lib
 			return false;
 		}
 
-		void ComponentContainer::updateComponents() {
-			if (!m_components.empty()) {
-				for (auto &component : m_components) {
-					component->update();
-				}
-			}
+		void ComponentContainer::updateComponents() 
+        {
+			if (!m_components.ccurrent().empty()) 
+            {
+                m_components.update([](sptr<IComponent> component)
+                {
+                    component->update();
+                    return true;
+                });
+            }
 		}
 
 		const sptr<IComponent> ComponentContainer::componentOfType(const std::type_index & ti) const
 		{
-			return getComponentFromTypeIndex(ti, m_components);
+			return getComponentFromTypeIndex(ti, m_components.ccurrent());
 		}
 	}
 }

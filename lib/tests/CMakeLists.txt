@@ -1,7 +1,9 @@
 enable_testing()
 
 set(UNIT_TEST_LIST
-    scenenode
+	main
+    scene/scenenode
+	scene/components/componentcontainer
 )
 
 foreach(NAME IN LISTS UNIT_TEST_LIST)
@@ -18,7 +20,6 @@ target_link_libraries(${TARGET_NAME} PRIVATE lib)
 target_link_libraries(${TARGET_NAME} PRIVATE mtypes)
 
 include_directories(${TARGET_NAME} INTERFACE ${CATCH_INCLUDE_DIR})
-
 
 # add_test( NAME all COMMAND CTest)
 include (Catch)

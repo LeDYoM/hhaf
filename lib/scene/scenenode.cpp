@@ -25,7 +25,8 @@ namespace lib::scene
 
     void SceneNode::render(bool parentTransformationChanged)
     {
-        if (visible()) {
+        if (visible()) 
+        {
             // Update the node components
             updateComponents();
 
@@ -52,7 +53,7 @@ namespace lib::scene
 
     Rectf32 SceneNode::scenePerspective()
     {
-        return sceneManager().viewRect();
+        return parentScene()->sceneManager().viewRect();
     }
 
     bool SceneNode::moveLastBeforeNode(const sptr<SceneNode> &beforeNode)

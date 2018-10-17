@@ -1,7 +1,11 @@
 #include "scenemanager.hpp"
 #include "scene.hpp"
 
+#include <lib/core/host.hpp>
+#include <lib/core/resourcemanager.hpp>
 #include <lib/include/core/log.hpp>
+
+#include <lib/include/resources/iresourceretriever.hpp>
 
 namespace lib::scene
 {
@@ -12,7 +16,7 @@ namespace lib::scene
 
 	void SceneManager::start()
 	{
-		m_componentContainer.ensureComponentOfType(m_statesController);
+        m_statesController = m_componentContainer.ensureComponentOfType<StatesController<sptr<Scene>>>();
 	}
 
 	void SceneManager::terminateScene()
@@ -49,6 +53,11 @@ namespace lib::scene
 	{
 		m_statesController->pop_state();
 	}
+
+    IResourceRetriever & SceneManager::resources()
+    {
+        return host().resourceManager();
+    }
 
     void SceneManager::startScene(sptr<Scene> scene)
     {

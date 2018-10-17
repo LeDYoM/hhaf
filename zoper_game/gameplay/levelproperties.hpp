@@ -11,6 +11,7 @@
 #include <lib/scene/color.hpp>
 
 #include "../gameshareddata.hpp"
+#include "gamehud.hpp"
 
 namespace zoper
 {
@@ -30,7 +31,7 @@ namespace zoper
         inline size_t millisBetweenTokens() const { return m_millisBetweenTokens; }
         inline size_t baseScore() const { return m_baseScore; }
         inline size_t stayCounter() const { return m_stayCounter; }
-        
+        void increaseScore(const size_type scoreIncrement);
 
         static constexpr size_t maxLevelWithProperties{ 25U };
 
@@ -51,8 +52,10 @@ namespace zoper
         size_t m_millisBetweenTokens{ 0U };
         size_t m_baseScore{ 0U };
         size_t m_stayCounter{ 0U };
+        size_t m_currentScore{ 0U };
         GameMode m_gameMode;
         sptr<GameSceneData> m_gameSceneData;
+        sptr<GameHudSceneNode> m_gameHud;
     };
 }
 

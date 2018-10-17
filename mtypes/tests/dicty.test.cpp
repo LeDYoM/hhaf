@@ -133,6 +133,4 @@ TEST_CASE("dicty create 4", "[dicty]")
 	CHECK(obj4["key4"] == "value4");
 	CHECK_FALSE(obj4["adf"].isValid());
 	CHECK_FALSE(obj4["adf"] == "");
-
-
 }

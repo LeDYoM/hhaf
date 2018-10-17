@@ -1,4 +1,3 @@
-#define CATCH_CONFIG_MAIN
 #include "catch.hpp"
 
 #include <mtypes/include/parpar.hpp>
@@ -6,7 +5,7 @@
 using namespace lib;
 using namespace lib::parpar;
 
-TEST_CASE("program", "[parpar]")
+TEST_CASE("lib::parpar::ParameterParser", "[parpar]")
 {
     const ParametersParser paramParser (create(
         {"program"}

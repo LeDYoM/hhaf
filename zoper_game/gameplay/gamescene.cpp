@@ -46,8 +46,7 @@ namespace zoper
 
         m_data = msptr<GameSceneData>();
         m_data->createData(*this, m_inGameData.gameMode);
-
-        increaseScore(0);
+        m_gameOver = createSceneNode<GameOverSceneNode>("gameOverSceneNode");
 
         using namespace lib::board;
 
@@ -141,7 +140,7 @@ namespace zoper
 		}
 		break;
         case GameOver:
-            m_data->m_gameOverrg->visible = true;
+//            m_data->m_gameOverrg->visible = true;
             break;
 		default:
 			break;
@@ -290,7 +289,7 @@ namespace zoper
                     ++inARow;
 
                     // Increase the score accordingly
-                    increaseScore(inARow * levelProperties->baseScore());
+                    levelProperties->increaseScore(inARow * levelProperties->baseScore());
 
                     // Inform that a token has been consumed
                     levelProperties->tokenConsumed();
@@ -381,15 +380,5 @@ namespace zoper
             }
             log_debug_info(temp);
         }
-    }
-
-    constexpr u8 scoreSize = 5;
-
-    void GameScene::increaseScore(const size_type scoreIncrement)
-    {
-        m_inGameData.score += scoreIncrement;
-        str result(m_inGameData.score);
-        while (result.size() < scoreSize) result = "0" + result;
-        m_data->m_scoreQuad->text(vector2dst{1,1})->text.set(Text_t(result));
     }
 }

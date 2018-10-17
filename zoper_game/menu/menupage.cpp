@@ -28,7 +28,7 @@ namespace zoper
 	void MenuPage::onCreated()
 	{
         BaseClass::onCreated();
-        m_normalFont = sceneManager().host().resourceManager().getResource<TTFont>
+        m_normalFont = parentScene()->sceneManager().resources().getFont
                        (MainMenuResources::MenuFontId)->font(72);
 		m_normalColor = colors::Blue;
 		m_selectedColor = colors::Red;

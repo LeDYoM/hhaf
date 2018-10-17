@@ -8,13 +8,23 @@
 #include <mtypes/include/str.hpp>
 #include <mtypes/include/dicty.hpp>
 
+namespace lib::scene
+{
+    class SceneManager;
+}
+
 namespace lib::core
 {
+
     class IHostContext
     {
     public:
         virtual ~IHostContext() {}
         virtual const dicty::BasicDictionary<str> &appParameters() const = 0;
+
+        virtual const scene::SceneManager &sceneManager() const noexcept = 0;
+        virtual scene::SceneManager &sceneManager() noexcept = 0;
+
     };
 }
 

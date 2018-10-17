@@ -77,10 +77,14 @@ namespace lib::scene
         void render(bool parentTransformationChanged);
         virtual void update() {}
 
-        virtual Scene *const parentScene() { return m_parent->parentScene(); }
+        virtual Scene *const parentScene() noexcept { return m_parent->parentScene(); }
+        virtual const Scene *const parentScene() const noexcept { return m_parent->parentScene(); }
 
         template <typename SceneType>
         SceneType *const parentSceneAs() { return dynamic_cast<SceneType*>(parentScene()); }
+
+        template <typename SceneType>
+        const SceneType *const parentSceneAs() const { return dynamic_cast<SceneType*>(parentScene()); }
 
         Rectf32 scenePerspective();
 
