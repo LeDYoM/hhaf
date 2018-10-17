@@ -62,7 +62,7 @@ namespace lib
                 m_components.update([](sptr<IComponent> component)
                 {
                     component->update();
-                    return true;
+//                    return true;
                 });
             }
 		}

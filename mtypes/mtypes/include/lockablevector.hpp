@@ -55,10 +55,23 @@ namespace lib
         * New values will be processed the next call to update.
         * @param f A callable object receiving a T& as parameter and returning a bool
         */
+        /*
         constexpr void update(function<bool(T &)> f) 
         {
             addSupportContainerToMainContainer();
             if (!m_mainContainer.empty()) 
+            {
+                lock();
+                updateInternal(f);
+                unlock();
+                addSupportContainerToMainContainer();
+            }
+        }
+*/
+        constexpr void update(function<void(T &)> f)
+        {
+            addSupportContainerToMainContainer();
+            if (!m_mainContainer.empty())
             {
                 lock();
                 updateInternal(f);
@@ -90,6 +103,11 @@ namespace lib
 
     private:
 
+        constexpr vector<T>& current() noexcept
+        {
+            return m_locked ? m_supportContainer : m_mainContainer;
+        }
+
         constexpr bool setLock(const bool lock) noexcept
         {
             const bool wasLocked{ m_locked };
@@ -97,6 +115,7 @@ namespace lib
             return wasLocked;
         }
 
+        /*
         constexpr void updateInternal(function<bool(T &)> f)
         {
             bool isDirty{ false };
@@ -110,6 +129,14 @@ namespace lib
             if (isDirty)
             {
                 m_mainContainer.remove_values(T());
+            }
+        }
+        */
+
+        constexpr void updateInternal(function<void(T &)> f)
+        {
+            for (T &element : m_mainContainer) {
+                f(element);
             }
         }
 
