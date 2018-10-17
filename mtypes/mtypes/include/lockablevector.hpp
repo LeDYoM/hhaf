@@ -55,7 +55,8 @@ namespace lib
         * New values will be processed the next call to update.
         * @param f A callable object receiving a T& as parameter and returning a bool
         */
-        constexpr void update(function<bool(T &)> f) {
+        constexpr void update(function<bool(T &)> f) 
+        {
             addSupportContainerToMainContainer();
             if (!m_mainContainer.empty()) 
             {
@@ -113,7 +114,8 @@ namespace lib
         }
 
     private:
-        constexpr void addSupportContainerToMainContainer() {
+        constexpr void addSupportContainerToMainContainer() 
+        {
             if (!m_supportContainer.empty()) {
                 m_mainContainer.insert(m_supportContainer);
                 m_supportContainer.clear();
