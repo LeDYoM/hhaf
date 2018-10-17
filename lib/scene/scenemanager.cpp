@@ -16,7 +16,7 @@ namespace lib::scene
 
 	void SceneManager::start()
 	{
-		m_componentContainer.ensureComponentOfType(m_statesController);
+        m_statesController = m_componentContainer.ensureComponentOfType<StatesController<sptr<Scene>>>();
 	}
 
 	void SceneManager::terminateScene()

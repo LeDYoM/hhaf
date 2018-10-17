@@ -57,17 +57,14 @@ namespace lib
 
 		void ComponentContainer::updateComponents() 
         {
-            /*
-			if (!m_components.empty()) 
+			if (!m_components.ccurrent().empty()) 
             {
-                vector<decltype(m_components)::value_type> copy(m_components);
-
-                for (auto &component : copy)
+                m_components.update([](sptr<IComponent> component)
                 {
-					component->update();
-				}
+                    component->update();
+                    return true;
+                });
             }
-            */
 		}
 
 		const sptr<IComponent> ComponentContainer::componentOfType(const std::type_index & ti) const
