@@ -177,11 +177,9 @@ namespace zoper
 
         // Generate the new token type
         const size_type newToken{ ensureComponentOfType<RandomizerComponent>()->getUInt(NumTokens) };
-//        const size_type newToken{ 1 };
 
         // Calculate in wich tile zone offset is going to appear
-//        const size_type sizep{ ensureComponentOfType<RandomizerComponent>()->getUInt(currentTokenZone.size) };
-        const size_type sizep{ 0 };
+        const size_type sizep{ ensureComponentOfType<RandomizerComponent>()->getUInt(currentTokenZone.size) };
 
         // Prepare the position for the new token
         const size_type newX{ currentTokenZone.zone.left + (currentTokenZone.direction.isHorizontal() ? 0 : sizep) };
@@ -210,7 +208,7 @@ namespace zoper
             return true;
         });
         // Set the new token
-//        addNewToken(vector2dst{ newX, newY }, newToken);
+        addNewToken(vector2dst{ newX, newY }, newToken);
         m_nextTokenPart = (m_nextTokenPart + 1) % NumWays;
 
         CLIENT_EXECUTE_IN_DEBUG(_debugDisplayBoard());
