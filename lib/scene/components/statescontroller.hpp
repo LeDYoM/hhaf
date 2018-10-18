@@ -21,21 +21,25 @@ namespace lib
 		{
 		public:
 			constexpr void update() {
-                m_pendingActions.update([](auto action) {
+                m_pendingActions.update([](auto action) 
+                {
 					action();
-                    return false;
                 });
 			}
 
-			constexpr void start(T firstState) noexcept {
+			constexpr void start(T firstState) noexcept 
+            {
 				assert_debug(m_statesStack.size() == 0, "You cannot call start if the stack is not empty");
 				BeforeStart(firstState);
 				push_state(std::move(firstState));
 			}
 
-			constexpr void push_state(T firstState) noexcept {
-				postAction([this, firstState = std::move(firstState)]() {
-					if (m_statesStack.size() > 0) {
+			constexpr void push_state(T firstState) noexcept 
+            {
+				postAction([this, firstState = std::move(firstState)]() 
+                {
+					if (m_statesStack.size() > 0) 
+                    {
 						StatePaused(m_statesStack.back());
 					}
 					StatePushed(firstState);
@@ -43,15 +47,19 @@ namespace lib
 				});
 			}
 
-			constexpr void pop_state() noexcept {
-				postAction([this]() {
+			constexpr void pop_state() noexcept 
+            {
+				postAction([this]() 
+                {
 					assert_debug(m_statesStack.size() > 0, "m_statesStack.size() is 0");
 					StatePopped(m_statesStack.back());
-					if (m_statesStack.size() > 1) {
+					if (m_statesStack.size() > 1) 
+                    {
 						m_statesStack.pop_back();
 						StateResumed(m_statesStack.back());
 					}
-					else {
+					else 
+                    {
 						BeforeFinish(m_statesStack.back());
 						m_statesStack.pop_back();
 						AfterFinish();
