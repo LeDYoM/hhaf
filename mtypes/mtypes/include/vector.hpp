@@ -105,7 +105,8 @@ namespace lib
 			std::swap(m_capacity, other.m_capacity);
 		}
 
-        constexpr size_type index_from_iterator(iterator it) const noexcept {
+        constexpr size_type index_from_iterator(iterator it) const noexcept
+        {
             for (size_type i{ 0 }; i < m_size; ++i) {
                 if (m_buffer + i == it) {
                     return i;
@@ -114,11 +115,13 @@ namespace lib
 			return m_size;
         }
 
-		constexpr iterator remove_value(const T &value, iterator start) {
+		constexpr iterator remove_value(const T &value, iterator start)
+        {
 			return remove_if([&value](const T p) { return p == value; }, start);
 		}
 
-		constexpr iterator remove_value(const T &value) {
+		constexpr iterator remove_value(const T &value)
+        {
 			return remove_value(value, begin());
 		}
 
