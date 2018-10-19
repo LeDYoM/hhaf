@@ -20,16 +20,14 @@ class TestComponent : public IComponent
 
 };
 
-TEST_CASE("lib::scene::ComponentContainer::ComponentContainer", "[ComponentContainer][constructor]")
+TEST_CASE("lib::scene::ComponentContainer", "[ComponentContainer][constructor]")
 {
-    /*
     sptr<ComponentContainer> componentContainerNoParent(msptr<ComponentContainer>());
-    CHECK(componentContainerNoParent->componentOfType)
+ //   CHECK(componentContainerNoParent->componentOfType)
 
     auto node_test(unitTestScene()->createSceneNode("SceneNode_test"));
     CHECK(unitTestScene()->sceneNodesSize() == 1);
     CHECK(unitTestScene()->renderNodesSize() == 0);
     CHECK(node_test->sceneNodesSize() == 0);
     CHECK(node_test->renderNodesSize() == 0);
-    */
 }

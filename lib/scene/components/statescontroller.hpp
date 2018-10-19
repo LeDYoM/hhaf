@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_STATES_CONTROLLER_INCLUDE_HPP__
-#define LIB_STATES_CONTROLLER_INCLUDE_HPP__
+#ifndef LIB_STATES_CONTROLLER_INCLUDE_HPP
+#define LIB_STATES_CONTROLLER_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/function.hpp>
@@ -20,11 +20,15 @@ namespace lib
 		class StatesControllerRaw
 		{
 		public:
-			constexpr void update() {
-                m_pendingActions.update([](auto action) 
+			constexpr void update() 
+            {
+                if (m_pendingActions.update(); !m_pendingActions.current().empty())
                 {
-					action();
-                });
+                    for (auto action : m_pendingActions.current())
+                    {
+                        action();
+                    }
+                }
 			}
 
 			constexpr void start(T firstState) noexcept 

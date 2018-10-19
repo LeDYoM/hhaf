@@ -9,7 +9,7 @@ int main(int argc, char* argv[])
     // this is the preferred way to set them
 
     session.configData().waitForKeypress = Catch::WaitForKeypress::BeforeExit;
-    session.configData().showSuccessfulTests = true;
+//    session.configData().showSuccessfulTests = true;
     int returnCode = session.applyCommandLine(argc, argv);
     if (returnCode != 0) // Indicates a command line error
         return returnCode;
