@@ -1,7 +1,10 @@
 #pragma once
 
-#ifndef LIB_MTYPES_LOCKABLE_VECTOR_CONTAINER_INCLUDE_HPP__
-#define LIB_MTYPES_LOCKABLE_VECTOR_CONTAINER_INCLUDE_HPP__
+#ifndef LIB_MTYPES_LOCKABLE_VECTOR_CONTAINER_INCLUDE_HPP
+#define LIB_MTYPES_LOCKABLE_VECTOR_CONTAINER_INCLUDE_HPP
+
+#include "vector.hpp"
+#include "function.hpp"
 
 namespace lib
 {
@@ -23,7 +26,7 @@ namespace lib
         */
         constexpr void push_back(const T &element) 
         {
-            current().push_back(element);
+            addingCache_.push_back(element);
         }
 
         /**
@@ -32,7 +35,7 @@ namespace lib
         */
         constexpr void push_back(T &&element)
         {
-            current().push_back(std::move(element));
+            addingCache_.push_back(std::move(element));
         }
 
         /**
@@ -42,116 +45,91 @@ namespace lib
         template<typename ...Args>
         constexpr void emplace_back(Args&&... args) 
         {
-            current().emplace_back(std::forward<Args>(args)...);
+            addingCache_.emplace_back(std::forward<Args>(args)...);
         }
 
         /**
-        * Update function.
-        * This function must be called by the user with a callable object returning
-        * a bool. It first adds the container avaiable to the user to the internal one,
-        * then process the vector with f. All elements whose f(T) returns false,
-        * will be set to T() and deleted afterwards.
-        * Finally adds the container available to the user in the internal again.
-        * New values will be processed the next call to update.
-        * @param f A callable object receiving a T& as parameter and returning a bool
+        * Remove an element.
+        * @param element The element to remove.
         */
-        /*
-        constexpr void update(function<bool(T &)> f) 
+        constexpr void remove_value(const T &element)
         {
-            addSupportContainerToMainContainer();
-            if (!m_mainContainer.empty()) 
-            {
-                lock();
-                updateInternal(f);
-                unlock();
-                addSupportContainerToMainContainer();
-            }
-        }
-*/
-        constexpr void update(function<void(T &)> f)
-        {
-            addSupportContainerToMainContainer();
-            if (!m_mainContainer.empty())
-            {
-                lock();
-                updateInternal(f);
-                unlock();
-                addSupportContainerToMainContainer();
-            }
+            remove_cache_.push_back(element);
         }
 
-        constexpr void clear()
+        constexpr void update()
         {
-            m_mainContainer.clear();
-            m_supportContainer.clear();
+            add_to_main_container();
+            remove_from_containers();
         }
 
-        constexpr const vector<T>& ccurrent() const noexcept
+        constexpr void clear() noexcept
         {
-            return m_locked ? m_supportContainer : m_mainContainer;
+            main_container_.clear();
         }
 
-        constexpr bool lock() noexcept
+        constexpr const vector<T>& current() noexcept
         {
-            return setLock(true);
+            update();
+            return main_container_;
         }
 
-        constexpr bool unlock() noexcept
+        constexpr auto pending_add() noexcept
         {
-            return setLock(false);
+            return addingCache_.size();
+        }
+
+        constexpr bool are_pending_adds() noexcept
+        {
+            return !addingCache_.empty();
+        }
+
+        constexpr auto pending_remove() noexcept
+        {
+            return remove_cache_.size();
+        }
+
+        constexpr bool are_pending_removes() noexcept
+        {
+            return !remove_cache_.empty();
         }
 
     private:
 
-        constexpr vector<T>& current() noexcept
+        template <typename Container>
+        constexpr void remove_cache_elements_from(Container& c)
         {
-            return m_locked ? m_supportContainer : m_mainContainer;
-        }
-
-        constexpr bool setLock(const bool lock) noexcept
-        {
-            const bool wasLocked{ m_locked };
-            m_locked = lock;
-            return wasLocked;
-        }
-
-        /*
-        constexpr void updateInternal(function<bool(T &)> f)
-        {
-            bool isDirty{ false };
-            for (T &element : m_mainContainer) {
-                if (!f(element)) {
-                    element = T();
-                    isDirty = true;
-                }
-            }
-
-            if (isDirty)
+            for (const auto& element : remove_cache_)
             {
-                m_mainContainer.remove_values(T());
+                c.remove_value(element);
             }
         }
-        */
 
-        constexpr void updateInternal(function<void(T &)> f)
+        constexpr void remove_from_containers()
         {
-            for (T &element : m_mainContainer) {
-                f(element);
+            if (!remove_cache_.empty())
+            {
+                remove_cache_elements_from(main_container_);
+                remove_cache_elements_from(remove_cache_);
+
+                remove_cache_.clear();
             }
+
         }
 
-    private:
-        constexpr void addSupportContainerToMainContainer() 
+        constexpr void add_to_main_container() 
         {
-            if (!m_supportContainer.empty()) {
-                m_mainContainer.insert(m_supportContainer);
-                m_supportContainer.clear();
+            if (!addingCache_.empty()) 
+            {
+                main_container_.insert(addingCache_);
+                addingCache_.clear();
             }
         }
 
-        vector<T> m_mainContainer;
-        vector<T> m_supportContainer;
-        bool m_locked{ false };
+        vector<T> main_container_;
+        vector<T> addingCache_;
+        vector<T> remove_cache_;
+        bool locked_{ false };
     };
 }
 
