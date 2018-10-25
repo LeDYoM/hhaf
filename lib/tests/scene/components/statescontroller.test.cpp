@@ -8,7 +8,13 @@ using namespace lib::scene;
 
 TEST_CASE("lib::StatesController", "[StatesController]")
 {
-    sptr<StatesController<int>> states_controller(msptr<StatesController<int>>());
+	constexpr u32 Start_State = 0U;
+    sptr<StatesController<u32>> states_controller(msptr<StatesController<u32>>());
 
+	states_controller->BeforeStart.connect([Start_State](const auto& state)
+	{
+		CHECK(state == Start_State);
+	});
 
+	states_controller->start(Start_State);
 }
