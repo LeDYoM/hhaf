@@ -9,27 +9,47 @@
 using namespace lib;
 using namespace lib::scene;
 
-static auto unitTestScene()
+struct TestComponent : public IComponent
 {
-    auto uts(lib::msptr<lib::scene::Scene>("unitTest"));
-    return uts;
-}
+    int data_{ 0 };
 
-class TestComponent : public IComponent
-{
-
+    sptr<TestComponent> addAnother()
+    {
+        return attachedNode()->ensureComponentOfType<TestComponent>();
+    }
+private:
+    void update() override
+    {
+        ++data_;
+    }
 };
 
-TEST_CASE("lib::scene::ComponentContainer::ComponentContainer", "[ComponentContainer][constructor]")
+TEST_CASE("lib::scene::ComponentContainer", "[ComponentContainer][constructor]")
 {
-    /*
-    sptr<ComponentContainer> componentContainerNoParent(msptr<ComponentContainer>());
-    CHECK(componentContainerNoParent->componentOfType)
+    // Create scenario for testing
+    sptr<ComponentContainer> component_container_no_parent(msptr<ComponentContainer>());
 
-    auto node_test(unitTestScene()->createSceneNode("SceneNode_test"));
-    CHECK(unitTestScene()->sceneNodesSize() == 1);
-    CHECK(unitTestScene()->renderNodesSize() == 0);
-    CHECK(node_test->sceneNodesSize() == 0);
-    CHECK(node_test->renderNodesSize() == 0);
-    */
+    SECTION("Add component")
+    {
+        sptr<TestComponent> component = component_container_no_parent->ensureComponentOfType<TestComponent>();
+        component_container_no_parent->updateComponents();
+        CHECK(component->data_ == 1);
+
+        SECTION("Add twice")
+        {
+            sptr<TestComponent> component2 = component_container_no_parent->ensureComponentOfType<TestComponent>();
+            component_container_no_parent->updateComponents();
+            CHECK(component->data_ == 2);
+            CHECK(component2->data_ == 2);
+            CHECK(component == component2);
+        }
+    }
+
+    SECTION("Clear")
+    {
+        sptr<TestComponent> component = component_container_no_parent->ensureComponentOfType<TestComponent>();
+        auto data_copy(component->data_);
+        component_container_no_parent->clearComponents();
+        CHECK(data_copy == component->data_);
+    }
 }

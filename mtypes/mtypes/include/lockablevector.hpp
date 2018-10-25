@@ -9,10 +9,12 @@
 namespace lib
 {
     /**
-    * Vector that must not change during the iteration.
+    * This class encapsulates the functionality of a vector with deferred operations.
 
-    *    This class encapsulates two vectors of T, providing a wrapper
-    * to one of them to modify and doing the update in the other one.
+    *    This class encapsulates 3 vectors<T>, providing a wrapper
+    * to add and remove elements without modifying the main vector.
+    * To access to the modifications, the user must call one of the available
+    * methods to do that. The user may also access the non updated data.
     * The logic to hide the vectors internally is part of the provided
     * functionality.
     */
@@ -49,7 +51,7 @@ namespace lib
         }
 
         /**
-        * Remove an element.
+        * Remove an element. Overload for const references.
         * @param element The element to remove.
         */
         constexpr void remove_value(const T &element)
@@ -57,38 +59,85 @@ namespace lib
             remove_cache_.push_back(element);
         }
 
+        /**
+        * Remove an element. Overload for rvalues
+        * @param element The element to remove.
+        */
+        constexpr void remove_value(T &&element)
+        {
+            remove_cache_.push_back(std::move(element));
+        }
+
+        /**
+        * Explicitly call this method to force an update
+        * (adding and removing values) to the container.
+        */
         constexpr void update()
         {
             add_to_main_container();
             remove_from_containers();
         }
 
-        constexpr void clear() noexcept
+        /**
+        * Clear all containers, no pending adds or removes after that.
+        */
+        constexpr void clear()
         {
             main_container_.clear();
+            addingCache_.clear();
+            remove_cache_.clear();
         }
 
+        /**
+        * Retrieve a reference to the internal main container.
+        * @return lvalue reference to the main container.
+        */
+        constexpr const vector<T>& deferred_current() const noexcept
+        {
+            return main_container_;
+        }
+
+        /**
+        * Retrieve a constant reference to the updated internal main container.
+        * @return rvalue reference to the updated main container.
+        */
         constexpr const vector<T>& current() noexcept
         {
             update();
             return main_container_;
         }
 
-        constexpr auto pending_add() noexcept
+        /**
+        * Retrieve the number of pending elements to be added.
+        * @return The number of elements.
+        */
+        constexpr size_type pending_add() noexcept
         {
             return addingCache_.size();
         }
 
+        /**
+        * Ask if there is any number of elements pending to be added.
+        * @return true or false
+        */
         constexpr bool are_pending_adds() noexcept
         {
             return !addingCache_.empty();
         }
 
+        /**
+        * Retrieve the number of pending elements to be added.
+        * @return The number of elements.
+        */
         constexpr auto pending_remove() noexcept
         {
             return remove_cache_.size();
         }
 
+        /**
+        * Ask if there is any number of elements pending to be removed.
+        * @return true or false
+        */
         constexpr bool are_pending_removes() noexcept
         {
             return !remove_cache_.empty();

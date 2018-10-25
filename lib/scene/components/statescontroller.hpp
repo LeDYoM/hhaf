@@ -90,7 +90,8 @@ namespace lib
 
 		private:
 			inline void changeState(T newState) {
-				postAction([this, newState = std::move(newState)]() {
+				postAction([this, newState = std::move(newState)]() 
+                {
 					assert_debug(m_statesStack.size() != 0, "States stack size is 0");
 					const T&oldState{ m_statesStack.back() };
 					m_statesStack.pop_back();

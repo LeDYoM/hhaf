@@ -2,8 +2,10 @@ enable_testing()
 
 set(UNIT_TEST_LIST
 	main
+	scene/scenemanager
     scene/scenenode
 	scene/components/componentcontainer
+	scene/components/statescontroller
 )
 
 foreach(NAME IN LISTS UNIT_TEST_LIST)

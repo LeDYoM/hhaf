@@ -72,7 +72,7 @@ namespace lib
 
 		const sptr<IComponent> ComponentContainer::componentOfType(const std::type_index & ti) const
 		{
-			return getComponentFromTypeIndex(ti, m_components.current());
+			return getComponentFromTypeIndex(ti, m_components.deferred_current());
 		}
 	}
 }

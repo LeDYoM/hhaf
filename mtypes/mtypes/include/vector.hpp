@@ -375,12 +375,18 @@ namespace lib
 	};
 
 	template <class A>
-	constexpr bool operator==(const vector<A>& lhs, const vector<A>& rhs) noexcept {
-		if (lhs.m_size != rhs.m_size) {
+	constexpr bool operator==(const vector<A>& lhs, const vector<A>& rhs) noexcept 
+    {
+		if (lhs.m_size != rhs.m_size) 
+        {
 			return false;
-		} else {
-			for (decltype(lhs.m_size) i{ 0 }; i < lhs.m_size;++i) {
-				if (lhs.m_buffer[i] != rhs.m_buffer[i]) {
+		}
+        else 
+        {
+			for (decltype(lhs.m_size) i{ 0 }; i < lhs.m_size;++i) 
+            {
+				if (lhs.m_buffer[i] != rhs.m_buffer[i]) 
+                {
 					return false;
 				}
 			}
