@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_STATES_CONTROLLER_INCLUDE_HPP__
-#define LIB_STATES_CONTROLLER_INCLUDE_HPP__
+#ifndef LIB_STATES_CONTROLLER_INCLUDE_HPP
+#define LIB_STATES_CONTROLLER_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/function.hpp>
@@ -20,22 +20,30 @@ namespace lib
 		class StatesControllerRaw
 		{
 		public:
-			constexpr void update() {
-                m_pendingActions.update([](auto action) {
-					action();
-                    return false;
-                });
+			constexpr void update() 
+            {
+                if (m_pendingActions.update(); !m_pendingActions.current().empty())
+                {
+                    for (auto action : m_pendingActions.current())
+                    {
+                        action();
+                    }
+                }
 			}
 
-			constexpr void start(T firstState) noexcept {
+			constexpr void start(T firstState) noexcept 
+            {
 				assert_debug(m_statesStack.size() == 0, "You cannot call start if the stack is not empty");
 				BeforeStart(firstState);
 				push_state(std::move(firstState));
 			}
 
-			constexpr void push_state(T firstState) noexcept {
-				postAction([this, firstState = std::move(firstState)]() {
-					if (m_statesStack.size() > 0) {
+			constexpr void push_state(T firstState) noexcept 
+            {
+				postAction([this, firstState = std::move(firstState)]() 
+                {
+					if (m_statesStack.size() > 0) 
+                    {
 						StatePaused(m_statesStack.back());
 					}
 					StatePushed(firstState);
@@ -43,15 +51,19 @@ namespace lib
 				});
 			}
 
-			constexpr void pop_state() noexcept {
-				postAction([this]() {
+			constexpr void pop_state() noexcept 
+            {
+				postAction([this]() 
+                {
 					assert_debug(m_statesStack.size() > 0, "m_statesStack.size() is 0");
 					StatePopped(m_statesStack.back());
-					if (m_statesStack.size() > 1) {
+					if (m_statesStack.size() > 1) 
+                    {
 						m_statesStack.pop_back();
 						StateResumed(m_statesStack.back());
 					}
-					else {
+					else 
+                    {
 						BeforeFinish(m_statesStack.back());
 						m_statesStack.pop_back();
 						AfterFinish();
@@ -78,7 +90,8 @@ namespace lib
 
 		private:
 			inline void changeState(T newState) {
-				postAction([this, newState = std::move(newState)]() {
+				postAction([this, newState = std::move(newState)]() 
+                {
 					assert_debug(m_statesStack.size() != 0, "States stack size is 0");
 					const T&oldState{ m_statesStack.back() };
 					m_statesStack.pop_back();

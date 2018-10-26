@@ -1,35 +1,112 @@
 #include "catch.hpp"
 
-#include <mtypes/include/vector.hpp>
+#include <mtypes/include/lockablevector.hpp>
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/lockablevector.hpp>
 
 using namespace lib;
 
-TEST_CASE("LocableVector constructors", "[vector]")
+TEST_CASE("LocableVector constructors", "[LocableVector]")
 {
-    /*
-    vector<u32> m;
+    LockableVector<u32> locable_vector;
+    auto m(locable_vector.current());
+
     CHECK(m.size() == 0);
     CHECK(m.empty());
+    CHECK(m.capacity() == 0);
 
-    m = { 1,9,8,7,6,5,4,3,2,0,1 };
-    CHECK(m == vector<u32>{ 1, 9, 8, 7, 6, 5, 4, 3, 2, 0, 1 });
+}
 
-	// Copy constructor
-	auto m2(m);
-	CHECK(m == m2);
+TEST_CASE("LocableVector lock", "[LocableVector]")
+{
+    LockableVector<u32> lockable_vector;
+    auto m(lockable_vector.current());
 
-	// Move constructor
+    SECTION("Add elements")
+    {
+        lockable_vector.push_back(0);
+        lockable_vector.push_back(1);
+        lockable_vector.push_back(2);
+        lockable_vector.push_back(3);
+        lockable_vector.push_back(4);
 
-	auto m3(std::move(m));
-	CHECK(m.empty());
+        // After adding but not updating, the visible vector
+        // is still empty.
+        CHECK(lockable_vector.are_pending_adds());
+        CHECK(lockable_vector.pending_add() == 5);
 
-	CHECK(m2 == m3);
+        // The call to current() updates implicity.
+        CHECK(lockable_vector.deferred_current().size() == 0);
+        CHECK(lockable_vector.current().size() == 5);
 
-	// Construct from address and size
-	const u32 arr[] = { 4, 3, 2, 1 };
-	vector<u32> v(arr, sizeof(arr) / sizeof(u32));
-	CHECK(v.size() == 4);
-    */
+        SECTION("Add")
+        {
+            lockable_vector.update();
+            CHECK(lockable_vector.deferred_current() == lockable_vector.current());
+
+            CHECK(lockable_vector.current().size() == 5);
+            CHECK_FALSE(lockable_vector.are_pending_adds());
+            CHECK(lockable_vector.pending_add() == 0);
+            lockable_vector.push_back(5);
+            lockable_vector.emplace_back(6);
+            CHECK(lockable_vector.current().size() == 7);
+
+            // Update does not affect in this case
+            lockable_vector.update();
+            CHECK(lockable_vector.current().size() == 7);
+            CHECK_FALSE(lockable_vector.are_pending_adds());
+            CHECK(lockable_vector.pending_add() == 0);
+            CHECK(lockable_vector.deferred_current() == lockable_vector.current());
+        }
+
+        SECTION("Remove")
+        {
+            lockable_vector.remove_value(1);
+            CHECK(lockable_vector.are_pending_removes());
+            CHECK(lockable_vector.pending_remove() == 1);
+            const auto v(lockable_vector.deferred_current());
+            CHECK_FALSE(v == lockable_vector.current());
+            CHECK(lockable_vector.current().size() == 4);
+            lockable_vector.remove_value(1);
+            CHECK(lockable_vector.deferred_current() == lockable_vector.current());
+            CHECK(lockable_vector.current().size() == 4);
+        }
+
+        SECTION("Mix Add and Remove (KISS version)")
+        {
+            lockable_vector.remove_value(1);
+            lockable_vector.push_back(5);
+            lockable_vector.emplace_back(6);
+
+            CHECK(lockable_vector.are_pending_removes());
+            CHECK(lockable_vector.pending_remove() == 1);
+            CHECK(lockable_vector.are_pending_adds());
+            CHECK(lockable_vector.pending_add() == 2);
+
+            CHECK(lockable_vector.current().size() == 6);
+            CHECK_FALSE(lockable_vector.are_pending_removes());
+            CHECK(lockable_vector.pending_remove() == 0);
+            CHECK_FALSE(lockable_vector.are_pending_adds());
+            CHECK(lockable_vector.pending_add() == 0);
+        }
+
+        SECTION("Mix Add and Remove (more complicated version)")
+        {
+            lockable_vector.remove_value(1);
+            lockable_vector.push_back(5);
+            lockable_vector.emplace_back(6);
+
+            CHECK(lockable_vector.are_pending_removes());
+            CHECK(lockable_vector.pending_remove() == 1);
+            CHECK(lockable_vector.are_pending_adds());
+            CHECK(lockable_vector.pending_add() == 2);
+
+            CHECK(lockable_vector.current().size() == 6);
+            CHECK_FALSE(lockable_vector.are_pending_removes());
+            CHECK(lockable_vector.pending_remove() == 0);
+            CHECK_FALSE(lockable_vector.are_pending_adds());
+            CHECK(lockable_vector.pending_add() == 0);
+        }
+
+    }
 }

@@ -9,31 +9,63 @@
 
 namespace lib
 {
+    template <typename T>
+    class Allocator
+    {
+    public:
+        T *allocate(const size_type size)
+        {
+            if (size)
+            {
+                return new T[size];
+            }
+            return nullptr;
+        }
+
+        void deallocate(T* element)
+        {
+            if (element)
+            {
+                delete[] element;
+            }
+        }
+    };
+
 	/** Vector class to store a sequence of elements
 	* This class is a container to store sequences of Ts. It can be resized.
 	* Other use cases include search, replacement, etc...
 	*/
-	template <typename T>
-	class  vector {
+	template <typename T, typename Allocator_t = Allocator<T>>
+	class  vector 
+    {
 	public:
 		using iterator = T*;
 		using const_iterator = const T*;
 		using reference = T&;
 		using const_reference = const T&;
         using value_type = T;
+        using pointer = T *;
+        using const_pointer = const T*;
 
 		constexpr vector() noexcept : m_capacity{ 0 }, m_size{ 0 }, m_buffer{ nullptr } {}
-		explicit constexpr vector(const size_type size) : m_capacity{ size }, m_size{ size }, m_buffer{ size?new T[size] :nullptr} {}
 
-		constexpr vector(std::initializer_list<T> ilist) noexcept : vector( ilist.size() ) {
+        explicit constexpr vector(const size_type size) : m_capacity{ size }, m_size{ size }, 
+            m_buffer{ m_allocator.allocate(size) }
+        {}
+
+		constexpr vector(std::initializer_list<value_type> ilist) noexcept : vector( ilist.size() ) 
+        {
 			_copyElements(ilist.begin(), m_size);
 		}
 
-		constexpr vector(const T*elements, const size_type size) : vector(size) {
+		constexpr vector(const T*elements, const size_type size) : vector(size) 
+        {
 			_copyElements(elements, m_size);
 		}
 
-		constexpr vector(const vector&other) : m_capacity{ other.m_capacity }, m_size{ other.m_size }, m_buffer{new T[m_capacity]} {
+		constexpr vector(const vector&other) : m_capacity{ other.m_capacity }, m_size{ other.m_size }, 
+            m_buffer{ m_allocator.allocate(m_capacity) }
+        {
 			_copyElements(other.m_buffer, other.m_size);
 		}
 
@@ -105,8 +137,10 @@ namespace lib
 			std::swap(m_capacity, other.m_capacity);
 		}
 
-        constexpr size_type index_from_iterator(iterator it) const noexcept {
-            for (size_type i{ 0 }; i < m_size; ++i) {
+        constexpr size_type index_from_iterator(iterator it) const noexcept
+        {
+            for (size_type i{ 0 }; i < m_size; ++i) 
+            {
                 if (m_buffer + i == it) {
                     return i;
                 }
@@ -114,11 +148,13 @@ namespace lib
 			return m_size;
         }
 
-		constexpr iterator remove_value(const T &value, iterator start) {
+		constexpr iterator remove_value(const T &value, iterator start)
+        {
 			return remove_if([&value](const T p) { return p == value; }, start);
 		}
 
-		constexpr iterator remove_value(const T &value) {
+		constexpr iterator remove_value(const T &value)
+        {
 			return remove_value(value, begin());
 		}
 
@@ -138,26 +174,31 @@ namespace lib
             return m_size;
 		}
 
-		constexpr iterator remove_if(function<bool(const T&)> condition, iterator start) {
+		constexpr iterator remove_if(function<bool(const T&)> condition, iterator start) 
+        {
 			bool moving{ false };
 			iterator where_it_was{ end() };
             auto old_size(m_size);
 			for (size_type i{ index_from_iterator(start) }; i < old_size; ++i) {
-				if (!moving) {
-					if (condition(m_buffer[i])) {
+				if (!moving) 
+                {
+					if (condition(m_buffer[i])) 
+                    {
 						moving = true;
 						--m_size;
 						where_it_was = m_buffer + i;
 					}
 				}
-				else {
+				else 
+                {
 					m_buffer[i - 1] = std::move(m_buffer[i]);
 				}
 			}
 			return where_it_was;
 		}
 
-		constexpr iterator remove_if(function<bool(const T&)> condition) {
+		constexpr iterator remove_if(function<bool(const T&)> condition) 
+        {
             return remove_if(std::move(condition), begin());
 		}
 
@@ -168,7 +209,8 @@ namespace lib
 			return m_size;
 		}
 
-		constexpr size_type remove_all_if(function<bool(const T&)> condition) {
+		constexpr size_type remove_all_if(function<bool(const T&)> condition) 
+        {
 			return remove_all_if(condition, begin());
 		}
 
@@ -198,18 +240,21 @@ namespace lib
 			m_buffer[m_size++] = T(std::forward<Args>(args)...);
 		}
 
-		constexpr void shrink_to_fit() {
-			if (m_size < m_capacity) {
+		constexpr void shrink_to_fit() 
+        {
+			if (m_size < m_capacity) 
+            {
 				T*oldBuffer{ m_buffer };
-				m_buffer = new T[m_size];
+				m_buffer = m_allocator.allocate(m_size);
 				m_capacity = m_size;
 				_moveElements(oldBuffer,m_size);
 
-				delete[] oldBuffer;
+				m_allocator.deallocate(oldBuffer);
 			}
 		}
 
-		constexpr void push_back(const T& value) {
+		constexpr void push_back(const T& value) 
+        {
 			reserve(m_size + 1);
 			m_buffer[m_size++] = value;
 		}
@@ -250,13 +295,16 @@ namespace lib
 
 		constexpr void pop_back() noexcept { if (m_size > 0) --m_size; }
 
-		constexpr void reserve(const size_type capacity) noexcept {
-			if (m_capacity < capacity) {
-				T *oldBuffer{ m_buffer };
+		constexpr void reserve(const size_type capacity) noexcept 
+        {
+			if (m_capacity < capacity) 
+            {
+				T *old_buffer{ m_buffer };
 				m_capacity = capacity;
-				m_buffer = new T[m_capacity];
-				_moveElements(oldBuffer, m_size);
-				delete[] oldBuffer;
+
+				m_buffer = m_allocator.allocate(m_capacity);
+				_moveElements(old_buffer, m_size);
+                m_allocator.deallocate(old_buffer);
 			}
 		}
 
@@ -280,28 +328,35 @@ namespace lib
 
 	private:
 
-		constexpr void _copyStructure(const vector&other) {
+		constexpr void _copyStructure(const vector&other)
+        {
 			_destroy();
-			m_buffer = new T[other.m_size];
+			m_buffer = m_allocator.allocate(other.m_size);
 			m_capacity = other.m_size;
 			m_size = other.m_size;
 		}
 
-		constexpr void _copyElements(const T*const source, const size_type s) {
-			for (size_type i{ 0 }; i < s; ++i) {
+		constexpr void _copyElements(const T*const source, const size_type s)
+        {
+			for (size_type i{ 0U }; i < s; ++i) 
+            {
 				m_buffer[i] = source[i];
 			}
 		}
 
-		constexpr void _moveElements(T*source, const size_type s) noexcept {
-			for (size_type i{ 0 }; i < s; ++i) {
+		constexpr void _moveElements(T*source, const size_type s) noexcept 
+        {
+			for (size_type i{ 0U }; i < s; ++i) 
+            {
 				m_buffer[i] = std::move(source[i]);
 			}
 		}
 
-		constexpr void _destroy() {
-			if (m_buffer) {
-				delete[] m_buffer;
+		constexpr void _destroy() 
+        {
+			if (m_buffer) 
+            {
+                m_allocator.deallocate(m_buffer);
 				m_buffer = nullptr;
 				m_size = m_capacity = 0;
 			}
@@ -310,6 +365,7 @@ namespace lib
 		size_type m_capacity;
 		size_type m_size;
 		T* m_buffer;
+        Allocator_t m_allocator;
 
 		template <class A>
 		friend constexpr bool operator==(const vector<A>& lhs, const vector<A>& rhs) noexcept;
@@ -319,12 +375,18 @@ namespace lib
 	};
 
 	template <class A>
-	constexpr bool operator==(const vector<A>& lhs, const vector<A>& rhs) noexcept {
-		if (lhs.m_size != rhs.m_size) {
+	constexpr bool operator==(const vector<A>& lhs, const vector<A>& rhs) noexcept 
+    {
+		if (lhs.m_size != rhs.m_size) 
+        {
 			return false;
-		} else {
-			for (decltype(lhs.m_size) i{ 0 }; i < lhs.m_size;++i) {
-				if (lhs.m_buffer[i] != rhs.m_buffer[i]) {
+		}
+        else 
+        {
+			for (decltype(lhs.m_size) i{ 0 }; i < lhs.m_size;++i) 
+            {
+				if (lhs.m_buffer[i] != rhs.m_buffer[i]) 
+                {
 					return false;
 				}
 			}

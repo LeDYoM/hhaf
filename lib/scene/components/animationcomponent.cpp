@@ -29,14 +29,20 @@ namespace lib
 
 			void AnimationComponent::update()
 			{
-                m_private->m_animations.update([](auto animation) {
-                    if (!animation->animate()) {
+                m_private->m_animations.update();
+
+                for (auto animation : m_private->m_animations.current())
+                {
+                    if (!animation->animate()) 
+                    {
                         animation->executeEndAction();
-                        return false;
+//                        return false;
                     }
-                    return true;
-                });
-			}
+//                    return true;
+                }
+
+                m_private->m_animations.update();
+            }
 		}
 	}
 }
