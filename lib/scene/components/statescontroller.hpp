@@ -112,6 +112,7 @@ namespace lib
 		template <typename T>
 		class StatesController : public StatesControllerRaw<T>, public IComponent
 		{
+        public:
 			constexpr void update() override final {
 				StatesControllerRaw<T>::update();
 			}
