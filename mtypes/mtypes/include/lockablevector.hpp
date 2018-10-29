@@ -79,6 +79,15 @@ namespace lib
         }
 
         /**
+
+        */
+        constexpr void swap()
+        {
+            main_container_.clear();
+            update();
+        }
+
+        /**
         * Clear all containers, no pending adds or removes after that.
         */
         constexpr void clear()

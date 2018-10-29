@@ -22,7 +22,7 @@ namespace lib
 		public:
 			constexpr void update() 
             {
-                if (m_pendingActions.update(); !m_pendingActions.current().empty())
+                if (!m_pendingActions.current().empty())
                 {
                     for (auto action : m_pendingActions.current())
                     {
