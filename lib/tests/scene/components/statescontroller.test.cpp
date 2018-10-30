@@ -45,7 +45,8 @@ TEST_CASE("lib::StatesController", "[StatesController]")
 
     common.states_controller->StateFinished.connect([&common](const auto& state)
     {
-//        CHECK(state == 0);
+        (void)state;
+//        CHECK((state == 0) && (state == 1));
     });
 
     common.states_controller->start(Start_State);
