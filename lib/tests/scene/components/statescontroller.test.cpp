@@ -9,6 +9,8 @@ using namespace lib::scene;
 TEST_CASE("lib::StatesController", "[StatesController]")
 {
 	constexpr u32 Start_State = 0U;
+    constexpr u32 Finish_State = 1U;
+
     struct CommonData
     {
         bool exit = false;
@@ -19,34 +21,69 @@ TEST_CASE("lib::StatesController", "[StatesController]")
     CommonData common;
     common.states_controller = msptr<StatesController<u32>>();
 
-    common.states_controller->BeforeStart.connect([&common, Start_State](const auto& state)
+    common.states_controller->BeforeStart.connect([&common]()
 	{
-		CHECK(state == Start_State);
         CHECK(common.step == 0U);
         common.step++;
-	});
+        CHECK(common.step == 1U);
+    });
 
     common.states_controller->StatePushed.connect([&common, Start_State](const auto& state)
     {
         CHECK(state == Start_State);
-        common.states_controller->setState(1);
-        CHECK(common.step == 1U);
         common.step++;
-
-        common.states_controller->setState(1);
-
+        CHECK(common.step == 2U);
     });
 
-    common.states_controller->StateStarted.connect([&common](const auto& state)
+    common.states_controller->StatePopped.connect([&common, Finish_State](const auto& state)
     {
-        CHECK(state == 1);
+        CHECK(state == Finish_State);
+        common.step++;
+        CHECK(common.step == 7U);
+    });
+
+    common.states_controller->AfterFinish.connect([&common]()
+    {
+        common.step++;
+        CHECK(common.step == 8U);
         common.exit = true;
     });
 
-    common.states_controller->StateFinished.connect([&common](const auto& state)
+
+    common.states_controller->StateStarted.connect([&common, Start_State, Finish_State](const auto& state)
     {
-        (void)state;
-//        CHECK((state == 0) && (state == 1));
+        if (common.step == 2U)
+        {
+            CHECK(state == Start_State);
+            common.step++;
+            CHECK(common.step == 3U);
+            common.states_controller->setState(Finish_State);
+        }
+        else
+        {
+            CHECK(state == Finish_State);
+            common.step++;
+            CHECK(common.step == 5U);
+            common.states_controller->pop_state();
+        }
+
+    });
+
+    common.states_controller->StateFinished.connect([&common, Start_State, Finish_State](const auto& state)
+    {
+        if (common.step == 3U)
+        {
+            CHECK(state == Start_State);
+            common.step++;
+            CHECK(common.step == 4U);
+        }
+        else
+        {
+            CHECK(state == Finish_State);
+            common.step++;
+            CHECK(common.step == 6U);
+            common.states_controller->pop_state();
+        }
     });
 
     common.states_controller->start(Start_State);
@@ -55,4 +92,7 @@ TEST_CASE("lib::StatesController", "[StatesController]")
     {
         common.states_controller->update();
     }
+
+    common.step++;
+    CHECK(common.step == 9U);
 }

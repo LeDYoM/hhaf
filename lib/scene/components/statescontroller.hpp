@@ -36,7 +36,7 @@ namespace lib
 			constexpr void start(T firstState) noexcept 
             {
 				assert_debug(m_statesStack.size() == 0, "You cannot call start if the stack is not empty");
-				BeforeStart(firstState);
+                BeforeStart();
 				push_state(std::move(firstState));
 			}
 
@@ -49,6 +49,7 @@ namespace lib
 						StatePaused(m_statesStack.back());
 					}
 					StatePushed(firstState);
+                    StateStarted(firstState);
 					m_statesStack.push_back(std::move(firstState));
 				});
 			}
@@ -58,6 +59,7 @@ namespace lib
 				postAction([this]() 
                 {
 					assert_debug(m_statesStack.size() > 0, "m_statesStack.size() is 0");
+                    StateFinished(m_statesStack.back());
 					StatePopped(m_statesStack.back());
 					if (m_statesStack.size() > 1) 
                     {
@@ -66,7 +68,6 @@ namespace lib
 					}
 					else 
                     {
-						BeforeFinish(m_statesStack.back());
 						m_statesStack.pop_back();
 						AfterFinish();
 					}
@@ -86,12 +87,12 @@ namespace lib
 			emitter<const T&> StatePopped;
 			emitter<const T&> StatePaused;
 			emitter<const T&> StateResumed;
-			emitter<const T&> BeforeStart;
-			emitter<const T&> BeforeFinish;
-			emitter<>		  AfterFinish;
+			emitter<>          BeforeStart;
+			emitter<>		   AfterFinish;
 
 		private:
-			inline void changeState(T newState) {
+			inline void changeState(T newState) 
+            {
 				postAction([this, newState = std::move(newState)]() 
                 {
 					assert_debug(m_statesStack.size() != 0, "States stack size is 0");

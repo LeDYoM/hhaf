@@ -90,7 +90,8 @@ namespace zoper
 			hidePage(menuPage);
 		});
 
-		statesController->BeforeStart.connect([this](const MenuPageType) {
+		statesController->BeforeStart.connect([this]()
+        {
 			for (auto&& menuStep : m_menuSteps) {
 				menuStep->visible = false;
 			}
