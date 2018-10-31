@@ -2,8 +2,9 @@ enable_testing()
 
 set(UNIT_TEST_LIST
 	main
+	scene/scenecontroller
 	scene/scenemanager
-    scene/scenenode
+	scene/scenenode
 	scene/components/componentcontainer
 	scene/components/statescontroller
 )
