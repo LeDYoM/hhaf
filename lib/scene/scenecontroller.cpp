@@ -12,10 +12,6 @@ namespace lib::scene
 		scene_manager_ = scene_manager;
 	}
 
-	void SceneController::start()
-	{
-	}
-
 	void SceneController::terminateScene()
 	{
         log_debug_info("Terminating scene ", this->currentState()->name());
@@ -25,7 +21,7 @@ namespace lib::scene
 			nextScene = m_sceneDirector(currentState());
 		}
 
-        log_debug_info("Setting new scene: ", nextScene?nextScene->name():"<nullptr>");
+        log_debug_info("Setting new scene: ", nextScene ? nextScene->name():"<nullptr>");
 		this->setState(std::move(nextScene));
 	}
 
@@ -36,7 +32,8 @@ namespace lib::scene
 
 	void SceneController::update()
 	{
-        if (auto&& currentScene = this->currentState()) 
+		BaseClass::update();
+        if (auto&& currentScene = BaseClass::currentState()) 
         {
 			currentScene->updateScene();
 			currentScene->render(false);
@@ -52,5 +49,6 @@ namespace lib::scene
     {
         scene->m_sceneManager = scene_manager_;
         scene->onCreated();
+		BaseClass::start(std::move(scene));
     }
 }

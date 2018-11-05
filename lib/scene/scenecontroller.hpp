@@ -17,6 +17,8 @@ namespace lib::scene
 
 	class SceneController : public StatesController<sptr<Scene>>
 	{
+	private:
+		using BaseClass = StatesController<sptr<Scene>>;
 	public:
 
 		void setSceneManager(SceneManager *scene_manager);
@@ -30,20 +32,17 @@ namespace lib::scene
 		void startFirstScene()
 		{
 			auto scene( createScene<T>() );
-			start();
-			m_statesController->start(std::move(scene));
+			startScene(std::move(scene));
 		}
 
 		template <typename T>
 		sptr<T> createScene() {
 			auto scene(msptr<T>());
-			startScene(scene);
 			return std::dynamic_pointer_cast<T>(scene);
 		}
 
 
 	private:
-		void start();
 		void startScene(sptr<Scene> scene);
 
 		SceneDirectorType m_sceneDirector;
