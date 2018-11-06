@@ -26,9 +26,6 @@ namespace lib
 	}
 	namespace scene
 	{
-        class Scene;
-		class SceneController;
-
 		class SceneManager : public AppService
 		{
 		public:
@@ -38,6 +35,7 @@ namespace lib
 			void start();
 			void update();
 			void finish();
+			void terminateScene();
 
             IResourceRetriever &resources();
 
@@ -45,6 +43,12 @@ namespace lib
             void setViewPort(const Rectf32& vp) noexcept;
             Rectf32 viewRect() const noexcept;
             void setViewRect(const Rectf32& vr) noexcept;
+
+			inline const sptr<SceneController> &sceneController() const
+				noexcept { return scene_controller_; }
+
+			inline sptr<SceneController> &sceneController() 
+				noexcept { return scene_controller_; }
 
 		private:
 			ComponentContainer m_componentContainer;

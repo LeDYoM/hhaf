@@ -23,6 +23,7 @@
 #include <lib/scene/renderizables/nodequad.hpp>
 #include <lib/scene/components/timercomponent.hpp>
 #include <lib/scene/components/statescontroller.hpp>
+#include <lib/scene/components/statescontrolleractuator.hpp>
 #include <lib/scene/components/timercomponent.hpp>
 
 namespace zoper
@@ -33,7 +34,7 @@ namespace zoper
 
     using namespace lib;
 
-    class GameScene final : public scene::Scene, public scene::StatesControllerActuator<size_type>
+    class GameScene final : public scene::Scene, public StatesControllerActuator<size_type>
     {
     public:
         GameScene();
