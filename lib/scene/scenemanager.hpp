@@ -35,7 +35,6 @@ namespace lib
 			void start();
 			void update();
 			void finish();
-			void terminateScene();
 
             IResourceRetriever &resources();
 

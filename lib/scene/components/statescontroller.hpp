@@ -116,7 +116,7 @@ namespace lib
 		class StatesController : public StatesControllerRaw<T>, public IComponent
 		{
         public:
-			constexpr void update() override
+			void update() override
 			{
 				StatesControllerRaw<T>::update();
 			}

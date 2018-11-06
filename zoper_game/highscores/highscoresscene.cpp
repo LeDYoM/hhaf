@@ -36,7 +36,10 @@ namespace zoper
 		m_background->color = colors::White;
 
         auto highScoreTextController(createSceneNode<HighScoreTextController>("HighScoreTextController"));
-        highScoreTextController->Finished.connect([this,statesController]() { sceneManager().terminateScene(); });
+        highScoreTextController->Finished.connect([this,statesController]()
+		{
+			sceneManager().sceneController()->terminateScene();
+		});
 
 		statesController->start(HighScoresSceneStates::Show);
 	}
