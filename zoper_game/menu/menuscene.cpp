@@ -35,7 +35,7 @@ namespace zoper
         auto mainMenu (createSceneNode<MainMenu>(MainMenu::ClassName));
         mainMenu->MenuFinished.connect([this]() {
             zApp().gameSharedData->exitGame = true;
-            sceneManager().terminateScene();
+            sceneManager().sceneController()->terminateScene();
         });
     }
 }

@@ -32,6 +32,11 @@ namespace lib::scene
 		*/
 	}
 
+    void SceneManager::finish()
+    {
+        scene_controller_->finish();
+    }
+
 	Rectf32 SceneManager::viewPort() const noexcept
 	{
 		return m_parentWindow.renderTarget()->viewPort();
