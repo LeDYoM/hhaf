@@ -11,13 +11,16 @@
 namespace lib::scene
 {
 	SceneManager::SceneManager(core::Host& host, core::Window &window) 
-        : AppService{ host }, m_parentWindow { window } {}
+        : AppService{ host }, m_parentWindow { window } 
+    {
+        scene_controller_ = m_componentContainer.ensureComponentOfType<SceneController>();
+        scene_controller_->setSceneManager(this);
+    }
 
 	SceneManager::~SceneManager() = default;
 
 	void SceneManager::start()
 	{
-        scene_controller_ = m_componentContainer.ensureComponentOfType<SceneController>();
 	}
 
 	void SceneManager::update()

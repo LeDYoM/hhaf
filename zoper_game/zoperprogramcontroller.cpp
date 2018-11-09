@@ -37,9 +37,9 @@ namespace zoper
                 if (gameSharedData->exitGame) {
                     return nullptr;
                 }
-                return hostContext().sceneManager().sceneController()->createScene<GameScene>();
+                return hostContext().sceneManager().sceneController()->startScene<GameScene>();
             }
-			return hostContext().sceneManager().sceneController()->createScene<MenuScene>();
+			return hostContext().sceneManager().sceneController()->startScene<MenuScene>();
 		});
 
 		// Hack to test high scores
@@ -48,7 +48,7 @@ namespace zoper
 //            hostContext().sceneManager().startFirstScene<HighScoresScene>();
 		}
 
-        hostContext().sceneManager().sceneController()->startFirstScene<MenuScene>();
+        hostContext().sceneManager().sceneController()->startScene<MenuScene>();
 	}
 
 	IAppDescriptor ZoperProgramController::getAppDescriptor() const

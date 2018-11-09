@@ -29,18 +29,12 @@ namespace lib::scene
 		void finish();
 
 		template <typename T>
-		void startFirstScene()
+		sptr<T> startScene()
 		{
-			auto scene( createScene<T>() );
-			startScene(std::move(scene));
+			auto scene( msptr<T>() );
+			startScene(scene);
+            return scene;
 		}
-
-		template <typename T>
-		sptr<T> createScene() {
-			auto scene(msptr<T>());
-			return std::dynamic_pointer_cast<T>(scene);
-		}
-
 
 	private:
 		void startScene(sptr<Scene> scene);
