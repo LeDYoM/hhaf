@@ -30,7 +30,7 @@ TEST_CASE("lib::scene::SceneController", "[lib][SceneController]")
     CommonData common;
     common.scene_controller = msptr<SceneController>();
 
-    common.scene_controller->startFirstScene<UniqueScene>();
+    common.scene_controller->startScene<UniqueScene>();
 
     while (!common.exit)
     {
