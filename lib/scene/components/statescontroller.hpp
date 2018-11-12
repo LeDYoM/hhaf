@@ -22,19 +22,21 @@ namespace lib
 		public:
 			constexpr void update() 
             {
-                if (m_pendingActions.update(); !m_pendingActions.current().empty())
+                if (!m_pendingActions.current().empty())
                 {
                     for (auto action : m_pendingActions.current())
                     {
                         action();
+                        m_pendingActions.remove_value(action);
                     }
+                    m_pendingActions.update();
                 }
 			}
 
 			constexpr void start(T firstState) noexcept 
             {
 				assert_debug(m_statesStack.size() == 0, "You cannot call start if the stack is not empty");
-				BeforeStart(firstState);
+                BeforeStart();
 				push_state(std::move(firstState));
 			}
 
@@ -47,6 +49,7 @@ namespace lib
 						StatePaused(m_statesStack.back());
 					}
 					StatePushed(firstState);
+                    StateStarted(firstState);
 					m_statesStack.push_back(std::move(firstState));
 				});
 			}
@@ -56,6 +59,7 @@ namespace lib
 				postAction([this]() 
                 {
 					assert_debug(m_statesStack.size() > 0, "m_statesStack.size() is 0");
+                    StateFinished(m_statesStack.back());
 					StatePopped(m_statesStack.back());
 					if (m_statesStack.size() > 1) 
                     {
@@ -64,7 +68,6 @@ namespace lib
 					}
 					else 
                     {
-						BeforeFinish(m_statesStack.back());
 						m_statesStack.pop_back();
 						AfterFinish();
 					}
@@ -84,12 +87,12 @@ namespace lib
 			emitter<const T&> StatePopped;
 			emitter<const T&> StatePaused;
 			emitter<const T&> StateResumed;
-			emitter<const T&> BeforeStart;
-			emitter<const T&> BeforeFinish;
-			emitter<>		  AfterFinish;
+			emitter<>          BeforeStart;
+			emitter<>		   AfterFinish;
 
 		private:
-			inline void changeState(T newState) {
+			inline void changeState(T newState) 
+            {
 				postAction([this, newState = std::move(newState)]() 
                 {
 					assert_debug(m_statesStack.size() != 0, "States stack size is 0");
@@ -112,39 +115,12 @@ namespace lib
 		template <typename T>
 		class StatesController : public StatesControllerRaw<T>, public IComponent
 		{
-			constexpr void update() override final {
+        public:
+			void update() override
+			{
 				StatesControllerRaw<T>::update();
 			}
 		};
-
-        template <typename T>
-        class StatesControllerActuator
-        {
-        public:
-            virtual void onEnterState(const T&) {}
-            virtual void onExitState(const T&) {}
-            virtual void onPushedState(const T&) {}
-            virtual void onPoppedState(const T&) {}
-            virtual void onPausedState(const T&) {}
-            virtual void onResumedState(const T&) {}
-        };
-
-        template <typename T>
-        class StatesControllerActuatorRegister
-        {
-        public:
-            void registerStatesControllerActuator(
-                StatesController<T> &statesController,
-                StatesControllerActuator<T> &statesControllerActuator) 
-            {
-                statesController.StateStarted.connect([&statesControllerActuator](const T&startedState) {
-                    statesControllerActuator.onEnterState(startedState);
-                });
-                statesController.StateFinished.connect([&statesControllerActuator](const T&startedState) {
-                    statesControllerActuator.onExitState(startedState);
-                });
-            }
-        };
 	}
 }
 

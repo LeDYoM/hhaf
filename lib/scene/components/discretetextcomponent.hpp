@@ -16,10 +16,6 @@ namespace lib::scene
         DiscreteTextComponent() {}
         virtual ~DiscreteTextComponent() {}
 
-        virtual void onAttached() override {
-            BaseClass::onAttached();
-        }
-
         BasicProperty<bool> circleAroud{ true };
         BasicProperty<string_vector> data;
         void incrementIndex() noexcept;

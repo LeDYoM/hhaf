@@ -78,7 +78,7 @@ namespace zoper
             }
             break;
             case GameOver:
-                sceneManager().terminateScene();
+                sceneManager().sceneController()->terminateScene();
                 break;
             case Pause:
                 if (keyMapping->isPauseKey(key)) {

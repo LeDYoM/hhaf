@@ -79,6 +79,15 @@ namespace lib
         }
 
         /**
+
+        */
+        constexpr void swap()
+        {
+            main_container_.clear();
+            update();
+        }
+
+        /**
         * Clear all containers, no pending adds or removes after that.
         */
         constexpr void clear()
@@ -95,6 +104,15 @@ namespace lib
         constexpr const vector<T>& deferred_current() const noexcept
         {
             return main_container_;
+        }
+
+        /**
+        * Get a copy 
+        * */
+        constexpr vector<T> next() const
+        {
+            LockableVector<T> temp(*this);
+            return temp.current();
         }
 
         /**

@@ -31,7 +31,7 @@ namespace zoper
 				log_debug_info("Selected level ", zApp().gameSharedData->startLevel,
 					" GameMode: ", static_cast<u32>(zApp().gameSharedData->gameMode),
 					" Exiting game: ", zApp().gameSharedData->exitGame);
-				parentScene()->sceneManager().terminateScene();
+				parentScene()->sceneManager().sceneController()->terminateScene();
 				break;
 			// Back
 			case 2:

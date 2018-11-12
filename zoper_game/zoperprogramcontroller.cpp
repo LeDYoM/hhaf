@@ -29,7 +29,7 @@ namespace zoper
 		kmSerializer.deserialize("keyboard.txt", *keyMapping);
         hostContext().sceneManager().setViewRect({0,0,2000,2000});
 		
-        hostContext().sceneManager().setSceneDirector([this](sptr<Scene> scene) -> sptr<Scene>
+        hostContext().sceneManager().sceneController()->setSceneDirector([this](sptr<Scene> scene) -> sptr<Scene>
         {
             if (typeid(*scene) == typeid(MenuScene)) 
             {
@@ -37,9 +37,9 @@ namespace zoper
                 if (gameSharedData->exitGame) {
                     return nullptr;
                 }
-                return hostContext().sceneManager().createScene<GameScene>();
+                return hostContext().sceneManager().sceneController()->startScene<GameScene>();
             }
-			return hostContext().sceneManager().createScene<MenuScene>();
+			return hostContext().sceneManager().sceneController()->startScene<MenuScene>();
 		});
 
 		// Hack to test high scores
@@ -48,7 +48,7 @@ namespace zoper
 //            hostContext().sceneManager().startFirstScene<HighScoresScene>();
 		}
 
-        hostContext().sceneManager().startFirstScene<MenuScene>();
+        hostContext().sceneManager().sceneController()->startScene<MenuScene>();
 	}
 
 	IAppDescriptor ZoperProgramController::getAppDescriptor() const

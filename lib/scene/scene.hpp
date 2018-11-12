@@ -49,6 +49,7 @@ namespace lib
             SceneManager *m_sceneManager{ nullptr };
 			friend class core::Host;
 			friend class SceneManager;
+			friend class SceneController;
 		};
 	}
 }

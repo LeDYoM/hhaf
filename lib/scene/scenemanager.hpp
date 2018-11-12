@@ -8,8 +8,8 @@
 #include <mtypes/include/properties.hpp>
 #include <mtypes/include/function.hpp>
 #include <lib/scene/components/componentcontainer.hpp>
-#include <lib/scene/components/statescontroller.hpp>
 #include <lib/scene/scene.hpp>
+#include <lib/scene/scenecontroller.hpp>
 
 #include <lib/core/appservice.hpp>
 #include <lib/core/window.hpp>
@@ -26,67 +26,33 @@ namespace lib
 	}
 	namespace scene
 	{
-        class Scene;
-
-		using SceneDirectorType = function<sptr<Scene>(sptr<Scene>)>;
-
 		class SceneManager : public AppService
 		{
 		public:
 			SceneManager(core::Host& host, core::Window &window);
 			~SceneManager();
 
-			void terminateScene();
-			void setSceneDirector(SceneDirectorType sceneDirector);
-
+			void start();
 			void update();
-
 			void finish();
 
             IResourceRetriever &resources();
 
-            inline Rectf32 viewPort() const noexcept
-            {
-                return m_parentWindow.renderTarget()->viewPort();
-            }
+            Rectf32 viewPort() const noexcept;
+            void setViewPort(const Rectf32& vp) noexcept;
+            Rectf32 viewRect() const noexcept;
+            void setViewRect(const Rectf32& vr) noexcept;
 
-            inline void setViewPort(const Rectf32& vp) noexcept
-            {
-                m_parentWindow.renderTarget()->setViewPort(vp);
-            }
+			inline const sptr<SceneController> &sceneController() const
+				noexcept { return scene_controller_; }
 
-            Rectf32 viewRect() const noexcept
-            {
-                return m_parentWindow.renderTarget()->viewRect();
-            }
-
-            inline void setViewRect(const Rectf32& vr) noexcept
-            {
-                m_parentWindow.renderTarget()->setViewRect(vr);
-            }
-
-			template <typename T>
-			void startFirstScene()
-			{
-                auto scene( createScene<T>() );
-                start();
-				m_statesController->start(std::move(scene));
-			}
-
-			template <typename T>
-			sptr<T> createScene() {
-				auto scene(msptr<T>());
-                startScene(scene);
-				return std::dynamic_pointer_cast<T>(scene);
-			}
-
+			inline sptr<SceneController> &sceneController() 
+				noexcept { return scene_controller_; }
 
 		private:
-            void start();
-            void startScene(sptr<Scene> scene);
 			ComponentContainer m_componentContainer;
-			sptr<StatesController<sptr<Scene>>> m_statesController;
-			SceneDirectorType m_sceneDirector;
+			sptr<SceneController> scene_controller_;
+			SceneDirectorType scene_director_;
 			core::Window &m_parentWindow;
 		};
 	}

@@ -4,6 +4,7 @@
 #define LIB_ZOPERPROGRAMCONTROLLER_HPP
 
 #include <lib/include/iapp.hpp>
+#include <mtypes/include/types.hpp>
 
 namespace zoper
 {

@@ -11,16 +11,17 @@ TEST_CASE("LocableVector constructors", "[LocableVector]")
     LockableVector<u32> locable_vector;
     auto m(locable_vector.current());
 
-    CHECK(m.size() == 0);
-    CHECK(m.empty());
-    CHECK(m.capacity() == 0);
 
 }
 
-TEST_CASE("LocableVector lock", "[LocableVector]")
+TEST_CASE("LocableVector", "[LocableVector]")
 {
     LockableVector<u32> lockable_vector;
     auto m(lockable_vector.current());
+
+    CHECK(m.size() == 0);
+    CHECK(m.empty());
+    CHECK(m.capacity() == 0);
 
     SECTION("Add elements")
     {
@@ -96,17 +97,35 @@ TEST_CASE("LocableVector lock", "[LocableVector]")
             lockable_vector.push_back(5);
             lockable_vector.emplace_back(6);
 
-            CHECK(lockable_vector.are_pending_removes());
-            CHECK(lockable_vector.pending_remove() == 1);
-            CHECK(lockable_vector.are_pending_adds());
-            CHECK(lockable_vector.pending_add() == 2);
+            SECTION("LockableVector::next")
+            {
+                vector<u32> next_one(lockable_vector.next());
 
-            CHECK(lockable_vector.current().size() == 6);
-            CHECK_FALSE(lockable_vector.are_pending_removes());
-            CHECK(lockable_vector.pending_remove() == 0);
-            CHECK_FALSE(lockable_vector.are_pending_adds());
-            CHECK(lockable_vector.pending_add() == 0);
+                CHECK_FALSE(next_one.empty());
+                CHECK(next_one.size() != lockable_vector.deferred_current().size());
+                auto sz(next_one.size());
+                auto rsv(next_one.capacity());
+
+                lockable_vector.push_back(9);
+                lockable_vector.remove_value(3);
+
+                CHECK(next_one.size() == sz);
+                CHECK(next_one.capacity() == rsv);
+            }
+
+            SECTION("More mixing")
+            {
+                CHECK(lockable_vector.are_pending_removes());
+                CHECK(lockable_vector.pending_remove() == 1);
+                CHECK(lockable_vector.are_pending_adds());
+                CHECK(lockable_vector.pending_add() == 2);
+
+                CHECK(lockable_vector.current().size() == 6);
+                CHECK_FALSE(lockable_vector.are_pending_removes());
+                CHECK(lockable_vector.pending_remove() == 0);
+                CHECK_FALSE(lockable_vector.are_pending_adds());
+                CHECK(lockable_vector.pending_add() == 0);
+            }
         }
-
     }
 }

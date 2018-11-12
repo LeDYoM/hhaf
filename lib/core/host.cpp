@@ -108,16 +108,52 @@ namespace lib::core
         logDestruct_NOPARAMS;
     }
 
+    const Window &Host::parentWindow() const noexcept
+    {
+         return *m_window; 
+    }
+
+    Window &Host::parentWindow() noexcept
+    {
+        return *m_window; 
+    }
+    
+    const ResourceManager &Host::resourceManager() const  noexcept 
+    {
+        return *m_resourceManager;
+    }
+    
+    ResourceManager &Host::resourceManager()  noexcept
+    {
+        return *m_resourceManager;
+    }
+    
+    const input::InputSystem &Host::inputSystem() const noexcept
+    {
+        return *m_inputSystem; 
+    }
+
+    input::InputSystem &Host::inputSystem() noexcept
+    { 
+        return *m_inputSystem;
+    }
+    
+    const scene::SceneManager &Host::sceneManager() const noexcept
+    {
+        return *m_sceneManager;
+    }
+    
+    scene::SceneManager &Host::sceneManager() noexcept
+    {
+        return *m_sceneManager;
+    }
+
     bool Host::setApplication(uptr<IApp> iapp)
     {
         if (!m_private->m_appGroup.m_iapp && iapp) 
         {
             log_debug_info("StartingRegistering app...");
             m_private->m_appGroup.m_iapp = std::move(iapp);
-            m_private->m_appGroup.m_hostContext = muptr<HostContext>(this);
-            m_private->m_appGroup.m_appContext = muptr<AppContext>(this);
-            m_private->m_appGroup.m_iapp->setHostContext(&(*(m_private->m_appGroup.m_hostContext)));
-            m_private->m_appGroup.m_iapp->setAppContext(&(*(m_private->m_appGroup.m_appContext)));
             log_debug_info("Starting new app...");
             m_state = AppState::ReadyToStart;
             return true;
@@ -140,6 +176,11 @@ namespace lib::core
             m_window = muptr<Window>(*this, m_private->m_appGroup.m_iapp->getAppDescriptor().wcp);
             m_sceneManager = muptr<scene::SceneManager>(*this, *m_window);
             m_resourceManager = muptr<core::ResourceManager>(*this);
+
+            m_private->m_appGroup.m_hostContext = muptr<HostContext>(this);
+            m_private->m_appGroup.m_appContext = muptr<AppContext>(this);
+            m_private->m_appGroup.m_iapp->setHostContext(&(*(m_private->m_appGroup.m_hostContext)));
+            m_private->m_appGroup.m_iapp->setAppContext(&(*(m_private->m_appGroup.m_appContext)));
 
             m_private->m_appGroup.m_iapp->onInit();
             log_debug_info(m_private->m_appGroup.m_appContext->appId(), ": Starting execution...");

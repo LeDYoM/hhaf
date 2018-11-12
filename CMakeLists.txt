@@ -3,8 +3,6 @@ cmake_minimum_required (VERSION 3.9.2)
 # Turn on the ability to create folders to organize projects (.vcproj)
 # It creates "CMakePredefinedTargets" folder by default and adds CMake
 # defined projects like INSTALL.vcproj and ZERO_CHECK.vcproj
-set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-enable_testing()
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -36,3 +34,4 @@ add_subdirectory(loader)
 add_subdirectory(lib)
 add_subdirectory(backend_sfml)
 add_subdirectory(zoper_game)
+add_subdirectory(librun)
