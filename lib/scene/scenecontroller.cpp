@@ -12,6 +12,12 @@ namespace lib::scene
 		scene_manager_ = scene_manager;
 	}
 
+	bool SceneController::startScene(const str &sceneName)
+	{
+//		scene_factory_.??
+		return true;
+	}
+
 	void SceneController::terminateScene()
 	{
         log_debug_info("Terminating scene ", this->currentState()->name());

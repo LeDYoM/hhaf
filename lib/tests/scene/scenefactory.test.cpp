@@ -4,6 +4,8 @@
 #include <lib/scene/scene.hpp>
 #include <lib/scene/scenefactory.hpp>
 
+#include <typeinfo>
+
 using namespace lib;
 using namespace lib::scene;
 
@@ -61,9 +63,9 @@ TEST_CASE("lib::scene::SceneFactory", "[lib][SceneFactory]")
 
     SECTION("Basic insertion")
     {
-        CHECK(scene_factory.registerSceneType("Scene::TODO", SceneTypeBasic::create));
+        CHECK(scene_factory.registerSceneType("SceneTypeBasic", SceneTypeBasic::create));
         // Insertion of the same element is false
-        CHECK_FALSE(scene_factory.registerSceneType("Scene::TODO", SceneTypeBasic::create));
+        CHECK_FALSE(scene_factory.registerSceneType("SceneTypeBasic", SceneTypeBasic::create));
 
         SECTION("Inserting overloads")
         {
@@ -74,6 +76,17 @@ TEST_CASE("lib::scene::SceneFactory", "[lib][SceneFactory]")
             CHECK_FALSE(scene_factory.registerSceneType<SceneTypeWithStaticTypeName>(SceneTypeWithStaticTypeName::create));            
             CHECK_FALSE(scene_factory.registerSceneType<SceneTypeWithStaticCreateScene>(str("SceneTypeWithStaticCreateScene")));
             CHECK_FALSE(scene_factory.registerSceneType<SceneTypeWithStaticTypeNameAndStaticCreateScene>());
+
+            SECTION("Check existence")
+            {
+                auto scene_type_basic = scene_factory.create("SceneTypeBasic");
+                CHECK(scene_type_basic != nullptr);
+                CHECK(typeid(*scene_type_basic) == typeid(SceneTypeBasic));
+
+                auto scene_type_complete = scene_factory.create<SceneTypeWithStaticTypeName>();
+                CHECK(scene_type_complete != nullptr);
+                CHECK(typeid(*scene_type_complete) == typeid(SceneTypeWithStaticTypeName));
+            }
         }
     }
 }

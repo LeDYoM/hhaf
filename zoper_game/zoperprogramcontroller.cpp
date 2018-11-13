@@ -28,6 +28,12 @@ namespace zoper
 		Serializer<KeyMapping> kmSerializer;
 		kmSerializer.deserialize("keyboard.txt", *keyMapping);
         hostContext().sceneManager().setViewRect({0,0,2000,2000});
+
+		auto &scene_factory(hostContext().sceneManager().sceneController()->sceneFactory());
+
+		scene_factory.registerSceneType<MenuScene>();
+		scene_factory.registerSceneType<GameScene>();
+		scene_factory.registerSceneType<HighScoresScene>();
 		
         hostContext().sceneManager().sceneController()->setSceneDirector([this](sptr<Scene> scene) -> sptr<Scene>
         {

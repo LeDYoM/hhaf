@@ -20,6 +20,11 @@ namespace lib::scene
 		{
 			constructors_[std::move(name)] = scene_cf;
 		}
+
+		inline SceneConstructorFunction get(str name)
+		{
+			return constructors_[std::move(name)];
+		}
 	};
 
 	SceneFactory::SceneFactory() 
@@ -38,4 +43,19 @@ namespace lib::scene
 		return true;
 	}
 
+	uptr<InterfaceType> SceneFactory::create(const str &type_name)
+	{
+		if (!private_->containsSceneType(type_name))
+		{
+			return uptr<InterfaceType>(nullptr);
+		}
+
+		auto constructor(private_->get(type_name));
+		if (constructor.empty())
+		{
+			return uptr<InterfaceType>(nullptr);
+		}
+
+		return constructor();
+	}
 }

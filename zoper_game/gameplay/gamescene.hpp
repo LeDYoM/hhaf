@@ -26,6 +26,8 @@
 #include <lib/scene/components/statescontrolleractuator.hpp>
 #include <lib/scene/components/timercomponent.hpp>
 
+#include <lib/include/scene/iscene.hpp>
+
 namespace zoper
 {
     class Player;
@@ -37,6 +39,9 @@ namespace zoper
     class GameScene final : public scene::Scene, public StatesControllerActuator<size_type>
     {
     public:
+
+        DECLARE_SCENE(GameScene)
+
         GameScene();
         ~GameScene() override;
 

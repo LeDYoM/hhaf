@@ -1,12 +1,13 @@
 #pragma once
 
-#ifndef ZOPER_MENUSCENE_INCLUDE_HPP__
-#define ZOPER_MENUSCENE_INCLUDE_HPP__
+#ifndef ZOPER_MENUSCENE_INCLUDE_HPP
+#define ZOPER_MENUSCENE_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/connection.hpp>
 #include <lib/scene/renderizables/nodequad.hpp>
 #include <lib/scene/scene.hpp>
+#include <lib/include/scene/iscene.hpp>
 
 namespace zoper
 {
@@ -15,10 +16,11 @@ namespace zoper
 	{
 	public:
         using BaseClass = scene::Scene;
-		MenuScene();
-		virtual ~MenuScene() = default;
 
-		constexpr static f32 MenuPosX = 165.0f;
+		DECLARE_SCENE(MenuScene)
+
+		MenuScene();
+		~MenuScene() override;
 
 		virtual void onCreated() override;
 

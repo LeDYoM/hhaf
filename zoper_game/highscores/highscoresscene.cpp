@@ -17,6 +17,7 @@ namespace zoper
 	using namespace lib::scene::nodes;
 
 	HighScoresScene::HighScoresScene() : BaseClass{ "HighScoresScene" } {}
+	HighScoresScene::~HighScoresScene() = default;
 
 	void HighScoresScene::onCreated()
 	{

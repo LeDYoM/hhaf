@@ -10,7 +10,8 @@
 
 namespace lib::scene
 {
-		using SceneConstructorFunction = function<uptr<Scene>()>;
+	using InterfaceType = Scene;
+	using SceneConstructorFunction = function<uptr<InterfaceType>()>;
 
 	class SceneFactory
 	{
@@ -36,6 +37,14 @@ namespace lib::scene
 		constexpr bool registerSceneType()
 		{
 			return registerSceneType(T::StaticTypeName, T::createScene);
+		}
+
+		uptr<InterfaceType> create(const str &type_name);
+
+		template <typename T>
+		constexpr uptr<InterfaceType> create()
+		{
+			return create(T::StaticTypeName);
 		}
 
 	private:
