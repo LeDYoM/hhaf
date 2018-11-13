@@ -14,7 +14,7 @@ TEST_CASE("LocableVector constructors", "[LocableVector]")
 
 }
 
-TEST_CASE("LocableVector", "[LocableVector]")
+TEST_CASE("LockableVector", "[LockableVector]")
 {
     LockableVector<u32> lockable_vector;
     auto m(lockable_vector.current());
