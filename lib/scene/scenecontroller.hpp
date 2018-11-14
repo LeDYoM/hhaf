@@ -13,7 +13,7 @@
 
 namespace lib::scene
 {
-	using SceneDirectorType = function<sptr<Scene>(sptr<Scene>)>;
+	using SceneDirectorType = function<str(const str&)>;
 	class SceneManager;
 
 	class SceneController : public StatesController<sptr<Scene>>
@@ -30,12 +30,11 @@ namespace lib::scene
 		void finish();
 
 		bool startScene(const str &sceneName);
-		template <typename T>
-		sptr<T> startScene()
+
+		template <typename T> 
+		inline bool startScene()
 		{
-			auto scene( msptr<T>() );
-			startScene(scene);
-            return scene;
+			return startScene(T::StaticTypeName);
 		}
 
 		inline SceneFactory& sceneFactory() noexcept { return scene_factory_; }
@@ -44,7 +43,7 @@ namespace lib::scene
 	private:
 		void startScene(sptr<Scene> scene);
 
-		SceneDirectorType m_sceneDirector;
+		SceneDirectorType scene_director_;
 		SceneFactory scene_factory_;
 		SceneManager* scene_manager_{ nullptr };
 	};

@@ -30,8 +30,6 @@ namespace lib
 			return m_callable->Invoke(std::forward<Args>(args)...);
 		}
 
-		constexpr bool empty() const noexcept { return m_callable == nullptr; }
-
 	private:
 		class ICallable {
 		public:
@@ -45,7 +43,7 @@ namespace lib
 			template <typename Y>
 			constexpr CallableT(Y &&t) noexcept : m_t{ std::forward<Y>(t) } {}
 
-			constexpr ReturnValue Invoke(Args... args) override {
+			inline ReturnValue Invoke(Args... args) override {
 				return m_t(std::forward<Args>(args)...);
 			}
 
@@ -62,7 +60,7 @@ namespace lib
 			constexpr CallableMethodPointerT(T*const receiver, const HandlerFunctionPtr function) 
 				: obj{ receiver }, function_{ function } {}
 
-			constexpr ReturnValue Invoke(Args... args) override {
+			inline ReturnValue Invoke(Args... args) override {
 				return (obj->*function_)(std::forward<Args>(args)...);
 			}
 

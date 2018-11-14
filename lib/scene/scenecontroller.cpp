@@ -14,7 +14,8 @@ namespace lib::scene
 
 	bool SceneController::startScene(const str &sceneName)
 	{
-//		scene_factory_.??
+		auto scene = scene_factory_.create(sceneName);
+		startScene(sptr<Scene>(std::move(scene)));
 		return true;
 	}
 
@@ -22,18 +23,18 @@ namespace lib::scene
 	{
         log_debug_info("Terminating scene ", this->currentState()->name());
         sptr<Scene> nextScene;
-		if (m_sceneDirector)
+		if (scene_director_)
         {
-			nextScene = m_sceneDirector(currentState());
+			nextScene = scene_factory_.create(scene_director_(currentState()->name()));
 		}
 
         log_debug_info("Setting new scene: ", nextScene ? nextScene->name():"<nullptr>");
-		this->setState(std::move(nextScene));
+        startScene(std::move(nextScene));
 	}
 
 	void SceneController::setSceneDirector(SceneDirectorType sceneDirector)
 	{
-		m_sceneDirector = std::move(sceneDirector);
+		scene_director_ = std::move(sceneDirector);
 	}
 
 	void SceneController::update()

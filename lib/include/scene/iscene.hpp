@@ -10,6 +10,6 @@
 		{	\
 			return muptr<sceneName>();	\
 		}
-
+		
 #endif
 
