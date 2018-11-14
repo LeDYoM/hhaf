@@ -2,7 +2,7 @@
 
 #include <mtypes/include/types.hpp>
 #include <lib/scene/scene.hpp>
-#include <lib/scene/sceneController.hpp>
+#include <lib/scene/scenecontroller.hpp>
 
 TEST_CASE("lib::scene::SceneController", "[lib][SceneController]")
 {

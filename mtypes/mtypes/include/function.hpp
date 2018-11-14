@@ -30,6 +30,8 @@ namespace lib
 			return m_callable->Invoke(std::forward<Args>(args)...);
 		}
 
+		constexpr bool empty() const noexcept { return m_callable == nullptr; }
+
 	private:
 		class ICallable {
 		public:

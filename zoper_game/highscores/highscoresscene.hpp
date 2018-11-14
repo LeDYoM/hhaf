@@ -11,6 +11,8 @@
 #include <lib/scene/texture.hpp>
 #include <lib/scene/ttfont.hpp>
 
+#include <lib/include/scene/iscene.hpp>
+
 namespace zoper
 {
     using namespace lib;
@@ -18,8 +20,11 @@ namespace zoper
 	class HighScoresScene final : public scene::Scene
 	{
 	public:
+
+		DECLARE_SCENE(HighScoresScene)
+
 		HighScoresScene();
-		virtual ~HighScoresScene() = default;
+		~HighScoresScene() override;
 
 		void onCreated() override;
 		void updateScene() override;

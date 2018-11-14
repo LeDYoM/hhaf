@@ -9,6 +9,7 @@
 #include <lib/scene/components/statescontroller.hpp>
 #include <lib/scene/components/icomponent.hpp>
 #include <lib/scene/scene.hpp>
+#include <lib/scene/scenefactory.hpp>
 
 namespace lib::scene
 {
@@ -28,6 +29,7 @@ namespace lib::scene
 		void update();
 		void finish();
 
+		bool startScene(const str &sceneName);
 		template <typename T>
 		sptr<T> startScene()
 		{
@@ -36,10 +38,14 @@ namespace lib::scene
             return scene;
 		}
 
+		inline SceneFactory& sceneFactory() noexcept { return scene_factory_; }
+		inline const SceneFactory& sceneFactory() const noexcept { return scene_factory_; }
+
 	private:
 		void startScene(sptr<Scene> scene);
 
 		SceneDirectorType m_sceneDirector;
+		SceneFactory scene_factory_;
 		SceneManager* scene_manager_{ nullptr };
 	};
 }
