@@ -29,6 +29,8 @@ namespace lib
 			virtual ~Scene();
 
 			void onCreated() override;
+			virtual void onFinished() {}
+
 			virtual void updateScene() {}
 
 			Scene *const parentScene() noexcept override { return this; }

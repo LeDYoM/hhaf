@@ -19,9 +19,6 @@ namespace zoper
 
 		DECLARE_SCENE(MenuScene)
 
-		MenuScene();
-		~MenuScene() override;
-
 		virtual void onCreated() override;
 
 	private:

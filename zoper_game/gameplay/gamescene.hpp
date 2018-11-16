@@ -42,9 +42,6 @@ namespace zoper
 
         DECLARE_SCENE(GameScene)
 
-        GameScene();
-        ~GameScene() override;
-
         // Inherited via Scene
         virtual void onCreated() override;
         void updateScene() override;

@@ -9,7 +9,13 @@ namespace lib::scene
 {
 	void SceneController::setSceneManager(SceneManager *scene_manager)
 	{
+		assert_debug(scene_manager_ == nullptr, "The scene_manager_ was set already");
 		scene_manager_ = scene_manager;
+
+		this->StateFinished.connect([](const sptr<Scene>& scene) 
+		{
+			scene->onFinished();
+		});
 	}
 
 	bool SceneController::startScene(const str &sceneName)

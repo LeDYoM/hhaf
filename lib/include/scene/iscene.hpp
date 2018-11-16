@@ -3,12 +3,17 @@
 #ifndef LIB_ISCENE_INTERFACE_INCLUDE_HPP
 #define LIB_ISCENE_INTERFACE_INCLUDE_HPP
 
-#define STRINGIFY(...) #__VA_ARGS__
-#define DECLARE_SCENE(sceneName)	static constexpr char StaticTypeName[] = #sceneName;	\
+#define DECLARE_SCENE(sceneName) sceneName() : lib::scene::Scene{ lib::str(#sceneName) } {}	\
 	\
-		static uptr<Scene> createScene()	\
+	~sceneName() override {}	\
+	\
+	SIMPLE_DECLARE_SCENE(sceneName)
+
+#define SIMPLE_DECLARE_SCENE(sceneName)	static constexpr char StaticTypeName[] = #sceneName;	\
+	\
+		static lib::uptr<lib::scene::Scene> createScene()	\
 		{	\
-			return muptr<sceneName>();	\
+			return lib::muptr<sceneName>();	\
 		}
 		
 #endif

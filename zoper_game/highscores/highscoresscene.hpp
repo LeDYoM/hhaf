@@ -23,9 +23,6 @@ namespace zoper
 
 		DECLARE_SCENE(HighScoresScene)
 
-		HighScoresScene();
-		~HighScoresScene() override;
-
 		void onCreated() override;
 		void updateScene() override;
 
