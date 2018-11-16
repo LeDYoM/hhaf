@@ -36,9 +36,8 @@ namespace lib
                     if (!animation->animate()) 
                     {
                         animation->executeEndAction();
-//                        return false;
+                        m_private->m_animations.remove_value(animation);
                     }
-//                    return true;
                 }
 
                 m_private->m_animations.update();
