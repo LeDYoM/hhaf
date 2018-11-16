@@ -15,9 +15,6 @@ namespace zoper
     using namespace lib::scene;
     using namespace lib::scene::nodes;
 
-    MenuScene::MenuScene() : BaseClass{ "MenuScene" } {}
-    MenuScene::~MenuScene() = default;
-
     void MenuScene::onCreated()
     {
         BaseClass::onCreated();

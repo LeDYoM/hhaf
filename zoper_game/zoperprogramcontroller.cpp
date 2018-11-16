@@ -35,17 +35,17 @@ namespace zoper
 		scene_factory.registerSceneType<GameScene>();
 		scene_factory.registerSceneType<HighScoresScene>();
 		
-        hostContext().sceneManager().sceneController()->setSceneDirector([this](sptr<Scene> scene) -> sptr<Scene>
+        hostContext().sceneManager().sceneController()->setSceneDirector([this](const str& scene_name) -> str
         {
-            if (typeid(*scene) == typeid(MenuScene)) 
+            if (scene_name == (MenuScene::StaticTypeName))
             {
                 // Did the user selected exit?
                 if (gameSharedData->exitGame) {
-                    return nullptr;
+                    return str();
                 }
-                return hostContext().sceneManager().sceneController()->startScene<GameScene>();
+                return GameScene::StaticTypeName;
             }
-			return hostContext().sceneManager().sceneController()->startScene<MenuScene>();
+			return MenuScene::StaticTypeName;
 		});
 
 		// Hack to test high scores

@@ -35,11 +35,6 @@ namespace zoper
     constexpr u32 NumTokens = 5;
     constexpr u32 PlayerToken = NumTokens;
 
-    GameScene::GameScene() : Scene("GameScene") {}
-
-    GameScene::~GameScene() = default;
-
-
     void GameScene::onCreated()
     {
         BaseClass::onCreated();

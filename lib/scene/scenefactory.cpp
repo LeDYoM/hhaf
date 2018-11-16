@@ -51,7 +51,7 @@ namespace lib::scene
 		}
 
 		auto constructor(private_->get(type_name));
-		if (constructor.empty())
+		if (!constructor)
 		{
 			return uptr<InterfaceType>(nullptr);
 		}
