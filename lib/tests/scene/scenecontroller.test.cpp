@@ -6,7 +6,15 @@
 #include <lib/scene/scene.hpp>
 #include <lib/scene/scenecontroller.hpp>
 #include <lib/include/scene/iscene.hpp>
-#include <lib/scene/scenemanager.hpp>
+
+struct CommonData
+{
+    bool exit = false;
+    lib::u32 step{ 0U };
+    lib::sptr<lib::scene::SceneController> scene_controller = lib::msptr<lib::scene::SceneController>();
+};
+
+CommonData common;
 
 class UniqueScene : public lib::scene::Scene
 {
@@ -32,7 +40,7 @@ public:
 
     void updateScene() override
     {
-        sceneManager().sceneController()->terminateScene();
+        common.scene_controller->terminateScene();
     }
 };
 
@@ -53,15 +61,6 @@ TEST_CASE("SceneController", "[lib][SceneController]")
         Update
     };
 
-    struct CommonData
-    {
-        bool exit = false;
-        u32 step{ 0U };
-        sptr<SceneController> scene_controller = msptr<SceneController>();
-    };
-
-    CommonData common;
-
     SECTION("Simple scene")
     {
         CHECK(common.scene_controller->registerAndStartScene<UniqueScene>("UniqueScene"));
@@ -78,6 +77,11 @@ TEST_CASE("SceneController", "[lib][SceneController]")
 
     SECTION("Two scenes")
     {
+        common.scene_controller->setSceneDirector([](const str&scene_name)
+        {
+            CHECK(str(scene_name) == GroupScene1::StaticTypeName);
+            return str(GroupScene2::StaticTypeName);
+        });
         CHECK(common.scene_controller->registerSceneType<GroupScene1>());
         CHECK(common.scene_controller->registerSceneType<GroupScene2>());
         CHECK_FALSE(common.scene_controller->registerSceneType<GroupScene1>());
@@ -87,5 +91,7 @@ TEST_CASE("SceneController", "[lib][SceneController]")
 
         common.scene_controller->update();
         CHECK(common.scene_controller->currentState()->name() == GroupScene1::StaticTypeName);
+        common.scene_controller->update();
+        CHECK(common.scene_controller->currentState()->name() == GroupScene2::StaticTypeName);
     }
 }
