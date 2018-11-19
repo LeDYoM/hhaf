@@ -11,11 +11,6 @@ namespace lib::scene
 	{
 		assert_debug(scene_manager_ == nullptr, "The scene_manager_ was set already");
 		scene_manager_ = scene_manager;
-
-		this->StateFinished.connect([](const sptr<Scene>& scene) 
-		{
-			scene->onFinished();
-		});
 	}
 
 	bool SceneController::startScene(const str &sceneName)
@@ -61,6 +56,12 @@ namespace lib::scene
     void SceneController::startScene(sptr<Scene> scene)
     {
         scene->m_sceneManager = scene_manager_;
+
+		this->StateFinished.connect([](const sptr<Scene>& scene) 
+		{
+			scene->onFinished();
+		});
+
         scene->onCreated();
 		BaseClass::start(std::move(scene));
     }
