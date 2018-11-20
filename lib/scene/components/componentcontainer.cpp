@@ -64,7 +64,6 @@ namespace lib
                 for (auto component : m_components.current())
                 {
                     component->update();
-//                    return true;
                 }
                 m_components.update();
             }
