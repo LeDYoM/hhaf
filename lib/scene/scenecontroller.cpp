@@ -55,14 +55,17 @@ namespace lib::scene
 
     void SceneController::startScene(sptr<Scene> scene)
     {
-        scene->m_sceneManager = scene_manager_;
+        if (scene)
+        {
+            scene->m_sceneManager = scene_manager_;
 
-		this->StateFinished.connect([](const sptr<Scene>& scene) 
-		{
-			scene->onFinished();
-		});
+            this->StateFinished.connect([](const sptr<Scene>& scene)
+            {
+                scene->onFinished();
+            });
 
-        scene->onCreated();
-		BaseClass::start(std::move(scene));
+            scene->onCreated();
+        }
+        BaseClass::start(std::move(scene));
     }
 }
