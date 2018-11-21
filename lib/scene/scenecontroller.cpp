@@ -41,10 +41,10 @@ namespace lib::scene
 	void SceneController::update()
 	{
 		BaseClass::update();
-        if (auto&& currentScene = BaseClass::currentState()) 
+        if (auto current_scene = currentScene())
         {
-			currentScene->updateScene();
-			currentScene->render(false);
+			current_scene->updateScene();
+			current_scene->render(false);
 		}
 	}
 
@@ -52,6 +52,11 @@ namespace lib::scene
 	{
 		this->pop_state();
 	}
+
+    sptr<Scene> SceneController::currentScene()
+    {
+        return BaseClass::currentState();
+    }
 
     void SceneController::startScene(sptr<Scene> scene)
     {

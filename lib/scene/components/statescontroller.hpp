@@ -36,8 +36,11 @@ namespace lib
 			constexpr void start(T firstState) noexcept 
             {
 				assert_debug(m_statesStack.size() == 0, "You cannot call start if the stack is not empty");
-                BeforeStart();
-				push_state(std::move(firstState));
+                if (m_statesStack.size() == 0)
+                {
+                    BeforeStart();
+                    push_state(std::move(firstState));
+                }
 			}
 
 			constexpr void push_state(T firstState) noexcept 
@@ -74,7 +77,8 @@ namespace lib
 				});
 			}
 
-			constexpr void setState(T newState) {
+			constexpr void setState(T newState) 
+            {
 				changeState(std::move(newState));
 			}
 
