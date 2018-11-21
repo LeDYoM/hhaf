@@ -240,8 +240,6 @@ namespace lib::core
         m_inputSystem->preUpdate();
         m_sceneManager->update();
 
-        __ASSERT(m_currentScene || m_nextScene, "Current scene and nextscene cannot be nullptr at same time");
-
         m_window->postLoop();
         m_inputSystem->postUpdate();
         return windowWants2Close;
@@ -249,7 +247,7 @@ namespace lib::core
 
     void Host::exitProgram()
     {
-        __ASSERT(m_state == AppState::Executing, "Cannot terminate a program that is not in the executing state");
+        assert_release(m_state == AppState::Executing, "Cannot terminate a program that is not in the executing state");
         m_state = AppState::ReadyToTerminate;
     }
 

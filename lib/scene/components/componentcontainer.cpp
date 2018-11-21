@@ -34,7 +34,7 @@ namespace lib
 
 		bool ComponentContainer::addComponent(sptr<IComponent> nc)
 		{
-			__ASSERT(nc, "Trying to add a nullptr component");
+			assert_release(nc != nullptr, "Trying to add a nullptr component");
 			const auto& tinfo(typeid(*nc));
 			const std::type_index tindex(tinfo);
 			
