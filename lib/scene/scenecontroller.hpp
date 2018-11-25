@@ -30,6 +30,7 @@ namespace lib::scene
 		void finish();
 
         sptr<Scene> currentScene();
+        bool currentSceneIsNull();
 
 		bool startScene(const str &sceneName);
 

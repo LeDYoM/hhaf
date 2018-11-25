@@ -50,7 +50,11 @@ namespace lib::scene
 
 	void SceneController::finish()
 	{
-		this->pop_state();
+        while (BaseClass::hasActiveState())
+        {
+            this->pop_state();
+            BaseClass::update();
+        }
 	}
 
     sptr<Scene> SceneController::currentScene()
@@ -71,6 +75,19 @@ namespace lib::scene
 
             scene->onCreated();
         }
-        BaseClass::start(std::move(scene));
+        
+        if (!BaseClass::hasActiveState())
+        {
+            BaseClass::start(std::move(scene));
+        }
+        else
+        {
+            BaseClass::push_state(std::move(scene));
+        }
+    }
+
+    bool SceneController::currentSceneIsNull()
+    {
+        return currentScene() == nullptr;
     }
 }

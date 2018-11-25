@@ -94,7 +94,6 @@ namespace lib::core
     Host::Host(int argc, char *argv[])
         : m_private{muptr<HostPrivate>(argc,argv)}, m_state{ AppState::NotInitialized }
     {
-        logConstruct_NOPARAMS;
         log_release_info("Starting HostController...");
         log_release_info("LIB version: ", LIB_VERSION_MAJOR,".", LIB_VERSION_MINOR,".", LIB_VERSION_PATCH);
 #ifdef ACCEPT_PARAMETERS
@@ -105,7 +104,6 @@ namespace lib::core
 
     Host::~Host()
     {
-        logDestruct_NOPARAMS;
     }
 
     const Window &Host::parentWindow() const noexcept

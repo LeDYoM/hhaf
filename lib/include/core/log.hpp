@@ -49,12 +49,25 @@ namespace lib
    		template<level_type level, severity_type severity, typename...Args>
 		constexpr void log(Args&&...args) noexcept
 		{
-			if constexpr (compile_logs<level>) {
+			if constexpr (compile_logs<level>)
+			{
 				str log_stream(detail::severity_txt<severity>());
 				log_stream << make_str(std::forward<Args>(args)...);
 				detail::commitlog(log_stream);
 			}
 		}
+
+   		template<level_type level, typename T>
+		constexpr void execute_in() noexcept
+		{
+			if constexpr (compile_logs<level>)
+			{
+				str log_stream(detail::severity_txt<severity>());
+				log_stream << make_str(std::forward<Args>(args)...);
+				detail::commitlog(log_stream);
+			}
+		}
+
 	}
 
 	template<typename ...Args>
@@ -92,8 +105,6 @@ namespace lib
 
 }
 
-#define logConstruct_NOPARAMS
-#define logDestruct_NOPARAMS
 #define CLIENT_EXECUTE_IN_DEBUG(x)	x
 
 #endif
