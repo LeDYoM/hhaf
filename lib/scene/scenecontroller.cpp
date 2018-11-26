@@ -67,22 +67,24 @@ namespace lib::scene
         if (scene)
         {
             scene->m_sceneManager = scene_manager_;
-
-            this->StateFinished.connect([](const sptr<Scene>& scene)
-            {
-                scene->onFinished();
-            });
-
             scene->onCreated();
         }
         
         if (!BaseClass::hasActiveState())
         {
+            this->StateFinished.connect([](const sptr<Scene>& scene)
+            {
+                if (scene)
+                {
+                    scene->onFinished();
+                }
+            });
+
             BaseClass::start(std::move(scene));
         }
         else
         {
-            BaseClass::push_state(std::move(scene));
+            BaseClass::setState(std::move(scene));
         }
     }
 
