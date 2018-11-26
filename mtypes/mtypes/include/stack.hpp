@@ -29,7 +29,7 @@ namespace lib
 		constexpr size_type size() const noexcept { return m_data.size(); }
 		constexpr bool empty() const noexcept { return m_data.empty(); }
         constexpr T& back() noexcept { return m_data.back(); }
-        constexpr const T& cback() const noexcept { return m_data.back(); }
+        constexpr const T& cback() const noexcept { return m_data.cback(); }
 
 		constexpr void swap(stack& other) {
 			swap(m_data, other.m_data);

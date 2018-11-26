@@ -67,7 +67,7 @@ namespace lib::core
         log_debug_info("Fullscreen:" , wcp.fullScreen);
         log_debug_info("Antialiasing:", wcp.antialiasing);
 
-        __ASSERT(!m_wPrivate->m_backendWindow, "Cannot create window twice");
+        assert_release(!m_wPrivate->m_backendWindow, "Cannot create window twice");
         log_debug_info("Creating window...");
 
         // Create window object

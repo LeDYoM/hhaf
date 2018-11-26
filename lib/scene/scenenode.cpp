@@ -58,7 +58,7 @@ namespace lib::scene
 
     bool SceneNode::moveLastBeforeNode(const sptr<SceneNode> &beforeNode)
     {
-        __ASSERT(!m_groups.empty(), "Cannot moveLastInsertedBeforeNode on empty container");
+        assert_release(!m_groups.empty(), "Cannot moveLastInsertedBeforeNode on empty container");
         if (!beforeNode) return false;
 
         // Find the node to swap before to
