@@ -35,11 +35,12 @@ public:
 
     void onCreated() override
     {
-
+        ++(common.step);
     }
 
     void updateScene() override
     {
+        ++(common.step);
         common.scene_controller->terminateScene();
     }
 };
@@ -48,18 +49,23 @@ class GroupScene2 : public lib::scene::Scene
 {
 public:
     DECLARE_SCENE(GroupScene2)
+
+    void onCreated() override
+    {
+        ++(common.step);
+    }
+
+    void updateScene() override
+    {
+        ++(common.step);
+        common.scene_controller->terminateScene();
+    }
 };
 
 TEST_CASE("SceneController", "[lib][SceneController]")
 {
     using namespace lib;
     using namespace lib::scene;
-
-    enum class TestScenesState
-    {
-        Created = 0U,
-        Update
-    };
 
     SECTION("Simple scene")
     {
@@ -79,19 +85,33 @@ TEST_CASE("SceneController", "[lib][SceneController]")
     {
         common.scene_controller->setSceneDirector([](const str&scene_name)
         {
-            CHECK(str(scene_name) == GroupScene1::StaticTypeName);
-            return str(GroupScene2::StaticTypeName);
+            if (str(scene_name) == GroupScene1::StaticTypeName)
+            {
+                return str(GroupScene2::StaticTypeName);
+            }
+            else if (str(scene_name) == GroupScene2::StaticTypeName)
+            {
+                return str("");
+            }
+            CHECK(false);
+            return str("");
         });
         CHECK(common.scene_controller->registerSceneType<GroupScene1>());
         CHECK(common.scene_controller->registerSceneType<GroupScene2>());
         CHECK_FALSE(common.scene_controller->registerSceneType<GroupScene1>());
         CHECK_FALSE(common.scene_controller->registerSceneType<GroupScene2>());
 
+        common.step = 0U;
         common.scene_controller->startScene<GroupScene1>();
+        CHECK(common.step == 1U);
 
+        // Update triggers finish and creation of new scene.
         common.scene_controller->update();
         CHECK(common.scene_controller->currentState()->name() == GroupScene1::StaticTypeName);
+        CHECK(common.step == 3U);
+
         common.scene_controller->update();
         CHECK(common.scene_controller->currentState()->name() == GroupScene2::StaticTypeName);
+        CHECK(common.step == 4U);
     }
 }
