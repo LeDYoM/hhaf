@@ -92,4 +92,9 @@ namespace lib::scene
     {
         return currentScene() == nullptr;
     }
+
+    bool SceneController::isActive()
+    {
+        return !currentSceneIsNull() && hasActiveState();
+    }
 }

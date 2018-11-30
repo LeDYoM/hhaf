@@ -30,7 +30,8 @@ namespace lib::scene
 		void finish();
 
         sptr<Scene> currentScene();
-        bool currentSceneIsNull();
+	    bool isActive();
+
 
 		bool startScene(const str &sceneName);
 
@@ -68,6 +69,7 @@ namespace lib::scene
 
 		inline SceneFactory& sceneFactory() noexcept { return scene_factory_; }
 		inline const SceneFactory& sceneFactory() const noexcept { return scene_factory_; }
+        bool currentSceneIsNull();
 
 	private:
 		void startScene(sptr<Scene> scene);

@@ -22,12 +22,6 @@ public:
     DECLARE_SCENE(UniqueScene)
 };
 
-enum class SceneState
-{
-    Created = 0U,
-    Finished
-};
-
 class GroupScene1 : public lib::scene::Scene
 {
 public:
@@ -113,5 +107,8 @@ TEST_CASE("SceneController", "[lib][SceneController]")
         common.scene_controller->update();
         CHECK(common.scene_controller->currentState()->name() == GroupScene2::StaticTypeName);
         CHECK(common.step == 4U);
+        CHECK(common.scene_controller->currentSceneIsNull());
+        common.scene_controller->update();
+        CHECK_FALSE(common.scene_controller->isActive());
     }
 }
