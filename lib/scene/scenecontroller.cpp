@@ -11,11 +11,6 @@ namespace lib::scene
 	{
 		assert_debug(scene_manager_ == nullptr, "The scene_manager_ was set already");
 		scene_manager_ = scene_manager;
-
-		this->StateFinished.connect([](const sptr<Scene>& scene) 
-		{
-			scene->onFinished();
-		});
 	}
 
 	bool SceneController::startScene(const str &sceneName)
@@ -46,22 +41,55 @@ namespace lib::scene
 	void SceneController::update()
 	{
 		BaseClass::update();
-        if (auto&& currentScene = BaseClass::currentState()) 
+        if (auto current_scene = currentScene())
         {
-			currentScene->updateScene();
-			currentScene->render(false);
+			current_scene->updateScene();
+			current_scene->render(false);
 		}
 	}
 
 	void SceneController::finish()
 	{
-		this->pop_state();
+        while (BaseClass::hasActiveState())
+        {
+            this->pop_state();
+            BaseClass::update();
+        }
 	}
+
+    sptr<Scene> SceneController::currentScene()
+    {
+        return BaseClass::currentState();
+    }
 
     void SceneController::startScene(sptr<Scene> scene)
     {
-        scene->m_sceneManager = scene_manager_;
-        scene->onCreated();
-		BaseClass::start(std::move(scene));
+        if (scene)
+        {
+            scene->m_sceneManager = scene_manager_;
+            scene->onCreated();
+        }
+        
+        if (!BaseClass::hasActiveState())
+        {
+            this->StateFinished.connect([](const sptr<Scene>& scene)
+            {
+                if (scene)
+                {
+                    scene->onFinished();
+                }
+            });
+
+            BaseClass::start(std::move(scene));
+        }
+        else
+        {
+            BaseClass::setState(std::move(scene));
+        }
+    }
+
+    bool SceneController::currentSceneIsNull()
+    {
+        return currentScene() == nullptr;
     }
 }

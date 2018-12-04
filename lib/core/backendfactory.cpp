@@ -85,7 +85,6 @@ namespace lib::backend
         m_shaderFactory = nullptr;
 
 		loader::destroyLoader();
-		logDestruct_NOPARAMS;
 	}
 
 	bool BackendFactory::initilialize(const str&)

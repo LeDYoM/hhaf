@@ -49,35 +49,48 @@ namespace lib
    		template<level_type level, severity_type severity, typename...Args>
 		constexpr void log(Args&&...args) noexcept
 		{
-			if constexpr (compile_logs<level>) {
+			if constexpr (compile_logs<level>)
+			{
 				str log_stream(detail::severity_txt<severity>());
 				log_stream << make_str(std::forward<Args>(args)...);
 				detail::commitlog(log_stream);
 			}
 		}
+
+   		template<level_type level, typename T>
+		constexpr void execute_in() noexcept
+		{
+			if constexpr (compile_logs<level>)
+			{
+				str log_stream(detail::severity_txt<severity>());
+				log_stream << make_str(std::forward<Args>(args)...);
+				detail::commitlog(log_stream);
+			}
+		}
+
 	}
 
 	template<typename ...Args>
-	constexpr void log_debug_info(Args&&... args) noexcept {
-        using namespace log;
+	constexpr void log_debug_info(Args&&... args) noexcept 
+	{
 		log::log<log::level_type::debug, log::severity_type::info>(std::forward<Args>(args)...);
 	}
 
 	template<typename ...Args>
-	constexpr void log_debug_error(Args&&... args) noexcept {
+	constexpr void log_debug_error(Args&&... args) noexcept 
+	{
 		log::log<log::level_type::debug, log::severity_type::error>(std::forward<Args>(args)...);
 	}
 
 	template<typename ...Args>
-	constexpr void log_release_info(Args&&... args) noexcept {
-        using namespace log;
-		log::log<level_type::release, severity_type::info>(std::forward<Args>(args)...);
+	constexpr void log_release_info(Args&&... args) noexcept 
+	{
+		log::log<log::level_type::release, log::severity_type::info>(std::forward<Args>(args)...);
 	}
 
 	template<typename ...Args>
 	constexpr void log_release_error(Args&&... args) noexcept {
-        using namespace log;
-        log::log<level_type::release, severity_type::error>(std::forward<Args>(args)...);
+        log::log<log::level_type::release, log::severity_type::error>(std::forward<Args>(args)...);
 	}
 
 	template<typename ...Args>
@@ -92,12 +105,6 @@ namespace lib
 
 }
 
-#define logConstruct_NOPARAMS
-#define logDestruct_NOPARAMS
-#define __ASSERT(...)
-#define CLIENT_ASSERT(...)
-#define logConstruct(...)
-#define logDestruct(...)
 #define CLIENT_EXECUTE_IN_DEBUG(x)	x
 
 #endif

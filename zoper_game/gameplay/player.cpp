@@ -35,7 +35,7 @@ namespace zoper
 
     void Player::movePlayer(const Direction & direction, const sptr<board::BoardModelComponent>& boardModel)
     {
-        CLIENT_ASSERT(direction.isValid(), "Invalid direction passed to move");
+        assert_debug(direction.isValid(), "Invalid direction passed to move");
         currentDirection = direction;
         auto nPosition = direction.applyToVector(boardPosition());
         if (TokenZones::pointInCenter(nPosition)) 

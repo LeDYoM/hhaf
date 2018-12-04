@@ -26,13 +26,6 @@ namespace lib::scene
 	void SceneManager::update()
 	{
 		m_componentContainer.updateComponents();
-/*
-        if (auto&& currentScene = m_statesController->currentState()) 
-        {
-			currentScene->updateScene();
-			currentScene->render(false);
-		}
-		*/
 	}
 
     void SceneManager::finish()
