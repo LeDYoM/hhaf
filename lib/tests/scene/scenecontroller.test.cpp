@@ -107,8 +107,9 @@ TEST_CASE("SceneController", "[lib][SceneController]")
         common.scene_controller->update();
         CHECK(common.scene_controller->currentState()->name() == GroupScene2::StaticTypeName);
         CHECK(common.step == 4U);
-        CHECK(common.scene_controller->currentSceneIsNull());
+        CHECK_FALSE(common.scene_controller->currentSceneIsNull());
         common.scene_controller->update();
+        CHECK(common.scene_controller->currentSceneIsNull());
         CHECK_FALSE(common.scene_controller->isActive());
     }
 }
