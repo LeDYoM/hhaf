@@ -9,6 +9,7 @@
 #include <lib/scene/vertex.hpp>
 #include <lib/include/key.hpp>
 #include <lib/scene/vertexarray.hpp>
+#include "iinput.hpp"
 #include "itexture.hpp"
 
 namespace lib
@@ -17,7 +18,7 @@ namespace lib
 	namespace backend
 	{
         class IRenderTarget;
-		class IWindow
+		class IWindow : public IInput
 		{
 		public:
 
@@ -33,13 +34,6 @@ namespace lib
 			virtual void closeWindow() = 0;
 
             virtual IRenderTarget *renderTarget() = 0;
-
-			// Input part
-			virtual bool arePendingKeyPresses() const = 0;
-			virtual bool arePendingKeyReleases() const = 0;
-
-			virtual input::Key popKeyPress() = 0;
-			virtual input::Key popKeyRelease() = 0;
 		};
 
 		class IWindowProviderInfo
@@ -53,4 +47,3 @@ namespace lib
 }
 
 #endif
-
