@@ -18,7 +18,7 @@ namespace lib
 	namespace backend
 	{
         class IRenderTarget;
-		class IWindow : public IInput
+		class IWindow
 		{
 		public:
 
@@ -34,6 +34,7 @@ namespace lib
 			virtual void closeWindow() = 0;
 
             virtual IRenderTarget *renderTarget() = 0;
+            virtual IInput *inputSystem() = 0;
 		};
 
 		class IWindowProviderInfo

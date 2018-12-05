@@ -42,22 +42,22 @@ namespace lib::core
 
     bool Window::arePendingKeyPresses() const
     {
-        return m_wPrivate->m_backendWindow->arePendingKeyPresses();
+        return m_wPrivate->m_backendWindow->inputSystem()->arePendingKeyPresses();
     }
 
     bool Window::arePendingKeyReleases() const
     {
-        return m_wPrivate->m_backendWindow->arePendingKeyReleases();
+        return m_wPrivate->m_backendWindow->inputSystem()->arePendingKeyReleases();
     }
 
     input::Key Window::popKeyPress()
     {
-        return m_wPrivate->m_backendWindow->popKeyPress();
+        return m_wPrivate->m_backendWindow->inputSystem()->popKeyPress();
     }
 
     input::Key Window::popKeyRelease()
     {
-        return m_wPrivate->m_backendWindow->popKeyRelease();
+        return m_wPrivate->m_backendWindow->inputSystem()->popKeyRelease();
     }
 
     void Window::create(const WindowCreationParams &wcp)

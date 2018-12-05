@@ -8,12 +8,14 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
+
+#include "inputsystem.hpp"
+
 #include <lib/scene/vertexarray.hpp>
 #include <lib/include/iapp.hpp>
 #include <lib/include/backend/iwindow.hpp>
+#include <lib/include/backend/iinput.hpp>
 #include <lib/include/backend/irendertarget.hpp>
-
-#include <queue>
 
 namespace lib::backend::sfmlb
 {
@@ -49,23 +51,13 @@ namespace lib::backend::sfmlb
         void setWindowTitle(str newTitle) override;
         void closeWindow() override;
 
-        // Input part
-        bool arePendingKeyPresses() const override;
-        bool arePendingKeyReleases() const override;
-
-        input::Key popKeyPress() override;
-        input::Key popKeyRelease() override;
-
+        virtual IInput *inputSystem() override;
     protected:
         virtual void onCreate();
         virtual void onResize();
 
     private:
-        void keyEvent(const sf::Event &e);
-
-        std::queue<input::Key> m_keysPressed;
-        std::queue<input::Key> m_keysReleased;
-
+        InputSystem input_system_;
     };
 
     class WindowBackendInfo : public IWindowProviderInfo
