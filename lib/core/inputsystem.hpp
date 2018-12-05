@@ -4,9 +4,11 @@
 #define LIB_INPUTSYSTEM_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
+
 #include <lib/include/key.hpp>
+#include <lib/include/backend/iinputdriver.hpp>
+
 #include "appservice.hpp"
-#include <list>
 
 namespace lib
 {

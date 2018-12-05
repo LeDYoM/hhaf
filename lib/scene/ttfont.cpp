@@ -4,6 +4,7 @@
 #include <lib/core/backendfactory.hpp>
 
 #include <map>
+#include <algorithm>
 
 namespace lib::scene
 {

@@ -4,12 +4,9 @@
 #define LIB_BACKEND_IWINDOW_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <mtypes/include/vector2d.hpp>
-#include <mtypes/include/rect.hpp>
-#include <lib/scene/vertex.hpp>
-#include <lib/include/key.hpp>
-#include <lib/scene/vertexarray.hpp>
-#include "iinput.hpp"
+#include <mtypes/include/str.hpp>
+
+#include "iinputdriver.hpp"
 #include "itexture.hpp"
 
 namespace lib
@@ -34,7 +31,7 @@ namespace lib
 			virtual void closeWindow() = 0;
 
             virtual IRenderTarget *renderTarget() = 0;
-            virtual IInput *inputSystem() = 0;
+            virtual IInputDriver *inputDriver() = 0;
 		};
 
 		class IWindowProviderInfo

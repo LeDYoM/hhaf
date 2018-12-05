@@ -1,11 +1,11 @@
 #include <lib/include/key.hpp>
 
-#include "inputsystem.hpp"
+#include "inputdriver.hpp"
 #include "conversions.hpp"
 
 namespace lib::backend::sfmlb
 {
-	void InputSystem::keyEvent(const sf::Event &e)
+	void InputDriver::keyEvent(const sf::Event &e)
 	{
 		const auto k(doCast(e.key.code));
 		if (k != input::Key::Unknown) {
@@ -18,12 +18,12 @@ namespace lib::backend::sfmlb
 		}
 	}
 
-	bool InputSystem::arePendingKeyPresses() const
+	bool InputDriver::arePendingKeyPresses() const
 	{
 		return !m_keysPressed.empty();
 	}
 
-	bool InputSystem::arePendingKeyReleases() const
+	bool InputDriver::arePendingKeyReleases() const
 	{
 		return !m_keysReleased.empty();
 	}
@@ -38,12 +38,12 @@ namespace lib::backend::sfmlb
 		return k;
 	}
 
-	input::Key InputSystem::popKeyPress()
+	input::Key InputDriver::popKeyPress()
 	{
 		return popKey(m_keysPressed);
 	}
 
-	input::Key InputSystem::popKeyRelease()
+	input::Key InputDriver::popKeyRelease()
 	{
 		return popKey(m_keysReleased);
 	}

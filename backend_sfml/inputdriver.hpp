@@ -1,19 +1,19 @@
 #pragma once
 
-#ifndef LIB_BACKEND_INPUT_INCLUDE_HPP
-#define LIB_BACKEND_INPUT_INCLUDE_HPP
+#ifndef LIB_BACKEND_SFMLB_INPUTDRIVER_INCLUDE_HPP
+#define LIB_BACKEND_SFMLB_INPUTDRIVER_INCLUDE_HPP
 
-#include <lib/include/backend/iinput.hpp>
+#include <lib/include/backend/iinputdriver.hpp>
 #include <SFML/Window/Event.hpp>
 #include <queue>
 
 namespace lib::backend::sfmlb
 {
-    class InputSystem : public IInput
+    class InputDriver : public IInputDriver
     {
     public:
-        InputSystem() = default;
-        ~InputSystem() override = default;
+        InputDriver() = default;
+        ~InputDriver() override = default;
 
         bool arePendingKeyPresses() const override;
         bool arePendingKeyReleases() const override;

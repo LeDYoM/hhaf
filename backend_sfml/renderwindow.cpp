@@ -85,7 +85,7 @@ namespace lib::backend::sfmlb
 			}
 			else if (event.type == sf::Event::KeyPressed || event.type == sf::Event::KeyReleased) 
             {
-                input_system_.keyEvent(event);
+                input_driver_.keyEvent(event);
 			}
 		}
 		return false;
@@ -106,9 +106,9 @@ namespace lib::backend::sfmlb
 		Window::close();
 	}
 
-    IInput * RenderWindow::inputSystem()
+    IInputDriver * RenderWindow::inputDriver()
     {
-        return &input_system_;
+        return &input_driver_;
     }
 
 	void RenderWindow::onCreate()
