@@ -6,6 +6,7 @@
 #include "appservice.hpp"
 
 #include <lib/include/backend/iwindow.hpp>
+#include <lib/include/backend/iinputdriver.hpp>
 
 #include <lib/include/key.hpp>
 
@@ -36,13 +37,7 @@ namespace lib
             virtual void onDestroy();
 
             sptr<RenderTarget> renderTarget();
-
-            bool arePendingKeyPresses() const;
-            bool arePendingKeyReleases() const;
-
-            input::Key popKeyPress();
-            input::Key popKeyRelease();
-
+            sptr<backend::IInputDriver> inputDriver();
         private:
             void create(const WindowCreationParams &wcp);
             struct WindowPrivate;
