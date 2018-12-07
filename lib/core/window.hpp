@@ -37,7 +37,7 @@ namespace lib
             virtual void onDestroy();
 
             sptr<RenderTarget> renderTarget();
-            sptr<backend::IInputDriver> inputDriver();
+            backend::IInputDriver* inputDriver();
         private:
             void create(const WindowCreationParams &wcp);
             struct WindowPrivate;

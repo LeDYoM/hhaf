@@ -18,7 +18,7 @@ namespace lib
     */
 	class AppService
 	{
-	public:
+	protected:
         constexpr AppService(core::Host &host) noexcept : m_host{ host } {}
 
         AppService(const AppService &rh) = delete;

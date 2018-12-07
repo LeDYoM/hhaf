@@ -26,7 +26,6 @@ namespace lib
 		{
 		public:
             InputSystem(core::Host& host);
-            using AppService::AppService;
 			~InputSystem();
 
 			void keyPressed(const Key key);
@@ -40,7 +39,6 @@ namespace lib
 			
             friend class lib::scene::InputComponent;
 
-            sptr<backend::IInputDriver> input_driver_;
             KeyStates m_keyStates;
 			vector<Key> m_pressedKeys;
 			vector<Key> m_releasedKeys;
