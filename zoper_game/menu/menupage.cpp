@@ -20,7 +20,8 @@ namespace zoper
 	using namespace lib::scene::nodes;
 	using namespace lib::core;
 
-	MenuPage::MenuPage(SceneNode *parent, str name) : BaseClass{ parent, std::move(name) } {}
+	MenuPage::MenuPage(SceneNode *parent, str name) 
+        : BaseClass{ parent, std::move(name) } {}
 
 	MenuPage::~MenuPage() = default;
 

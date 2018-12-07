@@ -26,6 +26,7 @@ namespace lib
 
         virtual ~AppService() = default;
 
+    public:
         constexpr core::Host& host() noexcept { return m_host; }
         constexpr const core::Host& host() const noexcept { return m_host; }
 
