@@ -14,7 +14,7 @@ class SceneTypeBasic : public Scene
 public:
     SceneTypeBasic() : Scene{str("SceneTypeBasic")} {}
 
-    static uptr<Scene> create()
+    static uptr<Scene> createScene()
     {
         return muptr<SceneTypeBasic>();
     }
@@ -27,7 +27,7 @@ public:
 
     SceneTypeWithStaticTypeName() : Scene{str(SceneTypeWithStaticTypeName::StaticTypeName)} {}
 
-    static uptr<Scene> create()
+    static uptr<Scene> createScene()
     {
         return muptr<SceneTypeWithStaticTypeName>();
     }
@@ -38,7 +38,7 @@ class SceneTypeWithStaticCreateScene : public Scene
 public:
     SceneTypeWithStaticCreateScene() : Scene{"SceneTypeWithStaticCreateScene"} {}
 
-    static uptr<Scene> createScene()
+    static uptr<Scene> create()
     {
         return muptr<SceneTypeWithStaticCreateScene>();
     }
@@ -51,7 +51,7 @@ public:
 
     SceneTypeWithStaticTypeNameAndStaticCreateScene() : Scene{"SceneTypeWithStaticTypeNameAndStaticCreateScene"} {}
 
-    static uptr<Scene> createScene()
+    static uptr<Scene> create()
     {
         return muptr<SceneTypeWithStaticTypeNameAndStaticCreateScene>();
     }
@@ -63,17 +63,17 @@ TEST_CASE("lib::scene::SceneFactory", "[lib][SceneFactory]")
 
     SECTION("Basic insertion")
     {
-        CHECK(scene_factory.registerSceneType("SceneTypeBasic", SceneTypeBasic::create));
+        CHECK(scene_factory.registerSceneType("SceneTypeBasic", SceneTypeBasic::createScene));
         // Insertion of the same element is false
-        CHECK_FALSE(scene_factory.registerSceneType("SceneTypeBasic", SceneTypeBasic::create));
+        CHECK_FALSE(scene_factory.registerSceneType("SceneTypeBasic", SceneTypeBasic::createScene));
 
         SECTION("Inserting overloads")
         {
-            CHECK(scene_factory.registerSceneType<SceneTypeWithStaticTypeName>(SceneTypeWithStaticTypeName::create));            
+            CHECK(scene_factory.registerSceneType<SceneTypeWithStaticTypeName>(SceneTypeWithStaticTypeName::createScene));            
             CHECK(scene_factory.registerSceneType<SceneTypeWithStaticCreateScene>(str("SceneTypeWithStaticCreateScene")));
             CHECK(scene_factory.registerSceneType<SceneTypeWithStaticTypeNameAndStaticCreateScene>());
 
-            CHECK_FALSE(scene_factory.registerSceneType<SceneTypeWithStaticTypeName>(SceneTypeWithStaticTypeName::create));            
+            CHECK_FALSE(scene_factory.registerSceneType<SceneTypeWithStaticTypeName>(SceneTypeWithStaticTypeName::createScene));            
             CHECK_FALSE(scene_factory.registerSceneType<SceneTypeWithStaticCreateScene>(str("SceneTypeWithStaticCreateScene")));
             CHECK_FALSE(scene_factory.registerSceneType<SceneTypeWithStaticTypeNameAndStaticCreateScene>());
 

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <mtypes/include/types.hpp>
+
 #ifndef LIB_ISCENENODE_INTERFACE_INCLUDE_HPP
 #define LIB_ISCENENODE_INTERFACE_INCLUDE_HPP
 
@@ -11,7 +13,7 @@
 
 #define SIMPLE_DECLARE_SCENE_NODE_FROM(SceneNodeTypeName, BaseSceneNodeTypeName)	static constexpr char StaticTypeName[] = #SceneNodeTypeName;	\
 	\
-		static lib::uptr<BaseSceneNodeTypeName> createScene()	\
+		static lib::uptr<BaseSceneNodeTypeName> create()	\
 		{	\
 			return lib::muptr<SceneNodeTypeName>();	\
 		}
