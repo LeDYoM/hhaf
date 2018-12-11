@@ -30,13 +30,13 @@ namespace lib::scene
 		template <typename T>
 		constexpr bool registerSceneType(str type_name)
 		{
-			return registerSceneType(std::move(type_name), T::createScene);
+			return registerSceneType(std::move(type_name), T::create);
 		}
 
 		template <typename T>
 		constexpr bool registerSceneType()
 		{
-			return registerSceneType(T::StaticTypeName, T::createScene);
+			return registerSceneType(T::StaticTypeName, T::create);
 		}
 
 		uptr<InterfaceType> create(const str &type_name);

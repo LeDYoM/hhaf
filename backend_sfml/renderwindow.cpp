@@ -75,28 +75,17 @@ namespace lib::backend::sfmlb
         return this;
     }
 
-	void RenderWindow::keyEvent(const sf::Event &e)
-	{
-		const auto k(doCast(e.key.code));
-		if (k != input::Key::Unknown) {
-			if (e.type == sf::Event::KeyPressed) {
-				m_keysPressed.push(k);
-			}
-			else if (e.type == sf::Event::KeyReleased) {
-				m_keysReleased.push(k);
-			}
-		}
-	}
-
 	bool RenderWindow::processEvents()
 	{
 		sf::Event event;
 		while (pollEvent(event)) {
-			if (event.type == sf::Event::Closed) {
+			if (event.type == sf::Event::Closed) 
+            {
 				return true;
 			}
-			else if (event.type == sf::Event::KeyPressed || event.type == sf::Event::KeyReleased) {
-				keyEvent(event);
+			else if (event.type == sf::Event::KeyPressed || event.type == sf::Event::KeyReleased) 
+            {
+                input_driver_.keyEvent(event);
 			}
 		}
 		return false;
@@ -117,35 +106,10 @@ namespace lib::backend::sfmlb
 		Window::close();
 	}
 
-	bool RenderWindow::arePendingKeyPresses() const
-	{
-		return !m_keysPressed.empty();
-	}
-
-	bool RenderWindow::arePendingKeyReleases() const
-	{
-		return !m_keysReleased.empty();
-	}
-
-	template <typename T>
-	input::Key popKey(T &container) {
-		input::Key k(input::Key::Unknown);
-		if (!container.empty()) {
-			k = container.front();
-			container.pop();
-		}
-		return k;
-	}
-
-	input::Key RenderWindow::popKeyPress()
-	{
-		return popKey(m_keysPressed);
-	}
-
-	input::Key RenderWindow::popKeyRelease()
-	{
-		return popKey(m_keysReleased);
-	}
+    IInputDriver * RenderWindow::inputDriver()
+    {
+        return &input_driver_;
+    }
 
 	void RenderWindow::onCreate()
 	{

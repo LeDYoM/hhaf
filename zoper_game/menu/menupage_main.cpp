@@ -8,7 +8,8 @@
 
 namespace zoper
 {
-	MenuPageMain::MenuPageMain(lib::scene::SceneNode *parent, str name) : MenuPage{ parent, std::move(name) } {}
+	MenuPageMain::MenuPageMain(lib::scene::SceneNode *parent, str name) 
+        : MenuPage{ parent, std::move(name) } {}
 
 	MenuPageMain::~MenuPageMain() = default;
 

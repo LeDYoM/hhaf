@@ -18,7 +18,7 @@ namespace lib
     */
 	class AppService
 	{
-	public:
+	protected:
         constexpr AppService(core::Host &host) noexcept : m_host{ host } {}
 
         AppService(const AppService &rh) = delete;
@@ -26,6 +26,7 @@ namespace lib
 
         virtual ~AppService() = default;
 
+    public:
         constexpr core::Host& host() noexcept { return m_host; }
         constexpr const core::Host& host() const noexcept { return m_host; }
 

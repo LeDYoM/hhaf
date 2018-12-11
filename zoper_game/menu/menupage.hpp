@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef ZOPER_MENU_MENUPAGE_INCLUDE_HPP__
-#define ZOPER_MENU_MENUPAGE_INCLUDE_HPP__
+#ifndef ZOPER_MENU_MENUPAGE_INCLUDE_HPP
+#define ZOPER_MENU_MENUPAGE_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <lib/scene/scenenode.hpp>
