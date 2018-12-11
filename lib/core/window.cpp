@@ -40,24 +40,9 @@ namespace lib::core
         return m_wPrivate->m_renderTarget;
     }
 
-    bool Window::arePendingKeyPresses() const
+    backend::IInputDriver* Window::inputDriver()
     {
-        return m_wPrivate->m_backendWindow->arePendingKeyPresses();
-    }
-
-    bool Window::arePendingKeyReleases() const
-    {
-        return m_wPrivate->m_backendWindow->arePendingKeyReleases();
-    }
-
-    input::Key Window::popKeyPress()
-    {
-        return m_wPrivate->m_backendWindow->popKeyPress();
-    }
-
-    input::Key Window::popKeyRelease()
-    {
-        return m_wPrivate->m_backendWindow->popKeyRelease();
+        return m_wPrivate->m_backendWindow->inputDriver();
     }
 
     void Window::create(const WindowCreationParams &wcp)
@@ -80,10 +65,15 @@ namespace lib::core
         // Create physical window
         if (bw.createWindow(wcp))
         {
+            log_debug_info("Hardware window created...");
             // If window created successfully, extract the render target
             // associated with the window.
             m_wPrivate->m_renderTarget = msptr<RenderTarget>(
                     m_wPrivate->m_backendWindow->renderTarget());
+
+            // Also extract the input driver
+//            m_wPrivate->input_driver_ = sptr<backend::IInputDriver>(
+//                m_wPrivate->m_backendWindow->inputDriver());
         }
         log_debug_info("Window creation completed");
     }

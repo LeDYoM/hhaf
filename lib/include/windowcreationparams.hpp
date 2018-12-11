@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_WINDOWCREATIONPARAMS_INCLUDE_HPP__
-#define LIB_WINDOWCREATIONPARAMS_INCLUDE_HPP__
+#ifndef LIB_WINDOWCREATIONPARAMS_INCLUDE_HPP
+#define LIB_WINDOWCREATIONPARAMS_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>

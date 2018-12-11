@@ -8,7 +8,8 @@
 namespace lib::input
 {
 	InputSystem::InputSystem(core::Host& host) 
-        : AppService{ host }, m_keyStates {} {}
+        : AppService{ host }, 
+        m_keyStates{} {}
 
 	InputSystem::~InputSystem() = default;
 
@@ -28,13 +29,17 @@ namespace lib::input
 
 	void InputSystem::preUpdate()
 	{
-		auto &window( host().parentWindow() );
-		if (window.arePendingKeyPresses() || window.arePendingKeyReleases()) {
-			while (window.arePendingKeyPresses()) {
-				keyPressed(window.popKeyPress());
+        auto input_driver(host().parentWindow().inputDriver());
+
+        if (input_driver->arePendingKeyPresses() || input_driver->arePendingKeyReleases())
+        {
+			while (input_driver->arePendingKeyPresses())
+            {
+				keyPressed(input_driver->popKeyPress());
 			}
-			while (window.arePendingKeyReleases()) {
-				keyReleased(window.popKeyRelease());
+			while (input_driver->arePendingKeyReleases())
+            {
+				keyReleased(input_driver->popKeyRelease());
 			}
 		}
 	}
