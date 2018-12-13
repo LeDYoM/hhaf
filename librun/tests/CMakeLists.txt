@@ -1,20 +1,14 @@
 enable_testing()
 
 set(UNIT_TEST_LIST
-    dicty
-	lockablevector
     main
-    parpar
-    str
-    streams
-    vector
 )
 
 foreach(NAME IN LISTS UNIT_TEST_LIST)
   list(APPEND UNIT_TEST_SOURCE_LIST ${NAME}.test.cpp)
 endforeach()
 
-set(TARGET_NAME mtypes_utests)
+set(TARGET_NAME lib_test_mode)
 set(CMAKE_CXX_STANDARD 17)
 
 add_executable(${TARGET_NAME}

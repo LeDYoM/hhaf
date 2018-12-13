@@ -29,5 +29,7 @@ set(CPACK_PACKAGE_VERSION "1.0.0")
 # we don't want to split our program up into several things
 set(CPACK_MONOLITHIC_INSTALL 1)
 
-# This must be last
+# This must be last except tests
 include(CPack)
+
+add_subdirectory(tests)
