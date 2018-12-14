@@ -36,7 +36,7 @@ namespace lib
 			virtual void keyReleased(const input::Key&) {}
 		private:
 			class InputComponentPrivate;
-			InputComponentPrivate *m_private;
+            uptr<InputComponentPrivate> priv_;
 		};
 	}
 }

@@ -1,11 +1,6 @@
 #include <lib/include/core/log.hpp>
 #include <iostream>
 
-#ifdef _MSC_VER
-    #define WIN32_LEAN_AND_MEAN
-    #include <Windows.h>
-#endif
-
 namespace lib
 {
     namespace log
@@ -16,9 +11,6 @@ namespace lib
             {
                 std::cout << log_str;
                 std::cout.flush();
-#ifdef _MSC_VER
-                OutputDebugString(log_str);
-#endif
             }
 
             log_function log_function_callback{ userLogFunction };
@@ -26,7 +18,8 @@ namespace lib
 
         void init_log(log_function f)
         {
-            if (f) {
+            if (f) 
+            {
                 std::swap(log_function_callback, f);
             }
         }
