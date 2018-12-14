@@ -16,14 +16,9 @@ namespace lib::scene
 	{
 	};
 	InputComponent::InputComponent()
-		: m_private{ new InputComponentPrivate } {}
+		: priv_{ new InputComponentPrivate } {}
 
-	InputComponent::~InputComponent()
-	{
-		assert_release(m_private, "Destructing private class that is nullptr");
-		delete m_private;
-		m_private = nullptr;
-	}
+    InputComponent::~InputComponent() = default;
 
 	void InputComponent::update()
 	{

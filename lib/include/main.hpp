@@ -1,13 +1,14 @@
-#ifndef __LIB_MAIN_HPP__
-#define __LIB_MAIN_HPP__
+#pragma once
+
+#ifndef LIB_MAIN_ENTRY_POINT_INCLUDE_HPP
+#define LIB_MAIN_ENTRY_POINT_INCLUDE_HPP
 
 #include "lib.hpp"
-#include <mtypes/include/types.hpp>
 #include "iapp.hpp"
 
 namespace lib
 {
-	LIB_API_EXPORT int libMain(int argc, char *argv[], uptr<IApp> app);
+	LIB_API_EXPORT int libMain(int argc, char *argv[]);
 }
 
 #endif

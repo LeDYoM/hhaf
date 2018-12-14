@@ -7,21 +7,18 @@
 #include <lib/include/core/log.hpp>
 
 #include "scenemanager.hpp"
+#include "scenenodeblob.hpp"
 
 namespace lib::scene
 {
     SceneNode::SceneNode(SceneNode *const parent, str name)
         : core::HasName{ std::move(name) }, ComponentContainer{ this }, 
+        SceneNodeBlob{ *this },
         visible{ true }, m_parent{ parent }
     {
-//        log_debug_info("Creating object: ", typeid(*this).name());
     }
 
-    SceneNode::~SceneNode() 
-	{ 
-//        log_debug_info("Destroying ", typeid(*this).name());
-        clearAll();
-    }
+    SceneNode::~SceneNode() = default;
 
     void SceneNode::render(bool parentTransformationChanged)
     {
@@ -49,11 +46,6 @@ namespace lib::scene
                 group->render(parentTransformationChanged);
             }
         }
-    }
-
-    Rectf32 SceneNode::scenePerspective()
-    {
-        return parentScene()->sceneManager().viewRect();
     }
 
     bool SceneNode::moveLastBeforeNode(const sptr<SceneNode> &beforeNode)
