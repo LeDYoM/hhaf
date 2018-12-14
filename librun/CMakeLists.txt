@@ -32,4 +32,4 @@ set(CPACK_MONOLITHIC_INSTALL 1)
 # This must be last except tests
 include(CPack)
 
-add_subdirectory(tests)
+#add_subdirectory(tests)
