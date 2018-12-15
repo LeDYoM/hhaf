@@ -1,12 +1,13 @@
 #include <lib/include/main.hpp>
 #include <lib/core/memmanager.hpp>
 #include <lib/core/host.hpp>
+#include <lib/include/core/log.hpp>
 
-#include <mtypes/include/log.hpp>
+#include "../zoper_game/app.hpp"
 
 namespace lib
 {
-	int libMain(int argc, char *argv[], uptr<IApp> app)
+	int libMain(int argc, char *argv[])
 	{
 		int result = -1;
 
@@ -17,9 +18,10 @@ namespace lib
 			installMemManager();
 
 			core::Host::createHost(argc, argv);
-			core::Host::host().setApplication(std::move(app));
-			result = core::Host::host().run();
+			core::Host::host().setApplication(uptr<IApp>(createApp()));
+            int run_result(result = core::Host::host().run());
 			core::Host::destroyHost();
+            result = run_result;
 		}
 		catch (std::exception e)
 		{

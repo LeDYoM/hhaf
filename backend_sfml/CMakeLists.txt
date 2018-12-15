@@ -13,7 +13,6 @@ add_library(${CURRENT_TARGET}
 
 #Patch for testing
 #TO DO: Remove it (use a variable)
-include_directories ("../lib/backend")
 include_directories ("..")
 
 target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
@@ -40,4 +39,3 @@ install (TARGETS ${CURRENT_TARGET}
 	LIBRARY DESTINATION .
 	RUNTIME DESTINATION .
 )
-

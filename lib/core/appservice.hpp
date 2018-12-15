@@ -1,5 +1,7 @@
-#ifndef __LIB_APP_SERVICE_HPP__
-#define __LIB_APP_SERVICE_HPP__
+#pragma once
+
+#ifndef LIB_APP_SERVICE_INCLUDE_HPP
+#define LIB_APP_SERVICE_INCLUDE_HPP
 
 namespace lib
 {
@@ -8,14 +10,28 @@ namespace lib
 		class Host;
 	}
 
+    /**
+    * Class to serve as a base for all App Services.
+    * 
+    * An App Service is a class, instanciated by the Host to give functionality
+    * to the app clients.
+    */
 	class AppService
 	{
-	public:
-		AppService(const AppService &rh) = delete;
+	protected:
+        constexpr AppService(core::Host &host) noexcept : m_host{ host } {}
+
+        AppService(const AppService &rh) = delete;
 		AppService &operator=(const AppService &rh) = delete;
 
-		constexpr AppService() {};
-		friend class Host;
+        virtual ~AppService() = default;
+
+    public:
+        constexpr core::Host& host() noexcept { return m_host; }
+        constexpr const core::Host& host() const noexcept { return m_host; }
+
+    private:
+        core::Host &m_host;
 	};
 }
 #endif

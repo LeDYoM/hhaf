@@ -1,51 +1,60 @@
 #include "scenemanager.hpp"
-#include <mtypes/include/log.hpp>
+#include "scenecontroller.hpp"
 #include "scene.hpp"
 
-namespace lib
+#include <lib/core/host.hpp>
+#include <lib/core/resourcemanager.hpp>
+#include <lib/include/core/log.hpp>
+
+#include <lib/include/resources/iresourceretriever.hpp>
+
+namespace lib::scene
 {
-	namespace scene
+	SceneManager::SceneManager(core::Host& host, core::Window &window) 
+        : AppService{ host }, m_parentWindow { window } 
+    {
+        scene_controller_ = m_componentContainer.ensureComponentOfType<SceneController>();
+        scene_controller_->setSceneManager(this);
+    }
+
+	SceneManager::~SceneManager() = default;
+
+	void SceneManager::start()
 	{
-		SceneManager::SceneManager(core::Window &window) : m_parentWindow{ window } {}
-
-		SceneManager::~SceneManager() = default;
-
-		void SceneManager::start()
-		{
-			m_componentContainer.ensureComponentOfType(m_statesController);
-			m_statesController->UseDeferred();
-		}
-
-		void SceneManager::terminateScene()
-		{
-            log_debug_info("Terminating scene ", m_statesController->currentState()->name());
-            assert_debug(m_statesController != nullptr, "terminateScene with no current scene");
-            sptr<Scene> nextScene;
-			if (m_sceneDirector) {
-				nextScene = m_sceneDirector(m_statesController->currentState());
-			}
-
-            log_debug_info("Setting new scene: ", nextScene?nextScene->name():"<nullptr>");
-			m_statesController->setState(std::move(nextScene));
-		}
-
-		void SceneManager::setSceneDirector(SceneDirectorType sceneDirector)
-		{
-			m_sceneDirector = std::move(sceneDirector);
-		}
-
-		void SceneManager::update()
-		{
-			m_componentContainer.updateComponents();
-            if (auto&& currentScene = m_statesController->currentState()) {
-				currentScene->updateScene();
-				currentScene->render(false);
-			}
-		}
-
-		void SceneManager::finish()
-		{
-			m_statesController->pop_state();
-		}
 	}
+
+	void SceneManager::update()
+	{
+		m_componentContainer.updateComponents();
+	}
+
+    void SceneManager::finish()
+    {
+        scene_controller_->finish();
+    }
+
+	Rectf32 SceneManager::viewPort() const noexcept
+	{
+		return m_parentWindow.renderTarget()->viewPort();
+	}
+
+	void SceneManager::setViewPort(const Rectf32& vp) noexcept
+	{
+		m_parentWindow.renderTarget()->setViewPort(vp);
+	}
+
+	Rectf32 SceneManager::viewRect() const noexcept
+	{
+		return m_parentWindow.renderTarget()->viewRect();
+	}
+
+	void SceneManager::setViewRect(const Rectf32& vr) noexcept
+	{
+		m_parentWindow.renderTarget()->setViewRect(vr);
+	}
+
+    IResourceRetriever & SceneManager::resources()
+    {
+        return host().resourceManager();
+    }
 }

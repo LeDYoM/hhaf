@@ -3,29 +3,25 @@
 #ifndef LIB_SCENE_TEXTQUAD_HPP__
 #define LIB_SCENE_TEXTQUAD_HPP__
 
-#include <lib/scene/scenenode.hpp>
-#include <lib/scene/renderizables/nodetext.hpp>
+#include <lib/scene/nodes/tablenode.hpp>
+#include <lib/scene/nodes/scenenodetext.hpp>
 
-namespace lib
+namespace lib::scene::nodes
 {
-	namespace scene
-	{
-		namespace nodes
-		{
-			class TextQuad : public SceneNode
-			{
-			public:
-				TextQuad(SceneNode *parent, str name, sptr<TTFont> font, const u32 characterSize, const Color &color, const Rectf32 &box);
-				virtual ~TextQuad();
+    class TextQuad : public TableNode<SceneNodeText>
+    {
+    public:
+        using BaseClass = TableNode<SceneNodeText>;
+        TextQuad(SceneNode *parent, str name,
+                 sptr<Font> font, const Color &color, const vector2df &size);
+        virtual ~TextQuad();
 
-				inline sptr<NodeText> text(const u32 index) const noexcept { return m_texts[index]; }
+        inline sptr<SceneNodeText> text(vector2dst index) const noexcept
+        { return nodeAt(std::move(index)); }
 
-			private:
-				Rectf32 m_box;
-				sptr<NodeText> m_texts[4];
-			};
-		}
-	}
+    private:
+        vector2df m_size;
+    };
 }
 
 #endif

@@ -9,10 +9,18 @@ namespace lib
 {
     using callback_t = function<void()>;
 
+    /**
+     * This class provides a basic interface for all Properties of
+     * the system.
+     */
     template <typename T>
     class IProperty
     {
     public:
+        /**
+         * Get value of the property.
+         * @return The content of the property.
+        */
         virtual const T &get() const noexcept = 0;
         virtual void set(const T&v) noexcept = 0;
     };
@@ -22,7 +30,8 @@ namespace lib
     {
     public:
         constexpr BasicProperty() noexcept = default;
-        constexpr BasicProperty(T iv) noexcept : m_value{ std::move(iv) } {}
+        constexpr BasicProperty(T&& iv) noexcept : m_value{ std::move(iv) } {}
+        constexpr BasicProperty(const T& iv) noexcept : m_value{ iv } {}
 
         constexpr const T&operator()() const noexcept { return m_value; }
         constexpr void operator=(const T&v) noexcept { set(v); }

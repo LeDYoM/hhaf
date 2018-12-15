@@ -1,13 +1,16 @@
 #include "menupage.hpp"
 #include "menupageinputcomponent.hpp"
-#include <mtypes/include/log.hpp>
+#include "../loaders/mainmenuresources.hpp"
+
+#include <lib/include/core/log.hpp>
 #include <lib/scene/scene.hpp>
 #include <lib/scene/renderizables/nodeshape.hpp>
-#include <lib/scene/renderizables/nodetext.hpp>
 #include <lib/core/host.hpp>
 #include <lib/core/resourcemanager.hpp>
 #include <lib/scene/ttfont.hpp>
+#include <lib/scene/font.hpp>
 #include <lib/include/key.hpp>
+
 #include <mtypes/include/function.hpp>
 
 namespace zoper
@@ -17,7 +20,8 @@ namespace zoper
 	using namespace lib::scene::nodes;
 	using namespace lib::core;
 
-	MenuPage::MenuPage(SceneNode *parent, str name) : BaseClass{ parent, std::move(name) } {}
+	MenuPage::MenuPage(SceneNode *parent, str name) 
+        : BaseClass{ parent, std::move(name) } {}
 
 	MenuPage::~MenuPage() = default;
 
@@ -25,10 +29,10 @@ namespace zoper
 	void MenuPage::onCreated()
 	{
         BaseClass::onCreated();
-		m_normalFont = resourceManager().getResource<TTFont>("menu.mainFont", "resources/oldct.ttf");
+        m_normalFont = parentScene()->sceneManager().resources().getFont
+                       (MainMenuResources::MenuFontId)->font(72);
 		m_normalColor = colors::Blue;
 		m_selectedColor = colors::Red;
-		m_normalCharacterSize = 72;
 
 		auto input = ensureComponentOfType<MenuPageInputComponent>();
 		input->Up.connect({ this, &MenuPage::goUp });
@@ -50,11 +54,11 @@ namespace zoper
 		switch (m_pageMode)
 		{
 		case zoper::MenuPageMode::Selector:
-			tableSize = { 2, titles.size() };
+            setTableSize( { 2, titles.size() } );
 			titleColumn = 1;
 			break;
 		case zoper::MenuPageMode::Optioner:
-			tableSize = { 4, titles.size() };
+            setTableSize( { 4, titles.size() } );
 			titleColumn = 0;
 			break;
 		default:
@@ -67,12 +71,12 @@ namespace zoper
 		size_type counter{ 0 };
 		for (auto&& title : titles) {
 			auto newOption(createNodeAt(vector2dst{ titleColumn,counter }, make_str("label",counter)));
-			standarizeText(newOption->node());
-			newOption->node()->text = title;
+            standarizeText(newOption);
+            newOption->text.set(Text_t(title));
 
 			if (options.size() > counter) {
 				auto discreteTextLabel(createNodeAt(vector2dst{ columnForOptions, counter }, make_str("option",counter)));
-				standarizeText(discreteTextLabel->node());
+                standarizeText(discreteTextLabel);
 				auto discreteTextComponent(discreteTextLabel->ensureComponentOfType<DiscreteTextComponent>());
 				discreteTextComponent->data.set(options[counter]);
 			}
@@ -110,16 +114,17 @@ namespace zoper
 
 	void MenuPage::setColorToLine(const size_type index, const Color &color)
 	{
-		for_each_tableSceneNode_in_y(index, [&color](const size_type, const sptr<TextSceneNode> &node) {
-			node->node()->color = color;
+        for_each_tableSceneNode_in_y(index, [&color](const size_type, const
+                                     sptr<BaseClass::ContainedElement> &node)
+        {
+            node->textColor.set(FillColor_t(color));
 		});
 	}
 
-	void MenuPage::standarizeText(const sptr<scene::nodes::NodeText> &ntext)
+    void MenuPage::standarizeText(const sptr<ContainedElement> &ntext)
 	{
-		ntext->color = m_normalColor;
-		ntext->font = m_normalFont;
-		ntext->characterSize = m_normalCharacterSize;
+        ntext->textColor.set(FillColor_t(m_normalColor));
+        ntext->font.set(m_normalFont);
 	}
 
 	void MenuPage::goDown()
@@ -179,51 +184,4 @@ namespace zoper
 		assert_debug(node != nullptr, "This node does not have options");
 		return node->componentOfType<DiscreteTextComponent>();
 	}
-
-	/*
-	void MenuPage::modelChanged()
-	{
-		clearNodes();
-		u32 count{};
-		vector2df currentPos{};
-//				const auto &cTheme(parent()->snCast<ChooseControlGroup>()->currentTheme());
-		for (const auto& label : optionModel())
-		{
-			auto menuLine = createSceneNode<LabelText>("menuLineText" + str(count));
-			menuLine->create();
-			menuLine->mainText()->text = label.text;
-//					menuLine->setFont(cTheme.font);
-//					menuLine->setCharacterSize(cTheme.characterSize);
-//					menuLine->setColor(cTheme.textColor);
-			menuLine->setAlignmentBox(box().moved(currentPos));
-			menuLine->option()->data = label.subOptionsLabels;
-			menuLine->configure();
-
-//					currentPos.y += (cTheme.characterSize + cTheme.lineHeight);
-			lines.push_back(std::move(menuLine));
-			++count;
-		}
-
-		previouslySelectedItem = 0;
-		selectedItem.setCallback([this]() {
-			if (!lines.empty()) {
-				__ASSERT(previouslySelectedItem < lines.size(), "Invalid previously selected index for cursor");
-				__ASSERT(selectedItem() < lines.size(), "Invalid select index for cursor");
-
-//						const auto &cTheme(parent()->snCast<ChooseControlGroup>()->currentTheme());
-
-//						previouscurrentLine()->setColor(cTheme.textColor);
-//						currentLine()->setColor(cTheme.selectedTextColor);
-				previouslySelectedItem = selectedItem();
-
-				//			m_cursorNode->rotation.set(90);
-				//			auto p(vector2df{ selectedText->position().x - descriptorCursorSize.x, selectedText->position().y });
-				//			addAnimation(msptr<anim::IPropertyAnimation<vector2df>>(120, m_cursorNode->position,
-				//				m_cursorNode->position(), vector2df{ selectedText->position().x - descriptorCursorSize.x, selectedText->position().y },
-				//				anim::noAction, anim::noAction));
-			}
-		});
-		selectedItem = 0;
-	}
-	*/
 }

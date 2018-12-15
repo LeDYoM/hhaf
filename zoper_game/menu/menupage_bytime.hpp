@@ -19,8 +19,7 @@ namespace zoper
             setType(GameMode::Time);
         }
 
-        virtual ~MenuPageByTime() = default;
-
+        virtual ~MenuPageByTime() {}
 	};
 }
 

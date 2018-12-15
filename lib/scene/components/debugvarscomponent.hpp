@@ -1,9 +1,10 @@
 #ifndef LIB_DEBUGCOMPONENT_INCLUDE_HPP
 #define LIB_DEBUGCOMPONENT_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
 #include <lib/scene/components/inputcomponent.hpp>
-#include <mtypes/include/log.hpp>
+#include <lib/include/core/log.hpp>
+
+#include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
 #include <map>
 

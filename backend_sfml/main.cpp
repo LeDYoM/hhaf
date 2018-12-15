@@ -1,13 +1,18 @@
-#include <lib/backend/iwindow.hpp>
-#include <lib/backend/interfaces.hpp>
+#include <lib/include/backend/iwindow.hpp>
+#include <lib/include/backend/interfaces.hpp>
 
 #include "renderwindow.hpp"
 #include "ttfontfactory.hpp"
 #include "texturefactory.hpp"
+#include "shaderfactory.hpp"
 
-#define EXPORT extern "C" SPECIFIC_EXPORT
+#ifdef _WIN32
+    #define EXPORT   extern "C" __declspec( dllexport )
+#else
+    #define EXPORT   extern "C"
+#endif
 
-EXPORT lib::backend::IWindowProviderInfo * createWindowProviderInfo() {
+EXPORT lib::backend::IWindowProviderInfo * createWindowProviderInfo() { 
 	return new lib::backend::sfmlb::WindowBackendInfo;
 }
 
@@ -18,7 +23,6 @@ EXPORT bool destroyWindowProviderInfo(lib::backend::IWindowProviderInfo *iwpi) {
 	}
 	return false;
 }
-
 
 EXPORT lib::backend::IWindow * createWindow() {
 	return new lib::backend::sfmlb::RenderWindow;
@@ -56,4 +60,16 @@ EXPORT bool destroyTextureFactory(lib::backend::ITextureFactory *itf) {
 		return true;
 	}
 	return false;
+}
+
+EXPORT lib::backend::IShaderFactory * createShaderFactory() {
+    return new lib::backend::sfmlb::ShaderFactory;
+}
+
+EXPORT bool destroyShaderFactory(lib::backend::IShaderFactory *isf) {
+    if (isf) {
+        delete isf;
+        return true;
+    }
+    return false;
 }

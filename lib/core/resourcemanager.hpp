@@ -1,12 +1,14 @@
 #pragma once
 
-#ifndef __LIB_RESOURCEMANAGER_HPP__
-#define __LIB_RESOURCEMANAGER_HPP__
+#ifndef LIB_RESOURCEMANAGER_INCLUDE_HPP
+#define LIB_RESOURCEMANAGER_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
+
+#include <lib/include/resources/iresourcehandler.hpp>
+#include <lib/include/resources/iresourceretriever.hpp>
 #include "appservice.hpp"
-#include <list>
 
 namespace lib
 {
@@ -14,38 +16,69 @@ namespace lib
 	{
 		class TTFont;
 		class Texture;
+        class Shader;
 	}
+
 	namespace core
 	{
-		class Resource;
-
-		class ResourceManager final : public AppService
+        class Host;
+		class ResourceManager final : public AppService, public IResourceHandler, public IResourceRetriever
 		{
 		public:
-			ResourceManager();
-			~ResourceManager();
+			ResourceManager(Host &host);
+			~ResourceManager() override;
 
-			sptr<scene::TTFont> getFont(const str &rid, const str &fileName);
-			sptr<scene::Texture> getTexture(const str &rid, const str &fileName);
+			sptr<scene::TTFont> getFont(const str &rid) override;
+			sptr<scene::Texture> getTexture(const str &rid) override;
+			sptr<scene::Shader> getShader(const str &rid) override;
+
+            sptr<scene::TTFont> loadFont(const str &rid, const str &fileName) override;
+            sptr<scene::Texture> loadTexture(const str &rid, const str &fileName) override;
+            sptr<scene::Shader> loadShader(const str &rid, const str &fileName) override;
 
 			template <typename T>
-			sptr<T> getResource(const str &rid, const str &fileName="") {
-                if constexpr (std::is_same_v<T,scene::TTFont>) {
-                    return getFont(rid, fileName);
-                } else {
-                    return getTexture(rid, fileName);
+			sptr<T> loadResource(const str &rid, const str &fileName) {
+                if constexpr (std::is_same_v<T,scene::TTFont>)
+                {
+                    return loadFont(rid, fileName);
+                }
+                else if constexpr (std::is_same_v<T, scene::Texture>)
+                {
+                    return loadTexture(rid, fileName);
+                }
+                else if constexpr (std::is_same_v<T, scene::Shader>)
+                {
+                    return loadShader(rid, fileName);
+                }
+                else
+                {
+                    static_assert(false, "Invalid resource type");
                 }
             }
 
-			template <typename T>
-			using NamedIndex = std::pair<const str, T>;
+            template <typename T>
+            sptr<T> getResource(const str &rid) {
+                if constexpr (std::is_same_v<T, scene::TTFont>)
+                {
+                    return getFont(rid);
+                }
+                else if constexpr (std::is_same_v<T, scene::Texture>)
+                {
+                    return getTexture(rid);
+                }
+                else if constexpr (std::is_same_v<T, scene::Shader>)
+                {
+                    return getShader(rid);
+                }
+                else
+                {
+                    static_assert(false, "Invalid resource type");
+                }
+            }
 
-			template <typename T>
-			using ResourceList = std::list<NamedIndex<T>>;
-
-		private:
-			ResourceList<sptr<scene::TTFont>> m_fonts;
-			ResourceList<sptr<scene::Texture>> m_textures;
+        private:
+            struct ResourceManagerPrivate;
+            uptr<ResourceManagerPrivate> m_private;
 		};
 	}
 }

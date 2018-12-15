@@ -3,15 +3,13 @@
 #ifndef LIB_STR_INCLUDE_HPP
 #define LIB_STR_INCLUDE_HPP
 
-#include "mtypes_export.hpp"
 #include "vector.hpp"
 #include "types.hpp"
 #include <type_traits>
+#include "mtypes_export.hpp"
 
 namespace lib
 {
-    using char_type = char;
-
     using char_type = char;
 
     class MTYPES_EXPORT str
@@ -20,7 +18,6 @@ namespace lib
         using const_reference = const char_type&;
         using iterator = char_type*;
         using const_iterator = const char_type*;
-        // Temporary code
 #ifdef _MSC_VER
         #pragma warning(push)
         #pragma warning(disable:4251)
@@ -33,22 +30,22 @@ namespace lib
         constexpr str() noexcept : m_data() {}
 
         template<size_type N>
-        constexpr str(const char_type(&a)[N]) noexcept : m_data( a,N ) {}
+		constexpr str(const char_type(&a)[N]) noexcept : m_data( a,N ) {}
 
         constexpr str(str&&) noexcept = default;
 
-        constexpr str(const str & n) noexcept : m_data( n.m_data ) {}
-        constexpr str(const char_type *n, const size_type N) noexcept : m_data(n, N+1) {}
+		constexpr str(const str & n) noexcept : m_data( n.m_data ) {}
+		explicit str(const char_type *n) noexcept;
+		constexpr str(const char_type *n, const size_type N) noexcept : m_data(n, N+1) {}
 
-        str(const u32 n);
-        str(const s32 n);
-        str(const char_type *n) noexcept;
-        str(const f32 n);
-        str(const f64 n);
-        str(const char_type c) : str{ &c,1 } {}
-        str(const unsigned long n);
+        str(const u64 n);
+		str(const s64 n);
+		str(const u32 n);
+		str(const s32 n);	
+		str(const f32 n);
+		str(const f64 n);
 
-        constexpr str&operator=(str&&) noexcept = default;
+        str&operator=(str&&) noexcept = default;
         constexpr str&operator=(const str&rhs) noexcept {
             m_data = rhs.m_data;
             return *this;
@@ -60,30 +57,46 @@ namespace lib
             m_data.pop_back();
         }
 
-        str substr(size_type start, const size_type len = npos) const;
+        str substr(size_type start, size_type len = npos) const;
 
         constexpr str &append() { return *this; }
-
-        str & append(const u32 n) {
-            append(str(n));
-            return *this;
-        }
-
-        str & append(const s32 n) {
-            append(str(n));
-            return *this;
-        }
 
         str & append(const str & n) {
             m_data.pop_back();
             m_data.insert(n.m_data);
-            return *this        ;
+            return *this;
         }
+
+		template<size_type N>
+		constexpr str &append(const char_type(&n)[N]) {
+			append(str(std::forward<const char_type(&)[N]>(n)));
+			return *this;
+		}
 
         str & append(const char_type * n) {
             append(str(n));
             return *this;
         }
+
+		str & append(const u64 n) {
+			append(str(n));
+			return *this;
+		}
+
+		str & append(const s64 n) {
+			append(str(n));
+			return *this;
+		}
+
+		str & append(const u32 n) {
+			append(str(n));
+			return *this;
+		}
+
+		str & append(const s32 n) {
+			append(str(n));
+			return *this;
+		}
 
         str & append(const f32 n) {
             append(str(n));
@@ -95,15 +108,14 @@ namespace lib
             return *this;
         }
 
-        str & append(const long unsigned n) {
-            append(str(n));
-            return *this;
-        }
-
-        void convert(u32 &n) const;
-        void convert(s32 &n) const;
-        void convert(f32 &n) const;
-        void convert(f64 &n) const;
+		bool convert(u64 &n) const;
+		bool convert(s64 &n) const;
+		bool convert(u32 &n) const;
+		bool convert(s32 &n) const;
+		bool convert(u16 &n) const;
+		bool convert(s16 &n) const;
+		bool convert(f32 &n) const;
+		bool convert(f64 &n) const;
 
         template <typename T>
         str &operator+=(T&&source) {
@@ -125,12 +137,12 @@ namespace lib
         constexpr const_iterator cend() const noexcept { return m_data.cbegin()+size(); }
 
         constexpr const char_type *const c_str() const noexcept { return m_data.cbegin(); }
-        constexpr bool empty() const noexcept { return m_data.size() == 0; }
+        constexpr bool empty() const noexcept { return size() == 0; }
 
         constexpr size_type find_first_of(const char_type chValue) const noexcept {
             const auto iterator(m_data.find(chValue));
             if (iterator!=m_data.cend()) {
-                return *iterator;
+                return iterator - m_data.cbegin();
             }
             return npos;
         }
@@ -141,7 +153,8 @@ namespace lib
         }
 
         template <typename T>
-        constexpr str& operator>>(T &n) {
+        constexpr str& operator>>(T &n)
+        {
             if constexpr (std::is_enum_v<T>) {
                 std::underlying_type_t<T> tmp{};
                 convert(tmp);
@@ -158,6 +171,12 @@ namespace lib
 
         friend constexpr bool operator==(const str& lhs, const str&rhs) noexcept;
         friend constexpr bool operator!=(const str& lhs, const str&rhs) noexcept;
+
+        template<size_type N>
+        friend constexpr bool operator==(const str& lhs, const char_type(&a)[N]) noexcept;
+        template<size_type N>
+        friend constexpr bool operator!=(const str& lhs, const char_type(&a)[N]) noexcept;
+
         friend bool operator<(const str& lhs, const str&rhs) noexcept;
         friend str operator+(const str& lhs, const str&rhs) noexcept;
     };
@@ -169,6 +188,27 @@ namespace lib
 
     constexpr bool operator!=(const str& lhs, const str&rhs) noexcept {
         return lhs.m_data != rhs.m_data;
+    }
+
+    template<size_type N>
+    constexpr bool operator==(const str& lhs, const char_type(&a)[N]) noexcept
+    {
+        if (lhs.size() != (N-1))
+            return false;
+
+        size_type counter{0};
+        for (const char_type c : lhs.m_data) {
+            if (c != a[counter]) return false;
+            ++counter;
+        }
+        return true;
+    }
+
+
+    template<size_type N>
+    constexpr bool operator!=(const str& lhs, const char_type(&a)[N]) noexcept
+    {
+        return !(operator==(lhs,a));
     }
 
     inline bool operator<(const str& lhs, const str&rhs) noexcept {

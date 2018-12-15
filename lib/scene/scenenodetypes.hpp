@@ -4,9 +4,10 @@
 #define LIB_SCENE_SCENENODETYPES_INCLUDE_HPP__
 
 #include <mtypes/include/types.hpp>
-#include <lib/scene/components/parentrendercomponent.hpp>
 #include <lib/scene/components/icomponent.hpp>
-#include <lib/scene/renderizables/nodetext.hpp>
+#include <lib/scene/renderizables/nodeshape.hpp>
+#include <lib/scene/renderizables/nodequad.hpp>
+
 #include "scenenode.hpp"
 
 namespace lib::scene
@@ -15,40 +16,20 @@ namespace lib::scene
 	class RenderizableSceneNode : public SceneNode
 	{
 	public:
-		RenderizableSceneNode(SceneNode *const parent, str name) : SceneNode{ parent, name } {}
+		constexpr RenderizableSceneNode(SceneNode *const parent, str name) : 
+            SceneNode{ parent, name }, m_node{ SceneNode::createRenderizable<T>(name + "_node") }
+        {
+        }
 
-		void onCreated() override {
-			m_node = createRenderizable<T>(name()+"_node");
-		}
-
-		sptr<T> node() noexcept { return m_node; }
-		const sptr<T> node() const noexcept { return m_node; }
+		constexpr sptr<T> node() noexcept { return m_node; }
+		constexpr const sptr<T> node() const noexcept { return m_node; }
 
 	private:
-		sptr<T> m_node;
+		const sptr<T> m_node;
 	};
 
-	template <typename RenderizableT, typename BaseComponent>
-	class RenderizableSceneNodeComponent : public ParentRenderComponent<RenderizableT, BaseComponent>
-	{
-	public:
-		using BaseClass = ParentRenderComponent<RenderizableT,BaseComponent>;
-        using ParentNodeClass = RenderizableSceneNode<RenderizableT>;
-		void onAttached() override {
-			if (auto parentNode = BaseClass::template attachedNodeAs<ParentNodeClass>()) {
-				m_renderizableNode = parentNode->node();
-			}
-			BaseClass::onAttached();
-		}
-	private:
-		sptr<RenderizableT> getRenderNodeToAttach() override {
-			return m_renderizableNode;
-		}
-
-		sptr<RenderizableT> m_renderizableNode;
-	};
-
-	using TextSceneNode = RenderizableSceneNode<nodes::NodeText>;
+    using ShapeSceneNode = RenderizableSceneNode<nodes::NodeShape>;
+    using QuadSceneNode = RenderizableSceneNode<nodes::NodeQuad>;
 }
 
 #endif

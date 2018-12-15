@@ -4,7 +4,7 @@
 #include <mtypes/include/streams.hpp>
 #include <mtypes/include/array.hpp>
 #include <lib/include/key.hpp>
-#include "direction.hpp"
+#include "gameplay/direction.hpp"
 
 namespace zoper
 {

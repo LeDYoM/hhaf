@@ -1,10 +1,11 @@
 #pragma once
 
-#ifndef LIB_SCENE_COMPONENTCONTAINER_INCLUDE_HPP__
-#define LIB_SCENE_COMPONENTCONTAINER_INCLUDE_HPP__
+#ifndef LIB_SCENE_COMPONENTCONTAINER_INCLUDE_HPP
+#define LIB_SCENE_COMPONENTCONTAINER_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector.hpp>
+#include <mtypes/include/lockablevector.hpp>
 #include "icomponent.hpp"
 #include <typeinfo>
 #include <typeindex>
@@ -57,7 +58,7 @@ namespace lib
 			const sptr<IComponent> componentOfType(const std::type_index& ti) const;
 
 			SceneNode *m_sceneNode;
-			vector_shared_pointers<IComponent> m_components;
+			LockableVector<sptr<IComponent>> m_components;
 		};
 	}
 }

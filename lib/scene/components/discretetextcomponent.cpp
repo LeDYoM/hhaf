@@ -1,4 +1,5 @@
 #include "discretetextcomponent.hpp"
+#include <lib/include/properties.hpp>
 
 namespace lib::scene
 {
@@ -37,6 +38,6 @@ namespace lib::scene
 
     void DiscreteTextComponent::_setText(const str & nText)
     {
-        node()->text.set(nText);
+        attachedNodeAs<nodes::SceneNodeText>()->text.set(Text_t(nText));
     }
 }

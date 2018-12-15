@@ -1,31 +1,22 @@
 project (lib)
 
-set(SOURCE_FILES_LIST
-    backend/backendfactory.cpp
-    backend/backendfactory.hpp
-    backend/interfaces.hpp
-    backend/itexturefactory.hpp
-    backend/itexture.hpp
-    backend/ittfontfactory.hpp
-    backend/ittfont.hpp
-    backend/iwindow.hpp
-
-    board/boardmodel.cpp
-    board/boardmodel.hpp
-    board/itilescontroller.hpp
-)
-
-#Add all the file from the library to compile
-file (GLOB_RECURSE LIB_HEADERS "*.hpp")
-file (GLOB_RECURSE LIB_SOURCES "*.cpp")
-
 include_directories ("..")
+
+set(LIB_VERSION_MAJOR "1")
+set(LIB_VERSION_MINOR "6")
+set(LIB_VERSION_PATCH "2")
+
+file (GLOB_RECURSE _SOURCES "board/*.cpp" "core/*.cpp" "scene/*.cpp")
+file (GLOB_RECURSE _HEADERS "board/*.hpp" "core/*.hpp" "include/*.hpp" "scene/*.hpp")
+
+configure_file(config.hpp.in config.hpp)
+include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 set (CURRENT_TARGET lib)
 
-add_library(${CURRENT_TARGET} STATIC ${LIB_HEADERS} ${LIB_SOURCES})
-
-source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${LIB_HEADERS} ${LIB_SOURCES})
+add_library(${CURRENT_TARGET} STATIC ${_SOURCES} ${_HEADERS})
 
 target_link_libraries(${CURRENT_TARGET} PRIVATE loader)
 target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
+
+add_subdirectory(tests)

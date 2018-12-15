@@ -8,16 +8,7 @@ namespace lib
 	{
 		Transformable::Transformable() noexcept : 
 			origin{ },
-			rotation{
-/*				[this]() {
-					auto temp_rotation(static_cast<f32>(fmod(rotation(), 360.f)));
-					if (temp_rotation != rotation()) {
-						rotation.set(temp_rotation);
-					}
-
-					setNeedsUpdate();
-				}*/
-			},
+            rotation{ },
 			scale{ { 1, 1 } },
 			position{ },
 			m_transform{},

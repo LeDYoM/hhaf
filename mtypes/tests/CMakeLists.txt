@@ -1,12 +1,20 @@
+enable_testing()
+
 set(UNIT_TEST_LIST
-  dicty
-  parpar)
+    dicty
+	lockablevector
+    main
+    parpar
+    str
+    streams
+    vector
+)
 
 foreach(NAME IN LISTS UNIT_TEST_LIST)
   list(APPEND UNIT_TEST_SOURCE_LIST ${NAME}.test.cpp)
 endforeach()
 
-set(TARGET_NAME mtypes_tests)
+set(TARGET_NAME mtypes_utests)
 set(CMAKE_CXX_STANDARD 17)
 
 add_executable(${TARGET_NAME}
@@ -15,9 +23,8 @@ add_executable(${TARGET_NAME}
 target_link_libraries(${TARGET_NAME}
   PRIVATE mtypes)
 
-target_include_directories(${TARGET_NAME}
-  PRIVATE ../3rdparty/catch2/)
+include_directories(${TARGET_NAME}
+  INTERFACE ${CATCH_INCLUDE_DIR})
 
-add_test(
-  NAME ${TARGET_NAME}
-  COMMAND ${TARGET_NAME} -o report.xml -r junit)
+# add_test( NAME all COMMAND CTest)
+include (Catch)

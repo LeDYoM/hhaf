@@ -1,4 +1,4 @@
-#include "timer.hpp"
+#include <lib/include/core/timer.hpp>
 #include <chrono>
 
 namespace lib
@@ -8,84 +8,143 @@ namespace lib
 
 	struct TimePrivate
 	{
-		std::chrono::microseconds m_micrseconds;
-		TimePrivate(std::chrono::microseconds microseconds)
-			: m_micrseconds{microseconds} {}
+		std::chrono::microseconds m_microseconds;
+		TimePrivate(std::chrono::microseconds microseconds = std::chrono::microseconds::zero())
+			: m_microseconds{microseconds} {}
 
-		TimePrivate(TimePrivate &&rh) = default;
+		TimePrivate(TimePrivate &&) = default;
+		TimePrivate(const TimePrivate &) = default;
+		TimePrivate&operator=(TimePrivate &&) = default;
+		TimePrivate&operator=(const TimePrivate &) = default;
+        ~TimePrivate() = default;
 	};
 
-	Time::Time()
-		: m_timePrivate{ std::make_unique<TimePrivate>(std::chrono::microseconds::zero()) } { }
+	Time::Time(const u64 quantity, TimeInitializationTag initTag)
+        : m_timePrivate{ muptr<TimePrivate>() } 
+    {
+        switch (initTag)
+        {
+        default:
+        case TimeInitializationTag::Microseconds:
+            m_timePrivate->m_microseconds = std::chrono::microseconds(quantity);
+            break;
+        case TimeInitializationTag::Milliseconds:
+            m_timePrivate->m_microseconds = std::chrono::milliseconds(quantity);
+            break;
+        case TimeInitializationTag::Seconds:
+            m_timePrivate->m_microseconds = std::chrono::seconds(quantity);
+            break;
+        }
+    }
 
-	Time::Time(Time &&rh)
+    Time::Time(Time &&rh) noexcept : m_timePrivate{ std::move(rh.m_timePrivate) } {}
+
+	Time::Time(const Time & rhs) : m_timePrivate{ muptr<TimePrivate>(*(rhs.m_timePrivate)) } { }
+
+	Time & Time::operator=(const Time &rhs)
 	{
-		m_timePrivate = std::move(rh.m_timePrivate);
+		m_timePrivate.reset(new TimePrivate(*(rhs.m_timePrivate)));
+		return *this;
 	}
 
-	Time::~Time() = default;
+	Time & Time::operator=(Time && rhs) noexcept
+	{
+		std::swap(m_timePrivate, rhs.m_timePrivate);
+		return *this;
+	}
+
+	Time::~Time() {}
 
 	Time &Time::operator+=(const Time &rh)
 	{
-		m_timePrivate->m_micrseconds += rh.m_timePrivate->m_micrseconds;
+		m_timePrivate->m_microseconds += rh.m_timePrivate->m_microseconds;
+		return *this;
+	}
+
+	Time & Time::operator-=(const Time & rh)
+	{
+		m_timePrivate->m_microseconds -= rh.m_timePrivate->m_microseconds;
 		return *this;
 	}
 
 	Time Time::operator-(const Time &rh) const
 	{
-		Time t;
-		t.m_timePrivate = std::make_unique<TimePrivate>(this->m_timePrivate->m_micrseconds - rh.m_timePrivate->m_micrseconds);
-		return t;
+		Time t(*this);
+		t -= rh;
+        return t;
 	}
 
-	Time & Time::operator=(const Time &other)
+    bool Time::operator>(const Time &rh) const noexcept
+    {
+        return m_timePrivate->m_microseconds > rh.m_timePrivate->m_microseconds;
+    }
+
+    bool Time::operator<(const Time &rh) const noexcept
+    {
+        return m_timePrivate->m_microseconds > rh.m_timePrivate->m_microseconds;
+    }
+
+    bool Time::operator>=(const Time &rh) const noexcept
+    {
+        return m_timePrivate->m_microseconds >= rh.m_timePrivate->m_microseconds;
+    }
+
+    bool Time::operator<=(const Time &rh) const noexcept
+    {
+        return m_timePrivate->m_microseconds >= rh.m_timePrivate->m_microseconds;
+    }
+
+    bool Time::operator==(const Time &rh) const noexcept
+    {
+        return m_timePrivate->m_microseconds == rh.m_timePrivate->m_microseconds;
+    }
+
+    bool Time::operator!=(const Time &rh) const noexcept
+    {
+        return m_timePrivate->m_microseconds != rh.m_timePrivate->m_microseconds;
+    }
+
+	u64 Time::asMicroSeconds() const noexcept
 	{
-		m_timePrivate->m_micrseconds = other.m_timePrivate->m_micrseconds;
-		return *this;
+		return m_timePrivate->m_microseconds.count();
 	}
 
-	u64 Time::asMicroSeconds() const
+	u64 Time::asMilliSeconds() const noexcept
 	{
-		return m_timePrivate->m_micrseconds.count();
+		return std::chrono::duration_cast<std::chrono::milliseconds>(m_timePrivate->m_microseconds).count();
 	}
 
-	u64 Time::asMilliSeconds() const
+	u64 Time::asSeconds() const noexcept
 	{
-		return std::chrono::duration_cast<std::chrono::milliseconds>(m_timePrivate->m_micrseconds).count();
+		return std::chrono::duration_cast<std::chrono::seconds>(m_timePrivate->m_microseconds).count();
 	}
 
-	u64 Time::asSeconds() const
+	void Time::setZero() noexcept
 	{
-		return std::chrono::duration_cast<std::chrono::seconds>(m_timePrivate->m_micrseconds).count();
-	}
-
-	void Time::setZero()
-	{
-		if (m_timePrivate)
-			m_timePrivate->m_micrseconds = std::chrono::microseconds::zero();
+		m_timePrivate->m_microseconds = std::chrono::microseconds::zero();
 	}
 
 	struct TimerPrivate
 	{
-
 		clock_t::time_point start;
 		std::chrono::microseconds pausedTime;
-		TimerPrivate()
-		{
-			start = clock_t::now();
-			pausedTime = std::chrono::microseconds::zero();
-		}
+        
+		TimerPrivate() :
+            start{ clock_t::now() },
+            pausedTime{ std::chrono::microseconds::zero() } {}
+        ~TimerPrivate() = default;
 	};
 
 	Timer::Timer() : m_timerPrivate{ new TimerPrivate } {}
 
 	Timer::~Timer() = default;
+    Timer::Timer(Timer &&) = default;
+    Timer & Timer::operator=(Timer &&) = default;
 
-	const Time Timer::getElapsedTime() const
+	Time Timer::ellapsed() const
 	{
-		std::chrono::microseconds ellapsed = std::chrono::duration_cast<std::chrono::microseconds>(clock_t::now() - m_timerPrivate->start);
-		Time t;
-		t.m_timePrivate = std::make_unique<TimePrivate>(ellapsed);
+		Time t((std::chrono::duration_cast<std::chrono::microseconds>(clock_t::now() - m_timerPrivate->start)).count(),
+            TimeInitializationTag::Microseconds);
 		return t;
 	}
 
@@ -96,8 +155,7 @@ namespace lib
 
 	void PausableTimer::pause()
 	{
-		if (!m_paused)
-		{
+		if (!m_paused) {
 			m_paused = true;
 			m_pausedTimer.restart();
 		}
@@ -107,7 +165,7 @@ namespace lib
 	{
 		if (m_paused) {
 			m_paused = false;
-			m_pausedTime += m_pausedTimer.getElapsedTime();
+			m_pausedTime += m_pausedTimer.ellapsed();
 		}
 	}
 
@@ -117,11 +175,13 @@ namespace lib
 		return m_paused;
 	}
 
-	const Time PausableTimer::getElapsedTime() const
+	Time PausableTimer::ellapsed() const
 	{
-		Time t = (Timer::getElapsedTime() - m_pausedTime);
+		Time t{ Timer::ellapsed() - m_pausedTime };
 		if (m_paused)
-			t = t - m_pausedTimer.getElapsedTime();
+		{
+			t -= m_pausedTimer.ellapsed();
+		}
 		return t;
 	}
 

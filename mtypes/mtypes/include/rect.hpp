@@ -11,7 +11,7 @@ namespace lib
     template <typename T>
     struct Rect
     {
-        T left, top, width, height;
+        T left{}, top{}, width{}, height{};
 
         constexpr Rect() noexcept = default;
         constexpr Rect(const T rectLeft, const T rectTop, const T rectWidth, const T rectHeight) noexcept : left{ rectLeft }, top{ rectTop }, width{ rectWidth }, height{ rectHeight } { }
@@ -68,6 +68,10 @@ namespace lib
             return *this;
         }
 
+        constexpr vector2d<T> radius() const noexcept {
+            return { width / static_cast<T>(2) , height / static_cast<T>(2) };
+        }
+
         constexpr const vector2d<T> leftTop() const noexcept { return vector2d<T>{left, top}; }
         constexpr const vector2d<T> size() const  noexcept { return vector2d<T>{width, height}; }
         constexpr const T right() const  noexcept { return left + width; }
@@ -76,11 +80,26 @@ namespace lib
         constexpr const vector2d<T> rightTop() const  noexcept { return vector2d<T>{right(), top}; }
         constexpr const vector2d<T> leftBottom() const  noexcept { return vector2d<T>{left, bottom()}; }
 
-        constexpr void move(const vector2d<T> &offset) const { ( *this ) += offset; };
-        constexpr Rect moved(const vector2d<T> &offset) const { return (Rect(*this) += offset); };
-        constexpr Rect resize(const vector2d<T> &sSize) const { return Rect{ left, top, width + sSize.x, height + sSize.y }; };
-        constexpr Rect setRadiusFromCenter(const vector2d<T> &radius) const { Rect temp{ *this }; temp.setRadiusFromCenter(radius); return temp; }
-        constexpr Rect moveResize(const vector2d<T> &offset, const vector2d<T> &sSize) const { return moved(offset).resize(sSize); };
+        constexpr void move(const vector2d<T> &offset) const noexcept { ( *this ) += offset; };
+        constexpr Rect moved(const vector2d<T> &offset) const noexcept { return (Rect(*this) += offset); };
+        constexpr Rect resize(const vector2d<T> &sSize) const noexcept { return Rect{ left, top, width + sSize.x, height + sSize.y }; };
+        constexpr Rect setRadiusFromCenter(const vector2d<T> &radius) const noexcept { Rect temp{ *this }; temp.setRadiusFromCenter(radius); return temp; }
+        constexpr Rect moveResize(const vector2d<T> &offset, const vector2d<T> &sSize) const noexcept { return moved(offset).resize(sSize); };
+
+        constexpr bool insideX(const vector2d<T>& v) const noexcept
+        {
+            return (v.x >= left && v.x < right());
+        }
+
+        constexpr bool insideY(const vector2d<T>& v) const noexcept
+        {
+            return (v.y >= top && v.y < bottom());
+        }
+
+        constexpr bool inside(const vector2d<T>& v) const noexcept
+        {
+            return insideX(v) && insideY(v);
+        }
     };
 
     template <typename T>

@@ -1,10 +1,16 @@
-#ifndef __LIB_WINDOW_HPP__
-#define __LIB_WINDOW_HPP__
+#pragma once
+
+#ifndef LIB_WINDOW_INCLUDE_HPP__
+#define LIB_WINDOW_INCLUDE_HPP__
+
+#include "appservice.hpp"
+
+#include <lib/include/backend/iwindow.hpp>
+#include <lib/include/backend/iinputdriver.hpp>
+
+#include <lib/include/key.hpp>
 
 #include <mtypes/include/types.hpp>
-#include "appservice.hpp"
-#include <lib/backend/iwindow.hpp>
-#include <lib/include/key.hpp>
 #include <mtypes/include/properties.hpp>
 
 namespace lib
@@ -18,27 +24,20 @@ namespace lib
 
     namespace core
     {
-        class Window : public AppService
+        class RenderTarget;
+        class Host;
+        class Window final : public AppService
         {
         public:
-            Window(const WindowCreationParams &wcp);
-            ~Window();
+            Window(Host &host, const WindowCreationParams &wcp);
+            ~Window() override;
             bool preLoop();
             void postLoop();
             virtual void onCreate();
             virtual void onDestroy();
 
-            PropertyTrigger<Rectf32> viewPort;
-            PropertyTrigger<Rectf32> viewRect;
-
-            void draw(const scene::RenderData &renderData);
-
-            bool arePendingKeyPresses() const;
-            bool arePendingKeyReleases() const;
-
-            input::Key popKeyPress();
-            input::Key popKeyRelease();
-
+            sptr<RenderTarget> renderTarget();
+            backend::IInputDriver* inputDriver();
         private:
             void create(const WindowCreationParams &wcp);
             struct WindowPrivate;

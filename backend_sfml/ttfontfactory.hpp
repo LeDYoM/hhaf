@@ -1,28 +1,24 @@
+#pragma once
+
 #ifndef LIB_BACKEND_SFML_TTFONTFACTORY_HPP
 #define LIB_BACKEND_SFML_TTFONTFACTORY_HPP
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
 
-#include <lib/backend/ittfontfactory.hpp>
+#include <lib/include/backend/iresourcefactories.hpp>
 #include "ttfont.hpp"
 
-namespace lib
+namespace lib::backend::sfmlb
 {
-	namespace backend
+	class TTFontFactory : public ITTFontFactory
 	{
-		namespace sfmlb
-		{
-			class TTFontFactory : public ITTFontFactory
-			{
-			public:
-				virtual ITTFont* loadFromFile(const str &file) override;
-				virtual ~TTFontFactory();
-			private:
-				vector<TTFont*> m_fontCache;
-			};
-		}
-	}
+	public:
+		virtual ITTFont* loadFromFile(const str &file) override;
+		virtual ~TTFontFactory();
+	private:
+		vector<uptr<TTFont>> m_fontCache;
+	};
 }
 
 #endif

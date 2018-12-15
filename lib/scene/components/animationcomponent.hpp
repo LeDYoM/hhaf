@@ -21,9 +21,10 @@ namespace lib
 
 				virtual void update() override;
 				void addAnimation(uptr<IAnimation>);
+
 			private:
 				class AnimationComponentPrivate;
-				AnimationComponentPrivate *m_private;
+				uptr<AnimationComponentPrivate> m_private;
 			};
 		}
 	}

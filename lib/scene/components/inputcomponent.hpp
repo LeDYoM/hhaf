@@ -16,9 +16,9 @@ namespace lib
 		{
 		public:
 			InputComponent();
-			~InputComponent();
+			~InputComponent() override;
 
-			virtual void update() override;
+			void update() override;
 			
 			bool isPressed(const input::Key key);
 
@@ -36,7 +36,7 @@ namespace lib
 			virtual void keyReleased(const input::Key&) {}
 		private:
 			class InputComponentPrivate;
-			InputComponentPrivate *m_private;
+            uptr<InputComponentPrivate> priv_;
 		};
 	}
 }

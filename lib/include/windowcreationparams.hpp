@@ -1,9 +1,8 @@
 #pragma once
 
-#ifndef LIB_WINDOWCREATIONPARAMS_INCLUDE_HPP__
-#define LIB_WINDOWCREATIONPARAMS_INCLUDE_HPP__
+#ifndef LIB_WINDOWCREATIONPARAMS_INCLUDE_HPP
+#define LIB_WINDOWCREATIONPARAMS_INCLUDE_HPP
 
-#include "compconfig.hpp"
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
 

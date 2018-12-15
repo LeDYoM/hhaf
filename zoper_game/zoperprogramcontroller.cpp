@@ -1,7 +1,7 @@
 #include "zoperprogramcontroller.hpp"
-#include "scenes/menuscene.hpp"
-#include "scenes/gamescene.hpp"
-#include "scenes/highscoresscene.hpp"
+#include "menu/menuscene.hpp"
+#include "gameplay/gamescene.hpp"
+#include "highscores/highscoresscene.hpp"
 #include "common.hpp"
 
 #include <lib/core/host.hpp>
@@ -13,45 +13,54 @@ namespace zoper
 	using namespace lib;
 	using namespace lib::scene;
 
-	ZoperProgramController::ZoperProgramController() = default;
-	ZoperProgramController::~ZoperProgramController() = default;
+	ZoperProgramController::ZoperProgramController() {}
+	ZoperProgramController::~ZoperProgramController() {}
 
 	void ZoperProgramController::onInit()
 	{
-		gameData = msptr<GameData>();
+        appContext().setApplicationName("Zoper");
+        appContext().setApplicationVersion(1);
+        appContext().setApplicationSubVersion(2);
+        appContext().setApplicationPatch(2);
+		gameSharedData = msptr<GameSharedData>();
 
 		keyMapping = muptr<KeyMapping>();
 		Serializer<KeyMapping> kmSerializer;
 		kmSerializer.deserialize("keyboard.txt", *keyMapping);
-		sceneManager().setViewRect({0,0,2000,2000});
-		sceneManager().setSceneDirector([this](sptr<Scene> scene) -> sptr<Scene> {
-            if (typeid(*scene) == typeid(MenuScene)) {
+        hostContext().sceneManager().setViewRect({0,0,2000,2000});
+
+		auto &scene_factory(hostContext().sceneManager().sceneController()->sceneFactory());
+
+		scene_factory.registerSceneType<MenuScene>();
+		scene_factory.registerSceneType<GameScene>();
+		scene_factory.registerSceneType<HighScoresScene>();
+		
+        hostContext().sceneManager().sceneController()->setSceneDirector([this](const str& scene_name) -> str
+        {
+            if (scene_name == (MenuScene::StaticTypeName))
+            {
                 // Did the user selected exit?
-                if (gameData->startGameData.exitGame) {
-                    return nullptr;
+                if (gameSharedData->exitGame) {
+                    return str();
                 }
-                return sceneManager().createScene<GameScene>();
+                return GameScene::StaticTypeName;
             }
-			return sceneManager().createScene<MenuScene>();
+			return MenuScene::StaticTypeName;
 		});
-		sceneManager().start();
+
 		// Hack to test high scores
 		{
-//			gameData->score = 10000;
-//			sceneManager().startFirstScene<HighScoresScene>();
+//            gameData->score = 10000;
+//            hostContext().sceneManager().startFirstScene<HighScoresScene>();
 		}
 
-		sceneManager().startFirstScene<MenuScene>();
+        hostContext().sceneManager().sceneController()->startScene<MenuScene>();
 	}
 
-	const IAppDescriptor ZoperProgramController::getAppDescriptor() const
+	IAppDescriptor ZoperProgramController::getAppDescriptor() const
 	{
 		return IAppDescriptor
 		{
-			"Zoper",
-			1,
-			1,
-			4,
 			"config.cfg",
 			"res.cfg",
 			WindowCreationParams
@@ -66,10 +75,5 @@ namespace zoper
 				false
 			}
 		};
-	}
-
-	int ZoperProgramController::loop()
-	{
-		return 0;
 	}
 }

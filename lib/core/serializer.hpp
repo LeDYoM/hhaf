@@ -5,7 +5,9 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
-#include <mtypes/include/log.hpp>
+
+#include <lib/include/core/log.hpp>
+
 #include "file.hpp"
 
 namespace lib
@@ -24,7 +26,7 @@ namespace lib
 		constexpr bool deserialize(const str&fileName, T&data) {
 			FileInput fin{ fileName };
 			if (fin.exists()) {
-				auto ssi(fin.getAsStream());
+                SerializationStreamIn ssi(fin.getAsStream());
 				ssi >> data;
 				return true;
 			}

@@ -19,7 +19,7 @@ namespace lib::parpar
     using ParameterName = str_t;
     using PositionalParameter = str_t;
     using SwitchParameter = str_t;
-    using OptionParameter = std::pair<str_t,str_t>;
+    using OptionParameter = pair<str_t,str_t>;
 
     using PositionalParameterVector = vector_t<PositionalParameter>;
     using SwitchParameterVector = vector_t<SwitchParameter>;
@@ -88,7 +88,7 @@ namespace lib::parpar
         }
 
         using COptionResult
-            = std::pair<SyntaxParserErrorCodes,std::pair<str_t,str_t>>;
+            = pair<SyntaxParserErrorCodes,pair<str_t,str_t>>;
 
         /// Method that given a parameter assumed as option,
         /// checks if it is well formed.
@@ -101,7 +101,7 @@ namespace lib::parpar
             // Find '=' sign
             const auto equalSign(param.find_first_of('='));
 
-            if (equalSign != std::string::npos)
+            if (equalSign != str_t::npos)
             {
                 const str_t name(param.substr(1,equalSign-1));
                 const str_t value(param.substr(equalSign+1));
@@ -267,7 +267,7 @@ namespace lib::parpar
             return optionValue(opPar).first;
         }
 
-        inline std::pair<bool,str> optionValue(const str_t &opPar) const
+        inline pair<bool,str> optionValue(const str_t &opPar) const
         {
             auto iterator(std::find_if(
                 m_optionParameters.cbegin(),
@@ -278,8 +278,8 @@ namespace lib::parpar
                 }));
 
                 return iterator == m_optionParameters.cend()?
-                    std::make_pair(false,""):
-                    std::make_pair(true,iterator->second);
+                    std::make_pair(false,str("")):
+                    std::make_pair(true,str(iterator->second));
         }
 
         inline str_t optionValueOrDefault(const str_t &opPar,

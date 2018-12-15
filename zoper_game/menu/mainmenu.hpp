@@ -9,13 +9,13 @@
 
 namespace zoper
 {
-	class GameData;
 	using namespace lib;
+    struct GameSharedData;
 
 	class MainMenu : public scene::SceneNode
 	{
 	public:
-		constexpr static const char*ClassName = "MainMenu";
+		static constexpr char ClassName[] = "MainMenu";
 		MainMenu(scene::SceneNode *parent, str name);
 		virtual ~MainMenu();
 
@@ -25,7 +25,7 @@ namespace zoper
 		void hidePage(const MenuPageType&page);
 		emitter<> MenuFinished;
 	private:
-		sptr<GameData> m_gameData;
+		sptr<GameSharedData> m_gameSharedData;
 		vector_shared_pointers<MenuPage> m_menuSteps;
 	};
 }

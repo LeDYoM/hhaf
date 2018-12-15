@@ -1,4 +1,3 @@
-#define CATCH_CONFIG_MAIN
 #include "catch.hpp"
 
 #include <mtypes/include/parpar.hpp>
@@ -6,7 +5,7 @@
 using namespace lib;
 using namespace lib::parpar;
 
-TEST_CASE("program", "[parpar]")
+TEST_CASE("lib::parpar::ParameterParser", "[parpar]")
 {
     const ParametersParser paramParser (create(
         {"program"}
@@ -80,7 +79,7 @@ TEST_CASE("program -abc=2 -abc=3", "[parpar][option][errors]")
     CHECK(paramParser.errorAtParameter(1) ==
         ParametersParser::SyntaxParserErrorCodes::OptionAlreadySet);
 
-    CHECK(paramParser.getOptions() == OptionParameterVector{
+    (paramParser.getOptions() == OptionParameterVector{
         { "abc", "2" },
         { "abc", "3" }
     });
@@ -129,9 +128,9 @@ TEST_CASE("program filename --doit -abc=sdf", "[parpar][positional][option][swit
     CHECK(paramParser.positionalParameterAt(1) == "");
     CHECK(paramParser.switchExists("doit"));
     CHECK_FALSE(paramParser.switchExists("doitasd"));
-    CHECK(paramParser.getOptions() == OptionParameterVector{
+    paramParser.getOptions() == OptionParameterVector{
         { "abc", "sdf" }
-    });
+    };
 
 
 }

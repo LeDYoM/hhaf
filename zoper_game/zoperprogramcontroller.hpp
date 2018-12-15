@@ -1,14 +1,15 @@
 #pragma once
 
-#ifndef LIB_ZOPERPROGRAMCONTROLLER_HPP__
-#define LIB_ZOPERPROGRAMCONTROLLER_HPP__
+#ifndef LIB_ZOPERPROGRAMCONTROLLER_HPP
+#define LIB_ZOPERPROGRAMCONTROLLER_HPP
 
 #include <lib/include/iapp.hpp>
+#include <mtypes/include/types.hpp>
 
 namespace zoper
 {
 	using namespace lib;
-	class GameData;
+	struct GameSharedData;
 	class KeyMapping;
 	class MenuScene;
 	class GameScene;
@@ -20,10 +21,9 @@ namespace zoper
 		virtual ~ZoperProgramController();
 
 		void onInit() override;
-		virtual const IAppDescriptor getAppDescriptor() const override;
-		virtual int loop() override;
+		IAppDescriptor getAppDescriptor() const override;
 
-		sptr<GameData> gameData;
+		sptr<GameSharedData> gameSharedData;
 		uptr<KeyMapping> keyMapping;
 	};
 }

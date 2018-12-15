@@ -1,12 +1,11 @@
 #pragma once
 
-#ifndef ZOPER_MENU_MENUPAGE_MAIN_INCLUDE_HPP__
-#define ZOPER_MENU_MENUPAGE_MAIN_INCLUDE_HPP__
+#ifndef ZOPER_MENU_MENUPAGE_MAIN_INCLUDE_HPP
+#define ZOPER_MENU_MENUPAGE_MAIN_INCLUDE_HPP
 
 #include "menupage.hpp"
 #include <mtypes/include/types.hpp>
 #include <lib/scene/scenenode.hpp>
-#include <lib/scene/renderizables/nodetext.hpp>
 
 namespace zoper
 {

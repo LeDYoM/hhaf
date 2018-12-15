@@ -1,14 +1,23 @@
 #include "mainmenuresources.hpp"
-#include <lib/core/resourcemanager.hpp>
+
+#include <lib/include/resources/iresourcehandler.hpp>
+
+#include <lib/scene/texture.hpp>
+#include <lib/scene/ttfont.hpp>
 
 namespace zoper
 {
 	using namespace lib;
 	using namespace lib::scene;
 
-	void MainMenuResources::loadResources(core::ResourceManager&resourceManager)
+	void MainMenuResources::loadResources(IResourceHandler&resourceHandler)
 	{
-		background = resourceManager.getResource<Texture>("game_menu.background","resources/gr_ms.png");
-		logo = resourceManager.getResource<Texture>("game_menu.logo","resources/zoperbl.png");
+        constexpr static char BackgroundTextureFile[] = "resources/gr_ms.png";
+        constexpr static char LogoFile[] = "resources/zoperbl.png";
+        constexpr static char MenuFontFile[] = "resources/oldct.ttf";
+
+        resourceHandler.loadTexture(BackgroundTextureId, BackgroundTextureFile);
+        resourceHandler.loadTexture(LogoId, LogoFile);
+        resourceHandler.loadFont(MenuFontId, MenuFontFile);
 	}
 }

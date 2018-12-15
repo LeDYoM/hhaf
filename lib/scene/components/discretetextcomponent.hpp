@@ -4,28 +4,23 @@
 #define LIB_COMPONENT_DISCRETE_TEXT_INCLUDE_HPP__
 
 #include <mtypes/include/types.hpp>
-#include "parentrendercomponent.hpp"
-#include <lib/scene/scenenodetypes.hpp>
-#include <lib/scene/renderizables/nodetext.hpp>
+#include <lib/scene/nodes/scenenodetext.hpp>
+#include <lib/scene/components/icomponent.hpp>
 
 namespace lib::scene
 {
-    class DiscreteTextComponent : public RenderizableSceneNodeComponent<nodes::NodeText, IComponent>
+    class DiscreteTextComponent : public IComponent
     {
     public:
-        using BaseClass = RenderizableSceneNodeComponent<nodes::NodeText, IComponent>;
+        using BaseClass = IComponent;
         DiscreteTextComponent() {}
         virtual ~DiscreteTextComponent() {}
-
-        virtual void onAttached() override {
-            BaseClass::onAttached();
-        }
 
         BasicProperty<bool> circleAroud{ true };
         BasicProperty<string_vector> data;
         void incrementIndex() noexcept;
         void decrementIndex() noexcept;
-        PropertyState<u32> index{ 0 };
+        PropertyState<size_type> index{ 0 };
 
         virtual void update() override final;
     private:

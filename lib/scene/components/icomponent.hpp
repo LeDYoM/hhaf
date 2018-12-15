@@ -1,11 +1,9 @@
 #pragma once
 
-#ifndef LIB_SCENE_ICOMPONENT_INCLUDE_HPP__
-#define LIB_SCENE_ICOMPONENT_INCLUDE_HPP__
+#ifndef LIB_SCENE_ICOMPONENT_INCLUDE_HPP
+#define LIB_SCENE_ICOMPONENT_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <mtypes/include/properties.hpp>
-#include <mtypes/include/log.hpp>
 
 namespace lib::scene
 {

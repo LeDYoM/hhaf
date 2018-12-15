@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_DRAW_SCENENODE_HPP__
-#define LIB_DRAW_SCENENODE_HPP__
+#ifndef LIB_SCENE_SCENENODE_INCLUDE_HPP
+#define LIB_SCENE_SCENENODE_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
@@ -10,6 +10,8 @@
 #include <lib/scene/hasname.hpp>
 #include <lib/scene/components/icomponent.hpp>
 #include <lib/scene/components/componentcontainer.hpp>
+
+#include "scenenodeblob.hpp"
 
 namespace lib::scene
 {
@@ -20,11 +22,12 @@ namespace lib::scene
     /** \brief Main class representing all SceneNodes from a Scene.
     * This class is that serves as main entry point in the hierarchy of the scene
     */
-    class SceneNode : public core::HasName, public Transformable, public ComponentContainer
+    class SceneNode : public core::HasName, public Transformable, public ComponentContainer, public SceneNodeBlob
     {
     public:
         SceneNode(const SceneNode&) = delete;
         SceneNode &operator=(const SceneNode&) = delete;
+
         SceneNode(SceneNode *const parent, str name);
         virtual ~SceneNode();
 
@@ -77,12 +80,14 @@ namespace lib::scene
         void render(bool parentTransformationChanged);
         virtual void update() {}
 
-        virtual Scene *const parentScene() { return m_parent->parentScene(); }
+        virtual Scene *const parentScene() noexcept { return m_parent->parentScene(); }
+        virtual const Scene *const parentScene() const noexcept { return m_parent->parentScene(); }
 
         template <typename SceneType>
         SceneType *const parentSceneAs() { return dynamic_cast<SceneType*>(parentScene()); }
 
-        const Rectf32 &scenePerspective();
+        template <typename SceneType>
+        const SceneType *const parentSceneAs() const { return dynamic_cast<SceneType*>(parentScene()); }
 
         inline SceneNode *parent() noexcept { return m_parent; }
         inline const SceneNode *parent() const noexcept { return m_parent; }
@@ -117,39 +122,26 @@ namespace lib::scene
 
         void for_each_group(function<void(const sptr<SceneNode> &)> action) const;
 
-        inline void setNeedsUpdate() noexcept { m_needsUpdate = true; }
-        inline bool needsUpdate() const noexcept { return m_needsUpdate; }
-        inline void clearNeedsUpdate() noexcept { m_needsUpdate = false; }
+        BasicProperty<bool> visible;
+
+        constexpr const auto &renderNodes() const noexcept { return m_renderNodes; }
+        constexpr auto &renderNodes() noexcept { return m_renderNodes; }
+        constexpr auto renderNodesSize() const noexcept { return renderNodes().size(); }
+        constexpr const auto &sceneNodes() const noexcept { return m_groups; }
+        constexpr auto &sceneNodes() noexcept { return m_groups; }
+        constexpr auto sceneNodesSize() const noexcept { return sceneNodes().size(); }
 
     protected:
-
-        const vsp_with_deferred_delete<Renderizable> &renderNodes() const noexcept { return m_renderNodes; }
-        const vsp_with_deferred_delete<SceneNode> &sceneNodes() const noexcept { return m_groups; }
 
         void addRenderizable(sptr<Renderizable> newElement);
         void addSceneNode(sptr<SceneNode> node);
 
     private:
-
-        void internalUpdate() {
-            if (m_needsUpdate) {
-                m_needsUpdate = false;
-                update();
-            }
-        }
-
-        void updateRemoves();
-
-    public:
-        BasicProperty<bool> visible;
-
-    private:
+        friend class SceneNodeBlob;
         SceneNode *m_parent;
 
-        vsp_with_deferred_delete<Renderizable> m_renderNodes;
-        vsp_with_deferred_delete<SceneNode> m_groups;
-
-        bool m_needsUpdate{ true };
+        vector<sptr<Renderizable>> m_renderNodes;
+        vector<sptr<SceneNode>> m_groups;
     };
 
     using SceneNodeSPtr = sptr<SceneNode>;

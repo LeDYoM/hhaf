@@ -1,5 +1,7 @@
 #include "componentcontainer.hpp"
-#include <mtypes/include/log.hpp>
+
+#include <lib/include/core/log.hpp>
+
 #include <algorithm>
 
 namespace lib
@@ -32,7 +34,7 @@ namespace lib
 
 		bool ComponentContainer::addComponent(sptr<IComponent> nc)
 		{
-			__ASSERT(nc, "Trying to add a nullptr component");
+			assert_release(nc != nullptr, "Trying to add a nullptr component");
 			const auto& tinfo(typeid(*nc));
 			const std::type_index tindex(tinfo);
 			
@@ -40,7 +42,7 @@ namespace lib
 			log_debug_info("Searching for another component of the same type...");
 			
 			sptr<IComponent> component(std::move(nc));
-			const bool alreadyInConainer(containsComponentOfType(component,m_components));
+			const bool alreadyInConainer(containsComponentOfType(component, m_components.current()));
 
 			if (!alreadyInConainer) {
 				log_debug_info("Not found. Adding it");
@@ -53,17 +55,23 @@ namespace lib
 			return false;
 		}
 
-		void ComponentContainer::updateComponents() {
-			if (!m_components.empty()) {
-				for (auto &component : m_components) {
-					component->update();
-				}
-			}
+		void ComponentContainer::updateComponents() 
+        {
+            m_components.update();
+
+			if (!m_components.current().empty()) 
+            {
+                for (auto component : m_components.current())
+                {
+                    component->update();
+                }
+                m_components.update();
+            }
 		}
 
 		const sptr<IComponent> ComponentContainer::componentOfType(const std::type_index & ti) const
 		{
-			return getComponentFromTypeIndex(ti, m_components);
+			return getComponentFromTypeIndex(ti, m_components.next());
 		}
 	}
 }

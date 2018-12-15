@@ -1,8 +1,9 @@
 #include "animationcomponent.hpp"
-#include <lib/scene/ianimation.hpp>
 
-#include <mtypes/include/log.hpp>
-#include <algorithm>
+#include <lib/scene/ianimation.hpp>
+#include <lib/include/core/log.hpp>
+
+#include <mtypes/include/lockablevector.hpp>
 
 namespace lib
 {
@@ -14,41 +15,33 @@ namespace lib
 			{
 			public:
 				AnimationComponentPrivate() {}
-				vector_shared_pointers<IAnimation> m_animations;
+                LockableVector<sptr<IAnimation>> m_animations;
 			};
 			AnimationComponent::AnimationComponent()
-				: m_private{ new AnimationComponentPrivate }
-			{
-			}
+				: m_private{ muptr<AnimationComponentPrivate>() } {}
 
-			AnimationComponent::~AnimationComponent()
-			{
-				__ASSERT(m_private, "Destructing private class that is nullptr");
-				delete m_private;
-				m_private = nullptr;
-			}
+			AnimationComponent::~AnimationComponent() {}
 
 			void AnimationComponent::addAnimation(uptr<IAnimation> nanimation)
 			{
-				m_private->m_animations.emplace_back(std::move(nanimation));
+				m_private->m_animations.push_back(std::move(nanimation));
 			}
 
 			void AnimationComponent::update()
 			{
-				if (!m_private->m_animations.empty()) {
-					bool animsFinished{ false };
-					for (auto& animation : m_private->m_animations) {
-						if (!animation->animate()) {
-							animation = nullptr;
-							animsFinished = true;
-						}
-					}
+                m_private->m_animations.update();
 
-					if (animsFinished) {
-						m_private->m_animations.remove_values(nullptr);
-					}
-				}
-			}
+                for (auto animation : m_private->m_animations.current())
+                {
+                    if (!animation->animate()) 
+                    {
+                        animation->executeEndAction();
+                        m_private->m_animations.remove_value(animation);
+                    }
+                }
+
+                m_private->m_animations.update();
+            }
 		}
 	}
 }

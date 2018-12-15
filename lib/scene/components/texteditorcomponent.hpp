@@ -3,11 +3,10 @@
 #ifndef LIB_COMPONENT_TEXTEDITOR_INCLUDE_HPP__
 #define LIB_COMPONENT_TEXTEDITOR_INCLUDE_HPP__
 
-#include "parentrendercomponent.hpp"
 #include "inputcomponent.hpp"
 #include <mtypes/include/types.hpp>
 #include <lib/scene/scenenodetypes.hpp>
-#include <lib/scene/renderizables/nodetext.hpp>
+#include <lib/scene/nodes/scenenodetext.hpp>
 
 namespace lib::scene
 {
@@ -19,14 +18,14 @@ namespace lib::scene
 	};
 	namespace
 	{
-		using BaseClass_ = RenderizableSceneNodeComponent<nodes::NodeText, InputComponent>;
+        using BaseClass_ = InputComponent;
 	}
-	class TextEditorComponent : public BaseClass_
+    class TextEditorComponent : public BaseClass_
 	{
+    private:
+        using BaseClass = BaseClass_;
 	public:
-		using BaseClass = BaseClass_;
-
-		virtual void onAttached() override;
+        virtual void onAttached() override;
 
 		emitter<const str&> Accepted;
 		emitter<> Rejected;

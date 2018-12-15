@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_FACTORY_INCLUDE_HPP__
-#define LIB_FACTORY_INCLUDE_HPP__
+#ifndef LIB_FACTORY_INCLUDE_HPP
+#define LIB_FACTORY_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
@@ -65,7 +65,6 @@ namespace lib
 	private:
 		std::map<std::type_index,sptr<interface_type>> m_registeredTypes;
 	};
-
 }
 
 #endif

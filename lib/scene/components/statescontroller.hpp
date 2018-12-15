@@ -1,14 +1,14 @@
 #pragma once
 
-#ifndef LIB_STATES_CONTROLLER_INCLUDE_HPP__
-#define LIB_STATES_CONTROLLER_INCLUDE_HPP__
+#ifndef LIB_STATES_CONTROLLER_INCLUDE_HPP
+#define LIB_STATES_CONTROLLER_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/function.hpp>
 #include <mtypes/include/connection.hpp>
 #include <mtypes/include/stack.hpp>
-#include <mtypes/include/log.hpp>
-#include <mtypes/include/auxcontainer.hpp>
+#include <mtypes/include/lockablevector.hpp>
+#include <lib/include/core/log.hpp>
 #include <lib/scene/components/icomponent.hpp>
 
 namespace lib
@@ -20,56 +20,74 @@ namespace lib
 		class StatesControllerRaw
 		{
 		public:
-			constexpr void UseDeferred() noexcept { m_useDeferred = true; }
-			constexpr void UseDirect() noexcept { m_useDeferred = false; }
-			constexpr void update() {
-				if (!m_pendingActions.conainer().empty()) {
-					m_pendingActions.swap();
-					for (auto&& action : m_pendingActions.auxContainer()) {
-						action();
-					}
-					m_pendingActions.auxContainer().clear();
-					m_pendingActions.swap();
-				}
+			constexpr void update() 
+            {
+                if (!m_pendingActions.current().empty())
+                {
+                    for (auto action : m_pendingActions.current())
+                    {
+                        action();
+                        m_pendingActions.remove_value(action);
+                    }
+                    m_pendingActions.update();
+                }
 			}
 
-			constexpr void start(T firstState) noexcept {
-				assert_debug(m_statesStack.size() == 0, "You cannot call start if the stack is not empty");
-				BeforeStart(firstState);
-				push_state(std::move(firstState));
+			constexpr void start(T firstState) noexcept 
+            {
+				assert_debug(m_statesStack.empty(), "You cannot call start if the stack is not empty");
+                if (m_statesStack.empty())
+                {
+                    BeforeStart();
+                    push_state(std::move(firstState));
+                }
 			}
 
-			constexpr void push_state(T firstState) noexcept {
-				postAction([this, firstState = std::move(firstState)]() {
-					if (m_statesStack.size() > 0) {
+			constexpr void push_state(T firstState) noexcept 
+            {
+				postAction([this, firstState = std::move(firstState)]() 
+                {
+					if (!m_statesStack.empty()) 
+                    {
 						StatePaused(m_statesStack.back());
 					}
 					StatePushed(firstState);
+                    StateStarted(firstState);
 					m_statesStack.push_back(std::move(firstState));
 				});
 			}
 
-			constexpr void pop_state() noexcept {
-				postAction([this]() {
+			constexpr void pop_state() noexcept 
+            {
+				postAction([this]() 
+                {
 					assert_debug(m_statesStack.size() > 0, "m_statesStack.size() is 0");
+                    StateFinished(m_statesStack.back());
 					StatePopped(m_statesStack.back());
-					if (m_statesStack.size() > 1) {
+					if (m_statesStack.size() > 1) 
+                    {
 						m_statesStack.pop_back();
 						StateResumed(m_statesStack.back());
 					}
-					else {
-						BeforeFinish(m_statesStack.back());
+					else 
+                    {
 						m_statesStack.pop_back();
 						AfterFinish();
 					}
 				});
 			}
 
-			constexpr void setState(T newState) {
+			constexpr void setState(T newState) 
+            {
 				changeState(std::move(newState));
 			}
 
-			constexpr const T&currentState() const noexcept { return m_statesStack.back(); }
+            constexpr bool hasActiveState() const
+            {
+                return !m_statesStack.empty();
+            }
+
+			constexpr const T&currentState() const noexcept { return m_statesStack.cback(); }
 			constexpr T&currentState() noexcept { return m_statesStack.back(); }
 
 			emitter<const T&> StateFinished;
@@ -78,13 +96,14 @@ namespace lib
 			emitter<const T&> StatePopped;
 			emitter<const T&> StatePaused;
 			emitter<const T&> StateResumed;
-			emitter<const T&> BeforeStart;
-			emitter<const T&> BeforeFinish;
-			emitter<>		  AfterFinish;
+			emitter<>          BeforeStart;
+			emitter<>		   AfterFinish;
 
 		private:
-			inline void changeState(T newState) {
-				postAction([this, newState = std::move(newState)]() {
+			inline void changeState(T newState) 
+            {
+				postAction([this, newState = std::move(newState)]() 
+                {
 					assert_debug(m_statesStack.size() != 0, "States stack size is 0");
 					const T&oldState{ m_statesStack.back() };
 					m_statesStack.pop_back();
@@ -95,22 +114,19 @@ namespace lib
 			}
 
 			constexpr void postAction(Action action) {
-				if (m_useDeferred) {
-					m_pendingActions.conainer().push_back(std::move(action));
-				} else {
-					action();
-				}
+				m_pendingActions.push_back(std::move(action));
 			}
 
-			bool m_useDeferred{ false };
 			stack<T> m_statesStack;
-			AuxContainer<vector<Action>> m_pendingActions;
+			LockableVector<Action> m_pendingActions;
 		};
 
 		template <typename T>
 		class StatesController : public StatesControllerRaw<T>, public IComponent
 		{
-			constexpr void update() override final {
+        public:
+			void update() override
+			{
 				StatesControllerRaw<T>::update();
 			}
 		};

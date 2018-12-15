@@ -1,5 +1,5 @@
 #include "mainmenu.hpp"
-#include "../gamedata.hpp"
+#include "../gameshareddata.hpp"
 #include "../zoperprogramcontroller.hpp"
 #include "menupage.hpp"
 #include "menupage_main.hpp"
@@ -9,9 +9,10 @@
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/scenemanager.hpp>
 #include <lib/core/host.hpp>
-#include <mtypes/include/log.hpp>
-#include <mtypes/include/function.hpp>
+#include <lib/include/core/log.hpp>
 #include <lib/scene/components/statescontroller.hpp>
+
+#include <mtypes/include/function.hpp>
 
 namespace zoper
 {
@@ -22,7 +23,7 @@ namespace zoper
 	MainMenu::MainMenu(SceneNode *parent, str name)
 		: SceneNode{ parent, std::move(name) } 
 	{
-		m_gameData = app<ZoperProgramController>().gameData;
+		m_gameSharedData = app<ZoperProgramController>().gameSharedData;
 	}
 
 	MainMenu::~MainMenu() = default;
@@ -33,7 +34,6 @@ namespace zoper
 		SceneNode::onCreated();
 
 		auto statesController = ensureComponentOfType<StatesController<MenuPageType>>();
-		statesController->UseDeferred();
 
 		// Create and register menu pages
 		auto menuPageMain(createSceneNode<MenuPageMain>("menuPageMain"));
@@ -52,7 +52,6 @@ namespace zoper
 				statesController->push_state(MenuPageType::SelectLevelToken);
 				break;
 			case MenuPageType::SelectLevelSpeed:
-                m_gameData->startGameData.gameMode = GameMode::Time;
                 statesController->push_state(MenuPageType::SelectLevelSpeed);
 				break;
 			case MenuPageType::Options:
@@ -91,7 +90,8 @@ namespace zoper
 			hidePage(menuPage);
 		});
 
-		statesController->BeforeStart.connect([this](const MenuPageType) {
+		statesController->BeforeStart.connect([this]()
+        {
 			for (auto&& menuStep : m_menuSteps) {
 				menuStep->visible = false;
 			}
