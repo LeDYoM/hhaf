@@ -1,6 +1,7 @@
 #include "host.hpp"
 #include "window.hpp"
 #include "resourcemanager.hpp"
+#include "randomsystem.hpp"
 
 #include <lib/include/backend/iwindow.hpp>
 #include <lib/include/core/log.hpp>
@@ -136,6 +137,16 @@ namespace lib::core
         return *m_inputSystem;
     }
     
+    const RandomSystem &Host::randomSystem() const noexcept
+    {
+        return *random_system_;
+    }
+
+    RandomSystem &Host::randomSystem() noexcept
+    {
+        return *random_system_;
+    }
+
     const scene::SceneManager &Host::sceneManager() const noexcept
     {
         return *m_sceneManager;
@@ -174,6 +185,7 @@ namespace lib::core
             m_inputSystem = muptr<input::InputSystem>(*this);
             m_sceneManager = muptr<scene::SceneManager>(*this, *m_window);
             m_resourceManager = muptr<core::ResourceManager>(*this);
+            random_system_ = muptr<RandomSystem>(*this);
 
             m_private->m_appGroup.m_hostContext = muptr<HostContext>(this);
             m_private->m_appGroup.m_appContext = muptr<AppContext>(this);

@@ -22,6 +22,7 @@ namespace lib
     {
         class Window;
         class ResourceManager;
+        class RandomSystem;
         class HostPrivate;
 
         class Host final
@@ -47,6 +48,8 @@ namespace lib
             ResourceManager &resourceManager()  noexcept;
             const input::InputSystem &inputSystem() const noexcept;
             input::InputSystem &inputSystem() noexcept;
+            const RandomSystem &randomSystem() const noexcept;
+            RandomSystem &randomSystem() noexcept;
             const scene::SceneManager &sceneManager() const noexcept;
             scene::SceneManager &sceneManager() noexcept;
 
@@ -67,16 +70,15 @@ namespace lib
             uptr<ResourceManager> m_resourceManager;
             uptr<input::InputSystem> m_inputSystem;
             uptr<scene::SceneManager> m_sceneManager;
+            uptr<RandomSystem> random_system_;
             bool exit{ false };
         };
     }
 
-    
     template <typename AppType>
     inline AppType &app() {
         return core::Host::host().app<AppType>();
     }
-    
 }
 
 #endif
