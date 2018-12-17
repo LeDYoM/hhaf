@@ -2,7 +2,6 @@
 
 #include <lib/include/core/log.hpp>
 #include <lib/include/key.hpp>
-#include <lib/core/host.hpp>
 #include <lib/core/inputsystem.hpp>
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/scene.hpp>
@@ -24,14 +23,14 @@ namespace lib::scene
 	{
         if (attachedNode())
         {
-            core::Host &host{ attachedNode()->parentScene()->sceneManager().host() };
+            const input::InputSystem& input_system{ attachedNode()->inputSystem() };
 
-            for (const auto &pressedKey : host.inputSystem().pressedKeys())
+            for (const auto &pressedKey : input_system.pressedKeys())
             {
                 KeyPressed(pressedKey);
             }
 
-            for (const auto &releasedKey : host.inputSystem().releasedKeys())
+            for (const auto &releasedKey : input_system.releasedKeys())
             {
                 KeyReleased(releasedKey);
             }
@@ -42,8 +41,7 @@ namespace lib::scene
 	{
         if (attachedNode())
         {
-            core::Host &host{ attachedNode()->parentScene()->sceneManager().host() };
-            return host.inputSystem().keyStates()[key];
+            return attachedNode()->inputSystem().keyStates()[key];
         }
         return false;
 	}
