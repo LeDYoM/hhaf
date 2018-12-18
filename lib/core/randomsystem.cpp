@@ -15,7 +15,7 @@ namespace lib::core
 
         RandomSystemPrivate() : mt{ rd() } {}
 
-        std::uniform_int_distribution<int> dist;
+        std::uniform_int_distribution<size_type> dist;
     };
 
     RandomSystem::RandomSystem(Host &host)
@@ -25,14 +25,18 @@ namespace lib::core
 
     RandomSystem::~RandomSystem() = default;
 
-    u32 RandomSystem::getUInt(const size_type max, const size_type min) const
+    size_type RandomSystem::getUInt() const
     {
-        log_debug_info("Asked for random number between ", min, " and ", max);
-        assert_release(min != max, "The min and max parameters must be different");
-        assert_release(max > min, "The max paramter must be greater than min");
-        auto g(priv_->dist(priv_->mt) % (max - min));
-        log_debug_info("\tGot ", g);
-        log_debug_info("\tReturning ", min + g);
-        return min + g;
+        return static_cast<size_type>(priv_->dist(priv_->mt));
+    }
+
+    void RandomSystem::generateRandomBuffer(RandomBuffer & dest, const size_type size)
+    {
+        dest.numbers.resize(size);
+
+        for (auto& num_ref : dest.numbers)
+        {
+            num_ref = getUInt();
+        }
     }
 }

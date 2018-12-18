@@ -4,11 +4,17 @@
 #define LIB_COMPONENT_RANDOMSYSTEM_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
+#include <mtypes/include/vector.hpp>
 #include "appservice.hpp"
 
 namespace lib::core
 {
     class Host;
+
+    struct RandomBuffer
+    {
+        vector<size_type> numbers;
+    };
 
     /**
     * This system is intended to be used to generate
@@ -19,7 +25,9 @@ namespace lib::core
 	public:
         RandomSystem(Host &host);
         ~RandomSystem() override;
-        u32 getUInt(const size_type max = 1U, const size_type min = 0U) const;
+        size_type getUInt() const;
+        void generateRandomBuffer(RandomBuffer& dest, const size_type size = 100U);
+
     private:
         class RandomSystemPrivate;
         uptr<RandomSystemPrivate> priv_;

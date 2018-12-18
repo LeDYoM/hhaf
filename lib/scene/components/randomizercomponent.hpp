@@ -17,10 +17,12 @@ namespace lib::scene
 	public:
         RandomizerComponent();
         ~RandomizerComponent() override;
-        u32 getUInt(const size_type max = 1U, const size_type min = 0U) const;
+        u32 getUInt(const size_type max, const size_type min = 0U) const;
+
+        void onAttached() override;
     private:
         class RandomizerPrivate;
-        uptr<RandomizerPrivate> p_rPriv;
+        uptr<RandomizerPrivate> priv_;
 	};
 }
 
