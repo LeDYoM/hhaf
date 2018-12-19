@@ -7,6 +7,7 @@
 
 #include <lib/include/iapp.hpp>
 #include <lib/include/core/ihostcontext.hpp>
+#include "systemprovider.hpp"
 
 namespace lib
 {
@@ -25,7 +26,7 @@ namespace lib
         class RandomSystem;
         class HostPrivate;
 
-        class Host final
+        class Host final : public SystemProvider
         {
         public:
             static bool createHost(int argc, char *argv[]);
@@ -42,17 +43,6 @@ namespace lib
 
             void exitProgram();
 
-            const Window &parentWindow() const noexcept;
-            Window &parentWindow() noexcept;
-            const ResourceManager &resourceManager() const  noexcept;
-            ResourceManager &resourceManager()  noexcept;
-            const input::InputSystem &inputSystem() const noexcept;
-            input::InputSystem &inputSystem() noexcept;
-            const RandomSystem &randomSystem() const noexcept;
-            RandomSystem &randomSystem() noexcept;
-            const scene::SceneManager &sceneManager() const noexcept;
-            scene::SceneManager &sceneManager() noexcept;
-
             template <typename T>
             T &app() { return *(dynamic_cast<T*>(&app())); }
             IApp &app();
@@ -66,11 +56,6 @@ namespace lib
             static Host *m_instance;
 
             AppState m_state;
-            uptr<Window> m_window;
-            uptr<ResourceManager> m_resourceManager;
-            uptr<input::InputSystem> m_inputSystem;
-            uptr<scene::SceneManager> m_sceneManager;
-            uptr<RandomSystem> random_system_;
             bool exit{ false };
         };
     }
