@@ -3,6 +3,12 @@
 #ifndef LIB_APP_SERVICE_INCLUDE_HPP
 #define LIB_APP_SERVICE_INCLUDE_HPP
 
+///////////////////////////////
+// Temporary
+#include "host.hpp"
+#include "systemprovider.hpp"
+///////////////////////////////
+
 namespace lib
 {
 	namespace core
@@ -29,6 +35,9 @@ namespace lib
     public:
         constexpr core::Host& host() noexcept { return m_host; }
         constexpr const core::Host& host() const noexcept { return m_host; }
+
+        constexpr core::SystemProvider& systemProvider() noexcept { return m_host; }
+        constexpr const core::SystemProvider& systemProvider() const noexcept { return m_host; }
 
     private:
         core::Host &m_host;

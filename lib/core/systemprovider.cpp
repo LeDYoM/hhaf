@@ -15,11 +15,12 @@ namespace lib::core
 {
     void SystemProvider::init(Host& host, const WindowCreationParams& wcp)
     {
-        m_window = muptr<Window>(host, wcp);
-        m_inputSystem = muptr<input::InputSystem>(host);
-        m_sceneManager = muptr<scene::SceneManager>(host, *m_window);
-        m_resourceManager = muptr<core::ResourceManager>(host);
-        random_system_ = muptr<RandomSystem>(host);
+        host_ = &host;
+        m_window = muptr<Window>(*host_, wcp);
+        m_inputSystem = muptr<input::InputSystem>(*host_);
+        m_sceneManager = muptr<scene::SceneManager>(*host_, *m_window);
+        m_resourceManager = muptr<core::ResourceManager>(*host_);
+        random_system_ = muptr<RandomSystem>(*host_);
     }
 
     void SystemProvider::terminate()
@@ -29,6 +30,16 @@ namespace lib::core
         m_sceneManager = nullptr;
         m_inputSystem = nullptr;
         m_window = nullptr;
+    }
+
+    const core::Host & SystemProvider::host() const noexcept
+    {
+        return *host_;
+    }
+
+    core::Host & SystemProvider::host() noexcept
+    {
+        return *host_;
     }
 
     const Window &SystemProvider::parentWindow() const noexcept

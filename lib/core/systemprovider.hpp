@@ -30,6 +30,9 @@ namespace lib
         public:
             void init(Host& host, const WindowCreationParams& wcp);
             void terminate();
+
+            const core::Host &host() const noexcept;
+            core::Host &host() noexcept;
             const Window &parentWindow() const noexcept;
             Window &parentWindow() noexcept;
             const ResourceManager &resourceManager() const  noexcept;
@@ -41,8 +44,8 @@ namespace lib
             const scene::SceneManager &sceneManager() const noexcept;
             scene::SceneManager &sceneManager() noexcept;
 
-
         private:
+            core::Host* host_;
             uptr<Window> m_window;
             uptr<ResourceManager> m_resourceManager;
             uptr<input::InputSystem> m_inputSystem;
