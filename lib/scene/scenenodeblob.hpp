@@ -27,9 +27,6 @@ namespace lib::scene
     public:
         SceneNodeBlob(SceneNode& provider);
 
-        const core::Host& host() const;
-        core::Host& host();
-
         const input::InputSystem& inputSystem() const;
         input::InputSystem& inputSystem();
 

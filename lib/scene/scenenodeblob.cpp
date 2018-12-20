@@ -7,23 +7,12 @@
 #include "scene.hpp"
 #include "scenemanager.hpp"
 
-#include <lib/core/host.hpp>
+#include <lib/core/systemprovider.hpp>
 
 namespace lib::scene
 {
     SceneNodeBlob::SceneNodeBlob(SceneNode & provider)
         : scene_node_{ provider } {}
-
-
-    const core::Host& SceneNodeBlob::host() const
-    {
-        return scene_node_.parentScene()->sceneManager().systemProvider().host();
-    }
-
-    core::Host& SceneNodeBlob::host()
-    {
-        return scene_node_.parentScene()->sceneManager().systemProvider().host();
-    }
 
     const input::InputSystem & SceneNodeBlob::inputSystem() const
     {
