@@ -55,6 +55,6 @@ namespace lib::scene
 
     IResourceRetriever & SceneManager::resources()
     {
-        return host().resourceManager();
+        return systemProvider().resourceManager();
     }
 }

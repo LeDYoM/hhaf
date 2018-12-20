@@ -29,7 +29,7 @@ namespace lib::input
 
 	void InputSystem::preUpdate()
 	{
-        auto input_driver(host().parentWindow().inputDriver());
+        auto input_driver(systemProvider().parentWindow().inputDriver());
 
         if (input_driver->arePendingKeyPresses() || input_driver->arePendingKeyReleases())
         {
