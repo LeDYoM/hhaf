@@ -25,22 +25,28 @@ namespace lib
 	class AppService
 	{
 	protected:
-        constexpr AppService(core::Host &host) noexcept : m_host{ host } {}
-
+        AppService() = default;
         AppService(const AppService &rh) = delete;
 		AppService &operator=(const AppService &rh) = delete;
 
         virtual ~AppService() = default;
+	};
+
+    class HostedAppService : public AppService
+    {
+    protected:
+        constexpr HostedAppService(core::SystemProvider &system_provider) noexcept
+            : AppService{}, system_provider_ { system_provider } {}
+
+        ~HostedAppService() override = default;
 
     public:
-//        constexpr core::Host& host() noexcept { return m_host; }
-//        constexpr const core::Host& host() const noexcept { return m_host; }
-
-        constexpr core::SystemProvider& systemProvider() noexcept { return m_host; }
-        constexpr const core::SystemProvider& systemProvider() const noexcept { return m_host; }
+        constexpr core::SystemProvider& systemProvider() noexcept { return system_provider_; }
+        constexpr const core::SystemProvider& systemProvider() const noexcept { return system_provider_; }
 
     private:
-        core::Host &m_host;
-	};
+        core::SystemProvider &system_provider_;
+    };
+
 }
 #endif

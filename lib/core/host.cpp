@@ -129,7 +129,7 @@ namespace lib::core
             log_debug_info("Starting initialization of new App...");
             m_state = AppState::Executing;
 
-            SystemProvider::init(*this, m_private->m_appGroup.m_iapp->getAppDescriptor().wcp);
+            SystemProvider::init(*this, m_private->m_appGroup.m_iapp.get());
 
             m_private->m_appGroup.m_hostContext = muptr<HostContext>(this);
             m_private->m_appGroup.m_appContext = muptr<AppContext>(this);

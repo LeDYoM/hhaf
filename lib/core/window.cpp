@@ -26,8 +26,8 @@ namespace lib::core
         sptr<RenderTarget> m_renderTarget{nullptr};
     };
 
-    Window::Window(Host &host, const WindowCreationParams &wcp)
-        : AppService{ host },
+    Window::Window(const WindowCreationParams &wcp)
+        : AppService{ },
         m_wPrivate{ muptr<WindowPrivate>() }, m_title{ wcp.windowTitle }
     {
         create(wcp);
@@ -40,7 +40,17 @@ namespace lib::core
         return m_wPrivate->m_renderTarget;
     }
 
+    const sptr<RenderTarget> Window::renderTarget() const
+    {
+        return m_wPrivate->m_renderTarget;
+    }
+
     backend::IInputDriver* Window::inputDriver()
+    {
+        return m_wPrivate->m_backendWindow->inputDriver();
+    }
+
+    const backend::IInputDriver* Window::inputDriver() const
     {
         return m_wPrivate->m_backendWindow->inputDriver();
     }

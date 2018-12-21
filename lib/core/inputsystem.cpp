@@ -4,12 +4,12 @@
 #include <lib/include/backend/iwindow.hpp>
 #include <lib/core/host.hpp>
 #include <lib/core/window.hpp>
+#include <lib/include/backend/iinputdriver.hpp>
 
 namespace lib::input
 {
-	InputSystem::InputSystem(core::Host& host) 
-        : AppService{ host }, 
-        m_keyStates{} {}
+	InputSystem::InputSystem(backend::IInputDriver* const input_driver)
+        : AppService{ }, input_driver_{ input_driver }, m_keyStates{} {}
 
 	InputSystem::~InputSystem() = default;
 
@@ -29,17 +29,15 @@ namespace lib::input
 
 	void InputSystem::preUpdate()
 	{
-        auto input_driver(systemProvider().parentWindow().inputDriver());
-
-        if (input_driver->arePendingKeyPresses() || input_driver->arePendingKeyReleases())
+        if (input_driver_->arePendingKeyPresses() || input_driver_->arePendingKeyReleases())
         {
-			while (input_driver->arePendingKeyPresses())
+			while (input_driver_->arePendingKeyPresses())
             {
-				keyPressed(input_driver->popKeyPress());
+				keyPressed(input_driver_->popKeyPress());
 			}
-			while (input_driver->arePendingKeyReleases())
+			while (input_driver_->arePendingKeyReleases())
             {
-				keyReleased(input_driver->popKeyRelease());
+				keyReleased(input_driver_->popKeyRelease());
 			}
 		}
 	}

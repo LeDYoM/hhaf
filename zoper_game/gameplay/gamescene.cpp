@@ -55,7 +55,7 @@ namespace zoper
         auto inputComponent(ensureComponentOfType<scene::InputComponent>());
         inputComponent->KeyPressed.connect([this](const lib::input::Key&key) {
             log_debug_info("Key pressed in GameScene");
-            const auto &keyMapping = sceneManager().systemProvider().host().app<ZoperProgramController>().keyMapping;
+            const auto &keyMapping = sceneManager().systemProvider().app<ZoperProgramController>().keyMapping;
             switch (state())
             {
             case Playing:
@@ -211,12 +211,12 @@ namespace zoper
 
     void GameScene::importGameSharedData()
     {
-        (*sceneManager().systemProvider().host().app<ZoperProgramController>().gameSharedData) >> m_inGameData;
+        (*sceneManager().systemProvider().app<ZoperProgramController>().gameSharedData) >> m_inGameData;
     }
 
     void GameScene::exportGameSharedData()
     {
-        m_inGameData >> (*sceneManager().systemProvider().host().app<ZoperProgramController>().gameSharedData);
+        m_inGameData >> (*sceneManager().systemProvider().app<ZoperProgramController>().gameSharedData);
     }
 
     void GameScene::for_each_token_in_line(const vector2dst &startPosition, const Direction &direction,

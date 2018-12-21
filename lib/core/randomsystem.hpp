@@ -23,10 +23,10 @@ namespace lib::core
     class RandomSystem final : public AppService
 	{
 	public:
-        RandomSystem(Host &host);
+        RandomSystem();
         ~RandomSystem() override;
         size_type getUInt() const;
-        void generateRandomBuffer(RandomBuffer& dest, const size_type size = 100U);
+        void generateRandomBuffer(RandomBuffer& dest, const size_type channel, const size_type size = 100U);
 
     private:
         class RandomSystemPrivate;

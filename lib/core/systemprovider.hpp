@@ -9,6 +9,7 @@
 namespace lib
 {
     struct WindowCreationParams;
+    class IApp;
 
     namespace input
     {
@@ -28,11 +29,16 @@ namespace lib
         class SystemProvider
         {
         public:
-            void init(Host& host, const WindowCreationParams& wcp);
+            void init(Host& host, IApp *iapp);
             void terminate();
 
-            const core::Host &host() const noexcept;
-            core::Host &host() noexcept;
+//            const core::Host &host() const noexcept;
+//            core::Host &host() noexcept;
+
+            template <typename T>
+            T &app() { return *(dynamic_cast<T*>(&app())); }
+            IApp &app();
+
             const Window &parentWindow() const noexcept;
             Window &parentWindow() noexcept;
             const ResourceManager &resourceManager() const  noexcept;
@@ -46,6 +52,7 @@ namespace lib
 
         private:
             core::Host* host_;
+            IApp* app_;
             uptr<Window> m_window;
             uptr<ResourceManager> m_resourceManager;
             uptr<input::InputSystem> m_inputSystem;

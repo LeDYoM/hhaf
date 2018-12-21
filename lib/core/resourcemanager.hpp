@@ -25,7 +25,7 @@ namespace lib
 		class ResourceManager final : public AppService, public IResourceHandler, public IResourceRetriever
 		{
 		public:
-			ResourceManager(Host &host);
+			ResourceManager();
 			~ResourceManager() override;
 
 			sptr<scene::TTFont> getFont(const str &rid) override;

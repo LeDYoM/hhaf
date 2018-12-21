@@ -29,7 +29,7 @@ namespace lib
         class Window final : public AppService
         {
         public:
-            Window(Host &host, const WindowCreationParams &wcp);
+            Window(const WindowCreationParams &wcp);
             ~Window() override;
             bool preLoop();
             void postLoop();
@@ -37,7 +37,11 @@ namespace lib
             virtual void onDestroy();
 
             sptr<RenderTarget> renderTarget();
+            const sptr<RenderTarget> renderTarget() const;
+
             backend::IInputDriver* inputDriver();
+            const backend::IInputDriver* inputDriver() const;
+
         private:
             void create(const WindowCreationParams &wcp);
             struct WindowPrivate;

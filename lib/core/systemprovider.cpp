@@ -7,20 +7,23 @@
 #include <lib/include/backend/iwindow.hpp>
 #include <lib/include/core/log.hpp>
 #include <lib/include/windowcreationparams.hpp>
+#include <lib/include/iapp.hpp>
 
 #include <lib/core/backendfactory.hpp>
 #include <lib/scene/scenemanager.hpp>
 
 namespace lib::core
 {
-    void SystemProvider::init(Host& host, const WindowCreationParams& wcp)
+    void SystemProvider::init(Host& host, IApp *iapp)
     {
+        assert_release(iapp != nullptr, "Cannot create a SystemProvider with a nullptr app");
         host_ = &host;
-        m_window = muptr<Window>(*host_, wcp);
-        m_inputSystem = muptr<input::InputSystem>(*host_);
-        m_sceneManager = muptr<scene::SceneManager>(*host_, *m_window);
-        m_resourceManager = muptr<core::ResourceManager>(*host_);
-        random_system_ = muptr<RandomSystem>(*host_);
+        app_ = iapp;
+        m_window = muptr<Window>(app_->getAppDescriptor().wcp);
+        m_inputSystem = muptr<input::InputSystem>(m_window->inputDriver());
+        m_sceneManager = muptr<scene::SceneManager>(*this);
+        m_resourceManager = muptr<core::ResourceManager>();
+        random_system_ = muptr<RandomSystem>();
     }
 
     void SystemProvider::terminate()
@@ -32,6 +35,7 @@ namespace lib::core
         m_window = nullptr;
     }
 
+    /*
     const core::Host & SystemProvider::host() const noexcept
     {
         return *host_;
@@ -40,6 +44,12 @@ namespace lib::core
     core::Host & SystemProvider::host() noexcept
     {
         return *host_;
+    }
+    */
+
+    IApp &SystemProvider::app()
+    {
+        return *app_;
     }
 
     const Window &SystemProvider::parentWindow() const noexcept

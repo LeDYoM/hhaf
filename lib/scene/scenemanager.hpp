@@ -19,17 +19,12 @@ namespace lib
 {
     class IResourceRetriever;
 
-	namespace core
-	{
-		class Host;
-		class Window;
-	}
 	namespace scene
 	{
-		class SceneManager : public AppService
+		class SceneManager : public HostedAppService
 		{
 		public:
-			SceneManager(core::Host& host, core::Window &window);
+			SceneManager(core::SystemProvider &system_provider);
 			~SceneManager();
 
 			void start();
@@ -53,7 +48,6 @@ namespace lib
 			ComponentContainer m_componentContainer;
 			sptr<SceneController> scene_controller_;
 			SceneDirectorType scene_director_;
-			core::Window &m_parentWindow;
 		};
 	}
 }
