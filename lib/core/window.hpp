@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_WINDOW_INCLUDE_HPP__
-#define LIB_WINDOW_INCLUDE_HPP__
+#ifndef LIB_WINDOW_INCLUDE_HPP
+#define LIB_WINDOW_INCLUDE_HPP
 
 #include "appservice.hpp"
 
