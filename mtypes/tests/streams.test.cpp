@@ -15,9 +15,17 @@ namespace
     };
 }
 
-TEST_CASE("streamIn constructors", "[streams][istreams][ostreams][constructor]")
+TEST_CASE("SerializationStreamIn", "[streams][SerializationStreamIn]")
 {
-    SerializationStreamIn ssi;
-    SerializationStreamOut sso;
+	string_vector data = { "1", "2" };
+	SerializationStreamIn ssi{ std::move(data) };
 
+	int a{ 0U };
+	int b{ 0U };
+
+	ssi >> a;
+	ssi >> b;
+	
+	CHECK(a == 1U);
+	CHECK(b == 2U);
 }
