@@ -17,7 +17,7 @@ namespace
 
 TEST_CASE("SerializationStreamIn", "[streams][SerializationStreamIn]")
 {
-	string_vector data = { "1", "2" };
+	str data { "1, 2" };
 	SerializationStreamIn ssi{ std::move(data) };
 
 	int a{ 0U };
