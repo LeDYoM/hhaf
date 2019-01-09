@@ -48,5 +48,7 @@ namespace lib::core
                 num_ref = getUInt();
             }
         }
+
+        log_debug_info("RandomBuffer generated: ", dest.numbers);
     }
 }
