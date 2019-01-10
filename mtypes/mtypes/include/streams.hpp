@@ -23,7 +23,7 @@ namespace lib
         constexpr bool eof() const noexcept { return data_.empty(); }
 
 	private:
-        inline void remove_whitespaces()
+        inline void remove_lwhitespaces()
         {
             data_.ltrim();
         }
@@ -35,11 +35,11 @@ namespace lib
 
         inline str extract_to_separator_and_update_data()
         {
-            remove_whitespaces();
+            remove_lwhitespaces();
 
             const auto separator_index(data_.find_first_of(separator_));
             str result(data_.substr(0, separator_index));
-            advance_data(separator_index + 1);
+            advance_data(std::max(separator_index, separator_index + 1));
             return result;
         }
 
@@ -55,15 +55,16 @@ namespace lib
 		return ssi;
 	}
 
-	template <typename T, size_type size>
-	SerializationStreamIn& operator>>(SerializationStreamIn&ssi, array<T,size> &data)
-	{
-		for (T& element : data) ssi >> element;
-		return ssi;
-	}
+    template <typename T, size_type Size>
+    constexpr SerializationStreamIn& operator>>(SerializationStreamIn&ssi, T(&data)[Size])
+    {
+        for (T& element : data) 
+            ssi >> element;
+        return ssi;
+    }
 
 	template <typename T, size_type size>
-	SerializationStreamIn& operator>>(SerializationStreamIn&ssi, T data[size])
+	SerializationStreamIn& operator>>(SerializationStreamIn&ssi, array<T,size> &data)
 	{
 		for (T& element : data) ssi >> element;
 		return ssi;
