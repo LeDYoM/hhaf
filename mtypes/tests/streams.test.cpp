@@ -152,3 +152,43 @@ TEST_CASE("SerializationStreamIn: Output to string", "[streams][SerializationStr
     ssi >> out;
     CHECK(out == "ABC  DEF");
 }
+
+TEST_CASE("SerializationStreamIn: Separtors", "[streams][SerializationStreamIn]")
+{
+    SerializationStreamIn ssi("abc def, ABC  DEF");
+    CHECK_FALSE(ssi.eof());
+
+    {
+        str out;
+        ssi >> out;
+        CHECK(out == "abc def");
+        ssi >> out;
+        CHECK(out == "ABC  DEF");
+    }
+
+    {
+        str out;
+        ssi += "abc def, ABC  DEF";
+        ssi.separator(',') >> out;
+        CHECK(out == "abc def");
+        ssi >> out;
+        CHECK(out == "ABC  DEF");
+    }
+
+    {
+        str out;
+        ssi += "abc def, ABC  DEF";
+        ssi.separator('B') >> out;
+        CHECK(out == "abc def, A");
+        ssi >> out;
+        CHECK(out == "C  DEF");
+    }
+
+    {
+        str out;
+        ssi.disableSeparator() << "abc def, ABC  DEF";
+        ssi >> out;
+        CHECK(out == "abc def, ABC  DEF");
+        CHECK(ssi.eof());
+    }
+}

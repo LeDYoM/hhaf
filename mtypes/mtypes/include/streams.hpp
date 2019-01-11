@@ -40,6 +40,17 @@ namespace lib
             return *this;
         }
 
+        constexpr SerializationStreamIn& separator(const char_type separator)
+        {
+            separator_ = separator;
+            return *this;
+        }
+
+        inline SerializationStreamIn& disableSeparator()
+        {
+            return separator(0);
+        }
+
 	private:
         inline void remove_lwhitespaces()
         {
