@@ -51,6 +51,10 @@ namespace lib
             return separator(0);
         }
 
+        inline char_type separator() const
+        {
+            return separator_;
+        }
 	private:
         inline void remove_lwhitespaces()
         {
