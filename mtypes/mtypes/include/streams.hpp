@@ -15,12 +15,30 @@ namespace lib
         using char_type = char;
 
         SerializationStreamIn() = default;
-        SerializationStreamIn(str&& data) : data_{ std::move(data) } {}
+        SerializationStreamIn(str data) : data_{ std::move(data) } {}
 
 		template <typename T>
 		friend SerializationStreamIn& operator>>(SerializationStreamIn&ssi, T &data);
 
         constexpr bool eof() const noexcept { return data_.empty(); }
+
+        inline void append(const str& data)
+        {
+            data_.append("\n");
+            data_.append(data);
+        }
+
+        inline SerializationStreamIn& operator+=(const str& data)
+        {
+            append(data);
+            return *this;
+        }
+
+        inline SerializationStreamIn& operator<<(const str& data)
+        {
+            append(data);
+            return *this;
+        }
 
 	private:
         inline void remove_lwhitespaces()
@@ -45,7 +63,6 @@ namespace lib
 
         str data_;
         char separator_{ ',' };
-        bool correct_{ true };
 	};
 
 	template <typename T>
