@@ -5,8 +5,11 @@
 
 #include "vector.hpp"
 #include "types.hpp"
-#include <type_traits>
 #include "mtypes_export.hpp"
+
+#include <type_traits>
+#include <algorithm>
+#include <cctype>
 
 namespace lib
 {
@@ -37,6 +40,14 @@ namespace lib
 		constexpr str(const str & n) noexcept : m_data( n.m_data ) {}
 		explicit str(const char_type *n) noexcept;
 		constexpr str(const char_type *n, const size_type N) noexcept : m_data(n, N+1) {}
+        
+        constexpr str(const_iterator _begin, const_iterator _end) : m_data{_begin, _end } 
+        {
+            if (m_data[size() - 1] != 0U)
+            {
+                m_data.push_back(0U);
+            }
+        }
 
         str(const u64 n);
 		str(const s64 n);
@@ -46,15 +57,38 @@ namespace lib
 		str(const f64 n);
 
         str&operator=(str&&) noexcept = default;
-        constexpr str&operator=(const str&rhs) noexcept {
+
+        constexpr str&operator=(const str&rhs) noexcept 
+        {
             m_data = rhs.m_data;
             return *this;
         }
 
         vector<str> split(const char_type separator) const;
 
-        constexpr void pop_char() noexcept {
+        constexpr void pop_char() noexcept 
+        {
             m_data.pop_back();
+        }
+
+        inline bool starts_with(const str& prefix) const noexcept
+        {
+            if (size() < prefix.size())
+            {
+                return false;
+            }
+
+            return (substr(0, prefix.size()) == prefix);
+        }
+
+        inline bool ends_with(const str& prefix) const noexcept
+        {
+            if (size() < prefix.size())
+            {
+                return false;
+            }
+
+            return (substr(size() - prefix.size()) == prefix);
         }
 
         str substr(size_type start, size_type len = npos) const;
@@ -127,6 +161,51 @@ namespace lib
         }
 
         constexpr size_type size() const noexcept{ return m_data.empty()?0:m_data.size()-1; }
+
+        inline void ltrim() 
+        {
+            if (!empty())
+            {
+                for (size_type index = 0U; index < size(); ++index)
+                {
+                    if (!std::isspace(static_cast<unsigned char>(m_data[index])))
+                    {
+                        *this = substr(index);
+                        return;
+                    }
+                }
+                *this = "";
+            }
+        }
+
+        // trim from end (in place)
+        inline void rtrim()
+        {
+            if (!empty())
+            {
+                for (size_type index = size() - 1; index > 0; --index)
+                {
+                    if (!std::isspace(static_cast<unsigned char>(m_data[index])))
+                    {
+                        *this = substr(0U, index + 1U);
+                        return;
+                    }
+                }
+         
+                *this = (std::isspace(static_cast<unsigned char>(m_data[0U])))
+                ? "" : substr(0U, 1U);
+            }
+        }
+
+        // trim from both ends (in place)
+        inline void trim()
+        {
+            ltrim();
+            rtrim();
+        }
+
+        //TO DO: Change them by using, eg.
+        // using vector<T>::begin();
         constexpr reference operator[](const size_type index) noexcept { return m_data[index]; }
         constexpr const_reference operator[](const size_type index) const noexcept { return m_data[index]; }
         constexpr iterator begin() noexcept { return m_data.begin(); }
@@ -139,9 +218,12 @@ namespace lib
         constexpr const char_type *const c_str() const noexcept { return m_data.cbegin(); }
         constexpr bool empty() const noexcept { return size() == 0; }
 
-        constexpr size_type find_first_of(const char_type chValue) const noexcept {
-            const auto iterator(m_data.find(chValue));
-            if (iterator!=m_data.cend()) {
+        constexpr size_type find_first_of(const char_type chValue) const noexcept 
+        {
+            const auto iterator(m_data.cfind(chValue));
+
+            if (iterator != m_data.cend()) 
+            {
                 return iterator - m_data.cbegin();
             }
             return npos;

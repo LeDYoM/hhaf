@@ -78,6 +78,9 @@ namespace lib
 			other.m_buffer = nullptr;
 		}
 
+        constexpr vector(const_iterator _begin, const_iterator _end)
+            : vector{ _begin, static_cast<size_type>(std::distance(_begin, _end)) } { }
+
 		constexpr vector& operator=(const vector&other) {
 			if (this != &other) {
 				if (m_capacity < other.m_size) 
@@ -159,7 +162,8 @@ namespace lib
 		}
 
         //TO DO: Optimize
-		constexpr size_type remove_values(const T&value, iterator start) {
+		constexpr size_type remove_values(const T&value, iterator start) 
+        {
 			return remove_all_if([&value](const T p) { return p == value; } , start);
 		}
 
@@ -179,7 +183,8 @@ namespace lib
 			bool moving{ false };
 			iterator where_it_was{ end() };
             auto old_size(m_size);
-			for (size_type i{ index_from_iterator(start) }; i < old_size; ++i) {
+			for (size_type i{ index_from_iterator(start) }; i < old_size; ++i) 
+            {
 				if (!moving) 
                 {
 					if (condition(m_buffer[i])) 
@@ -202,10 +207,13 @@ namespace lib
             return remove_if(std::move(condition), begin());
 		}
 
-		constexpr size_type remove_all_if(function<bool(const T&)> condition, iterator start) {
-			do {
+		constexpr size_type remove_all_if(function<bool(const T&)> condition, iterator start) 
+        {
+			do 
+            {
 				start = remove_if(condition, start);
 			} while (start != end());
+
 			return m_size;
 		}
 

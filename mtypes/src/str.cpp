@@ -28,7 +28,8 @@ namespace lib
         std::stringstream ss((*this).c_str());
         std::string tok;
 
-        while (std::getline(ss, tok, separator)) {
+        while (std::getline(ss, tok, separator)) 
+        {
             result.push_back(str(tok.c_str()));
         }
         return result;

@@ -18,8 +18,8 @@ namespace lib::core
         std::uniform_int_distribution<size_type> dist;
     };
 
-    RandomSystem::RandomSystem(Host &host)
-        : AppService{ host },
+    RandomSystem::RandomSystem()
+        : AppService{ },
         priv_ { muptr<RandomSystemPrivate>()
     } {}
 
@@ -30,13 +30,25 @@ namespace lib::core
         return static_cast<size_type>(priv_->dist(priv_->mt));
     }
 
-    void RandomSystem::generateRandomBuffer(RandomBuffer & dest, const size_type size)
+    void RandomSystem::generateRandomBuffer(RandomBuffer & dest, const size_type channel, const size_type size)
     {
         dest.numbers.resize(size);
 
-        for (auto& num_ref : dest.numbers)
+        if (channel != 0)
         {
-            num_ref = getUInt();
+            for (auto& num_ref : dest.numbers)
+            {
+                num_ref = getUInt();
+            }
         }
+        else
+        {
+            for (auto& num_ref : dest.numbers)
+            {
+                num_ref = getUInt();
+            }
+        }
+
+        log_debug_info("RandomBuffer generated: ", dest.numbers);
     }
 }

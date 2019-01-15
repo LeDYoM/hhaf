@@ -7,17 +7,31 @@ using namespace lib;
 
 TEST_CASE("vector::vector", "[vector]")
 {
-    vector<u32> m;
-
     SECTION("Default Constructor")
     {
+        vector<u32> m;
+
         CHECK(m.size() == 0);
         CHECK(m.empty());
         CHECK(m.capacity() == 0);
     }
 
+    SECTION("Iterators constructor")
+    {
+        const u32 data[] = { 0U, 1U, 2U, 3U, 4U };
+        vector<u32> v(data, data + 5);
+        CHECK(v.size() == 5U);
+        CHECK(v == vector<u32>{0U, 1U, 2U, 3U, 4U});
+        CHECK(0U == v[0]);
+        CHECK(1U == v[1]);
+        CHECK(2U == v[2]);
+        CHECK(3U == v[3]);
+        CHECK(4U == v[4]);
+    }
+
     SECTION("Initializer list constructor")
     {
+        vector<u32> m;
         m = { 1,9,8,7,6,5,4,3,2,0,1 };
         CHECK(m == vector<u32>{ 1, 9, 8, 7, 6, 5, 4, 3, 2, 0, 1 });
 

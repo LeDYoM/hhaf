@@ -16,9 +16,11 @@ namespace lib
 	string_vector FileInput::readAsText(const char_type separator)
 	{
 		std::ifstream infile(m_fileName.c_str());
-		if (infile.good() && infile.is_open()) {
+		if (infile.good() && infile.is_open()) 
+        {
 			string_vector result;
-			while (infile) {
+			while (infile) 
+            {
 				std::string line;
 				infile >> line;
 				if (!line.empty()) {

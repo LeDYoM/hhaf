@@ -63,7 +63,7 @@ namespace lib::core
 		ResourceList<sptr<scene::Shader>> m_shaders;
     };
 
-    ResourceManager::ResourceManager(Host &host) : AppService{ host },
+    ResourceManager::ResourceManager() : AppService{ },
         m_private{ muptr<ResourceManagerPrivate>() } {}
 
 	ResourceManager::~ResourceManager() = default;

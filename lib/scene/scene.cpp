@@ -36,6 +36,6 @@ namespace lib::scene
 
     void Scene::loadResources(IResourceLoader&& resourceLoader)
     {
-        resourceLoader.loadResources(sceneManager().host().resourceManager());
+        resourceLoader.loadResources(sceneManager().systemProvider().resourceManager());
     }
 }

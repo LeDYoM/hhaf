@@ -29,7 +29,7 @@ namespace lib::scene
                     updateColor();
                 }
 
-                m_parent->parentScene()->sceneManager().host().parentWindow().renderTarget()->
+                m_parent->parentScene()->sceneManager().systemProvider().parentWindow().renderTarget()->
                         draw({
                     m_vertices,
                     m_parent->globalTransform(),
