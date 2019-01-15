@@ -199,5 +199,30 @@ TEST_CASE("str", "[str]")
         // Warning: sign mismatch, but works
         CHECK(slongStr.convert(k));
     }
+
+    SECTION("starts and ends with")
+    {
+        str tst_string("String to test");
+
+        SECTION("Starts with")
+        {
+            CHECK(tst_string.starts_with(""));
+            CHECK(tst_string.starts_with("String "));
+            CHECK(tst_string.starts_with("String to test"));
+            CHECK_FALSE(tst_string.starts_with(" "));
+            CHECK_FALSE(tst_string.starts_with("Stringt"));
+            CHECK_FALSE(tst_string.starts_with("String to test "));
+        }
+
+        SECTION("Ends with")
+        {
+            CHECK(tst_string.ends_with(""));
+            CHECK(tst_string.ends_with(" test"));
+            CHECK(tst_string.ends_with("String to test"));
+            CHECK_FALSE(tst_string.ends_with(" "));
+            CHECK_FALSE(tst_string.ends_with("ttest"));
+            CHECK_FALSE(tst_string.ends_with("String to test "));
+        }
+    }
 }
 

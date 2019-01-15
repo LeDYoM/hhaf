@@ -66,8 +66,29 @@ namespace lib
 
         vector<str> split(const char_type separator) const;
 
-        constexpr void pop_char() noexcept {
+        constexpr void pop_char() noexcept 
+        {
             m_data.pop_back();
+        }
+
+        inline bool starts_with(const str& prefix) const noexcept
+        {
+            if (size() < prefix.size())
+            {
+                return false;
+            }
+
+            return (substr(0, prefix.size()) == prefix);
+        }
+
+        inline bool ends_with(const str& prefix) const noexcept
+        {
+            if (size() < prefix.size())
+            {
+                return false;
+            }
+
+            return (substr(size() - prefix.size()) == prefix);
         }
 
         str substr(size_type start, size_type len = npos) const;
