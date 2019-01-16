@@ -323,7 +323,9 @@ namespace lib
     template<typename T>
     constexpr str make_str(T&& arg)
     {
-        return str(std::forward<T>(arg));
+        str t;
+        make_str_internal(t, std::forward<T>(arg));
+        return t;
     }
 
     template<typename T, typename ...Args>
@@ -337,22 +339,6 @@ namespace lib
     constexpr void make_str_internal(str &buffer, T&& arg)
     {
         buffer << std::forward<T>(arg);
-    }
-
-    template<typename T>
-    constexpr void make_str_internal(str &buffer, const vector<T>& arg)
-    {
-        make_str_internal(buffer, "[");
-
-        for (auto index = 0U; index < arg.size(); ++index)
-        {
-            make_str_internal(buffer, arg[index]);
-            if (index != arg.size() - 1)
-            {
-                make_str_internal(buffer, ",");
-            }
-        }
-        make_str_internal(buffer, "]");
     }
 
     static_assert(std::is_move_constructible_v<str>, "str must be movable");

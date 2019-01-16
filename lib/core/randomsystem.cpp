@@ -49,6 +49,6 @@ namespace lib::core
             }
         }
 
-        log_debug_info(dest.numbers[0]);
+        log_debug_info(dest.numbers);
     }
 }

@@ -402,6 +402,23 @@ namespace lib
 		}
 	}
 
+    class str;
+    template <typename T> str &operator<<(str &str_in, const vector<T>& data)
+    {
+        str_in << "[";
+        for (size_type index = 0U; index < data.size(); ++index)
+        {
+            str_in << data[index];
+            if (index != data.size() - 1)
+            {
+                str_in << ",";
+            }
+        }
+        str_in << "]";
+        return str_in;
+    }
+
+
 	template <class A>
 	constexpr bool operator!=(const vector<A>& lhs, const vector<A>& rhs) noexcept {
 		return !(lhs == rhs);
