@@ -89,6 +89,6 @@ namespace lib
 
 	bool FileOutput::write(const SerializationStreamOut data, const char_type separator)
 	{
-		return write(data.data(), separator);
+        return write(string_vector{ data.data() }, separator);
 	}
 }

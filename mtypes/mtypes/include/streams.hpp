@@ -15,7 +15,15 @@ namespace lib
         using char_type = char;
 
         SerializationStreamIn() = default;
-        SerializationStreamIn(str data) : data_{ std::move(data) } {}
+        explicit SerializationStreamIn(str data) : data_{ std::move(data) } {}
+        explicit SerializationStreamIn(string_vector data)
+        {
+            for (const str& line_data : data)
+            {
+                data_ += line_data;
+                data_ += "\n";
+            }
+        }
 
 		template <typename T>
 		friend SerializationStreamIn& operator>>(SerializationStreamIn&ssi, T &data);
