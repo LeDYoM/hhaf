@@ -43,7 +43,8 @@ namespace zoper
         DECLARE_SCENE(GameScene)
 
         // Inherited via Scene
-        virtual void onCreated() override;
+        void onCreated() override;
+        void onFinished() override;
         void updateScene() override;
 
         void onEnterState(const size_type&) override;
@@ -52,6 +53,8 @@ namespace zoper
         vector2df board2Scene(const lib::vector2dst &bPosition) const;
 
     private:
+        struct GameScenePrivate;
+        GameScenePrivate *private_;
         sptr<GameSceneData> m_data;
         using BaseClass = scene::Scene;
         void setLevel(const size_type nv);

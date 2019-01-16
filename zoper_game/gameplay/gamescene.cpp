@@ -35,9 +35,18 @@ namespace zoper
     constexpr u32 NumTokens = 5;
     constexpr u32 PlayerToken = NumTokens;
 
+    struct GameScene::GameScenePrivate
+    {
+        sptr<RandomizerComponent> token_type_generator_;
+        sptr<RandomizerComponent> token_position_generator_;
+    };
+
     void GameScene::onCreated()
     {
         BaseClass::onCreated();
+
+        assert_debug(private_ == nullptr, "Private data pointer is not nullptr!");
+        private_ = new GameScenePrivate();
 
         m_data = msptr<GameSceneData>();
         m_data->createData(*this, m_inGameData.gameMode);
@@ -113,7 +122,25 @@ namespace zoper
             StatesControllerActuatorRegister<size_type> gameSceneActuatorRegister;
             gameSceneActuatorRegister.registerStatesControllerActuator(*m_sceneStates, *this);
         }
+
+        private_->token_type_generator_ = ensureComponentOfType<RandomizerComponent>();
+        assert_release(private_->token_type_generator_ != nullptr, "Cannot create RandomizerComponent");
+        private_->token_type_generator_->channel.set(1U);
+        private_->token_position_generator_ = ensureComponentOfType<RandomizerComponent>();
+        assert_release(private_->token_position_generator_ != nullptr, "Cannot create RandomizerComponent");
+        private_->token_position_generator_->channel.set(2U);
+
         setState(Playing);
+    }
+
+    void GameScene::onFinished()
+    {
+        if (private_)
+        {
+            delete private_;
+            private_ = nullptr;
+        }
+        BaseClass::onFinished();
     }
 
     void GameScene::updateScene()
@@ -171,14 +198,14 @@ namespace zoper
         log_debug_info("zone: ", currentTokenZone.zone);
 
         // Generate the new token type
-        const size_type newToken{ ensureComponentOfType<RandomizerComponent>()->getUInt(NumTokens) };
+        const size_type newToken{ private_->token_type_generator_->getUInt(NumTokens) };
 
         // Calculate in wich tile zone offset is going to appear
-        const size_type sizep{ ensureComponentOfType<RandomizerComponent>()->getUInt(currentTokenZone.size) };
+        const size_type token_displacement{ private_->token_position_generator_->getUInt(currentTokenZone.size) };
 
         // Prepare the position for the new token
-        const size_type newX{ currentTokenZone.zone.left + (currentTokenZone.direction.isHorizontal() ? 0 : sizep) };
-        const size_type newY{ currentTokenZone.zone.top + (currentTokenZone.direction.isHorizontal() ? sizep : 0) };
+        const size_type newX{ currentTokenZone.zone.left + (currentTokenZone.direction.isHorizontal() ? 0 : token_displacement) };
+        const size_type newY{ currentTokenZone.zone.top + (currentTokenZone.direction.isHorizontal() ? token_displacement : 0) };
         lib::log_debug_info("New tile pos: ", newX, ",", newY);
 
         vector2dst loopPosition{ (currentTokenZone.direction.isHorizontal() ? currentTokenZone.zone.size().x : newX),
