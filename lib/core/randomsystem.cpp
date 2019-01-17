@@ -17,7 +17,7 @@ namespace lib::core
 
         std::uniform_int_distribution<size_type> dist;
 
-        size_type getUInt() const
+        size_type getUInt()
         {
             return static_cast<size_type>(dist(mt));
         }
@@ -38,14 +38,14 @@ namespace lib::core
         {
             for (auto& num_ref : dest.numbers)
             {
-                num_ref = getUInt();
+                num_ref = priv_->getUInt();
             }
         }
         else
         {
             for (auto& num_ref : dest.numbers)
             {
-                num_ref = getUInt();
+                num_ref = priv_->getUInt();
             }
         }
 
