@@ -16,6 +16,11 @@ namespace lib::core
         RandomSystemPrivate() : mt{ rd() } {}
 
         std::uniform_int_distribution<size_type> dist;
+
+        size_type getUInt() const
+        {
+            return static_cast<size_type>(dist(mt));
+        }
     };
 
     RandomSystem::RandomSystem()
@@ -24,11 +29,6 @@ namespace lib::core
     } {}
 
     RandomSystem::~RandomSystem() = default;
-
-    size_type RandomSystem::getUInt() const
-    {
-        return static_cast<size_type>(priv_->dist(priv_->mt));
-    }
 
     void RandomSystem::generateRandomBuffer(RandomBuffer & dest, const size_type channel, const size_type size)
     {
