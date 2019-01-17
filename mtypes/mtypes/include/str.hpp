@@ -307,7 +307,8 @@ namespace lib
         return lhs.size() < rhs.size();
     }
 
-    inline str operator+(const str& lhs, const str&rhs) noexcept {
+    inline str operator+(const str& lhs, const str&rhs) noexcept 
+    {
         return str(lhs).append(rhs);
     }
 
@@ -322,7 +323,9 @@ namespace lib
     template<typename T>
     constexpr str make_str(T&& arg)
     {
-        return str(std::forward<T>(arg));
+        str t;
+        make_str_internal(t, std::forward<T>(arg));
+        return t;
     }
 
     template<typename T, typename ...Args>

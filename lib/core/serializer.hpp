@@ -20,7 +20,8 @@ namespace lib
 			SerializationStreamOut sso;
 			sso << data;
 			FileOutput fout{ fileName };
-			return fout.write(sso.data());
+            //TO DO: Fix this nonsense.
+			return fout.write(sso.data().split(','));
 		}
 
 		constexpr bool deserialize(const str&fileName, T&data) {

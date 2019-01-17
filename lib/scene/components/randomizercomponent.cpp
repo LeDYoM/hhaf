@@ -73,7 +73,10 @@ namespace lib::scene
 
         assert_release(min != max, "The min and max parameters must be different");
         assert_release(max > min, "The max paramter must be greater than min");
-        const size_type generated(priv_->next() % (max - min));
+
+        const auto next(priv_->next());
+        log_debug_info("Fetch next element from random queue: ", next);
+        const size_type generated(next % (max - min));
         log_debug_info("\tGot ", generated);
         log_debug_info("\tReturning ", min + generated);
         return min + generated;
