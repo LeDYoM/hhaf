@@ -16,7 +16,17 @@ namespace lib::backend::dback
         input::Key key;
         bool pressed;
         size_type time_stamp;
+
     };
+
+    SerializationStreamIn& operator>>(SerializationStreamIn& sin, KeyEventDebug& ked)
+    {
+        size_type temp;
+        sin >> temp;
+        ked.key = static_cast<input::Key>(temp);
+        sin >> ked.pressed;
+        sin >> ked.time_stamp;
+    }
 
     class InputDriver : public IInputDriver
     {

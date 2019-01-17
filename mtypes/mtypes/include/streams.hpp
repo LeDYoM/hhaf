@@ -6,6 +6,7 @@
 #include "types.hpp"
 #include "str.hpp"
 #include "array.hpp"
+#include <algorithm>
 
 namespace lib
 {
@@ -29,7 +30,9 @@ namespace lib
 		friend SerializationStreamIn& operator>>(SerializationStreamIn&ssi, T &data);
 
         constexpr bool eof() const noexcept { return data_.empty(); }
-
+        constexpr bool error() const noexcept { return error_; }
+        constexpr void setError() noexcept { error_ = true; }
+ 
         inline void append(const str& data)
         {
             data_.append("\n");
@@ -63,7 +66,41 @@ namespace lib
         {
             return separator_;
         }
-	private:
+
+        SerializationStreamIn& startReadObject()
+        {
+            const auto old_separator(separator());
+            separator('{');
+
+            str tmp;
+            *this >> tmp;
+
+            if (!tmp.empty())
+            {
+                setError();
+            }
+
+            separator(old_separator);
+            return *this;
+        }
+
+        SerializationStreamIn& finishReadObject()
+        {
+            const auto old_separator(separator());
+            separator('}');
+
+            str tmp;
+            *this >> tmp;
+
+            if (!tmp.empty())
+            {
+                setError();
+            }
+            separator(old_separator);
+            return*this;
+        }
+
+    private:
         inline void remove_lwhitespaces()
         {
             data_.ltrim();
@@ -85,6 +122,7 @@ namespace lib
         }
 
         str data_;
+        bool error_{ false };
         char separator_{ ',' };
 	};
 
