@@ -30,8 +30,6 @@ namespace lib
 		friend SerializationStreamIn& operator>>(SerializationStreamIn&ssi, T &data);
 
         constexpr bool eof() const noexcept { return data_.empty(); }
-        constexpr bool error() const noexcept { return error_; }
-        constexpr void setError() noexcept { error_ = true; }
  
         inline void append(const str& data)
         {
@@ -51,7 +49,7 @@ namespace lib
             return *this;
         }
 
-        constexpr SerializationStreamIn& separator(const char_type separator)
+        constexpr SerializationStreamIn& separator(const char_type separator) noexcept
         {
             separator_ = separator;
             return *this;
@@ -65,39 +63,6 @@ namespace lib
         inline char_type separator() const
         {
             return separator_;
-        }
-
-        SerializationStreamIn& startReadObject()
-        {
-            const auto old_separator(separator());
-            separator('{');
-
-            str tmp;
-            *this >> tmp;
-
-            if (!tmp.empty())
-            {
-                setError();
-            }
-
-            separator(old_separator);
-            return *this;
-        }
-
-        SerializationStreamIn& finishReadObject()
-        {
-            const auto old_separator(separator());
-            separator('}');
-
-            str tmp;
-            *this >> tmp;
-
-            if (!tmp.empty())
-            {
-                setError();
-            }
-            separator(old_separator);
-            return*this;
         }
 
     private:
