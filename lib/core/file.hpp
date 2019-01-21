@@ -18,8 +18,8 @@ namespace lib
 			: m_fileName{ std::move(file) } {}
 
 		bool exists() const;
-		string_vector readAsText(const char_type separator = ',');
-		SerializationStreamIn getAsStream(const char_type separator = ',');
+		string_vector readAsText();
+		SerializationStreamIn getAsStream();
 		vector<char> readBinary();
 
 		u32 fileLength();

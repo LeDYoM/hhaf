@@ -13,36 +13,30 @@ namespace lib
 		return infile.good();
 	}
 
-	string_vector FileInput::readAsText(const char_type separator)
+	string_vector FileInput::readAsText()
 	{
-		std::ifstream infile(m_fileName.c_str());
+        string_vector result;
+        std::ifstream infile(m_fileName.c_str());
 		if (infile.good() && infile.is_open()) 
         {
-			string_vector result;
 			while (infile) 
             {
 				std::string line;
 				infile >> line;
-				if (!line.empty()) {
-					str sline(line.c_str());
-					auto parsedLine(sline.split(separator));
-					for (auto&& data : parsedLine) {
-						result.push_back(std::move(data));
-					}
-				}
+				result.emplace_back(line.c_str());
 			}
-			return result;
 		}
-		else {
+		else 
+        {
 			log_debug_error("The file ", m_fileName, " does not exist");
 		}
 
-		return string_vector{};
-	}
+        return result;
+    }
 
-	SerializationStreamIn FileInput::getAsStream(const char_type separator)
+	SerializationStreamIn FileInput::getAsStream()
 	{
-		return SerializationStreamIn(readAsText(separator));
+		return SerializationStreamIn(readAsText());
 	}
 
 	vector<char> FileInput::readBinary()
