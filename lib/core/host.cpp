@@ -187,11 +187,10 @@ namespace lib::core
     bool Host::loopStep()
     {
         const bool windowWants2Close{ parentWindow().preLoop() };
-        inputSystem().preUpdate();
+        inputSystem().update();
         sceneManager().update();
 
         parentWindow().postLoop();
-        inputSystem().postUpdate();
         return windowWants2Close;
     }
 

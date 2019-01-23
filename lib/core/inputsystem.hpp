@@ -17,23 +17,25 @@ namespace lib
 
     namespace input
 	{
-		class InputSystem final : public AppService
-		{
-		public:
+        class InputSystem final : public AppService
+        {
+        public:
             InputSystem(backend::IInputDriver* const input_driver);
-			~InputSystem();
+            ~InputSystem();
 
-			void keyPressed(const Key key);
-			void keyReleased(const Key key);
-			void preUpdate();
-			void postUpdate();
+            void injectInputDriver(backend::IInputDriver *a_input_driver);
+
+            void keyPressed(const Key key);
+            void keyReleased(const Key key);
+            void update();
 
             const vector<Key> &pressedKeys() const noexcept;
             const vector<Key> &releasedKeys() const noexcept;
             const KeyStates &keyStates() const noexcept { return m_keyStates; }
 
         private:
-            backend::IInputDriver* const input_driver_;
+            void updateInputDriver(backend::IInputDriver *const input_driver);
+            backend::IInputDriver* input_driver_[2];
             KeyStates m_keyStates;
 			vector<Key> m_pressedKeys;
 			vector<Key> m_releasedKeys;
