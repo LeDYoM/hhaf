@@ -83,7 +83,8 @@ namespace lib::core
 
     bool Host::destroyHost() noexcept
     {
-        if (m_instance) {
+        if (m_instance) 
+        {
             backend::BackendFactory::destroy();
             delete m_instance;
             m_instance = nullptr;
@@ -142,11 +143,13 @@ namespace lib::core
         break;
         case AppState::Executing:
         {
-            if (loopStep()) {
+            if (loopStep()) 
+            {
                 m_state = AppState::ReadyToTerminate;
                 log_debug_info(m_private->m_appGroup.m_appContext->appId(), ": ", " is now ready to terminate");
             }
-            else if (m_state == AppState::ReadyToTerminate) {
+            else if (m_state == AppState::ReadyToTerminate) 
+            {
                 log_debug_info(m_private->m_appGroup.m_appContext->appId(), ": ", " requested to terminate");
             }
         }
@@ -169,8 +172,10 @@ namespace lib::core
 
     int Host::run()
     {
-        while (!exit) {
-            if (update()) {
+        while (!exit) 
+        {
+            if (update()) 
+            {
                 m_private->m_appGroup.m_hostContext.reset();
                 m_private->m_appGroup.m_appContext.reset();
                 m_private->m_appGroup.m_iapp.reset();
@@ -178,7 +183,8 @@ namespace lib::core
             }
         }
 
-        if (!m_private->m_appGroup.m_iapp) {
+        if (!m_private->m_appGroup.m_iapp) 
+        {
             log_release_info("App destroyed. Exiting normally");
         }
         return 0;
