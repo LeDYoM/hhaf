@@ -1,9 +1,9 @@
 #include "scene.hpp"
 #include <lib/scene/renderizables/renderizable.hpp>
 
-#include <lib/core/window.hpp>
+#include <lib/system/window.hpp>
 #include <lib/core/host.hpp>
-#include <lib/core/resourcemanager.hpp>
+#include <lib/system/resourcemanager.hpp>
 #include <lib/scene/scenemanager.hpp>
 
 #include <lib/include/core/log.hpp>

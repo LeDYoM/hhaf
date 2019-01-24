@@ -11,9 +11,7 @@
 #include <lib/scene/scene.hpp>
 #include <lib/scene/scenecontroller.hpp>
 
-#include <lib/core/appservice.hpp>
-#include <lib/core/window.hpp>
-#include <lib/core/rendertarget.hpp>
+#include <lib/system/appservice.hpp>
 
 namespace lib
 {

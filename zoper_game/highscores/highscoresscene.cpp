@@ -7,7 +7,7 @@
 
 #include <lib/scene/renderizables/nodeshape.hpp>
 #include <lib/scene/renderizables/nodequad.hpp>
-#include <lib/core/resourcemanager.hpp>
+#include <lib/system/resourcemanager.hpp>
 #include <lib/core/host.hpp>
 
 namespace zoper

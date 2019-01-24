@@ -6,7 +6,7 @@
 #include <lib/scene/scene.hpp>
 #include <lib/scene/renderizables/nodeshape.hpp>
 #include <lib/core/host.hpp>
-#include <lib/core/resourcemanager.hpp>
+#include <lib/system/resourcemanager.hpp>
 #include <lib/scene/ttfont.hpp>
 #include <lib/scene/font.hpp>
 #include <lib/include/key.hpp>

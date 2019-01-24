@@ -10,7 +10,7 @@
 #include <lib/scene/ttfont.hpp>
 
 #include <lib/core/host.hpp>
-#include <lib/core/resourcemanager.hpp>
+#include <lib/system/resourcemanager.hpp>
 
 namespace zoper
 {

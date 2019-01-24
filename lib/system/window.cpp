@@ -1,14 +1,13 @@
 #include "window.hpp"
-#include "host.hpp"
 
 #include <lib/include/core/log.hpp>
 #include <lib/include/core/timer.hpp>
 #include <lib/include/backend/irendertarget.hpp>
 #include <lib/include/iapp.hpp>
 
-#include <lib/core/inputsystem.hpp>
+#include <lib/system/inputsystem.hpp>
+#include <lib/system/rendertarget.hpp>
 #include <lib/core/backendfactory.hpp>
-#include <lib/core/rendertarget.hpp>
 
 #include <lib/scene/texture.hpp>
 #include <lib/scene/renderdata.hpp>

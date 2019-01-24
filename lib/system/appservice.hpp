@@ -5,8 +5,8 @@
 
 ///////////////////////////////
 // Temporary
-#include "host.hpp"
-#include "systemprovider.hpp"
+#include <lib/core/host.hpp>
+#include <lib/system/systemprovider.hpp>
 ///////////////////////////////
 
 namespace lib

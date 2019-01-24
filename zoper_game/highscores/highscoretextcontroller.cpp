@@ -6,7 +6,7 @@
 #include "../zoperprogramcontroller.hpp"
 
 #include <lib/scene/components/texteditorcomponent.hpp>
-#include <lib/core/resourcemanager.hpp>
+#include <lib/system/resourcemanager.hpp>
 #include <lib/core/host.hpp>
 
 namespace zoper

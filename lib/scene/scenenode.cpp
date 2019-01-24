@@ -1,9 +1,8 @@
 #include "scenenode.hpp"
-#include <lib/scene/renderizables/renderizable.hpp>
 #include "scene.hpp"
 
-#include <lib/core/window.hpp>
-#include <lib/core/host.hpp>
+#include <lib/scene/renderizables/renderizable.hpp>
+
 #include <lib/include/core/log.hpp>
 
 #include "scenemanager.hpp"

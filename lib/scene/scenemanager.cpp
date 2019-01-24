@@ -2,11 +2,12 @@
 #include "scenecontroller.hpp"
 #include "scene.hpp"
 
-#include <lib/core/systemprovider.hpp>
-#include <lib/core/window.hpp>
-#include <lib/core/resourcemanager.hpp>
-#include <lib/include/core/log.hpp>
+#include <lib/system/systemprovider.hpp>
+#include <lib/system/window.hpp>
+#include <lib/system/resourcemanager.hpp>
+#include <lib/system/rendertarget.hpp>
 
+#include <lib/include/core/log.hpp>
 #include <lib/include/resources/iresourceretriever.hpp>
 
 namespace lib::scene

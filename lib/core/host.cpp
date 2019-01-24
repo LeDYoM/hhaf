@@ -1,11 +1,11 @@
 #include "host.hpp"
-#include "window.hpp"
-#include "resourcemanager.hpp"
-#include "randomsystem.hpp"
+#include <lib/system/window.hpp>
+#include <lib/system/resourcemanager.hpp>
+#include <lib/system/randomsystem.hpp>
+#include <lib/system/inputsystem.hpp>
 
 #include <lib/include/backend/iwindow.hpp>
 #include <lib/include/core/log.hpp>
-#include <lib/core/inputsystem.hpp>
 #include <lib/core/backendfactory.hpp>
 #include <lib/core/appcontext.hpp>
 #include <lib/core/hostcontext.hpp>

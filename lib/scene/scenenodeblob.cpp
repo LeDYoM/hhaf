@@ -7,7 +7,7 @@
 #include "scene.hpp"
 #include "scenemanager.hpp"
 
-#include <lib/core/systemprovider.hpp>
+#include <lib/system/systemprovider.hpp>
 
 namespace lib::scene
 {

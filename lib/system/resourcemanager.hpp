@@ -8,7 +8,7 @@
 
 #include <lib/include/resources/iresourcehandler.hpp>
 #include <lib/include/resources/iresourceretriever.hpp>
-#include "appservice.hpp"
+#include <lib/system/appservice.hpp>
 
 namespace lib
 {

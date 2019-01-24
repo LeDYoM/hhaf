@@ -7,7 +7,7 @@
 
 #include <lib/include/iapp.hpp>
 #include <lib/include/core/ihostcontext.hpp>
-#include "systemprovider.hpp"
+#include <lib/system/systemprovider.hpp>
 
 namespace lib
 {

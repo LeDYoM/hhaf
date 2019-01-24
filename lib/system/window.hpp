@@ -3,7 +3,7 @@
 #ifndef LIB_WINDOW_INCLUDE_HPP
 #define LIB_WINDOW_INCLUDE_HPP
 
-#include "appservice.hpp"
+#include <lib/system/appservice.hpp>
 
 #include <lib/include/backend/iwindow.hpp>
 #include <lib/include/backend/iinputdriver.hpp>

@@ -1,8 +1,8 @@
 #include "randomizercomponent.hpp"
+#include <lib/system/randomsystem.hpp>
 
 #include <lib/include/core/log.hpp>
 #include <lib/scene/scenenode.hpp>
-#include <lib/core/randomsystem.hpp>
 #include <lib/include/core/log.hpp>
 
 namespace lib::scene
