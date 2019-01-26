@@ -5,7 +5,6 @@
 
 #include <mtypes/include/types.hpp>
 
-
 namespace lib
 {
     struct WindowCreationParams;
@@ -25,6 +24,7 @@ namespace lib
         class Window;
         class ResourceManager;
         class RandomSystem;
+        class SimulationSystem;
 
         class SystemProvider
         {
@@ -49,15 +49,18 @@ namespace lib
             RandomSystem &randomSystem() noexcept;
             const scene::SceneManager &sceneManager() const noexcept;
             scene::SceneManager &sceneManager() noexcept;
+            const SimulationSystem &simulationSystem() const noexcept;
+            SimulationSystem &simulationSystem() noexcept;
 
         private:
             core::Host* host_;
             IApp* app_;
-            uptr<Window> m_window;
-            uptr<ResourceManager> m_resourceManager;
-            uptr<input::InputSystem> m_inputSystem;
-            uptr<scene::SceneManager> m_sceneManager;
+            uptr<Window> window_;
+            uptr<ResourceManager> resource_manager_;
+            uptr<input::InputSystem> input_system_;
+            uptr<scene::SceneManager> scene_manager_;
             uptr<RandomSystem> random_system_;
+            SimulationSystem* simulation_system_;
         };
     }
 }

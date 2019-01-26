@@ -3,6 +3,7 @@
 #include "resourcemanager.hpp"
 #include "randomsystem.hpp"
 #include "inputsystem.hpp"
+#include "simulationsystem.hpp"
 
 #include <lib/include/backend/iwindow.hpp>
 #include <lib/include/core/log.hpp>
@@ -16,23 +17,27 @@ namespace lib::core
 {
     void SystemProvider::init(Host& host, IApp *iapp)
     {
+        uptr<SimulationSystem> f = muptr<SimulationSystem>();
         assert_release(iapp != nullptr, "Cannot create a SystemProvider with a nullptr app");
         host_ = &host;
         app_ = iapp;
-        m_window = muptr<Window>(app_->getAppDescriptor().wcp);
-        m_inputSystem = muptr<input::InputSystem>(m_window->inputDriver());
-        m_sceneManager = muptr<scene::SceneManager>(*this);
-        m_resourceManager = muptr<core::ResourceManager>();
+        window_ = muptr<Window>(app_->getAppDescriptor().wcp);
+        input_system_ = muptr<input::InputSystem>(window_->inputDriver());
+        scene_manager_ = muptr<scene::SceneManager>(*this);
+        resource_manager_ = muptr<core::ResourceManager>();
         random_system_ = muptr<RandomSystem>();
+        // WTF
+        simulation_system_ = new SimulationSystem();
     }
 
     void SystemProvider::terminate()
     {
-        m_sceneManager->finish();
-        m_resourceManager = nullptr;
-        m_sceneManager = nullptr;
-        m_inputSystem = nullptr;
-        m_window = nullptr;
+        scene_manager_->finish();
+        resource_manager_ = nullptr;
+        scene_manager_ = nullptr;
+        input_system_ = nullptr;
+        window_ = nullptr;
+        delete simulation_system_;
     }
 
     /*
@@ -54,32 +59,32 @@ namespace lib::core
 
     const Window &SystemProvider::parentWindow() const noexcept
     {
-         return *m_window; 
+         return *window_; 
     }
 
     Window &SystemProvider::parentWindow() noexcept
     {
-        return *m_window; 
+        return *window_; 
     }
     
     const ResourceManager &SystemProvider::resourceManager() const  noexcept
     {
-        return *m_resourceManager;
+        return *resource_manager_;
     }
     
     ResourceManager &SystemProvider::resourceManager()  noexcept
     {
-        return *m_resourceManager;
+        return *resource_manager_;
     }
     
     const input::InputSystem &SystemProvider::inputSystem() const noexcept
     {
-        return *m_inputSystem; 
+        return *input_system_; 
     }
 
     input::InputSystem &SystemProvider::inputSystem() noexcept
     { 
-        return *m_inputSystem;
+        return *input_system_;
     }
     
     const RandomSystem &SystemProvider::randomSystem() const noexcept
@@ -94,11 +99,21 @@ namespace lib::core
 
     const scene::SceneManager &SystemProvider::sceneManager() const noexcept
     {
-        return *m_sceneManager;
+        return *scene_manager_;
     }
     
     scene::SceneManager &SystemProvider::sceneManager() noexcept
     {
-        return *m_sceneManager;
+        return *scene_manager_;
+    }
+
+    const SimulationSystem & SystemProvider::simulationSystem() const noexcept
+    {
+        return *simulation_system_;
+    }
+
+    SimulationSystem & SystemProvider::simulationSystem() noexcept
+    {
+        return *simulation_system_;
     }
 }
