@@ -8,6 +8,8 @@
 
 namespace lib
 {
+    using TimeStamp = u64;
+
 	struct TimerPrivate;
 	struct TimePrivate;
 

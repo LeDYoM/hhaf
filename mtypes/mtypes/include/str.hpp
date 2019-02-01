@@ -235,18 +235,23 @@ namespace lib
         }
 
         template <typename T>
-        constexpr str& operator>>(T &n)
+        constexpr bool operator>>(T &n) const
         {
-            if constexpr (std::is_enum_v<T>) {
+            if constexpr (std::is_enum_v<T>) 
+            {
                 std::underlying_type_t<T> tmp{};
-                convert(tmp);
+                const bool result{ convert(tmp) };
                 n = static_cast<T>(tmp);
-            } else if constexpr (std::is_same_v<T,str>) {
+                return result;
+            } else if constexpr (std::is_same_v<T,str>) 
+            {
                 n = *this;
-            } else {
-                convert(n);
+                return true;
             }
-            return *this;
+            else 
+            {
+                return convert(n);
+            }
         }
 
         static const size_type	npos = static_cast<size_type>(-1);

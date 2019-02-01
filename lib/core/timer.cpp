@@ -11,12 +11,6 @@ namespace lib
 		std::chrono::microseconds m_microseconds;
 		TimePrivate(std::chrono::microseconds microseconds = std::chrono::microseconds::zero())
 			: m_microseconds{microseconds} {}
-
-		TimePrivate(TimePrivate &&) = default;
-		TimePrivate(const TimePrivate &) = default;
-		TimePrivate&operator=(TimePrivate &&) = default;
-		TimePrivate&operator=(const TimePrivate &) = default;
-        ~TimePrivate() = default;
 	};
 
 	Time::Time(const u64 quantity, TimeInitializationTag initTag)
