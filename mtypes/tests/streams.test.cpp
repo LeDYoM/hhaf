@@ -164,7 +164,9 @@ TEST_CASE("SerializationStreamIn: Separtors", "[streams][SerializationStreamIn]"
         CHECK(out == "abc def");
         ssi >> out;
         CHECK(out == "ABC  DEF");
-    }
+		CHECK(ssi.eof());
+		CHECK_FALSE(ssi.hasError());
+	}
 
     {
         str out;
@@ -174,6 +176,8 @@ TEST_CASE("SerializationStreamIn: Separtors", "[streams][SerializationStreamIn]"
         CHECK(out == "abc def");
         ssi >> out;
         CHECK(out == "ABC  DEF");
+		CHECK(ssi.eof());
+		CHECK_FALSE(ssi.hasError());
     }
 
     {
@@ -184,7 +188,9 @@ TEST_CASE("SerializationStreamIn: Separtors", "[streams][SerializationStreamIn]"
         ssi >> out;
         CHECK(out == "C  DEF");
         CHECK(ssi.separator() == 'B');
-    }
+		CHECK(ssi.eof());
+		CHECK_FALSE(ssi.hasError());
+	}
 
     {
         str out;
@@ -193,5 +199,49 @@ TEST_CASE("SerializationStreamIn: Separtors", "[streams][SerializationStreamIn]"
         ssi >> out;
         CHECK(out == "abc def, ABC  DEF");
         CHECK(ssi.eof());
-    }
+		CHECK_FALSE(ssi.hasError());
+	}
+}
+
+TEST_CASE("SerializationStreamIn: Errors empty data", "[streams][SerializationStreamIn]")
+{
+	SECTION("Empty data")
+	{
+		SerializationStreamIn data;
+		u32 a;
+
+		data >> a;
+		CHECK(data.eof());
+		CHECK(data.hasError());
+	}
+
+	SECTION("Empty separator data")
+	{
+		SerializationStreamIn data{ "," };
+		u32 a;
+
+		data >> a;
+		CHECK(data.eof());
+		CHECK(data.hasError());
+	}
+
+	SECTION("Empty separator data 2")
+	{
+		SerializationStreamIn data{ " ," };
+		u32 a;
+
+		data >> a;
+		CHECK(data.eof());
+		CHECK(data.hasError());
+	}
+
+	SECTION("Empty separator data 2")
+	{
+		SerializationStreamIn data{ " , " };
+		u32 a;
+
+		data >> a;
+		CHECK_FALSE(data.eof());
+		CHECK(data.hasError());
+	}
 }
