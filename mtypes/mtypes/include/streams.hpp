@@ -30,7 +30,7 @@ namespace lib
 		friend SerializationStreamIn& operator>>(SerializationStreamIn&ssi, T &data);
 
         constexpr bool eof() const noexcept { return data_.empty(); }
-        constexpr bool hasError() const noexcept { return error_; }
+        constexpr bool hasError() const noexcept { return !correct_; }
  
         inline void append(const str& data)
         {
@@ -88,14 +88,14 @@ namespace lib
         }
 
         str data_;
-        bool error_{ false };
+        bool correct_{ true };
         char separator_{ ',' };
 	};
 
 	template <typename T>
 	SerializationStreamIn& operator>>(SerializationStreamIn&ssi, T &data)
 	{
-        ssi.error_ &= ssi.extract_to_separator_and_update_data() >> data;
+        ssi.correct_ &= ssi.extract_to_separator_and_update_data() >> data;
 		return ssi;
 	}
 
