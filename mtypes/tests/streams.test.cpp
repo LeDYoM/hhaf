@@ -13,6 +13,17 @@ namespace
         float b;
         short c;
     };
+
+	SerializationStreamIn operator>>(SerializationStreamIn& ssi, PODClass& out)
+	{
+		ssi >> out.a >> out.b >> out.c;
+		return ssi;
+	}
+
+	bool operator==(const PODClass& lhs, const PODClass& rhs)
+	{
+		return lhs.a == lhs.a && lhs.b == rhs.b && lhs.c == rhs.c;
+	}
 }
 
 template <typename T, size_type Size>
@@ -243,5 +254,33 @@ TEST_CASE("SerializationStreamIn: Errors empty data", "[streams][SerializationSt
 		data >> a;
 		CHECK_FALSE(data.eof());
 		CHECK(data.hasError());
+	}
+}
+
+TEST_CASE("SerializationStreamIn: Errors invalid format", "[streams][SerializationStreamIn]")
+{
+	SECTION("Try to put str in integer")
+	{
+		SerializationStreamIn data{ "1abc" };
+		u32 a;
+
+		data >> a;
+		CHECK(data.eof());
+		CHECK_FALSE(data.hasError());
+	}
+}
+
+TEST_CASE("SerializationStreamIn: Simple serialization", "[streams][SerializationStreamIn]")
+{
+	SECTION("Completely Correct input")
+	{
+		SerializationStreamIn data{ "123000,84.234F,500" };
+		PODClass a;
+		
+		data >> a;
+
+		CHECK(a == PODClass{123000, 84.234F, 500});
+		CHECK(data.eof());
+		CHECK_FALSE(data.hasError());
 	}
 }
