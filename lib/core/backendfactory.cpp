@@ -22,6 +22,7 @@ namespace lib::backend
 		static const char *sh_name = "bsfml";
 		if (loader->loadModule(sh_name)) 
         {
+
 			auto fp_createWindowProviderInfo = (p_createWindowProviderInfo)loader->loadMethod(sh_name, "createWindowProviderInfo");
             auto fp_destroyWindowProviderInfo = (p_destroyWindowProviderInfo)loader->loadMethod(sh_name, "destroyWindowProviderInfo");
 

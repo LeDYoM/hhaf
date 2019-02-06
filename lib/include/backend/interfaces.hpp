@@ -21,4 +21,38 @@ using p_destroyTextureFactory = bool (*)(lib::backend::ITextureFactory *);
 using p_createShaderFactory = lib::backend::IShaderFactory * (*)();
 using p_destroyShaderFactory = bool(*)(lib::backend::IShaderFactory *);
 
+
+namespace lib::backend
+{
+
+	template <typename T>
+	class FactoryOf
+	{
+	public:
+		virtual T *const create() noexcept = 0;
+		virtual bool destroy(T *) noexcept = 0;
+		virtual ~FactoryOf() {}
+	};
+
+	using IInfoFactory = FactoryOf<IWindowProviderInfo>;
+	using IWindowFactory = FactoryOf<IWindow>;
+	using ITTFontFactoryFactory = FactoryOf<ITTFontFactory>;
+	using ITextureFactoryFactory = FactoryOf<ITextureFactory>;
+	using IShaderFactoryFactory = FactoryOf<IShaderFactory>;
+
+	class IBackendRegister
+	{
+	public:
+		virtual void setFactory(IInfoFactory* const) noexcept = 0;
+		virtual void setFactory(IWindowFactory* const) noexcept = 0;
+		virtual void setFactory(ITTFontFactoryFactory* const) noexcept = 0;
+		virtual void setFactory(ITextureFactoryFactory* const) noexcept = 0;
+		virtual void setFactory(IShaderFactoryFactory* const) noexcept = 0;
+		virtual ~IBackendRegister() {}
+	};
+}
+
+using p_initLib = void (*)(lib::backend::IBackendRegister* const);
+using p_finishLib = void(*)(lib::backend::IBackendRegister* const);
+
 #endif

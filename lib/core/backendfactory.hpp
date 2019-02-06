@@ -5,6 +5,7 @@
 
 #include <lib/include/backend/iwindow.hpp>
 #include <lib/include/backend/iresourcefactories.hpp>
+#include <lib/include/backend/interfaces.hpp>
 
 namespace lib::backend
 {
@@ -22,6 +23,7 @@ namespace lib::backend
 	private:
 		BackendFactory();
 		~BackendFactory();
+		uptr<BackendRegister> backend_register_;
 		sptr<IWindowProviderInfo> m_windowProviderInfo;
 		sptr<IWindow> m_window;
 		sptr<ITextureFactory> m_textureFactory;
