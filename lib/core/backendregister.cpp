@@ -21,7 +21,7 @@ namespace lib::backend
 
 	void BackendRegister::setFactory(ITextureFactoryFactory * const texture_factory_factory) noexcept
 	{
-		texture_factory_factory_ texture_factory_factory;
+		texture_factory_factory_ = texture_factory_factory;
 	}
 
 	void BackendRegister::setFactory(IShaderFactoryFactory * const shader_factory_factory) noexcept

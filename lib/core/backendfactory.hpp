@@ -7,6 +7,8 @@
 #include <lib/include/backend/iresourcefactories.hpp>
 #include <lib/include/backend/interfaces.hpp>
 
+#include "backendregister.hpp"
+
 namespace lib::backend
 {
 	class BackendFactory final
