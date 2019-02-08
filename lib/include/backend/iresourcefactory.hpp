@@ -14,7 +14,5 @@ namespace lib::backend
 		virtual T* loadFromFile(const str &file) = 0;
 		virtual ~IResourceFactory() {}
 	};
-
-
 }
 #endif

@@ -21,7 +21,7 @@ namespace lib::core
         u64 lastTimeFps{ 0 };
         s32 lastFps{ 0 };
         s32 currentFps{ 0 };
-        sptr<backend::IWindow> m_backendWindow{nullptr};
+        backend::IWindow* m_backendWindow{nullptr};
         sptr<RenderTarget> m_renderTarget{nullptr};
     };
 
