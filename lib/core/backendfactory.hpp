@@ -16,21 +16,21 @@ namespace lib::backend
 	public:
 		static bool initilialize(const str&file);
 		static bool destroy();
-		sptr<IWindowProviderInfo> getWindowProviderInfo();
-		sptr<IWindow> getOrCreateWindow();
-		sptr<ITextureFactory> getTextureFactory();
-		sptr<ITTFontFactory> getTTFontFactory();
-        sptr<IShaderFactory> getShaderFactory();
+		IWindowProviderInfo* getWindowProviderInfo();
+		IWindow* getOrCreateWindow();
+		ITextureFactory* getTextureFactory();
+		ITTFontFactory* getTTFontFactory();
+        IShaderFactory* getShaderFactory();
 		static inline BackendFactory *const instance() noexcept { return m_instance; }
 	private:
 		BackendFactory();
 		~BackendFactory();
 		uptr<BackendRegister> backend_register_;
-		sptr<IWindowProviderInfo> m_windowProviderInfo;
-		sptr<IWindow> m_window;
-		sptr<ITextureFactory> m_textureFactory;
-		sptr<ITTFontFactory> m_ttfontFactory;
-        sptr<IShaderFactory> m_shaderFactory;
+		IWindowProviderInfo* m_windowProviderInfo;
+		IWindow* m_window;
+		ITextureFactory* m_textureFactory;
+		ITTFontFactory* m_ttfontFactory;
+        IShaderFactory* m_shaderFactory;
 		static BackendFactory *m_instance;
 	};
 

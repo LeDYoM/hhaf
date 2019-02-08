@@ -26,19 +26,37 @@ namespace lib::backend
 {
 
 	template <typename T>
-	class FactoryOf
+	class IFactoryOf
 	{
 	public:
 		virtual T *const create() noexcept = 0;
 		virtual bool destroy(T *) noexcept = 0;
-		virtual ~FactoryOf() {}
+		virtual ~IFactoryOf() {}
 	};
 
-	using IInfoFactory = FactoryOf<IWindowProviderInfo>;
-	using IWindowFactory = FactoryOf<IWindow>;
-	using ITTFontFactoryFactory = FactoryOf<ITTFontFactory>;
-	using ITextureFactoryFactory = FactoryOf<ITextureFactory>;
-	using IShaderFactoryFactory = FactoryOf<IShaderFactory>;
+	template <typename T, typename ConcreteObject>
+	class DefaultFactoryOf : public IFactoryOf<T>
+	{
+	public:
+		virtual T *const create() noexcept override
+		{
+			return new ConcreteObject;
+		}
+
+		virtual bool destroy(T *obj) noexcept override
+		{
+			delete obj;
+			return true;
+		}
+
+		virtual ~DefaultFactoryOf() {}
+	};
+
+	using IInfoFactory = IFactoryOf<IWindowProviderInfo>;
+	using IWindowFactory = IFactoryOf<IWindow>;
+	using ITTFontFactoryFactory = IFactoryOf<ITTFontFactory>;
+	using ITextureFactoryFactory = IFactoryOf<ITextureFactory>;
+	using IShaderFactoryFactory = IFactoryOf<IShaderFactory>;
 
 	class IBackendRegister
 	{
@@ -48,11 +66,12 @@ namespace lib::backend
 		virtual void setFactory(ITTFontFactoryFactory* const) noexcept = 0;
 		virtual void setFactory(ITextureFactoryFactory* const) noexcept = 0;
 		virtual void setFactory(IShaderFactoryFactory* const) noexcept = 0;
+
 		virtual ~IBackendRegister() {}
 	};
 }
 
-using p_initLib = void (*)(lib::backend::IBackendRegister* const);
-using p_finishLib = void(*)(lib::backend::IBackendRegister* const);
+using p_initLib = bool (*)(lib::backend::IBackendRegister* const);
+using p_finishLib = bool (*)(lib::backend::IBackendRegister* const);
 
 #endif

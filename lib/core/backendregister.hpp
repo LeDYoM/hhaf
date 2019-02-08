@@ -17,12 +17,32 @@ namespace lib::backend
 		void setFactory(ITTFontFactoryFactory* const) noexcept override;
 		void setFactory(ITextureFactoryFactory* const) noexcept override;
 		void setFactory(IShaderFactoryFactory* const) noexcept override;
+
+		void setLibFuncs(p_initLib init_lib_func, 
+			p_finishLib finish_lib_func) noexcept;
+
+		template <typename T>
+		T* const getFactory() const;
+
+		template <> IInfoFactory* const getFactory() const { return info_factory_; }
+		template <> IWindowFactory* const getFactory() const { return window_factory_; }
+		template <> ITTFontFactoryFactory* const getFactory() const { return ttfont_factory_factory_; }
+		template <> ITextureFactoryFactory* const getFactory() const { return texture_factory_factory_; }
+		template <> IShaderFactoryFactory* const getFactory() const { return shader_factory_factory_; }
+
+		bool init();
+		bool finish();
+
+		inline bool canUse() const noexcept { return init_lib_func_ != nullptr && finish_lib_func_ != nullptr; }
+
 	private:
-		IInfoFactory* info_factory_;
-		IWindowFactory* window_factory_;
-		ITTFontFactoryFactory* ttfont_factory_factory_;
-		ITextureFactoryFactory* texture_factory_factory_;
-		IShaderFactoryFactory* shader_factory_factory_;
+		p_initLib init_lib_func_{ nullptr };
+		p_finishLib finish_lib_func_{ nullptr };
+		IInfoFactory* info_factory_{ nullptr };
+		IWindowFactory* window_factory_{ nullptr };
+		ITTFontFactoryFactory* ttfont_factory_factory_{ nullptr };
+		ITextureFactoryFactory* texture_factory_factory_{ nullptr };
+		IShaderFactoryFactory* shader_factory_factory_{ nullptr };
 	};
 }
 
