@@ -5,8 +5,8 @@
 
 #include <lib/system/appservice.hpp>
 
-#include <lib/include/backend/iwindow.hpp>
-#include <lib/include/backend/iinputdriver.hpp>
+#include <backend_dev/include/iwindow.hpp>
+#include <backend_dev/include/iinputdriver.hpp>
 
 #include <lib/include/key.hpp>
 

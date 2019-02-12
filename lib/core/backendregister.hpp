@@ -3,9 +3,9 @@
 #ifndef LIB_BACKEND_REGISTER_HPP
 #define LIB_BACKEND_REGISTER_HPP
 
-#include <lib/include/backend/iwindow.hpp>
-#include <lib/include/backend/iresourcefactories.hpp>
-#include <lib/include/backend/interfaces.hpp>
+#include <backend_dev/include/iwindow.hpp>
+#include <backend_dev/include/iresourcefactories.hpp>
+#include <backend_dev/include/interfaces.hpp>
 
 namespace lib::backend
 {

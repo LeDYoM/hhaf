@@ -10,9 +10,9 @@
 #include <mtypes/include/vector2d.hpp>
 
 #include <lib/scene/vertexarray.hpp>
-#include <lib/include/backend/iwindow.hpp>
-#include <lib/include/backend/iinputdriver.hpp>
-#include <lib/include/backend/irendertarget.hpp>
+#include <backend_dev/include/iwindow.hpp>
+#include <backend_dev/include/iinputdriver.hpp>
+#include <backend_dev/include/irendertarget.hpp>
 #include <lib/include/windowcreationparams.hpp>
 
 #include "inputdriver.hpp"

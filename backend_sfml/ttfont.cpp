@@ -7,10 +7,19 @@ namespace lib::backend::sfmlb
     TTFont::TTFont(uptr<sf::Font> f) : m_font{ std::move(f) } {}
     TTFont::~TTFont() = default;
 
-	ITTGlyph TTFont::getGlyph(const u32 codePoint, const u32 characterSize) const
-    {
-		const sf::Glyph &glyph(m_font->getGlyph(codePoint, characterSize, false));
-		return ITTGlyph{ from_sft_type<f32>(glyph.bounds), from_sft_type<s32>(glyph.textureRect), glyph.advance };
+	Rectf32 TTFont::getBounds(const u32 codePoint, const u32 characterSize) const
+	{
+		return from_sft_type<f32>(m_font->getGlyph(codePoint, characterSize, false).bounds);
+	}
+
+	Rectf32 TTFont::getTextureBounds(const u32 codePoint, const u32 characterSize) const
+	{
+		return from_sft_type<s32>(m_font->getGlyph(codePoint, characterSize, false).textureRect);
+	}
+
+	f32 TTFont::getAdvance(const u32 codePoint, const u32 characterSize) const
+	{
+		return static_cast<f32>(m_font->getGlyph(codePoint, characterSize, false).advance);
 	}
 
 	f32 TTFont::getLineSpacing(const u32 characterSize) const
@@ -33,8 +42,9 @@ namespace lib::backend::sfmlb
 
 		auto nTexture(muptr<TextureTTFont>( m_font->getTexture(characterSize)));
 
+		// What is needed here is to force the load of the font surface
 		for (u32 i = 0U; i < 0xff; ++i)
-			getGlyph(i, characterSize);
+			getTextureBounds(i, characterSize);
 
         auto *ret(nTexture.get());
 		m_fontTexturesCache[characterSize] = std::move(nTexture);

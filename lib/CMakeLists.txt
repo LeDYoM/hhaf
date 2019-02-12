@@ -18,5 +18,6 @@ add_library(${CURRENT_TARGET} STATIC ${_SOURCES} ${_HEADERS})
 
 target_link_libraries(${CURRENT_TARGET} PRIVATE loader)
 target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
+target_link_libraries(${CURRENT_TARGET} PRIVATE backend_dev)
 
 add_subdirectory(tests)

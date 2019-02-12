@@ -3,9 +3,9 @@
 #ifndef LIB_BACKEND_FACTORY_HPP
 #define LIB_BACKEND_FACTORY_HPP
 
-#include <lib/include/backend/iwindow.hpp>
-#include <lib/include/backend/iresourcefactories.hpp>
-#include <lib/include/backend/interfaces.hpp>
+#include <backend_dev/include/iwindow.hpp>
+#include <backend_dev/include/iresourcefactories.hpp>
+#include <backend_dev/include/interfaces.hpp>
 
 #include "backendregister.hpp"
 
