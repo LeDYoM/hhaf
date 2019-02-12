@@ -7,13 +7,12 @@
 #include <mtypes/include/rect.hpp>
 #include <lib/scene/texture.hpp>
 #include <lib/scene/font.hpp>
-#include <backend_dev/include/ittfont.hpp>
 
 namespace lib
 {
     namespace backend
     {
-        class IFont;
+        class ITTFont;
     }
 
     namespace scene
