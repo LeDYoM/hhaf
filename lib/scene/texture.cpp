@@ -1,6 +1,6 @@
 #include "texture.hpp"
 
-#include <lib/include/backend/itexture.hpp>
+#include <backend_dev/include/itexture.hpp>
 #include <lib/core/backendfactory.hpp>
 
 namespace lib::scene

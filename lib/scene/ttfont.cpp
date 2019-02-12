@@ -1,6 +1,6 @@
 #include "ttfont.hpp"
 
-#include <lib/include/backend/ittfont.hpp>
+#include <backend_dev/include/ittfont.hpp>
 #include <lib/core/backendfactory.hpp>
 
 #include <map>
@@ -21,10 +21,20 @@ namespace lib::scene
 
     TTFont::~TTFont() = default;
 
-    TTGlyph TTFont::getGlyph(const u32 codePoint, const u32 characterSize) const
-    {
-        return TTGlyph(m_private->m_font->getGlyph(codePoint, characterSize));
-    }
+	Rectf32 TTFont::getBounds(const u32 codePoint, const u32 characterSize) const
+	{
+		return m_private->m_font->getBounds(codePoint, characterSize);
+	}
+
+	Rectf32 TTFont::getTextureBounds(const u32 codePoint, const u32 characterSize) const
+	{
+		return m_private->m_font->getTextureBounds(codePoint, characterSize);
+	}
+
+	f32 TTFont::getAdvance(const u32 codePoint, const u32 characterSize) const
+	{
+		return m_private->m_font->getAdvance(codePoint, characterSize);
+	}
 
     f32 TTFont::getLineSpacing(const u32 characterSize) const
     {
@@ -67,7 +77,7 @@ namespace lib::scene
             if ((curChar == ' ') || (curChar == '\t') || (curChar == '\n'))
             {
                 // Update the current bounds (min coordinates)
-                const f32 hspace{ getGlyph(L' ', characterSize).advance };
+                const f32 hspace{ getAdvance(L' ', characterSize) };
 
                 switch (curChar)
                 {
@@ -82,8 +92,7 @@ namespace lib::scene
             }
             else
             {
-                const TTGlyph glyph{ getGlyph(curChar, characterSize) };
-                const Rectf32 letterBox{ glyph.bounds + vector2df{ x,y } };
+                const Rectf32 letterBox{ getBounds(curChar, characterSize) + vector2df{ x,y } };
 
                 // Update the current bounds
                 {
@@ -92,7 +101,7 @@ namespace lib::scene
                 }
 
                 // Advance to the next character
-                x += glyph.advance;
+				x += getAdvance(curChar, characterSize);
             }
         }
         return max;
@@ -117,12 +126,22 @@ namespace lib::scene
     {
     }
 
-    TTGlyph TTFontInstance::getGlyph(const u32 codePoint) const
-    {
-        return m_parentInstance.getGlyph(codePoint, m_characterSize);
-    }
+	Rectf32 TTFontInstance::getBounds(const u32 codePoint) const
+	{
+		return m_parentInstance.getBounds(codePoint, m_characterSize);
+	}
 
-    f32 TTFontInstance::getLineSpacing() const
+	Rectf32 TTFontInstance::getTextureBounds(const u32 codePoint) const
+	{
+		return m_parentInstance.getTextureBounds(codePoint, m_characterSize);
+	}
+
+	f32 TTFontInstance::getAdvance(const u32 codePoint) const
+	{
+		return m_parentInstance.getAdvance(codePoint, m_characterSize);
+	}
+
+	f32 TTFontInstance::getLineSpacing() const
     {
         return m_parentInstance.getLineSpacing(m_characterSize);
     }

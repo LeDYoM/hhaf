@@ -6,7 +6,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
 
-#include <lib/include/backend/itexture.hpp>
+#include <backend_dev/include/itexture.hpp>
 
 #include <SFML/Graphics/Texture.hpp>
 

@@ -6,7 +6,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
 
-#include <lib/include/backend/iresourcefactories.hpp>
+#include <backend_dev/include/iresourcefactories.hpp>
 #include "texture.hpp"
 
 namespace lib::backend::sfmlb
