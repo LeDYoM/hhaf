@@ -14,7 +14,6 @@
 
 #include <lib/board/boardmodel.hpp>
 #include <lib/include/core/log.hpp>
-#include <lib/system/resourcemanager.hpp>
 #include <lib/scene/renderizables/renderizable.hpp>
 #include <lib/scene/scenemanager.hpp>
 #include <lib/scene/renderizables/nodeshape.hpp>

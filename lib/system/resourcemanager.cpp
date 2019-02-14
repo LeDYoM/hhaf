@@ -19,8 +19,8 @@ namespace lib::core
 
     namespace
 	{
-        template <typename T, typename A>
-        inline auto get_or_add(A& factory, ResourceList<sptr<T>> &container, const str &rid, const str &fileName)
+        template <typename V, typename T>
+        inline sptr<T> get_or_add(backend::IResourceFactory<V>& factory, ResourceList<sptr<T>> &container, const str &rid, const str &fileName)
         {
             auto iterator(std::find_if(container.begin(), container.end(),
                 [rid](const auto &node) {return node.first == rid; }));
@@ -43,8 +43,8 @@ namespace lib::core
             }
         }
 
-        template <typename T, typename A>
-        inline auto get_or_default(A& /*factory*/, ResourceList<sptr<T>> &container, const str &rid)
+        template <typename T>
+        inline auto get_or_default(ResourceList<sptr<T>> &container, const str &rid)
         {
             auto iterator(std::find_if(container.begin(), container.end(),
                 [rid](const auto &node) { return node.first == rid; }));
@@ -70,17 +70,17 @@ namespace lib::core
 
 	sptr<scene::TTFont> ResourceManager::getFont(const str &rid)
 	{
-        return get_or_default(backend::ttfontFactory(), m_private->m_fonts, rid);
+        return get_or_default(m_private->m_fonts, rid);
     }
 
 	sptr<scene::Texture> ResourceManager::getTexture(const str &rid)
 	{
-        return get_or_default(backend::textureFactory(), m_private->m_textures, rid);
+        return get_or_default(m_private->m_textures, rid);
 	}
 
     sptr<scene::Shader> ResourceManager::getShader(const str &rid)
     {
-        return get_or_default(backend::shaderFactory(), m_private->m_shaders, rid);
+        return get_or_default(m_private->m_shaders, rid);
     }
 
     sptr<scene::TTFont> ResourceManager::loadFont(const str & rid, const str & fileName)

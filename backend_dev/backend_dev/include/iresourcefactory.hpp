@@ -7,11 +7,18 @@
 
 namespace lib::backend
 {
+	struct RawMemory
+	{
+		size_type size;
+		void* data;
+	};
+
     template <typename T>
 	class IResourceFactory
 	{
 	public:
-		virtual T* loadFromFile(const str &file) = 0;
+		virtual T* loadFromFile(const str &) = 0;
+		virtual T* loadFromRawMemory(RawMemory *) { return nullptr; }
 		virtual ~IResourceFactory() {}
 	};
 }
