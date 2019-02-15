@@ -1,4 +1,5 @@
 #include "ttfont.hpp"
+#include "ttfontinstance.hpp"
 
 #include <backend_dev/include/ittfont.hpp>
 #include <lib/core/backendfactory.hpp>
@@ -112,52 +113,12 @@ namespace lib::scene
         if (auto iterator = m_private->m_fontMap.find(charactersize);
                 iterator == m_private->m_fontMap.end())
         {
-            sptr<TTFontInstance> newFont{new TTFontInstance{*this,charactersize}};
+            sptr<TTFontInstance> newFont{msptr<TTFontInstance>(*this,charactersize)};
             return m_private->m_fontMap[charactersize] = newFont;
         }
         else
         {
             return (*iterator).second;
         }
-    }
-
-    TTFontInstance::TTFontInstance(const TTFont &parent, u32 characterSize)
-        : m_parentInstance{parent}, m_characterSize{characterSize}
-    {
-    }
-
-	Rectf32 TTFontInstance::getBounds(const u32 codePoint) const
-	{
-		return m_parentInstance.getBounds(codePoint, m_characterSize);
-	}
-
-	Rectf32 TTFontInstance::getTextureBounds(const u32 codePoint) const
-	{
-		return m_parentInstance.getTextureBounds(codePoint, m_characterSize);
-	}
-
-	f32 TTFontInstance::getAdvance(const u32 codePoint) const
-	{
-		return m_parentInstance.getAdvance(codePoint, m_characterSize);
-	}
-
-	f32 TTFontInstance::getLineSpacing() const
-    {
-        return m_parentInstance.getLineSpacing(m_characterSize);
-    }
-
-    f32 TTFontInstance::getKerning(const u32 first, const u32 second) const
-    {
-        return m_parentInstance.getKerning(first, second, m_characterSize);
-    }
-
-    sptr<Texture> TTFontInstance::getTexture() const
-    {
-        return m_parentInstance.getTexture(m_characterSize);
-    }
-
-    vector2df TTFontInstance::textSize(const str&text) const
-    {
-        return m_parentInstance.textSize(text, m_characterSize);
     }
 }
