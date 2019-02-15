@@ -10,7 +10,7 @@
 
 #include <lib/include/core/log.hpp>
 #include <lib/include/resources/iresourceretriever.hpp>
-#include <lib/scene/ttfont.hpp>
+#include <lib/resources/ttfont.hpp>
 
 namespace zoper
 {

@@ -9,7 +9,6 @@
 #include <lib/system/rendertarget.hpp>
 #include <lib/core/backendfactory.hpp>
 
-#include <lib/scene/texture.hpp>
 #include <lib/scene/renderdata.hpp>
 #include <lib/scene/vertexarray.hpp>
 

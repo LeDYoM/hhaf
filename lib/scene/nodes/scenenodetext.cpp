@@ -1,8 +1,10 @@
 #include "scenenodetext.hpp"
 
-#include <lib/scene/font.hpp>
-#include <lib/scene/texture.hpp>
+#include <lib/resources/font.hpp>
+#include <lib/resources/texture.hpp>
+
 #include <lib/include/core/log.hpp>
+
 #include <lib/scene/vertexarray.hpp>
 #include <lib/scene/scenenodetypes.hpp>
 

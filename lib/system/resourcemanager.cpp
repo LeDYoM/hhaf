@@ -1,9 +1,9 @@
 #include "resourcemanager.hpp"
 #include <lib/include/core/log.hpp>
 
-#include <lib/scene/ttfont.hpp>
-#include <lib/scene/texture.hpp>
-#include <lib/scene/shader.hpp>
+#include <lib/resources/ttfont.hpp>
+#include <lib/resources/texture.hpp>
+#include <lib/resources/shader.hpp>
 
 #include <lib/core/backendfactory.hpp>
 #include <algorithm>

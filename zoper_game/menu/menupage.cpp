@@ -7,8 +7,8 @@
 #include <lib/scene/renderizables/nodeshape.hpp>
 #include <lib/core/host.hpp>
 #include <lib/system/resourcemanager.hpp>
-#include <lib/scene/ttfont.hpp>
-#include <lib/scene/font.hpp>
+#include <lib/resources/ttfont.hpp>
+#include <lib/resources/font.hpp>
 #include <lib/include/key.hpp>
 
 #include <mtypes/include/function.hpp>

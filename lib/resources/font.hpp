@@ -5,7 +5,7 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/rect.hpp>
-#include <lib/scene/texture.hpp>
+#include "texture.hpp"
 
 namespace lib::scene
 {

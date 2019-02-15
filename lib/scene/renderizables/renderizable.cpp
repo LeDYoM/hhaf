@@ -6,8 +6,7 @@
 #include <lib/scene/scenemanager.hpp>
 #include <lib/scene/renderdata.hpp>
 #include <lib/scene/scenenode.hpp>
-#include <lib/scene/texture.hpp>
-#include <lib/scene/scenenode.hpp>
+#include <lib/resources/texture.hpp>
 
 namespace lib::scene
 {
