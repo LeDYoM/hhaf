@@ -17,7 +17,7 @@ namespace lib::backend::sfmlb
 	ITexture * TextureFactory::loadFromRawMemory(RawMemory * raw_memory)
 	{
 		uptr<sf::Texture> texture(muptr<sf::Texture>());
-		texture->loadFromMemory(raw_memory->data, raw_memory->size);
+		texture->loadFromMemory(raw_memory->first, raw_memory->second);
 		uptr<Texture> t{ muptr<Texture>(std::move(texture)) };
 		m_textureCache.push_back(std::move(t));
 		return (*(m_textureCache.end() - 1)).get();

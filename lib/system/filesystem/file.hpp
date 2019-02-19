@@ -9,6 +9,30 @@
 
 namespace lib
 {
+	namespace core
+	{
+		class FileSystem;
+	};
+
+	class FileInputBinary
+	{
+	public:
+		size_type size() const noexcept { return (data_.get() != nullptr) ? size_ : 0U; }
+		const void* data() const noexcept { return data_.get(); }
+		void* data() noexcept { return data_.get(); }
+
+		// Note: destructive operation
+		RawMemory aquire() noexcept { return RawMemory(std::move(data()), size()); }
+
+	private:
+		FileInputBinary(uptr<char[]> raw_memory,const size_type size) noexcept
+			: data_{ std::move(raw_memory) }, size_{ size } {}
+
+		friend class core::FileSystem;
+		uptr<char[]> data_;
+		size_type size_;
+	};
+
 	class FileInput
 	{
 	public:

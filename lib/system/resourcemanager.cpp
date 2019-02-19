@@ -19,6 +19,12 @@ namespace lib::core
 
     namespace
 	{
+		template <bool UseInternalFileSystem, typename T, typename V>
+		inline sptr<T> loadResource(backend::IResourceFactory<V>& factory, const str &fileName)
+		{
+			return msptr<T>(factory.loadFromFile(fileName));
+		}
+
         template <typename V, typename T>
         inline sptr<T> get_or_add(backend::IResourceFactory<V>& factory, ResourceList<sptr<T>> &container, const str &rid, const str &fileName)
         {
@@ -37,7 +43,7 @@ namespace lib::core
                 log_debug_info(rid, " not found on resource list.");
 
                 log_debug_info("Going to load file: ", fileName);
-                auto resource(msptr<T>(factory.loadFromFile(fileName)));
+                sptr<T> resource(loadResource<false,T>(factory, fileName));
                 container.push_back(NamedIndex<sptr<T>>(rid, resource));
                 return resource;
             }
@@ -63,7 +69,8 @@ namespace lib::core
 		ResourceList<sptr<scene::Shader>> m_shaders;
     };
 
-    ResourceManager::ResourceManager() : AppService{ },
+    ResourceManager::ResourceManager(core::SystemProvider &system_provider) 
+		: HostedAppService{ system_provider },
         m_private{ muptr<ResourceManagerPrivate>() } {}
 
 	ResourceManager::~ResourceManager() = default;

@@ -4,6 +4,7 @@
 #include "randomsystem.hpp"
 #include "inputsystem.hpp"
 #include "simulationsystem.hpp"
+#include "filesystem/filesystem.hpp"
 
 #include <backend_dev/include/iwindow.hpp>
 #include <lib/include/core/log.hpp>
@@ -24,8 +25,9 @@ namespace lib::core
         window_ = muptr<Window>(app_->getAppDescriptor().wcp);
         input_system_ = muptr<input::InputSystem>(window_->inputDriver());
         scene_manager_ = muptr<scene::SceneManager>(*this);
-        resource_manager_ = muptr<core::ResourceManager>();
+        resource_manager_ = muptr<core::ResourceManager>(*this);
         random_system_ = muptr<RandomSystem>();
+		file_system_ = muptr<FileSystem>(*this);
         // WTF
         simulation_system_ = new SimulationSystem();
     }
@@ -96,6 +98,16 @@ namespace lib::core
     {
         return *random_system_;
     }
+
+	const FileSystem &SystemProvider::fileSystem() const noexcept
+	{
+		return *file_system_;
+	}
+
+	FileSystem &SystemProvider::fileSystem() noexcept
+	{
+		return *file_system_;
+	}
 
     const scene::SceneManager &SystemProvider::sceneManager() const noexcept
     {

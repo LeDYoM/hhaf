@@ -22,10 +22,10 @@ namespace lib
 	namespace core
 	{
         class Host;
-		class ResourceManager final : public AppService, public IResourceHandler, public IResourceRetriever
+		class ResourceManager final : public HostedAppService, public IResourceHandler, public IResourceRetriever
 		{
 		public:
-			ResourceManager();
+			ResourceManager(core::SystemProvider &system_provider);
 			~ResourceManager() override;
 
 			sptr<scene::TTFont> getFont(const str &rid) override;

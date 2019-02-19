@@ -7,12 +7,6 @@
 
 namespace lib::backend
 {
-	struct RawMemory
-	{
-		size_type size;
-		void* data;
-	};
-
     template <typename T>
 	class IResourceFactory
 	{
