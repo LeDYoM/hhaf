@@ -14,6 +14,15 @@ namespace lib::backend::sfmlb
         return (*(m_fontCache.end() - 1)).get();
 	}
 
+	ITTFont * TTFontFactory::loadFromRawMemory(RawMemory * raw_memory)
+	{
+		uptr<sf::Font> font(muptr<sf::Font>());
+		font->loadFromMemory(raw_memory->first, raw_memory->second);
+		uptr<TTFont> t{ muptr<TTFont>(std::move(font)) };
+		m_fontCache.push_back(std::move(t));
+		return (*(m_fontCache.end() - 1)).get();
+	}
+
 	TTFontFactory::~TTFontFactory()
 	{
         m_fontCache.clear();

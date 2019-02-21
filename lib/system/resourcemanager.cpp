@@ -1,4 +1,8 @@
 #include "resourcemanager.hpp"
+#include "systemprovider.hpp"
+#include "filesystem/filesystem.hpp"
+#include "filesystem/file.hpp"
+
 #include <lib/include/core/log.hpp>
 
 #include <lib/resources/ttfont.hpp>
@@ -19,14 +23,34 @@ namespace lib::core
 
     namespace
 	{
-		template <bool UseInternalFileSystem, typename T, typename V>
-		inline sptr<T> loadResource(backend::IResourceFactory<V>& factory, const str &fileName)
+		RawMemory copyFrom(const RawMemory& other)
 		{
-			return msptr<T>(factory.loadFromFile(fileName));
+			std::byte* first = new std::byte[other.second];
+			std::memcpy(first, other.first, other.second);
+			return { first, other.second };
+		}
+		template <bool UseInternalFileSystem, typename T, typename V>
+		inline sptr<T> loadResource(backend::IResourceFactory<V>& factory, 
+			FileSystem& fileSystem, const str &fileName)
+		{
+			if constexpr (UseInternalFileSystem)
+			{
+				FileInputBinary finput(fileSystem.loadBinaryFile(fileName));
+				RawMemory data(finput.getRawMemory());
+				
+				// Prototype / check
+				RawMemory willLeak(copyFrom(data));
+				return msptr<T>(factory.loadFromRawMemory(&willLeak));
+			}
+			else
+			{
+				return msptr<T>(factory.loadFromFile(fileName));
+			}
 		}
 
-        template <typename V, typename T>
-        inline sptr<T> get_or_add(backend::IResourceFactory<V>& factory, ResourceList<sptr<T>> &container, const str &rid, const str &fileName)
+        template <bool UseInternalFileSystem, typename V, typename T>
+        inline sptr<T> get_or_add(backend::IResourceFactory<V>& factory, ResourceList<sptr<T>> &container, 
+			FileSystem& fileSystem, const str &rid, const str &fileName)
         {
             auto iterator(std::find_if(container.begin(), container.end(),
                 [rid](const auto &node) {return node.first == rid; }));
@@ -43,7 +67,7 @@ namespace lib::core
                 log_debug_info(rid, " not found on resource list.");
 
                 log_debug_info("Going to load file: ", fileName);
-                sptr<T> resource(loadResource<false,T>(factory, fileName));
+                sptr<T> resource(loadResource<UseInternalFileSystem,T>(factory, fileSystem, fileName));
                 container.push_back(NamedIndex<sptr<T>>(rid, resource));
                 return resource;
             }
@@ -92,14 +116,14 @@ namespace lib::core
 
     sptr<scene::TTFont> ResourceManager::loadFont(const str & rid, const str & fileName)
     {
-        return get_or_add(backend::ttfontFactory(), m_private->m_fonts, rid, fileName);
+        return get_or_add<false>(backend::ttfontFactory(), m_private->m_fonts, systemProvider().fileSystem(),  rid, fileName);
     }
     sptr<scene::Texture> ResourceManager::loadTexture(const str & rid, const str & fileName)
     {
-        return get_or_add(backend::textureFactory(), m_private->m_textures, rid, fileName);
+        return get_or_add<true>(backend::textureFactory(), m_private->m_textures, systemProvider().fileSystem(), rid, fileName);
     }
     sptr<scene::Shader> ResourceManager::loadShader(const str & rid, const str & fileName)
     {
-        return get_or_add(backend::shaderFactory(), m_private->m_shaders, rid, fileName);
+        return get_or_add<false>(backend::shaderFactory(), m_private->m_shaders, systemProvider().fileSystem(), rid, fileName);
     }
 }

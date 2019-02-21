@@ -34,8 +34,7 @@ namespace lib::backend::sfmlb
 
 	ITexture *TTFont::getTexture(const u32 characterSize)
     {
-        if (auto iterator(m_fontTexturesCache.find(characterSize));
-        iterator != m_fontTexturesCache.end()) 
+        if (auto iterator(m_fontTexturesCache.find(characterSize)); iterator != m_fontTexturesCache.end()) 
         {
             return iterator->second.get();
 		}
