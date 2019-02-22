@@ -12,7 +12,7 @@
 
 namespace lib::backend::sfmlb
 {
-    class TextureTTFont;
+    class Texture;
 	class TTFont : public ITTFont
 	{
 	public:
@@ -27,7 +27,7 @@ namespace lib::backend::sfmlb
 		ITexture *getTexture(const u32 characterSize) override;
 	private:
 		uptr<sf::Font> m_font;
-		std::map<u32, uptr<TextureTTFont>> m_fontTexturesCache;
+		std::map<u32, uptr<Texture>> m_fontTexturesCache;
 	};
 }
 

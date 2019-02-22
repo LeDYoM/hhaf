@@ -1,5 +1,4 @@
 #include "ttfont.hpp"
-#include "texturettfont.hpp"
 #include "conversions.hpp"
 
 namespace lib::backend::sfmlb
@@ -39,7 +38,7 @@ namespace lib::backend::sfmlb
             return iterator->second.get();
 		}
 
-		auto nTexture(muptr<TextureTTFont>( m_font->getTexture(characterSize)));
+		auto nTexture(muptr<Texture>( &m_font->getTexture(characterSize), false));
 
 		// What is needed here is to force the load of the font surface
 		for (u32 i = 0U; i < 0xff; ++i)

@@ -120,7 +120,7 @@ namespace lib::core
     }
     sptr<scene::Texture> ResourceManager::loadTexture(const str & rid, const str & fileName)
     {
-        return get_or_add<true>(backend::textureFactory(), m_private->m_textures, systemProvider().fileSystem(), rid, fileName);
+        return get_or_add<false>(backend::textureFactory(), m_private->m_textures, systemProvider().fileSystem(), rid, fileName);
     }
     sptr<scene::Shader> ResourceManager::loadShader(const str & rid, const str & fileName)
     {

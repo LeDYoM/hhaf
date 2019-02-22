@@ -19,7 +19,7 @@ namespace lib::backend::sfmlb
 		ITexture *loadFromRawMemory(RawMemory *raw_memory) override;
 		~TextureFactory() override;
 	private:
-		vector<uptr<Texture>> m_textureCache;
+		vector<sptr<Texture>> m_textureCache;
 	};
 }
 

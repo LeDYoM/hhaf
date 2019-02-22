@@ -2,9 +2,15 @@
 
 namespace lib::backend::sfmlb
 {
-    Texture::Texture(uptr<sf::Texture> texture) : m_texturePrivate{ std::move(texture) } {}
+	Texture::Texture(const sf::Texture* const texture, const bool owned) : m_texturePrivate{ texture }, owned_{ owned } {}
 
-    Texture::~Texture() {}
+    Texture::~Texture()
+	{
+		if (owned_ && m_texturePrivate != nullptr)
+		{
+			delete m_texturePrivate;
+		}
+	}
 
 	vector2du32 Texture::size() const
 	{
