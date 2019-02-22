@@ -21,16 +21,16 @@ namespace lib::core
 
 	FileInputBinary FileSystem::loadBinaryFile(const str & fileName)
 	{
-		/*
+		
 		//Note function returns size_max. size_type is maximum 4GB for a file.
 		size_type fileSize = static_cast<size_type>(std::filesystem::file_size(fileName.c_str()));
 
-		uptr<char[]> buf{ muptr<char[]>(fileSize) };
-		std::basic_ifstream<char> ifs(fileName.c_str(), std::ios::binary);
+		uptr<std::byte[]> buf{ muptr<std::byte[]>(fileSize) };
+		std::basic_ifstream<std::byte> ifs(fileName.c_str(), std::ios::binary);
 		ifs.read(buf.get(), fileSize);
 		return FileInputBinary(std::move(buf), fileSize);
-		*/
-
+		
+		/*
 		//Note function returns size_max. size_type is maximum 4GB for a file.
 		size_type fileSize = static_cast<size_type>(std::filesystem::file_size(fileName.c_str()));
 
@@ -38,5 +38,6 @@ namespace lib::core
 		std::basic_ifstream<std::byte> ifs(fileName.c_str(), std::ios::binary);
 		ifs.read(buf, fileSize);
 		return FileInputBinary(buf, fileSize);
+		*/
 	}
 }

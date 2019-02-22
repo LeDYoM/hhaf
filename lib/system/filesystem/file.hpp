@@ -18,26 +18,16 @@ namespace lib
 	{
 	public:
 		size_type size() const noexcept { return (data_ != nullptr) ? size_ : 0U; }
-		const void* data() const noexcept { return data_; }
-		void* data() noexcept { return data_; }
+		const void* data() const noexcept { return data_.get(); }
+		void* data() noexcept { return data_.get(); }
 
 		RawMemory getRawMemory() const noexcept { return RawMemory(data(), size()); }
-
-		~FileInputBinary()
-		{
-			if (data_)
-			{
-				delete data_;
-				data_ = nullptr;
-				size_ = 0U;
-			}
-		}
 	private:
-		FileInputBinary(std::byte* raw_memory,const size_type size) noexcept
-			: data_{ raw_memory }, size_{ size } {}
+		FileInputBinary(uptr<std::byte[]> raw_memory, const size_type size) noexcept
+			: data_{ std::move(raw_memory) }, size_{ size } {}
 
 		friend class core::FileSystem;
-		std::byte* data_{ nullptr };
+		uptr<std::byte[]> data_{ nullptr };
 		size_type size_{ 0U };
 	};
 
