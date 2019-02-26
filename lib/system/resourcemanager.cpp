@@ -23,24 +23,16 @@ namespace lib::core
 
     namespace
 	{
-		RawMemory copyFrom(const RawMemory& other)
-		{
-			std::byte* first = new std::byte[other.second];
-			std::memcpy(first, other.first, other.second);
-			return { first, other.second };
-		}
 		template <bool UseInternalFileSystem, typename T, typename V>
 		inline sptr<T> loadResource(backend::IResourceFactory<V>& factory, 
 			FileSystem& fileSystem, const str &fileName)
 		{
 			if constexpr (UseInternalFileSystem)
 			{
-				FileInputBinary finput(fileSystem.loadBinaryFile(fileName));
-				RawMemory data(finput.getRawMemory());
-				
+				RawMemory data(fileSystem.loadBinaryFile(fileName));
+
 				// Prototype / check
-				RawMemory willLeak(copyFrom(data));
-				return msptr<T>(factory.loadFromRawMemory(&willLeak));
+				return msptr<T>(factory.loadFromRawMemory(&data));
 			}
 			else
 			{
@@ -116,14 +108,14 @@ namespace lib::core
 
     sptr<scene::TTFont> ResourceManager::loadFont(const str & rid, const str & fileName)
     {
-        return get_or_add<false>(backend::ttfontFactory(), m_private->m_fonts, systemProvider().fileSystem(),  rid, fileName);
+        return get_or_add<true>(backend::ttfontFactory(), m_private->m_fonts, systemProvider().fileSystem(),  rid, fileName);
     }
     sptr<scene::Texture> ResourceManager::loadTexture(const str & rid, const str & fileName)
     {
-        return get_or_add<false>(backend::textureFactory(), m_private->m_textures, systemProvider().fileSystem(), rid, fileName);
+        return get_or_add<true>(backend::textureFactory(), m_private->m_textures, systemProvider().fileSystem(), rid, fileName);
     }
     sptr<scene::Shader> ResourceManager::loadShader(const str & rid, const str & fileName)
     {
-        return get_or_add<false>(backend::shaderFactory(), m_private->m_shaders, systemProvider().fileSystem(), rid, fileName);
+        return get_or_add<true>(backend::shaderFactory(), m_private->m_shaders, systemProvider().fileSystem(), rid, fileName);
     }
 }

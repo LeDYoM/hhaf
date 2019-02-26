@@ -6,6 +6,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
 #include <mtypes/include/streams.hpp>
+#include <mtypes/include/rawmemory.hpp>
 
 namespace lib
 {
@@ -17,18 +18,13 @@ namespace lib
 	class FileInputBinary
 	{
 	public:
-		size_type size() const noexcept { return (data_ != nullptr) ? size_ : 0U; }
-		const void* data() const noexcept { return data_.get(); }
-		void* data() noexcept { return data_.get(); }
-
-		RawMemory getRawMemory() const noexcept { return RawMemory(data(), size()); }
+		const RawMemory& getRawMemory() const noexcept { return data_; }
 	private:
-		FileInputBinary(uptr<std::byte[]> raw_memory, const size_type size) noexcept
-			: data_{ std::move(raw_memory) }, size_{ size } {}
+		FileInputBinary(RawMemory raw_memory) noexcept
+			: data_{ std::move(raw_memory) } {}
 
 		friend class core::FileSystem;
-		uptr<std::byte[]> data_{ nullptr };
-		size_type size_{ 0U };
+		RawMemory data_;
 	};
 
 	class FileInput

@@ -3,7 +3,8 @@
 
 namespace lib::backend::sfmlb
 {
-    TTFont::TTFont(uptr<sf::Font> f) : m_font{ std::move(f) } {}
+    TTFont::TTFont(uptr<sf::Font> f, RawMemory raw_memory)
+		: m_font{ std::move(f) }, raw_memory_{ std::move(raw_memory) } {}
     TTFont::~TTFont() = default;
 
 	Rectf32 TTFont::getBounds(const u32 codePoint, const u32 characterSize) const

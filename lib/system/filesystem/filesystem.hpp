@@ -17,7 +17,7 @@ namespace lib::core
 		FileSystem(core::SystemProvider &system_provider);
         ~FileSystem() override;
 
-		FileInputBinary loadBinaryFile(const str& fileName);
+		RawMemory loadBinaryFile(const str& fileName);
 
     private:
         class FileSystemPrivate;

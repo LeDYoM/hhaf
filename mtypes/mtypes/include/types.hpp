@@ -42,8 +42,6 @@ namespace lib
 
 	template <typename T, typename V>
 	using pair = std::pair<T, V>;
-
-	using RawMemory = std::pair<const void*, size_type>;
 }
 
 #endif

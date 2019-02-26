@@ -19,7 +19,7 @@ namespace lib::core
 
 	FileSystem::~FileSystem() = default;
 
-	FileInputBinary FileSystem::loadBinaryFile(const str & fileName)
+	RawMemory FileSystem::loadBinaryFile(const str & fileName)
 	{
 		
 		//Note function returns size_max. size_type is maximum 4GB for a file.
@@ -28,16 +28,7 @@ namespace lib::core
 		uptr<std::byte[]> buf{ muptr<std::byte[]>(fileSize) };
 		std::basic_ifstream<std::byte> ifs(fileName.c_str(), std::ios::binary);
 		ifs.read(buf.get(), fileSize);
-		return FileInputBinary(std::move(buf), fileSize);
+		return RawMemory{ std::move(buf), fileSize };
 		
-		/*
-		//Note function returns size_max. size_type is maximum 4GB for a file.
-		size_type fileSize = static_cast<size_type>(std::filesystem::file_size(fileName.c_str()));
-
-		std::byte* buf = new std::byte[fileSize];
-		std::basic_ifstream<std::byte> ifs(fileName.c_str(), std::ios::binary);
-		ifs.read(buf, fileSize);
-		return FileInputBinary(buf, fileSize);
-		*/
 	}
 }

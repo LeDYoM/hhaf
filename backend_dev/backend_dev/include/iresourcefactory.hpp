@@ -4,6 +4,7 @@
 #define LIB_BACKEND_IRESOURCE_FACTORY_INCLUDE_HPP
 
 #include <mtypes/include/str.hpp>
+#include <mtypes/include/rawmemory.hpp>
 
 namespace lib::backend
 {
