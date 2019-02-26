@@ -5,7 +5,8 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
-#include <mtypes/include/streams.hpp>
+#include <mtypes/include/streamin.hpp>
+#include <mtypes/include/streamout.hpp>
 #include <mtypes/include/rawmemory.hpp>
 
 namespace lib

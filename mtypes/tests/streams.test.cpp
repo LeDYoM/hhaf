@@ -1,6 +1,6 @@
 #include "catch.hpp"
 
-#include <mtypes/include/streams.hpp>
+#include <mtypes/include/streamin.hpp>
 #include <mtypes/include/types.hpp>
 
 using namespace lib;
