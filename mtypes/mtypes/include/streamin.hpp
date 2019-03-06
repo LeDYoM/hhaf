@@ -56,7 +56,18 @@ namespace lib
             return *this;
         }
 
-        inline SerializationStreamIn& disableSeparator()
+		constexpr SerializationStreamIn& setUseNewLineAsSeparator(const bool unlas) noexcept
+		{
+			useEndLineAsSeparator_ = unlas;
+			return *this;
+		}
+
+		constexpr bool useNewLineAsSeparator() const noexcept
+		{
+			return useEndLineAsSeparator_;
+		}
+
+        constexpr SerializationStreamIn& disableSeparator()
         {
             return separator(0);
         }
@@ -77,18 +88,35 @@ namespace lib
             data_ = data_.substr(increment);
         }
 
+		inline vector<char> separators()
+		{
+			vector<char> result;
+			if (separator_ != 0U)
+			{
+				result.push_back(separator_);
+			}
+
+			if (useEndLineAsSeparator_)
+			{
+				result.push_back('\n');
+			}
+
+			return result;
+		}
+
         inline str extract_to_separator_and_update_data()
         {
             remove_lwhitespaces();
 
-            const auto separator_index(data_.find_first_of(separator_));
+            const auto separator_index(data_.find_first_of(separators()));
             str result(data_.substr(0, separator_index));
             advance_data(std::max(separator_index, separator_index + 1));
             return result;
         }
 
         str data_;
-        bool correct_{ true };
+		bool correct_{ true };
+		bool useEndLineAsSeparator_{ true };
         char separator_{ ',' };
 	};
 

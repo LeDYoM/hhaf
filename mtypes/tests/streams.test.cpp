@@ -126,7 +126,7 @@ TEST_CASE("SerializationStreamIn::append", "[streams][SerializationStreamIn]")
         ssi.append(",9 ");
         CHECK_FALSE(ssi.eof());
 
-        ssi >> a;
+        ssi.setUseNewLineAsSeparator(false) >> a;
 
         check_array(a);
         CHECK(ssi.eof());
@@ -135,7 +135,8 @@ TEST_CASE("SerializationStreamIn::append", "[streams][SerializationStreamIn]")
     SECTION("Test3: Append directly to the input stream and handle \\n")
     {
         SerializationStreamIn ssi;
-        size_type a[10U] = { 0U };
+
+		size_type a[10U] = { 0U };
 
         CHECK(ssi.eof());
 
@@ -145,7 +146,7 @@ TEST_CASE("SerializationStreamIn::append", "[streams][SerializationStreamIn]")
         ssi.append("8, 9");
         CHECK_FALSE(ssi.eof());
 
-        ssi >> a;
+        ssi.setUseNewLineAsSeparator(false) >> a;
 
         check_array(a);
         CHECK(ssi.eof());

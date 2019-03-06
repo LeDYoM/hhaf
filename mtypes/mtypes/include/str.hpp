@@ -218,16 +218,21 @@ namespace lib
         constexpr const char_type *const c_str() const noexcept { return m_data.cbegin(); }
         constexpr bool empty() const noexcept { return size() == 0; }
 
-        constexpr size_type find_first_of(const char_type chValue) const noexcept 
+        constexpr auto find_first_of(const vector<char_type>& chValue) const noexcept 
         {
-            const auto iterator(m_data.cfind(chValue));
-
-            if (iterator != m_data.cend()) 
-            {
-                return iterator - m_data.cbegin();
-            }
-            return npos;
+			const auto it(m_data.find_first_of(chValue));
+			return (it == m_data.cend()) ? str::npos : index_from_iterator(it);
         }
+
+		constexpr auto find_first_of(const char_type chValue) const noexcept
+		{
+			return find_first_of(vector<char_type>{ chValue });
+		}
+
+		constexpr size_type index_from_iterator(const const_iterator it) const noexcept
+		{
+			return m_data.index_from_iterator(it);
+		}
 
         template <typename T>
         constexpr str &operator<<(const T&n) {

@@ -263,7 +263,6 @@ namespace lib::dicty
             return v;
         }
 
-    private:
         bool set(std::initializer_list<pair<str, str>> iListValues, bool overwrite = true)
         {
             bool ok{true};
@@ -282,6 +281,17 @@ namespace lib::dicty
             return ok;
         }
 
+		bool set(str key, Object obj, bool overwrite = true)
+		{
+			return set({ std::make_pair(key, obj) }, overwrite);
+		}
+
+		bool set(str key, str value, bool overwrite = true)
+		{
+			return set({ std::make_pair(key, value) }, overwrite);
+		}
+
+	private:
         ValueDictionary m_values;
         ObjectDictionary m_objects;
     };

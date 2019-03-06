@@ -7,6 +7,7 @@ set(UNIT_TEST_LIST
     parpar
     str
     streams
+    translator
     vector
 )
 
