@@ -5,9 +5,9 @@
 
 #include "types.hpp"
 #include "str.hpp"
-#include "streamin.hpp"
 #include "dicty.hpp"
 #include "stack.hpp"
+#include "vector2d.hpp"
 
 namespace lib
 {
@@ -20,6 +20,7 @@ namespace lib
 		CloseArray,
 		ObjectSeparator,
 		KeyValueSeparator,
+		StringDelimiter,
 		Integer,
 		Float
 	};
@@ -33,8 +34,8 @@ namespace lib
 	class Scaner
 	{
 	public:
-		constexpr Scaner(SerializationStreamIn& ssi)
-			: ssi_{ssi.disableSeparator() } { }
+		inline Scaner(string_vector data)
+			: data_{ std::move(data) } { }
 
 		const vector<Token> scan()
 		{
@@ -45,6 +46,10 @@ namespace lib
 			return tokens_;
 		}
 	private:
+		str::char_type nextChar()
+		{
+
+		}
 		bool isInteger(const str& value) const
 		{
 			s32 temp;
@@ -62,6 +67,7 @@ namespace lib
 			str value;
 			TokenType token_type{ TokenType::Str };
 
+			bool exit{ false };
 			ssi_ >> value;
 
 			// Check for reserved chars.
@@ -101,8 +107,9 @@ namespace lib
 			return { value, token_type };
 		}
 
-		SerializationStreamIn& ssi_;
-		vector<Token> tokens_;
+		string_vector data_;
+		vector2d<u16> current_position_{ 0U, 0U };
+		vector<Token> tokens_{};
 	};
 	
 	// Parser	------------------------------------------------------------------------------------------------

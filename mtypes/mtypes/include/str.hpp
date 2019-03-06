@@ -13,14 +13,15 @@
 
 namespace lib
 {
-    using char_type = char;
-
     class MTYPES_EXPORT str
     {
-        using reference = char_type&;
+	public:
+		using char_type = char;
+		using reference = char_type&;
         using const_reference = const char_type&;
         using iterator = char_type*;
         using const_iterator = const char_type*;
+	private:
 #ifdef _MSC_VER
         #pragma warning(push)
         #pragma warning(disable:4251)

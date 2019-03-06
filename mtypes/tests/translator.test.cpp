@@ -10,7 +10,7 @@ TEST_CASE("Scaner", "[streams][SerializationStreamIn][translator]")
 {
 	SerializationStreamIn ssi(string_vector{
 		"{",
-		"id : 'This is a string'"
+		"id : ' This is a string'"
 		"}"
 		});
 
