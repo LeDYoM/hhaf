@@ -13,9 +13,9 @@ namespace lib
 
     namespace detail
     {
-        constexpr size_t _str_len(const char_type *const p_str) noexcept
+        constexpr size_t _str_len(const str::char_type *const p_str) noexcept
         {
-            const char_type *p_str_copy{ p_str };
+            const str::char_type *p_str_copy{ p_str };
             while (*p_str_copy) ++p_str_copy;
             return p_str_copy - p_str;
         }

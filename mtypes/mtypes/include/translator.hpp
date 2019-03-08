@@ -5,9 +5,9 @@
 
 #include "types.hpp"
 #include "str.hpp"
+#include "streamin.hpp"
 #include "dicty.hpp"
 #include "stack.hpp"
-#include "vector2d.hpp"
 
 namespace lib
 {
@@ -20,7 +20,6 @@ namespace lib
 		CloseArray,
 		ObjectSeparator,
 		KeyValueSeparator,
-		StringDelimiter,
 		Integer,
 		Float
 	};
@@ -34,8 +33,8 @@ namespace lib
 	class Scaner
 	{
 	public:
-		inline Scaner(string_vector data)
-			: data_{ std::move(data) } { }
+		constexpr Scaner(SerializationStreamIn& ssi)
+			: ssi_{ ssi.disableSeparator() } { }
 
 		const vector<Token> scan()
 		{
@@ -46,10 +45,6 @@ namespace lib
 			return tokens_;
 		}
 	private:
-		str::char_type nextChar()
-		{
-
-		}
 		bool isInteger(const str& value) const
 		{
 			s32 temp;
@@ -67,7 +62,6 @@ namespace lib
 			str value;
 			TokenType token_type{ TokenType::Str };
 
-			bool exit{ false };
 			ssi_ >> value;
 
 			// Check for reserved chars.
@@ -107,11 +101,10 @@ namespace lib
 			return { value, token_type };
 		}
 
-		string_vector data_;
-		vector2d<u16> current_position_{ 0U, 0U };
-		vector<Token> tokens_{};
+		SerializationStreamIn& ssi_;
+		vector<Token> tokens_;
 	};
-	
+
 	// Parser	------------------------------------------------------------------------------------------------
 
 	class InternalParserInterface
@@ -149,8 +142,8 @@ namespace lib
 	{
 	public:
 		Parser(vector<Token> tokens)
-			: InternalParserInterface{ current_index_, tokens, global_object_, global_state_stack_ }, 
-			global_tokens_{std::move(tokens)}
+			: InternalParserInterface{ current_index_, tokens, global_object_, global_state_stack_ },
+			global_tokens_{ std::move(tokens) }
 		{ }
 
 		void parseObject()

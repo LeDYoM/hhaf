@@ -284,13 +284,13 @@ namespace lib
     }
 
     template<size_type N>
-    constexpr bool operator==(const str& lhs, const char_type(&a)[N]) noexcept
+    constexpr bool operator==(const str& lhs, const str::char_type(&a)[N]) noexcept
     {
         if (lhs.size() != (N-1))
             return false;
 
         size_type counter{0};
-        for (const char_type c : lhs.m_data) {
+        for (const auto c : lhs.m_data) {
             if (c != a[counter]) return false;
             ++counter;
         }
@@ -299,7 +299,7 @@ namespace lib
 
 
     template<size_type N>
-    constexpr bool operator!=(const str& lhs, const char_type(&a)[N]) noexcept
+    constexpr bool operator!=(const str& lhs, const str::char_type(&a)[N]) noexcept
     {
         return !(operator==(lhs,a));
     }
