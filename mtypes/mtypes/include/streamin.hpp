@@ -77,6 +77,15 @@ namespace lib
             return separator_;
         }
 
+		inline SerializationStreamIn& getLine(str& line)
+		{
+			const auto current_separator{ separator() };
+			const bool old_new_line_as_separatr{ useNewLineAsSeparator() };
+			disableSeparator().setUseNewLineAsSeparator(true);
+			*this >> line;
+			return separator(current_separator).setUseNewLineAsSeparator(old_new_line_as_separatr);
+		}
+
     private:
         inline void remove_lwhitespaces()
         {

@@ -34,7 +34,7 @@ namespace lib
 	{
 	public:
 		constexpr Scaner(SerializationStreamIn& ssi)
-			: ssi_{ ssi.disableSeparator() } { }
+			: ssi_{ ssi.separator(' ') } { }
 
 		const vector<Token> scan()
 		{
@@ -63,6 +63,17 @@ namespace lib
 			TokenType token_type{ TokenType::Str };
 
 			ssi_ >> value;
+
+			if (value.starts_with("\""))
+			{
+				// Special case for strings in "string" form.
+				while (!value.ends_with("\""))
+				{
+					str extravalue;
+					ssi_ >> extravalue;
+					value += extravalue;
+				}
+			}
 
 			// Check for reserved chars.
 			if (value.size() == 1U)

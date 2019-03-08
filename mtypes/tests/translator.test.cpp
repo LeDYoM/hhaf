@@ -10,13 +10,13 @@ TEST_CASE("Scaner", "[streams][SerializationStreamIn][translator]")
 {
 	SerializationStreamIn ssi(string_vector{
 		"{",
-		"id : ' This is a string'"
+		"id : \"This is a string\"",
 		"}"
 		});
 
 	Scaner scanner(ssi);
 	auto tokens = scanner.scan();
 
-//	CHECK(tokens.size() == 5U);
+	CHECK(tokens.size() == 5U);
 
 }
