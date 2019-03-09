@@ -17,12 +17,21 @@ namespace lib
 
         SerializationStreamIn() = default;
         explicit SerializationStreamIn(str data) : data_{ std::move(data) } {}
-        explicit SerializationStreamIn(string_vector data)
+        explicit SerializationStreamIn(const string_vector& data)
         {
-            for (const str& line_data : data)
+			string_vector::const_iterator first = data.cbegin();
+			const string_vector::const_iterator last = data.cend();
+
+			if (first != last)
+			{
+				data_ = *first;
+				++first;
+			}
+
+            while (first != last)
             {
-                data_ += line_data;
-                data_ += "\n";
+				append(*first);
+				++first;
             }
         }
 

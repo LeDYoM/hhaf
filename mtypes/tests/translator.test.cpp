@@ -19,4 +19,18 @@ TEST_CASE("Scaner", "[streams][SerializationStreamIn][translator]")
 
 	CHECK(tokens.size() == 5U);
 
+	CHECK(tokens[0].value == "{");
+	CHECK(tokens[0].token_type == TokenType::OpenObject);
+
+	CHECK(tokens[1].value == "id");
+	CHECK(tokens[1].token_type == TokenType::Str);
+
+	CHECK(tokens[2].value == ":");
+	CHECK(tokens[2].token_type == TokenType::KeyValueSeparator);
+
+	CHECK(tokens[3].value == "\"This is a string\"");
+	CHECK(tokens[3].token_type == TokenType::Str);
+
+	CHECK(tokens[4].value == "}");
+	CHECK(tokens[4].token_type == TokenType::CloseObject);
 }
