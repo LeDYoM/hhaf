@@ -69,6 +69,8 @@ namespace lib
 				// Special case for strings in "string" form.
 				while (!value.ends_with("\""))
 				{
+					value += " ";
+
 					str extravalue;
 					ssi_ >> extravalue;
 					value += extravalue;

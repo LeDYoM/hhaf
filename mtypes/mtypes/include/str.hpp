@@ -169,7 +169,7 @@ namespace lib
             {
                 for (size_type index = 0U; index < size(); ++index)
                 {
-                    if (!std::isspace(static_cast<unsigned char>(m_data[index])))
+                    if (!std::isspace(static_cast<char_type>(m_data[index])))
                     {
                         *this = substr(index);
                         return;
