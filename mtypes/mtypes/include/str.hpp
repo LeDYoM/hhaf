@@ -161,7 +161,7 @@ namespace lib
             return append(source);
         }
 
-        constexpr size_type size() const noexcept{ return m_data.empty()?0:m_data.size()-1; }
+        constexpr size_type size() const noexcept { return m_data.empty()?0:m_data.size()-1; }
 
         inline void ltrim() 
         {
@@ -178,6 +178,13 @@ namespace lib
                 *this = "";
             }
         }
+
+		constexpr size_type find(const char_type ch) const noexcept
+		{
+			const auto it(m_data.cfind(ch));
+			return ((it == m_data.cend()) ?
+				npos : index_from_iterator(it));
+		}
 
         // trim from end (in place)
         inline void rtrim()

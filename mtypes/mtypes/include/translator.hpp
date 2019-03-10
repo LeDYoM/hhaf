@@ -48,7 +48,7 @@ namespace lib
 		bool isInteger(const str& value) const
 		{
 			s32 temp;
-			return value.convert(temp);
+			return value.convert(temp) && str(temp) == value;
 		}
 
 		bool isFloat(const str& value) const
@@ -63,19 +63,6 @@ namespace lib
 			TokenType token_type{ TokenType::Str };
 
 			ssi_ >> value;
-
-			if (value.starts_with("\""))
-			{
-				// Special case for strings in "string" form.
-				while (!value.ends_with("\""))
-				{
-					value += " ";
-
-					str extravalue;
-					ssi_ >> extravalue;
-					value += extravalue;
-				}
-			}
 
 			// Check for reserved chars.
 			if (value.size() == 1U)

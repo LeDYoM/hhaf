@@ -65,6 +65,17 @@ namespace lib
             return *this;
         }
 
+		constexpr SerializationStreamIn& extractRawDoubleQuotedStrings(const bool value) noexcept
+		{
+			extractDoubleQuotedRawStrings_ = value;
+			return *this;
+		}
+
+		constexpr bool extractRawDoubleQuotedStrings() noexcept
+		{
+			return extractDoubleQuotedRawStrings_;
+		}
+
 		constexpr SerializationStreamIn& setUseNewLineAsSeparator(const bool unlas) noexcept
 		{
 			useEndLineAsSeparator_ = unlas;
@@ -119,22 +130,38 @@ namespace lib
 				result.push_back('\n');
 			}
 
+			if (extractDoubleQuotedRawStrings_)
+			{
+				result.push_back('\"');
+			}
 			return result;
 		}
 
         inline str extract_to_separator_and_update_data()
         {
             remove_lwhitespaces();
+			size_type separator_index;
 
-            const auto separator_index(data_.find_first_of(separators()));
-            str result(data_.substr(0, separator_index));
-            advance_data(std::max(separator_index, separator_index + 1));
+			if (!data_.empty() && data_[0] == '\"' && extractDoubleQuotedRawStrings_)
+			{
+				advance_data(1U);
+				separator_index = data_.find('\"');
+			}
+			else
+			{
+				separator_index = data_.find_first_of(separators());
+			}
+
+			str result(data_.substr(0, separator_index));
+            advance_data(std::max(separator_index + 1U, separator_index));
+
             return result;
         }
 
         str data_;
 		bool correct_{ true };
 		bool useEndLineAsSeparator_{ true };
+		bool extractDoubleQuotedRawStrings_{ true };
         char separator_{ ',' };
 	};
 

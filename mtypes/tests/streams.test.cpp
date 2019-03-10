@@ -50,6 +50,7 @@ TEST_CASE("SerializationStreamIn", "[streams][SerializationStreamIn]")
 
         CHECK(a == 1U);
         CHECK(b == 2U);
+		CHECK(ssi.eof());
     }
 
     SECTION("Simple 2")
