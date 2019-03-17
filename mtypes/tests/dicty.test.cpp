@@ -5,15 +5,15 @@
 using namespace lib;
 using namespace lib::dicty;
 
+TEST_CASE("Dicty basic values", "[dicty][ValueDictionary]")
+{
+    Object::ValueDictionary bdictionary{ {"key1", "value1"} };
+    CHECK(bdictionary.data() == Object::ValueDictionary::content{ Object::ValueDictionary::element("key1", "value1") });
+    CHECK_FALSE(bdictionary.add("key1", "asd", false));
+}
+
 TEST_CASE("Dicty", "[dicty]")
 {
-    SECTION("basic values", "[dicty]")
-    {
-        Object::ValueDictionary bdictionary{ {"key1", "value1"} };
-        CHECK(bdictionary.data() == Object::ValueDictionary::content{ Object::ValueDictionary::element("key1", "value1") });
-        CHECK_FALSE(bdictionary.add("key1", "asd", false));
-    }
-
     SECTION("dicty create 1")
     {
         Object tester{ {"subkey","subValue"} };

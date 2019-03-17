@@ -3,6 +3,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/streamin.hpp>
 #include <mtypes/include/translator.hpp>
+#include <mtypes/include/dicty.hpp>
 
 using namespace lib;
 
@@ -187,7 +188,7 @@ TEST_CASE("Scaner numbers and letters", "[streams][SerializationStreamIn][transl
 	CHECK(tokens[16].token_type == TokenType::CloseObject);
 }
 
-TEST_CASE("Scaner numbers and letters with tabs and spaces", "[streams][SerializationStreamIn][translator]")
+TEST_CASE("Scaner numbers and letters with tabs and spaces", "[streams][SerializationStreamIn][translator][Scanner]")
 {
 	SerializationStreamIn ssi(string_vector{
 		"{",
@@ -253,4 +254,22 @@ TEST_CASE("Scaner numbers and letters with tabs and spaces", "[streams][Serializ
 
 	CHECK(tokens[16].value == "}");
 	CHECK(tokens[16].token_type == TokenType::CloseObject);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+TEST_CASE("Parser basic", "[streams][SerializationStreamIn][translator][Parser]")
+{
+	SerializationStreamIn ssi(string_vector{
+		"{",
+		"id : \"This is a string\"",
+		"}"
+		});
+
+	Parser parser(Scaner{ ssi }.scan());
+	parser.parseObject();
+	const dicty::Object& obj{ parser.innerObject() };
+
+	CHECK(parser.errors().empty());
+	CHECK(obj["id"] == "This is a string");
 }

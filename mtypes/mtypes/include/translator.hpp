@@ -110,22 +110,106 @@ namespace lib
 	class InternalParserInterface
 	{
 	public:
-		InternalParserInterface(size_type& index, const vector<Token>& tokens,
-			dicty::Object& obj, stack<uptr<InternalParserInterface>>& state_stack)
-			: index_{ index }, tokens_{ tokens }, object_{ obj }, state_stack_{ state_stack } {}
+		using TokenVector = vector<Token>;
+		using TokenVectorCIterator = vector<Token>::const_iterator;
+		using VectorOfErrors = vector<pair<TokenType, TokenType>>;
+
+		InternalParserInterface(TokenVectorCIterator begin, const TokenVectorCIterator end)
+			: tokens_begin_{ begin }, tokens_end_{ end } {}
 
 		template <typename T>
-		void push_state()
+		pair<dicty::Object,const VectorOfErrors> push_state()
 		{
-			state_stack_.push_back(muptr<T>(index_, tokens_, object_, state_stack_));
+			T p(tokens_begin_, tokens_end_);
+			InternalParserInterface& ref{ p };
+			ref.parse();
+			return { ref.innerObject(), errors() };
+		}
+
+		constexpr bool pendingTokens() const noexcept
+		{
+			return tokens_begin_ != tokens_end_;
+		}
+
+		constexpr const Token& currentToken() const
+		{
+			return *tokens_begin_;
+		}
+
+		constexpr void advanceTokenVector() noexcept
+		{
+			if (tokens_begin_ != tokens_end_)
+			{
+				++tokens_begin_;
+			}
+		}
+
+		constexpr void error(const TokenType expected, const TokenType found)
+		{
+			errors_.emplace_back(expected, found);
+		}
+
+		constexpr void expectType(const TokenType expectedCurrent)
+		{
+			const TokenType current(currentToken().token_type);
+			if (current != expectedCurrent)
+			{
+				error(expectedCurrent, current);
+			}
+		}
+
+		constexpr const str& getFromExpectedType(const TokenType expectedCurrent)
+		{
+			expectType(expectedCurrent);
+			return currentToken().value;
+		}
+
+		constexpr void expectTypeAndAdvance(const TokenType expectedCurrent)
+		{
+			const TokenType current(currentToken().token_type);
+			if (current != expectedCurrent)
+			{
+				error(expectedCurrent, current);
+			}
+			advanceTokenVector();
+		}
+
+		constexpr const str& getFromExpectedTypeAndAdvance(const TokenType expectedCurrent)
+		{
+			const str& v{ currentToken().value };
+			expectTypeAndAdvance(expectedCurrent);
+			return v;
+		}
+
+		constexpr bool currentTokenIsOfType(const TokenType expectedCurrent)
+		{
+			return currentToken().token_type == expectedCurrent;
+		}
+
+		constexpr bool currentTokenIsOfTypeAndAdvance(const TokenType expectedCurrent)
+		{
+			const bool valid{ currentToken().token_type == expectedCurrent };
+			advanceTokenVector();
+			return valid;
+		}
+
+		constexpr const dicty::Object &innerObject() const noexcept
+		{
+			return obj_;
+		}
+
+		constexpr const VectorOfErrors& errors() const noexcept
+		{
+			return errors_;
 		}
 
 		virtual void parse() = 0;
+
 	protected:
-		size_type& index_;
-		const vector<Token>& tokens_;
-		dicty::Object& object_;
-		stack<uptr<InternalParserInterface>>& state_stack_;
+		TokenVectorCIterator tokens_begin_;
+		const TokenVectorCIterator tokens_end_;
+		VectorOfErrors errors_{};
+		dicty::Object obj_{};
 	};
 
 	class ObjectParser : public InternalParserInterface
@@ -135,36 +219,52 @@ namespace lib
 
 		void parse() override
 		{
+			expectTypeAndAdvance(TokenType::OpenObject);
+
+			do
+			{
+				str property_name(getFromExpectedTypeAndAdvance(TokenType::Str));
+				expectTypeAndAdvance(TokenType::KeyValueSeparator);
+				if (currentTokenIsOfType(TokenType::Str))
+				{
+					obj_.set(property_name, currentToken().value);
+				}
+				else if (currentTokenIsOfType(TokenType::OpenObject))
+				{
+					auto[next_state, next_state_errors] = push_state<ObjectParser>();
+					obj_.set(property_name, next_state);
+					errors_ += next_state_errors;
+				}
+				else
+				{
+					// Error
+					error(TokenType::OpenObject, currentToken().token_type);
+				}
+			} while (currentTokenIsOfTypeAndAdvance(TokenType::ObjectSeparator));
+			expectTypeAndAdvance(TokenType::CloseObject);
 		}
 	};
 
-	class Parser : InternalParserInterface
+	class Parser : public InternalParserInterface
 	{
 	public:
 		Parser(vector<Token> tokens)
-			: InternalParserInterface{ current_index_, tokens, global_object_, global_state_stack_ },
+			: InternalParserInterface{ tokens.cbegin(), tokens.cend() },
 			global_tokens_{ std::move(tokens) }
 		{ }
+
+		void parse() override
+		{
+			parseObject();
+		}
 
 		void parseObject()
 		{
 			push_state<ObjectParser>();
-			while (!tokens_.empty())
-			{
-				state_stack_.back()->parse();
-			}
 		}
 
-		dicty::Object object() const
-		{
-			return object_;
-		}
 	private:
 		vector<Token> global_tokens_;
-		dicty::Object global_object_;
-		size_type current_index_{ 0U };
-		stack<uptr<InternalParserInterface>> global_state_stack_;
-		vector<u32> errors_;
 	};
 }
 
