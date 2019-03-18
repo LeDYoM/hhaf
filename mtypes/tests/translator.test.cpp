@@ -267,7 +267,7 @@ TEST_CASE("Parser basic", "[streams][SerializationStreamIn][translator][Parser]"
 		});
 
 	Parser parser(Scaner{ ssi }.scan());
-	parser.parseObject();
+	parser.parse();
 	const dicty::Object& obj{ parser.innerObject() };
 
 	CHECK(parser.errors().empty());

@@ -128,13 +128,16 @@ namespace lib::dicty
 
         constexpr bool operator==(const BasicDictionary &other) const noexcept 
 		{
-            if (m_data.size() == other.m_data.size()) {
-
-                for (size_type i = 0; i < m_data.size(); ++i) {
-                    if (m_data[i].first != other.m_data[i].first) {
+            if (m_data.size() == other.m_data.size()) 
+			{
+				for (size_type i = { 0U }; i < m_data.size(); ++i)
+				{
+                    if (m_data[i].first != other.m_data[i].first) 
+					{
                         return false;
                     }
-                    if (m_data[i].second != other.m_data[i].second) {
+                    else if (m_data[i].second != other.m_data[i].second) 
+					{
                         return false;
                     }
                 }
@@ -143,7 +146,8 @@ namespace lib::dicty
             return false;
         }
 
-        constexpr bool operator!=(const BasicDictionary &other) const noexcept {
+        constexpr bool operator!=(const BasicDictionary &other) const noexcept 
+		{
             return !(*this == other);
         }
 
@@ -164,13 +168,13 @@ namespace lib::dicty
             set(std::move(iListValues), false);
         }
 
-         inline Object(std::initializer_list<pair<str,Object>> iListObjects) 
+         inline Object(std::initializer_list<pair<str,Object>> iListObjects)
 		 {
             set(std::move(iListObjects), false);
          }
 
         inline Object(std::initializer_list<pair<str, Object>> iListObjects,
-                std::initializer_list<pair<str, str>> iListValues) 
+                std::initializer_list<pair<str, str>> iListValues)
 		{
             set(std::move(iListObjects), false);
             set(std::move(iListValues), false);

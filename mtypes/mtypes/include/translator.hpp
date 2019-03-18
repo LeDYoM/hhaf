@@ -231,8 +231,8 @@ namespace lib
 				}
 				else if (currentTokenIsOfType(TokenType::OpenObject))
 				{
-					auto[next_state, next_state_errors] = push_state<ObjectParser>();
-					obj_.set(property_name, next_state);
+					auto[result_obj, next_state_errors] = push_state<ObjectParser>();
+					obj_.set(property_name, result_obj);
 					errors_ += next_state_errors;
 				}
 				else
@@ -255,12 +255,9 @@ namespace lib
 
 		void parse() override
 		{
-			parseObject();
-		}
-
-		void parseObject()
-		{
-			push_state<ObjectParser>();
+			auto[result_obj, next_state_errors] = push_state<ObjectParser>();
+			obj_ = result_obj;
+			errors_ += next_state_errors;
 		}
 
 	private:
