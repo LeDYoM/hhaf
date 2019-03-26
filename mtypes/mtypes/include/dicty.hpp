@@ -117,14 +117,19 @@ namespace lib::dicty
 
         constexpr pair<bool,const_iterator> findChecked(const str&key) const noexcept
         {
-            auto iterator(find(key));
-            return {iterator != m_data.cend(), iterator};
+            const auto it(find(key));
+            return {it != m_data.cend(), it};
         }
 
         constexpr size_type size() const noexcept 
 		{
             return m_data.size();
         }
+
+		constexpr bool empty() const noexcept
+		{
+			return m_data.empty();
+		}
 
         constexpr bool operator==(const BasicDictionary &other) const noexcept 
 		{
@@ -228,15 +233,96 @@ namespace lib::dicty
                 return !(*this==obj);
             }
 
+			constexpr bool operator==(const Value &obj) const noexcept
+			{
+				if (isObject() == obj.isObject() && isValue() == obj.isValue())
+				{
+					if (isObject())
+					{
+						return getObject() == obj.getObject();
+					}
+					else if (isValue())
+					{
+						return getValue() == obj.getValue();
+					}
+
+					// Both are nullptr;
+					return true;
+				}
+				return false;
+			}
+
+			constexpr bool operator!=(const Value &obj) const noexcept
+			{
+				return !(*this == obj);
+			}
+
             Value operator[](const str&key) const
             {
-				return ((isValue()) ? Value{} : (*m_object)[key]);
+				// Using indexing operator in a value returns empty value.
+				// If the key exists, forward the key to it.
+				return (isObject() ? (*m_object)[key] : Value{});
             }
+
+			const Object& getObject() const noexcept
+			{
+				return (*m_object);
+			}
+
+			const str& getValue() const noexcept
+			{
+				return (*m_value);
+			}
+
+			/// Get a @Value in the array form. That is the
+			/// method is equivaled to obj(key){index].
+			Value operator()(const str& key, const size_t index) const
+			{
+				return (isObject() ? getObject()(key, index) : Value{});
+			}
+
+			/// Get a @Vector of @Value in the array form. That is the
+			/// @vector will contain values starting from 
+			vector<Value> operator()(const str& key) const
+			{
+				return (isObject() ? getObject()(key) : vector<Value>{});
+			}
 
         private:
             const Object *m_object{nullptr};
             const str *m_value{nullptr};
         };
+
+
+		constexpr size_type size_objects() const noexcept
+		{
+			return m_objects.size();
+		}
+
+		constexpr size_type size_values() const noexcept
+		{
+			return m_values.size();
+		}
+
+		constexpr size_type size() const noexcept
+		{
+			return size_objects() + size_values();
+		}
+
+		constexpr bool empty_objects() const noexcept
+		{
+			return m_objects.empty();
+		}
+
+		constexpr bool empty_values() const noexcept
+		{
+			return m_values.empty();
+		}
+
+		constexpr size_type empty() const noexcept
+		{
+			return empty_objects() && empty_values();
+		}
 
         Value getObject(const str&key) const
 		{
@@ -254,6 +340,10 @@ namespace lib::dicty
                 Value());
         }
 
+		/// Get a @Value pointing to an element with the specified key.
+		/// @param[in] key Key str to search for.
+		/// @return Empty invalid @Value if not found or a @Value
+		/// pointing to the data if found.
         Value operator[](const str&key) const
         {
             // Note: Priority to str
@@ -261,33 +351,38 @@ namespace lib::dicty
 			return ((val.isValid()) ? val : getObject(key));
         }
 
-        template <typename... Args>
-        Value getObject(const str&key, Args&&... args) 
+		/// Get a @Value in the array form. That is the
+		/// method is equivaled to obj(key){index].
+		Value operator()(const str& key, const size_t index) const
 		{
-            Value v{ std::move(getObject(key)) };
-            if constexpr (sizeof...(args) > 0) 
-			{
-                return (v.isValid()) ?
-                    getObject(std::forward<Args>(args)...) :
-                    v;
-            }
-            return v;
-        }
-
-		template <typename... Args>
-		Value getObject(const str&key, Args&&... args) const
-		{
-			Value v{ std::move(getObject(key)) };
-			if constexpr (sizeof...(args) > 0)
-			{
-				return (v.isValid()) ?
-					getObject(std::forward<Args>(args)...) :
-					v;
-			}
-			return v;
+			return (*this)[str(key) + "_" + str(index)];
 		}
 
-        bool set(std::initializer_list<pair<str, str>> iListValues, bool overwrite = true)
+		/// Get a @Vector of @Value in the array form. That is the
+		/// @vector will contain values starting from 
+		vector<Value> operator()(const str& key) const
+		{
+			size_t index{ 0U };
+			bool stay{ true };
+			vector<Value> result;
+
+			do
+			{
+				Value temp{ (*this)(key, index++) };
+				if (temp.isValid())
+				{
+					result.emplace_back(std::move(temp));
+				}
+				else
+				{
+					stay = false;
+				}
+			} while (stay);
+
+			return result;
+		}
+
+		bool set(std::initializer_list<pair<str, str>> iListValues, bool overwrite = true)
         {
             bool ok{true};
             for (auto&& element : iListValues) 

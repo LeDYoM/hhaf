@@ -349,11 +349,13 @@ namespace lib
     };
 
 
-    constexpr bool operator==(const str& lhs, const str&rhs) noexcept {
+    constexpr bool operator==(const str& lhs, const str&rhs) noexcept 
+	{
         return lhs.m_data == rhs.m_data;
     }
 
-    constexpr bool operator!=(const str& lhs, const str&rhs) noexcept {
+    constexpr bool operator!=(const str& lhs, const str&rhs) noexcept 
+	{
         return lhs.m_data != rhs.m_data;
     }
 

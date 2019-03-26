@@ -260,7 +260,8 @@ TEST_CASE("Scaner numbers and letters with tabs and spaces", "[streams][Serializ
 
 TEST_CASE("Parser basic", "[streams][SerializationStreamIn][translator][Parser]")
 {
-	SerializationStreamIn ssi(string_vector{
+	SerializationStreamIn ssi(string_vector
+		{
 		"{",
 		"id : \"This is a string\"",
 		"}"
