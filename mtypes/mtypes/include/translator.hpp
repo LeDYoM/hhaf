@@ -235,6 +235,12 @@ namespace lib
 					obj_.set(property_name, result_obj);
 					errors_ += next_state_errors;
 				}
+				else if (currentTokenIsOfType(TokenType::OpenArray))
+				{
+					auto[result_obj, next_state_errors] = push_state<ObjectParser>();
+					obj_.set(property_name, result_obj);
+					errors_ += next_state_errors;
+				}
 				else
 				{
 					// Error
