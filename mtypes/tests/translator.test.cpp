@@ -275,12 +275,12 @@ TEST_CASE("Parser basic", "[streams][SerializationStreamIn][translator][Parser]"
 	CHECK(obj["id"] == "This is a string");
 }
 
-TEST_CASE("Parser: Object with empty object", "[streams][SerializationStreamIn][translator][Parser]")
+TEST_CASE("Parser: Object inside object", "[streams][SerializationStreamIn][translator][Parser]")
 {
 	SerializationStreamIn ssi(string_vector
 		{
 		"{",
-		"id _object: {",
+		"id_object : {",
 		"		test_string : \"test_value\"",
 		"	}",
 		"}"
@@ -291,5 +291,11 @@ TEST_CASE("Parser: Object with empty object", "[streams][SerializationStreamIn][
 	const dicty::Object& obj{ parser.innerObject() };
 
 	CHECK(parser.errors().empty());
+	CHECK(obj.size_objects() == 1U);
+	CHECK(obj.empty_values());
+	CHECK(obj["id_object"].isObject());
+	CHECK(obj["id_object"].getObject().empty_objects());
+	CHECK(obj["id_object"].getObject().size_values() == 1U);
+	CHECK(obj["id_object"]["test_string"].isValue());
 	CHECK(obj["id_object"]["test_string"] == "test_value");
 }
