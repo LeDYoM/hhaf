@@ -135,7 +135,7 @@ namespace lib
 			: tokens_begin_{ begin }, tokens_end_{ end } {}
 
 		template <typename T>
-		pair<dicty::Object,const VectorOfErrors> push_state()
+		pair<dicty::Object, VectorOfErrors> push_state()
 		{
 			T p(tokens_begin_, tokens_end_);
 			InternalParserInterface& ref{ p };

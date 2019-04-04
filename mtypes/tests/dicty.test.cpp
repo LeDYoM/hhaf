@@ -270,15 +270,25 @@ TEST_CASE("dicty copy", "[dicty]")
 
 		CHECK_FALSE(obj2.set("other_invalid_key", obj["ínvalid_key"]));
 		CHECK_FALSE(obj2["other_invalid_key"].isValid());
+
+		// Ensure that the object is copied, not just linked.
+		obj2.set("other_key1", "other_value");
+		CHECK(obj["key1"]["subkey1"] == "subvalue1");
+		CHECK(obj2["other_key1"] == "other_value");
+
 	}
 
-/*
-	CHECK(obj3["key1"]["subkey1"] == "subvalue1");
-	CHECK(obj3["key2"]["subkey2"] == "subvalue2");
-	CHECK(obj3["key3"]["subkey1"]["subsubkey1"] == "subsubvalue");
-	CHECK_FALSE(obj3["key4"]["subkey2"] == "subvalue2");
-	CHECK(obj3["key4"] == "value4");
-	CHECK_FALSE(obj3["adf"].isValid());
-	CHECK_FALSE(obj3["adf"] == "");
-	*/
+	SECTION("Copy objects")
+	{
+		Object obj2;
+
+		CHECK(obj2.set("other_key1", obj["key1"]));
+		CHECK(obj2["other_key1"]["subkey1"] == "subvalue1");
+
+		CHECK(obj2.set("other_key2", obj["key2"]));
+		CHECK(obj2["other_key2"]["subkey2"] == "subvalue2");
+
+		CHECK(obj2.set("other_key3", obj["key3"]));
+		CHECK(obj2["other_key3"]["subkey1"]["subsubkey1"] == "subsubvalue");
+	}
 }
