@@ -217,6 +217,68 @@ TEST_CASE("Dicty: Read array2", "[dicty][vector]")
 	CHECK(obj["key3"]["subkey1"]("subsubkey").size() == 1U);
 	CHECK(obj["key3"]["subkey1"]("subsubkey", 0U) == "subsubvalue");
 	CHECK(obj["key3"]["subkey1"]["subsubkey_0"] == "subsubvalue");
+	CHECK(obj["key3"]["subkey1"]["subsubkey_0"].isValid());
 	CHECK_FALSE(obj["key3"]["subkey1"]["subsubkey_1"].isValid());
 	CHECK_FALSE(obj["key3"]["subkey1"]["subsubkey"].isValid());
+}
+
+TEST_CASE("dicty copy", "[dicty]")
+{
+	// Initialize with initializer list of objects and initializer list of
+	// properties.
+	Object obj
+	{
+		{
+			{ "key1",
+				{
+					{ "subkey1", "subvalue1" }
+				}
+			},
+			{ "key2",
+				{
+					{ "subkey2", "subvalue2" }
+				}
+			},
+			{ "key3",
+				Object{ {"subkey1",
+					Object {
+						{ "subsubkey1", "subsubvalue" }
+					}
+				} }
+			}
+		},
+		{
+			{"key4","value4"}
+		}
+	};
+
+	SECTION("Copy values")
+	{
+		Object obj2;
+
+		CHECK(obj2.set("other_key1", obj["key1"]["subkey1"]));
+		CHECK(obj2["other_key1"] == "subvalue1");
+
+		CHECK(obj2.set("other_key2", obj["key2"]["subkey2"]));
+		CHECK(obj2["other_key2"] == "subvalue2");
+
+		CHECK(obj2.set("other_key3", obj["key3"]["subkey1"]["subsubkey1"]));
+		CHECK(obj2["other_key3"] == "subsubvalue");
+
+		CHECK(obj2.set("other_key4", obj["key4"]));
+		CHECK(obj2["other_key4"] == "value4");
+
+		CHECK_FALSE(obj2.set("other_invalid_key", obj["ínvalid_key"]));
+		CHECK_FALSE(obj2["other_invalid_key"].isValid());
+	}
+
+/*
+	CHECK(obj3["key1"]["subkey1"] == "subvalue1");
+	CHECK(obj3["key2"]["subkey2"] == "subvalue2");
+	CHECK(obj3["key3"]["subkey1"]["subsubkey1"] == "subsubvalue");
+	CHECK_FALSE(obj3["key4"]["subkey2"] == "subvalue2");
+	CHECK(obj3["key4"] == "value4");
+	CHECK_FALSE(obj3["adf"].isValid());
+	CHECK_FALSE(obj3["adf"] == "");
+	*/
 }

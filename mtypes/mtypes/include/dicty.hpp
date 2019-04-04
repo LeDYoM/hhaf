@@ -395,11 +395,33 @@ namespace lib::dicty
         bool set(std::initializer_list<pair<str,Object>> iListObject, bool overwrite = true)
         {
             bool ok{true};
-            for (auto&& element : iListObject) {
+            for (auto&& element : iListObject)
+			{
                 ok &= m_objects.add(element.first, element.second, overwrite);
             }
             return ok;
         }
+
+		bool set(std::initializer_list<pair<str, Value>> iListObject, bool overwrite = true)
+		{
+			bool ok{ true };
+			for (auto&& element : iListObject)
+			{
+				if (element.second.isObject())
+				{
+					ok &= set(element.first, element.second.getObject(), overwrite);
+				}
+				else if (element.second.isValue())
+				{
+					ok &= set(element.first, element.second.getValue(), overwrite);
+				}
+				else
+				{
+					ok = false;
+				}
+			}
+			return ok;
+		}
 
 		bool set(str key, Object obj, bool overwrite = true)
 		{
@@ -407,6 +429,11 @@ namespace lib::dicty
 		}
 
 		bool set(str key, str value, bool overwrite = true)
+		{
+			return set({ std::make_pair(key, value) }, overwrite);
+		}
+
+		bool set(str key, Value value, bool overwrite = true)
 		{
 			return set({ std::make_pair(key, value) }, overwrite);
 		}
