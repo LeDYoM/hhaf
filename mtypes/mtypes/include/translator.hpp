@@ -3,14 +3,25 @@
 #ifndef LIB_MTYPES_TRANSLATOR_INCLUDE_HPP
 #define LIB_MTYPES_TRANSLATOR_INCLUDE_HPP
 
+//#define LOG_MODE 1
+
 #include "types.hpp"
 #include "str.hpp"
 #include "streamin.hpp"
 #include "dicty.hpp"
 #include "stack.hpp"
+#ifdef LOG_MODE
+	#include <iostream>
+#endif
 
 namespace lib
 {
+#ifdef LOG_MODE
+	#define LOG(x)	std::cout << x << std::endl;
+#else
+	#define LOG(x)
+#endif
+
 	enum class TokenType
 	{
 		Str,
@@ -40,7 +51,13 @@ namespace lib
 		{
 			while (!ssi_.eof() && !ssi_.hasError())
 			{
-				tokens_.push_back(nextToken());
+#ifdef LOG_MODE
+				Token t{ nextToken() };
+				LOG("Token found: " << int(t.token_type) << "\t:" << t.value.c_str());
+				tokens_.emplace_back(std::move(t));
+#else
+				tokens_.emplace_back(nextToken());
+#endif
 			}
 			return tokens_;
 		}
@@ -123,6 +140,7 @@ namespace lib
 			T p(tokens_begin_, tokens_end_);
 			InternalParserInterface& ref{ p };
 			ref.parse();
+			this->tokens_begin_ = ref.tokens_begin_;
 			return { ref.innerObject(), errors() };
 		}
 
@@ -142,6 +160,13 @@ namespace lib
 			{
 				++tokens_begin_;
 			}
+		}
+
+		inline Token currentTokenAndAdvance()
+		{
+			const auto t{ currentToken() };
+			advanceTokenVector();
+			return t;
 		}
 
 		constexpr void error(const TokenType expected, const TokenType found)
@@ -164,17 +189,16 @@ namespace lib
 			return currentToken().value;
 		}
 
-		constexpr void expectTypeAndAdvance(const TokenType expectedCurrent)
+		inline void expectTypeAndAdvance(const TokenType expectedCurrent)
 		{
-			const TokenType current(currentToken().token_type);
+			const TokenType current(currentTokenAndAdvance().token_type);
 			if (current != expectedCurrent)
 			{
 				error(expectedCurrent, current);
 			}
-			advanceTokenVector();
 		}
 
-		constexpr const str& getFromExpectedTypeAndAdvance(const TokenType expectedCurrent)
+		inline const str& getFromExpectedTypeAndAdvance(const TokenType expectedCurrent)
 		{
 			const str& v{ currentToken().value };
 			expectTypeAndAdvance(expectedCurrent);
@@ -186,10 +210,21 @@ namespace lib
 			return currentToken().token_type == expectedCurrent;
 		}
 
-		constexpr bool currentTokenIsOfTypeAndAdvance(const TokenType expectedCurrent)
+		constexpr bool currentTokenIsOfTypeAndAdvanceIfItIs(const TokenType expectedCurrent)
 		{
-			const bool valid{ currentToken().token_type == expectedCurrent };
-			advanceTokenVector();
+			const bool value{ currentToken().token_type == expectedCurrent };
+
+			if (value)
+			{
+				advanceTokenVector();
+			}
+
+			return value;
+		}
+
+		inline bool currentTokenIsOfTypeAndAdvance(const TokenType expectedCurrent)
+		{
+			const bool valid{ currentTokenAndAdvance().token_type == expectedCurrent };
 			return valid;
 		}
 
@@ -225,9 +260,9 @@ namespace lib
 			{
 				str property_name(getFromExpectedTypeAndAdvance(TokenType::Str));
 				expectTypeAndAdvance(TokenType::KeyValueSeparator);
-				if (currentTokenIsOfType(TokenType::Str))
+				if (currentTokenIsOfType(TokenType::Str) || currentTokenIsOfType(TokenType::Integer) || currentTokenIsOfType(TokenType::Float))
 				{
-					obj_.set(property_name, currentToken().value);
+					obj_.set(property_name, currentTokenAndAdvance().value);
 				}
 				else if (currentTokenIsOfType(TokenType::OpenObject))
 				{
@@ -246,7 +281,7 @@ namespace lib
 					// Error
 					error(TokenType::OpenObject, currentToken().token_type);
 				}
-			} while (currentTokenIsOfTypeAndAdvance(TokenType::ObjectSeparator));
+			} while (currentTokenIsOfTypeAndAdvanceIfItIs(TokenType::ObjectSeparator));
 			expectTypeAndAdvance(TokenType::CloseObject);
 		}
 	};
