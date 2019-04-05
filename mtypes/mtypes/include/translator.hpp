@@ -141,7 +141,7 @@ namespace lib
 			InternalParserInterface& ref{ p };
 			ref.parse();
 			this->tokens_begin_ = ref.tokens_begin_;
-			return { ref.innerObject(), errors() };
+			return { ref.innerObject(), ref.errors() };
 		}
 
 		constexpr bool pendingTokens() const noexcept
@@ -247,14 +247,22 @@ namespace lib
 		dicty::Object obj_{};
 	};
 
-	class ObjectParser : public InternalParserInterface
+	template <bool ParseObject>
+	class ObjectParserBase : public InternalParserInterface
 	{
 	public:
 		using InternalParserInterface::InternalParserInterface;
 
 		void parse() override
 		{
-			expectTypeAndAdvance(TokenType::OpenObject);
+			if constexpr (ParseObject)
+			{
+				expectTypeAndAdvance(TokenType::OpenObject);
+			}
+			else
+			{
+				expectTypeAndAdvance(TokenType::OpenArray);
+			}
 
 			do
 			{
@@ -282,9 +290,19 @@ namespace lib
 					error(TokenType::OpenObject, currentToken().token_type);
 				}
 			} while (currentTokenIsOfTypeAndAdvanceIfItIs(TokenType::ObjectSeparator));
-			expectTypeAndAdvance(TokenType::CloseObject);
+
+			if constexpr (ParseObject)
+			{
+				expectTypeAndAdvance(TokenType::CloseObject);
+			}
+			else
+			{
+				expectTypeAndAdvance(TokenType::CloseArray);
+			}
 		}
 	};
+
+	using ObjectParser = ObjectParserBase<true>;
 
 	class Parser : public InternalParserInterface
 	{
