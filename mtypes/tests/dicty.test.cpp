@@ -157,21 +157,18 @@ TEST_CASE("dicty create 4","[dicty]")
 TEST_CASE("Dicty: Read array1", "[dicty][vector]")
 {
 	Object obj{
-		{"key_0", "value1"},
-		{"key_1", "value2"}
+		{"__0", "value1"},
+		{"__1", "value2"}
 	};
 
-	CHECK(obj("key").size() == 2U);
-	CHECK(obj("key", 0U) == "value1");
-	CHECK(obj("key", 1U) == "value2");
+	CHECK(obj[0U] == "value1");
+	CHECK(obj[1U] == "value2");
 
-	CHECK(obj("key")[0U] == "value1");
-	CHECK(obj("key")[1U] == "value2");
-
-	CHECK(obj["key_0"] == "value1");
-	CHECK(obj["key_1"] == "value2");
-	CHECK_FALSE(obj["key_2"].isValid());
+	CHECK(obj["__0"] == "value1");
+	CHECK(obj["__1"] == "value2");
+	CHECK_FALSE(obj["__2"].isValid());
 }
+
 
 TEST_CASE("Dicty: Read array2", "[dicty][vector]")
 {
@@ -182,8 +179,8 @@ TEST_CASE("Dicty: Read array2", "[dicty][vector]")
 		{
 			{ "key1",
 				{
-					{ "subkey_0", "subvalue0" },
-					{ "subkey_1", "subvalue1" }
+					{ "__0", "subvalue0" },
+					{ "__1", "subvalue1" }
 				}
 			},
 			{ "key2",
@@ -194,7 +191,7 @@ TEST_CASE("Dicty: Read array2", "[dicty][vector]")
 			{ "key3",
 				Object{ { "subkey1",
 					Object{
-						{ "subsubkey_0", "subsubvalue" }
+						{ "__0", "subsubvalue" }
 					}
 				}
 			}
@@ -205,6 +202,13 @@ TEST_CASE("Dicty: Read array2", "[dicty][vector]")
 		}
 	};
 
+	CHECK(obj["key1"][0U] == "subvalue0");
+	CHECK(obj["key1"][1U] == "subvalue1");
+	CHECK(obj["key1"]["__0"] == "subvalue0");
+	CHECK(obj["key1"]["__1"] == "subvalue1");
+
+
+	/*
 	CHECK(obj("key").size() == 0U);
 	CHECK(obj["key1"]("subkey").size() == 2U);
 	CHECK(obj["key1"]("subkey", 0U) == "subvalue0");
@@ -220,7 +224,9 @@ TEST_CASE("Dicty: Read array2", "[dicty][vector]")
 	CHECK(obj["key3"]["subkey1"]["subsubkey_0"].isValid());
 	CHECK_FALSE(obj["key3"]["subkey1"]["subsubkey_1"].isValid());
 	CHECK_FALSE(obj["key3"]["subkey1"]["subsubkey"].isValid());
+	*/
 }
+
 
 TEST_CASE("dicty copy", "[dicty]")
 {

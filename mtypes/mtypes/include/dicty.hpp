@@ -264,6 +264,13 @@ namespace lib::dicty
 				return (isObject() ? (*m_object)[key] : Value{});
             }
 
+			/// Get a @Value in the array form. That is the
+			/// method is equivaled to obj(key){index].
+			Value operator[](const size_t index) const
+			{
+				return (isObject() ? getObject()[index] : Value{});
+			}
+
 			const Object& getObject() const noexcept
 			{
 				return (*m_object);
@@ -272,20 +279,6 @@ namespace lib::dicty
 			const str& getValue() const noexcept
 			{
 				return (*m_value);
-			}
-
-			/// Get a @Value in the array form. That is the
-			/// method is equivaled to obj(key){index].
-			Value operator()(const str& key, const size_t index) const
-			{
-				return (isObject() ? getObject()(key, index) : Value{});
-			}
-
-			/// Get a @Vector of @Value in the array form. That is the
-			/// @vector will contain values starting from 
-			vector<Value> operator()(const str& key) const
-			{
-				return (isObject() ? getObject()(key) : vector<Value>{});
 			}
 
         private:
@@ -351,35 +344,10 @@ namespace lib::dicty
 			return ((val.isValid()) ? val : getObject(key));
         }
 
-		/// Get a @Value in the array form. That is the
-		/// method is equivaled to obj(key){index].
-		Value operator()(const str& key, const size_t index) const
+		/// Get a @Value in the array form.
+		Value operator[](const size_t index) const
 		{
-			return (*this)[str(key) + "_" + str(index)];
-		}
-
-		/// Get a @Vector of @Value in the array form. That is the
-		/// @vector will contain values starting from 
-		vector<Value> operator()(const str& key) const
-		{
-			size_t index{ 0U };
-			bool stay{ true };
-			vector<Value> result;
-
-			do
-			{
-				Value temp{ (*this)(key, index++) };
-				if (temp.isValid())
-				{
-					result.emplace_back(std::move(temp));
-				}
-				else
-				{
-					stay = false;
-				}
-			} while (stay);
-
-			return result;
+			return (*this)["__" + str(index)];
 		}
 
 		bool set(std::initializer_list<pair<str, str>> iListValues, bool overwrite = true)
