@@ -157,16 +157,17 @@ TEST_CASE("dicty create 4","[dicty]")
 TEST_CASE("Dicty: Read array1", "[dicty][vector]")
 {
 	Object obj{
-		{"__0", "value1"},
-		{"__1", "value2"}
+		{str(Object::arraySeparator) + "0", "value1"},
+		{str(Object::arraySeparator) + "1", "value2"}
 	};
 
 	CHECK(obj[0U] == "value1");
 	CHECK(obj[1U] == "value2");
 
-	CHECK(obj["__0"] == "value1");
-	CHECK(obj["__1"] == "value2");
-	CHECK_FALSE(obj["__2"].isValid());
+	CHECK(obj[str(Object::arraySeparator) + "0"] == "value1");
+	CHECK(obj[str(Object::arraySeparator) + "1"] == "value2");
+	CHECK_FALSE(obj[str(Object::arraySeparator) + "2"].isValid());
+	CHECK_FALSE(obj[2U].isValid());
 }
 
 
@@ -179,8 +180,8 @@ TEST_CASE("Dicty: Read array2", "[dicty][vector]")
 		{
 			{ "key1",
 				{
-					{ "__0", "subvalue0" },
-					{ "__1", "subvalue1" }
+					{ str(Object::arraySeparator) + "0", "subvalue0" },
+					{ str(Object::arraySeparator) + "1", "subvalue1" }
 				}
 			},
 			{ "key2",
@@ -191,7 +192,7 @@ TEST_CASE("Dicty: Read array2", "[dicty][vector]")
 			{ "key3",
 				Object{ { "subkey1",
 					Object{
-						{ "__0", "subsubvalue" }
+						{ str(Object::arraySeparator) + "0", "subsubvalue" }
 					}
 				}
 			}
@@ -204,29 +205,21 @@ TEST_CASE("Dicty: Read array2", "[dicty][vector]")
 
 	CHECK(obj["key1"][0U] == "subvalue0");
 	CHECK(obj["key1"][1U] == "subvalue1");
-	CHECK(obj["key1"]["__0"] == "subvalue0");
-	CHECK(obj["key1"]["__1"] == "subvalue1");
+	CHECK_FALSE(obj["key1"][2U].isValid());
 
+	// The construction [str(Object::arraySeparator) + "Number"] is not really
+	// meant to be used, but here it is used to ensure arrays might also be
+	// read this way.
+	CHECK(obj["key1"][str(Object::arraySeparator) + "0"] == "subvalue0");
+	CHECK(obj["key1"][str(Object::arraySeparator) + "1"] == "subvalue1");
 
-	/*
-	CHECK(obj("key").size() == 0U);
-	CHECK(obj["key1"]("subkey").size() == 2U);
-	CHECK(obj["key1"]("subkey", 0U) == "subvalue0");
-	CHECK(obj["key1"]("subkey", 1U) == "subvalue1");
-	CHECK(obj["key1"]["subkey_0"] == "subvalue0");
-	CHECK(obj["key1"]["subkey_1"] == "subvalue1");
-	CHECK_FALSE(obj["key1"]["subkey_2"].isValid());
-	CHECK_FALSE(obj["key1"]["subkey_"].isValid());
+	CHECK_FALSE(obj["key2"][0U].isValid());
 
-	CHECK(obj["key3"]["subkey1"]("subsubkey").size() == 1U);
-	CHECK(obj["key3"]["subkey1"]("subsubkey", 0U) == "subsubvalue");
-	CHECK(obj["key3"]["subkey1"]["subsubkey_0"] == "subsubvalue");
-	CHECK(obj["key3"]["subkey1"]["subsubkey_0"].isValid());
-	CHECK_FALSE(obj["key3"]["subkey1"]["subsubkey_1"].isValid());
-	CHECK_FALSE(obj["key3"]["subkey1"]["subsubkey"].isValid());
-	*/
+	CHECK(obj["key3"]["subkey1"][0U] == "subsubvalue");
+	CHECK(obj["key3"]["subkey1"][str(Object::arraySeparator) + "0"] == "subsubvalue");
+
+	CHECK_FALSE(obj["key4"][0U].isValid());
 }
-
 
 TEST_CASE("dicty copy", "[dicty]")
 {

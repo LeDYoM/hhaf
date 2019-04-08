@@ -344,10 +344,12 @@ namespace lib::dicty
 			return ((val.isValid()) ? val : getObject(key));
         }
 
+		static constexpr const char*const arraySeparator = "::";
+
 		/// Get a @Value in the array form.
 		Value operator[](const size_t index) const
 		{
-			return (*this)["__" + str(index)];
+			return (*this)[str(arraySeparator) + str(index)];
 		}
 
 		bool set(std::initializer_list<pair<str, str>> iListValues, bool overwrite = true)
