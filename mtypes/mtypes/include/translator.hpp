@@ -288,6 +288,8 @@ namespace lib
 		dicty::Object obj_{};
 	};
 
+	class ListParser;
+
 	class ObjectParser : public InternalParserInterface
 	{
 	public:
@@ -300,7 +302,7 @@ namespace lib
 
 		bool storeIfPendingList(const str& property_name)
 		{
-			return storeIfPendingThing<ObjectParser, TokenType::OpenObject>(property_name);
+			return storeIfPendingThing<ListParser, TokenType::OpenArray>(property_name);
 		}
 
 		bool storePendingValueAndAdvance(const str& property_name)
@@ -334,6 +336,32 @@ namespace lib
 			} while (currentTokenIsOfTypeAndAdvanceIfItIs(TokenType::ObjectSeparator));
 
 			expectTypeAndAdvance(TokenType::CloseObject);
+		}
+	};
+
+	class ListParser : public ObjectParser
+	{
+	public:
+		using ObjectParser::ObjectParser;
+
+		void parse() override
+		{
+			expectTypeAndAdvance(TokenType::OpenArray);
+
+			size_t counter{ 0U };
+
+			do
+			{
+				str property_name{ str(dicty::Object::arraySeparator) + str(counter) };
+				if (!storePendingValueAndAdvance(property_name))
+				{
+					// Error
+					error(TokenType::OpenObject, currentToken().token_type);
+				}
+				++counter;
+			} while (currentTokenIsOfTypeAndAdvanceIfItIs(TokenType::ObjectSeparator));
+
+			expectTypeAndAdvance(TokenType::CloseArray);
 		}
 	};
 
