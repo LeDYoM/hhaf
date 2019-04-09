@@ -347,6 +347,10 @@ namespace lib::dicty
 		static constexpr const char*const arraySeparator = "::";
 
 		/// Get a @Value in the array form.
+		/// @param index The index of the element you want to read.
+		/// @return @b Value Representing the element.
+		/// Note: You might need to check with @Value::isValid
+		/// if the value is valid.
 		Value operator[](const size_t index) const
 		{
 			return (*this)[str(arraySeparator) + str(index)];

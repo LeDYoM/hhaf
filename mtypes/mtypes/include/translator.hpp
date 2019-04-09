@@ -144,6 +144,47 @@ namespace lib
 			return { ref.innerObject(), ref.errors() };
 		}
 
+		template <typename T>
+		void pushAndStore(const str& property_name)
+		{
+			auto[result_obj, next_state_errors] = push_state<T>();
+			obj_.set(property_name, result_obj);
+			errors_ += next_state_errors;
+		}
+
+		inline str readPropertyNameAndAdvance()
+		{
+			str property_name(getFromExpectedTypeAndAdvance(TokenType::Str));
+			expectTypeAndAdvance(TokenType::KeyValueSeparator);
+			return property_name;
+		}
+
+		bool pendingProperty() const
+		{
+			return currentTokenIsOfType(TokenType::Str) || currentTokenIsOfType(TokenType::Integer) || currentTokenIsOfType(TokenType::Float);
+		}
+
+		bool storeIfPendingProperty(const str& property_name)
+		{
+			if (pendingProperty())
+			{
+				obj_.set(property_name, currentTokenAndAdvance().value);
+				return true;
+			}
+			return false;
+		}
+
+		template <typename T, TokenType token_type_value>
+		bool storeIfPendingThing(const str& property_name)
+		{
+			if (currentTokenIsOfType(token_type_value))
+			{
+				pushAndStore<T>(property_name);
+				return true;
+			}
+			return false;
+		}
+
 		constexpr bool pendingTokens() const noexcept
 		{
 			return tokens_begin_ != tokens_end_;
@@ -205,7 +246,7 @@ namespace lib
 			return v;
 		}
 
-		constexpr bool currentTokenIsOfType(const TokenType expectedCurrent)
+		constexpr bool currentTokenIsOfType(const TokenType expectedCurrent) const
 		{
 			return currentToken().token_type == expectedCurrent;
 		}
@@ -247,62 +288,54 @@ namespace lib
 		dicty::Object obj_{};
 	};
 
-	template <bool ParseObject>
-	class ObjectParserBase : public InternalParserInterface
+	class ObjectParser : public InternalParserInterface
 	{
 	public:
 		using InternalParserInterface::InternalParserInterface;
 
+		bool storeIfPendingObject(const str& property_name)
+		{
+			return storeIfPendingThing<ObjectParser, TokenType::OpenObject>(property_name);
+		}
+
+		bool storeIfPendingList(const str& property_name)
+		{
+			return storeIfPendingThing<ObjectParser, TokenType::OpenObject>(property_name);
+		}
+
+		bool storePendingValueAndAdvance(const str& property_name)
+		{
+			if (!storeIfPendingProperty(property_name))
+			{
+				if (!storeIfPendingObject(property_name))
+				{
+					if (!storeIfPendingList(property_name))
+					{
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+
 		void parse() override
 		{
-			if constexpr (ParseObject)
-			{
-				expectTypeAndAdvance(TokenType::OpenObject);
-			}
-			else
-			{
-				expectTypeAndAdvance(TokenType::OpenArray);
-			}
+			expectTypeAndAdvance(TokenType::OpenObject);
 
 			do
 			{
-				str property_name(getFromExpectedTypeAndAdvance(TokenType::Str));
-				expectTypeAndAdvance(TokenType::KeyValueSeparator);
-				if (currentTokenIsOfType(TokenType::Str) || currentTokenIsOfType(TokenType::Integer) || currentTokenIsOfType(TokenType::Float))
-				{
-					obj_.set(property_name, currentTokenAndAdvance().value);
-				}
-				else if (currentTokenIsOfType(TokenType::OpenObject))
-				{
-					auto[result_obj, next_state_errors] = push_state<ObjectParser>();
-					obj_.set(property_name, result_obj);
-					errors_ += next_state_errors;
-				}
-				else if (currentTokenIsOfType(TokenType::OpenArray))
-				{
-					auto[result_obj, next_state_errors] = push_state<ObjectParser>();
-					obj_.set(property_name, result_obj);
-					errors_ += next_state_errors;
-				}
-				else
+				str property_name{ readPropertyNameAndAdvance() };
+
+				if (!storePendingValueAndAdvance(property_name))
 				{
 					// Error
 					error(TokenType::OpenObject, currentToken().token_type);
 				}
 			} while (currentTokenIsOfTypeAndAdvanceIfItIs(TokenType::ObjectSeparator));
 
-			if constexpr (ParseObject)
-			{
-				expectTypeAndAdvance(TokenType::CloseObject);
-			}
-			else
-			{
-				expectTypeAndAdvance(TokenType::CloseArray);
-			}
+			expectTypeAndAdvance(TokenType::CloseObject);
 		}
 	};
-
-	using ObjectParser = ObjectParserBase<true>;
 
 	class Parser : public InternalParserInterface
 	{
