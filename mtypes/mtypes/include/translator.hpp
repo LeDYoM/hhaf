@@ -3,7 +3,7 @@
 #ifndef LIB_MTYPES_TRANSLATOR_INCLUDE_HPP
 #define LIB_MTYPES_TRANSLATOR_INCLUDE_HPP
 
-//#define LOG_MODE
+#define LOG_MODE
 
 #include "types.hpp"
 #include "str.hpp"
@@ -18,8 +18,10 @@ namespace lib
 {
 #ifdef LOG_MODE
 	#define LOG(x)	std::cout << x << std::endl;
+	#define LOG_TOKEN(t) LOG("Token: " << int(t.token_type) << "\t: " << t.value.c_str());
 #else
 	#define LOG(x)
+	#define LOG_TOKEN(t)
 #endif
 
 	enum class TokenType
@@ -53,12 +55,15 @@ namespace lib
 			{
 #ifdef LOG_MODE
 				Token t{ nextToken() };
-				LOG("Token found: " << int(t.token_type) << "\t:" << t.value.c_str());
+				LOG("Token found: " << int(t.token_type) << "\t: " << t.value.c_str());
 				tokens_.emplace_back(std::move(t));
 #else
 				tokens_.emplace_back(nextToken());
 #endif
 			}
+
+			LOG("Scanner completed---------------------------------------");
+
 			return tokens_;
 		}
 	private:
@@ -197,6 +202,9 @@ namespace lib
 
 		constexpr void advanceTokenVector() noexcept
 		{
+#ifdef LOG_MODE
+//			LOG("Current token: ");
+#endif
 			if (tokens_begin_ != tokens_end_)
 			{
 				++tokens_begin_;
