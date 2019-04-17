@@ -487,3 +487,43 @@ TEST_CASE("Parser list of lists object and values as properties with new sintax"
 	CHECK(obj["ids"][1U][0U]["name"] == "john");
 	CHECK(obj["ids"][1U][0U]["last_name"] == "XYZZY");
 }
+
+TEST_CASE("Simple list", "[streams][SerializationStreamIn][translator][Parser]")
+{
+	SerializationStreamIn ssi(string_vector
+		{
+		"{",
+		"	ids:[a,b,c,d,e]",
+		"}"
+		});
+
+	Parser parser(Scaner{ ssi }.scan());
+	parser.parse();
+	const dicty::Object& obj{ parser.innerObject() };
+
+	CHECK(parser.errors().empty());
+	CHECK(obj["ids"][0U] == "a");
+	CHECK(obj["ids"][1U] == "b");
+	CHECK(obj["ids"][2U] == "c");
+	CHECK(obj["ids"][3U] == "d");
+}
+
+TEST_CASE("Simple list without name", "[streams][SerializationStreamIn][translator][Parser]")
+{
+	SerializationStreamIn ssi(string_vector
+		{
+		"{",
+		"	[a,b,c,d,e]",
+		"}"
+		});
+
+	Parser parser(Scaner{ ssi }.scan());
+	parser.parse();
+	const dicty::Object& obj{ parser.innerObject() };
+
+	CHECK(parser.errors().empty());
+	CHECK(obj[0U] == "a");
+	CHECK(obj[1U] == "b");
+	CHECK(obj[2U] == "c");
+	CHECK(obj[3U] == "d");
+}
