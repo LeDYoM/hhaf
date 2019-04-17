@@ -10,6 +10,9 @@
 #include "streamin.hpp"
 #include "dicty.hpp"
 #include "stack.hpp"
+
+#include <cctype>
+
 #ifdef LOG_MODE
 	#include <iostream>
 #endif
@@ -37,36 +40,138 @@ namespace lib
 		Float
 	};
 
+	struct Position
+	{
+		size_type line;
+		size_type column;
+	};
+
 	struct Token
 	{
 		str value;
 		TokenType token_type{ TokenType::Str };
+		Position position;
 	};
 
-	class Scaner
+	class Tokenizer
 	{
 	public:
-		constexpr Scaner(SerializationStreamIn& ssi)
-			: ssi_{ ssi.separator(' ') } { }
+		inline Tokenizer(SerializationStreamIn& ssi)
+			: begin_{ ssi.getData().begin() }, end_{ ssi.getData().end() } { }
 
-		const vector<Token> scan()
+		constexpr bool eof() const noexcept
 		{
-			while (!ssi_.eof() && !ssi_.hasError())
+			return begin_ == end_;
+		}
+
+		constexpr bool hasError() const noexcept
+		{
+			return false;
+		}
+
+		constexpr bool isSpecial(str::const_iterator it)
+		{
+			return special_chars.cfind(*it) != special_chars.cend();
+		}
+
+		constexpr void advancePositionAndIterator()
+		{
+			if (*begin_ == '\n')
 			{
-#ifdef LOG_MODE
-				Token t{ nextToken() };
-				LOG("Token found: " << int(t.token_type) << "\t: " << t.value.c_str());
-				tokens_.emplace_back(std::move(t));
-#else
-				tokens_.emplace_back(nextToken());
-#endif
+				++(position_.line);
+				position_.column = 0U;
+			}
+			else
+			{
+				++(position_.column);
+			}
+			++begin_;
+		}
+
+		Token requestToken()
+		{
+			Token preparedToken = Token();
+			bool next{ true };
+			bool inDoubleBranckets{ false };
+
+			while (begin_ != end_ && next)
+			{
+				if ((!std::isblank(*begin_) && !std::isspace(*begin_)) || inDoubleBranckets)
+				{
+					if (*begin_ == '\"')
+					{
+						inDoubleBranckets = !inDoubleBranckets;
+						if (!inDoubleBranckets)
+						{
+							next = false;
+						}
+					}
+					else
+					{
+						if (preparedToken.value.empty())
+						{
+							preparedToken.position = position_;
+						}
+						preparedToken.value.append_char(*begin_);
+
+						if (isSpecial(begin_))
+						{
+							next = false;
+						}
+					}
+				}
+				else if (!preparedToken.value.empty())
+				{
+					next = false;
+				}
+				advancePositionAndIterator();
+			}
+			return preparedToken;
+		}
+
+		Token nextToken()
+		{
+			Token next = requestToken();
+
+			// Check for reserved chars.
+			if (next.value.size() == 1U)
+			{
+				switch (next.value[0U])
+				{
+				case '{':
+					next.token_type = TokenType::OpenObject;
+					break;
+				case '}':
+					next.token_type = TokenType::CloseObject;
+					break;
+				case '[':
+					next.token_type = TokenType::OpenArray;
+					break;
+				case ']':
+					next.token_type = TokenType::CloseArray;
+					break;
+				case ',':
+					next.token_type = TokenType::ObjectSeparator;
+					break;
+				case ':':
+					next.token_type = TokenType::KeyValueSeparator;
+					break;
+				}
 			}
 
-			LOG("Scanner completed---------------------------------------");
-
-			return tokens_;
+			if (isInteger(next.value))
+			{
+				return { next.value, TokenType::Integer };
+			}
+			else if (isFloat(next.value))
+			{
+				return { next.value, TokenType::Float };
+			}
+			return { next.value, next.token_type };
 		}
+
 	private:
+
 		bool isInteger(const str& value) const
 		{
 			s32 temp;
@@ -79,51 +184,38 @@ namespace lib
 			return value.convert(temp);
 		}
 
-		Token nextToken()
+		str::const_iterator begin_;
+		str::const_iterator end_;
+		Position position_;
+		vector<str::char_type> special_chars{ '{', '}', ',', ':', '[', ']' };
+	};
+
+	class Scaner
+	{
+	public:
+		constexpr Scaner(SerializationStreamIn& ssi)
+			: tokenizer_{ ssi } { }
+
+		const vector<Token> scan()
 		{
-			str value;
-			TokenType token_type{ TokenType::Str };
-
-			ssi_ >> value;
-
-			// Check for reserved chars.
-			if (value.size() == 1U)
+			while (!tokenizer_.eof() && !tokenizer_.hasError())
 			{
-				switch (value[0U])
-				{
-				case '{':
-					token_type = TokenType::OpenObject;
-					break;
-				case '}':
-					token_type = TokenType::CloseObject;
-					break;
-				case '[':
-					token_type = TokenType::OpenArray;
-					break;
-				case ']':
-					token_type = TokenType::CloseArray;
-					break;
-				case ',':
-					token_type = TokenType::ObjectSeparator;
-					break;
-				case ':':
-					token_type = TokenType::KeyValueSeparator;
-					break;
-				}
+#ifdef LOG_MODE
+				Token t{ tokenizer_.nextToken() };
+				LOG("Token found: " << int(t.token_type) << "\t: " << t.value.c_str());
+				tokens_.emplace_back(std::move(t));
+#else
+				tokens_.emplace_back(tokenizer_.nextToken());
+#endif
 			}
 
-			if (isInteger(value))
-			{
-				return { value, TokenType::Integer };
-			}
-			else if (isFloat(value))
-			{
-				return { value, TokenType::Float };
-			}
-			return { value, token_type };
+			LOG("Scanner completed---------------------------------------");
+
+			return tokens_;
 		}
+	private:
 
-		SerializationStreamIn& ssi_;
+		Tokenizer tokenizer_;
 		vector<Token> tokens_;
 	};
 

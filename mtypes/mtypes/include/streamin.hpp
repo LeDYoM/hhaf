@@ -106,6 +106,8 @@ namespace lib
 			return separator(current_separator).setUseNewLineAsSeparator(old_new_line_as_separatr);
 		}
 
+		const str& getData() const noexcept { return data_; }
+
     private:
         inline void remove_lwhitespaces()
         {

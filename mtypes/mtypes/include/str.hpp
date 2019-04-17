@@ -85,11 +85,6 @@ namespace lib
 			return result;
 		}
 
-        constexpr void pop_char() noexcept 
-        {
-            m_data.pop_back();
-        }
-
         inline bool starts_with(const str& prefix) const noexcept
         {
             if (size() < prefix.size())
@@ -130,52 +125,67 @@ namespace lib
 
         constexpr str &append() { return *this; }
 
-        str & append(const str & n) {
+        str & append(const str & n)
+		{
             m_data.pop_back();
             m_data.insert(n.m_data);
             return *this;
         }
 
 		template<size_type N>
-		constexpr str &append(const char_type(&n)[N]) {
+		constexpr str &append(const char_type(&n)[N])
+		{
 			append(str(std::forward<const char_type(&)[N]>(n)));
 			return *this;
 		}
 
-        str & append(const char_type * n) {
+        str & append(const char_type * n)
+		{
             append(str(n));
             return *this;
         }
 
-		str & append(const u64 n) {
+		str & append(const u64 n)
+		{
 			append(str(n));
 			return *this;
 		}
 
-		str & append(const s64 n) {
+		str & append(const s64 n)
+		{
 			append(str(n));
 			return *this;
 		}
 
-		str & append(const u32 n) {
+		str & append(const u32 n)
+		{
 			append(str(n));
 			return *this;
 		}
 
-		str & append(const s32 n) {
+		str & append(const s32 n)
+		{
 			append(str(n));
 			return *this;
 		}
 
-        str & append(const f32 n) {
+        str & append(const f32 n)
+		{
             append(str(n));
             return *this;
         }
 
-        str & append(const f64 n) {
+        str & append(const f64 n)
+		{
             append(str(n));
             return *this;
         }
+
+		str & append_char(const char_type n)
+		{
+			const char_type temp[2U] = { n, 0U };
+			return append(temp);
+		}
 
 		bool convert(u64 & n) const
 		{
