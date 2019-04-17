@@ -7,10 +7,8 @@
 
 #include "types.hpp"
 #include "str.hpp"
-#include "streamin.hpp"
 #include "dicty.hpp"
-#include "stack.hpp"
-
+#include "streamin.hpp"
 #include <cctype>
 
 #ifdef LOG_MODE
@@ -56,8 +54,8 @@ namespace lib
 	class Tokenizer
 	{
 	public:
-		inline Tokenizer(SerializationStreamIn& ssi)
-			: begin_{ ssi.getData().begin() }, end_{ ssi.getData().end() } { }
+		constexpr Tokenizer(str::const_iterator begin, str::const_iterator end) noexcept
+			: begin_{ begin }, end_{ end } { }
 
 		constexpr bool eof() const noexcept
 		{
@@ -108,20 +106,45 @@ namespace lib
 					}
 					else
 					{
+						// If it is the first char containing not blanks,
+						// store the position.
 						if (preparedToken.value.empty())
 						{
 							preparedToken.position = position_;
 						}
-						preparedToken.value.append_char(*begin_);
 
 						if (isSpecial(begin_))
 						{
+							// If it is special, but the first char in the
+							// token, store it.
+							if (preparedToken.value.empty())
+							{
+								preparedToken.value.append_char(*begin_);
+							}
+							else
+							{
+								// If it is special, but not the first one,
+								// it has to be the first one of the next token,
+								// so put it back for processing.
+								// Note: No danger in underflowing the iterator,
+								// because if it where the first one,
+								// preparedToken will not be empty.
+								--begin_;
+							}
 							next = false;
+						}
+						else
+						{
+							// If it is not special char, store it
+							// in the current token.
+							preparedToken.value.append_char(*begin_);
 						}
 					}
 				}
 				else if (!preparedToken.value.empty())
 				{
+					// If we found a blank char and there is a pending token,
+					// stop the loop and return it.
 					next = false;
 				}
 				advancePositionAndIterator();
@@ -133,29 +156,34 @@ namespace lib
 		{
 			Token next = requestToken();
 
-			// Check for reserved chars.
+			// Check for reserved values.
 			if (next.value.size() == 1U)
 			{
-				switch (next.value[0U])
+				// Small optimization, you do not need to enter the switch
+				// if it is not one of the special characters.
+				if (isSpecial(next.value.cbegin()))
 				{
-				case '{':
-					next.token_type = TokenType::OpenObject;
-					break;
-				case '}':
-					next.token_type = TokenType::CloseObject;
-					break;
-				case '[':
-					next.token_type = TokenType::OpenArray;
-					break;
-				case ']':
-					next.token_type = TokenType::CloseArray;
-					break;
-				case ',':
-					next.token_type = TokenType::ObjectSeparator;
-					break;
-				case ':':
-					next.token_type = TokenType::KeyValueSeparator;
-					break;
+					switch (next.value[0U])
+					{
+					case '{':
+						next.token_type = TokenType::OpenObject;
+						break;
+					case '}':
+						next.token_type = TokenType::CloseObject;
+						break;
+					case '[':
+						next.token_type = TokenType::OpenArray;
+						break;
+					case ']':
+						next.token_type = TokenType::CloseArray;
+						break;
+					case ',':
+						next.token_type = TokenType::ObjectSeparator;
+						break;
+					case ':':
+						next.token_type = TokenType::KeyValueSeparator;
+						break;
+					}
 				}
 			}
 
@@ -194,7 +222,7 @@ namespace lib
 	{
 	public:
 		constexpr Scaner(SerializationStreamIn& ssi)
-			: tokenizer_{ ssi } { }
+			: tokenizer_{ ssi.getData().begin(), ssi.getData().end() } { }
 
 		const vector<Token> scan()
 		{

@@ -458,3 +458,32 @@ TEST_CASE("Parser list of lists object and values as properties", "[streams][Ser
 	CHECK(obj["ids"][1U][0U]["name"] == "john");
 	CHECK(obj["ids"][1U][0U]["last_name"] == "XYZZY");
 }
+
+TEST_CASE("Parser list of lists object and values as properties with new sintax", "[streams][SerializationStreamIn][translator][Parser]")
+{
+	SerializationStreamIn ssi(string_vector
+		{
+		"{",
+		"	ids:[",
+		"		[{",
+		"			name:\"pepito\",",
+		"			last_name:abcd",
+				"}],",
+		"		[{",
+		"			name:\"john\",",
+		"			last_name:XYZZY",
+				"}]",
+		"	]",
+		"}"
+		});
+
+	Parser parser(Scaner{ ssi }.scan());
+	parser.parse();
+	const dicty::Object& obj{ parser.innerObject() };
+
+	CHECK(parser.errors().empty());
+	CHECK(obj["ids"][0U][0U]["name"] == "pepito");
+	CHECK(obj["ids"][0U][0U]["last_name"] == "abcd");
+	CHECK(obj["ids"][1U][0U]["name"] == "john");
+	CHECK(obj["ids"][1U][0U]["last_name"] == "XYZZY");
+}
