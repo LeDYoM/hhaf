@@ -25,7 +25,7 @@ namespace lib
 	#define LOG_TOKEN(t)
 #endif
 
-	enum class TokenType
+	enum class TokenType : u8
 	{
 		Str,
 		OpenObject,
@@ -36,6 +36,13 @@ namespace lib
 		KeyValueSeparator,
 		Integer,
 		Float
+	};
+
+	enum ErrorType : u8
+	{
+		NoError = 0U,
+		InvalidCharacter,
+		UnterminatedString
 	};
 
 	struct Position
@@ -64,7 +71,7 @@ namespace lib
 
 		constexpr bool hasError() const noexcept
 		{
-			return false;
+			return last_error_ != ErrorType::NoError;
 		}
 
 		constexpr bool isSpecial(str::const_iterator it)
@@ -88,7 +95,7 @@ namespace lib
 
 		Token requestToken()
 		{
-			Token preparedToken = Token();
+			Token preparedToken{};
 			bool next{ true };
 			bool inDoubleBranckets{ false };
 
@@ -149,12 +156,21 @@ namespace lib
 				}
 				advancePositionAndIterator();
 			}
+
+			if (next)
+			{
+				if (!preparedToken.value.empty())
+				{
+					last_error_ = ErrorType::UnterminatedString;
+				}
+			}
+
 			return preparedToken;
 		}
 
 		Token nextToken()
 		{
-			Token next = requestToken();
+			Token next{ requestToken() };
 
 			// Check for reserved values.
 			if (next.value.size() == 1U)
@@ -214,8 +230,9 @@ namespace lib
 
 		str::const_iterator begin_;
 		str::const_iterator end_;
-		Position position_;
+		Position position_{};
 		vector<str::char_type> special_chars{ '{', '}', ',', ':', '[', ']' };
+		ErrorType last_error_{ ErrorType::NoError };
 	};
 
 	class Scaner
@@ -223,6 +240,9 @@ namespace lib
 	public:
 		constexpr Scaner(SerializationStreamIn& ssi)
 			: tokenizer_{ ssi.getData().begin(), ssi.getData().end() } { }
+
+		constexpr Scaner(const str& input)
+			: tokenizer_{ input.cbegin(), input.cend() } { }
 
 		const vector<Token> scan()
 		{
@@ -241,8 +261,8 @@ namespace lib
 
 			return tokens_;
 		}
-	private:
 
+	private:
 		Tokenizer tokenizer_;
 		vector<Token> tokens_;
 	};
