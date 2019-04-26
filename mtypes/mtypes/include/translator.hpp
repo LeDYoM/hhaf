@@ -42,7 +42,8 @@ namespace lib
 	{
 		NoError = 0U,
 		InvalidCharacter,
-		UnterminatedString
+		UnterminatedString,
+		ExpectedTokenType
 	};
 
 	struct Position
@@ -58,20 +59,71 @@ namespace lib
 		Position position;
 	};
 
+	struct Error
+	{
+		Token token;
+		ErrorType type{ ErrorType::NoError };
+		u8 error_data;
+	};
+
+	class ErrorContainer
+	{
+	public:
+		constexpr bool empty() const noexcept
+		{
+			return errors_.empty();
+		}
+
+		void merge(const ErrorContainer& other)
+		{
+			errors_ += other.errors_;
+		}
+
+		inline void error(const TokenType expected, const Token& found)
+		{
+			Error error_;
+			error_.token = found;
+			error_.type = ErrorType::ExpectedTokenType;
+			error_.error_data = static_cast<u8>(expected);
+
+			errors_.push_back(std::move(error_));
+		}
+
+		inline void unterminatedString(const Token& token)
+		{
+			Error error_;
+			error_.token = token;
+			error_.type = ErrorType::UnterminatedString;
+			error_.error_data = 0U;
+
+			errors_.push_back(std::move(error_));
+		}
+
+		inline void invalidCharacter(const Token& token, const str::char_type ch)
+		{
+			Error error_;
+			error_.token = token;
+			error_.type = ErrorType::InvalidCharacter;
+			error_.error_data = static_cast<decltype(Error::error_data)>(ch);
+
+			errors_.push_back(std::move(error_));
+		}
+
+	private:
+		vector<Error> errors_;
+	};
+
 	class Tokenizer
 	{
 	public:
-		constexpr Tokenizer(str::const_iterator begin, str::const_iterator end) noexcept
-			: begin_{ begin }, end_{ end } { }
+		constexpr Tokenizer(str::const_iterator begin, 
+			str::const_iterator end, 
+			ErrorContainer &error_container) noexcept
+			: begin_{ begin }, end_{ end }, errors_{ error_container } { }
 
 		constexpr bool eof() const noexcept
 		{
 			return begin_ == end_;
-		}
-
-		constexpr bool hasError() const noexcept
-		{
-			return last_error_ != ErrorType::NoError;
 		}
 
 		constexpr bool isSpecial(str::const_iterator it)
@@ -161,7 +213,7 @@ namespace lib
 			{
 				if (!preparedToken.value.empty())
 				{
-					last_error_ = ErrorType::UnterminatedString;
+					errors_.unterminatedString(preparedToken);
 				}
 			}
 
@@ -232,29 +284,25 @@ namespace lib
 		str::const_iterator end_;
 		Position position_{};
 		vector<str::char_type> special_chars{ '{', '}', ',', ':', '[', ']' };
-		ErrorType last_error_{ ErrorType::NoError };
+		ErrorContainer& errors_;
 	};
 
 	class Scaner
 	{
 	public:
-		constexpr Scaner(SerializationStreamIn& ssi)
-			: tokenizer_{ ssi.getData().begin(), ssi.getData().end() } { }
-
 		constexpr Scaner(const str& input)
-			: tokenizer_{ input.cbegin(), input.cend() } { }
+			: tokenizer_{ input.cbegin(), input.cend(), error_container_ } { }
 
 		const vector<Token> scan()
 		{
-			while (!tokenizer_.eof() && !tokenizer_.hasError())
+			while (!tokenizer_.eof() && error_container_.empty())
 			{
-#ifdef LOG_MODE
 				Token t{ tokenizer_.nextToken() };
+#ifdef LOG_MODE
 				LOG("Token found: " << int(t.token_type) << "\t: " << t.value.c_str());
-				tokens_.emplace_back(std::move(t));
-#else
-				tokens_.emplace_back(tokenizer_.nextToken());
 #endif
+				tokens_.push_back(std::move(t));
+
 			}
 
 			LOG("Scanner completed---------------------------------------");
@@ -265,6 +313,7 @@ namespace lib
 	private:
 		Tokenizer tokenizer_;
 		vector<Token> tokens_;
+		ErrorContainer error_container_;
 	};
 
 	// Parser	------------------------------------------------------------------------------------------------
@@ -274,13 +323,12 @@ namespace lib
 	public:
 		using TokenVector = vector<Token>;
 		using TokenVectorCIterator = vector<Token>::const_iterator;
-		using VectorOfErrors = vector<pair<TokenType, TokenType>>;
 
 		InternalParserInterface(TokenVectorCIterator begin, const TokenVectorCIterator end)
 			: tokens_begin_{ begin }, tokens_end_{ end } {}
 
 		template <typename T>
-		pair<dicty::Object, VectorOfErrors> push_state()
+		pair<dicty::Object, ErrorContainer> push_state()
 		{
 			T p(tokens_begin_, tokens_end_);
 			InternalParserInterface& ref{ p };
@@ -294,7 +342,7 @@ namespace lib
 		{
 			auto[result_obj, next_state_errors] = push_state<T>();
 			obj_.set(property_name, result_obj);
-			errors_ += next_state_errors;
+			errors_.merge(next_state_errors);
 		}
 
 		inline str readPropertyNameAndAdvance()
@@ -342,9 +390,6 @@ namespace lib
 
 		constexpr void advanceTokenVector() noexcept
 		{
-#ifdef LOG_MODE
-//			LOG("Current token: ");
-#endif
 			if (tokens_begin_ != tokens_end_)
 			{
 				++tokens_begin_;
@@ -358,17 +403,12 @@ namespace lib
 			return t;
 		}
 
-		constexpr void error(const TokenType expected, const TokenType found)
-		{
-			errors_.emplace_back(expected, found);
-		}
-
 		constexpr void expectType(const TokenType expectedCurrent)
 		{
-			const TokenType current(currentToken().token_type);
-			if (current != expectedCurrent)
+			const Token& current_token{ currentToken() };
+			if (current_token.token_type != expectedCurrent)
 			{
-				error(expectedCurrent, current);
+				errors_.error(expectedCurrent, current_token);
 			}
 		}
 
@@ -380,10 +420,11 @@ namespace lib
 
 		inline void expectTypeAndAdvance(const TokenType expectedCurrent)
 		{
-			const TokenType current(currentTokenAndAdvance().token_type);
-			if (current != expectedCurrent)
+			const Token& current_token{ currentTokenAndAdvance() };
+			const TokenType current(current_token.token_type);
+			if (current_token.token_type != expectedCurrent)
 			{
-				error(expectedCurrent, current);
+				errors_.error(expectedCurrent, current_token);
 			}
 		}
 
@@ -422,7 +463,7 @@ namespace lib
 			return obj_;
 		}
 
-		constexpr const VectorOfErrors& errors() const noexcept
+		constexpr const ErrorContainer& errors() const noexcept
 		{
 			return errors_;
 		}
@@ -432,7 +473,7 @@ namespace lib
 	protected:
 		TokenVectorCIterator tokens_begin_;
 		const TokenVectorCIterator tokens_end_;
-		VectorOfErrors errors_{};
+		ErrorContainer errors_{};
 		dicty::Object obj_{};
 	};
 
@@ -479,7 +520,7 @@ namespace lib
 				if (!storePendingValueAndAdvance(property_name))
 				{
 					// Error
-					error(TokenType::OpenObject, currentToken().token_type);
+					errors_.error(TokenType::OpenObject, currentToken());
 				}
 			} while (currentTokenIsOfTypeAndAdvanceIfItIs(TokenType::ObjectSeparator));
 
@@ -504,7 +545,7 @@ namespace lib
 				if (!storePendingValueAndAdvance(property_name))
 				{
 					// Error
-					error(TokenType::OpenObject, currentToken().token_type);
+					errors_.error(TokenType::OpenObject, currentToken());
 				}
 				++counter;
 			} while (currentTokenIsOfTypeAndAdvanceIfItIs(TokenType::ObjectSeparator));
@@ -525,7 +566,7 @@ namespace lib
 		{
 			auto[result_obj, next_state_errors] = push_state<ObjectParser>();
 			obj_ = result_obj;
-			errors_ += next_state_errors;
+			errors_.merge(next_state_errors);
 		}
 
 	private:

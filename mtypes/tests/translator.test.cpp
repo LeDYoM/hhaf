@@ -6,7 +6,7 @@
 
 using namespace lib;
 
-TEST_CASE("Scaner basic 0", "[streams][SerializationStreamIn][translator]")
+TEST_CASE("Scaner basic 0", "[translator]")
 {
 	const str input{
 		"{"
@@ -35,7 +35,7 @@ TEST_CASE("Scaner basic 0", "[streams][SerializationStreamIn][translator]")
 	CHECK(tokens[4].token_type == TokenType::CloseObject);
 }
 
-TEST_CASE("Scaner basic 1", "[streams][SerializationStreamIn][translator]")
+TEST_CASE("Scaner basic 1", "[translator]")
 {
 	const str input{
 		"{"
@@ -64,7 +64,7 @@ TEST_CASE("Scaner basic 1", "[streams][SerializationStreamIn][translator]")
 	CHECK(tokens[4].token_type == TokenType::CloseObject);
 }
 
-TEST_CASE("Scaner basic 2", "[streams][SerializationStreamIn][translator]")
+TEST_CASE("Scaner basic 2", "[translator]")
 {
 	const str input{
 		"{"
@@ -496,4 +496,19 @@ TEST_CASE("Simple list", "[streams][SerializationStreamIn][translator][Parser]")
 	CHECK(obj["ids"][1U] == "b");
 	CHECK(obj["ids"][2U] == "c");
 	CHECK(obj["ids"][3U] == "d");
+}
+
+TEST_CASE("Scanner SyntaxError", "[Scanner]")
+{
+	const str input{
+		"{"
+		"	ids:\"abc"
+		"}"
+	};
+
+	Parser parser(Scaner{ input }.scan());
+	parser.parse();
+	const dicty::Object& obj{ parser.innerObject() };
+
+	CHECK_FALSE(parser.errors().empty());
 }
