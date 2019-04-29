@@ -83,3 +83,5 @@ ipch/
 #install/
 _build/
 3rdparty/SFML/
+
+\.vscode/
