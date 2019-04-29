@@ -506,9 +506,9 @@ TEST_CASE("Scanner SyntaxError", "[Scanner]")
 		"}"
 	};
 
-	Parser parser(Scaner{ input }.scan());
-	parser.parse();
-	const dicty::Object& obj{ parser.innerObject() };
-
-	CHECK_FALSE(parser.errors().empty());
+	ObjectCompiler oc{ input };
+	CHECK_FALSE(oc.compile());
+	CHECK_FALSE(oc.errors().empty());
+	CHECK(oc.errors().errors().size() == 1U);
+	CHECK(oc.errors().errors()[0U].type == ErrorType::UnterminatedString);
 }

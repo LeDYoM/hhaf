@@ -109,6 +109,10 @@ namespace lib
 			errors_.push_back(std::move(error_));
 		}
 
+		constexpr const vector<Error>& errors() const noexcept
+		{
+			return errors_;
+		}
 	private:
 		vector<Error> errors_;
 	};
@@ -165,14 +169,16 @@ namespace lib
 					}
 					else
 					{
-						// If it is the first char containing not blanks,
+						// If it is the first char is not a blank,
 						// store the position.
 						if (preparedToken.value.empty())
 						{
 							preparedToken.position = position_;
 						}
 
-						if (isSpecial(begin_))
+						// If we found a special character and we are not
+						// in double brackets mode.
+						if (isSpecial(begin_) && !inDoubleBranckets)
 						{
 							// If it is special, but the first char in the
 							// token, store it.
@@ -309,6 +315,8 @@ namespace lib
 
 			return tokens_;
 		}
+
+		constexpr const ErrorContainer& errors() const noexcept { return error_container_; }
 
 	private:
 		Tokenizer tokenizer_;
@@ -571,6 +579,57 @@ namespace lib
 
 	private:
 		vector<Token> global_tokens_;
+	};
+
+	class ObjectCompiler
+	{
+	public:
+		constexpr ObjectCompiler(const str& input) noexcept
+			: input_{ input } {}
+
+		constexpr ObjectCompiler(str&& input) noexcept
+			: input_{ std::move(input) } {}
+
+		bool compile()
+		{
+			Scaner scaner{ input_ };
+			const auto tokens(scaner.scan());
+			if (scaner.errors().empty())
+			{
+				Parser parser(Scaner{ input_ }.scan());
+				parser.parse();
+				if (parser.errors().empty())
+				{
+					output_ = parser.innerObject();
+					return true;
+				}
+				else
+				{
+					errors_ = parser.errors();
+					return false;
+				}
+			}
+			else
+			{
+				errors_ = scaner.errors();
+				return false;
+			}
+		}
+
+		constexpr const dicty::Object& result() const noexcept
+		{
+			return output_;
+		}
+
+		constexpr const ErrorContainer& errors() const noexcept
+		{
+			return errors_;
+		}
+
+	private:
+		ErrorContainer errors_;
+		str input_;
+		dicty::Object output_;
 	};
 }
 
