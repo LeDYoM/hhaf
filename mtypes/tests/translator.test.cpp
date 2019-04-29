@@ -1,21 +1,49 @@
 #include "catch.hpp"
 
 #include <mtypes/include/types.hpp>
-#include <mtypes/include/streamin.hpp>
 #include <mtypes/include/translator.hpp>
 #include <mtypes/include/dicty.hpp>
 
 using namespace lib;
 
-TEST_CASE("Scaner basic", "[streams][SerializationStreamIn][translator]")
+TEST_CASE("Scaner basic 0", "[translator]")
 {
-	SerializationStreamIn ssi(string_vector{
-		"{",
-		"id : \"This is a string\"",
+	const str input{
+		"{"
+		"id : data"
 		"}"
-		});
+	};
 
-	Scaner scanner(ssi);
+	Scaner scanner{ input };
+	auto tokens = scanner.scan();
+
+	CHECK(tokens.size() == 5U);
+
+	CHECK(tokens[0].value == "{");
+	CHECK(tokens[0].token_type == TokenType::OpenObject);
+
+	CHECK(tokens[1].value == "id");
+	CHECK(tokens[1].token_type == TokenType::Str);
+
+	CHECK(tokens[2].value == ":");
+	CHECK(tokens[2].token_type == TokenType::KeyValueSeparator);
+
+	CHECK(tokens[3].value == "data");
+	CHECK(tokens[3].token_type == TokenType::Str);
+
+	CHECK(tokens[4].value == "}");
+	CHECK(tokens[4].token_type == TokenType::CloseObject);
+}
+
+TEST_CASE("Scaner basic 1", "[translator]")
+{
+	const str input{
+		"{"
+		"id : \"This is a string\""
+		"}"
+	};
+
+	Scaner scanner{ input };
 	auto tokens = scanner.scan();
 
 	CHECK(tokens.size() == 5U);
@@ -36,16 +64,16 @@ TEST_CASE("Scaner basic", "[streams][SerializationStreamIn][translator]")
 	CHECK(tokens[4].token_type == TokenType::CloseObject);
 }
 
-TEST_CASE("Scaner basic 2", "[streams][SerializationStreamIn][translator]")
+TEST_CASE("Scaner basic 2", "[translator]")
 {
-	SerializationStreamIn ssi(string_vector{
-		"{",
-		"id0 : \"This is a string\",",
-		"id1 : \"This  is    a diferent string\"",
+	const str input{
+		"{"
+		"id0 : \"This is a string\","
+		"id1 : \"This  is    a diferent string\""
 		"}"
-		});
+	};
 
-	Scaner scanner(ssi);
+	Scaner scanner{ input };
 	auto tokens = scanner.scan();
 
 	CHECK(tokens.size() == 9U);
@@ -80,14 +108,14 @@ TEST_CASE("Scaner basic 2", "[streams][SerializationStreamIn][translator]")
 
 TEST_CASE("Scaner One word strings", "[streams][SerializationStreamIn][translator]")
 {
-	SerializationStreamIn ssi(string_vector{
-		"{",
-		"id : abc ,",
-		"id1 : def",
+	const str input{
+		"{"
+		"id : abc ,"
+		"id1 : def"
 		"}"
-		});
+	};
 
-	Scaner scanner(ssi);
+	Scaner scanner{ input };
 	auto tokens = scanner.scan();
 
 	CHECK(tokens.size() == 9U);
@@ -122,16 +150,16 @@ TEST_CASE("Scaner One word strings", "[streams][SerializationStreamIn][translato
 
 TEST_CASE("Scaner numbers and letters", "[streams][SerializationStreamIn][translator]")
 {
-	SerializationStreamIn ssi(string_vector{
-		"{",
-		"id0 : 234.01 ,",
-		"id1 : 1000 ,",
-		"id2 : 5 ,",
-		"id3 : A",
+	const str input{
+		"{"
+		"id0 : 234.01 ,"
+		"id1 : 1000 ,"
+		"id2 : 5 ,"
+		"id3 : A"
 		"}"
-		});
+	};
 
-	Scaner scanner(ssi);
+	Scaner scanner{ input };
 	auto tokens = scanner.scan();
 
 	CHECK(tokens.size() == 17U);
@@ -190,16 +218,16 @@ TEST_CASE("Scaner numbers and letters", "[streams][SerializationStreamIn][transl
 
 TEST_CASE("Scaner numbers and letters with tabs and spaces", "[streams][SerializationStreamIn][translator][Scanner]")
 {
-	SerializationStreamIn ssi(string_vector{
-		"{",
-		"	id0 : 234.01 ,",
-		"\tid1 : 1000 ,",
-		"    id2 : 5 ,",
-		"\t	    id3 : A",
+	const str input{
+		"{"
+		"	id0 : 234.01 ,"
+		"\tid1 : 1000 ,"
+		"    id2 : 5 ,"
+		"\t	    id3 : A"
 		"}"
-		});
+	};
 
-	Scaner scanner(ssi);
+	Scaner scanner{ input };
 	auto tokens = scanner.scan();
 
 	CHECK(tokens.size() == 17U);
@@ -260,14 +288,13 @@ TEST_CASE("Scaner numbers and letters with tabs and spaces", "[streams][Serializ
 
 TEST_CASE("Parser basic", "[streams][SerializationStreamIn][translator][Parser]")
 {
-	SerializationStreamIn ssi(string_vector
-		{
-		"{",
-		"id : \"This is a string\"",
+	const str input{
+		"{"
+		"id : \"This is a string\""
 		"}"
-		});
+	};
 
-	Parser parser(Scaner{ ssi }.scan());
+	Parser parser(Scaner{ input }.scan());
 	parser.parse();
 	const dicty::Object& obj{ parser.innerObject() };
 
@@ -277,16 +304,15 @@ TEST_CASE("Parser basic", "[streams][SerializationStreamIn][translator][Parser]"
 
 TEST_CASE("Parser: Object inside object", "[streams][SerializationStreamIn][translator][Parser]")
 {
-	SerializationStreamIn ssi(string_vector
-		{
-		"{",
-		"	id_object : {",
-		"		test_string : \"test_value\"",
-		"	}",
+	const str input{
+		"{"
+		"	id_object : {"
+		"		test_string : \"test_value\""
+		"	}"
 		"}"
-		});
+	};
 
-	Parser parser(Scaner{ ssi }.scan());
+	Parser parser(Scaner{ input }.scan());
 	parser.parse();
 	const dicty::Object& obj{ parser.innerObject() };
 
@@ -302,17 +328,16 @@ TEST_CASE("Parser: Object inside object", "[streams][SerializationStreamIn][tran
 
 TEST_CASE("Parser: Object inside object with numerical values", "[streams][SerializationStreamIn][translator][Parser]")
 {
-	SerializationStreamIn ssi(string_vector
-		{
-		"{",
-		"	id_object : {",
-		"		test_string : \"test_value\"",
-		"	} ,",
-		"	value_number : 3",
+	const str input{
+		"{"
+		"	id_object : {"
+		"		test_string : \"test_value\""
+		"	} ,"
+		"	value_number : 3"
 		"}"
-		});
+	};
 
-	Parser parser(Scaner{ ssi }.scan());
+	Parser parser(Scaner{ input }.scan());
 	parser.parse();
 	const dicty::Object& obj{ parser.innerObject() };
 	CHECK(parser.errors().empty());
@@ -329,15 +354,14 @@ TEST_CASE("Parser: Object inside object with numerical values", "[streams][Seria
 
 TEST_CASE("Parser list str properties", "[streams][SerializationStreamIn][translator][Parser]")
 {
-	SerializationStreamIn ssi(string_vector
-		{
-		"{",
-		"	id : [",
-		"		a , b , c ]",
+	const str input{
+		"{"
+		"	id : ["
+		"		a , b , c ]"
 		"}"
-		});
+	};
 
-	Parser parser(Scaner{ ssi }.scan());
+	Parser parser(Scaner{ input }.scan());
 	parser.parse();
 	const dicty::Object& obj{ parser.innerObject() };
 
@@ -349,23 +373,22 @@ TEST_CASE("Parser list str properties", "[streams][SerializationStreamIn][transl
 
 TEST_CASE("Parser list object properties", "[streams][SerializationStreamIn][translator][Parser]")
 {
-	SerializationStreamIn ssi(string_vector
-		{
-		"{",
-		"	ids : [",
-		"		{",
-		"			name : \"pepito\",",
-		"			last_name : abcd",
-				"} ,",
-		"		{",
-		"			name : \"john\",",
-		"			last_name : XYZZY",
-				"}",
-		"	]",
+	const str input{
+		"{"
+		"	ids : ["
+		"		{"
+		"			name : \"pepito\","
+		"			last_name : abcd"
+				"} ,"
+		"		{"
+		"			name : \"john\","
+		"			last_name : XYZZY"
+				"}"
+		"	]"
 		"}"
-		});
+	};
 
-	Parser parser(Scaner{ ssi }.scan());
+	Parser parser(Scaner{ input }.scan());
 	parser.parse();
 	const dicty::Object& obj{ parser.innerObject() };
 
@@ -378,20 +401,19 @@ TEST_CASE("Parser list object properties", "[streams][SerializationStreamIn][tra
 
 TEST_CASE("Parser list object and values as properties", "[streams][SerializationStreamIn][translator][Parser]")
 {
-	SerializationStreamIn ssi(string_vector
-		{
-		"{",
-		"	ids : [",
-		"		{",
-		"			name : \"pepito\",",
-		"			last_name : abcd",
-				"} ,",
-		"		\"name\"",
-		"	]",
+	const str input{
+		"{"
+		"	ids : ["
+		"		{"
+		"			name : \"pepito\","
+		"			last_name : abcd"
+				"} ,"
+		"		\"name\""
+		"	]"
 		"}"
-		});
+	};
 
-	Parser parser(Scaner{ ssi }.scan());
+	Parser parser(Scaner{ input }.scan());
 	parser.parse();
 	const dicty::Object& obj{ parser.innerObject() };
 
@@ -403,23 +425,22 @@ TEST_CASE("Parser list object and values as properties", "[streams][Serializatio
 
 TEST_CASE("Parser list of lists object and values as properties", "[streams][SerializationStreamIn][translator][Parser]")
 {
-	SerializationStreamIn ssi(string_vector
-		{
-		"{",
-		"	ids : [",
-		"		[ {",
-		"			name : \"pepito\",",
-		"			last_name : abcd",
-				"} ] ,",
-		"		[ {",
-		"			name : \"john\",",
-		"			last_name : XYZZY",
-				"} ]",
-		"	]",
+	const str input{
+		"{"
+		"	ids : ["
+		"		[ {"
+		"			name : \"pepito\","
+		"			last_name : abcd"
+				"} ] ,"
+		"		[ {"
+		"			name : \"john\","
+		"			last_name : XYZZY"
+				"} ]"
+		"	]"
 		"}"
-		});
+	};
 
-	Parser parser(Scaner{ ssi }.scan());
+	Parser parser(Scaner{ input }.scan());
 	parser.parse();
 	const dicty::Object& obj{ parser.innerObject() };
 
@@ -428,4 +449,66 @@ TEST_CASE("Parser list of lists object and values as properties", "[streams][Ser
 	CHECK(obj["ids"][0U][0U]["last_name"] == "abcd");
 	CHECK(obj["ids"][1U][0U]["name"] == "john");
 	CHECK(obj["ids"][1U][0U]["last_name"] == "XYZZY");
+}
+
+TEST_CASE("Parser list of lists object and values as properties with new sintax", "[streams][SerializationStreamIn][translator][Parser]")
+{
+	const str input{
+		"{"
+		"	ids:["
+		"		[{"
+		"			name:\"pepito\","
+		"			last_name:abcd"
+				"}],"
+		"		[{"
+		"			name:\"john\","
+		"			last_name:XYZZY"
+				"}]"
+		"	]"
+		"}"
+	};
+
+	Parser parser(Scaner{ input }.scan());
+	parser.parse();
+	const dicty::Object& obj{ parser.innerObject() };
+
+	CHECK(parser.errors().empty());
+	CHECK(obj["ids"][0U][0U]["name"] == "pepito");
+	CHECK(obj["ids"][0U][0U]["last_name"] == "abcd");
+	CHECK(obj["ids"][1U][0U]["name"] == "john");
+	CHECK(obj["ids"][1U][0U]["last_name"] == "XYZZY");
+}
+
+TEST_CASE("Simple list", "[streams][SerializationStreamIn][translator][Parser]")
+{
+	const str input{
+		"{"
+		"	ids:[a,b,c,d,e]"
+		"}"
+	};
+
+	Parser parser(Scaner{ input }.scan());
+	parser.parse();
+	const dicty::Object& obj{ parser.innerObject() };
+
+	CHECK(parser.errors().empty());
+	CHECK(obj["ids"][0U] == "a");
+	CHECK(obj["ids"][1U] == "b");
+	CHECK(obj["ids"][2U] == "c");
+	CHECK(obj["ids"][3U] == "d");
+}
+
+TEST_CASE("Scanner SyntaxError", "[Scanner]")
+{
+	const str input{
+		"{"
+		"	ids:\"abc"
+		"}"
+	};
+
+	ObjectCompiler oc{ input };
+	CHECK_FALSE(oc.compile());
+	CHECK_FALSE(oc.errors().empty());
+	CHECK(oc.errors().errors().size() == 1U);
+	CHECK(oc.errors().errors()[0U].type == ErrorType::UnterminatedString);
 }
