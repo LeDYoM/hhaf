@@ -32,6 +32,11 @@ namespace lib::dicty
         constexpr BasicDictionary(const content &eList)
             : m_data{ std::move(eList) } {}
 
+        constexpr iterator begin() noexcept { return m_data.begin(); }
+        constexpr const_iterator begin() const noexcept{ return m_data.begin(); }
+        constexpr iterator end() noexcept { return m_data.end(); }
+        constexpr const_iterator end() const noexcept{ return m_data.end(); }
+
         constexpr bool add(const content &eList, const bool overwrite = true)
         {
             bool result{ true };
@@ -411,6 +416,9 @@ namespace lib::dicty
 		{
 			return set({ std::make_pair(key, value) }, overwrite);
 		}
+
+        constexpr ObjectDictionary::iterator begin_objects() noexcept { return m_objects.begin(); }
+        constexpr ObjectDictionary::const_iterator begin_objects() const noexcept{ return m_objects.begin(); }
 
 	private:
         ValueDictionary m_values;

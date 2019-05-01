@@ -116,10 +116,10 @@ namespace lib
 		constexpr bool empty() const noexcept { return m_size == 0; }
 		constexpr iterator begin() noexcept { return m_buffer; }
 		constexpr const_iterator begin() const noexcept { return m_buffer; }
+		constexpr const_iterator cbegin() const noexcept { return begin(); }
 		constexpr iterator end() noexcept { return m_buffer + m_size; }
 		constexpr const_iterator end() const noexcept { return m_buffer + m_size; }
-		constexpr const_iterator cbegin() const noexcept { return m_buffer; }
-		constexpr const_iterator cend() const noexcept { return m_buffer + m_size; }
+		constexpr const_iterator cend() const noexcept { return end(); }
 		constexpr T& front() noexcept { return m_buffer[0]; }
 		constexpr T& back() noexcept { return m_buffer[m_size > 0 ? (m_size - 1) : 0]; }
         constexpr const T& cfront() const noexcept { return m_buffer[0]; }
