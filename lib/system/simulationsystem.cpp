@@ -12,8 +12,8 @@ namespace lib::core
     };
 
     SimulationSystem::SimulationSystem()
-        : AppService{ }//,
-    //    priv_ { muptr<SimulationSystemPrivate>() } 
+        : AppService{ },
+        priv_ { muptr<SimulationSystemPrivate>() } 
     {}
 
     SimulationSystem::~SimulationSystem() = default;
