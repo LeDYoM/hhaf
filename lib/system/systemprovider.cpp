@@ -18,7 +18,6 @@ namespace lib::core
 {
     void SystemProvider::init(Host& host, IApp *iapp)
     {
-        uptr<SimulationSystem> f = muptr<SimulationSystem>();
         assert_release(iapp != nullptr, "Cannot create a SystemProvider with a nullptr app");
         host_ = &host;
         app_ = iapp;
@@ -28,8 +27,7 @@ namespace lib::core
         resource_manager_ = muptr<core::ResourceManager>(*this);
         random_system_ = muptr<RandomSystem>();
 		file_system_ = muptr<FileSystem>(*this);
-        // WTF
-        simulation_system_ = new SimulationSystem();
+        simulation_system_ = muptr<SimulationSystem>();
     }
 
     void SystemProvider::terminate()
@@ -39,7 +37,7 @@ namespace lib::core
         scene_manager_ = nullptr;
         input_system_ = nullptr;
         window_ = nullptr;
-        delete simulation_system_;
+        simulation_system_ = nullptr;
     }
 
     /*

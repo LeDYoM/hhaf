@@ -1,9 +1,11 @@
 #include "host.hpp"
+
 #include <lib/system/window.hpp>
 #include <lib/system/resourcemanager.hpp>
 #include <lib/system/randomsystem.hpp>
 #include <lib/system/inputsystem.hpp>
 #include <lib/system/filesystem/filesystem.hpp>
+#include <lib/system/simulationsystem.hpp>
 
 #include <backend_dev/include/iwindow.hpp>
 #include <lib/include/core/log.hpp>

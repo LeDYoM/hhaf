@@ -3,6 +3,7 @@
 #ifndef LIB_CORE_SYSTEM_SIMULATIONSYSTEM_INCLUDE_HPP
 #define LIB_CORE_SYSTEM_SIMULATIONSYSTEM_INCLUDE_HPP
 
+#include <mtypes/include/types.hpp>
 #include <lib/system/appservice.hpp>
 
 namespace lib::core

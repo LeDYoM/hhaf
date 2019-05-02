@@ -64,7 +64,7 @@ namespace lib
             uptr<scene::SceneManager> scene_manager_;
             uptr<RandomSystem> random_system_;
 			uptr<FileSystem> file_system_;
-            SimulationSystem* simulation_system_;
+            uptr<SimulationSystem> simulation_system_;
         };
     }
 }
