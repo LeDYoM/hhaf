@@ -8,7 +8,7 @@
 namespace lib::core
 {
     /**
-    * This system is intended to be used to symulate behaviours
+    * This system is intended to be used to simulate behaviours
     * to other systems
     */
     class SimulationSystem final : public AppService

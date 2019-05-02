@@ -3,7 +3,6 @@
 #include <mtypes/include/dicty.hpp>
 
 using namespace lib;
-using namespace lib::dicty;
 
 TEST_CASE("Dicty basic values", "[dicty][ValueDictionary]")
 {
@@ -267,7 +266,7 @@ TEST_CASE("dicty copy", "[dicty]")
 		CHECK(obj2.set("other_key4", obj["key4"]));
 		CHECK(obj2["other_key4"] == "value4");
 
-		CHECK_FALSE(obj2.set("other_invalid_key", obj["ínvalid_key"]));
+		CHECK_FALSE(obj2.set("other_invalid_key", obj["ï¿½nvalid_key"]));
 		CHECK_FALSE(obj2["other_invalid_key"].isValid());
 
 		// Ensure that the object is copied, not just linked.

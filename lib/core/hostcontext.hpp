@@ -21,14 +21,14 @@ namespace lib::core
     {
     public:
         explicit HostContext(Host *const host);
-        const dicty::BasicDictionary<str> &appParameters() const override;
+        const Dictionary<str> &appParameters() const override;
 
         const scene::SceneManager &sceneManager() const noexcept override;
         scene::SceneManager &sceneManager() noexcept override;
 
     private:
         Host *const m_host;
-        dicty::BasicDictionary<str> m_appParameters;
+        Dictionary<str> m_appParameters;
     };
 }
 

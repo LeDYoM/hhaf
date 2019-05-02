@@ -296,7 +296,7 @@ TEST_CASE("Parser basic", "[streams][SerializationStreamIn][translator][Parser]"
 
 	Parser parser(Scaner{ input }.scan());
 	parser.parse();
-	const dicty::Object& obj{ parser.innerObject() };
+	const Object& obj{ parser.innerObject() };
 
 	CHECK(parser.errors().empty());
 	CHECK(obj["id"] == "This is a string");
@@ -314,7 +314,7 @@ TEST_CASE("Parser: Object inside object", "[streams][SerializationStreamIn][tran
 
 	Parser parser(Scaner{ input }.scan());
 	parser.parse();
-	const dicty::Object& obj{ parser.innerObject() };
+	const Object& obj{ parser.innerObject() };
 
 	CHECK(parser.errors().empty());
 	CHECK(obj.size_objects() == 1U);
@@ -339,7 +339,7 @@ TEST_CASE("Parser: Object inside object with numerical values", "[streams][Seria
 
 	Parser parser(Scaner{ input }.scan());
 	parser.parse();
-	const dicty::Object& obj{ parser.innerObject() };
+	const Object& obj{ parser.innerObject() };
 	CHECK(parser.errors().empty());
 	CHECK(obj.size_objects() == 1U);
 	CHECK(obj.size_values() == 1U);
@@ -363,7 +363,7 @@ TEST_CASE("Parser list str properties", "[streams][SerializationStreamIn][transl
 
 	Parser parser(Scaner{ input }.scan());
 	parser.parse();
-	const dicty::Object& obj{ parser.innerObject() };
+	const Object& obj{ parser.innerObject() };
 
 	CHECK(parser.errors().empty());
 	CHECK(obj["id"][0U] == "a");
@@ -390,7 +390,7 @@ TEST_CASE("Parser list object properties", "[streams][SerializationStreamIn][tra
 
 	Parser parser(Scaner{ input }.scan());
 	parser.parse();
-	const dicty::Object& obj{ parser.innerObject() };
+	const Object& obj{ parser.innerObject() };
 
 	CHECK(parser.errors().empty());
 	CHECK(obj["ids"][0U]["name"] == "pepito");
@@ -415,7 +415,7 @@ TEST_CASE("Parser list object and values as properties", "[streams][Serializatio
 
 	Parser parser(Scaner{ input }.scan());
 	parser.parse();
-	const dicty::Object& obj{ parser.innerObject() };
+	const Object& obj{ parser.innerObject() };
 
 	CHECK(parser.errors().empty());
 	CHECK(obj["ids"][0U]["name"] == "pepito");
@@ -442,7 +442,7 @@ TEST_CASE("Parser list of lists object and values as properties", "[streams][Ser
 
 	Parser parser(Scaner{ input }.scan());
 	parser.parse();
-	const dicty::Object& obj{ parser.innerObject() };
+	const Object& obj{ parser.innerObject() };
 
 	CHECK(parser.errors().empty());
 	CHECK(obj["ids"][0U][0U]["name"] == "pepito");
@@ -470,7 +470,7 @@ TEST_CASE("Parser list of lists object and values as properties with new sintax"
 
 	Parser parser(Scaner{ input }.scan());
 	parser.parse();
-	const dicty::Object& obj{ parser.innerObject() };
+	const Object& obj{ parser.innerObject() };
 
 	CHECK(parser.errors().empty());
 	CHECK(obj["ids"][0U][0U]["name"] == "pepito");
@@ -489,7 +489,7 @@ TEST_CASE("Simple list", "[streams][SerializationStreamIn][translator][Parser]")
 
 	Parser parser(Scaner{ input }.scan());
 	parser.parse();
-	const dicty::Object& obj{ parser.innerObject() };
+	const Object& obj{ parser.innerObject() };
 
 	CHECK(parser.errors().empty());
 	CHECK(obj["ids"][0U] == "a");

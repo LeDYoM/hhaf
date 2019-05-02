@@ -336,7 +336,7 @@ namespace lib
 			: tokens_begin_{ begin }, tokens_end_{ end } {}
 
 		template <typename T>
-		pair<dicty::Object, ErrorContainer> push_state()
+		pair<Object, ErrorContainer> push_state()
 		{
 			T p(tokens_begin_, tokens_end_);
 			InternalParserInterface& ref{ p };
@@ -466,7 +466,7 @@ namespace lib
 			return valid;
 		}
 
-		constexpr const dicty::Object &innerObject() const noexcept
+		constexpr const Object &innerObject() const noexcept
 		{
 			return obj_;
 		}
@@ -482,7 +482,7 @@ namespace lib
 		TokenVectorCIterator tokens_begin_;
 		const TokenVectorCIterator tokens_end_;
 		ErrorContainer errors_{};
-		dicty::Object obj_{};
+		Object obj_{};
 	};
 
 	class ListParser;
@@ -549,7 +549,7 @@ namespace lib
 
 			do
 			{
-				str property_name{ str(dicty::Object::arraySeparator) + str(counter) };
+				str property_name{ str(Object::arraySeparator) + str(counter) };
 				if (!storePendingValueAndAdvance(property_name))
 				{
 					// Error
@@ -616,7 +616,7 @@ namespace lib
 			}
 		}
 
-		constexpr const dicty::Object& result() const noexcept
+		constexpr const Object& result() const noexcept
 		{
 			return output_;
 		}
@@ -629,7 +629,7 @@ namespace lib
 	private:
 		ErrorContainer errors_;
 		str input_;
-		dicty::Object output_;
+		Object output_;
 	};
 }
 

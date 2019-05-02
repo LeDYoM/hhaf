@@ -56,7 +56,7 @@ namespace lib::core
         parpar::ParametersParser m_params;
 #endif
 
-        dicty::BasicDictionary<str> m_configuration;
+        Dictionary<str> m_configuration;
 
         ApplicationGroup m_appGroup;
     };
