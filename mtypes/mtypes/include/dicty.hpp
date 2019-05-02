@@ -291,7 +291,6 @@ namespace lib::dicty
             const str *m_value{nullptr};
         };
 
-
 		constexpr size_type size_objects() const noexcept
 		{
 			return m_objects.size();
@@ -419,6 +418,13 @@ namespace lib::dicty
 
         constexpr ObjectDictionary::iterator begin_objects() noexcept { return m_objects.begin(); }
         constexpr ObjectDictionary::const_iterator begin_objects() const noexcept{ return m_objects.begin(); }
+        constexpr ObjectDictionary::iterator end_objects() noexcept { return m_objects.end(); }
+        constexpr ObjectDictionary::const_iterator end_objects() const noexcept{ return m_objects.end(); }
+
+        constexpr ValueDictionary::iterator begin_values() noexcept { return m_values.begin(); }
+        constexpr ValueDictionary::const_iterator begin_values() const noexcept{ return m_values.begin(); }
+        constexpr ValueDictionary::iterator end_values() noexcept { return m_values.end(); }
+        constexpr ValueDictionary::const_iterator end_values() const noexcept{ return m_values.end(); }
 
 	private:
         ValueDictionary m_values;
