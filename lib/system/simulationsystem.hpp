@@ -19,6 +19,10 @@ namespace lib::core
         ~SimulationSystem() override;
 
         void update();
+
+    private:
+        struct SimulationSystemPrivate;
+        uptr<SimulationSystemPrivate> priv_;
     };
 }
 

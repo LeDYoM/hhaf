@@ -47,6 +47,5 @@ namespace lib
     private:
         core::SystemProvider &system_provider_;
     };
-
 }
 #endif
