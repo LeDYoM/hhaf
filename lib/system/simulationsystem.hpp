@@ -12,17 +12,13 @@ namespace lib::core
     * This system is intended to be used to simulate behaviours
     * to other systems
     */
-    class SimulationSystem final : public AppService
+    class SimulationSystem final : public HostedAppService
 	{
 	public:
-        SimulationSystem();
+        SimulationSystem(core::SystemProvider &system_provider);
         ~SimulationSystem() override;
 
         void update();
-
-    private:
-        class SimulationSystemPrivate;
-        uptr<SimulationSystemPrivate> priv_;
     };
 }
 

@@ -4,17 +4,11 @@
 
 namespace lib::core
 {
-    class SimulationSystem::SimulationSystemPrivate
+    SimulationSystem::SimulationSystem(core::SystemProvider &system_provider)
+		: HostedAppService{ system_provider }
     {
-    public:
-        SimulationSystemPrivate() {}
-        ~SimulationSystemPrivate() {}
-    };
-
-    SimulationSystem::SimulationSystem()
-        : AppService{ },
-        priv_ { muptr<SimulationSystemPrivate>() } 
-    {}
+        
+    }
 
     SimulationSystem::~SimulationSystem() = default;
 

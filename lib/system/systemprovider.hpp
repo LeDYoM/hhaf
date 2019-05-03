@@ -20,21 +20,19 @@ namespace lib
     }
     namespace core
     {
-        class Host;
-        class Window;
-        class ResourceManager;
-        class RandomSystem;
 		class FileSystem;
+        class Host;
+        class RandomSystem;
+        class ResourceManager;
         class SimulationSystem;
+        class TimeSystem;
+        class Window;
 
         class SystemProvider
         {
         public:
             void init(Host& host, IApp *iapp);
             void terminate();
-
-//            const core::Host &host() const noexcept;
-//            core::Host &host() noexcept;
 
             template <typename T>
             T &app() { return *(dynamic_cast<T*>(&app())); }
@@ -54,6 +52,8 @@ namespace lib
 			FileSystem &fileSystem() noexcept;
 			const SimulationSystem &simulationSystem() const noexcept;
             SimulationSystem &simulationSystem() noexcept;
+			const TimeSystem &timeSystem() const noexcept;
+            TimeSystem &timeSystem() noexcept;
 
         private:
             core::Host* host_;
@@ -65,6 +65,7 @@ namespace lib
             uptr<RandomSystem> random_system_;
 			uptr<FileSystem> file_system_;
             uptr<SimulationSystem> simulation_system_;
+            uptr<TimeSystem> time_system_;
         };
     }
 }

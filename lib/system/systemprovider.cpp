@@ -5,6 +5,7 @@
 #include "inputsystem.hpp"
 #include "simulationsystem.hpp"
 #include "filesystem/filesystem.hpp"
+#include "timesystem.hpp"
 
 #include <backend_dev/include/iwindow.hpp>
 #include <lib/include/core/log.hpp>
@@ -21,13 +22,14 @@ namespace lib::core
         assert_release(iapp != nullptr, "Cannot create a SystemProvider with a nullptr app");
         host_ = &host;
         app_ = iapp;
-        window_ = muptr<Window>(app_->getAppDescriptor().wcp);
+        time_system_ = muptr<TimeSystem>();
+        window_ = muptr<Window>(*this, app_->getAppDescriptor().wcp);
         input_system_ = muptr<input::InputSystem>(window_->inputDriver());
         scene_manager_ = muptr<scene::SceneManager>(*this);
         resource_manager_ = muptr<core::ResourceManager>(*this);
         random_system_ = muptr<RandomSystem>();
 		file_system_ = muptr<FileSystem>(*this);
-        simulation_system_ = muptr<SimulationSystem>();
+        simulation_system_ = muptr<SimulationSystem>(*this);
     }
 
     void SystemProvider::terminate()
@@ -38,19 +40,8 @@ namespace lib::core
         input_system_ = nullptr;
         window_ = nullptr;
         simulation_system_ = nullptr;
+        time_system_ = nullptr;
     }
-
-    /*
-    const core::Host & SystemProvider::host() const noexcept
-    {
-        return *host_;
-    }
-
-    core::Host & SystemProvider::host() noexcept
-    {
-        return *host_;
-    }
-    */
 
     IApp &SystemProvider::app()
     {
@@ -125,5 +116,15 @@ namespace lib::core
     SimulationSystem & SystemProvider::simulationSystem() noexcept
     {
         return *simulation_system_;
+    }
+
+    const TimeSystem &SystemProvider::timeSystem() const noexcept
+    {
+        return *time_system_;
+    }
+
+    TimeSystem &SystemProvider::timeSystem() noexcept
+    {
+        return *time_system_;
     }
 }

@@ -97,6 +97,24 @@ namespace lib
         return Time{ millis, TimeInitializationTag::Milliseconds };
     }
 
+	class TimePoint
+	{
+	public:
+		constexpr TimePoint(const u64 nanoseconds) noexcept
+			: nanoseconds_{nanoseconds} {}
+
+		constexpr u64 nanoseconds() const noexcept { return nanoseconds_; }
+		constexpr u64 microseconds() const noexcept { return static_cast<u64>(nanoseconds_ / static_cast<u64>(1000U)); }
+		constexpr u64 milliseconds() const noexcept { return static_cast<u64>(nanoseconds_ / static_cast<u64>(1000000U)); }
+		constexpr u64 seconds() const noexcept { return static_cast<u64>(nanoseconds_ / static_cast<u64>(1000000000U)); }
+	private:
+		u64 nanoseconds_;
+	};
+
+	constexpr TimePoint operator-(const TimePoint& lhs, const TimePoint& rhs)
+	{
+		return { lhs.nanoseconds() - rhs.nanoseconds() };
+	}
 }
 
 #endif
