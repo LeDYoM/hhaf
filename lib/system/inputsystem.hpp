@@ -21,12 +21,8 @@ namespace lib
         {
         public:
             InputSystem(backend::IInputDriver* const input_driver);
-            ~InputSystem();
+            ~InputSystem() override;
 
-            void injectInputDriver(backend::IInputDriver *a_input_driver);
-
-            void keyPressed(const Key key);
-            void keyReleased(const Key key);
             void update();
 
             const vector<Key> &pressedKeys() const noexcept;
@@ -34,7 +30,10 @@ namespace lib
             const KeyStates &keyStates() const noexcept { return m_keyStates; }
 
         private:
-            backend::IInputDriver* input_driver_;
+			void keyPressed(const Key key);
+			void keyReleased(const Key key);
+
+			backend::IInputDriver* input_driver_;
             KeyStates m_keyStates;
 			vector<Key> m_pressedKeys;
 			vector<Key> m_releasedKeys;
