@@ -34,8 +34,7 @@ namespace lib
             const KeyStates &keyStates() const noexcept { return m_keyStates; }
 
         private:
-            void updateInputDriver(backend::IInputDriver *const input_driver);
-            backend::IInputDriver* input_driver_[2];
+            backend::IInputDriver* input_driver_;
             KeyStates m_keyStates;
 			vector<Key> m_pressedKeys;
 			vector<Key> m_releasedKeys;

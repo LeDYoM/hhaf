@@ -8,7 +8,7 @@ namespace lib::core
     enum class SimulationActionType : u8
     {
 
-    }
+    };
 
     struct SimulationAction
     {
