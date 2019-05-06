@@ -10,20 +10,6 @@ namespace lib::input
 
 	InputSystem::~InputSystem() = default;
 
-	void InputSystem::keyPressed(const Key key)
-	{
-		assert_release(key < Key::KeyCount, "Incorrect key value");
-		m_keyStates[key] = true;
-		m_pressedKeys.push_back(key);
-	}
-
-	void InputSystem::keyReleased(const Key key)
-	{
-		assert_release(key < Key::KeyCount, "Incorrect key value");
-		m_keyStates[key] = false;
-		m_releasedKeys.push_back(key);
-	}
-
 	void InputSystem::update()
 	{
         m_pressedKeys.clear();
@@ -50,5 +36,19 @@ namespace lib::input
 	const vector<Key>& InputSystem::releasedKeys() const noexcept
 	{
 		return m_releasedKeys;
+	}
+
+	void InputSystem::keyPressed(const Key key)
+	{
+		assert_release(key < Key::KeyCount, "Incorrect key value");
+		m_keyStates[key] = true;
+		m_pressedKeys.push_back(key);
+	}
+
+	void InputSystem::keyReleased(const Key key)
+	{
+		assert_release(key < Key::KeyCount, "Incorrect key value");
+		m_keyStates[key] = false;
+		m_releasedKeys.push_back(key);
 	}
 }
