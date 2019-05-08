@@ -56,11 +56,11 @@ namespace lib::input
 
     void InputSystem::pressKey(const Key key)
     {
-        keyPressed(key);
+        input_driver_->keyPressed(key);
     }
 
     void InputSystem::releaseKey(const Key key)
     {
-        keyReleased(key);
+        input_driver_->keyReleased(key);
     }
 }
