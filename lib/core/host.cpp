@@ -196,6 +196,7 @@ namespace lib::core
     bool Host::loopStep()
     {
         const bool windowWants2Close{ parentWindow().preLoop() };
+        simulationSystem().update();
         inputSystem().update();
         sceneManager().update();
 

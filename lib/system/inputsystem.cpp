@@ -41,6 +41,7 @@ namespace lib::input
 	void InputSystem::keyPressed(const Key key)
 	{
 		assert_release(key < Key::KeyCount, "Incorrect key value");
+        log_debug_info("InputSystem: Key pressed: ", key);
 		m_keyStates[key] = true;
 		m_pressedKeys.push_back(key);
 	}
@@ -48,7 +49,18 @@ namespace lib::input
 	void InputSystem::keyReleased(const Key key)
 	{
 		assert_release(key < Key::KeyCount, "Incorrect key value");
+        log_debug_info("InputSystem: Key released: ", key);
 		m_keyStates[key] = false;
 		m_releasedKeys.push_back(key);
 	}
+
+    void InputSystem::pressKey(const Key key)
+    {
+        keyPressed(key);
+    }
+
+    void InputSystem::releaseKey(const Key key)
+    {
+        keyReleased(key);
+    }
 }

@@ -29,6 +29,14 @@ namespace lib
             const vector<Key> &releasedKeys() const noexcept;
             const KeyStates &keyStates() const noexcept { return m_keyStates; }
 
+            /// Force or simulate a key press.
+            /// @param key @b Key to be added.
+            void pressKey(const Key key);
+
+            /// Force or simulate a key release.
+            /// @param key @b Key to be added.
+            void releaseKey(const Key key);
+
         private:
 			void keyPressed(const Key key);
 			void keyReleased(const Key key);
