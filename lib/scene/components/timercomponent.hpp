@@ -14,7 +14,7 @@
 
 namespace lib::scene
 {
-    using timer_emitter_t = emitter<Time>;
+    using timer_emitter_t = emitter<TimePoint>;
     using timer_callback_t = timer_emitter_t::emitter_callback_t;
 
     enum class TimerType : u8
@@ -26,7 +26,7 @@ namespace lib::scene
     class TimerConnector
     {
     public:
-        TimerConnector(TimerType timerType, Time timeOut, timer_callback_t emitter)
+        TimerConnector(TimerType timerType, TimePoint timeOut, timer_callback_t emitter)
             : m_timer{ }, m_timeOut{ std::move(timeOut) },
             m_emitter{ std::move(emitter) }, m_timerType{ timerType } {}
 
@@ -37,7 +37,7 @@ namespace lib::scene
 
     private:
         PausableTimer m_timer;
-        Time m_timeOut;
+        TimePoint m_timeOut;
         timer_emitter_t m_emitter;
         TimerType m_timerType;
         friend class TimerComponent;
@@ -48,7 +48,7 @@ namespace lib::scene
     class TimerComponent : public IComponent
 	{
 	public:
-        TimerConnectorSPtr addTimer(TimerType timerType, Time timeOut, timer_callback_t callback) {
+        TimerConnectorSPtr addTimer(TimerType timerType, TimePoint timeOut, timer_callback_t callback) {
             auto timerConnector(msptr<TimerConnector>(timerType, std::move(timeOut), std::move(callback)));
             m_activeTimers.push_back(timerConnector);
             return timerConnector;

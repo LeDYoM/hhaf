@@ -109,12 +109,14 @@ namespace zoper
 
         m_nextTokenTimer = m_sceneTimerComponent->addTimer(
             TimerType::Continuous,
-            TimeFromMillis(levelProperties->millisBetweenTokens()),
-            [this](Time realEllapsed) {
-            log_debug_info("Elapsed between tokens: ", realEllapsed.asMilliSeconds());
-            // New token
-            generateNextToken();
-        });
+            TimePoint_as_miliseconds(levelProperties->millisBetweenTokens()),
+            [this](TimePoint realEllapsed) 
+            {
+                log_debug_info("Elapsed between tokens: ", realEllapsed.milliseconds());
+                // New token
+                generateNextToken();
+            }
+        );
 
         // Set state controll.
         {
@@ -155,7 +157,7 @@ namespace zoper
             m_data->m_pauseSceneNode->visible = true;
             auto animationComponent(m_data->m_pauseSceneNode->ensureComponentOfType<anim::AnimationComponent>());
             animationComponent->addAnimation(muptr<anim::IPropertyAnimation<FillColor_t>>(
-                TimeFromMillis(1000), 
+                TimePoint_as_miliseconds(1000), 
                 m_data->m_pauseText->textColor, FillColor_t{Color{ 255, 255, 255, 0 } },
                                  FillColor_t{Color{ 255, 255, 255, 255 } }));
 		}
@@ -351,11 +353,11 @@ namespace zoper
                 auto animationComponent(sceneNode->ensureComponentOfType<anim::AnimationComponent>());
                 animationComponent->
                     addAnimation(muptr<anim::IPropertyAnimation<vector2df>>(
-                        TimeFromMillis(gameplay::constants::MillisAnimationPointsToScore),
+                        TimePoint_as_miliseconds(gameplay::constants::MillisAnimationPointsToScore),
                         sceneNode->position,
                         lastTokenPosition, gameplay::constants::EndPositionPointsToScore));
                 m_sceneTimerComponent->addTimer(TimerType::OneShot, 
-                    TimeFromMillis(gameplay::constants::MillisAnimationPointsToScore),
+                    TimePoint_as_miliseconds(gameplay::constants::MillisAnimationPointsToScore),
                     [this, sceneNode](auto) { removeSceneNode(sceneNode); } );
 
                 m_player->launchAnimation(lastTokenPosition);

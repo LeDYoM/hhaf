@@ -56,7 +56,7 @@ namespace zoper
         auto animationComponent(ensureComponentOfType<anim::AnimationComponent>());
         animationComponent->addAnimation(muptr<anim::IPropertyAnimation<vector2df>>
         (
-            TimeFromMillis(
+            TimePoint_as_miliseconds(
                 parentSceneAs<GameScene>()->
                     ensureComponentOfType<LevelProperties>()->millisBetweenTokens() / 2
             ),
