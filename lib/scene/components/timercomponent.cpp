@@ -10,8 +10,10 @@ namespace lib::scene
     void update_(vector_shared_pointers<TimerConnector> &activeTimers,
         function<void(sptr<TimerConnector>)> updateFunction)
     {
-        if (!(activeTimers.empty())) {
-            for (auto &sptr_timerConnector : activeTimers) {
+        if (!(activeTimers.empty())) 
+        {
+            for (auto &sptr_timerConnector : activeTimers) 
+            {
                 updateFunction(sptr_timerConnector);
             }
         }
@@ -19,24 +21,31 @@ namespace lib::scene
 
     void TimerComponent::update()
     {
-        if (!(m_activeTimers.empty())) {
+        if (!(m_activeTimers.empty()))
+        {
             bool someDeleted{ false };
-            for (auto &sptr_timerConnector : m_activeTimers) {
+            for (auto &sptr_timerConnector : m_activeTimers)
+            {
                 TimerConnector &timerConnector{ *sptr_timerConnector };
-                if (timerConnector.timeOut()) {
+                if (timerConnector.timeOut())
+                {
                     // Delta time has passed, so trigger
                     // the callback and update the timer
                     timerConnector.m_emitter(timerConnector.m_timer.ellapsed());
-                    if (timerConnector.m_timerType == TimerType::Continuous) {
+                    if (timerConnector.m_timerType == TimerType::Continuous)
+                    {
                         timerConnector.m_timer.restart();
-                    } else {
+                    }
+                    else
+                    {
                         sptr_timerConnector.reset();
                         someDeleted = true;
                     }
                 }
             }
 
-            if (someDeleted) {
+            if (someDeleted) 
+            {
                 m_activeTimers.remove_values(nullptr);
             }
         }

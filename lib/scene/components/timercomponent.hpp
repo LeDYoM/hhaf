@@ -48,7 +48,8 @@ namespace lib::scene
     class TimerComponent : public IComponent
 	{
 	public:
-        TimerConnectorSPtr addTimer(TimerType timerType, TimePoint timeOut, timer_callback_t callback) {
+        TimerConnectorSPtr addTimer(TimerType timerType, TimePoint timeOut, timer_callback_t callback)
+        {
             auto timerConnector(msptr<TimerConnector>(timerType, std::move(timeOut), std::move(callback)));
             m_activeTimers.push_back(timerConnector);
             return timerConnector;
