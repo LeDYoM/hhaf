@@ -76,11 +76,6 @@ namespace lib::scene
         std::for_each(m_renderNodes.cbegin(), m_renderNodes.cend(), action);
     }
 
-    void SceneNode::for_each_group(function<void(const sptr<SceneNode>&)> action) const
-    {
-        std::for_each(m_groups.cbegin(), m_groups.cend(), action);
-    }
-
     void SceneNode::addRenderizable(sptr<Renderizable> newElement)
     {
         m_renderNodes.push_back(std::move(newElement));
