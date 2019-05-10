@@ -3,7 +3,7 @@
 #include <lib/core/host.hpp>
 #include <lib/include/core/log.hpp>
 
-#include "../zoper_game/app.hpp"
+#include "apploader.hpp"
 
 namespace lib
 {
@@ -18,7 +18,8 @@ namespace lib
 			installMemManager();
 
 			core::Host::createHost(argc, argv);
-			core::Host::host().setApplication(uptr<IApp>(createApp()));
+            core::AppLoader app_loader;
+			core::Host::host().setApplication(app_loader.loadApp("zooper_game"));
             int run_result(result = core::Host::host().run());
 			core::Host::destroyHost();
             result = run_result;

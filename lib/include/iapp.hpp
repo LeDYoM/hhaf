@@ -39,4 +39,7 @@ namespace lib
     };
 }
 
+using p_initApp = lib::IApp *(*)();
+using p_finishApp = bool (*)(lib::IApp* const);
+
 #endif

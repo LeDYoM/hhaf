@@ -26,7 +26,7 @@ namespace lib::core
 {
     struct ApplicationGroup
     {
-        uptr<IApp> m_iapp;
+        AppUniquePtr m_iapp;
         uptr<HostContext> m_hostContext;
         uptr<AppContext> m_appContext;
     };
@@ -109,7 +109,7 @@ namespace lib::core
 
     Host::~Host() = default;
 
-    bool Host::setApplication(uptr<IApp> iapp)
+    bool Host::setApplication(AppUniquePtr iapp)
     {
         if (!m_private->m_appGroup.m_iapp && iapp) 
         {
