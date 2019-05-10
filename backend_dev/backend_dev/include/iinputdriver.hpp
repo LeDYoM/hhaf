@@ -19,6 +19,9 @@ namespace lib::backend
 
 		virtual input::Key popKeyPress() = 0;
 		virtual input::Key popKeyRelease() = 0;
+
+		virtual void keyPressed(const input::Key) = 0;
+		virtual void keyReleased(const input::Key) = 0;
 	};
 }
 

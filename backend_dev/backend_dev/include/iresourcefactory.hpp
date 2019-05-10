@@ -4,6 +4,7 @@
 #define LIB_BACKEND_IRESOURCE_FACTORY_INCLUDE_HPP
 
 #include <mtypes/include/str.hpp>
+#include <mtypes/include/rawmemory.hpp>
 
 namespace lib::backend
 {
@@ -11,7 +12,8 @@ namespace lib::backend
 	class IResourceFactory
 	{
 	public:
-		virtual T* loadFromFile(const str &file) = 0;
+		virtual T* loadFromFile(const str &) = 0;
+		virtual T* loadFromRawMemory(RawMemory *) { return nullptr; }
 		virtual ~IResourceFactory() {}
 	};
 }

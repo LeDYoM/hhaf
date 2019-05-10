@@ -1,15 +1,18 @@
 #include "host.hpp"
-#include <lib/system/window.hpp>
-#include <lib/system/resourcemanager.hpp>
-#include <lib/system/randomsystem.hpp>
-#include <lib/system/inputsystem.hpp>
 
 #include <backend_dev/include/iwindow.hpp>
-#include <lib/include/core/log.hpp>
-#include <lib/core/backendfactory.hpp>
 #include <lib/core/appcontext.hpp>
+#include <lib/core/backendfactory.hpp>
 #include <lib/core/hostcontext.hpp>
+#include <lib/include/core/log.hpp>
 #include <lib/scene/scenemanager.hpp>
+#include <lib/system/filesystem/filesystem.hpp>
+#include <lib/system/inputsystem.hpp>
+#include <lib/system/randomsystem.hpp>
+#include <lib/system/resourcemanager.hpp>
+#include <lib/system/simulationsystem.hpp>
+#include <lib/system/timesystem.hpp>
+#include <lib/system/window.hpp>
 
 #include <mtypes/include/parpar.hpp>
 #include <mtypes/include/dicty.hpp>
@@ -55,7 +58,7 @@ namespace lib::core
         parpar::ParametersParser m_params;
 #endif
 
-        dicty::BasicDictionary<str> m_configuration;
+        Dictionary<str> m_configuration;
 
         ApplicationGroup m_appGroup;
     };
@@ -193,6 +196,7 @@ namespace lib::core
     bool Host::loopStep()
     {
         const bool windowWants2Close{ parentWindow().preLoop() };
+        simulationSystem().update();
         inputSystem().update();
         sceneManager().update();
 

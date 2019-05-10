@@ -67,7 +67,7 @@ namespace zoper
         auto animationComponent(ensureComponentOfType<anim::AnimationComponent>());
         animationComponent->
             addAnimation(muptr<anim::IPropertyAnimation<vector2df>>(
-                TimeFromMillis(gameplay::constants::MillisAnimationLaunchPlayerStep),
+                TimePoint_as_miliseconds(gameplay::constants::MillisAnimationLaunchPlayerStep),
                 position, 
                 position(), toWhere,
                 [this,currentPosition = std::move(currentPosition)]() { launchAnimationBack(currentPosition); }
@@ -98,7 +98,7 @@ namespace zoper
         auto animationComponent(ensureComponentOfType<anim::AnimationComponent>());
         animationComponent->
             addAnimation(muptr<anim::IPropertyAnimation<vector2df>>(
-                TimeFromMillis(gameplay::constants::MillisAnimationLaunchPlayerStep),
+                TimePoint_as_miliseconds(gameplay::constants::MillisAnimationLaunchPlayerStep),
                 position,
                 position(), toWhere,
                 [this]() { updateDirectionFromParameter(currentDirection()); }

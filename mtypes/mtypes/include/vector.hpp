@@ -116,10 +116,10 @@ namespace lib
 		constexpr bool empty() const noexcept { return m_size == 0; }
 		constexpr iterator begin() noexcept { return m_buffer; }
 		constexpr const_iterator begin() const noexcept { return m_buffer; }
+		constexpr const_iterator cbegin() const noexcept { return begin(); }
 		constexpr iterator end() noexcept { return m_buffer + m_size; }
 		constexpr const_iterator end() const noexcept { return m_buffer + m_size; }
-		constexpr const_iterator cbegin() const noexcept { return m_buffer; }
-		constexpr const_iterator cend() const noexcept { return m_buffer + m_size; }
+		constexpr const_iterator cend() const noexcept { return end(); }
 		constexpr T& front() noexcept { return m_buffer[0]; }
 		constexpr T& back() noexcept { return m_buffer[m_size > 0 ? (m_size - 1) : 0]; }
         constexpr const T& cfront() const noexcept { return m_buffer[0]; }
@@ -134,13 +134,14 @@ namespace lib
 			}
 		}
 
-		constexpr void swap(vector& other) noexcept {
+		constexpr void swap(vector& other) noexcept
+		{
 			std::swap(m_buffer, other.m_buffer);
 			std::swap(m_size, other.m_size);
 			std::swap(m_capacity, other.m_capacity);
 		}
 
-        constexpr size_type index_from_iterator(iterator it) const noexcept
+        constexpr size_type index_from_iterator(const const_iterator it) const noexcept
         {
             for (size_type i{ 0 }; i < m_size; ++i) 
             {
@@ -222,7 +223,22 @@ namespace lib
 			return remove_all_if(condition, begin());
 		}
 
-		constexpr iterator find(const T&element) noexcept {
+		constexpr decltype(auto) find_first_of(const vector& other) const noexcept
+		{
+			auto it(cbegin());
+			while (it != cend())
+			{
+				if (other.cfind(*it) != other.cend())
+				{
+					return it;
+				}
+				++it;
+			}
+			return it;
+		}
+
+		constexpr iterator find(const T&element) noexcept 
+		{
 			auto finder( begin() );
 			while (finder != end() && !(*finder == element)) ++finder;
 			return finder;

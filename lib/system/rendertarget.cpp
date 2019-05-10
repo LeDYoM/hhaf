@@ -2,7 +2,7 @@
 
 #include <backend_dev/include/irendertarget.hpp>
 #include <lib/scene/renderdata.hpp>
-#include <lib/scene/texture.hpp>
+#include <lib/resources/texture.hpp>
 
 namespace lib::core
 {

@@ -5,10 +5,29 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
-#include <mtypes/include/streams.hpp>
+#include <mtypes/include/streamin.hpp>
+#include <mtypes/include/streamout.hpp>
+#include <mtypes/include/rawmemory.hpp>
 
 namespace lib
 {
+	namespace core
+	{
+		class FileSystem;
+	};
+
+	class FileInputBinary
+	{
+	public:
+		const RawMemory& getRawMemory() const noexcept { return data_; }
+	private:
+		FileInputBinary(RawMemory raw_memory) noexcept
+			: data_{ std::move(raw_memory) } {}
+
+		friend class core::FileSystem;
+		RawMemory data_;
+	};
+
 	class FileInput
 	{
 	public:

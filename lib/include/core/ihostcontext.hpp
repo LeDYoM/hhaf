@@ -20,7 +20,7 @@ namespace lib::core
     {
     public:
         virtual ~IHostContext() {}
-        virtual const dicty::BasicDictionary<str> &appParameters() const = 0;
+        virtual const Dictionary<str> &appParameters() const = 0;
 
         virtual const scene::SceneManager &sceneManager() const noexcept = 0;
         virtual scene::SceneManager &sceneManager() noexcept = 0;

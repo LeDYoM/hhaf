@@ -1,6 +1,6 @@
 #include "catch.hpp"
 
-#include <mtypes/include/streams.hpp>
+#include <mtypes/include/streamin.hpp>
 #include <mtypes/include/types.hpp>
 
 using namespace lib;
@@ -50,6 +50,7 @@ TEST_CASE("SerializationStreamIn", "[streams][SerializationStreamIn]")
 
         CHECK(a == 1U);
         CHECK(b == 2U);
+		CHECK(ssi.eof());
     }
 
     SECTION("Simple 2")
@@ -79,7 +80,7 @@ TEST_CASE("SerializationStreamIn", "[streams][SerializationStreamIn]")
 
 TEST_CASE("SerializationStreamIn::append", "[streams][SerializationStreamIn]")
 {
-    SECTION("Test1: Appended string")
+    SECTION("Appended string")
     {
         str data("0,1,2,3");
         size_type a[10U] = { 0U };
@@ -96,7 +97,7 @@ TEST_CASE("SerializationStreamIn::append", "[streams][SerializationStreamIn]")
         CHECK(ssi.eof());
     }
 
-    SECTION("Test2: Appended string with divided numbers")
+    SECTION("Appended string with divided numbers")
     {
         str data("0,1,2,3,4,5,6,7,8,9");
         size_type a[11U] = { 0U };
@@ -112,7 +113,7 @@ TEST_CASE("SerializationStreamIn::append", "[streams][SerializationStreamIn]")
         CHECK(ssi.eof());
     }
 
-    SECTION("Test3: Append directly to the input stream")
+    SECTION("Append directly to the input stream")
     {
         SerializationStreamIn ssi;
         size_type a[10U] = { 0U };
@@ -126,29 +127,47 @@ TEST_CASE("SerializationStreamIn::append", "[streams][SerializationStreamIn]")
         ssi.append(",9 ");
         CHECK_FALSE(ssi.eof());
 
-        ssi >> a;
+        ssi.setUseNewLineAsSeparator(false) >> a;
 
         check_array(a);
         CHECK(ssi.eof());
     }
 
-    SECTION("Test3: Append directly to the input stream and handle \\n")
+    SECTION("Append directly to the input stream and handle \\n")
     {
         SerializationStreamIn ssi;
-        size_type a[10U] = { 0U };
+
+		size_type a[10U] = { 0U };
 
         CHECK(ssi.eof());
 
-        ssi << "0,1,2,3,4";
-        ssi.append(",5, ");
-        ssi << " 6,   7  ,";
-        ssi.append("8, 9");
-        CHECK_FALSE(ssi.eof());
+		SECTION("With new line as separator")
+		{
+			ssi << "0,1,2,3,4";
+			ssi.append(",5, ");
+			ssi << " 6,   7  ,";
+			ssi.append("8, 9");
+			CHECK_FALSE(ssi.eof());
 
-        ssi >> a;
+			ssi.setUseNewLineAsSeparator(false) >> a;
 
-        check_array(a);
-        CHECK(ssi.eof());
+			check_array(a);
+			CHECK(ssi.eof());
+		}
+
+		SECTION("Without new line as separator")
+		{
+			ssi << "0,1,2,3,4";
+			ssi.append("5");
+			ssi << " 6,   7  ";
+			ssi.append("8, 9");
+			CHECK_FALSE(ssi.eof());
+
+			ssi.setUseNewLineAsSeparator(true) >> a;
+
+			check_array(a);
+			CHECK(ssi.eof());
+		}
     }
 }
 
@@ -162,6 +181,27 @@ TEST_CASE("SerializationStreamIn: Output to string", "[streams][SerializationStr
     CHECK(out == "abc def");
     ssi >> out;
     CHECK(out == "ABC  DEF");
+}
+
+TEST_CASE("SerializationStreamIn: getLine", "[streams][SerializationStreamIn]")
+{
+	{
+		SerializationStreamIn ssi(string_vector{ "1,2,", "3,4", "5,6" });
+		CHECK_FALSE(ssi.eof());
+
+		str value[2];
+		ssi.setUseNewLineAsSeparator(false) >> value;
+		CHECK(value[0] == "1");
+		CHECK(value[1] == "2");
+
+		ssi.getLine(value[0]);
+		CHECK(value[0] == "3,4");
+
+		ssi >> value;
+		CHECK(value[0] == "5");
+		CHECK(value[1] == "6");
+		CHECK(ssi.eof());
+	}
 }
 
 TEST_CASE("SerializationStreamIn: Separtors", "[streams][SerializationStreamIn]")

@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_MTYPES_STREAMS_INCLUDE_HPP
-#define LIB_MTYPES_STREAMS_INCLUDE_HPP
+#ifndef LIB_MTYPES_STREAMIN_INCLUDE_HPP
+#define LIB_MTYPES_STREAMIN_INCLUDE_HPP
 
 #include "types.hpp"
 #include "str.hpp"
@@ -17,12 +17,21 @@ namespace lib
 
         SerializationStreamIn() = default;
         explicit SerializationStreamIn(str data) : data_{ std::move(data) } {}
-        explicit SerializationStreamIn(string_vector data)
+        explicit SerializationStreamIn(const string_vector& data)
         {
-            for (const str& line_data : data)
+			string_vector::const_iterator first = data.cbegin();
+			const string_vector::const_iterator last = data.cend();
+
+			if (first != last)
+			{
+				data_ = *first;
+				++first;
+			}
+
+            while (first != last)
             {
-                data_ += line_data;
-                data_ += "\n";
+				append(*first);
+				++first;
             }
         }
 
@@ -56,7 +65,29 @@ namespace lib
             return *this;
         }
 
-        inline SerializationStreamIn& disableSeparator()
+		constexpr SerializationStreamIn& extractRawDoubleQuotedStrings(const bool value) noexcept
+		{
+			extractDoubleQuotedRawStrings_ = value;
+			return *this;
+		}
+
+		constexpr bool extractRawDoubleQuotedStrings() noexcept
+		{
+			return extractDoubleQuotedRawStrings_;
+		}
+
+		constexpr SerializationStreamIn& setUseNewLineAsSeparator(const bool unlas) noexcept
+		{
+			useEndLineAsSeparator_ = unlas;
+			return *this;
+		}
+
+		constexpr bool useNewLineAsSeparator() const noexcept
+		{
+			return useEndLineAsSeparator_;
+		}
+
+        constexpr SerializationStreamIn& disableSeparator()
         {
             return separator(0);
         }
@@ -65,6 +96,17 @@ namespace lib
         {
             return separator_;
         }
+
+		inline SerializationStreamIn& getLine(str& line)
+		{
+			const auto current_separator{ separator() };
+			const bool old_new_line_as_separatr{ useNewLineAsSeparator() };
+			disableSeparator().setUseNewLineAsSeparator(true);
+			*this >> line;
+			return separator(current_separator).setUseNewLineAsSeparator(old_new_line_as_separatr);
+		}
+
+		const str& getData() const noexcept { return data_; }
 
     private:
         inline void remove_lwhitespaces()
@@ -77,18 +119,51 @@ namespace lib
             data_ = data_.substr(increment);
         }
 
+		inline vector<char> separators()
+		{
+			vector<char> result;
+			if (separator_ != 0U)
+			{
+				result.push_back(separator_);
+			}
+
+			if (useEndLineAsSeparator_)
+			{
+				result.push_back('\n');
+			}
+
+			if (extractDoubleQuotedRawStrings_)
+			{
+				result.push_back('\"');
+			}
+			return result;
+		}
+
         inline str extract_to_separator_and_update_data()
         {
             remove_lwhitespaces();
+			size_type separator_index;
 
-            const auto separator_index(data_.find_first_of(separator_));
-            str result(data_.substr(0, separator_index));
-            advance_data(std::max(separator_index, separator_index + 1));
+			if (!data_.empty() && data_[0] == '\"' && extractDoubleQuotedRawStrings_)
+			{
+				advance_data(1U);
+				separator_index = data_.find('\"');
+			}
+			else
+			{
+				separator_index = data_.find_first_of(separators());
+			}
+
+			str result(data_.substr(0, separator_index));
+            advance_data(std::max(separator_index + 1U, separator_index));
+
             return result;
         }
 
         str data_;
-        bool correct_{ true };
+		bool correct_{ true };
+		bool useEndLineAsSeparator_{ true };
+		bool extractDoubleQuotedRawStrings_{ true };
         char separator_{ ',' };
 	};
 
@@ -112,43 +187,6 @@ namespace lib
 	{
 		for (T& element : data) ssi >> element;
 		return ssi;
-	}
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	class SerializationStreamOut
-	{
-	public:
-
-		const str &data() const { return m_data; }
-
-		template <typename T>
-		friend SerializationStreamOut& operator<<(SerializationStreamOut&sso, const T&data);
-	private:
-		str m_data;
-	};
-
-	template <typename T>
-	SerializationStreamOut& operator<<(SerializationStreamOut&sso, const T&data)
-	{
-		str t;
-		t << data;
-		sso.m_data += t;
-		return sso;
-	}
-
-	template <typename T, size_type size>
-	SerializationStreamOut& operator<<(SerializationStreamOut&sso, const array<T,size> &data)
-	{
-		for (const auto& element : data) sso << element;
-		return sso;
-	}
-
-	template <typename T, size_type size>
-	SerializationStreamOut& operator<<(SerializationStreamOut&sso, const T data[size])
-	{
-		for (const auto& element : data) sso << element;
-		return sso;
 	}
 }
 

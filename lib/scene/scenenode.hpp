@@ -5,7 +5,6 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
-#include <mtypes/include/vsp.hpp>
 #include <lib/scene/transformable.hpp>
 #include <lib/scene/hasname.hpp>
 #include <lib/scene/components/icomponent.hpp>
@@ -109,18 +108,6 @@ namespace lib::scene
         }
 
         void for_each_node(function<void(const sptr<Renderizable> &)> action) const;
-
-        template <typename T>
-        constexpr void for_each_group_as(function<void(const sptr<T> &)> action)
-        {
-            for_each_group([&action](const sptr<SceneNode>&node) {
-                if (auto tnode = std::dynamic_pointer_cast<T>(node)) {
-                    action(tnode);
-                }
-            });
-        }
-
-        void for_each_group(function<void(const sptr<SceneNode> &)> action) const;
 
         BasicProperty<bool> visible;
 

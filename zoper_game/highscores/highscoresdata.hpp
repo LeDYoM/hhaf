@@ -5,7 +5,7 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/array.hpp>
-#include <mtypes/include/streams.hpp>
+#include <mtypes/include/streamin.hpp>
 
 namespace zoper
 {

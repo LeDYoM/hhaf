@@ -3,6 +3,7 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/rect.hpp>
+#include <mtypes/include/rawmemory.hpp>
 #include <backend_dev/include/ittfont.hpp>
 #include <backend_dev/include/itexture.hpp>
 
@@ -12,11 +13,11 @@
 
 namespace lib::backend::sfmlb
 {
-    class TextureTTFont;
+    class Texture;
 	class TTFont : public ITTFont
 	{
 	public:
-		TTFont(uptr<sf::Font> f);
+		TTFont(uptr<sf::Font> f, RawMemory raw_memory);
         ~TTFont() override;
 
 		Rectf32 getBounds(const u32 codePoint, const u32 characterSize) const override;
@@ -27,7 +28,8 @@ namespace lib::backend::sfmlb
 		ITexture *getTexture(const u32 characterSize) override;
 	private:
 		uptr<sf::Font> m_font;
-		std::map<u32, uptr<TextureTTFont>> m_fontTexturesCache;
+		RawMemory raw_memory_;
+		std::map<u32, uptr<Texture>> m_fontTexturesCache;
 	};
 }
 

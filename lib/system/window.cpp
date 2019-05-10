@@ -1,32 +1,29 @@
 #include "window.hpp"
 
+#include <backend_dev/include/irendertarget.hpp>
+#include <lib/core/backendfactory.hpp>
 #include <lib/include/core/log.hpp>
 #include <lib/include/core/timer.hpp>
-#include <backend_dev/include/irendertarget.hpp>
 #include <lib/include/iapp.hpp>
-
-#include <lib/system/inputsystem.hpp>
-#include <lib/system/rendertarget.hpp>
-#include <lib/core/backendfactory.hpp>
-
-#include <lib/scene/texture.hpp>
 #include <lib/scene/renderdata.hpp>
 #include <lib/scene/vertexarray.hpp>
+#include <lib/system/inputsystem.hpp>
+#include <lib/system/rendertarget.hpp>
+#include <lib/system/timesystem.hpp>
 
 namespace lib::core
 {
     struct Window::WindowPrivate final
     {
-        Timer globalClock;
-        u64 lastTimeFps{ 0 };
+        TimePoint lastTimeFps{ 0U };
         s32 lastFps{ 0 };
         s32 currentFps{ 0 };
         backend::IWindow* m_backendWindow{nullptr};
         sptr<RenderTarget> m_renderTarget{nullptr};
     };
 
-    Window::Window(const WindowCreationParams &wcp)
-        : AppService{ },
+    Window::Window(core::SystemProvider &system_provider, const WindowCreationParams &wcp)
+        : HostedAppService{ system_provider },
         m_wPrivate{ muptr<WindowPrivate>() }, m_title{ wcp.windowTitle }
     {
         create(wcp);
@@ -90,8 +87,10 @@ namespace lib::core
     bool Window::preLoop()
     {
         backend::IWindow &bw(*m_wPrivate->m_backendWindow);
-        auto eMs = m_wPrivate->globalClock.ellapsed().asMilliSeconds();
-        if ((eMs - m_wPrivate->lastTimeFps) > 1000) {
+//        auto eMs = m_wPrivate->globalClock.ellapsed().asMilliSeconds();
+        const TimePoint eMs = systemProvider().timeSystem().timeSinceStart();
+        if ((eMs - m_wPrivate->lastTimeFps).milliseconds() > 1000U)
+        {
             m_wPrivate->lastTimeFps = eMs;
             m_wPrivate->lastFps = m_wPrivate->currentFps;
             m_wPrivate->currentFps = 0;

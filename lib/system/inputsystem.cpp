@@ -6,46 +6,26 @@
 namespace lib::input
 {
 	InputSystem::InputSystem(backend::IInputDriver* const input_driver)
-        : AppService{ }, input_driver_{ input_driver, nullptr }, m_keyStates{} {}
+        : AppService{ }, input_driver_{ input_driver }, m_keyStates{} {}
 
 	InputSystem::~InputSystem() = default;
-
-    void InputSystem::injectInputDriver(backend::IInputDriver * a_input_driver)
-    {
-        input_driver_[1] = a_input_driver;
-    }
-
-	void InputSystem::keyPressed(const Key key)
-	{
-		assert_release(key < Key::KeyCount, "Incorrect key value");
-		m_keyStates[key] = true;
-		m_pressedKeys.push_back(key);
-	}
-
-	void InputSystem::keyReleased(const Key key)
-	{
-		assert_release(key < Key::KeyCount, "Incorrect key value");
-		m_keyStates[key] = false;
-		m_releasedKeys.push_back(key);
-	}
 
 	void InputSystem::update()
 	{
         m_pressedKeys.clear();
         m_releasedKeys.clear();
 
-        std::for_each(
-            std::begin(input_driver_), 
-            std::end(input_driver_),
-            [this](backend::IInputDriver* const id) 
-            { 
-                if (id != nullptr)
-                {
-                    updateInputDriver(id);
-                }
+        if (input_driver_->arePendingKeyPresses() || input_driver_->arePendingKeyReleases())
+        {
+            while (input_driver_->arePendingKeyPresses())
+            {
+                keyPressed(input_driver_->popKeyPress());
             }
-
-        );
+            while (input_driver_->arePendingKeyReleases())
+            {
+                keyReleased(input_driver_->popKeyRelease());
+            }
+        }
 	}
 
     const vector<Key>& InputSystem::pressedKeys() const noexcept
@@ -58,18 +38,29 @@ namespace lib::input
 		return m_releasedKeys;
 	}
 
-    void InputSystem::updateInputDriver(backend::IInputDriver * const input_driver)
+	void InputSystem::keyPressed(const Key key)
+	{
+		assert_release(key < Key::KeyCount, "Incorrect key value");
+        log_debug_info("InputSystem: Key pressed: ", key);
+		m_keyStates[key] = true;
+		m_pressedKeys.push_back(key);
+	}
+
+	void InputSystem::keyReleased(const Key key)
+	{
+		assert_release(key < Key::KeyCount, "Incorrect key value");
+        log_debug_info("InputSystem: Key released: ", key);
+		m_keyStates[key] = false;
+		m_releasedKeys.push_back(key);
+	}
+
+    void InputSystem::pressKey(const Key key)
     {
-        if (input_driver->arePendingKeyPresses() || input_driver->arePendingKeyReleases())
-        {
-            while (input_driver->arePendingKeyPresses())
-            {
-                keyPressed(input_driver->popKeyPress());
-            }
-            while (input_driver->arePendingKeyReleases())
-            {
-                keyReleased(input_driver->popKeyRelease());
-            }
-        }
+        input_driver_->keyPressed(key);
+    }
+
+    void InputSystem::releaseKey(const Key key)
+    {
+        input_driver_->keyReleased(key);
     }
 }

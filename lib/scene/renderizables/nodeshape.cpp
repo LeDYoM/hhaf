@@ -2,7 +2,7 @@
 #include "geometry_math.hpp"
 
 #include <lib/include/core/log.hpp>
-#include <lib/scene/texture.hpp>
+#include <lib/resources/texture.hpp>
 
 namespace lib::scene::nodes
 {

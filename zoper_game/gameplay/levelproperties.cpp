@@ -23,10 +23,12 @@ namespace zoper
 
         m_updateLevelDataTimer = m_sceneTimerComponent->addTimer(
             TimerType::Continuous,
-            TimeFromMillis(120),
-            [this](Time realEllapsed) {
-            updateLevelData();
-        });
+            TimePoint_as_miliseconds(120),
+            [this](TimePoint /*realEllapsed*/)
+            {
+                updateLevelData();
+            }
+        );
 
         m_gameHud = attachedNode()->createSceneNode<GameHudSceneNode>("hud");
         
@@ -95,9 +97,9 @@ namespace zoper
             break;
 
         case GameMode::Time:
-            m_gameHud->setEllapsedTimeInSeconds(m_levelTimer.ellapsed().asSeconds());
+            m_gameHud->setEllapsedTimeInSeconds(m_levelTimer.ellapsed().seconds());
             
-            if (m_levelTimer.ellapsed().asSeconds() >= m_stayCounter)
+            if (m_levelTimer.ellapsed().seconds() >= m_stayCounter)
             {
                 setLevel(m_currentLevel + 1);
             }

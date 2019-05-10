@@ -26,10 +26,10 @@ namespace lib
     {
         class RenderTarget;
         class Host;
-        class Window final : public AppService
+        class Window final : public HostedAppService
         {
         public:
-            Window(const WindowCreationParams &wcp);
+            Window(core::SystemProvider &system_provider, const WindowCreationParams &wcp);
             ~Window() override;
             bool preLoop();
             void postLoop();

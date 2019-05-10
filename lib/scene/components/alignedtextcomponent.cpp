@@ -1,7 +1,8 @@
 #include "alignedtextcomponent.hpp"
 
 #include <lib/scene/nodes/scenenodetext.hpp>
-#include <lib/scene/font.hpp>
+
+#include <lib/resources/font.hpp>
 
 namespace lib::scene
 {

@@ -1,9 +1,13 @@
 #include "resourcemanager.hpp"
+#include "systemprovider.hpp"
+#include "filesystem/filesystem.hpp"
+#include "filesystem/file.hpp"
+
 #include <lib/include/core/log.hpp>
 
-#include <lib/scene/ttfont.hpp>
-#include <lib/scene/texture.hpp>
-#include <lib/scene/shader.hpp>
+#include <lib/resources/ttfont.hpp>
+#include <lib/resources/texture.hpp>
+#include <lib/resources/shader.hpp>
 
 #include <lib/core/backendfactory.hpp>
 #include <algorithm>
@@ -19,8 +23,26 @@ namespace lib::core
 
     namespace
 	{
-        template <typename T, typename A>
-        inline auto get_or_add(A& factory, ResourceList<sptr<T>> &container, const str &rid, const str &fileName)
+		template <bool UseInternalFileSystem, typename T, typename V>
+		inline sptr<T> loadResource(backend::IResourceFactory<V>& factory, 
+			FileSystem& fileSystem, const str &fileName)
+		{
+			if constexpr (UseInternalFileSystem)
+			{
+				RawMemory data(fileSystem.loadBinaryFile(fileName));
+
+				// Prototype / check
+				return msptr<T>(factory.loadFromRawMemory(&data));
+			}
+			else
+			{
+				return msptr<T>(factory.loadFromFile(fileName));
+			}
+		}
+
+        template <bool UseInternalFileSystem, typename V, typename T>
+        inline sptr<T> get_or_add(backend::IResourceFactory<V>& factory, ResourceList<sptr<T>> &container, 
+			FileSystem& fileSystem, const str &rid, const str &fileName)
         {
             auto iterator(std::find_if(container.begin(), container.end(),
                 [rid](const auto &node) {return node.first == rid; }));
@@ -37,14 +59,14 @@ namespace lib::core
                 log_debug_info(rid, " not found on resource list.");
 
                 log_debug_info("Going to load file: ", fileName);
-                auto resource(msptr<T>(factory.loadFromFile(fileName)));
+                sptr<T> resource(loadResource<UseInternalFileSystem,T>(factory, fileSystem, fileName));
                 container.push_back(NamedIndex<sptr<T>>(rid, resource));
                 return resource;
             }
         }
 
-        template <typename T, typename A>
-        inline auto get_or_default(A& /*factory*/, ResourceList<sptr<T>> &container, const str &rid)
+        template <typename T>
+        inline auto get_or_default(ResourceList<sptr<T>> &container, const str &rid)
         {
             auto iterator(std::find_if(container.begin(), container.end(),
                 [rid](const auto &node) { return node.first == rid; }));
@@ -63,36 +85,37 @@ namespace lib::core
 		ResourceList<sptr<scene::Shader>> m_shaders;
     };
 
-    ResourceManager::ResourceManager() : AppService{ },
+    ResourceManager::ResourceManager(core::SystemProvider &system_provider) 
+		: HostedAppService{ system_provider },
         m_private{ muptr<ResourceManagerPrivate>() } {}
 
 	ResourceManager::~ResourceManager() = default;
 
 	sptr<scene::TTFont> ResourceManager::getFont(const str &rid)
 	{
-        return get_or_default(backend::ttfontFactory(), m_private->m_fonts, rid);
+        return get_or_default(m_private->m_fonts, rid);
     }
 
 	sptr<scene::Texture> ResourceManager::getTexture(const str &rid)
 	{
-        return get_or_default(backend::textureFactory(), m_private->m_textures, rid);
+        return get_or_default(m_private->m_textures, rid);
 	}
 
     sptr<scene::Shader> ResourceManager::getShader(const str &rid)
     {
-        return get_or_default(backend::shaderFactory(), m_private->m_shaders, rid);
+        return get_or_default(m_private->m_shaders, rid);
     }
 
     sptr<scene::TTFont> ResourceManager::loadFont(const str & rid, const str & fileName)
     {
-        return get_or_add(backend::ttfontFactory(), m_private->m_fonts, rid, fileName);
+        return get_or_add<true>(backend::ttfontFactory(), m_private->m_fonts, systemProvider().fileSystem(),  rid, fileName);
     }
     sptr<scene::Texture> ResourceManager::loadTexture(const str & rid, const str & fileName)
     {
-        return get_or_add(backend::textureFactory(), m_private->m_textures, rid, fileName);
+        return get_or_add<true>(backend::textureFactory(), m_private->m_textures, systemProvider().fileSystem(), rid, fileName);
     }
     sptr<scene::Shader> ResourceManager::loadShader(const str & rid, const str & fileName)
     {
-        return get_or_add(backend::shaderFactory(), m_private->m_shaders, rid, fileName);
+        return get_or_add<true>(backend::shaderFactory(), m_private->m_shaders, systemProvider().fileSystem(), rid, fileName);
     }
 }
