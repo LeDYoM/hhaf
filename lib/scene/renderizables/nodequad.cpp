@@ -1,7 +1,7 @@
 #include "nodequad.hpp"
 #include "geometry_math.hpp"
 
-#include <lib/include/core/log.hpp>
+#include <logger/include/log.hpp>
 
 namespace lib::scene::nodes
 {

@@ -2,7 +2,7 @@
 #include "constants.hpp"
 #include "tokenzones.hpp"
 
-#include <lib/include/core/log.hpp>
+#include <logger/include/log.hpp>
 
 #include <lib/scene/ianimation.hpp>
 #include <lib/scene/components/animationcomponent.hpp>

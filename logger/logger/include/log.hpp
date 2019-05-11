@@ -3,18 +3,14 @@
 #ifndef LIB_MTYPES_LOG_INCLUDE_HPP
 #define LIB_MTYPES_LOG_INCLUDE_HPP
 
-#include <lib/include/lib.hpp>
 #include <mtypes/include/str.hpp>
 #include <mtypes/include/function.hpp>
-
-#define LOG_EXPORT	LIB_API_EXPORT
+#include <iostream>
 
 namespace lib::log
 {
-    using log_function = function<void(const char*const)>;
-
-    void LOG_EXPORT init_log(log_function f = {});
-    void LOG_EXPORT finish_log();
+    inline void init_log() {}
+    inline void finish_log() {}
 
     enum severity_type { info, error };
     enum level_type { debug, release };
@@ -41,22 +37,16 @@ namespace lib::log
             }
         }
 
-        void LOG_EXPORT commitlog(str& log_stream);
+        inline void commitlog(str& log_stream) 
+        {
+            log_stream << "\n";
+            std::cout << log_stream.c_str();
+            std::cout.flush();
+        }
     }
     
     template<level_type level, severity_type severity, typename...Args>
     constexpr void log(Args&&...args) noexcept
-    {
-        if constexpr (compile_logs<level>)
-        {
-            str log_stream(detail::severity_txt<severity>());
-            log_stream << make_str(std::forward<Args>(args)...);
-            detail::commitlog(log_stream);
-        }
-    }
-
-    template<level_type level, typename T>
-    constexpr void execute_in() noexcept
     {
         if constexpr (compile_logs<level>)
         {

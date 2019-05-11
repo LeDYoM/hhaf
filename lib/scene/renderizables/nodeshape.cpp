@@ -1,7 +1,7 @@
 #include "nodeshape.hpp"
 #include "geometry_math.hpp"
 
-#include <lib/include/core/log.hpp>
+#include <logger/include/log.hpp>
 #include <lib/resources/texture.hpp>
 
 namespace lib::scene::nodes

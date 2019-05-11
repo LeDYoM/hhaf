@@ -2,7 +2,7 @@
 
 #include <mtypes/include/function.hpp>
 
-#include <lib/include/core/log.hpp>
+#include <logger/include/log.hpp>
 #include <lib/scene/scene.hpp>
 
 namespace lib::scene

@@ -11,6 +11,7 @@ add_library (${CURRENT_TARGET} ${ZOPER_SOURCES} ${ZOPER_HEADERS})
 include_directories(..)
 target_link_libraries(${CURRENT_TARGET} PRIVATE lib)
 target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
+target_link_libraries(${CURRENT_TARGET} PRIVATE logger)
 
 add_custom_command(TARGET ${CURRENT_TARGET} POST_BUILD
 	COMMAND ${CMAKE_COMMAND} -E copy_directory

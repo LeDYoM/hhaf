@@ -4,7 +4,7 @@
 #include <lib/core/appcontext.hpp>
 #include <lib/core/backendfactory.hpp>
 #include <lib/core/hostcontext.hpp>
-#include <lib/include/core/log.hpp>
+#include <logger/include/log.hpp>
 #include <lib/scene/scenemanager.hpp>
 #include <lib/system/filesystem/filesystem.hpp>
 #include <lib/system/inputsystem.hpp>

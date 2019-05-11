@@ -3,7 +3,7 @@
 #include "filesystem/filesystem.hpp"
 #include "filesystem/file.hpp"
 
-#include <lib/include/core/log.hpp>
+#include <logger/include/log.hpp>
 
 #include <lib/resources/ttfont.hpp>
 #include <lib/resources/texture.hpp>

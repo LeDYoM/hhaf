@@ -3,7 +3,7 @@
 #include <lib/resources/font.hpp>
 #include <lib/resources/texture.hpp>
 
-#include <lib/include/core/log.hpp>
+#include <logger/include/log.hpp>
 
 #include <lib/scene/vertexarray.hpp>
 #include <lib/scene/scenenodetypes.hpp>

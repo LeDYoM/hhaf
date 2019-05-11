@@ -32,6 +32,7 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 
 # Sub-directories where more CMakeLists.txt exist
 add_subdirectory(mtypes)
+add_subdirectory(logger)
 add_subdirectory(loader)
 add_subdirectory(backend_dev)
 add_subdirectory(lib)

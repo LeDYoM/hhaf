@@ -2,7 +2,7 @@
 
 #include <chrono>
 
-#include <lib/include/core/log.hpp>
+#include <logger/include/log.hpp>
 #include <lib/include/core/timer.hpp>
 
 namespace lib::core

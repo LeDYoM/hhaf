@@ -1,7 +1,7 @@
 #include <lib/include/main.hpp>
 #include <lib/core/memmanager.hpp>
 #include <lib/core/host.hpp>
-#include <lib/include/core/log.hpp>
+#include <logger/include/log.hpp>
 
 #include "apploader.hpp"
 #include "../zoper_game/app.hpp"

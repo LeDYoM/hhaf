@@ -8,7 +8,7 @@
 #include "timesystem.hpp"
 
 #include <backend_dev/include/iwindow.hpp>
-#include <lib/include/core/log.hpp>
+#include <logger/include/log.hpp>
 #include <lib/include/windowcreationparams.hpp>
 #include <lib/include/iapp.hpp>
 

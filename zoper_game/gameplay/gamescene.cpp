@@ -13,7 +13,7 @@
 #include <mtypes/include/properties.hpp>
 
 #include <lib/board/boardmodel.hpp>
-#include <lib/include/core/log.hpp>
+#include <logger/include/log.hpp>
 #include <lib/scene/renderizables/renderizable.hpp>
 #include <lib/scene/scenemanager.hpp>
 #include <lib/scene/renderizables/nodeshape.hpp>

@@ -1,6 +1,6 @@
 #include "renderizables.hpp"
 
-#include <lib/include/core/log.hpp>
+#include <logger/include/log.hpp>
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/scenemanager.hpp>
 

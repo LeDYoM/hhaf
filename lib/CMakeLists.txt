@@ -18,6 +18,7 @@ set (CURRENT_TARGET lib)
 add_library(${CURRENT_TARGET} ${_SOURCES} ${_HEADERS})
 
 target_link_libraries(${CURRENT_TARGET} PRIVATE loader)
+target_link_libraries(${CURRENT_TARGET} PRIVATE logger)
 target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
 target_link_libraries(${CURRENT_TARGET} PRIVATE backend_dev)
 

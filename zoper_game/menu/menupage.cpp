@@ -2,7 +2,7 @@
 #include "menupageinputcomponent.hpp"
 #include "../loaders/mainmenuresources.hpp"
 
-#include <lib/include/core/log.hpp>
+#include <logger/include/log.hpp>
 #include <lib/scene/scene.hpp>
 #include <lib/scene/renderizables/nodeshape.hpp>
 #include <lib/core/host.hpp>

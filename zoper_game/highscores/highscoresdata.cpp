@@ -1,7 +1,7 @@
 #include "highscoresdata.hpp"
 
 #include <lib/core/serializer.hpp>
-#include <lib/include/core/log.hpp>
+#include <logger/include/log.hpp>
 
 
 namespace zoper
