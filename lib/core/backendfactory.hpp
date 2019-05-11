@@ -34,10 +34,10 @@ namespace lib::backend
 		static BackendFactory *m_instance;
 	};
 
-	static inline BackendFactory &backendFactory() { return *(BackendFactory::instance()); }
-	static inline ITextureFactory &textureFactory() { return *(BackendFactory::instance()->getTextureFactory()); }
-	static inline ITTFontFactory &ttfontFactory() { return *(BackendFactory::instance()->getTTFontFactory()); }
-    static inline IShaderFactory &shaderFactory() { return *(BackendFactory::instance()->getShaderFactory()); }
+	inline BackendFactory &backendFactory() { return *(BackendFactory::instance()); }
+	inline ITextureFactory &textureFactory() { return *(BackendFactory::instance()->getTextureFactory()); }
+	inline ITTFontFactory &ttfontFactory() { return *(BackendFactory::instance()->getTTFontFactory()); }
+    inline IShaderFactory &shaderFactory() { return *(BackendFactory::instance()->getShaderFactory()); }
 }
 
 #endif

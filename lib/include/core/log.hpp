@@ -9,67 +9,66 @@
 
 #define LOG_EXPORT	LIB_API_EXPORT
 
+namespace lib::log
+{
+    using log_function = function<void(const char*const)>;
+
+    void LOG_EXPORT init_log(log_function f = {});
+    void LOG_EXPORT finish_log();
+
+    enum severity_type { info, error };
+    enum level_type { debug, release };
+
+    constexpr level_type compiled_log_level_type = level_type::debug;
+
+    template <level_type level>
+    constexpr bool compile_logs = compiled_log_level_type <= level;
+
+    namespace detail
+    {
+        template<severity_type severity>
+        constexpr const auto severity_txt() noexcept
+        {
+            switch (severity)
+            {
+            default:
+            case severity_type::info:
+                return "<INFO> :";
+                break;
+            case severity_type::error:
+                return "<ERROR> :";
+                break;
+            }
+        }
+
+        void LOG_EXPORT commitlog(str& log_stream);
+    }
+    
+    template<level_type level, severity_type severity, typename...Args>
+    constexpr void log(Args&&...args) noexcept
+    {
+        if constexpr (compile_logs<level>)
+        {
+            str log_stream(detail::severity_txt<severity>());
+            log_stream << make_str(std::forward<Args>(args)...);
+            detail::commitlog(log_stream);
+        }
+    }
+
+    template<level_type level, typename T>
+    constexpr void execute_in() noexcept
+    {
+        if constexpr (compile_logs<level>)
+        {
+            str log_stream(detail::severity_txt<severity>());
+            log_stream << make_str(std::forward<Args>(args)...);
+            detail::commitlog(log_stream);
+        }
+    }
+}
+
 namespace lib
 {
-	namespace log
-	{
-        using log_function = function<void(const char*const)>;
-
-        void LOG_EXPORT init_log(log_function f = {});
-		void LOG_EXPORT finish_log();
-
-		enum severity_type { info, error };
-		enum level_type { debug, release };
-
-		constexpr level_type compiled_log_level_type = level_type::debug;
-
-		template <level_type level>
-		constexpr bool compile_logs = compiled_log_level_type <= level;
-
-		namespace detail
-		{
-			template<severity_type severity>
-			constexpr const auto severity_txt() noexcept
-			{
-				switch (severity)
-				{
-				default:
-				case severity_type::info:
-					return "<INFO> :";
-					break;
-				case severity_type::error:
-					return "<ERROR> :";
-					break;
-				}
-			}
-
-			void LOG_EXPORT commitlog(str& log_stream);
-		}
-        
-   		template<level_type level, severity_type severity, typename...Args>
-		constexpr void log(Args&&...args) noexcept
-		{
-			if constexpr (compile_logs<level>)
-			{
-				str log_stream(detail::severity_txt<severity>());
-				log_stream << make_str(std::forward<Args>(args)...);
-				detail::commitlog(log_stream);
-			}
-		}
-
-   		template<level_type level, typename T>
-		constexpr void execute_in() noexcept
-		{
-			if constexpr (compile_logs<level>)
-			{
-				str log_stream(detail::severity_txt<severity>());
-				log_stream << make_str(std::forward<Args>(args)...);
-				detail::commitlog(log_stream);
-			}
-		}
-
-	}
-
 	template<typename ...Args>
 	constexpr void log_debug_info(Args&&... args) noexcept 
 	{
@@ -102,7 +101,6 @@ namespace lib
 	constexpr void assert_release(const bool condition, Args&&... args) noexcept {
 		if (!condition) { log_release_error(std::forward<Args>(args)...); }
 	}
-
 }
 
 #define CLIENT_EXECUTE_IN_DEBUG(x)	x

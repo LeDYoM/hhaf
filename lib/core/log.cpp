@@ -1,39 +1,36 @@
 #include <lib/include/core/log.hpp>
 #include <iostream>
 
-namespace lib
+namespace lib::log
 {
-    namespace log
+    namespace
     {
-        namespace
+        void userLogFunction(const char*const log_str)
         {
-            void userLogFunction(const char*const log_str)
-            {
-                std::cout << log_str;
-                std::cout.flush();
-            }
-
-            log_function log_function_callback{ userLogFunction };
+            std::cout << log_str;
+            std::cout.flush();
         }
 
-        void init_log(log_function f)
-        {
-            if (f) 
-            {
-                std::swap(log_function_callback, f);
-            }
-        }
+        log_function log_function_callback{ userLogFunction };
+    }
 
-        void finish_log()
+    void init_log(log_function f)
+    {
+        if (f) 
         {
+            std::swap(log_function_callback, f);
         }
+    }
 
-        namespace detail
-        {
-            void commitlog(str& log_stream) {
-                log_stream << "\n";
-                userLogFunction(log_stream.c_str());
-            }
+    void finish_log()
+    {
+    }
+
+    namespace detail
+    {
+        void commitlog(str& log_stream) {
+            log_stream << "\n";
+            userLogFunction(log_stream.c_str());
         }
     }
 }

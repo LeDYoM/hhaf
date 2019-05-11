@@ -1,5 +1,4 @@
 #include "backendregister.hpp"
-#include "backendregister.hpp"
 
 #include <lib/include/core/log.hpp>
 
