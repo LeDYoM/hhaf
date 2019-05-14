@@ -7,11 +7,9 @@
 
 namespace lib::scene
 {
-    using namespace backend;
-
     struct Shader::ShaderPrivate
     {
-        IShader *m_shader;
+        backend::IShader *m_shader;
     };
 
     Shader::Shader(backend::IShader* shader) :
