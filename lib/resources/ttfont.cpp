@@ -9,11 +9,9 @@
 
 namespace lib::scene
 {
-    using namespace backend;
-
     struct TTFont::FontPrivate
     {
-        ITTFont *m_font;
+        backend::ITTFont *m_font;
         std::map<u32,sptr<TTFontInstance>> m_fontMap;
     };
 
@@ -47,9 +45,9 @@ namespace lib::scene
         return m_private->m_font->getKerning(first, second, characterSize);
     }
 
-    sptr<Texture> TTFont::getTexture(const u32 characterSize) const
+    sptr<ITexture> TTFont::getTexture(const u32 characterSize) const
     {
-        return msptr<Texture>(m_private->m_font->getTexture(characterSize));
+        return std::dynamic_pointer_cast<ITexture>(msptr<Texture>(m_private->m_font->getTexture(characterSize)));
     }
 
     vector2df TTFont::textSize(const lib::str& text,

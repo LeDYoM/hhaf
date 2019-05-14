@@ -10,12 +10,12 @@
 #include <lib/scene/color.hpp>
 #include <lib/scene/hasname.hpp>
 #include <lib/scene/vertexarray.hpp>
+#include <lib/include/resources/itexture.hpp>
 
 namespace lib
 {
     namespace scene
     {
-        class Texture;
         class SceneNode;
 
         class Renderizable : public core::HasName
@@ -31,17 +31,17 @@ namespace lib
             PropertyState<Color> color;
             BasicProperty<bool> visible{ true };
 
-            void setTextureAndTextureRect(sptr<Texture> texture_,
+            void setTextureAndTextureRect(sptr<ITexture> texture_,
                                           const Rectf32& textRect);
 
-            void setTextureFill(sptr<Texture> texture_);
+            void setTextureFill(sptr<ITexture> texture_);
 
         private:
             SceneNode *m_parent;
 
         protected:
             PropertyState<Rects32> textureRect;
-            PropertyState<sptr<Texture>> texture;
+            PropertyState<sptr<ITexture>> texture;
 
             VertexArray m_vertices;
             bool m_geometryNeedsUpdate{ true };

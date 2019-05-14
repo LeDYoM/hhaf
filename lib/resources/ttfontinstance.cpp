@@ -39,9 +39,9 @@ namespace lib::scene
         return m_parentInstance.getKerning(first, second, m_characterSize);
     }
 
-    sptr<Texture> TTFontInstance::getTexture() const
+    sptr<ITexture> TTFontInstance::getTexture() const
     {
-        return m_parentInstance.getTexture(m_characterSize);
+        return std::dynamic_pointer_cast<ITexture>(m_parentInstance.getTexture(m_characterSize));
     }
 
     vector2df TTFontInstance::textSize(const str&text) const

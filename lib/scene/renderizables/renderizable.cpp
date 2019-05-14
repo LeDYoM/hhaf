@@ -34,7 +34,7 @@ namespace lib::scene
                         draw({
                     m_vertices,
                     m_parent->globalTransform(),
-                    texture().get()
+                    dynamic_cast<Texture*>(texture().get())
                 });
             }
         }
@@ -65,7 +65,7 @@ namespace lib::scene
     }
 
     void Renderizable::setTextureAndTextureRect
-        (sptr<Texture> texture_, const Rectf32& textRect)
+        (sptr<ITexture> texture_, const Rectf32& textRect)
     {
         texture.set(texture_);
         if (texture_) {
@@ -79,7 +79,7 @@ namespace lib::scene
         }
     }
 
-    void Renderizable::setTextureFill(sptr<Texture> texture_)
+    void Renderizable::setTextureFill(sptr<ITexture> texture_)
     {
         if (texture_)
         {
