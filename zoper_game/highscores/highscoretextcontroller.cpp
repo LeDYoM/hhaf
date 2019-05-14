@@ -4,7 +4,7 @@
 #include "../loaders/highscoresresources.hpp"
 #include "../gameshareddata.hpp"
 #include "../zoperprogramcontroller.hpp"
-
+#include <lib/resources/ttfont.hpp>
 #include <lib/scene/components/texteditorcomponent.hpp>
 #include <lib/system/resourcemanager.hpp>
 #include <lib/core/host.hpp>

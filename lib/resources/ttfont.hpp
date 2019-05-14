@@ -7,7 +7,7 @@
 #include <mtypes/include/rect.hpp>
 
 #include "texture.hpp"
-#include "font.hpp"
+#include <lib/include/resources/ifont.hpp>
 
 namespace lib
 {
@@ -30,7 +30,7 @@ namespace lib
             f32 getKerning(const u32 first, const u32 second, const u32 characterSize) const;
             sptr<Texture> getTexture(const u32 characterSize) const;
             vector2df textSize(const str& text, const u32 characterSize) const;
-            sptr<Font> font(const u32 charactersize);
+            sptr<IFont> font(const u32 charactersize);
         private:
             struct FontPrivate;
             uptr<FontPrivate> m_private;

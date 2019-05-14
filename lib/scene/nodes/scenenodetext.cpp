@@ -1,6 +1,6 @@
 #include "scenenodetext.hpp"
 
-#include <lib/resources/font.hpp>
+#include <lib/include/resources/ifont.hpp>
 #include <lib/resources/texture.hpp>
 
 #include <logger/include/log.hpp>

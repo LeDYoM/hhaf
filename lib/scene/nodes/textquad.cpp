@@ -4,7 +4,7 @@
 
 namespace lib::scene::nodes
 {
-    TextQuad::TextQuad(SceneNode * parent, str name, sptr<Font> font, const Color &color,
+    TextQuad::TextQuad(SceneNode * parent, str name, sptr<IFont> font, const Color &color,
                        const vector2df & size)
         : BaseClass{ parent, std::move(name) }, m_size { size }
     {

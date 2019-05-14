@@ -8,7 +8,7 @@
 #include <lib/core/host.hpp>
 #include <lib/system/resourcemanager.hpp>
 #include <lib/resources/ttfont.hpp>
-#include <lib/resources/font.hpp>
+#include <lib/include/resources/ifont.hpp>
 #include <lib/include/key.hpp>
 
 #include <mtypes/include/function.hpp>

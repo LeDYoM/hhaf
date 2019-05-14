@@ -6,13 +6,13 @@
 #include <mtypes/include/types.hpp>
 
 #include "texture.hpp"
-#include "font.hpp"
+#include <lib/include/resources/ifont.hpp>
 
 namespace lib::scene
 {
 	class TTFont;
 
-    class TTFontInstance : public Font
+    class TTFontInstance : public IFont
     {
     public:
 		Rectf32 getBounds(const u32 codePoint) const override;

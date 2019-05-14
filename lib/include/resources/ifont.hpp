@@ -5,16 +5,19 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/rect.hpp>
-#include "texture.hpp"
+
+// TO be removed
+#include <lib/resources/texture.hpp>
+#include "itexture.hpp"
 
 namespace lib::scene
 {
     /// This class provides the minimum interface for a font, independent
     /// of its type
-    class Font
+    class IFont
     {
     public:
-        virtual ~Font() {}
+        virtual ~IFont() {}
 		virtual Rectf32 getBounds(const u32 codePoint) const = 0;
 		virtual Rectf32 getTextureBounds(const u32 codePoint) const = 0;
 		virtual f32 getAdvance(const u32 codePoint) const = 0;

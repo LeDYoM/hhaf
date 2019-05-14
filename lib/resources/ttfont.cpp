@@ -108,7 +108,7 @@ namespace lib::scene
         return max;
     }
 
-    sptr<Font> TTFont::font(const u32 charactersize)
+    sptr<IFont> TTFont::font(const u32 charactersize)
     {
         if (auto iterator = m_private->m_fontMap.find(charactersize);
                 iterator == m_private->m_fontMap.end())
