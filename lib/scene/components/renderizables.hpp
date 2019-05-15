@@ -4,10 +4,14 @@
 #define LIB_COMPONENT_RENDERIZABLES_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
+#include <mtypes/include/function.hpp>
+
 #include <lib/scene/components/icomponent.hpp>
 
 namespace lib::scene
 {
+    class Renderizable;
+
     class Renderizables : public IComponent
     {
     public:
@@ -15,8 +19,38 @@ namespace lib::scene
         ~Renderizables() override;
 
         void update() override;
-        
+
+        /**
+        * Method to add a user defined renderizable
+        * @params args Arguments to be passed to the constructor
+        * @returns The created renderizable
+        */
+        template <typename T, typename... Args>
+        sptr<T> createRenderizable(Args&&... args)
+        {
+            auto result(msptr<T>(this, std::forward<Args>(args)...));
+            addRenderizable(result);
+            return result;
+        }
+
+        void removeRenderizable(sptr<Renderizable> element);
+        void clearRenderizables();
+
+        template <typename T>
+        constexpr void for_each_node_as(function<void(const sptr<T> &)> action)
+        {
+            for_each_node([&action](const sptr<Renderizable>&node) {
+                if (auto tnode = std::dynamic_pointer_cast<T>(node)) {
+                    action(tnode);
+                }
+            });
+        }
+
+        void for_each_node(function<void(const sptr<Renderizable> &)> action) const;
+
     private:
+        void addRenderizable(sptr<Renderizable> newElement);
+
         class RenderizablesPrivate;
         uptr<RenderizablesPrivate> priv_;
     };
