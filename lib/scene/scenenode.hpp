@@ -118,6 +118,9 @@ namespace lib::scene
         constexpr auto &sceneNodes() noexcept { return m_groups; }
         constexpr auto sceneNodesSize() const noexcept { return sceneNodes().size(); }
 
+        // TODO: Temporary
+        vector<sptr<Renderizable>> m_renderNodes;
+
     protected:
 
         void addRenderizable(sptr<Renderizable> newElement);
@@ -127,7 +130,6 @@ namespace lib::scene
         friend class SceneNodeBlob;
         SceneNode *m_parent;
 
-        vector<sptr<Renderizable>> m_renderNodes;
         vector<sptr<SceneNode>> m_groups;
     };
 

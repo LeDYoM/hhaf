@@ -3,6 +3,7 @@
 #include <logger/include/log.hpp>
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/scenemanager.hpp>
+#include <lib/scene/scenenode.hpp>
 
 namespace lib::scene
 {
@@ -13,7 +14,12 @@ namespace lib::scene
         RenderizablesPrivate() {}
         ~RenderizablesPrivate() {}
 
-        vector<sptr<Renderizable>> render_nodes_;
+        vector<sptr<Renderizable>> *render_nodes_;
+
+        decltype(auto) renderNodes()
+        {
+            return *render_nodes_;
+        }
 	};
 
 	Renderizables::Renderizables()
@@ -25,25 +31,31 @@ namespace lib::scene
 	{
 	}
 
+    void Renderizables::onAttached()
+    {
+        priv_->render_nodes_ = &(attachedNode()->m_renderNodes);
+    }
+
     void Renderizables::removeRenderizable(sptr<Renderizable> element)
     {
         assert_debug(element.get() != nullptr, "Received empty renderizable node to be deleted");
 
-        priv_->render_nodes_.remove_value(element);
+        priv_->renderNodes().remove_value(element);
     }
 
     void Renderizables::clearRenderizables()
     {
-        priv_->render_nodes_.clear();
+        priv_->renderNodes().clear();
     }
 
     void Renderizables::for_each_node(function<void(const sptr<Renderizable>&)> action) const
     {
-        std::for_each(priv_->render_nodes_.cbegin(), priv_->render_nodes_.cend(), action);
+        std::for_each(priv_->renderNodes().cbegin(), priv_->renderNodes().cend(), action);
     }
 
     void Renderizables::addRenderizable(sptr<Renderizable> newElement)
     {
-        priv_->render_nodes_.push_back(std::move(newElement));
+        priv_->render_nodes_ = &(attachedNode()->m_renderNodes);
+        priv_->renderNodes().push_back(std::move(newElement));
     }
 }

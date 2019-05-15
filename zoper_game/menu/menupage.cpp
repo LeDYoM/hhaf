@@ -10,6 +10,7 @@
 #include <lib/resources/ttfont.hpp>
 #include <lib/include/resources/ifont.hpp>
 #include <lib/include/key.hpp>
+#include <lib/scene/components/resourceviewcomponent.hpp>
 
 #include <mtypes/include/function.hpp>
 
@@ -29,7 +30,9 @@ namespace zoper
 	void MenuPage::onCreated()
 	{
         BaseClass::onCreated();
-        m_normalFont = parentScene()->sceneManager().resources().getFont
+        auto resources_viewer = ensureComponentOfType<ResourceView>();
+
+        m_normalFont = resources_viewer->getFont
                        (MainMenuResources::MenuFontId)->font(72);
 		m_normalColor = colors::Blue;
 		m_selectedColor = colors::Red;

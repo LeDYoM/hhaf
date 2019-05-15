@@ -8,6 +8,10 @@
 
 #include <lib/scene/components/icomponent.hpp>
 
+#include <lib/scene/renderizables/nodeshape.hpp>
+#include <lib/scene/renderizables/nodequad.hpp>
+#include <lib/scene/renderizables/renderizable.hpp>
+
 namespace lib::scene
 {
     class Renderizable;
@@ -20,6 +24,8 @@ namespace lib::scene
 
         void update() override;
 
+        void onAttached() override;
+
         /**
         * Method to add a user defined renderizable
         * @params args Arguments to be passed to the constructor
@@ -28,7 +34,7 @@ namespace lib::scene
         template <typename T, typename... Args>
         sptr<T> createRenderizable(Args&&... args)
         {
-            auto result(msptr<T>(this, std::forward<Args>(args)...));
+            auto result(msptr<T>(attachedNode(), std::forward<Args>(args)...));
             addRenderizable(result);
             return result;
         }

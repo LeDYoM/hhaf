@@ -9,6 +9,7 @@
 #include <lib/scene/components/alignedtextcomponent.hpp>
 
 #include <logger/include/log.hpp>
+#include <lib/scene/components/resourceviewcomponent.hpp>
 #include <lib/include/resources/iresourceretriever.hpp>
 #include <lib/resources/ttfont.hpp>
 
@@ -21,9 +22,10 @@ namespace zoper
     GameHudSceneNode::GameHudSceneNode(SceneNode * const parent, str name)
         : SceneNode{parent, std::move(name)}
     {
-        auto& res_retriever = parentScene()->sceneManager().resources();
+        auto resources_viewer = ensureComponentOfType<ResourceView>();
+
         m_scoreQuad = parent->createSceneNode<TextQuad>("score",
-            res_retriever.getFont(GameResources::ScoreFontId)->font(90),
+            resources_viewer->getFont(GameResources::ScoreFontId)->font(90),
             colors::White, vector2df{ 600, 300 });
         m_scoreQuad->position.set(vector2df{ 50, 150 });
         m_scoreQuad->text(vector2dst{ 0,0 })->text.set(Text_t("Level:"));
@@ -32,7 +34,7 @@ namespace zoper
         m_scoreQuad->text(vector2dst{ 0,1 })->textColor = FillColor_t(colors::Blue);
 
         m_goalQuad = parent->createSceneNode<TextQuad>("goal",
-            res_retriever.getFont(GameResources::ScoreFontId)->font(90),
+            resources_viewer->getFont(GameResources::ScoreFontId)->font(90),
             colors::White, vector2df{ 600, 300 });
         m_goalQuad->position.set(vector2df{ 1250, 50 });
         m_goalQuad->text(vector2dst{ 0,0 })->textColor = FillColor_t(colors::Blue);
