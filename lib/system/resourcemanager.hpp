@@ -28,9 +28,9 @@ namespace lib
 			ResourceManager(core::SystemProvider &system_provider);
 			~ResourceManager() override;
 
-			sptr<scene::TTFont> getFont(const str &rid) override;
-			sptr<scene::Texture> getTexture(const str &rid) override;
-			sptr<scene::Shader> getShader(const str &rid) override;
+			sptr<scene::ITTFont> getFont(const str &rid) override;
+			sptr<scene::ITexture> getTexture(const str &rid) override;
+			sptr<scene::IShader> getShader(const str &rid) override;
 
             sptr<scene::TTFont> loadFont(const str &rid, const str &fileName) override;
             sptr<scene::Texture> loadTexture(const str &rid, const str &fileName) override;
@@ -38,15 +38,15 @@ namespace lib
 
 			template <typename T>
 			sptr<T> loadResource(const str &rid, const str &fileName) {
-                if constexpr (std::is_same_v<T,scene::TTFont>)
+                if constexpr (std::is_same_v<T,scene::ITTFont>)
                 {
                     return loadFont(rid, fileName);
                 }
-                else if constexpr (std::is_same_v<T, scene::Texture>)
+                else if constexpr (std::is_same_v<T, scene::ITexture>)
                 {
                     return loadTexture(rid, fileName);
                 }
-                else if constexpr (std::is_same_v<T, scene::Shader>)
+                else if constexpr (std::is_same_v<T, scene::IShader>)
                 {
                     return loadShader(rid, fileName);
                 }
@@ -58,15 +58,15 @@ namespace lib
 
             template <typename T>
             sptr<T> getResource(const str &rid) {
-                if constexpr (std::is_same_v<T, scene::TTFont>)
+                if constexpr (std::is_same_v<T, scene::ITTFont>)
                 {
                     return getFont(rid);
                 }
-                else if constexpr (std::is_same_v<T, scene::Texture>)
+                else if constexpr (std::is_same_v<T, scene::ITexture>)
                 {
                     return getTexture(rid);
                 }
-                else if constexpr (std::is_same_v<T, scene::Shader>)
+                else if constexpr (std::is_same_v<T, scene::IShader>)
                 {
                     return getShader(rid);
                 }

@@ -6,21 +6,21 @@
 #include <mtypes/include/str.hpp>
 #include <mtypes/include/types.hpp>
 
+namespace lib::scene
+{
+    class ITTFont;
+    class ITexture;
+    class IShader;
+}
+
 namespace lib
 {
-    namespace scene
-    {
-        class TTFont;
-        class Texture;
-        class Shader;
-    }
-
     class IResourceRetriever
     {
     public:
-        virtual sptr<scene::TTFont> getFont(const str &rid) = 0;
-        virtual sptr<scene::Texture> getTexture(const str &rid) = 0;
-        virtual sptr<scene::Shader> getShader(const str &rid) = 0;
+        virtual sptr<scene::ITTFont> getFont(const str &rid) = 0;
+        virtual sptr<scene::ITexture> getTexture(const str &rid) = 0;
+        virtual sptr<scene::IShader> getShader(const str &rid) = 0;
     };
 }
 

@@ -4,10 +4,11 @@
 #include "../loaders/highscoresresources.hpp"
 #include "../gameshareddata.hpp"
 #include "../zoperprogramcontroller.hpp"
-#include <lib/resources/ttfont.hpp>
 #include <lib/scene/components/texteditorcomponent.hpp>
 #include <lib/system/resourcemanager.hpp>
 #include <lib/core/host.hpp>
+#include <lib/include/resources/ittfont.hpp>
+#include <lib/scene/components/resourceviewcomponent.hpp>
 
 namespace zoper
 {
@@ -23,8 +24,9 @@ namespace zoper
 	{
 		BaseClass::onCreated();
 
-        m_normalFont = parentScene()->sceneManager().systemProvider().resourceManager().getResource<TTFont>
-                       ("menu.mainFont")->font(72);
+        auto resource_view = ensureComponentOfType<ResourceView>();
+
+        m_normalFont = resource_view->getFont("menu.mainFont")->font(72);
 		m_normalColor = colors::Blue;
 		m_selectedColor = colors::Red;
 

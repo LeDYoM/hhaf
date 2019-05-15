@@ -91,17 +91,17 @@ namespace lib::core
 
 	ResourceManager::~ResourceManager() = default;
 
-	sptr<scene::TTFont> ResourceManager::getFont(const str &rid)
+	sptr<scene::ITTFont> ResourceManager::getFont(const str &rid)
 	{
         return get_or_default(m_private->m_fonts, rid);
     }
 
-	sptr<scene::Texture> ResourceManager::getTexture(const str &rid)
+	sptr<scene::ITexture> ResourceManager::getTexture(const str &rid)
 	{
         return get_or_default(m_private->m_textures, rid);
 	}
 
-    sptr<scene::Shader> ResourceManager::getShader(const str &rid)
+    sptr<scene::IShader> ResourceManager::getShader(const str &rid)
     {
         return get_or_default(m_private->m_shaders, rid);
     }
