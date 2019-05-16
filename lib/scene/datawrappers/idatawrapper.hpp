@@ -28,7 +28,7 @@ namespace lib::scene
         * Method called after the component is attached to a node.
         * Override it to perform initialization
         */
-        virtual void onAttached() {}
+        virtual void onCreated() {}
 
         /**
         * Shortcut method to cast to another scenenode type

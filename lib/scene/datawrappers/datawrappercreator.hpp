@@ -25,7 +25,7 @@ namespace lib::scene
         {
             uptr<T> result = muptr<T>();
             result->scene_node_ = scene_node_;
-            result->onAttached();
+            result->onCreated();
             return result;
         }
     private:
