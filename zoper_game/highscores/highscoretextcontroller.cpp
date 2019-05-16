@@ -8,7 +8,7 @@
 #include <lib/system/resourcemanager.hpp>
 #include <lib/core/host.hpp>
 #include <lib/include/resources/ittfont.hpp>
-#include <lib/scene/components/resourceviewcomponent.hpp>
+#include <lib/scene/datawrappers/resourceview.hpp>
 
 namespace zoper
 {
@@ -24,7 +24,7 @@ namespace zoper
 	{
 		BaseClass::onCreated();
 
-        auto resource_view = ensureComponentOfType<ResourceView>();
+        auto resource_view = dataWrapper<ResourceView>();
 
         m_normalFont = resource_view->getFont("menu.mainFont")->font(72);
 		m_normalColor = colors::Blue;

@@ -1,6 +1,6 @@
 #include "menuscene.hpp"
 #include <lib/scene/components/renderizables.hpp>
-#include <lib/scene/components/resourceviewcomponent.hpp>
+#include <lib/scene/datawrappers/resourceview.hpp>
 #include <lib/scene/renderizables/nodeshape.hpp>
 #include <lib/scene/renderizables/nodequad.hpp>
 #include <lib/resources/texture.hpp>
@@ -24,7 +24,7 @@ namespace zoper
 
         loadResources(MainMenuResources{});
         auto renderizables = ensureComponentOfType<Renderizables>();
-        auto resources_viewer = ensureComponentOfType<ResourceView>();
+        auto resources_viewer = dataWrapper<ResourceView>();
     
         m_background = renderizables->createRenderizable<NodeQuad>("background");
         m_background->box = rectFromSize(2000.0f, 2000.0f);

@@ -9,7 +9,7 @@
 #include <lib/scene/components/alignedtextcomponent.hpp>
 
 #include <logger/include/log.hpp>
-#include <lib/scene/components/resourceviewcomponent.hpp>
+#include <lib/scene/datawrappers/resourceview.hpp>
 #include <lib/include/resources/iresourceretriever.hpp>
 #include <lib/resources/ttfont.hpp>
 
@@ -22,7 +22,7 @@ namespace zoper
     GameHudSceneNode::GameHudSceneNode(SceneNode * const parent, str name)
         : SceneNode{parent, std::move(name)}
     {
-        auto resources_viewer = ensureComponentOfType<ResourceView>();
+        auto resources_viewer = dataWrapper<ResourceView>();
 
         m_scoreQuad = parent->createSceneNode<TextQuad>("score",
             resources_viewer->getFont(GameResources::ScoreFontId)->font(90),

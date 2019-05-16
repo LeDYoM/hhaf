@@ -9,6 +9,7 @@
 #include <lib/scene/hasname.hpp>
 #include <lib/scene/components/icomponent.hpp>
 #include <lib/scene/components/componentcontainer.hpp>
+#include <lib/scene/datawrappers/datawrappercreator.hpp>
 
 #include "scenenodeblob.hpp"
 
@@ -21,7 +22,8 @@ namespace lib::scene
     /** \brief Main class representing all SceneNodes from a Scene.
     * This class is that serves as main entry point in the hierarchy of the scene
     */
-    class SceneNode : public core::HasName, public Transformable, public ComponentContainer, public SceneNodeBlob
+    class SceneNode : public core::HasName, public Transformable, 
+        public DataWrapperCreator, public ComponentContainer, public SceneNodeBlob
     {
     public:
         SceneNode(const SceneNode&) = delete;

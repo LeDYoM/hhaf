@@ -11,7 +11,7 @@
 #include <logger/include/log.hpp>
 #include <lib/include/resources/iresourceretriever.hpp>
 #include <lib/include/resources/ittfont.hpp>
-#include <lib/scene/components/resourceviewcomponent.hpp>
+#include <lib/scene/datawrappers/resourceview.hpp>
 
 namespace zoper
 {
@@ -26,7 +26,7 @@ namespace zoper
 
         vector2df gosize{ parentScene()->scenePerspective().width, 715 };
         m_gameOverrg->position.set({ 0, 575 });
-        auto resources_viewer = ensureComponentOfType<ResourceView>();
+        auto resources_viewer = dataWrapper<ResourceView>();
 
         auto gameText(m_gameOverrg->createSceneNode<SceneNodeText>("gameovergame"));
         gameText->text.set(Text_t("GAME"));

@@ -1,4 +1,4 @@
-#include "resourceviewcomponent.hpp"
+#include "resourceview.hpp"
 
 #include <lib/scene/scenenode.hpp>
 #include <logger/include/log.hpp>
@@ -6,10 +6,6 @@
 
 namespace lib::scene
 {
-    void ResourceView::onAttached()
-    {
-    }
-
     ResourceView::~ResourceView() = default;
     
     sptr<scene::ITTFont> ResourceView::getFont(const str &rid)

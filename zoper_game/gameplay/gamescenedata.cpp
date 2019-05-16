@@ -11,7 +11,7 @@
 
 #include <lib/core/host.hpp>
 #include <lib/system/resourcemanager.hpp>
-#include <lib/scene/components/resourceviewcomponent.hpp>
+#include <lib/scene/datawrappers/resourceview.hpp>
 
 namespace zoper
 {
@@ -22,7 +22,7 @@ namespace zoper
     void GameSceneData::createData(GameScene &gameScene, const GameMode gameMode)
     {
         gameScene.loadResources(GameResources{});
-        auto resources_viewer = gameScene.ensureComponentOfType<ResourceView>();
+        auto resources_viewer = gameScene.dataWrapper<ResourceView>();
 
         m_levelrg = gameScene.createSceneNode("level");
         m_pauseSceneNode = gameScene.createSceneNode("pause");
