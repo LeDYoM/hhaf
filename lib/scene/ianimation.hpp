@@ -1,13 +1,14 @@
 #pragma once
 
-#ifndef LIB_SCENE_IANIMATION_INCLUDE_HPP__
-#define LIB_SCENE_IANIMATION_INCLUDE_HPP__
+#ifndef LIB_SCENE_IANIMATION_INCLUDE_HPP
+#define LIB_SCENE_IANIMATION_INCLUDE_HPP
 
 #include <lib/include/core/timer.hpp>
 #include <lib/include/properties.hpp>
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/properties.hpp>
+#include <mtypes/include/function.hpp>
 
 namespace lib::scene::anim
 {
