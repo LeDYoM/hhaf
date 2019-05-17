@@ -13,20 +13,20 @@ namespace lib::scene
     Renderizable::Renderizable(SceneNode * const parent, const str & name, const u32 vertexCount)
         : core::HasName{ name }, m_parent{ parent }, m_vertices{ TriangleFan, vertexCount }
     {
-        box.setCallback([this]() { m_geometryNeedsUpdate = true; });
-        textureRect.setCallback([this]() { updateTextureCoords(); });
     }
 
     Renderizable::~Renderizable() = default;
 
     void Renderizable::render()
     {
-        if (visible()) {
+        if (visible())
+        {
             updateGeometry();
 
-            if (!m_vertices.empty()) {
-
-                if (color.readResetHasChanged()) {
+            if (!m_vertices.empty()) 
+            {
+                if (color.readResetHasChanged()) 
+                {
                     updateColor();
                 }
 
@@ -43,8 +43,10 @@ namespace lib::scene
     void Renderizable::updateColor()
     {
         const Color c{color()};
-        if (!m_vertices.empty()) {
-            for (auto& v : m_vertices.verticesArray()) {
+        if (!m_vertices.empty()) 
+        {
+            for (auto& v : m_vertices.verticesArray()) 
+            {
                 v.color = c;
             }
         }
@@ -90,14 +92,15 @@ namespace lib::scene
 
     void Renderizable::updateGeometry()
     {
-        if (m_geometryNeedsUpdate) {
-            m_geometryNeedsUpdate = false;
+        if (box.readResetHasChanged())
+        {
             updateGeometrySimpleNode();
             color.setChanged();
             textureRect.setChanged();
         }
 
-        if (textureRect.readResetHasChanged()) {
+        if (textureRect.readResetHasChanged()) 
+        {
             updateTextureCoords();
         }
     }

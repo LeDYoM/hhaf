@@ -26,7 +26,7 @@ namespace lib
 
             void render();
 
-            PropertyTrigger<Rectf32> box;
+            PropertyState<Rectf32> box;
 
             PropertyState<Color> color;
             BasicProperty<bool> visible{ true };
@@ -44,7 +44,6 @@ namespace lib
             PropertyState<sptr<ITexture>> texture;
 
             VertexArray m_vertices;
-            bool m_geometryNeedsUpdate{ true };
         private:
             virtual void updateGeometrySimpleNode() = 0;
             void updateTextureCoords();
