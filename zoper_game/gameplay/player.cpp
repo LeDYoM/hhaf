@@ -6,6 +6,7 @@
 
 #include <lib/scene/ianimation.hpp>
 #include <lib/scene/components/animationcomponent.hpp>
+#include <lib/scene/components/renderizables.hpp>
 
 namespace zoper
 {
@@ -25,7 +26,9 @@ namespace zoper
     {
         m_extraSceneNode = createSceneNode("m_extraSceneNode");
         m_extraSceneNode_2 = m_extraSceneNode->createSceneNode("m_extraSceneNode_2");
-        m_node = m_extraSceneNode_2->createRenderizable<nodes::NodeShape>("Node", 3);
+        
+        auto renderizables = m_extraSceneNode_2->ensureComponentOfType<Renderizables>();
+        m_node = renderizables->createRenderizable<nodes::NodeShape>("Node", 3);
 
         m_node->box.set(box);
         m_node->color.set(getColorForToken());

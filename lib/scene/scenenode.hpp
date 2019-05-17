@@ -50,7 +50,7 @@ namespace lib::scene
         * @returns The created renderizable
         */
         template <typename T, typename... Args>
-        sptr<T> createRenderizable(Args&&... args)
+        sptr<T> createRenderizable2(Args&&... args)
         {
             auto result(msptr<T>(this, std::forward<Args>(args)...));
             addRenderizable(result);

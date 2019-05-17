@@ -2,6 +2,8 @@
 
 #include <logger/include/log.hpp>
 
+#include <lib/scene/components/renderizables.hpp>
+
 namespace zoper
 {
 	using namespace lib::scene;
@@ -9,9 +11,10 @@ namespace zoper
 
 	BoardSceneNode::BoardSceneNode(SceneNode* parent, str name, const Rectf32 &tileBox) :
 		BaseClass{ parent, std::move(name) }, 
-		m_backgroundTile(createRenderizable<NodeQuad>("backgroundTile")),
         m_pointInCenter{createSceneNode<ShapeSceneNode>("backgroundTilePoint")}
 	{
+        auto renderizables = ensureComponentOfType<Renderizables>();
+        m_backgroundTile = renderizables->createRenderizable<NodeQuad>("backgroundTile");
 		m_backgroundTile->box = tileBox;
 
 		// Size of the point in the middle of the tile

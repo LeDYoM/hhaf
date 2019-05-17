@@ -63,6 +63,7 @@ namespace zoper
         levelChanged(currentLevel);
         updateGoals();
         updateLevelData();
+        increaseScore(0U);
 
         log_debug_info("Level set: ", m_currentLevel);
         log_debug_info("Millis between tokens: ", millisBetweenTokens());

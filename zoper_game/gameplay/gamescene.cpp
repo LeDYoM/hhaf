@@ -24,6 +24,7 @@
 #include <lib/scene/components/inputcomponent.hpp>
 #include <lib/scene/components/alignedtextcomponent.hpp>
 #include <lib/scene/components/randomizercomponent.hpp>
+#include <lib/scene/components/renderizables.hpp>
 
 namespace zoper
 {
@@ -346,7 +347,9 @@ namespace zoper
             if (found) 
             {
                 auto sceneNode(createSceneNode("pointIncrementScore_SceneNode"));
-                auto node(sceneNode->createRenderizable<NodeShape>("pointIncrementScore", 30));
+
+                auto renderizables_sceneNode = sceneNode->ensureComponentOfType<Renderizables>();
+                auto node(renderizables_sceneNode->createRenderizable<NodeShape>("pointIncrementScore", 30));
                 node->box = rectFromSize(15.0f, 15.0f);
                 node->color = colors::White;
 

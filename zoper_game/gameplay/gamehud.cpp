@@ -36,7 +36,7 @@ namespace zoper
         m_goalQuad = parent->createSceneNode<TextQuad>("goal",
             resources_viewer->getFont(GameResources::ScoreFontId)->font(90),
             colors::White, vector2df{ 600, 300 });
-        m_goalQuad->position.set(vector2df{ 1250, 50 });
+        m_goalQuad->position.set(vector2df{ 1250, 150 });
         m_goalQuad->text(vector2dst{ 0,0 })->textColor = FillColor_t(colors::Blue);
         m_goalQuad->text(vector2dst{ 0,1 })->textColor = FillColor_t(colors::Blue);
 
@@ -61,6 +61,7 @@ namespace zoper
 
     void GameHudSceneNode::setConsumedTokens(const size_type consumedTokens)
     {
+        log_debug_info("B");
         m_goalQuad->text(vector2dst{ 1,0 })->text.set(Text_t(consumedTokens));
     }
 

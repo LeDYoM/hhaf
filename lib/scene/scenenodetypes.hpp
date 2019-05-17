@@ -7,6 +7,7 @@
 #include <lib/scene/components/icomponent.hpp>
 #include <lib/scene/renderizables/nodeshape.hpp>
 #include <lib/scene/renderizables/nodequad.hpp>
+#include <lib/scene/components/renderizables.hpp>
 
 #include "scenenode.hpp"
 
@@ -17,15 +18,19 @@ namespace lib::scene
 	{
 	public:
 		constexpr RenderizableSceneNode(SceneNode *const parent, str name) : 
-            SceneNode{ parent, name }, m_node{ SceneNode::createRenderizable<T>(name + "_node") }
+            SceneNode{ parent, name }
         {
+                            log_debug_info("A");
+
+            auto renderizables = ensureComponentOfType<Renderizables>();
+            m_node = renderizables->createRenderizable<T>(name + "_node");
         }
 
 		constexpr sptr<T> node() noexcept { return m_node; }
 		constexpr const sptr<T> node() const noexcept { return m_node; }
 
 	private:
-		const sptr<T> m_node;
+		sptr<T> m_node;
 	};
 
     using ShapeSceneNode = RenderizableSceneNode<nodes::NodeShape>;

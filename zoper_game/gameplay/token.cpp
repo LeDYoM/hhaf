@@ -3,6 +3,7 @@
 #include <lib/scene/renderizables/nodeshape.hpp>
 #include <lib/scene/ianimation.hpp>
 #include <lib/scene/components/animationcomponent.hpp>
+#include <lib/scene/components/renderizables.hpp>
 
 #include <logger/include/log.hpp>
 
@@ -21,7 +22,8 @@ namespace zoper
 		GameBaseTile{ parent, name + str(m_tileCounter) + str(m_tileCounter), data }
 	{
 		++m_tileCounter;
-		m_node = createRenderizable<nodes::NodeShape>("Node", 30);
+        auto renderizables = ensureComponentOfType<Renderizables>();
+		m_node = renderizables->createRenderizable<nodes::NodeShape>("Node", 30);
 		m_node->box = box;
 		m_node->color = getColorForToken();
 	}
