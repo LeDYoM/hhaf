@@ -25,7 +25,7 @@ namespace lib::scene
         virtual ~IDataWrapper() {}
 
         /**
-        * Method called after the component is attached to a node.
+        * Method called after the component is created abd attached to a node.
         * Override it to perform initialization
         */
         virtual void onCreated() {}
