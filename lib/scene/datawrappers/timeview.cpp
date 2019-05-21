@@ -69,5 +69,5 @@ namespace lib::scene
         Timer::onCreated();
         is_paused_ = false;
         time_paused_ = TimePoint{}; 
-    }    
+    }
 }

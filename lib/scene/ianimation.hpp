@@ -4,6 +4,7 @@
 #define LIB_SCENE_IANIMATION_INCLUDE_HPP
 
 #include <lib/include/core/timer.hpp>
+#include <lib/scene/datawrappers/timeview.hpp>
 #include <lib/include/properties.hpp>
 
 #include <mtypes/include/types.hpp>
@@ -16,12 +17,12 @@ namespace lib::scene::anim
     class IAnimation
     {
     public:
-        IAnimation(TimePoint duration, ActionFunc endAction = {}) noexcept
-            : m_duration{ std::move(duration) }, m_timer{}, m_endAction{ std::move(endAction) } {}
+        IAnimation(uptr<scene::Timer> timer, TimePoint duration, ActionFunc endAction = {}) noexcept
+            : timer_{std::move(timer)}, m_duration{ std::move(duration) }, m_endAction{ std::move(endAction) } {}
 
         virtual bool animate()
         {
-            m_currentTime = m_timer.ellapsed();
+            m_currentTime = timer_->ellapsed();
             if (m_currentTime > m_duration) 
             {
                 m_delta = 1.0f;
@@ -42,11 +43,12 @@ namespace lib::scene::anim
         }
 
         virtual ~IAnimation() {}
+
     protected:
+        uptr<scene::Timer> timer_;
         TimePoint m_duration;
         TimePoint m_currentTime;
         f32 m_delta{ 0.0f };
-        Timer m_timer;
         ActionFunc m_endAction;
     };
 
@@ -54,9 +56,9 @@ namespace lib::scene::anim
     class IPropertyAnimation : public IAnimation
     {
     public:
-        IPropertyAnimation(TimePoint duration, IProperty<T> &prop,
+        IPropertyAnimation(uptr<scene::Timer> timer, TimePoint duration, IProperty<T> &prop,
             T start, T end, ActionFunc endAction = {})
-            : IAnimation{ std::move(duration), std::move(endAction) }, m_property{ prop }, m_startValue { std::move(start)	},
+            : IAnimation{ std::move(timer), std::move(duration), std::move(endAction) }, m_property{ prop }, m_startValue { std::move(start)	},
             m_endValue{ std::move(end) }, m_deltaValue{ m_endValue - m_startValue } {}
 
         virtual bool animate() override
@@ -79,9 +81,9 @@ namespace lib::scene::anim
     public:
         using T = strong_typedef<Tag,RealT>;
 
-        IPropertyAnimation(TimePoint duration, IProperty<T> &prop, 
+        IPropertyAnimation(uptr<scene::Timer> timer, TimePoint duration, IProperty<T> &prop, 
             T start, T end, ActionFunc endAction = {})
-            : IAnimation{ std::move(duration), std::move(endAction) }, m_property{ prop }, m_startValue { std::move(start)	},
+            : IAnimation{ std::move(timer), std::move(duration), std::move(endAction) }, m_property{ prop }, m_startValue { std::move(start)	},
             m_endValue{ std::move(end) }, m_deltaValue{ m_endValue() - m_startValue() } {}
 
         virtual bool animate() override

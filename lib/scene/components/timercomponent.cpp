@@ -31,10 +31,10 @@ namespace lib::scene
                 {
                     // Delta time has passed, so trigger
                     // the callback and update the timer
-                    timerConnector.m_emitter(timerConnector.m_timer.ellapsed());
+                    timerConnector.m_emitter(timerConnector.timer_->ellapsed());
                     if (timerConnector.m_timerType == TimerType::Continuous)
                     {
-                        timerConnector.m_timer.restart();
+                        timerConnector.timer_->restart();
                     }
                     else
                     {
@@ -54,21 +54,21 @@ namespace lib::scene
     void TimerComponent::pause()
     {
         m_activeTimers.for_each([](const sptr<TimerConnector>&timerConnector) {
-            timerConnector->m_timer.pause();
+            timerConnector->timer_->pause();
         });
     }
 
     void TimerComponent::resume()
     {
         m_activeTimers.for_each([](const sptr<TimerConnector>&timerConnector) {
-            timerConnector->m_timer.resume();
+            timerConnector->timer_->resume();
         });
     }
 
     void TimerComponent::switchPause()
     {
         m_activeTimers.for_each([](const sptr<TimerConnector>&timerConnector) {
-            timerConnector->m_timer.switchPause();
+            timerConnector->timer_->switchPause();
         });
     }
 }

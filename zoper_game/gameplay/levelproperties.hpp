@@ -43,7 +43,7 @@ namespace zoper
         void updateLevelData();
         void setLevel(const LevelType currentLevel);
 
-        Timer m_levelTimer;
+        uptr<scene::Timer> m_levelTimer;
         scene::TimerConnectorSPtr m_updateLevelDataTimer;
         sptr<scene::TimerComponent> m_sceneTimerComponent;
 

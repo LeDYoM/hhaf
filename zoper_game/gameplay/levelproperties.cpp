@@ -37,7 +37,7 @@ namespace zoper
 
     void LevelProperties::setLevel(const LevelType currentLevel)
     {
-        m_levelTimer.restart();
+        m_levelTimer->restart();
 
         m_currentLevel = currentLevel;
 		m_baseScore = 10 + m_currentLevel;
@@ -98,9 +98,9 @@ namespace zoper
             break;
 
         case GameMode::Time:
-            m_gameHud->setEllapsedTimeInSeconds(m_levelTimer.ellapsed().seconds());
+            m_gameHud->setEllapsedTimeInSeconds(m_levelTimer->ellapsed().seconds());
             
-            if (m_levelTimer.ellapsed().seconds() >= m_stayCounter)
+            if (m_levelTimer->ellapsed().seconds() >= m_stayCounter)
             {
                 setLevel(m_currentLevel + 1);
             }

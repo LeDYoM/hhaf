@@ -30,6 +30,7 @@ namespace lib::scene
 
     class PausableTimer : public Timer
     {
+    public:
         TimePoint ellapsed() const override;
         void pause();
 		void resume();
