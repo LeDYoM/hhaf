@@ -5,12 +5,9 @@
 
 #include <mtypes/include/str.hpp>
 #include <mtypes/include/types.hpp>
-#include <lib/include/lib.hpp>
 
 namespace lib
 {
-	struct TimerPrivate;
-
 	class TimePoint
 	{
 	public:
@@ -99,43 +96,6 @@ namespace lib
 		os << tp.nanoseconds();
 		return os;
 	}
-
-    	class LIB_API_EXPORT Timer
-	{
-	public:
-		Timer();
-		virtual ~Timer();
-
-        Timer(Timer&&);
-        Timer& operator=(Timer&&);
-
-		virtual TimePoint ellapsed() const;
-		virtual void restart();
-	private:
-#ifdef _MSC_VER
-        #pragma warning(push)
-        #pragma warning(disable:4251)
-#endif
-        uptr<TimerPrivate> m_timerPrivate;
-#ifdef _MSC_VER
-        #pragma warning(pop)
-#endif
-	};
-
-	class LIB_API_EXPORT PausableTimer : public Timer
-	{
-	public:
-		void pause();
-		void resume();
-		bool switchPause();
-		virtual TimePoint ellapsed() const override;
-		virtual void restart() override;
-
-	private:
-		Timer m_pausedTimer;
-		TimePoint m_pausedTime;
-		bool m_paused{ false };
-	};
 }
 
 #endif
