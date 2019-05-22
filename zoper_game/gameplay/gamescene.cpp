@@ -157,10 +157,15 @@ namespace zoper
             m_sceneTimerComponent->pause();
             m_data->m_pauseSceneNode->visible = true;
             auto animationComponent(m_data->m_pauseSceneNode->ensureComponentOfType<anim::AnimationComponent>());
+            animationComponent->addPropertyAnimation(TimePoint_as_miliseconds(1000),
+                m_data->m_pauseText->textColor, FillColor_t{Color{ 255, 255, 255, 0 } },
+                FillColor_t{Color{ 255, 255, 255, 255 } });
+/*
             animationComponent->addAnimation(muptr<anim::IPropertyAnimation<FillColor_t>>(
                 TimePoint_as_miliseconds(1000), 
                 m_data->m_pauseText->textColor, FillColor_t{Color{ 255, 255, 255, 0 } },
                                  FillColor_t{Color{ 255, 255, 255, 255 } }));
+            */
 		}
 		break;
         case GameOver:
@@ -298,7 +303,7 @@ namespace zoper
         {
             bool result{ true };
             bool found{ false };
-            vector2df lastTokenPosition;
+            vector2df lastTokenPosition{};
 
             if (!m_data->m_boardGroup->p_boardModel->tileEmpty(loopPosition) && !TokenZones::pointInCenter(loopPosition) && result)
             {
@@ -355,10 +360,15 @@ namespace zoper
 
                 auto animationComponent(sceneNode->ensureComponentOfType<anim::AnimationComponent>());
                 animationComponent->
+                    addPropertyAnimation(TimePoint_as_miliseconds(gameplay::constants::MillisAnimationPointsToScore),
+                        sceneNode->position,
+                        lastTokenPosition, gameplay::constants::EndPositionPointsToScore);
+/*                animationComponent->
                     addAnimation(muptr<anim::IPropertyAnimation<vector2df>>(
                         TimePoint_as_miliseconds(gameplay::constants::MillisAnimationPointsToScore),
                         sceneNode->position,
                         lastTokenPosition, gameplay::constants::EndPositionPointsToScore));
+*/
                 m_sceneTimerComponent->addTimer(TimerType::OneShot, 
                     TimePoint_as_miliseconds(gameplay::constants::MillisAnimationPointsToScore),
                     [this, sceneNode](auto) { removeSceneNode(sceneNode); } );

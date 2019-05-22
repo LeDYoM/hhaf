@@ -14,6 +14,10 @@ namespace zoper
         const GameMode gameMode, sptr<GameSceneData> gameSceneData,
         sptr<scene::TimerComponent> sceneTimerComponent)
     {
+        if (!m_levelTimer)
+        {
+            m_levelTimer = attachedNode()->dataWrapper<scene::Timer>();
+        }
         assert_debug(m_sceneTimerComponent != nullptr, "Passed nullptr sceneTimerComponent");
         assert_debug(m_gameSceneData != nullptr, "Passed nullptr gameSceneData");
 
