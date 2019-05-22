@@ -9,7 +9,7 @@
 #include <lib/resources/texture.hpp>
 #include <lib/resources/shader.hpp>
 
-#include <lib/core/backendfactory.hpp>
+#include <lib/system/backendfactory.hpp>
 #include <algorithm>
 #include <list>
 
@@ -108,14 +108,14 @@ namespace lib::core
 
     sptr<scene::TTFont> ResourceManager::loadFont(const str & rid, const str & fileName)
     {
-        return get_or_add<true>(backend::ttfontFactory(), m_private->m_fonts, systemProvider().fileSystem(),  rid, fileName);
+        return get_or_add<true>(systemProvider().backendFactory().ttfontFactory(), m_private->m_fonts, systemProvider().fileSystem(),  rid, fileName);
     }
     sptr<scene::Texture> ResourceManager::loadTexture(const str & rid, const str & fileName)
     {
-        return get_or_add<true>(backend::textureFactory(), m_private->m_textures, systemProvider().fileSystem(), rid, fileName);
+        return get_or_add<true>(systemProvider().backendFactory().textureFactory(), m_private->m_textures, systemProvider().fileSystem(), rid, fileName);
     }
     sptr<scene::Shader> ResourceManager::loadShader(const str & rid, const str & fileName)
     {
-        return get_or_add<true>(backend::shaderFactory(), m_private->m_shaders, systemProvider().fileSystem(), rid, fileName);
+        return get_or_add<true>(systemProvider().backendFactory().shaderFactory(), m_private->m_shaders, systemProvider().fileSystem(), rid, fileName);
     }
 }

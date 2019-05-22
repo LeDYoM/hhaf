@@ -1,7 +1,7 @@
 #include "window.hpp"
 
 #include <backend_dev/include/irendertarget.hpp>
-#include <lib/core/backendfactory.hpp>
+#include <lib/system/backendfactory.hpp>
 #include <logger/include/log.hpp>
 #include <lib/include/core/timer.hpp>
 #include <lib/include/iapp.hpp>
@@ -62,8 +62,7 @@ namespace lib::core
         log_debug_info("Creating window...");
 
         // Create window object
-        m_wPrivate->m_backendWindow = backend::BackendFactory::instance()->getOrCreateWindow();
-//            m_wPrivate->m_renderTarget = dynamic_cast<backend::IRenderTarget*>(m_wPrivate->m_backendWindow);
+        m_wPrivate->m_backendWindow = systemProvider().backendFactory().getOrCreateWindow();
         log_debug_info("Window created");
         log_debug_info("Registering for view changes...");
         backend::IWindow &bw(*m_wPrivate->m_backendWindow);
@@ -87,7 +86,6 @@ namespace lib::core
     bool Window::preLoop()
     {
         backend::IWindow &bw(*m_wPrivate->m_backendWindow);
-//        auto eMs = m_wPrivate->globalClock.ellapsed().asMilliSeconds();
         const TimePoint eMs = systemProvider().timeSystem().timeSinceStart();
         if ((eMs - m_wPrivate->lastTimeFps).milliseconds() > 1000U)
         {

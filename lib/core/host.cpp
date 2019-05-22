@@ -2,7 +2,7 @@
 
 #include <backend_dev/include/iwindow.hpp>
 #include <lib/core/appcontext.hpp>
-#include <lib/core/backendfactory.hpp>
+#include <lib/system/backendfactory.hpp>
 #include <lib/core/hostcontext.hpp>
 #include <logger/include/log.hpp>
 #include <lib/scene/scenemanager.hpp>
@@ -76,9 +76,9 @@ namespace lib::core
 
     bool Host::createHost(int argc, char * argv[])
     {
-        if (!m_instance) {
+        if (!m_instance) 
+        {
             m_instance = new Host(argc, argv);
-            backend::BackendFactory::initilialize("bsfml");
             return true;
         }
         return false;
@@ -88,7 +88,6 @@ namespace lib::core
     {
         if (m_instance) 
         {
-            backend::BackendFactory::destroy();
             delete m_instance;
             m_instance = nullptr;
             return true;

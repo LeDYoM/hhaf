@@ -12,7 +12,7 @@
 #include <lib/include/windowcreationparams.hpp>
 #include <lib/include/iapp.hpp>
 
-#include <lib/core/backendfactory.hpp>
+#include <lib/system/backendfactory.hpp>
 #include <lib/scene/scenemanager.hpp>
 
 namespace lib::core
@@ -22,6 +22,7 @@ namespace lib::core
         assert_release(iapp != nullptr, "Cannot create a SystemProvider with a nullptr app");
         host_ = &host;
         app_ = iapp;
+        backend_factory_ = muptr<backend::BackendFactory>();
         time_system_ = muptr<TimeSystem>();
         window_ = muptr<Window>(*this, app_->getAppDescriptor().wcp);
         input_system_ = muptr<input::InputSystem>(window_->inputDriver());
@@ -41,6 +42,7 @@ namespace lib::core
         window_ = nullptr;
         simulation_system_ = nullptr;
         time_system_ = nullptr;
+        backend_factory_ = nullptr;
     }
 
     IApp &SystemProvider::app()
@@ -126,5 +128,15 @@ namespace lib::core
     TimeSystem &SystemProvider::timeSystem() noexcept
     {
         return *time_system_;
+    }
+
+    const backend::BackendFactory &SystemProvider::backendFactory() const noexcept
+    {
+        return *backend_factory_;
+    }
+
+    backend::BackendFactory &SystemProvider::backendFactory() noexcept
+    {
+        return *backend_factory_;
     }
 }
