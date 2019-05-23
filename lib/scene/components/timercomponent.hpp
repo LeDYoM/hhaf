@@ -27,7 +27,7 @@ namespace lib::scene
     class TimerConnector
     {
     public:
-        TimerConnector(uptr<scene::PausableTimer> timer, TimerType timerType, TimePoint timeOut, timer_callback_t emitter)
+        TimerConnector(uptr<scene::Timer> timer, TimerType timerType, TimePoint timeOut, timer_callback_t emitter)
             : timer_{ std::move(timer) }, m_timeOut{ std::move(timeOut) },
             m_emitter{ std::move(emitter) }, m_timerType{ timerType } {}
 
@@ -37,7 +37,7 @@ namespace lib::scene
         inline void switchPause() { timer_->switchPause(); }
 
     private:
-        uptr<scene::PausableTimer> timer_;
+        uptr<scene::Timer> timer_;
         TimePoint m_timeOut;
         timer_emitter_t m_emitter;
         TimerType m_timerType;
@@ -52,7 +52,7 @@ namespace lib::scene
         TimerConnectorSPtr addTimer(TimerType timerType, TimePoint timeOut, timer_callback_t callback)
         {
             auto timerConnector(msptr<TimerConnector>(
-                attachedNode()->dataWrapper<PausableTimer>(),
+                attachedNode()->dataWrapper<Timer>(),
                 timerType, std::move(timeOut), std::move(callback)));
             m_activeTimers.push_back(timerConnector);
             return timerConnector;

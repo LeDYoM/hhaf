@@ -24,21 +24,20 @@ namespace lib::scene
         if (!(m_activeTimers.empty()))
         {
             bool someDeleted{ false };
-            for (auto &sptr_timerConnector : m_activeTimers)
+            for (auto &timerConnector : m_activeTimers)
             {
-                TimerConnector &timerConnector{ *sptr_timerConnector };
-                if (timerConnector.timeOut())
+                if (timerConnector->timeOut())
                 {
                     // Delta time has passed, so trigger
                     // the callback and update the timer
-                    timerConnector.m_emitter(timerConnector.timer_->ellapsed());
-                    if (timerConnector.m_timerType == TimerType::Continuous)
+                    timerConnector->m_emitter(timerConnector->timer_->ellapsed());
+                    if (timerConnector->m_timerType == TimerType::Continuous)
                     {
-                        timerConnector.timer_->restart();
+                        timerConnector->timer_->restart();
                     }
                     else
                     {
-                        sptr_timerConnector.reset();
+                        timerConnector.reset();
                         someDeleted = true;
                     }
                 }
@@ -53,21 +52,24 @@ namespace lib::scene
 
     void TimerComponent::pause()
     {
-        m_activeTimers.for_each([](const sptr<TimerConnector>&timerConnector) {
+        m_activeTimers.for_each([](const sptr<TimerConnector>&timerConnector)
+        {
             timerConnector->timer_->pause();
         });
     }
 
     void TimerComponent::resume()
     {
-        m_activeTimers.for_each([](const sptr<TimerConnector>&timerConnector) {
+        m_activeTimers.for_each([](const sptr<TimerConnector>&timerConnector)
+        {
             timerConnector->timer_->resume();
         });
     }
 
     void TimerComponent::switchPause()
     {
-        m_activeTimers.for_each([](const sptr<TimerConnector>&timerConnector) {
+        m_activeTimers.for_each([](const sptr<TimerConnector>&timerConnector)
+        {
             timerConnector->timer_->switchPause();
         });
     }

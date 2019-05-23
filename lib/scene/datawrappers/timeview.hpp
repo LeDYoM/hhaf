@@ -21,27 +21,20 @@ namespace lib::scene
     class Timer : public TimeView
     {
     public:
-        virtual TimePoint ellapsed() const;
-		void restart();
-        void onCreated() override;
-    protected:
-        TimePoint started_at_;
-    };
-
-    class PausableTimer : public Timer
-    {
-    public:
-        TimePoint ellapsed() const override;
+        TimePoint ellapsed() const;
         void pause();
 		void resume();
 		void switchPause();
+		void restart();
 
         constexpr bool isPaused() const noexcept { return is_paused_; }
         void onCreated() override;
 
     private:
+        TimePoint started_at_;
         TimePoint time_paused_;
         bool is_paused_;
+
 	};
 }
 

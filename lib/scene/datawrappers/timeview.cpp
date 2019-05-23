@@ -21,27 +21,17 @@ namespace lib::scene
 
     TimePoint Timer::ellapsed() const
     {
-        return now() - started_at_;
-    }
-
-    void Timer::onCreated()
-    {
-        restart();
-    }    
-
-    TimePoint PausableTimer::ellapsed() const
-    {
         if (isPaused())
         {
             return time_paused_ - started_at_;
         }
         else
         {
-            return Timer::ellapsed();
+            return now() - started_at_;
         }
     }
 
-    void PausableTimer::pause()
+    void Timer::pause()
     {
         if (!isPaused())
         {
@@ -50,7 +40,7 @@ namespace lib::scene
         }
     }
 
-    void PausableTimer::resume()
+    void Timer::resume()
     {
         if (isPaused())
         {
@@ -59,14 +49,14 @@ namespace lib::scene
         }
     }
 
-    void PausableTimer::switchPause()
+    void Timer::switchPause()
     {
         (void)(isPaused() ? resume() : pause());
     }
 
-    void PausableTimer::onCreated()
+    void Timer::onCreated()
     {
-        Timer::onCreated();
+        restart();
         is_paused_ = false;
         time_paused_ = TimePoint{}; 
     }
