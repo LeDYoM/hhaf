@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_SCENE_RENDERIZABLE_INCLUDE_HPP__
-#define LIB_SCENE_RENDERIZABLE_INCLUDE_HPP__
+#ifndef LIB_SCENE_RENDERIZABLE_INCLUDE_HPP
+#define LIB_SCENE_RENDERIZABLE_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/properties.hpp>
@@ -12,46 +12,51 @@
 #include <lib/scene/vertexarray.hpp>
 #include <lib/include/resources/itexture.hpp>
 
-namespace lib
+namespace lib::scene
 {
-    namespace scene
+    class SceneNode;
+
+    enum class FigType_t : u8
     {
-        class SceneNode;
+        Quad,
+        Shape
+    };
 
-        class Renderizable : public core::HasName
-        {
-        public:
-            Renderizable(SceneNode *const parent, const str &name, const u32 vertexCount);
-            virtual ~Renderizable();
+    class Renderizable : public core::HasName
+    {
+    public:
+        Renderizable(SceneNode *const parent, const str &name, const u32 vertexCount);
+        virtual ~Renderizable();
 
-            void render();
+        void render();
 
-            PropertyState<Rectf32> box;
+        PropertyState<FigType_t> figType;
+        PropertyState<Rectf32> box;
+        PropertyState<Color> color;
+        BasicProperty<bool> visible{ true };
 
-            PropertyState<Color> color;
-            BasicProperty<bool> visible{ true };
+        void setTextureAndTextureRect(sptr<ITexture> texture_,
+                                        const Rectf32& textRect);
 
-            void setTextureAndTextureRect(sptr<ITexture> texture_,
-                                          const Rectf32& textRect);
+        void setTextureFill(sptr<ITexture> texture_);
 
-            void setTextureFill(sptr<ITexture> texture_);
+        BasicProperty<size_type> pointCount;
 
-        private:
-            SceneNode *m_parent;
+    private:
+        SceneNode *m_parent;
 
-        protected:
-            PropertyState<Rects32> textureRect;
-            PropertyState<sptr<ITexture>> texture;
+    protected:
+        PropertyState<Rects32> textureRect;
+        PropertyState<sptr<ITexture>> texture;
 
-            VertexArray m_vertices;
-        private:
-            virtual void updateGeometrySimpleNode() = 0;
-            void updateTextureCoords();
+        VertexArray m_vertices;
+    private:
+        virtual void updateGeometrySimpleNode();
+        void updateTextureCoords();
 
-            void updateGeometry();
-            void updateColor();
-        };
-    }
+        void updateGeometry();
+        void updateColor();
+    };
 }
 
 #endif

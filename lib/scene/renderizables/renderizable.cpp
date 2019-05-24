@@ -8,8 +8,24 @@
 #include <lib/scene/scenenode.hpp>
 #include <lib/resources/texture.hpp>
 
+#include "geometry_math.hpp"
+
 namespace lib::scene
 {
+    template <typename T> int sgn(T val) {
+        return (T(0) < val) - (val < T(0));
+    }
+
+    template <typename T> int sgn_cos(T angle) 
+    {
+        return sgn(std::cos(angle));
+    }
+
+    template <typename T> int sgn_sin(T angle) 
+    {
+        return sgn(std::sin(angle));
+    }
+
     Renderizable::Renderizable(SceneNode * const parent, const str & name, const u32 vertexCount)
         : core::HasName{ name }, m_parent{ parent }, m_vertices{ TriangleFan, vertexCount }
     {
@@ -92,7 +108,7 @@ namespace lib::scene
 
     void Renderizable::updateGeometry()
     {
-        if (box.readResetHasChanged())
+        if (ps_readResetHasChanged(box, figType))
         {
             updateGeometrySimpleNode();
             color.setChanged();
@@ -102,6 +118,79 @@ namespace lib::scene
         if (textureRect.readResetHasChanged()) 
         {
             updateTextureCoords();
+        }
+    }
+
+    void Renderizable::updateGeometrySimpleNode()
+    {
+        switch (figType())
+        {
+            default:
+            case FigType_t::Quad:
+            {
+                const Rectf32 &cBox{ box() };
+                auto& vertices(m_vertices.verticesArray());
+
+                const size_type nPoints{4U};
+                const size_type nVertex{nPoints + 2};
+
+                const vector2df size{ cBox.size() };
+                const vector2df radius{ size / 2.0f };
+
+                vertices.resize(nVertex); // + 2 for center and repeated first point
+                const f64 baseAngle((2 * PiConstant<f64>) / static_cast<f64>(nPoints));
+                const auto leftTop(cBox.leftTop());
+
+                for (u32 i{ 0 }; i < nPoints; ++i) {
+                    const f64 angle{ (i*baseAngle) + (PiConstant<f64> / 4) };
+
+                    const vector2dd r{ (sgn_cos(angle) * radius.x),
+                                sgn_sin(angle) * radius.y };
+
+                    vertices[i + 1].position = vector2df{
+                                                static_cast<f32>(radius.x + r.x),
+                                                static_cast<f32>(radius.y + r.y) }
+                                                + leftTop;
+                }
+
+                vertices[nPoints + 1].position = vertices[1].position;
+                vertices[0].position = (cBox.size() / 2) + leftTop;
+            }
+            break;
+
+            case FigType_t::Shape:
+            {
+                if (pointCount()) 
+                {
+                    const Rectf32 &cBox{ box() };
+                    auto& vertices(m_vertices.verticesArray());
+
+                    const size_type nPoints{pointCount()};
+                    const size_type nVertex{nPoints + 2};
+
+                    const vector2df size{ cBox.size() };
+                    const vector2df radius{ size / 2.0f };
+
+                    vertices.resize(nVertex); // + 2 for center and repeated first point
+                    const f64 baseAngle((2 * PiConstant<f64>) / static_cast<f64>(nPoints));
+                    const auto leftTop(cBox.leftTop());
+                    for (u32 i{ 0 }; i < nPoints; ++i) {
+                        const f64 angle{ (i*baseAngle) - (PiD2Constant<f64>) };
+
+                        const vector2dd r{ std::cos(angle) * radius.x,
+                                    std::sin(angle) * radius.y };
+
+                        vertices[i + 1].position = vector2df{
+                                                static_cast<f32>(radius.x + r.x),
+                                                static_cast<f32>(radius.y + r.y) }
+                                                + leftTop;
+                    }
+
+                    vertices[nPoints + 1].position = vertices[1].position;
+                    vertices[0].position = (cBox.size() / 2) + leftTop;
+                }
+            }
+            break;
         }
     }
 }
