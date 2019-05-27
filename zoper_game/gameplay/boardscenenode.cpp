@@ -11,7 +11,7 @@ namespace zoper
 
 	BoardSceneNode::BoardSceneNode(SceneNode* parent, str name, const Rectf32 &tileBox) :
 		BaseClass{ parent, std::move(name) }, 
-        m_pointInCenter{createSceneNode<ShapeSceneNode>("backgroundTilePoint")}
+        m_pointInCenter{createSceneNode<RenderizableSceneNode>("backgroundTilePoint")}
 	{
         auto renderizables = ensureComponentOfType<Renderizables>();
         m_backgroundTile = renderizables->createRenderizable<NodeQuad>("backgroundTile");

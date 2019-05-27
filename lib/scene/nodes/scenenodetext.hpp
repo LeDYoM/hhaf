@@ -15,7 +15,7 @@ namespace lib::scene::nodes
         using BaseClass = SceneNode;
     public:
         SceneNodeText(SceneNode *const parent, const str &name);
-        virtual ~SceneNodeText();
+        ~SceneNodeText() override;
 
         PropertyState<Text_t> text;
         PropertyState<sptr<IFont>> font;

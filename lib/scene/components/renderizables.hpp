@@ -11,6 +11,7 @@
 #include <lib/scene/renderizables/nodeshape.hpp>
 #include <lib/scene/renderizables/nodequad.hpp>
 #include <lib/scene/renderizables/renderizable.hpp>
+#include <lib/scene/renderizables/renderizable.hpp>
 
 namespace lib::scene
 {
@@ -35,6 +36,13 @@ namespace lib::scene
         sptr<T> createRenderizable(Args&&... args)
         {
             auto result(msptr<T>(attachedNode(), std::forward<Args>(args)...));
+            addRenderizable(result);
+            return result;
+        }
+
+        sptr<Renderizable> createNode(const str& name)
+        {
+            auto result(msptr<Renderizable>(attachedNode(), name, 0U));
             addRenderizable(result);
             return result;
         }

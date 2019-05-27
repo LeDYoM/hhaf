@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef ZOPER_BOARDSCENENODE_INCLUDE_HPP__
-#define ZOPER_BOARDSCENENODE_INCLUDE_HPP__
+#ifndef ZOPER_BOARDSCENENODE_INCLUDE_HPP
+#define ZOPER_BOARDSCENENODE_INCLUDE_HPP
 
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/color.hpp>
@@ -26,7 +26,7 @@ namespace zoper
 
 	private:
 		sptr<nodes::NodeQuad> m_backgroundTile;
-		sptr<ShapeSceneNode> m_pointInCenter;
+		sptr<RenderizableSceneNode> m_pointInCenter;
 	};
 }
 

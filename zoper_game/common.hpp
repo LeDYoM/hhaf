@@ -13,6 +13,7 @@ namespace zoper
         return app<ZoperProgramController>();
     }
     
+    constexpr u32 PointsPerQuad = 6U;
 }
 
 #endif

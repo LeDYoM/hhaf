@@ -13,28 +13,24 @@
 
 namespace lib::scene
 {
-	template <typename T>
 	class RenderizableSceneNode : public SceneNode
 	{
 	public:
-		constexpr RenderizableSceneNode(SceneNode *const parent, str name) : 
+		RenderizableSceneNode(SceneNode *const parent, str name) : 
             SceneNode{ parent, name }
         {
                             log_debug_info("A");
 
-            auto renderizables = ensureComponentOfType<Renderizables>();
-            m_node = renderizables->createRenderizable<T>(name + "_node");
+            m_node = ensureComponentOfType<Renderizables>()->
+                createNode(name + "_node");
         }
 
-		constexpr sptr<T> node() noexcept { return m_node; }
-		constexpr const sptr<T> node() const noexcept { return m_node; }
+		sptr<Renderizable> node() noexcept { return m_node; }
+		const sptr<Renderizable> node() const noexcept { return m_node; }
 
 	private:
-		sptr<T> m_node;
+		sptr<Renderizable> m_node;
 	};
-
-    using ShapeSceneNode = RenderizableSceneNode<nodes::NodeShape>;
-    using QuadSceneNode = RenderizableSceneNode<nodes::NodeQuad>;
 }
 
 #endif

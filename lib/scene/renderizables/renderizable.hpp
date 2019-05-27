@@ -33,14 +33,13 @@ namespace lib::scene
         PropertyState<FigType_t> figType;
         PropertyState<Rectf32> box;
         PropertyState<Color> color;
+        PropertyState<size_type> pointCount;
         BasicProperty<bool> visible{ true };
 
         void setTextureAndTextureRect(sptr<ITexture> texture_,
                                         const Rectf32& textRect);
 
         void setTextureFill(sptr<ITexture> texture_);
-
-        BasicProperty<size_type> pointCount;
 
     private:
         SceneNode *m_parent;

@@ -18,11 +18,12 @@ namespace lib
             {
             public:
                 explicit NodeShape(SceneNode *const parent, const str &name, const u32 pointC = 30)
-                    : Renderizable{ parent, name, pointC + 2 }, pointCount{ pointC } {}
+                    : Renderizable{ parent, name, pointC }
+                    {
+                        pointCount.set(pointC + 2U);
+                    }
 
                 virtual ~NodeShape() = default;
-
-                BasicProperty<size_type> pointCount;
 
             protected:
                 virtual void updateGeometrySimpleNode() override;
