@@ -5,8 +5,7 @@
 
 #include "../loaders/highscoresresources.hpp"
 
-#include <lib/scene/renderizables/nodeshape.hpp>
-#include <lib/scene/renderizables/nodequad.hpp>
+#include <lib/scene/renderizables/renderizable.hpp>
 #include <lib/scene/components/renderizables.hpp>
 #include <lib/system/resourcemanager.hpp>
 #include <lib/core/host.hpp>
@@ -29,7 +28,9 @@ namespace zoper
 		m_selectedColor = colors::Red;
 
         auto renderizables = ensureComponentOfType<Renderizables>();
-		m_background = renderizables->createRenderizable<NodeQuad>("background");
+		m_background = renderizables->createNode("background");
+        m_background->figType.set(FigType_t::Quad);
+        m_background->pointCount.set(4U);
 		m_background->box = rectFromSize(2000.0f, 2000.0f);
         m_background->setTextureFill(sceneManager().systemProvider().resourceManager().getTexture(HighScoresResources::BackgroundTextureId));
 		m_background->color = colors::White;

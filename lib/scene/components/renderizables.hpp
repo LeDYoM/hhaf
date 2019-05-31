@@ -8,9 +8,6 @@
 
 #include <lib/scene/components/icomponent.hpp>
 
-#include <lib/scene/renderizables/nodeshape.hpp>
-#include <lib/scene/renderizables/nodequad.hpp>
-#include <lib/scene/renderizables/renderizable.hpp>
 #include <lib/scene/renderizables/renderizable.hpp>
 
 namespace lib::scene

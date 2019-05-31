@@ -4,7 +4,7 @@
 #define ZOPER_GAMEBASETILE_HPP
 
 #include <lib/scene/scenenode.hpp>
-#include <lib/scene/renderizables/nodeshape.hpp>
+#include <lib/scene/renderizables/renderizable.hpp>
 #include <lib/board/itile.hpp>
 
 namespace zoper
@@ -20,7 +20,7 @@ namespace zoper
 		scene::Color getColorForToken() const;
 
 	protected:
-		sptr<scene::nodes::NodeShape> m_node;
+		sptr<scene::Renderizable> m_node;
 	};
 }
 

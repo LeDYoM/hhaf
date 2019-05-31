@@ -1,6 +1,5 @@
 #include "token.hpp"
 
-#include <lib/scene/renderizables/nodeshape.hpp>
 #include <lib/scene/ianimation.hpp>
 #include <lib/scene/components/animationcomponent.hpp>
 #include <lib/scene/components/renderizables.hpp>
@@ -23,7 +22,9 @@ namespace zoper
 	{
 		++m_tileCounter;
         auto renderizables = ensureComponentOfType<Renderizables>();
-		m_node = renderizables->createRenderizable<nodes::NodeShape>("Node", 30);
+		m_node = renderizables->createNode("Node" + str(m_tileCounter));
+        m_node->figType.set(FigType_t::Shape);
+        m_node->pointCount.set(30U);
 		m_node->box = box;
 		m_node->color = getColorForToken();
 	}

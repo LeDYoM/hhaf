@@ -24,7 +24,7 @@ namespace zoper
         auto resources_viewer = dataWrapper<ResourceView>();
     
         auto background = renderizables->createNode("background");
-        background->figType.set(FigType_t::Quad);
+//        background->figType.set(FigType_t::Quad);
         background->pointCount.set(PointsPerQuad);
         background->box = rectFromSize(2000.0f, 2000.0f);
         background->setTextureFill(resources_viewer->getTexture(MainMenuResources::BackgroundTextureId));

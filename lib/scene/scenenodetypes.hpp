@@ -1,12 +1,11 @@
 #pragma once
 
-#ifndef LIB_SCENE_SCENENODETYPES_INCLUDE_HPP__
-#define LIB_SCENE_SCENENODETYPES_INCLUDE_HPP__
+#ifndef LIB_SCENE_SCENENODETYPES_INCLUDE_HPP
+#define LIB_SCENE_SCENENODETYPES_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <lib/scene/components/icomponent.hpp>
-#include <lib/scene/renderizables/nodeshape.hpp>
-#include <lib/scene/renderizables/nodequad.hpp>
+#include <lib/scene/renderizables/renderizable.hpp>
 #include <lib/scene/components/renderizables.hpp>
 
 #include "scenenode.hpp"

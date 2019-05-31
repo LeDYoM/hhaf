@@ -1,13 +1,13 @@
 #pragma once
 
-#ifndef ZOPER_HIGHSCORESSCENE_INCLUDE_HPP__
-#define ZOPER_HIGHSCORESSCENE_INCLUDE_HPP__
+#ifndef ZOPER_HIGHSCORESSCENE_INCLUDE_HPP
+#define ZOPER_HIGHSCORESSCENE_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/connection.hpp>
 
 #include <lib/scene/scene.hpp>
-#include <lib/scene/renderizables/nodequad.hpp>
+#include <lib/scene/renderizables/renderizable.hpp>
 #include <lib/resources/texture.hpp>
 #include <lib/resources/ttfont.hpp>
 
@@ -30,7 +30,7 @@ namespace zoper
 	private:
         using BaseClass = lib::scene::Scene;
 
-		sptr<scene::nodes::NodeQuad> m_background;
+		sptr<scene::Renderizable> m_background;
 		sptr<HighScoreTextController> m_highScoreTextController;
         sptr<scene::IFont> m_normalFont;
 		scene::Color m_normalColor;

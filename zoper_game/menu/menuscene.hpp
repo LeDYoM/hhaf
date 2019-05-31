@@ -5,7 +5,6 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/connection.hpp>
-#include <lib/scene/renderizables/nodequad.hpp>
 #include <lib/scene/renderizables/renderizable.hpp>
 #include <lib/scene/scene.hpp>
 #include <lib/include/scene/iscene.hpp>

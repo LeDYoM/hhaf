@@ -55,6 +55,7 @@ namespace lib::scene
 
         void updateGeometry();
         void updateColor();
+        vector2dd getPositionFromAngleAndRadius(const f64 angle, const vector2df& radius) const;
     };
 }
 

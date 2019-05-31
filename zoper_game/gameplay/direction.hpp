@@ -102,22 +102,23 @@ namespace zoper
             switch (data)
             {
             case DirectionData::Left:
-                return 270.f;
+                return 90.F;
                 break;
             case DirectionData::Right:
-                return  90.f;
+                return 270.f;
                 break;
             case DirectionData::Up:
-                return 0.f;
+                return 180.f;
                 break;
             case DirectionData::Down:
-                return 180.f;
+                return 0.f;
                 break;
             case DirectionData::Invalid:
             default:
                 lib::log_debug_error("Invalid direction. Cannot convert");
                 return 0.f;
             }
+
         }
 
     private:

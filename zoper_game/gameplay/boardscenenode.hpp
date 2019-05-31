@@ -5,8 +5,7 @@
 
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/color.hpp>
-#include <lib/scene/renderizables/nodeshape.hpp>
-#include <lib/scene/renderizables/nodequad.hpp>
+#include <lib/scene/renderizables/renderizable.hpp>
 #include <lib/scene/scenenodetypes.hpp>
 
 namespace zoper
@@ -25,7 +24,7 @@ namespace zoper
 		void setTileColor(Color color);
 
 	private:
-		sptr<nodes::NodeQuad> m_backgroundTile;
+		sptr<Renderizable> m_backgroundTile;
 		sptr<RenderizableSceneNode> m_pointInCenter;
 	};
 }

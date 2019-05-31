@@ -79,6 +79,8 @@ namespace lib::scene::nodes
 
                         auto letterNode(createSceneNode
                                         <RenderizableSceneNode>("text_"+str(curChar)));
+                        letterNode->node()->figType.set(FigType_t::Quad);
+                        letterNode->node()->pointCount.set(6U);
                         letterNode->node()->box.set(letterBox);
                         letterNode->node()->setTextureAndTextureRect(texture,
                                     textureUV);

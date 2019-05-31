@@ -16,8 +16,6 @@
 #include <logger/include/log.hpp>
 #include <lib/scene/renderizables/renderizable.hpp>
 #include <lib/scene/scenemanager.hpp>
-#include <lib/scene/renderizables/nodeshape.hpp>
-#include <lib/scene/renderizables/nodequad.hpp>
 #include <lib/core/host.hpp>
 #include <lib/scene/ianimation.hpp>
 #include <lib/scene/components/animationcomponent.hpp>
@@ -354,7 +352,9 @@ namespace zoper
                 auto sceneNode(createSceneNode("pointIncrementScore_SceneNode"));
 
                 auto renderizables_sceneNode = sceneNode->ensureComponentOfType<Renderizables>();
-                auto node(renderizables_sceneNode->createRenderizable<NodeShape>("pointIncrementScore", 30));
+                auto node(renderizables_sceneNode->createNode("pointIncrementScore"));
+                node->figType.set(FigType_t::Shape);
+                node->pointCount.set(30U);
                 node->box = rectFromSize(15.0f, 15.0f);
                 node->color = colors::White;
 
