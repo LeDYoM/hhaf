@@ -25,8 +25,6 @@ namespace zoper
 
         void createData(GameScene& gameScene, const GameMode gameMode);
 
-        sptr<scene::SceneNode> m_pauseSceneNode;
-        sptr<scene::nodes::SceneNodeText> m_pauseText;
         sptr<BoardGroup> m_boardGroup;
     };
 }

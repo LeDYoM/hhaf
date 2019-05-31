@@ -7,8 +7,6 @@
 #include "levelproperties.hpp"
 #include "boardgroup.hpp"
 #include "tokenzones.hpp"
-#include "gameover.hpp"
-#include "gamehud.hpp"
 
 #include "../keymapping.hpp"
 #include "../gameshareddata.hpp"
@@ -33,6 +31,8 @@ namespace zoper
     class Player;
     class Token;
     class GameSceneData;
+    class PauseSceneNode;
+    class GameOverSceneNode;
 
     using namespace lib;
 
@@ -84,12 +84,12 @@ namespace zoper
         scene::TimerConnectorSPtr m_nextTokenTimer;
 
         // General properties.
-//        sptr<board::BoardModelComponent> p_boardModel{ nullptr };
         InGameData m_inGameData;
         u8 m_nextTokenPart{ 0 };
         sptr<LevelProperties> levelProperties;
         sptr<Player> m_player{ nullptr };
         sptr<GameOverSceneNode> m_gameOver;
+        sptr<PauseSceneNode> pause_node_;
     };
 }
 

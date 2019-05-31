@@ -4,6 +4,9 @@
 #include "token.hpp"
 #include "player.hpp"
 #include "constants.hpp"
+#include "gameover.hpp"
+#include "gamehud.hpp"
+#include "pause.hpp"
 
 #include "../common.hpp"
 #include "../gameshareddata.hpp"
@@ -130,6 +133,9 @@ namespace zoper
         assert_release(private_->token_position_generator_ != nullptr, "Cannot create RandomizerComponent");
         private_->token_position_generator_->channel.set(2U);
 
+        // Prepare the pause text.
+        pause_node_ = createSceneNode<PauseSceneNode>("PauseNode");
+
         setState(Playing);
     }
 
@@ -153,18 +159,8 @@ namespace zoper
 		case Pause:
 		{
             m_sceneTimerComponent->pause();
-            m_data->m_pauseSceneNode->visible = true;
-            auto animationComponent(m_data->m_pauseSceneNode->ensureComponentOfType<anim::AnimationComponent>());
-            animationComponent->addPropertyAnimation(TimePoint_as_miliseconds(1000),
-                m_data->m_pauseText->textColor, FillColor_t{Color{ 255, 255, 255, 0 } },
-                FillColor_t{Color{ 255, 255, 255, 255 } });
-/*
-            animationComponent->addAnimation(muptr<anim::IPropertyAnimation<FillColor_t>>(
-                TimePoint_as_miliseconds(1000), 
-                m_data->m_pauseText->textColor, FillColor_t{Color{ 255, 255, 255, 0 } },
-                                 FillColor_t{Color{ 255, 255, 255, 255 } }));
-            */
-		}
+            pause_node_->enterPause();
+ 		}
 		break;
         case GameOver:
 //            m_data->m_gameOverrg->visible = true;
@@ -177,15 +173,16 @@ namespace zoper
 
     void GameScene::onExitState(const size_type &state)
     {
-		switch (state) {
-		case Pause:
-		{
-            m_sceneTimerComponent->resume();
-            m_data->m_pauseSceneNode->visible = false;
-		}
-		break;
-		default:
-			break;
+		switch (state) 
+        {
+            case Pause:
+            {
+                m_sceneTimerComponent->resume();
+                pause_node_->exitPause();
+            }
+            break;
+            default:
+                break;
 		}
 		log_debug_info("Exited state: ", state);
     }
