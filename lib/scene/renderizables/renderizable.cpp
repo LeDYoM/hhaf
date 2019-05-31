@@ -150,17 +150,15 @@ namespace lib::scene
 
             const size_type nPoints{pointCount()};
             const size_type nVertex{nPoints + 2};
-
-            const vector2df size{ cBox.size() };
-            const vector2df radius{ size / 2.0f };
+            const vector2df radius{ cBox.size() / 2.0f };
 
             vertices.resize(nVertex); // + 2 for center and repeated first point
-            const f64 baseAngle((2 * PiConstant<f64>) / static_cast<f64>(nPoints));
+            const f64 baseAngle(PiM2Constant<f64> / static_cast<f64>(nPoints));
             const auto leftTop(cBox.leftTop());
 
             for (size_type i{ 0U }; i < nPoints; ++i) 
             {
-                const f64 angle{ (i*baseAngle)  + (PiConstant<f64> / 2.0) };
+                const f64 angle{ (i * baseAngle) };
                 const vector2dd r{ getPositionFromAngleAndRadius(angle, radius)  };
                 vertices[i + 1].position = leftTop + radius + static_cast<vector2df>(r);
             }

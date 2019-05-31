@@ -62,7 +62,7 @@ namespace zoper
         m_extraSceneNode->rotateAround(tileCenter, destDirection.angle());
 
 		m_extraSceneNode_2->scaleAround(tileCenter, 
-			(destDirection.isVertical()) ?
+			(!destDirection.isVertical()) ?
 				vector2df{ 1, 1 }:
 				vector2df{ m_board2SceneFactor.y / m_board2SceneFactor.x, m_board2SceneFactor.x / m_board2SceneFactor.y }
 		);

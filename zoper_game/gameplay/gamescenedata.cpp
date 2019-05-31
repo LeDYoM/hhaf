@@ -24,7 +24,6 @@ namespace zoper
         gameScene.loadResources(GameResources{});
         auto resources_viewer = gameScene.dataWrapper<ResourceView>();
 
-        m_levelrg = gameScene.createSceneNode("level");
         m_pauseSceneNode = gameScene.createSceneNode("pause");
 
         m_pauseText = m_pauseSceneNode->createSceneNode<SceneNodeText>("pausetext");
@@ -37,8 +36,6 @@ namespace zoper
             align->alignmentX.set(AlignedTextComponent::AlignmentX::Center);
             align->alignmentY.set(AlignedTextComponent::AlignmentY::Middle);
         }
-
-        m_levelrg->position = vector2df{ 1250, 50 };
 
         m_pauseSceneNode->visible = false;
     }
