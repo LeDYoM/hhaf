@@ -50,13 +50,16 @@ namespace zoper
         private_ = new GameScenePrivate();
 
         m_data = msptr<GameSceneData>();
-        m_data->createData(*this, m_inGameData.gameMode);
+        m_data->createData();
+
+        loadResources(GameResources{});
+
         m_gameOver = createSceneNode<GameOverSceneNode>("gameOverSceneNode");
 
         using namespace lib::board;
 
-        assert_debug(!m_data->m_boardGroup, "m_boardGroup is not empty");
-        m_data->m_boardGroup = createSceneNode<BoardGroup>("BoardGroup", TokenZones::size);
+        assert_debug(!m_boardGroup, "m_boardGroup is not empty");
+        m_boardGroup = createSceneNode<BoardGroup>("BoardGroup", TokenZones::size);
 
         addPlayer();
 
@@ -72,7 +75,7 @@ namespace zoper
             {
                 auto dir(keyMapping->getDirectionFromKey(key));
                 if (dir.isValid()) {
-                    m_player->movePlayer(dir, m_data->m_boardGroup->p_boardModel);
+                    m_player->movePlayer(dir, m_boardGroup->p_boardModel);
                 }
                 else if (keyMapping->isLaunchKey(key)) {
                     launchPlayer();
@@ -102,10 +105,10 @@ namespace zoper
         // At this point, we setup level properties.
         // levelProperties should not be used before this point.
         levelProperties = ensureComponentOfType<LevelProperties>();
-        levelProperties->levelChanged.connect([&m_data = m_data](const auto level)
+        levelProperties->levelChanged.connect([this](const auto level)
         {
             // Forward current level where necessary.
-            m_data->m_boardGroup->setLevel(level);
+            m_boardGroup->setLevel(level);
         });
         levelProperties->setUp(m_inGameData.currentLevel, m_inGameData.gameMode, m_data, m_sceneTimerComponent);
 
@@ -189,7 +192,7 @@ namespace zoper
 
     void GameScene::setLevel(const size_type)
     {
-        m_data->m_boardGroup->setLevel(m_inGameData.currentLevel);
+        m_boardGroup->setLevel(m_inGameData.currentLevel);
     }
 
     void GameScene::generateNextToken()
@@ -218,10 +221,10 @@ namespace zoper
         Direction loopDirection = currentTokenZone.direction.negate();
         for_each_token_in_line(loopPosition, loopDirection, [this](const vector2dst &loopPosition, const Direction &direction) 
         {
-            if (!m_data->m_boardGroup->p_boardModel->tileEmpty(loopPosition))
+            if (!m_boardGroup->p_boardModel->tileEmpty(loopPosition))
             {
                 const auto dest( direction.negate().applyToVector(loopPosition) );
-                m_data->m_boardGroup->p_boardModel->moveTile(loopPosition, dest);
+                m_boardGroup->p_boardModel->moveTile(loopPosition, dest);
 
                 if (TokenZones::pointInCenter(dest)) {
                     log_debug_info("Found point in center: ", dest);
@@ -258,7 +261,7 @@ namespace zoper
         do {
             stay &= updatePredicate(loopPosition, direction);
             loopPosition = direction.applyToVector(loopPosition);
-            stay &= m_data->m_boardGroup->p_boardModel->validCoords(loopPosition);
+            stay &= m_boardGroup->p_boardModel->validCoords(loopPosition);
         } while (stay);
     }
 
@@ -267,10 +270,10 @@ namespace zoper
         log_debug_info("Adding player tile at ", TokenZones::centerRect.leftTop());
         assert_release(!m_player, "Player already initialized");
         // Create the player instance
-        m_player = m_data->m_boardGroup->m_mainBoardrg->createSceneNode<Player>("playerNode", TokenZones::centerRect.leftTop(), rectFromSize(tileSize()), board2SceneFactor());
+        m_player = m_boardGroup->m_mainBoardrg->createSceneNode<Player>("playerNode", TokenZones::centerRect.leftTop(), rectFromSize(tileSize()), board2SceneFactor());
 
         // Add it to the board and to the scene nodes
-        m_data->m_boardGroup->p_boardModel->setTile(m_player->boardPosition(), m_player);
+        m_boardGroup->p_boardModel->setTile(m_player->boardPosition(), m_player);
     }
 
     void GameScene::addNewToken(const vector2dst &pos, const size_type newToken)
@@ -279,12 +282,12 @@ namespace zoper
 
         log_debug_info("Adding new tile at ", pos, " with value ", newToken);
         // Create a new Tile instance
-        auto newTileToken = m_data->m_boardGroup->m_mainBoardrg->createSceneNode<Token>("tileNode", BoardTileData{ static_cast<BoardTileData>(newToken) }, rectFromSize(tileSize()));
+        auto newTileToken = m_boardGroup->m_mainBoardrg->createSceneNode<Token>("tileNode", BoardTileData{ static_cast<BoardTileData>(newToken) }, rectFromSize(tileSize()));
         // Set the position in the scene depending on the board position
         newTileToken->position = board2Scene(pos);
 
         // Add it to the board
-        m_data->m_boardGroup->p_boardModel->setTile(pos, newTileToken);
+        m_boardGroup->p_boardModel->setTile(pos, newTileToken);
     }
 
     void GameScene::launchPlayer()
@@ -300,9 +303,9 @@ namespace zoper
             bool found{ false };
             vector2df lastTokenPosition{};
 
-            if (!m_data->m_boardGroup->p_boardModel->tileEmpty(loopPosition) && !TokenZones::pointInCenter(loopPosition) && result)
+            if (!m_boardGroup->p_boardModel->tileEmpty(loopPosition) && !TokenZones::pointInCenter(loopPosition) && result)
             {
-                sptr<board::ITile> currentToken{ m_data->m_boardGroup->p_boardModel->getTile(loopPosition) };
+                sptr<board::ITile> currentToken{ m_boardGroup->p_boardModel->getTile(loopPosition) };
                 board::BoardTileData currentTokenType = currentToken->get();
 
                 if (currentTokenType == tokenType) 
@@ -322,7 +325,7 @@ namespace zoper
                     lastTokenPosition = board2Scene(loopPosition);
 
                     // Delete the token
-                    m_data->m_boardGroup->p_boardModel->deleteTile(loopPosition);
+                    m_boardGroup->p_boardModel->deleteTile(loopPosition);
 
                     // At least you found one token
                     found = true;
@@ -332,10 +335,10 @@ namespace zoper
                     // If we found a token, but it is from another color:
 
                     // Change the type of the player to this new one
-                    m_data->m_boardGroup->p_boardModel->changeTileData(m_player->boardPosition(), currentTokenType);
+                    m_boardGroup->p_boardModel->changeTileData(m_player->boardPosition(), currentTokenType);
 
                     // Change the type of the token for the previous type of the player
-                    m_data->m_boardGroup->p_boardModel->changeTileData(loopPosition, tokenType);
+                    m_boardGroup->p_boardModel->changeTileData(loopPosition, tokenType);
 
                     log_debug_info("Player type changed to ", m_player->get());
 
@@ -378,8 +381,8 @@ namespace zoper
 
     vector2df GameScene::board2SceneFactor() const
     {
-        return{ sceneManager().viewRect().size().x / static_cast<f32>(m_data->m_boardGroup->p_boardModel->size().x),
-            sceneManager().viewRect().size().y / static_cast<f32>(m_data->m_boardGroup->p_boardModel->size().y) };
+        return{ sceneManager().viewRect().size().x / static_cast<f32>(m_boardGroup->p_boardModel->size().x),
+            sceneManager().viewRect().size().y / static_cast<f32>(m_boardGroup->p_boardModel->size().y) };
     }
 
     vector2df GameScene::board2Scene(const lib::vector2dst &bPosition) const
@@ -399,7 +402,7 @@ namespace zoper
             str temp;
             for (u32 x{ 0 }; x < TokenZones::size.x; ++x) {
                 str chTemp;
-                auto lp_tile(m_data->m_boardGroup->p_boardModel->getTile({ x, y }));
+                auto lp_tile(m_boardGroup->p_boardModel->getTile({ x, y }));
                 if (lp_tile) {
                     chTemp = lp_tile->get();
                 } else {

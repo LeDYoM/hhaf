@@ -79,6 +79,8 @@ namespace zoper
         void addPlayer();
         void _debugDisplayBoard() const;
 
+        sptr<BoardGroup> m_boardGroup;
+
         // Timer related properties
         sptr<scene::TimerComponent> m_sceneTimerComponent;
         scene::TimerConnectorSPtr m_nextTokenTimer;
