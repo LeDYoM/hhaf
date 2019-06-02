@@ -1,5 +1,4 @@
 #include "gamescene.hpp"
-#include "gamescenedata.hpp"
 
 #include "token.hpp"
 #include "player.hpp"

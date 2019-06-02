@@ -1,5 +1,4 @@
 #include "levelproperties.hpp"
-#include "gamescenedata.hpp"
 
 #include <lib/core/host.hpp>
 #include <logger/include/log.hpp>
