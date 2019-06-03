@@ -10,18 +10,15 @@ namespace zoper
 	using namespace lib::core;
 
     void LevelProperties::setUp(const size_type currentLevel,
-        const GameMode gameMode, sptr<GameSceneData> gameSceneData,
-        sptr<scene::TimerComponent> sceneTimerComponent)
+        const GameMode gameMode, sptr<scene::TimerComponent> sceneTimerComponent)
     {
         if (!m_levelTimer)
         {
             m_levelTimer = attachedNode()->dataWrapper<scene::Timer>();
         }
         assert_debug(m_sceneTimerComponent != nullptr, "Passed nullptr sceneTimerComponent");
-        assert_debug(m_gameSceneData != nullptr, "Passed nullptr gameSceneData");
 
         m_gameMode = gameMode;
-        m_gameSceneData.swap(gameSceneData);
         m_sceneTimerComponent.swap(sceneTimerComponent);
 
         m_updateLevelDataTimer = m_sceneTimerComponent->addTimer(

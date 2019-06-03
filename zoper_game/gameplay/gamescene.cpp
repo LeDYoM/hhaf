@@ -48,9 +48,6 @@ namespace zoper
         assert_debug(private_ == nullptr, "Private data pointer is not nullptr!");
         private_ = new GameScenePrivate();
 
-        m_data = msptr<GameSceneData>();
-        m_data->createData();
-
         loadResources(GameResources{});
 
         m_gameOver = createSceneNode<GameOverSceneNode>("gameOverSceneNode");
@@ -109,7 +106,7 @@ namespace zoper
             // Forward current level where necessary.
             m_boardGroup->setLevel(level);
         });
-        levelProperties->setUp(m_inGameData.currentLevel, m_inGameData.gameMode, m_data, m_sceneTimerComponent);
+        levelProperties->setUp(m_inGameData.currentLevel, m_inGameData.gameMode, m_sceneTimerComponent);
 
         m_nextTokenTimer = m_sceneTimerComponent->addTimer(
             TimerType::Continuous,

@@ -30,7 +30,6 @@ namespace zoper
 {
     class Player;
     class Token;
-    class GameSceneData;
     class PauseSceneNode;
     class GameOverSceneNode;
 
@@ -55,7 +54,6 @@ namespace zoper
     private:
         struct GameScenePrivate;
         GameScenePrivate *private_;
-        sptr<GameSceneData> m_data;
         using BaseClass = scene::Scene;
         void setLevel(const size_type nv);
         void generateNextToken();
