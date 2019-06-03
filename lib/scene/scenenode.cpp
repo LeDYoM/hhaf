@@ -3,7 +3,7 @@
 
 #include <lib/scene/renderizables/renderizable.hpp>
 
-#include <lib/include/core/log.hpp>
+#include <logger/include/log.hpp>
 
 #include "scenemanager.hpp"
 #include "scenenodeblob.hpp"
@@ -11,8 +11,8 @@
 namespace lib::scene
 {
     SceneNode::SceneNode(SceneNode *const parent, str name)
-        : core::HasName{ std::move(name) }, ComponentContainer{ this }, 
-        SceneNodeBlob{ *this },
+        : core::HasName{ std::move(name) }, DataWrapperCreator{ this}, 
+        ComponentContainer{ this }, SceneNodeBlob{ *this },
         visible{ true }, m_parent{ parent }
     {
     }

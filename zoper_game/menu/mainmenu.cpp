@@ -9,7 +9,7 @@
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/scenemanager.hpp>
 #include <lib/core/host.hpp>
-#include <lib/include/core/log.hpp>
+#include <logger/include/log.hpp>
 #include <lib/scene/components/statescontroller.hpp>
 
 #include <mtypes/include/function.hpp>

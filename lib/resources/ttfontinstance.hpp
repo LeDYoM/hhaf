@@ -6,13 +6,13 @@
 #include <mtypes/include/types.hpp>
 
 #include "texture.hpp"
-#include "font.hpp"
+#include <lib/include/resources/ifont.hpp>
 
 namespace lib::scene
 {
 	class TTFont;
 
-    class TTFontInstance : public Font
+    class TTFontInstance : public IFont
     {
     public:
 		Rectf32 getBounds(const u32 codePoint) const override;
@@ -20,7 +20,7 @@ namespace lib::scene
 		f32 getAdvance(const u32 codePoint) const override;
 		f32 getLineSpacing() const override;
         f32 getKerning(const u32 first, const u32 second) const override;
-        sptr<Texture> getTexture() const override;
+        sptr<ITexture> getTexture() const override;
         vector2df textSize(const str& text) const override;
 		~TTFontInstance() override;
 		TTFontInstance(const TTFont &parent, const u32 characterSize);

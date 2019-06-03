@@ -1,9 +1,9 @@
 #include "scenenodetext.hpp"
 
-#include <lib/resources/font.hpp>
+#include <lib/include/resources/ifont.hpp>
 #include <lib/resources/texture.hpp>
 
-#include <lib/include/core/log.hpp>
+#include <logger/include/log.hpp>
 
 #include <lib/scene/vertexarray.hpp>
 #include <lib/scene/scenenodetypes.hpp>
@@ -18,7 +18,7 @@ namespace lib::scene::nodes
     {
     }
 
-    nodes::SceneNodeText::~SceneNodeText() = default;
+    SceneNodeText::~SceneNodeText() = default;
 
     void SceneNodeText::update()
     {
@@ -78,7 +78,9 @@ namespace lib::scene::nodes
                         const Rectf32 letterBox{ font()->getBounds(curChar) + vector2df{ x,y } };
 
                         auto letterNode(createSceneNode
-                                        <QuadSceneNode>("text_"+str(curChar)));
+                                        <RenderizableSceneNode>("text_"+str(curChar)));
+                        letterNode->node()->figType.set(FigType_t::Quad);
+                        letterNode->node()->pointCount.set(6U);
                         letterNode->node()->box.set(letterBox);
                         letterNode->node()->setTextureAndTextureRect(texture,
                                     textureUV);
@@ -106,7 +108,7 @@ namespace lib::scene::nodes
         {
             const Color &tc{textColor()()};
             sceneNodes().for_each([&tc](const SceneNodeSPtr& sNode) {
-                sNode->snCast<QuadSceneNode>()->node()->color.set(tc);
+                sNode->snCast<RenderizableSceneNode>()->node()->color.set(tc);
             });
         }
     }

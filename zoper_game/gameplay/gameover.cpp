@@ -8,9 +8,10 @@
 
 #include <lib/scene/components/alignedtextcomponent.hpp>
 
-#include <lib/include/core/log.hpp>
+#include <logger/include/log.hpp>
 #include <lib/include/resources/iresourceretriever.hpp>
-#include <lib/resources/ttfont.hpp>
+#include <lib/include/resources/ittfont.hpp>
+#include <lib/scene/datawrappers/resourceview.hpp>
 
 namespace zoper
 {
@@ -25,10 +26,11 @@ namespace zoper
 
         vector2df gosize{ parentScene()->scenePerspective().width, 715 };
         m_gameOverrg->position.set({ 0, 575 });
+        auto resources_viewer = dataWrapper<ResourceView>();
 
         auto gameText(m_gameOverrg->createSceneNode<SceneNodeText>("gameovergame"));
         gameText->text.set(Text_t("GAME"));
-        gameText->font.set(parentScene()->sceneManager().resources().getFont(GameResources::ScoreFontId)->font(360));
+        gameText->font.set(resources_viewer->getFont(GameResources::ScoreFontId)->font(360));
         gameText->textColor.set(FillColor_t{ colors::White });
         {
             auto align(gameText->ensureComponentOfType<AlignedTextComponent>());
@@ -39,7 +41,7 @@ namespace zoper
 
         auto overText(m_gameOverrg->createSceneNode<SceneNodeText>("gameoverover"));
         overText->text.set(Text_t("OVER"));
-        overText->font.set(parentScene()->sceneManager().resources().getFont(GameResources::ScoreFontId)->font(360));
+        overText->font.set(resources_viewer->getFont(GameResources::ScoreFontId)->font(360));
         overText->textColor.set(FillColor_t{ colors::White });
         {
             auto align(overText->ensureComponentOfType<AlignedTextComponent>());

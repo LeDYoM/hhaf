@@ -1,10 +1,10 @@
 #include "token.hpp"
 
-#include <lib/scene/renderizables/nodeshape.hpp>
 #include <lib/scene/ianimation.hpp>
 #include <lib/scene/components/animationcomponent.hpp>
+#include <lib/scene/components/renderizables.hpp>
 
-#include <lib/include/core/log.hpp>
+#include <logger/include/log.hpp>
 
 #include "gamescene.hpp"
 #include "levelproperties.hpp"
@@ -21,7 +21,10 @@ namespace zoper
 		GameBaseTile{ parent, name + str(m_tileCounter) + str(m_tileCounter), data }
 	{
 		++m_tileCounter;
-		m_node = createRenderizable<nodes::NodeShape>("Node", 30);
+        auto renderizables = ensureComponentOfType<Renderizables>();
+		m_node = renderizables->createNode("Node" + str(m_tileCounter));
+        m_node->figType.set(FigType_t::Shape);
+        m_node->pointCount.set(30U);
 		m_node->box = box;
 		m_node->color = getColorForToken();
 	}
@@ -54,6 +57,14 @@ namespace zoper
     void Token::tileMoved(const vector2dst & /*source*/, const vector2dst & dest)
     {
         auto animationComponent(ensureComponentOfType<anim::AnimationComponent>());
+        const auto time(TimePoint_as_miliseconds(
+                parentSceneAs<GameScene>()->
+                    ensureComponentOfType<LevelProperties>()->millisBetweenTokens() / 2
+            ));
+
+        const auto destination(parentSceneAs<GameScene>()->board2Scene(dest));
+        animationComponent->addPropertyAnimation(time, position, destination);
+/*
         animationComponent->addAnimation(muptr<anim::IPropertyAnimation<vector2df>>
         (
             TimePoint_as_miliseconds(
@@ -63,5 +74,6 @@ namespace zoper
             position, position(),
             parentSceneAs<GameScene>()->board2Scene(dest))
         );
+        */
     }
 }

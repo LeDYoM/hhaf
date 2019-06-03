@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_MAIN_INCLUDE_HPP__
-#define LIB_MAIN_INCLUDE_HPP__
+#ifndef LIB_MAIN_INCLUDE_HPP
+#define LIB_MAIN_INCLUDE_HPP
 
  // Identify the operating system
 // see http://nadeausoftware.com/articles/2012/01/c_c_tip_how_use_compiler_predefined_macros_detect_operating_system

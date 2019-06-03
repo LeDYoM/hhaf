@@ -2,7 +2,7 @@
 
 #include <mtypes/include/function.hpp>
 
-#include <lib/include/core/log.hpp>
+#include <logger/include/log.hpp>
 #include <lib/scene/scene.hpp>
 
 namespace lib::scene
@@ -24,21 +24,20 @@ namespace lib::scene
         if (!(m_activeTimers.empty()))
         {
             bool someDeleted{ false };
-            for (auto &sptr_timerConnector : m_activeTimers)
+            for (auto &timerConnector : m_activeTimers)
             {
-                TimerConnector &timerConnector{ *sptr_timerConnector };
-                if (timerConnector.timeOut())
+                if (timerConnector->timeOut())
                 {
                     // Delta time has passed, so trigger
                     // the callback and update the timer
-                    timerConnector.m_emitter(timerConnector.m_timer.ellapsed());
-                    if (timerConnector.m_timerType == TimerType::Continuous)
+                    timerConnector->m_emitter(timerConnector->timer_->ellapsed());
+                    if (timerConnector->m_timerType == TimerType::Continuous)
                     {
-                        timerConnector.m_timer.restart();
+                        timerConnector->timer_->restart();
                     }
                     else
                     {
-                        sptr_timerConnector.reset();
+                        timerConnector.reset();
                         someDeleted = true;
                     }
                 }
@@ -53,22 +52,25 @@ namespace lib::scene
 
     void TimerComponent::pause()
     {
-        m_activeTimers.for_each([](const sptr<TimerConnector>&timerConnector) {
-            timerConnector->m_timer.pause();
+        m_activeTimers.for_each([](const sptr<TimerConnector>&timerConnector)
+        {
+            timerConnector->timer_->pause();
         });
     }
 
     void TimerComponent::resume()
     {
-        m_activeTimers.for_each([](const sptr<TimerConnector>&timerConnector) {
-            timerConnector->m_timer.resume();
+        m_activeTimers.for_each([](const sptr<TimerConnector>&timerConnector)
+        {
+            timerConnector->timer_->resume();
         });
     }
 
     void TimerComponent::switchPause()
     {
-        m_activeTimers.for_each([](const sptr<TimerConnector>&timerConnector) {
-            timerConnector->m_timer.switchPause();
+        m_activeTimers.for_each([](const sptr<TimerConnector>&timerConnector)
+        {
+            timerConnector->timer_->switchPause();
         });
     }
 }

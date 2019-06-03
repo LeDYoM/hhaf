@@ -2,7 +2,7 @@
 #define LIB_DEBUGCOMPONENT_INCLUDE_HPP
 
 #include <lib/scene/components/inputcomponent.hpp>
-#include <lib/include/core/log.hpp>
+#include <logger/include/log.hpp>
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>

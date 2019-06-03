@@ -6,7 +6,7 @@
 #include <lib/system/resourcemanager.hpp>
 #include <lib/scene/scenemanager.hpp>
 
-#include <lib/include/core/log.hpp>
+#include <logger/include/log.hpp>
 #include <lib/include/resources/iresourceloader.hpp>
 #include <lib/include/resources/iresourcehandler.hpp>
 

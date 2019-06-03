@@ -56,7 +56,7 @@ namespace zoper
 		size_type m_previouslySelectedItem{ 0 };
 		size_type m_selectedItem{ 0 };
 
-        sptr<Font> m_normalFont;
+        sptr<IFont> m_normalFont;
 		Color m_normalColor;
 		Color m_selectedColor;
 		ireceiver m_receiver;

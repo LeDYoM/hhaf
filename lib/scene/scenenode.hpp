@@ -9,6 +9,7 @@
 #include <lib/scene/hasname.hpp>
 #include <lib/scene/components/icomponent.hpp>
 #include <lib/scene/components/componentcontainer.hpp>
+#include <lib/scene/datawrappers/datawrappercreator.hpp>
 
 #include "scenenodeblob.hpp"
 
@@ -21,7 +22,8 @@ namespace lib::scene
     /** \brief Main class representing all SceneNodes from a Scene.
     * This class is that serves as main entry point in the hierarchy of the scene
     */
-    class SceneNode : public core::HasName, public Transformable, public ComponentContainer, public SceneNodeBlob
+    class SceneNode : public core::HasName, public Transformable, 
+        public DataWrapperCreator, public ComponentContainer, public SceneNodeBlob
     {
     public:
         SceneNode(const SceneNode&) = delete;
@@ -48,7 +50,7 @@ namespace lib::scene
         * @returns The created renderizable
         */
         template <typename T, typename... Args>
-        sptr<T> createRenderizable(Args&&... args)
+        sptr<T> createRenderizable2(Args&&... args)
         {
             auto result(msptr<T>(this, std::forward<Args>(args)...));
             addRenderizable(result);
@@ -118,6 +120,9 @@ namespace lib::scene
         constexpr auto &sceneNodes() noexcept { return m_groups; }
         constexpr auto sceneNodesSize() const noexcept { return sceneNodes().size(); }
 
+        // TODO: Temporary
+        vector<sptr<Renderizable>> m_renderNodes;
+
     protected:
 
         void addRenderizable(sptr<Renderizable> newElement);
@@ -127,7 +132,6 @@ namespace lib::scene
         friend class SceneNodeBlob;
         SceneNode *m_parent;
 
-        vector<sptr<Renderizable>> m_renderNodes;
         vector<sptr<SceneNode>> m_groups;
     };
 

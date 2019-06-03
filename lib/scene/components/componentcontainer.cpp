@@ -1,6 +1,6 @@
 #include "componentcontainer.hpp"
 
-#include <lib/include/core/log.hpp>
+#include <logger/include/log.hpp>
 
 #include <algorithm>
 
@@ -44,7 +44,8 @@ namespace lib
 			sptr<IComponent> component(std::move(nc));
 			const bool alreadyInConainer(containsComponentOfType(component, m_components.current()));
 
-			if (!alreadyInConainer) {
+			if (!alreadyInConainer)
+            {
 				log_debug_info("Not found. Adding it");
 				component->m_sceneNode = m_sceneNode;
 				m_components.push_back(component);

@@ -7,7 +7,7 @@
 #include <lib/system/resourcemanager.hpp>
 #include <lib/system/rendertarget.hpp>
 
-#include <lib/include/core/log.hpp>
+#include <logger/include/log.hpp>
 #include <lib/include/resources/iresourceretriever.hpp>
 
 namespace lib::scene

@@ -3,7 +3,6 @@
 #ifndef LIB_IHOSTCONTEXT_INTERFACE_INCLUDE_HPP
 #define LIB_IHOSTCONTEXT_INTERFACE_INCLUDE_HPP
 
-#include <lib/include/lib.hpp>
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
 #include <mtypes/include/dicty.hpp>

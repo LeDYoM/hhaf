@@ -3,7 +3,6 @@
 #ifndef LIB_HOSTCONTEXT_INCLUDE_HPP
 #define LIB_HOSTCONTEXT_INCLUDE_HPP
 
-#include <lib/include/lib.hpp>
 #include <lib/include/core/ihostcontext.hpp>
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>

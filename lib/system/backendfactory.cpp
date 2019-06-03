@@ -1,7 +1,7 @@
 #include "backendfactory.hpp"
 #include "backendregister.hpp"
 
-#include <lib/include/core/log.hpp>
+#include <logger/include/log.hpp>
 
 #include <backend_dev/include/interfaces.hpp>
 #include <loader/include/loader.hpp>
@@ -33,8 +33,6 @@ namespace lib::backend
 		}
 		return false;
 	}
-
-	BackendFactory *BackendFactory::m_instance = nullptr;
 
 	BackendFactory::BackendFactory()
 	{
@@ -80,27 +78,6 @@ namespace lib::backend
 		backend_register_.reset();
 
 		loader::destroyLoader();
-	}
-
-	bool BackendFactory::initilialize(const str&)
-	{
-		if (!m_instance) {
-			m_instance = new BackendFactory;
-			log_release_info("Using backend: ", m_instance->m_windowProviderInfo->info());
-			return true;
-		}
-
-		return false;
-	}
-
-	bool BackendFactory::destroy()
-	{
-		if (m_instance) {
-			delete m_instance;
-			m_instance = nullptr;
-			return true;
-		}
-		return false;
 	}
 
 	IWindowProviderInfo* BackendFactory::getWindowProviderInfo()

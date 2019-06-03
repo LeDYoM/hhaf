@@ -12,8 +12,8 @@ namespace lib
     template <typename T>
     using sptr = std::shared_ptr<T>;
 
-    template <typename T>
-    using uptr = std::unique_ptr<T>;
+    template <typename T, typename D = std::default_delete<T>>
+    using uptr = std::unique_ptr<T, D>;
 
     template <typename T, typename... Args>
     constexpr sptr<T> msptr(Args&&... args) { return std::make_shared<T>(std::forward<Args>(args)...); }

@@ -7,8 +7,6 @@
 #include "levelproperties.hpp"
 #include "boardgroup.hpp"
 #include "tokenzones.hpp"
-#include "gameover.hpp"
-#include "gamehud.hpp"
 
 #include "../keymapping.hpp"
 #include "../gameshareddata.hpp"
@@ -20,7 +18,7 @@
 #include <lib/board/boardmodel.hpp>
 #include <lib/scene/nodes/textquad.hpp>
 #include <lib/scene/nodes/scenenodetext.hpp>
-#include <lib/scene/renderizables/nodequad.hpp>
+#include <lib/scene/renderizables/renderizable.hpp>
 #include <lib/scene/components/timercomponent.hpp>
 #include <lib/scene/components/statescontroller.hpp>
 #include <lib/scene/components/statescontrolleractuator.hpp>
@@ -32,7 +30,8 @@ namespace zoper
 {
     class Player;
     class Token;
-    class GameSceneData;
+    class PauseSceneNode;
+    class GameOverSceneNode;
 
     using namespace lib;
 
@@ -55,7 +54,6 @@ namespace zoper
     private:
         struct GameScenePrivate;
         GameScenePrivate *private_;
-        sptr<GameSceneData> m_data;
         using BaseClass = scene::Scene;
         void setLevel(const size_type nv);
         void generateNextToken();
@@ -79,17 +77,19 @@ namespace zoper
         void addPlayer();
         void _debugDisplayBoard() const;
 
+        sptr<BoardGroup> m_boardGroup;
+
         // Timer related properties
         sptr<scene::TimerComponent> m_sceneTimerComponent;
         scene::TimerConnectorSPtr m_nextTokenTimer;
 
         // General properties.
-//        sptr<board::BoardModelComponent> p_boardModel{ nullptr };
         InGameData m_inGameData;
         u8 m_nextTokenPart{ 0 };
         sptr<LevelProperties> levelProperties;
         sptr<Player> m_player{ nullptr };
         sptr<GameOverSceneNode> m_gameOver;
+        sptr<PauseSceneNode> pause_node_;
     };
 }
 

@@ -2,7 +2,7 @@
 
 #include <lib/scene/nodes/scenenodetext.hpp>
 
-#include <lib/resources/font.hpp>
+#include <lib/include/resources/ifont.hpp>
 
 namespace lib::scene
 {

@@ -2,14 +2,14 @@
 #include "menupageinputcomponent.hpp"
 #include "../loaders/mainmenuresources.hpp"
 
-#include <lib/include/core/log.hpp>
+#include <logger/include/log.hpp>
 #include <lib/scene/scene.hpp>
-#include <lib/scene/renderizables/nodeshape.hpp>
 #include <lib/core/host.hpp>
 #include <lib/system/resourcemanager.hpp>
 #include <lib/resources/ttfont.hpp>
-#include <lib/resources/font.hpp>
+#include <lib/include/resources/ifont.hpp>
 #include <lib/include/key.hpp>
+#include <lib/scene/datawrappers/resourceview.hpp>
 
 #include <mtypes/include/function.hpp>
 
@@ -29,7 +29,9 @@ namespace zoper
 	void MenuPage::onCreated()
 	{
         BaseClass::onCreated();
-        m_normalFont = parentScene()->sceneManager().resources().getFont
+        auto resources_viewer = dataWrapper<ResourceView>();
+
+        m_normalFont = resources_viewer->getFont
                        (MainMenuResources::MenuFontId)->font(72);
 		m_normalColor = colors::Blue;
 		m_selectedColor = colors::Red;

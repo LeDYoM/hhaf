@@ -5,7 +5,7 @@
 
 #include <mtypes/include/types.hpp>
 #include <lib/scene/scenenode.hpp>
-#include <lib/resources/ttfont.hpp>
+#include <lib/include/resources/ifont.hpp>
 #include <lib/scene/nodes/tablenode.hpp>
 #include <lib/scene/scenenodetypes.hpp>
 #include <lib/scene/nodes/scenenodetext.hpp>
@@ -35,7 +35,7 @@ namespace zoper
         void standarizeText(const sptr<nodes::SceneNodeText>&ntext);
 		void saveHighScores();
 		HighScoresData m_hsData;
-        sptr<Font> m_normalFont;
+        sptr<IFont> m_normalFont;
 		Color m_normalColor;
 		Color m_selectedColor;
 	};

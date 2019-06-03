@@ -1,13 +1,12 @@
 #include "gamebasetile.hpp"
 
-#include <lib/include/core/log.hpp>
+#include <logger/include/log.hpp>
 
 namespace zoper
 {
 	using namespace lib;
 	using namespace lib::board;
 	using namespace lib::scene;
-	using namespace lib::scene::nodes;
 
 	GameBaseTile::GameBaseTile(SceneNode* const parent, str name, BoardTileData data)
 		: ITile{ data }, SceneNode{ parent, std::move(name) }

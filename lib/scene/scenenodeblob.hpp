@@ -5,7 +5,7 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/rect.hpp>
-#include <lib/include/core/log.hpp>
+#include <logger/include/log.hpp>
 
 namespace lib::core
 {

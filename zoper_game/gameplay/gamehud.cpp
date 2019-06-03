@@ -8,7 +8,8 @@
 
 #include <lib/scene/components/alignedtextcomponent.hpp>
 
-#include <lib/include/core/log.hpp>
+#include <logger/include/log.hpp>
+#include <lib/scene/datawrappers/resourceview.hpp>
 #include <lib/include/resources/iresourceretriever.hpp>
 #include <lib/resources/ttfont.hpp>
 
@@ -18,11 +19,13 @@ namespace zoper
 	using namespace lib::scene;
     using namespace lib::scene::nodes;
 
-    GameHudSceneNode::GameHudSceneNode(scene::SceneNode * const parent, str name)
+    GameHudSceneNode::GameHudSceneNode(SceneNode * const parent, str name)
         : SceneNode{parent, std::move(name)}
     {
+        auto resources_viewer = dataWrapper<ResourceView>();
+
         m_scoreQuad = parent->createSceneNode<TextQuad>("score",
-            parentScene()->sceneManager().resources().getFont(GameResources::ScoreFontId)->font(90),
+            resources_viewer->getFont(GameResources::ScoreFontId)->font(90),
             colors::White, vector2df{ 600, 300 });
         m_scoreQuad->position.set(vector2df{ 50, 150 });
         m_scoreQuad->text(vector2dst{ 0,0 })->text.set(Text_t("Level:"));
@@ -31,9 +34,9 @@ namespace zoper
         m_scoreQuad->text(vector2dst{ 0,1 })->textColor = FillColor_t(colors::Blue);
 
         m_goalQuad = parent->createSceneNode<TextQuad>("goal",
-            parentScene()->sceneManager().resources().getFont(GameResources::ScoreFontId)->font(90),
+            resources_viewer->getFont(GameResources::ScoreFontId)->font(90),
             colors::White, vector2df{ 600, 300 });
-        m_goalQuad->position.set(vector2df{ 1250, 50 });
+        m_goalQuad->position.set(vector2df{ 1250, 150 });
         m_goalQuad->text(vector2dst{ 0,0 })->textColor = FillColor_t(colors::Blue);
         m_goalQuad->text(vector2dst{ 0,1 })->textColor = FillColor_t(colors::Blue);
 
@@ -58,6 +61,7 @@ namespace zoper
 
     void GameHudSceneNode::setConsumedTokens(const size_type consumedTokens)
     {
+        log_debug_info("B");
         m_goalQuad->text(vector2dst{ 1,0 })->text.set(Text_t(consumedTokens));
     }
 
@@ -76,5 +80,4 @@ namespace zoper
         while (result.size() < scoreSize) result = "0" + result;
         m_scoreQuad->text(vector2dst{ 1,1 })->text.set(Text_t(result));
     }
-
 }

@@ -4,6 +4,7 @@
 #define LIB_SCENE_SHADER_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
+#include <lib/include/resources/ishader.hpp>
 
 namespace lib
 {
@@ -14,11 +15,11 @@ namespace lib
 
     namespace scene
     {
-        class Shader final
+        class Shader final : public IShader
         {
         public:
             Shader(backend::IShader *shader);
-            ~Shader();
+            ~Shader() override;
         private:
             struct ShaderPrivate;
             uptr<ShaderPrivate> m_private;

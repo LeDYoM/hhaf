@@ -2,9 +2,9 @@
 
 #include <backend_dev/include/iwindow.hpp>
 #include <lib/core/appcontext.hpp>
-#include <lib/core/backendfactory.hpp>
+#include <lib/system/backendfactory.hpp>
 #include <lib/core/hostcontext.hpp>
-#include <lib/include/core/log.hpp>
+#include <logger/include/log.hpp>
 #include <lib/scene/scenemanager.hpp>
 #include <lib/system/filesystem/filesystem.hpp>
 #include <lib/system/inputsystem.hpp>
@@ -26,7 +26,7 @@ namespace lib::core
 {
     struct ApplicationGroup
     {
-        uptr<IApp> m_iapp;
+        AppUniquePtr m_iapp;
         uptr<HostContext> m_hostContext;
         uptr<AppContext> m_appContext;
     };
@@ -76,9 +76,9 @@ namespace lib::core
 
     bool Host::createHost(int argc, char * argv[])
     {
-        if (!m_instance) {
+        if (!m_instance) 
+        {
             m_instance = new Host(argc, argv);
-            backend::BackendFactory::initilialize("bsfml");
             return true;
         }
         return false;
@@ -88,7 +88,6 @@ namespace lib::core
     {
         if (m_instance) 
         {
-            backend::BackendFactory::destroy();
             delete m_instance;
             m_instance = nullptr;
             return true;
@@ -109,7 +108,7 @@ namespace lib::core
 
     Host::~Host() = default;
 
-    bool Host::setApplication(uptr<IApp> iapp)
+    bool Host::setApplication(AppUniquePtr iapp)
     {
         if (!m_private->m_appGroup.m_iapp && iapp) 
         {

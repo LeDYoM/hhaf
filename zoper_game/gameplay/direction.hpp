@@ -6,7 +6,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
 
-#include <lib/include/core/log.hpp>
+#include <logger/include/log.hpp>
 
 namespace zoper
 {
@@ -102,22 +102,23 @@ namespace zoper
             switch (data)
             {
             case DirectionData::Left:
-                return 270.f;
+                return 180.F;
                 break;
             case DirectionData::Right:
-                return  90.f;
+                return 0.F;
                 break;
             case DirectionData::Up:
-                return 0.f;
+                return 270.F;
                 break;
             case DirectionData::Down:
-                return 180.f;
+                return 90.F;
                 break;
             case DirectionData::Invalid:
             default:
                 lib::log_debug_error("Invalid direction. Cannot convert");
                 return 0.f;
             }
+
         }
 
     private:
