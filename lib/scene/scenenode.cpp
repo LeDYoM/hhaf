@@ -71,16 +71,6 @@ namespace lib::scene
         return true;
     }
 
-    void SceneNode::for_each_node(function<void(const sptr<Renderizable>&)> action) const
-    {
-        std::for_each(m_renderNodes.cbegin(), m_renderNodes.cend(), action);
-    }
-
-    void SceneNode::addRenderizable(sptr<Renderizable> newElement)
-    {
-        m_renderNodes.push_back(std::move(newElement));
-    }
-
     void SceneNode::addSceneNode(sptr<SceneNode> node)
     {
         m_groups.push_back(node);
@@ -97,32 +87,14 @@ namespace lib::scene
         m_groups.remove_value(element);
     }
 
-    void SceneNode::removeRenderizable(sptr<Renderizable> element)
-    {
-        assert_debug(element.get() != nullptr, "Received empty renderizable node to be deleted");
-
-        m_renderNodes.remove_value(element);
-    }
-
     void SceneNode::clearAll()
     {
-        clearNodes();
+        clearSceneNodes();
         clearComponents();
-    }
-
-    void SceneNode::clearRenderizables()
-    {
-        m_renderNodes.clear();
     }
 
     void SceneNode::clearSceneNodes()
     {
         m_groups.clear();
-    }
-
-    void SceneNode::clearNodes()
-    {
-        clearRenderizables();
-        clearSceneNodes();
     }
 }
