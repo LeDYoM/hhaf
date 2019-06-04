@@ -3,19 +3,14 @@
 #include <backend_dev/include/irendertarget.hpp>
 #include <lib/scene/renderdata.hpp>
 #include <lib/resources/texture.hpp>
+#include <lib/scene/transformation.hpp>
 
 namespace lib::core
 {
     RenderTarget::RenderTarget(lib::backend::IRenderTarget*renderTarget)
-        : m_renderTarget{renderTarget}
-    {
+        : m_renderTarget{renderTarget} {}
 
-    }
-
-    RenderTarget::~RenderTarget()
-    {
-
-    }
+    RenderTarget::~RenderTarget() = default;
 
     void RenderTarget::draw(const scene::RenderData & renderData)
     {

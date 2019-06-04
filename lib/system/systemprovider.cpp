@@ -6,6 +6,7 @@
 #include "simulationsystem.hpp"
 #include "filesystem/filesystem.hpp"
 #include "timesystem.hpp"
+#include "rendersystem.hpp"
 
 #include <backend_dev/include/iwindow.hpp>
 #include <logger/include/log.hpp>
@@ -28,6 +29,7 @@ namespace lib::core
         input_system_ = muptr<input::InputSystem>(window_->inputDriver());
         scene_manager_ = muptr<scene::SceneManager>(*this);
         resource_manager_ = muptr<core::ResourceManager>(*this);
+        render_system_ = muptr<core::RenderSystem>(*this);
         random_system_ = muptr<RandomSystem>();
 		file_system_ = muptr<FileSystem>(*this);
         simulation_system_ = muptr<SimulationSystem>(*this);
@@ -36,11 +38,14 @@ namespace lib::core
     void SystemProvider::terminate()
     {
         scene_manager_->finish();
+        simulation_system_ = nullptr;
+        file_system_ = nullptr;
+        random_system_ = nullptr;
+        render_system_ = nullptr;
         resource_manager_ = nullptr;
         scene_manager_ = nullptr;
         input_system_ = nullptr;
         window_ = nullptr;
-        simulation_system_ = nullptr;
         time_system_ = nullptr;
         backend_factory_ = nullptr;
     }
@@ -138,5 +143,15 @@ namespace lib::core
     backend::BackendFactory &SystemProvider::backendFactory() noexcept
     {
         return *backend_factory_;
+    }
+
+    const RenderSystem &SystemProvider::renderSystem() const noexcept
+    {
+        return *render_system_;
+    }
+
+    RenderSystem &SystemProvider::renderSystem() noexcept
+    {
+        return *render_system_;
     }
 }

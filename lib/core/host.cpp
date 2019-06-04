@@ -13,6 +13,7 @@
 #include <lib/system/simulationsystem.hpp>
 #include <lib/system/timesystem.hpp>
 #include <lib/system/window.hpp>
+#include <lib/system/rendersystem.hpp>
 
 #include <mtypes/include/parpar.hpp>
 #include <mtypes/include/dicty.hpp>

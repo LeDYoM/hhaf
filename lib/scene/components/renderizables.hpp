@@ -20,7 +20,7 @@ namespace lib::scene
         Renderizables();
         ~Renderizables() override;
 
-        void update() override;
+        void update() override final;
 
         void onAttached() override;
 
@@ -58,6 +58,8 @@ namespace lib::scene
         }
 
         void for_each_node(function<void(const sptr<Renderizable> &)> action) const;
+
+        void postUpdate();
 
     private:
         void addRenderizable(sptr<Renderizable> newElement);

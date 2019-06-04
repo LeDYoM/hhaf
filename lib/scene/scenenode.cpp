@@ -26,22 +26,26 @@ namespace lib::scene
             // Update the node components
             updateComponents();
 
+//            for (auto&& renderizable : m_renderNodes)
+//            {
+//                renderizable->render();
+//            }
+
             // Update node
             update();
 
-            if (transformationNeedsUpdate()) {
+            if (transformationNeedsUpdate())
+            {
                 parentTransformationChanged = true;
             }
 
-			if (parentTransformationChanged) {
+			if (parentTransformationChanged)
+            {
 				updateGlobalTransformation(m_parent ? m_parent->globalTransform() : Transform{});
 			}
 
-            for (auto&& renderizable : m_renderNodes) {
-                renderizable->render();
-            }
-
-            for (auto&& group : m_groups) {
+            for (auto&& group : m_groups)
+            {
                 group->render(parentTransformationChanged);
             }
         }

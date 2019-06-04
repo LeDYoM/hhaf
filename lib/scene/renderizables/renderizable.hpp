@@ -25,7 +25,7 @@ namespace lib::scene
     class Renderizable : public core::HasName
     {
     public:
-        Renderizable(SceneNode *const parent, const str &name, const u32 vertexCount);
+        Renderizable(SceneNode *const parent, str name, const u32 vertexCount);
         virtual ~Renderizable();
 
         void render();
@@ -54,7 +54,6 @@ namespace lib::scene
         void updateTextureCoords();
 
         void updateGeometry();
-        void updateColor();
         vector2dd getPositionFromAngleAndRadius(const f64 angle, const vector2df& radius) const;
     };
 }

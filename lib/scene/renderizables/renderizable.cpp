@@ -1,7 +1,5 @@
 #include "renderizable.hpp"
-#include <lib/core/host.hpp>
-#include <lib/system/window.hpp>
-#include <lib/system/rendertarget.hpp>
+#include <lib/system/rendersystem.hpp>
 
 #include <lib/scene/scenemanager.hpp>
 #include <lib/scene/renderdata.hpp>
@@ -12,24 +10,28 @@
 
 namespace lib::scene
 {
-    template <typename T> int sgn(T val) {
-        return (T(0) < val) - (val < T(0));
-    }
-
-    template <typename T> int sgn_cos(T angle) 
+    namespace
     {
-        return sgn(std::cos(angle));
-    }
+        template <typename T>
+        constexpr int sgn(const T val) noexcept
+        {
+            return (T(0) < val) - (val < T(0));
+        }
 
-    template <typename T> int sgn_sin(T angle) 
-    {
-        return sgn(std::sin(angle));
-    }
+        template <typename T>
+        constexpr int sgn_cos(T angle)
+        {
+            return sgn(std::cos(angle));
+        }
 
-    Renderizable::Renderizable(SceneNode * const parent, const str & name, const u32 vertexCount)
-        : core::HasName{ name }, m_parent{ parent }, m_vertices{ TriangleFan, vertexCount }
-    {
+        template <typename T>
+        constexpr int sgn_sin(T angle) 
+        {
+            return sgn(std::sin(angle));
+        }
     }
+    Renderizable::Renderizable(SceneNode * const parent, str name, const u32 vertexCount)
+        : core::HasName{ std::move(name) }, m_parent{ parent }, m_vertices{ TriangleFan, vertexCount } { }
 
     Renderizable::~Renderizable() = default;
 
@@ -41,8 +43,8 @@ namespace lib::scene
 
             if (!m_vertices.empty()) 
             {
-                m_parent->parentScene()->sceneManager().systemProvider().parentWindow().renderTarget()->
-                        draw({
+                m_parent->parentScene()->sceneManager().systemProvider().renderSystem().
+                        draw(scene::RenderData{
                     m_vertices,
                     m_parent->globalTransform(),
                     dynamic_cast<Texture*>(texture().get())
@@ -51,29 +53,16 @@ namespace lib::scene
         }
     }
 
-    void Renderizable::updateColor()
-    {
-        const Color c{color()};
-        if (!m_vertices.empty()) 
-        {
-            for (auto& v : m_vertices.verticesArray()) 
-            {
-                v.color = c;
-            }
-        }
-    }
-
     void Renderizable::updateTextureCoords()
     {
         const auto& localbounds(box());
         BasicVertexArray& vertices{ m_vertices.verticesArray() };
-        if (!vertices.empty()) {
-            for (auto &v : vertices) {
-                const f32 xratio((v.position.x - localbounds.left) / localbounds.width);
-                const f32 yratio((v.position.y - localbounds.top) / localbounds.height);
-                v.texCoords.x = textureRect().left + (textureRect().width * xratio);
-                v.texCoords.y = textureRect().top + (textureRect().height * yratio);
-            }
+        for (auto &v : vertices)
+        {
+            const f32 xratio((v.position.x - localbounds.left) / localbounds.width);
+            const f32 yratio((v.position.y - localbounds.top) / localbounds.height);
+            v.texCoords.x = textureRect().left + (textureRect().width * xratio);
+            v.texCoords.y = textureRect().top + (textureRect().height * yratio);
         }
     }
 
@@ -81,7 +70,8 @@ namespace lib::scene
         (sptr<ITexture> texture_, const Rectf32& textRect)
     {
         texture.set(texture_);
-        if (texture_) {
+        if (texture_)
+        {
             auto tSize(texture_->size());
             textureRect = {
                 static_cast<s32>(textRect.left),
@@ -137,7 +127,11 @@ namespace lib::scene
 
         if (color.readResetHasChanged()) 
         {
-            updateColor();
+            const Color c{color()};
+            for (auto& v : m_vertices.verticesArray()) 
+            {
+                v.color = c;
+            }
         }
     }
 
