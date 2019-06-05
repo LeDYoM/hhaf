@@ -21,7 +21,7 @@ namespace lib::scene::nodes
         PropertyState<sptr<IFont>> font;
         PropertyState<FillColor_t> textColor;
     protected:
-        void update() override;
+        void update() override final;
     };
 }
 

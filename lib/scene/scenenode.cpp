@@ -26,11 +26,6 @@ namespace lib::scene
             // Update the node components
             updateComponents();
 
-//            for (auto&& renderizable : m_renderNodes)
-//            {
-//                renderizable->render();
-//            }
-
             // Update node
             update();
 

@@ -29,10 +29,10 @@ namespace lib::scene
 
 	void Renderizables::update()
 	{
-//        for (auto&& renderizable : priv_->renderNodes())
-//        {
-//            renderizable->render();
-//        }
+        for (auto&& renderizable : priv_->renderNodes())
+        {
+            renderizable->render();
+        }
 	}
 
     void Renderizables::postUpdate()
