@@ -5,6 +5,7 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/function.hpp>
+#include <mtypes/include/vector.hpp>
 
 #include <lib/scene/components/icomponent.hpp>
 
@@ -34,7 +35,7 @@ namespace lib::scene
             return result;
         }
 
-        void removeRenderizable(sptr<Renderizable> element);
+        void removeRenderizable(const sptr<Renderizable>& element);
         void clearRenderizables();
 
         template <typename T>
@@ -56,8 +57,7 @@ namespace lib::scene
     private:
         void addRenderizable(sptr<Renderizable> newElement);
 
-        class RenderizablesPrivate;
-        uptr<RenderizablesPrivate> priv_;
+        vector<sptr<Renderizable>> render_nodes_;
     };
 }
 
