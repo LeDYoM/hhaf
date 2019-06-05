@@ -27,17 +27,12 @@ namespace lib::scene
 
     Renderizables::~Renderizables() = default;
 
-	void Renderizables::update()
-	{
+    void Renderizables::postUpdate()
+    {
         for (auto&& renderizable : priv_->renderNodes())
         {
             renderizable->render();
         }
-	}
-
-    void Renderizables::postUpdate()
-    {
-
     }
 
     void Renderizables::onAttached()

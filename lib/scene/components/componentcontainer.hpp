@@ -24,9 +24,11 @@ namespace lib
 			bool addComponent(sptr<IComponent> nc);
 
 			template <typename T>
-			sptr<T> ensureComponentOfType() {
+			sptr<T> ensureComponentOfType()
+            {
 				auto component(componentOfType<T>());
-				if (!component) {
+				if (!component)
+                {
 					auto nc(msptr<T>());
 					addComponent(nc);
 					return nc;
@@ -35,11 +37,13 @@ namespace lib
 			}
 
 			template <typename T>
-			void ensureComponentOfType(sptr<T> &component) {
+			void ensureComponentOfType(sptr<T> &component)
+            {
 				component = ensureComponentOfType<T>();
 			}
 
 			void updateComponents();
+            void postUpdateComponents();
 
 			/**
 			* Returns the component of the specified type if exists

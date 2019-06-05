@@ -39,6 +39,7 @@ namespace lib::scene
 				updateGlobalTransformation(m_parent ? m_parent->globalTransform() : Transform{});
 			}
 
+            postUpdateComponents();
             for (auto&& group : m_groups)
             {
                 group->render(parentTransformationChanged);

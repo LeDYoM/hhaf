@@ -21,6 +21,11 @@ namespace lib::scene
         virtual void update() {}
 
         /**
+        * Interface to be implemented to update the component
+        */
+        virtual void postUpdate() {}
+
+        /**
         * Destructor
         */
         virtual ~IComponent() {}

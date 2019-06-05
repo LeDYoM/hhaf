@@ -70,6 +70,20 @@ namespace lib
             }
 		}
 
+        void ComponentContainer::postUpdateComponents()
+        {
+            m_components.update();
+
+			if (!m_components.current().empty()) 
+            {
+                for (auto component : m_components.current())
+                {
+                    component->postUpdate();
+                }
+                m_components.update();
+            }
+        }
+
 		const sptr<IComponent> ComponentContainer::componentOfType(const std::type_index & ti) const
 		{
 			return getComponentFromTypeIndex(ti, m_components.next());

@@ -20,23 +20,13 @@ namespace lib::scene
         Renderizables();
         ~Renderizables() override;
 
-        void update() override final;
-
         void onAttached() override;
 
         /**
-        * Method to add a user defined renderizable
-        * @params args Arguments to be passed to the constructor
-        * @returns The created renderizable
+        * Method to create a Renderizable
+        * @params name The name of the Renderizable node.
+        * @returns The created Renderizable
         */
-        template <typename T, typename... Args>
-        sptr<T> createRenderizable(Args&&... args)
-        {
-            auto result(msptr<T>(attachedNode(), std::forward<Args>(args)...));
-            addRenderizable(result);
-            return result;
-        }
-
         sptr<Renderizable> createNode(const str& name)
         {
             auto result(msptr<Renderizable>(attachedNode(), name, 0U));
@@ -50,8 +40,10 @@ namespace lib::scene
         template <typename T>
         constexpr void for_each_node_as(function<void(const sptr<T> &)> action)
         {
-            for_each_node([&action](const sptr<Renderizable>&node) {
-                if (auto tnode = std::dynamic_pointer_cast<T>(node)) {
+            for_each_node([&action](const sptr<Renderizable>&node)
+            {
+                if (auto tnode = std::dynamic_pointer_cast<T>(node))
+                {
                     action(tnode);
                 }
             });
@@ -59,7 +51,7 @@ namespace lib::scene
 
         void for_each_node(function<void(const sptr<Renderizable> &)> action) const;
 
-        void postUpdate();
+        void postUpdate() override;
 
     private:
         void addRenderizable(sptr<Renderizable> newElement);
