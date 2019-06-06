@@ -43,7 +43,6 @@ namespace lib::scene
 		BaseClass::update();
         if (auto current_scene = currentScene())
         {
-			current_scene->updateScene();
 			current_scene->render(false);
 		}
 	}

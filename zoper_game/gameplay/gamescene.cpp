@@ -148,10 +148,6 @@ namespace zoper
         BaseClass::onFinished();
     }
 
-    void GameScene::updateScene()
-    {
-    }
-
 	void GameScene::onEnterState(const size_type &state)
 	{
 		switch (state) {

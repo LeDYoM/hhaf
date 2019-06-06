@@ -25,7 +25,6 @@ namespace zoper
 		DECLARE_SCENE(HighScoresScene)
 
 		void onCreated() override;
-		void updateScene() override;
 
 	private:
         using BaseClass = lib::scene::Scene;

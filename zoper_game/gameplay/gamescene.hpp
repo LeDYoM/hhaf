@@ -44,7 +44,6 @@ namespace zoper
         // Inherited via Scene
         void onCreated() override;
         void onFinished() override;
-        void updateScene() override;
 
         void onEnterState(const size_type&) override;
         void onExitState(const size_type&) override;

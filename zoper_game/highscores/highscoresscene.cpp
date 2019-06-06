@@ -43,8 +43,4 @@ namespace zoper
 
 		statesController->start(HighScoresSceneStates::Show);
 	}
-
-	void HighScoresScene::updateScene()
-	{
-	}
 }
