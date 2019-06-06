@@ -65,19 +65,22 @@ namespace zoper
         inputComponent->KeyPressed.connect([this](const lib::input::Key&key) {
             log_debug_info("Key pressed in GameScene");
             const auto &keyMapping = sceneManager().systemProvider().app<ZoperProgramController>().keyMapping;
-            switch (state())
+            switch (m_sceneStates->currentState())
             {
             case Playing:
             {
                 auto dir(keyMapping->getDirectionFromKey(key));
-                if (dir.isValid()) {
+                if (dir.isValid())
+                {
                     m_player->movePlayer(dir, m_boardGroup->p_boardModel);
                 }
-                else if (keyMapping->isLaunchKey(key)) {
+                else if (keyMapping->isLaunchKey(key))
+                {
                     launchPlayer();
                 }
-                else if (keyMapping->isPauseKey(key)) {
-					setState(Pause);
+                else if (keyMapping->isPauseKey(key))
+                {
+                    m_sceneStates->setState(Pause);
 				}
             }
             break;
@@ -85,8 +88,9 @@ namespace zoper
                 sceneManager().sceneController()->terminateScene();
                 break;
             case Pause:
-                if (keyMapping->isPauseKey(key)) {
-					setState(Playing);
+                if (keyMapping->isPauseKey(key))
+                {
+					m_sceneStates->setState(Playing);
 				}
                 break;
             }
@@ -121,6 +125,8 @@ namespace zoper
 
         // Set state controll.
         {
+            m_sceneStates = ensureComponentOfType<std::remove_reference_t<decltype(*m_sceneStates)>>();
+
             StatesControllerActuatorRegister<size_type> gameSceneActuatorRegister;
             gameSceneActuatorRegister.registerStatesControllerActuator(*m_sceneStates, *this);
         }
@@ -135,7 +141,7 @@ namespace zoper
         // Prepare the pause text.
         pause_node_ = createSceneNode<PauseSceneNode>("PauseNode");
 
-        setState(Playing);
+        m_sceneStates->start(Playing);
     }
 
     void GameScene::onFinished()
@@ -221,7 +227,7 @@ namespace zoper
                 if (TokenZones::pointInCenter(dest)) {
                     log_debug_info("Found point in center: ", dest);
                     // Collided with the center. Game over
-                    setState(GameOver);
+                    m_sceneStates->setState(GameOver);
                 }
             }
             return true;

@@ -69,6 +69,7 @@ namespace zoper
             GameOver = 2,
             Pause = 3
         } _sceneStates{ Initialize };
+        sptr<StatesController<size_type>> m_sceneStates;
 
         void importGameSharedData();
         void exportGameSharedData();
