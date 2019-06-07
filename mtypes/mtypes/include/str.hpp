@@ -410,6 +410,13 @@ namespace lib
         return t;
     }
 
+    template <> inline str make_str(u64&& n) { return str::to_str(std::move(n)); }
+    template <> inline str make_str(s64&& n) { return str::to_str(std::move(n)); }
+    template <> inline str make_str(u32&& n) { return str::to_str(std::move(n)); }
+    template <> inline str make_str(s32&& n) { return str::to_str(std::move(n)); }
+    template <> inline str make_str(f32&& n) { return str::to_str(std::move(n)); }
+    template <> inline str make_str(f64&& n) { return str::to_str(std::move(n)); }
+
     template<typename T, typename ...Args>
     constexpr void make_str_internal(str &buffer, T&& arg, Args&&... args)
     {
@@ -425,6 +432,8 @@ namespace lib
 
     static_assert(std::is_move_constructible_v<str>, "str must be movable");
     static_assert(std::is_move_assignable_v<str>, "str must be movable assignable");
+    static_assert(std::is_default_constructible_v<str>, "str must be default constructible");
+    static_assert(std::is_copy_constructible_v<str>, "str must be copy constructible");
     using string_vector = vector<str>;
 }
 
