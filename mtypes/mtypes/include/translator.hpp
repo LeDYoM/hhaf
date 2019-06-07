@@ -277,7 +277,7 @@ namespace lib
 		bool isInteger(const str& value) const
 		{
 			s32 temp;
-			return value.convert(temp) && str(temp) == value;
+			return value.convert(temp) && str::to_str(temp) == value;
 		}
 
 		bool isFloat(const str& value) const
@@ -549,7 +549,7 @@ namespace lib
 
 			do
 			{
-				str property_name{ str(Object::arraySeparator) + str(counter) };
+				str property_name{ str(Object::arraySeparator) + str::to_str(counter) };
 				if (!storePendingValueAndAdvance(property_name))
 				{
 					// Error

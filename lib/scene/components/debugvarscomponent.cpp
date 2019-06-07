@@ -42,7 +42,7 @@ namespace lib
 
 		void DebugVarsComponent::addOrUpdateDebugVar(const str &id, const u32 data)
 		{
-			addOrUpdateDebugVar(id, str(data));
+//			addOrUpdateDebugVar(id, str(data));
 		}
 	}
 }

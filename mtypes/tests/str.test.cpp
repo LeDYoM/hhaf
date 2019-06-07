@@ -4,24 +4,34 @@
 
 using namespace lib;
 
-TEST_CASE("str", "[str]")
+TEST_CASE("str::str", "[str]")
 {
-    SECTION("Constructors")
+    SECTION("Default constructor")
     {
         str test;
         CHECK(test == "");
         CHECK(test.size() == 0);
+    }
 
-        test = "a";
+    SECTION("Copy initialize")
+    {
+        str test("a");
         CHECK(test == "a");
         CHECK(test.size() == 1);
 
-        char test_str[] = "test1_bigstring_to_test_here_and_now_in_this_test";
-        test = "test1_bigstring_to_test_here_and_now_in_this_test";
-        CHECK(test == "test1_bigstring_to_test_here_and_now_in_this_test");
-        CHECK(test.size() == sizeof(test_str) - 1);
-    }
+        str test2 = "a";
+        CHECK(test2 == "a");
+        CHECK(test2.size() == 1);
 
+        char test_str[] = "test1_bigstring_to_test_here_and_now_in_this_test";
+        str test3 = "test1_bigstring_to_test_here_and_now_in_this_test";
+        CHECK(test3 == "test1_bigstring_to_test_here_and_now_in_this_test");
+        CHECK(test3.size() == sizeof(test_str) - 1);
+    }
+}
+
+TEST_CASE("str", "[str]")
+{
     SECTION("Increment")
     {
         str test("This");
@@ -73,9 +83,9 @@ TEST_CASE("str", "[str]")
 
     SECTION("conversions", "[str]")
     {
-        str test = 1234567890L;
+        str test = str::to_str(1234567890L);
         CHECK(test == "1234567890");
-        test = 'A';
+        test = str::to_str('A');
         CHECK(test == "65");
         test = "A";
         CHECK(test == "A");
@@ -174,8 +184,8 @@ TEST_CASE("str", "[str]")
     {
         str sInt("-42");
         str sIntCopy(sInt);
-        str longStr(12345678900);
-        str slongStr(-12345678900);
+        str longStr(str::to_str(12345678900));
+        str slongStr(str::to_str(-12345678900));
         s32 i{ 0 };
         f32 j{ 0 };
         u64 k{ 0 };

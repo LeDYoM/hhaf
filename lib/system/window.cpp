@@ -92,7 +92,7 @@ namespace lib::core
             m_wPrivate->lastTimeFps = eMs;
             m_wPrivate->lastFps = m_wPrivate->currentFps;
             m_wPrivate->currentFps = 0;
-            str wtitle(m_title + " FPS:" + str(m_wPrivate->lastFps));
+            str wtitle(m_title + " FPS:" + str::to_str(m_wPrivate->lastFps));
             bw.setWindowTitle(wtitle);
         }
         ++(m_wPrivate->currentFps);

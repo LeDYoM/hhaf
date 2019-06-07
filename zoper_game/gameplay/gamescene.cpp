@@ -404,7 +404,7 @@ namespace zoper
                 str chTemp;
                 auto lp_tile(m_boardGroup->p_boardModel->getTile({ x, y }));
                 if (lp_tile) {
-                    chTemp = lp_tile->get();
+                    chTemp = str::to_str(lp_tile->get());
                 } else {
                     chTemp = "*";
                     if (TokenZones::pointInCenter({ x, y })) {

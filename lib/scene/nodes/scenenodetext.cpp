@@ -78,7 +78,7 @@ namespace lib::scene::nodes
                         const Rectf32 letterBox{ font()->getBounds(curChar) + vector2df{ x,y } };
 
                         auto letterNode(createSceneNode
-                                        <RenderizableSceneNode>("text_"+str(curChar)));
+                                        <RenderizableSceneNode>("text_"+str::to_str(curChar)));
                         letterNode->node()->figType.set(FigType_t::Quad);
                         letterNode->node()->pointCount.set(6U);
                         letterNode->node()->box.set(letterBox);

@@ -43,12 +43,12 @@ namespace lib
         constexpr str(const_iterator _begin, const_iterator _end) 
             : str(_begin, (_end - _begin) + 1U ) { }
 
-		str(const u64  n) : str{ std::to_string(n).c_str() } {}
-		str(const s64  n) : str{ std::to_string(n).c_str() } {}
-		str(const u32  n) : str{ std::to_string(n).c_str() } {}
-		str(const s32 n) : str{ std::to_string(n).c_str() } {}
-		str(const f32 n) : str{ std::to_string(n).c_str() } {}
-		str(const f64 n) : str{ std::to_string(n).c_str() } {}
+		inline static str to_str(const u64 n) { return str{ std::to_string(n).c_str() }; }
+		inline static str to_str(const s64 n) { return str{ std::to_string(n).c_str() }; }
+		inline static str to_str(const u32 n) { return str{ std::to_string(n).c_str() }; }
+		inline static str to_str(const s32 n) { return str{ std::to_string(n).c_str() }; }
+		inline static str to_str(const f32 n) { return str{ std::to_string(n).c_str() }; }
+		inline static str to_str(const f64 n) { return str{ std::to_string(n).c_str() }; }
 
 		constexpr size_t _str_len(const str::char_type *const p_str) noexcept
 		{
@@ -132,37 +132,37 @@ namespace lib
 
 		str & append(const u64 n)
 		{
-			append(str(n));
+			append(to_str(n));
 			return *this;
 		}
 
 		str & append(const s64 n)
 		{
-			append(str(n));
+			append(to_str(n));
 			return *this;
 		}
 
 		str & append(const u32 n)
 		{
-			append(str(n));
+			append(to_str(n));
 			return *this;
 		}
 
 		str & append(const s32 n)
 		{
-			append(str(n));
+			append(to_str(n));
 			return *this;
 		}
 
         str & append(const f32 n)
 		{
-            append(str(n));
+            append(to_str(n));
             return *this;
         }
 
         str & append(const f64 n)
 		{
-            append(str(n));
+            append(to_str(n));
             return *this;
         }
 
