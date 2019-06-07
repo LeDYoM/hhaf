@@ -3,7 +3,7 @@
 #ifndef LIB_MTYPES_TRANSLATOR_INCLUDE_HPP
 #define LIB_MTYPES_TRANSLATOR_INCLUDE_HPP
 
-#define LOG_MODE
+//#define LOG_MODE
 
 #include "types.hpp"
 #include "str.hpp"

@@ -12,10 +12,6 @@
 #include <algorithm>
 #include <cctype>
 
-namespace detail
-{
-}
-
 namespace lib
 {
     class str
@@ -30,25 +26,22 @@ namespace lib
         vector<char_type> m_data;
 
     public:
-        constexpr str() noexcept : m_data() {}
+        constexpr str() noexcept : m_data{} {}
+
+        constexpr str(str&&) noexcept = default;
+        str&operator=(str&&) noexcept = default;
+
+		constexpr str(const str & n) = default;
+        constexpr str&operator=(const str&rhs) = default;
 
         template<size_type N>
 		constexpr str(const char_type(&a)[N]) noexcept : m_data( a,N ) {}
 
-        constexpr str(str&&) noexcept = default;
-
-		constexpr str(const str & n) noexcept : m_data( n.m_data ) {}
-		explicit str(const char_type *n) noexcept : m_data(n, _str_len(n) + 1) {}
-
 		constexpr str(const char_type *n, const size_type N) noexcept : m_data(n, N+1) {}
+		explicit str(const char_type *n) noexcept : str(n, _str_len(n)) {}
         
-        constexpr str(const_iterator _begin, const_iterator _end) : m_data{_begin, _end } 
-        {
-            if (m_data[size() - 1] != 0U)
-            {
-                m_data.push_back(0U);
-            }
-        }
+        constexpr str(const_iterator _begin, const_iterator _end) 
+            : str(_begin, (_end - _begin) + 1U ) { }
 
 		str(const u64  n) : str{ std::to_string(n).c_str() } {}
 		str(const s64  n) : str{ std::to_string(n).c_str() } {}
@@ -56,14 +49,6 @@ namespace lib
 		str(const s32 n) : str{ std::to_string(n).c_str() } {}
 		str(const f32 n) : str{ std::to_string(n).c_str() } {}
 		str(const f64 n) : str{ std::to_string(n).c_str() } {}
-
-        str&operator=(str&&) noexcept = default;
-
-        constexpr str&operator=(const str&rhs) noexcept 
-        {
-            m_data = rhs.m_data;
-            return *this;
-        }
 
 		constexpr size_t _str_len(const str::char_type *const p_str) noexcept
 		{
