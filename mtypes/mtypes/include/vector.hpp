@@ -13,21 +13,20 @@ namespace lib
     class Allocator
     {
     public:
-        T *allocate(const size_type size)
+        using pointer = T*;
+
+        pointer allocate(const size_type size) { return ::new T[size]; }
+        void deallocate(pointer element) { ::delete[] element; }
+
+		template<typename ...Args>
+        void construct(pointer where, Args&&... args)
         {
-            if (size)
-            {
-                return new T[size];
-            }
-            return nullptr;
+            new (where) T{std::forward<Args>(args)...};
         }
 
-        void deallocate(T* element)
+        void destruct(pointer where) noexcept
         {
-            if (element)
-            {
-                delete[] element;
-            }
+            where->~T();
         }
     };
 
@@ -47,20 +46,25 @@ namespace lib
         using pointer = T *;
         using const_pointer = const T*;
 
-		constexpr vector() noexcept : m_capacity{ 0 }, m_size{ 0 }, m_buffer{ nullptr } {}
+        /// Default constructor.
+        /// Sets all members to 0 nullptr or empty.
+		constexpr vector() noexcept {}
 
-        explicit constexpr vector(const size_type size) : m_capacity{ size }, m_size{ size }, 
-            m_buffer{ m_allocator.allocate(size) }
-        {}
+        /// Constructor for empty container with reserved memory.
+        /// The memory for the vector is allocated, but no construction
+        /// is done.
+        /// @param size Number of elements to reserve memory for.
+        explicit constexpr vector(const size_type size) : m_capacity{ size }, m_size{ }, 
+            m_buffer{ m_allocator.allocate(size) } {}
 
 		constexpr vector(std::initializer_list<value_type> ilist) noexcept : vector( ilist.size() ) 
         {
-			_copyElements(ilist.begin(), m_size);
+			_copyElements(ilist.begin(), ilist.size());
 		}
 
-		constexpr vector(const T*elements, const size_type size) : vector(size) 
+		constexpr vector(const T*elements, const size_type count) : vector(count)
         {
-			_copyElements(elements, m_size);
+			_copyElements(elements, count);
 		}
 
 		constexpr vector(const vector&other) : m_capacity{ other.m_capacity }, m_size{ other.m_size }, 
@@ -72,7 +76,9 @@ namespace lib
 		constexpr vector(const vector&other, const size_type size)
 			: vector(other.m_buffer, size) {}
 
-		constexpr vector(vector&&other) noexcept : m_capacity{ other.m_capacity }, m_size{ other.m_size }, m_buffer{ other.m_buffer } {
+		constexpr vector(vector&&other) noexcept 
+            : m_capacity{ other.m_capacity }, m_size{ other.m_size }, m_buffer{ other.m_buffer } 
+        {
 			other.m_capacity = 0U;
 			other.m_size = 0U;
 			other.m_buffer = nullptr;
@@ -81,7 +87,8 @@ namespace lib
         constexpr vector(const_iterator _begin, const_iterator _end)
             : vector{ _begin, static_cast<size_type>(std::distance(_begin, _end)) } { }
 
-		constexpr vector& operator=(const vector&other) {
+		constexpr vector& operator=(const vector&other) 
+        {
 			if (this != &other) {
 				if (m_capacity < other.m_size) 
 					_copyStructure(other);
@@ -256,8 +263,10 @@ namespace lib
 		}
 
 		template<typename ...Args>
-		constexpr void emplace_back(Args&&... args) {
-			if (m_size == m_capacity) {
+		constexpr void emplace_back(Args&&... args)
+        {
+			if (m_size == m_capacity)
+            {
 				reserve(m_size + 1);
 			}
 
@@ -360,11 +369,25 @@ namespace lib
 			m_size = other.m_size;
 		}
 
-		constexpr void _copyElements(const T*const source, const size_type s)
+        /// This method copies and only copies the elements pointed by
+        /// the parameter into this container.
+        /// @param source pointer to the elements to copy.
+        /// @param count Number of elements to copy.
+		constexpr void _copyElements(const T*const source, const size_type count)
         {
-			for (size_type i{ 0U }; i < s; ++i) 
+            assert(m_reserved >= count);
+
+			for (size_type i{ 0U }; i < count; ++i) 
             {
-				m_buffer[i] = source[i];
+                if (m_size <= i)
+                {
+                    m_allocator.construct(m_buffer + i, source[i]);
+                    ++m_size;
+                }
+                else
+                {
+    				m_buffer[i] = source[i];
+                }                
 			}
 		}
 
@@ -372,8 +395,49 @@ namespace lib
         {
 			for (size_type i{ 0U }; i < s; ++i) 
             {
-				m_buffer[i] = std::move(source[i]);
+                if (m_size <= i)
+                {
+                    m_allocator.construct(m_buffer + i, std::move(source[i]));
+                    ++m_size;
+                }
+                else
+                {
+    				m_buffer[i] = std::move(source[i]);
+                }
 			}
+		}
+
+        constexpr void _initializeElements(const size_type begin_construct,
+            const T*const source, const size_type count)
+        {
+            
+        }
+		constexpr void _copyConstructElements(const size_type begin_construct,
+            const T*const source, const size_type count)
+        {
+            assert(m_reserved >= (count + begin_construct));
+            assert(begin_construct <= m_size);
+
+			for (size_type i{ begin_construct }; i < (count + begin_construct); ++i) 
+            {
+                m_allocator.construct(m_buffer + i, source[i]);
+			}
+
+            m_size += count;
+		}
+
+		constexpr void _moveConstructElements(const size_type begin_construct,
+            const T*const source, const size_type count)
+        {
+            assert(m_reserved >= (count + begin_construct));
+            assert(begin_construct <= m_size);
+
+			for (size_type i{ begin_construct }; i < (count + begin_construct); ++i) 
+            {
+                m_allocator.construct(m_buffer + i, std::move(source[i]));
+			}
+
+            m_size += count;
 		}
 
 		constexpr void _destroy() 
@@ -386,10 +450,10 @@ namespace lib
 			}
 		}
 
-		size_type m_capacity;
-		size_type m_size;
-		T* m_buffer;
-        Allocator_t m_allocator;
+		size_type m_capacity{};
+		size_type m_size{};
+		T* m_buffer{};
+        Allocator_t m_allocator{};
 
 		template <class A>
 		friend constexpr bool operator==(const vector<A>& lhs, const vector<A>& rhs) noexcept;
