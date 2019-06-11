@@ -14,6 +14,36 @@ TEST_CASE("vector::vector", "[vector]")
         CHECK(m.size() == 0);
         CHECK(m.empty());
         CHECK(m.capacity() == 0);
+        
+        SECTION("Check errorneous operations")
+        {
+            m.pop_back();
+            CHECK(m.size() == 0U);
+            CHECK(m.empty());
+            CHECK(m.capacity() == 0U);
+
+            m.clear();
+            CHECK(m.size() == 0U);
+            CHECK(m.empty());
+            CHECK(m.capacity() == 0U);
+        }
+    }
+
+    SECTION("Constructor with reserved")
+    {
+        vector<s32> m(2U);
+        CHECK(m.size() == 0);
+        CHECK(m.empty());
+        CHECK(m.capacity() == 2U);
+
+        m.push_back(0);
+        m.push_back(1);
+        CHECK(m.size() == 2U);
+        CHECK_FALSE(m.empty());
+        CHECK(m.capacity() == 2U);
+
+        CHECK(m[0] == 0);
+        CHECK(m[1] == 1);
     }
 
     SECTION("Iterators constructor")
@@ -54,14 +84,14 @@ TEST_CASE("vector::vector", "[vector]")
         {
             const u32 arr[] = { 4, 3, 2, 1 };
             vector<u32> v(arr, sizeof(arr) / sizeof(u32));
-            CHECK(v.size() == 4);
+            CHECK(v.size() == 4U);
         }
 
         SECTION("With sizeof")
         {
-//            const u32 arr[] = { 4, 3, 2, 1 };
-//            vector<u32> v(arr);
-//            CHECK(v.size() == 4);
+            const u32 arr[] = { 4, 3, 2, 1 };
+            vector<u32> v(std::cbegin(arr), std::cend(arr));
+            CHECK(v.size() == 4);
         }
     }
 }
@@ -86,19 +116,72 @@ inline auto init_vector_shared_pointers_A() {
     return test_vector1;
 }
 
-TEST_CASE("vector removes", "[vector]")
+TEST_CASE("vector of shared pointers", "[vector]")
 {
-    vector_shared_pointers<A> test_vector1(init_vector_shared_pointers_A());
-    CHECK(test_vector1.size() == 10);
+    SECTION("Move")
+    {
+        vector_shared_pointers<A> test_vector1(init_vector_shared_pointers_A());
+        CHECK(test_vector1.size() == 10U);
 
-    test_vector1[1] = nullptr;
-    test_vector1[5] = nullptr;
+        vector_shared_pointers<A> test_vector2 = std::move(test_vector1);
+        CHECK(test_vector1.empty());
+        CHECK(test_vector1.capacity() == 0U);
 
-    test_vector1.remove_values(nullptr);
-    CHECK(test_vector1.size() == 8);
+        CHECK(test_vector2.size() == 10U);
 
-    test_vector1.push_back(nullptr);
-    CHECK(test_vector1.size() == 9);
-    test_vector1.remove_values(nullptr);
-    CHECK(test_vector1.size() == 8);
+        vector_shared_pointers<A> test_vector3;
+        test_vector3 = std::move(test_vector2);
+        CHECK(test_vector2.empty());
+        CHECK(test_vector2.capacity() == 0U);
+
+        CHECK(test_vector3.size() == 10U);
+    }
+
+    SECTION("Add move add")
+    {
+        vector_shared_pointers<A> test_vector1(init_vector_shared_pointers_A());
+        CHECK(test_vector1.size() == 10U);
+
+        vector_shared_pointers<A> test_vector2 = std::move(test_vector1);
+        CHECK(test_vector1.empty());
+        CHECK(test_vector1.capacity() == 0U);
+
+        CHECK(test_vector2.size() == 10U);
+
+        vector_shared_pointers<A> test_vector3;
+        test_vector3 = std::move(test_vector2);
+        CHECK(test_vector2.empty());
+        CHECK(test_vector2.capacity() == 0U);
+
+        CHECK(test_vector3.size() == 10U);
+
+        test_vector1.push_back(msptr<A>(1));
+    }
+
+    SECTION("Remove")
+    {
+        vector_shared_pointers<A> test_vector1(init_vector_shared_pointers_A());
+        CHECK(test_vector1.size() == 10);
+
+        test_vector1[1] = nullptr;
+        test_vector1[5] = nullptr;
+
+        test_vector1.remove_values(nullptr);
+        CHECK(test_vector1.size() == 8);
+
+        test_vector1.push_back(nullptr);
+        CHECK(test_vector1.size() == 9);
+        test_vector1.remove_values(nullptr);
+        CHECK(test_vector1.size() == 8);
+
+        SECTION("Remove removed shared pointer")
+        {
+            sptr<A> temp = msptr<A>(A{42});
+            wptr<A> weak = temp;
+            test_vector1.push_back(std::move(temp));
+            CHECK_FALSE(weak.lock() == nullptr);
+            test_vector1.pop_back();
+            CHECK(weak.lock() == nullptr);
+        }
+    }
 }

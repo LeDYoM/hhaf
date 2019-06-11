@@ -3,6 +3,9 @@
 #ifndef MTYPES_VECTOR_INCLUDE_HPP
 #define MTYPES_VECTOR_INCLUDE_HPP
 
+#define LOG_MODE
+#include "debug_internal.hpp"
+
 #include <utility>
 #include <initializer_list>
 #include "function.hpp"
@@ -15,8 +18,16 @@ namespace lib
     public:
         using pointer = T*;
 
-        pointer allocate(const size_type size) { return ::new T[size]; }
-        void deallocate(pointer element) { ::delete[] element; }
+        pointer allocate(const size_type size)
+        { 
+            return (pointer)malloc(sizeof(T)*size);
+        }
+        
+        void deallocate(pointer element)
+        {
+            assert(element != nullptr);
+            free (element);
+        }
 
 		template<typename ...Args>
         void construct(pointer where, Args&&... args)
@@ -99,15 +110,18 @@ namespace lib
 			return *this;
 		}
 
-		constexpr vector& copyExact(const vector&other) {
-			if (this != &other) {
+		constexpr vector& copyExact(const vector&other)
+        {
+			if (this != &other)
+            {
 				_copyStructure(other);
 				_copyElements(other.m_buffer, other.m_size);
 			}
 			return *this;
 		}
 
-		constexpr vector& operator=(vector&&other) noexcept {
+		constexpr vector& operator=(vector&&other) noexcept
+        {
 			swap(other);
 			return *this;
 		}
@@ -116,24 +130,26 @@ namespace lib
             _destroy();
 		}
 
-		constexpr reference operator[](const size_type index) noexcept { return m_buffer[index]; }
-		constexpr const_reference operator[](const size_type index) const noexcept { return m_buffer[index]; }
+		constexpr reference operator[](const size_type index) noexcept { return *(m_buffer + index); }
+		constexpr const_reference operator[](const size_type index) const noexcept { return *(m_buffer + index); }
 		constexpr size_type capacity() const noexcept { return m_capacity; }
 		constexpr size_type size() const noexcept { return m_size; }
-		constexpr bool empty() const noexcept { return m_size == 0; }
+		constexpr bool empty() const noexcept { return m_size == 0U; }
 		constexpr iterator begin() noexcept { return m_buffer; }
 		constexpr const_iterator begin() const noexcept { return m_buffer; }
 		constexpr const_iterator cbegin() const noexcept { return begin(); }
 		constexpr iterator end() noexcept { return m_buffer + m_size; }
 		constexpr const_iterator end() const noexcept { return m_buffer + m_size; }
 		constexpr const_iterator cend() const noexcept { return end(); }
-		constexpr T& front() noexcept { return m_buffer[0]; }
-		constexpr T& back() noexcept { return m_buffer[m_size > 0 ? (m_size - 1) : 0]; }
-        constexpr const T& cfront() const noexcept { return m_buffer[0]; }
-        constexpr const T& cback() const noexcept { return m_buffer[m_size > 0 ? (m_size - 1) : 0]; }
+		constexpr T& front() noexcept { return *m_buffer; }
+		constexpr T& back() noexcept { return m_buffer[m_size > 0U ? (m_size - 1U) : 0U]; }
+        constexpr const T& cfront() const noexcept { return *m_buffer }
+        constexpr const T& cback() const noexcept { return m_buffer + (m_size > 0U ? (m_size - 1U) : 0U); }
 
-        constexpr void for_each(const function<void(const T&)> f) {
-			if (!empty()) {
+        constexpr void for_each(const function<void(const T&)> f)
+        {
+			if (!empty())
+            {
 				iterator current{ begin() };
                 do {
 					f(*current);
@@ -175,7 +191,8 @@ namespace lib
 			return remove_all_if([&value](const T p) { return p == value; } , start);
 		}
 
-		constexpr size_type remove_values(const T&value) {
+		constexpr size_type remove_values(const T&value)
+        {
 			return remove_values(value, begin());
 		}
 
@@ -289,12 +306,15 @@ namespace lib
 		constexpr void push_back(const T& value) 
         {
 			reserve(m_size + 1);
-			m_buffer[m_size++] = value;
+            m_allocator.construct(m_buffer + m_size, value);
+            ++m_size;
 		}
 
-		constexpr void push_back(T&& value) {
+		constexpr void push_back(T&& value) 
+        {
 			reserve(m_size + 1);
-			m_buffer[m_size++] = std::move(value);
+            m_allocator.construct(m_buffer + m_size, std::move(value));
+            ++m_size;
 		}
 
 		constexpr void insert(const vector &other) {
@@ -326,36 +346,51 @@ namespace lib
 			return *this;
 		}
 
-		constexpr void pop_back() noexcept { if (m_size > 0) --m_size; }
+		constexpr void pop_back() noexcept
+        {
+            LOG("vector::pop_back() --- m_size before: " << m_size);
+            if (m_size > 0U)
+            {
+                m_allocator.destruct(end()-1U);
+                --m_size;
+            }
+            LOG("vector::pop_back() --- m_size after: " << m_size);
+        }
 
-		constexpr void reserve(const size_type capacity) noexcept 
+		constexpr void reserve(const size_type capacity)
         {
 			if (m_capacity < capacity) 
             {
-				T *old_buffer{ m_buffer };
-				m_capacity = capacity;
+                vector new_vector = vector(static_cast<size_type>(capacity));
+                
+                for (auto iterator = begin(); iterator != end(); ++iterator)
+                {
+                    new_vector.push_back(std::move(*iterator));
+                }
 
-				m_buffer = m_allocator.allocate(m_capacity);
-				_moveElements(old_buffer, m_size);
-                m_allocator.deallocate(old_buffer);
+                std::swap(*this, new_vector);
 			}
 		}
 
 		constexpr void resize(const size_type size) {
-			if (size != m_size) {
+			if (size != m_size)
+            {
 				// Delete to shrink
-				while (m_size > size) {
+				while (m_size > size)
+                {
 					pop_back();
 				}
 
 				// Append the necessary
-				while (m_size < size) {
+				while (m_size < size)
+                {
 					emplace_back();
 				}
 			}
 		}
 
-		constexpr void clear() noexcept {
+		constexpr void clear() noexcept
+        {
 			m_size = 0;
 		}
 
@@ -375,7 +410,7 @@ namespace lib
         /// @param count Number of elements to copy.
 		constexpr void _copyElements(const T*const source, const size_type count)
         {
-            assert(m_reserved >= count);
+            assert(m_capacity >= count);
 
 			for (size_type i{ 0U }; i < count; ++i) 
             {
@@ -391,9 +426,11 @@ namespace lib
 			}
 		}
 
-		constexpr void _moveElements(T*source, const size_type s) noexcept 
+		constexpr void _moveElements(T*source, const size_type count) noexcept 
         {
-			for (size_type i{ 0U }; i < s; ++i) 
+            assert(m_capacity >= count);
+
+			for (size_type i{ 0U }; i < count; ++i) 
             {
                 if (m_size <= i)
                 {
@@ -407,43 +444,14 @@ namespace lib
 			}
 		}
 
-        constexpr void _initializeElements(const size_type begin_construct,
-            const T*const source, const size_type count)
-        {
-            
-        }
-		constexpr void _copyConstructElements(const size_type begin_construct,
-            const T*const source, const size_type count)
-        {
-            assert(m_reserved >= (count + begin_construct));
-            assert(begin_construct <= m_size);
-
-			for (size_type i{ begin_construct }; i < (count + begin_construct); ++i) 
-            {
-                m_allocator.construct(m_buffer + i, source[i]);
-			}
-
-            m_size += count;
-		}
-
-		constexpr void _moveConstructElements(const size_type begin_construct,
-            const T*const source, const size_type count)
-        {
-            assert(m_reserved >= (count + begin_construct));
-            assert(begin_construct <= m_size);
-
-			for (size_type i{ begin_construct }; i < (count + begin_construct); ++i) 
-            {
-                m_allocator.construct(m_buffer + i, std::move(source[i]));
-			}
-
-            m_size += count;
-		}
-
 		constexpr void _destroy() 
         {
-			if (m_buffer) 
+			if (m_buffer)
             {
+                while (m_size > 0U)
+                {
+                    pop_back();
+                }
                 m_allocator.deallocate(m_buffer);
 				m_buffer = nullptr;
 				m_size = m_capacity = 0;
