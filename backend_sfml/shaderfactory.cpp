@@ -10,13 +10,13 @@ namespace lib::backend::sfmlb
         uptr<sf::Shader> shader(muptr<sf::Shader>());
         shader->loadFromFile(file.c_str(), sf::Shader::Vertex);
         uptr<Shader> t{ muptr<Shader>(std::move(shader)) };
-        m_shaderCache.push_back(std::move(t));
+//        m_shaderCache.push_back(std::move(t));
         return (*(m_shaderCache.end() - 1)).get();
     }
 
     ShaderFactory::~ShaderFactory()
 	{
-        m_shaderCache.clear();
+//        m_shaderCache.clear();
         m_shaderCache.shrink_to_fit();
     }
 }

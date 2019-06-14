@@ -1,13 +1,13 @@
 enable_testing()
 
 set(UNIT_TEST_LIST
-#   dicty
-#   lockablevector
+    dicty
+    lockablevector
     main
-#    parpar
-#    str
-#    streams
-#    translator
+    parpar
+    str
+    streams
+    translator
     vector
 )
 

@@ -26,6 +26,17 @@ TEST_CASE("vector::vector", "[vector]")
             CHECK(m.size() == 0U);
             CHECK(m.empty());
             CHECK(m.capacity() == 0U);
+
+    SECTION("Copy empty")
+    {
+        vector_shared_pointers<s32> empty_vector;
+        CHECK(empty_vector.capacity() == 0U);
+        CHECK(empty_vector.size() == 0U);
+
+        vector_shared_pointers<s32> copy_empty(empty_vector);
+        CHECK(copy_empty.capacity() == 0U);
+        CHECK(copy_empty.size() == 0U);
+    }
         }
     }
 
@@ -44,6 +55,24 @@ TEST_CASE("vector::vector", "[vector]")
 
         CHECK(m[0] == 0);
         CHECK(m[1] == 1);
+    }
+
+    SECTION("Copy constructor")
+    {
+        vector<s32> m;
+
+        m.push_back(5);
+
+        vector<s32> m2(m);
+        CHECK(m.size() == m2.size());
+        
+        m.reserve(10U);
+        CHECK(m.size() == 1U);
+
+        vector<s32> m3(m);
+        CHECK(m3.capacity() <= m.capacity());
+        CHECK(m3.size() <= m.size());
+        CHECK(m3[0U] == 5);
     }
 
     SECTION("Iterators constructor")
@@ -91,8 +120,18 @@ TEST_CASE("vector::vector", "[vector]")
         {
             const u32 arr[] = { 4, 3, 2, 1 };
             vector<u32> v(std::cbegin(arr), std::cend(arr));
-            CHECK(v.size() == 4);
+            CHECK(v.size() == 4U);
         }
+    }
+
+    SECTION("Emplace")
+    {
+        vector<u32> v;
+
+        v.emplace_back(0);
+        CHECK(v.size() == 1U);
+        v.pop_back();
+        CHECK(v.empty());
     }
 }
 
@@ -118,6 +157,17 @@ inline auto init_vector_shared_pointers_A() {
 
 TEST_CASE("vector of shared pointers", "[vector]")
 {
+    SECTION("Copy empty")
+    {
+        vector_shared_pointers<A> empty_vector;
+        CHECK(empty_vector.capacity() == 0U);
+        CHECK(empty_vector.size() == 0U);
+
+        vector_shared_pointers<A> copy_empty(empty_vector);
+        CHECK(copy_empty.capacity() == 0U);
+        CHECK(copy_empty.size() == 0U);
+    }
+
     SECTION("Move")
     {
         vector_shared_pointers<A> test_vector1(init_vector_shared_pointers_A());
@@ -155,7 +205,7 @@ TEST_CASE("vector of shared pointers", "[vector]")
 
         CHECK(test_vector3.size() == 10U);
 
-        test_vector1.push_back(msptr<A>(1));
+        test_vector1.push_back(msptr<A>(A{ 1 }));
     }
 
     SECTION("Remove")
@@ -184,4 +234,131 @@ TEST_CASE("vector of shared pointers", "[vector]")
             CHECK(weak.lock() == nullptr);
         }
     }
+
+    SECTION("Emplace")
+    {
+        vector_shared_pointers<A> test_vector;
+        sptr<A> temp = msptr<A>(A{42});
+
+        test_vector.emplace_back(new A{42});
+        CHECK(test_vector.size() == 1U);
+        test_vector.pop_back();
+        CHECK(test_vector.empty());
+    }
+
+    SECTION("Clear")
+    {
+        vector_shared_pointers<A> test_vector1(init_vector_shared_pointers_A());
+        CHECK(test_vector1.size() == 10U);
+
+        sptr<A> temp = msptr<A>(A{42});
+        wptr<A> weak = temp;
+        test_vector1.push_back(std::move(temp));
+        CHECK_FALSE(weak.lock() == nullptr);
+        test_vector1.clear();
+        CHECK(weak.lock() == nullptr);
+    }
+
+    SECTION("shrink_to_fit")
+    {
+        vector_shared_pointers<A> test_vector1(init_vector_shared_pointers_A());
+        CHECK(test_vector1.size() == 10U);
+        CHECK(test_vector1.capacity() >= 10U);
+
+        test_vector1.pop_back();
+        test_vector1.pop_back();
+        CHECK(test_vector1.size() == 8U);
+        CHECK(test_vector1.capacity() >= 10U);
+
+        test_vector1.shrink_to_fit();
+        CHECK(test_vector1.size() == 8U);
+        CHECK(test_vector1.capacity() == 8U);
+
+        test_vector1.clear();
+        CHECK(test_vector1.size() == 0U);
+        CHECK(test_vector1.capacity() == 8U);
+
+        test_vector1.shrink_to_fit();
+        CHECK(test_vector1.size() == 0U);
+        CHECK(test_vector1.capacity() == 0U);
+    }
+}
+
+TEST_CASE("Unique ptr")
+{
+    vector_unique_pointers<s32> test_vector1;
+    vector_unique_pointers<s32> test_vector2(4U);
+
+    CHECK(test_vector1.capacity() == 0U);
+    CHECK(test_vector2.capacity() == 4U);
+
+    test_vector1.push_back(muptr<s32>(1));
+    test_vector2.push_back(muptr<s32>(1));
+
+    CHECK((*test_vector1[0U]) == (*test_vector2[0U]));
+
+    test_vector1.emplace_back(muptr<s32>(2));
+    test_vector2.emplace_back(muptr<s32>(2));
+
+    CHECK((*test_vector1[1U]) == (*test_vector2[1U]));
+
+    test_vector1.shrink_to_fit();
+    test_vector2.shrink_to_fit();
+
+    CHECK(test_vector1.capacity() == 2U);
+    CHECK(test_vector1.capacity() == 2U);
+
+    test_vector1.clear();
+    test_vector2.clear();
+
+    test_vector1.shrink_to_fit();
+    test_vector2.shrink_to_fit();
+
+    CHECK(test_vector1.capacity() == 0U);
+    CHECK(test_vector1.capacity() == 0U);
+
+    test_vector1.shrink_to_fit();
+    test_vector2.shrink_to_fit();
+
+    CHECK(test_vector1.capacity() == 0U);
+    CHECK(test_vector1.capacity() == 0U);
+}
+
+TEST_CASE("Grow policy")
+{
+    vector<s32> default_test_vector;
+    vector<s32, AllocatorMallocFree<s32>, GrowPolicyDouble> double_grow_test_vector;
+
+    CHECK(default_test_vector.empty());
+    CHECK(default_test_vector.capacity() == 0U);
+
+    CHECK(double_grow_test_vector.empty());
+    CHECK(double_grow_test_vector.capacity() == 0U);
+
+    default_test_vector.push_back(1);
+    double_grow_test_vector.push_back(1);
+
+    CHECK(default_test_vector.size() == 1U);
+    CHECK(default_test_vector.capacity() == 1U);
+
+    CHECK(double_grow_test_vector.size() == 1U);
+    CHECK(double_grow_test_vector.capacity() == 1U);
+
+    default_test_vector.push_back(2);
+    double_grow_test_vector.push_back(2);
+
+    CHECK(default_test_vector.size() == 2U);
+    CHECK(default_test_vector.capacity() == 2U);
+
+    CHECK(double_grow_test_vector.size() == 2U);
+    CHECK(double_grow_test_vector.capacity() == 2U);
+
+    default_test_vector.push_back(3);
+    double_grow_test_vector.push_back(3);
+
+    CHECK(default_test_vector.size() == 3U);
+    CHECK(default_test_vector.capacity() == 3U);
+
+    CHECK(double_grow_test_vector.size() == 3U);
+    CHECK(double_grow_test_vector.capacity() == 4U);
 }

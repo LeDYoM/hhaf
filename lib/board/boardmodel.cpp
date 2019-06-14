@@ -17,8 +17,13 @@ namespace lib
 			assert_release(m_actuator == nullptr, "m_actuator already contains a value");
             std::swap(m_actuator, boardModelActuator);
             _tiles.reserve(size.x);
-            for (auto x = 0u; x < size.x; ++x) {
+            for (auto x = 0u; x < size.x; ++x)
+            {
                 _tiles.emplace_back(size.y);
+                for (auto y = 0U; y < size.y; ++y)
+                {
+                    _tiles[x].emplace_back();
+                }
             }
             _tiles.shrink_to_fit();
         }
