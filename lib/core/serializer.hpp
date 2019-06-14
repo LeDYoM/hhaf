@@ -1,12 +1,12 @@
 #pragma once
 
-#ifndef LIB_SERIALIZER_INCLUDE_HPP__
-#define LIB_SERIALIZER_INCLUDE_HPP__
+#ifndef LIB_SERIALIZER_INCLUDE_HPP
+#define LIB_SERIALIZER_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
 
-#include <logger/include/log.hpp>
+#include <lib/include/liblog.hpp>
 
 #include <lib/system/filesystem/file.hpp>
 

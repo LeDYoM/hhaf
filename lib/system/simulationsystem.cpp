@@ -4,7 +4,7 @@
 #include "inputsystem.hpp"
 
 #include <lib/include/key.hpp>
-#include <logger/include/log.hpp>
+#include <lib/include/liblog.hpp>
 #include <lib/include/core/timer.hpp>
 
 #include <mtypes/include/types.hpp>

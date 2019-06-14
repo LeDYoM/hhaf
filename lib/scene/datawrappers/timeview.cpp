@@ -1,7 +1,7 @@
 #include "timeview.hpp"
 
 #include <lib/scene/scenenode.hpp>
-#include <logger/include/log.hpp>
+#include <lib/include/liblog.hpp>
 #include <lib/scene/scenemanager.hpp>
 #include <lib/system/timesystem.hpp>
 

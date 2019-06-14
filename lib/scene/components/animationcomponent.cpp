@@ -1,7 +1,7 @@
 #include "animationcomponent.hpp"
 
 #include <lib/scene/ianimation.hpp>
-#include <logger/include/log.hpp>
+#include <lib/include/liblog.hpp>
 
 #include <mtypes/include/lockablevector.hpp>
 

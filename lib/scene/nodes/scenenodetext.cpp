@@ -2,8 +2,7 @@
 
 #include <lib/include/resources/ifont.hpp>
 #include <lib/resources/texture.hpp>
-
-#include <logger/include/log.hpp>
+#include <lib/include/liblog.hpp>
 
 #include <lib/scene/vertexarray.hpp>
 #include <lib/scene/scenenodetypes.hpp>

@@ -9,7 +9,7 @@
 #include "rendersystem.hpp"
 
 #include <backend_dev/include/iwindow.hpp>
-#include <logger/include/log.hpp>
+#include <lib/include/liblog.hpp>
 #include <lib/include/windowcreationparams.hpp>
 #include <lib/include/iapp.hpp>
 

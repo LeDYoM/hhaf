@@ -1,7 +1,7 @@
 #include <lib/include/main.hpp>
 #include <lib/core/memmanager.hpp>
 #include <lib/core/host.hpp>
-#include <logger/include/log.hpp>
+#include <lib/include/liblog.hpp>
 
 #include "apploader.hpp"
 #include "../zoper_game/app.hpp"
@@ -14,7 +14,7 @@ namespace lib
 
 		try
 		{
-			log::init_log();
+			logger::init_log();
 
 			installMemManager();
 
@@ -36,7 +36,7 @@ namespace lib
 			log_release_info("Unexpected exception");
 		}
 		finishMemManager();
-		log::finish_log();
+		logger::finish_log();
 
 		return result;
 	}

@@ -1,6 +1,6 @@
 #include "inputcomponent.hpp"
 
-#include <logger/include/log.hpp>
+#include <lib/include/liblog.hpp>
 #include <lib/include/key.hpp>
 #include <lib/system/inputsystem.hpp>
 #include <lib/scene/scenenode.hpp>

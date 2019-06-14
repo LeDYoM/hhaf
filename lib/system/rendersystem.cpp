@@ -5,7 +5,7 @@
 #include "rendertarget.hpp"
 #include <lib/resources/texture.hpp>
 #include <lib/scene/renderdata.hpp>
-#include <logger/include/log.hpp>
+#include <lib/include/liblog.hpp>
 #include <lib/include/core/timer.hpp>
 
 #include <mtypes/include/types.hpp>

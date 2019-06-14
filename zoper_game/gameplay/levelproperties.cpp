@@ -1,7 +1,6 @@
 #include "levelproperties.hpp"
 
-#include <lib/core/host.hpp>
-#include <logger/include/log.hpp>
+#include <lib/include/liblog.hpp>
 
 namespace zoper
 {

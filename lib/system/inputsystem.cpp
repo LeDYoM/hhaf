@@ -1,6 +1,6 @@
 #include "inputsystem.hpp"
 
-#include <logger/include/log.hpp>
+#include <lib/include/liblog.hpp>
 #include <backend_dev/include/iinputdriver.hpp>
 
 namespace lib::input

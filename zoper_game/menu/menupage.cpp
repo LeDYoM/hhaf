@@ -2,9 +2,8 @@
 #include "menupageinputcomponent.hpp"
 #include "../loaders/mainmenuresources.hpp"
 
-#include <logger/include/log.hpp>
+#include <lib/include/liblog.hpp>
 #include <lib/scene/scene.hpp>
-#include <lib/core/host.hpp>
 #include <lib/system/resourcemanager.hpp>
 #include <lib/resources/ttfont.hpp>
 #include <lib/include/resources/ifont.hpp>
