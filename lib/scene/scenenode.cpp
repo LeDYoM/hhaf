@@ -3,7 +3,7 @@
 
 #include <lib/scene/renderizables/renderizable.hpp>
 
-#include <logger/include/log.hpp>
+#include <lib/include/liblog.hpp>
 
 #include "scenemanager.hpp"
 #include "scenenodeblob.hpp"

@@ -8,7 +8,7 @@
 
 #include <lib/scene/components/alignedtextcomponent.hpp>
 
-#include <logger/include/log.hpp>
+#include <lib/include/liblog.hpp>
 #include <lib/include/resources/iresourceretriever.hpp>
 #include <lib/include/resources/ittfont.hpp>
 #include <lib/scene/datawrappers/resourceview.hpp>

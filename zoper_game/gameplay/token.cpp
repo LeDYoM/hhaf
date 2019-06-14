@@ -4,7 +4,7 @@
 #include <lib/scene/components/animationcomponent.hpp>
 #include <lib/scene/components/renderizables.hpp>
 
-#include <logger/include/log.hpp>
+#include <lib/include/liblog.hpp>
 
 #include "gamescene.hpp"
 #include "levelproperties.hpp"
