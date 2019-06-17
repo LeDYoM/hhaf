@@ -22,7 +22,7 @@ namespace lib
 			virtual ~IWindow() {}
 
 			virtual bool createWindow(const WindowCreationParams &wcp) = 0;
-            virtual bool activate(const bool activate = true) = 0;
+            virtual bool setActive(const bool activate = true) = 0;
 
 			virtual bool processEvents() = 0;
 
