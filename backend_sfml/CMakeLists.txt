@@ -25,6 +25,7 @@ set (SFML_ROOT "${L3RD_PARTY_DIR}/SFML")
 
 #Find any version 2.X of SFML
 #See the FindSFML.cmake file for additional details and instructions
+cmake_policy(SET CMP0074 OLD)
 find_package(SFML 2 REQUIRED system window graphics)
 if(SFML_FOUND)
   include_directories(${SFML_INCLUDE_DIR})
