@@ -68,7 +68,7 @@ namespace logger
         template<typename StreamType, typename ...Args>
         void to_log_stream(StreamType& sout, Args&&... args) 
         {
-            (sout << ... << args) << '\n';
+            (sout << ... << args);
         }
     }
     
