@@ -20,7 +20,7 @@ namespace lib::scene
     {
     public:
         SceneManager(core::SystemProvider &system_provider);
-        ~SceneManager();
+        ~SceneManager() override;
 
         void start();
         void update();

@@ -26,7 +26,7 @@ namespace lib
 		{
 		public:
 			Scene(str name);
-			virtual ~Scene();
+			~Scene() override;
 
 			virtual void onFinished() {}
 

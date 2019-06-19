@@ -211,26 +211,40 @@ TEST_CASE("vector of shared pointers", "[vector]")
     SECTION("Remove")
     {
         vector_shared_pointers<A> test_vector1(init_vector_shared_pointers_A());
-        CHECK(test_vector1.size() == 10);
+        CHECK(test_vector1.size() == 10U);
 
         test_vector1[1] = nullptr;
         test_vector1[5] = nullptr;
 
         test_vector1.remove_values(nullptr);
-        CHECK(test_vector1.size() == 8);
+        CHECK(test_vector1.size() == 8U);
 
         test_vector1.push_back(nullptr);
-        CHECK(test_vector1.size() == 9);
+        CHECK(test_vector1.size() == 9U);
         test_vector1.remove_values(nullptr);
-        CHECK(test_vector1.size() == 8);
+        CHECK(test_vector1.size() == 8U);
 
         SECTION("Remove removed shared pointer")
         {
             sptr<A> temp = msptr<A>(A{42});
             wptr<A> weak = temp;
             test_vector1.push_back(std::move(temp));
+            CHECK(test_vector1.size() == 9U);
             CHECK_FALSE(weak.lock() == nullptr);
             test_vector1.pop_back();
+            CHECK(test_vector1.size() == 8U);
+            CHECK(weak.lock() == nullptr);
+        }
+
+        SECTION("Remove if")
+        {
+            sptr<A> temp = msptr<A>(A{ 42 });
+            wptr<A> weak = temp;
+            test_vector1.push_back(std::move(temp));
+            CHECK(test_vector1.size() == 9U);
+            CHECK_FALSE(weak.lock() == nullptr);
+            test_vector1.remove_if([](const sptr<A> element) { return element->b == 42; });
+            CHECK(test_vector1.size() == 8U);
             CHECK(weak.lock() == nullptr);
         }
     }
