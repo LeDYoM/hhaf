@@ -242,18 +242,16 @@ namespace lib
             return erase_all_if(condition, begin());
         }
 
-        constexpr decltype(auto) find_first_of(const vector& other) const noexcept
+        constexpr const_iterator find_first_of(const vector& other) const noexcept
         {
-            auto it(cbegin());
-            while (it != cend())
+            for (auto it(begin()); it != end(); ++it)
             {
-                if (other.cfind(*it) != other.cend())
+                if (other.find(*it) != other.end())
                 {
                     return it;
                 }
-                ++it;
             }
-            return it;
+            return end();
         }
 
         constexpr iterator find(iterator begin, const iterator end, const T&element) noexcept 
