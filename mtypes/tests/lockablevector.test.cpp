@@ -1,6 +1,5 @@
 #include "catch.hpp"
 
-#include <mtypes/include/lockablevector.hpp>
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/lockablevector.hpp>
 

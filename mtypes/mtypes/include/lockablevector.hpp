@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_MTYPES_LOCKABLE_VECTOR_CONTAINER_INCLUDE_HPP
-#define LIB_MTYPES_LOCKABLE_VECTOR_CONTAINER_INCLUDE_HPP
+#ifndef MTYPES_LOCKABLE_VECTOR_CONTAINER_INCLUDE_HPP
+#define MTYPES_LOCKABLE_VECTOR_CONTAINER_INCLUDE_HPP
 
 #include "vector.hpp"
 #include "function.hpp"
@@ -10,8 +10,7 @@ namespace lib
 {
     /**
     * This class encapsulates the functionality of a vector with deferred operations.
-
-    *    This class encapsulates 3 vectors<T>, providing a wrapper
+    * This class encapsulates 3 vectors<T>, providing a wrapper
     * to add and remove elements without modifying the main vector.
     * To access to the modifications, the user must call one of the available
     * methods to do that. The user may also access the non updated data.

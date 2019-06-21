@@ -6,62 +6,14 @@
 //#define LOG_MODE
 #include "debug_internal.hpp"
 
-#include <utility>
 #include <initializer_list>
+#include <utility>
+#include "allocator.hpp"
 #include "function.hpp"
+#include "growpolicy.hpp"
 
 namespace lib
 {
-    class GrowPolicyUnary
-    {
-    public:
-        static constexpr size_type growSize(const size_type size) noexcept
-        {
-            return size + 1U;
-        }
-    };
-
-    class GrowPolicyDouble
-    {
-    public:
-        static constexpr size_type growSize(const size_type size) noexcept
-        {
-            return size > 0U ? (size * 2U) : (size + 1);
-        }
-    };
-
-    template <typename T>
-    class AllocatorMallocFree
-    {
-    public:
-        using pointer = T*;
-
-        static pointer allocate(const size_type size)
-        { 
-            assert(size > 0U);
-            return (pointer)malloc(sizeof(T)*size);
-        }
-        
-        static void deallocate(pointer element)
-        {
-            assert(element != nullptr);
-            free (element);
-        }
-
-        template<typename ...Args>
-        static void construct(pointer where, Args&&... args)
-        {
-            assert(where != nullptr);
-            ::new((void *)where) T(std::forward<Args>(args)...);
-        }
-
-        static void destruct(pointer where) noexcept
-        {
-            assert(where != nullptr);
-            where->~T();
-        }
-    };
-
     /** Vector class to store a sequence of elements
     * This class is a container to store sequences of Ts. It can be resized.
     * Other use cases include search, replacement, etc...
