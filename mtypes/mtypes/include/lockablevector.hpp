@@ -54,7 +54,7 @@ namespace lib
         * Remove an element. Overload for const references.
         * @param element The element to remove.
         */
-        constexpr void erase_value(const T &element)
+        constexpr void erase_values(const T &element)
         {
             remove_cache_.push_back(element);
         }
@@ -63,7 +63,7 @@ namespace lib
         * Remove an element. Overload for rvalues
         * @param element The element to remove.
         */
-        constexpr void erase_value(T &&element)
+        constexpr void erase_values(T &&element)
         {
             remove_cache_.push_back(std::move(element));
         }
@@ -168,7 +168,7 @@ namespace lib
         {
             for (const auto& element : remove_cache_)
             {
-                c.erase_value(element);
+                c.erase_values(element);
             }
         }
 

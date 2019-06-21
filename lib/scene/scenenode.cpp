@@ -84,7 +84,7 @@ namespace lib::scene
         assert_release(this != element.get(), "Cannot delete myself from myself");
         assert_debug(this == element->parent()," You must call removeSceneNode from the parent node");
 
-        m_groups.erase_value(element);
+        m_groups.erase_values(element);
     }
 
     void SceneNode::clearAll()

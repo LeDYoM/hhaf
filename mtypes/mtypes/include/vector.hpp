@@ -224,45 +224,28 @@ namespace lib
             std::swap(m_capacity, other.m_capacity);
         }
 
-        constexpr size_type index_from_iterator(const const_iterator it) const noexcept
+        constexpr size_type index_from_iterator(const const_iterator it_) const noexcept
         {
-            for (size_type i{ 0 }; i < m_size; ++i) 
+            size_type i{0U};
+            for (const_iterator it(cbegin()); it != cend(); ++it, ++i)
             {
-                if (m_buffer + i == it) {
+                if (it == it_)
+                {
                     return i;
                 }
             }
             return m_size;
         }
 
-        constexpr iterator erase_value(const T &value, iterator start)
-        {
-            return erase_if([&value](const T p) { return p == value; }, start);
-        }
-
-        constexpr iterator erase_value(const T &value)
-        {
-            return erase_value(value, begin());
-        }
-
         //TO DO: Optimize
-        constexpr size_type erase_values(const T&value, iterator start) 
+        constexpr iterator erase_values(const T&value, iterator start) 
         {
             return erase_all_if([&value](const T p) { return p == value; } , start);
         }
 
-        constexpr size_type erase_values(const T&value)
+        constexpr iterator erase_values(const T&value)
         {
             return erase_values(value, begin());
-        }
-
-        constexpr size_type erase_all_from(const vector &other)
-        {
-            for (auto&& node : other)
-            {
-                erase_value(std::forward<T>(node));
-            }
-            return m_size;
         }
 
         constexpr iterator erase_if(function<bool(const T&)> condition, iterator start) 
@@ -290,17 +273,19 @@ namespace lib
             return erase_if(std::move(condition), begin());
         }
 
-        constexpr size_type erase_all_if(function<bool(const T&)> condition, iterator start) 
+        constexpr iterator erase_all_if(function<bool(const T&)> condition, iterator start) 
         {
-            do 
+            iterator result { start };
+            do
             {
+                result = start;
                 start = erase_if(condition, start);
             } while (start != end());
 
-            return m_size;
+            return result;
         }
 
-        constexpr size_type erase_all_if(function<bool(const T&)> condition) 
+        constexpr iterator erase_all_if(function<bool(const T&)> condition) 
         {
             return erase_all_if(condition, begin());
         }
@@ -324,8 +309,8 @@ namespace lib
             checkRange(begin);
             checkRange(end);
 
-            for (;(begin != end && !(*begin == element)); ++finder);
-            return finder;
+            for (;(begin != end && !(*begin == element)); ++begin);
+            return begin;
         }
 
         constexpr iterator find_if(iterator begin, const iterator end, function<bool(const T&)> f) noexcept 

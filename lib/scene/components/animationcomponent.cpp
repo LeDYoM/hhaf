@@ -36,7 +36,7 @@ namespace lib
                     if (!animation->animate()) 
                     {
                         animation->executeEndAction();
-                        m_private->m_animations.erase_value(animation);
+                        m_private->m_animations.erase_values(animation);
                     }
                 }
 
