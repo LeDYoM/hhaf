@@ -154,7 +154,7 @@ namespace lib
         }
 
         /// Destructor.
-        ~vector() noexcept
+        inline ~vector() noexcept
         {
             if (m_buffer)
             {
@@ -319,22 +319,45 @@ namespace lib
             return it;
         }
 
-        constexpr iterator find(const T&element) noexcept 
+        constexpr iterator find(iterator begin, const iterator end, const T&element) noexcept 
         {
-            auto finder( begin() );
-            while (finder != end() && !(*finder == element)) ++finder;
+            checkRange(begin);
+            checkRange(end);
+
+            for (;(begin != end && !(*begin == element)); ++finder);
             return finder;
         }
 
-        constexpr const_iterator find(const T&element) const noexcept {
-            return cfind(element);
+        constexpr iterator find_if(iterator begin, const iterator end, function<bool(const T&)> f) noexcept 
+        {
+            assert(begin >= begin());
+            assert(begin <= end());
+            assert(end >= begin());
+            assert(end <= end());
+
+            for (;(begin != end && !(f(*begin))); ++finder);
+            return finder;
+        }
+
+        constexpr const_iterator cfind(const_iterator begin, const const_iterator end, const T&element) const noexcept 
+        {
+            assert(begin >= cbegin());
+            assert(begin <= cend());
+            assert(end >= cbegin());
+            assert(end <= cend());
+
+            for (;(begin != end && !(*begin == element)); ++begin);
+            return begin;
         }
 
         constexpr const_iterator cfind(const T&element) const noexcept
         {
-            auto finder{ cbegin() };
-            while (finder != cend() && !(*finder == element)) ++finder;
-            return finder;
+            return cfind(cbegin(), cend(), element);
+        }
+
+        constexpr const_iterator find(const T&element) const noexcept
+        {
+            return cfind(element);
         }
 
         constexpr void shrink_to_fit() 
@@ -470,6 +493,18 @@ namespace lib
             {
                 pop_back();
             }
+        }
+
+        constexpr void checkRange(const iterator it) const
+        {
+            assert(it >= begin());
+            assert(it <= end());
+        }
+
+        constexpr void checkRange(const const_iterator it) const
+        {
+            assert(it >= begin());
+            assert(it <= end());
         }
 
 	private:
