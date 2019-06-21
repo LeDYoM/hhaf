@@ -27,7 +27,7 @@ namespace lib::scene
     {
         assert_debug(element.get() != nullptr, "Received empty renderizable node to be deleted");
 
-        render_nodes_.remove_value(element);
+        render_nodes_.erase_value(element);
     }
 
     void Renderizables::clearRenderizables()

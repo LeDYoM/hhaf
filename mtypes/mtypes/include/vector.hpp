@@ -235,37 +235,37 @@ namespace lib
             return m_size;
         }
 
-        constexpr iterator remove_value(const T &value, iterator start)
+        constexpr iterator erase_value(const T &value, iterator start)
         {
-            return remove_if([&value](const T p) { return p == value; }, start);
+            return erase_if([&value](const T p) { return p == value; }, start);
         }
 
-        constexpr iterator remove_value(const T &value)
+        constexpr iterator erase_value(const T &value)
         {
-            return remove_value(value, begin());
+            return erase_value(value, begin());
         }
 
         //TO DO: Optimize
-        constexpr size_type remove_values(const T&value, iterator start) 
+        constexpr size_type erase_values(const T&value, iterator start) 
         {
-            return remove_all_if([&value](const T p) { return p == value; } , start);
+            return erase_all_if([&value](const T p) { return p == value; } , start);
         }
 
-        constexpr size_type remove_values(const T&value)
+        constexpr size_type erase_values(const T&value)
         {
-            return remove_values(value, begin());
+            return erase_values(value, begin());
         }
 
-        constexpr size_type remove_all_from(const vector &other)
+        constexpr size_type erase_all_from(const vector &other)
         {
             for (auto&& node : other)
             {
-                remove_value(std::forward<T>(node));
+                erase_value(std::forward<T>(node));
             }
             return m_size;
         }
 
-        constexpr iterator remove_if(function<bool(const T&)> condition, iterator start) 
+        constexpr iterator erase_if(function<bool(const T&)> condition, iterator start) 
         {
             iterator where_it_was{ end() };
             auto old_size(m_size);
@@ -285,24 +285,24 @@ namespace lib
             return where_it_was;
         }
 
-        constexpr iterator remove_if(function<bool(const T&)> condition) 
+        constexpr iterator erase_if(function<bool(const T&)> condition) 
         {
-            return remove_if(std::move(condition), begin());
+            return erase_if(std::move(condition), begin());
         }
 
-        constexpr size_type remove_all_if(function<bool(const T&)> condition, iterator start) 
+        constexpr size_type erase_all_if(function<bool(const T&)> condition, iterator start) 
         {
             do 
             {
-                start = remove_if(condition, start);
+                start = erase_if(condition, start);
             } while (start != end());
 
             return m_size;
         }
 
-        constexpr size_type remove_all_if(function<bool(const T&)> condition) 
+        constexpr size_type erase_all_if(function<bool(const T&)> condition) 
         {
-            return remove_all_if(condition, begin());
+            return erase_all_if(condition, begin());
         }
 
         constexpr decltype(auto) find_first_of(const vector& other) const noexcept

@@ -32,7 +32,7 @@ namespace lib
         }
 
         constexpr bool disconnect(emitter_callback_t& f) {
-            return m_receivers.remove_value(f, m_receivers.begin()) != m_receivers.end();
+            return m_receivers.erase_value(f, m_receivers.begin()) != m_receivers.end();
         }
 
     private:

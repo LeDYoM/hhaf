@@ -45,7 +45,7 @@ namespace lib::scene
 
             if (someDeleted) 
             {
-                m_activeTimers.remove_values(nullptr);
+                m_activeTimers.erase_values(nullptr);
             }
         }
     }
