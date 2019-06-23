@@ -19,7 +19,7 @@ namespace lib
     * Other use cases include search, replacement, etc...
     */
     template <typename T, typename Allocator = AllocatorMallocFree<T>, typename GrowPolicy = GrowPolicyUnary>
-    class  vector
+    class  vector final
     {
     public:
         using iterator = T * ;
@@ -192,7 +192,14 @@ namespace lib
         //TO DO: Optimize
         constexpr iterator erase_values(const T&value, iterator start) 
         {
-            return erase_all_if([&value](const T p) { return p == value; } , start);
+            iterator result { start };
+            do
+            {
+                result = start;
+                start = erase_one(value, start);
+            } while (start != end());
+
+            return result;
         }
 
         constexpr iterator erase_values(const T&value)
@@ -202,20 +209,40 @@ namespace lib
 
         constexpr iterator erase_if(function<bool(const T&)> condition, iterator start) 
         {
-            iterator where_it_was{ end() };
-            auto old_size(m_size);
-            for (size_type i{ index_from_iterator(start) }; i < old_size; ++i) 
+            // Find a node where the condition is true.
+            iterator where_it_was{ find_if(start, end(), condition) };
+
+            // If such a node is found erase it, if not,
+            // return end() (result from find_if(...)).
+            if (where_it_was != end())
             {
-                if (condition(m_buffer[i]))
+                // If the element to delete is not the last one
+                if (where_it_was < end() - 1U)
                 {
-                    if (i < (old_size - 1U))
-                    {
-                        std::swap(m_buffer[i], m_buffer[old_size - 1U]);
-                    }
-                    where_it_was = &(m_buffer[i]);
-                    pop_back();
-                    i = old_size;
+                    // swap the element to delete with the last one
+                    std::swap(*where_it_was, back());
                 }
+                pop_back();
+            }
+            return where_it_was;
+        }
+
+        constexpr iterator erase_one(const T& value, iterator start)
+        {
+            // Find a node with the specified value
+            iterator where_it_was{ find(start, end(), value) };
+
+            // If such a node is found erase it, if not,
+            // return end() (result from find(...)).
+            if (where_it_was != end())
+            {
+                // If the element to delete is not the last one
+                if (where_it_was < end() - 1U)
+                {
+                    // swap the element to delete with the last one
+                    std::swap(*where_it_was, back());
+                }
+                pop_back();
             }
             return where_it_was;
         }
@@ -254,7 +281,8 @@ namespace lib
             return end();
         }
 
-        constexpr iterator find(iterator begin, const iterator end, const T&element) noexcept 
+        constexpr iterator find(iterator begin,
+            const iterator end, const T&element) const noexcept 
         {
             checkRange(begin);
             checkRange(end);
@@ -263,23 +291,21 @@ namespace lib
             return begin;
         }
 
-        constexpr iterator find_if(iterator begin, const iterator end, function<bool(const T&)> f) noexcept 
+        constexpr iterator find_if(iterator begin,
+            const iterator end, function<bool(const T&)> f) const noexcept
         {
-            assert(begin >= begin());
-            assert(begin <= end());
-            assert(end >= begin());
-            assert(end <= end());
+            checkRange(begin);
+            checkRange(end);
 
-            for (;(begin != end && !(f(*begin))); ++finder);
-            return finder;
+            for (;(begin != end && !(f(*begin))); ++begin);
+            return begin;
         }
 
-        constexpr const_iterator cfind(const_iterator begin, const const_iterator end, const T&element) const noexcept 
+        constexpr const_iterator cfind(const_iterator begin,
+            const const_iterator end, const T&element) const noexcept 
         {
-            assert(begin >= cbegin());
-            assert(begin <= cend());
-            assert(end >= cbegin());
-            assert(end <= cend());
+            checkRange(begin);
+            checkRange(end);
 
             for (;(begin != end && !(*begin == element)); ++begin);
             return begin;
@@ -318,17 +344,23 @@ namespace lib
         constexpr void push_back(const T& value) 
         {
 			LOG("vector::push_back(const T&) --- m_size before: " << m_size);
+
             reserve(GrowPolicy::growSize(m_size));
             Allocator::construct(m_buffer + m_size, value);
             ++m_size;
+
 			LOG("vector::push_back(const T&) --- m_size after: " << m_size);
 		}
 
         constexpr void push_back(T&& value) 
         {
+            LOG("vector::push_back(T&&) --- m_size before: " << m_size);
+
             reserve(GrowPolicy::growSize(m_size));
             Allocator::construct(m_buffer + m_size, std::move(value));
             ++m_size;
+
+            LOG("vector::push_back(T&&) --- m_size after: " << m_size);
         }
 
         template<typename ...Args>
@@ -438,14 +470,14 @@ namespace lib
 
         constexpr void checkRange(const const_iterator it) const
         {
-            assert(it >= begin());
-            assert(it <= end());
+            assert(it >= cbegin());
+            assert(it <= cend());
         }
 
 	private:
-        size_type m_capacity{};
-        size_type m_size{};
-        T* m_buffer{};
+        size_type m_capacity{0U};
+        size_type m_size{0U};
+        T* m_buffer{nullptr};
     };
 
     template <class A>
