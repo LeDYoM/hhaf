@@ -8,21 +8,21 @@
 
 namespace lib::backend
 {
-	class IInputDriver
-	{
-	public:
+    class IInputDriver
+    {
+    public:
 
-		virtual ~IInputDriver() {}
+        virtual ~IInputDriver() {}
 
-		virtual bool arePendingKeyPresses() const = 0;
-		virtual bool arePendingKeyReleases() const = 0;
+        virtual bool arePendingKeyPresses() const = 0;
+        virtual bool arePendingKeyReleases() const = 0;
 
-		virtual input::Key popKeyPress() = 0;
-		virtual input::Key popKeyRelease() = 0;
+        virtual input::Key popKeyPress() = 0;
+        virtual input::Key popKeyRelease() = 0;
 
-		virtual void keyPressed(const input::Key) = 0;
-		virtual void keyReleased(const input::Key) = 0;
-	};
+        virtual void keyPressed(const input::Key) = 0;
+        virtual void keyReleased(const input::Key) = 0;
+    };
 }
 
 #endif

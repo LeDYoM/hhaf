@@ -8,14 +8,14 @@
 
 namespace lib::backend
 {
-	class ITexture
-	{
-	public:
-		ITexture() {}
-		virtual ~ITexture() {}
+    class ITexture
+    {
+    public:
+        ITexture() {}
+        virtual ~ITexture() {}
 
-		virtual vector2du32 size() const = 0;
-	};
+        virtual vector2du32 size() const = 0;
+    };
 }
 
 #endif
