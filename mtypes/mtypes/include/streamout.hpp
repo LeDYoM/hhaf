@@ -10,40 +10,40 @@
 
 namespace lib
 {
-	class SerializationStreamOut
-	{
-	public:
+    class SerializationStreamOut
+    {
+    public:
 
-		const str &data() const { return m_data; }
+        const str &data() const { return m_data; }
 
-		template <typename T>
-		friend SerializationStreamOut& operator<<(SerializationStreamOut&sso, const T&data);
-	private:
-		str m_data;
-	};
+        template <typename T>
+        friend SerializationStreamOut& operator<<(SerializationStreamOut&sso, const T&data);
+    private:
+        str m_data;
+    };
 
-	template <typename T>
-	SerializationStreamOut& operator<<(SerializationStreamOut&sso, const T&data)
-	{
-		str t;
-		t << data;
-		sso.m_data += t;
-		return sso;
-	}
+    template <typename T>
+    SerializationStreamOut& operator<<(SerializationStreamOut&sso, const T&data)
+    {
+        str t;
+        t << data;
+        sso.m_data += t;
+        return sso;
+    }
 
-	template <typename T, size_type size>
-	SerializationStreamOut& operator<<(SerializationStreamOut&sso, const array<T,size> &data)
-	{
-		for (const auto& element : data) sso << element;
-		return sso;
-	}
+    template <typename T, size_type size>
+    SerializationStreamOut& operator<<(SerializationStreamOut&sso, const array<T,size> &data)
+    {
+        for (const auto& element : data) sso << element;
+        return sso;
+    }
 
-	template <typename T, size_type size>
-	SerializationStreamOut& operator<<(SerializationStreamOut&sso, const T data[size])
-	{
-		for (const auto& element : data) sso << element;
-		return sso;
-	}
+    template <typename T, size_type size>
+    SerializationStreamOut& operator<<(SerializationStreamOut&sso, const T data[size])
+    {
+        for (const auto& element : data) sso << element;
+        return sso;
+    }
 }
 
 #endif
