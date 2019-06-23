@@ -14,16 +14,16 @@ namespace
         short c;
     };
 
-	SerializationStreamIn operator>>(SerializationStreamIn& ssi, PODClass& out)
-	{
-		ssi >> out.a >> out.b >> out.c;
-		return ssi;
-	}
+    SerializationStreamIn operator>>(SerializationStreamIn& ssi, PODClass& out)
+    {
+        ssi >> out.a >> out.b >> out.c;
+        return ssi;
+    }
 
-	bool operator==(const PODClass& lhs, const PODClass& rhs)
-	{
-		return lhs.a == lhs.a && lhs.b == rhs.b && lhs.c == rhs.c;
-	}
+    bool operator==(const PODClass& lhs, const PODClass& rhs)
+    {
+        return lhs.a == lhs.a && lhs.b == rhs.b && lhs.c == rhs.c;
+    }
 }
 
 template <typename T, size_type Size>
@@ -50,7 +50,7 @@ TEST_CASE("SerializationStreamIn", "[streams][SerializationStreamIn]")
 
         CHECK(a == 1U);
         CHECK(b == 2U);
-		CHECK(ssi.eof());
+        CHECK(ssi.eof());
     }
 
     SECTION("Simple 2")
@@ -137,37 +137,37 @@ TEST_CASE("SerializationStreamIn::append", "[streams][SerializationStreamIn]")
     {
         SerializationStreamIn ssi;
 
-		size_type a[10U] = { 0U };
+        size_type a[10U] = { 0U };
 
         CHECK(ssi.eof());
 
-		SECTION("With new line as separator")
-		{
-			ssi << "0,1,2,3,4";
-			ssi.append(",5, ");
-			ssi << " 6,   7  ,";
-			ssi.append("8, 9");
-			CHECK_FALSE(ssi.eof());
+        SECTION("With new line as separator")
+        {
+            ssi << "0,1,2,3,4";
+            ssi.append(",5, ");
+            ssi << " 6,   7  ,";
+            ssi.append("8, 9");
+            CHECK_FALSE(ssi.eof());
 
-			ssi.setUseNewLineAsSeparator(false) >> a;
+            ssi.setUseNewLineAsSeparator(false) >> a;
 
-			check_array(a);
-			CHECK(ssi.eof());
-		}
+            check_array(a);
+            CHECK(ssi.eof());
+        }
 
-		SECTION("Without new line as separator")
-		{
-			ssi << "0,1,2,3,4";
-			ssi.append("5");
-			ssi << " 6,   7  ";
-			ssi.append("8, 9");
-			CHECK_FALSE(ssi.eof());
+        SECTION("Without new line as separator")
+        {
+            ssi << "0,1,2,3,4";
+            ssi.append("5");
+            ssi << " 6,   7  ";
+            ssi.append("8, 9");
+            CHECK_FALSE(ssi.eof());
 
-			ssi.setUseNewLineAsSeparator(true) >> a;
+            ssi.setUseNewLineAsSeparator(true) >> a;
 
-			check_array(a);
-			CHECK(ssi.eof());
-		}
+            check_array(a);
+            CHECK(ssi.eof());
+        }
     }
 }
 
@@ -185,23 +185,21 @@ TEST_CASE("SerializationStreamIn: Output to string", "[streams][SerializationStr
 
 TEST_CASE("SerializationStreamIn: getLine", "[streams][SerializationStreamIn]")
 {
-	{
-		SerializationStreamIn ssi(string_vector{ "1,2,", "3,4", "5,6" });
-		CHECK_FALSE(ssi.eof());
+    SerializationStreamIn ssi(string_vector{ "1,2,", "3,4", "5,6" });
+    CHECK_FALSE(ssi.eof());
 
-		str value[2];
-		ssi.setUseNewLineAsSeparator(false) >> value;
-		CHECK(value[0] == "1");
-		CHECK(value[1] == "2");
+    str value[2];
+    ssi.setUseNewLineAsSeparator(false) >> value;
+    CHECK(value[0] == "1");
+    CHECK(value[1] == "2");
 
-		ssi.getLine(value[0]);
-		CHECK(value[0] == "3,4");
+    ssi.getLine(value[0]);
+    CHECK(value[0] == "3,4");
 
-		ssi >> value;
-		CHECK(value[0] == "5");
-		CHECK(value[1] == "6");
-		CHECK(ssi.eof());
-	}
+    ssi >> value;
+    CHECK(value[0] == "5");
+    CHECK(value[1] == "6");
+    CHECK(ssi.eof());
 }
 
 TEST_CASE("SerializationStreamIn: Separtors", "[streams][SerializationStreamIn]")
@@ -215,9 +213,9 @@ TEST_CASE("SerializationStreamIn: Separtors", "[streams][SerializationStreamIn]"
         CHECK(out == "abc def");
         ssi >> out;
         CHECK(out == "ABC  DEF");
-		CHECK(ssi.eof());
-		CHECK_FALSE(ssi.hasError());
-	}
+        CHECK(ssi.eof());
+        CHECK_FALSE(ssi.hasError());
+    }
 
     {
         str out;
@@ -227,8 +225,8 @@ TEST_CASE("SerializationStreamIn: Separtors", "[streams][SerializationStreamIn]"
         CHECK(out == "abc def");
         ssi >> out;
         CHECK(out == "ABC  DEF");
-		CHECK(ssi.eof());
-		CHECK_FALSE(ssi.hasError());
+        CHECK(ssi.eof());
+        CHECK_FALSE(ssi.hasError());
     }
 
     {
@@ -239,9 +237,9 @@ TEST_CASE("SerializationStreamIn: Separtors", "[streams][SerializationStreamIn]"
         ssi >> out;
         CHECK(out == "C  DEF");
         CHECK(ssi.separator() == 'B');
-		CHECK(ssi.eof());
-		CHECK_FALSE(ssi.hasError());
-	}
+        CHECK(ssi.eof());
+        CHECK_FALSE(ssi.hasError());
+    }
 
     {
         str out;
@@ -250,77 +248,77 @@ TEST_CASE("SerializationStreamIn: Separtors", "[streams][SerializationStreamIn]"
         ssi >> out;
         CHECK(out == "abc def, ABC  DEF");
         CHECK(ssi.eof());
-		CHECK_FALSE(ssi.hasError());
-	}
+        CHECK_FALSE(ssi.hasError());
+    }
 }
 
 TEST_CASE("SerializationStreamIn: Errors empty data", "[streams][SerializationStreamIn]")
 {
-	SECTION("Empty data")
-	{
-		SerializationStreamIn data;
-		u32 a;
+    SECTION("Empty data")
+    {
+        SerializationStreamIn data;
+        u32 a;
 
-		data >> a;
-		CHECK(data.eof());
-		CHECK(data.hasError());
-	}
+        data >> a;
+        CHECK(data.eof());
+        CHECK(data.hasError());
+    }
 
-	SECTION("Empty separator data")
-	{
-		SerializationStreamIn data{ "," };
-		u32 a;
+    SECTION("Empty separator data")
+    {
+        SerializationStreamIn data{ "," };
+        u32 a;
 
-		data >> a;
-		CHECK(data.eof());
-		CHECK(data.hasError());
-	}
+        data >> a;
+        CHECK(data.eof());
+        CHECK(data.hasError());
+    }
 
-	SECTION("Empty separator data 2")
-	{
-		SerializationStreamIn data{ " ," };
-		u32 a;
+    SECTION("Empty separator data 2")
+    {
+        SerializationStreamIn data{ " ," };
+        u32 a;
 
-		data >> a;
-		CHECK(data.eof());
-		CHECK(data.hasError());
-	}
+        data >> a;
+        CHECK(data.eof());
+        CHECK(data.hasError());
+    }
 
-	SECTION("Empty separator data 2")
-	{
-		SerializationStreamIn data{ " , " };
-		u32 a;
+    SECTION("Empty separator data 2")
+    {
+        SerializationStreamIn data{ " , " };
+        u32 a;
 
-		data >> a;
-		CHECK_FALSE(data.eof());
-		CHECK(data.hasError());
-	}
+        data >> a;
+        CHECK_FALSE(data.eof());
+        CHECK(data.hasError());
+    }
 }
 
 TEST_CASE("SerializationStreamIn: Errors invalid format", "[streams][SerializationStreamIn]")
 {
-	SECTION("Try to put str in integer")
-	{
-		SerializationStreamIn data{ "1abc" };
-		u32 a;
+    SECTION("Try to put str in integer")
+    {
+        SerializationStreamIn data{ "1abc" };
+        u32 a;
 
-		data >> a;
-		CHECK(data.eof());
-		CHECK_FALSE(data.hasError());
-	}
+        data >> a;
+        CHECK(data.eof());
+        CHECK_FALSE(data.hasError());
+    }
 }
 
 TEST_CASE("SerializationStreamIn: Simple serialization", "[streams][SerializationStreamIn]")
 {
-	SECTION("Completely Correct input")
-	{
-		SerializationStreamIn data{ "123000,84.234F,500" };
-		PODClass a;
-		
-		data >> a;
+    SECTION("Completely Correct input")
+    {
+        SerializationStreamIn data{ "123000,84.234F,500" };
+        PODClass a;
+        
+        data >> a;
 
-		CHECK(a == PODClass{123000, 84.234F, 500});
-		CHECK(data.eof());
-		CHECK_FALSE(data.hasError());
-	}
+        CHECK(a == PODClass{123000, 84.234F, 500});
+        CHECK(data.eof());
+        CHECK_FALSE(data.hasError());
+    }
 }
