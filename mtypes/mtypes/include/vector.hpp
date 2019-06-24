@@ -227,6 +227,16 @@ namespace lib
             return where_it_was;
         }
 
+        /**
+         * @brief Erase one element (the first one containing a specified)
+         * value.
+         * @param value [in] Value to search for in the vector.
+         * @param value [in] start iterator pointing to the first element
+         *  to look for.
+         * @return iterator past the element deleted. It will be end() if
+         *  either no element found with this value or the last element
+         *  is the one deleted.
+         */
         constexpr iterator erase_one(const T& value, iterator start)
         {
             // Find a node with the specified value
@@ -243,6 +253,7 @@ namespace lib
                     std::swap(*where_it_was, back());
                 }
                 pop_back();
+                ++where_it_was;
             }
             return where_it_was;
         }
