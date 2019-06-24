@@ -398,16 +398,22 @@ namespace zoper
 
     void GameScene::_debugDisplayBoard() const
     {
-        for (u32 y{ 0 }; y < TokenZones::size.y; ++y) {
+        for (u32 y{ 0 }; y < TokenZones::size.y; ++y)
+        {
             str temp;
-            for (u32 x{ 0 }; x < TokenZones::size.x; ++x) {
+            for (u32 x{ 0 }; x < TokenZones::size.x; ++x)
+            {
                 str chTemp;
                 auto lp_tile(m_boardGroup->p_boardModel->getTile({ x, y }));
-                if (lp_tile) {
+                if (lp_tile) 
+                {
                     chTemp = str::to_str(lp_tile->get());
-                } else {
+                }
+                else 
+                {
                     chTemp = "*";
-                    if (TokenZones::pointInCenter({ x, y })) {
+                    if (TokenZones::pointInCenter({ x, y }))
+                    {
                         chTemp = "C";
                     }
                 }
