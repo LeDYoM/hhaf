@@ -4,7 +4,7 @@
 #include <lib/core/appcontext.hpp>
 #include <lib/system/backendfactory.hpp>
 #include <lib/core/hostcontext.hpp>
-#include <logger/include/log.hpp>
+#include <lib/include/liblog.hpp>
 #include <lib/scene/scenemanager.hpp>
 #include <lib/system/filesystem/filesystem.hpp>
 #include <lib/system/inputsystem.hpp>
@@ -13,6 +13,7 @@
 #include <lib/system/simulationsystem.hpp>
 #include <lib/system/timesystem.hpp>
 #include <lib/system/window.hpp>
+#include <lib/system/rendersystem.hpp>
 
 #include <mtypes/include/parpar.hpp>
 #include <mtypes/include/dicty.hpp>

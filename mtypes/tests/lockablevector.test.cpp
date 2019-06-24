@@ -1,6 +1,5 @@
 #include "catch.hpp"
 
-#include <mtypes/include/lockablevector.hpp>
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/lockablevector.hpp>
 
@@ -17,83 +16,83 @@ TEST_CASE("LockableVector", "[LockableVector]")
     LockableVector<u32> lockable_vector;
     auto m(lockable_vector.current());
 
-    CHECK(m.size() == 0);
+    CHECK(m.size() == 0U);
     CHECK(m.empty());
-    CHECK(m.capacity() == 0);
+    CHECK(m.capacity() == 0U);
 
     SECTION("Add elements")
     {
-        lockable_vector.push_back(0);
-        lockable_vector.push_back(1);
-        lockable_vector.push_back(2);
-        lockable_vector.push_back(3);
-        lockable_vector.push_back(4);
+        lockable_vector.push_back(0U);
+        lockable_vector.push_back(1U);
+        lockable_vector.push_back(2U);
+        lockable_vector.push_back(3U);
+        lockable_vector.push_back(4U);
 
         // After adding but not updating, the visible vector
         // is still empty.
         CHECK(lockable_vector.are_pending_adds());
-        CHECK(lockable_vector.pending_add() == 5);
+        CHECK(lockable_vector.pending_add() == 5U);
 
         // The call to current() updates implicity.
-        CHECK(lockable_vector.deferred_current().size() == 0);
-        CHECK(lockable_vector.current().size() == 5);
+        CHECK(lockable_vector.deferred_current().size() == 0U);
+        CHECK(lockable_vector.current().size() == 5U);
 
         SECTION("Add")
         {
             lockable_vector.update();
             CHECK(lockable_vector.deferred_current() == lockable_vector.current());
 
-            CHECK(lockable_vector.current().size() == 5);
+            CHECK(lockable_vector.current().size() == 5U);
             CHECK_FALSE(lockable_vector.are_pending_adds());
-            CHECK(lockable_vector.pending_add() == 0);
-            lockable_vector.push_back(5);
-            lockable_vector.emplace_back(6);
-            CHECK(lockable_vector.current().size() == 7);
+            CHECK(lockable_vector.pending_add() == 0U);
+            lockable_vector.push_back(5U);
+            lockable_vector.emplace_back(6U);
+            CHECK(lockable_vector.current().size() == 7U);
 
             // Update does not affect in this case
             lockable_vector.update();
-            CHECK(lockable_vector.current().size() == 7);
+            CHECK(lockable_vector.current().size() == 7U);
             CHECK_FALSE(lockable_vector.are_pending_adds());
-            CHECK(lockable_vector.pending_add() == 0);
+            CHECK(lockable_vector.pending_add() == 0U);
             CHECK(lockable_vector.deferred_current() == lockable_vector.current());
         }
 
         SECTION("Remove")
         {
-            lockable_vector.remove_value(1);
+            lockable_vector.erase_values(1);
             CHECK(lockable_vector.are_pending_removes());
-            CHECK(lockable_vector.pending_remove() == 1);
+            CHECK(lockable_vector.pending_remove() == 1U);
             const auto v(lockable_vector.deferred_current());
             CHECK_FALSE(v == lockable_vector.current());
-            CHECK(lockable_vector.current().size() == 4);
-            lockable_vector.remove_value(1);
+            CHECK(lockable_vector.current().size() == 4U);
+            lockable_vector.erase_values(1U);
             CHECK(lockable_vector.deferred_current() == lockable_vector.current());
-            CHECK(lockable_vector.current().size() == 4);
+            CHECK(lockable_vector.current().size() == 4U);
         }
 
         SECTION("Mix Add and Remove (KISS version)")
         {
-            lockable_vector.remove_value(1);
-            lockable_vector.push_back(5);
-            lockable_vector.emplace_back(6);
+            lockable_vector.erase_values(1U);
+            lockable_vector.push_back(5U);
+            lockable_vector.emplace_back(6U);
 
             CHECK(lockable_vector.are_pending_removes());
-            CHECK(lockable_vector.pending_remove() == 1);
+            CHECK(lockable_vector.pending_remove() == 1U);
             CHECK(lockable_vector.are_pending_adds());
-            CHECK(lockable_vector.pending_add() == 2);
+            CHECK(lockable_vector.pending_add() == 2U);
 
-            CHECK(lockable_vector.current().size() == 6);
+            CHECK(lockable_vector.current().size() == 6U);
             CHECK_FALSE(lockable_vector.are_pending_removes());
-            CHECK(lockable_vector.pending_remove() == 0);
+            CHECK(lockable_vector.pending_remove() == 0U);
             CHECK_FALSE(lockable_vector.are_pending_adds());
-            CHECK(lockable_vector.pending_add() == 0);
+            CHECK(lockable_vector.pending_add() == 0U);
         }
 
         SECTION("Mix Add and Remove (more complicated version)")
         {
-            lockable_vector.remove_value(1);
-            lockable_vector.push_back(5);
-            lockable_vector.emplace_back(6);
+            lockable_vector.erase_values(1U);
+            lockable_vector.push_back(5U);
+            lockable_vector.emplace_back(6U);
 
             SECTION("LockableVector::next")
             {
@@ -104,8 +103,8 @@ TEST_CASE("LockableVector", "[LockableVector]")
                 auto sz(next_one.size());
                 auto rsv(next_one.capacity());
 
-                lockable_vector.push_back(9);
-                lockable_vector.remove_value(3);
+                lockable_vector.push_back(9U);
+                lockable_vector.erase_values(3U);
 
                 CHECK(next_one.size() == sz);
                 CHECK(next_one.capacity() == rsv);
@@ -114,15 +113,15 @@ TEST_CASE("LockableVector", "[LockableVector]")
             SECTION("More mixing")
             {
                 CHECK(lockable_vector.are_pending_removes());
-                CHECK(lockable_vector.pending_remove() == 1);
+                CHECK(lockable_vector.pending_remove() == 1U);
                 CHECK(lockable_vector.are_pending_adds());
-                CHECK(lockable_vector.pending_add() == 2);
+                CHECK(lockable_vector.pending_add() == 2U);
 
-                CHECK(lockable_vector.current().size() == 6);
+                CHECK(lockable_vector.current().size() == 6U);
                 CHECK_FALSE(lockable_vector.are_pending_removes());
-                CHECK(lockable_vector.pending_remove() == 0);
+                CHECK(lockable_vector.pending_remove() == 0U);
                 CHECK_FALSE(lockable_vector.are_pending_adds());
-                CHECK(lockable_vector.pending_add() == 0);
+                CHECK(lockable_vector.pending_add() == 0U);
             }
         }
     }

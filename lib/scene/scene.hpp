@@ -26,12 +26,9 @@ namespace lib
 		{
 		public:
 			Scene(str name);
-			virtual ~Scene();
+			~Scene() override;
 
-			void onCreated() override;
 			virtual void onFinished() {}
-
-			virtual void updateScene() {}
 
 			Scene *const parentScene() noexcept override { return this; }
             const Scene *const parentScene() const noexcept override { return this; }
@@ -40,12 +37,6 @@ namespace lib
 			inline const SceneManager &sceneManager() const noexcept { return *m_sceneManager; }
 
             void loadResources(IResourceLoader &&resourceloader);
-		protected:
-
-            size_type state();
-			void setState(const size_type);
-            sptr<StatesController<size_type>> m_sceneStates;
-
 		private:
 
             SceneManager *m_sceneManager{ nullptr };

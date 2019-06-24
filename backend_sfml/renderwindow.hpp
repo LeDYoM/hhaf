@@ -39,10 +39,7 @@ namespace lib::backend::sfmlb
         bool createWindow(const WindowCreationParams &wcp) override;
         sf::Vector2u getSize() const;
 
-        bool activate(bool active = true) override { return sf::Window::setActive(active); }
-
-        // Not necessary, but the headers of sf::RenderTarget in Linux, contain this definition
-        bool setActive(bool active = true) { return IWindow::activate(active); }
+        bool setActive(bool active = true) override;
 
         IRenderTarget *renderTarget() override;
 

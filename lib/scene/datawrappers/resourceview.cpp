@@ -1,7 +1,7 @@
 #include "resourceview.hpp"
 
 #include <lib/scene/scenenode.hpp>
-#include <logger/include/log.hpp>
+#include <lib/include/liblog.hpp>
 #include <lib/scene/scenemanager.hpp>
 
 namespace lib::scene

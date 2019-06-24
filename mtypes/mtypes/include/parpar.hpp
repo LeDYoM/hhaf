@@ -311,7 +311,7 @@ namespace lib::parpar
     ParametersParser create(int argc, char *argv[])
     {
         vector_t<str> params(argc);
-        for (int i=0;i<argc;++i)
+        for (int i = 0; i < argc; ++i)
         {
             params.emplace_back(argv[i]);
         }

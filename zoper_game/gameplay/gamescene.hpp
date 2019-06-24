@@ -35,7 +35,14 @@ namespace zoper
 
     using namespace lib;
 
-    class GameScene final : public scene::Scene, public StatesControllerActuator<size_type>
+        enum class GameSceneStates : u8
+        {
+            Playing = 0,
+            GameOver,
+            Pause
+        };
+
+    class GameScene final : public scene::Scene, public StatesControllerActuator<GameSceneStates>
     {
     public:
 
@@ -44,16 +51,15 @@ namespace zoper
         // Inherited via Scene
         void onCreated() override;
         void onFinished() override;
-        void updateScene() override;
 
-        void onEnterState(const size_type&) override;
-        void onExitState(const size_type&) override;
+        void onEnterState(const GameSceneStates&) override;
+        void onExitState(const GameSceneStates&) override;
 
         vector2df board2Scene(const lib::vector2dst &bPosition) const;
 
     private:
         struct GameScenePrivate;
-        GameScenePrivate *private_;
+        GameScenePrivate* private_{nullptr};
         using BaseClass = scene::Scene;
         void setLevel(const size_type nv);
         void generateNextToken();
@@ -63,13 +69,7 @@ namespace zoper
         void for_each_token_in_line(const vector2dst &startPosition, const Direction &direction,
             function<bool(const vector2dst &, const Direction &)> updatePredicate);
 
-        enum : size_type
-        {
-            Initialize = 0,
-            Playing = 1,
-            GameOver = 2,
-            Pause = 3
-        } _sceneStates{ Initialize };
+        sptr<StatesController<GameSceneStates>> m_sceneStates;
 
         void importGameSharedData();
         void exportGameSharedData();

@@ -2,7 +2,7 @@
 
 #include <mtypes/include/function.hpp>
 
-#include <logger/include/log.hpp>
+#include <lib/include/liblog.hpp>
 #include <lib/scene/scene.hpp>
 
 namespace lib::scene
@@ -45,7 +45,7 @@ namespace lib::scene
 
             if (someDeleted) 
             {
-                m_activeTimers.remove_values(nullptr);
+                m_activeTimers.erase_values(nullptr);
             }
         }
     }

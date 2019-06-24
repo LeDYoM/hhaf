@@ -1,6 +1,6 @@
 #include "boardscenenode.hpp"
 
-#include <logger/include/log.hpp>
+#include <lib/include/liblog.hpp>
 
 #include <lib/scene/components/renderizables.hpp>
 

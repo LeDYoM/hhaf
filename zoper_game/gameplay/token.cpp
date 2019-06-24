@@ -4,7 +4,7 @@
 #include <lib/scene/components/animationcomponent.hpp>
 #include <lib/scene/components/renderizables.hpp>
 
-#include <logger/include/log.hpp>
+#include <lib/include/liblog.hpp>
 
 #include "gamescene.hpp"
 #include "levelproperties.hpp"
@@ -18,11 +18,11 @@ namespace zoper
 	u32 Token::m_tileCounter{ 0 };
 
 	Token::Token(SceneNode* const parent, str name, BoardTileData data, const Rectf32 &box) :
-		GameBaseTile{ parent, name + str(m_tileCounter) + str(m_tileCounter), data }
+		GameBaseTile{ parent, name + str::to_str(m_tileCounter) + str::to_str(m_tileCounter), data }
 	{
 		++m_tileCounter;
         auto renderizables = ensureComponentOfType<Renderizables>();
-		m_node = renderizables->createNode("Node" + str(m_tileCounter));
+		m_node = renderizables->createNode("Node" + str::to_str(m_tileCounter));
         m_node->figType.set(FigType_t::Shape);
         m_node->pointCount.set(30U);
 		m_node->box = box;

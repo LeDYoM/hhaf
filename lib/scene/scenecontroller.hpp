@@ -21,6 +21,7 @@ namespace lib::scene
 	private:
 		using BaseClass = StatesController<sptr<Scene>>;
 	public:
+		~SceneController() override = default;
 
 		void setSceneManager(SceneManager *scene_manager);
 	

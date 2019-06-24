@@ -1,7 +1,6 @@
 #include "levelproperties.hpp"
 
-#include <lib/core/host.hpp>
-#include <logger/include/log.hpp>
+#include <lib/include/liblog.hpp>
 
 namespace zoper
 {
@@ -16,7 +15,8 @@ namespace zoper
         {
             m_levelTimer = attachedNode()->dataWrapper<scene::Timer>();
         }
-        assert_debug(m_sceneTimerComponent != nullptr, "Passed nullptr sceneTimerComponent");
+        assert_debug(sceneTimerComponent != nullptr, "m_sceneNodeComponent already contains a value");
+        assert_debug(m_sceneTimerComponent == nullptr, "Passed nullptr sceneTimerComponent");
 
         m_gameMode = gameMode;
         m_sceneTimerComponent.swap(sceneTimerComponent);

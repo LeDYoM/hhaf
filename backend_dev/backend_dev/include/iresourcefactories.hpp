@@ -16,4 +16,5 @@ namespace lib::backend
     using ITTFontFactory = IResourceFactory<ITTFont>;
     using IShaderFactory = IResourceFactory<IShader>;
 }
+
 #endif

@@ -3,7 +3,7 @@
 
 #include <lib/scene/renderizables/renderizable.hpp>
 
-#include <logger/include/log.hpp>
+#include <lib/include/liblog.hpp>
 
 #include "scenemanager.hpp"
 #include "scenenodeblob.hpp"
@@ -29,19 +29,19 @@ namespace lib::scene
             // Update node
             update();
 
-            if (transformationNeedsUpdate()) {
+            if (transformationNeedsUpdate())
+            {
                 parentTransformationChanged = true;
             }
 
-			if (parentTransformationChanged) {
+			if (parentTransformationChanged)
+            {
 				updateGlobalTransformation(m_parent ? m_parent->globalTransform() : Transform{});
 			}
 
-            for (auto&& renderizable : m_renderNodes) {
-                renderizable->render();
-            }
-
-            for (auto&& group : m_groups) {
+            postUpdateComponents();
+            for (auto&& group : m_groups)
+            {
                 group->render(parentTransformationChanged);
             }
         }
@@ -71,16 +71,6 @@ namespace lib::scene
         return true;
     }
 
-    void SceneNode::for_each_node(function<void(const sptr<Renderizable>&)> action) const
-    {
-        std::for_each(m_renderNodes.cbegin(), m_renderNodes.cend(), action);
-    }
-
-    void SceneNode::addRenderizable(sptr<Renderizable> newElement)
-    {
-        m_renderNodes.push_back(std::move(newElement));
-    }
-
     void SceneNode::addSceneNode(sptr<SceneNode> node)
     {
         m_groups.push_back(node);
@@ -94,35 +84,17 @@ namespace lib::scene
         assert_release(this != element.get(), "Cannot delete myself from myself");
         assert_debug(this == element->parent()," You must call removeSceneNode from the parent node");
 
-        m_groups.remove_value(element);
-    }
-
-    void SceneNode::removeRenderizable(sptr<Renderizable> element)
-    {
-        assert_debug(element.get() != nullptr, "Received empty renderizable node to be deleted");
-
-        m_renderNodes.remove_value(element);
+        m_groups.erase_values(element);
     }
 
     void SceneNode::clearAll()
     {
-        clearNodes();
+        clearSceneNodes();
         clearComponents();
-    }
-
-    void SceneNode::clearRenderizables()
-    {
-        m_renderNodes.clear();
     }
 
     void SceneNode::clearSceneNodes()
     {
         m_groups.clear();
-    }
-
-    void SceneNode::clearNodes()
-    {
-        clearRenderizables();
-        clearSceneNodes();
     }
 }

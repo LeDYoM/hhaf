@@ -35,6 +35,7 @@ namespace lib::core
     class SimulationSystem;
     class TimeSystem;
     class Window;
+    class RenderSystem;
 }
 
 namespace lib::core
@@ -67,6 +68,8 @@ namespace lib::core
         TimeSystem &timeSystem() noexcept;
         const backend::BackendFactory &backendFactory() const noexcept;
         backend::BackendFactory &backendFactory() noexcept;
+        const RenderSystem &renderSystem() const noexcept;
+        RenderSystem &renderSystem() noexcept;
 
     private:
         core::Host* host_;
@@ -80,6 +83,7 @@ namespace lib::core
         uptr<FileSystem> file_system_;
         uptr<SimulationSystem> simulation_system_;
         uptr<TimeSystem> time_system_;
+        uptr<RenderSystem> render_system_;
     };
 }
 

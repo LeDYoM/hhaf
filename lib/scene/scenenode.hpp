@@ -15,9 +15,9 @@
 
 namespace lib::scene
 {
+    class Renderizable;
     class IComponent;
     class Scene;
-    class Renderizable;
 
     /** \brief Main class representing all SceneNodes from a Scene.
     * This class is that serves as main entry point in the hierarchy of the scene
@@ -44,19 +44,6 @@ namespace lib::scene
         */
         virtual void configure() {}
 
-        /**
-        * Method to add a user defined renderizable
-        * @params args Arguments to be passed to the constructor
-        * @returns The created renderizable
-        */
-        template <typename T, typename... Args>
-        sptr<T> createRenderizable2(Args&&... args)
-        {
-            auto result(msptr<T>(this, std::forward<Args>(args)...));
-            addRenderizable(result);
-            return result;
-        }
-
         template <typename T = SceneNode, typename... Args>
         sptr<T> createSceneNode(Args&&... args)
         {
@@ -72,11 +59,8 @@ namespace lib::scene
 
         bool moveLastBeforeNode(const sptr<SceneNode> &beforeNode);
         void removeSceneNode(sptr<SceneNode> element);
-        void removeRenderizable(sptr<Renderizable> element);
         void clearAll();
-        void clearRenderizables();
         void clearSceneNodes();
-        void clearNodes();
 
         void render(bool parentTransformationChanged);
         virtual void update() {}
@@ -99,33 +83,13 @@ namespace lib::scene
         template <typename T>
         constexpr const T *const snCast() const { return dynamic_cast<const T *const>(this); }
 
-        template <typename T>
-        constexpr void for_each_node_as(function<void(const sptr<T> &)> action)
-        {
-            for_each_node([&action](const sptr<Renderizable>&node) {
-                if (auto tnode = std::dynamic_pointer_cast<T>(node)) {
-                    action(tnode);
-                }
-            });
-        }
-
-        void for_each_node(function<void(const sptr<Renderizable> &)> action) const;
-
         BasicProperty<bool> visible;
 
-        constexpr const auto &renderNodes() const noexcept { return m_renderNodes; }
-        constexpr auto &renderNodes() noexcept { return m_renderNodes; }
-        constexpr auto renderNodesSize() const noexcept { return renderNodes().size(); }
         constexpr const auto &sceneNodes() const noexcept { return m_groups; }
         constexpr auto &sceneNodes() noexcept { return m_groups; }
         constexpr auto sceneNodesSize() const noexcept { return sceneNodes().size(); }
 
-        // TODO: Temporary
-        vector<sptr<Renderizable>> m_renderNodes;
-
     protected:
-
-        void addRenderizable(sptr<Renderizable> newElement);
         void addSceneNode(sptr<SceneNode> node);
 
     private:

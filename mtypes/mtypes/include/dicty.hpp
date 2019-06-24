@@ -202,7 +202,7 @@ namespace lib
 		/// if the value is valid.
 		Value operator[](const size_t index) const
 		{
-			return (*this)[str(arraySeparator) + str(index)];
+			return (*this)[str(arraySeparator) + str::to_str(index)];
 		}
 
 		bool set(std::initializer_list<pair<str, str>> iListValues, bool overwrite = true)

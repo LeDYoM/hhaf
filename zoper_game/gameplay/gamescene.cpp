@@ -15,7 +15,7 @@
 #include <mtypes/include/properties.hpp>
 
 #include <lib/board/boardmodel.hpp>
-#include <logger/include/log.hpp>
+#include <lib/include/liblog.hpp>
 #include <lib/scene/renderizables/renderizable.hpp>
 #include <lib/scene/scenemanager.hpp>
 #include <lib/core/host.hpp>
@@ -65,28 +65,32 @@ namespace zoper
         inputComponent->KeyPressed.connect([this](const lib::input::Key&key) {
             log_debug_info("Key pressed in GameScene");
             const auto &keyMapping = sceneManager().systemProvider().app<ZoperProgramController>().keyMapping;
-            switch (state())
+            switch (m_sceneStates->currentState())
             {
-            case Playing:
+            case GameSceneStates::Playing:
             {
                 auto dir(keyMapping->getDirectionFromKey(key));
-                if (dir.isValid()) {
+                if (dir.isValid())
+                {
                     m_player->movePlayer(dir, m_boardGroup->p_boardModel);
                 }
-                else if (keyMapping->isLaunchKey(key)) {
+                else if (keyMapping->isLaunchKey(key))
+                {
                     launchPlayer();
                 }
-                else if (keyMapping->isPauseKey(key)) {
-					setState(Pause);
+                else if (keyMapping->isPauseKey(key))
+                {
+                    m_sceneStates->setState(GameSceneStates::Pause);
 				}
             }
             break;
-            case GameOver:
+            case GameSceneStates::GameOver:
                 sceneManager().sceneController()->terminateScene();
                 break;
-            case Pause:
-                if (keyMapping->isPauseKey(key)) {
-					setState(Playing);
+            case GameSceneStates::Pause:
+                if (keyMapping->isPauseKey(key))
+                {
+					m_sceneStates->setState(GameSceneStates::Playing);
 				}
                 break;
             }
@@ -121,7 +125,9 @@ namespace zoper
 
         // Set state controll.
         {
-            StatesControllerActuatorRegister<size_type> gameSceneActuatorRegister;
+            m_sceneStates = ensureComponentOfType<std::remove_reference_t<decltype(*m_sceneStates)>>();
+
+            StatesControllerActuatorRegister<GameSceneStates> gameSceneActuatorRegister;
             gameSceneActuatorRegister.registerStatesControllerActuator(*m_sceneStates, *this);
         }
 
@@ -135,7 +141,7 @@ namespace zoper
         // Prepare the pause text.
         pause_node_ = createSceneNode<PauseSceneNode>("PauseNode");
 
-        setState(Playing);
+        m_sceneStates->start(GameSceneStates::Playing);
     }
 
     void GameScene::onFinished()
@@ -148,33 +154,30 @@ namespace zoper
         BaseClass::onFinished();
     }
 
-    void GameScene::updateScene()
-    {
-    }
-
-	void GameScene::onEnterState(const size_type &state)
+	void GameScene::onEnterState(const GameSceneStates&state)
 	{
-		switch (state) {
-		case Pause:
+		switch (state)
+        {
+		case GameSceneStates::Pause:
 		{
             m_sceneTimerComponent->pause();
             pause_node_->enterPause();
  		}
 		break;
-        case GameOver:
+        case GameSceneStates::GameOver:
 //            m_data->m_gameOverrg->visible = true;
             break;
 		default:
 			break;
 		}
-        log_debug_info("Entered state: ", state);
+        log_debug_info("Entered state: ", static_cast<int>(state));
     }
 
-    void GameScene::onExitState(const size_type &state)
+    void GameScene::onExitState(const GameSceneStates&state)
     {
 		switch (state) 
         {
-            case Pause:
+            case GameSceneStates::Pause:
             {
                 m_sceneTimerComponent->resume();
                 pause_node_->exitPause();
@@ -183,7 +186,7 @@ namespace zoper
             default:
                 break;
 		}
-		log_debug_info("Exited state: ", state);
+		log_debug_info("Exited state: ", static_cast<int>(state));
     }
 
     void GameScene::setLevel(const size_type)
@@ -222,10 +225,11 @@ namespace zoper
                 const auto dest( direction.negate().applyToVector(loopPosition) );
                 m_boardGroup->p_boardModel->moveTile(loopPosition, dest);
 
-                if (TokenZones::pointInCenter(dest)) {
+                if (TokenZones::pointInCenter(dest))
+                {
                     log_debug_info("Found point in center: ", dest);
-                    // Collided with the center. Game over
-                    setState(GameOver);
+                    // Collided with the center. Game over.
+                    m_sceneStates->setState(GameSceneStates::GameOver);
                 }
             }
             return true;
@@ -400,7 +404,7 @@ namespace zoper
                 str chTemp;
                 auto lp_tile(m_boardGroup->p_boardModel->getTile({ x, y }));
                 if (lp_tile) {
-                    chTemp = lp_tile->get();
+                    chTemp = str::to_str(lp_tile->get());
                 } else {
                     chTemp = "*";
                     if (TokenZones::pointInCenter({ x, y })) {

@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_MTYPES_LOCKABLE_VECTOR_CONTAINER_INCLUDE_HPP
-#define LIB_MTYPES_LOCKABLE_VECTOR_CONTAINER_INCLUDE_HPP
+#ifndef MTYPES_LOCKABLE_VECTOR_CONTAINER_INCLUDE_HPP
+#define MTYPES_LOCKABLE_VECTOR_CONTAINER_INCLUDE_HPP
 
 #include "vector.hpp"
 #include "function.hpp"
@@ -10,8 +10,7 @@ namespace lib
 {
     /**
     * This class encapsulates the functionality of a vector with deferred operations.
-
-    *    This class encapsulates 3 vectors<T>, providing a wrapper
+    * This class encapsulates 3 vectors<T>, providing a wrapper
     * to add and remove elements without modifying the main vector.
     * To access to the modifications, the user must call one of the available
     * methods to do that. The user may also access the non updated data.
@@ -54,7 +53,7 @@ namespace lib
         * Remove an element. Overload for const references.
         * @param element The element to remove.
         */
-        constexpr void remove_value(const T &element)
+        constexpr void erase_values(const T &element)
         {
             remove_cache_.push_back(element);
         }
@@ -63,7 +62,7 @@ namespace lib
         * Remove an element. Overload for rvalues
         * @param element The element to remove.
         */
-        constexpr void remove_value(T &&element)
+        constexpr void erase_values(T &&element)
         {
             remove_cache_.push_back(std::move(element));
         }
@@ -168,7 +167,7 @@ namespace lib
         {
             for (const auto& element : remove_cache_)
             {
-                c.remove_value(element);
+                c.erase_values(element);
             }
         }
 

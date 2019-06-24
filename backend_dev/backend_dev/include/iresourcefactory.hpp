@@ -9,12 +9,13 @@
 namespace lib::backend
 {
     template <typename T>
-	class IResourceFactory
-	{
-	public:
-		virtual T* loadFromFile(const str &) = 0;
-		virtual T* loadFromRawMemory(RawMemory *) { return nullptr; }
-		virtual ~IResourceFactory() {}
-	};
+    class IResourceFactory
+    {
+    public:
+        virtual T* loadFromFile(const str &) = 0;
+        virtual T* loadFromRawMemory(RawMemory *) { return nullptr; }
+        virtual ~IResourceFactory() {}
+    };
 }
+
 #endif

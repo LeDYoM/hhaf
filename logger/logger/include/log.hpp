@@ -3,19 +3,36 @@
 #ifndef LIB_MTYPES_LOG_INCLUDE_HPP
 #define LIB_MTYPES_LOG_INCLUDE_HPP
 
-#include <mtypes/include/str.hpp>
-#include <mtypes/include/function.hpp>
 #include <iostream>
 
-namespace lib::log
+/**
+ * @brief Component to facilitate the logging
+ * This components provide some easy to use functions and classes
+ * to perform a configurable and understandable logging.
+ */
+namespace logger
 {
     inline void init_log() {}
     inline void finish_log() {}
 
-    enum severity_type { info, error };
-    enum level_type { debug, release };
+    enum class level_type { debug, release };
 
-    constexpr level_type compiled_log_level_type = level_type::debug;
+    /**
+     * Enumerator containing the severity type of the message.
+     * When you use one of the values to ooutput a message, it
+     * will be written if and only if the current severity_type
+     * is bigger or equal to the passed one.
+     */
+    enum class severity_type { all, info, error, none };
+
+    constexpr level_type compiled_log_level_type =
+#ifndef NDEBUG
+        level_type::debug;
+#else
+        level_type::release;
+#endif
+
+    constexpr severity_type compiled_log_severity_type = severity_type::all;
 
     template <level_type level>
     constexpr bool compile_logs = compiled_log_level_type <= level;
@@ -27,72 +44,56 @@ namespace lib::log
         {
             switch (severity)
             {
-            default:
+            case severity_type::all:
+                return "<ALL> :";
+                break;
             case severity_type::info:
                 return "<INFO> :";
                 break;
             case severity_type::error:
                 return "<ERROR> :";
                 break;
+            default:
+                // That should not happen.
+                return "<> :";
             }
         }
 
-        inline void commitlog(str& log_stream) 
+        inline void commitlog(const char* const log_stream) 
         {
-            log_stream << "\n";
-            std::cout << log_stream.c_str();
+            std::cout << log_stream << std::endl;
             std::cout.flush();
+        }
+
+        template<typename StreamType, typename ...Args>
+        void to_log_stream(StreamType& sout, Args&&... args) 
+        {
+            (sout << ... << args);
         }
     }
     
-    template<level_type level, severity_type severity, typename...Args>
+    template<typename StreamType, level_type level, severity_type severity, typename...Args>
     constexpr void log(Args&&...args) noexcept
     {
-        if constexpr (compile_logs<level>)
+        if constexpr (compile_logs<level> && severity >= compiled_log_severity_type)
         {
-            str log_stream(detail::severity_txt<severity>());
-            log_stream << make_str(std::forward<Args>(args)...);
-            detail::commitlog(log_stream);
+            StreamType log_stream(detail::severity_txt<severity>());
+            detail::to_log_stream(log_stream, std::forward<Args>(args)...);
+            detail::commitlog(log_stream.c_str());
         }
     }
+
+    template<typename StreamType, severity_type severity, typename...Args>
+    constexpr void log_debug(Args&&...args) noexcept
+    {
+        log<StreamType,level_type::debug, severity>(std::forward<Args>(args)...);
+    }
+
+    template<typename StreamType, severity_type severity, typename...Args>
+    constexpr void log_release(Args&&...args) noexcept
+    {
+        log<StreamType,level_type::release, severity>(std::forward<Args>(args)...);
+    }
 }
-
-namespace lib
-{
-	template<typename ...Args>
-	constexpr void log_debug_info(Args&&... args) noexcept 
-	{
-		log::log<log::level_type::debug, log::severity_type::info>(std::forward<Args>(args)...);
-	}
-
-	template<typename ...Args>
-	constexpr void log_debug_error(Args&&... args) noexcept 
-	{
-		log::log<log::level_type::debug, log::severity_type::error>(std::forward<Args>(args)...);
-	}
-
-	template<typename ...Args>
-	constexpr void log_release_info(Args&&... args) noexcept 
-	{
-		log::log<log::level_type::release, log::severity_type::info>(std::forward<Args>(args)...);
-	}
-
-	template<typename ...Args>
-	constexpr void log_release_error(Args&&... args) noexcept {
-        log::log<log::level_type::release, log::severity_type::error>(std::forward<Args>(args)...);
-	}
-
-	template<typename ...Args>
-	constexpr void assert_debug(const bool condition, Args&&... args) noexcept {
-		if (!condition) { log_debug_error(std::forward<Args>(args)...); }
-	}
-
-	template<typename ...Args>
-	constexpr void assert_release(const bool condition, Args&&... args) noexcept {
-		if (!condition) { log_release_error(std::forward<Args>(args)...); }
-	}
-}
-
-#define CLIENT_EXECUTE_IN_DEBUG(x)	x
 
 #endif

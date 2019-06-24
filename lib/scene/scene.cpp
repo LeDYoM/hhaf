@@ -6,7 +6,7 @@
 #include <lib/system/resourcemanager.hpp>
 #include <lib/scene/scenemanager.hpp>
 
-#include <logger/include/log.hpp>
+#include <lib/include/liblog.hpp>
 #include <lib/include/resources/iresourceloader.hpp>
 #include <lib/include/resources/iresourcehandler.hpp>
 
@@ -17,22 +17,6 @@ namespace lib::scene
 	Scene::Scene(str name) : SceneNode{ nullptr,std::move(name) } {}
 
 	Scene::~Scene() = default;
-
-	void Scene::onCreated()
-	{
-        m_sceneStates = ensureComponentOfType<std::remove_reference_t<decltype(*m_sceneStates)>>();
-		m_sceneStates->start(0);
-    }
-
-    size_type Scene::state()
-    {
-        return m_sceneStates->currentState();
-    }
-
-    void Scene::setState(const size_type ns)
-    {
-        m_sceneStates->setState(ns);
-    }
 
     void Scene::loadResources(IResourceLoader&& resourceLoader)
     {

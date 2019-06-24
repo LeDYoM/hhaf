@@ -1,8 +1,9 @@
+#pragma once
+
 #ifndef LIB_DEBUGCOMPONENT_INCLUDE_HPP
 #define LIB_DEBUGCOMPONENT_INCLUDE_HPP
 
 #include <lib/scene/components/inputcomponent.hpp>
-#include <logger/include/log.hpp>
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>

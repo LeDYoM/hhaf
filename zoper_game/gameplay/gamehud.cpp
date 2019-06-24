@@ -8,7 +8,7 @@
 
 #include <lib/scene/components/alignedtextcomponent.hpp>
 
-#include <logger/include/log.hpp>
+#include <lib/include/liblog.hpp>
 #include <lib/scene/datawrappers/resourceview.hpp>
 #include <lib/include/resources/iresourceretriever.hpp>
 #include <lib/resources/ttfont.hpp>
@@ -62,13 +62,13 @@ namespace zoper
     void GameHudSceneNode::setConsumedTokens(const size_type consumedTokens)
     {
         log_debug_info("B");
-        m_goalQuad->text(vector2dst{ 1,0 })->text.set(Text_t(consumedTokens));
+        m_goalQuad->text(vector2dst{ 1,0 })->text.set(Text_t(str::to_str(consumedTokens)));
     }
 
     void GameHudSceneNode::setEllapsedTimeInSeconds(const u64 seconds)
     {
         m_goalQuad->text(vector2dst{ 1,0 })->text.set(
-            Text_t(static_cast<u16>(seconds))
+            Text_t(str::to_str(static_cast<u16>(seconds)))
         );
     }
 
@@ -76,7 +76,7 @@ namespace zoper
 
     void GameHudSceneNode::setScore(const size_type score)
     {
-        str result(score);
+        str result(str::to_str(score));
         while (result.size() < scoreSize) result = "0" + result;
         m_scoreQuad->text(vector2dst{ 1,1 })->text.set(Text_t(result));
     }

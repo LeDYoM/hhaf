@@ -1,7 +1,7 @@
 #include "animationcomponent.hpp"
 
 #include <lib/scene/ianimation.hpp>
-#include <logger/include/log.hpp>
+#include <lib/include/liblog.hpp>
 
 #include <mtypes/include/lockablevector.hpp>
 
@@ -36,7 +36,7 @@ namespace lib
                     if (!animation->animate()) 
                     {
                         animation->executeEndAction();
-                        m_private->m_animations.remove_value(animation);
+                        m_private->m_animations.erase_values(animation);
                     }
                 }
 

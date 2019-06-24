@@ -75,6 +75,11 @@ namespace lib::backend::sfmlb
         return this;
     }
 
+    bool RenderWindow::setActive(bool active)
+    {
+        return sf::Window::setActive(active); 
+    }
+
 	bool RenderWindow::processEvents()
 	{
 		sf::Event event;
