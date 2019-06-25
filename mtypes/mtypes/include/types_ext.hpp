@@ -10,8 +10,8 @@
 
 namespace lib
 {
-	using write_stream = str;
-	using read_stream = std::istream;
+    using write_stream = str;
+    using read_stream = std::istream;
 }
 
 #endif

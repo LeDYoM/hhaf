@@ -2,7 +2,7 @@
 #include "menupage.hpp"
 #include "menupagetype.hpp"
 
-#include <lib/include/core/log.hpp>
+#include <lib/include/liblog.hpp>
 #include <lib/scene/scene.hpp>
 #include <lib/scene/ianimation.hpp>
 

@@ -1,14 +1,19 @@
 #include "host.hpp"
-#include "window.hpp"
-#include "resourcemanager.hpp"
 
-#include <lib/include/backend/iwindow.hpp>
-#include <lib/include/core/log.hpp>
-#include <lib/core/inputsystem.hpp>
-#include <lib/core/backendfactory.hpp>
+#include <backend_dev/include/iwindow.hpp>
 #include <lib/core/appcontext.hpp>
+#include <lib/system/backendfactory.hpp>
 #include <lib/core/hostcontext.hpp>
+#include <lib/include/liblog.hpp>
 #include <lib/scene/scenemanager.hpp>
+#include <lib/system/filesystem/filesystem.hpp>
+#include <lib/system/inputsystem.hpp>
+#include <lib/system/randomsystem.hpp>
+#include <lib/system/resourcemanager.hpp>
+#include <lib/system/simulationsystem.hpp>
+#include <lib/system/timesystem.hpp>
+#include <lib/system/window.hpp>
+#include <lib/system/rendersystem.hpp>
 
 #include <mtypes/include/parpar.hpp>
 #include <mtypes/include/dicty.hpp>
@@ -22,7 +27,7 @@ namespace lib::core
 {
     struct ApplicationGroup
     {
-        uptr<IApp> m_iapp;
+        AppUniquePtr m_iapp;
         uptr<HostContext> m_hostContext;
         uptr<AppContext> m_appContext;
     };
@@ -54,7 +59,7 @@ namespace lib::core
         parpar::ParametersParser m_params;
 #endif
 
-        dicty::BasicDictionary<str> m_configuration;
+        Dictionary<str> m_configuration;
 
         ApplicationGroup m_appGroup;
     };
@@ -72,9 +77,9 @@ namespace lib::core
 
     bool Host::createHost(int argc, char * argv[])
     {
-        if (!m_instance) {
+        if (!m_instance) 
+        {
             m_instance = new Host(argc, argv);
-            backend::BackendFactory::initilialize("bsfml");
             return true;
         }
         return false;
@@ -82,8 +87,8 @@ namespace lib::core
 
     bool Host::destroyHost() noexcept
     {
-        if (m_instance) {
-            backend::BackendFactory::destroy();
+        if (m_instance) 
+        {
             delete m_instance;
             m_instance = nullptr;
             return true;
@@ -102,51 +107,9 @@ namespace lib::core
 #endif
     }
 
-    Host::~Host()
-    {
-    }
+    Host::~Host() = default;
 
-    const Window &Host::parentWindow() const noexcept
-    {
-         return *m_window; 
-    }
-
-    Window &Host::parentWindow() noexcept
-    {
-        return *m_window; 
-    }
-    
-    const ResourceManager &Host::resourceManager() const  noexcept 
-    {
-        return *m_resourceManager;
-    }
-    
-    ResourceManager &Host::resourceManager()  noexcept
-    {
-        return *m_resourceManager;
-    }
-    
-    const input::InputSystem &Host::inputSystem() const noexcept
-    {
-        return *m_inputSystem; 
-    }
-
-    input::InputSystem &Host::inputSystem() noexcept
-    { 
-        return *m_inputSystem;
-    }
-    
-    const scene::SceneManager &Host::sceneManager() const noexcept
-    {
-        return *m_sceneManager;
-    }
-    
-    scene::SceneManager &Host::sceneManager() noexcept
-    {
-        return *m_sceneManager;
-    }
-
-    bool Host::setApplication(uptr<IApp> iapp)
+    bool Host::setApplication(AppUniquePtr iapp)
     {
         if (!m_private->m_appGroup.m_iapp && iapp) 
         {
@@ -170,10 +133,7 @@ namespace lib::core
             log_debug_info("Starting initialization of new App...");
             m_state = AppState::Executing;
 
-            m_window = muptr<Window>(*this, m_private->m_appGroup.m_iapp->getAppDescriptor().wcp);
-            m_inputSystem = muptr<input::InputSystem>(*this);
-            m_sceneManager = muptr<scene::SceneManager>(*this, *m_window);
-            m_resourceManager = muptr<core::ResourceManager>(*this);
+            SystemProvider::init(*this, m_private->m_appGroup.m_iapp.get());
 
             m_private->m_appGroup.m_hostContext = muptr<HostContext>(this);
             m_private->m_appGroup.m_appContext = muptr<AppContext>(this);
@@ -186,24 +146,22 @@ namespace lib::core
         break;
         case AppState::Executing:
         {
-            if (loopStep()) {
+            if (loopStep()) 
+            {
                 m_state = AppState::ReadyToTerminate;
                 log_debug_info(m_private->m_appGroup.m_appContext->appId(), ": ", " is now ready to terminate");
             }
-            else if (m_state == AppState::ReadyToTerminate) {
+            else if (m_state == AppState::ReadyToTerminate) 
+            {
                 log_debug_info(m_private->m_appGroup.m_appContext->appId(), ": ", " requested to terminate");
             }
         }
         break;
         case AppState::ReadyToTerminate:
             log_debug_info(m_private->m_appGroup.m_appContext->appId(), ": started termination");
-            m_sceneManager->finish();
             m_state = AppState::Terminated;
 //				m_iapp->onFinish();
-            m_resourceManager = nullptr;
-            m_sceneManager = nullptr;
-            m_inputSystem = nullptr;
-            m_window = nullptr;
+            SystemProvider::terminate();
             return true;
             break;
         case AppState::Terminated:
@@ -217,8 +175,10 @@ namespace lib::core
 
     int Host::run()
     {
-        while (!exit) {
-            if (update()) {
+        while (!exit) 
+        {
+            if (update()) 
+            {
                 m_private->m_appGroup.m_hostContext.reset();
                 m_private->m_appGroup.m_appContext.reset();
                 m_private->m_appGroup.m_iapp.reset();
@@ -226,7 +186,8 @@ namespace lib::core
             }
         }
 
-        if (!m_private->m_appGroup.m_iapp) {
+        if (!m_private->m_appGroup.m_iapp) 
+        {
             log_release_info("App destroyed. Exiting normally");
         }
         return 0;
@@ -234,12 +195,12 @@ namespace lib::core
 
     bool Host::loopStep()
     {
-        const bool windowWants2Close{ m_window->preLoop() };
-        m_inputSystem->preUpdate();
-        m_sceneManager->update();
+        const bool windowWants2Close{ parentWindow().preLoop() };
+        simulationSystem().update();
+        inputSystem().update();
+        sceneManager().update();
 
-        m_window->postLoop();
-        m_inputSystem->postUpdate();
+        parentWindow().postLoop();
         return windowWants2Close;
     }
 

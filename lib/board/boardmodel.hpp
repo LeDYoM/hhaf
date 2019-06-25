@@ -33,7 +33,7 @@ namespace lib::board
     private:
         void _setTile(const vector2dst &position, SITilePointer newTile);
 
-        IBoardModelActuator* m_actuator;
+        IBoardModelActuator* m_actuator{nullptr};
         vector<vector<SITilePointer>> _tiles;
     };
 }

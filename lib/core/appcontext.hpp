@@ -3,7 +3,6 @@
 #ifndef LIB_APPCONTEXT_INCLUDE_HPP
 #define LIB_APPCONTEXT_INCLUDE_HPP
 
-#include <lib/include/lib.hpp>
 #include <lib/include/core/iappcontext.hpp>
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>

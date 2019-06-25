@@ -2,16 +2,18 @@
 #include "scenecontroller.hpp"
 #include "scene.hpp"
 
-#include <lib/core/host.hpp>
-#include <lib/core/resourcemanager.hpp>
-#include <lib/include/core/log.hpp>
+#include <lib/system/systemprovider.hpp>
+#include <lib/system/window.hpp>
+#include <lib/system/resourcemanager.hpp>
+#include <lib/system/rendertarget.hpp>
 
+#include <lib/include/liblog.hpp>
 #include <lib/include/resources/iresourceretriever.hpp>
 
 namespace lib::scene
 {
-	SceneManager::SceneManager(core::Host& host, core::Window &window) 
-        : AppService{ host }, m_parentWindow { window } 
+	SceneManager::SceneManager(core::SystemProvider &system_provider)
+        : HostedAppService{ system_provider }
     {
         scene_controller_ = m_componentContainer.ensureComponentOfType<SceneController>();
         scene_controller_->setSceneManager(this);
@@ -35,26 +37,26 @@ namespace lib::scene
 
 	Rectf32 SceneManager::viewPort() const noexcept
 	{
-		return m_parentWindow.renderTarget()->viewPort();
+		return systemProvider().parentWindow().renderTarget()->viewPort();
 	}
 
 	void SceneManager::setViewPort(const Rectf32& vp) noexcept
 	{
-		m_parentWindow.renderTarget()->setViewPort(vp);
+        systemProvider().parentWindow().renderTarget()->setViewPort(vp);
 	}
 
 	Rectf32 SceneManager::viewRect() const noexcept
 	{
-		return m_parentWindow.renderTarget()->viewRect();
+		return systemProvider().parentWindow().renderTarget()->viewRect();
 	}
 
 	void SceneManager::setViewRect(const Rectf32& vr) noexcept
 	{
-		m_parentWindow.renderTarget()->setViewRect(vr);
+        systemProvider().parentWindow().renderTarget()->setViewRect(vr);
 	}
 
     IResourceRetriever & SceneManager::resources()
     {
-        return host().resourceManager();
+        return systemProvider().resourceManager();
     }
 }

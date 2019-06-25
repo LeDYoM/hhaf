@@ -1,14 +1,23 @@
 project (loader)
 
-file (GLOB _SOURCES "*.cpp")
-file (GLOB _HEADERS "*.hpp")
- 
-file (GLOB _INCLUDES "include/*.hpp")
-
 set (CURRENT_TARGET loader) 
 
-add_library(${CURRENT_TARGET} SHARED ${_SOURCES} ${_HEADERS} ${_INCLUDES})
-target_include_directories(${CURRENT_TARGET} PUBLIC ${PROJECT_SOURCE_DIR})
+set(SOURCES 
+    "loadedinstance.cpp" 
+    "loader.cpp"
+    "include/loader.hpp" 
+    )
+
+
+add_library(${CURRENT_TARGET} SHARED ${SOURCES})
+
+target_include_directories(${CURRENT_TARGET}
+    PUBLIC 
+        $<INSTALL_INTERFACE:include>    
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/
+)
 
 target_link_libraries(${CURRENT_TARGET} ${CMAKE_DL_LIBS})
 
@@ -16,4 +25,3 @@ install (TARGETS ${CURRENT_TARGET}
 	LIBRARY DESTINATION .
 	RUNTIME DESTINATION .
 )
-

@@ -5,18 +5,39 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/rect.hpp>
+#include <lib/include/liblog.hpp>
+
+namespace lib::core
+{
+    class Host;
+    class RandomSystem;
+}
+
+namespace lib::input
+{
+    class InputSystem;
+}
 
 namespace lib::scene
 {
     class SceneNode;
+    class SceneManager;
 
     class SceneNodeBlob
     {
     public:
-        SceneNodeBlob(SceneNode& sibling_node)
-            : scene_node_{ sibling_node } {}
+        SceneNodeBlob(SceneNode& provider);
 
-        Rectf32 scenePerspective();
+        const SceneManager &sceneManager() const noexcept;
+        SceneManager &sceneManager() noexcept;
+
+        const input::InputSystem& inputSystem() const;
+        input::InputSystem& inputSystem();
+
+        const core::RandomSystem& randomSystem() const;
+        core::RandomSystem& randomSystem();
+
+        Rectf32 scenePerspective() const;
 
     private:
         SceneNode& scene_node_;

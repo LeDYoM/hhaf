@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_SCENE_TEXTQUAD_HPP__
-#define LIB_SCENE_TEXTQUAD_HPP__
+#ifndef LIB_SCENE_TEXTQUAD_INCLUDE_HPP
+#define LIB_SCENE_TEXTQUAD_INCLUDE_HPP
 
 #include <lib/scene/nodes/tablenode.hpp>
 #include <lib/scene/nodes/scenenodetext.hpp>
@@ -13,7 +13,7 @@ namespace lib::scene::nodes
     public:
         using BaseClass = TableNode<SceneNodeText>;
         TextQuad(SceneNode *parent, str name,
-                 sptr<Font> font, const Color &color, const vector2df &size);
+                 sptr<IFont> font, const Color &color, const vector2df &size);
         virtual ~TextQuad();
 
         inline sptr<SceneNodeText> text(vector2dst index) const noexcept

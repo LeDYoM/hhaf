@@ -6,7 +6,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
 
-#include <lib/include/backend/iresourcefactories.hpp>
+#include <backend_dev/include/iresourcefactories.hpp>
 #include "ttfont.hpp"
 
 namespace lib::backend::sfmlb
@@ -15,7 +15,8 @@ namespace lib::backend::sfmlb
 	{
 	public:
 		virtual ITTFont* loadFromFile(const str &file) override;
-		virtual ~TTFontFactory();
+		ITTFont *loadFromRawMemory(RawMemory *raw_memory) override;
+		~TTFontFactory() override;
 	private:
 		vector<uptr<TTFont>> m_fontCache;
 	};

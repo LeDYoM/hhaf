@@ -1,8 +1,9 @@
 #include <lib/include/main.hpp>
 #include <lib/core/memmanager.hpp>
 #include <lib/core/host.hpp>
-#include <lib/include/core/log.hpp>
+#include <lib/include/liblog.hpp>
 
+#include "apploader.hpp"
 #include "../zoper_game/app.hpp"
 
 namespace lib
@@ -13,12 +14,15 @@ namespace lib
 
 		try
 		{
-			log::init_log();
+			logger::init_log();
 
 			installMemManager();
 
 			core::Host::createHost(argc, argv);
-			core::Host::host().setApplication(uptr<IApp>(createApp()));
+//          core::AppLoader app_loader;
+//			core::Host::host().setApplication(app_loader.loadApp("zooper_game"));
+            core::AppUniquePtr app(createApp());
+            core::Host::host().setApplication(std::move(app));
             int run_result(result = core::Host::host().run());
 			core::Host::destroyHost();
             result = run_result;
@@ -32,7 +36,7 @@ namespace lib
 			log_release_info("Unexpected exception");
 		}
 		finishMemManager();
-		log::finish_log();
+		logger::finish_log();
 
 		return result;
 	}

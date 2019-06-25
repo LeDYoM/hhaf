@@ -17,16 +17,13 @@ namespace zoper
 {
     using namespace lib;
 
-    class GameSceneData;
-
     using LevelType = size_type;
 
 	class LevelProperties : public scene::IComponent
 	{
 	public:
         void setUp(const size_type currentLevel, 
-            const GameMode gameMode, sptr<GameSceneData> gameSceneData,
-            sptr<scene::TimerComponent> m_sceneTimerComponent);
+            const GameMode gameMode, sptr<scene::TimerComponent> m_sceneTimerComponent);
 
         inline size_t millisBetweenTokens() const { return m_millisBetweenTokens; }
         inline size_t baseScore() const { return m_baseScore; }
@@ -43,7 +40,7 @@ namespace zoper
         void updateLevelData();
         void setLevel(const LevelType currentLevel);
 
-        Timer m_levelTimer;
+        uptr<scene::Timer> m_levelTimer;
         scene::TimerConnectorSPtr m_updateLevelDataTimer;
         sptr<scene::TimerComponent> m_sceneTimerComponent;
 
@@ -54,7 +51,6 @@ namespace zoper
         size_t m_stayCounter{ 0U };
         size_t m_currentScore{ 0U };
         GameMode m_gameMode;
-        sptr<GameSceneData> m_gameSceneData;
         sptr<GameHudSceneNode> m_gameHud;
     };
 }

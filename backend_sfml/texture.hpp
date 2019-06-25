@@ -6,7 +6,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
 
-#include <lib/include/backend/itexture.hpp>
+#include <backend_dev/include/itexture.hpp>
 
 #include <SFML/Graphics/Texture.hpp>
 
@@ -15,14 +15,15 @@ namespace lib::backend::sfmlb
 	class Texture : public ITexture
 	{
 	public:
-		Texture(uptr<sf::Texture> texture);
-		virtual ~Texture();
+		Texture(const sf::Texture* const texture, const bool owned);
+		~Texture() override;
 
 		virtual vector2du32 size() const override;
 
 		const sf::Texture &backEndTexture() const { return *m_texturePrivate; }
 	private:
-		uptr<sf::Texture> m_texturePrivate;
+		const sf::Texture* const m_texturePrivate;
+		const bool owned_;
 	};
 }
 

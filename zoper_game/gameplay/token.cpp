@@ -1,10 +1,10 @@
 #include "token.hpp"
 
-#include <lib/scene/renderizables/nodeshape.hpp>
 #include <lib/scene/ianimation.hpp>
 #include <lib/scene/components/animationcomponent.hpp>
+#include <lib/scene/components/renderizables.hpp>
 
-#include <lib/include/core/log.hpp>
+#include <lib/include/liblog.hpp>
 
 #include "gamescene.hpp"
 #include "levelproperties.hpp"
@@ -18,10 +18,13 @@ namespace zoper
 	u32 Token::m_tileCounter{ 0 };
 
 	Token::Token(SceneNode* const parent, str name, BoardTileData data, const Rectf32 &box) :
-		GameBaseTile{ parent, name + str(m_tileCounter) + str(m_tileCounter), data }
+		GameBaseTile{ parent, name + str::to_str(m_tileCounter) + str::to_str(m_tileCounter), data }
 	{
 		++m_tileCounter;
-		m_node = createRenderizable<nodes::NodeShape>("Node", 30);
+        auto renderizables = ensureComponentOfType<Renderizables>();
+		m_node = renderizables->createNode("Node" + str::to_str(m_tileCounter));
+        m_node->figType.set(FigType_t::Shape);
+        m_node->pointCount.set(30U);
 		m_node->box = box;
 		m_node->color = getColorForToken();
 	}
@@ -54,14 +57,23 @@ namespace zoper
     void Token::tileMoved(const vector2dst & /*source*/, const vector2dst & dest)
     {
         auto animationComponent(ensureComponentOfType<anim::AnimationComponent>());
+        const auto time(TimePoint_as_miliseconds(
+                parentSceneAs<GameScene>()->
+                    ensureComponentOfType<LevelProperties>()->millisBetweenTokens() / 2
+            ));
+
+        const auto destination(parentSceneAs<GameScene>()->board2Scene(dest));
+        animationComponent->addPropertyAnimation(time, position, destination);
+/*
         animationComponent->addAnimation(muptr<anim::IPropertyAnimation<vector2df>>
         (
-            TimeFromMillis(
+            TimePoint_as_miliseconds(
                 parentSceneAs<GameScene>()->
                     ensureComponentOfType<LevelProperties>()->millisBetweenTokens() / 2
             ),
             position, position(),
             parentSceneAs<GameScene>()->board2Scene(dest))
         );
+        */
     }
 }

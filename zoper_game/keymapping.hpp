@@ -1,7 +1,10 @@
-#ifndef __KEYMAPPING_HPP__
-#define __KEYMAPPING_HPP__
+#pragma once
 
-#include <mtypes/include/streams.hpp>
+#ifndef ZOPER_KEYMAPPING_HPP
+#define ZOPER_KEYMAPPING_HPP
+
+#include <mtypes/include/streamin.hpp>
+#include <mtypes/include/streamout.hpp>
 #include <mtypes/include/array.hpp>
 #include <lib/include/key.hpp>
 #include "gameplay/direction.hpp"

@@ -1,14 +1,14 @@
 #pragma once
 
-#ifndef LIB_SERIALIZER_INCLUDE_HPP__
-#define LIB_SERIALIZER_INCLUDE_HPP__
+#ifndef LIB_SERIALIZER_INCLUDE_HPP
+#define LIB_SERIALIZER_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
 
-#include <lib/include/core/log.hpp>
+#include <lib/include/liblog.hpp>
 
-#include "file.hpp"
+#include <lib/system/filesystem/file.hpp>
 
 namespace lib
 {
@@ -20,7 +20,8 @@ namespace lib
 			SerializationStreamOut sso;
 			sso << data;
 			FileOutput fout{ fileName };
-			return fout.write(sso.data());
+            //TO DO: Fix this nonsense.
+			return fout.write(sso.data().split(','));
 		}
 
 		constexpr bool deserialize(const str&fileName, T&data) {

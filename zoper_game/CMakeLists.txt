@@ -7,18 +7,17 @@ set (CURRENT_TARGET zoper_game)
 
 add_library (${CURRENT_TARGET} ${ZOPER_SOURCES} ${ZOPER_HEADERS})
 
-# Detect and add lib
-include_directories(..)
+# Detect and add libraries
 target_link_libraries(${CURRENT_TARGET} PRIVATE lib)
 target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
+target_link_libraries(${CURRENT_TARGET} PRIVATE logger)
 
 add_custom_command(TARGET ${CURRENT_TARGET} POST_BUILD
 	COMMAND ${CMAKE_COMMAND} -E copy_directory
 	${PROJECT_SOURCE_DIR}/../zoper_data/
 	$<TARGET_FILE_DIR:${CURRENT_TARGET}>)
 
-
-install (TARGETS ${CURRENT_TARGET} DESTINATION  .)
+install(TARGETS ${CURRENT_TARGET} DESTINATION  .)
 install(DIRECTORY ${SFML_ROOT}/bin/$<CONFIGURATION>/ DESTINATION .)
 install(DIRECTORY ${PROJECT_SOURCE_DIR}/zoper/data/ DESTINATION .)
 

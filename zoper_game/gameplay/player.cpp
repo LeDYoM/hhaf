@@ -2,10 +2,11 @@
 #include "constants.hpp"
 #include "tokenzones.hpp"
 
-#include <lib/include/core/log.hpp>
+#include <lib/include/liblog.hpp>
 
 #include <lib/scene/ianimation.hpp>
 #include <lib/scene/components/animationcomponent.hpp>
+#include <lib/scene/components/renderizables.hpp>
 
 namespace zoper
 {
@@ -15,20 +16,26 @@ namespace zoper
     Player::Player(SceneNode* const parent, const str& name, vector2dst bPosition, Rectf32 box, vector2df board2SceneFactor)
           :	GameBaseTile{ parent, name, 0 },
 	        boardPosition{ std::move(bPosition),
-	            [this]() {
-		            log_debug_info("Player board position: ",boardPosition());
+	            [this]() 
+                {
+		            log_debug_info("Player board position: ", boardPosition());
 	                position = vector2df{ m_board2SceneFactor.x * boardPosition().x, m_board2SceneFactor.y * boardPosition().y };
-	                log_debug_info("Player scene position: ",position());
+	                log_debug_info("Player scene position: ", position());
 	            }
 		    },
 		currentDirection{ Direction{Direction::DirectionData::Up} }, m_board2SceneFactor{ std::move(board2SceneFactor) }
     {
         m_extraSceneNode = createSceneNode("m_extraSceneNode");
         m_extraSceneNode_2 = m_extraSceneNode->createSceneNode("m_extraSceneNode_2");
-        m_node = m_extraSceneNode_2->createRenderizable<nodes::NodeShape>("Node", 3);
+        
+        auto renderizables = m_extraSceneNode_2->ensureComponentOfType<Renderizables>();
+        m_node = renderizables->createNode("Node");
+        m_node->figType.set(FigType_t::Shape);
+        m_node->pointCount.set(3U);
 
         m_node->box.set(box);
         m_node->color.set(getColorForToken());
+        updateDirectionFromParameter(currentDirection());
     }
 
 	Player::~Player() {}
@@ -43,18 +50,19 @@ namespace zoper
             boardModel->moveTile(boardPosition(), nPosition);
             boardPosition.set(nPosition);
         }
-        else {
+        else
+        {
             updateDirectionFromParameter(currentDirection());
         }
     }
 
     void Player::updateDirectionFromParameter(const Direction destDirection)
     {
-        const auto tileCenter(m_board2SceneFactor / 2.0f);
+        const auto tileCenter(m_board2SceneFactor / 2.0F);
         m_extraSceneNode->rotateAround(tileCenter, destDirection.angle());
 
 		m_extraSceneNode_2->scaleAround(tileCenter, 
-			(destDirection.isVertical())?
+			(!destDirection.isVertical()) ?
 				vector2df{ 1, 1 }:
 				vector2df{ m_board2SceneFactor.y / m_board2SceneFactor.x, m_board2SceneFactor.x / m_board2SceneFactor.y }
 		);
@@ -66,8 +74,8 @@ namespace zoper
 
         auto animationComponent(ensureComponentOfType<anim::AnimationComponent>());
         animationComponent->
-            addAnimation(muptr<anim::IPropertyAnimation<vector2df>>(
-                TimeFromMillis(gameplay::constants::MillisAnimationLaunchPlayerStep),
+            addAnimation(muptr<anim::IPropertyAnimation<vector2df>>(dataWrapper<scene::Timer>(),
+                TimePoint_as_miliseconds(gameplay::constants::MillisAnimationLaunchPlayerStep),
                 position, 
                 position(), toWhere,
                 [this,currentPosition = std::move(currentPosition)]() { launchAnimationBack(currentPosition); }
@@ -97,8 +105,8 @@ namespace zoper
         updateDirectionFromParameter(currentDirection().negate());
         auto animationComponent(ensureComponentOfType<anim::AnimationComponent>());
         animationComponent->
-            addAnimation(muptr<anim::IPropertyAnimation<vector2df>>(
-                TimeFromMillis(gameplay::constants::MillisAnimationLaunchPlayerStep),
+            addAnimation(muptr<anim::IPropertyAnimation<vector2df>>(dataWrapper<scene::Timer>(),
+                TimePoint_as_miliseconds(gameplay::constants::MillisAnimationLaunchPlayerStep),
                 position,
                 position(), toWhere,
                 [this]() { updateDirectionFromParameter(currentDirection()); }

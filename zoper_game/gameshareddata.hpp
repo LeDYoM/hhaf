@@ -7,7 +7,7 @@
 #include <mtypes/include/array.hpp>
 #include <mtypes/include/vector2d.hpp>
 #include <mtypes/include/rect.hpp>
-#include <mtypes/include/streams.hpp>
+#include <mtypes/include/streamin.hpp>
 #include <lib/include/core/timer.hpp>
 
 #include "gameplay/direction.hpp"

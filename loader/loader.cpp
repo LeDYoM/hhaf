@@ -1,5 +1,6 @@
 #include "include/loader.hpp"
 #include "loadedinstance.hpp"
+#include <string>
 #include <map>
 #include <memory>
 

@@ -3,7 +3,7 @@
 #ifndef LIB_BACKEND_SFMLB_INPUTDRIVER_INCLUDE_HPP
 #define LIB_BACKEND_SFMLB_INPUTDRIVER_INCLUDE_HPP
 
-#include <lib/include/backend/iinputdriver.hpp>
+#include <backend_dev/include/iinputdriver.hpp>
 #include <SFML/Window/Event.hpp>
 #include <queue>
 
@@ -21,11 +21,13 @@ namespace lib::backend::sfmlb
         input::Key popKeyPress() override;
         input::Key popKeyRelease() override;
 
+        void keyPressed(const input::Key) override;
+		void keyReleased(const input::Key) override;
+
         void keyEvent(const sf::Event &e);
 
         std::queue<input::Key> m_keysPressed;
         std::queue<input::Key> m_keysReleased;
-
     };
 }
 

@@ -1,16 +1,10 @@
 project (mtypes)
+cmake_minimum_required (VERSION 3.9.2)
 
 set (CURRENT_TARGET mtypes)
 
-file (GLOB _SOURCES "src/*.cpp")
-file (GLOB _HEADERS "*.hpp")
-
-file (GLOB _INCLUDES "${CURRENT_TARGET}/include/*.hpp")
-
-add_library(${CURRENT_TARGET} SHARED ${_SOURCES} ${_HEADERS} ${_INCLUDES})
-
-target_include_directories(${CURRENT_TARGET} PUBLIC ${PROJECT_SOURCE_DIR})
-
+add_library(${CURRENT_TARGET} INTERFACE)
+target_include_directories(${CURRENT_TARGET} INTERFACE ${PROJECT_SOURCE_DIR})
 
 install (TARGETS ${CURRENT_TARGET}
     LIBRARY DESTINATION .

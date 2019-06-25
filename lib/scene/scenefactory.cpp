@@ -1,8 +1,6 @@
 #include "scenefactory.hpp"
 #include "scene.hpp"
 
-#include <lib/include/core/log.hpp>
-
 #include <map>
 
 namespace lib::scene

@@ -1,8 +1,7 @@
 #include "renderwindow.hpp"
 #include <lib/include/key.hpp>
-#include <lib/include/backend/itexture.hpp>
+#include <backend_dev/include/itexture.hpp>
 #include "texture.hpp"
-#include "texturettfont.hpp"
 #include <SFML/Window.hpp>
 #include <SFML/System/String.hpp>
 
@@ -47,9 +46,6 @@ namespace lib::backend::sfmlb
     {
         if (t) {
             if (auto tmp = dynamic_cast<const Texture*>(t)) {
-                return &(tmp->backEndTexture());
-            }
-            if (auto tmp = dynamic_cast<const TextureTTFont*>(t)) {
                 return &(tmp->backEndTexture());
             }
         }

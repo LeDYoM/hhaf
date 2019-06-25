@@ -32,7 +32,7 @@ public:
         ++(common.step);
     }
 
-    void updateScene() override
+    void update() override
     {
         ++(common.step);
         common.scene_controller->terminateScene();
@@ -49,7 +49,7 @@ public:
         ++(common.step);
     }
 
-    void updateScene() override
+    void update() override
     {
         ++(common.step);
         common.scene_controller->terminateScene();

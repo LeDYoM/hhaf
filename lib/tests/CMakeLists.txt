@@ -22,6 +22,7 @@ add_executable(${TARGET_NAME}
 
 target_link_libraries(${TARGET_NAME} PRIVATE lib)
 target_link_libraries(${TARGET_NAME} PRIVATE mtypes)
+target_link_libraries(${TARGET_NAME} PRIVATE logger)
 
 include_directories(${TARGET_NAME} INTERFACE ${CATCH_INCLUDE_DIR})
 

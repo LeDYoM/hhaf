@@ -4,8 +4,7 @@
 
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/nodes/tablenode.hpp>
-#include <lib/scene/renderizables/nodequad.hpp>
-#include <lib/scene/renderizables/nodeshape.hpp>
+#include <lib/scene/renderizables/renderizable.hpp>
 
 #include <lib/board/boardmodel.hpp>
 #include <lib/board/itile.hpp>
@@ -33,8 +32,10 @@ namespace zoper
         const Rectf32 bBox(scenePerspective());
 
         Rectf32 tileBox({}, cellSize());
-        for (size_type y{ 0U }; y < tableSize().y; ++y) {
-            for (size_type x{ 0U }; x < tableSize().x; ++x) {
+        for (size_type y{ 0U }; y < tableSize().y; ++y)
+        {
+            for (size_type x{ 0U }; x < tableSize().x; ++x)
+            {
                 static_cast<void>(createNodeAt({ x,y }, make_str("BoardGroupTile_", x, y), tileBox));
             }
         }

@@ -1,8 +1,9 @@
 #include "scenenodetext.hpp"
 
-#include <lib/scene/font.hpp>
-#include <lib/scene/texture.hpp>
-#include <lib/include/core/log.hpp>
+#include <lib/include/resources/ifont.hpp>
+#include <lib/resources/texture.hpp>
+#include <lib/include/liblog.hpp>
+
 #include <lib/scene/vertexarray.hpp>
 #include <lib/scene/scenenodetypes.hpp>
 
@@ -16,7 +17,7 @@ namespace lib::scene::nodes
     {
     }
 
-    nodes::SceneNodeText::~SceneNodeText() = default;
+    SceneNodeText::~SceneNodeText() = default;
 
     void SceneNodeText::update()
     {
@@ -57,7 +58,7 @@ namespace lib::scene::nodes
                         // Update the current bounds (min coordinates)
                         minX = min(minX, x);
                         minY = min(minY, y);
-                        const f32 hspace{ font()->getGlyph(L' ').advance };
+                        const f32 hspace{ font()->getAdvance(L' ') };
 
                         switch (curChar)
                         {
@@ -72,12 +73,13 @@ namespace lib::scene::nodes
                     }
                     else
                     {
-                        const TTGlyph glyph{ font()->getGlyph(curChar) };
-                        const Rectf32 textureUV{ glyph.textureBounds};
-                        const Rectf32 letterBox{ glyph.bounds + vector2df{ x,y } };
+                        const Rectf32 textureUV{ font()->getTextureBounds(curChar) };
+                        const Rectf32 letterBox{ font()->getBounds(curChar) + vector2df{ x,y } };
 
                         auto letterNode(createSceneNode
-                                        <QuadSceneNode>("text_"+str(curChar)));
+                                        <RenderizableSceneNode>("text_"+str::to_str(curChar)));
+                        letterNode->node()->figType.set(FigType_t::Quad);
+                        letterNode->node()->pointCount.set(6U);
                         letterNode->node()->box.set(letterBox);
                         letterNode->node()->setTextureAndTextureRect(texture,
                                     textureUV);
@@ -92,7 +94,7 @@ namespace lib::scene::nodes
                         }
 
                         // Advance to the next character
-                        x += glyph.advance;
+						x += font()->getAdvance(curChar);
                     }
                 }
 
@@ -105,7 +107,7 @@ namespace lib::scene::nodes
         {
             const Color &tc{textColor()()};
             sceneNodes().for_each([&tc](const SceneNodeSPtr& sNode) {
-                sNode->snCast<QuadSceneNode>()->node()->color.set(tc);
+                sNode->snCast<RenderizableSceneNode>()->node()->color.set(tc);
             });
         }
     }

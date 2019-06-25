@@ -3,7 +3,6 @@
 #ifndef LIB_HOSTCONTEXT_INCLUDE_HPP
 #define LIB_HOSTCONTEXT_INCLUDE_HPP
 
-#include <lib/include/lib.hpp>
 #include <lib/include/core/ihostcontext.hpp>
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
@@ -21,14 +20,14 @@ namespace lib::core
     {
     public:
         explicit HostContext(Host *const host);
-        const dicty::BasicDictionary<str> &appParameters() const override;
+        const Dictionary<str> &appParameters() const override;
 
         const scene::SceneManager &sceneManager() const noexcept override;
         scene::SceneManager &sceneManager() noexcept override;
 
     private:
         Host *const m_host;
-        dicty::BasicDictionary<str> m_appParameters;
+        Dictionary<str> m_appParameters;
     };
 }
 

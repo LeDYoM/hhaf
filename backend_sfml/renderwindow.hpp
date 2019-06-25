@@ -9,26 +9,15 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
 
-#include <lib/scene/vertexarray.hpp>
-#include <lib/include/backend/iwindow.hpp>
-#include <lib/include/backend/iinputdriver.hpp>
-#include <lib/include/backend/irendertarget.hpp>
+#include <backend_dev/include/iwindow.hpp>
+#include <backend_dev/include/iinputdriver.hpp>
 #include <lib/include/windowcreationparams.hpp>
 
+#include "rendertarget.hpp"
 #include "inputdriver.hpp"
 
 namespace lib::backend::sfmlb
 {
-    class RenderTarget : public IRenderTarget, public sf::RenderTarget
-    {
-        void draw(const scene::Vertex *vertices, const u32 nVertex, const scene::PrimitiveType pType, const f32 *transform, const ITexture *texture) override;
-        void setViewPort(const Rectf32 &nviewport) override;
-        Rectf32 viewPort() const override;
-        void setViewRect(const Rectf32 &nviewRect) override;
-        Rectf32 viewRect() const override;
-        void clear() override;
-    };
-
     class RenderWindow : public IWindow, public RenderTarget, public sf::Window
     {
     public:
@@ -39,10 +28,7 @@ namespace lib::backend::sfmlb
         bool createWindow(const WindowCreationParams &wcp) override;
         sf::Vector2u getSize() const;
 
-        bool activate(bool active = true) override { return sf::Window::setActive(active); }
-
-        // Not necessary, but the headers of sf::RenderTarget in Linux, contain this definition
-        bool setActive(bool active = true) { return IWindow::activate(active); }
+        bool setActive(bool active = true) override;
 
         IRenderTarget *renderTarget() override;
 

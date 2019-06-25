@@ -17,7 +17,5 @@ TEST_CASE("Constructor", "[SceneNode]")
 
     auto node_test(unitTestScene()->createSceneNode("SceneNode_test"));
     CHECK(unitTestScene()->sceneNodesSize() == 1);
-    CHECK(unitTestScene()->renderNodesSize() == 0);
     CHECK(node_test->sceneNodesSize() == 0);
-    CHECK(node_test->renderNodesSize() == 0);
 }

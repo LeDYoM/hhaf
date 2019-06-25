@@ -64,19 +64,21 @@ namespace lib
     };
 
     template <typename T>
-    class PropertyState : public PropertyTrigger<T>
+    class PropertyState : public BasicProperty<T>
     {
-        using BaseClass = PropertyTrigger<T>;
+        using BaseClass = BasicProperty<T>;
     public:
-        constexpr PropertyState() noexcept : PropertyState{T{}} {}
-        constexpr PropertyState(T iv) noexcept : BaseClass{ std::move(iv), [this]() { m_hasChanged = true; } } {}
+        constexpr PropertyState() noexcept : BaseClass{T{}} {}
+        constexpr PropertyState(T iv) noexcept : BaseClass{ std::move(iv) } {}
 
-        using BaseClass::operator=;
+        constexpr void operator=(const T&v) noexcept { set(v); }
 
         constexpr bool hasChanged() const noexcept { return m_hasChanged; }
         constexpr void resetHasChanged() noexcept { m_hasChanged = false; }
-        constexpr void setChanged() noexcept { BaseClass::update(); }
+        constexpr void setChanged() noexcept { m_hasChanged = true; }
         constexpr bool readResetHasChanged() noexcept { const bool v{ m_hasChanged }; resetHasChanged(); return v; }
+        const T &get() const noexcept override { return m_value; }
+        void set(const T&v) noexcept override { m_value = v; setChanged(); }
 
     private:
         bool m_hasChanged{ true };

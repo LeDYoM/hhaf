@@ -28,10 +28,12 @@ namespace lib
 			scene::StatesController<T> &statesController,
 			StatesControllerActuator<T> &statesControllerActuator) 
 		{
-			statesController.StateStarted.connect([&statesControllerActuator](const T&startedState) {
+			statesController.StateStarted.connect([&statesControllerActuator](const T&startedState)
+            {
 				statesControllerActuator.onEnterState(startedState);
 			});
-			statesController.StateFinished.connect([&statesControllerActuator](const T&startedState) {
+			statesController.StateFinished.connect([&statesControllerActuator](const T&startedState)
+            {
 				statesControllerActuator.onExitState(startedState);
 			});
 		}

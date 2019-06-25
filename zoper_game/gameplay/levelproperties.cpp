@@ -1,8 +1,6 @@
 #include "levelproperties.hpp"
-#include "gamescenedata.hpp"
 
-#include <lib/core/host.hpp>
-#include <lib/include/core/log.hpp>
+#include <lib/include/liblog.hpp>
 
 namespace zoper
 {
@@ -11,22 +9,26 @@ namespace zoper
 	using namespace lib::core;
 
     void LevelProperties::setUp(const size_type currentLevel,
-        const GameMode gameMode, sptr<GameSceneData> gameSceneData,
-        sptr<scene::TimerComponent> sceneTimerComponent)
+        const GameMode gameMode, sptr<scene::TimerComponent> sceneTimerComponent)
     {
-        assert_debug(m_sceneTimerComponent != nullptr, "Passed nullptr sceneTimerComponent");
-        assert_debug(m_gameSceneData != nullptr, "Passed nullptr gameSceneData");
+        if (!m_levelTimer)
+        {
+            m_levelTimer = attachedNode()->dataWrapper<scene::Timer>();
+        }
+        assert_debug(sceneTimerComponent != nullptr, "m_sceneNodeComponent already contains a value");
+        assert_debug(m_sceneTimerComponent == nullptr, "Passed nullptr sceneTimerComponent");
 
         m_gameMode = gameMode;
-        m_gameSceneData.swap(gameSceneData);
         m_sceneTimerComponent.swap(sceneTimerComponent);
 
         m_updateLevelDataTimer = m_sceneTimerComponent->addTimer(
             TimerType::Continuous,
-            TimeFromMillis(120),
-            [this](Time realEllapsed) {
-            updateLevelData();
-        });
+            TimePoint_as_miliseconds(120),
+            [this](TimePoint /*realEllapsed*/)
+            {
+                updateLevelData();
+            }
+        );
 
         m_gameHud = attachedNode()->createSceneNode<GameHudSceneNode>("hud");
         
@@ -35,7 +37,7 @@ namespace zoper
 
     void LevelProperties::setLevel(const LevelType currentLevel)
     {
-        m_levelTimer.restart();
+        m_levelTimer->restart();
 
         m_currentLevel = currentLevel;
 		m_baseScore = 10 + m_currentLevel;
@@ -61,6 +63,7 @@ namespace zoper
         levelChanged(currentLevel);
         updateGoals();
         updateLevelData();
+        increaseScore(0U);
 
         log_debug_info("Level set: ", m_currentLevel);
         log_debug_info("Millis between tokens: ", millisBetweenTokens());
@@ -95,9 +98,9 @@ namespace zoper
             break;
 
         case GameMode::Time:
-            m_gameHud->setEllapsedTimeInSeconds(m_levelTimer.ellapsed().asSeconds());
+            m_gameHud->setEllapsedTimeInSeconds(m_levelTimer->ellapsed().seconds());
             
-            if (m_levelTimer.ellapsed().asSeconds() >= m_stayCounter)
+            if (m_levelTimer->ellapsed().seconds() >= m_stayCounter)
             {
                 setLevel(m_currentLevel + 1);
             }

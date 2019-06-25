@@ -1,7 +1,7 @@
-#ifndef LIB_COMPONENT_INPUT_INCLUDE_HPP__
-#define LIB_COMPONENT_INPUT_INCLUDE_HPP__
-
 #pragma once
+
+#ifndef LIB_COMPONENT_INPUT_INCLUDE_HPP
+#define LIB_COMPONENT_INPUT_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/connection.hpp>

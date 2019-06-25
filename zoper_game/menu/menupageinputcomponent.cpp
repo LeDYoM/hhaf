@@ -1,6 +1,6 @@
 #include "menupageinputcomponent.hpp"
 
-#include <lib/include/core/log.hpp>
+#include <lib/include/liblog.hpp>
 
 namespace zoper
 {
