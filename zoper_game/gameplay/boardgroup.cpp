@@ -32,8 +32,10 @@ namespace zoper
         const Rectf32 bBox(scenePerspective());
 
         Rectf32 tileBox({}, cellSize());
-        for (size_type y{ 0U }; y < tableSize().y; ++y) {
-            for (size_type x{ 0U }; x < tableSize().x; ++x) {
+        for (size_type y{ 0U }; y < tableSize().y; ++y)
+        {
+            for (size_type x{ 0U }; x < tableSize().x; ++x)
+            {
                 static_cast<void>(createNodeAt({ x,y }, make_str("BoardGroupTile_", x, y), tileBox));
             }
         }

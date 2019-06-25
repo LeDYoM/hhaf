@@ -4,7 +4,6 @@
 
 #include <lib/include/liblog.hpp>
 
-
 namespace lib::scene
 {
     void SceneController::setSceneManager(SceneManager *scene_manager)
@@ -29,7 +28,7 @@ namespace lib::scene
             nextScene = scene_factory_.create(scene_director_(currentState()->name()));
         }
 
-        log_debug_info("Setting new scene: ", nextScene ? nextScene->name():"<nullptr>");
+        log_debug_info("Setting new scene: ", nextScene ? nextScene->name() : "<nullptr>");
         startScene(std::move(nextScene));
     }
 

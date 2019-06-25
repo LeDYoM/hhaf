@@ -42,7 +42,7 @@ namespace lib::scene
     private:
         void refillBuffer()
         {
-            log_debug_info("Called refillBuffer");
+            log_debug_info("Call refillBuffer");
             log_debug_info("Size to refill: ", buffer_size_);
             random_system_.generateRandomBuffer(numbers_, channel_, buffer_size_);
             assert_release(numbers_.numbers.size() == buffer_size_, 

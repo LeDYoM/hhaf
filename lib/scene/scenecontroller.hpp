@@ -33,7 +33,6 @@ namespace lib::scene
         sptr<Scene> currentScene();
 	    bool isActive();
 
-
 		bool startScene(const str &sceneName);
 
 		template <typename T>

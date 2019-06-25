@@ -15,8 +15,8 @@ namespace lib::scene
     * a series of random numbers.
     */
     class RandomizerComponent final : public IComponent
-	{
-	public:
+    {
+    public:
         RandomizerComponent();
         ~RandomizerComponent() override;
         u32 getUInt(const size_type max, const size_type min = 0U) const;
