@@ -24,8 +24,7 @@ namespace lib::core
 
     RandomSystem::RandomSystem()
         : AppService{ },
-        priv_ { muptr<RandomSystemPrivate>()
-    } {}
+        priv_ { muptr<RandomSystemPrivate>() } {}
 
     RandomSystem::~RandomSystem() = default;
 
