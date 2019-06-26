@@ -193,6 +193,8 @@ namespace lib
         constexpr iterator erase_values(const T&value, iterator start) 
         {
             iterator result { start };
+            checkRange(result);
+
             do
             {
                 result = start;
@@ -239,23 +241,27 @@ namespace lib
          */
         constexpr iterator erase_one(const T& value, iterator start)
         {
-            // Find a node with the specified value
-            iterator where_it_was{ find(start, end(), value) };
-
-            // If such a node is found erase it, if not,
-            // return end() (result from find(...)).
-            if (where_it_was != end())
+            if (!empty())
             {
-                // If the element to delete is not the last one
-                if (where_it_was < end() - 1U)
+                // Find a node with the specified value
+                iterator where_it_was{ find(start, end(), value) };
+
+                // If such a node is found erase it, if not,
+                // return end() (result from find(...)).
+                if (where_it_was != end())
                 {
-                    // swap the element to delete with the last one
-                    std::swap(*where_it_was, back());
+                    // If the element to delete is not the last one
+                    if (where_it_was < end() - 1U)
+                    {
+                        // swap the element to delete with the last one
+                        std::swap(*where_it_was, back());
+                    }
+                    pop_back();
+                    ++where_it_was;
                 }
-                pop_back();
-                ++where_it_was;
+                return where_it_was;
             }
-            return where_it_was;
+            return end();
         }
 
         constexpr iterator erase_if(function<bool(const T&)> condition) 

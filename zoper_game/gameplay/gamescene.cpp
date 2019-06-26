@@ -133,10 +133,8 @@ namespace zoper
 
         private_->token_type_generator_ = ensureComponentOfType<RandomizerComponent>();
         assert_release(private_->token_type_generator_ != nullptr, "Cannot create RandomizerComponent");
-        private_->token_type_generator_->channel.set(1U);
         private_->token_position_generator_ = ensureComponentOfType<RandomizerComponent>();
         assert_release(private_->token_position_generator_ != nullptr, "Cannot create RandomizerComponent");
-        private_->token_position_generator_->channel.set(2U);
 
         // Prepare the pause text.
         pause_node_ = createSceneNode<PauseSceneNode>("PauseNode");

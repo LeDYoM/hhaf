@@ -22,27 +22,27 @@ namespace lib::core
     using ResourceList = std::list<NamedIndex<T>>;
 
     namespace
-	{
-		template <bool UseInternalFileSystem, typename T, typename V>
-		inline sptr<T> loadResource(backend::IResourceFactory<V>& factory, 
-			FileSystem& fileSystem, const str &fileName)
-		{
-			if constexpr (UseInternalFileSystem)
-			{
-				RawMemory data(fileSystem.loadBinaryFile(fileName));
+    {
+        template <bool UseInternalFileSystem, typename T, typename V>
+        inline sptr<T> loadResource(backend::IResourceFactory<V>& factory, 
+            FileSystem& fileSystem, const str &fileName)
+        {
+            if constexpr (UseInternalFileSystem)
+            {
+                RawMemory data(fileSystem.loadBinaryFile(fileName));
 
-				// Prototype / check
-				return msptr<T>(factory.loadFromRawMemory(&data));
-			}
-			else
-			{
-				return msptr<T>(factory.loadFromFile(fileName));
-			}
-		}
+                // Prototype / check
+                return msptr<T>(factory.loadFromRawMemory(&data));
+            }
+            else
+            {
+                return msptr<T>(factory.loadFromFile(fileName));
+            }
+        }
 
         template <bool UseInternalFileSystem, typename V, typename T>
         inline sptr<T> get_or_add(backend::IResourceFactory<V>& factory, ResourceList<sptr<T>> &container, 
-			FileSystem& fileSystem, const str &rid, const str &fileName)
+            FileSystem& fileSystem, const str &rid, const str &fileName)
         {
             auto iterator(std::find_if(container.begin(), container.end(),
                 [rid](const auto &node) {return node.first == rid; }));
@@ -82,24 +82,24 @@ namespace lib::core
     {
         ResourceList<sptr<scene::TTFont>> m_fonts;
         ResourceList<sptr<scene::Texture>> m_textures;
-		ResourceList<sptr<scene::Shader>> m_shaders;
+        ResourceList<sptr<scene::Shader>> m_shaders;
     };
 
     ResourceManager::ResourceManager(core::SystemProvider &system_provider) 
-		: HostedAppService{ system_provider },
+        : HostedAppService{ system_provider },
         m_private{ muptr<ResourceManagerPrivate>() } {}
 
-	ResourceManager::~ResourceManager() = default;
+    ResourceManager::~ResourceManager() = default;
 
-	sptr<scene::ITTFont> ResourceManager::getFont(const str &rid)
-	{
+    sptr<scene::ITTFont> ResourceManager::getFont(const str &rid)
+    {
         return get_or_default(m_private->m_fonts, rid);
     }
 
-	sptr<scene::ITexture> ResourceManager::getTexture(const str &rid)
-	{
+    sptr<scene::ITexture> ResourceManager::getTexture(const str &rid)
+    {
         return get_or_default(m_private->m_textures, rid);
-	}
+    }
 
     sptr<scene::IShader> ResourceManager::getShader(const str &rid)
     {

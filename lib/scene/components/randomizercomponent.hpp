@@ -21,8 +21,6 @@ namespace lib::scene
         ~RandomizerComponent() override;
         u32 getUInt(const size_type max, const size_type min = 0U) const;
 
-        PropertyTrigger<size_type> channel;
-
         void onAttached() override;
     private:
         class RandomizerPrivate;

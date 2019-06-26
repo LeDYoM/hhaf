@@ -32,19 +32,12 @@ namespace lib::scene
             return numbers_.numbers[consumed_++];
         }
 
-        void setChannel(const size_type channel)
-        {
-            log_debug_info("Setting channel to  ", channel);
-            channel_ = channel;
-            log_debug_info(" Discarding buffer");
-            refillBuffer();
-        }
     private:
         void refillBuffer()
         {
             log_debug_info("Call refillBuffer");
             log_debug_info("Size to refill: ", buffer_size_);
-            random_system_.generateRandomBuffer(numbers_, channel_, buffer_size_);
+            random_system_.generateRandomBuffer(numbers_, buffer_size_);
             assert_release(numbers_.numbers.size() == buffer_size_, 
                 "The size of the buffer is different from the buffer_size");
             consumed_ = 0U;
@@ -54,13 +47,10 @@ namespace lib::scene
         size_type consumed_{ 0U };
         core::RandomSystem& random_system_;
         size_type buffer_size_{ 100U };
-        size_type channel_{ 0U };
     };
 
     RandomizerComponent::RandomizerComponent()
-        : priv_{ nullptr }, 
-        channel{ 0U, [this]() { priv_->setChannel(channel.get()); } }
-    {}
+        : priv_{ nullptr } {}
 
     RandomizerComponent::~RandomizerComponent() = default;
 

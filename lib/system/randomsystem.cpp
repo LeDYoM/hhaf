@@ -28,23 +28,13 @@ namespace lib::core
 
     RandomSystem::~RandomSystem() = default;
 
-    void RandomSystem::generateRandomBuffer(RandomBuffer & dest, const size_type channel, const size_type size)
+    void RandomSystem::generateRandomBuffer(RandomBuffer & dest, const size_type size)
     {
         dest.numbers.resize(size);
 
-        if (channel != 0)
+        for (auto& num_ref : dest.numbers)
         {
-            for (auto& num_ref : dest.numbers)
-            {
-                num_ref = priv_->getUInt();
-            }
-        }
-        else
-        {
-            for (auto& num_ref : dest.numbers)
-            {
-                num_ref = priv_->getUInt();
-            }
+            num_ref = priv_->getUInt();
         }
 
         log_debug_info(dest.numbers);

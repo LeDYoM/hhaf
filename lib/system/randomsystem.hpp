@@ -18,7 +18,7 @@ namespace lib::core
 
     class IRandomSystem
     {
-        virtual void generateRandomBuffer(RandomBuffer& dest, const size_type channel, const size_type size = 100U) = 0;
+        virtual void generateRandomBuffer(RandomBuffer& dest, const size_type size = 100U) = 0;
     };
 
     /**
@@ -26,11 +26,11 @@ namespace lib::core
     * a series of random numbers.
     */
     class RandomSystem final : public AppService, IRandomSystem
-	{
-	public:
+    {
+    public:
         RandomSystem();
         ~RandomSystem() override;
-        void generateRandomBuffer(RandomBuffer& dest, const size_type channel, const size_type size = 100U) override;
+        void generateRandomBuffer(RandomBuffer& dest, const size_type size = 100U) override;
 
     private:
         class RandomSystemPrivate;
