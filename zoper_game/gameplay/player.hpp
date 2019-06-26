@@ -1,5 +1,5 @@
-#ifndef __PLAYER_HPP__
-#define __PLAYER_HPP__
+#ifndef ZOPER_PLAYER_INCLUDE_HPP
+#define ZOPER_PLAYER_INCLUDE_HPP
 
 #include "gamebasetile.hpp"
 #include "direction.hpp"
@@ -7,6 +7,8 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/function.hpp>
 #include <lib/board/boardmodel.hpp>
+#include <lib/scene/ianimation.hpp>
+#include <lib/scene/components/animationcomponent.hpp>
 
 namespace zoper
 {
@@ -36,6 +38,7 @@ namespace zoper
 
     private:
         void launchAnimationBack(vector2df toWhere);
+        sptr<scene::anim::AnimationComponent> animation_component_;
         scene::SceneNodeSPtr m_extraSceneNode;
         scene::SceneNodeSPtr m_extraSceneNode_2;
         vector2df m_board2SceneFactor;

@@ -4,8 +4,6 @@
 
 #include <lib/include/liblog.hpp>
 
-#include <lib/scene/ianimation.hpp>
-#include <lib/scene/components/animationcomponent.hpp>
 #include <lib/scene/components/renderizables.hpp>
 
 namespace zoper
@@ -15,15 +13,15 @@ namespace zoper
 
     Player::Player(SceneNode* const parent, const str& name, vector2dst bPosition, Rectf32 box, vector2df board2SceneFactor)
           :	GameBaseTile{ parent, name, 0 },
-	        boardPosition{ std::move(bPosition),
-	            [this]() 
+            boardPosition{ std::move(bPosition),
+                [this]() 
                 {
-		            log_debug_info("Player board position: ", boardPosition());
-	                position = vector2df{ m_board2SceneFactor.x * boardPosition().x, m_board2SceneFactor.y * boardPosition().y };
-	                log_debug_info("Player scene position: ", position());
-	            }
-		    },
-		currentDirection{ Direction{Direction::DirectionData::Up} }, m_board2SceneFactor{ std::move(board2SceneFactor) }
+                    log_debug_info("Player board position: ", boardPosition());
+                    position = vector2df{ m_board2SceneFactor.x * boardPosition().x, m_board2SceneFactor.y * boardPosition().y };
+                    log_debug_info("Player scene position: ", position());
+                }
+            },
+        currentDirection{ Direction{Direction::DirectionData::Up} }, m_board2SceneFactor{ std::move(board2SceneFactor) }
     {
         m_extraSceneNode = createSceneNode("m_extraSceneNode");
         m_extraSceneNode_2 = m_extraSceneNode->createSceneNode("m_extraSceneNode_2");
@@ -61,11 +59,11 @@ namespace zoper
         const auto tileCenter(m_board2SceneFactor / 2.0F);
         m_extraSceneNode->rotateAround(tileCenter, destDirection.angle());
 
-		m_extraSceneNode_2->scaleAround(tileCenter, 
-			(!destDirection.isVertical()) ?
-				vector2df{ 1, 1 }:
-				vector2df{ m_board2SceneFactor.y / m_board2SceneFactor.x, m_board2SceneFactor.x / m_board2SceneFactor.y }
-		);
+        m_extraSceneNode_2->scaleAround(tileCenter, 
+            (!destDirection.isVertical()) ?
+                vector2df{ 1, 1 }:
+                vector2df{ m_board2SceneFactor.y / m_board2SceneFactor.x, m_board2SceneFactor.x / m_board2SceneFactor.y }
+        );
     }
 
     void Player::launchAnimation(vector2df toWhere)
@@ -103,8 +101,11 @@ namespace zoper
     void Player::launchAnimationBack(vector2df toWhere)
     {
         updateDirectionFromParameter(currentDirection().negate());
-        auto animationComponent(ensureComponentOfType<anim::AnimationComponent>());
-        animationComponent->
+        if (!animation_component_)
+        {
+            animation_component_ = ensureComponentOfType<anim::AnimationComponent>();
+        }
+        animation_component_->
             addAnimation(muptr<anim::IPropertyAnimation<vector2df>>(dataWrapper<scene::Timer>(),
                 TimePoint_as_miliseconds(gameplay::constants::MillisAnimationLaunchPlayerStep),
                 position,

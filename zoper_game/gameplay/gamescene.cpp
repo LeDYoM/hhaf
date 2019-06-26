@@ -133,7 +133,7 @@ namespace zoper
 
         private_->token_type_generator_ = ensureComponentOfType<RandomizerComponent>();
         assert_release(private_->token_type_generator_ != nullptr, "Cannot create RandomizerComponent");
-        private_->token_position_generator_ = ensureComponentOfType<RandomizerComponent>();
+        private_->token_position_generator_ = private_->token_type_generator_; //ensureComponentOfType<RandomizerComponent>();
         assert_release(private_->token_position_generator_ != nullptr, "Cannot create RandomizerComponent");
 
         // Prepare the pause text.

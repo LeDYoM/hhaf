@@ -29,6 +29,11 @@ namespace lib::scene
                 addComponent(nc);
                 return nc;
             }
+            else
+            {
+                assert_debug(false);
+            }
+            
             return component;
         }
 
