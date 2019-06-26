@@ -241,6 +241,7 @@ namespace lib
          */
         constexpr iterator erase_one(const T& value, iterator start)
         {
+            checkRange(start);
             if (begin() != end())
             {
                 // Find a node with the specified value
