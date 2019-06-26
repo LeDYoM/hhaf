@@ -53,7 +53,7 @@ namespace lib
         * Remove an element. Overload for const references.
         * @param element The element to remove.
         */
-        constexpr void erase_values(const T &element)
+        constexpr void erase_value(const T &element)
         {
             remove_cache_.push_back(element);
         }
