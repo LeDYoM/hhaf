@@ -235,13 +235,13 @@ namespace lib
          * @param value [in] Value to search for in the vector.
          * @param value [in] start iterator pointing to the first element
          *  to look for.
-         * @return iterator past the element deleted. It will be end() if
-         *  either no element found with this value or the last element
-         *  is the one deleted.
+         * @return iterator Pointing to the element in the position where the
+         * deleted element was. If the element was the last one or no element
+         * with this value found, the iterator will be end().
          */
         constexpr iterator erase_one(const T& value, iterator start)
         {
-            if (!empty())
+            if (begin() != end())
             {
                 // Find a node with the specified value
                 iterator where_it_was{ find(start, end(), value) };
@@ -257,7 +257,6 @@ namespace lib
                         std::swap(*where_it_was, back());
                     }
                     pop_back();
-                    ++where_it_was;
                 }
                 return where_it_was;
             }
