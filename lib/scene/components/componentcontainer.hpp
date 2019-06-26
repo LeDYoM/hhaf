@@ -19,8 +19,6 @@ namespace lib::scene
         constexpr ComponentContainer(SceneNode *sceneNode = nullptr) noexcept : m_sceneNode{ sceneNode } {}
         inline ~ComponentContainer() = default;
 
-        bool addComponent(sptr<IComponent> nc);
-
         template <typename T>
         sptr<T> ensureComponentOfType()
         {
@@ -51,6 +49,8 @@ namespace lib::scene
 
         void clearComponents() noexcept { m_components.clear(); m_sceneNode = nullptr; }
     private:
+        bool addComponent(sptr<IComponent> nc);
+
         template <typename T>
         void ensureComponentOfType(sptr<T> &component)
         {
