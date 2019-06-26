@@ -6,21 +6,21 @@
 #include <windows.h>
 #include <crtdbg.h>
 
-static int crtDebugMemAllocHook(int allocType, void *userData, size_t size, int blockType, long requestIndex, const unsigned char *fileName, int lineIndex){
+static int crtDebugMemAllocHook(int allocType, void *userData, size_t size, int blockType, long requestIndex, const unsigned char *fileName, int lineIndex)
+{
+    lineIndex;
+    fileName;
+    blockType;
+    blockType;
+    size;
+    userData;
+    allocType;
 
-	lineIndex;
-	fileName;
-	blockType;
-	blockType;
-	size;
-	userData;
-	allocType;
+    if (requestIndex == 141160) //break;
 
-	if (requestIndex == 141160) //break;
+        return true;
 
-		return true;
-
-	return true;
+    return true;
 }
 
 #endif
@@ -30,8 +30,8 @@ void installMemManager()
 {
 #ifdef USE_MEM_MANAGER
 #ifdef _MSC_VER
-	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	_CrtSetAllocHook(crtDebugMemAllocHook);
+    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+    _CrtSetAllocHook(crtDebugMemAllocHook);
 #endif
 #endif
 }
