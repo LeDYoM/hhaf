@@ -12,6 +12,7 @@ namespace lib::scene
 
     /**
      * @brief Class to create @b IDataWrapper (s) instances.
+     * DataWrappers are stand alone objects, not
     */
     class DataWrapperCreator
     {

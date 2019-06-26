@@ -34,12 +34,6 @@ namespace lib::scene
             return component;
         }
 
-        template <typename T>
-        void ensureComponentOfType(sptr<T> &component)
-        {
-            component = ensureComponentOfType<T>();
-        }
-
         void updateComponents();
         void postUpdateComponents();
 
@@ -57,6 +51,12 @@ namespace lib::scene
 
         void clearComponents() noexcept { m_components.clear(); m_sceneNode = nullptr; }
     private:
+        template <typename T>
+        void ensureComponentOfType(sptr<T> &component)
+        {
+            component = ensureComponentOfType<T>();
+        }
+
         const sptr<IComponent> componentOfType(const std::type_index& ti) const;
 
         SceneNode *m_sceneNode;
