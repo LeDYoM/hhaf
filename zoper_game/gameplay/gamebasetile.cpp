@@ -8,15 +8,17 @@ namespace zoper
 	using namespace lib::board;
 	using namespace lib::scene;
 
-	GameBaseTile::GameBaseTile(SceneNode* const parent, str name, BoardTileData data)
-		: ITile{ data }, SceneNode{ parent, std::move(name) }
+	GameBaseTile::GameBaseTile(SceneNode* const parent, str name)
+		: ITile{ }, SceneNode{ parent, std::move(name) }
 	{
-		setCallback([this]() {m_node->color = getColorForToken(); });
+		data.setCallback([this]() { m_node->color = getColorForToken(); });
 	}
+
+    GameBaseTile::~GameBaseTile() = default;
 
 	Color GameBaseTile::getColorForToken() const
 	{
-		switch (get())
+		switch (data.get())
 		{
 		case 0:
 			return colors::Red;
@@ -34,7 +36,7 @@ namespace zoper
 			return colors::Magenta;
 			break;
 		default:
-			lib::log_debug_error("Error value for token: ", get(), " is not supported");
+			lib::log_debug_error("Error value for token: ", data.get(), " is not supported");
 			return colors::White;
 			break;
 		}

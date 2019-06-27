@@ -11,10 +11,12 @@ namespace lib::board
 {
     using BoardTileData = s32;
 
-    class ITile : public PropertyTrigger<BoardTileData>
+    class ITile
     {
     public:
-        using PropertyTrigger<BoardTileData>::PropertyTrigger;
+        constexpr ITile() noexcept {}
+        PropertyTrigger<BoardTileData> data;
+
         virtual ~ITile() = default;
 
         virtual void tileAdded(const vector2dst & /* position */) {}

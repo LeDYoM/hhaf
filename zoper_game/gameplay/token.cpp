@@ -16,19 +16,29 @@ namespace zoper
 
     u32 Token::m_tileCounter{ 0 };
 
-    Token::Token(SceneNode* const parent, str name, BoardTileData data, const Rectf32 &box) :
-        GameBaseTile{ parent, name + str::to_str(m_tileCounter) + str::to_str(m_tileCounter), data }
+    Token::Token(SceneNode* const parent, str name) :
+        GameBaseTile{ parent, name + str::to_str(m_tileCounter) + str::to_str(m_tileCounter) }
     {
         ++m_tileCounter;
         auto renderizables = addComponentOfType<Renderizables>();
         m_node = renderizables->createNode("Node" + str::to_str(m_tileCounter));
         m_node->figType.set(FigType_t::Shape);
         m_node->pointCount.set(30U);
-        m_node->box = box;
-        m_node->color = getColorForToken();
     }
 
     Token::~Token() = default;
+
+    void Token::setUp(sptr<LevelProperties> level_properties,
+        sptr<scene::anim::AnimationComponent> animation_component,
+        board::BoardTileData board_tile_data,
+        const Rectf32 &box)
+    {
+        data.set(board_tile_data);
+        m_node->box = box;
+        m_node->color = getColorForToken();
+        animation_component_ = std::move(animation_component_);
+        level_properties_ = std::move(level_properties);
+    }
 
     void Token::resetTileCounter()
     {
@@ -50,16 +60,14 @@ namespace zoper
     void Token::tileChanged(const vector2dst &position_, const board::BoardTileData oldValue, const board::BoardTileData newValue)
     {
         log_debug_info("Token at position ", position_, " changed from ", oldValue, " to ", newValue);
-        set(newValue);
+        data.set(newValue);
     }
 
     void Token::tileMoved(const vector2dst & /*source*/, const vector2dst & dest)
     {
-        ensureComponentOfType(animation_component_);
         const auto time(TimePoint_as_miliseconds(
-                parentSceneAs<GameScene>()->
-                    addComponentOfType<LevelProperties>()->millisBetweenTokens() / 2
-            ));
+            level_properties_->millisBetweenTokens() / 2
+        ));
 
         const auto destination(parentSceneAs<GameScene>()->board2Scene(dest));
         animation_component_->addPropertyAnimation(time, position, destination);

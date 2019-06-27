@@ -37,6 +37,7 @@ namespace zoper
 
     struct GameScene::GameScenePrivate
     {
+        sptr<anim::AnimationComponent> scene_animation_component_;
         sptr<RandomizerComponent> token_type_generator_;
         sptr<RandomizerComponent> token_position_generator_;
     };
@@ -102,6 +103,7 @@ namespace zoper
         // Import game shared data. Basically, the menu selected options.
         importGameSharedData();
 
+        private_->scene_animation_component_ = addComponentOfType<scene::anim::AnimationComponent>();
         // At this point, we setup level properties.
         // levelProperties should not be used before this point.
         levelProperties = addComponentOfType<LevelProperties>();
@@ -280,12 +282,16 @@ namespace zoper
 
         log_debug_info("Adding new tile at ", pos, " with value ", newToken);
         // Create a new Tile instance
-        auto newTileToken = m_boardGroup->m_mainBoardrg->createSceneNode<Token>("tileNode", BoardTileData{ static_cast<BoardTileData>(newToken) }, rectFromSize(tileSize()));
+        auto new_tile_token = m_boardGroup->m_mainBoardrg->createSceneNode<Token>("tileNode");
+        new_tile_token->setUp(levelProperties,
+            private_->scene_animation_component_,
+            static_cast<BoardTileData>(newToken),rectFromSize(tileSize()));
+
         // Set the position in the scene depending on the board position
-        newTileToken->position = board2Scene(pos);
+        new_tile_token->position = board2Scene(pos);
 
         // Add it to the board
-        m_boardGroup->p_boardModel->setTile(pos, newTileToken);
+        m_boardGroup->p_boardModel->setTile(pos, std::move(new_tile_token));
     }
 
     void GameScene::launchPlayer()
@@ -293,7 +299,7 @@ namespace zoper
         lib::log_debug_info("Launching player");
         const Direction loopDirection{ m_player->currentDirection() };
         const vector2dst loopPosition{ m_player->boardPosition() };
-        const board::BoardTileData tokenType{ m_player->get() };
+        const board::BoardTileData tokenType{ m_player->data.get() };
         u32 inARow{ 0 };
         for_each_token_in_line(loopPosition, loopDirection, [this, tokenType, &inARow](const vector2dst &loopPosition, const Direction &)
         {
@@ -304,7 +310,7 @@ namespace zoper
             if (!m_boardGroup->p_boardModel->tileEmpty(loopPosition) && !TokenZones::pointInCenter(loopPosition) && result)
             {
                 sptr<board::ITile> currentToken{ m_boardGroup->p_boardModel->getTile(loopPosition) };
-                board::BoardTileData currentTokenType = currentToken->get();
+                board::BoardTileData currentTokenType = currentToken->data.get();
 
                 if (currentTokenType == tokenType) 
                 {
@@ -338,7 +344,7 @@ namespace zoper
                     // Change the type of the token for the previous type of the player
                     m_boardGroup->p_boardModel->changeTileData(loopPosition, tokenType);
 
-                    log_debug_info("Player type changed to ", m_player->get());
+                    log_debug_info("Player type changed to ", m_player->data.get());
 
                     // Exit the loop
                     result = false;
@@ -361,12 +367,7 @@ namespace zoper
                     addPropertyAnimation(TimePoint_as_miliseconds(gameplay::constants::MillisAnimationPointsToScore),
                         sceneNode->position,
                         lastTokenPosition, gameplay::constants::EndPositionPointsToScore);
-/*                animationComponent->
-                    addAnimation(muptr<anim::IPropertyAnimation<vector2df>>(
-                        TimePoint_as_miliseconds(gameplay::constants::MillisAnimationPointsToScore),
-                        sceneNode->position,
-                        lastTokenPosition, gameplay::constants::EndPositionPointsToScore));
-*/
+
                 m_sceneTimerComponent->addTimer(TimerType::OneShot, 
                     TimePoint_as_miliseconds(gameplay::constants::MillisAnimationPointsToScore),
                     [this, sceneNode](auto) { removeSceneNode(sceneNode); } );
@@ -405,7 +406,7 @@ namespace zoper
                 auto lp_tile(m_boardGroup->p_boardModel->getTile({ x, y }));
                 if (lp_tile) 
                 {
-                    chTemp = str::to_str(lp_tile->get());
+                    chTemp = str::to_str(lp_tile->data.get());
                 }
                 else 
                 {

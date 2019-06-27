@@ -12,7 +12,7 @@ namespace zoper
     using namespace lib::scene;
 
     Player::Player(SceneNode* const parent, const str& name, vector2dst bPosition, Rectf32 box, vector2df board2SceneFactor)
-          :	GameBaseTile{ parent, name, 0 },
+          :	GameBaseTile{ parent, name },
             boardPosition{ std::move(bPosition),
                 [this]() 
                 {
@@ -23,6 +23,7 @@ namespace zoper
             },
         currentDirection{ Direction{Direction::DirectionData::Up} }, m_board2SceneFactor{ std::move(board2SceneFactor) }
     {
+        data.set(0);
         m_extraSceneNode = createSceneNode("m_extraSceneNode");
         m_extraSceneNode_2 = m_extraSceneNode->createSceneNode("m_extraSceneNode_2");
         
@@ -102,7 +103,7 @@ namespace zoper
     void Player::tileChanged(const vector2dst &position_, const board::BoardTileData oldValue, const board::BoardTileData newValue)
     {
         log_debug_info("Player (position ", position_, ") changed from ", oldValue, " to ", newValue);
-        set(newValue);
+        data.set(newValue);
     }
 
     void Player::tileMoved(const vector2dst &, const vector2dst &)

@@ -45,7 +45,7 @@ namespace zoper
 
 		if (m_currentLevel <= maxLevelWithProperties) 
         {
-			m_millisBetweenTokens = 2600 - (m_currentLevel * 100);
+			m_millisBetweenTokens = 1350 - (m_currentLevel * 50U);
             m_stayCounter = ((m_gameMode == GameMode::Time)?
                                  180 + (m_currentLevel * 30)
                                 :

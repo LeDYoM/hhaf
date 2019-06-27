@@ -14,8 +14,8 @@ namespace zoper
 	class GameBaseTile : public board::ITile, public scene::SceneNode
 	{
 	public:
-		GameBaseTile(scene::SceneNode* const parent, str name, board::BoardTileData data);
-		~GameBaseTile() override = default;
+		GameBaseTile(scene::SceneNode* const parent, str name);
+		~GameBaseTile() override;
 
 		scene::Color getColorForToken() const;
 

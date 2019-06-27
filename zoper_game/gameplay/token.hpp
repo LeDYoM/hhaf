@@ -14,6 +14,7 @@
 namespace zoper
 {
     using namespace lib;
+    class LevelProperties;
 
     /**
     * This class represents one of the enemies in the board of the game.
@@ -24,8 +25,13 @@ namespace zoper
     class Token : public GameBaseTile
     {
     public:
-        Token(scene::SceneNode* const parent, str name, board::BoardTileData data, const Rectf32 &box);
+        Token(scene::SceneNode* const parent, str name);
         ~Token() override;
+
+        void setUp(sptr<LevelProperties> level_properties,
+            sptr<scene::anim::AnimationComponent> animation_component,
+            board::BoardTileData data,
+            const Rectf32 &box);
 
         static void resetTileCounter();
 
@@ -40,6 +46,7 @@ namespace zoper
     private:
         static u32 m_tileCounter;
         sptr<scene::anim::AnimationComponent> animation_component_;
+        sptr<LevelProperties> level_properties_;
     };
 }
 
