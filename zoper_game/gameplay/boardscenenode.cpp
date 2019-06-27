@@ -12,7 +12,7 @@ namespace zoper
 		BaseClass{ parent, std::move(name) }, 
         m_pointInCenter{createSceneNode<RenderizableSceneNode>("backgroundTilePoint")}
 	{
-        auto renderizables = ensureComponentOfType<Renderizables>();
+        auto renderizables = addComponentOfType<Renderizables>();
         m_backgroundTile = renderizables->createNode("backgroundTile");
         m_backgroundTile->figType.set(FigType_t::Quad);
         m_backgroundTile->pointCount.set(6U);

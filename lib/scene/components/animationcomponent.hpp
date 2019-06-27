@@ -8,10 +8,10 @@
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/components/icomponent.hpp>
 #include <lib/scene/datawrappers/timeview.hpp>
+#include <lib/scene/ianimation.hpp>
 
 namespace lib::scene::anim
 {
-    class IAnimation;
     class AnimationComponent : public IComponent
     {
     public:
@@ -23,18 +23,24 @@ namespace lib::scene::anim
 
         template <typename PropertyType>
         void addPropertyAnimation(const TimePoint time,
-        IProperty<PropertyType>& property, const PropertyType dest)
+            IProperty<PropertyType>& property,
+            const PropertyType dest,
+            ActionFunc endAction = {})
         {
             addAnimation(muptr<anim::IPropertyAnimation<PropertyType>>(
-            attachedNode()->dataWrapper<scene::Timer>(), time, property, property.get(), dest));
+            attachedNode()->dataWrapper<scene::Timer>(), time, property, 
+            property.get(), dest, std::move(endAction)));
         }
 
         template <typename PropertyType>
         void addPropertyAnimation(const TimePoint time,
-        IProperty<PropertyType>& property, const PropertyType start, const PropertyType dest)
+            IProperty<PropertyType>& property, 
+            const PropertyType start,
+            const PropertyType dest,
+            ActionFunc endAction = {})
         {
             addAnimation(muptr<anim::IPropertyAnimation<PropertyType>>(
-            attachedNode()->dataWrapper<scene::Timer>(), time, property, start, dest));
+            attachedNode()->dataWrapper<scene::Timer>(), time, property, start, dest, endAction));
         }
 
     private:

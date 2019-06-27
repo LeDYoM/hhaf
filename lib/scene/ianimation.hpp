@@ -58,7 +58,8 @@ namespace lib::scene::anim
     public:
         IPropertyAnimation(uptr<scene::Timer> timer, TimePoint duration, IProperty<T> &prop,
             T start, T end, ActionFunc endAction = {})
-            : IAnimation{ std::move(timer), std::move(duration), std::move(endAction) }, m_property{ prop }, m_startValue { std::move(start)	},
+            : IAnimation{ std::move(timer), std::move(duration), std::move(endAction) },
+            m_property{ prop }, m_startValue { std::move(start)	},
             m_endValue{ std::move(end) }, m_deltaValue{ m_endValue - m_startValue } {}
 
         virtual bool animate() override

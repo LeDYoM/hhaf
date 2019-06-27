@@ -20,22 +20,23 @@ namespace lib::scene
         inline ~ComponentContainer() = default;
 
         template <typename T>
-        sptr<T> ensureComponentOfType()
+        sptr<T> addComponentOfType()
         {
-            auto component(componentOfType<T>());
-            if (!component)
-            {
-                auto nc(msptr<T>());
-                addComponent(nc);
-                return nc;
-            }
-            else
-            {
-                assert_debug(false);
-            }
-            
-            return component;
+            assert_debug(componentOfType<T>() == nullptr, "This component already exists");
+            auto nc(msptr<T>());
+            addComponent(nc);
+            return nc;
         }
+
+        template <typename T>
+        void ensureComponentOfType(sptr<T>& element)
+        {
+            if (!element)
+            {
+                element = addComponentOfType<T>();
+            }
+        }
+
 
         void updateComponents();
         void postUpdateComponents();
@@ -57,9 +58,9 @@ namespace lib::scene
         bool addComponent(sptr<IComponent> nc);
 
         template <typename T>
-        void ensureComponentOfType(sptr<T> &component)
+        void addComponentOfType(sptr<T> &component)
         {
-            component = ensureComponentOfType<T>();
+            component = addComponentOfType<T>();
         }
 
         const sptr<IComponent> componentOfType(const std::type_index& ti) const;

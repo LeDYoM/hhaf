@@ -9,6 +9,7 @@
 #include <mtypes/include/vector2d.hpp>
 
 #include <lib/board/itile.hpp>
+#include <lib/scene/components/animationcomponent.hpp>
 
 namespace zoper
 {
@@ -19,14 +20,14 @@ namespace zoper
     * 
     * The clas contains internal data like the token type inherited from
     * the base class. It also provides the required graphical information.
-    * */
-	class Token : public GameBaseTile
-	{
-	public:
-		Token(scene::SceneNode* const parent, str name, board::BoardTileData data, const Rectf32 &box);
-		~Token() override;
+    */
+    class Token : public GameBaseTile
+    {
+    public:
+        Token(scene::SceneNode* const parent, str name, board::BoardTileData data, const Rectf32 &box);
+        ~Token() override;
 
-		static void resetTileCounter();
+        static void resetTileCounter();
 
         void tileAdded(const vector2dst &position) override;
         void tileRemoved(const vector2dst & /* position */) override;
@@ -36,9 +37,10 @@ namespace zoper
         void tileMoved(const vector2dst& source,
             const vector2dst& dest) override;
 
-	private:
+    private:
         static u32 m_tileCounter;
-	};
+        sptr<scene::anim::AnimationComponent> animation_component_;
+    };
 }
 
 #endif

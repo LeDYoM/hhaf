@@ -20,7 +20,7 @@ namespace zoper
         BaseClass::onCreated();
 
         loadResources(MainMenuResources{});
-        auto renderizables = ensureComponentOfType<Renderizables>();
+        auto renderizables = addComponentOfType<Renderizables>();
         auto resources_viewer = dataWrapper<ResourceView>();
     
         auto background = renderizables->createNode("background");

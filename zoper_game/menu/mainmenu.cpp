@@ -32,7 +32,7 @@ namespace zoper
 		using namespace nodes;
 		SceneNode::onCreated();
 
-		auto statesController = ensureComponentOfType<StatesController<MenuPageType>>();
+		auto statesController = addComponentOfType<StatesController<MenuPageType>>();
 
 		// Create and register menu pages
 		auto menuPageMain(createSceneNode<MenuPageMain>("menuPageMain"));

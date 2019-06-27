@@ -58,7 +58,7 @@ namespace zoper
                 standarizeText(label);
 
 				if (isInserting && positionInTable == counter) {
-//					auto editor(label->ensureComponentOfType<TextEditorComponent>());
+//					auto editor(label->addComponentOfType<TextEditorComponent>());
 //					editor->setTextValidator(msptr<HighScoreValidator>());
 //                    editor->Accepted.connect([this,positionInTable,element](const str&entry) mutable {
 //                        m_hsData.setHighScoreName(positionInTable, entry);

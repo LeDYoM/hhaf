@@ -20,7 +20,7 @@ namespace lib::scene
         {
                             log_debug_info("A");
 
-            m_node = ensureComponentOfType<Renderizables>()->
+            m_node = addComponentOfType<Renderizables>()->
                 createNode(name + "_node");
         }
 

@@ -26,7 +26,7 @@ namespace zoper
         m_extraSceneNode = createSceneNode("m_extraSceneNode");
         m_extraSceneNode_2 = m_extraSceneNode->createSceneNode("m_extraSceneNode_2");
         
-        auto renderizables = m_extraSceneNode_2->ensureComponentOfType<Renderizables>();
+        auto renderizables = m_extraSceneNode_2->addComponentOfType<Renderizables>();
         m_node = renderizables->createNode("Node");
         m_node->figType.set(FigType_t::Shape);
         m_node->pointCount.set(3U);
@@ -69,15 +69,27 @@ namespace zoper
     void Player::launchAnimation(vector2df toWhere)
     {
         auto currentPosition(position());
-
-        auto animationComponent(ensureComponentOfType<anim::AnimationComponent>());
-        animationComponent->
-            addAnimation(muptr<anim::IPropertyAnimation<vector2df>>(dataWrapper<scene::Timer>(),
+        ensureComponentOfType(animation_component_);
+        animation_component_->
+            addPropertyAnimation(
                 TimePoint_as_miliseconds(gameplay::constants::MillisAnimationLaunchPlayerStep),
-                position, 
-                position(), toWhere,
-                [this,currentPosition = std::move(currentPosition)]() { launchAnimationBack(currentPosition); }
-            ));
+                position,
+                toWhere,
+                [this, currentPosition = std::move(currentPosition)]() { launchAnimationBack(currentPosition); }
+            );
+    }
+
+    void Player::launchAnimationBack(vector2df toWhere)
+    {
+        updateDirectionFromParameter(currentDirection().negate());
+        ensureComponentOfType(animation_component_);
+        animation_component_->
+            addPropertyAnimation(
+                TimePoint_as_miliseconds(gameplay::constants::MillisAnimationLaunchPlayerStep),
+                position,
+                toWhere,
+                [this]() { updateDirectionFromParameter(currentDirection()); }
+        );
     }
 
     void Player::tileAdded(const vector2dst & position_)
@@ -96,21 +108,5 @@ namespace zoper
     void Player::tileMoved(const vector2dst &, const vector2dst &)
     {
         updateDirectionFromParameter(currentDirection());
-    }
-
-    void Player::launchAnimationBack(vector2df toWhere)
-    {
-        updateDirectionFromParameter(currentDirection().negate());
-        if (!animation_component_)
-        {
-            animation_component_ = ensureComponentOfType<anim::AnimationComponent>();
-        }
-        animation_component_->
-            addAnimation(muptr<anim::IPropertyAnimation<vector2df>>(dataWrapper<scene::Timer>(),
-                TimePoint_as_miliseconds(gameplay::constants::MillisAnimationLaunchPlayerStep),
-                position,
-                position(), toWhere,
-                [this]() { updateDirectionFromParameter(currentDirection()); }
-        ));
     }
 }

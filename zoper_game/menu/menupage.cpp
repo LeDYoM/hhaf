@@ -35,7 +35,7 @@ namespace zoper
 		m_normalColor = colors::Blue;
 		m_selectedColor = colors::Red;
 
-		auto input = ensureComponentOfType<MenuPageInputComponent>();
+		auto input = addComponentOfType<MenuPageInputComponent>();
 		input->Up.connect({ this, &MenuPage::goUp });
 		input->Down.connect({ this, &MenuPage::goDown });
 		input->Left.connect({ this, &MenuPage::goLeft });
@@ -78,7 +78,7 @@ namespace zoper
 			if (options.size() > counter) {
 				auto discreteTextLabel(createNodeAt(vector2dst{ columnForOptions, counter }, make_str("option",counter)));
                 standarizeText(discreteTextLabel);
-				auto discreteTextComponent(discreteTextLabel->ensureComponentOfType<DiscreteTextComponent>());
+				auto discreteTextComponent(discreteTextLabel->addComponentOfType<DiscreteTextComponent>());
 				discreteTextComponent->data.set(options[counter]);
 			}
 

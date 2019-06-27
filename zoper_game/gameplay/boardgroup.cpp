@@ -40,7 +40,7 @@ namespace zoper
             }
         }
 
-        p_boardModel = ensureComponentOfType<board::BoardModelComponent>();
+        p_boardModel = addComponentOfType<board::BoardModelComponent>();
         p_boardModel->initialize(tableSize(), this);
 	}
 

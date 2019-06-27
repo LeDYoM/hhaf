@@ -61,7 +61,7 @@ namespace zoper
 
         m_nextTokenPart = 0;
 
-        auto inputComponent(ensureComponentOfType<scene::InputComponent>());
+        auto inputComponent(addComponentOfType<scene::InputComponent>());
         inputComponent->KeyPressed.connect([this](const lib::input::Key&key) {
             log_debug_info("Key pressed in GameScene");
             const auto &keyMapping = sceneManager().systemProvider().app<ZoperProgramController>().keyMapping;
@@ -97,14 +97,14 @@ namespace zoper
         });
 
         // Create the general timer component for the scene.
-        m_sceneTimerComponent = ensureComponentOfType<scene::TimerComponent>();
+        m_sceneTimerComponent = addComponentOfType<scene::TimerComponent>();
 
         // Import game shared data. Basically, the menu selected options.
         importGameSharedData();
 
         // At this point, we setup level properties.
         // levelProperties should not be used before this point.
-        levelProperties = ensureComponentOfType<LevelProperties>();
+        levelProperties = addComponentOfType<LevelProperties>();
         levelProperties->levelChanged.connect([this](const auto level)
         {
             // Forward current level where necessary.
@@ -125,15 +125,15 @@ namespace zoper
 
         // Set state controll.
         {
-            m_sceneStates = ensureComponentOfType<std::remove_reference_t<decltype(*m_sceneStates)>>();
+            m_sceneStates = addComponentOfType<std::remove_reference_t<decltype(*m_sceneStates)>>();
 
             StatesControllerActuatorRegister<GameSceneStates> gameSceneActuatorRegister;
             gameSceneActuatorRegister.registerStatesControllerActuator(*m_sceneStates, *this);
         }
 
-        private_->token_type_generator_ = ensureComponentOfType<RandomizerComponent>();
+        private_->token_type_generator_ = addComponentOfType<RandomizerComponent>();
         assert_release(private_->token_type_generator_ != nullptr, "Cannot create RandomizerComponent");
-        private_->token_position_generator_ = private_->token_type_generator_; //ensureComponentOfType<RandomizerComponent>();
+        private_->token_position_generator_ = private_->token_type_generator_; //addComponentOfType<RandomizerComponent>();
         assert_release(private_->token_position_generator_ != nullptr, "Cannot create RandomizerComponent");
 
         // Prepare the pause text.
@@ -349,14 +349,14 @@ namespace zoper
             {
                 auto sceneNode(createSceneNode("pointIncrementScore_SceneNode"));
 
-                auto renderizables_sceneNode = sceneNode->ensureComponentOfType<Renderizables>();
+                auto renderizables_sceneNode = sceneNode->addComponentOfType<Renderizables>();
                 auto node(renderizables_sceneNode->createNode("pointIncrementScore"));
                 node->figType.set(FigType_t::Shape);
                 node->pointCount.set(30U);
                 node->box = rectFromSize(15.0f, 15.0f);
                 node->color = colors::White;
 
-                auto animationComponent(sceneNode->ensureComponentOfType<anim::AnimationComponent>());
+                auto animationComponent(sceneNode->addComponentOfType<anim::AnimationComponent>());
                 animationComponent->
                     addPropertyAnimation(TimePoint_as_miliseconds(gameplay::constants::MillisAnimationPointsToScore),
                         sceneNode->position,

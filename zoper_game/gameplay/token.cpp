@@ -1,7 +1,6 @@
 #include "token.hpp"
 
 #include <lib/scene/ianimation.hpp>
-#include <lib/scene/components/animationcomponent.hpp>
 #include <lib/scene/components/renderizables.hpp>
 
 #include <lib/include/liblog.hpp>
@@ -11,30 +10,30 @@
 
 namespace zoper
 {
-	using namespace lib;
-	using namespace lib::scene;
-	using namespace lib::board;
+    using namespace lib;
+    using namespace lib::scene;
+    using namespace lib::board;
 
-	u32 Token::m_tileCounter{ 0 };
+    u32 Token::m_tileCounter{ 0 };
 
-	Token::Token(SceneNode* const parent, str name, BoardTileData data, const Rectf32 &box) :
-		GameBaseTile{ parent, name + str::to_str(m_tileCounter) + str::to_str(m_tileCounter), data }
-	{
-		++m_tileCounter;
-        auto renderizables = ensureComponentOfType<Renderizables>();
-		m_node = renderizables->createNode("Node" + str::to_str(m_tileCounter));
+    Token::Token(SceneNode* const parent, str name, BoardTileData data, const Rectf32 &box) :
+        GameBaseTile{ parent, name + str::to_str(m_tileCounter) + str::to_str(m_tileCounter), data }
+    {
+        ++m_tileCounter;
+        auto renderizables = addComponentOfType<Renderizables>();
+        m_node = renderizables->createNode("Node" + str::to_str(m_tileCounter));
         m_node->figType.set(FigType_t::Shape);
         m_node->pointCount.set(30U);
-		m_node->box = box;
-		m_node->color = getColorForToken();
-	}
+        m_node->box = box;
+        m_node->color = getColorForToken();
+    }
 
-	Token::~Token() = default;
+    Token::~Token() = default;
 
-	void Token::resetTileCounter()
-	{
-		m_tileCounter = 0;
-	}
+    void Token::resetTileCounter()
+    {
+        m_tileCounter = 0;
+    }
 
     void Token::tileAdded(const vector2dst & position_)
     {
@@ -56,24 +55,13 @@ namespace zoper
 
     void Token::tileMoved(const vector2dst & /*source*/, const vector2dst & dest)
     {
-        auto animationComponent(ensureComponentOfType<anim::AnimationComponent>());
+        ensureComponentOfType(animation_component_);
         const auto time(TimePoint_as_miliseconds(
                 parentSceneAs<GameScene>()->
-                    ensureComponentOfType<LevelProperties>()->millisBetweenTokens() / 2
+                    addComponentOfType<LevelProperties>()->millisBetweenTokens() / 2
             ));
 
         const auto destination(parentSceneAs<GameScene>()->board2Scene(dest));
-        animationComponent->addPropertyAnimation(time, position, destination);
-/*
-        animationComponent->addAnimation(muptr<anim::IPropertyAnimation<vector2df>>
-        (
-            TimePoint_as_miliseconds(
-                parentSceneAs<GameScene>()->
-                    ensureComponentOfType<LevelProperties>()->millisBetweenTokens() / 2
-            ),
-            position, position(),
-            parentSceneAs<GameScene>()->board2Scene(dest))
-        );
-        */
+        animation_component_->addPropertyAnimation(time, position, destination);
     }
 }
