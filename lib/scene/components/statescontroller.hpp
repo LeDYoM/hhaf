@@ -33,7 +33,7 @@ namespace lib::scene
                 for (auto action : m_pendingActions.current())
                 {
                     action();
-                    m_pendingActions.erase_values(action);
+                    m_pendingActions.erase_value(action);
                 }
                 m_pendingActions.update();
             }

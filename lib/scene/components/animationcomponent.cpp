@@ -15,7 +15,7 @@ namespace lib::scene::anim
     AnimationComponent::AnimationComponent()
         : m_private{ muptr<AnimationComponentPrivate>() } {}
 
-    AnimationComponent::~AnimationComponent() {}
+    AnimationComponent::~AnimationComponent() = default;
 
     void AnimationComponent::addAnimation(uptr<IAnimation> nanimation)
     {
@@ -31,7 +31,7 @@ namespace lib::scene::anim
             if (!animation->animate()) 
             {
                 animation->executeEndAction();
-                m_private->m_animations.erase_values(animation);
+                m_private->m_animations.erase_value(animation);
             }
         }
 
