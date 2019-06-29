@@ -23,7 +23,6 @@ namespace zoper
             },
         currentDirection{ Direction{Direction::DirectionData::Up} }, m_board2SceneFactor{ std::move(board2SceneFactor) }
     {
-        data.set(0);
         m_extraSceneNode = createSceneNode("m_extraSceneNode");
         m_extraSceneNode_2 = m_extraSceneNode->createSceneNode("m_extraSceneNode_2");
         
@@ -35,6 +34,7 @@ namespace zoper
         m_node->box.set(box);
         m_node->color.set(getColorForToken());
         updateDirectionFromParameter(currentDirection());
+        data.set(0);
     }
 
 	Player::~Player() {}
