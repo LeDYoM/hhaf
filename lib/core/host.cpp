@@ -160,7 +160,7 @@ namespace lib::core
         case AppState::ReadyToTerminate:
             log_debug_info(m_private->m_appGroup.m_appContext->appId(), ": started termination");
             m_state = AppState::Terminated;
-//				m_iapp->onFinish();
+//            m_iapp->onFinish();
             SystemProvider::terminate();
             return true;
             break;
