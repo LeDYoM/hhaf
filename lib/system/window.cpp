@@ -3,7 +3,7 @@
 #include <backend_dev/include/irendertarget.hpp>
 #include <lib/system/backendfactory.hpp>
 #include <lib/include/liblog.hpp>
-#include <lib/include/core/timer.hpp>
+#include <lib/include/core/timepoint.hpp>
 #include <lib/include/iapp.hpp>
 #include <lib/scene/renderdata.hpp>
 #include <lib/scene/vertexarray.hpp>

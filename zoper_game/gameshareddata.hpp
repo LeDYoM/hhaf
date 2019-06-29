@@ -8,7 +8,7 @@
 #include <mtypes/include/vector2d.hpp>
 #include <mtypes/include/rect.hpp>
 #include <mtypes/include/streamin.hpp>
-#include <lib/include/core/timer.hpp>
+#include <lib/include/core/timepoint.hpp>
 
 #include "gameplay/direction.hpp"
 

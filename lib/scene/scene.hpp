@@ -1,13 +1,13 @@
 #pragma once
 
-#ifndef LIB_SCENE_SCENE_INCLUDE_HPP__
-#define LIB_SCENE_SCENE_INCLUDE_HPP__
+#ifndef LIB_SCENE_SCENE_INCLUDE_HPP
+#define LIB_SCENE_SCENE_INCLUDE_HPP
 
 #include "hasname.hpp"
 #include "scenenode.hpp"
 
 #include <mtypes/include/types.hpp>
-#include <lib/include/core/timer.hpp>
+#include <lib/include/core/timepoint.hpp>
 #include <lib/scene/components/statescontroller.hpp>
 
 namespace lib

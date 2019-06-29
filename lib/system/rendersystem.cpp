@@ -6,7 +6,7 @@
 #include <lib/resources/texture.hpp>
 #include <lib/scene/renderdata.hpp>
 #include <lib/include/liblog.hpp>
-#include <lib/include/core/timer.hpp>
+#include <lib/include/core/timepoint.hpp>
 
 #include <mtypes/include/types.hpp>
 
@@ -17,7 +17,7 @@ namespace lib::core
     };
 
     RenderSystem::RenderSystem(core::SystemProvider &system_provider)
-		: HostedAppService{ system_provider }, priv_{ muptr<RenderSystemPrivate>() }
+        : HostedAppService{ system_provider }, priv_{ muptr<RenderSystemPrivate>() }
     {
         system_provider.parentWindow().renderTarget()->viewPort();
     }
@@ -37,5 +37,4 @@ namespace lib::core
     {
         systemProvider().parentWindow().renderTarget()->clear();
     }
-
 }
