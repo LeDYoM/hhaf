@@ -52,7 +52,7 @@ namespace lib::core
             last_end_frame_ = timepoint_global_now();
         }
     private:
-    	TimePoint globalStart_;
+        TimePoint globalStart_;
         TimePoint last_start_frame_{0U};
         TimePoint last_end_frame_{0U};
     };

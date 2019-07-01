@@ -9,26 +9,23 @@
 #include <mtypes/include/str.hpp>
 #include <map>
 
-namespace lib
+namespace lib::scene
 {
-	namespace scene
-	{
-		class DebugVarsComponent final : public scene::InputComponent
-		{
-		public:
-			DebugVarsComponent();
-			virtual void update() override;
-			void addOrUpdateDebugVar(const str &id, const str &data);
-			void addOrUpdateDebugVar(const str &id, const u32 data);
+    class DebugVarsComponent final : public scene::InputComponent
+    {
+    public:
+        DebugVarsComponent();
+        virtual void update() override;
+        void addOrUpdateDebugVar(const str &id, const str &data);
+        void addOrUpdateDebugVar(const str &id, const u32 data);
 
-			inline void showVarsNextFrame() noexcept { m_displayVarsNextFrame = true; }
-		private:
-			void displayDebugVars();
+        inline void showVarsNextFrame() noexcept { m_displayVarsNextFrame = true; }
+    private:
+        void displayDebugVars();
 
-			std::map<str,str> m_varsData;
-			bool m_displayVarsNextFrame{ false };
-		};
-	}
+        std::map<str,str> m_varsData;
+        bool m_displayVarsNextFrame{ false };
+    };
 }
 
 #endif

@@ -12,48 +12,48 @@
 
 namespace lib::scene
 {
-	SceneManager::SceneManager(core::SystemProvider &system_provider)
+    SceneManager::SceneManager(core::SystemProvider &system_provider)
         : HostedAppService{ system_provider }
     {
         scene_controller_ = m_componentContainer.addComponentOfType<SceneController>();
         scene_controller_->setSceneManager(this);
     }
 
-	SceneManager::~SceneManager() = default;
+    SceneManager::~SceneManager() = default;
 
-	void SceneManager::start()
-	{
-	}
+    void SceneManager::start()
+    {
+    }
 
-	void SceneManager::update()
-	{
-		m_componentContainer.updateComponents();
-	}
+    void SceneManager::update()
+    {
+        m_componentContainer.updateComponents();
+    }
 
     void SceneManager::finish()
     {
         scene_controller_->finish();
     }
 
-	Rectf32 SceneManager::viewPort() const noexcept
-	{
-		return systemProvider().parentWindow().renderTarget()->viewPort();
-	}
+    Rectf32 SceneManager::viewPort() const noexcept
+    {
+        return systemProvider().parentWindow().renderTarget()->viewPort();
+    }
 
-	void SceneManager::setViewPort(const Rectf32& vp) noexcept
-	{
+    void SceneManager::setViewPort(const Rectf32& vp) noexcept
+    {
         systemProvider().parentWindow().renderTarget()->setViewPort(vp);
-	}
+    }
 
-	Rectf32 SceneManager::viewRect() const noexcept
-	{
-		return systemProvider().parentWindow().renderTarget()->viewRect();
-	}
+    Rectf32 SceneManager::viewRect() const noexcept
+    {
+        return systemProvider().parentWindow().renderTarget()->viewRect();
+    }
 
-	void SceneManager::setViewRect(const Rectf32& vr) noexcept
-	{
+    void SceneManager::setViewRect(const Rectf32& vr) noexcept
+    {
         systemProvider().parentWindow().renderTarget()->setViewRect(vr);
-	}
+    }
 
     IResourceRetriever & SceneManager::resources()
     {

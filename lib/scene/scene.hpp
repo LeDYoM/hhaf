@@ -13,38 +13,39 @@
 namespace lib
 {
     class IResourceLoader;
+}
 
-	namespace core
-	{
-		class Host;
-	}
-	namespace scene
-	{
-		class SceneManager;
+namespace lib::core
+{
+    class Host;
+}
 
-		class Scene : public SceneNode
-		{
-		public:
-			Scene(str name);
-			~Scene() override;
+namespace lib::scene
+{
+    class SceneManager;
 
-			virtual void onFinished() {}
+    class Scene : public SceneNode
+    {
+    public:
+        Scene(str name);
+        ~Scene() override;
 
-			Scene *const parentScene() noexcept override { return this; }
-            const Scene *const parentScene() const noexcept override { return this; }
+        virtual void onFinished() {}
 
-			inline SceneManager &sceneManager() noexcept { return *m_sceneManager; }
-			inline const SceneManager &sceneManager() const noexcept { return *m_sceneManager; }
+        Scene *const parentScene() noexcept override { return this; }
+        const Scene *const parentScene() const noexcept override { return this; }
 
-            void loadResources(IResourceLoader &&resourceloader);
-		private:
+        inline SceneManager &sceneManager() noexcept { return *m_sceneManager; }
+        inline const SceneManager &sceneManager() const noexcept { return *m_sceneManager; }
 
-            SceneManager *m_sceneManager{ nullptr };
-			friend class core::Host;
-			friend class SceneManager;
-			friend class SceneController;
-		};
-	}
+        void loadResources(IResourceLoader &&resourceloader);
+    private:
+
+        SceneManager *m_sceneManager{ nullptr };
+        friend class core::Host;
+        friend class SceneManager;
+        friend class SceneController;
+    };
 }
 
 #endif

@@ -21,34 +21,36 @@ namespace lib
         class VertexArray;
         class RenderData;
     }
+}
 
-    namespace core
+namespace lib::core
+{
+    class RenderTarget;
+    class Host;
+    class SystemProvider;
+
+    class Window final : public HostedAppService
     {
-        class RenderTarget;
-        class Host;
-        class Window final : public HostedAppService
-        {
-        public:
-            Window(core::SystemProvider &system_provider, const WindowCreationParams &wcp);
-            ~Window() override;
-            bool preLoop();
-            void postLoop();
-            virtual void onCreate();
-            virtual void onDestroy();
+    public:
+        Window(core::SystemProvider &system_provider, const WindowCreationParams &wcp);
+        ~Window() override;
+        bool preLoop();
+        void postLoop();
+        virtual void onCreate();
+        virtual void onDestroy();
 
-            sptr<RenderTarget> renderTarget();
-            const sptr<RenderTarget> renderTarget() const;
+        sptr<RenderTarget> renderTarget();
+        const sptr<RenderTarget> renderTarget() const;
 
-            backend::IInputDriver* inputDriver();
-            const backend::IInputDriver* inputDriver() const;
+        backend::IInputDriver* inputDriver();
+        const backend::IInputDriver* inputDriver() const;
 
-        private:
-            void create(const WindowCreationParams &wcp);
-            struct WindowPrivate;
-            uptr<WindowPrivate> m_wPrivate;
-            str m_title;
-        };
-    }
+    private:
+        void create(const WindowCreationParams &wcp);
+        struct WindowPrivate;
+        uptr<WindowPrivate> m_wPrivate;
+        str m_title;
+    };
 }
 
 #endif

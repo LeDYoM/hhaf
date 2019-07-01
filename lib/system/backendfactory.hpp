@@ -13,30 +13,29 @@
 
 namespace lib::backend
 {
-	class BackendFactory final : public AppService
-	{
-	public:
-		BackendFactory();
-		~BackendFactory() override;
+    class BackendFactory final : public AppService
+    {
+    public:
+        BackendFactory();
+        ~BackendFactory() override;
 
-		IWindowProviderInfo* getWindowProviderInfo();
-		IWindow* getOrCreateWindow();
-		ITextureFactory* getTextureFactory();
-		ITTFontFactory* getTTFontFactory();
+        IWindowProviderInfo* getWindowProviderInfo();
+        IWindow* getOrCreateWindow();
+        ITextureFactory* getTextureFactory();
+        ITTFontFactory* getTTFontFactory();
         IShaderFactory* getShaderFactory();
         inline ITextureFactory &textureFactory() { return *getTextureFactory(); }
         inline ITTFontFactory &ttfontFactory() { return *getTTFontFactory(); }
         inline IShaderFactory &shaderFactory() { return *getShaderFactory(); }
 
-	private:
-
-		uptr<BackendRegister> backend_register_;
-		IWindowProviderInfo* m_windowProviderInfo;
-		IWindow* m_window;
-		ITextureFactory* m_textureFactory;
-		ITTFontFactory* m_ttfontFactory;
+    private:
+        uptr<BackendRegister> backend_register_;
+        IWindowProviderInfo* m_windowProviderInfo;
+        IWindow* m_window;
+        ITextureFactory* m_textureFactory;
+        ITTFontFactory* m_ttfontFactory;
         IShaderFactory* m_shaderFactory;
-	};
+    };
 }
 
 #endif

@@ -24,12 +24,12 @@ namespace lib::scene
                 createNode(name + "_node");
         }
 
-		sptr<Renderizable> node() noexcept { return m_node; }
-		const sptr<Renderizable> node() const noexcept { return m_node; }
+        sptr<Renderizable> node() noexcept { return m_node; }
+        const sptr<Renderizable> node() const noexcept { return m_node; }
 
-	private:
-		sptr<Renderizable> m_node;
-	};
+    private:
+        sptr<Renderizable> m_node;
+    };
 }
 
 #endif

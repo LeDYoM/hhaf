@@ -12,7 +12,7 @@ namespace lib::scene
 
     DebugVarsComponent::DebugVarsComponent()
     {
-/*			scene::InputComponent::setOnKeyPressedHandler([this](const auto&key) {
+/*      scene::InputComponent::setOnKeyPressedHandler([this](const auto&key) {
             if (key == input::Key::Num2) {
                 m_displayVarsNextFrame = true;
             }
@@ -24,11 +24,13 @@ namespace lib::scene
     {
         scene::InputComponent::update();
 
-        if (isPressed(input::Key::Num1)) {
+        if (isPressed(input::Key::Num1))
+        {
             m_displayVarsNextFrame = true;
         }
 
-        if (m_displayVarsNextFrame) {
+        if (m_displayVarsNextFrame)
+        {
             m_displayVarsNextFrame = false;
             displayDebugVars();
         }
@@ -41,6 +43,6 @@ namespace lib::scene
 
     void DebugVarsComponent::addOrUpdateDebugVar(const str &id, const u32 data)
     {
-//			addOrUpdateDebugVar(id, str(data));
+//      addOrUpdateDebugVar(id, str(data));
     }
 }

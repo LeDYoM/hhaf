@@ -15,7 +15,7 @@
 
 namespace lib
 {
-	using Action = function<void()>;
+    using Action = function<void()>;
 }
 
 namespace lib::scene

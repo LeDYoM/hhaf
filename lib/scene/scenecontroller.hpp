@@ -13,71 +13,71 @@
 
 namespace lib::scene
 {
-	using SceneDirectorType = function<str(const str&)>;
-	class SceneManager;
+    using SceneDirectorType = function<str(const str&)>;
+    class SceneManager;
 
-	class SceneController : public StatesController<sptr<Scene>>
-	{
-	private:
-		using BaseClass = StatesController<sptr<Scene>>;
-	public:
-		~SceneController() override = default;
+    class SceneController : public StatesController<sptr<Scene>>
+    {
+    private:
+        using BaseClass = StatesController<sptr<Scene>>;
+    public:
+        ~SceneController() override = default;
 
-		void setSceneManager(SceneManager *scene_manager);
-	
-		void terminateScene();
-		void setSceneDirector(SceneDirectorType sceneDirector);
-		void update();
-		void finish();
+        void setSceneManager(SceneManager *scene_manager);
+
+        void terminateScene();
+        void setSceneDirector(SceneDirectorType sceneDirector);
+        void update();
+        void finish();
 
         sptr<Scene> currentScene();
-	    bool isActive();
+        bool isActive();
 
-		bool startScene(const str &sceneName);
+        bool startScene(const str &sceneName);
 
-		template <typename T>
-		bool registerAndStartScene(const str &sceneName)
-		{
-			if (scene_factory_.registerSceneType<T>(sceneName))
-			{
-				return startScene(sceneName);
-			}
-			return false;
-		}
+        template <typename T>
+        bool registerAndStartScene(const str &sceneName)
+        {
+            if (scene_factory_.registerSceneType<T>(sceneName))
+            {
+                return startScene(sceneName);
+            }
+            return false;
+        }
 
-		template <typename T>
-		bool registerAndStartScene()
-		{
-			if (sceneFactory_.registerSceneType<T>())
-			{
-				return startScene(sceneName);
-			}
-			return false;
-		}
+        template <typename T>
+        bool registerAndStartScene()
+        {
+            if (sceneFactory_.registerSceneType<T>())
+            {
+                return startScene(sceneName);
+            }
+            return false;
+        }
 
-		template <typename T>
-		bool registerSceneType()
-		{
-			return scene_factory_.registerSceneType<T>();
-		}
+        template <typename T>
+        bool registerSceneType()
+        {
+            return scene_factory_.registerSceneType<T>();
+        }
 
-		template <typename T> 
-		inline bool startScene()
-		{
-			return startScene(T::StaticTypeName);
-		}
+        template <typename T> 
+        inline bool startScene()
+        {
+            return startScene(T::StaticTypeName);
+        }
 
-		inline SceneFactory& sceneFactory() noexcept { return scene_factory_; }
-		inline const SceneFactory& sceneFactory() const noexcept { return scene_factory_; }
+        inline SceneFactory& sceneFactory() noexcept { return scene_factory_; }
+        inline const SceneFactory& sceneFactory() const noexcept { return scene_factory_; }
         bool currentSceneIsNull();
 
-	private:
-		void startScene(sptr<Scene> scene);
+    private:
+        void startScene(sptr<Scene> scene);
 
-		SceneDirectorType scene_director_;
-		SceneFactory scene_factory_;
-		SceneManager* scene_manager_{ nullptr };
-	};
+        SceneDirectorType scene_director_;
+        SceneFactory scene_factory_;
+        SceneManager* scene_manager_{ nullptr };
+    };
 }
 
 #endif

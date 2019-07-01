@@ -13,8 +13,8 @@ namespace lib::core
     * to other systems
     */
     class SimulationSystem final : public HostedAppService
-	{
-	public:
+    {
+    public:
         SimulationSystem(core::SystemProvider &system_provider);
         ~SimulationSystem() override;
 

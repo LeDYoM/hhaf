@@ -26,33 +26,33 @@ namespace lib::input
                 keyReleased(input_driver_->popKeyRelease());
             }
         }
-	}
+    }
 
     const vector<Key>& InputSystem::pressedKeys() const noexcept
-	{
-		return m_pressedKeys;
-	}
+    {
+        return m_pressedKeys;
+    }
 
-	const vector<Key>& InputSystem::releasedKeys() const noexcept
-	{
-		return m_releasedKeys;
-	}
+    const vector<Key>& InputSystem::releasedKeys() const noexcept
+    {
+        return m_releasedKeys;
+    }
 
-	void InputSystem::keyPressed(const Key key)
-	{
-		assert_release(key < Key::KeyCount, "Incorrect key value");
+    void InputSystem::keyPressed(const Key key)
+    {
+        assert_release(key < Key::KeyCount, "Incorrect key value");
         log_debug_info("InputSystem: Key pressed: ", key);
-		m_keyStates[key] = true;
-		m_pressedKeys.push_back(key);
-	}
+        m_keyStates[key] = true;
+        m_pressedKeys.push_back(key);
+    }
 
-	void InputSystem::keyReleased(const Key key)
-	{
-		assert_release(key < Key::KeyCount, "Incorrect key value");
+    void InputSystem::keyReleased(const Key key)
+    {
+        assert_release(key < Key::KeyCount, "Incorrect key value");
         log_debug_info("InputSystem: Key released: ", key);
-		m_keyStates[key] = false;
-		m_releasedKeys.push_back(key);
-	}
+        m_keyStates[key] = false;
+        m_releasedKeys.push_back(key);
+    }
 
     void InputSystem::pressKey(const Key key)
     {

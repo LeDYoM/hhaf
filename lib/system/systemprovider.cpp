@@ -31,7 +31,7 @@ namespace lib::core
         resource_manager_ = muptr<core::ResourceManager>(*this);
         render_system_ = muptr<core::RenderSystem>(*this);
         random_system_ = muptr<RandomSystem>();
-		file_system_ = muptr<FileSystem>(*this);
+        file_system_ = muptr<FileSystem>(*this);
         simulation_system_ = muptr<SimulationSystem>(*this);
     }
 
@@ -95,15 +95,15 @@ namespace lib::core
         return *random_system_;
     }
 
-	const FileSystem &SystemProvider::fileSystem() const noexcept
-	{
-		return *file_system_;
-	}
+    const FileSystem &SystemProvider::fileSystem() const noexcept
+    {
+        return *file_system_;
+    }
 
-	FileSystem &SystemProvider::fileSystem() noexcept
-	{
-		return *file_system_;
-	}
+    FileSystem &SystemProvider::fileSystem() noexcept
+    {
+        return *file_system_;
+    }
 
     const scene::SceneManager &SystemProvider::sceneManager() const noexcept
     {
