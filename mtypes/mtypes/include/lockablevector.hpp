@@ -107,7 +107,7 @@ namespace lib
 
         /**
         * Get a copy 
-        * */
+        */
         constexpr vector<T> next() const
         {
             LockableVector<T> temp(*this);
@@ -116,7 +116,7 @@ namespace lib
 
         /**
         * Retrieve a constant reference to the updated internal main container.
-        * @return rvalue reference to the updated main container.
+        * @return const lvalue reference to the updated main container.
         */
         constexpr const vector<T>& current() noexcept
         {

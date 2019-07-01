@@ -22,7 +22,7 @@ namespace lib::scene
         template <typename T>
         sptr<T> addComponentOfType()
         {
-            assert_debug(componentOfType<T>() == nullptr, "This component already exists");
+            assert_debug(componentOfType<T>() == nullptr, "There is already a component with this type");
             auto nc(msptr<T>());
             addComponent(nc);
             return nc;
@@ -53,7 +53,7 @@ namespace lib::scene
             return cot ? std::dynamic_pointer_cast<T>(cot) : nullptr;
         }
 
-        void clearComponents() noexcept { m_components.clear(); m_sceneNode = nullptr; }
+        void clearComponents() noexcept { m_components.clear(); }
     private:
         bool addComponent(sptr<IComponent> nc);
 
@@ -65,7 +65,7 @@ namespace lib::scene
 
         const sptr<IComponent> componentOfType(const std::type_index& ti) const;
 
-        SceneNode *m_sceneNode;
+        SceneNode *const m_sceneNode;
         LockableVector<sptr<IComponent>> m_components;
     };
 }

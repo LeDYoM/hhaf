@@ -36,7 +36,7 @@ namespace zoper
         data.set(board_tile_data);
         m_node->box = box;
         m_node->color = getColorForToken();
-        animation_component_ = std::move(animation_component_);
+        animation_component_ = std::move(animation_component);
         level_properties_ = std::move(level_properties);
     }
 
