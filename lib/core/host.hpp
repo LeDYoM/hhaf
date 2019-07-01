@@ -39,7 +39,7 @@ namespace lib::core
         Host(int argc, char *argv[]);
         ~Host();
 
-        bool setApplication(AppUniquePtr iapp);
+        bool setApplication(IApp* iapp);
         int run();
         bool update();
 

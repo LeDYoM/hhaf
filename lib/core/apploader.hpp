@@ -5,18 +5,16 @@
 
 #include <lib/include/iapp.hpp>
 #include <mtypes/include/types.hpp>
+#include <mtypes/include/function.hpp>
 
 namespace lib::core
 {
-    struct IAppDeleterFunctor
+    struct ManagedApp
     {
-        void operator()(IApp* iapp) const
-        {
-            delete iapp;
-        }
+        IApp *app{nullptr};
+        p_initApp init_app{nullptr};
+        p_finishApp finish_app{nullptr};
     };
-
-    using AppUniquePtr = uptr<IApp, IAppDeleterFunctor>;
 
     /// Class to perform a load of an app in memory.
     /// This class does not manage the memory of the
@@ -27,7 +25,9 @@ namespace lib::core
         /// Method to load an app.
         /// @return Instance of the loaded app or nullptr
         ///     in case of failure.
-        AppUniquePtr loadApp(const str& file) const;
+        ManagedApp loadApp(const str& file) const;
+        ManagedApp loadApp(p_initApp init_app, p_finishApp finish_app) const;
+        bool unloadApp(ManagedApp& managed_app) const;
     };
 }
 

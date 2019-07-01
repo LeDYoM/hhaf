@@ -27,7 +27,7 @@ namespace lib::core
 {
     struct ApplicationGroup
     {
-        AppUniquePtr m_iapp;
+        IApp* m_iapp{nullptr};
         uptr<HostContext> m_hostContext;
         uptr<AppContext> m_appContext;
     };
@@ -109,7 +109,7 @@ namespace lib::core
 
     Host::~Host() = default;
 
-    bool Host::setApplication(AppUniquePtr iapp)
+    bool Host::setApplication(IApp* iapp)
     {
         if (!m_private->m_appGroup.m_iapp && iapp) 
         {
@@ -133,7 +133,7 @@ namespace lib::core
             log_debug_info("Starting initialization of new App...");
             m_state = AppState::Executing;
 
-            SystemProvider::init(*this, m_private->m_appGroup.m_iapp.get());
+            SystemProvider::init(*this, m_private->m_appGroup.m_iapp);
 
             m_private->m_appGroup.m_hostContext = muptr<HostContext>(this);
             m_private->m_appGroup.m_appContext = muptr<AppContext>(this);
@@ -181,7 +181,7 @@ namespace lib::core
             {
                 m_private->m_appGroup.m_hostContext.reset();
                 m_private->m_appGroup.m_appContext.reset();
-                m_private->m_appGroup.m_iapp.reset();
+                m_private->m_appGroup.m_iapp;
                 exit = true;
             }
         }

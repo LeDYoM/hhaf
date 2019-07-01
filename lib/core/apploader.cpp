@@ -3,30 +3,45 @@
 
 namespace lib::core
 {
-    AppUniquePtr AppLoader::loadApp(const str& file) const
+    ManagedApp AppLoader::loadApp(const str& file) const
     {
-		using namespace loader;
-		auto *loader(createLoader());
+        using namespace loader;
+        auto *loader(createLoader());
 
-        // Temporary. Fake to test.
-		static const char *file_name = "zooper_game";
-		if (loader->loadModule(file_name))
+        if (loader->loadModule(file.c_str()))
         {
-			auto fp_init_app = (p_initApp)loader->loadMethod(file_name, "createApp");
-			auto fp_destroy_app = (p_finishApp)loader->loadMethod(file_name, "destroyApp");
+            auto fp_init_app = (p_initApp)loader->loadMethod(file.c_str(), "createApp");
+            auto fp_destroy_app = (p_finishApp)loader->loadMethod(file.c_str(), "destroyApp");
 
-            if (fp_init_app && fp_destroy_app)
-            {
-                // Both init and destroy functions exist.
-                // We can now, load the app.
-                auto app = fp_init_app();
-
-                // Create a unique_ptr
-                AppUniquePtr app_p{std::move(app)};
-
-                return app_p;
-            }
+            return loadApp(fp_init_app, fp_destroy_app);
         }
-        return {};
+        return ManagedApp();
     }
+
+    ManagedApp AppLoader::loadApp(p_initApp init_app, p_finishApp finish_app) const
+    {
+        return {init_app ? init_app() : nullptr, init_app, finish_app};
+    }
+
+    bool AppLoader::unloadApp(ManagedApp& managed_app) const
+    {
+        bool result{false};
+
+        if (managed_app.finish_app)
+        {
+            managed_app.finish_app(managed_app.app);
+            result = true;
+        }
+        else if (managed_app.app)
+        {
+            delete managed_app.app;
+            result = true;
+        }
+
+        managed_app.app = nullptr;
+        managed_app.init_app = nullptr;
+        managed_app.finish_app = nullptr;
+        return result;
+    }
+
 }

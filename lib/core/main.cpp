@@ -19,11 +19,12 @@ namespace lib
             installMemManager();
 
             core::Host::createHost(argc, argv);
-//          core::AppLoader app_loader;
-//          core::Host::host().setApplication(app_loader.loadApp("zooper_game"));
-            core::AppUniquePtr app(createApp());
-            core::Host::host().setApplication(std::move(app));
+            core::AppLoader app_loader;
+            core::ManagedApp managed_app = app_loader.loadApp(createApp, destroyApp);
+//            core::ManagedApp managed_app = app_loader.loadApp("zoper_game");
+            core::Host::host().setApplication(managed_app.app);
             int run_result(result = core::Host::host().run());
+            app_loader.unloadApp(managed_app);
             core::Host::destroyHost();
             result = run_result;
         }

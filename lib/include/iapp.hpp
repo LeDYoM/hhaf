@@ -18,11 +18,11 @@ namespace lib
         WindowCreationParams wcp;
     };
 
-	class IApp
-	{
-	public:
+    class IApp
+    {
+    public:
         constexpr IApp() : m_hostContext{ nullptr }, m_iappContext{ nullptr } { }
-		virtual ~IApp() {}
+        virtual ~IApp() {}
 
         virtual void sceneFinished() {}
         virtual IAppDescriptor getAppDescriptor() const = 0;
