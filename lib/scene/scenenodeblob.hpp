@@ -5,11 +5,14 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/rect.hpp>
-#include <lib/include/liblog.hpp>
+
+namespace lib
+{
+    class IApp;
+}
 
 namespace lib::core
 {
-    class Host;
     class RandomSystem;
 }
 
@@ -36,6 +39,12 @@ namespace lib::scene
 
         const core::RandomSystem& randomSystem() const;
         core::RandomSystem& randomSystem();
+
+        const IApp& app() const;
+        IApp& app();
+
+        template <typename T>
+        T &app() { return (static_cast<T&>(app())); }
 
         Rectf32 scenePerspective() const;
 

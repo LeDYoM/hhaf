@@ -48,7 +48,12 @@ namespace lib::core
 
         template <typename T>
         T &app() { return *(dynamic_cast<T*>(&app())); }
+
+        template <typename T>
+        const T &app() const { return *(dynamic_cast<T*>(&app())); }
+
         IApp &app();
+        const IApp &app() const;
 
         const Window &parentWindow() const noexcept;
         Window &parentWindow() noexcept;

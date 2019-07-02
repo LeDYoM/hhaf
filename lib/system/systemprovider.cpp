@@ -55,6 +55,11 @@ namespace lib::core
         return *app_;
     }
 
+    const IApp &SystemProvider::app() const
+    {
+        return *app_;
+    }
+
     const Window &SystemProvider::parentWindow() const noexcept
     {
          return *window_; 

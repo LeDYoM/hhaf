@@ -5,6 +5,7 @@
 #include "scenemanager.hpp"
 
 #include <lib/system/systemprovider.hpp>
+#include <lib/include/iapp.hpp>
 
 namespace lib::scene
 {
@@ -39,6 +40,16 @@ namespace lib::scene
     core::RandomSystem & SceneNodeBlob::randomSystem()
     {
         return sceneManager().systemProvider().randomSystem();
+    }
+
+    const IApp& SceneNodeBlob::app() const
+    {
+        return sceneManager().systemProvider().app();
+    }
+
+    IApp& SceneNodeBlob::app()
+    {
+        return sceneManager().systemProvider().app();
     }
 
     Rectf32 SceneNodeBlob::scenePerspective() const

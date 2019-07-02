@@ -8,11 +8,6 @@
 
 namespace zoper
 {
-    
-    inline ZoperProgramController &zApp() {
-        return app<ZoperProgramController>();
-    }
-    
     constexpr u32 PointsPerQuad = 6U;
 }
 
