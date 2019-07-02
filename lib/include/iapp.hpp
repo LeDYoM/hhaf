@@ -24,18 +24,17 @@ namespace lib
         constexpr IApp() : m_hostContext{ nullptr }, m_iappContext{ nullptr } { }
         virtual ~IApp() {}
 
-        virtual void sceneFinished() {}
         virtual IAppDescriptor getAppDescriptor() const = 0;
         virtual void onInit() = 0;
 
-        inline void setHostContext(core::IHostContext*hostContext) noexcept { m_hostContext = hostContext; }
-        inline void setAppContext(core::IAppContext*appContext) noexcept { m_iappContext = appContext; }
+        inline void setHostContext(core::IHostContext* const hostContext) noexcept { m_hostContext = hostContext; }
+        inline void setAppContext(core::IAppContext* const appContext) noexcept { m_iappContext = appContext; }
 
         inline core::IHostContext &hostContext() const { return *m_hostContext; }
         inline core::IAppContext &appContext() const { return *m_iappContext; }
     private:
-        core::IHostContext *m_hostContext;
-        core::IAppContext *m_iappContext;
+        core::IHostContext *m_hostContext{nullptr};
+        core::IAppContext *m_iappContext{nullptr};
     };
 }
 
