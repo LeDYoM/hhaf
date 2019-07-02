@@ -43,7 +43,7 @@ namespace lib::core
     class SystemProvider
     {
     public:
-        void init(Host& host, IApp *iapp);
+        void init(IApp *iapp);
         void terminate();
 
         template <typename T>
@@ -76,8 +76,9 @@ namespace lib::core
         const RenderSystem &renderSystem() const noexcept;
         RenderSystem &renderSystem() noexcept;
 
+        bool runStep();
+
     private:
-        core::Host* host_;
         IApp* app_;
         uptr<backend::BackendFactory> backend_factory_;
         uptr<Window> window_;

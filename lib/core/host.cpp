@@ -1,11 +1,12 @@
 #include "host.hpp"
 
-#include <backend_dev/include/iwindow.hpp>
 #include <lib/core/appcontext.hpp>
-#include <lib/system/backendfactory.hpp>
 #include <lib/core/hostcontext.hpp>
 #include <lib/include/liblog.hpp>
+#include <backend_dev/include/iwindow.hpp>
+
 #include <lib/scene/scenemanager.hpp>
+#include <lib/system/backendfactory.hpp>
 #include <lib/system/filesystem/filesystem.hpp>
 #include <lib/system/inputsystem.hpp>
 #include <lib/system/randomsystem.hpp>
@@ -91,7 +92,7 @@ namespace lib::core
         if (!m_private->m_appGroup.m_iapp && iapp) 
         {
             log_debug_info("StartingRegistering app...");
-            m_private->m_appGroup.m_iapp = std::move(iapp);
+            m_private->m_appGroup.m_iapp = iapp;
             log_debug_info("Starting new app...");
             m_state = AppState::ReadyToStart;
             return true;
@@ -110,7 +111,7 @@ namespace lib::core
             log_debug_info("Starting initialization of new App...");
             m_state = AppState::Executing;
 
-            SystemProvider::init(*this, m_private->m_appGroup.m_iapp);
+            SystemProvider::init(m_private->m_appGroup.m_iapp);
 
             m_private->m_appGroup.m_hostContext = muptr<HostContext>(this);
             m_private->m_appGroup.m_appContext = muptr<AppContext>(this);
@@ -172,13 +173,7 @@ namespace lib::core
 
     bool Host::loopStep()
     {
-        const bool windowWants2Close{ parentWindow().preLoop() };
-        simulationSystem().update();
-        inputSystem().update();
-        sceneManager().update();
-
-        parentWindow().postLoop();
-        return windowWants2Close;
+        return runStep();
     }
 
     void Host::exitProgram()

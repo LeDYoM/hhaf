@@ -14,6 +14,8 @@ namespace lib::core
 {
     struct RenderSystem::RenderSystemPrivate final
     {
+        RenderSystemPrivate() {}
+        ~RenderSystemPrivate() {}
     };
 
     RenderSystem::RenderSystem(core::SystemProvider &system_provider)

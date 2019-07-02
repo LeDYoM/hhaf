@@ -18,10 +18,9 @@
 
 namespace lib::core
 {
-    void SystemProvider::init(Host& host, IApp *iapp)
+    void SystemProvider::init(IApp *iapp)
     {
         assert_release(iapp != nullptr, "Cannot create a SystemProvider with a nullptr app");
-        host_ = &host;
         app_ = iapp;
         backend_factory_ = muptr<backend::BackendFactory>();
         time_system_ = muptr<TimeSystem>();
@@ -158,5 +157,16 @@ namespace lib::core
     RenderSystem &SystemProvider::renderSystem() noexcept
     {
         return *render_system_;
+    }
+
+    bool SystemProvider::runStep()
+    {
+        const bool windowWants2Close{ parentWindow().preLoop() };
+        simulationSystem().update();
+        inputSystem().update();
+        sceneManager().update();
+
+        parentWindow().postLoop();
+        return windowWants2Close;
     }
 }
