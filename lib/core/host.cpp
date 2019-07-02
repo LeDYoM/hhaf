@@ -22,8 +22,6 @@
 #include <algorithm>
 #include "config.hpp"
 
-#define ACCEPT_PARAMETERS
-
 namespace lib::core
 {
     struct ApplicationGroup
@@ -33,13 +31,11 @@ namespace lib::core
         uptr<AppContext> m_appContext;
     };
 
-    class HostPrivate final
+    class Host::HostPrivate final
     {
     public:
         HostPrivate(const int argc, char *argv[]) :
-#ifdef ACCEPT_PARAMETERS
             m_params{parpar::create(argc,argv)},
-#endif
             // Hardcoded default configuration
             // TODO
             m_configuration{
@@ -49,7 +45,6 @@ namespace lib::core
 
         }
 
-#ifdef ACCEPT_PARAMETERS
         bool parseCommandLineParameters()
         {
             if (m_params.hasParameters()) {
@@ -58,10 +53,8 @@ namespace lib::core
             return true;
         }
         parpar::ParametersParser m_params;
-#endif
 
         Dictionary<str> m_configuration;
-
         ApplicationGroup m_appGroup;
     };
 

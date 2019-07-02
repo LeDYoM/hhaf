@@ -23,11 +23,6 @@ namespace lib::scene
 
 namespace lib::core
 {
-    class Window;
-    class ResourceManager;
-    class RandomSystem;
-    class HostPrivate;
-
     class Host final : public SystemProvider
     {
     public:
@@ -49,7 +44,7 @@ namespace lib::core
         IApp &app();
 
     private:
-        friend class lib::core::HostPrivate;
+        class HostPrivate;
         uptr<HostPrivate> m_private;
 
         bool loopStep();
