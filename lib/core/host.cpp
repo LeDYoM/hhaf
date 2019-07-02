@@ -174,9 +174,4 @@ namespace lib::core
         assert_release(m_state == AppState::Executing, "Cannot terminate a program that is not in the executing state");
         m_state = AppState::ReadyToTerminate;
     }
-
-    IApp &Host::app()
-    {
-        return *(m_private->m_appGroup.m_iapp);
-    }
 }

@@ -39,10 +39,6 @@ namespace lib::core
 
         void exitProgram();
 
-        template <typename T>
-        T &app() { return *(dynamic_cast<T*>(&app())); }
-        IApp &app();
-
     private:
         class HostPrivate;
         uptr<HostPrivate> m_private;
