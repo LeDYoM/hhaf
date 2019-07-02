@@ -73,29 +73,6 @@ namespace lib::core
         Terminated
     };
 
-    Host *Host::m_instance = nullptr;
-
-    bool Host::createHost(int argc, char * argv[])
-    {
-        if (!m_instance) 
-        {
-            m_instance = new Host(argc, argv);
-            return true;
-        }
-        return false;
-    }
-
-    bool Host::destroyHost() noexcept
-    {
-        if (m_instance) 
-        {
-            delete m_instance;
-            m_instance = nullptr;
-            return true;
-        }
-        return false;
-    }
-
     Host::Host(int argc, char *argv[])
         : m_private{muptr<HostPrivate>(argc,argv)}, m_state{ AppState::NotInitialized }
     {

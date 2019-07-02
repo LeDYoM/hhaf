@@ -34,7 +34,6 @@ namespace lib::core
         static bool createHost(int argc, char *argv[]);
         static bool destroyHost() noexcept;
 
-        inline static Host &host() noexcept { return *m_instance; }
         enum class AppState : u8;
         Host(int argc, char *argv[]);
         ~Host();
@@ -54,8 +53,6 @@ namespace lib::core
         uptr<HostPrivate> m_private;
 
         bool loopStep();
-
-        static Host *m_instance;
 
         AppState m_state;
         bool exit{ false };
