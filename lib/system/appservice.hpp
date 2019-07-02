@@ -9,13 +9,13 @@
 #include <lib/system/systemprovider.hpp>
 ///////////////////////////////
 
+namespace lib::core
+{
+    class Host;
+}
+
 namespace lib
 {
-	namespace core
-	{
-		class Host;
-	}
-
     /**
     * Class to serve as a base for all App Services.
     * 
@@ -48,4 +48,5 @@ namespace lib
         core::SystemProvider &system_provider_;
     };
 }
+
 #endif

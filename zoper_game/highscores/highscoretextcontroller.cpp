@@ -6,7 +6,6 @@
 #include "../zoperprogramcontroller.hpp"
 #include <lib/scene/components/texteditorcomponent.hpp>
 #include <lib/system/resourcemanager.hpp>
-#include <lib/core/host.hpp>
 #include <lib/include/resources/ittfont.hpp>
 #include <lib/scene/datawrappers/resourceview.hpp>
 
