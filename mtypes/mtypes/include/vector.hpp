@@ -389,7 +389,6 @@ namespace lib
             Allocator::construct(m_buffer + m_size, std::forward<Args>(args)...);
             m_size++;
             LOG("vector::emplace_back() --- m_size before: " << m_size);
-
         }
 
         constexpr void insert(const vector &other)
