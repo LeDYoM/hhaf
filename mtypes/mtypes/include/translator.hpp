@@ -350,7 +350,7 @@ namespace lib
 
         bool pendingProperty() const
         {
-            return currentTokenIsOfType(TokenType::Str) || currentTokenIsOfType(TokenType::Integer) || currentTokenIsOfType(TokenType::Float);
+            return currentTokenIsOfType<TokenType::Str>() || currentTokenIsOfType<TokenType::Integer>() || currentTokenIsOfType<TokenType::Float>();
         }
 
         bool storeIfPendingProperty(const str& property_name)
@@ -366,7 +366,7 @@ namespace lib
         template <typename T, TokenType token_type_value>
         bool storeIfPendingThing(const str& property_name)
         {
-            if (currentTokenIsOfType(token_type_value))
+            if (currentTokenIsOfType<token_type_value>())
             {
                 pushAndStore<T>(property_name);
                 return true;
@@ -431,9 +431,10 @@ namespace lib
             return v;
         }
 
-        constexpr bool currentTokenIsOfType(const TokenType expectedCurrent) const
+        template <TokenType expected>
+        constexpr bool currentTokenIsOfType() const
         {
-            return currentToken().token_type == expectedCurrent;
+            return currentToken().token_type == expected;
         }
 
         constexpr bool currentTokenIsOfTypeAndAdvanceIfItIs(const TokenType expectedCurrent)

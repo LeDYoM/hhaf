@@ -19,36 +19,36 @@ namespace lib
         constexpr Object() {}
 
         inline Object(std::initializer_list<pair<str,str>> iListValues) 
-		{
+        {
             set(std::move(iListValues), false);
         }
 
-         inline Object(std::initializer_list<pair<str,Object>> iListObjects)
-		 {
+            inline Object(std::initializer_list<pair<str,Object>> iListObjects)
+            {
             set(std::move(iListObjects), false);
-         }
+            }
 
         inline Object(std::initializer_list<pair<str, Object>> iListObjects,
                 std::initializer_list<pair<str, str>> iListValues)
-		{
+        {
             set(std::move(iListObjects), false);
             set(std::move(iListValues), false);
         }
 
         inline Object(std::initializer_list<pair<str, str>> iListValues,
-               std::initializer_list<pair<str, Object>> iListObjects) 
-		{
+                std::initializer_list<pair<str, Object>> iListObjects) 
+        {
             set(std::move(iListValues), false);
             set(std::move(iListObjects), false);
         }
 
         constexpr bool operator==(const Object &obj) const noexcept 
-		{
+        {
             return m_values == obj.m_values && m_objects == obj.m_objects;
         }
 
         constexpr bool operator!=(const Object &obj) const noexcept 
-		{
+        {
             return !((*this) == obj);
         }
 
@@ -64,110 +64,110 @@ namespace lib
             constexpr bool isObject() const noexcept { return m_object != nullptr; }
 
             constexpr bool operator==(const str&key) const noexcept 
-			{
-				return ((isValue()) ? (*m_value) == key : false);
+            {
+                return ((isValue()) ? (*m_value) == key : false);
             }
 
             constexpr bool operator!=(const str&key) const noexcept 
-			{
+            {
                 return !(*this==key);
             }
 
             constexpr bool operator==(const Object &obj) const noexcept 
-			{
-				return ((isObject()) ? (*m_object) == obj : false);
+            {
+                return ((isObject()) ? (*m_object) == obj : false);
             }
 
             constexpr bool operator!=(const Object &obj) const noexcept
-			{
+            {
                 return !(*this==obj);
             }
 
-			constexpr bool operator==(const Value &obj) const noexcept
-			{
-				if (isObject() == obj.isObject() && isValue() == obj.isValue())
-				{
-					if (isObject())
-					{
-						return getObject() == obj.getObject();
-					}
-					else if (isValue())
-					{
-						return getValue() == obj.getValue();
-					}
+            constexpr bool operator==(const Value &obj) const noexcept
+            {
+                if (isObject() == obj.isObject() && isValue() == obj.isValue())
+                {
+                    if (isObject())
+                    {
+                        return getObject() == obj.getObject();
+                    }
+                    else if (isValue())
+                    {
+                        return getValue() == obj.getValue();
+                    }
 
-					// Both are nullptr;
-					return true;
-				}
-				return false;
-			}
+                    // Both are nullptr;
+                    return true;
+                }
+                return false;
+            }
 
-			constexpr bool operator!=(const Value &obj) const noexcept
-			{
-				return !(*this == obj);
-			}
+            constexpr bool operator!=(const Value &obj) const noexcept
+            {
+                return !(*this == obj);
+            }
 
             Value operator[](const str&key) const
             {
-				// Using indexing operator in a value returns empty value.
-				// If the key exists, forward the key to it.
-				return (isObject() ? (*m_object)[key] : Value{});
+                // Using indexing operator in a value returns empty value.
+                // If the key exists, forward the key to it.
+                return (isObject() ? (*m_object)[key] : Value{});
             }
 
-			/// Get a @Value in the array form. That is the
-			/// method is equivaled to obj(key){index].
-			Value operator[](const size_t index) const
-			{
-				return (isObject() ? getObject()[index] : Value{});
-			}
+            /// Get a @Value in the array form. That is the
+            /// method is equivaled to obj(key){index].
+            Value operator[](const size_t index) const
+            {
+                return (isObject() ? getObject()[index] : Value{});
+            }
 
-			const Object& getObject() const noexcept
-			{
-				return (*m_object);
-			}
+            const Object& getObject() const noexcept
+            {
+                return (*m_object);
+            }
 
-			const str& getValue() const noexcept
-			{
-				return (*m_value);
-			}
+            const str& getValue() const noexcept
+            {
+                return (*m_value);
+            }
 
         private:
             const Object *m_object{nullptr};
             const str *m_value{nullptr};
         };
 
-		constexpr size_type size_objects() const noexcept
-		{
-			return m_objects.size();
-		}
+        constexpr size_type size_objects() const noexcept
+        {
+            return m_objects.size();
+        }
 
-		constexpr size_type size_values() const noexcept
-		{
-			return m_values.size();
-		}
+        constexpr size_type size_values() const noexcept
+        {
+            return m_values.size();
+        }
 
-		constexpr size_type size() const noexcept
-		{
-			return size_objects() + size_values();
-		}
+        constexpr size_type size() const noexcept
+        {
+            return size_objects() + size_values();
+        }
 
-		constexpr bool empty_objects() const noexcept
-		{
-			return m_objects.empty();
-		}
+        constexpr bool empty_objects() const noexcept
+        {
+            return m_objects.empty();
+        }
 
-		constexpr bool empty_values() const noexcept
-		{
-			return m_values.empty();
-		}
+        constexpr bool empty_values() const noexcept
+        {
+            return m_values.empty();
+        }
 
-		constexpr size_type empty() const noexcept
-		{
-			return empty_objects() && empty_values();
-		}
+        constexpr size_type empty() const noexcept
+        {
+            return empty_objects() && empty_values();
+        }
 
         Value getObject(const str&key) const
-		{
+        {
             auto token(m_objects.findChecked(key));
             return (token.first?
                 Value(&(token.second->second)):
@@ -175,41 +175,41 @@ namespace lib
         }
 
         Value getValue(const str&key) const
-		{
+        {
             auto token(m_values.findChecked(key));
             return (token.first?
                 Value(&(token.second->second)):
                 Value());
         }
 
-		/// Get a @Value pointing to an element with the specified key.
-		/// @param[in] key Key str to search for.
-		/// @return Empty invalid @Value if not found or a @Value
-		/// pointing to the data if found.
+        /// Get a @Value pointing to an element with the specified key.
+        /// @param[in] key Key str to search for.
+        /// @return Empty invalid @Value if not found or a @Value
+        /// pointing to the data if found.
         Value operator[](const str&key) const
         {
             // Note: Priority to str
             Value val{getValue(key)};
-			return ((val.isValid()) ? val : getObject(key));
+            return ((val.isValid()) ? val : getObject(key));
         }
 
-		static constexpr const char*const arraySeparator = "::";
+        static constexpr const char*const arraySeparator = "::";
 
-		/// Get a @Value in the array form.
-		/// @param index The index of the element you want to read.
-		/// @return @b Value Representing the element.
-		/// Note: You might need to check with @Value::isValid
-		/// if the value is valid.
-		Value operator[](const size_t index) const
-		{
-			return (*this)[str(arraySeparator) + str::to_str(index)];
-		}
+        /// Get a @Value in the array form.
+        /// @param index The index of the element you want to read.
+        /// @return @b Value Representing the element.
+        /// Note: You might need to check with @Value::isValid
+        /// if the value is valid.
+        Value operator[](const size_t index) const
+        {
+            return (*this)[str(arraySeparator) + str::to_str(index)];
+        }
 
-		bool set(std::initializer_list<pair<str, str>> iListValues, bool overwrite = true)
+        bool set(std::initializer_list<pair<str, str>> iListValues, bool overwrite = true)
         {
             bool ok{true};
             for (auto&& element : iListValues) 
-			{
+            {
                 ok &= m_values.add(std::move(element.first), std::move(element.second), overwrite);
             }
             return ok;
@@ -219,47 +219,47 @@ namespace lib
         {
             bool ok{true};
             for (auto&& element : iListObject)
-			{
+            {
                 ok &= m_objects.add(element.first, element.second, overwrite);
             }
             return ok;
         }
 
-		bool set(std::initializer_list<pair<str, Value>> iListObject, bool overwrite = true)
-		{
-			bool ok{ true };
-			for (auto&& element : iListObject)
-			{
-				if (element.second.isObject())
-				{
-					ok &= set(element.first, element.second.getObject(), overwrite);
-				}
-				else if (element.second.isValue())
-				{
-					ok &= set(element.first, element.second.getValue(), overwrite);
-				}
-				else
-				{
-					ok = false;
-				}
-			}
-			return ok;
-		}
+        bool set(std::initializer_list<pair<str, Value>> iListObject, bool overwrite = true)
+        {
+            bool ok{ true };
+            for (auto&& element : iListObject)
+            {
+                if (element.second.isObject())
+                {
+                    ok &= set(element.first, element.second.getObject(), overwrite);
+                }
+                else if (element.second.isValue())
+                {
+                    ok &= set(element.first, element.second.getValue(), overwrite);
+                }
+                else
+                {
+                    ok = false;
+                }
+            }
+            return ok;
+        }
 
-		bool set(str key, Object obj, bool overwrite = true)
-		{
-			return set({ std::make_pair(key, obj) }, overwrite);
-		}
+        bool set(str key, Object obj, bool overwrite = true)
+        {
+            return set({ std::make_pair(key, obj) }, overwrite);
+        }
 
-		bool set(str key, str value, bool overwrite = true)
-		{
-			return set({ std::make_pair(key, value) }, overwrite);
-		}
+        bool set(str key, str value, bool overwrite = true)
+        {
+            return set({ std::make_pair(key, value) }, overwrite);
+        }
 
-		bool set(str key, Value value, bool overwrite = true)
-		{
-			return set({ std::make_pair(key, value) }, overwrite);
-		}
+        bool set(str key, Value value, bool overwrite = true)
+        {
+            return set({ std::make_pair(key, value) }, overwrite);
+        }
 
         constexpr ObjectDictionary::iterator begin_objects() noexcept { return m_objects.begin(); }
         constexpr ObjectDictionary::const_iterator begin_objects() const noexcept{ return m_objects.begin(); }
@@ -271,7 +271,7 @@ namespace lib
         constexpr ValueDictionary::iterator end_values() noexcept { return m_values.end(); }
         constexpr ValueDictionary::const_iterator end_values() const noexcept{ return m_values.end(); }
 
-	private:
+    private:
         ValueDictionary m_values;
         ObjectDictionary m_objects;
     };
