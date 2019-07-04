@@ -25,9 +25,6 @@ namespace lib::core
     class Host final : public SystemProvider
     {
     public:
-        static bool createHost(int argc, char *argv[]);
-        static bool destroyHost() noexcept;
-
         enum class AppState : u8;
         Host(int argc, char *argv[]);
         ~Host();
