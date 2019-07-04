@@ -1,7 +1,6 @@
 #include "host.hpp"
 
 #include <lib/core/appcontext.hpp>
-#include <lib/core/hostcontext.hpp>
 #include <lib/include/liblog.hpp>
 #include <backend_dev/include/iwindow.hpp>
 
@@ -27,7 +26,6 @@ namespace lib::core
     struct ApplicationGroup
     {
         IApp* m_iapp{nullptr};
-        uptr<HostContext> m_hostContext;
         uptr<AppContext> m_appContext;
     };
 
@@ -106,9 +104,8 @@ namespace lib::core
 
             SystemProvider::init(m_private->m_appGroup.m_iapp);
 
-            m_private->m_appGroup.m_hostContext = muptr<HostContext>(this);
             m_private->m_appGroup.m_appContext = muptr<AppContext>(this);
-            m_private->m_appGroup.m_iapp->setHostContext(&(*(m_private->m_appGroup.m_hostContext)));
+            m_private->m_appGroup.m_iapp->setSystemProvider(this);
             m_private->m_appGroup.m_iapp->setAppContext(&(*(m_private->m_appGroup.m_appContext)));
 
             m_private->m_appGroup.m_iapp->onInit();
@@ -150,7 +147,6 @@ namespace lib::core
         {
             if (update()) 
             {
-                m_private->m_appGroup.m_hostContext.reset();
                 m_private->m_appGroup.m_appContext.reset();
                 m_private->m_appGroup.m_iapp;
                 exit = true;

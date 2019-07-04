@@ -8,7 +8,6 @@
 #include <mtypes/include/types.hpp>
 
 #include <lib/include/iapp.hpp>
-#include <lib/include/core/ihostcontext.hpp>
 #include <lib/system/systemprovider.hpp>
 
 namespace lib::input

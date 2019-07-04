@@ -4,10 +4,14 @@
 #define LIB_IAPP_INCLUDE_HPP
 
 #include "windowcreationparams.hpp"
-#include <lib/include/core/ihostcontext.hpp>
 #include <lib/include/core/iappcontext.hpp>
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
+
+namespace lib::core
+{
+    class SystemProvider;
+}
 
 namespace lib
 {
@@ -21,19 +25,19 @@ namespace lib
     class IApp
     {
     public:
-        constexpr IApp() : m_hostContext{ nullptr }, m_iappContext{ nullptr } { }
+        constexpr IApp() noexcept {}
         virtual ~IApp() {}
 
         virtual IAppDescriptor getAppDescriptor() const = 0;
         virtual void onInit() = 0;
 
-        inline void setHostContext(core::IHostContext* const hostContext) noexcept { m_hostContext = hostContext; }
+        inline void setSystemProvider(core::SystemProvider* const system_provider) noexcept { system_provider_ = system_provider; }
         inline void setAppContext(core::IAppContext* const appContext) noexcept { m_iappContext = appContext; }
 
-        inline core::IHostContext &hostContext() const { return *m_hostContext; }
-        inline core::IAppContext &appContext() const { return *m_iappContext; }
+        inline core::SystemProvider &systemProvider() const noexcept { return *system_provider_; }
+        inline core::IAppContext &appContext() const noexcept { return *m_iappContext; }
     private:
-        core::IHostContext *m_hostContext{nullptr};
+        core::SystemProvider *system_provider_{nullptr};
         core::IAppContext *m_iappContext{nullptr};
     };
 }
