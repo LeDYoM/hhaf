@@ -17,13 +17,14 @@
 #include <lib/include/liblog.hpp>
 #include <lib/scene/renderizables/renderizable.hpp>
 #include <lib/scene/scenemanager.hpp>
-#include <lib/core/host.hpp>
 #include <lib/scene/ianimation.hpp>
 #include <lib/scene/components/animationcomponent.hpp>
 #include <lib/scene/components/inputcomponent.hpp>
 #include <lib/scene/components/alignedtextcomponent.hpp>
 #include <lib/scene/components/randomizercomponent.hpp>
 #include <lib/scene/components/renderizables.hpp>
+//TODO: Fixme
+#include <lib/system/systemprovider.hpp>
 
 namespace zoper
 {
@@ -64,6 +65,7 @@ namespace zoper
         auto inputComponent(addComponentOfType<scene::InputComponent>());
         inputComponent->KeyPressed.connect([this](const lib::input::Key&key) {
             log_debug_info("Key pressed in GameScene");
+            // TODO: Fixme
             const auto &keyMapping = sceneManager().systemProvider().app<ZoperProgramController>().keyMapping;
             switch (m_sceneStates->currentState())
             {

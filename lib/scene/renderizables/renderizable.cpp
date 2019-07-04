@@ -5,6 +5,7 @@
 #include <lib/scene/renderdata.hpp>
 #include <lib/scene/scenenode.hpp>
 #include <lib/resources/texture.hpp>
+#include <lib/system/systemprovider.hpp>
 
 #include "geometry_math.hpp"
 

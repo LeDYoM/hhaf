@@ -3,7 +3,6 @@
 #include <lib/scene/datawrappers/resourceview.hpp>
 #include <lib/resources/texture.hpp>
 #include <lib/system/resourcemanager.hpp>
-#include <lib/core/host.hpp>
 
 #include "../menu/mainmenu.hpp"
 #include "../gameshareddata.hpp"

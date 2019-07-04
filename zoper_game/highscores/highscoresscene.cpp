@@ -8,7 +8,7 @@
 #include <lib/scene/renderizables/renderizable.hpp>
 #include <lib/scene/components/renderizables.hpp>
 #include <lib/system/resourcemanager.hpp>
-#include <lib/core/host.hpp>
+#include <lib/system/systemprovider.hpp>
 
 namespace zoper
 {

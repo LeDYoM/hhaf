@@ -3,7 +3,6 @@
 #include "gameplay/gamescene.hpp"
 #include "highscores/highscoresscene.hpp"
 
-#include <lib/core/host.hpp>
 #include <lib/core/serializer.hpp>
 #include <lib/scene/scenemanager.hpp>
 #include <lib/system/systemprovider.hpp>

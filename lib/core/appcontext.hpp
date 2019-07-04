@@ -14,7 +14,7 @@ namespace lib::core
     class AppContext final : public IAppContext
     {
     public:
-        explicit AppContext(Host *const host);
+        AppContext();
         void setApplicationName(str appName) override;
         void setApplicationVersion(size_type version) override;
         void setApplicationSubVersion(size_type subversion) override;
@@ -23,7 +23,6 @@ namespace lib::core
         void setProperty(str prop_name, str prop_value) override;
 
     private:
-        Host * m_host{ nullptr };
         str m_applicationName{ "UnknownApp" };
         size_type m_applicationVersion{ 0U };
         size_type m_applicationSubVersion{ 0U };

@@ -6,6 +6,7 @@
 #include <lib/include/key.hpp>
 #include <lib/include/liblog.hpp>
 #include <lib/include/core/timepoint.hpp>
+#include <lib/system/systemprovider.hpp>
 
 #include <mtypes/include/types.hpp>
 

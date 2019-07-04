@@ -5,6 +5,7 @@
 
 #include <lib/include/resources/iresourceloader.hpp>
 #include <lib/include/resources/iresourcehandler.hpp>
+#include <lib/system/systemprovider.hpp>
 
 namespace lib::scene
 {

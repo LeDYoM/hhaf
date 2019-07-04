@@ -1,8 +1,6 @@
 #include "transformation.hpp"
 #include <math.h>
 
-#include <lib/core/host.hpp>
-
 namespace lib::scene
 {
     const Transform Transform::Identity = Transform{};

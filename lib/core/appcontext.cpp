@@ -1,5 +1,4 @@
 #include "appcontext.hpp"
-#include "host.hpp"
 
 namespace lib::core
 {
@@ -9,10 +8,9 @@ namespace lib::core
         constexpr char AppVersion[]         = "ApplicationVersion";
         constexpr char AppSubVersion[]      = "ApplicationSubVersion";
         constexpr char AppPatch[]           = "ApplicationPatch";
-
-
     }
-    AppContext::AppContext(Host * const host) : m_host{ host } { }
+
+    AppContext::AppContext() = default;
 
     void AppContext::setApplicationName(str appName)
     {

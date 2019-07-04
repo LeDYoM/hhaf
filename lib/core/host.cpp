@@ -14,6 +14,7 @@
 #include <lib/system/timesystem.hpp>
 #include <lib/system/window.hpp>
 #include <lib/system/rendersystem.hpp>
+#include <lib/system/systemprovider.hpp>
 
 #include <mtypes/include/parpar.hpp>
 #include <mtypes/include/dicty.hpp>
@@ -39,9 +40,9 @@ namespace lib::core
             m_configuration{
                 {}
             }
-        {
+        { }
 
-        }
+        ~HostPrivate() = default;
 
         bool parseCommandLineParameters()
         {
@@ -54,6 +55,7 @@ namespace lib::core
 
         Dictionary<str> m_configuration;
         ApplicationGroup m_appGroup;
+        SystemProvider system_provider_;
     };
 
     enum class Host::AppState : u8
@@ -70,10 +72,8 @@ namespace lib::core
     {
         log_release_info("Starting HostController...");
         log_release_info("LIB version: ", LIB_VERSION_MAJOR,".", LIB_VERSION_MINOR,".", LIB_VERSION_PATCH);
-#ifdef ACCEPT_PARAMETERS
         log_release_info("Parsing parameters...");
         m_private->parseCommandLineParameters();
-#endif
     }
 
     Host::~Host() = default;
@@ -102,10 +102,10 @@ namespace lib::core
             log_debug_info("Starting initialization of new App...");
             m_state = AppState::Executing;
 
-            SystemProvider::init(m_private->m_appGroup.m_iapp);
+            m_private->system_provider_.init(m_private->m_appGroup.m_iapp);
 
-            m_private->m_appGroup.m_appContext = muptr<AppContext>(this);
-            m_private->m_appGroup.m_iapp->setSystemProvider(this);
+            m_private->m_appGroup.m_appContext = muptr<AppContext>();
+            m_private->m_appGroup.m_iapp->setSystemProvider(&(m_private->system_provider_));
             m_private->m_appGroup.m_iapp->setAppContext(&(*(m_private->m_appGroup.m_appContext)));
 
             m_private->m_appGroup.m_iapp->onInit();
@@ -129,7 +129,7 @@ namespace lib::core
             log_debug_info(m_private->m_appGroup.m_appContext->appId(), ": started termination");
             m_state = AppState::Terminated;
 //            m_iapp->onFinish();
-            SystemProvider::terminate();
+            m_private->system_provider_.terminate();
             return true;
             break;
         case AppState::Terminated:
@@ -162,7 +162,7 @@ namespace lib::core
 
     bool Host::loopStep()
     {
-        return runStep();
+        return m_private->system_provider_.runStep();
     }
 
     void Host::exitProgram()

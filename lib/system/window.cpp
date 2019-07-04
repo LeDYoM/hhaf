@@ -10,6 +10,7 @@
 #include <lib/system/inputsystem.hpp>
 #include <lib/system/rendertarget.hpp>
 #include <lib/system/timesystem.hpp>
+#include <lib/system/systemprovider.hpp>
 
 namespace lib::core
 {

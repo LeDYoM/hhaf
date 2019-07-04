@@ -3,15 +3,9 @@
 #ifndef LIB_APP_SERVICE_INCLUDE_HPP
 #define LIB_APP_SERVICE_INCLUDE_HPP
 
-///////////////////////////////
-// Temporary
-#include <lib/core/host.hpp>
-#include <lib/system/systemprovider.hpp>
-///////////////////////////////
-
 namespace lib::core
 {
-    class Host;
+    class SystemProvider;
 }
 
 namespace lib
@@ -19,18 +13,18 @@ namespace lib
     /**
     * Class to serve as a base for all App Services.
     * 
-    * An App Service is a class, instanciated by the Host to give functionality
+    * An App Service is a class, instanciated by SystemProvider to give functionality
     * to the app clients.
     */
-	class AppService
-	{
-	protected:
+    class AppService
+    {
+    protected:
         AppService() = default;
         AppService(const AppService &rh) = delete;
-		AppService &operator=(const AppService &rh) = delete;
+        AppService &operator=(const AppService &rh) = delete;
 
         virtual ~AppService() = default;
-	};
+    };
 
     class HostedAppService : public AppService
     {
