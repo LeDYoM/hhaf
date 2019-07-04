@@ -7,7 +7,6 @@
 #include "gamehud.hpp"
 #include "pause.hpp"
 
-#include "../common.hpp"
 #include "../gameshareddata.hpp"
 #include "../zoperprogramcontroller.hpp"
 

@@ -6,14 +6,16 @@
 #include <lib/core/host.hpp>
 
 #include "../menu/mainmenu.hpp"
-#include "../common.hpp"
 #include "../gameshareddata.hpp"
 #include "../loaders/mainmenuresources.hpp"
+#include "../zoperprogramcontroller.hpp"
 
 namespace zoper
 {
     using namespace lib;
     using namespace lib::scene;
+
+    constexpr u32 PointsPerQuad = 6U;
 
     void MenuScene::onCreated()
     {
@@ -24,7 +26,7 @@ namespace zoper
         auto resources_viewer = dataWrapper<ResourceView>();
     
         auto background = renderizables->createNode("background");
-//        background->figType.set(FigType_t::Quad);
+        background->figType.set(FigType_t::Quad);
         background->pointCount.set(PointsPerQuad);
         background->box = rectFromSize(2000.0f, 2000.0f);
         background->setTextureFill(resources_viewer->getTexture(MainMenuResources::BackgroundTextureId));

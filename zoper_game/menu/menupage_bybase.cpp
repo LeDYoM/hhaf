@@ -3,7 +3,6 @@
 #include <lib/include/liblog.hpp>
 #include <lib/scene/scene.hpp>
 #include <lib/scene/ianimation.hpp>
-#include "../common.hpp"
 #include "../zoperprogramcontroller.hpp"
 #include "../gameshareddata.hpp"
 

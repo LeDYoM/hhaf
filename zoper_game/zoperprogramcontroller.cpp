@@ -2,7 +2,6 @@
 #include "menu/menuscene.hpp"
 #include "gameplay/gamescene.hpp"
 #include "highscores/highscoresscene.hpp"
-#include "common.hpp"
 
 #include <lib/core/host.hpp>
 #include <lib/core/serializer.hpp>
