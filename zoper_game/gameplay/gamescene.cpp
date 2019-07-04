@@ -82,7 +82,7 @@ namespace zoper
                 else if (keyMapping->isPauseKey(key))
                 {
                     m_sceneStates->setState(GameSceneStates::Pause);
-				}
+                }
             }
             break;
             case GameSceneStates::GameOver:
@@ -91,8 +91,8 @@ namespace zoper
             case GameSceneStates::Pause:
                 if (keyMapping->isPauseKey(key))
                 {
-					m_sceneStates->setState(GameSceneStates::Playing);
-				}
+                    m_sceneStates->setState(GameSceneStates::Playing);
+                }
                 break;
             }
         });
@@ -154,28 +154,28 @@ namespace zoper
         BaseClass::onFinished();
     }
 
-	void GameScene::onEnterState(const GameSceneStates&state)
-	{
-		switch (state)
+    void GameScene::onEnterState(const GameSceneStates&state)
+    {
+        switch (state)
         {
-		case GameSceneStates::Pause:
-		{
+        case GameSceneStates::Pause:
+        {
             m_sceneTimerComponent->pause();
             pause_node_->enterPause();
- 		}
-		break;
+        }
+        break;
         case GameSceneStates::GameOver:
 //            m_data->m_gameOverrg->visible = true;
             break;
-		default:
-			break;
-		}
+        default:
+            break;
+        }
         log_debug_info("Entered state: ", static_cast<int>(state));
     }
 
     void GameScene::onExitState(const GameSceneStates&state)
     {
-		switch (state) 
+        switch (state) 
         {
             case GameSceneStates::Pause:
             {
@@ -185,8 +185,8 @@ namespace zoper
             break;
             default:
                 break;
-		}
-		log_debug_info("Exited state: ", static_cast<int>(state));
+        }
+        log_debug_info("Exited state: ", static_cast<int>(state));
     }
 
     void GameScene::setLevel(const size_type)

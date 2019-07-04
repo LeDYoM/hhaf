@@ -10,6 +10,12 @@
 
 namespace lib
 {
+    template <typename T>
+    using KeyValuePair = pair<str,T>;
+
+    using KeyValueStr = KeyValuePair<str>;
+    using KeyValueObject = KeyValuePair<Object>;
+
     class Object
     {
     public:
@@ -18,25 +24,25 @@ namespace lib
 
         constexpr Object() {}
 
-        inline Object(std::initializer_list<pair<str,str>> iListValues) 
+        inline Object(std::initializer_list<KeyValueStr> iListValues) 
         {
             set(std::move(iListValues), false);
         }
 
-            inline Object(std::initializer_list<pair<str,Object>> iListObjects)
+            inline Object(std::initializer_list<KeyValueObject> iListObjects)
             {
             set(std::move(iListObjects), false);
             }
 
-        inline Object(std::initializer_list<pair<str, Object>> iListObjects,
-                std::initializer_list<pair<str, str>> iListValues)
+        inline Object(std::initializer_list<KeyValueObject> iListObjects,
+                std::initializer_list<KeyValueStr> iListValues)
         {
             set(std::move(iListObjects), false);
             set(std::move(iListValues), false);
         }
 
-        inline Object(std::initializer_list<pair<str, str>> iListValues,
-                std::initializer_list<pair<str, Object>> iListObjects) 
+        inline Object(std::initializer_list<KeyValueStr> iListValues,
+                std::initializer_list<KeyValueObject> iListObjects) 
         {
             set(std::move(iListValues), false);
             set(std::move(iListObjects), false);
@@ -136,6 +142,8 @@ namespace lib
             const str *m_value{nullptr};
         };
 
+        using KeyValueValue = KeyValuePair<Value>;
+
         constexpr size_type size_objects() const noexcept
         {
             return m_objects.size();
@@ -205,7 +213,7 @@ namespace lib
             return (*this)[str(arraySeparator) + str::to_str(index)];
         }
 
-        bool set(std::initializer_list<pair<str, str>> iListValues, bool overwrite = true)
+        bool set(std::initializer_list<KeyValueStr> iListValues, bool overwrite = true)
         {
             bool ok{true};
             for (auto&& element : iListValues) 
@@ -215,7 +223,7 @@ namespace lib
             return ok;
         }
 
-        bool set(std::initializer_list<pair<str,Object>> iListObject, bool overwrite = true)
+        bool set(std::initializer_list<KeyValueObject> iListObject, bool overwrite = true)
         {
             bool ok{true};
             for (auto&& element : iListObject)
@@ -225,7 +233,7 @@ namespace lib
             return ok;
         }
 
-        bool set(std::initializer_list<pair<str, Value>> iListObject, bool overwrite = true)
+        bool set(std::initializer_list<KeyValueValue> iListObject, bool overwrite = true)
         {
             bool ok{ true };
             for (auto&& element : iListObject)
