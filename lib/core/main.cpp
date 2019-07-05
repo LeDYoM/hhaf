@@ -21,6 +21,7 @@ namespace lib
             {
                 core::Host host(argc, argv);
                 core::AppLoader app_loader;
+                core::ManagedApp managed_app = app_loader.loadApp("zoper_game");
                 core::ManagedApp managed_app = app_loader.loadApp(createApp, destroyApp);
                 host.setApplication(managed_app.app);
                 int run_result(host.run());

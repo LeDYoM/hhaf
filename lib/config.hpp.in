@@ -10,8 +10,4 @@
 #cmakedefine  LIB_VERSION_MINOR "@LIB_VERSION_MINOR@"
 #cmakedefine  LIB_VERSION_PATCH "@LIB_VERSION_PATCH@"
 
-#define USE_MEM_MANAGER
-#define USE_LOGS
-#cmakedefine USE_DEBUG_VARIABLES
-
 #endif
