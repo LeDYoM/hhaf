@@ -1,5 +1,5 @@
+#include <memmanager/include/memmanager.hpp>
 #include <lib/include/main.hpp>
-#include <lib/core/memmanager.hpp>
 #include <lib/core/host.hpp>
 #include <lib/include/liblog.hpp>
 

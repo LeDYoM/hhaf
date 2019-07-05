@@ -10,6 +10,7 @@ add_executable (${CURRENT_TARGET} ${SOURCE_FILES})
 
 # Detect and add lib
 include_directories(..)
+target_link_libraries(${CURRENT_TARGET} PUBLIC memmanager)
 target_link_libraries(${CURRENT_TARGET} PRIVATE loader)
 target_link_libraries(${CURRENT_TARGET} PRIVATE lib)
 target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)

@@ -1,7 +1,5 @@
-#include "memmanager.hpp"
-#include "config.hpp"
+#include <memmanager/include/memmanager.hpp>
 
-#ifdef USE_MEM_MANAGER
 #ifdef _MSC_VER
 #include <windows.h>
 #include <crtdbg.h>
@@ -24,23 +22,18 @@ static int crtDebugMemAllocHook(int allocType, void *userData, size_t size, int 
 }
 
 #endif
-#endif
 
 void installMemManager()
 {
-#ifdef USE_MEM_MANAGER
 #ifdef _MSC_VER
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
     _CrtSetAllocHook(crtDebugMemAllocHook);
-#endif
 #endif
 }
 
 void finishMemManager()
 {
-#ifdef USE_MEM_MANAGER
 #ifdef _MSC_VER
-//	_CrtDumpMemoryLeaks();
-#endif
+	_CrtDumpMemoryLeaks();
 #endif
 }
