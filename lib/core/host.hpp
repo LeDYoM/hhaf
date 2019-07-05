@@ -3,10 +3,12 @@
 #ifndef LIB_HOST_MAIN_INCLUDE_HPP
 #define LIB_HOST_MAIN_INCLUDE_HPP
 
-#include "apploader.hpp"
-
 #include <mtypes/include/types.hpp>
-#include <lib/include/iapp.hpp>
+
+namespace lib
+{
+    class IApp;
+}
 
 namespace lib::core
 {
