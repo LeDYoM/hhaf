@@ -20,7 +20,13 @@
 #include <mtypes/include/dicty.hpp>
 
 #include <algorithm>
-#include "config.hpp"
+
+namespace
+{
+    constexpr static const char HostVersion[] = "1";
+    constexpr static const char HostSubversion[] = "1";
+    constexpr static const char HostPatch[] = "0";
+}
 
 namespace lib::core
 {
@@ -71,7 +77,7 @@ namespace lib::core
         : m_private{muptr<HostPrivate>(argc,argv)}, m_state{ AppState::NotInitialized }
     {
         log_release_info("Starting HostController...");
-        log_release_info("LIB version: ", LIB_VERSION_MAJOR,".", LIB_VERSION_MINOR,".", LIB_VERSION_PATCH);
+        log_release_info("Host version: ", HostVersion,".", HostSubversion,".", HostPatch);
         log_release_info("Parsing parameters...");
         m_private->parseCommandLineParameters();
     }
