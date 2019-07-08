@@ -1,7 +1,6 @@
 #include "host.hpp"
 
 #include <lib/include/liblog.hpp>
-#include <backend_dev/include/iwindow.hpp>
 #include <lib/include/iapp.hpp>
 #include <lib/scene/scenemanager.hpp>
 #include <lib/system/backendfactory.hpp>
