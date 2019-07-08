@@ -15,12 +15,13 @@ namespace zoper
     ZoperProgramController::ZoperProgramController() {}
     ZoperProgramController::~ZoperProgramController() {}
 
+    u16 ZoperProgramController::getVersion() const noexcept { return 1; }
+    u16 ZoperProgramController::getSubVersion() const noexcept { return 4; }
+    u16 ZoperProgramController::getPatch() const noexcept { return 0; }
+    str ZoperProgramController::getName() const noexcept { return "Zoper"; }
+
     void ZoperProgramController::onInit()
     {
-        appContext().setApplicationName("Zoper");
-        appContext().setApplicationVersion(1);
-        appContext().setApplicationSubVersion(2);
-        appContext().setApplicationPatch(2);
         gameSharedData = msptr<GameSharedData>();
 
         keyMapping = muptr<KeyMapping>();

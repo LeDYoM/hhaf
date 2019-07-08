@@ -8,24 +8,27 @@
 
 namespace zoper
 {
-	using namespace lib;
-	struct GameSharedData;
-	class KeyMapping;
-	class MenuScene;
-	class GameScene;
-	class HighScoresScene;
-	class ZoperProgramController : public IApp
-	{
-	public:
-		ZoperProgramController();
-		virtual ~ZoperProgramController();
+    using namespace lib;
+    struct GameSharedData;
+    class KeyMapping;
 
-		void onInit() override;
-		IAppDescriptor getAppDescriptor() const override;
+    class ZoperProgramController : public IApp
+    {
+    public:
+        ZoperProgramController();
+        virtual ~ZoperProgramController();
 
-		sptr<GameSharedData> gameSharedData;
-		uptr<KeyMapping> keyMapping;
-	};
+        void onInit() override;
+        IAppDescriptor getAppDescriptor() const override;
+
+        u16 getVersion() const noexcept override;
+        u16 getSubVersion() const noexcept override;
+        u16 getPatch() const noexcept override;
+        str getName() const noexcept override;
+
+        sptr<GameSharedData> gameSharedData;
+        uptr<KeyMapping> keyMapping;
+    };
 }
 
 #endif

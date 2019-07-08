@@ -4,7 +4,6 @@
 #define LIB_IAPP_INCLUDE_HPP
 
 #include "windowcreationparams.hpp"
-#include <lib/include/core/iappcontext.hpp>
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
 
@@ -31,14 +30,15 @@ namespace lib
         virtual IAppDescriptor getAppDescriptor() const = 0;
         virtual void onInit() = 0;
 
-        inline void setSystemProvider(core::SystemProvider* const system_provider) noexcept { system_provider_ = system_provider; }
-        inline void setAppContext(core::IAppContext* const appContext) noexcept { m_iappContext = appContext; }
+        virtual u16 getVersion() const noexcept = 0;
+        virtual u16 getSubVersion() const noexcept = 0;
+        virtual u16 getPatch() const noexcept  = 0;
+        virtual str getName() const noexcept  = 0;
 
+        inline void setSystemProvider(core::SystemProvider* const system_provider) noexcept { system_provider_ = system_provider; }
         inline core::SystemProvider &systemProvider() const noexcept { return *system_provider_; }
-        inline core::IAppContext &appContext() const noexcept { return *m_iappContext; }
     private:
         core::SystemProvider *system_provider_{nullptr};
-        core::IAppContext *m_iappContext{nullptr};
     };
 }
 

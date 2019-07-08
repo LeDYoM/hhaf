@@ -1,6 +1,5 @@
 #include "host.hpp"
 
-#include <lib/core/appcontext.hpp>
 #include <lib/include/liblog.hpp>
 #include <backend_dev/include/iwindow.hpp>
 #include <lib/include/iapp.hpp>
@@ -19,8 +18,6 @@
 #include <mtypes/include/parpar.hpp>
 #include <mtypes/include/dicty.hpp>
 
-#include <algorithm>
-
 namespace
 {
     constexpr static const char HostVersion[] = "1";
@@ -33,7 +30,6 @@ namespace lib::core
     struct ApplicationGroup
     {
         IApp* m_iapp{nullptr};
-        uptr<AppContext> m_appContext;
     };
 
     class Host::HostPrivate final
@@ -97,6 +93,11 @@ namespace lib::core
         return false;
     }
 
+    static inline str appDisplayNameAndVersion(const IApp& app) noexcept
+    {
+        return make_str(app.getName(), "(", app.getVersion(), ".", app.getSubVersion(), ".", app.getPatch(), ")");
+    }
+
     bool Host::update()
     {
         switch (m_state)
@@ -110,12 +111,11 @@ namespace lib::core
 
             m_private->system_provider_.init(m_private->m_appGroup.m_iapp);
 
-            m_private->m_appGroup.m_appContext = muptr<AppContext>();
             m_private->m_appGroup.m_iapp->setSystemProvider(&(m_private->system_provider_));
-            m_private->m_appGroup.m_iapp->setAppContext(&(*(m_private->m_appGroup.m_appContext)));
 
             m_private->m_appGroup.m_iapp->onInit();
-            log_debug_info(m_private->m_appGroup.m_appContext->appId(), ": Starting execution...");
+            log_debug_info(appDisplayNameAndVersion(*(m_private->m_appGroup.m_iapp)),
+                ": Starting execution...");
         }
         break;
         case AppState::Executing:
@@ -123,16 +123,16 @@ namespace lib::core
             if (loopStep()) 
             {
                 m_state = AppState::ReadyToTerminate;
-                log_debug_info(m_private->m_appGroup.m_appContext->appId(), ": ", " is now ready to terminate");
+                log_debug_info(appDisplayNameAndVersion(*(m_private->m_appGroup.m_iapp)), ": ", " is now ready to terminate");
             }
             else if (m_state == AppState::ReadyToTerminate) 
             {
-                log_debug_info(m_private->m_appGroup.m_appContext->appId(), ": ", " requested to terminate");
+                log_debug_info(appDisplayNameAndVersion(*(m_private->m_appGroup.m_iapp)), ": ", " requested to terminate");
             }
         }
         break;
         case AppState::ReadyToTerminate:
-            log_debug_info(m_private->m_appGroup.m_appContext->appId(), ": started termination");
+            log_debug_info(appDisplayNameAndVersion(*(m_private->m_appGroup.m_iapp)), ": started termination");
             m_state = AppState::Terminated;
 //            m_iapp->onFinish();
             m_private->system_provider_.terminate();
@@ -153,7 +153,6 @@ namespace lib::core
         {
             if (update()) 
             {
-                m_private->m_appGroup.m_appContext.reset();
                 m_private->m_appGroup.m_iapp;
                 exit = true;
             }
