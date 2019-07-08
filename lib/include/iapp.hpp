@@ -29,6 +29,7 @@ namespace lib
 
         virtual IAppDescriptor getAppDescriptor() const = 0;
         virtual void onInit() = 0;
+        virtual void onFinish() = 0;
 
         virtual u16 getVersion() const noexcept = 0;
         virtual u16 getSubVersion() const noexcept = 0;

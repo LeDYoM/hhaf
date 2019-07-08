@@ -19,6 +19,7 @@ namespace zoper
         virtual ~ZoperProgramController();
 
         void onInit() override;
+        void onFinish() override;
         IAppDescriptor getAppDescriptor() const override;
 
         u16 getVersion() const noexcept override;

@@ -57,6 +57,8 @@ namespace zoper
         systemProvider().sceneManager().sceneController()->startScene<MenuScene>();
     }
 
+    void ZoperProgramController::onFinish() { }
+
     IAppDescriptor ZoperProgramController::getAppDescriptor() const
     {
         return IAppDescriptor

@@ -27,11 +27,6 @@ namespace
 
 namespace lib::core
 {
-    struct ApplicationGroup
-    {
-        IApp* m_iapp{nullptr};
-    };
-
     class Host::HostPrivate final
     {
     public:
@@ -56,7 +51,7 @@ namespace lib::core
         parpar::ParametersParser m_params;
 
         Dictionary<str> m_configuration;
-        ApplicationGroup m_appGroup;
+        IApp* iapp_{nullptr};
         SystemProvider system_provider_;
     };
 
@@ -82,10 +77,10 @@ namespace lib::core
 
     bool Host::setApplication(IApp* iapp)
     {
-        if (!m_private->m_appGroup.m_iapp && iapp) 
+        if (!m_private->iapp_ && iapp) 
         {
             log_debug_info("StartingRegistering app...");
-            m_private->m_appGroup.m_iapp = iapp;
+            m_private->iapp_ = iapp;
             log_debug_info("Starting new app...");
             m_state = AppState::ReadyToStart;
             return true;
@@ -109,12 +104,12 @@ namespace lib::core
             log_debug_info("Starting initialization of new App...");
             m_state = AppState::Executing;
 
-            m_private->system_provider_.init(m_private->m_appGroup.m_iapp);
+            m_private->system_provider_.init(m_private->iapp_);
 
-            m_private->m_appGroup.m_iapp->setSystemProvider(&(m_private->system_provider_));
+            m_private->iapp_->setSystemProvider(&(m_private->system_provider_));
 
-            m_private->m_appGroup.m_iapp->onInit();
-            log_debug_info(appDisplayNameAndVersion(*(m_private->m_appGroup.m_iapp)),
+            m_private->iapp_->onInit();
+            log_debug_info(appDisplayNameAndVersion(*(m_private->iapp_)),
                 ": Starting execution...");
         }
         break;
@@ -123,18 +118,18 @@ namespace lib::core
             if (loopStep()) 
             {
                 m_state = AppState::ReadyToTerminate;
-                log_debug_info(appDisplayNameAndVersion(*(m_private->m_appGroup.m_iapp)), ": ", " is now ready to terminate");
+                log_debug_info(appDisplayNameAndVersion(*(m_private->iapp_)), ": ", " is now ready to terminate");
             }
             else if (m_state == AppState::ReadyToTerminate) 
             {
-                log_debug_info(appDisplayNameAndVersion(*(m_private->m_appGroup.m_iapp)), ": ", " requested to terminate");
+                log_debug_info(appDisplayNameAndVersion(*(m_private->iapp_)), ": ", " requested to terminate");
             }
         }
         break;
         case AppState::ReadyToTerminate:
-            log_debug_info(appDisplayNameAndVersion(*(m_private->m_appGroup.m_iapp)), ": started termination");
+            log_debug_info(appDisplayNameAndVersion(*(m_private->iapp_)), ": started termination");
             m_state = AppState::Terminated;
-//            m_iapp->onFinish();
+            m_private->iapp_->onFinish();
             m_private->system_provider_.terminate();
             return true;
             break;
@@ -153,12 +148,12 @@ namespace lib::core
         {
             if (update()) 
             {
-                m_private->m_appGroup.m_iapp;
+                m_private->iapp_;
                 exit = true;
             }
         }
 
-        if (!m_private->m_appGroup.m_iapp) 
+        if (!m_private->iapp_)
         {
             log_release_info("App destroyed. Exiting normally");
         }
