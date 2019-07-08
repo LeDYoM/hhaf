@@ -5,6 +5,14 @@
 
 #include <mtypes/include/types.hpp>
 
+#include <lib/system/filesystem/filesystem.hpp>
+#include <lib/system/inputsystem.hpp>
+#include <lib/system/randomsystem.hpp>
+#include <lib/system/resourcemanager.hpp>
+#include <lib/scene/scenemanager.hpp>
+#include <lib/system/simulationsystem.hpp>
+#include <lib/system/timesystem.hpp>
+
 namespace lib
 {
     struct WindowCreationParams;
@@ -16,23 +24,8 @@ namespace lib::backend
     class BackendFactory;
 }
 
-namespace lib::input
-{
-    class InputSystem;
-}
-
-namespace lib::scene
-{
-    class SceneManager;
-}
-
 namespace lib::core
 {
-    class FileSystem;
-    class RandomSystem;
-    class ResourceManager;
-    class SimulationSystem;
-    class TimeSystem;
     class Window;
     class RenderSystem;
 }
