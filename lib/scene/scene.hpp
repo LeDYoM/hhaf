@@ -15,11 +15,6 @@ namespace lib
     class IResourceLoader;
 }
 
-namespace lib::core
-{
-    class Host;
-}
-
 namespace lib::scene
 {
     class SceneManager;
@@ -42,7 +37,6 @@ namespace lib::scene
     private:
 
         SceneManager *m_sceneManager{ nullptr };
-        friend class core::Host;
         friend class SceneManager;
         friend class SceneController;
     };

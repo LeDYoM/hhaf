@@ -26,7 +26,6 @@ namespace lib
 namespace lib::core
 {
     class RenderTarget;
-    class Host;
     class SystemProvider;
 
     class Window final : public HostedAppService

@@ -29,7 +29,6 @@ namespace lib::scene
 namespace lib::core
 {
     class FileSystem;
-    class Host;
     class RandomSystem;
     class ResourceManager;
     class SimulationSystem;

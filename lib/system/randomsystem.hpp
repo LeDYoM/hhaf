@@ -9,8 +9,6 @@
 
 namespace lib::core
 {
-    class Host;
-
     struct RandomBuffer
     {
         vector<size_type> numbers;
