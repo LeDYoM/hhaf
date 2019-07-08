@@ -82,6 +82,7 @@ namespace zoper
 
     void Player::launchAnimationBack(vector2df toWhere)
     {
+        log_debug_info("Creating animation for player to go back");
         updateDirectionFromParameter(currentDirection().negate());
         ensureComponentOfType(animation_component_);
         animation_component_->

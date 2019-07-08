@@ -17,7 +17,7 @@ namespace lib::board
         constexpr ITile() noexcept {}
         virtual ~ITile() = default;
 
-        PropertyTrigger<BoardTileData> data;
+        PropertyState<BoardTileData> data;
         virtual void tileAdded(const vector2dst & /* position */) {}
         virtual void tileRemoved(const vector2dst & /* position */) {}
         virtual void tileChanged(const vector2dst & /*position */,

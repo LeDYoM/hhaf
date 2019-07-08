@@ -319,6 +319,7 @@ namespace zoper
 
                     // Increment the number of tokens deleted in a row
                     ++inARow;
+                    log_debug_info("In a row: ", inARow);
 
                     // Increase the score accordingly
                     levelProperties->increaseScore(inARow * levelProperties->baseScore());
@@ -354,6 +355,8 @@ namespace zoper
 
             if (found) 
             {
+                log_debug_info("Tile with same color found");
+                log_debug_info("Creating points to score");
                 auto sceneNode(createSceneNode("pointIncrementScore_SceneNode"));
 
                 auto renderizables_sceneNode = sceneNode->addComponentOfType<Renderizables>();
@@ -363,16 +366,19 @@ namespace zoper
                 node->box = rectFromSize(15.0f, 15.0f);
                 node->color = colors::White;
 
+                log_debug_info("Creating animation for points to score");
                 auto animationComponent(sceneNode->addComponentOfType<anim::AnimationComponent>());
                 animationComponent->
                     addPropertyAnimation(TimePoint_as_miliseconds(gameplay::constants::MillisAnimationPointsToScore),
                         sceneNode->position,
                         lastTokenPosition, gameplay::constants::EndPositionPointsToScore);
 
+                log_debug_info("Creating player animation");
                 m_sceneTimerComponent->addTimer(TimerType::OneShot, 
                     TimePoint_as_miliseconds(gameplay::constants::MillisAnimationPointsToScore),
                     [this, sceneNode](auto) { removeSceneNode(sceneNode); } );
 
+                log_debug_info("Launching player");
                 m_player->launchAnimation(lastTokenPosition);
             }
             return result;

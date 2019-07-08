@@ -11,10 +11,23 @@ namespace zoper
     GameBaseTile::GameBaseTile(SceneNode* const parent, str name)
         : ITile{ }, SceneNode{ parent, std::move(name) }
     {
-        data.setCallback([this]() { if (m_node) m_node->color = getColorForToken(); });
+//        data.setCallback([this]() { if (m_node) m_node->color = getColorForToken(); });
     }
 
     GameBaseTile::~GameBaseTile() = default;
+
+    void GameBaseTile::update()
+    {
+        SceneNode::update();
+
+        if (data.readResetHasChanged())
+        {
+            if (m_node) 
+            {
+                m_node->color = getColorForToken(); 
+            }
+        }
+    }
 
     Color GameBaseTile::getColorForToken() const
     {
