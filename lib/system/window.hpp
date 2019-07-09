@@ -15,7 +15,6 @@
 
 namespace lib
 {
-    struct WindowCreationParams;
     namespace scene
     {
         class VertexArray;
@@ -31,7 +30,7 @@ namespace lib::core
     class Window final : public HostedAppService
     {
     public:
-        Window(core::SystemProvider &system_provider, const WindowCreationParams &wcp);
+        Window(core::SystemProvider &system_provider);
         ~Window() override;
         bool preLoop();
         void postLoop();
@@ -47,8 +46,7 @@ namespace lib::core
     private:
         void create(const WindowCreationParams &wcp);
         struct WindowPrivate;
-        uptr<WindowPrivate> m_wPrivate;
-        str m_title;
+        uptr<WindowPrivate> priv_;
     };
 }
 

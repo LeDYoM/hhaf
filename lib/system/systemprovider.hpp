@@ -17,7 +17,6 @@
 
 namespace lib
 {
-    struct WindowCreationParams;
     class IApp;
 }
 

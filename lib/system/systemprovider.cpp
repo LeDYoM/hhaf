@@ -24,7 +24,7 @@ namespace lib::core
         app_ = iapp;
         backend_factory_ = muptr<backend::BackendFactory>();
         time_system_ = muptr<TimeSystem>();
-        window_ = muptr<Window>(*this, app_->getAppDescriptor().wcp);
+        window_ = muptr<Window>(*this);
         input_system_ = muptr<input::InputSystem>(window_->inputDriver());
         scene_manager_ = muptr<scene::SceneManager>(*this);
         resource_manager_ = muptr<core::ResourceManager>(*this);
