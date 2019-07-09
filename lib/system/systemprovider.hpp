@@ -8,8 +8,10 @@
 #include <lib/system/filesystem/filesystem.hpp>
 #include <lib/system/inputsystem.hpp>
 #include <lib/system/randomsystem.hpp>
+#include <lib/system/rendersystem.hpp>
 #include <lib/system/resourcemanager.hpp>
 #include <lib/scene/scenemanager.hpp>
+#include <lib/system/window.hpp>
 #include <lib/system/simulationsystem.hpp>
 #include <lib/system/timesystem.hpp>
 
@@ -22,12 +24,6 @@ namespace lib
 namespace lib::backend
 {
     class BackendFactory;
-}
-
-namespace lib::core
-{
-    class Window;
-    class RenderSystem;
 }
 
 namespace lib::core

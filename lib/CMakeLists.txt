@@ -2,12 +2,8 @@ project (lib)
 
 include_directories ("..")
 
-set(LIB_VERSION_MAJOR "1")
-set(LIB_VERSION_MINOR "6")
-set(LIB_VERSION_PATCH "3")
-
 file (GLOB_RECURSE _SOURCES "board/*.cpp" "core/*.cpp" "resources/*.cpp" "scene/*.cpp" "system/*.cpp")
-file (GLOB_RECURSE _HEADERS "board/*.hpp" "core/*.hpp" "include/*.hpp" "resources/*.cpp" "scene/*.hpp" "system/*.cpp")
+file (GLOB_RECURSE _HEADERS "board/*.hpp" "core/*.hpp" "include/*.hpp" "resources/*.hpp" "scene/*.hpp" "system/*.hpp")
 
 set (CURRENT_TARGET lib)
 
@@ -25,6 +21,6 @@ target_link_libraries(${CURRENT_TARGET} PUBLIC memmanager)
 target_link_libraries(${CURRENT_TARGET} PRIVATE loader)
 target_link_libraries(${CURRENT_TARGET} PRIVATE logger)
 target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
-target_link_libraries(${CURRENT_TARGET} PRIVATE backend_dev)
+target_link_libraries(${CURRENT_TARGET} PUBLIC backend_dev)
 
 add_subdirectory(tests)

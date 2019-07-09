@@ -3,8 +3,6 @@
 #include <lib/include/liblog.hpp>
 #include <lib/include/iapp.hpp>
 #include <lib/system/backendfactory.hpp>
-#include <lib/system/window.hpp>
-#include <lib/system/rendersystem.hpp>
 #include <lib/system/systemprovider.hpp>
 
 #include <mtypes/include/parpar.hpp>

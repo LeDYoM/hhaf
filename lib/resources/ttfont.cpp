@@ -11,12 +11,13 @@ namespace lib::scene
 {
     struct TTFont::FontPrivate
     {
+        FontPrivate(backend::ITTFont* font) : m_font{font} {}
         backend::ITTFont *m_font;
         std::map<u32,sptr<TTFontInstance>> m_fontMap;
     };
 
     TTFont::TTFont(backend::ITTFont* font) :
-        m_private{ new FontPrivate{ std::move(font) } } {}
+        m_private{ muptr<FontPrivate>( font ) } {}
 
     TTFont::~TTFont() = default;
 
