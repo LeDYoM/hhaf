@@ -1,12 +1,4 @@
 #include "systemprovider.hpp"
-#include "window.hpp"
-#include "resourcemanager.hpp"
-#include "randomsystem.hpp"
-#include "inputsystem.hpp"
-#include "simulationsystem.hpp"
-#include "filesystem/filesystem.hpp"
-#include "timesystem.hpp"
-#include "rendersystem.hpp"
 
 #include <backend_dev/include/iwindow.hpp>
 #include <lib/include/liblog.hpp>
