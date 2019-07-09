@@ -5,16 +5,6 @@
 
 #include <mtypes/include/types.hpp>
 
-#include <lib/system/filesystem/filesystem.hpp>
-#include <lib/system/inputsystem.hpp>
-#include <lib/system/randomsystem.hpp>
-#include <lib/system/rendersystem.hpp>
-#include <lib/system/resourcemanager.hpp>
-#include <lib/scene/scenemanager.hpp>
-#include <lib/system/window.hpp>
-#include <lib/system/simulationsystem.hpp>
-#include <lib/system/timesystem.hpp>
-
 namespace lib
 {
     class IApp;
@@ -25,11 +15,35 @@ namespace lib::backend
     class BackendFactory;
 }
 
+namespace lib::input
+{
+    class InputSystem;
+}
+
+namespace lib::scene
+{
+    class SceneManager;
+}
+
 namespace lib::core
 {
-    class SystemProvider
+    class Window;
+    class ResourceManager;
+    class RandomSystem;
+    class FileSystem;
+    class SimulationSystem;
+    class TimeSystem;
+    class RenderSystem;
+}
+
+namespace lib::core
+{
+    class SystemProvider final
     {
     public:
+        SystemProvider();
+        ~SystemProvider();
+        
         void init(IApp *iapp);
         void terminate();
 
@@ -66,17 +80,8 @@ namespace lib::core
         bool runStep();
 
     private:
-        IApp* app_;
-        uptr<backend::BackendFactory> backend_factory_;
-        uptr<Window> window_;
-        uptr<ResourceManager> resource_manager_;
-        uptr<input::InputSystem> input_system_;
-        uptr<scene::SceneManager> scene_manager_;
-        uptr<RandomSystem> random_system_;
-        uptr<FileSystem> file_system_;
-        uptr<SimulationSystem> simulation_system_;
-        uptr<TimeSystem> time_system_;
-        uptr<RenderSystem> render_system_;
+        struct SystemProviderPrivate;
+        uptr<SystemProviderPrivate> p_;
     };
 }
 
