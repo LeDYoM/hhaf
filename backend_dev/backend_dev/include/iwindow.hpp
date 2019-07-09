@@ -6,25 +6,19 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
 
-#include "iinputdriver.hpp"
-#include "itexture.hpp"
-
-namespace lib
-{
-    struct WindowCreationParams;
-}
-
 namespace lib::backend
 {
     class IRenderTarget;
+    class IInputDriver;
+
     class IWindow
     {
     public:
 
         virtual ~IWindow() {}
 
-        virtual bool createWindow(const WindowCreationParams &wcp) = 0;
-        virtual bool setActive(const bool activate = true) = 0;
+        virtual bool createWindow(const u16 width, const u16 height, const u8 bpp) = 0;
+        virtual bool setActive(const bool activate) = 0;
 
         virtual bool processEvents() = 0;
 

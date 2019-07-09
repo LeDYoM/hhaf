@@ -12,17 +12,16 @@ namespace lib::backend::sfmlb
     RenderWindow::RenderWindow() {}
     RenderWindow::~RenderWindow() {}
 
-    bool RenderWindow::createWindow(const WindowCreationParams & wcp)
+    bool RenderWindow::createWindow(const u16 width, const u16 height, const u8 bpp)
     {
-        sf::Uint32 style{ sf::Style::Titlebar | sf::Style::Close };
-        if (wcp.fullScreen)
-            style = sf::Style::Fullscreen;
+        sf::Uint32 style{ sf::Style::Default };
+//        if (wcp.fullScreen)
+//            style = sf::Style::Fullscreen;
 
-        // Deal with SFML bug
-        sf::Window::create(sf::VideoMode(wcp.width, wcp.height, wcp.bpp), to_sf_type(wcp.windowTitle),
-            style, sf::ContextSettings(0, 0, wcp.antialiasing));
+        sf::Window::create(sf::VideoMode(width, height, bpp), "",
+            style);
 
-        this->setVerticalSyncEnabled(wcp.vsync);
+        this->setVerticalSyncEnabled(false);
         return true;
     }
 

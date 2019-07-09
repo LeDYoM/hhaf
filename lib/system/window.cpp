@@ -28,7 +28,7 @@ namespace lib::core
         : HostedAppService{ system_provider },
         priv_{ muptr<WindowPrivate>() }
     {
-        create(system_provider.app().getAppDescriptor().wcp);
+        create();
     }
 
     Window::~Window() = default;
@@ -53,12 +53,12 @@ namespace lib::core
         return priv_->m_backendWindow->inputDriver();
     }
 
-    void Window::create(const WindowCreationParams &wcp)
+    void Window::create()
     {
         log_debug_info("Going to create Window");
-        log_debug_info("Resolution:", wcp.width, "x", wcp.height ,"x", wcp.bpp);
-        log_debug_info("Fullscreen:" , wcp.fullScreen);
-        log_debug_info("Antialiasing:", wcp.antialiasing);
+//        log_debug_info("Resolution:", wcp.width, "x", wcp.height ,"x", wcp.bpp);
+//        log_debug_info("Fullscreen:" , wcp.fullScreen);
+//        log_debug_info("Antialiasing:", wcp.antialiasing);
 
         assert_release(!priv_->m_backendWindow, "Cannot create window twice");
         log_debug_info("Creating window...");
@@ -70,7 +70,7 @@ namespace lib::core
         backend::IWindow &bw(*priv_->m_backendWindow);
 
         // Create physical window
-        if (bw.createWindow(wcp))
+        if (bw.createWindow(1024U, 768U, 32U))
         {
             log_debug_info("Hardware window created...");
             // If window created successfully, extract the render target

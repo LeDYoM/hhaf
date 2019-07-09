@@ -58,24 +58,4 @@ namespace zoper
     }
 
     void ZoperProgramController::onFinish() { }
-
-    IAppDescriptor ZoperProgramController::getAppDescriptor() const
-    {
-        return IAppDescriptor
-        {
-            "config.cfg",
-            "res.cfg",
-            WindowCreationParams
-            {
-                "ZOPER",
-                1024,
-                768,
-                32,
-                0,
-                false,
-                false,
-                false
-            }
-        };
-    }
 }

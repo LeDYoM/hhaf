@@ -20,7 +20,6 @@ namespace zoper
 
         void onInit() override;
         void onFinish() override;
-        IAppDescriptor getAppDescriptor() const override;
 
         u16 getVersion() const noexcept override;
         u16 getSubVersion() const noexcept override;

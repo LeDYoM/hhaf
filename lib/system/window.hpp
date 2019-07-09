@@ -44,7 +44,7 @@ namespace lib::core
         const backend::IInputDriver* inputDriver() const;
 
     private:
-        void create(const WindowCreationParams &wcp);
+        void create();
         struct WindowPrivate;
         uptr<WindowPrivate> priv_;
     };

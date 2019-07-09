@@ -3,7 +3,6 @@
 #ifndef LIB_IAPP_INCLUDE_HPP
 #define LIB_IAPP_INCLUDE_HPP
 
-#include "windowcreationparams.hpp"
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
 
@@ -14,20 +13,12 @@ namespace lib::core
 
 namespace lib
 {
-    struct IAppDescriptor
-    {
-        const char *const configFile;
-        const char *const resourceFile;
-        WindowCreationParams wcp;
-    };
-
     class IApp
     {
     public:
         constexpr IApp() noexcept {}
         virtual ~IApp() {}
 
-        virtual IAppDescriptor getAppDescriptor() const = 0;
         virtual void onInit() = 0;
         virtual void onFinish() = 0;
 

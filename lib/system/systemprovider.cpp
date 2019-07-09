@@ -10,7 +10,6 @@
 
 #include <backend_dev/include/iwindow.hpp>
 #include <lib/include/liblog.hpp>
-#include <lib/include/windowcreationparams.hpp>
 #include <lib/include/iapp.hpp>
 
 #include <lib/system/backendfactory.hpp>
