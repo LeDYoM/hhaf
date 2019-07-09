@@ -95,7 +95,6 @@ namespace lib::core
             m_state = AppState::Executing;
 
             m_private->system_provider_.init(m_private->iapp_);
-
             m_private->iapp_->setSystemProvider(&(m_private->system_provider_));
 
             m_private->iapp_->onInit();
