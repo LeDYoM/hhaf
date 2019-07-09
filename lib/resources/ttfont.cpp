@@ -21,20 +21,20 @@ namespace lib::scene
 
     TTFont::~TTFont() = default;
 
-	Rectf32 TTFont::getBounds(const u32 codePoint, const u32 characterSize) const
-	{
-		return m_private->m_font->getBounds(codePoint, characterSize);
-	}
+    Rectf32 TTFont::getBounds(const u32 codePoint, const u32 characterSize) const
+    {
+        return m_private->m_font->getBounds(codePoint, characterSize);
+    }
 
-	Rectf32 TTFont::getTextureBounds(const u32 codePoint, const u32 characterSize) const
-	{
-		return m_private->m_font->getTextureBounds(codePoint, characterSize);
-	}
+    Rectf32 TTFont::getTextureBounds(const u32 codePoint, const u32 characterSize) const
+    {
+        return m_private->m_font->getTextureBounds(codePoint, characterSize);
+    }
 
-	f32 TTFont::getAdvance(const u32 codePoint, const u32 characterSize) const
-	{
-		return m_private->m_font->getAdvance(codePoint, characterSize);
-	}
+    f32 TTFont::getAdvance(const u32 codePoint, const u32 characterSize) const
+    {
+        return m_private->m_font->getAdvance(codePoint, characterSize);
+    }
 
     f32 TTFont::getLineSpacing(const u32 characterSize) const
     {
@@ -52,7 +52,7 @@ namespace lib::scene
     }
 
     vector2df TTFont::textSize(const lib::str& text,
-                                           const u32 characterSize) const
+                                            const u32 characterSize) const
     {
         if (text.empty()) {
             return {};
@@ -101,7 +101,7 @@ namespace lib::scene
                 }
 
                 // Advance to the next character
-				x += getAdvance(curChar, characterSize);
+                x += getAdvance(curChar, characterSize);
             }
         }
         return max;
