@@ -1,8 +1,6 @@
 #include "backendfactory.hpp"
 #include "backendregister.hpp"
 
-#include <lib/include/liblog.hpp>
-
 #include <backend_dev/include/interfaces.hpp>
 #include <loader/include/loader.hpp>
 
@@ -57,12 +55,6 @@ namespace lib::backend
             result &= fillFactory(backend_register_, &m_ttfontFactory);
             result &= fillFactory(backend_register_, &m_textureFactory);
             result &= fillFactory(backend_register_, &m_shaderFactory);
-            assert_debug(result, "Not all factories created");
-        }
-        else 
-        {
-            // Cannot load shared library dynamically.
-            log_release_error("Fatal: Cannot load shared library ", sh_name);
         }
     }
 

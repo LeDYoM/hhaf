@@ -9,15 +9,13 @@
 
 #include "backendregister.hpp"
 
-#include <lib/system/appservice.hpp>
-
 namespace lib::backend
 {
-    class BackendFactory final : public AppService
+    class BackendFactory final
     {
     public:
         BackendFactory();
-        ~BackendFactory() override;
+        ~BackendFactory();
 
         IWindowProviderInfo* getWindowProviderInfo();
         IWindow* getOrCreateWindow();

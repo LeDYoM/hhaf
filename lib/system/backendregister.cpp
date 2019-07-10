@@ -1,7 +1,5 @@
 #include "backendregister.hpp"
 
-#include <lib/include/liblog.hpp>
-
 namespace lib::backend
 {
     void BackendRegister::setFactory(IInfoFactory * const info_factory) noexcept
@@ -40,7 +38,6 @@ namespace lib::backend
         if (canUse())
         {
             const bool result{ init_lib_func_(this) };
-            assert_debug(result, "Cannot initialize library");
             return result;
         }
         return false;
