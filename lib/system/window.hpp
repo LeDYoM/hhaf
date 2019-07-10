@@ -8,19 +8,7 @@
 #include <backend_dev/include/iwindow.hpp>
 #include <backend_dev/include/iinputdriver.hpp>
 
-#include <lib/include/key.hpp>
-
 #include <mtypes/include/types.hpp>
-#include <mtypes/include/properties.hpp>
-
-namespace lib
-{
-    namespace scene
-    {
-        class VertexArray;
-        class RenderData;
-    }
-}
 
 namespace lib::core
 {

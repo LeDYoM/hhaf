@@ -4,9 +4,6 @@
 #include <backend/include/backendfactory.hpp>
 #include <lib/include/liblog.hpp>
 #include <lib/include/core/timepoint.hpp>
-#include <lib/include/iapp.hpp>
-#include <lib/scene/renderdata.hpp>
-#include <lib/scene/vertexarray.hpp>
 #include <lib/system/inputsystem.hpp>
 #include <lib/system/rendertarget.hpp>
 #include <lib/system/timesystem.hpp>
