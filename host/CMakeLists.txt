@@ -1,7 +1,7 @@
 project(host)
 cmake_minimum_required(VERSION 3.11)
 
-set(CURRENT_TARGET host)
+set (CURRENT_TARGET ${PROJECT_NAME})
 
 set(SOURCES "src/apploader.cpp" "src/host.cpp" "src/main.cpp")
 
@@ -11,7 +11,7 @@ set_target_properties(${CURRENT_TARGET}
 
 target_include_directories(${CURRENT_TARGET} PUBLIC ${PROJECT_SOURCE_DIR})
 
-target_link_libraries(${CURRENT_TARGET} PUBLIC memmanager)
+target_link_libraries(${CURRENT_TARGET} PRIVATE memmanager)
 target_link_libraries(${CURRENT_TARGET} PRIVATE lib)
 target_link_libraries(${CURRENT_TARGET} PRIVATE loader)
 target_link_libraries(${CURRENT_TARGET} PRIVATE logger)
