@@ -1,4 +1,4 @@
-#include "host.hpp"
+#include <host/include/host.hpp>
 
 #include <lib/include/liblog.hpp>
 #include <lib/include/iapp.hpp>
@@ -77,7 +77,7 @@ namespace lib::core
         return false;
     }
 
-    static inline str appDisplayNameAndVersion(const IApp& app) noexcept
+    inline str appDisplayNameAndVersion(const IApp& app) noexcept
     {
         return make_str(app.getName(), "(", app.getVersion(), ".", app.getSubVersion(), ".", app.getPatch(), ")");
     }

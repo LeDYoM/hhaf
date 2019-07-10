@@ -10,11 +10,11 @@ add_executable (${CURRENT_TARGET} ${SOURCE_FILES})
 
 # Detect and add lib
 include_directories(..)
-target_link_libraries(${CURRENT_TARGET} PUBLIC memmanager)
-target_link_libraries(${CURRENT_TARGET} PRIVATE loader)
-target_link_libraries(${CURRENT_TARGET} PRIVATE lib)
-target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
-target_link_libraries(${CURRENT_TARGET} PRIVATE zoper_game)
+target_link_libraries(${CURRENT_TARGET} PRIVATE host)
+#target_link_libraries(${CURRENT_TARGET} PRIVATE memmanager)
+#target_link_libraries(${CURRENT_TARGET} PRIVATE loader)
+#target_link_libraries(${CURRENT_TARGET} PRIVATE lib)
+#target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
 
 install(TARGETS ${CURRENT_TARGET} DESTINATION  .)
 install(DIRECTORY ${SFML_ROOT}/bin/$<CONFIGURATION>/ DESTINATION .)
