@@ -2,7 +2,6 @@
 #include "ttfontinstance.hpp"
 
 #include <backend_dev/include/ittfont.hpp>
-#include <lib/system/backendfactory.hpp>
 
 #include <map>
 #include <algorithm>

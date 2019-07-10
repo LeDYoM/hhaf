@@ -1,16 +1,15 @@
 #include "texture.hpp"
 
 #include <backend_dev/include/itexture.hpp>
-#include <lib/system/backendfactory.hpp>
 
 namespace lib::scene
 {
-	Texture::Texture(backend::ITexture *texture) : m_texturePrivate{ texture } {}
+    Texture::Texture(backend::ITexture *texture) : m_texturePrivate{ texture } {}
 
-	Texture::~Texture() {}
+    Texture::~Texture() {}
 
-	vector2du32 Texture::size() const
-	{
-		return m_texturePrivate->size();
-	}
+    vector2du32 Texture::size() const
+    {
+        return m_texturePrivate->size();
+    }
 }

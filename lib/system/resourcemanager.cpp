@@ -9,7 +9,7 @@
 #include <lib/resources/texture.hpp>
 #include <lib/resources/shader.hpp>
 
-#include <lib/system/backendfactory.hpp>
+#include <backend/include/backendfactory.hpp>
 #include <algorithm>
 #include <list>
 

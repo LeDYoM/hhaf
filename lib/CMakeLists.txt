@@ -20,6 +20,7 @@ target_include_directories(${CURRENT_TARGET}
 target_link_libraries(${CURRENT_TARGET} PRIVATE loader)
 target_link_libraries(${CURRENT_TARGET} PRIVATE logger)
 target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
+target_link_libraries(${CURRENT_TARGET} PRIVATE backend)
 target_link_libraries(${CURRENT_TARGET} PUBLIC backend_dev)
 
 add_subdirectory(tests)
