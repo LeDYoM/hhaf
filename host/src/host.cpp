@@ -117,8 +117,8 @@ namespace lib::core
         case AppState::ReadyToTerminate:
             log_debug_info(appDisplayNameAndVersion(*(m_private->iapp_)), ": started termination");
             m_state = AppState::Terminated;
-            m_private->system_provider_.terminate();
             m_private->iapp_->onFinish();
+            m_private->system_provider_.terminate();
             return true;
             break;
         case AppState::Terminated:

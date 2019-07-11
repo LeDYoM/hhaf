@@ -26,6 +26,8 @@ namespace lib::core
 
     bool AppLoader::unloadApp(ManagedApp& managed_app) const
     {
+        using namespace loader;
+
         bool result{false};
 
         if (managed_app.finish_app)
@@ -42,6 +44,7 @@ namespace lib::core
         managed_app.app = nullptr;
         managed_app.init_app = nullptr;
         managed_app.finish_app = nullptr;
+        destroyLoader();
         return result;
     }
 
