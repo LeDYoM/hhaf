@@ -1,11 +1,14 @@
 project(zoper_game)
+cmake_minimum_required(VERSION 3.11)
 
-file (GLOB_RECURSE ZOPER_HEADERS "*.hpp")
-file (GLOB_RECURSE ZOPER_SOURCES "*.cpp")
+file (GLOB_RECURSE HEADERS "*.hpp")
+file (GLOB_RECURSE SOURCES "*.cpp")
 
-set (CURRENT_TARGET zoper_game)
+set (CURRENT_TARGET  ${PROJECT_NAME})
 
-add_library (${CURRENT_TARGET} ${ZOPER_SOURCES} ${ZOPER_HEADERS})
+add_library (${CURRENT_TARGET} SHARED ${SOURCES} ${HEADERS})
+set_target_properties(${CURRENT_TARGET}
+                      PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS true)
 
 # Detect and add libraries
 target_link_libraries(${CURRENT_TARGET} PRIVATE lib)
