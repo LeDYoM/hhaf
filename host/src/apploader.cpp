@@ -20,6 +20,7 @@ namespace lib::core
 
     ManagedApp AppLoader::loadApp(p_initApp init_app, p_finishApp finish_app) const
     {
+        // Do the loading if parameters are correct.
         return {init_app ? init_app() : nullptr, init_app, finish_app};
     }
 
