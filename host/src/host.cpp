@@ -117,8 +117,8 @@ namespace lib::core
         case AppState::ReadyToTerminate:
             log_debug_info(appDisplayNameAndVersion(*(m_private->iapp_)), ": started termination");
             m_state = AppState::Terminated;
-            m_private->iapp_->onFinish();
             m_private->system_provider_.terminate();
+            m_private->iapp_->onFinish();
             return true;
             break;
         case AppState::Terminated:
@@ -136,15 +136,10 @@ namespace lib::core
         {
             if (update()) 
             {
-                m_private->iapp_;
                 exit = true;
             }
         }
 
-        if (!m_private->iapp_)
-        {
-            log_release_info("App destroyed. Exiting normally");
-        }
         return 0;
     }
 
