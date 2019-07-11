@@ -25,7 +25,7 @@ namespace lib::core
         virtual void onCreate();
         virtual void onDestroy();
 
-        sptr<RenderTarget> renderTarget();
+        sptr<RenderTarget> renderTarget(); 
         const sptr<RenderTarget> renderTarget() const;
 
         backend::IInputDriver* inputDriver();
