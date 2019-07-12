@@ -353,7 +353,7 @@ namespace zoper
                 }
             }
 
-            if (found) 
+            if (found)
             {
                 log_debug_info("Tile with same color found");
                 log_debug_info("Creating points to score");
@@ -385,6 +385,7 @@ namespace zoper
             }
             return result;
         });
+        log_debug_info("Number of tokens in a row: ", inARow);
     }
 
     vector2df GameScene::board2SceneFactor() const
