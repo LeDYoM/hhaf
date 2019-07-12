@@ -286,7 +286,6 @@ namespace zoper
         // Create a new Tile instance
         auto new_tile_token = m_boardGroup->m_mainBoardrg->createSceneNode<Token>("tileNode");
         new_tile_token->setUp(levelProperties,
-            private_->scene_animation_component_,
             static_cast<BoardTileData>(newToken),rectFromSize(tileSize()));
 
         // Set the position in the scene depending on the board position

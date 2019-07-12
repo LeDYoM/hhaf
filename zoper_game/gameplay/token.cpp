@@ -24,19 +24,18 @@ namespace zoper
         m_node = renderizables->createNode("Node" + str::to_str(m_tileCounter));
         m_node->figType.set(FigType_t::Shape);
         m_node->pointCount.set(30U);
+        animation_component_ = addComponentOfType<scene::anim::AnimationComponent>();
     }
 
     Token::~Token() = default;
 
     void Token::setUp(sptr<LevelProperties> level_properties,
-        sptr<scene::anim::AnimationComponent> animation_component,
         board::BoardTileData board_tile_data,
         const Rectf32 &box)
     {
         data.set(board_tile_data);
         m_node->box = box;
         m_node->color = getColorForToken();
-        animation_component_ = std::move(animation_component);
         level_properties_ = std::move(level_properties);
     }
 

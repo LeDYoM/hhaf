@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef ZOPER_TILE_HPP
-#define ZOPER_TILE_HPP
+#ifndef ZOPER_TOKEN_HPP
+#define ZOPER_TOKEN_HPP
 
 #include "gamebasetile.hpp"
 
@@ -29,7 +29,6 @@ namespace zoper
         ~Token() override;
 
         void setUp(sptr<LevelProperties> level_properties,
-            sptr<scene::anim::AnimationComponent> animation_component,
             board::BoardTileData data,
             const Rectf32 &box);
 
