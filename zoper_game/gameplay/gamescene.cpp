@@ -37,7 +37,7 @@ namespace zoper
 
     struct GameScene::GameScenePrivate
     {
-        sptr<anim::AnimationComponent> scene_animation_component_;
+        sptr<AnimationComponent> scene_animation_component_;
         sptr<RandomizerComponent> token_type_generator_;
         sptr<RandomizerComponent> token_position_generator_;
     };
@@ -104,7 +104,7 @@ namespace zoper
         // Import game shared data. Basically, the menu selected options.
         importGameSharedData();
 
-        private_->scene_animation_component_ = addComponentOfType<scene::anim::AnimationComponent>();
+        private_->scene_animation_component_ = addComponentOfType<scene::AnimationComponent>();
         // At this point, we setup level properties.
         // levelProperties should not be used before this point.
         levelProperties = addComponentOfType<LevelProperties>();
@@ -370,7 +370,7 @@ namespace zoper
                     using namespace gameplay::constants;
 
                     log_debug_info("Creating animation for points to score");
-                    auto animationComponent(sceneNode->addComponentOfType<anim::AnimationComponent>());
+                    auto animationComponent(sceneNode->addComponentOfType<AnimationComponent>());
                     animationComponent->
                         addPropertyAnimation(TimePoint_as_miliseconds(MillisAnimationPointsToScore),
                             sceneNode->position, lastTokenPosition, EndPositionPointsToScore);

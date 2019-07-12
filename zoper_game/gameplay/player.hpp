@@ -38,7 +38,7 @@ namespace zoper
 
     private:
         void launchAnimationBack(vector2df toWhere);
-        sptr<scene::anim::AnimationComponent> animation_component_;
+        sptr<scene::AnimationComponent> animation_component_;
         scene::SceneNodeSPtr m_extraSceneNode;
         scene::SceneNodeSPtr m_extraSceneNode_2;
         vector2df m_board2SceneFactor;

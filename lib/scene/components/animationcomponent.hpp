@@ -10,7 +10,7 @@
 #include <lib/scene/datawrappers/timeview.hpp>
 #include <lib/scene/ianimation.hpp>
 
-namespace lib::scene::anim
+namespace lib::scene
 {
     class AnimationComponent : public IComponent
     {
@@ -27,7 +27,7 @@ namespace lib::scene::anim
             const PropertyType dest,
             ActionFunc endAction = {})
         {
-            addAnimation(muptr<anim::IPropertyAnimation<PropertyType>>(
+            addAnimation(muptr<IPropertyAnimation<PropertyType>>(
             attachedNode()->dataWrapper<scene::Timer>(), time, property, 
             property.get(), dest, std::move(endAction)));
         }
@@ -39,7 +39,7 @@ namespace lib::scene::anim
             const PropertyType dest,
             ActionFunc endAction = {})
         {
-            addAnimation(muptr<anim::IPropertyAnimation<PropertyType>>(
+            addAnimation(muptr<IPropertyAnimation<PropertyType>>(
             attachedNode()->dataWrapper<scene::Timer>(), time, property, start, dest, endAction));
         }
 

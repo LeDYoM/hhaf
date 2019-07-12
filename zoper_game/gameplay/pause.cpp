@@ -42,7 +42,7 @@ namespace zoper
     void PauseSceneNode::enterPause()
     {
         visible.set(true);
-        auto animationComponent(addComponentOfType<anim::AnimationComponent>());
+        auto animationComponent(addComponentOfType<AnimationComponent>());
         animationComponent->addPropertyAnimation(TimePoint_as_miliseconds(1000),
             m_pauseText->textColor, FillColor_t{Color{ 255, 255, 255, 0 } },
             FillColor_t{Color{ 255, 255, 255, 255 } });

@@ -24,7 +24,7 @@ namespace zoper
         m_node = renderizables->createNode("Node" + str::to_str(m_tileCounter));
         m_node->figType.set(FigType_t::Shape);
         m_node->pointCount.set(30U);
-        animation_component_ = addComponentOfType<scene::anim::AnimationComponent>();
+        animation_component_ = addComponentOfType<scene::AnimationComponent>();
     }
 
     Token::~Token() = default;

@@ -11,7 +11,7 @@
 #include <mtypes/include/properties.hpp>
 #include <mtypes/include/function.hpp>
 
-namespace lib::scene::anim
+namespace lib::scene
 {
     using ActionFunc = function<void()>;
     class IAnimation

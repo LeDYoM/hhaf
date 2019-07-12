@@ -44,7 +44,7 @@ namespace zoper
 
     private:
         static u32 m_tileCounter;
-        sptr<scene::anim::AnimationComponent> animation_component_;
+        sptr<scene::AnimationComponent> animation_component_;
         sptr<LevelProperties> level_properties_;
     };
 }

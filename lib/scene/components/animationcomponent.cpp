@@ -4,7 +4,7 @@
 
 #include <mtypes/include/lockablevector.hpp>
 
-namespace lib::scene::anim
+namespace lib::scene
 {
     class AnimationComponent::AnimationComponentPrivate
     {
