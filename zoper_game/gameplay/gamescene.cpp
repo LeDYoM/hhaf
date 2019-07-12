@@ -224,6 +224,7 @@ namespace zoper
             if (!m_boardGroup->p_boardModel->tileEmpty(loopPosition))
             {
                 const auto dest( direction.negate().applyToVector(loopPosition) );
+                log_debug_info("Tile moved from ", loopPosition, " to ", dest);
                 m_boardGroup->p_boardModel->moveTile(loopPosition, dest);
 
                 if (TokenZones::pointInCenter(dest))

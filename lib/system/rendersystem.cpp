@@ -21,7 +21,6 @@ namespace lib::core
     RenderSystem::RenderSystem(core::SystemProvider &system_provider)
         : HostedAppService{ system_provider }, priv_{ muptr<RenderSystemPrivate>() }
     {
-        system_provider.parentWindow().renderTarget()->viewPort();
     }
 
     RenderSystem::~RenderSystem() = default;
