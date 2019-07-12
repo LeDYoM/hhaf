@@ -366,18 +366,20 @@ namespace zoper
                 node->box = rectFromSize(15.0f, 15.0f);
                 node->color = colors::White;
 
-                log_debug_info("Creating animation for points to score");
-                auto animationComponent(sceneNode->addComponentOfType<anim::AnimationComponent>());
-                animationComponent->
-                    addPropertyAnimation(TimePoint_as_miliseconds(gameplay::constants::MillisAnimationPointsToScore),
-                        sceneNode->position,
-                        lastTokenPosition, gameplay::constants::EndPositionPointsToScore);
+                {
+                    using namespace gameplay::constants;
 
-                log_debug_info("Creating player animation");
-                m_sceneTimerComponent->addTimer(TimerType::OneShot, 
-                    TimePoint_as_miliseconds(gameplay::constants::MillisAnimationPointsToScore),
-                    [this, sceneNode](auto) { removeSceneNode(sceneNode); } );
+                    log_debug_info("Creating animation for points to score");
+                    auto animationComponent(sceneNode->addComponentOfType<anim::AnimationComponent>());
+                    animationComponent->
+                        addPropertyAnimation(TimePoint_as_miliseconds(MillisAnimationPointsToScore),
+                            sceneNode->position, lastTokenPosition, EndPositionPointsToScore);
 
+                    log_debug_info("Creating player animation");
+                    m_sceneTimerComponent->addTimer(TimerType::OneShot, 
+                        TimePoint_as_miliseconds(MillisAnimationPointsToScore),
+                        [this, sceneNode](auto) { removeSceneNode(sceneNode); } );
+                }
                 log_debug_info("Launching player");
                 m_player->launchAnimation(lastTokenPosition);
             }
