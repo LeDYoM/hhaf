@@ -370,15 +370,14 @@ namespace zoper
                     using namespace gameplay::constants;
 
                     log_debug_info("Creating animation for points to score");
-                    auto animationComponent(sceneNode->addComponentOfType<AnimationComponent>());
-                    animationComponent->
+                    private_->scene_animation_component_->
                         addPropertyAnimation(TimePoint_as_miliseconds(MillisAnimationPointsToScore),
-                            sceneNode->position, lastTokenPosition, EndPositionPointsToScore);
-
-                    log_debug_info("Creating player animation");
-                    m_sceneTimerComponent->addTimer(TimerType::OneShot, 
-                        TimePoint_as_miliseconds(MillisAnimationPointsToScore),
-                        [this, sceneNode](auto) { removeSceneNode(sceneNode); } );
+                            sceneNode->position, lastTokenPosition, EndPositionPointsToScore,
+                            [this, sceneNode]()
+                            {
+                                removeSceneNode(sceneNode);
+                            }
+                        );
                 }
                 log_debug_info("Launching player");
                 m_player->launchAnimation(lastTokenPosition);
