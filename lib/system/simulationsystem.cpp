@@ -32,6 +32,7 @@ namespace lib::core
     {
         SimulationActionContainer simulation_actions_;
         CurrentSimulationActionIterator current_simulation_action_iterator_;
+        SimulableDataBuffer simulable_data_buffer_;
         TimePoint start_point_;
 
         void setSimulationActions(const TimePoint now, SimulationActionContainer sim_act_container)
@@ -40,6 +41,11 @@ namespace lib::core
             current_simulation_action_iterator_ = simulation_actions_.cbegin();
             start_point_ = now;
             log_debug_info("Simulation System started at: ", start_point_);
+        }
+
+        void setSimulatedDataBuffer(SimulableDataBuffer simulated_data_buffer)
+        {
+            simulable_data_buffer_.numbers = std::move(simulated_data_buffer.numbers);
         }
     };
 
@@ -84,4 +90,16 @@ namespace lib::core
             }
         }
     }
+
+    void SimulationSystem::generateSimulableDataBuffer(SimulableDataBuffer & dest)
+    {
+        dest.numbers.resize(10U);
+
+        for (auto& num_ref : dest.numbers)
+        {
+        }
+
+        log_debug_info(dest.numbers);
+    }
+
 }

@@ -12,6 +12,7 @@ namespace lib::core
     struct SimulableDataBuffer
     {
         vector<size_type> numbers;
+        using const_iterator = vector<size_type>::const_iterator;
     };
 
     /**
@@ -23,6 +24,7 @@ namespace lib::core
      */
     class ISimulableDataProvider
     {
+    public:
         virtual void generateSimulableDataBuffer(SimulableDataBuffer& dest) = 0;
     };
 }

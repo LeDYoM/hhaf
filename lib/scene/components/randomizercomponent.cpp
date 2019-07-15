@@ -1,4 +1,5 @@
 #include "randomizercomponent.hpp"
+#include <lib/system/simulabledataprovider.hpp>
 #include <lib/system/randomsystem.hpp>
 
 #include <lib/include/liblog.hpp>
@@ -9,45 +10,44 @@ namespace lib::scene
     class RandomizerComponent::RandomizerPrivate
     {
     public:
-        constexpr RandomizerPrivate(core::RandomSystem& rSystem,
-            const size_type buffer_size) noexcept
-            : random_system_{ rSystem }, buffer_size_{ buffer_size }
+        constexpr RandomizerPrivate(core::ISimulableDataProvider& data_provider) noexcept
+            : data_provider_{ data_provider }
         {
-            assert_debug(std::addressof(rSystem) != nullptr, "nullptr RandomSystem received");
-            assert_debug(buffer_size_ > 0U, "The buffer should be at least size 1");
+            assert_debug(std::addressof(data_provider_) != nullptr, "nullptr ISimulableDataProvider received");
         }
+
+        ~RandomizerPrivate() = default;
 
         constexpr void ensureBufferAvailability()
         {
-            if (consumed_ >= numbers_.numbers.size())
+            if (consumed_ >= numbers_.numbers.end())
             {
                 refillBuffer();
             }
-            assert_debug(consumed_ < numbers_.numbers.size(),"");
+            assert_debug(consumed_ <= numbers_.numbers.end(), "Error ensuring buffer availability");
         }
 
         constexpr size_type next()
         {
             ensureBufferAvailability();
-            return numbers_.numbers[consumed_++];
+            return *(consumed_++);
         }
 
     private:
         void refillBuffer()
         {
             log_debug_info("Call refillBuffer");
-            random_system_.generateSimulableDataBuffer(numbers_);
-            consumed_ = 0U;
+            data_provider_.generateSimulableDataBuffer(numbers_);
+            consumed_ = numbers_.numbers.cbegin();
         }
 
         core::SimulableDataBuffer numbers_;
-        size_type consumed_{ 0U };
-        core::RandomSystem& random_system_;
+        core::SimulableDataBuffer::const_iterator consumed_{nullptr};
+        core::ISimulableDataProvider& data_provider_;
         size_type buffer_size_{ 100U };
     };
 
-    RandomizerComponent::RandomizerComponent()
-        : priv_{ nullptr } {}
+    RandomizerComponent::RandomizerComponent() noexcept : priv_{ nullptr } {}
 
     RandomizerComponent::~RandomizerComponent() = default;
 
@@ -72,7 +72,7 @@ namespace lib::scene
     {
         if (attachedNode())
         {
-            priv_ = muptr<RandomizerPrivate>(attachedNode()->randomSystem(), 100U);
+            priv_ = muptr<RandomizerPrivate>(static_cast<core::ISimulableDataProvider&>(attachedNode()->randomSystem()));
         }
     }
 }

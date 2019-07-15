@@ -17,7 +17,7 @@ namespace lib::scene
     class RandomizerComponent final : public IComponent
     {
     public:
-        RandomizerComponent();
+        RandomizerComponent() noexcept;
         ~RandomizerComponent() override;
         u32 getUInt(const size_type max, const size_type min = 0U) const;
 

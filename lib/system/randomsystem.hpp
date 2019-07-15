@@ -14,7 +14,7 @@ namespace lib::core
     * This system is intended to be used to generate
     * a series of random numbers.
     */
-    class RandomSystem final : public AppService, ISimulableDataProvider
+    class RandomSystem final : public AppService, public ISimulableDataProvider
     {
     public:
         RandomSystem();
