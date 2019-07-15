@@ -1,11 +1,10 @@
 #pragma once
 
-#ifndef LIB_COMPONENT_RANDOMIZER_COMPONENT_INCLUDE_HPP
-#define LIB_COMPONENT_RANDOMIZER_COMPONENT_INCLUDE_HPP
+#ifndef LIB_DATA_PROVIDER_COMPONENT_INCLUDE_HPP
+#define LIB_DATA_PROVIDER_COMPONENT_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 
-#include <lib/include/properties.hpp>
 #include <lib/scene/components/icomponent.hpp>
 
 namespace lib::scene
@@ -14,17 +13,17 @@ namespace lib::scene
     * This component class is intended to be used to generate
     * a series of random numbers.
     */
-    class RandomizerComponent final : public IComponent
+    class DataProviderComponent final : public IComponent
     {
     public:
-        RandomizerComponent() noexcept;
-        ~RandomizerComponent() override;
+        DataProviderComponent() noexcept;
+        ~DataProviderComponent() override;
         u32 getUInt(const size_type max, const size_type min = 0U) const;
 
         void onAttached() override;
     private:
-        class RandomizerPrivate;
-        uptr<RandomizerPrivate> priv_;
+        class DataProviderComponentPrivate;
+        uptr<DataProviderComponentPrivate> priv_;
 	};
 }
 

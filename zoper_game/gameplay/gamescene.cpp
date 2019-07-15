@@ -21,7 +21,7 @@
 #include <lib/scene/components/animationcomponent.hpp>
 #include <lib/scene/components/inputcomponent.hpp>
 #include <lib/scene/components/alignedtextcomponent.hpp>
-#include <lib/scene/components/randomizercomponent.hpp>
+#include <lib/scene/components/dataprovidercomponent.hpp>
 #include <lib/scene/components/renderizables.hpp>
 //TODO: Fixme
 #include <lib/system/systemprovider.hpp>
@@ -38,8 +38,8 @@ namespace zoper
     struct GameScene::GameScenePrivate
     {
         sptr<AnimationComponent> scene_animation_component_;
-        sptr<RandomizerComponent> token_type_generator_;
-        sptr<RandomizerComponent> token_position_generator_;
+        sptr<DataProviderComponent> token_type_generator_;
+        sptr<DataProviderComponent> token_position_generator_;
     };
 
     void GameScene::onCreated()
@@ -134,9 +134,9 @@ namespace zoper
             gameSceneActuatorRegister.registerStatesControllerActuator(*m_sceneStates, *this);
         }
 
-        private_->token_type_generator_ = addComponentOfType<RandomizerComponent>();
+        private_->token_type_generator_ = addComponentOfType<DataProviderComponent>();
         assert_release(private_->token_type_generator_ != nullptr, "Cannot create RandomizerComponent");
-        private_->token_position_generator_ = private_->token_type_generator_; //addComponentOfType<RandomizerComponent>();
+        private_->token_position_generator_ = private_->token_type_generator_; //addComponentOfType<DataProviderComponent>();
         assert_release(private_->token_position_generator_ != nullptr, "Cannot create RandomizerComponent");
 
         // Prepare the pause text.

@@ -1,4 +1,4 @@
-#include "randomizercomponent.hpp"
+#include "dataprovidercomponent.hpp"
 #include <lib/system/simulabledataprovider.hpp>
 #include <lib/system/randomsystem.hpp>
 
@@ -7,16 +7,16 @@
 
 namespace lib::scene
 {
-    class RandomizerComponent::RandomizerPrivate
+    class DataProviderComponent::DataProviderComponentPrivate
     {
     public:
-        constexpr RandomizerPrivate(core::ISimulableDataProvider& data_provider) noexcept
+        constexpr DataProviderComponentPrivate(core::ISimulableDataProvider& data_provider) noexcept
             : data_provider_{ data_provider }
         {
             assert_debug(std::addressof(data_provider_) != nullptr, "nullptr ISimulableDataProvider received");
         }
 
-        ~RandomizerPrivate() = default;
+        ~DataProviderComponentPrivate() = default;
 
         constexpr void ensureBufferAvailability()
         {
@@ -47,11 +47,11 @@ namespace lib::scene
         size_type buffer_size_{ 100U };
     };
 
-    RandomizerComponent::RandomizerComponent() noexcept : priv_{ nullptr } {}
+    DataProviderComponent::DataProviderComponent() noexcept : priv_{ nullptr } {}
 
-    RandomizerComponent::~RandomizerComponent() = default;
+    DataProviderComponent::~DataProviderComponent() = default;
 
-    u32 RandomizerComponent::getUInt(const size_type max, const size_type min) const
+    u32 DataProviderComponent::getUInt(const size_type max, const size_type min) const
     {
         log_debug_info("Asked for random number between ", min, " and ", max);
 
@@ -68,11 +68,11 @@ namespace lib::scene
         return min + generated;
     }
 
-    void RandomizerComponent::onAttached()
+    void DataProviderComponent::onAttached()
     {
         if (attachedNode())
         {
-            priv_ = muptr<RandomizerPrivate>(static_cast<core::ISimulableDataProvider&>(attachedNode()->randomSystem()));
+            priv_ = muptr<DataProviderComponentPrivate>(static_cast<core::ISimulableDataProvider&>(attachedNode()->randomSystem()));
         }
     }
 }
