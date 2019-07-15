@@ -28,9 +28,9 @@ namespace lib::core
 
     RandomSystem::~RandomSystem() = default;
 
-    void RandomSystem::generateRandomBuffer(RandomBuffer & dest, const size_type size)
+    void RandomSystem::generateSimulableDataBuffer(SimulableDataBuffer & dest)
     {
-        dest.numbers.resize(size);
+        dest.numbers.resize(10U);
 
         for (auto& num_ref : dest.numbers)
         {

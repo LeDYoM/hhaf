@@ -36,14 +36,11 @@ namespace lib::scene
         void refillBuffer()
         {
             log_debug_info("Call refillBuffer");
-            log_debug_info("Size to refill: ", buffer_size_);
-            random_system_.generateRandomBuffer(numbers_, buffer_size_);
-            assert_release(numbers_.numbers.size() == buffer_size_, 
-                "The size of the buffer is different from the buffer_size");
+            random_system_.generateSimulableDataBuffer(numbers_);
             consumed_ = 0U;
         }
 
-        core::RandomBuffer numbers_;
+        core::SimulableDataBuffer numbers_;
         size_type consumed_{ 0U };
         core::RandomSystem& random_system_;
         size_type buffer_size_{ 100U };
