@@ -21,7 +21,7 @@ namespace zoper
         virtual ~Player();
 
         PropertyTrigger<vector2dst> boardPosition;
-        PropertyTrigger<Direction> currentDirection;
+        BasicProperty<Direction> currentDirection;
 
         void movePlayer(const Direction &direction, const sptr<board::BoardModelComponent> &boardModel);
         void updateDirectionFromParameter(const Direction destDirection);
