@@ -1,6 +1,5 @@
 #include "dataprovidercomponent.hpp"
 #include <lib/system/simulabledataprovider.hpp>
-#include <lib/system/randomsystem.hpp>
 
 #include <lib/include/liblog.hpp>
 #include <lib/scene/scenenode.hpp>
@@ -20,11 +19,11 @@ namespace lib::scene
 
         constexpr void ensureBufferAvailability()
         {
-            if (consumed_ >= numbers_.numbers.end())
+            if (consumed_ >= numbers_.end())
             {
                 refillBuffer();
             }
-            assert_debug(consumed_ <= numbers_.numbers.end(), "Error ensuring buffer availability");
+            assert_debug(consumed_ <= numbers_.end(), "Error ensuring buffer availability");
         }
 
         constexpr size_type next()
@@ -38,7 +37,7 @@ namespace lib::scene
         {
             log_debug_info("Call refillBuffer");
             data_provider_.generateSimulableDataBuffer(numbers_);
-            consumed_ = numbers_.numbers.cbegin();
+            consumed_ = numbers_.cbegin();
         }
 
         core::SimulableDataBuffer numbers_;
@@ -72,7 +71,7 @@ namespace lib::scene
     {
         if (attachedNode())
         {
-            priv_ = muptr<DataProviderComponentPrivate>(static_cast<core::ISimulableDataProvider&>(attachedNode()->randomSystem()));
+            priv_ = muptr<DataProviderComponentPrivate>(attachedNode()->simulableDataProvider());
         }
     }
 }

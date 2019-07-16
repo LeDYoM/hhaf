@@ -22,24 +22,34 @@ namespace lib::scene
         return scene_node_.parentScene()->sceneManager();
     }
 
-    const input::InputSystem & SceneNodeBlob::inputSystem() const
+    const input::InputSystem & SceneNodeBlob::inputSystem() const noexcept
     {
         return sceneManager().systemProvider().inputSystem();
     }
 
-    input::InputSystem & SceneNodeBlob::inputSystem()
+    input::InputSystem & SceneNodeBlob::inputSystem() noexcept
     {
         return sceneManager().systemProvider().inputSystem();
     }
 
-    const core::RandomSystem & SceneNodeBlob::randomSystem() const
+    const core::RandomSystem & SceneNodeBlob::randomSystem() const noexcept
     {
         return sceneManager().systemProvider().randomSystem();
     }
 
-    core::RandomSystem & SceneNodeBlob::randomSystem()
+    core::RandomSystem & SceneNodeBlob::randomSystem() noexcept
     {
         return sceneManager().systemProvider().randomSystem();
+    }
+
+    const core::ISimulableDataProvider & SceneNodeBlob::simulableDataProvider() const noexcept
+    {
+        return sceneManager().systemProvider().simulableDataProvider();
+    }
+
+    core::ISimulableDataProvider & SceneNodeBlob::simulableDataProvider() noexcept
+    {
+        return sceneManager().systemProvider().simulableDataProvider();
     }
 
     const IApp& SceneNodeBlob::app() const

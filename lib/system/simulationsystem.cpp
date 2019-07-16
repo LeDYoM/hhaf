@@ -7,6 +7,8 @@
 #include <lib/include/liblog.hpp>
 #include <lib/include/core/timepoint.hpp>
 #include <lib/system/systemprovider.hpp>
+#include <lib/system/simulabledataprovider.hpp>
+#include <lib/system/randomsystem.hpp>
 
 #include <mtypes/include/types.hpp>
 
@@ -33,6 +35,7 @@ namespace lib::core
         SimulationActionContainer simulation_actions_;
         CurrentSimulationActionIterator current_simulation_action_iterator_;
         SimulableDataBuffer simulable_data_buffer_;
+        SimulableDataBuffer::const_iterator current_simulable_data_buffer_iterator;
         TimePoint start_point_;
 
         void setSimulationActions(const TimePoint now, SimulationActionContainer sim_act_container)
@@ -45,11 +48,12 @@ namespace lib::core
 
         void setSimulatedDataBuffer(SimulableDataBuffer simulated_data_buffer)
         {
-            simulable_data_buffer_.numbers = std::move(simulated_data_buffer.numbers);
+            simulable_data_buffer_ = std::move(simulated_data_buffer);
+            current_simulable_data_buffer_iterator = simulable_data_buffer_.begin();
         }
     };
 
-    SimulationSystem::SimulationSystem(core::SystemProvider &system_provider)
+    SimulationSystem::SimulationSystem(SystemProvider &system_provider)
 		: HostedAppService{ system_provider }, priv_{ muptr<SimulationSystemPrivate>() }
     {
         priv_->setSimulationActions(systemProvider().timeSystem().now(),
@@ -57,6 +61,8 @@ namespace lib::core
                 {SimulationActionType::KeyPressed, TimePoint_as_seconds(2U), input::Key::Down},
                 {SimulationActionType::KeyReleased, TimePoint_as_seconds(3U), input::Key::Down}
             });
+
+        priv_->setSimulatedDataBuffer(SimulableDataBuffer{});
     }
 
     SimulationSystem::~SimulationSystem() = default;
@@ -93,13 +99,17 @@ namespace lib::core
 
     void SimulationSystem::generateSimulableDataBuffer(SimulableDataBuffer & dest)
     {
-        dest.numbers.resize(10U);
-
-        for (auto& num_ref : dest.numbers)
+        if (!priv_->simulable_data_buffer_.empty() && priv_->current_simulable_data_buffer_iterator != priv_->simulable_data_buffer_.cend())
         {
+            dest.resize(1U);
+            dest[0U] = *(priv_->current_simulable_data_buffer_iterator++);
+
+            log_debug_info(dest);
         }
-
-        log_debug_info(dest.numbers);
+        else
+        {
+            systemProvider().randomSystem().generateSimulableDataBuffer(dest);
+        }
+        
     }
-
 }

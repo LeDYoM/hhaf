@@ -181,6 +181,16 @@ namespace lib::core
         return *p_->render_system_;
     }
 
+    const ISimulableDataProvider &SystemProvider::simulableDataProvider() const noexcept
+    {
+        return *p_->simulation_system_;
+    }
+
+    ISimulableDataProvider &SystemProvider::simulableDataProvider() noexcept
+    {
+        return *p_->simulation_system_;
+    }
+
     bool SystemProvider::runStep()
     {
         const bool windowWants2Close{ parentWindow().preLoop() };

@@ -9,11 +9,7 @@
 
 namespace lib::core
 {
-    struct SimulableDataBuffer
-    {
-        vector<size_type> numbers;
-        using const_iterator = vector<size_type>::const_iterator;
-    };
+    using SimulableDataBuffer = vector<size_type>;
 
     /**
      * @brief Provide an interface to Simulable data.

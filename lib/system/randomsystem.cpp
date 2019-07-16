@@ -30,13 +30,13 @@ namespace lib::core
 
     void RandomSystem::generateSimulableDataBuffer(SimulableDataBuffer & dest)
     {
-        dest.numbers.resize(10U);
+        dest.resize(10U);
 
-        for (auto& num_ref : dest.numbers)
+        for (auto& num_ref : dest)
         {
             num_ref = priv_->getUInt();
         }
 
-        log_debug_info(dest.numbers);
+        log_debug_info(dest);
     }
 }
