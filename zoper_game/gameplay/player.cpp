@@ -12,15 +12,7 @@ namespace zoper
     using namespace lib::scene;
 
     Player::Player(SceneNode* const parent, const str& name, vector2dst bPosition, Rectf32 box, vector2df board2SceneFactor)
-          :	GameBaseTile{ parent, name },
-            boardPosition{ std::move(bPosition),
-                [this]() 
-                {
-                    log_debug_info("Player board position: ", boardPosition());
-                    position = vector2df{ m_board2SceneFactor.x * boardPosition().x, m_board2SceneFactor.y * boardPosition().y };
-                    log_debug_info("Player scene position: ", position());
-                }
-            },
+        : BaseClass{ parent, name }, boardPosition{ std::move(bPosition) }, 
         currentDirection{ Direction{Direction::DirectionData::Up} }, m_board2SceneFactor{ std::move(board2SceneFactor) }
     {
         m_extraSceneNode = createSceneNode("m_extraSceneNode");
@@ -38,6 +30,18 @@ namespace zoper
     }
 
 	Player::~Player() {}
+
+    void Player::update()
+    {
+        BaseClass::update();
+
+        if (boardPosition.readResetHasChanged())
+        {
+            log_debug_info("Player board position: ", boardPosition());
+            position = vector2df{ m_board2SceneFactor.x * boardPosition().x, m_board2SceneFactor.y * boardPosition().y };
+            log_debug_info("Player scene position: ", position());
+        }
+    }
 
     void Player::movePlayer(const Direction & direction, const sptr<board::BoardModelComponent>& boardModel)
     {

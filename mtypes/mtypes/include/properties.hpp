@@ -43,27 +43,6 @@ namespace lib
     };
 
     template <typename T>
-    class PropertyTrigger : public BasicProperty<T>
-    {
-        using BaseClass = BasicProperty<T>;
-    public:
-        constexpr PropertyTrigger() noexcept = default;
-        constexpr PropertyTrigger(T iv) noexcept : BaseClass{ std::move(iv) }, m_callback{} {}
-        constexpr PropertyTrigger(callback_t c) noexcept : BaseClass{}, m_callback{ std::move(c) } {}
-        constexpr PropertyTrigger(T iv, callback_t c) noexcept : BaseClass{ std::move(iv) }, m_callback{ std::move(c) } {}
-
-        void set(const T&v) noexcept override { BaseClass::m_value = v; update(); }
-
-        constexpr void setCallback(callback_t c) noexcept { m_callback = std::move(c); }
-        constexpr void operator=(const T&v) noexcept { set(v); }
-
-        constexpr void update() { if (m_callback) m_callback(); }
-
-    private:
-        callback_t m_callback{};
-    };
-
-    template <typename T>
     class PropertyState : public BasicProperty<T>
     {
         using BaseClass = BasicProperty<T>;

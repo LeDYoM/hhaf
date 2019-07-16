@@ -16,11 +16,13 @@ namespace zoper
     class Player : public GameBaseTile
     {
     public:
+        using BaseClass = GameBaseTile;
+
         Player(scene::SceneNode* const parent, const str &name,
                vector2dst bPosition, Rectf32 box, vector2df board2SceneFactor);
         virtual ~Player();
 
-        PropertyTrigger<vector2dst> boardPosition;
+        PropertyState<vector2dst> boardPosition;
         BasicProperty<Direction> currentDirection;
 
         void movePlayer(const Direction &direction, const sptr<board::BoardModelComponent> &boardModel);
@@ -36,6 +38,7 @@ namespace zoper
         void tileMoved(const vector2dst& source,
             const vector2dst& dest) override;
 
+        void update() override;
     private:
         void launchAnimationBack(vector2df toWhere);
         sptr<scene::AnimationComponent> animation_component_;
