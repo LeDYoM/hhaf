@@ -9,7 +9,7 @@
 #include <lib/scene/components/statescontroller.hpp>
 #include <lib/scene/components/icomponent.hpp>
 #include <lib/scene/scene.hpp>
-#include <lib/scene/scenefactory.hpp>
+#include <lib/scene/scenenodefactory.hpp>
 
 namespace lib::scene
 {
@@ -67,15 +67,15 @@ namespace lib::scene
             return startScene(T::StaticTypeName);
         }
 
-        inline SceneFactory& sceneFactory() noexcept { return scene_factory_; }
-        inline const SceneFactory& sceneFactory() const noexcept { return scene_factory_; }
+        inline SceneNodeFactory& sceneNodeFactory() noexcept { return scene_factory_; }
+        inline const SceneNodeFactory& sceneNodeFactory() const noexcept { return scene_factory_; }
         bool currentSceneIsNull();
 
     private:
         void startScene(sptr<Scene> scene);
 
         SceneDirectorType scene_director_;
-        SceneFactory scene_factory_;
+        SceneNodeFactory scene_factory_;
         SceneManager* scene_manager_{ nullptr };
     };
 }

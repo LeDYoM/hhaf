@@ -29,11 +29,11 @@ namespace zoper
         kmSerializer.deserialize("keyboard.txt", *keyMapping);
         systemProvider().sceneManager().setViewRect({0,0,2000,2000});
 
-        auto &scene_factory(systemProvider().sceneManager().sceneController()->sceneFactory());
+        auto &scene_node_factory(systemProvider().sceneManager().sceneController()->sceneNodeFactory());
 
-        scene_factory.registerSceneType<MenuScene>();
-        scene_factory.registerSceneType<GameScene>();
-        scene_factory.registerSceneType<HighScoresScene>();
+        scene_node_factory.registerSceneType<MenuScene>();
+        scene_node_factory.registerSceneType<GameScene>();
+        scene_node_factory.registerSceneType<HighScoresScene>();
         
         systemProvider().sceneManager().sceneController()->setSceneDirector([this](const str& scene_name) -> str
         {

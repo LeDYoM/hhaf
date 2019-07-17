@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_SCENE_SCENEFACTORY_INCLUDE_HPP
-#define LIB_SCENE_SCENEFACTORY_INCLUDE_HPP
+#ifndef LIB_SCENE_SceneNodeFactory_INCLUDE_HPP
+#define LIB_SCENE_SceneNodeFactory_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/function.hpp>
@@ -11,18 +11,18 @@
 namespace lib::scene
 {
     using InterfaceType = Scene;
-    using SceneConstructorFunction = function<uptr<InterfaceType>()>;
+    using SceneNodeConstructorFunction = function<uptr<InterfaceType>()>;
 
-    class SceneFactory
+    class SceneNodeFactory
     {
     public:
-        SceneFactory();
-        ~SceneFactory();
+        SceneNodeFactory();
+        ~SceneNodeFactory();
 
-        bool registerSceneType(str type_name, SceneConstructorFunction scene_constructor_function);
+        bool registerSceneType(str type_name, SceneNodeConstructorFunction scene_constructor_function);
 
         template <typename T>
-        constexpr bool registerSceneType(SceneConstructorFunction scene_constructor_function)
+        constexpr bool registerSceneType(SceneNodeConstructorFunction scene_constructor_function)
         {
             return registerSceneType(T::StaticTypeName, std::move(scene_constructor_function));
         }
@@ -48,8 +48,8 @@ namespace lib::scene
         }
 
     private:
-        struct SceneFactoryPrivate;
-        uptr<SceneFactoryPrivate> private_;
+        struct SceneNodeFactoryPrivate;
+        uptr<SceneNodeFactoryPrivate> private_;
     };
 }
 

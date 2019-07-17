@@ -1,36 +1,36 @@
-#include "scenefactory.hpp"
-#include "scene.hpp"
+#include "scenenodefactory.hpp"
+#include "scenenode.hpp"
 
 #include <map>
 
 namespace lib::scene
 {
-    struct SceneFactory::SceneFactoryPrivate
+    struct SceneNodeFactory::SceneNodeFactoryPrivate
     {
-        std::map<str, SceneConstructorFunction> constructors_;
+        std::map<str, SceneNodeConstructorFunction> constructors_;
 
         inline bool containsSceneType(const str& name)
         {
             return constructors_.find(name) != std::end(constructors_);
         }
 
-        inline void insert(str name, SceneConstructorFunction scene_cf)
+        inline void insert(str name, SceneNodeConstructorFunction scene_cf)
         {
             constructors_[std::move(name)] = scene_cf;
         }
 
-        inline SceneConstructorFunction get(str name)
+        inline SceneNodeConstructorFunction get(str name)
         {
             return constructors_[std::move(name)];
         }
     };
 
-    SceneFactory::SceneFactory() 
-        : private_{ muptr<SceneFactoryPrivate>() } {}
+    SceneNodeFactory::SceneNodeFactory()
+        : private_{ muptr<SceneNodeFactoryPrivate>() } {}
 
-    SceneFactory::~SceneFactory() = default;
+    SceneNodeFactory::~SceneNodeFactory() = default;
 
-    bool SceneFactory::registerSceneType(str type_name, SceneConstructorFunction scene_constructor_function)
+    bool SceneNodeFactory::registerSceneType(str type_name, SceneNodeConstructorFunction scene_constructor_function)
     {
         if (private_->containsSceneType(type_name))
         {
@@ -41,7 +41,7 @@ namespace lib::scene
         return true;
     }
 
-    uptr<InterfaceType> SceneFactory::create(const str &type_name)
+    uptr<InterfaceType> SceneNodeFactory::create(const str &type_name)
     {
         if (!private_->containsSceneType(type_name))
         {
