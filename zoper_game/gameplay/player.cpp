@@ -11,9 +11,9 @@ namespace zoper
     using namespace lib;
     using namespace lib::scene;
 
-    Player::Player(SceneNode* const parent, const str& name, vector2dst bPosition, Rectf32 box, vector2df board2SceneFactor)
-        : BaseClass{ parent, name }, boardPosition{ std::move(bPosition) }, 
-        currentDirection{ Direction{Direction::DirectionData::Up} }, m_board2SceneFactor{ std::move(board2SceneFactor) }
+    Player::Player(SceneNode* const parent, str name)
+        : BaseClass{ parent, std::move(name) }, boardPosition{ },
+        currentDirection{ Direction{Direction::DirectionData::Up} }, m_board2SceneFactor{ }
     {
         m_extraSceneNode = createSceneNode("m_extraSceneNode");
         m_extraSceneNode_2 = m_extraSceneNode->createSceneNode("m_extraSceneNode_2");
@@ -22,14 +22,17 @@ namespace zoper
         m_node = renderizables->createNode("Node");
         m_node->figType.set(FigType_t::Shape);
         m_node->pointCount.set(3U);
-
-        m_node->box.set(box);
-        m_node->color.set(getColorForToken());
-        updateDirectionFromParameter(currentDirection());
         data.set(0);
     }
 
 	Player::~Player() {}
+
+    void Player::setUp(vector2dst bPosition, Rectf32 box, vector2df board2SceneFactor)
+    {
+        m_board2SceneFactor = board2SceneFactor;
+        boardPosition.set(bPosition);
+        m_node->box.set(box);
+    }
 
     void Player::update()
     {
@@ -73,14 +76,13 @@ namespace zoper
 
     void Player::launchAnimation(vector2df toWhere)
     {
-        auto currentPosition(position());
         ensureComponentOfType(animation_component_);
         animation_component_->
             addPropertyAnimation(
                 TimePoint_as_miliseconds(gameplay::constants::MillisAnimationLaunchPlayerStep),
                 position,
                 toWhere,
-                [this, currentPosition = std::move(currentPosition)]() { launchAnimationBack(currentPosition); }
+                [this, currentPosition = position()]() { launchAnimationBack(currentPosition); }
             );
     }
 
@@ -101,6 +103,9 @@ namespace zoper
     void Player::tileAdded(const vector2dst & position_)
     {
         log_debug_info("TokenPlayer appeared at ", position_);
+        m_node->color.set(getColorForToken());
+        updateDirectionFromParameter(currentDirection());
+
         // Set the position in the scene depending on the board position
         boardPosition.set(position_);
     }

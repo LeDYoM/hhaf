@@ -18,9 +18,10 @@ namespace zoper
     public:
         using BaseClass = GameBaseTile;
 
-        Player(scene::SceneNode* const parent, const str &name,
-               vector2dst bPosition, Rectf32 box, vector2df board2SceneFactor);
+        Player(scene::SceneNode* const parent, str name);
         virtual ~Player();
+
+        void setUp(vector2dst bPosition, Rectf32 box, vector2df board2SceneFactor);
 
         PropertyState<vector2dst> boardPosition;
         BasicProperty<Direction> currentDirection;
