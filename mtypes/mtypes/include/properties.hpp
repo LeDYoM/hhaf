@@ -7,8 +7,6 @@
 
 namespace lib
 {
-    using callback_t = function<void()>;
-
     /**
      * This class provides a basic interface for all Properties of
      * the system.
@@ -35,19 +33,19 @@ namespace lib
 
         constexpr const T&operator()() const noexcept { return m_value; }
         constexpr void operator=(const T&v) noexcept { set(v); }
-        const T &get() const noexcept override { return m_value; }
-        void set(const T&v) noexcept override { m_value = v; }
+        inline const T &get() const noexcept override final { return m_value; }
+        inline void set(const T&v) noexcept override { m_value = v; }
 
     protected:
         T m_value{};
     };
 
     template <typename T>
-    class PropertyState : public BasicProperty<T>
+    class PropertyState final : public BasicProperty<T>
     {
         using BaseClass = BasicProperty<T>;
     public:
-        constexpr PropertyState() noexcept : BaseClass{T{}} {}
+        constexpr PropertyState() noexcept : BaseClass{} {}
         constexpr PropertyState(T iv) noexcept : BaseClass{ std::move(iv) } {}
 
         constexpr void operator=(const T&v) noexcept { set(v); }
@@ -56,8 +54,7 @@ namespace lib
         constexpr void resetHasChanged() noexcept { m_hasChanged = false; }
         constexpr void setChanged() noexcept { m_hasChanged = true; }
         constexpr bool readResetHasChanged() noexcept { const bool v{ m_hasChanged }; resetHasChanged(); return v; }
-        const T &get() const noexcept override { return m_value; }
-        void set(const T&v) noexcept override { m_value = v; setChanged(); }
+        inline void set(const T&v) noexcept override { BaseClass::set(v); setChanged(); }
 
     private:
         bool m_hasChanged{ true };
