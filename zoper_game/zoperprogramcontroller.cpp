@@ -31,9 +31,9 @@ namespace zoper
 
         auto &scene_node_factory(systemProvider().sceneManager().sceneController()->sceneNodeFactory());
 
-        scene_node_factory.registerSceneType<MenuScene>();
-        scene_node_factory.registerSceneType<GameScene>();
-        scene_node_factory.registerSceneType<HighScoresScene>();
+        scene_node_factory.registerSceneNodeType<MenuScene>();
+        scene_node_factory.registerSceneNodeType<GameScene>();
+        scene_node_factory.registerSceneNodeType<HighScoresScene>();
         
         systemProvider().sceneManager().sceneController()->setSceneDirector([this](const str& scene_name) -> str
         {

@@ -38,7 +38,7 @@ namespace lib::scene
         template <typename T>
         bool registerAndStartScene(const str &sceneName)
         {
-            if (scene_factory_.registerSceneType<T>(sceneName))
+            if (scene_factory_.registerSceneNodeType<T>(sceneName))
             {
                 return startScene(sceneName);
             }
@@ -48,7 +48,7 @@ namespace lib::scene
         template <typename T>
         bool registerAndStartScene()
         {
-            if (sceneFactory_.registerSceneType<T>())
+            if (sceneFactory_.registerSceneNodeType<T>())
             {
                 return startScene(sceneName);
             }
@@ -56,9 +56,9 @@ namespace lib::scene
         }
 
         template <typename T>
-        bool registerSceneType()
+        bool registerSceneNodeType()
         {
-            return scene_factory_.registerSceneType<T>();
+            return scene_factory_.registerSceneNodeType<T>();
         }
 
         template <typename T> 

@@ -64,19 +64,19 @@ TEST_CASE("lib::scene::SceneNodeFactory", "[lib][SceneNodeFactory]")
 
     SECTION("Basic insertion")
     {
-        CHECK(scene_node_factory.registerSceneType("SceneTypeBasic", SceneTypeBasic::createScene));
+        CHECK(scene_node_factory.registerSceneNodeType("SceneTypeBasic", SceneTypeBasic::createScene));
         // Insertion of the same element is false
-        CHECK_FALSE(scene_node_factory.registerSceneType("SceneTypeBasic", SceneTypeBasic::createScene));
+        CHECK_FALSE(scene_node_factory.registerSceneNodeType("SceneTypeBasic", SceneTypeBasic::createScene));
 
         SECTION("Inserting overloads")
         {
-            CHECK(scene_node_factory.registerSceneType<SceneTypeWithStaticTypeName>(SceneTypeWithStaticTypeName::createScene));            
-            CHECK(scene_node_factory.registerSceneType<SceneTypeWithStaticCreateScene>(str("SceneTypeWithStaticCreateScene")));
-            CHECK(scene_node_factory.registerSceneType<SceneTypeWithStaticTypeNameAndStaticCreateScene>());
+            CHECK(scene_node_factory.registerSceneNodeType<SceneTypeWithStaticTypeName>(SceneTypeWithStaticTypeName::createScene));            
+            CHECK(scene_node_factory.registerSceneNodeType<SceneTypeWithStaticCreateScene>(str("SceneTypeWithStaticCreateScene")));
+            CHECK(scene_node_factory.registerSceneNodeType<SceneTypeWithStaticTypeNameAndStaticCreateScene>());
 
-            CHECK_FALSE(scene_node_factory.registerSceneType<SceneTypeWithStaticTypeName>(SceneTypeWithStaticTypeName::createScene));            
-            CHECK_FALSE(scene_node_factory.registerSceneType<SceneTypeWithStaticCreateScene>(str("SceneTypeWithStaticCreateScene")));
-            CHECK_FALSE(scene_node_factory.registerSceneType<SceneTypeWithStaticTypeNameAndStaticCreateScene>());
+            CHECK_FALSE(scene_node_factory.registerSceneNodeType<SceneTypeWithStaticTypeName>(SceneTypeWithStaticTypeName::createScene));            
+            CHECK_FALSE(scene_node_factory.registerSceneNodeType<SceneTypeWithStaticCreateScene>(str("SceneTypeWithStaticCreateScene")));
+            CHECK_FALSE(scene_node_factory.registerSceneNodeType<SceneTypeWithStaticTypeNameAndStaticCreateScene>());
 
             SECTION("Check existence")
             {

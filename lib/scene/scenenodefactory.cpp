@@ -9,14 +9,14 @@ namespace lib::scene
     {
         std::map<str, SceneNodeConstructorFunction> constructors_;
 
-        inline bool containsSceneType(const str& name)
+        inline bool containsSceneNodeType(const str& name)
         {
             return constructors_.find(name) != std::end(constructors_);
         }
 
         inline void insert(str name, SceneNodeConstructorFunction scene_cf)
         {
-            constructors_[std::move(name)] = scene_cf;
+            constructors_[std::move(name)] = std::move(scene_cf);
         }
 
         inline SceneNodeConstructorFunction get(str name)
@@ -30,9 +30,9 @@ namespace lib::scene
 
     SceneNodeFactory::~SceneNodeFactory() = default;
 
-    bool SceneNodeFactory::registerSceneType(str type_name, SceneNodeConstructorFunction scene_constructor_function)
+    bool SceneNodeFactory::registerSceneNodeType(str type_name, SceneNodeConstructorFunction scene_constructor_function)
     {
-        if (private_->containsSceneType(type_name))
+        if (private_->containsSceneNodeType(type_name))
         {
             return false;
         }
@@ -41,9 +41,9 @@ namespace lib::scene
         return true;
     }
 
-    uptr<InterfaceType> SceneNodeFactory::create(const str &type_name)
+    uptr<SceneNodeFactory::InterfaceType> SceneNodeFactory::create(const str &type_name)
     {
-        if (!private_->containsSceneType(type_name))
+        if (!private_->containsSceneNodeType(type_name))
         {
             return uptr<InterfaceType>(nullptr);
         }

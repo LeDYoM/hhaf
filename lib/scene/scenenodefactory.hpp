@@ -1,6 +1,6 @@
 #pragma once
 
-#ifndef LIB_SCENE_SceneNodeFactory_INCLUDE_HPP
+#ifndef LIB_SCENE_SCENENODEFACTORY_INCLUDE_HPP
 #define LIB_SCENE_SceneNodeFactory_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
@@ -10,33 +10,33 @@
 
 namespace lib::scene
 {
-    using InterfaceType = Scene;
-    using SceneNodeConstructorFunction = function<uptr<InterfaceType>()>;
-
     class SceneNodeFactory
     {
     public:
+        using InterfaceType = Scene;
+        using SceneNodeConstructorFunction = function<uptr<InterfaceType>()>;
+
         SceneNodeFactory();
         ~SceneNodeFactory();
 
-        bool registerSceneType(str type_name, SceneNodeConstructorFunction scene_constructor_function);
+        bool registerSceneNodeType(str type_name, SceneNodeConstructorFunction scene_constructor_function);
 
         template <typename T>
-        constexpr bool registerSceneType(SceneNodeConstructorFunction scene_constructor_function)
+        constexpr bool registerSceneNodeType(SceneNodeConstructorFunction scene_constructor_function)
         {
-            return registerSceneType(T::StaticTypeName, std::move(scene_constructor_function));
+            return registerSceneNodeType(T::StaticTypeName, std::move(scene_constructor_function));
         }
 
         template <typename T>
-        constexpr bool registerSceneType(str type_name)
+        constexpr bool registerSceneNodeType(str type_name)
         {
-            return registerSceneType(std::move(type_name), T::create);
+            return registerSceneNodeType(std::move(type_name), T::create);
         }
 
         template <typename T>
-        constexpr bool registerSceneType()
+        constexpr bool registerSceneNodeType()
         {
-            return registerSceneType(T::StaticTypeName, T::create);
+            return registerSceneNodeType(T::StaticTypeName, T::create);
         }
 
         uptr<InterfaceType> create(const str &type_name);
