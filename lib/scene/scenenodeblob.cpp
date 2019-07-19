@@ -4,8 +4,14 @@
 #include "scene.hpp"
 #include "scenemanager.hpp"
 
+#include <lib/system/resourcemanager.hpp>
 #include <lib/system/systemprovider.hpp>
+
 #include <lib/include/iapp.hpp>
+
+#include <lib/include/resources/iresourceloader.hpp>
+#include <lib/include/resources/iresourcehandler.hpp>
+
 
 namespace lib::scene
 {
@@ -65,5 +71,10 @@ namespace lib::scene
     Rectf32 SceneNodeBlob::scenePerspective() const
     {
         return sceneManager().viewRect();
+    }
+
+    void SceneNodeBlob::loadResources(IResourceLoader&& resourceLoader)
+    {
+        resourceLoader.loadResources(sceneManager().systemProvider().resourceManager());
     }
 }

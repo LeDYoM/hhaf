@@ -9,6 +9,7 @@
 namespace lib
 {
     class IApp;
+    class IResourceLoader;
 }
 
 namespace lib::core
@@ -52,6 +53,8 @@ namespace lib::scene
 
         Rectf32 scenePerspective() const;
 
+       void loadResources(IResourceLoader &&resourceloader);
+ 
     private:
         SceneNode& scene_node_;
     };

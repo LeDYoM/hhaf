@@ -33,7 +33,6 @@ namespace lib::scene
         inline SceneManager &sceneManager() noexcept { return *m_sceneManager; }
         inline const SceneManager &sceneManager() const noexcept { return *m_sceneManager; }
 
-        void loadResources(IResourceLoader &&resourceloader);
     private:
 
         SceneManager *m_sceneManager{ nullptr };

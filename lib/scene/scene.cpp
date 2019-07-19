@@ -12,9 +12,4 @@ namespace lib::scene
 	Scene::Scene(str name) : SceneNode{ nullptr,std::move(name) } {}
 
 	Scene::~Scene() = default;
-
-    void Scene::loadResources(IResourceLoader&& resourceLoader)
-    {
-        resourceLoader.loadResources(sceneManager().systemProvider().resourceManager());
-    }
 }
