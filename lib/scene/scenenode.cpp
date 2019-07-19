@@ -11,7 +11,7 @@
 namespace lib::scene
 {
     SceneNode::SceneNode(SceneNode *const parent, str name)
-        : core::HasName{ std::move(name) }, DataWrapperCreator{ this}, 
+        : core::HasName{ std::move(name) }, DataWrapperCreator{ this },
         ComponentContainer{ this }, SceneNodeBlob{ *this },
         visible{ true }, m_parent{ parent }
     {
