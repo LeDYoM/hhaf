@@ -14,7 +14,8 @@ namespace lib::scene
     {
     public:
         using InterfaceType = Scene;
-        using SceneNodeConstructorFunction = function<uptr<InterfaceType>()>;
+        using CreateReturnType = sptr<InterfaceType>;
+        using SceneNodeConstructorFunction = function<CreateReturnType()>;
 
         SceneNodeFactory();
         ~SceneNodeFactory();
@@ -39,10 +40,10 @@ namespace lib::scene
             return registerSceneNodeType(T::StaticTypeName, T::create);
         }
 
-        uptr<InterfaceType> create(const str &type_name);
+        CreateReturnType create(const str &type_name);
 
         template <typename T>
-        constexpr uptr<InterfaceType> create()
+        constexpr CreateReturnType create()
         {
             return create(T::StaticTypeName);
         }

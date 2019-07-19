@@ -41,7 +41,7 @@ namespace lib::scene
         return true;
     }
 
-    uptr<SceneNodeFactory::InterfaceType> SceneNodeFactory::create(const str &type_name)
+    SceneNodeFactory::CreateReturnType SceneNodeFactory::create(const str &type_name)
     {
         if (!private_->containsSceneNodeType(type_name))
         {
