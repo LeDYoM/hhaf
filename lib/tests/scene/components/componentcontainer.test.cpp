@@ -40,7 +40,8 @@ TEST_CASE("lib::scene::ComponentContainer", "[ComponentContainer][constructor]")
 
             SECTION("Add twice")
             {
-                sptr<TestComponent> component2 = component_container_no_parent->addComponentOfType<TestComponent>();
+                sptr<TestComponent> component2 = component;
+                component_container_no_parent->ensureComponentOfType(component2);
                 component_container_no_parent->updateComponents();
                 CHECK(component->data_ == 2);
                 CHECK(component2->data_ == 2);
@@ -52,7 +53,8 @@ TEST_CASE("lib::scene::ComponentContainer", "[ComponentContainer][constructor]")
         {
             SECTION("Add twice")
             {
-                sptr<TestComponent> component2 = component_container_no_parent->addComponentOfType<TestComponent>();
+                sptr<TestComponent> component2 = component;
+                component_container_no_parent->ensureComponentOfType(component2);
                 CHECK(component == component2);
             }
         }

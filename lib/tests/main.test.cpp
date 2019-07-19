@@ -8,7 +8,6 @@ int main(int argc, char* argv[])
     // writing to session.configData() here sets defaults
     // this is the preferred way to set them
 
-    session.configData().waitForKeypress = Catch::WaitForKeypress::BeforeExit;
     session.configData().showSuccessfulTests = true;
     int returnCode = session.applyCommandLine(argc, argv);
     if (returnCode != 0) // Indicates a command line error
