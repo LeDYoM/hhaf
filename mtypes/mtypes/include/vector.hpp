@@ -264,6 +264,11 @@ namespace lib
             return end();
         }
 
+        constexpr iterator erase_one(const T& value)
+        {
+            return erase_one(value, begin());
+        }
+
         constexpr iterator erase_if(function<bool(const T&)> condition) 
         {
             return erase_if(std::move(condition), begin());

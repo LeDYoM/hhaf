@@ -167,7 +167,7 @@ namespace lib
         {
             for (const auto& element : remove_cache_)
             {
-                c.erase_values(element);
+                c.erase_one(element);
             }
         }
 
@@ -176,11 +176,8 @@ namespace lib
             if (!remove_cache_.empty())
             {
                 remove_cache_elements_from(main_container_);
-                remove_cache_elements_from(remove_cache_);
-
                 remove_cache_.clear();
             }
-
         }
 
         constexpr void add_to_main_container() 

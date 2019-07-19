@@ -30,6 +30,11 @@ namespace lib
             return m_callable->Invoke(std::forward<Args>(args)...);
         }
 
+        constexpr bool operator==(const function& other) const noexcept
+        {
+            return m_callable == other.m_callable;
+        }
+
     private:
         class ICallable {
         public:
