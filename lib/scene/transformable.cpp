@@ -3,13 +3,9 @@
 
 namespace lib::scene
 {
-    Transformable::Transformable() noexcept : 
-        origin{ },
-        rotation{ },
-        scale{ { 1, 1 } },
-        position{ },
-        m_transform{},
-        m_globalTransform{}
+    Transformable::Transformable() noexcept :
+        origin{ }, rotation{ }, scale{ { 1U, 1U } },
+        position{ }, m_transform{ }, m_globalTransform{ }
     {}
 
     Transformable::~Transformable() = default;
@@ -21,22 +17,19 @@ namespace lib::scene
 
     void Transformable::rotateAround(const vector2df & point, const f32 angle)
     {
-        origin = point;
-        position = point;
+        origin = position = point;
         rotation = angle;
     }
 
     void Transformable::scaleAround(const vector2df & point, const vector2df & scale_)
     {
-        origin = point;
-        position = point;
+        origin = position = point;
         scale = scale_;
     }
 
     void Transformable::rotateScaleAround(const vector2df & point, const f32 angle, const vector2df & scale_)
     {
-        origin = point;
-        position = point;
+        origin = position = point;
         rotation = angle;
         scale = scale_;
     }
@@ -56,9 +49,9 @@ namespace lib::scene
         const vector2df pos{ position() };
 
         m_transform = {
-            sc.x,		ss.y,	(-orig.x * sc.x) - (orig.y * ss.y) + pos.x,
-            -ss.x,		sc.y,	( orig.x * ss.y) - (orig.y * sc.y) + pos.y,
-            0.f,		0.f,	1.f 
+            sc.x,   ss.y,   (-orig.x * sc.x) - (orig.y * ss.y) + pos.x,
+            -ss.x,  sc.y,   ( orig.x * ss.y) - (orig.y * sc.y) + pos.y,
+            0.f,    0.f,    1.f 
         };
     }
 }

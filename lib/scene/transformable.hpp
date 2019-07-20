@@ -47,7 +47,8 @@ namespace lib::scene
         void rotateScaleAround(const vector2df &point, const f32 angle, const vector2df &scale);
 
     protected:
-        inline bool transformationNeedsUpdate() noexcept {
+        inline bool transformationNeedsUpdate() const noexcept
+        {
             return ps_hasChanged(position,origin,scale,rotation);
         }
 

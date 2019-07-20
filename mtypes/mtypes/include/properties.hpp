@@ -28,11 +28,16 @@ namespace lib
     {
     public:
         constexpr BasicProperty() noexcept = default;
+        constexpr BasicProperty(BasicProperty&&) noexcept = default;
+        constexpr BasicProperty(const BasicProperty&) noexcept = default;
+        constexpr BasicProperty& operator=(BasicProperty&&) noexcept = default;
+        constexpr BasicProperty& operator=(const BasicProperty&) noexcept = default;
+
         constexpr BasicProperty(T&& iv) noexcept : m_value{ std::move(iv) } {}
         constexpr BasicProperty(const T& iv) noexcept : m_value{ iv } {}
 
         constexpr const T&operator()() const noexcept { return m_value; }
-        constexpr void operator=(const T&v) noexcept { set(v); }
+        constexpr const T& operator=(const T&v) noexcept { set(v); return v; }
         inline const T &get() const noexcept override final { return m_value; }
         inline void set(const T&v) noexcept override { m_value = v; }
 
@@ -47,8 +52,12 @@ namespace lib
     public:
         constexpr PropertyState() noexcept : BaseClass{} {}
         constexpr PropertyState(T iv) noexcept : BaseClass{ std::move(iv) } {}
+        constexpr PropertyState(PropertyState&&) noexcept = default;
+        constexpr PropertyState(const PropertyState&) noexcept = default;
+        constexpr PropertyState& operator=(PropertyState&&) noexcept = default;
+        constexpr PropertyState& operator=(const PropertyState&) noexcept = default;
 
-        constexpr void operator=(const T&v) noexcept { set(v); }
+        constexpr const T& operator=(const T&v) noexcept { set(v); return v; }
 
         constexpr bool hasChanged() const noexcept { return m_hasChanged; }
         constexpr void resetHasChanged() noexcept { m_hasChanged = false; }
@@ -67,7 +76,7 @@ namespace lib
     }
 
     template<typename T>
-    constexpr bool ps_hasChanged(PropertyState<T> &arg)
+    constexpr bool ps_hasChanged(const PropertyState<T> &arg)
     {
         return arg.hasChanged();
     }
