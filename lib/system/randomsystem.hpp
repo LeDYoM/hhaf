@@ -6,31 +6,20 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector.hpp>
 #include <lib/system/appservice.hpp>
+#include <lib/system/simulabledataprovider.hpp>
 
 namespace lib::core
 {
-    class Host;
-
-    struct RandomBuffer
-    {
-        vector<size_type> numbers;
-    };
-
-    class IRandomSystem
-    {
-        virtual void generateRandomBuffer(RandomBuffer& dest, const size_type channel, const size_type size = 100U) = 0;
-    };
-
     /**
     * This system is intended to be used to generate
     * a series of random numbers.
     */
-    class RandomSystem final : public AppService, IRandomSystem
-	{
-	public:
+    class RandomSystem final : public AppService, public ISimulableDataProvider
+    {
+    public:
         RandomSystem();
         ~RandomSystem() override;
-        void generateRandomBuffer(RandomBuffer& dest, const size_type channel, const size_type size = 100U) override;
+        void generateSimulableDataBuffer(SimulableDataBuffer& dest) override;
 
     private:
         class RandomSystemPrivate;

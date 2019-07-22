@@ -11,17 +11,18 @@ namespace zoper
 {
     using namespace lib;
 
-	class GameBaseTile : public board::ITile, public scene::SceneNode
-	{
-	public:
-		GameBaseTile(scene::SceneNode* const parent, str name, board::BoardTileData data);
-		~GameBaseTile() override = default;
+    class GameBaseTile : public board::ITile, public scene::SceneNode
+    {
+    public:
+        GameBaseTile(scene::SceneNode* const parent, str name);
+        ~GameBaseTile() override;
 
-		scene::Color getColorForToken() const;
+        void update() override;
+        scene::Color getColorForToken() const;
 
-	protected:
-		sptr<scene::Renderizable> m_node;
-	};
+    protected:
+        sptr<scene::Renderizable> m_node;
+    };
 }
 
 #endif

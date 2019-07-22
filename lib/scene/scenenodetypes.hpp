@@ -7,6 +7,7 @@
 #include <lib/scene/components/icomponent.hpp>
 #include <lib/scene/renderizables/renderizable.hpp>
 #include <lib/scene/components/renderizables.hpp>
+#include <lib/include/liblog.hpp>
 
 #include "scenenode.hpp"
 
@@ -20,16 +21,16 @@ namespace lib::scene
         {
                             log_debug_info("A");
 
-            m_node = ensureComponentOfType<Renderizables>()->
+            m_node = addComponentOfType<Renderizables>()->
                 createNode(name + "_node");
         }
 
-		sptr<Renderizable> node() noexcept { return m_node; }
-		const sptr<Renderizable> node() const noexcept { return m_node; }
+        sptr<Renderizable> node() noexcept { return m_node; }
+        const sptr<Renderizable> node() const noexcept { return m_node; }
 
-	private:
-		sptr<Renderizable> m_node;
-	};
+    private:
+        sptr<Renderizable> m_node;
+    };
 }
 
 #endif

@@ -6,7 +6,6 @@
 #include "../zoperprogramcontroller.hpp"
 #include <lib/scene/components/texteditorcomponent.hpp>
 #include <lib/system/resourcemanager.hpp>
-#include <lib/core/host.hpp>
 #include <lib/include/resources/ittfont.hpp>
 #include <lib/scene/datawrappers/resourceview.hpp>
 
@@ -58,7 +57,7 @@ namespace zoper
                 standarizeText(label);
 
 				if (isInserting && positionInTable == counter) {
-//					auto editor(label->ensureComponentOfType<TextEditorComponent>());
+//					auto editor(label->addComponentOfType<TextEditorComponent>());
 //					editor->setTextValidator(msptr<HighScoreValidator>());
 //                    editor->Accepted.connect([this,positionInTable,element](const str&entry) mutable {
 //                        m_hsData.setHighScoreName(positionInTable, entry);

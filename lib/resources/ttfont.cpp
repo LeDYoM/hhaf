@@ -2,7 +2,6 @@
 #include "ttfontinstance.hpp"
 
 #include <backend_dev/include/ittfont.hpp>
-#include <lib/system/backendfactory.hpp>
 
 #include <map>
 #include <algorithm>
@@ -11,29 +10,30 @@ namespace lib::scene
 {
     struct TTFont::FontPrivate
     {
+        FontPrivate(backend::ITTFont* font) : m_font{font} {}
         backend::ITTFont *m_font;
         std::map<u32,sptr<TTFontInstance>> m_fontMap;
     };
 
     TTFont::TTFont(backend::ITTFont* font) :
-        m_private{ new FontPrivate{ std::move(font) } } {}
+        m_private{ muptr<FontPrivate>( font ) } {}
 
     TTFont::~TTFont() = default;
 
-	Rectf32 TTFont::getBounds(const u32 codePoint, const u32 characterSize) const
-	{
-		return m_private->m_font->getBounds(codePoint, characterSize);
-	}
+    Rectf32 TTFont::getBounds(const u32 codePoint, const u32 characterSize) const
+    {
+        return m_private->m_font->getBounds(codePoint, characterSize);
+    }
 
-	Rectf32 TTFont::getTextureBounds(const u32 codePoint, const u32 characterSize) const
-	{
-		return m_private->m_font->getTextureBounds(codePoint, characterSize);
-	}
+    Rectf32 TTFont::getTextureBounds(const u32 codePoint, const u32 characterSize) const
+    {
+        return m_private->m_font->getTextureBounds(codePoint, characterSize);
+    }
 
-	f32 TTFont::getAdvance(const u32 codePoint, const u32 characterSize) const
-	{
-		return m_private->m_font->getAdvance(codePoint, characterSize);
-	}
+    f32 TTFont::getAdvance(const u32 codePoint, const u32 characterSize) const
+    {
+        return m_private->m_font->getAdvance(codePoint, characterSize);
+    }
 
     f32 TTFont::getLineSpacing(const u32 characterSize) const
     {
@@ -51,7 +51,7 @@ namespace lib::scene
     }
 
     vector2df TTFont::textSize(const lib::str& text,
-                                           const u32 characterSize) const
+                                            const u32 characterSize) const
     {
         if (text.empty()) {
             return {};
@@ -100,7 +100,7 @@ namespace lib::scene
                 }
 
                 // Advance to the next character
-				x += getAdvance(curChar, characterSize);
+                x += getAdvance(curChar, characterSize);
             }
         }
         return max;

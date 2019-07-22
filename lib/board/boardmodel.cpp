@@ -69,7 +69,7 @@ namespace lib::board
         assert_release(!tileEmpty(source), "You can only change data in not empty tiles");
 
         auto tile (getTile(source));
-        BoardTileData ov{ tile->get() };
+        BoardTileData ov{ tile->data.get() };
 
         if (m_actuator)
         {
@@ -87,7 +87,7 @@ namespace lib::board
             SITilePointer sourceTile{ getTile(source) };
             SITilePointer destTile{ getTile(dest) };
 
-            log_debug_info("Source Value: ", sourceTile->get());
+            log_debug_info("Source Value: ", sourceTile->data.get());
 
             if (sourceTile)
             {

@@ -28,7 +28,7 @@ namespace zoper
         m_pauseText->font.set(resources_viewer->getFont(GameResources::ScoreFontId)->font(180));
         m_pauseText->textColor.set(FillColor_t{colors::White});
         {
-            auto align(m_pauseText->ensureComponentOfType<AlignedTextComponent>());
+            auto align(m_pauseText->addComponentOfType<AlignedTextComponent>());
             align->alignmentSize.set(parentScene()->scenePerspective().size());
             align->alignmentX.set(AlignedTextComponent::AlignmentX::Center);
             align->alignmentY.set(AlignedTextComponent::AlignmentY::Middle);
@@ -42,7 +42,7 @@ namespace zoper
     void PauseSceneNode::enterPause()
     {
         visible.set(true);
-        auto animationComponent(ensureComponentOfType<anim::AnimationComponent>());
+        auto animationComponent(addComponentOfType<AnimationComponent>());
         animationComponent->addPropertyAnimation(TimePoint_as_miliseconds(1000),
             m_pauseText->textColor, FillColor_t{Color{ 255, 255, 255, 0 } },
             FillColor_t{Color{ 255, 255, 255, 255 } });

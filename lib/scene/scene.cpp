@@ -5,15 +5,11 @@
 
 #include <lib/include/resources/iresourceloader.hpp>
 #include <lib/include/resources/iresourcehandler.hpp>
+#include <lib/system/systemprovider.hpp>
 
 namespace lib::scene
 {
 	Scene::Scene(str name) : SceneNode{ nullptr,std::move(name) } {}
 
 	Scene::~Scene() = default;
-
-    void Scene::loadResources(IResourceLoader&& resourceLoader)
-    {
-        resourceLoader.loadResources(sceneManager().systemProvider().resourceManager());
-    }
 }

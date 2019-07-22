@@ -33,7 +33,7 @@ namespace zoper
         gameText->font.set(resources_viewer->getFont(GameResources::ScoreFontId)->font(360));
         gameText->textColor.set(FillColor_t{ colors::White });
         {
-            auto align(gameText->ensureComponentOfType<AlignedTextComponent>());
+            auto align(gameText->addComponentOfType<AlignedTextComponent>());
             align->alignmentSize.set(gosize);
             align->alignmentX.set(AlignedTextComponent::AlignmentX::Center);
             align->alignmentY.set(AlignedTextComponent::AlignmentY::Top);
@@ -44,7 +44,7 @@ namespace zoper
         overText->font.set(resources_viewer->getFont(GameResources::ScoreFontId)->font(360));
         overText->textColor.set(FillColor_t{ colors::White });
         {
-            auto align(overText->ensureComponentOfType<AlignedTextComponent>());
+            auto align(overText->addComponentOfType<AlignedTextComponent>());
             align->alignmentSize.set(gosize);
             align->alignmentX.set(AlignedTextComponent::AlignmentX::Center);
             align->alignmentY.set(AlignedTextComponent::AlignmentY::Bottom);

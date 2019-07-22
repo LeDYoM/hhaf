@@ -18,6 +18,7 @@ namespace lib::scene
     class Renderizable;
     class IComponent;
     class Scene;
+    class SceneManager;
 
     /** \brief Main class representing all SceneNodes from a Scene.
     * This class is that serves as main entry point in the hierarchy of the scene
@@ -93,9 +94,7 @@ namespace lib::scene
         void addSceneNode(sptr<SceneNode> node);
 
     private:
-        friend class SceneNodeBlob;
         SceneNode *m_parent;
-
         vector<sptr<SceneNode>> m_groups;
     };
 

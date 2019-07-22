@@ -53,7 +53,7 @@ namespace lib
         * Remove an element. Overload for const references.
         * @param element The element to remove.
         */
-        constexpr void erase_values(const T &element)
+        constexpr void erase_value(const T &element)
         {
             remove_cache_.push_back(element);
         }
@@ -107,7 +107,7 @@ namespace lib
 
         /**
         * Get a copy 
-        * */
+        */
         constexpr vector<T> next() const
         {
             LockableVector<T> temp(*this);
@@ -116,7 +116,7 @@ namespace lib
 
         /**
         * Retrieve a constant reference to the updated internal main container.
-        * @return rvalue reference to the updated main container.
+        * @return const lvalue reference to the updated main container.
         */
         constexpr const vector<T>& current() noexcept
         {
@@ -167,7 +167,7 @@ namespace lib
         {
             for (const auto& element : remove_cache_)
             {
-                c.erase_values(element);
+                c.erase_one(element);
             }
         }
 
@@ -176,11 +176,8 @@ namespace lib
             if (!remove_cache_.empty())
             {
                 remove_cache_elements_from(main_container_);
-                remove_cache_elements_from(remove_cache_);
-
                 remove_cache_.clear();
             }
-
         }
 
         constexpr void add_to_main_container() 

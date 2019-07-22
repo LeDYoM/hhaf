@@ -90,10 +90,10 @@ TEST_CASE("SceneController", "[lib][SceneController]")
             CHECK(false);
             return str("");
         });
-        CHECK(common.scene_controller->registerSceneType<GroupScene1>());
-        CHECK(common.scene_controller->registerSceneType<GroupScene2>());
-        CHECK_FALSE(common.scene_controller->registerSceneType<GroupScene1>());
-        CHECK_FALSE(common.scene_controller->registerSceneType<GroupScene2>());
+        CHECK(common.scene_controller->registerSceneNodeType<GroupScene1>());
+        CHECK(common.scene_controller->registerSceneNodeType<GroupScene2>());
+        CHECK_FALSE(common.scene_controller->registerSceneNodeType<GroupScene1>());
+        CHECK_FALSE(common.scene_controller->registerSceneNodeType<GroupScene2>());
 
         common.step = 0U;
         common.scene_controller->startScene<GroupScene1>();

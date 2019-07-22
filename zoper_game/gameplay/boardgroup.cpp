@@ -40,15 +40,15 @@ namespace zoper
             }
         }
 
-        p_boardModel = ensureComponentOfType<board::BoardModelComponent>();
+        p_boardModel = addComponentOfType<board::BoardModelComponent>();
         p_boardModel->initialize(tableSize(), this);
-	}
+    }
 
-	void BoardGroup::tileRemoved(const vector2dst, board::SITilePointer tile)
-	{
-		assert_release(std::dynamic_pointer_cast<Token>(tile) != nullptr, "Trying to delete invalid type from board");
-		m_mainBoardrg->removeSceneNode(std::dynamic_pointer_cast<Token>(tile));
-	}
+    void BoardGroup::tileRemoved(const vector2dst, board::SITilePointer tile)
+    {
+        assert_release(std::dynamic_pointer_cast<Token>(tile) != nullptr, "Trying to delete invalid type from board");
+        m_mainBoardrg->removeSceneNode(std::dynamic_pointer_cast<Token>(tile));
+    }
 
     void BoardGroup::setLevel(const size_type level)
     {

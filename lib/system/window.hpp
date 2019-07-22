@@ -8,47 +8,34 @@
 #include <backend_dev/include/iwindow.hpp>
 #include <backend_dev/include/iinputdriver.hpp>
 
-#include <lib/include/key.hpp>
-
 #include <mtypes/include/types.hpp>
-#include <mtypes/include/properties.hpp>
 
-namespace lib
+namespace lib::core
 {
-    struct WindowCreationParams;
-    namespace scene
+    class RenderTarget;
+    class SystemProvider;
+
+    class Window final : public HostedAppService
     {
-        class VertexArray;
-        class RenderData;
-    }
+    public:
+        Window(core::SystemProvider &system_provider);
+        ~Window() override;
+        bool preLoop();
+        void postLoop();
+        virtual void onCreate();
+        virtual void onDestroy();
 
-    namespace core
-    {
-        class RenderTarget;
-        class Host;
-        class Window final : public HostedAppService
-        {
-        public:
-            Window(core::SystemProvider &system_provider, const WindowCreationParams &wcp);
-            ~Window() override;
-            bool preLoop();
-            void postLoop();
-            virtual void onCreate();
-            virtual void onDestroy();
+        sptr<RenderTarget> renderTarget(); 
+        const sptr<RenderTarget> renderTarget() const;
 
-            sptr<RenderTarget> renderTarget();
-            const sptr<RenderTarget> renderTarget() const;
+        backend::IInputDriver* inputDriver();
+        const backend::IInputDriver* inputDriver() const;
 
-            backend::IInputDriver* inputDriver();
-            const backend::IInputDriver* inputDriver() const;
-
-        private:
-            void create(const WindowCreationParams &wcp);
-            struct WindowPrivate;
-            uptr<WindowPrivate> m_wPrivate;
-            str m_title;
-        };
-    }
+    private:
+        void create();
+        struct WindowPrivate;
+        uptr<WindowPrivate> priv_;
+    };
 }
 
 #endif

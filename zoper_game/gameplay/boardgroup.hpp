@@ -16,16 +16,16 @@ namespace zoper
     using namespace lib;
 
     class BoardGroup : public scene::nodes::TableNode<BoardSceneNode>, public board::IBoardModelActuator
-	{
-	private:
-		using BaseClass = scene::nodes::TableNode<BoardSceneNode>;
-	public:
-		BoardGroup(scene::SceneNode* parent, str name, vector2dst size);
-		virtual ~BoardGroup();
+    {
+    private:
+        using BaseClass = scene::nodes::TableNode<BoardSceneNode>;
+    public:
+        BoardGroup(scene::SceneNode* parent, str name, vector2dst size);
+        ~BoardGroup() override;
 
-		void onCreated() override;
+        void onCreated() override;
 
-		void tileRemoved(const vector2dst, board::SITilePointer) override;
+        void tileRemoved(const vector2dst, board::SITilePointer) override;
 
         void setLevel(const size_type level);
 
@@ -34,7 +34,6 @@ namespace zoper
 
         sptr<board::BoardModelComponent> p_boardModel;
         sptr<scene::SceneNode> m_mainBoardrg;
-
 	};
 }
 

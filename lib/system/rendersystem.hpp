@@ -18,8 +18,8 @@ namespace lib::core
     * priving the render data to the Backend render part.
     */
     class RenderSystem final : public HostedAppService
-	{
-	public:
+    {
+    public:
         RenderSystem(core::SystemProvider &system_provider);
         ~RenderSystem() override;
 

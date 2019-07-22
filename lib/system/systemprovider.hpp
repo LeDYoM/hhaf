@@ -7,7 +7,6 @@
 
 namespace lib
 {
-    struct WindowCreationParams;
     class IApp;
 }
 
@@ -28,27 +27,35 @@ namespace lib::scene
 
 namespace lib::core
 {
-    class FileSystem;
-    class Host;
-    class RandomSystem;
+    class Window;
     class ResourceManager;
+    class RandomSystem;
+    class FileSystem;
     class SimulationSystem;
     class TimeSystem;
-    class Window;
     class RenderSystem;
+    class ISimulableDataProvider;
 }
 
 namespace lib::core
 {
-    class SystemProvider
+    class SystemProvider final
     {
     public:
-        void init(Host& host, IApp *iapp);
+        SystemProvider();
+        ~SystemProvider();
+        
+        void init(IApp *iapp);
         void terminate();
 
         template <typename T>
         T &app() { return *(dynamic_cast<T*>(&app())); }
+
+        template <typename T>
+        const T &app() const { return *(dynamic_cast<T*>(&app())); }
+
         IApp &app();
+        const IApp &app() const;
 
         const Window &parentWindow() const noexcept;
         Window &parentWindow() noexcept;
@@ -70,20 +77,14 @@ namespace lib::core
         backend::BackendFactory &backendFactory() noexcept;
         const RenderSystem &renderSystem() const noexcept;
         RenderSystem &renderSystem() noexcept;
+        const ISimulableDataProvider &simulableDataProvider() const noexcept;
+        ISimulableDataProvider &simulableDataProvider() noexcept;
+
+        bool runStep();
 
     private:
-        core::Host* host_;
-        IApp* app_;
-        uptr<backend::BackendFactory> backend_factory_;
-        uptr<Window> window_;
-        uptr<ResourceManager> resource_manager_;
-        uptr<input::InputSystem> input_system_;
-        uptr<scene::SceneManager> scene_manager_;
-        uptr<RandomSystem> random_system_;
-        uptr<FileSystem> file_system_;
-        uptr<SimulationSystem> simulation_system_;
-        uptr<TimeSystem> time_system_;
-        uptr<RenderSystem> render_system_;
+        struct SystemProviderPrivate;
+        uptr<SystemProviderPrivate> p_;
     };
 }
 

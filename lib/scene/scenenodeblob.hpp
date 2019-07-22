@@ -5,12 +5,17 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/rect.hpp>
-#include <lib/include/liblog.hpp>
+
+namespace lib
+{
+    class IApp;
+    class IResourceLoader;
+}
 
 namespace lib::core
 {
-    class Host;
     class RandomSystem;
+    class ISimulableDataProvider;
 }
 
 namespace lib::input
@@ -31,14 +36,25 @@ namespace lib::scene
         const SceneManager &sceneManager() const noexcept;
         SceneManager &sceneManager() noexcept;
 
-        const input::InputSystem& inputSystem() const;
-        input::InputSystem& inputSystem();
+        const input::InputSystem& inputSystem() const noexcept;
+        input::InputSystem& inputSystem() noexcept;
 
-        const core::RandomSystem& randomSystem() const;
-        core::RandomSystem& randomSystem();
+        const core::RandomSystem& randomSystem() const noexcept;
+        core::RandomSystem& randomSystem() noexcept;
+
+        const core::ISimulableDataProvider &simulableDataProvider() const noexcept;
+        core::ISimulableDataProvider &simulableDataProvider() noexcept;
+
+        const IApp& app() const;
+        IApp& app();
+
+        template <typename T>
+        T &app() { return (static_cast<T&>(app())); }
 
         Rectf32 scenePerspective() const;
 
+       void loadResources(IResourceLoader &&resourceloader);
+ 
     private:
         SceneNode& scene_node_;
     };

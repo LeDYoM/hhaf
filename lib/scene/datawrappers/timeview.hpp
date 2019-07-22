@@ -5,14 +5,14 @@
 
 #include <mtypes/include/types.hpp>
 #include "idatawrapper.hpp"
-#include <lib/include/core/timer.hpp>
+#include <lib/include/core/timepoint.hpp>
 
 namespace lib::scene
 {
     /// Component to provide access to resources.
     class TimeView : public IDataWrapper
-	{
-	public:
+    {
+    public:
         ~TimeView() override;
 
         TimePoint now() const;
@@ -23,9 +23,9 @@ namespace lib::scene
     public:
         TimePoint ellapsed() const;
         void pause();
-		void resume();
-		void switchPause();
-		void restart();
+        void resume();
+        void switchPause();
+        void restart();
 
         constexpr bool isPaused() const noexcept { return is_paused_; }
         void onCreated() override;
@@ -35,7 +35,7 @@ namespace lib::scene
         TimePoint time_paused_;
         bool is_paused_;
 
-	};
+    };
 }
 
 #endif

@@ -8,7 +8,7 @@
 #include <lib/scene/renderizables/renderizable.hpp>
 #include <lib/scene/components/renderizables.hpp>
 #include <lib/system/resourcemanager.hpp>
-#include <lib/core/host.hpp>
+#include <lib/system/systemprovider.hpp>
 
 namespace zoper
 {
@@ -20,14 +20,14 @@ namespace zoper
 	{
 		BaseClass::onCreated();
 
-        auto statesController( ensureComponentOfType<StatesController<HighScoresSceneStates>>());
+        auto statesController( addComponentOfType<StatesController<HighScoresSceneStates>>());
         loadResources(HighScoresResources{});
 
         m_normalFont = sceneManager().systemProvider().resourceManager().getFont("menu.mainFont")->font(72);
 		m_normalColor = colors::Blue;
 		m_selectedColor = colors::Red;
 
-        auto renderizables = ensureComponentOfType<Renderizables>();
+        auto renderizables = addComponentOfType<Renderizables>();
 		m_background = renderizables->createNode("background");
         m_background->figType.set(FigType_t::Quad);
         m_background->pointCount.set(4U);

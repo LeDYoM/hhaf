@@ -18,7 +18,7 @@ namespace lib::scene::nodes
 
         // Second text is right aligned
         {
-            auto align(nodeAt({1,0})->ensureComponentOfType<AlignedTextComponent>());
+            auto align(nodeAt({1,0})->addComponentOfType<AlignedTextComponent>());
             align->alignmentSize.set(size);
             align->alignmentX.set(AlignedTextComponent::AlignmentX::Right);
             align->alignmentY.set(AlignedTextComponent::AlignmentY::Top);
@@ -26,7 +26,7 @@ namespace lib::scene::nodes
 
         // Third text is bottom aligned
         {
-            auto align(nodeAt({0,1})->ensureComponentOfType<AlignedTextComponent>());
+            auto align(nodeAt({0,1})->addComponentOfType<AlignedTextComponent>());
             align->alignmentSize.set(size);
             align->alignmentX.set(AlignedTextComponent::AlignmentX::Left);
             align->alignmentY.set(AlignedTextComponent::AlignmentY::Bottom);
@@ -34,7 +34,7 @@ namespace lib::scene::nodes
 
         // Fourth text is right and bottom aligned
         {
-            auto align(nodeAt({1,1})->ensureComponentOfType<AlignedTextComponent>());
+            auto align(nodeAt({1,1})->addComponentOfType<AlignedTextComponent>());
             align->alignmentSize.set(size);
             align->alignmentX.set(AlignedTextComponent::AlignmentX::Right);
             align->alignmentY.set(AlignedTextComponent::AlignmentY::Bottom);

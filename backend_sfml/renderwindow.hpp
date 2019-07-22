@@ -11,7 +11,6 @@
 
 #include <backend_dev/include/iwindow.hpp>
 #include <backend_dev/include/iinputdriver.hpp>
-#include <lib/include/windowcreationparams.hpp>
 
 #include "rendertarget.hpp"
 #include "inputdriver.hpp"
@@ -25,7 +24,7 @@ namespace lib::backend::sfmlb
         RenderWindow();
         virtual ~RenderWindow();
 
-        bool createWindow(const WindowCreationParams &wcp) override;
+        bool createWindow(const u16 width, const u16 height, const u8 bpp) override;
         sf::Vector2u getSize() const;
 
         bool setActive(bool active = true) override;

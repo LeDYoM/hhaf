@@ -3,28 +3,29 @@
 #include <lib/scene/datawrappers/resourceview.hpp>
 #include <lib/resources/texture.hpp>
 #include <lib/system/resourcemanager.hpp>
-#include <lib/core/host.hpp>
 
 #include "../menu/mainmenu.hpp"
-#include "../common.hpp"
 #include "../gameshareddata.hpp"
 #include "../loaders/mainmenuresources.hpp"
+#include "../zoperprogramcontroller.hpp"
 
 namespace zoper
 {
     using namespace lib;
     using namespace lib::scene;
 
+    constexpr u32 PointsPerQuad = 6U;
+
     void MenuScene::onCreated()
     {
         BaseClass::onCreated();
 
         loadResources(MainMenuResources{});
-        auto renderizables = ensureComponentOfType<Renderizables>();
+        auto renderizables = addComponentOfType<Renderizables>();
         auto resources_viewer = dataWrapper<ResourceView>();
     
         auto background = renderizables->createNode("background");
-//        background->figType.set(FigType_t::Quad);
+        background->figType.set(FigType_t::Quad);
         background->pointCount.set(PointsPerQuad);
         background->box = rectFromSize(2000.0f, 2000.0f);
         background->setTextureFill(resources_viewer->getTexture(MainMenuResources::BackgroundTextureId));
@@ -40,7 +41,7 @@ namespace zoper
         auto mainMenu (createSceneNode<MainMenu>(MainMenu::ClassName));
         mainMenu->MenuFinished.connect([this]()
         {
-            zApp().gameSharedData->exitGame = true;
+            app<ZoperProgramController>().gameSharedData->exitGame = true;
             sceneManager().sceneController()->terminateScene();
         });
     }

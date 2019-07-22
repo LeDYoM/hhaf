@@ -3,7 +3,7 @@
 #ifndef LIB_SCENE_IANIMATION_INCLUDE_HPP
 #define LIB_SCENE_IANIMATION_INCLUDE_HPP
 
-#include <lib/include/core/timer.hpp>
+#include <lib/include/core/timepoint.hpp>
 #include <lib/scene/datawrappers/timeview.hpp>
 #include <lib/include/properties.hpp>
 
@@ -11,7 +11,7 @@
 #include <mtypes/include/properties.hpp>
 #include <mtypes/include/function.hpp>
 
-namespace lib::scene::anim
+namespace lib::scene
 {
     using ActionFunc = function<void()>;
     class IAnimation
@@ -58,7 +58,8 @@ namespace lib::scene::anim
     public:
         IPropertyAnimation(uptr<scene::Timer> timer, TimePoint duration, IProperty<T> &prop,
             T start, T end, ActionFunc endAction = {})
-            : IAnimation{ std::move(timer), std::move(duration), std::move(endAction) }, m_property{ prop }, m_startValue { std::move(start)	},
+            : IAnimation{ std::move(timer), std::move(duration), std::move(endAction) },
+            m_property{ prop }, m_startValue { std::move(start)	},
             m_endValue{ std::move(end) }, m_deltaValue{ m_endValue - m_startValue } {}
 
         virtual bool animate() override

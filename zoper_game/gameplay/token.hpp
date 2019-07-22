@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef ZOPER_TILE_HPP
-#define ZOPER_TILE_HPP
+#ifndef ZOPER_TOKEN_HPP
+#define ZOPER_TOKEN_HPP
 
 #include "gamebasetile.hpp"
 
@@ -9,24 +9,30 @@
 #include <mtypes/include/vector2d.hpp>
 
 #include <lib/board/itile.hpp>
+#include <lib/scene/components/animationcomponent.hpp>
 
 namespace zoper
 {
     using namespace lib;
+    class LevelProperties;
 
     /**
     * This class represents one of the enemies in the board of the game.
     * 
     * The clas contains internal data like the token type inherited from
     * the base class. It also provides the required graphical information.
-    * */
-	class Token : public GameBaseTile
-	{
-	public:
-		Token(scene::SceneNode* const parent, str name, board::BoardTileData data, const Rectf32 &box);
-		~Token() override;
+    */
+    class Token : public GameBaseTile
+    {
+    public:
+        Token(scene::SceneNode* const parent, str name);
+        ~Token() override;
 
-		static void resetTileCounter();
+        void setUp(sptr<LevelProperties> level_properties,
+            board::BoardTileData data,
+            const Rectf32 &box);
+
+        static void resetTileCounter();
 
         void tileAdded(const vector2dst &position) override;
         void tileRemoved(const vector2dst & /* position */) override;
@@ -36,9 +42,11 @@ namespace zoper
         void tileMoved(const vector2dst& source,
             const vector2dst& dest) override;
 
-	private:
+    private:
         static u32 m_tileCounter;
-	};
+        sptr<scene::AnimationComponent> animation_component_;
+        sptr<LevelProperties> level_properties_;
+    };
 }
 
 #endif

@@ -28,25 +28,15 @@ namespace lib::core
 
     RandomSystem::~RandomSystem() = default;
 
-    void RandomSystem::generateRandomBuffer(RandomBuffer & dest, const size_type channel, const size_type size)
+    void RandomSystem::generateSimulableDataBuffer(SimulableDataBuffer & dest)
     {
-        dest.numbers.resize(size);
+        dest.resize(10U);
 
-        if (channel != 0)
+        for (auto& num_ref : dest)
         {
-            for (auto& num_ref : dest.numbers)
-            {
-                num_ref = priv_->getUInt();
-            }
-        }
-        else
-        {
-            for (auto& num_ref : dest.numbers)
-            {
-                num_ref = priv_->getUInt();
-            }
+            num_ref = priv_->getUInt();
         }
 
-        log_debug_info(dest.numbers);
+        log_debug_info(dest);
     }
 }

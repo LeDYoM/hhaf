@@ -14,7 +14,7 @@ add_library(${CURRENT_TARGET} SHARED ${SOURCES})
 target_include_directories(${CURRENT_TARGET}
     PUBLIC 
         $<INSTALL_INTERFACE:include>    
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../>
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/
 )
