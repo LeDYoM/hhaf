@@ -17,10 +17,10 @@ namespace lib::scene
     {
     public:
         virtual ~IFont() {}
-		virtual Rectf32 getBounds(const u32 codePoint) const = 0;
-		virtual Rectf32 getTextureBounds(const u32 codePoint) const = 0;
-		virtual f32 getAdvance(const u32 codePoint) const = 0;
-		virtual f32 getLineSpacing() const = 0;
+        virtual Rectf32 getBounds(const u32 codePoint) const = 0;
+        virtual Rectf32 getTextureBounds(const u32 codePoint) const = 0;
+        virtual f32 getAdvance(const u32 codePoint) const = 0;
+        virtual f32 getLineSpacing() const = 0;
         virtual f32 getKerning(const u32 first, const u32 second) const = 0;
         virtual sptr<ITexture> getTexture() const = 0;
         virtual vector2df textSize(const str& text) const = 0;

@@ -9,25 +9,25 @@
 
 namespace lib
 {
-	namespace backend
-	{
-		class ITexture;
-	}
-	namespace scene
-	{
-		class Texture final : public ITexture
-		{
-		public:
-			Texture(backend::ITexture* texture);
-			~Texture() override;
+    namespace backend
+    {
+        class ITexture;
+    }
+    namespace scene
+    {
+        class Texture final : public ITexture
+        {
+        public:
+            Texture(backend::ITexture* texture);
+            ~Texture() override;
 
-			vector2du32 size() const override;
+            vector2du32 size() const override;
 
-			const backend::ITexture* backEndTexture() const noexcept { return m_texturePrivate; }
-		private:
-			backend::ITexture *m_texturePrivate;
-		};
-	}
+            const backend::ITexture* backEndTexture() const noexcept { return m_texturePrivate; }
+        private:
+            backend::ITexture *m_texturePrivate;
+        };
+    }
 }
 
 #endif
