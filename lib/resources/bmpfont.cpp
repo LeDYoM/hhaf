@@ -1,0 +1,51 @@
+#include "bmpfontinstance.hpp"
+#include "ttfont.hpp"
+
+#include <backend_dev/include/ittfont.hpp>
+
+namespace lib::scene
+{
+    using namespace backend;
+
+    BMPFontInstance::BMPFontInstance(const TTFont &parent, const u32 characterSize)
+        : m_parentInstance{parent}, m_characterSize{characterSize}
+    {
+    }
+
+    BMPFontInstance::~BMPFontInstance() = default;
+
+    Rectf32 TTFontInstance::getBounds(const u32 codePoint) const
+    {
+        return m_parentInstance.getBounds(codePoint, m_characterSize);
+    }
+
+    Rectf32 BMPFontInstance::getTextureBounds(const u32 codePoint) const
+    {
+        return m_parentInstance.getTextureBounds(codePoint, m_characterSize);
+    }
+
+    f32 BMPFontInstance::getAdvance(const u32 codePoint) const
+    {
+        return m_parentInstance.getAdvance(codePoint, m_characterSize);
+    }
+
+    f32 BMPFontInstance::getLineSpacing() const
+    {
+        return m_parentInstance.getLineSpacing(m_characterSize);
+    }
+
+    f32 BMPFontInstance::getKerning(const u32 first, const u32 second) const
+    {
+        return m_parentInstance.getKerning(first, second, m_characterSize);
+    }
+
+    sptr<ITexture> BMPFontInstance::getTexture() const
+    {
+        return std::dynamic_pointer_cast<ITexture>(m_parentInstance.getTexture(m_characterSize));
+    }
+
+    vector2df BMPFontInstance::textSize(const str&text) const
+    {
+        return m_parentInstance.textSize(text, m_characterSize);
+    }
+}
