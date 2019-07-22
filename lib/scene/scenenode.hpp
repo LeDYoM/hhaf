@@ -90,23 +90,12 @@ namespace lib::scene
         constexpr auto &sceneNodes() noexcept { return m_groups; }
         constexpr auto sceneNodesSize() const noexcept { return sceneNodes().size(); }
 
-        inline SceneManager &sceneManager() noexcept { return *m_sceneManager; }
-        inline const SceneManager &sceneManager() const noexcept { return *m_sceneManager; }
-
     protected:
         void addSceneNode(sptr<SceneNode> node);
 
     private:
-
-        SceneManager *m_sceneManager{ nullptr };
-
-    private:
-        friend class SceneNodeBlob;
         SceneNode *m_parent;
-
         vector<sptr<SceneNode>> m_groups;
-        friend class SceneManager;
-        friend class SceneController;
     };
 
     using SceneNodeSPtr = sptr<SceneNode>;
