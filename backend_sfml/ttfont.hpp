@@ -14,23 +14,23 @@
 namespace lib::backend::sfmlb
 {
     class Texture;
-	class TTFont : public ITTFont
-	{
-	public:
-		TTFont(uptr<sf::Font> f, RawMemory raw_memory);
+    class TTFont : public ITTFont
+    {
+    public:
+        TTFont(uptr<sf::Font> f, RawMemory raw_memory);
         ~TTFont() override;
 
-		Rectf32 getBounds(const u32 codePoint, const u32 characterSize) const override;
-		Rectf32 getTextureBounds(const u32 codePoint, const u32 characterSize) const override;
-		f32 getAdvance(const u32 codePoint, const u32 characterSize) const override;
-		f32 getLineSpacing(const u32 characterSize) const override;
-		f32 getKerning(const u32 first, const u32 second, const u32 characterSize) const override;
-		ITexture *getTexture(const u32 characterSize) override;
-	private:
-		uptr<sf::Font> m_font;
-		RawMemory raw_memory_;
-		std::map<u32, uptr<Texture>> m_fontTexturesCache;
-	};
+        Rectf32 getBounds(const u32 codePoint, const u32 characterSize) const override;
+        Rectf32 getTextureBounds(const u32 codePoint, const u32 characterSize) const override;
+        f32 getAdvance(const u32 codePoint, const u32 characterSize) const override;
+        f32 getLineSpacing(const u32 characterSize) const override;
+        f32 getKerning(const u32 first, const u32 second, const u32 characterSize) const override;
+        ITexture *getTexture(const u32 characterSize) override;
+    private:
+        uptr<sf::Font> m_font;
+        RawMemory raw_memory_;
+        std::map<u32, uptr<Texture>> m_fontTexturesCache;
+    };
 }
 
 #endif

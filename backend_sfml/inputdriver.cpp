@@ -62,4 +62,4 @@ namespace lib::backend::sfmlb
     {
         m_keysReleased.push(k);
     }
-} // namespace lib::backend::sfmlb
+}
