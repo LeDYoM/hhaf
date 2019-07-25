@@ -1,51 +1,415 @@
-#include "bmpfontinstance.hpp"
-#include "ttfont.hpp"
+#include "bmpfont.hpp"
+#include "bmpfont_private.hpp"
+#include <lib/include/liblog.hpp>
 
-#include <backend_dev/include/ittfont.hpp>
+#include <fstream>
 
 namespace lib::scene
 {
     using namespace backend;
+/*
+		BMFont::BMFont(Window *parentWindow, const std::string id_, const std::string &baseFile) :
+			Resource(id_), fontPrivate(new BMFontPrivate)
+		{
+			fontPrivate->chars_.resize(256);
 
-    BMPFontInstance::BMPFontInstance(const TTFont &parent, const u32 characterSize)
-        : m_parentInstance{parent}, m_characterSize{characterSize}
+			std::string fontfile(baseFile + ".fnt");
+			std::string texturefile(baseFile + ".png");
+			LOG_DEBUG("Starting to Parse Font " << fontfile);
+			ParseFont(fontfile);
+			LOG_DEBUG("Finished Parsing Font " << fontfile);
+			LOG_DEBUG("Calculating some metrics");
+			fontPrivate->adv = 1.0f / (f32)size().x;
+
+			for (u32 i = 0; i < fontPrivate->chars_.size(); ++i)
+			{
+				fontPrivate->chars_[i].offsetedPosition = Rectanglef32(fontPrivate->chars_[i].offset, fontPrivate->chars_[i].offset + fontPrivate->chars_[i].position.size());
+				fontPrivate->chars_[i].charTriangles.setQuad(fontPrivate->chars_[i].offsetedPosition, static_cast<Rectanglef32>(fontPrivate->chars_[i].position)*fontPrivate->adv);
+				fontPrivate->chars_[i].charVAO = parentWindow->getRenderManager()->newVAO(&fontPrivate->chars_[i].charTriangles);
+			}
+			LOG_DEBUG("Finished Parsing Font " << fontfile);
+			LOG_DEBUG("Loading pages. Number of pages: " << fontPrivate->pagesData_.size());
+
+			for (u32 i = 0; i < fontPrivate->pagesData_.size(); ++i)
+			{
+				fontPrivate->pagesData_[i].it = parentWindow->getResourceManager()->getImageTexture(fontPrivate->pagesData_[i].file + "id", fontPrivate->pagesData_[i].file);
+//				fontPrivate->pagesData_[i].it->setImage(parentWindow->getResourceManager()->getImage(fontPrivate->pagesData_[i].file.c_str(), fontPrivate->pagesData_[i].file.c_str()));
+			}
+			LOG_DEBUG("Page(s) loaded");
+		}
+*/
+
+    BMPFont::BMPFont()
     {
+        str baseFile = "lucida";
+        fontPrivate->chars_.resize(256);
+
+        str fontfile(baseFile + ".fnt");
+        str texturefile(baseFile + ".png");
+        log_debug_info("Starting to Parse Font ", fontfile);
+        ParseFont(fontfile);
+        log_debug_info("Finished Parsing Font ", fontfile);
+        log_debug_info("Calculating some metrics");
+        fontPrivate->adv = 1.0f / (f32)size().x;
+
+        for (u32 i = 0; i < fontPrivate->chars_.size(); ++i)
+        {
+//            fontPrivate->chars_[i].offsetedPosition = Rectf32(fontPrivate->chars_[i].offset, fontPrivate->chars_[i].offset + fontPrivate->chars_[i].position.size());
+//           fontPrivate->chars_[i].charTriangles.setQuad(fontPrivate->chars_[i].offsetedPosition, static_cast<Rectf32>(fontPrivate->chars_[i].position)*fontPrivate->adv);
+//            fontPrivate->chars_[i].charVAO = parentWindow->getRenderManager()->newVAO(&fontPrivate->chars_[i].charTriangles);
+        }
+        log_debug_info("Finished Parsing Font ", fontfile);
+        log_debug_info("Loading pages. Number of pages: ", fontPrivate->pagesData_.size());
+
+        for (u32 i = 0; i < fontPrivate->pagesData_.size(); ++i)
+        {
+//            fontPrivate->pagesData_[i].it = parentWindow->getResourceManager()->getImageTexture(fontPrivate->pagesData_[i].file + "id", fontPrivate->pagesData_[i].file);
+        }
+        log_debug_info("Page(s) loaded");
     }
 
-    BMPFontInstance::~BMPFontInstance() = default;
+    BMPFont::~BMPFont() = default;
 
-    Rectf32 TTFontInstance::getBounds(const u32 codePoint) const
+    void filterStr(std::stringstream &LineStream, std::string &Value)
     {
-        return m_parentInstance.getBounds(codePoint, m_characterSize);
+        bool doNext = true;
+        do
+        {
+            int first_ = Value.find_first_of('\"');
+            int last_ = Value.find_last_of('\"');
+            doNext = (first_ > -1 && first_ == last_);
+            if (doNext)
+            {
+                std::string readTemp;
+                LineStream >> readTemp;
+                Value += " " + readTemp;
+            }
+        } while (doNext);
     }
 
-    Rectf32 BMPFontInstance::getTextureBounds(const u32 codePoint) const
+    const vector2du32 &BMPFont::size() const
     {
-        return m_parentInstance.getTextureBounds(codePoint, m_characterSize);
+        return fontPrivate->size_;
     }
 
-    f32 BMPFontInstance::getAdvance(const u32 codePoint) const
+    std::string getStr(const std::string &read)
     {
-        return m_parentInstance.getAdvance(codePoint, m_characterSize);
+        std::string result;
+
+        for (char ch : read)
+        {
+            if (ch != '"')
+            {
+                result.push_back(ch);
+            }
+        }
+        return result;
     }
 
-    f32 BMPFontInstance::getLineSpacing() const
+    bool BMPFont::ParseFont(const str&fontfile)
     {
-        return m_parentInstance.getLineSpacing(m_characterSize);
+        std::ifstream Stream(fontfile.c_str());
+        std::string Line, Read, Key, Value;
+        std::size_t i;
+        u32 first, second;
+        s32 amount;
+
+        KearningInfo K;
+        CharDescriptor C;
+
+        while (!Stream.eof())
+        {
+            std::stringstream LineStream;
+            std::getline(Stream, Line);
+            LineStream << Line;
+
+            //read the line's type
+            LineStream >> Read;
+            if (Read == "common")
+            {
+                //this holds common data
+                while (!LineStream.eof())
+                {
+                    std::stringstream Converter;
+                    LineStream >> Read;
+                    i = Read.find('=');
+                    Key = Read.substr(0, i);
+                    Value = Read.substr(i + 1).c_str();
+
+                    //assign the correct value
+                    Converter << Value;
+                    if (Key == "lineHeight")
+                    {
+                        Converter >> fontPrivate->lineHeight;
+                    }
+                    else if (Key == "base")
+                    {
+                        Converter >> fontPrivate->base;
+                    }
+                    else if (Key == "scaleW")
+                    {
+                        Converter >> fontPrivate->size_.x;
+                    }
+                    else if (Key == "scaleH")
+                    {
+                        Converter >> fontPrivate->size_.y;
+                    }
+                    else if (Key == "pages")
+                    {
+                        Converter >> fontPrivate->pages;
+                    }
+                    else if (Key == "outline")
+                    {
+                        Converter >> fontPrivate->outline;
+                    }
+                }
+            }
+            else if (Read == "page")
+            {
+                //this holds common data
+                while (!LineStream.eof())
+                {
+                    std::stringstream Converter;
+                    LineStream >> Read;
+                    i = Read.find('=');
+                    Key = Read.substr(0, i);
+                    Value = Read.substr(i + 1);
+                    u32 id(0);
+
+                    filterStr(LineStream, Value);
+
+                    //assign the correct value
+                    Converter << Value;
+                    if (Key == "id")
+                    {
+                        Converter >> id;
+                        fontPrivate->pagesData_.resize(id + 1);
+                    }
+                    else if (Key == "file")
+                    {
+                        fontPrivate->pagesData_[id].file = getStr(Value);
+                    }
+                }
+            }
+            else if (Read == "info")
+            {
+                //this holds info font data
+                while (!LineStream.eof())
+                {
+                    std::stringstream Converter;
+                    LineStream >> Read;
+                    i = Read.find('=');
+                    Key = Read.substr(0, i);
+                    Value = Read.substr(i + 1);
+
+                    filterStr(LineStream, Value);
+                    Converter << Value;
+                    if (Key == "face")
+                    {
+                        fontPrivate->fInfo.face = getStr(Value).c_str();
+                    }
+                    else if (Key == "size")
+                    {
+                        Converter >> fontPrivate->fInfo.size;
+                    }
+                    else if (Key == "bold")
+                    {
+                        Converter >> fontPrivate->fInfo.bold;
+                    }
+                    else if (Key == "italic")
+                    {
+                        Converter >> fontPrivate->fInfo.italic;
+                    }
+                    else if (Key == "charset")
+                    {
+                        fontPrivate->fInfo.charset = getStr(Value).c_str();
+                    }
+                    else if (Key == "unicode")
+                    {
+                        Converter >> fontPrivate->fInfo.unicode;
+                    }
+                    else if (Key == "stretchH")
+                    {
+                        Converter >> fontPrivate->fInfo.stretchH;
+                    }
+                    else if (Key == "smooth")
+                    {
+                        Converter >> fontPrivate->fInfo.smooth;
+                    }
+                    else if (Key == "aa")
+                    {
+                        Converter >> fontPrivate->fInfo.aa;
+                    }
+                    else if (Key == "padding")
+                    {
+                        std::string temp;
+                        std::getline(Converter, temp, ',');
+                        fontPrivate->fInfo.padding.left = static_cast<s16>(std::atoi(temp.c_str()));
+                        std::getline(Converter, temp, ',');
+                        fontPrivate->fInfo.padding.top = static_cast<s16>(std::atoi(temp.c_str()));
+                        std::getline(Converter, temp, ',');
+                        fontPrivate->fInfo.padding.setRight(static_cast<s16>(std::atoi(temp.c_str())));
+                        std::getline(Converter, temp, ',');
+                        fontPrivate->fInfo.padding.setBottom(static_cast<s16>(std::atoi(temp.c_str())));
+                    }
+                    else if (Key == "spacing")
+                    {
+                        std::string temp;
+                        std::getline(Converter, temp, ',');
+                        fontPrivate->fInfo.spacing.x = static_cast<s16>(std::atoi(temp.c_str()));
+                        std::getline(Converter, temp, ',');
+                        fontPrivate->fInfo.spacing.y = static_cast<s16>(std::atoi(temp.c_str()));
+                    }
+                    else if (Key == "outline")
+                    {
+                        Converter >> fontPrivate->fInfo.outline;
+                    }
+                }
+            }
+            else if (Read == "char")
+            {
+                //This is data for each specific character.
+                int CharID = 0;
+
+                while (!LineStream.eof())
+                {
+                    std::stringstream Converter;
+                    LineStream >> Read;
+                    i = Read.find('=');
+                    Key = Read.substr(0, i);
+                    Value = Read.substr(i + 1);
+
+                    //Assign the correct value
+                    Converter << Value;
+                    if (Key == "id")
+                    {
+                        Converter >> CharID;
+                    }
+                    else if (Key == "x")
+                    {
+                        Converter >> C.position.left;
+                    }
+                    else if (Key == "y")
+                    {
+                        Converter >> C.position.top;
+                    }
+                    else if (Key == "width")
+                    {
+                        u16 temp;
+                        Converter >> temp;
+                        C.position.width = temp;
+                    }
+                    else if (Key == "height")
+                    {
+                        u16 temp;
+                        Converter >> temp;
+                        C.position.height = temp;
+                    }
+                    else if (Key == "xoffset")
+                    {
+                        Converter >> C.offset.x;
+                    }
+                    else if (Key == "yoffset")
+                    {
+                        Converter >> C.offset.y;
+                    }
+                    else if (Key == "xadvance")
+                    {
+                        Converter >> C.xadvance;
+                    }
+                    else if (Key == "page")
+                    {
+                        Converter >> C.page;
+                    }
+                }
+                if (CharID < 256)
+                    fontPrivate->chars_[CharID] = C;
+
+            }
+            else if (Read == "kernings")
+            {
+                while (!LineStream.eof())
+                {
+                    std::stringstream Converter;
+                    LineStream >> Read;
+                    i = Read.find('=');
+                    Key = Read.substr(0, i);
+                    Value = Read.substr(i + 1);
+
+                    //assign the correct value
+                    Converter << Value;
+                    //				if( Key == "count" )
+                    //				     {Converter >> KernCount; }
+                }
+            }
+
+            else if (Read == "kerning")
+            {
+                while (!LineStream.eof())
+                {
+                    std::stringstream Converter;
+                    LineStream >> Read;
+                    i = Read.find('=');
+                    Key = Read.substr(0, i);
+                    Value = Read.substr(i + 1);
+
+                    Converter << Value;
+                    if (Key == "first")
+                    {
+                        Converter >> first;
+                    }
+
+                    else if (Key == "second")
+                    {
+                        Converter >> second;
+                    }
+
+                    else if (Key == "amount")
+                    {
+                        Converter >> amount;
+                    }
+                }
+                CharDescriptor &ch = fontPrivate->chars_[first];
+                ch.kearn.push_back(KearningInfo(second, amount));
+            }
+        }
+
+        Stream.close();
+        return true;
     }
 
-    f32 BMPFontInstance::getKerning(const u32 first, const u32 second) const
+    Rectf32 BMPFont::getBounds(const u32 codePoint) const
     {
-        return m_parentInstance.getKerning(first, second, m_characterSize);
+        return Rectf32{};
     }
 
-    sptr<ITexture> BMPFontInstance::getTexture() const
+    Rectf32 BMPFont::getTextureBounds(const u32 codePoint) const
     {
-        return std::dynamic_pointer_cast<ITexture>(m_parentInstance.getTexture(m_characterSize));
+        return Rectf32{};
     }
 
-    vector2df BMPFontInstance::textSize(const str&text) const
+    f32 BMPFont::getAdvance(const u32 codePoint) const
     {
-        return m_parentInstance.textSize(text, m_characterSize);
+        return 0.F;
+    }
+
+    f32 BMPFont::getLineSpacing() const
+    {
+        return 0.F;
+    }
+
+    f32 BMPFont::getKerning(const u32 first, const u32 second) const
+    {
+        return 0.F;
+    }
+
+    sptr<ITexture> BMPFont::getTexture() const
+    {
+        return nullptr;
+    }
+
+    vector2df BMPFont::textSize(const str&text) const
+    {
+        return vector2df{};
     }
 }
