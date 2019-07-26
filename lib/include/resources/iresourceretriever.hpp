@@ -8,6 +8,7 @@
 
 namespace lib::scene
 {
+    class IFont;
     class ITTFont;
     class ITexture;
     class IShader;
@@ -21,6 +22,7 @@ namespace lib
         virtual sptr<scene::ITTFont> getFont(const str &rid) = 0;
         virtual sptr<scene::ITexture> getTexture(const str &rid) = 0;
         virtual sptr<scene::IShader> getShader(const str &rid) = 0;
+        virtual sptr<scene::IFont> getBMPFont(const str &rid) = 0;
     };
 }
 

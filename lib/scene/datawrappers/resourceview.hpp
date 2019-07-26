@@ -18,6 +18,7 @@ namespace lib::scene
         sptr<scene::ITTFont> getFont(const str &rid) override;
         sptr<scene::ITexture> getTexture(const str &rid) override;
         sptr<scene::IShader> getShader(const str &rid) override;
+        sptr<scene::IFont> getBMPFont(const str &rid) override;
 	};
 }
 

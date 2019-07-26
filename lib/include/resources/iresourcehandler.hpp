@@ -10,6 +10,7 @@ namespace lib
 {
     namespace scene
     {
+        class BMPFont;
         class TTFont;
         class Texture;
         class Shader;
@@ -21,6 +22,7 @@ namespace lib
         virtual sptr<scene::TTFont> loadFont(const str &rid, const str &fileName) = 0;
         virtual sptr<scene::Texture> loadTexture(const str &rid, const str &fileName) = 0;
         virtual sptr<scene::Shader> loadShader(const str &rid, const str &fileName) = 0;
+        virtual sptr<scene::BMPFont> loadBMPFont(const str &rid, const str &fileName) = 0;
     };
 }
 

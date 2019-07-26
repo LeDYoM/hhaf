@@ -22,4 +22,10 @@ namespace lib::scene
     {
         return attachedNode()->sceneManager().resources().getShader(rid);
     }
+
+    sptr<scene::IFont> ResourceView::getBMPFont(const str &rid)
+    {
+        return attachedNode()->sceneManager().resources().getBMPFont(rid);
+    }
+
 }
