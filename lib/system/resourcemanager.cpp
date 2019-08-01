@@ -110,7 +110,7 @@ namespace lib::core
 
     sptr<scene::IFont> ResourceManager::getBMPFont(const str &rid)
     {
-        return sptr<scene::IFont>();
+        return msptr<scene::BMPFont>(rid, rid, *this);
     }
 
     sptr<scene::TTFont> ResourceManager::loadFont(const str & rid, const str & fileName)
@@ -128,6 +128,6 @@ namespace lib::core
 
     sptr<scene::BMPFont> ResourceManager::loadBMPFont(const str &rid, const str &fileName)
     {
-        return sptr<scene::BMPFont>();
+        return msptr<scene::BMPFont>(rid, fileName, *this);
     }
 }

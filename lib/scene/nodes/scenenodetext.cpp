@@ -13,9 +13,7 @@
 namespace lib::scene::nodes
 {
     SceneNodeText::SceneNodeText(SceneNode * const parent, const str & name)
-        : SceneNode{ parent, name } //, Triangles, 0 }
-    {
-    }
+        : SceneNode{ parent, name } { }
 
     SceneNodeText::~SceneNodeText() = default;
 
@@ -34,7 +32,6 @@ namespace lib::scene::nodes
             if (font() && !(text()().empty()))
             {
                 auto texture(font()->getTexture());
-                const f32 vspace{ font()->getLineSpacing() };
 
                 f32 x{ 0.f };
                 f32 y{ 0.f };
@@ -46,8 +43,17 @@ namespace lib::scene::nodes
                 f32 maxY{ 0.f };
                 u32 prevChar{ 0 };
 
+                log_debug_info("Text to render: ", text()());
+
                 for (auto&& curChar : text()())
                 {
+                    log_debug_info("-----------------------------------------------------------------");
+                    log_debug_info("Current char: ", make_str(curChar));
+                    log_debug_info("Current x and y: ",x,",",y);
+                    log_debug_info("minX: ",minX," minY: ,",minY);
+                    log_debug_info("maxX: ",maxX," maxY: ,",maxY);
+                    log_debug_info("prevChar: ",make_str(prevChar));
+                    log_debug_info("kerning: ",font()->getKerning(prevChar,curChar));
                     // Apply the kerning offset
                     x += font()->getKerning(prevChar, curChar);
                     prevChar = curChar;
@@ -62,9 +68,16 @@ namespace lib::scene::nodes
 
                         switch (curChar)
                         {
-                        case ' ':  x += hspace;        break;
-                        case '\t': x += hspace * 4;    break;
-                        case '\n': y += vspace; x = 0; break;
+                            case ' ':
+                                x += hspace;
+                            break;
+                            case '\t':
+                                x += hspace * 4;
+                            break;
+                            case '\n':
+                                y += font()->getLineSpacing();
+                                x = 0;
+                            break;
                         }
 
                         // Update the current bounds (max coordinates)
@@ -74,7 +87,10 @@ namespace lib::scene::nodes
                     else
                     {
                         const Rectf32 textureUV{ font()->getTextureBounds(curChar) };
-                        const Rectf32 letterBox{ font()->getBounds(curChar) + vector2df{ x,y } };
+                        Rectf32 letterBox{ font()->getBounds(curChar) + vector2df{ x,y } };
+                        letterBox += vector2df{50.0F, 50.0F};
+                        log_debug_info("textureUV: ", textureUV);
+                        log_debug_info("letterBox: ", letterBox);
 
                         auto letterNode(createSceneNode
                                         <RenderizableSceneNode>("text_"+str::to_str(curChar)));
@@ -94,7 +110,8 @@ namespace lib::scene::nodes
                         }
 
                         // Advance to the next character
-						x += font()->getAdvance(curChar);
+                        x += font()->getAdvance(curChar);
+                        log_debug_info("advance :",font()->getAdvance(curChar));
                     }
                 }
 

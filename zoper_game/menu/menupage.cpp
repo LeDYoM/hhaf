@@ -31,8 +31,10 @@ namespace zoper
         BaseClass::onCreated();
         auto resources_viewer = dataWrapper<ResourceView>();
 
-        m_normalFont = resources_viewer->getFont
-                        (MainMenuResources::MenuFontId)->font(72);
+//        m_normalFont = resources_viewer->getFont
+//                        (MainMenuResources::MenuFontId)->font(72);
+        m_normalFont = resources_viewer->getBMPFont
+                        (MainMenuResources::MenuFontId);
         m_normalColor = colors::Blue;
         m_selectedColor = colors::Red;
 

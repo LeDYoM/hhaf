@@ -1,10 +1,12 @@
 #pragma once
 
-#ifndef LIB_SCENE_BMPFONTINSTANCE_INCLUDE_HPP
-#define LIB_SCENE_BMPFONTINSTANCE_INCLUDE_HPP
+#ifndef LIB_SCENE_RESOURCES_BMPFONT_INCLUDE_HPP
+#define LIB_SCENE_RESOURCES_BMPFONT_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
+
 #include <lib/include/resources/ifont.hpp>
+#include <lib/include/resources/iresourcehandler.hpp>
 #include "texture.hpp"
 
 namespace lib::scene
@@ -14,7 +16,7 @@ namespace lib::scene
     class BMPFont : public IFont
     {
     public:
-        BMPFont();
+        BMPFont(const str& id, const str& file_name, IResourceHandler& resource_handler);
         ~BMPFont() override;
 
         Rectf32 getBounds(const u32 codePoint) const override;

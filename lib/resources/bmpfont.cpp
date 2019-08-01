@@ -8,39 +8,40 @@ namespace lib::scene
 {
     using namespace backend;
 /*
-		BMFont::BMFont(Window *parentWindow, const std::string id_, const std::string &baseFile) :
-			Resource(id_), fontPrivate(new BMFontPrivate)
-		{
-			fontPrivate->chars_.resize(256);
+        BMFont::BMFont(Window *parentWindow, const std::string id_, const std::string &baseFile) :
+            Resource(id_), fontPrivate(new BMFontPrivate)
+        {
+            fontPrivate->chars_.resize(256);
 
-			std::string fontfile(baseFile + ".fnt");
-			std::string texturefile(baseFile + ".png");
-			LOG_DEBUG("Starting to Parse Font " << fontfile);
-			ParseFont(fontfile);
-			LOG_DEBUG("Finished Parsing Font " << fontfile);
-			LOG_DEBUG("Calculating some metrics");
-			fontPrivate->adv = 1.0f / (f32)size().x;
+            std::string fontfile(baseFile + ".fnt");
+            std::string texturefile(baseFile + ".png");
+            LOG_DEBUG("Starting to Parse Font " << fontfile);
+            ParseFont(fontfile);
+            LOG_DEBUG("Finished Parsing Font " << fontfile);
+            LOG_DEBUG("Calculating some metrics");
+            fontPrivate->adv = 1.0f / (f32)size().x;
 
-			for (u32 i = 0; i < fontPrivate->chars_.size(); ++i)
-			{
-				fontPrivate->chars_[i].offsetedPosition = Rectanglef32(fontPrivate->chars_[i].offset, fontPrivate->chars_[i].offset + fontPrivate->chars_[i].position.size());
-				fontPrivate->chars_[i].charTriangles.setQuad(fontPrivate->chars_[i].offsetedPosition, static_cast<Rectanglef32>(fontPrivate->chars_[i].position)*fontPrivate->adv);
-				fontPrivate->chars_[i].charVAO = parentWindow->getRenderManager()->newVAO(&fontPrivate->chars_[i].charTriangles);
-			}
-			LOG_DEBUG("Finished Parsing Font " << fontfile);
-			LOG_DEBUG("Loading pages. Number of pages: " << fontPrivate->pagesData_.size());
+            for (u32 i = 0; i < fontPrivate->chars_.size(); ++i)
+            {
+                fontPrivate->chars_[i].offsetedPosition = Rectanglef32(fontPrivate->chars_[i].offset, fontPrivate->chars_[i].offset + fontPrivate->chars_[i].position.size());
+                fontPrivate->chars_[i].charTriangles.setQuad(fontPrivate->chars_[i].offsetedPosition, static_cast<Rectanglef32>(fontPrivate->chars_[i].position)*fontPrivate->adv);
+                fontPrivate->chars_[i].charVAO = parentWindow->getRenderManager()->newVAO(&fontPrivate->chars_[i].charTriangles);
+            }
+            LOG_DEBUG("Finished Parsing Font " << fontfile);
+            LOG_DEBUG("Loading pages. Number of pages: " << fontPrivate->pagesData_.size());
 
-			for (u32 i = 0; i < fontPrivate->pagesData_.size(); ++i)
-			{
-				fontPrivate->pagesData_[i].it = parentWindow->getResourceManager()->getImageTexture(fontPrivate->pagesData_[i].file + "id", fontPrivate->pagesData_[i].file);
-//				fontPrivate->pagesData_[i].it->setImage(parentWindow->getResourceManager()->getImage(fontPrivate->pagesData_[i].file.c_str(), fontPrivate->pagesData_[i].file.c_str()));
-			}
-			LOG_DEBUG("Page(s) loaded");
-		}
+            for (u32 i = 0; i < fontPrivate->pagesData_.size(); ++i)
+            {
+                fontPrivate->pagesData_[i].it = parentWindow->getResourceManager()->getImageTexture(fontPrivate->pagesData_[i].file + "id", fontPrivate->pagesData_[i].file);
+//              fontPrivate->pagesData_[i].it->setImage(parentWindow->getResourceManager()->getImage(fontPrivate->pagesData_[i].file.c_str(), fontPrivate->pagesData_[i].file.c_str()));
+            }
+            LOG_DEBUG("Page(s) loaded");
+        }
 */
 
-    BMPFont::BMPFont()
+    BMPFont::BMPFont(const str& id, const str& file_name, IResourceHandler& resource_handler)
     {
+        fontPrivate = new BMFontPrivate;
         str baseFile = "lucida";
         fontPrivate->chars_.resize(256);
 
@@ -52,9 +53,11 @@ namespace lib::scene
         log_debug_info("Calculating some metrics");
         fontPrivate->adv = 1.0f / (f32)size().x;
 
-        for (u32 i = 0; i < fontPrivate->chars_.size(); ++i)
+        for (u32 i{0U}; i < fontPrivate->chars_.size(); ++i)
         {
-//            fontPrivate->chars_[i].offsetedPosition = Rectf32(fontPrivate->chars_[i].offset, fontPrivate->chars_[i].offset + fontPrivate->chars_[i].position.size());
+            fontPrivate->chars_[i].offsetedPosition = Rectf32(
+                static_cast<vector2d<f32>>(fontPrivate->chars_[i].offset), 
+                static_cast<vector2d<f32>>(fontPrivate->chars_[i].position.size()));
 //           fontPrivate->chars_[i].charTriangles.setQuad(fontPrivate->chars_[i].offsetedPosition, static_cast<Rectf32>(fontPrivate->chars_[i].position)*fontPrivate->adv);
 //            fontPrivate->chars_[i].charVAO = parentWindow->getRenderManager()->newVAO(&fontPrivate->chars_[i].charTriangles);
         }
@@ -63,12 +66,15 @@ namespace lib::scene
 
         for (u32 i = 0; i < fontPrivate->pagesData_.size(); ++i)
         {
-//            fontPrivate->pagesData_[i].it = parentWindow->getResourceManager()->getImageTexture(fontPrivate->pagesData_[i].file + "id", fontPrivate->pagesData_[i].file);
+            fontPrivate->pagesData_[i].it = resource_handler.loadTexture(fontPrivate->pagesData_[i].file + "id", fontPrivate->pagesData_[i].file);
         }
         log_debug_info("Page(s) loaded");
     }
 
-    BMPFont::~BMPFont() = default;
+    BMPFont::~BMPFont()
+    {
+        delete fontPrivate;
+    }
 
     void filterStr(std::stringstream &LineStream, std::string &Value)
     {
@@ -117,7 +123,7 @@ namespace lib::scene
         KearningInfo K;
         CharDescriptor C;
 
-        while (!Stream.eof())
+        while (Stream && !Stream.eof())
         {
             std::stringstream LineStream;
             std::getline(Stream, Line);
@@ -187,7 +193,7 @@ namespace lib::scene
                     }
                     else if (Key == "file")
                     {
-                        fontPrivate->pagesData_[id].file = getStr(Value);
+                        fontPrivate->pagesData_[id].file = str(getStr(Value).c_str());
                     }
                 }
             }
@@ -338,8 +344,8 @@ namespace lib::scene
 
                     //assign the correct value
                     Converter << Value;
-                    //				if( Key == "count" )
-                    //				     {Converter >> KernCount; }
+                    //      if( Key == "count" )
+                    //          {Converter >> KernCount; }
                 }
             }
 
@@ -380,17 +386,17 @@ namespace lib::scene
 
     Rectf32 BMPFont::getBounds(const u32 codePoint) const
     {
-        return Rectf32{};
+        return fontPrivate->chars_[codePoint].offsetedPosition;
     }
 
     Rectf32 BMPFont::getTextureBounds(const u32 codePoint) const
     {
-        return Rectf32{};
+        return static_cast<Rectf32>(fontPrivate->chars_[codePoint].position);
     }
 
     f32 BMPFont::getAdvance(const u32 codePoint) const
     {
-        return 0.F;
+        return static_cast<f32>(fontPrivate->chars_[codePoint].xadvance);
     }
 
     f32 BMPFont::getLineSpacing() const
@@ -400,12 +406,12 @@ namespace lib::scene
 
     f32 BMPFont::getKerning(const u32 first, const u32 second) const
     {
-        return 0.F;
+        return static_cast<f32>(fontPrivate->chars_[first].GetKerningPair(second));
     }
 
     sptr<ITexture> BMPFont::getTexture() const
     {
-        return nullptr;
+        return fontPrivate->pagesData_[0U].it;
     }
 
     vector2df BMPFont::textSize(const str&text) const

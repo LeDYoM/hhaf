@@ -19,6 +19,14 @@ namespace lib
             return *this;
         }
 
+        template <typename V>
+        constexpr vector2d &operator+=(const vector2d &right) noexcept
+        {
+            x += static_cast<T>(right.x);
+            y += static_cast<T>(right.y);
+            return *this;
+        }
+
         constexpr vector2d &operator-=(const vector2d &right) noexcept
         {
             x -= right.x;
@@ -78,6 +86,10 @@ namespace lib
         }
         */
         constexpr vector2d operator+(const vector2d &right) const noexcept { return (vector2d(*this) += right); }
+        
+        template <typename V>
+        constexpr vector2d operator+(const vector2d<V> &right) const noexcept { return (vector2d(*this) += right); }
+
         constexpr vector2d operator-(const vector2d &right) const noexcept { return (vector2d(*this) -= right); }
         constexpr vector2d operator*(const vector2d &right) const noexcept { return (vector2d(*this) *= right); }
         constexpr vector2d operator/(const vector2d &right) const noexcept { return (vector2d(*this) /= right); }

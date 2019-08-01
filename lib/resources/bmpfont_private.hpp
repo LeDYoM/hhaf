@@ -50,11 +50,11 @@ namespace lib::scene
     class PageData
     {
     public:
-        std::string file;
+        str file;
         PageData() : file("") {}
         sptr<Texture> it;
 
-        PageData(const std::string& file_) :file(file_),it(nullptr) {}
+        PageData(str file_) :file(std::move(file_)),it(nullptr) {}
     };
     class FontInfo
     {
