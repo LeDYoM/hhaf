@@ -59,7 +59,8 @@ namespace lib::scene::nodes
                     prevChar = curChar;
 
                     // Handle special characters
-                    if ((curChar == ' ') || (curChar == '\t') || (curChar == '\n')) {
+                    if ((curChar == ' ') || (curChar == '\t') || (curChar == '\n'))
+                    {
                         using namespace std;
                         // Update the current bounds (min coordinates)
                         minX = min(minX, x);
@@ -111,7 +112,7 @@ namespace lib::scene::nodes
 
                         // Advance to the next character
                         x += font()->getAdvance(curChar);
-                        log_debug_info("advance :",font()->getAdvance(curChar));
+                        log_debug_info("advance :", font()->getAdvance(curChar));
                     }
                 }
 
@@ -123,7 +124,8 @@ namespace lib::scene::nodes
         if (textColor.readResetHasChanged()) 
         {
             const Color &tc{textColor()()};
-            sceneNodes().for_each([&tc](const SceneNodeSPtr& sNode) {
+            sceneNodes().for_each([&tc](const SceneNodeSPtr& sNode)
+            {
                 sNode->snCast<RenderizableSceneNode>()->node()->color.set(tc);
             });
         }
