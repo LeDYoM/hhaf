@@ -10,6 +10,17 @@
 // Temp
 #include <cmath>
 
+namespace
+{
+    constexpr bool do_logs{false};
+
+    template<typename...Args>
+    constexpr void log_snt(Args&&...args) noexcept
+    {
+        lib::log_debug_info_if<do_logs>(std::forward<Args>(args)...);
+    }
+}
+
 namespace lib::scene::nodes
 {
     SceneNodeText::SceneNodeText(SceneNode * const parent, const str & name)
@@ -43,17 +54,17 @@ namespace lib::scene::nodes
                 f32 maxY{ 0.f };
                 u32 prevChar{ 0 };
 
-                log_debug_info("Text to render: ", text()());
+                log_snt("Text to render: ", text()());
 
                 for (auto&& curChar : text()())
                 {
-                    log_debug_info("-----------------------------------------------------------------");
-                    log_debug_info("Current char: ", make_str(curChar));
-                    log_debug_info("Current x and y: ",x,",",y);
-                    log_debug_info("minX: ",minX," minY: ,",minY);
-                    log_debug_info("maxX: ",maxX," maxY: ,",maxY);
-                    log_debug_info("prevChar: ",make_str(prevChar));
-                    log_debug_info("kerning: ",font()->getKerning(prevChar,curChar));
+                    log_snt("-----------------------------------------------------------------");
+                    log_snt("Current char: ", make_str(curChar));
+                    log_snt("Current x and y: ",x,",",y);
+                    log_snt("minX: ",minX," minY: ,",minY);
+                    log_snt("maxX: ",maxX," maxY: ,",maxY);
+                    log_snt("prevChar: ",make_str(prevChar));
+                    log_snt("kerning: ",font()->getKerning(prevChar,curChar));
                     // Apply the kerning offset
                     x += font()->getKerning(prevChar, curChar);
                     prevChar = curChar;
@@ -90,8 +101,8 @@ namespace lib::scene::nodes
                         const Rectf32 textureUV{ font()->getTextureBounds(curChar) };
                         Rectf32 letterBox{ font()->getBounds(curChar) + vector2df{ x,y } };
                         letterBox += vector2df{50.0F, 50.0F};
-                        log_debug_info("textureUV: ", textureUV);
-                        log_debug_info("letterBox: ", letterBox);
+                        log_snt("textureUV: ", textureUV);
+                        log_snt("letterBox: ", letterBox);
 
                         auto letterNode(createSceneNode
                                         <RenderizableSceneNode>("text_"+str::to_str(curChar)));
@@ -112,7 +123,7 @@ namespace lib::scene::nodes
 
                         // Advance to the next character
                         x += font()->getAdvance(curChar);
-                        log_debug_info("advance :", font()->getAdvance(curChar));
+                        log_snt("advance :", font()->getAdvance(curChar));
                     }
                 }
 

@@ -72,28 +72,33 @@ namespace lib::backend
         loader::destroyLoader();
     }
 
-    IWindowProviderInfo* BackendFactory::getWindowProviderInfo()
-    {
-        return m_windowProviderInfo;
-    }
-
     IWindow* lib::backend::BackendFactory::getOrCreateWindow()
     {
         return m_window;
     }
 
-    ITextureFactory* BackendFactory::getTextureFactory()
+    IWindowProviderInfo* BackendFactory::getWindowProviderInfo() const noexcept
+    {
+        return m_windowProviderInfo;
+    }
+
+    ITextureFactory* BackendFactory::getTextureFactory() const noexcept
     {
         return m_textureFactory;
     }
 
-    ITTFontFactory* BackendFactory::getTTFontFactory()
+    ITTFontFactory* BackendFactory::getTTFontFactory() const noexcept
     {
         return m_ttfontFactory;
     }
 
-    IShaderFactory* BackendFactory::getShaderFactory()
+    IShaderFactory* BackendFactory::getShaderFactory() const noexcept
     {
         return m_shaderFactory;
+    }
+
+    IBMPFontFactory* BackendFactory::getBMPFontFactory() const noexcept
+    {
+        return m_bmpFontFactory;
     }
 }

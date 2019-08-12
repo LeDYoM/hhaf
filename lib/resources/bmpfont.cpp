@@ -7,46 +7,14 @@
 namespace lib::scene
 {
     using namespace backend;
-/*
-        BMFont::BMFont(Window *parentWindow, const std::string id_, const std::string &baseFile) :
-            Resource(id_), fontPrivate(new BMFontPrivate)
-        {
-            fontPrivate->chars_.resize(256);
-
-            std::string fontfile(baseFile + ".fnt");
-            std::string texturefile(baseFile + ".png");
-            LOG_DEBUG("Starting to Parse Font " << fontfile);
-            ParseFont(fontfile);
-            LOG_DEBUG("Finished Parsing Font " << fontfile);
-            LOG_DEBUG("Calculating some metrics");
-            fontPrivate->adv = 1.0f / (f32)size().x;
-
-            for (u32 i = 0; i < fontPrivate->chars_.size(); ++i)
-            {
-                fontPrivate->chars_[i].offsetedPosition = Rectanglef32(fontPrivate->chars_[i].offset, fontPrivate->chars_[i].offset + fontPrivate->chars_[i].position.size());
-                fontPrivate->chars_[i].charTriangles.setQuad(fontPrivate->chars_[i].offsetedPosition, static_cast<Rectanglef32>(fontPrivate->chars_[i].position)*fontPrivate->adv);
-                fontPrivate->chars_[i].charVAO = parentWindow->getRenderManager()->newVAO(&fontPrivate->chars_[i].charTriangles);
-            }
-            LOG_DEBUG("Finished Parsing Font " << fontfile);
-            LOG_DEBUG("Loading pages. Number of pages: " << fontPrivate->pagesData_.size());
-
-            for (u32 i = 0; i < fontPrivate->pagesData_.size(); ++i)
-            {
-                fontPrivate->pagesData_[i].it = parentWindow->getResourceManager()->getImageTexture(fontPrivate->pagesData_[i].file + "id", fontPrivate->pagesData_[i].file);
-//              fontPrivate->pagesData_[i].it->setImage(parentWindow->getResourceManager()->getImage(fontPrivate->pagesData_[i].file.c_str(), fontPrivate->pagesData_[i].file.c_str()));
-            }
-            LOG_DEBUG("Page(s) loaded");
-        }
-*/
 
     BMPFont::BMPFont(const str& id, const str& file_name, IResourceHandler& resource_handler)
     {
         fontPrivate = new BMFontPrivate;
-        str baseFile = "lucida";
-        fontPrivate->chars_.resize(256);
+        fontPrivate->chars_.resize(256U);
 
-        str fontfile(baseFile + ".fnt");
-        str texturefile(baseFile + ".png");
+        str fontfile(file_name + ".fnt");
+        str texturefile(file_name + ".png");
         log_debug_info("Starting to Parse Font ", fontfile);
         ParseFont(fontfile);
         log_debug_info("Finished Parsing Font ", fontfile);
@@ -57,16 +25,17 @@ namespace lib::scene
         {
             fontPrivate->chars_[i].offsetedPosition = Rectf32(
                 static_cast<vector2d<f32>>(fontPrivate->chars_[i].offset), 
-                static_cast<vector2d<f32>>(fontPrivate->chars_[i].position.size()));
-//           fontPrivate->chars_[i].charTriangles.setQuad(fontPrivate->chars_[i].offsetedPosition, static_cast<Rectf32>(fontPrivate->chars_[i].position)*fontPrivate->adv);
-//            fontPrivate->chars_[i].charVAO = parentWindow->getRenderManager()->newVAO(&fontPrivate->chars_[i].charTriangles);
+                static_cast<vector2d<f32>>(fontPrivate->chars_[i].position.size())
+            );
         }
         log_debug_info("Finished Parsing Font ", fontfile);
         log_debug_info("Loading pages. Number of pages: ", fontPrivate->pagesData_.size());
 
         for (u32 i = 0; i < fontPrivate->pagesData_.size(); ++i)
         {
-            fontPrivate->pagesData_[i].it = resource_handler.loadTexture(fontPrivate->pagesData_[i].file + "id", fontPrivate->pagesData_[i].file);
+            fontPrivate->pagesData_[i].it = resource_handler.loadTexture(
+                fontPrivate->pagesData_[i].file, 
+                fontPrivate->pagesData_[i].file);
         }
         log_debug_info("Page(s) loaded");
     }
@@ -116,9 +85,10 @@ namespace lib::scene
     {
         std::ifstream Stream(fontfile.c_str());
         std::string Line, Read, Key, Value;
-        std::size_t i;
-        u32 first, second;
-        s32 amount;
+        std::size_t i{0U};
+        u32 first{0U};
+        u32 second{0U};
+        s32 amount{0};
 
         KearningInfo K;
         CharDescriptor C;

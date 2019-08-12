@@ -17,22 +17,26 @@ namespace lib::backend
         BackendFactory();
         ~BackendFactory();
 
-        IWindowProviderInfo* getWindowProviderInfo();
         IWindow* getOrCreateWindow();
-        ITextureFactory* getTextureFactory();
-        ITTFontFactory* getTTFontFactory();
-        IShaderFactory* getShaderFactory();
-        inline ITextureFactory &textureFactory() { return *getTextureFactory(); }
-        inline ITTFontFactory &ttfontFactory() { return *getTTFontFactory(); }
-        inline IShaderFactory &shaderFactory() { return *getShaderFactory(); }
+        IWindowProviderInfo* getWindowProviderInfo() const noexcept;
+        ITextureFactory* getTextureFactory() const noexcept;
+        ITTFontFactory* getTTFontFactory() const noexcept;
+        IShaderFactory* getShaderFactory() const noexcept;
+        IBMPFontFactory* getBMPFontFactory() const noexcept;
+        inline IWindowProviderInfo &windowProviderInfo() const { return *getWindowProviderInfo(); }
+        inline ITextureFactory &textureFactory() const { return *getTextureFactory(); }
+        inline ITTFontFactory &ttfontFactory() const { return *getTTFontFactory(); }
+        inline IShaderFactory &shaderFactory() const { return *getShaderFactory(); }
+        inline IBMPFontFactory &bmpFontFactory() const { return *getBMPFontFactory(); }
 
     private:
         uptr<BackendRegister> backend_register_;
-        IWindowProviderInfo* m_windowProviderInfo;
-        IWindow* m_window;
-        ITextureFactory* m_textureFactory;
-        ITTFontFactory* m_ttfontFactory;
-        IShaderFactory* m_shaderFactory;
+        IWindowProviderInfo* m_windowProviderInfo{nullptr};
+        IWindow* m_window{nullptr};
+        ITextureFactory* m_textureFactory{nullptr};
+        ITTFontFactory* m_ttfontFactory{nullptr};
+        IShaderFactory* m_shaderFactory{nullptr};
+        IBMPFontFactory *m_bmpFontFactory{nullptr};
     };
 }
 

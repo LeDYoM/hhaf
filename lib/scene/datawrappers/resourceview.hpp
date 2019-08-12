@@ -15,7 +15,7 @@ namespace lib::scene
 	public:
         ~ResourceView() override;
 
-        sptr<scene::ITTFont> getFont(const str &rid) override;
+        sptr<scene::ITTFont> getTTFont(const str &rid) override;
         sptr<scene::ITexture> getTexture(const str &rid) override;
         sptr<scene::IShader> getShader(const str &rid) override;
         sptr<scene::IFont> getBMPFont(const str &rid) override;

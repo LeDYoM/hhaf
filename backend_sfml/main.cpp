@@ -11,81 +11,56 @@
     #define EXPORT   extern "C"
 #endif
 
-using WindowBackendInfo = lib::backend::DefaultFactoryOf
-    <lib::backend::IWindowProviderInfo,
-    lib::backend::sfmlb::WindowBackendInfo>;
-
-using WindowFactory = lib::backend::DefaultFactoryOf
-    <lib::backend::IWindow,
-    lib::backend::sfmlb::RenderWindow>;
-
-using TTFontFactoryFactory = lib::backend::DefaultFactoryOf
-    <lib::backend::ITTFontFactory,
-    lib::backend::sfmlb::TTFontFactory>;
-
-using TextureFactoryFactory = lib::backend::DefaultFactoryOf
-    <lib::backend::ITextureFactory,
-    lib::backend::sfmlb::TextureFactory>;
-
-using ShaderFactoryFactory = lib::backend::DefaultFactoryOf
-    <lib::backend::IShaderFactory,
-    lib::backend::sfmlb::ShaderFactory>;
-
-struct BackendManager
+template <typename T>
+void createFactoryOfFactories(lib::vector<lib::uptr<lib::backend::IAutoRegisterFactory>> &factories)
 {
-    WindowBackendInfo *window_backend_info_factory_{ nullptr };
-    WindowFactory *window_factory_{ nullptr };
-    TTFontFactoryFactory *ttfont_factory_factory_{ nullptr };
-    TextureFactoryFactory *texture_factory_factory_{ nullptr };
-    ShaderFactoryFactory *shader_factory_factory_{ nullptr };
+    auto f(lib::muptr<lib::backend::AutoRegisterFactory<T::Interface>>());
+    f.get()->create(lib::muptr<T>());
+    factories.push_back(std::move(f));
+}
 
-    void create()
+struct BackendManager final : lib::backend::IBackendManager
+{
+    lib::vector<lib::uptr<lib::backend::IAutoRegisterFactory>> factories;
+
+    void create() override
     {
-        window_backend_info_factory_ = new WindowBackendInfo;
-        window_factory_ = new WindowFactory;
-        ttfont_factory_factory_ = new TTFontFactoryFactory;
-        texture_factory_factory_ = new TextureFactoryFactory;
-        shader_factory_factory_ = new ShaderFactoryFactory;
+        using namespace lib;
+        using namespace lib::backend;
+        using namespace lib::backend::sfmlb;
+
+        createFactoryOfFactories<DefaultFactoryOf<IWindowProviderInfo, WindowBackendInfo>>(factories);
+        createFactoryOfFactories<DefaultFactoryOf<IWindow, RenderWindow>>(factories);
+        createFactoryOfFactories<DefaultFactoryOf<ITTFontFactory, TTFontFactory>>(factories);
+        createFactoryOfFactories<DefaultFactoryOf<ITextureFactory, TextureFactory>>(factories);
+        createFactoryOfFactories<DefaultFactoryOf<IShaderFactory, ShaderFactory>>(factories);
     }
 
-    void setFactories(lib::backend::IBackendRegister*const backend_register)
+    void setFactories(lib::backend::IBackendRegister*const backend_register) override
     {
-        backend_register->setFactory(window_backend_info_factory_);
-        backend_register->setFactory(window_factory_);
-        backend_register->setFactory(ttfont_factory_factory_);
-        backend_register->setFactory(texture_factory_factory_);
-        backend_register->setFactory(shader_factory_factory_);
-    }
-
-    void resetFactories(lib::backend::IBackendRegister*const backend_register)
-    {
-        backend_register->setFactory(static_cast<WindowBackendInfo*>(nullptr));
-        backend_register->setFactory(static_cast<WindowFactory*>(nullptr));
-        backend_register->setFactory(static_cast<TTFontFactoryFactory*>(nullptr));
-        backend_register->setFactory(static_cast<TextureFactoryFactory*>(nullptr));
-        backend_register->setFactory(static_cast<ShaderFactoryFactory*>(nullptr));
-    }
-
-    template <typename T>
-    void SecureDeleteRawPointer(T*& pnt)
-    {
-        if (pnt)
+        for (const auto &factory : factories)
         {
-            delete pnt;
-            pnt = nullptr;
+            factory.get()->setFactory(backend_register);
         }
     }
 
-    void destroy()
+    void resetFactories(lib::backend::IBackendRegister*const backend_register) override
     {
-        SecureDeleteRawPointer(window_backend_info_factory_);
-        SecureDeleteRawPointer(window_factory_);
-        SecureDeleteRawPointer(ttfont_factory_factory_);
-        SecureDeleteRawPointer(texture_factory_factory_);
-        SecureDeleteRawPointer(shader_factory_factory_);
+        for (const auto &factory : factories)
+        {
+            factory.get()->resetFactory(backend_register);
+        }
     }
 
-    ~BackendManager()
+    void destroy()  override
+    {
+        for (const auto &factory : factories)
+        {
+            factory.get()->destroy();
+        }
+    }
+
+    ~BackendManager() override
     {
         destroy();
     }

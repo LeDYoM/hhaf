@@ -17,6 +17,7 @@ namespace lib::backend
         void setFactory(ITTFontFactoryFactory* const) noexcept override;
         void setFactory(ITextureFactoryFactory* const) noexcept override;
         void setFactory(IShaderFactoryFactory* const) noexcept override;
+        void setFactory(IBMPFontFactoryFactory* const) noexcept override;
 
         void setLibFuncs(p_initLib init_lib_func, 
             p_finishLib finish_lib_func) noexcept;
@@ -29,6 +30,7 @@ namespace lib::backend
         template <> ITTFontFactoryFactory* const getFactory() const { return ttfont_factory_factory_; }
         template <> ITextureFactoryFactory* const getFactory() const { return texture_factory_factory_; }
         template <> IShaderFactoryFactory* const getFactory() const { return shader_factory_factory_; }
+        template <> IBMPFontFactoryFactory* const getFactory() const { return bmpfont_factory_factory_; }
 
         bool init();
         bool finish();
@@ -43,6 +45,7 @@ namespace lib::backend
         ITTFontFactoryFactory* ttfont_factory_factory_{ nullptr };
         ITextureFactoryFactory* texture_factory_factory_{ nullptr };
         IShaderFactoryFactory* shader_factory_factory_{ nullptr };
+        IBMPFontFactoryFactory* bmpfont_factory_factory_{ nullptr };
     };
 }
 

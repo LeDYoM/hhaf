@@ -15,9 +15,11 @@ namespace zoper
         constexpr static char BackgroundTextureFile[] = "resources/gr_ms.png";
         constexpr static char LogoFile[] = "resources/zoperbl.png";
         constexpr static char MenuFontFile[] = "resources/oldct.ttf";
+//        constexpr static char MenuFontFile[] = "lucida";
 
         resourceHandler.loadTexture(BackgroundTextureId, BackgroundTextureFile);
         resourceHandler.loadTexture(LogoId, LogoFile);
-        resourceHandler.loadFont(MenuFontId, MenuFontFile);
+        resourceHandler.loadTTFont(MenuFontId, MenuFontFile);
+//        resourceHandler.loadBMPFont(MenuFontId, MenuFontFile);
 	}
 }

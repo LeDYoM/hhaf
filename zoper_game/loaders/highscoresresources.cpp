@@ -16,6 +16,6 @@ namespace zoper
         constexpr static char MenuFontFile[] = "resources/oldct.ttf";
 
         resourceHandler.loadTexture(BackgroundTextureId, BackgroundTextureFile);
-        resourceHandler.loadFont(MenuFontId, MenuFontFile);
+        resourceHandler.loadTTFont(MenuFontId, MenuFontFile);
 	}
 }

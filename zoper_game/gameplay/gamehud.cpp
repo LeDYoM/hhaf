@@ -25,7 +25,7 @@ namespace zoper
         auto resources_viewer = dataWrapper<ResourceView>();
 
         m_scoreQuad = parent->createSceneNode<TextQuad>("score",
-            resources_viewer->getFont(GameResources::ScoreFontId)->font(90),
+            resources_viewer->getTTFont(GameResources::ScoreFontId)->font(90),
             colors::White, vector2df{ 600, 300 });
         m_scoreQuad->position.set(vector2df{ 50, 150 });
         m_scoreQuad->text(vector2dst{ 0,0 })->text.set(Text_t("Level:"));
@@ -34,7 +34,7 @@ namespace zoper
         m_scoreQuad->text(vector2dst{ 0,1 })->textColor = FillColor_t(colors::Blue);
 
         m_goalQuad = parent->createSceneNode<TextQuad>("goal",
-            resources_viewer->getFont(GameResources::ScoreFontId)->font(90),
+            resources_viewer->getTTFont(GameResources::ScoreFontId)->font(90),
             colors::White, vector2df{ 600, 300 });
         m_goalQuad->position.set(vector2df{ 1250, 150 });
         m_goalQuad->text(vector2dst{ 0,0 })->textColor = FillColor_t(colors::Blue);

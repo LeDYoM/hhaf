@@ -19,7 +19,7 @@ namespace lib
     class IResourceHandler
     {
     public:
-        virtual sptr<scene::TTFont> loadFont(const str &rid, const str &fileName) = 0;
+        virtual sptr<scene::TTFont> loadTTFont(const str &rid, const str &fileName) = 0;
         virtual sptr<scene::Texture> loadTexture(const str &rid, const str &fileName) = 0;
         virtual sptr<scene::Shader> loadShader(const str &rid, const str &fileName) = 0;
         virtual sptr<scene::BMPFont> loadBMPFont(const str &rid, const str &fileName) = 0;

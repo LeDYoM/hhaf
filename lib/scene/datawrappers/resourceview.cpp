@@ -8,9 +8,9 @@ namespace lib::scene
 {
     ResourceView::~ResourceView() = default;
     
-    sptr<scene::ITTFont> ResourceView::getFont(const str &rid)
+    sptr<scene::ITTFont> ResourceView::getTTFont(const str &rid)
     {
-        return attachedNode()->sceneManager().resources().getFont(rid);
+        return attachedNode()->sceneManager().resources().getTTFont(rid);
     }
 
     sptr<scene::ITexture> ResourceView::getTexture(const str &rid)

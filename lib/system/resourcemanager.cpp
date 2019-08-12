@@ -93,7 +93,7 @@ namespace lib::core
 
     ResourceManager::~ResourceManager() = default;
 
-    sptr<scene::ITTFont> ResourceManager::getFont(const str &rid)
+    sptr<scene::ITTFont> ResourceManager::getTTFont(const str &rid)
     {
         return get_or_default(m_private->ttf_fonts_, rid);
     }
@@ -113,7 +113,7 @@ namespace lib::core
         return msptr<scene::BMPFont>(rid, rid, *this);
     }
 
-    sptr<scene::TTFont> ResourceManager::loadFont(const str & rid, const str & fileName)
+    sptr<scene::TTFont> ResourceManager::loadTTFont(const str & rid, const str & fileName)
     {
         return get_or_add<true>(systemProvider().backendFactory().ttfontFactory(), m_private->ttf_fonts_, systemProvider().fileSystem(),  rid, fileName);
     }
