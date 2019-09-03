@@ -112,9 +112,9 @@ namespace lib
             {
                 clear();
                 Allocator::deallocate(m_buffer);
-				m_buffer = nullptr;
-				m_size = 0U;
-				m_capacity = 0U;
+                m_buffer = nullptr;
+                m_size = 0U;
+                m_capacity = 0U;
             }
         }
 
