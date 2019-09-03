@@ -66,7 +66,7 @@ namespace lib
         constexpr vector(std::initializer_list<value_type> ilist) noexcept
             : vector(ilist.begin(), ilist.size()) { }
 
-        constexpr vector(const_iterator _begin, const_iterator _end)
+        constexpr vector(const const_iterator _begin, const const_iterator _end)
             : vector{ _begin, static_cast<size_type>(std::distance(_begin, _end)) } { }
 
         // Big five. ////////////////////////////////////////////////////
@@ -134,10 +134,10 @@ namespace lib
         constexpr bool empty() const noexcept { return m_size == 0U; }
         constexpr iterator begin() noexcept { return m_buffer; }
         constexpr const_iterator begin() const noexcept { return m_buffer; }
-        constexpr const_iterator cbegin() const noexcept { return begin(); }
+        constexpr const_iterator cbegin() const noexcept { return m_buffer; }
         constexpr iterator end() noexcept { return m_buffer + m_size; }
         constexpr const_iterator end() const noexcept { return m_buffer + m_size; }
-        constexpr const_iterator cend() const noexcept { return end(); }
+        constexpr const_iterator cend() const noexcept { return m_buffer + m_size; }
 
         constexpr T& back() noexcept
         {
@@ -157,7 +157,8 @@ namespace lib
             return *(cend() - 1U);
         }
 
-        constexpr void for_each(const function<void(const T&)> f)
+        template <typename F>
+        constexpr void for_each(F f)
         {
             if (!empty())
             {
@@ -504,7 +505,7 @@ namespace lib
     template <class A>
     constexpr bool operator==(const vector<A>& lhs, const vector<A>& rhs) noexcept 
     {
-        // Comparing agains yourself is true.
+        // Comparing with yourself returns true.
         if (&lhs == &rhs)
         {
             return true;
@@ -513,11 +514,16 @@ namespace lib
         {
             return false;
         }
-        else 
+        else if (lhs.empty())
+        {
+            return true;
+        }
+        else
         {
             for (auto lhs_iterator = lhs.cbegin(), rhs_iterator = rhs.cbegin();
-                lhs_iterator != lhs.cend() && rhs_iterator != rhs.cend();
-                ++lhs_iterator, ++rhs_iterator) 
+                lhs_iterator != lhs.cend() 
+//                    && rhs_iterator != rhs.cend() <- Not needed, they have the same size.
+                ;++lhs_iterator, ++rhs_iterator) 
             {
                 if (*lhs_iterator != *rhs_iterator)
                 {
@@ -539,7 +545,7 @@ namespace lib
     str &operator<<(str &str_in, const vector<T>& data)
     {
         str_in << "[";
-        for (auto it = data.cbegin(); it != data.cend(); ++it)
+        for (auto it(data.cbegin()); it != data.cend(); ++it)
         {
             str_in << *it;
             if (data.size() > 1U && it != data.cend() - 1U)
