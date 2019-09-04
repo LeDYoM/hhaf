@@ -5,7 +5,8 @@
 
 #include <backend_dev/include/iwindow.hpp>
 #include <backend_dev/include/iresourcefactories.hpp>
-#include <backend_dev/include/interfaces.hpp>
+#include <backend_dev/include/client/ibackendregister.hpp>
+#include <backend_dev/include/client/interfaces.hpp>
 
 namespace lib::backend
 {
