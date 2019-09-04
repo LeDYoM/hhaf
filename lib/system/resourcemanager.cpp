@@ -46,7 +46,7 @@ namespace lib::core
             FileSystem& fileSystem, const str &rid, const str &fileName)
         {
             auto iterator(std::find_if(container.begin(), container.end(),
-                [rid](const auto &node) {return node.first == rid; }));
+                [rid](const auto &node) { return node.first == rid; }));
 
             if (iterator != container.end())
             {
