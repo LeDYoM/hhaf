@@ -25,7 +25,7 @@ namespace lib::scene
 
         /**
         * Method to create a Renderizable
-        * @params name The name of the Renderizable node.
+        * @param name The name of the Renderizable node.
         * @returns The created Renderizable
         */
         sptr<Renderizable> createNode(const str& name)

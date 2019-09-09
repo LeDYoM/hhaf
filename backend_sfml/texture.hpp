@@ -12,19 +12,19 @@
 
 namespace lib::backend::sfmlb
 {
-	class Texture : public ITexture
-	{
-	public:
-		Texture(const sf::Texture* const texture, const bool owned);
-		~Texture() override;
+    class Texture : public ITexture
+    {
+    public:
+        Texture(const sf::Texture* const texture, const bool owned);
+        ~Texture() override;
 
-		virtual vector2du32 size() const override;
+        virtual vector2du32 size() const override;
 
-		const sf::Texture &backEndTexture() const { return *m_texturePrivate; }
-	private:
-		const sf::Texture* const m_texturePrivate;
-		const bool owned_;
-	};
+        const sf::Texture &backEndTexture() const { return *m_texturePrivate; }
+    private:
+        const sf::Texture* const m_texturePrivate;
+        const bool owned_;
+    };
 }
 
 #endif

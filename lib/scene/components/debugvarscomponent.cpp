@@ -41,7 +41,7 @@ namespace lib::scene
         m_varsData[id] = data;
     }
 
-    void DebugVarsComponent::addOrUpdateDebugVar(const str &id, const u32 data)
+    void DebugVarsComponent::addOrUpdateDebugVar(const str &, const u32)
     {
 //      addOrUpdateDebugVar(id, str(data));
     }

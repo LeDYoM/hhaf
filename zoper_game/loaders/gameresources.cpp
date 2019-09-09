@@ -14,6 +14,6 @@ namespace zoper
 
 	void GameResources::loadResources(IResourceHandler&resourceHandler)
 	{
-        resourceHandler.loadFont(ScoreFontId, ScoreFontFile);
+        resourceHandler.loadTTFont(ScoreFontId, ScoreFontFile);
 	}
 }

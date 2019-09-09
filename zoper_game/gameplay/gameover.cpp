@@ -30,7 +30,7 @@ namespace zoper
 
         auto gameText(m_gameOverrg->createSceneNode<SceneNodeText>("gameovergame"));
         gameText->text.set(Text_t("GAME"));
-        gameText->font.set(resources_viewer->getFont(GameResources::ScoreFontId)->font(360));
+        gameText->font.set(resources_viewer->getTTFont(GameResources::ScoreFontId)->font(360));
         gameText->textColor.set(FillColor_t{ colors::White });
         {
             auto align(gameText->addComponentOfType<AlignedTextComponent>());
@@ -41,7 +41,7 @@ namespace zoper
 
         auto overText(m_gameOverrg->createSceneNode<SceneNodeText>("gameoverover"));
         overText->text.set(Text_t("OVER"));
-        overText->font.set(resources_viewer->getFont(GameResources::ScoreFontId)->font(360));
+        overText->font.set(resources_viewer->getTTFont(GameResources::ScoreFontId)->font(360));
         overText->textColor.set(FillColor_t{ colors::White });
         {
             auto align(overText->addComponentOfType<AlignedTextComponent>());

@@ -123,6 +123,7 @@ namespace lib
             assert(index < m_size);
             return *(m_buffer + index);
         }
+
         constexpr const_reference operator[](const size_type index) const noexcept
         {
             assert(index < m_size);
@@ -314,8 +315,9 @@ namespace lib
             return begin;
         }
 
+        template <typename F>
         constexpr iterator find_if(iterator begin,
-            const iterator end, function<bool(const T&)> f) const noexcept
+            const iterator end, F f) const noexcept
         {
             checkRange(begin);
             checkRange(end);

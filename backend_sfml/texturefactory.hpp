@@ -11,16 +11,16 @@
 
 namespace lib::backend::sfmlb
 {
-	class Texture;
-	class TextureFactory : public ITextureFactory
-	{
-	public:
-		ITexture *loadFromFile(const str &file) override;
-		ITexture *loadFromRawMemory(RawMemory *raw_memory) override;
-		~TextureFactory() override;
-	private:
-		vector<sptr<Texture>> m_textureCache;
-	};
+    class Texture;
+    class TextureFactory : public ITextureFactory
+    {
+    public:
+        ITexture *loadFromFile(const str &file) override;
+        ITexture *loadFromRawMemory(RawMemory *raw_memory) override;
+        ~TextureFactory() override;
+    private:
+        vector<sptr<Texture>> m_textureCache;
+    };
 }
 
 #endif

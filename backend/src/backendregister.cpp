@@ -27,6 +27,11 @@ namespace lib::backend
         shader_factory_factory_ = shader_factory_factory;
     }
 
+    void BackendRegister::setFactory(IBMPFontFactoryFactory * const bmpfont_factory_factory) noexcept
+    {
+        bmpfont_factory_factory_ = bmpfont_factory_factory;
+    }
+
     void BackendRegister::setLibFuncs(p_initLib init_lib_func, p_finishLib finish_lib_func) noexcept
     {
         init_lib_func_ = init_lib_func;

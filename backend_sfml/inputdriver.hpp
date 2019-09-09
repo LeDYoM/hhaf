@@ -22,7 +22,7 @@ namespace lib::backend::sfmlb
         input::Key popKeyRelease() override;
 
         void keyPressed(const input::Key) override;
-		void keyReleased(const input::Key) override;
+        void keyReleased(const input::Key) override;
 
         void keyEvent(const sf::Event &e);
 

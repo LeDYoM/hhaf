@@ -43,6 +43,12 @@ namespace lib
         constexpr str(const_iterator _begin, const_iterator _end) 
             : str(_begin, (_end - _begin) + 1U ) { }
 
+        str& operator=(const char_type *n) noexcept 
+        {
+            *this = str(n, _str_len(n));
+            return *this;
+        }
+
         inline static str to_str(const u64 n) { return str{ std::to_string(n).c_str() }; }
         inline static str to_str(const s64 n) { return str{ std::to_string(n).c_str() }; }
         inline static str to_str(const u32 n) { return str{ std::to_string(n).c_str() }; }

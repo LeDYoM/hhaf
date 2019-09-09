@@ -8,6 +8,7 @@
 #include <lib/resources/ttfont.hpp>
 #include <lib/resources/texture.hpp>
 #include <lib/resources/shader.hpp>
+#include <lib/resources/bmpfont.hpp>
 
 #include <backend/include/backendfactory.hpp>
 #include <algorithm>
@@ -45,7 +46,7 @@ namespace lib::core
             FileSystem& fileSystem, const str &rid, const str &fileName)
         {
             auto iterator(std::find_if(container.begin(), container.end(),
-                [rid](const auto &node) {return node.first == rid; }));
+                [rid](const auto &node) { return node.first == rid; }));
 
             if (iterator != container.end())
             {
@@ -80,9 +81,10 @@ namespace lib::core
 
     struct ResourceManager::ResourceManagerPrivate
     {
-        ResourceList<sptr<scene::TTFont>> m_fonts;
-        ResourceList<sptr<scene::Texture>> m_textures;
-        ResourceList<sptr<scene::Shader>> m_shaders;
+        ResourceList<sptr<scene::TTFont>> ttf_fonts_;
+        ResourceList<sptr<scene::Texture>> textures_;
+        ResourceList<sptr<scene::Shader>> shaders_;
+        ResourceList<sptr<scene::BMPFont>> bmp_fonts_;
     };
 
     ResourceManager::ResourceManager(core::SystemProvider &system_provider) 
@@ -91,31 +93,41 @@ namespace lib::core
 
     ResourceManager::~ResourceManager() = default;
 
-    sptr<scene::ITTFont> ResourceManager::getFont(const str &rid)
+    sptr<scene::ITTFont> ResourceManager::getTTFont(const str &rid)
     {
-        return get_or_default(m_private->m_fonts, rid);
+        return get_or_default(m_private->ttf_fonts_, rid);
     }
 
     sptr<scene::ITexture> ResourceManager::getTexture(const str &rid)
     {
-        return get_or_default(m_private->m_textures, rid);
+        return get_or_default(m_private->textures_, rid);
     }
 
     sptr<scene::IShader> ResourceManager::getShader(const str &rid)
     {
-        return get_or_default(m_private->m_shaders, rid);
+        return get_or_default(m_private->shaders_, rid);
     }
 
-    sptr<scene::TTFont> ResourceManager::loadFont(const str & rid, const str & fileName)
+    sptr<scene::IFont> ResourceManager::getBMPFont(const str &rid)
     {
-        return get_or_add<true>(systemProvider().backendFactory().ttfontFactory(), m_private->m_fonts, systemProvider().fileSystem(),  rid, fileName);
+        return msptr<scene::BMPFont>(rid, rid, *this);
+    }
+
+    sptr<scene::TTFont> ResourceManager::loadTTFont(const str & rid, const str & fileName)
+    {
+        return get_or_add<true>(systemProvider().backendFactory().ttfontFactory(), m_private->ttf_fonts_, systemProvider().fileSystem(),  rid, fileName);
     }
     sptr<scene::Texture> ResourceManager::loadTexture(const str & rid, const str & fileName)
     {
-        return get_or_add<true>(systemProvider().backendFactory().textureFactory(), m_private->m_textures, systemProvider().fileSystem(), rid, fileName);
+        return get_or_add<true>(systemProvider().backendFactory().textureFactory(), m_private->textures_, systemProvider().fileSystem(), rid, fileName);
     }
     sptr<scene::Shader> ResourceManager::loadShader(const str & rid, const str & fileName)
     {
-        return get_or_add<true>(systemProvider().backendFactory().shaderFactory(), m_private->m_shaders, systemProvider().fileSystem(), rid, fileName);
+        return get_or_add<true>(systemProvider().backendFactory().shaderFactory(), m_private->shaders_, systemProvider().fileSystem(), rid, fileName);
+    }
+
+    sptr<scene::BMPFont> ResourceManager::loadBMPFont(const str &rid, const str &fileName)
+    {
+        return msptr<scene::BMPFont>(rid, fileName, *this);
     }
 }
