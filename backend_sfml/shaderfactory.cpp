@@ -5,8 +5,8 @@
 
 namespace lib::backend::sfmlb
 {
-	IShader* ShaderFactory::loadFromFile(const str & file)
-	{
+    IShader* ShaderFactory::loadFromFile(const str & file)
+    {
         uptr<sf::Shader> shader(muptr<sf::Shader>());
         shader->loadFromFile(file.c_str(), sf::Shader::Vertex);
         uptr<Shader> t{ muptr<Shader>(std::move(shader)) };
@@ -15,7 +15,7 @@ namespace lib::backend::sfmlb
     }
 
     ShaderFactory::~ShaderFactory()
-	{
+    {
 //        m_shaderCache.clear();
         m_shaderCache.shrink_to_fit();
     }

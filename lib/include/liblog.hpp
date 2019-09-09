@@ -50,6 +50,24 @@ namespace lib
         if (!condition) { log_release_error(std::forward<Args>(args)...); }
     }
 
+    // Up to today in MSVC [[maybe_unused]] is ignored for
+    // variadic templates.
+#ifdef _MSC_VER
+#pragma warning( push )
+#pragma warning(disable: 4100)
+#endif
+    template<bool do_logs, typename...Args>
+    constexpr void log_debug_info_if([[maybe_unused]] Args&&...args) noexcept
+    {
+        if constexpr (do_logs)
+        {
+            log_debug_info(std::forward<Args>(args)...);
+        }
+    }
+#ifdef _MSC_VER
+#pragma warning( pop )
+#endif
+
 #ifdef NDEBUG
     #define CLIENT_EXECUTE_IN_DEBUG(x)	x
 #else

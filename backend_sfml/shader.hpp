@@ -10,18 +10,18 @@
 
 namespace lib::backend::sfmlb
 {
-	class Shader : public IShader
-	{
-	public:
+    class Shader : public IShader
+    {
+    public:
         Shader(uptr<sf::Shader> shader);
         ~Shader() override;
 
         void setUniform(const str &name, vector2df v) override;
         void setUniform(const str &name, ITexture *texture) override;
 
-	private:
+    private:
         uptr<sf::Shader> m_shaderPrivate;
-	};
+    };
 }
 
 #endif

@@ -50,7 +50,7 @@ namespace lib::scene
 
         VertexArray m_vertices;
     private:
-        virtual void updateGeometrySimpleNode();
+        void updateGeometrySimpleNode();
         void updateTextureCoords();
 
         void updateGeometry();

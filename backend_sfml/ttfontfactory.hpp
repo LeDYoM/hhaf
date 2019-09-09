@@ -11,15 +11,15 @@
 
 namespace lib::backend::sfmlb
 {
-	class TTFontFactory : public ITTFontFactory
-	{
-	public:
-		virtual ITTFont* loadFromFile(const str &file) override;
-		ITTFont *loadFromRawMemory(RawMemory *raw_memory) override;
-		~TTFontFactory() override;
-	private:
-		vector<uptr<TTFont>> m_fontCache;
-	};
+    class TTFontFactory : public ITTFontFactory
+    {
+    public:
+        virtual ITTFont* loadFromFile(const str &file) override;
+        ITTFont *loadFromRawMemory(RawMemory *raw_memory) override;
+        ~TTFontFactory() override;
+    private:
+        vector<uptr<TTFont>> m_fontCache;
+    };
 }
 
 #endif

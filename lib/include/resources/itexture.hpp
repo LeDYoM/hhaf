@@ -8,12 +8,12 @@
 
 namespace lib::scene
 {
-	class ITexture
-	{
-	public:
-		virtual ~ITexture() {}
-		virtual vector2du32 size() const = 0;
-	};
+    class ITexture
+    {
+    public:
+        virtual ~ITexture() {}
+        virtual vector2du32 size() const = 0;
+    };
 }
 
 #endif

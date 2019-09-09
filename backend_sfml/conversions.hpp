@@ -44,8 +44,10 @@ namespace lib::backend::sfmlb
 
     constexpr const sf::Texture *const to_sf_type(const ITexture*t)
     {
-        if (t) {
-            if (auto tmp = dynamic_cast<const Texture*>(t)) {
+        if (t)
+        {
+            if (auto tmp = dynamic_cast<const Texture*>(t))
+            {
                 return &(tmp->backEndTexture());
             }
         }

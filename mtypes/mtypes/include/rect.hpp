@@ -75,7 +75,9 @@ namespace lib
         constexpr const vector2d<T> leftTop() const noexcept { return vector2d<T>{left, top}; }
         constexpr const vector2d<T> size() const  noexcept { return vector2d<T>{width, height}; }
         constexpr const T right() const  noexcept { return left + width; }
+        constexpr void setRight(const T& r) noexcept { width = r - left; }
         constexpr const T bottom() const  noexcept { return top + height; }
+        constexpr void setBottom(const T& b) noexcept { height = b - top; }
         constexpr const vector2d<T> rightBottom() const noexcept { return vector2d<T>{right(), bottom()}; }
         constexpr const vector2d<T> rightTop() const  noexcept { return vector2d<T>{right(), top}; }
         constexpr const vector2d<T> leftBottom() const  noexcept { return vector2d<T>{left, bottom()}; }

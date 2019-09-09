@@ -7,11 +7,11 @@
 
 namespace lib::scene
 {
-	class IShader
-	{
-	public:
-		virtual ~IShader() {}
-	};
+    class IShader
+    {
+    public:
+        virtual ~IShader() {}
+    };
 }
 
 #endif

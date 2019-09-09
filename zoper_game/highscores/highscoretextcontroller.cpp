@@ -25,7 +25,7 @@ namespace zoper
 
         auto resource_view = dataWrapper<ResourceView>();
 
-        m_normalFont = resource_view->getFont("menu.mainFont")->font(72);
+        m_normalFont = resource_view->getTTFont("menu.mainFont")->font(72);
 		m_normalColor = colors::Blue;
 		m_selectedColor = colors::Red;
 

@@ -7,29 +7,29 @@ namespace lib::scene
 {
     using namespace backend;
 
-	TTFontInstance::TTFontInstance(const TTFont &parent, const u32 characterSize)
+    TTFontInstance::TTFontInstance(const TTFont &parent, const u32 characterSize)
         : m_parentInstance{parent}, m_characterSize{characterSize}
     {
     }
 
-	TTFontInstance::~TTFontInstance() = default;
+    TTFontInstance::~TTFontInstance() = default;
 
-	Rectf32 TTFontInstance::getBounds(const u32 codePoint) const
-	{
-		return m_parentInstance.getBounds(codePoint, m_characterSize);
-	}
+    Rectf32 TTFontInstance::getBounds(const u32 codePoint) const
+    {
+        return m_parentInstance.getBounds(codePoint, m_characterSize);
+    }
 
-	Rectf32 TTFontInstance::getTextureBounds(const u32 codePoint) const
-	{
-		return m_parentInstance.getTextureBounds(codePoint, m_characterSize);
-	}
+    Rectf32 TTFontInstance::getTextureBounds(const u32 codePoint) const
+    {
+        return m_parentInstance.getTextureBounds(codePoint, m_characterSize);
+    }
 
-	f32 TTFontInstance::getAdvance(const u32 codePoint) const
-	{
-		return m_parentInstance.getAdvance(codePoint, m_characterSize);
-	}
+    f32 TTFontInstance::getAdvance(const u32 codePoint) const
+    {
+        return m_parentInstance.getAdvance(codePoint, m_characterSize);
+    }
 
-	f32 TTFontInstance::getLineSpacing() const
+    f32 TTFontInstance::getLineSpacing() const
     {
         return m_parentInstance.getLineSpacing(m_characterSize);
     }

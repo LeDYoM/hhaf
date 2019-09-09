@@ -11,14 +11,14 @@
 
 namespace lib::backend::sfmlb
 {
-	class ShaderFactory : public IShaderFactory
-	{
-	public:
-		virtual IShader* loadFromFile(const str &file) override;
+    class ShaderFactory : public IShaderFactory
+    {
+    public:
+        virtual IShader* loadFromFile(const str &file) override;
         ~ShaderFactory() override;
-	private:
+    private:
         vector<uptr<Shader>> m_shaderCache;
-	};
+    };
 }
 
 #endif
