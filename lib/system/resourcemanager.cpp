@@ -41,31 +41,6 @@ namespace lib::core
             }
         }
 
-        template <bool UseInternalFileSystem, typename V, typename T>
-        inline sptr<T> get_or_add(backend::IResourceFactory<V>& factory, ResourceList<sptr<T>> &container, 
-            FileSystem& fileSystem, const str &rid, const str &fileName)
-        {
-            auto iterator(std::find_if(container.begin(), container.end(),
-                [rid](const auto &node) { return node.first == rid; }));
-
-            if (iterator != container.end())
-            {
-                log_debug_info(rid, " found on resource list. Returning instance.");
-
-                return (*iterator).second;
-            }
-            else
-            {
-                // Not found, try to load it.
-                log_debug_info(rid, " not found on resource list.");
-
-                log_debug_info("Going to load file: ", fileName);
-                sptr<T> resource(loadResource<UseInternalFileSystem,T>(factory, fileSystem, fileName));
-                container.push_back(NamedIndex<sptr<T>>(rid, resource));
-                return resource;
-            }
-        }
-
         template <typename T>
         inline auto get_or_default(ResourceList<sptr<T>> &container, const str &rid)
         {
@@ -75,7 +50,30 @@ namespace lib::core
             return (iterator != container.end()) ?
                 (*iterator).second
                 :
-                msptr<T>(nullptr);
+                sptr<T>(nullptr);
+        }
+
+        template <bool UseInternalFileSystem, typename V, typename T>
+        inline sptr<T> get_or_add(backend::IResourceFactory<V>& factory,
+            ResourceList<sptr<T>> &container, FileSystem& fileSystem,
+            const str &rid, const str &fileName)
+        {
+            auto internal_resource(get_or_default(container, rid));
+
+            if (internal_resource != nullptr)
+            {
+                log_debug_info(rid, " found on resource list. Returning instance.");
+                return internal_resource;
+            }
+            else
+            {
+                // Not found, try to load it.
+                log_debug_info(rid, " not found on resource list.");
+                log_debug_info("Going to load file: ", fileName);
+                sptr<T> resource(loadResource<UseInternalFileSystem,T>(factory, fileSystem, fileName));
+                container.emplace_back(rid, resource);
+                return resource;
+            }
         }
     }
 
