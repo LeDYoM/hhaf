@@ -8,7 +8,7 @@ namespace lib::scene
 {
     using namespace backend;
 
-    BMPFont::BMPFont(const str& id, const str& file_name, IResourceHandler& resource_handler)
+    BMPFont::BMPFont(const str& id, const str& file_name/*, IResourceHandler& resource_handler*/)
     {
         fontPrivate = new BMFontPrivate;
         fontPrivate->chars_.resize(256U);
@@ -30,7 +30,7 @@ namespace lib::scene
         }
         log_debug_info("Finished Parsing Font ", fontfile);
         log_debug_info("Loading pages. Number of pages: ", fontPrivate->pagesData_.size());
-
+/*
         for (u32 i = 0; i < fontPrivate->pagesData_.size(); ++i)
         {
             fontPrivate->pagesData_[i].it = resource_handler.loadTexture(
@@ -38,6 +38,32 @@ namespace lib::scene
                 fontPrivate->pagesData_[i].file);
         }
         log_debug_info("Page(s) loaded");
+        */
+    }
+
+
+    vector<str> BMPFont::textureFileNames() const
+    {
+        vector<str> texture_file_names(fontPrivate->pagesData_.size());
+        for (const auto& page_data : fontPrivate->pagesData_)
+        {
+            texture_file_names.push_back(page_data.file);
+        }
+
+        return texture_file_names;
+    }
+
+    void BMPFont::setTexturePages(const vector<sptr<Texture>>& texture_pages)
+    {
+        assert_release(texture_pages.size() <= fontPrivate->pagesData_.size(), 
+            "The number of textures to add should be lower or equal that the number of pages.");
+
+        size_type count{0U};
+
+        for (sptr<Texture> texture : texture_pages)
+        {
+            fontPrivate->pagesData_[count].it = texture;
+        }
     }
 
     BMPFont::~BMPFont()

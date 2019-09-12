@@ -11,6 +11,7 @@
 #include <lib/resources/bmpfont.hpp>
 
 #include <backend/include/backendfactory.hpp>
+#include <lib/resources/bmpfontfactory.hpp>
 #include <algorithm>
 #include <list>
 
@@ -83,6 +84,8 @@ namespace lib::core
         ResourceList<sptr<scene::Texture>> textures_;
         ResourceList<sptr<scene::Shader>> shaders_;
         ResourceList<sptr<scene::BMPFont>> bmp_fonts_;
+
+        scene::BMPFontFactory bmp_font_factory_;
     };
 
     ResourceManager::ResourceManager(core::SystemProvider &system_provider) 
@@ -108,7 +111,7 @@ namespace lib::core
 
     sptr<scene::IFont> ResourceManager::getBMPFont(const str &rid)
     {
-        return msptr<scene::BMPFont>(rid, rid, *this);
+        return get_or_default(m_private->bmp_fonts_, rid);
     }
 
     sptr<scene::TTFont> ResourceManager::loadTTFont(const str & rid, const str & fileName)
@@ -123,9 +126,24 @@ namespace lib::core
     {
         return get_or_add<true>(systemProvider().backendFactory().shaderFactory(), m_private->shaders_, systemProvider().fileSystem(), rid, fileName);
     }
-
     sptr<scene::BMPFont> ResourceManager::loadBMPFont(const str &rid, const str &fileName)
     {
-        return msptr<scene::BMPFont>(rid, fileName, *this);
+        sptr<scene::BMPFont> bmp_font{m_private->bmp_font_factory_.loadFromFile(fileName)};
+
+        if (bmp_font)
+        {
+            const auto& texture_file_names{bmp_font->textureFileNames()};
+            vector<sptr<scene::Texture>> textures(texture_file_names.size());
+
+            for (const auto& file_name : texture_file_names)
+            {
+                sptr<scene::Texture> texture(loadTexture(rid + "_" + file_name, file_name));
+                textures.push_back(std::move(texture));
+            }
+
+            bmp_font->setTexturePages(textures);
+            m_private->bmp_fonts_.emplace_back(rid, bmp_font);
+        }
+        return bmp_font;
     }
 }

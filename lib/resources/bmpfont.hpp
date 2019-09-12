@@ -16,7 +16,7 @@ namespace lib::scene
     class BMPFont : public IFont
     {
     public:
-        BMPFont(const str& id, const str& file_name, IResourceHandler& resource_handler);
+        BMPFont(const str& id, const str& file_name/*, IResourceHandler& resource_handler*/);
         ~BMPFont() override;
 
         Rectf32 getBounds(const u32 codePoint) const override;
@@ -28,6 +28,9 @@ namespace lib::scene
         vector2df textSize(const str& text) const override;
         const vector2du32 &size() const;
 
+        vector<str> textureFileNames() const;
+        void setTexturePages(const vector<sptr<Texture>>& texture_pages);
+        
     private:
         BMFontPrivate *fontPrivate;
         bool ParseFont(const str&);
