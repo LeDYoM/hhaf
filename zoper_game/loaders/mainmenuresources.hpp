@@ -14,6 +14,9 @@ namespace zoper
         constexpr static char LogoId[] = "game_menu.logo";
         constexpr static char MenuFontId[] = "menu.mainFont";
 
+        //TODO: Remove
+        constexpr static char TestFontId[] = "menu.testFont";
+
 		void loadResources(lib::IResourceHandler&) override;
 	};
 }

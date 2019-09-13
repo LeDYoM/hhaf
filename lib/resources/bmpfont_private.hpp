@@ -9,56 +9,41 @@
 
 namespace lib::scene
 {
-    class KearningInfo
+    struct KearningInfo
     {
-    public:
+        KearningInfo(const u32 second_, const s32 amount_) 
+            : second{second_}, amount{amount_}	{ }
+        KearningInfo() = default;
         u32 second;
         s32 amount;
-        KearningInfo(u32 second_, s32 amount_) : second(second_), amount(amount_)	{ }
-        KearningInfo() : second(0), amount(0)	{ }
     };
 
-    class CharDescriptor
+    struct CharDescriptor
     {
-    public:
-        CharDescriptor() = default;
-        CharDescriptor(const CharDescriptor&) = default;
-        CharDescriptor& operator=(const CharDescriptor&) = default;
-
         Rect<u16> position;
         vector2d<s16> offset;
         s16 xadvance;
         s16 page;
         vector<KearningInfo> kearn;
         Rectf32 offsetedPosition;
-//        VertexArray charTriangles;
-//        mlp<VAOWrapper> charVAO;
-        s32 GetKerningPair(const u8 &second) const
+
+        constexpr s32 GetKerningPair(const u32 second) const
         {
-            for (u32 j = 0; j < kearn.size(); ++j)
-            {
-                if (kearn[j].second == second)
-                {
-                    return kearn[j].amount;
-                }
-            }
-            return 0;
+            const auto iterator(kearn.cfind_if([second](const auto& this_kearn)
+            { return this_kearn.second == second; }));
+
+            return iterator == kearn.cend() ? 0 : iterator->amount;        
         }
-        
     };
 
-    class PageData
+    struct PageData
     {
-    public:
         str file;
-        PageData() : file("") {}
         sptr<Texture> it;
-
-        PageData(str file_) :file(std::move(file_)),it(nullptr) {}
     };
-    class FontInfo
+
+    struct FontInfo
     {
-    public:
         str face;
         u16 size;
         bool bold;
@@ -95,7 +80,6 @@ namespace lib::scene
 
             nextCharPos.x += charDescriptor->xadvance;
         }
-
     };
 }
 

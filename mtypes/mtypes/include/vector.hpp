@@ -33,14 +33,14 @@ namespace lib
         // Constructors. ////////////////////////////////////////////////////////////
 
         /// Default constructor.
-        /// Sets all members to 0 nullptr or empty.
+        /// Sets all members to 0, nullptr or empty.
         constexpr vector() noexcept {}
 
         /// Constructor for empty container with reserved memory.
         /// The memory for the vector is allocated, but no construction
         /// is done.
         /// @param size Number of elements to reserve memory for.
-        explicit constexpr vector(const size_type size) : m_capacity{ size }, m_size{ },
+        explicit vector(const size_type size) : m_capacity{ size }, m_size{ },
             m_buffer{ size > 0U ? Allocator::allocate(size) : nullptr } {}
 
         /**
@@ -316,14 +316,50 @@ namespace lib
         }
 
         template <typename F>
-        constexpr iterator find_if(iterator begin,
-            const iterator end, F f) const noexcept
+        constexpr const_iterator cfind_if(const_iterator begin,
+            const const_iterator end, F&& f) const noexcept
         {
             checkRange(begin);
             checkRange(end);
 
-            for (;(begin != end && !(f(*begin))); ++begin);
+            for (;(begin != end && !(std::forward<F>(f)(*begin))); ++begin);
             return begin;
+        }
+
+        template <typename F>
+        constexpr const_iterator cfind_if(F&& f) const noexcept
+        {
+            return cfind_if(cbegin(), cend(), std::forward<F>(f));
+        }
+
+        template <typename F>
+        constexpr iterator find_if(iterator begin,
+            const const_iterator end, F&& f) noexcept
+        {
+            checkRange(begin);
+            checkRange(end);
+
+            for (;(begin != end && !(std::forward<F>(f)(*begin))); ++begin);
+            return begin;
+        }
+
+        template <typename F>
+        constexpr iterator find_if(F&& f) noexcept
+        {
+            return find_if(begin(), cend(), std::forward<F>(f));
+        }
+
+        template <typename F>
+        constexpr const_iterator find_if(const const_iterator begin,
+            const const_iterator end, F&& f) const noexcept
+        {
+            return cfind_if(begin, end, std::forward<F>(f));
+        }
+
+        template <typename F>
+        constexpr const_iterator find_if(F&& f) const noexcept
+        {
+            return cfind_if(cbegin(), cend(), std::forward<F>(f));
         }
 
         constexpr const_iterator cfind(const_iterator begin,

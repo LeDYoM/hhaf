@@ -33,8 +33,8 @@ namespace zoper
 
         m_normalFont = resources_viewer->getTTFont
                         (MainMenuResources::MenuFontId)->font(72);
-//        m_normalFont = resources_viewer->getBMPFont
-//                        (MainMenuResources::MenuFontId);
+        m_normalFont = resources_viewer->getBMPFont
+                        (MainMenuResources::TestFontId);
         m_normalColor = colors::Blue;
         m_selectedColor = colors::Red;
 

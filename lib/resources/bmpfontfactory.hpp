@@ -14,11 +14,8 @@ namespace lib::scene
     class BMPFontFactory final
     {
     public:
-        virtual sptr<BMPFont> loadFromFile(const str &file);
+        sptr<BMPFont> loadFromFile(const str &file);
         sptr<BMPFont> loadFromRawMemory(RawMemory *raw_memory);
-        ~BMPFontFactory();
-    private:
-        vector<sptr<BMPFont>> m_fontCache;
     };
 }
 

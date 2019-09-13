@@ -8,7 +8,7 @@ namespace lib::scene
 {
     using namespace backend;
 
-    BMPFont::BMPFont(const str& id, const str& file_name/*, IResourceHandler& resource_handler*/)
+    BMPFont::BMPFont(const str& file_name)
     {
         fontPrivate = new BMFontPrivate;
         fontPrivate->chars_.resize(256U);
@@ -71,19 +71,19 @@ namespace lib::scene
         delete fontPrivate;
     }
 
-    void filterStr(std::stringstream &LineStream, std::string &Value)
+    void filterStr(std::stringstream &line_stream, std::string &value)
     {
         bool doNext = true;
         do
         {
-            int first_ = Value.find_first_of('\"');
-            int last_ = Value.find_last_of('\"');
+            int first_ = value.find_first_of('\"');
+            int last_ = value.find_last_of('\"');
             doNext = (first_ > -1 && first_ == last_);
             if (doNext)
             {
                 std::string readTemp;
-                LineStream >> readTemp;
-                Value += " " + readTemp;
+                line_stream >> readTemp;
+                value += " " + readTemp;
             }
         } while (doNext);
     }
@@ -109,274 +109,277 @@ namespace lib::scene
 
     bool BMPFont::ParseFont(const str&fontfile)
     {
-        std::ifstream Stream(fontfile.c_str());
-        std::string Line, Read, Key, Value;
+        std::ifstream font_file_stream(fontfile.c_str());
         std::size_t i{0U};
         u32 first{0U};
         u32 second{0U};
         s32 amount{0};
 
-        KearningInfo K;
         CharDescriptor C;
 
-        while (Stream && !Stream.eof())
+        while (font_file_stream && !font_file_stream.eof())
         {
-            std::stringstream LineStream;
-            std::getline(Stream, Line);
-            LineStream << Line;
+            std::string line;
+            std::string read;
+            std::string key;
+            std::string value;
+
+            std::stringstream line_stream;
+            std::getline(font_file_stream, line);
+            line_stream << line;
 
             //read the line's type
-            LineStream >> Read;
-            if (Read == "common")
+            line_stream >> read;
+            if (read == "common")
             {
                 //this holds common data
-                while (!LineStream.eof())
+                while (!line_stream.eof())
                 {
-                    std::stringstream Converter;
-                    LineStream >> Read;
-                    i = Read.find('=');
-                    Key = Read.substr(0, i);
-                    Value = Read.substr(i + 1).c_str();
+                    std::stringstream converter;
+                    line_stream >> read;
+                    i = read.find('=');
+                    key = read.substr(0, i);
+                    value = read.substr(i + 1).c_str();
 
                     //assign the correct value
-                    Converter << Value;
-                    if (Key == "lineHeight")
+                    converter << value;
+                    if (key == "lineHeight")
                     {
-                        Converter >> fontPrivate->lineHeight;
+                        converter >> fontPrivate->lineHeight;
                     }
-                    else if (Key == "base")
+                    else if (key == "base")
                     {
-                        Converter >> fontPrivate->base;
+                        converter >> fontPrivate->base;
                     }
-                    else if (Key == "scaleW")
+                    else if (key == "scaleW")
                     {
-                        Converter >> fontPrivate->size_.x;
+                        converter >> fontPrivate->size_.x;
                     }
-                    else if (Key == "scaleH")
+                    else if (key == "scaleH")
                     {
-                        Converter >> fontPrivate->size_.y;
+                        converter >> fontPrivate->size_.y;
                     }
-                    else if (Key == "pages")
+                    else if (key == "pages")
                     {
-                        Converter >> fontPrivate->pages;
+                        converter >> fontPrivate->pages;
                     }
-                    else if (Key == "outline")
+                    else if (key == "outline")
                     {
-                        Converter >> fontPrivate->outline;
+                        converter >> fontPrivate->outline;
                     }
                 }
             }
-            else if (Read == "page")
+            else if (read == "page")
             {
                 //this holds common data
-                while (!LineStream.eof())
+                while (!line_stream.eof())
                 {
-                    std::stringstream Converter;
-                    LineStream >> Read;
-                    i = Read.find('=');
-                    Key = Read.substr(0, i);
-                    Value = Read.substr(i + 1);
-                    u32 id(0);
+                    std::stringstream converter;
+                    line_stream >> read;
+                    i = read.find('=');
+                    key = read.substr(0, i);
+                    value = read.substr(i + 1);
+                    u32 id{0U};
 
-                    filterStr(LineStream, Value);
+                    filterStr(line_stream, value);
 
                     //assign the correct value
-                    Converter << Value;
-                    if (Key == "id")
+                    converter << value;
+                    if (key == "id")
                     {
-                        Converter >> id;
+                        converter >> id;
                         fontPrivate->pagesData_.resize(id + 1);
                     }
-                    else if (Key == "file")
+                    else if (key == "file")
                     {
-                        fontPrivate->pagesData_[id].file = str(getStr(Value).c_str());
+                        fontPrivate->pagesData_[id].file = str(getStr(value).c_str());
                     }
                 }
             }
-            else if (Read == "info")
+            else if (read == "info")
             {
                 //this holds info font data
-                while (!LineStream.eof())
+                while (!line_stream.eof())
                 {
-                    std::stringstream Converter;
-                    LineStream >> Read;
-                    i = Read.find('=');
-                    Key = Read.substr(0, i);
-                    Value = Read.substr(i + 1);
+                    std::stringstream converter;
+                    line_stream >> read;
+                    i = read.find('=');
+                    key = read.substr(0, i);
+                    value = read.substr(i + 1);
 
-                    filterStr(LineStream, Value);
-                    Converter << Value;
-                    if (Key == "face")
+                    filterStr(line_stream, value);
+                    converter << value;
+                    if (key == "face")
                     {
-                        fontPrivate->fInfo.face = getStr(Value).c_str();
+                        fontPrivate->fInfo.face = getStr(value).c_str();
                     }
-                    else if (Key == "size")
+                    else if (key == "size")
                     {
-                        Converter >> fontPrivate->fInfo.size;
+                        converter >> fontPrivate->fInfo.size;
                     }
-                    else if (Key == "bold")
+                    else if (key == "bold")
                     {
-                        Converter >> fontPrivate->fInfo.bold;
+                        converter >> fontPrivate->fInfo.bold;
                     }
-                    else if (Key == "italic")
+                    else if (key == "italic")
                     {
-                        Converter >> fontPrivate->fInfo.italic;
+                        converter >> fontPrivate->fInfo.italic;
                     }
-                    else if (Key == "charset")
+                    else if (key == "charset")
                     {
-                        fontPrivate->fInfo.charset = getStr(Value).c_str();
+                        fontPrivate->fInfo.charset = getStr(value).c_str();
                     }
-                    else if (Key == "unicode")
+                    else if (key == "unicode")
                     {
-                        Converter >> fontPrivate->fInfo.unicode;
+                        converter >> fontPrivate->fInfo.unicode;
                     }
-                    else if (Key == "stretchH")
+                    else if (key == "stretchH")
                     {
-                        Converter >> fontPrivate->fInfo.stretchH;
+                        converter >> fontPrivate->fInfo.stretchH;
                     }
-                    else if (Key == "smooth")
+                    else if (key == "smooth")
                     {
-                        Converter >> fontPrivate->fInfo.smooth;
+                        converter >> fontPrivate->fInfo.smooth;
                     }
-                    else if (Key == "aa")
+                    else if (key == "aa")
                     {
-                        Converter >> fontPrivate->fInfo.aa;
+                        converter >> fontPrivate->fInfo.aa;
                     }
-                    else if (Key == "padding")
+                    else if (key == "padding")
                     {
                         std::string temp;
-                        std::getline(Converter, temp, ',');
+                        std::getline(converter, temp, ',');
                         fontPrivate->fInfo.padding.left = static_cast<s16>(std::atoi(temp.c_str()));
-                        std::getline(Converter, temp, ',');
+                        std::getline(converter, temp, ',');
                         fontPrivate->fInfo.padding.top = static_cast<s16>(std::atoi(temp.c_str()));
-                        std::getline(Converter, temp, ',');
+                        std::getline(converter, temp, ',');
                         fontPrivate->fInfo.padding.setRight(static_cast<s16>(std::atoi(temp.c_str())));
-                        std::getline(Converter, temp, ',');
+                        std::getline(converter, temp, ',');
                         fontPrivate->fInfo.padding.setBottom(static_cast<s16>(std::atoi(temp.c_str())));
                     }
-                    else if (Key == "spacing")
+                    else if (key == "spacing")
                     {
                         std::string temp;
-                        std::getline(Converter, temp, ',');
+                        std::getline(converter, temp, ',');
                         fontPrivate->fInfo.spacing.x = static_cast<s16>(std::atoi(temp.c_str()));
-                        std::getline(Converter, temp, ',');
+                        std::getline(converter, temp, ',');
                         fontPrivate->fInfo.spacing.y = static_cast<s16>(std::atoi(temp.c_str()));
                     }
-                    else if (Key == "outline")
+                    else if (key == "outline")
                     {
-                        Converter >> fontPrivate->fInfo.outline;
+                        converter >> fontPrivate->fInfo.outline;
                     }
                 }
             }
-            else if (Read == "char")
+            else if (read == "char")
             {
                 //This is data for each specific character.
-                int CharID = 0;
+                int char_id{0};
 
-                while (!LineStream.eof())
+                while (!line_stream.eof())
                 {
-                    std::stringstream Converter;
-                    LineStream >> Read;
-                    i = Read.find('=');
-                    Key = Read.substr(0, i);
-                    Value = Read.substr(i + 1);
+                    std::stringstream converter;
+                    line_stream >> read;
+                    i = read.find('=');
+                    key = read.substr(0, i);
+                    value = read.substr(i + 1);
 
                     //Assign the correct value
-                    Converter << Value;
-                    if (Key == "id")
+                    converter << value;
+                    if (key == "id")
                     {
-                        Converter >> CharID;
+                        converter >> char_id;
                     }
-                    else if (Key == "x")
+                    else if (key == "x")
                     {
-                        Converter >> C.position.left;
+                        converter >> C.position.left;
                     }
-                    else if (Key == "y")
+                    else if (key == "y")
                     {
-                        Converter >> C.position.top;
+                        converter >> C.position.top;
                     }
-                    else if (Key == "width")
+                    else if (key == "width")
                     {
                         u16 temp;
-                        Converter >> temp;
+                        converter >> temp;
                         C.position.width = temp;
                     }
-                    else if (Key == "height")
+                    else if (key == "height")
                     {
                         u16 temp;
-                        Converter >> temp;
+                        converter >> temp;
                         C.position.height = temp;
                     }
-                    else if (Key == "xoffset")
+                    else if (key == "xoffset")
                     {
-                        Converter >> C.offset.x;
+                        converter >> C.offset.x;
                     }
-                    else if (Key == "yoffset")
+                    else if (key == "yoffset")
                     {
-                        Converter >> C.offset.y;
+                        converter >> C.offset.y;
                     }
-                    else if (Key == "xadvance")
+                    else if (key == "xadvance")
                     {
-                        Converter >> C.xadvance;
+                        converter >> C.xadvance;
                     }
-                    else if (Key == "page")
+                    else if (key == "page")
                     {
-                        Converter >> C.page;
+                        converter >> C.page;
                     }
                 }
-                if (CharID < 256)
-                    fontPrivate->chars_[CharID] = C;
+                if (char_id < 256)
+                {
+                    fontPrivate->chars_[char_id] = C;
+                }
 
             }
-            else if (Read == "kernings")
+            else if (read == "kernings")
             {
-                while (!LineStream.eof())
+                while (!line_stream.eof())
                 {
-                    std::stringstream Converter;
-                    LineStream >> Read;
-                    i = Read.find('=');
-                    Key = Read.substr(0, i);
-                    Value = Read.substr(i + 1);
+                    std::stringstream converter;
+                    line_stream >> read;
+                    i = read.find('=');
+                    key = read.substr(0, i);
+                    value = read.substr(i + 1);
 
                     //assign the correct value
-                    Converter << Value;
-                    //      if( Key == "count" )
-                    //          {Converter >> KernCount; }
+                    converter << value;
+                    //      if( key == "count" )
+                    //          {converter >> KernCount; }
                 }
             }
 
-            else if (Read == "kerning")
+            else if (read == "kerning")
             {
-                while (!LineStream.eof())
+                while (!line_stream.eof())
                 {
-                    std::stringstream Converter;
-                    LineStream >> Read;
-                    i = Read.find('=');
-                    Key = Read.substr(0, i);
-                    Value = Read.substr(i + 1);
+                    std::stringstream converter;
+                    line_stream >> read;
+                    i = read.find('=');
+                    key = read.substr(0, i);
+                    value = read.substr(i + 1);
 
-                    Converter << Value;
-                    if (Key == "first")
+                    converter << value;
+                    if (key == "first")
                     {
-                        Converter >> first;
+                        converter >> first;
                     }
 
-                    else if (Key == "second")
+                    else if (key == "second")
                     {
-                        Converter >> second;
+                        converter >> second;
                     }
 
-                    else if (Key == "amount")
+                    else if (key == "amount")
                     {
-                        Converter >> amount;
+                        converter >> amount;
                     }
                 }
-                CharDescriptor &ch = fontPrivate->chars_[first];
-                ch.kearn.push_back(KearningInfo(second, amount));
+                fontPrivate->chars_[first].kearn.emplace_back(second, amount);
             }
         }
 
-        Stream.close();
         return true;
     }
 

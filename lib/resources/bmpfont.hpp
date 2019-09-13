@@ -16,7 +16,7 @@ namespace lib::scene
     class BMPFont : public IFont
     {
     public:
-        BMPFont(const str& id, const str& file_name/*, IResourceHandler& resource_handler*/);
+        BMPFont(const str& file_name);
         ~BMPFont() override;
 
         Rectf32 getBounds(const u32 codePoint) const override;
