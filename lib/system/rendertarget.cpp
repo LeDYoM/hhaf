@@ -4,11 +4,15 @@
 #include <lib/scene/renderdata.hpp>
 #include <lib/resources/texture.hpp>
 #include <lib/scene/transformation.hpp>
+#include <lib/include/liblog.hpp>
 
 namespace lib::core
 {
-    RenderTarget::RenderTarget(lib::backend::IRenderTarget*renderTarget)
-        : m_renderTarget{renderTarget} {}
+    RenderTarget::RenderTarget(rawptr<lib::backend::IRenderTarget> renderTarget)
+        : m_renderTarget{renderTarget}
+        {
+            assert_debug(renderTarget != nullptr, "renderTarget parameter is nullptr");
+        }
 
     RenderTarget::~RenderTarget() = default;
 

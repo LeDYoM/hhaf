@@ -24,6 +24,9 @@ namespace lib
     template <typename T>
     using wptr = std::weak_ptr<T>;
 
+    template <typename T>
+    using rawptr = std::add_pointer_t<T>;
+
     using u64 = uint64_t;
     using s64 = int64_t;
     using u32 = uint32_t;

@@ -23,7 +23,7 @@ namespace lib
         class RenderTarget
         {
         public:
-            RenderTarget(backend::IRenderTarget *renderTarget);
+            RenderTarget(rawptr<backend::IRenderTarget> renderTarget);
             ~RenderTarget();
 
             void setViewPort(const Rectf32 &nviewport);
@@ -34,7 +34,7 @@ namespace lib
             void draw(const scene::RenderData &renderData);
             void clear();
         private:
-            backend::IRenderTarget *m_renderTarget;
+            rawptr<backend::IRenderTarget> m_renderTarget;
         };
     }
 }
