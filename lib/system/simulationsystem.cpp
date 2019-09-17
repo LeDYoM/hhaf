@@ -63,7 +63,6 @@ namespace lib::core
                 {
                     log_debug_error("Unknown SimulationActionType enum value: ",(int)simulation_action.type);
                 }
-                
             }
         }
     }

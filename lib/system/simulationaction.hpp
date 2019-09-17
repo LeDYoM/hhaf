@@ -28,7 +28,6 @@ namespace lib::core
         SimulationActionType type;
         TimePoint time_point;
         input::Key key;
-        bool relative_time_point{true};
 
         inline bool timeToLaunch(const TimePoint& time_since_start, const TimePoint& last_triggered) const noexcept
         {
@@ -38,7 +37,7 @@ namespace lib::core
             //   substract the time when the last action was triggered.
             // - If it is not relative, substract nothing.
             // - return if this quantity is bigger than the time_point of this SimulationAction.
-            return (time_since_start - (relative_time_point ? last_triggered : TimePoint{})) > time_point;
+            return ((time_since_start - last_triggered) > time_point);
         }
     };
 
