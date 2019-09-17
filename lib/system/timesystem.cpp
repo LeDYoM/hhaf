@@ -11,26 +11,16 @@ namespace lib::core
     {
         using clock_t = std::chrono::high_resolution_clock;
 
-        constexpr TimePoint from_std_nanos(const std::chrono::nanoseconds nanosec)
-        {
-            return TimePoint{static_cast<u64>(nanosec.count())};
-        }
-
-        std::chrono::nanoseconds global_now()
-        {
-            return clock_t::now().time_since_epoch();
-        }
-
         constexpr TimePoint timepoint_global_now()
         {
-            return from_std_nanos(global_now());
+            return TimePoint{static_cast<u64>(clock_t::now().time_since_epoch().count())};
         }
     }
 
     struct TimeSystem::TimeSystemPrivate final
     {
         TimeSystemPrivate()
-        : globalStart_{from_std_nanos(global_now())}
+        : globalStart_{timepoint_global_now()}
         {
             log_debug_info("TimeSystem started at: ", globalStart_.seconds());
         }
@@ -39,7 +29,7 @@ namespace lib::core
 
         TimePoint timeSinceStart() const
         {
-            return timepoint_global_now() - globalStart_;
+            return (timepoint_global_now() - globalStart_) /* * 100U*/;
         }
 
         void updateStartFrameTime()
