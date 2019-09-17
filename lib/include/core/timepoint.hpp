@@ -46,9 +46,14 @@ namespace lib
         return TimePoint_as_microseconds(millis * 1000U);
     }
 
-    constexpr TimePoint TimePoint_as_seconds(const u64 secs) noexcept
+    constexpr TimePoint TimePoint_as_seconds(const u32 secs) noexcept
     {
         return TimePoint_as_miliseconds(secs * 1000U);
+    }
+
+    constexpr TimePoint TimePoint_as_seconds(const f32 secs) noexcept
+    {
+        return TimePoint_as_miliseconds(static_cast<u32>(secs * 1000U));
     }
 
     constexpr TimePoint operator+(const TimePoint& lhs, const TimePoint& rhs) noexcept

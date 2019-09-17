@@ -135,9 +135,9 @@ namespace zoper
         }
 
         private_->token_type_generator_ = addComponentOfType<DataProviderComponent>();
-        assert_release(private_->token_type_generator_ != nullptr, "Cannot create RandomizerComponent");
+        assert_release(private_->token_type_generator_ != nullptr, "Cannot create DataProviderComponent");
         private_->token_position_generator_ = private_->token_type_generator_; //addComponentOfType<DataProviderComponent>();
-        assert_release(private_->token_position_generator_ != nullptr, "Cannot create RandomizerComponent");
+        assert_release(private_->token_position_generator_ != nullptr, "Cannot create DataProviderComponent");
 
         // Prepare the pause text.
         pause_node_ = createSceneNode<PauseSceneNode>("PauseNode");

@@ -1,7 +1,8 @@
 #include "simulationsystem.hpp"
+#include "simulationsystem_private.hpp"
+#include "simulationaction.hpp"
 
 #include "timesystem.hpp"
-#include "inputsystem.hpp"
 
 #include <lib/include/key.hpp>
 #include <lib/include/liblog.hpp>
@@ -14,69 +15,39 @@
 
 namespace lib::core
 {
-    enum class SimulationActionType : u8
-    {
-        KeyPressed,
-        KeyReleased
-    };
-
-    struct SimulationAction
-    {
-        SimulationActionType type;
-        TimePoint tp;
-        input::Key key;
-    };
-
-    using SimulationActionContainer = vector<SimulationAction>;
-    using CurrentSimulationActionIterator = SimulationActionContainer::const_iterator;
-
-    struct SimulationSystem::SimulationSystemPrivate final
-    {
-        SimulationActionContainer simulation_actions_;
-        CurrentSimulationActionIterator current_simulation_action_iterator_;
-        SimulableDataBuffer simulable_data_buffer_;
-        SimulableDataBuffer::const_iterator current_simulable_data_buffer_iterator;
-        TimePoint start_point_;
-
-        void setSimulationActions(const TimePoint now, SimulationActionContainer sim_act_container)
-        {
-            simulation_actions_.swap(sim_act_container);
-            current_simulation_action_iterator_ = simulation_actions_.cbegin();
-            start_point_ = now;
-            log_debug_info("Simulation System started at: ", start_point_);
-        }
-
-        void setSimulatedDataBuffer(SimulableDataBuffer simulated_data_buffer)
-        {
-            simulable_data_buffer_ = std::move(simulated_data_buffer);
-            current_simulable_data_buffer_iterator = simulable_data_buffer_.begin();
-        }
-    };
-
     SimulationSystem::SimulationSystem(SystemProvider &system_provider)
-		: HostedAppService{ system_provider }, priv_{ muptr<SimulationSystemPrivate>() }
-    {
-        priv_->setSimulationActions(systemProvider().timeSystem().now(),
-            {
-                {SimulationActionType::KeyPressed, TimePoint_as_seconds(2U), input::Key::Down},
-                {SimulationActionType::KeyReleased, TimePoint_as_seconds(3U), input::Key::Down}
-            });
-
-        priv_->setSimulatedDataBuffer(SimulableDataBuffer{});
-    }
+        : HostedAppService{ system_provider },
+        priv_{ muptr<SimulationSystemPrivate>() } {}
 
     SimulationSystem::~SimulationSystem() = default;
 
+    void SimulationSystem::setSimulationActions(const TimePoint &current, SimulationActionGroup simulation_action_group)
+    {
+        priv_->setSimulationActions(current, simulation_action_group.getContainer());
+    }
+
+    void SimulationSystem::setSimulationActions(SimulationActionGroup simulation_action_group)
+    {
+        setSimulationActions(systemProvider().timeSystem().now(), simulation_action_group.getContainer());
+    }
+
+    void SimulationSystem::setSimulatedDataBuffer(SimulableDataBuffer simulated_data_buffer)
+    {
+        priv_->setSimulatedDataBuffer(std::move(simulated_data_buffer));
+    }
+
     void SimulationSystem::update()
     {
-        // Check if we have reached the next TimePoint
-        // And we are not at the end
+        // Check if we have still actions to trigger.
         if (priv_->current_simulation_action_iterator_ != priv_->simulation_actions_.cend())
         {
+            // Check if we have reached the next TimePoint
             const SimulationAction& simulation_action{*(priv_->current_simulation_action_iterator_)};
-            if (systemProvider().timeSystem().now().milliseconds() > simulation_action.tp.milliseconds())
+            const TimePoint& current_time_point{systemProvider().timeSystem().now()};
+            if (simulation_action.timeToLaunch(current_time_point, priv_->last_checked_point_ ))
             {
-                ++priv_->current_simulation_action_iterator_;
+                priv_->last_checked_point_ = current_time_point;
+                ++(priv_->current_simulation_action_iterator_);
 
                 if (simulation_action.type == SimulationActionType::KeyPressed)
                 {
@@ -110,6 +81,5 @@ namespace lib::core
         {
             systemProvider().randomSystem().generateSimulableDataBuffer(dest);
         }
-        
     }
 }
