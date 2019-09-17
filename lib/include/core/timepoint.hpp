@@ -66,6 +66,16 @@ namespace lib
         return { lhs.nanoseconds() - rhs.nanoseconds() };
     }
 
+    constexpr TimePoint operator*(const TimePoint& lhs, const u64 scalar) noexcept
+    {
+        return { lhs.nanoseconds() * scalar };
+    }
+
+    constexpr TimePoint operator/(const TimePoint& lhs, const u64 scalar) noexcept
+    {
+        return { static_cast<u64>(lhs.nanoseconds() / scalar) };
+    }
+
     constexpr bool operator<(const TimePoint& lhs, const TimePoint& rhs) noexcept
     {
         return { lhs.nanoseconds() < rhs.nanoseconds() };
