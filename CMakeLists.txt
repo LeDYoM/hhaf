@@ -12,15 +12,13 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 # Set compiler flags and options. 
 # Here it is setting the Visual Studio warning level to 4
 if(MSVC)
-  # Force to always compile with W4
-  if(CMAKE_CXX_FLAGS MATCHES "/W[0-4]")
-    string(REGEX REPLACE "/W[0-4]" "/W4" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
-  else()
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
-  endif()
-elseif(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-long-long -pedantic")
+    add_compile_definitions(/W4 /WX)
+else()
+    add_compile_definitions(-Wall -Wextra -pedantic -Werror)
 endif()
+
+#add_compile_definitions(LIB_COMPILE_SIMULATIONS)
+#add_compile_definitions(LIB_ALLOW_ACCELERATION)
 
 message ("cxx Flags: " ${CMAKE_CXX_FLAGS})
 

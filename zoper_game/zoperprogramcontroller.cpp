@@ -71,9 +71,11 @@ namespace zoper
             simulation_action_group.addKeyStroke(input::Key::Down);
             simulation_action_group.addKeyStroke(input::Key::Return);
 
+#ifdef LIB_COMPILE_SIMULATIONS
             auto& simulationSystem(systemProvider().simulationSystem());
             simulationSystem.setSimulationActions(simulation_action_group);
             simulationSystem.setSimulatedDataBuffer(core::SimulableDataBuffer{0U, 0U, 0U, 0U});
+#endif
         }
 
     }

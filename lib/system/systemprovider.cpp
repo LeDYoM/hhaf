@@ -53,7 +53,9 @@ namespace lib::core
         p_->render_system_ = muptr<core::RenderSystem>(*this);
         p_->random_system_ = muptr<RandomSystem>();
         p_->file_system_ = muptr<FileSystem>(*this);
+#ifdef LIB_COMPILE_SIMULATIONS
         p_->simulation_system_ = muptr<SimulationSystem>(*this);
+#endif
     }
 
     void SystemProvider::terminate()
@@ -141,6 +143,7 @@ namespace lib::core
         return *p_->scene_manager_;
     }
 
+#ifdef LIB_COMPILE_SIMULATIONS
     const SimulationSystem & SystemProvider::simulationSystem() const noexcept
     {
         return *p_->simulation_system_;
@@ -150,6 +153,7 @@ namespace lib::core
     {
         return *p_->simulation_system_;
     }
+#endif
 
     const TimeSystem &SystemProvider::timeSystem() const noexcept
     {
@@ -183,18 +187,32 @@ namespace lib::core
 
     const ISimulableDataProvider &SystemProvider::simulableDataProvider() const noexcept
     {
-        return *p_->simulation_system_;
+        return *p_->
+#ifdef LIB_COMPILE_SIMULATIONS
+        simulation_system_
+#else
+        random_system_
+#endif
+        ;
     }
 
     ISimulableDataProvider &SystemProvider::simulableDataProvider() noexcept
     {
-        return *p_->simulation_system_;
+        return *p_->
+#ifdef LIB_COMPILE_SIMULATIONS
+        simulation_system_
+#else
+        random_system_
+#endif
+        ;
     }
 
     bool SystemProvider::runStep()
     {
         const bool windowWants2Close{ parentWindow().preLoop() };
+#ifdef LIB_COMPILE_SIMULATIONS
         simulationSystem().update();
+#endif
         inputSystem().update();
         sceneManager().update();
 

@@ -31,7 +31,9 @@ namespace lib::core
     class ResourceManager;
     class RandomSystem;
     class FileSystem;
+#ifdef LIB_COMPILE_SIMULATIONS
     class SimulationSystem;
+#endif
     class TimeSystem;
     class RenderSystem;
     class ISimulableDataProvider;
@@ -69,8 +71,10 @@ namespace lib::core
         scene::SceneManager &sceneManager() noexcept;
         const FileSystem &fileSystem() const noexcept;
         FileSystem &fileSystem() noexcept;
+#ifdef LIB_COMPILE_SIMULATIONS
         const SimulationSystem &simulationSystem() const noexcept;
         SimulationSystem &simulationSystem() noexcept;
+#endif
         const TimeSystem &timeSystem() const noexcept;
         TimeSystem &timeSystem() noexcept;
         const backend::BackendFactory &backendFactory() const noexcept;
