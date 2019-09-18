@@ -20,6 +20,10 @@ namespace lib::core
 
         void startFrame();
         void endFrame();
+
+#ifdef LIB_ALLOW_ACCELERATION
+        void setAcceleration(const f32 acceleration);
+#endif
     private:
         struct TimeSystemPrivate;
         uptr<TimeSystemPrivate> priv_;

@@ -29,7 +29,11 @@ namespace lib::core
 
         TimePoint timeSinceStart() const
         {
-            return (timepoint_global_now() - globalStart_) /* * 100U*/;
+            return (timepoint_global_now() - globalStart_)
+#ifdef LIB_ALLOW_ACCELERATION
+                * acceleration_;
+#endif
+             ;
         }
 
         void updateStartFrameTime()
@@ -45,6 +49,9 @@ namespace lib::core
         TimePoint globalStart_;
         TimePoint last_start_frame_{0U};
         TimePoint last_end_frame_{0U};
+#ifdef LIB_ALLOW_ACCELERATION
+        f32 acceleration_ = 1.0f;
+#endif
     };
 
     TimeSystem::TimeSystem()

@@ -71,9 +71,19 @@ namespace lib
         return { lhs.nanoseconds() * scalar };
     }
 
+    constexpr TimePoint operator*(const TimePoint& lhs, const f32 scalar) noexcept
+    {
+        return { static_cast<u64>(static_cast<f32>(lhs.nanoseconds()) * scalar) };
+    }
+
     constexpr TimePoint operator/(const TimePoint& lhs, const u64 scalar) noexcept
     {
         return { static_cast<u64>(lhs.nanoseconds() / scalar) };
+    }
+
+    constexpr TimePoint operator/(const TimePoint& lhs, const f32 scalar) noexcept
+    {
+        return { static_cast<u64>(static_cast<f32>(lhs.nanoseconds()) / scalar) };
     }
 
     constexpr bool operator<(const TimePoint& lhs, const TimePoint& rhs) noexcept
