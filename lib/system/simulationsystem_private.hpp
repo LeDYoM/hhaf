@@ -28,6 +28,12 @@ namespace lib::core
         SimulableDataBuffer::const_iterator current_simulable_data_buffer_iterator;
         TimePoint last_checked_point_;
 
+        struct ReplayData
+        {
+            SimulableDataBuffer data_buffer_;
+            str replay_file;
+        } replay_data_;
+
         void setSimulationActions(const TimePoint &current, SimulationActionContainer sim_act_container)
         {
             simulation_actions_.swap(sim_act_container);

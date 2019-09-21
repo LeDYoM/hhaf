@@ -17,8 +17,10 @@ else()
     add_compile_definitions(-Wall -Wextra -pedantic -Werror)
 endif()
 
-#add_compile_definitions(LIB_COMPILE_SIMULATIONS)
+add_compile_definitions(LIB_COMPILE_SIMULATIONS)
 #add_compile_definitions(LIB_ALLOW_ACCELERATION)
+add_compile_definitions(ZOPER_STORE_PLAY)
+#add_compile_definitions(ZOPER_USE_SIMULATION)
 
 message ("cxx Flags: " ${CMAKE_CXX_FLAGS})
 

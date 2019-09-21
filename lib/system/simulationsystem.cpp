@@ -13,13 +13,49 @@
 
 #include <mtypes/include/types.hpp>
 
+#include <fstream>
+
 namespace lib::core
 {
     SimulationSystem::SimulationSystem(SystemProvider &system_provider)
         : HostedAppService{ system_provider },
         priv_{ muptr<SimulationSystemPrivate>() } {}
 
-    SimulationSystem::~SimulationSystem() = default;
+    SimulationSystem::~SimulationSystem()
+    {
+        if (!priv_->replay_data_.replay_file.empty() && !priv_->replay_data_.data_buffer_.empty())
+        {
+            log_debug_info("Going to write play data into file " ,priv_->replay_data_.replay_file);
+            if (std::ofstream output_file(priv_->replay_data_.replay_file.c_str()); output_file)
+            {
+                log_debug_info("Writing play data...");
+                for (const auto data : priv_->replay_data_.data_buffer_)
+                {
+                    output_file << data;
+                    if (&data != std::prev(priv_->replay_data_.data_buffer_.end()))
+                    {
+                        output_file << ",";
+                    }
+                }
+                if (output_file.good())
+                {
+                    log_debug_info("Play data written successfully");
+                }
+                else
+                {
+                    log_debug_error("Error while writing the debug data");
+                }
+            }
+            else
+            {
+                log_debug_error("Cannot open ", priv_->replay_data_.replay_file," for writing!");
+            }
+        }
+        else
+        {
+            log_debug_info("No file or no data to store the replay");
+        }
+    }
 
     void SimulationSystem::setSimulationActions(const TimePoint &current, SimulationActionGroup simulation_action_group)
     {
@@ -73,12 +109,22 @@ namespace lib::core
         {
             dest.resize(1U);
             dest[0U] = *(priv_->current_simulable_data_buffer_iterator++);
-
+            priv_->replay_data_.data_buffer_.push_back(dest[0U]);
             log_debug_info(dest);
         }
         else
         {
             systemProvider().randomSystem().generateSimulableDataBuffer(dest);
         }
+    }
+
+    void SimulationSystem::setInputDataFile(str input_file)
+    {
+
+    }
+
+    void SimulationSystem::setPlayedDataFile(str played_file)
+    {
+        priv_->replay_data_.replay_file = std::move(played_file);
     }
 }

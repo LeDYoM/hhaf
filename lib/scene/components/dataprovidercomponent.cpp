@@ -21,7 +21,10 @@ namespace lib::scene
         {
             if (consumed_ >= numbers_.end())
             {
-                refillBuffer();
+                // refill buffer
+                log_debug_info("refilling buffer");
+                data_provider_.generateSimulableDataBuffer(numbers_);
+                consumed_ = numbers_.cbegin();
             }
             assert_debug(consumed_ <= numbers_.end(), "Error ensuring buffer availability");
         }
@@ -33,13 +36,8 @@ namespace lib::scene
         }
 
     private:
-        void refillBuffer()
-        {
-            log_debug_info("Call refillBuffer");
-            data_provider_.generateSimulableDataBuffer(numbers_);
-            consumed_ = numbers_.cbegin();
-        }
-
+#ifdef LIB_STORE_PLAY
+#endif
         core::SimulableDataBuffer numbers_;
         core::SimulableDataBuffer::const_iterator consumed_{nullptr};
         core::ISimulableDataProvider& data_provider_;
@@ -60,7 +58,7 @@ namespace lib::scene
         assert_release(max > min, "The max paramter must be greater than min");
 
         const auto next(priv_->next());
-        log_debug_info("Fetch next element from random queue: ", next);
+        log_debug_info("Fetch next element from queue: ", next);
         const size_type generated(next % (max - min));
         log_debug_info("\tGot ", generated);
         log_debug_info("\tReturning ", min + generated);
