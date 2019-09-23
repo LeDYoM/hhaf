@@ -29,7 +29,7 @@ namespace lib::core
             if (std::ofstream output_file(priv_->replay_data_.replay_file.c_str()); output_file)
             {
                 log_debug_info("Writing play data...");
-                for (const auto data : priv_->replay_data_.data_buffer_)
+                for (const auto& data : priv_->replay_data_.data_buffer_)
                 {
                     output_file << data;
                     if (&data != std::prev(priv_->replay_data_.data_buffer_.end()))
@@ -109,13 +109,16 @@ namespace lib::core
         {
             dest.resize(1U);
             dest[0U] = *(priv_->current_simulable_data_buffer_iterator++);
-            priv_->replay_data_.data_buffer_.push_back(dest[0U]);
             log_debug_info(dest);
         }
         else
         {
             systemProvider().randomSystem().generateSimulableDataBuffer(dest);
         }
+
+        // Store the generated buffer into the play data.
+        priv_->replay_data_.data_buffer_.insert(dest);
+
     }
 
     void SimulationSystem::setInputDataFile(str input_file)
