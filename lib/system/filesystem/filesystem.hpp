@@ -12,12 +12,12 @@
 namespace lib::core
 {
     class FileSystem final : public HostedAppService
-	{
-	public:
-		FileSystem(core::SystemProvider &system_provider);
+    {
+    public:
+        FileSystem(core::SystemProvider &system_provider);
         ~FileSystem() override;
 
-		RawMemory loadBinaryFile(const str& fileName);
+        RawMemory loadBinaryFile(const str& fileName);
 
     private:
         class FileSystemPrivate;
