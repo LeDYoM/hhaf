@@ -12,6 +12,7 @@
 #include <lib/system/randomsystem.hpp>
 
 #include <mtypes/include/types.hpp>
+#include <mtypes/include/dicty.hpp>
 
 #include <fstream>
 
@@ -23,6 +24,14 @@ namespace lib::core
 
     SimulationSystem::~SimulationSystem()
     {
+        // Test
+        priv_->replay_data_.replay_file = "foo2.txt";
+        priv_->replay_data_.data_buffer_.push_back(12344U);
+        priv_->replay_data_.data_buffer_.push_back(3434U);
+
+        Object obj;
+//        obj.set(priv_->replay_data_.data_buffer_);
+
         if (!priv_->replay_data_.replay_file.empty() && !priv_->replay_data_.data_buffer_.empty())
         {
             log_debug_info("Going to write play data into file " ,priv_->replay_data_.replay_file);
@@ -97,7 +106,7 @@ namespace lib::core
                 }
                 else
                 {
-                    log_debug_error("Unknown SimulationActionType enum value: ",(int)simulation_action.type);
+                    log_debug_error("Unknown SimulationActionType enum value: ", (int)simulation_action.type);
                 }
             }
         }
@@ -121,13 +130,49 @@ namespace lib::core
 
     }
 
-    void SimulationSystem::setInputDataFile(str input_file)
+    void SimulationSystem::setReplayDataFile(str replay_file)
     {
-
+        priv_->replay_data_.replay_file = std::move(replay_file);
     }
 
     void SimulationSystem::setPlayedDataFile(str played_file)
     {
-        priv_->replay_data_.replay_file = std::move(played_file);
+        priv_->replay_data_.input_replay_file = std::move(played_file);
+/*
+        if (!priv_->replay_data_.input_replay_file.empty())
+        {
+            log_debug_info("Going to read play data from file " ,priv_->replay_data_.input_replay_file);
+            for (std::ifstream input_file(priv_->replay_data_.replay_file.c_str()); input_file && !input_file.eof();)
+            {
+                std::string buffer;
+                std::getline(input_file,buffer,",");
+                for (const auto& data : priv_->replay_data_.data_buffer_)
+                {
+                    input_file 
+                    output_file << data;
+                    if (&data != std::prev(priv_->replay_data_.data_buffer_.end()))
+                    {
+                        output_file << ",";
+                    }
+                }
+                if (output_file.good())
+                {
+                    log_debug_info("Play data written successfully");
+                }
+                else
+                {
+                    log_debug_error("Error while writing the debug data");
+                }
+            }
+            else
+            {
+                log_debug_error("Cannot open ", priv_->replay_data_.replay_file," for reading!");
+            }
+        }
+        else
+        {
+            log_debug_info("No file or no data to store the replay");
+        }
+        */
     }
 }

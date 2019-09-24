@@ -32,6 +32,7 @@ namespace lib::core
         {
             SimulableDataBuffer data_buffer_;
             str replay_file;
+            str input_replay_file;
         } replay_data_;
 
         void setSimulationActions(const TimePoint &current, SimulationActionContainer sim_act_container)

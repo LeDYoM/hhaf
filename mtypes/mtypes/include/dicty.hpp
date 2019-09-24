@@ -137,6 +137,12 @@ namespace lib
                 return (*m_value);
             }
 
+            template <typename T>
+            T as() const
+            {
+                return (*m_value).convertOrDefault<T>();
+            }
+
         private:
             const Object *m_object{nullptr};
             const str *m_value{nullptr};
@@ -256,19 +262,54 @@ namespace lib
 
         bool set(str key, Object obj, bool overwrite = true)
         {
-            return set({ std::make_pair(key, obj) }, overwrite);
+            return set({ std::make_pair(key, std::move(obj)) }, overwrite);
         }
 
         bool set(str key, str value, bool overwrite = true)
         {
-            return set({ std::make_pair(key, value) }, overwrite);
+            return set({ std::make_pair(key, std::move(value)) }, overwrite);
         }
 
         bool set(str key, Value value, bool overwrite = true)
         {
-            return set({ std::make_pair(key, value) }, overwrite);
+            return set({ std::make_pair(key, std::move(value)) }, overwrite);
         }
 
+        bool set(size_t index, str value, bool overwrite = true)
+        {
+            return set({ std::make_pair(str(arraySeparator) + str::to_str(index), std::move(value)) }, overwrite);
+        }
+
+        template <typename T, typename TD = std::decay_t<T>,
+            std::enable_if_t<std::is_arithmetic_v<TD>>* = nullptr>
+        bool set(size_t index, T&& value, bool overwrite = true)
+        {
+            if constexpr (std::is_floating_point_v<TD>)
+            {
+                return set(index, str::to_str(static_cast<f64>(value)), overwrite);
+            }
+            else if constexpr (std::is_signed_v<TD>)
+            {
+                return set(index, str::to_str(static_cast<s64>(value)), overwrite);
+            }
+            else
+            {
+                return set(index, str::to_str(static_cast<u64>(value)), overwrite);
+            }
+        }
+/*
+        template <typename T>
+        bool set(const vector<T>& value, bool overwrite = true)
+        {
+            bool is_set{true};
+            size_t index{0U};
+            for (const auto& element : value)
+            {
+                is_set &= set(index, value, overwrite);
+            }
+            return is_set;
+        }
+*/
         constexpr ObjectDictionary::iterator begin_objects() noexcept { return m_objects.begin(); }
         constexpr ObjectDictionary::const_iterator begin_objects() const noexcept{ return m_objects.begin(); }
         constexpr ObjectDictionary::iterator end_objects() noexcept { return m_objects.end(); }

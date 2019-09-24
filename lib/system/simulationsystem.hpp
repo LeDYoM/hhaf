@@ -29,7 +29,7 @@ namespace lib::core
         void setSimulationActions(const TimePoint &current, SimulationActionGroup simulation_action_group);
         void setSimulationActions(SimulationActionGroup simulation_action_group);
         void setSimulatedDataBuffer(SimulableDataBuffer simulated_data_buffer);
-        void setInputDataFile(str input_file);
+        void setReplayDataFile(str play_file);
         void setPlayedDataFile(str played_file);
 
     private:

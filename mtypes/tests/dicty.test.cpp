@@ -169,6 +169,30 @@ TEST_CASE("Dicty: Read array1", "[dicty][vector]")
     CHECK_FALSE(obj[2U].isValid());
 }
 
+TEST_CASE("Dicty: Write array1", "[dicty][vector]")
+{
+    Object obj;
+    obj.set(0U, "value1");
+    obj.set(1U, "value2");
+    obj.set(2U, 12345UL);
+    obj.set(3U, 1.2);
+    obj.set(4U, static_cast<s32>(32));
+
+    CHECK(obj[0U] == "value1");
+    CHECK(obj[1U] == "value2");
+    CHECK(obj[2U].as<u32>() == 12345UL);
+    CHECK(obj[3U].as<f64>() == 1.2);
+    CHECK(obj[4U].as<s32>() == 32);
+
+    CHECK(obj[str(Object::arraySeparator) + "0"] == "value1");
+    CHECK(obj[str(Object::arraySeparator) + "1"] == "value2");
+    CHECK(obj[str(Object::arraySeparator) + "2"].as<u32>() == 12345UL);
+    CHECK(obj[str(Object::arraySeparator) + "3"].as<f64>() == 1.2);
+    CHECK(obj[str(Object::arraySeparator) + "4"].as<s32>() == 32);
+
+    CHECK_FALSE(obj[5U].isValid());
+}
+
 TEST_CASE("Dicty: Read array2", "[dicty][vector]")
 {
     // Initialize with initializer list of objects and initializer list of
@@ -265,7 +289,7 @@ TEST_CASE("dicty copy", "[dicty]")
         CHECK(obj2.set("other_key4", obj["key4"]));
         CHECK(obj2["other_key4"] == "value4");
 
-        CHECK_FALSE(obj2.set("other_invalid_key", obj["�nvalid_key"]));
+        CHECK_FALSE(obj2.set("other_invalid_key", obj["invalid_key"]));
         CHECK_FALSE(obj2["other_invalid_key"].isValid());
 
         // Ensure that the object is copied, not just linked.
@@ -288,4 +312,21 @@ TEST_CASE("dicty copy", "[dicty]")
         CHECK(obj2.set("other_key3", obj["key3"]));
         CHECK(obj2["other_key3"]["subkey1"]["subsubkey1"] == "subsubvalue");
     }
+}
+
+TEST_CASE("dicty with vector", "[dicty][vector]")
+{
+    vector<s32> v = {-1, 1, 3, -3};
+    Object obj;
+
+    obj.set(0U, v[0U]);
+    obj.set(1U, v[1U]);
+    obj.set(2U, v[2U]);
+    obj.set(3U, v[3U]);
+
+    CHECK(obj[0U].as<s32>() == v[0U]);
+    CHECK(obj[1U].as<s32>() == v[1U]);
+    CHECK(obj[2U].as<s32>() == v[2U]);
+    CHECK(obj[3U].as<s32>() == v[3U]);
+    CHECK_FALSE(obj[4U].isValid());
 }

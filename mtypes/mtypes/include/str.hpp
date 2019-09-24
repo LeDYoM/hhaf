@@ -218,6 +218,21 @@ namespace lib
             return static_cast<bool>(std::istringstream(c_str()) >> n);
         }
 
+        template<typename T>
+        [[nodiscard]] pair<T,bool> convert() const
+        {
+            T value;
+            return { convert(value), value};
+        }
+
+        template<typename T>
+        [[nodiscard]] T convertOrDefault() const
+        {
+            T value;
+            convert(value);
+            return value;
+        }
+
         template <typename T>
         str &operator+=(T&&source) 
         {
