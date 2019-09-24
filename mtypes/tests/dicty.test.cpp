@@ -319,14 +319,35 @@ TEST_CASE("dicty with vector", "[dicty][vector]")
     vector<s32> v = {-1, 1, 3, -3};
     Object obj;
 
-    obj.set(0U, v[0U]);
-    obj.set(1U, v[1U]);
-    obj.set(2U, v[2U]);
-    obj.set(3U, v[3U]);
+    SECTION("Simple")
+    {
+        obj.set(0U, v[0U]);
+        obj.set(1U, v[1U]);
+        obj.set(2U, v[2U]);
+        obj.set(3U, v[3U]);
 
-    CHECK(obj[0U].as<s32>() == v[0U]);
-    CHECK(obj[1U].as<s32>() == v[1U]);
-    CHECK(obj[2U].as<s32>() == v[2U]);
-    CHECK(obj[3U].as<s32>() == v[3U]);
-    CHECK_FALSE(obj[4U].isValid());
+        CHECK(obj[0U].as<s32>() == v[0U]);
+        CHECK(obj[1U].as<s32>() == v[1U]);
+        CHECK(obj[2U].as<s32>() == v[2U]);
+        CHECK(obj[3U].as<s32>() == v[3U]);
+        CHECK_FALSE(obj[4U].isValid());
+    }
+
+    SECTION("Direct")
+    {
+        obj.set(v);
+
+        CHECK(obj[0U].as<s32>() == v[0U]);
+        CHECK(obj[1U].as<s32>() == v[1U]);
+        CHECK(obj[2U].as<s32>() == v[2U]);
+        CHECK(obj[3U].as<s32>() == v[3U]);
+        CHECK_FALSE(obj[4U].isValid());
+    }
+
+    SECTION("More direct with rv vector and float")
+    {
+        obj.set(vector<f32>{2.3F, 1.1F});
+        CHECK(obj[0U].as<f32>() == 2.3F);
+        CHECK(obj[1U].as<f32>() == 1.1F);
+    }
 }

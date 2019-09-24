@@ -286,18 +286,18 @@ namespace lib
         {
             if constexpr (std::is_floating_point_v<TD>)
             {
-                return set(index, str::to_str(static_cast<f64>(value)), overwrite);
+                return set(index, str::to_str(static_cast<f64>(std::forward<T>(value))), overwrite);
             }
             else if constexpr (std::is_signed_v<TD>)
             {
-                return set(index, str::to_str(static_cast<s64>(value)), overwrite);
+                return set(index, str::to_str(static_cast<s64>(std::forward<T>(value))), overwrite);
             }
             else
             {
-                return set(index, str::to_str(static_cast<u64>(value)), overwrite);
+                return set(index, str::to_str(static_cast<u64>(std::forward<T>(value))), overwrite);
             }
         }
-/*
+
         template <typename T>
         bool set(const vector<T>& value, bool overwrite = true)
         {
@@ -305,11 +305,23 @@ namespace lib
             size_t index{0U};
             for (const auto& element : value)
             {
-                is_set &= set(index, value, overwrite);
+                is_set &= set(index++, element, overwrite);
             }
             return is_set;
         }
-*/
+
+        template <typename T>
+        bool set(vector<T>&& value, bool overwrite = true)
+        {
+            bool is_set{true};
+            size_t index{0U};
+            for (const auto& element : value)
+            {
+                is_set &= set(index++, element, overwrite);
+            }
+            return is_set;
+        }
+
         constexpr ObjectDictionary::iterator begin_objects() noexcept { return m_objects.begin(); }
         constexpr ObjectDictionary::const_iterator begin_objects() const noexcept{ return m_objects.begin(); }
         constexpr ObjectDictionary::iterator end_objects() noexcept { return m_objects.end(); }
