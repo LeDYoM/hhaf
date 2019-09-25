@@ -22,7 +22,7 @@ namespace lib
         using ObjectDictionary = Dictionary<Object>;
         using ValueDictionary = Dictionary<str>;
 
-        constexpr Object() {}
+        constexpr Object() noexcept {}
 
         inline Object(std::initializer_list<KeyValueStr> iListValues) 
         {
@@ -331,6 +331,12 @@ namespace lib
         constexpr ValueDictionary::const_iterator begin_values() const noexcept{ return m_values.begin(); }
         constexpr ValueDictionary::iterator end_values() noexcept { return m_values.end(); }
         constexpr ValueDictionary::const_iterator end_values() const noexcept{ return m_values.end(); }
+
+        template <typename T>
+        constexpr static bool isArrayElement(const pair<str,T>& it)
+        {
+            return ((*it).first.starts_with(str(arraySeparator)));
+        }
 
     private:
         ValueDictionary m_values;

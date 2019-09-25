@@ -9,6 +9,7 @@
 #include "str.hpp"
 #include "dicty.hpp"
 #include "streamin.hpp"
+#include "streamout.hpp"
 #include <cctype>
 
 namespace lib
@@ -620,6 +621,19 @@ namespace lib
         str input_;
         Object output_;
     };
+
+    SerializationStreamOut& operator<<(SerializationStreamOut&sso, const Object& obj)
+    {
+        // Start with values (that are not arrays)
+        for (auto it(obj.begin_values()); it !=obj.end_values(); ++it)
+        {
+            if (!Object::isArrayElement(*it))
+            {
+                
+            }
+        }
+        return sso;
+    }
 }
 
 #endif

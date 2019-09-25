@@ -6,7 +6,8 @@ set(UNIT_TEST_LIST
     main
     parpar
     str
-    streams
+    streamin
+    streamout
     translator
     vector
 )
