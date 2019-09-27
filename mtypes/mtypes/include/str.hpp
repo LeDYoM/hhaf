@@ -306,7 +306,10 @@ namespace lib
         constexpr const_iterator end() const noexcept { return m_data.begin()+size(); }
         constexpr const_iterator cend() const noexcept { return m_data.cbegin()+size(); }
 
-        constexpr const char_type *const c_str() const noexcept { return m_data.cbegin(); }
+        constexpr const char_type *const c_str() const noexcept
+        { 
+            return m_data.empty() ? "" : m_data.cbegin();
+        }
         constexpr bool empty() const noexcept { return size() == 0; }
 
         constexpr auto find_first_of(const vector<char_type>& chValue) const noexcept 

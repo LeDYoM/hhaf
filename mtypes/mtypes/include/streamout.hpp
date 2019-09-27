@@ -24,6 +24,8 @@ namespace lib
 
         template <typename T>
         friend SerializationStreamOut& operator<<(SerializationStreamOut&sso, const T&data);
+        friend SerializationStreamOut& operator<<(SerializationStreamOut&sso, const str& data);
+
     private:
         void addSeparator(str &data)
         {
@@ -35,6 +37,17 @@ namespace lib
         str data_;
         str separator_ = ",";
     };
+
+    inline SerializationStreamOut& operator<<(SerializationStreamOut&sso, const str& data)
+    {
+        sso.data_ += data;
+        return sso;
+    }
+
+    inline SerializationStreamOut& operator<<(SerializationStreamOut&sso, const char* data)
+    {
+        return sso << str(data);
+    }
 
     template <typename T>
     SerializationStreamOut& operator<<(SerializationStreamOut&sso, const T&data)

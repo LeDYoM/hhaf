@@ -335,7 +335,7 @@ namespace lib
         template <typename T>
         constexpr static bool isArrayElement(const pair<str,T>& it)
         {
-            return ((*it).first.starts_with(str(arraySeparator)));
+            return (it.first.starts_with(str(arraySeparator)));
         }
 
     private:

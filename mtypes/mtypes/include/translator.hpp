@@ -297,7 +297,6 @@ namespace lib
                 LOG("Token found: " << int(t.token_type) << "\t: " << t.value.c_str());
 #endif
                 tokens_.push_back(std::move(t));
-
             }
 
             LOG("Scanner completed---------------------------------------");
@@ -624,14 +623,57 @@ namespace lib
 
     SerializationStreamOut& operator<<(SerializationStreamOut&sso, const Object& obj)
     {
+        sso << "{\n";
+
         // Start with values (that are not arrays)
         for (auto it(obj.begin_values()); it !=obj.end_values(); ++it)
         {
             if (!Object::isArrayElement(*it))
             {
-                
+                sso << (*it).first << ":\"" << (*it).second << "\"";
             }
         }
+
+        // Continue with objects (that are not arrays).
+        for (auto it(obj.begin_objects()); it !=obj.end_objects(); ++it)
+        {
+            if (!Object::isArrayElement(*it))
+            {
+                sso << (*it).first << (*it).second;
+            }
+        }
+
+        // Andd now, arrays.
+        size_type i{0U};
+        bool next{true};
+
+        do
+        {
+            const auto value(obj[i]);
+            if (value.isValid())
+            {
+                if (i == 0U)
+                {
+                    sso << "[";
+                }
+                if (value.isObject())
+                {
+                    sso << value.getObject();
+                }
+                else
+                {
+                    sso << value.getValue();
+                }
+            }
+            else
+            {
+                next = false;
+            }
+
+        } while (next);
+
+        sso << "}";
+    
         return sso;
     }
 }

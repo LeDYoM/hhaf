@@ -220,7 +220,7 @@ TEST_CASE("Scaner numbers and letters with tabs and spaces", "[streams][Serializ
 {
     const str input{
         "{"
-        "	id0 : 234.01 ,"
+        "   id0 : 234.01 ,"
         "\tid1 : 1000 ,"
         "    id2 : 5 ,"
         "\t	    id3 : A"
@@ -290,7 +290,7 @@ TEST_CASE("Parser basic", "[streams][SerializationStreamIn][translator][Parser]"
 {
     const str input{
         "{"
-        "id : \"This is a string\""
+            "id : \"This is a string\""
         "}"
     };
 
@@ -300,15 +300,32 @@ TEST_CASE("Parser basic", "[streams][SerializationStreamIn][translator][Parser]"
 
     CHECK(parser.errors().empty());
     CHECK(obj["id"] == "This is a string");
+
+    SECTION("Write")
+    {
+        SerializationStreamOut sout;
+        ((sout << obj).data() == 
+            "{"
+                "id:\"This is a string\""
+            "}");
+
+        SECTION("Read and close loop")
+        {
+            Parser parser_write(Scaner{ sout.data() }.scan());
+            parser_write.parse();
+            CHECK(parser_write.innerObject()["id"] == "This is a string");
+            CHECK(parser_write.innerObject() == obj);
+        }
+    }
 }
 
 TEST_CASE("Parser: Object inside object", "[streams][SerializationStreamIn][translator][Parser]")
 {
     const str input{
         "{"
-        "	id_object : {"
-        "		test_string : \"test_value\""
-        "	}"
+        "   id_object : {"
+        "       test_string : \"test_value\""
+        "   }"
         "}"
     };
 
@@ -324,16 +341,42 @@ TEST_CASE("Parser: Object inside object", "[streams][SerializationStreamIn][tran
     CHECK(obj["id_object"].getObject().size_values() == 1U);
     CHECK(obj["id_object"]["test_string"].isValue());
     CHECK(obj["id_object"]["test_string"] == "test_value");
+
+    SECTION("Write")
+    {
+        SerializationStreamOut sout;
+        ((sout << obj).data() == 
+        "{"
+        "id_object:{"
+                "test_string:\"test_value\""
+            "}"
+        "}");
+
+        SECTION("Read and close loop")
+        {
+            Parser parser_write(Scaner{ sout.data() }.scan());
+            parser_write.parse();
+            const Object& obj2 = parser_write.innerObject();
+            CHECK(obj2.size_objects() == 1U);
+            CHECK(obj2.empty_values());
+            CHECK(obj2["id_object"].isObject());
+            CHECK(obj2["id_object"].getObject().empty_objects());
+            CHECK(obj2["id_object"].getObject().size_values() == 1U);
+            CHECK(obj2["id_object"]["test_string"].isValue());
+            CHECK(obj2["id_object"]["test_string"] == "test_value");
+            CHECK(obj2 == obj);
+        }
+    }
 }
 
 TEST_CASE("Parser: Object inside object with numerical values", "[streams][SerializationStreamIn][translator][Parser]")
 {
     const str input{
         "{"
-        "	id_object : {"
-        "		test_string : \"test_value\""
-        "	} ,"
-        "	value_number : 3"
+        "   id_object : {"
+        "       test_string : \"test_value\""
+        "   } ,"
+        "   value_number : 3"
         "}"
     };
 
@@ -356,8 +399,8 @@ TEST_CASE("Parser list str properties", "[streams][SerializationStreamIn][transl
 {
     const str input{
         "{"
-        "	id : ["
-        "		a , b , c ]"
+        "   id : ["
+        "       a , b , c ]"
         "}"
     };
 
@@ -376,14 +419,14 @@ TEST_CASE("Parser list object properties", "[streams][SerializationStreamIn][tra
     const str input{
         "{"
         "	ids : ["
-        "		{"
-        "			name : \"pepito\","
-        "			last_name : abcd"
+        "       {"
+        "           name : \"pepito\","
+        "           last_name : abcd"
                 "} ,"
-        "		{"
-        "			name : \"john\","
-        "			last_name : XYZZY"
-                "}"
+        "       {"
+        "           name : \"john\","
+        "           last_name : XYZZY"
+        "       }"
         "	]"
         "}"
     };
@@ -403,13 +446,13 @@ TEST_CASE("Parser list object and values as properties", "[streams][Serializatio
 {
     const str input{
         "{"
-        "	ids : ["
-        "		{"
-        "			name : \"pepito\","
-        "			last_name : abcd"
-                "} ,"
-        "		\"name\""
-        "	]"
+        "   ids : ["
+        "       {"
+        "           name : \"pepito\","
+        "           last_name : abcd"
+        "       } ,"
+        "       \"name\""
+        "   ]"
         "}"
     };
 
@@ -427,16 +470,16 @@ TEST_CASE("Parser list of lists object and values as properties", "[streams][Ser
 {
     const str input{
         "{"
-        "	ids : ["
-        "		[ {"
-        "			name : \"pepito\","
-        "			last_name : abcd"
-                "} ] ,"
-        "		[ {"
-        "			name : \"john\","
-        "			last_name : XYZZY"
-                "} ]"
-        "	]"
+        "   ids : ["
+        "       [ {"
+        "           name : \"pepito\","
+        "           last_name : abcd"
+        "       } ] ,"
+        "       [ {"
+        "           name : \"john\","
+        "           last_name : XYZZY"
+        "       } ]"
+        "   ]"
         "}"
     };
 
@@ -455,16 +498,16 @@ TEST_CASE("Parser list of lists object and values as properties with new sintax"
 {
     const str input{
         "{"
-        "	ids:["
-        "		[{"
-        "			name:\"pepito\","
-        "			last_name:abcd"
-                "}],"
-        "		[{"
-        "			name:\"john\","
-        "			last_name:XYZZY"
-                "}]"
-        "	]"
+        "   ids:["
+        "       [{"
+        "           name:\"pepito\","
+        "           last_name:abcd"
+        "       }],"
+        "       [{"
+        "           name:\"john\","
+        "           last_name:XYZZY"
+        "       }]"
+        "   ]"
         "}"
     };
 
@@ -502,7 +545,7 @@ TEST_CASE("Scanner SyntaxError", "[Scanner]")
 {
     const str input{
         "{"
-        "	ids:\"abc"
+        "   ids:\"abc"
         "}"
     };
 
