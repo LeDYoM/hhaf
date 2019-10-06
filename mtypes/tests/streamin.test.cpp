@@ -303,8 +303,9 @@ TEST_CASE("SerializationStreamIn: Errors invalid format", "[streams][Serializati
         u32 a;
 
         data >> a;
+        CHECK(a == 1);
         CHECK(data.eof());
-        CHECK_FALSE(data.hasError());
+        CHECK(data.hasError());
     }
 }
 
@@ -312,7 +313,7 @@ TEST_CASE("SerializationStreamIn: Simple serialization", "[streams][Serializatio
 {
     SECTION("Completely Correct input")
     {
-        SerializationStreamIn data{ "123000,84.234F,500" };
+        SerializationStreamIn data{ "123000,84.234,500" };
         PODClass a;
         
         data >> a;

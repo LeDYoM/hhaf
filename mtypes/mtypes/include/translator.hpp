@@ -250,11 +250,11 @@ namespace lib
                 }
             }
 
-            if (isInteger(next.value))
+            if (next.value.is<s32>())
             {
                 return { next.value, TokenType::Integer };
             }
-            else if (isFloat(next.value))
+            else if (next.value.is<f32>())
             {
                 return { next.value, TokenType::Float };
             }
@@ -262,18 +262,6 @@ namespace lib
         }
 
     private:
-
-        bool isInteger(const str& value) const
-        {
-            s32 temp;
-            return value.convert(temp) && str::to_str(temp) == value;
-        }
-
-        bool isFloat(const str& value) const
-        {
-            f32 temp;
-            return value.convert(temp);
-        }
 
         str::const_iterator begin_;
         str::const_iterator end_;
@@ -621,26 +609,23 @@ namespace lib
         Object output_;
     };
 
+    SerializationStreamOut& operator<<(SerializationStreamOut&sso, const Object::ValueDictionary::const_iterator it);
+    SerializationStreamOut& operator<<(SerializationStreamOut&sso, const Object::ObjectDictionary::const_iterator it);
+
     SerializationStreamOut& operator<<(SerializationStreamOut&sso, const Object& obj)
     {
-        sso << "{\n";
+        sso << "{";
 
-        // Start with values (that are not arrays)
-        for (auto it(obj.begin_values()); it !=obj.end_values(); ++it)
-        {
-            if (!Object::isArrayElement(*it))
-            {
-                sso << (*it).first << ":\"" << (*it).second << "\"";
-            }
-        }
-
-        // Continue with objects (that are not arrays).
+        // Elements with objects (that are not arrays).
         for (auto it(obj.begin_objects()); it !=obj.end_objects(); ++it)
         {
-            if (!Object::isArrayElement(*it))
-            {
-                sso << (*it).first << (*it).second;
-            }
+            sso << it;
+        }
+
+        // Elements with values (that are not arrays)
+        for (auto it(obj.begin_values()); it !=obj.end_values(); ++it)
+        {
+            sso << it;
         }
 
         // Andd now, arrays.
@@ -676,6 +661,37 @@ namespace lib
     
         return sso;
     }
+
+    SerializationStreamOut& operator<<(SerializationStreamOut&sso, const Object::ValueDictionary::const_iterator it)
+    {
+        if (!Object::isArrayElement(*it))
+        {
+            const bool add_double_quotes = (!((*it).second.is<s32>()) && !((*it).second.is<f32>()));
+            sso << (*it).first << ":";
+            if (add_double_quotes)
+            {
+                sso << "\"";
+            }
+
+            sso << (*it).second;
+
+            if (add_double_quotes)
+            {
+                sso << "\"";
+            }
+        }
+        return sso;
+    }
+
+    SerializationStreamOut& operator<<(SerializationStreamOut&sso, const Object::ObjectDictionary::const_iterator it)
+    {
+        if (!Object::isArrayElement(*it))
+        {
+            sso << (*it).first << ":" << (*it).second;
+        }
+        return sso;
+    }
+
 }
 
 #endif

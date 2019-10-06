@@ -294,6 +294,10 @@ TEST_CASE("Parser basic", "[streams][SerializationStreamIn][translator][Parser]"
         "}"
     };
 
+    auto func = [](const str& input)
+    {
+
+    };
     Parser parser(Scaner{ input }.scan());
     parser.parse();
     const Object& obj{ parser.innerObject() };
@@ -304,7 +308,7 @@ TEST_CASE("Parser basic", "[streams][SerializationStreamIn][translator][Parser]"
     SECTION("Write")
     {
         SerializationStreamOut sout;
-        ((sout << obj).data() == 
+        CHECK((sout << obj).data() == 
             "{"
                 "id:\"This is a string\""
             "}");
@@ -345,7 +349,7 @@ TEST_CASE("Parser: Object inside object", "[streams][SerializationStreamIn][tran
     SECTION("Write")
     {
         SerializationStreamOut sout;
-        ((sout << obj).data() == 
+        CHECK((sout << obj).data() == 
         "{"
         "id_object:{"
                 "test_string:\"test_value\""
@@ -376,7 +380,7 @@ TEST_CASE("Parser: Object inside object with numerical values", "[streams][Seria
         "   id_object : {"
         "       test_string : \"test_value\""
         "   } ,"
-        "   value_number : 3"
+        "   value_number : 4"
         "}"
     };
 
@@ -392,7 +396,39 @@ TEST_CASE("Parser: Object inside object with numerical values", "[streams][Seria
     CHECK(obj["id_object"].getObject().size_values() == 1U);
     CHECK(obj["id_object"]["test_string"].isValue());
     CHECK(obj["id_object"]["test_string"] == "test_value");
-    CHECK_FALSE(obj["value_numer"].isValue());
+    CHECK(obj["value_number"].isValue());
+    CHECK(obj["value_number"].as<s32>() == 4);
+    CHECK(obj["value_number"].as<u32>() == 4U);
+    CHECK(obj["value_number"].as<s16>() == 4);
+    CHECK(obj["value_number"].as<u16>() == 4U);
+
+    SECTION("Write")
+    {
+        SerializationStreamOut sout;
+        CHECK((sout << obj).data() == 
+        "{"
+            "id_object:{"
+                "test_string:\"test_value\""
+            "}"
+            "value_number:4"
+        "}"
+        );
+
+        SECTION("Read and close loop")
+        {
+            Parser parser_write(Scaner{ sout.data() }.scan());
+            parser_write.parse();
+/*            const Object& obj2 = parser_write.innerObject();
+            CHECK(obj2.size_objects() == 1U);
+            CHECK(obj2.empty_values());
+            CHECK(obj2["id_object"].isObject());
+            CHECK(obj2["id_object"].getObject().empty_objects());
+            CHECK(obj2["id_object"].getObject().size_values() == 1U);
+            CHECK(obj2["id_object"]["test_string"].isValue());
+            CHECK(obj2["id_object"]["test_string"] == "test_value");
+            CHECK(obj2 == obj);*/
+        }
+    }
 }
 
 TEST_CASE("Parser list str properties", "[streams][SerializationStreamIn][translator][Parser]")

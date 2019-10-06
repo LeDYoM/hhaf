@@ -56,6 +56,13 @@ namespace lib
         inline static str to_str(const f32 n) { return str{ std::to_string(n).c_str() }; }
         inline static str to_str(const f64 n) { return str{ std::to_string(n).c_str() }; }
 
+        template <typename T>
+        bool is() const
+        {
+            T temp;
+            return convert(temp);
+        }
+
         constexpr size_t _str_len(const str::char_type *const p_str) noexcept
         {
             const str::char_type *p_str_copy{ p_str };
@@ -178,44 +185,12 @@ namespace lib
             return append(temp);
         }
 
-        bool convert(u64 & n) const
+        template <typename T>
+        bool convert(T & n) const
         {
-            return static_cast<bool>(std::istringstream(c_str()) >> n);
-        }
-
-        bool convert(s64 & n) const
-        {
-            return static_cast<bool>(std::istringstream(c_str()) >> n);
-        }
-
-        bool convert(u32 & n) const
-        {
-            return static_cast<bool>(std::istringstream(c_str()) >> n);
-        }
-
-        bool convert(s32 & n) const
-        {
-            return static_cast<bool>(std::istringstream(c_str()) >> n);
-        }
-
-        bool convert(u16 & n) const
-        {
-            return static_cast<bool>(std::istringstream(c_str()) >> n);
-        }
-
-        bool convert(s16 & n) const
-        {
-            return static_cast<bool>(std::istringstream(c_str()) >> n);
-        }
-
-        bool convert(f32 & n) const
-        {
-            return static_cast<bool>(std::istringstream(c_str()) >> n);
-        }
-
-        bool convert(f64 & n) const
-        {
-            return static_cast<bool>(std::istringstream(c_str()) >> n);
+            std::istringstream iss(c_str());
+            iss >> n;
+            return (iss.eof() && !iss.fail());
         }
 
         template<typename T>

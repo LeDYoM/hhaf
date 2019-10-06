@@ -404,35 +404,35 @@ namespace lib
 
         constexpr void push_back(const T& value) 
         {
-			LOG("vector::push_back(const T&) --- m_size before: " << m_size);
+//            LOG("vector::push_back(const T&) --- m_size before: " << m_size);
 
             reserve(GrowPolicy::growSize(m_size));
             Allocator::construct(m_buffer + m_size, value);
             ++m_size;
 
-			LOG("vector::push_back(const T&) --- m_size after: " << m_size);
-		}
+//            LOG("vector::push_back(const T&) --- m_size after: " << m_size);
+        }
 
         constexpr void push_back(T&& value) 
         {
-            LOG("vector::push_back(T&&) --- m_size before: " << m_size);
+//            LOG("vector::push_back(T&&) --- m_size before: " << m_size);
 
             reserve(GrowPolicy::growSize(m_size));
             Allocator::construct(m_buffer + m_size, std::move(value));
             ++m_size;
 
-            LOG("vector::push_back(T&&) --- m_size after: " << m_size);
+//            LOG("vector::push_back(T&&) --- m_size after: " << m_size);
         }
 
         template<typename ...Args>
         constexpr void emplace_back(Args&&... args)
         {
-            LOG("vector::emplace_back() --- m_size before: " << m_size);
+//            LOG("vector::emplace_back() --- m_size before: " << m_size);
 
             reserve(GrowPolicy::growSize(m_size));
             Allocator::construct(m_buffer + m_size, std::forward<Args>(args)...);
             m_size++;
-            LOG("vector::emplace_back() --- m_size before: " << m_size);
+//            LOG("vector::emplace_back() --- m_size before: " << m_size);
         }
 
         constexpr void insert(const vector &other)
@@ -472,13 +472,13 @@ namespace lib
 
         constexpr void pop_back() noexcept
         {
-            LOG("vector::pop_back() --- m_size before: " << m_size);
+//            LOG("vector::pop_back() --- m_size before: " << m_size);
             if (m_size > 0U)
             {
                 Allocator::destruct(end()-1U);
                 --m_size;
             }
-            LOG("vector::pop_back() --- m_size after: " << m_size);
+//            LOG("vector::pop_back() --- m_size after: " << m_size);
         }
 
         constexpr void reserve(const size_type capacity)
