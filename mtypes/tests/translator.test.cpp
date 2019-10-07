@@ -454,6 +454,29 @@ TEST_CASE("Parser list str properties", "[streams][SerializationStreamIn][transl
     CHECK(obj["id"][0U] == "a");
     CHECK(obj["id"][1U] == "b");
     CHECK(obj["id"][2U] == "c");
+
+    SECTION("Write")
+    {
+        SerializationStreamOut sout;
+        CHECK((sout << obj).data() == 
+        "{"
+        "   id : ["
+        "       a , b , c ]"
+        "}"
+        );
+
+        SECTION("Read and close loop")
+        {
+            Parser parser_write(Scaner{ sout.data() }.scan());
+            parser_write.parse();
+            const Object& obj2 = parser_write.innerObject();
+            CHECK(parser_write.errors().empty());
+            CHECK(obj2["id"][0U] == "a");
+            CHECK(obj2["id"][1U] == "b");
+            CHECK(obj2["id"][2U] == "c");
+            CHECK(obj2 == obj);
+        }
+    }
 }
 
 TEST_CASE("Parser list object properties", "[streams][SerializationStreamIn][translator][Parser]")
