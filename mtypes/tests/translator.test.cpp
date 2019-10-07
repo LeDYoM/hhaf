@@ -409,7 +409,7 @@ TEST_CASE("Parser: Object inside object with numerical values", "[streams][Seria
         "{"
             "id_object:{"
                 "test_string:\"test_value\""
-            "}"
+            "},"
             "value_number:4"
         "}"
         );
@@ -418,15 +418,21 @@ TEST_CASE("Parser: Object inside object with numerical values", "[streams][Seria
         {
             Parser parser_write(Scaner{ sout.data() }.scan());
             parser_write.parse();
-/*            const Object& obj2 = parser_write.innerObject();
+            const Object& obj2 = parser_write.innerObject();
             CHECK(obj2.size_objects() == 1U);
-            CHECK(obj2.empty_values());
+            CHECK(obj.size_values() == 1U);
+            CHECK(obj.size() == 2U);
             CHECK(obj2["id_object"].isObject());
             CHECK(obj2["id_object"].getObject().empty_objects());
             CHECK(obj2["id_object"].getObject().size_values() == 1U);
             CHECK(obj2["id_object"]["test_string"].isValue());
             CHECK(obj2["id_object"]["test_string"] == "test_value");
-            CHECK(obj2 == obj);*/
+            CHECK(obj2["value_number"].isValue());
+            CHECK(obj2["value_number"].as<s32>() == 4);
+            CHECK(obj2["value_number"].as<u32>() == 4U);
+            CHECK(obj2["value_number"].as<s16>() == 4);
+            CHECK(obj2["value_number"].as<u16>() == 4U);
+            CHECK(obj2 == obj);
         }
     }
 }

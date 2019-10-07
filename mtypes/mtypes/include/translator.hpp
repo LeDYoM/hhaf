@@ -609,22 +609,37 @@ namespace lib
         Object output_;
     };
 
+    void manageSeparator(SerializationStreamOut&sso, bool& is_first)
+    {
+        if (!is_first)
+        {
+            sso << ",";
+        }
+        else
+        {
+            is_first = false;
+        }
+    }
+
     SerializationStreamOut& operator<<(SerializationStreamOut&sso, const Object::ValueDictionary::const_iterator it);
     SerializationStreamOut& operator<<(SerializationStreamOut&sso, const Object::ObjectDictionary::const_iterator it);
 
     SerializationStreamOut& operator<<(SerializationStreamOut&sso, const Object& obj)
     {
         sso << "{";
+        bool is_first{true};
 
         // Elements with objects (that are not arrays).
         for (auto it(obj.begin_objects()); it !=obj.end_objects(); ++it)
         {
+            manageSeparator(sso, is_first);
             sso << it;
         }
 
         // Elements with values (that are not arrays)
         for (auto it(obj.begin_values()); it !=obj.end_values(); ++it)
         {
+            manageSeparator(sso, is_first);
             sso << it;
         }
 
@@ -643,10 +658,12 @@ namespace lib
                 }
                 if (value.isObject())
                 {
+                    manageSeparator(sso, is_first);
                     sso << value.getObject();
                 }
                 else
                 {
+                    manageSeparator(sso, is_first);
                     sso << value.getValue();
                 }
             }
