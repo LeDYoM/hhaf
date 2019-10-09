@@ -31,7 +31,7 @@ namespace lib
 
         inline Object(std::initializer_list<KeyValueObject> iListObjects)
         {
-        set(std::move(iListObjects));
+            set(std::move(iListObjects));
         }
 
         inline Object(std::initializer_list<KeyValueObject> iListObjects,
@@ -311,15 +311,11 @@ namespace lib
         }
 
         template <typename T>
-        bool set(vector<T>&& value)
+        bool set(const str& property_name, const vector<T>& value)
         {
-            bool is_set{true};
-            size_t index{0U};
-            for (const auto& element : value)
-            {
-                is_set &= set(index++, element);
-            }
-            return is_set;
+            Object inner_object;
+            inner_object.set(value);
+            return set(property_name, inner_object);
         }
 
         constexpr ObjectDictionary::iterator begin_objects() noexcept { return m_objects.begin(); }
