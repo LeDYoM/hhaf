@@ -61,12 +61,12 @@ namespace lib
         {
             auto it(find(key));
 
-            if (it == m_data.cend()) 
+            if (it == m_data.end()) 
 			{
                 m_data.emplace_back(std::move(key), std::move(value));
                 return true;
             }
-            else if (overwrite) 
+            else if (overwrite)
 			{
                 (*it) = element(key, value);
                 return true;
