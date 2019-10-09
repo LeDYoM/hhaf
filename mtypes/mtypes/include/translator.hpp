@@ -10,7 +10,6 @@
 #include "object.hpp"
 #include "streamin.hpp"
 #include "streamout.hpp"
-#include <cctype>
 
 namespace lib
 {
