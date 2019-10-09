@@ -26,26 +26,26 @@ namespace lib
 
         inline Object(std::initializer_list<KeyValueStr> iListValues) 
         {
-            set(std::move(iListValues), false);
+            set(std::move(iListValues));
         }
 
-            inline Object(std::initializer_list<KeyValueObject> iListObjects)
-            {
-            set(std::move(iListObjects), false);
-            }
+        inline Object(std::initializer_list<KeyValueObject> iListObjects)
+        {
+        set(std::move(iListObjects));
+        }
 
         inline Object(std::initializer_list<KeyValueObject> iListObjects,
                 std::initializer_list<KeyValueStr> iListValues)
         {
-            set(std::move(iListObjects), false);
-            set(std::move(iListValues), false);
+            set(std::move(iListObjects));
+            set(std::move(iListValues));
         }
 
         inline Object(std::initializer_list<KeyValueStr> iListValues,
                 std::initializer_list<KeyValueObject> iListObjects) 
         {
-            set(std::move(iListValues), false);
-            set(std::move(iListObjects), false);
+            set(std::move(iListValues));
+            set(std::move(iListObjects));
         }
 
         constexpr bool operator==(const Object &obj) const noexcept 
@@ -219,38 +219,38 @@ namespace lib
             return (*this)[str(arraySeparator) + str::to_str(index)];
         }
 
-        bool set(std::initializer_list<KeyValueStr> iListValues, bool overwrite = true)
+        bool set(std::initializer_list<KeyValueStr> iListValues)
         {
             bool ok{true};
             for (auto&& element : iListValues) 
             {
-                ok &= m_values.add(std::move(element.first), std::move(element.second), overwrite);
+                ok &= m_values.add(std::move(element.first), std::move(element.second));
             }
             return ok;
         }
 
-        bool set(std::initializer_list<KeyValueObject> iListObject, bool overwrite = true)
+        bool set(std::initializer_list<KeyValueObject> iListObject)
         {
             bool ok{true};
             for (auto&& element : iListObject)
             {
-                ok &= m_objects.add(element.first, element.second, overwrite);
+                ok &= m_objects.add(element.first, element.second);
             }
             return ok;
         }
 
-        bool set(std::initializer_list<KeyValueValue> iListObject, bool overwrite = true)
+        bool set(std::initializer_list<KeyValueValue> iListObject)
         {
             bool ok{ true };
             for (auto&& element : iListObject)
             {
                 if (element.second.isObject())
                 {
-                    ok &= set(element.first, element.second.getObject(), overwrite);
+                    ok &= set(element.first, element.second.getObject());
                 }
                 else if (element.second.isValue())
                 {
-                    ok &= set(element.first, element.second.getValue(), overwrite);
+                    ok &= set(element.first, element.second.getValue());
                 }
                 else
                 {
@@ -260,64 +260,64 @@ namespace lib
             return ok;
         }
 
-        bool set(str key, Object obj, bool overwrite = true)
+        bool set(str key, Object obj)
         {
-            return set({ std::make_pair(key, std::move(obj)) }, overwrite);
+            return set({ std::make_pair(key, std::move(obj)) });
         }
 
-        bool set(str key, str value, bool overwrite = true)
+        bool set(str key, str value)
         {
-            return set({ std::make_pair(key, std::move(value)) }, overwrite);
+            return set({ std::make_pair(key, std::move(value)) });
         }
 
-        bool set(str key, Value value, bool overwrite = true)
+        bool set(str key, Value value)
         {
-            return set({ std::make_pair(key, std::move(value)) }, overwrite);
+            return set({ std::make_pair(key, std::move(value)) });
         }
 
-        bool set(size_t index, str value, bool overwrite = true)
+        bool set(size_t index, str value)
         {
-            return set({ std::make_pair(str(arraySeparator) + str::to_str(index), std::move(value)) }, overwrite);
+            return set({ std::make_pair(str(arraySeparator) + str::to_str(index), std::move(value)) });
         }
 
         template <typename T, typename TD = std::decay_t<T>,
             std::enable_if_t<std::is_arithmetic_v<TD>>* = nullptr>
-        bool set(size_t index, T&& value, bool overwrite = true)
+        bool set(size_t index, T&& value)
         {
             if constexpr (std::is_floating_point_v<TD>)
             {
-                return set(index, str::to_str(static_cast<f64>(std::forward<T>(value))), overwrite);
+                return set(index, str::to_str(static_cast<f64>(std::forward<T>(value))));
             }
             else if constexpr (std::is_signed_v<TD>)
             {
-                return set(index, str::to_str(static_cast<s64>(std::forward<T>(value))), overwrite);
+                return set(index, str::to_str(static_cast<s64>(std::forward<T>(value))));
             }
             else
             {
-                return set(index, str::to_str(static_cast<u64>(std::forward<T>(value))), overwrite);
+                return set(index, str::to_str(static_cast<u64>(std::forward<T>(value))));
             }
         }
 
         template <typename T>
-        bool set(const vector<T>& value, bool overwrite = true)
+        bool set(const vector<T>& value)
         {
             bool is_set{true};
             size_t index{0U};
             for (const auto& element : value)
             {
-                is_set &= set(index++, element, overwrite);
+                is_set &= set(index++, element);
             }
             return is_set;
         }
 
         template <typename T>
-        bool set(vector<T>&& value, bool overwrite = true)
+        bool set(vector<T>&& value)
         {
             bool is_set{true};
             size_t index{0U};
             for (const auto& element : value)
             {
-                is_set &= set(index++, element, overwrite);
+                is_set &= set(index++, element);
             }
             return is_set;
         }
