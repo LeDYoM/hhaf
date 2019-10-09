@@ -609,7 +609,29 @@ namespace lib
         Object output_;
     };
 
-    void manageSeparator(SerializationStreamOut&sso, bool& is_first)
+    void manageSeparatorForObjectIn(SerializationStreamOut&sso, bool& is_first, bool& contains_array_only)
+    {
+        if (!is_first)
+        {
+            sso << ",";
+        }
+        else
+        {
+            contains_array_only = false;
+            sso << "{";
+            is_first = false;
+        }
+    }
+
+    void manageSeparatorForObjectOut(SerializationStreamOut&sso, bool& is_first)
+    {
+        if (!is_first)
+        {
+            sso << "}";
+        }
+    }
+
+    void manageSeparatorForList(SerializationStreamOut&sso, bool& is_first)
     {
         if (!is_first)
         {
@@ -621,61 +643,97 @@ namespace lib
         }
     }
 
+    struct PropertyWrapper
+    {
+        str value;
+    };
+
     SerializationStreamOut& operator<<(SerializationStreamOut&sso, const Object::ValueDictionary::const_iterator it);
     SerializationStreamOut& operator<<(SerializationStreamOut&sso, const Object::ObjectDictionary::const_iterator it);
+    SerializationStreamOut& operator<<(SerializationStreamOut&sso, const PropertyWrapper& property_wrapper);
 
     SerializationStreamOut& operator<<(SerializationStreamOut&sso, const Object& obj)
     {
-        sso << "{";
+        bool contains_array_only{true};
         bool is_first{true};
 
         // Elements with objects (that are not arrays).
         for (auto it(obj.begin_objects()); it !=obj.end_objects(); ++it)
         {
-            manageSeparator(sso, is_first);
-            sso << it;
+            if (!Object::isArrayElement(*it))
+            {
+                manageSeparatorForObjectIn(sso, is_first, contains_array_only);
+                sso << it;
+            }
         }
 
         // Elements with values (that are not arrays)
         for (auto it(obj.begin_values()); it !=obj.end_values(); ++it)
         {
-            manageSeparator(sso, is_first);
-            sso << it;
+            if (!Object::isArrayElement(*it))
+            {
+                manageSeparatorForObjectIn(sso, is_first, contains_array_only);
+                sso << it;
+            }
         }
 
         // Andd now, arrays.
         size_type i{0U};
         bool next{true};
+        bool is_first_array_element{true};
 
         do
         {
             const auto value(obj[i]);
             if (value.isValid())
             {
-                if (i == 0U)
+                if ((i++) == 0U)
                 {
                     sso << "[";
                 }
                 if (value.isObject())
                 {
-                    manageSeparator(sso, is_first);
+                    manageSeparatorForList(sso, is_first_array_element);
                     sso << value.getObject();
                 }
                 else
                 {
-                    manageSeparator(sso, is_first);
-                    sso << value.getValue();
+                    manageSeparatorForList(sso, is_first_array_element);
+                    sso << PropertyWrapper{value.getValue()};
                 }
             }
             else
             {
                 next = false;
+                if (!is_first_array_element)
+                {
+                    sso << "]";
+                }
             }
 
         } while (next);
 
-        sso << "}";
+        manageSeparatorForObjectOut(sso, is_first);
     
+        return sso;
+    }
+
+    SerializationStreamOut& operator<<(SerializationStreamOut&sso, const PropertyWrapper& property_wrapper)
+    {
+        const bool add_double_quotes = (!(property_wrapper.value.is<s32>()) && !(property_wrapper.value.is<f32>()));
+
+        if (add_double_quotes)
+        {
+            sso << "\"";
+        }
+
+        sso << property_wrapper.value;
+
+        if (add_double_quotes)
+        {
+            sso << "\"";
+        }
+
         return sso;
     }
 
@@ -683,19 +741,8 @@ namespace lib
     {
         if (!Object::isArrayElement(*it))
         {
-            const bool add_double_quotes = (!((*it).second.is<s32>()) && !((*it).second.is<f32>()));
             sso << (*it).first << ":";
-            if (add_double_quotes)
-            {
-                sso << "\"";
-            }
-
-            sso << (*it).second;
-
-            if (add_double_quotes)
-            {
-                sso << "\"";
-            }
+            sso << PropertyWrapper{(*it).second};
         }
         return sso;
     }
@@ -708,7 +755,6 @@ namespace lib
         }
         return sso;
     }
-
 }
 
 #endif

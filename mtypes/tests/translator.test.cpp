@@ -442,7 +442,7 @@ TEST_CASE("Parser list str properties", "[streams][SerializationStreamIn][transl
     const str input{
         "{"
         "   id : ["
-        "       a , b , c ]"
+        "       \"a\" , \"b\" , \"c\" ]"
         "}"
     };
 
@@ -460,8 +460,10 @@ TEST_CASE("Parser list str properties", "[streams][SerializationStreamIn][transl
         SerializationStreamOut sout;
         CHECK((sout << obj).data() == 
         "{"
-        "   id : ["
-        "       a , b , c ]"
+            "id:"
+            "["
+                "\"a\",\"b\",\"c\""
+            "]"
         "}"
         );
 
@@ -505,6 +507,38 @@ TEST_CASE("Parser list object properties", "[streams][SerializationStreamIn][tra
     CHECK(obj["ids"][0U]["last_name"] == "abcd");
     CHECK(obj["ids"][1U]["name"] == "john");
     CHECK(obj["ids"][1U]["last_name"] == "XYZZY");
+
+    SECTION("Write")
+    {
+        SerializationStreamOut sout;
+        CHECK((sout << obj).data() == 
+        "{"
+            "ids:["
+                "{"
+                    "name:\"pepito\","
+                    "last_name:\"abcd\""
+                "},"
+                "{"
+                    "name:\"john\","
+                    "last_name:\"XYZZY\""
+                "}"
+            "]"
+        "}"
+        );
+
+        SECTION("Read and close loop")
+        {
+            Parser parser_write(Scaner{ sout.data() }.scan());
+            parser_write.parse();
+            const Object& obj2 = parser_write.innerObject();
+            CHECK(parser_write.errors().empty());
+            CHECK(obj2["ids"][0U]["name"] == "pepito");
+            CHECK(obj2["ids"][0U]["last_name"] == "abcd");
+            CHECK(obj2["ids"][1U]["name"] == "john");
+            CHECK(obj2["ids"][1U]["last_name"] == "XYZZY");
+            CHECK(obj2 == obj);
+        }
+    }
 }
 
 TEST_CASE("Parser list object and values as properties", "[streams][SerializationStreamIn][translator][Parser]")
@@ -529,6 +563,34 @@ TEST_CASE("Parser list object and values as properties", "[streams][Serializatio
     CHECK(obj["ids"][0U]["name"] == "pepito");
     CHECK(obj["ids"][0U]["last_name"] == "abcd");
     CHECK(obj["ids"][1U] == "name");
+
+    SECTION("Write")
+    {
+        SerializationStreamOut sout;
+        CHECK((sout << obj).data() == 
+        "{"
+            "ids:["
+                "{"
+                    "name:\"pepito\","
+                    "last_name:\"abcd\""
+                "},"
+                "\"name\""
+            "]"
+        "}"
+        );
+
+        SECTION("Read and close loop")
+        {
+            Parser parser_write(Scaner{ sout.data() }.scan());
+            parser_write.parse();
+            const Object& obj2 = parser_write.innerObject();
+            CHECK(parser_write.errors().empty());
+            CHECK(obj2["ids"][0U]["name"] == "pepito");
+            CHECK(obj2["ids"][0U]["last_name"] == "abcd");
+            CHECK(obj2["ids"][1U] == "name");
+            CHECK(obj2 == obj);
+        }
+    }
 }
 
 TEST_CASE("Parser list of lists object and values as properties", "[streams][SerializationStreamIn][translator][Parser]")
@@ -557,6 +619,38 @@ TEST_CASE("Parser list of lists object and values as properties", "[streams][Ser
     CHECK(obj["ids"][0U][0U]["last_name"] == "abcd");
     CHECK(obj["ids"][1U][0U]["name"] == "john");
     CHECK(obj["ids"][1U][0U]["last_name"] == "XYZZY");
+
+    SECTION("Write")
+    {
+        SerializationStreamOut sout;
+        CHECK((sout << obj).data() == 
+        "{"
+            "ids:["
+                "[{"
+                    "name:\"pepito\","
+                    "last_name:\"abcd\""
+                "}],"
+                "[{"
+                    "name:\"john\","
+                    "last_name:\"XYZZY\""
+                "}]"
+            "]"
+        "}"
+        );
+
+        SECTION("Read and close loop")
+        {
+            Parser parser_write(Scaner{ sout.data() }.scan());
+            parser_write.parse();
+            const Object& obj2 = parser_write.innerObject();
+            CHECK(parser_write.errors().empty());
+            CHECK(obj2["ids"][0U][0U]["name"] == "pepito");
+            CHECK(obj2["ids"][0U][0U]["last_name"] == "abcd");
+            CHECK(obj2["ids"][1U][0U]["name"] == "john");
+            CHECK(obj2["ids"][1U][0U]["last_name"] == "XYZZY");
+            CHECK(obj2 == obj);
+        }
+    }
 }
 
 TEST_CASE("Parser list of lists object and values as properties with new sintax", "[streams][SerializationStreamIn][translator][Parser]")
@@ -585,6 +679,38 @@ TEST_CASE("Parser list of lists object and values as properties with new sintax"
     CHECK(obj["ids"][0U][0U]["last_name"] == "abcd");
     CHECK(obj["ids"][1U][0U]["name"] == "john");
     CHECK(obj["ids"][1U][0U]["last_name"] == "XYZZY");
+
+    SECTION("Write")
+    {
+        SerializationStreamOut sout;
+        ((sout << obj).data() == 
+        "{"
+            "ids:["
+                "[{"
+                    "name:\"pepito\","
+                    "last_name:\"abcd\""
+                "}],"
+                "[{"
+                    "name:\"john\","
+                    "last_name:\"XYZZY\""
+                "}]"
+            "]"
+        "}"
+        );
+
+        SECTION("Read and close loop")
+        {
+            Parser parser_write(Scaner{ sout.data() }.scan());
+            parser_write.parse();
+            const Object& obj2 = parser_write.innerObject();
+            CHECK(parser_write.errors().empty());
+            CHECK(obj2["ids"][0U][0U]["name"] == "pepito");
+            CHECK(obj2["ids"][0U][0U]["last_name"] == "abcd");
+            CHECK(obj2["ids"][1U][0U]["name"] == "john");
+            CHECK(obj2["ids"][1U][0U]["last_name"] == "XYZZY");
+            CHECK(obj2 == obj);
+        }
+    }
 }
 
 TEST_CASE("Simple list", "[streams][SerializationStreamIn][translator][Parser]")
@@ -604,6 +730,74 @@ TEST_CASE("Simple list", "[streams][SerializationStreamIn][translator][Parser]")
     CHECK(obj["ids"][1U] == "b");
     CHECK(obj["ids"][2U] == "c");
     CHECK(obj["ids"][3U] == "d");
+    CHECK(obj["ids"][4U] == "e");
+
+    SECTION("Write")
+    {
+        SerializationStreamOut sout;
+        CHECK((sout << obj).data() == 
+        "{"
+            "ids:[\"a\",\"b\",\"c\",\"d\",\"e\"]"
+        "}"
+        );
+
+        SECTION("Read and close loop")
+        {
+            Parser parser_write(Scaner{ sout.data() }.scan());
+            parser_write.parse();
+            const Object& obj2 = parser_write.innerObject();
+            CHECK(parser_write.errors().empty());
+            CHECK(obj2["ids"][0U] == "a");
+            CHECK(obj2["ids"][1U] == "b");
+            CHECK(obj2["ids"][2U] == "c");
+            CHECK(obj2["ids"][3U] == "d");
+            CHECK(obj2["ids"][4U] == "e");
+            CHECK(obj2 == obj);
+        }
+    }
+}
+
+TEST_CASE("Simple list with numbers", "[streams][SerializationStreamIn][translator][Parser]")
+{
+    const str input{
+        "{"
+        "	ids:[a,1,3.2,-5,-50.45]"
+        "}"
+    };
+
+    Parser parser(Scaner{ input }.scan());
+    parser.parse();
+    const Object& obj{ parser.innerObject() };
+
+    CHECK(parser.errors().empty());
+    CHECK(obj["ids"][0U] == "a");
+    CHECK(obj["ids"][1U].as<s32>() == 1);
+    CHECK(obj["ids"][2U].as<f32>() == 3.2F);
+    CHECK(obj["ids"][3U].as<s32>() == -5);
+    CHECK(obj["ids"][4U].as<f32>() == -50.45F);
+
+    SECTION("Write")
+    {
+        SerializationStreamOut sout;
+        CHECK((sout << obj).data() == 
+        "{"
+            "ids:[\"a\",1,3.2,-5,-50.45]"
+        "}"
+        );
+
+        SECTION("Read and close loop")
+        {
+            Parser parser_write(Scaner{ sout.data() }.scan());
+            parser_write.parse();
+            const Object& obj2 = parser_write.innerObject();
+            CHECK(parser_write.errors().empty());
+            CHECK(obj2["ids"][1U].as<s32>() == 1);
+            CHECK(obj2["ids"][2U].as<f32>() == 3.2F);
+            CHECK(obj2["ids"][3U].as<s32>() == -5);
+            CHECK(obj2["ids"][4U].as<f32>() == -50.45F);
+            CHECK(obj2 == obj);
+        }
+    }
 }
 
 TEST_CASE("Scanner SyntaxError", "[Scanner]")
