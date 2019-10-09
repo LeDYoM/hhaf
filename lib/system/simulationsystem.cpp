@@ -12,7 +12,7 @@
 #include <lib/system/randomsystem.hpp>
 
 #include <mtypes/include/types.hpp>
-#include <mtypes/include/dicty.hpp>
+#include <mtypes/include/object.hpp>
 
 #include <fstream>
 

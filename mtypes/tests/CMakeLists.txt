@@ -1,9 +1,9 @@
 enable_testing()
 
 set(UNIT_TEST_LIST
-    dicty
     lockablevector
     main
+    object
     parpar
     str
     streamin

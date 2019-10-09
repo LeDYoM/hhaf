@@ -5,7 +5,7 @@
 #include <lib/system/systemprovider.hpp>
 
 #include <mtypes/include/parpar.hpp>
-#include <mtypes/include/dicty.hpp>
+#include <mtypes/include/object.hpp>
 
 namespace
 {

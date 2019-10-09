@@ -7,7 +7,7 @@
 
 #include "types.hpp"
 #include "str.hpp"
-#include "dicty.hpp"
+#include "object.hpp"
 #include "streamin.hpp"
 #include "streamout.hpp"
 #include <cctype>

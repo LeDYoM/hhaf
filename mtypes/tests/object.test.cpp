@@ -1,17 +1,17 @@
 #include "catch.hpp"
 
-#include <mtypes/include/dicty.hpp>
+#include <mtypes/include/object.hpp>
 
 using namespace lib;
 
-TEST_CASE("Dicty basic values", "[dicty][ValueDictionary]")
+TEST_CASE("Object basic values", "[Object][ValueDictionary]")
 {
     Object::ValueDictionary bdictionary{ {"key1", "value1"} };
     CHECK(bdictionary.data() == Object::ValueDictionary::content{ Object::ValueDictionary::element("key1", "value1") });
     CHECK_FALSE(bdictionary.add("key1", "asd", false));
 }
 
-TEST_CASE("dicty create 1", "[dicty]")
+TEST_CASE("Object create 1", "[Object]")
 {
     Object tester{ {"subkey","subValue"} };
     Object obj{
@@ -29,7 +29,7 @@ TEST_CASE("dicty create 1", "[dicty]")
     CHECK_FALSE(obj.empty());
 }
 
-TEST_CASE("dicty create 2", "[dicty]")
+TEST_CASE("Object create 2", "[Object]")
 {
     // Initialize with initializer list of objects
     Object obj
@@ -74,7 +74,7 @@ TEST_CASE("dicty create 2", "[dicty]")
     CHECK(obj["key3"]["subkey1"].isObject());
 }
 
-TEST_CASE("dicty create 3", "[dicty]")
+TEST_CASE("Object create 3", "[Object]")
 {
     // Initialize with initializer list of objects and initializer list of
     // properties.
@@ -113,7 +113,7 @@ TEST_CASE("dicty create 3", "[dicty]")
     CHECK_FALSE(obj3["adf"] == "");
 }
 
-TEST_CASE("dicty create 4","[dicty]")
+TEST_CASE("Object create 4","[Object]")
 {
     // Initialize with initializer list of objects and initializer list of
     // properties.
@@ -153,7 +153,7 @@ TEST_CASE("dicty create 4","[dicty]")
     CHECK_FALSE(obj4["adf"] == "");
 }
 
-TEST_CASE("Dicty: Read array1", "[dicty][vector]")
+TEST_CASE("Object: Read array1", "[Object][vector]")
 {
     Object obj{
         {str(Object::arraySeparator) + "0", "value1"},
@@ -169,7 +169,7 @@ TEST_CASE("Dicty: Read array1", "[dicty][vector]")
     CHECK_FALSE(obj[2U].isValid());
 }
 
-TEST_CASE("Dicty: Write array1", "[dicty][vector]")
+TEST_CASE("Object: Write array1", "[Object][vector]")
 {
     Object obj;
     obj.set(0U, "value1");
@@ -193,7 +193,7 @@ TEST_CASE("Dicty: Write array1", "[dicty][vector]")
     CHECK_FALSE(obj[5U].isValid());
 }
 
-TEST_CASE("Dicty: Read array2", "[dicty][vector]")
+TEST_CASE("Object: Read array2", "[Object][vector]")
 {
     // Initialize with initializer list of objects and initializer list of
     // properties.
@@ -243,7 +243,7 @@ TEST_CASE("Dicty: Read array2", "[dicty][vector]")
     CHECK_FALSE(obj["key4"][0U].isValid());
 }
 
-TEST_CASE("dicty copy", "[dicty]")
+TEST_CASE("Object copy", "[Object]")
 {
     // Initialize with initializer list of objects and initializer list of
     // properties.
@@ -314,7 +314,7 @@ TEST_CASE("dicty copy", "[dicty]")
     }
 }
 
-TEST_CASE("dicty with vector", "[dicty][vector]")
+TEST_CASE("Object with vector", "[Object][vector]")
 {
     vector<s32> v = {-1, 1, 3, -3};
     Object obj;

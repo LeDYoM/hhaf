@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef MTYPES_DICTY_INCLUDE_HPP
-#define MTYPES_DICTY_INCLUDE_HPP
+#ifndef MTYPES_OBJECT_INCLUDE_HPP
+#define MTYPES_OBJECT_INCLUDE_HPP
 
 #include "types.hpp"
 #include "str.hpp"
