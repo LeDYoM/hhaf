@@ -4,11 +4,11 @@ set(UNIT_TEST_LIST
     lockablevector
     main
     object
+    object_utils
     parpar
     str
     streamin
     streamout
-    translator
     vector
 )
 

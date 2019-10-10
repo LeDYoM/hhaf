@@ -1,7 +1,7 @@
 #include "catch.hpp"
 
 #include <mtypes/include/types.hpp>
-#include <mtypes/include/translator.hpp>
+#include <mtypes/include/object_utils.hpp>
 #include <mtypes/include/object.hpp>
 
 using namespace lib;
