@@ -8,8 +8,6 @@
 #include "types.hpp"
 #include "str.hpp"
 #include "object.hpp"
-#include "streamin.hpp"
-#include "streamout.hpp"
 
 namespace lib
 {
@@ -608,7 +606,9 @@ namespace lib
         Object output_;
     };
 
-    void manageSeparatorForObjectIn(SerializationStreamOut&sso, bool& is_first, bool& contains_array_only)
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    void manageSeparatorForObjectIn(str&sso, bool& is_first, bool& contains_array_only)
     {
         if (!is_first)
         {
@@ -622,7 +622,7 @@ namespace lib
         }
     }
 
-    void manageSeparatorForObjectOut(SerializationStreamOut&sso, bool& is_first)
+    void manageSeparatorForObjectOut(str&sso, bool& is_first)
     {
         if (!is_first)
         {
@@ -630,7 +630,7 @@ namespace lib
         }
     }
 
-    void manageSeparatorForList(SerializationStreamOut&sso, bool& is_first)
+    void manageSeparatorForList(str&sso, bool& is_first)
     {
         if (!is_first)
         {
@@ -647,11 +647,11 @@ namespace lib
         str value;
     };
 
-    SerializationStreamOut& operator<<(SerializationStreamOut&sso, const Object::ValueDictionary::const_iterator it);
-    SerializationStreamOut& operator<<(SerializationStreamOut&sso, const Object::ObjectDictionary::const_iterator it);
-    SerializationStreamOut& operator<<(SerializationStreamOut&sso, const PropertyWrapper& property_wrapper);
+    str& operator<<(str&sso, const Object::ValueDictionary::const_iterator it);
+    str& operator<<(str&sso, const Object::ObjectDictionary::const_iterator it);
+    str& operator<<(str&sso, const PropertyWrapper& property_wrapper);
 
-    SerializationStreamOut& operator<<(SerializationStreamOut&sso, const Object& obj)
+    str& operator<<(str&sso, const Object& obj)
     {
         bool contains_array_only{true};
         bool is_first{true};
@@ -717,7 +717,7 @@ namespace lib
         return sso;
     }
 
-    SerializationStreamOut& operator<<(SerializationStreamOut&sso, const PropertyWrapper& property_wrapper)
+    str& operator<<(str&sso, const PropertyWrapper& property_wrapper)
     {
         const bool add_double_quotes = (!(property_wrapper.value.is<s32>()) && !(property_wrapper.value.is<f32>()));
 
@@ -736,7 +736,7 @@ namespace lib
         return sso;
     }
 
-    SerializationStreamOut& operator<<(SerializationStreamOut&sso, const Object::ValueDictionary::const_iterator it)
+    str& operator<<(str&sso, const Object::ValueDictionary::const_iterator it)
     {
         if (!Object::isArrayElement(*it))
         {
@@ -746,7 +746,7 @@ namespace lib
         return sso;
     }
 
-    SerializationStreamOut& operator<<(SerializationStreamOut&sso, const Object::ObjectDictionary::const_iterator it)
+    str& operator<<(str&sso, const Object::ObjectDictionary::const_iterator it)
     {
         if (!Object::isArrayElement(*it))
         {

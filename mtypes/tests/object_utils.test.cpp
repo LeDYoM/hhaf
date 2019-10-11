@@ -106,7 +106,7 @@ TEST_CASE("Scaner basic 2", "[translator]")
     CHECK(tokens[8].token_type == TokenType::CloseObject);
 }
 
-TEST_CASE("Scaner One word strings", "[streams][SerializationStreamIn][translator]")
+TEST_CASE("Scaner One word strings", "[Object][utils]")
 {
     const str input{
         "{"
@@ -148,7 +148,7 @@ TEST_CASE("Scaner One word strings", "[streams][SerializationStreamIn][translato
     CHECK(tokens[8].token_type == TokenType::CloseObject);
 }
 
-TEST_CASE("Scaner numbers and letters", "[streams][SerializationStreamIn][translator]")
+TEST_CASE("Scaner numbers and letters", "[Object][utils]")
 {
     const str input{
         "{"
@@ -216,7 +216,7 @@ TEST_CASE("Scaner numbers and letters", "[streams][SerializationStreamIn][transl
     CHECK(tokens[16].token_type == TokenType::CloseObject);
 }
 
-TEST_CASE("Scaner numbers and letters with tabs and spaces", "[streams][SerializationStreamIn][translator][Scanner]")
+TEST_CASE("Scaner numbers and letters with tabs and spaces", "[Object][utils][Scanner]")
 {
     const str input{
         "{"
@@ -284,6 +284,21 @@ TEST_CASE("Scaner numbers and letters with tabs and spaces", "[streams][Serializ
     CHECK(tokens[16].token_type == TokenType::CloseObject);
 }
 
+TEST_CASE("Scanner SyntaxError", "[Scanner]")
+{
+    const str input{
+        "{"
+        "   ids:\"abc"
+        "}"
+    };
+
+    ObjectCompiler oc{ input };
+    CHECK_FALSE(oc.compile());
+    CHECK_FALSE(oc.errors().empty());
+    CHECK(oc.errors().errors().size() == 1U);
+    CHECK(oc.errors().errors()[0U].type == ErrorType::UnterminatedString);
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 TEST_CASE("Parser basic", "[streams][SerializationStreamIn][translator][Parser]")
@@ -307,15 +322,15 @@ TEST_CASE("Parser basic", "[streams][SerializationStreamIn][translator][Parser]"
 
     SECTION("Write")
     {
-        SerializationStreamOut sout;
-        CHECK((sout << obj).data() == 
+        str sout;
+        CHECK((sout << obj) == 
             "{"
                 "id:\"This is a string\""
             "}");
 
         SECTION("Read and close loop")
         {
-            Parser parser_write(Scaner{ sout.data() }.scan());
+            Parser parser_write(Scaner{ sout }.scan());
             parser_write.parse();
             CHECK(parser_write.innerObject()["id"] == "This is a string");
             CHECK(parser_write.innerObject() == obj);
@@ -348,8 +363,8 @@ TEST_CASE("Parser: Object inside object", "[streams][SerializationStreamIn][tran
 
     SECTION("Write")
     {
-        SerializationStreamOut sout;
-        CHECK((sout << obj).data() == 
+        str sout;
+        CHECK((sout << obj) == 
         "{"
         "id_object:{"
                 "test_string:\"test_value\""
@@ -358,7 +373,7 @@ TEST_CASE("Parser: Object inside object", "[streams][SerializationStreamIn][tran
 
         SECTION("Read and close loop")
         {
-            Parser parser_write(Scaner{ sout.data() }.scan());
+            Parser parser_write(Scaner{ sout }.scan());
             parser_write.parse();
             const Object& obj2 = parser_write.innerObject();
             CHECK(obj2.size_objects() == 1U);
@@ -404,8 +419,8 @@ TEST_CASE("Parser: Object inside object with numerical values", "[streams][Seria
 
     SECTION("Write")
     {
-        SerializationStreamOut sout;
-        CHECK((sout << obj).data() == 
+        str sout;
+        CHECK((sout << obj) == 
         "{"
             "id_object:{"
                 "test_string:\"test_value\""
@@ -416,7 +431,7 @@ TEST_CASE("Parser: Object inside object with numerical values", "[streams][Seria
 
         SECTION("Read and close loop")
         {
-            Parser parser_write(Scaner{ sout.data() }.scan());
+            Parser parser_write(Scaner{ sout }.scan());
             parser_write.parse();
             const Object& obj2 = parser_write.innerObject();
             CHECK(obj2.size_objects() == 1U);
@@ -457,8 +472,8 @@ TEST_CASE("Parser list str properties", "[streams][SerializationStreamIn][transl
 
     SECTION("Write")
     {
-        SerializationStreamOut sout;
-        CHECK((sout << obj).data() == 
+        str sout;
+        CHECK((sout << obj) == 
         "{"
             "id:"
             "["
@@ -469,7 +484,7 @@ TEST_CASE("Parser list str properties", "[streams][SerializationStreamIn][transl
 
         SECTION("Read and close loop")
         {
-            Parser parser_write(Scaner{ sout.data() }.scan());
+            Parser parser_write(Scaner{ sout }.scan());
             parser_write.parse();
             const Object& obj2 = parser_write.innerObject();
             CHECK(parser_write.errors().empty());
@@ -510,8 +525,8 @@ TEST_CASE("Parser list object properties", "[streams][SerializationStreamIn][tra
 
     SECTION("Write")
     {
-        SerializationStreamOut sout;
-        CHECK((sout << obj).data() == 
+        str sout;
+        CHECK((sout << obj) == 
         "{"
             "ids:["
                 "{"
@@ -528,7 +543,7 @@ TEST_CASE("Parser list object properties", "[streams][SerializationStreamIn][tra
 
         SECTION("Read and close loop")
         {
-            Parser parser_write(Scaner{ sout.data() }.scan());
+            Parser parser_write(Scaner{ sout }.scan());
             parser_write.parse();
             const Object& obj2 = parser_write.innerObject();
             CHECK(parser_write.errors().empty());
@@ -566,8 +581,8 @@ TEST_CASE("Parser list object and values as properties", "[streams][Serializatio
 
     SECTION("Write")
     {
-        SerializationStreamOut sout;
-        CHECK((sout << obj).data() == 
+        str sout;
+        CHECK((sout << obj) == 
         "{"
             "ids:["
                 "{"
@@ -581,7 +596,7 @@ TEST_CASE("Parser list object and values as properties", "[streams][Serializatio
 
         SECTION("Read and close loop")
         {
-            Parser parser_write(Scaner{ sout.data() }.scan());
+            Parser parser_write(Scaner{ sout }.scan());
             parser_write.parse();
             const Object& obj2 = parser_write.innerObject();
             CHECK(parser_write.errors().empty());
@@ -622,8 +637,8 @@ TEST_CASE("Parser list of lists object and values as properties", "[streams][Ser
 
     SECTION("Write")
     {
-        SerializationStreamOut sout;
-        CHECK((sout << obj).data() == 
+        str sout;
+        CHECK((sout << obj) == 
         "{"
             "ids:["
                 "[{"
@@ -640,7 +655,7 @@ TEST_CASE("Parser list of lists object and values as properties", "[streams][Ser
 
         SECTION("Read and close loop")
         {
-            Parser parser_write(Scaner{ sout.data() }.scan());
+            Parser parser_write(Scaner{ sout }.scan());
             parser_write.parse();
             const Object& obj2 = parser_write.innerObject();
             CHECK(parser_write.errors().empty());
@@ -682,8 +697,8 @@ TEST_CASE("Parser list of lists object and values as properties with new sintax"
 
     SECTION("Write")
     {
-        SerializationStreamOut sout;
-        ((sout << obj).data() == 
+        str sout;
+        CHECK((sout << obj) == 
         "{"
             "ids:["
                 "[{"
@@ -700,7 +715,7 @@ TEST_CASE("Parser list of lists object and values as properties with new sintax"
 
         SECTION("Read and close loop")
         {
-            Parser parser_write(Scaner{ sout.data() }.scan());
+            Parser parser_write(Scaner{ sout }.scan());
             parser_write.parse();
             const Object& obj2 = parser_write.innerObject();
             CHECK(parser_write.errors().empty());
@@ -734,8 +749,8 @@ TEST_CASE("Simple list", "[streams][SerializationStreamIn][translator][Parser]")
 
     SECTION("Write")
     {
-        SerializationStreamOut sout;
-        CHECK((sout << obj).data() == 
+        str sout;
+        CHECK((sout << obj) == 
         "{"
             "ids:[\"a\",\"b\",\"c\",\"d\",\"e\"]"
         "}"
@@ -743,7 +758,7 @@ TEST_CASE("Simple list", "[streams][SerializationStreamIn][translator][Parser]")
 
         SECTION("Read and close loop")
         {
-            Parser parser_write(Scaner{ sout.data() }.scan());
+            Parser parser_write(Scaner{ sout }.scan());
             parser_write.parse();
             const Object& obj2 = parser_write.innerObject();
             CHECK(parser_write.errors().empty());
@@ -778,8 +793,8 @@ TEST_CASE("Simple list with numbers", "[streams][SerializationStreamIn][translat
 
     SECTION("Write")
     {
-        SerializationStreamOut sout;
-        CHECK((sout << obj).data() == 
+        str sout;
+        CHECK((sout << obj) == 
         "{"
             "ids:[\"a\",1,3.2,-5,-50.45]"
         "}"
@@ -787,7 +802,7 @@ TEST_CASE("Simple list with numbers", "[streams][SerializationStreamIn][translat
 
         SECTION("Read and close loop")
         {
-            Parser parser_write(Scaner{ sout.data() }.scan());
+            Parser parser_write(Scaner{ sout }.scan());
             parser_write.parse();
             const Object& obj2 = parser_write.innerObject();
             CHECK(parser_write.errors().empty());
@@ -798,19 +813,4 @@ TEST_CASE("Simple list with numbers", "[streams][SerializationStreamIn][translat
             CHECK(obj2 == obj);
         }
     }
-}
-
-TEST_CASE("Scanner SyntaxError", "[Scanner]")
-{
-    const str input{
-        "{"
-        "   ids:\"abc"
-        "}"
-    };
-
-    ObjectCompiler oc{ input };
-    CHECK_FALSE(oc.compile());
-    CHECK_FALSE(oc.errors().empty());
-    CHECK(oc.errors().errors().size() == 1U);
-    CHECK(oc.errors().errors()[0U].type == ErrorType::UnterminatedString);
 }
