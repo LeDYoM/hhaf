@@ -30,7 +30,8 @@ namespace lib::core
         priv_->replay_data_.data_buffer_.push_back(3434U);
 
         Object obj;
-//        obj.set(priv_->replay_data_.data_buffer_);
+        obj.set("replay_data", priv_->replay_data_.data_buffer_);
+        assert_debug(!(obj.empty()), "Internal error creating object to store replay data" );
 
         if (!priv_->replay_data_.replay_file.empty() && !priv_->replay_data_.data_buffer_.empty())
         {
