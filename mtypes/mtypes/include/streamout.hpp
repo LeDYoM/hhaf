@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_MTYPES_STREAMS_INCLUDE_HPP
-#define LIB_MTYPES_STREAMS_INCLUDE_HPP
+#ifndef MTYPES_STREAMS_INCLUDE_HPP
+#define MTYPES_STREAMS_INCLUDE_HPP
 
 #include "types.hpp"
 #include "str.hpp"
