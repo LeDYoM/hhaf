@@ -31,8 +31,8 @@ namespace lib::core
         struct ReplayData
         {
             SimulableDataBuffer data_buffer_;
-            str replay_file;
-            str input_replay_file;
+            str save_replay_file;
+            str load_replay_file;
         } replay_data_;
 
         void setSimulationActions(const TimePoint &current, SimulationActionContainer sim_act_container)

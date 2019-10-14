@@ -79,13 +79,12 @@ namespace zoper
             }
 #endif
 
-//#ifdef ZOPER_STORE_PLAY
+#ifdef ZOPER_STORE_PLAY
             {
                 auto& simulationSystem(systemProvider().simulationSystem());
-                simulationSystem.setPlayedDataFile("foo.txt");
+                simulationSystem.setSaveReplayFile("foo.txt");
             }
-
-//#endif
+#endif
         }
 
     }

@@ -10,9 +10,11 @@
 #include <lib/system/systemprovider.hpp>
 #include <lib/system/simulabledataprovider.hpp>
 #include <lib/system/randomsystem.hpp>
+#include <lib/system/filesystem/filesystem.hpp>
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/object.hpp>
+#include <mtypes/include/object_utils.hpp>
 
 #include <fstream>
 
@@ -24,41 +26,23 @@ namespace lib::core
 
     SimulationSystem::~SimulationSystem()
     {
-        // Test
-        priv_->replay_data_.replay_file = "foo2.txt";
-        priv_->replay_data_.data_buffer_.push_back(12344U);
-        priv_->replay_data_.data_buffer_.push_back(3434U);
-
-        Object obj;
-        obj.set("replay_data", priv_->replay_data_.data_buffer_);
-        assert_debug(!(obj.empty()), "Internal error creating object to store replay data" );
-
-        if (!priv_->replay_data_.replay_file.empty() && !priv_->replay_data_.data_buffer_.empty())
+        if (!priv_->replay_data_.save_replay_file.empty() && !priv_->replay_data_.data_buffer_.empty())
         {
-            log_debug_info("Going to write play data into file " ,priv_->replay_data_.replay_file);
-            if (std::ofstream output_file(priv_->replay_data_.replay_file.c_str()); output_file)
+            log_debug_info("Going to write play data into file " , priv_->replay_data_.save_replay_file);
+            log_debug_info("Writing play data...");
+
+            Object obj;
+            obj.set("replay_data", priv_->replay_data_.data_buffer_);
+
+            str temp;
+            temp << obj;
+            if (systemProvider().fileSystem().saveFile(priv_->replay_data_.save_replay_file, temp))
             {
-                log_debug_info("Writing play data...");
-                for (const auto& data : priv_->replay_data_.data_buffer_)
-                {
-                    output_file << data;
-                    if (&data != std::prev(priv_->replay_data_.data_buffer_.end()))
-                    {
-                        output_file << ",";
-                    }
-                }
-                if (output_file.good())
-                {
-                    log_debug_info("Play data written successfully");
-                }
-                else
-                {
-                    log_debug_error("Error while writing the debug data");
-                }
+                log_debug_info("Play data written successfully");
             }
             else
             {
-                log_debug_error("Cannot open ", priv_->replay_data_.replay_file," for writing!");
+                log_debug_error("Error while writing the debug data");
             }
         }
         else
@@ -131,49 +115,13 @@ namespace lib::core
 
     }
 
-    void SimulationSystem::setReplayDataFile(str replay_file)
+    void SimulationSystem::setSaveReplayFile(str save_replay_file)
     {
-        priv_->replay_data_.replay_file = std::move(replay_file);
+        std::swap(priv_->replay_data_.save_replay_file, save_replay_file);
     }
 
-    void SimulationSystem::setPlayedDataFile(str played_file)
+    void SimulationSystem::setLoadReplayFile(str load_replay_file)
     {
-        priv_->replay_data_.input_replay_file = std::move(played_file);
-/*
-        if (!priv_->replay_data_.input_replay_file.empty())
-        {
-            log_debug_info("Going to read play data from file " ,priv_->replay_data_.input_replay_file);
-            for (std::ifstream input_file(priv_->replay_data_.replay_file.c_str()); input_file && !input_file.eof();)
-            {
-                std::string buffer;
-                std::getline(input_file,buffer,",");
-                for (const auto& data : priv_->replay_data_.data_buffer_)
-                {
-                    input_file 
-                    output_file << data;
-                    if (&data != std::prev(priv_->replay_data_.data_buffer_.end()))
-                    {
-                        output_file << ",";
-                    }
-                }
-                if (output_file.good())
-                {
-                    log_debug_info("Play data written successfully");
-                }
-                else
-                {
-                    log_debug_error("Error while writing the debug data");
-                }
-            }
-            else
-            {
-                log_debug_error("Cannot open ", priv_->replay_data_.replay_file," for reading!");
-            }
-        }
-        else
-        {
-            log_debug_info("No file or no data to store the replay");
-        }
-        */
+        priv_->replay_data_.load_replay_file = std::move(load_replay_file);
     }
 }

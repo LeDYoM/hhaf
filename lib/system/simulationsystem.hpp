@@ -29,8 +29,8 @@ namespace lib::core
         void setSimulationActions(const TimePoint &current, SimulationActionGroup simulation_action_group);
         void setSimulationActions(SimulationActionGroup simulation_action_group);
         void setSimulatedDataBuffer(SimulableDataBuffer simulated_data_buffer);
-        void setReplayDataFile(str play_file);
-        void setPlayedDataFile(str played_file);
+        void setSaveReplayFile(str save_play_file);
+        void setLoadReplayFile(str load_replay_file);
 
     private:
         struct SimulationSystemPrivate;

@@ -14,10 +14,14 @@ namespace lib::core
     class FileSystem final : public HostedAppService
     {
     public:
+        using Path = str;
+
         FileSystem(core::SystemProvider &system_provider);
         ~FileSystem() override;
 
         RawMemory loadBinaryFile(const str& fileName);
+
+        bool saveFile(const Path& path, const str& data);
 
     private:
         class FileSystemPrivate;
