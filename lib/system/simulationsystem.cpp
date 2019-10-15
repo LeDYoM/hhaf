@@ -122,6 +122,14 @@ namespace lib::core
 
     void SimulationSystem::setLoadReplayFile(str load_replay_file)
     {
-        priv_->replay_data_.load_replay_file = std::move(load_replay_file);
+        std::swap(priv_->replay_data_.load_replay_file, load_replay_file);
+
+        if (!priv_->replay_data_.load_replay_file.empty())
+        {
+            if (str temp(systemProvider().fileSystem().loadTextFile(priv_->replay_data_.load_replay_file)); !temp.empty())
+            {
+
+            }
+        }
     }
 }

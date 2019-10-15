@@ -19,7 +19,7 @@ namespace lib::core
 {
     enum class SimulationActionType : u8
     {
-        KeyPressed,
+        KeyPressed = 0U,
         KeyReleased
     };
 

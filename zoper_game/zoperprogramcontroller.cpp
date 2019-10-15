@@ -71,15 +71,16 @@ namespace zoper
             simulation_action_group.addKeyStroke(input::Key::Down);
             simulation_action_group.addKeyStroke(input::Key::Return);
 
-#ifdef ZOPER_USE_SIMULATION
+#ifndef ZOPER_USE_SIMULATION
             {
                 auto& simulationSystem(systemProvider().simulationSystem());
+                simulationSystem.setLoadReplayFile("foo2.txt");
                 simulationSystem.setSimulationActions(simulation_action_group);
                 simulationSystem.setSimulatedDataBuffer(core::SimulableDataBuffer{0U, 0U, 0U, 0U});
             }
 #endif
 
-#ifdef ZOPER_STORE_PLAY
+#ifndef ZOPER_STORE_PLAY
             {
                 auto& simulationSystem(systemProvider().simulationSystem());
                 simulationSystem.setSaveReplayFile("foo.txt");
