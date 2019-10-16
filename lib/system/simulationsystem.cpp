@@ -128,7 +128,30 @@ namespace lib::core
         {
             if (str temp(systemProvider().fileSystem().loadTextFile(priv_->replay_data_.load_replay_file)); !temp.empty())
             {
-
+                // If the file has been read corretly,
+                // createan ObjectCompiler and use it.
+                ObjectCompiler obj_compiler(temp);
+                if (obj_compiler.compile())
+                {
+                    // The compilation was correct so, at least we
+                    // have a valid Object.
+                    const auto replay_data_object = obj_compiler.result()["replay_data"];
+                    if (replay_data_object.isObject())
+                    {
+                        bool exit{false};
+                        size_type current_index;
+                        do
+                        {
+                            const auto array_value = replay_data_object[current_index++];
+                            if (array_value.isValid())
+                            {
+                                
+                            }
+                        } while (!exit);
+                        Object replay_Data_object = obj_compiler.result()["replay_data"];
+                    }
+                }
+                
             }
         }
     }
