@@ -338,6 +338,12 @@ namespace lib
         ValueDictionary m_values;
         ObjectDictionary m_objects;
     };
+
+    template <typename T>
+    Object& operator>>(const Object& obj, vector<T>& data)
+    {
+
+    }
 }
 
 #endif
