@@ -143,6 +143,18 @@ namespace lib
                 return (*m_value).convertOrDefault<T>();
             }
 
+            template <>
+            str as() const
+            {
+                return (*m_value);
+            }
+
+            template <>
+            Object as() const
+            {
+                return (*m_object);
+            }
+
         private:
             const Object *m_object{nullptr};
             const str *m_value{nullptr};
@@ -342,7 +354,7 @@ namespace lib
     template <typename T>
     Object& operator>>(const Object& obj, vector<T>& data)
     {
-
+        
     }
 }
 
