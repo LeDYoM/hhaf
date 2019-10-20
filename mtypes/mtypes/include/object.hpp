@@ -113,7 +113,7 @@ namespace lib
                 return !(*this == obj);
             }
 
-            Value operator[](const str&key) const
+            [[nodiscard]] Value operator[](const str&key) const
             {
                 // Using indexing operator in a value returns empty value.
                 // If the key exists, forward the key to it.
@@ -122,7 +122,7 @@ namespace lib
 
             /// Get a @Value in the array form. That is the
             /// method is equivaled to obj(key){index].
-            Value operator[](const size_t index) const
+            [[nodiscard]] Value operator[](const size_t index) const
             {
                 return (isObject() ? getObject()[index] : Value{});
             }
@@ -138,21 +138,27 @@ namespace lib
             }
 
             template <typename T>
-            T as() const
+            [[nodiscard]] T as() const
             {
                 return (*m_value).convertOrDefault<T>();
             }
 
             template <>
-            str as() const
+            [[nodiscard]] str as() const
             {
                 return (*m_value);
             }
 
             template <>
-            Object as() const
+            [[nodiscard]] Object as() const
             {
                 return (*m_object);
+            }
+
+            template<typename T>
+            [[nodiscard]] bool can_convert() const
+            {
+                return convert(value).second;
             }
 
         private:
@@ -354,7 +360,25 @@ namespace lib
     template <typename T>
     Object& operator>>(const Object& obj, vector<T>& data)
     {
-        
+        for (size_type count{0U}, Value& value = obj[count];
+            value.isValid();
+            ++count; value = obj[count])
+        {
+            data.push_back(read_var.as<size_type>());
+        }
+        /*
+        bool exit{false};
+        size_type count{0U};
+        do
+        {
+            const auto& read_var{obj[count]};
+            if (read_var.isValue())
+            {
+                data.push_back(read_var.as<size_type>());
+            }
+        } while (!false);
+*/
+        return obj;
     }
 }
 

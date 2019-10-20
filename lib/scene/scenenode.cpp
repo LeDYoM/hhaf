@@ -34,10 +34,10 @@ namespace lib::scene
                 parentTransformationChanged = true;
             }
 
-			if (parentTransformationChanged)
+            if (parentTransformationChanged)
             {
-				updateGlobalTransformation(m_parent ? m_parent->globalTransform() : Transform{});
-			}
+                updateGlobalTransformation(m_parent ? m_parent->globalTransform() : Transform{});
+            }
 
             postUpdateComponents();
             for (auto&& group : m_groups)
