@@ -14,6 +14,8 @@
 #include <lib/system/randomsystem.hpp>
 
 #include <mtypes/include/types.hpp>
+#include <mtypes/include/object.hpp>
+#include <mtypes/include/object_utils.hpp>
 
 namespace lib::core
 {
@@ -40,6 +42,26 @@ namespace lib::core
             return ((time_since_start - last_triggered) > time_point);
         }
     };
+
+    inline const Object& operator>>(const Object& obj, SimulationAction& simulation_action)
+    {
+        simulation_action.type = static_cast<SimulationActionType>(obj["type"].as<std::underlying_type_t<SimulationActionType>>());
+        simulation_action.time_point = TimePoint{obj["time_point"].as<TimePoint::Rep>()};
+        simulation_action.key = static_cast<input::Key>(obj["type"].as<std::underlying_type_t<input::Key>>());
+
+        return obj;
+    }
+
+    inline Object& operator<<(Object& obj, const SimulationAction& simulation_action)
+    {
+//        obj.set(str("type"), static_cast<std::underlying_type_t<SimulationActionType>>(simulation_action.type));
+
+//        simulation_action.type = static_cast<SimulationActionType>(obj["type"].as<std::underlying_type_t<SimulationActionType>>());
+//        simulation_action.time_point = TimePoint{obj["time_point"].as<TimePoint::Rep>()};
+//        simulation_action.key = static_cast<input::Key>(obj["type"].as<std::underlying_type_t<input::Key>>());
+
+        return obj;
+    }
 
     using SimulationActionContainer = vector<SimulationAction>;
     using CurrentSimulationActionIterator = SimulationActionContainer::const_iterator;

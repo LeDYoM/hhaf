@@ -12,13 +12,15 @@ namespace lib
     {
     public:
 
-        constexpr TimePoint(const u64 nanoseconds = 0U) noexcept
+        using Rep = u64;
+    
+        constexpr TimePoint(const Rep nanoseconds = Rep{0U}) noexcept
             : nanoseconds_{nanoseconds} {}
 
-        constexpr u64 nanoseconds() const noexcept { return nanoseconds_; }
-        constexpr u64 microseconds() const noexcept { return static_cast<u64>(nanoseconds_ / static_cast<u64>(1000U)); }
-        constexpr u64 milliseconds() const noexcept { return static_cast<u64>(microseconds() / static_cast<u64>(1000U)); }
-        constexpr u64 seconds() const noexcept { return static_cast<u64>(milliseconds() / static_cast<u64>(1000U)); }
+        constexpr Rep nanoseconds() const noexcept { return nanoseconds_; }
+        constexpr Rep microseconds() const noexcept { return static_cast<Rep>(nanoseconds_ / static_cast<Rep>(1000U)); }
+        constexpr Rep milliseconds() const noexcept { return static_cast<Rep>(microseconds() / static_cast<Rep>(1000U)); }
+        constexpr Rep seconds() const noexcept { return static_cast<Rep>(milliseconds() / static_cast<Rep>(1000U)); }
 
         constexpr TimePoint& operator+=(const TimePoint& other) noexcept
         {

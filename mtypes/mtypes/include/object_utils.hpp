@@ -608,7 +608,7 @@ namespace lib
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    void manageSeparatorForObjectIn(str&sso, bool& is_first, bool& contains_array_only)
+    constexpr void manageSeparatorForObjectIn(str&sso, bool& is_first, bool& contains_array_only)
     {
         if (!is_first)
         {
@@ -622,7 +622,7 @@ namespace lib
         }
     }
 
-    void manageSeparatorForObjectOut(str&sso, bool& is_first)
+    constexpr void manageSeparatorForObjectOut(str&sso, bool& is_first)
     {
         if (!is_first)
         {
@@ -630,7 +630,7 @@ namespace lib
         }
     }
 
-    void manageSeparatorForList(str&sso, bool& is_first)
+    constexpr void manageSeparatorForList(str&sso, bool& is_first)
     {
         if (!is_first)
         {
@@ -651,7 +651,7 @@ namespace lib
     str& operator<<(str&sso, const Object::ObjectDictionary::const_iterator it);
     str& operator<<(str&sso, const PropertyWrapper& property_wrapper);
 
-    str& operator<<(str&sso, const Object& obj)
+    inline str& operator<<(str&sso, const Object& obj)
     {
         bool contains_array_only{true};
         bool is_first{true};
@@ -717,7 +717,7 @@ namespace lib
         return sso;
     }
 
-    str& operator<<(str&sso, const PropertyWrapper& property_wrapper)
+    inline str& operator<<(str&sso, const PropertyWrapper& property_wrapper)
     {
         const bool add_double_quotes = (!(property_wrapper.value.is<s32>()) && !(property_wrapper.value.is<f32>()));
 
@@ -736,7 +736,7 @@ namespace lib
         return sso;
     }
 
-    str& operator<<(str&sso, const Object::ValueDictionary::const_iterator it)
+    inline str& operator<<(str&sso, const Object::ValueDictionary::const_iterator it)
     {
         if (!Object::isArrayElement(*it))
         {
@@ -746,7 +746,7 @@ namespace lib
         return sso;
     }
 
-    str& operator<<(str&sso, const Object::ObjectDictionary::const_iterator it)
+    inline str& operator<<(str&sso, const Object::ObjectDictionary::const_iterator it)
     {
         if (!Object::isArrayElement(*it))
         {
