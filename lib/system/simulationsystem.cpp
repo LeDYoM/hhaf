@@ -135,26 +135,8 @@ namespace lib::core
                 {
                     // The compilation was correct so, at least we
                     // have a valid Object.
-                    const auto replay_data_value = obj_compiler.result()["replay_data"];
-                    /*
-                    if (replay_data_value.isObject())
-                    {
-                        SimulableDataBuffer d;
-                        replay_data_value.getObject() >> d;
-                        bool exit{false};
-                        size_type current_index;
-                        do
-                        {
-                            const auto array_value = replay_data_object[current_index++];
-                            if (array_value.isValid())
-                            {
-                                
-                            }
-                        } while (!exit);
-                    }
-                    */
+                    obj_compiler.result() >> priv_->replay_data_;
                 }
-                
             }
         }
     }

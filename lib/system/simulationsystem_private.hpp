@@ -17,9 +17,25 @@
 #include <lib/system/randomsystem.hpp>
 
 #include <mtypes/include/types.hpp>
+#include <mtypes/include/object.hpp>
+#include <mtypes/include/object_utils.hpp>
 
 namespace lib::core
 {
+    struct ReplayData
+    {
+        SimulableDataBuffer data_buffer_;
+        str save_replay_file;
+        str load_replay_file;
+    };
+
+    const Object& operator>>(const Object&obj, ReplayData& replay_data)
+    {
+        const auto replay_data_value = obj["replay_data"];
+        replay_data_value.getObject() >> replay_data.data_buffer_;
+        return obj;
+    }
+
     struct SimulationSystem::SimulationSystemPrivate final
     {
         SimulationActionContainer simulation_actions_;  ///< Container containing the simulation actions to execute.
@@ -28,12 +44,7 @@ namespace lib::core
         SimulableDataBuffer::const_iterator current_simulable_data_buffer_iterator;
         TimePoint last_checked_point_;
 
-        struct ReplayData
-        {
-            SimulableDataBuffer data_buffer_;
-            str save_replay_file;
-            str load_replay_file;
-        } replay_data_;
+        ReplayData replay_data_;
 
         void setSimulationActions(const TimePoint &current, SimulationActionContainer sim_act_container)
         {

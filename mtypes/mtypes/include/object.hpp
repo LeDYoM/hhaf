@@ -358,26 +358,37 @@ namespace lib
     };
 
     template <typename T>
-    Object& operator>>(const Object& obj, vector<T>& data)
+    const Object& operator>>(const Object& obj, T& data)
     {
-        for (size_type count{0U}, Value& value = obj[count];
-            value.isValid();
-            ++count; value = obj[count])
+        // This function should not be called.
+        assert(false);
+        return obj;
+    }
+
+    template <typename T>
+    const Object& operator>>(const Object& obj, vector<T>& data)
+    {
+        bool stay{true};
+        for (size_type count{0U}; stay; ++count)
         {
-            data.push_back(read_var.as<size_type>());
-        }
-        /*
-        bool exit{false};
-        size_type count{0U};
-        do
-        {
-            const auto& read_var{obj[count]};
-            if (read_var.isValue())
+            const Object::Value& value = obj[count];
+            stay = value.isValid();
+            if (stay)
             {
-                data.push_back(read_var.as<size_type>());
+                T internal_data;
+
+                if (value.isObject())
+                {
+                    value.getObject() >> internal_data;
+                }
+                else
+                {
+                    value.getValue() >> internal_data;
+                }
+                data.push_back(std::move(internal_data));
+
             }
-        } while (!false);
-*/
+        }
         return obj;
     }
 }
