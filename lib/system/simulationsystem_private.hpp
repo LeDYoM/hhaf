@@ -25,20 +25,26 @@ namespace lib::core
     struct ReplayData
     {
         SimulableDataBuffer data_buffer_;
+        SimulationActionContainer simulation_actions_;  ///< Container containing the simulation actions to execute.
         str save_replay_file;
         str load_replay_file;
     };
 
     const Object& operator>>(const Object&obj, ReplayData& replay_data)
     {
-        const auto replay_data_value = obj["replay_data"];
-        replay_data_value.getObject() >> replay_data.data_buffer_;
+        obj["replay_data"].getObject() >> replay_data.data_buffer_;
+//        obj["input_data"].getObject() >> replay_data.simulation_actions_;
         return obj;
+    }
+
+    void setObjectProperty(Object& obj, const ReplayData& replay_data)
+    {
+        obj.set("replay_data", replay_data.data_buffer_);
+//        obj.set("input_data", replay_data.simulation_actions_);
     }
 
     struct SimulationSystem::SimulationSystemPrivate final
     {
-        SimulationActionContainer simulation_actions_;  ///< Container containing the simulation actions to execute.
         CurrentSimulationActionIterator current_simulation_action_iterator_;    ///< Iterator pointing to the current simulation.
         SimulableDataBuffer simulable_data_buffer_;
         SimulableDataBuffer::const_iterator current_simulable_data_buffer_iterator;
@@ -48,15 +54,15 @@ namespace lib::core
 
         void setSimulationActions(const TimePoint &current, SimulationActionContainer sim_act_container)
         {
-            simulation_actions_.swap(sim_act_container);
-            current_simulation_action_iterator_ = simulation_actions_.cbegin();
+            replay_data_.simulation_actions_.swap(sim_act_container);
+            current_simulation_action_iterator_ = replay_data_.simulation_actions_.cbegin();
             last_checked_point_ = current;
             log_debug_info("Simulation System started ");
         }
 
         void addSimulationAction(SimulationAction simulation_action)
         {
-            simulation_actions_.push_back(std::move(simulation_action));
+            replay_data_.simulation_actions_.push_back(std::move(simulation_action));
         }
 
         void setSimulatedDataBuffer(SimulableDataBuffer simulated_data_buffer)

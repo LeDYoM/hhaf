@@ -315,25 +315,7 @@ namespace lib
                 return set(index, str::to_str(static_cast<u64>(std::forward<T>(value))));
             }
         }
-/*
-        template <typename T, typename TD = std::decay_t<T>,
-            std::enable_if_t<std::is_arithmetic_v<TD>>* = nullptr>
-        bool set(str key, T&& value)
-        {
-            if constexpr (std::is_floating_point_v<TD>)
-            {
-                return set(std::move(key), str::to_str(static_cast<f64>(std::forward<T>(value))));
-            }
-            else if constexpr (std::is_signed_v<TD>)
-            {
-                return set(std::move(key), str::to_str(static_cast<s64>(std::forward<T>(value))));
-            }
-            else
-            {
-                return set(std::move(key), str::to_str(static_cast<u64>(std::forward<T>(value))));
-            }
-        }
-*/
+
         template <typename T>
         bool set(const vector<T>& value)
         {

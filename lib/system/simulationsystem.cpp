@@ -69,7 +69,7 @@ namespace lib::core
     void SimulationSystem::update()
     {
         // Check if we have still actions to trigger.
-        if (priv_->current_simulation_action_iterator_ != priv_->simulation_actions_.cend())
+        if (priv_->current_simulation_action_iterator_ != priv_->replay_data_.simulation_actions_.cend())
         {
             // Check if we have reached the next TimePoint
             const SimulationAction& simulation_action{*(priv_->current_simulation_action_iterator_)};

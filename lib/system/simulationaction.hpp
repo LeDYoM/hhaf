@@ -45,20 +45,18 @@ namespace lib::core
 
     inline const Object& operator>>(const Object& obj, SimulationAction& simulation_action)
     {
-        simulation_action.type = static_cast<SimulationActionType>(obj["type"].as<std::underlying_type_t<SimulationActionType>>());
-        simulation_action.time_point = TimePoint{obj["time_point"].as<TimePoint::Rep>()};
-        simulation_action.key = static_cast<input::Key>(obj["type"].as<std::underlying_type_t<input::Key>>());
+//        simulation_action.type = static_cast<SimulationActionType>(obj["type"].as<std::underlying_type_t<SimulationActionType>>());
+//        simulation_action.time_point = TimePoint{obj["time_point"].as<TimePoint::Rep>()};
+//        simulation_action.key = static_cast<input::Key>(obj["type"].as<std::underlying_type_t<input::Key>>());
 
         return obj;
     }
 
     inline Object& operator<<(Object& obj, const SimulationAction& simulation_action)
     {
-//        obj.set(str("type"), static_cast<std::underlying_type_t<SimulationActionType>>(simulation_action.type));
-
-//        simulation_action.type = static_cast<SimulationActionType>(obj["type"].as<std::underlying_type_t<SimulationActionType>>());
-//        simulation_action.time_point = TimePoint{obj["time_point"].as<TimePoint::Rep>()};
-//        simulation_action.key = static_cast<input::Key>(obj["type"].as<std::underlying_type_t<input::Key>>());
+//        obj.set("type", static_cast<std::underlying_type_t<SimulationActionType>>(simulation_action.type));
+//        obj.set("time_point", simulation_action.time_point.nanoseconds());
+//        obj.set("key", static_cast<std::underlying_type_t<input::Key>>(simulation_action.key));
 
         return obj;
     }
