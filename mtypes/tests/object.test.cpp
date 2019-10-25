@@ -440,7 +440,7 @@ TEST_CASE("Object with vector of custom types", "[Object][vector]")
     vector<Simple> output;
     obj >> output;
 
-    (vec == output);
+    CHECK(vec == output);
 }
 
 namespace TestVectorWithCustomTypesEnumsAndFloats
@@ -483,7 +483,7 @@ namespace TestVectorWithCustomTypesEnumsAndFloats
         data.a = obj["a"].as<f32>();
         data.b = obj["b"].as<f64>();
         data.small_enum = obj["small_enum"].as<MySmallEnum>();
-        data.default_enum = obj["MyDefaultEnum"].as<MyDefaultEnum>();
+        data.default_enum = obj["default_enum"].as<MyDefaultEnum>();
         data.big_enum = obj["big_enum"].as<MyBigEnum>();
 
         return obj;
@@ -535,5 +535,5 @@ TEST_CASE("Object with vector of custom types, enums and floats", "[Object][vect
     vector<Simple> output;
     obj >> output;
 
-    (vec == output);
+    CHECK(vec == output);
 }

@@ -154,7 +154,14 @@ namespace lib
             {
                 if constexpr (std::is_enum_v<T>)
                 {
-                    return static_cast<T>((*m_value).convertOrDefault<std::underlying_type_t<T>>());
+                    if constexpr (sizeof(T) == sizeof(char))
+                    {
+                        return static_cast<T>((*m_value).convertOrDefault<s16>());
+                    }
+                    else
+                    {
+                        return static_cast<T>((*m_value).convertOrDefault<std::underlying_type_t<T>>());
+                    }
                 }
                 else
                 {
@@ -316,7 +323,11 @@ namespace lib
             std::enable_if_t<std::is_arithmetic_v<TD> || std::is_enum_v<TD>>* = nullptr>
         bool set(str key, T&& value)
         {
-            if constexpr (std::is_floating_point_v<TD>)
+            if constexpr (std::is_enum_v<TD>)
+            {
+                return set(std::move(key), str::to_str(static_cast<std::underlying_type_t<TD>>(std::forward<T>(value))));
+            }
+            else if constexpr (std::is_floating_point_v<TD>)
             {
                 return set(std::move(key), str::to_str(static_cast<f64>(std::forward<T>(value))));
             }
@@ -328,6 +339,7 @@ namespace lib
             {
                 return set(std::move(key), str::to_str(static_cast<u64>(std::forward<T>(value))));
             }
+
         }
 
         bool set(size_t index, str value)
