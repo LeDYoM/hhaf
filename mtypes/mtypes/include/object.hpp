@@ -392,10 +392,10 @@ namespace lib
             stay = value.isValid();
             if (stay)
             {
+                T internal_data;
+
                 if  constexpr (storable_or_copyable_as_value_v<T>)
                 {
-                    T internal_data;
-
                     if constexpr (is_object_v<T>)
                     {
                         value.getObject() >> internal_data;
@@ -407,13 +407,13 @@ namespace lib
                             value.getValue() >> internal_data;
                         }
                     }
-                    data.push_back(std::move(internal_data));
                 }
                 else
                 {
-                    T internal_data;
                     value.getObject() >> internal_data;
                 }
+                data.push_back(std::move(internal_data));
+
             }
         }
         return obj;
@@ -435,7 +435,7 @@ namespace lib
             {
                 Object temp;
                 temp << element;
-                temp.set(counter++,temp);
+                obj.set(counter++,temp);
             }
         }
         return obj;

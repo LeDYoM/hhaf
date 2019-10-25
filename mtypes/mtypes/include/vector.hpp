@@ -563,7 +563,7 @@ namespace lib
 //                    && rhs_iterator != rhs.cend() <- Not needed, they have the same size.
                 ;++lhs_iterator, ++rhs_iterator) 
             {
-                if (*lhs_iterator != *rhs_iterator)
+                if (!(*lhs_iterator == *rhs_iterator))
                 {
                     return false;
                 }

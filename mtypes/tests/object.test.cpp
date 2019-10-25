@@ -380,3 +380,127 @@ TEST_CASE("Object with vector", "[Object][vector]")
         }
     }
 }
+
+namespace TestVectorWithCustomTypes
+{
+    struct Simple
+    {
+        int a;
+        short b;
+        long c;
+
+        bool operator==(const Simple& rhs) const
+        {
+            return ((a == rhs.a) && (b == rhs.b) && (c == rhs.c));
+        }
+    };
+
+    inline const Object& operator>>(const Object& obj, Simple& data)
+    {
+        data.a = obj["a"].as<int>();
+        data.b = obj["b"].as<short>();
+        data.c = obj["c"].as<long>();
+        return obj;
+    }
+
+    inline Object& operator<<(Object& obj, const Simple& data)
+    {
+        obj.set("a", data.a);
+        obj.set("b", data.b);
+        obj.set("c", data.c);
+        return obj;
+    }
+
+};
+
+TEST_CASE("Object with vector of custom types", "[Object][vector]")
+{
+    using namespace TestVectorWithCustomTypes;
+
+    vector<Simple> vec = {{5000, 40, 10000}, {1000, 10, 20000}};
+
+    Object obj;
+    obj << vec;
+
+    CHECK(obj[0U]["a"].as<int>() == vec[0U].a);
+    CHECK(obj[0U]["b"].as<short>() == vec[0U].b);
+    CHECK(obj[0U]["c"].as<long>() == vec[0U].c);
+    CHECK(obj[0U].getObject().empty_objects());
+    CHECK(obj[0U].getObject().size_values() == 3U);
+
+    CHECK(obj[1U]["a"].as<int>() == vec[1U].a);
+    CHECK(obj[1U]["b"].as<short>() == vec[1U].b);
+    CHECK(obj[1U]["c"].as<long>() == vec[1U].c);
+    CHECK(obj[1U].getObject().empty_objects());
+    CHECK(obj[1U].getObject().size_values() == 3U);
+
+    CHECK(obj.size_objects() == 2U);
+    CHECK(obj.empty_values());
+
+    vector<Simple> output;
+    obj >> output;
+
+    (vec == output);
+}
+
+namespace TestVectorWithCustomTypesEnumsAndFloats
+{
+    struct Simple
+    {
+        int a;
+        short b;
+        long c;
+
+        bool operator==(const Simple& rhs) const
+        {
+            return ((a == rhs.a) && (b == rhs.b) && (c == rhs.c));
+        }
+    };
+
+    inline const Object& operator>>(const Object& obj, Simple& data)
+    {
+        data.a = obj["a"].as<int>();
+        data.b = obj["b"].as<short>();
+        data.c = obj["c"].as<long>();
+        return obj;
+    }
+
+    inline Object& operator<<(Object& obj, const Simple& data)
+    {
+        obj.set("a", data.a);
+        obj.set("b", data.b);
+        obj.set("c", data.c);
+        return obj;
+    }
+
+};
+
+TEST_CASE("Object with vector of custom types, enums and floats", "[Object][vector]")
+{
+    using namespace TestVectorWithCustomTypesEnumsAndFloats;
+
+    vector<Simple> vec = {{5000, 40, 10000}, {1000, 10, 20000}};
+
+    Object obj;
+    obj << vec;
+
+    CHECK(obj[0U]["a"].as<int>() == vec[0U].a);
+    CHECK(obj[0U]["b"].as<short>() == vec[0U].b);
+    CHECK(obj[0U]["c"].as<long>() == vec[0U].c);
+    CHECK(obj[0U].getObject().empty_objects());
+    CHECK(obj[0U].getObject().size_values() == 3U);
+
+    CHECK(obj[1U]["a"].as<int>() == vec[1U].a);
+    CHECK(obj[1U]["b"].as<short>() == vec[1U].b);
+    CHECK(obj[1U]["c"].as<long>() == vec[1U].c);
+    CHECK(obj[1U].getObject().empty_objects());
+    CHECK(obj[1U].getObject().size_values() == 3U);
+
+    CHECK(obj.size_objects() == 2U);
+    CHECK(obj.empty_values());
+
+    vector<Simple> output;
+    obj >> output;
+
+    (vec == output);
+}
