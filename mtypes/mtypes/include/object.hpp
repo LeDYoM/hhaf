@@ -152,7 +152,14 @@ namespace lib
             template <typename T>
             [[nodiscard]] T as() const
             {
-                return (*m_value).convertOrDefault<T>();
+                if constexpr (std::is_enum_v<T>)
+                {
+                    return static_cast<T>((*m_value).convertOrDefault<std::underlying_type_t<T>>());
+                }
+                else
+                {
+                    return (*m_value).convertOrDefault<T>();
+                }
             }
 
             template <>
@@ -306,7 +313,7 @@ namespace lib
         }
 
         template <typename T, typename TD = std::decay_t<T>,
-            std::enable_if_t<std::is_arithmetic_v<TD>>* = nullptr>
+            std::enable_if_t<std::is_arithmetic_v<TD> || std::is_enum_v<TD>>* = nullptr>
         bool set(str key, T&& value)
         {
             if constexpr (std::is_floating_point_v<TD>)

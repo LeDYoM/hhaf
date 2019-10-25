@@ -445,23 +445,47 @@ TEST_CASE("Object with vector of custom types", "[Object][vector]")
 
 namespace TestVectorWithCustomTypesEnumsAndFloats
 {
+    enum class MySmallEnum : u8
+    {
+        First,
+        Second
+    };
+
+    enum class MyDefaultEnum
+    {
+        First,
+        Second
+    };
+
+    enum class MyBigEnum : u64
+    {
+        First,
+        Second
+    };
+
     struct Simple
     {
-        int a;
-        short b;
-        long c;
+        MySmallEnum small_enum;
+        MyDefaultEnum default_enum;
+        MyBigEnum big_enum;
+        f32 a;
+        f64 b;
 
         bool operator==(const Simple& rhs) const
         {
-            return ((a == rhs.a) && (b == rhs.b) && (c == rhs.c));
+            return ((small_enum == rhs.small_enum) && (default_enum == rhs.default_enum) &&
+            (big_enum == rhs.big_enum) && (a == rhs.a) && (b == rhs.b));
         }
     };
 
     inline const Object& operator>>(const Object& obj, Simple& data)
     {
-        data.a = obj["a"].as<int>();
-        data.b = obj["b"].as<short>();
-        data.c = obj["c"].as<long>();
+        data.a = obj["a"].as<f32>();
+        data.b = obj["b"].as<f64>();
+        data.small_enum = obj["small_enum"].as<MySmallEnum>();
+        data.default_enum = obj["MyDefaultEnum"].as<MyDefaultEnum>();
+        data.big_enum = obj["big_enum"].as<MyBigEnum>();
+
         return obj;
     }
 
@@ -469,7 +493,9 @@ namespace TestVectorWithCustomTypesEnumsAndFloats
     {
         obj.set("a", data.a);
         obj.set("b", data.b);
-        obj.set("c", data.c);
+        obj.set("small_enum", data.small_enum);
+        obj.set("default_enum", data.default_enum);
+        obj.set("big_enum", data.big_enum);
         return obj;
     }
 
@@ -479,22 +505,29 @@ TEST_CASE("Object with vector of custom types, enums and floats", "[Object][vect
 {
     using namespace TestVectorWithCustomTypesEnumsAndFloats;
 
-    vector<Simple> vec = {{5000, 40, 10000}, {1000, 10, 20000}};
+    vector<Simple> vec = {
+        { MySmallEnum::First, MyDefaultEnum::First, MyBigEnum::First, 4.5F, 2000.123},
+        { MySmallEnum::Second, MyDefaultEnum::Second, MyBigEnum::Second, -1.2F, -454341.999999}
+    };
 
     Object obj;
     obj << vec;
 
-    CHECK(obj[0U]["a"].as<int>() == vec[0U].a);
-    CHECK(obj[0U]["b"].as<short>() == vec[0U].b);
-    CHECK(obj[0U]["c"].as<long>() == vec[0U].c);
+    CHECK(obj[0U]["a"].as<f32>() == vec[0U].a);
+    CHECK(obj[0U]["b"].as<f64>() == vec[0U].b);
+    CHECK(obj[0U]["small_enum"].as<MySmallEnum>() == vec[0U].small_enum);
+    CHECK(obj[0U]["default_enum"].as<MyDefaultEnum>() == vec[0U].default_enum);
+    CHECK(obj[0U]["big_enum"].as<MyBigEnum>() == vec[0U].big_enum);
     CHECK(obj[0U].getObject().empty_objects());
-    CHECK(obj[0U].getObject().size_values() == 3U);
+    CHECK(obj[0U].getObject().size_values() == 5U);
 
-    CHECK(obj[1U]["a"].as<int>() == vec[1U].a);
-    CHECK(obj[1U]["b"].as<short>() == vec[1U].b);
-    CHECK(obj[1U]["c"].as<long>() == vec[1U].c);
+    CHECK(obj[1U]["a"].as<f32>() == vec[1U].a);
+    CHECK(obj[1U]["b"].as<f64>() == vec[1U].b);
+    CHECK(obj[1U]["small_enum"].as<MySmallEnum>() == vec[1U].small_enum);
+    CHECK(obj[1U]["default_enum"].as<MyDefaultEnum>() == vec[1U].default_enum);
+    CHECK(obj[1U]["big_enum"].as<MyBigEnum>() == vec[1U].big_enum);
     CHECK(obj[1U].getObject().empty_objects());
-    CHECK(obj[1U].getObject().size_values() == 3U);
+    CHECK(obj[1U].getObject().size_values() == 5U);
 
     CHECK(obj.size_objects() == 2U);
     CHECK(obj.empty_values());
