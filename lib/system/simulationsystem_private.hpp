@@ -33,14 +33,14 @@ namespace lib::core
     const Object& operator>>(const Object&obj, ReplayData& replay_data)
     {
         obj["replay_data"].getObject() >> replay_data.data_buffer_;
-//        obj["input_data"].getObject() >> replay_data.simulation_actions_;
+        obj["input_data"].getObject() >> replay_data.simulation_actions_;
         return obj;
     }
 
     void setObjectProperty(Object& obj, const ReplayData& replay_data)
     {
         obj.set("replay_data", replay_data.data_buffer_);
-//        obj.set("input_data", replay_data.simulation_actions_);
+        obj.set("input_data", replay_data.simulation_actions_);
     }
 
     struct SimulationSystem::SimulationSystemPrivate final

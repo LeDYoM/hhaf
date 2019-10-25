@@ -7,9 +7,21 @@
 #include "str.hpp"
 #include "vector.hpp"
 #include "dictionary.hpp"
+#include <type_traits>
 
 namespace lib
 {
+    template <typename T>
+    constexpr bool storable_as_value_v = std::is_arithmetic_v<std::decay_t<T>>
+        || std::is_same_v<std::decay_t<T>,str>;
+
+    template <typename T>
+    constexpr bool is_object_v = std::is_same_v<std::decay_t<T>, Object>;
+
+    template <typename T>
+    constexpr bool storable_or_copyable_as_value_v = storable_as_value_v<T>
+        || is_object_v<T>;
+
     template <typename T>
     using KeyValuePair = pair<str,T>;
 
@@ -293,9 +305,32 @@ namespace lib
             return set({ std::make_pair(std::move(key), std::move(value)) });
         }
 
+        template <typename T, typename TD = std::decay_t<T>,
+            std::enable_if_t<std::is_arithmetic_v<TD>>* = nullptr>
+        bool set(str key, T&& value)
+        {
+            if constexpr (std::is_floating_point_v<TD>)
+            {
+                return set(std::move(key), str::to_str(static_cast<f64>(std::forward<T>(value))));
+            }
+            else if constexpr (std::is_signed_v<TD>)
+            {
+                return set(std::move(key), str::to_str(static_cast<s64>(std::forward<T>(value))));
+            }
+            else
+            {
+                return set(std::move(key), str::to_str(static_cast<u64>(std::forward<T>(value))));
+            }
+        }
+
         bool set(size_t index, str value)
         {
             return set({ std::make_pair(str(arraySeparator) + str::to_str(index), std::move(value)) });
+        }
+
+        bool set(size_t index, Object value)
+        {
+            return set(str(arraySeparator) + str::to_str(index), std::move(value));
         }
 
         template <typename T, typename TD = std::decay_t<T>,
@@ -317,22 +352,10 @@ namespace lib
         }
 
         template <typename T>
-        bool set(const vector<T>& value)
-        {
-            bool is_set{true};
-            size_t index{0U};
-            for (const auto& element : value)
-            {
-                is_set &= set(index++, element);
-            }
-            return is_set;
-        }
-
-        template <typename T>
         bool set(const str& property_name, const vector<T>& value)
         {
             Object inner_object;
-            inner_object.set(value);
+            inner_object << value;
             return set(property_name, inner_object);
         }
 
@@ -357,13 +380,7 @@ namespace lib
         ObjectDictionary m_objects;
     };
 
-    template <typename T>
-    constexpr const Object& operator>>(const Object& obj, T& data)
-    {
-        // This function should not be called.
-        assert(false);
-        return obj;
-    }
+    //////////////////////////////////////////////////////////////////////////////////
 
     template <typename T>
     constexpr const Object& operator>>(const Object& obj, vector<T>& data)
@@ -375,18 +392,50 @@ namespace lib
             stay = value.isValid();
             if (stay)
             {
-                T internal_data;
-
-                if (value.isObject())
+                if  constexpr (storable_or_copyable_as_value_v<T>)
                 {
-                    value.getObject() >> internal_data;
+                    T internal_data;
+
+                    if constexpr (is_object_v<T>)
+                    {
+                        value.getObject() >> internal_data;
+                    }
+                    else
+                    {
+                        if constexpr (storable_as_value_v<T>)
+                        {
+                            value.getValue() >> internal_data;
+                        }
+                    }
+                    data.push_back(std::move(internal_data));
                 }
                 else
                 {
-                    value.getValue() >> internal_data;
+                    T internal_data;
+                    value.getObject() >> internal_data;
                 }
-                data.push_back(std::move(internal_data));
+            }
+        }
+        return obj;
+    }
 
+    //////////////////////////////////////////////////////////////////
+
+    template <typename T>
+    inline Object& operator<<(Object& obj, const vector<T>& data)
+    {
+        size_type counter{0U};
+        for (const auto& element : data)
+        {
+            if constexpr (storable_or_copyable_as_value_v<T>)
+            {
+                obj.set(counter++, element);
+            }
+            else
+            {
+                Object temp;
+                temp << element;
+                temp.set(counter++,temp);
             }
         }
         return obj;

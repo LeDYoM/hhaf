@@ -337,7 +337,7 @@ TEST_CASE("Object with vector", "[Object][vector]")
 
         SECTION("Direct")
         {
-            obj.set(v);
+            obj << v;
 
             CHECK(obj[0U].as<s32>() == v[0U]);
             CHECK(obj[1U].as<s32>() == v[1U]);
@@ -348,7 +348,7 @@ TEST_CASE("Object with vector", "[Object][vector]")
 
         SECTION("More direct with rv vector and float")
         {
-            obj.set(vector<f32>{2.3F, 1.1F});
+            obj << vector<f32>{2.3F, 1.1F};
             CHECK(obj[0U].as<f32>() == 2.3F);
             CHECK(obj[1U].as<f32>() == 1.1F);
         }

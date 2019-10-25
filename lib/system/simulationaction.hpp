@@ -54,7 +54,7 @@ namespace lib::core
 
     inline Object& operator<<(Object& obj, const SimulationAction& simulation_action)
     {
-//        obj.set("type", static_cast<std::underlying_type_t<SimulationActionType>>(simulation_action.type));
+        obj.set("type", static_cast<std::underlying_type_t<SimulationActionType>>(simulation_action.type));
 //        obj.set("time_point", simulation_action.time_point.nanoseconds());
 //        obj.set("key", static_cast<std::underlying_type_t<input::Key>>(simulation_action.key));
 
