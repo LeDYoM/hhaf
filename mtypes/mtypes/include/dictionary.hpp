@@ -23,7 +23,7 @@ namespace lib
         using iterator = typename content::iterator;
         using const_iterator = typename content::const_iterator;
 
-		/// Default constructor.
+        /// Default constructor.
         constexpr Dictionary() = default;
 
         constexpr Dictionary(std::initializer_list<element> eList)
@@ -41,7 +41,7 @@ namespace lib
         {
             bool result{ true };
             for (const element& elems : eList) 
-			{
+            {
                 result &= add(elems.first, elems.second, overwrite);
             }
             return result;
@@ -51,7 +51,7 @@ namespace lib
         {
             bool result{true};
             for (const element& elems : eList) 
-			{
+            {
                 result &= add(elems.first, elems.second, overwrite);
             }
             return result;
@@ -62,12 +62,12 @@ namespace lib
             auto it(find(key));
 
             if (it == m_data.end()) 
-			{
+            {
                 m_data.emplace_back(std::move(key), std::move(value));
                 return true;
             }
             else if (overwrite)
-			{
+            {
                 (*it) = element(key, value);
                 return true;
             }
@@ -75,22 +75,21 @@ namespace lib
         }
 
         constexpr void clear() 
-		{
+        {
             m_data.clear();
         }
 
         constexpr const content &data() const noexcept 
-		{
+        {
             return m_data;
         }
 
-    private:
         constexpr const_iterator find(const str &key) const noexcept 
-		{
+        {
             for (auto &element : m_data) 
-			{
+            {
                 if (element.first == key) 
-				{
+                {
                     return &element;
                 }
             }
@@ -98,11 +97,11 @@ namespace lib
         }
 
         constexpr iterator find(const str &key) noexcept 
-		{
+        {
             for (auto&& element : m_data) 
-			{
+            {
                 if (element.first == key) 
-				{
+                {
                     return &element;
                 }
             }
@@ -110,7 +109,7 @@ namespace lib
         }
 
         constexpr bool exists(const str &key) const noexcept 
-		{
+        {
             return find(key) != m_data.cend();
         }
 
@@ -127,27 +126,27 @@ namespace lib
         }
 
         constexpr size_type size() const noexcept 
-		{
+        {
             return m_data.size();
         }
 
-		constexpr bool empty() const noexcept
-		{
-			return m_data.empty();
-		}
+        constexpr bool empty() const noexcept
+        {
+            return m_data.empty();
+        }
 
         constexpr bool operator==(const Dictionary &other) const noexcept 
-		{
+        {
             if (m_data.size() == other.m_data.size()) 
-			{
-				for (size_type i = { 0U }; i < m_data.size(); ++i)
-				{
+            {
+                for (size_type i = { 0U }; i < m_data.size(); ++i)
+                {
                     if (m_data[i].first != other.m_data[i].first) 
-					{
+                    {
                         return false;
                     }
                     else if (m_data[i].second != other.m_data[i].second) 
-					{
+                    {
                         return false;
                     }
                 }
@@ -157,12 +156,12 @@ namespace lib
         }
 
         constexpr bool operator!=(const Dictionary &other) const noexcept 
-		{
+        {
             return !(*this == other);
         }
 
+    private:
         content m_data;
-        friend class Object;
     };
 }
 
