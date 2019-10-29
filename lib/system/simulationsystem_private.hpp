@@ -28,19 +28,31 @@ namespace lib::core
         SimulationActionContainer simulation_actions_;  ///< Container containing the simulation actions to execute.
         str save_replay_file;
         str load_replay_file;
+
+        constexpr static char DataBufferName[] = "replay_data";
+        constexpr static char InputDataName[] = "input_data";
     };
 
     const Object& operator>>(const Object&obj, ReplayData& replay_data)
     {
-        obj["replay_data"].getObject() >> replay_data.data_buffer_;
-        obj["input_data"].getObject() >> replay_data.simulation_actions_;
+        if (const auto obj_random_generator_data = obj[ReplayData::DataBufferName]; obj_random_generator_data.isObject())
+        {
+            obj_random_generator_data.getObject() >> replay_data.data_buffer_;
+        }
+
+        if (const auto obj_input_data = obj[ReplayData::InputDataName]; obj_input_data.isObject())
+        {
+            obj_input_data.getObject() >> replay_data.simulation_actions_;
+        }
+
         return obj;
     }
 
-    void setObjectProperty(Object& obj, const ReplayData& replay_data)
+    inline Object& operator<<(Object& obj, const ReplayData& replay_data)
     {
-        obj.set("replay_data", replay_data.data_buffer_);
-        obj.set("input_data", replay_data.simulation_actions_);
+        obj.set(ReplayData::DataBufferName, replay_data.data_buffer_);
+        obj.set(ReplayData::InputDataName, replay_data.simulation_actions_);
+        return obj;
     }
 
     struct SimulationSystem::SimulationSystemPrivate final

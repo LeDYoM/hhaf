@@ -26,17 +26,19 @@ namespace lib::core
 
     SimulationSystem::~SimulationSystem()
     {
-        if (!priv_->replay_data_.save_replay_file.empty() && !priv_->replay_data_.data_buffer_.empty())
+        constexpr char SaveFileName[] = "foo3.txt";
+
+        if (!priv_->replay_data_.data_buffer_.empty())
         {
-            log_debug_info("Going to write play data into file " , priv_->replay_data_.save_replay_file);
+            log_debug_info("Going to write play data into file " , SaveFileName);
             log_debug_info("Writing play data...");
 
             Object obj;
-            obj.set("replay_data", priv_->replay_data_.data_buffer_);
+            obj << priv_->replay_data_;
 
             str temp;
             temp << obj;
-            if (systemProvider().fileSystem().saveFile(priv_->replay_data_.save_replay_file, temp))
+            if (systemProvider().fileSystem().saveFile(SaveFileName, temp))
             {
                 log_debug_info("Play data written successfully");
             }
