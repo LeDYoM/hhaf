@@ -26,8 +26,6 @@ namespace lib::core
     {
         SimulableDataBuffer data_buffer_;
         SimulationActionContainer simulation_actions_;  ///< Container containing the simulation actions to execute.
-        str save_replay_file;
-        str load_replay_file;
 
         constexpr static char DataBufferName[] = "replay_data";
         constexpr static char InputDataName[] = "input_data";

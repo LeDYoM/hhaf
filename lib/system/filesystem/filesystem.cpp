@@ -28,24 +28,37 @@ namespace lib::core
 
     RawMemory FileSystem::loadBinaryFile(const Path & file_name)
     {
-        //Note function returns size_max. size_type is maximum 4GB for a file.
-        size_type file_size = static_cast<size_type>(std::filesystem::file_size(file_name.c_str()));
+        if (fileExists(file_name))
+        {
+            //Note function returns size_max. size_type is maximum 4GB for a file.
+            size_type file_size = static_cast<size_type>(std::filesystem::file_size(file_name.c_str()));
 
-        uptr<std::byte[]> buf{ muptr<std::byte[]>(file_size) };
-        buf = priv_->readBuffer(std::move(buf), file_name, file_size);
-        return RawMemory{ std::move(buf), file_size };
+            uptr<std::byte[]> buf{ muptr<std::byte[]>(file_size) };
+            buf = priv_->readBuffer(std::move(buf), file_name, file_size);
+            return RawMemory{ std::move(buf), file_size };
+        }
+        return RawMemory{};
+    }
+
+    bool FileSystem::fileExists(const Path& path)
+    {
+        return std::filesystem::exists(std::filesystem::path(path.c_str()));
     }
 
     str FileSystem::loadTextFile(const Path& file_name)
     {
-        //Note function returns size_max. size_type is maximum 4GB for a file.
-        size_type file_size = static_cast<size_type>(std::filesystem::file_size(file_name.c_str()));
+        if (fileExists(file_name))
+        {
+            //Note function returns size_max. size_type is maximum 4GB for a file.
+            size_type file_size = static_cast<size_type>(std::filesystem::file_size(file_name.c_str()));
 
-        uptr<str::char_type[]> buf{ muptr<str::char_type[]>(file_size + 1U) };
-        buf = priv_->readBuffer(std::move(buf), file_name, file_size);
-        
-        buf[file_size] = static_cast<str::char_type>(0);
-        return str(buf.get());
+            uptr<str::char_type[]> buf{ muptr<str::char_type[]>(file_size + 1U) };
+            buf = priv_->readBuffer(std::move(buf), file_name, file_size);
+            
+            buf[file_size] = static_cast<str::char_type>(0);
+            return str(buf.get());
+        }
+        return str{};
     }
 
     bool FileSystem::saveFile(const Path& file_name, const str& data)

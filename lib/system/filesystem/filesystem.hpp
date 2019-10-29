@@ -19,6 +19,8 @@ namespace lib::core
         FileSystem(core::SystemProvider &system_provider);
         ~FileSystem() override;
 
+        bool fileExists(const Path& path);
+
         RawMemory loadBinaryFile(const str& file_name);
         str loadTextFile(const Path& file_name);
 

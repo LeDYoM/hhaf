@@ -26,7 +26,7 @@ namespace lib::core
 
     SimulationSystem::~SimulationSystem()
     {
-        constexpr char SaveFileName[] = "foo3.txt";
+        constexpr char SaveFileName[] = "simulation_output.txt";
 
         if (!priv_->replay_data_.data_buffer_.empty())
         {
@@ -50,6 +50,24 @@ namespace lib::core
         else
         {
             log_debug_info("No file or no data to store the replay");
+        }
+    }
+
+    void SimulationSystem::initialize()
+    {
+        static constexpr char InputFileName[] = "simulation_input.txt";
+
+        if (str temp(systemProvider().fileSystem().loadTextFile(InputFileName)); !temp.empty())
+        {
+            // If the file has been read corretly,
+            // createan ObjectCompiler and use it.
+            ObjectCompiler obj_compiler(temp);
+            if (obj_compiler.compile())
+            {
+                // The compilation was correct so, at least we
+                // have a valid Object.
+                obj_compiler.result() >> priv_->replay_data_;
+            }
         }
     }
 
@@ -115,31 +133,5 @@ namespace lib::core
         // Store the generated buffer into the play data.
         priv_->replay_data_.data_buffer_.insert(dest);
 
-    }
-
-    void SimulationSystem::setSaveReplayFile(str save_replay_file)
-    {
-        std::swap(priv_->replay_data_.save_replay_file, save_replay_file);
-    }
-
-    void SimulationSystem::setLoadReplayFile(str load_replay_file)
-    {
-        std::swap(priv_->replay_data_.load_replay_file, load_replay_file);
-
-        if (!priv_->replay_data_.load_replay_file.empty())
-        {
-            if (str temp(systemProvider().fileSystem().loadTextFile(priv_->replay_data_.load_replay_file)); !temp.empty())
-            {
-                // If the file has been read corretly,
-                // createan ObjectCompiler and use it.
-                ObjectCompiler obj_compiler(temp);
-                if (obj_compiler.compile())
-                {
-                    // The compilation was correct so, at least we
-                    // have a valid Object.
-                    obj_compiler.result() >> priv_->replay_data_;
-                }
-            }
-        }
     }
 }
