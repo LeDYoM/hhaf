@@ -19,7 +19,8 @@ namespace lib::core
     public:
         RandomSystem();
         ~RandomSystem() override;
-        void generateSimulableDataBuffer(SimulableDataBuffer& dest) override;
+
+        size_type getNext(const str& name, const size_type min, const size_type max) override;
 
     private:
         class RandomSystemPrivate;

@@ -5,6 +5,7 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector.hpp>
+#include <mtypes/include/str.hpp>
 
 namespace lib::core
 {
@@ -20,7 +21,7 @@ namespace lib::core
     class ISimulableDataProvider
     {
     public:
-        virtual void generateSimulableDataBuffer(SimulableDataBuffer& dest) = 0;
+        virtual size_type getNext(const str& name, const size_type min, const size_type max) = 0;
     };
 }
 

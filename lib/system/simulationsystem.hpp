@@ -25,7 +25,8 @@ namespace lib::core
         ~SimulationSystem() override;
 
         void update();
-        void generateSimulableDataBuffer(SimulableDataBuffer& dest) override;
+        size_type getNext(const str& name, const size_type min, const size_type max) override;
+
         void setSimulationActions(const TimePoint &current, SimulationActionGroup simulation_action_group);
         void setSimulationActions(SimulationActionGroup simulation_action_group);
         void setSimulatedDataBuffer(SimulableDataBuffer simulated_data_buffer);

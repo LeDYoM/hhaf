@@ -16,9 +16,10 @@ namespace lib::core
 
         std::uniform_int_distribution<size_type> dist;
 
-        size_type getUInt()
+        template <typename T>
+        T getNext()
         {
-            return static_cast<size_type>(dist(mt));
+            return static_cast<T>(dist(mt));
         }
     };
 
@@ -28,15 +29,13 @@ namespace lib::core
 
     RandomSystem::~RandomSystem() = default;
 
-    void RandomSystem::generateSimulableDataBuffer(SimulableDataBuffer & dest)
+    size_type RandomSystem::getNext(const str& name, const size_type min, const size_type max)
     {
-        dest.resize(10U);
-
-        for (auto& num_ref : dest)
-        {
-            num_ref = priv_->getUInt();
-        }
-
-        log_debug_info(dest);
+        const size_type next = priv_->getNext<size_type>();
+        log_debug_info("RandomSystem: Raw number generator: ", next);
+        assert_debug(min < max, "min (", min, ") should be smaller than max (", max, ")");
+        const size_type filtered_next = (next % (max - min)) + min;
+        log_debug_info("RandomSystem: Returning filtered output: ", filtered_next);
+        return filtered_next;
     }
 }

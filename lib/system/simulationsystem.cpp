@@ -117,21 +117,24 @@ namespace lib::core
         }
     }
 
-    void SimulationSystem::generateSimulableDataBuffer(SimulableDataBuffer & dest)
+    size_type SimulationSystem::getNext(const str& name, const size_type min, const size_type max)
     {
+        size_type simulated_data{0U};
+
         if (!priv_->simulable_data_buffer_.empty() && priv_->current_simulable_data_buffer_iterator != priv_->simulable_data_buffer_.cend())
         {
-            dest.resize(1U);
-            dest[0U] = *(priv_->current_simulable_data_buffer_iterator++);
-            log_debug_info(dest);
+            simulated_data = (*(priv_->current_simulable_data_buffer_iterator++));
+            log_debug_info("Returning simulated data: ", simulated_data);
         }
         else
         {
-            systemProvider().randomSystem().generateSimulableDataBuffer(dest);
+            simulated_data = systemProvider().randomSystem().getNext(name,  min, max);
+            log_debug_info("Returning random data from RandomSystem: ", simulated_data);
         }
 
         // Store the generated buffer into the play data.
-        priv_->replay_data_.data_buffer_.insert(dest);
-
+        priv_->replay_data_.data_buffer_.push_back(simulated_data);
+        log_debug_info("Gemerated data added to buffer for ", name);
+        return simulated_data;
     }
 }

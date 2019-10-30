@@ -4,6 +4,7 @@
 #define LIB_DATA_PROVIDER_COMPONENT_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
+#include <mtypes/include/str.hpp>
 
 #include <lib/scene/components/icomponent.hpp>
 
@@ -19,6 +20,8 @@ namespace lib::scene
         DataProviderComponent() noexcept;
         ~DataProviderComponent() override;
         u32 getUInt(const size_type max, const size_type min = 0U) const;
+        void setName(str new_name);
+        const str& name() const noexcept;
 
         void onAttached() override;
     private:
