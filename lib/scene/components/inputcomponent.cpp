@@ -9,56 +9,56 @@
 
 namespace lib::scene
 {
-    using namespace input;
+using namespace input;
 
-    class InputComponent::InputComponentPrivate
+class InputComponent::InputComponentPrivate
+{
+};
+InputComponent::InputComponent()
+    : priv_{new InputComponentPrivate} {}
+
+InputComponent::~InputComponent() = default;
+
+void InputComponent::update()
+{
+    if (attachedNode())
     {
-    };
-    InputComponent::InputComponent()
-        : priv_{ new InputComponentPrivate } {}
+        const input::InputSystem &input_system{attachedNode()->inputSystem()};
 
-    InputComponent::~InputComponent() = default;
-
-    void InputComponent::update()
-    {
-        if (attachedNode())
+        for (const auto &pressedKey : input_system.pressedKeys())
         {
-            const input::InputSystem& input_system{ attachedNode()->inputSystem() };
+            KeyPressed(pressedKey);
+        }
 
-            for (const auto &pressedKey : input_system.pressedKeys())
-            {
-                KeyPressed(pressedKey);
-            }
-
-            for (const auto &releasedKey : input_system.releasedKeys())
-            {
-                KeyReleased(releasedKey);
-            }
+        for (const auto &releasedKey : input_system.releasedKeys())
+        {
+            KeyReleased(releasedKey);
         }
     }
+}
 
-    bool InputComponent::isPressed(const Key key)
+bool InputComponent::isPressed(const Key key)
+{
+    if (attachedNode())
     {
-        if (attachedNode())
-        {
-            return attachedNode()->inputSystem().keyStates()[key];
-        }
-        return false;
+        return attachedNode()->inputSystem().keyStates()[key];
     }
+    return false;
+}
 
-    bool InputComponent::isShiftPressed() const
-    {
+bool InputComponent::isShiftPressed() const
+{
     /*        if (attachedNode())
         {
             const core::Host &host{ attachedNode()->parentScene()->sceneManager().host() };
             return host().inputSystem().keyStates()[Key::LShift] || host().inputSystem().keyStates()[Key::RShift];
         }
         */
-        return false;
-    }
-
-    char InputComponent::toAscii(const Key key) noexcept
-    {
-        return static_cast<char>(key + (isShiftPressed() ? 127 : 65));
-    }
+    return false;
 }
+
+char InputComponent::toAscii(const Key key) noexcept
+{
+    return static_cast<char>(key + (isShiftPressed() ? 127 : 65));
+}
+} // namespace lib::scene

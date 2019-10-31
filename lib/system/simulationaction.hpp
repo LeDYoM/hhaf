@@ -17,50 +17,50 @@
 
 namespace lib::core
 {
-    enum class SimulationActionType : u8
+enum class SimulationActionType : u8
+{
+    KeyPressed = 0U,
+    KeyReleased
+};
+
+struct SimulationAction
+{
+    SimulationActionType type;
+    TimePoint time_point;
+    input::Key key;
+
+    inline bool timeToLaunch(const TimePoint &time_since_start, const TimePoint &last_triggered) const noexcept
     {
-        KeyPressed = 0U,
-        KeyReleased
-    };
-
-    struct SimulationAction
-    {
-        SimulationActionType type;
-        TimePoint time_point;
-        input::Key key;
-
-        inline bool timeToLaunch(const TimePoint& time_since_start, const TimePoint& last_triggered) const noexcept
-        {
-            // To calculate if is time to trigger the action:
-            // - Get the time passed since the start.
-            // - In case that is time action is relative (to the previous one),
-            //   substract the time when the last action was triggered.
-            // - If it is not relative, substract nothing.
-            // - return if this quantity is bigger than the time_point of this SimulationAction.
-            return ((time_since_start - last_triggered) > time_point);
-        }
-    };
-
-    inline const Object& operator>>(const Object& obj, SimulationAction& simulation_action)
-    {
-        simulation_action.type = obj["type"].as<SimulationActionType>();
-        simulation_action.time_point = TimePoint{obj["time_point"].as<TimePoint::Rep>()};
-        simulation_action.key = obj["key"].as<input::Key>();
-
-        return obj;
+        // To calculate if is time to trigger the action:
+        // - Get the time passed since the start.
+        // - In case that is time action is relative (to the previous one),
+        //   substract the time when the last action was triggered.
+        // - If it is not relative, substract nothing.
+        // - return if this quantity is bigger than the time_point of this SimulationAction.
+        return ((time_since_start - last_triggered) > time_point);
     }
+};
 
-    inline Object& operator<<(Object& obj, const SimulationAction& simulation_action)
-    {
-        obj.set("type", simulation_action.type);
-        obj.set("time_point", simulation_action.time_point.nanoseconds());
-        obj.set("key", simulation_action.key);
+inline const Object &operator>>(const Object &obj, SimulationAction &simulation_action)
+{
+    simulation_action.type = obj["type"].as<SimulationActionType>();
+    simulation_action.time_point = TimePoint{obj["time_point"].as<TimePoint::Rep>()};
+    simulation_action.key = obj["key"].as<input::Key>();
 
-        return obj;
-    }
-
-    using SimulationActionContainer = vector<SimulationAction>;
-    using CurrentSimulationActionIterator = SimulationActionContainer::const_iterator;
+    return obj;
 }
+
+inline Object &operator<<(Object &obj, const SimulationAction &simulation_action)
+{
+    obj.set("type", simulation_action.type);
+    obj.set("time_point", simulation_action.time_point.nanoseconds());
+    obj.set("key", simulation_action.key);
+
+    return obj;
+}
+
+using SimulationActionContainer = vector<SimulationAction>;
+using CurrentSimulationActionIterator = SimulationActionContainer::const_iterator;
+} // namespace lib::core
 
 #endif

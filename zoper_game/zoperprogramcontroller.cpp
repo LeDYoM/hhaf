@@ -74,7 +74,6 @@ namespace zoper
 #ifndef ZOPER_USE_SIMULATION
             {
                 auto& simulationSystem(systemProvider().simulationSystem());
-                simulationSystem.initialize();
                 simulationSystem.setSimulationActions(simulation_action_group);
                 simulationSystem.setSimulatedDataBuffer(core::SimulableDataBuffer{0U, 0U, 0U, 0U});
             }

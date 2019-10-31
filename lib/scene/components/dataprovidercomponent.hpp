@@ -10,24 +10,25 @@
 
 namespace lib::scene
 {
-    /**
+/**
     * This component class is intended to be used to generate
     * a series of random numbers.
     */
-    class DataProviderComponent final : public IComponent
-    {
-    public:
-        DataProviderComponent() noexcept;
-        ~DataProviderComponent() override;
-        u32 getUInt(const size_type max, const size_type min = 0U) const;
-        void setName(str new_name);
-        const str& name() const noexcept;
+class DataProviderComponent final : public IComponent
+{
+public:
+    DataProviderComponent() noexcept;
+    ~DataProviderComponent() override;
+    u32 getUInt(const size_type max, const size_type min = 0U) const;
+    void setName(str new_name);
+    const str &name() const noexcept;
 
-        void onAttached() override;
-    private:
-        class DataProviderComponentPrivate;
-        uptr<DataProviderComponentPrivate> priv_;
-	};
-}
+    void onAttached() override;
+
+private:
+    class DataProviderComponentPrivate;
+    uptr<DataProviderComponentPrivate> priv_;
+};
+} // namespace lib::scene
 
 #endif
