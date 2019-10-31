@@ -9,20 +9,19 @@
 
 namespace lib::core
 {
-    using SimulableDataBuffer = vector<size_type>;
 
-    /**
-     * @brief Provide an interface to Simulable data.
+/**
+     * @brief Provide an interface to get simulable data.
      * This abstract class should be inherited from classes
-     * that provide access to a @b SimulableDataBuffer, that is
+     * that provide access to a provider of data, that is
      * can be wrapped by the @b SimulationSysten in order to
      * override it.
      */
-    class ISimulableDataProvider
-    {
-    public:
-        virtual size_type getNext(const str& name, const size_type min, const size_type max) = 0;
-    };
-}
+class ISimulableDataProvider
+{
+public:
+    virtual size_type getNext(const str &name, const size_type min, const size_type max) = 0;
+};
+} // namespace lib::core
 
 #endif

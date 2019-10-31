@@ -21,6 +21,8 @@ namespace lib::core
 class SimulationSystem final : public HostedAppService, public ISimulableDataProvider
 {
 public:
+    using SimulableDataBuffer = vector<size_type>;
+
     SimulationSystem(core::SystemProvider &system_provider);
     ~SimulationSystem() override;
 

@@ -13,7 +13,7 @@
 #include <lib/include/liblog.hpp>
 #include <lib/include/core/timepoint.hpp>
 #include <lib/system/systemprovider.hpp>
-#include <lib/system/simulabledataprovider.hpp>
+#include <lib/system/simulationsystem.hpp>
 #include <lib/system/randomsystem.hpp>
 
 #include <mtypes/include/types.hpp>
@@ -22,9 +22,10 @@
 
 namespace lib::core
 {
+
 struct ReplayData
 {
-    SimulableDataBuffer data_buffer_;
+    SimulationSystem::SimulableDataBuffer data_buffer_;
     SimulationActionContainer simulation_actions_; ///< Container containing the simulation actions to execute.
 
     constexpr static char DataBufferName[] = "replay_data";
