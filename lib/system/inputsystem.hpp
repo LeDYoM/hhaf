@@ -29,11 +29,11 @@ namespace lib::backend
 
         /// Force or simulate a key press.
         /// @param key @b Key to be added.
-        void pressKey(const Key key);
+        void simulatePressKey(const Key key);
 
         /// Force or simulate a key release.
         /// @param key @b Key to be added.
-        void releaseKey(const Key key);
+        void simulateReleaseKey(const Key key);
 
     private:
         void keyPressed(const Key key);
