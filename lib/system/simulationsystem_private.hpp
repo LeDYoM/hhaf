@@ -65,6 +65,7 @@ struct SimulationSystem::SimulationSystemPrivate final
 
     void setSimulationActions(const TimePoint &current, SimulationActionContainer sim_act_container)
     {
+        // The passed container is now part of the data to be replayed.
         replay_data_.simulation_actions_.swap(sim_act_container);
         current_simulation_action_iterator_ = replay_data_.simulation_actions_.cbegin();
         last_checked_point_ = current;

@@ -93,12 +93,14 @@ void SimulationSystem::setSimulatedDataBuffer(SimulableDataBuffer simulated_data
 
 void SimulationSystem::update()
 {
+    // Get the current TimePoint
+    const TimePoint &current_time_point{systemProvider().timeSystem().now()};
+
     // Check if we have still actions to trigger.
     if (priv_->current_simulation_action_iterator_ != priv_->replay_data_.simulation_actions_.cend())
     {
         // Check if we have reached the next TimePoint
         const SimulationAction &simulation_action{*(priv_->current_simulation_action_iterator_)};
-        const TimePoint &current_time_point{systemProvider().timeSystem().now()};
         if (simulation_action.timeToLaunch(current_time_point, priv_->last_checked_point_))
         {
             priv_->last_checked_point_ = current_time_point;
@@ -118,6 +120,38 @@ void SimulationSystem::update()
             {
                 log_debug_error("Unknown SimulationActionType enum value: ", (int)simulation_action.type);
             }
+        }
+    }
+
+    {
+        // Check if some new input is there.
+        // Note: this will catch the simulated keys in the previous loop too, but
+        //      that is intended.
+        auto &&input_system{systemProvider().inputSystem()};
+
+        // If there are keys pending in the input system, process them.
+        if (
+            !input_system.pressedKeys().empty() ||
+            !input_system.releasedKeys().empty())
+        {
+            for (const auto &pressedKey : input_system.pressedKeys())
+            {
+                SimulationAction SimulationAction{
+                    SimulationActionType::KeyPressed,
+                    current_time_point - priv_->last_checked_point_,
+                    pressedKey};
+            }
+
+            for (const auto &releasedKey : input_system.releasedKeys())
+            {
+                SimulationAction SimulationAction{
+                    SimulationActionType::KeyPressed,
+                    current_time_point - priv_->last_checked_point_,
+                    releasedKey};
+            }
+
+            // Update the time of the last update.
+            priv_->last_checked_point_ = current_time_point;
         }
     }
 }
