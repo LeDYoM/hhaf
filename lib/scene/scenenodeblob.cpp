@@ -48,16 +48,6 @@ namespace lib::scene
         return sceneManager().systemProvider().randomSystem();
     }
 
-    const core::ISimulableDataProvider & SceneNodeBlob::simulableDataProvider() const noexcept
-    {
-        return sceneManager().systemProvider().simulableDataProvider();
-    }
-
-    core::ISimulableDataProvider & SceneNodeBlob::simulableDataProvider() noexcept
-    {
-        return sceneManager().systemProvider().simulableDataProvider();
-    }
-
     const IApp& SceneNodeBlob::app() const
     {
         return sceneManager().systemProvider().app();

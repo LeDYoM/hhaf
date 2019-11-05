@@ -1,5 +1,6 @@
 #include "randomsystem.hpp"
-
+#include <lib/system/systemprovider.hpp>
+#include "simulationsystem.hpp"
 #include <lib/include/liblog.hpp>
 
 #include <random>
@@ -23,8 +24,8 @@ namespace lib::core
         }
     };
 
-    RandomSystem::RandomSystem()
-        : AppService{ },
+    RandomSystem::RandomSystem(core::SystemProvider &system_provider)
+        : HostedAppService{system_provider},
         priv_ { muptr<RandomSystemPrivate>() } {}
 
     RandomSystem::~RandomSystem() = default;
@@ -34,8 +35,11 @@ namespace lib::core
         const size_type next = priv_->getNext<size_type>();
         log_debug_info("RandomSystem: Raw number generator: ", next);
         assert_debug(min < max, "min (", min, ") should be smaller than max (", max, ")");
-        const size_type filtered_next = (next % (max - min)) + min;
-        log_debug_info("RandomSystem: Returning filtered output: ", filtered_next);
+        size_type filtered_next = (next % (max - min)) + min;
+        log_debug_info("RandomSystem: Preselecting output: ", filtered_next);
+
+        bool generated{systemProvider().simulationSystem().getNext(name, filtered_next)};
+
         return filtered_next;
     }
 }

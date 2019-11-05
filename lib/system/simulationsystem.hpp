@@ -5,9 +5,6 @@
 
 #include <mtypes/include/types.hpp>
 #include <lib/system/appservice.hpp>
-#include <lib/system/simulabledataprovider.hpp>
-#include <lib/system/simulationaction.hpp>
-#include <lib/include/core/timepoint.hpp>
 #include <lib/system/simulationactiongroup.hpp>
 
 namespace lib::core
@@ -18,7 +15,7 @@ namespace lib::core
     * 
     * For this purpose, the simulation system...
     */
-class SimulationSystem final : public HostedAppService, public ISimulableDataProvider
+class SimulationSystem final : public HostedAppService
 {
 public:
     using SimulableDataBuffer = vector<size_type>;
@@ -27,7 +24,7 @@ public:
     ~SimulationSystem() override;
 
     void update();
-    size_type getNext(const str &name, const size_type min, const size_type max) override;
+    bool getNext(const str &name, size_type& pre_selected);
 
     void setSimulationActions(const TimePoint &current, SimulationActionGroup simulation_action_group);
     void setSimulationActions(SimulationActionGroup simulation_action_group);

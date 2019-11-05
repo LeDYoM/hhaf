@@ -6,7 +6,6 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector.hpp>
 #include <lib/system/appservice.hpp>
-#include <lib/system/simulabledataprovider.hpp>
 
 namespace lib::core
 {
@@ -14,13 +13,13 @@ namespace lib::core
     * This system is intended to be used to generate
     * a series of random numbers.
     */
-    class RandomSystem final : public AppService, public ISimulableDataProvider
+    class RandomSystem final : public HostedAppService
     {
     public:
-        RandomSystem();
+        RandomSystem(core::SystemProvider &system_provider);
         ~RandomSystem() override;
 
-        size_type getNext(const str& name, const size_type min, const size_type max) override;
+        size_type getNext(const str& name, const size_type min, const size_type max);
 
     private:
         class RandomSystemPrivate;

@@ -15,7 +15,6 @@ namespace lib
 namespace lib::core
 {
     class RandomSystem;
-    class ISimulableDataProvider;
 }
 
 namespace lib::input
@@ -41,9 +40,6 @@ namespace lib::scene
 
         const core::RandomSystem& randomSystem() const noexcept;
         core::RandomSystem& randomSystem() noexcept;
-
-        const core::ISimulableDataProvider &simulableDataProvider() const noexcept;
-        core::ISimulableDataProvider &simulableDataProvider() noexcept;
 
         const IApp& app() const;
         IApp& app();

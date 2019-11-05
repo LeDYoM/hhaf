@@ -36,7 +36,6 @@ namespace lib::core
 #endif
     class TimeSystem;
     class RenderSystem;
-    class ISimulableDataProvider;
 }
 
 namespace lib::core
@@ -81,8 +80,6 @@ namespace lib::core
         backend::BackendFactory &backendFactory() noexcept;
         const RenderSystem &renderSystem() const noexcept;
         RenderSystem &renderSystem() noexcept;
-        const ISimulableDataProvider &simulableDataProvider() const noexcept;
-        ISimulableDataProvider &simulableDataProvider() noexcept;
 
         bool runStep();
 

@@ -51,7 +51,7 @@ void SystemProvider::init(IApp *iapp)
     p_->scene_manager_ = muptr<scene::SceneManager>(*this);
     p_->resource_manager_ = muptr<core::ResourceManager>(*this);
     p_->render_system_ = muptr<core::RenderSystem>(*this);
-    p_->random_system_ = muptr<RandomSystem>();
+    p_->random_system_ = muptr<RandomSystem>(*this);
     p_->file_system_ = muptr<FileSystem>(*this);
 #ifdef LIB_COMPILE_SIMULATIONS
     p_->simulation_system_ = muptr<SimulationSystem>(*this);
@@ -184,28 +184,6 @@ const RenderSystem &SystemProvider::renderSystem() const noexcept
 RenderSystem &SystemProvider::renderSystem() noexcept
 {
     return *p_->render_system_;
-}
-
-const ISimulableDataProvider &SystemProvider::simulableDataProvider() const noexcept
-{
-    return *p_->
-#ifdef LIB_COMPILE_SIMULATIONS
-            simulation_system_
-#else
-            random_system_
-#endif
-        ;
-}
-
-ISimulableDataProvider &SystemProvider::simulableDataProvider() noexcept
-{
-    return *p_->
-#ifdef LIB_COMPILE_SIMULATIONS
-            simulation_system_
-#else
-            random_system_
-#endif
-        ;
 }
 
 bool SystemProvider::runStep()

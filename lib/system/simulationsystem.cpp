@@ -8,7 +8,6 @@
 #include <lib/include/liblog.hpp>
 #include <lib/include/core/timepoint.hpp>
 #include <lib/system/systemprovider.hpp>
-#include <lib/system/simulabledataprovider.hpp>
 #include <lib/system/randomsystem.hpp>
 #include <lib/system/filesystem/filesystem.hpp>
 
@@ -156,24 +155,20 @@ void SimulationSystem::update()
     }
 }
 
-size_type SimulationSystem::getNext(const str &name, const size_type min, const size_type max)
+bool SimulationSystem::getNext(const str &name, size_type& pre_selected)
 {
-    size_type simulated_data{0U};
+    bool generated{false};
 
     if (!priv_->simulable_data_buffer_.empty() && priv_->current_simulable_data_buffer_iterator != priv_->simulable_data_buffer_.cend())
     {
-        simulated_data = (*(priv_->current_simulable_data_buffer_iterator++));
-        log_debug_info("Returning simulated data: ", simulated_data);
-    }
-    else
-    {
-        simulated_data = systemProvider().randomSystem().getNext(name, min, max);
-        log_debug_info("Returning random data from RandomSystem: ", simulated_data);
+        pre_selected = (*(priv_->current_simulable_data_buffer_iterator++));
+        generated = true;
+        log_debug_info("Returning simulated data: ", pre_selected);
     }
 
     // Store the generated buffer into the play data.
-    priv_->replay_data_.data_buffer_.push_back(simulated_data);
+    priv_->replay_data_.data_buffer_.push_back(pre_selected);
     log_debug_info("Generated data added to buffer for ", name);
-    return simulated_data;
+    return generated;
 }
 } // namespace lib::core
