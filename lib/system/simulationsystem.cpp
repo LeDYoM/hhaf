@@ -54,6 +54,28 @@ SimulationSystem::~SimulationSystem()
 
 void SimulationSystem::initialize()
 {
+    // Just test.
+    SimulationActionGroup simulation_action_group;
+
+    simulation_action_group.addKeyStroke(input::Key::Return);
+    simulation_action_group.addKeyStroke(input::Key::Down);
+    simulation_action_group.addKeyStroke(input::Key::Return);
+
+#ifndef ZOPER_USE_SIMULATION
+            {
+                auto& simulationSystem(systemProvider().simulationSystem());
+//                simulationSystem.setSimulationActions(simulation_action_group);
+                simulationSystem.setSimulatedDataBuffer(core::SimulationSystem::SimulableDataBuffer{0U, 0U, 0U, 0U});
+            }
+#endif
+
+#ifndef ZOPER_STORE_PLAY
+            {
+                auto& simulationSystem(systemProvider().simulationSystem());
+                simulationSystem.setSaveReplayFile("foo.txt");
+            }
+#endif
+
     static constexpr char InputFileName[] = "simulation_input.txt";
 
     log_debug_info("Trying to load ", InputFileName, " to read simulation data");
@@ -135,18 +157,20 @@ void SimulationSystem::update()
         {
             for (const auto &pressedKey : input_system.pressedKeys())
             {
-                SimulationAction SimulationAction{
+                SimulationAction simulation_action{
                     SimulationActionType::KeyPressed,
                     current_time_point - priv_->last_checked_point_,
                     pressedKey};
+                priv_->addSimulationAction(std::move(simulation_action));
             }
 
             for (const auto &releasedKey : input_system.releasedKeys())
             {
-                SimulationAction SimulationAction{
+                SimulationAction simulation_action{
                     SimulationActionType::KeyPressed,
                     current_time_point - priv_->last_checked_point_,
                     releasedKey};
+                priv_->addSimulationAction(std::move(simulation_action));
             }
 
             // Update the time of the last update.
