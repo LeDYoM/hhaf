@@ -18,7 +18,7 @@ namespace lib::core
 class SimulationSystem final : public HostedAppService
 {
 public:
-    using SimulableDataBuffer = vector<size_type>;
+    using SimulateRandomDataBuffer = vector<size_type>;
 
     SimulationSystem(core::SystemProvider &system_provider);
     ~SimulationSystem() override;
@@ -28,7 +28,7 @@ public:
 
     void setSimulationActions(const TimePoint &current, SimulationActionGroup simulation_action_group);
     void setSimulationActions(SimulationActionGroup simulation_action_group);
-    void setSimulatedDataBuffer(SimulableDataBuffer simulated_data_buffer);
+    void setSimulateRandomDataBuffer(SimulateRandomDataBuffer simulated_data_buffer);
     void initialize();
 
 private:

@@ -27,13 +27,13 @@ SimulationSystem::~SimulationSystem()
 {
     constexpr char SaveFileName[] = "simulation_output.txt";
 
-    if (!priv_->replay_data_.data_buffer_.empty())
+    if (!priv_->next_replay_data_.data_buffer_.empty())
     {
         log_debug_info("Going to write play data into file ", SaveFileName);
         log_debug_info("Writing play data...");
 
         Object obj;
-        obj << priv_->replay_data_;
+        obj << priv_->next_replay_data_;
 
         str temp;
         temp << obj;
@@ -62,18 +62,19 @@ void SimulationSystem::initialize()
     simulation_action_group.addKeyStroke(input::Key::Return);
 
 #ifndef ZOPER_USE_SIMULATION
-            {
-                auto& simulationSystem(systemProvider().simulationSystem());
-//                simulationSystem.setSimulationActions(simulation_action_group);
-                simulationSystem.setSimulatedDataBuffer(core::SimulationSystem::SimulableDataBuffer{0U, 0U, 0U, 0U});
-            }
+    {
+        auto &simulationSystem(systemProvider().simulationSystem());
+        //                simulationSystem.setSimulationActions(simulation_action_group);
+        simulationSystem.setSimulateRandomDataBuffer(
+            SimulateRandomDataBuffer{0U, 0U, 0U, 0U});
+    }
 #endif
 
 #ifndef ZOPER_STORE_PLAY
-            {
-                auto& simulationSystem(systemProvider().simulationSystem());
-                simulationSystem.setSaveReplayFile("foo.txt");
-            }
+    {
+        auto &simulationSystem(systemProvider().simulationSystem());
+        simulationSystem.setSaveReplayFile("foo.txt");
+    }
 #endif
 
     static constexpr char InputFileName[] = "simulation_input.txt";
@@ -88,7 +89,7 @@ void SimulationSystem::initialize()
         {
             // The compilation was correct so, at least we
             // have a valid Object.
-            obj_compiler.result() >> priv_->replay_data_;
+            obj_compiler.result() >> priv_->current_replay_data_;
         }
     }
     else
@@ -107,9 +108,9 @@ void SimulationSystem::setSimulationActions(SimulationActionGroup simulation_act
     setSimulationActions(systemProvider().timeSystem().now(), simulation_action_group.getContainer());
 }
 
-void SimulationSystem::setSimulatedDataBuffer(SimulableDataBuffer simulated_data_buffer)
+void SimulationSystem::setSimulateRandomDataBuffer(SimulateRandomDataBuffer simulated_data_buffer)
 {
-    priv_->setSimulatedDataBuffer(std::move(simulated_data_buffer));
+    priv_->setSimulateRandomDataBuffer(std::move(simulated_data_buffer));
 }
 
 void SimulationSystem::update()
@@ -118,13 +119,13 @@ void SimulationSystem::update()
     const TimePoint &current_time_point{systemProvider().timeSystem().now()};
 
     // Check if we have still actions to trigger.
-    if (priv_->current_simulation_action_iterator_ != priv_->replay_data_.simulation_actions_.cend())
+    if (priv_->current_simulation_action_iterator_ != priv_->current_replay_data_.simulation_actions_.cend())
     {
         // Check if we have reached the next TimePoint
         const SimulationAction &simulation_action{*(priv_->current_simulation_action_iterator_)};
-        if (simulation_action.timeToLaunch(current_time_point, priv_->last_checked_point_))
+        if (simulation_action.timeToLaunch(current_time_point, priv_->current_last_checked_point_))
         {
-            priv_->last_checked_point_ = current_time_point;
+            priv_->current_last_checked_point_ = current_time_point;
             ++(priv_->current_simulation_action_iterator_);
 
             if (simulation_action.type == SimulationActionType::KeyPressed)
@@ -159,7 +160,7 @@ void SimulationSystem::update()
             {
                 SimulationAction simulation_action{
                     SimulationActionType::KeyPressed,
-                    current_time_point - priv_->last_checked_point_,
+                    current_time_point - priv_->next_last_checked_point_,
                     pressedKey};
                 priv_->addSimulationAction(std::move(simulation_action));
             }
@@ -168,22 +169,23 @@ void SimulationSystem::update()
             {
                 SimulationAction simulation_action{
                     SimulationActionType::KeyPressed,
-                    current_time_point - priv_->last_checked_point_,
+                    current_time_point - priv_->next_last_checked_point_,
                     releasedKey};
                 priv_->addSimulationAction(std::move(simulation_action));
             }
 
             // Update the time of the last update.
-            priv_->last_checked_point_ = current_time_point;
+            priv_->next_last_checked_point_ = current_time_point;
         }
     }
 }
 
-bool SimulationSystem::getNext(const str &name, size_type& pre_selected)
+bool SimulationSystem::getNext(const str &name, size_type &pre_selected)
 {
     bool generated{false};
 
-    if (!priv_->simulable_data_buffer_.empty() && priv_->current_simulable_data_buffer_iterator != priv_->simulable_data_buffer_.cend())
+    if (!priv_->current_replay_data_.data_buffer_.empty() &&
+        priv_->current_simulable_data_buffer_iterator != priv_->current_replay_data_.data_buffer_.cend())
     {
         pre_selected = (*(priv_->current_simulable_data_buffer_iterator++));
         generated = true;
@@ -191,7 +193,7 @@ bool SimulationSystem::getNext(const str &name, size_type& pre_selected)
     }
 
     // Store the generated buffer into the play data.
-    priv_->replay_data_.data_buffer_.push_back(pre_selected);
+    priv_->next_replay_data_.data_buffer_.push_back(pre_selected);
     log_debug_info("Generated data added to buffer for ", name);
     return generated;
 }
