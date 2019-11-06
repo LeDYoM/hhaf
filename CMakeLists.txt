@@ -19,8 +19,7 @@ endif()
 
 add_compile_definitions(LIB_COMPILE_SIMULATIONS)
 #add_compile_definitions(LIB_ALLOW_ACCELERATION)
-add_compile_definitions(ZOPER_STORE_PLAY)
-#add_compile_definitions(ZOPER_USE_SIMULATION)
+#add_compile_definitions(LIB_USE_SIMULATION_INIT_DATA)
 
 message ("cxx Flags: " ${CMAKE_CXX_FLAGS})
 

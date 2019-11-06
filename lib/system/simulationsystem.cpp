@@ -27,28 +27,21 @@ SimulationSystem::~SimulationSystem()
 {
     constexpr char SaveFileName[] = "simulation_output.txt";
 
-    if (!priv_->next_replay_data_.data_buffer_.empty())
+    log_debug_info("Going to write play data into file ", SaveFileName);
+    log_debug_info("Writing play data...");
+
+    Object obj;
+    obj << priv_->next_replay_data_;
+
+    str temp;
+    temp << obj;
+    if (systemProvider().fileSystem().saveFile(SaveFileName, temp))
     {
-        log_debug_info("Going to write play data into file ", SaveFileName);
-        log_debug_info("Writing play data...");
-
-        Object obj;
-        obj << priv_->next_replay_data_;
-
-        str temp;
-        temp << obj;
-        if (systemProvider().fileSystem().saveFile(SaveFileName, temp))
-        {
-            log_debug_info("Play data written successfully");
-        }
-        else
-        {
-            log_debug_error("Error while writing the debug data");
-        }
+        log_debug_info("Play data written successfully");
     }
     else
     {
-        log_debug_info("No file or no data to store the replay");
+        log_debug_error("Error while writing the debug data");
     }
 }
 
@@ -57,23 +50,16 @@ void SimulationSystem::initialize()
     // Just test.
     SimulationActionGroup simulation_action_group;
 
-    simulation_action_group.addKeyStroke(input::Key::Return);
-    simulation_action_group.addKeyStroke(input::Key::Down);
-    simulation_action_group.addKeyStroke(input::Key::Return);
-
-#ifndef ZOPER_USE_SIMULATION
+#ifdef LIB_USE_SIMULATION_INIT_DATA
     {
+        simulation_action_group.addKeyStroke(input::Key::Return);
+        simulation_action_group.addKeyStroke(input::Key::Down);
+        simulation_action_group.addKeyStroke(input::Key::Return);
+
         auto &simulationSystem(systemProvider().simulationSystem());
-        //                simulationSystem.setSimulationActions(simulation_action_group);
+        simulationSystem.setSimulationActions(simulation_action_group);
         simulationSystem.setSimulateRandomDataBuffer(
             SimulateRandomDataBuffer{0U, 0U, 0U, 0U});
-    }
-#endif
-
-#ifndef ZOPER_STORE_PLAY
-    {
-        auto &simulationSystem(systemProvider().simulationSystem());
-        simulationSystem.setSaveReplayFile("foo.txt");
     }
 #endif
 
@@ -96,6 +82,13 @@ void SimulationSystem::initialize()
     {
         log_debug_info("File ", InputFileName, " not found");
     }
+
+    // Prepare output
+    priv_->next_last_checked_point_ = systemProvider().timeSystem().now();
+    priv_->current_simulation_action_iterator_ =
+        priv_->current_replay_data_.simulation_actions_.cbegin();
+    priv_->current_simulable_data_buffer_iterator = 
+        priv_->current_replay_data_.data_buffer_.cbegin();
 }
 
 void SimulationSystem::setSimulationActions(const TimePoint &current, SimulationActionGroup simulation_action_group)
@@ -119,7 +112,9 @@ void SimulationSystem::update()
     const TimePoint &current_time_point{systemProvider().timeSystem().now()};
 
     // Check if we have still actions to trigger.
-    if (priv_->current_simulation_action_iterator_ != priv_->current_replay_data_.simulation_actions_.cend())
+    if (!priv_->current_replay_data_.simulation_actions_.empty() &&
+        (priv_->current_simulation_action_iterator_ !=
+         priv_->current_replay_data_.simulation_actions_.cend()))
     {
         // Check if we have reached the next TimePoint
         const SimulationAction &simulation_action{*(priv_->current_simulation_action_iterator_)};
@@ -160,7 +155,7 @@ void SimulationSystem::update()
             {
                 SimulationAction simulation_action{
                     SimulationActionType::KeyPressed,
-                    current_time_point - priv_->next_last_checked_point_,
+                    (current_time_point - priv_->next_last_checked_point_),
                     pressedKey};
                 priv_->addSimulationAction(std::move(simulation_action));
             }
@@ -168,8 +163,8 @@ void SimulationSystem::update()
             for (const auto &releasedKey : input_system.releasedKeys())
             {
                 SimulationAction simulation_action{
-                    SimulationActionType::KeyPressed,
-                    current_time_point - priv_->next_last_checked_point_,
+                    SimulationActionType::KeyReleased,
+                    (current_time_point - priv_->next_last_checked_point_),
                     releasedKey};
                 priv_->addSimulationAction(std::move(simulation_action));
             }

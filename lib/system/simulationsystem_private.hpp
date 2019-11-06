@@ -76,7 +76,7 @@ struct SimulationSystem::SimulationSystemPrivate final
 
     void addSimulationAction(SimulationAction simulation_action)
     {
-        current_replay_data_.simulation_actions_.push_back(std::move(simulation_action));
+        next_replay_data_.simulation_actions_.push_back(std::move(simulation_action));
     }
 
     void setSimulateRandomDataBuffer(SimulateRandomDataBuffer simulated_data_buffer)
