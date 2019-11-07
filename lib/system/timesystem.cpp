@@ -45,6 +45,13 @@ namespace lib::core
         {
             last_end_frame_ = timepoint_global_now();
         }
+
+#ifdef LIB_ALLOW_ACCELERATION
+        void setAcceleration(const f32 acceleration) noexcept
+        {
+            acceleration_ = acceleration;
+        }
+#endif
     private:
         TimePoint globalStart_;
         TimePoint last_start_frame_{0U};
@@ -69,6 +76,13 @@ namespace lib::core
     TimePoint TimeSystem::now() const
     {
         return priv_->timeSinceStart();
+    }
+
+    void TimeSystem::setAcceleration(const f32 acceleration)
+    {
+#ifdef LIB_ALLOW_ACCELERATION
+        priv_->setAcceleration(acceleration);
+#endif
     }
 
     void TimeSystem::startFrame()

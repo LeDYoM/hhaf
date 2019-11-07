@@ -132,15 +132,23 @@ namespace lib::core
 
     int Host::run()
     {
-        while (!exit) 
+        try
         {
-            if (update()) 
+            while (!exit) 
             {
-                exit = true;
+                if (update()) 
+                {
+                    exit = true;
+                }
             }
-        }
 
-        return 0;
+            return 0;
+        }
+        catch(const std::exception& e)
+        {
+            std::cerr << e.what() << '\n';
+        }
+        return 1;
     }
 
     bool Host::loopStep()
