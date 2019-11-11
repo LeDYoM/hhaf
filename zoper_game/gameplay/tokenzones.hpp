@@ -30,14 +30,14 @@ namespace zoper
             // From left to right
             TokenZone
             {
-                Rectst{ 0,centerRect.top,centerRect.left - 1, centerRect.bottom() - 1 },
+                Rectst{ 0U, centerRect.top,centerRect.left - 1U, centerRect.bottom() - 1U },
                 Direction::DirectionData::Right,
                 centerRect.size().y
             },
             // From top to bottom
             TokenZone
             {
-                Rectst{ centerRect.left , 0, centerRect.right() - 1, centerRect.top - 1 },
+                Rectst{ centerRect.left , 0U, centerRect.right() - 1U, centerRect.top - 1U },
                 Direction::DirectionData::Down,
                 centerRect.size().x
             },
