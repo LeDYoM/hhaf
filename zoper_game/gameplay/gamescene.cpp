@@ -195,12 +195,31 @@ namespace zoper
         m_boardGroup->setLevel(m_inGameData.currentLevel);
     }
 
+    size_type moveTowardsCenter(const sptr<board::BoardModelComponent>& p_boardModel, const Direction direction, const vector2dst position)
+    {
+        size_type counter{0U};
+        if (!p_boardModel->tileEmpty(position))
+        {
+            const auto next = direction.applyToVector(position);
+
+            if (!p_boardModel->tileEmpty(next))
+            {
+                // If the target position where to move the
+                // token is occupied, move the this target first.
+                counter += moveTowardsCenter(p_boardModel, direction, next);
+            }
+            p_boardModel->moveTile(position, next);
+            ++counter;
+        }
+        return counter;
+    }
+
     void GameScene::generateNextToken()
     {
         const TokenZones::TokenZone &currentTokenZone{ TokenZones::tokenZones[m_nextTokenPart] };
 
         log_debug_info("NextTokenPart: ", m_nextTokenPart);
-        log_debug_info("zone: ", currentTokenZone.zone);
+        log_debug_info("zone: ", currentTokenZone.zone_start);
 
         // Generate the new token type
         const size_type newToken{ private_->token_type_generator_->getUInt(NumTokens) };
@@ -209,35 +228,16 @@ namespace zoper
         const size_type token_displacement{ private_->token_position_generator_->getUInt(currentTokenZone.size) };
 
         // Prepare the position for the new token
-        const size_type newX{ currentTokenZone.zone.left + (currentTokenZone.direction.isHorizontal() ? 0 : token_displacement) };
-        const size_type newY{ currentTokenZone.zone.top + (currentTokenZone.direction.isHorizontal() ? token_displacement : 0) };
-        lib::log_debug_info("New tile pos: ", newX, ",", newY);
-
-        vector2dst loopPosition{ (currentTokenZone.direction.isHorizontal() ? currentTokenZone.zone.size().x : newX),
-            (currentTokenZone.direction.isHorizontal() ? newY : currentTokenZone.zone.size().y) };
-        lib::log_debug_info("Starting at: ", loopPosition);
+        const vector2dst new_position{TokenZones::displacedStartPoint(currentTokenZone, token_displacement)};
+        lib::log_debug_info("New tile pos: ", new_position);
 
         // Now, we have the data for the new token generated, but first, lets start to move the row or col.
-        Direction loopDirection = currentTokenZone.direction.negate();
-        for_each_token_in_line(loopPosition, loopDirection, [this](const vector2dst &loopPosition, const Direction &direction) 
-        {
-            if (!m_boardGroup->p_boardModel->tileEmpty(loopPosition))
-            {
-                const auto dest( direction.negate().applyToVector(loopPosition) );
-                log_debug_info("Tile moved from ", loopPosition, " to ", dest);
-                m_boardGroup->p_boardModel->moveTile(loopPosition, dest);
+        const auto num_tokens_moved = moveTowardsCenter(
+                    m_boardGroup->p_boardModel, 
+                    currentTokenZone.direction, new_position);
 
-                if (TokenZones::pointInCenter(dest))
-                {
-                    log_debug_info("Found point in center: ", dest);
-                    // Collided with the center. Game over.
-                    m_sceneStates->setState(GameSceneStates::GameOver);
-                }
-            }
-            return true;
-        });
         // Set the new token
-        addNewToken(vector2dst{ newX, newY }, newToken);
+        addNewToken(new_position, newToken);
         m_nextTokenPart = (m_nextTokenPart + 1) % NumWays;
 
         CLIENT_EXECUTE_IN_DEBUG(_debugDisplayBoard());

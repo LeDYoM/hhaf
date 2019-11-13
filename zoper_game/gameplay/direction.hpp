@@ -40,12 +40,6 @@ public:
 
     constexpr bool isHorizontal() const noexcept { return data == DirectionData::Left || data == DirectionData::Right; }
     constexpr bool isVertical() const noexcept { return data == DirectionData::Up || data == DirectionData::Down; }
-    constexpr s32 advance() const noexcept
-    {
-        return ((data == DirectionData::Right || data == DirectionData::Down)
-                    ? 1
-                    : -1);
-    }
 
     constexpr Direction negate() const noexcept
     {
