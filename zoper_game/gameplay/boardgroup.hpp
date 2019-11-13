@@ -13,28 +13,30 @@
 
 namespace zoper
 {
-    using namespace lib;
+using namespace lib;
 
-    class BoardGroup : public scene::nodes::TableNode<BoardSceneNode>, public board::IBoardModelActuator
-    {
-    private:
-        using BaseClass = scene::nodes::TableNode<BoardSceneNode>;
-    public:
-        BoardGroup(scene::SceneNode* parent, str name, vector2dst size);
-        ~BoardGroup() override;
+class BoardGroup : public scene::nodes::TableNode<BoardSceneNode>,
+                   public board::IBoardModelActuator
+{
+private:
+    using BaseClass = scene::nodes::TableNode<BoardSceneNode>;
 
-        void onCreated() override;
+public:
+    BoardGroup(scene::SceneNode *parent, str name, vector2dst size);
+    ~BoardGroup() override;
 
-        void tileRemoved(const vector2dst, board::SITilePointer) override;
+    void onCreated() override;
 
-        void setLevel(const size_type level);
+    void tileRemoved(const vector2dst, board::SITilePointer&) override;
 
-        scene::Color getBackgroundTileColor(const size_type level, 
-            vector2dst position, const bool isCenter) const;
+    void setLevel(const size_type level);
 
-        sptr<board::BoardModelComponent> p_boardModel;
-        sptr<scene::SceneNode> m_mainBoardrg;
-	};
-}
+    scene::Color getBackgroundTileColor(const size_type level,
+                                        vector2dst position, const bool isCenter) const;
+
+    sptr<board::BoardModelComponent> p_boardModel;
+    sptr<scene::SceneNode> m_mainBoardrg;
+};
+} // namespace zoper
 
 #endif
