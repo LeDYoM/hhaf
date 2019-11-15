@@ -50,7 +50,7 @@ namespace zoper
             align->alignmentY.set(AlignedTextComponent::AlignmentY::Bottom);
         }
 
-        m_gameOverrg->visible = false;
+//        m_gameOverrg->visible = false;
     }
 
     GameOverSceneNode::~GameOverSceneNode() = default;

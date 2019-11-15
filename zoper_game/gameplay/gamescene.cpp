@@ -51,8 +51,6 @@ namespace zoper
 
         loadResources(GameResources{});
 
-        m_gameOver = createSceneNode<GameOverSceneNode>("gameOverSceneNode");
-
         using namespace lib::board;
 
         assert_debug(!m_boardGroup, "m_boardGroup is not empty");
@@ -126,6 +124,8 @@ namespace zoper
             }
         );
 
+        m_gameOver = createSceneNode<GameOverSceneNode>("gameOverSceneNode");
+
         // Set state controll.
         {
             m_sceneStates = addComponentOfType<std::remove_reference_t<decltype(*m_sceneStates)>>();
@@ -166,7 +166,8 @@ namespace zoper
         }
         break;
         case GameSceneStates::GameOver:
-//            m_data->m_gameOverrg->visible = true;
+            m_gameOver->visible = true;
+            m_sceneTimerComponent->pause();
             break;
         default:
             break;
@@ -195,9 +196,13 @@ namespace zoper
         m_boardGroup->setLevel(m_inGameData.currentLevel);
     }
 
-    size_type moveTowardsCenter(const sptr<board::BoardModelComponent>& p_boardModel, const Direction direction, const vector2dst position)
+    bool moveTowardsCenter(
+        const sptr<board::BoardModelComponent>& p_boardModel,
+        const Direction direction,
+        const vector2dst position)
     {
-        size_type counter{0U};
+        bool moved_to_center{false};
+
         if (!p_boardModel->tileEmpty(position))
         {
             const auto next = direction.applyToVector(position);
@@ -206,12 +211,16 @@ namespace zoper
             {
                 // If the target position where to move the
                 // token is occupied, move the this target first.
-                counter += moveTowardsCenter(p_boardModel, direction, next);
+                moved_to_center = moveTowardsCenter(p_boardModel, direction, next);
             }
             p_boardModel->moveTile(position, next);
-            ++counter;
+            if (TokenZones::pointInCenter(next))
+            {
+                assert_debug(!moved_to_center, "Double game over!");
+                moved_to_center = true;
+            }
         }
-        return counter;
+        return moved_to_center;
     }
 
     void GameScene::generateNextToken()
@@ -232,7 +241,7 @@ namespace zoper
         lib::log_debug_info("New tile pos: ", new_position);
 
         // Now, we have the data for the new token generated, but first, lets start to move the row or col.
-        const auto num_tokens_moved = moveTowardsCenter(
+        const auto game_over = moveTowardsCenter(
                     m_boardGroup->p_boardModel, 
                     currentTokenZone.direction, new_position);
 
@@ -241,6 +250,11 @@ namespace zoper
         m_nextTokenPart = (m_nextTokenPart + 1) % NumWays;
 
         CLIENT_EXECUTE_IN_DEBUG(_debugDisplayBoard());
+
+        if (game_over)
+        {
+            m_sceneStates->setState(GameSceneStates::GameOver);
+        }
     }
 
     void GameScene::importGameSharedData()

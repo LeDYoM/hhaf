@@ -61,6 +61,8 @@ namespace zoper
 
             sceneController->startScene<MenuScene>();
         }
+
+        systemProvider().timeSystem().setAcceleration(5.0F);
     }
 
     void ZoperProgramController::onFinish() { }

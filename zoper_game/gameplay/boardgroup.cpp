@@ -50,12 +50,6 @@ void BoardGroup::tileRemoved(const vector2dst, board::SITilePointer &tile)
     m_mainBoardrg->removeSceneNode(std::dynamic_pointer_cast<Token>(tile));
 }
 
-void BoardGroup::tileMoved(
-    const vector2dst source, const vector2dst dest, board::SITilePointer &)
-{
-//    assert_debug()
-}
-
 void BoardGroup::setLevel(const size_type level)
 {
     // Update background tiles

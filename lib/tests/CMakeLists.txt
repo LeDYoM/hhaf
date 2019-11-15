@@ -1,13 +1,13 @@
 enable_testing()
 
 set(UNIT_TEST_LIST
-	main
-	scene/scenecontroller
-	scene/scenenodefactory
-	scene/scenemanager
-	scene/scenenode
-	scene/components/componentcontainer
-	scene/components/statescontroller
+    main
+    scene/scenecontroller
+    scene/scenenodefactory
+    scene/scenemanager
+    scene/scenenode
+    scene/components/componentcontainer
+    scene/components/statescontroller
 )
 
 foreach(NAME IN LISTS UNIT_TEST_LIST)
