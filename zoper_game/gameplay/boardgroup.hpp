@@ -10,10 +10,12 @@
 
 #include <lib/board/boardmodel.hpp>
 #include <lib/board/iboardmodelactuator.hpp>
+#include <lib/board/itile.hpp>
 
 namespace zoper
 {
 using namespace lib;
+class LevelProperties;
 
 class BoardGroup : public scene::nodes::TableNode<BoardSceneNode>,
                    public board::IBoardModelActuator
@@ -24,6 +26,12 @@ private:
 public:
     BoardGroup(scene::SceneNode *parent, str name, vector2dst size);
     ~BoardGroup() override;
+
+    void setUp(sptr<LevelProperties> level_properties);
+    void createNewToken(
+        const board::BoardTileData data,
+        const vector2dst& board_position,
+        const vector2df& size);
 
     void onCreated() override;
 
@@ -36,6 +44,12 @@ public:
 
     sptr<board::BoardModelComponent> p_boardModel;
     sptr<scene::SceneNode> m_mainBoardrg;
+    sptr<LevelProperties> level_properties_;
+
+private:
+    vector2df board2SceneFactor() const;
+    vector2df board2Scene(const lib::vector2dst &bPosition) const;
+    vector2df tileSize() const;
 };
 } // namespace zoper
 

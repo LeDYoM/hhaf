@@ -63,7 +63,6 @@ namespace zoper
         using BaseClass = scene::Scene;
         void setLevel(const size_type nv);
         void generateNextToken();
-        void addNewToken(const vector2dst &pos, const size_type newToken);
         vector2df board2SceneFactor() const;
         vector2df tileSize() const;
         void for_each_token_in_line(const vector2dst &startPosition, const Direction &direction,

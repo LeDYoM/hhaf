@@ -14,7 +14,8 @@ namespace zoper
 using namespace lib::scene;
 using namespace lib::scene::nodes;
 
-BoardGroup::BoardGroup(SceneNode *parent, str name, vector2dst size) : BaseClass{parent, std::move(name), size} {}
+BoardGroup::BoardGroup(SceneNode *parent, str name, vector2dst size)
+    : BaseClass{parent, std::move(name), size} {}
 
 BoardGroup::~BoardGroup() {}
 
@@ -43,10 +44,37 @@ void BoardGroup::onCreated()
     p_boardModel->initialize(tableSize(), this);
 }
 
+void BoardGroup::setUp(sptr<LevelProperties> level_properties)
+{
+    level_properties_ = std::move(level_properties);
+}
+
+void BoardGroup::createNewToken(
+    const board::BoardTileData data,
+    const vector2dst &board_position,
+    const vector2df &size)
+{
+    using namespace lib::board;
+
+    log_debug_info("BoardGroup:: Adding new tile at ", board_position,
+                   " with value ", data);
+
+    // Create a new Tile instance
+    auto new_tile_token = m_mainBoardrg->createSceneNode<Token>("tileNode");
+    new_tile_token->setUp(level_properties_,
+                          static_cast<BoardTileData>(data), rectFromSize(size));
+
+    // Set the position in the scene depending on the board position
+    new_tile_token->position.set(board2Scene(board_position));
+
+    // Add it to the board
+    p_boardModel->setTile(board_position, std::move(new_tile_token));
+}
+
 void BoardGroup::tileRemoved(const vector2dst, board::SITilePointer &tile)
 {
-    assert_release(std::dynamic_pointer_cast<Token>(tile) != nullptr, 
-        "Trying to delete invalid type from board");
+    assert_release(std::dynamic_pointer_cast<Token>(tile) != nullptr,
+                   "Trying to delete invalid type from board");
     m_mainBoardrg->removeSceneNode(std::dynamic_pointer_cast<Token>(tile));
 }
 
@@ -138,6 +166,24 @@ Color BoardGroup::getBackgroundTileColor(const size_type level,
         }
     }
     return colors::Black;
+}
+
+vector2df BoardGroup::board2SceneFactor() const
+{
+    return {
+        sceneManager().viewRect().size().x / static_cast<f32>(p_boardModel->size().x),
+        sceneManager().viewRect().size().y / static_cast<f32>(p_boardModel->size().y)};
+}
+
+vector2df BoardGroup::board2Scene(const lib::vector2dst &bPosition) const
+{
+    const auto b2sf{board2SceneFactor()};
+    return {b2sf.x * bPosition.x, b2sf.y * bPosition.y};
+}
+
+vector2df BoardGroup::tileSize() const
+{
+    return board2Scene({1, 1});
 }
 
 } // namespace zoper

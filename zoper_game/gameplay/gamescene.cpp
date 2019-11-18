@@ -111,7 +111,13 @@ namespace zoper
             // Forward current level where necessary.
             m_boardGroup->setLevel(level);
         });
-        levelProperties->setUp(m_inGameData.currentLevel, m_inGameData.gameMode, m_sceneTimerComponent);
+
+        levelProperties->setUp(
+            m_inGameData.currentLevel,
+            m_inGameData.gameMode,
+            m_sceneTimerComponent);
+
+        m_boardGroup->setUp(levelProperties);
 
         m_nextTokenTimer = m_sceneTimerComponent->addTimer(
             TimerType::Continuous,
@@ -246,7 +252,12 @@ namespace zoper
                     currentTokenZone.direction, new_position);
 
         // Set the new token
-        addNewToken(new_position, newToken);
+        m_boardGroup->createNewToken(
+            static_cast<board::BoardTileData>(newToken),
+            new_position,
+            tileSize());
+
+        // Select the next token zone.
         m_nextTokenPart = (m_nextTokenPart + 1) % NumWays;
 
         CLIENT_EXECUTE_IN_DEBUG(_debugDisplayBoard());
@@ -291,23 +302,6 @@ namespace zoper
 
         // Add it to the board and to the scene nodes
         m_boardGroup->p_boardModel->setTile(m_player->boardPosition(), m_player);
-    }
-
-    void GameScene::addNewToken(const vector2dst &pos, const size_type newToken)
-    {
-        using namespace lib::board;
-
-        log_debug_info("Adding new tile at ", pos, " with value ", newToken);
-        // Create a new Tile instance
-        auto new_tile_token = m_boardGroup->m_mainBoardrg->createSceneNode<Token>("tileNode");
-        new_tile_token->setUp(levelProperties,
-            static_cast<BoardTileData>(newToken),rectFromSize(tileSize()));
-
-        // Set the position in the scene depending on the board position
-        new_tile_token->position = board2Scene(pos);
-
-        // Add it to the board
-        m_boardGroup->p_boardModel->setTile(pos, std::move(new_tile_token));
     }
 
     void GameScene::launchPlayer()
