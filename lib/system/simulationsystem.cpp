@@ -10,12 +10,11 @@
 #include <lib/system/systemprovider.hpp>
 #include <lib/system/randomsystem.hpp>
 #include <lib/system/filesystem/filesystem.hpp>
+#include <lib/core/serializer.hpp>
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/object.hpp>
 #include <mtypes/include/object_utils.hpp>
-
-#include <fstream>
 
 namespace lib::core
 {
@@ -27,15 +26,13 @@ SimulationSystem::~SimulationSystem()
 {
     constexpr char SaveFileName[] = "simulation_output.txt";
 
+    log_debug_info("Serializing play data...");
+
     log_debug_info("Going to write play data into file ", SaveFileName);
-    log_debug_info("Writing play data...");
-
-    Object obj;
-    obj << priv_->next_replay_data_;
-
-    str temp;
-    temp << obj;
-    if (systemProvider().fileSystem().saveFile(SaveFileName, temp))
+    if (systemProvider().fileSystem().saveFile(
+        SaveFileName,
+        Serializer<decltype(priv_->next_replay_data_)>::
+            serialize(priv_->next_replay_data_)))
     {
         log_debug_info("Play data written successfully");
     }

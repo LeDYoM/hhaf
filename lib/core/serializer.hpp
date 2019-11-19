@@ -5,42 +5,39 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
-
-#include <lib/include/liblog.hpp>
-
-#include <lib/system/filesystem/file.hpp>
+#include <mtypes/include/object.hpp>
+#include <mtypes/include/object_utils.hpp>
 
 namespace lib
 {
-    template <typename T>
-    class Serializer
+template <typename T>
+class Serializer
+{
+public:
+    static constexpr str serialize(const T &data)
     {
-    public:
-        constexpr bool serialize(const str&fileName, T&data)
-        {
-            SerializationStreamOut sso;
-            sso << data;
-            FileOutput fout{ fileName };
-            //TO DO: Fix this nonsense.
-            return fout.write(sso.data().split(','));
-        }
+        Object obj;
+        obj << data;
 
-        constexpr bool deserialize(const str&fileName, T&data)
+        str temp;
+        temp << obj;
+        return temp;
+    }
+
+    static constexpr bool deserialize(const str &data, T &output)
+    {
+        ObjectCompiler obj_compiler(data);
+        if (obj_compiler.compile())
         {
-            FileInput fin{ fileName };
-            if (fin.exists())
-            {
-                SerializationStreamIn ssi(fin.getAsStream());
-                ssi >> data;
-                return true;
-            }
-            else
-            {
-                log_debug_info("File ", fileName, " cannot be opened for reading");
-            }
-            return false;
+            // The compilation was correct so, at least we
+            // have a valid Object.
+            obj_compiler.result() >> output;
+            return true;
         }
-    };
-}
+        return false;
+    }
+};
+
+} // namespace lib
 
 #endif
