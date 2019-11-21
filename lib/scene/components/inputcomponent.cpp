@@ -41,7 +41,7 @@ bool InputComponent::isPressed(const Key key)
 {
     if (attachedNode())
     {
-        return attachedNode()->inputSystem().keyStates()[key];
+        return attachedNode()->inputSystem().keyStates()[KeyIndex(key)];
     }
     return false;
 }
@@ -59,6 +59,6 @@ bool InputComponent::isShiftPressed() const
 
 char InputComponent::toAscii(const Key key) noexcept
 {
-    return static_cast<char>(key + (isShiftPressed() ? 127 : 65));
+    return static_cast<char>(KeyIndex(key) + (isShiftPressed() ? 127 : 65));
 }
 } // namespace lib::scene

@@ -3,10 +3,11 @@
 #ifndef ZOPER_KEYMAPPING_HPP
 #define ZOPER_KEYMAPPING_HPP
 
-#include <mtypes/include/streamin.hpp>
-#include <mtypes/include/streamout.hpp>
 #include <mtypes/include/array.hpp>
+#include <mtypes/include/object.hpp>
+
 #include <lib/include/key.hpp>
+
 #include "gameplay/direction.hpp"
 
 namespace zoper
@@ -14,14 +15,15 @@ namespace zoper
 class KeyMapping
 {
 public:
+    static constexpr lib::u32 TotalKeys = Direction::Total + 2;
+
     KeyMapping();
     virtual ~KeyMapping();
 
     void reset();
-    static constexpr lib::u32 TotalKeys = Direction::Total + 2;
 
-    lib::input::Key getKey(const Direction d) const noexcept;
-    Direction getDirectionFromKey(const lib::input::Key k) const noexcept;
+    lib::input::Key getKey(const Direction direction) const noexcept;
+    Direction getDirectionFromKey(const lib::input::Key key) const noexcept;
     lib::input::Key getLaunchKey() const noexcept;
     bool isLaunchKey(const lib::input::Key key) const noexcept;
     lib::input::Key getPauseKey() const noexcept;
@@ -30,23 +32,23 @@ public:
     bool setKey(const lib::u32 index, const lib::input::Key key);
     void apply();
 
-    friend lib::SerializationStreamIn &operator>>(lib::SerializationStreamIn &ssi, KeyMapping &data);
-    friend lib::SerializationStreamOut &operator<<(lib::SerializationStreamOut &sso, const KeyMapping &data);
+    friend const lib::Object &operator>>(const lib::Object &obj, KeyMapping &key_mapping);
+    friend lib::Object &operator<<(lib::Object &obj, const KeyMapping &key_mapping);
 
 private:
     lib::array<lib::input::Key, KeyMapping::TotalKeys> m_keys;
 };
 
-inline lib::SerializationStreamIn &operator>>(lib::SerializationStreamIn &ssi, KeyMapping &data)
+inline const lib::Object &operator>>(const lib::Object &obj, KeyMapping &key_mapping)
 {
-    ssi >> data.m_keys;
-    return ssi;
+//    obj >> key_mapping.m_keys;
+    return obj;
 }
 
-inline lib::SerializationStreamOut &operator<<(lib::SerializationStreamOut &sso, const KeyMapping &data)
+inline Object &operator<<(Object &obj, const KeyMapping &key_mapping)
 {
-    sso << data.m_keys;
-    return sso;
+    obj << key_mapping.m_keys;
+    return obj;
 }
 } // namespace zoper
 

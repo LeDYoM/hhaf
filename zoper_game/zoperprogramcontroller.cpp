@@ -1,4 +1,5 @@
 #include "zoperprogramcontroller.hpp"
+#include "keymapping.hpp"
 #include "menu/menuscene.hpp"
 #include "gameplay/gamescene.hpp"
 #include "highscores/highscoresscene.hpp"
@@ -26,8 +27,9 @@ namespace zoper
         gameSharedData = msptr<GameSharedData>();
 
         keyMapping = muptr<KeyMapping>();
-        Serializer<KeyMapping> kmSerializer;
-        kmSerializer.deserialize("keyboard.txt", *keyMapping);
+//        Serializer<KeyMapping>::deserialize("", *keyMapping);
+        keyMapping->reset();
+        str a = Serializer<KeyMapping>::serialize(*keyMapping);
 
         {
             auto& sceneManager(systemProvider().sceneManager());

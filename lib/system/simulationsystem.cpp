@@ -122,12 +122,12 @@ void SimulationSystem::update()
 
             if (simulation_action.type == SimulationActionType::KeyPressed)
             {
-                log_debug_info("SimulationSystem: Pressing key: ", simulation_action.key);
+                log_debug_info("SimulationSystem: Pressing key: ", KeyIndex(simulation_action.key));
                 systemProvider().inputSystem().simulatePressKey(simulation_action.key);
             }
             else if (simulation_action.type == SimulationActionType::KeyReleased)
             {
-                log_debug_info("SimulationSystem: releasing key: ", simulation_action.key);
+                log_debug_info("SimulationSystem: releasing key: ", KeyIndex(simulation_action.key));
                 systemProvider().inputSystem().simulateReleaseKey(simulation_action.key);
             }
             else

@@ -381,6 +381,73 @@ TEST_CASE("Object with vector", "[Object][vector]")
     }
 }
 
+TEST_CASE("Object with array", "[Object][vector]")
+{
+    array<s32, 4U> v = {-1, 1, 3, -3};
+    Object obj;
+
+    SECTION("Without property name")
+    {
+        SECTION("Simple")
+        {
+            obj.set(0U, v[0U]);
+            obj.set(1U, v[1U]);
+            obj.set(2U, v[2U]);
+            obj.set(3U, v[3U]);
+
+            CHECK(obj[0U].as<s32>() == v[0U]);
+            CHECK(obj[1U].as<s32>() == v[1U]);
+            CHECK(obj[2U].as<s32>() == v[2U]);
+            CHECK(obj[3U].as<s32>() == v[3U]);
+            CHECK_FALSE(obj[4U].isValid());
+        }
+
+        SECTION("Direct")
+        {
+            obj << v;
+
+            CHECK(obj[0U].as<s32>() == v[0U]);
+            CHECK(obj[1U].as<s32>() == v[1U]);
+            CHECK(obj[2U].as<s32>() == v[2U]);
+            CHECK(obj[3U].as<s32>() == v[3U]);
+            CHECK_FALSE(obj[4U].isValid());
+        }
+
+        SECTION("More direct with rv array and float")
+        {
+            obj << array<f32, 2U>{2.3F, 1.1F};
+            CHECK(obj[0U].as<f32>() == 2.3F);
+            CHECK(obj[1U].as<f32>() == 1.1F);
+        }
+    }
+
+    SECTION("With property name")
+    {
+        Object inner_object;
+
+        SECTION("Direct")
+        {
+            obj.set("test_property", v);
+
+            CHECK(obj["test_property"][0U].as<s32>() == v[0U]);
+            CHECK(obj["test_property"][1U].as<s32>() == v[1U]);
+            CHECK(obj["test_property"][2U].as<s32>() == v[2U]);
+            CHECK(obj["test_property"][3U].as<s32>() == v[3U]);
+            CHECK_FALSE(obj["test_property"][4U].isValid());
+            CHECK_FALSE(obj[0U].isValid());
+        }
+
+        SECTION("More direct with rv vector and float")
+        {
+            obj.set("other_", vector<f32>{2.3F, 1.1F});
+            CHECK(obj["other_"][0U].as<f32>() == 2.3F);
+            CHECK(obj["other_"][1U].as<f32>() == 1.1F);
+            CHECK_FALSE(obj["other_"][2U].isValid());
+            CHECK_FALSE(obj[0U].isValid());
+        }
+    }
+}
+
 namespace TestVectorWithCustomTypes
 {
     struct Simple
@@ -410,7 +477,6 @@ namespace TestVectorWithCustomTypes
         obj.set("c", data.c);
         return obj;
     }
-
 };
 
 TEST_CASE("Object with vector of custom types", "[Object][vector]")
@@ -533,6 +599,43 @@ TEST_CASE("Object with vector of custom types, enums and floats", "[Object][vect
     CHECK(obj.empty_values());
 
     vector<Simple> output;
+    obj >> output;
+
+    CHECK(vec == output);
+}
+
+TEST_CASE("Object with array of custom types, enums and floats", "[Object][vector]")
+{
+    using namespace TestVectorWithCustomTypesEnumsAndFloats;
+
+    array<Simple, 2U> vec = {
+        { MySmallEnum::First, MyDefaultEnum::First, MyBigEnum::First, 4.5F, 2000.123},
+        { MySmallEnum::Second, MyDefaultEnum::Second, MyBigEnum::Second, -1.2F, -454341.999999}
+    };
+
+    Object obj;
+    obj << vec;
+
+    CHECK(obj[0U]["a"].as<f32>() == vec[0U].a);
+    CHECK(obj[0U]["b"].as<f64>() == vec[0U].b);
+    CHECK(obj[0U]["small_enum"].as<MySmallEnum>() == vec[0U].small_enum);
+    CHECK(obj[0U]["default_enum"].as<MyDefaultEnum>() == vec[0U].default_enum);
+    CHECK(obj[0U]["big_enum"].as<MyBigEnum>() == vec[0U].big_enum);
+    CHECK(obj[0U].getObject().empty_objects());
+    CHECK(obj[0U].getObject().size_values() == 5U);
+
+    CHECK(obj[1U]["a"].as<f32>() == vec[1U].a);
+    CHECK(obj[1U]["b"].as<f64>() == vec[1U].b);
+    CHECK(obj[1U]["small_enum"].as<MySmallEnum>() == vec[1U].small_enum);
+    CHECK(obj[1U]["default_enum"].as<MyDefaultEnum>() == vec[1U].default_enum);
+    CHECK(obj[1U]["big_enum"].as<MyBigEnum>() == vec[1U].big_enum);
+    CHECK(obj[1U].getObject().empty_objects());
+    CHECK(obj[1U].getObject().size_values() == 5U);
+
+    CHECK(obj.size_objects() == 2U);
+    CHECK(obj.empty_values());
+
+    array<Simple, 2U> output;
     obj >> output;
 
     CHECK(vec == output);
