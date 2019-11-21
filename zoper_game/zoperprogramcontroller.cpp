@@ -4,7 +4,7 @@
 #include "gameplay/gamescene.hpp"
 #include "highscores/highscoresscene.hpp"
 
-#include <lib/core/serializer.hpp>
+#include <mtypes/include/serializer.hpp>
 #include <lib/scene/scenemanager.hpp>
 #include <lib/system/systemprovider.hpp>
 #include <lib/system/simulationsystem.hpp>
