@@ -6,6 +6,8 @@
 #include <initializer_list>
 #include "types.hpp"
 
+#include <cassert>
+
 namespace lib
 {
 template <class T, size_type array_size>

@@ -41,13 +41,13 @@ private:
 
 inline const lib::Object &operator>>(const lib::Object &obj, KeyMapping &key_mapping)
 {
-//    obj >> key_mapping.m_keys;
+    obj["keys"].getObject() >> key_mapping.m_keys;
     return obj;
 }
 
 inline Object &operator<<(Object &obj, const KeyMapping &key_mapping)
 {
-    obj << key_mapping.m_keys;
+    obj.set("keys", key_mapping.m_keys);
     return obj;
 }
 } // namespace zoper

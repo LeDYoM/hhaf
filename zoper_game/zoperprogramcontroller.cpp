@@ -8,6 +8,7 @@
 #include <lib/scene/scenemanager.hpp>
 #include <lib/system/systemprovider.hpp>
 #include <lib/system/simulationsystem.hpp>
+#include <lib/system/filesystem/filesystem.hpp>
 
 namespace zoper
 {
@@ -27,9 +28,9 @@ namespace zoper
         gameSharedData = msptr<GameSharedData>();
 
         keyMapping = muptr<KeyMapping>();
-//        Serializer<KeyMapping>::deserialize("", *keyMapping);
         keyMapping->reset();
-        str a = Serializer<KeyMapping>::serialize(*keyMapping);
+        systemProvider().fileSystem().deserializeFromFile("keys.txt", *keyMapping);
+        systemProvider().fileSystem().serializeToFile("keys.txt", *keyMapping);
 
         {
             auto& sceneManager(systemProvider().sceneManager());

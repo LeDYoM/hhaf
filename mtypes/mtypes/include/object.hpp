@@ -424,6 +424,10 @@ constexpr const Object &operator>>(const Object &obj, vector<T> &data)
                     }
                 }
             }
+            else if constexpr (std::is_enum_v<T>)
+            {
+                value.getValue() >> internal_data;
+            }
             else
             {
                 value.getObject() >> internal_data;
