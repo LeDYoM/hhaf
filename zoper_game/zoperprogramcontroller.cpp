@@ -34,7 +34,7 @@ namespace zoper
 
         {
             auto& sceneManager(systemProvider().sceneManager());
-            sceneManager.setViewRect({0,0,2000,2000});
+            sceneManager.setViewRect({0U,0U,2000U,2000U});
             auto& sceneController(sceneManager.sceneController());
 
             auto &scene_node_factory(sceneController->sceneNodeFactory());
@@ -48,7 +48,8 @@ namespace zoper
                 if (scene_name == (MenuScene::StaticTypeName))
                 {
                     // Did the user selected exit?
-                    if (gameSharedData->exitGame) {
+                    if (gameSharedData->exitGame)
+                    {
                         return str();
                     }
                     return GameScene::StaticTypeName;
@@ -59,7 +60,7 @@ namespace zoper
             // Hack to test high scores
             {
     //            gameData->score = 10000;
-    //            sceneManager.startFirstScene<HighScoresScene>();
+    //            sceneManager.startScene<HighScoresScene>();
             }
 
             sceneController->startScene<MenuScene>();
