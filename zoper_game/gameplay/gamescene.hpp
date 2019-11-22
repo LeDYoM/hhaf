@@ -28,68 +28,72 @@
 
 namespace zoper
 {
-    class Player;
-    class Token;
-    class PauseSceneNode;
-    class GameOverSceneNode;
+class Player;
+class Token;
+class PauseSceneNode;
+class GameOverSceneNode;
 
-    using namespace lib;
+using namespace lib;
 
-        enum class GameSceneStates : u8
-        {
-            Playing = 0,
-            GameOver,
-            Pause
-        };
+enum class GameSceneStates : u8
+{
+    Playing = 0,
+    GameOver,
+    Pause
+};
 
-    class GameScene final : public scene::Scene, public StatesControllerActuator<GameSceneStates>
-    {
-    public:
+class GameScene final : public scene::Scene,
+                        public StatesControllerActuator<GameSceneStates>
+{
+public:
+    DECLARE_SCENE(GameScene)
 
-        DECLARE_SCENE(GameScene)
+    // Inherited via Scene
+    void onCreated() override;
+    void onFinished() override;
 
-        // Inherited via Scene
-        void onCreated() override;
-        void onFinished() override;
+    void onEnterState(const GameSceneStates &) override;
+    void onExitState(const GameSceneStates &) override;
 
-        void onEnterState(const GameSceneStates&) override;
-        void onExitState(const GameSceneStates&) override;
+    vector2df board2Scene(const lib::vector2dst &bPosition) const;
 
-        vector2df board2Scene(const lib::vector2dst &bPosition) const;
+    sptr<LevelProperties> levelProperties() const { return level_properties_; }
 
-    private:
-        struct GameScenePrivate;
-        GameScenePrivate* private_{nullptr};
-        using BaseClass = scene::Scene;
-        void setLevel(const size_type nv);
-        void generateNextToken();
-        vector2df board2SceneFactor() const;
-        vector2df tileSize() const;
-        void for_each_token_in_line(const vector2dst &startPosition, const Direction &direction,
-            function<bool(const vector2dst &, const Direction &)> updatePredicate);
+private:
+    struct GameScenePrivate;
+    GameScenePrivate *private_{nullptr};
+    using BaseClass = scene::Scene;
+    void setLevel(const size_type nv);
+    void generateNextToken();
+    vector2df board2SceneFactor() const;
+    vector2df tileSize() const;
+    void for_each_token_in_line(
+        const vector2dst &startPosition,
+        const Direction &direction,
+        function<bool(const vector2dst &, const Direction &)> updatePredicate);
 
-        sptr<StatesController<GameSceneStates>> m_sceneStates;
+    sptr<StatesController<GameSceneStates>> m_sceneStates;
 
-        void importGameSharedData();
-        void exportGameSharedData();
-        void launchPlayer();
-        void addPlayer();
-        void _debugDisplayBoard() const;
+    void importGameSharedData();
+    void exportGameSharedData();
+    void launchPlayer();
+    void addPlayer();
+    void _debugDisplayBoard() const;
 
-        sptr<BoardGroup> m_boardGroup;
+    sptr<BoardGroup> m_boardGroup;
 
-        // Timer related properties
-        sptr<scene::TimerComponent> m_sceneTimerComponent;
-        scene::TimerConnectorSPtr m_nextTokenTimer;
+    // Timer related properties
+    sptr<scene::TimerComponent> m_sceneTimerComponent;
+    scene::TimerConnectorSPtr m_nextTokenTimer;
 
-        // General properties.
-        InGameData m_inGameData;
-        u8 m_nextTokenPart{ 0 };
-        sptr<LevelProperties> levelProperties;
-        sptr<Player> m_player{ nullptr };
-        sptr<GameOverSceneNode> m_gameOver;
-        sptr<PauseSceneNode> pause_node_;
-    };
-}
+    // General properties.
+    InGameData m_inGameData;
+    u8 m_nextTokenPart{0};
+    sptr<LevelProperties> level_properties_;
+    sptr<Player> m_player{nullptr};
+    sptr<GameOverSceneNode> m_gameOver;
+    sptr<PauseSceneNode> pause_node_;
+};
+} // namespace zoper
 
 #endif

@@ -7,6 +7,10 @@
 #include "gamehud.hpp"
 #include "pause.hpp"
 
+#ifdef USE_DEBUG_ACTIONS
+#include "debug_actions.hpp"
+#endif
+
 #include "../gameshareddata.hpp"
 #include "../zoperprogramcontroller.hpp"
 
@@ -58,7 +62,7 @@ namespace zoper
 
         addPlayer();
 
-        m_nextTokenPart = 0;
+        m_nextTokenPart = 0U;
 
         auto inputComponent(addComponentOfType<scene::InputComponent>());
         inputComponent->KeyPressed.connect([this](const lib::input::Key&key) {
@@ -104,24 +108,28 @@ namespace zoper
 
         private_->scene_animation_component_ = addComponentOfType<scene::AnimationComponent>();
         // At this point, we setup level properties.
-        // levelProperties should not be used before this point.
-        levelProperties = addComponentOfType<LevelProperties>();
-        levelProperties->levelChanged.connect([this](const auto level)
+        // level_properties_ should not be used before this point.
+        level_properties_ = addComponentOfType<LevelProperties>();
+        level_properties_->levelChanged.connect([this](const auto level)
         {
             // Forward current level where necessary.
             m_boardGroup->setLevel(level);
         });
 
-        levelProperties->setUp(
+        level_properties_->setUp(
             m_inGameData.currentLevel,
             m_inGameData.gameMode,
             m_sceneTimerComponent);
 
-        m_boardGroup->setUp(levelProperties);
+        m_boardGroup->setUp(level_properties_);
+
+#ifdef USE_DEBUG_ACTIONS
+        addComponentOfType<DebugActions>();
+#endif
 
         m_nextTokenTimer = m_sceneTimerComponent->addTimer(
             TimerType::Continuous,
-            TimePoint_as_miliseconds(levelProperties->millisBetweenTokens()),
+            TimePoint_as_miliseconds(level_properties_->millisBetweenTokens()),
             [this](TimePoint realEllapsed) 
             {
                 log_debug_info("Elapsed between tokens: ", realEllapsed.milliseconds());
@@ -331,10 +339,10 @@ namespace zoper
                     log_debug_info("In a row: ", inARow);
 
                     // Increase the score accordingly
-                    levelProperties->increaseScore(inARow * levelProperties->baseScore());
+                    level_properties_->increaseScore(inARow * level_properties_->baseScore());
 
                     // Inform that a token has been consumed
-                    levelProperties->tokenConsumed();
+                    level_properties_->tokenConsumed();
 
                     // Store the position of this last cosumed token
                     lastTokenPosition = board2Scene(loopPosition);
