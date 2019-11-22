@@ -6,10 +6,9 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector.hpp>
 #include <mtypes/include/serializer.hpp>
+#include <mtypes/include/rawmemory.hpp>
 
 #include <lib/system/appservice.hpp>
-
-#include "file.hpp"
 
 namespace lib::core
 {

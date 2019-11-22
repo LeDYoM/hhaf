@@ -7,8 +7,6 @@ set(UNIT_TEST_LIST
     object_utils
     parpar
     str
-    streamin
-    streamout
     vector
 )
 

@@ -1,11 +1,11 @@
 #pragma once
 
-#ifndef ZOPER_HIGHSCORESDATA_INCLUDE_HPP__
-#define ZOPER_HIGHSCORESDATA_INCLUDE_HPP__
+#ifndef ZOPER_HIGHSCORESDATA_INCLUDE_HPP
+#define ZOPER_HIGHSCORESDATA_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/array.hpp>
-#include <mtypes/include/streamin.hpp>
+#include <mtypes/include/object.hpp>
 
 namespace zoper
 {

@@ -301,7 +301,7 @@ TEST_CASE("Scanner SyntaxError", "[Scanner]")
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-TEST_CASE("Parser basic", "[streams][SerializationStreamIn][translator][Parser]")
+TEST_CASE("Parser basic", "[streams][translator][Parser]")
 {
     const str input{
         "{"
@@ -338,7 +338,7 @@ TEST_CASE("Parser basic", "[streams][SerializationStreamIn][translator][Parser]"
     }
 }
 
-TEST_CASE("Parser: Object inside object", "[streams][SerializationStreamIn][translator][Parser]")
+TEST_CASE("Parser: Object inside object", "[streams][translator][Parser]")
 {
     const str input{
         "{"
@@ -388,7 +388,7 @@ TEST_CASE("Parser: Object inside object", "[streams][SerializationStreamIn][tran
     }
 }
 
-TEST_CASE("Parser: Object inside object with numerical values", "[streams][SerializationStreamIn][translator][Parser]")
+TEST_CASE("Parser: Object inside object with numerical values", "[streams][translator][Parser]")
 {
     const str input{
         "{"
@@ -452,7 +452,7 @@ TEST_CASE("Parser: Object inside object with numerical values", "[streams][Seria
     }
 }
 
-TEST_CASE("Parser list str properties", "[streams][SerializationStreamIn][translator][Parser]")
+TEST_CASE("Parser list str properties", "[streams][translator][Parser]")
 {
     const str input{
         "{"
@@ -496,7 +496,7 @@ TEST_CASE("Parser list str properties", "[streams][SerializationStreamIn][transl
     }
 }
 
-TEST_CASE("Parser list object properties", "[streams][SerializationStreamIn][translator][Parser]")
+TEST_CASE("Parser list object properties", "[streams][translator][Parser]")
 {
     const str input{
         "{"
@@ -556,7 +556,7 @@ TEST_CASE("Parser list object properties", "[streams][SerializationStreamIn][tra
     }
 }
 
-TEST_CASE("Parser list object and values as properties", "[streams][SerializationStreamIn][translator][Parser]")
+TEST_CASE("Parser list object and values as properties", "[streams][translator][Parser]")
 {
     const str input{
         "{"
@@ -608,7 +608,7 @@ TEST_CASE("Parser list object and values as properties", "[streams][Serializatio
     }
 }
 
-TEST_CASE("Parser list of lists object and values as properties", "[streams][SerializationStreamIn][translator][Parser]")
+TEST_CASE("Parser list of lists object and values as properties", "[streams][translator][Parser]")
 {
     const str input{
         "{"
@@ -668,7 +668,7 @@ TEST_CASE("Parser list of lists object and values as properties", "[streams][Ser
     }
 }
 
-TEST_CASE("Parser list of lists object and values as properties with new sintax", "[streams][SerializationStreamIn][translator][Parser]")
+TEST_CASE("Parser list of lists object and values as properties with new sintax", "[streams][translator][Parser]")
 {
     const str input{
         "{"
@@ -728,7 +728,7 @@ TEST_CASE("Parser list of lists object and values as properties with new sintax"
     }
 }
 
-TEST_CASE("Simple list", "[streams][SerializationStreamIn][translator][Parser]")
+TEST_CASE("Simple list", "[streams][translator][Parser]")
 {
     const str input{
         "{"
@@ -772,7 +772,7 @@ TEST_CASE("Simple list", "[streams][SerializationStreamIn][translator][Parser]")
     }
 }
 
-TEST_CASE("Simple list with numbers", "[streams][SerializationStreamIn][translator][Parser]")
+TEST_CASE("Simple list with numbers", "[streams][translator][Parser]")
 {
     const str input{
         "{"
