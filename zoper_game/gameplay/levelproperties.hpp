@@ -19,9 +19,9 @@ namespace zoper
 
     using LevelType = size_type;
 
-	class LevelProperties : public scene::IComponent
-	{
-	public:
+    class LevelProperties : public scene::IComponent
+    {
+    public:
         void setUp(const size_type currentLevel, 
             const GameMode gameMode, sptr<scene::TimerComponent> m_sceneTimerComponent);
 
