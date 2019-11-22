@@ -1,4 +1,4 @@
-#include "inputcomponent.hpp"
+#include "virtual_input_component.hpp"
 
 #include <lib/include/liblog.hpp>
 #include <lib/include/key.hpp>
@@ -11,10 +11,10 @@ namespace lib::scene
 {
 using namespace input;
 
-InputComponent::InputComponent() = default;
-InputComponent::~InputComponent() = default;
+VirtualInputComponent::VirtualInputComponent() = default;
+VirtualInputComponent::~VirtualInputComponent() = default;
 
-void InputComponent::update()
+void VirtualInputComponent::update()
 {
     if (attachedNode())
     {
@@ -22,12 +22,12 @@ void InputComponent::update()
 
         for (const auto &pressedKey : input_system.pressedKeys())
         {
-            KeyPressed(pressedKey);
+            onKeyPressed(pressedKey);
         }
 
         for (const auto &releasedKey : input_system.releasedKeys())
         {
-            KeyReleased(releasedKey);
+            onKeyReleased(releasedKey);
         }
     }
 }
