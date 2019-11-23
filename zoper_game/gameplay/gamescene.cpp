@@ -272,8 +272,13 @@ namespace zoper
 
         if (game_over)
         {
-            m_sceneStates->setState(GameSceneStates::GameOver);
+            goGameOver();
         }
+    }
+
+    void GameScene::goGameOver()
+    {
+        m_sceneStates->setState(GameSceneStates::GameOver);
     }
 
     void GameScene::importGameSharedData()

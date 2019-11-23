@@ -11,17 +11,24 @@ namespace zoper
 using namespace lib::input;
 using namespace lib::scene;
 
-void DebugActions::onKeyPressed(const Key& key)
+void DebugActions::onKeyPressed(const Key &key)
 {
-    gameScene()->levelProperties()->increaseScore(100);
+    switch (key)
+    {
+    case Key::Num1:
+        gameScene()->levelProperties()->increaseScore(100);
+        break;
+    case Key::Q:
+        gameScene()->goGameOver();
+        break;
+    }
 }
 
-void DebugActions::onKeyReleased(const Key& key)
+void DebugActions::onKeyReleased(const Key &key)
 {
-
 }
 
-GameScene* const DebugActions::gameScene()
+GameScene *const DebugActions::gameScene()
 {
     return attachedNodeAs<GameScene>();
 }

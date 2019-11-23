@@ -58,6 +58,7 @@ public:
     vector2df board2Scene(const lib::vector2dst &bPosition) const;
 
     sptr<LevelProperties> levelProperties() const { return level_properties_; }
+    void goGameOver();
 
 private:
     struct GameScenePrivate;
