@@ -22,7 +22,7 @@ namespace zoper
     GameOverSceneNode::GameOverSceneNode(scene::SceneNode * const parent, str name)
         : SceneNode{parent, std::move(name)}
     {
-        m_gameOverrg = parent->createSceneNode("gameOverScreen");
+        m_gameOverrg = createSceneNode("gameOverScreen");
 
         vector2df gosize{ parentScene()->scenePerspective().width, 715 };
         m_gameOverrg->position.set({ 0, 575 });
@@ -49,8 +49,7 @@ namespace zoper
             align->alignmentX.set(AlignedTextComponent::AlignmentX::Center);
             align->alignmentY.set(AlignedTextComponent::AlignmentY::Bottom);
         }
-
-//        m_gameOverrg->visible = false;
+        visible = false;
     }
 
     GameOverSceneNode::~GameOverSceneNode() = default;

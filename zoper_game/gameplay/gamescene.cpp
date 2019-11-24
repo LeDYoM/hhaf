@@ -139,6 +139,7 @@ namespace zoper
         );
 
         m_gameOver = createSceneNode<GameOverSceneNode>("gameOverSceneNode");
+        m_gameOver->visible = false;
 
         // Set state controll.
         {
