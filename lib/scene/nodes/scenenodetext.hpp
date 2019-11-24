@@ -4,9 +4,10 @@
 #define LIB_SCENE_NODES_SCENENODETEXT_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <lib/include/properties.hpp>
+#include <mtypes/include/properties.hpp>
 #include <lib/include/resources/ifont.hpp>
 #include <lib/scene/scenenode.hpp>
+#include <lib/scene/color.hpp>
 
 namespace lib::scene::nodes
 {
@@ -17,7 +18,7 @@ namespace lib::scene::nodes
         SceneNodeText(SceneNode *const parent, const str &name);
         ~SceneNodeText() override;
 
-        PropertyState<Text_t> text;
+        PropertyState<str> text;
         PropertyState<sptr<IFont>> font;
         PropertyState<Color> textColor;
     protected:

@@ -5,7 +5,6 @@
 
 #include <lib/include/core/timepoint.hpp>
 #include <lib/scene/datawrappers/timeview.hpp>
-#include <lib/include/properties.hpp>
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/properties.hpp>
@@ -66,33 +65,6 @@ namespace lib::scene
         {
             const bool bResult{ IAnimation::animate() };
             m_property.set(T{ m_startValue + (m_deltaValue * m_delta) });
-            return bResult;
-        }
-
-    protected:
-        IProperty<T> &m_property;
-        T m_startValue;
-        T m_endValue;
-        T m_deltaValue;
-    };
-
-    template <typename RealT, typename Tag>
-    class IPropertyAnimation<strong_typedef<Tag,RealT>> : public IAnimation
-    {
-    public:
-        using T = strong_typedef<Tag,RealT>;
-
-        IPropertyAnimation(uptr<scene::Timer> timer, TimePoint duration, IProperty<T> &prop, 
-            T start, T end, ActionFunc endAction = {})
-            : IAnimation{ std::move(timer), std::move(duration), std::move(endAction) }, m_property{ prop }, m_startValue { std::move(start)	},
-            m_endValue{ std::move(end) }, m_deltaValue{ m_endValue() - m_startValue() } {}
-
-        virtual bool animate() override
-        {
-            const bool bResult{ IAnimation::animate() };
-            m_property.set(T{ m_startValue() +
-                                    (m_deltaValue() * m_delta)
-                            });
             return bResult;
         }
 

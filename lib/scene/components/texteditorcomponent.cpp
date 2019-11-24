@@ -9,38 +9,43 @@ namespace lib::scene
     {
         BaseClass::onAttached();
         
-        m_originalText = attachedNodeAs<nodes::SceneNodeText>()->text()();
-        attachedNodeAs<nodes::SceneNodeText>()->text.set(Text_t(""));
+        m_originalText = attachedNodeAs<nodes::SceneNodeText>()->text();
+        attachedNodeAs<nodes::SceneNodeText>()->text.set("");
 
-        m_receiver.connect(InputComponent::KeyPressed, [this](const Key&key) {
+        m_receiver.connect(InputComponent::KeyPressed, [this](const Key&key)
+        {
             auto attachedTextNode(attachedNodeAs<nodes::SceneNodeText>());
             if (isAscii(key)) {
                 const char c_ascii{ toAscii(key) };
                 bool success{ true };
                 if (m_textValidator) {
-                    success = m_textValidator->canAddChar(attachedTextNode->text()(), c_ascii);
+                    success = m_textValidator->canAddChar(attachedTextNode->text(), c_ascii);
                 }
                 if (success) {
-                    attachedTextNode->text.set(Text_t(attachedTextNode->text()() + make_str(c_ascii)));
+                    attachedTextNode->text.set(attachedTextNode->text() + make_str(c_ascii));
                 }
             }
-            else if (key == Key::BackSpace && !attachedTextNode->text()().empty()) 
+            else if (key == Key::BackSpace && !attachedTextNode->text().empty()) 
             {
                 attachedTextNode->text.set(
-                    Text_t(attachedTextNode->text()().substr(0, 
-                        attachedTextNode->text()().size() - 1)));
+                    attachedTextNode->text().substr(0U,
+                        attachedTextNode->text().size() - 1));
             }
-            else if (key == Key::Return) {
+            else if (key == Key::Return)
+            {
                 bool success{ true };
-                if (m_textValidator) {
-                    success = m_textValidator->isValidText(attachedTextNode->text()());
+                if (m_textValidator)
+                {
+                    success = m_textValidator->isValidText(attachedTextNode->text());
                 }
-                if (success) {
-                    Accepted(attachedTextNode->text()());
+                if (success)
+                {
+                    Accepted(attachedTextNode->text());
                 }
             }
-            else if (key == Key::Escape) {
-                attachedTextNode->text.set(Text_t(m_originalText));
+            else if (key == Key::Escape)
+            {
+                attachedTextNode->text.set(m_originalText);
                 Rejected();
             }
         });

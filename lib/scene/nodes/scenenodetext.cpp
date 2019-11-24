@@ -40,7 +40,7 @@ namespace lib::scene::nodes
 
             clearSceneNodes();
 
-            if (font() && !(text()().empty()))
+            if (font() && !(text().empty()))
             {
                 auto texture(font()->getTexture());
 
@@ -54,9 +54,9 @@ namespace lib::scene::nodes
                 f32 maxY{ 0.f };
                 u32 prevChar{ 0 };
 
-                log_snt("Text to render: ", text()());
+                log_snt("Text to render: ", text());
 
-                for (auto&& curChar : text()())
+                for (auto&& curChar : text())
                 {
                     log_snt("-----------------------------------------------------------------");
                     log_snt("Current char: ", make_str(curChar));

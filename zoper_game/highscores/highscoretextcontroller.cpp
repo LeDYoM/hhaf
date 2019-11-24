@@ -48,11 +48,11 @@ void HighScoreTextController::onCreated()
         {
             auto label(createNodeAt(vector2dst{0, counter}, make_str("label", 0, counter)));
             standarizeText(label);
-            label->text.set(Text_t(make_str(counter, ".")));
+            label->text.set(make_str(counter, "."));
 
             label = createNodeAt(vector2dst{1, counter}, make_str("label", 1, counter));
             standarizeText(label);
-            label->text.set(Text_t(make_str(element.score)));
+            label->text.set(make_str(element.score));
 
             label = createNodeAt(vector2dst{2, counter}, make_str("label", 2, counter));
             standarizeText(label);
@@ -69,7 +69,7 @@ void HighScoreTextController::onCreated()
             }
             else
             {
-                label->text.set(Text_t(element.name));
+                label->text.set(element.name);
             }
             ++counter;
         }

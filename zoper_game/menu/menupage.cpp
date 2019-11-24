@@ -76,7 +76,7 @@ namespace zoper
         for (auto&& title : titles) {
             auto newOption(createNodeAt(vector2dst{ titleColumn,counter }, make_str("label",counter)));
             standarizeText(newOption);
-            newOption->text.set(Text_t(title));
+            newOption->text.set(title);
 
             if (options.size() > counter) {
                 auto discreteTextLabel(createNodeAt(vector2dst{ columnForOptions, counter }, make_str("option",counter)));

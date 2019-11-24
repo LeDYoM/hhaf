@@ -24,7 +24,7 @@ PauseSceneNode::PauseSceneNode(scene::SceneNode *const parent, str name)
     auto resources_viewer = dataWrapper<ResourceView>();
 
     m_pauseText = createSceneNode<SceneNodeText>("pausetext");
-    m_pauseText->text.set(Text_t("PAUSE"));
+    m_pauseText->text.set("PAUSE");
     m_pauseText->font.set(resources_viewer->getTTFont(GameResources::ScoreFontId)->font(180));
     m_pauseText->textColor.set(colors::White);
     {

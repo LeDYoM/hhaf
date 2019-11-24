@@ -29,7 +29,7 @@ GameOverSceneNode::GameOverSceneNode(scene::SceneNode *const parent, str name)
     auto resources_viewer = dataWrapper<ResourceView>();
 
     auto gameText(m_gameOverrg->createSceneNode<SceneNodeText>("gameovergame"));
-    gameText->text.set(Text_t("GAME"));
+    gameText->text.set("GAME");
     gameText->font.set(resources_viewer->getTTFont(GameResources::ScoreFontId)->font(360));
     gameText->textColor = colors::White;
     {
@@ -40,7 +40,7 @@ GameOverSceneNode::GameOverSceneNode(scene::SceneNode *const parent, str name)
     }
 
     auto overText(m_gameOverrg->createSceneNode<SceneNodeText>("gameoverover"));
-    overText->text.set(Text_t("OVER"));
+    overText->text.set("OVER");
     overText->font.set(resources_viewer->getTTFont(GameResources::ScoreFontId)->font(360));
     overText->textColor = colors::White;
     {

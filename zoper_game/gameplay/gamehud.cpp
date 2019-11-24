@@ -28,9 +28,9 @@ namespace zoper
             resources_viewer->getTTFont(GameResources::ScoreFontId)->font(90),
             colors::White, vector2df{ 600, 300 });
         m_scoreQuad->position.set(vector2df{ 50, 150 });
-        m_scoreQuad->text(vector2dst{ 0,0 })->text.set(Text_t("Level:"));
+        m_scoreQuad->text(vector2dst{ 0,0 })->text.set("Level:");
         m_scoreQuad->text(vector2dst{ 0,0 })->textColor = colors::Blue;
-        m_scoreQuad->text(vector2dst{ 0,1 })->text.set(Text_t("Score:"));
+        m_scoreQuad->text(vector2dst{ 0,1 })->text.set("Score:");
         m_scoreQuad->text(vector2dst{ 0,1 })->textColor = colors::Blue;
 
         m_goalQuad = parent->createSceneNode<TextQuad>("goal",
@@ -40,36 +40,35 @@ namespace zoper
         m_goalQuad->text(vector2dst{ 0,0 })->textColor = colors::Blue;
         m_goalQuad->text(vector2dst{ 0,1 })->textColor = colors::Blue;
 
-        m_goalQuad->text(vector2dst{ 0,0 })->text.set(Text_t(
+        m_goalQuad->text(vector2dst{ 0,0 })->text.set(
 //            gameMode == GameMode::Token ? "Tokens: " : "Time: ")
-            "Look here: ")
-        );
-        m_goalQuad->text(vector2dst{ 0,1 })->text.set(Text_t("Goal: "));
+            "Look here: ");
+        m_goalQuad->text(vector2dst{ 0,1 })->text.set("Goal: ");
     }
 
     GameHudSceneNode::~GameHudSceneNode() = default;
 
     void GameHudSceneNode::setLevel(const size_type level)
     {
-        m_scoreQuad->text(vector2dst{ 1,0 })->text.set(Text_t(make_str(level + 1)));
+        m_scoreQuad->text(vector2dst{ 1,0 })->text.set(make_str(level + 1));
     }
 
     void GameHudSceneNode::setStayCounter(const size_type stayCounter)
     {
-        m_goalQuad->text(vector2dst{ 1,1 })->text.set(Text_t(make_str(stayCounter)));
+        m_goalQuad->text(vector2dst{ 1,1 })->text.set(make_str(stayCounter));
     }
 
     void GameHudSceneNode::setConsumedTokens(const size_type consumedTokens)
     {
         str comsumed_tokens_str{str::to_str(consumedTokens)};
         log_debug_info("B");
-        m_goalQuad->text(vector2dst{ 1,0 })->text.set(Text_t(str::to_str(consumedTokens)));
+        m_goalQuad->text(vector2dst{ 1,0 })->text.set(str::to_str(consumedTokens));
     }
 
     void GameHudSceneNode::setEllapsedTimeInSeconds(const u64 seconds)
     {
         m_goalQuad->text(vector2dst{ 1,0 })->text.set(
-            Text_t(str::to_str(static_cast<u16>(seconds)))
+            str::to_str(static_cast<u16>(seconds))
         );
     }
 
@@ -79,6 +78,6 @@ namespace zoper
     {
         str result(str::to_str(score));
         while (result.size() < scoreSize) result = "0" + result;
-        m_scoreQuad->text(vector2dst{ 1,1 })->text.set(Text_t(result));
+        m_scoreQuad->text(vector2dst{ 1,1 })->text.set(result);
     }
 }
