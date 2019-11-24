@@ -121,13 +121,13 @@ namespace zoper
         for_each_tableSceneNode_in_y(index, [&color](const size_type, const
                                         sptr<BaseClass::ContainedElement> &node)
         {
-            node->textColor.set(FillColor_t(color));
+            node->textColor.set(color);
         });
     }
 
     void MenuPage::standarizeText(const sptr<ContainedElement> &ntext)
     {
-        ntext->textColor.set(FillColor_t(m_normalColor));
+        ntext->textColor.set(m_normalColor);
         ntext->font.set(m_normalFont);
     }
 

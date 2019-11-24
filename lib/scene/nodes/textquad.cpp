@@ -13,7 +13,7 @@ namespace lib::scene::nodes
         {
             auto node = createNodeAt({count%2, count/2}, name + "node_" + make_str(count));
             node->font = font;
-            node->textColor.set(FillColor_t(color));
+            node->textColor.set(color);
         }
 
         // Second text is right aligned

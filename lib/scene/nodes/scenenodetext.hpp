@@ -19,7 +19,7 @@ namespace lib::scene::nodes
 
         PropertyState<Text_t> text;
         PropertyState<sptr<IFont>> font;
-        PropertyState<FillColor_t> textColor;
+        PropertyState<Color> textColor;
     protected:
         void update() override final;
     };

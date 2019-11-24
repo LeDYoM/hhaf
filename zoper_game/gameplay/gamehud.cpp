@@ -29,16 +29,16 @@ namespace zoper
             colors::White, vector2df{ 600, 300 });
         m_scoreQuad->position.set(vector2df{ 50, 150 });
         m_scoreQuad->text(vector2dst{ 0,0 })->text.set(Text_t("Level:"));
-        m_scoreQuad->text(vector2dst{ 0,0 })->textColor = FillColor_t(colors::Blue);
+        m_scoreQuad->text(vector2dst{ 0,0 })->textColor = colors::Blue;
         m_scoreQuad->text(vector2dst{ 0,1 })->text.set(Text_t("Score:"));
-        m_scoreQuad->text(vector2dst{ 0,1 })->textColor = FillColor_t(colors::Blue);
+        m_scoreQuad->text(vector2dst{ 0,1 })->textColor = colors::Blue;
 
         m_goalQuad = parent->createSceneNode<TextQuad>("goal",
             resources_viewer->getTTFont(GameResources::ScoreFontId)->font(90),
             colors::White, vector2df{ 600, 300 });
         m_goalQuad->position.set(vector2df{ 1250, 150 });
-        m_goalQuad->text(vector2dst{ 0,0 })->textColor = FillColor_t(colors::Blue);
-        m_goalQuad->text(vector2dst{ 0,1 })->textColor = FillColor_t(colors::Blue);
+        m_goalQuad->text(vector2dst{ 0,0 })->textColor = colors::Blue;
+        m_goalQuad->text(vector2dst{ 0,1 })->textColor = colors::Blue;
 
         m_goalQuad->text(vector2dst{ 0,0 })->text.set(Text_t(
 //            gameMode == GameMode::Token ? "Tokens: " : "Time: ")
@@ -61,6 +61,7 @@ namespace zoper
 
     void GameHudSceneNode::setConsumedTokens(const size_type consumedTokens)
     {
+        str comsumed_tokens_str{str::to_str(consumedTokens)};
         log_debug_info("B");
         m_goalQuad->text(vector2dst{ 1,0 })->text.set(Text_t(str::to_str(consumedTokens)));
     }

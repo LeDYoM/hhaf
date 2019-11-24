@@ -13,24 +13,22 @@
 
 namespace lib::scene
 {
-	class RenderizableSceneNode : public SceneNode
-	{
-	public:
-		RenderizableSceneNode(SceneNode *const parent, str name) : 
-            SceneNode{ parent, name }
-        {
-                            log_debug_info("A");
+class RenderizableSceneNode : public SceneNode
+{
+public:
+    RenderizableSceneNode(SceneNode *const parent, str name) : SceneNode{parent, name}
+    {
+        log_debug_info("A");
 
-            m_node = addComponentOfType<Renderizables>()->
-                createNode(name + "_node");
-        }
+        m_node = addComponentOfType<Renderizables>()->createNode(name + "_node");
+    }
 
-        sptr<Renderizable> node() noexcept { return m_node; }
-        const sptr<Renderizable> node() const noexcept { return m_node; }
+    sptr<Renderizable> node() noexcept { return m_node; }
+    const sptr<Renderizable> node() const noexcept { return m_node; }
 
-    private:
-        sptr<Renderizable> m_node;
-    };
-}
+private:
+    sptr<Renderizable> m_node;
+};
+} // namespace lib::scene
 
 #endif

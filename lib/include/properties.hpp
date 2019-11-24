@@ -44,8 +44,6 @@ namespace lib
 
     struct TextTag;
     using Text_t = strong_typedef<TextTag, str>;
-    struct FillColorTag;
-    using FillColor_t = strong_typedef<FillColorTag, scene::Color>;
 }
 
 namespace lib

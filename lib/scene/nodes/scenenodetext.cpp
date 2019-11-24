@@ -134,7 +134,7 @@ namespace lib::scene::nodes
 
         if (textColor.readResetHasChanged()) 
         {
-            const Color &tc{textColor()()};
+            const Color &tc{textColor()};
             sceneNodes().for_each([&tc](const SceneNodeSPtr& sNode)
             {
                 sNode->snCast<RenderizableSceneNode>()->node()->color.set(tc);

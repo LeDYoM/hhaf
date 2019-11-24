@@ -7,106 +7,130 @@
 
 namespace lib
 {
-    /**
+/**
      * This class provides a basic interface for all Properties of
      * the system.
      */
-    template <typename T>
-    class IProperty
-    {
-    public:
-        /**
+template <typename T>
+class IProperty
+{
+public:
+    /**
          * Get value of the property.
          * @return The content of the property.
         */
-        virtual const T &get() const noexcept = 0;
-        virtual void set(const T&v) noexcept = 0;
-    };
+    virtual const T &get() const noexcept = 0;
+    virtual void set(const T &v) noexcept = 0;
+};
 
-    template <typename T>
-    class BasicProperty : public IProperty<T>
+template <typename T>
+class BasicProperty : public IProperty<T>
+{
+public:
+    constexpr BasicProperty() noexcept = default;
+    constexpr BasicProperty(BasicProperty &&) noexcept = default;
+    constexpr BasicProperty(const BasicProperty &) noexcept = default;
+    constexpr BasicProperty &operator=(BasicProperty &&) noexcept = default;
+    constexpr BasicProperty &operator=(const BasicProperty &) noexcept = default;
+
+    constexpr BasicProperty(T &&iv) noexcept : m_value{std::move(iv)} {}
+    constexpr BasicProperty(const T &iv) noexcept : m_value{iv} {}
+
+    constexpr const T &operator()() const noexcept { return m_value; }
+    constexpr const T &operator=(const T &v) noexcept
     {
-    public:
-        constexpr BasicProperty() noexcept = default;
-        constexpr BasicProperty(BasicProperty&&) noexcept = default;
-        constexpr BasicProperty(const BasicProperty&) noexcept = default;
-        constexpr BasicProperty& operator=(BasicProperty&&) noexcept = default;
-        constexpr BasicProperty& operator=(const BasicProperty&) noexcept = default;
+        set(v);
+        return v;
+    }
+    inline const T &get() const noexcept override final { return m_value; }
+    inline void set(const T &v) noexcept override { m_value = v; }
 
-        constexpr BasicProperty(T&& iv) noexcept : m_value{ std::move(iv) } {}
-        constexpr BasicProperty(const T& iv) noexcept : m_value{ iv } {}
+protected:
+    T m_value{};
+};
 
-        constexpr const T&operator()() const noexcept { return m_value; }
-        constexpr const T& operator=(const T&v) noexcept { set(v); return v; }
-        inline const T &get() const noexcept override final { return m_value; }
-        inline void set(const T&v) noexcept override { m_value = v; }
+template <typename T>
+class PropertyState final : public BasicProperty<T>
+{
+    using BaseClass = BasicProperty<T>;
 
-    protected:
-        T m_value{};
-    };
+public:
+    constexpr PropertyState() noexcept : BaseClass{} {}
+    constexpr PropertyState(T iv) noexcept : BaseClass{std::move(iv)} {}
+    constexpr PropertyState(PropertyState &&) noexcept = default;
+    constexpr PropertyState(const PropertyState &) noexcept = default;
+    constexpr PropertyState &operator=(PropertyState &&) noexcept = default;
+    constexpr PropertyState &operator=(const PropertyState &) noexcept = default;
 
-    template <typename T>
-    class PropertyState final : public BasicProperty<T>
+    constexpr const T &operator=(const T &v) noexcept
     {
-        using BaseClass = BasicProperty<T>;
-    public:
-        constexpr PropertyState() noexcept : BaseClass{} {}
-        constexpr PropertyState(T iv) noexcept : BaseClass{ std::move(iv) } {}
-        constexpr PropertyState(PropertyState&&) noexcept = default;
-        constexpr PropertyState(const PropertyState&) noexcept = default;
-        constexpr PropertyState& operator=(PropertyState&&) noexcept = default;
-        constexpr PropertyState& operator=(const PropertyState&) noexcept = default;
-
-        constexpr const T& operator=(const T&v) noexcept { set(v); return v; }
-
-        constexpr bool hasChanged() const noexcept { return m_hasChanged; }
-        constexpr void resetHasChanged() noexcept { m_hasChanged = false; }
-        constexpr void setChanged() noexcept { m_hasChanged = true; }
-        constexpr bool readResetHasChanged() noexcept { const bool v{ m_hasChanged }; resetHasChanged(); return v; }
-        inline void set(const T&v) noexcept override { BaseClass::set(v); setChanged(); }
-
-    private:
-        bool m_hasChanged{ true };
-    };
-
-    template<typename T, typename ...Args>
-    constexpr bool ps_hasChanged(const PropertyState<T> &arg, Args&&... args)
-    {
-        return arg.hasChanged() || ps_hasChanged(std::forward<Args>(args)...);
+        set(v);
+        return v;
     }
 
-    template<typename T>
-    constexpr bool ps_hasChanged(const PropertyState<T> &arg)
+    constexpr bool hasChanged() const noexcept { return m_hasChanged; }
+    constexpr void resetHasChanged() noexcept { m_hasChanged = false; }
+    constexpr void setChanged() noexcept { m_hasChanged = true; }
+    constexpr bool readResetHasChanged() noexcept
     {
-        return arg.hasChanged();
+        const bool v{m_hasChanged};
+        resetHasChanged();
+        return v;
+    }
+    inline void set(const T &v) noexcept override
+    {
+//        const bool is_different{v == get()};
+
+        BaseClass::set(v);
+
+//        if (is_different)
+//        {
+            setChanged();
+//        }
     }
 
-    template<typename T, typename ...Args>
-    constexpr void ps_resetHasChanged(PropertyState<T> &arg, Args&&... args)
-    {
-        arg.resetHasChanged();
-        ps_resetHasChanged(std::forward<Args>(args)...);
-    }
+private:
+    bool m_hasChanged{true};
+};
 
-    template<typename T>
-    constexpr void ps_resetHasChanged(PropertyState<T> &arg)
-    {
-        return arg.resetHasChanged();
-    }
-
-    template<typename T, typename ...Args>
-    constexpr bool ps_readResetHasChanged(PropertyState<T> &arg, Args&&... args)
-    {
-        const bool result_unary{arg.readResetHasChanged()};
-        const bool result_rest{ps_readResetHasChanged(std::forward<Args>(args)...)};
-        return result_unary || result_rest;
-    }
-
-    template<typename T>
-    constexpr bool ps_readResetHasChanged(PropertyState<T> &arg)
-    {
-        return arg.readResetHasChanged();
-    }
+template <typename T, typename... Args>
+constexpr bool ps_hasChanged(const PropertyState<T> &arg, Args &&... args)
+{
+    return arg.hasChanged() || ps_hasChanged(std::forward<Args>(args)...);
 }
+
+template <typename T>
+constexpr bool ps_hasChanged(const PropertyState<T> &arg)
+{
+    return arg.hasChanged();
+}
+
+template <typename T, typename... Args>
+constexpr void ps_resetHasChanged(PropertyState<T> &arg, Args &&... args)
+{
+    arg.resetHasChanged();
+    ps_resetHasChanged(std::forward<Args>(args)...);
+}
+
+template <typename T>
+constexpr void ps_resetHasChanged(PropertyState<T> &arg)
+{
+    return arg.resetHasChanged();
+}
+
+template <typename T, typename... Args>
+constexpr bool ps_readResetHasChanged(PropertyState<T> &arg, Args &&... args)
+{
+    const bool result_unary{arg.readResetHasChanged()};
+    const bool result_rest{ps_readResetHasChanged(std::forward<Args>(args)...)};
+    return result_unary || result_rest;
+}
+
+template <typename T>
+constexpr bool ps_readResetHasChanged(PropertyState<T> &arg)
+{
+    return arg.readResetHasChanged();
+}
+} // namespace lib
 
 #endif
