@@ -15,6 +15,7 @@ build_client_library(
     ${SOURCES})
 
 target_compile_definitions(${CURRENT_TARGET} PRIVATE USE_DEBUG_ACTIONS)
+#target_compile_definitions(${CURRENT_TARGET} PRIVATE TEST_BMP_FONT)
 
 install(TARGETS ${CURRENT_TARGET} DESTINATION  .)
 install(DIRECTORY ${SFML_ROOT}/bin/$<CONFIGURATION>/ DESTINATION .)

@@ -7,23 +7,22 @@
 
 namespace zoper
 {
-	using namespace lib;
-	using namespace lib::scene;
+using namespace lib;
+using namespace lib::scene;
 
-	void MainMenuResources::loadResources(IResourceHandler&resourceHandler)
-	{
-        constexpr static char BackgroundTextureFile[] = "resources/gr_ms.png";
-        constexpr static char LogoFile[] = "resources/zoperbl.png";
-        constexpr static char MenuFontFile[] = "resources/oldct.ttf";
+void MainMenuResources::loadResources(IResourceHandler &resourceHandler)
+{
+    constexpr static char BackgroundTextureFile[] = "resources/gr_ms.png";
+    constexpr static char LogoFile[] = "resources/zoperbl.png";
+    constexpr static char MenuFontFile[] = "resources/oldct.ttf";
 
-        // TODO: Remove
-        constexpr static char TestBMPFontFile[] = "lucida";
+    resourceHandler.loadTexture(BackgroundTextureId, BackgroundTextureFile);
+    resourceHandler.loadTexture(LogoId, LogoFile);
+    resourceHandler.loadTTFont(MenuFontId, MenuFontFile);
 
-        resourceHandler.loadTexture(BackgroundTextureId, BackgroundTextureFile);
-        resourceHandler.loadTexture(LogoId, LogoFile);
-        resourceHandler.loadTTFont(MenuFontId, MenuFontFile);
-
-        // TODO: Remove
-        resourceHandler.loadBMPFont(TestFontId, TestBMPFontFile);
-	}
+#ifdef TEST_BMP_FONT
+    constexpr static char TestBMPFontFile[] = "lucida";
+    resourceHandler.loadBMPFont(TestFontId, TestBMPFontFile);
+#endif
 }
+} // namespace zoper

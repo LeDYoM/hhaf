@@ -7,18 +7,19 @@
 
 namespace zoper
 {
-	class MainMenuResources : public lib::IResourceLoader
-	{
-	public:
-        constexpr static char BackgroundTextureId[] = "game_menu.background";
-        constexpr static char LogoId[] = "game_menu.logo";
-        constexpr static char MenuFontId[] = "menu.mainFont";
+class MainMenuResources : public lib::IResourceLoader
+{
+public:
+    constexpr static char BackgroundTextureId[] = "game_menu.background";
+    constexpr static char LogoId[] = "game_menu.logo";
+    constexpr static char MenuFontId[] = "menu.mainFont";
 
-        //TODO: Remove
-        constexpr static char TestFontId[] = "menu.testFont";
+#ifdef TEST_BMP_FONT
+    constexpr static char TestFontId[] = "menu.testFont";
+#endif
 
-		void loadResources(lib::IResourceHandler&) override;
-	};
-}
+    void loadResources(lib::IResourceHandler &) override;
+};
+} // namespace zoper
 
 #endif
