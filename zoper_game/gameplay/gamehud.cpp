@@ -25,7 +25,7 @@ namespace zoper
         auto resources_viewer = dataWrapper<ResourceView>();
 
         m_scoreQuad = parent->createSceneNode<TextQuad>("score",
-            resources_viewer->getTTFont(GameResources::ScoreFontId)->font(90),
+            resources_viewer->getTTFont(GameResources::ScoreFontId)->font(90U),
             colors::White, vector2df{ 600, 300 });
         m_scoreQuad->position.set(vector2df{ 50, 150 });
         m_scoreQuad->text(vector2dst{ 0,0 })->text.set("Level:");
@@ -61,7 +61,6 @@ namespace zoper
     void GameHudSceneNode::setConsumedTokens(const size_type consumedTokens)
     {
         str comsumed_tokens_str{str::to_str(consumedTokens)};
-        log_debug_info("B");
         m_goalQuad->text(vector2dst{ 1,0 })->text.set(str::to_str(consumedTokens));
     }
 

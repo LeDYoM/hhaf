@@ -7,20 +7,16 @@
 
 namespace lib
 {
-/**
-     * This class provides a basic interface for all Properties of
-     * the system.
-     */
+/// This class provides a basic interface for all Properties of
+/// the system.
 template <typename T>
 class IProperty
 {
 public:
-    /**
-         * Get value of the property.
-         * @return The content of the property.
-        */
+    /// Get value of the property.
+    /// @return The content of the property.
     virtual const T &get() const noexcept = 0;
-    virtual void set(const T &v) noexcept = 0;
+    virtual bool set(const T &v) noexcept = 0;
 };
 
 template <typename T>
@@ -43,7 +39,15 @@ public:
         return v;
     }
     inline const T &get() const noexcept override final { return m_value; }
-    inline void set(const T &v) noexcept override { m_value = v; }
+    inline bool set(const T &v) noexcept override
+    {
+        if (!(m_value == v))
+        {
+            m_value = v;
+            return true;
+        }
+        return false;
+    }
 
 protected:
     T m_value{};
@@ -77,16 +81,16 @@ public:
         resetHasChanged();
         return v;
     }
-    inline void set(const T &v) noexcept override
+
+    inline bool set(const T &v) noexcept override
     {
-//        const bool is_different{v == get()};
+        const bool is_different{BaseClass::set(v)};
 
-        BaseClass::set(v);
-
-//        if (is_different)
-//        {
+        if (is_different)
+        {
             setChanged();
-//        }
+        }
+        return is_different;
     }
 
 private:
