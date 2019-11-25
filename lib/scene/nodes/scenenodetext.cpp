@@ -138,5 +138,58 @@ void SceneNodeText::update()
             sNode->snCast<RenderizableSceneNode>()->node()->color.set(tc);
         });
     }
+
+    const bool as_rr_hasChanged{alignmentSize.readResetHasChanged()};
+
+    if (as_rr_hasChanged || alignmentX.readResetHasChanged())
+    {
+        updateAlignmentX(font()->textSize(text()).x);
+    }
+
+    if (as_rr_hasChanged || alignmentY.readResetHasChanged())
+    {
+        updateAlignmentY(font()->textSize(text()).y);
+    }
 }
+
+void SceneNodeText::updateAlignmentX(const f32 textSizeX)
+{
+    f32 newPosX{0.f};
+
+    switch (alignmentX())
+    {
+    default:
+    case AlignmentX::Left:
+        break;
+    case AlignmentX::Center:
+        newPosX = (alignmentSize().x / 2) - (textSizeX / 2);
+        break;
+    case AlignmentX::Right:
+        newPosX = alignmentSize().x - textSizeX;
+        break;
+    }
+
+    position.set(vector2df{newPosX, position().y});
+}
+
+void SceneNodeText::updateAlignmentY(const f32 textSizeY)
+{
+    f32 newPosY{0.f};
+
+    switch (alignmentY())
+    {
+    default:
+    case AlignmentY::Top:
+        break;
+    case AlignmentY::Middle:
+        newPosY = (alignmentSize().y / 2) - (textSizeY / 2);
+        break;
+    case AlignmentY::Bottom:
+        newPosY = alignmentSize().y - textSizeY;
+        break;
+    }
+
+    position.set(vector2df{position().x, newPosY});
+}
+
 } // namespace lib::scene::nodes

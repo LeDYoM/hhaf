@@ -18,11 +18,31 @@ namespace lib::scene::nodes
         SceneNodeText(SceneNode *const parent, const str &name);
         ~SceneNodeText() override;
 
+        enum class AlignmentX : u8
+        {
+            Left = 0,
+            Center,
+            Right
+        };
+
+        enum class AlignmentY : u8
+        {
+            Top = 0,
+            Middle,
+            Bottom
+        };
+
         PropertyState<str> text;
         PropertyState<sptr<IFont>> font;
         PropertyState<Color> textColor;
+        PropertyState<AlignmentX> alignmentX;
+        PropertyState<AlignmentY> alignmentY;
+        PropertyState<vector2df> alignmentSize;
     protected:
         void update() override final;
+    private:
+        void updateAlignmentX(const f32 textSizeX);
+        void updateAlignmentY(const f32 textSizeY);
     };
 }
 

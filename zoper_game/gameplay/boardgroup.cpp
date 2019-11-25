@@ -15,7 +15,10 @@ using namespace lib::scene;
 using namespace lib::scene::nodes;
 
 BoardGroup::BoardGroup(SceneNode *parent, str name, vector2dst size)
-    : BaseClass{parent, std::move(name), size} {}
+    : BaseClass{parent, std::move(name)}
+    {
+        setTableSize(std::move(size));
+    }
 
 BoardGroup::~BoardGroup() {}
 

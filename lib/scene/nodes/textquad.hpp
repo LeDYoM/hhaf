@@ -19,8 +19,6 @@ namespace lib::scene::nodes
         inline sptr<SceneNodeText> text(vector2dst index) const noexcept
         { return nodeAt(std::move(index)); }
 
-    private:
-        vector2df m_size;
     };
 }
 
