@@ -15,8 +15,8 @@
 
 namespace zoper
 {
-	using namespace lib;
-	using namespace lib::scene;
+    using namespace lib;
+    using namespace lib::scene;
     using namespace lib::scene::nodes;
 
     GameHudSceneNode::GameHudSceneNode(SceneNode * const parent, str name)
