@@ -6,8 +6,6 @@
 #include <lib/scene/scene.hpp>
 #include <lib/scene/nodes/scenenodetext.hpp>
 
-#include <lib/scene/components/alignedtextcomponent.hpp>
-
 #include <lib/include/liblog.hpp>
 #include <lib/include/resources/iresourceretriever.hpp>
 #include <lib/include/resources/ittfont.hpp>
@@ -32,23 +30,18 @@ GameOverSceneNode::GameOverSceneNode(scene::SceneNode *const parent, str name)
     gameText->text.set("GAME");
     gameText->font.set(resources_viewer->getTTFont(GameResources::ScoreFontId)->font(360));
     gameText->textColor = colors::White;
-    {
-        auto align(gameText->addComponentOfType<AlignedTextComponent>());
-        align->alignmentSize.set(gosize);
-        align->alignmentX.set(AlignedTextComponent::AlignmentX::Center);
-        align->alignmentY.set(AlignedTextComponent::AlignmentY::Top);
-    }
+    gameText->alignmentSize.set(gosize);
+    gameText->alignmentX.set(SceneNodeText::AlignmentX::Center);
+    gameText->alignmentY.set(SceneNodeText::AlignmentY::Top);
 
     auto overText(m_gameOverrg->createSceneNode<SceneNodeText>("gameoverover"));
     overText->text.set("OVER");
     overText->font.set(resources_viewer->getTTFont(GameResources::ScoreFontId)->font(360));
     overText->textColor = colors::White;
-    {
-        auto align(overText->addComponentOfType<AlignedTextComponent>());
-        align->alignmentSize.set(gosize);
-        align->alignmentX.set(AlignedTextComponent::AlignmentX::Center);
-        align->alignmentY.set(AlignedTextComponent::AlignmentY::Bottom);
-    }
+    overText->alignmentSize.set(gosize);
+    overText->alignmentX.set(SceneNodeText::AlignmentX::Center);
+    overText->alignmentY.set(SceneNodeText::AlignmentY::Bottom);
+
     visible = false;
 }
 

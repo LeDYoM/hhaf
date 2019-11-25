@@ -6,8 +6,6 @@
 #include <lib/scene/scene.hpp>
 #include <lib/scene/nodes/scenenodetext.hpp>
 
-#include <lib/scene/components/alignedtextcomponent.hpp>
-
 #include <lib/include/liblog.hpp>
 #include <lib/scene/datawrappers/resourceview.hpp>
 #include <lib/include/resources/iresourceretriever.hpp>
