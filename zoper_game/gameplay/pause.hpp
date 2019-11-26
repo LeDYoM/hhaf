@@ -7,6 +7,7 @@
 
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/nodes/textquad.hpp>
+#include <lib/scene/components/animationcomponent.hpp>
 
 #include "../gameshareddata.hpp"
 
@@ -26,6 +27,7 @@ namespace zoper
         void exitPause();
     private:
         sptr<scene::nodes::SceneNodeText> m_pauseText;
+        sptr<scene::AnimationComponent> animation_component_;
     };
 }
 
