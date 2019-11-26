@@ -24,7 +24,6 @@
 #include <lib/scene/ianimation.hpp>
 #include <lib/scene/components/animationcomponent.hpp>
 #include <lib/scene/components/inputcomponent.hpp>
-#include <lib/scene/components/alignedtextcomponent.hpp>
 #include <lib/scene/components/randomnumberscomponent.hpp>
 #include <lib/scene/components/renderizables.hpp>
 //TODO: Fixme

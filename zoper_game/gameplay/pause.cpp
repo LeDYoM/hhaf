@@ -3,7 +3,6 @@
 #include "../loaders/gameresources.hpp"
 
 #include <lib/scene/nodes/scenenodetext.hpp>
-#include <lib/scene/components/alignedtextcomponent.hpp>
 #include <lib/scene/components/animationcomponent.hpp>
 #include <lib/scene/ianimation.hpp>
 #include <lib/resources/texture.hpp>
@@ -27,12 +26,9 @@ PauseSceneNode::PauseSceneNode(scene::SceneNode *const parent, str name)
     m_pauseText->text.set("PAUSE");
     m_pauseText->font.set(resources_viewer->getTTFont(GameResources::ScoreFontId)->font(180));
     m_pauseText->textColor.set(colors::White);
-    {
-        auto align(m_pauseText->addComponentOfType<AlignedTextComponent>());
-        align->alignmentSize.set(parentScene()->scenePerspective().size());
-        align->alignmentX.set(AlignedTextComponent::AlignmentX::Center);
-        align->alignmentY.set(AlignedTextComponent::AlignmentY::Middle);
-    }
+    m_pauseText->alignmentSize.set(parentScene()->scenePerspective().size());
+    m_pauseText->alignmentX.set(SceneNodeText::AlignmentX::Center);
+    m_pauseText->alignmentY.set(SceneNodeText::AlignmentY::Middle);
 
     visible.set(false);
 }
