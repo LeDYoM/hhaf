@@ -45,16 +45,24 @@ namespace zoper
             
             sceneController->setSceneDirector([this](const str& scene_name) -> str
             {
-                if (scene_name == (MenuScene::StaticTypeName))
+                // Did the user selected exit?
+                if (gameSharedData->exitGame)
                 {
-                    // Did the user selected exit?
-                    if (gameSharedData->exitGame)
-                    {
-                        return str();
-                    }
+                    return str{};
+                }
+                else if (scene_name == (MenuScene::StaticTypeName))
+                {
                     return GameScene::StaticTypeName;
                 }
-                return MenuScene::StaticTypeName;
+                else if (scene_name == (GameScene::StaticTypeName))
+                {
+                    return HighScoresScene::StaticTypeName;
+                }
+                else if (scene_name == (GameScene::StaticTypeName))
+                {
+                    return MenuScene::StaticTypeName;
+                }
+                return str{};
             });
 
             // Hack to test high scores
