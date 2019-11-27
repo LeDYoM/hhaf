@@ -14,31 +14,32 @@
 
 namespace zoper
 {
-	using namespace lib;
-	using namespace lib::scene;
+using namespace lib;
+using namespace lib::scene;
 
-    namespace
-    {
-    }
-    class HighScoreTextController : public nodes::TableNode<nodes::SceneNodeText>
-	{
-        using BaseClass = nodes::TableNode<nodes::SceneNodeText>;
-    public:
-        HighScoreTextController(scene::SceneNode *parent, str name);
-		virtual ~HighScoreTextController();
-
-		virtual void onCreated() override;
-
-		emitter<> Finished;
-
-	private:
-        void standarizeText(const sptr<nodes::SceneNodeText>&ntext);
-		void saveHighScores();
-		HighScoresData m_hsData;
-        sptr<IFont> m_normalFont;
-		Color m_normalColor;
-		Color m_selectedColor;
-	};
+namespace
+{
 }
+class HighScoreTextController : public nodes::TableNode<nodes::SceneNodeText>
+{
+    using BaseClass = nodes::TableNode<nodes::SceneNodeText>;
+
+public:
+    HighScoreTextController(scene::SceneNode *parent, str name);
+    virtual ~HighScoreTextController();
+
+    virtual void onCreated() override;
+
+    emitter<> Finished;
+
+private:
+    void standarizeText(const sptr<nodes::SceneNodeText> &ntext);
+    void saveHighScores();
+    HighScoresData m_hsData;
+    sptr<IFont> m_normalFont;
+    Color m_normalColor;
+    Color m_selectedColor;
+};
+} // namespace zoper
 
 #endif

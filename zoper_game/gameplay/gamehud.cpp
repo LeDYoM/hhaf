@@ -48,7 +48,7 @@ namespace zoper
 
     void GameHudSceneNode::setLevel(const size_type level)
     {
-        m_scoreQuad->text(vector2dst{ 1,0 })->text.set(make_str(level + 1));
+        m_scoreQuad->text(vector2dst{ 1,0 })->text.set(make_str(level + 1U));
     }
 
     void GameHudSceneNode::setStayCounter(const size_type stayCounter)

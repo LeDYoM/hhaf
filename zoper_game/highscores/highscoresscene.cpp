@@ -7,40 +7,44 @@
 
 #include <lib/scene/renderizables/renderizable.hpp>
 #include <lib/scene/components/renderizables.hpp>
+#include <lib/scene/datawrappers/resourceview.hpp>
 #include <lib/system/resourcemanager.hpp>
 #include <lib/system/systemprovider.hpp>
 
 namespace zoper
 {
-	using namespace lib;
-	using namespace lib::scene;
-	using namespace lib::scene::nodes;
+using namespace lib;
+using namespace lib::scene;
+using namespace lib::scene::nodes;
 
-	void HighScoresScene::onCreated()
-	{
-		BaseClass::onCreated();
+constexpr u32 PointsPerQuad = 6U;
 
-        auto statesController( addComponentOfType<StatesController<HighScoresSceneStates>>());
-        loadResources(HighScoresResources{});
+void HighScoresScene::onCreated()
+{
+    BaseClass::onCreated();
 
-        m_normalFont = sceneManager().systemProvider().resourceManager().getTTFont("menu.mainFont")->font(72);
-		m_normalColor = colors::Blue;
-		m_selectedColor = colors::Red;
+    auto statesController(addComponentOfType<StatesController<HighScoresSceneStates>>());
+    loadResources(HighScoresResources{});
+    auto resources_viewer = dataWrapper<ResourceView>();
 
-        auto renderizables = addComponentOfType<Renderizables>();
-		m_background = renderizables->createNode("background");
-        m_background->figType.set(FigType_t::Quad);
-        m_background->pointCount.set(4U);
-		m_background->box = rectFromSize(2000.0f, 2000.0f);
-        m_background->setTextureFill(sceneManager().systemProvider().resourceManager().getTexture(HighScoresResources::BackgroundTextureId));
-		m_background->color = colors::White;
+    m_normalFont = resources_viewer->getTTFont("menu.mainFont")->font(72);
+    m_normalColor = colors::Blue;
+    m_selectedColor = colors::Red;
 
-        auto highScoreTextController(createSceneNode<HighScoreTextController>("HighScoreTextController"));
-        highScoreTextController->Finished.connect([this,statesController]()
-		{
-			sceneManager().sceneController()->terminateScene();
-		});
+    auto renderizables = addComponentOfType<Renderizables>();
+    auto background = renderizables->createNode("background");
+    background->figType.set(FigType_t::Quad);
+    background->pointCount.set(PointsPerQuad);
+    background->box = rectFromSize(2000.0f, 2000.0f);
+    background->setTextureFill(resources_viewer->getTexture(HighScoresResources::BackgroundTextureId));
+    background->color = colors::White;
 
-		statesController->start(HighScoresSceneStates::Show);
-	}
+    auto highScoreTextController(createSceneNode<HighScoreTextController>("HighScoreTextController"));
+    highScoreTextController->Finished.connect([this, statesController]()
+    {
+        sceneManager().sceneController()->terminateScene();
+    });
+
+    statesController->start(HighScoresSceneStates::Show);
 }
+} // namespace zoper

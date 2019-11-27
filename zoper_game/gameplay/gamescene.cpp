@@ -11,7 +11,6 @@
 #include "debug_actions.hpp"
 #endif
 
-#include "../gameshareddata.hpp"
 #include "../zoperprogramcontroller.hpp"
 
 #include <mtypes/include/types.hpp>
@@ -103,7 +102,7 @@ namespace zoper
         m_sceneTimerComponent = addComponentOfType<scene::TimerComponent>();
 
         // Import game shared data. Basically, the menu selected options.
-        importGameSharedData();
+        app<ZoperProgramController>().importGameSharedData(game_shared_data_);
 
         private_->scene_animation_component_ = addComponentOfType<scene::AnimationComponent>();
         // At this point, we setup level properties.
@@ -116,8 +115,8 @@ namespace zoper
         });
 
         level_properties_->setUp(
-            m_inGameData.currentLevel,
-            m_inGameData.gameMode,
+            game_shared_data_->startLevel,
+            game_shared_data_->gameMode,
             m_sceneTimerComponent);
 
         m_boardGroup->setUp(level_properties_);
@@ -207,7 +206,7 @@ namespace zoper
 
     void GameScene::setLevel(const size_type)
     {
-        m_boardGroup->setLevel(m_inGameData.currentLevel);
+        m_boardGroup->setLevel(game_shared_data_->endLevel);
     }
 
     bool moveTowardsCenter(
@@ -278,17 +277,8 @@ namespace zoper
 
     void GameScene::goGameOver()
     {
+        level_properties_->updateGameSharedData(game_shared_data_);
         m_sceneStates->setState(GameSceneStates::GameOver);
-    }
-
-    void GameScene::importGameSharedData()
-    {
-        (*sceneManager().systemProvider().app<ZoperProgramController>().gameSharedData) >> m_inGameData;
-    }
-
-    void GameScene::exportGameSharedData()
-    {
-        m_inGameData >> (*sceneManager().systemProvider().app<ZoperProgramController>().gameSharedData);
     }
 
     void GameScene::for_each_token_in_line(const vector2dst &startPosition, const Direction &direction,

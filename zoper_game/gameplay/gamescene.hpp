@@ -74,9 +74,7 @@ private:
         function<bool(const vector2dst &, const Direction &)> updatePredicate);
 
     sptr<StatesController<GameSceneStates>> m_sceneStates;
-
-    void importGameSharedData();
-    void exportGameSharedData();
+    sptr<GameSharedData> game_shared_data_;
     void launchPlayer();
     void addPlayer();
     void _debugDisplayBoard() const;
@@ -88,7 +86,6 @@ private:
     scene::TimerConnectorSPtr m_nextTokenTimer;
 
     // General properties.
-    InGameData m_inGameData;
     u8 m_nextTokenPart{0};
     sptr<LevelProperties> level_properties_;
     sptr<Player> m_player{nullptr};

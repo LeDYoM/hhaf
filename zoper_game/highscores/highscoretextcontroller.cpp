@@ -38,7 +38,7 @@ void HighScoreTextController::onCreated()
     Rectf32 textBox{rectFromSize(scenePerspective().size()).setLeftTop({0, 250}).setSize({2000, 1500})};
     position = textBox.leftTop();
     sceneNodeSize = textBox.size();
-    setTableSize({3, NumHighScore});
+    setTableSize({3U, NumHighScore});
 
     size_type positionInTable;
     const bool isInserting{m_hsData.tryInsertHighScore(gameScore, positionInTable)};

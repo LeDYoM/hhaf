@@ -21,6 +21,9 @@ void DebugActions::onKeyPressed(const Key &key)
     case Key::Q:
         gameScene()->goGameOver();
         break;
+    case Key::A:
+        gameScene()->levelProperties()->nextLevel();
+        break;
     }
 }
 

@@ -29,7 +29,8 @@ namespace zoper
         inline size_t baseScore() const { return m_baseScore; }
         inline size_t stayCounter() const { return m_stayCounter; }
         void increaseScore(const size_type scoreIncrement);
-
+        void nextLevel();
+        void updateGameSharedData(sptr<GameSharedData> game_shared_data);
         static constexpr size_t maxLevelWithProperties{ 25U };
 
         void tokenConsumed();

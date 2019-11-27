@@ -24,36 +24,16 @@ namespace zoper
 
     struct GameSharedData
     {
+        bool exitGame{ false };
+
+        // MenuScene will write these
         size_type startLevel{ 0U };
+        GameMode gameMode{ GameMode::Token };
+
+        // GameScene will write these.
         size_type endLevel{ 0U };
         size_type score{ 0U };
-
-        bool exitGame{ false };
-        GameMode gameMode{ GameMode::Token };
     };
-
-    struct InGameData
-    {
-        size_type currentLevel{ 0U };
-        size_type score{ 0U };
-        GameMode gameMode;
-    };
-
-    inline const GameSharedData &operator>>(const GameSharedData &gsd, InGameData &igd) noexcept
-    {
-        igd.currentLevel = gsd.startLevel;
-        igd.score = 0U;
-        igd.gameMode = gsd.gameMode;
-        return gsd;
-    }
-
-    inline const InGameData &operator>>(const InGameData &igd, GameSharedData &gsd) noexcept
-    {
-        gsd.endLevel = igd.currentLevel;
-        gsd.score = igd.score;
-        gsd.gameMode = igd.gameMode;
-        return igd;
-    }
 }
 
 #endif

@@ -15,27 +15,25 @@
 
 namespace zoper
 {
-    using namespace lib;
-    class HighScoreTextController;
+using namespace lib;
+class HighScoreTextController;
 
-	class HighScoresScene final : public scene::Scene
-	{
-	public:
+class HighScoresScene final : public scene::Scene
+{
+public:
+    DECLARE_SCENE(HighScoresScene)
 
-		DECLARE_SCENE(HighScoresScene)
+    void onCreated() override;
 
-		void onCreated() override;
+private:
+    using BaseClass = lib::scene::Scene;
 
-	private:
-        using BaseClass = lib::scene::Scene;
-
-		sptr<scene::Renderizable> m_background;
-		sptr<HighScoreTextController> m_highScoreTextController;
-        sptr<scene::IFont> m_normalFont;
-		scene::Color m_normalColor;
-		scene::Color m_selectedColor;
-		ireceiver m_receiver;
-	};
-}
+    sptr<HighScoreTextController> m_highScoreTextController;
+    sptr<scene::IFont> m_normalFont;
+    scene::Color m_normalColor;
+    scene::Color m_selectedColor;
+    ireceiver m_receiver;
+};
+} // namespace zoper
 
 #endif

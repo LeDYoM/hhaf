@@ -9,7 +9,8 @@ using namespace lib::scene;
 using namespace lib::core;
 
 void LevelProperties::setUp(const size_type currentLevel,
-                            const GameMode gameMode, sptr<scene::TimerComponent> sceneTimerComponent)
+                            const GameMode gameMode,
+                            sptr<scene::TimerComponent> sceneTimerComponent)
 {
     if (!m_levelTimer)
     {
@@ -24,12 +25,14 @@ void LevelProperties::setUp(const size_type currentLevel,
     m_updateLevelDataTimer = m_sceneTimerComponent->addTimer(
         TimerType::Continuous,
         TimePoint_as_miliseconds(120),
-        [this](TimePoint /*realEllapsed*/) {
+        [this](TimePoint /*realEllapsed*/)
+        {
             updateLevelData();
         });
 
     m_gameHud = attachedNode()->createSceneNode<GameHudSceneNode>("hud");
 
+    m_currentScore = 0U;
     setLevel(currentLevel);
 }
 
@@ -62,7 +65,7 @@ void LevelProperties::setLevel(const LevelType currentLevel)
     log_debug_info("Level set: ", m_currentLevel);
     log_debug_info("Millis between tokens: ", millisBetweenTokens());
     log_debug_info("Current base score: ", baseScore());
-    log_debug_info("Seconds or tokensto next level: ", stayCounter());
+    log_debug_info("Seconds or tokens to next level: ", stayCounter());
 }
 
 void LevelProperties::tokenConsumed()
@@ -73,7 +76,7 @@ void LevelProperties::tokenConsumed()
 
 void LevelProperties::updateGoals()
 {
-    m_gameHud->setLevel(m_currentLevel + 1);
+    m_gameHud->setLevel(m_currentLevel);
     m_gameHud->setStayCounter(m_stayCounter);
 }
 
@@ -87,7 +90,7 @@ void LevelProperties::updateLevelData()
 
         if (m_consumedTokens >= m_stayCounter)
         {
-            setLevel(m_currentLevel + 1);
+            nextLevel();
         }
         break;
 
@@ -96,7 +99,7 @@ void LevelProperties::updateLevelData()
 
         if (m_levelTimer->ellapsed().seconds() >= m_stayCounter)
         {
-            setLevel(m_currentLevel + 1);
+            nextLevel();
         }
         break;
     }
@@ -106,6 +109,17 @@ void LevelProperties::increaseScore(const size_type scoreIncrement)
 {
     m_currentScore += scoreIncrement;
     m_gameHud->setScore(m_currentScore);
+}
+
+void LevelProperties::nextLevel()
+{
+    setLevel(m_currentLevel + 1);
+}
+
+void LevelProperties::updateGameSharedData(sptr<GameSharedData> game_shared_data)
+{
+    game_shared_data->endLevel = m_currentLevel;
+    game_shared_data->score = m_currentScore;
 }
 
 } // namespace zoper

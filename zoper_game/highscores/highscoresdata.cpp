@@ -51,14 +51,14 @@ bool HighScoresData::tryInsertHighScore(const Score score, size_type &positionIn
 void HighScoresData::read()
 {
     log_debug_info("Reading high scores files...");
-//    Serializer<HighScoresList> sHScoreList;
-//    sHScoreList.deserialize(hsfile, m_highScoreList);
+    //    Serializer<HighScoresList> sHScoreList;
+    //    sHScoreList.deserialize(hsfile, m_highScoreList);
 }
 
 void HighScoresData::store()
 {
     log_debug_info("Writing high scores file");
-//    auto r = Serializer<HighScoresList>::serialize(m_highScoreList);
+    //    auto r = Serializer<HighScoresList>::serialize(m_highScoreList);
     //    sHScoreList.serialize(hsfile, m_highScoreList);
 }
 /*

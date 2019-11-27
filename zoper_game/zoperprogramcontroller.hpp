@@ -27,6 +27,11 @@ namespace zoper
 
         lib::sptr<GameSharedData> gameSharedData;
         lib::uptr<KeyMapping> keyMapping;
+
+        void importGameSharedData(lib::sptr<GameSharedData>& rhs)
+        {
+            rhs = gameSharedData;
+        }
     };
 }
 
