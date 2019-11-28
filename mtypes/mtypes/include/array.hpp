@@ -56,7 +56,9 @@ public:
     {
         if (index < array_size)
         {
-            for (size_type i{array_size - 2U}; i > index; --i)
+            for (size_type i{array_size - 2U}; 
+                i >= index && (i < static_cast<size_type>(-1));
+                --i)
             {
                 m_buffer[i + 1] = std::move(m_buffer[i]);
             }
@@ -102,6 +104,16 @@ public:
 private:
     T m_buffer[array_size];
 };
+
+template <typename T, size_type S>
+using array_shared_pointers = array<sptr<T>, S>;
+
+template <typename T, size_type S>
+using array_unique_pointers = array<uptr<T>, S>;
+
+template <typename T, size_type S>
+using array_weak_pointers = array<wptr<T>, S>;
+
 } // namespace lib
 
 #endif

@@ -17,7 +17,7 @@ using Score = size_type;
 struct HighScore
 {
     str name{};
-    Score score{0};
+    Score score{0U};
 };
 
 class HighScoresData

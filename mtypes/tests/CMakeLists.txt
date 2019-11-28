@@ -1,6 +1,7 @@
 enable_testing()
 
 set(UNIT_TEST_LIST
+    array
     lockablevector
     main
     object
