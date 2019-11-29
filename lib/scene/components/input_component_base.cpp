@@ -27,6 +27,6 @@ bool InputComponentBase::isShiftPressed() const
 
 char InputComponentBase::toAscii(const Key key) noexcept
 {
-    return static_cast<char>(KeyIndex(key) + (isShiftPressed() ? 127 : 65));
+    return static_cast<char>(KeyIndex(key) + (isShiftPressed() ? 65 : 65));
 }
 } // namespace lib::scene

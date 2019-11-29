@@ -10,12 +10,12 @@ constexpr char hsfile[] = "hscores.txt";
 
 HighScoresData::HighScoresData()
 {
-    size_type counter{1};
+    size_type counter{10U};
     for (auto &element : m_highScoreList)
     {
         element.name = "AAA";
         element.score = counter * 100;
-        ++counter;
+        --counter;
     }
 }
 

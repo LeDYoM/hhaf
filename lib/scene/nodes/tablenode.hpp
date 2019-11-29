@@ -111,14 +111,14 @@ public:
     void update() override
     {
         BaseClass::update();
-        // Update row and column size
 
+        // Update row and column size
         if (ps_readResetHasChanged(sceneNodeSize, tableSize_))
         {
-            const vector2df nodeSize{sceneNodeSize() / static_cast<vector2df>(tableSize())};
-            for_each_table_innerSceneNode([this, nodeSize](const vector2dst &p, const auto &n)
+            const vector2df cell_size{cellSize()};
+            for_each_table_innerSceneNode([this, cell_size](const vector2dst &p, const auto &n)
             {
-                n->position = nodeSize * static_cast<vector2df>(p);
+                n->position = cell_size * static_cast<vector2df>(p);
             });
         }
     }

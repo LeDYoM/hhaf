@@ -58,7 +58,7 @@ namespace zoper
                 {
                     return HighScoresScene::StaticTypeName;
                 }
-                else if (scene_name == (GameScene::StaticTypeName))
+                else if (scene_name == (HighScoresScene::StaticTypeName))
                 {
                     return MenuScene::StaticTypeName;
                 }

@@ -9,17 +9,22 @@
 
 namespace zoper
 {
-	class HighScoreValidator : public lib::scene::TextValidator
-	{
-	public:
-		bool canAddChar(const str&,const char) override {
-			return true;
-		}
+class HighScoreValidator : public lib::scene::TextValidator
+{
+public:
+    bool canAddChar(const str &source, const char new_char) override
+    {
+        str dest{source};
+        dest.append_char(new_char);
+        return isValidText(dest);
+        return true;
+    }
 
-		bool isValidText(const lib::str&) override {
-			return true;
-		}
-	};
-}
+    bool isValidText(const lib::str &source) override
+    {
+        return source.size() < 4U;
+    }
+};
+} // namespace zoper
 
 #endif

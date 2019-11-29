@@ -28,7 +28,7 @@ TEST_CASE("array::array", "[array]")
 
     SECTION("Iterators constructor")
     {
-        const u32 data[] = { 0U, 1U, 2U, 3U, 4U };
+        const u32 data[] = {0U, 1U, 2U, 3U, 4U};
         array<u32, 5U> v(data, data + 5);
         CHECK(v.size() == 5U);
         CHECK(v[0U] == data[0U]);
@@ -41,8 +41,8 @@ TEST_CASE("array::array", "[array]")
     SECTION("Initializer list constructor")
     {
         array<u32, 11U> m;
-        m = { 1U, 9U, 8U, 7U, 6U, 5U, 4U, 3U, 2U, 0U, 1U };
-        CHECK(m == array<u32, 11U>{ 1, 9, 8, 7, 6, 5, 4, 3, 2, 0, 1 });
+        m = {1U, 9U, 8U, 7U, 6U, 5U, 4U, 3U, 2U, 0U, 1U};
+        CHECK(m == array<u32, 11U>{1, 9, 8, 7, 6, 5, 4, 3, 2, 0, 1});
 
         SECTION("Copy and move constructor")
         {
@@ -59,14 +59,14 @@ TEST_CASE("array::array", "[array]")
     {
         SECTION("With sizeof")
         {
-            const u32 arr[] = { 4U, 3U, 2U, 1U };
+            const u32 arr[] = {4U, 3U, 2U, 1U};
             array<u32, 4U> v(arr, sizeof(arr) / sizeof(u32));
             CHECK(v.size() == 4U);
         }
 
         SECTION("With sizeof")
         {
-            const u32 arr[] = { 4U, 3U, 2U, 1U };
+            const u32 arr[] = {4U, 3U, 2U, 1U};
             array<u32, 4U> v(std::cbegin(arr), std::cend(arr));
             CHECK(v.size() == 4U);
         }
@@ -131,7 +131,8 @@ TEST_CASE("array::insert", "[array]")
     }
 }
 
-class A {
+class A
+{
 public:
     s32 b;
 };
@@ -139,16 +140,16 @@ public:
 inline auto init_array_shared_pointers_A()
 {
     array_shared_pointers<A, 10U> test_array1;
-    test_array1[0U] = msptr<A>(A{ 1 });
-    test_array1[1U] = msptr<A>(A{ -2 });
-    test_array1[2U] = msptr<A>(A{ 3 });
-    test_array1[3U] = msptr<A>(A{ -2 });
-    test_array1[4U] = msptr<A>(A{ 5 });
-    test_array1[5U] = msptr<A>(A{ 100 });
-    test_array1[6U] = msptr<A>(A{ -2 });
-    test_array1[7U] = msptr<A>(A{ -2 });
-    test_array1[8U] = msptr<A>(A{ -1 });
-    test_array1[9U] = msptr<A>(A{ 0 });
+    test_array1[0U] = msptr<A>(A{1});
+    test_array1[1U] = msptr<A>(A{-2});
+    test_array1[2U] = msptr<A>(A{3});
+    test_array1[3U] = msptr<A>(A{-2});
+    test_array1[4U] = msptr<A>(A{5});
+    test_array1[5U] = msptr<A>(A{100});
+    test_array1[6U] = msptr<A>(A{-2});
+    test_array1[7U] = msptr<A>(A{-2});
+    test_array1[8U] = msptr<A>(A{-1});
+    test_array1[9U] = msptr<A>(A{0});
     return test_array1;
 }
 
@@ -207,7 +208,7 @@ TEST_CASE("array of shared pointers", "[array][sptr]")
         {
             SECTION("At the begining")
             {
-                test_array2.insert(0U, msptr<A>(A{ 42 }));
+                test_array2.insert(0U, msptr<A>(A{42}));
                 CHECK(test_array2[0U]->b == 42);
                 CHECK(test_array2[1U]->b == 1);
                 CHECK(test_array2[2U]->b == -2);
@@ -219,7 +220,7 @@ TEST_CASE("array of shared pointers", "[array][sptr]")
                 CHECK(test_array2[8U]->b == -2);
                 CHECK(test_array2[9U]->b == -1);
 
-                test_array2.insert(0U, msptr<A>(A{ 348 }));
+                test_array2.insert(0U, msptr<A>(A{348}));
                 CHECK(test_array2[0U]->b == 348);
                 CHECK(test_array2[1U]->b == 42);
                 CHECK(test_array2[2U]->b == 1);
@@ -233,7 +234,7 @@ TEST_CASE("array of shared pointers", "[array][sptr]")
 
                 SECTION("At the end")
                 {
-                    test_array2.insert(9U, msptr<A>(A{ -8 }));
+                    test_array2.insert(9U, msptr<A>(A{-8}));
                     CHECK(test_array2[0U]->b == 348);
                     CHECK(test_array2[1U]->b == 42);
                     CHECK(test_array2[2U]->b == 1);
@@ -245,7 +246,7 @@ TEST_CASE("array of shared pointers", "[array][sptr]")
                     CHECK(test_array2[8U]->b == -2);
                     CHECK(test_array2[9U]->b == -8);
 
-                    test_array2.insert(9U, msptr<A>(A{ -4 }));
+                    test_array2.insert(9U, msptr<A>(A{-4}));
                     CHECK(test_array2[0U]->b == 348);
                     CHECK(test_array2[1U]->b == 42);
                     CHECK(test_array2[2U]->b == 1);
@@ -260,7 +261,7 @@ TEST_CASE("array of shared pointers", "[array][sptr]")
 
                 SECTION("On the middle")
                 {
-                    test_array2.insert(5U, msptr<A>(A{ 10000 }));
+                    test_array2.insert(5U, msptr<A>(A{10000}));
                     CHECK(test_array2[0U]->b == 348);
                     CHECK(test_array2[1U]->b == 42);
                     CHECK(test_array2[2U]->b == 1);
@@ -272,7 +273,7 @@ TEST_CASE("array of shared pointers", "[array][sptr]")
                     CHECK(test_array2[8U]->b == 100);
                     CHECK(test_array2[9U]->b == -2);
 
-                    test_array2.insert(5U, msptr<A>(A{ 9999 }));
+                    test_array2.insert(5U, msptr<A>(A{9999}));
                     CHECK(test_array2[0U]->b == 348);
                     CHECK(test_array2[1U]->b == 42);
                     CHECK(test_array2[2U]->b == 1);

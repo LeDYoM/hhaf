@@ -66,34 +66,21 @@ public:
         }
     }
 
-    template <size_type Index>
-    constexpr void insert(value_type element) noexcept
-    {
-        if (Index < array_size)
-        {
-            for (size_type i{array_size - 2U}; i > Index; --i)
-            {
-                m_buffer[i + 1] = std::move(m_buffer[i]);
-            }
-            m_buffer[Index] = std::move(element);
-        }
-    }
-
     constexpr reference operator[](const size_t index) noexcept { return m_buffer[index]; }
     constexpr const_reference operator[](const size_t index) const noexcept { return m_buffer[index]; }
     constexpr size_t size() const noexcept { return array_size; }
-    constexpr bool empty() const noexcept { return array_size == 0; }
+    constexpr bool empty() const noexcept { return array_size == 0U; }
     constexpr iterator begin() noexcept { return m_buffer; }
     constexpr const_iterator begin() const noexcept { return m_buffer; }
     constexpr iterator end() noexcept { return m_buffer + array_size; }
     constexpr const_iterator end() const noexcept { return m_buffer + array_size; }
     constexpr const_iterator cbegin() const noexcept { return begin(); }
     constexpr const_iterator cend() const noexcept { return end(); }
-    constexpr reference front() noexcept { return m_buffer[0]; }
-    constexpr reference back() noexcept { return m_buffer[array_size > 0 ? (array_size - 1) : 0]; }
-    constexpr const_reference front() const noexcept { return m_buffer[0]; }
+    constexpr reference front() noexcept { return *begin(); }
+    constexpr reference back() noexcept { return m_buffer[array_size - 1U]; }
+    constexpr const_reference front() const noexcept { return cbegin(); }
     constexpr const_reference back() const noexcept { return m_buffer[array_size > 0 ? (array_size - 1) : 0]; }
-    constexpr const_reference cfront() const noexcept { return front(); }
+    constexpr const_reference cfront() const noexcept { return cbegin(); }
     constexpr const_reference cback() const noexcept { return back(); }
 
     constexpr bool operator==(const array& other) const

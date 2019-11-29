@@ -59,13 +59,20 @@ void HighScoreTextController::onCreated()
 
             if (isInserting && positionInTable == counter)
             {
-                //                    auto editor(label->addComponentOfType<TextEditorComponent>());
-                //                    editor->setTextValidator(msptr<HighScoreValidator>());
-                //                    editor->Accepted.connect([this,positionInTable,element](const str&entry) mutable {
-                //                        m_hsData.setHighScoreName(positionInTable, entry);
-                //                    saveHighScores();
-                //                    Finished();
-                //                    });
+                    auto editor(label->addComponentOfType<TextEditorComponent>());
+                    editor->setTextValidator(msptr<HighScoreValidator>());
+                    editor->Accepted.connect([this,positionInTable](const str&entry) mutable
+                    {
+                        m_hsData.setHighScoreName(positionInTable, entry);
+                        saveHighScores();
+                        Finished();
+                    });
+
+                    editor->Rejected.connect([editor]()
+                    {
+                        editor->enabled = true;
+                    });
+
             }
             else
             {
