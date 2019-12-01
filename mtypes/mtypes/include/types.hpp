@@ -15,6 +15,9 @@ namespace lib
     template <typename T, typename D = std::default_delete<T>>
     using uptr = std::unique_ptr<T, D>;
 
+    template <typename T>
+    using wptr = std::weak_ptr<T>;
+
     template <typename T, typename... Args>
     constexpr sptr<T> msptr(Args&&... args) { return std::make_shared<T>(std::forward<Args>(args)...); }
 
@@ -22,7 +25,7 @@ namespace lib
     constexpr uptr<T> muptr(Args&&... args) { return std::make_unique<T>(std::forward<Args>(args)...); }
 
     template <typename T>
-    using wptr = std::weak_ptr<T>;
+    constexpr wptr<T> mwptr(const sptr<T>& sp) { return wptr<T>(sp); }
 
     template <typename T>
     using rawptr = std::add_pointer_t<T>;
