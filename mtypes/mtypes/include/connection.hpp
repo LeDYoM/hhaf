@@ -9,7 +9,8 @@
 namespace lib
 {
     template <typename... Args>
-    class emitter final {
+    class emitter final
+    {
     public:
         using emitter_callback_t = function<void(Args...)>;
         constexpr emitter() = default;
@@ -27,11 +28,13 @@ namespace lib
             }
         }
 
-        constexpr void connect(emitter_callback_t f) {
+        constexpr void connect(emitter_callback_t f) noexcept
+        {
             m_receivers.emplace_back(std::move(f));
         }
 
-        constexpr bool disconnect(emitter_callback_t& f) {
+        constexpr bool disconnect(emitter_callback_t& f) noexcept
+        {
             return m_receivers.erase_values(f, m_receivers.begin()) != m_receivers.end();
         }
 

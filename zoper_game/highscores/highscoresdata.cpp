@@ -47,33 +47,4 @@ bool HighScoresData::tryInsertHighScore(const Score score, size_type &positionIn
     }
     return false;
 }
-
-void HighScoresData::read()
-{
-    log_debug_info("Reading high scores files...");
-    //    Serializer<HighScoresList> sHScoreList;
-    //    sHScoreList.deserialize(hsfile, m_highScoreList);
-}
-
-void HighScoresData::store()
-{
-    log_debug_info("Writing high scores file");
-    //    auto r = Serializer<HighScoresList>::serialize(m_highScoreList);
-    //    sHScoreList.serialize(hsfile, m_highScoreList);
-}
-/*
-inline SerializationStreamIn &operator>>(SerializationStreamIn &ssi, HighScore &data)
-{
-    ssi >> data.name;
-    ssi >> data.score;
-    return ssi;
-}
-
-inline SerializationStreamOut &operator<<(SerializationStreamOut &sso, const HighScore &data)
-{
-    sso << data.name;
-    sso << data.score;
-    return sso;
-}
-*/
 } // namespace zoper

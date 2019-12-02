@@ -7,6 +7,7 @@
 
 #include <lib/scene/renderizables/renderizable.hpp>
 #include <lib/scene/components/renderizables.hpp>
+#include <lib/scene/components/inputcomponent.hpp>
 #include <lib/scene/datawrappers/resourceview.hpp>
 #include <lib/system/resourcemanager.hpp>
 #include <lib/system/systemprovider.hpp>
@@ -38,6 +39,8 @@ void HighScoresScene::onCreated()
     background->box = rectFromSize(2000.0f, 2000.0f);
     background->setTextureFill(resources_viewer->getTexture(HighScoresResources::BackgroundTextureId));
     background->color = colors::White;
+
+    auto input_component(addComponentOfType<InputComponent>());
 
     auto highScoreTextController(createSceneNode<HighScoreTextController>("HighScoreTextController"));
     highScoreTextController->Finished.connect([this, statesController]()

@@ -8,11 +8,15 @@
 #include <lib/system/resourcemanager.hpp>
 #include <lib/include/resources/ittfont.hpp>
 #include <lib/scene/datawrappers/resourceview.hpp>
+#include <lib/system/systemprovider.hpp>
+#include <lib/system/filesystem/filesystem.hpp>
 
 namespace zoper
 {
 using namespace lib;
 using namespace lib::scene;
+
+static constexpr char HighScoresFileName[] = "high_scores.txt";
 
 HighScoreTextController::HighScoreTextController(SceneNode *parent, str name)
     : BaseClass{parent, "HighScreTextController"} {}
@@ -30,7 +34,7 @@ void HighScoreTextController::onCreated()
     m_selectedColor = colors::Red;
 
     // Request the high scores.
-    m_hsData.read();
+    sceneManager().systemProvider().fileSystem().deserializeFromFile(HighScoresFileName, m_hsData);
 
     // Request game score
     Score gameScore = app<ZoperProgramController>().gameSharedData->score;
@@ -61,8 +65,7 @@ void HighScoreTextController::onCreated()
             {
                 auto editor(label->addComponentOfType<TextEditorComponent>());
                 editor->setTextValidator(msptr<HighScoreValidator>());
-                editor->Accepted.connect([this,positionInTable](const str&entry) mutable
-                {
+                editor->Accepted.connect([this, positionInTable](const str &entry) mutable {
                     m_hsData.setHighScoreName(positionInTable, entry);
                     saveHighScores();
                     Finished();
@@ -89,6 +92,8 @@ void HighScoreTextController::standarizeText(const sptr<nodes::SceneNodeText> &n
 
 void HighScoreTextController::saveHighScores()
 {
-    log_debug_error("Saving highscores is still not implemented");
+    log_debug_info("Saving highscores...");
+    sceneManager().systemProvider().fileSystem().serializeToFile(HighScoresFileName, m_hsData);
+    log_debug_info("High Scores saved");
 }
 } // namespace zoper
