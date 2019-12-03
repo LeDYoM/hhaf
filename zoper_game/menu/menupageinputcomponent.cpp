@@ -11,7 +11,8 @@ void MenuPageInputComponent::onAttached()
 {
     BaseClass::onAttached();
 
-    m_receiver.connect(InputComponent::KeyPressed, [this](const input::Key &key) {
+    KeyPressed.connect([this](const input::Key &key)
+    {
         switch (key)
         {
         case input::Key::Left:
@@ -33,7 +34,6 @@ void MenuPageInputComponent::onAttached()
             break;
         }
     });
-    //		InputComponent::KeyReleased.connect(keyReleased);
 }
 
 } // namespace zoper
