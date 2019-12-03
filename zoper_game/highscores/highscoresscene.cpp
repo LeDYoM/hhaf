@@ -39,9 +39,16 @@ void HighScoresScene::onCreated()
     background->box = rectFromSize(2000.0f, 2000.0f);
     background->setTextureFill(resources_viewer->getTexture(HighScoresResources::BackgroundTextureId));
     background->color = colors::White;
-
+/*
     auto input_component(addComponentOfType<InputComponent>());
-
+    input_component->KeyPressed.connect([statesController](const auto&)
+    {
+        if (statesController->currentState() == HighScoresSceneStates::Show)
+        {
+            statesController->setState(HighScoresSceneStates::FadeOut);
+        }
+    });
+*/
     auto highScoreTextController(createSceneNode<HighScoreTextController>("HighScoreTextController"));
     highScoreTextController->Finished.connect([this, statesController]()
     {

@@ -82,6 +82,15 @@ void HighScoreTextController::onCreated()
             ++counter;
         }
     }
+
+    if (!isInserting)
+    {
+        auto input_component(addComponentOfType<InputComponent>());
+        input_component->KeyPressed.connect([this](const auto&)
+        {
+            Finished();
+        });
+    }
 }
 
 void HighScoreTextController::standarizeText(const sptr<nodes::SceneNodeText> &ntext)
