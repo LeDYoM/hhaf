@@ -40,7 +40,7 @@ void Renderizable::render()
 {
     if (visible())
     {
-        updateGeometry();
+        update();
 
         if (!m_vertices.empty())
         {
@@ -107,11 +107,11 @@ void Renderizable::setTextureFill(sptr<ITexture> texture_)
     }
 }
 
-void Renderizable::updateGeometry()
+void Renderizable::update()
 {
     if (ps_readResetHasChanged(box, figType))
     {
-        updateGeometrySimpleNode();
+        updateGeometry();
         color.setChanged();
         textureRect.setChanged();
     }
@@ -132,7 +132,7 @@ void Renderizable::updateGeometry()
     }
 }
 
-void Renderizable::updateGeometrySimpleNode()
+void Renderizable::updateGeometry()
 {
     if (pointCount())
     {

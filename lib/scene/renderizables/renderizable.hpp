@@ -51,10 +51,10 @@ protected:
     VertexArray m_vertices;
 
 private:
-    void updateGeometrySimpleNode();
+    void updateGeometry();
     void updateTextureCoords();
 
-    void updateGeometry();
+    void update();
     vector2dd getPositionFromAngleAndRadius(const f64 angle, const vector2df &radius) const;
 };
 } // namespace lib::scene
