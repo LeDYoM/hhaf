@@ -21,7 +21,8 @@ namespace lib::scene
     class SceneManager;
 
     /** \brief Main class representing all SceneNodes from a Scene.
-    * This class is that serves as main entry point in the hierarchy of the scene
+    * This class serves as main entry point in the hierarchy of the scene.
+    * To create new SceneNode types, please, inherit from this class.
     */
     class SceneNode : public core::HasName, public Transformable, 
         public DataWrapperCreator, public ComponentContainer, public SceneNodeBlob

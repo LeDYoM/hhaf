@@ -14,48 +14,49 @@
 
 namespace lib::scene
 {
-    class SceneNode;
+class SceneNode;
 
-    enum class FigType_t : u8
-    {
-        Quad,
-        Shape
-    };
+enum class FigType_t : u8
+{
+    Quad,
+    Shape
+};
 
-    class Renderizable : public core::HasName
-    {
-    public:
-        Renderizable(SceneNode *const parent, str name, const u32 vertexCount);
-        virtual ~Renderizable();
+class Renderizable : public core::HasName
+{
+public:
+    Renderizable(SceneNode *const parent, str name, const u32 vertexCount);
+    virtual ~Renderizable();
 
-        void render();
+    void render();
 
-        PropertyState<FigType_t> figType;
-        PropertyState<Rectf32> box;
-        PropertyState<Color> color;
-        PropertyState<size_type> pointCount;
-        BasicProperty<bool> visible{ true };
+    PropertyState<FigType_t> figType;
+    PropertyState<Rectf32> box;
+    PropertyState<Color> color;
+    PropertyState<size_type> pointCount;
+    BasicProperty<bool> visible{true};
 
-        void setTextureAndTextureRect(sptr<ITexture> texture_,
-                                        const Rectf32& textRect);
+    void setTextureAndTextureRect(sptr<ITexture> texture_,
+                                  const Rectf32 &textRect);
 
-        void setTextureFill(sptr<ITexture> texture_);
+    void setTextureFill(sptr<ITexture> texture_);
 
-    private:
-        SceneNode *m_parent;
+private:
+    SceneNode *m_parent;
 
-    protected:
-        PropertyState<Rects32> textureRect;
-        PropertyState<sptr<ITexture>> texture;
+protected:
+    PropertyState<Rects32> textureRect;
+    PropertyState<sptr<ITexture>> texture;
 
-        VertexArray m_vertices;
-    private:
-        void updateGeometrySimpleNode();
-        void updateTextureCoords();
+    VertexArray m_vertices;
 
-        void updateGeometry();
-        vector2dd getPositionFromAngleAndRadius(const f64 angle, const vector2df& radius) const;
-    };
-}
+private:
+    void updateGeometrySimpleNode();
+    void updateTextureCoords();
+
+    void updateGeometry();
+    vector2dd getPositionFromAngleAndRadius(const f64 angle, const vector2df &radius) const;
+};
+} // namespace lib::scene
 
 #endif
