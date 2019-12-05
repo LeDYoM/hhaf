@@ -123,11 +123,39 @@ constexpr void ps_resetHasChanged(PropertyState<T> &arg)
 }
 
 template <typename T, typename... Args>
-constexpr bool ps_readResetHasChanged(PropertyState<T> &arg, Args &&... args)
+constexpr bool ps_readResetHasAnyChanged(PropertyState<T> &arg, Args &&... args)
 {
     const bool result_unary{arg.readResetHasChanged()};
-    const bool result_rest{ps_readResetHasChanged(std::forward<Args>(args)...)};
-    return result_unary || result_rest;
+
+    if constexpr (sizeof...(Args) > 1U)
+    {
+        const bool result_rest{ps_readResetHasAnyChanged(std::forward<Args>(args)...)};
+        return result_unary || result_rest;
+    }
+    else if constexpr (sizeof...(Args) > 0U)
+    {
+        const bool result_rest{ps_readResetHasChanged(std::forward<Args>(args)...)};
+        return result_unary || result_rest;
+    }
+    return result_unary;
+}
+
+template <typename T, typename... Args>
+constexpr bool ps_readResetHasAllChanged(PropertyState<T> &arg, Args &&... args)
+{
+    const bool result_unary{arg.readResetHasChanged()};
+
+    if constexpr (sizeof...(Args) > 1U)
+    {
+        const bool result_rest{ps_readResetHasAllChanged(std::forward<Args>(args)...)};
+        return result_unary && result_rest;
+    }
+    else if constexpr (sizeof...(Args) > 0U)
+    {
+        const bool result_rest{ps_readResetHasChanged(std::forward<Args>(args)...)};
+        return result_unary && result_rest;
+    }
+    return result_unary;
 }
 
 template <typename T>

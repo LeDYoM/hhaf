@@ -5,8 +5,8 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/properties.hpp>
+#include <mtypes/include/function.hpp>
 
-#include <lib/scene/transformable.hpp>
 #include <lib/scene/color.hpp>
 #include <lib/scene/hasname.hpp>
 #include <lib/scene/vertexarray.hpp>
@@ -22,11 +22,11 @@ enum class FigType_t : u8
     Shape
 };
 
-class Renderizable : public core::HasName
+class Renderizable final : public core::HasName
 {
 public:
     Renderizable(SceneNode *const parent, str name, const u32 vertexCount);
-    virtual ~Renderizable();
+    ~Renderizable();
 
     void render();
 
@@ -34,6 +34,9 @@ public:
     PropertyState<Rectf32> box;
     PropertyState<Color> color;
     PropertyState<size_type> pointCount;
+    PropertyState<function<Color(const BasicVertexArray::const_iterator v_iterator,
+        const Rectf32& cbox, const Rects32& ctexture_rect)>> color_modifier_;
+
     BasicProperty<bool> visible{true};
 
     void setTextureAndTextureRect(sptr<ITexture> texture_,
@@ -42,20 +45,23 @@ public:
     void setTextureFill(sptr<ITexture> texture_);
 
 private:
-    SceneNode *m_parent;
+    SceneNode *parent_;
 
-protected:
     PropertyState<Rects32> textureRect;
     PropertyState<sptr<ITexture>> texture;
 
     VertexArray m_vertices;
 
-private:
     void updateGeometry();
-    void updateTextureCoords();
+    void updateTextureCoordsAndColor();
+    void updateTextureCoordsAndColorForVertex(const BasicVertexArray::iterator v_iterator,
+        const Rectf32& cbox, const Rects32& ctexture_rect);
+    void updateColorForVertex(const BasicVertexArray::iterator v_iterator,
+        const Rectf32& cbox, const Rects32& ctexture_rect);
+    void updateColors();
 
     void update();
-    vector2dd getPositionFromAngleAndRadius(const f64 angle, const vector2df &radius) const;
+
 };
 } // namespace lib::scene
 

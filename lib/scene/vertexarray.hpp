@@ -25,7 +25,7 @@ namespace lib::scene
     class VertexArray
     {
     public:
-        constexpr VertexArray() = default;
+        constexpr VertexArray() noexcept = default;
         constexpr VertexArray(const PrimitiveType type) noexcept
             : m_vertices( ), m_primitiveType{ type } {}
 

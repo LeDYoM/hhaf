@@ -113,7 +113,7 @@ public:
         BaseClass::update();
 
         // Update row and column size
-        if (ps_readResetHasChanged(sceneNodeSize, tableSize_))
+        if (ps_readResetHasAnyChanged(sceneNodeSize, tableSize_))
         {
             const vector2df cell_size{cellSize()};
             for_each_table_innerSceneNode([this, cell_size](const vector2dst &p, const auto &n)

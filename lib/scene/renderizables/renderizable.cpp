@@ -30,58 +30,11 @@ constexpr int sgn_sin(T angle)
 {
     return sgn(std::sin(angle));
 }
-} // namespace
-Renderizable::Renderizable(SceneNode *const parent, str name, const u32 vertexCount)
-    : core::HasName{std::move(name)}, m_parent{parent}, m_vertices{TriangleFan, vertexCount} {}
 
-Renderizable::~Renderizable() = default;
-
-void Renderizable::render()
+constexpr vector2dd getPositionFromAngleAndRadius(const FigType_t fig_type,
+                                                  const f64 angle, const vector2df &radius)
 {
-    if (visible())
-    {
-        update();
-
-        if (!m_vertices.empty())
-        {
-            m_parent->parentScene()->sceneManager().systemProvider().renderSystem().draw(scene::RenderData{
-                m_vertices,
-                m_parent->globalTransform(),
-                dynamic_cast<Texture *>(texture().get())});
-        }
-    }
-}
-
-void Renderizable::updateTextureCoords()
-{
-    const auto &localbounds(box());
-    BasicVertexArray &vertices{m_vertices.verticesArray()};
-    for (auto &v : vertices)
-    {
-        const f32 xratio((v.position.x - localbounds.left) / localbounds.width);
-        const f32 yratio((v.position.y - localbounds.top) / localbounds.height);
-        v.texCoords.x = textureRect().left + (textureRect().width * xratio);
-        v.texCoords.y = textureRect().top + (textureRect().height * yratio);
-    }
-}
-
-void Renderizable::setTextureAndTextureRect(sptr<ITexture> texture_, const Rectf32 &textRect)
-{
-    texture.set(texture_);
-    if (texture_)
-    {
-        auto tSize(texture_->size());
-        textureRect = {
-            static_cast<s32>(textRect.left),
-            static_cast<s32>(textRect.top),
-            static_cast<s32>(textRect.width),
-            static_cast<s32>(textRect.height)};
-    }
-}
-
-vector2dd Renderizable::getPositionFromAngleAndRadius(const f64 angle, const vector2df &radius) const
-{
-    switch (figType())
+    switch (fig_type)
     {
     default:
     case FigType_t::Quad:
@@ -98,6 +51,46 @@ vector2dd Renderizable::getPositionFromAngleAndRadius(const f64 angle, const vec
     }
 }
 
+} // namespace
+
+Renderizable::Renderizable(SceneNode *const parent, str name, const u32 vertexCount)
+    : core::HasName{std::move(name)},
+      parent_{parent},
+      m_vertices{TriangleFan, vertexCount}
+{
+}
+
+Renderizable::~Renderizable() = default;
+
+void Renderizable::render()
+{
+    if (visible())
+    {
+        update();
+
+        if (!m_vertices.empty())
+        {
+            parent_->parentScene()->sceneManager().systemProvider().renderSystem().draw(scene::RenderData{
+                m_vertices,
+                parent_->globalTransform(),
+                dynamic_cast<Texture *>(texture().get())});
+        }
+    }
+}
+
+void Renderizable::setTextureAndTextureRect(sptr<ITexture> texture_, const Rectf32 &textRect)
+{
+    texture.set(texture_);
+    if (texture_)
+    {
+        textureRect = {
+            static_cast<s32>(textRect.left),
+            static_cast<s32>(textRect.top),
+            static_cast<s32>(textRect.width),
+            static_cast<s32>(textRect.height)};
+    }
+}
+
 void Renderizable::setTextureFill(sptr<ITexture> texture_)
 {
     if (texture_)
@@ -107,28 +100,79 @@ void Renderizable::setTextureFill(sptr<ITexture> texture_)
     }
 }
 
+void Renderizable::updateTextureCoordsAndColorForVertex(
+    const BasicVertexArray::iterator v_iterator,
+    const Rectf32 &cbox, const Rects32 &ctexture_rect)
+{
+    auto &dest_vertex = *v_iterator;
+    const f32 xratio{(dest_vertex.position.x - cbox.left) / cbox.width};
+    const f32 yratio{(dest_vertex.position.y - cbox.top) / cbox.height};
+    dest_vertex.texCoords = {(ctexture_rect.left + (ctexture_rect.width * xratio)),
+                             (ctexture_rect.top + (ctexture_rect.height * yratio))};
+
+    updateColorForVertex(v_iterator, cbox, ctexture_rect);
+}
+
+void Renderizable::updateColorForVertex(
+    const BasicVertexArray::iterator v_iterator,
+    const Rectf32 &cbox, const Rects32 &ctexture_rect)
+{
+    Color dest_color{color()};
+    if (color_modifier_())
+    {
+        dest_color *= color_modifier_()(v_iterator, cbox, ctexture_rect);
+    }
+    v_iterator->color = dest_color;    
+}
+
+void Renderizable::updateTextureCoordsAndColor()
+{
+    const auto &cbox(box());
+    const auto ctexture_rect{textureRect()};
+
+    BasicVertexArray &vertices{m_vertices.verticesArray()};
+
+    for (auto v_iterator = vertices.begin();
+         v_iterator != vertices.end(); ++v_iterator)
+    {
+        updateTextureCoordsAndColorForVertex(v_iterator, cbox, ctexture_rect);
+    }
+}
+
+void Renderizable::updateColors()
+{
+    const auto &cbox(box());
+    const auto ctexture_rect{textureRect()};
+
+    BasicVertexArray &vertices{m_vertices.verticesArray()};
+
+    for (auto v_iterator = vertices.begin();
+         v_iterator != vertices.end(); ++v_iterator)
+    {
+        updateColorForVertex(v_iterator, cbox, ctexture_rect);
+    }
+}
+
 void Renderizable::update()
 {
-    if (ps_readResetHasChanged(box, figType))
+    if (ps_readResetHasAnyChanged(box, figType))
     {
         updateGeometry();
-        color.setChanged();
-        textureRect.setChanged();
+        textureRect.resetHasChanged();
+        color.resetHasChanged();
+        color_modifier_.resetHasChanged();
     }
 
-    if (textureRect.readResetHasChanged())
+    if (ps_readResetHasAnyChanged(textureRect))
     {
-        updateTextureCoords();
-        color.setChanged();
+        updateTextureCoordsAndColor();
+        color.resetHasChanged();
+        color_modifier_.resetHasChanged();
     }
 
-    if (color.readResetHasChanged())
+    if (ps_readResetHasAnyChanged(color, color_modifier_))
     {
-        const Color c{color()};
-        for (auto &v : m_vertices.verticesArray())
-        {
-            v.color = c;
-        }
+        updateColors();
     }
 }
 
@@ -141,21 +185,31 @@ void Renderizable::updateGeometry()
 
         const size_type nPoints{pointCount()};
         const size_type nVertex{nPoints + 2};
-        const vector2df radius{cBox.size() / 2.0f};
+        const vector2df radius{cBox.size() / 2.0F};
 
         vertices.resize(nVertex); // + 2 for center and repeated first point
         const f64 baseAngle(PiM2Constant<f64> / static_cast<f64>(nPoints));
         const auto leftTop(cBox.leftTop());
+        const auto base_position{leftTop + radius};
+        const auto fig_type{figType()};
 
-        for (size_type i{0U}; i < nPoints; ++i)
+        const auto vertices_iterator_begin = m_vertices.verticesArray().begin();
+        auto vertices_iterator_second = vertices_iterator_begin;
+        auto vertices_iterator{++vertices_iterator_second};
+        auto angle{0.0};
+
+        for (size_type i{0U}; i < nPoints; ++i, ++vertices_iterator)
         {
-            const f64 angle{(i * baseAngle)};
-            const vector2dd r{getPositionFromAngleAndRadius(angle, radius)};
-            vertices[i + 1].position = leftTop + radius + static_cast<vector2df>(r);
+            angle += baseAngle;
+            const vector2dd r{getPositionFromAngleAndRadius(fig_type, angle, radius)};
+            vertices_iterator->position = base_position + static_cast<vector2df>(r);
+            updateTextureCoordsAndColorForVertex(vertices_iterator, cBox, textureRect());
         }
 
-        vertices[nPoints + 1].position = vertices[1].position;
-        vertices[0].position = radius + leftTop;
+        vertices_iterator->position = vertices_iterator_second->position;
+        updateTextureCoordsAndColorForVertex(vertices_iterator, cBox, textureRect());
+        vertices_iterator_begin->position = radius + leftTop;
+        updateTextureCoordsAndColorForVertex(vertices_iterator_begin, cBox, textureRect());
     }
 }
 } // namespace lib::scene

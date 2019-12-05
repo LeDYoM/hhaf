@@ -36,7 +36,7 @@ void DiscreteTextComponent::decrementIndex() noexcept
 
 void DiscreteTextComponent::update()
 {
-    if (ps_readResetHasChanged(index))
+    if (ps_readResetHasAnyChanged(index))
     {
         _setText(data()[index()]);
     }
