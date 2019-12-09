@@ -35,7 +35,7 @@ public:
     PropertyState<Color> color;
     PropertyState<size_type> pointCount;
     PropertyState<function<Color(const BasicVertexArray::const_iterator v_iterator,
-        const Rectf32& cbox, const Rects32& ctexture_rect)>> color_modifier_;
+        const Rectf32& cbox, const Rects32& ctexture_rect)>> color_modifier;
 
     BasicProperty<bool> visible{true};
 
@@ -43,6 +43,7 @@ public:
                                   const Rectf32 &textRect);
 
     void setTextureFill(sptr<ITexture> texture_);
+    Rectf32 normalizedTextureRect() const;
 
 private:
     SceneNode *parent_;

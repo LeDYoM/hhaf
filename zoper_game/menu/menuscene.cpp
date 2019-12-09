@@ -30,6 +30,11 @@ namespace zoper
         background->box = rectFromSize(2000.0f, 2000.0f);
         background->setTextureFill(resources_viewer->getTexture(MainMenuResources::BackgroundTextureId));
         background->color = colors::White;
+        background->color_modifier = [](const BasicVertexArray::const_iterator v_iterator,
+            const Rectf32& cbox, const Rects32& ctexture_rect)
+        {
+            return colors::Yellow;
+        };
 
         auto logo = renderizables->createNode("mainLogo");
         logo->figType.set(FigType_t::Quad);

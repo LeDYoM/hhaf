@@ -83,11 +83,7 @@ void Renderizable::setTextureAndTextureRect(sptr<ITexture> texture_, const Rectf
     texture.set(texture_);
     if (texture_)
     {
-        textureRect = {
-            static_cast<s32>(textRect.left),
-            static_cast<s32>(textRect.top),
-            static_cast<s32>(textRect.width),
-            static_cast<s32>(textRect.height)};
+        textureRect = static_cast<Rects32>(textRect);
     }
 }
 
@@ -98,6 +94,16 @@ void Renderizable::setTextureFill(sptr<ITexture> texture_)
         setTextureAndTextureRect(std::move(texture_),
                                  {0.0f, 0.0f, static_cast<vector2df>(texture_->size())});
     }
+}
+
+Rectf32 Renderizable::normalizedTextureRect() const
+{
+    const auto texture_rectf32{static_cast<Rectf32>(textureRect())};
+    const auto texture_sizef32{static_cast<vector2df>(texture()->size())};
+
+    return Rectf32 {
+        texture_rectf32.leftTop() / texture_sizef32,
+        texture_rectf32.size() / texture_sizef32};
 }
 
 void Renderizable::updateTextureCoordsAndColorForVertex(
@@ -118,9 +124,9 @@ void Renderizable::updateColorForVertex(
     const Rectf32 &cbox, const Rects32 &ctexture_rect)
 {
     Color dest_color{color()};
-    if (color_modifier_())
+    if (color_modifier())
     {
-        dest_color *= color_modifier_()(v_iterator, cbox, ctexture_rect);
+        dest_color *= color_modifier()(v_iterator, cbox, ctexture_rect);
     }
     v_iterator->color = dest_color;    
 }
@@ -160,17 +166,17 @@ void Renderizable::update()
         updateGeometry();
         textureRect.resetHasChanged();
         color.resetHasChanged();
-        color_modifier_.resetHasChanged();
+        color_modifier.resetHasChanged();
     }
 
     if (ps_readResetHasAnyChanged(textureRect))
     {
         updateTextureCoordsAndColor();
         color.resetHasChanged();
-        color_modifier_.resetHasChanged();
+        color_modifier.resetHasChanged();
     }
 
-    if (ps_readResetHasAnyChanged(color, color_modifier_))
+    if (ps_readResetHasAnyChanged(color, color_modifier))
     {
         updateColors();
     }
