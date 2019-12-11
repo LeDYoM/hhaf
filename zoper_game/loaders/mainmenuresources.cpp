@@ -16,7 +16,6 @@ void MainMenuResources::loadResources(IResourceHandler &resourceHandler)
     constexpr static char LogoFile[] = "resources/zoperbl.png";
     constexpr static char MenuFontFile[] = "resources/oldct.ttf";
 
-    resourceHandler.loadTexture(BackgroundTextureId, BackgroundTextureFile);
     resourceHandler.loadTexture(LogoId, LogoFile);
     resourceHandler.loadTTFont(MenuFontId, MenuFontFile);
 

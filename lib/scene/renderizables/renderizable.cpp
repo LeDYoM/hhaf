@@ -96,14 +96,14 @@ void Renderizable::setTextureFill(sptr<ITexture> texture_)
     }
 }
 
-Rectf32 Renderizable::normalizedTextureRect() const
+vector2df Renderizable::normalizeInBox(
+    const vector2df &position,
+    const Rectf32 box, const Rectf32 &rect) const
 {
-    const auto texture_rectf32{static_cast<Rectf32>(textureRect())};
-    const auto texture_sizef32{static_cast<vector2df>(texture()->size())};
-
-    return Rectf32 {
-        texture_rectf32.leftTop() / texture_sizef32,
-        texture_rectf32.size() / texture_sizef32};
+    const f32 xratio{(position.x - box.left) / box.width};
+    const f32 yratio{(position.y - box.top) / box.height};
+    return {(rect.left + (rect.width * xratio)),
+            (rect.top + (rect.height * yratio))};
 }
 
 void Renderizable::updateTextureCoordsAndColorForVertex(
@@ -111,11 +111,7 @@ void Renderizable::updateTextureCoordsAndColorForVertex(
     const Rectf32 &cbox, const Rects32 &ctexture_rect)
 {
     auto &dest_vertex = *v_iterator;
-    const f32 xratio{(dest_vertex.position.x - cbox.left) / cbox.width};
-    const f32 yratio{(dest_vertex.position.y - cbox.top) / cbox.height};
-    dest_vertex.texCoords = {(ctexture_rect.left + (ctexture_rect.width * xratio)),
-                             (ctexture_rect.top + (ctexture_rect.height * yratio))};
-
+    dest_vertex.texCoords = normalizeInBox(dest_vertex.position, cbox, ctexture_rect);
     updateColorForVertex(v_iterator, cbox, ctexture_rect);
 }
 
@@ -126,9 +122,14 @@ void Renderizable::updateColorForVertex(
     Color dest_color{color()};
     if (color_modifier())
     {
-        dest_color *= color_modifier()(v_iterator, cbox, ctexture_rect);
+        RenderizableModifierContext context{
+            box(),
+            ctexture_rect, 
+            texture() ? texture()->size() : vector2du32{0U, 0U},
+            *v_iterator};
+        dest_color *= color_modifier()(context);
     }
-    v_iterator->color = dest_color;    
+    v_iterator->color = dest_color;
 }
 
 void Renderizable::updateTextureCoordsAndColor()

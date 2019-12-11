@@ -10,7 +10,6 @@ namespace zoper
 class MainMenuResources : public lib::IResourceLoader
 {
 public:
-    constexpr static char BackgroundTextureId[] = "game_menu.background";
     constexpr static char LogoId[] = "game_menu.logo";
     constexpr static char MenuFontId[] = "menu.mainFont";
 

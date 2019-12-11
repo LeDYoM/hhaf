@@ -7,6 +7,7 @@
 #include <mtypes/include/properties.hpp>
 #include <mtypes/include/function.hpp>
 
+#include <lib/scene/renderizables/renderizable_modifier_context.hpp>
 #include <lib/scene/color.hpp>
 #include <lib/scene/hasname.hpp>
 #include <lib/scene/vertexarray.hpp>
@@ -34,8 +35,7 @@ public:
     PropertyState<Rectf32> box;
     PropertyState<Color> color;
     PropertyState<size_type> pointCount;
-    PropertyState<function<Color(const BasicVertexArray::const_iterator v_iterator,
-        const Rectf32& cbox, const Rects32& ctexture_rect)>> color_modifier;
+    PropertyState<function<Color(const RenderizableModifierContext &)>> color_modifier;
 
     BasicProperty<bool> visible{true};
 
@@ -43,7 +43,6 @@ public:
                                   const Rectf32 &textRect);
 
     void setTextureFill(sptr<ITexture> texture_);
-    Rectf32 normalizedTextureRect() const;
 
 private:
     SceneNode *parent_;
@@ -56,13 +55,13 @@ private:
     void updateGeometry();
     void updateTextureCoordsAndColor();
     void updateTextureCoordsAndColorForVertex(const BasicVertexArray::iterator v_iterator,
-        const Rectf32& cbox, const Rects32& ctexture_rect);
+                                              const Rectf32 &cbox, const Rects32 &ctexture_rect);
     void updateColorForVertex(const BasicVertexArray::iterator v_iterator,
-        const Rectf32& cbox, const Rects32& ctexture_rect);
+                              const Rectf32 &cbox, const Rects32 &ctexture_rect);
     void updateColors();
 
+    vector2df normalizeInBox(const vector2df &position, const Rectf32 box, const Rectf32 &rect) const;
     void update();
-
 };
 } // namespace lib::scene
 

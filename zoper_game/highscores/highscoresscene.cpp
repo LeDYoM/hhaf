@@ -37,18 +37,13 @@ void HighScoresScene::onCreated()
     background->figType.set(FigType_t::Quad);
     background->pointCount.set(PointsPerQuad);
     background->box = rectFromSize(2000.0f, 2000.0f);
-    background->setTextureFill(resources_viewer->getTexture(HighScoresResources::BackgroundTextureId));
     background->color = colors::White;
-/*
-    auto input_component(addComponentOfType<InputComponent>());
-    input_component->KeyPressed.connect([statesController](const auto&)
+    background->color_modifier = [](const RenderizableModifierContext&context)
     {
-        if (statesController->currentState() == HighScoresSceneStates::Show)
-        {
-            statesController->setState(HighScoresSceneStates::FadeOut);
-        }
-    });
-*/
+        const auto n = context.normalizedVertexInBox();
+        return Color::fromFloats(n.y, n.y, n.y);
+    };
+
     auto highScoreTextController(createSceneNode<HighScoreTextController>("HighScoreTextController"));
     highScoreTextController->Finished.connect([this, statesController]()
     {

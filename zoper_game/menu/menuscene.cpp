@@ -28,12 +28,15 @@ namespace zoper
         background->figType.set(FigType_t::Quad);
         background->pointCount.set(PointsPerQuad);
         background->box = rectFromSize(2000.0f, 2000.0f);
-        background->setTextureFill(resources_viewer->getTexture(MainMenuResources::BackgroundTextureId));
         background->color = colors::White;
-        background->color_modifier = [](const BasicVertexArray::const_iterator v_iterator,
-            const Rectf32& cbox, const Rects32& ctexture_rect)
+        background->color_modifier = [](const RenderizableModifierContext&context)
         {
-            return colors::Yellow;
+            const auto n = context.normalizedVertexInBox();
+            static constexpr auto decrease_ratio = 0.5F;
+            return Color::fromFloats(
+                n.y * decrease_ratio,
+                n.y * decrease_ratio,
+                n.y * decrease_ratio);
         };
 
         auto logo = renderizables->createNode("mainLogo");

@@ -7,14 +7,13 @@
 
 namespace zoper
 {
-	class HighScoresResources : public lib::IResourceLoader
-	{
-	public:
-        constexpr static char BackgroundTextureId[] = "game_menu.background";
-        constexpr static char MenuFontId[] = "highScores.mainFont";
+class HighScoresResources : public lib::IResourceLoader
+{
+public:
+    constexpr static char MenuFontId[] = "highScores.mainFont";
 
-		void loadResources(lib::IResourceHandler&) override;		
-	};
-}
+    void loadResources(lib::IResourceHandler &) override;
+};
+} // namespace zoper
 
 #endif
