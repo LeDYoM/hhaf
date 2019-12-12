@@ -2,6 +2,7 @@ enable_testing()
 
 set(UNIT_TEST_LIST
     main
+    scene/color
     scene/scenecontroller
     scene/scenenodefactory
     scene/scenemanager

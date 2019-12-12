@@ -4,32 +4,44 @@
 #define LIB_SCENE_COLOR_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
+
+#include <algorithm>
 #include <limits>
 
 namespace lib::scene
 {
 namespace detail
 {
-    template <typename value_type>
-    static constexpr value_type value_max = std::numeric_limits<value_type>::max();
+template <typename value_type>
+static constexpr value_type value_max = std::numeric_limits<value_type>::max();
 
-    template <typename value_type>
-    static constexpr value_type value_min = std::numeric_limits<value_type>::min();
+template <typename value_type>
+static constexpr value_type value_min = std::numeric_limits<value_type>::min();
 
-    template<typename value_type>
-    constexpr float normalize(const value_type v) noexcept
-    {
-        return static_cast<float>(
-            static_cast<float>(v) /
-            static_cast<float>(value_max<value_type>));
-    }
-
-    template<typename value_type>
-    constexpr void denormalize(const float v, value_type& d) noexcept
-    {
-        d = static_cast<value_type>(v * value_max<value_type>);
-    }
+template <typename Dest, typename Source>
+constexpr Dest ensureLimits(Source source) noexcept
+{
+    return static_cast<Dest>(std::min(
+        static_cast<Source>(value_max<Dest>),
+        std::max(
+            source,
+            static_cast<Source>(value_min<Dest>))));
 }
+
+template <typename value_type>
+constexpr float normalize(const value_type v) noexcept
+{
+    return static_cast<float>(
+        static_cast<float>(v) /
+        static_cast<float>(value_max<value_type>));
+}
+
+template <typename value_type>
+constexpr void denormalize(const float v, value_type &d) noexcept
+{
+    d = static_cast<value_type>(v * value_max<value_type>);
+}
+} // namespace detail
 
 struct Color
 {
@@ -37,11 +49,17 @@ struct Color
     static constexpr value_type value_max = detail::value_max<value_type>;
     static constexpr value_type value_min = detail::value_min<value_type>;
 
+    template <typename Source>
+    static constexpr value_type ensureLimits(Source source) noexcept
+    {
+        return detail::ensureLimits<value_type, Source>(std::move(source));
+    }
+
     constexpr Color() noexcept : r{}, g{}, b{}, a{value_max} {}
     constexpr Color(const value_type red,
-        const value_type green,
-        const value_type blue, 
-        const value_type alpha = value_max) noexcept
+                    const value_type green,
+                    const value_type blue,
+                    const value_type alpha = value_max) noexcept
         : r{red}, g{green}, b{blue}, a{alpha} {}
 
     static constexpr Color fromFloats(const float red, const float green, const float blue, const float alpha = 1.0F) noexcept
@@ -100,7 +118,7 @@ struct Color
 
     constexpr Color &operator-=(const Color &right) noexcept
     {
-        r = static_cast<value_type>(std::max(static_cast<s32>(r) - right.r, static_cast<s32>(value_min)));
+        r = ensureLimits(static_cast<s32>(r) - right.r);
         g = static_cast<value_type>(std::max(static_cast<s32>(g) - right.g, static_cast<s32>(value_min)));
         b = static_cast<value_type>(std::max(static_cast<s32>(b) - right.b, static_cast<s32>(value_min)));
         a = static_cast<value_type>(std::max(static_cast<s32>(a) - right.a, static_cast<s32>(value_min)));
@@ -116,13 +134,22 @@ struct Color
         return *this;
     }
 
-    constexpr Color operator*(const f32 delta) const noexcept
+    constexpr Color &operator*=(const f32 delta) noexcept
     {
-        return Color{
-            static_cast<value_type>(static_cast<u32>(r) * delta),
-            static_cast<value_type>(static_cast<u32>(g) * delta),
-            static_cast<value_type>(static_cast<u32>(b) * delta),
-            static_cast<value_type>(static_cast<u32>(a) * delta)};
+        r = detail::ensureLimits<value_type>(static_cast<f32>(r) * delta);
+        g = detail::ensureLimits<value_type>(static_cast<f32>(g) * delta);
+        b = detail::ensureLimits<value_type>(static_cast<f32>(b) * delta);
+        a = detail::ensureLimits<value_type>(static_cast<f32>(a) * delta);
+        return *this;
+    }
+
+    constexpr Color &operator/=(const f32 delta) noexcept
+    {
+        r = detail::ensureLimits<value_type>(static_cast<f32>(r) / delta);
+        g = detail::ensureLimits<value_type>(static_cast<f32>(g) / delta);
+        b = detail::ensureLimits<value_type>(static_cast<f32>(b) / delta);
+        a = detail::ensureLimits<value_type>(static_cast<f32>(a) / delta);
+        return *this;
     }
 
     constexpr float red() const noexcept { return detail::normalize(r); }
@@ -141,7 +168,25 @@ struct Color
     value_type a;
 };
 
-static_assert(sizeof(Color) == sizeof(u32), "Color size is wrong");
+constexpr Color operator*(Color color, const f32 delta) noexcept
+{
+    return Color{std::move(color)} *= delta;
+}
+
+constexpr Color operator*(const f32 delta, Color color) noexcept
+{
+    return std::move(color) * delta;
+}
+
+constexpr Color operator/(Color color, const f32 delta) noexcept
+{
+    return Color{std::move(color)} /= delta;
+}
+
+constexpr Color operator*(const f32 delta, Color color) noexcept
+{
+    return std::move(color) / delta;
+}
 
 namespace colors
 {
@@ -150,8 +195,8 @@ static constexpr const Color White{Color::value_max, Color::value_max, Color::va
 static constexpr const Color Red{Color::value_max, Color::value_min, Color::value_min};
 static constexpr const Color Green{Color::value_min, Color::value_max, Color::value_min};
 static constexpr const Color Blue{Color::value_min, Color::value_min, Color::value_max};
-static constexpr const Color Yellow{255U, 255U, Color::value_min};
-static constexpr const Color Magenta{255U, Color::value_min, Color::value_max};
+static constexpr const Color Yellow{Color::value_max, Color::value_max, Color::value_min};
+static constexpr const Color Magenta{Color::value_max, Color::value_min, Color::value_max};
 static constexpr const Color Cyan{Color::value_min, Color::value_max, Color::value_max};
 static constexpr const Color Transparent{Color::value_min, Color::value_min, Color::value_min, Color::value_min};
 } // namespace colors
