@@ -6,11 +6,17 @@
 
 namespace lib::backend::sfmlb
 {
-    void RenderTarget::draw(const scene::Vertex *vertices, const u32 nVertex, const scene::PrimitiveType pType, const f32 *transform, const ITexture *texture)
+    void RenderTarget::draw(
+        const scene::Vertex *vertices,
+        const u32 nVertex,
+        const scene::PrimitiveType pType,
+        const f32 *transform,
+        const ITexture *texture,
+        const IShader *shader)
     {
         sf::RenderTarget::draw((const sf::Vertex*)vertices, nVertex,
             static_cast<sf::PrimitiveType>(pType),
-            to_sf_type(transform,texture));
+            to_sf_type(transform, texture, shader));
     }
 
     void RenderTarget::setViewPort(const Rectf32 & nviewport)

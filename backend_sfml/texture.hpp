@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_BACKEND_SFML_TEXTURE_INCLUDE_HPP__
-#define LIB_BACKEND_SFML_TEXTURE_INCLUDE_HPP__
+#ifndef LIB_BACKEND_SFML_TEXTURE_INCLUDE_HPP
+#define LIB_BACKEND_SFML_TEXTURE_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>

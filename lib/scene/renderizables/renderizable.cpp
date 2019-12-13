@@ -5,6 +5,7 @@
 #include <lib/scene/renderdata.hpp>
 #include <lib/scene/scenenode.hpp>
 #include <lib/resources/texture.hpp>
+#include <lib/resources/shader.hpp>
 #include <lib/system/systemprovider.hpp>
 
 #include "geometry_math.hpp"
@@ -70,10 +71,13 @@ void Renderizable::render()
 
         if (!m_vertices.empty())
         {
-            parent_->parentScene()->sceneManager().systemProvider().renderSystem().draw(scene::RenderData{
+            parent_->parentScene()->sceneManager().systemProvider()
+                .renderSystem().draw(scene::RenderData{
                 m_vertices,
                 parent_->globalTransform(),
-                dynamic_cast<Texture *>(texture().get())});
+                dynamic_cast<Texture *>(texture().get()),
+                dynamic_cast<Shader *>(shader().get()),
+                });
         }
     }
 }

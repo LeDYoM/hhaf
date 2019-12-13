@@ -12,6 +12,7 @@ class MainMenuResources : public lib::IResourceLoader
 public:
     constexpr static char LogoId[] = "game_menu.logo";
     constexpr static char MenuFontId[] = "menu.mainFont";
+    constexpr static char Shader[] = "menu.shader";
 
 #ifdef TEST_BMP_FONT
     constexpr static char TestFontId[] = "menu.testFont";

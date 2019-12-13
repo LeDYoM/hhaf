@@ -29,15 +29,17 @@ namespace zoper
         background->pointCount.set(PointsPerQuad);
         background->box = rectFromSize(2000.0f, 2000.0f);
         background->color = colors::White;
-        background->color_modifier = [](const RenderizableModifierContext&context)
-        {
-            const auto n = context.normalizedVertexInBox();
-            static constexpr auto decrease_ratio = 0.5F;
-            return Color::fromFloats(
-                n.y * decrease_ratio,
-                n.y * decrease_ratio,
-                n.y * decrease_ratio);
-        };
+//        background->color_modifier = [](const RenderizableModifierContext&context)
+//        {
+//            const auto n = context.normalizedVertexInBox();
+//            static constexpr auto decrease_ratio = 0.5F;
+//            return Color::fromFloats(
+//                n.y * decrease_ratio,
+//                n.y * decrease_ratio,
+//                n.y * decrease_ratio);
+//        };
+
+        background->shader = resources_viewer->getShader(MainMenuResources::Shader);
 
         auto logo = renderizables->createNode("mainLogo");
         logo->figType.set(FigType_t::Quad);

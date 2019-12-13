@@ -3,6 +3,7 @@
 #include <backend_dev/include/irendertarget.hpp>
 #include <lib/scene/renderdata.hpp>
 #include <lib/resources/texture.hpp>
+#include <lib/resources/shader.hpp>
 #include <lib/scene/transformation.hpp>
 #include <lib/include/liblog.hpp>
 
@@ -23,7 +24,8 @@ namespace lib::core
             renderData.vArray.verticesArray().size(),
             renderData.vArray.primitiveType(),
             renderData.transform.getMatrix(),
-                renderData.texture ? renderData.texture->backEndTexture() : nullptr);
+                renderData.texture ? renderData.texture->backEndTexture() : nullptr,
+                renderData.shader ? renderData.shader->backEndShader() : nullptr);
     }
 
     void RenderTarget::clear()

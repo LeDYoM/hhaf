@@ -5,13 +5,8 @@
 
 namespace lib::scene
 {
-    struct Shader::ShaderPrivate
-    {
-        backend::IShader *m_shader;
-    };
+Shader::Shader(backend::IShader *shader) : m_ShaderPrivate{shader} {}
 
-    Shader::Shader(backend::IShader* shader) :
-        m_private{ new ShaderPrivate{ std::move(shader) } } {}
+Shader::~Shader() {}
 
-    Shader::~Shader() = default;
-}
+} // namespace lib::scene
