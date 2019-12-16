@@ -13,10 +13,10 @@
 
 namespace lib::backend
 {
-    using ITextureFactory = IResourceFactory<ITexture>;
-    using ITTFontFactory = IResourceFactory<ITTFont>;
-    using IShaderFactory = IResourceFactory<IShader>;
-    using IBMPFontFactory = IResourceFactory<IBMPFont>;
-}
+using ITextureFactory = IResourceFactory<ITexture>;
+using ITTFontFactory = IResourceFactory<ITTFont>;
+using IShaderFactory = IResourceFactory<IShader>;
+using IBMPFontFactory = IResourceFactory<IBMPFont>;
+} // namespace lib::backend
 
 #endif
