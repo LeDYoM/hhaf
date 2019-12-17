@@ -11,16 +11,15 @@
 
 namespace lib::backend
 {
-    class IShader
-    {
-    public:
-        IShader() {}
-        virtual ~IShader() {}
+class IShader
+{
+public:
+    IShader() {}
+    virtual ~IShader() {}
 
-        virtual void setUniform(const str &name, vector2df v) = 0;
-        virtual void setUniform(const str &name, ITexture *texture) = 0;
-
-    };
-}
+    virtual void setUniform(const str &name, vector2df v) = 0;
+    virtual void setUniform(const str &name, ITexture *texture) = 0;
+};
+} // namespace lib::backend
 
 #endif

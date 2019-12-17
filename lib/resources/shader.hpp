@@ -8,23 +8,24 @@
 
 namespace lib
 {
-    namespace backend
-    {
-        class IShader;
-    }
-
-    namespace scene
-    {
-        class Shader final : public IShader
-        {
-        public:
-            Shader(backend::IShader *shader);
-            ~Shader() override;
-        private:
-            struct ShaderPrivate;
-            uptr<ShaderPrivate> m_private;
-        };
-    }
+namespace backend
+{
+class IShader;
 }
+
+namespace scene
+{
+class Shader final : public IShader
+{
+public:
+    Shader(backend::IShader *shader);
+    ~Shader() override;
+
+    const backend::IShader* backEndShader() const noexcept { return m_ShaderPrivate; }
+private:
+    backend::IShader *m_ShaderPrivate;
+};
+} // namespace scene
+} // namespace lib
 
 #endif

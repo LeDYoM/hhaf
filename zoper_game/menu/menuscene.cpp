@@ -8,6 +8,7 @@
 #include "../gameshareddata.hpp"
 #include "../loaders/mainmenuresources.hpp"
 #include "../zoperprogramcontroller.hpp"
+#include "../common_scene_nodes.hpp"
 
 namespace zoper
 {
@@ -24,20 +25,7 @@ namespace zoper
         auto renderizables = addComponentOfType<Renderizables>();
         auto resources_viewer = dataWrapper<ResourceView>();
     
-        auto background = renderizables->createNode("background");
-        background->figType.set(FigType_t::Quad);
-        background->pointCount.set(PointsPerQuad);
-        background->box = rectFromSize(2000.0f, 2000.0f);
-        background->color = colors::White;
-        background->color_modifier = [](const RenderizableModifierContext&context)
-        {
-            const auto n = context.normalizedVertexInBox();
-            static constexpr auto decrease_ratio = 0.5F;
-            return Color::fromFloats(
-                n.y * decrease_ratio,
-                n.y * decrease_ratio,
-                n.y * decrease_ratio);
-        };
+        createStandardBackground(renderizables);
 
         auto logo = renderizables->createNode("mainLogo");
         logo->figType.set(FigType_t::Quad);

@@ -12,6 +12,7 @@
 #include <lib/scene/hasname.hpp>
 #include <lib/scene/vertexarray.hpp>
 #include <lib/include/resources/itexture.hpp>
+#include <lib/include/resources/ishader.hpp>
 
 namespace lib::scene
 {
@@ -35,6 +36,7 @@ public:
     PropertyState<Rectf32> box;
     PropertyState<Color> color;
     PropertyState<size_type> pointCount;
+    PropertyState<sptr<IShader>> shader;
     PropertyState<function<Color(const RenderizableModifierContext &)>> color_modifier;
 
     BasicProperty<bool> visible{true};

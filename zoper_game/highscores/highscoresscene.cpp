@@ -4,6 +4,7 @@
 #include "highscoresscenestates.hpp"
 
 #include "../loaders/highscoresresources.hpp"
+#include "../common_scene_nodes.hpp"
 
 #include <lib/scene/renderizables/renderizable.hpp>
 #include <lib/scene/components/renderizables.hpp>
@@ -18,8 +19,6 @@ using namespace lib;
 using namespace lib::scene;
 using namespace lib::scene::nodes;
 
-constexpr u32 PointsPerQuad = 6U;
-
 void HighScoresScene::onCreated()
 {
     BaseClass::onCreated();
@@ -33,16 +32,7 @@ void HighScoresScene::onCreated()
     m_selectedColor = colors::Red;
 
     auto renderizables = addComponentOfType<Renderizables>();
-    auto background = renderizables->createNode("background");
-    background->figType.set(FigType_t::Quad);
-    background->pointCount.set(PointsPerQuad);
-    background->box = rectFromSize(2000.0f, 2000.0f);
-    background->color = colors::White;
-    background->color_modifier = [](const RenderizableModifierContext&context)
-    {
-        const auto n = context.normalizedVertexInBox();
-        return Color::fromFloats(n.y, n.y, n.y);
-    };
+    createStandardBackground(renderizables);
 
     auto highScoreTextController(createSceneNode<HighScoreTextController>("HighScoreTextController"));
     highScoreTextController->Finished.connect([this, statesController]()

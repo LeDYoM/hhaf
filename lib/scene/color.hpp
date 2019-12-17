@@ -183,7 +183,7 @@ constexpr Color operator/(Color color, const f32 delta) noexcept
     return Color{std::move(color)} /= delta;
 }
 
-constexpr Color operator*(const f32 delta, Color color) noexcept
+constexpr Color operator/(const f32 delta, Color color) noexcept
 {
     return std::move(color) / delta;
 }

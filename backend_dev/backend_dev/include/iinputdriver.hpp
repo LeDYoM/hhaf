@@ -24,11 +24,11 @@ public:
     virtual bool arePendingKeyReleases() const = 0;
 
     /// Extract the last @Key that has been pressed.
-    /// @return The extracted @Key 
+    /// @return The extracted @Key
     virtual input::Key popKeyPress() = 0;
 
     /// Extract the last @Key that has been released.
-    /// @return The extracted @Key 
+    /// @return The extracted @Key
     virtual input::Key popKeyRelease() = 0;
 
     /// Users of this class should call this method to add any
