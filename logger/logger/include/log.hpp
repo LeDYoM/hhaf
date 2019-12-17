@@ -12,68 +12,81 @@
  */
 namespace logger
 {
-    inline void init_log() {}
-    inline void finish_log() {}
+inline void init_log() {}
+inline void finish_log() {}
 
-    enum class level_type { debug, release };
+enum class level_type
+{
+    debug,
+    release
+};
 
-    /**
+/**
      * Enumerator containing the severity type of the message.
      * When you use one of the values to ooutput a message, it
      * will be written if and only if the current severity_type
      * is bigger or equal to the passed one.
      */
-    enum class severity_type { all, info, error, none };
+enum class severity_type
+{
+    all,
+    info,
+    error,
+    none
+};
 
-    constexpr level_type compiled_log_level_type =
+constexpr level_type compiled_log_level_type =
 #ifndef NDEBUG
-        level_type::debug;
+    level_type::debug;
 #else
-        level_type::release;
+    level_type::release;
 #endif
 
-    constexpr severity_type compiled_log_severity_type = severity_type::all;
+constexpr severity_type compiled_log_severity_type = severity_type::all;
 
-    template <level_type level>
-    constexpr bool compile_logs = compiled_log_level_type <= level;
+template <level_type level>
+constexpr bool compile_logs = compiled_log_level_type <= level;
 
-    namespace detail
+namespace detail
+{
+template <severity_type severity>
+constexpr const auto severity_txt() noexcept
+{
+    switch (severity)
     {
-        template<severity_type severity>
-        constexpr const auto severity_txt() noexcept
-        {
-            switch (severity)
-            {
-            case severity_type::all:
-                return "<ALL> :";
-                break;
-            case severity_type::info:
-                return "<INFO> :";
-                break;
-            case severity_type::error:
-                return "<ERROR> :";
-                break;
-            default:
-                // That should not happen.
-                return "<> :";
-            }
-        }
-
-        inline void commitlog(const char* const log_stream) 
-        {
-            std::cout << log_stream << std::endl;
-            std::cout.flush();
-        }
-
-        template<typename StreamType, typename ...Args>
-        void to_log_stream(StreamType& sout, Args&&... args) 
-        {
-            (sout << ... << args);
-        }
+    case severity_type::all:
+        return "<ALL> :";
+        break;
+    case severity_type::info:
+        return "<INFO> :";
+        break;
+    case severity_type::error:
+        return "<ERROR> :";
+        break;
+    default:
+        // That should not happen.
+        return "<> :";
     }
-    
-    template<typename StreamType, level_type level, severity_type severity, typename...Args>
-    constexpr void log(Args&&...args) noexcept
+}
+
+inline void commitlog(const char *const log_stream)
+{
+    std::cout << log_stream << std::endl;
+    std::cout.flush();
+}
+
+template <typename StreamType, typename... Args>
+void to_log_stream(StreamType &sout, Args &&... args)
+{
+    (sout << ... << args);
+}
+} // namespace detail
+
+template <typename StreamType>
+struct Log
+{
+    template <level_type level, severity_type severity, typename... Args>
+    static constexpr void log(Args &&... args) noexcept
     {
         if constexpr (compile_logs<level> && severity >= compiled_log_severity_type)
         {
@@ -83,17 +96,19 @@ namespace logger
         }
     }
 
-    template<typename StreamType, severity_type severity, typename...Args>
-    constexpr void log_debug(Args&&...args) noexcept
+    template <severity_type severity, typename... Args>
+    static constexpr void log_debug(Args &&... args) noexcept
     {
-        log<StreamType,level_type::debug, severity>(std::forward<Args>(args)...);
+        log<level_type::debug, severity>(std::forward<Args>(args)...);
     }
 
-    template<typename StreamType, severity_type severity, typename...Args>
-    constexpr void log_release(Args&&...args) noexcept
+    template <severity_type severity, typename... Args>
+    static constexpr void log_release(Args &&... args) noexcept
     {
-        log<StreamType,level_type::release, severity>(std::forward<Args>(args)...);
+        log<level_type::release, severity>(std::forward<Args>(args)...);
     }
-}
+};
+
+} // namespace logger
 
 #endif
