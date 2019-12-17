@@ -28,3 +28,19 @@ function(build_client_library)
     endif()
 
 endfunction(build_client_library)
+
+# Function to build different components from the project in an unified way.
+function(build_lib_component)
+
+    cmake_parse_arguments(LC_BUILD "" "HEADER_DIRECTORY" "SOURCES" ${ARGN})
+
+    set (CURRENT_TARGET ${PROJECT_NAME})
+
+    add_library (${CURRENT_TARGET} SHARED ${LC_BUILD_SOURCES})
+
+    set_target_properties(${CURRENT_TARGET}
+                      PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS true)
+
+    target_include_directories(${CURRENT_TARGET} PUBLIC ${LC_BUILD_HEADER_DIRECTORY})
+
+endfunction(build_lib_component)
