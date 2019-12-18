@@ -7,32 +7,32 @@
 
 namespace lib
 {
-    class IApp;
+class IApp;
 }
 
 namespace lib::core
 {
-    class Host final
-    {
-    public:
-        Host(int argc, char *argv[]);
-        ~Host();
+class Host final
+{
+public:
+    Host(int argc, char *argv[]);
+    ~Host();
 
-        bool setApplication(IApp* iapp);
-        int run();
+    bool setApplication(IApp *iapp);
+    int run();
 
-    private:
-        class HostPrivate;
-        uptr<HostPrivate> m_private;
+private:
+    class HostPrivate;
+    uptr<HostPrivate> m_private;
 
-        bool loopStep();
-        void exitProgram();
-        bool update();
+    bool loopStep();
+    void exitProgram();
+    bool update();
 
-        enum class AppState : u8;
-        AppState m_state;
-        bool exit{ false };
-    };
-}
+    enum class AppState : u8;
+    AppState m_state;
+    bool exit{false};
+};
+} // namespace lib::core
 
 #endif

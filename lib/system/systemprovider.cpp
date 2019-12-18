@@ -13,7 +13,7 @@
 
 #include <backend_dev/include/iwindow.hpp>
 #include <lib/include/liblog.hpp>
-#include <lib/include/iapp.hpp>
+#include <hosted_app/include/iapp.hpp>
 
 namespace lib::core
 {

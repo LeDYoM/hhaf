@@ -3,7 +3,7 @@
 #ifndef LIB_HOST_APP_LOADER_INCLUDE_HPP
 #define LIB_HOST_APP_LOADER_INCLUDE_HPP
 
-#include "../lib/include/iapp.hpp"
+#include "hosted_app/include/iapp.hpp"
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/function.hpp>
 

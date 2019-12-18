@@ -7,7 +7,7 @@
 #include <lib/system/resourcemanager.hpp>
 #include <lib/system/systemprovider.hpp>
 
-#include <lib/include/iapp.hpp>
+#include <hosted_app/include/iapp.hpp>
 
 #include <lib/include/resources/iresourceloader.hpp>
 #include <lib/include/resources/iresourcehandler.hpp>

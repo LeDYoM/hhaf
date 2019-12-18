@@ -1,7 +1,7 @@
 #include <host/include/host.hpp>
 
 #include <lib/include/liblog.hpp>
-#include <lib/include/iapp.hpp>
+#include <hosted_app/include/iapp.hpp>
 #include <lib/system/systemprovider.hpp>
 
 #include <mtypes/include/parpar.hpp>

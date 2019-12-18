@@ -3,7 +3,7 @@
 #ifndef LIB_ZOPERPROGRAMCONTROLLER_HPP
 #define LIB_ZOPERPROGRAMCONTROLLER_HPP
 
-#include <lib/include/iapp.hpp>
+#include <hosted_app/include/iapp.hpp>
 #include <mtypes/include/types.hpp>
 
 namespace zoper

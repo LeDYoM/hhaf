@@ -3,7 +3,7 @@
 #ifndef LIB_ZOPER_APP_EXPORT_INCLUDE_HPP
 #define LIB_ZOPER_APP_EXPORT_INCLUDE_HPP
 
-#include <lib/include/iapp.hpp>
+#include <hosted_app/include/iapp.hpp>
 
 extern "C"
 {

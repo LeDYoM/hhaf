@@ -20,6 +20,7 @@ target_include_directories(${CURRENT_TARGET}
         ${CMAKE_CURRENT_SOURCE_DIR}/../
 )
 
+target_link_libraries(${CURRENT_TARGET} PRIVATE hosted_app)
 target_link_libraries(${CURRENT_TARGET} PRIVATE loader)
 target_link_libraries(${CURRENT_TARGET} PRIVATE logger)
 target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)

@@ -10,6 +10,7 @@ function(build_client_library)
                         PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS true)
 
     # Detect and add libraries
+    target_link_libraries(${CURRENT_TARGET} PRIVATE hosted_app)
     target_link_libraries(${CURRENT_TARGET} PRIVATE lib)
     target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
     target_link_libraries(${CURRENT_TARGET} PRIVATE logger)
@@ -44,3 +45,20 @@ function(build_lib_component)
     target_include_directories(${CURRENT_TARGET} PUBLIC ${LC_BUILD_HEADER_DIRECTORY})
 
 endfunction(build_lib_component)
+
+# Function to build different components from the project in an unified way.
+function(build_lib_interface_component)
+
+    cmake_parse_arguments(LC_BUILD "" "HEADER_DIRECTORY" "" ${ARGN})
+
+    set (CURRENT_TARGET ${PROJECT_NAME})
+
+    add_library (${CURRENT_TARGET} INTERFACE)
+    target_include_directories(${CURRENT_TARGET} INTERFACE ${LC_BUILD_HEADER_DIRECTORY})
+
+    install (TARGETS ${CURRENT_TARGET}
+        LIBRARY DESTINATION .
+        RUNTIME DESTINATION .
+    )
+
+endfunction(build_lib_interface_component)

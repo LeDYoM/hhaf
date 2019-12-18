@@ -5,7 +5,7 @@
 
 namespace lib
 {
-    int libMain(int argc, char *argv[]);
+int libMain(int argc, char *argv[]);
 }
 
 #endif
