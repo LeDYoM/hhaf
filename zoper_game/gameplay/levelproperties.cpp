@@ -16,8 +16,8 @@ void LevelProperties::setUp(const size_type currentLevel,
     {
         m_levelTimer = attachedNode()->dataWrapper<scene::Timer>();
     }
-    assert_debug(sceneTimerComponent != nullptr, "m_sceneNodeComponent already contains a value");
-    assert_debug(m_sceneTimerComponent == nullptr, "Passed nullptr sceneTimerComponent");
+    log_assert(sceneTimerComponent != nullptr, "m_sceneNodeComponent already contains a value");
+    log_assert(m_sceneTimerComponent == nullptr, "Passed nullptr sceneTimerComponent");
 
     m_gameMode = gameMode;
     m_sceneTimerComponent.swap(sceneTimerComponent);
@@ -62,10 +62,10 @@ void LevelProperties::setLevel(const LevelType currentLevel)
     updateLevelData();
     increaseScore(0U);
 
-    log_debug_info("Level set: ", m_currentLevel);
-    log_debug_info("Millis between tokens: ", millisBetweenTokens());
-    log_debug_info("Current base score: ", baseScore());
-    log_debug_info("Seconds or tokens to next level: ", stayCounter());
+    log_info("Level set: ", m_currentLevel);
+    log_info("Millis between tokens: ", millisBetweenTokens());
+    log_info("Current base score: ", baseScore());
+    log_info("Seconds or tokens to next level: ", stayCounter());
 }
 
 void LevelProperties::tokenConsumed()

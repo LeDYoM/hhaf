@@ -49,7 +49,7 @@ namespace lib::scene
 
     bool SceneNode::moveLastBeforeNode(const sptr<SceneNode> &beforeNode)
     {
-        assert_release(!m_groups.empty(), "Cannot moveLastInsertedBeforeNode on empty container");
+        log_assert(!m_groups.empty(), "Cannot moveLastInsertedBeforeNode on empty container");
         if (!beforeNode) return false;
 
         // Find the node to swap before to
@@ -80,9 +80,9 @@ namespace lib::scene
 
     void SceneNode::removeSceneNode(sptr<SceneNode> element)
     {
-        assert_debug(element.get() != nullptr, "Received empty scene node to be deleted");
-        assert_release(this != element.get(), "Cannot delete myself from myself");
-        assert_debug(this == element->parent()," You must call removeSceneNode from the parent node");
+        log_assert(element.get() != nullptr, "Received empty scene node to be deleted");
+        log_assert(this != element.get(), "Cannot delete myself from myself");
+        log_assert(this == element->parent()," You must call removeSceneNode from the parent node");
 
         m_groups.erase_values(element);
     }

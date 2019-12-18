@@ -33,11 +33,11 @@ namespace lib
         }
         catch (std::exception e)
         {
-            log_release_error("std::Exception: ", e.what());
+            log_error("std::Exception: ", e.what());
         }
         catch (...)
         {
-            log_release_info("Unexpected exception");
+            log_info("Unexpected exception");
         }
         finishMemManager();
         logger::finish_log();

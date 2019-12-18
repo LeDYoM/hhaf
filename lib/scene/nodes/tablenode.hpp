@@ -52,7 +52,7 @@ public:
         sptr<SceneNode> inner_node(createSceneNode<SceneNode>("inner_node" + make_str(index)));
 
         sptr<T> result(inner_node->createSceneNode<T>(std::forward<Args>(args)...));
-        assert_release(index.x < tableSize().x && index.y < tableSize().y,
+        log_assert(index.x < tableSize().x && index.y < tableSize().y,
                        "TableSize::createNodeAt: Index ", index, " is out "
                                                                  "of bounds. Size: ",
                        tableSize());

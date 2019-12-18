@@ -22,7 +22,7 @@ namespace lib::scene
         template <typename T>
         sptr<T> addComponentOfType()
         {
-            assert_debug(componentOfType<T>() == nullptr, "There is already a component with this type");
+            log_assert(componentOfType<T>() == nullptr, "There is already a component with this type");
             auto nc(msptr<T>());
             addComponent(nc);
             return nc;

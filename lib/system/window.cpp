@@ -52,24 +52,24 @@ namespace lib::core
 
     void Window::create()
     {
-        log_debug_info("Going to create Window");
-//        log_debug_info("Resolution:", wcp.width, "x", wcp.height ,"x", wcp.bpp);
-//        log_debug_info("Fullscreen:" , wcp.fullScreen);
-//        log_debug_info("Antialiasing:", wcp.antialiasing);
+        log_info("Going to create Window");
+//        log_info("Resolution:", wcp.width, "x", wcp.height ,"x", wcp.bpp);
+//        log_info("Fullscreen:" , wcp.fullScreen);
+//        log_info("Antialiasing:", wcp.antialiasing);
 
-        assert_release(!priv_->m_backendWindow, "Cannot create window twice");
-        log_debug_info("Creating window...");
+        log_assert(!priv_->m_backendWindow, "Cannot create window twice");
+        log_info("Creating window...");
 
         // Create window object
         priv_->m_backendWindow = systemProvider().backendFactory().getOrCreateWindow();
-        log_debug_info("Window created");
-        log_debug_info("Registering for view changes...");
+        log_info("Window created");
+        log_info("Registering for view changes...");
         backend::IWindow &bw(*priv_->m_backendWindow);
 
         // Create physical window
         if (bw.createWindow(1024U, 768U, 32U))
         {
-            log_debug_info("Hardware window created...");
+            log_info("Hardware window created...");
             // If window created successfully, extract the render target
             // associated with the window.
             priv_->m_renderTarget = msptr<RenderTarget>(
@@ -79,7 +79,7 @@ namespace lib::core
 //            priv_->input_driver_ = sptr<backend::IInputDriver>(
 //                priv_->m_backendWindow->inputDriver());
         }
-        log_debug_info("Window creation completed");
+        log_info("Window creation completed");
     }
 
     bool Window::preLoop()
@@ -106,13 +106,13 @@ namespace lib::core
 
     void Window::onCreate()
     {
-        log_debug_info("Window created");
+        log_info("Window created");
     }
 
     void Window::onDestroy()
     {
-        log_debug_info("Going to close Window");
+        log_info("Going to close Window");
         priv_->m_backendWindow->closeWindow();
-        log_debug_info("Window closed");
+        log_info("Window closed");
     }
 }

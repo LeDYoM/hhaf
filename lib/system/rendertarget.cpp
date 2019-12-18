@@ -12,7 +12,7 @@ namespace lib::core
     RenderTarget::RenderTarget(rawptr<lib::backend::IRenderTarget> renderTarget)
         : m_renderTarget{renderTarget}
         {
-            assert_debug(renderTarget != nullptr, "renderTarget parameter is nullptr");
+            log_assert(renderTarget != nullptr, "renderTarget parameter is nullptr");
         }
 
     RenderTarget::~RenderTarget() = default;

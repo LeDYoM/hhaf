@@ -34,7 +34,7 @@ bool HighScoresData::positionForScore(const Score score, size_type &positionInTa
 
 void HighScoresData::setHighScoreName(const size_type positionInTable, const str &nName)
 {
-    assert_release(positionInTable < m_highScoreList.size(), "Invalid index");
+    log_assert(positionInTable < m_highScoreList.size(), "Invalid index");
     m_highScoreList[positionInTable].name = nName;
 }
 

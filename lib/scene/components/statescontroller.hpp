@@ -39,7 +39,7 @@ public:
 
     constexpr void start(T firstState) noexcept
     {
-        assert_debug(m_statesStack.empty(), "You cannot call start if the stack is not empty");
+        log_assert(m_statesStack.empty(), "You cannot call start if the stack is not empty");
         if (m_statesStack.empty())
         {
             BeforeStart();
@@ -63,7 +63,7 @@ public:
     constexpr void pop_state() noexcept
     {
         postAction([this]() {
-            assert_debug(m_statesStack.size() > 0, "m_statesStack.size() is 0");
+            log_assert(m_statesStack.size() > 0, "m_statesStack.size() is 0");
             StateFinished(m_statesStack.back());
             StatePopped(m_statesStack.back());
             if (m_statesStack.size() > 1)
@@ -109,7 +109,7 @@ private:
     inline void changeState(T newState)
     {
         postAction([this, newState = std::move(newState)]() {
-            assert_debug(m_statesStack.size() != 0, "States stack size is 0");
+            log_assert(m_statesStack.size() != 0, "States stack size is 0");
             StateFinished(m_statesStack.back());
             m_statesStack.pop_back();
             StateStarted(newState);

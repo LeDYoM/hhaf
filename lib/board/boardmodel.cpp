@@ -9,10 +9,10 @@ namespace lib::board
 
     void BoardModelComponent::initialize(const vector2dst &size, IBoardModelActuator* boardModelActuator)
     {
-        log_debug_info("BoardModelComponent initialize with size: ", size);
-        log_debug_info("IBoardModelActuator received ", boardModelActuator != nullptr);
+        log_info("BoardModelComponent initialize with size: ", size);
+        log_info("IBoardModelActuator received ", boardModelActuator != nullptr);
 
-        assert_release(m_actuator == nullptr, "m_actuator already contains a value");
+        log_assert(m_actuator == nullptr, "m_actuator already contains a value");
         std::swap(m_actuator, boardModelActuator);
         _tiles.reserve(size.x);
         for (auto x = 0u; x < size.x; ++x)
@@ -33,13 +33,13 @@ namespace lib::board
             return _tiles[position.x][position.y];
         }
 
-        log_debug_error("Error getting tile in coordinates ", position.x, ",", position.y);
+        log_error("Error getting tile in coordinates ", position.x, ",", position.y);
         return SITilePointer();
     }
 
     void BoardModelComponent::setTile(const lib::vector2dst &tPosition, SITilePointer newTile)
     {
-        assert_release(tileEmpty(tPosition), "You can only set data in empty tiles");
+        log_assert(tileEmpty(tPosition), "You can only set data in empty tiles");
 
         _setTile(tPosition, newTile);
         newTile->tileAdded(tPosition);
@@ -52,7 +52,7 @@ namespace lib::board
 
     void BoardModelComponent::deleteTile(const vector2dst &position)
     {
-        assert_release(!tileEmpty(position), "You can only delete not empty tiles");
+        log_assert(!tileEmpty(position), "You can only delete not empty tiles");
 
         SITilePointer current(getTile(position));
         current->tileRemoved(position);
@@ -66,7 +66,7 @@ namespace lib::board
 
     void BoardModelComponent::changeTileData(const vector2dst &source, const BoardTileData &nv)
     {
-        assert_release(!tileEmpty(source), "You can only change data in not empty tiles");
+        log_assert(!tileEmpty(source), "You can only change data in not empty tiles");
 
         auto tile (getTile(source));
         BoardTileData ov{ tile->data.get() };
@@ -82,16 +82,16 @@ namespace lib::board
     {
         if (!tileEmpty(source))
         {
-            log_debug_info("Moving tile from ", source, " to ", dest);
+            log_info("Moving tile from ", source, " to ", dest);
 
             SITilePointer sourceTile{ getTile(source) };
             SITilePointer destTile{ getTile(dest) };
 
-            log_debug_info("Source Value: ", sourceTile->data.get());
+            log_info("Source Value: ", sourceTile->data.get());
 
             if (sourceTile)
             {
-                assert_release(!destTile, "Trying to move to a not empty tile: " , dest);
+                log_assert(!destTile, "Trying to move to a not empty tile: " , dest);
 
                 _setTile(dest, sourceTile);
                 _setTile(source, SITilePointer());
@@ -106,7 +106,7 @@ namespace lib::board
         }
         else
         {
-            log_debug_info("Trying to move empty tile: ", source.x , ",", source.y, " ignoring it");
+            log_info("Trying to move empty tile: ", source.x , ",", source.y, " ignoring it");
         }
         return false;
     }

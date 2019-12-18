@@ -66,12 +66,12 @@ void MenuPage::configure(MenuPageMode pageMode, const string_vector &titles, con
         titleColumn = 0;
         break;
     default:
-        assert_release(false, "Invalid enum value");
+        log_assert(false, "Invalid enum value");
         break;
     }
 
-    assert_debug(titles.size() >= options.size() || options.size() == 0, "Invalid number of options");
-    assert_debug(titles.size() > 0, "Titles cannot be empty");
+    log_assert(titles.size() >= options.size() || options.size() == 0, "Invalid number of options");
+    log_assert(titles.size() > 0, "Titles cannot be empty");
     size_type counter{0};
     for (auto &&title : titles)
     {
@@ -94,7 +94,7 @@ void MenuPage::configure(MenuPageMode pageMode, const string_vector &titles, con
 
 size_type MenuPage::SelectedOptionAtRow(const size_type row) const
 {
-    assert_debug(row < tableSize().y, "Invalid row index parameter");
+    log_assert(row < tableSize().y, "Invalid row index parameter");
     auto node(nodeAt({columnForOptions, row}));
     if (auto discreteText = node->componentOfType<DiscreteTextComponent>())
     {
@@ -102,7 +102,7 @@ size_type MenuPage::SelectedOptionAtRow(const size_type row) const
     }
     else
     {
-        log_debug_error("The is no discrete text at ", vector2dst{columnForOptions, row});
+        log_error("The is no discrete text at ", vector2dst{columnForOptions, row});
     }
     return static_cast<size_type>(-1);
 }
@@ -182,9 +182,9 @@ bool MenuPage::nodeHasOptions(const size_type y) const noexcept
 
 sptr<DiscreteTextComponent> MenuPage::optionsLabelAt(const size_type y)
 {
-    assert_debug(m_pageMode == MenuPageMode::Optioner, "This page does not have options");
+    log_assert(m_pageMode == MenuPageMode::Optioner, "This page does not have options");
     auto node = nodeAt({columnForOptions, y});
-    assert_debug(node != nullptr, "This node does not have options");
+    log_assert(node != nullptr, "This node does not have options");
     return node->componentOfType<DiscreteTextComponent>();
 }
 } // namespace zoper

@@ -49,7 +49,7 @@ namespace zoper
             return colors::Magenta;
             break;
         default:
-            lib::log_debug_error("Error value for token: ", data.get(), " is not supported");
+            lib::log_error("Error value for token: ", data.get(), " is not supported");
             return colors::White;
             break;
         }

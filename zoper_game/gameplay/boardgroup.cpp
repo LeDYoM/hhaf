@@ -59,7 +59,7 @@ void BoardGroup::createNewToken(
 {
     using namespace lib::board;
 
-    log_debug_info("BoardGroup:: Adding new tile at ", board_position,
+    log_info("BoardGroup:: Adding new tile at ", board_position,
                    " with value ", data);
 
     // Create a new Tile instance
@@ -76,7 +76,7 @@ void BoardGroup::createNewToken(
 
 void BoardGroup::tileRemoved(const vector2dst, board::SITilePointer &tile)
 {
-    assert_release(std::dynamic_pointer_cast<Token>(tile) != nullptr,
+    log_assert(std::dynamic_pointer_cast<Token>(tile) != nullptr,
                    "Trying to delete invalid type from board");
     m_mainBoardrg->removeSceneNode(std::dynamic_pointer_cast<Token>(tile));
 }

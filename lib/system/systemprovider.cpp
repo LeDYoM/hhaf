@@ -42,7 +42,7 @@ SystemProvider::~SystemProvider() = default;
 
 void SystemProvider::init(IApp *iapp)
 {
-    assert_release(iapp != nullptr, "Cannot create a SystemProvider with a nullptr app");
+    log_assert(iapp != nullptr, "Cannot create a SystemProvider with a nullptr app");
     p_->app_ = iapp;
     p_->backend_factory_ = muptr<backend::BackendFactory>();
     p_->time_system_ = muptr<TimeSystem>();

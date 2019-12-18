@@ -12,7 +12,7 @@ public:
     constexpr RandomNumbersComponentPrivate(core::RandomSystem &random_system) noexcept
         : random_system_{random_system}
     {
-        assert_debug(std::addressof(random_system_) != nullptr, "nullptr RandomSystem received");
+        log_assert(std::addressof(random_system_) != nullptr, "nullptr RandomSystem received");
     }
 
     ~RandomNumbersComponentPrivate() = default;
@@ -43,16 +43,16 @@ const str &RandomNumbersComponent::name() const noexcept
 
 u32 RandomNumbersComponent::getUInt(const size_type max, const size_type min) const
 {
-    log_debug_info("Asked for random number between ", min, " and ", max);
+    log_info("Asked for random number between ", min, " and ", max);
 
-    assert_release(min != max, "The min and max parameters must be different");
-    assert_release(max > min, "The max paramter must be greater than min");
+    log_assert(min != max, "The min and max parameters must be different");
+    log_assert(max > min, "The max paramter must be greater than min");
 
     const auto next(priv_->randomsystem().getNext(name(), min, max));
-    log_debug_info("Fetch next element from queue: ", next);
+    log_info("Fetch next element from queue: ", next);
     const size_type generated(next % (max - min));
-    log_debug_info("\tGot ", generated);
-    log_debug_info("\tReturning ", min + generated);
+    log_info("\tGot ", generated);
+    log_info("\tReturning ", min + generated);
     return min + generated;
 }
 

@@ -8,7 +8,7 @@ namespace lib::scene
 {
     void SceneController::setSceneManager(SceneManager *scene_manager)
     {
-        assert_debug(scene_manager_ == nullptr, "The scene_manager_ was set already");
+        log_assert(scene_manager_ == nullptr, "The scene_manager_ was set already");
         scene_manager_ = scene_manager;
     }
 
@@ -21,14 +21,14 @@ namespace lib::scene
 
     void SceneController::terminateScene()
     {
-        log_debug_info("Terminating scene ", this->currentState()->name());
+        log_info("Terminating scene ", this->currentState()->name());
         sptr<Scene> nextScene;
         if (scene_director_)
         {
             nextScene = scene_factory_.create(scene_director_(currentState()->name()));
         }
 
-        log_debug_info("Setting new scene: ", nextScene ? nextScene->name() : "<nullptr>");
+        log_info("Setting new scene: ", nextScene ? nextScene->name() : "<nullptr>");
         startScene(std::move(nextScene));
     }
 

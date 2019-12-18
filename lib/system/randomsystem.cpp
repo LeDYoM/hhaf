@@ -33,10 +33,10 @@ namespace lib::core
     size_type RandomSystem::getNext(const str& name, const size_type min, const size_type max)
     {
         const size_type next = priv_->getNext<size_type>();
-        log_debug_info("RandomSystem: Raw number generator: ", next);
-        assert_debug(min < max, "min (", min, ") should be smaller than max (", max, ")");
+        log_info("RandomSystem: Raw number generator: ", next);
+        log_assert(min < max, "min (", min, ") should be smaller than max (", max, ")");
         size_type filtered_next = (next % (max - min)) + min;
-        log_debug_info("RandomSystem: Preselecting output: ", filtered_next);
+        log_info("RandomSystem: Preselecting output: ", filtered_next);
 
         bool generated{systemProvider().simulationSystem().getNext(name, filtered_next)};
 

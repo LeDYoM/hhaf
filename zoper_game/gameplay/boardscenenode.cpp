@@ -33,7 +33,7 @@ namespace zoper
 
 	void BoardSceneNode::setTileColor(Color color)
 	{
-		assert_debug(m_backgroundTile != nullptr, "This node is not correctly initialized");
+		log_assert(m_backgroundTile != nullptr, "This node is not correctly initialized");
 		m_backgroundTile->color = std::move(color);
 
 	}

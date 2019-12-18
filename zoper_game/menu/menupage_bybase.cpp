@@ -31,7 +31,7 @@ namespace zoper
                     capp.gameSharedData->startLevel = SelectedOptionAtRow(0);
                     capp.gameSharedData->gameMode = m_gameModePage;
                     capp.gameSharedData->exitGame = false;
-                    log_debug_info("Selected level ", capp.gameSharedData->startLevel,
+                    log_info("Selected level ", capp.gameSharedData->startLevel,
                         " GameMode: ", static_cast<u32>(capp.gameSharedData->gameMode),
                         " Exiting game: ", capp.gameSharedData->exitGame);
                     parentScene()->sceneManager().sceneController()->terminateScene();

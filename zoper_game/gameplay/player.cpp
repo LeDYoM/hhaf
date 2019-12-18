@@ -40,15 +40,15 @@ namespace zoper
 
         if (boardPosition.readResetHasChanged())
         {
-            log_debug_info("Player board position: ", boardPosition());
+            log_info("Player board position: ", boardPosition());
             position = vector2df{ m_board2SceneFactor.x * boardPosition().x, m_board2SceneFactor.y * boardPosition().y };
-            log_debug_info("Player scene position: ", position());
+            log_info("Player scene position: ", position());
         }
     }
 
     void Player::movePlayer(const Direction & direction, const sptr<board::BoardModelComponent>& boardModel)
     {
-        assert_debug(direction.isValid(), "Invalid direction passed to move");
+        log_assert(direction.isValid(), "Invalid direction passed to move");
         currentDirection = direction;
         auto nPosition = direction.applyToVector(boardPosition());
         if (TokenZones::pointInCenter(nPosition)) 
@@ -88,7 +88,7 @@ namespace zoper
 
     void Player::launchAnimationBack(vector2df toWhere)
     {
-        log_debug_info("Creating animation for player to go back");
+        log_info("Creating animation for player to go back");
         updateDirectionFromParameter(currentDirection().negate());
         ensureComponentOfType(animation_component_);
         animation_component_->
@@ -102,7 +102,7 @@ namespace zoper
 
     void Player::tileAdded(const vector2dst & position_)
     {
-        log_debug_info("TokenPlayer appeared at ", position_);
+        log_info("TokenPlayer appeared at ", position_);
         m_node->color.set(getColorForToken());
         updateDirectionFromParameter(currentDirection());
 
@@ -112,7 +112,7 @@ namespace zoper
 
     void Player::tileChanged(const vector2dst &position_, const board::BoardTileData oldValue, const board::BoardTileData newValue)
     {
-        log_debug_info("Player (position ", position_, ") changed from ", oldValue, " to ", newValue);
+        log_info("Player (position ", position_, ") changed from ", oldValue, " to ", newValue);
         data.set(newValue);
     }
 

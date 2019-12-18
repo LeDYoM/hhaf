@@ -22,7 +22,7 @@ namespace lib::scene
 
     bool ComponentContainer::addComponent(sptr<IComponent> nc)
     {
-        assert_debug(nc != nullptr, "Trying to add a nullptr component");
+        log_assert(nc != nullptr, "Trying to add a nullptr component");
 
         nc->m_sceneNode = m_sceneNode;
         m_components.push_back(nc);
