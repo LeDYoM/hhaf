@@ -10,7 +10,7 @@
 namespace
 {
     constexpr static const char HostVersion[] = "1";
-    constexpr static const char HostSubversion[] = "1";
+    constexpr static const char HostSubversion[] = "2";
     constexpr static const char HostPatch[] = "0";
 }
 
