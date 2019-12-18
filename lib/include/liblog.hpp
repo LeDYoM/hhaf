@@ -15,25 +15,25 @@ using logClass = logger::Log<str>;
 template <typename... Args>
 constexpr void log_debug_info(Args &&... args) noexcept
 {
-    logClass::log_debug<logger::severity_type::info>(std::forward<Args>(args)...);
+    logClass::log_debug<logClass::severity_type::info>(std::forward<Args>(args)...);
 }
 
 template <typename... Args>
 constexpr void log_debug_error(Args &&... args) noexcept
 {
-    logClass::log_debug<logger::severity_type::error>(std::forward<Args>(args)...);
+    logClass::log_debug<logClass::severity_type::error>(std::forward<Args>(args)...);
 }
 
 template <typename... Args>
 constexpr void log_release_info(Args &&... args) noexcept
 {
-    logClass::log_release<logger::severity_type::info>(std::forward<Args>(args)...);
+    logClass::log_release<logClass::severity_type::info>(std::forward<Args>(args)...);
 }
 
 template <typename... Args>
 constexpr void log_release_error(Args &&... args) noexcept
 {
-    logClass::log_release<logger::severity_type::error>(std::forward<Args>(args)...);
+    logClass::log_release<logClass::severity_type::error>(std::forward<Args>(args)...);
 }
 
 template <typename... Args>
