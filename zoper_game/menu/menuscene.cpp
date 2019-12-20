@@ -12,33 +12,32 @@
 
 namespace zoper
 {
-    using namespace lib;
-    using namespace lib::scene;
+using namespace lib;
+using namespace lib::scene;
 
-    constexpr u32 PointsPerQuad = 6U;
+constexpr u32 PointsPerQuad = 6U;
 
-    void MenuScene::onCreated()
-    {
-        BaseClass::onCreated();
+void MenuScene::onCreated()
+{
+    BaseClass::onCreated();
 
-        loadResources(MainMenuResources{});
-        auto renderizables = addComponentOfType<Renderizables>();
-        auto resources_viewer = dataWrapper<ResourceView>();
-    
-        createStandardBackground(renderizables);
+    loadResources(MainMenuResources{});
+    auto renderizables = addComponentOfType<Renderizables>();
+    auto resources_viewer = dataWrapper<ResourceView>();
 
-        auto logo = renderizables->createNode("mainLogo");
-        logo->figType.set(FigType_t::Quad);
-        logo->pointCount.set(PointsPerQuad);
-        logo->box = Rectf32{ 500, 150, 1000, 500 };
-        logo->setTextureFill(resources_viewer->getTexture(MainMenuResources::LogoId));
-        logo->color = colors::White;
+    createStandardBackground(renderizables);
 
-        auto mainMenu (createSceneNode<MainMenu>(MainMenu::ClassName));
-        mainMenu->MenuFinished.connect([this]()
-        {
-            app<ZoperProgramController>().gameSharedData->exitGame = true;
-            sceneManager().sceneController()->terminateScene();
-        });
-    }
+    auto logo = renderizables->createNode("mainLogo");
+    logo->figType.set(FigType_t::Quad);
+    logo->pointCount.set(PointsPerQuad);
+    logo->box = Rectf32{500, 150, 1000, 500};
+    logo->setTextureFill(resources_viewer->getTexture(MainMenuResources::LogoId));
+    logo->color = colors::White;
+
+    auto mainMenu(createSceneNode<MainMenu>(MainMenu::ClassName));
+    mainMenu->MenuFinished.connect([this]() {
+        app<ZoperProgramController>().gameSharedData->exitGame = true;
+        sceneManager().sceneController()->terminateScene();
+    });
 }
+} // namespace zoper

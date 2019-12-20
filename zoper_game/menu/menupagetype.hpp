@@ -7,13 +7,13 @@
 
 namespace zoper
 {
-	enum class MenuPageType : lib::u32
-	{
-		Main					= 0,
-		SelectLevelToken		= 1,
-		SelectLevelSpeed		= 2,
-		Options					= 3
-	};
+enum class MenuPageType : lib::u32
+{
+    Main = 0U,
+    SelectLevelToken = 1U,
+    SelectLevelSpeed = 2U,
+    Options = 3
+};
 }
 
 #endif

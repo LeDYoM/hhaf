@@ -9,27 +9,27 @@
 
 namespace zoper
 {
-    using namespace lib;
-    using namespace lib::scene;
+using namespace lib;
+using namespace lib::scene;
 
-    class MenuPageInputComponent : public InputComponent
-    {
-    public:
-        using BaseClass = InputComponent;
-        ~MenuPageInputComponent() override = default;
+class MenuPageInputComponent : public InputComponent
+{
+public:
+    using BaseClass = InputComponent;
+    ~MenuPageInputComponent() override = default;
 
-        using InputComponent::InputComponent;
-        void onAttached() override;
+    using InputComponent::InputComponent;
+    void onAttached() override;
 
-        emitter<> Up;
-        emitter<> Down;
-        emitter<> Left;
-        emitter<> Right;
-        emitter<> Selected;
+    emitter<> Up;
+    emitter<> Down;
+    emitter<> Left;
+    emitter<> Right;
+    emitter<> Selected;
 
-    private:
-        ireceiver m_receiver;
-    };
-}
+private:
+    ireceiver m_receiver;
+};
+} // namespace zoper
 
 #endif

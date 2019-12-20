@@ -11,19 +11,19 @@
 
 namespace zoper
 {
-	using namespace lib;
-	class MenuScene final : public scene::Scene
-	{
-	public:
-        using BaseClass = scene::Scene;
+using namespace lib;
+class MenuScene final : public scene::Scene
+{
+public:
+    using BaseClass = scene::Scene;
 
-		DECLARE_SCENE(MenuScene)
+    DECLARE_SCENE(MenuScene)
 
-		virtual void onCreated() override;
+    virtual void onCreated() override;
 
-	private:
-		ireceiver m_receiver;
-	};
-}
+private:
+    ireceiver m_receiver;
+};
+} // namespace zoper
 
 #endif

@@ -9,25 +9,26 @@
 
 namespace zoper
 {
-	using namespace lib;
-    struct GameSharedData;
+using namespace lib;
+struct GameSharedData;
 
-	class MainMenu : public scene::SceneNode
-	{
-	public:
-		static constexpr char ClassName[] = "MainMenu";
-		MainMenu(scene::SceneNode *parent, str name);
-		virtual ~MainMenu();
+class MainMenu : public scene::SceneNode
+{
+public:
+    static constexpr char ClassName[] = "MainMenu";
+    MainMenu(scene::SceneNode *parent, str name);
+    virtual ~MainMenu();
 
-		virtual void onCreated() override;
+    virtual void onCreated() override;
 
-		void showPage(const MenuPageType&newPage);
-		void hidePage(const MenuPageType&page);
-		emitter<> MenuFinished;
-	private:
-		sptr<GameSharedData> m_gameSharedData;
-		vector_shared_pointers<MenuPage> m_menuSteps;
-	};
-}
+    void showPage(const MenuPageType &newPage);
+    void hidePage(const MenuPageType &page);
+    emitter<> MenuFinished;
+
+private:
+    sptr<GameSharedData> m_gameSharedData;
+    vector_shared_pointers<MenuPage> m_menuSteps;
+};
+} // namespace zoper
 
 #endif

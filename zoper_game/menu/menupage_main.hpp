@@ -9,16 +9,16 @@
 
 namespace zoper
 {
-	class MenuPageMain : public MenuPage
-	{
-	public:
-		using BaseClass = MenuPage;
+class MenuPageMain : public MenuPage
+{
+public:
+    using BaseClass = MenuPage;
 
-		MenuPageMain(lib::scene::SceneNode *parent, str name);
-		virtual ~MenuPageMain();
+    MenuPageMain(lib::scene::SceneNode *parent, str name);
+    virtual ~MenuPageMain();
 
-		void onCreated() override;
-	};
-}
+    void onCreated() override;
+};
+} // namespace zoper
 
 #endif

@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef ZOPER_MENU_MENUPAGE_BYTIME_INCLUDE_HPP__
-#define ZOPER_MENU_MENUPAGE_BYTIME_INCLUDE_HPP__
+#ifndef ZOPER_MENU_MENUPAGE_BYTIME_INCLUDE_HPP
+#define ZOPER_MENU_MENUPAGE_BYTIME_INCLUDE_HPP
 
 #include "menupage_bybase.hpp"
 #include <mtypes/include/types.hpp>
@@ -9,18 +9,19 @@
 
 namespace zoper
 {
-	class MenuPageByTime : public MenuPageByBase
-	{
-	public:
-		using BaseClass = MenuPageByBase;
+class MenuPageByTime : public MenuPageByBase
+{
+public:
+    using BaseClass = MenuPageByBase;
 
-        MenuPageByTime(lib::scene::SceneNode *parent, str name)
-            : BaseClass(parent, name) {
-            setType(GameMode::Time);
-        }
+    MenuPageByTime(lib::scene::SceneNode *parent, str name)
+        : BaseClass(parent, name)
+    {
+        setType(GameMode::Time);
+    }
 
-        virtual ~MenuPageByTime() {}
-	};
-}
+    virtual ~MenuPageByTime() {}
+};
+} // namespace zoper
 
 #endif
