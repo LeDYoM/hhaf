@@ -59,7 +59,7 @@ void BoardGroup::createNewToken(
 {
     using namespace lib::board;
 
-    log_info("BoardGroup:: Adding new tile at ", board_position,
+    DisplayLog::info("BoardGroup:: Adding new tile at ", board_position,
                    " with value ", data);
 
     // Create a new Tile instance

@@ -101,8 +101,8 @@ void HighScoreTextController::standarizeText(const sptr<nodes::SceneNodeText> &n
 
 void HighScoreTextController::saveHighScores()
 {
-    log_info("Saving highscores...");
+    DisplayLog::info("Saving highscores...");
     sceneManager().systemProvider().fileSystem().serializeToFile(HighScoresFileName, m_hsData);
-    log_info("High Scores saved");
+    DisplayLog::info("High Scores saved");
 }
 } // namespace zoper

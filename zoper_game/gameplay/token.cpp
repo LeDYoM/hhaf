@@ -46,19 +46,19 @@ namespace zoper
 
     void Token::tileAdded(const vector2dst & position_)
     {
-        log_info("Token ", name(), " appeared at ", position_);
+        DisplayLog::info("Token ", name(), " appeared at ", position_);
         // Set the position in the scene depending on the board position
 //        setBoardPosition(position);
     }
 
     void Token::tileRemoved(const vector2dst &position_)
     {
-        log_info("Deleting token ", name(), " from scene at position ", position_);
+        DisplayLog::info("Deleting token ", name(), " from scene at position ", position_);
     }
 
     void Token::tileChanged(const vector2dst &position_, const board::BoardTileData oldValue, const board::BoardTileData newValue)
     {
-        log_info("Token at position ", position_, " changed from ", oldValue, " to ", newValue);
+        DisplayLog::info("Token at position ", position_, " changed from ", oldValue, " to ", newValue);
         data.set(newValue);
     }
 

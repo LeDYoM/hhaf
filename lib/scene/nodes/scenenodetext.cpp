@@ -7,8 +7,7 @@
 #include <lib/scene/vertexarray.hpp>
 #include <lib/scene/scenenodetypes.hpp>
 
-// Temp
-#include <cmath>
+#include <algorithm>
 
 namespace
 {

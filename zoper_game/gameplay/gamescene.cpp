@@ -64,7 +64,7 @@ namespace zoper
 
         auto inputComponent(addComponentOfType<scene::InputComponent>());
         inputComponent->KeyPressed.connect([this](const lib::input::Key&key) {
-            log_info("Key pressed in GameScene");
+            DisplayLog::info("Key pressed in GameScene");
             // TODO: Fixme
             const auto &keyMapping = sceneManager().systemProvider().app<ZoperProgramController>().keyMapping;
             switch (m_sceneStates->currentState())
@@ -130,7 +130,7 @@ namespace zoper
             TimePoint_as_miliseconds(level_properties_->millisBetweenTokens()),
             [this](TimePoint realEllapsed) 
             {
-                log_info("Elapsed between tokens: ", realEllapsed.milliseconds());
+                DisplayLog::info("Elapsed between tokens: ", realEllapsed.milliseconds());
                 // New token
                 generateNextToken();
             }
@@ -185,7 +185,7 @@ namespace zoper
         default:
             break;
         }
-        log_info("Entered state: ", static_cast<int>(state));
+        DisplayLog::info("Entered state: ", static_cast<int>(state));
     }
 
     void GameScene::onExitState(const GameSceneStates&state)
@@ -201,7 +201,7 @@ namespace zoper
             default:
                 break;
         }
-        log_info("Exited state: ", static_cast<int>(state));
+        DisplayLog::info("Exited state: ", static_cast<int>(state));
     }
 
     void GameScene::setLevel(const size_type)
@@ -240,8 +240,8 @@ namespace zoper
     {
         const TokenZones::TokenZone &currentTokenZone{ TokenZones::tokenZones[m_nextTokenPart] };
 
-        log_info("NextTokenPart: ", m_nextTokenPart);
-        log_info("zone: ", currentTokenZone.zone_start);
+        DisplayLog::info("NextTokenPart: ", m_nextTokenPart);
+        DisplayLog::info("zone: ", currentTokenZone.zone_start);
 
         // Generate the new token type
         const size_type newToken{ private_->token_type_generator_->getUInt(NumTokens) };
@@ -251,7 +251,7 @@ namespace zoper
 
         // Prepare the position for the new token
         const vector2dst new_position{TokenZones::displacedStartPoint(currentTokenZone, token_displacement)};
-        lib::log_info("New tile pos: ", new_position);
+        lib::DisplayLog::info("New tile pos: ", new_position);
 
         // Now, we have the data for the new token generated, but first, lets start to move the row or col.
         const auto game_over = moveTowardsCenter(
@@ -297,7 +297,7 @@ namespace zoper
 
     void GameScene::addPlayer()
     {
-        log_info("Adding player tile at ", TokenZones::centerRect.leftTop());
+        DisplayLog::info("Adding player tile at ", TokenZones::centerRect.leftTop());
         log_assert(!m_player, "Player already initialized");
         // Create the player instance
         m_player = m_boardGroup->m_mainBoardrg->createSceneNode<Player>("playerNode");
@@ -309,7 +309,7 @@ namespace zoper
 
     void GameScene::launchPlayer()
     {
-        lib::log_info("Launching player");
+        lib::DisplayLog::info("Launching player");
         const Direction loopDirection{ m_player->currentDirection() };
         const vector2dst loopPosition{ m_player->boardPosition() };
         const board::BoardTileData tokenType{ m_player->data.get() };
@@ -331,7 +331,7 @@ namespace zoper
 
                     // Increment the number of tokens deleted in a row
                     ++inARow;
-                    log_info("In a row: ", inARow);
+                    DisplayLog::info("In a row: ", inARow);
 
                     // Increase the score accordingly
                     level_properties_->increaseScore(inARow * level_properties_->baseScore());
@@ -358,7 +358,7 @@ namespace zoper
                     // Change the type of the token for the previous type of the player
                     m_boardGroup->p_boardModel->changeTileData(loopPosition, tokenType);
 
-                    log_info("Player type changed to ", m_player->data.get());
+                    DisplayLog::info("Player type changed to ", m_player->data.get());
 
                     // Exit the loop
                     result = false;
@@ -367,8 +367,8 @@ namespace zoper
 
             if (found)
             {
-                log_info("Tile with same color found");
-                log_info("Creating points to score");
+                DisplayLog::info("Tile with same color found");
+                DisplayLog::info("Creating points to score");
                 auto sceneNode(createSceneNode("pointIncrementScore_SceneNode"));
 
                 auto renderizables_sceneNode = sceneNode->addComponentOfType<Renderizables>();
@@ -381,7 +381,7 @@ namespace zoper
                 {
                     using namespace gameplay::constants;
 
-                    log_info("Creating animation for points to score");
+                    DisplayLog::info("Creating animation for points to score");
                     private_->scene_animation_component_->
                         addPropertyAnimation(TimePoint_as_miliseconds(MillisAnimationPointsToScore),
                             sceneNode->position, lastTokenPosition, EndPositionPointsToScore,
@@ -391,12 +391,12 @@ namespace zoper
                             }
                         );
                 }
-                log_info("Launching player");
+                DisplayLog::info("Launching player");
                 m_player->launchAnimation(lastTokenPosition);
             }
             return result;
         });
-        log_info("Number of tokens in a row: ", inARow);
+        DisplayLog::info("Number of tokens in a row: ", inARow);
     }
 
     vector2df GameScene::board2SceneFactor() const
@@ -440,7 +440,7 @@ namespace zoper
 
                 temp += chTemp;
             }
-            log_info(temp);
+            DisplayLog::info(temp);
         }
     }
 }

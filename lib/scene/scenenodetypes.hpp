@@ -18,7 +18,7 @@ class RenderizableSceneNode : public SceneNode
 public:
     RenderizableSceneNode(SceneNode *const parent, str name) : SceneNode{parent, name}
     {
-        log_info("A");
+        DisplayLog::info("A");
 
         m_node = addComponentOfType<Renderizables>()->createNode(name + "_node");
     }

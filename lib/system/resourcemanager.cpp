@@ -60,14 +60,14 @@ inline sptr<T> get_or_add(backend::IResourceFactory<V> &factory,
 
     if (internal_resource != nullptr)
     {
-        log_info(rid, " found on resource list. Returning instance.");
+        DisplayLog::info(rid, " found on resource list. Returning instance.");
         return internal_resource;
     }
     else
     {
         // Not found, try to load it.
-        log_info(rid, " not found on resource list.");
-        log_info("Going to load file: ", fileName);
+        DisplayLog::info(rid, " not found on resource list.");
+        DisplayLog::info("Going to load file: ", fileName);
         sptr<T> resource(loadResource<UseInternalFileSystem, T>(factory, fileSystem, fileName));
         container.emplace_back(rid, resource);
         return resource;

@@ -26,19 +26,19 @@ SimulationSystem::~SimulationSystem()
 {
     constexpr char SaveFileName[] = "simulation_output.txt";
 
-    log_info("Serializing play data...");
+    DisplayLog::info("Serializing play data...");
 
-    log_info("Going to write play data into file ", SaveFileName);
+    DisplayLog::info("Going to write play data into file ", SaveFileName);
     if (systemProvider().fileSystem().saveFile(
         SaveFileName,
         Serializer<decltype(priv_->next_replay_data_)>::
             serialize(priv_->next_replay_data_)))
     {
-        log_info("Play data written successfully");
+        DisplayLog::info("Play data written successfully");
     }
     else
     {
-        log_error("Error while writing the debug data");
+        DisplayLog::error("Error while writing the debug data");
     }
 }
 
@@ -62,7 +62,7 @@ void SimulationSystem::initialize()
 
     static constexpr char InputFileName[] = "simulation_input.txt";
 
-    log_info("Trying to load ", InputFileName, " to read simulation data");
+    DisplayLog::info("Trying to load ", InputFileName, " to read simulation data");
     if (str temp(systemProvider().fileSystem().loadTextFile(InputFileName)); !temp.empty())
     {
         // If the file has been read corretly,
@@ -77,7 +77,7 @@ void SimulationSystem::initialize()
     }
     else
     {
-        log_info("File ", InputFileName, " not found");
+        DisplayLog::info("File ", InputFileName, " not found");
     }
 
     // Prepare output
@@ -122,17 +122,17 @@ void SimulationSystem::update()
 
             if (simulation_action.type == SimulationActionType::KeyPressed)
             {
-                log_info("SimulationSystem: Pressing key: ", KeyIndex(simulation_action.key));
+                DisplayLog::info("SimulationSystem: Pressing key: ", KeyIndex(simulation_action.key));
                 systemProvider().inputSystem().simulatePressKey(simulation_action.key);
             }
             else if (simulation_action.type == SimulationActionType::KeyReleased)
             {
-                log_info("SimulationSystem: releasing key: ", KeyIndex(simulation_action.key));
+                DisplayLog::info("SimulationSystem: releasing key: ", KeyIndex(simulation_action.key));
                 systemProvider().inputSystem().simulateReleaseKey(simulation_action.key);
             }
             else
             {
-                log_error("Unknown SimulationActionType enum value: ", (int)simulation_action.type);
+                DisplayLog::error("Unknown SimulationActionType enum value: ", (int)simulation_action.type);
             }
         }
     }
@@ -181,12 +181,12 @@ bool SimulationSystem::getNext(const str &name, size_type &pre_selected)
     {
         pre_selected = (*(priv_->current_simulable_data_buffer_iterator++));
         generated = true;
-        log_info("Returning simulated data: ", pre_selected);
+        DisplayLog::info("Returning simulated data: ", pre_selected);
     }
 
     // Store the generated buffer into the play data.
     priv_->next_replay_data_.data_buffer_.push_back(pre_selected);
-    log_info("Generated data added to buffer for ", name);
+    DisplayLog::info("Generated data added to buffer for ", name);
     return generated;
 }
 } // namespace lib::core

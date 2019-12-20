@@ -21,14 +21,14 @@ namespace lib::scene
 
     void SceneController::terminateScene()
     {
-        log_info("Terminating scene ", this->currentState()->name());
+        DisplayLog::info("Terminating scene ", this->currentState()->name());
         sptr<Scene> nextScene;
         if (scene_director_)
         {
             nextScene = scene_factory_.create(scene_director_(currentState()->name()));
         }
 
-        log_info("Setting new scene: ", nextScene ? nextScene->name() : "<nullptr>");
+        DisplayLog::info("Setting new scene: ", nextScene ? nextScene->name() : "<nullptr>");
         startScene(std::move(nextScene));
     }
 

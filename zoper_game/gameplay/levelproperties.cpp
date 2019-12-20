@@ -62,10 +62,10 @@ void LevelProperties::setLevel(const LevelType currentLevel)
     updateLevelData();
     increaseScore(0U);
 
-    log_info("Level set: ", m_currentLevel);
-    log_info("Millis between tokens: ", millisBetweenTokens());
-    log_info("Current base score: ", baseScore());
-    log_info("Seconds or tokens to next level: ", stayCounter());
+    DisplayLog::info("Level set: ", m_currentLevel);
+    DisplayLog::info("Millis between tokens: ", millisBetweenTokens());
+    DisplayLog::info("Current base score: ", baseScore());
+    DisplayLog::info("Seconds or tokens to next level: ", stayCounter());
 }
 
 void LevelProperties::tokenConsumed()

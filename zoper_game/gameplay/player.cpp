@@ -40,9 +40,9 @@ namespace zoper
 
         if (boardPosition.readResetHasChanged())
         {
-            log_info("Player board position: ", boardPosition());
+            DisplayLog::info("Player board position: ", boardPosition());
             position = vector2df{ m_board2SceneFactor.x * boardPosition().x, m_board2SceneFactor.y * boardPosition().y };
-            log_info("Player scene position: ", position());
+            DisplayLog::info("Player scene position: ", position());
         }
     }
 
@@ -88,7 +88,7 @@ namespace zoper
 
     void Player::launchAnimationBack(vector2df toWhere)
     {
-        log_info("Creating animation for player to go back");
+        DisplayLog::info("Creating animation for player to go back");
         updateDirectionFromParameter(currentDirection().negate());
         ensureComponentOfType(animation_component_);
         animation_component_->
@@ -102,7 +102,7 @@ namespace zoper
 
     void Player::tileAdded(const vector2dst & position_)
     {
-        log_info("TokenPlayer appeared at ", position_);
+        DisplayLog::info("TokenPlayer appeared at ", position_);
         m_node->color.set(getColorForToken());
         updateDirectionFromParameter(currentDirection());
 
@@ -112,7 +112,7 @@ namespace zoper
 
     void Player::tileChanged(const vector2dst &position_, const board::BoardTileData oldValue, const board::BoardTileData newValue)
     {
-        log_info("Player (position ", position_, ") changed from ", oldValue, " to ", newValue);
+        DisplayLog::info("Player (position ", position_, ") changed from ", oldValue, " to ", newValue);
         data.set(newValue);
     }
 

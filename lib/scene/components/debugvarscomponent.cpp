@@ -6,7 +6,7 @@ namespace lib::scene
     void DebugVarsComponent::displayDebugVars()
     {
         for (auto&& dv : m_varsData) {
-            log_info(dv.first,": ",dv.second);
+            DisplayLog::info(dv.first,": ",dv.second);
         }
     }
 

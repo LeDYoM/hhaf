@@ -52,24 +52,24 @@ namespace lib::core
 
     void Window::create()
     {
-        log_info("Going to create Window");
-//        log_info("Resolution:", wcp.width, "x", wcp.height ,"x", wcp.bpp);
-//        log_info("Fullscreen:" , wcp.fullScreen);
-//        log_info("Antialiasing:", wcp.antialiasing);
+        DisplayLog::info("Going to create Window");
+//        DisplayLog::info("Resolution:", wcp.width, "x", wcp.height ,"x", wcp.bpp);
+//        DisplayLog::info("Fullscreen:" , wcp.fullScreen);
+//        DisplayLog::info("Antialiasing:", wcp.antialiasing);
 
         log_assert(!priv_->m_backendWindow, "Cannot create window twice");
-        log_info("Creating window...");
+        DisplayLog::info("Creating window...");
 
         // Create window object
         priv_->m_backendWindow = systemProvider().backendFactory().getOrCreateWindow();
-        log_info("Window created");
-        log_info("Registering for view changes...");
+        DisplayLog::info("Window created");
+        DisplayLog::info("Registering for view changes...");
         backend::IWindow &bw(*priv_->m_backendWindow);
 
         // Create physical window
         if (bw.createWindow(1024U, 768U, 32U))
         {
-            log_info("Hardware window created...");
+            DisplayLog::info("Hardware window created...");
             // If window created successfully, extract the render target
             // associated with the window.
             priv_->m_renderTarget = msptr<RenderTarget>(
@@ -79,7 +79,7 @@ namespace lib::core
 //            priv_->input_driver_ = sptr<backend::IInputDriver>(
 //                priv_->m_backendWindow->inputDriver());
         }
-        log_info("Window creation completed");
+        DisplayLog::info("Window creation completed");
     }
 
     bool Window::preLoop()
@@ -106,13 +106,13 @@ namespace lib::core
 
     void Window::onCreate()
     {
-        log_info("Window created");
+        DisplayLog::info("Window created");
     }
 
     void Window::onDestroy()
     {
-        log_info("Going to close Window");
+        DisplayLog::info("Going to close Window");
         priv_->m_backendWindow->closeWindow();
-        log_info("Window closed");
+        DisplayLog::info("Window closed");
     }
 }

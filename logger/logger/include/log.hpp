@@ -29,34 +29,21 @@ inline void commitlog(const char *const log_stream)
 
 } // namespace detail
 
-template <typename StreamType,
-    typename severity_type_type = DefaultSeverityType,
-    severity_type_type display_log_severity = severity_type_type::all>
+template <typename StreamType>
 struct Log
 {
-    using severity_type = severity_type_type;
+    static constexpr bool output_logs = compile_logs;
 
-private:
-    template <severity_type severity>
-    static constexpr bool output_logs = 
-        compile_logs && severity >= display_log_severity;
-
-    template <severity_type severity, typename... Args>
-    static constexpr void log_imp(Args &&... args) noexcept
+public:
+    template <typename... Args>
+    static constexpr void log(Args &&... args) noexcept
     {
-        if constexpr (output_logs<severity>)
+        if constexpr (output_logs)
         {
-            StreamType log_stream(severity_txt<severity>());
+            StreamType log_stream;
             (log_stream << ... << std::forward<Args>(args));
             detail::commitlog(log_stream.c_str());
         }
-    }
-
-public:
-    template <severity_type severity, typename... Args>
-    static constexpr void log(Args &&... args) noexcept
-    {
-        log_imp<severity>(std::forward<Args>(args)...);
     }
 };
 

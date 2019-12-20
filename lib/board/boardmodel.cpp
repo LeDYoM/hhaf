@@ -9,8 +9,8 @@ namespace lib::board
 
     void BoardModelComponent::initialize(const vector2dst &size, IBoardModelActuator* boardModelActuator)
     {
-        log_info("BoardModelComponent initialize with size: ", size);
-        log_info("IBoardModelActuator received ", boardModelActuator != nullptr);
+        DisplayLog::info("BoardModelComponent initialize with size: ", size);
+        DisplayLog::info("IBoardModelActuator received ", boardModelActuator != nullptr);
 
         log_assert(m_actuator == nullptr, "m_actuator already contains a value");
         std::swap(m_actuator, boardModelActuator);
@@ -33,7 +33,7 @@ namespace lib::board
             return _tiles[position.x][position.y];
         }
 
-        log_error("Error getting tile in coordinates ", position.x, ",", position.y);
+        DisplayLog::error("Error getting tile in coordinates ", position.x, ",", position.y);
         return SITilePointer();
     }
 
@@ -82,12 +82,12 @@ namespace lib::board
     {
         if (!tileEmpty(source))
         {
-            log_info("Moving tile from ", source, " to ", dest);
+            DisplayLog::info("Moving tile from ", source, " to ", dest);
 
             SITilePointer sourceTile{ getTile(source) };
             SITilePointer destTile{ getTile(dest) };
 
-            log_info("Source Value: ", sourceTile->data.get());
+            DisplayLog::info("Source Value: ", sourceTile->data.get());
 
             if (sourceTile)
             {
@@ -106,7 +106,7 @@ namespace lib::board
         }
         else
         {
-            log_info("Trying to move empty tile: ", source.x , ",", source.y, " ignoring it");
+            DisplayLog::info("Trying to move empty tile: ", source.x , ",", source.y, " ignoring it");
         }
         return false;
     }

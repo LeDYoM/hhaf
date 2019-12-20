@@ -22,7 +22,7 @@ namespace lib::core
         TimeSystemPrivate()
         : globalStart_{timepoint_global_now()}
         {
-            log_info("TimeSystem started at: ", globalStart_.seconds());
+            DisplayLog::info("TimeSystem started at: ", globalStart_.seconds());
         }
 
         ~TimeSystemPrivate() {}

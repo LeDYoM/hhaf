@@ -74,7 +74,7 @@ namespace lib::core
 
         if (!file || !correct)
         {
-            log_error("Cannot write text file", file_name);
+            DisplayLog::error("Cannot write text file", file_name);
         }
 
         return (file && correct);

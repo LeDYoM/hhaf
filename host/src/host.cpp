@@ -56,9 +56,9 @@ namespace lib::core
     Host::Host(int argc, char *argv[])
         : m_private{muptr<HostPrivate>(argc,argv)}, m_state{ AppState::NotInitialized }
     {
-        log_info("Starting HostController...");
-        log_info("Host version: ", HostVersion,".", HostSubversion,".", HostPatch);
-        log_info("Parsing parameters...");
+        DisplayLog::info("Starting HostController...");
+        DisplayLog::info("Host version: ", HostVersion,".", HostSubversion,".", HostPatch);
+        DisplayLog::info("Parsing parameters...");
         m_private->parseCommandLineParameters();
     }
 
@@ -68,9 +68,9 @@ namespace lib::core
     {
         if (!m_private->iapp_ && iapp) 
         {
-            log_info("StartingRegistering app...");
+            DisplayLog::info("StartingRegistering app...");
             m_private->iapp_ = iapp;
-            log_info("Starting new app...");
+            DisplayLog::info("Starting new app...");
             m_state = AppState::ReadyToStart;
             return true;
         }
@@ -90,14 +90,14 @@ namespace lib::core
             break;
         case AppState::ReadyToStart:
         {
-            log_info("Starting initialization of new App...");
+            DisplayLog::info("Starting initialization of new App...");
             m_state = AppState::Executing;
 
             m_private->system_provider_.init(m_private->iapp_);
             m_private->iapp_->setSystemProvider(&(m_private->system_provider_));
 
             m_private->iapp_->onInit();
-            log_info(appDisplayNameAndVersion(*(m_private->iapp_)),
+            DisplayLog::info(appDisplayNameAndVersion(*(m_private->iapp_)),
                 ": Starting execution...");
         }
         break;
@@ -106,16 +106,16 @@ namespace lib::core
             if (loopStep()) 
             {
                 m_state = AppState::ReadyToTerminate;
-                log_info(appDisplayNameAndVersion(*(m_private->iapp_)), ": ", " is now ready to terminate");
+                DisplayLog::info(appDisplayNameAndVersion(*(m_private->iapp_)), ": ", " is now ready to terminate");
             }
             else if (m_state == AppState::ReadyToTerminate) 
             {
-                log_info(appDisplayNameAndVersion(*(m_private->iapp_)), ": ", " requested to terminate");
+                DisplayLog::info(appDisplayNameAndVersion(*(m_private->iapp_)), ": ", " requested to terminate");
             }
         }
         break;
         case AppState::ReadyToTerminate:
-            log_info(appDisplayNameAndVersion(*(m_private->iapp_)), ": started termination");
+            DisplayLog::info(appDisplayNameAndVersion(*(m_private->iapp_)), ": started termination");
             m_state = AppState::Terminated;
             m_private->iapp_->onFinish();
             m_private->system_provider_.terminate();

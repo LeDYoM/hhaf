@@ -102,7 +102,7 @@ size_type MenuPage::SelectedOptionAtRow(const size_type row) const
     }
     else
     {
-        log_error("The is no discrete text at ", vector2dst{columnForOptions, row});
+        DisplayLog::error("The is no discrete text at ", vector2dst{columnForOptions, row});
     }
     return static_cast<size_type>(-1);
 }

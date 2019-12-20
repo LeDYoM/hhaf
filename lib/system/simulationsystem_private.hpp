@@ -71,7 +71,7 @@ struct SimulationSystem::SimulationSystemPrivate final
         current_replay_data_.simulation_actions_.swap(sim_act_container);
         current_simulation_action_iterator_ = current_replay_data_.simulation_actions_.cbegin();
         current_last_checked_point_ = current;
-        log_info("Simulation System started");
+        DisplayLog::info("Simulation System started");
     }
 
     void addSimulationAction(SimulationAction simulation_action)

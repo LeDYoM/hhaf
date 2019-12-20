@@ -15,10 +15,10 @@ namespace lib::scene
 
         str fontfile(file_name + ".fnt");
         str texturefile(file_name + ".png");
-        log_info("Starting to Parse Font ", fontfile);
+        DisplayLog::info("Starting to Parse Font ", fontfile);
         ParseFont(fontfile);
-        log_info("Finished Parsing Font ", fontfile);
-        log_info("Calculating some metrics");
+        DisplayLog::info("Finished Parsing Font ", fontfile);
+        DisplayLog::info("Calculating some metrics");
         fontPrivate->adv = 1.0f / (f32)size().x;
 
         for (u32 i{0U}; i < fontPrivate->chars_.size(); ++i)
@@ -28,8 +28,8 @@ namespace lib::scene
                 static_cast<vector2d<f32>>(fontPrivate->chars_[i].position.size())
             );
         }
-        log_info("Finished Parsing Font ", fontfile);
-        log_info("Loading pages. Number of pages: ", fontPrivate->pagesData_.size());
+        DisplayLog::info("Finished Parsing Font ", fontfile);
+        DisplayLog::info("Loading pages. Number of pages: ", fontPrivate->pagesData_.size());
 /*
         for (u32 i = 0; i < fontPrivate->pagesData_.size(); ++i)
         {
@@ -37,7 +37,7 @@ namespace lib::scene
                 fontPrivate->pagesData_[i].file, 
                 fontPrivate->pagesData_[i].file);
         }
-        log_info("Page(s) loaded");
+        DisplayLog::info("Page(s) loaded");
         */
     }
 

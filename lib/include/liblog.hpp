@@ -11,25 +11,14 @@
 namespace lib
 {
 using logClass = logger::Log<str>;
-
-template <typename... Args>
-constexpr void log_info(Args &&... args) noexcept
-{
-    logClass::log<logClass::severity_type::info>(std::forward<Args>(args)...);
-}
-
-template <typename... Args>
-constexpr void log_error(Args &&... args) noexcept
-{
-    logClass::log<logClass::severity_type::error>(std::forward<Args>(args)...);
-}
+using DisplayLog = logger_::LogDisplayer<logClass>;
 
 template <typename... Args>
 constexpr void log_assert(const bool condition, Args &&... args) noexcept
 {
     if (!condition)
     {
-        log_error(std::forward<Args>(args)...);
+        DisplayLog::error(std::forward<Args>(args)...);
     }
     assert(condition);
 }
@@ -45,7 +34,7 @@ constexpr void log_info_if([[maybe_unused]] Args &&... args) noexcept
 {
     if constexpr (do_logs)
     {
-        log_info(std::forward<Args>(args)...);
+        DisplayLog::info(std::forward<Args>(args)...);
     }
 }
 #ifdef _MSC_VER

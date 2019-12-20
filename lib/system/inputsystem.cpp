@@ -38,7 +38,7 @@ const vector<Key> &InputSystem::releasedKeys() const noexcept
 void InputSystem::keyPressed(const Key key)
 {
     log_assert(key < Key::KeyCount, "Incorrect key value");
-    log_info("InputSystem: Key pressed: ", KeyIndex(key));
+    DisplayLog::info("InputSystem: Key pressed: ", KeyIndex(key));
     m_keyStates[KeyIndex(key)] = true;
     m_pressedKeys.push_back(key);
 }
@@ -46,7 +46,7 @@ void InputSystem::keyPressed(const Key key)
 void InputSystem::keyReleased(const Key key)
 {
     log_assert(key < Key::KeyCount, "Incorrect key value");
-    log_info("InputSystem: Key released: ", KeyIndex(key));
+    DisplayLog::info("InputSystem: Key released: ", KeyIndex(key));
     m_keyStates[KeyIndex(key)] = false;
     m_releasedKeys.push_back(key);
 }

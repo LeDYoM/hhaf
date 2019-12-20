@@ -43,16 +43,16 @@ const str &RandomNumbersComponent::name() const noexcept
 
 u32 RandomNumbersComponent::getUInt(const size_type max, const size_type min) const
 {
-    log_info("Asked for random number between ", min, " and ", max);
+    DisplayLog::info("Asked for random number between ", min, " and ", max);
 
     log_assert(min != max, "The min and max parameters must be different");
     log_assert(max > min, "The max paramter must be greater than min");
 
     const auto next(priv_->randomsystem().getNext(name(), min, max));
-    log_info("Fetch next element from queue: ", next);
+    DisplayLog::info("Fetch next element from queue: ", next);
     const size_type generated(next % (max - min));
-    log_info("\tGot ", generated);
-    log_info("\tReturning ", min + generated);
+    DisplayLog::info("\tGot ", generated);
+    DisplayLog::info("\tReturning ", min + generated);
     return min + generated;
 }
 
