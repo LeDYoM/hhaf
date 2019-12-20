@@ -9,7 +9,7 @@
 namespace zoper
 {
 MenuPageMain::MenuPageMain(lib::scene::SceneNode *parent, str name)
-    : MenuPage{parent, std::move(name)} {}
+    : MenuPageSelector{parent, std::move(name)} {}
 
 MenuPageMain::~MenuPageMain() = default;
 
@@ -17,7 +17,7 @@ void MenuPageMain::onCreated()
 {
     BaseClass::onCreated();
 
-    configure(MenuPageMode::Selector,
+    configure(
               {"Play token mode", "Play time mode", "Options", "Exit"});
 
     Selection.connect([this](const size_type index) {

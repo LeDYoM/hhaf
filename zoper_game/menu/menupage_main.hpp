@@ -9,10 +9,10 @@
 
 namespace zoper
 {
-class MenuPageMain : public MenuPage
+class MenuPageMain : public MenuPageSelector
 {
 public:
-    using BaseClass = MenuPage;
+    using BaseClass = MenuPageSelector;
 
     MenuPageMain(lib::scene::SceneNode *parent, str name);
     virtual ~MenuPageMain();

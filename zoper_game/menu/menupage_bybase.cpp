@@ -8,42 +8,42 @@
 
 namespace zoper
 {
-	MenuPageByBase::MenuPageByBase(lib::scene::SceneNode *parent, str name) : MenuPage{ parent, std::move(name) } {}
+MenuPageByBase::MenuPageByBase(lib::scene::SceneNode *parent, str name) 
+    : BaseClass{parent, std::move(name)} {}
 
-    MenuPageByBase::~MenuPageByBase() {}
+MenuPageByBase::~MenuPageByBase() {}
 
-    void MenuPageByBase::onCreated()
-    {
-        BaseClass::onCreated();
+void MenuPageByBase::onCreated()
+{
+    BaseClass::onCreated();
 
-        const str FirstOption(str("Start level ") + str(m_gameModePage == GameMode::Token?"token":"time") + str(" mode"));
-        configure(MenuPageMode::Optioner, 
-        { std::move(FirstOption), "Play", "Back" }, { { "1","2", "3", "4", "5", "6", "7", "8", "9", "10" } });
+    const str FirstOption(str("Start level ") + str(m_gameModePage == GameMode::Token ? "token" : "time") + str(" mode"));
+    configure(
+              {std::move(FirstOption), "Play", "Back"}, {{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"}});
 
-        Selection.connect([this](const size_type index)
+    Selection.connect([this](const size_type index) {
+        switch (index)
         {
-            switch (index)
-            {
-            // Play
-            case 1:
-                {
-                    auto& capp = app<ZoperProgramController>();
-                    capp.gameSharedData->startLevel = SelectedOptionAtRow(0);
-                    capp.gameSharedData->gameMode = m_gameModePage;
-                    capp.gameSharedData->exitGame = false;
-                    DisplayLog::info("Selected level ", capp.gameSharedData->startLevel,
-                        " GameMode: ", static_cast<u32>(capp.gameSharedData->gameMode),
-                        " Exiting game: ", capp.gameSharedData->exitGame);
-                    parentScene()->sceneManager().sceneController()->terminateScene();
-                }
-                break;
-            // Back
-            case 2:
-                Back();
-                break;
-            default:
-                break;
-            }
-        });
-    }
+        // Play
+        case 1:
+        {
+            auto &capp = app<ZoperProgramController>();
+            capp.gameSharedData->startLevel = SelectedOptionAtRow(0);
+            capp.gameSharedData->gameMode = m_gameModePage;
+            capp.gameSharedData->exitGame = false;
+            DisplayLog::info("Selected level ", capp.gameSharedData->startLevel,
+                             " GameMode: ", static_cast<u32>(capp.gameSharedData->gameMode),
+                             " Exiting game: ", capp.gameSharedData->exitGame);
+            parentScene()->sceneManager().sceneController()->terminateScene();
+        }
+        break;
+        // Back
+        case 2:
+            Back();
+            break;
+        default:
+            break;
+        }
+    });
 }
+} // namespace zoper

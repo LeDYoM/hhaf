@@ -8,33 +8,33 @@
 
 namespace zoper
 {
-	MenuPageOptions::MenuPageOptions(lib::scene::SceneNode *parent, str name) : MenuPage{ parent, std::move(name) } {}
+MenuPageOptions::MenuPageOptions(lib::scene::SceneNode *parent, str name) 
+    : BaseClass{parent, std::move(name)} {}
 
-	MenuPageOptions::~MenuPageOptions() = default;
+MenuPageOptions::~MenuPageOptions() = default;
 
-	void MenuPageOptions::onCreated()
-	{
-		BaseClass::onCreated();
-		configure(MenuPageMode::Optioner, 
-		{ "Anti aliasing", "Resolution", "Fullscreen",  "VSync", "Redefine keyboard", "Cancel", "Accept" },
-		{ 
-			{ "Worst", "Bad", "Normal", "Good", "Best" },
-			{ "Worst", "Bad", "Normal", "Good", "Best" },
-			{ "No", "Yes" },
-			{ "No", "Yes" }
-		});
+void MenuPageOptions::onCreated()
+{
+    BaseClass::onCreated();
+    configure(
+              {"Anti aliasing", "Resolution", "Fullscreen", "VSync", "Redefine keyboard", "Cancel", "Accept"},
+              {{"Worst", "Bad", "Normal", "Good", "Best"},
+               {"Worst", "Bad", "Normal", "Good", "Best"},
+               {"No", "Yes"},
+               {"No", "Yes"}});
 
-		Selection.connect([this](const size_type index) {
-			switch (index) {
-			// Cancel
-			default:
-			case 4:
-				Back();
-				break;
-			case 5:
-				Back();
-				break;
-			}
-		});
-	}
+    Selection.connect([this](const size_type index) {
+        switch (index)
+        {
+        // Cancel
+        default:
+        case 4:
+            Back();
+            break;
+        case 5:
+            Back();
+            break;
+        }
+    });
 }
+} // namespace zoper

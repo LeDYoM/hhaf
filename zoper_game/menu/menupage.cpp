@@ -46,36 +46,35 @@ void MenuPage::onCreated()
     input->Selected.connect({this, &MenuPage::goSelected});
 }
 
-void MenuPage::configure(MenuPageMode pageMode, const string_vector &titles, const vector<string_vector> options)
+pair<size_type, size_type> MenuPageSelector::getTableData() const
 {
-    m_pageMode = pageMode;
-    Rectf32 textBox{rectFromSize(scenePerspective().size()).setLeftTop({0, 750}).setSize({2000, 4 * 150})};
+    return {2U, 1U};
+}
+
+pair<size_type, size_type> MenuPageOptioner::getTableData() const
+{
+    return {4U, 0};
+}
+
+void MenuPage::configure(const string_vector &titles, const vector<string_vector> options)
+{
+    Rectf32 textBox{
+        rectFromSize(scenePerspective().size())
+            .setLeftTop({0, 750}).setSize({2000, 4 * 150})};
+
     position = textBox.leftTop();
     sceneNodeSize = textBox.size();
 
-    size_type titleColumn{0};
+    auto [size_y, title_column] = getTableData();
 
-    switch (m_pageMode)
-    {
-    case zoper::MenuPageMode::Selector:
-        setTableSize({2, titles.size()});
-        titleColumn = 1;
-        break;
-    case zoper::MenuPageMode::Optioner:
-        setTableSize({4, titles.size()});
-        titleColumn = 0;
-        break;
-    default:
-        log_assert(false, "Invalid enum value");
-        break;
-    }
+    setTableSize({size_y, titles.size()});
 
     log_assert(titles.size() >= options.size() || options.size() == 0, "Invalid number of options");
     log_assert(titles.size() > 0, "Titles cannot be empty");
     size_type counter{0};
     for (auto &&title : titles)
     {
-        auto newOption(createNodeAt(vector2dst{titleColumn, counter}, make_str("label", counter)));
+        auto newOption(createNodeAt(vector2dst{title_column, counter}, make_str("label", counter)));
         standarizeText(newOption);
         newOption->text.set(title);
 
@@ -166,23 +165,23 @@ void MenuPage::goSelected()
     Selection(m_selectedItem);
 }
 
-bool MenuPage::nodeHasOptions(const size_type y) const noexcept
+bool MenuPageSelector::nodeHasOptions(const size_type y) const noexcept
 {
-    if (m_pageMode != MenuPageMode::Optioner)
-    {
-        return false;
-    }
+    return false;
+}
 
+bool MenuPageOptioner::nodeHasOptions(const size_type y) const noexcept
+{
     if (auto node = nodeAt({columnForOptions, y}))
     {
         return node->componentOfType<DiscreteTextComponent>() != nullptr;
     }
-    return false;
+    return false;    
 }
 
 sptr<DiscreteTextComponent> MenuPage::optionsLabelAt(const size_type y)
 {
-    log_assert(m_pageMode == MenuPageMode::Optioner, "This page does not have options");
+//    log_assert(m_pageMode == MenuPageMode::Optioner, "This page does not have options");
     auto node = nodeAt({columnForOptions, y});
     log_assert(node != nullptr, "This node does not have options");
     return node->componentOfType<DiscreteTextComponent>();

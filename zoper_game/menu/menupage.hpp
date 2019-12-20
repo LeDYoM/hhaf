@@ -17,12 +17,6 @@ namespace zoper
 using namespace lib;
 using namespace lib::scene;
 
-enum class MenuPageMode
-{
-    Selector,
-    Optioner
-};
-
 class MenuPage : public nodes::TableNode<nodes::SceneNodeText>
 {
 private:
@@ -33,8 +27,8 @@ public:
     MenuPage(SceneNode *parent, str name);
     virtual ~MenuPage();
 
-    void configure(MenuPageMode pageMode, const string_vector &titles, const vector<string_vector> options = {});
     void onCreated() override;
+    void configure(const string_vector &titles, const vector<string_vector> options = {});
 
     size_type SelectedOptionAtRow(const size_type row) const;
     emitter<const MenuPageType> Forward;
@@ -51,7 +45,8 @@ private:
     void goRight();
     void goSelected();
 
-    bool nodeHasOptions(const size_type y) const noexcept;
+    virtual pair<size_type, size_type> getTableData() const = 0;
+    virtual bool nodeHasOptions(const size_type y) const noexcept = 0;
     sptr<DiscreteTextComponent> optionsLabelAt(const size_type y);
     void setSelectedItem(const size_type index);
     void updateSelection();
@@ -63,8 +58,26 @@ private:
     Color m_normalColor;
     Color m_selectedColor;
     ireceiver m_receiver;
-    MenuPageMode m_pageMode;
 };
+
+class MenuPageSelector : public MenuPage
+{
+public:
+    using MenuPage::MenuPage;
+private:
+    pair<size_type, size_type> getTableData() const override;
+    bool nodeHasOptions(const size_type y) const noexcept override;
+};
+
+class MenuPageOptioner : public MenuPage
+{
+public:
+    using MenuPage::MenuPage;
+private:
+    pair<size_type, size_type> getTableData() const override;
+    bool nodeHasOptions(const size_type y) const noexcept override;
+};
+
 } // namespace zoper
 
 #endif

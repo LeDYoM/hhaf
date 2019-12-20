@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef ZOPER_MENU_MENUPAGE_BYBASE_INCLUDE_HPP__
-#define ZOPER_MENU_MENUPAGE_BYBASE_INCLUDE_HPP__
+#ifndef ZOPER_MENU_MENUPAGE_BYBASE_INCLUDE_HPP
+#define ZOPER_MENU_MENUPAGE_BYBASE_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <lib/scene/scenenode.hpp>
@@ -10,10 +10,10 @@
 
 namespace zoper
 {
-class MenuPageByBase : public MenuPage
+class MenuPageByBase : public MenuPageOptioner
 {
 public:
-    using BaseClass = MenuPage;
+    using BaseClass = MenuPageOptioner;
 
     MenuPageByBase(lib::scene::SceneNode *parent, str name);
     virtual ~MenuPageByBase();
