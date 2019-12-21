@@ -123,21 +123,6 @@ constexpr s32 KeyIndex(const Key key)
     return static_cast<s32>(key);
 }
 
-/*
-inline write_stream &operator<<(write_stream &os, const Key &key)
-{
-    os << static_cast<std::underlying_type_t<Key>>(key);
-    return os;
-}
-
-inline std::istream &operator>>(std::istream &is, Key &key)
-{
-    std::underlying_type_t<Key> p;
-    is >> p;
-    key = static_cast<Key>(p);
-    return is;
-}
-*/
 using KeyStates = bool[KeyCount];
 } // namespace lib
 

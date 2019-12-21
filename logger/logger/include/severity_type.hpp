@@ -21,8 +21,7 @@ struct SeverityType
         none
     };
 
-    template <severity_type_t severity_value>
-    static constexpr const auto as_str() noexcept
+    static constexpr const auto as_str(severity_type_t severity_value) noexcept
     {
         switch (severity_value)
         {
@@ -49,20 +48,20 @@ struct SeverityType
 template <typename LogClass>
 struct LogDisplayer
 {
-    template <bool condition, SeverityType::severity_type_t severity_type, typename... Args>
+    template <bool condition, SeverityType::severity_type_t severity_value, typename... Args>
     static constexpr void log_if(Args &&... args) noexcept
     {
         if constexpr (condition)
         {
             LogClass::log(
-                SeverityType::as_str<severity_type>(), std::forward<Args>(args)...);
+                SeverityType::as_str(severity_value), std::forward<Args>(args)...);
         }
     }
 
-    template <SeverityType::severity_type_t severity_type, typename... Args>
+    template <SeverityType::severity_type_t severity_value, typename... Args>
     static constexpr void log_if_severity_under(Args &&... args) noexcept
     {
-        log_if<SeverityType::ShowSeverity<severity_type>, severity_type>(
+        log_if<SeverityType::ShowSeverity<severity_value>, severity_value>(
             std::forward<Args>(args)...);
     }
 

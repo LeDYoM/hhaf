@@ -7,6 +7,7 @@
 #include "levelproperties.hpp"
 #include "boardgroup.hpp"
 #include "tokenzones.hpp"
+#include "gamescene_states.hpp"
 
 #include "../keymapping.hpp"
 #include "../gameshareddata.hpp"
@@ -34,13 +35,6 @@ class PauseSceneNode;
 class GameOverSceneNode;
 
 using namespace lib;
-
-enum class GameSceneStates : u8
-{
-    Playing = 0,
-    GameOver,
-    Pause
-};
 
 class GameScene final : public scene::Scene,
                         public StatesControllerActuator<GameSceneStates>

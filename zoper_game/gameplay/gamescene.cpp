@@ -185,7 +185,7 @@ namespace zoper
         default:
             break;
         }
-        DisplayLog::info("Entered state: ", static_cast<int>(state));
+        DisplayLog::info("Entered state: ", make_str(state));
     }
 
     void GameScene::onExitState(const GameSceneStates&state)
@@ -201,7 +201,7 @@ namespace zoper
             default:
                 break;
         }
-        DisplayLog::info("Exited state: ", static_cast<int>(state));
+        DisplayLog::info("Exited state: ", make_str(state));
     }
 
     void GameScene::setLevel(const size_type)

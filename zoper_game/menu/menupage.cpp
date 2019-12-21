@@ -88,7 +88,7 @@ void MenuPage::configure(const string_vector &titles, const vector<string_vector
 
         ++counter;
     }
-    setSelectedItem(0);
+    setSelectedItem(0U);
 }
 
 size_type MenuPage::SelectedOptionAtRow(const size_type row) const
