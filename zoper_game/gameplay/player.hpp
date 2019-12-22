@@ -6,7 +6,7 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/function.hpp>
-#include <lib/board/boardmodel.hpp>
+#include <boardmanager/include/boardmodel.hpp>
 #include <lib/scene/ianimation.hpp>
 #include <lib/scene/components/animationcomponent.hpp>
 

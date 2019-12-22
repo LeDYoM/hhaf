@@ -6,8 +6,8 @@
 #include <lib/scene/nodes/tablenode.hpp>
 #include <lib/scene/renderizables/renderizable.hpp>
 
-#include <lib/board/boardmodel.hpp>
-#include <lib/board/itile.hpp>
+#include <boardmanager/include/boardmodel.hpp>
+#include <boardmanager/include/itile.hpp>
 
 namespace zoper
 {

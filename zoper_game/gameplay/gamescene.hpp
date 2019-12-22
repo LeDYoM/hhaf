@@ -16,7 +16,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/function.hpp>
 #include <lib/scene/scene.hpp>
-#include <lib/board/boardmodel.hpp>
+#include <boardmanager/include/boardmodel.hpp>
 #include <lib/scene/nodes/textquad.hpp>
 #include <lib/scene/nodes/scenenodetext.hpp>
 #include <lib/scene/renderizables/renderizable.hpp>

@@ -8,7 +8,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
 
-#include <lib/board/itile.hpp>
+#include <boardmanager/include/itile.hpp>
 #include <lib/scene/components/animationcomponent.hpp>
 
 namespace zoper

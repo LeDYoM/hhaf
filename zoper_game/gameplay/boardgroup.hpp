@@ -8,9 +8,9 @@
 
 #include "boardscenenode.hpp"
 
-#include <lib/board/boardmodel.hpp>
-#include <lib/board/iboardmodelactuator.hpp>
-#include <lib/board/itile.hpp>
+#include <boardmanager/include/boardmodel.hpp>
+#include <boardmanager/include/iboardmodelactuator.hpp>
+#include <boardmanager/include/itile.hpp>
 
 namespace zoper
 {

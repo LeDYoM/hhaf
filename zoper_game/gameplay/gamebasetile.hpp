@@ -5,7 +5,7 @@
 
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/renderizables/renderizable.hpp>
-#include <lib/board/itile.hpp>
+#include <boardmanager/include/itile.hpp>
 
 namespace zoper
 {

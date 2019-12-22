@@ -29,13 +29,12 @@ public:
 
     void onCreated() override;
     void configure(const string_vector &titles, const vector<string_vector> options = {});
-
-    size_type SelectedOptionAtRow(const size_type row) const;
     emitter<const MenuPageType> Forward;
     emitter<> Back;
-
+    
 protected:
     emitter<const size_type> Selection;
+    size_type SelectedOptionAtRow(const size_type row) const;
 
 private:
     void standarizeText(const sptr<ContainedElement> &ntext);
@@ -64,6 +63,7 @@ class MenuPageSelector : public MenuPage
 {
 public:
     using MenuPage::MenuPage;
+
 private:
     pair<size_type, size_type> getTableData() const override;
     bool nodeHasOptions(const size_type y) const noexcept override;
@@ -73,6 +73,7 @@ class MenuPageOptioner : public MenuPage
 {
 public:
     using MenuPage::MenuPage;
+
 private:
     pair<size_type, size_type> getTableData() const override;
     bool nodeHasOptions(const size_type y) const noexcept override;

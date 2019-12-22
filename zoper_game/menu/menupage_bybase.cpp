@@ -28,7 +28,7 @@ void MenuPageByBase::onCreated()
         case 1:
         {
             auto &capp = app<ZoperProgramController>();
-            capp.gameSharedData->startLevel = SelectedOptionAtRow(0);
+            capp.gameSharedData->startLevel = SelectedOptionAtRow(0U);
             capp.gameSharedData->gameMode = m_gameModePage;
             capp.gameSharedData->exitGame = false;
             DisplayLog::info("Selected level ", capp.gameSharedData->startLevel,

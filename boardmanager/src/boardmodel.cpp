@@ -1,5 +1,6 @@
-#include "boardmodel.hpp"
-#include "iboardmodelactuator.hpp"
+#include <boardmanager/include/boardmodel.hpp>
+#include <boardmanager/include/iboardmodelactuator.hpp>
+
 #include <lib/include/liblog.hpp>
 
 namespace lib::board
