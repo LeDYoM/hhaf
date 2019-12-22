@@ -1,4 +1,5 @@
-project (libef)
+# Host Application Framework
+project (hef)
 cmake_minimum_required (VERSION 3.12)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -42,7 +43,7 @@ add_subdirectory(host)
 add_subdirectory(backend_dev)
 add_subdirectory(backend)
 add_subdirectory(lib)
-add_subdirectory(boardmanager)
+add_subdirectory(hef_ext)
 add_subdirectory(backend_sfml)
 add_subdirectory(zoper_game)
 add_subdirectory(librun)
