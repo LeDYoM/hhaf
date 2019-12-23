@@ -204,7 +204,8 @@ public:
     }
 
     template <typename T>
-    [[nodiscard]] T convertOrDefault() const {
+    [[nodiscard]] T convertOrDefault() const
+    {
         T value;
         convert(value);
         return value;
@@ -306,12 +307,6 @@ public:
     }
 
     template <typename T>
-    constexpr str &operator<<(const T &n)
-    {
-        return append(n);
-    }
-
-    template <typename T>
     constexpr bool operator>>(T &n) const
     {
         if constexpr (std::is_enum_v<T>)
@@ -345,6 +340,12 @@ public:
     friend bool operator<(const str &lhs, const str &rhs) noexcept;
     friend str operator+(const str &lhs, const str &rhs) noexcept;
 };
+
+template <typename T>
+constexpr str &operator<<(str& dest, const T &n)
+{
+    return dest.append(n);
+}
 
 constexpr bool operator==(const str &lhs, const str &rhs) noexcept
 {

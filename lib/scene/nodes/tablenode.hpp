@@ -42,7 +42,7 @@ public:
         }
     }
 
-    vector2dst tableSize() const { return tableSize_(); }
+    vector2dst tableSize() const noexcept { return tableSize_(); }
 
     PropertyState<vector2df> sceneNodeSize;
 

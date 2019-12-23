@@ -1,17 +1,16 @@
 #include "mainmenu.hpp"
+#include "../loaders/mainmenuresources.hpp"
 #include "../gameshareddata.hpp"
 #include "../zoperprogramcontroller.hpp"
-#include "menupage.hpp"
-#include "menupage_main.hpp"
-#include "menupage_bytoken.hpp"
-#include "menupage_bytime.hpp"
-#include "menupage_options.hpp"
+#include <menu_paged/include/menu_page.hpp>
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/scenemanager.hpp>
 #include <lib/include/liblog.hpp>
-#include <lib/scene/components/statescontroller.hpp>
+#include <lib/scene/datawrappers/resourceview.hpp>
+#include <lib/resources/ttfont.hpp>
 
 #include <mtypes/include/function.hpp>
+#include <mtypes/include/types.hpp>
 
 namespace zoper
 {
@@ -19,8 +18,20 @@ using namespace lib;
 using namespace lib::scene;
 using namespace lib::scene::nodes;
 
+void goGame(MenuPaged *scene_node,
+            const GameMode game_mode,
+            vector<s32> menu_data)
+{
+    auto &capp = scene_node->app<ZoperProgramController>();
+    capp.gameSharedData->startLevel = menu_data[0U];
+    capp.gameSharedData->gameMode = game_mode;
+    capp.gameSharedData->exitGame = false;
+    DisplayLog::info(capp.gameSharedData->to_str());
+    scene_node->terminate(1);
+}
+
 MainMenu::MainMenu(SceneNode *parent, str name)
-    : SceneNode{parent, std::move(name)}
+    : BaseClass{parent, std::move(name)}
 {
     m_gameSharedData = app<ZoperProgramController>().gameSharedData;
 }
@@ -29,86 +40,66 @@ MainMenu::~MainMenu() = default;
 
 void MainMenu::onCreated()
 {
-    using namespace nodes;
-    SceneNode::onCreated();
+    BaseClass::onCreated();
 
-    auto statesController = addComponentOfType<StatesController<MenuPageType>>();
+    auto resources_viewer = dataWrapper<ResourceView>();
+
+    auto normalFont = resources_viewer->getTTFont(MainMenuResources::MenuFontId)->font(72);
+#ifdef TEST_BMP_FONT
+    auto normalFont = resources_viewer->getBMPFont(MainMenuResources::TestFontId);
+#endif
+
+    setNormalTextFont(normalFont);
+    setNormalColor(colors::Blue);
+    setSelectedColor(colors::Red);
+
+    vector_shared_pointers<scene::MenuPage> menu_steps;
 
     // Create and register menu pages
-    auto menuPageMain(createSceneNode<MenuPageMain>("menuPageMain"));
-    m_menuSteps.push_back(menuPageMain);
-    auto menuPageByToken(createSceneNode<MenuPageByToken>("menuPageByToken"));
-    m_menuSteps.push_back(menuPageByToken);
-    auto menuPageByTime(createSceneNode<MenuPageByTime>("menuPageByTime"));
-    m_menuSteps.push_back(menuPageByTime);
-    auto menuPageOptions(createSceneNode<MenuPageOptions>("menuPageOptions"));
-    m_menuSteps.push_back(menuPageOptions);
+    auto menuPageMain(createSceneNode<MenuPage>("menuPageMain"));
+    PageOptions main_page_options{true};
+    menuPageMain->configure({make_option("Play Token mode", 1),
+                             make_option("Play Time mode", 2),
+                             make_option("Options", 3),
+                             make_option("Exit", MenuPagedOption::GoBack)},
+                             main_page_options);
 
-    menuPageMain->Forward.connect([this, statesController](const MenuPageType selectedIndex) {
-        switch (selectedIndex)
-        {
-        case MenuPageType::SelectLevelToken:
-            statesController->push_state(MenuPageType::SelectLevelToken);
-            break;
-        case MenuPageType::SelectLevelSpeed:
-            statesController->push_state(MenuPageType::SelectLevelSpeed);
-            break;
-        case MenuPageType::Options:
-            statesController->push_state(MenuPageType::Options);
-            break;
-        default:
-            statesController->pop_state();
-            break;
-        }
+    menu_steps.push_back(menuPageMain);
+
+    auto menuPageByToken(createSceneNode<MenuPage>("menuPageByToken"));
+    menuPageByToken->configure({make_option("Start level Token Mode", 0U, 1U, 10U),
+                                make_option("Play", MenuPagedOption::Accept),
+                                make_option("Back", MenuPagedOption::GoBack)});
+
+    menuPageByToken->Accepted.connect([this](vector<s32> menu_data) {
+        goGame(this, GameMode::Token, std::move(menu_data));
     });
 
-    menuPageMain->Back.connect([statesController]() {
-        statesController->pop_state();
-    });
-    menuPageByToken->Back.connect([statesController]() {
-        statesController->pop_state();
-    });
-    menuPageByTime->Back.connect([statesController]() {
-        statesController->pop_state();
-    });
-    menuPageOptions->Back.connect([statesController]() {
-        statesController->pop_state();
+    menu_steps.push_back(menuPageByToken);
+
+    auto menuPageByTime(createSceneNode<MenuPage>("menuPageByTime"));
+    menuPageByTime->configure({make_option("Start level Time Mode", 0U, 1U, 10U),
+                               make_option("Play", MenuPagedOption::Accept),
+                               make_option("Back", MenuPagedOption::GoBack)});
+
+    menuPageByTime->Accepted.connect([this](vector<s32> menu_data) {
+        goGame(this, GameMode::Time, std::move(menu_data));
     });
 
-    statesController->StatePushed.connect([this](const MenuPageType menuPage) {
-        showPage(menuPage);
-    });
-    statesController->StateResumed.connect([this](const MenuPageType menuPage) {
-        showPage(menuPage);
-    });
+    menu_steps.push_back(menuPageByTime);
 
-    statesController->StatePaused.connect([this](const MenuPageType menuPage) {
-        hidePage(menuPage);
-    });
-    statesController->StatePopped.connect([this](const MenuPageType menuPage) {
-        hidePage(menuPage);
-    });
+    auto menuPageOptions(createSceneNode<MenuPage>("menuPageOptions"));
+    menuPageOptions->configure({make_option("Antialiasing", 0U, string_vector{"Worst", "Bad", "Normal", "Good", "Best"}),
+                                make_option("Resolution", 0U, string_vector{"Worst", "Bad", "Normal", "Good", "Best"}),
+                                make_option("Fullscreen", 0U, string_vector{"No", "Yes"}),
+                                make_option("VSync", 0U, string_vector{"No", "Yes"}),
+                                make_option("Redefine keyboard"),
+                                make_option("Accept", MenuPagedOption::GoBack),
+                                make_option("Cancel", MenuPagedOption::GoBack)});
 
-    statesController->BeforeStart.connect([this]() {
-        for (auto &&menuStep : m_menuSteps)
-        {
-            menuStep->visible = false;
-        }
-    });
+    menu_steps.push_back(menuPageOptions);
 
-    statesController->AfterFinish.connect([this]() {
-        MenuFinished();
-    });
-    statesController->start(MenuPageType::Main);
+    configure_menu(std::move(menu_steps));
 }
 
-void MainMenu::showPage(const MenuPageType &newPage)
-{
-    m_menuSteps[static_cast<int>(newPage)]->visible = true;
-}
-
-void MainMenu::hidePage(const MenuPageType &page)
-{
-    m_menuSteps[static_cast<int>(page)]->visible = false;
-}
 } // namespace zoper

@@ -1,33 +1,28 @@
 #pragma once
 
-#ifndef ZOPER_MAINMENU_INCLUDE_HPP__
-#define ZOPER_MAINMENU_INCLUDE_HPP__
+#ifndef ZOPER_MAINMENU_INCLUDE_HPP
+#define ZOPER_MAINMENU_INCLUDE_HPP
 
-#include <lib/scene/scenenode.hpp>
-#include "menupagetype.hpp"
-#include "menupage.hpp"
+#include <menu_paged/include/menu_paged.hpp>
 
 namespace zoper
 {
 using namespace lib;
 struct GameSharedData;
 
-class MainMenu : public scene::SceneNode
+class MainMenu : public lib::scene::MenuPaged
 {
 public:
+    using BaseClass = lib::scene::MenuPaged;
+
     static constexpr char ClassName[] = "MainMenu";
     MainMenu(scene::SceneNode *parent, str name);
-    virtual ~MainMenu();
+    ~MainMenu() override;
 
     virtual void onCreated() override;
 
-    void showPage(const MenuPageType &newPage);
-    void hidePage(const MenuPageType &page);
-    emitter<> MenuFinished;
-
 private:
     sptr<GameSharedData> m_gameSharedData;
-    vector_shared_pointers<MenuPage> m_menuSteps;
 };
 } // namespace zoper
 
