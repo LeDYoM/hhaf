@@ -34,16 +34,8 @@ private:
 
     inline const Transform &transform() const noexcept { return m_transform; }
 
-    inline const Transform &updatedTransform(
-        const bool local_transformation_needs_update)
-    {
-        if (local_transformation_needs_update)
-        {
-            updateTransform();
-            reset_needs_update();
-        }
-        return m_transform;
-    }
+    const Transform &updatedTransform(
+        const bool local_transformation_needs_update);
 
 public:
     void updateGlobalTransformation(

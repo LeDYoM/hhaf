@@ -10,6 +10,17 @@ Transformable::Transformable() noexcept : origin{}, rotation{}, scale{{1U, 1U}},
 
 Transformable::~Transformable() = default;
 
+const Transform &Transformable::updatedTransform(
+        const bool local_transformation_needs_update)
+    {
+        if (local_transformation_needs_update)
+        {
+            updateTransform();
+            reset_needs_update();
+        }
+        return m_transform;
+    }
+
 void Transformable::updateGlobalTransformation(
     const bool local_transformation_needs_update,
     const Transform &currentGlobalTransformation)
