@@ -17,20 +17,29 @@ namespace lib
         constexpr emitter(emitter_callback_t f) : m_receivers{ std::move(f) } {}
         constexpr emitter(const emitter &) = default;
         constexpr emitter & operator=(const emitter &) = default;
-        constexpr emitter(emitter &&) = default;
-        constexpr emitter & operator=(emitter &&) = default;
+        constexpr emitter(emitter &&) noexcept = default;
+        constexpr emitter & operator=(emitter &&) noexcept = default;
 
-        constexpr void operator()(Args... args) {
-            if (!m_receivers.empty()) {
-                for (auto &f : m_receivers) {
+        constexpr void operator()(Args... args)
+        {
+            if (!m_receivers.empty())
+            {
+                for (auto &f : m_receivers)
+                {
                     f(std::forward<Args>(args)...);
                 }
             }
         }
-
+    
         constexpr void connect(emitter_callback_t f) noexcept
         {
             m_receivers.emplace_back(std::move(f));
+        }
+
+        constexpr emitter& operator+=(emitter_callback_t f) noexcept
+        {
+            connect(std::move(f));
+            return *this;
         }
 
         constexpr bool disconnect(emitter_callback_t& f) noexcept

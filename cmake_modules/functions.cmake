@@ -15,6 +15,7 @@ function(build_client_library)
     target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
     target_link_libraries(${CURRENT_TARGET} PRIVATE logger)
     target_link_libraries(${CURRENT_TARGET} PRIVATE boardmanager)
+    target_link_libraries(${CURRENT_TARGET} PRIVATE menu_paged)
 
     # Copy data if data directory has been passed.
     if (NOT ${CL_BUILD_DATA_SOURCE} STREQUAL "")

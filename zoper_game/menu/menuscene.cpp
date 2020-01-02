@@ -3,6 +3,7 @@
 #include <lib/scene/datawrappers/resourceview.hpp>
 #include <lib/resources/texture.hpp>
 #include <lib/system/resourcemanager.hpp>
+#include <lib/scene/scenemanager.hpp>
 
 #include "../menu/mainmenu.hpp"
 #include "../gameshareddata.hpp"
@@ -35,8 +36,9 @@ void MenuScene::onCreated()
     logo->color = colors::White;
 
     auto mainMenu(createSceneNode<MainMenu>(MainMenu::ClassName));
-    mainMenu->MenuFinished.connect([this]() {
-        app<ZoperProgramController>().gameSharedData->exitGame = true;
+    mainMenu->MenuFinished.connect([this](const s32 status)
+    {
+        app<ZoperProgramController>().gameSharedData->exitGame = (status == 0);
         sceneManager().sceneController()->terminateScene();
     });
 }

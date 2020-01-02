@@ -1,12 +1,9 @@
-#include "menupageinputcomponent.hpp"
+#include <menu_paged/include/menu_paged_input_component.hpp>
 
 #include <lib/include/liblog.hpp>
 
-namespace zoper
+namespace lib::scene
 {
-using namespace lib;
-using namespace lib::scene;
-
 void MenuPageInputComponent::onAttached()
 {
     BaseClass::onAttached();
@@ -35,4 +32,4 @@ void MenuPageInputComponent::onAttached()
     });
 }
 
-} // namespace zoper
+} // namespace lib::scene

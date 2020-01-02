@@ -62,11 +62,12 @@ public:
 
     constexpr void pop_state() noexcept
     {
-        postAction([this]() {
-            log_assert(m_statesStack.size() > 0, "m_statesStack.size() is 0");
+        postAction([this]()
+        {
+            log_assert(m_statesStack.size() > 0U, "m_statesStack.size() is 0");
             StateFinished(m_statesStack.back());
             StatePopped(m_statesStack.back());
-            if (m_statesStack.size() > 1)
+            if (m_statesStack.size() > 1U)
             {
                 m_statesStack.pop_back();
                 StateResumed(m_statesStack.back());
@@ -84,9 +85,14 @@ public:
         changeState(std::move(newState));
     }
 
-    constexpr bool hasActiveState() const
+    constexpr bool hasActiveState() const noexcept
     {
         return !m_statesStack.empty();
+    }
+
+    constexpr size_type stateStackSize() const noexcept
+    {
+        return m_statesStack.size();
     }
 
     constexpr const T &currentState() const noexcept { return m_statesStack.cback(); }
@@ -108,8 +114,9 @@ public:
 private:
     inline void changeState(T newState)
     {
-        postAction([this, newState = std::move(newState)]() {
-            log_assert(m_statesStack.size() != 0, "States stack size is 0");
+        postAction([this, newState = std::move(newState)]()
+        {
+            log_assert(m_statesStack.size() != 0U, "States stack size is 0");
             StateFinished(m_statesStack.back());
             m_statesStack.pop_back();
             StateStarted(newState);

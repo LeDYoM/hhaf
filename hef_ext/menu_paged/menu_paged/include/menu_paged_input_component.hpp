@@ -7,10 +7,8 @@
 #include <mtypes/include/rect.hpp>
 #include <lib/scene/components/inputcomponent.hpp>
 
-namespace zoper
+namespace lib::scene
 {
-using namespace lib;
-using namespace lib::scene;
 
 class MenuPageInputComponent : public InputComponent
 {
