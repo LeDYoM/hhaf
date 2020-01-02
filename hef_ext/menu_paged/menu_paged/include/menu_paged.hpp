@@ -40,7 +40,16 @@ public:
     emitter<const s32> MenuFinished;
 
 protected:
+    sptr<MenuPage> createMenuPage(str name);
     void configure_menu(vector_shared_pointers<MenuPage> menu_steps);
+
+    template <typename... Args>
+    sptr<MenuPage> createAndConfigureMenuPage(str name, Args&&... args)
+    {
+        auto node{createMenuPage(std::move(name))};
+        node->configure(std::forward<Args>(args)...);
+        return node;
+    }
 
 private:
     void showPage(const s32 page_index);

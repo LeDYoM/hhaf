@@ -47,6 +47,11 @@ s32 MenuPaged::status() const
     return status_;
 }
 
+sptr<MenuPage> MenuPaged::createMenuPage(str name)
+{
+    return createSceneNode<MenuPage>(std::move(name));
+}
+
 void MenuPaged::configure_menu(vector_shared_pointers<scene::MenuPage> menu_steps)
 {
     menu_steps_ = std::move(menu_steps);
