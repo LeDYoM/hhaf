@@ -10,91 +10,95 @@
 
 namespace lib::scene
 {
-    SceneNode::SceneNode(SceneNode *const parent, str name)
-        : core::HasName{ std::move(name) }, DataWrapperCreator{ this },
-        ComponentContainer{ this }, SceneNodeBlob{ *this },
-        visible{ true }, m_parent{ parent }
-    {
-    }
+SceneNode::SceneNode(SceneNode *const parent, str name)
+    : core::HasName{std::move(name)}, DataWrapperCreator{this},
+      ComponentContainer{this}, SceneNodeBlob{*this},
+      visible{true}, m_parent{parent}
+{
+}
 
-    SceneNode::~SceneNode() = default;
+SceneNode::~SceneNode() = default;
 
-    void SceneNode::render(bool parentTransformationChanged)
+void SceneNode::render(bool parentTransformationChanged)
+{
+    if (visible())
     {
-        if (visible()) 
+        // Update the node components
+        updateComponents();
+
+        // Update node
+        update();
+
+        bool local_transformation_needs_update{transformationNeedsUpdate()};
+
+        if (parentTransformationChanged | local_transformation_needs_update)
         {
-            // Update the node components
-            updateComponents();
+            updateGlobalTransformation(
+                local_transformation_needs_update,
+                m_parent ? m_parent->globalTransform() : Transform::Identity);
+        }
 
-            // Update node
-            update();
-
-            if (transformationNeedsUpdate())
-            {
-                parentTransformationChanged = true;
-            }
-
-            if (parentTransformationChanged)
-            {
-                updateGlobalTransformation(m_parent ? m_parent->globalTransform() : Transform{});
-            }
-
-            postUpdateComponents();
-            for (auto&& group : m_groups)
-            {
-                group->render(parentTransformationChanged);
-            }
+        postUpdateComponents();
+        for (auto &&group : m_groups)
+        {
+            group->render(parentTransformationChanged |
+                          local_transformation_needs_update);
         }
     }
-
-    bool SceneNode::moveLastBeforeNode(const sptr<SceneNode> &beforeNode)
-    {
-        log_assert(!m_groups.empty(), "Cannot moveLastInsertedBeforeNode on empty container");
-        if (!beforeNode) return false;
-
-        // Find the node to swap before to
-        auto iterator (std::find(m_groups.begin(), m_groups.end(),beforeNode));
-
-        // If beforeNode not found, nothing to do
-        if (iterator == m_groups.end()) return false;
-
-        // If beforeNode is the last element, nothing to do
-        if (iterator == std::prev(m_groups.end())) return false;
-
-        auto last(std::prev(m_groups.end()));
-
-        // Do not swap yourself
-        if (*iterator == *last) return false;
-
-        // Swap the iterators
-        std::swap(*iterator, *last);
-        return true;
-    }
-
-    void SceneNode::addSceneNode(sptr<SceneNode> node)
-    {
-        m_groups.push_back(node);
-        node->m_parent = this;
-        node->onCreated();
-    }
-
-    void SceneNode::removeSceneNode(sptr<SceneNode> element)
-    {
-        log_assert(element.get() != nullptr, "Received empty scene node to be deleted");
-        log_assert(this != element.get(), "Cannot delete myself from myself");
-        log_assert(this == element->parent()," You must call removeSceneNode from the parent node");
-
-        m_groups.erase_values(element);
-    }
-
-    void SceneNode::clearAll()
-    {
-        clearSceneNodes();
-        clearComponents();
-    }
-
-    void SceneNode::clearSceneNodes()
-    {
-        m_groups.clear();
-    }
 }
+
+bool SceneNode::moveLastBeforeNode(const sptr<SceneNode> &beforeNode)
+{
+    log_assert(!m_groups.empty(), "Cannot moveLastInsertedBeforeNode on empty container");
+    if (!beforeNode)
+        return false;
+
+    // Find the node to swap before to
+    auto iterator(std::find(m_groups.begin(), m_groups.end(), beforeNode));
+
+    // If beforeNode not found, nothing to do
+    if (iterator == m_groups.end())
+        return false;
+
+    // If beforeNode is the last element, nothing to do
+    if (iterator == std::prev(m_groups.end()))
+        return false;
+
+    auto last(std::prev(m_groups.end()));
+
+    // Do not swap yourself
+    if (*iterator == *last)
+        return false;
+
+    // Swap the iterators
+    std::swap(*iterator, *last);
+    return true;
+}
+
+void SceneNode::addSceneNode(sptr<SceneNode> node)
+{
+    m_groups.push_back(node);
+    node->m_parent = this;
+    node->onCreated();
+}
+
+void SceneNode::removeSceneNode(sptr<SceneNode> element)
+{
+    log_assert(element.get() != nullptr, "Received empty scene node to be deleted");
+    log_assert(this != element.get(), "Cannot delete myself from myself");
+    log_assert(this == element->parent(), " You must call removeSceneNode from the parent node");
+
+    m_groups.erase_values(element);
+}
+
+void SceneNode::clearAll()
+{
+    clearSceneNodes();
+    clearComponents();
+}
+
+void SceneNode::clearSceneNodes()
+{
+    m_groups.clear();
+}
+} // namespace lib::scene

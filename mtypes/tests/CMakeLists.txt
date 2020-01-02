@@ -4,6 +4,7 @@ set(UNIT_TEST_LIST
     array
     lockablevector
     main
+    menum
     object
     object_utils
     parpar

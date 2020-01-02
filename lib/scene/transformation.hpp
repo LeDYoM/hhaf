@@ -33,7 +33,8 @@ namespace lib::scene
 
         static const Transform Identity;
 
-        inline Transform& operator *=(const Transform& right) noexcept {
+        inline Transform& operator *=(const Transform& right) noexcept
+        {
             return combine(right);
         }
 
