@@ -75,6 +75,11 @@ bool SceneNode::moveLastBeforeNode(const sptr<SceneNode> &beforeNode)
     return true;
 }
 
+sptr<SceneNode> SceneNode::createSceneNode(str name)
+{
+    return createSceneNode<SceneNode>(std::move(name));
+}
+
 void SceneNode::addSceneNode(sptr<SceneNode> node)
 {
     m_groups.push_back(node);

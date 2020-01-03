@@ -3,7 +3,6 @@
 #ifndef LIB_LOGGER_LOG_INCLUDE_HPP
 #define LIB_LOGGER_LOG_INCLUDE_HPP
 
-#include "severity_type.hpp"
 #include <iostream>
 
 /**
@@ -18,18 +17,16 @@ inline void finish_log() {}
 
 constexpr bool compile_logs = true;
 
-namespace detail
+struct COutCommiter
 {
+    static inline void commitlog(const char *const log_stream)
+    {
+        std::cout << log_stream << std::endl;
+        std::cout.flush();
+    }
+};
 
-inline void commitlog(const char *const log_stream)
-{
-    std::cout << log_stream << std::endl;
-    std::cout.flush();
-}
-
-} // namespace detail
-
-template <typename StreamType>
+template <typename StreamType, typename LogCommiter>
 struct Log
 {
     static constexpr bool output_logs = compile_logs;
@@ -42,7 +39,7 @@ public:
         {
             StreamType log_stream;
             (log_stream << ... << std::forward<Args>(args));
-            detail::commitlog(log_stream.c_str());
+            LogCommiter::commitlog(log_stream.c_str());
         }
     }
 };

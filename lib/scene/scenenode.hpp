@@ -20,31 +20,37 @@ class IComponent;
 class Scene;
 class SceneManager;
 
-/** \brief Main class representing all SceneNodes from a Scene.
-    * This class serves as main entry point in the hierarchy of the scene.
-    * To create new SceneNode types, please, inherit from this class.
-    */
-class SceneNode : public core::HasName, public Transformable, public DataWrapperCreator, public ComponentContainer, public SceneNodeBlob
+/// Main class representing all SceneNodes from a Scene.
+/// This class serves as main entry point in the hierarchy of the scene.
+/// To create new SceneNode types, inherit from this class.
+class SceneNode : public core::HasName,
+                  public Transformable,
+                  public DataWrapperCreator,
+                  public ComponentContainer,
+                  public SceneNodeBlob
 {
 public:
+    /// No copy constructor.
     SceneNode(const SceneNode &) = delete;
+    /// No assignment operator
     SceneNode &operator=(const SceneNode &) = delete;
 
+    /// Constructor normally used to create a scene node.
+    /// @param[in] parent   Parent of this element.
+    /// @param[in] name     Name of this element.
     SceneNode(SceneNode *const parent, str name);
+
+    /// Virtual destructor.
     virtual ~SceneNode();
 
-    /**
-        * Method called when adding a new node just after creation.
-        * Override it to add code on creation
-        * @see configure
-        */
+    /// Method called when adding a new node just after creation.
+    /// Override it to add code on creation.
+    /// @see configure
     virtual void onCreated() {}
 
-    /**
-        * This method is called just before completing the initialization
-        */
-    virtual void configure() {}
-
+    /// Method to create a new SceneNode. Since new constructors
+    /// may be added, it uses variadic forwarding of the arguments.
+    /// It also adds the new node to the parents list.
     template <typename T = SceneNode, typename... Args>
     sptr<T> createSceneNode(Args &&... args)
     {
@@ -53,10 +59,9 @@ public:
         return result;
     }
 
-    sptr<SceneNode> createSceneNode(str name)
-    {
-        return createSceneNode<SceneNode>(std::move(name));
-    }
+    /// Method to create a new SceneNode. It is a partial specialization of
+    // the general one.
+    sptr<SceneNode> createSceneNode(str name);
 
     bool moveLastBeforeNode(const sptr<SceneNode> &beforeNode);
     void removeSceneNode(sptr<SceneNode> element);

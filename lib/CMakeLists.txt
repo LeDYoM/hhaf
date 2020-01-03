@@ -3,8 +3,8 @@ cmake_minimum_required(VERSION 3.11)
 
 include_directories ("..")
 
-file (GLOB_RECURSE _SOURCES "board/*.cpp" "core/*.cpp" "resources/*.cpp" "scene/*.cpp" "system/*.cpp")
-file (GLOB_RECURSE _HEADERS "board/*.hpp" "core/*.hpp" "include/*.hpp" "resources/*.hpp" "scene/*.hpp" "system/*.hpp")
+file (GLOB_RECURSE _SOURCES "core/*.cpp" "resources/*.cpp" "scene/*.cpp" "system/*.cpp")
+file (GLOB_RECURSE _HEADERS "core/*.hpp" "include/*.hpp" "resources/*.hpp" "scene/*.hpp" "system/*.hpp")
 
 set (CURRENT_TARGET  ${PROJECT_NAME})
 
