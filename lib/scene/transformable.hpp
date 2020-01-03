@@ -1,9 +1,9 @@
+#pragma once
+
 #ifndef LIB_TRANSFORMABLE_INCLUDE_HPP
 #define LIB_TRANSFORMABLE_INCLUDE_HPP
 
-#pragma once
-
-#include "transformation.hpp"
+#include "transform.hpp"
 #include <mtypes/include/vector2d.hpp>
 #include <mtypes/include/properties.hpp>
 

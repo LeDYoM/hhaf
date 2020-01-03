@@ -4,7 +4,7 @@
 #include <lib/scene/renderdata.hpp>
 #include <lib/resources/texture.hpp>
 #include <lib/resources/shader.hpp>
-#include <lib/scene/transformation.hpp>
+#include <lib/scene/transform.hpp>
 #include <lib/include/liblog.hpp>
 
 namespace lib::core
