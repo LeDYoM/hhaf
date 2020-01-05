@@ -11,6 +11,7 @@
 #include "allocator.hpp"
 #include "function.hpp"
 #include "growpolicy.hpp"
+#include "vector_storage.hpp"
 
 namespace lib
 {
@@ -21,8 +22,9 @@ namespace lib
 template <typename T,
           typename Allocator = AllocatorMallocFree<T>,
           typename GrowPolicy = GrowPolicyUnary>
-class vector final
+class vector final : private vector_storage<T, Allocator, GrowPolicy>
 {
+    using Base = vector_storage<T, Allocator, GrowPolicy>;
 public:
     using iterator = T *;
     using const_iterator = const T *;
@@ -30,38 +32,32 @@ public:
     using const_reference = const T &;
     using value_type = T;
     using pointer = T *;
-    using const_pointer = const T *;
-
     // Constructors. ////////////////////////////////////////////////////////////
 
     /// Default constructor.
     /// Sets all members to 0, nullptr or empty.
-    constexpr vector() noexcept {}
+    constexpr vector() noexcept = default;
 
     /// Constructor for empty container with reserved memory.
     /// The memory for the vector is allocated, but no construction
     /// is done.
     /// @param size Number of elements to reserve memory for.
-    explicit vector(const size_type size) : m_capacity{size},
-                                            m_buffer{size > 0U ? Allocator::allocate(size) : nullptr} {}
+    explicit vector(const size_type size) : 
+        vector_storage(size) {}
 
-    /**
-         * @brief Constructor.
-         * This constructor takes a pointer and a number of elements
-         * and constructs a vector from it.
-         * @param source Pointer to the first element of the
-         *  memory to copy.
-         * @param count Number of elements to copy.
-         */
+    /// @brief Constructor.
+    /// This constructor takes a pointer and a number of elements
+    /// and constructs a vector from it.
+    /// @param source Pointer to the first element of the
+    ///  memory to copy.
+    /// @param count Number of elements to copy.
     constexpr vector(const T *const source, const size_type count)
-        : vector(count)
+        : vector_storage(count)
     {
-        assert(m_capacity >= count);
-
         for (auto iterator = source; iterator != (source + count); ++iterator)
         {
             // Construct by copy.
-            push_back(*iterator);
+            emplace_back(*iterator);
         }
     }
 
@@ -73,29 +69,25 @@ public:
 
     // Big five. ////////////////////////////////////////////////////
 
-    /**
-         * @brief Copy constructor.
-         * This constructor constructs a vector from another one.
-         * The capacity of the resultant vector might be different
-         * from the capacity of the source. The size will be the same.
-         * @param other Source vector to copy.
-         */
+    /// @brief Copy constructor.
+    /// This constructor constructs a vector from another one.
+    /// The capacity of the resultant vector might be different
+    /// from the capacity of the source. The size will be the same.
+    /// @param other Source vector to copy.
     constexpr vector(const vector &other)
         : vector(other.m_buffer, other.m_size) {}
 
     // Move constructor.
     constexpr vector(vector &&other) noexcept
-        : m_capacity{std::exchange(other.m_capacity, 0U)},
-          m_size{std::exchange(other.m_size, 0U)},
-          m_buffer{std::exchange(other.m_buffer, nullptr)} {}
+        : vector_storage{std::move(other)} {}
 
     /// Copy assignment.
     constexpr vector &operator=(const vector &other)
     {
         if (this != &other)
         {
-            // TODO: Optimize. Do not allocate memory if not necessary.
-            *this = vector(other);
+            clear();
+            insert(other);
         }
         return *this;
     }
@@ -110,54 +102,47 @@ public:
     /// Destructor.
     inline ~vector() noexcept
     {
-        if (m_buffer)
-        {
-            clear();
-            Allocator::deallocate(m_buffer);
-            m_buffer = nullptr;
-            m_size = 0U;
-            m_capacity = 0U;
-        }
+        clear();
     }
 
     constexpr reference operator[](const size_type index) noexcept
     {
         assert(index < m_size);
-        return *(m_buffer + index);
+        return *(at(index));
     }
 
     constexpr const_reference operator[](const size_type index) const noexcept
     {
         assert(index < m_size);
-        return *(m_buffer + index);
+        return *(at(index));
     }
 
-    constexpr size_type capacity() const noexcept { return m_capacity; }
-    constexpr size_type size() const noexcept { return m_size; }
-    constexpr bool empty() const noexcept { return m_size == 0U; }
-    constexpr iterator begin() noexcept { return m_buffer; }
-    constexpr const_iterator begin() const noexcept { return m_buffer; }
-    constexpr const_iterator cbegin() const noexcept { return m_buffer; }
-    constexpr iterator end() noexcept { return m_buffer + m_size; }
-    constexpr const_iterator end() const noexcept { return m_buffer + m_size; }
-    constexpr const_iterator cend() const noexcept { return m_buffer + m_size; }
+    constexpr size_type capacity() const noexcept { return Base::capacity(); }
+    constexpr size_type size() const noexcept { return Base::size(); }
+    constexpr bool empty() const noexcept { return Base::empty(); }
+    constexpr iterator begin() noexcept { return Base::begin(); }
+    constexpr const_iterator begin() const noexcept { return Base::begin(); }
+    constexpr const_iterator cbegin() const noexcept { return Base::cbegin(); }
+    constexpr iterator end() noexcept { return Base::end(); }
+    constexpr const_iterator end() const noexcept { return Base::end(); }
+    constexpr const_iterator cend() const noexcept { return Base::cend(); }
 
     constexpr T &back() noexcept
     {
         assert(m_size > 0U);
-        return *(end() - 1U);
+        return *(at(m_size - 1U));
     }
 
     constexpr const T &back() const noexcept
     {
         assert(m_size > 0U);
-        return *(end() - 1U);
+        return *(at(m_size - 1U));
     }
 
     constexpr const T &cback() const noexcept
     {
         assert(m_size > 0U);
-        return *(cend() - 1U);
+        return *(cat(m_size - 1U));
     }
 
     template <typename F>
@@ -175,22 +160,7 @@ public:
 
     constexpr void swap(vector &other) noexcept
     {
-        std::swap(m_buffer, other.m_buffer);
-        std::swap(m_size, other.m_size);
-        std::swap(m_capacity, other.m_capacity);
-    }
-
-    constexpr size_type index_from_iterator(const const_iterator it_) const noexcept
-    {
-        size_type i{0U};
-        for (const_iterator it(cbegin()); it != cend(); ++it, ++i)
-        {
-            if (it == it_)
-            {
-                return i;
-            }
-        }
-        return m_size;
+        Base::swap(static_cast<Base&>(other));
     }
 
     //TO DO: Optimize
@@ -233,16 +203,14 @@ public:
         return where_it_was;
     }
 
-    /**
-         * @brief Erase one element (the first one containing a specified)
-         * value.
-         * @param value [in] Value to search for in the vector.
-         * @param value [in] start iterator pointing to the first element
-         *  to look for.
-         * @return iterator Pointing to the element in the position where the
-         * deleted element was. If the element was the last one or no element
-         * with this value found, the iterator will be end().
-         */
+    /// @brief Erase one element (the first one containing a specified)
+    /// value.
+    /// @param value [in] Value to search for in the vector.
+    /// @param value [in] start iterator pointing to the first element
+    ///  to look for.
+    /// @return iterator Pointing to the element in the position where the
+    /// deleted element was. If the element was the last one or no element
+    /// with this value found, the iterator will be end().
     constexpr iterator erase_one(const T &value, iterator start)
     {
         checkRange(start);
@@ -390,55 +358,23 @@ public:
 
     constexpr void shrink_to_fit()
     {
-        if (m_size < m_capacity)
-        {
-            auto tmp_buffer = m_buffer;
-            m_capacity = m_size;
-
-            m_buffer = m_size > 0U ? Allocator::allocate(m_size) : nullptr;
-            auto m_buffer_iterator = m_buffer;
-
-            for (auto it = tmp_buffer; it != (tmp_buffer + m_size); ++it)
-            {
-                Allocator::construct(m_buffer_iterator, std::move(*it));
-                Allocator::destruct(it);
-                ++m_buffer_iterator;
-            }
-            Allocator::deallocate(tmp_buffer);
-        }
+        Base::shrink_to_fit();
     }
 
     constexpr void push_back(const T &value)
     {
-        //            LOG("vector::push_back(const T&) --- m_size before: " << m_size);
-
-        reserve(GrowPolicy::growSize(m_size));
-        Allocator::construct(m_buffer + m_size, value);
-        ++m_size;
-
-        //            LOG("vector::push_back(const T&) --- m_size after: " << m_size);
+        Base::push_back(value);
     }
 
     constexpr void push_back(T &&value)
     {
-        //            LOG("vector::push_back(T&&) --- m_size before: " << m_size);
-
-        reserve(GrowPolicy::growSize(m_size));
-        Allocator::construct(m_buffer + m_size, std::move(value));
-        ++m_size;
-
-        //            LOG("vector::push_back(T&&) --- m_size after: " << m_size);
+        Base::push_back(std::move(value));
     }
 
     template <typename... Args>
     constexpr void emplace_back(Args &&... args)
     {
-        //            LOG("vector::emplace_back() --- m_size before: " << m_size);
-
-        reserve(GrowPolicy::growSize(m_size));
-        Allocator::construct(m_buffer + m_size, std::forward<Args>(args)...);
-        m_size++;
-        //            LOG("vector::emplace_back() --- m_size before: " << m_size);
+        Base::emplace_back(std::forward<Args>(args)...);
     }
 
     constexpr void insert(const vector &other)
@@ -478,28 +414,12 @@ public:
 
     constexpr void pop_back() noexcept
     {
-        //            LOG("vector::pop_back() --- m_size before: " << m_size);
-        if (m_size > 0U)
-        {
-            Allocator::destruct(end() - 1U);
-            --m_size;
-        }
-        //            LOG("vector::pop_back() --- m_size after: " << m_size);
+        Base::pop_back();
     }
 
     constexpr void reserve(const size_type capacity)
     {
-        if (m_capacity < capacity)
-        {
-            vector new_vector = vector(static_cast<size_type>(capacity));
-
-            for (auto iterator = begin(); iterator != end(); ++iterator)
-            {
-                new_vector.push_back(std::move(*iterator));
-            }
-
-            std::swap(*this, new_vector);
-        }
+        Base::reserve(capacity);
     }
 
     constexpr void resize(const size_type size)
@@ -539,11 +459,6 @@ public:
         assert(it >= cbegin());
         assert(it <= cend());
     }
-
-private:
-    size_type m_capacity{0U};
-    size_type m_size{0U};
-    T *m_buffer{nullptr};
 };
 
 template <class A>

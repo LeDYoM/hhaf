@@ -341,7 +341,7 @@ TEST_CASE("Unique ptr")
 TEST_CASE("Grow policy")
 {
     vector<s32> default_test_vector;
-    vector<s32, AllocatorMallocFree<s32>, GrowPolicyDouble> double_grow_test_vector;
+    vector_storage<s32, AllocatorMallocFree<s32>, GrowPolicyDouble> double_grow_test_vector;
 
     CHECK(default_test_vector.empty());
     CHECK(default_test_vector.capacity() == 0U);

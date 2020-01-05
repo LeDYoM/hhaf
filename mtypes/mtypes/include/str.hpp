@@ -204,8 +204,7 @@ public:
     }
 
     template <typename T>
-    [[nodiscard]] T convertOrDefault() const
-    {
+    [[nodiscard]] T convertOrDefault() const {
         T value;
         convert(value);
         return value;
@@ -243,7 +242,7 @@ public:
     constexpr size_type find(const char_type ch) const noexcept
     {
         const auto it(m_data.cfind(ch));
-        return ((it == m_data.cend()) ? npos : index_from_iterator(it));
+        return ((it == m_data.cend()) ? npos : std::distance(cbegin(), it));
     }
 
     // trim from end (in place)
@@ -293,17 +292,12 @@ public:
     constexpr auto find_first_of(const vector<char_type> &chValue) const noexcept
     {
         const auto it(m_data.find_first_of(chValue));
-        return (it == m_data.cend()) ? str::npos : index_from_iterator(it);
+        return (it == m_data.cend()) ? str::npos : std::distance(cbegin(), it);
     }
 
     constexpr auto find_first_of(const char_type chValue) const noexcept
     {
         return find_first_of(vector<char_type>{chValue});
-    }
-
-    constexpr size_type index_from_iterator(const const_iterator it) const noexcept
-    {
-        return m_data.index_from_iterator(it);
     }
 
     template <typename T>
@@ -342,7 +336,7 @@ public:
 };
 
 template <typename T>
-constexpr str &operator<<(str& dest, const T &n)
+constexpr str &operator<<(str &dest, const T &n)
 {
     return dest.append(n);
 }
