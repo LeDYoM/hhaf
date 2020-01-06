@@ -6,13 +6,13 @@
 namespace lib::scene
 {
 
-void VisibilitySelector::configure(size_type first_index)
+void VisibilitySelectorComponent::configure(size_type first_index)
 {
     hideAll();
     show(active_index, true);
 }
 
-void VisibilitySelector::show(size_type index, bool force)
+void VisibilitySelectorComponent::show(size_type index, bool force)
 {
     if (index != active_index || force)
     {
@@ -22,17 +22,12 @@ void VisibilitySelector::show(size_type index, bool force)
     }
 }
 
-void VisibilitySelector::hideAll()
+void VisibilitySelectorComponent::hideAll()
 {
     for (auto &scene_node : attachedNode()->sceneNodes())
     {
         scene_node->visible = false;
     }
-}
-
-void VisibilitySelector::onAttached()
-{
-
 }
 
 } // namespace lib::scene::nodes
