@@ -8,20 +8,16 @@
 
 #include <lib/scene/scenenode.hpp>
 
-namespace lib::scene::nodes
+namespace lib::scene
 {
 /// Class representing a SceneNode that will have only one visible child.
-class VisibilitySelector : public SceneNode
+class VisibilitySelector : public IComponent
 {
 public:
-    using BaseClass = SceneNode;
-
-    VisibilitySelector(SceneNode *parent, str name);
-    ~VisibilitySelector() override;
-
     void configure(size_type first_index);
     void show(size_type index, bool force = false);
 
+    void onAttached() override;
 private:
     void hideAll();
 

@@ -1,6 +1,8 @@
 #include <menu_paged/include/menu_paged.hpp>
 #include <menu_paged/include/menu_page.hpp>
+
 #include <lib/scene/components/statescontroller.hpp>
+#include <lib/scene/components/visibility_selector.hpp>
 
 namespace lib::scene
 {
@@ -54,9 +56,9 @@ sptr<MenuPage> MenuPaged::createMenuPage(str name)
 
 void MenuPaged::configure_menu(vector_shared_pointers<scene::MenuPage> menu_steps)
 {
-    menu_steps_ = std::move(menu_steps);
-
+    auto visibility_selector = addComponentOfType<VisibilitySelector>();
     auto statesController = addComponentOfType<StatesController<s32>>();
+    menu_steps_ = std::move(menu_steps);
 
     for (auto&& menu_page : menu_steps_)
     {
@@ -78,14 +80,14 @@ void MenuPaged::configure_menu(vector_shared_pointers<scene::MenuPage> menu_step
         });
     }
 
-    statesController->StatePushed.connect([this](const s32 menu_page)
+    statesController->StatePushed.connect([visibility_selector](const s32 menu_page)
     {
-        show(static_cast<size_type>(menu_page));
+        visibility_selector->show(static_cast<size_type>(menu_page));
     });
     
-    statesController->StateResumed.connect([this](const s32 menu_page)
+    statesController->StateResumed.connect([visibility_selector](const s32 menu_page)
     {
-        show(static_cast<size_type>(menu_page));
+        visibility_selector->show(static_cast<size_type>(menu_page));
     });
 
     statesController->AfterFinish.connect([this]()
@@ -94,7 +96,7 @@ void MenuPaged::configure_menu(vector_shared_pointers<scene::MenuPage> menu_step
     });
     
     statesController->start(0);
-    VisibilitySelector::configure(0U);
+    visibility_selector->configure(0U);
 }
 
 void MenuPaged::terminate(const s32 status)

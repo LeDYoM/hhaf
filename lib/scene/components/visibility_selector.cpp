@@ -3,12 +3,8 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
 
-namespace lib::scene::nodes
+namespace lib::scene
 {
-VisibilitySelector::VisibilitySelector(SceneNode *parent, str name)
-    : BaseClass{parent, std::move(name)} {}
-
-VisibilitySelector::~VisibilitySelector() = default;
 
 void VisibilitySelector::configure(size_type first_index)
 {
@@ -20,18 +16,23 @@ void VisibilitySelector::show(size_type index, bool force)
 {
     if (index != active_index || force)
     {
-        sceneNodes()[active_index]->visible = false;
+        attachedNode()->sceneNodes()[active_index]->visible = false;
         active_index = index;
-        sceneNodes()[active_index]->visible = true;
+        attachedNode()->sceneNodes()[active_index]->visible = true;
     }
 }
 
 void VisibilitySelector::hideAll()
 {
-    for (auto &scene_node : sceneNodes())
+    for (auto &scene_node : attachedNode()->sceneNodes())
     {
         scene_node->visible = false;
     }
+}
+
+void VisibilitySelector::onAttached()
+{
+
 }
 
 } // namespace lib::scene::nodes
