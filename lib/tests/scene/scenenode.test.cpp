@@ -16,6 +16,6 @@ TEST_CASE("Constructor", "[SceneNode]")
     using namespace lib::scene;
 
     auto node_test(unitTestScene()->createSceneNode("SceneNode_test"));
-    CHECK(unitTestScene()->sceneNodesSize() == 1);
-    CHECK(node_test->sceneNodesSize() == 0);
+    CHECK(unitTestScene()->sceneNodes().size() == 1U);
+    CHECK(node_test->sceneNodes().size() == 0U);
 }

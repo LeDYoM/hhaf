@@ -118,7 +118,6 @@ public:
 
     constexpr const auto &sceneNodes() const noexcept { return m_groups; }
     constexpr auto &sceneNodes() noexcept { return m_groups; }
-    constexpr auto sceneNodesSize() const noexcept { return sceneNodes().size(); }
 
 protected:
     void addSceneNode(sptr<SceneNode> node);

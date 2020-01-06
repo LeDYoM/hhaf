@@ -80,30 +80,12 @@ void MenuPaged::configure_menu(vector_shared_pointers<scene::MenuPage> menu_step
 
     statesController->StatePushed.connect([this](const s32 menu_page)
     {
-        showPage(menu_page);
+        show(static_cast<size_type>(menu_page));
     });
     
     statesController->StateResumed.connect([this](const s32 menu_page)
     {
-        showPage(menu_page);
-    });
-
-    statesController->StatePaused.connect([this](const s32 menu_page)
-    {
-        hidePage(menu_page);
-    });
-    
-    statesController->StatePopped.connect([this](const s32 menu_page)
-    {
-        hidePage(menu_page);
-    });
-
-    statesController->BeforeStart.connect([this]()
-    {
-        for (auto &&menuStep : menu_steps_)
-        {
-            menuStep->visible = false;
-        }
+        show(static_cast<size_type>(menu_page));
     });
 
     statesController->AfterFinish.connect([this]()
@@ -112,22 +94,13 @@ void MenuPaged::configure_menu(vector_shared_pointers<scene::MenuPage> menu_step
     });
     
     statesController->start(0);
+    VisibilitySelector::configure(0U);
 }
 
 void MenuPaged::terminate(const s32 status)
 {
     setMenuPagedStatus(status);
     MenuFinished(status_);
-}
-
-void MenuPaged::showPage(const s32 page_index)
-{
-    menu_steps_[page_index]->visible = true;
-}
-
-void MenuPaged::hidePage(const s32 page_index)
-{
-    menu_steps_[page_index]->visible = false;
 }
 
 }

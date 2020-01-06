@@ -7,6 +7,7 @@
 #include <mtypes/include/connection.hpp>
 
 #include <lib/scene/scenenode.hpp>
+#include <lib/scene/nodes/visibility_selector.hpp>
 #include <lib/include/resources/ifont.hpp>
 #include <lib/scene/color.hpp>
 
@@ -17,10 +18,10 @@ class MenuPage;
 /// Main class to model a menu in paged style.
 /// This class should be used as a base class for a new
 /// type of @b SceneNode.
-class MenuPaged : public SceneNode
+class MenuPaged : public nodes::VisibilitySelector
 {
 public:
-    using SceneNode::SceneNode;
+    using nodes::VisibilitySelector::VisibilitySelector;
     ~MenuPaged() override;
 
     void setNormalTextFont(sptr<IFont> normal_text_font);
@@ -52,9 +53,6 @@ protected:
     }
 
 private:
-    void showPage(const s32 page_index);
-    void hidePage(const s32 page_index);
-
     sptr<IFont> normal_text_font_;
     Color normal_color_;
     Color selected_color_;
