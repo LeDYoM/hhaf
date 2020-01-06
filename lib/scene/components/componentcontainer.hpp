@@ -12,62 +12,63 @@
 
 namespace lib::scene
 {
-    class SceneNode;
-    class ComponentContainer
+class SceneNode;
+class ComponentContainer
+{
+public:
+    constexpr ComponentContainer(SceneNode *sceneNode = nullptr) noexcept
+        : m_sceneNode{sceneNode} {}
+    virtual ~ComponentContainer();
+
+    template <typename T>
+    sptr<T> addComponentOfType()
     {
-    public:
-        constexpr ComponentContainer(SceneNode *sceneNode = nullptr) noexcept : m_sceneNode{ sceneNode } {}
-        inline ~ComponentContainer() = default;
+        log_assert(componentOfType<T>() == nullptr, "There is already a component with this type");
+        auto nc(msptr<T>());
+        addComponent(nc);
+        return nc;
+    }
 
-        template <typename T>
-        sptr<T> addComponentOfType()
+    template <typename T>
+    void ensureComponentOfType(sptr<T> &element)
+    {
+        if (!element)
         {
-            log_assert(componentOfType<T>() == nullptr, "There is already a component with this type");
-            auto nc(msptr<T>());
-            addComponent(nc);
-            return nc;
+            element = addComponentOfType<T>();
         }
+    }
 
-        template <typename T>
-        void ensureComponentOfType(sptr<T>& element)
-        {
-            if (!element)
-            {
-                element = addComponentOfType<T>();
-            }
-        }
+    void updateComponents();
+    void postUpdateComponents();
 
-
-        void updateComponents();
-        void postUpdateComponents();
-
-        /**
+    /**
         * Returns the component of the specified type if exists
         * @param T type of the component to be retrieved
         * @return A shared pointer to the container or nullptr if not found
         */
-        template <typename T>
-        sptr<T> componentOfType() const
-        {
-            sptr<IComponent> cot(componentOfType(std::type_index(typeid(T))));
-            return cot ? std::dynamic_pointer_cast<T>(cot) : nullptr;
-        }
+    template <typename T>
+    sptr<T> componentOfType() const
+    {
+        sptr<IComponent> cot(componentOfType(std::type_index(typeid(T))));
+        return cot ? std::dynamic_pointer_cast<T>(cot) : nullptr;
+    }
 
-        void clearComponents() noexcept { m_components.clear(); }
-    private:
-        bool addComponent(sptr<IComponent> nc);
+    void clearComponents() noexcept { m_components.clear(); }
 
-        template <typename T>
-        void addComponentOfType(sptr<T> &component)
-        {
-            component = addComponentOfType<T>();
-        }
+private:
+    bool addComponent(sptr<IComponent> nc);
 
-        const sptr<IComponent> componentOfType(const std::type_index& ti) const;
+    template <typename T>
+    void addComponentOfType(sptr<T> &component)
+    {
+        component = addComponentOfType<T>();
+    }
 
-        SceneNode *const m_sceneNode;
-        LockableVector<sptr<IComponent>> m_components;
-    };
-}
+    const sptr<IComponent> componentOfType(const std::type_index &ti) const;
+
+    SceneNode *const m_sceneNode;
+    LockableVector<sptr<IComponent>> m_components;
+};
+} // namespace lib::scene
 
 #endif

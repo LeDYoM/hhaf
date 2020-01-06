@@ -30,4 +30,14 @@ void VisibilitySelectorComponent::hideAll()
     }
 }
 
+void VisibilitySelector::configure(size_type first_index)
+{
+    componentOfType<VisibilitySelectorComponent>()->configure(first_index);
+}
+
+void VisibilitySelector::show(size_type index, bool force)
+{
+    componentOfType<VisibilitySelectorComponent>()->show(index, force);
+}
+
 } // namespace lib::scene::nodes

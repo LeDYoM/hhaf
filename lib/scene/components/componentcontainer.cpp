@@ -20,6 +20,8 @@ namespace lib::scene
         }
     }
 
+    ComponentContainer::~ComponentContainer() = default;
+
     bool ComponentContainer::addComponent(sptr<IComponent> nc)
     {
         log_assert(nc != nullptr, "Trying to add a nullptr component");
