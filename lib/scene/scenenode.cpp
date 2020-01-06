@@ -87,6 +87,16 @@ void SceneNode::addSceneNode(sptr<SceneNode> node)
     node->onCreated();
 }
 
+sptr<SceneNode> SceneNode::groupByName(const str& name) const
+{
+    const auto iterator = sceneNodes().find_if([name](const auto& node)
+    {
+        return node->name() == name;
+    });
+
+    return iterator == sceneNodes().cend() ? nullptr : *iterator;
+}
+
 void SceneNode::removeSceneNode(sptr<SceneNode> element)
 {
     log_assert(element.get() != nullptr, "Received empty scene node to be deleted");

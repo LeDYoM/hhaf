@@ -83,8 +83,7 @@ void MenuPage::configure(vector<sptr<MenuPagedOption>> options,
     position = textBox.leftTop();
     sceneNodeSize = textBox.size();
 
-    size_type size_x = 5U;
-    setTableSize({size_x, options.size()});
+    setTableSize({5U, options.size()});
 
     log_assert(options.size() > 0U, "options cannot be empty");
     size_type counter{0U};

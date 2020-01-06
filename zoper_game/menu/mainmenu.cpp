@@ -77,11 +77,11 @@ void MainMenu::onCreated()
                 make_option("Play", MenuPagedOption::Accept),
                 make_option("Back", MenuPagedOption::GoBack)}));
 
-    menuPageByToken->Accepted.connect([this](vector<s32> menu_data) {
+    menu_steps.push_back(menuPageByToken);
+
+    menu_steps.back()->Accepted.connect([this](vector<s32> menu_data) {
         goGame(this, GameMode::Token, std::move(menu_data));
     });
-
-    menu_steps.push_back(menuPageByToken);
 
     auto menuPageByTime(
         createAndConfigureMenuPage(
@@ -91,11 +91,11 @@ void MainMenu::onCreated()
                 make_option("Play", MenuPagedOption::Accept),
                 make_option("Back", MenuPagedOption::GoBack)}));
 
-    menuPageByTime->Accepted.connect([this](vector<s32> menu_data) {
+    menu_steps.push_back(menuPageByTime);
+
+    menu_steps.back()->Accepted.connect([this](vector<s32> menu_data) {
         goGame(this, GameMode::Time, std::move(menu_data));
     });
-
-    menu_steps.push_back(menuPageByTime);
 
     auto menuPageOptions(createAndConfigureMenuPage(
         "menuPageOptions",

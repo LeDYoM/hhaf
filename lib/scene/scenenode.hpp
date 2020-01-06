@@ -119,6 +119,8 @@ public:
     constexpr const auto &sceneNodes() const noexcept { return m_groups; }
     constexpr auto &sceneNodes() noexcept { return m_groups; }
 
+    sptr<SceneNode> groupByName(const str& name) const;
+
 protected:
     void addSceneNode(sptr<SceneNode> node);
 
