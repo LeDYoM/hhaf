@@ -1,6 +1,6 @@
 #include "resourcemanager.hpp"
 #include "systemprovider.hpp"
-#include "filesystem/filesystem.hpp"
+#include "filesystem.hpp"
 
 #include <lib/include/liblog.hpp>
 

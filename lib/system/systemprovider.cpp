@@ -1,7 +1,7 @@
 #include "systemprovider.hpp"
 
 #include <backend/include/backendfactory.hpp>
-#include <lib/system/filesystem/filesystem.hpp>
+#include <lib/system/filesystem.hpp>
 #include <lib/system/inputsystem.hpp>
 #include <lib/system/randomsystem.hpp>
 #include <lib/system/rendersystem.hpp>

@@ -8,7 +8,7 @@
 #include <lib/scene/scenemanager.hpp>
 #include <lib/system/systemprovider.hpp>
 #include <lib/system/simulationsystem.hpp>
-#include <lib/system/filesystem/filesystem.hpp>
+#include <lib/system/filesystem.hpp>
 
 namespace zoper
 {
