@@ -1,9 +1,9 @@
 project (lib)
-cmake_minimum_required(VERSION 3.11)
+cmake_minimum_required(VERSION 3.12)
 
 include_directories ("..")
 
-file (GLOB_RECURSE _SOURCES "core/*.cpp")
+set(_SOURCES "core/main.cpp")
 file (GLOB_RECURSE _HEADERS "core/*.hpp" "include/*.hpp")
 
 set (CURRENT_TARGET  ${PROJECT_NAME})
@@ -37,5 +37,11 @@ target_link_libraries(${CURRENT_TARGET} PRIVATE loader)
 target_link_libraries(${CURRENT_TARGET} PRIVATE logger)
 target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
 target_link_libraries(${CURRENT_TARGET} PRIVATE backend)
+
+# TODO: Investigate some day
+#if(MSVC)
+#set_target_properties(${CURRENT_TARGET} 
+#    PROPERTIES LINK_FLAGS "${LINK_FLAGS} /NODEFAULTLIB")
+#endif()
 
 add_subdirectory(tests)
