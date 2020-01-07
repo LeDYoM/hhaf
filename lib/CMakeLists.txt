@@ -3,8 +3,8 @@ cmake_minimum_required(VERSION 3.11)
 
 include_directories ("..")
 
-file (GLOB_RECURSE _SOURCES "core/*.cpp" "resources/*.cpp" "system/*.cpp")
-file (GLOB_RECURSE _HEADERS "core/*.hpp" "include/*.hpp" "resources/*.hpp" "system/*.hpp")
+file (GLOB_RECURSE _SOURCES "core/*.cpp" "system/*.cpp")
+file (GLOB_RECURSE _HEADERS "core/*.hpp" "include/*.hpp" "system/*.hpp")
 
 set (CURRENT_TARGET  ${PROJECT_NAME})
 
@@ -23,6 +23,9 @@ target_include_directories(${CURRENT_TARGET}
 # Directory internal libraries that will be used by the client too.
 add_subdirectory(scene)
 target_link_libraries(${CURRENT_TARGET} PUBLIC scene)
+add_subdirectory(resources)
+target_link_libraries(${CURRENT_TARGET} PUBLIC resources)
+
 
 # Internal libraries that will be used by the client too.
 target_link_libraries(${CURRENT_TARGET} PUBLIC backend_dev)
