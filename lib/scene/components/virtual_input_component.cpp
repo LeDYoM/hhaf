@@ -5,7 +5,6 @@
 #include <lib/system/inputsystem.hpp>
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/scene.hpp>
-#include <lib/scene/scenemanager.hpp>
 
 namespace lib::scene
 {

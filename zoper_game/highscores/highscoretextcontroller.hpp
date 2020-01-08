@@ -1,9 +1,10 @@
 #pragma once
 
-#ifndef ZOPER_HIGHSCORETEXTCONTROLLER_INCLUDE_HPP__
-#define ZOPER_HIGHSCORETEXTCONTROLLER_INCLUDE_HPP__
+#ifndef ZOPER_HIGHSCORETEXTCONTROLLER_INCLUDE_HPP
+#define ZOPER_HIGHSCORETEXTCONTROLLER_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
+#include <mtypes/include/connection.hpp>
 #include <lib/scene/scenenode.hpp>
 #include <lib/include/resources/ifont.hpp>
 #include <lib/scene/nodes/tablenode.hpp>

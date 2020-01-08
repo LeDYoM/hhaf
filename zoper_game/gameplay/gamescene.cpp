@@ -19,12 +19,13 @@
 #include <boardmanager/include/boardmodel.hpp>
 #include <lib/include/liblog.hpp>
 #include <lib/scene/renderizables/renderizable.hpp>
-#include <lib/scene/scenemanager.hpp>
 #include <lib/scene/ianimation.hpp>
 #include <lib/scene/components/animationcomponent.hpp>
 #include <lib/scene/components/inputcomponent.hpp>
 #include <lib/scene/components/randomnumberscomponent.hpp>
 #include <lib/scene/components/renderizables.hpp>
+#include <lib/system/scenemanager.hpp>
+
 //TODO: Fixme
 #include <lib/system/systemprovider.hpp>
 

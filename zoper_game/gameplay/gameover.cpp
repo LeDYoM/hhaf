@@ -2,7 +2,6 @@
 
 #include "../loaders/gameresources.hpp"
 
-#include <lib/scene/scenemanager.hpp>
 #include <lib/scene/scene.hpp>
 #include <lib/scene/nodes/scenenodetext.hpp>
 

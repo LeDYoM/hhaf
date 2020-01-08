@@ -1,7 +1,6 @@
 #include "scene.hpp"
 
 #include <lib/system/resourcemanager.hpp>
-#include <lib/scene/scenemanager.hpp>
 
 #include <lib/include/resources/iresourceloader.hpp>
 #include <lib/include/resources/iresourcehandler.hpp>

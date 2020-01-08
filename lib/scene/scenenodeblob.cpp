@@ -2,7 +2,7 @@
 #include "scenenode.hpp"
 
 #include "scene.hpp"
-#include "scenemanager.hpp"
+#include <lib/system/scenemanager.hpp>
 
 #include <lib/system/resourcemanager.hpp>
 #include <lib/system/systemprovider.hpp>

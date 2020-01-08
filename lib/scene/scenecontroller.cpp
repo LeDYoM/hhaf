@@ -1,5 +1,4 @@
 #include "scenecontroller.hpp"
-#include "scenemanager.hpp"
 #include "scene.hpp"
 
 #include <lib/include/liblog.hpp>

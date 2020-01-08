@@ -4,7 +4,6 @@
 #include "../zoperprogramcontroller.hpp"
 #include <menu_paged/include/menu_page.hpp>
 #include <lib/scene/scenenode.hpp>
-#include <lib/scene/scenemanager.hpp>
 #include <lib/include/liblog.hpp>
 #include <lib/scene/datawrappers/resourceview.hpp>
 #include <lib/resources/ttfont.hpp>

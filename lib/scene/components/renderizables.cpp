@@ -2,7 +2,6 @@
 
 #include <lib/include/liblog.hpp>
 #include <lib/scene/scenenode.hpp>
-#include <lib/scene/scenemanager.hpp>
 #include <lib/scene/scenenode.hpp>
 
 namespace lib::scene

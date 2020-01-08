@@ -1,8 +1,8 @@
 #include "resourceview.hpp"
 
+#include <lib/system/scenemanager.hpp>
 #include <lib/scene/scenenode.hpp>
 #include <lib/include/liblog.hpp>
-#include <lib/scene/scenemanager.hpp>
 
 namespace lib::scene
 {

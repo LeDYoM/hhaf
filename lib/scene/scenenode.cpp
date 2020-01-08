@@ -5,7 +5,7 @@
 
 #include <lib/include/liblog.hpp>
 
-#include "scenemanager.hpp"
+#include <lib/system/scenemanager.hpp>
 #include "scenenodeblob.hpp"
 
 namespace lib::scene

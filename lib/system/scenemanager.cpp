@@ -1,6 +1,4 @@
 #include "scenemanager.hpp"
-#include "scenecontroller.hpp"
-#include "scene.hpp"
 
 #include <lib/system/systemprovider.hpp>
 #include <lib/system/window.hpp>
