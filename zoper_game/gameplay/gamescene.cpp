@@ -35,7 +35,7 @@ namespace zoper
     using namespace lib::scene;
     using namespace lib::scene::nodes;
 
-    constexpr u32 NumTokens = 5;
+    constexpr u32 NumTokens = 5U;
     constexpr u32 PlayerToken = NumTokens;
 
     struct GameScene::GameScenePrivate
