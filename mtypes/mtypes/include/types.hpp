@@ -28,7 +28,7 @@ namespace lib
     constexpr wptr<T> mwptr(const sptr<T>& sp) { return wptr<T>(sp); }
 
     template <typename T>
-    using rawptr = std::add_pointer_t<T>;
+    using rptr = std::add_pointer_t<T>;
 
     using u64 = uint64_t;
     using s64 = int64_t;

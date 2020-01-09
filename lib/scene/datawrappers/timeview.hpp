@@ -9,33 +9,32 @@
 
 namespace lib::scene
 {
-    /// Component to provide access to resources.
-    class TimeView : public IDataWrapper
-    {
-    public:
-        ~TimeView() override;
+/// Component to provide access to resources.
+class TimeView : public IDataWrapper
+{
+public:
+    ~TimeView() override;
 
-        TimePoint now() const;
-    };
+    TimePoint now() const;
+};
 
-    class Timer : public TimeView
-    {
-    public:
-        TimePoint ellapsed() const;
-        void pause();
-        void resume();
-        void switchPause();
-        void restart();
+class Timer : public TimeView
+{
+public:
+    TimePoint ellapsed() const;
+    void pause();
+    void resume();
+    void switchPause();
+    void restart();
 
-        constexpr bool isPaused() const noexcept { return is_paused_; }
-        void onCreated() override;
+    constexpr bool isPaused() const noexcept { return is_paused_; }
+    void onCreated() override;
 
-    private:
-        TimePoint started_at_;
-        TimePoint time_paused_;
-        bool is_paused_;
-
-    };
-}
+private:
+    TimePoint started_at_;
+    TimePoint time_paused_;
+    bool is_paused_;
+};
+} // namespace lib::scene
 
 #endif
