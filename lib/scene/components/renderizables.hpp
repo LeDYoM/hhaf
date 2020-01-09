@@ -7,7 +7,7 @@
 #include <mtypes/include/function.hpp>
 #include <mtypes/include/vector.hpp>
 
-#include <lib/scene/components/icomponent.hpp>
+#include <lib/scene/icomponent.hpp>
 
 #include <lib/scene/renderizables/renderizable.hpp>
 

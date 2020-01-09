@@ -4,7 +4,7 @@
 #define LIB_INPUT_COMPONENT_BASE_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <lib/scene/components/icomponent.hpp>
+#include <lib/scene/icomponent.hpp>
 #include <lib/include/key.hpp>
 
 namespace lib::scene

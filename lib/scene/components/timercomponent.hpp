@@ -11,7 +11,7 @@
 #include <mtypes/include/vector.hpp>
 #include <mtypes/include/lockablevector.hpp>
 #include <lib/scene/scenenode.hpp>
-#include <lib/scene/components/icomponent.hpp>
+#include <lib/scene/icomponent.hpp>
 
 namespace lib::scene
 {

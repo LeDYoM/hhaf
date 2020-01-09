@@ -9,7 +9,7 @@
 #include <mtypes/include/stack.hpp>
 #include <mtypes/include/lockablevector.hpp>
 #include <lib/include/liblog.hpp>
-#include <lib/scene/components/icomponent.hpp>
+#include <lib/scene/icomponent.hpp>
 
 namespace lib
 {

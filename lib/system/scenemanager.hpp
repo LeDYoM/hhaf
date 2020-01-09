@@ -8,7 +8,7 @@
 #include <mtypes/include/properties.hpp>
 #include <mtypes/include/function.hpp>
 
-#include <lib/scene/components/componentcontainer.hpp>
+#include <lib/scene/componentcontainer.hpp>
 #include <lib/scene/scene.hpp>
 #include <lib/scene/scenecontroller.hpp>
 

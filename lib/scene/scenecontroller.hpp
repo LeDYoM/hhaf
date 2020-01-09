@@ -7,7 +7,7 @@
 #include <mtypes/include/function.hpp>
 
 #include <lib/scene/components/statescontroller.hpp>
-#include <lib/scene/components/icomponent.hpp>
+#include <lib/scene/icomponent.hpp>
 #include <lib/scene/scene.hpp>
 #include <lib/scene/scenenodefactory.hpp>
 

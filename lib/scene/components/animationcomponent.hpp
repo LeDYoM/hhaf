@@ -6,7 +6,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
 #include <lib/scene/scenenode.hpp>
-#include <lib/scene/components/icomponent.hpp>
+#include <lib/scene/icomponent.hpp>
 #include <lib/scene/datawrappers/timeview.hpp>
 #include <lib/scene/ianimation.hpp>
 

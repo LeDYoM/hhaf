@@ -4,7 +4,7 @@
 #define LIB_SCENE_SCENENODETYPES_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <lib/scene/components/icomponent.hpp>
+#include <lib/scene/icomponent.hpp>
 #include <lib/scene/renderizables/renderizable.hpp>
 #include <lib/scene/components/renderizables.hpp>
 #include <lib/include/liblog.hpp>

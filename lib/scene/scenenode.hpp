@@ -7,9 +7,9 @@
 #include <mtypes/include/vector2d.hpp>
 #include <lib/scene/transformable.hpp>
 #include <lib/scene/hasname.hpp>
-#include <lib/scene/components/icomponent.hpp>
-#include <lib/scene/components/componentcontainer.hpp>
-#include <lib/scene/datawrappers/datawrappercreator.hpp>
+#include <lib/scene/icomponent.hpp>
+#include <lib/scene/componentcontainer.hpp>
+#include <lib/scene/datawrappercreator.hpp>
 
 #include "scenenodeblob.hpp"
 
