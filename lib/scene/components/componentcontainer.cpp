@@ -1,8 +1,11 @@
 #include "componentcontainer.hpp"
 
 #include <lib/include/liblog.hpp>
+#include <mtypes/include/algoutils.hpp>
 
 #include <algorithm>
+#include <functional>   // std::invoke
+#include <memory>       // std::addressof
 
 namespace lib::scene
 {
@@ -20,8 +23,6 @@ namespace lib::scene
         }
     }
 
-    ComponentContainer::~ComponentContainer() = default;
-
     bool ComponentContainer::addComponent(sptr<IComponent> nc)
     {
         log_assert(nc != nullptr, "Trying to add a nullptr component");
@@ -32,32 +33,41 @@ namespace lib::scene
         return true;
     }
 
+    template <typename T>
+    void update_impl(const sptr<T> p)
+    {
+        std::invoke(&T::update, p);
+    }
+
+    template <typename T>
+    void postUpdate_impl(const sptr<T> p)
+    {
+        std::invoke(&T::postUpdate, p);
+    }
+
+    template <typename LCKV, typename F>
+    void executeForAllComponents(LCKV& components, F&& f)
+    {
+        components.update();
+
+        if (!components.current().empty()) 
+        {
+            for_each_all(components.current(), 
+                std::forward<F>(f));
+            components.update();
+        }
+    }
+ 
     void ComponentContainer::updateComponents() 
     {
-        m_components.update();
-
-        if (!m_components.current().empty()) 
-        {
-            for (auto component : m_components.current())
-            {
-                component->update();
-            }
-            m_components.update();
-        }
+        executeForAllComponents(m_components, 
+            &update_impl<IComponent>);
     }
 
     void ComponentContainer::postUpdateComponents()
     {
-        m_components.update();
-
-        if (!m_components.current().empty()) 
-        {
-            for (auto component : m_components.current())
-            {
-                component->postUpdate();
-            }
-            m_components.update();
-        }
+        executeForAllComponents(m_components, 
+            &postUpdate_impl<IComponent>);
     }
 
     const sptr<IComponent> ComponentContainer::componentOfType(const std::type_index & ti) const

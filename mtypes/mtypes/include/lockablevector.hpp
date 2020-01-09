@@ -21,6 +21,13 @@ namespace lib
     class LockableVector final
     {
     public:
+        using iterator = typename vector<T>::iterator;
+        using const_iterator = typename vector<T>::const_iterator;
+        using reference = typename vector<T>::reference;
+        using const_reference = typename vector<T>::const_reference;
+        using value_type = typename vector<T>::value_type;
+        using pointer = typename vector<T>::pointer;
+
         /**
         * Add a new element. Overload for const references.
         * @param element The new element.

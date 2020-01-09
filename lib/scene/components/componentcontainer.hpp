@@ -16,9 +16,10 @@ class SceneNode;
 class ComponentContainer
 {
 public:
-    constexpr ComponentContainer(SceneNode *sceneNode = nullptr) noexcept
-        : m_sceneNode{sceneNode} {}
-    virtual ~ComponentContainer();
+    constexpr ComponentContainer(rptr<SceneNode> sceneNode = nullptr) noexcept
+        : m_sceneNode{std::move(sceneNode)} {}
+
+    virtual ~ComponentContainer() {}
 
     template <typename T>
     sptr<T> addComponentOfType()

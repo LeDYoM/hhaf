@@ -9,34 +9,35 @@
 
 namespace lib
 {
-    namespace backend
-    {
-        class IRenderTarget;
-    }
-    namespace scene
-    {
-        class RenderData;
-    }
-
-    namespace core
-    {
-        class RenderTarget
-        {
-        public:
-            RenderTarget(rawptr<backend::IRenderTarget> renderTarget);
-            ~RenderTarget();
-
-            void setViewPort(const Rectf32 &nviewport);
-            Rectf32 viewPort() const;
-            void setViewRect(const Rectf32 &nviewRect);
-            Rectf32 viewRect() const;
-
-            void draw(const scene::RenderData &renderData);
-            void clear();
-        private:
-            rawptr<backend::IRenderTarget> m_renderTarget;
-        };
-    }
+namespace backend
+{
+class IRenderTarget;
 }
+namespace scene
+{
+class RenderData;
+}
+
+namespace core
+{
+class RenderTarget
+{
+public:
+    RenderTarget(rptr<backend::IRenderTarget> renderTarget);
+    ~RenderTarget();
+
+    void setViewPort(const Rectf32 &nviewport);
+    Rectf32 viewPort() const;
+    void setViewRect(const Rectf32 &nviewRect);
+    Rectf32 viewRect() const;
+
+    void draw(const scene::RenderData &renderData);
+    void clear();
+
+private:
+    const rptr<backend::IRenderTarget> m_renderTarget;
+};
+} // namespace core
+} // namespace lib
 
 #endif
