@@ -8,12 +8,14 @@
 #include <lib/include/liblog.hpp>
 #include <lib/include/resources/iresourceretriever.hpp>
 
+#include <lib/scene/scene.hpp>
+
 namespace lib::scene
 {
 SceneManager::SceneManager(sys::SystemProvider &system_provider)
     : HostedAppService{system_provider}
 {
-    scene_controller_ = m_componentContainer.addComponentOfType<SceneController>();
+    scene_controller_ = msptr<SceneController>();
     scene_controller_->setSceneManager(this);
 }
 
@@ -25,7 +27,7 @@ void SceneManager::start()
 
 void SceneManager::update()
 {
-    m_componentContainer.updateComponents();
+    scene_controller_->update();
 }
 
 void SceneManager::finish()

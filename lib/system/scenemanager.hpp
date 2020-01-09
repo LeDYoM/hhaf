@@ -5,18 +5,20 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
-#include <mtypes/include/properties.hpp>
 #include <mtypes/include/function.hpp>
 
-#include <lib/scene/componentcontainer.hpp>
-#include <lib/scene/scene.hpp>
-#include <lib/scene/scenecontroller.hpp>
-
 #include <lib/system/appservice.hpp>
+
+#include <lib/scene/scenecontroller.hpp>
 
 namespace lib
 {
     class IResourceRetriever;
+}
+
+namespace lib::scene
+{
+    class Scene;
 }
 
 namespace lib::scene
@@ -44,9 +46,7 @@ public:
     inline sptr<SceneController> &sceneController() noexcept { return scene_controller_; }
 
 private:
-    ComponentContainer m_componentContainer;
     sptr<SceneController> scene_controller_;
-    SceneDirectorType scene_director_;
 };
 } // namespace lib::scene
 

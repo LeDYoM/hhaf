@@ -101,11 +101,11 @@ TEST_CASE("SceneController", "[lib][SceneController]")
 
         // Update triggers finish and creation of new scene.
         common.scene_controller->update();
-        CHECK(common.scene_controller->currentState()->name() == GroupScene1::StaticTypeName);
+        CHECK(common.scene_controller->currentScene()->name() == GroupScene1::StaticTypeName);
         CHECK(common.step == 3U);
 
         common.scene_controller->update();
-        CHECK(common.scene_controller->currentState()->name() == GroupScene2::StaticTypeName);
+        CHECK(common.scene_controller->currentScene()->name() == GroupScene2::StaticTypeName);
         CHECK(common.step == 4U);
         CHECK_FALSE(common.scene_controller->currentSceneIsNull());
         common.scene_controller->update();
