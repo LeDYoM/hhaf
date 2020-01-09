@@ -26,6 +26,7 @@ namespace lib::scene
 {
     class SceneNode;
     class SceneManager;
+    class SceneController;
 
     class SceneNodeBlob
     {
@@ -34,6 +35,9 @@ namespace lib::scene
 
         const SceneManager &sceneManager() const noexcept;
         SceneManager &sceneManager() noexcept;
+
+        const SceneController &sceneController() const noexcept;
+        SceneController &sceneController() noexcept;
 
         const input::InputSystem& inputSystem() const noexcept;
         input::InputSystem& inputSystem() noexcept;

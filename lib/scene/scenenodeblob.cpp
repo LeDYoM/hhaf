@@ -1,5 +1,7 @@
 #include "scenenodeblob.hpp"
-#include "scenenode.hpp"
+
+#include <lib/scene/scenenode.hpp>
+#include <lib/scene/scenecontroller.hpp>
 
 #include "scene.hpp"
 #include <lib/system/scenemanager.hpp>
@@ -12,59 +14,68 @@
 #include <lib/include/resources/iresourceloader.hpp>
 #include <lib/include/resources/iresourcehandler.hpp>
 
-
 namespace lib::scene
 {
-    SceneNodeBlob::SceneNodeBlob(SceneNode & provider)
-        : scene_node_{ provider } {}
+SceneNodeBlob::SceneNodeBlob(SceneNode &provider)
+    : scene_node_{provider} {}
 
-    const SceneManager &SceneNodeBlob::sceneManager() const noexcept
-    {
-        return scene_node_.parentScene()->sceneManager();
-    }
-
-    SceneManager &SceneNodeBlob::sceneManager() noexcept
-    {
-        return scene_node_.parentScene()->sceneManager();
-    }
-
-    const input::InputSystem & SceneNodeBlob::inputSystem() const noexcept
-    {
-        return sceneManager().systemProvider().inputSystem();
-    }
-
-    input::InputSystem & SceneNodeBlob::inputSystem() noexcept
-    {
-        return sceneManager().systemProvider().inputSystem();
-    }
-
-    const core::RandomSystem & SceneNodeBlob::randomSystem() const noexcept
-    {
-        return sceneManager().systemProvider().randomSystem();
-    }
-
-    core::RandomSystem & SceneNodeBlob::randomSystem() noexcept
-    {
-        return sceneManager().systemProvider().randomSystem();
-    }
-
-    const IApp& SceneNodeBlob::app() const
-    {
-        return sceneManager().systemProvider().app();
-    }
-
-    IApp& SceneNodeBlob::app()
-    {
-        return sceneManager().systemProvider().app();
-    }
-
-    Rectf32 SceneNodeBlob::scenePerspective() const
-    {
-        return sceneManager().viewRect();
-    }
-
-    void SceneNodeBlob::loadResources(IResourceLoader&& resourceLoader)
-    {
-        resourceLoader.loadResources(sceneManager().systemProvider().resourceManager());
-    }
+const SceneManager &SceneNodeBlob::sceneManager() const noexcept
+{
+    return scene_node_.parentScene()->sceneManager();
 }
+
+SceneManager &SceneNodeBlob::sceneManager() noexcept
+{
+    return scene_node_.parentScene()->sceneManager();
+}
+
+const SceneController &SceneNodeBlob::sceneController() const noexcept
+{
+    return *(sceneManager().sceneController());
+}
+
+SceneController &SceneNodeBlob::sceneController() noexcept
+{
+    return *(sceneManager().sceneController());
+}
+
+const input::InputSystem &SceneNodeBlob::inputSystem() const noexcept
+{
+    return sceneManager().systemProvider().inputSystem();
+}
+
+input::InputSystem &SceneNodeBlob::inputSystem() noexcept
+{
+    return sceneManager().systemProvider().inputSystem();
+}
+
+const core::RandomSystem &SceneNodeBlob::randomSystem() const noexcept
+{
+    return sceneManager().systemProvider().randomSystem();
+}
+
+core::RandomSystem &SceneNodeBlob::randomSystem() noexcept
+{
+    return sceneManager().systemProvider().randomSystem();
+}
+
+const IApp &SceneNodeBlob::app() const
+{
+    return sceneManager().systemProvider().app();
+}
+
+IApp &SceneNodeBlob::app()
+{
+    return sceneManager().systemProvider().app();
+}
+
+Rectf32 SceneNodeBlob::scenePerspective() const
+{
+    return sceneManager().viewRect();
+}
+
+void SceneNodeBlob::loadResources(IResourceLoader &&resourceLoader)
+{
+    resourceLoader.loadResources(sceneManager().systemProvider().resourceManager());
+}
+} // namespace lib::scene

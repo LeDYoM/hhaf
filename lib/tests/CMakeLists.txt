@@ -5,10 +5,11 @@ set(UNIT_TEST_LIST
     scene/color
     scene/scenecontroller
     scene/scenenodefactory
-    scene/scenemanager
     scene/scenenode
     scene/components/componentcontainer
     scene/components/statescontroller
+
+    system/scenemanager
 )
 
 foreach(NAME IN LISTS UNIT_TEST_LIST)

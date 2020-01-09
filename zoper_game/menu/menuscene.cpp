@@ -1,9 +1,9 @@
 #include "menuscene.hpp"
 #include <lib/scene/components/renderizables.hpp>
 #include <lib/scene/datawrappers/resourceview.hpp>
+#include <lib/scene/scenecontroller.hpp>
 #include <lib/resources/texture.hpp>
 #include <lib/system/resourcemanager.hpp>
-#include <lib/system/scenemanager.hpp>
 
 #include "../menu/mainmenu.hpp"
 #include "../gameshareddata.hpp"
@@ -39,7 +39,7 @@ void MenuScene::onCreated()
     mainMenu->MenuFinished.connect([this](const s32 status)
     {
         app<ZoperProgramController>().gameSharedData->exitGame = (status == 0);
-        sceneManager().sceneController()->terminateScene();
+        sceneController().terminateScene();
     });
 }
 } // namespace zoper
