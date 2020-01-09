@@ -3,8 +3,8 @@ cmake_minimum_required(VERSION 3.12)
 
 include_directories ("..")
 
-set(_SOURCES "core/main.cpp")
-file (GLOB_RECURSE _HEADERS "core/*.hpp" "include/*.hpp")
+set(_SOURCES "main.cpp")
+file (GLOB_RECURSE _HEADERS "include/*.hpp")
 
 set (CURRENT_TARGET  ${PROJECT_NAME})
 
