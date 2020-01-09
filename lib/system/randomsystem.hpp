@@ -7,7 +7,7 @@
 #include <mtypes/include/vector.hpp>
 #include <lib/system/appservice.hpp>
 
-namespace lib::core
+namespace lib::sys
 {
     /**
     * This system is intended to be used to generate
@@ -16,7 +16,7 @@ namespace lib::core
     class RandomSystem final : public HostedAppService
     {
     public:
-        RandomSystem(core::SystemProvider &system_provider);
+        RandomSystem(sys::SystemProvider &system_provider);
         ~RandomSystem() override;
 
         size_type getNext(const str& name, const size_type min, const size_type max);

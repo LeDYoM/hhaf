@@ -6,7 +6,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
 
-namespace lib::core
+namespace lib::sys
 {
     class SystemProvider;
 }
@@ -27,10 +27,10 @@ namespace lib
         virtual u16 getPatch() const noexcept  = 0;
         virtual str getName() const noexcept  = 0;
 
-        inline void setSystemProvider(core::SystemProvider* const system_provider) noexcept { system_provider_ = system_provider; }
-        inline core::SystemProvider &systemProvider() const noexcept { return *system_provider_; }
+        inline void setSystemProvider(sys::SystemProvider* const system_provider) noexcept { system_provider_ = system_provider; }
+        inline sys::SystemProvider &systemProvider() const noexcept { return *system_provider_; }
     private:
-        core::SystemProvider *system_provider_{nullptr};
+        sys::SystemProvider *system_provider_{nullptr};
     };
 }
 

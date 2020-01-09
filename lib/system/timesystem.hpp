@@ -7,7 +7,7 @@
 #include <lib/system/appservice.hpp>
 #include <lib/include/core/timepoint.hpp>
 
-namespace lib::core
+namespace lib::sys
 {
     class TimeSystem final : public AppService
     {

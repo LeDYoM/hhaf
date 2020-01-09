@@ -7,7 +7,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/function.hpp>
 
-namespace lib::core
+namespace lib::sys
 {
     struct ManagedApp
     {

@@ -9,7 +9,7 @@ namespace lib::scene
 class RandomNumbersComponent::RandomNumbersComponentPrivate
 {
 public:
-    constexpr RandomNumbersComponentPrivate(core::RandomSystem &random_system) noexcept
+    constexpr RandomNumbersComponentPrivate(sys::RandomSystem &random_system) noexcept
         : random_system_{random_system}
     {
         log_assert(std::addressof(random_system_) != nullptr, "nullptr RandomSystem received");
@@ -20,10 +20,10 @@ public:
     const str &name() const noexcept { return name_; }
     void setName(str name) { std::swap(name, name_); }
 
-    core::RandomSystem &randomsystem() noexcept { return random_system_; }
+    sys::RandomSystem &randomsystem() noexcept { return random_system_; }
 
 private:
-    core::RandomSystem &random_system_;
+    sys::RandomSystem &random_system_;
     str name_;
 };
 

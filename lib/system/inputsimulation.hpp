@@ -5,7 +5,7 @@
 
 #include <lib/system/appservice.hpp>
 
-namespace lib::core
+namespace lib::sys
 {
 }
 

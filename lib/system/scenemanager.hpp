@@ -24,7 +24,7 @@ namespace lib::scene
 class SceneManager : public HostedAppService
 {
 public:
-    SceneManager(core::SystemProvider &system_provider);
+    SceneManager(sys::SystemProvider &system_provider);
     ~SceneManager() override;
 
     void start();

@@ -10,7 +10,7 @@
 
 #include <mtypes/include/types.hpp>
 
-namespace lib::core
+namespace lib::sys
 {
     struct RenderSystem::RenderSystemPrivate final
     {
@@ -18,7 +18,7 @@ namespace lib::core
         ~RenderSystemPrivate() {}
     };
 
-    RenderSystem::RenderSystem(core::SystemProvider &system_provider)
+    RenderSystem::RenderSystem(sys::SystemProvider &system_provider)
         : HostedAppService{ system_provider }, priv_{ muptr<RenderSystemPrivate>() }
     {
     }

@@ -8,7 +8,6 @@
 
 namespace lib::scene
 {
-using namespace input;
 
 bool InputComponentBase::isPressed(const Key key)
 {

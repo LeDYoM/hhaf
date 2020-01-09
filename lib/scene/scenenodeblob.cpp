@@ -39,22 +39,22 @@ SceneController &SceneNodeBlob::sceneController() noexcept
     return *(sceneManager().sceneController());
 }
 
-const input::InputSystem &SceneNodeBlob::inputSystem() const noexcept
+const sys::InputSystem &SceneNodeBlob::inputSystem() const noexcept
 {
     return sceneManager().systemProvider().inputSystem();
 }
 
-input::InputSystem &SceneNodeBlob::inputSystem() noexcept
+sys::InputSystem &SceneNodeBlob::inputSystem() noexcept
 {
     return sceneManager().systemProvider().inputSystem();
 }
 
-const core::RandomSystem &SceneNodeBlob::randomSystem() const noexcept
+const sys::RandomSystem &SceneNodeBlob::randomSystem() const noexcept
 {
     return sceneManager().systemProvider().randomSystem();
 }
 
-core::RandomSystem &SceneNodeBlob::randomSystem() noexcept
+sys::RandomSystem &SceneNodeBlob::randomSystem() noexcept
 {
     return sceneManager().systemProvider().randomSystem();
 }

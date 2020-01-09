@@ -14,7 +14,7 @@
 #include <algorithm>
 #include <list>
 
-namespace lib::core
+namespace lib::sys
 {
 template <typename T>
 using NamedIndex = pair<const str, T>;
@@ -85,7 +85,7 @@ struct ResourceManager::ResourceManagerPrivate
     scene::BMPFontFactory bmp_font_factory_;
 };
 
-ResourceManager::ResourceManager(core::SystemProvider &system_provider)
+ResourceManager::ResourceManager(sys::SystemProvider &system_provider)
     : HostedAppService{system_provider},
       m_private{muptr<ResourceManagerPrivate>()} {}
 
@@ -143,4 +143,4 @@ sptr<scene::BMPFont> ResourceManager::loadBMPFont(const str &rid, const str &fil
     }
     return bmp_font;
 }
-} // namespace lib::core
+} // namespace lib::sys

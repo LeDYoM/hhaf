@@ -5,7 +5,7 @@
 
 #include <random>
 
-namespace lib::core
+namespace lib::sys
 {
     class RandomSystem::RandomSystemPrivate
     {
@@ -24,7 +24,7 @@ namespace lib::core
         }
     };
 
-    RandomSystem::RandomSystem(core::SystemProvider &system_provider)
+    RandomSystem::RandomSystem(sys::SystemProvider &system_provider)
         : HostedAppService{system_provider},
         priv_ { muptr<RandomSystemPrivate>() } {}
 

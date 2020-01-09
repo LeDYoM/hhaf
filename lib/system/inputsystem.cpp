@@ -3,7 +3,7 @@
 #include <lib/include/liblog.hpp>
 #include <backend_dev/include/iinputdriver.hpp>
 
-namespace lib::input
+namespace lib::sys
 {
 InputSystem::InputSystem(backend::IInputDriver *const input_driver)
     : AppService{}, input_driver_{input_driver}, m_keyStates{} {}

@@ -25,21 +25,21 @@ public:
 
     /// Extract the last @Key that has been pressed.
     /// @return The extracted @Key
-    virtual input::Key popKeyPress() = 0;
+    virtual Key popKeyPress() = 0;
 
     /// Extract the last @Key that has been released.
     /// @return The extracted @Key
-    virtual input::Key popKeyRelease() = 0;
+    virtual Key popKeyRelease() = 0;
 
     /// Users of this class should call this method to add any
     /// pending key pressed.
-    /// @param[in] input::Key indicating the element to add.
-    virtual void keyPressed(const input::Key) = 0;
+    /// @param[in] Key indicating the element to add.
+    virtual void keyPressed(const Key) = 0;
 
     /// Users of this class should call this method to add any
     /// pending key releases.
-    /// @param[in] input::Key indicating the element to add.
-    virtual void keyReleased(const input::Key) = 0;
+    /// @param[in] Key indicating the element to add.
+    virtual void keyReleased(const Key) = 0;
 };
 } // namespace lib::backend
 

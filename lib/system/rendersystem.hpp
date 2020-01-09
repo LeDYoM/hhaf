@@ -11,7 +11,7 @@ namespace lib::scene
     class RenderData;
 }
 
-namespace lib::core
+namespace lib::sys
 {
     /**
     * This system is intended to be the responsible of
@@ -20,7 +20,7 @@ namespace lib::core
     class RenderSystem final : public HostedAppService
     {
     public:
-        RenderSystem(core::SystemProvider &system_provider);
+        RenderSystem(sys::SystemProvider &system_provider);
         ~RenderSystem() override;
 
         void update();

@@ -18,12 +18,12 @@ namespace lib::scene
     class Shader;
 }
 
-namespace lib::core
+namespace lib::sys
 {
     class ResourceManager final : public HostedAppService, public IResourceHandler, public IResourceRetriever
     {
     public:
-        ResourceManager(core::SystemProvider &system_provider);
+        ResourceManager(sys::SystemProvider &system_provider);
         ~ResourceManager() override;
 
         sptr<scene::ITTFont> getTTFont(const str &rid) override;

@@ -18,8 +18,8 @@ public:
 
     void update() override;
 
-    emitter<const input::Key &> KeyPressed;
-    emitter<const input::Key &> KeyReleased;
+    emitter<const Key &> KeyPressed;
+    emitter<const Key &> KeyReleased;
 };
 } // namespace lib::scene
 

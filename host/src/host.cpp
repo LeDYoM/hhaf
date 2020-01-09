@@ -14,7 +14,7 @@ namespace
     constexpr static const char HostPatch[] = "0";
 }
 
-namespace lib::core
+namespace lib::sys
 {
     class Host::HostPrivate final
     {

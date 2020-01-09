@@ -8,8 +8,6 @@
 
 namespace lib::scene
 {
-using namespace input;
-
 VirtualInputComponent::VirtualInputComponent() = default;
 VirtualInputComponent::~VirtualInputComponent() = default;
 
@@ -17,7 +15,7 @@ void VirtualInputComponent::update()
 {
     if (attachedNode())
     {
-        const input::InputSystem &input_system{attachedNode()->inputSystem()};
+        const sys::InputSystem &input_system{attachedNode()->inputSystem()};
 
         for (const auto &pressedKey : input_system.pressedKeys())
         {

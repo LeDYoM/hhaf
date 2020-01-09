@@ -18,8 +18,8 @@ namespace lib::scene
         void update() override;
 
     private:
-        virtual void onKeyPressed(const input::Key& key) {}
-        virtual void onKeyReleased(const input::Key& key) {}
+        virtual void onKeyPressed(const Key& key) {}
+        virtual void onKeyReleased(const Key& key) {}
     };
 }
 

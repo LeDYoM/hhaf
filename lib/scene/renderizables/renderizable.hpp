@@ -24,7 +24,7 @@ enum class FigType_t : u8
     Shape
 };
 
-class Renderizable final : public core::HasName
+class Renderizable final : public sys::HasName
 {
 public:
     Renderizable(SceneNode *const parent, str name, const u32 vertexCount);

@@ -10,7 +10,7 @@
 
 #include <mtypes/include/types.hpp>
 
-namespace lib::core
+namespace lib::sys
 {
     class RenderTarget;
     class SystemProvider;
@@ -18,7 +18,7 @@ namespace lib::core
     class Window final : public HostedAppService
     {
     public:
-        Window(core::SystemProvider &system_provider);
+        Window(sys::SystemProvider &system_provider);
         ~Window() override;
         bool preLoop();
         void postLoop();

@@ -10,41 +10,40 @@
 
 namespace lib::backend
 {
-    class IInputDriver;
+class IInputDriver;
 }
 
- namespace lib::input
+namespace lib::sys
 {
-    class InputSystem final : public AppService
-    {
-    public:
-        InputSystem(backend::IInputDriver* const input_driver);
-        ~InputSystem() override;
+class InputSystem final : public AppService
+{
+public:
+    InputSystem(backend::IInputDriver *const input_driver);
+    ~InputSystem() override;
 
-        void update();
+    void update();
 
-        const vector<Key> &pressedKeys() const noexcept;
-        const vector<Key> &releasedKeys() const noexcept;
-        const KeyStates &keyStates() const noexcept { return m_keyStates; }
+    const vector<Key> &pressedKeys() const noexcept;
+    const vector<Key> &releasedKeys() const noexcept;
+    const KeyStates &keyStates() const noexcept { return m_keyStates; }
 
-        /// Force or simulate a key press.
-        /// @param key @b Key to be added.
-        void simulatePressKey(const Key key);
+    /// Force or simulate a key press.
+    /// @param key @b Key to be added.
+    void simulatePressKey(const Key key);
 
-        /// Force or simulate a key release.
-        /// @param key @b Key to be added.
-        void simulateReleaseKey(const Key key);
+    /// Force or simulate a key release.
+    /// @param key @b Key to be added.
+    void simulateReleaseKey(const Key key);
 
-    private:
-        void keyPressed(const Key key);
-        void keyReleased(const Key key);
+private:
+    void keyPressed(const Key key);
+    void keyReleased(const Key key);
 
-        backend::IInputDriver* input_driver_;
-        KeyStates m_keyStates;
-        vector<Key> m_pressedKeys;
-        vector<Key> m_releasedKeys;
-
-    };
-}
+    backend::IInputDriver *input_driver_;
+    KeyStates m_keyStates;
+    vector<Key> m_pressedKeys;
+    vector<Key> m_releasedKeys;
+};
+} // namespace lib::sys
 
 #endif

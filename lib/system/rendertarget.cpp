@@ -7,7 +7,7 @@
 #include <lib/scene/transform.hpp>
 #include <lib/include/liblog.hpp>
 
-namespace lib::core
+namespace lib::sys
 {
 RenderTarget::RenderTarget(rptr<lib::backend::IRenderTarget> renderTarget)
     : m_renderTarget{std::move(renderTarget)}
@@ -52,4 +52,4 @@ void RenderTarget::setViewRect(const Rectf32 &nViewRect)
 {
     m_renderTarget->setViewRect(nViewRect);
 }
-} // namespace lib::core
+} // namespace lib::sys

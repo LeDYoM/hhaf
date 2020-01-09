@@ -22,21 +22,21 @@ public:
 
     void reset();
 
-    lib::input::Key getKey(const Direction direction) const noexcept;
-    Direction getDirectionFromKey(const lib::input::Key key) const noexcept;
-    lib::input::Key getLaunchKey() const noexcept;
-    bool isLaunchKey(const lib::input::Key key) const noexcept;
-    lib::input::Key getPauseKey() const noexcept;
-    bool isPauseKey(const lib::input::Key key) const noexcept;
+    lib::Key getKey(const Direction direction) const noexcept;
+    Direction getDirectionFromKey(const lib::Key key) const noexcept;
+    lib::Key getLaunchKey() const noexcept;
+    bool isLaunchKey(const lib::Key key) const noexcept;
+    lib::Key getPauseKey() const noexcept;
+    bool isPauseKey(const lib::Key key) const noexcept;
 
-    bool setKey(const lib::u32 index, const lib::input::Key key);
+    bool setKey(const lib::u32 index, const lib::Key key);
     void apply();
 
     friend const lib::Object &operator>>(const lib::Object &obj, KeyMapping &key_mapping);
     friend lib::Object &operator<<(lib::Object &obj, const KeyMapping &key_mapping);
 
 private:
-    lib::array<lib::input::Key, KeyMapping::TotalKeys> m_keys;
+    lib::array<lib::Key, KeyMapping::TotalKeys> m_keys;
 };
 
 inline const lib::Object &operator>>(const lib::Object &obj, KeyMapping &key_mapping)

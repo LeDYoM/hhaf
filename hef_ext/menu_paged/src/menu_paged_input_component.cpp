@@ -8,22 +8,22 @@ void MenuPageInputComponent::onAttached()
 {
     BaseClass::onAttached();
 
-    KeyPressed.connect([this](const input::Key &key) {
+    KeyPressed.connect([this](const Key &key) {
         switch (key)
         {
-        case input::Key::Left:
+        case Key::Left:
             Left();
             break;
-        case input::Key::Right:
+        case Key::Right:
             Right();
             break;
-        case input::Key::Up:
+        case Key::Up:
             Up();
             break;
-        case input::Key::Down:
+        case Key::Down:
             Down();
             break;
-        case input::Key::Return:
+        case Key::Return:
             Selected();
             break;
         default:

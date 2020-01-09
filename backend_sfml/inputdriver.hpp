@@ -18,16 +18,16 @@ namespace lib::backend::sfmlb
         bool arePendingKeyPresses() const override;
         bool arePendingKeyReleases() const override;
 
-        input::Key popKeyPress() override;
-        input::Key popKeyRelease() override;
+        Key popKeyPress() override;
+        Key popKeyRelease() override;
 
-        void keyPressed(const input::Key) override;
-        void keyReleased(const input::Key) override;
+        void keyPressed(const Key) override;
+        void keyReleased(const Key) override;
 
         void keyEvent(const sf::Event &e);
 
-        std::queue<input::Key> m_keysPressed;
-        std::queue<input::Key> m_keysReleased;
+        std::queue<Key> m_keysPressed;
+        std::queue<Key> m_keysReleased;
     };
 }
 

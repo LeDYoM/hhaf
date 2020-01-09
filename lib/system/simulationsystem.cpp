@@ -10,13 +10,14 @@
 #include <lib/system/systemprovider.hpp>
 #include <lib/system/randomsystem.hpp>
 #include <lib/system/filesystem.hpp>
+#include <lib/system/inputsystem.hpp>
 
 #include <mtypes/include/serializer.hpp>
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/object.hpp>
 #include <mtypes/include/object_utils.hpp>
 
-namespace lib::core
+namespace lib::sys
 {
 SimulationSystem::SimulationSystem(SystemProvider &system_provider)
     : HostedAppService{system_provider},
@@ -49,9 +50,9 @@ void SimulationSystem::initialize()
 
 #ifdef LIB_USE_SIMULATION_INIT_DATA
     {
-        simulation_action_group.addKeyStroke(input::Key::Return);
-        simulation_action_group.addKeyStroke(input::Key::Down);
-        simulation_action_group.addKeyStroke(input::Key::Return);
+        simulation_action_group.addKeyStroke(Key::Return);
+        simulation_action_group.addKeyStroke(Key::Down);
+        simulation_action_group.addKeyStroke(Key::Return);
 
         auto &simulationSystem(systemProvider().simulationSystem());
         simulationSystem.setSimulationActions(simulation_action_group);
@@ -189,4 +190,4 @@ bool SimulationSystem::getNext(const str &name, size_type &pre_selected)
     DisplayLog::info("Generated data added to buffer for ", name);
     return generated;
 }
-} // namespace lib::core
+} // namespace lib::sys

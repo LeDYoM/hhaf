@@ -3,7 +3,7 @@
 #ifndef LIB_APP_SERVICE_INCLUDE_HPP
 #define LIB_APP_SERVICE_INCLUDE_HPP
 
-namespace lib::core
+namespace lib::sys
 {
     class SystemProvider;
 }
@@ -29,17 +29,17 @@ namespace lib
     class HostedAppService : public AppService
     {
     protected:
-        constexpr HostedAppService(core::SystemProvider &system_provider) noexcept
+        constexpr HostedAppService(sys::SystemProvider &system_provider) noexcept
             : AppService{}, system_provider_ { system_provider } {}
 
         ~HostedAppService() override = default;
 
     public:
-        constexpr core::SystemProvider& systemProvider() noexcept { return system_provider_; }
-        constexpr const core::SystemProvider& systemProvider() const noexcept { return system_provider_; }
+        constexpr sys::SystemProvider& systemProvider() noexcept { return system_provider_; }
+        constexpr const sys::SystemProvider& systemProvider() const noexcept { return system_provider_; }
 
     private:
-        core::SystemProvider &system_provider_;
+        sys::SystemProvider &system_provider_;
     };
 }
 

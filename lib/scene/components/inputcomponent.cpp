@@ -8,7 +8,6 @@
 
 namespace lib::scene
 {
-using namespace input;
 
 InputComponent::InputComponent() = default;
 InputComponent::~InputComponent() = default;
@@ -17,7 +16,7 @@ void InputComponent::update()
 {
     if (attachedNode())
     {
-        const input::InputSystem &input_system{attachedNode()->inputSystem()};
+        const sys::InputSystem &input_system{attachedNode()->inputSystem()};
 
         for (const auto &pressedKey : input_system.pressedKeys())
         {

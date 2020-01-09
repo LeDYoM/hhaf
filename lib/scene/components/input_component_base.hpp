@@ -12,14 +12,14 @@ namespace lib::scene
 class InputComponentBase : public IComponent
 {
 public:
-    bool isPressed(const input::Key key);
+    bool isPressed(const Key key);
 
-    static inline bool isAscii(const input::Key key) noexcept
+    static inline bool isAscii(const Key key) noexcept
     {
-        return key >= input::Key::A && key <= input::Key::Z;
+        return key >= Key::A && key <= Key::Z;
     }
 
-    char toAscii(const input::Key key) noexcept;
+    char toAscii(const Key key) noexcept;
     bool isShiftPressed() const;
 };
 } // namespace lib::scene

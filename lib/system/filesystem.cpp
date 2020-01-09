@@ -6,7 +6,7 @@
 #include <string>
 #include <fstream>
 
-namespace lib::core
+namespace lib::sys
 {
     class FileSystem::FileSystemPrivate
     {
@@ -20,7 +20,7 @@ namespace lib::core
         }
     };
 
-    FileSystem::FileSystem(core::SystemProvider &system_provider)
+    FileSystem::FileSystem(sys::SystemProvider &system_provider)
         : HostedAppService{ system_provider },
         priv_ { muptr<FileSystemPrivate>() } {}
 

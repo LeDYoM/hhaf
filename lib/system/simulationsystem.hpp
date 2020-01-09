@@ -7,7 +7,7 @@
 #include <lib/system/appservice.hpp>
 #include <lib/system/simulationactiongroup.hpp>
 
-namespace lib::core
+namespace lib::sys
 {
 /**
     * This system is intended to be used to simulate behaviours
@@ -20,7 +20,7 @@ class SimulationSystem final : public HostedAppService
 public:
     using SimulateRandomDataBuffer = vector<size_type>;
 
-    SimulationSystem(core::SystemProvider &system_provider);
+    SimulationSystem(sys::SystemProvider &system_provider);
     ~SimulationSystem() override;
 
     void update();
@@ -35,6 +35,6 @@ private:
     struct SimulationSystemPrivate;
     uptr<SimulationSystemPrivate> priv_;
 };
-} // namespace lib::core
+} // namespace lib::sys
 
 #endif

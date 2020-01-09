@@ -6,7 +6,7 @@ namespace zoper
 {
 using namespace lib;
 using namespace lib::scene;
-using namespace lib::core;
+using namespace lib::sys;
 
 void LevelProperties::setUp(const size_type currentLevel,
                             const GameMode gameMode,

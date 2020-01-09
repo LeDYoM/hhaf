@@ -13,7 +13,7 @@ namespace lib::scene
     DebugVarsComponent::DebugVarsComponent()
     {
 /*      scene::InputComponent::setOnKeyPressedHandler([this](const auto&key) {
-            if (key == input::Key::Num2) {
+            if (key == Key::Num2) {
                 m_displayVarsNextFrame = true;
             }
         });
@@ -24,7 +24,7 @@ namespace lib::scene
     {
         scene::InputComponent::update();
 
-        if (isPressed(input::Key::Num1))
+        if (isPressed(Key::Num1))
         {
             m_displayVarsNextFrame = true;
         }

@@ -9,7 +9,7 @@
 #include <lib/system/timesystem.hpp>
 #include <lib/system/systemprovider.hpp>
 
-namespace lib::core
+namespace lib::sys
 {
     struct Window::WindowPrivate final
     {
@@ -21,7 +21,7 @@ namespace lib::core
         str title_{};
     };
 
-    Window::Window(core::SystemProvider &system_provider)
+    Window::Window(sys::SystemProvider &system_provider)
         : HostedAppService{ system_provider },
         priv_{ muptr<WindowPrivate>() }
     {

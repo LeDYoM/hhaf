@@ -15,18 +15,14 @@ namespace lib::backend
     class BackendFactory;
 }
 
-namespace lib::input
-{
-    class InputSystem;
-}
-
 namespace lib::scene
 {
     class SceneManager;
 }
 
-namespace lib::core
+namespace lib::sys
 {
+    class InputSystem;
     class Window;
     class ResourceManager;
     class RandomSystem;
@@ -38,7 +34,7 @@ namespace lib::core
     class RenderSystem;
 }
 
-namespace lib::core
+namespace lib::sys
 {
     class SystemProvider final
     {
@@ -62,8 +58,8 @@ namespace lib::core
         Window &parentWindow() noexcept;
         const ResourceManager &resourceManager() const  noexcept;
         ResourceManager &resourceManager()  noexcept;
-        const input::InputSystem &inputSystem() const noexcept;
-        input::InputSystem &inputSystem() noexcept;
+        const sys::InputSystem &inputSystem() const noexcept;
+        sys::InputSystem &inputSystem() noexcept;
         const RandomSystem &randomSystem() const noexcept;
         RandomSystem &randomSystem() noexcept;
         const scene::SceneManager &sceneManager() const noexcept;

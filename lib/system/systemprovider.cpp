@@ -14,7 +14,7 @@
 #include <lib/include/liblog.hpp>
 #include <hosted_app/include/iapp.hpp>
 
-namespace lib::core
+namespace lib::sys
 {
 struct SystemProvider::SystemProviderPrivate
 {
@@ -25,13 +25,15 @@ struct SystemProvider::SystemProviderPrivate
     uptr<backend::BackendFactory> backend_factory_;
     uptr<Window> window_;
     uptr<ResourceManager> resource_manager_;
-    uptr<input::InputSystem> input_system_;
+    uptr<InputSystem> input_system_;
     uptr<scene::SceneManager> scene_manager_;
     uptr<RandomSystem> random_system_;
     uptr<FileSystem> file_system_;
-    uptr<SimulationSystem> simulation_system_;
     uptr<TimeSystem> time_system_;
     uptr<RenderSystem> render_system_;
+#ifdef LIB_COMPILE_SIMULATIONS
+    uptr<SimulationSystem> simulation_system_;
+#endif
 };
 
 SystemProvider::SystemProvider()
@@ -46,10 +48,10 @@ void SystemProvider::init(IApp *iapp)
     p_->backend_factory_ = muptr<backend::BackendFactory>();
     p_->time_system_ = muptr<TimeSystem>();
     p_->window_ = muptr<Window>(*this);
-    p_->input_system_ = muptr<input::InputSystem>(p_->window_->inputDriver());
+    p_->input_system_ = muptr<InputSystem>(p_->window_->inputDriver());
     p_->scene_manager_ = muptr<scene::SceneManager>(*this);
-    p_->resource_manager_ = muptr<core::ResourceManager>(*this);
-    p_->render_system_ = muptr<core::RenderSystem>(*this);
+    p_->resource_manager_ = muptr<sys::ResourceManager>(*this);
+    p_->render_system_ = muptr<sys::RenderSystem>(*this);
     p_->random_system_ = muptr<RandomSystem>(*this);
     p_->file_system_ = muptr<FileSystem>(*this);
 #ifdef LIB_COMPILE_SIMULATIONS
@@ -103,12 +105,12 @@ ResourceManager &SystemProvider::resourceManager() noexcept
     return *p_->resource_manager_;
 }
 
-const input::InputSystem &SystemProvider::inputSystem() const noexcept
+const sys::InputSystem &SystemProvider::inputSystem() const noexcept
 {
     return *p_->input_system_;
 }
 
-input::InputSystem &SystemProvider::inputSystem() noexcept
+sys::InputSystem &SystemProvider::inputSystem() noexcept
 {
     return *p_->input_system_;
 }
@@ -197,4 +199,4 @@ bool SystemProvider::runStep()
     parentWindow().postLoop();
     return windowWants2Close;
 }
-} // namespace lib::core
+} // namespace lib::sys

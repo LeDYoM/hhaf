@@ -12,13 +12,9 @@ namespace lib
     class IResourceLoader;
 }
 
-namespace lib::core
+namespace lib::sys
 {
     class RandomSystem;
-}
-
-namespace lib::input
-{
     class InputSystem;
 }
 
@@ -39,11 +35,11 @@ namespace lib::scene
         const SceneController &sceneController() const noexcept;
         SceneController &sceneController() noexcept;
 
-        const input::InputSystem& inputSystem() const noexcept;
-        input::InputSystem& inputSystem() noexcept;
+        const sys::InputSystem& inputSystem() const noexcept;
+        sys::InputSystem& inputSystem() noexcept;
 
-        const core::RandomSystem& randomSystem() const noexcept;
-        core::RandomSystem& randomSystem() noexcept;
+        const sys::RandomSystem& randomSystem() const noexcept;
+        sys::RandomSystem& randomSystem() noexcept;
 
         const IApp& app() const;
         IApp& app();

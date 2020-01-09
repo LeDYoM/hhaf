@@ -10,7 +10,7 @@
 
 namespace lib::scene
 {
-SceneManager::SceneManager(core::SystemProvider &system_provider)
+SceneManager::SceneManager(sys::SystemProvider &system_provider)
     : HostedAppService{system_provider}
 {
     scene_controller_ = m_componentContainer.addComponentOfType<SceneController>();

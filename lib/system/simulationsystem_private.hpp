@@ -20,7 +20,7 @@
 #include <mtypes/include/object.hpp>
 #include <mtypes/include/object_utils.hpp>
 
-namespace lib::core
+namespace lib::sys
 {
 
 struct ReplayData
@@ -85,6 +85,6 @@ struct SimulationSystem::SimulationSystemPrivate final
         current_simulable_data_buffer_iterator = current_replay_data_.data_buffer_.begin();
     }
 };
-} // namespace lib::core
+} // namespace lib::sys
 
 #endif

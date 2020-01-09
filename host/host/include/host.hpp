@@ -10,7 +10,7 @@ namespace lib
 class IApp;
 }
 
-namespace lib::core
+namespace lib::sys
 {
 class Host final
 {
@@ -33,6 +33,6 @@ private:
     AppState m_state;
     bool exit{false};
 };
-} // namespace lib::core
+} // namespace lib::sys
 
 #endif

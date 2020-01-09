@@ -3,7 +3,6 @@
 
 namespace lib::scene
 {
-using namespace input;
 
 void TextEditorComponent::onAttached()
 {

@@ -16,8 +16,8 @@ class DebugActions : public lib::scene::VirtualInputComponent
 private:
     using BaseClass = lib::scene::IComponent;
 
-    void onKeyPressed(const lib::input::Key& key) override;
-    void onKeyReleased(const lib::input::Key& key) override;
+    void onKeyPressed(const lib::Key& key) override;
+    void onKeyReleased(const lib::Key& key) override;
 
     GameScene* const gameScene();
 public:

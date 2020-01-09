@@ -1,7 +1,7 @@
 #include <host/include/apploader.hpp>
 #include <loader/include/loader.hpp>
 
-namespace lib::core
+namespace lib::sys
 {
     ManagedApp AppLoader::loadApp(const str& file) const
     {

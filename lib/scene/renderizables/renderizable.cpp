@@ -55,7 +55,7 @@ constexpr vector2dd getPositionFromAngleAndRadius(const FigType_t fig_type,
 } // namespace
 
 Renderizable::Renderizable(SceneNode *const parent, str name, const u32 vertexCount)
-    : core::HasName{std::move(name)},
+    : sys::HasName{std::move(name)},
       parent_{parent},
       m_vertices{TriangleFan, vertexCount}
 {

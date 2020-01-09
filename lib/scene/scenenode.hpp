@@ -23,7 +23,7 @@ class SceneManager;
 /// Main class representing all SceneNodes from a Scene.
 /// This class serves as main entry point in the hierarchy of the scene.
 /// To create new SceneNode types, inherit from this class.
-class SceneNode : public core::HasName,
+class SceneNode : public sys::HasName,
                   public Transformable,
                   public DataWrapperCreator,
                   public ComponentContainer,

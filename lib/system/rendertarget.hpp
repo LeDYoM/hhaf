@@ -7,18 +7,16 @@
 #include <mtypes/include/rect.hpp>
 #include <mtypes/include/properties.hpp>
 
-namespace lib
-{
-namespace backend
+namespace lib::backend
 {
 class IRenderTarget;
 }
-namespace scene
+namespace lib::scene
 {
 class RenderData;
 }
 
-namespace core
+namespace lib::sys
 {
 class RenderTarget
 {
@@ -37,7 +35,6 @@ public:
 private:
     const rptr<backend::IRenderTarget> m_renderTarget;
 };
-} // namespace core
-} // namespace lib
+} // namespace lib::sys
 
 #endif

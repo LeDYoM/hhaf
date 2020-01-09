@@ -10,14 +10,14 @@
 
 #include <lib/system/appservice.hpp>
 
-namespace lib::core
+namespace lib::sys
 {
     class FileSystem final : public HostedAppService
     {
     public:
         using Path = str;
 
-        FileSystem(core::SystemProvider &system_provider);
+        FileSystem(sys::SystemProvider &system_provider);
         ~FileSystem() override;
 
         bool fileExists(const Path& path);

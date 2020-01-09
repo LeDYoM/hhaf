@@ -19,9 +19,9 @@ namespace lib
             installMemManager();
 
             {
-                core::Host host(argc, argv);
-                core::AppLoader app_loader;
-                core::ManagedApp managed_app = app_loader.loadApp("zoper_game");
+                sys::Host host(argc, argv);
+                sys::AppLoader app_loader;
+                sys::ManagedApp managed_app = app_loader.loadApp("zoper_game");
                 host.setApplication(managed_app.app);
                 int run_result(host.run());
                 app_loader.unloadApp(managed_app);

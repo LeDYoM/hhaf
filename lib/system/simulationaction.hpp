@@ -14,7 +14,7 @@
 #include <mtypes/include/object.hpp>
 #include <mtypes/include/object_utils.hpp>
 
-namespace lib::core
+namespace lib::sys
 {
 enum class SimulationActionType : u8
 {
@@ -26,7 +26,7 @@ struct SimulationAction
 {
     SimulationActionType type;
     TimePoint time_point;
-    input::Key key;
+    Key key;
 
     inline bool timeToLaunch(const TimePoint &time_since_start, const TimePoint &last_triggered) const noexcept
     {
@@ -44,7 +44,7 @@ inline const Object &operator>>(const Object &obj, SimulationAction &simulation_
 {
     simulation_action.type = obj["type"].as<SimulationActionType>();
     simulation_action.time_point = TimePoint{obj["time_point"].as<TimePoint::Rep>()};
-    simulation_action.key = obj["key"].as<input::Key>();
+    simulation_action.key = obj["key"].as<Key>();
 
     return obj;
 }
@@ -60,6 +60,6 @@ inline Object &operator<<(Object &obj, const SimulationAction &simulation_action
 
 using SimulationActionContainer = vector<SimulationAction>;
 using CurrentSimulationActionIterator = SimulationActionContainer::const_iterator;
-} // namespace lib::core
+} // namespace lib::sys
 
 #endif
