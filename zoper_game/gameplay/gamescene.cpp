@@ -88,7 +88,7 @@ namespace zoper
             }
             break;
             case GameSceneStates::GameOver:
-                sceneManager().sceneController()->terminateScene();
+                sceneManager().sceneController()->switchToNextScene();
                 break;
             case GameSceneStates::Pause:
                 if (keyMapping->isPauseKey(key))

@@ -38,7 +38,7 @@ void HighScoresScene::onCreated()
     auto highScoreTextController(createSceneNode<HighScoreTextController>("HighScoreTextController"));
     highScoreTextController->Finished.connect([this, statesController]()
     {
-        sceneManager().sceneController()->terminateScene();
+        sceneManager().sceneController()->switchToNextScene();
     });
 
     statesController->start(HighScoresSceneStates::Show);

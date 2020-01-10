@@ -35,7 +35,7 @@ public:
     void update() override
     {
         ++(common.step);
-        common.scene_controller->terminateScene();
+        common.scene_controller->switchToNextScene();
     }
 };
 
@@ -52,7 +52,7 @@ public:
     void update() override
     {
         ++(common.step);
-        common.scene_controller->terminateScene();
+        common.scene_controller->switchToNextScene();
     }
 };
 
@@ -97,19 +97,21 @@ TEST_CASE("SceneController", "[lib][SceneController]")
 
         common.step = 0U;
         common.scene_controller->startScene<GroupScene1>();
+        CHECK(common.scene_controller->currentScene()->name() == GroupScene1::StaticTypeName);
         CHECK(common.step == 1U);
 
         // Update triggers finish and creation of new scene.
         common.scene_controller->update();
-        CHECK(common.scene_controller->currentScene()->name() == GroupScene1::StaticTypeName);
+        CHECK(common.scene_controller->currentScene()->name() == GroupScene2::StaticTypeName);
         CHECK(common.step == 3U);
 
         common.scene_controller->update();
-        CHECK(common.scene_controller->currentScene()->name() == GroupScene2::StaticTypeName);
+        CHECK(common.scene_controller->currentSceneIsNull());
         CHECK(common.step == 4U);
-        CHECK_FALSE(common.scene_controller->currentSceneIsNull());
+        CHECK_FALSE(common.scene_controller->isActive());
         common.scene_controller->update();
         CHECK(common.scene_controller->currentSceneIsNull());
         CHECK_FALSE(common.scene_controller->isActive());
+        CHECK(common.step == 4U);
     }
 }

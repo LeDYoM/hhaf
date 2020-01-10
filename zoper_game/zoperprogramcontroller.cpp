@@ -65,16 +65,8 @@ namespace zoper
                 return str{};
             });
 
-            // Hack to test high scores
-            {
-    //            gameData->score = 10000;
-    //            sceneManager.startScene<HighScoresScene>();
-            }
-
             sceneController->startScene<MenuScene>();
         }
-
-//        systemProvider().timeSystem().setAcceleration(5.0F);
     }
 
     void ZoperProgramController::onFinish() { }

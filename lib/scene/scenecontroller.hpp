@@ -22,7 +22,7 @@ public:
 
     void setSceneManager(SceneManager *scene_manager);
 
-    void terminateScene();
+    void switchToNextScene();
     void setSceneDirector(SceneDirectorType sceneDirector);
     void update();
     void finish();
@@ -71,7 +71,8 @@ public:
 
 private:
     void startScene(sptr<Scene> scene);
-
+    void terminateCurrentScene();
+    
     SceneDirectorType scene_director_;
     SceneNodeFactory scene_factory_;
     SceneManager *scene_manager_{nullptr};

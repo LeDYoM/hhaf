@@ -39,7 +39,7 @@ void MenuScene::onCreated()
     mainMenu->MenuFinished.connect([this](const s32 status)
     {
         app<ZoperProgramController>().gameSharedData->exitGame = (status == 0);
-        sceneController().terminateScene();
+        sceneController().switchToNextScene();
     });
 }
 } // namespace zoper

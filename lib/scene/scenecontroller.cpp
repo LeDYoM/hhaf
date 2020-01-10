@@ -20,21 +20,26 @@ bool SceneController::startScene(const str &sceneName)
     return true;
 }
 
-void SceneController::terminateScene()
+void SceneController::switchToNextScene()
 {
-    log_assert(current_scene_ != nullptr, "Unexpected nullptr in current_scene");
-    DisplayLog::info("Terminating scene ", current_scene_->name());
-    current_scene_->onFinished();
-
     // Prepare next Scene
-    sptr<Scene> nextScene{ nullptr };
+    sptr<Scene> nextScene{nullptr};
     if (scene_director_)
     {
         nextScene = scene_factory_.create(scene_director_(current_scene_->name()));
     }
 
+    terminateCurrentScene();
+
     DisplayLog::info("Setting new scene: ", nextScene ? nextScene->name() : "<nullptr>");
     startScene(std::move(nextScene));
+}
+
+void SceneController::terminateCurrentScene()
+{
+    log_assert(current_scene_ != nullptr, "Unexpected nullptr in current_scene");
+    DisplayLog::info("Terminating scene ", current_scene_->name());
+    current_scene_->onFinished();
 }
 
 void SceneController::setSceneDirector(SceneDirectorType sceneDirector)
@@ -54,7 +59,7 @@ void SceneController::finish()
 {
     if (!currentSceneIsNull())
     {
-        current_scene_->onFinished();
+        terminateCurrentScene();
     }
 }
 
