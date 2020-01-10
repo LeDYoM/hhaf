@@ -331,6 +331,16 @@ public:
     template <size_type N>
     friend constexpr bool operator!=(const str &lhs, const char_type (&a)[N]) noexcept;
 
+    template <size_type N>
+    friend constexpr bool operator==(const char_type (&a)[N], const str &rhs) noexcept;
+    template <size_type N>
+    friend constexpr bool operator!=(const char_type (&a)[N], const str &rhs) noexcept;
+
+    friend constexpr bool operator==(const char_type *a, const str &rhs) noexcept;
+    friend constexpr bool operator!=(const char_type *a, const str &rhs) noexcept;
+    friend constexpr bool operator==(const str &lhs, const char_type *a) noexcept;
+    friend constexpr bool operator!=(const str &lhs, const char_type *a) noexcept;
+
     friend bool operator<(const str &lhs, const str &rhs) noexcept;
     friend str operator+(const str &lhs, const str &rhs) noexcept;
 };
@@ -371,6 +381,52 @@ template <size_type N>
 constexpr bool operator!=(const str &lhs, const str::char_type (&a)[N]) noexcept
 {
     return !(operator==(lhs, a));
+}
+
+template <size_type N>
+constexpr bool operator==(const str::char_type (&a)[N], const str &rhs) noexcept
+{
+    return rhs == a;
+}
+
+template <size_type N>
+constexpr bool operator!=(const str::char_type (&a)[N], const str &rhs) noexcept
+{
+    return rhs != a;
+}
+
+constexpr bool operator==(const str &lhs, const str::char_type *a) noexcept
+{
+    size_type counter{0};
+    for (const auto c : lhs.m_data)
+    {
+        if (a[counter] == 0 && c != 0)
+        {
+            return false;
+        }
+
+        if (c != a[counter])
+        {
+            return false;
+        }
+        ++counter;
+    }
+    return true;
+}
+
+constexpr bool operator!=(const str &lhs, const str::char_type *a) noexcept
+{
+    return !(lhs == a);
+}
+
+constexpr bool operator==(const str::char_type *a, const str &rhs) noexcept
+{
+    return rhs == a;
+}
+
+constexpr bool operator!=(const str::char_type *a, const str &rhs) noexcept
+{
+    return rhs != a;
 }
 
 inline bool operator<(const str &lhs, const str &rhs) noexcept

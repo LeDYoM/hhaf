@@ -90,19 +90,19 @@ void MenuPage::configure(vector<sptr<MenuPagedOption>> options,
     for (auto &&option : options)
     {
         size_type title_column{
-            (page_options.centered_empty_option && !option->hasOptions())
+            (page_options.centered_empty_option && option->option().options().empty())
                 ? 2U : 0U};
 
         auto newOption(createNodeAt(vector2dst{title_column, counter}, make_str("label", counter)));
         standarizeText(newOption);
         newOption->text.set(option->title());
 
-        if (option->hasOptions())
+        if (!option->option().options().empty())
         {
             auto discreteTextLabel(createNodeAt(vector2dst{columnForOptions, counter}, make_str("option", counter)));
             standarizeText(discreteTextLabel);
             auto discreteTextComponent(discreteTextLabel->addComponentOfType<DiscreteTextComponent>());
-            discreteTextComponent->data.set(option->options());
+            discreteTextComponent->data.set(option->option().options());
         }
 
         ++counter;

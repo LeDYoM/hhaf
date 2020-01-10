@@ -3,10 +3,8 @@
 namespace lib::scene
 {
 
-MenuPagedOption::MenuPagedOption(str title, size_type start_index,
-                                 size_type min, size_type max)
-    : title_{std::move(title)}, on_selected_{NoAction},
-      start_index_{std::move(start_index)}
+RangeOption::RangeOption(size_type min, size_type max)
+    : options_(static_cast<size_type>(max - min))
 {
     for (auto element = min; element <= max; ++element)
     {
@@ -14,31 +12,19 @@ MenuPagedOption::MenuPagedOption(str title, size_type start_index,
     }
 }
 
-MenuPagedOption::MenuPagedOption(str title, s32 on_selected)
-    : title_{std::move(title)}, on_selected_{on_selected}, 
-    start_index_{}, options_{} {}
-
-MenuPagedOption::MenuPagedOption(str title, size_type start_index,
-                                 string_vector options)
-    : title_{std::move(title)}, on_selected_{NoAction},
-      start_index_{start_index}
+RangeOption::RangeOption(string_vector options)
 {
     options_ = std::move(options);
 }
 
-bool MenuPagedOption::hasOptions() const noexcept
-{
-    return !options_.empty();
-}
+RangeOption::RangeOption() = default;
 
-string_vector MenuPagedOption::options() const noexcept
+MenuPagedOption::MenuPagedOption(str title,
+                                 RangeOption range_options,
+                                 s32 on_selected)
+    : title_{std::move(title)}, on_selected_{on_selected},
+      option_{std::move(range_options)}
 {
-    return options_;
-}
-
-size_type MenuPagedOption::startIndex() const noexcept
-{
-    return start_index_;
 }
 
 s32 MenuPagedOption::onSelected() const noexcept

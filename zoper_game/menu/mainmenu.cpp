@@ -17,6 +17,41 @@ using namespace lib;
 using namespace lib::scene;
 using namespace lib::scene::nodes;
 
+enum class Antialiasing
+{
+    Worst,
+    Bad,
+    Normal,
+    Good,
+    Best,
+    min = Worst,
+    max = Best
+};
+
+constexpr auto to_str(Antialiasing aa)
+{
+    switch(aa)
+    {
+        case Antialiasing::Worst:
+            return "Worst";
+            break;
+        case Antialiasing::Bad:
+            return "Bad";
+            break;
+        case Antialiasing::Normal:
+            return "Normal";
+            break;
+        case Antialiasing::Good:
+            return "Good";
+            break;
+        case Antialiasing::Best:
+            return "Best";
+            break;
+        default:
+            return "";
+    }
+}
+
 void goGame(MenuPaged *scene_node,
             const GameMode game_mode,
             vector<s32> menu_data)
@@ -60,10 +95,10 @@ void MainMenu::onCreated()
         createAndConfigureMenuPage(
             "menuPageMain",
             vector_shared_pointers<MenuPagedOption>{
-                make_option("Play Token mode", 1),
-                make_option("Play Time mode", 2),
-                make_option("Options", 3),
-                make_option("Exit", MenuPagedOption::GoBack)},
+                make_option("Play Token mode", RangeOption(), 1),
+                make_option("Play Time mode", RangeOption(), 2),
+                make_option("Options", RangeOption(), 3),
+                make_option("Exit", RangeOption(), MenuPagedOption::GoBack)},
             main_page_options));
 
     menu_steps.push_back(menuPageMain);
@@ -72,9 +107,9 @@ void MainMenu::onCreated()
         createAndConfigureMenuPage(
             "menuPageByToken",
             vector_shared_pointers<MenuPagedOption>{
-                make_option("Start level Token Mode", 0U, 1U, 10U),
-                make_option("Play", MenuPagedOption::Accept),
-                make_option("Back", MenuPagedOption::GoBack)}));
+                make_option("Start level Token Mode", RangeOption(1U, 10U)),
+                make_option("Play", RangeOption(), MenuPagedOption::Accept),
+                make_option("Back", RangeOption(), MenuPagedOption::GoBack)}));
 
     menu_steps.push_back(menuPageByToken);
 
@@ -86,9 +121,9 @@ void MainMenu::onCreated()
         createAndConfigureMenuPage(
             "menuPageByTime",
             vector_shared_pointers<MenuPagedOption>{
-                make_option("Start level Time Mode", 0U, 1U, 10U),
-                make_option("Play", MenuPagedOption::Accept),
-                make_option("Back", MenuPagedOption::GoBack)}));
+                make_option("Start level Time Mode", RangeOption(1U, 10U)),
+                make_option("Play", RangeOption(), MenuPagedOption::Accept),
+                make_option("Back", RangeOption(), MenuPagedOption::GoBack)}));
 
     menu_steps.push_back(menuPageByTime);
 
@@ -99,17 +134,13 @@ void MainMenu::onCreated()
     auto menuPageOptions(createAndConfigureMenuPage(
         "menuPageOptions",
         vector_shared_pointers<MenuPagedOption>{
-            make_option("Antialiasing", 0U,
-                        string_vector{"Worst", "Bad", "Normal", "Good", "Best"}),
-            make_option("Resolution", 0U,
-                        string_vector{"Worst", "Bad", "Normal", "Good", "Best"}),
-            make_option("Fullscreen", 0U,
-                        string_vector{"No", "Yes"}),
-            make_option("VSync", 0U,
-                        string_vector{"No", "Yes"}),
-            make_option("Redefine keyboard"),
-            make_option("Accept", MenuPagedOption::GoBack),
-            make_option("Cancel", MenuPagedOption::GoBack)}));
+            make_option("Antialiasing", RangeOption{Antialiasing{}}),
+            make_option("Resolution", RangeOption(string_vector{"Worst", "Bad", "Normal", "Good", "Best"})),
+            make_option("Fullscreen", RangeOption(string_vector{"No", "Yes"})),
+            make_option("VSync", RangeOption(string_vector{"No", "Yes"})),
+            make_option("Redefine keyboard", RangeOption()),
+            make_option("Accept", RangeOption(), MenuPagedOption::GoBack),
+            make_option("Cancel", RangeOption(), MenuPagedOption::GoBack)}));
 
     menu_steps.push_back(menuPageOptions);
 
