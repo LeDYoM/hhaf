@@ -15,18 +15,22 @@ struct SeverityType
     /// is bigger or equal to the passed one.
     enum class severity_type_t
     {
-        all,
+        none,
+        debug,
+        verbose,
         info,
         error,
-        none
     };
 
     static constexpr const auto as_str(severity_type_t severity_value) noexcept
     {
         switch (severity_value)
         {
-        case severity_type_t::all:
-            return "<ALL> :";
+        case severity_type_t::debug:
+            return "<DEBUG> :";
+            break;
+        case severity_type_t::verbose:
+            return "<VERBOSE> :";
             break;
         case severity_type_t::info:
             return "<INFO> :";
@@ -42,7 +46,7 @@ struct SeverityType
     }
 
     template <severity_type_t severity_type>
-    static constexpr bool ShowSeverity = severity_type > severity_type_t::all;
+    static constexpr bool ShowSeverity = severity_type >= severity_type_t::debug;
 };
 
 } // namespace logger
