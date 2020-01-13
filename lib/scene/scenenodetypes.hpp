@@ -16,9 +16,10 @@ namespace lib::scene
 class RenderizableSceneNode : public SceneNode
 {
 public:
-    RenderizableSceneNode(SceneNode *const parent, str name) : SceneNode{parent, name}
+    RenderizableSceneNode(SceneNode *const parent, str name)
+        : SceneNode{parent, name},
+          m_node{addComponentOfType<Renderizables>()->createNode(name + "_node")}
     {
-        m_node = addComponentOfType<Renderizables>()->createNode(name + "_node");
     }
 
     sptr<Renderizable> node() noexcept { return m_node; }

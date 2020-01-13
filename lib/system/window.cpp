@@ -75,9 +75,6 @@ namespace lib::sys
             priv_->m_renderTarget = msptr<RenderTarget>(
                     priv_->m_backendWindow->renderTarget());
 
-            // Also extract the input driver
-//            priv_->input_driver_ = sptr<backend::IInputDriver>(
-//                priv_->m_backendWindow->inputDriver());
         }
         DisplayLog::info("Window creation completed");
     }

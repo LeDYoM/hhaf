@@ -20,7 +20,7 @@ RenderTarget::~RenderTarget() = default;
 void RenderTarget::draw(const scene::RenderData &renderData)
 {
     m_renderTarget->draw(
-        &(renderData.vArray.verticesArray()[0]),
+        renderData.vArray.verticesArray().cbegin(),
         renderData.vArray.verticesArray().size(),
         renderData.vArray.primitiveType(),
         renderData.transform.getMatrix(),
