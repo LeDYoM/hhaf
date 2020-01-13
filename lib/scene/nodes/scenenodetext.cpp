@@ -34,6 +34,11 @@ void SceneNodeText::update()
     // If the font or the text changed, recreate the children nodes.
     if (font.hasChanged() || text.hasChanged())
     {
+        // Force reposition if font changed.
+        if (font.hasChanged())
+        {
+            alignmentSize.setChanged();
+        }
         font.resetHasChanged();
         text.resetHasChanged();
 
@@ -109,6 +114,7 @@ void SceneNodeText::update()
                     (createSceneNode<RenderizableSceneNode>(
                             "text_" + str::to_str(counter))));
                     ++counter;
+                    letterNode->visible = true;
                     letterNode->node()->figType.set(FigType_t::Quad);
                     letterNode->node()->color.set(tc);
 
@@ -133,10 +139,25 @@ void SceneNodeText::update()
             }
 
             // Remove the unused letters.
-            sceneNodes().resize(counter);
+            // Get the current total size of the vector of scene nodes.
+            const auto scene_nodes_size = sceneNodes().size();
+            // Iterate from the last one to one after counter
+            // and delete them
+            for (size_type index = scene_nodes_size - 1U;
+                index >= counter; --index)
+            {
+                removeSceneNode(sceneNodes()[index]);
+            }
+
+            // Force reposition if text size changed.
+            if (counter != old_counter)
+            {
+                alignmentSize.setChanged();
+            }
 
             // Force update color
             textColor.resetHasChanged();
+
         }
         else
         {

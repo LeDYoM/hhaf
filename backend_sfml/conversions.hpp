@@ -67,6 +67,16 @@ constexpr const sf::Shader *const to_sf_type(const IShader *s)
     return nullptr;
 }
 
+inline const sf::PrimitiveType to_sf_type(const scene::PrimitiveType primitive_type)
+{
+    return static_cast<sf::PrimitiveType>(primitive_type);
+}
+
+inline const sf::Vertex* to_sf_type(const scene::Vertex* vertex)
+{
+    return reinterpret_cast<const sf::Vertex*>(vertex);
+}
+
 inline const sf::RenderStates to_sf_type(
     const f32 *matrix,
     const ITexture *texture,
