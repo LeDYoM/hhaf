@@ -30,25 +30,25 @@ enum class Antialiasing
 
 constexpr auto to_str(Antialiasing aa)
 {
-    switch(aa)
+    switch (aa)
     {
-        case Antialiasing::Worst:
-            return "Worst";
-            break;
-        case Antialiasing::Bad:
-            return "Bad";
-            break;
-        case Antialiasing::Normal:
-            return "Normal";
-            break;
-        case Antialiasing::Good:
-            return "Good";
-            break;
-        case Antialiasing::Best:
-            return "Best";
-            break;
-        default:
-            return "";
+    case Antialiasing::Worst:
+        return "Worst";
+        break;
+    case Antialiasing::Bad:
+        return "Bad";
+        break;
+    case Antialiasing::Normal:
+        return "Normal";
+        break;
+    case Antialiasing::Good:
+        return "Good";
+        break;
+    case Antialiasing::Best:
+        return "Best";
+        break;
+    default:
+        return "";
     }
 }
 
@@ -86,6 +86,13 @@ void MainMenu::onCreated()
     setNormalTextFont(normalFont);
     setNormalColor(colors::Blue);
     setSelectedColor(colors::Red);
+
+    Rectf32 textBox{
+        rectFromSize(scenePerspective().size())
+            .setLeftTop({0, 750})
+            .setSize({2000, 4 * 150})};
+    position = textBox.leftTop();
+    setSceneNodeSizeForPages(textBox.size());
 
     vector_shared_pointers<scene::MenuPage> menu_steps;
 

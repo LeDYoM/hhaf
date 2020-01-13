@@ -7,6 +7,12 @@
 namespace lib::scene
 {
 
+MenuPaged::MenuPaged(SceneNode *parent, str name)
+    : BaseClass{parent, std::move(name)},
+      scene_node_size_for_pages_{scenePerspective().size()}
+{
+}
+
 MenuPaged::~MenuPaged() = default;
 
 void MenuPaged::setNormalTextFont(sptr<IFont> normal_text_font)
@@ -39,6 +45,23 @@ Color MenuPaged::selectedColor() const
     return selected_color_;
 }
 
+void MenuPaged::setSceneNodeSizeForPages(vector2df size)
+{
+    scene_node_size_for_pages_ = std::move(size);
+    for (auto &sceneNode : sceneNodes())
+    {
+        if (auto menu_page = std::dynamic_pointer_cast<MenuPage>(sceneNode))
+        {
+            menu_page->sceneNodeSize = scene_node_size_for_pages_;
+        }
+    }
+}
+
+vector2df MenuPaged::sceneNodeSizeForPages() const
+{
+    return scene_node_size_for_pages_;
+}
+
 void MenuPaged::setMenuPagedStatus(s32 status)
 {
     status_ = status;
@@ -60,10 +83,9 @@ void MenuPaged::configure_menu(vector_shared_pointers<scene::MenuPage> menu_step
     auto statesController = addComponentOfType<StatesController<s32>>();
     menu_steps_ = std::move(menu_steps);
 
-    for (auto&& menu_page : menu_steps_)
+    for (auto &&menu_page : menu_steps_)
     {
-        menu_page->Forward.connect([this, statesController](const s32 selectedIndex)
-        {
+        menu_page->Forward.connect([this, statesController](const s32 selectedIndex) {
             if (selectedIndex > -1)
             {
                 statesController->push_state(selectedIndex);
@@ -74,27 +96,23 @@ void MenuPaged::configure_menu(vector_shared_pointers<scene::MenuPage> menu_step
             }
         });
 
-        menu_page->Back.connect([statesController]()
-        {
+        menu_page->Back.connect([statesController]() {
             statesController->pop_state();
         });
     }
 
-    statesController->StatePushed.connect([visibility_selector](const s32 menu_page)
-    {
-        visibility_selector->show(static_cast<size_type>(menu_page));
-    });
-    
-    statesController->StateResumed.connect([visibility_selector](const s32 menu_page)
-    {
+    statesController->StatePushed.connect([visibility_selector](const s32 menu_page) {
         visibility_selector->show(static_cast<size_type>(menu_page));
     });
 
-    statesController->AfterFinish.connect([this]()
-    {
+    statesController->StateResumed.connect([visibility_selector](const s32 menu_page) {
+        visibility_selector->show(static_cast<size_type>(menu_page));
+    });
+
+    statesController->AfterFinish.connect([this]() {
         MenuFinished(status_);
     });
-    
+
     statesController->start(0);
     visibility_selector->configure(0U);
 }
@@ -105,4 +123,4 @@ void MenuPaged::terminate(const s32 status)
     MenuFinished(status_);
 }
 
-}
+} // namespace lib::scene

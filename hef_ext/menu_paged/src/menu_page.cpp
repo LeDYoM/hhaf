@@ -75,14 +75,6 @@ size_type MenuPage::SelectedOptionAtRow(const size_type row) const
 void MenuPage::configure(vector<sptr<MenuPagedOption>> options,
     PageOptions page_options)
 {
-    Rectf32 textBox{
-        rectFromSize(scenePerspective().size())
-            .setLeftTop({0, 750})
-            .setSize({2000, 4 * 150})};
-
-    position = textBox.leftTop();
-    sceneNodeSize = textBox.size();
-
     setTableSize({5U, options.size()});
 
     log_assert(options.size() > 0U, "options cannot be empty");

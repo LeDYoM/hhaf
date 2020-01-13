@@ -16,7 +16,6 @@ namespace lib::scene
 class MenuPaged;
 class MenuPage : public scene::nodes::TableNode<nodes::SceneNodeText>
 {
-private:
     using BaseClass = scene::nodes::TableNode<nodes::SceneNodeText>;
 private:
     void standarizeText(const sptr<ContainedElement> &ntext);

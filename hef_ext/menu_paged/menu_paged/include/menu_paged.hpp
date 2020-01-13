@@ -7,8 +7,8 @@
 #include <mtypes/include/connection.hpp>
 
 #include <lib/scene/scenenode.hpp>
-#include <lib/include/resources/ifont.hpp>
 #include <lib/scene/color.hpp>
+#include <lib/include/resources/ifont.hpp>
 
 namespace lib::scene
 {
@@ -20,7 +20,8 @@ class MenuPage;
 class MenuPaged : public SceneNode
 {
 public:
-    using SceneNode::SceneNode;
+    using BaseClass = SceneNode;
+    MenuPaged(SceneNode* parent, str name);
     ~MenuPaged() override;
 
     void setNormalTextFont(sptr<IFont> normal_text_font);
@@ -32,6 +33,8 @@ public:
     void setSelectedColor(Color selected_color);
     Color selectedColor() const;
 
+    void setSceneNodeSizeForPages(vector2df size);
+    vector2df sceneNodeSizeForPages() const;
     void setMenuPagedStatus(s32 status);
     s32 status() const;
 
@@ -47,11 +50,13 @@ protected:
     sptr<MenuPage> createAndConfigureMenuPage(str name, Args&&... args)
     {
         auto node{createMenuPage(std::move(name))};
+        node->sceneNodeSize = scene_node_size_for_pages_;
         node->configure(std::forward<Args>(args)...);
         return node;
     }
 
 private:
+    vector2df scene_node_size_for_pages_;
     sptr<IFont> normal_text_font_;
     Color normal_color_;
     Color selected_color_;
