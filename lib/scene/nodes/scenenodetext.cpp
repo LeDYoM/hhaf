@@ -37,8 +37,6 @@ void SceneNodeText::update()
         font.resetHasChanged();
         text.resetHasChanged();
 
-        clearSceneNodes();
-
         if (font() && !(text().empty()))
         {
             auto texture(font()->getTexture());
@@ -51,7 +49,10 @@ void SceneNodeText::update()
             f32 minY{y};
             f32 maxX{0.f};
             f32 maxY{0.f};
-            u32 prevChar{0};
+            u32 prevChar{0U};
+            size_type counter{0U};
+            size_type old_counter = sceneNodes().size();
+            const Color &tc{textColor()};
 
             log_snt("Text to render: ", text());
 
@@ -103,8 +104,14 @@ void SceneNodeText::update()
                     log_snt("textureUV: ", textureUV);
                     log_snt("letterBox: ", letterBox);
 
-                    auto letterNode(createSceneNode<RenderizableSceneNode>("text_" + str::to_str(curChar)));
+                    sptr<RenderizableSceneNode> letterNode((counter < old_counter) ? 
+                    std::dynamic_pointer_cast<RenderizableSceneNode>(sceneNodes()[counter]) :
+                    (createSceneNode<RenderizableSceneNode>(
+                            "text_" + str::to_str(counter))));
+                    ++counter;
                     letterNode->node()->figType.set(FigType_t::Quad);
+                    letterNode->node()->color.set(tc);
+
                     letterNode->node()->pointCount.set(6U);
                     letterNode->node()->box.set(letterBox);
                     letterNode->node()->setTextureAndTextureRect(texture,
@@ -125,8 +132,15 @@ void SceneNodeText::update()
                 }
             }
 
+            // Remove the unused letters.
+            sceneNodes().resize(counter);
+
             // Force update color
-            textColor.setChanged();
+            textColor.resetHasChanged();
+        }
+        else
+        {
+            clearSceneNodes();
         }
     }
 
