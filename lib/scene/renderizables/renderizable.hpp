@@ -13,6 +13,7 @@
 #include <lib/scene/vertexarray.hpp>
 #include <lib/include/resources/itexture.hpp>
 #include <lib/include/resources/ishader.hpp>
+#include <lib/scene/renderdata.hpp>
 
 namespace lib::scene
 {
@@ -27,7 +28,7 @@ enum class FigType_t : u8
 class Renderizable final : public sys::HasName
 {
 public:
-    Renderizable(SceneNode *const parent, str name, const u32 vertexCount);
+    Renderizable(rptr<SceneNode> parent, str name, const u32 vertexCount);
     ~Renderizable();
 
     void render();
@@ -47,12 +48,13 @@ public:
     void setTextureFill(sptr<ITexture> texture_);
 
 private:
-    SceneNode *parent_;
+    const rptr<SceneNode> parent_;
 
     PropertyState<Rects32> textureRect;
     PropertyState<sptr<ITexture>> texture;
 
     VertexArray m_vertices;
+    RenderData render_data_;
 
     void updateGeometry();
     void updateTextureCoordsAndColor();

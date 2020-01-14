@@ -32,8 +32,9 @@ constexpr int sgn_sin(T angle)
     return sgn(std::sin(angle));
 }
 
-constexpr vector2dd getPositionFromAngleAndRadius(const FigType_t fig_type,
-                                                  const f64 angle, const vector2df &radius)
+constexpr vector2dd getPositionFromAngleAndRadius(
+    const FigType_t fig_type,
+    const f64 angle, const vector2df &radius)
 {
     switch (fig_type)
     {
@@ -54,10 +55,14 @@ constexpr vector2dd getPositionFromAngleAndRadius(const FigType_t fig_type,
 
 } // namespace
 
-Renderizable::Renderizable(SceneNode *const parent, str name, const u32 vertexCount)
+Renderizable::Renderizable(
+    rptr<SceneNode> parent,
+    str name,
+    const u32 vertexCount)
     : sys::HasName{std::move(name)},
-      parent_{parent},
-      m_vertices{TriangleFan, vertexCount}
+      parent_{std::move(parent)},
+      m_vertices{TriangleFan, vertexCount},
+      render_data_{m_vertices, parent->globalTransform(), nullptr, nullptr}
 {
 }
 
@@ -71,13 +76,8 @@ void Renderizable::render()
 
         if (!m_vertices.empty())
         {
-            parent_->parentScene()->sceneManager().systemProvider()
-                .renderSystem().draw(scene::RenderData{
-                m_vertices,
-                parent_->globalTransform(),
-                dynamic_cast<Texture *>(texture().get()),
-                dynamic_cast<Shader *>(shader().get()),
-                });
+            parent_->sceneManager().
+                systemProvider().renderSystem().draw(render_data_);
         }
     }
 }
@@ -128,7 +128,7 @@ void Renderizable::updateColorForVertex(
     {
         RenderizableModifierContext context{
             box(),
-            ctexture_rect, 
+            ctexture_rect,
             texture() ? texture()->size() : vector2du32{0U, 0U},
             *v_iterator};
         dest_color *= color_modifier()(context);
@@ -185,6 +185,17 @@ void Renderizable::update()
     {
         updateColors();
     }
+
+    if (ps_readResetHasChanged(texture))
+    {
+        render_data_.texture = dynamic_cast<Texture *>(texture().get());
+    }
+
+    if (ps_readResetHasChanged(shader))
+    {
+        render_data_.shader = dynamic_cast<Shader *>(shader().get());
+    }
+
 }
 
 void Renderizable::updateGeometry()

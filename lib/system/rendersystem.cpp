@@ -12,30 +12,34 @@
 
 namespace lib::sys
 {
-    struct RenderSystem::RenderSystemPrivate final
-    {
-        RenderSystemPrivate() {}
-        ~RenderSystemPrivate() {}
-    };
+struct RenderSystem::RenderSystemPrivate final
+{
+    RenderSystemPrivate(rptr<RenderTarget> render_target) noexcept 
+        : render_target_{std::move(render_target)} {}
+    ~RenderSystemPrivate() {}
+    const rptr<RenderTarget> render_target_;
+};
 
-    RenderSystem::RenderSystem(sys::SystemProvider &system_provider)
-        : HostedAppService{ system_provider }, priv_{ muptr<RenderSystemPrivate>() }
-    {
-    }
-
-    RenderSystem::~RenderSystem() = default;
-
-    void RenderSystem::update()
-    {
-    }
-
-    void RenderSystem::draw(const scene::RenderData & renderData)
-    {
-        systemProvider().parentWindow().renderTarget()->draw(renderData);
-    }
-
-    void RenderSystem::clear()
-    {
-        systemProvider().parentWindow().renderTarget()->clear();
-    }
+RenderSystem::RenderSystem(sys::SystemProvider &system_provider)
+    : HostedAppService{system_provider},
+      priv_{muptr<RenderSystemPrivate>(
+          system_provider.parentWindow().renderTarget().get())}
+{
 }
+
+RenderSystem::~RenderSystem() = default;
+
+void RenderSystem::update()
+{
+}
+
+void RenderSystem::draw(const scene::RenderData &renderData)
+{
+    priv_->render_target_->draw(renderData);
+}
+
+void RenderSystem::clear()
+{
+    priv_->render_target_->clear();
+}
+} // namespace lib::sys
