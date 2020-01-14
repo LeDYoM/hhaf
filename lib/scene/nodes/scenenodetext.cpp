@@ -109,10 +109,7 @@ void SceneNodeText::update()
                     log_snt("textureUV: ", textureUV);
                     log_snt("letterBox: ", letterBox);
 
-                    sptr<RenderizableSceneNode> letterNode((counter < old_counter) ? 
-                    std::dynamic_pointer_cast<RenderizableSceneNode>(sceneNodes()[counter]) :
-                    (createSceneNode<RenderizableSceneNode>(
-                            "text_" + str::to_str(counter))));
+                    sptr<RenderizableSceneNode> letterNode((counter < old_counter) ? std::dynamic_pointer_cast<RenderizableSceneNode>(sceneNodes()[counter]) : (createSceneNode<RenderizableSceneNode>("text_" + str::to_str(counter))));
                     ++counter;
                     letterNode->visible = true;
                     letterNode->node()->figType.set(FigType_t::Quad);
@@ -140,11 +137,11 @@ void SceneNodeText::update()
 
             // Remove the unused letters.
             // Get the current total size of the vector of scene nodes.
-            const auto scene_nodes_size = sceneNodes().size();
+            const auto scene_nodes_size{sceneNodes().size()};
             // Iterate from the last one to one after counter
             // and delete them
-            for (size_type index = scene_nodes_size - 1U;
-                index >= counter; --index)
+            for (size_type index{(scene_nodes_size - 1U)};
+                 index >= counter; --index)
             {
                 removeSceneNode(sceneNodes()[index]);
             }
@@ -157,7 +154,6 @@ void SceneNodeText::update()
 
             // Force update color
             textColor.resetHasChanged();
-
         }
         else
         {
