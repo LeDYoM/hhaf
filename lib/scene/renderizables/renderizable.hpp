@@ -28,7 +28,11 @@ enum class FigType_t : u8
 class Renderizable final : public sys::HasName
 {
 public:
-    Renderizable(rptr<SceneNode> parent, str name, const u32 vertexCount);
+    Renderizable(rptr<SceneNode> parent, str name,
+                 FigType_t figure_type, size_type initial_point_count, 
+                 Rectf32 _box, Color color, sptr<ITexture> _texture,
+                 sptr<IShader> _shader);
+
     ~Renderizable();
 
     void render();

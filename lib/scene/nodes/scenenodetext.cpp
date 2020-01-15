@@ -109,13 +109,20 @@ void SceneNodeText::update()
                     log_snt("textureUV: ", textureUV);
                     log_snt("letterBox: ", letterBox);
 
-                    sptr<RenderizableSceneNode> letterNode((counter < old_counter) ? std::dynamic_pointer_cast<RenderizableSceneNode>(sceneNodes()[counter]) : (createSceneNode<RenderizableSceneNode>("text_" + str::to_str(counter))));
+                    sptr<RenderizableSceneNode> letterNode;
+                    if (counter < old_counter)
+                    {
+                        letterNode = std::dynamic_pointer_cast<RenderizableSceneNode>(sceneNodes()[counter]);
+                    }
+                    else
+                    {
+                        letterNode = (createSceneNode<RenderizableSceneNode>("text_" + str::to_str(counter)));
+                        letterNode->node()->figType.set(FigType_t::Quad);
+                        letterNode->node()->pointCount.set(4U);
+                    }
                     ++counter;
-                    letterNode->visible = true;
-                    letterNode->node()->figType.set(FigType_t::Quad);
                     letterNode->node()->color.set(tc);
 
-                    letterNode->node()->pointCount.set(6U);
                     letterNode->node()->box.set(letterBox);
                     letterNode->node()->setTextureAndTextureRect(texture,
                                                                  textureUV);

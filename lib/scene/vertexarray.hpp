@@ -10,42 +10,45 @@
 
 namespace lib::scene
 {
-    using BasicVertexArray = vector<Vertex>;
+using BasicVertexArray = vector<Vertex>;
 
-    enum PrimitiveType
-    {
-        Points = 0,
-        Lines,
-        LineStrip,
-        Triangles,
-        TriangleStrip,
-        TriangleFan
-    };
+enum class PrimitiveType : u8
+{
+    Points = 0U,
+    Lines,
+    LineStrip,
+    Triangles,
+    TriangleStrip,
+    TriangleFan
+};
 
-    class VertexArray
-    {
-    public:
-        constexpr VertexArray() noexcept = default;
-        constexpr VertexArray(const PrimitiveType type) noexcept
-            : m_vertices( ), m_primitiveType{ type } {}
+class VertexArray
+{
+public:
+    constexpr VertexArray() noexcept = default;
+    constexpr VertexArray(const PrimitiveType type) noexcept
+        : m_vertices(), m_primitiveType{type} {}
 
-        constexpr VertexArray(const PrimitiveType type, const u32 vertexCount) noexcept
-            : m_vertices( vertexCount ), m_primitiveType{ type } {}
+    constexpr VertexArray(
+        const PrimitiveType type,
+        const size_type vertexCount) noexcept
+        : m_vertices(vertexCount), m_primitiveType{type} {}
 
-        constexpr bool empty() const noexcept { return m_vertices.empty(); }
+    constexpr bool empty() const noexcept { return m_vertices.empty(); }
 
-        constexpr const BasicVertexArray &verticesArray() const noexcept { return m_vertices; }
-        constexpr BasicVertexArray &verticesArray() noexcept { return m_vertices; }
+    constexpr const BasicVertexArray &verticesArray() const noexcept { return m_vertices; }
+    constexpr BasicVertexArray &verticesArray() noexcept { return m_vertices; }
 
-        constexpr PrimitiveType primitiveType() const noexcept { return m_primitiveType; }
+    constexpr PrimitiveType primitiveType() const noexcept { return m_primitiveType; }
 
-        void move(const vector2df &offset) noexcept;
-        void moveX(const f32 xOffset) noexcept;
-        void moveY(const f32 yOffset) noexcept;
-    private:
-        BasicVertexArray m_vertices;
-        PrimitiveType m_primitiveType{Triangles};
-    };
-}
+    void move(const vector2df &offset) noexcept;
+    void moveX(const f32 xOffset) noexcept;
+    void moveY(const f32 yOffset) noexcept;
+
+private:
+    BasicVertexArray m_vertices;
+    PrimitiveType m_primitiveType{PrimitiveType::Triangles};
+};
+} // namespace lib::scene
 
 #endif

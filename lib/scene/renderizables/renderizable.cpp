@@ -53,16 +53,61 @@ constexpr vector2dd getPositionFromAngleAndRadius(
     }
 }
 
+constexpr size_type vertexPerFigure(
+    const FigType_t fig_type, const size_type num_points)
+{
+    switch (fig_type)
+    {
+    case FigType_t::Quad:
+    case FigType_t::Shape:
+    {
+        return num_points + 2U;
+    }
+    break;
+    default:
+    {
+        return num_points;
+    }
+    }
+}
+
+constexpr size_type primitivePerFigure(
+    const FigType_t fig_type, const size_type num_points)
+{
+    switch (fig_type)
+    {
+    case FigType_t::Quad:
+    case FigType_t::Shape:
+    {
+        return num_points + 2U;
+    }
+    break;
+    default:
+    {
+        return num_points;
+    }
+    }
+}
+
 } // namespace
 
 Renderizable::Renderizable(
-    rptr<SceneNode> parent,
-    str name,
-    const u32 vertexCount)
+    rptr<SceneNode> parent, str name, FigType_t figure_type,
+    size_type initial_point_count, Rectf32 _box, Color _color,
+    sptr<ITexture> _texture, sptr<IShader> _shader)
     : sys::HasName{std::move(name)},
       parent_{std::move(parent)},
-      m_vertices{TriangleFan, vertexCount},
-      render_data_{m_vertices, parent->globalTransform(), nullptr, nullptr}
+      m_vertices{
+          PrimitiveType::TriangleFan,
+          vertexPerFigure(FigType_t::Quad, initial_point_count)},
+      pointCount{initial_point_count},
+      box{std::move(_box)},
+      color{std::move(_color)},
+      texture{std::move(_texture)},
+      shader{std::move(_shader)},
+      render_data_{m_vertices, parent->globalTransform(), 
+        texture().get() != nullptr ? dynamic_cast<Texture *>(texture().get()) : nullptr, 
+        shader().get() != nullptr ? dynamic_cast<Shader *>(shader().get()) : nullptr}
 {
 }
 
@@ -76,8 +121,7 @@ void Renderizable::render()
 
         if (!m_vertices.empty())
         {
-            parent_->sceneManager().
-                systemProvider().renderSystem().draw(render_data_);
+            parent_->sceneManager().systemProvider().renderSystem().draw(render_data_);
         }
     }
 }
@@ -166,7 +210,7 @@ void Renderizable::updateColors()
 
 void Renderizable::update()
 {
-    if (ps_readResetHasAnyChanged(box, figType))
+    if (ps_readResetHasAnyChanged(box, figType, pointCount))
     {
         updateGeometry();
         textureRect.resetHasChanged();
@@ -188,14 +232,16 @@ void Renderizable::update()
 
     if (ps_readResetHasChanged(texture))
     {
-        render_data_.texture = dynamic_cast<Texture *>(texture().get());
+        render_data_.texture = (texture().get() != nullptr) ?
+            (dynamic_cast<Texture *>(texture().get())) : nullptr;
     }
 
     if (ps_readResetHasChanged(shader))
     {
-        render_data_.shader = dynamic_cast<Shader *>(shader().get());
-    }
+        render_data_.shader = (shader().get() != nullptr) ?
+            (dynamic_cast<Shader *>(shader().get())) : nullptr;
 
+    }
 }
 
 void Renderizable::updateGeometry()
@@ -205,15 +251,15 @@ void Renderizable::updateGeometry()
         const Rectf32 &cBox{box()};
         auto &vertices(m_vertices.verticesArray());
 
+        const auto fig_type{figType()};
         const size_type nPoints{pointCount()};
-        const size_type nVertex{nPoints + 2};
+        const size_type nVertex{vertexPerFigure(fig_type, nPoints)};
         const vector2df radius{cBox.size() / 2.0F};
 
         vertices.resize(nVertex); // + 2 for center and repeated first point
         const f64 baseAngle(PiM2Constant<f64> / static_cast<f64>(nPoints));
         const auto leftTop(cBox.leftTop());
         const auto base_position{leftTop + radius};
-        const auto fig_type{figType()};
 
         const auto vertices_iterator_begin = m_vertices.verticesArray().begin();
         auto vertices_iterator_second = vertices_iterator_begin;
