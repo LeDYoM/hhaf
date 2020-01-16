@@ -8,7 +8,7 @@
 #include <lib/system/resourcemanager.hpp>
 #include <lib/system/scenemanager.hpp>
 #include <lib/system/window.hpp>
-#include <lib/system/simulationsystem.hpp>
+#include <lib/simulation/simulationsystem.hpp>
 #include <lib/system/timesystem.hpp>
 
 #include <lib/include/liblog.hpp>

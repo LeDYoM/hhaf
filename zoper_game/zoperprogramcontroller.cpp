@@ -6,7 +6,7 @@
 
 #include <mtypes/include/serializer.hpp>
 #include <lib/system/systemprovider.hpp>
-#include <lib/system/simulationsystem.hpp>
+#include <lib/simulation/simulationsystem.hpp>
 #include <lib/system/filesystem.hpp>
 #include <lib/system/scenemanager.hpp>
 

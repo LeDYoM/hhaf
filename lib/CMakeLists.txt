@@ -25,6 +25,8 @@ add_subdirectory(scene)
 target_link_libraries(${CURRENT_TARGET} PUBLIC scene)
 add_subdirectory(resources)
 target_link_libraries(${CURRENT_TARGET} PUBLIC resources)
+add_subdirectory(simulation)
+target_link_libraries(${CURRENT_TARGET} PUBLIC simulation)
 add_subdirectory(system)
 target_link_libraries(${CURRENT_TARGET} PUBLIC system)
 

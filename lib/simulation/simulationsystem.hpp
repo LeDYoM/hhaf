@@ -5,7 +5,7 @@
 
 #include <mtypes/include/types.hpp>
 #include <lib/system/appservice.hpp>
-#include <lib/system/simulationactiongroup.hpp>
+#include <lib/simulation/simulationactiongroup.hpp>
 
 namespace lib::sys
 {
