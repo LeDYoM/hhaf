@@ -6,7 +6,6 @@
 #include "../loaders/highscoresresources.hpp"
 #include "../common_scene_nodes.hpp"
 
-#include <lib/scene/renderizables/renderizable.hpp>
 #include <lib/scene/components/renderizables.hpp>
 #include <lib/scene/components/inputcomponent.hpp>
 #include <lib/scene/datawrappers/resourceview.hpp>

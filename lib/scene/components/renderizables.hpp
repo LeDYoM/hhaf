@@ -9,7 +9,7 @@
 
 #include <lib/scene/icomponent.hpp>
 
-#include <lib/scene/renderizables/renderizable.hpp>
+#include <lib/scene/renderizable.hpp>
 
 namespace lib::scene
 {

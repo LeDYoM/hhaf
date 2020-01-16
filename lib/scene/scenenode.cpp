@@ -1,7 +1,7 @@
 #include "scenenode.hpp"
 #include "scene.hpp"
 
-#include <lib/scene/renderizables/renderizable.hpp>
+#include <lib/scene/renderizable.hpp>
 
 #include <lib/include/liblog.hpp>
 

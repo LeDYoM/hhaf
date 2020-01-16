@@ -4,7 +4,7 @@
 
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/nodes/tablenode.hpp>
-#include <lib/scene/renderizables/renderizable.hpp>
+#include <lib/scene/renderizable.hpp>
 #include <lib/system/scenemanager.hpp>
 
 #include <boardmanager/include/boardmodel.hpp>

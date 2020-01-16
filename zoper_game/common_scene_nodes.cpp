@@ -2,7 +2,7 @@
 #include <mtypes/include/properties.hpp>
 
 #include <lib/include/liblog.hpp>
-#include <lib/scene/renderizables/renderizable.hpp>
+#include <lib/scene/renderizable.hpp>
 #include <lib/scene/components/renderizables.hpp>
 #include <lib/scene/scenenode.hpp>
 

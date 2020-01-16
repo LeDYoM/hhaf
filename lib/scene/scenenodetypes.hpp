@@ -5,7 +5,7 @@
 
 #include <mtypes/include/types.hpp>
 #include <lib/scene/icomponent.hpp>
-#include <lib/scene/renderizables/renderizable.hpp>
+#include <lib/scene/renderizable.hpp>
 #include <lib/scene/components/renderizables.hpp>
 #include <lib/include/liblog.hpp>
 

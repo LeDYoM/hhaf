@@ -4,7 +4,7 @@
 #define ZOPER_GAMEBASETILE_HPP
 
 #include <lib/scene/scenenode.hpp>
-#include <lib/scene/renderizables/renderizable.hpp>
+#include <lib/scene/renderizable.hpp>
 #include <boardmanager/include/itile.hpp>
 
 namespace zoper

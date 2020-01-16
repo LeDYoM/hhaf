@@ -7,7 +7,7 @@
 #include <mtypes/include/properties.hpp>
 #include <mtypes/include/function.hpp>
 
-#include <lib/scene/renderizables/renderizable_modifier_context.hpp>
+#include <lib/scene/renderizable_modifier_context.hpp>
 #include <lib/scene/color.hpp>
 #include <lib/scene/hasname.hpp>
 #include <lib/scene/vertexarray.hpp>

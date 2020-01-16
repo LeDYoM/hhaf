@@ -5,7 +5,7 @@
 
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/color.hpp>
-#include <lib/scene/renderizables/renderizable.hpp>
+#include <lib/scene/renderizable.hpp>
 #include <lib/scene/scenenodetypes.hpp>
 
 namespace zoper
