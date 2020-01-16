@@ -29,20 +29,18 @@ void SceneNode::render(bool parentTransformationChanged)
         // Update node
         update();
 
-        bool local_transformation_needs_update{transformationNeedsUpdate()};
+        parentTransformationChanged |= updateTransformIfNecessary();
 
-        if (parentTransformationChanged | local_transformation_needs_update)
+        if (parentTransformationChanged)
         {
             updateGlobalTransformation(
-                local_transformation_needs_update,
                 m_parent ? m_parent->globalTransform() : Transform::Identity);
         }
 
         postUpdateComponents();
         for (auto &&group : m_groups)
         {
-            group->render(parentTransformationChanged |
-                          local_transformation_needs_update);
+            group->render(parentTransformationChanged);
         }
     }
 }

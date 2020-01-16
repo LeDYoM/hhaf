@@ -3,45 +3,33 @@
 
 namespace lib::scene
 {
-Transformable::Transformable() noexcept : origin{}, rotation{}, scale{{1U, 1U}},
-                                          position{}, m_transform{}, m_globalTransform{}
+Transformable::Transformable() noexcept
+    : origin{}, rotation{}, scale{{1U, 1U}},
+      position{}, m_transform{}, m_globalTransform{}
 {
 }
 
 Transformable::~Transformable() = default;
 
-const Transform &Transformable::updatedTransform(
-        const bool local_transformation_needs_update)
-    {
-        if (local_transformation_needs_update)
-        {
-            updateTransform();
-            reset_needs_update();
-        }
-        return m_transform;
-    }
-
 void Transformable::updateGlobalTransformation(
-    const bool local_transformation_needs_update,
     const Transform &currentGlobalTransformation)
 {
-    m_globalTransform = currentGlobalTransformation *
-                        updatedTransform(local_transformation_needs_update);
+    m_globalTransform = currentGlobalTransformation * m_transform;
 }
 
-void Transformable::rotateAround(const vector2df &point, const f32 angle)
+void Transformable::rotateAround(vector2df point, f32 angle)
 {
-    origin = position = point;
-    rotation = angle;
+    origin = position = std::move(point);
+    rotation = std::move(angle);
 }
 
-void Transformable::scaleAround(const vector2df &point, const vector2df &scale_)
+void Transformable::scaleAround(vector2df point, vector2df scale_)
 {
-    origin = position = point;
-    scale = scale_;
+    origin = position = std::move(point);
+    scale = std::move(scale_);
 }
 
-void Transformable::rotateScaleAround(const vector2df &point, const f32 angle, const vector2df &scale_)
+void Transformable::rotateScaleAround(vector2df point, f32 angle, vector2df scale_)
 {
     origin = position = point;
     rotation = angle;
@@ -50,9 +38,6 @@ void Transformable::rotateScaleAround(const vector2df &point, const f32 angle, c
 
 void Transformable::updateTransform() noexcept
 {
-    if (!transformationNeedsUpdate())
-        return;
-
     // Recompute the combined transform
     const f32 angle{-rotation() * 3.141592654f / 180.f};
     const f32 cosine{static_cast<f32>(std::cos(angle))};
