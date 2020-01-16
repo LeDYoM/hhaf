@@ -16,9 +16,13 @@ namespace lib::scene
 class RenderizableSceneNode : public SceneNode
 {
 public:
-    RenderizableSceneNode(SceneNode *const parent, str name)
+    using BaseClass = SceneNode;
+
+    template <typename... Args>
+    RenderizableSceneNode(SceneNode *const parent, const str& name, Args &&... args)
         : SceneNode{parent, name},
-          m_node{addComponentOfType<Renderizables>()->createNode(name + "_node")}
+          m_node{addComponentOfType<Renderizables>()
+                     ->createRenderizable(name + "_node", std::forward<Args>(args)...)}
     {
     }
 

@@ -110,20 +110,21 @@ void SceneNodeText::update()
                     log_snt("letterBox: ", letterBox);
 
                     sptr<RenderizableSceneNode> letterNode;
+                    // In case we already have a node containing the letter,
+                    // reuse it. If not, create a new one.
                     if (counter < old_counter)
                     {
                         letterNode = std::dynamic_pointer_cast<RenderizableSceneNode>(sceneNodes()[counter]);
+                        letterNode->node()->color.set(tc);
+                        letterNode->node()->box.set(letterBox);
                     }
                     else
                     {
-                        letterNode = (createSceneNode<RenderizableSceneNode>("text_" + str::to_str(counter)));
-                        letterNode->node()->figType.set(FigType_t::Quad);
-                        letterNode->node()->pointCount.set(4U);
+                        letterNode = createSceneNode<RenderizableSceneNode>(
+                            "text_" + str::to_str(counter),
+                            FigType_t::Quad, letterBox, tc);
                     }
                     ++counter;
-                    letterNode->node()->color.set(tc);
-
-                    letterNode->node()->box.set(letterBox);
                     letterNode->node()->setTextureAndTextureRect(texture,
                                                                  textureUV);
 
@@ -150,6 +151,8 @@ void SceneNodeText::update()
             for (size_type index{(scene_nodes_size - 1U)};
                  index >= counter; --index)
             {
+                // Assert we are removing always the last one.
+                log_assert(sceneNodes()[index] == *(sceneNodes().end() - 1U));
                 removeSceneNode(sceneNodes()[index]);
             }
 

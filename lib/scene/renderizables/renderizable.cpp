@@ -97,17 +97,18 @@ Renderizable::Renderizable(
     sptr<ITexture> _texture, sptr<IShader> _shader)
     : sys::HasName{std::move(name)},
       parent_{std::move(parent)},
-      m_vertices{
-          PrimitiveType::TriangleFan,
-          vertexPerFigure(FigType_t::Quad, initial_point_count)},
+      figType{figure_type},
       pointCount{initial_point_count},
       box{std::move(_box)},
       color{std::move(_color)},
       texture{std::move(_texture)},
       shader{std::move(_shader)},
-      render_data_{m_vertices, parent->globalTransform(), 
-        texture().get() != nullptr ? dynamic_cast<Texture *>(texture().get()) : nullptr, 
-        shader().get() != nullptr ? dynamic_cast<Shader *>(shader().get()) : nullptr}
+      m_vertices{
+          PrimitiveType::TriangleFan,
+          vertexPerFigure(figure_type, initial_point_count)},
+      render_data_{m_vertices, parent->globalTransform(),
+                   texture().get() != nullptr ? dynamic_cast<Texture *>(texture().get()) : nullptr,
+                   shader().get() != nullptr ? dynamic_cast<Shader *>(shader().get()) : nullptr}
 {
 }
 
@@ -232,15 +233,12 @@ void Renderizable::update()
 
     if (ps_readResetHasChanged(texture))
     {
-        render_data_.texture = (texture().get() != nullptr) ?
-            (dynamic_cast<Texture *>(texture().get())) : nullptr;
+        render_data_.texture = (texture().get() != nullptr) ? (dynamic_cast<Texture *>(texture().get())) : nullptr;
     }
 
     if (ps_readResetHasChanged(shader))
     {
-        render_data_.shader = (shader().get() != nullptr) ?
-            (dynamic_cast<Shader *>(shader().get())) : nullptr;
-
+        render_data_.shader = (shader().get() != nullptr) ? (dynamic_cast<Shader *>(shader().get())) : nullptr;
     }
 }
 

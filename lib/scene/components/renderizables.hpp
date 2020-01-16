@@ -18,33 +18,16 @@ class Renderizable;
 class Renderizables : public IComponent
 {
 public:
-    Renderizables();
-    ~Renderizables() override;
-
-    void onAttached() override;
-
     /// Method to create a Renderizable
     /// @param name The name of the Renderizable node.
+    /// @param figure_type Type of the figure to generate.
+    /// @param box Box containing the Renderizable.
+    /// @param color Color of the Renderizable.
+    /// @param num_points Number of points of the Renderizable.
     /// @returns The created Renderizable
-    sptr<Renderizable> createNode(const str &name)
-    {
-        auto result(msptr<Renderizable>(attachedNode(), std::move(name), 
-            FigType_t::Quad, 0U, Rectf32{}, colors::White, nullptr, nullptr));
-        addRenderizable(result);
-        return result;
-    }
-
-    sptr<Renderizable> createNode(str name,
-                                Rectf32 box, Color color = colors::White,
-                                size_type num_points = 4U)
-    {
-        auto result(msptr<Renderizable>(
-            attachedNode(), std::move(name), 
-            FigType_t::Quad, std::move(num_points),
-            std::move(box), std::move(color), nullptr, nullptr));
-        addRenderizable(result);
-        return result;
-    }
+    sptr<Renderizable> createRenderizable(
+        str name, FigType_t figure_type, Rectf32 box = Rectf32{},
+        Color color = colors::White, size_type num_points = 4U);
 
     void removeRenderizable(const sptr<Renderizable> &element);
     void clearRenderizables();
@@ -66,7 +49,6 @@ public:
 
 private:
     void addRenderizable(sptr<Renderizable> newElement);
-
     vector<sptr<Renderizable>> render_nodes_;
 };
 } // namespace lib::scene

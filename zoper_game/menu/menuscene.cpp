@@ -28,12 +28,9 @@ void MenuScene::onCreated()
 
     createStandardBackground(renderizables);
 
-    auto logo = renderizables->createNode("mainLogo");
-    logo->figType.set(FigType_t::Quad);
-    logo->pointCount.set(PointsPerQuad);
-    logo->box = Rectf32{500, 150, 1000, 500};
+    auto logo = renderizables->createRenderizable(
+        "mainLogo", FigType_t::Quad, Rectf32{500, 150, 1000, 500});
     logo->setTextureFill(resources_viewer->getTexture(MainMenuResources::LogoId));
-    logo->color = colors::White;
 
     auto mainMenu(createSceneNode<MainMenu>(MainMenu::ClassName));
     mainMenu->MenuFinished.connect([this](const s32 status)

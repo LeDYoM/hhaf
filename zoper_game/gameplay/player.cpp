@@ -19,9 +19,8 @@ namespace zoper
         m_extraSceneNode_2 = m_extraSceneNode->createSceneNode("m_extraSceneNode_2");
         
         auto renderizables = m_extraSceneNode_2->addComponentOfType<Renderizables>();
-        m_node = renderizables->createNode("Node");
-        m_node->figType.set(FigType_t::Shape);
-        m_node->pointCount.set(3U);
+        m_node = renderizables->createRenderizable(
+            "player_node", FigType_t::Shape, Rectf32{}, colors::White, 3U);
         data.set(0);
     }
 
