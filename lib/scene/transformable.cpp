@@ -11,8 +11,29 @@ Transformable::Transformable() noexcept
 
 Transformable::~Transformable() = default;
 
+bool Transformable::updateTransformIfNecessary() noexcept
+{
+    if (transformationNeedsUpdate())
+    {
+        updateTransform();
+        resetNeedsUpdate();
+        return true;
+    }
+    return false;
+}
+
+void Transformable::resetNeedsUpdate() noexcept
+{
+    ps_resetHasChanged(origin, rotation, scale, position);
+}
+
+bool Transformable::transformationNeedsUpdate() const noexcept
+{
+    return ps_hasChanged(position, origin, scale, rotation);
+}
+
 void Transformable::updateGlobalTransformation(
-    const Transform &currentGlobalTransformation)
+    const Transform &currentGlobalTransformation) noexcept
 {
     m_globalTransform = currentGlobalTransformation * m_transform;
 }

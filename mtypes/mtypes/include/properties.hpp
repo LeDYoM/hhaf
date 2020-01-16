@@ -16,7 +16,7 @@ public:
     /// Get value of the property.
     /// @return The content of the property.
     virtual const T &get() const noexcept = 0;
-    virtual bool set(const T &v) noexcept = 0;
+    virtual bool set(const T &v) = 0;
 };
 
 template <typename T>
@@ -39,7 +39,7 @@ public:
         return v;
     }
     inline const T &get() const noexcept override final { return m_value; }
-    inline bool set(const T &v) noexcept override
+    inline bool set(const T &v) override
     {
         if (!(m_value == v))
         {
@@ -62,9 +62,9 @@ public:
     constexpr PropertyState() noexcept : BaseClass{} {}
     constexpr PropertyState(T iv) noexcept : BaseClass{std::move(iv)} {}
     constexpr PropertyState(PropertyState &&) noexcept = default;
-    constexpr PropertyState(const PropertyState &) noexcept = default;
+    constexpr PropertyState(const PropertyState &) = default;
     constexpr PropertyState &operator=(PropertyState &&) noexcept = default;
-    constexpr PropertyState &operator=(const PropertyState &) noexcept = default;
+    constexpr PropertyState &operator=(const PropertyState &) = default;
 
     constexpr const T &operator=(const T &v) noexcept
     {
@@ -82,7 +82,7 @@ public:
         return v;
     }
 
-    inline bool set(const T &v) noexcept override
+    inline bool set(const T &v) override
     {
         const bool is_different{BaseClass::set(v)};
 
@@ -98,32 +98,32 @@ private:
 };
 
 template <typename T, typename... Args>
-constexpr bool ps_hasChanged(const PropertyState<T> &arg, Args &&... args)
+constexpr bool ps_hasChanged(const PropertyState<T> &arg, Args &&... args) noexcept
 {
     return arg.hasChanged() || ps_hasChanged(std::forward<Args>(args)...);
 }
 
 template <typename T>
-constexpr bool ps_hasChanged(const PropertyState<T> &arg)
+constexpr bool ps_hasChanged(const PropertyState<T> &arg) noexcept
 {
     return arg.hasChanged();
 }
 
 template <typename T, typename... Args>
-constexpr void ps_resetHasChanged(PropertyState<T> &arg, Args &&... args)
+constexpr void ps_resetHasChanged(PropertyState<T> &arg, Args &&... args) noexcept
 {
     arg.resetHasChanged();
     ps_resetHasChanged(std::forward<Args>(args)...);
 }
 
 template <typename T>
-constexpr void ps_resetHasChanged(PropertyState<T> &arg)
+constexpr void ps_resetHasChanged(PropertyState<T> &arg) noexcept
 {
     return arg.resetHasChanged();
 }
 
 template <typename T, typename... Args>
-constexpr bool ps_readResetHasAnyChanged(PropertyState<T> &arg, Args &&... args)
+constexpr bool ps_readResetHasAnyChanged(PropertyState<T> &arg, Args &&... args) noexcept
 {
     const bool result_unary{arg.readResetHasChanged()};
 
@@ -141,7 +141,7 @@ constexpr bool ps_readResetHasAnyChanged(PropertyState<T> &arg, Args &&... args)
 }
 
 template <typename T, typename... Args>
-constexpr bool ps_readResetHasAllChanged(PropertyState<T> &arg, Args &&... args)
+constexpr bool ps_readResetHasAllChanged(PropertyState<T> &arg, Args &&... args) noexcept
 {
     const bool result_unary{arg.readResetHasChanged()};
 
@@ -159,7 +159,7 @@ constexpr bool ps_readResetHasAllChanged(PropertyState<T> &arg, Args &&... args)
 }
 
 template <typename T>
-constexpr bool ps_readResetHasChanged(PropertyState<T> &arg)
+constexpr bool ps_readResetHasChanged(PropertyState<T> &arg) noexcept
 {
     return arg.readResetHasChanged();
 }

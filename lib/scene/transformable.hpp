@@ -20,17 +20,7 @@ public:
     PropertyState<vector2df> scale;
     PropertyState<vector2df> position;
 
-    bool updateTransformIfNecessary()
-    {
-        if (transformationNeedsUpdate())
-        {
-            updateTransform();
-            reset_needs_update();
-            return true;
-        }
-        return false;
-    }
-
+    bool updateTransformIfNecessary() noexcept;
     inline const Transform &globalTransform() const noexcept { return m_globalTransform; }
 
     /// Method to set the associated transformation to a rotation around a given point.
@@ -48,19 +38,11 @@ public:
     void rotateScaleAround(vector2df point, f32 angle, vector2df scale);
 
 protected:
-    inline bool transformationNeedsUpdate() const noexcept
-    {
-        return ps_hasChanged(position, origin, scale, rotation);
-    }
-
-    void updateGlobalTransformation(const Transform &);
+    bool transformationNeedsUpdate() const noexcept;
+    void updateGlobalTransformation(const Transform &) noexcept;
 
 private:
-    inline void reset_needs_update() noexcept
-    {
-        ps_resetHasChanged(origin, rotation, scale, position);
-    }
-
+    void resetNeedsUpdate() noexcept;
     inline const Transform &transform() const noexcept { return m_transform; }
 
 private:
