@@ -5,21 +5,21 @@
 
 #include <mtypes/include/types.hpp>
 #include "idatawrapper.hpp"
-#include <lib/include/resources/iresourceretriever.hpp>
+#include <lib/resources/include/iresourceretriever.hpp>
 
 namespace lib::scene
 {
-    /// Component to provide access to resources.
-    class ResourceView final : public IDataWrapper, public IResourceRetriever
-	{
-	public:
-        ~ResourceView() override;
+/// Component to provide access to resources.
+class ResourceView final : public IDataWrapper, public IResourceRetriever
+{
+public:
+    ~ResourceView() override;
 
-        sptr<scene::ITTFont> getTTFont(const str &rid) override;
-        sptr<scene::ITexture> getTexture(const str &rid) override;
-        sptr<scene::IShader> getShader(const str &rid) override;
-        sptr<scene::IFont> getBMPFont(const str &rid) override;
-	};
-}
+    sptr<scene::ITTFont> getTTFont(const str &rid) override;
+    sptr<scene::ITexture> getTexture(const str &rid) override;
+    sptr<scene::IShader> getShader(const str &rid) override;
+    sptr<scene::IFont> getBMPFont(const str &rid) override;
+};
+} // namespace lib::scene
 
 #endif

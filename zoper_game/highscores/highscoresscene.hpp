@@ -8,8 +8,8 @@
 
 #include <lib/scene/scene.hpp>
 #include <lib/scene/renderizable.hpp>
-#include <lib/resources/texture.hpp>
-#include <lib/resources/ttfont.hpp>
+#include <lib/resources/include/texture.hpp>
+#include <lib/resources/include/ttfont.hpp>
 
 #include <lib/include/scene/iscene.hpp>
 

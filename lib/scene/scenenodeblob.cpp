@@ -11,8 +11,8 @@
 
 #include <hosted_app/include/iapp.hpp>
 
-#include <lib/include/resources/iresourceloader.hpp>
-#include <lib/include/resources/iresourcehandler.hpp>
+#include <lib/resources/include/iresourceloader.hpp>
+#include <lib/resources/include/iresourcehandler.hpp>
 
 namespace lib::scene
 {

@@ -1,12 +1,8 @@
 #include "rendersystem.hpp"
 #include "systemprovider.hpp"
 #include "window.hpp"
-#include "timesystem.hpp"
 #include "rendertarget.hpp"
-#include <lib/resources/texture.hpp>
 #include <lib/scene/renderdata.hpp>
-#include <lib/include/liblog.hpp>
-#include <lib/include/core/timepoint.hpp>
 
 #include <mtypes/include/types.hpp>
 

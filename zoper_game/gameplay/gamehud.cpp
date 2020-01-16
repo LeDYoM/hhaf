@@ -7,8 +7,7 @@
 
 #include <lib/include/liblog.hpp>
 #include <lib/scene/datawrappers/resourceview.hpp>
-#include <lib/include/resources/iresourceretriever.hpp>
-#include <lib/resources/ttfont.hpp>
+#include <lib/resources/include/ttfont.hpp>
 
 namespace zoper
 {

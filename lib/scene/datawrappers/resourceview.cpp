@@ -6,26 +6,26 @@
 
 namespace lib::scene
 {
-    ResourceView::~ResourceView() = default;
-    
-    sptr<scene::ITTFont> ResourceView::getTTFont(const str &rid)
-    {
-        return attachedNode()->sceneManager().resources().getTTFont(rid);
-    }
+ResourceView::~ResourceView() = default;
 
-    sptr<scene::ITexture> ResourceView::getTexture(const str &rid)
-    {
-        return attachedNode()->sceneManager().resources().getTexture(rid);
-    }
-
-    sptr<scene::IShader> ResourceView::getShader(const str &rid)
-    {
-        return attachedNode()->sceneManager().resources().getShader(rid);
-    }
-
-    sptr<scene::IFont> ResourceView::getBMPFont(const str &rid)
-    {
-        return attachedNode()->sceneManager().resources().getBMPFont(rid);
-    }
-
+sptr<scene::ITTFont> ResourceView::getTTFont(const str &rid)
+{
+    return attachedNode()->sceneManager().resources().getTTFont(rid);
 }
+
+sptr<scene::ITexture> ResourceView::getTexture(const str &rid)
+{
+    return attachedNode()->sceneManager().resources().getTexture(rid);
+}
+
+sptr<scene::IShader> ResourceView::getShader(const str &rid)
+{
+    return attachedNode()->sceneManager().resources().getShader(rid);
+}
+
+sptr<scene::IFont> ResourceView::getBMPFont(const str &rid)
+{
+    return attachedNode()->sceneManager().resources().getBMPFont(rid);
+}
+
+} // namespace lib::scene

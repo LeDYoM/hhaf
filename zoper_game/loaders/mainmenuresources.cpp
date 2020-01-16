@@ -1,9 +1,6 @@
 #include "mainmenuresources.hpp"
 
-#include <lib/include/resources/iresourcehandler.hpp>
-
-#include <lib/resources/texture.hpp>
-#include <lib/resources/ttfont.hpp>
+#include <lib/resources/include/iresourcehandler.hpp>
 
 namespace zoper
 {

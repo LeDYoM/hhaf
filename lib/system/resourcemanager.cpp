@@ -4,13 +4,13 @@
 
 #include <lib/include/liblog.hpp>
 
-#include <lib/resources/ttfont.hpp>
-#include <lib/resources/texture.hpp>
-#include <lib/resources/shader.hpp>
-#include <lib/resources/bmpfont.hpp>
+#include <lib/resources/include/ttfont.hpp>
+#include <lib/resources/include/texture.hpp>
+#include <lib/resources/include/shader.hpp>
+#include <lib/resources/include/bmpfont.hpp>
+#include <lib/resources/include/bmpfontfactory.hpp>
 
 #include <backend/include/backendfactory.hpp>
-#include <lib/resources/bmpfontfactory.hpp>
 #include <algorithm>
 #include <list>
 

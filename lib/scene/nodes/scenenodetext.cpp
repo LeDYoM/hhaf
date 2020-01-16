@@ -1,7 +1,7 @@
 #include "scenenodetext.hpp"
 
-#include <lib/include/resources/ifont.hpp>
-#include <lib/resources/texture.hpp>
+#include <lib/resources/include/ifont.hpp>
+#include <lib/resources/include/texture.hpp>
 #include <lib/include/liblog.hpp>
 
 #include <lib/scene/vertexarray.hpp>

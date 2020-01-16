@@ -2,8 +2,8 @@
 
 #include <backend_dev/include/irendertarget.hpp>
 #include <lib/scene/renderdata.hpp>
-#include <lib/resources/texture.hpp>
-#include <lib/resources/shader.hpp>
+#include <lib/resources/include/texture.hpp>
+#include <lib/resources/include/shader.hpp>
 #include <lib/scene/transform.hpp>
 #include <lib/include/liblog.hpp>
 

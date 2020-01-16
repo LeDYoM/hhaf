@@ -3,7 +3,7 @@
 #ifndef ZOOPER_MAINMENU_RESOURCES_INCLUDE_HPP
 #define ZOOPER_MAINMENU_RESOURCES_INCLUDE_HPP
 
-#include <lib/include/resources/iresourceloader.hpp>
+#include <lib/resources/include/iresourceloader.hpp>
 
 namespace zoper
 {

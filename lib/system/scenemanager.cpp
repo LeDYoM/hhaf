@@ -6,7 +6,7 @@
 #include <lib/system/rendertarget.hpp>
 
 #include <lib/include/liblog.hpp>
-#include <lib/include/resources/iresourceretriever.hpp>
+#include <lib/resources/include/iresourceretriever.hpp>
 
 #include <lib/scene/scene.hpp>
 

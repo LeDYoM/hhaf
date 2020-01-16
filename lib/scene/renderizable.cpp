@@ -4,8 +4,8 @@
 #include <lib/system/scenemanager.hpp>
 #include <lib/scene/renderdata.hpp>
 #include <lib/scene/scenenode.hpp>
-#include <lib/resources/texture.hpp>
-#include <lib/resources/shader.hpp>
+#include <lib/resources/include/texture.hpp>
+#include <lib/resources/include/shader.hpp>
 #include <lib/system/systemprovider.hpp>
 
 #include "geometry_math.hpp"

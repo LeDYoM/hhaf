@@ -2,8 +2,8 @@
 
 #include <lib/system/resourcemanager.hpp>
 
-#include <lib/include/resources/iresourceloader.hpp>
-#include <lib/include/resources/iresourcehandler.hpp>
+#include <lib/resources/include/iresourceloader.hpp>
+#include <lib/resources/include/iresourcehandler.hpp>
 #include <lib/system/systemprovider.hpp>
 
 namespace lib::scene

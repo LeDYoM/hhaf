@@ -2,7 +2,7 @@
 #include <lib/scene/components/renderizables.hpp>
 #include <lib/scene/datawrappers/resourceview.hpp>
 #include <lib/scene/scenecontroller.hpp>
-#include <lib/resources/texture.hpp>
+#include <lib/resources/include/texture.hpp>
 #include <lib/system/resourcemanager.hpp>
 
 #include "../menu/mainmenu.hpp"

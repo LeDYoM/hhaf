@@ -6,7 +6,7 @@
 #include <mtypes/include/types.hpp>
 
 #include "texture.hpp"
-#include <lib/include/resources/ifont.hpp>
+#include <lib/resources/include/ifont.hpp>
 
 namespace lib::scene
 {

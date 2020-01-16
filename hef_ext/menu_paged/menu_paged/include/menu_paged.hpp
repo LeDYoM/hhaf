@@ -8,7 +8,7 @@
 
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/color.hpp>
-#include <lib/include/resources/ifont.hpp>
+#include <lib/resources/include/ifont.hpp>
 
 namespace lib::scene
 {

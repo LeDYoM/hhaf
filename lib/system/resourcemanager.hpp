@@ -6,8 +6,8 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
 
-#include <lib/include/resources/iresourcehandler.hpp>
-#include <lib/include/resources/iresourceretriever.hpp>
+#include <lib/resources/include/iresourcehandler.hpp>
+#include <lib/resources/include/iresourceretriever.hpp>
 #include <lib/system/appservice.hpp>
 
 namespace lib::scene

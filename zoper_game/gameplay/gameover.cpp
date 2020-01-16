@@ -6,8 +6,8 @@
 #include <lib/scene/nodes/scenenodetext.hpp>
 
 #include <lib/include/liblog.hpp>
-#include <lib/include/resources/iresourceretriever.hpp>
-#include <lib/include/resources/ittfont.hpp>
+#include <lib/resources/include/iresourceretriever.hpp>
+#include <lib/resources/include/ittfont.hpp>
 #include <lib/scene/datawrappers/resourceview.hpp>
 
 namespace zoper

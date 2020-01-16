@@ -2,27 +2,23 @@ project (resources CXX)
 cmake_minimum_required(VERSION 3.12)
 
 set (_SOURCES 
-    "bmpfont.cpp"
-    "bmpfontfactory.cpp"
-    "shader.cpp"
-    "texture.cpp"
-    "ttfont.cpp"
-    "ttfontinstance.cpp"
-)
-
-set (_HEADERS
-    "bmpfont_private.hpp"
-    "bmpfont.hpp"
-    "bmpfontfactory.hpp"
-    "shader.hpp"
-    "texture.hpp"
-    "ttfont.hpp"
-    "ttfontinstance.hpp"
+    "src/bmpfont.cpp"
+    "src/bmpfont_private.hpp"
+    "src/bmpfontfactory.cpp"
+    "src/shader.cpp"
+    "src/texture.cpp"
+    "src/ttfont.cpp"
+    "src/ttfontinstance.cpp"
 )
 
 set (CURRENT_TARGET  ${PROJECT_NAME})
 
-add_library(${CURRENT_TARGET} STATIC ${_SOURCES} ${_HEADERS})
+build_internal_lib_component(
+    HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}"
+    SOURCES
+    ${_SOURCES}
+)
+
 target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
 target_link_libraries(${CURRENT_TARGET} PRIVATE logger)
 target_link_libraries(${CURRENT_TARGET} PRIVATE backend_dev)

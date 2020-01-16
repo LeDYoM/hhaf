@@ -1,6 +1,6 @@
-#include "bmpfontfactory.hpp"
-#include "bmpfont.hpp"
-#include "texture.hpp"
+#include <lib/resources/include/bmpfontfactory.hpp>
+#include <lib/resources/include/bmpfont.hpp>
+#include <lib/resources/include/texture.hpp>
 
 namespace lib::scene
 {

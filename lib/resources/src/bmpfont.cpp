@@ -1,4 +1,4 @@
-#include "bmpfont.hpp"
+#include <lib/resources/include/bmpfont.hpp>
 #include "bmpfont_private.hpp"
 #include <lib/include/liblog.hpp>
 
