@@ -12,10 +12,10 @@
 
 namespace lib::scene
 {
-    class BMPFont;
-    class TTFont;
-    class Texture;
-    class Shader;
+    class IFont;
+    class ITTFont;
+    class ITexture;
+    class IShader;
 }
 
 namespace lib::sys

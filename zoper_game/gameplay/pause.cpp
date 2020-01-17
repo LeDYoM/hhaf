@@ -5,10 +5,9 @@
 #include <lib/scene/nodes/scenenodetext.hpp>
 #include <lib/scene/components/animationcomponent.hpp>
 #include <lib/scene/ianimation.hpp>
-#include <lib/resources/include/texture.hpp>
-#include <lib/resources/include/ttfont.hpp>
+#include <lib/resources/include/itexture.hpp>
+#include <lib/resources/include/ittfont.hpp>
 
-#include <lib/system/resourcemanager.hpp>
 #include <lib/system/scenemanager.hpp>
 #include <lib/scene/datawrappers/resourceview.hpp>
 

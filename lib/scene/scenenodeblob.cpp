@@ -6,7 +6,7 @@
 #include "scene.hpp"
 #include <lib/system/scenemanager.hpp>
 
-#include <lib/system/resourcemanager.hpp>
+#include <lib/resources/include/resourcemanager.hpp>
 #include <lib/system/systemprovider.hpp>
 
 #include <hosted_app/include/iapp.hpp>

@@ -2,8 +2,10 @@
 
 #include <backend_dev/include/irendertarget.hpp>
 #include <lib/scene/renderdata.hpp>
+#include <lib/resources/include/itexture.hpp>
 #include <lib/resources/include/texture.hpp>
 #include <lib/resources/include/shader.hpp>
+#include <lib/resources/include/ishader.hpp>
 #include <lib/scene/transform.hpp>
 #include <lib/include/liblog.hpp>
 
@@ -24,8 +26,8 @@ void RenderTarget::draw(const scene::RenderData &renderData)
         renderData.vArray.verticesArray().size(),
         renderData.vArray.primitiveType(),
         renderData.transform.getMatrix(),
-        renderData.texture ? renderData.texture->backEndTexture() : nullptr,
-        renderData.shader ? renderData.shader->backEndShader() : nullptr);
+        renderData.texture ? dynamic_cast<const scene::Texture *>(renderData.texture)->backEndTexture() : nullptr,
+        renderData.shader ? dynamic_cast<const scene::Shader *>(renderData.shader)->backEndShader() : nullptr);
 }
 
 void RenderTarget::clear()
