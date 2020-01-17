@@ -6,14 +6,12 @@
 #include <mtypes/include/types.hpp>
 #include <lib/resources/include/ishader.hpp>
 
-namespace lib
-{
-namespace backend
+namespace lib::backend
 {
 class IShader;
 }
 
-namespace scene
+namespace lib::scene
 {
 class Shader final : public IShader
 {
@@ -21,11 +19,11 @@ public:
     Shader(backend::IShader *shader);
     ~Shader() override;
 
-    const backend::IShader* backEndShader() const noexcept { return m_ShaderPrivate; }
+    const backend::IShader *backEndShader() const noexcept { return m_ShaderPrivate; }
+
 private:
     backend::IShader *m_ShaderPrivate;
 };
-} // namespace scene
-} // namespace lib
+} // namespace lib::scene
 
 #endif

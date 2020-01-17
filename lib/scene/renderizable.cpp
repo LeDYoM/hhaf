@@ -4,7 +4,7 @@
 #include <lib/system/scenemanager.hpp>
 #include <lib/scene/renderdata.hpp>
 #include <lib/scene/scenenode.hpp>
-#include <lib/resources/include/texture.hpp>
+#include <lib/resources/include/itexture.hpp>
 #include <lib/resources/include/shader.hpp>
 #include <lib/system/systemprovider.hpp>
 
@@ -107,8 +107,11 @@ Renderizable::Renderizable(
           PrimitiveType::TriangleFan,
           vertexPerFigure(figure_type, initial_point_count)},
       render_data_{m_vertices, parent->globalTransform(),
-                   texture().get() != nullptr ? dynamic_cast<Texture *>(texture().get()) : nullptr,
-                   shader().get() != nullptr ? dynamic_cast<Shader *>(shader().get()) : nullptr}
+//                   texture().get() != nullptr ? dynamic_cast<Texture *>(texture().get()) : nullptr,
+//                   shader().get() != nullptr ? dynamic_cast<Shader *>(shader().get()) : nullptr}
+                   texture().get(),
+                   shader().get()}
+
 {
 }
 
@@ -233,12 +236,14 @@ void Renderizable::update()
 
     if (ps_readResetHasChanged(texture))
     {
-        render_data_.texture = (texture().get() != nullptr) ? (dynamic_cast<Texture *>(texture().get())) : nullptr;
+//        render_data_.texture = (texture().get() != nullptr) ? (dynamic_cast<Texture *>(texture().get())) : nullptr;
+        render_data_.texture = texture().get();
     }
 
     if (ps_readResetHasChanged(shader))
     {
-        render_data_.shader = (shader().get() != nullptr) ? (dynamic_cast<Shader *>(shader().get())) : nullptr;
+//        render_data_.shader = (shader().get() != nullptr) ? (dynamic_cast<Shader *>(shader().get())) : nullptr;
+        render_data_.shader = shader().get();
     }
 }
 

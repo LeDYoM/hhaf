@@ -5,11 +5,12 @@
 #include <lib/system/inputsystem.hpp>
 #include <lib/system/randomsystem.hpp>
 #include <lib/system/rendersystem.hpp>
-#include <lib/system/resourcemanager.hpp>
 #include <lib/system/scenemanager.hpp>
 #include <lib/system/window.hpp>
-#include <lib/simulation/simulationsystem.hpp>
 #include <lib/system/timesystem.hpp>
+
+#include <lib/resources/include/resourcemanager.hpp>
+#include <lib/simulation/simulationsystem.hpp>
 
 #include <lib/include/liblog.hpp>
 #include <hosted_app/include/iapp.hpp>

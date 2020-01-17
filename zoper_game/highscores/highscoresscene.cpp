@@ -9,7 +9,6 @@
 #include <lib/scene/components/renderizables.hpp>
 #include <lib/scene/components/inputcomponent.hpp>
 #include <lib/scene/datawrappers/resourceview.hpp>
-#include <lib/system/resourcemanager.hpp>
 #include <lib/system/systemprovider.hpp>
 #include <lib/system/scenemanager.hpp>
 

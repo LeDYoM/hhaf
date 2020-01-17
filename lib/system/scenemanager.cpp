@@ -2,7 +2,7 @@
 
 #include <lib/system/systemprovider.hpp>
 #include <lib/system/window.hpp>
-#include <lib/system/resourcemanager.hpp>
+#include <lib/resources/include/resourcemanager.hpp>
 #include <lib/system/rendertarget.hpp>
 
 #include <lib/include/liblog.hpp>

@@ -1,12 +1,16 @@
-#include "resourcemanager.hpp"
-#include "systemprovider.hpp"
-#include "filesystem.hpp"
+#include <lib/resources/include/resourcemanager.hpp>
+#include <lib/system/systemprovider.hpp>
+#include <lib/system/filesystem.hpp>
 
 #include <lib/include/liblog.hpp>
 
-#include <lib/resources/include/ttfont.hpp>
+#include <lib/resources/include/ittfont.hpp>
+#include <lib/resources/include/itexture.hpp>
+#include <lib/resources/include/ishader.hpp>
 #include <lib/resources/include/texture.hpp>
 #include <lib/resources/include/shader.hpp>
+#include <lib/resources/include/ttfont.hpp>
+
 #include <lib/resources/include/bmpfont.hpp>
 #include <lib/resources/include/bmpfontfactory.hpp>
 

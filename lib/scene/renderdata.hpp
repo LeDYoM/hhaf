@@ -5,23 +5,23 @@
 
 namespace lib::scene
 {
-class Texture;
+class ITexture;
 class VertexArray;
 class Transform;
-class Shader;
+class IShader;
 
 class RenderData final
 {
 public:
     constexpr RenderData(
         const VertexArray &va, const Transform &transform,
-        const Texture *texture, const Shader *shader)
+        const ITexture *texture, const IShader *shader)
         : vArray{va}, transform{transform}, texture{texture}, shader{shader} {}
 
     const VertexArray &vArray;
     const Transform &transform;
-    const Texture *texture;
-    const Shader *shader;
+    const ITexture *texture;
+    const IShader *shader;
 };
 } // namespace lib::scene
 

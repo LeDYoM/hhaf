@@ -2,7 +2,7 @@
 
 #include <lib/resources/include/iresourcehandler.hpp>
 
-#include <lib/resources/include/texture.hpp>
+#include <lib/resources/include/itexture.hpp>
 #include <lib/resources/include/ttfont.hpp>
 
 namespace zoper
