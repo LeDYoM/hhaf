@@ -20,7 +20,8 @@ namespace lib::scene
 
 namespace lib::sys
 {
-    class ResourceManager final : public HostedAppService, public IResourceHandler, public IResourceRetriever
+    class ResourceManager final : public HostedAppService, 
+    public IResourceHandler, public IResourceRetriever
     {
     public:
         ResourceManager(sys::SystemProvider &system_provider);
@@ -31,10 +32,10 @@ namespace lib::sys
         sptr<scene::IShader> getShader(const str &rid) override;
         sptr<scene::IFont> getBMPFont(const str &rid) override;
 
-        sptr<scene::TTFont> loadTTFont(const str &rid, const str &fileName) override;
-        sptr<scene::Texture> loadTexture(const str &rid, const str &fileName) override;
-        sptr<scene::Shader> loadShader(const str &rid, const str &fileName) override;
-        sptr<scene::BMPFont> loadBMPFont(const str &rid, const str &fileName) override;
+        bool loadTTFont(const str &rid, const str &fileName) override;
+        bool loadTexture(const str &rid, const str &fileName) override;
+        bool loadShader(const str &rid, const str &fileName) override;
+        bool loadBMPFont(const str &rid, const str &fileName) override;
 
     private:
         struct ResourceManagerPrivate;

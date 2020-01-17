@@ -5,7 +5,7 @@
 
 #include <mtypes/include/types.hpp>
 #include <lib/resources/include/ifont.hpp>
-#include <lib/resources/include/texture.hpp>
+#include <lib/resources/include/itexture.hpp>
 
 namespace lib::scene
 {
@@ -39,7 +39,7 @@ namespace lib::scene
     struct PageData
     {
         str file;
-        sptr<Texture> it;
+        sptr<ITexture> it;
     };
 
     struct FontInfo

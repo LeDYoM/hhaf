@@ -6,24 +6,24 @@
 #include <mtypes/include/str.hpp>
 #include <mtypes/include/types.hpp>
 
+namespace lib::scene
+{
+class BMPFont;
+class TTFont;
+class Texture;
+class IShader;
+} // namespace lib::scene
+
 namespace lib
 {
-    namespace scene
-    {
-        class BMPFont;
-        class TTFont;
-        class Texture;
-        class Shader;
-    }
-
-    class IResourceHandler
-    {
-    public:
-        virtual sptr<scene::TTFont> loadTTFont(const str &rid, const str &fileName) = 0;
-        virtual sptr<scene::Texture> loadTexture(const str &rid, const str &fileName) = 0;
-        virtual sptr<scene::Shader> loadShader(const str &rid, const str &fileName) = 0;
-        virtual sptr<scene::BMPFont> loadBMPFont(const str &rid, const str &fileName) = 0;
-    };
-}
+class IResourceHandler
+{
+public:
+    virtual bool loadTTFont(const str &rid, const str &fileName) = 0;
+    virtual bool loadTexture(const str &rid, const str &fileName) = 0;
+    virtual bool loadShader(const str &rid, const str &fileName) = 0;
+    virtual bool loadBMPFont(const str &rid, const str &fileName) = 0;
+};
+} // namespace lib
 
 #endif

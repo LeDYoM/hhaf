@@ -111,36 +111,49 @@ sptr<scene::IFont> ResourceManager::getBMPFont(const str &rid)
     return get_or_default(m_private->bmp_fonts_, rid);
 }
 
-sptr<scene::TTFont> ResourceManager::loadTTFont(const str &rid, const str &fileName)
+bool ResourceManager::loadTTFont(const str &rid, const str &fileName)
 {
-    return get_or_add<true>(systemProvider().backendFactory().ttfontFactory(), m_private->ttf_fonts_, systemProvider().fileSystem(), rid, fileName);
+    return get_or_add<true>(
+        systemProvider().backendFactory().ttfontFactory(),
+        m_private->ttf_fonts_, systemProvider().fileSystem(),
+        rid, fileName) != nullptr;
 }
-sptr<scene::Texture> ResourceManager::loadTexture(const str &rid, const str &fileName)
+bool ResourceManager::loadTexture(const str &rid, const str &fileName)
 {
-    return get_or_add<true>(systemProvider().backendFactory().textureFactory(), m_private->textures_, systemProvider().fileSystem(), rid, fileName);
+    return get_or_add<true>(
+        systemProvider().backendFactory().textureFactory(),
+        m_private->textures_, systemProvider().fileSystem(),
+        rid, fileName) != nullptr;
 }
-sptr<scene::Shader> ResourceManager::loadShader(const str &rid, const str &fileName)
+
+bool ResourceManager::loadShader(const str &rid, const str &fileName)
 {
-    return get_or_add<false>(systemProvider().backendFactory().shaderFactory(), m_private->shaders_, systemProvider().fileSystem(), rid, fileName);
+    return get_or_add<false>(
+        systemProvider().backendFactory().shaderFactory(),
+        m_private->shaders_, systemProvider().fileSystem(),
+        rid, fileName) != nullptr;
 }
-sptr<scene::BMPFont> ResourceManager::loadBMPFont(const str &rid, const str &fileName)
+
+bool ResourceManager::loadBMPFont(const str &rid, const str &fileName)
 {
     sptr<scene::BMPFont> bmp_font{m_private->bmp_font_factory_.loadFromFile(fileName)};
 
     if (bmp_font)
     {
         const auto &texture_file_names{bmp_font->textureFileNames()};
-        vector<sptr<scene::Texture>> textures(texture_file_names.size());
+        vector<sptr<scene::ITexture>> textures(texture_file_names.size());
 
         for (const auto &file_name : texture_file_names)
         {
-            sptr<scene::Texture> texture(loadTexture(rid + "_" + file_name, file_name));
+            const bool texture_available = loadTexture(rid + "_" + file_name, file_name);
+
+            sptr<scene::ITexture> texture(getTexture(rid + "_" + file_name));
             textures.push_back(std::move(texture));
         }
 
         bmp_font->setTexturePages(textures);
         m_private->bmp_fonts_.emplace_back(rid, bmp_font);
     }
-    return bmp_font;
+    return bmp_font != nullptr;
 }
 } // namespace lib::sys
