@@ -3,7 +3,7 @@
 #include <lib/system/systemprovider.hpp>
 #include <lib/system/window.hpp>
 #include <lib/resources/include/resourcemanager.hpp>
-#include <lib/system/rendertarget.hpp>
+#include <lib/render/include/rendertarget.hpp>
 
 #include <lib/include/liblog.hpp>
 #include <lib/resources/include/iresourceretriever.hpp>

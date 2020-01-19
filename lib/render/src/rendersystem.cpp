@@ -1,7 +1,7 @@
-#include "rendersystem.hpp"
-#include "systemprovider.hpp"
-#include "window.hpp"
-#include "rendertarget.hpp"
+#include <lib/render/include/rendersystem.hpp>
+#include <lib/system/systemprovider.hpp>
+#include <lib/system/window.hpp>
+#include <lib/render/include/rendertarget.hpp>
 #include <lib/scene/renderdata.hpp>
 
 #include <mtypes/include/types.hpp>

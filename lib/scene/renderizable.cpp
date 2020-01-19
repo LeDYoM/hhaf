@@ -1,5 +1,5 @@
 #include "renderizable.hpp"
-#include <lib/system/rendersystem.hpp>
+#include <lib/render/include/rendersystem.hpp>
 
 #include <lib/system/scenemanager.hpp>
 #include <lib/scene/renderdata.hpp>

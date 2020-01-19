@@ -5,7 +5,7 @@
 #include <lib/include/liblog.hpp>
 #include <lib/include/core/timepoint.hpp>
 #include <lib/system/inputsystem.hpp>
-#include <lib/system/rendertarget.hpp>
+#include <lib/render/include/rendertarget.hpp>
 #include <lib/system/timesystem.hpp>
 #include <lib/system/systemprovider.hpp>
 

@@ -4,7 +4,7 @@
 #include <lib/system/filesystem.hpp>
 #include <lib/system/inputsystem.hpp>
 #include <lib/system/randomsystem.hpp>
-#include <lib/system/rendersystem.hpp>
+#include <lib/render/include/rendersystem.hpp>
 #include <lib/system/scenemanager.hpp>
 #include <lib/system/window.hpp>
 #include <lib/system/timesystem.hpp>

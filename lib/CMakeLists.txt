@@ -23,6 +23,8 @@ target_include_directories(${CURRENT_TARGET}
 # Directory internal libraries that will be used by the client too.
 add_subdirectory(scene)
 target_link_libraries(${CURRENT_TARGET} PUBLIC scene)
+add_subdirectory(render)
+target_link_libraries(${CURRENT_TARGET} PUBLIC render)
 add_subdirectory(resources)
 target_link_libraries(${CURRENT_TARGET} PUBLIC resources)
 add_subdirectory(simulation)
