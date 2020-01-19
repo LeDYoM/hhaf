@@ -3,8 +3,8 @@
 #ifndef LIB_CORE_SYSTEM_SIMULATIONSYSTEM_PRIVATE_INCLUDE_HPP
 #define LIB_CORE_SYSTEM_SIMULATIONSYSTEM_PRIVATE_INCLUDE_HPP
 
-#include <lib/simulation/simulationsystem.hpp>
-#include <lib/simulation/simulationaction.hpp>
+#include <lib/simulation/include/simulationsystem.hpp>
+#include <lib/simulation/include/simulationaction.hpp>
 
 #include <lib/system/timesystem.hpp>
 #include <lib/system/inputsystem.hpp>
@@ -13,7 +13,6 @@
 #include <lib/include/liblog.hpp>
 #include <lib/include/core/timepoint.hpp>
 #include <lib/system/systemprovider.hpp>
-#include <lib/simulation/simulationsystem.hpp>
 #include <lib/system/randomsystem.hpp>
 
 #include <mtypes/include/types.hpp>

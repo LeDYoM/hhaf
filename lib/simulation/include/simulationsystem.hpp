@@ -5,16 +5,14 @@
 
 #include <mtypes/include/types.hpp>
 #include <lib/system/appservice.hpp>
-#include <lib/simulation/simulationactiongroup.hpp>
+#include <lib/simulation/include/simulationactiongroup.hpp>
 
 namespace lib::sys
 {
-/**
-    * This system is intended to be used to simulate behaviours
-    * to other systems.
-    * 
-    * For this purpose, the simulation system...
-    */
+///
+/// This system is intended to be used to simulate behaviours
+/// to other systems.
+/// For this purpose, the simulation system...
 class SimulationSystem final : public HostedAppService
 {
 public:
@@ -24,7 +22,7 @@ public:
     ~SimulationSystem() override;
 
     void update();
-    bool getNext(const str &name, size_type& pre_selected);
+    bool getNext(const str &name, size_type &pre_selected);
 
     void setSimulationActions(const TimePoint &current, SimulationActionGroup simulation_action_group);
     void setSimulationActions(SimulationActionGroup simulation_action_group);

@@ -1,6 +1,6 @@
-#include "simulationsystem.hpp"
+#include <lib/simulation/include/simulationsystem.hpp>
 #include "simulationsystem_private.hpp"
-#include "simulationaction.hpp"
+#include <lib/simulation/include/simulationaction.hpp>
 
 #include <lib/include/key.hpp>
 #include <lib/include/liblog.hpp>

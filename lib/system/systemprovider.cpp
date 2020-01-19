@@ -10,7 +10,10 @@
 #include <lib/system/timesystem.hpp>
 
 #include <lib/resources/include/resourcemanager.hpp>
-#include <lib/simulation/simulationsystem.hpp>
+
+#ifdef LIB_COMPILE_SIMULATIONS
+    #include <lib/simulation/include/simulationsystem.hpp>
+#endif
 
 #include <lib/include/liblog.hpp>
 #include <hosted_app/include/iapp.hpp>
