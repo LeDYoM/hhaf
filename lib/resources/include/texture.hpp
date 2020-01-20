@@ -5,7 +5,7 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
-#include <lib/resources/include/itexture.hpp>
+#include <lib/resources_interface/include/itexture.hpp>
 
 namespace lib
 {

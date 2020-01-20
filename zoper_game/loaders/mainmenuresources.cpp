@@ -1,6 +1,6 @@
 #include "mainmenuresources.hpp"
 
-#include <lib/resources/include/iresourcehandler.hpp>
+#include <lib/resources_interface/include/iresourcehandler.hpp>
 
 namespace zoper
 {

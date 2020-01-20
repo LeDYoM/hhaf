@@ -4,8 +4,8 @@
 #define LIB_SCENE_BMPFONTPRIVATE_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <lib/resources/include/ifont.hpp>
-#include <lib/resources/include/itexture.hpp>
+#include <lib/resources_interface/include/ifont.hpp>
+#include <lib/resources_interface/include/itexture.hpp>
 
 namespace lib::scene
 {

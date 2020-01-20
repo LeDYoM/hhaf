@@ -5,7 +5,7 @@
 
 #include <mtypes/include/types.hpp>
 #include "idatawrapper.hpp"
-#include <lib/resources/include/iresourceretriever.hpp>
+#include <lib/resources_interface/include/iresourceretriever.hpp>
 
 namespace lib::scene
 {

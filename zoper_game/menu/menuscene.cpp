@@ -2,7 +2,7 @@
 #include <lib/scene/components/renderizables.hpp>
 #include <lib/scene/datawrappers/resourceview.hpp>
 #include <lib/scene/scenecontroller.hpp>
-#include <lib/resources/include/itexture.hpp>
+#include <lib/resources_interface/include/itexture.hpp>
 
 #include "../menu/mainmenu.hpp"
 #include "../gameshareddata.hpp"

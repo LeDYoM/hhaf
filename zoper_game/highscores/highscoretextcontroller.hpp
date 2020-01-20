@@ -6,7 +6,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/connection.hpp>
 #include <lib/scene/scenenode.hpp>
-#include <lib/resources/include/ifont.hpp>
+#include <lib/resources_interface/include/ifont.hpp>
 #include <lib/scene/nodes/tablenode.hpp>
 #include <lib/scene/scenenodetypes.hpp>
 #include <lib/scene/nodes/scenenodetext.hpp>

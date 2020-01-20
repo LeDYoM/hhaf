@@ -26,21 +26,19 @@ target_link_libraries(${CURRENT_TARGET} PUBLIC scene)
 add_subdirectory(render)
 target_link_libraries(${CURRENT_TARGET} PUBLIC render)
 add_subdirectory(resources)
-target_link_libraries(${CURRENT_TARGET} PUBLIC resources)
+#target_link_libraries(${CURRENT_TARGET} PUBLIC resources)
+add_subdirectory(resources_interface)
+target_link_libraries(${CURRENT_TARGET} PUBLIC resources_interface)
 add_subdirectory(simulation)
 target_link_libraries(${CURRENT_TARGET} PUBLIC simulation)
 add_subdirectory(system)
 target_link_libraries(${CURRENT_TARGET} PUBLIC system)
-
-# Internal libraries that will be used by the client too.
-target_link_libraries(${CURRENT_TARGET} PUBLIC backend_dev)
 
 # Internal libraries necessary for the library only.
 target_link_libraries(${CURRENT_TARGET} PRIVATE hosted_app)
 target_link_libraries(${CURRENT_TARGET} PRIVATE loader)
 target_link_libraries(${CURRENT_TARGET} PRIVATE logger)
 target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
-target_link_libraries(${CURRENT_TARGET} PRIVATE backend)
 
 # TODO: Investigate some day
 #if(MSVC)

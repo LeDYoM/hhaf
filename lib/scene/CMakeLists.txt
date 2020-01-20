@@ -9,8 +9,7 @@ set (CURRENT_TARGET  ${PROJECT_NAME})
 add_library(${CURRENT_TARGET} STATIC ${_SOURCES} ${_HEADERS})
 target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
 target_link_libraries(${CURRENT_TARGET} PRIVATE logger)
-target_link_libraries(${CURRENT_TARGET} PRIVATE resources)
-target_link_libraries(${CURRENT_TARGET} PRIVATE backend_dev)
+target_link_libraries(${CURRENT_TARGET} PRIVATE resources_interface)
 target_link_libraries(${CURRENT_TARGET} PRIVATE hosted_app)
 
 target_include_directories(${CURRENT_TARGET}
