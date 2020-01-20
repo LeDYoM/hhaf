@@ -2,7 +2,7 @@
 #include <lib/render/include/rendersystem.hpp>
 
 #include <lib/system/scenemanager.hpp>
-#include <lib/scene/renderdata.hpp>
+#include <lib/render/include/renderdata.hpp>
 #include <lib/scene/scenenode.hpp>
 #include <lib/resources/include/itexture.hpp>
 #include <lib/resources/include/shader.hpp>

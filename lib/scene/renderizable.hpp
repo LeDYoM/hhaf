@@ -13,7 +13,7 @@
 #include <lib/scene/vertexarray.hpp>
 #include <lib/resources/include/itexture.hpp>
 #include <lib/resources/include/ishader.hpp>
-#include <lib/scene/renderdata.hpp>
+#include <lib/render/include/renderdata.hpp>
 
 namespace lib::scene
 {
