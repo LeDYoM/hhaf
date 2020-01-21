@@ -1,25 +1,26 @@
 #include "transform.hpp"
+#include "geometry_math.hpp"
 #include <math.h>
 
 namespace lib::scene
 {
 const Transform Transform::Identity = Transform{};
 
-vector2df Transform::transformPoint(const f32 x, const f32 y) const noexcept
+Transform::VectorScalar Transform::transformPoint(const Scalar x, const Scalar y) const noexcept
 {
-    return vector2df{m_matrix[0] * x + m_matrix[4] * y + m_matrix[12],
-                     m_matrix[1] * x + m_matrix[5] * y + m_matrix[13]};
+    return {(m_matrix[0U] * x) + (m_matrix[4U] * y) + m_matrix[12U],
+            (m_matrix[1U] * x) + (m_matrix[5U] * y) + m_matrix[13U]};
 }
 
-vector2df Transform::transformPoint(const vector2df &point) const noexcept
+Transform::VectorScalar Transform::transformPoint(const VectorScalar &point) const noexcept
 {
     return transformPoint(point.x, point.y);
 }
 
-Rectf32 Transform::transformRect(const Rectf32 &rectangle) const noexcept
+Transform::RectScalar Transform::transformRect(const RectScalar &rectangle) const noexcept
 {
     // Transform the 4 corners of the rectangle
-    const vector2df points[4U] =
+    const VectorScalar points[4U] =
         {
             transformPoint(rectangle.left, rectangle.top),
             transformPoint(rectangle.left, rectangle.top + rectangle.height),
@@ -27,10 +28,10 @@ Rectf32 Transform::transformRect(const Rectf32 &rectangle) const noexcept
             transformPoint(rectangle.left + rectangle.width, rectangle.top + rectangle.height)};
 
     // Compute the bounding rectangle of the transformed points
-    f32 left{points[0].x};
-    f32 top{points[0].y};
-    f32 right{points[0].x};
-    f32 bottom{points[0].y};
+    Scalar left{points[0U].x},
+        top{points[0U].y},
+        right{points[0U].x},
+        bottom{points[0U].y};
 
     for (const auto &point : points)
     {
@@ -53,90 +54,89 @@ Rectf32 Transform::transformRect(const Rectf32 &rectangle) const noexcept
         }
     }
 
-    return Rectf32{left, top, right - left, bottom - top};
+    return {left, top, right - left, bottom - top};
 }
 
 Transform &Transform::combine(const Transform &transform) noexcept
 {
-    const f32 *a = &(m_matrix[0]);
-    const f32 *b = &(transform.m_matrix[0]);
+    const Scalar *const a{&(m_matrix[0U])};
+    const Scalar *const b{&(transform.m_matrix[0U])};
 
-    *this = Transform{a[0] * b[0] + a[4] * b[1] + a[12] * b[3],
-                      a[0] * b[4] + a[4] * b[5] + a[12] * b[7],
-                      a[0] * b[12] + a[4] * b[13] + a[12] * b[15],
-                      a[1] * b[0] + a[5] * b[1] + a[13] * b[3],
-                      a[1] * b[4] + a[5] * b[5] + a[13] * b[7],
-                      a[1] * b[12] + a[5] * b[13] + a[13] * b[15],
-                      a[3] * b[0] + a[7] * b[1] + a[15] * b[3],
-                      a[3] * b[4] + a[7] * b[5] + a[15] * b[7],
-                      a[3] * b[12] + a[7] * b[13] + a[15] * b[15]};
+    *this = {(a[0U] * b[0U]) + (a[4U] * b[1U]) + (a[12U] * b[3U]),
+             (a[0U] * b[4U]) + (a[4U] * b[5U]) + (a[12U] * b[7U]),
+             (a[0U] * b[12U]) + (a[4U] * b[13U]) + (a[12U] * b[15U]),
+             (a[1U] * b[0U]) + (a[5U] * b[1U]) + (a[13U] * b[3U]),
+             (a[1U] * b[4U]) + (a[5U] * b[5U]) + (a[13U] * b[7U]),
+             (a[1U] * b[12U]) + (a[5U] * b[13U]) + (a[13U] * b[15U]),
+             (a[3U] * b[0U]) + (a[7U] * b[1U]) + (a[15U] * b[3U]),
+             (a[3U] * b[4U]) + (a[7U] * b[5U]) + (a[15U] * b[7U]),
+             (a[3U] * b[12U]) + (a[7U] * b[13U]) + (a[15U] * b[15U])};
 
     return *this;
 }
 
-Transform &Transform::translate(const f32 x, const f32 y) noexcept
+Transform &Transform::translate(const Scalar x, const Scalar y) noexcept
 {
-    return combine(Transform{1, 0, x,
-                             0, 1, y,
-                             0, 0, 1});
+    return combine({One, Zero, x,
+                    Zero, One, y,
+                    Zero, Zero, One});
 }
 
-Transform &Transform::translate(const vector2df &offset) noexcept
+Transform &Transform::translate(const VectorScalar &offset) noexcept
 {
     return translate(offset.x, offset.y);
 }
 
-static constexpr f32 radFactor = 3.141592654f / 180.f;
-
-Transform &Transform::rotate(const f32 angle) noexcept
+Transform &Transform::rotate(const Scalar angle) noexcept
 {
-    const f32 rad = angle * radFactor;
-    const f32 cos = std::cos(rad);
-    const f32 sin = std::sin(rad);
+    const Scalar rad{angle * ToRadians<Scalar>};
+    const Scalar cos{static_cast<Scalar>(std::cos(rad))};
+    const Scalar sin{static_cast<Scalar>(std::sin(rad))};
 
-    return combine(Transform{cos, -sin, 0,
-                             sin, cos, 0,
-                             0, 0, 1});
+    return combine({cos, -sin, Zero,
+                    sin, cos, Zero,
+                    Zero, Zero, One});
 }
 
-Transform &Transform::rotate(const f32 angle, const f32 centerX, const f32 centerY) noexcept
+Transform &Transform::rotate(
+    const Scalar angle, const Scalar centerX, const Scalar centerY) noexcept
 {
-    const f32 rad = angle * radFactor;
-    const f32 cos = std::cos(rad);
-    const f32 sin = std::sin(rad);
+    const Scalar rad{static_cast<Scalar>(angle * ToRadians<Scalar>)};
+    const Scalar cos{static_cast<Scalar>(std::cos(rad))};
+    const Scalar sin{static_cast<Scalar>(std::sin(rad))};
 
-    return combine(Transform{cos, -sin, centerX * (1 - cos) + centerY * sin,
-                             sin, cos, centerY * (1 - cos) - centerX * sin,
-                             0, 0, 1});
+    return combine({cos, -sin, centerX * (One - cos) + centerY * sin,
+                    sin, cos, centerY * (One - cos) - centerX * sin,
+                    Zero, Zero, One});
 }
 
-Transform &Transform::rotate(const f32 angle, const vector2df &center) noexcept
+Transform &Transform::rotate(const Scalar angle, const VectorScalar &center) noexcept
 {
     return rotate(angle, center.x, center.y);
 }
 
-Transform &Transform::scale(const f32 scaleX, const f32 scaleY) noexcept
+Transform &Transform::scale(const Scalar scaleX, const Scalar scaleY) noexcept
 {
-    Transform scaling{scaleX, 0, 0,
-                      0, scaleY, 0,
-                      0, 0, 1};
-
-    return combine(scaling);
+    return combine({scaleX, Zero, Zero,
+                    Zero, scaleY, Zero,
+                    Zero, Zero, One});
 }
 
-Transform &Transform::scale(const f32 scaleX, const f32 scaleY, const f32 centerX, const f32 centerY) noexcept
+Transform &Transform::scale(
+    const Scalar scaleX, const Scalar scaleY,
+    const Scalar centerX, const Scalar centerY) noexcept
 {
-    return combine(Transform{scaleX, 0, centerX * (1 - scaleX),
-                             0, scaleY, centerY * (1 - scaleY),
-                             0, 0, 1});
+    return combine({scaleX, Zero, centerX * (One - scaleX),
+                    Zero, scaleY, centerY * (One - scaleY),
+                    Zero, Zero, One});
 }
 
-Transform &Transform::scale(const vector2df &factors) noexcept
+Transform &Transform::scale(const VectorScalar &factors) noexcept
 {
     return scale(factors.x, factors.y);
 }
 
-Transform &Transform::scale(const vector2df &factors, const vector2df &center) noexcept
+Transform &Transform::scale(const VectorScalar &factors, const VectorScalar &center) noexcept
 {
     return scale(factors.x, factors.y, center.x, center.y);
 }

@@ -1,7 +1,7 @@
-#ifndef LIB_RECT_INCLUDE_HPP__
-#define LIB_RECT_INCLUDE_HPP__
-
 #pragma once
+
+#ifndef LIB_MTYPES_RECT_INCLUDE_HPP
+#define LIB_MTYPES_RECT_INCLUDE_HPP
 
 #include "types.hpp"
 #include "vector2d.hpp"

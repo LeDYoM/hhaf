@@ -13,7 +13,8 @@ namespace lib::scene
     static constexpr T PiM2Constant = PiConstant<T> * static_cast<T>(2);
     template <typename T>
     static constexpr T PiMDConstant = PiConstant<T> * static_cast<T>(1.5);
-
+    template <typename T>
+    static constexpr T ToRadians = PiConstant<T> / static_cast<T>(180);
 }
 
 #endif

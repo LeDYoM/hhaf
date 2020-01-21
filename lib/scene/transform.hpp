@@ -1,72 +1,80 @@
-#ifndef LIB_TRANSFORMATION_INCLUDE_HPP__
-#define LIB_TRANSFORMATION_INCLUDE_HPP__
+#pragma once
+
+#ifndef LIB_TRANSFORMATION_INCLUDE_HPP
+#define LIB_TRANSFORMATION_INCLUDE_HPP
 
 #include <mtypes/include/vector2d.hpp>
 #include <mtypes/include/rect.hpp>
 
 namespace lib::scene
 {
-    class Transform final
+class Transform final
+{
+public:
+    using Scalar = f32;
+    using VectorScalar = vector2d<Scalar>;
+    using RectScalar = Rect<Scalar>;
+
+    static constexpr Scalar One = 1.0F;
+    static constexpr Scalar Zero = 0.0F;
+    constexpr Transform() noexcept
+        : m_matrix{One, Zero, Zero, Zero,
+                   Zero, One, Zero, Zero,
+                   Zero, Zero, One, Zero,
+                   Zero, Zero, Zero, One} {}
+
+    constexpr Transform(const Scalar a00, const Scalar a01, const Scalar a02,
+                        const Scalar a10, const Scalar a11, const Scalar a12,
+                        const Scalar a20, const Scalar a21, const Scalar a22) noexcept
+        : m_matrix{a00, a10, Zero, a20,
+                   a01, a11, Zero, a21,
+                   Zero, Zero, One, Zero,
+                   a02, a12, Zero, a22} {}
+
+    constexpr Transform(const Transform &) noexcept = default;
+    Transform &operator=(const Transform &) noexcept = default;
+
+    constexpr Transform(Transform &&) noexcept = default;
+    Transform &operator=(Transform &&) noexcept = default;
+
+    constexpr const Scalar *const getMatrix() const noexcept { return &m_matrix[0U]; }
+
+    static const Transform Identity;
+
+    inline Transform &operator*=(const Transform &right) noexcept
     {
-    public:
-        constexpr Transform() noexcept
-            : m_matrix{ 1.f, 0.f, 0.f, 0.f,
-            0.f, 1.f, 0.f, 0.f,
-            0.f, 0.f, 1.f, 0.f,
-            0.f, 0.f, 0.f, 1.f } {}
+        return combine(right);
+    }
 
-        constexpr Transform(const f32 a00, const f32 a01, const f32 a02,
-            const f32 a10, const f32 a11, const f32 a12,
-            const f32 a20, const f32 a21, const f32 a22) noexcept
-            : m_matrix{ a00, a10, 0.f, a20,
-            a01, a11, 0.f, a21,
-            0.f, 0.f, 1.f, 0.f,
-            a02, a12, 0.f, a22 } {}
+    inline Transform operator*(const Transform &right) const noexcept
+    {
+        Transform copy{*this};
+        copy.combine(right);
+        return copy;
+    }
 
-        constexpr Transform(const Transform&) noexcept = default;
-        Transform& operator=(const Transform&) noexcept = default;
+    inline const VectorScalar operator*(const VectorScalar &right) const noexcept
+    {
+        return transformPoint(right);
+    }
 
-        constexpr Transform(Transform&&) noexcept = default;
-        Transform& operator=(Transform&&) noexcept = default;
+    VectorScalar transformPoint(const Scalar x, const Scalar y) const noexcept;
+    VectorScalar transformPoint(const VectorScalar &point) const noexcept;
+    RectScalar transformRect(const RectScalar &rectangle) const noexcept;
+    Transform &combine(const Transform &transform) noexcept;
+    Transform &translate(const Scalar x, const Scalar y) noexcept;
+    Transform &translate(const VectorScalar &offset) noexcept;
+    Transform &rotate(const Scalar angle) noexcept;
+    Transform &rotate(const Scalar angle, const Scalar centerX, const Scalar centerY) noexcept;
+    Transform &rotate(const Scalar angle, const VectorScalar &center) noexcept;
+    Transform &scale(const Scalar scaleX, const Scalar scaleY) noexcept;
+    Transform &scale(const Scalar scaleX, const Scalar scaleY, const Scalar centerX, const Scalar centerY) noexcept;
+    Transform &scale(const VectorScalar &factors) noexcept;
+    Transform &scale(const VectorScalar &factors, const VectorScalar &center) noexcept;
 
-        constexpr const f32* const getMatrix() const noexcept { return &m_matrix[0]; }
-
-        static const Transform Identity;
-
-        inline Transform& operator *=(const Transform& right) noexcept
-        {
-            return combine(right);
-        }
-
-        inline Transform operator *(const Transform& right) const noexcept
-        {
-            Transform copy{ *this };
-            copy.combine(right);
-            return copy;
-        }
-
-        inline const vector2df operator *(const vector2df& right) const noexcept
-        {
-            return transformPoint(right);
-        }
-
-        vector2df transformPoint(const f32 x, const f32 y) const noexcept;
-        vector2df transformPoint(const vector2df& point) const noexcept;
-        Rectf32 transformRect(const Rectf32& rectangle) const noexcept;
-        Transform& combine(const Transform& transform) noexcept;
-        Transform& translate(const f32 x, const f32 y) noexcept;
-        Transform& translate(const vector2df& offset) noexcept;
-        Transform& rotate(const f32 angle) noexcept;
-        Transform& rotate(const f32 angle, const f32 centerX, const f32 centerY) noexcept;
-        Transform& rotate(const f32 angle, const vector2df& center) noexcept;
-        Transform& scale(const f32 scaleX, const f32 scaleY) noexcept;
-        Transform& scale(const f32 scaleX, const f32 scaleY, const f32 centerX, const f32 centerY) noexcept;
-        Transform& scale(const vector2df& factors) noexcept;
-        Transform& scale(const vector2df& factors, const vector2df& center) noexcept;
-
-    private:
-        f32 m_matrix[16];
-    };
-}
+private:
+    Scalar m_matrix[16U];
+};
+} // namespace lib::scene
 
 #endif

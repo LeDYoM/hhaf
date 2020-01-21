@@ -12,13 +12,16 @@ namespace lib::scene
 class Transformable
 {
 public:
+    using Scalar = Transform::Scalar;
+    using VectorScalar = Transform::VectorScalar;
+
     Transformable() noexcept;
     virtual ~Transformable();
 
-    PropertyState<vector2df> origin;
-    PropertyState<f32> rotation;
-    PropertyState<vector2df> scale;
-    PropertyState<vector2df> position;
+    PropertyState<VectorScalar> origin;
+    PropertyState<Scalar> rotation;
+    PropertyState<VectorScalar> scale;
+    PropertyState<VectorScalar> position;
 
     bool updateTransformIfNecessary() noexcept;
     inline const Transform &globalTransform() const noexcept { return m_globalTransform; }
@@ -27,13 +30,13 @@ public:
     /// Note: this method overwrites the properties.
     /// @param [in] point Point to be rotated around
     /// @param [in] angle Angle for the rotation
-    void rotateAround(vector2df point, f32 angle);
+    void rotateAround(VectorScalar point, Scalar angle);
 
     /// Method to set the associated transformation to a scale around a given point.
     /// Note: this method overwrites the properties.
     /// @param [in] point Point to be rotated around
     /// @param [in] scale Scale factor
-    void scaleAround(vector2df point, vector2df scale);
+    void scaleAround(VectorScalar point, VectorScalar scale);
 
     void rotateScaleAround(vector2df point, f32 angle, vector2df scale);
 
@@ -43,9 +46,6 @@ protected:
 
 private:
     void resetNeedsUpdate() noexcept;
-    inline const Transform &transform() const noexcept { return m_transform; }
-
-private:
     void updateTransform() noexcept;
 
     Transform m_transform;
