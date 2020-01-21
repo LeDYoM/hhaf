@@ -12,31 +12,31 @@
 
 namespace lib
 {
-    class IResourceLoader;
+class IResourceLoader;
 }
 
 namespace lib::scene
 {
-    class SceneManager;
+class SceneManager;
 
-    class Scene : public SceneNode
-    {
-    public:
-        Scene(str name);
-        ~Scene() override;
+class Scene : public SceneNode
+{
+public:
+    Scene(str name);
+    ~Scene() override;
 
-        virtual void onFinished() {}
+    virtual void onFinished() {}
 
-        Scene *const parentScene() noexcept override { return this; }
-        const Scene *const parentScene() const noexcept override { return this; }
+    Scene *const parentScene() noexcept override { return this; }
+    const Scene *const parentScene() const noexcept override { return this; }
 
-        inline SceneManager &sceneManager() noexcept { return *m_sceneManager; }
-        inline const SceneManager &sceneManager() const noexcept { return *m_sceneManager; }
+    inline SceneManager &sceneManager() noexcept { return *m_sceneManager; }
+    inline const SceneManager &sceneManager() const noexcept { return *m_sceneManager; }
 
-    private:
-        SceneManager *m_sceneManager{ nullptr };
-        friend class SceneController;
-    };
-}
+private:
+    SceneManager *m_sceneManager{nullptr};
+    friend class SceneController;
+};
+} // namespace lib::scene
 
 #endif
