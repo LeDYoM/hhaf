@@ -14,24 +14,6 @@ namespace lib::scene
 {
 namespace
 {
-template <typename T>
-constexpr int sgn(const T val) noexcept
-{
-    return (T(0) < val) - (val < T(0));
-}
-
-template <typename T>
-constexpr int sgn_cos(T angle)
-{
-    return sgn(std::cos(angle));
-}
-
-template <typename T>
-constexpr int sgn_sin(T angle)
-{
-    return sgn(std::sin(angle));
-}
-
 constexpr vector2dd getPositionFromAngleAndRadius(
     const FigType_t fig_type,
     const f64 angle, const vector2df &radius)
@@ -54,24 +36,6 @@ constexpr vector2dd getPositionFromAngleAndRadius(
 }
 
 constexpr size_type vertexPerFigure(
-    const FigType_t fig_type, const size_type num_points)
-{
-    switch (fig_type)
-    {
-    case FigType_t::Quad:
-    case FigType_t::Shape:
-    {
-        return num_points + 2U;
-    }
-    break;
-    default:
-    {
-        return num_points;
-    }
-    }
-}
-
-constexpr size_type primitivePerFigure(
     const FigType_t fig_type, const size_type num_points)
 {
     switch (fig_type)
