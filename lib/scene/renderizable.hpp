@@ -22,7 +22,8 @@ class SceneNode;
 enum class FigType_t : u8
 {
     Quad,
-    Shape
+    Shape,
+    EmptyQuad
 };
 
 class Renderizable final : public sys::HasName

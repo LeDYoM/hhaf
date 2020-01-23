@@ -26,8 +26,50 @@ public:
     /// @param num_points Number of points of the Renderizable.
     /// @returns The created Renderizable
     sptr<Renderizable> createRenderizable(
-        str name, FigType_t figure_type, Rectf32 box = Rectf32{},
-        Color color = colors::White, size_type num_points = 4U);
+        str name, FigType_t figure_type, Rectf32 box, Color color,
+            sptr<ITexture> texture, sptr<IShader> shader, size_type num_points);
+
+    sptr<Renderizable> createRenderizable(str name, FigType_t figure_type)
+    {
+        return createRenderizable(std::move(name), std::move(figure_type),
+        Rectf32{}, colors::White, nullptr, nullptr, 4U);
+    }
+
+    sptr<Renderizable> createRenderizable(str name, FigType_t figure_type,
+        size_type num_points)
+    {
+        return createRenderizable(std::move(name), std::move(figure_type),
+        Rectf32{}, colors::White, nullptr, nullptr, std::move(num_points));
+    }
+
+    sptr<Renderizable> createRenderizable(str name, FigType_t figure_type,
+        Rectf32 box, Color color)
+    {
+        return createRenderizable(std::move(name), std::move(figure_type),
+        std::move(box), std::move(color), nullptr, nullptr, 4U);
+    }
+
+    sptr<Renderizable> createRenderizable(str name, FigType_t figure_type,
+        Rectf32 box, sptr<ITexture> texture)
+    {
+        return createRenderizable(std::move(name), std::move(figure_type),
+        std::move(box), colors::White, std::move(texture), nullptr, 4U);
+    }
+
+    sptr<Renderizable> createRenderizable(str name, FigType_t figure_type,
+        Rectf32 box)
+    {
+        return createRenderizable(std::move(name), std::move(figure_type),
+        std::move(box), nullptr);
+    }
+
+    sptr<Renderizable> createRenderizable(str name, FigType_t figure_type,
+        Rectf32 box, Color color, size_type num_points)
+    {
+        return createRenderizable(std::move(name), std::move(figure_type),
+        std::move(box), std::move(color), nullptr, nullptr, 
+        std::move(num_points));
+    }
 
     void removeRenderizable(const sptr<Renderizable> &element);
     void clearRenderizables();

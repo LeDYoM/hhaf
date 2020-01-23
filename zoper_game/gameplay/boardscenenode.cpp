@@ -26,7 +26,8 @@ BoardSceneNode::BoardSceneNode(
     m_pointInCenter->position.set(point_box.leftTop());
 
     auto renderizables = addComponentOfType<Renderizables>();
-    m_backgroundTile = renderizables->createRenderizable("backgroundTile", FigType_t::Quad, tileBox);
+    m_backgroundTile = renderizables->createRenderizable(
+        "backgroundTile", FigType_t::Quad, tileBox);
 }
 
 BoardSceneNode::~BoardSceneNode() = default;

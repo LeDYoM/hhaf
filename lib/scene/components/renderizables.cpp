@@ -7,13 +7,14 @@
 namespace lib::scene
 {
 sptr<Renderizable> Renderizables::createRenderizable(
-    str name, FigType_t figure_type, Rectf32 box,
-    Color color, size_type num_points)
+    str name, FigType_t figure_type, Rectf32 box, Color color,
+    sptr<ITexture> texture, sptr<IShader> shader, size_type num_points)
 {
     auto result(msptr<Renderizable>(
         attachedNode(), std::move(name),
         figure_type, std::move(num_points),
-        std::move(box), std::move(color), nullptr, nullptr));
+        std::move(box), std::move(color),
+        std::move(texture), std::move(shader)));
     addRenderizable(result);
     return result;
 }

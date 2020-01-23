@@ -40,6 +40,7 @@ constexpr pair<PrimitiveType, size_type> initDataVertexPerFigureAndNumPoints(
 {
     switch (fig_type)
     {
+    default:
     case FigType_t::Quad:
     case FigType_t::Shape:
     {
@@ -50,10 +51,7 @@ constexpr pair<PrimitiveType, size_type> initDataVertexPerFigureAndNumPoints(
     {
         return {PrimitiveType::LineStrip, num_points + 1U};
     }
-    default:
-    {
-        return {PrimitiveType::LineStrip, num_points + 2U};
-    }
+    break;
     }
 }
 

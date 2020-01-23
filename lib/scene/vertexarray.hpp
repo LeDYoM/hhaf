@@ -26,13 +26,17 @@ class VertexArray
 {
 public:
     constexpr VertexArray() noexcept = default;
-    constexpr VertexArray(const PrimitiveType type) noexcept
+    explicit constexpr VertexArray(const PrimitiveType type) noexcept
         : m_vertices(), m_primitiveType{type} {}
 
-    constexpr VertexArray(
+    inline VertexArray(
         const PrimitiveType type,
         const size_type vertexCount) noexcept
         : m_vertices(vertexCount), m_primitiveType{type} {}
+
+    explicit inline VertexArray(
+        pair<PrimitiveType, size_type> init) noexcept
+        : VertexArray{init.first, init.second} {}
 
     constexpr bool empty() const noexcept { return m_vertices.empty(); }
 

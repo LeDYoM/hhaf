@@ -21,8 +21,7 @@ Token::Token(SceneNode *const parent, str name) : GameBaseTile{parent, name + st
     ++m_tileCounter;
     auto renderizables = addComponentOfType<Renderizables>();
         m_node = renderizables->createRenderizable(
-        "Node" + str::to_str(m_tileCounter), FigType_t::Shape, 
-        Rectf32{}, colors::White, 30U);
+        "Node" + str::to_str(m_tileCounter), FigType_t::Shape, 30U);
         animation_component_ = addComponentOfType<scene::AnimationComponent>();
 }
 

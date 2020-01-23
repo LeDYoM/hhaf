@@ -378,11 +378,14 @@ void GameScene::launchPlayer()
                 using namespace gameplay::constants;
 
                 DisplayLog::info("Creating animation for points to score");
-                private_->scene_animation_component_->addPropertyAnimation(TimePoint_as_miliseconds(MillisAnimationPointsToScore),
-                                                                           sceneNode->position, lastTokenPosition, EndPositionPointsToScore,
-                                                                           [this, sceneNode]() {
-                                                                               removeSceneNode(sceneNode);
-                                                                           });
+                private_->scene_animation_component_->addPropertyAnimation(
+                    TimePoint_as_miliseconds(MillisAnimationPointsToScore),
+                    sceneNode->position,
+                    lastTokenPosition, EndPositionPointsToScore,
+                    [this, sceneNode]()
+                    {
+                        removeSceneNode(sceneNode);
+                    });
             }
             DisplayLog::info("Launching player");
             m_player->launchAnimation(lastTokenPosition);
