@@ -35,22 +35,32 @@ constexpr vector2dd getPositionFromAngleAndRadius(
     }
 }
 
-constexpr size_type vertexPerFigure(
-    const FigType_t fig_type, const size_type num_points)
+constexpr pair<PrimitiveType, size_type> initDataVertexPerFigureAndNumPoints(
+    const FigType_t fig_type, const size_type num_points) noexcept
 {
     switch (fig_type)
     {
     case FigType_t::Quad:
     case FigType_t::Shape:
     {
-        return num_points + 2U;
+        return {PrimitiveType::TriangleFan, num_points + 2U};
     }
     break;
+    case FigType_t::EmptyQuad:
+    {
+        return {PrimitiveType::LineStrip, num_points + 1U};
+    }
     default:
     {
-        return num_points;
+        return {PrimitiveType::LineStrip, num_points + 2U};
     }
     }
+}
+
+Rects32 textureFillQuad(const sptr<ITexture> &texture)
+{
+    return texture ? Rects32{0, 0, static_cast<vector2ds32>(texture->size())}
+                   : Rects32{};
 }
 
 } // namespace
@@ -60,22 +70,16 @@ Renderizable::Renderizable(
     size_type initial_point_count, Rectf32 _box, Color _color,
     sptr<ITexture> _texture, sptr<IShader> _shader)
     : sys::HasName{std::move(name)},
-      parent_{std::move(parent)},
-      figType{figure_type},
-      pointCount{initial_point_count},
-      box{std::move(_box)},
+      parent_{std::move(parent)}, figType{figure_type},
+      pointCount{initial_point_count}, box{std::move(_box)},
       color{std::move(_color)},
-      texture{std::move(_texture)},
       shader{std::move(_shader)},
+      textureRect{textureFillQuad(_texture)},
+      texture{std::move(_texture)},
       m_vertices{
-          PrimitiveType::TriangleFan,
-          vertexPerFigure(figure_type, initial_point_count)},
+          initDataVertexPerFigureAndNumPoints(figure_type, initial_point_count)},
       render_data_{m_vertices, parent->globalTransform(),
-//                   texture().get() != nullptr ? dynamic_cast<Texture *>(texture().get()) : nullptr,
-//                   shader().get() != nullptr ? dynamic_cast<Shader *>(shader().get()) : nullptr}
-                   texture().get(),
-                   shader().get()}
-
+                   texture().get(), shader().get()}
 {
 }
 
@@ -96,20 +100,13 @@ void Renderizable::render()
 
 void Renderizable::setTextureAndTextureRect(sptr<ITexture> texture_, const Rectf32 &textRect)
 {
-    texture.set(texture_);
-    if (texture_)
-    {
-        textureRect = static_cast<Rects32>(textRect);
-    }
+    textureRect = static_cast<Rects32>(textRect);
+    texture.set(std::move(texture_));
 }
 
 void Renderizable::setTextureFill(sptr<ITexture> texture_)
 {
-    if (texture_)
-    {
-        setTextureAndTextureRect(std::move(texture_),
-                                 {0.0f, 0.0f, static_cast<vector2df>(texture_->size())});
-    }
+    setTextureAndTextureRect(texture_, textureFillQuad(texture_));
 }
 
 vector2df Renderizable::normalizeInBox(
@@ -200,13 +197,13 @@ void Renderizable::update()
 
     if (ps_readResetHasChanged(texture))
     {
-//        render_data_.texture = (texture().get() != nullptr) ? (dynamic_cast<Texture *>(texture().get())) : nullptr;
+        //        render_data_.texture = (texture().get() != nullptr) ? (dynamic_cast<Texture *>(texture().get())) : nullptr;
         render_data_.texture = texture().get();
     }
 
     if (ps_readResetHasChanged(shader))
     {
-//        render_data_.shader = (shader().get() != nullptr) ? (dynamic_cast<Shader *>(shader().get())) : nullptr;
+        //        render_data_.shader = (shader().get() != nullptr) ? (dynamic_cast<Shader *>(shader().get())) : nullptr;
         render_data_.shader = shader().get();
     }
 }
@@ -220,7 +217,7 @@ void Renderizable::updateGeometry()
 
         const auto fig_type{figType()};
         const size_type nPoints{pointCount()};
-        const size_type nVertex{vertexPerFigure(fig_type, nPoints)};
+        const size_type nVertex{initDataVertexPerFigureAndNumPoints(fig_type, nPoints).second};
         const vector2df radius{cBox.size() / 2.0F};
 
         vertices.resize(nVertex); // + 2 for center and repeated first point
@@ -228,23 +225,46 @@ void Renderizable::updateGeometry()
         const auto leftTop(cBox.leftTop());
         const auto base_position{leftTop + radius};
 
-        const auto vertices_iterator_begin = m_vertices.verticesArray().begin();
-        auto vertices_iterator_second = vertices_iterator_begin;
-        auto vertices_iterator{++vertices_iterator_second};
-        auto angle{0.0};
-
-        for (size_type i{0U}; i < nPoints; ++i, ++vertices_iterator)
+        switch (fig_type)
         {
-            angle += baseAngle;
-            const vector2dd r{getPositionFromAngleAndRadius(fig_type, angle, radius)};
-            vertices_iterator->position = base_position + static_cast<vector2df>(r);
-            updateTextureCoordsAndColorForVertex(vertices_iterator, cBox, textureRect());
-        }
+        case FigType_t::Quad:
+        case FigType_t::Shape:
+        {
+            const auto vertices_iterator_begin = m_vertices.verticesArray().begin();
+            auto vertices_iterator_second = vertices_iterator_begin;
+            auto vertices_iterator{++vertices_iterator_second};
+            auto angle{0.0};
 
-        vertices_iterator->position = vertices_iterator_second->position;
-        updateTextureCoordsAndColorForVertex(vertices_iterator, cBox, textureRect());
-        vertices_iterator_begin->position = radius + leftTop;
-        updateTextureCoordsAndColorForVertex(vertices_iterator_begin, cBox, textureRect());
+            for (size_type i{0U}; i < nPoints; ++i, ++vertices_iterator)
+            {
+                angle += baseAngle;
+                const vector2dd r{getPositionFromAngleAndRadius(fig_type, angle, radius)};
+                vertices_iterator->position = base_position + static_cast<vector2df>(r);
+                updateTextureCoordsAndColorForVertex(vertices_iterator, cBox, textureRect());
+            }
+
+            vertices_iterator->position = vertices_iterator_second->position;
+            updateTextureCoordsAndColorForVertex(vertices_iterator, cBox, textureRect());
+            vertices_iterator_begin->position = radius + leftTop;
+            updateTextureCoordsAndColorForVertex(vertices_iterator_begin, cBox, textureRect());
+        }
+        break;
+        case FigType_t::EmptyQuad:
+        {
+            auto &vertices = m_vertices.verticesArray();
+            vertices[0U].position = cBox.leftTop();
+            updateTextureCoordsAndColorForVertex(&vertices[0U], cBox, textureRect());
+            vertices[1U].position = cBox.rightTop();
+            updateTextureCoordsAndColorForVertex(&vertices[1U], cBox, textureRect());
+            vertices[2U].position = cBox.rightBottom();
+            updateTextureCoordsAndColorForVertex(&vertices[2U], cBox, textureRect());
+            vertices[3U].position = cBox.leftBottom();
+            updateTextureCoordsAndColorForVertex(&vertices[3U], cBox, textureRect());
+            vertices[4U].position = cBox.leftTop();
+            updateTextureCoordsAndColorForVertex(&vertices[4U], cBox, textureRect());
+        }
+        break;
+        }
     }
 }
 } // namespace lib::scene
