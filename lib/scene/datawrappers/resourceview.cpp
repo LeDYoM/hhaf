@@ -8,24 +8,30 @@ namespace lib::scene
 {
 ResourceView::~ResourceView() = default;
 
+void ResourceView::onCreated()
+{
+    retriever_ = &(attachedNode()->sceneManager().resources());
+    log_assert(retriever_ != nullptr, "Invalid IResourceRetrieved");
+}
+
 sptr<scene::ITTFont> ResourceView::getTTFont(const str &rid)
 {
-    return attachedNode()->sceneManager().resources().getTTFont(rid);
+    return retriever_->getTTFont(rid);
 }
 
 sptr<scene::ITexture> ResourceView::getTexture(const str &rid)
 {
-    return attachedNode()->sceneManager().resources().getTexture(rid);
+    return retriever_->getTexture(rid);
 }
 
 sptr<scene::IShader> ResourceView::getShader(const str &rid)
 {
-    return attachedNode()->sceneManager().resources().getShader(rid);
+    return retriever_->getShader(rid);
 }
 
 sptr<scene::IFont> ResourceView::getBMPFont(const str &rid)
 {
-    return attachedNode()->sceneManager().resources().getBMPFont(rid);
+    return retriever_->getBMPFont(rid);
 }
 
 } // namespace lib::scene

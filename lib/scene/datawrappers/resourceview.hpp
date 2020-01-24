@@ -14,11 +14,13 @@ class ResourceView final : public IDataWrapper, public IResourceRetriever
 {
 public:
     ~ResourceView() override;
-
+    void onCreated() override;
     sptr<scene::ITTFont> getTTFont(const str &rid) override;
     sptr<scene::ITexture> getTexture(const str &rid) override;
     sptr<scene::IShader> getShader(const str &rid) override;
     sptr<scene::IFont> getBMPFont(const str &rid) override;
+private:
+    rptr<IResourceRetriever> retriever_;
 };
 } // namespace lib::scene
 

@@ -31,8 +31,10 @@ public:
     template <typename T>
     uptr<T> dataWrapper()
     {
-        static_assert(std::is_base_of_v<IDataWrapper, T>, "You can only use this "
-                                                          "function with types derived from IDataWrapper");
+        static_assert(
+            std::is_base_of_v<IDataWrapper, T>,
+            "You can only use this "
+            "function with types derived from IDataWrapper");
         uptr<T> result = muptr<T>();
         initialize(result.get());
         return result;
