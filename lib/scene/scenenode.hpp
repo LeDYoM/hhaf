@@ -5,6 +5,7 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
+#include <lib/scene/scenenodes.hpp>
 #include <lib/scene/transformable.hpp>
 #include <lib/scene/hasname.hpp>
 #include <lib/scene/icomponent.hpp>
@@ -24,6 +25,7 @@ class SceneManager;
 /// This class serves as main entry point in the hierarchy of the scene.
 /// To create new SceneNode types, inherit from this class.
 class SceneNode : public sys::HasName,
+                  public SceneNodes,
                   public Transformable,
                   public DataWrapperCreator,
                   public ComponentContainer,
@@ -47,26 +49,6 @@ public:
     /// Override it to add code on creation.
     /// @see configure
     virtual void onCreated() {}
-
-    /// Method to create a new SceneNode. Since new constructors
-    /// may be added, it uses variadic forwarding of the arguments.
-    /// It also adds the new node to the parents list.
-    template <typename T = SceneNode, typename... Args>
-    sptr<T> createSceneNode(Args &&... args)
-    {
-        auto result(msptr<T>(this, std::forward<Args>(args)...));
-        addSceneNode(result);
-        return result;
-    }
-
-    /// Method to create a new SceneNode. It is a partial specialization of
-    // the general one.
-    sptr<SceneNode> createSceneNode(str name);
-
-    bool moveLastBeforeNode(const sptr<SceneNode> &beforeNode);
-    void removeSceneNode(sptr<SceneNode> element);
-    void clearAll();
-    void clearSceneNodes();
 
     void render(bool parentTransformationChanged);
     virtual void update() {}
@@ -115,18 +97,10 @@ public:
     constexpr const T *const snCast() const { return dynamic_cast<const T *const>(this); }
 
     BasicProperty<bool> visible;
-
-    constexpr const auto &sceneNodes() const noexcept { return m_groups; }
-    constexpr auto &sceneNodes() noexcept { return m_groups; }
-
-    sptr<SceneNode> groupByName(const str& name) const;
-
-protected:
-    void addSceneNode(sptr<SceneNode> node);
+    void clearAll();
 
 private:
     SceneNode *m_parent;
-    vector<sptr<SceneNode>> m_groups;
 };
 
 using SceneNodeSPtr = sptr<SceneNode>;
