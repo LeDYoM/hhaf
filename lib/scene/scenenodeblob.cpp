@@ -74,8 +74,4 @@ Rectf32 SceneNodeBlob::scenePerspective() const
     return sceneManager().viewRect();
 }
 
-void SceneNodeBlob::loadResources(IResourceLoader &&resourceLoader)
-{
-    resourceLoader.loadResources(sceneManager().systemProvider().resourceManager());
-}
 } // namespace lib::scene

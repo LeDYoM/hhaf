@@ -14,6 +14,7 @@
 namespace lib
 {
     class IResourceRetriever;
+    class IResourceHandler;
 }
 
 namespace lib::scene
@@ -34,6 +35,7 @@ public:
     void finish();
 
     IResourceRetriever &resources();
+    IResourceHandler &resourcesLoader();
 
     Rectf32 viewPort() const noexcept;
     void setViewPort(const Rectf32 &vp) noexcept;

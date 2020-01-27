@@ -13,7 +13,6 @@ namespace lib::scene
 class ResourceView final : public IDataWrapper, public IResourceRetriever
 {
 public:
-    ~ResourceView() override;
     void onCreated() override;
     sptr<scene::ITTFont> getTTFont(const str &rid) override;
     sptr<scene::ITexture> getTexture(const str &rid) override;

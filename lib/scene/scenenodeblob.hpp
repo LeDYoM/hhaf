@@ -47,10 +47,7 @@ namespace lib::scene
         template <typename T>
         T &app() { return (static_cast<T&>(app())); }
 
-        Rectf32 scenePerspective() const;
-
-       void loadResources(IResourceLoader &&resourceloader);
- 
+        Rectf32 scenePerspective() const; 
     private:
         SceneNode& scene_node_;
     };

@@ -6,8 +6,6 @@
 
 namespace lib::scene
 {
-ResourceView::~ResourceView() = default;
-
 void ResourceView::onCreated()
 {
     retriever_ = &(attachedNode()->sceneManager().resources());

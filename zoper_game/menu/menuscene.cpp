@@ -1,6 +1,7 @@
 #include "menuscene.hpp"
 #include <lib/scene/components/renderizables.hpp>
 #include <lib/scene/datawrappers/resourceview.hpp>
+#include <lib/scene/datawrappers/resourcehandler.hpp>
 #include <lib/scene/scenecontroller.hpp>
 #include <lib/resources_interface/include/itexture.hpp>
 
@@ -21,7 +22,9 @@ void MenuScene::onCreated()
 {
     BaseClass::onCreated();
 
-    loadResources(MainMenuResources{});
+    auto resources_loader = dataWrapper<ResourceHandler>();
+    resources_loader->loadResources(MainMenuResources{});
+
     auto renderizables = addComponentOfType<Renderizables>();
     auto resources_viewer = dataWrapper<ResourceView>();
 

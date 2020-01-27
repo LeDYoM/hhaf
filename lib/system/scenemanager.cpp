@@ -7,6 +7,7 @@
 
 #include <lib/include/liblog.hpp>
 #include <lib/resources_interface/include/iresourceretriever.hpp>
+#include <lib/resources_interface/include/iresourcehandler.hpp>
 
 #include <lib/scene/scene.hpp>
 
@@ -59,4 +60,10 @@ IResourceRetriever &SceneManager::resources()
 {
     return systemProvider().resourceManager();
 }
+
+IResourceHandler &SceneManager::resourcesLoader()
+{
+    return systemProvider().resourceManager();
+}
+
 } // namespace lib::scene

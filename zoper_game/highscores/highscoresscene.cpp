@@ -9,6 +9,7 @@
 #include <lib/scene/components/renderizables.hpp>
 #include <lib/scene/components/inputcomponent.hpp>
 #include <lib/scene/datawrappers/resourceview.hpp>
+#include <lib/scene/datawrappers/resourcehandler.hpp>
 #include <lib/system/systemprovider.hpp>
 #include <lib/system/scenemanager.hpp>
 
@@ -21,9 +22,9 @@ using namespace lib::scene::nodes;
 void HighScoresScene::onCreated()
 {
     BaseClass::onCreated();
+    dataWrapper<ResourceHandler>()->loadResources(HighScoresResources{});
 
     auto statesController(addComponentOfType<StatesController<HighScoresSceneStates>>());
-    loadResources(HighScoresResources{});
     auto resources_viewer = dataWrapper<ResourceView>();
 
     m_normalFont = resources_viewer->getTTFont("menu.mainFont")->font(72);
