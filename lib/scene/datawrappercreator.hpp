@@ -36,12 +36,12 @@ public:
             "You can only use this "
             "function with types derived from IDataWrapper");
         uptr<T> result = muptr<T>();
-        initialize(result.get());
+        initialize(std::move(result.get()));
         return result;
     }
 
 private:
-    void initialize(IDataWrapper *const dw);
+    void initialize(rptr<IDataWrapper> dw);
     const rptr<SceneNode> scene_node_;
 };
 } // namespace lib::scene

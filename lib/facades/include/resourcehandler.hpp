@@ -18,7 +18,7 @@ namespace lib::scene
 class ResourceHandler final : public IDataWrapper, public IResourceHandler
 {
 public:
-    void onCreated() override;
+    void onAttached() override;
     bool loadTTFont(const str &rid, const str &fileName) override;
     bool loadTexture(const str &rid, const str &fileName) override;
     bool loadShader(const str &rid, const str &fileName) override;

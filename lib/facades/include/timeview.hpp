@@ -26,7 +26,7 @@ public:
     void restart();
 
     constexpr bool isPaused() const noexcept { return is_paused_; }
-    void onCreated() override;
+    void onAttached() override;
 
 private:
     TimePoint started_at_;

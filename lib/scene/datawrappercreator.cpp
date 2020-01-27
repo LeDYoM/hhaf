@@ -1,12 +1,12 @@
-#include "datawrappercreator.hpp"
+#include <lib/scene/datawrappercreator.hpp>
 
 namespace lib::scene
 {
     DataWrapperCreator::~DataWrapperCreator() = default;
 
-    void DataWrapperCreator::initialize(IDataWrapper *const dw)
+    void DataWrapperCreator::initialize(rptr<IDataWrapper> dw)
     {
-        dw->scene_node_ = scene_node_;
-        dw->onCreated();
+        dw->attachedNode_ = scene_node_;
+        dw->onAttached();
     }
 }

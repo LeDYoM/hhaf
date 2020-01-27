@@ -6,7 +6,7 @@
 
 namespace lib::scene
 {
-void ResourceView::onCreated()
+void ResourceView::onAttached()
 {
     retriever_ = &(attachedNode()->sceneManager().resources());
     log_assert(retriever_ != nullptr, "Invalid IResourceRetrieved");

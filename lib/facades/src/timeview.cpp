@@ -53,7 +53,7 @@ namespace lib::scene
         (void)(isPaused() ? resume() : pause());
     }
 
-    void Timer::onCreated()
+    void Timer::onAttached()
     {
         restart();
         is_paused_ = false;

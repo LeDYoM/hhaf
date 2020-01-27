@@ -4,61 +4,40 @@
 #define LIB_SCENE_ICOMPONENT_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
+#include <lib/scene/attachable.hpp>
 
 namespace lib::scene
 {
-    class SceneNode;
+class SceneNode;
 
-    /**
-    * Base class for all components attached to a scene node.
-    */
-    class IComponent
+/// Base class for all components attached to a scene node.
+class IComponent : public Attachable<SceneNode>
+{
+public:
+    /// Interface to be implemented to update the component
+    virtual void update() {}
+
+    ///
+    /// Interface to be implemented to update the component
+    virtual void postUpdate() {}
+
+    ///
+    /// Destructor
+    ~IComponent() override {}
+
+private:
+    friend class ComponentContainer;
+};
+
+template <typename T1, typename T2>
+class IComponentMixin : public IComponent
+{
+    virtual void update() override
     {
-    public:
-        /**
-        * Interface to be implemented to update the component
-        */
-        virtual void update() {}
-
-        /**
-        * Interface to be implemented to update the component
-        */
-        virtual void postUpdate() {}
-
-        /**
-        * Destructor
-        */
-        virtual ~IComponent() {}
-
-        /**
-        * Method called after the component is attached to a node.
-        * Override it to perform initialization
-        */
-        virtual void onAttached() {}
-
-        /**
-        * Shortcut method to cast to another scenenode type
-        */
-        template <typename T>
-        inline T*const attachedNodeAs() const { return dynamic_cast<T*>(m_sceneNode); }
-
-        inline const SceneNode *const attachedNode() const noexcept { return m_sceneNode; }
-        inline SceneNode *const attachedNode() noexcept { return m_sceneNode; }
-
-    private:
-        SceneNode *m_sceneNode;
-        friend class ComponentContainer;
-    };
-
-    template <typename T1, typename T2>
-    class IComponentMixin : public IComponent
-    {
-        virtual void update() override
-        {
-            T1::update();
-            T2::update();
-        }
-    };
-}
+        T1::update();
+        T2::update();
+    }
+};
+} // namespace lib::scene
 
 #endif
