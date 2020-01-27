@@ -13,60 +13,61 @@ class Scene;
 class SceneNodeParent
 {
 public:
-    constexpr SceneNodeParent(rptr<SceneNode> parent, rptr<Scene> parent_scene)
-        : parent_{parent},
-          parent_scene_{parent_scene}
-    {
-    }
+    constexpr SceneNodeParent(
+        rptr<SceneNode> parent, rptr<Scene> parent_scene) noexcept
+        : parent_{std::move(parent)}, parent_scene_{std::move(parent_scene)} {}
 
     /// Virtual destructor.
     virtual ~SceneNodeParent() {}
 
-    rptr<Scene> parentScene() noexcept
+    constexpr rptr<Scene> parentScene() noexcept
     {
         return parent_scene_;
     }
 
-    const rptr<Scene> parentScene() const noexcept
+    constexpr const rptr<const Scene> parentScene() const noexcept
     {
         return parent_scene_;
     }
 
     template <typename SceneType>
-    SceneType *const parentSceneAs()
+    rptr<SceneType> parentSceneAs()
     {
         return dynamic_cast<SceneType *>(parentScene());
     }
 
     template <typename SceneType>
-    const SceneType *const parentSceneAs() const
+    const rptr<const SceneType> parentSceneAs() const
     {
         return dynamic_cast<const SceneType *>(parentScene());
     }
 
-    SceneNode *parent() noexcept { return parent_; }
-    const SceneNode *parent() const noexcept { return parent_; }
+    constexpr rptr<SceneNode> parent() noexcept { return parent_; }
+    constexpr const rptr<const SceneNode> parent() const noexcept { return parent_; }
 
     template <typename SceneNodeType>
-    SceneNodeType *parentAs()
+    rptr<SceneNodeType> parentAs() noexcept
     {
         return dynamic_cast<SceneNodeType *>(parent());
     }
 
     template <typename SceneNodeType>
-    const SceneNodeType *parentAs() const
+    const rptr<const SceneNodeType> parentAs() const noexcept
     {
         return dynamic_cast<const SceneNodeType *>(parent());
     }
 
     template <typename T>
-    constexpr T *const snCast() { return dynamic_cast<T *const>(this); }
+    rptr<T> snCast() noexcept { return dynamic_cast<T *const>(this); }
 
     template <typename T>
-    constexpr const T *const snCast() const { return dynamic_cast<const T *const>(this); }
+    const rptr<const T> snCast() const noexcept
+    { 
+        return dynamic_cast<const T *const>(this); 
+    }
 
 private:
-    rptr<SceneNode> parent_;
+    const rptr<SceneNode> parent_;
     rptr<Scene> parent_scene_;
     friend class Scene;
 };

@@ -39,6 +39,9 @@ public:
     /// No assignment operator
     SceneNode &operator=(const SceneNode &) = delete;
 
+    SceneNode(SceneNode&&) noexcept = default;
+    SceneNode& operator=(SceneNode&&) noexcept = default;
+
     /// Constructor normally used to create a scene node.
     /// @param[in] parent   Parent of this element.
     /// @param[in] name     Name of this element.
