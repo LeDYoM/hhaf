@@ -1,4 +1,4 @@
-#include "resourcehandler.hpp"
+#include <lib/facades/include/resourcehandler.hpp>
 #include <lib/resources_interface/include/iresourceloader.hpp>
 #include <lib/system/scenemanager.hpp>
 #include <lib/scene/scenenode.hpp>

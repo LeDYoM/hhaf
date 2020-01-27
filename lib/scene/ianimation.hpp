@@ -4,7 +4,7 @@
 #define LIB_SCENE_IANIMATION_INCLUDE_HPP
 
 #include <lib/include/core/timepoint.hpp>
-#include <lib/scene/datawrappers/timeview.hpp>
+#include <lib/facades/include/timeview.hpp>
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/properties.hpp>

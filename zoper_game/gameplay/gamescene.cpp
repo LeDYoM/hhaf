@@ -20,7 +20,7 @@
 #include <lib/include/liblog.hpp>
 #include <lib/scene/renderizable.hpp>
 #include <lib/scene/ianimation.hpp>
-#include <lib/scene/datawrappers/resourcehandler.hpp>
+#include <lib/facades/include/resourcehandler.hpp>
 #include <lib/scene/components/animationcomponent.hpp>
 #include <lib/scene/components/inputcomponent.hpp>
 #include <lib/scene/components/randomnumberscomponent.hpp>

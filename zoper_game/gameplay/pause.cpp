@@ -9,7 +9,7 @@
 #include <lib/resources_interface/include/ittfont.hpp>
 
 #include <lib/system/scenemanager.hpp>
-#include <lib/scene/datawrappers/resourceview.hpp>
+#include <lib/facades/include/resourceview.hpp>
 
 namespace zoper
 {

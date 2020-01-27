@@ -7,7 +7,7 @@
 #include <mtypes/include/function.hpp>
 #include <mtypes/include/connection.hpp>
 #include <lib/include/core/timepoint.hpp>
-#include <lib/scene/datawrappers/timeview.hpp>
+#include <lib/facades/include/timeview.hpp>
 #include <mtypes/include/vector.hpp>
 #include <mtypes/include/lockablevector.hpp>
 #include <lib/scene/scenenode.hpp>

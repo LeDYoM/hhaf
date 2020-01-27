@@ -5,7 +5,7 @@
 #include <menu_paged/include/menu_page.hpp>
 #include <lib/scene/scenenode.hpp>
 #include <lib/include/liblog.hpp>
-#include <lib/scene/datawrappers/resourceview.hpp>
+#include <lib/facades/include/resourceview.hpp>
 #include <lib/resources_interface/include/ittfont.hpp>
 
 #include <mtypes/include/function.hpp>
