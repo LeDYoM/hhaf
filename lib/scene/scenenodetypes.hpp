@@ -19,7 +19,7 @@ public:
     using BaseClass = SceneNode;
 
     template <typename... Args>
-    RenderizableSceneNode(rptr<SceneNode> parent, const str& name, Args &&... args)
+    RenderizableSceneNode(rptr<SceneNode> parent, const str &name, Args &&... args)
         : SceneNode{std::move(parent), name},
           m_node{addComponentOfType<Renderizables>()
                      ->createRenderizable(name + "_node", std::forward<Args>(args)...)}
