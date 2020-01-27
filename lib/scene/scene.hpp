@@ -27,9 +27,6 @@ public:
 
     virtual void onFinished() {}
 
-    Scene *const parentScene() noexcept override { return this; }
-    const Scene *const parentScene() const noexcept override { return this; }
-
     inline SceneManager &sceneManager() noexcept { return *m_sceneManager; }
     inline const SceneManager &sceneManager() const noexcept { return *m_sceneManager; }
 

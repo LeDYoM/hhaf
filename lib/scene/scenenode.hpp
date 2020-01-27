@@ -5,6 +5,7 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
+#include <lib/scene/scenenodeparent.hpp>
 #include <lib/scene/scenenodes.hpp>
 #include <lib/scene/transformable.hpp>
 #include <lib/scene/hasname.hpp>
@@ -25,6 +26,7 @@ class SceneManager;
 /// This class serves as main entry point in the hierarchy of the scene.
 /// To create new SceneNode types, inherit from this class.
 class SceneNode : public sys::HasName,
+                  public SceneNodeParent,
                   public SceneNodes,
                   public Transformable,
                   public DataWrapperCreator,
@@ -40,7 +42,7 @@ public:
     /// Constructor normally used to create a scene node.
     /// @param[in] parent   Parent of this element.
     /// @param[in] name     Name of this element.
-    SceneNode(SceneNode *const parent, str name);
+    SceneNode(rptr<SceneNode> parent, str name);
 
     /// Virtual destructor.
     virtual ~SceneNode();
@@ -53,54 +55,8 @@ public:
     void render(bool parentTransformationChanged);
     virtual void update() {}
 
-    virtual Scene *const parentScene() noexcept
-    {
-        return m_parent->parentScene();
-    }
-
-    virtual const Scene *const parentScene() const noexcept
-    {
-        return m_parent->parentScene();
-    }
-
-    template <typename SceneType>
-    SceneType *const parentSceneAs()
-    {
-        return dynamic_cast<SceneType *>(parentScene());
-    }
-
-    template <typename SceneType>
-    const SceneType *const parentSceneAs() const
-    {
-        return dynamic_cast<const SceneType *>(parentScene());
-    }
-
-    SceneNode *parent() noexcept { return m_parent; }
-    const SceneNode *parent() const noexcept { return m_parent; }
-
-    template <typename SceneNodeType>
-    SceneNodeType *parentAs()
-    {
-        return dynamic_cast<SceneNodeType *>(parent());
-    }
-
-    template <typename SceneNodeType>
-    const SceneNodeType *parentAs() const
-    {
-        return dynamic_cast<const SceneNodeType *>(parent());
-    }
-
-    template <typename T>
-    constexpr T *const snCast() { return dynamic_cast<T *const>(this); }
-
-    template <typename T>
-    constexpr const T *const snCast() const { return dynamic_cast<const T *const>(this); }
-
     BasicProperty<bool> visible;
     void clearAll();
-
-private:
-    SceneNode *m_parent;
 };
 
 using SceneNodeSPtr = sptr<SceneNode>;
