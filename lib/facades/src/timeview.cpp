@@ -8,8 +8,6 @@
 
 namespace lib::scene
 {
-    TimeView::~TimeView() = default;
-
     TimePoint TimeView::now() const
     {
         return attachedNode()->parentScene()->sceneManager().systemProvider().timeSystem().now();

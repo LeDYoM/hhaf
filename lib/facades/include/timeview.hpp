@@ -13,12 +13,10 @@ namespace lib::scene
 class TimeView : public IDataWrapper
 {
 public:
-    ~TimeView() override;
-
     TimePoint now() const;
 };
 
-class Timer : public TimeView
+class Timer final : public TimeView
 {
 public:
     TimePoint ellapsed() const;
