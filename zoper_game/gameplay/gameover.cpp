@@ -21,7 +21,7 @@ GameOverSceneNode::GameOverSceneNode(scene::SceneNode *const parent, str name)
 {
     m_gameOverrg = createSceneNode("gameOverScreen");
 
-    vector2df gosize{parentScene()->scenePerspective().width, 715};
+    vector2df gosize{scenePerspective().width, 715};
     m_gameOverrg->position.set({0, 575});
     auto resources_viewer = dataWrapper<ResourceView>();
 
