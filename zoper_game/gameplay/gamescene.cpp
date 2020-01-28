@@ -300,7 +300,8 @@ void GameScene::addPlayer()
     log_assert(!m_player, "Player already initialized");
     // Create the player instance
     m_player = m_boardGroup->m_mainBoardrg->createSceneNode<Player>("playerNode");
-    m_player->setUp(TokenZones::centerRect.leftTop(), rectFromSize(tileSize()), board2SceneFactor());
+    m_player->configure(TokenZones::centerRect.leftTop(),
+        rectFromSize(tileSize()), board2SceneFactor());
 
     // Add it to the board and to the scene nodes
     m_boardGroup->p_boardModel->setTile(m_player->boardPosition(), m_player);
