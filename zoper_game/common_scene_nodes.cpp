@@ -3,7 +3,6 @@
 
 #include <lib/include/liblog.hpp>
 #include <lib/scene/renderizable.hpp>
-#include <lib/scene/components/renderizables.hpp>
 #include <lib/scene/scenenode.hpp>
 
 namespace zoper
@@ -12,7 +11,7 @@ using namespace lib;
 using namespace lib::scene;
 
 void createStandardBackground(
-    const sptr<lib::scene::Renderizables> &renderizables)
+    const rptr<lib::scene::Renderizables> renderizables)
 {
     auto background = renderizables->createRenderizable(
         "background", FigType_t::Quad, rectFromSize(2000.0f, 2000.0f));

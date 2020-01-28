@@ -1,8 +1,5 @@
 #include "boardscenenode.hpp"
-
 #include <lib/include/liblog.hpp>
-
-#include <lib/scene/components/renderizables.hpp>
 
 namespace zoper
 {
@@ -25,8 +22,7 @@ BoardSceneNode::BoardSceneNode(
             Rectf32{0, 0, point_box.width, point_box.height}, colors::White);
     m_pointInCenter->position.set(point_box.leftTop());
 
-    auto renderizables = addComponentOfType<Renderizables>();
-    m_backgroundTile = renderizables->createRenderizable(
+    m_backgroundTile = createRenderizable(
         "backgroundTile", FigType_t::Quad, tileBox);
 }
 

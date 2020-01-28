@@ -1,9 +1,9 @@
 #pragma once
 
-#include <lib/scene/components/renderizables.hpp>
+#include <lib/scene/renderizables.hpp>
 
 namespace zoper
 {
     void createStandardBackground(
-        const sptr<lib::scene::Renderizables>& renderizables);
+        const rptr<lib::scene::Renderizables> renderizables);
 }

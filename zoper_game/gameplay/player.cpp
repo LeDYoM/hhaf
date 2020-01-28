@@ -4,8 +4,6 @@
 
 #include <lib/include/liblog.hpp>
 
-#include <lib/scene/components/renderizables.hpp>
-
 namespace zoper
 {
 using namespace lib;
@@ -18,8 +16,7 @@ Player::Player(SceneNode *const parent, str name)
     m_extraSceneNode = createSceneNode("m_extraSceneNode");
     m_extraSceneNode_2 = m_extraSceneNode->createSceneNode("m_extraSceneNode_2");
 
-    auto renderizables = m_extraSceneNode_2->addComponentOfType<Renderizables>();
-    m_node = renderizables->createRenderizable(
+    m_node = m_extraSceneNode_2->createRenderizable(
         "player_node", FigType_t::Shape, 3U);
     data.set(0);
 }
@@ -66,8 +63,9 @@ void Player::updateDirectionFromParameter(const Direction destDirection)
     const auto tileCenter(m_board2SceneFactor / 2.0F);
     m_extraSceneNode->rotateAround(tileCenter, destDirection.angle());
 
-    m_extraSceneNode_2->scaleAround(tileCenter,
-                                    (!destDirection.isVertical()) ? vector2df{1, 1} : vector2df{m_board2SceneFactor.y / m_board2SceneFactor.x, m_board2SceneFactor.x / m_board2SceneFactor.y});
+    m_extraSceneNode_2->scaleAround(
+        tileCenter,
+        (!destDirection.isVertical()) ? vector2df{1.0F, 1.0F} : vector2df{m_board2SceneFactor.y / m_board2SceneFactor.x, m_board2SceneFactor.x / m_board2SceneFactor.y});
 }
 
 void Player::launchAnimation(vector2df toWhere)

@@ -24,7 +24,6 @@
 #include <lib/scene/components/animationcomponent.hpp>
 #include <lib/scene/components/inputcomponent.hpp>
 #include <lib/scene/components/randomnumberscomponent.hpp>
-#include <lib/scene/components/renderizables.hpp>
 #include <lib/system/scenemanager.hpp>
 
 //TODO: Fixme
@@ -370,8 +369,7 @@ void GameScene::launchPlayer()
             DisplayLog::info("Creating points to score");
             auto sceneNode(createSceneNode("pointIncrementScore_SceneNode"));
 
-            auto renderizables = sceneNode->addComponentOfType<Renderizables>();
-            auto node(renderizables->createRenderizable(
+            auto node(createRenderizable(
                 "pointIncrementScore", FigType_t::Shape,
                 rectFromSize(15.0F, 15.0F), colors::White, 30U));
 

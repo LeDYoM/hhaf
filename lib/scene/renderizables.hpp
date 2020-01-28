@@ -7,17 +7,19 @@
 #include <mtypes/include/function.hpp>
 #include <mtypes/include/vector.hpp>
 
-#include <lib/scene/icomponent.hpp>
-
 #include <lib/scene/renderizable.hpp>
 
 namespace lib::scene
 {
 class Renderizable;
+class SceneNode;
 
-class Renderizables : public IComponent
+class Renderizables
 {
 public:
+    Renderizables(rptr<SceneNode> scene_node) noexcept
+        : scene_node_{std::move(scene_node)} {}
+
     /// Method to create a Renderizable
     /// @param name The name of the Renderizable node.
     /// @param figure_type Type of the figure to generate.
@@ -87,10 +89,11 @@ public:
 
     void for_each_node(function<void(const sptr<Renderizable> &)> action) const;
 
-    void postUpdate() override;
+    void updateRenderizables();
 
 private:
     void addRenderizable(sptr<Renderizable> newElement);
+    rptr<SceneNode> scene_node_;
     vector<sptr<Renderizable>> render_nodes_;
 };
 } // namespace lib::scene

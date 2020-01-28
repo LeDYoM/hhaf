@@ -6,7 +6,6 @@
 #include "../loaders/highscoresresources.hpp"
 #include "../common_scene_nodes.hpp"
 
-#include <lib/scene/components/renderizables.hpp>
 #include <lib/scene/components/inputcomponent.hpp>
 #include <lib/facades/include/resourceview.hpp>
 #include <lib/facades/include/resourcehandler.hpp>
@@ -31,8 +30,7 @@ void HighScoresScene::onCreated()
     m_normalColor = colors::Blue;
     m_selectedColor = colors::Red;
 
-    auto renderizables = addComponentOfType<Renderizables>();
-    createStandardBackground(renderizables);
+    createStandardBackground(this);
 
     auto highScoreTextController(createSceneNode<HighScoreTextController>("HighScoreTextController"));
     highScoreTextController->Finished.connect([this, statesController]()

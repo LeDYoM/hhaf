@@ -1,8 +1,6 @@
 #include "token.hpp"
 
 #include <lib/scene/ianimation.hpp>
-#include <lib/scene/components/renderizables.hpp>
-
 #include <lib/include/liblog.hpp>
 
 #include "gamescene.hpp"
@@ -19,10 +17,9 @@ u32 Token::m_tileCounter{0};
 Token::Token(SceneNode *const parent, str name) : GameBaseTile{parent, name + str::to_str(m_tileCounter) + str::to_str(m_tileCounter)}
 {
     ++m_tileCounter;
-    auto renderizables = addComponentOfType<Renderizables>();
-        m_node = renderizables->createRenderizable(
+    m_node = createRenderizable(
         "Node" + str::to_str(m_tileCounter), FigType_t::Shape, 30U);
-        animation_component_ = addComponentOfType<scene::AnimationComponent>();
+    animation_component_ = addComponentOfType<scene::AnimationComponent>();
 }
 
 Token::~Token() = default;

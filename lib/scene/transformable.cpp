@@ -41,21 +41,21 @@ void Transformable::updateGlobalTransformation(
 
 void Transformable::rotateAround(VectorScalar point, Scalar angle)
 {
-    origin = position = std::move(point);
-    rotation = std::move(angle);
+    origin = position = point;
+    rotation = angle;
 }
 
 void Transformable::scaleAround(VectorScalar point, VectorScalar scale_)
 {
-    origin = position = std::move(point);
-    scale = std::move(scale_);
+    origin = position = point;
+    scale = scale_;
 }
 
 void Transformable::rotateScaleAround(VectorScalar point, f32 angle, VectorScalar scale_)
 {
-    origin = position = std::move(point);
-    rotation = std::move(angle);
-    scale = std::move(scale_);
+    origin = position = point;
+    rotation = angle;
+    scale = scale_;
 }
 
 void Transformable::updateTransform() noexcept

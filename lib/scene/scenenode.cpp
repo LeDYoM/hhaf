@@ -13,7 +13,7 @@ namespace lib::scene
 SceneNode::SceneNode(rptr<SceneNode> parent, str name)
     : sys::HasName{std::move(name)},
       SceneNodeParent{parent, parent != nullptr ? (parent->parentScene()) : nullptr},
-      SceneNodes{this},
+      SceneNodes{this}, Renderizables{this},
       DataWrapperCreator{this}, ComponentContainer{this}, SceneNodeBlob{*this},
       visible{true}
 {
@@ -39,7 +39,7 @@ void SceneNode::render(bool parentTransformationChanged)
                 parent() ? parent()->globalTransform() : Transform::Identity);
         }
 
-        postUpdateComponents();
+        updateRenderizables();
         renderGroups(parentTransformationChanged);
     }
 }

@@ -7,6 +7,7 @@
 #include <mtypes/include/vector2d.hpp>
 #include <lib/scene/scenenodeparent.hpp>
 #include <lib/scene/scenenodes.hpp>
+#include <lib/scene/renderizables.hpp>
 #include <lib/scene/transformable.hpp>
 #include <lib/scene/hasname.hpp>
 #include <lib/scene/icomponent.hpp>
@@ -28,6 +29,7 @@ class SceneManager;
 class SceneNode : public sys::HasName,
                   public SceneNodeParent,
                   public SceneNodes,
+                  public Renderizables,
                   public Transformable,
                   public DataWrapperCreator,
                   public ComponentContainer,

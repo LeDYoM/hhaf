@@ -1,5 +1,4 @@
 #include "menuscene.hpp"
-#include <lib/scene/components/renderizables.hpp>
 #include <lib/facades/include/resourceview.hpp>
 #include <lib/facades/include/resourcehandler.hpp>
 #include <lib/scene/scenecontroller.hpp>
@@ -24,16 +23,14 @@ void MenuScene::onCreated()
 
     auto resources_loader = dataWrapper<ResourceHandler>();
     resources_loader->loadResources(MainMenuResources{});
-
-    auto renderizables = addComponentOfType<Renderizables>();
     auto resources_viewer = dataWrapper<ResourceView>();
 
-    createStandardBackground(renderizables);
+    createStandardBackground(this);
 
-//    auto logo = renderizables->createRenderizable(
+//    auto logo = createRenderizable(
 //        "mainLogo", FigType_t::EmptyQuad, Rectf32{500, 150, 1000, 500},colors::Red);
 
-    auto logo = renderizables->createRenderizable(
+    auto logo = createRenderizable(
         "mainLogo", FigType_t::Quad, Rectf32{500, 150, 1000, 500},
         resources_viewer->getTexture(MainMenuResources::LogoId));
 

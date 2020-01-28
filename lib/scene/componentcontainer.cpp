@@ -28,8 +28,8 @@ bool ComponentContainer::addComponent(sptr<IComponent> nc)
     log_assert(nc != nullptr, "Trying to add a nullptr component");
 
     nc->attachedNode_ = m_sceneNode;
-    m_components.push_back(nc);
     nc->onAttached();
+    m_components.emplace_back(std::move(nc));
     return true;
 }
 
@@ -37,12 +37,6 @@ template <typename T>
 void update_impl(const sptr<T> p)
 {
     std::invoke(&T::update, p);
-}
-
-template <typename T>
-void postUpdate_impl(const sptr<T> p)
-{
-    std::invoke(&T::postUpdate, p);
 }
 
 template <typename LCKV, typename F>
@@ -62,12 +56,6 @@ void ComponentContainer::updateComponents()
 {
     executeForAllComponents(m_components,
                             &update_impl<IComponent>);
-}
-
-void ComponentContainer::postUpdateComponents()
-{
-    executeForAllComponents(m_components,
-                            &postUpdate_impl<IComponent>);
 }
 
 const sptr<IComponent> ComponentContainer::componentOfType(const std::type_index &ti) const

@@ -24,7 +24,8 @@ public:
     template <typename T>
     sptr<T> addComponentOfType()
     {
-        log_assert(componentOfType<T>() == nullptr, "There is already a component with this type");
+        log_assert(componentOfType<T>() == nullptr,
+                   "There is already a component with this type");
         auto nc(msptr<T>());
         addComponent(nc);
         return nc;
@@ -40,7 +41,6 @@ public:
     }
 
     void updateComponents();
-    void postUpdateComponents();
 
     /**
         * Returns the component of the specified type if exists

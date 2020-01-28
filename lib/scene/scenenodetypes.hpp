@@ -6,7 +6,6 @@
 #include <mtypes/include/types.hpp>
 #include <lib/scene/icomponent.hpp>
 #include <lib/scene/renderizable.hpp>
-#include <lib/scene/components/renderizables.hpp>
 #include <lib/include/liblog.hpp>
 
 #include "scenenode.hpp"
@@ -21,16 +20,15 @@ public:
     template <typename... Args>
     RenderizableSceneNode(rptr<SceneNode> parent, const str &name, Args &&... args)
         : SceneNode{std::move(parent), name},
-          m_node{addComponentOfType<Renderizables>()
-                     ->createRenderizable(name + "_node", std::forward<Args>(args)...)}
+          node_{createRenderizable(name + "_node", std::forward<Args>(args)...)}
     {
     }
 
-    sptr<Renderizable> node() noexcept { return m_node; }
-    const sptr<Renderizable> node() const noexcept { return m_node; }
+    sptr<Renderizable> node() noexcept { return node_; }
+    const sptr<Renderizable> node() const noexcept { return node_; }
 
 private:
-    sptr<Renderizable> m_node;
+    sptr<Renderizable> node_;
 };
 } // namespace lib::scene
 

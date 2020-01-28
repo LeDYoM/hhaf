@@ -11,7 +11,7 @@ sptr<Renderizable> Renderizables::createRenderizable(
     sptr<ITexture> texture, sptr<IShader> shader, size_type num_points)
 {
     auto result(msptr<Renderizable>(
-        attachedNode(), std::move(name),
+        scene_node_, std::move(name),
         figure_type, std::move(num_points),
         std::move(box), std::move(color),
         std::move(texture), std::move(shader)));
@@ -19,7 +19,7 @@ sptr<Renderizable> Renderizables::createRenderizable(
     return result;
 }
 
-void Renderizables::postUpdate()
+void Renderizables::updateRenderizables()
 {
     for (auto &&renderizable : render_nodes_)
     {
