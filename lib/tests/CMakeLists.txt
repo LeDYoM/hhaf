@@ -6,6 +6,7 @@ set(UNIT_TEST_LIST
     scene/scenecontroller
     scene/scenenodefactory
     scene/scenenode
+    scene/scenenodeparent
     scene/components/componentcontainer
     scene/components/statescontroller
 

@@ -58,12 +58,46 @@ public:
     }
 
     template <typename T>
-    rptr<T> snCast() noexcept { return dynamic_cast<T *const>(this); }
+    rptr<T> snCast() noexcept { return dynamic_cast<T *>(this); }
 
     template <typename T>
     const rptr<const T> snCast() const noexcept
     { 
         return dynamic_cast<const T *const>(this); 
+    }
+
+    template <typename T = SceneNode>
+    constexpr rptr<T> ancestor() noexcept
+    {
+        rptr<SceneNode> _parent{parent()};
+        if (_parent == nullptr)
+        {
+            return nullptr;
+        }
+        else
+        {
+            auto parent_as_type{_parent->snCast<T>()};
+            return parent_as_type == nullptr ?
+                _parent->ancestor<T>() :
+                parent_as_type;
+        }
+    }
+
+    template <typename T = SceneNode>
+    constexpr const rptr<const T> ancestor() const noexcept
+    {
+        rptr<const SceneNode> _parent{parent()};
+        if (_parent == nullptr)
+        {
+            return nullptr;
+        }
+        else
+        {
+            auto parent_as_type{_parent->snCast<T>()};
+            return parent_as_type == nullptr ?
+                _parent->ancestor<T>() :
+                parent_as_type;
+        }
     }
 
 private:
