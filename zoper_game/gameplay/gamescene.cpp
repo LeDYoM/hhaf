@@ -156,6 +156,16 @@ void GameScene::onCreated()
     m_sceneStates->start(GameSceneStates::Playing);
 }
 
+void GameScene::onFinished()
+{
+    if (private_)
+    {
+        delete private_;
+        private_ = nullptr;
+    }
+    BaseClass::onFinished();
+}
+
 void GameScene::onEnterState(const GameSceneStates &state)
 {
     switch (state)
