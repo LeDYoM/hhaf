@@ -27,8 +27,6 @@ void BoardGroup::onCreated()
 {
     BaseClass::onCreated();
 
-    m_mainBoardrg = parent()->createSceneNode("mainBoard");
-
     Rectf32 textBox{scenePerspective()};
     position = textBox.leftTop();
     sceneNodeSize = textBox.size();
@@ -46,6 +44,9 @@ void BoardGroup::onCreated()
 
     p_boardModel = addComponentOfType<board::BoardModelComponent>();
     p_boardModel->initialize(tableSize(), this);
+
+    tokens_scene_node = createSceneNode("mainBoard");
+
 }
 
 void BoardGroup::setUp(sptr<LevelProperties> level_properties)
@@ -64,7 +65,7 @@ void BoardGroup::createNewToken(
                    " with value ", data);
 
     // Create a new Tile instance
-    auto new_tile_token = m_mainBoardrg->createSceneNode<Token>("tileNode");
+    auto new_tile_token = tokens_scene_node->createSceneNode<Token>("tileNode");
     new_tile_token->setUp(level_properties_,
                           static_cast<BoardTileData>(data), rectFromSize(size));
 
@@ -79,7 +80,7 @@ void BoardGroup::tileRemoved(const vector2dst, board::SITilePointer &tile)
 {
     log_assert(std::dynamic_pointer_cast<Token>(tile) != nullptr,
                    "Trying to delete invalid type from board");
-    m_mainBoardrg->removeSceneNode(std::dynamic_pointer_cast<Token>(tile));
+    tokens_scene_node->removeSceneNode(std::dynamic_pointer_cast<Token>(tile));
 }
 
 void BoardGroup::setLevel(const size_type level)

@@ -75,7 +75,7 @@ void GameScene::onCreated()
             auto dir(keyMapping->getDirectionFromKey(key));
             if (dir.isValid())
             {
-                m_player->movePlayer(dir, m_boardGroup->p_boardModel);
+                m_player->movePlayer(dir);
             }
             else if (keyMapping->isLaunchKey(key))
             {
@@ -299,7 +299,7 @@ void GameScene::addPlayer()
     DisplayLog::info("Adding player tile at ", TokenZones::centerRect.leftTop());
     log_assert(!m_player, "Player already initialized");
     // Create the player instance
-    m_player = m_boardGroup->m_mainBoardrg->createSceneNode<Player>("playerNode");
+    m_player = m_boardGroup->tokensSceneNode()->createSceneNode<Player>("playerNode");
     m_player->configure(TokenZones::centerRect.leftTop(),
         rectFromSize(tileSize()), board2SceneFactor());
 

@@ -1,6 +1,8 @@
 #include "player.hpp"
 #include "constants.hpp"
 #include "tokenzones.hpp"
+#include "boardgroup.hpp"
+#include <boardmanager/include/boardmodel.hpp>
 
 #include <lib/include/liblog.hpp>
 #include <lib/scene/scenenodetypes.hpp>
@@ -10,13 +12,16 @@ namespace zoper
 using namespace lib;
 using namespace lib::scene;
 
-Player::Player(SceneNode *const parent, str name)
-    : BaseClass{parent, std::move(name)}, boardPosition{},
-      currentDirection{Direction{Direction::DirectionData::Up}}, m_board2SceneFactor{}
+Player::Player(rptr<SceneNode> parent, str name)
+    : BaseClass{std::move(parent), std::move(name)},
+      boardPosition{},
+      currentDirection{Direction{Direction::DirectionData::Up}},
+      m_board2SceneFactor{}
 {
     rotator_ = createSceneNode("player_rotator");
 
-    auto render_scene_node = rotator_->createSceneNode<RenderizableSceneNode>("player_render_scene_node", FigType_t::Shape, 3U);
+    auto render_scene_node = rotator_->createSceneNode<RenderizableSceneNode>(
+        "player_render_scene_node", FigType_t::Shape, 3U);
 
     m_node = render_scene_node->node();
     scalator_ = render_scene_node;
@@ -28,7 +33,7 @@ Player::~Player() {}
 void Player::configure(const vector2dst &bPosition,
                        const Rectf32 &box, const vector2df &board2SceneFactor)
 {
-    m_board2SceneFactor = std::move(board2SceneFactor);
+    m_board2SceneFactor = board2SceneFactor;
     boardPosition.set(bPosition);
     m_node->box.set(box);
 }
@@ -63,15 +68,23 @@ void Player::update()
     }
 }
 
-void Player::movePlayer(const Direction &direction,
-    const sptr<board::BoardModelComponent> &boardModel)
+auto getBoardModel(Player& player)
+{
+    auto board_group{player.ancestor<BoardGroup>()};
+    log_assert(board_group != nullptr, "Invalid BoardModel received");
+
+    return board_group != nullptr ?
+        board_group->boardModel() : nullptr;
+}
+
+void Player::movePlayer(const Direction &direction)
 {
     log_assert(direction.isValid(), "Invalid direction passed to move");
     currentDirection = direction;
     auto nPosition = direction.applyToVector(boardPosition());
     if (TokenZones::pointInCenter(nPosition))
     {
-        boardModel->moveTile(boardPosition(), nPosition);
+        getBoardModel(*this)->moveTile(boardPosition(), nPosition);
         boardPosition.set(nPosition);
     }
 }

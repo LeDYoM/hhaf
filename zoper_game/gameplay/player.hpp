@@ -6,7 +6,6 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/function.hpp>
-#include <boardmanager/include/boardmodel.hpp>
 #include <lib/scene/ianimation.hpp>
 #include <lib/scene/components/animationcomponent.hpp>
 
@@ -18,7 +17,7 @@ class Player : public GameBaseTile
 public:
     using BaseClass = GameBaseTile;
 
-    Player(scene::SceneNode *const parent, str name);
+    Player(rptr<scene::SceneNode> parent, str name);
     ~Player() override;
 
     void configure(const vector2dst &bPosition,
@@ -28,8 +27,7 @@ public:
     PropertyState<vector2dst> boardPosition;
     PropertyState<Direction> currentDirection;
 
-    void movePlayer(const Direction &direction,
-                    const sptr<board::BoardModelComponent> &boardModel);
+    void movePlayer(const Direction &direction);
     void launchAnimation(const vector2df &toWhere);
 
     void tileAdded(const vector2dst &position) override;
