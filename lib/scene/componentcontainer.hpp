@@ -6,6 +6,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector.hpp>
 #include <mtypes/include/lockablevector.hpp>
+#include <lib/include/liblog.hpp>
 #include "icomponent.hpp"
 #include <typeinfo>
 #include <typeindex>

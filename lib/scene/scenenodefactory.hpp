@@ -10,6 +10,12 @@
 
 namespace lib::scene
 {
+template <typename T>
+lib::uptr<T> createScene()
+{
+    return lib::muptr<T>();
+}
+
 class SceneNodeFactory
 {
 public:
@@ -31,13 +37,13 @@ public:
     template <typename T>
     constexpr bool registerSceneNodeType(str type_name)
     {
-        return registerSceneNodeType(std::move(type_name), T::create);
+        return registerSceneNodeType(std::move(type_name), createScene<T>);
     }
 
     template <typename T>
     constexpr bool registerSceneNodeType()
     {
-        return registerSceneNodeType(T::StaticTypeName, T::create);
+        return registerSceneNodeType(T::StaticTypeName, createScene<T>);
     }
 
     CreateReturnType create(const str &type_name);

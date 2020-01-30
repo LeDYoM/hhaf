@@ -27,7 +27,7 @@ class SceneController;
 class SceneNodeBlob
 {
 public:
-    SceneNodeBlob(SceneNode &provider);
+    SceneNodeBlob(SceneNode &provider, rptr<SceneManager> scene_manager);
 
     const SceneManager &sceneManager() const noexcept;
     SceneManager &sceneManager() noexcept;
@@ -51,6 +51,8 @@ public:
 
 private:
     SceneNode &scene_node_;
+    rptr<SceneManager> scene_manager_{nullptr};
+    friend class SceneController;
 };
 } // namespace lib::scene
 

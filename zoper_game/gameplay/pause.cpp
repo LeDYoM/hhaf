@@ -26,7 +26,7 @@ PauseSceneNode::PauseSceneNode(scene::SceneNode *const parent, str name)
     m_pauseText->text.set("PAUSE");
     m_pauseText->font.set(resources_viewer->getTTFont(GameResources::ScoreFontId)->font(180));
     m_pauseText->textColor.set(colors::White);
-    m_pauseText->alignmentSize.set(parentScene()->scenePerspective().size());
+    m_pauseText->alignmentSize.set(scenePerspective().size());
     m_pauseText->alignmentX.set(SceneNodeText::AlignmentX::Center);
     m_pauseText->alignmentY.set(SceneNodeText::AlignmentY::Middle);
 

@@ -5,7 +5,6 @@
 
 #include <lib/scene/scene.hpp>
 #include <lib/scene/scenecontroller.hpp>
-#include <lib/include/scene/iscene.hpp>
 
 struct CommonData
 {
@@ -19,13 +18,15 @@ CommonData common;
 class UniqueScene : public lib::scene::Scene
 {
 public:
-    DECLARE_SCENE(UniqueScene)
+    static constexpr char StaticTypeName[] = "UniqueScene";
+    UniqueScene() : Scene{StaticTypeName} {}
 };
 
 class GroupScene1 : public lib::scene::Scene
 {
 public:
-    DECLARE_SCENE(GroupScene1)
+    static constexpr char StaticTypeName[] = "GroupScene1";
+    GroupScene1() : Scene{StaticTypeName} {}
 
     void onCreated() override
     {
@@ -42,7 +43,8 @@ public:
 class GroupScene2 : public lib::scene::Scene
 {
 public:
-    DECLARE_SCENE(GroupScene2)
+    static constexpr char StaticTypeName[] = "GroupScene2";
+    GroupScene2() : Scene{StaticTypeName} {}
 
     void onCreated() override
     {

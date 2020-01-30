@@ -11,8 +11,6 @@
 #include <lib/resources_interface/include/itexture.hpp>
 #include <lib/resources_interface/include/ittfont.hpp>
 
-#include <lib/include/scene/iscene.hpp>
-
 namespace zoper
 {
 using namespace lib;
@@ -21,7 +19,10 @@ class HighScoreTextController;
 class HighScoresScene final : public scene::Scene
 {
 public:
-    DECLARE_SCENE(HighScoresScene)
+    HighScoresScene();
+    ~HighScoresScene() override;
+
+	static constexpr char StaticTypeName[] = "HighScoresScene";
 
     void onCreated() override;
 

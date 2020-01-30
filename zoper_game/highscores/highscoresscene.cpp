@@ -6,6 +6,7 @@
 #include "../loaders/highscoresresources.hpp"
 #include "../common_scene_nodes.hpp"
 
+#include <lib/scene/components/statescontroller.hpp>
 #include <lib/scene/components/inputcomponent.hpp>
 #include <lib/facades/include/resourceview.hpp>
 #include <lib/facades/include/resourcehandler.hpp>
@@ -17,6 +18,9 @@ namespace zoper
 using namespace lib;
 using namespace lib::scene;
 using namespace lib::scene::nodes;
+
+HighScoresScene::HighScoresScene() : Scene{StaticTypeName} {}
+HighScoresScene::~HighScoresScene() = default;
 
 void HighScoresScene::onCreated()
 {

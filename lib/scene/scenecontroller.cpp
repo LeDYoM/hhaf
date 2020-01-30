@@ -73,7 +73,7 @@ void SceneController::startScene(sptr<Scene> scene)
     current_scene_ = std::move(scene);
     if (current_scene_)
     {
-        current_scene_->m_sceneManager = scene_manager_;
+        current_scene_->scene_manager_ = scene_manager_;
         current_scene_->onCreated();
     }
 }

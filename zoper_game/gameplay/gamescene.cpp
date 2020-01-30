@@ -45,6 +45,9 @@ struct GameScene::GameScenePrivate
     sptr<RandomNumbersComponent> token_position_generator_;
 };
 
+GameScene::GameScene() : Scene{StaticTypeName} {}
+GameScene::~GameScene() = default;
+
 void GameScene::onCreated()
 {
     BaseClass::onCreated();

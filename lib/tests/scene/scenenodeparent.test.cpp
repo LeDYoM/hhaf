@@ -45,26 +45,6 @@ TEST_CASE("SceneNodeParent::SceneNodeParent", "[SceneNode][SceneNodeParent]")
         CHECK(scene_node->parentAs<SceneNode>()->snCast<TestSceneNode>() == scene_node_test.get());
     }
 
-    SECTION("Get Parent Scene")
-    {
-        CHECK(test_scene->parentScene() == test_scene.get());
-        CHECK(scene_node_test->parentScene() == test_scene.get());
-        CHECK(scene_node->parentScene() == test_scene.get());
-    }
-
-    SECTION("Get Parent Scene As")
-    {
-        CHECK(test_scene->parentSceneAs<TestScene>() == test_scene.get());
-        CHECK(scene_node_test->parentSceneAs<TestScene>() == test_scene.get());
-        CHECK(scene_node->parentSceneAs<TestScene>() == test_scene.get());
-        CHECK(scene_node_test->parentSceneAs<Scene>() == test_scene.get());
-        CHECK(scene_node->parentSceneAs<Scene>() == test_scene.get());
-        CHECK(scene_node->parentSceneAs<Scene>()->snCast<TestScene>() == test_scene.get());
-        CHECK(scene_node_test->parentSceneAs<TestSceneNode>() == nullptr);
-        CHECK(scene_node->parentSceneAs<TestSceneNode>() == nullptr);
-        CHECK(test_scene->parentSceneAs<TestSceneNode>() == nullptr);
-    }
-
     SECTION("Ancestor")
     {
         CHECK(scene_node->ancestor<TestSceneNode>() == scene_node_test.get());

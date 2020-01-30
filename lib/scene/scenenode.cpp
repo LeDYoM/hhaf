@@ -12,9 +12,10 @@ namespace lib::scene
 {
 SceneNode::SceneNode(rptr<SceneNode> parent, str name)
     : sys::HasName{std::move(name)},
-      SceneNodeParent{parent, parent != nullptr ? (parent->parentScene()) : nullptr},
+      SceneNodeParent{parent},
       SceneNodes{this}, Renderizables{this},
-      DataWrapperCreator{this}, ComponentContainer{this}, SceneNodeBlob{*this},
+      DataWrapperCreator{this}, ComponentContainer{this},
+      SceneNodeBlob{*this, parent != nullptr ? &(parent->sceneManager()) : nullptr},
       visible{true}
 {
 }

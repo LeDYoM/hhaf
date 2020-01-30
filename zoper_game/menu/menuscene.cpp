@@ -17,6 +17,9 @@ using namespace lib::scene;
 
 constexpr u32 PointsPerQuad = 6U;
 
+MenuScene::MenuScene() : BaseClass{StaticTypeName} {}
+MenuScene::~MenuScene() = default;
+
 void MenuScene::onCreated()
 {
     BaseClass::onCreated();

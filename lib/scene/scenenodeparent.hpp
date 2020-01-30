@@ -17,47 +17,11 @@ class SceneNodeParent
 public:
     /// Constructor.
     /// @param[in] parent       The parent of this node.
-    /// @param[in] parent_scene The @b Scene that is also a parent of the node.
     constexpr SceneNodeParent(
-        rptr<SceneNode> parent, rptr<Scene> parent_scene) noexcept
-        : parent_{std::move(parent)}, parent_scene_{std::move(parent_scene)} {}
+        rptr<SceneNode> parent) noexcept : parent_{std::move(parent)} {}
 
     /// Virtual destructor.
     virtual ~SceneNodeParent() {}
-
-    /// Get the parent scene.
-    /// @return A @b Scene that is parent of the node or nullptr if no parent.
-    constexpr rptr<Scene> parentScene() noexcept
-    {
-        return parent_scene_;
-    }
-
-    /// Get the parent scene.
-    /// @return A @b Scene that is parent of the node or nullptr if no parent.
-    constexpr const rptr<const Scene> parentScene() const noexcept
-    {
-        return parent_scene_;
-    }
-
-    /// Get the parent scene casted to a type.
-    /// @return The parentScene() casted to a @b Scene subclass or null if the
-    ///     cast is not possible.
-    /// @see parentScene
-    template <typename SceneType>
-    rptr<SceneType> parentSceneAs()
-    {
-        return dynamic_cast<SceneType *>(parentScene());
-    }
-
-    /// Get the parent scene casted to a type.
-    /// @return The parentScene() casted to a @b Scene subclass or null if the
-    ///     cast is not possible.
-    /// @see parentScene
-    template <typename SceneType>
-    const rptr<const SceneType> parentSceneAs() const
-    {
-        return dynamic_cast<const SceneType *>(parentScene());
-    }
 
     constexpr rptr<SceneNode> parent() noexcept { return parent_; }
     constexpr const rptr<const SceneNode> parent() const noexcept { return parent_; }
@@ -115,8 +79,6 @@ public:
 
 private:
     const rptr<SceneNode> parent_;
-    rptr<Scene> parent_scene_;
-    friend class Scene;
 };
 
 } // namespace lib::scene

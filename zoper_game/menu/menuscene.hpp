@@ -7,7 +7,6 @@
 #include <mtypes/include/connection.hpp>
 #include <lib/scene/renderizable.hpp>
 #include <lib/scene/scene.hpp>
-#include <lib/include/scene/iscene.hpp>
 
 namespace zoper
 {
@@ -15,9 +14,12 @@ using namespace lib;
 class MenuScene final : public scene::Scene
 {
 public:
-    using BaseClass = scene::Scene;
+    MenuScene();
+    ~MenuScene() override;
 
-    DECLARE_SCENE(MenuScene)
+    static constexpr char StaticTypeName[] = "MenuScene";
+
+    using BaseClass = scene::Scene;
 
     virtual void onCreated() override;
 

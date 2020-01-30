@@ -10,12 +10,12 @@ namespace lib::scene
 {
     TimePoint TimeView::now() const
     {
-        return attachedNode()->parentScene()->sceneManager().systemProvider().timeSystem().now();
+        return attachedNode()->sceneManager().systemProvider().timeSystem().now();
     }
 
     void Timer::restart()
     {
-        started_at_ = attachedNode()->parentScene()->sceneManager().systemProvider().timeSystem().now();
+        started_at_ = attachedNode()->sceneManager().systemProvider().timeSystem().now();
     }
 
     TimePoint Timer::ellapsed() const
