@@ -156,16 +156,6 @@ void GameScene::onCreated()
     m_sceneStates->start(GameSceneStates::Playing);
 }
 
-void GameScene::onFinished()
-{
-    if (private_)
-    {
-        delete private_;
-        private_ = nullptr;
-    }
-    BaseClass::onFinished();
-}
-
 void GameScene::onEnterState(const GameSceneStates &state)
 {
     switch (state)
@@ -251,9 +241,10 @@ void GameScene::generateNextToken()
     const vector2dst new_position{TokenZones::displacedStartPoint(currentTokenZone, token_displacement)};
     lib::DisplayLog::info("New tile pos: ", new_position);
 
-    // Now, we have the data for the new token generated, but first, lets start to move the row or col.
+    // Now, we have the data for the new token generated, but first,
+    /// lets start to move the row or col.
     const auto game_over = moveTowardsCenter(
-        m_boardGroup->p_boardModel,
+        m_boardGroup->boardModel(),
         currentTokenZone.direction, new_position);
 
     // Set the new token
@@ -290,7 +281,7 @@ void GameScene::for_each_token_in_line(const vector2dst &startPosition, const Di
     {
         stay &= updatePredicate(loopPosition, direction);
         loopPosition = direction.applyToVector(loopPosition);
-        stay &= m_boardGroup->p_boardModel->validCoords(loopPosition);
+        stay &= m_boardGroup->boardModel()->validCoords(loopPosition);
     } while (stay);
 }
 
@@ -304,7 +295,7 @@ void GameScene::addPlayer()
         rectFromSize(tileSize()), board2SceneFactor());
 
     // Add it to the board and to the scene nodes
-    m_boardGroup->p_boardModel->setTile(m_player->boardPosition(), m_player);
+    m_boardGroup->boardModel()->setTile(m_player->boardPosition(), m_player);
 }
 
 void GameScene::launchPlayer()
@@ -319,9 +310,9 @@ void GameScene::launchPlayer()
         bool found{false};
         vector2df lastTokenPosition{};
 
-        if (!m_boardGroup->p_boardModel->tileEmpty(loopPosition) && !TokenZones::pointInCenter(loopPosition) && result)
+        if (!m_boardGroup->boardModel()->tileEmpty(loopPosition) && !TokenZones::pointInCenter(loopPosition) && result)
         {
-            sptr<board::ITile> currentToken{m_boardGroup->p_boardModel->getTile(loopPosition)};
+            sptr<board::ITile> currentToken{m_boardGroup->boardModel()->getTile(loopPosition)};
             board::BoardTileData currentTokenType = currentToken->data.get();
 
             if (currentTokenType == tokenType)
@@ -342,7 +333,7 @@ void GameScene::launchPlayer()
                 lastTokenPosition = board2Scene(loopPosition);
 
                 // Delete the token
-                m_boardGroup->p_boardModel->deleteTile(loopPosition);
+                m_boardGroup->boardModel()->deleteTile(loopPosition);
 
                 // At least you found one token
                 found = true;
@@ -352,10 +343,10 @@ void GameScene::launchPlayer()
                 // If we found a token, but it is from another color:
 
                 // Change the type of the player to this new one
-                m_boardGroup->p_boardModel->changeTileData(m_player->boardPosition(), currentTokenType);
+                m_boardGroup->boardModel()->changeTileData(m_player->boardPosition(), currentTokenType);
 
                 // Change the type of the token for the previous type of the player
-                m_boardGroup->p_boardModel->changeTileData(loopPosition, tokenType);
+                m_boardGroup->boardModel()->changeTileData(loopPosition, tokenType);
 
                 DisplayLog::info("Player type changed to ", m_player->data.get());
 
@@ -397,8 +388,8 @@ void GameScene::launchPlayer()
 
 vector2df GameScene::board2SceneFactor() const
 {
-    return {sceneManager().viewRect().size().x / static_cast<f32>(m_boardGroup->p_boardModel->size().x),
-            sceneManager().viewRect().size().y / static_cast<f32>(m_boardGroup->p_boardModel->size().y)};
+    return {sceneManager().viewRect().size().x / static_cast<f32>(m_boardGroup->boardModel()->size().x),
+            sceneManager().viewRect().size().y / static_cast<f32>(m_boardGroup->boardModel()->size().y)};
 }
 
 vector2df GameScene::board2Scene(const lib::vector2dst &bPosition) const
@@ -420,7 +411,7 @@ void GameScene::_debugDisplayBoard() const
         for (u32 x{0}; x < TokenZones::size.x; ++x)
         {
             str chTemp;
-            auto lp_tile(m_boardGroup->p_boardModel->getTile({x, y}));
+            auto lp_tile(m_boardGroup->boardModel()->getTile({x, y}));
             if (lp_tile)
             {
                 chTemp = str::to_str(lp_tile->data.get());

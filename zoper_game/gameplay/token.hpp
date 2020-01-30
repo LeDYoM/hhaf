@@ -28,7 +28,7 @@ namespace zoper
         Token(scene::SceneNode* const parent, str name);
         ~Token() override;
 
-        void setUp(sptr<LevelProperties> level_properties,
+        void configure(sptr<LevelProperties> level_properties,
             board::BoardTileData data,
             const Rectf32 &box);
 

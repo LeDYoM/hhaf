@@ -61,12 +61,12 @@ void BoardGroup::createNewToken(
 {
     using namespace lib::board;
 
-    DisplayLog::info("BoardGroup:: Adding new tile at ", board_position,
+    DisplayLog::info("BoardGroup:: Adding new token at ", board_position,
                    " with value ", data);
 
     // Create a new Tile instance
     auto new_tile_token = tokens_scene_node->createSceneNode<Token>("tileNode");
-    new_tile_token->setUp(level_properties_,
+    new_tile_token->configure(level_properties_,
                           static_cast<BoardTileData>(data), rectFromSize(size));
 
     // Set the position in the scene depending on the board position

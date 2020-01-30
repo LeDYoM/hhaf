@@ -43,14 +43,13 @@ public:
                                         vector2dst position, const bool isCenter) const;
 
     sptr<board::BoardModelComponent> boardModel() noexcept { return p_boardModel; }
-    const sptr<board::BoardModelComponent> boardModel() const noexcept { return p_boardModel; }
+    const sptr<const board::BoardModelComponent> boardModel() const noexcept { return p_boardModel; }
 
     sptr<scene::SceneNode> tokensSceneNode() noexcept { return tokens_scene_node; }
     const sptr<scene::SceneNode> tokensSceneNode() const noexcept { return tokens_scene_node; }
 
-    sptr<board::BoardModelComponent> p_boardModel;
-
 private:
+    sptr<board::BoardModelComponent> p_boardModel;
     sptr<scene::SceneNode> tokens_scene_node;
     sptr<LevelProperties> level_properties_;
 

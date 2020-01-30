@@ -24,7 +24,7 @@ Token::Token(SceneNode *const parent, str name) : GameBaseTile{parent, name + st
 
 Token::~Token() = default;
 
-void Token::setUp(sptr<LevelProperties> level_properties,
+void Token::configure(sptr<LevelProperties> level_properties,
                   board::BoardTileData board_tile_data,
                   const Rectf32 &box)
 {

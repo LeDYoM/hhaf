@@ -44,7 +44,6 @@ public:
 
     // Inherited via Scene
     void onCreated() override;
-    void onFinished() override;
 
     void onEnterState(const GameSceneStates &) override;
     void onExitState(const GameSceneStates &) override;
