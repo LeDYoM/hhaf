@@ -26,6 +26,7 @@ public:
     void deleteTile(const vector2dst &position);
     bool moveTile(const vector2dst &source, const vector2dst &dest);
     void changeTileData(const vector2dst &source, const BoardTileData &nv);
+    void swapTileData(const vector2dst& lhs, const vector2dst& rhs);
 
     inline bool validCoords(const vector2dst &tPosition) const noexcept { return _tiles.size() > tPosition.x && _tiles[0].size() > tPosition.y; }
     inline const vector2dst size() const noexcept { return vector2dst{_tiles.size(), _tiles[0].size()}; }

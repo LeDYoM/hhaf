@@ -46,7 +46,7 @@ void BoardGroup::onCreated()
     p_boardModel = addComponentOfType<board::BoardModelComponent>();
     p_boardModel->initialize(tableSize(), this);
 
-    tokens_scene_node = createSceneNode("mainBoard");
+    tokens_scene_node = createSceneNode("tokens_scene_node");
     addPlayer();
 }
 

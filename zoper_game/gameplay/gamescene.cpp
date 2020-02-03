@@ -330,11 +330,11 @@ void GameScene::launchPlayer()
             {
                 // If we found a token, but it is from another color:
 
-                // Change the type of the player to this new one
-                m_boardGroup->boardModel()->changeTileData(m_boardGroup->player()->boardPosition(), currentTokenType);
-
-                // Change the type of the token for the previous type of the player
-                m_boardGroup->boardModel()->changeTileData(loopPosition, tokenType);
+                // Change the type of the player to this new one and
+                // change the type of the token for the previous type of the player
+                m_boardGroup->boardModel()->swapTileData(
+                    m_boardGroup->player()->boardPosition(),
+                    loopPosition);
 
                 DisplayLog::info("Player type changed to ", m_boardGroup->player()->data.get());
 
@@ -361,8 +361,7 @@ void GameScene::launchPlayer()
                     TimePoint_as_miliseconds(MillisAnimationPointsToScore),
                     sceneNode->position,
                     lastTokenPosition, EndPositionPointsToScore,
-                    [this, sceneNode]()
-                    {
+                    [this, sceneNode]() {
                         removeSceneNode(sceneNode);
                     });
             }
