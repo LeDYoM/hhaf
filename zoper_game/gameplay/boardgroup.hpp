@@ -27,7 +27,7 @@ public:
     BoardGroup(scene::SceneNode *parent, str name, vector2dst size);
     ~BoardGroup() override;
 
-    void setUp(sptr<LevelProperties> level_properties);
+    void configure(sptr<LevelProperties> level_properties);
     void createNewToken(
         const board::BoardTileData data,
         const vector2dst& board_position,

@@ -49,7 +49,7 @@ void BoardGroup::onCreated()
 
 }
 
-void BoardGroup::setUp(sptr<LevelProperties> level_properties)
+void BoardGroup::configure(sptr<LevelProperties> level_properties)
 {
     level_properties_ = std::move(level_properties);
 }

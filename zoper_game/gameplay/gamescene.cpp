@@ -122,7 +122,7 @@ void GameScene::onCreated()
         game_shared_data_->gameMode,
         m_sceneTimerComponent);
 
-    m_boardGroup->setUp(level_properties_);
+    m_boardGroup->configure(level_properties_);
 
 #ifdef USE_DEBUG_ACTIONS
     addComponentOfType<DebugActions>();
