@@ -27,8 +27,6 @@
 
 namespace zoper
 {
-class Player;
-class Token;
 class PauseSceneNode;
 class GameOverSceneNode;
 
@@ -70,7 +68,6 @@ private:
     sptr<StatesController<GameSceneStates>> m_sceneStates;
     sptr<GameSharedData> game_shared_data_;
     void launchPlayer();
-    void addPlayer();
     void _debugDisplayBoard() const;
 
     sptr<BoardGroup> m_boardGroup;
@@ -82,7 +79,6 @@ private:
     // General properties.
     u8 m_nextTokenPart{0};
     sptr<LevelProperties> level_properties_;
-    sptr<Player> m_player{nullptr};
     sptr<GameOverSceneNode> m_gameOver;
     sptr<PauseSceneNode> pause_node_;
 };

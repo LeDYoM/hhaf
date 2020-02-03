@@ -16,6 +16,7 @@ namespace zoper
 {
 using namespace lib;
 class LevelProperties;
+class Player;
 
 class BoardGroup : public scene::nodes::TableNode<BoardSceneNode>,
                    public board::IBoardModelActuator
@@ -34,9 +35,7 @@ public:
         const vector2df& size);
 
     void onCreated() override;
-
     void tileRemoved(const vector2dst, board::SITilePointer&) override;
-
     void setLevel(const size_type level);
 
     scene::Color getBackgroundTileColor(const size_type level,
@@ -48,14 +47,19 @@ public:
     sptr<scene::SceneNode> tokensSceneNode() noexcept { return tokens_scene_node; }
     const sptr<scene::SceneNode> tokensSceneNode() const noexcept { return tokens_scene_node; }
 
+    sptr<Player> player() noexcept { return player_; }
+    const sptr<Player> player() const noexcept { return player_; }
+
 private:
     sptr<board::BoardModelComponent> p_boardModel;
+    sptr<Player> player_;
     sptr<scene::SceneNode> tokens_scene_node;
     sptr<LevelProperties> level_properties_;
 
     vector2df board2SceneFactor() const;
     vector2df board2Scene(const lib::vector2dst &bPosition) const;
     vector2df tileSize() const;
+    void addPlayer();
 };
 } // namespace zoper
 

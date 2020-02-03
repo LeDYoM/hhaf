@@ -1,6 +1,7 @@
 #include "boardgroup.hpp"
 #include "token.hpp"
 #include "tokenzones.hpp"
+#include "player.hpp"
 
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/nodes/tablenode.hpp>
@@ -46,12 +47,25 @@ void BoardGroup::onCreated()
     p_boardModel->initialize(tableSize(), this);
 
     tokens_scene_node = createSceneNode("mainBoard");
-
+    addPlayer();
 }
 
 void BoardGroup::configure(sptr<LevelProperties> level_properties)
 {
     level_properties_ = std::move(level_properties);
+}
+
+void BoardGroup::addPlayer()
+{
+    DisplayLog::info("Adding player tile at ", TokenZones::centerRect.leftTop());
+    log_assert(player_ == nullptr, "Player already initialized");
+    // Create the player instance
+    player_ = tokens_scene_node->createSceneNode<Player>("playerNode");
+    player_->configure(TokenZones::centerRect.leftTop(),
+        rectFromSize(tileSize()), board2SceneFactor());
+
+    // Add it to the board and to the scene nodes
+    p_boardModel->setTile(player_->boardPosition(), player_);
 }
 
 void BoardGroup::createNewToken(

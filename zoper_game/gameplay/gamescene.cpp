@@ -62,8 +62,6 @@ void GameScene::onCreated()
     log_assert(!m_boardGroup, "m_boardGroup is not empty");
     m_boardGroup = createSceneNode<BoardGroup>("BoardGroup", TokenZones::size);
 
-    addPlayer();
-
     m_nextTokenPart = 0U;
 
     auto inputComponent(addComponentOfType<scene::InputComponent>());
@@ -78,7 +76,7 @@ void GameScene::onCreated()
             auto dir(keyMapping->getDirectionFromKey(key));
             if (dir.isValid())
             {
-                m_player->movePlayer(dir);
+                m_boardGroup->player()->movePlayer(dir);
             }
             else if (keyMapping->isLaunchKey(key))
             {
@@ -288,25 +286,12 @@ void GameScene::for_each_token_in_line(const vector2dst &startPosition, const Di
     } while (stay);
 }
 
-void GameScene::addPlayer()
-{
-    DisplayLog::info("Adding player tile at ", TokenZones::centerRect.leftTop());
-    log_assert(!m_player, "Player already initialized");
-    // Create the player instance
-    m_player = m_boardGroup->tokensSceneNode()->createSceneNode<Player>("playerNode");
-    m_player->configure(TokenZones::centerRect.leftTop(),
-        rectFromSize(tileSize()), board2SceneFactor());
-
-    // Add it to the board and to the scene nodes
-    m_boardGroup->boardModel()->setTile(m_player->boardPosition(), m_player);
-}
-
 void GameScene::launchPlayer()
 {
     lib::DisplayLog::info("Launching player");
-    const Direction loopDirection{m_player->currentDirection()};
-    const vector2dst loopPosition{m_player->boardPosition()};
-    const board::BoardTileData tokenType{m_player->data.get()};
+    const Direction loopDirection{m_boardGroup->player()->currentDirection()};
+    const vector2dst loopPosition{m_boardGroup->player()->boardPosition()};
+    const board::BoardTileData tokenType{m_boardGroup->player()->data.get()};
     u32 inARow{0};
     for_each_token_in_line(loopPosition, loopDirection, [this, tokenType, &inARow](const vector2dst &loopPosition, const Direction &) {
         bool result{true};
@@ -346,12 +331,12 @@ void GameScene::launchPlayer()
                 // If we found a token, but it is from another color:
 
                 // Change the type of the player to this new one
-                m_boardGroup->boardModel()->changeTileData(m_player->boardPosition(), currentTokenType);
+                m_boardGroup->boardModel()->changeTileData(m_boardGroup->player()->boardPosition(), currentTokenType);
 
                 // Change the type of the token for the previous type of the player
                 m_boardGroup->boardModel()->changeTileData(loopPosition, tokenType);
 
-                DisplayLog::info("Player type changed to ", m_player->data.get());
+                DisplayLog::info("Player type changed to ", m_boardGroup->player()->data.get());
 
                 // Exit the loop
                 result = false;
@@ -382,7 +367,7 @@ void GameScene::launchPlayer()
                     });
             }
             DisplayLog::info("Launching player");
-            m_player->launchAnimation(lastTokenPosition);
+            m_boardGroup->player()->launchAnimation(lastTokenPosition);
         }
         return result;
     });
