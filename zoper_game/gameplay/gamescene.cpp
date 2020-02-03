@@ -53,7 +53,7 @@ void GameScene::onCreated()
     BaseClass::onCreated();
 
     log_assert(private_ == nullptr, "Private data pointer is not nullptr!");
-    private_ = new GameScenePrivate();
+    private_ = muptr<GameScenePrivate>();
 
     dataWrapper<ResourceHandler>()->loadResources(GameResources{});
 
@@ -157,16 +157,6 @@ void GameScene::onCreated()
     pause_node_ = createSceneNode<PauseSceneNode>("PauseNode");
 
     m_sceneStates->start(GameSceneStates::Playing);
-}
-
-void GameScene::onFinished()
-{
-    if (private_)
-    {
-        delete private_;
-        private_ = nullptr;
-    }
-    BaseClass::onFinished();
 }
 
 void GameScene::onEnterState(const GameSceneStates &state)

@@ -45,7 +45,6 @@ public:
 
     // Inherited via Scene
     void onCreated() override;
-    void onFinished() override;
 
     void onEnterState(const GameSceneStates &) override;
     void onExitState(const GameSceneStates &) override;
@@ -57,7 +56,7 @@ public:
 
 private:
     struct GameScenePrivate;
-    GameScenePrivate *private_{nullptr};
+    uptr<GameScenePrivate> private_{nullptr};
     using BaseClass = scene::Scene;
     void setLevel(const size_type nv);
     void generateNextToken();
