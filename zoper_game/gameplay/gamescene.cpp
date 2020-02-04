@@ -6,6 +6,7 @@
 #include "gameover.hpp"
 #include "gamehud.hpp"
 #include "pause.hpp"
+#include "boardutils.hpp"
 
 #ifdef USE_DEBUG_ACTIONS
 #include "debug_actions.hpp"
@@ -271,21 +272,6 @@ void GameScene::goGameOver()
     m_sceneStates->setState(GameSceneStates::GameOver);
 }
 
-void GameScene::for_each_token_in_line(const vector2dst &startPosition, const Direction &direction,
-                                       function<bool(const vector2dst &, const Direction &)> updatePredicate)
-{
-    vector2dst loopPosition{startPosition};
-
-    // Now, we have the data for the new token generated, but first, lets start to move the row or col.
-    bool stay{true};
-    do
-    {
-        stay &= updatePredicate(loopPosition, direction);
-        loopPosition = direction.applyToVector(loopPosition);
-        stay &= m_boardGroup->boardModel()->validCoords(loopPosition);
-    } while (stay);
-}
-
 void GameScene::launchPlayer()
 {
     lib::DisplayLog::info("Launching player");
@@ -293,83 +279,85 @@ void GameScene::launchPlayer()
     const vector2dst loopPosition{m_boardGroup->player()->boardPosition()};
     const board::BoardTileData tokenType{m_boardGroup->player()->data.get()};
     u32 inARow{0};
-    for_each_token_in_line(loopPosition, loopDirection, [this, tokenType, &inARow](const vector2dst &loopPosition, const Direction &) {
-        bool result{true};
-        bool found{false};
-        vector2df lastTokenPosition{};
+    BoardUtils::for_each_token_in_line(
+        loopPosition, loopDirection, m_boardGroup->boardModel()->size(),
+        [this, tokenType, &inARow](const vector2dst &loopPosition, const Direction &) {
+            bool result{true};
+            bool found{false};
+            vector2df lastTokenPosition{};
 
-        if (!m_boardGroup->boardModel()->tileEmpty(loopPosition) && !TokenZones::pointInCenter(loopPosition) && result)
-        {
-            sptr<board::ITile> currentToken{m_boardGroup->boardModel()->getTile(loopPosition)};
-            board::BoardTileData currentTokenType = currentToken->data.get();
-
-            if (currentTokenType == tokenType)
+            if (!m_boardGroup->boardModel()->tileEmpty(loopPosition) && !TokenZones::pointInCenter(loopPosition) && result)
             {
-                // If we found a token with the same color than the player:
+                sptr<board::ITile> currentToken{m_boardGroup->boardModel()->getTile(loopPosition)};
+                board::BoardTileData currentTokenType{currentToken->data.get()};
 
-                // Increment the number of tokens deleted in a row
-                ++inARow;
-                DisplayLog::info("In a row: ", inARow);
+                if (currentTokenType == tokenType)
+                {
+                    // If we found a token with the same color than the player:
 
-                // Increase the score accordingly
-                level_properties_->increaseScore(inARow * level_properties_->baseScore());
+                    // Increment the number of tokens deleted in a row
+                    ++inARow;
+                    DisplayLog::info("In a row: ", inARow);
 
-                // Inform that a token has been consumed
-                level_properties_->tokenConsumed();
+                    // Increase the score accordingly
+                    level_properties_->increaseScore(inARow * level_properties_->baseScore());
 
-                // Store the position of this last cosumed token
-                lastTokenPosition = board2Scene(loopPosition);
+                    // Inform that a token has been consumed
+                    level_properties_->tokenConsumed();
 
-                // Delete the token
-                m_boardGroup->boardModel()->deleteTile(loopPosition);
+                    // Store the position of this last cosumed token
+                    lastTokenPosition = board2Scene(loopPosition);
 
-                // At least you found one token
-                found = true;
+                    // Delete the token
+                    m_boardGroup->boardModel()->deleteTile(loopPosition);
+
+                    // At least you found one token
+                    found = true;
+                }
+                else
+                {
+                    // If we found a token, but it is from another color:
+
+                    // Change the type of the player to this new one and
+                    // change the type of the token for the previous type of the player
+                    m_boardGroup->boardModel()->swapTileData(
+                        m_boardGroup->player()->boardPosition(),
+                        loopPosition);
+
+                    DisplayLog::info("Player type changed to ", m_boardGroup->player()->data.get());
+
+                    // Exit the loop
+                    result = false;
+                }
             }
-            else
+
+            if (found)
             {
-                // If we found a token, but it is from another color:
+                DisplayLog::info("Tile with same color found");
+                DisplayLog::info("Creating points to score");
+                auto sceneNode(createSceneNode("pointIncrementScore_SceneNode"));
 
-                // Change the type of the player to this new one and
-                // change the type of the token for the previous type of the player
-                m_boardGroup->boardModel()->swapTileData(
-                    m_boardGroup->player()->boardPosition(),
-                    loopPosition);
+                auto node(createRenderizable(
+                    "pointIncrementScore", FigType_t::Shape,
+                    rectFromSize(15.0F, 15.0F), colors::White, 30U));
 
-                DisplayLog::info("Player type changed to ", m_boardGroup->player()->data.get());
+                {
+                    using namespace gameplay::constants;
 
-                // Exit the loop
-                result = false;
+                    DisplayLog::info("Creating animation for points to score");
+                    private_->scene_animation_component_->addPropertyAnimation(
+                        TimePoint_as_miliseconds(MillisAnimationPointsToScore),
+                        sceneNode->position,
+                        lastTokenPosition, EndPositionPointsToScore,
+                        [this, sceneNode]() {
+                            removeSceneNode(sceneNode);
+                        });
+                }
+                DisplayLog::info("Launching player");
+                m_boardGroup->player()->launchAnimation(lastTokenPosition);
             }
-        }
-
-        if (found)
-        {
-            DisplayLog::info("Tile with same color found");
-            DisplayLog::info("Creating points to score");
-            auto sceneNode(createSceneNode("pointIncrementScore_SceneNode"));
-
-            auto node(createRenderizable(
-                "pointIncrementScore", FigType_t::Shape,
-                rectFromSize(15.0F, 15.0F), colors::White, 30U));
-
-            {
-                using namespace gameplay::constants;
-
-                DisplayLog::info("Creating animation for points to score");
-                private_->scene_animation_component_->addPropertyAnimation(
-                    TimePoint_as_miliseconds(MillisAnimationPointsToScore),
-                    sceneNode->position,
-                    lastTokenPosition, EndPositionPointsToScore,
-                    [this, sceneNode]() {
-                        removeSceneNode(sceneNode);
-                    });
-            }
-            DisplayLog::info("Launching player");
-            m_boardGroup->player()->launchAnimation(lastTokenPosition);
-        }
-        return result;
-    });
+            return result;
+        });
     DisplayLog::info("Number of tokens in a row: ", inARow);
 }
 

@@ -10,23 +10,24 @@
 
 namespace zoper
 {
-    using namespace lib;
-    using namespace lib::scene;
+using namespace lib;
+using namespace lib::scene;
 
-	class BoardSceneNode : public SceneNode
-	{
-	private:
-		using BaseClass = SceneNode;
-	public:
-		BoardSceneNode(SceneNode* parent, str name, const Rectf32 &tileBox);
-		virtual ~BoardSceneNode();
+class BoardSceneNode : public SceneNode
+{
+private:
+    using BaseClass = SceneNode;
 
-		void setTileColor(Color color);
+public:
+    BoardSceneNode(SceneNode *parent, str name, const Rectf32 &tileBox);
+    virtual ~BoardSceneNode();
 
-	private:
-		sptr<Renderizable> m_backgroundTile;
-		sptr<RenderizableSceneNode> m_pointInCenter;
-	};
-}
+    void setTileColor(Color color);
+
+private:
+    sptr<Renderizable> m_backgroundTile;
+    sptr<RenderizableSceneNode> m_pointInCenter;
+};
+} // namespace zoper
 
 #endif

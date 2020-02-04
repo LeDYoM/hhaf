@@ -60,10 +60,6 @@ private:
     void generateNextToken();
     vector2df board2SceneFactor() const;
     vector2df tileSize() const;
-    void for_each_token_in_line(
-        const vector2dst &startPosition,
-        const Direction &direction,
-        function<bool(const vector2dst &, const Direction &)> updatePredicate);
 
     sptr<StatesController<GameSceneStates>> m_sceneStates;
     sptr<GameSharedData> game_shared_data_;
