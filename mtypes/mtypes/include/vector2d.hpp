@@ -75,25 +75,19 @@ namespace lib
             return r.x + r.y;
         }
 
-        /*
-        vector2d computeNormal( const vector2d& p2) const noexcept
-        {
-            vector2d<T> normal{ *this - p2 };
-            T length (static_cast<T>(std::sqrt(normal.x * normal.x + normal.y * normal.y)));
-            if (length != T{})
-                normal /= length;
-            return normal;
-        }
-        */
         constexpr vector2d operator+(const vector2d &right) const noexcept { return (vector2d(*this) += right); }
-        
-        template <typename V>
+
+        template <typename V, typename = std::enable_if_t<!std::is_same_v<std::decay_t<T>, std::decay_t<V>>>>
         constexpr vector2d operator+(const vector2d<V> &right) const noexcept { return (vector2d(*this) += right); }
 
         constexpr vector2d operator-(const vector2d &right) const noexcept { return (vector2d(*this) -= right); }
+
         constexpr vector2d operator*(const vector2d &right) const noexcept { return (vector2d(*this) *= right); }
+        constexpr vector2d operator*(const T &right) const noexcept { return (vector2d(*this) *= right); }
+        template <typename V, typename = std::enable_if_t<!std::is_same_v<std::decay_t<T>, std::decay_t<V>>>>
+        constexpr vector2d operator*(const vector2d<V> &right) const noexcept { return (vector2d(*this) *= static_cast<vector2d>(right)); }
+
         constexpr vector2d operator/(const vector2d &right) const noexcept { return (vector2d(*this) /= right); }
-        constexpr vector2d operator*(const T &right) const noexcept { return (vector2d(*this) *= right);	}
         constexpr vector2d operator/(const T &right) const noexcept { return (vector2d(*this) /= right); }
         constexpr bool operator ==(const vector2d &right) const noexcept { return (x == right.x && y == right.y); }
         constexpr bool operator !=(const vector2d &right) const noexcept {	return !(*operator==(right)); }

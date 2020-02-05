@@ -7,6 +7,7 @@
 #include "gamehud.hpp"
 #include "pause.hpp"
 #include "boardutils.hpp"
+#include "scoreutils.hpp"
 
 #ifdef USE_DEBUG_ACTIONS
 #include "debug_actions.hpp"
@@ -44,6 +45,30 @@ struct GameScene::GameScenePrivate
     sptr<AnimationComponent> scene_animation_component_;
     sptr<RandomNumbersComponent> token_type_generator_;
     sptr<RandomNumbersComponent> token_position_generator_;
+
+    void createScoreIncrementPoints(SceneNode &main_node,
+                                    const vector2df &lastTokenPosition)
+    {
+        auto sceneNode =
+            main_node.createSceneNode("pointIncrementScore_SceneNode");
+
+        auto node(sceneNode->createRenderizable(
+            "pointIncrementScore", FigType_t::Shape,
+            rectFromSize(15.0F, 15.0F), colors::White, 30U));
+
+        {
+            using namespace gameplay::constants;
+
+            DisplayLog::info("Creating animation for points to score");
+            scene_animation_component_->addPropertyAnimation(
+                TimePoint_as_miliseconds(MillisAnimationPointsToScore),
+                sceneNode->position,
+                lastTokenPosition, EndPositionPointsToScore,
+                [this, sceneNode]() {
+                    sceneNode->parent()->removeSceneNode(sceneNode);
+                });
+        }
+    }
 };
 
 GameScene::GameScene() : Scene{StaticTypeName} {}
@@ -278,10 +303,10 @@ void GameScene::launchPlayer()
     const Direction loopDirection{m_boardGroup->player()->currentDirection()};
     const vector2dst loopPosition{m_boardGroup->player()->boardPosition()};
     const board::BoardTileData tokenType{m_boardGroup->player()->data.get()};
-    u32 inARow{0};
+    ScoreIncrementer score_incrementer{level_properties_};
     BoardUtils::for_each_token_in_line(
         loopPosition, loopDirection, m_boardGroup->boardModel()->size(),
-        [this, tokenType, &inARow](const vector2dst &loopPosition, const Direction &) {
+        [this, tokenType, &score_incrementer](const vector2dst &loopPosition, const Direction &) {
             bool result{true};
             bool found{false};
             vector2df lastTokenPosition{};
@@ -296,14 +321,7 @@ void GameScene::launchPlayer()
                     // If we found a token with the same color than the player:
 
                     // Increment the number of tokens deleted in a row
-                    ++inARow;
-                    DisplayLog::info("In a row: ", inARow);
-
-                    // Increase the score accordingly
-                    level_properties_->increaseScore(inARow * level_properties_->baseScore());
-
-                    // Inform that a token has been consumed
-                    level_properties_->tokenConsumed();
+                    score_incrementer.addHit();
 
                     // Store the position of this last cosumed token
                     lastTokenPosition = board2Scene(loopPosition);
@@ -335,30 +353,13 @@ void GameScene::launchPlayer()
             {
                 DisplayLog::info("Tile with same color found");
                 DisplayLog::info("Creating points to score");
-                auto sceneNode(createSceneNode("pointIncrementScore_SceneNode"));
+                private_->createScoreIncrementPoints(*this, lastTokenPosition);
 
-                auto node(createRenderizable(
-                    "pointIncrementScore", FigType_t::Shape,
-                    rectFromSize(15.0F, 15.0F), colors::White, 30U));
-
-                {
-                    using namespace gameplay::constants;
-
-                    DisplayLog::info("Creating animation for points to score");
-                    private_->scene_animation_component_->addPropertyAnimation(
-                        TimePoint_as_miliseconds(MillisAnimationPointsToScore),
-                        sceneNode->position,
-                        lastTokenPosition, EndPositionPointsToScore,
-                        [this, sceneNode]() {
-                            removeSceneNode(sceneNode);
-                        });
-                }
                 DisplayLog::info("Launching player");
                 m_boardGroup->player()->launchAnimation(lastTokenPosition);
             }
             return result;
         });
-    DisplayLog::info("Number of tokens in a row: ", inARow);
 }
 
 vector2df GameScene::board2SceneFactor() const
@@ -370,7 +371,7 @@ vector2df GameScene::board2SceneFactor() const
 vector2df GameScene::board2Scene(const lib::vector2dst &bPosition) const
 {
     const auto b2sf{board2SceneFactor()};
-    return {b2sf.x * bPosition.x, b2sf.y * bPosition.y};
+    return b2sf * bPosition;
 }
 
 vector2df GameScene::tileSize() const

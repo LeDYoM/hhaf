@@ -45,9 +45,7 @@ void Player::update()
     if (boardPosition.readResetHasChanged())
     {
         DisplayLog::info("Player board position: ", boardPosition());
-        position = vector2df{
-            m_board2SceneFactor.x * boardPosition().x,
-            m_board2SceneFactor.y * boardPosition().y};
+        position = m_board2SceneFactor * boardPosition();
         DisplayLog::info("Player scene position: ", position());
     }
 
