@@ -54,7 +54,6 @@ private:
     struct GameScenePrivate;
     uptr<GameScenePrivate> private_{nullptr};
     using BaseClass = scene::Scene;
-    void setLevel(const size_type nv);
     void generateNextToken();
     vector2df tileSize() const;
 

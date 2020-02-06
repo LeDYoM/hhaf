@@ -22,9 +22,7 @@ public:
     virtual void tileRemoved(const vector2dst & /* position */) {}
     virtual void tileChanged(const vector2dst & /*position */,
                              const BoardTileData /* oldValue */,
-                             const BoardTileData /* newValue */)
-    {
-    }
+                             const BoardTileData /* newValue */) {}
 
     virtual void tileMoved(const vector2dst & /* source */,
                            const vector2dst & /* dest */) {}

@@ -11,34 +11,41 @@
 
 namespace zoper
 {
-using namespace lib;
+
+namespace mtps = lib;
+namespace haf = lib;
+namespace scene = haf::scene;
+
 class Player : public GameBaseTile
 {
 public:
     using BaseClass = GameBaseTile;
 
-    Player(rptr<scene::SceneNode> parent, str name);
+    Player(rptr<scene::SceneNode> parent, mtps::str name);
     ~Player() override;
 
-    void configure(const vector2dst &bPosition,
-                   const Rectf32 &box,
-                   const vector2df &board2SceneFactor);
+    void configure(const mtps::vector2dst &bPosition,
+                   const mtps::Rectf32 &box,
+                   const mtps::vector2df &board2SceneFactor);
 
-    PropertyState<vector2dst> boardPosition;
+    PropertyState<mtps::vector2dst> boardPosition;
     PropertyState<Direction> currentDirection;
 
     void movePlayer(const Direction &direction);
-    void launchAnimation(const vector2df &toWhere);
+    void launchAnimation(const mtps::vector2df &toWhere);
 
-    void tileAdded(const vector2dst &position) override;
-    void tileChanged(const vector2dst &position,
+    void tileAdded(const mtps::vector2dst &position) override;
+    void tileChanged(const mtps::vector2dst &position,
                      const board::BoardTileData oldValue,
                      const board::BoardTileData newValue) override;
+
+    void tileMoved(const mtps::vector2dst &source,
+                        const mtps::vector2dst &dest) override;
 
     void update() override;
 
 private:
-    void launchAnimationBack(const vector2df &toWhere);
+    void launchAnimationBack(const mtps::vector2df &toWhere);
     sptr<scene::AnimationComponent> animation_component_;
     scene::SceneNodeSPtr rotator_;
     scene::SceneNodeSPtr scalator_;

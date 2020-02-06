@@ -141,7 +141,7 @@ void GameScene::onCreated()
         m_boardGroup->setLevel(level);
     });
 
-    level_properties_->setUp(
+    level_properties_->configure(
         game_shared_data_->startLevel,
         game_shared_data_->gameMode,
         m_sceneTimerComponent);
@@ -219,29 +219,26 @@ void GameScene::onExitState(const GameSceneStates &state)
     DisplayLog::info("Exited state: ", make_str(state));
 }
 
-void GameScene::setLevel(const size_type)
-{
-    m_boardGroup->setLevel(game_shared_data_->endLevel);
-}
-
 bool moveTowardsCenter(
-    const sptr<board::BoardModelComponent> &p_boardModel,
+    const sptr<board::BoardModelComponent> &board_model,
     const Direction direction,
     const vector2dst position)
 {
     bool moved_to_center{false};
 
-    if (!p_boardModel->tileEmpty(position))
+    // Is the current tile position empty?
+    if (!board_model->tileEmpty(position))
     {
+        // If not, what about the next position to check, is empty?
         const auto next = direction.applyToVector(position);
 
-        if (!p_boardModel->tileEmpty(next))
+        if (!board_model->tileEmpty(next))
         {
             // If the target position where to move the
             // token is occupied, move the this target first.
-            moved_to_center = moveTowardsCenter(p_boardModel, direction, next);
+            moved_to_center = moveTowardsCenter(board_model, direction, next);
         }
-        p_boardModel->moveTile(position, next);
+        board_model->moveTile(position, next);
         if (TokenZones::pointInCenter(next))
         {
             log_assert(!moved_to_center, "Double game over!");

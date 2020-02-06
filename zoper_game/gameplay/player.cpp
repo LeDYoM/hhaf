@@ -83,8 +83,12 @@ void Player::movePlayer(const Direction &direction)
     if (TokenZones::pointInCenter(nPosition))
     {
         getBoardModel(*this)->moveTile(boardPosition(), nPosition);
-        boardPosition.set(nPosition);
     }
+}
+
+void Player::tileMoved(const vector2dst &/*source*/, const vector2dst &dest)
+{
+    boardPosition.set(dest);
 }
 
 void Player::launchAnimation(const vector2df &toWhere)

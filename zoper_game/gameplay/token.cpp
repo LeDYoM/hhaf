@@ -52,7 +52,9 @@ void Token::tileRemoved(const vector2dst &position_)
                      " from scene at position ", position_);
 }
 
-void Token::tileChanged(const vector2dst &position_, const board::BoardTileData oldValue, const board::BoardTileData newValue)
+void Token::tileChanged(const vector2dst &position_,
+                        const board::BoardTileData oldValue,
+                        const board::BoardTileData newValue)
 {
     DisplayLog::info("Token at position ", position_,
                      " changed from ", oldValue, " to ", newValue);
