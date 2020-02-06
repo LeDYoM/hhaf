@@ -13,40 +13,42 @@
 
 namespace zoper
 {
-    using namespace lib;
-    class LevelProperties;
+using namespace lib;
+class LevelProperties;
 
-    /**
+/**
     * This class represents one of the enemies in the board of the game.
     * 
     * The clas contains internal data like the token type inherited from
     * the base class. It also provides the required graphical information.
     */
-    class Token : public GameBaseTile
-    {
-    public:
-        Token(scene::SceneNode* const parent, str name);
-        ~Token() override;
+class Token : public GameBaseTile
+{
+public:
+    Token(scene::SceneNode *const parent, str name);
+    ~Token() override;
 
-        void configure(sptr<LevelProperties> level_properties,
-            board::BoardTileData data,
-            const Rectf32 &box);
+    void configure(sptr<LevelProperties> level_properties,
+                   board::BoardTileData data,
+                   const Rectf32 &box,
+                   const vector2df &board2SceneFactor);
 
-        static void resetTileCounter();
+    static void resetTileCounter();
 
-        void tileAdded(const vector2dst &position) override;
-        void tileRemoved(const vector2dst & /* position */) override;
-        void tileChanged(const vector2dst & /*position */,
-            const board::BoardTileData oldValue,
-            const board::BoardTileData newValue) override;
-        void tileMoved(const vector2dst& source,
-            const vector2dst& dest) override;
+    void tileAdded(const vector2dst &position) override;
+    void tileRemoved(const vector2dst & /* position */) override;
+    void tileChanged(const vector2dst & /*position */,
+                     const board::BoardTileData oldValue,
+                     const board::BoardTileData newValue) override;
+    void tileMoved(const vector2dst &source,
+                   const vector2dst &dest) override;
 
-    private:
-        static u32 m_tileCounter;
-        sptr<scene::AnimationComponent> animation_component_;
-        sptr<LevelProperties> level_properties_;
-    };
-}
+private:
+    static u32 m_tileCounter;
+    vector2df board2SceneFactor_;
+    sptr<scene::AnimationComponent> animation_component_;
+    sptr<LevelProperties> level_properties_;
+};
+} // namespace zoper
 
 #endif

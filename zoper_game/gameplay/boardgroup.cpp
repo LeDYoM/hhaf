@@ -18,9 +18,9 @@ using namespace lib::scene::nodes;
 
 BoardGroup::BoardGroup(SceneNode *parent, str name, vector2dst size)
     : BaseClass{parent, std::move(name)}
-    {
-        setTableSize(std::move(size));
-    }
+{
+    setTableSize(std::move(size));
+}
 
 BoardGroup::~BoardGroup() {}
 
@@ -62,7 +62,7 @@ void BoardGroup::addPlayer()
     // Create the player instance
     player_ = tokens_scene_node->createSceneNode<Player>("playerNode");
     player_->configure(TokenZones::centerRect.leftTop(),
-        rectFromSize(tileSize()), board2SceneFactor());
+                       rectFromSize(tileSize()), board2SceneFactor());
 
     // Add it to the board and to the scene nodes
     p_boardModel->setTile(player_->boardPosition(), player_);
@@ -76,12 +76,14 @@ void BoardGroup::createNewToken(
     using namespace lib::board;
 
     DisplayLog::info("BoardGroup:: Adding new token at ", board_position,
-                   " with value ", data);
+                     " with value ", data);
 
     // Create a new Tile instance
     auto new_tile_token = tokens_scene_node->createSceneNode<Token>("tileNode");
-    new_tile_token->configure(level_properties_,
-                          static_cast<BoardTileData>(data), rectFromSize(size));
+    new_tile_token->configure(
+        level_properties_,
+        static_cast<BoardTileData>(data), rectFromSize(size),
+        board2SceneFactor());
 
     // Set the position in the scene depending on the board position
     new_tile_token->position.set(board2Scene(board_position));
@@ -93,7 +95,7 @@ void BoardGroup::createNewToken(
 void BoardGroup::tileRemoved(const vector2dst, board::SITilePointer &tile)
 {
     log_assert(std::dynamic_pointer_cast<Token>(tile) != nullptr,
-                   "Trying to delete invalid type from board");
+               "Trying to delete invalid type from board");
     tokens_scene_node->removeSceneNode(std::dynamic_pointer_cast<Token>(tile));
 }
 
@@ -189,15 +191,12 @@ Color BoardGroup::getBackgroundTileColor(const size_type level,
 
 vector2df BoardGroup::board2SceneFactor() const
 {
-    return {
-        sceneManager().viewRect().size().x / static_cast<f32>(p_boardModel->size().x),
-        sceneManager().viewRect().size().y / static_cast<f32>(p_boardModel->size().y)};
+    return sceneManager().viewRect().size() / p_boardModel->size();
 }
 
 vector2df BoardGroup::board2Scene(const lib::vector2dst &bPosition) const
 {
-    const auto b2sf{board2SceneFactor()};
-    return {b2sf.x * bPosition.x, b2sf.y * bPosition.y};
+    return board2SceneFactor() * bPosition;
 }
 
 vector2df BoardGroup::tileSize() const

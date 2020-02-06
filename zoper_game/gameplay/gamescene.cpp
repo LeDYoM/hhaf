@@ -324,7 +324,7 @@ void GameScene::launchPlayer()
                     score_incrementer.addHit();
 
                     // Store the position of this last cosumed token
-                    lastTokenPosition = board2Scene(loopPosition);
+                    lastTokenPosition = m_boardGroup->board2Scene(loopPosition);
 
                     // Delete the token
                     m_boardGroup->boardModel()->deleteTile(loopPosition);
@@ -362,21 +362,9 @@ void GameScene::launchPlayer()
         });
 }
 
-vector2df GameScene::board2SceneFactor() const
-{
-    return {sceneManager().viewRect().size().x / static_cast<f32>(m_boardGroup->boardModel()->size().x),
-            sceneManager().viewRect().size().y / static_cast<f32>(m_boardGroup->boardModel()->size().y)};
-}
-
-vector2df GameScene::board2Scene(const lib::vector2dst &bPosition) const
-{
-    const auto b2sf{board2SceneFactor()};
-    return b2sf * bPosition;
-}
-
 vector2df GameScene::tileSize() const
 {
-    return board2Scene({1, 1});
+    return m_boardGroup->tileSize();
 }
 
 void GameScene::_debugDisplayBoard() const

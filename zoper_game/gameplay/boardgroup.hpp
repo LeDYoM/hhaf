@@ -50,15 +50,16 @@ public:
     sptr<Player> player() noexcept { return player_; }
     const sptr<Player> player() const noexcept { return player_; }
 
+    vector2df board2SceneFactor() const;
+    vector2df board2Scene(const lib::vector2dst &bPosition) const;
+    vector2df tileSize() const;
+
 private:
     sptr<board::BoardModelComponent> p_boardModel;
     sptr<Player> player_;
     sptr<scene::SceneNode> tokens_scene_node;
     sptr<LevelProperties> level_properties_;
 
-    vector2df board2SceneFactor() const;
-    vector2df board2Scene(const lib::vector2dst &bPosition) const;
-    vector2df tileSize() const;
     void addPlayer();
 };
 } // namespace zoper

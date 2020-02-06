@@ -47,8 +47,6 @@ public:
     void onEnterState(const GameSceneStates &) override;
     void onExitState(const GameSceneStates &) override;
 
-    vector2df board2Scene(const lib::vector2dst &bPosition) const;
-
     sptr<LevelProperties> levelProperties() const { return level_properties_; }
     void goGameOver();
 
@@ -58,7 +56,6 @@ private:
     using BaseClass = scene::Scene;
     void setLevel(const size_type nv);
     void generateNextToken();
-    vector2df board2SceneFactor() const;
     vector2df tileSize() const;
 
     sptr<StatesController<GameSceneStates>> m_sceneStates;

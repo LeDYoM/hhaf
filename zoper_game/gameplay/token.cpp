@@ -25,35 +25,37 @@ Token::Token(SceneNode *const parent, str name) : GameBaseTile{parent, name + st
 Token::~Token() = default;
 
 void Token::configure(sptr<LevelProperties> level_properties,
-                  board::BoardTileData board_tile_data,
-                  const Rectf32 &box)
+                      board::BoardTileData board_tile_data,
+                      const Rectf32 &box,
+                      const vector2df &board2SceneFactor)
 {
     data.set(board_tile_data);
     m_node->box = box;
     m_node->color = getColorForToken();
     level_properties_ = std::move(level_properties);
+    board2SceneFactor_ = board2SceneFactor;
 }
 
 void Token::resetTileCounter()
 {
-    m_tileCounter = 0;
+    m_tileCounter = 0U;
 }
 
 void Token::tileAdded(const vector2dst &position_)
 {
     DisplayLog::info("Token ", name(), " appeared at ", position_);
-    // Set the position in the scene depending on the board position
-    //        setBoardPosition(position);
 }
 
 void Token::tileRemoved(const vector2dst &position_)
 {
-    DisplayLog::info("Deleting token ", name(), " from scene at position ", position_);
+    DisplayLog::info("Deleting token ", name(),
+                     " from scene at position ", position_);
 }
 
 void Token::tileChanged(const vector2dst &position_, const board::BoardTileData oldValue, const board::BoardTileData newValue)
 {
-    DisplayLog::info("Token at position ", position_, " changed from ", oldValue, " to ", newValue);
+    DisplayLog::info("Token at position ", position_,
+                     " changed from ", oldValue, " to ", newValue);
     data.set(newValue);
 }
 
@@ -62,7 +64,7 @@ void Token::tileMoved(const vector2dst & /*source*/, const vector2dst &dest)
     const auto time(TimePoint_as_miliseconds(
         level_properties_->millisBetweenTokens() / 2));
 
-    const auto destination(ancestor<GameScene>()->board2Scene(dest));
+    const auto destination(board2SceneFactor_ * dest);
     animation_component_->addPropertyAnimation(time, position, destination);
 }
 } // namespace zoper
