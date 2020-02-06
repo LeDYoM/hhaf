@@ -9,27 +9,28 @@
 
 namespace lib::board
 {
-    using BoardTileData = s32;
+using BoardTileData = s32;
 
-    class ITile
+class ITile
+{
+public:
+    constexpr ITile() noexcept {}
+    virtual ~ITile() {}
+
+    PropertyState<BoardTileData> data;
+    virtual void tileAdded(const vector2dst & /* position */) {}
+    virtual void tileRemoved(const vector2dst & /* position */) {}
+    virtual void tileChanged(const vector2dst & /*position */,
+                             const BoardTileData /* oldValue */,
+                             const BoardTileData /* newValue */)
     {
-    public:
-        constexpr ITile() noexcept {}
-        virtual ~ITile() = default;
+    }
 
-        PropertyState<BoardTileData> data;
-        virtual void tileAdded(const vector2dst & /* position */) {}
-        virtual void tileRemoved(const vector2dst & /* position */) {}
-        virtual void tileChanged(const vector2dst & /*position */,
-            const BoardTileData /* oldValue */,
-            const BoardTileData /* newValue */)
-        {}
+    virtual void tileMoved(const vector2dst & /* source */,
+                           const vector2dst & /* dest */) {}
+};
 
-        virtual void tileMoved(const vector2dst& /* source */, 
-            const vector2dst& /* dest */) {}
-    };
-
-    using SITilePointer = sptr<ITile>;
-}
+using SITilePointer = sptr<ITile>;
+} // namespace lib::board
 
 #endif
