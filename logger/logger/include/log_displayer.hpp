@@ -47,6 +47,13 @@ public:
     }
 
     template <typename... Args>
+    static constexpr void warn(Args &&... args) noexcept
+    {
+        log_if_severity_under<SeverityType::severity_type_t::warn>(
+            std::forward<Args>(args)...);
+    }
+
+    template <typename... Args>
     static constexpr void error(Args &&... args) noexcept
     {
         log_if_severity_under<SeverityType::severity_type_t::error>(

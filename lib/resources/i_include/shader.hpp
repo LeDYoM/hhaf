@@ -4,7 +4,7 @@
 #define LIB_SCENE_SHADER_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <lib/resources_interface/include/ishader.hpp>
+#include <lib/resources/include/ishader.hpp>
 
 namespace lib::backend
 {

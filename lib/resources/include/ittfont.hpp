@@ -6,8 +6,8 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/rect.hpp>
 
-#include <lib/resources_interface/include/itexture.hpp>
-#include <lib/resources_interface/include/ifont.hpp>
+#include <lib/resources/include/itexture.hpp>
+#include <lib/resources/include/ifont.hpp>
 
 namespace lib::scene
 {

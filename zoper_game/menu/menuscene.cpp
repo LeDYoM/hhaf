@@ -2,7 +2,7 @@
 #include <lib/facades/include/resourceview.hpp>
 #include <lib/facades/include/resourcehandler.hpp>
 #include <lib/scene/scenecontroller.hpp>
-#include <lib/resources_interface/include/itexture.hpp>
+#include <lib/resources/include/itexture.hpp>
 
 #include "../menu/mainmenu.hpp"
 #include "../gameshareddata.hpp"

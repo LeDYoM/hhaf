@@ -5,7 +5,7 @@
 #include "../gameshareddata.hpp"
 #include "../zoperprogramcontroller.hpp"
 #include <lib/scene/components/texteditorcomponent.hpp>
-#include <lib/resources_interface/include/ittfont.hpp>
+#include <lib/resources/include/ittfont.hpp>
 #include <lib/facades/include/resourceview.hpp>
 #include <lib/system/systemprovider.hpp>
 #include <lib/system/filesystem.hpp>

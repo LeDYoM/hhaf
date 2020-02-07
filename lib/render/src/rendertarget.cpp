@@ -2,10 +2,10 @@
 
 #include <backend_dev/include/irendertarget.hpp>
 #include <lib/render/include/renderdata.hpp>
-#include <lib/resources_interface/include/itexture.hpp>
-#include <lib/resources/include/texture.hpp>
-#include <lib/resources/include/shader.hpp>
-#include <lib/resources_interface/include/ishader.hpp>
+#include <lib/resources/include/itexture.hpp>
+#include <lib/resources/i_include/texture.hpp>
+#include <lib/resources/include/ishader.hpp>
+#include <lib/resources/i_include/shader.hpp>
 #include <lib/scene/transform.hpp>
 #include <lib/include/liblog.hpp>
 

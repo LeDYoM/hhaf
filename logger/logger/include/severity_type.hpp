@@ -19,6 +19,7 @@ struct SeverityType
         debug,
         verbose,
         info,
+        warn,
         error,
     };
 
@@ -34,6 +35,9 @@ struct SeverityType
             break;
         case severity_type_t::info:
             return "<INFO> :";
+            break;
+        case severity_type_t::warn:
+            return "<WARN> :";
             break;
         case severity_type_t::error:
             return "<ERROR> :";

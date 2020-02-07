@@ -4,8 +4,8 @@
 #define LIB_RESOURCE_HANDLER_DATA_WRAPPER_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include "idatawrapper.hpp"
-#include <lib/resources_interface/include/iresourcehandler.hpp>
+#include <lib/scene/idatawrapper.hpp>
+#include <lib/resources/include/iresourcehandler.hpp>
 
 namespace lib
 {

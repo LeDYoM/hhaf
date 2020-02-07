@@ -9,24 +9,24 @@
 
 namespace lib::sys
 {
-    class TimeSystem final : public AppService
-    {
-    public:
-        TimeSystem();
-        ~TimeSystem() override;
+class TimeSystem final : public AppService
+{
+public:
+    TimeSystem();
+    ~TimeSystem() override;
 
-        TimePoint timeSinceStart() const;
-        TimePoint now() const;
+    TimePoint timeSinceStart() const;
+    TimePoint now() const;
 
-        void startFrame();
-        void endFrame();
+    void startFrame();
+    void endFrame();
 
-        void setAcceleration(const f32 acceleration);
+    void setAcceleration(const f32 acceleration);
 
-    private:
-        struct TimeSystemPrivate;
-        uptr<TimeSystemPrivate> priv_;
-    };
-}
+private:
+    struct TimeSystemPrivate;
+    uptr<TimeSystemPrivate> priv_;
+};
+} // namespace lib::sys
 
 #endif

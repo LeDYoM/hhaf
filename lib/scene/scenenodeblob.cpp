@@ -6,13 +6,13 @@
 #include "scene.hpp"
 #include <lib/system/scenemanager.hpp>
 
-#include <lib/resources/include/resourcemanager.hpp>
+#include <lib/resources/i_include/resourcemanager.hpp>
 #include <lib/system/systemprovider.hpp>
 
 #include <hosted_app/include/iapp.hpp>
 
-#include <lib/resources_interface/include/iresourceloader.hpp>
-#include <lib/resources_interface/include/iresourcehandler.hpp>
+#include <lib/resources/include/iresourceloader.hpp>
+#include <lib/resources/include/iresourcehandler.hpp>
 
 namespace lib::scene
 {

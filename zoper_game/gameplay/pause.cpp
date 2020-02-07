@@ -5,8 +5,8 @@
 #include <lib/scene/nodes/scenenodetext.hpp>
 #include <lib/scene/components/animationcomponent.hpp>
 #include <lib/scene/ianimation.hpp>
-#include <lib/resources_interface/include/itexture.hpp>
-#include <lib/resources_interface/include/ittfont.hpp>
+#include <lib/resources/include/itexture.hpp>
+#include <lib/resources/include/ittfont.hpp>
 
 #include <lib/system/scenemanager.hpp>
 #include <lib/facades/include/resourceview.hpp>

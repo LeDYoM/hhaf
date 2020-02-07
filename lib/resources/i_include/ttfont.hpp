@@ -7,7 +7,7 @@
 #include <mtypes/include/rect.hpp>
 
 #include "texture.hpp"
-#include <lib/resources_interface/include/ittfont.hpp>
+#include <lib/resources/include/ittfont.hpp>
 
 namespace lib
 {

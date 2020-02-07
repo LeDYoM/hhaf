@@ -4,7 +4,7 @@
 #define LIB_TIME_VIEW_DATA_WRAPPER_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include "idatawrapper.hpp"
+#include <lib/scene/idatawrapper.hpp>
 #include <lib/include/core/timepoint.hpp>
 
 namespace lib::scene

@@ -1,4 +1,4 @@
-#include <lib/resources/include/texture.hpp>
+#include <lib/resources/i_include/texture.hpp>
 #include <backend_dev/include/itexture.hpp>
 
 namespace lib::scene

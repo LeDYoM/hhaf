@@ -1,18 +1,17 @@
-#include <lib/resources/include/resourcemanager.hpp>
+#include <lib/resources/i_include/resourcemanager.hpp>
 #include <lib/system/systemprovider.hpp>
 #include <lib/system/filesystem.hpp>
 
 #include <lib/include/liblog.hpp>
 
-#include <lib/resources_interface/include/ittfont.hpp>
-#include <lib/resources_interface/include/itexture.hpp>
-#include <lib/resources_interface/include/ishader.hpp>
-#include <lib/resources/include/texture.hpp>
-#include <lib/resources/include/shader.hpp>
-#include <lib/resources/include/ttfont.hpp>
-
-#include <lib/resources/include/bmpfont.hpp>
-#include <lib/resources/include/bmpfontfactory.hpp>
+#include <lib/resources/include/ittfont.hpp>
+#include <lib/resources/include/itexture.hpp>
+#include <lib/resources/include/ishader.hpp>
+#include <lib/resources/i_include/texture.hpp>
+#include <lib/resources/i_include/shader.hpp>
+#include <lib/resources/i_include/ttfont.hpp>
+#include <lib/resources/i_include/bmpfont.hpp>
+#include <lib/resources/i_include/bmpfontfactory.hpp>
 
 #include <backend/include/backendfactory.hpp>
 #include <algorithm>

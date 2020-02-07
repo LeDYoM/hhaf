@@ -5,9 +5,9 @@
 
 #include <mtypes/include/types.hpp>
 
-#include <lib/resources_interface/include/ifont.hpp>
-#include <lib/resources_interface/include/iresourcehandler.hpp>
-#include <lib/resources_interface/include/itexture.hpp>
+#include <lib/resources/include/ifont.hpp>
+#include <lib/resources/include/iresourcehandler.hpp>
+#include <lib/resources/include/itexture.hpp>
 
 namespace lib::scene
 {

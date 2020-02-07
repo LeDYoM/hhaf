@@ -11,8 +11,8 @@
 #include <lib/scene/color.hpp>
 #include <lib/scene/hasname.hpp>
 #include <lib/scene/vertexarray.hpp>
-#include <lib/resources_interface/include/itexture.hpp>
-#include <lib/resources_interface/include/ishader.hpp>
+#include <lib/resources/include/itexture.hpp>
+#include <lib/resources/include/ishader.hpp>
 #include <lib/render/include/renderdata.hpp>
 
 namespace lib::scene

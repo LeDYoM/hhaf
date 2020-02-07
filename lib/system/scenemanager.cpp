@@ -2,12 +2,12 @@
 
 #include <lib/system/systemprovider.hpp>
 #include <lib/system/window.hpp>
-#include <lib/resources/include/resourcemanager.hpp>
+#include <lib/resources/i_include/resourcemanager.hpp>
 #include <lib/render/include/rendertarget.hpp>
 
 #include <lib/include/liblog.hpp>
-#include <lib/resources_interface/include/iresourceretriever.hpp>
-#include <lib/resources_interface/include/iresourcehandler.hpp>
+#include <lib/resources/include/iresourceretriever.hpp>
+#include <lib/resources/include/iresourcehandler.hpp>
 
 #include <lib/scene/scene.hpp>
 

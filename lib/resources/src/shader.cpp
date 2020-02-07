@@ -1,4 +1,4 @@
-#include <lib/resources/include/shader.hpp>
+#include <lib/resources/i_include/shader.hpp>
 
 #include <backend_dev/include/ishader.hpp>
 #include <map>

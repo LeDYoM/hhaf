@@ -9,7 +9,7 @@
 #include <lib/system/window.hpp>
 #include <lib/system/timesystem.hpp>
 
-#include <lib/resources/include/resourcemanager.hpp>
+#include <lib/resources/i_include/resourcemanager.hpp>
 
 #ifdef LIB_COMPILE_SIMULATIONS
     #include <lib/simulation/include/simulationsystem.hpp>

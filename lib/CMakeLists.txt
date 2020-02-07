@@ -22,19 +22,21 @@ target_include_directories(${CURRENT_TARGET}
 
 # Directory internal libraries that will be used by the client too.
 add_subdirectory(scene)
-target_link_libraries(${CURRENT_TARGET} PUBLIC scene)
+target_link_libraries(${CURRENT_TARGET} PRIVATE scene)
 add_subdirectory(render)
-target_link_libraries(${CURRENT_TARGET} PUBLIC render)
+target_link_libraries(${CURRENT_TARGET} PRIVATE render)
 add_subdirectory(resources)
-#target_link_libraries(${CURRENT_TARGET} PUBLIC resources)
+target_link_libraries(${CURRENT_TARGET} PRIVATE resources)
+#target_link_libraries(${CURRENT_TARGET} INTERFACE resources_inferface)
 add_subdirectory(facades)
 target_link_libraries(${CURRENT_TARGET} PUBLIC facades)
-add_subdirectory(resources_interface)
-target_link_libraries(${CURRENT_TARGET} PUBLIC resources_interface)
 add_subdirectory(simulation)
-target_link_libraries(${CURRENT_TARGET} PUBLIC simulation)
+target_link_libraries(${CURRENT_TARGET} PRIVATE simulation)
 add_subdirectory(system)
 target_link_libraries(${CURRENT_TARGET} PUBLIC system)
+add_subdirectory(shared_data)
+target_link_libraries(${CURRENT_TARGET} PRIVATE shareddata)
+target_link_libraries(${CURRENT_TARGET} INTERFACE shareddata_interface)
 
 # Internal libraries necessary for the library only.
 target_link_libraries(${CURRENT_TARGET} PRIVATE hosted_app)

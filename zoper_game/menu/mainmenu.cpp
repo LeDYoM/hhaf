@@ -6,7 +6,7 @@
 #include <lib/scene/scenenode.hpp>
 #include <lib/include/liblog.hpp>
 #include <lib/facades/include/resourceview.hpp>
-#include <lib/resources_interface/include/ittfont.hpp>
+#include <lib/resources/include/ittfont.hpp>
 
 #include <mtypes/include/function.hpp>
 #include <mtypes/include/types.hpp>

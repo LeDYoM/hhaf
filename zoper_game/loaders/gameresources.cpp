@@ -1,8 +1,8 @@
 #include "gameresources.hpp"
 
-#include <lib/resources_interface/include/iresourcehandler.hpp>
-#include <lib/resources_interface/include/itexture.hpp>
-#include <lib/resources_interface/include/ittfont.hpp>
+#include <lib/resources/include/iresourcehandler.hpp>
+#include <lib/resources/include/itexture.hpp>
+#include <lib/resources/include/ittfont.hpp>
 
 namespace zoper
 {

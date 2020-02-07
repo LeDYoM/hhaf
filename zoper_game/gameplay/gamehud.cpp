@@ -7,7 +7,7 @@
 
 #include <lib/include/liblog.hpp>
 #include <lib/facades/include/resourceview.hpp>
-#include <lib/resources_interface/include/ittfont.hpp>
+#include <lib/resources/include/ittfont.hpp>
 
 namespace zoper
 {

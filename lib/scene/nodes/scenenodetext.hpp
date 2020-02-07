@@ -5,7 +5,7 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/properties.hpp>
-#include <lib/resources_interface/include/ifont.hpp>
+#include <lib/resources/include/ifont.hpp>
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/color.hpp>
 

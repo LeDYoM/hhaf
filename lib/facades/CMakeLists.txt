@@ -18,7 +18,3 @@ build_internal_lib_component(
 target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
 target_link_libraries(${CURRENT_TARGET} PRIVATE logger)
 target_link_libraries(${CURRENT_TARGET} PRIVATE scene)
-
-target_include_directories(${CURRENT_TARGET}
-        PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
-)

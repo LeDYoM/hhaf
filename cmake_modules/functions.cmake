@@ -68,16 +68,27 @@ endfunction(build_lib_interface_component)
 # Function to build different components from the project in an unified way.
 function(build_internal_lib_component)
 
-    cmake_parse_arguments(ILC_BUILD "" "" "SOURCES;HEADERS" ${ARGN})
+    cmake_parse_arguments(LC_BUILD "" "HEADER_DIRECTORY" "SOURCES" ${ARGN})
 
     set (CURRENT_TARGET ${PROJECT_NAME})
+    set(_PUBLIC_INCLUDE "/include")
+    set(_PUBLIC_INCLUDE_DIRECTORY "${PROJECT_SOURCE_DIR}${_PUBLIC_INCLUDE}")
+    set(_INTERNAL_INCLUDE "/i_include")
+    set(_INTERNAL_INCLUDE_DIRECTORY "${PROJECT_SOURCE_DIR}${_INTERNAL_INCLUDE}")
 
-    add_library (${CURRENT_TARGET} STATIC ${ILC_BUILD_SOURCES} ${ILC_BUILD_HEADERS})
+    add_library (${CURRENT_TARGET} STATIC ${LC_BUILD_SOURCES} ${_PUBLIC_INCLUDE_DIRECTORY})
 
 # As long as static libraries are used for internal components, we do not need this.
 #    set_target_properties(${CURRENT_TARGET}
 #                      PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS true)
 
-    target_include_directories(${CURRENT_TARGET} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+    target_include_directories(${CURRENT_TARGET} 
+        PUBLIC
+        ${_PUBLIC_INCLUDE_DIRECTORY}
+        ${_INTERNAL_INCLUDE_DIRECTORY}
+        )
+
+    add_library (${CURRENT_TARGET}_interface INTERFACE)
+    target_include_directories(${CURRENT_TARGET}_interface INTERFACE ${_PUBLIC_INCLUDE_DIRECTORY})
 
 endfunction(build_internal_lib_component)
