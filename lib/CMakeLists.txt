@@ -34,7 +34,7 @@ add_subdirectory(simulation)
 target_link_libraries(${CURRENT_TARGET} PRIVATE simulation)
 add_subdirectory(system)
 target_link_libraries(${CURRENT_TARGET} PUBLIC system)
-add_subdirectory(shared_data)
+add_subdirectory(shareddata)
 target_link_libraries(${CURRENT_TARGET} PRIVATE shareddata)
 target_link_libraries(${CURRENT_TARGET} INTERFACE shareddata_interface)
 

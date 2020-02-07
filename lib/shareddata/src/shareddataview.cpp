@@ -1,4 +1,4 @@
-#include <lib/shared_data/include/shareddataview.hpp>
+#include <lib/shareddata/include/shareddataview.hpp>
 
 namespace lib::scene
 {
