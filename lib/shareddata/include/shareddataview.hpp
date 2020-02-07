@@ -5,14 +5,25 @@
 
 #include <mtypes/include/types.hpp>
 #include <lib/scene/idatawrapper.hpp>
+#include <lib/shareddata/include/ishareable.hpp>
 
-namespace lib::scene
+namespace lib::shdata
 {
 /// Component to provide access to resources.
-class SharedDataView : public IDataWrapper
+class SharedDataView : public scene::IDataWrapper
 {
 public:
     void onAttached() override;
+
+    void store(uptr<IShareable> data);
+    uptr<IShareable> retrieve();
+
+    template <typename T>
+    uptr<T> retrive()
+    {
+        return retrieve();
+    }
+
 };
 
 } // namespace lib::scene

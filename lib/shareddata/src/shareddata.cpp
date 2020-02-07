@@ -2,7 +2,7 @@
 
 #include <lib/include/liblog.hpp>
 
-namespace lib::sys
+namespace lib::shdata
 {
 SharedDataSystem::SharedDataSystem()
     : AppService{}, data_{nullptr} {}

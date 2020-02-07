@@ -8,6 +8,7 @@ namespace lib::scene
 {
 void ResourceHandler::onAttached()
 {
+    log_assert(handler_ == nullptr, "ResourceHandler already attached!");
     handler_ = &(attachedNode()->sceneManager().resourcesLoader());
     log_assert(handler_ != nullptr, "Invalid IResourceHandler");
 }

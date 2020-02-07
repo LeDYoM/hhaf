@@ -5,14 +5,10 @@
 
 #include <mtypes/include/types.hpp>
 #include <lib/system/appservice.hpp>
+#include <lib/shareddata/include/ishareable.hpp>
 
-namespace lib::sys
+namespace lib::shdata
 {
-class IShareable
-{
-public:
-    virtual ~IShareable() {}
-};
 
 /// SharedDataSystem is a system whose only purpose is to store
 /// data shared between different objects.

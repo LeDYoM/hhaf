@@ -1,8 +1,15 @@
 #include <lib/shareddata/include/shareddataview.hpp>
 
-namespace lib::scene
+namespace lib::shdata
 {
-void SharedDataView::onAttached()
+
+void SharedDataView::store(uptr<IShareable>)
 {
 }
+
+uptr<IShareable> SharedDataView::retrieve()
+{
+    return nullptr;
+}
+
 } // namespace lib::scene
