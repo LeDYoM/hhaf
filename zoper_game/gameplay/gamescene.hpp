@@ -30,49 +30,54 @@ namespace zoper
 class PauseSceneNode;
 class GameOverSceneNode;
 
-using namespace lib;
+namespace mtps = lib;
+namespace haf = lib;
+namespace scene = haf::scene;
 
 class GameScene final : public scene::Scene,
-                        public StatesControllerActuator<GameSceneStates>
+                        public haf::StatesControllerActuator<GameSceneStates>
 {
 public:
     GameScene();
     ~GameScene() override;
 
-	static constexpr char StaticTypeName[] = "GameScene";
+    static constexpr char StaticTypeName[] = "GameScene";
 
-    // Inherited via Scene
     void onCreated() override;
 
     void onEnterState(const GameSceneStates &) override;
     void onExitState(const GameSceneStates &) override;
 
-    sptr<LevelProperties> levelProperties() const { return level_properties_; }
+    mtps::sptr<LevelProperties> levelProperties() const
+    {
+        return level_properties_;
+    }
+    
     void goGameOver();
 
 private:
     struct GameScenePrivate;
-    uptr<GameScenePrivate> private_{nullptr};
+    haf::uptr<GameScenePrivate> private_;
     using BaseClass = scene::Scene;
     void generateNextToken();
-    vector2df tileSize() const;
+    mtps::vector2df tileSize() const;
 
-    sptr<StatesController<GameSceneStates>> m_sceneStates;
-    sptr<GameSharedData> game_shared_data_;
+    mtps::sptr<scene::StatesController<GameSceneStates>> m_sceneStates;
+    mtps::sptr<GameSharedData> game_shared_data_;
     void launchPlayer();
     void _debugDisplayBoard() const;
 
-    sptr<BoardGroup> m_boardGroup;
+    mtps::sptr<BoardGroup> m_boardGroup;
 
     // Timer related properties
-    sptr<scene::TimerComponent> m_sceneTimerComponent;
+    mtps::sptr<scene::TimerComponent> scene_timer_component_;
     scene::TimerConnectorSPtr m_nextTokenTimer;
 
     // General properties.
-    u8 m_nextTokenPart{0};
-    sptr<LevelProperties> level_properties_;
-    sptr<GameOverSceneNode> m_gameOver;
-    sptr<PauseSceneNode> pause_node_;
+    mtps::u8 m_nextTokenPart{0U};
+    mtps::sptr<LevelProperties> level_properties_;
+    mtps::sptr<GameOverSceneNode> m_gameOver;
+    mtps::sptr<PauseSceneNode> pause_node_;
 };
 } // namespace zoper
 

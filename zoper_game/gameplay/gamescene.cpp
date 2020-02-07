@@ -127,12 +127,14 @@ void GameScene::onCreated()
     });
 
     // Create the general timer component for the scene.
-    m_sceneTimerComponent = addComponentOfType<scene::TimerComponent>();
+    scene_timer_component_ = addComponentOfType<scene::TimerComponent>();
 
     // Import game shared data. Basically, the menu selected options.
     app<ZoperProgramController>().importGameSharedData(game_shared_data_);
 
-    private_->scene_animation_component_ = addComponentOfType<scene::AnimationComponent>();
+    private_->scene_animation_component_ =
+        addComponentOfType<AnimationComponent>();
+
     // At this point, we setup level properties.
     // level_properties_ should not be used before this point.
     level_properties_ = addComponentOfType<LevelProperties>();
@@ -144,7 +146,7 @@ void GameScene::onCreated()
     level_properties_->configure(
         game_shared_data_->startLevel,
         game_shared_data_->gameMode,
-        m_sceneTimerComponent);
+        scene_timer_component_);
 
     m_boardGroup->configure(level_properties_);
 
@@ -152,7 +154,7 @@ void GameScene::onCreated()
     addComponentOfType<DebugActions>();
 #endif
 
-    m_nextTokenTimer = m_sceneTimerComponent->addTimer(
+    m_nextTokenTimer = scene_timer_component_->addTimer(
         TimerType::Continuous,
         TimePoint_as_miliseconds(level_properties_->millisBetweenTokens()),
         [this](TimePoint realEllapsed) {
@@ -189,13 +191,13 @@ void GameScene::onEnterState(const GameSceneStates &state)
     {
     case GameSceneStates::Pause:
     {
-        m_sceneTimerComponent->pause();
+        scene_timer_component_->pause();
         pause_node_->enterPause();
     }
     break;
     case GameSceneStates::GameOver:
         m_gameOver->visible = true;
-        m_sceneTimerComponent->pause();
+        scene_timer_component_->pause();
         break;
     default:
         break;
@@ -209,7 +211,7 @@ void GameScene::onExitState(const GameSceneStates &state)
     {
     case GameSceneStates::Pause:
     {
-        m_sceneTimerComponent->resume();
+        scene_timer_component_->resume();
         pause_node_->exitPause();
     }
     break;
