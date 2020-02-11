@@ -15,6 +15,7 @@ set (_HEADERS
     "appservice.hpp"
     "filesystem.hpp"
     "inputsystem.hpp"
+    "isystemprovider.hpp"
     "randomsystem.hpp"
     "scenemanager.hpp"
     "systemprovider.hpp"

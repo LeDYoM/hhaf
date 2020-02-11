@@ -4,6 +4,7 @@
 #define LIB_SYSTEM_PROVIDER_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
+#include <lib/system/isystemprovider.hpp>
 
 namespace lib
 {
@@ -36,7 +37,7 @@ namespace lib::sys
 
 namespace lib::sys
 {
-    class SystemProvider final
+    class SystemProvider final : public ISystemProvider
     {
     public:
         SystemProvider();
