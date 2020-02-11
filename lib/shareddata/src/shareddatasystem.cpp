@@ -1,15 +1,16 @@
-#include <lib/shareddata/i_include/shareddata.hpp>
+#include <lib/shareddata/i_include/shareddatasystem.hpp>
 
 #include <lib/include/liblog.hpp>
 
-namespace lib::shdata
+namespace lib::sys
 {
+
 SharedDataSystem::SharedDataSystem()
     : AppService{}, data_{nullptr} {}
 
 SharedDataSystem::~SharedDataSystem() {}
 
-void SharedDataSystem::store(uptr<IShareable> data)
+void SharedDataSystem::store(uptr<shdata::IShareable> data)
 {
     if (data_ != nullptr)
     {
@@ -17,7 +18,7 @@ void SharedDataSystem::store(uptr<IShareable> data)
     }
 }
 
-uptr<IShareable> SharedDataSystem::retrieve()
+uptr<shdata::IShareable> SharedDataSystem::retrieve()
 {
     return std::move(data_);
 }

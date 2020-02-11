@@ -7,7 +7,7 @@
 #include <lib/system/appservice.hpp>
 #include <lib/shareddata/include/ishareable.hpp>
 
-namespace lib::shdata
+namespace lib::sys
 {
 
 /// SharedDataSystem is a system whose only purpose is to store
@@ -18,11 +18,11 @@ public:
     SharedDataSystem();
     ~SharedDataSystem() override;
 
-    void store(uptr<IShareable> data);
-    uptr<IShareable> retrieve();
+    void store(uptr<shdata::IShareable> data);
+    uptr<shdata::IShareable> retrieve();
 
 private:
-    uptr<IShareable> data_;
+    uptr<shdata::IShareable> data_;
 };
 } // namespace lib::sys
 

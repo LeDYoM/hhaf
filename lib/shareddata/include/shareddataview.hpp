@@ -9,12 +9,10 @@
 
 namespace lib::shdata
 {
-/// Component to provide access to resources.
-class SharedDataView : public scene::IDataWrapper
+/// Component to provide access to data resources.
+class SharedData : public scene::IDataWrapper
 {
 public:
-    void onAttached() override;
-
     void store(uptr<IShareable> data);
     uptr<IShareable> retrieve();
 
@@ -23,7 +21,17 @@ public:
     {
         return retrieve();
     }
+};
 
+class SharedDataView : public scene::IDataWrapper
+{
+public:
+    SharedDataView();
+    ~SharedDataView() override;
+    void onAttached() override;
+    IShareable& data();
+private:
+    uptr<IShareable> data_;
 };
 
 } // namespace lib::scene

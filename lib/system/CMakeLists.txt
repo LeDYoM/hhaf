@@ -33,6 +33,7 @@ target_link_libraries(${CURRENT_TARGET} PRIVATE simulation)
 target_link_libraries(${CURRENT_TARGET} PRIVATE scene)
 target_link_libraries(${CURRENT_TARGET} PRIVATE backend)
 target_link_libraries(${CURRENT_TARGET} PRIVATE resources)
+target_link_libraries(${CURRENT_TARGET} PRIVATE shareddata)
 target_link_libraries(${CURRENT_TARGET} PRIVATE backend_dev)
 target_link_libraries(${CURRENT_TARGET} PRIVATE hosted_app)
 

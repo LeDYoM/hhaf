@@ -2,7 +2,7 @@ project (shareddata CXX)
 cmake_minimum_required(VERSION 3.12)
 
 set (_SOURCES 
-    "src/shareddata.cpp"
+    "src/shareddatasystem.cpp"
     "src/shareddataview.cpp"
 )
 

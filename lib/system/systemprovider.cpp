@@ -8,6 +8,7 @@
 #include <lib/system/scenemanager.hpp>
 #include <lib/system/window.hpp>
 #include <lib/system/timesystem.hpp>
+#include <lib/shareddata/i_include/shareddatasystem.hpp>
 
 #include <lib/resources/i_include/resourcemanager.hpp>
 
@@ -26,6 +27,7 @@ struct SystemProvider::SystemProviderPrivate
     ~SystemProviderPrivate() = default;
 
     IApp *app_;
+    uptr<SharedDataSystem> shared_data_system_;
     uptr<backend::BackendFactory> backend_factory_;
     uptr<Window> window_;
     uptr<ResourceManager> resource_manager_;
@@ -49,6 +51,7 @@ void SystemProvider::init(IApp *iapp)
 {
     log_assert(iapp != nullptr, "Cannot create a SystemProvider with a nullptr app");
     p_->app_ = iapp;
+    p_->shared_data_system_ = muptr<SharedDataSystem>();
     p_->backend_factory_ = muptr<backend::BackendFactory>();
     p_->time_system_ = muptr<TimeSystem>();
     p_->window_ = muptr<Window>(*this);
@@ -189,6 +192,16 @@ const RenderSystem &SystemProvider::renderSystem() const noexcept
 RenderSystem &SystemProvider::renderSystem() noexcept
 {
     return *p_->render_system_;
+}
+
+SharedDataSystem &SystemProvider::sharedDataSystem() noexcept
+{
+    return *p_->shared_data_system_;
+}
+
+const SharedDataSystem &SystemProvider::sharedDataSystem() const noexcept
+{
+    return *p_->shared_data_system_;
 }
 
 bool SystemProvider::runStep()
