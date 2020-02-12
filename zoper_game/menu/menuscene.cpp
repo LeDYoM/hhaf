@@ -40,7 +40,10 @@ void MenuScene::onCreated()
     auto mainMenu(createSceneNode<MainMenu>(MainMenu::ClassName));
     mainMenu->MenuFinished.connect([this](const s32 status)
     {
-        app<ZoperProgramController>().gameSharedData->exitGame = (status == 0);
+        if (status == 0)
+        {
+            app<ZoperProgramController>().requestExit();
+        }
         sceneController().switchToNextScene();
     });
 }

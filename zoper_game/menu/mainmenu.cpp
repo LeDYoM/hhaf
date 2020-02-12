@@ -59,7 +59,6 @@ void goGame(MenuPaged *scene_node,
     auto &capp = scene_node->app<ZoperProgramController>();
     capp.gameSharedData->startLevel = menu_data[0U];
     capp.gameSharedData->gameMode = game_mode;
-    capp.gameSharedData->exitGame = false;
     DisplayLog::info(capp.gameSharedData->to_str());
     scene_node->terminate(1);
 }

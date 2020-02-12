@@ -8,6 +8,7 @@
 #include <lib/system/systemprovider.hpp>
 #include <lib/system/filesystem.hpp>
 #include <lib/system/scenemanager.hpp>
+#include <lib/shareddata/include/shareddataview.hpp>
 
 namespace zoper
 {
@@ -44,7 +45,7 @@ void ZoperProgramController::onInit()
 
         sceneController->setSceneDirector([this](const str &scene_name) -> str {
             // Did the user selected exit?
-            if (gameSharedData->exitGame)
+            if (exitRequested())
             {
                 return str{};
             }

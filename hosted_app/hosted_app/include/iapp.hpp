@@ -26,11 +26,14 @@ namespace lib
         virtual u16 getSubVersion() const noexcept = 0;
         virtual u16 getPatch() const noexcept  = 0;
         virtual str getName() const noexcept  = 0;
+        inline void requestExit() noexcept { exit_requested_ = true; }
+        inline bool exitRequested() const noexcept { return exit_requested_; }
 
         inline void setSystemProvider(sys::SystemProvider* const system_provider) noexcept { system_provider_ = system_provider; }
         inline sys::SystemProvider &systemProvider() const noexcept { return *system_provider_; }
     private:
         sys::SystemProvider *system_provider_{nullptr};
+        bool exit_requested_{false};
     };
 }
 

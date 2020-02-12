@@ -10,7 +10,7 @@
 #include <mtypes/include/object.hpp>
 #include <mtypes/include/str.hpp>
 #include <lib/include/core/timepoint.hpp>
-
+#include <lib/shareddata/include/ishareable.hpp>
 #include "gameplay/direction.hpp"
 
 namespace zoper
@@ -23,10 +23,8 @@ enum class GameMode : u8
     Time = 1,
 };
 
-struct GameSharedData
+struct GameSharedData : public shdata::IShareable
 {
-    bool exitGame{false};
-
     // MenuScene will write these
     size_type startLevel{0U};
     GameMode gameMode{GameMode::Token};
@@ -39,7 +37,6 @@ struct GameSharedData
     {
         str temp;
         temp << "Selected level " << startLevel << "\n"
-             << "Exit game: " << exitGame << "\n"
              << " GameMode: " << static_cast<u32>(gameMode);
         return temp;
     }
