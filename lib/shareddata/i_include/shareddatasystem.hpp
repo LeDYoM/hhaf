@@ -19,7 +19,12 @@ public:
     ~SharedDataSystem() override;
 
     void store(uptr<shdata::IShareable> data);
-    uptr<shdata::IShareable> retrieve();
+    [[nodiscard]] uptr<shdata::IShareable> retrieve();
+
+    bool isEmpty() const noexcept
+    {
+        return data_ == nullptr;
+    }
 
 private:
     uptr<shdata::IShareable> data_;

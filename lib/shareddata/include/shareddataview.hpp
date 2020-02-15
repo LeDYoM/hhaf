@@ -14,13 +14,37 @@ class SharedData : public scene::IDataWrapper
 {
 public:
     void store(uptr<IShareable> data);
-    uptr<IShareable> retrieve();
 
     template <typename T>
-    uptr<T> retrive()
+    void store(uptr<T> data)
     {
-        return retrieve();
+        store(unique_pointer_cast<IShareable>(std::move(data)));
     }
+
+    template <typename T, typename... Args>
+    void constructAndStore(Args &&... args)
+    {
+        store<T>(muptr<T>(std::forward<Args>(args)...));
+    }
+
+    template <typename T, typename... Args>
+    void constructAndStoreIfEmpty(Args &&... args)
+    {
+        if (isEmpty())
+        {
+            store<T>(muptr<T>(std::forward<Args>(args)...));
+        }
+    }
+
+    template <typename T = IShareable>
+    [[nodiscard]] uptr<T> retrieve()
+    {
+        return unique_pointer_cast<T>(std::move(retrieve_imp()));
+    }
+
+    [[nodiscard]] bool isEmpty();
+private:
+    [[nodiscard]] uptr<IShareable> retrieve_imp();
 };
 
 class SharedDataView : public scene::IDataWrapper
@@ -28,8 +52,24 @@ class SharedDataView : public scene::IDataWrapper
 public:
     SharedDataView();
     ~SharedDataView() override;
+
     void onAttached() override;
-    IShareable& data();
+
+    [[nodiscard]] IShareable& data();
+    [[nodiscard]] const IShareable& data() const;
+
+    template <typename T>
+    [[nodiscard]] T& dataAs()
+    {
+        return dynamic_cast<T&>(data());
+    }
+
+    template <typename T>
+    [[nodiscard]] const T& dataAs() const
+    {
+        return dynamic_cast<T&>(data());
+    }
+
 private:
     uptr<IShareable> data_;
 };

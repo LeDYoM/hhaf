@@ -12,28 +12,53 @@ void SharedData::store(uptr<IShareable> data)
     attachedNode()->sceneManager().systemProvider().sharedDataSystem().store(std::move(data));
 }
 
-uptr<IShareable> SharedData::retrieve()
+uptr<IShareable> SharedData::retrieve_imp()
 {
+    log_assert(!isEmpty(), "SharedDataSystem should be empty");
     return attachedNode()->sceneManager().systemProvider().sharedDataSystem().retrieve();
 }
 
-SharedDataView::SharedDataView()
-    : data_{nullptr}
+bool SharedData::isEmpty()
 {
+    return attachedNode()->sceneManager().systemProvider().sharedDataSystem().isEmpty();
 }
+
+SharedDataView::SharedDataView()
+    : data_{nullptr} {}
 
 SharedDataView::~SharedDataView()
 {
+    log_assert(data_ != nullptr, "Data is nullptr");
+    log_assert(attachedNode()->sceneManager().systemProvider().sharedDataSystem().isEmpty(),
+               "SharedDataSystem should be empty");
+
     attachedNode()->sceneManager().systemProvider().sharedDataSystem().store(std::move(data_));
+
+    log_assert(!attachedNode()->sceneManager().systemProvider().sharedDataSystem().isEmpty(),
+               "SharedDataSystem should not be empty");
+
+    log_assert(data_ == nullptr, "SharedDataView should contain nullptr");
 }
 
 void SharedDataView::onAttached()
 {
+    log_assert(data_ == nullptr, "SharedDataView should contain nullptr");
+    log_assert(!attachedNode()->sceneManager().systemProvider().sharedDataSystem().isEmpty(),
+               "SharedDataSystem should not be empty");
+
     data_ = attachedNode()->sceneManager().systemProvider().sharedDataSystem().retrieve();
+
+    log_assert(attachedNode()->sceneManager().systemProvider().sharedDataSystem().isEmpty(),
+               "SharedDataSystem should be empty");
     log_assert(data_ != nullptr, "Data is nullptr");
 }
 
 IShareable &SharedDataView::data()
+{
+    return *(data_.get());
+}
+
+const IShareable &SharedDataView::data() const
 {
     return *(data_.get());
 }

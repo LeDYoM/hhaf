@@ -27,6 +27,7 @@
 #include <lib/scene/components/inputcomponent.hpp>
 #include <lib/scene/components/randomnumberscomponent.hpp>
 #include <lib/system/scenemanager.hpp>
+#include <lib/shareddata/include/shareddataview.hpp>
 
 //TODO: Fixme
 #include <lib/system/systemprovider.hpp>
@@ -129,9 +130,6 @@ void GameScene::onCreated()
     // Create the general timer component for the scene.
     scene_timer_component_ = addComponentOfType<scene::TimerComponent>();
 
-    // Import game shared data. Basically, the menu selected options.
-    app<ZoperProgramController>().importGameSharedData(game_shared_data_);
-
     private_->scene_animation_component_ =
         addComponentOfType<AnimationComponent>();
 
@@ -143,10 +141,20 @@ void GameScene::onCreated()
         m_boardGroup->setLevel(level);
     });
 
+    size_type start_level;
+    GameMode game_mode;
+
+    {
+        auto game_shared_data_view = dataWrapper<shdata::SharedDataView>();
+        auto& game_shared_data = game_shared_data_view->dataAs<GameSharedData>();
+
+        start_level = game_shared_data.startLevel;
+        game_mode = game_shared_data.gameMode;
+    }
+
     level_properties_->configure(
-        game_shared_data_->startLevel,
-        game_shared_data_->gameMode,
-        scene_timer_component_);
+        start_level, game_mode, scene_timer_component_);
+
 
     m_boardGroup->configure(level_properties_);
 
@@ -292,7 +300,6 @@ void GameScene::generateNextToken()
 
 void GameScene::goGameOver()
 {
-    level_properties_->updateGameSharedData(game_shared_data_);
     m_sceneStates->setState(GameSceneStates::GameOver);
 }
 

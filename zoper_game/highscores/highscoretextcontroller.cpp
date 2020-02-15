@@ -3,13 +3,13 @@
 #include "highscorevalidator.hpp"
 #include "../loaders/highscoresresources.hpp"
 #include "../gameshareddata.hpp"
-#include "../zoperprogramcontroller.hpp"
 #include <lib/scene/components/texteditorcomponent.hpp>
 #include <lib/resources/include/ittfont.hpp>
 #include <lib/facades/include/resourceview.hpp>
 #include <lib/system/systemprovider.hpp>
 #include <lib/system/filesystem.hpp>
 #include <lib/system/scenemanager.hpp>
+#include <lib/shareddata/include/shareddataview.hpp>
 
 namespace zoper
 {
@@ -37,7 +37,7 @@ void HighScoreTextController::onCreated()
     sceneManager().systemProvider().fileSystem().deserializeFromFile(HighScoresFileName, m_hsData);
 
     // Request game score
-    Score gameScore = app<ZoperProgramController>().gameSharedData->score;
+    Score gameScore = dataWrapper<shdata::SharedDataView>()->dataAs<GameSharedData>().score;
 
     Rectf32 textBox{rectFromSize(scenePerspective().size()).setLeftTop({0, 250}).setSize({2000, 1500})};
     position = textBox.leftTop();

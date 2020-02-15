@@ -8,7 +8,6 @@
 #include <lib/system/systemprovider.hpp>
 #include <lib/system/filesystem.hpp>
 #include <lib/system/scenemanager.hpp>
-#include <lib/shareddata/include/shareddataview.hpp>
 
 namespace zoper
 {
@@ -25,8 +24,6 @@ str ZoperProgramController::getName() const noexcept { return "Zoper"; }
 
 void ZoperProgramController::onInit()
 {
-    gameSharedData = msptr<GameSharedData>();
-
     keyMapping = muptr<KeyMapping>();
     keyMapping->reset();
     systemProvider().fileSystem().deserializeFromFile("keys.txt", *keyMapping);

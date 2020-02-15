@@ -40,6 +40,8 @@ struct GameSharedData : public shdata::IShareable
              << " GameMode: " << static_cast<u32>(gameMode);
         return temp;
     }
+
+    ~GameSharedData() override = default;
 };
 
 } // namespace zoper

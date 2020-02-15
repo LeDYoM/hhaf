@@ -63,7 +63,6 @@ private:
     mtps::vector2df tileSize() const;
 
     mtps::sptr<scene::StatesController<GameSceneStates>> m_sceneStates;
-    mtps::sptr<GameSharedData> game_shared_data_;
     void launchPlayer();
     void _debugDisplayBoard() const;
 

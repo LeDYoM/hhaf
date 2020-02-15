@@ -31,7 +31,6 @@ public:
     inline size_t stayCounter() const { return m_stayCounter; }
     void increaseScore(const size_type scoreIncrement);
     void nextLevel();
-    void updateGameSharedData(sptr<GameSharedData> game_shared_data);
     static constexpr size_t maxLevelWithProperties{25U};
 
     void tokenConsumed();
@@ -41,6 +40,7 @@ private:
     void updateGoals();
     void updateLevelData();
     void setLevel(const LevelType currentLevel);
+    void setScore(const size_type new_score);
 
     uptr<scene::Timer> m_levelTimer;
     scene::TimerConnectorSPtr m_updateLevelDataTimer;

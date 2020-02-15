@@ -3,12 +3,13 @@
 #include <lib/facades/include/resourcehandler.hpp>
 #include <lib/scene/scenecontroller.hpp>
 #include <lib/resources/include/itexture.hpp>
+#include <lib/shareddata/include/shareddataview.hpp>
 
 #include "../menu/mainmenu.hpp"
-#include "../gameshareddata.hpp"
 #include "../loaders/mainmenuresources.hpp"
 #include "../zoperprogramcontroller.hpp"
 #include "../common_scene_nodes.hpp"
+#include "../gameshareddata.hpp"
 
 namespace zoper
 {
@@ -27,6 +28,7 @@ void MenuScene::onCreated()
     auto resources_loader = dataWrapper<ResourceHandler>();
     resources_loader->loadResources(MainMenuResources{});
     auto resources_viewer = dataWrapper<ResourceView>();
+    dataWrapper<shdata::SharedData>()->constructAndStoreIfEmpty<GameSharedData>();
 
     createStandardBackground(this);
 

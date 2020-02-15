@@ -8,7 +8,6 @@
 
 namespace zoper
 {
-struct GameSharedData;
 class KeyMapping;
 
 class ZoperProgramController : public lib::IApp
@@ -25,13 +24,7 @@ public:
     lib::u16 getPatch() const noexcept override;
     lib::str getName() const noexcept override;
 
-    lib::sptr<GameSharedData> gameSharedData;
     lib::uptr<KeyMapping> keyMapping;
-
-    void importGameSharedData(lib::sptr<GameSharedData> &rhs)
-    {
-        rhs = gameSharedData;
-    }
 };
 } // namespace zoper
 

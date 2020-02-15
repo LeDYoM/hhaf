@@ -8,7 +8,6 @@
 namespace zoper
 {
 using namespace lib;
-struct GameSharedData;
 
 class MainMenu : public lib::scene::MenuPaged
 {
@@ -20,9 +19,6 @@ public:
     ~MainMenu() override;
 
     virtual void onCreated() override;
-
-private:
-    sptr<GameSharedData> m_gameSharedData;
 };
 } // namespace zoper
 

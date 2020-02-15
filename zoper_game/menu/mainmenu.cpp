@@ -1,12 +1,12 @@
 #include "mainmenu.hpp"
 #include "../loaders/mainmenuresources.hpp"
 #include "../gameshareddata.hpp"
-#include "../zoperprogramcontroller.hpp"
 #include <menu_paged/include/menu_page.hpp>
 #include <lib/scene/scenenode.hpp>
 #include <lib/include/liblog.hpp>
 #include <lib/facades/include/resourceview.hpp>
 #include <lib/resources/include/ittfont.hpp>
+#include <lib/shareddata/include/shareddataview.hpp>
 
 #include <mtypes/include/function.hpp>
 #include <mtypes/include/types.hpp>
@@ -56,17 +56,21 @@ void goGame(MenuPaged *scene_node,
             const GameMode game_mode,
             vector<s32> menu_data)
 {
-    auto &capp = scene_node->app<ZoperProgramController>();
-    capp.gameSharedData->startLevel = menu_data[0U];
-    capp.gameSharedData->gameMode = game_mode;
-    DisplayLog::info(capp.gameSharedData->to_str());
+    {
+        auto game_shared_data_view = scene_node->dataWrapper<shdata::SharedDataView>();
+        auto& game_shared_data = game_shared_data_view->dataAs<GameSharedData>();
+
+        game_shared_data.startLevel = menu_data[0U];
+        game_shared_data.gameMode = game_mode;
+        DisplayLog::info(game_shared_data.to_str());
+    }
+
     scene_node->terminate(1);
 }
 
 MainMenu::MainMenu(SceneNode *parent, str name)
     : BaseClass{parent, std::move(name)}
 {
-    m_gameSharedData = app<ZoperProgramController>().gameSharedData;
 }
 
 MainMenu::~MainMenu() = default;

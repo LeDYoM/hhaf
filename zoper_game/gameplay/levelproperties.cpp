@@ -1,6 +1,8 @@
 #include "levelproperties.hpp"
+#include "../gameshareddata.hpp"
 
 #include <lib/include/liblog.hpp>
+#include <lib/shareddata/include/shareddataview.hpp>
 
 namespace zoper
 {
@@ -9,8 +11,8 @@ using namespace lib::scene;
 using namespace lib::sys;
 
 void LevelProperties::configure(const size_type currentLevel,
-                            const GameMode gameMode,
-                            sptr<scene::TimerComponent> sceneTimerComponent)
+                                const GameMode gameMode,
+                                sptr<scene::TimerComponent> sceneTimerComponent)
 {
     if (!m_levelTimer)
     {
@@ -25,15 +27,22 @@ void LevelProperties::configure(const size_type currentLevel,
     m_updateLevelDataTimer = m_sceneTimerComponent->addTimer(
         TimerType::Continuous,
         TimePoint_as_miliseconds(120),
-        [this](TimePoint /*realEllapsed*/)
-        {
+        [this](TimePoint /*realEllapsed*/) {
             updateLevelData();
         });
 
     m_gameHud = attachedNode()->createSceneNode<GameHudSceneNode>("hud");
 
-    m_currentScore = 0U;
+    setScore(0U);
     setLevel(currentLevel);
+}
+
+void LevelProperties::setScore(const size_type new_score)
+{
+    m_currentScore = new_score;
+    auto game_shared_data_view = attachedNode()->dataWrapper<shdata::SharedDataView>();
+    auto game_shared_data = game_shared_data_view->dataAs<GameSharedData>().score = m_currentScore;
+    m_gameHud->setScore(m_currentScore);
 }
 
 void LevelProperties::setLevel(const LevelType currentLevel)
@@ -41,20 +50,26 @@ void LevelProperties::setLevel(const LevelType currentLevel)
     m_levelTimer->restart();
 
     m_currentLevel = currentLevel;
-    m_baseScore = 10 + m_currentLevel;
+
+    {
+        auto game_shared_data_view = attachedNode()->dataWrapper<shdata::SharedDataView>();
+        game_shared_data_view->dataAs<GameSharedData>().endLevel = m_currentLevel;
+    }
+
+    m_baseScore = 2U * m_currentLevel;
     m_consumedTokens = 0U;
 
     if (m_currentLevel <= maxLevelWithProperties)
     {
-        m_millisBetweenTokens = 1350 - (m_currentLevel * 50U);
-        m_stayCounter = ((m_gameMode == GameMode::Time) ? 180 + (m_currentLevel * 30)
-                                                        : 25 + (10 * m_currentLevel));
+        m_millisBetweenTokens = 1350U - (m_currentLevel * 50U);
+        m_stayCounter = ((m_gameMode == GameMode::Time) ? 180U + (m_currentLevel * 30U)
+                                                        : 25U + (10U * m_currentLevel));
     }
     else
     {
         m_millisBetweenTokens = 50;
-        m_stayCounter = ((m_gameMode == GameMode::Time) ? 1200
-                                                        : 400);
+        m_stayCounter = ((m_gameMode == GameMode::Time) ? 1200U
+                                                        : 400U);
     }
 
     levelChanged(currentLevel);
@@ -107,19 +122,12 @@ void LevelProperties::updateLevelData()
 
 void LevelProperties::increaseScore(const size_type scoreIncrement)
 {
-    m_currentScore += scoreIncrement;
-    m_gameHud->setScore(m_currentScore);
+    setScore(m_currentScore + scoreIncrement);
 }
 
 void LevelProperties::nextLevel()
 {
     setLevel(m_currentLevel + 1);
-}
-
-void LevelProperties::updateGameSharedData(sptr<GameSharedData> game_shared_data)
-{
-    game_shared_data->endLevel = m_currentLevel;
-    game_shared_data->score = m_currentScore;
 }
 
 } // namespace zoper
