@@ -4,7 +4,7 @@
 #include <lib/scene/scenecontroller.hpp>
 
 #include "scene.hpp"
-#include <lib/system/scenemanager.hpp>
+#include <lib/scene/scenemanager.hpp>
 
 #include <lib/resources/i_include/resourcemanager.hpp>
 #include <lib/system/systemprovider.hpp>

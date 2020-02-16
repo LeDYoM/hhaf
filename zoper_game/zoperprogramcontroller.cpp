@@ -8,7 +8,7 @@
 #include <mtypes/include/serializer.hpp>
 #include <lib/system/systemprovider.hpp>
 #include <lib/system/filesystem.hpp>
-#include <lib/system/scenemanager.hpp>
+#include <lib/scene/scenemanager.hpp>
 #include <lib/shareddata/include/ishareddatasystem.hpp>
 
 namespace zoper

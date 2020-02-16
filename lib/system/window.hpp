@@ -5,7 +5,6 @@
 
 #include <lib/system/appservice.hpp>
 
-#include <backend_dev/include/iwindow.hpp>
 #include <backend_dev/include/iinputdriver.hpp>
 
 #include <mtypes/include/types.hpp>

@@ -6,7 +6,7 @@
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/nodes/tablenode.hpp>
 #include <lib/scene/renderizable.hpp>
-#include <lib/system/scenemanager.hpp>
+#include <lib/scene/scenemanager.hpp>
 
 #include <boardmanager/include/boardmodel.hpp>
 #include <boardmanager/include/itile.hpp>

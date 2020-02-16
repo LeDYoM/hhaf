@@ -5,7 +5,7 @@
 #include <lib/system/inputsystem.hpp>
 #include <lib/system/randomsystem.hpp>
 #include <lib/render/include/rendersystem.hpp>
-#include <lib/system/scenemanager.hpp>
+#include <lib/scene/scenemanager.hpp>
 #include <lib/system/window.hpp>
 #include <lib/system/timesystem.hpp>
 #include <lib/shareddata/i_include/shareddatasystem.hpp>

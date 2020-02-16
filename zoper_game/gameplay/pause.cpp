@@ -8,7 +8,7 @@
 #include <lib/resources/include/itexture.hpp>
 #include <lib/resources/include/ittfont.hpp>
 
-#include <lib/system/scenemanager.hpp>
+#include <lib/scene/scenemanager.hpp>
 #include <lib/facades/include/resourceview.hpp>
 
 namespace zoper

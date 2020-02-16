@@ -1,6 +1,6 @@
 #include <lib/facades/include/resourceview.hpp>
 
-#include <lib/system/scenemanager.hpp>
+#include <lib/scene/scenemanager.hpp>
 #include <lib/scene/scenenode.hpp>
 #include <lib/include/liblog.hpp>
 

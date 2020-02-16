@@ -11,7 +11,7 @@
 #include <lib/facades/include/resourceview.hpp>
 #include <lib/facades/include/resourcehandler.hpp>
 #include <lib/system/systemprovider.hpp>
-#include <lib/system/scenemanager.hpp>
+#include <lib/scene/scenemanager.hpp>
 
 namespace zoper
 {

@@ -26,7 +26,7 @@
 #include <lib/scene/components/animationcomponent.hpp>
 #include <lib/scene/components/inputcomponent.hpp>
 #include <lib/scene/components/randomnumberscomponent.hpp>
-#include <lib/system/scenemanager.hpp>
+#include <lib/scene/scenemanager.hpp>
 #include <lib/shareddata/include/shareddataview.hpp>
 
 //TODO: Fixme
