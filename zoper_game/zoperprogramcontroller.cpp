@@ -3,11 +3,13 @@
 #include "menu/menuscene.hpp"
 #include "gameplay/gamescene.hpp"
 #include "highscores/highscoresscene.hpp"
+#include "gameshareddata.hpp"
 
 #include <mtypes/include/serializer.hpp>
 #include <lib/system/systemprovider.hpp>
 #include <lib/system/filesystem.hpp>
 #include <lib/system/scenemanager.hpp>
+#include <lib/shareddata/include/ishareddatasystem.hpp>
 
 namespace zoper
 {
@@ -29,6 +31,10 @@ void ZoperProgramController::onInit()
     systemProvider().fileSystem().deserializeFromFile("keys.txt", *keyMapping);
     systemProvider().fileSystem().serializeToFile("keys.txt", *keyMapping);
 
+    {
+        auto game_shared_data{muptr<GameSharedData>()};
+        systemProvider().sharedDataSystem().store(std::move(game_shared_data));
+    }
     {
         auto &sceneManager(systemProvider().sceneManager());
         sceneManager.setViewRect({0U, 0U, 2000U, 2000U});
@@ -65,5 +71,10 @@ void ZoperProgramController::onInit()
     }
 }
 
-void ZoperProgramController::onFinish() {}
+void ZoperProgramController::onFinish()
+{
+    bool check = systemProvider().sharedDataSystem().makeEmpty();
+    log_assert(check, "SharedData is empty!");
+}
+
 } // namespace zoper

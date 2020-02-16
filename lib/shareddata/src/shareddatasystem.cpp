@@ -34,4 +34,19 @@ uptr<shdata::IShareable> SharedDataSystem::retrieve()
     return temp;
 }
 
+bool SharedDataSystem::isEmpty() const noexcept
+{
+    return data_ == nullptr;
+}
+
+bool SharedDataSystem::makeEmpty()
+{
+    if (!isEmpty())
+    {
+        data_.reset();
+        return true;
+    }
+    return false;
+}
+
 } // namespace lib::sys

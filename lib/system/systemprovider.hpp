@@ -33,7 +33,7 @@ namespace lib::sys
 #endif
     class TimeSystem;
     class RenderSystem;
-    class SharedDataSystem;
+    class ISharedDataSystem;
 }
 
 namespace lib::sys
@@ -78,8 +78,8 @@ namespace lib::sys
         backend::BackendFactory &backendFactory() noexcept;
         const RenderSystem &renderSystem() const noexcept;
         RenderSystem &renderSystem() noexcept;
-        SharedDataSystem &sharedDataSystem() noexcept;
-        const SharedDataSystem &sharedDataSystem() const noexcept;
+        ISharedDataSystem &sharedDataSystem() noexcept;
+        const ISharedDataSystem &sharedDataSystem() const noexcept;
 
         bool runStep();
 

@@ -194,12 +194,12 @@ RenderSystem &SystemProvider::renderSystem() noexcept
     return *p_->render_system_;
 }
 
-SharedDataSystem &SystemProvider::sharedDataSystem() noexcept
+ISharedDataSystem &SystemProvider::sharedDataSystem() noexcept
 {
     return *p_->shared_data_system_;
 }
 
-const SharedDataSystem &SystemProvider::sharedDataSystem() const noexcept
+const ISharedDataSystem &SystemProvider::sharedDataSystem() const noexcept
 {
     return *p_->shared_data_system_;
 }

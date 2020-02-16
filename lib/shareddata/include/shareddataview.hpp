@@ -21,21 +21,6 @@ public:
         store(unique_pointer_cast<IShareable>(std::move(data)));
     }
 
-    template <typename T, typename... Args>
-    void constructAndStore(Args &&... args)
-    {
-        store<T>(muptr<T>(std::forward<Args>(args)...));
-    }
-
-    template <typename T, typename... Args>
-    void constructAndStoreIfEmpty(Args &&... args)
-    {
-        if (isEmpty())
-        {
-            store<T>(muptr<T>(std::forward<Args>(args)...));
-        }
-    }
-
     template <typename T = IShareable>
     [[nodiscard]] uptr<T> retrieve()
     {

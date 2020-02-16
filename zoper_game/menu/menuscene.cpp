@@ -9,7 +9,6 @@
 #include "../loaders/mainmenuresources.hpp"
 #include "../zoperprogramcontroller.hpp"
 #include "../common_scene_nodes.hpp"
-#include "../gameshareddata.hpp"
 
 namespace zoper
 {
@@ -28,7 +27,6 @@ void MenuScene::onCreated()
     auto resources_loader = dataWrapper<ResourceHandler>();
     resources_loader->loadResources(MainMenuResources{});
     auto resources_viewer = dataWrapper<ResourceView>();
-    dataWrapper<shdata::SharedData>()->constructAndStoreIfEmpty<GameSharedData>();
 
     createStandardBackground(this);
 
