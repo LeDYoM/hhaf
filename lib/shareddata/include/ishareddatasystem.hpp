@@ -12,8 +12,8 @@ namespace lib::sys
 class ISharedDataSystem
 {
 public:
-    virtual void store(uptr<shdata::IShareable> data) = 0;
-    [[nodiscard]] virtual uptr<shdata::IShareable> retrieve() = 0;
+    virtual void store(uptr<shdata::IShareable> data) noexcept = 0;
+    [[nodiscard]] virtual uptr<shdata::IShareable> retrieve() noexcept = 0;
 
     virtual bool isEmpty() const noexcept = 0;
     virtual bool makeEmpty() = 0;

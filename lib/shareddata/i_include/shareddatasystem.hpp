@@ -16,11 +16,12 @@ namespace lib::sys
 class SharedDataSystem final : public AppService, public ISharedDataSystem
 {
 public:
-    SharedDataSystem();
+    // Default constructor.
+    SharedDataSystem() noexcept;
     ~SharedDataSystem() override;
 
-    void store(uptr<shdata::IShareable> data) override;
-    [[nodiscard]] uptr<shdata::IShareable> retrieve() override;
+    void store(uptr<shdata::IShareable> data) noexcept override;
+    [[nodiscard]] uptr<shdata::IShareable> retrieve() noexcept override;
 
     bool isEmpty() const noexcept override;
     bool makeEmpty() override;

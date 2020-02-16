@@ -16,7 +16,7 @@ namespace lib
 class AppService
 {
 protected:
-    AppService() = default;
+    AppService() noexcept = default;
     AppService(const AppService &rh) = delete;
     AppService &operator=(const AppService &rh) = delete;
 
