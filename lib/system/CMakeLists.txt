@@ -34,7 +34,3 @@ target_link_libraries(${CURRENT_TARGET} PRIVATE resources)
 target_link_libraries(${CURRENT_TARGET} PRIVATE shareddata)
 target_link_libraries(${CURRENT_TARGET} PRIVATE backend_dev)
 target_link_libraries(${CURRENT_TARGET} PRIVATE hosted_app)
-
-target_include_directories(${CURRENT_TARGET}
-        PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
-)
