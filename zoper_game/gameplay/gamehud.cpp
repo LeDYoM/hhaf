@@ -6,7 +6,7 @@
 #include <lib/scene/nodes/scenenodetext.hpp>
 
 #include <lib/include/liblog.hpp>
-#include <lib/facades/include/resourceview.hpp>
+#include <lib/resources/include/resourceview.hpp>
 #include <lib/resources/include/ittfont.hpp>
 
 namespace zoper

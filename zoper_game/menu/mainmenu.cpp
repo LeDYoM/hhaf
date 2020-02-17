@@ -4,7 +4,7 @@
 #include <menu_paged/include/menu_page.hpp>
 #include <lib/scene/scenenode.hpp>
 #include <lib/include/liblog.hpp>
-#include <lib/facades/include/resourceview.hpp>
+#include <lib/resources/include/resourceview.hpp>
 #include <lib/resources/include/ittfont.hpp>
 #include <lib/shareddata/include/shareddataview.hpp>
 

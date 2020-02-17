@@ -2,8 +2,6 @@ project (facades CXX)
 cmake_minimum_required(VERSION 3.12)
 
 set (_SOURCES 
-    "src/resourcehandler.cpp"
-    "src/resourceview.cpp"
     "src/timeview.cpp"
 )
 

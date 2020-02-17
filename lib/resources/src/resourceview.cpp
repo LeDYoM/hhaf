@@ -1,4 +1,4 @@
-#include <lib/facades/include/resourceview.hpp>
+#include <lib/resources/include/resourceview.hpp>
 
 #include <lib/scene/scenemanager.hpp>
 #include <lib/scene/scenenode.hpp>
