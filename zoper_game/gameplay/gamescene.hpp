@@ -20,10 +20,10 @@
 #include <lib/scene/nodes/textquad.hpp>
 #include <lib/scene/nodes/scenenodetext.hpp>
 #include <lib/scene/renderizable.hpp>
-#include <lib/scene/components/timercomponent.hpp>
+#include <lib/time/include/timercomponent.hpp>
 #include <lib/scene/components/statescontroller.hpp>
 #include <lib/scene/components/statescontrolleractuator.hpp>
-#include <lib/scene/components/timercomponent.hpp>
+#include <lib/time/include/timercomponent.hpp>
 
 namespace zoper
 {

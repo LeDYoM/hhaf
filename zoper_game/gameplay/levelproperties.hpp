@@ -6,7 +6,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
 
-#include <lib/scene/components/timercomponent.hpp>
+#include <lib/time/include/timercomponent.hpp>
 #include <lib/scene/icomponent.hpp>
 #include <lib/scene/color.hpp>
 
