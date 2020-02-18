@@ -2,9 +2,10 @@ project (time CXX)
 cmake_minimum_required(VERSION 3.12)
 
 set (_SOURCES 
-    "src/timeview.cpp"
+    "src/timer.cpp"
     "src/timercomponent.cpp"
     "src/timesystem.cpp"
+    "src/timeview.cpp"
 )
 
 set (CURRENT_TARGET  ${PROJECT_NAME})

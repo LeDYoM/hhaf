@@ -15,24 +15,6 @@ class TimeView : public IDataWrapper
 public:
     TimePoint now() const;
 };
-
-class Timer final : public TimeView
-{
-public:
-    TimePoint ellapsed() const;
-    void pause();
-    void resume();
-    void switchPause();
-    void restart();
-
-    constexpr bool isPaused() const noexcept { return is_paused_; }
-    void onAttached() override;
-
-private:
-    TimePoint started_at_;
-    TimePoint time_paused_;
-    bool is_paused_;
-};
 } // namespace lib::scene
 
 #endif
