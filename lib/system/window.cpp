@@ -6,7 +6,7 @@
 #include <lib/time/include/timepoint.hpp>
 #include <lib/system/inputsystem.hpp>
 #include <lib/render/include/rendertarget.hpp>
-#include <lib/system/timesystem.hpp>
+#include <lib/time/i_include/timesystem.hpp>
 #include <lib/system/systemprovider.hpp>
 
 namespace lib::sys

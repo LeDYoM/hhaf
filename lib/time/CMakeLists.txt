@@ -4,6 +4,7 @@ cmake_minimum_required(VERSION 3.12)
 set (_SOURCES 
     "src/timeview.cpp"
     "src/timercomponent.cpp"
+    "src/timesystem.cpp"
 )
 
 set (CURRENT_TARGET  ${PROJECT_NAME})

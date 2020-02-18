@@ -7,7 +7,7 @@
 #include <lib/render/include/rendersystem.hpp>
 #include <lib/scene/scenemanager.hpp>
 #include <lib/system/window.hpp>
-#include <lib/system/timesystem.hpp>
+#include <lib/time/i_include/timesystem.hpp>
 #include <lib/shareddata/i_include/shareddatasystem.hpp>
 
 #include <lib/resources/i_include/resourcemanager.hpp>

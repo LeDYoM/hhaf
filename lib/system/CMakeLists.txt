@@ -6,7 +6,6 @@ set (_SOURCES
     "inputsystem.cpp"
     "randomsystem.cpp"
     "systemprovider.cpp"
-    "timesystem.cpp"
     "window.cpp"
 )
 
@@ -17,7 +16,6 @@ set (_HEADERS
     "isystemprovider.hpp"
     "randomsystem.hpp"
     "systemprovider.hpp"
-    "timesystem.hpp"
     "window.hpp"
 )
 
