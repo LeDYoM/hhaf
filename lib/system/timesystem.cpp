@@ -3,7 +3,7 @@
 #include <chrono>
 
 #include <lib/include/liblog.hpp>
-#include <lib/include/core/timepoint.hpp>
+#include <lib/time/include/timepoint.hpp>
 
 namespace lib::sys
 {

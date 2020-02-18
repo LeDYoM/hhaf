@@ -5,7 +5,7 @@
 
 #include <mtypes/include/types.hpp>
 #include <lib/scene/idatawrapper.hpp>
-#include <lib/include/core/timepoint.hpp>
+#include <lib/time/include/timepoint.hpp>
 
 namespace lib::scene
 {

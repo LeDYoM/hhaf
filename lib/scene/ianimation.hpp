@@ -3,7 +3,7 @@
 #ifndef LIB_SCENE_IANIMATION_INCLUDE_HPP
 #define LIB_SCENE_IANIMATION_INCLUDE_HPP
 
-#include <lib/include/core/timepoint.hpp>
+#include <lib/time/include/timepoint.hpp>
 #include <lib/time/include/timeview.hpp>
 
 #include <mtypes/include/types.hpp>
