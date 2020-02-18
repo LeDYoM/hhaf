@@ -7,7 +7,7 @@
 #include <mtypes/include/vector2d.hpp>
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/icomponent.hpp>
-#include <lib/facades/include/timeview.hpp>
+#include <lib/time/include/timeview.hpp>
 #include <lib/scene/ianimation.hpp>
 
 namespace lib::scene

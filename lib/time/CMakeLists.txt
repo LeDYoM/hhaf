@@ -1,4 +1,4 @@
-project (facades CXX)
+project (time CXX)
 cmake_minimum_required(VERSION 3.12)
 
 set (_SOURCES 
