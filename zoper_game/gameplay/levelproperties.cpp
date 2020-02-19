@@ -12,11 +12,13 @@ using namespace lib::sys;
 
 void LevelProperties::configure(const size_type currentLevel,
                                 const GameMode gameMode,
-                                sptr<scene::TimerComponent> sceneTimerComponent)
+                                sptr<time::TimerComponent> sceneTimerComponent)
 {
+    using namespace time;
+
     if (!m_levelTimer)
     {
-        m_levelTimer = attachedNode()->dataWrapper<scene::Timer>();
+        m_levelTimer = attachedNode()->dataWrapper<Timer>();
     }
     log_assert(sceneTimerComponent != nullptr, "m_sceneNodeComponent already contains a value");
     log_assert(m_sceneTimerComponent == nullptr, "Passed nullptr sceneTimerComponent");

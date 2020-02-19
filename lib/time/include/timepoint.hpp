@@ -6,7 +6,7 @@
 #include <mtypes/include/str.hpp>
 #include <mtypes/include/types.hpp>
 
-namespace lib
+namespace lib::time
 {
 class TimePoint
 {

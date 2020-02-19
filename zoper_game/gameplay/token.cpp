@@ -63,7 +63,7 @@ void Token::tileChanged(const vector2dst &position_,
 
 void Token::tileMoved(const vector2dst & /*source*/, const vector2dst &dest)
 {
-    const auto time(TimePoint_as_miliseconds(
+    const auto time(time::TimePoint_as_miliseconds(
         level_properties_->millisBetweenTokens() / 2));
 
     const auto destination(board2SceneFactor_ * dest);

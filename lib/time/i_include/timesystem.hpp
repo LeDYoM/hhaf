@@ -15,8 +15,8 @@ public:
     TimeSystem();
     ~TimeSystem() override;
 
-    TimePoint timeSinceStart() const;
-    TimePoint now() const;
+    time::TimePoint timeSinceStart() const;
+    time::TimePoint now() const;
 
     void startFrame();
     void endFrame();

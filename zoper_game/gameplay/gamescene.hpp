@@ -69,8 +69,8 @@ private:
     mtps::sptr<BoardGroup> m_boardGroup;
 
     // Timer related properties
-    mtps::sptr<scene::TimerComponent> scene_timer_component_;
-    scene::TimerConnectorSPtr m_nextTokenTimer;
+    mtps::sptr<time::TimerComponent> scene_timer_component_;
+    time::TimerConnectorSPtr m_nextTokenTimer;
 
     // General properties.
     mtps::u8 m_nextTokenPart{0U};

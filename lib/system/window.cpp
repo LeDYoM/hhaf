@@ -9,6 +9,8 @@
 #include <lib/time/i_include/timesystem.hpp>
 #include <lib/system/systemprovider.hpp>
 
+using namespace lib::time;
+
 namespace lib::sys
 {
 struct Window::WindowPrivate final

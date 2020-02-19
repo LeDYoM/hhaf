@@ -5,7 +5,7 @@
 #include <lib/time/i_include/timesystem.hpp>
 #include <lib/system/systemprovider.hpp>
 
-namespace lib::scene
+namespace lib::time
 {
 TimePoint TimeView::now() const
 {

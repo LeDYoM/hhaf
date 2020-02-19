@@ -14,7 +14,7 @@
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/icomponent.hpp>
 
-namespace lib::scene
+namespace lib::time
 {
 using timer_emitter_t = emitter<TimePoint>;
 using timer_callback_t = timer_emitter_t::emitter_callback_t;
@@ -28,7 +28,7 @@ enum class TimerType : u8
 class TimerConnector
 {
 public:
-    TimerConnector(uptr<scene::Timer> timer, TimerType timerType, TimePoint timeOut, timer_callback_t emitter)
+    TimerConnector(uptr<Timer> timer, TimerType timerType, TimePoint timeOut, timer_callback_t emitter)
         : timer_{std::move(timer)}, m_timeOut{std::move(timeOut)},
           m_emitter{std::move(emitter)}, m_timerType{timerType} {}
 
@@ -38,7 +38,7 @@ public:
     inline void switchPause() { timer_->switchPause(); }
 
 private:
-    uptr<scene::Timer> timer_;
+    uptr<Timer> timer_;
     TimePoint m_timeOut;
     timer_emitter_t m_emitter;
     TimerType m_timerType;
@@ -47,7 +47,7 @@ private:
 
 using TimerConnectorSPtr = sptr<TimerConnector>;
 
-class TimerComponent : public IComponent
+class TimerComponent : public scene::IComponent
 {
 public:
     TimerConnectorSPtr addTimer(TimerType timerType, TimePoint timeOut, timer_callback_t callback)
@@ -67,6 +67,6 @@ public:
 private:
     vector_shared_pointers<TimerConnector> m_activeTimers;
 };
-} // namespace lib::scene
+} // namespace lib::time
 
 #endif

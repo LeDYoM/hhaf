@@ -7,6 +7,8 @@
 
 namespace lib::sys
 {
+using namespace time;
+
 namespace
 {
 using clock_t = std::chrono::high_resolution_clock;

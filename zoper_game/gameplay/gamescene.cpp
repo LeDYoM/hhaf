@@ -62,7 +62,7 @@ struct GameScene::GameScenePrivate
 
             DisplayLog::info("Creating animation for points to score");
             scene_animation_component_->addPropertyAnimation(
-                TimePoint_as_miliseconds(MillisAnimationPointsToScore),
+                time::TimePoint_as_miliseconds(MillisAnimationPointsToScore),
                 sceneNode->position,
                 lastTokenPosition, EndPositionPointsToScore,
                 [this, sceneNode]() {
@@ -128,7 +128,7 @@ void GameScene::onCreated()
     });
 
     // Create the general timer component for the scene.
-    scene_timer_component_ = addComponentOfType<scene::TimerComponent>();
+    scene_timer_component_ = addComponentOfType<time::TimerComponent>();
 
     private_->scene_animation_component_ =
         addComponentOfType<AnimationComponent>();
@@ -163,9 +163,9 @@ void GameScene::onCreated()
 #endif
 
     m_nextTokenTimer = scene_timer_component_->addTimer(
-        TimerType::Continuous,
-        TimePoint_as_miliseconds(level_properties_->millisBetweenTokens()),
-        [this](TimePoint realEllapsed) {
+        time::TimerType::Continuous,
+        time::TimePoint_as_miliseconds(level_properties_->millisBetweenTokens()),
+        [this](time::TimePoint realEllapsed) {
             DisplayLog::info("Elapsed between tokens: ", realEllapsed.milliseconds());
             // New token
             generateNextToken();

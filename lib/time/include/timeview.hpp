@@ -7,14 +7,14 @@
 #include <lib/scene/idatawrapper.hpp>
 #include <lib/time/include/timepoint.hpp>
 
-namespace lib::scene
+namespace lib::time
 {
 /// Component to provide access to resources.
-class TimeView : public IDataWrapper
+class TimeView : public scene::IDataWrapper
 {
 public:
     TimePoint now() const;
 };
-} // namespace lib::scene
+} // namespace lib::time
 
 #endif

@@ -22,25 +22,25 @@ namespace lib::scene
         void addAnimation(uptr<IAnimation>);
 
         template <typename PropertyType>
-        void addPropertyAnimation(const TimePoint time,
+        void addPropertyAnimation(const time::TimePoint time,
             IProperty<PropertyType>& property,
             const PropertyType dest,
             ActionFunc endAction = {})
         {
             addAnimation(muptr<IPropertyAnimation<PropertyType>>(
-            attachedNode()->dataWrapper<scene::Timer>(), time, property, 
+            attachedNode()->dataWrapper<time::Timer>(), time, property, 
             property.get(), dest, std::move(endAction)));
         }
 
         template <typename PropertyType>
-        void addPropertyAnimation(const TimePoint time,
+        void addPropertyAnimation(const time::TimePoint time,
             IProperty<PropertyType>& property, 
             const PropertyType start,
             const PropertyType dest,
             ActionFunc endAction = {})
         {
             addAnimation(muptr<IPropertyAnimation<PropertyType>>(
-            attachedNode()->dataWrapper<scene::Timer>(), time, property, start, dest, endAction));
+            attachedNode()->dataWrapper<time::Timer>(), time, property, start, dest, endAction));
         }
 
     private:

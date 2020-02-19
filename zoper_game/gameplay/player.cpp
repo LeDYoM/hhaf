@@ -11,6 +11,7 @@ namespace zoper
 {
 using namespace lib;
 using namespace lib::scene;
+using namespace lib::time;
 
 Player::Player(rptr<SceneNode> parent, str name)
     : BaseClass{std::move(parent), std::move(name)},

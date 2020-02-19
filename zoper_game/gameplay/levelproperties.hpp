@@ -24,7 +24,7 @@ class LevelProperties : public scene::IComponent
 public:
     void configure(const size_type currentLevel,
                const GameMode gameMode,
-               sptr<scene::TimerComponent> m_sceneTimerComponent);
+               sptr<time::TimerComponent> m_sceneTimerComponent);
 
     inline size_t millisBetweenTokens() const { return m_millisBetweenTokens; }
     inline size_t baseScore() const { return m_baseScore; }
@@ -42,9 +42,9 @@ private:
     void setLevel(const LevelType currentLevel);
     void setScore(const size_type new_score);
 
-    uptr<scene::Timer> m_levelTimer;
-    scene::TimerConnectorSPtr m_updateLevelDataTimer;
-    sptr<scene::TimerComponent> m_sceneTimerComponent;
+    uptr<time::Timer> m_levelTimer;
+    time::TimerConnectorSPtr m_updateLevelDataTimer;
+    sptr<time::TimerComponent> m_sceneTimerComponent;
 
     size_type m_consumedTokens{0U};
     LevelType m_currentLevel{0U};

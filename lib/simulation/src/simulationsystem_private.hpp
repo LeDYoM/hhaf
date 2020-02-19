@@ -60,10 +60,11 @@ struct SimulationSystem::SimulationSystemPrivate final
     CurrentSimulationActionIterator current_simulation_action_iterator_;
     SimulateRandomDataBuffer::const_iterator current_simulable_data_buffer_iterator;
 
-    TimePoint current_last_checked_point_;
-    TimePoint next_last_checked_point_;
+    time::TimePoint current_last_checked_point_;
+    time::TimePoint next_last_checked_point_;
 
-    void setSimulationActions(const TimePoint &current, SimulationActionContainer sim_act_container)
+    void setSimulationActions(const time::TimePoint &current,
+        SimulationActionContainer sim_act_container)
     {
         // The passed container is now part of the data to be replayed.
         current_replay_data_.simulation_actions_.swap(sim_act_container);

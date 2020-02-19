@@ -7,7 +7,7 @@
 #include <lib/time/include/timepoint.hpp>
 #include <lib/time/include/timeview.hpp>
 
-namespace lib::scene
+namespace lib::time
 {
 class Timer final : public TimeView
 {
@@ -26,6 +26,6 @@ private:
     TimePoint time_paused_;
     bool is_paused_;
 };
-} // namespace lib::scene
+} // namespace lib::time
 
 #endif

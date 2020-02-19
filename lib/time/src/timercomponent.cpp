@@ -5,7 +5,7 @@
 #include <lib/include/liblog.hpp>
 #include <lib/scene/scene.hpp>
 
-namespace lib::scene
+namespace lib::time
 {
 void update_(vector_shared_pointers<TimerConnector> &activeTimers,
              function<void(sptr<TimerConnector>)> updateFunction)

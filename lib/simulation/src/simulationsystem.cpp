@@ -30,9 +30,9 @@ SimulationSystem::~SimulationSystem()
 
     DisplayLog::info("Going to write play data into file ", SaveFileName);
     if (systemProvider().fileSystem().saveFile(
-        SaveFileName,
-        Serializer<decltype(priv_->next_replay_data_)>::
-            serialize(priv_->next_replay_data_)))
+            SaveFileName,
+            Serializer<decltype(priv_->next_replay_data_)>::
+                serialize(priv_->next_replay_data_)))
     {
         DisplayLog::info("Play data written successfully");
     }
@@ -84,11 +84,13 @@ void SimulationSystem::initialize()
     priv_->next_last_checked_point_ = systemProvider().timeSystem().now();
     priv_->current_simulation_action_iterator_ =
         priv_->current_replay_data_.simulation_actions_.cbegin();
-    priv_->current_simulable_data_buffer_iterator = 
+    priv_->current_simulable_data_buffer_iterator =
         priv_->current_replay_data_.data_buffer_.cbegin();
 }
 
-void SimulationSystem::setSimulationActions(const TimePoint &current, SimulationActionGroup simulation_action_group)
+void SimulationSystem::setSimulationActions(
+    const time::TimePoint &current,
+    SimulationActionGroup simulation_action_group)
 {
     priv_->setSimulationActions(current, simulation_action_group.getContainer());
 }
@@ -106,7 +108,7 @@ void SimulationSystem::setSimulateRandomDataBuffer(SimulateRandomDataBuffer simu
 void SimulationSystem::update()
 {
     // Get the current TimePoint
-    const TimePoint &current_time_point{systemProvider().timeSystem().now()};
+    const time::TimePoint &current_time_point{systemProvider().timeSystem().now()};
 
     // Check if we have still actions to trigger.
     if (!priv_->current_replay_data_.simulation_actions_.empty() &&

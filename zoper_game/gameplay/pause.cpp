@@ -16,6 +16,7 @@ namespace zoper
 using namespace lib;
 using namespace lib::scene;
 using namespace lib::scene::nodes;
+using namespace lib::time;
 
 PauseSceneNode::PauseSceneNode(scene::SceneNode *const parent, str name)
     : SceneNode{parent, std::move(name)}

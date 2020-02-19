@@ -17,7 +17,7 @@ using ActionFunc = function<void()>;
 class IAnimation
 {
 public:
-    IAnimation(uptr<scene::Timer> timer, TimePoint duration, ActionFunc endAction = {}) noexcept
+    IAnimation(uptr<time::Timer> timer, time::TimePoint duration, ActionFunc endAction = {}) noexcept
         : timer_{std::move(timer)}, m_duration{std::move(duration)}, m_endAction{std::move(endAction)} {}
 
     virtual bool animate()
@@ -45,9 +45,9 @@ public:
     virtual ~IAnimation() {}
 
 protected:
-    uptr<scene::Timer> timer_;
-    TimePoint m_duration;
-    TimePoint m_currentTime;
+    uptr<time::Timer> timer_;
+    time::TimePoint m_duration;
+    time::TimePoint m_currentTime;
     f32 m_delta{0.0f};
     ActionFunc m_endAction;
 };
@@ -56,7 +56,7 @@ template <typename T>
 class IPropertyAnimation : public IAnimation
 {
 public:
-    IPropertyAnimation(uptr<scene::Timer> timer, TimePoint duration, IProperty<T> &prop,
+    IPropertyAnimation(uptr<time::Timer> timer, time::TimePoint duration, IProperty<T> &prop,
                        T start, T end, ActionFunc endAction = {})
         : IAnimation{std::move(timer), std::move(duration), std::move(endAction)},
           m_property{prop}, m_startValue{std::move(start)},

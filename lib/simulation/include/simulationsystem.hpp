@@ -24,7 +24,8 @@ public:
     void update();
     bool getNext(const str &name, size_type &pre_selected);
 
-    void setSimulationActions(const TimePoint &current, SimulationActionGroup simulation_action_group);
+    void setSimulationActions(const time::TimePoint &current,
+                              SimulationActionGroup simulation_action_group);
     void setSimulationActions(SimulationActionGroup simulation_action_group);
     void setSimulateRandomDataBuffer(SimulateRandomDataBuffer simulated_data_buffer);
     void initialize();

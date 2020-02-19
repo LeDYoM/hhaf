@@ -24,10 +24,11 @@ enum class SimulationActionType : u8
 struct SimulationAction
 {
     SimulationActionType type;
-    TimePoint time_point;
+    time::TimePoint time_point;
     Key key;
 
-    inline bool timeToLaunch(const TimePoint &time_since_start, const TimePoint &last_triggered) const noexcept
+    inline bool timeToLaunch(const time::TimePoint &time_since_start,
+        const time::TimePoint &last_triggered) const noexcept
     {
         // To calculate if is time to trigger the action:
         // - Get the time passed since the start.
@@ -42,7 +43,7 @@ struct SimulationAction
 inline const Object &operator>>(const Object &obj, SimulationAction &simulation_action)
 {
     simulation_action.type = obj["type"].as<SimulationActionType>();
-    simulation_action.time_point = TimePoint{obj["time_point"].as<TimePoint::Rep>()};
+    simulation_action.time_point = time::TimePoint{obj["time_point"].as<time::TimePoint::Rep>()};
     simulation_action.key = obj["key"].as<Key>();
 
     return obj;
