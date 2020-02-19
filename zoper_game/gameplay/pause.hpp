@@ -13,22 +13,23 @@
 
 namespace zoper
 {
-    class GameScene;
+class GameScene;
 
-    using namespace lib;
+using namespace lib;
 
-    class PauseSceneNode : public scene::SceneNode
-    {
-    public:
-        PauseSceneNode(scene::SceneNode* const parent, str name);
-        ~PauseSceneNode() override;
+class PauseSceneNode : public scene::SceneNode
+{
+public:
+    PauseSceneNode(scene::SceneNode *const parent, str name);
+    ~PauseSceneNode() override;
 
-        void enterPause();
-        void exitPause();
-    private:
-        sptr<scene::nodes::SceneNodeText> m_pauseText;
-        sptr<scene::AnimationComponent> animation_component_;
-    };
-}
+    void enterPause();
+    void exitPause();
+
+private:
+    sptr<scene::nodes::SceneNodeText> m_pauseText;
+    sptr<scene::AnimationComponent> animation_component_;
+};
+} // namespace zoper
 
 #endif
