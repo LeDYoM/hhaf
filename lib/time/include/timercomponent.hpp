@@ -55,7 +55,7 @@ public:
         auto timerConnector(msptr<TimerConnector>(
             attachedNode()->dataWrapper<Timer>(),
             timerType, std::move(timeOut), std::move(callback)));
-        m_activeTimers.push_back(timerConnector);
+        activeTimers_.push_back(timerConnector);
         return timerConnector;
     }
 
@@ -65,7 +65,7 @@ public:
     void switchPause();
 
 private:
-    vector_shared_pointers<TimerConnector> m_activeTimers;
+    LockableVector<sptr<TimerConnector>> activeTimers_;
 };
 } // namespace lib::time
 

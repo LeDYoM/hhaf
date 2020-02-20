@@ -15,6 +15,15 @@ namespace lib
             std::end(container), 
             std::forward<F>(function));
     }
+
+    template <typename Container, typename F>
+    void for_each_all(Container &container, F&& function) noexcept
+    {
+        std::for_each(
+            std::begin(container), 
+            std::end(container), 
+            std::forward<F>(function));
+    }
 }
 
 #endif
