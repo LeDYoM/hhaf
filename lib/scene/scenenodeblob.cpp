@@ -40,16 +40,6 @@ SceneController &SceneNodeBlob::sceneController() noexcept
     return *(sceneManager().sceneController());
 }
 
-const sys::InputSystem &SceneNodeBlob::inputSystem() const noexcept
-{
-    return sceneManager().systemProvider().inputSystem();
-}
-
-sys::InputSystem &SceneNodeBlob::inputSystem() noexcept
-{
-    return sceneManager().systemProvider().inputSystem();
-}
-
 const sys::RandomSystem &SceneNodeBlob::randomSystem() const noexcept
 {
     return sceneManager().systemProvider().randomSystem();

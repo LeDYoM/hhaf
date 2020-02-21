@@ -8,85 +8,85 @@
 
 namespace lib
 {
-    class IApp;
+class IApp;
 }
 
 namespace lib::backend
 {
-    class BackendFactory;
+class BackendFactory;
 }
 
 namespace lib::scene
 {
-    class SceneManager;
+class SceneManager;
 }
 
 namespace lib::sys
 {
-    class InputSystem;
-    class Window;
-    class ResourceManager;
-    class RandomSystem;
-    class FileSystem;
+class InputSystem;
+class Window;
+class ResourceManager;
+class RandomSystem;
+class FileSystem;
 #ifdef LIB_COMPILE_SIMULATIONS
-    class SimulationSystem;
+class SimulationSystem;
 #endif
-    class TimeSystem;
-    class RenderSystem;
-    class ISharedDataSystem;
-}
+class TimeSystem;
+class RenderSystem;
+class ISharedDataSystem;
+} // namespace lib::sys
 
 namespace lib::sys
 {
-    class SystemProvider final : public ISystemProvider
-    {
-    public:
-        SystemProvider();
-        ~SystemProvider();
-        
-        void init(IApp *iapp);
-        void terminate();
+class SystemProvider final : public ISystemProvider
+{
+public:
+    SystemProvider();
+    ~SystemProvider();
 
-        template <typename T>
-        T &app() { return *(dynamic_cast<T*>(&app())); }
+    void init(IApp *iapp);
+    void terminate();
 
-        template <typename T>
-        const T &app() const { return *(dynamic_cast<T*>(&app())); }
+    template <typename T>
+    T &app() { return *(dynamic_cast<T *>(&app())); }
 
-        IApp &app();
-        const IApp &app() const;
+    template <typename T>
+    const T &app() const { return *(dynamic_cast<T *>(&app())); }
 
-        const Window &parentWindow() const noexcept;
-        Window &parentWindow() noexcept;
-        const ResourceManager &resourceManager() const  noexcept;
-        ResourceManager &resourceManager()  noexcept;
-        const sys::InputSystem &inputSystem() const noexcept;
-        sys::InputSystem &inputSystem() noexcept;
-        const RandomSystem &randomSystem() const noexcept;
-        RandomSystem &randomSystem() noexcept;
-        const scene::SceneManager &sceneManager() const noexcept;
-        scene::SceneManager &sceneManager() noexcept;
-        const FileSystem &fileSystem() const noexcept;
-        FileSystem &fileSystem() noexcept;
+    IApp &app();
+    const IApp &app() const;
+
+    const Window &parentWindow() const noexcept;
+    Window &parentWindow() noexcept;
+    const ResourceManager &resourceManager() const noexcept;
+    ResourceManager &resourceManager() noexcept;
+    const sys::InputSystem &inputSystem() const noexcept;
+    sys::InputSystem &inputSystem() noexcept;
+    const RandomSystem &randomSystem() const noexcept;
+    RandomSystem &randomSystem() noexcept;
+    const scene::SceneManager &sceneManager() const noexcept;
+    scene::SceneManager &sceneManager() noexcept;
+    const FileSystem &fileSystem() const noexcept;
+    FileSystem &fileSystem() noexcept;
 #ifdef LIB_COMPILE_SIMULATIONS
-        const SimulationSystem &simulationSystem() const noexcept;
-        SimulationSystem &simulationSystem() noexcept;
+    const SimulationSystem &simulationSystem() const noexcept;
+    SimulationSystem &simulationSystem() noexcept;
 #endif
-        const TimeSystem &timeSystem() const noexcept;
-        TimeSystem &timeSystem() noexcept;
-        const backend::BackendFactory &backendFactory() const noexcept;
-        backend::BackendFactory &backendFactory() noexcept;
-        const RenderSystem &renderSystem() const noexcept;
-        RenderSystem &renderSystem() noexcept;
-        ISharedDataSystem &sharedDataSystem() noexcept;
-        const ISharedDataSystem &sharedDataSystem() const noexcept;
+    const TimeSystem &timeSystem() const noexcept;
+    TimeSystem &timeSystem() noexcept;
+    const backend::BackendFactory &backendFactory() const noexcept;
+    backend::BackendFactory &backendFactory() noexcept;
+    const RenderSystem &renderSystem() const noexcept;
+    RenderSystem &renderSystem() noexcept;
+    ISharedDataSystem &sharedDataSystem() noexcept;
+    const ISharedDataSystem &sharedDataSystem() const noexcept;
 
-        bool runStep();
+    bool runStep();
 
-    private:
-        struct SystemProviderPrivate;
-        uptr<SystemProviderPrivate> p_;
-    };
-}
+private:
+    struct SystemProviderPrivate;
+    uptr<SystemProviderPrivate> p_;
+};
+} // namespace lib::sys
 
 #endif

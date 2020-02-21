@@ -2,6 +2,7 @@ project (input CXX)
 cmake_minimum_required(VERSION 3.12)
 
 set (_SOURCES 
+    "src/get_inputsystem.cpp"
     "src/input_component_base.cpp"
     "src/inputcomponent.cpp"
     "src/inputdriver.cpp"
@@ -18,5 +19,5 @@ build_internal_lib_component(
 
 target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
 target_link_libraries(${CURRENT_TARGET} PRIVATE logger)
-target_link_libraries(${CURRENT_TARGET} PRIVATE backend)
+target_link_libraries(${CURRENT_TARGET} PRIVATE scene)
 target_link_libraries(${CURRENT_TARGET} PRIVATE backend_dev)

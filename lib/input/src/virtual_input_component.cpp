@@ -3,8 +3,7 @@
 #include <lib/include/liblog.hpp>
 #include <lib/input/include/key.hpp>
 #include <lib/input/i_include/inputsystem.hpp>
-#include <lib/scene/scenenode.hpp>
-#include <lib/scene/scene.hpp>
+#include <lib/input/i_include/get_inputsystem.hpp>
 
 namespace lib::input
 {
@@ -15,7 +14,7 @@ void VirtualInputComponent::update()
 {
     if (attachedNode())
     {
-        const sys::InputSystem &input_system{attachedNode()->inputSystem()};
+        const sys::InputSystem &input_system{getInputSystem(attachedNode())};
 
         for (const auto &pressedKey : input_system.pressedKeys())
         {
