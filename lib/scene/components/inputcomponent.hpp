@@ -6,7 +6,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/connection.hpp>
 #include <lib/scene/components/input_component_base.hpp>
-#include <lib/include/key.hpp>
+#include <lib/input/include/key.hpp>
 
 namespace lib::scene
 {

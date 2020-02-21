@@ -3,7 +3,7 @@
 #include <menu_paged/include/menu_paged_input_component.hpp>
 
 #include <lib/include/liblog.hpp>
-#include <lib/include/key.hpp>
+#include <lib/input/include/key.hpp>
 #include <lib/scene/components/discretetextcomponent.hpp>
 
 #include <mtypes/include/function.hpp>

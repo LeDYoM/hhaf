@@ -1,4 +1,4 @@
-#include <lib/include/key.hpp>
+#include <lib/input/include/key.hpp>
 
 #include "inputdriver.hpp"
 #include "conversions.hpp"

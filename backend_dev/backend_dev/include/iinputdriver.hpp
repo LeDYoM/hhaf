@@ -3,7 +3,7 @@
 #ifndef LIB_BACKEND_IINPUTDRIVER_INCLUDE_HPP
 #define LIB_BACKEND_IINPUTDRIVER_INCLUDE_HPP
 
-#include <lib/include/key.hpp>
+#include <lib/input/include/key.hpp>
 
 namespace lib::backend
 {

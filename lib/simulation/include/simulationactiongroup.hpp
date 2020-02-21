@@ -5,7 +5,7 @@
 
 #include "simulationaction.hpp"
 
-#include <lib/include/key.hpp>
+#include <lib/input/include/key.hpp>
 #include <lib/time/include/timepoint.hpp>
 
 #include <mtypes/include/types.hpp>

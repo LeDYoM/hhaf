@@ -1,7 +1,7 @@
 #include "input_component_base.hpp"
 
 #include <lib/include/liblog.hpp>
-#include <lib/include/key.hpp>
+#include <lib/input/include/key.hpp>
 #include <lib/system/inputsystem.hpp>
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/scene.hpp>

@@ -4,7 +4,7 @@
 #define LIB_INPUTSYSTEM_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <lib/include/key.hpp>
+#include <lib/input/include/key.hpp>
 
 #include <lib/system/appservice.hpp>
 

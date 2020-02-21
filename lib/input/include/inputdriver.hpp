@@ -4,7 +4,7 @@
 #define LIB_BACKEND_SFMLB_INPUTDRIVER_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <lib/include/key.hpp>
+#include <lib/input/include/key.hpp>
 
 namespace lib::backend
 {
