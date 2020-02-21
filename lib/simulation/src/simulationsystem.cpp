@@ -9,7 +9,7 @@
 #include <lib/system/randomsystem.hpp>
 #include <lib/time/i_include/timesystem.hpp>
 #include <lib/system/filesystem.hpp>
-#include <lib/system/inputsystem.hpp>
+#include <lib/input/i_include/inputsystem.hpp>
 
 #include <mtypes/include/serializer.hpp>
 #include <mtypes/include/types.hpp>

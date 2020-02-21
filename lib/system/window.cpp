@@ -4,7 +4,7 @@
 #include <backend/include/backendfactory.hpp>
 #include <lib/include/liblog.hpp>
 #include <lib/time/include/timepoint.hpp>
-#include <lib/system/inputsystem.hpp>
+#include <lib/input/i_include/inputsystem.hpp>
 #include <lib/render/include/rendertarget.hpp>
 #include <lib/time/i_include/timesystem.hpp>
 #include <lib/system/systemprovider.hpp>

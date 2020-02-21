@@ -5,6 +5,7 @@ set (_SOURCES
     "src/input_component_base.cpp"
     "src/inputcomponent.cpp"
     "src/inputdriver.cpp"
+    "src/inputsystem.cpp"
     "src/virtual_input_component.cpp"
 )
 

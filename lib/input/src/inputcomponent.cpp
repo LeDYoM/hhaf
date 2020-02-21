@@ -1,8 +1,8 @@
-#include "inputcomponent.hpp"
+#include <lib/input/include/inputcomponent.hpp>
 
 #include <lib/include/liblog.hpp>
 #include <lib/input/include/key.hpp>
-#include <lib/system/inputsystem.hpp>
+#include <lib/input/i_include/inputsystem.hpp>
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/scene.hpp>
 

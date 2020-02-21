@@ -3,8 +3,6 @@
 #ifndef LIB_CORE_SYSTEM_SIMULATIONACTION_INCLUDE_HPP
 #define LIB_CORE_SYSTEM_SIMULATIONACTION_INCLUDE_HPP
 
-#include <lib/system/inputsystem.hpp>
-
 #include <lib/input/include/key.hpp>
 #include <lib/include/liblog.hpp>
 #include <lib/time/include/timepoint.hpp>

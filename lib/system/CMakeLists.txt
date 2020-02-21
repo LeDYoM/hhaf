@@ -3,7 +3,6 @@ cmake_minimum_required(VERSION 3.12)
 
 set (_SOURCES 
     "filesystem.cpp"
-    "inputsystem.cpp"
     "randomsystem.cpp"
     "systemprovider.cpp"
     "window.cpp"
@@ -12,7 +11,6 @@ set (_SOURCES
 set (_HEADERS
     "appservice.hpp"
     "filesystem.hpp"
-    "inputsystem.hpp"
     "isystemprovider.hpp"
     "randomsystem.hpp"
     "systemprovider.hpp"

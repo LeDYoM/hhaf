@@ -2,7 +2,7 @@
 
 #include <backend/include/backendfactory.hpp>
 #include <lib/system/filesystem.hpp>
-#include <lib/system/inputsystem.hpp>
+#include <lib/input/i_include/inputsystem.hpp>
 #include <lib/system/randomsystem.hpp>
 #include <lib/render/include/rendersystem.hpp>
 #include <lib/scene/scenemanager.hpp>

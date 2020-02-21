@@ -6,8 +6,6 @@
 #include <lib/simulation/include/simulationsystem.hpp>
 #include <lib/simulation/include/simulationaction.hpp>
 
-#include <lib/system/inputsystem.hpp>
-
 #include <lib/input/include/key.hpp>
 #include <lib/include/liblog.hpp>
 #include <lib/time/include/timepoint.hpp>
