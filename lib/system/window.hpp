@@ -4,10 +4,12 @@
 #define LIB_WINDOW_INCLUDE_HPP
 
 #include <lib/system/appservice.hpp>
-
 #include <backend_dev/include/iinputdriver.hpp>
 
-#include <mtypes/include/types.hpp>
+namespace lib::input
+{
+    class InputDriver;
+}
 
 namespace lib::sys
 {
@@ -27,8 +29,8 @@ public:
     sptr<RenderTarget> renderTarget();
     const sptr<RenderTarget> renderTarget() const;
 
-    backend::IInputDriver *inputDriver();
-    const backend::IInputDriver *inputDriver() const;
+    sptr<input::InputDriver> inputDriver();
+    const sptr<input::InputDriver> inputDriver() const;
 
 private:
     void create();

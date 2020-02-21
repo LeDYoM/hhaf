@@ -9,26 +9,26 @@
 
 namespace lib::backend::sfmlb
 {
-    class InputDriver : public IInputDriver
-    {
-    public:
-        InputDriver() = default;
-        ~InputDriver() override = default;
+class InputDriver : public IInputDriver
+{
+public:
+    InputDriver() = default;
+    ~InputDriver() override = default;
 
-        bool arePendingKeyPresses() const override;
-        bool arePendingKeyReleases() const override;
+    bool arePendingKeyPresses() const override;
+    bool arePendingKeyReleases() const override;
 
-        Key popKeyPress() override;
-        Key popKeyRelease() override;
+    Key popKeyPress() override;
+    Key popKeyRelease() override;
 
-        void keyPressed(const Key) override;
-        void keyReleased(const Key) override;
+    void keyPressed(const Key) override;
+    void keyReleased(const Key) override;
 
-        void keyEvent(const sf::Event &e);
+    void keyEvent(const sf::Event &e);
 
-        std::queue<Key> m_keysPressed;
-        std::queue<Key> m_keysReleased;
-    };
-}
+    std::queue<Key> m_keysPressed;
+    std::queue<Key> m_keysReleased;
+};
+} // namespace lib::backend::sfmlb
 
 #endif

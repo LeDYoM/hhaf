@@ -8,6 +8,7 @@
 #include <lib/render/include/rendertarget.hpp>
 #include <lib/time/i_include/timesystem.hpp>
 #include <lib/system/systemprovider.hpp>
+#include <lib/input/include/inputdriver.hpp>
 
 using namespace lib::time;
 
@@ -19,6 +20,7 @@ struct Window::WindowPrivate final
     s32 lastFps{0};
     s32 currentFps{0};
     backend::IWindow *m_backendWindow{nullptr};
+    sptr<input::InputDriver> input_driver_{nullptr};
     sptr<RenderTarget> m_renderTarget{nullptr};
     str title_{};
 };
@@ -42,14 +44,14 @@ const sptr<RenderTarget> Window::renderTarget() const
     return priv_->m_renderTarget;
 }
 
-backend::IInputDriver *Window::inputDriver()
+sptr<input::InputDriver> Window::inputDriver()
 {
-    return priv_->m_backendWindow->inputDriver();
+    return priv_->input_driver_;
 }
 
-const backend::IInputDriver *Window::inputDriver() const
+const sptr<input::InputDriver> Window::inputDriver() const
 {
-    return priv_->m_backendWindow->inputDriver();
+    return priv_->input_driver_;
 }
 
 void Window::create()
@@ -76,6 +78,10 @@ void Window::create()
         // associated with the window.
         priv_->m_renderTarget = msptr<RenderTarget>(
             priv_->m_backendWindow->renderTarget());
+
+        // Also take the input driver.
+        priv_->input_driver_ = msptr<input::InputDriver>(
+            priv_->m_backendWindow->inputDriver());
     }
     DisplayLog::info("Window creation completed");
 }

@@ -12,7 +12,7 @@
 namespace lib::sys
 {
 RenderTarget::RenderTarget(rptr<lib::backend::IRenderTarget> renderTarget)
-    : m_renderTarget{std::move(renderTarget)}
+    : irender_target_{std::move(renderTarget)}
 {
     log_assert(renderTarget != nullptr, "renderTarget parameter is nullptr");
 }
@@ -21,7 +21,7 @@ RenderTarget::~RenderTarget() = default;
 
 void RenderTarget::draw(const scene::RenderData &renderData)
 {
-    m_renderTarget->draw(
+    irender_target_->draw(
         renderData.vArray.verticesArray().cbegin(),
         renderData.vArray.verticesArray().size(),
         renderData.vArray.primitiveType(),
@@ -32,26 +32,26 @@ void RenderTarget::draw(const scene::RenderData &renderData)
 
 void RenderTarget::clear()
 {
-    m_renderTarget->clear();
+    irender_target_->clear();
 }
 
 Rectf32 RenderTarget::viewPort() const
 {
-    return m_renderTarget->viewPort();
+    return irender_target_->viewPort();
 }
 
 void RenderTarget::setViewPort(const Rectf32 &nViewPort)
 {
-    m_renderTarget->setViewPort(nViewPort);
+    irender_target_->setViewPort(nViewPort);
 }
 
 Rectf32 RenderTarget::viewRect() const
 {
-    return m_renderTarget->viewRect();
+    return irender_target_->viewRect();
 }
 
 void RenderTarget::setViewRect(const Rectf32 &nViewRect)
 {
-    m_renderTarget->setViewRect(nViewRect);
+    irender_target_->setViewRect(nViewRect);
 }
 } // namespace lib::sys

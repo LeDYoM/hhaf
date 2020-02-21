@@ -18,10 +18,25 @@ class RenderData;
 
 namespace lib::sys
 {
+/**
+ * @brief Class to encapsulate a Render target from the render target interface.
+ * 
+ * This class is to be used to export the functionality of the render target
+ * interface into a concrete class.
+ */
 class RenderTarget
 {
 public:
+    /**
+     * @brief Construct a new RenderTarget object
+     * 
+     * @param renderTarget Interface to the underlying low level render target.
+     */
     RenderTarget(rptr<backend::IRenderTarget> renderTarget);
+
+    /**
+     * @brief Destroy the Render Target object
+     */
     ~RenderTarget();
 
     void setViewPort(const Rectf32 &nviewport);
@@ -33,7 +48,7 @@ public:
     void clear();
 
 private:
-    const rptr<backend::IRenderTarget> m_renderTarget;
+    const rptr<backend::IRenderTarget> irender_target_;
 };
 } // namespace lib::sys
 

@@ -8,9 +8,9 @@
 
 #include <lib/system/appservice.hpp>
 
-namespace lib::backend
+namespace lib::input
 {
-class IInputDriver;
+class InputDriver;
 }
 
 namespace lib::sys
@@ -18,7 +18,7 @@ namespace lib::sys
 class InputSystem final : public AppService
 {
 public:
-    InputSystem(backend::IInputDriver *const input_driver);
+    InputSystem(sptr<input::InputDriver> input_driver);
     ~InputSystem() override;
 
     void update();
@@ -39,7 +39,7 @@ private:
     void keyPressed(const Key key);
     void keyReleased(const Key key);
 
-    backend::IInputDriver *input_driver_;
+    sptr<input::InputDriver> input_driver_;
     KeyStates m_keyStates;
     vector<Key> m_pressedKeys;
     vector<Key> m_releasedKeys;
