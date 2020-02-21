@@ -5,13 +5,13 @@
 #ifndef ZOPER_DEBUG_ACTIONS_INCLUDE_HPP
 #define ZOPER_DEBUG_ACTIONS_INCLUDE_HPP
 
-#include <lib/scene/components/virtual_input_component.hpp>
+#include <lib/input/include/virtual_input_component.hpp>
 
 namespace zoper
 {
 class GameScene;
 
-class DebugActions : public lib::scene::VirtualInputComponent
+class DebugActions : public lib::input::VirtualInputComponent
 {
 private:
     using BaseClass = lib::scene::IComponent;

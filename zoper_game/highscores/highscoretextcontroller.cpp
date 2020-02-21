@@ -85,7 +85,7 @@ void HighScoreTextController::onCreated()
 
     if (!isInserting)
     {
-        auto input_component(addComponentOfType<InputComponent>());
+        auto input_component(addComponentOfType<input::InputComponent>());
         input_component->KeyPressed.connect([this](const auto&)
         {
             Finished();

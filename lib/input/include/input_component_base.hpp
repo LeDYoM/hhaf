@@ -7,9 +7,9 @@
 #include <lib/scene/icomponent.hpp>
 #include <lib/input/include/key.hpp>
 
-namespace lib::scene
+namespace lib::input
 {
-class InputComponentBase : public IComponent
+class InputComponentBase : public scene::IComponent
 {
 public:
     bool isPressed(const Key key);

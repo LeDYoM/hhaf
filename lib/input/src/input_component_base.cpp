@@ -6,9 +6,8 @@
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/scene.hpp>
 
-namespace lib::scene
+namespace lib::input
 {
-
 bool InputComponentBase::isPressed(const Key key)
 {
     if (attachedNode())

@@ -2,7 +2,10 @@ project (input CXX)
 cmake_minimum_required(VERSION 3.12)
 
 set (_SOURCES 
+    "src/input_component_base.cpp"
+    "src/inputcomponent.cpp"
     "src/inputdriver.cpp"
+    "src/virtual_input_component.cpp"
 )
 
 set (CURRENT_TARGET  ${PROJECT_NAME})

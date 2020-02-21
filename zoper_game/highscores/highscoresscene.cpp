@@ -7,7 +7,7 @@
 #include "../common_scene_nodes.hpp"
 
 #include <lib/scene/components/statescontroller.hpp>
-#include <lib/scene/components/inputcomponent.hpp>
+#include <lib/input/include/inputcomponent.hpp>
 #include <lib/resources/include/resourceview.hpp>
 #include <lib/resources/include/resourcehandler.hpp>
 #include <lib/system/systemprovider.hpp>

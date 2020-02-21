@@ -5,18 +5,18 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/rect.hpp>
-#include <lib/scene/components/inputcomponent.hpp>
+#include <lib/input/include/inputcomponent.hpp>
 
 namespace lib::scene
 {
 
-class MenuPageInputComponent : public InputComponent
+class MenuPageInputComponent : public input::InputComponent
 {
 public:
-    using BaseClass = InputComponent;
+    using BaseClass = input::InputComponent;
     ~MenuPageInputComponent() override = default;
 
-    using InputComponent::InputComponent;
+    using input::InputComponent::InputComponent;
     void onAttached() override;
 
     emitter<> Up;

@@ -6,7 +6,7 @@
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/scene.hpp>
 
-namespace lib::scene
+namespace lib::input
 {
 
 InputComponent::InputComponent() = default;

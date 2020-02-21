@@ -24,7 +24,7 @@
 #include <lib/scene/ianimation.hpp>
 #include <lib/resources/include/resourcehandler.hpp>
 #include <lib/scene/components/animationcomponent.hpp>
-#include <lib/scene/components/inputcomponent.hpp>
+#include <lib/input/include/inputcomponent.hpp>
 #include <lib/scene/components/randomnumberscomponent.hpp>
 #include <lib/scene/scenemanager.hpp>
 #include <lib/shareddata/include/shareddataview.hpp>
@@ -91,7 +91,7 @@ void GameScene::onCreated()
 
     m_nextTokenPart = 0U;
 
-    auto inputComponent(addComponentOfType<scene::InputComponent>());
+    auto inputComponent(addComponentOfType<input::InputComponent>());
     inputComponent->KeyPressed.connect([this](const lib::Key &key) {
         DisplayLog::info("Key pressed in GameScene");
         // TODO: Fixme

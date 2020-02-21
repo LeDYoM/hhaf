@@ -5,10 +5,10 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/connection.hpp>
-#include <lib/scene/components/input_component_base.hpp>
+#include <lib/input/include/input_component_base.hpp>
 #include <lib/input/include/key.hpp>
 
-namespace lib::scene
+namespace lib::input
 {
 class InputComponent : public InputComponentBase
 {
@@ -21,6 +21,6 @@ public:
     emitter<const Key &> KeyPressed;
     emitter<const Key &> KeyReleased;
 };
-} // namespace lib::scene
+} // namespace lib::input
 
 #endif
