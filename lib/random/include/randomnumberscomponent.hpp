@@ -8,13 +8,13 @@
 
 #include <lib/scene/icomponent.hpp>
 
-namespace lib::scene
+namespace lib::rnd
 {
 /**
-    * This component class is intended to be used to generate
-    * a series of random numbers.
-    */
-class RandomNumbersComponent final : public IComponent
+* @brief This component class is intended to be used to generate
+* a series of random numbers.
+*/
+class RandomNumbersComponent final : public scene::IComponent
 {
 public:
     RandomNumbersComponent() noexcept;
@@ -29,6 +29,6 @@ private:
     class RandomNumbersComponentPrivate;
     uptr<RandomNumbersComponentPrivate> priv_;
 };
-} // namespace lib::scene
+} // namespace lib::rnd
 
 #endif

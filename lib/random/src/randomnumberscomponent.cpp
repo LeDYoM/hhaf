@@ -1,10 +1,10 @@
 #include "randomnumberscomponent.hpp"
-#include <lib/system/randomsystem.hpp>
+#include <lib/random/i_include/randomsystem.hpp>
 
 #include <lib/include/liblog.hpp>
 #include <lib/scene/scenenode.hpp>
 
-namespace lib::scene
+namespace lib::rnd
 {
 class RandomNumbersComponent::RandomNumbersComponentPrivate
 {
@@ -49,9 +49,9 @@ u32 RandomNumbersComponent::getUInt(const size_type max, const size_type min) co
     log_assert(max > min, "The max paramter must be greater than min");
 
     const auto next(priv_->randomsystem().getNext(name(), min, max));
-    DisplayLog::info("Fetch next element from queue: ", next);
+    DisplayLog::verbose("Fetch next element from queue: ", next);
     const size_type generated(next % (max - min));
-    DisplayLog::info("\tGot ", generated);
+    DisplayLog::verbose("\tGot ", generated);
     DisplayLog::info("\tReturning ", min + generated);
     return min + generated;
 }
@@ -61,7 +61,7 @@ void RandomNumbersComponent::onAttached()
     if (attachedNode())
     {
         priv_ = muptr<RandomNumbersComponentPrivate>(attachedNode()
-                                                        ->randomSystem());
+                                                         ->randomSystem());
     }
 }
-} // namespace lib::scene
+} // namespace lib::rnd

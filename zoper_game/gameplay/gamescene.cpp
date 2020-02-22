@@ -25,7 +25,7 @@
 #include <lib/resources/include/resourcehandler.hpp>
 #include <lib/scene/components/animationcomponent.hpp>
 #include <lib/input/include/inputcomponent.hpp>
-#include <lib/scene/components/randomnumberscomponent.hpp>
+#include <lib/random/include/randomnumberscomponent.hpp>
 #include <lib/scene/scenemanager.hpp>
 #include <lib/shareddata/include/shareddataview.hpp>
 
@@ -44,8 +44,8 @@ constexpr u32 PlayerToken = NumTokens;
 struct GameScene::GameScenePrivate
 {
     sptr<AnimationComponent> scene_animation_component_;
-    sptr<RandomNumbersComponent> token_type_generator_;
-    sptr<RandomNumbersComponent> token_position_generator_;
+    sptr<rnd::RandomNumbersComponent> token_type_generator_;
+    sptr<rnd::RandomNumbersComponent> token_position_generator_;
 
     void createScoreIncrementPoints(SceneNode &main_node,
                                     const vector2df &lastTokenPosition)
@@ -174,7 +174,7 @@ void GameScene::onCreated()
     m_gameOver = createSceneNode<GameOverSceneNode>("gameOverSceneNode");
     m_gameOver->visible = false;
 
-    // Set state controll.
+    // Set state control.
     {
         m_sceneStates = addComponentOfType<std::remove_reference_t<decltype(*m_sceneStates)>>();
 
@@ -182,9 +182,9 @@ void GameScene::onCreated()
         gameSceneActuatorRegister.registerStatesControllerActuator(*m_sceneStates, *this);
     }
 
-    private_->token_type_generator_ = addComponentOfType<RandomNumbersComponent>();
+    private_->token_type_generator_ = addComponentOfType<rnd::RandomNumbersComponent>();
     log_assert(private_->token_type_generator_ != nullptr, "Cannot create DataProviderComponent");
-    private_->token_position_generator_ = private_->token_type_generator_; //addComponentOfType<DataProviderComponent>();
+    private_->token_position_generator_ = private_->token_type_generator_;
     log_assert(private_->token_position_generator_ != nullptr, "Cannot create DataProviderComponent");
 
     // Prepare the pause text.

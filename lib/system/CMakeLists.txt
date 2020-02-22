@@ -3,7 +3,6 @@ cmake_minimum_required(VERSION 3.12)
 
 set (_SOURCES 
     "filesystem.cpp"
-    "randomsystem.cpp"
     "systemprovider.cpp"
     "window.cpp"
 )
@@ -12,7 +11,6 @@ set (_HEADERS
     "appservice.hpp"
     "filesystem.hpp"
     "isystemprovider.hpp"
-    "randomsystem.hpp"
     "systemprovider.hpp"
     "window.hpp"
 )
@@ -24,6 +22,7 @@ target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
 target_link_libraries(${CURRENT_TARGET} PRIVATE logger)
 target_link_libraries(${CURRENT_TARGET} PRIVATE time)
 target_link_libraries(${CURRENT_TARGET} PRIVATE input)
+target_link_libraries(${CURRENT_TARGET} PRIVATE random)
 target_link_libraries(${CURRENT_TARGET} PRIVATE render)
 target_link_libraries(${CURRENT_TARGET} PRIVATE simulation)
 target_link_libraries(${CURRENT_TARGET} PRIVATE scene)
