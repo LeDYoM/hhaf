@@ -23,7 +23,7 @@ struct SimulationAction
 {
     SimulationActionType type;
     time::TimePoint time_point;
-    Key key;
+    input::Key key;
 
     inline bool timeToLaunch(const time::TimePoint &time_since_start,
         const time::TimePoint &last_triggered) const noexcept
@@ -42,7 +42,7 @@ inline const Object &operator>>(const Object &obj, SimulationAction &simulation_
 {
     simulation_action.type = obj["type"].as<SimulationActionType>();
     simulation_action.time_point = time::TimePoint{obj["time_point"].as<time::TimePoint::Rep>()};
-    simulation_action.key = obj["key"].as<Key>();
+    simulation_action.key = obj["key"].as<input::Key>();
 
     return obj;
 }

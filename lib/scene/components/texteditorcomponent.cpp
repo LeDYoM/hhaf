@@ -11,7 +11,9 @@ void TextEditorComponent::onAttached()
     m_originalText = attachedNodeAs<nodes::SceneNodeText>()->text();
     attachedNodeAs<nodes::SceneNodeText>()->text.set("");
 
-    m_receiver.connect(InputComponent::KeyPressed, [this](const Key &key)
+    using namespace lib::input;
+
+    m_receiver.connect(InputComponent::KeyPressed, [this](Key const& key)
     {
         if (enabled)
         {

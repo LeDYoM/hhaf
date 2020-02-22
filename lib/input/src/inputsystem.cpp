@@ -3,9 +3,11 @@
 #include <lib/include/liblog.hpp>
 #include <lib/input/include/inputdriver.hpp>
 
+using namespace lib::input;
+
 namespace lib::sys
 {
-InputSystem::InputSystem(sptr<input::InputDriver> input_driver)
+InputSystem::InputSystem(sptr<InputDriver> input_driver)
     : AppService{}, input_driver_{std::move(input_driver)}, m_keyStates{} {}
 
 InputSystem::~InputSystem() = default;

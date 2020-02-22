@@ -6,7 +6,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/types_ext.hpp>
 
-namespace lib
+namespace lib::input
 {
 enum class Key : s32
 {

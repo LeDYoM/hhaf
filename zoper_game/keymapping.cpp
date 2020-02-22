@@ -7,17 +7,17 @@ namespace zoper
 
     void KeyMapping::reset()
     {
-        using namespace lib;
+        using namespace lib::input;
 
         m_keys = { Key::Left, Key::Right, Key::Up, Key::Down, Key::Space, Key::Escape };
     }
 
-    lib::Key KeyMapping::getKey(const Direction d) const noexcept
+    lib::input::Key KeyMapping::getKey(const Direction d) const noexcept
     {
         return m_keys[d];
     }
 
-    Direction KeyMapping::getDirectionFromKey(const lib::Key key) const noexcept
+    Direction KeyMapping::getDirectionFromKey(const lib::input::Key key) const noexcept
     {
         for (lib::u8 i = 0U; i < Direction::Total; ++i) {
             if (m_keys[i] == key)
@@ -28,27 +28,27 @@ namespace zoper
         return Direction::DirectionData::Invalid;
     }
 
-    lib::Key KeyMapping::getLaunchKey() const noexcept
+    lib::input::Key KeyMapping::getLaunchKey() const noexcept
     {
         return m_keys[Direction::Total];
     }
 
-    bool KeyMapping::isLaunchKey(const lib::Key key) const noexcept
+    bool KeyMapping::isLaunchKey(const lib::input::Key key) const noexcept
     {
         return key == getLaunchKey();
     }
 
-    lib::Key KeyMapping::getPauseKey() const noexcept
+    lib::input::Key KeyMapping::getPauseKey() const noexcept
     {
         return m_keys[Direction::Total + 1];
     }
 
-    bool KeyMapping::isPauseKey(const lib::Key key) const noexcept
+    bool KeyMapping::isPauseKey(const lib::input::Key key) const noexcept
     {
         return key == getPauseKey();
     }
 
-    bool KeyMapping::setKey(const lib::u32 index, const lib::Key key)
+    bool KeyMapping::setKey(const lib::u32 index, const lib::input::Key key)
     {
         log_assert(index < TotalKeys, "Invalid index");
 

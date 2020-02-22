@@ -46,13 +46,13 @@ public:
     /// Add a key stroke to the current internal @b SimulationActionContainer.
     /// To do that, an action of simulated keydown and then simulated key up.
     /// The separation times will be according the parameters.
-    /// @param[in] key The @Key to add to the container.
+    /// @param[in] key The @input::Key to add to the container.
     /// @param[in] delta_time @b TimePoint difference with the previous
     ///     added event. Default 0.1 seconds
     /// @param[in] delta_between_events @b TimePoint difference within the
     ///     key down and key up events. Default 0.1 seconds.
     void addKeyStroke(
-        const Key key,
+        const input::Key key,
         time::TimePoint delta_time = time::TimePoint_as_seconds(0.1f),
         time::TimePoint delta_between_events = time::TimePoint_as_seconds(0.1f))
     {

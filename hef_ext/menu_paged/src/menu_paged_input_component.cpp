@@ -8,7 +8,9 @@ void MenuPageInputComponent::onAttached()
 {
     BaseClass::onAttached();
 
-    KeyPressed.connect([this](const Key &key) {
+    using namespace lib::input;
+
+    KeyPressed.connect([this](const input::Key &key) {
         switch (key)
         {
         case Key::Left:

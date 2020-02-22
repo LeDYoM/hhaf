@@ -92,7 +92,7 @@ void GameScene::onCreated()
     m_nextTokenPart = 0U;
 
     auto inputComponent(addComponentOfType<input::InputComponent>());
-    inputComponent->KeyPressed.connect([this](const lib::Key &key) {
+    inputComponent->KeyPressed.connect([this](const lib::input::Key &key) {
         DisplayLog::info("Key pressed in GameScene");
         // TODO: Fixme
         const auto &keyMapping = sceneManager().systemProvider().app<ZoperProgramController>().keyMapping;

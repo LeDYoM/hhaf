@@ -23,26 +23,26 @@ public:
 
     void update();
 
-    const vector<Key> &pressedKeys() const noexcept;
-    const vector<Key> &releasedKeys() const noexcept;
-    const KeyStates &keyStates() const noexcept { return m_keyStates; }
+    const vector<input::Key> &pressedKeys() const noexcept;
+    const vector<input::Key> &releasedKeys() const noexcept;
+    const input::KeyStates &keyStates() const noexcept { return m_keyStates; }
 
     /// Force or simulate a key press.
     /// @param key @b Key to be added.
-    void simulatePressKey(const Key key);
+    void simulatePressKey(const input::Key key);
 
     /// Force or simulate a key release.
     /// @param key @b Key to be added.
-    void simulateReleaseKey(const Key key);
+    void simulateReleaseKey(const input::Key key);
 
 private:
-    void keyPressed(const Key key);
-    void keyReleased(const Key key);
+    void keyPressed(const input::Key key);
+    void keyReleased(const input::Key key);
 
     sptr<input::InputDriver> input_driver_;
-    KeyStates m_keyStates;
-    vector<Key> m_pressedKeys;
-    vector<Key> m_releasedKeys;
+    input::KeyStates m_keyStates;
+    vector<input::Key> m_pressedKeys;
+    vector<input::Key> m_releasedKeys;
 };
 } // namespace lib::sys
 

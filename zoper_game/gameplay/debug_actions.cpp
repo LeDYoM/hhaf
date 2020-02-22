@@ -9,6 +9,7 @@
 namespace zoper
 {
 using namespace lib::scene;
+using namespace lib::input;
 
 void DebugActions::onKeyPressed(const Key &key)
 {
