@@ -30,6 +30,39 @@ private:
     }
 
 public:
+
+    template <typename... Args>
+    static constexpr void bebug(Args &&... args) noexcept
+    {
+        log_if_severity_under<SeverityType::severity_type_t::debug>(
+            std::forward<Args>(args)...);
+    }
+
+    template <bool Condition, typename... Args>
+    static constexpr void debug_if(Args &&... args) noexcept
+    {
+        log_if_severity_under<Condition ?
+            SeverityType::severity_type_t::debug :
+            SeverityType::severity_type_t::none>(
+                std::forward<Args>(args)...);
+    }
+
+    template <typename... Args>
+    static constexpr void verbose(Args &&... args) noexcept
+    {
+        log_if_severity_under<SeverityType::severity_type_t::verbose>(
+            std::forward<Args>(args)...);
+    }
+
+    template <bool Condition, typename... Args>
+    static constexpr void verbose_if(Args &&... args) noexcept
+    {
+        log_if_severity_under<Condition ?
+            SeverityType::severity_type_t::verbose :
+            SeverityType::severity_type_t::none>(
+                std::forward<Args>(args)...);
+    }
+
     template <typename... Args>
     static constexpr void info(Args &&... args) noexcept
     {
@@ -53,11 +86,29 @@ public:
             std::forward<Args>(args)...);
     }
 
+    template <bool Condition, typename... Args>
+    static constexpr void warn_if(Args &&... args) noexcept
+    {
+        log_if_severity_under<Condition ?
+            SeverityType::severity_type_t::warn :
+            SeverityType::severity_type_t::none>(
+                std::forward<Args>(args)...);
+    }
+
     template <typename... Args>
     static constexpr void error(Args &&... args) noexcept
     {
         log_if_severity_under<SeverityType::severity_type_t::error>(
             std::forward<Args>(args)...);
+    }
+
+    template <bool Condition, typename... Args>
+    static constexpr void error_if(Args &&... args) noexcept
+    {
+        log_if_severity_under<Condition ?
+            SeverityType::severity_type_t::error :
+            SeverityType::severity_type_t::none>(
+                std::forward<Args>(args)...);
     }
 };
 

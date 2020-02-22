@@ -43,6 +43,8 @@ struct SeverityType
             return "<ERROR> :";
             break;
         case severity_type_t::none:
+            return "";
+            break;
         default:
             // That should not happen.
             return "<> :";

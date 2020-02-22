@@ -11,20 +11,39 @@ template <typename T>
 class Attachable
 {
 public:
-    /// Destructor
+    /**
+     * @brief Destroy the Attachable object
+     */
     virtual ~Attachable() {}
 
-    /// Method called after the component is attached to a node.
-    /// Override it to perform initialization
+    /**
+     * @brief Method called after the component is attached to a node.
+     * Override it to perform initialization
+     */
     virtual void onAttached() {}
 
+    /**
+     * @brief Get the attached node.
+     * @return const rptr<const T> The const attached node.
+     */
     constexpr const rptr<const T> attachedNode() const noexcept { return attachedNode_; }
+
+    /**
+     * @brief Get the attached node.
+     * @return const rptr<const T> The attached node.
+     */
     constexpr const rptr<T> attachedNode() noexcept { return attachedNode_; }
 
-    /// Shortcut method to cast to another scenenode type
+    /**
+     * @brief Shortcut method to get the attached node converted to a type.
+     * 
+     * @tparam Y Dest type to convert
+     * @return rptr<Y> containing the attached node or nullptr if no conversion
+     *  was possible.
+     */
     template <typename Y>
-    inline rptr<Y> attachedNodeAs() noexcept
-    { 
+    rptr<Y> attachedNodeAs() noexcept
+    {
         return dynamic_cast<Y *>(attachedNode());
     }
 

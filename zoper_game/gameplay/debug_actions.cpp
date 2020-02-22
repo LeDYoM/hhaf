@@ -31,7 +31,7 @@ void DebugActions::onKeyReleased(const Key &key)
 {
 }
 
-GameScene *const DebugActions::gameScene()
+const rptr<GameScene> DebugActions::gameScene()
 {
     return attachedNodeAs<GameScene>();
 }
