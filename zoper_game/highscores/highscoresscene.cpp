@@ -6,7 +6,7 @@
 #include "../loaders/highscoresresources.hpp"
 #include "../common_scene_nodes.hpp"
 
-#include <lib/scene/components/statescontroller.hpp>
+#include <lib/scene_components/include/statescontroller.hpp>
 #include <lib/input/include/inputcomponent.hpp>
 #include <lib/resources/include/resourceview.hpp>
 #include <lib/resources/include/resourcehandler.hpp>

@@ -1,8 +1,8 @@
 project (scene CXX)
 cmake_minimum_required(VERSION 3.12)
 
-file (GLOB _SOURCES "*.cpp" "components/*.cpp" "nodes/*.cpp")
-file (GLOB _HEADERS "*.hpp" "components/*.hpp" "nodes/*.cpp")
+file (GLOB _SOURCES "*.cpp" "nodes/*.cpp")
+file (GLOB _HEADERS "*.hpp" "nodes/*.cpp")
 
 set (CURRENT_TARGET  ${PROJECT_NAME})
 

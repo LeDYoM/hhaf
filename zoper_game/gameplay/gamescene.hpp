@@ -21,8 +21,8 @@
 #include <lib/scene/nodes/scenenodetext.hpp>
 #include <lib/scene/renderizable.hpp>
 #include <lib/time/include/timercomponent.hpp>
-#include <lib/scene/components/statescontroller.hpp>
-#include <lib/scene/components/statescontrolleractuator.hpp>
+#include <lib/scene_components/include/statescontroller.hpp>
+#include <lib/scene_components/include/statescontrolleractuator.hpp>
 #include <lib/time/include/timercomponent.hpp>
 
 namespace zoper

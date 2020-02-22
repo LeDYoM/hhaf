@@ -1,7 +1,7 @@
 #include <menu_paged/include/menu_paged.hpp>
 #include <menu_paged/include/menu_page.hpp>
 
-#include <lib/scene/components/statescontroller.hpp>
+#include <lib/scene_components/include/statescontroller.hpp>
 #include <lib/scene_components/include/visibility_selector.hpp>
 
 namespace lib::scene
