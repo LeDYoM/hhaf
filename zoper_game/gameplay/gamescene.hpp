@@ -17,8 +17,6 @@
 #include <mtypes/include/function.hpp>
 #include <lib/scene/scene.hpp>
 #include <boardmanager/include/boardmodel.hpp>
-#include <lib/scene/nodes/textquad.hpp>
-#include <lib/scene/nodes/scenenodetext.hpp>
 #include <lib/scene/renderizable.hpp>
 #include <lib/time/include/timercomponent.hpp>
 #include <lib/scene_components/include/statescontroller.hpp>

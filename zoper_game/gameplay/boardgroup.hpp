@@ -4,7 +4,7 @@
 #define ZOPER_BOARDGROUP_HPP
 
 #include <lib/scene/scenenode.hpp>
-#include <lib/scene/nodes/tablenode.hpp>
+#include <lib/scene_nodes/include/tablenode.hpp>
 
 #include "boardscenenode.hpp"
 

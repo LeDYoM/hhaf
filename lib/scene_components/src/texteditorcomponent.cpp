@@ -1,5 +1,5 @@
 #include "texteditorcomponent.hpp"
-#include <lib/scene/nodes/scenenodetext.hpp>
+#include <lib/scene_nodes/include/scenenodetext.hpp>
 
 namespace lib::scene
 {
@@ -13,8 +13,7 @@ void TextEditorComponent::onAttached()
 
     using namespace lib::input;
 
-    m_receiver.connect(InputComponent::KeyPressed, [this](Key const& key)
-    {
+    m_receiver.connect(InputComponent::KeyPressed, [this](Key const &key) {
         if (enabled)
         {
             auto attachedTextNode(attachedNodeAs<nodes::SceneNodeText>());

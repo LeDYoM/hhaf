@@ -5,7 +5,7 @@
 
 #include <lib/input/include/inputcomponent.hpp>
 #include <mtypes/include/types.hpp>
-#include <lib/scene/nodes/scenenodetext.hpp>
+#include <lib/scene_nodes/include/scenenodetext.hpp>
 
 namespace lib::scene
 {

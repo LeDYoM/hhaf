@@ -3,7 +3,7 @@
 #include "../loaders/gameresources.hpp"
 
 #include <lib/scene/scene.hpp>
-#include <lib/scene/nodes/scenenodetext.hpp>
+#include <lib/scene_nodes/include/scenenodetext.hpp>
 
 #include <lib/include/liblog.hpp>
 #include <lib/resources/include/iresourceretriever.hpp>
