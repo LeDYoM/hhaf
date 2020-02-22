@@ -1,12 +1,4 @@
 #include "scenenode.hpp"
-#include "scene.hpp"
-
-#include <lib/scene/renderizable.hpp>
-
-#include <lib/include/liblog.hpp>
-
-#include <lib/scene/scenemanager.hpp>
-#include "scenenodeblob.hpp"
 
 namespace lib::scene
 {

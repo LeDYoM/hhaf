@@ -1,7 +1,7 @@
 #include "catch.hpp"
 
 #include <mtypes/include/types.hpp>
-#include <lib/scene/color.hpp>
+#include <lib/scene/include/color.hpp>
 #include <type_traits>
 
 using namespace lib;

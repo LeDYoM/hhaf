@@ -5,7 +5,7 @@
 
 #include <mtypes/include/types.hpp>
 #include "itile.hpp"
-#include <lib/scene/icomponent.hpp>
+#include <lib/scene/include/icomponent.hpp>
 
 namespace lib::board
 {

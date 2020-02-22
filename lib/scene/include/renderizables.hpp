@@ -7,11 +7,10 @@
 #include <mtypes/include/function.hpp>
 #include <mtypes/include/vector.hpp>
 
-#include <lib/scene/renderizable.hpp>
+#include <lib/scene/include/renderizable.hpp>
 
 namespace lib::scene
 {
-class Renderizable;
 class SceneNode;
 
 class Renderizables

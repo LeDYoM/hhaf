@@ -1,8 +1,8 @@
 #include <lib/time/include/timer.hpp>
 
 #include <lib/include/liblog.hpp>
-#include <lib/scene/scenenode.hpp>
-#include <lib/scene/scenemanager.hpp>
+#include <lib/scene/include/scenenode.hpp>
+#include <lib/scene/include/scenemanager.hpp>
 #include <lib/time/i_include/timesystem.hpp>
 #include <lib/system/systemprovider.hpp>
 

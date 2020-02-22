@@ -5,9 +5,9 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/connection.hpp>
-#include <lib/scene/scenenode.hpp>
+#include <lib/scene/include/scenenode.hpp>
 #include <lib/resources/include/ifont.hpp>
-#include <lib/scene/scenenodetypes.hpp>
+#include <lib/scene/include/scenenodetypes.hpp>
 #include <lib/scene_nodes/include/tablenode.hpp>
 #include <lib/scene_nodes/include/scenenodetext.hpp>
 #include "../loaders/highscoresresources.hpp"

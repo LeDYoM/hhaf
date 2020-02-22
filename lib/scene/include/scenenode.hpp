@@ -5,14 +5,14 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
-#include <lib/scene/scenenodeparent.hpp>
-#include <lib/scene/scenenodes.hpp>
-#include <lib/scene/renderizables.hpp>
-#include <lib/scene/transformable.hpp>
-#include <lib/scene/hasname.hpp>
-#include <lib/scene/icomponent.hpp>
-#include <lib/scene/componentcontainer.hpp>
-#include <lib/scene/datawrappercreator.hpp>
+#include <lib/scene/include/scenenodeparent.hpp>
+#include <lib/scene/include/scenenodes.hpp>
+#include <lib/scene/include/renderizables.hpp>
+#include <lib/scene/include/transformable.hpp>
+#include <lib/scene/include/hasname.hpp>
+#include <lib/scene/include/icomponent.hpp>
+#include <lib/scene/include/componentcontainer.hpp>
+#include <lib/scene/include/datawrappercreator.hpp>
 
 #include "scenenodeblob.hpp"
 

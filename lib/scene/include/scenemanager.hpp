@@ -9,17 +9,17 @@
 
 #include <lib/system/appservice.hpp>
 
-#include <lib/scene/scenecontroller.hpp>
+#include <lib/scene/include/scenecontroller.hpp>
 
 namespace lib
 {
-    class IResourceRetriever;
-    class IResourceHandler;
-}
+class IResourceRetriever;
+class IResourceHandler;
+} // namespace lib
 
 namespace lib::scene
 {
-    class Scene;
+class Scene;
 }
 
 namespace lib::scene

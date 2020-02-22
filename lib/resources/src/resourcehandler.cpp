@@ -1,7 +1,7 @@
 #include <lib/resources/include/resourcehandler.hpp>
 #include <lib/resources/include/iresourceloader.hpp>
-#include <lib/scene/scenemanager.hpp>
-#include <lib/scene/scenenode.hpp>
+#include <lib/scene/include/scenemanager.hpp>
+#include <lib/scene/include/scenenode.hpp>
 #include <lib/include/liblog.hpp>
 
 namespace lib::scene

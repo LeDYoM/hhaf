@@ -7,10 +7,10 @@
 #include <mtypes/include/properties.hpp>
 #include <mtypes/include/function.hpp>
 
-#include <lib/scene/renderizable_modifier_context.hpp>
-#include <lib/scene/color.hpp>
-#include <lib/scene/hasname.hpp>
-#include <lib/scene/vertexarray.hpp>
+#include <lib/scene/include/renderizable_modifier_context.hpp>
+#include <lib/scene/include/color.hpp>
+#include <lib/scene/include/hasname.hpp>
+#include <lib/scene/include/vertexarray.hpp>
 #include <lib/resources/include/itexture.hpp>
 #include <lib/resources/include/ishader.hpp>
 #include <lib/render/include/renderdata.hpp>

@@ -3,7 +3,7 @@
 #ifndef ZOPER_BOARDGROUP_HPP
 #define ZOPER_BOARDGROUP_HPP
 
-#include <lib/scene/scenenode.hpp>
+#include <lib/scene/include/scenenode.hpp>
 #include <lib/scene_nodes/include/tablenode.hpp>
 
 #include "boardscenenode.hpp"

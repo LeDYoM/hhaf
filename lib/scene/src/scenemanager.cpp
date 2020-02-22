@@ -1,4 +1,5 @@
 #include "scenemanager.hpp"
+#include "scene.hpp"
 
 #include <lib/system/systemprovider.hpp>
 #include <lib/system/window.hpp>
@@ -9,7 +10,6 @@
 #include <lib/resources/include/iresourceretriever.hpp>
 #include <lib/resources/include/iresourcehandler.hpp>
 
-#include <lib/scene/scene.hpp>
 
 namespace lib::scene
 {

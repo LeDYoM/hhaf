@@ -7,8 +7,8 @@
 #include <mtypes/include/vector.hpp>
 #include <mtypes/include/function.hpp>
 
-#include <lib/scene/scene.hpp>
-#include <lib/scene/scenenodefactory.hpp>
+#include <lib/scene/include/scene.hpp>
+#include <lib/scene/include/scenenodefactory.hpp>
 
 namespace lib::scene
 {

@@ -1,8 +1,8 @@
 #include "renderizables.hpp"
 
 #include <lib/include/liblog.hpp>
-#include <lib/scene/scenenode.hpp>
-#include <lib/scene/scenenode.hpp>
+#include <lib/scene/include/scenenode.hpp>
+#include <lib/scene/include/scenenode.hpp>
 
 namespace lib::scene
 {

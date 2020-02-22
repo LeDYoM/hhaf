@@ -4,7 +4,7 @@
 #define LIB_SCENE_IDATA_WRAPPER_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <lib/scene/attachable.hpp>
+#include <lib/scene/include/attachable.hpp>
 
 namespace lib::scene
 {

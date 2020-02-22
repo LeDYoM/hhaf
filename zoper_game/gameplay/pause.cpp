@@ -4,11 +4,11 @@
 
 #include <lib/scene_nodes/include/scenenodetext.hpp>
 #include <lib/scene_components/include/animationcomponent.hpp>
-#include <lib/scene/ianimation.hpp>
+#include <lib/scene/include/ianimation.hpp>
 #include <lib/resources/include/itexture.hpp>
 #include <lib/resources/include/ittfont.hpp>
 
-#include <lib/scene/scenemanager.hpp>
+#include <lib/scene/include/scenemanager.hpp>
 #include <lib/resources/include/resourceview.hpp>
 
 namespace zoper

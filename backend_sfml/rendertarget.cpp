@@ -1,4 +1,4 @@
-#include <lib/scene/vertexarray.hpp>
+#include <lib/scene/include/vertexarray.hpp>
 
 #include "conversions.hpp"
 

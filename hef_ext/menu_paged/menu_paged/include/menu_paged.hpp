@@ -6,8 +6,8 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/connection.hpp>
 
-#include <lib/scene/scenenode.hpp>
-#include <lib/scene/color.hpp>
+#include <lib/scene/include/scenenode.hpp>
+#include <lib/scene/include/color.hpp>
 #include <lib/resources/include/ifont.hpp>
 
 namespace lib::scene

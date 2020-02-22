@@ -2,7 +2,7 @@
 #include "../loaders/mainmenuresources.hpp"
 #include "../gameshareddata.hpp"
 #include <menu_paged/include/menu_page.hpp>
-#include <lib/scene/scenenode.hpp>
+#include <lib/scene/include/scenenode.hpp>
 #include <lib/include/liblog.hpp>
 #include <lib/resources/include/resourceview.hpp>
 #include <lib/resources/include/ittfont.hpp>

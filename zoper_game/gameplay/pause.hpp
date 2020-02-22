@@ -5,7 +5,7 @@
 
 #include <mtypes/include/types.hpp>
 
-#include <lib/scene/scenenode.hpp>
+#include <lib/scene/include/scenenode.hpp>
 #include <lib/scene_nodes/include/scenenodetext.hpp>
 #include <lib/scene_components/include/animationcomponent.hpp>
 

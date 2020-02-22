@@ -6,8 +6,8 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
 #include <mtypes/include/rect.hpp>
-#include <lib/scene/vertex.hpp>
-#include <lib/scene/vertexarray.hpp>
+#include <lib/scene/include/vertex.hpp>
+#include <lib/scene/include/vertexarray.hpp>
 #include "itexture.hpp"
 #include "ishader.hpp"
 

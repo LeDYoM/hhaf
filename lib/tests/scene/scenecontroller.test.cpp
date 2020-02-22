@@ -3,8 +3,8 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
 
-#include <lib/scene/scene.hpp>
-#include <lib/scene/scenecontroller.hpp>
+#include <lib/scene/include/scene.hpp>
+#include <lib/scene/include/scenecontroller.hpp>
 
 struct CommonData
 {

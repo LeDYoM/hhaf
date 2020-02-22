@@ -4,7 +4,7 @@
 #define LIB_INPUT_COMPONENT_BASE_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <lib/scene/icomponent.hpp>
+#include <lib/scene/include/icomponent.hpp>
 #include <lib/input/include/key.hpp>
 
 namespace lib::input

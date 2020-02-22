@@ -4,7 +4,7 @@
 #define LIB_SHAREDDATA_VIEW_DATA_WRAPPER_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <lib/scene/idatawrapper.hpp>
+#include <lib/scene/include/idatawrapper.hpp>
 #include <lib/shareddata/include/ishareable.hpp>
 
 namespace lib::shdata

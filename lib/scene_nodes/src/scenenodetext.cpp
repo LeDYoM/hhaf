@@ -4,8 +4,8 @@
 #include <lib/resources/include/itexture.hpp>
 #include <lib/include/liblog.hpp>
 
-#include <lib/scene/vertexarray.hpp>
-#include <lib/scene/scenenodetypes.hpp>
+#include <lib/scene/include/vertexarray.hpp>
+#include <lib/scene/include/scenenodetypes.hpp>
 
 #include <algorithm>
 

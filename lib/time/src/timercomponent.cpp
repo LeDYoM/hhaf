@@ -3,7 +3,7 @@
 #include <mtypes/include/function.hpp>
 #include <mtypes/include/algoutils.hpp>
 #include <lib/include/liblog.hpp>
-#include <lib/scene/scene.hpp>
+#include <lib/scene/include/scene.hpp>
 
 namespace lib::time
 {

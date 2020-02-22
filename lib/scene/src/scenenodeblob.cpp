@@ -1,10 +1,10 @@
 #include "scenenodeblob.hpp"
 
-#include <lib/scene/scenenode.hpp>
-#include <lib/scene/scenecontroller.hpp>
+#include <lib/scene/include/scenenode.hpp>
+#include <lib/scene/include/scenecontroller.hpp>
 
 #include "scene.hpp"
-#include <lib/scene/scenemanager.hpp>
+#include <lib/scene/include/scenemanager.hpp>
 
 #include <lib/resources/i_include/resourcemanager.hpp>
 #include <lib/system/systemprovider.hpp>

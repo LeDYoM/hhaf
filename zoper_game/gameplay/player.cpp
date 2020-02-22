@@ -5,7 +5,7 @@
 #include <boardmanager/include/boardmodel.hpp>
 
 #include <lib/include/liblog.hpp>
-#include <lib/scene/scenenodetypes.hpp>
+#include <lib/scene/include/scenenodetypes.hpp>
 
 namespace zoper
 {

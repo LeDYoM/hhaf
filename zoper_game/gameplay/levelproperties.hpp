@@ -7,8 +7,8 @@
 #include <mtypes/include/vector2d.hpp>
 
 #include <lib/time/include/timercomponent.hpp>
-#include <lib/scene/icomponent.hpp>
-#include <lib/scene/color.hpp>
+#include <lib/scene/include/icomponent.hpp>
+#include <lib/scene/include/color.hpp>
 
 #include "../gameshareddata.hpp"
 #include "gamehud.hpp"

@@ -6,8 +6,8 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/connection.hpp>
 
-#include <lib/scene/scene.hpp>
-#include <lib/scene/renderizable.hpp>
+#include <lib/scene/include/scene.hpp>
+#include <lib/scene/include/renderizable.hpp>
 #include <lib/resources/include/itexture.hpp>
 #include <lib/resources/include/ittfont.hpp>
 

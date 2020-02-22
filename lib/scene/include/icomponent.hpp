@@ -4,7 +4,7 @@
 #define LIB_SCENE_ICOMPONENT_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <lib/scene/attachable.hpp>
+#include <lib/scene/include/attachable.hpp>
 
 namespace lib::scene
 {
@@ -14,7 +14,9 @@ class SceneNode;
 class IComponent : public Attachable<SceneNode>
 {
 public:
-    /// Interface to be implemented to update the component
+    /**
+     * @brief Interface to be implemented to update the component
+     */
     virtual void update() {}
 
     /// Destructor

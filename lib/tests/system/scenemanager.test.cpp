@@ -1,9 +1,9 @@
 #include "catch.hpp"
 
 #include <mtypes/include/types.hpp>
-#include <lib/scene/scenenode.hpp>
-#include <lib/scene/scene.hpp>
-#include <lib/scene/scenemanager.hpp>
+#include <lib/scene/include/scenenode.hpp>
+#include <lib/scene/include/scene.hpp>
+#include <lib/scene/include/scenemanager.hpp>
 
 TEST_CASE("lib::scene::SceneManager", "[lib]")
 {

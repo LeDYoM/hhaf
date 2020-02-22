@@ -1,7 +1,7 @@
 #include <lib/input/i_include/get_inputsystem.hpp>
 #include <lib/input/i_include/inputsystem.hpp>
-#include <lib/scene/scenenode.hpp>
-#include <lib/scene/scenemanager.hpp>
+#include <lib/scene/include/scenenode.hpp>
+#include <lib/scene/include/scenemanager.hpp>
 #include <lib/system/systemprovider.hpp>
 
 namespace lib::input

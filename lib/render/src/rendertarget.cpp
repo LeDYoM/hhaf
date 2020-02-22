@@ -6,7 +6,7 @@
 #include <lib/resources/i_include/texture.hpp>
 #include <lib/resources/include/ishader.hpp>
 #include <lib/resources/i_include/shader.hpp>
-#include <lib/scene/transform.hpp>
+#include <lib/scene/include/transform.hpp>
 #include <lib/include/liblog.hpp>
 
 namespace lib::sys

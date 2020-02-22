@@ -1,12 +1,30 @@
 project (scene CXX)
 cmake_minimum_required(VERSION 3.12)
 
-file (GLOB _SOURCES "*.cpp" "nodes/*.cpp")
-file (GLOB _HEADERS "*.hpp" "nodes/*.cpp")
+set (_SOURCES 
+    "src/componentcontainer.cpp"
+    "src/datawrappercreator.cpp"
+    "src/renderizable.cpp"
+    "src/renderizables.cpp"
+    "src/scenecontroller.cpp"
+    "src/scenemanager.cpp"
+    "src/scenenode.cpp"
+    "src/scenenodeblob.cpp"
+    "src/scenenodefactory.cpp"
+    "src/scenenodes.cpp"
+    "src/transform.cpp"
+    "src/transformable.cpp"
+    "src/vertexarray.cpp"
+)
 
 set (CURRENT_TARGET  ${PROJECT_NAME})
 
-add_library(${CURRENT_TARGET} STATIC ${_SOURCES} ${_HEADERS})
+build_internal_lib_component(
+    HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}"
+    SOURCES
+    ${_SOURCES}
+)
+
 target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
 target_link_libraries(${CURRENT_TARGET} PRIVATE logger)
 target_link_libraries(${CURRENT_TARGET} PRIVATE time)

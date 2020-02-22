@@ -11,8 +11,8 @@
 #include <lib/time/include/timer.hpp>
 #include <mtypes/include/vector.hpp>
 #include <mtypes/include/lockablevector.hpp>
-#include <lib/scene/scenenode.hpp>
-#include <lib/scene/icomponent.hpp>
+#include <lib/scene/include/scenenode.hpp>
+#include <lib/scene/include/icomponent.hpp>
 
 namespace lib::time
 {

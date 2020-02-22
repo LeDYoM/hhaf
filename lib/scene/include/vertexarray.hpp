@@ -5,7 +5,7 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/rect.hpp>
-#include <lib/scene/vertex.hpp>
+#include <lib/scene/include/vertex.hpp>
 #include <mtypes/include/properties.hpp>
 
 namespace lib::scene

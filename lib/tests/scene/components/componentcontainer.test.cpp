@@ -1,22 +1,23 @@
 #include "catch.hpp"
 
 #include <mtypes/include/types.hpp>
-#include <lib/scene/scenenode.hpp>
-#include <lib/scene/scene.hpp>
-#include <lib/scene/componentcontainer.hpp>
-#include <lib/scene/icomponent.hpp>
+#include <lib/scene/include/scenenode.hpp>
+#include <lib/scene/include/scene.hpp>
+#include <lib/scene/include/componentcontainer.hpp>
+#include <lib/scene/include/icomponent.hpp>
 
 using namespace lib;
 using namespace lib::scene;
 
 struct TestComponent : public IComponent
 {
-    int data_{ 0 };
+    int data_{0};
 
     sptr<TestComponent> addAnother()
     {
         return attachedNode()->addComponentOfType<TestComponent>();
     }
+
 private:
     void update() override
     {

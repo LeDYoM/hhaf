@@ -1,7 +1,7 @@
 #include <lib/shareddata/include/shareddataview.hpp>
 #include <lib/shareddata/i_include/shareddatasystem.hpp>
-#include <lib/scene/scenenode.hpp>
-#include <lib/scene/scenemanager.hpp>
+#include <lib/scene/include/scenenode.hpp>
+#include <lib/scene/include/scenemanager.hpp>
 #include <lib/system/systemprovider.hpp>
 
 namespace lib::shdata

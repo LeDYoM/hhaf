@@ -4,7 +4,7 @@
 #define HEF_EXT_MENU_PAGE_INCLUDE_HPP
 
 #include <menu_paged/include/menu_paged_option.hpp>
-#include <lib/scene/scenenode.hpp>
+#include <lib/scene/include/scenenode.hpp>
 #include <lib/scene_nodes/include/tablenode.hpp>
 #include <lib/scene_nodes/include/scenenodetext.hpp>
 

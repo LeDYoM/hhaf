@@ -6,7 +6,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
 
-#include <lib/scene/scenenode.hpp>
+#include <lib/scene/include/scenenode.hpp>
 
 namespace lib::scene
 {

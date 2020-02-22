@@ -2,8 +2,8 @@
 #include <mtypes/include/properties.hpp>
 
 #include <lib/include/liblog.hpp>
-#include <lib/scene/renderizable.hpp>
-#include <lib/scene/scenenode.hpp>
+#include <lib/scene/include/renderizable.hpp>
+#include <lib/scene/include/scenenode.hpp>
 
 namespace zoper
 {

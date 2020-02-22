@@ -20,13 +20,13 @@
 
 #include <boardmanager/include/boardmodel.hpp>
 #include <lib/include/liblog.hpp>
-#include <lib/scene/renderizable.hpp>
-#include <lib/scene/ianimation.hpp>
+#include <lib/scene/include/renderizable.hpp>
+#include <lib/scene/include/ianimation.hpp>
 #include <lib/resources/include/resourcehandler.hpp>
 #include <lib/scene_components/include/animationcomponent.hpp>
 #include <lib/input/include/inputcomponent.hpp>
 #include <lib/random/include/randomnumberscomponent.hpp>
-#include <lib/scene/scenemanager.hpp>
+#include <lib/scene/include/scenemanager.hpp>
 #include <lib/shareddata/include/shareddataview.hpp>
 
 //TODO: Fixme

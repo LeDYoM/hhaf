@@ -5,8 +5,8 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
-#include <lib/scene/icomponent.hpp>
-#include <lib/scene/componentcontainer.hpp>
+#include <lib/scene/include/icomponent.hpp>
+#include <lib/scene/include/componentcontainer.hpp>
 
 namespace lib::scene
 {

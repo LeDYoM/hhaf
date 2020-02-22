@@ -2,7 +2,7 @@
 
 #include "../loaders/gameresources.hpp"
 
-#include <lib/scene/scene.hpp>
+#include <lib/scene/include/scene.hpp>
 #include <lib/scene_nodes/include/scenenodetext.hpp>
 
 #include <lib/include/liblog.hpp>

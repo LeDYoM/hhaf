@@ -1,9 +1,9 @@
 #include "renderizable.hpp"
 #include <lib/render/include/rendersystem.hpp>
 
-#include <lib/scene/scenemanager.hpp>
+#include <lib/scene/include/scenemanager.hpp>
 #include <lib/render/include/renderdata.hpp>
-#include <lib/scene/scenenode.hpp>
+#include <lib/scene/include/scenenode.hpp>
 #include <lib/resources/include/itexture.hpp>
 #include <lib/resources/include/ishader.hpp>
 #include <lib/system/systemprovider.hpp>
