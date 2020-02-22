@@ -7,7 +7,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/function.hpp>
 #include <lib/scene/ianimation.hpp>
-#include <lib/scene/components/animationcomponent.hpp>
+#include <lib/scene_components/include/animationcomponent.hpp>
 
 namespace zoper
 {

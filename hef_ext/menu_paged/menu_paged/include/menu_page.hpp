@@ -9,7 +9,7 @@
 #include <lib/scene/nodes/scenenodetext.hpp>
 
 #include <mtypes/include/connection.hpp>
-#include <lib/scene/components/discretetextcomponent.hpp>
+#include <lib/scene_components/include/discretetextcomponent.hpp>
 
 namespace lib::scene
 {

@@ -3,7 +3,7 @@
 #include "highscorevalidator.hpp"
 #include "../loaders/highscoresresources.hpp"
 #include "../gameshareddata.hpp"
-#include <lib/scene/components/texteditorcomponent.hpp>
+#include <lib/scene_components/include/texteditorcomponent.hpp>
 #include <lib/resources/include/ittfont.hpp>
 #include <lib/resources/include/resourceview.hpp>
 #include <lib/system/systemprovider.hpp>

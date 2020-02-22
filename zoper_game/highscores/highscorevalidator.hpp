@@ -1,11 +1,11 @@
 #pragma once
 
-#ifndef ZOPER_HIGHSCORE_VALIDATOR_INCLUDE_HPP__
-#define ZOPER_HIGHSCORE_VALIDATOR_INCLUDE_HPP__
+#ifndef ZOPER_HIGHSCORE_VALIDATOR_INCLUDE_HPP
+#define ZOPER_HIGHSCORE_VALIDATOR_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
-#include <lib/scene/components/texteditorcomponent.hpp>
+#include <lib/scene_components/include/texteditorcomponent.hpp>
 
 namespace zoper
 {

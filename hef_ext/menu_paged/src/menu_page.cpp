@@ -4,7 +4,7 @@
 
 #include <lib/include/liblog.hpp>
 #include <lib/input/include/key.hpp>
-#include <lib/scene/components/discretetextcomponent.hpp>
+#include <lib/scene_components/include/discretetextcomponent.hpp>
 
 #include <mtypes/include/function.hpp>
 

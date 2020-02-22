@@ -21,12 +21,14 @@ target_include_directories(${CURRENT_TARGET}
 )
 
 # Directory internal libraries that will be used by the client too.
-add_subdirectory(scene)
-target_link_libraries(${CURRENT_TARGET} PRIVATE scene)
 add_subdirectory(render)
 target_link_libraries(${CURRENT_TARGET} PRIVATE render)
 add_subdirectory(resources)
 target_link_libraries(${CURRENT_TARGET} PRIVATE resources)
+add_subdirectory(scene)
+target_link_libraries(${CURRENT_TARGET} PRIVATE scene)
+add_subdirectory(scene_components)
+target_link_libraries(${CURRENT_TARGET} PRIVATE scene_components)
 add_subdirectory(time)
 target_link_libraries(${CURRENT_TARGET} PRIVATE time)
 add_subdirectory(input)

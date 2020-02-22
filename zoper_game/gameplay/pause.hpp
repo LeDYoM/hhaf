@@ -7,7 +7,7 @@
 
 #include <lib/scene/scenenode.hpp>
 #include <lib/scene/nodes/textquad.hpp>
-#include <lib/scene/components/animationcomponent.hpp>
+#include <lib/scene_components/include/animationcomponent.hpp>
 
 #include "../gameshareddata.hpp"
 
