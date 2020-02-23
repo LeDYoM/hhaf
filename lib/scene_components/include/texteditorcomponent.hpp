@@ -29,14 +29,14 @@ public:
 
     bool enabled{true};
 
-    inline void setTextValidator(sptr<TextValidator> nTextValidator) noexcept
+    inline void setTextValidator(uptr<TextValidator> nTextValidator) noexcept
     {
         std::swap(m_textValidator, nTextValidator);
     }
 
 private:
     ireceiver m_receiver;
-    sptr<TextValidator> m_textValidator;
+    uptr<TextValidator> m_textValidator;
     str m_originalText;
 };
 } // namespace lib::scene

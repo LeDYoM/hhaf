@@ -36,6 +36,10 @@ public:
 private:
     void standarizeText(const sptr<nodes::SceneNodeText> &ntext);
     void saveHighScores();
+    void addHighScoresLine(const size_type counter,
+                           const HighScore &element, const bool is_inserting);
+    void addHighScoreEditor(const sptr<SceneNode>& label,
+                            const size_type counter, const HighScore &element);
     HighScoresData m_hsData;
     sptr<IFont> m_normalFont;
     Color m_normalColor;

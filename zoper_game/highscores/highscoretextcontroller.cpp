@@ -44,53 +44,64 @@ void HighScoreTextController::onCreated()
     sceneNodeSize = textBox.size();
     setTableSize({3U, NumHighScore});
 
-    size_type positionInTable;
+    size_type positionInTable{0U};
     const bool isInserting{m_hsData.tryInsertHighScore(gameScore, positionInTable)};
+
+    size_type counter{0};
+    for (const auto &element : m_hsData.highScoresList())
     {
-        size_type counter{0};
-        for (const auto &element : m_hsData.highScoresList())
-        {
-            auto label(createNodeAt(vector2dst{0, counter}, make_str("label", 0, counter)));
-            standarizeText(label);
-            label->text.set(make_str(counter, "."));
-
-            label = createNodeAt(vector2dst{1, counter}, make_str("label", 1, counter));
-            standarizeText(label);
-            label->text.set(make_str(element.score));
-
-            label = createNodeAt(vector2dst{2, counter}, make_str("label", 2, counter));
-            standarizeText(label);
-
-            if (isInserting && positionInTable == counter)
-            {
-                auto editor(label->addComponentOfType<TextEditorComponent>());
-                editor->setTextValidator(msptr<HighScoreValidator>());
-                editor->Accepted.connect([this, positionInTable](const str &entry) mutable {
-                    m_hsData.setHighScoreName(positionInTable, entry);
-                    saveHighScores();
-                    Finished();
-                });
-                editor->Rejected.connect([editor_ = mwptr(editor)]()
-                {
-                    editor_.lock()->enabled = true;
-                });
-            }
-            else
-            {
-                label->text.set(element.name);
-            }
-            ++counter;
-        }
+        addHighScoresLine(counter, element,
+                          (isInserting && positionInTable == counter));
+        ++counter;
     }
 
     if (!isInserting)
     {
         auto input_component(addComponentOfType<input::InputComponent>());
-        input_component->KeyPressed.connect([this](const auto&)
-        {
+        input_component->KeyPressed.connect([this](const auto &) {
             Finished();
         });
     }
+}
+
+void HighScoreTextController::addHighScoresLine(
+    const size_type counter, const HighScore &element, const bool is_inserting)
+{
+    auto label(createNodeAt(vector2dst{0, counter}, make_str("label", 0, counter)));
+    standarizeText(label);
+    label->text.set(make_str(counter, "."));
+
+    label = createNodeAt(vector2dst{1, counter}, make_str("label", 1, counter));
+    standarizeText(label);
+    label->text.set(make_str(element.score));
+
+    label = createNodeAt(vector2dst{2, counter}, make_str("label", 2, counter));
+    standarizeText(label);
+
+    if (is_inserting)
+    {
+        addHighScoreEditor(label, counter, element);
+    }
+    else
+    {
+        label->text.set(element.name);
+    }
+}
+
+void HighScoreTextController::addHighScoreEditor(const sptr<SceneNode> &label,
+                                                 const size_type counter,
+                                                 const HighScore &element)
+{
+    auto editor(label->addComponentOfType<TextEditorComponent>());
+    editor->setTextValidator(muptr<HighScoreValidator>());
+    editor->Accepted.connect([this, counter](const str &entry) mutable {
+        m_hsData.setHighScoreName(counter, entry);
+        saveHighScores();
+        Finished();
+    });
+    editor->Rejected.connect([editor_ = mwptr(editor)]() {
+        editor_.lock()->enabled = true;
+    });
 }
 
 void HighScoreTextController::standarizeText(const sptr<nodes::SceneNodeText> &ntext)
