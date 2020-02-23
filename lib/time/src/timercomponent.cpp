@@ -3,10 +3,20 @@
 #include <mtypes/include/function.hpp>
 #include <mtypes/include/algoutils.hpp>
 #include <lib/include/liblog.hpp>
-#include <lib/scene/include/scene.hpp>
+#include <lib/scene/include/scenenode.hpp>
 
 namespace lib::time
 {
+TimerConnectorSPtr TimerComponent::addTimer(TimerType timerType,
+                            TimePoint timeOut, timer_callback_t callback)
+{
+    auto timerConnector(msptr<TimerConnector>(
+        attachedNode()->dataWrapper<Timer>(),
+        timerType, std::move(timeOut), std::move(callback)));
+    activeTimers_.push_back(timerConnector);
+    return timerConnector;
+}
+
 void TimerComponent::update()
 {
     activeTimers_.performUpdate([&](auto& timerConnector)
