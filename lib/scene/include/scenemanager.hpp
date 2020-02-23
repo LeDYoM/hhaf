@@ -24,7 +24,7 @@ class Scene;
 
 namespace lib::scene
 {
-class SceneManager : public HostedAppService
+class SceneManager : public AppService
 {
 public:
     SceneManager(sys::SystemProvider &system_provider);

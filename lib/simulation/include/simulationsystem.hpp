@@ -13,7 +13,7 @@ namespace lib::sys
 /// This system is intended to be used to simulate behaviours
 /// to other systems.
 /// For this purpose, the simulation system...
-class SimulationSystem final : public HostedAppService
+class SimulationSystem final : public AppService
 {
 public:
     using SimulateRandomDataBuffer = vector<size_type>;

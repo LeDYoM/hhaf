@@ -15,7 +15,7 @@ class InputDriver;
 
 namespace lib::sys
 {
-class InputSystem final : public HostedAppService
+class InputSystem final : public AppService
 {
 public:
     InputSystem(sys::SystemProvider& system_provider,

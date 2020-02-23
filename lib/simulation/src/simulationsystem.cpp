@@ -19,7 +19,7 @@
 namespace lib::sys
 {
 SimulationSystem::SimulationSystem(SystemProvider &system_provider)
-    : HostedAppService{system_provider},
+    : AppService{system_provider},
       priv_{muptr<SimulationSystemPrivate>()} {}
 
 SimulationSystem::~SimulationSystem()

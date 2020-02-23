@@ -17,7 +17,7 @@ namespace lib::sys
 * This system is intended to be the responsible of
 * priving the render data to the Backend render part.
 */
-class RenderSystem final : public HostedAppService
+class RenderSystem final : public AppService
 {
 public:
     RenderSystem(sys::SystemProvider &system_provider);

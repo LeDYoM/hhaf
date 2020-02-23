@@ -13,7 +13,7 @@ namespace lib::sys
 
 /// SharedDataSystem is a system whose only purpose is to store
 /// data shared between different objects.
-class SharedDataSystem final : public HostedAppService, public ISharedDataSystem
+class SharedDataSystem final : public AppService, public ISharedDataSystem
 {
 public:
     /**

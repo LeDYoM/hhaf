@@ -17,7 +17,7 @@ struct RenderSystem::RenderSystemPrivate final
 };
 
 RenderSystem::RenderSystem(sys::SystemProvider &system_provider)
-    : HostedAppService{system_provider},
+    : AppService{system_provider},
       priv_{muptr<RenderSystemPrivate>(
           system_provider.parentWindow().renderTarget().get())}
 {

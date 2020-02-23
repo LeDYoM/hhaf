@@ -13,7 +13,7 @@ namespace lib::sys
 * @brief This system is intended to be used to generate
 * a series of random numbers.
 */
-class RandomSystem final : public HostedAppService
+class RandomSystem final : public AppService
 {
 public:
     RandomSystem(sys::SystemProvider &system_provider);

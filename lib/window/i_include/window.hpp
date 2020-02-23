@@ -16,7 +16,7 @@ namespace lib::sys
 class RenderTarget;
 class SystemProvider;
 
-class Window final : public HostedAppService
+class Window final : public AppService
 {
 public:
     Window(sys::SystemProvider &system_provider);

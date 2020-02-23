@@ -9,7 +9,7 @@ namespace lib::sys
 {
 InputSystem::InputSystem(sys::SystemProvider &system_provider,
                          sptr<InputDriver> input_driver)
-    : HostedAppService{system_provider},
+    : AppService{system_provider},
       input_driver_{std::move(input_driver)}, m_keyStates{} {}
 
 InputSystem::~InputSystem() = default;

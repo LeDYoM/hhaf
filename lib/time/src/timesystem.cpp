@@ -64,7 +64,7 @@ private:
 };
 
 TimeSystem::TimeSystem(sys::SystemProvider& system_provider)
-    : HostedAppService{system_provider},
+    : AppService{system_provider},
       priv_{muptr<TimeSystemPrivate>()}
 {
 }

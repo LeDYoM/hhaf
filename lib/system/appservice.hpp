@@ -15,17 +15,17 @@ namespace lib
  * An App Service is a class, instanciated by SystemProvider to give
  * functionality to the app clients.
  */
-class HostedAppService
+class AppService
 {
 protected:
-    constexpr HostedAppService(sys::SystemProvider &system_provider) noexcept
+    constexpr AppService(sys::SystemProvider &system_provider) noexcept
         : system_provider_{system_provider} {}
 
-    virtual ~HostedAppService() = default;
+    virtual ~AppService() = default;
 
 public:
-    HostedAppService(const HostedAppService &rh) = delete;
-    HostedAppService &operator=(const HostedAppService &rh) = delete;
+    AppService(const AppService &rh) = delete;
+    AppService &operator=(const AppService &rh) = delete;
 
     constexpr sys::SystemProvider &systemProvider() noexcept
     { 

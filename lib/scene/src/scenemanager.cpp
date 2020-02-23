@@ -14,7 +14,7 @@
 namespace lib::scene
 {
 SceneManager::SceneManager(sys::SystemProvider &system_provider)
-    : HostedAppService{system_provider}
+    : AppService{system_provider}
 {
     scene_controller_ = msptr<SceneController>();
     scene_controller_->setSceneManager(this);

@@ -9,7 +9,7 @@
 
 namespace lib::sys
 {
-class TimeSystem final : public HostedAppService
+class TimeSystem final : public AppService
 {
 public:
     TimeSystem(sys::SystemProvider& system_provider);

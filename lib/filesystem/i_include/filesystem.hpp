@@ -12,7 +12,7 @@
 
 namespace lib::sys
 {
-class FileSystem final : public HostedAppService
+class FileSystem final : public AppService
 {
 public:
     using Path = str;

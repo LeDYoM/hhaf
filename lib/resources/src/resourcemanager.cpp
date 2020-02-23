@@ -89,7 +89,7 @@ struct ResourceManager::ResourceManagerPrivate
 };
 
 ResourceManager::ResourceManager(sys::SystemProvider &system_provider)
-    : HostedAppService{system_provider},
+    : AppService{system_provider},
       m_private{muptr<ResourceManagerPrivate>()} {}
 
 ResourceManager::~ResourceManager() = default;

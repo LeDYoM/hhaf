@@ -21,7 +21,7 @@ namespace lib::scene
 
 namespace lib::sys
 {
-    class ResourceManager final : public HostedAppService, 
+    class ResourceManager final : public AppService, 
     public IResourceHandler, public IResourceRetriever
     {
     public:

@@ -26,7 +26,7 @@ struct Window::WindowPrivate final
 };
 
 Window::Window(sys::SystemProvider &system_provider)
-    : HostedAppService{system_provider},
+    : AppService{system_provider},
       priv_{muptr<WindowPrivate>()}
 {
     create();

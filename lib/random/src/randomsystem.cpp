@@ -25,7 +25,7 @@ public:
 };
 
 RandomSystem::RandomSystem(sys::SystemProvider &system_provider)
-    : HostedAppService{system_provider},
+    : AppService{system_provider},
       priv_{muptr<RandomSystemPrivate>()} {}
 
 RandomSystem::~RandomSystem() = default;

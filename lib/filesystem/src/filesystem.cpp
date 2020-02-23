@@ -21,7 +21,7 @@ namespace lib::sys
     };
 
     FileSystem::FileSystem(sys::SystemProvider &system_provider)
-        : HostedAppService{ system_provider },
+        : AppService{ system_provider },
         priv_ { muptr<FileSystemPrivate>() } {}
 
     FileSystem::~FileSystem() = default;
