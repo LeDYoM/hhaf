@@ -8,19 +8,18 @@
 namespace lib::time
 {
 TimerConnectorSPtr TimerComponent::addTimer(TimerType timerType,
-                            TimePoint timeOut, timer_callback_t callback)
+                                            TimePoint timeOut, timer_callback_t callback)
 {
     auto timerConnector(msptr<TimerConnector>(
         attachedNode()->dataWrapper<Timer>(),
         timerType, std::move(timeOut), std::move(callback)));
-    activeTimers_.push_back(timerConnector);
+    activeTimers_.emplace_back(timerConnector);
     return timerConnector;
 }
 
 void TimerComponent::update()
 {
-    activeTimers_.performUpdate([&](auto& timerConnector)
-    {
+    activeTimers_.performUpdate([&](auto &timerConnector) {
         if (timerConnector->timeOut())
         {
             // Delta time has passed, so trigger

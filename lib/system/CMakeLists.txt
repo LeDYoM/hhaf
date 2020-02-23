@@ -4,7 +4,6 @@ cmake_minimum_required(VERSION 3.12)
 set (_SOURCES 
     "filesystem.cpp"
     "systemprovider.cpp"
-    "window.cpp"
 )
 
 set (_HEADERS
@@ -12,7 +11,6 @@ set (_HEADERS
     "filesystem.hpp"
     "isystemprovider.hpp"
     "systemprovider.hpp"
-    "window.hpp"
 )
 
 set (CURRENT_TARGET  ${PROJECT_NAME})
@@ -29,5 +27,6 @@ target_link_libraries(${CURRENT_TARGET} PRIVATE scene)
 target_link_libraries(${CURRENT_TARGET} PRIVATE backend)
 target_link_libraries(${CURRENT_TARGET} PRIVATE resources)
 target_link_libraries(${CURRENT_TARGET} PRIVATE shareddata)
+target_link_libraries(${CURRENT_TARGET} PRIVATE window)
 target_link_libraries(${CURRENT_TARGET} PRIVATE backend_dev)
 target_link_libraries(${CURRENT_TARGET} PRIVATE hosted_app)

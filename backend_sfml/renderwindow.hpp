@@ -17,39 +17,39 @@
 
 namespace lib::backend::sfmlb
 {
-    class RenderWindow : public IWindow, public RenderTarget, public sf::Window
-    {
-    public:
+class RenderWindow : public IWindow, public RenderTarget, public sf::Window
+{
+public:
+    RenderWindow();
+    virtual ~RenderWindow();
 
-        RenderWindow();
-        virtual ~RenderWindow();
+    bool createWindow(const u16 width, const u16 height, const u8 bpp) override;
+    sf::Vector2u getSize() const;
 
-        bool createWindow(const u16 width, const u16 height, const u8 bpp) override;
-        sf::Vector2u getSize() const;
+    bool setActive(bool active = true) override;
 
-        bool setActive(bool active = true) override;
+    IRenderTarget *renderTarget() override;
 
-        IRenderTarget *renderTarget() override;
+    bool processEvents() override;
+    void display() override;
+    void setWindowTitle(str newTitle) override;
+    void closeWindow() override;
 
-        bool processEvents() override;
-        void display() override;
-        void setWindowTitle(str newTitle) override;
-        void closeWindow() override;
+    virtual IInputDriver *inputDriver() override;
 
-        virtual IInputDriver *inputDriver() override;
-    protected:
-        virtual void onCreate();
-        virtual void onResize();
+protected:
+    virtual void onCreate();
+    virtual void onResize();
 
-    private:
-        InputDriver input_driver_;
-    };
+private:
+    InputDriver input_driver_;
+};
 
-    class WindowBackendInfo : public IWindowProviderInfo
-    {
-    public:
-        const str info() override;
-    };
-}
+class WindowBackendInfo : public IWindowProviderInfo
+{
+public:
+    const str info() override;
+};
+} // namespace lib::backend::sfmlb
 
 #endif

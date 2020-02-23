@@ -44,6 +44,8 @@ target_link_libraries(${CURRENT_TARGET} PUBLIC system)
 add_subdirectory(shareddata)
 target_link_libraries(${CURRENT_TARGET} PRIVATE shareddata)
 target_link_libraries(${CURRENT_TARGET} INTERFACE shareddata_interface)
+add_subdirectory(window)
+target_link_libraries(${CURRENT_TARGET} PRIVATE window)
 
 # Internal libraries necessary for the library only.
 target_link_libraries(${CURRENT_TARGET} PRIVATE hosted_app)

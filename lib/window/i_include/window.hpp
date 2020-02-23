@@ -3,8 +3,8 @@
 #ifndef LIB_WINDOW_INCLUDE_HPP
 #define LIB_WINDOW_INCLUDE_HPP
 
+#include <mtypes/include/types.hpp>
 #include <lib/system/appservice.hpp>
-#include <backend_dev/include/iinputdriver.hpp>
 
 namespace lib::input
 {

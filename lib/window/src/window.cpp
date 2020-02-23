@@ -1,6 +1,6 @@
 #include "window.hpp"
 
-#include <backend_dev/include/irendertarget.hpp>
+#include <backend_dev/include/iwindow.hpp>
 #include <backend/include/backendfactory.hpp>
 #include <lib/include/liblog.hpp>
 #include <lib/time/include/timepoint.hpp>

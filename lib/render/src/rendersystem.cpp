@@ -1,6 +1,6 @@
 #include <lib/render/include/rendersystem.hpp>
 #include <lib/system/systemprovider.hpp>
-#include <lib/system/window.hpp>
+#include <lib/window/i_include/window.hpp>
 #include <lib/render/include/rendertarget.hpp>
 #include <lib/render/include/renderdata.hpp>
 
