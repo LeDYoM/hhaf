@@ -2,15 +2,17 @@ enable_testing()
 
 set(UNIT_TEST_LIST
     main
+
     scene/color
     scene/scenecontroller
     scene/scenenodefactory
     scene/scenenode
     scene/scenenodeparent
-    scene/components/componentcontainer
-    scene/components/statescontroller
+    scene/scenemanager
 
-    system/scenemanager
+    scene_components/componentcontainer
+    scene_components/statescontroller
+
 )
 
 foreach(NAME IN LISTS UNIT_TEST_LIST)
