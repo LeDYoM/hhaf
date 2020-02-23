@@ -9,10 +9,10 @@
 
 namespace lib::sys
 {
-class TimeSystem final : public AppService
+class TimeSystem final : public HostedAppService
 {
 public:
-    TimeSystem();
+    TimeSystem(sys::SystemProvider& system_provider);
     ~TimeSystem() override;
 
     time::TimePoint timeSinceStart() const;

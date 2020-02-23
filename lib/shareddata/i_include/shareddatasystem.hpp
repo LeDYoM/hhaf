@@ -13,11 +13,13 @@ namespace lib::sys
 
 /// SharedDataSystem is a system whose only purpose is to store
 /// data shared between different objects.
-class SharedDataSystem final : public AppService, public ISharedDataSystem
+class SharedDataSystem final : public HostedAppService, public ISharedDataSystem
 {
 public:
-    // Default constructor.
-    SharedDataSystem() noexcept;
+    /**
+     * @brief Default constructor
+     */
+    SharedDataSystem(sys::SystemProvider& system_provider) noexcept;
     ~SharedDataSystem() override;
 
     void store(uptr<shdata::IShareable> data) noexcept override;

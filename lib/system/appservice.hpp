@@ -10,30 +10,32 @@ class SystemProvider;
 
 namespace lib
 {
-/// Class to serve as a base for all App Services.
-/// An App Service is a class, instanciated by SystemProvider to give
-/// functionality to the app clients.
-class AppService
-{
-protected:
-    AppService() noexcept = default;
-    AppService(const AppService &rh) = delete;
-    AppService &operator=(const AppService &rh) = delete;
-
-    virtual ~AppService() = default;
-};
-
-class HostedAppService : public AppService
+/**
+ * @brief Class to serve as a base for all App Services.
+ * An App Service is a class, instanciated by SystemProvider to give
+ * functionality to the app clients.
+ */
+class HostedAppService
 {
 protected:
     constexpr HostedAppService(sys::SystemProvider &system_provider) noexcept
-        : AppService{}, system_provider_{system_provider} {}
+        : system_provider_{system_provider} {}
 
-    ~HostedAppService() override = default;
+    virtual ~HostedAppService() = default;
 
 public:
-    constexpr sys::SystemProvider &systemProvider() noexcept { return system_provider_; }
-    constexpr const sys::SystemProvider &systemProvider() const noexcept { return system_provider_; }
+    HostedAppService(const HostedAppService &rh) = delete;
+    HostedAppService &operator=(const HostedAppService &rh) = delete;
+
+    constexpr sys::SystemProvider &systemProvider() noexcept
+    { 
+        return system_provider_;
+    }
+
+    constexpr const sys::SystemProvider &systemProvider() const noexcept
+    { 
+        return system_provider_;
+    }
 
 private:
     sys::SystemProvider &system_provider_;

@@ -12,42 +12,42 @@
 
 namespace lib::sys
 {
-    class FileSystem final : public HostedAppService
+class FileSystem final : public HostedAppService
+{
+public:
+    using Path = str;
+
+    FileSystem(sys::SystemProvider &system_provider);
+    ~FileSystem() override;
+
+    bool fileExists(const Path &path);
+
+    RawMemory loadBinaryFile(const str &file_name);
+    str loadTextFile(const Path &file_name);
+
+    bool saveFile(const Path &file_name, const str &data);
+
+    template <typename T>
+    bool deserializeFromFile(const Path &file_name, T &data)
     {
-    public:
-        using Path = str;
-
-        FileSystem(sys::SystemProvider &system_provider);
-        ~FileSystem() override;
-
-        bool fileExists(const Path& path);
-
-        RawMemory loadBinaryFile(const str& file_name);
-        str loadTextFile(const Path& file_name);
-
-        bool saveFile(const Path& file_name, const str& data);
-
-        template <typename T>
-        bool deserializeFromFile(const Path& file_name, T& data)
+        const str text_data{loadTextFile(file_name)};
+        if (!text_data.empty())
         {
-            const str text_data{loadTextFile(file_name)};
-            if (!text_data.empty())
-            {
-                return Serializer<T>::deserialize(text_data, data);
-            }
-            return false;
+            return Serializer<T>::deserialize(text_data, data);
         }
+        return false;
+    }
 
-        template <typename T>
-        bool serializeToFile(const Path& file_name, const T& data)
-        {
-            return saveFile(file_name, Serializer<T>::serialize(data));
-        }
+    template <typename T>
+    bool serializeToFile(const Path &file_name, const T &data)
+    {
+        return saveFile(file_name, Serializer<T>::serialize(data));
+    }
 
-    private:
-        class FileSystemPrivate;
-        uptr<FileSystemPrivate> priv_;
-    };
-}
+private:
+    class FileSystemPrivate;
+    uptr<FileSystemPrivate> priv_;
+};
+} // namespace lib::sys
 
 #endif

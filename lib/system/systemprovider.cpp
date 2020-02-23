@@ -51,11 +51,11 @@ void SystemProvider::init(IApp *iapp)
 {
     log_assert(iapp != nullptr, "Cannot create a SystemProvider with a nullptr app");
     p_->app_ = iapp;
-    p_->shared_data_system_ = muptr<SharedDataSystem>();
+    p_->shared_data_system_ = muptr<SharedDataSystem>(*this);
     p_->backend_factory_ = muptr<backend::BackendFactory>();
-    p_->time_system_ = muptr<TimeSystem>();
+    p_->time_system_ = muptr<TimeSystem>(*this);
     p_->window_ = muptr<Window>(*this);
-    p_->input_system_ = muptr<InputSystem>(p_->window_->inputDriver());
+    p_->input_system_ = muptr<InputSystem>(*this, p_->window_->inputDriver());
     p_->scene_manager_ = muptr<scene::SceneManager>(*this);
     p_->resource_manager_ = muptr<sys::ResourceManager>(*this);
     p_->render_system_ = muptr<sys::RenderSystem>(*this);

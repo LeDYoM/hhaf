@@ -15,10 +15,11 @@ class InputDriver;
 
 namespace lib::sys
 {
-class InputSystem final : public AppService
+class InputSystem final : public HostedAppService
 {
 public:
-    InputSystem(sptr<input::InputDriver> input_driver);
+    InputSystem(sys::SystemProvider& system_provider,
+        sptr<input::InputDriver> input_driver);
     ~InputSystem() override;
 
     void update();

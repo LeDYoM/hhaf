@@ -5,8 +5,8 @@
 namespace lib::sys
 {
 
-SharedDataSystem::SharedDataSystem() noexcept
-    : AppService{}, data_{nullptr} {}
+SharedDataSystem::SharedDataSystem(sys::SystemProvider& system_provider) noexcept
+    : HostedAppService{system_provider}, data_{nullptr} {}
 
 SharedDataSystem::~SharedDataSystem()
 {

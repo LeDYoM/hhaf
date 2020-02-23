@@ -7,8 +7,10 @@ using namespace lib::input;
 
 namespace lib::sys
 {
-InputSystem::InputSystem(sptr<InputDriver> input_driver)
-    : AppService{}, input_driver_{std::move(input_driver)}, m_keyStates{} {}
+InputSystem::InputSystem(sys::SystemProvider &system_provider,
+                         sptr<InputDriver> input_driver)
+    : HostedAppService{system_provider},
+      input_driver_{std::move(input_driver)}, m_keyStates{} {}
 
 InputSystem::~InputSystem() = default;
 
@@ -62,4 +64,4 @@ void InputSystem::simulateReleaseKey(const Key key)
 {
     input_driver_->keyReleased(key);
 }
-} // namespace lib::input
+} // namespace lib::sys
