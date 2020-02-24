@@ -11,11 +11,6 @@ namespace lib
 class IApp;
 } // namespace lib
 
-namespace lib::sys
-{
-class RandomSystem;
-} // namespace lib::sys
-
 namespace lib::scene
 {
 class SceneNode;
@@ -28,9 +23,6 @@ public:
 
     const SceneManager &sceneManager() const noexcept;
     SceneManager &sceneManager() noexcept;
-
-    const sys::RandomSystem &randomSystem() const noexcept;
-    sys::RandomSystem &randomSystem() noexcept;
 
     const IApp &app() const;
     IApp &app();

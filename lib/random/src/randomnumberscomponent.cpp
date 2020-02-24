@@ -1,5 +1,7 @@
 #include "randomnumberscomponent.hpp"
 #include <lib/random/i_include/randomsystem.hpp>
+#include <lib/scene/include/scenemanager.hpp>
+#include <lib/system/i_include/systemprovider.hpp>
 
 #include <lib/include/liblog.hpp>
 #include <lib/scene/include/scenenode.hpp>
@@ -60,8 +62,8 @@ void RandomNumbersComponent::onAttached()
 {
     if (attachedNode())
     {
-        priv_ = muptr<RandomNumbersComponentPrivate>(attachedNode()
-                                                         ->randomSystem());
+        priv_ = muptr<RandomNumbersComponentPrivate>(
+            attachedNode()->sceneManager().systemProvider().randomSystem());
     }
 }
 } // namespace lib::rnd

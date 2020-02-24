@@ -30,16 +30,6 @@ SceneManager &SceneNodeBlob::sceneManager() noexcept
     return *scene_manager_;
 }
 
-const sys::RandomSystem &SceneNodeBlob::randomSystem() const noexcept
-{
-    return sceneManager().systemProvider().randomSystem();
-}
-
-sys::RandomSystem &SceneNodeBlob::randomSystem() noexcept
-{
-    return sceneManager().systemProvider().randomSystem();
-}
-
 const IApp &SceneNodeBlob::app() const
 {
     return sceneManager().systemProvider().app();
