@@ -30,14 +30,4 @@ SceneManager &SceneNodeBlob::sceneManager() noexcept
     return *scene_manager_;
 }
 
-const IApp &SceneNodeBlob::app() const
-{
-    return sceneManager().systemProvider().app();
-}
-
-IApp &SceneNodeBlob::app()
-{
-    return sceneManager().systemProvider().app();
-}
-
 } // namespace lib::scene

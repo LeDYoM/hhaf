@@ -1,15 +1,9 @@
 #pragma once
 
-#ifndef LIB_SCENE_SCENENODE_BLOBL_INCLUDE_HPP
-#define LIB_SCENE_SCENENODE_BLOBL_INCLUDE_HPP
+#ifndef LIB_SCENE_SCENENODE_BLOB_INCLUDE_HPP
+#define LIB_SCENE_SCENENODE_BLOB_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <mtypes/include/rect.hpp>
-
-namespace lib
-{
-class IApp;
-} // namespace lib
 
 namespace lib::scene
 {
@@ -23,12 +17,6 @@ public:
 
     const SceneManager &sceneManager() const noexcept;
     SceneManager &sceneManager() noexcept;
-
-    const IApp &app() const;
-    IApp &app();
-
-    template <typename T>
-    T &app() { return (static_cast<T &>(app())); }
 
 private:
     SceneNode &scene_node_;
