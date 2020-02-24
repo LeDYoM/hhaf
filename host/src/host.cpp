@@ -3,6 +3,7 @@
 #include <lib/include/liblog.hpp>
 #include <hosted_app/include/iapp.hpp>
 #include <lib/system/i_include/systemprovider.hpp>
+#include <lib/system/include/icontrollablesystemprovider.hpp>
 
 #include <mtypes/include/parpar.hpp>
 #include <mtypes/include/object.hpp>
@@ -40,7 +41,7 @@ public:
 
     Dictionary<str> m_configuration;
     IApp *iapp_{nullptr};
-    uptr<SystemProvider> system_provider_;
+    IControllableSystemProvider* system_provider_;
 };
 
 enum class Host::AppState : u8
@@ -95,9 +96,12 @@ bool Host::update()
         DisplayLog::info("Starting initialization of new App...");
         m_state = AppState::Executing;
 
-        m_private->system_provider_ = muptr<SystemProvider>();
+        m_private->system_provider_ = new SystemProvider();
         m_private->system_provider_->init(m_private->iapp_);
-        m_private->iapp_->setSystemProvider(m_private->system_provider_.get());
+        
+        m_private->iapp_->setSystemProvider(
+            dynamic_cast<SystemProvider*>(m_private->system_provider_)
+            );
 
         m_private->iapp_->onInit();
         DisplayLog::info(appDisplayNameAndVersion(*(m_private->iapp_)),
@@ -122,7 +126,7 @@ bool Host::update()
         m_state = AppState::Terminated;
         m_private->iapp_->onFinish();
         m_private->system_provider_->terminate();
-        m_private->system_provider_.reset(nullptr);
+        delete m_private->system_provider_;
         return true;
         break;
     case AppState::Terminated:

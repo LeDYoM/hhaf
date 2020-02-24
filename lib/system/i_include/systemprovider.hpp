@@ -5,6 +5,7 @@
 
 #include <mtypes/include/types.hpp>
 #include <lib/system/include/isystemprovider.hpp>
+#include <lib/system/include/icontrollablesystemprovider.hpp>
 
 namespace lib
 {
@@ -38,14 +39,14 @@ class ISharedDataSystem;
 
 namespace lib::sys
 {
-class SystemProvider final : public ISystemProvider
+class SystemProvider final : public ISystemProvider, public IControllableSystemProvider
 {
 public:
     SystemProvider();
     ~SystemProvider();
 
-    void init(IApp *iapp);
-    void terminate();
+    void init(IApp *iapp) override;
+    void terminate() override;
 
     template <typename T>
     T &app() { return *(dynamic_cast<T *>(&app())); }
@@ -81,7 +82,7 @@ public:
     ISharedDataSystem &sharedDataSystem() noexcept;
     const ISharedDataSystem &sharedDataSystem() const noexcept;
 
-    bool runStep();
+    bool runStep() override;
 
 private:
     struct SystemProviderPrivate;
