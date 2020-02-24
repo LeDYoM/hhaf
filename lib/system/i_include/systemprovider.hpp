@@ -4,7 +4,7 @@
 #define LIB_SYSTEM_PROVIDER_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <lib/system/isystemprovider.hpp>
+#include <lib/system/include/isystemprovider.hpp>
 
 namespace lib
 {

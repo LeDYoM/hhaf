@@ -6,7 +6,7 @@
 #include <lib/scene_components/include/texteditorcomponent.hpp>
 #include <lib/resources/include/ittfont.hpp>
 #include <lib/resources/include/resourceview.hpp>
-#include <lib/system/systemprovider.hpp>
+#include <lib/system/i_include/systemprovider.hpp>
 #include <lib/filesystem/i_include/filesystem.hpp>
 #include <lib/scene/include/scenemanager.hpp>
 #include <lib/shareddata/include/shareddataview.hpp>

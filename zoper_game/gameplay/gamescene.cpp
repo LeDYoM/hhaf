@@ -30,7 +30,7 @@
 #include <lib/shareddata/include/shareddataview.hpp>
 
 //TODO: Fixme
-#include <lib/system/systemprovider.hpp>
+#include <lib/system/i_include/systemprovider.hpp>
 
 namespace zoper
 {

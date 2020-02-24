@@ -2,7 +2,7 @@
 
 #include <lib/include/liblog.hpp>
 #include <hosted_app/include/iapp.hpp>
-#include <lib/system/systemprovider.hpp>
+#include <lib/system/i_include/systemprovider.hpp>
 
 #include <mtypes/include/parpar.hpp>
 #include <mtypes/include/object.hpp>

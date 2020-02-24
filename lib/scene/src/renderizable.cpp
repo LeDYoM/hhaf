@@ -6,7 +6,7 @@
 #include <lib/scene/include/scenenode.hpp>
 #include <lib/resources/include/itexture.hpp>
 #include <lib/resources/include/ishader.hpp>
-#include <lib/system/systemprovider.hpp>
+#include <lib/system/i_include/systemprovider.hpp>
 
 #include "geometry_math.hpp"
 

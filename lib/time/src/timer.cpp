@@ -4,7 +4,7 @@
 #include <lib/scene/include/scenenode.hpp>
 #include <lib/scene/include/scenemanager.hpp>
 #include <lib/time/i_include/timesystem.hpp>
-#include <lib/system/systemprovider.hpp>
+#include <lib/system/i_include/systemprovider.hpp>
 
 namespace lib::time
 {

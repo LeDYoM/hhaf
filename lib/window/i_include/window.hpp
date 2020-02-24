@@ -4,7 +4,7 @@
 #define LIB_WINDOW_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <lib/system/appservice.hpp>
+#include <lib/system/include/appservice.hpp>
 
 namespace lib::input
 {

@@ -4,7 +4,7 @@
 #define LIB_CORE_SYSTEM_SIMULATIONSYSTEM_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <lib/system/appservice.hpp>
+#include <lib/system/include/appservice.hpp>
 #include <lib/simulation/include/simulationactiongroup.hpp>
 
 namespace lib::sys

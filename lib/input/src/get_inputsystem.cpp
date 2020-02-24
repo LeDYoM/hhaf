@@ -2,7 +2,7 @@
 #include <lib/input/i_include/inputsystem.hpp>
 #include <lib/scene/include/scenenode.hpp>
 #include <lib/scene/include/scenemanager.hpp>
-#include <lib/system/systemprovider.hpp>
+#include <lib/system/i_include/systemprovider.hpp>
 
 namespace lib::input
 {

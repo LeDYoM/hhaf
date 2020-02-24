@@ -6,7 +6,7 @@
 #include <mtypes/include/types.hpp>
 #include <lib/input/include/key.hpp>
 
-#include <lib/system/appservice.hpp>
+#include <lib/system/include/appservice.hpp>
 
 namespace lib::input
 {

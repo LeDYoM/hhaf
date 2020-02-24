@@ -8,7 +8,7 @@
 
 #include <lib/resources/include/iresourcehandler.hpp>
 #include <lib/resources/include/iresourceretriever.hpp>
-#include <lib/system/appservice.hpp>
+#include <lib/system/include/appservice.hpp>
 
 namespace lib::scene
 {

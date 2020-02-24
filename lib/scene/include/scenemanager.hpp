@@ -7,7 +7,7 @@
 #include <mtypes/include/str.hpp>
 #include <mtypes/include/function.hpp>
 
-#include <lib/system/appservice.hpp>
+#include <lib/system/include/appservice.hpp>
 
 #include <lib/scene/include/scenecontroller.hpp>
 

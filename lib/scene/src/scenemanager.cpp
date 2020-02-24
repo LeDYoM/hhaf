@@ -1,7 +1,7 @@
 #include "scenemanager.hpp"
 #include "scene.hpp"
 
-#include <lib/system/systemprovider.hpp>
+#include <lib/system/i_include/systemprovider.hpp>
 #include <lib/window/i_include/window.hpp>
 #include <lib/resources/i_include/resourcemanager.hpp>
 #include <lib/render/include/rendertarget.hpp>

@@ -4,7 +4,7 @@
 #define LIB_CORE_SYSTEM_TIMESYSTEM_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <lib/system/appservice.hpp>
+#include <lib/system/include/appservice.hpp>
 #include <lib/time/include/timepoint.hpp>
 
 namespace lib::sys

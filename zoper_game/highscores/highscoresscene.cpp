@@ -10,7 +10,7 @@
 #include <lib/input/include/inputcomponent.hpp>
 #include <lib/resources/include/resourceview.hpp>
 #include <lib/resources/include/resourcehandler.hpp>
-#include <lib/system/systemprovider.hpp>
+#include <lib/system/i_include/systemprovider.hpp>
 #include <lib/scene/include/scenemanager.hpp>
 
 namespace zoper
