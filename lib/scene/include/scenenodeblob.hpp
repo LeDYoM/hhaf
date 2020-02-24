@@ -31,9 +31,6 @@ public:
     const SceneManager &sceneManager() const noexcept;
     SceneManager &sceneManager() noexcept;
 
-    const SceneController &sceneController() const noexcept;
-    SceneController &sceneController() noexcept;
-
     const sys::RandomSystem &randomSystem() const noexcept;
     sys::RandomSystem &randomSystem() noexcept;
 
