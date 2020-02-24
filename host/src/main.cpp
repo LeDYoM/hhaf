@@ -8,37 +8,37 @@
 
 namespace lib
 {
-    int libMain(int argc, char *argv[])
+int libMain(int argc, char *argv[])
+{
+    int result = -1;
+
+    try
     {
-        int result = -1;
+        logger::init_log();
 
-        try
+        installMemManager();
+
         {
-            logger::init_log();
-
-            installMemManager();
-
-            {
-                sys::Host host(argc, argv);
-                sys::AppLoader app_loader;
-                sys::ManagedApp managed_app = app_loader.loadApp("zoper_game");
-                host.setApplication(managed_app.app);
-                int run_result(host.run());
-                app_loader.unloadApp(managed_app);
-                result = run_result;
-            }
+            sys::Host host(argc, argv);
+            sys::AppLoader app_loader;
+            sys::ManagedApp managed_app = app_loader.loadApp("zoper_game");
+            host.setApplication(managed_app.app);
+            int run_result(host.run());
+            app_loader.unloadApp(managed_app);
+            result = run_result;
         }
-        catch (std::exception e)
-        {
-            DisplayLog::error("std::Exception: ", e.what());
-        }
-        catch (...)
-        {
-            DisplayLog::info("Unexpected exception");
-        }
-        finishMemManager();
-        logger::finish_log();
-
-        return result;
     }
+    catch (std::exception e)
+    {
+        DisplayLog::error("std::Exception: ", e.what());
+    }
+    catch (...)
+    {
+        DisplayLog::info("Unexpected exception");
+    }
+    finishMemManager();
+    logger::finish_log();
+
+    return result;
 }
+} // namespace lib
