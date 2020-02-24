@@ -6,9 +6,9 @@
 #include "shaderfactory.hpp"
 
 #ifdef _WIN32
-    #define EXPORT   extern "C" __declspec( dllexport )
+#define EXPORT extern "C" __declspec(dllexport)
 #else
-    #define EXPORT   extern "C"
+#define EXPORT extern "C"
 #endif
 
 struct BackendManager : lib::backend::client::DefaultBackendManager
@@ -28,14 +28,14 @@ struct BackendManager : lib::backend::client::DefaultBackendManager
     }
 };
 
-BackendManager *backend_manager{ nullptr };
+BackendManager *backend_manager{nullptr};
 
-EXPORT bool init_lib(lib::backend::IBackendRegister*const ibackend_register)
+EXPORT bool init_lib(lib::backend::IBackendRegister *const ibackend_register)
 {
     return lib::backend::client::default_init_function(&backend_manager, ibackend_register);
 }
 
-EXPORT bool finish_lib(lib::backend::IBackendRegister*const ibackend_register)
+EXPORT bool finish_lib(lib::backend::IBackendRegister *const ibackend_register)
 {
     return lib::backend::client::default_finish_function(&backend_manager, ibackend_register);
 }
