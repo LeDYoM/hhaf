@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.12)
 
 set (_SOURCES 
     "src/systemprovider.cpp"
+    "src/systemprovider_init.cpp"
 )
 
 set (CURRENT_TARGET  ${PROJECT_NAME})

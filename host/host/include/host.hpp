@@ -18,7 +18,7 @@ public:
     Host(int argc, char *argv[]);
     ~Host();
 
-    bool setApplication(IApp *iapp);
+    bool setApplication(rptr<IApp> iapp);
     int run();
 
 private:

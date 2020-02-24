@@ -65,6 +65,7 @@ void SystemProvider::init(IApp *iapp)
     p_->simulation_system_ = muptr<SimulationSystem>(*this);
     p_->simulation_system_->initialize();
 #endif
+    p_->app_->setSystemProvider(this);
 }
 
 void SystemProvider::terminate()

@@ -2,8 +2,8 @@
 
 #include <lib/include/liblog.hpp>
 #include <hosted_app/include/iapp.hpp>
-#include <lib/system/i_include/systemprovider.hpp>
 #include <lib/system/include/icontrollablesystemprovider.hpp>
+#include <lib/system/include/systemprovider_init.hpp>
 
 #include <mtypes/include/parpar.hpp>
 #include <mtypes/include/object.hpp>
@@ -41,7 +41,7 @@ public:
 
     Dictionary<str> m_configuration;
     IApp *iapp_{nullptr};
-    IControllableSystemProvider* system_provider_;
+    IControllableSystemProvider *system_provider_;
 };
 
 enum class Host::AppState : u8
@@ -64,7 +64,7 @@ Host::Host(int argc, char *argv[])
 
 Host::~Host() = default;
 
-bool Host::setApplication(IApp *iapp)
+bool Host::setApplication(rptr<IApp> iapp)
 {
     log_assert(iapp != nullptr, "Received nullptr Application");
     log_assert(!m_private->iapp_, "Application already set");
@@ -80,9 +80,11 @@ bool Host::setApplication(IApp *iapp)
     return false;
 }
 
-inline str appDisplayNameAndVersion(const IApp &app) noexcept
+str appDisplayNameAndVersion(const IApp &app)
 {
-    return make_str(app.getName(), "(", app.getVersion(), ".", app.getSubVersion(), ".", app.getPatch(), ")");
+    return make_str(app.getName(), "(",
+                    app.getVersion(), ".",
+                    app.getSubVersion(), ".", app.getPatch(), ")");
 }
 
 bool Host::update()
@@ -96,12 +98,8 @@ bool Host::update()
         DisplayLog::info("Starting initialization of new App...");
         m_state = AppState::Executing;
 
-        m_private->system_provider_ = new SystemProvider();
+        m_private->system_provider_ = createSystemProvider();
         m_private->system_provider_->init(m_private->iapp_);
-        
-        m_private->iapp_->setSystemProvider(
-            dynamic_cast<SystemProvider*>(m_private->system_provider_)
-            );
 
         m_private->iapp_->onInit();
         DisplayLog::info(appDisplayNameAndVersion(*(m_private->iapp_)),
@@ -126,7 +124,8 @@ bool Host::update()
         m_state = AppState::Terminated;
         m_private->iapp_->onFinish();
         m_private->system_provider_->terminate();
-        delete m_private->system_provider_;
+        destroySystemProvider(m_private->system_provider_);
+        m_private->system_provider_ = nullptr;
         return true;
         break;
     case AppState::Terminated:
