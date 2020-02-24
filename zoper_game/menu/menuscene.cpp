@@ -5,6 +5,7 @@
 #include <lib/scene/include/scenemanager.hpp>
 #include <lib/resources/include/itexture.hpp>
 #include <lib/shareddata/include/shareddataview.hpp>
+#include <lib/system/include/systemrequests.hpp>
 
 #include "../menu/mainmenu.hpp"
 #include "../loaders/mainmenuresources.hpp"
@@ -43,7 +44,7 @@ void MenuScene::onCreated()
     {
         if (status == 0)
         {
-            app<ZoperProgramController>().requestExit();
+            dataWrapper<sys::SystemRequests>()->requestExit();
         }
         sceneManager().sceneController()->switchToNextScene();
     });

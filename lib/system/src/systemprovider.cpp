@@ -40,6 +40,7 @@ struct SystemProvider::SystemProviderPrivate
 #ifdef LIB_COMPILE_SIMULATIONS
     uptr<SimulationSystem> simulation_system_;
 #endif
+    bool exit_requested_{false};
 };
 
 SystemProvider::SystemProvider()
@@ -66,6 +67,16 @@ void SystemProvider::init(IApp *iapp)
     p_->simulation_system_->initialize();
 #endif
     p_->app_->setSystemProvider(this);
+}
+
+void SystemProvider::requestExit()
+{
+    p_->exit_requested_ = true;
+}
+
+bool SystemProvider::exitRequested() const
+{
+    return p_->exit_requested_;
 }
 
 void SystemProvider::terminate()

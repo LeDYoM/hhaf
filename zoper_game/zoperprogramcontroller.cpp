@@ -48,7 +48,7 @@ void ZoperProgramController::onInit()
 
         sceneController->setSceneDirector([this](const str &scene_name) -> str {
             // Did the user selected exit?
-            if (exitRequested())
+            if (systemProvider().exitRequested())
             {
                 return str{};
             }

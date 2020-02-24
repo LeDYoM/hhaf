@@ -46,7 +46,10 @@ public:
     ~SystemProvider();
 
     void init(IApp *iapp) override;
+    bool runStep() override;
     void terminate() override;
+    void requestExit();
+    bool exitRequested() const;
 
     template <typename T>
     T &app() { return *(dynamic_cast<T *>(&app())); }
@@ -81,8 +84,6 @@ public:
     RenderSystem &renderSystem() noexcept;
     ISharedDataSystem &sharedDataSystem() noexcept;
     const ISharedDataSystem &sharedDataSystem() const noexcept;
-
-    bool runStep() override;
 
 private:
     struct SystemProviderPrivate;
