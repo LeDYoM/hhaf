@@ -4,6 +4,7 @@ cmake_minimum_required(VERSION 3.12)
 set (_SOURCES 
     "src/animationcomponent.cpp"
     "src/discretetextcomponent.cpp"
+    "src/scenemetrics.cpp"
     "src/texteditorcomponent.cpp"
     "src/visibility_selector.cpp"
 )

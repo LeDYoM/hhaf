@@ -5,6 +5,7 @@
 
 #include <lib/scene/include/scenenode.hpp>
 #include <lib/scene_nodes/include/tablenode.hpp>
+#include <lib/scene_components/include/scenemetrics.hpp>
 #include <lib/scene/include/renderizable.hpp>
 #include <lib/scene/include/scenemanager.hpp>
 
@@ -28,11 +29,11 @@ void BoardGroup::onCreated()
 {
     BaseClass::onCreated();
 
-    Rectf32 textBox{scenePerspective()};
+    Rectf32 textBox{dataWrapper<SceneMetrics>()->currentView()};
     position = textBox.leftTop();
     sceneNodeSize = textBox.size();
 
-    const Rectf32 bBox(scenePerspective());
+    const Rectf32 bBox(textBox);
 
     Rectf32 tileBox({}, cellSize());
     for (size_type y{0U}; y < tableSize().y; ++y)

@@ -3,13 +3,14 @@
 
 #include <lib/scene_components/include/statescontroller.hpp>
 #include <lib/scene_components/include/visibility_selector.hpp>
+#include <lib/scene_components/include/scenemetrics.hpp>
 
 namespace lib::scene
 {
 
 MenuPaged::MenuPaged(SceneNode *parent, str name)
     : BaseClass{parent, std::move(name)},
-      scene_node_size_for_pages_{scenePerspective().size()}
+      scene_node_size_for_pages_{dataWrapper<SceneMetrics>()->currentView().size()}
 {
 }
 

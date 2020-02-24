@@ -9,7 +9,6 @@
 namespace lib
 {
 class IApp;
-class IResourceLoader;
 } // namespace lib
 
 namespace lib::sys
@@ -21,7 +20,6 @@ namespace lib::scene
 {
 class SceneNode;
 class SceneManager;
-class SceneController;
 
 class SceneNodeBlob
 {
@@ -39,8 +37,6 @@ public:
 
     template <typename T>
     T &app() { return (static_cast<T &>(app())); }
-
-    Rectf32 scenePerspective() const;
 
 private:
     SceneNode &scene_node_;

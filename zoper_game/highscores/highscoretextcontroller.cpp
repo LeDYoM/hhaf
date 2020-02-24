@@ -4,6 +4,7 @@
 #include "../loaders/highscoresresources.hpp"
 #include "../gameshareddata.hpp"
 #include <lib/scene_components/include/texteditorcomponent.hpp>
+#include <lib/scene_components/include/scenemetrics.hpp>
 #include <lib/resources/include/ittfont.hpp>
 #include <lib/resources/include/resourceview.hpp>
 #include <lib/system/i_include/systemprovider.hpp>
@@ -39,7 +40,10 @@ void HighScoreTextController::onCreated()
     // Request game score
     Score gameScore = dataWrapper<shdata::SharedDataView>()->dataAs<GameSharedData>().score;
 
-    Rectf32 textBox{rectFromSize(scenePerspective().size()).setLeftTop({0, 250}).setSize({2000, 1500})};
+    Rectf32 textBox{rectFromSize(
+                        dataWrapper<SceneMetrics>()->currentView().size())
+                        .setLeftTop({0, 250})
+                        .setSize({2000, 1500})};
     position = textBox.leftTop();
     sceneNodeSize = textBox.size();
     setTableSize({3U, NumHighScore});

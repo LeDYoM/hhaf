@@ -50,9 +50,4 @@ IApp &SceneNodeBlob::app()
     return sceneManager().systemProvider().app();
 }
 
-Rectf32 SceneNodeBlob::scenePerspective() const
-{
-    return sceneManager().viewRect();
-}
-
 } // namespace lib::scene

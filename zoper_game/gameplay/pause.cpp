@@ -4,6 +4,8 @@
 
 #include <lib/scene_nodes/include/scenenodetext.hpp>
 #include <lib/scene_components/include/animationcomponent.hpp>
+#include <lib/scene_components/include/scenemetrics.hpp>
+
 #include <lib/scene/include/ianimation.hpp>
 #include <lib/resources/include/itexture.hpp>
 #include <lib/resources/include/ittfont.hpp>
@@ -27,7 +29,7 @@ PauseSceneNode::PauseSceneNode(scene::SceneNode *const parent, str name)
     m_pauseText->text.set("PAUSE");
     m_pauseText->font.set(resources_viewer->getTTFont(GameResources::ScoreFontId)->font(180));
     m_pauseText->textColor.set(colors::White);
-    m_pauseText->alignmentSize.set(scenePerspective().size());
+    m_pauseText->alignmentSize.set(dataWrapper<SceneMetrics>()->currentView().size());
     m_pauseText->alignmentX.set(SceneNodeText::AlignmentX::Center);
     m_pauseText->alignmentY.set(SceneNodeText::AlignmentY::Middle);
 

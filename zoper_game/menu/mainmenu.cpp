@@ -7,7 +7,7 @@
 #include <lib/resources/include/resourceview.hpp>
 #include <lib/resources/include/ittfont.hpp>
 #include <lib/shareddata/include/shareddataview.hpp>
-
+#include <lib/scene_components/include/scenemetrics.hpp>
 #include <mtypes/include/function.hpp>
 #include <mtypes/include/types.hpp>
 
@@ -91,7 +91,7 @@ void MainMenu::onCreated()
     setSelectedColor(colors::Red);
 
     Rectf32 textBox{
-        rectFromSize(scenePerspective().size())
+        rectFromSize(dataWrapper<SceneMetrics>()->currentView().size())
             .setLeftTop({0, 750})
             .setSize({2000, 4 * 150})};
     position = textBox.leftTop();
