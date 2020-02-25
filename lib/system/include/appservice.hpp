@@ -24,16 +24,33 @@ protected:
     virtual ~AppService() = default;
 
 public:
-    AppService(const AppService &rh) = delete;
-    AppService &operator=(const AppService &rh) = delete;
+    /**
+     * @brief Deleted copy constructor.
+     */
+    AppService(const AppService &) = delete;
 
+    /**
+     * @brief Deleted assignment operator.
+     */
+    AppService &operator=(const AppService &) = delete;
+
+    /**
+     * @brief Get a lvalue reference to this apps @b SystemProvider
+     * 
+     * @return sys::SystemProvider& Reference to the SystemProvider
+     */
     constexpr sys::SystemProvider &systemProvider() noexcept
-    { 
+    {
         return system_provider_;
     }
 
-    constexpr const sys::SystemProvider &systemProvider() const noexcept
-    { 
+    /**
+     * @brief Get a const lvalue reference to this apps @b SystemProvider
+     * 
+     * @return sys::SystemProvider& Reference to the SystemProvider
+     */
+    constexpr sys::SystemProvider const& systemProvider() const noexcept
+    {
         return system_provider_;
     }
 
