@@ -15,8 +15,6 @@ public:
 AnimationComponent::AnimationComponent()
     : m_private{muptr<AnimationComponentPrivate>()} {}
 
-AnimationComponent::~AnimationComponent() = default;
-
 void AnimationComponent::addAnimation(uptr<IAnimation> nanimation)
 {
     m_private->m_animations.push_back(std::move(nanimation));

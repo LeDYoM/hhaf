@@ -33,6 +33,7 @@ void HighScoreTextController::onCreated()
     m_normalFont = resource_view->getTTFont("menu.mainFont")->font(72);
     m_normalColor = colors::Blue;
     m_selectedColor = colors::Red;
+    animation_component_ = addComponentOfType<scene::AnimationComponent>();
 
     // Request the high scores.
     sceneManager().systemProvider().fileSystem().deserializeFromFile(HighScoresFileName, m_hsData);
@@ -96,6 +97,7 @@ void HighScoreTextController::addHighScoreEditor(const sptr<SceneNode> &label,
                                                  const size_type counter,
                                                  const HighScore &element)
 {
+    addEditAnimation(counter);
     auto editor(label->addComponentOfType<TextEditorComponent>());
     editor->setTextValidator(muptr<HighScoreValidator>());
     editor->Accepted.connect([this, counter](const str &entry) mutable {
@@ -106,6 +108,18 @@ void HighScoreTextController::addHighScoreEditor(const sptr<SceneNode> &label,
     editor->Rejected.connect([editor_ = mwptr(editor)]() {
         editor_.lock()->enabled = true;
     });
+}
+
+void HighScoreTextController::addEditAnimation(const size_type line_index)
+{
+    log_assert(line_index < tableSize().y, "Invalid line_index");
+
+    for_each_tableSceneNode_in_y(
+        line_index, [this](const auto, const auto &element) {
+            animation_component_->addCircledPropertyAnimation(
+                time::TimePoint_as_miliseconds(2000),
+                element->textColor, colors::Black, colors::White);
+        });
 }
 
 void HighScoreTextController::standarizeText(const sptr<nodes::SceneNodeText> &ntext)

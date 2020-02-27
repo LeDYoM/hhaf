@@ -98,7 +98,9 @@ void Player::launchAnimation(const vector2df &toWhere)
     animation_component_->addPropertyAnimation(
         TimePoint_as_miliseconds(gameplay::constants::MillisAnimationLaunchPlayerStep),
         position,
+        position(),
         toWhere,
+        IAnimation::AnimationDirection::Forward,
         [this, currentPosition = position()]() { launchAnimationBack(currentPosition); });
 }
 
@@ -109,7 +111,7 @@ void Player::launchAnimationBack(const vector2df &toWhere)
     ensureComponentOfType(animation_component_);
     animation_component_->addPropertyAnimation(
         TimePoint_as_miliseconds(gameplay::constants::MillisAnimationLaunchPlayerStep),
-        position, toWhere);
+        position, position(), toWhere);
 }
 
 void Player::tileAdded(const vector2dst &position_)

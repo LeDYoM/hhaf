@@ -109,19 +109,19 @@ struct Color
 
     constexpr Color &operator+=(const Color &right) noexcept
     {
-        r = static_cast<value_type>(std::min(static_cast<u32>(r) + right.r, static_cast<u32>(value_max)));
-        g = static_cast<value_type>(std::min(static_cast<u32>(g) + right.g, static_cast<u32>(value_max)));
-        b = static_cast<value_type>(std::min(static_cast<u32>(b) + right.b, static_cast<u32>(value_max)));
-        a = static_cast<value_type>(std::min(static_cast<u32>(a) + right.a, static_cast<u32>(value_max)));
+        r = ensureLimits(static_cast<s32>(r) + right.r);
+        g = ensureLimits(static_cast<s32>(g) + right.g);
+        b = ensureLimits(static_cast<s32>(b) + right.b);
+        a = ensureLimits(static_cast<s32>(a) - right.a);
         return *this;
     }
 
     constexpr Color &operator-=(const Color &right) noexcept
     {
         r = ensureLimits(static_cast<s32>(r) - right.r);
-        g = static_cast<value_type>(std::max(static_cast<s32>(g) - right.g, static_cast<s32>(value_min)));
-        b = static_cast<value_type>(std::max(static_cast<s32>(b) - right.b, static_cast<s32>(value_min)));
-        a = static_cast<value_type>(std::max(static_cast<s32>(a) - right.a, static_cast<s32>(value_min)));
+        g = ensureLimits(static_cast<s32>(g) - right.g);
+        b = ensureLimits(static_cast<s32>(b) - right.b);
+        a = ensureLimits(static_cast<s32>(a) - right.a);
         return *this;
     }
 

@@ -14,7 +14,8 @@ using namespace lib::board;
 
 u32 Token::m_tileCounter{0};
 
-Token::Token(SceneNode *const parent, str name) : GameBaseTile{parent, name + str::to_str(m_tileCounter) + str::to_str(m_tileCounter)}
+Token::Token(SceneNode *const parent, str name)
+    : GameBaseTile{parent, name + str::to_str(m_tileCounter) + str::to_str(m_tileCounter)}
 {
     ++m_tileCounter;
     m_node = createRenderizable(
@@ -67,6 +68,7 @@ void Token::tileMoved(const vector2dst & /*source*/, const vector2dst &dest)
         level_properties_->millisBetweenTokens() / 2));
 
     const auto destination(board2SceneFactor_ * dest);
-    animation_component_->addPropertyAnimation(time, position, destination);
+    animation_component_->addPropertyAnimation(
+        time, position, position(), destination);
 }
 } // namespace zoper

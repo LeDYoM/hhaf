@@ -15,28 +15,52 @@
 namespace lib::scene
 {
 
+/**
+ * @brief Class representing an animation. The animation will be updated when
+ *  the animate() method is call.
+ * 
+ * @tparam T Type of the property to animate.
+ */
 template <typename T>
 class IPropertyAnimation : public IAnimation
 {
 public:
-    IPropertyAnimation(uptr<time::Timer> timer, time::TimePoint duration, IProperty<T> &prop,
-                       T start, T end, ActionFunc endAction = {})
-        : IAnimation{std::move(timer), std::move(duration), std::move(endAction)},
-          m_property{prop}, m_startValue{std::move(start)},
-          m_endValue{std::move(end)}, m_deltaValue{m_endValue - m_startValue} {}
+    /**
+     * @brief Construct a new IPropertyAnimation object
+     * 
+     * @param timer Timer to be used to control the animation
+     * @param duration Duration of the animation
+     * @param prop Reference to an IProperty<T> to use
+     * @param start Start value for the property
+     * @param end End value for the property
+     * @param animation_direction Direction to where the delta will go
+     * @param endAction Functor with an action to perform when the animation
+     *  is completed
+     */
+    IPropertyAnimation(uptr<time::Timer> timer, time::TimePoint duration,
+                       IProperty<T> &prop, T start, T end,
+                       IAnimation::AnimationDirection animation_direction,
+                       ActionFunc endAction = {})
+        : IAnimation{std::move(timer), std::move(duration),
+                     std::move(animation_direction), std::move(endAction)},
+          property_{prop}, startValue_{std::move(start)},
+          endValue_{std::move(end)},
+          deltaValue_{endValue_ - startValue_}
+    {
+    }
 
     virtual bool animate() override
     {
         const bool bResult{IAnimation::animate()};
-        m_property.set(T{m_startValue + (m_deltaValue * m_delta)});
+        property_.set(T{startValue_ + (deltaValue_ * delta_)});
         return bResult;
     }
 
 protected:
-    IProperty<T> &m_property;
-    T m_startValue;
-    T m_endValue;
-    T m_deltaValue;
+    IProperty<T> &property_;
+    T startValue_;
+    T endValue_;
+    T deltaValue_;
 };
 } // namespace lib::scene
 

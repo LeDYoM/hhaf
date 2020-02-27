@@ -17,21 +17,32 @@ class IAnimation
 {
 public:
     using ActionFunc = function<void()>;
+    enum class AnimationDirection : u8
+    {
+        Forward = 0U,
+        Backward
+    };
 
-    IAnimation(uptr<time::Timer> timer, time::TimePoint duration, ActionFunc endAction = {}) noexcept
-        : timer_{std::move(timer)}, m_duration{std::move(duration)}, m_endAction{std::move(endAction)} {}
+    IAnimation(uptr<time::Timer> timer, time::TimePoint duration,
+               const AnimationDirection animation_direction, 
+               ActionFunc endAction = {}) noexcept
+        : timer_{std::move(timer)}, m_duration{std::move(duration)},
+          animation_direction_{std::move(animation_direction)},
+          m_endAction{std::move(endAction)}, raw_delta_{0.0F},
+          delta_{postProcessDelta(raw_delta_)} {}
 
     virtual bool animate()
     {
         m_currentTime = timer_->ellapsed();
         if (m_currentTime > m_duration)
         {
-            m_delta = 1.0f;
+            delta_ = postProcessDelta(1.0F);
             return false;
         }
-        m_delta = (static_cast<decltype(m_delta)>(
-                       m_currentTime.milliseconds()) /
-                   m_duration.milliseconds());
+        raw_delta_ = static_cast<f32>(
+                      m_currentTime.milliseconds()) /
+                  m_duration.milliseconds();
+        delta_ = postProcessDelta(raw_delta_);
         return true;
     }
 
@@ -49,8 +60,25 @@ protected:
     uptr<time::Timer> timer_;
     time::TimePoint m_duration;
     time::TimePoint m_currentTime;
-    f32 m_delta{0.0f};
     ActionFunc m_endAction;
+    AnimationDirection animation_direction_;
+    f32 raw_delta_;
+    f32 delta_;
+
+private:
+    f32 postProcessDelta(const f32 delta)
+    {
+        switch (animation_direction_)
+        {
+        default:
+        case AnimationDirection::Forward:
+            return delta;
+            break;
+        case AnimationDirection::Backward:
+            return (1.0F - delta);
+            break;
+        }
+    }
 };
 
 } // namespace lib::scene

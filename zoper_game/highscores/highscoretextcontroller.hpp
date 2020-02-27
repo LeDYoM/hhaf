@@ -10,6 +10,7 @@
 #include <lib/scene/include/scenenodetypes.hpp>
 #include <lib/scene_nodes/include/tablenode.hpp>
 #include <lib/scene_nodes/include/scenenodetext.hpp>
+#include <lib/scene_components/include/animationcomponent.hpp>
 #include "../loaders/highscoresresources.hpp"
 #include "highscoresdata.hpp"
 
@@ -40,8 +41,11 @@ private:
                            const HighScore &element, const bool is_inserting);
     void addHighScoreEditor(const sptr<SceneNode>& label,
                             const size_type counter, const HighScore &element);
+    void addEditAnimation(const size_type line_index);
     HighScoresData m_hsData;
     sptr<IFont> m_normalFont;
+    sptr<scene::AnimationComponent> animation_component_;
+
     Color m_normalColor;
     Color m_selectedColor;
 };

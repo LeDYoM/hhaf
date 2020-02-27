@@ -63,8 +63,8 @@ struct GameScene::GameScenePrivate
             DisplayLog::info("Creating animation for points to score");
             scene_animation_component_->addPropertyAnimation(
                 time::TimePoint_as_miliseconds(MillisAnimationPointsToScore),
-                sceneNode->position,
-                lastTokenPosition, EndPositionPointsToScore,
+                sceneNode->position, lastTokenPosition,
+                EndPositionPointsToScore, IAnimation::AnimationDirection::Forward,
                 [this, sceneNode]() {
                     sceneNode->parent()->removeSceneNode(sceneNode);
                 });
@@ -146,7 +146,7 @@ void GameScene::onCreated()
 
     {
         auto game_shared_data_view = dataWrapper<shdata::SharedDataView>();
-        auto& game_shared_data = game_shared_data_view->dataAs<GameSharedData>();
+        auto &game_shared_data = game_shared_data_view->dataAs<GameSharedData>();
 
         start_level = game_shared_data.startLevel;
         game_mode = game_shared_data.gameMode;
@@ -154,7 +154,6 @@ void GameScene::onCreated()
 
     level_properties_->configure(
         start_level, game_mode, scene_timer_component_);
-
 
     m_boardGroup->configure(level_properties_);
 
