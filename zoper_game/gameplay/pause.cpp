@@ -6,7 +6,6 @@
 #include <lib/scene_components/include/animationcomponent.hpp>
 #include <lib/scene_components/include/scenemetrics.hpp>
 
-#include <lib/scene/include/ianimation.hpp>
 #include <lib/resources/include/itexture.hpp>
 #include <lib/resources/include/ittfont.hpp>
 

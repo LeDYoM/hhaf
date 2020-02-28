@@ -2,6 +2,7 @@ project (scene_components CXX)
 cmake_minimum_required(VERSION 3.12)
 
 set (_SOURCES 
+    "src/animation.cpp"
     "src/animationcomponent.cpp"
     "src/discretetextcomponent.cpp"
     "src/scenemetrics.cpp"

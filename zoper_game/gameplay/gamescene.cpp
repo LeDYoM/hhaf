@@ -21,7 +21,6 @@
 #include <boardmanager/include/boardmodel.hpp>
 #include <lib/include/liblog.hpp>
 #include <lib/scene/include/renderizable.hpp>
-#include <lib/scene/include/ianimation.hpp>
 #include <lib/resources/include/resourcehandler.hpp>
 #include <lib/scene_components/include/animationcomponent.hpp>
 #include <lib/input/include/inputcomponent.hpp>

@@ -6,7 +6,6 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/function.hpp>
-#include <lib/scene/include/ianimation.hpp>
 #include <lib/scene_components/include/animationcomponent.hpp>
 
 namespace zoper

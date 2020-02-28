@@ -8,8 +8,8 @@
 #include <lib/scene/include/scenenode.hpp>
 #include <lib/scene/include/icomponent.hpp>
 #include <lib/time/include/timeview.hpp>
-#include <lib/scene/include/ianimation.hpp>
-#include <lib/scene/include/ipropertyanimation.hpp>
+#include <lib/scene_components/include/animation.hpp>
+#include <lib/scene_components/include/ipropertyanimation.hpp>
 
 namespace lib::scene
 {

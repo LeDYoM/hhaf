@@ -1,6 +1,5 @@
 #include "token.hpp"
 
-#include <lib/scene/include/ianimation.hpp>
 #include <lib/include/liblog.hpp>
 
 #include "gamescene.hpp"

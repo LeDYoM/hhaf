@@ -10,7 +10,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/properties.hpp>
 #include <mtypes/include/function.hpp>
-#include <lib/scene/include/ianimation.hpp>
+#include <lib/scene_components/include/animation.hpp>
 
 namespace lib::scene
 {
@@ -52,7 +52,7 @@ public:
     virtual bool animate() override
     {
         const bool bResult{IAnimation::animate()};
-        property_.set(T{startValue_ + (deltaValue_ * delta_)});
+        property_.set(T{startValue_ + (deltaValue_ * delta())});
         return bResult;
     }
 
