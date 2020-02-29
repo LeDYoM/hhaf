@@ -22,7 +22,7 @@ namespace lib::scene
  * @tparam T Type of the property to animate.
  */
 template <typename T>
-class IPropertyAnimation : public IAnimation
+class IPropertyAnimation : public Animation
 {
 public:
     /**
@@ -39,9 +39,9 @@ public:
      */
     IPropertyAnimation(uptr<time::Timer> timer, time::TimePoint duration,
                        IProperty<T> &prop, T start, T end,
-                       IAnimation::AnimationDirection animation_direction,
+                       Animation::AnimationDirection animation_direction,
                        ActionFunc endAction = {})
-        : IAnimation{std::move(timer), std::move(duration),
+        : Animation{std::move(timer), std::move(duration),
                      std::move(animation_direction), std::move(endAction)},
           property_{prop}, startValue_{std::move(start)},
           endValue_{std::move(end)},
@@ -51,7 +51,7 @@ public:
 
     virtual bool animate() override
     {
-        const bool bResult{IAnimation::animate()};
+        const bool bResult{Animation::animate()};
         property_.set(T{startValue_ + (deltaValue_ * delta())});
         return bResult;
     }

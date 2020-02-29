@@ -3,7 +3,7 @@
 namespace lib::scene
 {
 
-IAnimation::IAnimation(uptr<time::Timer> timer, time::TimePoint duration,
+Animation::Animation(uptr<time::Timer> timer, time::TimePoint duration,
                        const AnimationDirection animation_direction,
                        ActionFunc endAction) noexcept
     : timer_{std::move(timer)}, m_duration{std::move(duration)},
@@ -11,9 +11,9 @@ IAnimation::IAnimation(uptr<time::Timer> timer, time::TimePoint duration,
       m_endAction{std::move(endAction)}, raw_delta_{0.0F},
       delta_{postProcessDelta(raw_delta_)} {}
 
-IAnimation::~IAnimation() = default;
+Animation::~Animation() = default;
 
-bool IAnimation::animate()
+bool Animation::animate()
 {
     m_currentTime = timer_->ellapsed();
     if (m_currentTime > m_duration)
@@ -28,7 +28,7 @@ bool IAnimation::animate()
     return true;
 }
 
-void IAnimation::executeEndAction()
+void Animation::executeEndAction()
 {
     if (m_endAction)
     {
@@ -36,7 +36,7 @@ void IAnimation::executeEndAction()
     }
 }
 
-f32 IAnimation::postProcessDelta(const f32 delta)
+f32 Animation::postProcessDelta(const f32 delta)
 {
     switch (animation_direction_)
     {

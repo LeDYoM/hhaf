@@ -13,7 +13,7 @@
 
 namespace lib::scene
 {
-class IAnimation
+class Animation
 {
 public:
     using ActionFunc = function<void()>;
@@ -24,7 +24,7 @@ public:
     };
 
     /**
-     * @brief Construct a new IAnimation object
+     * @brief Construct a new Animation object
      * 
      * @param timer @b Timer to use to animate
      * @param duration @b time::TimePoint containing the time the animation is
@@ -34,7 +34,7 @@ public:
      * @param endAction Functor containing an action to perform when the
      *  animation finishes
      */
-    IAnimation(uptr<time::Timer> timer, time::TimePoint duration,
+    Animation(uptr<time::Timer> timer, time::TimePoint duration,
                const AnimationDirection animation_direction,
                ActionFunc endAction = {}) noexcept;
 
@@ -47,9 +47,9 @@ public:
     virtual bool animate();
 
     /**
-     * @brief Destroy the IAnimation object
+     * @brief Destroy the Animation object
      */
-    virtual ~IAnimation();
+    virtual ~Animation();
 
     /**
      * @brief Execute an action at the end of the animation

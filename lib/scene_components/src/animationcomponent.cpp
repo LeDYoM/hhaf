@@ -10,12 +10,12 @@ class AnimationComponent::AnimationComponentPrivate
 {
 public:
     AnimationComponentPrivate() {}
-    LockableVector<sptr<IAnimation>> m_animations;
+    LockableVector<sptr<Animation>> m_animations;
 };
 AnimationComponent::AnimationComponent()
     : p_{muptr<AnimationComponentPrivate>()} {}
 
-void AnimationComponent::addAnimation(uptr<IAnimation> nanimation)
+void AnimationComponent::addAnimation(uptr<Animation> nanimation)
 {
     p_->m_animations.emplace_back(std::move(nanimation));
 }

@@ -24,7 +24,7 @@ public:
     /**
      * @brief Add an already created animation to the list of animations.
      */
-    void addAnimation(uptr<IAnimation>);
+    void addAnimation(uptr<Animation>);
 
     /**
      * @brief Add an animation that animates a certain property of the node.
@@ -41,9 +41,9 @@ public:
     void addPropertyAnimation(
         time::TimePoint time, IProperty<PropertyType> &property,
         PropertyType start, PropertyType dest,
-        IAnimation::AnimationDirection animation_direction =
-            IAnimation::AnimationDirection::Forward,
-        IAnimation::ActionFunc endAction = {})
+        Animation::AnimationDirection animation_direction =
+            Animation::AnimationDirection::Forward,
+        Animation::ActionFunc endAction = {})
     {
         addAnimation(muptr<IPropertyAnimation<PropertyType>>(
             attachedNode()->dataWrapper<time::Timer>(),
@@ -69,9 +69,9 @@ public:
     void addRepeatedPropertyAnimation(
         time::TimePoint time, IProperty<PropertyType> &property,
         PropertyType start, PropertyType dest,
-        IAnimation::AnimationDirection animation_direction =
-            IAnimation::AnimationDirection::Forward,
-        IAnimation::ActionFunc endAction = {})
+        Animation::AnimationDirection animation_direction =
+            Animation::AnimationDirection::Forward,
+        Animation::ActionFunc endAction = {})
     {
         addPropertyAnimation(
             time, property, start, dest, animation_direction,
@@ -109,9 +109,9 @@ public:
     void addCircledPropertyAnimation(
         time::TimePoint time, IProperty<PropertyType> &property,
         PropertyType start, PropertyType dest,
-        IAnimation::AnimationDirection animation_direction =
-            IAnimation::AnimationDirection::Forward,
-        IAnimation::ActionFunc endAction = {})
+        Animation::AnimationDirection animation_direction =
+            Animation::AnimationDirection::Forward,
+        Animation::ActionFunc endAction = {})
     {
         addPropertyAnimation(
             time, property, start, dest, animation_direction,
@@ -130,9 +130,9 @@ public:
                 addCircledPropertyAnimation(
                     time, property, start, dest,
                     (animation_direction ==
-                     IAnimation::AnimationDirection::Forward)
-                        ? IAnimation::AnimationDirection::Backward
-                        : IAnimation::AnimationDirection::Forward,
+                     Animation::AnimationDirection::Forward)
+                        ? Animation::AnimationDirection::Backward
+                        : Animation::AnimationDirection::Forward,
                     std::move(endAction));
             });
     }

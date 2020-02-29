@@ -63,7 +63,7 @@ struct GameScene::GameScenePrivate
             scene_animation_component_->addPropertyAnimation(
                 time::TimePoint_as_miliseconds(MillisAnimationPointsToScore),
                 sceneNode->position, lastTokenPosition,
-                EndPositionPointsToScore, IAnimation::AnimationDirection::Forward,
+                EndPositionPointsToScore, Animation::AnimationDirection::Forward,
                 [this, sceneNode]() {
                     sceneNode->parent()->removeSceneNode(sceneNode);
                 });

@@ -100,7 +100,7 @@ void Player::launchAnimation(const vector2df &toWhere)
         position,
         position(),
         toWhere,
-        IAnimation::AnimationDirection::Forward,
+        Animation::AnimationDirection::Forward,
         [this, currentPosition = position()]() { launchAnimationBack(currentPosition); });
 }
 
