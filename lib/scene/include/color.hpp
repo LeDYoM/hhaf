@@ -43,9 +43,9 @@ constexpr void denormalize(const float v, value_type &d) noexcept
 }
 } // namespace detail
 
-struct Color
+template <typename value_type>
+struct ColorImp
 {
-    using value_type = u8;
     static constexpr value_type value_max = detail::value_max<value_type>;
     static constexpr value_type value_min = detail::value_min<value_type>;
 
@@ -55,23 +55,23 @@ struct Color
         return detail::ensureLimits<value_type, Source>(std::move(source));
     }
 
-    constexpr Color() noexcept : r{}, g{}, b{}, a{value_max} {}
-    constexpr Color(const value_type red,
+    constexpr ColorImp() noexcept : r{}, g{}, b{}, a{value_max} {}
+    constexpr ColorImp(const value_type red,
                     const value_type green,
                     const value_type blue,
                     const value_type alpha = value_max) noexcept
         : r{red}, g{green}, b{blue}, a{alpha} {}
 
-    static constexpr Color fromFloats(const float red, const float green, const float blue, const float alpha = 1.0F) noexcept
+    static constexpr ColorImp fromFloats(const float red, const float green, const float blue, const float alpha = 1.0F) noexcept
     {
-        return Color{static_cast<value_type>(red * value_max),
+        return ColorImp{static_cast<value_type>(red * value_max),
                      static_cast<value_type>(green * value_max),
                      static_cast<value_type>(blue * value_max),
                      static_cast<value_type>(alpha * value_max)};
     }
 
     template <typename = std::enable_if_t<std::is_same_v<value_type, u8>>>
-    constexpr explicit Color(const u32 color) noexcept
+    constexpr explicit ColorImp(const u32 color) noexcept
         : r{static_cast<value_type>((color & 0xff000000) >> 24U)},
           g{static_cast<value_type>((color & 0x00ff0000) >> 16U)},
           b{static_cast<value_type>((color & 0x0000ff00) >> 8U)},
@@ -80,34 +80,37 @@ struct Color
     template <typename = std::enable_if_t<std::is_same_v<value_type, u8>>>
     constexpr u32 toInteger() const noexcept { return (r << 24U) | (g << 16U) | (b << 8U) | a; }
 
-    constexpr Color(const Color &) noexcept = default;
-    constexpr Color &operator=(const Color &) noexcept = default;
-    constexpr Color(Color &&) noexcept = default;
-    constexpr Color &operator=(Color &&) noexcept = default;
+    constexpr ColorImp(const ColorImp &) noexcept = default;
+    constexpr ColorImp &operator=(const ColorImp &) noexcept = default;
+    constexpr ColorImp(ColorImp &&) noexcept = default;
+    constexpr ColorImp &operator=(ColorImp &&) noexcept = default;
 
-    constexpr bool operator==(const Color &right) const noexcept
+    constexpr bool operator==(const ColorImp &right) const noexcept
     {
         return (r == right.r && g == right.g && b == right.b && a == right.a);
     }
 
-    constexpr bool operator!=(const Color &right) const noexcept { return !(*this == right); }
-
-    constexpr Color operator+(const Color &right) const noexcept
-    {
-        return (Color(*this) += right);
+    constexpr bool operator!=(const ColorImp &right) const noexcept
+    { 
+        return !(*this == right);
     }
 
-    constexpr Color operator-(const Color &right) const noexcept
+    constexpr ColorImp operator+(const ColorImp &right) const noexcept
     {
-        return (Color(*this) -= right);
+        return (ColorImp(*this) += right);
     }
 
-    constexpr Color operator*(const Color &right) const noexcept
+    constexpr ColorImp operator-(const ColorImp &right) const noexcept
     {
-        return (Color(*this) *= right);
+        return (ColorImp(*this) -= right);
     }
 
-    constexpr Color &operator+=(const Color &right) noexcept
+    constexpr ColorImp operator*(const ColorImp &right) const noexcept
+    {
+        return (ColorImp(*this) *= right);
+    }
+
+    constexpr ColorImp &operator+=(const ColorImp &right) noexcept
     {
         r = ensureLimits(static_cast<s32>(r) + right.r);
         g = ensureLimits(static_cast<s32>(g) + right.g);
@@ -116,7 +119,7 @@ struct Color
         return *this;
     }
 
-    constexpr Color &operator-=(const Color &right) noexcept
+    constexpr ColorImp &operator-=(const ColorImp &right) noexcept
     {
         r = ensureLimits(static_cast<s32>(r) - right.r);
         g = ensureLimits(static_cast<s32>(g) - right.g);
@@ -125,7 +128,7 @@ struct Color
         return *this;
     }
 
-    constexpr Color &operator*=(const Color &right) noexcept
+    constexpr ColorImp &operator*=(const ColorImp &right) noexcept
     {
         r = static_cast<value_type>(static_cast<u32>(r) * right.r / value_max);
         g = static_cast<value_type>(static_cast<u32>(g) * right.g / value_max);
@@ -134,7 +137,7 @@ struct Color
         return *this;
     }
 
-    constexpr Color &operator*=(const f32 delta) noexcept
+    constexpr ColorImp &operator*=(const f32 delta) noexcept
     {
         r = detail::ensureLimits<value_type>(static_cast<f32>(r) * delta);
         g = detail::ensureLimits<value_type>(static_cast<f32>(g) * delta);
@@ -143,7 +146,7 @@ struct Color
         return *this;
     }
 
-    constexpr Color &operator/=(const f32 delta) noexcept
+    constexpr ColorImp &operator/=(const f32 delta) noexcept
     {
         r = detail::ensureLimits<value_type>(static_cast<f32>(r) / delta);
         g = detail::ensureLimits<value_type>(static_cast<f32>(g) / delta);
@@ -168,25 +171,30 @@ struct Color
     value_type a;
 };
 
-constexpr Color operator*(Color color, const f32 delta) noexcept
+template <typename vt>
+constexpr ColorImp<vt> operator*(ColorImp<vt> color, const f32 delta) noexcept
 {
-    return Color{std::move(color)} *= delta;
+    return ColorImp<vt>{std::move(color)} *= delta;
 }
 
-constexpr Color operator*(const f32 delta, Color color) noexcept
+template <typename vt>
+constexpr ColorImp<vt> operator*(const f32 delta, ColorImp<vt> color) noexcept
 {
     return std::move(color) * delta;
 }
 
-constexpr Color operator/(Color color, const f32 delta) noexcept
+template <typename vt>
+constexpr ColorImp<vt> operator/(ColorImp<vt> color, const f32 delta) noexcept
 {
-    return Color{std::move(color)} /= delta;
+    return ColorImp<vt>{std::move(color)} /= delta;
 }
-
-constexpr Color operator/(const f32 delta, Color color) noexcept
+template <typename vt>
+constexpr ColorImp<vt> operator/(const f32 delta, ColorImp<vt> color) noexcept
 {
     return std::move(color) / delta;
 }
+
+using Color = ColorImp<u8>;
 
 namespace colors
 {

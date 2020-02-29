@@ -118,7 +118,7 @@ void HighScoreTextController::addEditAnimation(const size_type line_index)
         line_index, [this](const auto, const auto &element) {
             animation_component_->addCircledPropertyAnimation(
                 time::TimePoint_as_miliseconds(2000),
-                element->textColor, colors::Black, colors::White);
+                element->textColor, colors::White, colors::Black);
         });
 }
 
