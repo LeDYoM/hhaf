@@ -139,7 +139,7 @@ public:
 
 private:
     class AnimationComponentPrivate;
-    uptr<AnimationComponentPrivate> m_private;
+    uptr<AnimationComponentPrivate> p_;
 };
 } // namespace lib::scene
 

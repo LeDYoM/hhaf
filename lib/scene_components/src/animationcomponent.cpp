@@ -13,20 +13,20 @@ public:
     LockableVector<sptr<IAnimation>> m_animations;
 };
 AnimationComponent::AnimationComponent()
-    : m_private{muptr<AnimationComponentPrivate>()} {}
+    : p_{muptr<AnimationComponentPrivate>()} {}
 
 void AnimationComponent::addAnimation(uptr<IAnimation> nanimation)
 {
-    m_private->m_animations.push_back(std::move(nanimation));
+    p_->m_animations.emplace_back(std::move(nanimation));
 }
 
 void AnimationComponent::update()
 {
-    m_private->m_animations.performUpdate([this](auto &animation) {
+    p_->m_animations.performUpdate([this](auto &animation) {
         if (!animation->animate())
         {
             animation->executeEndAction();
-            m_private->m_animations.erase_value(animation);
+            p_->m_animations.erase_value(animation);
         }
     });
 }

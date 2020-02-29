@@ -23,18 +23,42 @@ public:
         Backward
     };
 
+    /**
+     * @brief Construct a new IAnimation object
+     * 
+     * @param timer @b Timer to use to animate
+     * @param duration @b time::TimePoint containing the time the animation is
+     *  going to last
+     * @param animation_direction @b AnimationDirection Direction of the
+     *  animation
+     * @param endAction Functor containing an action to perform when the
+     *  animation finishes
+     */
     IAnimation(uptr<time::Timer> timer, time::TimePoint duration,
-               const AnimationDirection animation_direction, 
+               const AnimationDirection animation_direction,
                ActionFunc endAction = {}) noexcept;
 
+    /**
+     * @brief Performs one step on the animation
+     * 
+     * @return true If the animation should continue
+     * @return false The animation should finish
+     */
     virtual bool animate();
 
-    void executeEndAction();
-
+    /**
+     * @brief Destroy the IAnimation object
+     */
     virtual ~IAnimation();
+
+    /**
+     * @brief Execute an action at the end of the animation
+     */
+    void executeEndAction();
 
 protected:
     f32 delta() const noexcept { return delta_; }
+
 private:
     uptr<time::Timer> timer_;
     time::TimePoint m_duration;
