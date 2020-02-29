@@ -4,7 +4,7 @@
 #define LIB_SCENE_COLOR_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-
+#include <lib/scene/include/animabletype.hpp>
 #include <algorithm>
 #include <limits>
 
@@ -85,6 +85,24 @@ struct ColorImp
     constexpr ColorImp(ColorImp &&) noexcept = default;
     constexpr ColorImp &operator=(ColorImp &&) noexcept = default;
 
+    template <typename vt>
+    constexpr ColorImp(const ColorImp<vt> &other) noexcept
+    {
+        r = ensureLimits(static_cast<value_type>(other.r));
+        g = ensureLimits(static_cast<value_type>(other.g));
+        b = ensureLimits(static_cast<value_type>(other.b));
+        a = ensureLimits(static_cast<value_type>(other.a));
+    }
+
+    template <typename vt>
+    constexpr ColorImp& operator=(const ColorImp<vt> &other) noexcept
+    {
+        r = ensureLimits(static_cast<value_type>(other.r));
+        g = ensureLimits(static_cast<value_type>(other.g));
+        b = ensureLimits(static_cast<value_type>(other.b));
+        a = ensureLimits(static_cast<value_type>(other.a));
+    }
+
     constexpr bool operator==(const ColorImp &right) const noexcept
     {
         return (r == right.r && g == right.g && b == right.b && a == right.a);
@@ -95,7 +113,8 @@ struct ColorImp
         return !(*this == right);
     }
 
-    constexpr ColorImp operator+(const ColorImp &right) const noexcept
+    template <typename vt>
+    constexpr ColorImp operator+(const ColorImp<vt> &right) const noexcept
     {
         return (ColorImp(*this) += right);
     }
@@ -110,12 +129,13 @@ struct ColorImp
         return (ColorImp(*this) *= right);
     }
 
-    constexpr ColorImp &operator+=(const ColorImp &right) noexcept
+    template <typename vt>
+    constexpr ColorImp &operator+=(const ColorImp<vt> &right) noexcept
     {
-        r = ensureLimits(static_cast<s32>(r) + right.r);
-        g = ensureLimits(static_cast<s32>(g) + right.g);
-        b = ensureLimits(static_cast<s32>(b) + right.b);
-        a = ensureLimits(static_cast<s32>(a) - right.a);
+        r = ensureLimits(static_cast<vt>(r) + right.r);
+        g = ensureLimits(static_cast<vt>(g) + right.g);
+        b = ensureLimits(static_cast<vt>(b) + right.b);
+        a = ensureLimits(static_cast<vt>(a) + right.a);
         return *this;
     }
 
@@ -208,6 +228,13 @@ static constexpr const Color Magenta{Color::value_max, Color::value_min, Color::
 static constexpr const Color Cyan{Color::value_min, Color::value_max, Color::value_max};
 static constexpr const Color Transparent{Color::value_min, Color::value_min, Color::value_min, Color::value_min};
 } // namespace colors
+
+template <>
+struct AnimableType<Color>
+{
+    using type = ColorImp<s16>;
+};
+
 } // namespace lib::scene
 
 #endif

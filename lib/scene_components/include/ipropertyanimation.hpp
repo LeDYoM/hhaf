@@ -1,7 +1,7 @@
 #pragma once
 
 #ifndef LIB_SCENE_IPROPERTY_ANIMATION_INCLUDE_HPP
-#define LIB_SCENE_IANIMATION_INCLUDE_HPP
+#define LIB_SCENE_IPROPERTY_ANIMATION_INCLUDE_HPP
 
 #include <lib/time/include/timepoint.hpp>
 #include <lib/time/include/timeview.hpp>
@@ -11,6 +11,7 @@
 #include <mtypes/include/properties.hpp>
 #include <mtypes/include/function.hpp>
 #include <lib/scene_components/include/animation.hpp>
+#include <lib/scene/include/animabletype.hpp>
 
 namespace lib::scene
 {
@@ -21,7 +22,7 @@ namespace lib::scene
  * 
  * @tparam T Type of the property to animate.
  */
-template <typename T>
+template <typename T, typename AT = AnimableType<T>::type>
 class IPropertyAnimation : public Animation
 {
 public:
@@ -45,14 +46,14 @@ public:
                      std::move(animation_direction), std::move(endAction)},
           property_{prop}, startValue_{std::move(start)},
           endValue_{std::move(end)},
-          deltaValue_{endValue_ - startValue_}
+          deltaValue_{AT{endValue_} - AT{startValue_}}
     {
     }
 
     virtual bool animate() override
     {
         const bool bResult{Animation::animate()};
-        property_.set(T{startValue_ + (deltaValue_ * delta())});
+        property_.set(AT{startValue_ + (deltaValue_ * delta())});
         return bResult;
     }
 
@@ -60,7 +61,7 @@ protected:
     IProperty<T> &property_;
     T startValue_;
     T endValue_;
-    T deltaValue_;
+    AT deltaValue_;
 };
 } // namespace lib::scene
 

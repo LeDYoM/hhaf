@@ -41,9 +41,10 @@ void PauseSceneNode::enterPause()
 {
     visible.set(true);
     ensureComponentOfType(animation_component_);
-    animation_component_->addPropertyAnimation(TimePoint_as_miliseconds(1000U),
-                                               m_pauseText->textColor, Color{255U, 255U, 255U, 0U},
-                                               Color{255U, 255U, 255U, 255U});
+    animation_component_->addPropertyAnimation(
+        TimePoint_as_miliseconds(1000U),
+        m_pauseText->textColor, Color{255U, 255U, 255U, 0U},
+        Color{255U, 255U, 255U, 255U});
 }
 
 void PauseSceneNode::exitPause()
