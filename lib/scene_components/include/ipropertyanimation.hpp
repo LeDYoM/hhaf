@@ -11,7 +11,7 @@
 #include <mtypes/include/properties.hpp>
 #include <mtypes/include/function.hpp>
 #include <lib/scene_components/include/animation.hpp>
-#include <lib/scene/include/animabletype.hpp>
+#include <lib/scene_components/include/animabletypes.hpp>
 
 namespace lib::scene
 {

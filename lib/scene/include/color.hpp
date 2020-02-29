@@ -4,7 +4,6 @@
 #define LIB_SCENE_COLOR_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <lib/scene/include/animabletype.hpp>
 #include <algorithm>
 #include <limits>
 
@@ -228,12 +227,6 @@ static constexpr const Color Magenta{Color::value_max, Color::value_min, Color::
 static constexpr const Color Cyan{Color::value_min, Color::value_max, Color::value_max};
 static constexpr const Color Transparent{Color::value_min, Color::value_min, Color::value_min, Color::value_min};
 } // namespace colors
-
-template <>
-struct AnimableType<Color>
-{
-    using type = ColorImp<s16>;
-};
 
 } // namespace lib::scene
 
