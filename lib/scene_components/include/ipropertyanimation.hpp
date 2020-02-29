@@ -20,7 +20,8 @@ namespace lib::scene
  * @brief Class representing an animation. The animation will be updated when
  *  the animate() method is call.
  * 
- * @tparam T Type of the property to animate.
+ * @tparam T Type of the property to animate
+ * @tparam AT Animable type corresponding to T
  */
 template <typename T, typename AT = AnimableType<T>::type>
 class IPropertyAnimation : public Animation
@@ -57,11 +58,11 @@ public:
         return bResult;
     }
 
-protected:
+private:
     IProperty<T> &property_;
-    T startValue_;
-    T endValue_;
-    AT deltaValue_;
+    const T startValue_;
+    const T endValue_;
+    const AT deltaValue_;
 };
 } // namespace lib::scene
 
