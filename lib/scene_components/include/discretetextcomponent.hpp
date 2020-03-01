@@ -9,20 +9,18 @@
 
 namespace lib::scene
 {
-class DiscreteTextComponent : public IComponent
+class DiscreteTextComponent final : public IComponent
 {
 public:
     using BaseClass = IComponent;
-    DiscreteTextComponent() {}
-    virtual ~DiscreteTextComponent() {}
 
     BasicProperty<bool> circleAroud{true};
     BasicProperty<string_vector> data;
     void incrementIndex() noexcept;
     void decrementIndex() noexcept;
-    PropertyState<size_type> index{0};
+    PropertyState<size_type> index{0U};
 
-    virtual void update() override final;
+    virtual void update() override;
 
 private:
     void _setText(const str &nText);

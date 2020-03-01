@@ -13,6 +13,10 @@
 
 namespace lib::scene
 {
+/**
+ * @brief Class representing an animation. The animation will be updated when
+ *  the animate() method is call.
+ */
 class Animation
 {
 public:

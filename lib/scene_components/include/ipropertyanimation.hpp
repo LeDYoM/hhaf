@@ -17,8 +17,8 @@ namespace lib::scene
 {
 
 /**
- * @brief Class representing an animation. The animation will be updated when
- *  the animate() method is call.
+ * @brief Class representing an animation of a property. It uses functionality
+ * from @b Animation to do that.
  * 
  * @tparam T Type of the property to animate
  * @tparam AT Animable type corresponding to T
@@ -44,7 +44,7 @@ public:
                        Animation::AnimationDirection animation_direction,
                        ActionFunc endAction = {})
         : Animation{std::move(timer), std::move(duration),
-                     std::move(animation_direction), std::move(endAction)},
+                    std::move(animation_direction), std::move(endAction)},
           property_{prop}, startValue_{std::move(start)},
           endValue_{std::move(end)},
           deltaValue_{AT{endValue_} - AT{startValue_}}

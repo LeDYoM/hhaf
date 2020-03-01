@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_DRAW_VERTEXARRAY_HPP
-#define LIB_DRAW_VERTEXARRAY_HPP
+#ifndef LIB_SCENE_VERTEXARRAY_INCLUDE_HPP
+#define LIB_SCENE_VERTEXARRAY_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/rect.hpp>
