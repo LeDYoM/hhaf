@@ -16,7 +16,7 @@ namespace lib::sys
 
 namespace lib::input
 {
-    const sys::InputSystem& getInputSystem(sptr<const scene::SceneNode> );
+    const sys::InputSystem& getInputSystem(rptr<const scene::SceneNode> );
     sys::InputSystem& getInputSystem(rptr<scene::SceneNode>);
 
 } // namespace lib::input
