@@ -3,7 +3,7 @@
 #include <lib/include/liblog.hpp>
 #include <lib/input/include/key.hpp>
 #include <lib/input/i_include/inputsystem.hpp>
-#include <lib/input/i_include/get_inputsystem.hpp>
+#include <lib/system/i_include/get_system.hpp>
 
 namespace lib::input
 {
@@ -11,7 +11,7 @@ bool InputComponentBase::isPressed(const Key key)
 {
     if (attachedNode())
     {
-        return getInputSystem(attachedNode()).keyStates()[KeyIndex(key)];
+        return sys::getSystem<sys::InputSystem>(attachedNode()).keyStates()[KeyIndex(key)];
     }
     return false;
 }

@@ -6,6 +6,7 @@
 namespace lib::sys
 {
 class SystemProvider;
+class ISystemProvider;
 }
 
 namespace lib
@@ -18,10 +19,8 @@ namespace lib
 class AppService
 {
 protected:
-    constexpr AppService(sys::SystemProvider &system_provider) noexcept
-        : system_provider_{system_provider} {}
-
-    virtual ~AppService() = default;
+    AppService(sys::SystemProvider &system_provider) noexcept;
+    virtual ~AppService();
 
 public:
     /**
@@ -39,20 +38,28 @@ public:
      * 
      * @return sys::SystemProvider& Reference to the SystemProvider
      */
-    constexpr sys::SystemProvider &systemProvider() noexcept
-    {
-        return system_provider_;
-    }
+    sys::SystemProvider &systemProvider() noexcept;
 
     /**
      * @brief Get a const lvalue reference to this apps @b SystemProvider
      * 
      * @return sys::SystemProvider& Reference to the SystemProvider
      */
-    constexpr sys::SystemProvider const& systemProvider() const noexcept
-    {
-        return system_provider_;
-    }
+    sys::SystemProvider const& systemProvider() const noexcept;
+
+    /**
+     * @brief Get a lvalue reference to this apps @b ISystemProvider
+     * 
+     * @return sys::SystemProvider& Reference to the SystemProvider
+     */
+    sys::ISystemProvider &isystemProvider() noexcept;
+
+    /**
+     * @brief Get a const lvalue reference to this apps @b ISystemProvider
+     * 
+     * @return sys::SystemProvider& Reference to the SystemProvider
+     */
+    sys::ISystemProvider const& isystemProvider() const noexcept;
 
 private:
     sys::SystemProvider &system_provider_;

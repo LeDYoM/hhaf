@@ -1,7 +1,8 @@
 project (system CXX)
 cmake_minimum_required(VERSION 3.12)
 
-set (_SOURCES 
+set (_SOURCES
+    "src/appservice.cpp"
     "src/systemprovider.cpp"
     "src/systemprovider_init.cpp"
     "src/systemrequests.cpp"

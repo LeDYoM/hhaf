@@ -39,7 +39,9 @@ class ISharedDataSystem;
 
 namespace lib::sys
 {
-class SystemProvider final : public ISystemProvider, public IControllableSystemProvider
+class SystemProvider final
+    : public ISystemProvider,
+      public IControllableSystemProvider
 {
 public:
     SystemProvider();

@@ -5,6 +5,11 @@
 
 #include <mtypes/include/types.hpp>
 
+namespace lib::sys
+{
+    class ISystemProvider;
+}
+
 namespace lib::scene
 {
 class SceneManager;
@@ -16,6 +21,9 @@ public:
 
     const SceneManager &sceneManager() const noexcept;
     SceneManager &sceneManager() noexcept;
+
+    const sys::ISystemProvider& isystemProvider() const noexcept;
+    sys::ISystemProvider& isystemProvider() noexcept;
 
 private:
     rptr<SceneManager> scene_manager_{nullptr};
