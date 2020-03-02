@@ -9,7 +9,7 @@ set (_SOURCES
     "src/scenecontroller.cpp"
     "src/scenemanager.cpp"
     "src/scenenode.cpp"
-    "src/scenenodeblob.cpp"
+    "src/scenemanager_accessor.cpp"
     "src/scenenodefactory.cpp"
     "src/scenenodes.cpp"
     "src/transform.cpp"

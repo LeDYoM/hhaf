@@ -9,10 +9,10 @@ namespace lib::scene
 {
 class SceneManager;
 
-class SceneNodeBlob
+class SceneManagerAccessor
 {
 public:
-    SceneNodeBlob(rptr<SceneManager> scene_manager);
+    SceneManagerAccessor(rptr<SceneManager> scene_manager);
 
     const SceneManager &sceneManager() const noexcept;
     SceneManager &sceneManager() noexcept;
