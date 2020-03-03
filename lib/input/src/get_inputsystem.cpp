@@ -5,17 +5,33 @@
 #include <lib/system/i_include/systemprovider.hpp>
 #include <lib/system/include/isystemprovider.hpp>
 #include <lib/system/i_include/get_system.hpp>
+#include <lib/input/i_include/inputsystem.hpp>
+#include <lib/system/i_include/get_systemprovider.hpp>
 
 namespace lib::sys
 {
-const sys::InputSystem &getSystem(rptr<const scene::SceneNode> scene_node)
+template <>
+const sys::InputSystem &getSystem<InputSystem>(rptr<const scene::SceneManagerAccessor> scene_manager_accessor)
 {
-    return dynamic_cast<const sys::SystemProvider&>(scene_node->isystemProvider()).inputSystem();
+    return getSystemProvider(scene_manager_accessor->isystemProvider()).inputSystem();
 }
 
-sys::InputSystem &getSystem(rptr<scene::SceneNode> scene_node)
+template <>
+sys::InputSystem &getSystem<InputSystem>(rptr<scene::SceneManagerAccessor> scene_manager_accessor)
 {
-    return dynamic_cast<sys::SystemProvider&>(scene_node->isystemProvider()).inputSystem();
+    return getSystemProvider(scene_manager_accessor->isystemProvider()).inputSystem();
+}
+
+template <>
+const sys::InputSystem &getSystem<InputSystem>(rptr<const scene::SceneNode> scene_node)
+{
+    return getSystem<sys::InputSystem>(static_cast<rptr<const scene::SceneManagerAccessor>>(scene_node));
+}
+
+template <>
+sys::InputSystem &getSystem<InputSystem>(rptr<scene::SceneNode> scene_node)
+{
+    return getSystem<sys::InputSystem>(static_cast<rptr<scene::SceneManagerAccessor>>(scene_node));
 }
 
 } // namespace lib::input

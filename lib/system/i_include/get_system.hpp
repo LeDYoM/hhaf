@@ -7,17 +7,23 @@
 
 namespace lib::scene
 {
-    class SceneNode;
+class SceneNode;
+class SceneManagerAccessor;
 }
 
 namespace lib::sys
 {
-    template <typename SystemType>
-    const SystemType& getSystem(rptr<const scene::SceneNode>);
+template <typename SystemType>
+const SystemType &getSystem(rptr<const scene::SceneManagerAccessor>);
 
-    template <typename SystemType>
-    SystemType& getSystem(rptr<scene::SceneNode>);
+template <typename SystemType>
+SystemType &getSystem(rptr<scene::SceneManagerAccessor>);
 
-} // namespace lib::input
+template <typename SystemType>
+const SystemType &getSystem(rptr<const scene::SceneNode>);
+
+template <typename SystemType>
+SystemType &getSystem(rptr<scene::SceneNode>);
+} // namespace lib::sys
 
 #endif
