@@ -1,12 +1,10 @@
-#include <lib/input/i_include/get_inputsystem.hpp>
-#include <lib/input/i_include/inputsystem.hpp>
+#include "get_systemprovider.hpp"
+#include "systemprovider.hpp"
+#include "isystemprovider.hpp"
+#include "get_system.hpp"
 #include <lib/scene/include/scenenode.hpp>
-#include <lib/scene/include/scenemanager.hpp>
-#include <lib/system/i_include/systemprovider.hpp>
-#include <lib/system/include/isystemprovider.hpp>
-#include <lib/system/i_include/get_system.hpp>
+#include <lib/scene/include/scenemanager_accessor.hpp>
 #include <lib/input/i_include/inputsystem.hpp>
-#include <lib/system/i_include/get_systemprovider.hpp>
 
 namespace lib::sys
 {
@@ -34,4 +32,4 @@ sys::InputSystem &getSystem<InputSystem>(rptr<scene::SceneNode> scene_node)
     return getSystem<sys::InputSystem>(static_cast<rptr<scene::SceneManagerAccessor>>(scene_node));
 }
 
-} // namespace lib::input
+}

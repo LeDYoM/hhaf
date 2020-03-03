@@ -4,6 +4,7 @@ cmake_minimum_required(VERSION 3.12)
 set (_SOURCES
     "src/appservice.cpp"
     "src/get_systemprovider.cpp"
+    "src/get_system.cpp"
     "src/systemprovider.cpp"
     "src/systemprovider_init.cpp"
     "src/systemrequests.cpp"

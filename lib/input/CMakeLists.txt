@@ -2,7 +2,6 @@ project (input CXX)
 cmake_minimum_required(VERSION 3.12)
 
 set (_SOURCES 
-    "src/get_inputsystem.cpp"
     "src/input_component_base.cpp"
     "src/inputcomponent.cpp"
     "src/inputdriver.cpp"
