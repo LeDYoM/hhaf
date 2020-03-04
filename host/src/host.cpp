@@ -101,7 +101,6 @@ bool Host::update()
         m_private->system_provider_ = createSystemProvider();
         m_private->system_provider_->init(m_private->iapp_);
 
-        m_private->iapp_->onInit();
         DisplayLog::info(appDisplayNameAndVersion(*(m_private->iapp_)),
                          ": Starting execution...");
     }
@@ -122,7 +121,6 @@ bool Host::update()
     case AppState::ReadyToTerminate:
         DisplayLog::info(appDisplayNameAndVersion(*(m_private->iapp_)), ": started termination");
         m_state = AppState::Terminated;
-        m_private->iapp_->onFinish();
         m_private->system_provider_->terminate();
         destroySystemProvider(m_private->system_provider_);
         m_private->system_provider_ = nullptr;

@@ -7,6 +7,7 @@
 
 #include <mtypes/include/serializer.hpp>
 #include <lib/system/i_include/systemprovider.hpp>
+#include <lib/system/i_include/get_systemprovider.hpp>
 #include <lib/filesystem/i_include/filesystem.hpp>
 #include <lib/scene/include/scenemanager.hpp>
 #include <lib/shareddata/include/ishareddatasystem.hpp>
@@ -24,19 +25,20 @@ u16 ZoperProgramController::getSubVersion() const noexcept { return 4; }
 u16 ZoperProgramController::getPatch() const noexcept { return 0; }
 str ZoperProgramController::getName() const noexcept { return "Zoper"; }
 
-void ZoperProgramController::onInit()
+void ZoperProgramController::onInit(sys::ISystemProvider &system_provider)
 {
+    sys::SystemProvider &systemprovider = sys::getSystemProvider(system_provider);
     keyMapping = muptr<KeyMapping>();
     keyMapping->reset();
-    systemProvider().fileSystem().deserializeFromFile("keys.txt", *keyMapping);
-    systemProvider().fileSystem().serializeToFile("keys.txt", *keyMapping);
+    systemprovider.fileSystem().deserializeFromFile("keys.txt", *keyMapping);
+    systemprovider.fileSystem().serializeToFile("keys.txt", *keyMapping);
 
     {
         auto game_shared_data{muptr<GameSharedData>()};
-        systemProvider().sharedDataSystem().store(std::move(game_shared_data));
+        systemprovider.sharedDataSystem().store(std::move(game_shared_data));
     }
     {
-        auto &sceneManager(systemProvider().sceneManager());
+        auto &sceneManager(systemprovider.sceneManager());
         sceneManager.setViewRect({0U, 0U, 2000U, 2000U});
         auto &sceneController(sceneManager.sceneController());
 
@@ -46,9 +48,9 @@ void ZoperProgramController::onInit()
         scene_node_factory.registerSceneNodeType<GameScene>();
         scene_node_factory.registerSceneNodeType<HighScoresScene>();
 
-        sceneController->setSceneDirector([this](const str &scene_name) -> str {
+        sceneController->setSceneDirector([this, &system_provider](const str &scene_name) -> str {
             // Did the user selected exit?
-            if (systemProvider().exitRequested())
+            if (sys::getSystemProvider(system_provider).exitRequested())
             {
                 return str{};
             }
@@ -71,9 +73,9 @@ void ZoperProgramController::onInit()
     }
 }
 
-void ZoperProgramController::onFinish()
+void ZoperProgramController::onFinish(sys::ISystemProvider &system_provider)
 {
-    bool check = systemProvider().sharedDataSystem().makeEmpty();
+    bool check = sys::getSystemProvider(system_provider).sharedDataSystem().makeEmpty();
     log_assert(check, "SharedData is empty!");
 }
 

@@ -66,7 +66,7 @@ void SystemProvider::init(IApp *iapp)
     p_->simulation_system_ = muptr<SimulationSystem>(*this);
     p_->simulation_system_->initialize();
 #endif
-    p_->app_->setSystemProvider(this);
+    p_->app_->onInit(*this);
 }
 
 void SystemProvider::requestExit()
@@ -81,6 +81,7 @@ bool SystemProvider::exitRequested() const
 
 void SystemProvider::terminate()
 {
+    p_->app_->onFinish(*this);
     p_->scene_manager_->finish();
     p_->simulation_system_ = nullptr;
     p_->file_system_ = nullptr;

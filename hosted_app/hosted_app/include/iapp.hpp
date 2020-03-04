@@ -8,33 +8,28 @@
 
 namespace lib::sys
 {
-    class SystemProvider;
-}
+class ISystemProvider;
+} // namespace lib::sys
 
 namespace lib
 {
-    class IApp
-    {
-    public:
-        constexpr IApp() noexcept {}
-        virtual ~IApp() {}
+class IApp
+{
+public:
+    constexpr IApp() noexcept {}
+    virtual ~IApp() noexcept {}
 
-        virtual void onInit() = 0;
-        virtual void onFinish() = 0;
+    virtual void onInit(sys::ISystemProvider& system_provider) = 0;
+    virtual void onFinish(sys::ISystemProvider& system_provider) = 0;
 
-        virtual u16 getVersion() const noexcept = 0;
-        virtual u16 getSubVersion() const noexcept = 0;
-        virtual u16 getPatch() const noexcept  = 0;
-        virtual str getName() const noexcept  = 0;
-
-        inline void setSystemProvider(sys::SystemProvider* const system_provider) noexcept { system_provider_ = system_provider; }
-        inline sys::SystemProvider &systemProvider() const noexcept { return *system_provider_; }
-    private:
-        sys::SystemProvider *system_provider_{nullptr};
-    };
-}
+    virtual u16 getVersion() const noexcept = 0;
+    virtual u16 getSubVersion() const noexcept = 0;
+    virtual u16 getPatch() const noexcept = 0;
+    virtual str getName() const noexcept = 0;
+};
+} // namespace lib
 
 using p_initApp = lib::IApp *(*)();
-using p_finishApp = bool (*)(lib::IApp* const);
+using p_finishApp = bool (*)(lib::IApp *const);
 
 #endif

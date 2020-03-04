@@ -28,4 +28,4 @@ void InputComponent::update()
         }
     }
 }
-} // namespace lib::scene
+} // namespace lib::input
