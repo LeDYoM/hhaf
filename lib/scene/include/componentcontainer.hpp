@@ -44,10 +44,10 @@ public:
     void updateComponents();
 
     /**
-        * Returns the component of the specified type if exists
-        * @param T type of the component to be retrieved
-        * @return A shared pointer to the container or nullptr if not found
-        */
+    * Returns the component of the specified type if exists
+    * @param T type of the component to be retrieved
+    * @return A shared pointer to the container or nullptr if not found
+    */
     template <typename T>
     sptr<T> componentOfType() const
     {
@@ -68,7 +68,7 @@ private:
 
     const sptr<IComponent> componentOfType(const std::type_index &ti) const;
 
-    SceneNode *const m_sceneNode;
+    const rptr<SceneNode> m_sceneNode;
     LockableVector<sptr<IComponent>> m_components;
 };
 } // namespace lib::scene

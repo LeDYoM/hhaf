@@ -3,7 +3,6 @@ cmake_minimum_required(VERSION 3.12)
 
 set (_SOURCES 
     "src/componentcontainer.cpp"
-    "src/datawrappercreator.cpp"
     "src/renderizable.cpp"
     "src/renderizables.cpp"
     "src/scenecontroller.cpp"

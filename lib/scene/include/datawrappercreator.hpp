@@ -23,7 +23,7 @@ public:
         : scene_node_{std::move(scene_node)} {}
 
     /// Destructor.
-    virtual ~DataWrapperCreator();
+    virtual ~DataWrapperCreator() {}
 
     /// Fetch a specific type of data wrapper.
     /// @paramt T Concrete type of the data wrapper.
@@ -41,7 +41,12 @@ public:
     }
 
 private:
-    void initialize(rptr<IDataWrapper> dw);
+    void initialize(rptr<IDataWrapper> dw)
+    {
+        dw->attachedNode_ = scene_node_;
+        dw->onAttached();
+    }
+
     const rptr<SceneNode> scene_node_;
 };
 } // namespace lib::scene
