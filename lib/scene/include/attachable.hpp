@@ -47,7 +47,7 @@ public:
         return dynamic_cast<Y *>(attachedNode());
     }
 
-protected:
+public:
     rptr<T> attachedNode_;
 };
 
