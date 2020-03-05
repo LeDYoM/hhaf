@@ -4,30 +4,29 @@
 #define LIB_SCENE_COMPONENTCONTAINER_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <mtypes/include/vector.hpp>
 #include <mtypes/include/lockablevector.hpp>
 #include <lib/include/liblog.hpp>
-#include "icomponent.hpp"
+#include <lib/scene/include/icomponent.hpp>
+#include <lib/scene/include/attachable_manager.hpp>
 #include <typeinfo>
 #include <typeindex>
 
 namespace lib::scene
 {
 class SceneNode;
-class ComponentContainer
+class ComponentContainer : public AttachableManager<SceneNode, IComponent, false>
 {
 public:
-    constexpr ComponentContainer(rptr<SceneNode> sceneNode = nullptr) noexcept
-        : m_sceneNode{std::move(sceneNode)} {}
+    using BaseClass = AttachableManager<SceneNode, IComponent, false>;
 
-    virtual ~ComponentContainer() {}
+    using BaseClass::AttachableManager;
 
     template <typename T>
     sptr<T> addComponentOfType()
     {
         log_assert(componentOfType<T>() == nullptr,
                    "There is already a component with this type");
-        auto nc(msptr<T>());
+        auto nc(create<T>());
         addComponent(nc);
         return nc;
     }
@@ -67,8 +66,6 @@ private:
     }
 
     const sptr<IComponent> componentOfType(const std::type_index &ti) const;
-
-    const rptr<SceneNode> m_sceneNode;
     LockableVector<sptr<IComponent>> m_components;
 };
 } // namespace lib::scene

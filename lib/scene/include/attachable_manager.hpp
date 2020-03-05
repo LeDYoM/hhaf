@@ -27,7 +27,7 @@ public:
     template <typename T>
     using ReturnType = typename ReturnTypeImpl<ReturnsUnique, T>::type;
 
-    constexpr AttachableManager(rptr<AttachableType> attachable) noexcept
+    constexpr AttachableManager(rptr<AttachableType> attachable = nullptr) noexcept
         : attachable_{std::move(attachable)} {}
 
     virtual ~AttachableManager() {}

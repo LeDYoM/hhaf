@@ -26,9 +26,6 @@ inline sptr<IComponent> getComponentFromTypeIndex(const std::type_index &tindex,
 bool ComponentContainer::addComponent(sptr<IComponent> nc)
 {
     log_assert(nc != nullptr, "Trying to add a nullptr component");
-
-    nc->attachedNode_ = m_sceneNode;
-    nc->onAttached();
     m_components.emplace_back(std::move(nc));
     return true;
 }
