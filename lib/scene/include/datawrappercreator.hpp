@@ -4,26 +4,24 @@
 #define LIB_SCENE_DATA_WRAPPER_CREATOR_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include "idatawrapper.hpp"
+#include <lib/scene/include/idatawrapper.hpp>
+#include <lib/scene/include/attachable_manager.hpp>
 
 namespace lib::scene
 {
 class SceneNode;
 
-///
-/// @brief Class to create @b IDataWrapper (s) instances.
-/// DataWrappers are stand alone objects, not components that interact with
-/// their containers. For active content see @b IComponent.
-class DataWrapperCreator
+/**
+ * @brief Class to create @b IDataWrapper (s) instances.
+ * DataWrappers are stand alone objects, not components that interact with
+ * their containers. For active content see @b IComponent.
+ */
+class DataWrapperCreator : public AttachableManager<SceneNode, IDataWrapper, true>
 {
 public:
-    /// Constructor.
-    /// @param scene_node Node to fetch the data to be wrapped.
-    constexpr DataWrapperCreator(rptr<SceneNode> scene_node) noexcept
-        : scene_node_{std::move(scene_node)} {}
+    using BaseClass = AttachableManager<SceneNode, IDataWrapper, true>;
 
-    /// Destructor.
-    virtual ~DataWrapperCreator() {}
+    using BaseClass::AttachableManager;
 
     /// Fetch a specific type of data wrapper.
     /// @paramt T Concrete type of the data wrapper.
@@ -31,23 +29,8 @@ public:
     template <typename T>
     uptr<T> dataWrapper()
     {
-        static_assert(
-            std::is_base_of_v<IDataWrapper, T>,
-            "You can only use this "
-            "function with types derived from IDataWrapper");
-        uptr<T> result = muptr<T>();
-        initialize(std::move(result.get()));
-        return result;
+        return create<T>();
     }
-
-private:
-    void initialize(rptr<IDataWrapper> dw)
-    {
-        dw->attachedNode_ = scene_node_;
-        dw->onAttached();
-    }
-
-    const rptr<SceneNode> scene_node_;
 };
 } // namespace lib::scene
 
