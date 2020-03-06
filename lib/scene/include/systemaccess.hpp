@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_SCENE_SCENENODE_BLOB_INCLUDE_HPP
-#define LIB_SCENE_SCENENODE_BLOB_INCLUDE_HPP
+#ifndef LIB_SCENE_SYSTEM_ACCESS_INCLUDE_HPP
+#define LIB_SCENE_SYSTEM_ACCESS_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 
@@ -14,10 +14,10 @@ namespace lib::scene
 {
 class SceneManager;
 
-class SceneManagerAccessor
+class SystemAccess
 {
 public:
-    SceneManagerAccessor(rptr<SceneManager> scene_manager);
+    SystemAccess(rptr<SceneManager> scene_manager);
 
     const SceneManager &sceneManager() const noexcept;
     SceneManager &sceneManager() noexcept;

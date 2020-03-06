@@ -8,16 +8,16 @@
 namespace lib::scene
 {
 class SceneNode;
-class SceneManagerAccessor;
+class SystemAccess;
 }
 
 namespace lib::sys
 {
 template <typename SystemType>
-const SystemType &getSystem(rptr<const scene::SceneManagerAccessor>);
+const SystemType &getSystem(rptr<const scene::SystemAccess>);
 
 template <typename SystemType>
-SystemType &getSystem(rptr<scene::SceneManagerAccessor>);
+SystemType &getSystem(rptr<scene::SystemAccess>);
 
 template <typename SystemType>
 const SystemType &getSystem(rptr<const scene::SceneNode>);

@@ -14,7 +14,7 @@
 #include <lib/scene/include/componentcontainer.hpp>
 #include <lib/scene/include/datawrappercreator.hpp>
 
-#include <lib/scene/include/scenemanager_accessor.hpp>
+#include <lib/scene/include/systemaccess.hpp>
 
 namespace lib::scene
 {
@@ -33,7 +33,7 @@ class SceneNode : public sys::HasName,
                   public Transformable,
                   public DataWrapperCreator,
                   public ComponentContainer,
-                  public SceneManagerAccessor
+                  public SystemAccess
 {
 public:
     /// No copy constructor.
