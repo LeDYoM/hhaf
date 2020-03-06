@@ -1,4 +1,6 @@
 #include "scenenode.hpp"
+#include "scenemanager.hpp"
+#include <lib/system/i_include/get_system.hpp>
 
 namespace lib::scene
 {
@@ -7,7 +9,7 @@ SceneNode::SceneNode(rptr<SceneNode> parent, str name)
       SceneNodeParent{parent},
       SceneNodes{this}, Renderizables{this},
       DataWrapperCreator{this}, ComponentContainer{this},
-      SystemAccess{parent != nullptr ? &(parent->sceneManager()) : nullptr},
+      SystemAccess{parent != nullptr ? &(sys::getSystem<SceneManager>(parent)) : nullptr},
       visible{true}
 {
 }

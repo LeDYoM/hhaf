@@ -6,6 +6,7 @@
 #include <lib/resources/include/itexture.hpp>
 #include <lib/shareddata/include/shareddataview.hpp>
 #include <lib/system/include/systemrequests.hpp>
+#include <lib/system/i_include/get_system.hpp>
 
 #include "../menu/mainmenu.hpp"
 #include "../loaders/mainmenuresources.hpp"

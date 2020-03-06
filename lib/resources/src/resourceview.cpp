@@ -1,14 +1,14 @@
-#include <lib/resources/include/resourceview.hpp>
+#include "resourceview.hpp"
 
-#include <lib/scene/include/scenemanager.hpp>
-#include <lib/scene/include/scenenode.hpp>
 #include <lib/include/liblog.hpp>
+#include <lib/system/i_include/get_system.hpp>
+#include <lib/resources/i_include/resourcemanager.hpp>
 
 namespace lib::scene
 {
 void ResourceView::onAttached()
 {
-    retriever_ = &(attachedNode()->sceneManager().resources());
+    retriever_ = &(sys::getSystem<sys::ResourceManager>(attachedNode()));
     log_assert(retriever_ != nullptr, "Invalid IResourceRetrieved");
 }
 

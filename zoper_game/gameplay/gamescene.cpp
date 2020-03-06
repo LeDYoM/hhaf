@@ -94,7 +94,9 @@ void GameScene::onCreated()
     inputComponent->KeyPressed.connect([this](const lib::input::Key &key) {
         DisplayLog::info("Key pressed in GameScene");
         // TODO: Fixme
-        const auto &keyMapping = sceneManager().systemProvider().app<ZoperProgramController>().keyMapping;
+        KeyMapping keyMapping__;
+        KeyMapping* keyMapping = &keyMapping__;
+//        const auto &keyMapping = sceneManager().systemProvider().app<ZoperProgramController>().keyMapping;
         switch (m_sceneStates->currentState())
         {
         case GameSceneStates::Playing:

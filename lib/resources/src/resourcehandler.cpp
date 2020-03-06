@@ -1,15 +1,15 @@
 #include <lib/resources/include/resourcehandler.hpp>
 #include <lib/resources/include/iresourceloader.hpp>
-#include <lib/scene/include/scenemanager.hpp>
-#include <lib/scene/include/scenenode.hpp>
 #include <lib/include/liblog.hpp>
+#include <lib/system/i_include/get_system.hpp>
+#include <lib/resources/i_include/resourcemanager.hpp>
 
 namespace lib::scene
 {
 void ResourceHandler::onAttached()
 {
     log_assert(handler_ == nullptr, "ResourceHandler already attached!");
-    handler_ = &(attachedNode()->sceneManager().resourcesLoader());
+    handler_ = &(sys::getSystem<sys::ResourceManager>(attachedNode()));
     log_assert(handler_ != nullptr, "Invalid IResourceHandler");
 }
 

@@ -1,10 +1,8 @@
 #include "randomnumberscomponent.hpp"
 #include <lib/random/i_include/randomsystem.hpp>
-#include <lib/scene/include/scenemanager.hpp>
-#include <lib/system/i_include/systemprovider.hpp>
 
 #include <lib/include/liblog.hpp>
-#include <lib/scene/include/scenenode.hpp>
+#include <lib/system/i_include/get_system.hpp>
 
 namespace lib::rnd
 {
@@ -63,7 +61,7 @@ void RandomNumbersComponent::onAttached()
     if (attachedNode())
     {
         priv_ = muptr<RandomNumbersComponentPrivate>(
-            attachedNode()->sceneManager().systemProvider().randomSystem());
+            sys::getSystem<sys::RandomSystem>(attachedNode()));
     }
 }
 } // namespace lib::rnd

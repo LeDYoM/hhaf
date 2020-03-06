@@ -1,12 +1,12 @@
 #include "renderizable.hpp"
 #include <lib/render/include/rendersystem.hpp>
 
-#include <lib/scene/include/scenemanager.hpp>
 #include <lib/render/include/renderdata.hpp>
 #include <lib/scene/include/scenenode.hpp>
 #include <lib/resources/include/itexture.hpp>
 #include <lib/resources/include/ishader.hpp>
-#include <lib/system/i_include/systemprovider.hpp>
+#include <lib/render/include/rendersystem.hpp>
+#include <lib/system/i_include/get_system.hpp>
 
 #include "geometry_math.hpp"
 
@@ -91,7 +91,7 @@ void Renderizable::render()
 
         if (!m_vertices.empty())
         {
-            parent_->sceneManager().systemProvider().renderSystem().draw(render_data_);
+            sys::getSystem<sys::RenderSystem>(parent_).draw(render_data_);
         }
     }
 }

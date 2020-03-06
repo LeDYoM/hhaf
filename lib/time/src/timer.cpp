@@ -4,13 +4,13 @@
 #include <lib/scene/include/scenenode.hpp>
 #include <lib/scene/include/scenemanager.hpp>
 #include <lib/time/i_include/timesystem.hpp>
-#include <lib/system/i_include/systemprovider.hpp>
+#include <lib/system/i_include/get_system.hpp>
 
 namespace lib::time
 {
 void Timer::restart()
 {
-    started_at_ = attachedNode()->sceneManager().systemProvider().timeSystem().now();
+    started_at_ = sys::getSystem<sys::TimeSystem>(attachedNode()).now();
 }
 
 TimePoint Timer::ellapsed() const

@@ -1,26 +1,25 @@
 #include <lib/shareddata/include/shareddataview.hpp>
 #include <lib/shareddata/i_include/shareddatasystem.hpp>
-#include <lib/scene/include/scenenode.hpp>
-#include <lib/scene/include/scenemanager.hpp>
 #include <lib/system/i_include/systemprovider.hpp>
+#include <lib/system/i_include/get_system.hpp>
+#include <lib/include/liblog.hpp>
 
 namespace lib::shdata
 {
-
 void SharedData::store(uptr<IShareable> data)
 {
-    attachedNode()->sceneManager().systemProvider().sharedDataSystem().store(std::move(data));
+    sys::getSystem<sys::ISharedDataSystem>(attachedNode()).store(std::move(data));
 }
 
 uptr<IShareable> SharedData::retrieve_imp()
 {
     log_assert(!isEmpty(), "SharedDataSystem should be empty");
-    return attachedNode()->sceneManager().systemProvider().sharedDataSystem().retrieve();
+    return sys::getSystem<sys::ISharedDataSystem>(attachedNode()).retrieve();
 }
 
 bool SharedData::isEmpty()
 {
-    return attachedNode()->sceneManager().systemProvider().sharedDataSystem().isEmpty();
+    return sys::getSystem<sys::ISharedDataSystem>(attachedNode()).isEmpty();
 }
 
 SharedDataView::SharedDataView()
@@ -29,12 +28,12 @@ SharedDataView::SharedDataView()
 SharedDataView::~SharedDataView()
 {
     log_assert(data_ != nullptr, "Data is nullptr");
-    log_assert(attachedNode()->sceneManager().systemProvider().sharedDataSystem().isEmpty(),
+    log_assert(sys::getSystem<sys::ISharedDataSystem>(attachedNode()).isEmpty(),
                "SharedDataSystem should be empty");
 
-    attachedNode()->sceneManager().systemProvider().sharedDataSystem().store(std::move(data_));
+    sys::getSystem<sys::ISharedDataSystem>(attachedNode()).store(std::move(data_));
 
-    log_assert(!attachedNode()->sceneManager().systemProvider().sharedDataSystem().isEmpty(),
+    log_assert(!sys::getSystem<sys::ISharedDataSystem>(attachedNode()).isEmpty(),
                "SharedDataSystem should not be empty");
 
     log_assert(data_ == nullptr, "SharedDataView should contain nullptr");
@@ -43,12 +42,12 @@ SharedDataView::~SharedDataView()
 void SharedDataView::onAttached()
 {
     log_assert(data_ == nullptr, "SharedDataView should contain nullptr");
-    log_assert(!attachedNode()->sceneManager().systemProvider().sharedDataSystem().isEmpty(),
+    log_assert(!sys::getSystem<sys::ISharedDataSystem>(attachedNode()).isEmpty(),
                "SharedDataSystem should not be empty");
 
-    data_ = attachedNode()->sceneManager().systemProvider().sharedDataSystem().retrieve();
+    data_ = sys::getSystem<sys::ISharedDataSystem>(attachedNode()).retrieve();
 
-    log_assert(attachedNode()->sceneManager().systemProvider().sharedDataSystem().isEmpty(),
+    log_assert(sys::getSystem<sys::ISharedDataSystem>(attachedNode()).isEmpty(),
                "SharedDataSystem should be empty");
     log_assert(data_ != nullptr, "Data is nullptr");
 }
