@@ -27,7 +27,7 @@ public:
     /// @paramt T Concrete type of the data wrapper.
     /// @return \b uptr<T> containing the data wrapper.
     template <typename T>
-    uptr<T> dataWrapper()
+    uptr<T> dataWrapper() const
     {
         return create<T>();
     }

@@ -33,7 +33,7 @@ public:
     virtual ~AttachableManager() {}
 
     template <typename T>
-    ReturnType<T> create()
+    ReturnType<T> create() const
     {
         static_assert(
             std::is_base_of_v<scene::Attachable<AttachableType>, T>,
@@ -47,7 +47,7 @@ public:
     }
 
 protected:
-    void initialize(rptr<AttachedBase> dw)
+    void initialize(rptr<AttachedBase> dw) const
     {
         dw->attachedNode_ = attachable_;
         dw->onAttached();

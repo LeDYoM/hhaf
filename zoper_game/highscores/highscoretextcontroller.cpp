@@ -11,6 +11,7 @@
 #include <lib/filesystem/i_include/filesystem.hpp>
 #include <lib/scene/include/scenemanager.hpp>
 #include <lib/shareddata/include/shareddataview.hpp>
+#include <lib/system/i_include/get_system.hpp>
 
 namespace zoper
 {
@@ -36,7 +37,7 @@ void HighScoreTextController::onCreated()
     animation_component_ = addComponentOfType<scene::AnimationComponent>();
 
     // Request the high scores.
-    sceneManager().systemProvider().fileSystem().deserializeFromFile(HighScoresFileName, m_hsData);
+    sys::getSystem<sys::FileSystem>(this).deserializeFromFile(HighScoresFileName, m_hsData);
 
     // Request game score
     Score gameScore = dataWrapper<shdata::SharedDataView>()->dataAs<GameSharedData>().score;
@@ -131,7 +132,8 @@ void HighScoreTextController::standarizeText(const sptr<nodes::SceneNodeText> &n
 void HighScoreTextController::saveHighScores()
 {
     DisplayLog::info("Saving highscores...");
-    sceneManager().systemProvider().fileSystem().serializeToFile(HighScoresFileName, m_hsData);
+
+    sys::getSystem<sys::FileSystem>(this).serializeToFile(HighScoresFileName, m_hsData);
     DisplayLog::info("High Scores saved");
 }
 } // namespace zoper

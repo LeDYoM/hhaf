@@ -10,6 +10,7 @@
 #include <lib/resources/i_include/resourcemanager.hpp>
 #include <lib/time/i_include/timesystem.hpp>
 #include <lib/shareddata/i_include/shareddatasystem.hpp>
+#include <lib/filesystem/i_include/filesystem.hpp>
 
 namespace lib::sys
 {
@@ -45,6 +46,7 @@ DEFINE_GETSYSTEM(sys::ResourceManager, resourceManager);
 DEFINE_GETSYSTEM(sys::TimeSystem, timeSystem);
 DEFINE_GETSYSTEM(sys::ISharedDataSystem, sharedDataSystem);
 DEFINE_GETSYSTEM(sys::RandomSystem, randomSystem);
+DEFINE_GETSYSTEM(sys::FileSystem, fileSystem);
 
 
 }

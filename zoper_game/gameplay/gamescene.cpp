@@ -30,6 +30,7 @@
 
 //TODO: Fixme
 #include <lib/system/i_include/systemprovider.hpp>
+#include <lib/system/i_include/get_system.hpp>
 
 namespace zoper
 {
@@ -117,7 +118,7 @@ void GameScene::onCreated()
         }
         break;
         case GameSceneStates::GameOver:
-            sceneManager().sceneController()->switchToNextScene();
+            sys::getSystem<scene::SceneManager>(this).sceneController()->switchToNextScene();
             break;
         case GameSceneStates::Pause:
             if (keyMapping->isPauseKey(key))

@@ -12,6 +12,7 @@
 #include <lib/resources/include/resourcehandler.hpp>
 #include <lib/system/i_include/systemprovider.hpp>
 #include <lib/scene/include/scenemanager.hpp>
+#include <lib/system/i_include/get_system.hpp>
 
 namespace zoper
 {
@@ -39,7 +40,7 @@ void HighScoresScene::onCreated()
     auto highScoreTextController(createSceneNode<HighScoreTextController>("HighScoreTextController"));
     highScoreTextController->Finished.connect([this, statesController]()
     {
-        sceneManager().sceneController()->switchToNextScene();
+        sys::getSystem<scene::SceneManager>(this).sceneController()->switchToNextScene();
     });
 
     statesController->start(HighScoresSceneStates::Show);

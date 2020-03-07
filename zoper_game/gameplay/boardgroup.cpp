@@ -192,7 +192,7 @@ Color BoardGroup::getBackgroundTileColor(const size_type level,
 
 vector2df BoardGroup::board2SceneFactor() const
 {
-    return sceneManager().viewRect().size() / p_boardModel->size();
+    return dataWrapper<SceneMetrics>()->currentView().size() / p_boardModel->size();
 }
 
 vector2df BoardGroup::board2Scene(const lib::vector2dst &bPosition) const

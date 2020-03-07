@@ -19,8 +19,8 @@ class SystemAccess
 public:
     SystemAccess(rptr<SceneManager> scene_manager);
 
-    const SceneManager &sceneManager() const noexcept;
-    SceneManager &sceneManager() noexcept;
+//    const SceneManager &sceneManager() const noexcept;
+//    SceneManager &sceneManager() noexcept;
 
     const sys::ISystemProvider& isystemProvider() const noexcept;
     sys::ISystemProvider& isystemProvider() noexcept;

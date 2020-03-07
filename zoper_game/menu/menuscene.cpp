@@ -47,7 +47,7 @@ void MenuScene::onCreated()
         {
             dataWrapper<sys::SystemRequests>()->requestExit();
         }
-        sceneManager().sceneController()->switchToNextScene();
+        sys::getSystem<scene::SceneManager>(this).sceneController()->switchToNextScene();
     });
 }
 } // namespace zoper
