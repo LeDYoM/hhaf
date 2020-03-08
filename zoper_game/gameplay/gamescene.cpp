@@ -23,14 +23,11 @@
 #include <lib/scene/include/renderizable.hpp>
 #include <lib/resources/include/resourcehandler.hpp>
 #include <lib/scene_components/include/animationcomponent.hpp>
+#include <lib/scene_components/include/scenecontrol.hpp>
 #include <lib/input/include/inputcomponent.hpp>
 #include <lib/random/include/randomnumberscomponent.hpp>
 #include <lib/scene/include/scenemanager.hpp>
 #include <lib/shareddata/include/shareddataview.hpp>
-
-//TODO: Fixme
-#include <lib/system/i_include/systemprovider.hpp>
-#include <lib/system/i_include/get_system.hpp>
 
 namespace zoper
 {
@@ -118,7 +115,7 @@ void GameScene::onCreated()
         }
         break;
         case GameSceneStates::GameOver:
-            sys::getSystem<scene::SceneManager>(this).sceneController()->switchToNextScene();
+            dataWrapper<SceneControl>()->switchToNextScene();
             break;
         case GameSceneStates::Pause:
             if (keyMapping->isPauseKey(key))

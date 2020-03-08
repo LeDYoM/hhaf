@@ -6,7 +6,7 @@
 #include <lib/resources/include/itexture.hpp>
 #include <lib/shareddata/include/shareddataview.hpp>
 #include <lib/system/include/systemrequests.hpp>
-#include <lib/system/i_include/get_system.hpp>
+#include <lib/scene_components/include/scenecontrol.hpp>
 
 #include "../menu/mainmenu.hpp"
 #include "../loaders/mainmenuresources.hpp"
@@ -47,7 +47,7 @@ void MenuScene::onCreated()
         {
             dataWrapper<sys::SystemRequests>()->requestExit();
         }
-        sys::getSystem<scene::SceneManager>(this).sceneController()->switchToNextScene();
+        dataWrapper<SceneControl>()->switchToNextScene();
     });
 }
 } // namespace zoper

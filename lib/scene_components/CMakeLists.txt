@@ -5,6 +5,7 @@ set (_SOURCES
     "src/animation.cpp"
     "src/animationcomponent.cpp"
     "src/discretetextcomponent.cpp"
+    "src/scenecontrol.cpp"
     "src/scenemetrics.cpp"
     "src/texteditorcomponent.cpp"
     "src/visibility_selector.cpp"
