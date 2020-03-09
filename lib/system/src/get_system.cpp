@@ -16,15 +16,15 @@ namespace lib::sys
 {
 #define DEFINE_GETSYSTEM(SystemType, callFunction)  \
 template <> \
-const SystemType &getSystem<SystemType>(rptr<const scene::SystemAccess> scene_manager_accessor)  \
+const SystemType &getSystem<SystemType>(rptr<const scene::SystemAccess> system_access)  \
 {   \
-    return getSystemProvider(scene_manager_accessor->isystemProvider()).callFunction();  \
+    return getSystemProvider(system_access->isystemProvider()).callFunction();  \
 }   \
     \
 template <> \
-SystemType &getSystem<SystemType>(rptr<scene::SystemAccess> scene_manager_accessor)  \
+SystemType &getSystem<SystemType>(rptr<scene::SystemAccess> system_access)  \
 {   \
-    return getSystemProvider(scene_manager_accessor->isystemProvider()).callFunction();  \
+    return getSystemProvider(system_access->isystemProvider()).callFunction();  \
 }   \
     \
 template <> \
