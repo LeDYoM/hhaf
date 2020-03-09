@@ -2,7 +2,6 @@
 
 #include <lib/include/liblog.hpp>
 #include <lib/scene/include/scenenode.hpp>
-#include <lib/scene/include/scenemanager.hpp>
 #include <lib/time/i_include/timesystem.hpp>
 #include <lib/system/i_include/get_system.hpp>
 

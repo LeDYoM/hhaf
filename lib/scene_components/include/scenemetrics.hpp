@@ -12,7 +12,7 @@ namespace lib::scene
 class SceneMetrics : public IDataWrapper
 {
 public:
-    Rectf32 currentView() noexcept;
+    Rectf32 currentView() const;
 };
 } // namespace lib::scene
 

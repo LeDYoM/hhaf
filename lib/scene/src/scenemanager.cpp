@@ -3,6 +3,7 @@
 
 #include <lib/system/i_include/systemprovider.hpp>
 #include <lib/window/i_include/window.hpp>
+#include <lib/scene/i_include/scenecontroller.hpp>
 #include <lib/resources/i_include/resourcemanager.hpp>
 #include <lib/render/include/rendertarget.hpp>
 

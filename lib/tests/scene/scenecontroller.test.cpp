@@ -4,7 +4,7 @@
 #include <mtypes/include/str.hpp>
 
 #include <lib/scene/include/scene.hpp>
-#include <lib/scene/include/scenecontroller.hpp>
+#include <lib/scene/i_include/scenecontroller.hpp>
 
 struct CommonData
 {

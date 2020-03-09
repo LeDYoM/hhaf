@@ -2,6 +2,7 @@
 #include "scenemanager.hpp"
 
 #include <lib/system/include/isystemprovider.hpp>
+#include <lib/include/liblog.hpp>
 
 namespace lib::sys
 {

@@ -26,7 +26,6 @@
 #include <lib/scene_components/include/scenecontrol.hpp>
 #include <lib/input/include/inputcomponent.hpp>
 #include <lib/random/include/randomnumberscomponent.hpp>
-#include <lib/scene/include/scenemanager.hpp>
 #include <lib/shareddata/include/shareddataview.hpp>
 
 namespace zoper

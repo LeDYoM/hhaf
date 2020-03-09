@@ -6,10 +6,9 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
 #include <mtypes/include/function.hpp>
+#include <mtypes/include/rect.hpp>
 
 #include <lib/system/include/appservice.hpp>
-
-#include <lib/scene/include/scenecontroller.hpp>
 
 namespace lib
 {
@@ -20,6 +19,7 @@ class IResourceHandler;
 namespace lib::scene
 {
 class Scene;
+class SceneController;
 }
 
 namespace lib::scene

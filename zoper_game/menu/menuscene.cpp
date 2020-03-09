@@ -1,8 +1,6 @@
 #include "menuscene.hpp"
 #include <lib/resources/include/resourceview.hpp>
 #include <lib/resources/include/resourcehandler.hpp>
-#include <lib/scene/include/scenecontroller.hpp>
-#include <lib/scene/include/scenemanager.hpp>
 #include <lib/resources/include/itexture.hpp>
 #include <lib/shareddata/include/shareddataview.hpp>
 #include <lib/system/include/systemrequests.hpp>
