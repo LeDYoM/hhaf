@@ -9,11 +9,15 @@
 
 namespace lib::scene
 {
+class SceneManager;
 class Scene : public SceneNode
 {
 public:
     explicit Scene(str name) : SceneNode{nullptr, std::move(name)} {}
     virtual void onFinished() {}
+private:
+    rptr<SceneManager> scene_manager_;
+    friend class SceneController;
 };
 } // namespace lib::scene
 

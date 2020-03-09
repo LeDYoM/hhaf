@@ -10,7 +10,6 @@ set (_SOURCES
     "src/scenenode.cpp"
     "src/scenenodefactory.cpp"
     "src/scenenodes.cpp"
-    "src/systemaccess.cpp"
     "src/transform.cpp"
     "src/transformable.cpp"
     "src/vertexarray.cpp"

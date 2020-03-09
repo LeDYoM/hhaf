@@ -9,7 +9,7 @@ SceneNode::SceneNode(rptr<SceneNode> parent, str name)
       SceneNodeParent{parent},
       SceneNodes{this}, Renderizables{this},
       DataWrapperCreator{this}, ComponentContainer{this},
-      SystemAccess{parent != nullptr ? &(sys::getSystem<SceneManager>(parent)) : nullptr},
+      sys::SystemAccess{parent != nullptr ? &(parent->isystemProvider()) : nullptr},
       visible{true}
 {
 }

@@ -13,8 +13,7 @@
 #include <lib/scene/include/icomponent.hpp>
 #include <lib/scene/include/componentcontainer.hpp>
 #include <lib/scene/include/datawrappercreator.hpp>
-
-#include <lib/scene/include/systemaccess.hpp>
+#include <lib/system/include/systemaccess.hpp>
 
 namespace lib::scene
 {
@@ -33,7 +32,7 @@ class SceneNode : public sys::HasName,
                   public Transformable,
                   public DataWrapperCreator,
                   public ComponentContainer,
-                  public SystemAccess
+                  public sys::SystemAccess
 {
 public:
     /// No copy constructor.

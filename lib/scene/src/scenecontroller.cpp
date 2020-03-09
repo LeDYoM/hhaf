@@ -1,6 +1,8 @@
 #include "scenecontroller.hpp"
 #include "scene.hpp"
+#include "scenemanager.hpp"
 
+#include <lib/system/include/isystemprovider.hpp>
 #include <lib/include/liblog.hpp>
 
 namespace lib::scene
@@ -73,7 +75,11 @@ void SceneController::startScene(sptr<Scene> scene)
     current_scene_ = std::move(scene);
     if (current_scene_)
     {
-        current_scene_->scene_manager_ = scene_manager_;
+        if (scene_manager_)
+        {
+            current_scene_->scene_manager_ = scene_manager_;
+            current_scene_->copySystemProvider(&(scene_manager_->isystemProvider()));
+        }
         current_scene_->onCreated();
     }
 }

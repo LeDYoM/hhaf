@@ -5,6 +5,7 @@ set (_SOURCES
     "src/appservice.cpp"
     "src/get_systemprovider.cpp"
     "src/get_system.cpp"
+    "src/systemaccess.cpp"
     "src/systemprovider.cpp"
     "src/systemprovider_init.cpp"
     "src/systemrequests.cpp"
