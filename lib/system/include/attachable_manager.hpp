@@ -4,9 +4,9 @@
 #define LIB_ATTACHABLE_MANAGER_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <lib/scene/include/attachable.hpp>
+#include <lib/system/include/attachable.hpp>
 
-namespace lib
+namespace lib::sys
 {
 template <typename AttachedBase, bool ReturnsUnique>
 class AttachableManager
@@ -34,28 +34,29 @@ public:
 
     virtual ~AttachableManager() {}
 
+protected:
     template <typename T>
     ReturnType<T> create() const
     {
         // Static check that T is a valid type for this class.
         static_assert(
-            std::is_base_of_v<scene::Attachable<AttachableType>, T>,
+            std::is_base_of_v<sys::Attachable<AttachableType>, T>,
             "You can only use this "
             "function with types derived from AttachedBase");
 
         T *temp = new T();
 
         // Dynamic check that T is a valid types for this class.
-        const rptr<scene::Attachable<AttachableType>> temp2 =
-            dynamic_cast<scene::Attachable<AttachableType> *>(temp);
+        const rptr<const sys::Attachable<AttachableType>> temp2 =
+            dynamic_cast<rptr<const sys::Attachable<AttachableType>>>(temp);
         log_assert(temp2 != nullptr, "");
 
         ReturnType<T> result = ReturnType<T>(std::move(temp));
-        initialize(std::move(result.get()));
+        initialize(result.get());
         return result;
     }
 
-protected:
+private:
     void initialize(rptr<AttachedBase> dw) const
     {
         dw->attachedNode_ = attachable_;
@@ -64,6 +65,6 @@ protected:
 
     const rptr<AttachableType> attachable_;
 };
-} // namespace lib
+} // namespace sys
 
 #endif

@@ -7,17 +7,17 @@
 #include <mtypes/include/lockablevector.hpp>
 #include <lib/include/liblog.hpp>
 #include <lib/scene/include/icomponent.hpp>
-#include <lib/scene/include/attachable_manager.hpp>
+#include <lib/system/include/attachable_manager.hpp>
 #include <typeinfo>
 #include <typeindex>
 
 namespace lib::scene
 {
 class SceneNode;
-class ComponentContainer : public AttachableManager<IComponent, false>
+class ComponentContainer : public sys::AttachableManager<IComponent, false>
 {
 public:
-    using BaseClass = AttachableManager<IComponent, false>;
+    using BaseClass = sys::AttachableManager<IComponent, false>;
 
     using BaseClass::AttachableManager;
 

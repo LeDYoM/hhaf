@@ -4,17 +4,17 @@
 #define LIB_SCENE_ICOMPONENT_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <lib/scene/include/attachable.hpp>
+#include <lib/system/include/attachable.hpp>
 
 namespace lib::scene
 {
 class SceneNode;
 
 /// Base class for all components attached to a scene node.
-class IComponent : public Attachable<SceneNode>
+class IComponent : public sys::Attachable<SceneNode>
 {
 public:
-    using AttachedNodeType = Attachable<SceneNode>::AttachedNodeType;
+    using AttachedNodeType = sys::Attachable<SceneNode>::AttachedNodeType;
 
     /**
      * @brief Interface to be implemented to update the component

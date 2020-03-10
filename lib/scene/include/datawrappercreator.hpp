@@ -5,7 +5,7 @@
 
 #include <mtypes/include/types.hpp>
 #include <lib/scene/include/idatawrapper.hpp>
-#include <lib/scene/include/attachable_manager.hpp>
+#include <lib/system/include/attachable_manager.hpp>
 
 namespace lib::sys
 {
@@ -19,10 +19,10 @@ namespace lib::scene
  * DataWrappers are stand alone objects, not components that interact with
  * their containers. For active content see @b IComponent.
  */
-class DataWrapperCreator : public AttachableManager<IDataWrapper, true>
+class DataWrapperCreator : public sys::AttachableManager<IDataWrapper, true>
 {
 public:
-    using BaseClass = AttachableManager<IDataWrapper, true>;
+    using BaseClass = sys::AttachableManager<IDataWrapper, true>;
 
     using BaseClass::AttachableManager;
 

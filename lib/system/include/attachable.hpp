@@ -1,11 +1,11 @@
 #pragma once
 
-#ifndef LIB_SCENE_ATTACHABLE_INCLUDE_HPP
-#define LIB_SCENE_ATTACHABLE_INCLUDE_HPP
+#ifndef LIB_SYS_ATTACHABLE_INCLUDE_HPP
+#define LIB_SYS_ATTACHABLE_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 
-namespace lib::scene
+namespace lib::sys
 {
 template <typename T>
 class Attachable
@@ -56,6 +56,6 @@ public:
     rptr<T> attachedNode_;
 };
 
-} // namespace lib::scene
+} // namespace lib::sys
 
 #endif

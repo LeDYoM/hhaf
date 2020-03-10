@@ -4,7 +4,7 @@
 #define LIB_SCENE_IDATA_WRAPPER_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <lib/scene/include/attachable.hpp>
+#include <lib/system/include/attachable.hpp>
 
 namespace lib::sys
 {
@@ -22,10 +22,10 @@ namespace lib::scene
  * some specific data via a scene node.
  * The @b IDataWrapper is not stored anywhere internally.
  */
-class IDataWrapper : public Attachable<sys::SystemAccess>
+class IDataWrapper : public sys::Attachable<sys::SystemAccess>
 {
 public:
-    using AttachedNodeType = Attachable<sys::SystemAccess>::AttachedNodeType;
+    using AttachedNodeType = sys::Attachable<sys::SystemAccess>::AttachedNodeType;
 
 private:
     friend class DataWrapperCreator;
