@@ -5,7 +5,7 @@
 #include <lib/scene/include/scenenode.hpp>
 #include <lib/system/include/systemaccess.hpp>
 #include <lib/scene/i_include/scenemanager.hpp>
-#include <lib/render/include/rendersystem.hpp>
+#include <lib/render/i_include/rendersystem.hpp>
 #include <lib/resources/i_include/resourcemanager.hpp>
 #include <lib/input/i_include/inputsystem.hpp>
 #include <lib/time/i_include/timesystem.hpp>
@@ -47,6 +47,4 @@ DEFINE_GETSYSTEM(sys::TimeSystem, timeSystem);
 DEFINE_GETSYSTEM(sys::ISharedDataSystem, sharedDataSystem);
 DEFINE_GETSYSTEM(sys::RandomSystem, randomSystem);
 DEFINE_GETSYSTEM(sys::FileSystem, fileSystem);
-
-
 }

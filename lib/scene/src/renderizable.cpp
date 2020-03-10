@@ -1,11 +1,10 @@
 #include "renderizable.hpp"
-#include <lib/render/include/rendersystem.hpp>
+#include <lib/render/i_include/rendersystem.hpp>
 
 #include <lib/render/include/renderdata.hpp>
 #include <lib/scene/include/scenenode.hpp>
 #include <lib/resources/include/itexture.hpp>
 #include <lib/resources/include/ishader.hpp>
-#include <lib/render/include/rendersystem.hpp>
 #include <lib/system/i_include/get_system.hpp>
 
 #include "geometry_math.hpp"
