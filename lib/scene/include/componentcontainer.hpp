@@ -14,10 +14,10 @@
 namespace lib::scene
 {
 class SceneNode;
-class ComponentContainer : public AttachableManager<SceneNode, IComponent, false>
+class ComponentContainer : public AttachableManager<IComponent, false>
 {
 public:
-    using BaseClass = AttachableManager<SceneNode, IComponent, false>;
+    using BaseClass = AttachableManager<IComponent, false>;
 
     using BaseClass::AttachableManager;
 

@@ -19,10 +19,10 @@ namespace lib::scene
  * DataWrappers are stand alone objects, not components that interact with
  * their containers. For active content see @b IComponent.
  */
-class DataWrapperCreator : public AttachableManager<sys::SystemAccess, IDataWrapper, true>
+class DataWrapperCreator : public AttachableManager<IDataWrapper, true>
 {
 public:
-    using BaseClass = AttachableManager<sys::SystemAccess, IDataWrapper, true>;
+    using BaseClass = AttachableManager<IDataWrapper, true>;
 
     using BaseClass::AttachableManager;
 

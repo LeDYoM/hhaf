@@ -12,6 +12,11 @@ class Attachable
 {
 public:
     /**
+     * @brief Type that composes this attachable.
+     */
+    using AttachedNodeType = T;
+
+    /**
      * @brief Destroy the Attachable object
      */
     virtual ~Attachable() {}

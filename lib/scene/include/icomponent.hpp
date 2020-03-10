@@ -14,6 +14,8 @@ class SceneNode;
 class IComponent : public Attachable<SceneNode>
 {
 public:
+    using AttachedNodeType = Attachable<SceneNode>::AttachedNodeType;
+
     /**
      * @brief Interface to be implemented to update the component
      */

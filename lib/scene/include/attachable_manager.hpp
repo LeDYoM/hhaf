@@ -8,10 +8,12 @@
 
 namespace lib
 {
-template <typename AttachableType, typename AttachedBase, bool ReturnsUnique>
+template <typename AttachedBase, bool ReturnsUnique>
 class AttachableManager
 {
 public:
+    using AttachableType = typename AttachedBase::AttachedNodeType;
+
     template <bool ReturnsUnique, typename T>
     struct ReturnTypeImpl
     {

@@ -24,6 +24,9 @@ namespace lib::scene
  */
 class IDataWrapper : public Attachable<sys::SystemAccess>
 {
+public:
+    using AttachedNodeType = Attachable<sys::SystemAccess>::AttachedNodeType;
+
 private:
     friend class DataWrapperCreator;
 };
