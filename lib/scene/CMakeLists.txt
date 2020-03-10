@@ -22,9 +22,6 @@ build_internal_lib_component(
     SOURCES
     ${_SOURCES}
 )
-
-target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
-target_link_libraries(${CURRENT_TARGET} PRIVATE logger)
 target_link_libraries(${CURRENT_TARGET} PRIVATE time)
 target_link_libraries(${CURRENT_TARGET} PRIVATE scene_components)
 target_link_libraries(${CURRENT_TARGET} PRIVATE scene_nodes)

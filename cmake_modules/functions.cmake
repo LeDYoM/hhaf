@@ -89,4 +89,7 @@ function(build_internal_lib_component)
     add_library (${CURRENT_TARGET}_interface INTERFACE)
     target_include_directories(${CURRENT_TARGET}_interface INTERFACE ${_PUBLIC_INCLUDE_DIRECTORY})
 
+    target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
+    target_link_libraries(${CURRENT_TARGET} PRIVATE logger)
+
 endfunction(build_internal_lib_component)
