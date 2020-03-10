@@ -1,6 +1,5 @@
 #include "systemrequests.hpp"
 #include "systemaccess.hpp"
-#include <lib/scene/include/scenenode.hpp>
 #include <lib/system/i_include/systemprovider.hpp>
 #include <lib/system/i_include/get_systemprovider.hpp>
 

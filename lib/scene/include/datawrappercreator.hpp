@@ -7,19 +7,22 @@
 #include <lib/scene/include/idatawrapper.hpp>
 #include <lib/scene/include/attachable_manager.hpp>
 
+namespace lib::sys
+{
+    class SystemAccess;
+}
+
 namespace lib::scene
 {
-class SceneNode;
-
 /**
  * @brief Class to create @b IDataWrapper (s) instances.
  * DataWrappers are stand alone objects, not components that interact with
  * their containers. For active content see @b IComponent.
  */
-class DataWrapperCreator : public AttachableManager<SceneNode, IDataWrapper, true>
+class DataWrapperCreator : public AttachableManager<sys::SystemAccess, IDataWrapper, true>
 {
 public:
-    using BaseClass = AttachableManager<SceneNode, IDataWrapper, true>;
+    using BaseClass = AttachableManager<sys::SystemAccess, IDataWrapper, true>;
 
     using BaseClass::AttachableManager;
 

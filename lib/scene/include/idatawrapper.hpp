@@ -6,9 +6,13 @@
 #include <mtypes/include/types.hpp>
 #include <lib/scene/include/attachable.hpp>
 
+namespace lib::sys
+{
+    class SystemAccess;
+}
+
 namespace lib::scene
 {
-class SceneNode;
 
 /**
  * @brief Base class for classes that provide some kind of access to specific
@@ -18,7 +22,7 @@ class SceneNode;
  * some specific data via a scene node.
  * The @b IDataWrapper is not stored anywhere internally.
  */
-class IDataWrapper : public Attachable<SceneNode>
+class IDataWrapper : public Attachable<sys::SystemAccess>
 {
 private:
     friend class DataWrapperCreator;

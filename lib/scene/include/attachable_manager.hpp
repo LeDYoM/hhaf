@@ -15,12 +15,12 @@ public:
     template <bool ReturnsUnique, typename T>
     struct ReturnTypeImpl
     {
-        using type = uptr<T>; 
+        using type = uptr<T>;
     };
 
     template <typename T>
     struct ReturnTypeImpl<false, typename T>
-    { 
+    {
         using type = sptr<T>;
     };
 
@@ -35,12 +35,19 @@ public:
     template <typename T>
     ReturnType<T> create() const
     {
+        // Static check that T is a valid type for this class.
         static_assert(
             std::is_base_of_v<scene::Attachable<AttachableType>, T>,
             "You can only use this "
             "function with types derived from AttachedBase");
 
-        T* temp = new T();
+        T *temp = new T();
+
+        // Dynamic check that T is a valid types for this class.
+        const rptr<scene::Attachable<AttachableType>> temp2 =
+            dynamic_cast<scene::Attachable<AttachableType> *>(temp);
+        log_assert(temp2 != nullptr, "");
+
         ReturnType<T> result = ReturnType<T>(std::move(temp));
         initialize(std::move(result.get()));
         return result;
@@ -55,6 +62,6 @@ protected:
 
     const rptr<AttachableType> attachable_;
 };
-} // namespace lib::scene
+} // namespace lib
 
 #endif
