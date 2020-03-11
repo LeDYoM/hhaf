@@ -18,20 +18,14 @@ target_link_libraries(${CURRENT_TARGET} PRIVATE backend_dev)
 # Set fallback directory for SFML
 set(SFML_ROOT "${L3RD_PARTY_DIR}/SFML")
 
+## In most cases better set in the CMake cache
+ set(SFML_DIR "${SFML_ROOT}/lib/cmake/SFML")
+
 # Find any version 2.X of SFML See the FindSFML.cmake file for additional
 # details and instructions
-cmake_policy(SET CMP0074 OLD)
-find_package(SFML
-             2
-             REQUIRED
-             system
-             window
-             graphics)
+find_package(SFML 2.5 COMPONENTS system window graphics REQUIRED)
 
-if(SFML_FOUND)
-  include_directories(${SFML_INCLUDE_DIR})
-  target_link_libraries(${CURRENT_TARGET} PRIVATE ${SFML_LIBRARIES})
-endif()
+target_link_libraries(${CURRENT_TARGET} PRIVATE sfml-system sfml-window sfml-graphics)
 
 add_custom_command(TARGET ${CURRENT_TARGET} POST_BUILD
                    COMMAND ${CMAKE_COMMAND}
