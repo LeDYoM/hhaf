@@ -15,7 +15,7 @@ namespace lib
 namespace lib::scene
 {
 /// Component to provide access to resources.
-class ResourceHandler final : public IDataWrapper, public IResourceHandler
+class ResourceHandler final : public sys::IDataWrapper, public IResourceHandler
 {
 public:
     void onAttached() override;

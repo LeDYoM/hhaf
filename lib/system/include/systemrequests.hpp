@@ -12,7 +12,7 @@ namespace lib::sys
  * This class is intended to be instantiated in order to ask the system
  * some questions about states or to set them.
  */
-class SystemRequests : public scene::IDataWrapper
+class SystemRequests : public sys::IDataWrapper
 {
 public:
     /**

@@ -10,7 +10,7 @@
 namespace lib::shdata
 {
 /// Component to provide access to data resources.
-class SharedData : public scene::IDataWrapper
+class SharedData : public sys::IDataWrapper
 {
 public:
     void store(uptr<IShareable> data);
@@ -32,7 +32,7 @@ private:
     [[nodiscard]] uptr<IShareable> retrieve_imp();
 };
 
-class SharedDataView : public scene::IDataWrapper
+class SharedDataView : public sys::IDataWrapper
 {
 public:
     SharedDataView();

@@ -8,10 +8,10 @@
 
 namespace lib::sys
 {
-    class SystemAccess;
+class SystemAccess;
 }
 
-namespace lib::scene
+namespace lib::sys
 {
 
 /**
@@ -30,6 +30,6 @@ public:
 private:
     friend class DataWrapperCreator;
 };
-} // namespace lib::scene
+} // namespace lib::sys
 
 #endif

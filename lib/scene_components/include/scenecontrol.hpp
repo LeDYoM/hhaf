@@ -8,7 +8,7 @@
 
 namespace lib::scene
 {
-class SceneControl : public IDataWrapper
+class SceneControl : public sys::IDataWrapper
 {
 public:
     void switchToNextScene();

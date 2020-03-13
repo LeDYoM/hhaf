@@ -11,7 +11,7 @@ namespace lib::time
 /**
  * @brief @b IDataWrapper to provide access to the current time
  */
-class TimeView : public scene::IDataWrapper
+class TimeView : public sys::IDataWrapper
 {
 public:
     /**

@@ -8,7 +8,7 @@ SceneNode::SceneNode(rptr<SceneNode> parent, str name)
     : sys::HasName{std::move(name)},
       SceneNodeParent{parent},
       SceneNodes{this}, Renderizables{this},
-      DataWrapperCreator{this}, ComponentContainer{this},
+      sys::DataWrapperCreator{this}, ComponentContainer{this},
       sys::SystemAccess{parent != nullptr ? &(parent->isystemProvider()) : nullptr},
       visible{true}
 {

@@ -30,7 +30,7 @@ class SceneNode : public sys::HasName,
                   public SceneNodes,
                   public Renderizables,
                   public Transformable,
-                  public DataWrapperCreator,
+                  public sys::DataWrapperCreator,
                   public ComponentContainer,
                   public sys::SystemAccess
 {

@@ -9,20 +9,20 @@
 
 namespace lib::sys
 {
-    class SystemAccess;
+class SystemAccess;
 }
 
-namespace lib::scene
+namespace lib::sys
 {
 /**
  * @brief Class to create @b IDataWrapper (s) instances.
  * DataWrappers are stand alone objects, not components that interact with
  * their containers. For active content see @b IComponent.
  */
-class DataWrapperCreator : public sys::AttachableManager<IDataWrapper, true>
+class DataWrapperCreator : public AttachableManager<IDataWrapper, true>
 {
 public:
-    using BaseClass = sys::AttachableManager<IDataWrapper, true>;
+    using BaseClass = AttachableManager<IDataWrapper, true>;
 
     using BaseClass::AttachableManager;
 
@@ -35,6 +35,6 @@ public:
         return create<T>();
     }
 };
-} // namespace lib::scene
+} // namespace lib::sys
 
 #endif

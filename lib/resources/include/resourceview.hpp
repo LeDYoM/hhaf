@@ -10,7 +10,7 @@
 namespace lib::scene
 {
 /// Component to provide access to resources.
-class ResourceView final : public IDataWrapper, public IResourceRetriever
+class ResourceView final : public sys::IDataWrapper, public IResourceRetriever
 {
 public:
     void onAttached() override;
