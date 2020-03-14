@@ -93,3 +93,18 @@ function(build_internal_lib_component)
     target_link_libraries(${CURRENT_TARGET} PRIVATE logger)
 
 endfunction(build_internal_lib_component)
+
+# Function to build different components from the project in an unified way.
+function(build_concrete_backend)
+
+    cmake_parse_arguments(LC_BUILD "" "" "SOURCES" ${ARGN})
+
+    add_library(${CURRENT_TARGET} SHARED ${SOURCES})
+
+    # Patch for testing TO DO: Remove it (use a variable)
+    include_directories("..")
+
+    target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
+    target_link_libraries(${CURRENT_TARGET} PRIVATE backend_dev)
+
+endfunction(build_concrete_backend)

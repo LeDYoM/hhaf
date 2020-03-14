@@ -1,20 +1,15 @@
 project(bsfml)
 
-file(GLOB _SOURCES "*.cpp")
-file(GLOB _HEADERS "*.hpp")
+file(GLOB SOURCES "*.cpp" "*.hpp")
 
 set(CURRENT_TARGET bsfml)
 
-add_library(${CURRENT_TARGET} SHARED ${_SOURCES} ${_HEADERS})
-
-# Patch for testing TO DO: Remove it (use a variable)
-include_directories("..")
-
-target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
-target_link_libraries(${CURRENT_TARGET} PRIVATE backend_dev)
+build_concrete_backend(
+    SOURCES
+    ${SOURCES}
+)
 
 # Detect and add SFML
-
 add_subdirectory(sfml)
 FetchContent_GetProperties(SFML)
 
