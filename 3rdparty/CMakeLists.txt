@@ -1,16 +1,6 @@
 include(FetchContent)
-include(ExternalProject)
-message(STATUS "Fetching third party libraries")
+message(STATUS "Fetching Catch2")
 #======================================
-
-set(SFML_VERSION 2.5.1)
-
-# It's nice to get stripped-down release zips instead of cloning
-# a repo and checking out a tag
-FetchContent_Declare(
-  SFML
-  URL "https://github.com/SFML/SFML/archive/${SFML_VERSION}.zip"
-)
 
 FetchContent_Declare(CATCH2
     GIT_REPOSITORY https://github.com/catchorg/Catch2.git
@@ -20,7 +10,5 @@ FetchContent_Declare(CATCH2
 
 FetchContent_MakeAvailable(Catch2)
 
-add_subdirectory(sfml)
-
 #======================================
-message(STATUS "Fetching thirdparty libraries done")
+message(STATUS "Fetching Catch2 libraries done")

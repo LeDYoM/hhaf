@@ -1,6 +1,9 @@
-enable_testing()
+cmake_minimum_required (VERSION 3.14)
+project(mtypes_utests CXX)
 
-set(UNIT_TEST_LIST
+set(CURRENT_TARGET ${PROJECT_NAME})
+
+set(SOURCE_TESTS
     array
     lockablevector
     main
@@ -12,21 +15,6 @@ set(UNIT_TEST_LIST
     vector
 )
 
-foreach(NAME IN LISTS UNIT_TEST_LIST)
-  list(APPEND UNIT_TEST_SOURCE_LIST ${NAME}.test.cpp)
-endforeach()
+add_test_executable(SOURCE_TESTS ${SOURCE_TESTS})
 
-set(TARGET_NAME mtypes_utests)
-set(CMAKE_CXX_STANDARD 17)
-
-add_executable(${TARGET_NAME}
-  ${UNIT_TEST_SOURCE_LIST})
-
-target_link_libraries(${TARGET_NAME}
-  PRIVATE mtypes)
-
-include_directories(${TARGET_NAME}
-  INTERFACE ${CATCH_INCLUDE_DIR})
-
-# add_test( NAME all COMMAND CTest)
-include (Catch)
+target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)

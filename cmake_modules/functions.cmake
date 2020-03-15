@@ -108,3 +108,33 @@ function(build_concrete_backend)
     target_link_libraries(${CURRENT_TARGET} PRIVATE backend_dev)
 
 endfunction(build_concrete_backend)
+
+function(add_test_executable)
+
+    cmake_parse_arguments(LC_BUILD "" "" "SOURCE_TESTS" ${ARGN})
+
+    include(FetchContent)
+    message(STATUS "Fetching Catch2")
+
+    FetchContent_Declare(Catch2
+        GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+        GIT_TAG v2.11.1
+        CMAKE_ARGS -DBUILD_TESTING=OFF
+    )
+
+    FetchContent_MakeAvailable(Catch2)
+
+    message(STATUS "Fetching Catch2 library done")
+
+    foreach(NAME IN LISTS SOURCE_TESTS)
+        list(APPEND SOURCE_TESTS_LIST ${NAME}.test.cpp)
+    endforeach()
+
+    enable_testing()
+    add_executable(${CURRENT_TARGET} ${SOURCE_TESTS_LIST})
+
+    target_link_libraries(${CURRENT_TARGET} PUBLIC Catch2)
+    target_include_directories(${CURRENT_TARGET} 
+        PRIVATE "${Catch2_SOURCE_DIR}/single_include/catch2")
+
+endfunction(add_test_executable)
