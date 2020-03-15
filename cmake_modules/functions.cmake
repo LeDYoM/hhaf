@@ -114,17 +114,7 @@ function(add_test_executable)
     cmake_parse_arguments(LC_BUILD "" "" "SOURCE_TESTS" ${ARGN})
 
     include(FetchContent)
-    message(STATUS "Fetching Catch2")
-
-    FetchContent_Declare(Catch2
-        GIT_REPOSITORY https://github.com/catchorg/Catch2.git
-        GIT_TAG v2.11.1
-        CMAKE_ARGS -DBUILD_TESTING=OFF
-    )
-
     FetchContent_MakeAvailable(Catch2)
-
-    message(STATUS "Fetching Catch2 library done")
 
     foreach(NAME IN LISTS SOURCE_TESTS)
         list(APPEND SOURCE_TESTS_LIST ${NAME}.test.cpp)

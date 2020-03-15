@@ -37,7 +37,7 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 include(${CMAKE_MODULE_PATH}/functions.cmake)
 
 # Sub-directories where more CMakeLists.txt exist
-#add_subdirectory(3rdparty)
+add_subdirectory(tests)
 add_subdirectory(memmanager)
 add_subdirectory(mtypes)
 add_subdirectory(logger)
