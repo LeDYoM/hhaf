@@ -22,5 +22,4 @@ FetchContent_Declare(SFML
 
 FetchContent_MakeAvailable(SFML)
 
-#======================================
 message(STATUS "Fetching SFML done")

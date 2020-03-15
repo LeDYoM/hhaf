@@ -26,12 +26,10 @@ add_compile_definitions(LIB_COMPILE_SIMULATIONS)
 add_compile_definitions(LIB_ALLOW_ACCELERATION)
 #add_compile_definitions(LIB_USE_SIMULATION_INIT_DATA)
 
-message ("cxx Flags: " ${CMAKE_CXX_FLAGS})
+message ("CXX Flags: " ${CMAKE_CXX_FLAGS})
 
 SET(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
 SET(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
-set(L3RD_PARTY_DIR "${CMAKE_SOURCE_DIR}/3rdparty")
-set(CATCH_INCLUDE_DIR  "${L3RD_PARTY_DIR}/catch2")
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 include(${CMAKE_MODULE_PATH}/functions.cmake)
