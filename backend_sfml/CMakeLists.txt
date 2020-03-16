@@ -11,7 +11,6 @@ build_concrete_backend(
 
 # Detect and add SFML
 add_subdirectory(sfml)
-FetchContent_GetProperties(SFML)
 
 add_dependencies(${CURRENT_TARGET} sfml-system sfml-window sfml-graphics)
 
