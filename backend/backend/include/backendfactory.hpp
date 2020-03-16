@@ -3,13 +3,14 @@
 #ifndef LIB_BACKEND_FACTORY_HPP
 #define LIB_BACKEND_FACTORY_HPP
 
-#include <backend_dev/include/iwindow.hpp>
 #include <backend_dev/include/iresourcefactories.hpp>
-
-#include <backend/include/backendregister.hpp>
 
 namespace lib::backend
 {
+class BackendRegister;
+class IWindow;
+class IWindowProviderInfo;
+
 class BackendFactory final
 {
 public:

@@ -89,6 +89,7 @@ void SystemProvider::terminate()
 {
     p_->app_->onFinish(*this);
     p_->scene_manager_->finish();
+    p_->scene_manager_ = nullptr;
     p_->simulation_system_ = nullptr;
     p_->file_system_ = nullptr;
     p_->random_system_ = nullptr;
