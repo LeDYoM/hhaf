@@ -3,7 +3,10 @@ cmake_minimum_required(VERSION 3.11)
 
 set(CURRENT_TARGET ${PROJECT_NAME})
 
-set(SOURCES "src/backendfactory.cpp" "src/backendregister.cpp")
+set(SOURCES 
+    "src/backend_creator.cpp"
+    "src/backendfactory.cpp" 
+    "src/backendregister.cpp")
 
 add_library(${CURRENT_TARGET} SHARED ${SOURCES})
 set_target_properties(${CURRENT_TARGET}

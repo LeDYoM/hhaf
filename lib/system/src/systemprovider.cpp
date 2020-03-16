@@ -1,6 +1,7 @@
 #include "systemprovider.hpp"
 
 #include <backend/include/backendfactory.hpp>
+#include <backend/include/backend_creator.hpp>
 #include <lib/filesystem/i_include/filesystem.hpp>
 #include <lib/input/i_include/inputsystem.hpp>
 #include <lib/random/i_include/randomsystem.hpp>
@@ -19,6 +20,9 @@
 #include <lib/include/liblog.hpp>
 #include <hosted_app/include/iapp.hpp>
 
+
+#include <functional>
+
 namespace lib::sys
 {
 struct SystemProvider::SystemProviderPrivate
@@ -28,7 +32,8 @@ struct SystemProvider::SystemProviderPrivate
 
     IApp *app_;
     uptr<SharedDataSystem> shared_data_system_;
-    uptr<backend::BackendFactory> backend_factory_;
+    uptr<backend::BackendFactory, void (*)(lib::backend::BackendFactory *)>
+        backend_factory_{nullptr, nullptr};
     uptr<Window> window_;
     uptr<ResourceManager> resource_manager_;
     uptr<InputSystem> input_system_;
@@ -51,9 +56,10 @@ SystemProvider::~SystemProvider() = default;
 void SystemProvider::init(IApp *iapp)
 {
     log_assert(iapp != nullptr, "Cannot create a SystemProvider with a nullptr app");
+    p_->backend_factory_ = uptr<backend::BackendFactory, void (*)(lib::backend::BackendFactory *)> 
+        (createBackendFactory(), destroyBackendFactory);
     p_->app_ = iapp;
     p_->shared_data_system_ = muptr<SharedDataSystem>(*this);
-    p_->backend_factory_ = muptr<backend::BackendFactory>();
     p_->time_system_ = muptr<TimeSystem>(*this);
     p_->window_ = muptr<Window>(*this);
     p_->input_system_ = muptr<InputSystem>(*this, p_->window_->inputDriver());
