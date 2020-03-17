@@ -11,13 +11,17 @@ class BackendRegister;
 class IWindow;
 class IWindowProviderInfo;
 
+/**
+ * @brief Class representing a factory for backend classes.
+ * This class initializes and stores subsystems of a backend.
+ */
 class BackendFactory final
 {
 public:
     BackendFactory();
     ~BackendFactory();
 
-    IWindow *getOrCreateWindow();
+    IWindow *getWindow();
     IWindowProviderInfo *getWindowProviderInfo() const noexcept;
     ITextureFactory *getTextureFactory() const noexcept;
     ITTFontFactory *getTTFontFactory() const noexcept;

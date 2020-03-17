@@ -65,15 +65,13 @@ void Window::create()
     DisplayLog::info("Creating window...");
 
     // Create window object
-    priv_->m_backendWindow = systemProvider().backendFactory().getOrCreateWindow();
-    DisplayLog::info("Window created");
-    DisplayLog::info("Registering for view changes...");
+    priv_->m_backendWindow = systemProvider().backendFactory().getWindow();
     backend::IWindow &bw(*priv_->m_backendWindow);
 
     // Create physical window
     if (bw.createWindow(1024U, 768U, 32U))
     {
-        DisplayLog::info("Hardware window created...");
+        DisplayLog::info("Window created...");
         // If window created successfully, extract the render target
         // associated with the window.
         priv_->m_renderTarget = msptr<RenderTarget>(

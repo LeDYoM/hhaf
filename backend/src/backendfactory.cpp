@@ -72,7 +72,7 @@ BackendFactory::~BackendFactory()
     loader::destroyLoader();
 }
 
-IWindow *lib::backend::BackendFactory::getOrCreateWindow()
+IWindow *lib::backend::BackendFactory::getWindow()
 {
     return m_window;
 }
