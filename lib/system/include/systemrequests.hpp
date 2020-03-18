@@ -3,7 +3,7 @@
 #ifndef LIB_SYSTEM_SYSTEM_REQUESTS_INCLUDE_HPP
 #define LIB_SYSTEM_SYSTEM_REQUESTS_INCLUDE_HPP
 
-#include <lib/scene/include/idatawrapper.hpp>
+#include <lib/system/include/idatawrapper.hpp>
 
 namespace lib::sys
 {

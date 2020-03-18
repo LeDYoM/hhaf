@@ -12,7 +12,7 @@
 #include <lib/scene/include/hasname.hpp>
 #include <lib/scene/include/icomponent.hpp>
 #include <lib/scene/include/componentcontainer.hpp>
-#include <lib/scene/include/datawrappercreator.hpp>
+#include <lib/system/include/datawrappercreator.hpp>
 #include <lib/system/include/systemaccess.hpp>
 
 namespace lib::scene

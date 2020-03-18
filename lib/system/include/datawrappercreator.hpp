@@ -4,7 +4,7 @@
 #define LIB_SCENE_DATA_WRAPPER_CREATOR_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <lib/scene/include/idatawrapper.hpp>
+#include <lib/system/include/idatawrapper.hpp>
 #include <lib/system/include/attachable_manager.hpp>
 
 namespace lib::sys

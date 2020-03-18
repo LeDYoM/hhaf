@@ -5,7 +5,7 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/rect.hpp>
-#include <lib/scene/include/idatawrapper.hpp>
+#include <lib/system/include/idatawrapper.hpp>
 
 namespace lib::scene
 {

@@ -25,6 +25,10 @@ namespace lib::sys
 class IDataWrapper : public sys::Attachable<sys::SystemAccess>
 {
 public:
+    /**
+     * @brief Public type alias template with the acched node type of this
+     * attachable. Required from @b sys::Atachable
+     */
     using AttachedNodeType = sys::Attachable<sys::SystemAccess>::AttachedNodeType;
 
 private:

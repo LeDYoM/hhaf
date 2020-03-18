@@ -3,7 +3,7 @@
 #ifndef LIB_TIME_VIEW_DATA_WRAPPER_INCLUDE_HPP
 #define LIB_TIME_VIEW_DATA_WRAPPER_INCLUDE_HPP
 
-#include <lib/scene/include/idatawrapper.hpp>
+#include <lib/system/include/idatawrapper.hpp>
 #include <lib/time/include/timepoint.hpp>
 
 namespace lib::time

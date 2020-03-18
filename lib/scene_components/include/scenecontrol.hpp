@@ -4,7 +4,7 @@
 #define LIB_SCENE_SCENE_CONTROL_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <lib/scene/include/idatawrapper.hpp>
+#include <lib/system/include/idatawrapper.hpp>
 
 namespace lib::scene
 {
