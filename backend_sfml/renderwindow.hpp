@@ -23,7 +23,7 @@ public:
     RenderWindow();
     virtual ~RenderWindow();
 
-    bool createWindow(const u16 width, const u16 height, const u8 bpp) override;
+    bool createWindow(const unsigned int, const unsigned int* const) override;
     sf::Vector2u getSize() const;
 
     bool setActive(bool active = true) override;

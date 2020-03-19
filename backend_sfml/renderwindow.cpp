@@ -12,11 +12,39 @@ namespace lib::backend::sfmlb
 RenderWindow::RenderWindow() {}
 RenderWindow::~RenderWindow() {}
 
-bool RenderWindow::createWindow(const u16 width, const u16 height, const u8 bpp)
+class ParamExtractor
 {
+public:
+    constexpr ParamExtractor(const unsigned int size, const unsigned int *const data)
+        : size_{size}, data_{data} {}
+
+    unsigned int getParam(const unsigned int def_param = 0U)
+    {
+        if (current_ < size_)
+        {
+            return data_[current_++];
+        }
+        return def_param;
+    }
+
+private:
+    unsigned int current_{0U};
+    const unsigned int size_;
+    const unsigned int *const data_;
+};
+
+bool RenderWindow::createWindow(const unsigned int size,
+    const unsigned int *const data)
+{
+    using uint = unsigned int;
     sf::Uint32 style{sf::Style::Default};
     //        if (wcp.fullScreen)
     //            style = sf::Style::Fullscreen;
+
+    ParamExtractor prm_xtr{size, data};
+    uint width = prm_xtr.getParam(800U);
+    uint height = prm_xtr.getParam(600U);
+    uint bpp = prm_xtr.getParam(32U);
 
     sf::Window::create(sf::VideoMode(width, height, bpp), "",
                        style);

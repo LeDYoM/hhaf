@@ -5,6 +5,7 @@
 
 #include <mtypes/include/types.hpp>
 #include <lib/system/include/appservice.hpp>
+#include <lib/window/include/window_properties.hpp>
 
 namespace lib::input
 {
@@ -38,6 +39,15 @@ public:
     ~Window() override;
 
     /**
+     * @brief Creates (or tryes to create) an operating system window
+     * 
+     * @param window_properties Desired properties for the window
+     * @return true If window creation was successful
+     * @return false Failed trying to create the window
+     */
+    bool create(uptr<win::WindowProperties> window_properties);
+
+    /**
      * @brief Method to be executed before starting a cycle of the system
      * 
      * @return true The window has requested to exit
@@ -59,7 +69,6 @@ public:
     const sptr<input::InputDriver> inputDriver() const;
 
 private:
-    void create();
     struct WindowPrivate;
     uptr<WindowPrivate> priv_;
 };

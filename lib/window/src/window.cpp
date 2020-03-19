@@ -19,7 +19,7 @@ struct Window::WindowPrivate final
     TimePoint lastTimeFps{0U};
     s32 lastFps{0};
     s32 currentFps{0};
-    backend::IWindow *m_backendWindow{nullptr};
+    rptr<backend::IWindow> m_backendWindow{nullptr};
     sptr<input::InputDriver> input_driver_{nullptr};
     sptr<RenderTarget> m_renderTarget{nullptr};
     str title_{};
@@ -29,7 +29,6 @@ Window::Window(sys::SystemProvider &system_provider)
     : AppService{system_provider},
       priv_{muptr<WindowPrivate>()}
 {
-    create();
 }
 
 Window::~Window() = default;
@@ -54,8 +53,10 @@ const sptr<input::InputDriver> Window::inputDriver() const
     return priv_->input_driver_;
 }
 
-void Window::create()
+bool Window::create(uptr<win::WindowProperties> window_properties)
 {
+    log_assert(window_properties != nullptr, "Invalid window properties. "
+                                "Pass nullptr to use the default values");
     DisplayLog::info("Going to create Window");
     //        DisplayLog::info("Resolution:", wcp.width, "x", wcp.height ,"x", wcp.bpp);
     //        DisplayLog::info("Fullscreen:" , wcp.fullScreen);
@@ -68,8 +69,28 @@ void Window::create()
     priv_->m_backendWindow = systemProvider().backendFactory().getWindow();
     backend::IWindow &bw(*priv_->m_backendWindow);
 
+    if (window_properties->width() == 0U)
+    {
+        window_properties->width = 800U;
+    }
+
+    if (window_properties->height() == 0U)
+    {
+        window_properties->height = 600U;
+    }
+
+    if (window_properties->bits_per_pixel() == 0U)
+    {
+        window_properties->bits_per_pixel = 32U;
+    }
+
+    unsigned int data[3U] = { 
+        static_cast<unsigned int>(window_properties->width()),
+        static_cast<unsigned int>(window_properties->height()),
+        static_cast<unsigned int>(window_properties->bits_per_pixel())};
+
     // Create physical window
-    if (bw.createWindow(1024U, 768U, 32U))
+    if (bw.createWindow(3U, data))
     {
         DisplayLog::info("Window created...");
         // If window created successfully, extract the render target
@@ -80,8 +101,14 @@ void Window::create()
         // Also take the input driver.
         priv_->input_driver_ = msptr<input::InputDriver>(
             priv_->m_backendWindow->inputDriver());
+        DisplayLog::info("Window creation completed");
+        return true;
     }
-    DisplayLog::info("Window creation completed");
+    else
+    {
+        DisplayLog::error("Cannot create window");
+        return false;
+    }
 }
 
 bool Window::preLoop()
