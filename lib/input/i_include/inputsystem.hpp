@@ -18,9 +18,8 @@ namespace lib::sys
 class InputSystem final : public AppService
 {
 public:
-    InputSystem(sys::SystemProvider& system_provider,
-        sptr<input::InputDriver> input_driver);
-    ~InputSystem() override;
+using AppService::AppService;
+    InputSystem(sys::SystemProvider& system_provider);
 
     void update();
 
@@ -28,13 +27,23 @@ public:
     const vector<input::Key> &releasedKeys() const noexcept;
     const input::KeyStates &keyStates() const noexcept { return m_keyStates; }
 
-    /// Force or simulate a key press.
-    /// @param key @b Key to be added.
+    /**
+     * @brief Force or simulate a key press.
+     * @param key Key to be added.
+     */
     void simulatePressKey(const input::Key key);
 
-    /// Force or simulate a key release.
-    /// @param key @b Key to be added.
+    /**
+     * @brief Force or simulate a key release.
+     * @param key Key to be added.
+     */
     void simulateReleaseKey(const input::Key key);
+
+    /**
+     * @brief Set the Input Driver object
+     * @param input_driver Object to be set.
+     */
+    void setInputDriver(sptr<input::InputDriver> input_driver);
 
 private:
     void keyPressed(const input::Key key);

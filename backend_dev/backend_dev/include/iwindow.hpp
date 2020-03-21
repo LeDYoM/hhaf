@@ -17,7 +17,8 @@ namespace lib::backend
 
         virtual ~IWindow() {}
 
-        virtual bool createWindow(const unsigned int, const unsigned int* const) = 0;
+        virtual bool createWindow(const unsigned int,
+            const unsigned int* const) = 0;
         virtual bool setActive(const bool activate) = 0;
 
         virtual bool processEvents() = 0;

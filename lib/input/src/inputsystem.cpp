@@ -7,12 +7,16 @@ using namespace lib::input;
 
 namespace lib::sys
 {
-InputSystem::InputSystem(sys::SystemProvider &system_provider,
-                         sptr<InputDriver> input_driver)
-    : AppService{system_provider},
-      input_driver_{std::move(input_driver)}, m_keyStates{} {}
+InputSystem::InputSystem(sys::SystemProvider &system_provider)
+    : AppService{system_provider}, input_driver_{}, m_keyStates{} {}
 
-InputSystem::~InputSystem() = default;
+void InputSystem::setInputDriver(sptr<input::InputDriver> input_driver)
+{
+    log_assert(input_driver != nullptr, "Parameter is nullptr");
+    log_assert(input_driver_ == nullptr, "Input driver was already set");
+
+    input_driver_ = std::move(input_driver);
+}
 
 void InputSystem::update()
 {

@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.12)
 
 set (_SOURCES 
     "src/window.cpp"
+    "src/window_properties.cpp"
     )
 
 set (CURRENT_TARGET  ${PROJECT_NAME})

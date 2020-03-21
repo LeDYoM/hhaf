@@ -55,8 +55,12 @@ const sptr<input::InputDriver> Window::inputDriver() const
 
 bool Window::create(uptr<win::WindowProperties> window_properties)
 {
-    log_assert(window_properties != nullptr, "Invalid window properties. "
-                                "Pass nullptr to use the default values");
+    if (window_properties == nullptr)
+    {
+        window_properties = muptr<win::WindowProperties>();
+        window_properties->onAttached();
+    }
+
     DisplayLog::info("Going to create Window");
     //        DisplayLog::info("Resolution:", wcp.width, "x", wcp.height ,"x", wcp.bpp);
     //        DisplayLog::info("Fullscreen:" , wcp.fullScreen);
@@ -68,21 +72,6 @@ bool Window::create(uptr<win::WindowProperties> window_properties)
     // Create window object
     priv_->m_backendWindow = systemProvider().backendFactory().getWindow();
     backend::IWindow &bw(*priv_->m_backendWindow);
-
-    if (window_properties->width() == 0U)
-    {
-        window_properties->width = 800U;
-    }
-
-    if (window_properties->height() == 0U)
-    {
-        window_properties->height = 600U;
-    }
-
-    if (window_properties->bits_per_pixel() == 0U)
-    {
-        window_properties->bits_per_pixel = 32U;
-    }
 
     unsigned int data[3U] = { 
         static_cast<unsigned int>(window_properties->width()),

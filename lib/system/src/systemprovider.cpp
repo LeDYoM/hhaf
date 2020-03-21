@@ -62,7 +62,7 @@ void SystemProvider::init(IApp *iapp)
     p_->shared_data_system_ = muptr<SharedDataSystem>(*this);
     p_->time_system_ = muptr<TimeSystem>(*this);
     p_->window_ = muptr<Window>(*this);
-    p_->input_system_ = muptr<InputSystem>(*this, p_->window_->inputDriver());
+    p_->input_system_ = muptr<InputSystem>(*this);
     p_->scene_manager_ = muptr<scene::SceneManager>(*this);
     p_->resource_manager_ = muptr<sys::ResourceManager>(*this);
     p_->render_system_ = muptr<sys::RenderSystem>(*this);
@@ -72,6 +72,9 @@ void SystemProvider::init(IApp *iapp)
     p_->simulation_system_ = muptr<SimulationSystem>(*this);
     p_->simulation_system_->initialize();
 #endif
+
+    p_->window_->create(nullptr);
+    p_->input_system_->setInputDriver(p_->window_->inputDriver());
     p_->app_->onInit(*this);
 }
 

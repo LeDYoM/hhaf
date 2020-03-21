@@ -18,8 +18,10 @@ public:
     mtps::BasicProperty<mtps::u32> width;
     mtps::BasicProperty<mtps::u32> height;
     mtps::BasicProperty<mtps::u32> bits_per_pixel;
+
+    void onAttached() override;
 };
 
-} // namespace hef::win
+} // namespace lib::win
 
 #endif
