@@ -17,7 +17,12 @@ class WindowProperties : public sys::IDataWrapper
 public:
     mtps::BasicProperty<mtps::u32> width;
     mtps::BasicProperty<mtps::u32> height;
-    mtps::BasicProperty<mtps::u32> bits_per_pixel;
+    mtps::BasicProperty<mtps::u8> bits_per_red;
+    mtps::BasicProperty<mtps::u8> bits_per_green;
+    mtps::BasicProperty<mtps::u8> bits_per_blue;
+    mtps::BasicProperty<mtps::u8> bits_per_alpha;
+
+    mtps::u32 bitsPerPixel() const;
 
     void onAttached() override;
 };

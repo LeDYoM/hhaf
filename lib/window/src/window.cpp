@@ -73,13 +73,11 @@ bool Window::create(uptr<win::WindowProperties> window_properties)
     priv_->m_backendWindow = systemProvider().backendFactory().getWindow();
     backend::IWindow &bw(*priv_->m_backendWindow);
 
-    unsigned int data[3U] = { 
-        static_cast<unsigned int>(window_properties->width()),
-        static_cast<unsigned int>(window_properties->height()),
-        static_cast<unsigned int>(window_properties->bits_per_pixel())};
-
     // Create physical window
-    if (bw.createWindow(3U, data))
+    if (bw.createWindow(window_properties->width(), window_properties->height(),
+        window_properties->bits_per_red(), window_properties->bits_per_green(),
+        window_properties->bits_per_blue(), window_properties->bits_per_alpha(),
+        0U, nullptr))
     {
         DisplayLog::info("Window created...");
         // If window created successfully, extract the render target
