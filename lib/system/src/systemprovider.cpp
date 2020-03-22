@@ -74,6 +74,7 @@ void SystemProvider::init(IApp *iapp)
 #endif
 
     p_->window_->create(nullptr);
+    p_->render_system_->setRenderTarget(p_->window_->renderTarget());
     p_->input_system_->setInputDriver(p_->window_->inputDriver());
     p_->app_->onInit(*this);
 }
