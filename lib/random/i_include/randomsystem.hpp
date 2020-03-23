@@ -5,6 +5,7 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector.hpp>
+#include <mtypes/include/str.hpp>
 #include <lib/system/include/appservice.hpp>
 
 namespace lib::sys

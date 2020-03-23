@@ -500,23 +500,6 @@ constexpr bool operator!=(const vector<A> &lhs, const vector<A> &rhs) noexcept
     return !(lhs == rhs);
 }
 
-class str;
-template <typename T>
-str &operator<<(str &str_in, const vector<T> &data)
-{
-    str_in << "[";
-    for (auto it(data.cbegin()); it != data.cend(); ++it)
-    {
-        str_in << *it;
-        if (data.size() > 1U && it != data.cend() - 1U)
-        {
-            str_in << ",";
-        }
-    }
-    str_in << "]";
-    return str_in;
-}
-
 template <typename T>
 using vector_shared_pointers = vector<sptr<T>>;
 
