@@ -9,8 +9,8 @@
 struct CommonData
 {
     bool exit = false;
-    lib::u32 step{ 0U };
-    lib::sptr<lib::scene::SceneController> scene_controller = lib::msptr<lib::scene::SceneController>();
+    mtps::u32 step{ 0U };
+    mtps::sptr<lib::scene::SceneController> scene_controller = mtps::msptr<lib::scene::SceneController>();
 };
 
 CommonData common;
@@ -79,18 +79,18 @@ TEST_CASE("SceneController", "[lib][SceneController]")
 
     SECTION("Two scenes")
     {
-        common.scene_controller->setSceneDirector([](const str&scene_name)
+        common.scene_controller->setSceneDirector([](const mtps::str& scene_name)
         {
-            if (str(scene_name) == GroupScene1::StaticTypeName)
+            if (mtps::str(scene_name) == GroupScene1::StaticTypeName)
             {
-                return str(GroupScene2::StaticTypeName);
+                return mtps::str(GroupScene2::StaticTypeName);
             }
-            else if (str(scene_name) == GroupScene2::StaticTypeName)
+            else if (mtps::str(scene_name) == GroupScene2::StaticTypeName)
             {
-                return str("");
+                return mtps::str("");
             }
             CHECK(false);
-            return str("");
+            return mtps::str("");
         });
         CHECK(common.scene_controller->registerSceneNodeType<GroupScene1>());
         CHECK(common.scene_controller->registerSceneNodeType<GroupScene2>());

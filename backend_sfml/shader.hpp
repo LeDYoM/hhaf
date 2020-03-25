@@ -13,16 +13,16 @@ namespace lib::backend::sfmlb
 class Shader : public IShader
 {
 public:
-    Shader(uptr<sf::Shader> shader);
+    Shader(mtps::uptr<sf::Shader> shader);
     ~Shader() override;
 
-    void setUniform(const str &name, vector2df v) override;
-    void setUniform(const str &name, ITexture *texture) override;
+    void setUniform(const mtps::str &name, mtps::vector2df v) override;
+    void setUniform(const mtps::str &name, ITexture *texture) override;
 
     const sf::Shader &backEndShader() const { return *m_shaderPrivate; }
 
 private:
-    uptr<sf::Shader> m_shaderPrivate;
+    mtps::uptr<sf::Shader> m_shaderPrivate;
 };
 } // namespace lib::backend::sfmlb
 

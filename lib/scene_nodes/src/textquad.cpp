@@ -2,14 +2,14 @@
 
 namespace lib::scene::nodes
 {
-    TextQuad::TextQuad(SceneNode * parent, str name, sptr<IFont> font, const Color &color,
-                       const vector2df & size)
+    TextQuad::TextQuad(SceneNode * parent, mtps::str name, mtps::sptr<IFont> font, const Color &color,
+                       const mtps::vector2df & size)
         : BaseClass{ parent, std::move(name) }
     {
         setTableSize({2,2});
-        for (size_type count{0}; count < 4U; ++count)
+        for (mtps::size_type count{0}; count < 4U; ++count)
         {
-            auto node = createNodeAt({count%2, count/2}, name + "node_" + make_str(count));
+            auto node = createNodeAt({count%2, count/2}, name + "node_" + mtps::make_str(count));
             node->font = font;
             node->textColor.set(color);
         }

@@ -39,8 +39,8 @@ public:
      * @param endAction Functor with an action to perform when the animation
      *  is completed
      */
-    IPropertyAnimation(uptr<time::Timer> timer, time::TimePoint duration,
-                       IProperty<T> &prop, T start, T end,
+    IPropertyAnimation(mtps::uptr<time::Timer> timer, time::TimePoint duration,
+                       mtps::IProperty<T> &prop, T start, T end,
                        Animation::AnimationDirection animation_direction,
                        ActionFunc endAction = {})
         : Animation{std::move(timer), std::move(duration),
@@ -59,7 +59,7 @@ public:
     }
 
 private:
-    IProperty<T> &property_;
+    mtps::IProperty<T> &property_;
     const T startValue_;
     const T endValue_;
     const AT deltaValue_;

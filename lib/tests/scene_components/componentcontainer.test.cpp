@@ -13,7 +13,7 @@ struct TestComponent : public IComponent
 {
     int data_{0};
 
-    sptr<TestComponent> addAnother()
+    mtps::sptr<TestComponent> addAnother()
     {
         return attachedNode()->addComponentOfType<TestComponent>();
     }
@@ -28,11 +28,11 @@ private:
 TEST_CASE("lib::scene::ComponentContainer", "[ComponentContainer][constructor]")
 {
     // Create scenario for testing
-    sptr<ComponentContainer> component_container_no_parent(msptr<ComponentContainer>());
+    mtps::sptr<ComponentContainer> component_container_no_parent(mtps::msptr<ComponentContainer>());
 
     SECTION("Add component")
     {
-        sptr<TestComponent> component = component_container_no_parent->addComponentOfType<TestComponent>();
+        mtps::sptr<TestComponent> component = component_container_no_parent->addComponentOfType<TestComponent>();
 
         SECTION("Update")
         {
@@ -41,7 +41,7 @@ TEST_CASE("lib::scene::ComponentContainer", "[ComponentContainer][constructor]")
 
             SECTION("Add twice")
             {
-                sptr<TestComponent> component2 = component;
+                mtps::sptr<TestComponent> component2 = component;
                 component_container_no_parent->ensureComponentOfType(component2);
                 component_container_no_parent->updateComponents();
                 CHECK(component->data_ == 2);
@@ -54,7 +54,7 @@ TEST_CASE("lib::scene::ComponentContainer", "[ComponentContainer][constructor]")
         {
             SECTION("Add twice")
             {
-                sptr<TestComponent> component2 = component;
+                mtps::sptr<TestComponent> component2 = component;
                 component_container_no_parent->ensureComponentOfType(component2);
                 CHECK(component == component2);
             }
@@ -63,7 +63,7 @@ TEST_CASE("lib::scene::ComponentContainer", "[ComponentContainer][constructor]")
 
     SECTION("Clear")
     {
-        sptr<TestComponent> component = component_container_no_parent->addComponentOfType<TestComponent>();
+        mtps::sptr<TestComponent> component = component_container_no_parent->addComponentOfType<TestComponent>();
         auto data_copy(component->data_);
         component_container_no_parent->clearComponents();
         CHECK(data_copy == component->data_);

@@ -16,10 +16,10 @@ class BoardUtils
 {
 public:
     static void for_each_token_in_line(
-        const lib::vector2dst &startPosition,
+        const mtps::vector2dst &startPosition,
         const Direction &direction,
-        const lib::vector2dst &board_size,
-        lib::function<bool(const lib::vector2dst &, const Direction &)>
+        const mtps::vector2dst &board_size,
+        mtps::function<bool(const mtps::vector2dst &, const Direction &)>
             updatePredicate);
 };
 } // namespace zoper

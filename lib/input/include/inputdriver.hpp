@@ -16,7 +16,7 @@ namespace lib::input
 class InputDriver final
 {
 public:
-    InputDriver(rptr<backend::IInputDriver> input_driver);
+    InputDriver(mtps::rptr<backend::IInputDriver> input_driver);
     ~InputDriver();
 
     bool arePendingKeyPresses() const;
@@ -29,7 +29,7 @@ public:
     void keyReleased(const Key);
 
 private:
-    rptr<backend::IInputDriver> input_driver_;
+    mtps::rptr<backend::IInputDriver> input_driver_;
 };
 } // namespace lib::backend::sfmlb
 

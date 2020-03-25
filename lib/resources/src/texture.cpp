@@ -8,7 +8,7 @@ Texture::Texture(backend::ITexture *texture)
 
 Texture::~Texture() {}
 
-vector2du32 Texture::size() const
+mtps::vector2du32 Texture::size() const
 {
     return m_texturePrivate->size();
 }

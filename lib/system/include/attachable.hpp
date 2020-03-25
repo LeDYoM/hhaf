@@ -29,31 +29,31 @@ public:
 
     /**
      * @brief Get the attached node.
-     * @return const rptr<const T> The const attached node.
+     * @return const mtps::rptr<const T> The const attached node.
      */
-    constexpr const rptr<const T> attachedNode() const noexcept { return attachedNode_; }
+    constexpr const mtps::rptr<const T> attachedNode() const noexcept { return attachedNode_; }
 
     /**
      * @brief Get the attached node.
-     * @return const rptr<const T> The attached node.
+     * @return const mtps::rptr<const T> The attached node.
      */
-    constexpr const rptr<T> attachedNode() noexcept { return attachedNode_; }
+    constexpr const mtps::rptr<T> attachedNode() noexcept { return attachedNode_; }
 
     /**
      * @brief Shortcut method to get the attached node converted to a type.
      * 
      * @tparam Y Dest type to convert
-     * @return rptr<Y> containing the attached node or nullptr if no conversion
+     * @return mtps::rptr<Y> containing the attached node or nullptr if no conversion
      *  was possible.
      */
     template <typename Y>
-    rptr<Y> attachedNodeAs() noexcept
+    mtps::rptr<Y> attachedNodeAs() noexcept
     {
         return dynamic_cast<Y *>(attachedNode());
     }
 
 public:
-    rptr<T> attachedNode_;
+    mtps::rptr<T> attachedNode_;
 };
 
 } // namespace lib::sys

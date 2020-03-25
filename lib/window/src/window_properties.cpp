@@ -1,7 +1,5 @@
 #include "window_properties.hpp"
 
-namespace mtps = lib;
-
 namespace lib::win
 {
 

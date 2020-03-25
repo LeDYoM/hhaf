@@ -13,18 +13,18 @@ using namespace lib;
 class GameHudSceneNode : public scene::SceneNode
 {
 public:
-    GameHudSceneNode(scene::SceneNode *const parent, str name);
+    GameHudSceneNode(scene::SceneNode *const parent, mtps::str name);
     ~GameHudSceneNode() override;
 
-    void setLevel(const size_type level);
-    void setStayCounter(const size_type stayCounter);
-    void setConsumedTokens(const size_type consumedTokens);
-    void setEllapsedTimeInSeconds(const u64 seconds);
-    void setScore(const size_type score);
+    void setLevel(const mtps::size_type level);
+    void setStayCounter(const mtps::size_type stayCounter);
+    void setConsumedTokens(const mtps::size_type consumedTokens);
+    void setEllapsedTimeInSeconds(const mtps::u64 seconds);
+    void setScore(const mtps::size_type score);
 
 private:
-    sptr<scene::nodes::TextQuad> m_scoreQuad;
-    sptr<scene::nodes::TextQuad> m_goalQuad;
+    mtps::sptr<scene::nodes::TextQuad> m_scoreQuad;
+    mtps::sptr<scene::nodes::TextQuad> m_goalQuad;
 };
 } // namespace zoper
 

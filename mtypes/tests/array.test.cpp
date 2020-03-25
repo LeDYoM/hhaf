@@ -3,7 +3,7 @@
 #include <mtypes/include/array.hpp>
 #include <mtypes/include/types.hpp>
 
-using namespace lib;
+using namespace mtps;
 
 TEST_CASE("array::array", "[array]")
 {

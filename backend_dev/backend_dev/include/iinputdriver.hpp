@@ -12,7 +12,7 @@ namespace lib::backend
 class IInputDriver
 {
 public:
-    /// Virtual destructor to enable inheritance correctly.
+    /// Virtual demtps::structor to enable inheritance correctly.
     virtual ~IInputDriver() {}
 
     /// @return This method returns true if there are any pressed @Key

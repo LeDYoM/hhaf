@@ -13,7 +13,7 @@
 
 namespace lib
 {
-using Action = function<void()>;
+using Action = mtps::function<void()>;
 }
 
 namespace lib::scene
@@ -90,7 +90,7 @@ public:
         return !m_statesStack.empty();
     }
 
-    constexpr size_type stateStackSize() const noexcept
+    constexpr mtps::size_type stateStackSize() const noexcept
     {
         return m_statesStack.size();
     }
@@ -102,14 +102,14 @@ public:
         return m_statesStack.back();
     }
 
-    emitter<const T &> StateFinished;
-    emitter<const T &> StateStarted;
-    emitter<const T &> StatePushed;
-    emitter<const T &> StatePopped;
-    emitter<const T &> StatePaused;
-    emitter<const T &> StateResumed;
-    emitter<> BeforeStart;
-    emitter<> AfterFinish;
+    mtps::emitter<const T &> StateFinished;
+    mtps::emitter<const T &> StateStarted;
+    mtps::emitter<const T &> StatePushed;
+    mtps::emitter<const T &> StatePopped;
+    mtps::emitter<const T &> StatePaused;
+    mtps::emitter<const T &> StateResumed;
+    mtps::emitter<> BeforeStart;
+    mtps::emitter<> AfterFinish;
 
 private:
     inline void changeState(T newState)
@@ -129,8 +129,8 @@ private:
         m_pendingActions.push_back(std::move(action));
     }
 
-    stack<T> m_statesStack;
-    LockableVector<Action> m_pendingActions;
+    mtps::stack<T> m_statesStack;
+    mtps::LockableVector<Action> m_pendingActions;
 };
 
 template <typename T>

@@ -7,29 +7,29 @@
 namespace lib::scene
 {
 
-BMPFont::BMPFont(const str &file_name)
+BMPFont::BMPFont(const mtps::str&file_name)
 {
     fontPrivate = new BMFontPrivate;
     fontPrivate->chars_.resize(256U);
 
-    str fontfile(file_name + ".fnt");
-    str texturefile(file_name + ".png");
+    mtps::str fontfile(file_name + ".fnt");
+    mtps::str texturefile(file_name + ".png");
     DisplayLog::info("Starting to Parse Font ", fontfile);
     ParseFont(fontfile);
     DisplayLog::info("Finished Parsing Font ", fontfile);
     DisplayLog::info("Calculating some metrics");
-    fontPrivate->adv = 1.0f / (f32)size().x;
+    fontPrivate->adv = 1.0f / (mtps::f32)size().x;
 
-    for (u32 i{0U}; i < fontPrivate->chars_.size(); ++i)
+    for (mtps::u32 i{0U}; i < fontPrivate->chars_.size(); ++i)
     {
-        fontPrivate->chars_[i].offsetedPosition = Rectf32(
-            static_cast<vector2d<f32>>(fontPrivate->chars_[i].offset),
-            static_cast<vector2d<f32>>(fontPrivate->chars_[i].position.size()));
+        fontPrivate->chars_[i].offsetedPosition = mtps::Rectf32(
+            static_cast<mtps::vector2df>(fontPrivate->chars_[i].offset),
+            static_cast<mtps::vector2df>(fontPrivate->chars_[i].position.size()));
     }
     DisplayLog::info("Finished Parsing Font ", fontfile);
     DisplayLog::info("Loading pages. Number of pages: ", fontPrivate->pagesData_.size());
     /*
-        for (u32 i = 0; i < fontPrivate->pagesData_.size(); ++i)
+        for (mtps::u32 i = 0; i < fontPrivate->pagesData_.size(); ++i)
         {
             fontPrivate->pagesData_[i].it = resource_handler.loadTexture(
                 fontPrivate->pagesData_[i].file, 
@@ -39,9 +39,9 @@ BMPFont::BMPFont(const str &file_name)
         */
 }
 
-vector<str> BMPFont::textureFileNames() const
+mtps::vector<mtps::str> BMPFont::textureFileNames() const
 {
-    vector<str> texture_file_names(fontPrivate->pagesData_.size());
+    mtps::vector<mtps::str> texture_file_names(fontPrivate->pagesData_.size());
     for (const auto &page_data : fontPrivate->pagesData_)
     {
         texture_file_names.push_back(page_data.file);
@@ -50,14 +50,14 @@ vector<str> BMPFont::textureFileNames() const
     return texture_file_names;
 }
 
-void BMPFont::setTexturePages(const vector<sptr<ITexture>> &texture_pages)
+void BMPFont::setTexturePages(const mtps::vector<mtps::sptr<ITexture>> &texture_pages)
 {
     log_assert(texture_pages.size() <= fontPrivate->pagesData_.size(),
                "The number of textures to add should be lower or equal that the number of pages.");
 
-    size_type count{0U};
+    mtps::size_type count{0U};
 
-    for (sptr<ITexture> texture : texture_pages)
+    for (mtps::sptr<ITexture> texture : texture_pages)
     {
         fontPrivate->pagesData_[count].it = texture;
     }
@@ -85,7 +85,7 @@ void filterStr(std::stringstream &line_stream, std::string &value)
     } while (doNext);
 }
 
-const vector2du32 &BMPFont::size() const
+const mtps::vector2du32 &BMPFont::size() const
 {
     return fontPrivate->size_;
 }
@@ -104,13 +104,13 @@ std::string getStr(const std::string &read)
     return result;
 }
 
-bool BMPFont::ParseFont(const str &fontfile)
+bool BMPFont::ParseFont(const mtps::str&fontfile)
 {
     std::ifstream font_file_stream(fontfile.c_str());
     std::size_t i{0U};
-    u32 first{0U};
-    u32 second{0U};
-    s32 amount{0};
+    mtps::u32 first{0U};
+    mtps::u32 second{0U};
+    mtps::s32 amount{0};
 
     CharDescriptor C;
 
@@ -176,7 +176,7 @@ bool BMPFont::ParseFont(const str &fontfile)
                 i = read.find('=');
                 key = read.substr(0, i);
                 value = read.substr(i + 1);
-                u32 id{0U};
+                mtps::u32 id{0U};
 
                 filterStr(line_stream, value);
 
@@ -189,7 +189,7 @@ bool BMPFont::ParseFont(const str &fontfile)
                 }
                 else if (key == "file")
                 {
-                    fontPrivate->pagesData_[id].file = str(getStr(value).c_str());
+                    fontPrivate->pagesData_[id].file = mtps::str(getStr(value).c_str());
                 }
             }
         }
@@ -246,21 +246,21 @@ bool BMPFont::ParseFont(const str &fontfile)
                 {
                     std::string temp;
                     std::getline(converter, temp, ',');
-                    fontPrivate->fInfo.padding.left = static_cast<s16>(std::atoi(temp.c_str()));
+                    fontPrivate->fInfo.padding.left = static_cast<mtps::s16>(std::atoi(temp.c_str()));
                     std::getline(converter, temp, ',');
-                    fontPrivate->fInfo.padding.top = static_cast<s16>(std::atoi(temp.c_str()));
+                    fontPrivate->fInfo.padding.top = static_cast<mtps::s16>(std::atoi(temp.c_str()));
                     std::getline(converter, temp, ',');
-                    fontPrivate->fInfo.padding.setRight(static_cast<s16>(std::atoi(temp.c_str())));
+                    fontPrivate->fInfo.padding.setRight(static_cast<mtps::s16>(std::atoi(temp.c_str())));
                     std::getline(converter, temp, ',');
-                    fontPrivate->fInfo.padding.setBottom(static_cast<s16>(std::atoi(temp.c_str())));
+                    fontPrivate->fInfo.padding.setBottom(static_cast<mtps::s16>(std::atoi(temp.c_str())));
                 }
                 else if (key == "spacing")
                 {
                     std::string temp;
                     std::getline(converter, temp, ',');
-                    fontPrivate->fInfo.spacing.x = static_cast<s16>(std::atoi(temp.c_str()));
+                    fontPrivate->fInfo.spacing.x = static_cast<mtps::s16>(std::atoi(temp.c_str()));
                     std::getline(converter, temp, ',');
-                    fontPrivate->fInfo.spacing.y = static_cast<s16>(std::atoi(temp.c_str()));
+                    fontPrivate->fInfo.spacing.y = static_cast<mtps::s16>(std::atoi(temp.c_str()));
                 }
                 else if (key == "outline")
                 {
@@ -297,13 +297,13 @@ bool BMPFont::ParseFont(const str &fontfile)
                 }
                 else if (key == "width")
                 {
-                    u16 temp;
+                    mtps::u16 temp;
                     converter >> temp;
                     C.position.width = temp;
                 }
                 else if (key == "height")
                 {
-                    u16 temp;
+                    mtps::u16 temp;
                     converter >> temp;
                     C.position.height = temp;
                 }
@@ -379,38 +379,38 @@ bool BMPFont::ParseFont(const str &fontfile)
     return true;
 }
 
-Rectf32 BMPFont::getBounds(const u32 codePoint) const
+mtps::Rectf32 BMPFont::getBounds(const mtps::u32 codePoint) const
 {
     return fontPrivate->chars_[codePoint].offsetedPosition;
 }
 
-Rectf32 BMPFont::getTextureBounds(const u32 codePoint) const
+mtps::Rectf32 BMPFont::getTextureBounds(const mtps::u32 codePoint) const
 {
-    return static_cast<Rectf32>(fontPrivate->chars_[codePoint].position);
+    return static_cast<mtps::Rectf32>(fontPrivate->chars_[codePoint].position);
 }
 
-f32 BMPFont::getAdvance(const u32 codePoint) const
+mtps::f32 BMPFont::getAdvance(const mtps::u32 codePoint) const
 {
-    return static_cast<f32>(fontPrivate->chars_[codePoint].xadvance);
+    return static_cast<mtps::f32>(fontPrivate->chars_[codePoint].xadvance);
 }
 
-f32 BMPFont::getLineSpacing() const
+mtps::f32 BMPFont::getLineSpacing() const
 {
     return 0.F;
 }
 
-f32 BMPFont::getKerning(const u32 first, const u32 second) const
+mtps::f32 BMPFont::getKerning(const mtps::u32 first, const mtps::u32 second) const
 {
-    return static_cast<f32>(fontPrivate->chars_[first].GetKerningPair(second));
+    return static_cast<mtps::f32>(fontPrivate->chars_[first].GetKerningPair(second));
 }
 
-sptr<ITexture> BMPFont::getTexture() const
+mtps::sptr<ITexture> BMPFont::getTexture() const
 {
     return fontPrivate->pagesData_[0U].it;
 }
 
-vector2df BMPFont::textSize(const str &text) const
+mtps::vector2df BMPFont::textSize(const mtps::str&text) const
 {
-    return vector2df{};
+    return mtps::vector2df{};
 }
 } // namespace lib::scene

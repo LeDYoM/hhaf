@@ -51,7 +51,7 @@ void Transformable::scaleAround(VectorScalar point, VectorScalar scale_)
     scale = scale_;
 }
 
-void Transformable::rotateScaleAround(VectorScalar point, f32 angle, VectorScalar scale_)
+void Transformable::rotateScaleAround(VectorScalar point, mtps::f32 angle, VectorScalar scale_)
 {
     origin = position = point;
     rotation = angle;

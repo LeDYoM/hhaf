@@ -10,12 +10,11 @@
 
 namespace zoper
 {
-using namespace lib;
 
 class Direction
 {
 public:
-    enum class DirectionData : u8
+    enum class DirectionData :  mtps::u8
     {
         Left = 0,
         Right = 1,
@@ -23,17 +22,17 @@ public:
         Down = 3,
         Invalid = 4
     };
-    static constexpr u8 Total = static_cast<u8>(DirectionData::Invalid);
+    static constexpr  mtps::u8 Total = static_cast< mtps::u8>(DirectionData::Invalid);
 
     constexpr Direction(DirectionData d) noexcept : data{d} {}
     constexpr Direction() noexcept : Direction{DirectionData::Up} {}
-    constexpr Direction(u8 d) noexcept : Direction{static_cast<DirectionData>(d)} {}
+    constexpr Direction( mtps::u8 d) noexcept : Direction{static_cast<DirectionData>(d)} {}
     constexpr Direction(const Direction &other) noexcept = default;
     constexpr Direction &operator=(const Direction &other) noexcept = default;
     constexpr Direction(Direction &&other) noexcept = default;
     constexpr Direction &operator=(Direction &&other) noexcept = default;
 
-    constexpr operator u8() const noexcept { return static_cast<u8>(data); }
+    constexpr operator  mtps::u8() const noexcept { return static_cast< mtps::u8>(data); }
 
     constexpr DirectionData value() const noexcept { return data; }
     constexpr bool isValid() const noexcept { return data < DirectionData::Invalid; }
@@ -60,13 +59,13 @@ public:
         return DirectionData::Invalid;
     }
 
-    constexpr vector2dst applyToVector(const vector2dst &v, const u32 scale = 1U) const noexcept
+    constexpr mtps::vector2dst applyToVector(const mtps::vector2dst &v, const mtps::u32 scale = 1U) const noexcept
     {
-        const vector2ds32 dv{directionVector(scale)};
+        const mtps::vector2ds32 dv{directionVector(scale)};
         return {v.x + dv.x, v.y + dv.y};
     }
 
-    constexpr lib::vector2ds32 directionVector(const lib::s32 scale = 1) const noexcept
+    constexpr mtps::vector2ds32 directionVector(const mtps::s32 scale = 1) const noexcept
     {
         switch (data)
         {
@@ -80,17 +79,17 @@ public:
             return {0, scale};
         case DirectionData::Invalid:
         default:
-            DisplayLog::error("Invalid direction. Cannot convert");
+            lib::DisplayLog::error("Invalid direction. Cannot convert");
         }
         return {};
     }
 
-    constexpr lib::vector2ds32 negatedDirectionVector(const lib::u32 scale = 1U) const noexcept
+    constexpr mtps::vector2ds32 negatedDirectionVector(const mtps::u32 scale = 1U) const noexcept
     {
         return directionVector(scale) * -1;
     }
 
-    constexpr lib::f32 angle() const noexcept
+    constexpr mtps::f32 angle() const noexcept
     {
         switch (data)
         {

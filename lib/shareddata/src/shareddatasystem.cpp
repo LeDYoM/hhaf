@@ -13,7 +13,7 @@ SharedDataSystem::~SharedDataSystem()
     data_.reset();
 }
 
-void SharedDataSystem::store(uptr<shdata::IShareable> data) noexcept
+void SharedDataSystem::store(mtps::uptr<shdata::IShareable> data) noexcept
 {
     log_assert(data_ == nullptr, "data_ is not nullptr");
     log_assert(data != nullptr, "data is nullptr");
@@ -25,10 +25,10 @@ void SharedDataSystem::store(uptr<shdata::IShareable> data) noexcept
     log_assert(data == nullptr, "data is not nullptr");
 }
 
-uptr<shdata::IShareable> SharedDataSystem::retrieve() noexcept
+mtps::uptr<shdata::IShareable> SharedDataSystem::retrieve() noexcept
 {
     log_assert(data_ != nullptr, "data_ is nullptr");
-    uptr<shdata::IShareable> temp = std::move(data_);
+    mtps::uptr<shdata::IShareable> temp = std::move(data_);
     log_assert(data_ == nullptr, "data_ is not nullptr");
 
     return temp;

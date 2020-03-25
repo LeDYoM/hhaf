@@ -6,7 +6,7 @@
 #include "types.hpp"
 #include "vector.hpp"
 
-namespace lib
+namespace mtps
 {
     template <typename T>
     class  stack {

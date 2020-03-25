@@ -9,25 +9,35 @@ namespace zoper
 {
 class LevelProperties;
 
-/// Class to help the logic of incrementing the score.
-/// This class uses RAII to store a pointer to @b LevelProperties
-/// and increment the score on destruction by calling it.
+/**
+ * @brief Class to help the logic of incrementing the score.
+ * This class uses RAII to store a pointer to @b LevelProperties
+ * and increment the score on destruction by calling it.
+ */
 class ScoreIncrementer
 {
 public:
-    /// Constructor.
-    /// @param level_properties class where to forward score increments.
-    ScoreIncrementer(lib::sptr<LevelProperties> level_properties);
+    /**
+     * @brief Construct a new Score Incrementer object
+     * 
+     * @param level_properties 
+     */
+    ScoreIncrementer(mtps::sptr<LevelProperties> level_properties);
 
-    /// destructor that perform the score incrementation.
+    /**
+     * @brief Destroy the Score Incrementer object
+     * 
+     */
     ~ScoreIncrementer();
 
-    /// Increments the number of token hit.
+    /**
+     * @brief Increments the number of token hit.
+     */
     void addHit();
 
 private:
-    lib::size_type hits_{0U};
-    lib::sptr<LevelProperties> level_properties_;
+    mtps::size_type hits_{0U};
+    mtps::sptr<LevelProperties> level_properties_;
 };
 } // namespace zoper
 

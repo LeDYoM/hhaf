@@ -20,7 +20,7 @@ namespace lib::sys
 class Host::HostPrivate final
 {
 public:
-    HostPrivate(const int argc, char *argv[]) : m_params{parpar::create(argc, argv)},
+    HostPrivate(const int argc, char *argv[]) : m_params{mtps::parpar::create(argc, argv)},
                                                 // Hardcoded default configuration
                                                 // TODO
                                                 m_configuration{
@@ -37,14 +37,14 @@ public:
         }
         return true;
     }
-    parpar::ParametersParser m_params;
+    mtps::parpar::ParametersParser m_params;
 
-    Dictionary<str> m_configuration;
+    mtps::Dictionary<mtps::str> m_configuration;
     IApp *iapp_{nullptr};
     IControllableSystemProvider *system_provider_;
 };
 
-enum class Host::AppState : u8
+enum class Host::AppState : mtps::u8
 {
     NotInitialized,
     ReadyToStart,
@@ -54,7 +54,7 @@ enum class Host::AppState : u8
 };
 
 Host::Host(int argc, char *argv[])
-    : m_private{muptr<HostPrivate>(argc, argv)}, m_state{AppState::NotInitialized}
+    : m_private{mtps::muptr<HostPrivate>(argc, argv)}, m_state{AppState::NotInitialized}
 {
     DisplayLog::info("Starting HostController...");
     DisplayLog::info("Host version: ", HostVersion, ".", HostSubversion, ".", HostPatch);
@@ -64,7 +64,7 @@ Host::Host(int argc, char *argv[])
 
 Host::~Host() = default;
 
-bool Host::setApplication(rptr<IApp> iapp)
+bool Host::setApplication(mtps::rptr<IApp> iapp)
 {
     log_assert(iapp != nullptr, "Received nullptr Application");
     log_assert(!m_private->iapp_, "Application already set");
@@ -80,9 +80,9 @@ bool Host::setApplication(rptr<IApp> iapp)
     return false;
 }
 
-str appDisplayNameAndVersion(const IApp &app)
+mtps::str appDisplayNameAndVersion(const IApp &app)
 {
-    return make_str(app.getName(), "(",
+    return mtps::make_str(app.getName(), "(",
                     app.getVersion(), ".",
                     app.getSubVersion(), ".", app.getPatch(), ")");
 }

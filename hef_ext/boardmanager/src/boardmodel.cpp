@@ -3,6 +3,8 @@
 
 #include <lib/include/liblog.hpp>
 
+using namespace mtps;
+
 namespace lib::board
 {
 BoardModelComponent::BoardModelComponent() = default;
@@ -38,7 +40,7 @@ SITilePointer BoardModelComponent::getTile(const vector2dst &position) const noe
     return SITilePointer();
 }
 
-void BoardModelComponent::setTile(const lib::vector2dst &tPosition, SITilePointer newTile)
+void BoardModelComponent::setTile(const vector2dst &tPosition, SITilePointer newTile)
 {
     log_assert(tileEmpty(tPosition), "You can only set data in empty tiles");
 

@@ -4,6 +4,7 @@
 #define LIB_SCENE_SCENECONTROLLER_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
+#include <mtypes/include/str.hpp>
 #include <mtypes/include/vector.hpp>
 #include <mtypes/include/function.hpp>
 
@@ -12,7 +13,7 @@
 
 namespace lib::scene
 {
-using SceneDirectorType = function<str(const str &)>;
+using SceneDirectorType = mtps::function<mtps::str(const mtps::str&)>;
 class SceneManager;
 
 class SceneController
@@ -27,13 +28,13 @@ public:
     void update();
     void finish();
 
-    sptr<Scene> currentScene();
+    mtps::sptr<Scene> currentScene();
     bool isActive();
 
-    bool startScene(const str &sceneName);
+    bool startScene(const mtps::str&sceneName);
 
     template <typename T>
-    bool registerAndStartScene(const str &sceneName)
+    bool registerAndStartScene(const mtps::str&sceneName)
     {
         if (scene_factory_.registerSceneNodeType<T>(sceneName))
         {
@@ -67,16 +68,16 @@ public:
     inline SceneNodeFactory &sceneNodeFactory() noexcept { return scene_factory_; }
     inline const SceneNodeFactory &sceneNodeFactory() const noexcept { return scene_factory_; }
     bool currentSceneIsNull();
-    const sptr<Scene> currentScene() const noexcept { return current_scene_; }
+    const mtps::sptr<Scene> currentScene() const noexcept { return current_scene_; }
 
 private:
-    void startScene(sptr<Scene> scene);
+    void startScene(mtps::sptr<Scene> scene);
     void terminateCurrentScene();
     
     SceneDirectorType scene_director_;
     SceneNodeFactory scene_factory_;
     SceneManager *scene_manager_{nullptr};
-    sptr<Scene> current_scene_{nullptr};
+    mtps::sptr<Scene> current_scene_{nullptr};
 };
 } // namespace lib::scene
 

@@ -20,7 +20,7 @@ private:
     void onKeyPressed(const lib::input::Key& key) override;
     void onKeyReleased(const lib::input::Key& key) override;
 
-    lib::rptr<GameScene> const gameScene();
+    mtps::rptr<GameScene> const gameScene();
 };
 } // namespace zoper
 

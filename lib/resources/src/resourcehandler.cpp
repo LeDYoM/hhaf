@@ -13,22 +13,22 @@ void ResourceHandler::onAttached()
     log_assert(handler_ != nullptr, "Invalid IResourceHandler");
 }
 
-bool ResourceHandler::loadTTFont(const str &rid, const str &fileName)
+bool ResourceHandler::loadTTFont(const mtps::str&rid, const mtps::str&fileName)
 {
     return handler_->loadTTFont(rid, fileName);
 }
 
-bool ResourceHandler::loadTexture(const str &rid, const str &fileName)
+bool ResourceHandler::loadTexture(const mtps::str&rid, const mtps::str&fileName)
 {
     return handler_->loadTexture(rid, fileName);
 }
 
-bool ResourceHandler::loadShader(const str &rid, const str &fileName)
+bool ResourceHandler::loadShader(const mtps::str&rid, const mtps::str&fileName)
 {
     return handler_->loadShader(rid, fileName);
 }
 
-bool ResourceHandler::loadBMPFont(const str &rid, const str &fileName)
+bool ResourceHandler::loadBMPFont(const mtps::str&rid, const mtps::str&fileName)
 {
     return handler_->loadBMPFont(rid, fileName);
 }

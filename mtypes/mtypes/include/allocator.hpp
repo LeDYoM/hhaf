@@ -6,7 +6,7 @@
 #include <cassert>
 #include "types.hpp"
 
-namespace lib
+namespace mtps
 {
 
 template <typename T>
@@ -41,6 +41,6 @@ public:
     }
 };
 
-} // namespace lib
+} // namespace mtps
 
 #endif

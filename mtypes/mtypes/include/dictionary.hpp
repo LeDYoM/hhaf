@@ -7,7 +7,7 @@
 #include "str.hpp"
 #include "vector.hpp"
 
-namespace lib
+namespace mtps
 {
     class Object;
 

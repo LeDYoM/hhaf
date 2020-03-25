@@ -12,11 +12,11 @@ namespace lib::scene
 {
 struct RenderizableModifierContext
 {
-    const Rectf32 box;
-    const Rects32 texture_rect;
-    const vector2du32 texture_size;
+    const mtps::Rectf32 box;
+    const mtps::Rects32 texture_rect;
+    const mtps::vector2du32 texture_size;
     const Vertex vertex;
-    constexpr vector2df normalizedVertexInBox() const
+    constexpr mtps::vector2df normalizedVertexInBox() const
     {
         return (box.rightBottom() - vertex.position) / box.rightBottom();
     }

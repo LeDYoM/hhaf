@@ -3,7 +3,7 @@
 
 namespace lib::input
 {
-InputDriver::InputDriver(rptr<backend::IInputDriver> input_driver)
+InputDriver::InputDriver(mtps::rptr<backend::IInputDriver> input_driver)
     : input_driver_{input_driver} {}
 
 InputDriver::~InputDriver() = default;

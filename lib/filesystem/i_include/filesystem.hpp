@@ -15,25 +15,25 @@ namespace lib::sys
 class FileSystem final : public AppService
 {
 public:
-    using Path = str;
+    using Path = mtps::str;
 
     FileSystem(sys::SystemProvider &system_provider);
     ~FileSystem() override;
 
     bool fileExists(const Path &path);
 
-    RawMemory loadBinaryFile(const str &file_name);
-    str loadTextFile(const Path &file_name);
+    mtps::RawMemory loadBinaryFile(const mtps::str&file_name);
+    mtps::str loadTextFile(const Path &file_name);
 
-    bool saveFile(const Path &file_name, const str &data);
+    bool saveFile(const Path &file_name, const mtps::str&data);
 
     template <typename T>
     bool deserializeFromFile(const Path &file_name, T &data)
     {
-        const str text_data{loadTextFile(file_name)};
+        const mtps::str text_data{loadTextFile(file_name)};
         if (!text_data.empty())
         {
-            return Serializer<T>::deserialize(text_data, data);
+            return mtps::Serializer<T>::deserialize(text_data, data);
         }
         return false;
     }
@@ -41,12 +41,12 @@ public:
     template <typename T>
     bool serializeToFile(const Path &file_name, const T &data)
     {
-        return saveFile(file_name, Serializer<T>::serialize(data));
+        return saveFile(file_name, mtps::Serializer<T>::serialize(data));
     }
 
 private:
     class FileSystemPrivate;
-    uptr<FileSystemPrivate> priv_;
+    mtps::uptr<FileSystemPrivate> priv_;
 };
 } // namespace lib::sys
 

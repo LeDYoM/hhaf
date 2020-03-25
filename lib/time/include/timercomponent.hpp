@@ -26,7 +26,7 @@ public:
      * @param timerType Type of the timer created.
      * @param timeOut  Time for when the timer will trigger.
      * @param callback Function to be triggered.
-     * @return TimerConnectorSPtr Object to control the timer created.
+     * @return TimerConnectorSPtr  mtps::Objectto control the timer created.
      */
     TimerConnectorSPtr addTimer(TimerType timerType,
                                 TimePoint timeOut, timer_callback_t callback);
@@ -37,7 +37,7 @@ public:
     void switchPause();
 
 private:
-    LockableVector<sptr<TimerConnector>> activeTimers_;
+   mtps::LockableVector<mtps::sptr<TimerConnector>> activeTimers_;
 };
 } // namespace lib::time
 

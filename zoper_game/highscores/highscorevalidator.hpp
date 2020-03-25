@@ -12,15 +12,15 @@ namespace zoper
 class HighScoreValidator : public lib::scene::TextValidator
 {
 public:
-    bool canAddChar(const str &source, const char new_char) override
+    bool canAddChar(const mtps::str &source, const char new_char) override
     {
-        str dest{source};
+        mtps::str dest{source};
         dest.append_char(new_char);
         return isValidText(dest);
         return true;
     }
 
-    bool isValidText(const lib::str &source) override
+    bool isValidText(const mtps::str &source) override
     {
         return source.size() < 4U;
     }

@@ -1,12 +1,12 @@
 #pragma once
 
-#ifndef LIB_VECTOR2D_INCLUDE_HPP
-#define LIB_VECTOR2D_INCLUDE_HPP
+#ifndef MTPS_VECTOR2D_INCLUDE_HPP
+#define MTPS_VECTOR2D_INCLUDE_HPP
 
 #include "types.hpp"
 #include "types_ext.hpp"
 
-namespace lib
+namespace mtps
 {
 template <typename T>
 class vector2d
@@ -144,6 +144,6 @@ using vector2ds32 = vector2d<s32>;
 using vector2df = vector2d<f32>;
 using vector2dd = vector2d<f64>;
 using vector2dst = vector2d<size_type>;
-} // namespace lib
+} // namespace mtps
 
 #endif

@@ -7,7 +7,7 @@
 namespace lib::backend
 {
 template <typename FactoryType>
-inline bool fillFactory(const uptr<BackendRegister> &backend_register, FactoryType **factory_to_fill)
+inline bool fillFactory(const mtps::uptr<BackendRegister> &backend_register, FactoryType **factory_to_fill)
 {
     if (auto factory(backend_register->getFactory<IFactoryOf<FactoryType>>()); factory)
     {
@@ -18,7 +18,7 @@ inline bool fillFactory(const uptr<BackendRegister> &backend_register, FactoryTy
 }
 
 template <typename FactoryType>
-inline bool emptyFactory(const uptr<BackendRegister> &backend_register, FactoryType **factory_to_empty)
+inline bool emptyFactory(const mtps::uptr<BackendRegister> &backend_register, FactoryType **factory_to_empty)
 {
     if (auto factory(backend_register->getFactory<IFactoryOf<FactoryType>>()); factory)
     {
@@ -45,7 +45,7 @@ BackendFactory::BackendFactory()
 
         if (fp_init_lib && fp_finish_lib)
         {
-            backend_register_ = muptr<BackendRegister>();
+            backend_register_ = mtps::muptr<BackendRegister>();
             backend_register_->setLibFuncs(fp_init_lib, fp_finish_lib);
             backend_register_->init();
         }

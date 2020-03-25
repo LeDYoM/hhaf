@@ -11,9 +11,9 @@ namespace lib::scene
 class Transform final
 {
 public:
-    using Scalar = f32;
-    using VectorScalar = vector2d<Scalar>;
-    using RectScalar = Rect<Scalar>;
+    using Scalar = mtps::f32;
+    using VectorScalar = mtps::vector2d<Scalar>;
+    using RectScalar = mtps::Rect<Scalar>;
 
     static constexpr Scalar One = 1.0F;
     static constexpr Scalar Zero = 0.0F;

@@ -28,7 +28,6 @@ namespace zoper
 class PauseSceneNode;
 class GameOverSceneNode;
 
-namespace mtps = lib;
 namespace haf = lib;
 namespace scene = haf::scene;
 
@@ -55,7 +54,7 @@ public:
 
 private:
     struct GameScenePrivate;
-    haf::uptr<GameScenePrivate> private_;
+    mtps::uptr<GameScenePrivate> private_;
     using BaseClass = scene::Scene;
     void generateNextToken();
     mtps::vector2df tileSize() const;

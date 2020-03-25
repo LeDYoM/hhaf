@@ -3,6 +3,8 @@
 #include <SFML/Graphics/Texture.hpp>
 #include "texture.hpp"
 
+using namespace mtps;
+
 namespace lib::backend::sfmlb
 {
     ITTFont* TTFontFactory::loadFromFile(const str & file)

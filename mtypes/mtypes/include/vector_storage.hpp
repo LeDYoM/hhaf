@@ -12,7 +12,7 @@
 #include "function.hpp"
 #include "growpolicy.hpp"
 
-namespace lib
+namespace mtps
 {
 /** Vector class to store a sequence of elements
     * This class is a container to store sequences of Ts. It can be resized.
@@ -201,6 +201,6 @@ public:
     T *m_buffer{nullptr};
 };
 
-} // namespace lib
+} // namespace mtps
 
 #endif

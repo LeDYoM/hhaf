@@ -20,7 +20,7 @@ namespace lib::sys
 {
 SimulationSystem::SimulationSystem(SystemProvider &system_provider)
     : AppService{system_provider},
-      priv_{muptr<SimulationSystemPrivate>()} {}
+      priv_{mtps::muptr<SimulationSystemPrivate>()} {}
 
 SimulationSystem::~SimulationSystem()
 {
@@ -31,7 +31,7 @@ SimulationSystem::~SimulationSystem()
     DisplayLog::info("Going to write play data into file ", SaveFileName);
     if (systemProvider().fileSystem().saveFile(
             SaveFileName,
-            Serializer<decltype(priv_->next_replay_data_)>::
+            mtps::Serializer<decltype(priv_->next_replay_data_)>::
                 serialize(priv_->next_replay_data_)))
     {
         DisplayLog::info("Play data written successfully");
@@ -63,11 +63,11 @@ void SimulationSystem::initialize()
     static constexpr char InputFileName[] = "simulation_input.txt";
 
     DisplayLog::info("Trying to load ", InputFileName, " to read simulation data");
-    if (str temp(systemProvider().fileSystem().loadTextFile(InputFileName)); !temp.empty())
+    if (mtps::str temp(systemProvider().fileSystem().loadTextFile(InputFileName)); !temp.empty())
     {
         // If the file has been read corretly,
         // createan ObjectCompiler and use it.
-        ObjectCompiler obj_compiler(temp);
+        mtps::ObjectCompiler obj_compiler(temp);
         if (obj_compiler.compile())
         {
             // The compilation was correct so, at least we
@@ -174,7 +174,7 @@ void SimulationSystem::update()
     }
 }
 
-bool SimulationSystem::getNext(const str &name, size_type &pre_selected)
+bool SimulationSystem::getNext(const mtps::str&name, mtps::size_type &pre_selected)
 {
     bool generated{false};
 

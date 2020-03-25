@@ -11,10 +11,10 @@ namespace lib::board
 class IBoardModelActuator
 {
 public:
-    virtual void tileAdded(const vector2dst, SITilePointer &) {}
-    virtual void tileRemoved(const vector2dst, SITilePointer &) {}
-    virtual void tileMoved(const vector2dst, const vector2dst, SITilePointer &) {}
-    virtual void tileChanged(const vector2dst, SITilePointer &, const BoardTileData, const BoardTileData) {}
+    virtual void tileAdded(const mtps::vector2dst, SITilePointer &) {}
+    virtual void tileRemoved(const mtps::vector2dst, SITilePointer &) {}
+    virtual void tileMoved(const mtps::vector2dst, const mtps::vector2dst, SITilePointer &) {}
+    virtual void tileChanged(const mtps::vector2dst, SITilePointer &, const BoardTileData, const BoardTileData) {}
 };
 } // namespace lib::board
 

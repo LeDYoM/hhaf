@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_MTYPES_OBJECT_UTILS_INCLUDE_HPP
-#define LIB_MTYPES_OBJECT_UTILS_INCLUDE_HPP
+#ifndef MTPS_MTYPES_OBJECT_UTILS_INCLUDE_HPP
+#define MTPS_MTYPES_OBJECT_UTILS_INCLUDE_HPP
 
 //#define LOG_MODE
 
@@ -9,7 +9,7 @@
 #include "str.hpp"
 #include "object.hpp"
 
-namespace lib
+namespace mtps
 {
     enum class TokenType : u8
     {

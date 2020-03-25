@@ -15,16 +15,16 @@ namespace lib::sys
 class SystemAccess;
 
 template <typename SystemType>
-const SystemType &getSystem(rptr<const SystemAccess>);
+const SystemType &getSystem(mtps::rptr<const SystemAccess>);
 
 template <typename SystemType>
-SystemType &getSystem(rptr<SystemAccess>);
+SystemType &getSystem(mtps::rptr<SystemAccess>);
 
 template <typename SystemType>
-const SystemType &getSystem(rptr<const scene::SceneNode>);
+const SystemType &getSystem(mtps::rptr<const scene::SceneNode>);
 
 template <typename SystemType>
-SystemType &getSystem(rptr<scene::SceneNode>);
+SystemType &getSystem(mtps::rptr<scene::SceneNode>);
 } // namespace lib::sys
 
 #endif

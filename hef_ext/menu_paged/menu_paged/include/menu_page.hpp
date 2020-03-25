@@ -18,19 +18,19 @@ class MenuPage : public scene::nodes::TableNode<nodes::SceneNodeText>
 {
     using BaseClass = scene::nodes::TableNode<nodes::SceneNodeText>;
 private:
-    void standarizeText(const sptr<ContainedElement> &ntext);
+    void standarizeText(const mtps::sptr<ContainedElement> &ntext);
     void goDown();
     void goUp();
     void goLeft();
     void goRight();
     void goSelected();
 
-    bool nodeHasOptions(const size_type y) const noexcept;
-    sptr<DiscreteTextComponent> optionsLabelAt(const size_type y) const;
-    void setSelectedItem(const size_type index);
+    bool nodeHasOptions(const mtps::size_type y) const noexcept;
+    mtps::sptr<DiscreteTextComponent> optionsLabelAt(const mtps::size_type y) const;
+    void setSelectedItem(const mtps::size_type index);
     void updateSelection();
-    void setColorToLine(const size_type, const scene::Color &);
-    vector<s32> optionsSelected() const;
+    void setColorToLine(const mtps::size_type, const scene::Color &);
+    mtps::vector<mtps::s32> optionsSelected() const;
 
 protected:
     using ContainedElement = BaseClass::ContainedElement;
@@ -38,29 +38,29 @@ protected:
     MenuPaged *parentMenuPaged();
     const MenuPaged *parentMenuPaged() const;
 
-    sptr<IFont> normalFont() const;
+    mtps::sptr<IFont> normalFont() const;
     Color normalColor() const;
     Color selectedColor() const;
 
-    size_type m_previouslySelectedItem{0U};
-    size_type m_selectedItem{0U};
+    mtps::size_type m_previouslySelectedItem{0U};
+    mtps::size_type m_selectedItem{0U};
 
-    ireceiver m_receiver;
+    mtps::ireceiver m_receiver;
 
 public:
     using BaseClass::BaseClass;
     ~MenuPage() override;
 
     void onCreated() override;
-    void configure(vector<sptr<MenuPagedOption>> options,
+    void configure(mtps::vector<mtps::sptr<MenuPagedOption>> options,
         PageOptions page_options = PageOptions{});
-    size_type SelectedOptionAtRow(const size_type row) const;
+    mtps::size_type SelectedOptionAtRow(const mtps::size_type row) const;
 
-    emitter<const s32> Forward;
-    emitter<vector<s32>> Accepted;
-    emitter<> Back;
-    emitter<vector<s32>> Canceled;
-    emitter<const size_type, const s32> Selection;
+    mtps::emitter<const mtps::s32> Forward;
+    mtps::emitter<mtps::vector<mtps::s32>> Accepted;
+    mtps::emitter<> Back;
+    mtps::emitter<mtps::vector<mtps::s32>> Canceled;
+    mtps::emitter<const mtps::size_type, const mtps::s32> Selection;
 };
 
 } // namespace lib::scene

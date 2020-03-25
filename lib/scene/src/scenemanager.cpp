@@ -17,7 +17,7 @@ namespace lib::scene
 SceneManager::SceneManager(sys::SystemProvider &system_provider)
     : AppService{system_provider}
 {
-    scene_controller_ = msptr<SceneController>();
+    scene_controller_ = mtps::msptr<SceneController>();
     scene_controller_->setSceneManager(this);
 }
 
@@ -37,22 +37,22 @@ void SceneManager::finish()
     scene_controller_->finish();
 }
 
-Rectf32 SceneManager::viewPort() const noexcept
+mtps::Rectf32 SceneManager::viewPort() const noexcept
 {
     return systemProvider().parentWindow().renderTarget()->viewPort();
 }
 
-void SceneManager::setViewPort(const Rectf32 &vp) noexcept
+void SceneManager::setViewPort(const mtps::Rectf32 &vp) noexcept
 {
     systemProvider().parentWindow().renderTarget()->setViewPort(vp);
 }
 
-Rectf32 SceneManager::viewRect() const noexcept
+mtps::Rectf32 SceneManager::viewRect() const noexcept
 {
     return systemProvider().parentWindow().renderTarget()->viewRect();
 }
 
-void SceneManager::setViewRect(const Rectf32 &vr) noexcept
+void SceneManager::setViewRect(const mtps::Rectf32 &vr) noexcept
 {
     systemProvider().parentWindow().renderTarget()->setViewRect(vr);
 }

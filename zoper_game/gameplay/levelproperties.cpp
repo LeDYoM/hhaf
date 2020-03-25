@@ -10,9 +10,9 @@ using namespace lib;
 using namespace lib::scene;
 using namespace lib::sys;
 
-void LevelProperties::configure(const size_type currentLevel,
+void LevelProperties::configure(const mtps::size_type currentLevel,
                                 const GameMode gameMode,
-                                sptr<time::TimerComponent> sceneTimerComponent)
+                                mtps::sptr<time::TimerComponent> sceneTimerComponent)
 {
     using namespace time;
 
@@ -39,7 +39,7 @@ void LevelProperties::configure(const size_type currentLevel,
     setLevel(currentLevel);
 }
 
-void LevelProperties::setScore(const size_type new_score)
+void LevelProperties::setScore(const mtps::size_type new_score)
 {
     m_currentScore = new_score;
     auto game_shared_data_view = attachedNode()->dataWrapper<shdata::SharedDataView>();
@@ -122,7 +122,7 @@ void LevelProperties::updateLevelData()
     }
 }
 
-void LevelProperties::increaseScore(const size_type scoreIncrement)
+void LevelProperties::increaseScore(const mtps::size_type scoreIncrement)
 {
     setScore(m_currentScore + scoreIncrement);
 }

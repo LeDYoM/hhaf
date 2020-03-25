@@ -4,11 +4,12 @@
 #include <lib/include/liblog.hpp>
 
 using namespace lib;
+using namespace mtps;
 
 namespace zoper
 {
 
-ScoreIncrementer::ScoreIncrementer(lib::sptr<LevelProperties> level_properties)
+ScoreIncrementer::ScoreIncrementer(sptr<LevelProperties> level_properties)
     : hits_{0U}, level_properties_{std::move(level_properties)}
 {
 }

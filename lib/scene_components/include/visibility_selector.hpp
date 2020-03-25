@@ -14,13 +14,13 @@ namespace lib::scene
 class VisibilitySelectorComponent : public IComponent
 {
 public:
-    void configure(size_type first_index);
-    void show(size_type index, bool force = false);
+    void configure(mtps::size_type first_index);
+    void show(mtps::size_type index, bool force = false);
 
 private:
     void hideAll();
 
-    size_type active_index{0U};
+    mtps::size_type active_index{0U};
 };
 
 class VisibilitySelector : public SceneNode
@@ -28,8 +28,8 @@ class VisibilitySelector : public SceneNode
 public:
     using SceneNode::SceneNode;
 
-    void configure(size_type first_index);
-    void show(size_type index, bool force = false);
+    void configure(mtps::size_type first_index);
+    void show(mtps::size_type index, bool force = false);
 };
 
 } // namespace lib::scene::nodes

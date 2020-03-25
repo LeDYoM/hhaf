@@ -27,24 +27,24 @@ class HighScoreTextController : public nodes::TableNode<nodes::SceneNodeText>
     using BaseClass = nodes::TableNode<nodes::SceneNodeText>;
 
 public:
-    HighScoreTextController(scene::SceneNode *parent, str name);
+    HighScoreTextController(scene::SceneNode *parent, mtps::str name);
     virtual ~HighScoreTextController();
 
     virtual void onCreated() override;
 
-    emitter<> Finished;
+    mtps::emitter<> Finished;
 
 private:
-    void standarizeText(const sptr<nodes::SceneNodeText> &ntext);
+    void standarizeText(const mtps::sptr<nodes::SceneNodeText> &ntext);
     void saveHighScores();
-    void addHighScoresLine(const size_type counter,
+    void addHighScoresLine(const mtps::size_type counter,
                            const HighScore &element, const bool is_inserting);
-    void addHighScoreEditor(const sptr<SceneNode>& label,
-                            const size_type counter, const HighScore &element);
-    void addEditAnimation(const size_type line_index);
+    void addHighScoreEditor(const mtps::sptr<SceneNode>& label,
+                            const mtps::size_type counter, const HighScore &element);
+    void addEditAnimation(const mtps::size_type line_index);
     HighScoresData m_hsData;
-    sptr<IFont> m_normalFont;
-    sptr<scene::AnimationComponent> animation_component_;
+    mtps::sptr<IFont> m_normalFont;
+    mtps::sptr<scene::AnimationComponent> animation_component_;
 
     Color m_normalColor;
     Color m_selectedColor;

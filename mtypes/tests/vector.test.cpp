@@ -3,7 +3,7 @@
 #include <mtypes/include/vector.hpp>
 #include <mtypes/include/types.hpp>
 
-using namespace lib;
+using namespace mtps;
 
 TEST_CASE("vector::vector", "[vector]")
 {

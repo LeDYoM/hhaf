@@ -8,7 +8,7 @@ namespace zoper
 
 #include <mtypes/include/str.hpp>
 
-enum class GameSceneStates : u8
+enum class GameSceneStates :  mtps::u8
 {
     Playing = 0U,
     GameOver,

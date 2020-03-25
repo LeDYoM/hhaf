@@ -18,18 +18,18 @@ public:
     Host(int argc, char *argv[]);
     ~Host();
 
-    bool setApplication(rptr<IApp> iapp);
+    bool setApplication(mtps::rptr<IApp> iapp);
     int run();
 
 private:
     class HostPrivate;
-    uptr<HostPrivate> m_private;
+    mtps::uptr<HostPrivate> m_private;
 
     bool loopStep();
     void exitProgram();
     bool update();
 
-    enum class AppState : u8;
+    enum class AppState : mtps::u8;
     AppState m_state;
     bool exit{false};
 };

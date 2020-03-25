@@ -24,7 +24,7 @@ public:
     virtual void onCreated() override;
 
 private:
-    ireceiver m_receiver;
+    mtps::ireceiver m_receiver;
 };
 } // namespace zoper
 

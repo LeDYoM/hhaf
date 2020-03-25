@@ -11,10 +11,12 @@
 #include <boardmanager/include/boardmodel.hpp>
 #include <boardmanager/include/itile.hpp>
 
-namespace zoper
-{
+using namespace mtps;
 using namespace lib::scene;
 using namespace lib::scene::nodes;
+
+namespace zoper
+{
 
 BoardGroup::BoardGroup(SceneNode *parent, str name, vector2dst size)
     : BaseClass{parent, std::move(name)}
@@ -107,81 +109,81 @@ void BoardGroup::setLevel(const size_type level)
     });
 }
 
-Color BoardGroup::getBackgroundTileColor(const size_type level,
-                                         vector2dst tilePosition, const bool isCenter) const
+Color BoardGroup::getBackgroundTileColor(
+    const size_type level, vector2dst tilePosition, const bool isCenter) const
 {
-    if (level <= 25)
+    if (level <= 25U)
     {
         if (isCenter)
         {
-            if (level < 9)
+            if (level < 9U)
             {
-                if (level % 2)
+                if (level % 2U)
                 {
-                    return {10, 200, 50};
+                    return {10U, 200U, 50U};
                 }
-                else if (!(level % 3))
+                else if (!(level % 3U))
                 {
-                    return {255, 70, 200};
+                    return {255U, 70U, 200U};
                 }
                 else
                 {
-                    return {255, 100, 100};
+                    return {255U, 100U, 100U};
                 }
             }
             else
             {
-                if (!(tilePosition.x % 2))
+                if (!(tilePosition.x % 2U))
                 {
-                    return (level < 15) ? Color{128, 128, 128} : Color{255, 100, 100};
+                    return (level < 15U) ? Color{128U, 128U, 128U} : Color{255U, 100U, 100U};
                 }
                 else
                 {
-                    return (level < 15) ? Color{225, 255, 255} : Color{100, 200, 200};
+                    return (level < 15U) ? Color{225U, 255U, 255U} : Color{100U, 200U, 200U};
                 }
             }
         }
         else
         {
-            if (level < 2)
+            if (level < 2U)
             {
                 return colors::Black;
             }
-            else if (level < 3)
+            else if (level < 3U)
             {
-                return {255, 128, 0};
+                return {255U, 128U, 0U};
             }
-            else if (level < 5)
+            else if (level < 5U)
             {
-                return {100, 128, 255};
+                return {100U, 128U, 255U};
             }
-            else if (level < 10)
+            else if (level < 10U)
             {
-                if (level % 2)
+                if (level % 2U)
                 {
-                    return (tilePosition.x % 2) ? Color{0, 255, 255} : Color{255, 100, 200};
+                    return (tilePosition.x % 2U) ? Color{0U, 255U, 255U} : Color{255U, 100U, 200U};
                 }
                 else
                 {
-                    return (tilePosition.y % 2) ? Color{0, 255, 255} : Color{255, 100, 200};
+                    return (tilePosition.y % 2U) ? Color{0U, 255U, 255U} : Color{255U, 100U, 200U};
                 }
             }
-            else if (level < 15)
+            else if (level < 15U)
             {
-                if (level % 2)
+                if (level % 2U)
                 {
-                    if (tilePosition.x % 2)
+                    if (tilePosition.x % 2U)
                     {
-                        return (tilePosition.y % 2) ? colors::White : Color{100, 100, 100};
+                        return (tilePosition.y % 2U) ? colors::White : Color{100U, 100U, 100U};
                     }
                     else
                     {
-                        return (tilePosition.y % 2) ? Color{0, 128, 255} : Color{10, 250, 100};
+                        return (tilePosition.y % 2U) ? Color{0U, 128U, 255U} : Color{10U, 250U, 100U};
                     }
                 }
                 else
                 {
-                    return (tilePosition.x % 2) ? ((tilePosition.y % 2) ? Color{25, 25, 25} : Color{10, 12, 250}) : ((tilePosition.y % 2) ? Color{250, 50, 10} : Color{10, 200, 10});
+                    return (tilePosition.x % 2U) ? ((tilePosition.y % 2U) ? Color{25U, 25U, 25U} : Color{10U, 12U, 250U}) : ((tilePosition.y % 2U) ? Color{250U, 50U, 10U} : Color{10U, 200U, 10U});
                 }
             }
         }
@@ -194,7 +196,7 @@ vector2df BoardGroup::board2SceneFactor() const
     return dataWrapper<SceneMetrics>()->currentView().size() / p_boardModel->size();
 }
 
-vector2df BoardGroup::board2Scene(const lib::vector2dst &bPosition) const
+vector2df BoardGroup::board2Scene(const vector2dst &bPosition) const
 {
     return board2SceneFactor() * bPosition;
 }

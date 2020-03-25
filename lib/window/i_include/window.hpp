@@ -45,7 +45,7 @@ public:
      * @return true If window creation was successful
      * @return false Failed trying to create the window
      */
-    bool create(uptr<win::WindowProperties> window_properties);
+    bool create(mtps::uptr<win::WindowProperties> window_properties);
 
     /**
      * @brief Method to be executed before starting a cycle of the system
@@ -62,15 +62,15 @@ public:
     void onCreate();
     void onDestroy();
 
-    sptr<RenderTarget> renderTarget();
-    const sptr<RenderTarget> renderTarget() const;
+    mtps::sptr<RenderTarget> renderTarget();
+    const mtps::sptr<RenderTarget> renderTarget() const;
 
-    sptr<input::InputDriver> inputDriver();
-    const sptr<input::InputDriver> inputDriver() const;
+    mtps::sptr<input::InputDriver> inputDriver();
+    const mtps::sptr<input::InputDriver> inputDriver() const;
 
 private:
     struct WindowPrivate;
-    uptr<WindowPrivate> priv_;
+    mtps::uptr<WindowPrivate> priv_;
 };
 } // namespace lib::sys
 

@@ -21,7 +21,7 @@ public:
     Texture(backend::ITexture *texture);
     ~Texture() override;
 
-    vector2du32 size() const override;
+    mtps::vector2du32 size() const override;
 
     const backend::ITexture *backEndTexture() const noexcept { return m_texturePrivate; }
 

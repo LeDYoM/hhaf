@@ -5,11 +5,13 @@
 #include "gamescene.hpp"
 #include "levelproperties.hpp"
 
-namespace zoper
-{
+using namespace mtps;
 using namespace lib;
 using namespace lib::scene;
 using namespace lib::board;
+
+namespace zoper
+{
 
 u32 Token::m_tileCounter{0};
 
@@ -18,7 +20,7 @@ Token::Token(SceneNode *const parent, str name)
 {
     ++m_tileCounter;
     m_node = createRenderizable(
-        "Node" + str::to_str(m_tileCounter), FigType_t::Shape, 30U);
+        "Node" + mtps::str::to_str(m_tileCounter), FigType_t::Shape, 30U);
     animation_component_ = addComponentOfType<scene::AnimationComponent>();
 }
 

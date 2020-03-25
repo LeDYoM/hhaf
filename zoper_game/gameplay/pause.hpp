@@ -20,15 +20,15 @@ using namespace lib;
 class PauseSceneNode : public scene::SceneNode
 {
 public:
-    PauseSceneNode(scene::SceneNode *const parent, str name);
+    PauseSceneNode(scene::SceneNode *const parent, mtps::str name);
     ~PauseSceneNode() override;
 
     void enterPause();
     void exitPause();
 
 private:
-    sptr<scene::nodes::SceneNodeText> m_pauseText;
-    sptr<scene::AnimationComponent> animation_component_;
+    mtps::sptr<scene::nodes::SceneNodeText> m_pauseText;
+    mtps::sptr<scene::AnimationComponent> animation_component_;
 };
 } // namespace zoper
 

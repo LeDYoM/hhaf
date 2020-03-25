@@ -19,14 +19,14 @@ private:
     using BaseClass = SceneNode;
 
 public:
-    BoardSceneNode(SceneNode *parent, str name, const Rectf32 &tileBox);
+    BoardSceneNode(SceneNode *parent, mtps::str name, const mtps::Rectf32 &tileBox);
     virtual ~BoardSceneNode();
 
     void setTileColor(Color color);
 
 private:
-    sptr<Renderizable> m_backgroundTile;
-    sptr<RenderizableSceneNode> m_pointInCenter;
+    mtps::sptr<Renderizable> m_backgroundTile;
+    mtps::sptr<RenderizableSceneNode> m_pointInCenter;
 };
 } // namespace zoper
 

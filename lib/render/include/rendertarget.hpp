@@ -32,23 +32,23 @@ public:
      * 
      * @param renderTarget Interface to the underlying low level render target.
      */
-    RenderTarget(rptr<backend::IRenderTarget> renderTarget);
+    RenderTarget(mtps::rptr<backend::IRenderTarget> renderTarget);
 
     /**
      * @brief Destroy the Render Target object
      */
     ~RenderTarget();
 
-    void setViewPort(const Rectf32 &nviewport);
-    Rectf32 viewPort() const;
-    void setViewRect(const Rectf32 &nviewRect);
-    Rectf32 viewRect() const;
+    void setViewPort(const mtps::Rectf32 &nviewport);
+    mtps::Rectf32 viewPort() const;
+    void setViewRect(const mtps::Rectf32 &nviewRect);
+    mtps::Rectf32 viewRect() const;
 
     void draw(const scene::RenderData &renderData);
     void clear();
 
 private:
-    const rptr<backend::IRenderTarget> irender_target_;
+    const mtps::rptr<backend::IRenderTarget> irender_target_;
 };
 } // namespace lib::sys
 

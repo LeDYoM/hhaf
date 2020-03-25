@@ -5,7 +5,7 @@
 
 namespace lib::scene
 {
-Rectf32 SceneMetrics::currentView() const
+mtps::Rectf32 SceneMetrics::currentView() const
 {
     return sys::getSystem<SceneManager>(attachedNode()).viewRect();
 }

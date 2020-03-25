@@ -12,7 +12,7 @@ namespace lib::time
  * @brief Enum class containing the different types of timer that can be created
  * 
  */
-enum class TimerType : u8
+enum class TimerType : mtps::u8
 {
     /**
      * @brief The @b Timer will be trigger continuosly until stopped.

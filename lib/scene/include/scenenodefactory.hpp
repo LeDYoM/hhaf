@@ -11,22 +11,22 @@
 namespace lib::scene
 {
 template <typename T>
-lib::uptr<T> createScene()
+mtps::uptr<T> createScene()
 {
-    return lib::muptr<T>();
+    return mtps::muptr<T>();
 }
 
 class SceneNodeFactory
 {
 public:
     using InterfaceType = Scene;
-    using CreateReturnType = sptr<InterfaceType>;
-    using SceneNodeConstructorFunction = function<CreateReturnType()>;
+    using CreateReturnType = mtps::sptr<InterfaceType>;
+    using SceneNodeConstructorFunction = mtps::function<CreateReturnType()>;
 
     SceneNodeFactory();
     ~SceneNodeFactory();
 
-    bool registerSceneNodeType(str type_name, SceneNodeConstructorFunction scene_constructor_function);
+    bool registerSceneNodeType(mtps::str type_name, SceneNodeConstructorFunction scene_constructor_function);
 
     template <typename T>
     constexpr bool registerSceneNodeType(SceneNodeConstructorFunction scene_constructor_function)
@@ -35,7 +35,7 @@ public:
     }
 
     template <typename T>
-    constexpr bool registerSceneNodeType(str type_name)
+    constexpr bool registerSceneNodeType(mtps::str type_name)
     {
         return registerSceneNodeType(std::move(type_name), createScene<T>);
     }
@@ -46,7 +46,7 @@ public:
         return registerSceneNodeType(T::StaticTypeName, createScene<T>);
     }
 
-    CreateReturnType create(const str &type_name);
+    CreateReturnType create(const mtps::str&type_name);
 
     template <typename T>
     constexpr CreateReturnType create()
@@ -56,7 +56,7 @@ public:
 
 private:
     struct SceneNodeFactoryPrivate;
-    uptr<SceneNodeFactoryPrivate> private_;
+    mtps::uptr<SceneNodeFactoryPrivate> private_;
 };
 } // namespace lib::scene
 

@@ -6,12 +6,12 @@
 
 namespace lib::shdata
 {
-void SharedData::store(uptr<IShareable> data)
+void SharedData::store(mtps::uptr<IShareable> data)
 {
     sys::getSystem<sys::ISharedDataSystem>(attachedNode()).store(std::move(data));
 }
 
-uptr<IShareable> SharedData::retrieve_imp()
+mtps::uptr<IShareable> SharedData::retrieve_imp()
 {
     log_assert(!isEmpty(), "SharedDataSystem should be empty");
     return sys::getSystem<sys::ISharedDataSystem>(attachedNode()).retrieve();

@@ -1,5 +1,3 @@
-#include <lib/input/include/key.hpp>
-
 #include "renderwindow.hpp"
 #include "conversions.hpp"
 
@@ -34,9 +32,9 @@ private:
 };
 
 bool RenderWindow::createWindow(
-            const u32 width, const u32 height,
-            const u8 red_bpp, const u8 green_bpp, const u8 blue_bpp,
-            const u8 alpha_bpp,
+            const mtps::u32 width, const mtps::u32 height,
+            const mtps::u8 red_bpp, const mtps::u8 green_bpp, const mtps::u8 blue_bpp,
+            const mtps::u8 alpha_bpp,
             const unsigned int num_extra_parameters, 
             const unsigned int* const extra_parameters)
 {
@@ -99,7 +97,7 @@ void RenderWindow::display()
     Window::display();
 }
 
-void RenderWindow::setWindowTitle(str newTitle)
+void RenderWindow::setWindowTitle(mtps::str newTitle)
 {
     Window::setTitle(to_sf_type(newTitle));
 }
@@ -124,8 +122,8 @@ void RenderWindow::onResize()
     setView(getView());
 }
 
-const str WindowBackendInfo::info()
+const mtps::str WindowBackendInfo::info()
 {
-    return make_str("SFML Backend: 1.0 Using SFML Version : ", SFML_VERSION_MAJOR, ".", SFML_VERSION_MINOR, ".", SFML_VERSION_PATCH);
+    return mtps::make_str("SFML Backend: 1.0 Using SFML Version : ", SFML_VERSION_MAJOR, ".", SFML_VERSION_MINOR, ".", SFML_VERSION_PATCH);
 }
 } // namespace lib::backend::sfmlb

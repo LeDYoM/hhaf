@@ -1,13 +1,15 @@
 #include "boardscenenode.hpp"
 #include <lib/include/liblog.hpp>
 
+using namespace mtps;
+
 namespace zoper
 {
 using namespace lib::scene;
 
 BoardSceneNode::BoardSceneNode(
     SceneNode *parent,
-    str name,
+    mtps::str name,
     const Rectf32 &tileBox)
     : BaseClass{parent, std::move(name)}
 {

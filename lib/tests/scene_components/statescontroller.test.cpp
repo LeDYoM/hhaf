@@ -3,23 +3,24 @@
 #include <mtypes/include/types.hpp>
 #include <lib/scene_components/include/statescontroller.hpp>
 
+using namespace mtps;
 using namespace lib;
 using namespace lib::scene;
 
 TEST_CASE("lib::StatesController", "[StatesController][lib][scene][component][StatesController]")
 {
-    constexpr u32 Start_State = 0U;
-    constexpr u32 Finish_State = 1U;
+    constexpr mtps::u32 Start_State = 0U;
+    constexpr mtps::u32 Finish_State = 1U;
 
     struct CommonData
     {
         bool exit = false;
-        u32 step{0U};
-        sptr<StatesController<u32>> states_controller;
+        mtps::u32 step{0U};
+        mtps::sptr<StatesController<mtps::u32>> states_controller;
     };
 
     CommonData common;
-    common.states_controller = msptr<StatesController<u32>>();
+    common.states_controller = mtps::msptr<StatesController<mtps::u32>>();
 
     common.states_controller->BeforeStart.connect([&common]() {
         CHECK(common.step == 0U);

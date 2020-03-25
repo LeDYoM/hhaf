@@ -11,7 +11,7 @@
 
 namespace lib
 {
-using logClass = logger::Log<str, logger::COutCommiter>;
+using logClass = logger::Log<mtps::str, logger::COutCommiter>;
 using DisplayLog = logger::LogDisplayer<logClass>;
 
 template <typename... Args>

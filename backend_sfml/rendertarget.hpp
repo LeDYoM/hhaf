@@ -21,15 +21,15 @@ class RenderTarget : public IRenderTarget, public sf::RenderTarget
 {
     void draw(
         const scene::Vertex *vertices,
-        const u32 nVertex,
+        const mtps::u32 nVertex,
         const scene::PrimitiveType pType,
-        const f32 *transform,
+        const mtps::f32 *transform,
         const ITexture *texture,
         const IShader *shader) override;
-    void setViewPort(const Rectf32 &nviewport) override;
-    Rectf32 viewPort() const override;
-    void setViewRect(const Rectf32 &nviewRect) override;
-    Rectf32 viewRect() const override;
+    void setViewPort(const mtps::Rectf32 &nviewport) override;
+    mtps::Rectf32 viewPort() const override;
+    void setViewRect(const mtps::Rectf32 &nviewRect) override;
+    mtps::Rectf32 viewRect() const override;
     void clear() override;
 };
 } // namespace lib::backend::sfmlb

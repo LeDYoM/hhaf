@@ -12,11 +12,11 @@ class TextQuad : public TableNode<SceneNodeText>
 {
 public:
     using BaseClass = TableNode<SceneNodeText>;
-    TextQuad(SceneNode *parent, str name,
-             sptr<IFont> font, const Color &color, const vector2df &size);
+    TextQuad(SceneNode *parent, mtps::str name,
+             mtps::sptr<IFont> font, const Color &color, const mtps::vector2df &size);
     virtual ~TextQuad();
 
-    inline sptr<SceneNodeText> text(vector2dst index) const noexcept
+    inline mtps::sptr<SceneNodeText> text(mtps::vector2dst index) const noexcept
     {
         return nodeAt(std::move(index));
     }

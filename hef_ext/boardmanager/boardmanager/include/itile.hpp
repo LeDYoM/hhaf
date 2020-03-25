@@ -9,7 +9,7 @@
 
 namespace lib::board
 {
-using BoardTileData = s32;
+using BoardTileData = mtps::s32;
 
 class ITile
 {
@@ -17,18 +17,18 @@ public:
     constexpr ITile() noexcept {}
     virtual ~ITile() {}
 
-    PropertyState<BoardTileData> data;
-    virtual void tileAdded(const vector2dst & /* position */) {}
-    virtual void tileRemoved(const vector2dst & /* position */) {}
-    virtual void tileChanged(const vector2dst & /*position */,
+    mtps::PropertyState<BoardTileData> data;
+    virtual void tileAdded(const mtps::vector2dst & /* position */) {}
+    virtual void tileRemoved(const mtps::vector2dst & /* position */) {}
+    virtual void tileChanged(const mtps::vector2dst & /*position */,
                              const BoardTileData /* oldValue */,
                              const BoardTileData /* newValue */) {}
 
-    virtual void tileMoved(const vector2dst & /* source */,
-                           const vector2dst & /* dest */) {}
+    virtual void tileMoved(const mtps::vector2dst & /* source */,
+                           const mtps::vector2dst & /* dest */) {}
 };
 
-using SITilePointer = sptr<ITile>;
+using SITilePointer = mtps::sptr<ITile>;
 } // namespace lib::board
 
 #endif

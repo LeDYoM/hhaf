@@ -17,19 +17,19 @@ public:
     template <bool ReturnsUnique, typename T>
     struct ReturnTypeImpl
     {
-        using type = uptr<T>;
+        using type = mtps::uptr<T>;
     };
 
     template <typename T>
     struct ReturnTypeImpl<false, typename T>
     {
-        using type = sptr<T>;
+        using type = mtps::sptr<T>;
     };
 
     template <typename T>
     using ReturnType = typename ReturnTypeImpl<ReturnsUnique, T>::type;
 
-    constexpr AttachableManager(rptr<AttachableType> attachable = nullptr) noexcept
+    constexpr AttachableManager(mtps::rptr<AttachableType> attachable = nullptr) noexcept
         : attachable_{std::move(attachable)} {}
 
     virtual ~AttachableManager() {}
@@ -47,8 +47,8 @@ protected:
         T *temp = new T();
 
         // Dynamic check that T is a valid types for this class.
-        const rptr<const sys::Attachable<AttachableType>> temp2 =
-            dynamic_cast<rptr<const sys::Attachable<AttachableType>>>(temp);
+        const mtps::rptr<const sys::Attachable<AttachableType>> temp2 =
+            dynamic_cast<mtps::rptr<const sys::Attachable<AttachableType>>>(temp);
         log_assert(temp2 != nullptr, "");
 
         ReturnType<T> result = ReturnType<T>(std::move(temp));
@@ -57,13 +57,13 @@ protected:
     }
 
 private:
-    void initialize(rptr<AttachedBase> dw) const
+    void initialize(mtps::rptr<AttachedBase> dw) const
     {
         dw->attachedNode_ = attachable_;
         dw->onAttached();
     }
 
-    const rptr<AttachableType> attachable_;
+    const mtps::rptr<AttachableType> attachable_;
 };
 } // namespace sys
 

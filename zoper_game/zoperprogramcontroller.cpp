@@ -13,18 +13,20 @@
 #include <lib/scene/i_include/scenecontroller.hpp>
 #include <lib/shareddata/include/ishareddatasystem.hpp>
 
-namespace zoper
-{
+using namespace mtps;
 using namespace lib;
 using namespace lib::scene;
+
+namespace zoper
+{
 
 ZoperProgramController::ZoperProgramController() {}
 ZoperProgramController::~ZoperProgramController() {}
 
-u16 ZoperProgramController::getVersion() const noexcept { return 1; }
-u16 ZoperProgramController::getSubVersion() const noexcept { return 4; }
-u16 ZoperProgramController::getPatch() const noexcept { return 0; }
-str ZoperProgramController::getName() const noexcept { return "Zoper"; }
+ u16 ZoperProgramController::getVersion() const noexcept { return 1; }
+ u16 ZoperProgramController::getSubVersion() const noexcept { return 4; }
+ u16 ZoperProgramController::getPatch() const noexcept { return 0; }
+ str ZoperProgramController::getName() const noexcept { return "Zoper"; }
 
 void ZoperProgramController::onInit(sys::ISystemProvider &system_provider)
 {
@@ -49,11 +51,11 @@ void ZoperProgramController::onInit(sys::ISystemProvider &system_provider)
         scene_node_factory.registerSceneNodeType<GameScene>();
         scene_node_factory.registerSceneNodeType<HighScoresScene>();
 
-        sceneController->setSceneDirector([this, &system_provider](const str &scene_name) -> str {
+        sceneController->setSceneDirector([this, &system_provider](const mtps::str &scene_name) -> mtps::str {
             // Did the user selected exit?
             if (sys::getSystemProvider(system_provider).exitRequested())
             {
-                return str{};
+                return mtps::str{};
             }
             else if (scene_name == (MenuScene::StaticTypeName))
             {
@@ -67,7 +69,7 @@ void ZoperProgramController::onInit(sys::ISystemProvider &system_provider)
             {
                 return MenuScene::StaticTypeName;
             }
-            return str{};
+            return mtps::str{};
         });
 
         sceneController->startScene<MenuScene>();

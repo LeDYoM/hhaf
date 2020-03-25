@@ -13,9 +13,9 @@ namespace lib::scene
 {
 namespace
 {
-constexpr vector2dd getPositionFromAngleAndRadius(
+constexpr mtps::vector2dd getPositionFromAngleAndRadius(
     const FigType_t fig_type,
-    const f64 angle, const vector2df &radius)
+    const mtps::f64 angle, const mtps::vector2df &radius)
 {
     switch (fig_type)
     {
@@ -34,8 +34,8 @@ constexpr vector2dd getPositionFromAngleAndRadius(
     }
 }
 
-constexpr pair<PrimitiveType, size_type> initDataVertexPerFigureAndNumPoints(
-    const FigType_t fig_type, const size_type num_points) noexcept
+constexpr mtps::pair<PrimitiveType, mtps::size_type> initDataVertexPerFigureAndNumPoints(
+    const FigType_t fig_type, const mtps::size_type num_points) noexcept
 {
     switch (fig_type)
     {
@@ -54,18 +54,18 @@ constexpr pair<PrimitiveType, size_type> initDataVertexPerFigureAndNumPoints(
     }
 }
 
-Rects32 textureFillQuad(const sptr<ITexture> &texture)
+mtps::Rects32 textureFillQuad(const mtps::sptr<ITexture> &texture)
 {
-    return texture ? Rects32{0, 0, static_cast<vector2ds32>(texture->size())}
-                   : Rects32{};
+    return texture ? mtps::Rects32{0, 0, static_cast<mtps::vector2ds32>(texture->size())}
+                   : mtps::Rects32{};
 }
 
 } // namespace
 
 Renderizable::Renderizable(
-    rptr<SceneNode> parent, str name, FigType_t figure_type,
-    size_type initial_point_count, Rectf32 _box, Color _color,
-    sptr<ITexture> _texture, sptr<IShader> _shader)
+    mtps::rptr<SceneNode> parent, mtps::str name, FigType_t figure_type,
+    mtps::size_type initial_point_count, mtps::Rectf32 _box, Color _color,
+    mtps::sptr<ITexture> _texture, mtps::sptr<IShader> _shader)
     : sys::HasName{std::move(name)},
       parent_{std::move(parent)}, figType{figure_type},
       pointCount{initial_point_count}, box{std::move(_box)},
@@ -95,30 +95,30 @@ void Renderizable::render()
     }
 }
 
-void Renderizable::setTextureAndTextureRect(sptr<ITexture> texture_, const Rectf32 &textRect)
+void Renderizable::setTextureAndTextureRect(mtps::sptr<ITexture> texture_, const mtps::Rectf32 &textRect)
 {
-    textureRect = static_cast<Rects32>(textRect);
+    textureRect = static_cast<mtps::Rects32>(textRect);
     texture.set(std::move(texture_));
 }
 
-void Renderizable::setTextureFill(sptr<ITexture> texture_)
+void Renderizable::setTextureFill(mtps::sptr<ITexture> texture_)
 {
     setTextureAndTextureRect(texture_, textureFillQuad(texture_));
 }
 
-vector2df Renderizable::normalizeInBox(
-    const vector2df &position,
-    const Rectf32 box, const Rectf32 &rect) const
+mtps::vector2df Renderizable::normalizeInBox(
+    const mtps::vector2df &position,
+    const mtps::Rectf32 box, const mtps::Rectf32 &rect) const
 {
-    const f32 xratio{(position.x - box.left) / box.width};
-    const f32 yratio{(position.y - box.top) / box.height};
+    const mtps::f32 xratio{(position.x - box.left) / box.width};
+    const mtps::f32 yratio{(position.y - box.top) / box.height};
     return {(rect.left + (rect.width * xratio)),
             (rect.top + (rect.height * yratio))};
 }
 
 void Renderizable::updateTextureCoordsAndColorForVertex(
     const BasicVertexArray::iterator v_iterator,
-    const Rectf32 &cbox, const Rects32 &ctexture_rect)
+    const mtps::Rectf32 &cbox, const mtps::Rects32 &ctexture_rect)
 {
     auto &dest_vertex = *v_iterator;
     dest_vertex.texCoords = normalizeInBox(dest_vertex.position, cbox, ctexture_rect);
@@ -127,7 +127,7 @@ void Renderizable::updateTextureCoordsAndColorForVertex(
 
 void Renderizable::updateColorForVertex(
     const BasicVertexArray::iterator v_iterator,
-    const Rectf32 &cbox, const Rects32 &ctexture_rect)
+    const mtps::Rectf32 &cbox, const mtps::Rects32 &ctexture_rect)
 {
     Color dest_color{color()};
     if (color_modifier())
@@ -135,7 +135,7 @@ void Renderizable::updateColorForVertex(
         RenderizableModifierContext context{
             box(),
             ctexture_rect,
-            texture() ? texture()->size() : vector2du32{0U, 0U},
+            texture() ? texture()->size() : mtps::vector2du32{0U, 0U},
             *v_iterator};
         dest_color *= color_modifier()(context);
     }
@@ -209,16 +209,16 @@ void Renderizable::updateGeometry()
 {
     if (pointCount())
     {
-        const Rectf32 &cBox{box()};
+        const mtps::Rectf32 &cBox{box()};
         auto &vertices(m_vertices.verticesArray());
 
         const auto fig_type{figType()};
-        const size_type nPoints{pointCount()};
-        const size_type nVertex{initDataVertexPerFigureAndNumPoints(fig_type, nPoints).second};
-        const vector2df radius{cBox.size() / 2.0F};
+        const mtps::size_type nPoints{pointCount()};
+        const mtps::size_type nVertex{initDataVertexPerFigureAndNumPoints(fig_type, nPoints).second};
+        const mtps::vector2df radius{cBox.size() / 2.0F};
 
         vertices.resize(nVertex); // + 2 for center and repeated first point
-        const f64 baseAngle(PiM2Constant<f64> / static_cast<f64>(nPoints));
+        const mtps::f64 baseAngle(PiM2Constant<mtps::f64> / static_cast<mtps::f64>(nPoints));
         const auto leftTop(cBox.leftTop());
         const auto base_position{leftTop + radius};
 
@@ -232,11 +232,11 @@ void Renderizable::updateGeometry()
             auto vertices_iterator{++vertices_iterator_second};
             auto angle{0.0};
 
-            for (size_type i{0U}; i < nPoints; ++i, ++vertices_iterator)
+            for (mtps::size_type i{0U}; i < nPoints; ++i, ++vertices_iterator)
             {
                 angle += baseAngle;
-                const vector2dd r{getPositionFromAngleAndRadius(fig_type, angle, radius)};
-                vertices_iterator->position = base_position + static_cast<vector2df>(r);
+                const mtps::vector2dd r{getPositionFromAngleAndRadius(fig_type, angle, radius)};
+                vertices_iterator->position = base_position + static_cast<mtps::vector2df>(r);
                 updateTextureCoordsAndColorForVertex(vertices_iterator, cBox, textureRect());
             }
 

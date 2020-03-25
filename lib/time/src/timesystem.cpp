@@ -15,7 +15,7 @@ using clock_t = std::chrono::high_resolution_clock;
 
 constexpr TimePoint timepoint_global_now()
 {
-    return TimePoint{static_cast<u64>(clock_t::now().time_since_epoch().count())};
+    return TimePoint{static_cast<mtps::u64>(clock_t::now().time_since_epoch().count())};
 }
 } // namespace
 
@@ -49,7 +49,7 @@ struct TimeSystem::TimeSystemPrivate final
     }
 
 #ifdef LIB_ALLOW_ACCELERATION
-    void setAcceleration(const f32 acceleration) noexcept
+    void setAcceleration(const mtps::f32 acceleration) noexcept
     {
         acceleration_ = acceleration;
     }
@@ -59,13 +59,13 @@ private:
     TimePoint last_start_frame_{0U};
     TimePoint last_end_frame_{0U};
 #ifdef LIB_ALLOW_ACCELERATION
-    f32 acceleration_ = 1.0f;
+    mtps::f32 acceleration_ = 1.0f;
 #endif
 };
 
 TimeSystem::TimeSystem(sys::SystemProvider& system_provider)
     : AppService{system_provider},
-      priv_{muptr<TimeSystemPrivate>()}
+      priv_{mtps::muptr<TimeSystemPrivate>()}
 {
 }
 
@@ -81,7 +81,7 @@ TimePoint TimeSystem::now() const
     return priv_->timeSinceStart();
 }
 
-void TimeSystem::setAcceleration(const f32 acceleration)
+void TimeSystem::setAcceleration(const mtps::f32 acceleration)
 {
 #ifdef LIB_ALLOW_ACCELERATION
     priv_->setAcceleration(acceleration);

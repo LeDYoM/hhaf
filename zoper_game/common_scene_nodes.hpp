@@ -5,5 +5,5 @@
 namespace zoper
 {
     void createStandardBackground(
-        const rptr<lib::scene::Renderizables> renderizables);
+        const mtps::rptr<lib::scene::Renderizables> renderizables);
 }

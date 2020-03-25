@@ -8,7 +8,7 @@
 
 #include <cassert>
 
-namespace lib
+namespace mtps
 {
 template <class T, size_type array_size>
 class array final
@@ -101,6 +101,6 @@ using array_unique_pointers = array<uptr<T>, S>;
 template <typename T, size_type S>
 using array_weak_pointers = array<wptr<T>, S>;
 
-} // namespace lib
+} // namespace mtps
 
 #endif

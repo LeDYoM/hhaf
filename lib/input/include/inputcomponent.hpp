@@ -18,8 +18,8 @@ public:
 
     void update() override;
 
-    emitter<const Key &> KeyPressed;
-    emitter<const Key &> KeyReleased;
+    mtps::emitter<const Key &> KeyPressed;
+    mtps::emitter<const Key &> KeyReleased;
 };
 } // namespace lib::input
 

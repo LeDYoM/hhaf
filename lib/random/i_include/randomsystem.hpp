@@ -20,11 +20,11 @@ public:
     RandomSystem(sys::SystemProvider &system_provider);
     ~RandomSystem() override;
 
-    size_type getNext(const str &name, const size_type min, const size_type max);
+    mtps::size_type getNext(const mtps::str&name, const mtps::size_type min, const mtps::size_type max);
 
 private:
     class RandomSystemPrivate;
-    uptr<RandomSystemPrivate> priv_;
+    mtps::uptr<RandomSystemPrivate> priv_;
 };
 } // namespace lib::sys
 

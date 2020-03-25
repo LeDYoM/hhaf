@@ -12,7 +12,7 @@ namespace lib::sys
 {
 struct ManagedApp
 {
-    rptr<IApp> app{nullptr};
+    mtps::rptr<IApp> app{nullptr};
     p_initApp init_app{nullptr};
     p_finishApp finish_app{nullptr};
 };
@@ -26,7 +26,7 @@ public:
     /// Method to load an app.
     /// @return Instance of the loaded app or nullptr
     ///     in case of failure.
-    ManagedApp loadApp(const str &file) const;
+    ManagedApp loadApp(const mtps::str &file) const;
     ManagedApp loadApp(p_initApp init_app, p_finishApp finish_app) const;
     bool unloadApp(ManagedApp &managed_app) const;
 };

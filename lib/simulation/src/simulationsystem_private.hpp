@@ -28,7 +28,7 @@ struct ReplayData
     constexpr static char InputDataName[] = "input_data";
 };
 
-const Object &operator>>(const Object &obj, ReplayData &replay_data)
+const  mtps::Object&operator>>(const  mtps::Object&obj, ReplayData &replay_data)
 {
     if (const auto obj_random_generator_data = obj[ReplayData::DataBufferName]; obj_random_generator_data.isObject())
     {
@@ -43,7 +43,7 @@ const Object &operator>>(const Object &obj, ReplayData &replay_data)
     return obj;
 }
 
-inline Object &operator<<(Object &obj, const ReplayData &replay_data)
+inline  mtps::Object&operator<<( mtps::Object&obj, const ReplayData &replay_data)
 {
     obj.set(ReplayData::DataBufferName, replay_data.data_buffer_);
     obj.set(ReplayData::InputDataName, replay_data.simulation_actions_);

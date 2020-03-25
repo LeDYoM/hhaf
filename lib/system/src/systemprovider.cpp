@@ -20,8 +20,9 @@
 #include <lib/include/liblog.hpp>
 #include <hosted_app/include/iapp.hpp>
 
-
 #include <functional>
+
+using namespace mtps;
 
 namespace lib::sys
 {
@@ -59,17 +60,17 @@ void SystemProvider::init(IApp *iapp)
     p_->backend_factory_ = uptr<backend::BackendFactory, void (*)(lib::backend::BackendFactory *)> 
         (createBackendFactory(), destroyBackendFactory);
     p_->app_ = iapp;
-    p_->shared_data_system_ = muptr<SharedDataSystem>(*this);
-    p_->time_system_ = muptr<TimeSystem>(*this);
-    p_->window_ = muptr<Window>(*this);
-    p_->input_system_ = muptr<InputSystem>(*this);
-    p_->scene_manager_ = muptr<scene::SceneManager>(*this);
-    p_->resource_manager_ = muptr<sys::ResourceManager>(*this);
-    p_->render_system_ = muptr<sys::RenderSystem>(*this);
-    p_->random_system_ = muptr<RandomSystem>(*this);
-    p_->file_system_ = muptr<FileSystem>(*this);
+    p_->shared_data_system_ = mtps::muptr<SharedDataSystem>(*this);
+    p_->time_system_ = mtps::muptr<TimeSystem>(*this);
+    p_->window_ = mtps::muptr<Window>(*this);
+    p_->input_system_ = mtps::muptr<InputSystem>(*this);
+    p_->scene_manager_ = mtps::muptr<scene::SceneManager>(*this);
+    p_->resource_manager_ = mtps::muptr<sys::ResourceManager>(*this);
+    p_->render_system_ = mtps::muptr<sys::RenderSystem>(*this);
+    p_->random_system_ = mtps::muptr<RandomSystem>(*this);
+    p_->file_system_ = mtps::muptr<FileSystem>(*this);
 #ifdef LIB_COMPILE_SIMULATIONS
-    p_->simulation_system_ = muptr<SimulationSystem>(*this);
+    p_->simulation_system_ = mtps::muptr<SimulationSystem>(*this);
     p_->simulation_system_->initialize();
 #endif
 

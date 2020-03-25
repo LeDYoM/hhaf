@@ -13,13 +13,13 @@ namespace lib::scene
 class RangeOption
 {
 public:
-    RangeOption(size_type min, size_type max);
-    explicit RangeOption(string_vector options);
+    RangeOption(mtps::size_type min, mtps::size_type max);
+    explicit RangeOption(mtps::string_vector options);
     explicit RangeOption();
 
     template <typename T>
     explicit RangeOption(T)
-        : options_(static_cast<size_type>(MEnum<T>::max_numeric - MEnum<T>::min_numeric))
+        : options_(static_cast<mtps::size_type>(MEnum<T>::max_numeric - MEnum<T>::min_numeric))
     {
         MEnum<T> v{T::min};
         while (v.isValid())
@@ -29,10 +29,10 @@ public:
         }
     }
 
-    const string_vector& options() const noexcept { return options_; }
+    const mtps::string_vector& options() const noexcept { return options_; }
 
 private:
-    string_vector options_;
+    mtps::string_vector options_;
 };
 
 /// This class stores the information to be passed to a @b MenuPage
@@ -42,21 +42,21 @@ private:
 class MenuPagedOption
 {
 public:
-    static constexpr s32 NoAction = -3;
-    static constexpr s32 GoBack = -2;
-    static constexpr s32 Accept = -1;
+    static constexpr mtps::s32 NoAction = -3;
+    static constexpr mtps::s32 GoBack = -2;
+    static constexpr mtps::s32 Accept = -1;
 
-    MenuPagedOption(str title,
+    MenuPagedOption(mtps::str title,
                     RangeOption range_options,
-                    s32 on_selected = NoAction);
+                    mtps::s32 on_selected = NoAction);
 
-    inline str title() const noexcept { return title_; }
+    inline mtps::str title() const noexcept { return title_; }
     const RangeOption& option() const noexcept { return option_; }
-    s32 onSelected() const noexcept;
+    mtps::s32 onSelected() const noexcept;
 
 private:
-    str title_;
-    s32 on_selected_;
+    mtps::str title_;
+    mtps::s32 on_selected_;
     RangeOption option_;
 };
 
@@ -67,9 +67,9 @@ public:
 };
 
 template <typename... Args>
-sptr<MenuPagedOption> make_option(Args &&... args)
+mtps::sptr<MenuPagedOption> make_option(Args &&... args)
 {
-    return msptr<MenuPagedOption>(std::forward<Args>(args)...);
+    return mtps::msptr<MenuPagedOption>(std::forward<Args>(args)...);
 }
 } // namespace lib::scene
 

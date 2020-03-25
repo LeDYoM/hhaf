@@ -12,11 +12,11 @@ namespace zoper
 	class GameOverSceneNode : public scene::SceneNode
 	{
 	public:
-        GameOverSceneNode(scene::SceneNode* const parent, str name);
+        GameOverSceneNode(scene::SceneNode* const parent, mtps::str name);
         ~GameOverSceneNode() override;
 
 	private:
-        sptr<scene::SceneNode> m_gameOverrg;
+        mtps::sptr<scene::SceneNode> m_gameOverrg;
     };
 }
 

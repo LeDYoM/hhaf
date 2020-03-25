@@ -19,14 +19,14 @@ public:
     using input::InputComponent::InputComponent;
     void onAttached() override;
 
-    emitter<> Up;
-    emitter<> Down;
-    emitter<> Left;
-    emitter<> Right;
-    emitter<> Selected;
+    mtps::emitter<> Up;
+    mtps::emitter<> Down;
+    mtps::emitter<> Left;
+    mtps::emitter<> Right;
+    mtps::emitter<> Selected;
 
 private:
-    ireceiver m_receiver;
+    mtps::ireceiver m_receiver;
 };
 } // namespace zoper
 

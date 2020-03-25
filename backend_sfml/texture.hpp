@@ -18,7 +18,7 @@ namespace lib::backend::sfmlb
         Texture(const sf::Texture* const texture, const bool owned);
         ~Texture() override;
 
-        virtual vector2du32 size() const override;
+        virtual mtps::vector2du32 size() const override;
 
         const sf::Texture &backEndTexture() const { return *m_texturePrivate; }
     private:

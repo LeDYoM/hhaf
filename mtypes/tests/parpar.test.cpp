@@ -2,8 +2,8 @@
 
 #include <mtypes/include/parpar.hpp>
 
-using namespace lib;
-using namespace lib::parpar;
+using namespace mtps;
+using namespace mtps::parpar;
 
 TEST_CASE("lib::parpar::ParameterParser", "[parpar]")
 {

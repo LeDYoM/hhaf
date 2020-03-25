@@ -4,6 +4,8 @@
 
 #include <SFML/Config.hpp>
 
+using namespace mtps;
+
 namespace lib::backend::sfmlb
 {
 static_assert(sizeof(sf::Vertex) == sizeof(scene::Vertex),
@@ -36,7 +38,7 @@ Rectf32 RenderTarget::viewPort() const
     return from_sft_type(currentView.getViewport());
 }
 
-void RenderTarget::setViewRect(const Rectf32 &nviewRect)
+void RenderTarget::setViewRect(const mtps::Rectf32 &nviewRect)
 {
     sf::View currentView(getView());
     currentView.setCenter(to_sf_type(nviewRect.center()));
@@ -44,7 +46,7 @@ void RenderTarget::setViewRect(const Rectf32 &nviewRect)
     setView(currentView);
 }
 
-Rectf32 RenderTarget::viewRect() const
+mtps::Rectf32 RenderTarget::viewRect() const
 {
     sf::View currentView(getView());
     return rectFromCenterAndSize(

@@ -46,7 +46,7 @@ public:
     /// Constructor normally used to create a scene node.
     /// @param[in] parent   Parent of this element.
     /// @param[in] name     Name of this element.
-    SceneNode(rptr<SceneNode> parent, str name);
+    SceneNode(mtps::rptr<SceneNode> parent, mtps::str name);
 
     /// Virtual destructor.
     virtual ~SceneNode();
@@ -59,11 +59,11 @@ public:
     void render(bool parentTransformationChanged);
     virtual void update() {}
 
-    BasicProperty<bool> visible;
+    mtps::BasicProperty<bool> visible;
     void clearAll();
 };
 
-using SceneNodeSPtr = sptr<SceneNode>;
+using SceneNodeSPtr = mtps::sptr<SceneNode>;
 } // namespace lib::scene
 
 #endif

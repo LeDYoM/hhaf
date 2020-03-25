@@ -22,7 +22,7 @@ public:
     using BaseClass::AttachableManager;
 
     template <typename T>
-    sptr<T> addComponentOfType()
+    mtps::sptr<T> addComponentOfType()
     {
         log_assert(componentOfType<T>() == nullptr,
                    "There is already a component with this type");
@@ -32,7 +32,7 @@ public:
     }
 
     template <typename T>
-    void ensureComponentOfType(sptr<T> &element)
+    void ensureComponentOfType(mtps::sptr<T> &element)
     {
         if (!element)
         {
@@ -48,25 +48,25 @@ public:
     * @return A shared pointer to the container or nullptr if not found
     */
     template <typename T>
-    sptr<T> componentOfType() const
+    mtps::sptr<T> componentOfType() const
     {
-        sptr<IComponent> cot(componentOfType(std::type_index(typeid(T))));
+        mtps::sptr<IComponent> cot(componentOfType(std::type_index(typeid(T))));
         return cot ? std::dynamic_pointer_cast<T>(cot) : nullptr;
     }
 
     void clearComponents() noexcept { m_components.clear(); }
 
 private:
-    bool addComponent(sptr<IComponent> nc);
+    bool addComponent(mtps::sptr<IComponent> nc);
 
     template <typename T>
-    void addComponentOfType(sptr<T> &component)
+    void addComponentOfType(mtps::sptr<T> &component)
     {
         component = addComponentOfType<T>();
     }
 
-    const sptr<IComponent> componentOfType(const std::type_index &ti) const;
-    LockableVector<sptr<IComponent>> m_components;
+    const mtps::sptr<IComponent> componentOfType(const std::type_index &ti) const;
+   mtps::LockableVector<mtps::sptr<IComponent>> m_components;
 };
 } // namespace lib::scene
 

@@ -4,7 +4,7 @@
 
 namespace lib::scene
 {
-SceneNodes::SceneNodes(const rptr<SceneNode> attached)
+SceneNodes::SceneNodes(const mtps::rptr<SceneNode> attached)
     : attached_{attached}
 {
 }
@@ -19,7 +19,7 @@ void SceneNodes::renderGroups(const bool parentTransformationChanged)
     }
 }
 
-bool SceneNodes::moveLastBeforeNode(const sptr<SceneNode> &beforeNode)
+bool SceneNodes::moveLastBeforeNode(const mtps::sptr<SceneNode> &beforeNode)
 {
     log_assert(!m_groups.empty(), "Cannot moveLastInsertedBeforeNode on empty container");
     if (!beforeNode)
@@ -47,18 +47,18 @@ bool SceneNodes::moveLastBeforeNode(const sptr<SceneNode> &beforeNode)
     return true;
 }
 
-sptr<SceneNode> SceneNodes::createSceneNode(str name)
+mtps::sptr<SceneNode> SceneNodes::createSceneNode(mtps::str name)
 {
     return createSceneNode<SceneNode>(std::move(name));
 }
 
-void SceneNodes::addSceneNode(sptr<SceneNode> node)
+void SceneNodes::addSceneNode(mtps::sptr<SceneNode> node)
 {
     m_groups.push_back(node);
     node->onCreated();
 }
 
-sptr<SceneNode> SceneNodes::groupByName(const str& name) const
+mtps::sptr<SceneNode> SceneNodes::groupByName(const mtps::str& name) const
 {
     const auto iterator = sceneNodes().find_if([name](const auto& node)
     {
@@ -68,7 +68,7 @@ sptr<SceneNode> SceneNodes::groupByName(const str& name) const
     return iterator == sceneNodes().cend() ? nullptr : *iterator;
 }
 
-void SceneNodes::removeSceneNode(sptr<SceneNode> element)
+void SceneNodes::removeSceneNode(mtps::sptr<SceneNode> element)
 {
     log_assert(element.get() != nullptr, "Received empty scene node to be deleted");
     log_assert(attached_ != element.get(), "Cannot delete myself from myself");

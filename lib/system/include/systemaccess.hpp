@@ -12,15 +12,15 @@ class ISystemProvider;
 class SystemAccess
 {
 public:
-    SystemAccess(rptr<ISystemProvider> isystem_provider);
+    SystemAccess(mtps::rptr<ISystemProvider> isystem_provider);
 
     const ISystemProvider &isystemProvider() const noexcept;
     ISystemProvider &isystemProvider() noexcept;
 
-    void copySystemProvider(rptr<ISystemProvider>);
+    void copySystemProvider(mtps::rptr<ISystemProvider>);
 
 private:
-    rptr<ISystemProvider> isystem_provider_;
+    mtps::rptr<ISystemProvider> isystem_provider_;
 };
 } // namespace lib::sys
 

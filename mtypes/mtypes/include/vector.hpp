@@ -13,7 +13,7 @@
 #include "growpolicy.hpp"
 #include "vector_storage.hpp"
 
-namespace lib
+namespace mtps
 {
 /** Vector class to store a sequence of elements
     * This class is a container to store sequences of Ts. It can be resized.
@@ -508,6 +508,6 @@ using vector_unique_pointers = vector<uptr<T>>;
 
 template <typename T>
 using vector_weak_pointers = vector<wptr<T>>;
-} // namespace lib
+} // namespace mtps
 
 #endif

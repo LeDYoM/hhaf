@@ -3,7 +3,7 @@
 
 namespace lib::sys
 {
-ManagedApp AppLoader::loadApp(const str &file) const
+ManagedApp AppLoader::loadApp(const mtps::str &file) const
 {
     using namespace loader;
     auto *loader(createLoader());

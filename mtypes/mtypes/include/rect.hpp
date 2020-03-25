@@ -1,12 +1,12 @@
 #pragma once
 
-#ifndef LIB_MTYPES_RECT_INCLUDE_HPP
-#define LIB_MTYPES_RECT_INCLUDE_HPP
+#ifndef MTPS_MTYPES_RECT_INCLUDE_HPP
+#define MTPS_MTYPES_RECT_INCLUDE_HPP
 
 #include "types.hpp"
 #include "vector2d.hpp"
 
-namespace lib
+namespace mtps
 {
     template <typename T>
     struct Rect

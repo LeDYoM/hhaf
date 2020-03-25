@@ -43,7 +43,7 @@ public:
         return simulation_action_container_;
     }
 
-    /// Add a key stroke to the current internal @b SimulationActionContainer.
+    /// Add a key mtps::oke to the current internal @b SimulationActionContainer.
     /// To do that, an action of simulated keydown and then simulated key up.
     /// The separation times will be according the parameters.
     /// @param[in] key The @input::Key to add to the container.

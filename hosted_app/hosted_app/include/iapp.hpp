@@ -22,10 +22,10 @@ public:
     virtual void onInit(sys::ISystemProvider& system_provider) = 0;
     virtual void onFinish(sys::ISystemProvider& system_provider) = 0;
 
-    virtual u16 getVersion() const noexcept = 0;
-    virtual u16 getSubVersion() const noexcept = 0;
-    virtual u16 getPatch() const noexcept = 0;
-    virtual str getName() const noexcept = 0;
+    virtual mtps::u16 getVersion() const noexcept = 0;
+    virtual mtps::u16 getSubVersion() const noexcept = 0;
+    virtual mtps::u16 getPatch() const noexcept = 0;
+    virtual mtps::str getName() const noexcept = 0;
 };
 } // namespace lib
 

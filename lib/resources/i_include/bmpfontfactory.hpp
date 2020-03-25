@@ -15,8 +15,8 @@ class BMPFont;
 class BMPFontFactory final
 {
 public:
-    sptr<BMPFont> loadFromFile(const str &file);
-    sptr<BMPFont> loadFromRawMemory(RawMemory *raw_memory);
+    mtps::sptr<BMPFont> loadFromFile(const mtps::str &file);
+    mtps::sptr<BMPFont> loadFromRawMemory(mtps::RawMemory *raw_memory);
 };
 } // namespace lib::scene
 

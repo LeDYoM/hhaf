@@ -10,9 +10,9 @@
 
 namespace lib::scene
 {
-using BasicVertexArray = vector<Vertex>;
+using BasicVertexArray = mtps::vector<Vertex>;
 
-enum class PrimitiveType : u8
+enum class PrimitiveType : mtps::u8
 {
     Points = 0U,
     Lines,
@@ -31,11 +31,11 @@ public:
 
     inline VertexArray(
         const PrimitiveType type,
-        const size_type vertexCount) noexcept
+        const mtps::size_type vertexCount) noexcept
         : m_vertices(vertexCount), m_primitiveType{type} {}
 
     explicit inline VertexArray(
-        pair<PrimitiveType, size_type> init) noexcept
+        mtps::pair<PrimitiveType, mtps::size_type> init) noexcept
         : VertexArray{init.first, init.second} {}
 
     constexpr bool empty() const noexcept { return m_vertices.empty(); }
@@ -45,9 +45,9 @@ public:
 
     constexpr PrimitiveType primitiveType() const noexcept { return m_primitiveType; }
 
-    void move(const vector2df &offset) noexcept;
-    void moveX(const f32 xOffset) noexcept;
-    void moveY(const f32 yOffset) noexcept;
+    void move(const mtps::vector2df &offset) noexcept;
+    void moveX(const mtps::f32 xOffset) noexcept;
+    void moveY(const mtps::f32 yOffset) noexcept;
 
 private:
     BasicVertexArray m_vertices;

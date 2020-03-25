@@ -17,43 +17,43 @@ namespace zoper
 {
 using namespace lib;
 
-using LevelType = size_type;
+using LevelType = mtps::size_type;
 
-class LevelProperties : public scene::IComponent
+class LevelProperties : public lib::scene::IComponent
 {
 public:
-    void configure(const size_type currentLevel,
+    void configure(const mtps::size_type currentLevel,
                const GameMode gameMode,
-               sptr<time::TimerComponent> m_sceneTimerComponent);
+               mtps::sptr<time::TimerComponent> m_sceneTimerComponent);
 
     inline size_t millisBetweenTokens() const { return m_millisBetweenTokens; }
     inline size_t baseScore() const { return m_baseScore; }
     inline size_t stayCounter() const { return m_stayCounter; }
-    void increaseScore(const size_type scoreIncrement);
+    void increaseScore(const mtps::size_type scoreIncrement);
     void nextLevel();
     static constexpr size_t maxLevelWithProperties{25U};
 
     void tokenConsumed();
-    emitter<const LevelType> levelChanged;
+    mtps::emitter<const LevelType> levelChanged;
 
 private:
     void updateGoals();
     void updateLevelData();
     void setLevel(const LevelType currentLevel);
-    void setScore(const size_type new_score);
+    void setScore(const mtps::size_type new_score);
 
-    uptr<time::Timer> m_levelTimer;
+    mtps::uptr<time::Timer> m_levelTimer;
     time::TimerConnectorSPtr m_updateLevelDataTimer;
-    sptr<time::TimerComponent> m_sceneTimerComponent;
+    mtps::sptr<time::TimerComponent> m_sceneTimerComponent;
 
-    size_type m_consumedTokens{0U};
+    mtps::size_type m_consumedTokens{0U};
     LevelType m_currentLevel{0U};
-    size_t m_millisBetweenTokens{0U};
-    size_t m_baseScore{0U};
-    size_t m_stayCounter{0U};
-    size_t m_currentScore{0U};
+    mtps::size_type m_millisBetweenTokens{0U};
+    mtps::size_type m_baseScore{0U};
+    mtps::size_type m_stayCounter{0U};
+    mtps::size_type m_currentScore{0U};
     GameMode m_gameMode;
-    sptr<GameHudSceneNode> m_gameHud;
+    mtps::sptr<GameHudSceneNode> m_gameHud;
 };
 } // namespace zoper
 

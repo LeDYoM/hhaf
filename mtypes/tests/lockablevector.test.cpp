@@ -3,7 +3,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/lockablevector.hpp>
 
-using namespace lib;
+using namespace mtps;
 
 TEST_CASE("LockableVector::LockableVector", "[LockableVector]")
 {

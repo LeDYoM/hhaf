@@ -10,19 +10,21 @@
 #include "ibackendmanager.hpp"
 #include "factory.hpp"
 
+using namespace mtps;
+
 namespace lib::backend::client
 {
     template <typename T>
-    void createFactoryOfFactories(lib::vector<lib::uptr<IAutoRegisterFactory>> &factories)
+    void createFactoryOfFactories(mtps::vector<mtps::uptr<IAutoRegisterFactory>> &factories)
     {
-        auto f(lib::muptr<AutoRegisterFactory<T::Interface>>());
-        f.get()->create(lib::muptr<T>());
+        auto f(mtps::muptr<AutoRegisterFactory<T::Interface>>());
+        f.get()->create(muptr<T>());
         factories.push_back(std::move(f));
     }
 
     struct DefaultBackendManager : IBackendManager
     {
-        vector<uptr<IAutoRegisterFactory>> factories;
+        mtps::vector<mtps::uptr<IAutoRegisterFactory>> factories;
 
         void setFactories(IBackendRegister*const backend_register) override final
         {

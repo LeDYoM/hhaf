@@ -12,8 +12,8 @@ namespace lib::scene
 class TextValidator
 {
 public:
-    virtual bool canAddChar(const str &, const char) { return true; }
-    virtual bool isValidText(const str &) { return true; }
+    virtual bool canAddChar(const mtps::str&, const char) { return true; }
+    virtual bool isValidText(const mtps::str&) { return true; }
 };
 
 class TextEditorComponent : public input::InputComponent
@@ -24,20 +24,20 @@ private:
 public:
     virtual void onAttached() override;
 
-    emitter<const str &> Accepted;
-    emitter<> Rejected;
+    mtps::emitter<const mtps::str&> Accepted;
+    mtps::emitter<> Rejected;
 
     bool enabled{true};
 
-    inline void setTextValidator(uptr<TextValidator> nTextValidator) noexcept
+    inline void setTextValidator(mtps::uptr<TextValidator> nTextValidator) noexcept
     {
         std::swap(m_textValidator, nTextValidator);
     }
 
 private:
-    ireceiver m_receiver;
-    uptr<TextValidator> m_textValidator;
-    str m_originalText;
+    mtps::ireceiver m_receiver;
+    mtps::uptr<TextValidator> m_textValidator;
+    mtps::str m_originalText;
 };
 } // namespace lib::scene
 

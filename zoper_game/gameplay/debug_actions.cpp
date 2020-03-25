@@ -6,6 +6,8 @@
 
 #include <lib/include/liblog.hpp>
 
+using namespace mtps;
+
 namespace zoper
 {
 using namespace lib::scene;

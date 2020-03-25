@@ -16,13 +16,13 @@ namespace lib::sys
 class SimulationSystem final : public AppService
 {
 public:
-    using SimulateRandomDataBuffer = vector<size_type>;
+    using SimulateRandomDataBuffer = mtps::vector<mtps::size_type>;
 
     SimulationSystem(sys::SystemProvider &system_provider);
     ~SimulationSystem() override;
 
     void update();
-    bool getNext(const str &name, size_type &pre_selected);
+    bool getNext(const mtps::str&name, mtps::size_type &pre_selected);
 
     void setSimulationActions(const time::TimePoint &current,
                               SimulationActionGroup simulation_action_group);
@@ -32,7 +32,7 @@ public:
 
 private:
     struct SimulationSystemPrivate;
-    uptr<SimulationSystemPrivate> priv_;
+    mtps::uptr<SimulationSystemPrivate> priv_;
 };
 } // namespace lib::sys
 

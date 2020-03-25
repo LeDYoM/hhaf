@@ -19,14 +19,14 @@ class ResourceHandler final : public sys::IDataWrapper, public IResourceHandler
 {
 public:
     void onAttached() override;
-    bool loadTTFont(const str &rid, const str &fileName) override;
-    bool loadTexture(const str &rid, const str &fileName) override;
-    bool loadShader(const str &rid, const str &fileName) override;
-    bool loadBMPFont(const str &rid, const str &fileName) override;
+    bool loadTTFont(const mtps::str&rid, const mtps::str&fileName) override;
+    bool loadTexture(const mtps::str&rid, const mtps::str&fileName) override;
+    bool loadShader(const mtps::str&rid, const mtps::str&fileName) override;
+    bool loadBMPFont(const mtps::str&rid, const mtps::str&fileName) override;
     void loadResources(IResourceLoader& resource_loader);
 
 private:
-    rptr<IResourceHandler> handler_;
+    mtps::rptr<IResourceHandler> handler_;
 };
 } // namespace lib::scene
 

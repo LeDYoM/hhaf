@@ -19,15 +19,15 @@ class RandomNumbersComponent final : public scene::IComponent
 public:
     RandomNumbersComponent() noexcept;
     ~RandomNumbersComponent() override;
-    u32 getUInt(const size_type max, const size_type min = 0U) const;
-    void setName(str new_name);
-    const str &name() const noexcept;
+    mtps::u32 getUInt(const mtps::size_type max, const mtps::size_type min = 0U) const;
+    void setName(mtps::str new_name);
+    const mtps::str&name() const noexcept;
 
     void onAttached() override;
 
 private:
     class RandomNumbersComponentPrivate;
-    uptr<RandomNumbersComponentPrivate> priv_;
+    mtps::uptr<RandomNumbersComponentPrivate> priv_;
 };
 } // namespace lib::rnd
 

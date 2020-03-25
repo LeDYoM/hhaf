@@ -6,7 +6,7 @@
 #include <type_traits>
 #include <limits>
 
-namespace lib
+namespace mtps
 {
 
 template <typename T>
@@ -75,6 +75,6 @@ private:
     T value;
 };
 
-} // namespace lib
+} // namespace mtps
 
 #endif

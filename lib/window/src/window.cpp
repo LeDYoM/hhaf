@@ -17,47 +17,47 @@ namespace lib::sys
 struct Window::WindowPrivate final
 {
     TimePoint lastTimeFps{0U};
-    s32 lastFps{0};
-    s32 currentFps{0};
-    rptr<backend::IWindow> m_backendWindow{nullptr};
-    sptr<input::InputDriver> input_driver_{nullptr};
-    sptr<RenderTarget> m_renderTarget{nullptr};
-    str title_{};
+    mtps::s32 lastFps{0};
+    mtps::s32 currentFps{0};
+    mtps::rptr<backend::IWindow> m_backendWindow{nullptr};
+    mtps::sptr<input::InputDriver> input_driver_{nullptr};
+    mtps::sptr<RenderTarget> m_renderTarget{nullptr};
+    mtps::str title_{};
 };
 
 Window::Window(sys::SystemProvider &system_provider)
     : AppService{system_provider},
-      priv_{muptr<WindowPrivate>()}
+      priv_{mtps::muptr<WindowPrivate>()}
 {
 }
 
 Window::~Window() = default;
 
-sptr<RenderTarget> Window::renderTarget()
+mtps::sptr<RenderTarget> Window::renderTarget()
 {
     return priv_->m_renderTarget;
 }
 
-const sptr<RenderTarget> Window::renderTarget() const
+const mtps::sptr<RenderTarget> Window::renderTarget() const
 {
     return priv_->m_renderTarget;
 }
 
-sptr<input::InputDriver> Window::inputDriver()
+mtps::sptr<input::InputDriver> Window::inputDriver()
 {
     return priv_->input_driver_;
 }
 
-const sptr<input::InputDriver> Window::inputDriver() const
+const mtps::sptr<input::InputDriver> Window::inputDriver() const
 {
     return priv_->input_driver_;
 }
 
-bool Window::create(uptr<win::WindowProperties> window_properties)
+bool Window::create(mtps::uptr<win::WindowProperties> window_properties)
 {
     if (window_properties == nullptr)
     {
-        window_properties = muptr<win::WindowProperties>();
+        window_properties = mtps::muptr<win::WindowProperties>();
         window_properties->onAttached();
     }
 
@@ -82,11 +82,11 @@ bool Window::create(uptr<win::WindowProperties> window_properties)
         DisplayLog::info("Window created...");
         // If window created successfully, extract the render target
         // associated with the window.
-        priv_->m_renderTarget = msptr<RenderTarget>(
+        priv_->m_renderTarget = mtps::msptr<RenderTarget>(
             priv_->m_backendWindow->renderTarget());
 
         // Also take the input driver.
-        priv_->input_driver_ = msptr<input::InputDriver>(
+        priv_->input_driver_ = mtps::msptr<input::InputDriver>(
             priv_->m_backendWindow->inputDriver());
         DisplayLog::info("Window creation completed");
         return true;

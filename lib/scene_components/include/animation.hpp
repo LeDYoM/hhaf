@@ -20,8 +20,8 @@ namespace lib::scene
 class Animation
 {
 public:
-    using ActionFunc = function<void()>;
-    enum class AnimationDirection : u8
+    using ActionFunc = mtps::function<void()>;
+    enum class AnimationDirection : mtps::u8
     {
         Forward = 0U,
         Backward
@@ -38,7 +38,7 @@ public:
      * @param endAction Functor containing an action to perform when the
      *  animation finishes
      */
-    Animation(uptr<time::Timer> timer, time::TimePoint duration,
+    Animation(mtps::uptr<time::Timer> timer, time::TimePoint duration,
                const AnimationDirection animation_direction,
                ActionFunc endAction = {}) noexcept;
 
@@ -61,19 +61,19 @@ public:
     void executeEndAction();
 
 protected:
-    f32 delta() const noexcept { return delta_; }
+    mtps::f32 delta() const noexcept { return delta_; }
 
 private:
-    uptr<time::Timer> timer_;
+    mtps::uptr<time::Timer> timer_;
     time::TimePoint m_duration;
     time::TimePoint m_currentTime;
     ActionFunc m_endAction;
     AnimationDirection animation_direction_;
-    f32 raw_delta_;
-    f32 delta_;
+    mtps::f32 raw_delta_;
+    mtps::f32 delta_;
 
 private:
-    f32 postProcessDelta(const f32 delta);
+    mtps::f32 postProcessDelta(const mtps::f32 delta);
 };
 
 } // namespace lib::scene

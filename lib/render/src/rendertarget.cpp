@@ -11,7 +11,7 @@
 
 namespace lib::sys
 {
-RenderTarget::RenderTarget(rptr<lib::backend::IRenderTarget> renderTarget)
+RenderTarget::RenderTarget(mtps::rptr<lib::backend::IRenderTarget> renderTarget)
     : irender_target_{std::move(renderTarget)}
 {
     log_assert(renderTarget != nullptr, "renderTarget parameter is nullptr");
@@ -35,22 +35,22 @@ void RenderTarget::clear()
     irender_target_->clear();
 }
 
-Rectf32 RenderTarget::viewPort() const
+mtps::Rectf32 RenderTarget::viewPort() const
 {
     return irender_target_->viewPort();
 }
 
-void RenderTarget::setViewPort(const Rectf32 &nViewPort)
+void RenderTarget::setViewPort(const mtps::Rectf32 &nViewPort)
 {
     irender_target_->setViewPort(nViewPort);
 }
 
-Rectf32 RenderTarget::viewRect() const
+mtps::Rectf32 RenderTarget::viewRect() const
 {
     return irender_target_->viewRect();
 }
 
-void RenderTarget::setViewRect(const Rectf32 &nViewRect)
+void RenderTarget::setViewRect(const mtps::Rectf32 &nViewRect)
 {
     irender_target_->setViewRect(nViewRect);
 }

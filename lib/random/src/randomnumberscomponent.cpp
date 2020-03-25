@@ -17,31 +17,31 @@ public:
 
     ~RandomNumbersComponentPrivate() = default;
 
-    const str &name() const noexcept { return name_; }
-    void setName(str name) { std::swap(name, name_); }
+    const mtps::str&name() const noexcept { return name_; }
+    void setName(mtps::str name) { std::swap(name, name_); }
 
     sys::RandomSystem &randomsystem() noexcept { return random_system_; }
 
 private:
     sys::RandomSystem &random_system_;
-    str name_;
+    mtps::str name_;
 };
 
 RandomNumbersComponent::RandomNumbersComponent() noexcept : priv_{nullptr} {}
 
 RandomNumbersComponent::~RandomNumbersComponent() = default;
 
-void RandomNumbersComponent::setName(str new_name)
+void RandomNumbersComponent::setName(mtps::str new_name)
 {
     priv_->setName(std::move(new_name));
 }
 
-const str &RandomNumbersComponent::name() const noexcept
+const mtps::str&RandomNumbersComponent::name() const noexcept
 {
     return priv_->name();
 }
 
-u32 RandomNumbersComponent::getUInt(const size_type max, const size_type min) const
+mtps::u32 RandomNumbersComponent::getUInt(const mtps::size_type max, const mtps::size_type min) const
 {
     DisplayLog::info("Asked for random number between ", min, " and ", max);
 
@@ -50,7 +50,7 @@ u32 RandomNumbersComponent::getUInt(const size_type max, const size_type min) co
 
     const auto next(priv_->randomsystem().getNext(name(), min, max));
     DisplayLog::verbose("Fetch next element from queue: ", next);
-    const size_type generated(next % (max - min));
+    const mtps::size_type generated(next % (max - min));
     DisplayLog::verbose("\tGot ", generated);
     DisplayLog::info("\tReturning ", min + generated);
     return min + generated;
@@ -60,7 +60,7 @@ void RandomNumbersComponent::onAttached()
 {
     if (attachedNode())
     {
-        priv_ = muptr<RandomNumbersComponentPrivate>(
+        priv_ = mtps::muptr<RandomNumbersComponentPrivate>(
             sys::getSystem<sys::RandomSystem>(attachedNode()));
     }
 }

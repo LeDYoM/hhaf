@@ -13,27 +13,26 @@
 
 namespace zoper
 {
-using namespace lib;
 class HighScoreTextController;
 
-class HighScoresScene final : public scene::Scene
+class HighScoresScene final : public lib::scene::Scene
 {
 public:
     HighScoresScene();
     ~HighScoresScene() override;
 
-	static constexpr char StaticTypeName[] = "HighScoresScene";
+    static constexpr char StaticTypeName[] = "HighScoresScene";
 
     void onCreated() override;
 
 private:
     using BaseClass = lib::scene::Scene;
 
-    sptr<HighScoreTextController> m_highScoreTextController;
-    sptr<scene::IFont> m_normalFont;
-    scene::Color m_normalColor;
-    scene::Color m_selectedColor;
-    ireceiver m_receiver;
+    mtps::sptr<HighScoreTextController> m_highScoreTextController;
+    mtps::sptr<lib::scene::IFont> m_normalFont;
+    lib::scene::Color m_normalColor;
+    lib::scene::Color m_selectedColor;
+    mtps::ireceiver m_receiver;
 };
 } // namespace zoper
 

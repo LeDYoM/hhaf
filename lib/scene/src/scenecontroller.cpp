@@ -15,17 +15,17 @@ void SceneController::setSceneManager(SceneManager *scene_manager)
     scene_manager_ = scene_manager;
 }
 
-bool SceneController::startScene(const str &sceneName)
+bool SceneController::startScene(const mtps::str&sceneName)
 {
     auto scene = scene_factory_.create(sceneName);
-    startScene(sptr<Scene>(std::move(scene)));
+    startScene(mtps::sptr<Scene>(std::move(scene)));
     return true;
 }
 
 void SceneController::switchToNextScene()
 {
     // Prepare next Scene
-    sptr<Scene> nextScene{nullptr};
+    mtps::sptr<Scene> nextScene{nullptr};
     if (scene_director_)
     {
         nextScene = scene_factory_.create(scene_director_(current_scene_->name()));
@@ -65,12 +65,12 @@ void SceneController::finish()
     }
 }
 
-sptr<Scene> SceneController::currentScene()
+mtps::sptr<Scene> SceneController::currentScene()
 {
     return current_scene_;
 }
 
-void SceneController::startScene(sptr<Scene> scene)
+void SceneController::startScene(mtps::sptr<Scene> scene)
 {
     current_scene_ = std::move(scene);
     if (current_scene_)

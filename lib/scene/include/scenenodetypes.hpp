@@ -18,17 +18,17 @@ public:
     using BaseClass = SceneNode;
 
     template <typename... Args>
-    RenderizableSceneNode(rptr<SceneNode> parent, const str &name, Args &&... args)
+    RenderizableSceneNode(mtps::rptr<SceneNode> parent, const mtps::str&name, Args &&... args)
         : SceneNode{std::move(parent), name},
           node_{createRenderizable(name + "_node", std::forward<Args>(args)...)}
     {
     }
 
-    sptr<Renderizable> node() noexcept { return node_; }
-    const sptr<Renderizable> node() const noexcept { return node_; }
+    mtps::sptr<Renderizable> node() noexcept { return node_; }
+    const mtps::sptr<Renderizable> node() const noexcept { return node_; }
 
 private:
-    sptr<Renderizable> node_;
+    mtps::sptr<Renderizable> node_;
 };
 } // namespace lib::scene
 

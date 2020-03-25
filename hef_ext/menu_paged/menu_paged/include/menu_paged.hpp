@@ -21,11 +21,11 @@ class MenuPaged : public SceneNode
 {
 public:
     using BaseClass = SceneNode;
-    MenuPaged(SceneNode* parent, str name);
+    MenuPaged(SceneNode* parent, mtps::str name);
     ~MenuPaged() override;
 
-    void setNormalTextFont(sptr<IFont> normal_text_font);
-    sptr<IFont> normalTextFont() const noexcept;
+    void setNormalTextFont(mtps::sptr<IFont> normal_text_font);
+    mtps::sptr<IFont> normalTextFont() const noexcept;
 
     void setNormalColor(Color normal_color);
     Color normalColor() const;
@@ -33,21 +33,21 @@ public:
     void setSelectedColor(Color selected_color);
     Color selectedColor() const;
 
-    void setSceneNodeSizeForPages(vector2df size);
-    vector2df sceneNodeSizeForPages() const;
-    void setMenuPagedStatus(s32 status);
-    s32 status() const;
+    void setSceneNodeSizeForPages( mtps::vector2df size);
+     mtps::vector2df sceneNodeSizeForPages() const;
+    void setMenuPagedStatus(mtps::s32 status);
+    mtps::s32 status() const;
 
-    void terminate(const s32 status);
+    void terminate(const mtps::s32 status);
 
-    emitter<const s32> MenuFinished;
+    mtps::emitter<const mtps::s32> MenuFinished;
 
 protected:
-    sptr<MenuPage> createMenuPage(str name);
-    void configure_menu(vector_shared_pointers<MenuPage> menu_steps);
+    mtps::sptr<MenuPage> createMenuPage(mtps::str name);
+    void configure_menu(mtps::vector_shared_pointers<MenuPage> menu_steps);
 
     template <typename... Args>
-    sptr<MenuPage> createAndConfigureMenuPage(str name, Args&&... args)
+    mtps::sptr<MenuPage> createAndConfigureMenuPage(mtps::str name, Args&&... args)
     {
         auto node{createMenuPage(std::move(name))};
         node->sceneNodeSize = scene_node_size_for_pages_;
@@ -56,12 +56,12 @@ protected:
     }
 
 private:
-    vector2df scene_node_size_for_pages_;
-    sptr<IFont> normal_text_font_;
+    mtps::vector2df scene_node_size_for_pages_;
+    mtps::sptr<IFont> normal_text_font_;
     Color normal_color_;
     Color selected_color_;
-    vector_shared_pointers<MenuPage> menu_steps_;
-    s32 status_{0};
+    mtps::vector_shared_pointers<MenuPage> menu_steps_;
+    mtps::s32 status_{};
 };
 } // namespace lib
 

@@ -19,7 +19,7 @@ namespace lib::scene
 {
 class SceneNode;
 
-enum class FigType_t : u8
+enum class FigType_t : mtps::u8
 {
     Quad,
     Shape,
@@ -29,34 +29,34 @@ enum class FigType_t : u8
 class Renderizable final : public sys::HasName
 {
 public:
-    Renderizable(rptr<SceneNode> parent, str name,
-                 FigType_t figure_type, size_type initial_point_count, 
-                 Rectf32 _box, Color color, sptr<ITexture> _texture,
-                 sptr<IShader> _shader);
+    Renderizable(mtps::rptr<SceneNode> parent, mtps::str name,
+                 FigType_t figure_type, mtps::size_type initial_point_count, 
+                 mtps::Rectf32 _box, Color color, mtps::sptr<ITexture> _texture,
+                 mtps::sptr<IShader> _shader);
 
     ~Renderizable();
 
     void render();
 
-    PropertyState<FigType_t> figType;
-    PropertyState<Rectf32> box;
-    PropertyState<Color> color;
-    PropertyState<size_type> pointCount;
-    PropertyState<sptr<IShader>> shader;
-    PropertyState<function<Color(const RenderizableModifierContext &)>> color_modifier;
+    mtps::PropertyState<FigType_t> figType;
+    mtps::PropertyState<mtps::Rectf32> box;
+    mtps::PropertyState<Color> color;
+    mtps::PropertyState<mtps::size_type> pointCount;
+    mtps::PropertyState<mtps::sptr<IShader>> shader;
+    mtps::PropertyState<mtps::function<Color(const RenderizableModifierContext &)>> color_modifier;
 
-    BasicProperty<bool> visible{true};
+    mtps::BasicProperty<bool> visible{true};
 
-    void setTextureAndTextureRect(sptr<ITexture> texture_,
-                                  const Rectf32 &textRect);
+    void setTextureAndTextureRect(mtps::sptr<ITexture> texture_,
+                                  const mtps::Rectf32 &textRect);
 
-    void setTextureFill(sptr<ITexture> texture_);
+    void setTextureFill(mtps::sptr<ITexture> texture_);
 
 private:
-    const rptr<SceneNode> parent_;
+    const mtps::rptr<SceneNode> parent_;
 
-    PropertyState<Rects32> textureRect;
-    PropertyState<sptr<ITexture>> texture;
+    mtps::PropertyState<mtps::Rects32> textureRect;
+    mtps::PropertyState<mtps::sptr<ITexture>> texture;
 
     VertexArray m_vertices;
     RenderData render_data_;
@@ -64,12 +64,12 @@ private:
     void updateGeometry();
     void updateTextureCoordsAndColor();
     void updateTextureCoordsAndColorForVertex(const BasicVertexArray::iterator v_iterator,
-                                              const Rectf32 &cbox, const Rects32 &ctexture_rect);
+                                              const mtps::Rectf32 &cbox, const mtps::Rects32 &ctexture_rect);
     void updateColorForVertex(const BasicVertexArray::iterator v_iterator,
-                              const Rectf32 &cbox, const Rects32 &ctexture_rect);
+                              const mtps::Rectf32 &cbox, const mtps::Rects32 &ctexture_rect);
     void updateColors();
 
-    vector2df normalizeInBox(const vector2df &position, const Rectf32 box, const Rectf32 &rect) const;
+    mtps::vector2df normalizeInBox(const mtps::vector2df &position, const mtps::Rectf32 box, const mtps::Rectf32 &rect) const;
     void update();
 };
 } // namespace lib::scene

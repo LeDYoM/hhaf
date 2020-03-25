@@ -11,19 +11,19 @@ namespace lib::scene
 {
 namespace
 {
-inline std::type_index tindexOf(const sptr<IComponent> &c)
+inline std::type_index tindexOf(const mtps::sptr<IComponent> &c)
 {
     return std::type_index(typeid(*c));
 }
 
-inline sptr<IComponent> getComponentFromTypeIndex(const std::type_index &tindex, const vector_shared_pointers<IComponent> &v)
+inline mtps::sptr<IComponent> getComponentFromTypeIndex(const std::type_index &tindex, const mtps::vector_shared_pointers<IComponent> &v)
 {
-    auto iterator(std::find_if(v.cbegin(), v.cend(), [&tindex](const sptr<IComponent> &component) { return tindexOf(component) == tindex; }));
+    auto iterator(std::find_if(v.cbegin(), v.cend(), [&tindex](const mtps::sptr<IComponent> &component) { return tindexOf(component) == tindex; }));
     return (iterator == v.cend()) ? nullptr : (*iterator);
 }
 } // namespace
 
-bool ComponentContainer::addComponent(sptr<IComponent> nc)
+bool ComponentContainer::addComponent(mtps::sptr<IComponent> nc)
 {
     log_assert(nc != nullptr, "Trying to add a nullptr component");
     m_components.emplace_back(std::move(nc));
@@ -31,7 +31,7 @@ bool ComponentContainer::addComponent(sptr<IComponent> nc)
 }
 
 template <typename T>
-void update_impl(const sptr<T> p)
+void update_impl(const mtps::sptr<T> p)
 {
     std::invoke(&T::update, p);
 }
@@ -55,7 +55,7 @@ void ComponentContainer::updateComponents()
                             &update_impl<IComponent>);
 }
 
-const sptr<IComponent> ComponentContainer::componentOfType(const std::type_index &ti) const
+const mtps::sptr<IComponent> ComponentContainer::componentOfType(const std::type_index &ti) const
 {
     return getComponentFromTypeIndex(ti, m_components.next());
 }

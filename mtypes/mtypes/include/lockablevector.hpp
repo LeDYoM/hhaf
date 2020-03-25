@@ -7,7 +7,7 @@
 #include "function.hpp"
 #include "algoutils.hpp"
 
-namespace lib
+namespace mtps
 {
 /// This class encapsulates the functionality of a vector with deferred operations.
 /// This class encapsulates 3 vectors<T>, providing a wrapper
@@ -185,6 +185,6 @@ private:
     vector<T> addingCache_;
     vector<T> remove_cache_;
 };
-} // namespace lib
+} // namespace mtps
 
 #endif

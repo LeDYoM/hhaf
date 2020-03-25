@@ -7,7 +7,7 @@
 
 namespace zoper
 {
-enum class HighScoresSceneStates : lib::u32
+enum class HighScoresSceneStates : mtps::u32
 {
     FadeIn = 0,
     Show = 1,

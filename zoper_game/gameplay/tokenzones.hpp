@@ -11,66 +11,66 @@
 namespace zoper
 {
 using namespace lib;
-constexpr size_type NumWays(4);
+constexpr mtps::size_type NumWays(4);
 
 struct TokenZones
 {
     struct TokenZone
     {
-        vector2dst zone_start;
+        mtps::vector2dst zone_start;
         Direction direction;
-        size_type size;
+        mtps::size_type size;
     };
 
-    constexpr static vector2dst size{18, 12};
-    constexpr static Rectst centerRect{7, 4, 4, 4};
+    constexpr static mtps::vector2dst size{18U, 12U};
+    constexpr static mtps::Rectst centerRect{7U, 4U, 4U, 4U};
 
     constexpr static TokenZone tokenZones[NumWays] =
         {
             // From left to right
             TokenZone{
-                vector2dst{ 0U, centerRect.top },
+                mtps::vector2dst{ 0U, centerRect.top },
                 Direction::DirectionData::Right,
                 centerRect.size().y},
             // From top to bottom
             TokenZone{
-                vector2dst{ centerRect.left, 0U },
+                mtps::vector2dst{ centerRect.left, 0U },
                 Direction::DirectionData::Down,
                 centerRect.size().x},
             // From right to left
             TokenZone{
-                vector2dst{size.x - 1U, centerRect.top},
+                mtps::vector2dst{size.x - 1U, centerRect.top},
                 Direction::DirectionData::Left,
                 centerRect.size().y},
             // From bottom to top
             TokenZone{
-                vector2dst{centerRect.left, size.y - 1},
+                mtps::vector2dst{centerRect.left, size.y - 1},
                 Direction::DirectionData::Up,
                 centerRect.size().x}};
 
-    static bool pointInCenter(const vector2dst &position)
+    static bool pointInCenter(const mtps::vector2dst &position)
     {
         return TokenZones::centerRect.inside(position);
     }
 
-    constexpr static vector2dst displaceFactor(const Direction direction) noexcept
+    constexpr static mtps::vector2dst displaceFactor(const Direction direction) noexcept
     {
-        return vector2dst{
+        return mtps::vector2dst{
             (direction.isHorizontal() ? 0U : 1U),
             (direction.isHorizontal() ? 1U : 0U)};
     }
 
-    static vector2dst displacedStartPoint(const TokenZone &token_zone,
-                                          const size_type displacement)
+    static mtps::vector2dst displacedStartPoint(const TokenZone &token_zone,
+                                          const mtps::size_type displacement)
     {
         // Prepare the position for the new token
         return token_zone.zone_start +
                            (displaceFactor(token_zone.direction) * displacement);
     }
 
-    static vector2dst nearest_point_to_center(
+    static mtps::vector2dst nearest_point_to_center(
         const TokenZone &token_zone,
-        const vector2dst &start_point)
+        const mtps::vector2dst &start_point)
     {
         auto point{start_point};
         while (!pointInCenter(point))

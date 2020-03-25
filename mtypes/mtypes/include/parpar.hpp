@@ -1,14 +1,14 @@
 #pragma once
 
-#ifndef PARPAR_LIB_INCLUDE_HPP__
-#define PARPAR_LIB_INCLUDE_HPP__
+#ifndef PARPAR_MTPS_INCLUDE_HPP__
+#define PARPAR_MTPS_INCLUDE_HPP__
 
 #include "types.hpp"
 #include "str.hpp"
 #include <utility>
 #include <algorithm>
 
-namespace lib::parpar
+namespace mtps::parpar
 {
     class ParametersParser;
     using str_t = str;

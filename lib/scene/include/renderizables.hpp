@@ -16,7 +16,7 @@ class SceneNode;
 class Renderizables
 {
 public:
-    Renderizables(rptr<SceneNode> scene_node) noexcept
+    Renderizables(mtps::rptr<SceneNode> scene_node) noexcept
         : scene_node_{std::move(scene_node)} {}
 
     /// Method to create a Renderizable
@@ -26,59 +26,59 @@ public:
     /// @param color Color of the Renderizable.
     /// @param num_points Number of points of the Renderizable.
     /// @returns The created Renderizable
-    sptr<Renderizable> createRenderizable(
-        str name, FigType_t figure_type, Rectf32 box, Color color,
-            sptr<ITexture> texture, sptr<IShader> shader, size_type num_points);
+    mtps::sptr<Renderizable> createRenderizable(
+        mtps::str name, FigType_t figure_type, mtps::Rectf32 box, Color color,
+            mtps::sptr<ITexture> texture, mtps::sptr<IShader> shader, mtps::size_type num_points);
 
-    sptr<Renderizable> createRenderizable(str name, FigType_t figure_type)
+    mtps::sptr<Renderizable> createRenderizable(mtps::str name, FigType_t figure_type)
     {
         return createRenderizable(std::move(name), std::move(figure_type),
-        Rectf32{}, colors::White, nullptr, nullptr, 4U);
+        mtps::Rectf32{}, colors::White, nullptr, nullptr, 4U);
     }
 
-    sptr<Renderizable> createRenderizable(str name, FigType_t figure_type,
-        size_type num_points)
+    mtps::sptr<Renderizable> createRenderizable(mtps::str name, FigType_t figure_type,
+        mtps::size_type num_points)
     {
         return createRenderizable(std::move(name), std::move(figure_type),
-        Rectf32{}, colors::White, nullptr, nullptr, std::move(num_points));
+        mtps::Rectf32{}, colors::White, nullptr, nullptr, std::move(num_points));
     }
 
-    sptr<Renderizable> createRenderizable(str name, FigType_t figure_type,
-        Rectf32 box, Color color)
+    mtps::sptr<Renderizable> createRenderizable(mtps::str name, FigType_t figure_type,
+        mtps::Rectf32 box, Color color)
     {
         return createRenderizable(std::move(name), std::move(figure_type),
         std::move(box), std::move(color), nullptr, nullptr, 4U);
     }
 
-    sptr<Renderizable> createRenderizable(str name, FigType_t figure_type,
-        Rectf32 box, sptr<ITexture> texture)
+    mtps::sptr<Renderizable> createRenderizable(mtps::str name, FigType_t figure_type,
+        mtps::Rectf32 box, mtps::sptr<ITexture> texture)
     {
         return createRenderizable(std::move(name), std::move(figure_type),
         std::move(box), colors::White, std::move(texture), nullptr, 4U);
     }
 
-    sptr<Renderizable> createRenderizable(str name, FigType_t figure_type,
-        Rectf32 box)
+    mtps::sptr<Renderizable> createRenderizable(mtps::str name, FigType_t figure_type,
+        mtps::Rectf32 box)
     {
         return createRenderizable(std::move(name), std::move(figure_type),
         std::move(box), nullptr);
     }
 
-    sptr<Renderizable> createRenderizable(str name, FigType_t figure_type,
-        Rectf32 box, Color color, size_type num_points)
+    mtps::sptr<Renderizable> createRenderizable(mtps::str name, FigType_t figure_type,
+        mtps::Rectf32 box, Color color, mtps::size_type num_points)
     {
         return createRenderizable(std::move(name), std::move(figure_type),
         std::move(box), std::move(color), nullptr, nullptr, 
         std::move(num_points));
     }
 
-    void removeRenderizable(const sptr<Renderizable> &element);
+    void removeRenderizable(const mtps::sptr<Renderizable> &element);
     void clearRenderizables();
 
     template <typename T>
-    constexpr void for_each_node_as(function<void(const sptr<T> &)> action)
+    constexpr void for_each_node_as(mtps::function<void(const mtps::sptr<T> &)> action)
     {
-        for_each_node([&action](const sptr<Renderizable> &node) {
+        for_each_node([&action](const mtps::sptr<Renderizable> &node) {
             if (auto tnode = std::dynamic_pointer_cast<T>(node))
             {
                 action(tnode);
@@ -86,14 +86,14 @@ public:
         });
     }
 
-    void for_each_node(function<void(const sptr<Renderizable> &)> action) const;
+    void for_each_node(mtps::function<void(const mtps::sptr<Renderizable> &)> action) const;
 
     void updateRenderizables();
 
 private:
-    void addRenderizable(sptr<Renderizable> newElement);
-    rptr<SceneNode> scene_node_;
-    vector<sptr<Renderizable>> render_nodes_;
+    void addRenderizable(mtps::sptr<Renderizable> newElement);
+    mtps::rptr<SceneNode> scene_node_;
+    mtps::vector<mtps::sptr<Renderizable>> render_nodes_;
 };
 } // namespace lib::scene
 

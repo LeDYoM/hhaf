@@ -15,7 +15,7 @@ namespace zoper
 class KeyMapping
 {
 public:
-    static constexpr lib::u32 TotalKeys = Direction::Total + 2;
+    static constexpr mtps::u32 TotalKeys = Direction::Total + 2;
 
     KeyMapping();
     virtual ~KeyMapping();
@@ -29,23 +29,23 @@ public:
     lib::input::Key getPauseKey() const noexcept;
     bool isPauseKey(const lib::input::Key key) const noexcept;
 
-    bool setKey(const lib::u32 index, const lib::input::Key key);
+    bool setKey(const mtps::u32 index, const lib::input::Key key);
     void apply();
 
-    friend const lib::Object &operator>>(const lib::Object &obj, KeyMapping &key_mapping);
-    friend lib::Object &operator<<(lib::Object &obj, const KeyMapping &key_mapping);
+    friend const mtps::Object &operator>>(const mtps::Object &obj, KeyMapping &key_mapping);
+    friend mtps::Object &operator<<(mtps::Object &obj, const KeyMapping &key_mapping);
 
 private:
-    lib::array<lib::input::Key, KeyMapping::TotalKeys> m_keys;
+    mtps::array<lib::input::Key, KeyMapping::TotalKeys> m_keys;
 };
 
-inline const lib::Object &operator>>(const lib::Object &obj, KeyMapping &key_mapping)
+inline const mtps::Object &operator>>(const mtps::Object &obj, KeyMapping &key_mapping)
 {
     obj["keys"].getObject() >> key_mapping.m_keys;
     return obj;
 }
 
-inline Object &operator<<(Object &obj, const KeyMapping &key_mapping)
+inline mtps::Object &operator<<(mtps::Object &obj, const KeyMapping &key_mapping)
 {
     obj.set("keys", key_mapping.m_keys);
     return obj;

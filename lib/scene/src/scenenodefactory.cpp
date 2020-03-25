@@ -7,30 +7,30 @@ namespace lib::scene
 {
 struct SceneNodeFactory::SceneNodeFactoryPrivate
 {
-    std::map<str, SceneNodeConstructorFunction> constructors_;
+    std::map<mtps::str, SceneNodeConstructorFunction> constructors_;
 
-    inline bool containsSceneNodeType(const str &name)
+    inline bool containsSceneNodeType(const mtps::str&name)
     {
         return constructors_.find(name) != std::end(constructors_);
     }
 
-    inline void insert(str name, SceneNodeConstructorFunction scene_cf)
+    inline void insert(mtps::str name, SceneNodeConstructorFunction scene_cf)
     {
         constructors_[std::move(name)] = std::move(scene_cf);
     }
 
-    inline SceneNodeConstructorFunction get(str name)
+    inline SceneNodeConstructorFunction get(mtps::str name)
     {
         return constructors_[std::move(name)];
     }
 };
 
 SceneNodeFactory::SceneNodeFactory()
-    : private_{muptr<SceneNodeFactoryPrivate>()} {}
+    : private_{mtps::muptr<SceneNodeFactoryPrivate>()} {}
 
 SceneNodeFactory::~SceneNodeFactory() = default;
 
-bool SceneNodeFactory::registerSceneNodeType(str type_name, SceneNodeConstructorFunction scene_constructor_function)
+bool SceneNodeFactory::registerSceneNodeType(mtps::str type_name, SceneNodeConstructorFunction scene_constructor_function)
 {
     if (private_->containsSceneNodeType(type_name))
     {
@@ -41,17 +41,17 @@ bool SceneNodeFactory::registerSceneNodeType(str type_name, SceneNodeConstructor
     return true;
 }
 
-SceneNodeFactory::CreateReturnType SceneNodeFactory::create(const str &type_name)
+SceneNodeFactory::CreateReturnType SceneNodeFactory::create(const mtps::str&type_name)
 {
     if (!private_->containsSceneNodeType(type_name))
     {
-        return uptr<InterfaceType>(nullptr);
+        return mtps::uptr<InterfaceType>(nullptr);
     }
 
     auto constructor(private_->get(type_name));
     if (!constructor)
     {
-        return uptr<InterfaceType>(nullptr);
+        return mtps::uptr<InterfaceType>(nullptr);
     }
 
     return constructor();

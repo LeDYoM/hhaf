@@ -6,7 +6,7 @@
 #include <cassert>
 #include "types.hpp"
 
-namespace lib
+namespace mtps
 {
 template <typename>
 class function;
@@ -83,6 +83,6 @@ private:
 
     sptr<ICallable> m_callable;
 };
-} // namespace lib
+} // namespace mtps
 
 #endif

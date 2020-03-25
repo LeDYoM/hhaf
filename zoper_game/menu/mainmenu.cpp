@@ -11,11 +11,13 @@
 #include <mtypes/include/function.hpp>
 #include <mtypes/include/types.hpp>
 
-namespace zoper
-{
+using namespace mtps;
 using namespace lib;
 using namespace lib::scene;
 using namespace lib::scene::nodes;
+
+namespace zoper
+{
 
 enum class Antialiasing
 {
@@ -68,7 +70,7 @@ void goGame(MenuPaged *scene_node,
     scene_node->terminate(1);
 }
 
-MainMenu::MainMenu(SceneNode *parent, str name)
+MainMenu::MainMenu(SceneNode *parent, mtps::str name)
     : BaseClass{parent, std::move(name)}
 {
 }

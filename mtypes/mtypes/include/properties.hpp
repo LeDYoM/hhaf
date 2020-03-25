@@ -1,11 +1,11 @@
 #pragma once
 
-#ifndef LIB_PROPERTIES_HPP
-#define LIB_PROPERTIES_HPP
+#ifndef MTPS_PROPERTIES_HPP
+#define MTPS_PROPERTIES_HPP
 
 #include "function.hpp"
 
-namespace lib
+namespace mtps
 {
 /// This class provides a basic interface for all Properties of
 /// the system.
@@ -163,6 +163,6 @@ constexpr bool ps_readResetHasChanged(PropertyState<T> &arg) noexcept
 {
     return arg.readResetHasChanged();
 }
-} // namespace lib
+} // namespace mtps
 
 #endif

@@ -4,7 +4,7 @@
 #include <mtypes/include/object_utils.hpp>
 #include <mtypes/include/object.hpp>
 
-using namespace lib;
+using namespace mtps;
 
 TEST_CASE("Scaner basic 0", "[translator]")
 {

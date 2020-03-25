@@ -1,12 +1,12 @@
 #pragma once
 
-#ifndef LIB_CONNECTION_INCLUDE_HPP
-#define LIB_CONNECTION_INCLUDE_HPP
+#ifndef MTPS_CONNECTION_INCLUDE_HPP
+#define MTPS_CONNECTION_INCLUDE_HPP
 
 #include "function.hpp"
 #include "vector.hpp"
 
-namespace lib
+namespace mtps
 {
     template <typename... Args>
     class emitter final

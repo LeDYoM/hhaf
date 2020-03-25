@@ -6,13 +6,13 @@
 namespace lib::scene
 {
 
-void VisibilitySelectorComponent::configure(size_type first_index)
+void VisibilitySelectorComponent::configure(mtps::size_type first_index)
 {
     hideAll();
     show(active_index, true);
 }
 
-void VisibilitySelectorComponent::show(size_type index, bool force)
+void VisibilitySelectorComponent::show(mtps::size_type index, bool force)
 {
     if (index != active_index || force)
     {
@@ -30,12 +30,12 @@ void VisibilitySelectorComponent::hideAll()
     }
 }
 
-void VisibilitySelector::configure(size_type first_index)
+void VisibilitySelector::configure(mtps::size_type first_index)
 {
     componentOfType<VisibilitySelectorComponent>()->configure(first_index);
 }
 
-void VisibilitySelector::show(size_type index, bool force)
+void VisibilitySelector::show(mtps::size_type index, bool force)
 {
     componentOfType<VisibilitySelectorComponent>()->show(index, force);
 }

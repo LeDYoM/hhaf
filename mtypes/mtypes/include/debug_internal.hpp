@@ -7,7 +7,7 @@
     #include <iostream>
 #endif
 
-namespace lib
+namespace mtps
 {
 #ifdef LOG_MODE
     #define LOG(x)	std::cout << x << std::endl;

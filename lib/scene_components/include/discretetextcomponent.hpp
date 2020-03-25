@@ -14,16 +14,16 @@ class DiscreteTextComponent final : public IComponent
 public:
     using BaseClass = IComponent;
 
-    BasicProperty<bool> circleAroud{true};
-    BasicProperty<string_vector> data;
+    mtps::BasicProperty<bool> circleAroud{true};
+    mtps::BasicProperty<mtps::string_vector> data;
     void incrementIndex() noexcept;
     void decrementIndex() noexcept;
-    PropertyState<size_type> index{0U};
+    mtps::PropertyState<mtps::size_type> index{0U};
 
     virtual void update() override;
 
 private:
-    void _setText(const str &nText);
+    void _setText(const mtps::str&nText);
 };
 } // namespace lib::scene
 

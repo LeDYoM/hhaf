@@ -6,7 +6,7 @@
 #include "object.hpp"
 #include "object_utils.hpp"
 
-namespace lib
+namespace mtps
 {
 template <typename T>
 class Serializer
@@ -36,6 +36,6 @@ public:
     }
 };
 
-} // namespace lib
+} // namespace mtps
 
 #endif

@@ -18,10 +18,10 @@ public:
     Transformable() noexcept;
     virtual ~Transformable();
 
-    PropertyState<VectorScalar> origin;
-    PropertyState<Scalar> rotation;
-    PropertyState<VectorScalar> scale;
-    PropertyState<VectorScalar> position;
+    mtps::PropertyState<VectorScalar> origin;
+    mtps::PropertyState<Scalar> rotation;
+    mtps::PropertyState<VectorScalar> scale;
+    mtps::PropertyState<VectorScalar> position;
 
     bool updateTransformIfNecessary() noexcept;
     inline const Transform &globalTransform() const noexcept { return m_globalTransform; }
@@ -38,7 +38,7 @@ public:
     /// @param [in] scale Scale factor
     void scaleAround(VectorScalar point, VectorScalar scale);
 
-    void rotateScaleAround(vector2df point, f32 angle, vector2df scale);
+    void rotateScaleAround(mtps::vector2df point, mtps::f32 angle, mtps::vector2df scale);
 
 protected:
     bool transformationNeedsUpdate() const noexcept;

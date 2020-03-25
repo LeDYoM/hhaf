@@ -15,7 +15,7 @@ public:
     using BaseClass = lib::scene::MenuPaged;
 
     static constexpr char ClassName[] = "MainMenu";
-    MainMenu(scene::SceneNode *parent, str name);
+    MainMenu(scene::SceneNode *parent, mtps::str name);
     ~MainMenu() override;
 
     virtual void onCreated() override;

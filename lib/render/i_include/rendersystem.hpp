@@ -30,11 +30,11 @@ public:
     void draw(const scene::RenderData &renderData);
     void clear();
 
-    void setRenderTarget(sptr<RenderTarget> render_target);
+    void setRenderTarget(mtps::sptr<RenderTarget> render_target);
 
 private:
     struct RenderSystemPrivate;
-    uptr<RenderSystemPrivate> priv_;
+    mtps::uptr<RenderSystemPrivate> priv_;
 };
 } // namespace lib::sys
 

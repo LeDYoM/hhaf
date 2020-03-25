@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_STR_INCLUDE_HPP
-#define LIB_STR_INCLUDE_HPP
+#ifndef MTPS_STR_INCLUDE_HPP
+#define MTPS_STR_INCLUDE_HPP
 
 #include "vector.hpp"
 #include "types.hpp"
@@ -12,7 +12,7 @@
 #include <algorithm>
 #include <cctype>
 
-namespace lib
+namespace mtps
 {
 class str
 {
@@ -499,6 +499,6 @@ static_assert(std::is_move_assignable_v<str>, "str must be movable assignable");
 static_assert(std::is_default_constructible_v<str>, "str must be default constructible");
 static_assert(std::is_copy_constructible_v<str>, "str must be copy constructible");
 using string_vector = vector<str>;
-} // namespace lib
+} // namespace mtps
 
 #endif

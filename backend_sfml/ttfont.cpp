@@ -1,6 +1,8 @@
 #include "ttfont.hpp"
 #include "conversions.hpp"
 
+using namespace mtps;
+
 namespace lib::backend::sfmlb
 {
     TTFont::TTFont(uptr<sf::Font> f, RawMemory raw_memory)
@@ -19,10 +21,10 @@ namespace lib::backend::sfmlb
 
     f32 TTFont::getAdvance(const u32 codePoint, const u32 characterSize) const
     {
-        return static_cast<f32>(m_font->getGlyph(codePoint, characterSize, false).advance);
+        return static_cast<mtps::f32>(m_font->getGlyph(codePoint, characterSize, false).advance);
     }
 
-    f32 TTFont::getLineSpacing(const u32 characterSize) const
+    f32 TTFont::getLineSpacing(const mtps::u32 characterSize) const
     {
         return m_font->getLineSpacing(characterSize);
     }
@@ -32,7 +34,7 @@ namespace lib::backend::sfmlb
         return m_font->getKerning(first, second, characterSize);
     }
 
-    ITexture *TTFont::getTexture(const u32 characterSize)
+    ITexture *TTFont::getTexture(const mtps::u32 characterSize)
     {
         if (auto iterator(m_fontTexturesCache.find(characterSize)); iterator != m_fontTexturesCache.end()) 
         {
@@ -42,7 +44,7 @@ namespace lib::backend::sfmlb
         auto nTexture(muptr<Texture>( &m_font->getTexture(characterSize), false));
 
         // What is needed here is to force the load of the font surface
-        for (u32 i = 0U; i < 0xff; ++i)
+        for (mtps::u32 i = 0U; i < 0xff; ++i)
             getTextureBounds(i, characterSize);
 
         auto *ret(nTexture.get());

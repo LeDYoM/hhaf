@@ -13,13 +13,13 @@
 
 namespace lib::time
 {
-using timer_emitter_t = emitter<TimePoint>;
+using timer_emitter_t = mtps::emitter<TimePoint>;
 using timer_callback_t = timer_emitter_t::emitter_callback_t;
 
 class TimerConnector
 {
 public:
-    TimerConnector(uptr<Timer> timer, TimerType timerType, TimePoint timeOut, timer_callback_t emitter)
+    TimerConnector(mtps::uptr<Timer> timer, TimerType timerType, TimePoint timeOut, timer_callback_t emitter)
         : timer_{std::move(timer)}, m_timeOut{std::move(timeOut)},
           m_emitter{std::move(emitter)}, m_timerType{timerType} {}
 
@@ -29,14 +29,14 @@ public:
     inline void switchPause() { timer_->switchPause(); }
 
 private:
-    uptr<Timer> timer_;
+    mtps::uptr<Timer> timer_;
     TimePoint m_timeOut;
     timer_emitter_t m_emitter;
     TimerType m_timerType;
     friend class TimerComponent;
 };
 
-using TimerConnectorSPtr = sptr<TimerConnector>;
+using TimerConnectorSPtr = mtps::sptr<TimerConnector>;
 
 } // namespace lib::time
 

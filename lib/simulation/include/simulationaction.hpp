@@ -13,7 +13,7 @@
 
 namespace lib::sys
 {
-enum class SimulationActionType : u8
+enum class SimulationActionType : mtps::u8
 {
     KeyPressed = 0U,
     KeyReleased
@@ -38,7 +38,7 @@ struct SimulationAction
     }
 };
 
-inline const Object &operator>>(const Object &obj, SimulationAction &simulation_action)
+inline const  mtps::Object&operator>>(const  mtps::Object&obj, SimulationAction &simulation_action)
 {
     simulation_action.type = obj["type"].as<SimulationActionType>();
     simulation_action.time_point = time::TimePoint{obj["time_point"].as<time::TimePoint::Rep>()};
@@ -47,7 +47,7 @@ inline const Object &operator>>(const Object &obj, SimulationAction &simulation_
     return obj;
 }
 
-inline Object &operator<<(Object &obj, const SimulationAction &simulation_action)
+inline  mtps::Object&operator<<( mtps::Object&obj, const SimulationAction &simulation_action)
 {
     obj.set("type", simulation_action.type);
     obj.set("time_point", simulation_action.time_point.nanoseconds());
@@ -56,7 +56,7 @@ inline Object &operator<<(Object &obj, const SimulationAction &simulation_action
     return obj;
 }
 
-using SimulationActionContainer = vector<SimulationAction>;
+using SimulationActionContainer = mtps::vector<SimulationAction>;
 using CurrentSimulationActionIterator = SimulationActionContainer::const_iterator;
 } // namespace lib::sys
 

@@ -24,12 +24,12 @@ public:
     void onInit(lib::sys::ISystemProvider& system_provider) override;
     void onFinish(lib::sys::ISystemProvider& system_provider) override;
 
-    lib::u16 getVersion() const noexcept override;
-    lib::u16 getSubVersion() const noexcept override;
-    lib::u16 getPatch() const noexcept override;
-    lib::str getName() const noexcept override;
+    mtps::u16 getVersion() const noexcept override;
+    mtps::u16 getSubVersion() const noexcept override;
+    mtps::u16 getPatch() const noexcept override;
+    mtps::str getName() const noexcept override;
 
-    lib::uptr<KeyMapping> keyMapping;
+    mtps::uptr<KeyMapping> keyMapping;
 };
 } // namespace zoper
 

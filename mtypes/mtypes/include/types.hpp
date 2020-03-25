@@ -1,13 +1,13 @@
 #pragma once
 
-#ifndef LIB_TYPES_INCLUDE_HPP
-#define LIB_TYPES_INCLUDE_HPP
+#ifndef MTPS_TYPES_INCLUDE_HPP
+#define MTPS_TYPES_INCLUDE_HPP
 
 #include <cstdint>
 #include <memory>
 #include <map>
 
-namespace lib
+namespace mtps
 {
 template <typename T>
 using sptr = std::shared_ptr<T>;
@@ -72,6 +72,6 @@ using map = std::map<T, V>;
 
 template <typename T, typename V>
 using pair = std::pair<T, V>;
-} // namespace lib
+} // namespace mtps
 
 #endif

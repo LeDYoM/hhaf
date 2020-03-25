@@ -5,7 +5,7 @@
 
 #include <algorithm>
 
-namespace lib
+namespace mtps
 {
     template <typename Container, typename F>
     void for_each_all(const Container &container, F&& function) noexcept

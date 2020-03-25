@@ -10,7 +10,7 @@ namespace lib::time
 TimerConnectorSPtr TimerComponent::addTimer(TimerType timerType,
                                             TimePoint timeOut, timer_callback_t callback)
 {
-    auto timerConnector(msptr<TimerConnector>(
+    auto timerConnector(mtps::msptr<TimerConnector>(
         attachedNode()->dataWrapper<Timer>(),
         timerType, std::move(timeOut), std::move(callback)));
     activeTimers_.emplace_back(timerConnector);
@@ -40,7 +40,7 @@ void TimerComponent::update()
 void TimerComponent::pause()
 {
     for_each_all(activeTimers_.current(),
-                 [](const sptr<TimerConnector> &timerConnector) {
+                 [](const mtps::sptr<TimerConnector> &timerConnector) {
                      timerConnector->timer_->pause();
                  });
 }
@@ -48,7 +48,7 @@ void TimerComponent::pause()
 void TimerComponent::resume()
 {
     for_each_all(activeTimers_.current(),
-                 [](const sptr<TimerConnector> &timerConnector) {
+                 [](const mtps::sptr<TimerConnector> &timerConnector) {
                      timerConnector->timer_->resume();
                  });
 }
@@ -56,7 +56,7 @@ void TimerComponent::resume()
 void TimerComponent::switchPause()
 {
     for_each_all(activeTimers_.current(),
-                 [](const sptr<TimerConnector> &timerConnector) {
+                 [](const mtps::sptr<TimerConnector> &timerConnector) {
                      timerConnector->timer_->switchPause();
                  });
 }

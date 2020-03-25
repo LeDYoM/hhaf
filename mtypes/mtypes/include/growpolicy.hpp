@@ -5,7 +5,7 @@
 
 #include "types.hpp"
 
-namespace lib
+namespace mtps
 {
     class GrowPolicyUnary
     {

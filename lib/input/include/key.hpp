@@ -8,7 +8,7 @@
 
 namespace lib::input
 {
-enum class Key : s32
+enum class Key : mtps::s32
 {
     Unknown = -1, ///< Unhandled key
     A = 0,        ///< The A key
@@ -116,11 +116,11 @@ enum class Key : s32
     KeyCount ///< Keep last -- the total number of keyboard keys
 };
 
-inline constexpr s32 KeyCount = static_cast<s32>(Key::KeyCount);
+inline constexpr mtps::s32 KeyCount = static_cast<mtps::s32>(Key::KeyCount);
 
-constexpr s32 KeyIndex(const Key key)
+constexpr mtps::s32 KeyIndex(const Key key)
 {
-    return static_cast<s32>(key);
+    return static_cast<mtps::s32>(key);
 }
 
 using KeyStates = bool[KeyCount];

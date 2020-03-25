@@ -34,7 +34,7 @@ public:
     IBMPFontFactory &bmpFontFactory() const;
 
 private:
-    uptr<BackendRegister> backend_register_;
+    mtps::uptr<BackendRegister> backend_register_;
     IWindowProviderInfo *m_windowProviderInfo{nullptr};
     IWindow *m_window{nullptr};
     ITextureFactory *m_textureFactory{nullptr};

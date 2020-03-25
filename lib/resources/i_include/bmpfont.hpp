@@ -16,24 +16,24 @@ class BMFontPrivate;
 class BMPFont : public IFont
 {
 public:
-    BMPFont(const str &file_name);
+    BMPFont(const mtps::str &file_name);
     ~BMPFont() override;
 
-    Rectf32 getBounds(const u32 codePoint) const override;
-    Rectf32 getTextureBounds(const u32 codePoint) const override;
-    f32 getAdvance(const u32 codePoint) const override;
-    f32 getLineSpacing() const override;
-    f32 getKerning(const u32 first, const u32 second) const override;
-    sptr<ITexture> getTexture() const override;
-    vector2df textSize(const str &text) const override;
-    const vector2du32 &size() const;
+    mtps::Rectf32 getBounds(const mtps::u32 codePoint) const override;
+    mtps::Rectf32 getTextureBounds(const mtps::u32 codePoint) const override;
+    mtps::f32 getAdvance(const mtps::u32 codePoint) const override;
+    mtps::f32 getLineSpacing() const override;
+    mtps::f32 getKerning(const mtps::u32 first, const mtps::u32 second) const override;
+    mtps::sptr<ITexture> getTexture() const override;
+    mtps::vector2df textSize(const mtps::str &text) const override;
+    const mtps::vector2du32 &size() const;
 
-    vector<str> textureFileNames() const;
-    void setTexturePages(const vector<sptr<ITexture>> &texture_pages);
+    mtps::vector<mtps::str> textureFileNames() const;
+    void setTexturePages(const mtps::vector<mtps::sptr<ITexture>> &texture_pages);
 
 private:
     BMFontPrivate *fontPrivate;
-    bool ParseFont(const str &);
+    bool ParseFont(const mtps::str &);
 };
 } // namespace lib::scene
 

@@ -28,20 +28,21 @@
 #include <lib/random/include/randomnumberscomponent.hpp>
 #include <lib/shareddata/include/shareddataview.hpp>
 
-namespace zoper
-{
+using namespace mtps;
 using namespace lib;
 using namespace lib::scene;
 using namespace lib::scene::nodes;
 
+namespace zoper
+{
 constexpr u32 NumTokens = 5U;
 constexpr u32 PlayerToken = NumTokens;
 
 struct GameScene::GameScenePrivate
 {
-    sptr<AnimationComponent> scene_animation_component_;
-    sptr<rnd::RandomNumbersComponent> token_type_generator_;
-    sptr<rnd::RandomNumbersComponent> token_position_generator_;
+    mtps::sptr<AnimationComponent> scene_animation_component_;
+    mtps::sptr<rnd::RandomNumbersComponent> token_type_generator_;
+    mtps::sptr<rnd::RandomNumbersComponent> token_position_generator_;
 
     void createScoreIncrementPoints(SceneNode &main_node,
                                     const vector2df &lastTokenPosition)
@@ -139,7 +140,7 @@ void GameScene::onCreated()
         m_boardGroup->setLevel(level);
     });
 
-    size_type start_level;
+    mtps::size_type start_level;
     GameMode game_mode;
 
     {
@@ -227,9 +228,9 @@ void GameScene::onExitState(const GameSceneStates &state)
 }
 
 bool moveTowardsCenter(
-    const sptr<board::BoardModelComponent> &board_model,
+    const mtps::sptr<board::BoardModelComponent> &board_model,
     const Direction direction,
-    const vector2dst position)
+    const mtps::vector2dst position)
 {
     bool moved_to_center{false};
 
@@ -263,13 +264,13 @@ void GameScene::generateNextToken()
     DisplayLog::info("zone: ", currentTokenZone.zone_start);
 
     // Generate the new token type
-    const size_type newToken{private_->token_type_generator_->getUInt(NumTokens)};
+    const mtps::size_type newToken{private_->token_type_generator_->getUInt(NumTokens)};
 
     // Calculate in wich tile zone offset is going to appear
-    const size_type token_displacement{private_->token_position_generator_->getUInt(currentTokenZone.size)};
+    const mtps::size_type token_displacement{private_->token_position_generator_->getUInt(currentTokenZone.size)};
 
     // Prepare the position for the new token
-    const vector2dst new_position{TokenZones::displacedStartPoint(currentTokenZone, token_displacement)};
+    const mtps::vector2dst new_position{TokenZones::displacedStartPoint(currentTokenZone, token_displacement)};
     lib::DisplayLog::info("New tile pos: ", new_position);
 
     // Now, we have the data for the new token generated, but first,
@@ -304,19 +305,19 @@ void GameScene::launchPlayer()
 {
     lib::DisplayLog::info("Launching player");
     const Direction loopDirection{m_boardGroup->player()->currentDirection()};
-    const vector2dst loopPosition{m_boardGroup->player()->boardPosition()};
+    const mtps::vector2dst loopPosition{m_boardGroup->player()->boardPosition()};
     const board::BoardTileData tokenType{m_boardGroup->player()->data.get()};
     ScoreIncrementer score_incrementer{level_properties_};
     BoardUtils::for_each_token_in_line(
         loopPosition, loopDirection, m_boardGroup->boardModel()->size(),
-        [this, tokenType, &score_incrementer](const vector2dst &loopPosition, const Direction &) {
+        [this, tokenType, &score_incrementer](const mtps::vector2dst &loopPosition, const Direction &) {
             bool result{true};
             bool found{false};
             vector2df lastTokenPosition{};
 
             if (!m_boardGroup->boardModel()->tileEmpty(loopPosition) && !TokenZones::pointInCenter(loopPosition) && result)
             {
-                sptr<board::ITile> currentToken{m_boardGroup->boardModel()->getTile(loopPosition)};
+                mtps::sptr<board::ITile> currentToken{m_boardGroup->boardModel()->getTile(loopPosition)};
                 board::BoardTileData currentTokenType{currentToken->data.get()};
 
                 if (currentTokenType == tokenType)
@@ -374,14 +375,14 @@ void GameScene::_debugDisplayBoard() const
 {
     for (u32 y{0}; y < TokenZones::size.y; ++y)
     {
-        str temp;
+        mtps::str temp;
         for (u32 x{0}; x < TokenZones::size.x; ++x)
         {
-            str chTemp;
+            mtps::str chTemp;
             auto lp_tile(m_boardGroup->boardModel()->getTile({x, y}));
             if (lp_tile)
             {
-                chTemp = str::to_str(lp_tile->data.get());
+                chTemp = mtps::str::to_str(lp_tile->data.get());
             }
             else
             {

@@ -37,18 +37,18 @@ public:
     IResourceRetriever &resources();
     IResourceHandler &resourcesLoader();
 
-    Rectf32 viewPort() const noexcept;
-    void setViewPort(const Rectf32 &vp) noexcept;
-    Rectf32 viewRect() const noexcept;
-    void setViewRect(const Rectf32 &vr) noexcept;
+    mtps::Rectf32 viewPort() const noexcept;
+    void setViewPort(const mtps::Rectf32 &vp) noexcept;
+    mtps::Rectf32 viewRect() const noexcept;
+    void setViewRect(const mtps::Rectf32 &vr) noexcept;
 
-    inline const sptr<SceneController> &sceneController() const
+    inline const mtps::sptr<SceneController> &sceneController() const
         noexcept { return scene_controller_; }
 
-    inline sptr<SceneController> &sceneController() noexcept { return scene_controller_; }
+    inline mtps::sptr<SceneController> &sceneController() noexcept { return scene_controller_; }
 
 private:
-    sptr<SceneController> scene_controller_;
+    mtps::sptr<SceneController> scene_controller_;
 };
 } // namespace lib::scene
 

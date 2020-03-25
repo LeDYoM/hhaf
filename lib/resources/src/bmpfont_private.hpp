@@ -11,23 +11,23 @@ namespace lib::scene
 {
     struct KearningInfo
     {
-        KearningInfo(const u32 second_, const s32 amount_) 
+        KearningInfo(const mtps::u32 second_, const mtps::s32 amount_) 
             : second{second_}, amount{amount_}	{ }
         KearningInfo() = default;
-        u32 second;
-        s32 amount;
+        mtps::u32 second;
+        mtps::s32 amount;
     };
 
     struct CharDescriptor
     {
-        Rect<u16> position;
-        vector2d<s16> offset;
-        s16 xadvance;
-        s16 page;
-        vector<KearningInfo> kearn;
-        Rectf32 offsetedPosition;
+        mtps::Rect<mtps::u16> position;
+        mtps::vector2d<mtps::s16> offset;
+        mtps::s16 xadvance;
+        mtps::s16 page;
+        mtps::vector<KearningInfo> kearn;
+        mtps::Rectf32 offsetedPosition;
 
-        constexpr s32 GetKerningPair(const u32 second) const
+        constexpr mtps::s32 GetKerningPair(const mtps::u32 second) const
         {
             const auto iterator(kearn.cfind_if([second](const auto& this_kearn)
             { return this_kearn.second == second; }));
@@ -38,40 +38,40 @@ namespace lib::scene
 
     struct PageData
     {
-        str file;
-        sptr<ITexture> it;
+        mtps::str file;
+        mtps::sptr<ITexture> it;
     };
 
     struct FontInfo
     {
-        str face;
-        u16 size;
+        mtps::str face;
+        mtps::u16 size;
         bool bold;
         bool italic;
-        str charset;
+        mtps::str charset;
         bool unicode;
-        f32 stretchH;
+        mtps::f32 stretchH;
         bool smooth;
         bool aa;
-        Rect<s16> padding;
-        vector2d<s16> spacing;
+        mtps::Rect<mtps::s16> padding;
+        mtps::vector2d<mtps::s16> spacing;
         bool outline;
     };
 
     class BMFontPrivate
     {
     public:
-        s16 lineHeight;
-        s16 base;
-        vector2du32 size_;
-        s16 pages;
-        s16 outline;
+        mtps::s16 lineHeight;
+        mtps::s16 base;
+        mtps::vector2du32 size_;
+        mtps::s16 pages;
+        mtps::s16 outline;
         FontInfo fInfo;
-        f32 adv;
-        vector<CharDescriptor> chars_;
-        vector<PageData> pagesData_;
+        mtps::f32 adv;
+        mtps::vector<CharDescriptor> chars_;
+        mtps::vector<PageData> pagesData_;
 
-        static void advanceCharPos(vector2d<f32> &nextCharPos, const CharDescriptor *charDescriptor, const char *nextChar)
+        static void advanceCharPos(mtps::vector2df &nextCharPos, const CharDescriptor *charDescriptor, const char *nextChar)
         {
             if (nextChar)
             {

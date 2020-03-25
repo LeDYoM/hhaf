@@ -21,11 +21,11 @@ public:
     void startFrame();
     void endFrame();
 
-    void setAcceleration(const f32 acceleration);
+    void setAcceleration(const mtps::f32 acceleration);
 
 private:
     struct TimeSystemPrivate;
-    uptr<TimeSystemPrivate> priv_;
+    mtps::uptr<TimeSystemPrivate> priv_;
 };
 } // namespace lib::sys
 

@@ -12,14 +12,15 @@
 #include <lib/shareddata/include/shareddataview.hpp>
 #include <lib/system/i_include/get_system.hpp>
 
-namespace zoper
-{
+using namespace mtps;
 using namespace lib;
 using namespace lib::scene;
 
+namespace zoper
+{
 static constexpr char HighScoresFileName[] = "high_scores.txt";
 
-HighScoreTextController::HighScoreTextController(SceneNode *parent, str name)
+HighScoreTextController::HighScoreTextController(SceneNode *parent, mtps::str name)
     : BaseClass{parent, "HighScreTextController"} {}
 
 HighScoreTextController::~HighScoreTextController() = default;
@@ -49,10 +50,10 @@ void HighScoreTextController::onCreated()
     sceneNodeSize = textBox.size();
     setTableSize({3U, NumHighScore});
 
-    size_type positionInTable{0U};
+    mtps::size_type positionInTable{0U};
     const bool isInserting{m_hsData.tryInsertHighScore(gameScore, positionInTable)};
 
-    size_type counter{0};
+    mtps::size_type counter{0};
     for (const auto &element : m_hsData.highScoresList())
     {
         addHighScoresLine(counter, element,
@@ -70,17 +71,17 @@ void HighScoreTextController::onCreated()
 }
 
 void HighScoreTextController::addHighScoresLine(
-    const size_type counter, const HighScore &element, const bool is_inserting)
+    const mtps::size_type counter, const HighScore &element, const bool is_inserting)
 {
-    auto label(createNodeAt(vector2dst{0, counter}, make_str("label", 0, counter)));
+    auto label(createNodeAt(mtps::vector2dst{0, counter}, make_str("label", 0, counter)));
     standarizeText(label);
     label->text.set(make_str(counter, "."));
 
-    label = createNodeAt(vector2dst{1, counter}, make_str("label", 1, counter));
+    label = createNodeAt(mtps::vector2dst{1, counter}, make_str("label", 1, counter));
     standarizeText(label);
     label->text.set(make_str(element.score));
 
-    label = createNodeAt(vector2dst{2, counter}, make_str("label", 2, counter));
+    label = createNodeAt(mtps::vector2dst{2, counter}, make_str("label", 2, counter));
     standarizeText(label);
 
     if (is_inserting)
@@ -93,14 +94,14 @@ void HighScoreTextController::addHighScoresLine(
     }
 }
 
-void HighScoreTextController::addHighScoreEditor(const sptr<SceneNode> &label,
-                                                 const size_type counter,
+void HighScoreTextController::addHighScoreEditor(const mtps::sptr<SceneNode> &label,
+                                                 const mtps::size_type counter,
                                                  const HighScore &element)
 {
     addEditAnimation(counter);
     auto editor(label->addComponentOfType<TextEditorComponent>());
     editor->setTextValidator(muptr<HighScoreValidator>());
-    editor->Accepted.connect([this, counter](const str &entry) mutable {
+    editor->Accepted.connect([this, counter](const mtps::str &entry) mutable {
         m_hsData.setHighScoreName(counter, entry);
         saveHighScores();
         Finished();
@@ -110,7 +111,7 @@ void HighScoreTextController::addHighScoreEditor(const sptr<SceneNode> &label,
     });
 }
 
-void HighScoreTextController::addEditAnimation(const size_type line_index)
+void HighScoreTextController::addEditAnimation(const mtps::size_type line_index)
 {
     log_assert(line_index < tableSize().y, "Invalid line_index");
 
@@ -122,7 +123,7 @@ void HighScoreTextController::addEditAnimation(const size_type line_index)
         });
 }
 
-void HighScoreTextController::standarizeText(const sptr<nodes::SceneNodeText> &ntext)
+void HighScoreTextController::standarizeText(const mtps::sptr<nodes::SceneNodeText> &ntext)
 {
     ntext->textColor.set(m_normalColor);
     ntext->font.set(m_normalFont);

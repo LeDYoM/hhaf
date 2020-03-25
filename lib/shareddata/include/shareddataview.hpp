@@ -13,23 +13,23 @@ namespace lib::shdata
 class SharedData : public sys::IDataWrapper
 {
 public:
-    void store(uptr<IShareable> data);
+    void store(mtps::uptr<IShareable> data);
 
     template <typename T>
-    void store(uptr<T> data)
+    void store(mtps::uptr<T> data)
     {
         store(unique_pointer_cast<IShareable>(std::move(data)));
     }
 
     template <typename T = IShareable>
-    [[nodiscard]] uptr<T> retrieve()
+    [[nodiscard]] mtps::uptr<T> retrieve()
     {
         return unique_pointer_cast<T>(std::move(retrieve_imp()));
     }
 
     [[nodiscard]] bool isEmpty();
 private:
-    [[nodiscard]] uptr<IShareable> retrieve_imp();
+    [[nodiscard]] mtps::uptr<IShareable> retrieve_imp();
 };
 
 class SharedDataView : public sys::IDataWrapper
@@ -56,7 +56,7 @@ public:
     }
 
 private:
-    uptr<IShareable> data_;
+    mtps::uptr<IShareable> data_;
 };
 
 } // namespace lib::scene

@@ -89,7 +89,7 @@ public:
 
 private:
     struct SystemProviderPrivate;
-    uptr<SystemProviderPrivate> p_;
+    mtps::uptr<SystemProviderPrivate> p_;
 };
 } // namespace lib::sys
 

@@ -4,7 +4,7 @@
 
 namespace lib::scene
 {
-SceneNode::SceneNode(rptr<SceneNode> parent, str name)
+SceneNode::SceneNode(mtps::rptr<SceneNode> parent, mtps::str name)
     : sys::HasName{std::move(name)},
       SceneNodeParent{parent},
       SceneNodes{this}, Renderizables{this},

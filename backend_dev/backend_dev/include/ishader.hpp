@@ -17,8 +17,8 @@ public:
     IShader() {}
     virtual ~IShader() {}
 
-    virtual void setUniform(const str &name, vector2df v) = 0;
-    virtual void setUniform(const str &name, ITexture *texture) = 0;
+    virtual void setUniform(const mtps::str &name, mtps::vector2df v) = 0;
+    virtual void setUniform(const mtps::str &name, ITexture *texture) = 0;
 };
 } // namespace lib::backend
 

@@ -24,7 +24,7 @@ public:
     /**
      * @brief Add an already created animation to the list of animations.
      */
-    void addAnimation(uptr<Animation>);
+    void addAnimation(mtps::uptr<Animation>);
 
     /**
      * @brief Add an animation that animates a certain property of the node.
@@ -39,13 +39,13 @@ public:
      */
     template <typename PropertyType>
     void addPropertyAnimation(
-        time::TimePoint time, IProperty<PropertyType> &property,
+        time::TimePoint time, mtps::IProperty<PropertyType> &property,
         PropertyType start, PropertyType dest,
         Animation::AnimationDirection animation_direction =
             Animation::AnimationDirection::Forward,
         Animation::ActionFunc endAction = {})
     {
-        addAnimation(muptr<IPropertyAnimation<PropertyType>>(
+        addAnimation(mtps::muptr<IPropertyAnimation<PropertyType>>(
             attachedNode()->dataWrapper<time::Timer>(),
             std::move(time), std::move(property), std::move(start),
             std::move(dest), std::move(animation_direction),
@@ -67,7 +67,7 @@ public:
      */
     template <typename PropertyType>
     void addRepeatedPropertyAnimation(
-        time::TimePoint time, IProperty<PropertyType> &property,
+        time::TimePoint time, mtps::IProperty<PropertyType> &property,
         PropertyType start, PropertyType dest,
         Animation::AnimationDirection animation_direction =
             Animation::AnimationDirection::Forward,
@@ -107,7 +107,7 @@ public:
      */
     template <typename PropertyType>
     void addCircledPropertyAnimation(
-        time::TimePoint time, IProperty<PropertyType> &property,
+        time::TimePoint time, mtps::IProperty<PropertyType> &property,
         PropertyType start, PropertyType dest,
         Animation::AnimationDirection animation_direction =
             Animation::AnimationDirection::Forward,
@@ -119,8 +119,8 @@ public:
                 this,
                 // these properties by copy
                 time, start, dest, animation_direction,
-                                       // Reference to the property by reference
-                                       &property,
+                // Reference to the property by reference
+                &property,
                 // Move endAction inside the inner lambda
                 endAction = std::move(endAction)]() {
                 if (endAction)
@@ -139,7 +139,7 @@ public:
 
 private:
     class AnimationComponentPrivate;
-    uptr<AnimationComponentPrivate> p_;
+    mtps::uptr<AnimationComponentPrivate> p_;
 };
 } // namespace lib::scene
 

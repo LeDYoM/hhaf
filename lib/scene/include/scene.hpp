@@ -6,6 +6,7 @@
 #include "scenenode.hpp"
 
 #include <mtypes/include/types.hpp>
+#include <mtypes/include/str.hpp>
 
 namespace lib::scene
 {
@@ -13,10 +14,10 @@ class SceneManager;
 class Scene : public SceneNode
 {
 public:
-    explicit Scene(str name) : SceneNode{nullptr, std::move(name)} {}
+    explicit Scene(mtps::str name) : SceneNode{nullptr, std::move(name)} {}
     virtual void onFinished() {}
 private:
-    rptr<SceneManager> scene_manager_;
+    mtps::rptr<SceneManager> scene_manager_;
     friend class SceneController;
 };
 } // namespace lib::scene

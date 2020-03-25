@@ -7,8 +7,6 @@
 #include <mtypes/include/properties.hpp>
 #include <lib/system/include/idatawrapper.hpp>
 
-namespace mtps = lib;
-
 namespace lib::win
 {
 

@@ -1,14 +1,14 @@
 #pragma once
 
-#ifndef LIB_TYPES_EXT_HPP__
-#define LIB_TYPES_EXR_HPP__
+#ifndef MTPS_TYPES_EXT_HPP__
+#define MTPS_TYPES_EXR_HPP__
 
 #include <memory>
 #include <iostream>
 
 #include "str.hpp"
 
-namespace lib
+namespace mtps
 {
     using write_stream = str;
     using read_stream = std::istream;

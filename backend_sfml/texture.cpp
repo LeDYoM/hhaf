@@ -12,8 +12,8 @@ namespace lib::backend::sfmlb
         }
     }
 
-    vector2du32 Texture::size() const
+    mtps::vector2du32 Texture::size() const
     {
-        return{ static_cast<u32>(m_texturePrivate->getSize().x), static_cast<u32>(m_texturePrivate->getSize().y) };
+        return{ static_cast<mtps::u32>(m_texturePrivate->getSize().x), static_cast<mtps::u32>(m_texturePrivate->getSize().y) };
     }
 }

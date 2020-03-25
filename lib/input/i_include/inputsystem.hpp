@@ -23,8 +23,8 @@ using AppService::AppService;
 
     void update();
 
-    const vector<input::Key> &pressedKeys() const noexcept;
-    const vector<input::Key> &releasedKeys() const noexcept;
+    const mtps::vector<input::Key> &pressedKeys() const noexcept;
+    const mtps::vector<input::Key> &releasedKeys() const noexcept;
     const input::KeyStates &keyStates() const noexcept { return m_keyStates; }
 
     /**
@@ -41,18 +41,18 @@ using AppService::AppService;
 
     /**
      * @brief Set the Input Driver object
-     * @param input_driver Object to be set.
+     * @param input_driver  mtps::Objectto be set.
      */
-    void setInputDriver(sptr<input::InputDriver> input_driver);
+    void setInputDriver(mtps::sptr<input::InputDriver> input_driver);
 
 private:
     void keyPressed(const input::Key key);
     void keyReleased(const input::Key key);
 
-    sptr<input::InputDriver> input_driver_;
+    mtps::sptr<input::InputDriver> input_driver_;
     input::KeyStates m_keyStates;
-    vector<input::Key> m_pressedKeys;
-    vector<input::Key> m_releasedKeys;
+    mtps::vector<input::Key> m_pressedKeys;
+    mtps::vector<input::Key> m_releasedKeys;
 };
 } // namespace lib::sys
 

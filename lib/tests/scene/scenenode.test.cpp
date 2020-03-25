@@ -6,7 +6,7 @@
 
 auto unitTestScene()
 {
-    static auto uts(lib::msptr<lib::scene::Scene>("unitTest"));
+    static auto uts(mtps::msptr<lib::scene::Scene>("unitTest"));
     return uts;
 }
 

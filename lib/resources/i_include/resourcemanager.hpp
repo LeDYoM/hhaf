@@ -28,19 +28,19 @@ namespace lib::sys
         ResourceManager(sys::SystemProvider &system_provider);
         ~ResourceManager() override;
 
-        sptr<scene::ITTFont> getTTFont(const str &rid) override;
-        sptr<scene::ITexture> getTexture(const str &rid) override;
-        sptr<scene::IShader> getShader(const str &rid) override;
-        sptr<scene::IFont> getBMPFont(const str &rid) override;
+        mtps::sptr<scene::ITTFont> getTTFont(const mtps::str &rid) override;
+        mtps::sptr<scene::ITexture> getTexture(const mtps::str &rid) override;
+        mtps::sptr<scene::IShader> getShader(const mtps::str &rid) override;
+        mtps::sptr<scene::IFont> getBMPFont(const mtps::str &rid) override;
 
-        bool loadTTFont(const str &rid, const str &fileName) override;
-        bool loadTexture(const str &rid, const str &fileName) override;
-        bool loadShader(const str &rid, const str &fileName) override;
-        bool loadBMPFont(const str &rid, const str &fileName) override;
+        bool loadTTFont(const mtps::str &rid, const mtps::str &fileName) override;
+        bool loadTexture(const mtps::str &rid, const mtps::str &fileName) override;
+        bool loadShader(const mtps::str &rid, const mtps::str &fileName) override;
+        bool loadBMPFont(const mtps::str &rid, const mtps::str &fileName) override;
 
     private:
         struct ResourceManagerPrivate;
-        uptr<ResourceManagerPrivate> m_private;
+        mtps::uptr<ResourceManagerPrivate> m_private;
     };
 }
 

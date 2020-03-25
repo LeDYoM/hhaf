@@ -5,7 +5,7 @@
 #include <mtypes/include/menum.hpp>
 #include <limits>
 
-using namespace lib;
+using namespace mtps;
 
 enum class A : s32
 {

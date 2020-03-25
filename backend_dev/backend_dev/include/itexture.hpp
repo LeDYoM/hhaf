@@ -14,7 +14,7 @@ public:
     ITexture() {}
     virtual ~ITexture() {}
 
-    virtual vector2du32 size() const = 0;
+    virtual mtps::vector2du32 size() const = 0;
 };
 } // namespace lib::backend
 

@@ -11,10 +11,12 @@
 #include "../zoperprogramcontroller.hpp"
 #include "../common_scene_nodes.hpp"
 
-namespace zoper
-{
+using namespace mtps;
 using namespace lib;
 using namespace lib::scene;
+
+namespace zoper
+{
 
 constexpr u32 PointsPerQuad = 6U;
 

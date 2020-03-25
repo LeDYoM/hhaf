@@ -24,7 +24,7 @@ TEST_CASE("SceneNodeParent::SceneNodeParent", "[SceneNode][SceneNodeParent]")
     using namespace lib;
     using namespace lib::scene;
 
-    auto test_scene = msptr<TestScene>("TestScene");
+    auto test_scene = mtps::msptr<TestScene>("TestScene");
     auto scene_node_test(test_scene->createSceneNode<TestSceneNode>("TestSceneNode_test"));
     auto scene_node(scene_node_test->createSceneNode("TestSceneNode"));
 

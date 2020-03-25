@@ -24,9 +24,9 @@ public:
     virtual ~RenderWindow();
 
     bool createWindow(
-            const u32 width, const u32 height,
-            const u8 red_bpp, const u8 green_bpp, const u8 blue_bpp,
-            const u8 alpha_bpp,
+            const mtps::u32 width, const mtps::u32 height,
+            const mtps::u8 red_bpp, const mtps::u8 green_bpp, const mtps::u8 blue_bpp,
+            const mtps::u8 alpha_bpp,
             const unsigned int num_extra_parameters, 
             const unsigned int* const extra_parameters) override;
     sf::Vector2u getSize() const;
@@ -37,7 +37,7 @@ public:
 
     bool processEvents() override;
     void display() override;
-    void setWindowTitle(str newTitle) override;
+    void setWindowTitle(mtps::str newTitle) override;
     void closeWindow() override;
 
     virtual IInputDriver *inputDriver() override;
@@ -53,7 +53,7 @@ private:
 class WindowBackendInfo : public IWindowProviderInfo
 {
 public:
-    const str info() override;
+    const mtps::str info() override;
 };
 } // namespace lib::backend::sfmlb
 

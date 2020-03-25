@@ -7,6 +7,7 @@
 
 namespace zoper
 {
+using namespace mtps;
 using namespace lib;
 using namespace lib::scene;
 

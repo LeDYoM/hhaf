@@ -15,7 +15,7 @@ class SceneNode;
 class SceneNodes
 {
 public:
-    SceneNodes(const rptr<SceneNode> scene_node);
+    SceneNodes(const mtps::rptr<SceneNode> scene_node);
     /// Virtual destructor.
     virtual ~SceneNodes();
 
@@ -23,19 +23,19 @@ public:
     /// may be added, it uses variadic forwarding of the arguments.
     /// It also adds the new node to the parents list.
     template <typename T = SceneNode, typename... Args>
-    sptr<T> createSceneNode(Args &&... args)
+    mtps::sptr<T> createSceneNode(Args &&... args)
     {
-        auto result(msptr<T>(attached_, std::forward<Args>(args)...));
+        auto result(mtps::msptr<T>(attached_, std::forward<Args>(args)...));
         addSceneNode(result);
         return result;
     }
 
     /// Method to create a new SceneNode. It is a partial specialization of
     // the general one.
-    sptr<SceneNode> createSceneNode(str name);
+    mtps::sptr<SceneNode> createSceneNode(mtps::str name);
 
-    bool moveLastBeforeNode(const sptr<SceneNode> &beforeNode);
-    void removeSceneNode(sptr<SceneNode> element);
+    bool moveLastBeforeNode(const mtps::sptr<SceneNode> &beforeNode);
+    void removeSceneNode(mtps::sptr<SceneNode> element);
     void clearSceneNodes();
 
     void renderGroups(const bool parentTransformationChanged);
@@ -43,14 +43,14 @@ public:
     constexpr const auto &sceneNodes() const noexcept { return m_groups; }
     constexpr auto &sceneNodes() noexcept { return m_groups; }
 
-    sptr<SceneNode> groupByName(const str &name) const;
+    mtps::sptr<SceneNode> groupByName(const mtps::str&name) const;
 
 protected:
-    void addSceneNode(sptr<SceneNode> node);
+    void addSceneNode(mtps::sptr<SceneNode> node);
 
 private:
-    const rptr<SceneNode> attached_;
-    vector<sptr<SceneNode>> m_groups;
+    const mtps::rptr<SceneNode> attached_;
+    mtps::vector<mtps::sptr<SceneNode>> m_groups;
 };
 
 } // namespace lib::scene

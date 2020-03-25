@@ -19,10 +19,10 @@ namespace lib
     class IResourceRetriever
     {
     public:
-        virtual sptr<scene::ITTFont> getTTFont(const str &rid) = 0;
-        virtual sptr<scene::ITexture> getTexture(const str &rid) = 0;
-        virtual sptr<scene::IShader> getShader(const str &rid) = 0;
-        virtual sptr<scene::IFont> getBMPFont(const str &rid) = 0;
+        virtual mtps::sptr<scene::ITTFont> getTTFont(const mtps::str &rid) = 0;
+        virtual mtps::sptr<scene::ITexture> getTexture(const mtps::str &rid) = 0;
+        virtual mtps::sptr<scene::IShader> getShader(const mtps::str &rid) = 0;
+        virtual mtps::sptr<scene::IFont> getBMPFont(const mtps::str &rid) = 0;
     };
 }
 

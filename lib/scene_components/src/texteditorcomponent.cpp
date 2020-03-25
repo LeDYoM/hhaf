@@ -30,7 +30,7 @@ void TextEditorComponent::onAttached()
 
                 if (success)
                 {
-                    str new_text{attachedTextNode->text()};
+                    mtps::str new_text{attachedTextNode->text()};
                     new_text.append_char(c_ascii);
                     attachedTextNode->text.set(new_text);
                 }

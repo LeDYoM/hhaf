@@ -19,10 +19,10 @@ namespace lib
 class IResourceHandler
 {
 public:
-    virtual bool loadTTFont(const str &rid, const str &fileName) = 0;
-    virtual bool loadTexture(const str &rid, const str &fileName) = 0;
-    virtual bool loadShader(const str &rid, const str &fileName) = 0;
-    virtual bool loadBMPFont(const str &rid, const str &fileName) = 0;
+    virtual bool loadTTFont(const mtps::str &rid, const mtps::str &fileName) = 0;
+    virtual bool loadTexture(const mtps::str &rid, const mtps::str &fileName) = 0;
+    virtual bool loadShader(const mtps::str &rid, const mtps::str &fileName) = 0;
+    virtual bool loadBMPFont(const mtps::str &rid, const mtps::str &fileName) = 0;
 };
 } // namespace lib
 

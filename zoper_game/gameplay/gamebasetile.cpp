@@ -8,7 +8,7 @@ namespace zoper
     using namespace lib::board;
     using namespace lib::scene;
 
-    GameBaseTile::GameBaseTile(SceneNode* const parent, str name)
+    GameBaseTile::GameBaseTile(SceneNode* const parent, mtps::str name)
         : ITile{ }, SceneNode{ parent, std::move(name) }
     {
     }

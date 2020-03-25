@@ -42,7 +42,7 @@ void DiscreteTextComponent::update()
     }
 }
 
-void DiscreteTextComponent::_setText(const str &nText)
+void DiscreteTextComponent::_setText(const mtps::str&nText)
 {
     attachedNodeAs<nodes::SceneNodeText>()->text.set(nText);
 }

@@ -15,29 +15,27 @@
 
 namespace zoper
 {
-using namespace lib;
-
-enum class GameMode : u8
+enum class GameMode :  mtps::u8
 {
     Token = 0,
     Time = 1,
 };
 
-struct GameSharedData : public shdata::IShareable
+struct GameSharedData : public lib::shdata::IShareable
 {
     // MenuScene will write these
-    size_type startLevel{0U};
+    mtps::size_type startLevel{0U};
     GameMode gameMode{GameMode::Token};
 
     // GameScene will write these.
-    size_type endLevel{0U};
-    size_type score{0U};
+    mtps::size_type endLevel{0U};
+    mtps::size_type score{0U};
 
-    str to_str() const
+    mtps::str to_str() const
     {
-        str temp;
+        mtps::str temp;
         temp << "Selected level " << startLevel << "\n"
-             << " GameMode: " << static_cast<u32>(gameMode);
+             << " GameMode: " << static_cast<mtps::u32>(gameMode);
         return temp;
     }
 

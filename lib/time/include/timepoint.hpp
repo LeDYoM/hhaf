@@ -11,7 +11,7 @@ namespace lib::time
 class TimePoint
 {
 public:
-    using Rep = u64;
+    using Rep = mtps::u64;
 
     constexpr TimePoint(const Rep nanoseconds = Rep{0U}) noexcept
         : nanoseconds_{nanoseconds} {}
@@ -34,27 +34,27 @@ public:
     }
 
 private:
-    u64 nanoseconds_;
+    mtps::u64 nanoseconds_;
 };
 
-constexpr TimePoint TimePoint_as_microseconds(const u64 micros) noexcept
+constexpr TimePoint TimePoint_as_microseconds(const mtps::u64 micros) noexcept
 {
     return TimePoint{micros * 1000U};
 }
 
-constexpr TimePoint TimePoint_as_miliseconds(const u64 millis) noexcept
+constexpr TimePoint TimePoint_as_miliseconds(const mtps::u64 millis) noexcept
 {
     return TimePoint_as_microseconds(millis * 1000U);
 }
 
-constexpr TimePoint TimePoint_as_seconds(const u32 secs) noexcept
+constexpr TimePoint TimePoint_as_seconds(const mtps::u32 secs) noexcept
 {
     return TimePoint_as_miliseconds(secs * 1000U);
 }
 
-constexpr TimePoint TimePoint_as_seconds(const f32 secs) noexcept
+constexpr TimePoint TimePoint_as_seconds(const mtps::f32 secs) noexcept
 {
-    return TimePoint_as_miliseconds(static_cast<u32>(secs * 1000U));
+    return TimePoint_as_miliseconds(static_cast<mtps::u32>(secs * 1000U));
 }
 
 constexpr TimePoint operator+(const TimePoint &lhs, const TimePoint &rhs) noexcept
@@ -67,24 +67,24 @@ constexpr TimePoint operator-(const TimePoint &lhs, const TimePoint &rhs) noexce
     return {lhs.nanoseconds() - rhs.nanoseconds()};
 }
 
-constexpr TimePoint operator*(const TimePoint &lhs, const u64 scalar) noexcept
+constexpr TimePoint operator*(const TimePoint &lhs, const mtps::u64 scalar) noexcept
 {
     return {lhs.nanoseconds() * scalar};
 }
 
-constexpr TimePoint operator*(const TimePoint &lhs, const f32 scalar) noexcept
+constexpr TimePoint operator*(const TimePoint &lhs, const mtps::f32 scalar) noexcept
 {
-    return {static_cast<u64>(static_cast<f32>(lhs.nanoseconds()) * scalar)};
+    return {static_cast<mtps::u64>(static_cast<mtps::f32>(lhs.nanoseconds()) * scalar)};
 }
 
-constexpr TimePoint operator/(const TimePoint &lhs, const u64 scalar) noexcept
+constexpr TimePoint operator/(const TimePoint &lhs, const mtps::u64 scalar) noexcept
 {
-    return {static_cast<u64>(lhs.nanoseconds() / scalar)};
+    return {static_cast<mtps::u64>(lhs.nanoseconds() / scalar)};
 }
 
-constexpr TimePoint operator/(const TimePoint &lhs, const f32 scalar) noexcept
+constexpr TimePoint operator/(const TimePoint &lhs, const mtps::f32 scalar) noexcept
 {
-    return {static_cast<u64>(static_cast<f32>(lhs.nanoseconds()) / scalar)};
+    return {static_cast<mtps::u64>(static_cast<mtps::f32>(lhs.nanoseconds()) / scalar)};
 }
 
 constexpr bool operator<(const TimePoint &lhs, const TimePoint &rhs) noexcept
@@ -117,7 +117,7 @@ constexpr bool operator!=(const TimePoint &lhs, const TimePoint &rhs) noexcept
     return {lhs.nanoseconds() != rhs.nanoseconds()};
 }
 
-constexpr str &operator<<(str &os, const TimePoint &tp) noexcept
+constexpr mtps::str&operator<<(mtps::str &os, const TimePoint &tp) noexcept
 {
     os << tp.nanoseconds();
     return os;
