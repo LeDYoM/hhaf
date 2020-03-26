@@ -1,7 +1,7 @@
 #pragma once
 
 #ifndef LIB_SCENE_SCENENODEFACTORY_INCLUDE_HPP
-#define LIB_SCENE_SceneNodeFactory_INCLUDE_HPP
+#define LIB_SCENE_SCENENODEFACTORY_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/function.hpp>
