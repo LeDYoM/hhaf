@@ -7,7 +7,7 @@
 #include <mtypes/include/function.hpp>
 #include <mtypes/include/str.hpp>
 
-#include <map>
+#include <mtypes/include/dictionary.hpp>
 
 namespace lib::scene
 {
@@ -54,15 +54,8 @@ public:
     bool registerObjectType(mtps::str type_name,
                             ObjectConstructorFunction constructor_function)
     {
-        // Check if the type is already registered
-        if (containsType(type_name))
-        {
-            return false;
-        }
-
-        // If it is not, insert it
-        insert(std::move(type_name), std::move(constructor_function));
-        return true;
+        return constructors_.add(
+            std::move(type_name), std::move(constructor_function), false);
     }
 
     /**
@@ -181,7 +174,7 @@ public:
     }
 
 private:
-    std::map<mtps::str, ObjectConstructorFunction> constructors_;
+    mtps::Dictionary<ObjectConstructorFunction> constructors_;
 
     template <typename T, typename... Args>
     static CreateReturnType createObject(Args &&... args)
@@ -192,12 +185,6 @@ private:
     bool containsType(const mtps::str &name) const
     {
         return constructors_.find(name) != std::end(constructors_);
-    }
-
-    void insert(mtps::str name,
-                ObjectConstructorFunction constructor_function)
-    {
-        constructors_[std::move(name)] = std::move(constructor_function);
     }
 };
 } // namespace lib::scene

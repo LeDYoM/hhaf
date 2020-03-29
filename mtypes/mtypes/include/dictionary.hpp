@@ -36,6 +36,8 @@ namespace mtps
         constexpr const_iterator begin() const noexcept{ return m_data.begin(); }
         constexpr iterator end() noexcept { return m_data.end(); }
         constexpr const_iterator end() const noexcept{ return m_data.end(); }
+        constexpr const_iterator cbegin() const noexcept{ return m_data.begin(); }
+        constexpr const_iterator cend() const noexcept{ return m_data.end(); }
 
         constexpr bool add(const content &eList, const bool overwrite = true)
         {
