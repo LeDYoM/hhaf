@@ -7,7 +7,6 @@ set(SOURCE_TESTS
     main
 
     scene/color
-    scene/object_factory
     scene/scenecontroller
     scene/scenenodefactory
     scene/scenenode
@@ -17,6 +16,7 @@ set(SOURCE_TESTS
     scene_components/componentcontainer
     scene_components/statescontroller
 
+    types/object_factory
 )
 
 add_test_executable(SOURCE_TESTS ${SOURCE_TESTS})

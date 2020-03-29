@@ -21,6 +21,8 @@ target_include_directories(${CURRENT_TARGET}
 )
 
 # Directory internal libraries that will be used by the client too.
+add_subdirectory(types)
+target_link_libraries(${CURRENT_TARGET} PRIVATE types)
 add_subdirectory(filesystem)
 target_link_libraries(${CURRENT_TARGET} PRIVATE filesystem)
 add_subdirectory(render)

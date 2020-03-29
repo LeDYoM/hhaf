@@ -1,7 +1,7 @@
 #include "catch.hpp"
 
 #include <mtypes/include/types.hpp>
-#include <lib/scene/include/object_factory.hpp>
+#include <lib/types/include/object_factory.hpp>
 
 #include <typeinfo>
 #include <typeindex>
