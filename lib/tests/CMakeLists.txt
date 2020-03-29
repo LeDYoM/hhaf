@@ -7,6 +7,7 @@ set(SOURCE_TESTS
     main
 
     scene/color
+    scene/object_factory
     scene/scenecontroller
     scene/scenenodefactory
     scene/scenenode
