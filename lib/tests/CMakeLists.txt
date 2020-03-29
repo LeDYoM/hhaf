@@ -16,7 +16,7 @@ set(SOURCE_TESTS
     scene_components/componentcontainer
     scene_components/statescontroller
 
-    types/object_factory
+    utils/object_factory
 )
 
 add_test_executable(SOURCE_TESTS ${SOURCE_TESTS})

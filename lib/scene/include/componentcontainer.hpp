@@ -7,7 +7,7 @@
 #include <mtypes/include/lockablevector.hpp>
 #include <lib/include/liblog.hpp>
 #include <lib/scene/include/icomponent.hpp>
-#include <lib/system/include/attachable_manager.hpp>
+#include <lib/utils/include/attachable_manager.hpp>
 #include <typeinfo>
 #include <typeindex>
 

@@ -4,7 +4,7 @@
 #define LIB_SCENE_ICOMPONENT_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <lib/system/include/attachable.hpp>
+#include <lib/utils/include/attachable.hpp>
 
 namespace lib::scene
 {

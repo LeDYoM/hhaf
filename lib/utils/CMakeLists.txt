@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 3.11)
-project (types CXX)
+project (utils CXX)
 
 set (CURRENT_TARGET ${PROJECT_NAME})
 add_library(${CURRENT_TARGET} INTERFACE)
