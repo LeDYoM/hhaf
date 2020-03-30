@@ -1,12 +1,10 @@
 #pragma once
 
-#ifndef LIB_SCENE_SCENENODES_INCLUDE_HPP
-#define LIB_SCENE_SCENENODES_INCLUDE_HPP
+#ifndef LIB_SCENE_SCENENODESGROUP_INCLUDE_HPP
+#define LIB_SCENE_SCENENODESGROUP_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <mtypes/include/vector2d.hpp>
-#include <lib/scene/include/icomponent.hpp>
-#include <lib/scene/include/componentcontainer.hpp>
+#include <lib/scene/include/scenenodes_group.hpp>
 
 namespace lib::scene
 {
@@ -16,43 +14,65 @@ class SceneNodes
 {
 public:
     SceneNodes(const mtps::rptr<SceneNode> scene_node);
-    /// Virtual destructor.
+
+    /**
+     * @brief Destroy the Scene Nodes object
+     */
     virtual ~SceneNodes();
 
-    /// Method to create a new SceneNode. Since new constructors
-    /// may be added, it uses variadic forwarding of the arguments.
-    /// It also adds the new node to the parents list.
+    /**
+     * @brief Create a Scene Node object.
+     * Since new constructors may be added, it uses variadic forwarding of the
+     * arguments.
+     * It also adds the new node to the parents list.
+     *
+     * @tparam T Type to create
+     * @tparam Args Type of the parameters
+     * @param args Actual value for the arguments
+     * @return mtps::sptr<T> The created object
+     */
     template <typename T = SceneNode, typename... Args>
-    mtps::sptr<T> createSceneNode(Args &&... args)
+    mtps::sptr<T> createSceneNode(Args&&... args)
     {
-        auto result(mtps::msptr<T>(attached_, std::forward<Args>(args)...));
+        auto result(mtps::msptr<T>(scene_node_, std::forward<Args>(args)...));
         addSceneNode(result);
         return result;
     }
 
-    /// Method to create a new SceneNode. It is a partial specialization of
-    // the general one.
+    /**
+     * @brief Create a Scene Node object.
+     * To do that default aguments will be used
+     *
+     * @param name The run time name of the object
+     * @return mtps::sptr<SceneNode> Object created
+     */
     mtps::sptr<SceneNode> createSceneNode(mtps::str name);
 
-    bool moveLastBeforeNode(const mtps::sptr<SceneNode> &beforeNode);
     void removeSceneNode(mtps::sptr<SceneNode> element);
     void clearSceneNodes();
 
     void renderGroups(const bool parentTransformationChanged);
 
-    constexpr const auto &sceneNodes() const noexcept { return m_groups; }
-    constexpr auto &sceneNodes() noexcept { return m_groups; }
+    const auto& sceneNodes() const noexcept
+    {
+        return scene_nodes_group_.sceneNodes();
+    }
+    
+    auto& sceneNodes() noexcept
+    {
+        return scene_nodes_group_.sceneNodes();
+    }
 
-    mtps::sptr<SceneNode> groupByName(const mtps::str&name) const;
+    mtps::sptr<SceneNode> groupByName(const mtps::str& name) const;
 
 protected:
     void addSceneNode(mtps::sptr<SceneNode> node);
 
 private:
-    const mtps::rptr<SceneNode> attached_;
-    mtps::vector<mtps::sptr<SceneNode>> m_groups;
+    const mtps::rptr<SceneNode> scene_node_;
+    SceneNodesGroup scene_nodes_group_;
 };
 
-} // namespace lib::scene
+}  // namespace lib::scene
 
 #endif
