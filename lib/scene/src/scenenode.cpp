@@ -4,15 +4,17 @@
 
 namespace lib::scene
 {
-SceneNode::SceneNode(mtps::rptr<SceneNode> parent, mtps::str name)
-    : sys::HasName{std::move(name)},
-      SceneNodeParent{parent},
-      SceneNodes{this}, Renderizables{this},
-      sys::DataWrapperCreator{this}, ComponentContainer{this},
-      sys::SystemAccess{parent != nullptr ? &(parent->isystemProvider()) : nullptr},
-      visible{true}
-{
-}
+SceneNode::SceneNode(mtps::rptr<SceneNode> parent, mtps::str name) :
+    sys::HasName{std::move(name)},
+    SceneNodeParent{parent},
+    SceneNodes{this},
+    Renderizables{this},
+    sys::DataWrapperCreator{this},
+    ComponentContainer{this},
+    sys::SystemAccess{parent != nullptr ? &(parent->isystemProvider())
+                                        : nullptr},
+    visible{true}
+{}
 
 SceneNode::~SceneNode() = default;
 
@@ -30,8 +32,8 @@ void SceneNode::render(bool parentTransformationChanged)
 
         if (parentTransformationChanged)
         {
-            updateGlobalTransformation(
-                parent() ? parent()->globalTransform() : Transform::Identity);
+            updateGlobalTransformation(parent() ? parent()->globalTransform()
+                                                : Transform::Identity);
         }
 
         updateRenderizables();
@@ -45,4 +47,4 @@ void SceneNode::clearAll()
     clearComponents();
 }
 
-} // namespace lib::scene
+}  // namespace lib::scene

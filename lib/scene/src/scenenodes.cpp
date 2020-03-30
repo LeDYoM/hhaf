@@ -12,10 +12,7 @@ SceneNodes::~SceneNodes() = default;
 
 void SceneNodes::renderGroups(const bool parentTransformationChanged)
 {
-    for (auto&& group : scene_nodes_group_.sceneNodes())
-    {
-        group->render(parentTransformationChanged);
-    }
+    scene_nodes_group_.renderGroups(parentTransformationChanged);
 }
 
 mtps::sptr<SceneNode> SceneNodes::createSceneNode(mtps::str name)

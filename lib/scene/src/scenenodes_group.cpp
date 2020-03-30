@@ -17,7 +17,6 @@ void SceneNodesGroup::renderGroups(const bool parentTransformationChanged)
 void SceneNodesGroup::addSceneNode(mtps::sptr<SceneNode> node)
 {
     m_groups.push_back(node);
-    node->onCreated();
 }
 
 void SceneNodesGroup::removeSceneNode(mtps::sptr<SceneNode> element)
