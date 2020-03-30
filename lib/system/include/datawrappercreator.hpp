@@ -19,10 +19,10 @@ namespace lib::sys
  * DataWrappers are stand alone objects, not components that interact with
  * their containers. For active content see @b IComponent.
  */
-class DataWrapperCreator : public AttachableManager<IDataWrapper, true>
+class DataWrapperCreator : public AttachableManager<IDataWrapper>
 {
 public:
-    using BaseClass = AttachableManager<IDataWrapper, true>;
+    using BaseClass = AttachableManager<IDataWrapper>;
 
     using BaseClass::AttachableManager;
 
@@ -35,6 +35,6 @@ public:
         return create<T>();
     }
 };
-} // namespace lib::sys
+}  // namespace lib::sys
 
 #endif

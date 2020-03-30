@@ -14,10 +14,10 @@
 namespace lib::scene
 {
 class SceneNode;
-class ComponentContainer : public sys::AttachableManager<IComponent, false>
+class ComponentContainer : public sys::AttachableManager<IComponent>
 {
 public:
-    using BaseClass = sys::AttachableManager<IComponent, false>;
+    using BaseClass = sys::AttachableManager<IComponent>;
 
     using BaseClass::AttachableManager;
 
@@ -26,7 +26,7 @@ public:
     {
         log_assert(componentOfType<T>() == nullptr,
                    "There is already a component with this type");
-        auto nc(create<T>());
+        mtps::sptr<T> nc(create<T>());
         addComponent(nc);
         return nc;
     }

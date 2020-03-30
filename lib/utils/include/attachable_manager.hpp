@@ -8,26 +8,17 @@
 
 namespace lib::sys
 {
-template <typename AttachedBase, bool ReturnsUnique>
+/**
+ * @brief Utility class to define a manager/factory for a certain types of
+ * classes.
+ * 
+ * @tparam AttachedBase Base Type of the objects to create
+ */
+template <typename AttachedBase>
 class AttachableManager
 {
 public:
     using AttachableType = typename AttachedBase::AttachedNodeType;
-
-    template <bool ReturnsUnique, typename T>
-    struct ReturnTypeImpl
-    {
-        using type = mtps::uptr<T>;
-    };
-
-    template <typename T>
-    struct ReturnTypeImpl<false, typename T>
-    {
-        using type = mtps::sptr<T>;
-    };
-
-    template <typename T>
-    using ReturnType = typename ReturnTypeImpl<ReturnsUnique, T>::type;
 
     constexpr AttachableManager(
         mtps::rptr<AttachableType> attachable = nullptr) noexcept :
@@ -38,7 +29,7 @@ public:
 
 protected:
     template <typename T>
-    ReturnType<T> create() const
+    mtps::uptr<T> create() const
     {
         // Static check that T is a valid type for this class.
         static_assert(std::is_base_of_v<sys::Attachable<AttachableType>, T>,
@@ -53,7 +44,7 @@ protected:
                 temp);
         log_assert(temp2 != nullptr, "");
 
-        ReturnType<T> result = ReturnType<T>(std::move(temp));
+        auto result = mtps::uptr<T>(std::move(temp));
         initialize(result.get());
         return result;
     }
