@@ -18,24 +18,18 @@ AlwaysBreakAfterReturnType: None
 AlwaysBreakBeforeMultilineStrings: false
 AlwaysBreakTemplateDeclarations: true
 BinPackArguments: true
-# BinPackParameters: changed in stringent compared to Zenuity configuration.
-# The feature appears not to work well with the rest of the formatting
-# settings, when parameters have default values.
 BinPackParameters: false
 BreakBeforeBraces: Custom
-# BraceWrapping::AfterExternBlock: false -- changed in stringent.
-# Turned off to make the reformatting patches that need to follow a
-# bit more tractable. Can be turned back on in the future if desired.
 BraceWrapping:
   AfterClass:      true
   AfterControlStatement: true
   AfterEnum:       true
   AfterFunction:   true
   AfterNamespace:  true
-  AfterObjCDeclaration: false
+  AfterObjCDeclaration: true
   AfterStruct:     true
   AfterUnion:      true
-  AfterExternBlock: false
+  AfterExternBlock: true
   BeforeCatch:     true
   BeforeElse:      true
   IndentBraces:    false
@@ -50,7 +44,6 @@ BreakConstructorInitializers: AfterColon
 BreakAfterJavaFieldAnnotations: false
 BreakStringLiterals: true
 ColumnLimit:     80
-CommentPragmas:  '^lint '
 CompactNamespaces: false
 ConstructorInitializerAllOnOneLineOrOnePerLine: true
 ConstructorInitializerIndentWidth: 4
