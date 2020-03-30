@@ -3,13 +3,13 @@
 #ifndef LIB_SCENE_COMPONENTCONTAINER_INCLUDE_HPP
 #define LIB_SCENE_COMPONENTCONTAINER_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/lockablevector.hpp>
 #include <lib/include/liblog.hpp>
 #include <lib/scene/include/icomponent.hpp>
 #include <lib/utils/include/attachable_manager.hpp>
-#include <typeinfo>
+#include <mtypes/include/lockablevector.hpp>
+#include <mtypes/include/types.hpp>
 #include <typeindex>
+#include <typeinfo>
 
 namespace lib::scene
 {
@@ -32,7 +32,7 @@ public:
     }
 
     template <typename T>
-    void ensureComponentOfType(mtps::sptr<T> &element)
+    void ensureComponentOfType(mtps::sptr<T>& element)
     {
         if (!element)
         {
@@ -43,10 +43,10 @@ public:
     void updateComponents();
 
     /**
-    * Returns the component of the specified type if exists
-    * @param T type of the component to be retrieved
-    * @return A shared pointer to the container or nullptr if not found
-    */
+     * Returns the component of the specified type if exists
+     * @param T type of the component to be retrieved
+     * @return A shared pointer to the container or nullptr if not found
+     */
     template <typename T>
     mtps::sptr<T> componentOfType() const
     {
@@ -60,14 +60,15 @@ private:
     bool addComponent(mtps::sptr<IComponent> nc);
 
     template <typename T>
-    void addComponentOfType(mtps::sptr<T> &component)
+    void addComponentOfType(mtps::sptr<T>& component)
     {
         component = addComponentOfType<T>();
     }
 
-    const mtps::sptr<IComponent> componentOfType(const std::type_index &ti) const;
-   mtps::LockableVector<mtps::sptr<IComponent>> m_components;
+    const mtps::sptr<IComponent> componentOfType(
+        const std::type_index& ti) const;
+    mtps::LockableVector<mtps::sptr<IComponent>> m_components;
 };
-} // namespace lib::scene
+}  // namespace lib::scene
 
 #endif

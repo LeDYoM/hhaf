@@ -3,8 +3,8 @@
 #ifndef LIB_ATTACHABLE_MANAGER_INCLUDE_HPP
 #define LIB_ATTACHABLE_MANAGER_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
 #include <lib/utils/include/attachable.hpp>
+#include <mtypes/include/types.hpp>
 
 namespace lib::sys
 {
@@ -29,8 +29,10 @@ public:
     template <typename T>
     using ReturnType = typename ReturnTypeImpl<ReturnsUnique, T>::type;
 
-    constexpr AttachableManager(mtps::rptr<AttachableType> attachable = nullptr) noexcept
-        : attachable_{std::move(attachable)} {}
+    constexpr AttachableManager(
+        mtps::rptr<AttachableType> attachable = nullptr) noexcept :
+        attachable_{std::move(attachable)}
+    {}
 
     virtual ~AttachableManager() {}
 
@@ -39,16 +41,16 @@ protected:
     ReturnType<T> create() const
     {
         // Static check that T is a valid type for this class.
-        static_assert(
-            std::is_base_of_v<sys::Attachable<AttachableType>, T>,
-            "You can only use this "
-            "function with types derived from AttachedBase");
+        static_assert(std::is_base_of_v<sys::Attachable<AttachableType>, T>,
+                      "You can only use this "
+                      "function with types derived from AttachedBase");
 
-        T *temp = new T();
+        T* temp = new T();
 
         // Dynamic check that T is a valid types for this class.
         const mtps::rptr<const sys::Attachable<AttachableType>> temp2 =
-            dynamic_cast<mtps::rptr<const sys::Attachable<AttachableType>>>(temp);
+            dynamic_cast<mtps::rptr<const sys::Attachable<AttachableType>>>(
+                temp);
         log_assert(temp2 != nullptr, "");
 
         ReturnType<T> result = ReturnType<T>(std::move(temp));
@@ -65,6 +67,6 @@ private:
 
     const mtps::rptr<AttachableType> attachable_;
 };
-} // namespace sys
+}  // namespace lib::sys
 
 #endif
