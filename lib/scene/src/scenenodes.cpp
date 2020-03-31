@@ -15,11 +15,6 @@ void SceneNodes::renderGroups(const bool parentTransformationChanged)
     scene_nodes_group_.renderGroups(parentTransformationChanged);
 }
 
-mtps::sptr<SceneNode> SceneNodes::createSceneNode(mtps::str name)
-{
-    return createSceneNode<SceneNode>(std::move(name));
-}
-
 void SceneNodes::addSceneNode(mtps::sptr<SceneNode> node)
 {
     scene_nodes_group_.addSceneNode(node);

@@ -39,15 +39,6 @@ public:
         return result;
     }
 
-    /**
-     * @brief Create a Scene Node object.
-     * To do that default aguments will be used
-     *
-     * @param name The run time name of the object
-     * @return mtps::sptr<SceneNode> Object created
-     */
-    mtps::sptr<SceneNode> createSceneNode(mtps::str name);
-
     void removeSceneNode(mtps::sptr<SceneNode> element);
     void clearSceneNodes();
 
