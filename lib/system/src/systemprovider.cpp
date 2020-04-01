@@ -237,6 +237,7 @@ bool SystemProvider::runStep()
 #endif
     inputSystem().update();
     sceneManager().update();
+    renderSystem().update();
 
     parentWindow().postLoop();
     return windowWants2Close;

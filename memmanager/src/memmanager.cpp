@@ -4,7 +4,13 @@
 #include <windows.h>
 #include <crtdbg.h>
 
-static int crtDebugMemAllocHook(int allocType, void *userData, size_t size, int blockType, long requestIndex, const unsigned char *fileName, int lineIndex)
+static int crtDebugMemAllocHook(int allocType,
+                                void* userData,
+                                size_t size,
+                                int blockType,
+                                long requestIndex,
+                                const unsigned char* fileName,
+                                int lineIndex)
 {
     lineIndex;
     fileName;
@@ -14,7 +20,7 @@ static int crtDebugMemAllocHook(int allocType, void *userData, size_t size, int 
     userData;
     allocType;
 
-    if (requestIndex == 141160) //break;
+    if (requestIndex == 141160)  // break;
 
         return true;
 
@@ -34,6 +40,6 @@ void installMemManager()
 void finishMemManager()
 {
 #ifdef _MSC_VER
-	_CrtDumpMemoryLeaks();
+    _CrtDumpMemoryLeaks();
 #endif
 }
