@@ -5,17 +5,17 @@
 #include <lib/system/include/isystemprovider.hpp>
 #include <lib/include/liblog.hpp>
 
+using namespace mtps;
+
 namespace lib::scene
 {
-SceneController::~SceneController() = default;
-
-void SceneController::setSceneManager(SceneManager* scene_manager)
+void SceneController::setSceneManager(rptr<SceneManager> scene_manager)
 {
     log_assert(scene_manager_ == nullptr, "The scene_manager_ was set already");
     scene_manager_ = scene_manager;
 }
 
-bool SceneController::startScene(const mtps::str& sceneName)
+bool SceneController::startScene(const str& sceneName)
 {
     auto scene = scene_factory_.create(sceneName);
     startScene(mtps::sptr<Scene>(std::move(scene)));
@@ -30,7 +30,7 @@ void SceneController::switchToNextScene()
 void SceneController::deferredSwitchScene()
 {
     // Prepare next Scene
-    mtps::sptr<Scene> nextScene{nullptr};
+    sptr<Scene> nextScene{nullptr};
     if (scene_director_)
     {
         nextScene =
@@ -79,7 +79,7 @@ void SceneController::finish()
     }
 }
 
-mtps::sptr<Scene> SceneController::currentScene()
+const sptr<Scene>& SceneController::currentScene() const noexcept
 {
     return current_scene_;
 }
@@ -117,11 +117,6 @@ SceneNodeFactory& SceneController::sceneNodeFactory() noexcept
 const SceneNodeFactory& SceneController::sceneNodeFactory() const noexcept
 {
     return scene_factory_;
-}
-
-const mtps::sptr<Scene> SceneController::currentScene() const noexcept
-{
-    return current_scene_;
 }
 
 }  // namespace lib::scene

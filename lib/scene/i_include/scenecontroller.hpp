@@ -13,22 +13,27 @@
 
 namespace lib::scene
 {
-using SceneDirectorType = mtps::function<mtps::str(const mtps::str&)>;
 class SceneManager;
 
-class SceneController
+/**
+ * @brief Class to control which @b Scene is active and which are not.
+ * This controller class manages the creation, destruction and maintenance of
+ * the @b Scene instances.
+ */
+class SceneController final
 {
 public:
-    virtual ~SceneController();
+    /**
+     * @brief Type defining the function callback for an scene director
+     */
+    using SceneDirectorType = mtps::function<mtps::str(const mtps::str&)>;
 
-    void setSceneManager(SceneManager* scene_manager);
+    void setSceneManager(mtps::rptr<SceneManager> scene_manager);
 
     void switchToNextScene();
     void setSceneDirector(SceneDirectorType sceneDirector);
     void update();
     void finish();
-
-    mtps::sptr<Scene> currentScene();
     bool isActive();
 
     bool startScene(const mtps::str& sceneName);
@@ -67,7 +72,7 @@ public:
 
     SceneNodeFactory& sceneNodeFactory() noexcept;
     const SceneNodeFactory& sceneNodeFactory() const noexcept;
-    const mtps::sptr<Scene> currentScene() const noexcept;
+    const mtps::sptr<Scene>& currentScene() const noexcept;
     bool currentSceneIsNull();
 
 private:
