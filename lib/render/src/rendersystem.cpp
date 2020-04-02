@@ -50,4 +50,9 @@ void RenderSystem::setRenderTarget(mtps::sptr<RenderTarget> render_target)
     priv_->render_target_ = std::move(render_target);
 }
 
+void RenderSystem::clearRenderQueue()
+{
+    priv_->render_data_container_.clear();
+}
+
 } // namespace lib::sys

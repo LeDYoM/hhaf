@@ -9,13 +9,13 @@ namespace lib::scene
 {
 SceneController::~SceneController() = default;
 
-void SceneController::setSceneManager(SceneManager *scene_manager)
+void SceneController::setSceneManager(SceneManager* scene_manager)
 {
     log_assert(scene_manager_ == nullptr, "The scene_manager_ was set already");
     scene_manager_ = scene_manager;
 }
 
-bool SceneController::startScene(const mtps::str&sceneName)
+bool SceneController::startScene(const mtps::str& sceneName)
 {
     auto scene = scene_factory_.create(sceneName);
     startScene(mtps::sptr<Scene>(std::move(scene)));
@@ -24,22 +24,30 @@ bool SceneController::startScene(const mtps::str&sceneName)
 
 void SceneController::switchToNextScene()
 {
+    switch_scene_ = true;
+}
+
+void SceneController::deferredSwitchScene()
+{
     // Prepare next Scene
     mtps::sptr<Scene> nextScene{nullptr};
     if (scene_director_)
     {
-        nextScene = scene_factory_.create(scene_director_(current_scene_->name()));
+        nextScene =
+            scene_factory_.create(scene_director_(current_scene_->name()));
     }
 
     terminateCurrentScene();
 
-    DisplayLog::info("Setting new scene: ", nextScene ? nextScene->name() : "<nullptr>");
+    DisplayLog::info("Setting new scene: ",
+                     nextScene ? nextScene->name() : "<nullptr>");
     startScene(std::move(nextScene));
 }
 
 void SceneController::terminateCurrentScene()
 {
-    log_assert(current_scene_ != nullptr, "Unexpected nullptr in current_scene");
+    log_assert(current_scene_ != nullptr,
+               "Unexpected nullptr in current_scene");
     DisplayLog::info("Terminating scene ", current_scene_->name());
     current_scene_->onFinished();
 }
@@ -51,6 +59,12 @@ void SceneController::setSceneDirector(SceneDirectorType sceneDirector)
 
 void SceneController::update()
 {
+    if (switch_scene_)
+    {
+        deferredSwitchScene();
+        switch_scene_ = false;
+    }
+
     if (auto current_scene = currentScene())
     {
         current_scene->render(false);
@@ -78,7 +92,8 @@ void SceneController::startScene(mtps::sptr<Scene> scene)
         if (scene_manager_)
         {
             current_scene_->scene_manager_ = scene_manager_;
-            current_scene_->copySystemProvider(&(scene_manager_->isystemProvider()));
+            current_scene_->copySystemProvider(
+                &(scene_manager_->isystemProvider()));
         }
         current_scene_->onCreated();
     }
@@ -93,4 +108,20 @@ bool SceneController::isActive()
 {
     return !currentSceneIsNull();
 }
-} // namespace lib::scene
+
+SceneNodeFactory& SceneController::sceneNodeFactory() noexcept
+{
+    return scene_factory_;
+}
+
+const SceneNodeFactory& SceneController::sceneNodeFactory() const noexcept
+{
+    return scene_factory_;
+}
+
+const mtps::sptr<Scene> SceneController::currentScene() const noexcept
+{
+    return current_scene_;
+}
+
+}  // namespace lib::scene

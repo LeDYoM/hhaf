@@ -102,15 +102,18 @@ TEST_CASE("SceneController", "[lib][SceneController]")
         CHECK(common.scene_controller->currentScene()->name() == GroupScene1::StaticTypeName);
         CHECK(common.step == 1U);
 
+        common.scene_controller->update();
+        CHECK(common.scene_controller->currentScene()->name() == GroupScene1::StaticTypeName);
+        CHECK(common.step == 2U);
+
         // Update triggers finish and creation of new scene.
         common.scene_controller->update();
         CHECK(common.scene_controller->currentScene()->name() == GroupScene2::StaticTypeName);
-        CHECK(common.step == 3U);
-
-        common.scene_controller->update();
-        CHECK(common.scene_controller->currentSceneIsNull());
+        CHECK_FALSE(common.scene_controller->currentSceneIsNull());
         CHECK(common.step == 4U);
-        CHECK_FALSE(common.scene_controller->isActive());
+        CHECK(common.scene_controller->isActive());
+
+        // Now the scene is finish and no new scene is added
         common.scene_controller->update();
         CHECK(common.scene_controller->currentSceneIsNull());
         CHECK_FALSE(common.scene_controller->isActive());

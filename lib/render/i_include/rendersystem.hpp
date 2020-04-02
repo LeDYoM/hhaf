@@ -31,6 +31,7 @@ public:
     void clear();
 
     void setRenderTarget(mtps::sptr<RenderTarget> render_target);
+    void clearRenderQueue();
 
 private:
     struct RenderSystemPrivate;
