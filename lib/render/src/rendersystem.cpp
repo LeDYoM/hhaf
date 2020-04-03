@@ -15,7 +15,7 @@ struct RenderSystem::RenderSystemPrivate final
 
     void update()
     {
-        render_target_->drawBatch(render_data_container_.cbegin(),
+        render_target_->render(render_data_container_.cbegin(),
                                   render_data_container_.cend());
         render_data_container_.clear();
     }

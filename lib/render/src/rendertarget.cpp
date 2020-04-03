@@ -1,6 +1,7 @@
 #include <lib/render/include/rendertarget.hpp>
 
 #include <backend_dev/include/irendertarget.hpp>
+#include <backend_dev/include/irenderdata.hpp>
 #include <lib/render/include/renderdata.hpp>
 #include <lib/resources/include/itexture.hpp>
 #include <lib/resources/i_include/texture.hpp>
@@ -25,10 +26,11 @@ RenderTarget::~RenderTarget() = default;
 inline void do_render(const mtps::rptr<backend::IRenderTarget> irender_target_,
                       const scene::RenderData& renderData)
 {
-    irender_target_->draw(
+    backend::IRenderData render_data{
         renderData.vArray.verticesArray().cbegin(),
         renderData.vArray.verticesArray().size(),
-        renderData.vArray.primitiveType(), renderData.transform.getMatrix(),
+        renderData.vArray.primitiveType(),
+        renderData.transform.getMatrix(),
         renderData.texture
             ? dynamic_cast<const scene::Texture*>(renderData.texture)
                   ->backEndTexture()
@@ -36,15 +38,12 @@ inline void do_render(const mtps::rptr<backend::IRenderTarget> irender_target_,
         renderData.shader
             ? dynamic_cast<const scene::Shader*>(renderData.shader)
                   ->backEndShader()
-            : nullptr);
+            : nullptr};
+
+    irender_target_->render(&render_data, &render_data + 1);
 }
 
-void RenderTarget::draw(const scene::RenderData& renderData)
-{
-    do_render(irender_target_, renderData);
-}
-
-void RenderTarget::drawBatch(rptr<const scene::RenderData> render_data_begin,
+void RenderTarget::render(rptr<const scene::RenderData> render_data_begin,
                              rptr<const scene::RenderData> render_data_end)
 {
     while (render_data_begin != render_data_end)

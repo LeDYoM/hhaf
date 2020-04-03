@@ -11,21 +11,23 @@ namespace lib::backend::sfmlb
 static_assert(sizeof(sf::Vertex) == sizeof(scene::Vertex),
               "Incomptable version of SFML");
 
-void RenderTarget::draw(
-    const scene::Vertex *vertices,
-    const u32 nVertex,
-    const scene::PrimitiveType pType,
-    const f32 *transform,
-    const ITexture *texture,
-    const IShader *shader)
+void RenderTarget::render(const IRenderData* render_data_begin,
+                        const IRenderData* render_data_end)
 {
-    sf::RenderTarget::draw(to_sf_type(vertices),
-                           static_cast<size_type>(nVertex),
-                           to_sf_type(pType),
-                           to_sf_type(transform, texture, shader));
+    while (render_data_begin != render_data_end)
+    {
+        sf::RenderTarget::draw(
+            to_sf_type((*render_data_begin).vertices),
+            static_cast<size_type>((*render_data_begin).nVertex),
+            to_sf_type((*render_data_begin).pType),
+            to_sf_type((*render_data_begin).transform,
+                       (*render_data_begin).texture,
+                       (*render_data_begin).shader));
+        ++render_data_begin;
+    }
 }
 
-void RenderTarget::setViewPort(const Rectf32 &nviewport)
+void RenderTarget::setViewPort(const Rectf32& nviewport)
 {
     sf::View currentView(getView());
     currentView.setViewport(to_sf_type(nviewport));
@@ -38,7 +40,7 @@ Rectf32 RenderTarget::viewPort() const
     return from_sft_type(currentView.getViewport());
 }
 
-void RenderTarget::setViewRect(const mtps::Rectf32 &nviewRect)
+void RenderTarget::setViewRect(const mtps::Rectf32& nviewRect)
 {
     sf::View currentView(getView());
     currentView.setCenter(to_sf_type(nviewRect.center()));
@@ -49,13 +51,12 @@ void RenderTarget::setViewRect(const mtps::Rectf32 &nviewRect)
 mtps::Rectf32 RenderTarget::viewRect() const
 {
     sf::View currentView(getView());
-    return rectFromCenterAndSize(
-        from_sf_type(currentView.getCenter()),
-        from_sf_type(currentView.getSize()));
+    return rectFromCenterAndSize(from_sf_type(currentView.getCenter()),
+                                 from_sf_type(currentView.getSize()));
 }
 
 void RenderTarget::clear()
 {
     sf::RenderTarget::clear();
 }
-} // namespace lib::backend::sfmlb
+}  // namespace lib::backend::sfmlb

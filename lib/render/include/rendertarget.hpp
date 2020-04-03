@@ -43,8 +43,7 @@ public:
     void setViewRect(const mtps::Rectf32& nviewRect);
     mtps::Rectf32 viewRect() const;
 
-    void draw(const scene::RenderData& renderData);
-    void drawBatch(mtps::rptr<const scene::RenderData> render_data_begin,
+    void render(mtps::rptr<const scene::RenderData> render_data_begin,
                    mtps::rptr<const scene::RenderData> render_data_end);
     void clear();
 

@@ -19,19 +19,15 @@ namespace lib::backend::sfmlb
 {
 class RenderTarget : public IRenderTarget, public sf::RenderTarget
 {
-    void draw(
-        const scene::Vertex *vertices,
-        const mtps::u32 nVertex,
-        const scene::PrimitiveType pType,
-        const mtps::f32 *transform,
-        const ITexture *texture,
-        const IShader *shader) override;
-    void setViewPort(const mtps::Rectf32 &nviewport) override;
+    void render(const IRenderData* render_data_begin,
+                const IRenderData* render_data_end) override;
+
+    void setViewPort(const mtps::Rectf32& nviewport) override;
     mtps::Rectf32 viewPort() const override;
-    void setViewRect(const mtps::Rectf32 &nviewRect) override;
+    void setViewRect(const mtps::Rectf32& nviewRect) override;
     mtps::Rectf32 viewRect() const override;
     void clear() override;
 };
-} // namespace lib::backend::sfmlb
+}  // namespace lib::backend::sfmlb
 
 #endif

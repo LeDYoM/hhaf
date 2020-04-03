@@ -8,6 +8,7 @@
 #include <mtypes/include/rect.hpp>
 #include <lib/scene/include/vertex.hpp>
 #include <lib/scene/include/vertexarray.hpp>
+#include "irenderdata.hpp"
 #include "itexture.hpp"
 #include "ishader.hpp"
 
@@ -18,13 +19,7 @@ class IRenderTarget
 public:
     virtual ~IRenderTarget() {}
 
-    virtual void draw(
-        const scene::Vertex *vertices,
-        const mtps::u32 nVertex,
-        const scene::PrimitiveType pType,
-        const mtps::f32 *transform,
-        const ITexture *texture,
-        const IShader *shader) = 0;
+    virtual void render(const IRenderData *render_data_begin, const IRenderData *render_data_end) = 0;
 
     virtual void setViewPort(const mtps::Rectf32 &nviewport) = 0;
     virtual mtps::Rectf32 viewPort() const = 0;
