@@ -9,25 +9,48 @@
 #include <lib/scene/include/transform.hpp>
 #include <lib/include/liblog.hpp>
 
+using namespace mtps;
+
 namespace lib::sys
 {
-RenderTarget::RenderTarget(mtps::rptr<lib::backend::IRenderTarget> renderTarget)
-    : irender_target_{std::move(renderTarget)}
+RenderTarget::RenderTarget(
+    mtps::rptr<lib::backend::IRenderTarget> renderTarget) :
+    irender_target_{std::move(renderTarget)}
 {
     log_assert(renderTarget != nullptr, "renderTarget parameter is nullptr");
 }
 
 RenderTarget::~RenderTarget() = default;
 
-void RenderTarget::draw(const scene::RenderData &renderData)
+inline void do_render(const mtps::rptr<backend::IRenderTarget> irender_target_,
+                      const scene::RenderData& renderData)
 {
     irender_target_->draw(
         renderData.vArray.verticesArray().cbegin(),
         renderData.vArray.verticesArray().size(),
-        renderData.vArray.primitiveType(),
-        renderData.transform.getMatrix(),
-        renderData.texture ? dynamic_cast<const scene::Texture *>(renderData.texture)->backEndTexture() : nullptr,
-        renderData.shader ? dynamic_cast<const scene::Shader *>(renderData.shader)->backEndShader() : nullptr);
+        renderData.vArray.primitiveType(), renderData.transform.getMatrix(),
+        renderData.texture
+            ? dynamic_cast<const scene::Texture*>(renderData.texture)
+                  ->backEndTexture()
+            : nullptr,
+        renderData.shader
+            ? dynamic_cast<const scene::Shader*>(renderData.shader)
+                  ->backEndShader()
+            : nullptr);
+}
+
+void RenderTarget::draw(const scene::RenderData& renderData)
+{
+    do_render(irender_target_, renderData);
+}
+
+void RenderTarget::drawBatch(rptr<const scene::RenderData> render_data_begin,
+                             rptr<const scene::RenderData> render_data_end)
+{
+    while (render_data_begin != render_data_end)
+    {
+        do_render(irender_target_, *(render_data_begin++));
+    }
 }
 
 void RenderTarget::clear()
@@ -40,7 +63,7 @@ mtps::Rectf32 RenderTarget::viewPort() const
     return irender_target_->viewPort();
 }
 
-void RenderTarget::setViewPort(const mtps::Rectf32 &nViewPort)
+void RenderTarget::setViewPort(const mtps::Rectf32& nViewPort)
 {
     irender_target_->setViewPort(nViewPort);
 }
@@ -50,8 +73,8 @@ mtps::Rectf32 RenderTarget::viewRect() const
     return irender_target_->viewRect();
 }
 
-void RenderTarget::setViewRect(const mtps::Rectf32 &nViewRect)
+void RenderTarget::setViewRect(const mtps::Rectf32& nViewRect)
 {
     irender_target_->setViewRect(nViewRect);
 }
-} // namespace lib::sys
+}  // namespace lib::sys
