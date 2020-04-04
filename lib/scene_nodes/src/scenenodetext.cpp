@@ -9,6 +9,8 @@
 
 #include <algorithm>
 
+using namespace mtps;
+
 namespace
 {
 constexpr bool do_logs{false};
@@ -22,7 +24,7 @@ constexpr void log_snt(Args &&... args) noexcept
 
 namespace lib::scene::nodes
 {
-SceneNodeText::SceneNodeText(SceneNode *const parent, const mtps::str&name)
+SceneNodeText::SceneNodeText(SceneNode *const parent, const str&name)
     : SceneNode{parent, name} {}
 
 SceneNodeText::~SceneNodeText() = default;
@@ -46,17 +48,17 @@ void SceneNodeText::update()
         {
             auto texture(font()->getTexture());
 
-            mtps::f32 x{0.f};
-            mtps::f32 y{0.f};
+            f32 x{0.f};
+            f32 y{0.f};
 
             // Create one quad for each character
-            mtps::f32 minX{y};
-            mtps::f32 minY{y};
-            mtps::f32 maxX{0.f};
-            mtps::f32 maxY{0.f};
-            mtps::u32 prevChar{0U};
-            mtps::size_type counter{0U};
-            mtps::size_type old_counter = sceneNodes().size();
+            f32 minX{y};
+            f32 minY{y};
+            f32 maxX{0.f};
+            f32 maxY{0.f};
+            u32 prevChar{0U};
+            size_type counter{0U};
+            size_type old_counter = sceneNodes().size();
             const Color &tc{textColor()};
 
             log_snt("Text to render: ", text());
@@ -64,11 +66,11 @@ void SceneNodeText::update()
             for (auto &&curChar : text())
             {
                 log_snt("-----------------------------------------------------------------");
-                log_snt("Current char: ", mtps::make_str(curChar));
+                log_snt("Current char: ", make_str(curChar));
                 log_snt("Current x and y: ", x, ",", y);
                 log_snt("minX: ", minX, " minY: ,", minY);
                 log_snt("maxX: ", maxX, " maxY: ,", maxY);
-                log_snt("prevChar: ", mtps::make_str(prevChar));
+                log_snt("prevChar: ", make_str(prevChar));
                 log_snt("kerning: ", font()->getKerning(prevChar, curChar));
                 // Apply the kerning offset
                 x += font()->getKerning(prevChar, curChar);
@@ -81,7 +83,7 @@ void SceneNodeText::update()
                     // Update the current bounds (min coordinates)
                     minX = min(minX, x);
                     minY = min(minY, y);
-                    const mtps::f32 hspace{font()->getAdvance(L' ')};
+                    const f32 hspace{font()->getAdvance(L' ')};
 
                     switch (curChar)
                     {
@@ -103,13 +105,13 @@ void SceneNodeText::update()
                 }
                 else
                 {
-                    const mtps::Rectf32 textureUV{font()->getTextureBounds(curChar)};
-                    mtps::Rectf32 letterBox{font()->getBounds(curChar) + mtps::vector2df{x, y}};
-                    letterBox += mtps::vector2df{50.0F, 50.0F};
+                    const Rectf32 textureUV{font()->getTextureBounds(curChar)};
+                    Rectf32 letterBox{font()->getBounds(curChar) + vector2df{x, y}};
+                    letterBox += vector2df{50.0F, 50.0F};
                     log_snt("textureUV: ", textureUV);
                     log_snt("letterBox: ", letterBox);
 
-                    mtps::sptr<RenderizableSceneNode> letterNode;
+                    sptr<RenderizableSceneNode> letterNode;
                     // In case we already have a node containing the letter,
                     // reuse it. If not, create a new one.
                     if (counter < old_counter)
@@ -121,7 +123,7 @@ void SceneNodeText::update()
                     else
                     {
                         letterNode = createSceneNode<RenderizableSceneNode>(
-                            "text_" + mtps::str::to_str(counter),
+                            "text_" + str::to_str(counter),
                             FigType_t::Quad, letterBox, tc);
                     }
                     ++counter;
@@ -148,7 +150,7 @@ void SceneNodeText::update()
             const auto scene_nodes_size{sceneNodes().size()};
             // Iterate from the last one to one after counter
             // and delete them
-            for (mtps::size_type index{(scene_nodes_size - 1U)};
+            for (size_type index{(scene_nodes_size - 1U)};
                  index >= counter; --index)
             {
                 // Assert we are removing always the last one.
@@ -192,9 +194,9 @@ void SceneNodeText::update()
     }
 }
 
-void SceneNodeText::updateAlignmentX(const mtps::f32 textSizeX)
+void SceneNodeText::updateAlignmentX(const f32 textSizeX)
 {
-    mtps::f32 newPosX{0.f};
+    f32 newPosX{0.f};
 
     switch (alignmentX())
     {
@@ -209,12 +211,12 @@ void SceneNodeText::updateAlignmentX(const mtps::f32 textSizeX)
         break;
     }
 
-    position.set(mtps::vector2df{newPosX, position().y});
+    position.set(vector2df{newPosX, position().y});
 }
 
-void SceneNodeText::updateAlignmentY(const mtps::f32 textSizeY)
+void SceneNodeText::updateAlignmentY(const f32 textSizeY)
 {
-    mtps::f32 newPosY{0.f};
+    f32 newPosY{0.f};
 
     switch (alignmentY())
     {
@@ -229,7 +231,7 @@ void SceneNodeText::updateAlignmentY(const mtps::f32 textSizeY)
         break;
     }
 
-    position.set(mtps::vector2df{position().x, newPosY});
+    position.set(vector2df{position().x, newPosY});
 }
 
 } // namespace lib::scene::nodes

@@ -3,6 +3,7 @@
 #include <lib/include/liblog.hpp>
 #include <lib/input/include/inputdriver.hpp>
 
+using namespace mtps;
 using namespace lib::input;
 
 namespace lib::sys
@@ -10,7 +11,7 @@ namespace lib::sys
 InputSystem::InputSystem(sys::SystemProvider &system_provider)
     : AppService{system_provider}, input_driver_{}, m_keyStates{} {}
 
-void InputSystem::setInputDriver(mtps::sptr<input::InputDriver> input_driver)
+void InputSystem::setInputDriver(sptr<input::InputDriver> input_driver)
 {
     log_assert(input_driver != nullptr, "Parameter is nullptr");
     log_assert(input_driver_ == nullptr, "Input driver was already set");
@@ -33,12 +34,12 @@ void InputSystem::update()
     }
 }
 
-const mtps::vector<Key> &InputSystem::pressedKeys() const noexcept
+const vector<Key> &InputSystem::pressedKeys() const noexcept
 {
     return m_pressedKeys;
 }
 
-const mtps::vector<Key> &InputSystem::releasedKeys() const noexcept
+const vector<Key> &InputSystem::releasedKeys() const noexcept
 {
     return m_releasedKeys;
 }

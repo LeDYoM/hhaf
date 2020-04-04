@@ -4,10 +4,11 @@
 #include <lib/scene/include/color.hpp>
 #include <type_traits>
 
+using namespace mtps;
 using namespace lib;
 using namespace lib::scene;
 
-static_assert(sizeof(Color) == sizeof(mtps::u32), "Color size is wrong");
+static_assert(sizeof(Color) == sizeof(u32), "Color size is wrong");
 static_assert(std::is_trivially_copy_assignable_v<Color>, "Color is not is_trivially_copy_assignable");
 static_assert(std::is_trivially_copy_constructible_v<Color>, "Color is not is_trivially_copy_constructible");
 static_assert(std::is_nothrow_constructible_v<Color>, "Color is not is_nothrow_constructible");

@@ -51,11 +51,11 @@ void ZoperProgramController::onInit(sys::ISystemProvider &system_provider)
         scene_node_factory.registerSceneNodeType<GameScene>();
         scene_node_factory.registerSceneNodeType<HighScoresScene>();
 
-        sceneController->setSceneDirector([this, &system_provider](const mtps::str &scene_name) -> mtps::str {
+        sceneController->setSceneDirector([this, &system_provider](const str &scene_name) -> str {
             // Did the user selected exit?
             if (sys::getSystemProvider(system_provider).exitRequested())
             {
-                return mtps::str{};
+                return str{};
             }
             else if (scene_name == (MenuScene::StaticTypeName))
             {
@@ -69,7 +69,7 @@ void ZoperProgramController::onInit(sys::ISystemProvider &system_provider)
             {
                 return MenuScene::StaticTypeName;
             }
-            return mtps::str{};
+            return str{};
         });
 
         sceneController->startScene<MenuScene>();

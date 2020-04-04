@@ -14,9 +14,10 @@ namespace lib::scene
 {
 class MenuPage;
 
-/// Main class to model a menu in paged style.
-/// This class should be used as a base class for a new
-/// type of @b SceneNode.
+/**
+ * @brief Main class to model a menu in paged style.
+ * This class should be used as a base class for a new type of @b SceneNode.
+ */
 class MenuPaged : public SceneNode
 {
 public:
@@ -33,9 +34,9 @@ public:
     void setSelectedColor(Color selected_color);
     Color selectedColor() const;
 
-    void setSceneNodeSizeForPages( mtps::vector2df size);
-     mtps::vector2df sceneNodeSizeForPages() const;
-    void setMenuPagedStatus(mtps::s32 status);
+    void setSceneNodeSizeForPages(mtps::vector2df size);
+    mtps::vector2df sceneNodeSizeForPages() const;
+    void setMenuPagedStatus(const mtps::s32 status);
     mtps::s32 status() const;
 
     void terminate(const mtps::s32 status);
@@ -47,7 +48,8 @@ protected:
     void configure_menu(mtps::vector_shared_pointers<MenuPage> menu_steps);
 
     template <typename... Args>
-    mtps::sptr<MenuPage> createAndConfigureMenuPage(mtps::str name, Args&&... args)
+    mtps::sptr<MenuPage> createAndConfigureMenuPage(mtps::str name,
+                                                    Args&&... args)
     {
         auto node{createMenuPage(std::move(name))};
         node->sceneNodeSize = scene_node_size_for_pages_;
@@ -63,6 +65,6 @@ private:
     mtps::vector_shared_pointers<MenuPage> menu_steps_;
     mtps::s32 status_{};
 };
-} // namespace lib
+}  // namespace lib::scene
 
 #endif

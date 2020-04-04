@@ -1,9 +1,10 @@
 #include "animation.hpp"
 
+using namespace mtps;
+
 namespace lib::scene
 {
-
-Animation::Animation(mtps::uptr<time::Timer> timer, time::TimePoint duration,
+Animation::Animation(uptr<time::Timer> timer, time::TimePoint duration,
                        const AnimationDirection animation_direction,
                        ActionFunc endAction) noexcept
     : timer_{std::move(timer)}, m_duration{std::move(duration)},
@@ -21,7 +22,7 @@ bool Animation::animate()
         delta_ = postProcessDelta(1.0F);
         return false;
     }
-    raw_delta_ = static_cast<mtps::f32>(
+    raw_delta_ = static_cast<f32>(
                      m_currentTime.milliseconds()) /
                  m_duration.milliseconds();
     delta_ = postProcessDelta(raw_delta_);
@@ -36,7 +37,7 @@ void Animation::executeEndAction()
     }
 }
 
-mtps::f32 Animation::postProcessDelta(const mtps::f32 delta)
+f32 Animation::postProcessDelta(const f32 delta)
 {
     switch (animation_direction_)
     {

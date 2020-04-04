@@ -1,9 +1,11 @@
 #include <host/include/apploader.hpp>
 #include <loader/include/loader.hpp>
 
+using namespace mtps;
+
 namespace lib::sys
 {
-ManagedApp AppLoader::loadApp(const mtps::str &file) const
+ManagedApp AppLoader::loadApp(const str &file) const
 {
     using namespace loader;
     auto *loader(createLoader());

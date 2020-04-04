@@ -4,9 +4,11 @@
 #include <lib/system/include/isystemprovider.hpp>
 #include <lib/include/liblog.hpp>
 
+using namespace mtps;
+
 namespace lib::sys
 {
-SystemAccess::SystemAccess(mtps::rptr<ISystemProvider> isystem_provider)
+SystemAccess::SystemAccess(rptr<ISystemProvider> isystem_provider)
     : isystem_provider_{std::move(isystem_provider)} {}
 
 const ISystemProvider& SystemAccess::isystemProvider() const noexcept
@@ -19,7 +21,7 @@ ISystemProvider& SystemAccess::isystemProvider() noexcept
     return *isystem_provider_;
 }
 
-void SystemAccess::copySystemProvider(mtps::rptr<ISystemProvider> rhs)
+void SystemAccess::copySystemProvider(rptr<ISystemProvider> rhs)
 {
     log_assert(isystem_provider_ == nullptr, "You should not use this function"
                                 " if isystemProvider is already set");

@@ -18,7 +18,7 @@ void SceneController::setSceneManager(rptr<SceneManager> scene_manager)
 bool SceneController::startScene(const str& sceneName)
 {
     auto scene = scene_factory_.create(sceneName);
-    startScene(mtps::sptr<Scene>(std::move(scene)));
+    startScene(sptr<Scene>(std::move(scene)));
     return true;
 }
 
@@ -84,7 +84,7 @@ const sptr<Scene>& SceneController::currentScene() const noexcept
     return current_scene_;
 }
 
-void SceneController::startScene(mtps::sptr<Scene> scene)
+void SceneController::startScene(sptr<Scene> scene)
 {
     current_scene_ = std::move(scene);
     if (current_scene_)

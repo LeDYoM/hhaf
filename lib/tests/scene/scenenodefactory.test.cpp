@@ -7,17 +7,18 @@
 
 #include <typeinfo>
 
+using namespace mtps;
 using namespace lib;
 using namespace lib::scene;
 
 class SceneTypeBasic : public Scene
 {
 public:
-    SceneTypeBasic() : Scene{mtps::str("SceneTypeBasic")} {}
+    SceneTypeBasic() : Scene{str("SceneTypeBasic")} {}
 
-    static mtps::uptr<Scene> createScene()
+    static uptr<Scene> createScene()
     {
-        return mtps::muptr<SceneTypeBasic>();
+        return muptr<SceneTypeBasic>();
     }
 };
 
@@ -26,11 +27,11 @@ class SceneTypeWithStaticTypeName : public Scene
 public:
     static constexpr char StaticTypeName[] = "StaticTypeName";
 
-    SceneTypeWithStaticTypeName() : Scene{mtps::str(SceneTypeWithStaticTypeName::StaticTypeName)} {}
+    SceneTypeWithStaticTypeName() : Scene{str(SceneTypeWithStaticTypeName::StaticTypeName)} {}
 
-    static mtps::uptr<Scene> createScene()
+    static uptr<Scene> createScene()
     {
-        return mtps::muptr<SceneTypeWithStaticTypeName>();
+        return muptr<SceneTypeWithStaticTypeName>();
     }
 };
 
@@ -39,9 +40,9 @@ class SceneTypeWithStaticCreateScene : public Scene
 public:
     SceneTypeWithStaticCreateScene() : Scene{"SceneTypeWithStaticCreateScene"} {}
 
-    static mtps::uptr<Scene> create()
+    static uptr<Scene> create()
     {
-        return mtps::muptr<SceneTypeWithStaticCreateScene>();
+        return muptr<SceneTypeWithStaticCreateScene>();
     }
 };
 
@@ -52,9 +53,9 @@ public:
 
     SceneTypeWithStaticTypeNameAndStaticCreateScene() : Scene{"SceneTypeWithStaticTypeNameAndStaticCreateScene"} {}
 
-    static mtps::uptr<Scene> create()
+    static uptr<Scene> create()
     {
-        return mtps::muptr<SceneTypeWithStaticTypeNameAndStaticCreateScene>();
+        return muptr<SceneTypeWithStaticTypeNameAndStaticCreateScene>();
     }
 };
 
@@ -71,11 +72,11 @@ TEST_CASE("lib::scene::SceneNodeFactory", "[lib][SceneNodeFactory]")
         SECTION("Inserting overloads")
         {
             CHECK(scene_node_factory.registerSceneNodeType<SceneTypeWithStaticTypeName>(SceneTypeWithStaticTypeName::createScene));            
-            CHECK(scene_node_factory.registerSceneNodeType<SceneTypeWithStaticCreateScene>(mtps::str("SceneTypeWithStaticCreateScene")));
+            CHECK(scene_node_factory.registerSceneNodeType<SceneTypeWithStaticCreateScene>(str("SceneTypeWithStaticCreateScene")));
             CHECK(scene_node_factory.registerSceneNodeType<SceneTypeWithStaticTypeNameAndStaticCreateScene>());
 
             CHECK_FALSE(scene_node_factory.registerSceneNodeType<SceneTypeWithStaticTypeName>(SceneTypeWithStaticTypeName::createScene));            
-            CHECK_FALSE(scene_node_factory.registerSceneNodeType<SceneTypeWithStaticCreateScene>(mtps::str("SceneTypeWithStaticCreateScene")));
+            CHECK_FALSE(scene_node_factory.registerSceneNodeType<SceneTypeWithStaticCreateScene>(str("SceneTypeWithStaticCreateScene")));
             CHECK_FALSE(scene_node_factory.registerSceneNodeType<SceneTypeWithStaticTypeNameAndStaticCreateScene>());
 
             SECTION("Check existence")

@@ -1,9 +1,10 @@
 #include "texteditorcomponent.hpp"
 #include <lib/scene_nodes/include/scenenodetext.hpp>
 
+using namespace mtps;
+
 namespace lib::scene
 {
-
 void TextEditorComponent::onAttached()
 {
     BaseClass::onAttached();
@@ -30,7 +31,7 @@ void TextEditorComponent::onAttached()
 
                 if (success)
                 {
-                    mtps::str new_text{attachedTextNode->text()};
+                    str new_text{attachedTextNode->text()};
                     new_text.append_char(c_ascii);
                     attachedTextNode->text.set(new_text);
                 }

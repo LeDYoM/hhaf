@@ -2,6 +2,8 @@
 
 #include <lib/include/liblog.hpp>
 
+using namespace mtps;
+
 namespace lib::sys
 {
 
@@ -13,7 +15,7 @@ SharedDataSystem::~SharedDataSystem()
     data_.reset();
 }
 
-void SharedDataSystem::store(mtps::uptr<shdata::IShareable> data) noexcept
+void SharedDataSystem::store(uptr<shdata::IShareable> data) noexcept
 {
     log_assert(data_ == nullptr, "data_ is not nullptr");
     log_assert(data != nullptr, "data is nullptr");
@@ -25,10 +27,10 @@ void SharedDataSystem::store(mtps::uptr<shdata::IShareable> data) noexcept
     log_assert(data == nullptr, "data is not nullptr");
 }
 
-mtps::uptr<shdata::IShareable> SharedDataSystem::retrieve() noexcept
+uptr<shdata::IShareable> SharedDataSystem::retrieve() noexcept
 {
     log_assert(data_ != nullptr, "data_ is nullptr");
-    mtps::uptr<shdata::IShareable> temp = std::move(data_);
+    uptr<shdata::IShareable> temp = std::move(data_);
     log_assert(data_ == nullptr, "data_ is not nullptr");
 
     return temp;

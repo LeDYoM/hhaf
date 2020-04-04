@@ -14,7 +14,7 @@ using namespace lib;
 using namespace lib::scene;
 using namespace lib::time;
 
-Player::Player(rptr<SceneNode> parent, mtps::str name)
+Player::Player(rptr<SceneNode> parent, str name)
     : BaseClass{std::move(parent), std::move(name)},
       boardPosition{},
       currentDirection{Direction{Direction::DirectionData::Up}},
@@ -32,7 +32,7 @@ Player::Player(rptr<SceneNode> parent, mtps::str name)
 
 Player::~Player() {}
 
-void Player::configure(const mtps::vector2dst &bPosition,
+void Player::configure(const vector2dst &bPosition,
                        const Rectf32 &box, const vector2df &board2SceneFactor)
 {
     m_board2SceneFactor = board2SceneFactor;
@@ -88,7 +88,7 @@ void Player::movePlayer(const Direction &direction)
     }
 }
 
-void Player::tileMoved(const mtps::vector2dst &/*source*/, const mtps::vector2dst &dest)
+void Player::tileMoved(const vector2dst &/*source*/, const vector2dst &dest)
 {
     boardPosition.set(dest);
 }
@@ -115,7 +115,7 @@ void Player::launchAnimationBack(const vector2df &toWhere)
         position, position(), toWhere);
 }
 
-void Player::tileAdded(const mtps::vector2dst &position_)
+void Player::tileAdded(const vector2dst &position_)
 {
     DisplayLog::info("TokenPlayer appeared at ", position_);
     m_node->color.set(getColorForToken());
@@ -124,7 +124,7 @@ void Player::tileAdded(const mtps::vector2dst &position_)
     boardPosition.set(position_);
 }
 
-void Player::tileChanged(const mtps::vector2dst &position_, const board::BoardTileData oldValue, const board::BoardTileData newValue)
+void Player::tileChanged(const vector2dst &position_, const board::BoardTileData oldValue, const board::BoardTileData newValue)
 {
     DisplayLog::info("Player (position ", position_, ") changed from ", oldValue, " to ", newValue);
     data.set(newValue);

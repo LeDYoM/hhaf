@@ -26,7 +26,7 @@ public:
 
 FileSystem::FileSystem(sys::SystemProvider &system_provider)
     : AppService{system_provider},
-      priv_{mtps::muptr<FileSystemPrivate>()} {}
+      priv_{muptr<FileSystemPrivate>()} {}
 
 FileSystem::~FileSystem() = default;
 
@@ -34,7 +34,7 @@ RawMemory FileSystem::loadBinaryFile(const Path &file_name)
 {
     if (fileExists(file_name))
     {
-        //Note function returns size_max. mtps::size_type is maximum 4GB for a file.
+        //Note function returns size_max. size_type is maximum 4GB for a file.
         size_type file_size = static_cast<size_type>(std::filesystem::file_size(file_name.c_str()));
 
         uptr<std::byte[]> buf{muptr<std::byte[]>(file_size)};
@@ -53,7 +53,7 @@ str FileSystem::loadTextFile(const Path &file_name)
 {
     if (fileExists(file_name))
     {
-        //Note function returns size_max. mtps::size_type is maximum 4GB for a file.
+        //Note function returns size_max. size_type is maximum 4GB for a file.
         size_type file_size = static_cast<size_type>(std::filesystem::file_size(file_name.c_str()));
 
         uptr<str::char_type[]> buf{muptr<str::char_type[]>(file_size + 1U)};

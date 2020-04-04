@@ -5,12 +5,14 @@
 #include <lib/include/liblog.hpp>
 #include <lib/scene/include/scenenode.hpp>
 
+using namespace mtps;
+
 namespace lib::time
 {
 TimerConnectorSPtr TimerComponent::addTimer(TimerType timerType,
                                             TimePoint timeOut, timer_callback_t callback)
 {
-    auto timerConnector(mtps::msptr<TimerConnector>(
+    auto timerConnector(msptr<TimerConnector>(
         attachedNode()->dataWrapper<Timer>(),
         timerType, std::move(timeOut), std::move(callback)));
     activeTimers_.emplace_back(timerConnector);
@@ -40,7 +42,7 @@ void TimerComponent::update()
 void TimerComponent::pause()
 {
     for_each_all(activeTimers_.current(),
-                 [](const mtps::sptr<TimerConnector> &timerConnector) {
+                 [](const sptr<TimerConnector> &timerConnector) {
                      timerConnector->timer_->pause();
                  });
 }
@@ -48,7 +50,7 @@ void TimerComponent::pause()
 void TimerComponent::resume()
 {
     for_each_all(activeTimers_.current(),
-                 [](const mtps::sptr<TimerConnector> &timerConnector) {
+                 [](const sptr<TimerConnector> &timerConnector) {
                      timerConnector->timer_->resume();
                  });
 }
@@ -56,7 +58,7 @@ void TimerComponent::resume()
 void TimerComponent::switchPause()
 {
     for_each_all(activeTimers_.current(),
-                 [](const mtps::sptr<TimerConnector> &timerConnector) {
+                 [](const sptr<TimerConnector> &timerConnector) {
                      timerConnector->timer_->switchPause();
                  });
 }

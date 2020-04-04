@@ -2,9 +2,11 @@
 #include "scenemanager.hpp"
 #include <lib/system/i_include/get_system.hpp>
 
+using namespace mtps;
+
 namespace lib::scene
 {
-SceneNode::SceneNode(mtps::rptr<SceneNode> parent, mtps::str name) :
+SceneNode::SceneNode(rptr<SceneNode> parent, str name) :
     sys::HasName{std::move(name)},
     SceneNodeParent{parent},
     SceneNodes{this},

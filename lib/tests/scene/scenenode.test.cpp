@@ -4,9 +4,11 @@
 #include <lib/scene/include/scenenode.hpp>
 #include <lib/scene/include/scene.hpp>
 
+using namespace mtps;
+
 auto unitTestScene()
 {
-    static auto uts(mtps::msptr<lib::scene::Scene>("unitTest"));
+    static auto uts(msptr<lib::scene::Scene>("unitTest"));
     return uts;
 }
 

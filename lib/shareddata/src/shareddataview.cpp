@@ -4,14 +4,16 @@
 #include <lib/system/i_include/get_system.hpp>
 #include <lib/include/liblog.hpp>
 
+using namespace mtps;
+
 namespace lib::shdata
 {
-void SharedData::store(mtps::uptr<IShareable> data)
+void SharedData::store(uptr<IShareable> data)
 {
     sys::getSystem<sys::ISharedDataSystem>(attachedNode()).store(std::move(data));
 }
 
-mtps::uptr<IShareable> SharedData::retrieve_imp()
+uptr<IShareable> SharedData::retrieve_imp()
 {
     log_assert(!isEmpty(), "SharedDataSystem should be empty");
     return sys::getSystem<sys::ISharedDataSystem>(attachedNode()).retrieve();

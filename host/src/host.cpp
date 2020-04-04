@@ -8,6 +8,8 @@
 #include <mtypes/include/parpar.hpp>
 #include <mtypes/include/object.hpp>
 
+using namespace mtps;
+
 namespace
 {
 constexpr static const char HostVersion[] = "1";
@@ -20,7 +22,7 @@ namespace lib::sys
 class Host::HostPrivate final
 {
 public:
-    HostPrivate(const int argc, char *argv[]) : m_params{mtps::parpar::create(argc, argv)},
+    HostPrivate(const int argc, char *argv[]) : m_params{parpar::create(argc, argv)},
                                                 // Hardcoded default configuration
                                                 // TODO
                                                 m_configuration{
@@ -37,14 +39,14 @@ public:
         }
         return true;
     }
-    mtps::parpar::ParametersParser m_params;
+    parpar::ParametersParser m_params;
 
-    mtps::Dictionary<mtps::str> m_configuration;
+    Dictionary<str> m_configuration;
     IApp *iapp_{nullptr};
     IControllableSystemProvider *system_provider_;
 };
 
-enum class Host::AppState : mtps::u8
+enum class Host::AppState : u8
 {
     NotInitialized,
     ReadyToStart,
@@ -54,7 +56,7 @@ enum class Host::AppState : mtps::u8
 };
 
 Host::Host(int argc, char *argv[])
-    : m_private{mtps::muptr<HostPrivate>(argc, argv)}, m_state{AppState::NotInitialized}
+    : m_private{muptr<HostPrivate>(argc, argv)}, m_state{AppState::NotInitialized}
 {
     DisplayLog::info("Starting HostController...");
     DisplayLog::info("Host version: ", HostVersion, ".", HostSubversion, ".", HostPatch);
@@ -64,7 +66,7 @@ Host::Host(int argc, char *argv[])
 
 Host::~Host() = default;
 
-bool Host::setApplication(mtps::rptr<IApp> iapp)
+bool Host::setApplication(rptr<IApp> iapp)
 {
     log_assert(iapp != nullptr, "Received nullptr Application");
     log_assert(!m_private->iapp_, "Application already set");
@@ -80,9 +82,9 @@ bool Host::setApplication(mtps::rptr<IApp> iapp)
     return false;
 }
 
-mtps::str appDisplayNameAndVersion(const IApp &app)
+str appDisplayNameAndVersion(const IApp &app)
 {
-    return mtps::make_str(app.getName(), "(",
+    return make_str(app.getName(), "(",
                     app.getVersion(), ".",
                     app.getSubVersion(), ".", app.getPatch(), ")");
 }

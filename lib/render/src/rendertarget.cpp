@@ -14,8 +14,7 @@ using namespace mtps;
 
 namespace lib::sys
 {
-RenderTarget::RenderTarget(
-    mtps::rptr<lib::backend::IRenderTarget> renderTarget) :
+RenderTarget::RenderTarget(rptr<lib::backend::IRenderTarget> renderTarget) :
     irender_target_{std::move(renderTarget)}
 {
     log_assert(renderTarget != nullptr, "renderTarget parameter is nullptr");
@@ -23,7 +22,7 @@ RenderTarget::RenderTarget(
 
 RenderTarget::~RenderTarget() = default;
 
-inline void do_render(const mtps::rptr<backend::IRenderTarget> irender_target_,
+inline void do_render(const rptr<backend::IRenderTarget> irender_target_,
                       const scene::RenderData& renderData)
 {
     backend::IRenderData render_data{
@@ -44,7 +43,7 @@ inline void do_render(const mtps::rptr<backend::IRenderTarget> irender_target_,
 }
 
 void RenderTarget::render(rptr<const scene::RenderData> render_data_begin,
-                             rptr<const scene::RenderData> render_data_end)
+                          rptr<const scene::RenderData> render_data_end)
 {
     while (render_data_begin != render_data_end)
     {
@@ -57,22 +56,22 @@ void RenderTarget::clear()
     irender_target_->clear();
 }
 
-mtps::Rectf32 RenderTarget::viewPort() const
+Rectf32 RenderTarget::viewPort() const
 {
     return irender_target_->viewPort();
 }
 
-void RenderTarget::setViewPort(const mtps::Rectf32& nViewPort)
+void RenderTarget::setViewPort(const Rectf32& nViewPort)
 {
     irender_target_->setViewPort(nViewPort);
 }
 
-mtps::Rectf32 RenderTarget::viewRect() const
+Rectf32 RenderTarget::viewRect() const
 {
     return irender_target_->viewRect();
 }
 
-void RenderTarget::setViewRect(const mtps::Rectf32& nViewRect)
+void RenderTarget::setViewRect(const Rectf32& nViewRect)
 {
     irender_target_->setViewRect(nViewRect);
 }

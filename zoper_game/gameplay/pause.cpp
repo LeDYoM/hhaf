@@ -10,6 +10,8 @@
 #include <lib/resources/include/ittfont.hpp>
 #include <lib/resources/include/resourceview.hpp>
 
+using namespace mtps;
+
 namespace zoper
 {
 using namespace lib;
@@ -17,7 +19,7 @@ using namespace lib::scene;
 using namespace lib::scene::nodes;
 using namespace lib::time;
 
-PauseSceneNode::PauseSceneNode(scene::SceneNode *const parent, mtps::str name)
+PauseSceneNode::PauseSceneNode(scene::SceneNode *const parent, str name)
     : SceneNode{parent, std::move(name)}
 {
     auto resources_viewer = dataWrapper<ResourceView>();

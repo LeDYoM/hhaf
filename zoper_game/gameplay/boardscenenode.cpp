@@ -9,7 +9,7 @@ using namespace lib::scene;
 
 BoardSceneNode::BoardSceneNode(
     SceneNode *parent,
-    mtps::str name,
+    str name,
     const Rectf32 &tileBox)
     : BaseClass{parent, std::move(name)}
 {

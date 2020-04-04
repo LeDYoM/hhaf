@@ -25,7 +25,7 @@ TEST_CASE("ObjectFactory simple case", "[hef][ObjectFactory]")
     CHECK(a.empty());
     CHECK(a.size() == 0U);
 
-    CHECK(a.registerObjectType<int>(mtps::str{"obj1"}));
+    CHECK(a.registerObjectType<int>(str{"obj1"}));
 
     CHECK_FALSE(a.empty());
     CHECK(a.size() == 1U);
@@ -82,7 +82,7 @@ TEST_CASE("ObjectFactory type no static name simple case", "[hef][ObjectFactory]
     CHECK(a.empty());
     CHECK(a.size() == 0U);
 
-    CHECK(a.registerObjectType<NoStaticTypeName>(mtps::str{"NoStaticTypeName1"}));
+    CHECK(a.registerObjectType<NoStaticTypeName>(str{"NoStaticTypeName1"}));
 
     CHECK_FALSE(a.empty());
     CHECK(a.size() == 1U);

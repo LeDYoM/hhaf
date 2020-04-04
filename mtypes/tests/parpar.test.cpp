@@ -3,7 +3,7 @@
 #include <mtypes/include/parpar.hpp>
 
 using namespace mtps;
-using namespace mtps::parpar;
+using namespace parpar;
 
 TEST_CASE("lib::parpar::ParameterParser", "[parpar]")
 {

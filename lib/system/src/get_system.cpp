@@ -12,31 +12,33 @@
 #include <lib/shareddata/i_include/shareddatasystem.hpp>
 #include <lib/filesystem/i_include/filesystem.hpp>
 
+using namespace mtps;
+
 namespace lib::sys
 {
 #define DEFINE_GETSYSTEM(SystemType, callFunction)  \
 template <> \
-const SystemType &getSystem<SystemType>(mtps::rptr<const SystemAccess> system_access)  \
+const SystemType &getSystem<SystemType>(rptr<const SystemAccess> system_access)  \
 {   \
     return getSystemProvider(system_access->isystemProvider()).callFunction();  \
 }   \
     \
 template <> \
-SystemType &getSystem<SystemType>(mtps::rptr<SystemAccess> system_access)  \
+SystemType &getSystem<SystemType>(rptr<SystemAccess> system_access)  \
 {   \
     return getSystemProvider(system_access->isystemProvider()).callFunction();  \
 }   \
     \
 template <> \
-const SystemType &getSystem<SystemType>(mtps::rptr<const scene::SceneNode> scene_node) \
+const SystemType &getSystem<SystemType>(rptr<const scene::SceneNode> scene_node) \
 {   \
-    return getSystem<SystemType>(static_cast<mtps::rptr<const SystemAccess>>(scene_node));   \
+    return getSystem<SystemType>(static_cast<rptr<const SystemAccess>>(scene_node));   \
 }   \
     \
 template <> \
-SystemType &getSystem<SystemType>(mtps::rptr<scene::SceneNode> scene_node) \
+SystemType &getSystem<SystemType>(rptr<scene::SceneNode> scene_node) \
 {   \
-    return getSystem<SystemType>(static_cast<mtps::rptr<SystemAccess>>(scene_node)); \
+    return getSystem<SystemType>(static_cast<rptr<SystemAccess>>(scene_node)); \
 }
 
 DEFINE_GETSYSTEM(sys::InputSystem, inputSystem);

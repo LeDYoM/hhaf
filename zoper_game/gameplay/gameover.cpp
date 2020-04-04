@@ -19,8 +19,9 @@ using namespace lib;
 using namespace lib::scene;
 using namespace lib::scene::nodes;
 
-GameOverSceneNode::GameOverSceneNode(scene::SceneNode *const parent, mtps::str name)
-    : SceneNode{parent, std::move(name)}
+GameOverSceneNode::GameOverSceneNode(scene::SceneNode* const parent,
+                                     str name) :
+    SceneNode{parent, std::move(name)}
 {
     m_gameOverrg = createSceneNode("gameOverScreen");
 
@@ -30,7 +31,8 @@ GameOverSceneNode::GameOverSceneNode(scene::SceneNode *const parent, mtps::str n
 
     auto gameText(m_gameOverrg->createSceneNode<SceneNodeText>("gameovergame"));
     gameText->text.set("GAME");
-    gameText->font.set(resources_viewer->getTTFont(GameResources::ScoreFontId)->font(360));
+    gameText->font.set(
+        resources_viewer->getTTFont(GameResources::ScoreFontId)->font(360));
     gameText->textColor = colors::White;
     gameText->alignmentSize.set(gosize);
     gameText->alignmentX.set(SceneNodeText::AlignmentX::Center);
@@ -38,7 +40,8 @@ GameOverSceneNode::GameOverSceneNode(scene::SceneNode *const parent, mtps::str n
 
     auto overText(m_gameOverrg->createSceneNode<SceneNodeText>("gameoverover"));
     overText->text.set("OVER");
-    overText->font.set(resources_viewer->getTTFont(GameResources::ScoreFontId)->font(360));
+    overText->font.set(
+        resources_viewer->getTTFont(GameResources::ScoreFontId)->font(360));
     overText->textColor = colors::White;
     overText->alignmentSize.set(gosize);
     overText->alignmentX.set(SceneNodeText::AlignmentX::Center);
@@ -48,4 +51,4 @@ GameOverSceneNode::GameOverSceneNode(scene::SceneNode *const parent, mtps::str n
 }
 
 GameOverSceneNode::~GameOverSceneNode() = default;
-} // namespace zoper
+}  // namespace zoper

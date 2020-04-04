@@ -6,10 +6,14 @@
 
 namespace lib::backend
 {
+using namespace mtps;
+
 template <typename FactoryType>
-inline bool fillFactory(const mtps::uptr<BackendRegister> &backend_register, FactoryType **factory_to_fill)
+inline bool fillFactory(const uptr<BackendRegister>& backend_register,
+                        FactoryType** factory_to_fill)
 {
-    if (auto factory(backend_register->getFactory<IFactoryOf<FactoryType>>()); factory)
+    if (auto factory(backend_register->getFactory<IFactoryOf<FactoryType>>());
+        factory)
     {
         (*factory_to_fill) = factory->create();
         return (*factory_to_fill) != nullptr;
@@ -18,9 +22,11 @@ inline bool fillFactory(const mtps::uptr<BackendRegister> &backend_register, Fac
 }
 
 template <typename FactoryType>
-inline bool emptyFactory(const mtps::uptr<BackendRegister> &backend_register, FactoryType **factory_to_empty)
+inline bool emptyFactory(const uptr<BackendRegister>& backend_register,
+                         FactoryType** factory_to_empty)
 {
-    if (auto factory(backend_register->getFactory<IFactoryOf<FactoryType>>()); factory)
+    if (auto factory(backend_register->getFactory<IFactoryOf<FactoryType>>());
+        factory)
     {
         if (factory_to_empty && *factory_to_empty)
         {
@@ -35,17 +41,19 @@ inline bool emptyFactory(const mtps::uptr<BackendRegister> &backend_register, Fa
 BackendFactory::BackendFactory()
 {
     using namespace loader;
-    auto *loader(createLoader());
+    auto* loader(createLoader());
 
-    static const char *sh_name = "bsfml";
+    static const char* sh_name = "bsfml";
     if (loader->loadModule(sh_name))
     {
-        auto fp_init_lib = static_cast<p_initLib>(loader->loadMethod(sh_name, "init_lib"));
-        auto fp_finish_lib = static_cast<p_initLib>(loader->loadMethod(sh_name, "finish_lib"));
+        auto fp_init_lib =
+            static_cast<p_initLib>(loader->loadMethod(sh_name, "init_lib"));
+        auto fp_finish_lib =
+            static_cast<p_initLib>(loader->loadMethod(sh_name, "finish_lib"));
 
         if (fp_init_lib && fp_finish_lib)
         {
-            backend_register_ = mtps::muptr<BackendRegister>();
+            backend_register_ = muptr<BackendRegister>();
             backend_register_->setLibFuncs(fp_init_lib, fp_finish_lib);
             backend_register_->init();
         }
@@ -72,58 +80,58 @@ BackendFactory::~BackendFactory()
     loader::destroyLoader();
 }
 
-IWindow *lib::backend::BackendFactory::getWindow()
+IWindow* lib::backend::BackendFactory::getWindow()
 {
     return m_window;
 }
 
-IWindowProviderInfo *BackendFactory::getWindowProviderInfo() const noexcept
+IWindowProviderInfo* BackendFactory::getWindowProviderInfo() const noexcept
 {
     return m_windowProviderInfo;
 }
 
-ITextureFactory *BackendFactory::getTextureFactory() const noexcept
+ITextureFactory* BackendFactory::getTextureFactory() const noexcept
 {
     return m_textureFactory;
 }
 
-ITTFontFactory *BackendFactory::getTTFontFactory() const noexcept
+ITTFontFactory* BackendFactory::getTTFontFactory() const noexcept
 {
     return m_ttfontFactory;
 }
 
-IShaderFactory *BackendFactory::getShaderFactory() const noexcept
+IShaderFactory* BackendFactory::getShaderFactory() const noexcept
 {
     return m_shaderFactory;
 }
 
-IBMPFontFactory *BackendFactory::getBMPFontFactory() const noexcept
+IBMPFontFactory* BackendFactory::getBMPFontFactory() const noexcept
 {
     return m_bmpFontFactory;
 }
 
-IWindowProviderInfo &BackendFactory::windowProviderInfo() const
+IWindowProviderInfo& BackendFactory::windowProviderInfo() const
 {
     return *getWindowProviderInfo();
 }
 
-ITextureFactory &BackendFactory::textureFactory() const
+ITextureFactory& BackendFactory::textureFactory() const
 {
     return *getTextureFactory();
 }
 
-ITTFontFactory &BackendFactory::ttfontFactory() const
+ITTFontFactory& BackendFactory::ttfontFactory() const
 {
     return *getTTFontFactory();
 }
 
-IShaderFactory &BackendFactory::shaderFactory() const
+IShaderFactory& BackendFactory::shaderFactory() const
 {
     return *getShaderFactory();
 }
 
-IBMPFontFactory &BackendFactory::bmpFontFactory() const
+IBMPFontFactory& BackendFactory::bmpFontFactory() const
 {
     return *getBMPFontFactory();
 }
-} // namespace lib::backend
+}  // namespace lib::backend

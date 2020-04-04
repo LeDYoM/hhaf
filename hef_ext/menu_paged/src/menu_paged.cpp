@@ -10,11 +10,11 @@ using namespace mtps;
 namespace lib::scene
 {
 
-MenuPaged::MenuPaged(SceneNode *parent, str name)
-    : BaseClass{parent, std::move(name)},
-      scene_node_size_for_pages_{dataWrapper<SceneMetrics>()->currentView().size()}
-{
-}
+MenuPaged::MenuPaged(SceneNode* parent, str name) :
+    BaseClass{parent, std::move(name)},
+    scene_node_size_for_pages_{
+        dataWrapper<SceneMetrics>()->currentView().size()}
+{}
 
 MenuPaged::~MenuPaged() = default;
 
@@ -48,10 +48,10 @@ Color MenuPaged::selectedColor() const
     return selected_color_;
 }
 
-void MenuPaged::setSceneNodeSizeForPages( mtps::vector2df size)
+void MenuPaged::setSceneNodeSizeForPages(vector2df size)
 {
     scene_node_size_for_pages_ = std::move(size);
-    for (auto &sceneNode : sceneNodes())
+    for (auto& sceneNode : sceneNodes())
     {
         if (auto menu_page = std::dynamic_pointer_cast<MenuPage>(sceneNode))
         {
@@ -60,17 +60,17 @@ void MenuPaged::setSceneNodeSizeForPages( mtps::vector2df size)
     }
 }
 
- mtps::vector2df MenuPaged::sceneNodeSizeForPages() const
+vector2df MenuPaged::sceneNodeSizeForPages() const
 {
     return scene_node_size_for_pages_;
 }
 
-void MenuPaged::setMenuPagedStatus(mtps::s32 status)
+void MenuPaged::setMenuPagedStatus(const s32 status)
 {
     status_ = status;
 }
 
-mtps::s32 MenuPaged::status() const
+s32 MenuPaged::status() const
 {
     return status_;
 }
@@ -80,50 +80,52 @@ sptr<MenuPage> MenuPaged::createMenuPage(str name)
     return createSceneNode<MenuPage>(std::move(name));
 }
 
-void MenuPaged::configure_menu(vector_shared_pointers<scene::MenuPage> menu_steps)
+void MenuPaged::configure_menu(
+    vector_shared_pointers<scene::MenuPage> menu_steps)
 {
-    auto visibility_selector = addComponentOfType<VisibilitySelectorComponent>();
-    auto statesController = addComponentOfType<StatesController<mtps::s32>>();
-    menu_steps_ = std::move(menu_steps);
+    auto visibility_selector =
+        addComponentOfType<VisibilitySelectorComponent>();
+    auto statesController = addComponentOfType<StatesController<s32>>();
+    menu_steps_           = std::move(menu_steps);
 
-    for (auto &&menu_page : menu_steps_)
+    for (auto&& menu_page : menu_steps_)
     {
-        menu_page->Forward.connect([this, statesController](const mtps::s32 selectedIndex) {
-            if (selectedIndex > -1)
-            {
-                statesController->push_state(selectedIndex);
-            }
-            else
-            {
-                statesController->pop_state();
-            }
-        });
+        menu_page->Forward.connect(
+            [this, statesController](const s32 selectedIndex) {
+                if (selectedIndex > -1)
+                {
+                    statesController->push_state(selectedIndex);
+                }
+                else
+                {
+                    statesController->pop_state();
+                }
+            });
 
-        menu_page->Back.connect([statesController]() {
-            statesController->pop_state();
-        });
+        menu_page->Back.connect(
+            [statesController]() { statesController->pop_state(); });
     }
 
-    statesController->StatePushed.connect([visibility_selector](const mtps::s32 menu_page) {
-        visibility_selector->show(static_cast<mtps::size_type>(menu_page));
-    });
+    statesController->StatePushed.connect(
+        [visibility_selector](const s32 menu_page) {
+            visibility_selector->show(static_cast<size_type>(menu_page));
+        });
 
-    statesController->StateResumed.connect([visibility_selector](const mtps::s32 menu_page) {
-        visibility_selector->show(static_cast<mtps::size_type>(menu_page));
-    });
+    statesController->StateResumed.connect(
+        [visibility_selector](const s32 menu_page) {
+            visibility_selector->show(static_cast<size_type>(menu_page));
+        });
 
-    statesController->AfterFinish.connect([this]() {
-        MenuFinished(status_);
-    });
+    statesController->AfterFinish.connect([this]() { MenuFinished(status_); });
 
     statesController->start(0);
     visibility_selector->configure(0U);
 }
 
-void MenuPaged::terminate(const mtps::s32 status)
+void MenuPaged::terminate(const s32 status)
 {
     setMenuPagedStatus(status);
     MenuFinished(status_);
 }
 
-} // namespace lib::scene
+}  // namespace lib::scene

@@ -2,25 +2,28 @@
 #include <lib/resources/i_include/bmpfont.hpp>
 #include <lib/resources/i_include/texture.hpp>
 
+using namespace mtps;
+
 namespace lib::scene
 {
-    mtps::sptr<BMPFont> BMPFontFactory::loadFromFile(const mtps::str & file)
-    {
-        mtps::sptr<scene::BMPFont> font(mtps::msptr<scene::BMPFont>(file));
-        return font;
-    }
-
-    mtps::sptr<BMPFont> BMPFontFactory::loadFromRawMemory(mtps::RawMemory *)
-    {
-        mtps::sptr<scene::BMPFont> font(mtps::msptr<scene::BMPFont>(""));
-        return font;
-/*
-        mtps::uptr<sf::Font> font(mtps::muptr<sf::Font>());
-        RawMemory internal_raw_memory(*raw_memory);
-        font->loadFromMemory(internal_raw_memory.data(), internal_raw_memory.size());
-        mtps::uptr<TTFont> t{ mtps::muptr<TTFont>(std::move(font), std::move(internal_raw_memory)) };
-        m_fontCache.push_back(std::move(t));
-        return (*(m_fontCache.end() - 1)).get();
-        */
-    }
+sptr<BMPFont> BMPFontFactory::loadFromFile(const str& file)
+{
+    sptr<scene::BMPFont> font(msptr<scene::BMPFont>(file));
+    return font;
 }
+
+sptr<BMPFont> BMPFontFactory::loadFromRawMemory(RawMemory*)
+{
+    sptr<scene::BMPFont> font(msptr<scene::BMPFont>(""));
+    return font;
+    /*
+            uptr<sf::Font> font(muptr<sf::Font>());
+            RawMemory internal_raw_memory(*raw_memory);
+            font->loadFromMemory(internal_raw_memory.data(),
+       internal_raw_memory.size()); uptr<TTFont> t{
+       muptr<TTFont>(std::move(font), std::move(internal_raw_memory)) };
+            m_fontCache.push_back(std::move(t));
+            return (*(m_fontCache.end() - 1)).get();
+            */
+}
+}  // namespace lib::scene

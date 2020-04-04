@@ -20,7 +20,7 @@ Token::Token(SceneNode *const parent, str name)
 {
     ++m_tileCounter;
     m_node = createRenderizable(
-        "Node" + mtps::str::to_str(m_tileCounter), FigType_t::Shape, 30U);
+        "Node" + str::to_str(m_tileCounter), FigType_t::Shape, 30U);
     animation_component_ = addComponentOfType<scene::AnimationComponent>();
 }
 

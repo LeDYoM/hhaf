@@ -5,6 +5,8 @@
 
 #include <random>
 
+using namespace mtps;
+
 namespace lib::sys
 {
 class RandomSystem::RandomSystemPrivate
@@ -15,7 +17,7 @@ public:
 
     RandomSystemPrivate() : mt{rd()} {}
 
-    std::uniform_int_distribution<mtps::size_type> dist;
+    std::uniform_int_distribution<size_type> dist;
 
     template <typename T>
     T getNext()
@@ -24,22 +26,26 @@ public:
     }
 };
 
-RandomSystem::RandomSystem(sys::SystemProvider &system_provider)
-    : AppService{system_provider},
-      priv_{mtps::muptr<RandomSystemPrivate>()} {}
+RandomSystem::RandomSystem(sys::SystemProvider& system_provider) :
+    AppService{system_provider}, priv_{muptr<RandomSystemPrivate>()}
+{}
 
 RandomSystem::~RandomSystem() = default;
 
-mtps::size_type RandomSystem::getNext(const mtps::str&name, const mtps::size_type min, const mtps::size_type max)
+size_type RandomSystem::getNext(const str& name,
+                                const size_type min,
+                                const size_type max)
 {
-    const mtps::size_type next = priv_->getNext<mtps::size_type>();
+    const size_type next = priv_->getNext<size_type>();
     DisplayLog::verbose("RandomSystem: Raw number generator: ", next);
-    log_assert(min < max, "min (", min, ") should be smaller than max (", max, ")");
-    mtps::size_type filtered_next = (next % (max - min)) + min;
+    log_assert(min < max, "min (", min, ") should be smaller than max (", max,
+               ")");
+    size_type filtered_next = (next % (max - min)) + min;
     DisplayLog::info("RandomSystem: Preselecting output: ", filtered_next);
 
-    bool generated{systemProvider().simulationSystem().getNext(name, filtered_next)};
+    bool generated{
+        systemProvider().simulationSystem().getNext(name, filtered_next)};
 
     return filtered_next;
 }
-} // namespace lib::sys
+}  // namespace lib::sys

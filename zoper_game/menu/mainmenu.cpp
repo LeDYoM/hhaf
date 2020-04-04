@@ -70,7 +70,7 @@ void goGame(MenuPaged *scene_node,
     scene_node->terminate(1);
 }
 
-MainMenu::MainMenu(SceneNode *parent, mtps::str name)
+MainMenu::MainMenu(SceneNode *parent, str name)
     : BaseClass{parent, std::move(name)}
 {
 }

@@ -26,12 +26,12 @@ void MenuPage::onCreated()
     input->Selected.connect({this, &MenuPage::goSelected});
 }
 
-MenuPaged *MenuPage::parentMenuPaged()
+MenuPaged* MenuPage::parentMenuPaged()
 {
     return parentAs<MenuPaged>();
 }
 
-const MenuPaged *MenuPage::parentMenuPaged() const
+const MenuPaged* MenuPage::parentMenuPaged() const
 {
     return parentAs<MenuPaged>();
 }
@@ -51,9 +51,9 @@ Color MenuPage::selectedColor() const
     return parentMenuPaged()->selectedColor();
 }
 
-constexpr mtps::size_type columnForOptions = 4U;
+constexpr size_type columnForOptions = 4U;
 
-mtps::size_type MenuPage::SelectedOptionAtRow(const mtps::size_type row) const
+size_type MenuPage::SelectedOptionAtRow(const size_type row) const
 {
     if (row < tableSize().y)
     {
@@ -64,38 +64,44 @@ mtps::size_type MenuPage::SelectedOptionAtRow(const mtps::size_type row) const
         }
         else
         {
-            DisplayLog::error("The is no discrete text at ", vector2dst{columnForOptions, row});
+            DisplayLog::error("The is no discrete text at ",
+                              vector2dst{columnForOptions, row});
         }
     }
     else
     {
         DisplayLog::error("Invalid row index parameter");
     }
-    return static_cast<mtps::size_type>(-1);
+    return static_cast<size_type>(-1);
 }
 
 void MenuPage::configure(vector<sptr<MenuPagedOption>> options,
-    PageOptions page_options)
+                         PageOptions page_options)
 {
     setTableSize({5U, options.size()});
 
     log_assert(options.size() > 0U, "options cannot be empty");
-    mtps::size_type counter{0U};
-    for (auto &&option : options)
+    size_type counter{0U};
+    for (auto&& option : options)
     {
-        mtps::size_type title_column{
-            (page_options.centered_empty_option && option->option().options().empty())
-                ? 2U : 0U};
+        size_type title_column{(page_options.centered_empty_option &&
+                                option->option().options().empty())
+                                   ? 2U
+                                   : 0U};
 
-        auto newOption(createNodeAt(vector2dst{title_column, counter}, make_str("label", counter)));
+        auto newOption(createNodeAt(vector2dst{title_column, counter},
+                                    make_str("label", counter)));
         standarizeText(newOption);
         newOption->text.set(option->title());
 
         if (!option->option().options().empty())
         {
-            auto discreteTextLabel(createNodeAt(vector2dst{columnForOptions, counter}, make_str("option", counter)));
+            auto discreteTextLabel(
+                createNodeAt(vector2dst{columnForOptions, counter},
+                             make_str("option", counter)));
             standarizeText(discreteTextLabel);
-            auto discreteTextComponent(discreteTextLabel->addComponentOfType<DiscreteTextComponent>());
+            auto discreteTextComponent(
+                discreteTextLabel->addComponentOfType<DiscreteTextComponent>());
             discreteTextComponent->data.set(option->option().options());
         }
 
@@ -103,43 +109,45 @@ void MenuPage::configure(vector<sptr<MenuPagedOption>> options,
     }
     setSelectedItem(0U);
 
-    Selection.connect([this, options](const mtps::size_type index, const mtps::s32 /*selection*/) {
-        log_assert(index <= static_cast<mtps::s32>(options.size()), "Logical error: Received invalid "
-                                                              "index in Selection");
+    Selection.connect(
+        [this, options](const size_type index, const s32 /*selection*/) {
+            log_assert(index <= static_cast<s32>(options.size()),
+                       "Logical error: Received invalid "
+                       "index in Selection");
 
-        const auto option = options[index];
-        if (option->onSelected() > MenuPagedOption::NoAction)
-        {
-            if (option->onSelected() == MenuPagedOption::GoBack)
+            const auto option = options[index];
+            if (option->onSelected() > MenuPagedOption::NoAction)
             {
-                Canceled(optionsSelected());
-                Back();
+                if (option->onSelected() == MenuPagedOption::GoBack)
+                {
+                    Canceled(optionsSelected());
+                    Back();
+                }
+                else
+                {
+                    Accepted(optionsSelected());
+                    Forward(option->onSelected());
+                }
             }
-            else
-            {
-                Accepted(optionsSelected());
-                Forward(option->onSelected());
-            }
-        }
-    });
+        });
 }
 
-vector<mtps::s32> MenuPage::optionsSelected() const
+vector<s32> MenuPage::optionsSelected() const
 {
-    vector<mtps::s32> result(tableSize().y);
+    vector<s32> result(tableSize().y);
 
-    for (mtps::size_type index = 0U; index < tableSize().y; ++index)
+    for (size_type index = 0U; index < tableSize().y; ++index)
     {
-        result.emplace_back((nodeHasOptions(index)) ? optionsLabelAt(index)->index()
-                                                    : -1);
+        result.emplace_back(
+            (nodeHasOptions(index)) ? optionsLabelAt(index)->index() : -1);
     }
     return result;
 }
 
-void MenuPage::setSelectedItem(const mtps::size_type index)
+void MenuPage::setSelectedItem(const size_type index)
 {
     m_previouslySelectedItem = m_selectedItem;
-    m_selectedItem = index;
+    m_selectedItem           = index;
     updateSelection();
 }
 
@@ -149,17 +157,17 @@ void MenuPage::updateSelection()
     setColorToLine(m_selectedItem, selectedColor());
 }
 
-void MenuPage::setColorToLine(const mtps::size_type index, const Color &color)
+void MenuPage::setColorToLine(const size_type index, const Color& color)
 {
-    for_each_tableSceneNode_in_y(index, [&color](const mtps::size_type,
-        const sptr<BaseClass::ContainedElement> &node)
-        {
+    for_each_tableSceneNode_in_y(
+        index,
+        [&color](const size_type,
+                 const sptr<BaseClass::ContainedElement>& node) {
             node->textColor.set(color);
-        }
-    );
+        });
 }
 
-void MenuPage::standarizeText(const mtps::sptr<ContainedElement> &ntext)
+void MenuPage::standarizeText(const sptr<ContainedElement>& ntext)
 {
     ntext->textColor.set(normalColor());
     ntext->font.set(normalFont());
@@ -168,13 +176,15 @@ void MenuPage::standarizeText(const mtps::sptr<ContainedElement> &ntext)
 void MenuPage::goDown()
 {
     m_previouslySelectedItem = m_selectedItem;
-    setSelectedItem((m_selectedItem < (tableSize().y - 1U)) ? (m_selectedItem + 1U) : (0U));
+    setSelectedItem(
+        (m_selectedItem < (tableSize().y - 1U)) ? (m_selectedItem + 1U) : (0U));
 }
 
 void MenuPage::goUp()
 {
     m_previouslySelectedItem = m_selectedItem;
-    setSelectedItem((m_selectedItem > 0U) ? (m_selectedItem - 1U) : (tableSize().y - 1U));
+    setSelectedItem((m_selectedItem > 0U) ? (m_selectedItem - 1U)
+                                          : (tableSize().y - 1U));
 }
 
 void MenuPage::goLeft()
@@ -195,25 +205,25 @@ void MenuPage::goRight()
 
 void MenuPage::goSelected()
 {
-    mtps::s32 option_selected_in_node{-1};
+    s32 option_selected_in_node{-1};
 
     if (nodeHasOptions(m_selectedItem))
     {
-        option_selected_in_node = static_cast<mtps::s32>(
-            optionsLabelAt(m_selectedItem)->index());
+        option_selected_in_node =
+            static_cast<s32>(optionsLabelAt(m_selectedItem)->index());
     }
 
     Selection(m_selectedItem, option_selected_in_node);
 }
 
-sptr<DiscreteTextComponent> MenuPage::optionsLabelAt(const mtps::size_type y) const
+sptr<DiscreteTextComponent> MenuPage::optionsLabelAt(const size_type y) const
 {
     auto node = nodeAt({columnForOptions, y});
     log_assert(node != nullptr, "This node does not have options");
     return node->componentOfType<DiscreteTextComponent>();
 }
 
-bool MenuPage::nodeHasOptions(const mtps::size_type y) const noexcept
+bool MenuPage::nodeHasOptions(const size_type y) const noexcept
 {
     if (tableSize().x >= columnForOptions)
     {
@@ -225,4 +235,4 @@ bool MenuPage::nodeHasOptions(const mtps::size_type y) const noexcept
     return false;
 }
 
-} // namespace lib::scene
+}  // namespace lib::scene

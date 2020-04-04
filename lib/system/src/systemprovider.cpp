@@ -14,7 +14,7 @@
 #include <lib/resources/i_include/resourcemanager.hpp>
 
 #ifdef LIB_COMPILE_SIMULATIONS
-    #include <lib/simulation/include/simulationsystem.hpp>
+#include <lib/simulation/include/simulationsystem.hpp>
 #endif
 
 #include <lib/include/liblog.hpp>
@@ -28,12 +28,12 @@ namespace lib::sys
 {
 struct SystemProvider::SystemProviderPrivate
 {
-    SystemProviderPrivate() = default;
+    SystemProviderPrivate()  = default;
     ~SystemProviderPrivate() = default;
 
-    IApp *app_;
+    IApp* app_;
     uptr<SharedDataSystem> shared_data_system_;
-    uptr<backend::BackendFactory, void (*)(lib::backend::BackendFactory *)>
+    uptr<backend::BackendFactory, void (*)(lib::backend::BackendFactory*)>
         backend_factory_{nullptr, nullptr};
     uptr<Window> window_;
     uptr<ResourceManager> resource_manager_;
@@ -49,28 +49,30 @@ struct SystemProvider::SystemProviderPrivate
     bool exit_requested_{false};
 };
 
-SystemProvider::SystemProvider()
-    : p_{muptr<SystemProviderPrivate>()} {}
+SystemProvider::SystemProvider() : p_{muptr<SystemProviderPrivate>()}
+{}
 
 SystemProvider::~SystemProvider() = default;
 
-void SystemProvider::init(IApp *iapp)
+void SystemProvider::init(IApp* iapp)
 {
-    log_assert(iapp != nullptr, "Cannot create a SystemProvider with a nullptr app");
-    p_->backend_factory_ = uptr<backend::BackendFactory, void (*)(lib::backend::BackendFactory *)> 
-        (createBackendFactory(), destroyBackendFactory);
-    p_->app_ = iapp;
-    p_->shared_data_system_ = mtps::muptr<SharedDataSystem>(*this);
-    p_->time_system_ = mtps::muptr<TimeSystem>(*this);
-    p_->window_ = mtps::muptr<Window>(*this);
-    p_->input_system_ = mtps::muptr<InputSystem>(*this);
-    p_->scene_manager_ = mtps::muptr<scene::SceneManager>(*this);
-    p_->resource_manager_ = mtps::muptr<sys::ResourceManager>(*this);
-    p_->render_system_ = mtps::muptr<sys::RenderSystem>(*this);
-    p_->random_system_ = mtps::muptr<RandomSystem>(*this);
-    p_->file_system_ = mtps::muptr<FileSystem>(*this);
+    log_assert(iapp != nullptr,
+               "Cannot create a SystemProvider with a nullptr app");
+    p_->backend_factory_ =
+        uptr<backend::BackendFactory, void (*)(lib::backend::BackendFactory*)>(
+            createBackendFactory(), destroyBackendFactory);
+    p_->app_                = iapp;
+    p_->shared_data_system_ = muptr<SharedDataSystem>(*this);
+    p_->time_system_        = muptr<TimeSystem>(*this);
+    p_->window_             = muptr<Window>(*this);
+    p_->input_system_       = muptr<InputSystem>(*this);
+    p_->scene_manager_      = muptr<scene::SceneManager>(*this);
+    p_->resource_manager_   = muptr<sys::ResourceManager>(*this);
+    p_->render_system_      = muptr<sys::RenderSystem>(*this);
+    p_->random_system_      = muptr<RandomSystem>(*this);
+    p_->file_system_        = muptr<FileSystem>(*this);
 #ifdef LIB_COMPILE_SIMULATIONS
-    p_->simulation_system_ = mtps::muptr<SimulationSystem>(*this);
+    p_->simulation_system_ = muptr<SimulationSystem>(*this);
     p_->simulation_system_->initialize();
 #endif
 
@@ -94,137 +96,137 @@ void SystemProvider::terminate()
 {
     p_->app_->onFinish(*this);
     p_->scene_manager_->finish();
-    p_->scene_manager_ = nullptr;
+    p_->scene_manager_     = nullptr;
     p_->simulation_system_ = nullptr;
-    p_->file_system_ = nullptr;
-    p_->random_system_ = nullptr;
-    p_->render_system_ = nullptr;
-    p_->resource_manager_ = nullptr;
-    p_->scene_manager_ = nullptr;
-    p_->input_system_ = nullptr;
-    p_->window_ = nullptr;
-    p_->time_system_ = nullptr;
-    p_->backend_factory_ = nullptr;
+    p_->file_system_       = nullptr;
+    p_->random_system_     = nullptr;
+    p_->render_system_     = nullptr;
+    p_->resource_manager_  = nullptr;
+    p_->scene_manager_     = nullptr;
+    p_->input_system_      = nullptr;
+    p_->window_            = nullptr;
+    p_->time_system_       = nullptr;
+    p_->backend_factory_   = nullptr;
 }
 
-IApp &SystemProvider::app()
+IApp& SystemProvider::app()
 {
     return *p_->app_;
 }
 
-const IApp &SystemProvider::app() const
+const IApp& SystemProvider::app() const
 {
     return *p_->app_;
 }
 
-const Window &SystemProvider::parentWindow() const noexcept
+const Window& SystemProvider::parentWindow() const noexcept
 {
     return *p_->window_;
 }
 
-Window &SystemProvider::parentWindow() noexcept
+Window& SystemProvider::parentWindow() noexcept
 {
     return *p_->window_;
 }
 
-const ResourceManager &SystemProvider::resourceManager() const noexcept
+const ResourceManager& SystemProvider::resourceManager() const noexcept
 {
     return *p_->resource_manager_;
 }
 
-ResourceManager &SystemProvider::resourceManager() noexcept
+ResourceManager& SystemProvider::resourceManager() noexcept
 {
     return *p_->resource_manager_;
 }
 
-const sys::InputSystem &SystemProvider::inputSystem() const noexcept
+const sys::InputSystem& SystemProvider::inputSystem() const noexcept
 {
     return *p_->input_system_;
 }
 
-sys::InputSystem &SystemProvider::inputSystem() noexcept
+sys::InputSystem& SystemProvider::inputSystem() noexcept
 {
     return *p_->input_system_;
 }
 
-const RandomSystem &SystemProvider::randomSystem() const noexcept
+const RandomSystem& SystemProvider::randomSystem() const noexcept
 {
     return *p_->random_system_;
 }
 
-RandomSystem &SystemProvider::randomSystem() noexcept
+RandomSystem& SystemProvider::randomSystem() noexcept
 {
     return *p_->random_system_;
 }
 
-const FileSystem &SystemProvider::fileSystem() const noexcept
+const FileSystem& SystemProvider::fileSystem() const noexcept
 {
     return *p_->file_system_;
 }
 
-FileSystem &SystemProvider::fileSystem() noexcept
+FileSystem& SystemProvider::fileSystem() noexcept
 {
     return *p_->file_system_;
 }
 
-const scene::SceneManager &SystemProvider::sceneManager() const noexcept
+const scene::SceneManager& SystemProvider::sceneManager() const noexcept
 {
     return *p_->scene_manager_;
 }
 
-scene::SceneManager &SystemProvider::sceneManager() noexcept
+scene::SceneManager& SystemProvider::sceneManager() noexcept
 {
     return *p_->scene_manager_;
 }
 
 #ifdef LIB_COMPILE_SIMULATIONS
-const SimulationSystem &SystemProvider::simulationSystem() const noexcept
+const SimulationSystem& SystemProvider::simulationSystem() const noexcept
 {
     return *p_->simulation_system_;
 }
 
-SimulationSystem &SystemProvider::simulationSystem() noexcept
+SimulationSystem& SystemProvider::simulationSystem() noexcept
 {
     return *p_->simulation_system_;
 }
 #endif
 
-const TimeSystem &SystemProvider::timeSystem() const noexcept
+const TimeSystem& SystemProvider::timeSystem() const noexcept
 {
     return *p_->time_system_;
 }
 
-TimeSystem &SystemProvider::timeSystem() noexcept
+TimeSystem& SystemProvider::timeSystem() noexcept
 {
     return *p_->time_system_;
 }
 
-const backend::BackendFactory &SystemProvider::backendFactory() const noexcept
+const backend::BackendFactory& SystemProvider::backendFactory() const noexcept
 {
     return *p_->backend_factory_;
 }
 
-backend::BackendFactory &SystemProvider::backendFactory() noexcept
+backend::BackendFactory& SystemProvider::backendFactory() noexcept
 {
     return *p_->backend_factory_;
 }
 
-const RenderSystem &SystemProvider::renderSystem() const noexcept
+const RenderSystem& SystemProvider::renderSystem() const noexcept
 {
     return *p_->render_system_;
 }
 
-RenderSystem &SystemProvider::renderSystem() noexcept
+RenderSystem& SystemProvider::renderSystem() noexcept
 {
     return *p_->render_system_;
 }
 
-ISharedDataSystem &SystemProvider::sharedDataSystem() noexcept
+ISharedDataSystem& SystemProvider::sharedDataSystem() noexcept
 {
     return *p_->shared_data_system_;
 }
 
-const ISharedDataSystem &SystemProvider::sharedDataSystem() const noexcept
+const ISharedDataSystem& SystemProvider::sharedDataSystem() const noexcept
 {
     return *p_->shared_data_system_;
 }
@@ -242,4 +244,4 @@ bool SystemProvider::runStep()
     parentWindow().postLoop();
     return windowWants2Close;
 }
-} // namespace lib::sys
+}  // namespace lib::sys

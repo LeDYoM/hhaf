@@ -141,7 +141,7 @@ void GameScene::onCreated()
         m_boardGroup->setLevel(level);
     });
 
-    mtps::size_type start_level;
+    size_type start_level;
     GameMode game_mode;
 
     {
@@ -236,9 +236,9 @@ void GameScene::onExitState(const GameSceneStates& state)
 }
 
 bool moveTowardsCenter(
-    const mtps::sptr<board::BoardModelComponent>& board_model,
+    const sptr<board::BoardModelComponent>& board_model,
     const Direction direction,
-    const mtps::vector2dst position)
+    const vector2dst position)
 {
     bool moved_to_center{false};
 
@@ -273,15 +273,15 @@ void GameScene::generateNextToken()
     DisplayLog::info("zone: ", currentTokenZone.zone_start);
 
     // Generate the new token type
-    const mtps::size_type newToken{
+    const size_type newToken{
         private_->token_type_generator_->getUInt(NumTokens)};
 
     // Calculate in wich tile zone offset is going to appear
-    const mtps::size_type token_displacement{
+    const size_type token_displacement{
         private_->token_position_generator_->getUInt(currentTokenZone.size)};
 
     // Prepare the position for the new token
-    const mtps::vector2dst new_position{
+    const vector2dst new_position{
         TokenZones::displacedStartPoint(currentTokenZone, token_displacement)};
     lib::DisplayLog::info("New tile pos: ", new_position);
 
@@ -314,14 +314,14 @@ void GameScene::launchPlayer()
 {
     lib::DisplayLog::info("Launching player");
     const Direction loopDirection{m_boardGroup->player()->currentDirection()};
-    const mtps::vector2dst loopPosition{
+    const vector2dst loopPosition{
         m_boardGroup->player()->boardPosition()};
     const board::BoardTileData tokenType{m_boardGroup->player()->data.get()};
     ScoreIncrementer score_incrementer{level_properties_};
     BoardUtils::for_each_token_in_line(
         loopPosition, loopDirection, m_boardGroup->boardModel()->size(),
         [this, tokenType, &score_incrementer](
-            const mtps::vector2dst& loopPosition, const Direction&) {
+            const vector2dst& loopPosition, const Direction&) {
             bool result{true};
             bool found{false};
             vector2df lastTokenPosition{};
@@ -329,7 +329,7 @@ void GameScene::launchPlayer()
             if (!m_boardGroup->boardModel()->tileEmpty(loopPosition) &&
                 !TokenZones::pointInCenter(loopPosition) && result)
             {
-                mtps::sptr<board::ITile> currentToken{
+                sptr<board::ITile> currentToken{
                     m_boardGroup->boardModel()->getTile(loopPosition)};
                 board::BoardTileData currentTokenType{currentToken->data.get()};
 
@@ -389,14 +389,14 @@ void GameScene::_debugDisplayBoard() const
 {
     for (u32 y{0}; y < TokenZones::size.y; ++y)
     {
-        mtps::str temp;
+        str temp;
         for (u32 x{0}; x < TokenZones::size.x; ++x)
         {
-            mtps::str chTemp;
+            str chTemp;
             auto lp_tile(m_boardGroup->boardModel()->getTile({x, y}));
             if (lp_tile)
             {
-                chTemp = mtps::str::to_str(lp_tile->data.get());
+                chTemp = str::to_str(lp_tile->data.get());
             }
             else
             {

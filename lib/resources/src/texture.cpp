@@ -1,6 +1,8 @@
 #include <lib/resources/i_include/texture.hpp>
 #include <backend_dev/include/itexture.hpp>
 
+using namespace mtps;
+
 namespace lib::scene
 {
 Texture::Texture(backend::ITexture *texture)
@@ -8,7 +10,7 @@ Texture::Texture(backend::ITexture *texture)
 
 Texture::~Texture() {}
 
-mtps::vector2du32 Texture::size() const
+vector2du32 Texture::size() const
 {
     return m_texturePrivate->size();
 }

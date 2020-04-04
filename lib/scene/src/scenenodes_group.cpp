@@ -3,9 +3,10 @@
 #include <lib/scene/include/scenenode.hpp>
 #include <lib/include/liblog.hpp>
 
+using namespace mtps;
+
 namespace lib::scene
 {
-
 void SceneNodesGroup::renderGroups(const bool parentTransformationChanged)
 {
     for (auto&& group : m_groups)
@@ -14,12 +15,12 @@ void SceneNodesGroup::renderGroups(const bool parentTransformationChanged)
     }
 }
 
-void SceneNodesGroup::addSceneNode(mtps::sptr<SceneNode> node)
+void SceneNodesGroup::addSceneNode(sptr<SceneNode> node)
 {
     m_groups.push_back(node);
 }
 
-void SceneNodesGroup::removeSceneNode(mtps::sptr<SceneNode> element)
+void SceneNodesGroup::removeSceneNode(sptr<SceneNode> element)
 {
     m_groups.erase_values(element);
 }

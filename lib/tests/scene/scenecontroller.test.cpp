@@ -6,11 +6,13 @@
 #include <lib/scene/include/scene.hpp>
 #include <lib/scene/i_include/scenecontroller.hpp>
 
+using namespace mtps;
+
 struct CommonData
 {
     bool exit = false;
-    mtps::u32 step{ 0U };
-    mtps::sptr<lib::scene::SceneController> scene_controller = mtps::msptr<lib::scene::SceneController>();
+    u32 step{ 0U };
+    sptr<lib::scene::SceneController> scene_controller = msptr<lib::scene::SceneController>();
 };
 
 CommonData common;
@@ -79,18 +81,18 @@ TEST_CASE("SceneController", "[lib][SceneController]")
 
     SECTION("Two scenes")
     {
-        common.scene_controller->setSceneDirector([](const mtps::str& scene_name)
+        common.scene_controller->setSceneDirector([](const str& scene_name)
         {
-            if (mtps::str(scene_name) == GroupScene1::StaticTypeName)
+            if (str(scene_name) == GroupScene1::StaticTypeName)
             {
-                return mtps::str(GroupScene2::StaticTypeName);
+                return str(GroupScene2::StaticTypeName);
             }
-            else if (mtps::str(scene_name) == GroupScene2::StaticTypeName)
+            else if (str(scene_name) == GroupScene2::StaticTypeName)
             {
-                return mtps::str("");
+                return str("");
             }
             CHECK(false);
-            return mtps::str("");
+            return str("");
         });
         CHECK(common.scene_controller->registerSceneNodeType<GroupScene1>());
         CHECK(common.scene_controller->registerSceneNodeType<GroupScene2>());

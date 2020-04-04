@@ -4,6 +4,8 @@
 #include <lib/system/i_include/get_system.hpp>
 #include <lib/resources/i_include/resourcemanager.hpp>
 
+using namespace mtps;
+
 namespace lib::scene
 {
 void ResourceView::onAttached()
@@ -12,22 +14,22 @@ void ResourceView::onAttached()
     log_assert(retriever_ != nullptr, "Invalid IResourceRetrieved");
 }
 
-mtps::sptr<scene::ITTFont> ResourceView::getTTFont(const mtps::str&rid)
+sptr<scene::ITTFont> ResourceView::getTTFont(const str&rid)
 {
     return retriever_->getTTFont(rid);
 }
 
-mtps::sptr<scene::ITexture> ResourceView::getTexture(const mtps::str&rid)
+sptr<scene::ITexture> ResourceView::getTexture(const str&rid)
 {
     return retriever_->getTexture(rid);
 }
 
-mtps::sptr<scene::IShader> ResourceView::getShader(const mtps::str&rid)
+sptr<scene::IShader> ResourceView::getShader(const str&rid)
 {
     return retriever_->getShader(rid);
 }
 
-mtps::sptr<scene::IFont> ResourceView::getBMPFont(const mtps::str&rid)
+sptr<scene::IFont> ResourceView::getBMPFont(const str&rid)
 {
     return retriever_->getBMPFont(rid);
 }

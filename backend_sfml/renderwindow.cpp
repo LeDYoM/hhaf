@@ -5,16 +5,22 @@
 
 #include <string>
 
+using namespace mtps;
+
 namespace lib::backend::sfmlb
 {
-RenderWindow::RenderWindow() {}
-RenderWindow::~RenderWindow() {}
+RenderWindow::RenderWindow()
+{}
+RenderWindow::~RenderWindow()
+{}
 
 class ParamExtractor
 {
 public:
-    constexpr ParamExtractor(const unsigned int size, const unsigned int *const data)
-        : size_{size}, data_{data} {}
+    constexpr ParamExtractor(const unsigned int size,
+                             const unsigned int* const data) :
+        size_{size}, data_{data}
+    {}
 
     unsigned int getParam(const unsigned int def_param = 0U)
     {
@@ -28,15 +34,17 @@ public:
 private:
     unsigned int current_{0U};
     const unsigned int size_;
-    const unsigned int *const data_;
+    const unsigned int* const data_;
 };
 
-bool RenderWindow::createWindow(
-            const mtps::u32 width, const mtps::u32 height,
-            const mtps::u8 red_bpp, const mtps::u8 green_bpp, const mtps::u8 blue_bpp,
-            const mtps::u8 alpha_bpp,
-            const unsigned int num_extra_parameters, 
-            const unsigned int* const extra_parameters)
+bool RenderWindow::createWindow(const u32 width,
+                                const u32 height,
+                                const u8 red_bpp,
+                                const u8 green_bpp,
+                                const u8 blue_bpp,
+                                const u8 alpha_bpp,
+                                const unsigned int num_extra_parameters,
+                                const unsigned int* const extra_parameters)
 {
     using uint = unsigned int;
     sf::Uint32 style{sf::Style::Default};
@@ -44,17 +52,16 @@ bool RenderWindow::createWindow(
     //            style = sf::Style::Fullscreen;
 
     ParamExtractor prm_xtr{num_extra_parameters, extra_parameters};
-//    uint width = prm_xtr.getParam(800U);
-//    uint height = prm_xtr.getParam(600U);
-//    uint bpp = prm_xtr.getParam(32U);
+    //    uint width = prm_xtr.getParam(800U);
+    //    uint height = prm_xtr.getParam(600U);
+    //    uint bpp = prm_xtr.getParam(32U);
 
     unsigned int w = static_cast<unsigned int>(width);
     unsigned int h = static_cast<unsigned int>(height);
-    unsigned int bpp = static_cast<unsigned int>(
-        red_bpp + green_bpp + blue_bpp + alpha_bpp);
+    unsigned int bpp =
+        static_cast<unsigned int>(red_bpp + green_bpp + blue_bpp + alpha_bpp);
 
-    sf::Window::create(sf::VideoMode(w, h, bpp), "",
-                       style);
+    sf::Window::create(sf::VideoMode(w, h, bpp), "", style);
 
     this->setVerticalSyncEnabled(false);
     return true;
@@ -65,7 +72,7 @@ sf::Vector2u RenderWindow::getSize() const
     return Window::getSize();
 }
 
-IRenderTarget *RenderWindow::renderTarget()
+IRenderTarget* RenderWindow::renderTarget()
 {
     return this;
 }
@@ -84,7 +91,8 @@ bool RenderWindow::processEvents()
         {
             return true;
         }
-        else if (event.type == sf::Event::KeyPressed || event.type == sf::Event::KeyReleased)
+        else if (event.type == sf::Event::KeyPressed ||
+                 event.type == sf::Event::KeyReleased)
         {
             input_driver_.keyEvent(event);
         }
@@ -97,7 +105,7 @@ void RenderWindow::display()
     Window::display();
 }
 
-void RenderWindow::setWindowTitle(mtps::str newTitle)
+void RenderWindow::setWindowTitle(str newTitle)
 {
     Window::setTitle(to_sf_type(newTitle));
 }
@@ -107,7 +115,7 @@ void RenderWindow::closeWindow()
     Window::close();
 }
 
-IInputDriver *RenderWindow::inputDriver()
+IInputDriver* RenderWindow::inputDriver()
 {
     return &input_driver_;
 }
@@ -122,8 +130,10 @@ void RenderWindow::onResize()
     setView(getView());
 }
 
-const mtps::str WindowBackendInfo::info()
+const str WindowBackendInfo::info()
 {
-    return mtps::make_str("SFML Backend: 1.0 Using SFML Version : ", SFML_VERSION_MAJOR, ".", SFML_VERSION_MINOR, ".", SFML_VERSION_PATCH);
+    return make_str(
+        "SFML Backend: 1.0 Using SFML Version : ", SFML_VERSION_MAJOR, ".",
+        SFML_VERSION_MINOR, ".", SFML_VERSION_PATCH);
 }
-} // namespace lib::backend::sfmlb
+}  // namespace lib::backend::sfmlb

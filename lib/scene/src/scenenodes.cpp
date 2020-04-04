@@ -2,9 +2,11 @@
 #include <lib/scene/include/scenenode.hpp>
 #include <lib/include/liblog.hpp>
 
+using namespace mtps;
+
 namespace lib::scene
 {
-SceneNodes::SceneNodes(const mtps::rptr<SceneNode> scene_node) :
+SceneNodes::SceneNodes(const rptr<SceneNode> scene_node) :
     scene_node_{scene_node}
 {}
 
@@ -15,13 +17,13 @@ void SceneNodes::renderGroups(const bool parentTransformationChanged)
     scene_nodes_group_.renderGroups(parentTransformationChanged);
 }
 
-void SceneNodes::addSceneNode(mtps::sptr<SceneNode> node)
+void SceneNodes::addSceneNode(sptr<SceneNode> node)
 {
     scene_nodes_group_.addSceneNode(node);
     node->onCreated();
 }
 
-mtps::sptr<SceneNode> SceneNodes::groupByName(const mtps::str& name) const
+sptr<SceneNode> SceneNodes::groupByName(const str& name) const
 {
     const auto iterator = sceneNodes().find_if(
         [name](const auto& node) { return node->name() == name; });
@@ -29,7 +31,7 @@ mtps::sptr<SceneNode> SceneNodes::groupByName(const mtps::str& name) const
     return iterator == sceneNodes().cend() ? nullptr : *iterator;
 }
 
-void SceneNodes::removeSceneNode(mtps::sptr<SceneNode> element)
+void SceneNodes::removeSceneNode(sptr<SceneNode> element)
 {
     log_assert(element.get() != nullptr,
                "Received empty scene node to be deleted");

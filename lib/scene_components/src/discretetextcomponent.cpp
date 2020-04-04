@@ -1,5 +1,7 @@
 #include "discretetextcomponent.hpp"
 
+using namespace mtps;
+
 namespace lib::scene
 {
 void DiscreteTextComponent::incrementIndex() noexcept
@@ -42,7 +44,7 @@ void DiscreteTextComponent::update()
     }
 }
 
-void DiscreteTextComponent::_setText(const mtps::str&nText)
+void DiscreteTextComponent::_setText(const str&nText)
 {
     attachedNodeAs<nodes::SceneNodeText>()->text.set(nText);
 }

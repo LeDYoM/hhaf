@@ -17,10 +17,12 @@
 #include <algorithm>
 #include <list>
 
+using namespace mtps;
+
 namespace lib::sys
 {
 template <typename T>
-using NamedIndex = mtps::pair<const mtps::str, T>;
+using NamedIndex = pair<const str, T>;
 
 template <typename T>
 using ResourceList = std::list<NamedIndex<T>>;
@@ -28,36 +30,36 @@ using ResourceList = std::list<NamedIndex<T>>;
 namespace
 {
 template <bool UseInternalFileSystem, typename T, typename V>
-inline mtps::sptr<T> loadResource(backend::IResourceFactory<V> &factory,
-                            FileSystem &fileSystem, const mtps::str&fileName)
+inline sptr<T> loadResource(backend::IResourceFactory<V> &factory,
+                            FileSystem &fileSystem, const str&fileName)
 {
     if constexpr (UseInternalFileSystem)
     {
-        mtps::RawMemory data(fileSystem.loadBinaryFile(fileName));
+        RawMemory data(fileSystem.loadBinaryFile(fileName));
 
         // Prototype / check
-        return mtps::msptr<T>(factory.loadFromRawMemory(&data));
+        return msptr<T>(factory.loadFromRawMemory(&data));
     }
     else
     {
-        return mtps::msptr<T>(factory.loadFromFile(fileName));
+        return msptr<T>(factory.loadFromFile(fileName));
     }
 }
 
 template <typename T>
-inline auto get_or_default(ResourceList<mtps::sptr<T>> &container, const mtps::str&rid)
+inline auto get_or_default(ResourceList<sptr<T>> &container, const str&rid)
 {
     auto iterator(std::find_if(container.begin(), container.end(),
                                [rid](const auto &node) { return node.first == rid; }));
 
     return (iterator != container.end()) ? (*iterator).second
-                                         : mtps::sptr<T>(nullptr);
+                                         : sptr<T>(nullptr);
 }
 
 template <bool UseInternalFileSystem, typename V, typename T>
-inline mtps::sptr<T> get_or_add(backend::IResourceFactory<V> &factory,
-                          ResourceList<mtps::sptr<T>> &container, FileSystem &fileSystem,
-                          const mtps::str&rid, const mtps::str&fileName)
+inline sptr<T> get_or_add(backend::IResourceFactory<V> &factory,
+                          ResourceList<sptr<T>> &container, FileSystem &fileSystem,
+                          const str&rid, const str&fileName)
 {
     auto internal_resource(get_or_default(container, rid));
 
@@ -71,7 +73,7 @@ inline mtps::sptr<T> get_or_add(backend::IResourceFactory<V> &factory,
         // Not found, try to load it.
         DisplayLog::info(rid, " not found on resource list.");
         DisplayLog::info("Going to load file: ", fileName);
-        mtps::sptr<T> resource(loadResource<UseInternalFileSystem, T>(factory, fileSystem, fileName));
+        sptr<T> resource(loadResource<UseInternalFileSystem, T>(factory, fileSystem, fileName));
         container.emplace_back(rid, resource);
         return resource;
     }
@@ -80,48 +82,48 @@ inline mtps::sptr<T> get_or_add(backend::IResourceFactory<V> &factory,
 
 struct ResourceManager::ResourceManagerPrivate
 {
-    ResourceList<mtps::sptr<scene::TTFont>> ttf_fonts_;
-    ResourceList<mtps::sptr<scene::Texture>> textures_;
-    ResourceList<mtps::sptr<scene::Shader>> shaders_;
-    ResourceList<mtps::sptr<scene::BMPFont>> bmp_fonts_;
+    ResourceList<sptr<scene::TTFont>> ttf_fonts_;
+    ResourceList<sptr<scene::Texture>> textures_;
+    ResourceList<sptr<scene::Shader>> shaders_;
+    ResourceList<sptr<scene::BMPFont>> bmp_fonts_;
 
     scene::BMPFontFactory bmp_font_factory_;
 };
 
 ResourceManager::ResourceManager(sys::SystemProvider &system_provider)
     : AppService{system_provider},
-      m_private{mtps::muptr<ResourceManagerPrivate>()} {}
+      m_private{muptr<ResourceManagerPrivate>()} {}
 
 ResourceManager::~ResourceManager() = default;
 
-mtps::sptr<scene::ITTFont> ResourceManager::getTTFont(const mtps::str&rid)
+sptr<scene::ITTFont> ResourceManager::getTTFont(const str&rid)
 {
     return get_or_default(m_private->ttf_fonts_, rid);
 }
 
-mtps::sptr<scene::ITexture> ResourceManager::getTexture(const mtps::str&rid)
+sptr<scene::ITexture> ResourceManager::getTexture(const str&rid)
 {
     return get_or_default(m_private->textures_, rid);
 }
 
-mtps::sptr<scene::IShader> ResourceManager::getShader(const mtps::str&rid)
+sptr<scene::IShader> ResourceManager::getShader(const str&rid)
 {
     return get_or_default(m_private->shaders_, rid);
 }
 
-mtps::sptr<scene::IFont> ResourceManager::getBMPFont(const mtps::str&rid)
+sptr<scene::IFont> ResourceManager::getBMPFont(const str&rid)
 {
     return get_or_default(m_private->bmp_fonts_, rid);
 }
 
-bool ResourceManager::loadTTFont(const mtps::str&rid, const mtps::str&fileName)
+bool ResourceManager::loadTTFont(const str&rid, const str&fileName)
 {
     return get_or_add<true>(
         systemProvider().backendFactory().ttfontFactory(),
         m_private->ttf_fonts_, systemProvider().fileSystem(),
         rid, fileName) != nullptr;
 }
-bool ResourceManager::loadTexture(const mtps::str&rid, const mtps::str&fileName)
+bool ResourceManager::loadTexture(const str&rid, const str&fileName)
 {
     return get_or_add<true>(
         systemProvider().backendFactory().textureFactory(),
@@ -129,7 +131,7 @@ bool ResourceManager::loadTexture(const mtps::str&rid, const mtps::str&fileName)
         rid, fileName) != nullptr;
 }
 
-bool ResourceManager::loadShader(const mtps::str&rid, const mtps::str&fileName)
+bool ResourceManager::loadShader(const str&rid, const str&fileName)
 {
     return get_or_add<false>(
         systemProvider().backendFactory().shaderFactory(),
@@ -137,20 +139,20 @@ bool ResourceManager::loadShader(const mtps::str&rid, const mtps::str&fileName)
         rid, fileName) != nullptr;
 }
 
-bool ResourceManager::loadBMPFont(const mtps::str&rid, const mtps::str&fileName)
+bool ResourceManager::loadBMPFont(const str&rid, const str&fileName)
 {
-    mtps::sptr<scene::BMPFont> bmp_font{m_private->bmp_font_factory_.loadFromFile(fileName)};
+    sptr<scene::BMPFont> bmp_font{m_private->bmp_font_factory_.loadFromFile(fileName)};
 
     if (bmp_font)
     {
         const auto &texture_file_names{bmp_font->textureFileNames()};
-        mtps::vector<mtps::sptr<scene::ITexture>> textures(texture_file_names.size());
+        vector<sptr<scene::ITexture>> textures(texture_file_names.size());
 
         for (const auto &file_name : texture_file_names)
         {
             const bool texture_available = loadTexture(rid + "_" + file_name, file_name);
 
-            mtps::sptr<scene::ITexture> texture(getTexture(rid + "_" + file_name));
+            sptr<scene::ITexture> texture(getTexture(rid + "_" + file_name));
             textures.push_back(std::move(texture));
         }
 

@@ -1,19 +1,24 @@
 #include "texture.hpp"
 
+using namespace mtps;
+
 namespace lib::backend::sfmlb
 {
-    Texture::Texture(const sf::Texture* const texture, const bool owned) : m_texturePrivate{ texture }, owned_{ owned } {}
+Texture::Texture(const sf::Texture* const texture, const bool owned) :
+    m_texturePrivate{texture}, owned_{owned}
+{}
 
-    Texture::~Texture()
+Texture::~Texture()
+{
+    if (owned_ && m_texturePrivate != nullptr)
     {
-        if (owned_ && m_texturePrivate != nullptr)
-        {
-            delete m_texturePrivate;
-        }
-    }
-
-    mtps::vector2du32 Texture::size() const
-    {
-        return{ static_cast<mtps::u32>(m_texturePrivate->getSize().x), static_cast<mtps::u32>(m_texturePrivate->getSize().y) };
+        delete m_texturePrivate;
     }
 }
+
+vector2du32 Texture::size() const
+{
+    return {static_cast<u32>(m_texturePrivate->getSize().x),
+            static_cast<u32>(m_texturePrivate->getSize().y)};
+}
+}  // namespace lib::backend::sfmlb
