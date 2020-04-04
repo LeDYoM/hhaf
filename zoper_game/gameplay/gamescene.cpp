@@ -35,24 +35,24 @@ using namespace lib::scene::nodes;
 
 namespace zoper
 {
-constexpr u32 NumTokens = 5U;
+constexpr u32 NumTokens   = 5U;
 constexpr u32 PlayerToken = NumTokens;
 
 struct GameScene::GameScenePrivate
 {
-    mtps::sptr<AnimationComponent> scene_animation_component_;
-    mtps::sptr<rnd::RandomNumbersComponent> token_type_generator_;
-    mtps::sptr<rnd::RandomNumbersComponent> token_position_generator_;
+    sptr<AnimationComponent> scene_animation_component_;
+    sptr<rnd::RandomNumbersComponent> token_type_generator_;
+    sptr<rnd::RandomNumbersComponent> token_position_generator_;
 
-    void createScoreIncrementPoints(SceneNode &main_node,
-                                    const vector2df &lastTokenPosition)
+    void createScoreIncrementPoints(SceneNode& main_node,
+                                    const vector2df& lastTokenPosition)
     {
         auto sceneNode =
             main_node.createSceneNode("pointIncrementScore_SceneNode");
 
         auto node(sceneNode->createRenderizable(
-            "pointIncrementScore", FigType_t::Shape,
-            rectFromSize(15.0F, 15.0F), colors::White, 30U));
+            "pointIncrementScore", FigType_t::Shape, rectFromSize(15.0F, 15.0F),
+            colors::White, 30U));
 
         {
             using namespace gameplay::constants;
@@ -61,15 +61,16 @@ struct GameScene::GameScenePrivate
             scene_animation_component_->addPropertyAnimation(
                 time::TimePoint_as_miliseconds(MillisAnimationPointsToScore),
                 sceneNode->position, lastTokenPosition,
-                EndPositionPointsToScore, Animation::AnimationDirection::Forward,
-                [this, sceneNode]() {
+                EndPositionPointsToScore,
+                Animation::AnimationDirection::Forward, [this, sceneNode]() {
                     sceneNode->parent()->removeSceneNode(sceneNode);
                 });
         }
     }
 };
 
-GameScene::GameScene() : Scene{StaticTypeName} {}
+GameScene::GameScene() : Scene{StaticTypeName}
+{}
 GameScene::~GameScene() = default;
 
 void GameScene::onCreated()
@@ -89,16 +90,16 @@ void GameScene::onCreated()
     m_nextTokenPart = 0U;
 
     auto inputComponent(addComponentOfType<input::InputComponent>());
-    inputComponent->KeyPressed.connect([this](const lib::input::Key &key) {
+    inputComponent->KeyPressed.connect([this](const lib::input::Key& key) {
         DisplayLog::info("Key pressed in GameScene");
         // TODO: Fixme
         KeyMapping keyMapping__;
         KeyMapping* keyMapping = &keyMapping__;
-//        const auto &keyMapping = sceneManager().systemProvider().app<ZoperProgramController>().keyMapping;
+        //        const auto &keyMapping =
+        //        sceneManager().systemProvider().app<ZoperProgramController>().keyMapping;
         switch (m_sceneStates->currentState())
         {
-        case GameSceneStates::Playing:
-        {
+        case GameSceneStates::Playing: {
             auto dir(keyMapping->getDirectionFromKey(key));
             if (dir.isValid())
             {
@@ -145,14 +146,15 @@ void GameScene::onCreated()
 
     {
         auto game_shared_data_view = dataWrapper<shdata::SharedDataView>();
-        auto &game_shared_data = game_shared_data_view->dataAs<GameSharedData>();
+        auto& game_shared_data =
+            game_shared_data_view->dataAs<GameSharedData>();
 
         start_level = game_shared_data.startLevel;
-        game_mode = game_shared_data.gameMode;
+        game_mode   = game_shared_data.gameMode;
     }
 
-    level_properties_->configure(
-        start_level, game_mode, scene_timer_component_);
+    level_properties_->configure(start_level, game_mode,
+                                 scene_timer_component_);
 
     m_boardGroup->configure(level_properties_);
 
@@ -162,9 +164,11 @@ void GameScene::onCreated()
 
     m_nextTokenTimer = scene_timer_component_->addTimer(
         time::TimerType::Continuous,
-        time::TimePoint_as_miliseconds(level_properties_->millisBetweenTokens()),
+        time::TimePoint_as_miliseconds(
+            level_properties_->millisBetweenTokens()),
         [this](time::TimePoint realEllapsed) {
-            DisplayLog::info("Elapsed between tokens: ", realEllapsed.milliseconds());
+            DisplayLog::info("Elapsed between tokens: ",
+                             realEllapsed.milliseconds());
             // New token
             generateNextToken();
         });
@@ -174,16 +178,22 @@ void GameScene::onCreated()
 
     // Set state control.
     {
-        m_sceneStates = addComponentOfType<std::remove_reference_t<decltype(*m_sceneStates)>>();
+        m_sceneStates = addComponentOfType<
+            std::remove_reference_t<decltype(*m_sceneStates)>>();
 
-        StatesControllerActuatorRegister<GameSceneStates> gameSceneActuatorRegister;
-        gameSceneActuatorRegister.registerStatesControllerActuator(*m_sceneStates, *this);
+        StatesControllerActuatorRegister<GameSceneStates>
+            gameSceneActuatorRegister;
+        gameSceneActuatorRegister.registerStatesControllerActuator(
+            *m_sceneStates, *this);
     }
 
-    private_->token_type_generator_ = addComponentOfType<rnd::RandomNumbersComponent>();
-    log_assert(private_->token_type_generator_ != nullptr, "Cannot create DataProviderComponent");
+    private_->token_type_generator_ =
+        addComponentOfType<rnd::RandomNumbersComponent>();
+    log_assert(private_->token_type_generator_ != nullptr,
+               "Cannot create DataProviderComponent");
     private_->token_position_generator_ = private_->token_type_generator_;
-    log_assert(private_->token_position_generator_ != nullptr, "Cannot create DataProviderComponent");
+    log_assert(private_->token_position_generator_ != nullptr,
+               "Cannot create DataProviderComponent");
 
     // Prepare the pause text.
     pause_node_ = createSceneNode<PauseSceneNode>("PauseNode");
@@ -191,12 +201,11 @@ void GameScene::onCreated()
     m_sceneStates->start(GameSceneStates::Playing);
 }
 
-void GameScene::onEnterState(const GameSceneStates &state)
+void GameScene::onEnterState(const GameSceneStates& state)
 {
     switch (state)
     {
-    case GameSceneStates::Pause:
-    {
+    case GameSceneStates::Pause: {
         scene_timer_component_->pause();
         pause_node_->enterPause();
     }
@@ -211,12 +220,11 @@ void GameScene::onEnterState(const GameSceneStates &state)
     DisplayLog::info("Entered state: ", make_str(state));
 }
 
-void GameScene::onExitState(const GameSceneStates &state)
+void GameScene::onExitState(const GameSceneStates& state)
 {
     switch (state)
     {
-    case GameSceneStates::Pause:
-    {
+    case GameSceneStates::Pause: {
         scene_timer_component_->resume();
         pause_node_->exitPause();
     }
@@ -228,7 +236,7 @@ void GameScene::onExitState(const GameSceneStates &state)
 }
 
 bool moveTowardsCenter(
-    const mtps::sptr<board::BoardModelComponent> &board_model,
+    const mtps::sptr<board::BoardModelComponent>& board_model,
     const Direction direction,
     const mtps::vector2dst position)
 {
@@ -258,32 +266,33 @@ bool moveTowardsCenter(
 
 void GameScene::generateNextToken()
 {
-    const TokenZones::TokenZone &currentTokenZone{TokenZones::tokenZones[m_nextTokenPart]};
+    const TokenZones::TokenZone& currentTokenZone{
+        TokenZones::tokenZones[m_nextTokenPart]};
 
     DisplayLog::info("NextTokenPart: ", m_nextTokenPart);
     DisplayLog::info("zone: ", currentTokenZone.zone_start);
 
     // Generate the new token type
-    const mtps::size_type newToken{private_->token_type_generator_->getUInt(NumTokens)};
+    const mtps::size_type newToken{
+        private_->token_type_generator_->getUInt(NumTokens)};
 
     // Calculate in wich tile zone offset is going to appear
-    const mtps::size_type token_displacement{private_->token_position_generator_->getUInt(currentTokenZone.size)};
+    const mtps::size_type token_displacement{
+        private_->token_position_generator_->getUInt(currentTokenZone.size)};
 
     // Prepare the position for the new token
-    const mtps::vector2dst new_position{TokenZones::displacedStartPoint(currentTokenZone, token_displacement)};
+    const mtps::vector2dst new_position{
+        TokenZones::displacedStartPoint(currentTokenZone, token_displacement)};
     lib::DisplayLog::info("New tile pos: ", new_position);
 
     // Now, we have the data for the new token generated, but first,
     /// lets start to move the row or col.
     const auto game_over = moveTowardsCenter(
-        m_boardGroup->boardModel(),
-        currentTokenZone.direction, new_position);
+        m_boardGroup->boardModel(), currentTokenZone.direction, new_position);
 
     // Set the new token
-    m_boardGroup->createNewToken(
-        static_cast<board::BoardTileData>(newToken),
-        new_position,
-        tileSize());
+    m_boardGroup->createNewToken(static_cast<board::BoardTileData>(newToken),
+                                 new_position, tileSize());
 
     // Select the next token zone.
     m_nextTokenPart = (m_nextTokenPart + 1) % NumWays;
@@ -305,19 +314,23 @@ void GameScene::launchPlayer()
 {
     lib::DisplayLog::info("Launching player");
     const Direction loopDirection{m_boardGroup->player()->currentDirection()};
-    const mtps::vector2dst loopPosition{m_boardGroup->player()->boardPosition()};
+    const mtps::vector2dst loopPosition{
+        m_boardGroup->player()->boardPosition()};
     const board::BoardTileData tokenType{m_boardGroup->player()->data.get()};
     ScoreIncrementer score_incrementer{level_properties_};
     BoardUtils::for_each_token_in_line(
         loopPosition, loopDirection, m_boardGroup->boardModel()->size(),
-        [this, tokenType, &score_incrementer](const mtps::vector2dst &loopPosition, const Direction &) {
+        [this, tokenType, &score_incrementer](
+            const mtps::vector2dst& loopPosition, const Direction&) {
             bool result{true};
             bool found{false};
             vector2df lastTokenPosition{};
 
-            if (!m_boardGroup->boardModel()->tileEmpty(loopPosition) && !TokenZones::pointInCenter(loopPosition) && result)
+            if (!m_boardGroup->boardModel()->tileEmpty(loopPosition) &&
+                !TokenZones::pointInCenter(loopPosition) && result)
             {
-                mtps::sptr<board::ITile> currentToken{m_boardGroup->boardModel()->getTile(loopPosition)};
+                mtps::sptr<board::ITile> currentToken{
+                    m_boardGroup->boardModel()->getTile(loopPosition)};
                 board::BoardTileData currentTokenType{currentToken->data.get()};
 
                 if (currentTokenType == tokenType)
@@ -341,12 +354,13 @@ void GameScene::launchPlayer()
                     // If we found a token, but it is from another color:
 
                     // Change the type of the player to this new one and
-                    // change the type of the token for the previous type of the player
+                    // change the type of the token for the previous type of the
+                    // player
                     m_boardGroup->boardModel()->swapTileData(
-                        m_boardGroup->player()->boardPosition(),
-                        loopPosition);
+                        m_boardGroup->player()->boardPosition(), loopPosition);
 
-                    DisplayLog::info("Player type changed to ", m_boardGroup->player()->data.get());
+                    DisplayLog::info("Player type changed to ",
+                                     m_boardGroup->player()->data.get());
 
                     // Exit the loop
                     result = false;
@@ -398,4 +412,4 @@ void GameScene::_debugDisplayBoard() const
         DisplayLog::info(temp);
     }
 }
-} // namespace zoper
+}  // namespace zoper

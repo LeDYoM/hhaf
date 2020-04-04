@@ -7,81 +7,97 @@ using namespace mtps;
 
 namespace lib::board
 {
-BoardModelComponent::BoardModelComponent() = default;
+BoardModelComponent::BoardModelComponent()  = default;
 BoardModelComponent::~BoardModelComponent() = default;
 
-void BoardModelComponent::initialize(const vector2dst &size, IBoardModelActuator *boardModelActuator)
+void BoardModelComponent::initialize(
+    const vector2dst& size,
+    rptr<IBoardModelActuator> board_model_actuator)
 {
     DisplayLog::info("BoardModelComponent initialize with size: ", size);
-    DisplayLog::info("IBoardModelActuator received ", boardModelActuator != nullptr);
+    DisplayLog::info("IBoardModelActuator received: ",
+                     (board_model_actuator != nullptr));
 
-    log_assert(m_actuator == nullptr, "m_actuator already contains a value");
-    std::swap(m_actuator, boardModelActuator);
-    _tiles.reserve(size.x);
-    for (auto x = 0u; x < size.x; ++x)
+    log_assert(actuator_ == nullptr, "m_actuator already contains a value");
+    std::swap(actuator_, board_model_actuator);
+
+    // Create the tiles.
+    tiles_.reserve(size.x);
+    for (auto x = 0U; x < size.x; ++x)
     {
-        _tiles.emplace_back(size.y);
+        tiles_.emplace_back(size.y);
         for (auto y = 0U; y < size.y; ++y)
         {
-            _tiles[x].emplace_back();
+            tiles_[x].emplace_back();
         }
     }
-    _tiles.shrink_to_fit();
+    tiles_.shrink_to_fit();
 }
 
-SITilePointer BoardModelComponent::getTile(const vector2dst &position) const noexcept
+SITilePointer BoardModelComponent::getTile(
+    const vector2dst& position) const noexcept
 {
     if (validCoords(position))
     {
-        return _tiles[position.x][position.y];
+        return tiles_[position.x][position.y];
     }
 
-    DisplayLog::error("Error getting tile in coordinates ", position.x, ",", position.y);
+    DisplayLog::error("Error getting tile in coordinates ", position.x, ",",
+                      position.y);
     return SITilePointer();
 }
 
-void BoardModelComponent::setTile(const vector2dst &tPosition, SITilePointer newTile)
+void BoardModelComponent::setTile(const vector2dst& tPosition,
+                                  SITilePointer newTile)
 {
     log_assert(tileEmpty(tPosition), "You can only set data in empty tiles");
 
     _setTile(tPosition, newTile);
     newTile->tileAdded(tPosition);
 
-    if (m_actuator)
+    if (actuator_)
     {
-        m_actuator->tileAdded(tPosition, newTile);
+        actuator_->tileAdded(tPosition, newTile);
     }
 }
 
-void BoardModelComponent::deleteTile(const vector2dst &position)
+bool BoardModelComponent::tileEmpty(const vector2dst& position) const noexcept
+{
+    return getTile(position) == nullptr;
+}
+
+void BoardModelComponent::deleteTile(const vector2dst& position)
 {
     log_assert(!tileEmpty(position), "You can only delete not empty tiles");
 
     SITilePointer current(getTile(position));
     current->tileRemoved(position);
 
-    if (m_actuator)
+    if (actuator_)
     {
-        m_actuator->tileRemoved(position, current);
+        actuator_->tileRemoved(position, current);
     }
-    _tiles[position.x][position.y].reset();
+    tiles_[position.x][position.y].reset();
 }
 
-void BoardModelComponent::changeTileData(const vector2dst &source, const BoardTileData &nv)
+void BoardModelComponent::changeTileData(const vector2dst& source,
+                                         const BoardTileData& nv)
 {
-    log_assert(!tileEmpty(source), "You can only change data in not empty tiles");
+    log_assert(!tileEmpty(source),
+               "You can only change data in not empty tiles");
 
     auto tile(getTile(source));
     BoardTileData ov{tile->data.get()};
 
-    if (m_actuator)
+    if (actuator_)
     {
-        m_actuator->tileChanged(source, tile, ov, nv);
+        actuator_->tileChanged(source, tile, ov, nv);
     }
     tile->tileChanged(source, ov, nv);
 }
 
-void BoardModelComponent::swapTileData(const vector2dst& lhs, const vector2dst& rhs)
+void BoardModelComponent::swapTileData(const vector2dst& lhs,
+                                       const vector2dst& rhs)
 {
     log_assert(!tileEmpty(lhs), "You can only change data in not empty tiles");
     log_assert(!tileEmpty(rhs), "You can only change data in not empty tiles");
@@ -91,7 +107,8 @@ void BoardModelComponent::swapTileData(const vector2dst& lhs, const vector2dst& 
     changeTileData(rhs, temp);
 }
 
-bool BoardModelComponent::moveTile(const vector2dst &source, const vector2dst &dest)
+bool BoardModelComponent::moveTile(const vector2dst& source,
+                                   const vector2dst& dest)
 {
     if (!tileEmpty(source))
     {
@@ -109,9 +126,9 @@ bool BoardModelComponent::moveTile(const vector2dst &source, const vector2dst &d
             _setTile(dest, sourceTile);
             _setTile(source, SITilePointer());
 
-            if (m_actuator)
+            if (actuator_)
             {
-                m_actuator->tileMoved(source, dest, sourceTile);
+                actuator_->tileMoved(source, dest, sourceTile);
             }
             sourceTile->tileMoved(source, dest);
             return true;
@@ -119,13 +136,26 @@ bool BoardModelComponent::moveTile(const vector2dst &source, const vector2dst &d
     }
     else
     {
-        DisplayLog::info("Trying to move empty tile: ", source.x, ",", source.y, " ignoring it");
+        DisplayLog::info("Trying to move empty tile: ", source.x, ",", source.y,
+                         " ignoring it");
     }
     return false;
 }
 
-void BoardModelComponent::_setTile(const vector2dst &position, SITilePointer newTile)
+bool BoardModelComponent::validCoords(
+    const vector2dst& tPosition) const noexcept
 {
-    _tiles[position.x][position.y] = newTile;
+    return tiles_.size() > tPosition.x && tiles_[0U].size() > tPosition.y;
 }
-} // namespace lib::board
+
+vector2dst BoardModelComponent::size() const noexcept
+{
+    return vector2dst{tiles_.size(), tiles_[0].size()};
+}
+
+void BoardModelComponent::_setTile(const vector2dst& position,
+                                   SITilePointer newTile)
+{
+    tiles_[position.x][position.y] = newTile;
+}
+}  // namespace lib::board
