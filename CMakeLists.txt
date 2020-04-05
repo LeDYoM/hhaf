@@ -10,10 +10,6 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-#WIP (Test)
-#set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
-#set(BUILD_SHARED_LIBS ON)
-
 # Set compiler flags and options. 
 # Here it is setting the Visual Studio warning level to 4
 if(MSVC)
