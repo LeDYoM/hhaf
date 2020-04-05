@@ -7,7 +7,7 @@
 #include <mtypes/include/rect.hpp>
 #include "itexture.hpp"
 
-namespace lib::backend
+namespace haf::backend
 {
 class IFont
 {
@@ -22,6 +22,6 @@ public:
     virtual mtps::f32 getKerning(const mtps::u32 first, const mtps::u32 second) const = 0;
     virtual ITexture *getTexture() = 0;
 };
-} // namespace lib::backend
+} // namespace haf::backend
 
 #endif

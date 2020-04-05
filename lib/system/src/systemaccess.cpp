@@ -6,7 +6,7 @@
 
 using namespace mtps;
 
-namespace lib::sys
+namespace haf::sys
 {
 SystemAccess::SystemAccess(rptr<ISystemProvider> isystem_provider)
     : isystem_provider_{std::move(isystem_provider)} {}
@@ -30,4 +30,4 @@ void SystemAccess::copySystemProvider(rptr<ISystemProvider> rhs)
     isystem_provider_ = std::move(rhs);
 }
 
-} // namespace lib::scene
+} // namespace haf::scene

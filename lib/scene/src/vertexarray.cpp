@@ -2,7 +2,7 @@
 
 using namespace mtps;
 
-namespace lib::scene
+namespace haf::scene
 {
 void VertexArray::move(const vector2df& offset) noexcept
 {
@@ -21,4 +21,4 @@ void VertexArray::moveY(const f32 yOffset) noexcept
     for (auto& v : m_vertices)
         v.position.y += yOffset;
 }
-}  // namespace lib::scene
+}  // namespace haf::scene

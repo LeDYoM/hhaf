@@ -7,7 +7,7 @@
 #include "itile.hpp"
 #include <lib/scene/include/icomponent.hpp>
 
-namespace lib::board
+namespace haf::board
 {
 class IBoardModelActuator;
 
@@ -38,6 +38,6 @@ private:
     mtps::rptr<IBoardModelActuator> actuator_{nullptr};
     mtps::vector<mtps::vector<SITilePointer>> tiles_;
 };
-}  // namespace lib::board
+}  // namespace haf::board
 
 #endif

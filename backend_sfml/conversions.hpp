@@ -7,7 +7,7 @@
 #include <SFML/Window.hpp>
 #include <SFML/System/String.hpp>
 
-namespace lib::backend::sfmlb
+namespace haf::backend::sfmlb
 {
 template <typename T>
 constexpr const sf::Rect<T> to_sf_type(const mtps::Rect<T> &rect) noexcept { return sf::Rect<T>{rect.left, rect.top, rect.width, rect.height}; }
@@ -87,4 +87,4 @@ inline const sf::RenderStates to_sf_type(
                             to_sf_type(texture),
                             to_sf_type(shader));
 }
-} // namespace lib::backend::sfmlb
+} // namespace haf::backend::sfmlb

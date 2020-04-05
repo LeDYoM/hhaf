@@ -10,9 +10,9 @@
 namespace zoper
 {
 using namespace mtps;
-using namespace lib;
-using namespace lib::scene;
-using namespace lib::time;
+using namespace haf;
+using namespace haf::scene;
+using namespace haf::time;
 
 Player::Player(rptr<SceneNode> parent, str name)
     : BaseClass{std::move(parent), std::move(name)},

@@ -7,7 +7,7 @@
 #include <mtypes/include/vector2d.hpp>
 #include <mtypes/include/properties.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
 class Transformable
 {
@@ -51,6 +51,6 @@ private:
     Transform m_transform;
     Transform m_globalTransform;
 };
-} // namespace lib::scene
+} // namespace haf::scene
 
 #endif

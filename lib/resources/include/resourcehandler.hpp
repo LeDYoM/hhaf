@@ -7,12 +7,12 @@
 #include <lib/system/include/idatawrapper.hpp>
 #include <lib/resources/include/iresourcehandler.hpp>
 
-namespace lib
+namespace haf
 {
     class IResourceLoader;
 }
 
-namespace lib::scene
+namespace haf::scene
 {
 /// Component to provide access to resources.
 class ResourceHandler final : public sys::IDataWrapper, public IResourceHandler
@@ -28,6 +28,6 @@ public:
 private:
     mtps::rptr<IResourceHandler> handler_;
 };
-} // namespace lib::scene
+} // namespace haf::scene
 
 #endif

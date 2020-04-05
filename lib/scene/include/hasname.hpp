@@ -5,7 +5,7 @@
 
 #include <mtypes/include/str.hpp>
 
-namespace lib::sys
+namespace haf::sys
 {
     class HasName
     {

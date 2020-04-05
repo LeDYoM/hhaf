@@ -14,7 +14,7 @@
 
 using namespace mtps;
 
-namespace lib::sys
+namespace haf::sys
 {
 #define DEFINE_GETSYSTEM(SystemType, callFunction)  \
 template <> \

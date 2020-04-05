@@ -1,11 +1,11 @@
 #include <backend/include/backend_creator.hpp>
 
-lib::backend::BackendFactory* createBackendFactory()
+haf::backend::BackendFactory* createBackendFactory()
 {
-    return new lib::backend::BackendFactory();
+    return new haf::backend::BackendFactory();
 }
 
-void destroyBackendFactory(lib::backend::BackendFactory*b_factory)
+void destroyBackendFactory(haf::backend::BackendFactory*b_factory)
 {
     delete b_factory;
 }

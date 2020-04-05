@@ -15,7 +15,7 @@
 #include <lib/system/include/datawrappercreator.hpp>
 #include <lib/system/include/systemaccess.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
 class Renderizable;
 class IComponent;
@@ -64,6 +64,6 @@ public:
 };
 
 using SceneNodeSPtr = mtps::sptr<SceneNode>;
-} // namespace lib::scene
+} // namespace haf::scene
 
 #endif

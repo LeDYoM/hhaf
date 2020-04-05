@@ -18,11 +18,11 @@ constexpr bool do_logs{false};
 template <typename... Args>
 constexpr void log_snt(Args &&... args) noexcept
 {
-    lib::DisplayLog::info_if<do_logs>(std::forward<Args>(args)...);
+    haf::DisplayLog::info_if<do_logs>(std::forward<Args>(args)...);
 }
 } // namespace
 
-namespace lib::scene::nodes
+namespace haf::scene::nodes
 {
 SceneNodeText::SceneNodeText(SceneNode *const parent, const str&name)
     : SceneNode{parent, name} {}
@@ -234,4 +234,4 @@ void SceneNodeText::updateAlignmentY(const f32 textSizeY)
     position.set(vector2df{position().x, newPosY});
 }
 
-} // namespace lib::scene::nodes
+} // namespace haf::scene::nodes

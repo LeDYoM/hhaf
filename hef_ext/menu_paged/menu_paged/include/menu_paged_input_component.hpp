@@ -7,7 +7,7 @@
 #include <mtypes/include/rect.hpp>
 #include <lib/input/include/inputcomponent.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
 
 class MenuPageInputComponent : public input::InputComponent

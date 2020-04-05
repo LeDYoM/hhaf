@@ -3,7 +3,7 @@
 
 #include <lib/include/liblog.hpp>
 
-using namespace lib;
+using namespace haf;
 using namespace mtps;
 
 namespace zoper

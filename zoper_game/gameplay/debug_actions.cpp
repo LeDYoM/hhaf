@@ -10,8 +10,8 @@ using namespace mtps;
 
 namespace zoper
 {
-using namespace lib::scene;
-using namespace lib::input;
+using namespace haf::scene;
+using namespace haf::input;
 
 void DebugActions::onKeyPressed(const Key &key)
 {

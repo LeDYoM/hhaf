@@ -6,13 +6,13 @@
 #include <mtypes/include/types.hpp>
 #include <lib/system/include/idatawrapper.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
 class SceneControl : public sys::IDataWrapper
 {
 public:
     void switchToNextScene();
 };
-} // namespace lib::scene
+} // namespace haf::scene
 
 #endif

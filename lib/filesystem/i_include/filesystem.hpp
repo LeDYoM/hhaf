@@ -10,7 +10,7 @@
 
 #include <lib/system/include/appservice.hpp>
 
-namespace lib::sys
+namespace haf::sys
 {
 class FileSystem final : public AppService
 {
@@ -48,6 +48,6 @@ private:
     class FileSystemPrivate;
     mtps::uptr<FileSystemPrivate> priv_;
 };
-} // namespace lib::sys
+} // namespace haf::sys
 
 #endif

@@ -8,7 +8,7 @@
 #include <lib/scene/include/icomponent.hpp>
 #include <lib/scene/include/componentcontainer.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
 class SceneNodesGroup
 {
@@ -26,6 +26,6 @@ private:
     mtps::vector<mtps::sptr<SceneNode>> m_groups;
 };
 
-}  // namespace lib::scene
+}  // namespace haf::scene
 
 #endif

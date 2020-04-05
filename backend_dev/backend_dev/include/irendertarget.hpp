@@ -12,7 +12,7 @@
 #include "itexture.hpp"
 #include "ishader.hpp"
 
-namespace lib::backend
+namespace haf::backend
 {
 class IRenderTarget
 {
@@ -28,6 +28,6 @@ public:
 
     virtual void clear() = 0;
 };
-} // namespace lib::backend
+} // namespace haf::backend
 
 #endif

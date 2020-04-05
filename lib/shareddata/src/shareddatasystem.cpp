@@ -4,7 +4,7 @@
 
 using namespace mtps;
 
-namespace lib::sys
+namespace haf::sys
 {
 
 SharedDataSystem::SharedDataSystem(sys::SystemProvider& system_provider) noexcept
@@ -51,4 +51,4 @@ bool SharedDataSystem::makeEmpty()
     return false;
 }
 
-} // namespace lib::sys
+} // namespace haf::sys

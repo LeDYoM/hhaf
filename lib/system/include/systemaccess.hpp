@@ -5,7 +5,7 @@
 
 #include <mtypes/include/types.hpp>
 
-namespace lib::sys
+namespace haf::sys
 {
 class ISystemProvider;
 
@@ -22,6 +22,6 @@ public:
 private:
     mtps::rptr<ISystemProvider> isystem_provider_;
 };
-} // namespace lib::sys
+} // namespace haf::sys
 
 #endif

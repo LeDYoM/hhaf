@@ -22,11 +22,11 @@ class LevelProperties;
 class Token : public GameBaseTile
 {
 public:
-    Token(mtps::rptr<lib::scene::SceneNode> parent, mtps::str name);
+    Token(mtps::rptr<haf::scene::SceneNode> parent, mtps::str name);
     ~Token() override;
 
     void configure(mtps::sptr<LevelProperties> level_properties,
-                   lib::board::BoardTileData data,
+                   haf::board::BoardTileData data,
                    const mtps::Rectf32 &box,
                    const mtps::vector2df &board2SceneFactor);
 
@@ -35,15 +35,15 @@ public:
     void tileAdded(const mtps::vector2dst &position) override;
     void tileRemoved(const mtps::vector2dst & /* position */) override;
     void tileChanged(const mtps::vector2dst & /*position */,
-                     const lib::board::BoardTileData oldValue,
-                     const lib::board::BoardTileData newValue) override;
+                     const haf::board::BoardTileData oldValue,
+                     const haf::board::BoardTileData newValue) override;
     void tileMoved(const mtps::vector2dst &source,
                    const mtps::vector2dst &dest) override;
 
 private:
     static mtps::u32 m_tileCounter;
     mtps::vector2df board2SceneFactor_;
-    mtps::sptr<lib::scene::AnimationComponent> animation_component_;
+    mtps::sptr<haf::scene::AnimationComponent> animation_component_;
     mtps::sptr<LevelProperties> level_properties_;
 };
 } // namespace zoper

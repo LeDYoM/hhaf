@@ -5,7 +5,7 @@
 
 #include <mtypes/include/types.hpp>
 
-namespace lib::sys
+namespace haf::sys
 {
 template <typename T>
 class Attachable
@@ -56,6 +56,6 @@ public:
     mtps::rptr<T> attachedNode_;
 };
 
-} // namespace lib::sys
+} // namespace haf::sys
 
 #endif

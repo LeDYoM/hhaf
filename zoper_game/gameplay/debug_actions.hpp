@@ -12,13 +12,13 @@ namespace zoper
 {
 class GameScene;
 
-class DebugActions : public lib::input::VirtualInputComponent
+class DebugActions : public haf::input::VirtualInputComponent
 {
 private:
-    using BaseClass = lib::scene::IComponent;
+    using BaseClass = haf::scene::IComponent;
 
-    void onKeyPressed(const lib::input::Key& key) override;
-    void onKeyReleased(const lib::input::Key& key) override;
+    void onKeyPressed(const haf::input::Key& key) override;
+    void onKeyReleased(const haf::input::Key& key) override;
 
     mtps::rptr<GameScene> const gameScene();
 };

@@ -9,7 +9,7 @@
 #include <backend_dev/include/iresourcefactories.hpp>
 #include "shader.hpp"
 
-namespace lib::backend::sfmlb
+namespace haf::backend::sfmlb
 {
     class ShaderFactory : public IShaderFactory
     {

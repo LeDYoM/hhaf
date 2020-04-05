@@ -8,9 +8,9 @@ using namespace mtps;
 
 namespace zoper
 {
-using namespace lib;
-using namespace lib::scene;
-using namespace lib::sys;
+using namespace haf;
+using namespace haf::scene;
+using namespace haf::sys;
 
 void LevelProperties::configure(
     const size_type currentLevel,

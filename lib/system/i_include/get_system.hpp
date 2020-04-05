@@ -5,12 +5,12 @@
 
 #include <mtypes/include/types.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
 class SceneNode;
 }
 
-namespace lib::sys
+namespace haf::sys
 {
 class SystemAccess;
 
@@ -25,6 +25,6 @@ const SystemType &getSystem(mtps::rptr<const scene::SceneNode>);
 
 template <typename SystemType>
 SystemType &getSystem(mtps::rptr<scene::SceneNode>);
-} // namespace lib::sys
+} // namespace haf::sys
 
 #endif

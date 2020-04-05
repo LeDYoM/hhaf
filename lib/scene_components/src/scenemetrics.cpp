@@ -5,11 +5,11 @@
 
 using namespace mtps;
 
-namespace lib::scene
+namespace haf::scene
 {
 Rectf32 SceneMetrics::currentView() const
 {
     return sys::getSystem<SceneManager>(attachedNode()).viewRect();
 }
 
-} // namespace lib::scene
+} // namespace haf::scene

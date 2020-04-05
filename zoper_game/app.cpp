@@ -2,12 +2,12 @@
 #include "zoperprogramcontroller.hpp"
 
 
-lib::IApp *createApp()
+haf::IApp *createApp()
 {
     return new zoper::ZoperProgramController();
 }
 
-bool destroyApp(lib::IApp *app)
+bool destroyApp(haf::IApp *app)
 {
     if (app)
     {

@@ -2,7 +2,7 @@
 
 using namespace mtps;
 
-namespace lib::scene
+namespace haf::scene
 {
 RangeOption::RangeOption(size_type min, size_type max) :
     options_(static_cast<size_type>(max - min))
@@ -33,4 +33,4 @@ s32 MenuPagedOption::onSelected() const noexcept
     return on_selected_;
 }
 
-};  // namespace lib::scene
+};  // namespace haf::scene

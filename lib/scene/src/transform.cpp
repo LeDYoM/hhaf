@@ -2,7 +2,7 @@
 #include "geometry_math.hpp"
 #include <math.h>
 
-namespace lib::scene
+namespace haf::scene
 {
 const Transform Transform::Identity = Transform{};
 
@@ -140,4 +140,4 @@ Transform &Transform::scale(const VectorScalar &factors, const VectorScalar &cen
 {
     return scale(factors.x, factors.y, center.x, center.y);
 }
-} // namespace lib::scene
+} // namespace haf::scene

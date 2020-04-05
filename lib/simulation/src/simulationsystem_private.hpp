@@ -16,7 +16,7 @@
 #include <mtypes/include/object.hpp>
 #include <mtypes/include/object_utils.hpp>
 
-namespace lib::sys
+namespace haf::sys
 {
 
 struct ReplayData
@@ -82,6 +82,6 @@ struct SimulationSystem::SimulationSystemPrivate final
         current_simulable_data_buffer_iterator = current_replay_data_.data_buffer_.begin();
     }
 };
-} // namespace lib::sys
+} // namespace haf::sys
 
 #endif

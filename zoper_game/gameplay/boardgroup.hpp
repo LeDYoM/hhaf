@@ -14,7 +14,7 @@
 
 namespace zoper
 {
-using namespace lib;
+using namespace haf;
 class LevelProperties;
 class Player;
 

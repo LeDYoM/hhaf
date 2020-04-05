@@ -10,7 +10,7 @@
 
 #include "scenenode.hpp"
 
-namespace lib::scene
+namespace haf::scene
 {
 class RenderizableSceneNode : public SceneNode
 {
@@ -30,6 +30,6 @@ public:
 private:
     mtps::sptr<Renderizable> node_;
 };
-} // namespace lib::scene
+} // namespace haf::scene
 
 #endif

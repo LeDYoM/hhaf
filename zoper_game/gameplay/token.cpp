@@ -6,9 +6,9 @@
 #include "levelproperties.hpp"
 
 using namespace mtps;
-using namespace lib;
-using namespace lib::scene;
-using namespace lib::board;
+using namespace haf;
+using namespace haf::scene;
+using namespace haf::board;
 
 namespace zoper
 {

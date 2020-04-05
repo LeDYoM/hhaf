@@ -8,7 +8,7 @@
 #include <mtypes/include/rawmemory.hpp>
 #include <mtypes/include/str.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
 class BMPFont;
 
@@ -18,6 +18,6 @@ public:
     mtps::sptr<BMPFont> loadFromFile(const mtps::str &file);
     mtps::sptr<BMPFont> loadFromRawMemory(mtps::RawMemory *raw_memory);
 };
-} // namespace lib::scene
+} // namespace haf::scene
 
 #endif

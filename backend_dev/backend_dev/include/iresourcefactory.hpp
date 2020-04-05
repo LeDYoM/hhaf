@@ -6,7 +6,7 @@
 #include <mtypes/include/str.hpp>
 #include <mtypes/include/rawmemory.hpp>
 
-namespace lib::backend
+namespace haf::backend
 {
 template <typename T>
 class IResourceFactory
@@ -16,6 +16,6 @@ public:
     virtual T *loadFromRawMemory(mtps::RawMemory *) { return nullptr; }
     virtual ~IResourceFactory() {}
 };
-} // namespace lib::backend
+} // namespace haf::backend
 
 #endif

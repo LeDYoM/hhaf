@@ -11,12 +11,12 @@
 #include "ishader.hpp"
 #include "ibmpfont.hpp"
 
-namespace lib::backend
+namespace haf::backend
 {
 using ITextureFactory = IResourceFactory<ITexture>;
 using ITTFontFactory = IResourceFactory<ITTFont>;
 using IShaderFactory = IResourceFactory<IShader>;
 using IBMPFontFactory = IResourceFactory<IBMPFont>;
-} // namespace lib::backend
+} // namespace haf::backend
 
 #endif

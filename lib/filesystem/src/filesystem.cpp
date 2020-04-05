@@ -8,7 +8,7 @@
 
 using namespace mtps;
 
-namespace lib::sys
+namespace haf::sys
 {
 class FileSystem::FileSystemPrivate
 {
@@ -84,4 +84,4 @@ bool FileSystem::saveFile(const Path &file_name, const str&data)
     return (file && correct);
 }
 
-} // namespace lib::sys
+} // namespace haf::sys

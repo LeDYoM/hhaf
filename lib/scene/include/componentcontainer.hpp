@@ -11,7 +11,7 @@
 #include <typeindex>
 #include <typeinfo>
 
-namespace lib::scene
+namespace haf::scene
 {
 class SceneNode;
 class ComponentContainer : public sys::AttachableManager<IComponent>
@@ -69,6 +69,6 @@ private:
         const std::type_index& ti) const;
     mtps::LockableVector<mtps::sptr<IComponent>> m_components;
 };
-}  // namespace lib::scene
+}  // namespace haf::scene
 
 #endif

@@ -3,13 +3,13 @@
 #ifndef LIB_APP_SERVICE_INCLUDE_HPP
 #define LIB_APP_SERVICE_INCLUDE_HPP
 
-namespace lib::sys
+namespace haf::sys
 {
 class SystemProvider;
 class ISystemProvider;
 }
 
-namespace lib
+namespace haf
 {
 /**
  * @brief Class to serve as a base for all App Services.
@@ -64,6 +64,6 @@ public:
 private:
     sys::SystemProvider &system_provider_;
 };
-} // namespace lib
+} // namespace haf
 
 #endif

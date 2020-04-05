@@ -8,7 +8,7 @@
 
 #include <lib/scene/include/scene.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
 template <typename T>
 mtps::uptr<T> createScene()
@@ -58,6 +58,6 @@ private:
     struct SceneNodeFactoryPrivate;
     mtps::uptr<SceneNodeFactoryPrivate> private_;
 };
-} // namespace lib::scene
+} // namespace haf::scene
 
 #endif

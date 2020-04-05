@@ -8,7 +8,7 @@
 #include <mtypes/include/vector2d.hpp>
 #include <lib/scene/include/vertex.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
 struct RenderizableModifierContext
 {
@@ -21,6 +21,6 @@ struct RenderizableModifierContext
         return (box.rightBottom() - vertex.position) / box.rightBottom();
     }
 };
-} // namespace lib::scene
+} // namespace haf::scene
 
 #endif

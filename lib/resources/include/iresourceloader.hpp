@@ -5,7 +5,7 @@
 
 #include <mtypes/include/str.hpp>
 
-namespace lib
+namespace haf
 {
     class IResourceHandler;
 

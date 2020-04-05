@@ -6,16 +6,16 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/rect.hpp>
 
-namespace lib::backend
+namespace haf::backend
 {
 class IRenderTarget;
 }
-namespace lib::scene
+namespace haf::scene
 {
 class RenderData;
 }
 
-namespace lib::sys
+namespace haf::sys
 {
 /**
  * @brief Class to encapsulate a Render target from the render target interface.
@@ -50,6 +50,6 @@ public:
 private:
     const mtps::rptr<backend::IRenderTarget> irender_target_;
 };
-}  // namespace lib::sys
+}  // namespace haf::sys
 
 #endif

@@ -7,7 +7,7 @@
 #include <mtypes/include/properties.hpp>
 #include <lib/system/include/idatawrapper.hpp>
 
-namespace lib::win
+namespace haf::win
 {
 
 class WindowProperties : public sys::IDataWrapper
@@ -25,6 +25,6 @@ public:
     void onAttached() override;
 };
 
-} // namespace lib::win
+} // namespace haf::win
 
 #endif

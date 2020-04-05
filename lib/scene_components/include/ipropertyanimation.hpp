@@ -13,7 +13,7 @@
 #include <lib/scene_components/include/animation.hpp>
 #include <lib/scene_components/include/animabletypes.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
 
 /**
@@ -64,6 +64,6 @@ private:
     const T endValue_;
     const AT deltaValue_;
 };
-} // namespace lib::scene
+} // namespace haf::scene
 
 #endif

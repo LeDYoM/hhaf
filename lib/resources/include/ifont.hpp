@@ -9,7 +9,7 @@
 // TO be removed
 #include "itexture.hpp"
 
-namespace lib::scene
+namespace haf::scene
 {
     /// This class provides the minimum interface for a font, independent
     /// of its type

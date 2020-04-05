@@ -5,8 +5,8 @@
 #include <type_traits>
 
 using namespace mtps;
-using namespace lib;
-using namespace lib::scene;
+using namespace haf;
+using namespace haf::scene;
 
 static_assert(sizeof(Color) == sizeof(u32), "Color size is wrong");
 static_assert(std::is_trivially_copy_assignable_v<Color>, "Color is not is_trivially_copy_assignable");

@@ -6,12 +6,12 @@
 #include <mtypes/include/types.hpp>
 #include <lib/system/include/appservice.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
 class RenderData;
 }
 
-namespace lib::sys
+namespace haf::sys
 {
 class RenderTarget;
 
@@ -37,6 +37,6 @@ private:
     struct RenderSystemPrivate;
     mtps::uptr<RenderSystemPrivate> priv_;
 };
-} // namespace lib::sys
+} // namespace haf::sys
 
 #endif

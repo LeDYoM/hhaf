@@ -10,7 +10,7 @@
 #include <lib/resources/include/iresourceretriever.hpp>
 #include <lib/system/include/appservice.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
     class BMPFont;
     class IFont;
@@ -19,7 +19,7 @@ namespace lib::scene
     class IShader;
 }
 
-namespace lib::sys
+namespace haf::sys
 {
     class ResourceManager final : public AppService, 
     public IResourceHandler, public IResourceRetriever

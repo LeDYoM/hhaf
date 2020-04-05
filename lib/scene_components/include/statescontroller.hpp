@@ -11,12 +11,12 @@
 #include <lib/include/liblog.hpp>
 #include <lib/scene/include/icomponent.hpp>
 
-namespace lib
+namespace haf
 {
 using Action = mtps::function<void()>;
 }
 
-namespace lib::scene
+namespace haf::scene
 {
 template <class T>
 class StatesControllerRaw
@@ -144,6 +144,6 @@ public:
         StatesControllerRaw<T>::update();
     }
 };
-} // namespace lib::scene
+} // namespace haf::scene
 
 #endif

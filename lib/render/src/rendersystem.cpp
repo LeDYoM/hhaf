@@ -6,7 +6,7 @@
 #include <mtypes/include/types.hpp>
 
 using namespace mtps;
-namespace lib::sys
+namespace haf::sys
 {
 struct RenderSystem::RenderSystemPrivate final
 {
@@ -56,4 +56,4 @@ void RenderSystem::clearRenderQueue()
     priv_->render_data_container_.clear();
 }
 
-}  // namespace lib::sys
+}  // namespace haf::sys

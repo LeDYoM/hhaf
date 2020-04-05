@@ -11,7 +11,7 @@
 
 #include <map>
 
-namespace lib::backend::sfmlb
+namespace haf::backend::sfmlb
 {
     class Texture;
     class TTFont : public ITTFont

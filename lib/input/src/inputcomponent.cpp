@@ -5,7 +5,7 @@
 #include <lib/input/i_include/inputsystem.hpp>
 #include <lib/system/i_include/get_system.hpp>
 
-namespace lib::input
+namespace haf::input
 {
 
 InputComponent::InputComponent() = default;
@@ -28,4 +28,4 @@ void InputComponent::update()
         }
     }
 }
-} // namespace lib::input
+} // namespace haf::input

@@ -8,11 +8,11 @@
 namespace zoper
 {
 using namespace mtps;
-using namespace lib;
-using namespace lib::scene;
+using namespace haf;
+using namespace haf::scene;
 
 void createStandardBackground(
-    const rptr<lib::scene::Renderizables> renderizables)
+    const rptr<haf::scene::Renderizables> renderizables)
 {
     auto background = renderizables->createRenderizable(
         "background", FigType_t::Quad, rectFromSize(2000.0f, 2000.0f));

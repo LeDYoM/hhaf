@@ -3,7 +3,7 @@
 
 using namespace mtps;
 
-namespace lib::scene
+namespace haf::scene
 {
 void TextEditorComponent::onAttached()
 {
@@ -12,7 +12,7 @@ void TextEditorComponent::onAttached()
     m_originalText = attachedNodeAs<nodes::SceneNodeText>()->text();
     attachedNodeAs<nodes::SceneNodeText>()->text.set("");
 
-    using namespace lib::input;
+    using namespace haf::input;
 
     m_receiver.connect(InputComponent::KeyPressed, [this](Key const &key) {
         if (enabled)
@@ -64,4 +64,4 @@ void TextEditorComponent::onAttached()
         }
     });
 }
-} // namespace lib::scene
+} // namespace haf::scene

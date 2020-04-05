@@ -6,7 +6,7 @@
 #include <mtypes/include/vector2d.hpp>
 #include <lib/scene/include/color.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
 struct Vertex final
 {
@@ -23,6 +23,6 @@ struct Vertex final
 };
 
 static_assert(std::is_standard_layout_v<Vertex>, "Vertex must have the standard layout");
-} // namespace lib::scene
+} // namespace haf::scene
 
 #endif

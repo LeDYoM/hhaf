@@ -5,7 +5,7 @@
 
 using namespace mtps;
 
-namespace lib::board
+namespace haf::board
 {
 BoardModelComponent::BoardModelComponent()  = default;
 BoardModelComponent::~BoardModelComponent() = default;
@@ -158,4 +158,4 @@ void BoardModelComponent::_setTile(const vector2dst& position,
 {
     tiles_[position.x][position.y] = newTile;
 }
-}  // namespace lib::board
+}  // namespace haf::board

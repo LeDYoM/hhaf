@@ -8,7 +8,7 @@
 #include <mtypes/include/function.hpp>
 #include <mtypes/include/str.hpp>
 
-namespace lib::sys
+namespace haf::sys
 {
 struct ManagedApp
 {
@@ -38,6 +38,6 @@ public:
     ManagedApp loadApp(p_initApp init_app, p_finishApp finish_app) const;
     bool unloadApp(ManagedApp &managed_app) const;
 };
-} // namespace lib::sys
+} // namespace haf::sys
 
 #endif

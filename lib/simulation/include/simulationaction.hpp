@@ -11,7 +11,7 @@
 #include <mtypes/include/object.hpp>
 #include <mtypes/include/object_utils.hpp>
 
-namespace lib::sys
+namespace haf::sys
 {
 enum class SimulationActionType : mtps::u8
 {
@@ -58,6 +58,6 @@ inline  mtps::Object&operator<<( mtps::Object&obj, const SimulationAction &simul
 
 using SimulationActionContainer = mtps::vector<SimulationAction>;
 using CurrentSimulationActionIterator = SimulationActionContainer::const_iterator;
-} // namespace lib::sys
+} // namespace haf::sys
 
 #endif

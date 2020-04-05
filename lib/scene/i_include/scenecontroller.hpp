@@ -11,7 +11,7 @@
 #include <lib/scene/include/scene.hpp>
 #include <lib/scene/include/scenenodefactory.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
 class SceneManager;
 
@@ -86,6 +86,6 @@ private:
     mtps::sptr<Scene> current_scene_{nullptr};
     bool switch_scene_{false};
 };
-}  // namespace lib::scene
+}  // namespace haf::scene
 
 #endif

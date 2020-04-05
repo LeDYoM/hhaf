@@ -7,12 +7,12 @@
 #include <lib/system/include/appservice.hpp>
 #include <lib/window/include/window_properties.hpp>
 
-namespace lib::input
+namespace haf::input
 {
     class InputDriver;
 }
 
-namespace lib::sys
+namespace haf::sys
 {
 class RenderTarget;
 class SystemProvider;
@@ -72,6 +72,6 @@ private:
     struct WindowPrivate;
     mtps::uptr<WindowPrivate> priv_;
 };
-} // namespace lib::sys
+} // namespace haf::sys
 
 #endif

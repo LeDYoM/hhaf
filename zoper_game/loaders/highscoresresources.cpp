@@ -6,8 +6,8 @@
 
 namespace zoper
 {
-using namespace lib;
-using namespace lib::scene;
+using namespace haf;
+using namespace haf::scene;
 
 void HighScoresResources::loadResources(IResourceHandler &resourceHandler)
 {

@@ -10,7 +10,7 @@
 
 #include <mtypes/include/types.hpp>
 
-namespace lib::sys
+namespace haf::sys
 {
 /**
      * This class encapsulates a SimulationActionGroup.
@@ -65,6 +65,6 @@ public:
 private:
     SimulationActionContainer simulation_action_container_; ///< Container to store the simulatted actions.
 };
-} // namespace lib::sys
+} // namespace haf::sys
 
 #endif

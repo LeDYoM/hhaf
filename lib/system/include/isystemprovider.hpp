@@ -3,13 +3,13 @@
 #ifndef LIB_ISYSTEM_PROVIDER_INTERFACE_INCLUDE_HPP
 #define LIB_ISYSTEM_PROVIDER_INTERFACE_INCLUDE_HPP
 
-namespace lib::sys
+namespace haf::sys
 {
 class ISystemProvider
 {
 public:
     virtual ~ISystemProvider() {}
 };
-} // namespace lib::sys
+} // namespace haf::sys
 
 #endif

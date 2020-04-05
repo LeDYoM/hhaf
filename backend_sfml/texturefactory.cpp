@@ -5,7 +5,7 @@
 
 using namespace mtps;
 
-namespace lib::backend::sfmlb
+namespace haf::backend::sfmlb
 {
     ITexture *TextureFactory::loadFromFile(const str & file)
     {

@@ -8,7 +8,7 @@
 
 #include <lib/scene/include/icomponent.hpp>
 
-namespace lib::rnd
+namespace haf::rnd
 {
 /**
 * @brief This component class is intended to be used to generate
@@ -29,6 +29,6 @@ private:
     class RandomNumbersComponentPrivate;
     mtps::uptr<RandomNumbersComponentPrivate> priv_;
 };
-} // namespace lib::rnd
+} // namespace haf::rnd
 
 #endif

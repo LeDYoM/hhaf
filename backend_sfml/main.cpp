@@ -11,14 +11,14 @@
 #define EXPORT extern "C"
 #endif
 
-struct BackendManager : lib::backend::client::DefaultBackendManager
+struct BackendManager : haf::backend::client::DefaultBackendManager
 {
     void create() override
     {
-        using namespace lib;
-        using namespace lib::backend;
-        using namespace lib::backend::client;
-        using namespace lib::backend::sfmlb;
+        using namespace haf;
+        using namespace haf::backend;
+        using namespace haf::backend::client;
+        using namespace haf::backend::sfmlb;
 
         createFactoryOfFactories<DefaultFactoryOf<IWindowProviderInfo, WindowBackendInfo>>(factories);
         createFactoryOfFactories<DefaultFactoryOf<IWindow, RenderWindow>>(factories);
@@ -30,12 +30,12 @@ struct BackendManager : lib::backend::client::DefaultBackendManager
 
 BackendManager *backend_manager{nullptr};
 
-EXPORT bool init_lib(lib::backend::IBackendRegister *const ibackend_register)
+EXPORT bool init_lib(haf::backend::IBackendRegister *const ibackend_register)
 {
-    return lib::backend::client::default_init_function(&backend_manager, ibackend_register);
+    return haf::backend::client::default_init_function(&backend_manager, ibackend_register);
 }
 
-EXPORT bool finish_lib(lib::backend::IBackendRegister *const ibackend_register)
+EXPORT bool finish_lib(haf::backend::IBackendRegister *const ibackend_register)
 {
-    return lib::backend::client::default_finish_function(&backend_manager, ibackend_register);
+    return haf::backend::client::default_finish_function(&backend_manager, ibackend_register);
 }

@@ -5,7 +5,7 @@
 #include <lib/time/i_include/timesystem.hpp>
 #include <lib/system/i_include/get_system.hpp>
 
-namespace lib::time
+namespace haf::time
 {
 void Timer::restart()
 {
@@ -53,4 +53,4 @@ void Timer::onAttached()
     is_paused_ = false;
     time_paused_ = TimePoint{};
 }
-} // namespace lib::scene
+} // namespace haf::scene

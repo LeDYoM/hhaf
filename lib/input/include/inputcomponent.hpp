@@ -8,7 +8,7 @@
 #include <lib/input/include/input_component_base.hpp>
 #include <lib/input/include/key.hpp>
 
-namespace lib::input
+namespace haf::input
 {
 class InputComponent : public InputComponentBase
 {
@@ -21,6 +21,6 @@ public:
     mtps::emitter<const Key &> KeyPressed;
     mtps::emitter<const Key &> KeyReleased;
 };
-} // namespace lib::input
+} // namespace haf::input
 
 #endif

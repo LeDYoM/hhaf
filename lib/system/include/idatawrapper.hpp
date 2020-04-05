@@ -6,12 +6,12 @@
 #include <mtypes/include/types.hpp>
 #include <lib/utils/include/attachable.hpp>
 
-namespace lib::sys
+namespace haf::sys
 {
 class SystemAccess;
 }
 
-namespace lib::sys
+namespace haf::sys
 {
 
 /**
@@ -34,6 +34,6 @@ public:
 private:
     friend class DataWrapperCreator;
 };
-} // namespace lib::sys
+} // namespace haf::sys
 
 #endif

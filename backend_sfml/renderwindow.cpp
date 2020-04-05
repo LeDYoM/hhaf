@@ -7,7 +7,7 @@
 
 using namespace mtps;
 
-namespace lib::backend::sfmlb
+namespace haf::backend::sfmlb
 {
 RenderWindow::RenderWindow()
 {}
@@ -136,4 +136,4 @@ const str WindowBackendInfo::info()
         "SFML Backend: 1.0 Using SFML Version : ", SFML_VERSION_MAJOR, ".",
         SFML_VERSION_MINOR, ".", SFML_VERSION_PATCH);
 }
-}  // namespace lib::backend::sfmlb
+}  // namespace haf::backend::sfmlb

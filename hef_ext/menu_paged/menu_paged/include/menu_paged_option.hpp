@@ -7,7 +7,7 @@
 #include <mtypes/include/str.hpp>
 #include <mtypes/include/menum.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
 
 class RangeOption
@@ -71,6 +71,6 @@ mtps::sptr<MenuPagedOption> make_option(Args &&... args)
 {
     return mtps::msptr<MenuPagedOption>(std::forward<Args>(args)...);
 }
-} // namespace lib::scene
+} // namespace haf::scene
 
 #endif

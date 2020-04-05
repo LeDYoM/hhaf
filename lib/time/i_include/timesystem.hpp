@@ -7,7 +7,7 @@
 #include <lib/system/include/appservice.hpp>
 #include <lib/time/include/timepoint.hpp>
 
-namespace lib::sys
+namespace haf::sys
 {
 class TimeSystem final : public AppService
 {
@@ -27,6 +27,6 @@ private:
     struct TimeSystemPrivate;
     mtps::uptr<TimeSystemPrivate> priv_;
 };
-} // namespace lib::sys
+} // namespace haf::sys
 
 #endif

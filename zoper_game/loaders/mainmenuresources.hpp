@@ -7,7 +7,7 @@
 
 namespace zoper
 {
-class MainMenuResources : public lib::IResourceLoader
+class MainMenuResources : public haf::IResourceLoader
 {
 public:
     constexpr static char LogoId[] = "game_menu.logo";
@@ -18,7 +18,7 @@ public:
     constexpr static char TestFontId[] = "menu.testFont";
 #endif
 
-    void loadResources(lib::IResourceHandler &) override;
+    void loadResources(haf::IResourceHandler &) override;
 };
 } // namespace zoper
 

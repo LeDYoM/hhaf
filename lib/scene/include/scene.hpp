@@ -8,7 +8,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
 class SceneManager;
 class Scene : public SceneNode
@@ -20,6 +20,6 @@ private:
     mtps::rptr<SceneManager> scene_manager_;
     friend class SceneController;
 };
-} // namespace lib::scene
+} // namespace haf::scene
 
 #endif

@@ -15,11 +15,11 @@
 
 namespace zoper
 {
-using namespace lib;
+using namespace haf;
 
 using LevelType = mtps::size_type;
 
-class LevelProperties : public lib::scene::IComponent
+class LevelProperties : public haf::scene::IComponent
 {
 public:
     void configure(const mtps::size_type currentLevel,

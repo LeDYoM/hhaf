@@ -4,10 +4,10 @@
 #include <lib/scene_components/include/statescontroller.hpp>
 
 using namespace mtps;
-using namespace lib;
-using namespace lib::scene;
+using namespace haf;
+using namespace haf::scene;
 
-TEST_CASE("lib::StatesController", "[StatesController][lib][scene][component][StatesController]")
+TEST_CASE("haf::StatesController", "[StatesController][lib][scene][component][StatesController]")
 {
     constexpr u32 Start_State = 0U;
     constexpr u32 Finish_State = 1U;

@@ -2,7 +2,7 @@
 
 using namespace mtps;
 
-namespace lib::win
+namespace haf::win
 {
 
 void WindowProperties::onAttached()
@@ -22,4 +22,4 @@ u32 WindowProperties::bitsPerPixel() const
     + bits_per_blue() + bits_per_alpha());
 }
 
-} // namespace lib::win
+} // namespace haf::win

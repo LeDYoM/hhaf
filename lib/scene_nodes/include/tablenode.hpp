@@ -8,7 +8,7 @@
 #include <lib/scene/include/scenenode.hpp>
 #include <lib/include/liblog.hpp>
 
-namespace lib::scene::nodes
+namespace haf::scene::nodes
 {
 /// Class representing a SceneNode with table layout.
 /// Properties of the table can be configured like size and so on.
@@ -143,6 +143,6 @@ private:
     mtps::vector<mtps::vector_shared_pointers<T>> nodes_;
     mtps::PropertyState<mtps::vector2dst> tableSize_;
 };
-} // namespace lib::scene::nodes
+} // namespace haf::scene::nodes
 
 #endif

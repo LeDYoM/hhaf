@@ -6,7 +6,7 @@
 
 using namespace mtps;
 
-namespace lib::scene
+namespace haf::scene
 {
 class AnimationComponent::AnimationComponentPrivate
 {
@@ -33,4 +33,4 @@ void AnimationComponent::update()
         }
     });
 }
-}  // namespace lib::scene
+}  // namespace haf::scene

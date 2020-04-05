@@ -7,13 +7,13 @@
 #include <mtypes/include/rect.hpp>
 #include <lib/system/include/idatawrapper.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
 class SceneMetrics : public sys::IDataWrapper
 {
 public:
     mtps::Rectf32 currentView() const;
 };
-} // namespace lib::scene
+} // namespace haf::scene
 
 #endif

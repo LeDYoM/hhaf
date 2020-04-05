@@ -11,7 +11,7 @@
 #include <lib/scene_components/include/animation.hpp>
 #include <lib/scene_components/include/ipropertyanimation.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
 
 class AnimationComponent : public IComponent
@@ -141,6 +141,6 @@ private:
     class AnimationComponentPrivate;
     mtps::uptr<AnimationComponentPrivate> p_;
 };
-} // namespace lib::scene
+} // namespace haf::scene
 
 #endif

@@ -6,7 +6,7 @@
 #include <mtypes/include/vector2d.hpp>
 #include <mtypes/include/rect.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
 class Transform final
 {
@@ -75,6 +75,6 @@ public:
 private:
     Scalar m_matrix[16U];
 };
-} // namespace lib::scene
+} // namespace haf::scene
 
 #endif

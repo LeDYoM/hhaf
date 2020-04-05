@@ -7,7 +7,7 @@
 
 using namespace mtps;
 
-namespace lib::sys
+namespace haf::sys
 {
 using namespace time;
 
@@ -99,4 +99,4 @@ void TimeSystem::endFrame()
 {
     priv_->updateEndFrameTime();
 }
-} // namespace lib::sys
+} // namespace haf::sys

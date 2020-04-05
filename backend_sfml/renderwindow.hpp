@@ -15,7 +15,7 @@
 #include "rendertarget.hpp"
 #include "inputdriver.hpp"
 
-namespace lib::backend::sfmlb
+namespace haf::backend::sfmlb
 {
 class RenderWindow : public IWindow, public RenderTarget, public sf::Window
 {
@@ -55,6 +55,6 @@ class WindowBackendInfo : public IWindowProviderInfo
 public:
     const mtps::str info() override;
 };
-} // namespace lib::backend::sfmlb
+} // namespace haf::backend::sfmlb
 
 #endif

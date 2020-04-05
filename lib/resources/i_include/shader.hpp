@@ -6,12 +6,12 @@
 #include <mtypes/include/types.hpp>
 #include <lib/resources/include/ishader.hpp>
 
-namespace lib::backend
+namespace haf::backend
 {
 class IShader;
 }
 
-namespace lib::scene
+namespace haf::scene
 {
 class Shader final : public IShader
 {
@@ -24,6 +24,6 @@ public:
 private:
     backend::IShader *m_ShaderPrivate;
 };
-} // namespace lib::scene
+} // namespace haf::scene
 
 #endif

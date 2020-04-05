@@ -21,7 +21,7 @@ enum class GameMode :  mtps::u8
     Time = 1,
 };
 
-struct GameSharedData : public lib::shdata::IShareable
+struct GameSharedData : public haf::shdata::IShareable
 {
     // MenuScene will write these
     mtps::size_type startLevel{0U};

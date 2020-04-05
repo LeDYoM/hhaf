@@ -15,7 +15,7 @@ namespace zoper
 {
 class GameScene;
 
-using namespace lib;
+using namespace haf;
 
 class PauseSceneNode : public scene::SceneNode
 {

@@ -7,7 +7,7 @@
 #include <mtypes/include/types.hpp>
 #include <lib/scene_nodes/include/scenenodetext.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
 class TextValidator
 {
@@ -39,6 +39,6 @@ private:
     mtps::uptr<TextValidator> m_textValidator;
     mtps::str m_originalText;
 };
-} // namespace lib::scene
+} // namespace haf::scene
 
 #endif

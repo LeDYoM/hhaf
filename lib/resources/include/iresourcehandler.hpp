@@ -6,15 +6,15 @@
 #include <mtypes/include/str.hpp>
 #include <mtypes/include/types.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
 class BMPFont;
 class TTFont;
 class Texture;
 class IShader;
-} // namespace lib::scene
+} // namespace haf::scene
 
-namespace lib
+namespace haf
 {
 class IResourceHandler
 {
@@ -24,6 +24,6 @@ public:
     virtual bool loadShader(const mtps::str &rid, const mtps::str &fileName) = 0;
     virtual bool loadBMPFont(const mtps::str &rid, const mtps::str &fileName) = 0;
 };
-} // namespace lib
+} // namespace haf
 
 #endif

@@ -12,19 +12,19 @@ struct CommonData
 {
     bool exit = false;
     u32 step{ 0U };
-    sptr<lib::scene::SceneController> scene_controller = msptr<lib::scene::SceneController>();
+    sptr<haf::scene::SceneController> scene_controller = msptr<haf::scene::SceneController>();
 };
 
 CommonData common;
 
-class UniqueScene : public lib::scene::Scene
+class UniqueScene : public haf::scene::Scene
 {
 public:
     static constexpr char StaticTypeName[] = "UniqueScene";
     UniqueScene() : Scene{StaticTypeName} {}
 };
 
-class GroupScene1 : public lib::scene::Scene
+class GroupScene1 : public haf::scene::Scene
 {
 public:
     static constexpr char StaticTypeName[] = "GroupScene1";
@@ -42,7 +42,7 @@ public:
     }
 };
 
-class GroupScene2 : public lib::scene::Scene
+class GroupScene2 : public haf::scene::Scene
 {
 public:
     static constexpr char StaticTypeName[] = "GroupScene2";
@@ -62,8 +62,8 @@ public:
 
 TEST_CASE("SceneController", "[lib][SceneController]")
 {
-    using namespace lib;
-    using namespace lib::scene;
+    using namespace haf;
+    using namespace haf::scene;
 
     SECTION("Simple scene")
     {

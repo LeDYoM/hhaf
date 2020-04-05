@@ -10,8 +10,8 @@
 
 namespace zoper
 {
-using namespace lib;
-using namespace lib::scene;
+using namespace haf;
+using namespace haf::scene;
 
 class BoardSceneNode : public SceneNode
 {

@@ -3,12 +3,12 @@
 
 IControllableSystemProvider* createSystemProvider()
 {
-    using namespace lib::sys;
+    using namespace haf::sys;
     return new SystemProvider();
 }
 
 void destroySystemProvider(IControllableSystemProvider* isp)
 {
-    auto system_provider = dynamic_cast<lib::sys::SystemProvider*>(isp);
+    auto system_provider = dynamic_cast<haf::sys::SystemProvider*>(isp);
     delete system_provider;
 }

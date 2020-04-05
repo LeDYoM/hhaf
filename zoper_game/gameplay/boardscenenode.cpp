@@ -5,7 +5,7 @@ using namespace mtps;
 
 namespace zoper
 {
-using namespace lib::scene;
+using namespace haf::scene;
 
 BoardSceneNode::BoardSceneNode(
     SceneNode *parent,

@@ -2,7 +2,7 @@
 #include "isystemprovider.hpp"
 #include "systemprovider.hpp"
 
-namespace lib
+namespace haf
 {
 AppService::AppService(sys::SystemProvider &system_provider) noexcept
         : system_provider_{system_provider} {}
@@ -29,4 +29,4 @@ sys::ISystemProvider const& AppService::isystemProvider() const noexcept
     return system_provider_;
 }
 
-} // namespace lib
+} // namespace haf

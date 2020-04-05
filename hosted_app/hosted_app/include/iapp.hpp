@@ -6,12 +6,12 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
 
-namespace lib::sys
+namespace haf::sys
 {
 class ISystemProvider;
-} // namespace lib::sys
+} // namespace haf::sys
 
-namespace lib
+namespace haf
 {
 class IApp
 {
@@ -27,9 +27,9 @@ public:
     virtual mtps::u16 getPatch() const noexcept = 0;
     virtual mtps::str getName() const noexcept = 0;
 };
-} // namespace lib
+} // namespace haf
 
-using p_initApp = lib::IApp *(*)();
-using p_finishApp = bool (*)(lib::IApp *const);
+using p_initApp = haf::IApp *(*)();
+using p_finishApp = bool (*)(haf::IApp *const);
 
 #endif

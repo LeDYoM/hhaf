@@ -7,7 +7,7 @@
 
 using namespace mtps;
 
-namespace lib::scene
+namespace haf::scene
 {
 void SceneController::setSceneManager(rptr<SceneManager> scene_manager)
 {
@@ -119,4 +119,4 @@ const SceneNodeFactory& SceneController::sceneNodeFactory() const noexcept
     return scene_factory_;
 }
 
-}  // namespace lib::scene
+}  // namespace haf::scene

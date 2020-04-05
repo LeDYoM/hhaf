@@ -11,7 +11,7 @@
 #include <mtypes/include/properties.hpp>
 #include <mtypes/include/function.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
 /**
  * @brief Class representing an animation. The animation will be updated when
@@ -76,6 +76,6 @@ private:
     mtps::f32 postProcessDelta(const mtps::f32 delta);
 };
 
-} // namespace lib::scene
+} // namespace haf::scene
 
 #endif

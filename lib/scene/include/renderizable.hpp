@@ -15,7 +15,7 @@
 #include <lib/resources/include/ishader.hpp>
 #include <lib/render/include/renderdata.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
 class SceneNode;
 
@@ -72,6 +72,6 @@ private:
     mtps::vector2df normalizeInBox(const mtps::vector2df &position, const mtps::Rectf32 box, const mtps::Rectf32 &rect) const;
     void update();
 };
-} // namespace lib::scene
+} // namespace haf::scene
 
 #endif

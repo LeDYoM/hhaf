@@ -3,7 +3,7 @@
 #include <lib/system/i_include/systemprovider.hpp>
 #include <lib/system/i_include/get_systemprovider.hpp>
 
-namespace lib::sys
+namespace haf::sys
 {
 void SystemRequests::requestExit()
 {
@@ -15,4 +15,4 @@ bool SystemRequests::exitRequested() const
     return getSystemProvider(attachedNode()->isystemProvider()).exitRequested();
 }
 
-} // namespace lib::sys
+} // namespace haf::sys

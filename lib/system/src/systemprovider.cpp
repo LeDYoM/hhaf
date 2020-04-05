@@ -24,7 +24,7 @@
 
 using namespace mtps;
 
-namespace lib::sys
+namespace haf::sys
 {
 struct SystemProvider::SystemProviderPrivate
 {
@@ -33,7 +33,7 @@ struct SystemProvider::SystemProviderPrivate
 
     IApp* app_;
     uptr<SharedDataSystem> shared_data_system_;
-    uptr<backend::BackendFactory, void (*)(lib::backend::BackendFactory*)>
+    uptr<backend::BackendFactory, void (*)(haf::backend::BackendFactory*)>
         backend_factory_{nullptr, nullptr};
     uptr<Window> window_;
     uptr<ResourceManager> resource_manager_;
@@ -59,7 +59,7 @@ void SystemProvider::init(IApp* iapp)
     log_assert(iapp != nullptr,
                "Cannot create a SystemProvider with a nullptr app");
     p_->backend_factory_ =
-        uptr<backend::BackendFactory, void (*)(lib::backend::BackendFactory*)>(
+        uptr<backend::BackendFactory, void (*)(haf::backend::BackendFactory*)>(
             createBackendFactory(), destroyBackendFactory);
     p_->app_                = iapp;
     p_->shared_data_system_ = muptr<SharedDataSystem>(*this);
@@ -244,4 +244,4 @@ bool SystemProvider::runStep()
     parentWindow().postLoop();
     return windowWants2Close;
 }
-}  // namespace lib::sys
+}  // namespace haf::sys

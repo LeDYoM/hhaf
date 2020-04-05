@@ -7,7 +7,7 @@
 #include <lib/scene/include/icomponent.hpp>
 #include <lib/input/include/key.hpp>
 
-namespace lib::input
+namespace haf::input
 {
 class InputComponentBase : public scene::IComponent
 {
@@ -22,6 +22,6 @@ public:
     char toAscii(const Key key) noexcept;
     bool isShiftPressed() const;
 };
-} // namespace lib::scene
+} // namespace haf::scene
 
 #endif

@@ -7,7 +7,7 @@
 #include <lib/resources/include/ifont.hpp>
 #include <lib/resources/include/itexture.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
     struct KearningInfo
     {

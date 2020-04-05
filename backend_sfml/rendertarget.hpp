@@ -10,12 +10,12 @@
 
 #include <backend_dev/include/irendertarget.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
 struct Vertex;
 }
 
-namespace lib::backend::sfmlb
+namespace haf::backend::sfmlb
 {
 class RenderTarget : public IRenderTarget, public sf::RenderTarget
 {
@@ -28,6 +28,6 @@ class RenderTarget : public IRenderTarget, public sf::RenderTarget
     mtps::Rectf32 viewRect() const override;
     void clear() override;
 };
-}  // namespace lib::backend::sfmlb
+}  // namespace haf::backend::sfmlb
 
 #endif

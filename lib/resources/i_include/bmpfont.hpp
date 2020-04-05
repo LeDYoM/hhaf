@@ -9,7 +9,7 @@
 #include <lib/resources/include/iresourcehandler.hpp>
 #include <lib/resources/include/itexture.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
 class BMFontPrivate;
 
@@ -35,6 +35,6 @@ private:
     BMFontPrivate *fontPrivate;
     bool ParseFont(const mtps::str &);
 };
-} // namespace lib::scene
+} // namespace haf::scene
 
 #endif

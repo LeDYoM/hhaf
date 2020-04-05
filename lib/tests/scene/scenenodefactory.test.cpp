@@ -8,8 +8,8 @@
 #include <typeinfo>
 
 using namespace mtps;
-using namespace lib;
-using namespace lib::scene;
+using namespace haf;
+using namespace haf::scene;
 
 class SceneTypeBasic : public Scene
 {
@@ -59,7 +59,7 @@ public:
     }
 };
 
-TEST_CASE("lib::scene::SceneNodeFactory", "[lib][SceneNodeFactory]")
+TEST_CASE("haf::scene::SceneNodeFactory", "[lib][SceneNodeFactory]")
 {
     SceneNodeFactory scene_node_factory;
 

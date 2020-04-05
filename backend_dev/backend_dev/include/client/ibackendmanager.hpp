@@ -5,7 +5,7 @@
 
 #include "ibackendregister.hpp"
 
-namespace lib::backend::client
+namespace haf::backend::client
 {
 struct IBackendManager
 {
@@ -15,6 +15,6 @@ struct IBackendManager
     virtual void destroy() = 0;
     virtual ~IBackendManager() {}
 };
-} // namespace lib::backend::client
+} // namespace haf::backend::client
 
 #endif

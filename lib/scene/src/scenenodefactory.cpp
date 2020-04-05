@@ -5,7 +5,7 @@
 
 using namespace mtps;
 
-namespace lib::scene
+namespace haf::scene
 {
 struct SceneNodeFactory::SceneNodeFactoryPrivate
 {
@@ -63,4 +63,4 @@ SceneNodeFactory::CreateReturnType SceneNodeFactory::create(
 
     return constructor();
 }
-}  // namespace lib::scene
+}  // namespace haf::scene

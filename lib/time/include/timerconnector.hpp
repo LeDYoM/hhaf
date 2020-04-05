@@ -11,7 +11,7 @@
 #include <lib/time/include/timer.hpp>
 #include <lib/time/include/timertype.hpp>
 
-namespace lib::time
+namespace haf::time
 {
 using timer_emitter_t = mtps::emitter<TimePoint>;
 using timer_callback_t = timer_emitter_t::emitter_callback_t;
@@ -38,6 +38,6 @@ private:
 
 using TimerConnectorSPtr = mtps::sptr<TimerConnector>;
 
-} // namespace lib::time
+} // namespace haf::time
 
 #endif

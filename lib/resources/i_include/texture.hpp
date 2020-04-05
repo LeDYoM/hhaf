@@ -7,7 +7,7 @@
 #include <mtypes/include/vector2d.hpp>
 #include <lib/resources/include/itexture.hpp>
 
-namespace lib
+namespace haf
 {
 namespace backend
 {
@@ -29,6 +29,6 @@ private:
     backend::ITexture *m_texturePrivate;
 };
 } // namespace scene
-} // namespace lib
+} // namespace haf
 
 #endif

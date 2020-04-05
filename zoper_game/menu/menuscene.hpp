@@ -10,7 +10,7 @@
 
 namespace zoper
 {
-using namespace lib;
+using namespace haf;
 class MenuScene final : public scene::Scene
 {
 public:

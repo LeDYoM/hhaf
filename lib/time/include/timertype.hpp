@@ -5,7 +5,7 @@
 
 #include <mtypes/include/types.hpp>
 
-namespace lib::time
+namespace haf::time
 {
 
 /**
@@ -26,6 +26,6 @@ enum class TimerType : mtps::u8
      */
     OneShot
 };
-} // namespace lib::time
+} // namespace haf::time
 
 #endif

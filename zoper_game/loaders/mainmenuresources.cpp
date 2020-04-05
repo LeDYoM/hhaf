@@ -4,8 +4,8 @@
 
 namespace zoper
 {
-using namespace lib;
-using namespace lib::scene;
+using namespace haf;
+using namespace haf::scene;
 
 void MainMenuResources::loadResources(IResourceHandler &resourceHandler)
 {

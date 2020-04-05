@@ -9,7 +9,7 @@
 
 #include <lib/scene/include/renderizable.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
 class SceneNode;
 
@@ -95,6 +95,6 @@ private:
     mtps::rptr<SceneNode> scene_node_;
     mtps::vector<mtps::sptr<Renderizable>> render_nodes_;
 };
-} // namespace lib::scene
+} // namespace haf::scene
 
 #endif

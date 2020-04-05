@@ -7,7 +7,7 @@
 #include <mtypes/include/vector2d.hpp>
 #include <mtypes/include/properties.hpp>
 
-namespace lib::board
+namespace haf::board
 {
 using BoardTileData = mtps::s32;
 
@@ -29,6 +29,6 @@ public:
 };
 
 using SITilePointer = mtps::sptr<ITile>;
-} // namespace lib::board
+} // namespace haf::board
 
 #endif

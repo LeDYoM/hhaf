@@ -12,7 +12,7 @@
 
 using namespace mtps;
 
-namespace lib::backend::client
+namespace haf::backend::client
 {
     template <typename T>
     void createFactoryOfFactories(mtps::vector<mtps::uptr<IAutoRegisterFactory>> &factories)
@@ -34,7 +34,7 @@ namespace lib::backend::client
             }
         }
 
-        void resetFactories(lib::backend::IBackendRegister*const backend_register) override final
+        void resetFactories(haf::backend::IBackendRegister*const backend_register) override final
         {
             for (const auto &factory : factories)
             {
@@ -86,7 +86,7 @@ namespace lib::backend::client
     }
 }
 
-using p_initLib = bool (*)(lib::backend::IBackendRegister* const);
-using p_finishLib = bool (*)(lib::backend::IBackendRegister* const);
+using p_initLib = bool (*)(haf::backend::IBackendRegister* const);
+using p_finishLib = bool (*)(haf::backend::IBackendRegister* const);
 
 #endif

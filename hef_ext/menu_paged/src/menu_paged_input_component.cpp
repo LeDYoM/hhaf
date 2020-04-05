@@ -2,13 +2,13 @@
 
 #include <lib/include/liblog.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
 void MenuPageInputComponent::onAttached()
 {
     BaseClass::onAttached();
 
-    using namespace lib::input;
+    using namespace haf::input;
 
     KeyPressed.connect([this](const input::Key &key) {
         switch (key)
@@ -34,4 +34,4 @@ void MenuPageInputComponent::onAttached()
     });
 }
 
-} // namespace lib::scene
+} // namespace haf::scene

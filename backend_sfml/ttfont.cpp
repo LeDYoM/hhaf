@@ -3,7 +3,7 @@
 
 using namespace mtps;
 
-namespace lib::backend::sfmlb
+namespace haf::backend::sfmlb
 {
 TTFont::TTFont(uptr<sf::Font> f, RawMemory raw_memory) :
     m_font{std::move(f)}, raw_memory_{std::move(raw_memory)}
@@ -59,4 +59,4 @@ ITexture* TTFont::getTexture(const u32 characterSize)
     m_fontTexturesCache[characterSize] = std::move(nTexture);
     return ret;
 }
-}  // namespace lib::backend::sfmlb
+}  // namespace haf::backend::sfmlb

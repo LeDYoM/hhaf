@@ -9,7 +9,7 @@
 #include <backend_dev/include/iresourcefactories.hpp>
 #include "texture.hpp"
 
-namespace lib::backend::sfmlb
+namespace haf::backend::sfmlb
 {
     class Texture;
     class TextureFactory : public ITextureFactory

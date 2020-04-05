@@ -4,9 +4,9 @@
 #include <lib/input/include/inputdriver.hpp>
 
 using namespace mtps;
-using namespace lib::input;
+using namespace haf::input;
 
-namespace lib::sys
+namespace haf::sys
 {
 InputSystem::InputSystem(sys::SystemProvider &system_provider)
     : AppService{system_provider}, input_driver_{}, m_keyStates{} {}
@@ -69,4 +69,4 @@ void InputSystem::simulateReleaseKey(const Key key)
 {
     input_driver_->keyReleased(key);
 }
-} // namespace lib::sys
+} // namespace haf::sys

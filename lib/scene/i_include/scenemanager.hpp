@@ -10,19 +10,19 @@
 
 #include <lib/system/include/appservice.hpp>
 
-namespace lib
+namespace haf
 {
 class IResourceRetriever;
 class IResourceHandler;
-} // namespace lib
+} // namespace haf
 
-namespace lib::scene
+namespace haf::scene
 {
 class Scene;
 class SceneController;
 }
 
-namespace lib::scene
+namespace haf::scene
 {
 class SceneManager : public AppService
 {
@@ -50,6 +50,6 @@ public:
 private:
     mtps::sptr<SceneController> scene_controller_;
 };
-} // namespace lib::scene
+} // namespace haf::scene
 
 #endif

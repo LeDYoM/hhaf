@@ -2,7 +2,7 @@
 
 using namespace mtps;
 
-namespace lib::scene
+namespace haf::scene
 {
 void DiscreteTextComponent::incrementIndex() noexcept
 {
@@ -48,4 +48,4 @@ void DiscreteTextComponent::_setText(const str&nText)
 {
     attachedNodeAs<nodes::SceneNodeText>()->text.set(nText);
 }
-} // namespace lib::scene
+} // namespace haf::scene

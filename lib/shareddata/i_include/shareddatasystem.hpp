@@ -8,7 +8,7 @@
 #include <lib/shareddata/include/ishareable.hpp>
 #include <lib/shareddata/include/ishareddatasystem.hpp>
 
-namespace lib::sys
+namespace haf::sys
 {
 
 /// SharedDataSystem is a system whose only purpose is to store
@@ -31,6 +31,6 @@ public:
 private:
     mtps::uptr<shdata::IShareable> data_;
 };
-} // namespace lib::sys
+} // namespace haf::sys
 
 #endif

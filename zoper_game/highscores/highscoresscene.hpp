@@ -15,7 +15,7 @@ namespace zoper
 {
 class HighScoreTextController;
 
-class HighScoresScene final : public lib::scene::Scene
+class HighScoresScene final : public haf::scene::Scene
 {
 public:
     HighScoresScene();
@@ -26,12 +26,12 @@ public:
     void onCreated() override;
 
 private:
-    using BaseClass = lib::scene::Scene;
+    using BaseClass = haf::scene::Scene;
 
     mtps::sptr<HighScoreTextController> m_highScoreTextController;
-    mtps::sptr<lib::scene::IFont> m_normalFont;
-    lib::scene::Color m_normalColor;
-    lib::scene::Color m_selectedColor;
+    mtps::sptr<haf::scene::IFont> m_normalFont;
+    haf::scene::Color m_normalColor;
+    haf::scene::Color m_selectedColor;
     mtps::ireceiver m_receiver;
 };
 } // namespace zoper

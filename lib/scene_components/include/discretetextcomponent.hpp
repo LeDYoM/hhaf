@@ -7,7 +7,7 @@
 #include <lib/scene_nodes/include/scenenodetext.hpp>
 #include <lib/scene/include/icomponent.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
 class DiscreteTextComponent final : public IComponent
 {
@@ -25,6 +25,6 @@ public:
 private:
     void _setText(const mtps::str&nText);
 };
-} // namespace lib::scene
+} // namespace haf::scene
 
 #endif

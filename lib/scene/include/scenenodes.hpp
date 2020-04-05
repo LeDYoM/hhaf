@@ -6,7 +6,7 @@
 #include <mtypes/include/types.hpp>
 #include <lib/scene/include/scenenodes_group.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
 class SceneNode;
 
@@ -64,6 +64,6 @@ private:
     SceneNodesGroup scene_nodes_group_;
 };
 
-}  // namespace lib::scene
+}  // namespace haf::scene
 
 #endif

@@ -11,9 +11,9 @@
 #include <lib/input/include/inputdriver.hpp>
 
 using namespace mtps;
-using namespace lib::time;
+using namespace haf::time;
 
-namespace lib::sys
+namespace haf::sys
 {
 struct Window::WindowPrivate final
 {
@@ -132,4 +132,4 @@ void Window::onDestroy()
     priv_->m_backendWindow->closeWindow();
     DisplayLog::info("Window closed");
 }
-} // namespace lib::sys
+} // namespace haf::sys

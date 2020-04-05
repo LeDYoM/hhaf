@@ -9,7 +9,7 @@
 
 namespace zoper
 {
-class HighScoreValidator : public lib::scene::TextValidator
+class HighScoreValidator : public haf::scene::TextValidator
 {
 public:
     bool canAddChar(const mtps::str &source, const char new_char) override

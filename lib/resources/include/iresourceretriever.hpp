@@ -6,7 +6,7 @@
 #include <mtypes/include/str.hpp>
 #include <mtypes/include/types.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
     class IFont;
     class ITTFont;
@@ -14,7 +14,7 @@ namespace lib::scene
     class IShader;
 }
 
-namespace lib
+namespace haf
 {
     class IResourceRetriever
     {

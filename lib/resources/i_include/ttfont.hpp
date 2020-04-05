@@ -9,7 +9,7 @@
 #include "texture.hpp"
 #include <lib/resources/include/ittfont.hpp>
 
-namespace lib
+namespace haf
 {
 namespace backend
 {
@@ -37,6 +37,6 @@ private:
     mtps::uptr<FontPrivate> m_private;
 };
 } // namespace scene
-} // namespace lib
+} // namespace haf
 
 #endif

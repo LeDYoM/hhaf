@@ -5,9 +5,9 @@
 #include <lib/scene/include/scene.hpp>
 #include <lib/scene/i_include/scenemanager.hpp>
 
-TEST_CASE("lib::scene::SceneManager", "[lib]")
+TEST_CASE("haf::scene::SceneManager", "[lib]")
 {
-    using namespace lib;
-    using namespace lib::scene;
+    using namespace haf;
+    using namespace haf::scene;
 
 }

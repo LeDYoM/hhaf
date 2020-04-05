@@ -14,10 +14,10 @@ using namespace mtps;
 
 namespace zoper
 {
-using namespace lib;
-using namespace lib::scene;
-using namespace lib::scene::nodes;
-using namespace lib::time;
+using namespace haf;
+using namespace haf::scene;
+using namespace haf::scene::nodes;
+using namespace haf::time;
 
 PauseSceneNode::PauseSceneNode(scene::SceneNode *const parent, str name)
     : SceneNode{parent, std::move(name)}

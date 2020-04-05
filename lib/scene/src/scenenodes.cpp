@@ -4,7 +4,7 @@
 
 using namespace mtps;
 
-namespace lib::scene
+namespace haf::scene
 {
 SceneNodes::SceneNodes(const rptr<SceneNode> scene_node) :
     scene_node_{scene_node}
@@ -47,4 +47,4 @@ void SceneNodes::clearSceneNodes()
 {
     scene_nodes_group_.clearSceneNodes();
 }
-}  // namespace lib::scene
+}  // namespace haf::scene

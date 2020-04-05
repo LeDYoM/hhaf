@@ -10,7 +10,7 @@
 
 using namespace mtps;
 
-namespace lib::scene
+namespace haf::scene
 {
 MenuPage::~MenuPage() = default;
 
@@ -235,4 +235,4 @@ bool MenuPage::nodeHasOptions(const size_type y) const noexcept
     return false;
 }
 
-}  // namespace lib::scene
+}  // namespace haf::scene

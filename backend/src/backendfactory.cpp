@@ -4,7 +4,7 @@
 
 #include <loader/include/loader.hpp>
 
-namespace lib::backend
+namespace haf::backend
 {
 using namespace mtps;
 
@@ -80,7 +80,7 @@ BackendFactory::~BackendFactory()
     loader::destroyLoader();
 }
 
-IWindow* lib::backend::BackendFactory::getWindow()
+IWindow* haf::backend::BackendFactory::getWindow()
 {
     return m_window;
 }
@@ -134,4 +134,4 @@ IBMPFontFactory& BackendFactory::bmpFontFactory() const
 {
     return *getBMPFontFactory();
 }
-}  // namespace lib::backend
+}  // namespace haf::backend

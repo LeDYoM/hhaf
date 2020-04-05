@@ -6,7 +6,7 @@
 #include <mtypes/include/types.hpp>
 #include <lib/utils/include/attachable.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
 class SceneNode;
 
@@ -37,6 +37,6 @@ class IComponentMixin : public IComponent
         T2::update();
     }
 };
-} // namespace lib::scene
+} // namespace haf::scene
 
 #endif

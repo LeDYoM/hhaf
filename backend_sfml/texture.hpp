@@ -10,7 +10,7 @@
 
 #include <SFML/Graphics/Texture.hpp>
 
-namespace lib::backend::sfmlb
+namespace haf::backend::sfmlb
 {
     class Texture : public ITexture
     {

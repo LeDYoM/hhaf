@@ -6,12 +6,12 @@
 #include <mtypes/include/types.hpp>
 #include <lib/input/include/key.hpp>
 
-namespace lib::backend
+namespace haf::backend
 {
     class IInputDriver;
 }
 
-namespace lib::input
+namespace haf::input
 {
 class InputDriver final
 {
@@ -31,6 +31,6 @@ public:
 private:
     mtps::rptr<backend::IInputDriver> input_driver_;
 };
-} // namespace lib::backend::sfmlb
+} // namespace haf::backend::sfmlb
 
 #endif

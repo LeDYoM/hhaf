@@ -6,7 +6,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
 
-namespace lib::backend
+namespace haf::backend
 {
 class IRenderTarget;
 class IInputDriver;
@@ -41,6 +41,6 @@ public:
     virtual const mtps::str info() = 0;
     virtual ~IWindowProviderInfo() {}
 };
-} // namespace lib::backend
+} // namespace haf::backend
 
 #endif

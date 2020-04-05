@@ -7,7 +7,7 @@
 
 using namespace mtps;
 
-namespace lib::time
+namespace haf::time
 {
 TimerConnectorSPtr TimerComponent::addTimer(TimerType timerType,
                                             TimePoint timeOut, timer_callback_t callback)
@@ -62,4 +62,4 @@ void TimerComponent::switchPause()
                      timerConnector->timer_->switchPause();
                  });
 }
-} // namespace lib::time
+} // namespace haf::time

@@ -5,7 +5,7 @@
 
 #include <mtypes/include/types.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
     class IShader
     {

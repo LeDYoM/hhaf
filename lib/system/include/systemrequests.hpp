@@ -5,7 +5,7 @@
 
 #include <lib/system/include/idatawrapper.hpp>
 
-namespace lib::sys
+namespace haf::sys
 {
 /**
  * @brief DataWrapper to perform requests to the system.
@@ -30,6 +30,6 @@ public:
      */
     bool exitRequested() const;
 };
-} // namespace lib::sys
+} // namespace haf::sys
 
 #endif

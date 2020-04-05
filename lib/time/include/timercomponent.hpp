@@ -9,7 +9,7 @@
 #include <lib/time/include/timertype.hpp>
 #include <lib/scene/include/icomponent.hpp>
 
-namespace lib::time
+namespace haf::time
 {
 /**
  * @brief Component to manage a group of @b Timer elements
@@ -39,6 +39,6 @@ public:
 private:
    mtps::LockableVector<mtps::sptr<TimerConnector>> activeTimers_;
 };
-} // namespace lib::time
+} // namespace haf::time
 
 #endif

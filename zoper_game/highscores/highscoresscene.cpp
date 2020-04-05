@@ -14,9 +14,9 @@
 
 namespace zoper
 {
-using namespace lib;
-using namespace lib::scene;
-using namespace lib::scene::nodes;
+using namespace haf;
+using namespace haf::scene;
+using namespace haf::scene::nodes;
 
 HighScoresScene::HighScoresScene() : Scene{StaticTypeName} {}
 HighScoresScene::~HighScoresScene() = default;

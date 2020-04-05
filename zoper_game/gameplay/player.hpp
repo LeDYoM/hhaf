@@ -16,7 +16,7 @@ class Player : public GameBaseTile
 public:
     using BaseClass = GameBaseTile;
 
-    Player(mtps::rptr<lib::scene::SceneNode> parent, mtps::str name);
+    Player(mtps::rptr<haf::scene::SceneNode> parent, mtps::str name);
     ~Player() override;
 
     void configure(const mtps::vector2dst &bPosition,
@@ -31,8 +31,8 @@ public:
 
     void tileAdded(const mtps::vector2dst &position) override;
     void tileChanged(const mtps::vector2dst &position,
-                     const lib::board::BoardTileData oldValue,
-                     const lib::board::BoardTileData newValue) override;
+                     const haf::board::BoardTileData oldValue,
+                     const haf::board::BoardTileData newValue) override;
 
     void tileMoved(const mtps::vector2dst &source,
                         const mtps::vector2dst &dest) override;
@@ -41,9 +41,9 @@ public:
 
 private:
     void launchAnimationBack(const mtps::vector2df &toWhere);
-    mtps::sptr<lib::scene::AnimationComponent> animation_component_;
-    lib::scene::SceneNodeSPtr rotator_;
-    lib::scene::SceneNodeSPtr scalator_;
+    mtps::sptr<haf::scene::AnimationComponent> animation_component_;
+    haf::scene::SceneNodeSPtr rotator_;
+    haf::scene::SceneNodeSPtr scalator_;
     mtps::vector2df m_board2SceneFactor;
 };
 } // namespace zoper

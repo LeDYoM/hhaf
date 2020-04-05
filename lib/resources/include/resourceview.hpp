@@ -7,7 +7,7 @@
 #include <lib/system/include/idatawrapper.hpp>
 #include <lib/resources/include/iresourceretriever.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
 /// Component to provide access to resources.
 class ResourceView final : public sys::IDataWrapper, public IResourceRetriever
@@ -21,6 +21,6 @@ public:
 private:
     mtps::rptr<IResourceRetriever> retriever_;
 };
-} // namespace lib::scene
+} // namespace haf::scene
 
 #endif

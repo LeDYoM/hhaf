@@ -3,7 +3,7 @@
 
 using namespace mtps;
 
-namespace lib::backend::sfmlb
+namespace haf::backend::sfmlb
 {
 Shader::Shader(uptr<sf::Shader> shader)
     : m_shaderPrivate{std::move(shader)} {}
@@ -20,4 +20,4 @@ void Shader::setUniform(const str &name, vector2df v)
 void Shader::setUniform(const str &, ITexture *)
 {
 }
-} // namespace lib::backend::sfmlb
+} // namespace haf::backend::sfmlb

@@ -6,7 +6,7 @@
 #include <logger/include/log.hpp>
 #include <host/include/apploader.hpp>
 
-namespace lib
+namespace haf
 {
 int libMain(int argc, char *argv[])
 {
@@ -41,4 +41,4 @@ int libMain(int argc, char *argv[])
 
     return result;
 }
-} // namespace lib
+} // namespace haf

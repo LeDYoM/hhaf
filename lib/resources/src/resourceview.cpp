@@ -6,7 +6,7 @@
 
 using namespace mtps;
 
-namespace lib::scene
+namespace haf::scene
 {
 void ResourceView::onAttached()
 {
@@ -34,4 +34,4 @@ sptr<scene::IFont> ResourceView::getBMPFont(const str&rid)
     return retriever_->getBMPFont(rid);
 }
 
-} // namespace lib::scene
+} // namespace haf::scene

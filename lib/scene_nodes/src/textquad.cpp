@@ -2,7 +2,7 @@
 
 using namespace mtps;
 
-namespace lib::scene::nodes
+namespace haf::scene::nodes
 {
 TextQuad::TextQuad(SceneNode* parent,
                    str name,
@@ -46,4 +46,4 @@ TextQuad::TextQuad(SceneNode* parent,
 }
 
 TextQuad::~TextQuad() = default;
-}  // namespace lib::scene::nodes
+}  // namespace haf::scene::nodes

@@ -6,7 +6,7 @@
 #include <lib/system/include/idatawrapper.hpp>
 #include <lib/time/include/timepoint.hpp>
 
-namespace lib::time
+namespace haf::time
 {
 /**
  * @brief @b IDataWrapper to provide access to the current time
@@ -21,6 +21,6 @@ public:
      */
     TimePoint now() const;
 };
-} // namespace lib::time
+} // namespace haf::time
 
 #endif

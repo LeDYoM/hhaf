@@ -7,7 +7,7 @@
 #include <SFML/Window/Event.hpp>
 #include <queue>
 
-namespace lib::backend::sfmlb
+namespace haf::backend::sfmlb
 {
 class InputDriver : public IInputDriver
 {
@@ -29,6 +29,6 @@ public:
     std::queue<input::Key> m_keysPressed;
     std::queue<input::Key> m_keysReleased;
 };
-} // namespace lib::backend::sfmlb
+} // namespace haf::backend::sfmlb
 
 #endif

@@ -8,7 +8,7 @@
 #include <mtypes/include/str.hpp>
 #include <lib/system/include/appservice.hpp>
 
-namespace lib::sys
+namespace haf::sys
 {
 /**
 * @brief This system is intended to be used to generate
@@ -26,6 +26,6 @@ private:
     class RandomSystemPrivate;
     mtps::uptr<RandomSystemPrivate> priv_;
 };
-} // namespace lib::sys
+} // namespace haf::sys
 
 #endif

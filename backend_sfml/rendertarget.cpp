@@ -6,7 +6,7 @@
 
 using namespace mtps;
 
-namespace lib::backend::sfmlb
+namespace haf::backend::sfmlb
 {
 static_assert(sizeof(sf::Vertex) == sizeof(scene::Vertex),
               "Incomptable version of SFML");
@@ -59,4 +59,4 @@ void RenderTarget::clear()
 {
     sf::RenderTarget::clear();
 }
-}  // namespace lib::backend::sfmlb
+}  // namespace haf::backend::sfmlb

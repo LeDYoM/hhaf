@@ -5,7 +5,7 @@
 #include <lib/input/i_include/inputsystem.hpp>
 #include <lib/system/i_include/get_system.hpp>
 
-namespace lib::input
+namespace haf::input
 {
 bool InputComponentBase::isPressed(const Key key)
 {
@@ -25,4 +25,4 @@ char InputComponentBase::toAscii(const Key key) noexcept
 {
     return static_cast<char>(KeyIndex(key) + (isShiftPressed() ? 65 : 65));
 }
-} // namespace lib::scene
+} // namespace haf::scene

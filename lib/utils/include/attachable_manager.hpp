@@ -6,7 +6,7 @@
 #include <lib/utils/include/attachable.hpp>
 #include <mtypes/include/types.hpp>
 
-namespace lib::sys
+namespace haf::sys
 {
 /**
  * @brief Utility class to define a manager/factory for a certain types of
@@ -58,6 +58,6 @@ private:
 
     const mtps::rptr<AttachableType> attachable_;
 };
-}  // namespace lib::sys
+}  // namespace haf::sys
 
 #endif

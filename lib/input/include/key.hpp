@@ -6,7 +6,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/types_ext.hpp>
 
-namespace lib::input
+namespace haf::input
 {
 enum class Key : mtps::s32
 {
@@ -124,6 +124,6 @@ constexpr mtps::s32 KeyIndex(const Key key)
 }
 
 using KeyStates = bool[KeyCount];
-} // namespace lib
+} // namespace haf
 
 #endif

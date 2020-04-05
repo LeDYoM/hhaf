@@ -6,7 +6,7 @@
 
 using namespace mtps;
 
-namespace lib::scene
+namespace haf::scene
 {
 
 BMPFont::BMPFont(const str& file_name)
@@ -424,4 +424,4 @@ vector2df BMPFont::textSize(const str& text) const
 {
     return vector2df{};
 }
-}  // namespace lib::scene
+}  // namespace haf::scene

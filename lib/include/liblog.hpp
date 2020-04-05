@@ -9,7 +9,7 @@
 
 #include <cassert>
 
-namespace lib
+namespace haf
 {
 using logClass = logger::Log<mtps::str, logger::COutCommiter>;
 using DisplayLog = logger::LogDisplayer<logClass>;
@@ -45,6 +45,6 @@ constexpr void log_assert(const bool condition, Args &&... args) noexcept
 #define CLIENT_EXECUTE_IN_DEBUG(x) x
 #endif
 
-} // namespace lib
+} // namespace haf
 
 #endif

@@ -9,7 +9,7 @@
 #include <lib/resources/include/itexture.hpp>
 #include <lib/resources/include/ifont.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
 class ITTFont
 {
@@ -24,6 +24,6 @@ public:
     virtual mtps::vector2df textSize(const mtps::str &text, const mtps::u32 characterSize) const = 0;
     virtual mtps::sptr<IFont> font(const mtps::u32 charactersize) = 0;
 };
-} // namespace lib::scene
+} // namespace haf::scene
 
 #endif

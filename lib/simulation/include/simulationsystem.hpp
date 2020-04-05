@@ -7,7 +7,7 @@
 #include <lib/system/include/appservice.hpp>
 #include <lib/simulation/include/simulationactiongroup.hpp>
 
-namespace lib::sys
+namespace haf::sys
 {
 ///
 /// This system is intended to be used to simulate behaviours
@@ -34,6 +34,6 @@ private:
     struct SimulationSystemPrivate;
     mtps::uptr<SimulationSystemPrivate> priv_;
 };
-} // namespace lib::sys
+} // namespace haf::sys
 
 #endif

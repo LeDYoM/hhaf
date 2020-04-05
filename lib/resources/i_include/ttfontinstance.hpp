@@ -8,7 +8,7 @@
 #include "texture.hpp"
 #include <lib/resources/include/ifont.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
     class TTFont;
 

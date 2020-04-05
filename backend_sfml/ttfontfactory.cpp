@@ -5,7 +5,7 @@
 
 using namespace mtps;
 
-namespace lib::backend::sfmlb
+namespace haf::backend::sfmlb
 {
     ITTFont* TTFontFactory::loadFromFile(const str & file)
     {

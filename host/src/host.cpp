@@ -17,7 +17,7 @@ constexpr static const char HostSubversion[] = "2";
 constexpr static const char HostPatch[] = "0";
 } // namespace
 
-namespace lib::sys
+namespace haf::sys
 {
 class Host::HostPrivate final
 {
@@ -168,4 +168,4 @@ void Host::exitProgram()
     log_assert(m_state == AppState::Executing, "Cannot terminate a program that is not in the executing state");
     m_state = AppState::ReadyToTerminate;
 }
-} // namespace lib::sys
+} // namespace haf::sys

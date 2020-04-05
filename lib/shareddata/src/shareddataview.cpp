@@ -6,7 +6,7 @@
 
 using namespace mtps;
 
-namespace lib::shdata
+namespace haf::shdata
 {
 void SharedData::store(uptr<IShareable> data)
 {
@@ -64,4 +64,4 @@ const IShareable &SharedDataView::data() const
     return *(data_.get());
 }
 
-} // namespace lib::shdata
+} // namespace haf::shdata

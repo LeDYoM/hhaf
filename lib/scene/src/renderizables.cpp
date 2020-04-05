@@ -6,7 +6,7 @@
 
 using namespace mtps;
 
-namespace lib::scene
+namespace haf::scene
 {
 sptr<Renderizable> Renderizables::createRenderizable(
     str name,
@@ -55,4 +55,4 @@ void Renderizables::addRenderizable(sptr<Renderizable> newElement)
 {
     render_nodes_.push_back(std::move(newElement));
 }
-}  // namespace lib::scene
+}  // namespace haf::scene

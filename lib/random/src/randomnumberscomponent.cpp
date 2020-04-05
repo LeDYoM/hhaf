@@ -6,7 +6,7 @@
 
 using namespace mtps;
 
-namespace lib::rnd
+namespace haf::rnd
 {
 class RandomNumbersComponent::RandomNumbersComponentPrivate
 {
@@ -70,4 +70,4 @@ void RandomNumbersComponent::onAttached()
             sys::getSystem<sys::RandomSystem>(attachedNode()));
     }
 }
-}  // namespace lib::rnd
+}  // namespace haf::rnd

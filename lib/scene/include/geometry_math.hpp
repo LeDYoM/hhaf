@@ -5,7 +5,7 @@
 
 #include <cmath>
 
-namespace lib::scene
+namespace haf::scene
 {
 template <typename T>
 static constexpr T PiConstant = static_cast<T>(3.14159265358979323846);
@@ -36,6 +36,6 @@ constexpr int sgn_sin(T angle)
     return sgn(std::sin(angle));
 }
 
-} // namespace lib::scene
+} // namespace haf::scene
 
 #endif

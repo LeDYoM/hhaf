@@ -6,7 +6,7 @@
 #include <mtypes/include/types.hpp>
 #include <lib/shareddata/include/ishareable.hpp>
 
-namespace lib::sys
+namespace haf::sys
 {
 
 class ISharedDataSystem
@@ -18,6 +18,6 @@ public:
     virtual bool isEmpty() const noexcept = 0;
     virtual bool makeEmpty() = 0;
 };
-} // namespace lib::sys
+} // namespace haf::sys
 
 #endif

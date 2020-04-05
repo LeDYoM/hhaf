@@ -11,7 +11,7 @@
 
 using namespace mtps;
 
-namespace lib::scene
+namespace haf::scene
 {
 namespace
 {
@@ -284,4 +284,4 @@ void Renderizable::updateGeometry()
         }
     }
 }
-}  // namespace lib::scene
+}  // namespace haf::scene

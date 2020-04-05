@@ -9,7 +9,7 @@
 
 #include <mtypes/include/dictionary.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
 
 /**
@@ -187,6 +187,6 @@ private:
         return constructors_.find(name) != std::end(constructors_);
     }
 };
-} // namespace lib::scene
+} // namespace haf::scene
 
 #endif

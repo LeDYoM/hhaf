@@ -3,13 +3,13 @@
 #include "inputdriver.hpp"
 #include "conversions.hpp"
 
-using namespace lib::input;
+using namespace haf::input;
 
-namespace lib::backend::sfmlb
+namespace haf::backend::sfmlb
 {
 void InputDriver::keyEvent(const sf::Event &e)
 {
-    const lib::input::Key k(doCast(e.key.code));
+    const haf::input::Key k(doCast(e.key.code));
     if (k != Key::Unknown)
     {
         if (e.type == sf::Event::KeyPressed)
@@ -64,4 +64,4 @@ void InputDriver::keyReleased(const Key k)
 {
     m_keysReleased.push(k);
 }
-} // namespace lib::backend::sfmlb
+} // namespace haf::backend::sfmlb

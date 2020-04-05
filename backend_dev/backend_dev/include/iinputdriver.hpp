@@ -5,7 +5,7 @@
 
 #include <lib/input/include/key.hpp>
 
-namespace lib::backend
+namespace haf::backend
 {
 /// @brief This class defines an interface to be used
 /// by any class wanting to provide keyboard data.
@@ -41,6 +41,6 @@ public:
     /// @param[in] Key indicating the element to add.
     virtual void keyReleased(const input::Key) = 0;
 };
-} // namespace lib::backend
+} // namespace haf::backend
 
 #endif

@@ -8,7 +8,7 @@
 #include <lib/scene/include/vertex.hpp>
 #include <mtypes/include/properties.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
 using BasicVertexArray = mtps::vector<Vertex>;
 
@@ -53,6 +53,6 @@ private:
     BasicVertexArray m_vertices;
     PrimitiveType m_primitiveType{PrimitiveType::Triangles};
 };
-} // namespace lib::scene
+} // namespace haf::scene
 
 #endif

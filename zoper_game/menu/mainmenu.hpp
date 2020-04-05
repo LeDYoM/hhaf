@@ -7,12 +7,12 @@
 
 namespace zoper
 {
-using namespace lib;
+using namespace haf;
 
-class MainMenu : public lib::scene::MenuPaged
+class MainMenu : public haf::scene::MenuPaged
 {
 public:
-    using BaseClass = lib::scene::MenuPaged;
+    using BaseClass = haf::scene::MenuPaged;
 
     static constexpr char ClassName[] = "MainMenu";
     MainMenu(scene::SceneNode *parent, mtps::str name);

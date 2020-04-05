@@ -5,7 +5,7 @@
 
 #include <lib/scene/include/color.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
 
 template <typename PropertyType>
@@ -20,6 +20,6 @@ struct AnimableType<Color>
     using type = ColorImp<mtps::s16>;
 };
 
-} // namespace lib::scene
+} // namespace haf::scene
 
 #endif

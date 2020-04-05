@@ -6,7 +6,7 @@
 #include <mtypes/include/types.hpp>
 #include <lib/scene_components/include/statescontroller.hpp>
 
-namespace lib
+namespace haf
 {
 template <typename T>
 class StatesControllerActuator
@@ -36,6 +36,6 @@ public:
         });
     }
 };
-} // namespace lib
+} // namespace haf
 
 #endif

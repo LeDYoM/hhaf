@@ -6,7 +6,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
 
-namespace lib::backend
+namespace haf::backend
 {
 class ITexture
 {
@@ -16,6 +16,6 @@ public:
 
     virtual mtps::vector2du32 size() const = 0;
 };
-} // namespace lib::backend
+} // namespace haf::backend
 
 #endif

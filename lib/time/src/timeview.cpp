@@ -4,7 +4,7 @@
 #include <lib/time/i_include/timesystem.hpp>
 #include <lib/system/i_include/get_system.hpp>
 
-namespace lib::time
+namespace haf::time
 {
 TimePoint TimeView::now() const
 {
@@ -12,4 +12,4 @@ TimePoint TimeView::now() const
     return sys::getSystem<sys::TimeSystem>(attachedNode()).now();
 }
 
-} // namespace lib::scene
+} // namespace haf::scene

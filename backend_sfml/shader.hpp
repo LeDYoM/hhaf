@@ -8,7 +8,7 @@
 
 #include <SFML/Graphics/Shader.hpp>
 
-namespace lib::backend::sfmlb
+namespace haf::backend::sfmlb
 {
 class Shader : public IShader
 {
@@ -24,6 +24,6 @@ public:
 private:
     mtps::uptr<sf::Shader> m_shaderPrivate;
 };
-} // namespace lib::backend::sfmlb
+} // namespace haf::backend::sfmlb
 
 #endif

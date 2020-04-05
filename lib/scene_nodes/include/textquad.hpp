@@ -6,7 +6,7 @@
 #include <lib/scene_nodes/include/tablenode.hpp>
 #include <lib/scene_nodes/include/scenenodetext.hpp>
 
-namespace lib::scene::nodes
+namespace haf::scene::nodes
 {
 class TextQuad : public TableNode<SceneNodeText>
 {
@@ -21,6 +21,6 @@ public:
         return nodeAt(std::move(index));
     }
 };
-} // namespace lib::scene::nodes
+} // namespace haf::scene::nodes
 
 #endif

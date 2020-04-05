@@ -7,8 +7,8 @@
 
 extern "C"
 {
-    lib::backend::BackendFactory* createBackendFactory();
-    void destroyBackendFactory(lib::backend::BackendFactory*);
+    haf::backend::BackendFactory* createBackendFactory();
+    void destroyBackendFactory(haf::backend::BackendFactory*);
 }
 
 #endif

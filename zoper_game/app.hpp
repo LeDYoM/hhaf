@@ -7,8 +7,8 @@
 
 extern "C"
 {
-    lib::IApp *createApp();
-    bool destroyApp(lib::IApp *app);
+    haf::IApp *createApp();
+    bool destroyApp(haf::IApp *app);
 }
 
 #endif

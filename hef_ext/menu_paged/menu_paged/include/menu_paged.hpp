@@ -10,7 +10,7 @@
 #include <lib/scene/include/color.hpp>
 #include <lib/resources/include/ifont.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
 class MenuPage;
 
@@ -65,6 +65,6 @@ private:
     mtps::vector_shared_pointers<MenuPage> menu_steps_;
     mtps::s32 status_{};
 };
-}  // namespace lib::scene
+}  // namespace haf::scene
 
 #endif

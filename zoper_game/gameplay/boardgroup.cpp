@@ -12,8 +12,8 @@
 #include <boardmanager/include/itile.hpp>
 
 using namespace mtps;
-using namespace lib::scene;
-using namespace lib::scene::nodes;
+using namespace haf::scene;
+using namespace haf::scene::nodes;
 
 namespace zoper
 {
@@ -75,7 +75,7 @@ void BoardGroup::createNewToken(
     const vector2dst &board_position,
     const vector2df &size)
 {
-    using namespace lib::board;
+    using namespace haf::board;
 
     DisplayLog::info("BoardGroup:: Adding new token at ", board_position,
                      " with value ", data);

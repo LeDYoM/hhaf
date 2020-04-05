@@ -18,7 +18,7 @@
 
 using namespace mtps;
 
-namespace lib::sys
+namespace haf::sys
 {
 SimulationSystem::SimulationSystem(SystemProvider &system_provider)
     : AppService{system_provider},
@@ -193,4 +193,4 @@ bool SimulationSystem::getNext(const str&name, size_type &pre_selected)
     DisplayLog::info("Generated data added to buffer for ", name);
     return generated;
 }
-} // namespace lib::sys
+} // namespace haf::sys

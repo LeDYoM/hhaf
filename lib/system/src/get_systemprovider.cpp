@@ -2,7 +2,7 @@
 #include "systemprovider.hpp"
 #include "isystemprovider.hpp"
 
-namespace lib::sys
+namespace haf::sys
 {
 const sys::SystemProvider& getSystemProvider(const sys::ISystemProvider& isystem_provider)
 {

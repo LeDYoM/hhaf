@@ -9,7 +9,7 @@
 
 #include "itexture.hpp"
 
-namespace lib::backend
+namespace haf::backend
 {
 class IShader
 {
@@ -20,6 +20,6 @@ public:
     virtual void setUniform(const mtps::str &name, mtps::vector2df v) = 0;
     virtual void setUniform(const mtps::str &name, ITexture *texture) = 0;
 };
-} // namespace lib::backend
+} // namespace haf::backend
 
 #endif

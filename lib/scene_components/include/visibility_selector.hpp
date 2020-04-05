@@ -8,7 +8,7 @@
 
 #include <lib/scene/include/scenenode.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
 /// Class representing a SceneNode that will have only one visible child.
 class VisibilitySelectorComponent : public IComponent
@@ -32,6 +32,6 @@ public:
     void show(mtps::size_type index, bool force = false);
 };
 
-} // namespace lib::scene::nodes
+} // namespace haf::scene::nodes
 
 #endif

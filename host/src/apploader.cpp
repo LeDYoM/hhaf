@@ -3,7 +3,7 @@
 
 using namespace mtps;
 
-namespace lib::sys
+namespace haf::sys
 {
 ManagedApp AppLoader::loadApp(const str &file) const
 {
@@ -50,4 +50,4 @@ bool AppLoader::unloadApp(ManagedApp &managed_app) const
     return result;
 }
 
-} // namespace lib::sys
+} // namespace haf::sys

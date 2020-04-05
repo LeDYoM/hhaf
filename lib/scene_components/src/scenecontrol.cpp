@@ -4,7 +4,7 @@
 #include <lib/scene/i_include/scenecontroller.hpp>
 #include <lib/system/i_include/get_system.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
 void SceneControl::switchToNextScene()
 {
@@ -13,4 +13,4 @@ void SceneControl::switchToNextScene()
         ->switchToNextScene();
 }
 
-} // namespace lib::scene
+} // namespace haf::scene

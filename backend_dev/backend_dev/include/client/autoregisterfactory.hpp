@@ -5,7 +5,7 @@
 
 #include "ibackendregister.hpp"
 
-namespace lib::backend::client
+namespace haf::backend::client
 {
     class IAutoRegisterFactory
     {

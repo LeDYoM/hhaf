@@ -3,7 +3,7 @@
 
 using namespace mtps;
 
-namespace lib::scene
+namespace haf::scene
 {
 Texture::Texture(backend::ITexture *texture)
     : m_texturePrivate{texture} {}
@@ -14,4 +14,4 @@ vector2du32 Texture::size() const
 {
     return m_texturePrivate->size();
 }
-} // namespace lib::scene
+} // namespace haf::scene

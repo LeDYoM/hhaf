@@ -7,7 +7,7 @@
 #include <lib/system/include/idatawrapper.hpp>
 #include <lib/shareddata/include/ishareable.hpp>
 
-namespace lib::shdata
+namespace haf::shdata
 {
 /// Component to provide access to data resources.
 class SharedData : public sys::IDataWrapper
@@ -59,6 +59,6 @@ private:
     mtps::uptr<IShareable> data_;
 };
 
-} // namespace lib::scene
+} // namespace haf::scene
 
 #endif

@@ -6,7 +6,7 @@
 #include <mtypes/include/str.hpp>
 #include <mtypes/include/types.hpp>
 
-namespace lib::time
+namespace haf::time
 {
 class TimePoint
 {
@@ -122,6 +122,6 @@ constexpr mtps::str&operator<<(mtps::str &os, const TimePoint &tp) noexcept
     os << tp.nanoseconds();
     return os;
 }
-} // namespace lib
+} // namespace haf
 
 #endif

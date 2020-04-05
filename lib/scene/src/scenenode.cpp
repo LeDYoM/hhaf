@@ -4,7 +4,7 @@
 
 using namespace mtps;
 
-namespace lib::scene
+namespace haf::scene
 {
 SceneNode::SceneNode(rptr<SceneNode> parent, str name) :
     sys::HasName{std::move(name)},
@@ -49,4 +49,4 @@ void SceneNode::clearAll()
     clearComponents();
 }
 
-}  // namespace lib::scene
+}  // namespace haf::scene

@@ -2,9 +2,9 @@
 
 #include <lib/include/liblog.hpp>
 
-using namespace lib;
-using namespace lib::board;
-using namespace lib::scene;
+using namespace haf;
+using namespace haf::board;
+using namespace haf::scene;
 using namespace mtps;
 
 namespace zoper
@@ -48,7 +48,7 @@ Color GameBaseTile::getColorForToken() const
         return colors::Magenta;
         break;
     default:
-        lib::DisplayLog::error("Error value for token: ", data.get(),
+        haf::DisplayLog::error("Error value for token: ", data.get(),
                                " is not supported");
         return colors::White;
         break;

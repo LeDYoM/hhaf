@@ -7,7 +7,7 @@
 #include "../iresourcefactories.hpp"
 #include "factory.hpp"
 
-namespace lib::backend
+namespace haf::backend
 {
     using IInfoFactory = IFactoryOf<IWindowProviderInfo>;
     using IWindowFactory = IFactoryOf<IWindow>;

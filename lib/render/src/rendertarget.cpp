@@ -12,9 +12,9 @@
 
 using namespace mtps;
 
-namespace lib::sys
+namespace haf::sys
 {
-RenderTarget::RenderTarget(rptr<lib::backend::IRenderTarget> renderTarget) :
+RenderTarget::RenderTarget(rptr<haf::backend::IRenderTarget> renderTarget) :
     irender_target_{std::move(renderTarget)}
 {
     log_assert(renderTarget != nullptr, "renderTarget parameter is nullptr");
@@ -75,4 +75,4 @@ void RenderTarget::setViewRect(const Rectf32& nViewRect)
 {
     irender_target_->setViewRect(nViewRect);
 }
-}  // namespace lib::sys
+}  // namespace haf::sys

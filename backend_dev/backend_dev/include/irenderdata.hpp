@@ -9,7 +9,7 @@
 #include "itexture.hpp"
 #include "ishader.hpp"
 
-namespace lib::backend
+namespace haf::backend
 {
 struct IRenderData
 {
@@ -20,6 +20,6 @@ struct IRenderData
     const ITexture *texture;
     const IShader *shader;
 };
-} // namespace lib::backend
+} // namespace haf::backend
 
 #endif

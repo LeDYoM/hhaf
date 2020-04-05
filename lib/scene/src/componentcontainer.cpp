@@ -9,7 +9,7 @@
 
 using namespace mtps;
 
-namespace lib::scene
+namespace haf::scene
 {
 namespace
 {
@@ -66,4 +66,4 @@ const sptr<IComponent> ComponentContainer::componentOfType(
 {
     return getComponentFromTypeIndex(ti, m_components.next());
 }
-}  // namespace lib::scene
+}  // namespace haf::scene

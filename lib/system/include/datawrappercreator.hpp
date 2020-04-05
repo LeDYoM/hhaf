@@ -7,12 +7,12 @@
 #include <lib/system/include/idatawrapper.hpp>
 #include <lib/utils/include/attachable_manager.hpp>
 
-namespace lib::sys
+namespace haf::sys
 {
 class SystemAccess;
 }
 
-namespace lib::sys
+namespace haf::sys
 {
 /**
  * @brief Class to create @b IDataWrapper (s) instances.
@@ -35,6 +35,6 @@ public:
         return create<T>();
     }
 };
-}  // namespace lib::sys
+}  // namespace haf::sys
 
 #endif

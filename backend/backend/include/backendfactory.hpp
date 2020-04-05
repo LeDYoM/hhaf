@@ -5,7 +5,7 @@
 
 #include <backend_dev/include/iresourcefactories.hpp>
 
-namespace lib::backend
+namespace haf::backend
 {
 class BackendRegister;
 class IWindow;
@@ -42,6 +42,6 @@ private:
     IShaderFactory *m_shaderFactory{nullptr};
     IBMPFontFactory *m_bmpFontFactory{nullptr};
 };
-} // namespace lib::backend
+} // namespace haf::backend
 
 #endif

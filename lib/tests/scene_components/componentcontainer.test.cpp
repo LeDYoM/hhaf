@@ -7,8 +7,8 @@
 #include <lib/scene/include/icomponent.hpp>
 
 using namespace mtps;
-using namespace lib;
-using namespace lib::scene;
+using namespace haf;
+using namespace haf::scene;
 
 struct TestComponent : public IComponent
 {
@@ -23,7 +23,7 @@ private:
     void update() override { ++data_; }
 };
 
-TEST_CASE("lib::scene::ComponentContainer", "[ComponentContainer][constructor]")
+TEST_CASE("haf::scene::ComponentContainer", "[ComponentContainer][constructor]")
 {
     // Create scenario for testing
     sptr<ComponentContainer> component_container_no_parent(

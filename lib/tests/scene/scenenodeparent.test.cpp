@@ -6,25 +6,25 @@
 
 using namespace mtps;
 
-class TestScene : public lib::scene::Scene
+class TestScene : public haf::scene::Scene
 {
     using Scene::Scene;
 };
 
-class UnusedScene : public lib::scene::Scene
+class UnusedScene : public haf::scene::Scene
 {
     using Scene::Scene;
 };
 
-class TestSceneNode : public lib::scene::SceneNode
+class TestSceneNode : public haf::scene::SceneNode
 {
     using SceneNode::SceneNode;
 };
 
 TEST_CASE("SceneNodeParent::SceneNodeParent", "[SceneNode][SceneNodeParent]")
 {
-    using namespace lib;
-    using namespace lib::scene;
+    using namespace haf;
+    using namespace haf::scene;
 
     auto test_scene = msptr<TestScene>("TestScene");
     auto scene_node_test(test_scene->createSceneNode<TestSceneNode>("TestSceneNode_test"));

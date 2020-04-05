@@ -5,7 +5,7 @@
 
 #include <mtypes/include/types.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
 class SceneNode;
 class Scene;
@@ -81,6 +81,6 @@ private:
     const mtps::rptr<SceneNode> parent_;
 };
 
-} // namespace lib::scene
+} // namespace haf::scene
 
 #endif

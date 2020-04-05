@@ -54,7 +54,7 @@ public:
             return DirectionData::Up;
         case DirectionData::Invalid:
         default:
-            lib::DisplayLog::error("Invalid direction. Cannot convert");
+            haf::DisplayLog::error("Invalid direction. Cannot convert");
         }
         return DirectionData::Invalid;
     }
@@ -79,7 +79,7 @@ public:
             return {0, scale};
         case DirectionData::Invalid:
         default:
-            lib::DisplayLog::error("Invalid direction. Cannot convert");
+            haf::DisplayLog::error("Invalid direction. Cannot convert");
         }
         return {};
     }
@@ -103,7 +103,7 @@ public:
             return 90.F;
         case DirectionData::Invalid:
         default:
-            lib::DisplayLog::error("Invalid direction. Cannot convert");
+            haf::DisplayLog::error("Invalid direction. Cannot convert");
         }
         return 0.f;
     }

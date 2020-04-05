@@ -7,7 +7,7 @@
 
 namespace zoper
 {
-    using namespace lib;
+    using namespace haf;
 
 	class GameOverSceneNode : public scene::SceneNode
 	{

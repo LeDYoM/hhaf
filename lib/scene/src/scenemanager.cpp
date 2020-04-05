@@ -13,7 +13,7 @@
 
 using namespace mtps;
 
-namespace lib::scene
+namespace haf::scene
 {
 SceneManager::SceneManager(sys::SystemProvider &system_provider)
     : AppService{system_provider}
@@ -68,4 +68,4 @@ IResourceHandler &SceneManager::resourcesLoader()
     return systemProvider().resourceManager();
 }
 
-} // namespace lib::scene
+} // namespace haf::scene

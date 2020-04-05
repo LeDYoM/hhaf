@@ -6,7 +6,7 @@
 
 using namespace mtps;
 
-namespace lib::scene
+namespace haf::scene
 {
 void ResourceHandler::onAttached()
 {
@@ -40,4 +40,4 @@ void ResourceHandler::loadResources(IResourceLoader& resource_loader)
     resource_loader.loadResources(*this);
 }
 
-} // namespace lib::scene
+} // namespace haf::scene

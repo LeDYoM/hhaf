@@ -6,7 +6,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
     class ITexture
     {

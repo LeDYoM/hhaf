@@ -11,7 +11,7 @@
 #include <mtypes/include/connection.hpp>
 #include <lib/scene_components/include/discretetextcomponent.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
 class MenuPaged;
 class MenuPage : public scene::nodes::TableNode<nodes::SceneNodeText>
@@ -63,6 +63,6 @@ public:
     mtps::emitter<const mtps::size_type, const mtps::s32> Selection;
 };
 
-} // namespace lib::scene
+} // namespace haf::scene
 
 #endif

@@ -29,9 +29,9 @@
 #include <lib/shareddata/include/shareddataview.hpp>
 
 using namespace mtps;
-using namespace lib;
-using namespace lib::scene;
-using namespace lib::scene::nodes;
+using namespace haf;
+using namespace haf::scene;
+using namespace haf::scene::nodes;
 
 namespace zoper
 {
@@ -82,7 +82,7 @@ void GameScene::onCreated()
 
     dataWrapper<ResourceHandler>()->loadResources(GameResources{});
 
-    using namespace lib::board;
+    using namespace haf::board;
 
     log_assert(!m_boardGroup, "m_boardGroup is not empty");
     m_boardGroup = createSceneNode<BoardGroup>("BoardGroup", TokenZones::size);
@@ -90,7 +90,7 @@ void GameScene::onCreated()
     m_nextTokenPart = 0U;
 
     auto inputComponent(addComponentOfType<input::InputComponent>());
-    inputComponent->KeyPressed.connect([this](const lib::input::Key& key) {
+    inputComponent->KeyPressed.connect([this](const haf::input::Key& key) {
         DisplayLog::info("Key pressed in GameScene");
         // TODO: Fixme
         KeyMapping keyMapping__;
@@ -283,7 +283,7 @@ void GameScene::generateNextToken()
     // Prepare the position for the new token
     const vector2dst new_position{
         TokenZones::displacedStartPoint(currentTokenZone, token_displacement)};
-    lib::DisplayLog::info("New tile pos: ", new_position);
+    haf::DisplayLog::info("New tile pos: ", new_position);
 
     // Now, we have the data for the new token generated, but first,
     /// lets start to move the row or col.
@@ -312,7 +312,7 @@ void GameScene::goGameOver()
 
 void GameScene::launchPlayer()
 {
-    lib::DisplayLog::info("Launching player");
+    haf::DisplayLog::info("Launching player");
     const Direction loopDirection{m_boardGroup->player()->currentDirection()};
     const vector2dst loopPosition{
         m_boardGroup->player()->boardPosition()};

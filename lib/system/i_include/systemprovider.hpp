@@ -7,22 +7,22 @@
 #include <lib/system/include/isystemprovider.hpp>
 #include <lib/system/include/icontrollablesystemprovider.hpp>
 
-namespace lib
+namespace haf
 {
 class IApp;
 }
 
-namespace lib::backend
+namespace haf::backend
 {
 class BackendFactory;
 }
 
-namespace lib::scene
+namespace haf::scene
 {
 class SceneManager;
 }
 
-namespace lib::sys
+namespace haf::sys
 {
 class InputSystem;
 class Window;
@@ -35,9 +35,9 @@ class SimulationSystem;
 class TimeSystem;
 class RenderSystem;
 class ISharedDataSystem;
-} // namespace lib::sys
+} // namespace haf::sys
 
-namespace lib::sys
+namespace haf::sys
 {
 class SystemProvider final
     : public ISystemProvider,
@@ -91,6 +91,6 @@ private:
     struct SystemProviderPrivate;
     mtps::uptr<SystemProviderPrivate> p_;
 };
-} // namespace lib::sys
+} // namespace haf::sys
 
 #endif

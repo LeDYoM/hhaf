@@ -19,7 +19,7 @@
 
 using namespace mtps;
 
-namespace lib::sys
+namespace haf::sys
 {
 template <typename T>
 using NamedIndex = pair<const str, T>;
@@ -161,4 +161,4 @@ bool ResourceManager::loadBMPFont(const str&rid, const str&fileName)
     }
     return bmp_font != nullptr;
 }
-} // namespace lib::sys
+} // namespace haf::sys

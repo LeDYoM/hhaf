@@ -7,12 +7,12 @@
 
 namespace zoper
 {
-class HighScoresResources : public lib::IResourceLoader
+class HighScoresResources : public haf::IResourceLoader
 {
 public:
     constexpr static char MenuFontId[] = "highScores.mainFont";
 
-    void loadResources(lib::IResourceHandler &) override;
+    void loadResources(haf::IResourceHandler &) override;
 };
 } // namespace zoper
 

@@ -7,7 +7,7 @@
 
 using namespace mtps;
 
-namespace lib::sys
+namespace haf::sys
 {
 class RandomSystem::RandomSystemPrivate
 {
@@ -48,4 +48,4 @@ size_type RandomSystem::getNext(const str& name,
 
     return filtered_next;
 }
-}  // namespace lib::sys
+}  // namespace haf::sys

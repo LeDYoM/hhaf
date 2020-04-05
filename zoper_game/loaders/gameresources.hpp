@@ -7,11 +7,11 @@
 
 namespace zoper
 {
-class GameResources : public lib::IResourceLoader
+class GameResources : public haf::IResourceLoader
 {
 public:
     static constexpr char ScoreFontId[] = "game_scene.scoreFont";
-    void loadResources(lib::IResourceHandler &) override;
+    void loadResources(haf::IResourceHandler &) override;
 };
 } // namespace zoper
 

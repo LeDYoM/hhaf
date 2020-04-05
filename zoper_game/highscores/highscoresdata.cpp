@@ -4,7 +4,7 @@
 #include <lib/include/liblog.hpp>
 
 using namespace mtps;
-using namespace lib;
+using namespace haf;
 
 namespace zoper
 {

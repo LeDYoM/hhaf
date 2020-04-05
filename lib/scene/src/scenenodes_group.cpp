@@ -5,7 +5,7 @@
 
 using namespace mtps;
 
-namespace lib::scene
+namespace haf::scene
 {
 void SceneNodesGroup::renderGroups(const bool parentTransformationChanged)
 {
@@ -29,4 +29,4 @@ void SceneNodesGroup::clearSceneNodes()
 {
     m_groups.clear();
 }
-}  // namespace lib::scene
+}  // namespace haf::scene

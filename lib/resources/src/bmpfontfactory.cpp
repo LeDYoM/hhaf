@@ -4,7 +4,7 @@
 
 using namespace mtps;
 
-namespace lib::scene
+namespace haf::scene
 {
 sptr<BMPFont> BMPFontFactory::loadFromFile(const str& file)
 {
@@ -26,4 +26,4 @@ sptr<BMPFont> BMPFontFactory::loadFromRawMemory(RawMemory*)
             return (*(m_fontCache.end() - 1)).get();
             */
 }
-}  // namespace lib::scene
+}  // namespace haf::scene

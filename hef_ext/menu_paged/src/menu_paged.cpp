@@ -7,7 +7,7 @@
 
 using namespace mtps;
 
-namespace lib::scene
+namespace haf::scene
 {
 
 MenuPaged::MenuPaged(SceneNode* parent, str name) :
@@ -128,4 +128,4 @@ void MenuPaged::terminate(const s32 status)
     MenuFinished(status_);
 }
 
-}  // namespace lib::scene
+}  // namespace haf::scene

@@ -7,8 +7,8 @@
 #include <typeindex>
 
 using namespace mtps;
-using namespace lib;
-using namespace lib::scene;
+using namespace haf;
+using namespace haf::scene;
 
 namespace
 {

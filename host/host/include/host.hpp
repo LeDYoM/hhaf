@@ -5,12 +5,12 @@
 
 #include <mtypes/include/types.hpp>
 
-namespace lib
+namespace haf
 {
 class IApp;
 }
 
-namespace lib::sys
+namespace haf::sys
 {
 class Host final
 {
@@ -33,6 +33,6 @@ private:
     AppState m_state;
     bool exit{false};
 };
-} // namespace lib::sys
+} // namespace haf::sys
 
 #endif

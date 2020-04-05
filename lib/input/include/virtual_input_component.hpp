@@ -7,7 +7,7 @@
 #include <lib/input/include/input_component_base.hpp>
 #include <lib/input/include/key.hpp>
 
-namespace lib::input
+namespace haf::input
 {
 class VirtualInputComponent : public InputComponentBase
 {
@@ -21,6 +21,6 @@ private:
     virtual void onKeyPressed(const Key &key) {}
     virtual void onKeyReleased(const Key &key) {}
 };
-} // namespace lib::input
+} // namespace haf::input
 
 #endif

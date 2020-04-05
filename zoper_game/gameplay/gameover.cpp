@@ -15,9 +15,9 @@ using namespace mtps;
 
 namespace zoper
 {
-using namespace lib;
-using namespace lib::scene;
-using namespace lib::scene::nodes;
+using namespace haf;
+using namespace haf::scene;
+using namespace haf::scene::nodes;
 
 GameOverSceneNode::GameOverSceneNode(scene::SceneNode* const parent,
                                      str name) :

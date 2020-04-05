@@ -9,7 +9,7 @@
 #include <lib/scene/include/scenenode.hpp>
 #include <lib/scene/include/color.hpp>
 
-namespace lib::scene::nodes
+namespace haf::scene::nodes
 {
 class SceneNodeText : public SceneNode
 {
@@ -47,6 +47,6 @@ private:
     void updateAlignmentX(const mtps::f32 textSizeX);
     void updateAlignmentY(const mtps::f32 textSizeY);
 };
-} // namespace lib::scene::nodes
+} // namespace haf::scene::nodes
 
 #endif

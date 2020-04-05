@@ -8,7 +8,7 @@
 
 namespace zoper
 {
-using namespace lib;
+using namespace haf;
 
 class GameHudSceneNode : public scene::SceneNode
 {

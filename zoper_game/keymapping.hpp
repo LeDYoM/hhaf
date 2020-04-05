@@ -22,21 +22,21 @@ public:
 
     void reset();
 
-    lib::input::Key getKey(const Direction direction) const noexcept;
-    Direction getDirectionFromKey(const lib::input::Key key) const noexcept;
-    lib::input::Key getLaunchKey() const noexcept;
-    bool isLaunchKey(const lib::input::Key key) const noexcept;
-    lib::input::Key getPauseKey() const noexcept;
-    bool isPauseKey(const lib::input::Key key) const noexcept;
+    haf::input::Key getKey(const Direction direction) const noexcept;
+    Direction getDirectionFromKey(const haf::input::Key key) const noexcept;
+    haf::input::Key getLaunchKey() const noexcept;
+    bool isLaunchKey(const haf::input::Key key) const noexcept;
+    haf::input::Key getPauseKey() const noexcept;
+    bool isPauseKey(const haf::input::Key key) const noexcept;
 
-    bool setKey(const mtps::u32 index, const lib::input::Key key);
+    bool setKey(const mtps::u32 index, const haf::input::Key key);
     void apply();
 
     friend const mtps::Object &operator>>(const mtps::Object &obj, KeyMapping &key_mapping);
     friend mtps::Object &operator<<(mtps::Object &obj, const KeyMapping &key_mapping);
 
 private:
-    mtps::array<lib::input::Key, KeyMapping::TotalKeys> m_keys;
+    mtps::array<haf::input::Key, KeyMapping::TotalKeys> m_keys;
 };
 
 inline const mtps::Object &operator>>(const mtps::Object &obj, KeyMapping &key_mapping)

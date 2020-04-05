@@ -6,7 +6,7 @@
 
 using namespace mtps;
 
-namespace lib::backend::sfmlb
+namespace haf::backend::sfmlb
 {
 namespace
 {
@@ -73,4 +73,4 @@ IShader* ShaderFactory::loadFromFile(const str& file)
 }
 
 ShaderFactory::~ShaderFactory() = default;
-}  // namespace lib::backend::sfmlb
+}  // namespace haf::backend::sfmlb

@@ -2,7 +2,7 @@
 
 using namespace mtps;
 
-namespace lib::scene
+namespace haf::scene
 {
 Animation::Animation(uptr<time::Timer> timer, time::TimePoint duration,
                        const AnimationDirection animation_direction,
@@ -50,4 +50,4 @@ f32 Animation::postProcessDelta(const f32 delta)
         break;
     }
 }
-} // namespace lib::scene
+} // namespace haf::scene

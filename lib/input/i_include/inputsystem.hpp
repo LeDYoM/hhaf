@@ -8,12 +8,12 @@
 
 #include <lib/system/include/appservice.hpp>
 
-namespace lib::input
+namespace haf::input
 {
 class InputDriver;
 }
 
-namespace lib::sys
+namespace haf::sys
 {
 class InputSystem final : public AppService
 {
@@ -54,6 +54,6 @@ private:
     mtps::vector<input::Key> m_pressedKeys;
     mtps::vector<input::Key> m_releasedKeys;
 };
-} // namespace lib::sys
+} // namespace haf::sys
 
 #endif

@@ -11,17 +11,17 @@
 namespace zoper
 {
 
-class GameBaseTile : public lib::board::ITile, public lib::scene::SceneNode
+class GameBaseTile : public haf::board::ITile, public haf::scene::SceneNode
 {
 public:
-    GameBaseTile(lib::scene::SceneNode *const parent, mtps::str name);
+    GameBaseTile(haf::scene::SceneNode *const parent, mtps::str name);
     ~GameBaseTile() override;
 
     void update() override;
-    lib::scene::Color getColorForToken() const;
+    haf::scene::Color getColorForToken() const;
 
 protected:
-   mtps::sptr<lib::scene::Renderizable> m_node;
+   mtps::sptr<haf::scene::Renderizable> m_node;
 };
 } // namespace zoper
 

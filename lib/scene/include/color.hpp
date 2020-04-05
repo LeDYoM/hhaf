@@ -7,7 +7,7 @@
 #include <algorithm>
 #include <limits>
 
-namespace lib::scene
+namespace haf::scene
 {
 namespace detail
 {
@@ -228,6 +228,6 @@ static constexpr const Color Cyan{Color::value_min, Color::value_max, Color::val
 static constexpr const Color Transparent{Color::value_min, Color::value_min, Color::value_min, Color::value_min};
 } // namespace colors
 
-} // namespace lib::scene
+} // namespace haf::scene
 
 #endif

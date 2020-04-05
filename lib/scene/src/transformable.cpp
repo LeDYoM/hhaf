@@ -4,7 +4,7 @@
 
 using namespace mtps;
 
-namespace lib::scene
+namespace haf::scene
 {
 Transformable::Transformable() noexcept :
     origin{},
@@ -84,4 +84,4 @@ void Transformable::updateTransform() noexcept
                    Transform::Zero,
                    Transform::One};
 }
-}  // namespace lib::scene
+}  // namespace haf::scene
