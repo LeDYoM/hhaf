@@ -1,12 +1,12 @@
-#ifndef LIB_RECT_INCLUDE_HPP__
-#define LIB_RECT_INCLUDE_HPP__
-
 #pragma once
+
+#ifndef MTPS_MTYPES_RECT_INCLUDE_HPP
+#define MTPS_MTYPES_RECT_INCLUDE_HPP
 
 #include "types.hpp"
 #include "vector2d.hpp"
 
-namespace lib
+namespace mtps
 {
     template <typename T>
     struct Rect
@@ -73,8 +73,8 @@ namespace lib
         }
 
         constexpr const vector2d<T> leftTop() const noexcept { return vector2d<T>{left, top}; }
-        constexpr const vector2d<T> size() const  noexcept { return vector2d<T>{width, height}; }
-        constexpr const T right() const  noexcept { return left + width; }
+        constexpr const vector2d<T> size() const noexcept { return vector2d<T>{width, height}; }
+        constexpr const T right() const noexcept { return left + width; }
         constexpr void setRight(const T& r) noexcept { width = r - left; }
         constexpr const T bottom() const  noexcept { return top + height; }
         constexpr void setBottom(const T& b) noexcept { height = b - top; }

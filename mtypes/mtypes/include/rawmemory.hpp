@@ -1,11 +1,11 @@
 #pragma once
 
-#ifndef LIB_MTYPES_RAWMEMORY_INCLUDE_HPP
-#define LIB_MTYPES_RAWMEMORY_INCLUDE_HPP
+#ifndef MTPS_MTYPES_RAWMEMORY_INCLUDE_HPP
+#define MTPS_MTYPES_RAWMEMORY_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 
-namespace lib
+namespace mtps
 {
 /**
      * @brief Class wrapping a unique pointer to an array of bytes.
@@ -38,6 +38,6 @@ private:
     uptr<std::byte[]> data_;
     size_type size_;
 };
-} // namespace lib
+} // namespace mtps
 
 #endif

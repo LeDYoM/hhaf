@@ -1,31 +1,28 @@
-enable_testing()
+cmake_minimum_required (VERSION 3.14)
+project(lib_utests CXX)
 
-set(UNIT_TEST_LIST
-	main
-	scene/scenecontroller
-	scene/scenenodefactory
-	scene/scenemanager
-	scene/scenenode
-	scene/components/componentcontainer
-	scene/components/statescontroller
+set(CURRENT_TARGET ${PROJECT_NAME})
+
+set(SOURCE_TESTS
+    main
+
+    scene/color
+    scene/scenecontroller
+    scene/scenenodefactory
+    scene/scenenode
+    scene/scenenodeparent
+    scene/scenemanager
+
+    scene_components/componentcontainer
+    scene_components/statescontroller
+
+    utils/object_factory
 )
 
-foreach(NAME IN LISTS UNIT_TEST_LIST)
-  list(APPEND UNIT_TEST_SOURCE_LIST ${NAME}.test.cpp)
-endforeach()
+add_test_executable(SOURCE_TESTS ${SOURCE_TESTS})
 
-set(TARGET_NAME lib_utests)
-set(CMAKE_CXX_STANDARD 17)
+target_link_libraries(${CURRENT_TARGET} PRIVATE lib)
+target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
+target_link_libraries(${CURRENT_TARGET} PRIVATE logger)
 
-add_executable(${TARGET_NAME}
-  ${UNIT_TEST_SOURCE_LIST})
-
-target_link_libraries(${TARGET_NAME} PRIVATE lib)
-target_link_libraries(${TARGET_NAME} PRIVATE mtypes)
-target_link_libraries(${TARGET_NAME} PRIVATE logger)
-
-include_directories(${TARGET_NAME} INTERFACE ${CATCH_INCLUDE_DIR})
-
-# add_test( NAME all COMMAND CTest)
-include (Catch)
-catch_discover_tests(${TARGET_NAME})
+#catch_discover_tests(${CURRENT_TARGET})

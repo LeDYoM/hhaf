@@ -6,27 +6,28 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
 #include <mtypes/include/rect.hpp>
-#include <lib/scene/vertex.hpp>
-#include <lib/scene/vertexarray.hpp>
+#include <lib/scene/include/vertex.hpp>
+#include <lib/scene/include/vertexarray.hpp>
+#include "irenderdata.hpp"
 #include "itexture.hpp"
+#include "ishader.hpp"
 
-namespace lib::backend
+namespace haf::backend
 {
-    class IRenderTarget
-    {
-    public:
+class IRenderTarget
+{
+public:
+    virtual ~IRenderTarget() {}
 
-        virtual ~IRenderTarget() {}
+    virtual void render(const IRenderData *render_data_begin, const IRenderData *render_data_end) = 0;
 
-        virtual void draw(const scene::Vertex *vertices, const u32 nVertex, const scene::PrimitiveType pType, const f32 *transform, const ITexture *texture) = 0;
+    virtual void setViewPort(const mtps::Rectf32 &nviewport) = 0;
+    virtual mtps::Rectf32 viewPort() const = 0;
+    virtual void setViewRect(const mtps::Rectf32 &nviewRect) = 0;
+    virtual mtps::Rectf32 viewRect() const = 0;
 
-        virtual void setViewPort(const Rectf32 &nviewport) = 0;
-        virtual Rectf32 viewPort() const = 0;
-        virtual void setViewRect(const Rectf32 &nviewRect) = 0;
-        virtual Rectf32 viewRect() const = 0;
-
-        virtual void clear() = 0;
-    };
-}
+    virtual void clear() = 0;
+};
+} // namespace haf::backend
 
 #endif

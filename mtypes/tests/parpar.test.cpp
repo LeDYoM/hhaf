@@ -2,10 +2,10 @@
 
 #include <mtypes/include/parpar.hpp>
 
-using namespace lib;
-using namespace lib::parpar;
+using namespace mtps;
+using namespace parpar;
 
-TEST_CASE("lib::parpar::ParameterParser", "[parpar]")
+TEST_CASE("haf::parpar::ParameterParser", "[parpar]")
 {
     const ParametersParser paramParser (create(
         {"program"}

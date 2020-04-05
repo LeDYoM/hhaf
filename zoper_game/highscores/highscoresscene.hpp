@@ -6,36 +6,34 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/connection.hpp>
 
-#include <lib/scene/scene.hpp>
-#include <lib/scene/renderizables/renderizable.hpp>
-#include <lib/resources/texture.hpp>
-#include <lib/resources/ttfont.hpp>
-
-#include <lib/include/scene/iscene.hpp>
+#include <lib/scene/include/scene.hpp>
+#include <lib/scene/include/renderizable.hpp>
+#include <lib/resources/include/itexture.hpp>
+#include <lib/resources/include/ittfont.hpp>
 
 namespace zoper
 {
-    using namespace lib;
-    class HighScoreTextController;
+class HighScoreTextController;
 
-	class HighScoresScene final : public scene::Scene
-	{
-	public:
+class HighScoresScene final : public haf::scene::Scene
+{
+public:
+    HighScoresScene();
+    ~HighScoresScene() override;
 
-		DECLARE_SCENE(HighScoresScene)
+    static constexpr char StaticTypeName[] = "HighScoresScene";
 
-		void onCreated() override;
+    void onCreated() override;
 
-	private:
-        using BaseClass = lib::scene::Scene;
+private:
+    using BaseClass = haf::scene::Scene;
 
-		sptr<scene::Renderizable> m_background;
-		sptr<HighScoreTextController> m_highScoreTextController;
-        sptr<scene::IFont> m_normalFont;
-		scene::Color m_normalColor;
-		scene::Color m_selectedColor;
-		ireceiver m_receiver;
-	};
-}
+    mtps::sptr<HighScoreTextController> m_highScoreTextController;
+    mtps::sptr<haf::scene::IFont> m_normalFont;
+    haf::scene::Color m_normalColor;
+    haf::scene::Color m_selectedColor;
+    mtps::ireceiver m_receiver;
+};
+} // namespace zoper
 
 #endif

@@ -3,29 +3,32 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
 
-#include <lib/scene/scene.hpp>
-#include <lib/scene/scenecontroller.hpp>
-#include <lib/include/scene/iscene.hpp>
+#include <lib/scene/include/scene.hpp>
+#include <lib/scene/i_include/scenecontroller.hpp>
+
+using namespace mtps;
 
 struct CommonData
 {
     bool exit = false;
-    lib::u32 step{ 0U };
-    lib::sptr<lib::scene::SceneController> scene_controller = lib::msptr<lib::scene::SceneController>();
+    u32 step{ 0U };
+    sptr<haf::scene::SceneController> scene_controller = msptr<haf::scene::SceneController>();
 };
 
 CommonData common;
 
-class UniqueScene : public lib::scene::Scene
+class UniqueScene : public haf::scene::Scene
 {
 public:
-    DECLARE_SCENE(UniqueScene)
+    static constexpr char StaticTypeName[] = "UniqueScene";
+    UniqueScene() : Scene{StaticTypeName} {}
 };
 
-class GroupScene1 : public lib::scene::Scene
+class GroupScene1 : public haf::scene::Scene
 {
 public:
-    DECLARE_SCENE(GroupScene1)
+    static constexpr char StaticTypeName[] = "GroupScene1";
+    GroupScene1() : Scene{StaticTypeName} {}
 
     void onCreated() override
     {
@@ -35,14 +38,15 @@ public:
     void update() override
     {
         ++(common.step);
-        common.scene_controller->terminateScene();
+        common.scene_controller->switchToNextScene();
     }
 };
 
-class GroupScene2 : public lib::scene::Scene
+class GroupScene2 : public haf::scene::Scene
 {
 public:
-    DECLARE_SCENE(GroupScene2)
+    static constexpr char StaticTypeName[] = "GroupScene2";
+    GroupScene2() : Scene{StaticTypeName} {}
 
     void onCreated() override
     {
@@ -52,14 +56,14 @@ public:
     void update() override
     {
         ++(common.step);
-        common.scene_controller->terminateScene();
+        common.scene_controller->switchToNextScene();
     }
 };
 
 TEST_CASE("SceneController", "[lib][SceneController]")
 {
-    using namespace lib;
-    using namespace lib::scene;
+    using namespace haf;
+    using namespace haf::scene;
 
     SECTION("Simple scene")
     {
@@ -77,7 +81,7 @@ TEST_CASE("SceneController", "[lib][SceneController]")
 
     SECTION("Two scenes")
     {
-        common.scene_controller->setSceneDirector([](const str&scene_name)
+        common.scene_controller->setSceneDirector([](const str& scene_name)
         {
             if (str(scene_name) == GroupScene1::StaticTypeName)
             {
@@ -97,19 +101,24 @@ TEST_CASE("SceneController", "[lib][SceneController]")
 
         common.step = 0U;
         common.scene_controller->startScene<GroupScene1>();
+        CHECK(common.scene_controller->currentScene()->name() == GroupScene1::StaticTypeName);
         CHECK(common.step == 1U);
+
+        common.scene_controller->update();
+        CHECK(common.scene_controller->currentScene()->name() == GroupScene1::StaticTypeName);
+        CHECK(common.step == 2U);
 
         // Update triggers finish and creation of new scene.
         common.scene_controller->update();
-        CHECK(common.scene_controller->currentState()->name() == GroupScene1::StaticTypeName);
-        CHECK(common.step == 3U);
-
-        common.scene_controller->update();
-        CHECK(common.scene_controller->currentState()->name() == GroupScene2::StaticTypeName);
-        CHECK(common.step == 4U);
+        CHECK(common.scene_controller->currentScene()->name() == GroupScene2::StaticTypeName);
         CHECK_FALSE(common.scene_controller->currentSceneIsNull());
+        CHECK(common.step == 4U);
+        CHECK(common.scene_controller->isActive());
+
+        // Now the scene is finish and no new scene is added
         common.scene_controller->update();
         CHECK(common.scene_controller->currentSceneIsNull());
         CHECK_FALSE(common.scene_controller->isActive());
+        CHECK(common.step == 4U);
     }
 }

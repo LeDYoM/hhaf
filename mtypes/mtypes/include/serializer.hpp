@@ -3,22 +3,39 @@
 #ifndef MTYPES_SERIALIZER_INCLUDE_HPP
 #define MTYPES_SERIALIZER_INCLUDE_HPP
 
-#include "dicty.hpp"
-#include "types.hpp"
-#include "str.hpp"
+#include "object.hpp"
+#include "object_utils.hpp"
 
-namespace lib
+namespace mtps
 {
-    constexpr Object& operator<<(Object &obj, const KeyValuePair<s64>& kvs)
+template <typename T>
+class Serializer
+{
+public:
+    static constexpr str serialize(const T &data)
     {
-        obj.set(kvs.first, str::to_str(kvs.second));
+        Object obj;
+        obj << data;
+
+        str temp;
+        temp << obj;
+        return temp;
     }
 
-    constexpr Object& operator<<(Object &obj, const KeyValuePair<s32>& kvs)
+    static constexpr bool deserialize(const str &data, T &output)
     {
-        obj.set(kvs.first, str::to_str(kvs.second));
+        ObjectCompiler obj_compiler(data);
+        if (obj_compiler.compile())
+        {
+            // The compilation was correct so, at least we
+            // have a valid Object.
+            obj_compiler.result() >> output;
+            return true;
+        }
+        return false;
     }
+};
 
-}
+} // namespace mtps
 
 #endif

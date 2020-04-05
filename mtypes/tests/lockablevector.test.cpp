@@ -3,9 +3,9 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/lockablevector.hpp>
 
-using namespace lib;
+using namespace mtps;
 
-TEST_CASE("LocableVector constructors", "[LocableVector]")
+TEST_CASE("LockableVector::LockableVector", "[LockableVector]")
 {
     LockableVector<u32> locable_vector;
     auto m(locable_vector.current());
@@ -123,6 +123,68 @@ TEST_CASE("LockableVector", "[LockableVector]")
                 CHECK_FALSE(lockable_vector.are_pending_adds());
                 CHECK(lockable_vector.pending_add() == 0U);
             }
+        }
+    }
+
+    SECTION("Update function")
+    {
+        lockable_vector.push_back(0);
+        lockable_vector.push_back(1);
+        lockable_vector.push_back(2);
+        lockable_vector.push_back(3);
+
+        SECTION("Constant Update function")
+        {
+            lockable_vector.performUpdate([](auto& element)
+            {
+                element += 1;
+            });
+
+            const auto& lv = lockable_vector.current();
+
+            CHECK(lv.size() == 4U);
+
+            CHECK(lv[0U] == 1U);
+            CHECK(lv[1U] == 2U);
+            CHECK(lv[2U] == 3U);
+            CHECK(lv[3U] == 4U);
+        }
+
+        SECTION("Add elements in Update function")
+        {
+            lockable_vector.performUpdate([&lockable_vector](auto& element)
+            {
+                lockable_vector.emplace_back(element + 5);
+                element += 1;
+            });
+
+            const auto& lv = lockable_vector.current();
+
+            CHECK(lv.size() == 8U);
+
+            CHECK(lv[0U] == 1U);
+            CHECK(lv[1U] == 2U);
+            CHECK(lv[2U] == 3U);
+            CHECK(lv[3U] == 4U);
+            CHECK(lv[4U] == 5U);
+            CHECK(lv[5U] == 6U);
+            CHECK(lv[6U] == 7U);
+            CHECK(lv[7U] == 8U);
+        }
+
+        SECTION("Remove elements in Update function")
+        {
+            lockable_vector.performUpdate([&lockable_vector](auto& element)
+            {
+                lockable_vector.erase_value(element);
+                element += 1;
+            });
+
+            const auto& lv = lockable_vector.current();
+
+            CHECK(lv.size() == 1U);
+
+            CHECK(lv[0U] == 4U);
         }
     }
 }

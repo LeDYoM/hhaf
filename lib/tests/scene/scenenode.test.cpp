@@ -1,21 +1,23 @@
 #include "catch.hpp"
 
 #include <mtypes/include/types.hpp>
-#include <lib/scene/scenenode.hpp>
-#include <lib/scene/scene.hpp>
+#include <lib/scene/include/scenenode.hpp>
+#include <lib/scene/include/scene.hpp>
+
+using namespace mtps;
 
 auto unitTestScene()
 {
-    static auto uts(lib::msptr<lib::scene::Scene>("unitTest"));
+    static auto uts(msptr<haf::scene::Scene>("unitTest"));
     return uts;
 }
 
 TEST_CASE("Constructor", "[SceneNode]")
 {
-    using namespace lib;
-    using namespace lib::scene;
+    using namespace haf;
+    using namespace haf::scene;
 
     auto node_test(unitTestScene()->createSceneNode("SceneNode_test"));
-    CHECK(unitTestScene()->sceneNodesSize() == 1);
-    CHECK(node_test->sceneNodesSize() == 0);
+    CHECK(unitTestScene()->sceneNodes().size() == 1U);
+    CHECK(node_test->sceneNodes().size() == 0U);
 }

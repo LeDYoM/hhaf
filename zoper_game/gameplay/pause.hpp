@@ -5,28 +5,31 @@
 
 #include <mtypes/include/types.hpp>
 
-#include <lib/scene/scenenode.hpp>
-#include <lib/scene/nodes/textquad.hpp>
+#include <lib/scene/include/scenenode.hpp>
+#include <lib/scene_nodes/include/scenenodetext.hpp>
+#include <lib/scene_components/include/animationcomponent.hpp>
 
 #include "../gameshareddata.hpp"
 
 namespace zoper
 {
-    class GameScene;
+class GameScene;
 
-    using namespace lib;
+using namespace haf;
 
-    class PauseSceneNode : public scene::SceneNode
-    {
-    public:
-        PauseSceneNode(scene::SceneNode* const parent, str name);
-        ~PauseSceneNode() override;
+class PauseSceneNode : public scene::SceneNode
+{
+public:
+    PauseSceneNode(scene::SceneNode *const parent, mtps::str name);
+    ~PauseSceneNode() override;
 
-        void enterPause();
-        void exitPause();
-    private:
-        sptr<scene::nodes::SceneNodeText> m_pauseText;
-    };
-}
+    void enterPause();
+    void exitPause();
+
+private:
+    mtps::sptr<scene::nodes::SceneNodeText> m_pauseText;
+    mtps::sptr<scene::AnimationComponent> animation_component_;
+};
+} // namespace zoper
 
 #endif

@@ -10,19 +10,21 @@
 #include "ibackendmanager.hpp"
 #include "factory.hpp"
 
-namespace lib::backend::client
+using namespace mtps;
+
+namespace haf::backend::client
 {
     template <typename T>
-    void createFactoryOfFactories(lib::vector<lib::uptr<IAutoRegisterFactory>> &factories)
+    void createFactoryOfFactories(mtps::vector<mtps::uptr<IAutoRegisterFactory>> &factories)
     {
-        auto f(lib::muptr<AutoRegisterFactory<T::Interface>>());
-        f.get()->create(lib::muptr<T>());
+        auto f(mtps::muptr<AutoRegisterFactory<T::Interface>>());
+        f.get()->create(muptr<T>());
         factories.push_back(std::move(f));
     }
 
     struct DefaultBackendManager : IBackendManager
     {
-        vector<uptr<IAutoRegisterFactory>> factories;
+        mtps::vector<mtps::uptr<IAutoRegisterFactory>> factories;
 
         void setFactories(IBackendRegister*const backend_register) override final
         {
@@ -32,7 +34,7 @@ namespace lib::backend::client
             }
         }
 
-        void resetFactories(lib::backend::IBackendRegister*const backend_register) override final
+        void resetFactories(haf::backend::IBackendRegister*const backend_register) override final
         {
             for (const auto &factory : factories)
             {
@@ -84,7 +86,7 @@ namespace lib::backend::client
     }
 }
 
-using p_initLib = bool (*)(lib::backend::IBackendRegister* const);
-using p_finishLib = bool (*)(lib::backend::IBackendRegister* const);
+using p_initLib = bool (*)(haf::backend::IBackendRegister* const);
+using p_finishLib = bool (*)(haf::backend::IBackendRegister* const);
 
 #endif

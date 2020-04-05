@@ -2,7 +2,7 @@
 
 #include <mtypes/include/str.hpp>
 
-using namespace lib;
+using namespace mtps;
 
 TEST_CASE("str::str", "[str]")
 {

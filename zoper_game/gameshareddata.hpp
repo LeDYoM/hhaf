@@ -7,53 +7,41 @@
 #include <mtypes/include/array.hpp>
 #include <mtypes/include/vector2d.hpp>
 #include <mtypes/include/rect.hpp>
-#include <mtypes/include/streamin.hpp>
-#include <lib/include/core/timepoint.hpp>
-
+#include <mtypes/include/object.hpp>
+#include <mtypes/include/str.hpp>
+#include <lib/time/include/timepoint.hpp>
+#include <lib/shareddata/include/ishareable.hpp>
 #include "gameplay/direction.hpp"
 
 namespace zoper
 {
-    using namespace lib;
+enum class GameMode :  mtps::u8
+{
+    Token = 0,
+    Time = 1,
+};
 
-    enum class GameMode : u8
+struct GameSharedData : public haf::shdata::IShareable
+{
+    // MenuScene will write these
+    mtps::size_type startLevel{0U};
+    GameMode gameMode{GameMode::Token};
+
+    // GameScene will write these.
+    mtps::size_type endLevel{0U};
+    mtps::size_type score{0U};
+
+    mtps::str to_str() const
     {
-        Token = 0,
-        Time = 1,
-    };
-
-    struct GameSharedData
-    {
-        size_type startLevel{ 0U };
-        size_type endLevel{ 0U };
-        size_type score{ 0U };
-
-        bool exitGame{ false };
-        GameMode gameMode{ GameMode::Token };
-    };
-
-    struct InGameData
-    {
-        size_type currentLevel{ 0U };
-        size_type score{ 0U };
-        GameMode gameMode;
-    };
-
-    inline const GameSharedData &operator>>(const GameSharedData &gsd, InGameData &igd) noexcept
-    {
-        igd.currentLevel = gsd.startLevel;
-        igd.score = 0U;
-        igd.gameMode = gsd.gameMode;
-        return gsd;
+        mtps::str temp;
+        temp << "Selected level " << startLevel << "\n"
+             << " GameMode: " << static_cast<mtps::u32>(gameMode);
+        return temp;
     }
 
-    inline const InGameData &operator>>(const InGameData &igd, GameSharedData &gsd) noexcept
-    {
-        gsd.endLevel = igd.currentLevel;
-        gsd.score = igd.score;
-        gsd.gameMode = igd.gameMode;
-        return igd;
-    }
-}
+    ~GameSharedData() override = default;
+};
+
+} // namespace zoper
 
 #endif

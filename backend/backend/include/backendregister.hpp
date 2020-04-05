@@ -8,7 +8,7 @@
 #include <backend_dev/include/client/ibackendregister.hpp>
 #include <backend_dev/include/client/interfaces.hpp>
 
-namespace lib::backend
+namespace haf::backend
 {
     class BackendRegister final : public IBackendRegister
     {

@@ -3,26 +3,26 @@
 #ifndef ZOPER_GAMEBASETILE_HPP
 #define ZOPER_GAMEBASETILE_HPP
 
-#include <lib/scene/scenenode.hpp>
-#include <lib/scene/renderizables/renderizable.hpp>
-#include <lib/board/itile.hpp>
+#include <mtypes/include/types.hpp>
+#include <lib/scene/include/scenenode.hpp>
+#include <lib/scene/include/renderizable.hpp>
+#include <boardmanager/include/itile.hpp>
 
 namespace zoper
 {
-    using namespace lib;
 
-    class GameBaseTile : public board::ITile, public scene::SceneNode
-    {
-    public:
-        GameBaseTile(scene::SceneNode* const parent, str name);
-        ~GameBaseTile() override;
+class GameBaseTile : public haf::board::ITile, public haf::scene::SceneNode
+{
+public:
+    GameBaseTile(haf::scene::SceneNode *const parent, mtps::str name);
+    ~GameBaseTile() override;
 
-        void update() override;
-        scene::Color getColorForToken() const;
+    void update() override;
+    haf::scene::Color getColorForToken() const;
 
-    protected:
-        sptr<scene::Renderizable> m_node;
-    };
-}
+protected:
+   mtps::sptr<haf::scene::Renderizable> m_node;
+};
+} // namespace zoper
 
 #endif

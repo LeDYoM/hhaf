@@ -3,20 +3,20 @@
 #ifndef ZOPER_GAMEOVER_SCENENODE_INCLUDE_HPP
 #define ZOPER_GAMEOVER_SCENENODE_INCLUDE_HPP
 
-#include <lib/scene/scenenode.hpp>
+#include <lib/scene/include/scenenode.hpp>
 
 namespace zoper
 {
-    using namespace lib;
+    using namespace haf;
 
 	class GameOverSceneNode : public scene::SceneNode
 	{
 	public:
-        GameOverSceneNode(scene::SceneNode* const parent, str name);
+        GameOverSceneNode(scene::SceneNode* const parent, mtps::str name);
         ~GameOverSceneNode() override;
 
 	private:
-        sptr<scene::SceneNode> m_gameOverrg;
+        mtps::sptr<scene::SceneNode> m_gameOverrg;
     };
 }
 

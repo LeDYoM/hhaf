@@ -1,6 +1,6 @@
 #include <backend/include/backendregister.hpp>
 
-namespace lib::backend
+namespace haf::backend
 {
     void BackendRegister::setFactory(IInfoFactory * const info_factory) noexcept
     {

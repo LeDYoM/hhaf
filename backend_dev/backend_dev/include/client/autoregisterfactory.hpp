@@ -5,7 +5,7 @@
 
 #include "ibackendregister.hpp"
 
-namespace lib::backend::client
+namespace haf::backend::client
 {
     class IAutoRegisterFactory
     {
@@ -21,7 +21,7 @@ namespace lib::backend::client
     public:
         AutoRegisterFactory() noexcept : factory_{} {}
 
-        void create(uptr<IFactoryOf<T>> f)
+        void create(mtps::uptr<IFactoryOf<T>> f)
         {
             factory_ = std::move(f);
         }
@@ -41,7 +41,7 @@ namespace lib::backend::client
             factory_.reset();
         }
     private:
-        uptr<IFactoryOf<T>> factory_;
+        mtps::uptr<IFactoryOf<T>> factory_;
 
     };
 }

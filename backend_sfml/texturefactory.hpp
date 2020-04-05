@@ -9,17 +9,17 @@
 #include <backend_dev/include/iresourcefactories.hpp>
 #include "texture.hpp"
 
-namespace lib::backend::sfmlb
+namespace haf::backend::sfmlb
 {
     class Texture;
     class TextureFactory : public ITextureFactory
     {
     public:
-        ITexture *loadFromFile(const str &file) override;
-        ITexture *loadFromRawMemory(RawMemory *raw_memory) override;
+        ITexture *loadFromFile(const mtps::str &file) override;
+        ITexture *loadFromRawMemory(mtps::RawMemory *raw_memory) override;
         ~TextureFactory() override;
     private:
-        vector<sptr<Texture>> m_textureCache;
+        mtps::vector<mtps::sptr<Texture>> m_textureCache;
     };
 }
 

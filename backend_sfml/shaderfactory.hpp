@@ -9,15 +9,15 @@
 #include <backend_dev/include/iresourcefactories.hpp>
 #include "shader.hpp"
 
-namespace lib::backend::sfmlb
+namespace haf::backend::sfmlb
 {
     class ShaderFactory : public IShaderFactory
     {
     public:
-        virtual IShader* loadFromFile(const str &file) override;
+        virtual IShader* loadFromFile(const mtps::str &file) override;
         ~ShaderFactory() override;
     private:
-        vector<uptr<Shader>> m_shaderCache;
+        mtps::vector<mtps::sptr<Shader>> m_shaderCache;
     };
 }
 

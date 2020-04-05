@@ -5,25 +5,27 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/connection.hpp>
-#include <lib/scene/renderizables/renderizable.hpp>
-#include <lib/scene/scene.hpp>
-#include <lib/include/scene/iscene.hpp>
+#include <lib/scene/include/renderizable.hpp>
+#include <lib/scene/include/scene.hpp>
 
 namespace zoper
 {
-	using namespace lib;
-	class MenuScene final : public scene::Scene
-	{
-	public:
-        using BaseClass = scene::Scene;
+using namespace haf;
+class MenuScene final : public scene::Scene
+{
+public:
+    MenuScene();
+    ~MenuScene() override;
 
-		DECLARE_SCENE(MenuScene)
+    static constexpr char StaticTypeName[] = "MenuScene";
 
-		virtual void onCreated() override;
+    using BaseClass = scene::Scene;
 
-	private:
-		ireceiver m_receiver;
-	};
-}
+    virtual void onCreated() override;
+
+private:
+    mtps::ireceiver m_receiver;
+};
+} // namespace zoper
 
 #endif

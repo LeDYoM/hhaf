@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_BACKEND_SFML_TEXTURE_INCLUDE_HPP__
-#define LIB_BACKEND_SFML_TEXTURE_INCLUDE_HPP__
+#ifndef LIB_BACKEND_SFML_TEXTURE_INCLUDE_HPP
+#define LIB_BACKEND_SFML_TEXTURE_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
@@ -10,7 +10,7 @@
 
 #include <SFML/Graphics/Texture.hpp>
 
-namespace lib::backend::sfmlb
+namespace haf::backend::sfmlb
 {
     class Texture : public ITexture
     {
@@ -18,7 +18,7 @@ namespace lib::backend::sfmlb
         Texture(const sf::Texture* const texture, const bool owned);
         ~Texture() override;
 
-        virtual vector2du32 size() const override;
+        virtual mtps::vector2du32 size() const override;
 
         const sf::Texture &backEndTexture() const { return *m_texturePrivate; }
     private:

@@ -1,47 +1,62 @@
-#include <lib/scene/vertexarray.hpp>
+#include <lib/scene/include/vertexarray.hpp>
 
 #include "conversions.hpp"
 
 #include <SFML/Config.hpp>
 
-namespace lib::backend::sfmlb
+using namespace mtps;
+
+namespace haf::backend::sfmlb
 {
-    void RenderTarget::draw(const scene::Vertex *vertices, const u32 nVertex, const scene::PrimitiveType pType, const f32 *transform, const ITexture *texture)
-    {
-        sf::RenderTarget::draw((const sf::Vertex*)vertices, nVertex,
-            static_cast<sf::PrimitiveType>(pType),
-            to_sf_type(transform,texture));
-    }
+static_assert(sizeof(sf::Vertex) == sizeof(scene::Vertex),
+              "Incomptable version of SFML");
 
-    void RenderTarget::setViewPort(const Rectf32 & nviewport)
+void RenderTarget::render(const IRenderData* render_data_begin,
+                        const IRenderData* render_data_end)
+{
+    while (render_data_begin != render_data_end)
     {
-        sf::View currentView(getView());
-        currentView.setViewport(to_sf_type(nviewport));
-        setView(currentView);
-    }
-
-    Rectf32 RenderTarget::viewPort() const
-    {
-        sf::View currentView(getView());
-        return from_sft_type(currentView.getViewport());
-    }
-
-    void RenderTarget::setViewRect(const Rectf32 & nviewRect)
-    {
-        sf::View currentView(getView());
-        currentView.setCenter(to_sf_type(nviewRect.center()));
-        currentView.setSize(to_sf_type(nviewRect.size()));
-        setView(currentView);
-    }
-
-    Rectf32 RenderTarget::viewRect() const
-    {
-        sf::View currentView(getView());
-        return rectFromCenterAndSize(from_sf_type(currentView.getCenter()), from_sf_type(currentView.getSize()));
-    }
-
-    void RenderTarget::clear()
-    {
-        sf::RenderTarget::clear();
+        sf::RenderTarget::draw(
+            to_sf_type((*render_data_begin).vertices),
+            static_cast<size_type>((*render_data_begin).nVertex),
+            to_sf_type((*render_data_begin).pType),
+            to_sf_type((*render_data_begin).transform,
+                       (*render_data_begin).texture,
+                       (*render_data_begin).shader));
+        ++render_data_begin;
     }
 }
+
+void RenderTarget::setViewPort(const Rectf32& nviewport)
+{
+    sf::View currentView(getView());
+    currentView.setViewport(to_sf_type(nviewport));
+    setView(currentView);
+}
+
+Rectf32 RenderTarget::viewPort() const
+{
+    sf::View currentView(getView());
+    return from_sft_type(currentView.getViewport());
+}
+
+void RenderTarget::setViewRect(const Rectf32& nviewRect)
+{
+    sf::View currentView(getView());
+    currentView.setCenter(to_sf_type(nviewRect.center()));
+    currentView.setSize(to_sf_type(nviewRect.size()));
+    setView(currentView);
+}
+
+Rectf32 RenderTarget::viewRect() const
+{
+    sf::View currentView(getView());
+    return rectFromCenterAndSize(from_sf_type(currentView.getCenter()),
+                                 from_sf_type(currentView.getSize()));
+}
+
+void RenderTarget::clear()
+{
+    sf::RenderTarget::clear();
+}
+}  // namespace haf::backend::sfmlb

@@ -1,21 +1,18 @@
 #include "highscoresresources.hpp"
 
-#include <lib/include/resources/iresourcehandler.hpp>
+#include <lib/resources/include/iresourcehandler.hpp>
 
-#include <lib/resources/texture.hpp>
-#include <lib/resources/ttfont.hpp>
+#include <lib/resources/include/itexture.hpp>
 
 namespace zoper
 {
-	using namespace lib;
-	using namespace lib::scene;
+using namespace haf;
+using namespace haf::scene;
 
-	void HighScoresResources::loadResources(IResourceHandler&resourceHandler)
-	{
-        constexpr static char BackgroundTextureFile[] = "resources/gr_ms.png";
-        constexpr static char MenuFontFile[] = "resources/oldct.ttf";
+void HighScoresResources::loadResources(IResourceHandler &resourceHandler)
+{
+    constexpr static char MenuFontFile[] = "resources/oldct.ttf";
 
-        resourceHandler.loadTexture(BackgroundTextureId, BackgroundTextureFile);
-        resourceHandler.loadTTFont(MenuFontId, MenuFontFile);
-	}
+    resourceHandler.loadTTFont(MenuFontId, MenuFontFile);
 }
+} // namespace zoper

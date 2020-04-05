@@ -8,20 +8,22 @@
 
 #include <SFML/Graphics/Shader.hpp>
 
-namespace lib::backend::sfmlb
+namespace haf::backend::sfmlb
 {
-    class Shader : public IShader
-    {
-    public:
-        Shader(uptr<sf::Shader> shader);
-        ~Shader() override;
+class Shader : public IShader
+{
+public:
+    Shader(mtps::uptr<sf::Shader> shader);
+    ~Shader() override;
 
-        void setUniform(const str &name, vector2df v) override;
-        void setUniform(const str &name, ITexture *texture) override;
+    void setUniform(const mtps::str &name, mtps::vector2df v) override;
+    void setUniform(const mtps::str &name, ITexture *texture) override;
 
-    private:
-        uptr<sf::Shader> m_shaderPrivate;
-    };
-}
+    const sf::Shader &backEndShader() const { return *m_shaderPrivate; }
+
+private:
+    mtps::uptr<sf::Shader> m_shaderPrivate;
+};
+} // namespace haf::backend::sfmlb
 
 #endif

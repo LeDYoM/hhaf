@@ -1,14 +1,15 @@
 #include "catch.hpp"
 
 #include <mtypes/include/types.hpp>
-#include <lib/scene/scene.hpp>
-#include <lib/scene/scenenode.hpp>
-#include <lib/scene/scenenodefactory.hpp>
+#include <lib/scene/include/scene.hpp>
+#include <lib/scene/include/scenenode.hpp>
+#include <lib/scene/include/scenenodefactory.hpp>
 
 #include <typeinfo>
 
-using namespace lib;
-using namespace lib::scene;
+using namespace mtps;
+using namespace haf;
+using namespace haf::scene;
 
 class SceneTypeBasic : public Scene
 {
@@ -58,7 +59,7 @@ public:
     }
 };
 
-TEST_CASE("lib::scene::SceneNodeFactory", "[lib][SceneNodeFactory]")
+TEST_CASE("haf::scene::SceneNodeFactory", "[lib][SceneNodeFactory]")
 {
     SceneNodeFactory scene_node_factory;
 

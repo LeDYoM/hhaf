@@ -5,34 +5,34 @@
 
 #include <mtypes/include/types.hpp>
 
-namespace lib
+namespace haf
 {
-    class IApp;
+class IApp;
 }
 
-namespace lib::core
+namespace haf::sys
 {
-    class Host final
-    {
-    public:
-        Host(int argc, char *argv[]);
-        ~Host();
+class Host final
+{
+public:
+    Host(int argc, char *argv[]);
+    ~Host();
 
-        bool setApplication(IApp* iapp);
-        int run();
+    bool setApplication(mtps::rptr<IApp> iapp);
+    int run();
 
-    private:
-        class HostPrivate;
-        uptr<HostPrivate> m_private;
+private:
+    class HostPrivate;
+    mtps::uptr<HostPrivate> m_private;
 
-        bool loopStep();
-        void exitProgram();
-        bool update();
+    bool loopStep();
+    void exitProgram();
+    bool update();
 
-        enum class AppState : u8;
-        AppState m_state;
-        bool exit{ false };
-    };
-}
+    enum class AppState : mtps::u8;
+    AppState m_state;
+    bool exit{false};
+};
+} // namespace haf::sys
 
 #endif

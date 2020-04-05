@@ -10,22 +10,24 @@
 
 #include <backend_dev/include/irendertarget.hpp>
 
-namespace lib::scene
+namespace haf::scene
 {
-    struct Vertex;
+struct Vertex;
 }
 
-namespace lib::backend::sfmlb
+namespace haf::backend::sfmlb
 {
-    class RenderTarget : public IRenderTarget, public sf::RenderTarget
-    {
-        void draw(const scene::Vertex *vertices, const u32 nVertex, const scene::PrimitiveType pType, const f32 *transform, const ITexture *texture) override;
-        void setViewPort(const Rectf32 &nviewport) override;
-        Rectf32 viewPort() const override;
-        void setViewRect(const Rectf32 &nviewRect) override;
-        Rectf32 viewRect() const override;
-        void clear() override;
-    };
-}
+class RenderTarget : public IRenderTarget, public sf::RenderTarget
+{
+    void render(const IRenderData* render_data_begin,
+                const IRenderData* render_data_end) override;
+
+    void setViewPort(const mtps::Rectf32& nviewport) override;
+    mtps::Rectf32 viewPort() const override;
+    void setViewRect(const mtps::Rectf32& nviewRect) override;
+    mtps::Rectf32 viewRect() const override;
+    void clear() override;
+};
+}  // namespace haf::backend::sfmlb
 
 #endif

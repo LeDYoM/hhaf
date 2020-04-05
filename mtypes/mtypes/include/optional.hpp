@@ -3,7 +3,7 @@
 #ifndef MTYPES_OPTIONAL_INCLUDE_HPP
 #define MTYPES_OPTIONAL_INCLUDE_HPP
 
-namespace lib
+namespace mtps
 {
     template <typename T>
     class  optional {

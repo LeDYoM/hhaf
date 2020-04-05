@@ -4,43 +4,43 @@
 #include "highscoresscenestates.hpp"
 
 #include "../loaders/highscoresresources.hpp"
+#include "../common_scene_nodes.hpp"
 
-#include <lib/scene/renderizables/renderizable.hpp>
-#include <lib/scene/components/renderizables.hpp>
-#include <lib/system/resourcemanager.hpp>
-#include <lib/system/systemprovider.hpp>
+#include <lib/scene_components/include/statescontroller.hpp>
+#include <lib/input/include/inputcomponent.hpp>
+#include <lib/resources/include/resourceview.hpp>
+#include <lib/resources/include/resourcehandler.hpp>
+#include <lib/scene_components/include/scenecontrol.hpp>
 
 namespace zoper
 {
-	using namespace lib;
-	using namespace lib::scene;
-	using namespace lib::scene::nodes;
+using namespace haf;
+using namespace haf::scene;
+using namespace haf::scene::nodes;
 
-	void HighScoresScene::onCreated()
-	{
-		BaseClass::onCreated();
+HighScoresScene::HighScoresScene() : Scene{StaticTypeName} {}
+HighScoresScene::~HighScoresScene() = default;
 
-        auto statesController( addComponentOfType<StatesController<HighScoresSceneStates>>());
-        loadResources(HighScoresResources{});
+void HighScoresScene::onCreated()
+{
+    BaseClass::onCreated();
+    dataWrapper<ResourceHandler>()->loadResources(HighScoresResources{});
 
-        m_normalFont = sceneManager().systemProvider().resourceManager().getTTFont("menu.mainFont")->font(72);
-		m_normalColor = colors::Blue;
-		m_selectedColor = colors::Red;
+    auto statesController(addComponentOfType<StatesController<HighScoresSceneStates>>());
+    auto resources_viewer = dataWrapper<ResourceView>();
 
-        auto renderizables = addComponentOfType<Renderizables>();
-		m_background = renderizables->createNode("background");
-        m_background->figType.set(FigType_t::Quad);
-        m_background->pointCount.set(4U);
-		m_background->box = rectFromSize(2000.0f, 2000.0f);
-        m_background->setTextureFill(sceneManager().systemProvider().resourceManager().getTexture(HighScoresResources::BackgroundTextureId));
-		m_background->color = colors::White;
+    m_normalFont = resources_viewer->getTTFont("menu.mainFont")->font(72);
+    m_normalColor = colors::Blue;
+    m_selectedColor = colors::Red;
 
-        auto highScoreTextController(createSceneNode<HighScoreTextController>("HighScoreTextController"));
-        highScoreTextController->Finished.connect([this,statesController]()
-		{
-			sceneManager().sceneController()->terminateScene();
-		});
+    createStandardBackground(this);
 
-		statesController->start(HighScoresSceneStates::Show);
-	}
+    auto highScoreTextController(createSceneNode<HighScoreTextController>("HighScoreTextController"));
+    highScoreTextController->Finished.connect([this, statesController]()
+    {
+        dataWrapper<SceneControl>()->switchToNextScene();
+    });
+
+    statesController->start(HighScoresSceneStates::Show);
 }
+} // namespace zoper

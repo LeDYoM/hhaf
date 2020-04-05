@@ -6,53 +6,55 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
 
-#include <lib/scene/components/timercomponent.hpp>
-#include <lib/scene/components/icomponent.hpp>
-#include <lib/scene/color.hpp>
+#include <lib/time/include/timercomponent.hpp>
+#include <lib/scene/include/icomponent.hpp>
+#include <lib/scene/include/color.hpp>
 
 #include "../gameshareddata.hpp"
 #include "gamehud.hpp"
 
 namespace zoper
 {
-    using namespace lib;
+using namespace haf;
 
-    using LevelType = size_type;
+using LevelType = mtps::size_type;
 
-	class LevelProperties : public scene::IComponent
-	{
-	public:
-        void setUp(const size_type currentLevel, 
-            const GameMode gameMode, sptr<scene::TimerComponent> m_sceneTimerComponent);
+class LevelProperties : public haf::scene::IComponent
+{
+public:
+    void configure(const mtps::size_type currentLevel,
+               const GameMode gameMode,
+               mtps::sptr<time::TimerComponent> m_sceneTimerComponent);
 
-        inline size_t millisBetweenTokens() const { return m_millisBetweenTokens; }
-        inline size_t baseScore() const { return m_baseScore; }
-        inline size_t stayCounter() const { return m_stayCounter; }
-        void increaseScore(const size_type scoreIncrement);
+    inline size_t millisBetweenTokens() const { return m_millisBetweenTokens; }
+    inline size_t baseScore() const { return m_baseScore; }
+    inline size_t stayCounter() const { return m_stayCounter; }
+    void increaseScore(const mtps::size_type scoreIncrement);
+    void nextLevel();
+    static constexpr size_t maxLevelWithProperties{25U};
 
-        static constexpr size_t maxLevelWithProperties{ 25U };
+    void tokenConsumed();
+    mtps::emitter<const LevelType> levelChanged;
 
-        void tokenConsumed();
-        emitter<const LevelType> levelChanged;
+private:
+    void updateGoals();
+    void updateLevelData();
+    void setLevel(const LevelType currentLevel);
+    void setScore(const mtps::size_type new_score);
 
-	private:
-        void updateGoals();
-        void updateLevelData();
-        void setLevel(const LevelType currentLevel);
+    mtps::uptr<time::Timer> m_levelTimer;
+    time::TimerConnectorSPtr m_updateLevelDataTimer;
+    mtps::sptr<time::TimerComponent> m_sceneTimerComponent;
 
-        uptr<scene::Timer> m_levelTimer;
-        scene::TimerConnectorSPtr m_updateLevelDataTimer;
-        sptr<scene::TimerComponent> m_sceneTimerComponent;
-
-        size_type m_consumedTokens{ 0U };
-        LevelType m_currentLevel{ 0U };
-        size_t m_millisBetweenTokens{ 0U };
-        size_t m_baseScore{ 0U };
-        size_t m_stayCounter{ 0U };
-        size_t m_currentScore{ 0U };
-        GameMode m_gameMode;
-        sptr<GameHudSceneNode> m_gameHud;
-    };
-}
+    mtps::size_type m_consumedTokens{0U};
+    LevelType m_currentLevel{0U};
+    mtps::size_type m_millisBetweenTokens{0U};
+    mtps::size_type m_baseScore{0U};
+    mtps::size_type m_stayCounter{0U};
+    mtps::size_type m_currentScore{0U};
+    GameMode m_gameMode;
+    mtps::sptr<GameHudSceneNode> m_gameHud;
+};
+} // namespace zoper
 
 #endif

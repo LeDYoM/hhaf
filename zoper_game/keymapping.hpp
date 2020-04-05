@@ -3,52 +3,53 @@
 #ifndef ZOPER_KEYMAPPING_HPP
 #define ZOPER_KEYMAPPING_HPP
 
-#include <mtypes/include/streamin.hpp>
-#include <mtypes/include/streamout.hpp>
 #include <mtypes/include/array.hpp>
-#include <lib/include/key.hpp>
+#include <mtypes/include/object.hpp>
+
+#include <lib/input/include/key.hpp>
+
 #include "gameplay/direction.hpp"
 
 namespace zoper
 {
-	class KeyMapping
-	{
-	public:
-		KeyMapping();
-		virtual ~KeyMapping();
+class KeyMapping
+{
+public:
+    static constexpr mtps::u32 TotalKeys = Direction::Total + 2;
 
-		void reset();
-		static constexpr lib::u32 TotalKeys = Direction::Total + 2;
+    KeyMapping();
+    virtual ~KeyMapping();
 
-		lib::input::Key getKey(const Direction d) const noexcept;
-		Direction getDirectionFromKey(const lib::input::Key k) const noexcept;
-		lib::input::Key getLaunchKey() const noexcept;
-		bool isLaunchKey(const lib::input::Key key) const noexcept;
-		lib::input::Key getPauseKey() const noexcept;
-		bool isPauseKey(const lib::input::Key key) const noexcept;
+    void reset();
 
-		bool setKey(const lib::u32 index, const lib::input::Key key);
-		void apply();
+    haf::input::Key getKey(const Direction direction) const noexcept;
+    Direction getDirectionFromKey(const haf::input::Key key) const noexcept;
+    haf::input::Key getLaunchKey() const noexcept;
+    bool isLaunchKey(const haf::input::Key key) const noexcept;
+    haf::input::Key getPauseKey() const noexcept;
+    bool isPauseKey(const haf::input::Key key) const noexcept;
 
-		friend lib::SerializationStreamIn& operator>>(lib::SerializationStreamIn&ssi, KeyMapping &data);
-		friend lib::SerializationStreamOut& operator<<(lib::SerializationStreamOut&sso, const KeyMapping&data);
-	private:
-		lib::array<lib::input::Key, KeyMapping::TotalKeys> m_keys;
+    bool setKey(const mtps::u32 index, const haf::input::Key key);
+    void apply();
 
-	};
+    friend const mtps::Object &operator>>(const mtps::Object &obj, KeyMapping &key_mapping);
+    friend mtps::Object &operator<<(mtps::Object &obj, const KeyMapping &key_mapping);
 
+private:
+    mtps::array<haf::input::Key, KeyMapping::TotalKeys> m_keys;
+};
 
-	inline lib::SerializationStreamIn & operator>>(lib::SerializationStreamIn & ssi, KeyMapping & data)
-	{
-		ssi >> data.m_keys;
-		return ssi;
-	}
-
-	inline lib::SerializationStreamOut& operator<<(lib::SerializationStreamOut&sso, const KeyMapping&data)
-	{
-		sso << data.m_keys;
-		return sso;
-	}
+inline const mtps::Object &operator>>(const mtps::Object &obj, KeyMapping &key_mapping)
+{
+    obj["keys"].getObject() >> key_mapping.m_keys;
+    return obj;
 }
+
+inline mtps::Object &operator<<(mtps::Object &obj, const KeyMapping &key_mapping)
+{
+    obj.set("keys", key_mapping.m_keys);
+    return obj;
+}
+} // namespace zoper
 
 #endif

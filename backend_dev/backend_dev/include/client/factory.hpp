@@ -3,7 +3,7 @@
 #ifndef LIB_BACKEND_FACTORY_INCLUDE_HPP
 #define LIB_BACKEND_FACTORY_INCLUDE_HPP
 
-namespace lib::backend
+namespace haf::backend
 {
     template <typename T>
     class IFactoryOf

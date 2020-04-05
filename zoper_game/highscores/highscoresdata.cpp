@@ -1,74 +1,52 @@
 #include "highscoresdata.hpp"
 
-#include <lib/core/serializer.hpp>
+#include <mtypes/include/serializer.hpp>
 #include <lib/include/liblog.hpp>
+
+using namespace mtps;
+using namespace haf;
 
 namespace zoper
 {
-	using namespace lib;
-	constexpr char hsfile[] = "hscores.txt";
+constexpr char hsfile[] = "hscores.txt";
 
-	HighScoresData::HighScoresData()
-	{
-		size_type counter{ 1 };
-		for (auto &element : m_highScoreList) {
-			element.name = "AAA";
-			element.score = counter * 100;
-			++counter;
-		}
-	}
-
-	bool HighScoresData::positionForScore(const Score score, size_type & positionInTable)
-	{
-		for (u32 i{ 0U }; i < NumHighScore; ++i) {
-			if (score > m_highScoreList[i].score) {
-				positionInTable = i;
-				return true;
-			}
-		}
-		return false;
-	}
-
-    void HighScoresData::setHighScoreName(const size_type positionInTable, const str&nName)
+HighScoresData::HighScoresData()
+{
+    size_type counter{10U};
+    for (auto &element : m_highScoreList)
     {
-        assert_release(positionInTable < m_highScoreList.size(),"Invalid index");
-        m_highScoreList[positionInTable].name = nName;
+        element.name = "AAA";
+        element.score = counter * 100;
+        --counter;
     }
-
-	bool HighScoresData::tryInsertHighScore(const Score score, size_type &positionInTable)
-	{
-		if (positionForScore(score, positionInTable)) {
-			m_highScoreList.insert(positionInTable, { "",score });
-			return true;
-		}
-		return false;
-	}
-
-	void HighScoresData::read()
-	{
-		log_debug_info("Reading high scores files...");
-		Serializer<HighScoresList> sHScoreList;
-		sHScoreList.deserialize(hsfile, m_highScoreList);
-	}
-
-	void HighScoresData::store()
-	{
-		log_debug_info("Writing high scores file");
-		Serializer<HighScoresList> sHScoreList;
-		sHScoreList.serialize(hsfile, m_highScoreList);
-	}
-
-	inline SerializationStreamIn& operator>>(SerializationStreamIn&ssi, HighScore &data)
-	{
-		ssi >> data.name;
-		ssi >> data.score;
-		return ssi;
-	}
-
-	inline SerializationStreamOut& operator<<(SerializationStreamOut&sso, const HighScore&data)
-	{
-		sso << data.name;
-		sso << data.score;
-		return sso;
-	}
 }
+
+bool HighScoresData::positionForScore(const Score score, size_type &positionInTable)
+{
+    for (u32 i{0U}; i < NumHighScore; ++i)
+    {
+        if (score > m_highScoreList[i].score)
+        {
+            positionInTable = i;
+            return true;
+        }
+    }
+    return false;
+}
+
+void HighScoresData::setHighScoreName(const size_type positionInTable, const str &nName)
+{
+    log_assert(positionInTable < m_highScoreList.size(), "Invalid index");
+    m_highScoreList[positionInTable].name = nName;
+}
+
+bool HighScoresData::tryInsertHighScore(const Score score, size_type &positionInTable)
+{
+    if (positionForScore(score, positionInTable))
+    {
+        m_highScoreList.insert(positionInTable, {"", score});
+        return true;
+    }
+    return false;
+}
+} // namespace zoper

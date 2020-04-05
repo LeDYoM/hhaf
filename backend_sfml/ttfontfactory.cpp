@@ -3,7 +3,9 @@
 #include <SFML/Graphics/Texture.hpp>
 #include "texture.hpp"
 
-namespace lib::backend::sfmlb
+using namespace mtps;
+
+namespace haf::backend::sfmlb
 {
     ITTFont* TTFontFactory::loadFromFile(const str & file)
     {

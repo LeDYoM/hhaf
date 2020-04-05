@@ -8,12 +8,12 @@
 
 namespace zoper::gameplay::constants
 {
-    using namespace lib;
+    using namespace haf;
 
-    constexpr u32 MillisAnimationPointsToScore = 600;
-    constexpr vector2df EndPositionPointsToScore = vector2df{ 450, 100 };
+    constexpr mtps::u32 MillisAnimationPointsToScore = 600U;
+    constexpr mtps::vector2df EndPositionPointsToScore = mtps::vector2df{ 450.0F, 100.0F };
 
-    constexpr u32 MillisAnimationLaunchPlayerStep = 125;
+    constexpr mtps::u32 MillisAnimationLaunchPlayerStep = 125U;
 }
 
 #endif

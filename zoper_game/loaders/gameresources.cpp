@@ -1,19 +1,18 @@
 #include "gameresources.hpp"
 
-#include <lib/include/resources/iresourcehandler.hpp>
-
-#include <lib/resources/texture.hpp>
-#include <lib/resources/ttfont.hpp>
+#include <lib/resources/include/iresourcehandler.hpp>
+#include <lib/resources/include/itexture.hpp>
+#include <lib/resources/include/ittfont.hpp>
 
 namespace zoper
 {
-	using namespace lib;
-	using namespace lib::scene;
+using namespace haf;
+using namespace haf::scene;
 
-    constexpr char ScoreFontFile[] = "resources/score.ttf";
+constexpr char ScoreFontFile[] = "resources/score.ttf";
 
-	void GameResources::loadResources(IResourceHandler&resourceHandler)
-	{
-        resourceHandler.loadTTFont(ScoreFontId, ScoreFontFile);
-	}
+void GameResources::loadResources(IResourceHandler &resourceHandler)
+{
+    resourceHandler.loadTTFont(ScoreFontId, ScoreFontFile);
 }
+} // namespace zoper

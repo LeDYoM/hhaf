@@ -2,5 +2,5 @@
 
 int main(int argc, char* argv[])
 {
-    return lib::libMain(argc, argv);
+    return haf::libMain(argc, argv);
 }

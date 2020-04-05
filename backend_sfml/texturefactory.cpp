@@ -3,7 +3,9 @@
 #include "texturefactory.hpp"
 #include <SFML/Graphics/Texture.hpp>
 
-namespace lib::backend::sfmlb
+using namespace mtps;
+
+namespace haf::backend::sfmlb
 {
     ITexture *TextureFactory::loadFromFile(const str & file)
     {

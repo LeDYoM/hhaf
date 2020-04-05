@@ -1,5 +1,3 @@
-#include <lib/include/key.hpp>
-
 #include "renderwindow.hpp"
 #include "conversions.hpp"
 
@@ -7,87 +5,135 @@
 
 #include <string>
 
-namespace lib::backend::sfmlb
+using namespace mtps;
+
+namespace haf::backend::sfmlb
 {
-    RenderWindow::RenderWindow() {}
-    RenderWindow::~RenderWindow() {}
+RenderWindow::RenderWindow()
+{}
+RenderWindow::~RenderWindow()
+{}
 
-    bool RenderWindow::createWindow(const u16 width, const u16 height, const u8 bpp)
+class ParamExtractor
+{
+public:
+    constexpr ParamExtractor(const unsigned int size,
+                             const unsigned int* const data) :
+        size_{size}, data_{data}
+    {}
+
+    unsigned int getParam(const unsigned int def_param = 0U)
     {
-        sf::Uint32 style{ sf::Style::Default };
-//        if (wcp.fullScreen)
-//            style = sf::Style::Fullscreen;
-
-        sf::Window::create(sf::VideoMode(width, height, bpp), "",
-            style);
-
-        this->setVerticalSyncEnabled(false);
-        return true;
-    }
-
-    sf::Vector2u RenderWindow::getSize() const
-    {
-        return Window::getSize();
-    }
-
-    IRenderTarget* RenderWindow::renderTarget()
-    {
-        return this;
-    }
-
-    bool RenderWindow::setActive(bool active)
-    {
-        return sf::Window::setActive(active); 
-    }
-
-    bool RenderWindow::processEvents()
-    {
-        sf::Event event;
-        while (pollEvent(event)) {
-            if (event.type == sf::Event::Closed) 
-            {
-                return true;
-            }
-            else if (event.type == sf::Event::KeyPressed || event.type == sf::Event::KeyReleased) 
-            {
-                input_driver_.keyEvent(event);
-            }
+        if (current_ < size_)
+        {
+            return data_[current_++];
         }
-        return false;
+        return def_param;
     }
 
-    void RenderWindow::display()
-    {
-        Window::display();
-    }
+private:
+    unsigned int current_{0U};
+    const unsigned int size_;
+    const unsigned int* const data_;
+};
 
-    void RenderWindow::setWindowTitle(str newTitle)
-    {
-        Window::setTitle(to_sf_type(newTitle));
-    }
+bool RenderWindow::createWindow(const u32 width,
+                                const u32 height,
+                                const u8 red_bpp,
+                                const u8 green_bpp,
+                                const u8 blue_bpp,
+                                const u8 alpha_bpp,
+                                const unsigned int num_extra_parameters,
+                                const unsigned int* const extra_parameters)
+{
+    using uint = unsigned int;
+    sf::Uint32 style{sf::Style::Default};
+    //        if (wcp.fullScreen)
+    //            style = sf::Style::Fullscreen;
 
-    void RenderWindow::closeWindow()
-    {
-        Window::close();
-    }
+    ParamExtractor prm_xtr{num_extra_parameters, extra_parameters};
+    //    uint width = prm_xtr.getParam(800U);
+    //    uint height = prm_xtr.getParam(600U);
+    //    uint bpp = prm_xtr.getParam(32U);
 
-    IInputDriver * RenderWindow::inputDriver()
-    {
-        return &input_driver_;
-    }
+    unsigned int w = static_cast<unsigned int>(width);
+    unsigned int h = static_cast<unsigned int>(height);
+    unsigned int bpp =
+        static_cast<unsigned int>(red_bpp + green_bpp + blue_bpp + alpha_bpp);
 
-    void RenderWindow::onCreate()
-    {
-        RenderTarget::initialize();
-    }
+    sf::Window::create(sf::VideoMode(w, h, bpp), "", style);
 
-    void RenderWindow::onResize()
-    {
-        setView(getView());
-    }
-
-    const str WindowBackendInfo::info()
-    {
-        return make_str("SFML Backend: 1.0 Using SFML Version : ", SFML_VERSION_MAJOR, ".", SFML_VERSION_MINOR, ".", SFML_VERSION_PATCH);
-    }
+    this->setVerticalSyncEnabled(false);
+    return true;
 }
+
+sf::Vector2u RenderWindow::getSize() const
+{
+    return Window::getSize();
+}
+
+IRenderTarget* RenderWindow::renderTarget()
+{
+    return this;
+}
+
+bool RenderWindow::setActive(bool active)
+{
+    return sf::Window::setActive(active);
+}
+
+bool RenderWindow::processEvents()
+{
+    sf::Event event;
+    while (pollEvent(event))
+    {
+        if (event.type == sf::Event::Closed)
+        {
+            return true;
+        }
+        else if (event.type == sf::Event::KeyPressed ||
+                 event.type == sf::Event::KeyReleased)
+        {
+            input_driver_.keyEvent(event);
+        }
+    }
+    return false;
+}
+
+void RenderWindow::display()
+{
+    Window::display();
+}
+
+void RenderWindow::setWindowTitle(str newTitle)
+{
+    Window::setTitle(to_sf_type(newTitle));
+}
+
+void RenderWindow::closeWindow()
+{
+    Window::close();
+}
+
+IInputDriver* RenderWindow::inputDriver()
+{
+    return &input_driver_;
+}
+
+void RenderWindow::onCreate()
+{
+    RenderTarget::initialize();
+}
+
+void RenderWindow::onResize()
+{
+    setView(getView());
+}
+
+const str WindowBackendInfo::info()
+{
+    return make_str(
+        "SFML Backend: 1.0 Using SFML Version : ", SFML_VERSION_MAJOR, ".",
+        SFML_VERSION_MINOR, ".", SFML_VERSION_PATCH);
+}
+}  // namespace haf::backend::sfmlb
