@@ -150,7 +150,8 @@ bool BoardModelComponent::validCoords(
 
 vector2dst BoardModelComponent::size() const noexcept
 {
-    return vector2dst{tiles_.size(), tiles_[0].size()};
+    return !tiles_.empty() ? vector2dst{tiles_.size(), tiles_[0U].size()}
+                           : vector2dst{0U, 0U};
 }
 
 void BoardModelComponent::_setTile(const vector2dst& position,

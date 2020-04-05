@@ -14,3 +14,5 @@ build_lib_component(
 target_link_libraries(${CURRENT_TARGET} PRIVATE lib)
 target_link_libraries(${CURRENT_TARGET} PRIVATE logger)
 target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
+
+add_subdirectory(tests)
