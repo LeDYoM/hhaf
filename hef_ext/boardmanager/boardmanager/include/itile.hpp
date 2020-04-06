@@ -18,17 +18,19 @@ public:
     virtual ~ITile() {}
 
     mtps::PropertyState<BoardTileData> data;
-    virtual void tileAdded(const mtps::vector2dst & /* position */) {}
-    virtual void tileRemoved(const mtps::vector2dst & /* position */) {}
-    virtual void tileChanged(const mtps::vector2dst & /*position */,
+    virtual void tileAdded(const mtps::vector2dst& /* position */) {}
+    virtual void tileRemoved(const mtps::vector2dst& /* position */) {}
+    virtual void tileChanged(const mtps::vector2dst& /*position */,
                              const BoardTileData /* oldValue */,
-                             const BoardTileData /* newValue */) {}
+                             const BoardTileData /* newValue */)
+    {}
 
-    virtual void tileMoved(const mtps::vector2dst & /* source */,
-                           const mtps::vector2dst & /* dest */) {}
+    virtual void tileMoved(const mtps::vector2dst& /* source */,
+                           const mtps::vector2dst& /* dest */)
+    {}
 };
 
 using SITilePointer = mtps::sptr<ITile>;
-} // namespace haf::board
+}  // namespace haf::board
 
 #endif

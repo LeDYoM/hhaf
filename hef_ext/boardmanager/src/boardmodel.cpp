@@ -42,23 +42,27 @@ SITilePointer BoardModelComponent::getTile(
         return tiles_[position.x][position.y];
     }
 
-    DisplayLog::error("Error getting tile in coordinates ", position.x, ",",
-                      position.y);
+    DisplayLog::error("Error getting tile in coordinates: ", position);
     return SITilePointer();
 }
 
-void BoardModelComponent::setTile(const vector2dst& tPosition,
+bool BoardModelComponent::setTile(const vector2dst& tPosition,
                                   SITilePointer newTile)
 {
     log_assert(tileEmpty(tPosition), "You can only set data in empty tiles");
 
-    _setTile(tPosition, newTile);
-    newTile->tileAdded(tPosition);
-
-    if (actuator_)
+    if (tileEmpty(tPosition))
     {
-        actuator_->tileAdded(tPosition, newTile);
+        _setTile(tPosition, newTile);
+        newTile->tileAdded(tPosition);
+
+        if (actuator_)
+        {
+            actuator_->tileAdded(tPosition, newTile);
+        }
+        return true;
     }
+    return false;
 }
 
 bool BoardModelComponent::tileEmpty(const vector2dst& position) const noexcept
@@ -66,45 +70,61 @@ bool BoardModelComponent::tileEmpty(const vector2dst& position) const noexcept
     return getTile(position) == nullptr;
 }
 
-void BoardModelComponent::deleteTile(const vector2dst& position)
+bool BoardModelComponent::deleteTile(const vector2dst& position)
 {
     log_assert(!tileEmpty(position), "You can only delete not empty tiles");
 
-    SITilePointer current(getTile(position));
-    current->tileRemoved(position);
-
-    if (actuator_)
+    if (!tileEmpty(position))
     {
-        actuator_->tileRemoved(position, current);
+        SITilePointer current(getTile(position));
+        current->tileRemoved(position);
+
+        if (actuator_)
+        {
+            actuator_->tileRemoved(position, current);
+        }
+        tiles_[position.x][position.y].reset();
+        return true;
     }
-    tiles_[position.x][position.y].reset();
+    return false;
 }
 
-void BoardModelComponent::changeTileData(const vector2dst& source,
+bool BoardModelComponent::changeTileData(const vector2dst& source,
                                          const BoardTileData& nv)
 {
     log_assert(!tileEmpty(source),
                "You can only change data in not empty tiles");
 
-    auto tile(getTile(source));
-    BoardTileData ov{tile->data.get()};
-
-    if (actuator_)
+    if (!tileEmpty(source))
     {
-        actuator_->tileChanged(source, tile, ov, nv);
+        auto tile{getTile(source)};
+        BoardTileData ov{tile->data.get()};
+
+        if (actuator_)
+        {
+            actuator_->tileChanged(source, tile, ov, nv);
+        }
+        tile->data.set(nv);
+        tile->tileChanged(source, ov, nv);
+        return true;
     }
-    tile->tileChanged(source, ov, nv);
+    return false;
 }
 
-void BoardModelComponent::swapTileData(const vector2dst& lhs,
+bool BoardModelComponent::swapTileData(const vector2dst& lhs,
                                        const vector2dst& rhs)
 {
     log_assert(!tileEmpty(lhs), "You can only change data in not empty tiles");
     log_assert(!tileEmpty(rhs), "You can only change data in not empty tiles");
 
-    const BoardTileData temp{getTile(lhs)->data.get()};
-    changeTileData(lhs, getTile(rhs)->data.get());
-    changeTileData(rhs, temp);
+    if (!tileEmpty(lhs) && !tileEmpty(rhs))
+    {
+        const BoardTileData temp{getTile(lhs)->data.get()};
+        changeTileData(lhs, getTile(rhs)->data.get());
+        changeTileData(rhs, temp);
+        return true;
+    }
+    return false;
 }
 
 bool BoardModelComponent::moveTile(const vector2dst& source,
@@ -117,21 +137,23 @@ bool BoardModelComponent::moveTile(const vector2dst& source,
         SITilePointer sourceTile{getTile(source)};
         SITilePointer destTile{getTile(dest)};
 
-        DisplayLog::info("Source Value: ", sourceTile->data.get());
-
         if (sourceTile)
         {
+            DisplayLog::info("Source Value: ", sourceTile->data.get());
             log_assert(!destTile, "Trying to move to a not empty tile: ", dest);
 
-            _setTile(dest, sourceTile);
-            _setTile(source, SITilePointer());
-
-            if (actuator_)
+            if (!destTile)
             {
-                actuator_->tileMoved(source, dest, sourceTile);
+                _setTile(dest, sourceTile);
+                _setTile(source, SITilePointer());
+
+                if (actuator_)
+                {
+                    actuator_->tileMoved(source, dest, sourceTile);
+                }
+                sourceTile->tileMoved(source, dest);
+                return true;
             }
-            sourceTile->tileMoved(source, dest);
-            return true;
         }
     }
     else
