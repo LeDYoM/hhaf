@@ -316,7 +316,7 @@ void GameScene::launchPlayer()
     const Direction loopDirection{m_boardGroup->player()->currentDirection()};
     const vector2dst loopPosition{
         m_boardGroup->player()->boardPosition()};
-    const board::BoardTileData tokenType{m_boardGroup->player()->data.get()};
+    const board::BoardTileData tokenType{m_boardGroup->player()->value()};
     ScoreIncrementer score_incrementer{level_properties_};
     BoardUtils::for_each_token_in_line(
         loopPosition, loopDirection, m_boardGroup->boardModel()->size(),
@@ -331,7 +331,7 @@ void GameScene::launchPlayer()
             {
                 sptr<board::ITile> currentToken{
                     m_boardGroup->boardModel()->getTile(loopPosition)};
-                board::BoardTileData currentTokenType{currentToken->data.get()};
+                board::BoardTileData currentTokenType{currentToken->value()};
 
                 if (currentTokenType == tokenType)
                 {
@@ -360,7 +360,7 @@ void GameScene::launchPlayer()
                         m_boardGroup->player()->boardPosition(), loopPosition);
 
                     DisplayLog::info("Player type changed to ",
-                                     m_boardGroup->player()->data.get());
+                                     m_boardGroup->player()->value());
 
                     // Exit the loop
                     result = false;
@@ -396,7 +396,7 @@ void GameScene::_debugDisplayBoard() const
             auto lp_tile(m_boardGroup->boardModel()->getTile({x, y}));
             if (lp_tile)
             {
-                chTemp = str::to_str(lp_tile->data.get());
+                chTemp = str::to_str(lp_tile->value());
             }
             else
             {

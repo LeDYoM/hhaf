@@ -179,7 +179,7 @@ TEST_CASE("BoardManager control with actuator", "[board_manager]")
         for (auto y = 0U; y < bm_size.y; ++y)
         {
             auto tile = msptr<ITile>();
-            CHECK(tile->data() == 0);
+            CHECK(tile->value() == 0);
             board_model_component.setTile(vector2dst{x, y}, std::move(tile));
         }
     }
@@ -196,12 +196,12 @@ TEST_CASE("BoardManager control with actuator", "[board_manager]")
     CHECK_FALSE(board_model_component.tileEmpty({0, 1}));
 
     CHECK(board_model_component.changeTileData({0,1}, 2));
-    CHECK(board_model_component.getTile({1,1})->data() == 0);
-    CHECK(board_model_component.getTile({0,1})->data() == 2);
+    CHECK(board_model_component.getTile({1,1})->value() == 0);
+    CHECK(board_model_component.getTile({0,1})->value() == 2);
     CHECK(dummy_board_model_actuator->data() == 3U);
 
     CHECK(board_model_component.swapTileData({0,1}, {1, 1}));
-    CHECK(board_model_component.getTile({0,1})->data() == 0);
-    CHECK(board_model_component.getTile({1,1})->data() == 2);
+    CHECK(board_model_component.getTile({0,1})->value() == 0);
+    CHECK(board_model_component.getTile({1,1})->value() == 2);
     CHECK(dummy_board_model_actuator->data() == 5U);
 }

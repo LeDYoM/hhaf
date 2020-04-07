@@ -98,13 +98,13 @@ bool BoardModelComponent::changeTileData(const vector2dst& source,
     if (!tileEmpty(source))
     {
         auto tile{getTile(source)};
-        BoardTileData ov{tile->data.get()};
+        BoardTileData ov{tile->value()};
 
         if (actuator_)
         {
             actuator_->tileChanged(source, tile, ov, nv);
         }
-        tile->data.set(nv);
+        tile->data_ = nv;
         tile->tileChanged(source, ov, nv);
         return true;
     }
@@ -119,8 +119,8 @@ bool BoardModelComponent::swapTileData(const vector2dst& lhs,
 
     if (!tileEmpty(lhs) && !tileEmpty(rhs))
     {
-        const BoardTileData temp{getTile(lhs)->data.get()};
-        changeTileData(lhs, getTile(rhs)->data.get());
+        const BoardTileData temp{getTile(lhs)->value()};
+        changeTileData(lhs, getTile(rhs)->value());
         changeTileData(rhs, temp);
         return true;
     }
@@ -139,7 +139,7 @@ bool BoardModelComponent::moveTile(const vector2dst& source,
 
         if (sourceTile)
         {
-            DisplayLog::info("Source Value: ", sourceTile->data.get());
+            DisplayLog::info("Source Value: ", sourceTile->value());
             log_assert(!destTile, "Trying to move to a not empty tile: ", dest);
 
             if (!destTile)

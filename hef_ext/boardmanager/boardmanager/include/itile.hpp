@@ -5,7 +5,6 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
-#include <mtypes/include/properties.hpp>
 
 namespace haf::board
 {
@@ -17,7 +16,6 @@ public:
     constexpr ITile() noexcept {}
     virtual ~ITile() {}
 
-    mtps::PropertyState<BoardTileData> data;
     virtual void tileAdded(const mtps::vector2dst& /* position */) {}
     virtual void tileRemoved(const mtps::vector2dst& /* position */) {}
     virtual void tileChanged(const mtps::vector2dst& /*position */,
@@ -28,6 +26,13 @@ public:
     virtual void tileMoved(const mtps::vector2dst& /* source */,
                            const mtps::vector2dst& /* dest */)
     {}
+
+    BoardTileData value() const noexcept { return data_; }
+
+private:
+    BoardTileData data_{0};
+    friend class BoardModelComponent;
+
 };
 
 using SITilePointer = mtps::sptr<ITile>;
