@@ -11,12 +11,18 @@ namespace haf::board
 {
 class IBoardModelActuator;
 
-class BoardModelComponent : public scene::IComponent
+class BoardModelComponent : public haf::scene::IComponent
 {
 public:
-    BoardModelComponent();
-    ~BoardModelComponent() override;
-
+    /**
+     * @brief Method to initialize the component.
+     * This method should be called once and only once per component.
+     * Failing that is underfined behaviour.
+     * 
+     * @param size Size of the board.
+     * @param board_model_actuator Pointer to a @b IBoardModelActuator
+     * to handle the callbacks.
+     */
     void initialize(const mtps::vector2dst& size,
                     mtps::rptr<IBoardModelActuator> board_model_actuator);
 

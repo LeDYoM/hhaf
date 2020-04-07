@@ -7,8 +7,6 @@ using namespace mtps;
 
 namespace haf::board
 {
-BoardModelComponent::BoardModelComponent()  = default;
-BoardModelComponent::~BoardModelComponent() = default;
 
 void BoardModelComponent::initialize(
     const vector2dst& size,
