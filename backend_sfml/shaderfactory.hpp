@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_BACKEND_SFML_SHADERFACTORY_HPP
-#define LIB_BACKEND_SFML_SHADERFACTORY_HPP
+#ifndef HAF_BACKEND_SFML_SHADERFACTORY_HPP
+#define HAF_BACKEND_SFML_SHADERFACTORY_HPP
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>

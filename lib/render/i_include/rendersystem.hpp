@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_SYS_SYSTEM_RENDERSYSTEM_INCLUDE_HPP
-#define LIB_SYS_SYSTEM_RENDERSYSTEM_INCLUDE_HPP
+#ifndef HAF_SYS_SYSTEM_RENDERSYSTEM_INCLUDE_HPP
+#define HAF_SYS_SYSTEM_RENDERSYSTEM_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <lib/system/include/appservice.hpp>

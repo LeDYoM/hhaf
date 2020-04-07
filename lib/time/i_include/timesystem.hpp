@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_CORE_SYSTEM_TIMESYSTEM_INCLUDE_HPP
-#define LIB_CORE_SYSTEM_TIMESYSTEM_INCLUDE_HPP
+#ifndef HAF_CORE_SYSTEM_TIMESYSTEM_INCLUDE_HPP
+#define HAF_CORE_SYSTEM_TIMESYSTEM_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <lib/system/include/appservice.hpp>

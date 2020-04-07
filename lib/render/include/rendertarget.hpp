@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_CORE_RENDER_TARGET_INCLUDE_HPP
-#define LIB_CORE_RENDER_TARGET_INCLUDE_HPP
+#ifndef HAF_CORE_RENDER_TARGET_INCLUDE_HPP
+#define HAF_CORE_RENDER_TARGET_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/rect.hpp>

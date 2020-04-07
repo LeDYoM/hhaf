@@ -49,7 +49,7 @@ void SimulationSystem::initialize()
     // Just test.
     SimulationActionGroup simulation_action_group;
 
-#ifdef LIB_USE_SIMULATION_INIT_DATA
+#ifdef HAF_USE_SIMULATION_INIT_DATA
     {
         simulation_action_group.addKeyStroke(Key::Return);
         simulation_action_group.addKeyStroke(Key::Down);

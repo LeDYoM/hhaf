@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_RESOURCES_BMPFONT_FACTORY_HPP
-#define LIB_RESOURCES_BMPFONT_FACTORY_HPP
+#ifndef HAF_RESOURCES_BMPFONT_FACTORY_HPP
+#define HAF_RESOURCES_BMPFONT_FACTORY_HPP
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector.hpp>

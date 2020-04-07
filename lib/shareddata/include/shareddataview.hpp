@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_SHAREDDATA_VIEW_DATA_WRAPPER_INCLUDE_HPP
-#define LIB_SHAREDDATA_VIEW_DATA_WRAPPER_INCLUDE_HPP
+#ifndef HAF_SHAREDDATA_VIEW_DATA_WRAPPER_INCLUDE_HPP
+#define HAF_SHAREDDATA_VIEW_DATA_WRAPPER_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <lib/system/include/idatawrapper.hpp>

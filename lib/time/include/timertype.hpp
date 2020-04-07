@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_TIME_TIMER_TYPE_INCLUDE_HPP
-#define LIB_TIME_TIMER_TYPE_INCLUDE_HPP
+#ifndef HAF_TIME_TIMER_TYPE_INCLUDE_HPP
+#define HAF_TIME_TIMER_TYPE_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 

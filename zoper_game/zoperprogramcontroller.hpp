@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_ZOPERPROGRAMCONTROLLER_HPP
-#define LIB_ZOPERPROGRAMCONTROLLER_HPP
+#ifndef HAF_ZOPERPROGRAMCONTROLLER_HPP
+#define HAF_ZOPERPROGRAMCONTROLLER_HPP
 
 #include <hosted_app/include/iapp.hpp>
 #include <mtypes/include/types.hpp>

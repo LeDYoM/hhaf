@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_RESOURCE_HANDLER_DATA_WRAPPER_INCLUDE_HPP
-#define LIB_RESOURCE_HANDLER_DATA_WRAPPER_INCLUDE_HPP
+#ifndef HAF_RESOURCE_HANDLER_DATA_WRAPPER_INCLUDE_HPP
+#define HAF_RESOURCE_HANDLER_DATA_WRAPPER_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <lib/system/include/idatawrapper.hpp>

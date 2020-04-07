@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_BACKEND_BACKEND_CREATOR_HPP
-#define LIB_BACKEND_BACKEND_CREATOR_HPP
+#ifndef HAF_BACKEND_BACKEND_CREATOR_HPP
+#define HAF_BACKEND_BACKEND_CREATOR_HPP
 
 #include <backend/include/backendfactory.hpp>
 

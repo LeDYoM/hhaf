@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_STATES_CONTROLLER_INCLUDE_HPP
-#define LIB_STATES_CONTROLLER_INCLUDE_HPP
+#ifndef HAF_STATES_CONTROLLER_INCLUDE_HPP
+#define HAF_STATES_CONTROLLER_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/function.hpp>

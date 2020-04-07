@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_CLASSMACROS_INCLUDE_
-#define LIB_CLASSMACROS_INCLUDE_
+#ifndef HAF_CLASSMACROS_INCLUDE_
+#define HAF_CLASSMACROS_INCLUDE_
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/types_ext.hpp>

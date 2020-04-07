@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_SCENE_COMPONENTCONTAINER_INCLUDE_HPP
-#define LIB_SCENE_COMPONENTCONTAINER_INCLUDE_HPP
+#ifndef HAF_SCENE_COMPONENTCONTAINER_INCLUDE_HPP
+#define HAF_SCENE_COMPONENTCONTAINER_INCLUDE_HPP
 
 #include <lib/include/liblog.hpp>
 #include <lib/scene/include/icomponent.hpp>

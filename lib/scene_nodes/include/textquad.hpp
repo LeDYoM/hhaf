@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_SCENE_TEXTQUAD_INCLUDE_HPP
-#define LIB_SCENE_TEXTQUAD_INCLUDE_HPP
+#ifndef HAF_SCENE_TEXTQUAD_INCLUDE_HPP
+#define HAF_SCENE_TEXTQUAD_INCLUDE_HPP
 
 #include <lib/scene_nodes/include/tablenode.hpp>
 #include <lib/scene_nodes/include/scenenodetext.hpp>

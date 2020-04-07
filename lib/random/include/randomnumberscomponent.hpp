@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_DATA_PROVIDER_COMPONENT_INCLUDE_HPP
-#define LIB_DATA_PROVIDER_COMPONENT_INCLUDE_HPP
+#ifndef HAF_DATA_PROVIDER_COMPONENT_INCLUDE_HPP
+#define HAF_DATA_PROVIDER_COMPONENT_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>

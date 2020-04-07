@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_SCENE_TTFONT_INCLUDE_HPP
-#define LIB_SCENE_TTFONT_INCLUDE_HPP
+#ifndef HAF_SCENE_TTFONT_INCLUDE_HPP
+#define HAF_SCENE_TTFONT_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/rect.hpp>

@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_HOST_APP_LOADER_INCLUDE_HPP
-#define LIB_HOST_APP_LOADER_INCLUDE_HPP
+#ifndef HAF_HOST_APP_LOADER_INCLUDE_HPP
+#define HAF_HOST_APP_LOADER_INCLUDE_HPP
 
 #include "hosted_app/include/iapp.hpp"
 #include <mtypes/include/types.hpp>

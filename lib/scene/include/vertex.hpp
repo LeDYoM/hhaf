@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_SCENE_VERTEX_INCLUDE_HPP__
-#define LIB_SCENE_VERTEX_INCLUDE_HPP__
+#ifndef HAF_SCENE_VERTEX_INCLUDE_HPP__
+#define HAF_SCENE_VERTEX_INCLUDE_HPP__
 
 #include <mtypes/include/vector2d.hpp>
 #include <lib/scene/include/color.hpp>

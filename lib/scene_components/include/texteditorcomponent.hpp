@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_COMPONENT_TEXTEDITOR_INCLUDE_HPP
-#define LIB_COMPONENT_TEXTEDITOR_INCLUDE_HPP
+#ifndef HAF_COMPONENT_TEXTEDITOR_INCLUDE_HPP
+#define HAF_COMPONENT_TEXTEDITOR_INCLUDE_HPP
 
 #include <lib/input/include/inputcomponent.hpp>
 #include <mtypes/include/types.hpp>

@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_CORE_HASNAME_HPP
-#define LIB_CORE_HASNAME_HPP
+#ifndef HAF_CORE_HASNAME_HPP
+#define HAF_CORE_HASNAME_HPP
 
 #include <mtypes/include/str.hpp>
 

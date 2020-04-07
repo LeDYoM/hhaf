@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_SYSTEM_SHARED_DATA_INCLUDE_HPP
-#define LIB_SYSTEM_SHARED_DATA_INCLUDE_HPP
+#ifndef HAF_SYSTEM_SHARED_DATA_INCLUDE_HPP
+#define HAF_SYSTEM_SHARED_DATA_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <lib/system/include/appservice.hpp>

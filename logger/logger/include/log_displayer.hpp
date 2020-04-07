@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_LOG_LOG_DISPLAYER_INCLUDE_HPP
-#define LIB_LOG_LOG_DISPLAYER_INCLUDE_HPP
+#ifndef HAF_LOG_LOG_DISPLAYER_INCLUDE_HPP
+#define HAF_LOG_LOG_DISPLAYER_INCLUDE_HPP
 
 #include "severity_type.hpp"
 

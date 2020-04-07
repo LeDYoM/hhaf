@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_BACKEND_FACTORY_HPP
-#define LIB_BACKEND_FACTORY_HPP
+#ifndef HAF_BACKEND_FACTORY_HPP
+#define HAF_BACKEND_FACTORY_HPP
 
 #include <backend_dev/include/iresourcefactories.hpp>
 

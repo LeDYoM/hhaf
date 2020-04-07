@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_BACKEND_SFMLB_INPUTDRIVER_INCLUDE_HPP
-#define LIB_BACKEND_SFMLB_INPUTDRIVER_INCLUDE_HPP
+#ifndef HAF_BACKEND_SFMLB_INPUTDRIVER_INCLUDE_HPP
+#define HAF_BACKEND_SFMLB_INPUTDRIVER_INCLUDE_HPP
 
 #include <backend_dev/include/iinputdriver.hpp>
 #include <SFML/Window/Event.hpp>

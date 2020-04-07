@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_RESOURCEMANAGER_INCLUDE_HPP
-#define LIB_RESOURCEMANAGER_INCLUDE_HPP
+#ifndef HAF_RESOURCEMANAGER_INCLUDE_HPP
+#define HAF_RESOURCEMANAGER_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>

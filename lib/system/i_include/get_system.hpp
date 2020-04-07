@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_SYSTEM_INTERNAL_GET_INCLUDE_HPP
-#define LIB_SYSTEM_INTERNAL_GET_INCLUDE_HPP
+#ifndef HAF_SYSTEM_INTERNAL_GET_INCLUDE_HPP
+#define HAF_SYSTEM_INTERNAL_GET_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 

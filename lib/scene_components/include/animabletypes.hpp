@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_SCENE_ANIMABLETYPE_INCLUDE_HPP
-#define LIB_SCENE_ANIMABLETYPE_INCLUDE_HPP
+#ifndef HAF_SCENE_ANIMABLETYPE_INCLUDE_HPP
+#define HAF_SCENE_ANIMABLETYPE_INCLUDE_HPP
 
 #include <lib/scene/include/color.hpp>
 

@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_KEY_INCLUDE_HPP
-#define LIB_KEY_INCLUDE_HPP
+#ifndef HAF_KEY_INCLUDE_HPP
+#define HAF_KEY_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/types_ext.hpp>

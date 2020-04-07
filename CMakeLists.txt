@@ -18,9 +18,9 @@ else()
     add_compile_definitions(-Wall -Wextra -pedantic -Werror)
 endif()
 
-add_compile_definitions(LIB_COMPILE_SIMULATIONS)
-add_compile_definitions(LIB_ALLOW_ACCELERATION)
-#add_compile_definitions(LIB_USE_SIMULATION_INIT_DATA)
+add_compile_definitions(HAF_COMPILE_SIMULATIONS)
+add_compile_definitions(HAF_ALLOW_ACCELERATION)
+#add_compile_definitions(HAF_USE_SIMULATION_INIT_DATA)
 
 message ("CXX Flags: " ${CMAKE_CXX_FLAGS})
 

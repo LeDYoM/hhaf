@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_TIME_VIEW_DATA_WRAPPER_INCLUDE_HPP
-#define LIB_TIME_VIEW_DATA_WRAPPER_INCLUDE_HPP
+#ifndef HAF_TIME_VIEW_DATA_WRAPPER_INCLUDE_HPP
+#define HAF_TIME_VIEW_DATA_WRAPPER_INCLUDE_HPP
 
 #include <lib/system/include/idatawrapper.hpp>
 #include <lib/time/include/timepoint.hpp>

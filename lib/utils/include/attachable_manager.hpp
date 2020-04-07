@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_ATTACHABLE_MANAGER_INCLUDE_HPP
-#define LIB_ATTACHABLE_MANAGER_INCLUDE_HPP
+#ifndef HAF_ATTACHABLE_MANAGER_INCLUDE_HPP
+#define HAF_ATTACHABLE_MANAGER_INCLUDE_HPP
 
 #include <lib/utils/include/attachable.hpp>
 #include <mtypes/include/types.hpp>

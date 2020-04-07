@@ -34,7 +34,7 @@ struct TimeSystem::TimeSystemPrivate final
     TimePoint timeSinceStart() const
     {
         return (timepoint_global_now() - globalStart_)
-#ifdef LIB_ALLOW_ACCELERATION
+#ifdef HAF_ALLOW_ACCELERATION
                * acceleration_;
 #endif
         ;
@@ -50,7 +50,7 @@ struct TimeSystem::TimeSystemPrivate final
         last_end_frame_ = timepoint_global_now();
     }
 
-#ifdef LIB_ALLOW_ACCELERATION
+#ifdef HAF_ALLOW_ACCELERATION
     void setAcceleration(const f32 acceleration) noexcept
     {
         acceleration_ = acceleration;
@@ -60,7 +60,7 @@ private:
     TimePoint globalStart_;
     TimePoint last_start_frame_{0U};
     TimePoint last_end_frame_{0U};
-#ifdef LIB_ALLOW_ACCELERATION
+#ifdef HAF_ALLOW_ACCELERATION
     f32 acceleration_ = 1.0f;
 #endif
 };
@@ -85,7 +85,7 @@ TimePoint TimeSystem::now() const
 
 void TimeSystem::setAcceleration(const f32 acceleration)
 {
-#ifdef LIB_ALLOW_ACCELERATION
+#ifdef HAF_ALLOW_ACCELERATION
     priv_->setAcceleration(acceleration);
 #endif
 }

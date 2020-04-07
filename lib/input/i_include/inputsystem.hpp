@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_INPUTSYSTEM_INCLUDE_HPP
-#define LIB_INPUTSYSTEM_INCLUDE_HPP
+#ifndef HAF_INPUTSYSTEM_INCLUDE_HPP
+#define HAF_INPUTSYSTEM_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <lib/input/include/key.hpp>

@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_BACKEND_INTERFACES_INLUDE_HPP
-#define LIB_BACKEND_INTERFACES_INLUDE_HPP
+#ifndef HAF_BACKEND_INTERFACES_INLUDE_HPP
+#define HAF_BACKEND_INTERFACES_INLUDE_HPP
 
 #include "../iwindow.hpp"
 #include "../iresourcefactories.hpp"

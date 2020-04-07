@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_COMPONENT_DISCRETE_TEXT_INCLUDE_HPP
-#define LIB_COMPONENT_DISCRETE_TEXT_INCLUDE_HPP
+#ifndef HAF_COMPONENT_DISCRETE_TEXT_INCLUDE_HPP
+#define HAF_COMPONENT_DISCRETE_TEXT_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <lib/scene_nodes/include/scenenodetext.hpp>

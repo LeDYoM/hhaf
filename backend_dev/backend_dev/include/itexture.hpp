@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_BACKEND_ITEXTURE_HPP
-#define LIB_BACKEND_ITEXTURE_HPP
+#ifndef HAF_BACKEND_ITEXTURE_HPP
+#define HAF_BACKEND_ITEXTURE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>

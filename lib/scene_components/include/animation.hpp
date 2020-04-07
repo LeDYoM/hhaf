@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_SCENE_IANIMATION_INCLUDE_HPP
-#define LIB_SCENE_IANIMATION_INCLUDE_HPP
+#ifndef HAF_SCENE_IANIMATION_INCLUDE_HPP
+#define HAF_SCENE_IANIMATION_INCLUDE_HPP
 
 #include <lib/time/include/timepoint.hpp>
 #include <lib/time/include/timeview.hpp>

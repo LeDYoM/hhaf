@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_INPUT_COMPONENT_BASE_INCLUDE_HPP
-#define LIB_INPUT_COMPONENT_BASE_INCLUDE_HPP
+#ifndef HAF_INPUT_COMPONENT_BASE_INCLUDE_HPP
+#define HAF_INPUT_COMPONENT_BASE_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <lib/scene/include/icomponent.hpp>

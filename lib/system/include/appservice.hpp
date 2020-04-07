@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_APP_SERVICE_INCLUDE_HPP
-#define LIB_APP_SERVICE_INCLUDE_HPP
+#ifndef HAF_APP_SERVICE_INCLUDE_HPP
+#define HAF_APP_SERVICE_INCLUDE_HPP
 
 namespace haf::sys
 {

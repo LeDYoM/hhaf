@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_COMPONENT_RENDERIZABLES_INCLUDE_HPP
-#define LIB_COMPONENT_RENDERIZABLES_INCLUDE_HPP
+#ifndef HAF_COMPONENT_RENDERIZABLES_INCLUDE_HPP
+#define HAF_COMPONENT_RENDERIZABLES_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/function.hpp>

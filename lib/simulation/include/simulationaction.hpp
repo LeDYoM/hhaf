@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_CORE_SYSTEM_SIMULATIONACTION_INCLUDE_HPP
-#define LIB_CORE_SYSTEM_SIMULATIONACTION_INCLUDE_HPP
+#ifndef HAF_CORE_SYSTEM_SIMULATIONACTION_INCLUDE_HPP
+#define HAF_CORE_SYSTEM_SIMULATIONACTION_INCLUDE_HPP
 
 #include <lib/input/include/key.hpp>
 #include <lib/include/liblog.hpp>

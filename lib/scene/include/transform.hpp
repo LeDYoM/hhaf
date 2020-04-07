@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_TRANSFORMATION_INCLUDE_HPP
-#define LIB_TRANSFORMATION_INCLUDE_HPP
+#ifndef HAF_TRANSFORMATION_INCLUDE_HPP
+#define HAF_TRANSFORMATION_INCLUDE_HPP
 
 #include <mtypes/include/vector2d.hpp>
 #include <mtypes/include/rect.hpp>

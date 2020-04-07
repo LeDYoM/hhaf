@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_SYSTEM_PROVIDER_INCLUDE_HPP
-#define LIB_SYSTEM_PROVIDER_INCLUDE_HPP
+#ifndef HAF_SYSTEM_PROVIDER_INCLUDE_HPP
+#define HAF_SYSTEM_PROVIDER_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <lib/system/include/isystemprovider.hpp>
@@ -29,7 +29,7 @@ class Window;
 class ResourceManager;
 class RandomSystem;
 class FileSystem;
-#ifdef LIB_COMPILE_SIMULATIONS
+#ifdef HAF_COMPILE_SIMULATIONS
 class SimulationSystem;
 #endif
 class TimeSystem;
@@ -74,7 +74,7 @@ public:
     scene::SceneManager &sceneManager() noexcept;
     const FileSystem &fileSystem() const noexcept;
     FileSystem &fileSystem() noexcept;
-#ifdef LIB_COMPILE_SIMULATIONS
+#ifdef HAF_COMPILE_SIMULATIONS
     const SimulationSystem &simulationSystem() const noexcept;
     SimulationSystem &simulationSystem() noexcept;
 #endif

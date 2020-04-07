@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_VIRTUAL_INPUT_COMPONENT_INCLUDE_HPP
-#define LIB_VIRTUAL_INPUT_COMPONENT_INCLUDE_HPP
+#ifndef HAF_VIRTUAL_INPUT_COMPONENT_INCLUDE_HPP
+#define HAF_VIRTUAL_INPUT_COMPONENT_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <lib/input/include/input_component_base.hpp>

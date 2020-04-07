@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_BOARD_ITILE_HPP
-#define LIB_BOARD_ITILE_HPP
+#ifndef HAF_BOARD_ITILE_HPP
+#define HAF_BOARD_ITILE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
