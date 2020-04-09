@@ -3,7 +3,7 @@
 #ifndef HAF_BACKEND_IINPUTDRIVER_INCLUDE_HPP
 #define HAF_BACKEND_IINPUTDRIVER_INCLUDE_HPP
 
-#include <lib/input/include/key.hpp>
+#include <haf/input/include/key.hpp>
 
 namespace haf::backend
 {

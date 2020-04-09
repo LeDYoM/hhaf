@@ -1,7 +1,7 @@
 #include "highscoresdata.hpp"
 
 #include <mtypes/include/serializer.hpp>
-#include <lib/include/liblog.hpp>
+#include <haf/include/liblog.hpp>
 
 using namespace mtps;
 using namespace haf;

@@ -5,8 +5,8 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/connection.hpp>
-#include <lib/scene/include/renderizable.hpp>
-#include <lib/scene/include/scene.hpp>
+#include <haf/scene/include/renderizable.hpp>
+#include <haf/scene/include/scene.hpp>
 
 namespace zoper
 {

@@ -1,8 +1,8 @@
 #include "highscoresresources.hpp"
 
-#include <lib/resources/include/iresourcehandler.hpp>
+#include <haf/resources/include/iresourcehandler.hpp>
 
-#include <lib/resources/include/itexture.hpp>
+#include <haf/resources/include/itexture.hpp>
 
 namespace zoper
 {

@@ -1,5 +1,5 @@
 #include "boardscenenode.hpp"
-#include <lib/include/liblog.hpp>
+#include <haf/include/liblog.hpp>
 
 using namespace mtps;
 

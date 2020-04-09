@@ -6,9 +6,9 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
 
-#include <lib/time/include/timercomponent.hpp>
-#include <lib/scene/include/icomponent.hpp>
-#include <lib/scene/include/color.hpp>
+#include <haf/time/include/timercomponent.hpp>
+#include <haf/scene/include/icomponent.hpp>
+#include <haf/scene/include/color.hpp>
 
 #include "../gameshareddata.hpp"
 #include "gamehud.hpp"

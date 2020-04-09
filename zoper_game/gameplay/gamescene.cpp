@@ -19,14 +19,14 @@
 #include <mtypes/include/properties.hpp>
 
 #include <boardmanager/include/boardmodel.hpp>
-#include <lib/include/liblog.hpp>
-#include <lib/scene/include/renderizable.hpp>
-#include <lib/resources/include/resourcehandler.hpp>
-#include <lib/scene_components/include/animationcomponent.hpp>
-#include <lib/scene_components/include/scenecontrol.hpp>
-#include <lib/input/include/inputcomponent.hpp>
-#include <lib/random/include/randomnumberscomponent.hpp>
-#include <lib/shareddata/include/shareddataview.hpp>
+#include <haf/include/liblog.hpp>
+#include <haf/scene/include/renderizable.hpp>
+#include <haf/resources/include/resourcehandler.hpp>
+#include <haf/scene_components/include/animationcomponent.hpp>
+#include <haf/scene_components/include/scenecontrol.hpp>
+#include <haf/input/include/inputcomponent.hpp>
+#include <haf/random/include/randomnumberscomponent.hpp>
+#include <haf/shareddata/include/shareddataview.hpp>
 
 using namespace mtps;
 using namespace haf;

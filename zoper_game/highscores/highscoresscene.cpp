@@ -6,11 +6,11 @@
 #include "../loaders/highscoresresources.hpp"
 #include "../common_scene_nodes.hpp"
 
-#include <lib/scene_components/include/statescontroller.hpp>
-#include <lib/input/include/inputcomponent.hpp>
-#include <lib/resources/include/resourceview.hpp>
-#include <lib/resources/include/resourcehandler.hpp>
-#include <lib/scene_components/include/scenecontrol.hpp>
+#include <haf/scene_components/include/statescontroller.hpp>
+#include <haf/input/include/inputcomponent.hpp>
+#include <haf/resources/include/resourceview.hpp>
+#include <haf/resources/include/resourcehandler.hpp>
+#include <haf/scene_components/include/scenecontrol.hpp>
 
 namespace zoper
 {

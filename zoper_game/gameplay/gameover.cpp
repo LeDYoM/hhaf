@@ -2,14 +2,14 @@
 
 #include "../loaders/gameresources.hpp"
 
-#include <lib/scene/include/scene.hpp>
-#include <lib/scene_nodes/include/scenenodetext.hpp>
-#include <lib/scene_components/include/scenemetrics.hpp>
+#include <haf/scene/include/scene.hpp>
+#include <haf/scene_nodes/include/scenenodetext.hpp>
+#include <haf/scene_components/include/scenemetrics.hpp>
 
-#include <lib/include/liblog.hpp>
-#include <lib/resources/include/iresourceretriever.hpp>
-#include <lib/resources/include/ittfont.hpp>
-#include <lib/resources/include/resourceview.hpp>
+#include <haf/include/liblog.hpp>
+#include <haf/resources/include/iresourceretriever.hpp>
+#include <haf/resources/include/ittfont.hpp>
+#include <haf/resources/include/resourceview.hpp>
 
 using namespace mtps;
 

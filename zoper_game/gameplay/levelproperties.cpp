@@ -1,8 +1,8 @@
 #include "levelproperties.hpp"
 #include "../gameshareddata.hpp"
 
-#include <lib/include/liblog.hpp>
-#include <lib/shareddata/include/shareddataview.hpp>
+#include <haf/include/liblog.hpp>
+#include <haf/shareddata/include/shareddataview.hpp>
 
 using namespace mtps;
 

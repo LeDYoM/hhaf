@@ -9,7 +9,7 @@
 #include <mtypes/include/vector2d.hpp>
 
 #include <boardmanager/include/itile.hpp>
-#include <lib/scene_components/include/animationcomponent.hpp>
+#include <haf/scene_components/include/animationcomponent.hpp>
 
 namespace zoper
 {

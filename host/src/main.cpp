@@ -2,7 +2,7 @@
 
 #include <memmanager/include/memmanager.hpp>
 #include <host/include/host.hpp>
-#include <lib/include/liblog.hpp>
+#include <haf/include/liblog.hpp>
 #include <logger/include/log.hpp>
 #include <host/include/apploader.hpp>
 

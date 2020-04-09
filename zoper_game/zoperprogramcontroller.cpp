@@ -6,12 +6,12 @@
 #include "gameshareddata.hpp"
 
 #include <mtypes/include/serializer.hpp>
-#include <lib/system/i_include/systemprovider.hpp>
-#include <lib/system/i_include/get_systemprovider.hpp>
-#include <lib/filesystem/i_include/filesystem.hpp>
-#include <lib/scene/i_include/scenemanager.hpp>
-#include <lib/scene/i_include/scenecontroller.hpp>
-#include <lib/shareddata/include/ishareddatasystem.hpp>
+#include <haf/system/i_include/systemprovider.hpp>
+#include <haf/system/i_include/get_systemprovider.hpp>
+#include <haf/filesystem/i_include/filesystem.hpp>
+#include <haf/scene/i_include/scenemanager.hpp>
+#include <haf/scene/i_include/scenecontroller.hpp>
+#include <haf/shareddata/include/ishareddatasystem.hpp>
 
 using namespace mtps;
 using namespace haf;

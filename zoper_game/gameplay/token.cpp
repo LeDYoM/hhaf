@@ -1,6 +1,6 @@
 #include "token.hpp"
 
-#include <lib/include/liblog.hpp>
+#include <haf/include/liblog.hpp>
 
 #include "gamescene.hpp"
 #include "levelproperties.hpp"

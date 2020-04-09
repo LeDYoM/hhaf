@@ -3,10 +3,10 @@
 #include "tokenzones.hpp"
 #include "player.hpp"
 
-#include <lib/scene/include/scenenode.hpp>
-#include <lib/scene_nodes/include/tablenode.hpp>
-#include <lib/scene_components/include/scenemetrics.hpp>
-#include <lib/scene/include/renderizable.hpp>
+#include <haf/scene/include/scenenode.hpp>
+#include <haf/scene_nodes/include/tablenode.hpp>
+#include <haf/scene_components/include/scenemetrics.hpp>
+#include <haf/scene/include/renderizable.hpp>
 
 #include <boardmanager/include/boardmodel.hpp>
 #include <boardmanager/include/itile.hpp>

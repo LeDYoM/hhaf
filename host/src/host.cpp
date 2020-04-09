@@ -1,9 +1,9 @@
 #include <host/include/host.hpp>
 
-#include <lib/include/liblog.hpp>
+#include <haf/include/liblog.hpp>
 #include <hosted_app/include/iapp.hpp>
-#include <lib/system/include/icontrollablesystemprovider.hpp>
-#include <lib/system/include/systemprovider_init.hpp>
+#include <haf/system/include/icontrollablesystemprovider.hpp>
+#include <haf/system/include/systemprovider_init.hpp>
 
 #include <mtypes/include/parpar.hpp>
 #include <mtypes/include/object.hpp>

@@ -5,9 +5,9 @@
 
 #include <mtypes/include/types.hpp>
 
-#include <lib/scene/include/scenenode.hpp>
-#include <lib/scene_nodes/include/scenenodetext.hpp>
-#include <lib/scene_components/include/animationcomponent.hpp>
+#include <haf/scene/include/scenenode.hpp>
+#include <haf/scene_nodes/include/scenenodetext.hpp>
+#include <haf/scene_components/include/animationcomponent.hpp>
 
 #include "../gameshareddata.hpp"
 

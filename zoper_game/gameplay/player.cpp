@@ -4,8 +4,8 @@
 #include "boardgroup.hpp"
 #include <boardmanager/include/boardmodel.hpp>
 
-#include <lib/include/liblog.hpp>
-#include <lib/scene/include/scenenodetypes.hpp>
+#include <haf/include/liblog.hpp>
+#include <haf/scene/include/scenenodetypes.hpp>
 
 namespace zoper
 {

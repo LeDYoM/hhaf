@@ -1,7 +1,7 @@
 #include "gamebasetile.hpp"
 #include "boardgroup.hpp"
 
-#include <lib/include/liblog.hpp>
+#include <haf/include/liblog.hpp>
 
 using namespace haf;
 using namespace haf::board;

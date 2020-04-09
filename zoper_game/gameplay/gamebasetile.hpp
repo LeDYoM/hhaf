@@ -4,8 +4,8 @@
 #define ZOPER_GAMEBASETILE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <lib/scene/include/scenenode.hpp>
-#include <lib/scene/include/renderizable.hpp>
+#include <haf/scene/include/scenenode.hpp>
+#include <haf/scene/include/renderizable.hpp>
 #include <boardmanager/include/itile.hpp>
 
 namespace haf::board

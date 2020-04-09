@@ -6,10 +6,10 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/connection.hpp>
 
-#include <lib/scene/include/scene.hpp>
-#include <lib/scene/include/renderizable.hpp>
-#include <lib/resources/include/itexture.hpp>
-#include <lib/resources/include/ittfont.hpp>
+#include <haf/scene/include/scene.hpp>
+#include <haf/scene/include/renderizable.hpp>
+#include <haf/resources/include/itexture.hpp>
+#include <haf/resources/include/ittfont.hpp>
 
 namespace zoper
 {

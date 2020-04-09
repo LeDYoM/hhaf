@@ -1,7 +1,7 @@
 # Host Application Framework
 cmake_minimum_required (VERSION 3.14)
-project(hef
-        VERSION 1.0.0
+project(haf_repo
+        VERSION 0.2.1
         DESCRIPTION "Host Application Framework"
 #        [HOMEPAGE_URL <url-string>]
         LANGUAGES CXX)
@@ -40,8 +40,8 @@ add_subdirectory(hosted_app)
 add_subdirectory(host)
 add_subdirectory(backend_dev)
 add_subdirectory(backend)
-add_subdirectory(lib)
-add_subdirectory(hef_ext)
+add_subdirectory(haf)
+add_subdirectory(haf_ext)
 add_subdirectory(backend_sfml)
 add_subdirectory(zoper_game)
 add_subdirectory(librun)
