@@ -113,7 +113,7 @@ void SimulationSystem::update()
     const time::TimePoint &current_time_point{systemProvider().timeSystem().now()};
 
     // Check if we have still actions to trigger.
-    if (!priv_->current_replay_data_.simulation_actions_.empty() &&
+    if ((!priv_->current_replay_data_.simulation_actions_.empty()) &&
         (priv_->current_simulation_action_iterator_ !=
          priv_->current_replay_data_.simulation_actions_.cend()))
     {

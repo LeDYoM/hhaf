@@ -46,15 +46,15 @@ BackendFactory::BackendFactory()
     static const char* sh_name = "bsfml";
     if (loader->loadModule(sh_name))
     {
-        auto fp_init_lib =
-            static_cast<p_initLib>(loader->loadMethod(sh_name, "init_lib"));
-        auto fp_finish_lib =
-            static_cast<p_initLib>(loader->loadMethod(sh_name, "finish_lib"));
+        auto fp_init_haf =
+            static_cast<p_initHaf>(loader->loadMethod(sh_name, "init_lib"));
+        auto fp_finish_haf =
+            static_cast<p_initHaf>(loader->loadMethod(sh_name, "finish_lib"));
 
-        if (fp_init_lib && fp_finish_lib)
+        if (fp_init_haf && fp_finish_haf)
         {
             backend_register_ = muptr<BackendRegister>();
-            backend_register_->setLibFuncs(fp_init_lib, fp_finish_lib);
+            backend_register_->setLibFuncs(fp_init_haf, fp_finish_haf);
             backend_register_->init();
         }
 

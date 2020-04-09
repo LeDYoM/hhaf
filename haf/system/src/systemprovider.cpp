@@ -10,12 +10,8 @@
 #include <haf/window/i_include/window.hpp>
 #include <haf/time/i_include/timesystem.hpp>
 #include <haf/shareddata/i_include/shareddatasystem.hpp>
-
 #include <haf/resources/i_include/resourcemanager.hpp>
-
-#ifdef HAF_COMPILE_SIMULATIONS
 #include <haf/simulation/include/simulationsystem.hpp>
-#endif
 
 #include <haf/include/liblog.hpp>
 #include <hosted_app/include/iapp.hpp>
@@ -43,9 +39,7 @@ struct SystemProvider::SystemProviderPrivate
     uptr<FileSystem> file_system_;
     uptr<TimeSystem> time_system_;
     uptr<RenderSystem> render_system_;
-#ifdef HAF_COMPILE_SIMULATIONS
     uptr<SimulationSystem> simulation_system_;
-#endif
     bool exit_requested_{false};
 };
 
@@ -71,10 +65,8 @@ void SystemProvider::init(IApp* iapp)
     p_->render_system_      = muptr<sys::RenderSystem>(*this);
     p_->random_system_      = muptr<RandomSystem>(*this);
     p_->file_system_        = muptr<FileSystem>(*this);
-#ifdef HAF_COMPILE_SIMULATIONS
     p_->simulation_system_ = muptr<SimulationSystem>(*this);
     p_->simulation_system_->initialize();
-#endif
 
     p_->window_->create(nullptr);
     p_->render_system_->setRenderTarget(p_->window_->renderTarget());
@@ -179,7 +171,6 @@ scene::SceneManager& SystemProvider::sceneManager() noexcept
     return *p_->scene_manager_;
 }
 
-#ifdef HAF_COMPILE_SIMULATIONS
 const SimulationSystem& SystemProvider::simulationSystem() const noexcept
 {
     return *p_->simulation_system_;
@@ -189,7 +180,6 @@ SimulationSystem& SystemProvider::simulationSystem() noexcept
 {
     return *p_->simulation_system_;
 }
-#endif
 
 const TimeSystem& SystemProvider::timeSystem() const noexcept
 {
@@ -234,9 +224,7 @@ const ISharedDataSystem& SystemProvider::sharedDataSystem() const noexcept
 bool SystemProvider::runStep()
 {
     const bool windowWants2Close{parentWindow().preLoop()};
-#ifdef HAF_COMPILE_SIMULATIONS
     simulationSystem().update();
-#endif
     inputSystem().update();
     sceneManager().update();
     renderSystem().update();

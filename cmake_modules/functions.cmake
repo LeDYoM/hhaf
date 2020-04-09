@@ -11,7 +11,7 @@ function(build_client_library)
 
     # Detect and add libraries
     target_link_libraries(${CURRENT_TARGET} PRIVATE hosted_app)
-    target_link_libraries(${CURRENT_TARGET} PRIVATE lib)
+    target_link_libraries(${CURRENT_TARGET} PRIVATE haf)
     target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
     target_link_libraries(${CURRENT_TARGET} PRIVATE logger)
 

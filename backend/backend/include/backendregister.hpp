@@ -20,8 +20,8 @@ namespace haf::backend
         void setFactory(IShaderFactoryFactory* const) noexcept override;
         void setFactory(IBMPFontFactoryFactory* const) noexcept override;
 
-        void setLibFuncs(p_initLib init_lib_func, 
-            p_finishLib finish_lib_func) noexcept;
+        void setLibFuncs(p_initHaf init_lib_func, 
+            p_finishHaf finish_lib_func) noexcept;
 
         template <typename T>
         T* const getFactory() const;
@@ -39,8 +39,8 @@ namespace haf::backend
         inline bool canUse() const noexcept { return init_lib_func_ != nullptr && finish_lib_func_ != nullptr; }
 
     private:
-        p_initLib init_lib_func_{ nullptr };
-        p_finishLib finish_lib_func_{ nullptr };
+        p_initHaf init_lib_func_{ nullptr };
+        p_finishHaf finish_lib_func_{ nullptr };
         IInfoFactory* info_factory_{ nullptr };
         IWindowFactory* window_factory_{ nullptr };
         ITTFontFactoryFactory* ttfont_factory_factory_{ nullptr };

@@ -86,7 +86,7 @@ namespace haf::backend::client
     }
 }
 
-using p_initLib = bool (*)(haf::backend::IBackendRegister* const);
-using p_finishLib = bool (*)(haf::backend::IBackendRegister* const);
+using p_initHaf = bool (*)(haf::backend::IBackendRegister* const);
+using p_finishHaf = bool (*)(haf::backend::IBackendRegister* const);
 
 #endif

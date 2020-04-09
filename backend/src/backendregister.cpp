@@ -32,7 +32,7 @@ namespace haf::backend
         bmpfont_factory_factory_ = bmpfont_factory_factory;
     }
 
-    void BackendRegister::setLibFuncs(p_initLib init_lib_func, p_finishLib finish_lib_func) noexcept
+    void BackendRegister::setLibFuncs(p_initHaf init_lib_func, p_finishHaf finish_lib_func) noexcept
     {
         init_lib_func_ = init_lib_func;
         finish_lib_func_ = finish_lib_func;

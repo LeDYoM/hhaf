@@ -18,7 +18,6 @@ else()
     add_compile_definitions(-Wall -Wextra -pedantic -Werror)
 endif()
 
-add_compile_definitions(HAF_COMPILE_SIMULATIONS)
 add_compile_definitions(HAF_ALLOW_ACCELERATION)
 
 message ("CXX Flags: " ${CMAKE_CXX_FLAGS})
