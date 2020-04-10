@@ -25,17 +25,19 @@ struct ReplayData
     SimulationActionContainer simulation_actions_;
 
     constexpr static char DataBufferName[] = "replay_data";
-    constexpr static char InputDataName[] = "input_data";
+    constexpr static char InputDataName[]  = "input_data";
 };
 
-const  mtps::Object&operator>>(const  mtps::Object&obj, ReplayData &replay_data)
+const mtps::Object& operator>>(const mtps::Object& obj, ReplayData& replay_data)
 {
-    if (const auto obj_random_generator_data = obj[ReplayData::DataBufferName]; obj_random_generator_data.isObject())
+    if (const auto obj_random_generator_data = obj[ReplayData::DataBufferName];
+        obj_random_generator_data.isObject())
     {
         obj_random_generator_data.getObject() >> replay_data.data_buffer_;
     }
 
-    if (const auto obj_input_data = obj[ReplayData::InputDataName]; obj_input_data.isObject())
+    if (const auto obj_input_data = obj[ReplayData::InputDataName];
+        obj_input_data.isObject())
     {
         obj_input_data.getObject() >> replay_data.simulation_actions_;
     }
@@ -43,7 +45,8 @@ const  mtps::Object&operator>>(const  mtps::Object&obj, ReplayData &replay_data)
     return obj;
 }
 
-inline  mtps::Object&operator<<( mtps::Object&obj, const ReplayData &replay_data)
+inline mtps::Object& operator<<(mtps::Object& obj,
+                                const ReplayData& replay_data)
 {
     obj.set(ReplayData::DataBufferName, replay_data.data_buffer_);
     obj.set(ReplayData::InputDataName, replay_data.simulation_actions_);
@@ -56,32 +59,37 @@ struct SimulationSystem::SimulationSystemPrivate final
     ReplayData next_replay_data_;
 
     CurrentSimulationActionIterator current_simulation_action_iterator_;
-    SimulateRandomDataBuffer::const_iterator current_simulable_data_buffer_iterator;
+    SimulateRandomDataBuffer::const_iterator
+        current_simulable_data_buffer_iterator;
 
     time::TimePoint current_last_checked_point_;
     time::TimePoint next_last_checked_point_;
 
-    void setSimulationActions(const time::TimePoint &current,
-        SimulationActionContainer sim_act_container)
+    void setSimulationActions(const time::TimePoint& current,
+                              SimulationActionContainer sim_act_container)
     {
         // The passed container is now part of the data to be replayed.
         current_replay_data_.simulation_actions_.swap(sim_act_container);
-        current_simulation_action_iterator_ = current_replay_data_.simulation_actions_.cbegin();
+        current_simulation_action_iterator_ =
+            current_replay_data_.simulation_actions_.cbegin();
         current_last_checked_point_ = current;
         DisplayLog::info("Simulation System started");
     }
 
     void addSimulationAction(SimulationAction simulation_action)
     {
-        next_replay_data_.simulation_actions_.push_back(std::move(simulation_action));
+        next_replay_data_.simulation_actions_.push_back(
+            std::move(simulation_action));
     }
 
-    void setSimulateRandomDataBuffer(SimulateRandomDataBuffer simulated_data_buffer)
+    void setSimulateRandomDataBuffer(
+        SimulateRandomDataBuffer simulated_data_buffer)
     {
         current_replay_data_.data_buffer_ = std::move(simulated_data_buffer);
-        current_simulable_data_buffer_iterator = current_replay_data_.data_buffer_.begin();
+        current_simulable_data_buffer_iterator =
+            current_replay_data_.data_buffer_.begin();
     }
 };
-} // namespace haf::sys
+}  // namespace haf::sys
 
 #endif

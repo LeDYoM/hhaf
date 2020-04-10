@@ -20,9 +20,9 @@ using namespace mtps;
 
 namespace haf::sys
 {
-SimulationSystem::SimulationSystem(SystemProvider &system_provider)
-    : AppService{system_provider},
-      priv_{muptr<SimulationSystemPrivate>()} {}
+SimulationSystem::SimulationSystem(SystemProvider& system_provider) :
+    AppService{system_provider}, priv_{muptr<SimulationSystemPrivate>()}
+{}
 
 SimulationSystem::~SimulationSystem()
 {
@@ -33,8 +33,8 @@ SimulationSystem::~SimulationSystem()
     DisplayLog::info("Going to write play data into file ", SaveFileName);
     if (systemProvider().fileSystem().saveFile(
             SaveFileName,
-            Serializer<decltype(priv_->next_replay_data_)>::
-                serialize(priv_->next_replay_data_)))
+            Serializer<decltype(priv_->next_replay_data_)>::serialize(
+                priv_->next_replay_data_)))
     {
         DisplayLog::info("Play data written successfully");
     }
@@ -64,8 +64,10 @@ void SimulationSystem::initialize()
 
     static constexpr char InputFileName[] = "simulation_input.txt";
 
-    DisplayLog::info("Trying to load ", InputFileName, " to read simulation data");
-    if (str temp(systemProvider().fileSystem().loadTextFile(InputFileName)); !temp.empty())
+    DisplayLog::info("Trying to load ", InputFileName,
+                     " to read simulation data");
+    if (str temp(systemProvider().fileSystem().loadTextFile(InputFileName));
+        !temp.empty())
     {
         // If the file has been read corretly,
         // createan ObjectCompiler and use it.
@@ -91,18 +93,22 @@ void SimulationSystem::initialize()
 }
 
 void SimulationSystem::setSimulationActions(
-    const time::TimePoint &current,
+    const time::TimePoint& current,
     SimulationActionGroup simulation_action_group)
 {
-    priv_->setSimulationActions(current, simulation_action_group.getContainer());
+    priv_->setSimulationActions(current,
+                                simulation_action_group.getContainer());
 }
 
-void SimulationSystem::setSimulationActions(SimulationActionGroup simulation_action_group)
+void SimulationSystem::setSimulationActions(
+    SimulationActionGroup simulation_action_group)
 {
-    setSimulationActions(systemProvider().timeSystem().now(), simulation_action_group.getContainer());
+    setSimulationActions(systemProvider().timeSystem().now(),
+                         simulation_action_group.getContainer());
 }
 
-void SimulationSystem::setSimulateRandomDataBuffer(SimulateRandomDataBuffer simulated_data_buffer)
+void SimulationSystem::setSimulateRandomDataBuffer(
+    SimulateRandomDataBuffer simulated_data_buffer)
 {
     priv_->setSimulateRandomDataBuffer(std::move(simulated_data_buffer));
 }
@@ -110,7 +116,8 @@ void SimulationSystem::setSimulateRandomDataBuffer(SimulateRandomDataBuffer simu
 void SimulationSystem::update()
 {
     // Get the current TimePoint
-    const time::TimePoint &current_time_point{systemProvider().timeSystem().now()};
+    const time::TimePoint& current_time_point{
+        systemProvider().timeSystem().now()};
 
     // Check if we have still actions to trigger.
     if ((!priv_->current_replay_data_.simulation_actions_.empty()) &&
@@ -118,41 +125,49 @@ void SimulationSystem::update()
          priv_->current_replay_data_.simulation_actions_.cend()))
     {
         // Check if we have reached the next TimePoint
-        const SimulationAction &simulation_action{*(priv_->current_simulation_action_iterator_)};
-        if (simulation_action.timeToLaunch(current_time_point, priv_->current_last_checked_point_))
+        const SimulationAction& simulation_action{
+            *(priv_->current_simulation_action_iterator_)};
+        if (simulation_action.timeToLaunch(current_time_point,
+                                           priv_->current_last_checked_point_))
         {
             priv_->current_last_checked_point_ = current_time_point;
             ++(priv_->current_simulation_action_iterator_);
 
             if (simulation_action.type == SimulationActionType::KeyPressed)
             {
-                DisplayLog::info("SimulationSystem: Pressing key: ", KeyIndex(simulation_action.key));
-                systemProvider().inputSystem().simulatePressKey(simulation_action.key);
+                DisplayLog::info("SimulationSystem: Pressing key: ",
+                                 KeyIndex(simulation_action.key));
+                systemProvider().inputSystem().simulatePressKey(
+                    simulation_action.key);
             }
-            else if (simulation_action.type == SimulationActionType::KeyReleased)
+            else if (simulation_action.type ==
+                     SimulationActionType::KeyReleased)
             {
-                DisplayLog::info("SimulationSystem: releasing key: ", KeyIndex(simulation_action.key));
-                systemProvider().inputSystem().simulateReleaseKey(simulation_action.key);
+                DisplayLog::info("SimulationSystem: releasing key: ",
+                                 KeyIndex(simulation_action.key));
+                systemProvider().inputSystem().simulateReleaseKey(
+                    simulation_action.key);
             }
             else
             {
-                DisplayLog::error("Unknown SimulationActionType enum value: ", (int)simulation_action.type);
+                DisplayLog::error("Unknown SimulationActionType enum value: ",
+                                  (int)simulation_action.type);
             }
         }
     }
 
     {
         // Check if some new input is there.
-        // Note: this will catch the simulated keys in the previous loop too, but
+        // Note: this will catch the simulated keys in the previous loop too,
+        // but
         //      that is intended.
-        auto &&input_system{systemProvider().inputSystem()};
+        auto&& input_system{systemProvider().inputSystem()};
 
         // If there are keys pending in the input system, process them.
-        if (
-            !input_system.pressedKeys().empty() ||
+        if (!input_system.pressedKeys().empty() ||
             !input_system.releasedKeys().empty())
         {
-            for (const auto &pressedKey : input_system.pressedKeys())
+            for (const auto& pressedKey : input_system.pressedKeys())
             {
                 SimulationAction simulation_action{
                     SimulationActionType::KeyPressed,
@@ -161,7 +176,7 @@ void SimulationSystem::update()
                 priv_->addSimulationAction(std::move(simulation_action));
             }
 
-            for (const auto &releasedKey : input_system.releasedKeys())
+            for (const auto& releasedKey : input_system.releasedKeys())
             {
                 SimulationAction simulation_action{
                     SimulationActionType::KeyReleased,
@@ -176,15 +191,16 @@ void SimulationSystem::update()
     }
 }
 
-bool SimulationSystem::getNext(const str&name, size_type &pre_selected)
+bool SimulationSystem::getNext(const str& name, size_type& pre_selected)
 {
     bool generated{false};
 
     if (!priv_->current_replay_data_.data_buffer_.empty() &&
-        priv_->current_simulable_data_buffer_iterator != priv_->current_replay_data_.data_buffer_.cend())
+        priv_->current_simulable_data_buffer_iterator !=
+            priv_->current_replay_data_.data_buffer_.cend())
     {
         pre_selected = (*(priv_->current_simulable_data_buffer_iterator++));
-        generated = true;
+        generated    = true;
         DisplayLog::info("Returning simulated data: ", pre_selected);
     }
 
@@ -193,4 +209,4 @@ bool SimulationSystem::getNext(const str&name, size_type &pre_selected)
     DisplayLog::info("Generated data added to buffer for ", name);
     return generated;
 }
-} // namespace haf::sys
+}  // namespace haf::sys
