@@ -1,5 +1,7 @@
 #include <memmanager/include/memmanager.hpp>
 
+#include <new>
+
 #ifdef _MSC_VER
 #include <windows.h>
 #include <crtdbg.h>
@@ -43,3 +45,14 @@ void finishMemManager()
     _CrtDumpMemoryLeaks();
 #endif
 }
+
+/*
+void * operator new(std::size_t n) noexcept(false)
+{
+    return ::new(n);
+}
+void operator delete(void * p) noexcept false
+{
+  //...
+}
+*/
