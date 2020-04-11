@@ -5,6 +5,7 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
+#include <mtypes/include/vector.hpp>
 #include <haf/scene/include/icomponent.hpp>
 #include <haf/scene/include/componentcontainer.hpp>
 
