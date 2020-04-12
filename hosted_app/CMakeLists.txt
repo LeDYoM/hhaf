@@ -7,4 +7,3 @@ build_lib_interface_component(
     HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}"
 )
 
-target_link_libraries(${CURRENT_TARGET} INTERFACE mtypes)

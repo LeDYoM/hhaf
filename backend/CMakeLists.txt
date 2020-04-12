@@ -19,5 +19,5 @@ target_include_directories(
   PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/)
 
 target_link_libraries(${CURRENT_TARGET} PRIVATE loader)
-target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
+target_link_libraries(${CURRENT_TARGET} PRIVATE htypes)
 target_link_libraries(${CURRENT_TARGET} PRIVATE backend_dev)

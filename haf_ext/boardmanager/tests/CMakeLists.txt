@@ -8,11 +8,8 @@ set(SOURCE_TESTS
     boardmanager
 )
 
-add_test_executable(SOURCE_TESTS ${SOURCE_TESTS})
+add_haf_test_executable(SOURCE_TESTS ${SOURCE_TESTS})
 
-target_link_libraries(${CURRENT_TARGET} PRIVATE haf)
-target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
-target_link_libraries(${CURRENT_TARGET} PRIVATE logger)
 target_link_libraries(${CURRENT_TARGET} PRIVATE boardmanager)
 
 #catch_discover_tests(${CURRENT_TARGET})

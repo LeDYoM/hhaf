@@ -5,9 +5,11 @@ set(CURRENT_TARGET htypes)
 
 set(SOURCES "src/htypes.cpp")
 
-add_library(${CURRENT_TARGET} SHARED ${SOURCES})
-set_target_properties(${CURRENT_TARGET} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS true)
+build_lib_component(
+    HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}"
+    SOURCES
+    ${SOURCES}
+)
 
-target_include_directories(${CURRENT_TARGET} PUBLIC ${PROJECT_SOURCE_DIR})
-target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
+target_link_libraries(${CURRENT_TARGET} PUBLIC mtypes)
 target_link_libraries(${CURRENT_TARGET} PRIVATE memmanager)

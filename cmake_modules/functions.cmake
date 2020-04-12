@@ -12,8 +12,6 @@ function(build_client_library)
     # Detect and add libraries
     target_link_libraries(${CURRENT_TARGET} PRIVATE hosted_app)
     target_link_libraries(${CURRENT_TARGET} PRIVATE haf)
-    target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
-    target_link_libraries(${CURRENT_TARGET} PRIVATE logger)
 
     # Copy data if data directory has been passed.
     if (NOT ${CL_BUILD_DATA_SOURCE} STREQUAL "")
@@ -89,7 +87,7 @@ function(build_internal_lib_component)
     add_library (${CURRENT_TARGET}_interface INTERFACE)
     target_include_directories(${CURRENT_TARGET}_interface INTERFACE ${_PUBLIC_INCLUDE_DIRECTORY})
 
-    target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
+    target_link_libraries(${CURRENT_TARGET} PRIVATE htypes)
     target_link_libraries(${CURRENT_TARGET} PRIVATE logger)
 
 endfunction(build_internal_lib_component)
@@ -104,7 +102,7 @@ function(build_concrete_backend)
     # Patch for testing TO DO: Remove it (use a variable)
     include_directories("..")
 
-    target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
+    target_link_libraries(${CURRENT_TARGET} PRIVATE htypes)
     target_link_libraries(${CURRENT_TARGET} PRIVATE backend_dev)
 
 endfunction(build_concrete_backend)
@@ -128,3 +126,12 @@ function(add_test_executable)
         PRIVATE "${Catch2_SOURCE_DIR}/single_include/catch2")
 
 endfunction(add_test_executable)
+
+function(add_haf_test_executable)
+
+    add_test_executable(${ARGV})
+
+    target_link_libraries(${CURRENT_TARGET} PRIVATE haf)
+    target_link_libraries(${CURRENT_TARGET} PRIVATE htypes)
+
+endfunction(add_haf_test_executable)

@@ -12,7 +12,4 @@ build_lib_component(
 )
 
 target_link_libraries(${CURRENT_TARGET} PRIVATE haf)
-target_link_libraries(${CURRENT_TARGET} PRIVATE logger)
-target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
-
 add_subdirectory(tests)

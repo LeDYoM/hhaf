@@ -54,8 +54,8 @@ target_link_libraries(${CURRENT_TARGET} PRIVATE window)
 # Internal libraries necessary for the library only.
 target_link_libraries(${CURRENT_TARGET} PRIVATE hosted_app)
 target_link_libraries(${CURRENT_TARGET} PRIVATE loader)
-target_link_libraries(${CURRENT_TARGET} PRIVATE logger)
-target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
+target_link_libraries(${CURRENT_TARGET} PUBLIC logger)
+target_link_libraries(${CURRENT_TARGET} PUBLIC htypes)
 
 # TODO: Investigate some day
 #if(MSVC)

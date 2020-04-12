@@ -19,10 +19,4 @@ set(SOURCE_TESTS
     utils/object_factory
 )
 
-add_test_executable(SOURCE_TESTS ${SOURCE_TESTS})
-
-target_link_libraries(${CURRENT_TARGET} PRIVATE haf)
-target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
-target_link_libraries(${CURRENT_TARGET} PRIVATE logger)
-
-#catch_discover_tests(${CURRENT_TARGET})
+add_haf_test_executable(SOURCE_TESTS ${SOURCE_TESTS})
