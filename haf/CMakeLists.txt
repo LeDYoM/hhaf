@@ -54,8 +54,8 @@ target_link_libraries(${CURRENT_TARGET} PRIVATE window)
 # Internal libraries necessary for the library only.
 target_link_libraries(${CURRENT_TARGET} PRIVATE hosted_app)
 target_link_libraries(${CURRENT_TARGET} PRIVATE loader)
-target_link_libraries(${CURRENT_TARGET} PUBLIC hlog)
-target_link_libraries(${CURRENT_TARGET} PUBLIC htypes)
+
+add_hlog_and_htypes()
 
 # TODO: Investigate some day
 #if(MSVC)

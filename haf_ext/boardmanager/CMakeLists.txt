@@ -5,11 +5,10 @@ set (CURRENT_TARGET ${PROJECT_NAME})
 
 set(SRC_FILES "src/boardmodel.cpp")
 
-build_lib_component(
+build_lib_ext(
     HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}"
     SOURCES
     ${SRC_FILES}
 )
 
-target_link_libraries(${CURRENT_TARGET} PRIVATE haf)
 add_subdirectory(tests)

@@ -28,6 +28,11 @@ function(build_client_library)
 
 endfunction(build_client_library)
 
+function (add_hlog_and_htypes)
+    target_link_libraries(${CURRENT_TARGET} PUBLIC htypes)
+    target_link_libraries(${CURRENT_TARGET} PUBLIC hlog)
+endfunction(add_hlog_and_htypes)
+
 # Function to build different components from the project in an unified way.
 function(build_lib_component)
 
@@ -43,6 +48,22 @@ function(build_lib_component)
     target_include_directories(${CURRENT_TARGET} PUBLIC ${LC_BUILD_HEADER_DIRECTORY})
 
 endfunction(build_lib_component)
+
+function(build_lib_ext)
+
+    cmake_parse_arguments(LC_BUILD "" "HEADER_DIRECTORY" "SOURCES" ${ARGN})
+
+    set (CURRENT_TARGET ${PROJECT_NAME})
+
+    add_library (${CURRENT_TARGET} SHARED ${LC_BUILD_SOURCES})
+
+    set_target_properties(${CURRENT_TARGET}
+                      PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS true)
+
+    target_include_directories(${CURRENT_TARGET} PUBLIC ${LC_BUILD_HEADER_DIRECTORY})
+    target_link_libraries(${CURRENT_TARGET} PRIVATE haf)
+
+endfunction(build_lib_ext)
 
 # Function to build different components from the project in an unified way.
 function(build_lib_interface_component)
@@ -86,9 +107,7 @@ function(build_internal_lib_component)
 
     add_library (${CURRENT_TARGET}_interface INTERFACE)
     target_include_directories(${CURRENT_TARGET}_interface INTERFACE ${_PUBLIC_INCLUDE_DIRECTORY})
-
-    target_link_libraries(${CURRENT_TARGET} PRIVATE htypes)
-    target_link_libraries(${CURRENT_TARGET} PRIVATE hlog)
+    add_hlog_and_htypes()
 
 endfunction(build_internal_lib_component)
 
@@ -102,7 +121,7 @@ function(build_concrete_backend)
     # Patch for testing TO DO: Remove it (use a variable)
     include_directories("..")
 
-    target_link_libraries(${CURRENT_TARGET} PRIVATE htypes)
+    add_hlog_and_htypes()
     target_link_libraries(${CURRENT_TARGET} PRIVATE backend_dev)
 
 endfunction(build_concrete_backend)
@@ -132,6 +151,5 @@ function(add_haf_test_executable)
     add_test_executable(${ARGV})
 
     target_link_libraries(${CURRENT_TARGET} PRIVATE haf)
-    target_link_libraries(${CURRENT_TARGET} PRIVATE htypes)
 
 endfunction(add_haf_test_executable)
