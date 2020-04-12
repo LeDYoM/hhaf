@@ -1,6 +1,6 @@
 #include <haf/time/include/timer.hpp>
 
-#include <haf/include/liblog.hpp>
+#include <hlog/include/hlog.hpp>
 #include <haf/scene/include/scenenode.hpp>
 #include <haf/time/i_include/timesystem.hpp>
 #include <haf/system/i_include/get_system.hpp>

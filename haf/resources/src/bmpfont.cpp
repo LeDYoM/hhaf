@@ -1,6 +1,6 @@
 #include <haf/resources/i_include/bmpfont.hpp>
 #include "bmpfont_private.hpp"
-#include <haf/include/liblog.hpp>
+#include <hlog/include/hlog.hpp>
 
 #include <fstream>
 

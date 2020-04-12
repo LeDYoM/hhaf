@@ -1,6 +1,6 @@
 #include "renderizables.hpp"
 
-#include <haf/include/liblog.hpp>
+#include <hlog/include/hlog.hpp>
 #include <haf/scene/include/scenenode.hpp>
 #include <haf/scene/include/scenenode.hpp>
 

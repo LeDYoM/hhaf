@@ -1,6 +1,6 @@
 #include "virtual_input_component.hpp"
 
-#include <haf/include/liblog.hpp>
+#include <hlog/include/hlog.hpp>
 #include <haf/input/include/key.hpp>
 #include <haf/input/i_include/inputsystem.hpp>
 #include <haf/system/i_include/get_system.hpp>

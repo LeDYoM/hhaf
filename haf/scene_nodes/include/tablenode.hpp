@@ -6,7 +6,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/properties.hpp>
 #include <haf/scene/include/scenenode.hpp>
-#include <haf/include/liblog.hpp>
+#include <hlog/include/hlog.hpp>
 
 namespace haf::scene::nodes
 {

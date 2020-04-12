@@ -1,7 +1,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/properties.hpp>
 
-#include <haf/include/liblog.hpp>
+#include <hlog/include/hlog.hpp>
 #include <haf/scene/include/renderizable.hpp>
 #include <haf/scene/include/scenenode.hpp>
 

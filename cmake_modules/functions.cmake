@@ -88,7 +88,7 @@ function(build_internal_lib_component)
     target_include_directories(${CURRENT_TARGET}_interface INTERFACE ${_PUBLIC_INCLUDE_DIRECTORY})
 
     target_link_libraries(${CURRENT_TARGET} PRIVATE htypes)
-    target_link_libraries(${CURRENT_TARGET} PRIVATE logger)
+    target_link_libraries(${CURRENT_TARGET} PRIVATE hlog)
 
 endfunction(build_internal_lib_component)
 

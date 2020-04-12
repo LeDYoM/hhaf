@@ -3,7 +3,7 @@
 #ifndef HAF_SCENE_COMPONENTCONTAINER_INCLUDE_HPP
 #define HAF_SCENE_COMPONENTCONTAINER_INCLUDE_HPP
 
-#include <haf/include/liblog.hpp>
+#include <hlog/include/hlog.hpp>
 #include <haf/scene/include/icomponent.hpp>
 #include <haf/utils/include/attachable_manager.hpp>
 #include <mtypes/include/lockablevector.hpp>

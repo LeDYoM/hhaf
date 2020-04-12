@@ -2,7 +2,7 @@
 
 #include <chrono>
 
-#include <haf/include/liblog.hpp>
+#include <hlog/include/hlog.hpp>
 #include <haf/time/include/timepoint.hpp>
 
 using namespace mtps;

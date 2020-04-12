@@ -1,7 +1,7 @@
 #include "randomsystem.hpp"
 #include <haf/system/i_include/systemprovider.hpp>
 #include <haf/simulation/include/simulationsystem.hpp>
-#include <haf/include/liblog.hpp>
+#include <hlog/include/hlog.hpp>
 
 #include <random>
 

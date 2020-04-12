@@ -1,6 +1,6 @@
 #include "inputsystem.hpp"
 
-#include <haf/include/liblog.hpp>
+#include <hlog/include/hlog.hpp>
 #include <haf/input/include/inputdriver.hpp>
 
 using namespace mtps;

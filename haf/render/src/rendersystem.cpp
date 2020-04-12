@@ -1,7 +1,7 @@
 #include "rendersystem.hpp"
 #include <haf/render/include/rendertarget.hpp>
 #include <haf/render/include/renderdata.hpp>
-#include <haf/include/liblog.hpp>
+#include <hlog/include/hlog.hpp>
 
 #include <mtypes/include/types.hpp>
 

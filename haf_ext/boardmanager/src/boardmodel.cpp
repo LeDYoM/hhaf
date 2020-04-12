@@ -1,7 +1,7 @@
 #include <boardmanager/include/boardmodel.hpp>
 #include <boardmanager/include/iboardmodelactuator.hpp>
 
-#include <haf/include/liblog.hpp>
+#include <hlog/include/hlog.hpp>
 
 using namespace mtps;
 

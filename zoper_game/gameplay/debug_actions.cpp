@@ -4,7 +4,7 @@
 #include "gamescene.hpp"
 #include "levelproperties.hpp"
 
-#include <haf/include/liblog.hpp>
+#include <hlog/include/hlog.hpp>
 
 using namespace mtps;
 

@@ -7,7 +7,7 @@
 #include <haf/resources/i_include/resourcemanager.hpp>
 #include <haf/render/include/rendertarget.hpp>
 
-#include <haf/include/liblog.hpp>
+#include <hlog/include/hlog.hpp>
 #include <haf/resources/include/iresourceretriever.hpp>
 #include <haf/resources/include/iresourcehandler.hpp>
 

@@ -2,7 +2,7 @@
 #include <menu_paged/include/menu_paged.hpp>
 #include <menu_paged/include/menu_paged_input_component.hpp>
 
-#include <haf/include/liblog.hpp>
+#include <hlog/include/hlog.hpp>
 #include <haf/input/include/key.hpp>
 #include <haf/scene_components/include/discretetextcomponent.hpp>
 

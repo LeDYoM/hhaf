@@ -1,7 +1,7 @@
 #include "randomnumberscomponent.hpp"
 #include <haf/random/i_include/randomsystem.hpp>
 
-#include <haf/include/liblog.hpp>
+#include <hlog/include/hlog.hpp>
 #include <haf/system/i_include/get_system.hpp>
 
 using namespace mtps;

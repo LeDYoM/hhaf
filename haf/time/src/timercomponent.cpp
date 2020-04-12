@@ -2,7 +2,7 @@
 
 #include <mtypes/include/function.hpp>
 #include <mtypes/include/algoutils.hpp>
-#include <haf/include/liblog.hpp>
+#include <hlog/include/hlog.hpp>
 #include <haf/scene/include/scenenode.hpp>
 
 using namespace mtps;

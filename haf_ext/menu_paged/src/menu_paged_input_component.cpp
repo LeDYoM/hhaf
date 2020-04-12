@@ -1,6 +1,6 @@
 #include <menu_paged/include/menu_paged_input_component.hpp>
 
-#include <haf/include/liblog.hpp>
+#include <hlog/include/hlog.hpp>
 
 namespace haf::scene
 {

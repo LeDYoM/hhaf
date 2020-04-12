@@ -1,6 +1,6 @@
 #include <haf/shareddata/i_include/shareddatasystem.hpp>
 
-#include <haf/include/liblog.hpp>
+#include <hlog/include/hlog.hpp>
 
 using namespace mtps;
 

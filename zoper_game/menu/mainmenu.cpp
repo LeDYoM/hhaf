@@ -3,7 +3,7 @@
 #include "../gameshareddata.hpp"
 #include <menu_paged/include/menu_page.hpp>
 #include <haf/scene/include/scenenode.hpp>
-#include <haf/include/liblog.hpp>
+#include <hlog/include/hlog.hpp>
 #include <haf/resources/include/resourceview.hpp>
 #include <haf/resources/include/ittfont.hpp>
 #include <haf/shareddata/include/shareddataview.hpp>

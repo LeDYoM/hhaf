@@ -1,6 +1,6 @@
 #include "componentcontainer.hpp"
 
-#include <haf/include/liblog.hpp>
+#include <hlog/include/hlog.hpp>
 #include <mtypes/include/algoutils.hpp>
 
 #include <algorithm>

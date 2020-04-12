@@ -13,7 +13,7 @@
 #include <haf/resources/i_include/resourcemanager.hpp>
 #include <haf/simulation/include/simulationsystem.hpp>
 
-#include <haf/include/liblog.hpp>
+#include <hlog/include/hlog.hpp>
 #include <hosted_app/include/iapp.hpp>
 
 #include <functional>

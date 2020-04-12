@@ -6,7 +6,7 @@
 #include <haf/scene_nodes/include/scenenodetext.hpp>
 #include <haf/scene_components/include/scenemetrics.hpp>
 
-#include <haf/include/liblog.hpp>
+#include <hlog/include/hlog.hpp>
 #include <haf/resources/include/iresourceretriever.hpp>
 #include <haf/resources/include/ittfont.hpp>
 #include <haf/resources/include/resourceview.hpp>

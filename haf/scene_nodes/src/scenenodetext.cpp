@@ -2,7 +2,7 @@
 
 #include <haf/resources/include/ifont.hpp>
 #include <haf/resources/include/itexture.hpp>
-#include <haf/include/liblog.hpp>
+#include <hlog/include/hlog.hpp>
 
 #include <haf/scene/include/vertexarray.hpp>
 #include <haf/scene/include/scenenodetypes.hpp>

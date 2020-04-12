@@ -8,7 +8,7 @@
 #include <mtypes/include/connection.hpp>
 #include <mtypes/include/stack.hpp>
 #include <mtypes/include/lockablevector.hpp>
-#include <haf/include/liblog.hpp>
+#include <hlog/include/hlog.hpp>
 #include <haf/scene/include/icomponent.hpp>
 
 namespace haf

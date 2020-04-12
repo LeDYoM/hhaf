@@ -1,6 +1,6 @@
 #include <host/include/host.hpp>
 
-#include <haf/include/liblog.hpp>
+#include <hlog/include/hlog.hpp>
 #include <hosted_app/include/iapp.hpp>
 #include <haf/system/include/icontrollablesystemprovider.hpp>
 #include <haf/system/include/systemprovider_init.hpp>

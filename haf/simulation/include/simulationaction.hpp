@@ -4,7 +4,7 @@
 #define HAF_CORE_SYSTEM_SIMULATIONACTION_INCLUDE_HPP
 
 #include <haf/input/include/key.hpp>
-#include <haf/include/liblog.hpp>
+#include <hlog/include/hlog.hpp>
 #include <haf/time/include/timepoint.hpp>
 
 #include <mtypes/include/types.hpp>

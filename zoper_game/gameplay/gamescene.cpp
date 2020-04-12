@@ -19,7 +19,7 @@
 #include <mtypes/include/properties.hpp>
 
 #include <boardmanager/include/boardmodel.hpp>
-#include <haf/include/liblog.hpp>
+#include <hlog/include/hlog.hpp>
 #include <haf/scene/include/renderizable.hpp>
 #include <haf/resources/include/resourcehandler.hpp>
 #include <haf/scene_components/include/animationcomponent.hpp>

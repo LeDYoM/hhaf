@@ -2,7 +2,7 @@
 #include <haf/system/i_include/systemprovider.hpp>
 #include <haf/filesystem/i_include/filesystem.hpp>
 
-#include <haf/include/liblog.hpp>
+#include <hlog/include/hlog.hpp>
 
 #include <haf/resources/include/ittfont.hpp>
 #include <haf/resources/include/itexture.hpp>

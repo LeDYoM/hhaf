@@ -1,6 +1,6 @@
 #include <haf/resources/include/resourcehandler.hpp>
 #include <haf/resources/include/iresourceloader.hpp>
-#include <haf/include/liblog.hpp>
+#include <hlog/include/hlog.hpp>
 #include <haf/system/i_include/get_system.hpp>
 #include <haf/resources/i_include/resourcemanager.hpp>
 

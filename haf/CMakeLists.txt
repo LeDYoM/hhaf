@@ -54,7 +54,7 @@ target_link_libraries(${CURRENT_TARGET} PRIVATE window)
 # Internal libraries necessary for the library only.
 target_link_libraries(${CURRENT_TARGET} PRIVATE hosted_app)
 target_link_libraries(${CURRENT_TARGET} PRIVATE loader)
-target_link_libraries(${CURRENT_TARGET} PUBLIC logger)
+target_link_libraries(${CURRENT_TARGET} PUBLIC hlog)
 target_link_libraries(${CURRENT_TARGET} PUBLIC htypes)
 
 # TODO: Investigate some day
@@ -62,5 +62,6 @@ target_link_libraries(${CURRENT_TARGET} PUBLIC htypes)
 #set_target_properties(${CURRENT_TARGET} 
 #    PROPERTIES LINK_FLAGS "${LINK_FLAGS} /NODEFAULTLIB")
 #endif()
+
 
 add_subdirectory(tests)

@@ -6,7 +6,7 @@
 #include <mtypes/include/types.hpp>
 #include <haf/scene/include/icomponent.hpp>
 #include <haf/scene/include/renderizable.hpp>
-#include <haf/include/liblog.hpp>
+#include <hlog/include/hlog.hpp>
 
 #include "scenenode.hpp"
 
