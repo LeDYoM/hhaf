@@ -14,14 +14,15 @@
 
 namespace mtps
 {
+// template <typename char_type = char, typename Container = vector>
 class str
 {
 public:
-    using char_type = char;
-    using reference = char_type &;
-    using const_reference = const char_type &;
-    using iterator = char_type *;
-    using const_iterator = const char_type *;
+    using char_type       = char;
+    using reference       = char_type&;
+    using const_reference = const char_type&;
+    using iterator        = char_type*;
+    using const_iterator  = const char_type*;
 
 private:
     vector<char_type> m_data;
@@ -29,33 +30,55 @@ private:
 public:
     constexpr str() noexcept : m_data{} {}
 
-    constexpr str(str &&) noexcept = default;
-    str &operator=(str &&) noexcept = default;
+    constexpr str(str&&) noexcept = default;
+    str& operator=(str&&) noexcept = default;
 
-    constexpr str(const str &n) = default;
-    constexpr str &operator=(const str &rhs) = default;
+    constexpr str(const str& n) = default;
+    constexpr str& operator=(const str& rhs) = default;
 
     template <size_type N>
-    constexpr str(const char_type (&a)[N]) noexcept : m_data(a, N) {}
+    constexpr str(const char_type (&a)[N]) noexcept : m_data(a, N)
+    {}
 
-    constexpr str(const char_type *n, const size_type N) noexcept : m_data(n, N + 1) {}
-    explicit str(const char_type *n) noexcept : str(n, _str_len(n)) {}
+    constexpr str(const char_type* n, const size_type N) noexcept :
+        m_data(n, N + 1)
+    {}
+    explicit str(const char_type* n) noexcept : str(n, _str_len(n)) {}
 
-    constexpr str(const_iterator _begin, const_iterator _end)
-        : str(_begin, (_end - _begin) + 1U) {}
+    constexpr str(const_iterator _begin, const_iterator _end) :
+        str(_begin, (_end - _begin) + 1U)
+    {}
 
-    str &operator=(const char_type *n) noexcept
+    str& operator=(const char_type* n) noexcept
     {
         *this = str(n, _str_len(n));
         return *this;
     }
 
-    inline static str to_str(const u64 n) { return str{std::to_string(n).c_str()}; }
-    inline static str to_str(const s64 n) { return str{std::to_string(n).c_str()}; }
-    inline static str to_str(const u32 n) { return str{std::to_string(n).c_str()}; }
-    inline static str to_str(const s32 n) { return str{std::to_string(n).c_str()}; }
-    inline static str to_str(const f32 n) { return str{std::to_string(n).c_str()}; }
-    inline static str to_str(const f64 n) { return str{std::to_string(n).c_str()}; }
+    inline static str to_str(const u64 n)
+    {
+        return str{std::to_string(n).c_str()};
+    }
+    inline static str to_str(const s64 n)
+    {
+        return str{std::to_string(n).c_str()};
+    }
+    inline static str to_str(const u32 n)
+    {
+        return str{std::to_string(n).c_str()};
+    }
+    inline static str to_str(const s32 n)
+    {
+        return str{std::to_string(n).c_str()};
+    }
+    inline static str to_str(const f32 n)
+    {
+        return str{std::to_string(n).c_str()};
+    }
+    inline static str to_str(const f64 n)
+    {
+        return str{std::to_string(n).c_str()};
+    }
 
     template <typename T>
     bool is() const
@@ -64,9 +87,9 @@ public:
         return convert(temp);
     }
 
-    constexpr size_t _str_len(const str::char_type *const p_str) noexcept
+    constexpr size_t _str_len(const char_type* const p_str) noexcept
     {
-        const str::char_type *p_str_copy{p_str};
+        const str::char_type* p_str_copy{p_str};
         while (*p_str_copy)
             ++p_str_copy;
         return p_str_copy - p_str;
@@ -85,7 +108,7 @@ public:
         return result;
     }
 
-    inline bool starts_with(const str &prefix) const noexcept
+    inline bool starts_with(const str& prefix) const noexcept
     {
         if (size() < prefix.size())
         {
@@ -95,7 +118,7 @@ public:
         return (substr(0, prefix.size()) == prefix);
     }
 
-    inline bool ends_with(const str &prefix) const noexcept
+    inline bool ends_with(const str& prefix) const noexcept
     {
         if (size() < prefix.size())
         {
@@ -125,9 +148,9 @@ public:
         return temp;
     }
 
-    constexpr str &append() { return *this; }
+    constexpr str& append() { return *this; }
 
-    str &append(const str &n)
+    str& append(const str& n)
     {
         m_data.pop_back();
         m_data.insert(n.m_data);
@@ -135,62 +158,62 @@ public:
     }
 
     template <size_type N>
-    constexpr str &append(const char_type (&n)[N])
+    constexpr str& append(const char_type (&n)[N])
     {
         append(str(std::forward<const char_type(&)[N]>(n)));
         return *this;
     }
 
-    str &append(const char_type *n)
+    str& append(const char_type* n)
     {
         append(str(n));
         return *this;
     }
 
-    str &append(const u64 n)
+    str& append(const u64 n)
     {
         append(to_str(n));
         return *this;
     }
 
-    str &append(const s64 n)
+    str& append(const s64 n)
     {
         append(to_str(n));
         return *this;
     }
 
-    str &append(const u32 n)
+    str& append(const u32 n)
     {
         append(to_str(n));
         return *this;
     }
 
-    str &append(const s32 n)
+    str& append(const s32 n)
     {
         append(to_str(n));
         return *this;
     }
 
-    str &append(const f32 n)
+    str& append(const f32 n)
     {
         append(to_str(n));
         return *this;
     }
 
-    str &append(const f64 n)
+    str& append(const f64 n)
     {
         append(to_str(n));
         return *this;
     }
 
-    str &append_char(const char_type n)
+    str& append_char(const char_type n)
     {
         const char_type temp[2U] = {n, 0U};
         return append(temp);
     }
 
     template <typename T>
-    bool convert(T &n) const
+    bool convert(T& n) const
     {
         std::istringstream iss(c_str());
         iss >> n;
@@ -198,30 +221,32 @@ public:
     }
 
     template <typename T>
-    [[nodiscard]] pair<T, bool> convert() const {
+    [[nodiscard]] pair<T, bool> convert() const
+    {
         T value;
         return {convert(value), value};
     }
 
     template <typename T>
-    [[nodiscard]] T convertOrDefault() const {
+    [[nodiscard]] T convertOrDefault() const
+    {
         T value;
         convert(value);
         return value;
     }
 
     template <typename T>
-    str &operator+=(T &&source)
+    str& operator+=(T&& source)
     {
         return append(std::forward<T>(source));
     }
 
-    str &operator+=(const str &source)
-    {
-        return append(source);
-    }
+    str& operator+=(const str& source) { return append(source); }
 
-    constexpr size_type size() const noexcept { return m_data.empty() ? 0 : m_data.size() - 1; }
+    constexpr size_type size() const noexcept
+    {
+        return m_data.empty() ? 0 : m_data.size() - 1;
+    }
 
     inline void ltrim()
     {
@@ -260,8 +285,8 @@ public:
             }
 
             *this = (std::isspace(static_cast<unsigned char>(m_data[0U])))
-                        ? ""
-                        : substr(0U, 1U);
+                ? ""
+                : substr(0U, 1U);
         }
     }
 
@@ -272,24 +297,37 @@ public:
         rtrim();
     }
 
-    //TO DO: Change them by using, eg.
+    // TO DO: Change them by using, eg.
     // using vector<T>::begin();
-    constexpr reference operator[](const size_type index) noexcept { return m_data[index]; }
-    constexpr const_reference operator[](const size_type index) const noexcept { return m_data[index]; }
+    constexpr reference operator[](const size_type index) noexcept
+    {
+        return m_data[index];
+    }
+    constexpr const_reference operator[](const size_type index) const noexcept
+    {
+        return m_data[index];
+    }
     constexpr iterator begin() noexcept { return m_data.begin(); }
     constexpr const_iterator begin() const noexcept { return m_data.begin(); }
     constexpr const_iterator cbegin() const noexcept { return m_data.cbegin(); }
     constexpr iterator end() noexcept { return m_data.begin() + size(); }
-    constexpr const_iterator end() const noexcept { return m_data.begin() + size(); }
-    constexpr const_iterator cend() const noexcept { return m_data.cbegin() + size(); }
+    constexpr const_iterator end() const noexcept
+    {
+        return m_data.begin() + size();
+    }
+    constexpr const_iterator cend() const noexcept
+    {
+        return m_data.cbegin() + size();
+    }
 
-    constexpr const char_type *const c_str() const noexcept
+    constexpr const char_type* const c_str() const noexcept
     {
         return m_data.empty() ? "" : m_data.cbegin();
     }
     constexpr bool empty() const noexcept { return size() == 0; }
 
-    constexpr auto find_first_of(const vector<char_type> &chValue) const noexcept
+    constexpr auto find_first_of(
+        const vector<char_type>& chValue) const noexcept
     {
         const auto it(m_data.find_first_of(chValue));
         return (it == m_data.cend()) ? str::npos : std::distance(cbegin(), it);
@@ -301,7 +339,7 @@ public:
     }
 
     template <typename T>
-    constexpr bool operator>>(T &n) const
+    constexpr bool operator>>(T& n) const
     {
         if constexpr (std::is_enum_v<T>)
         {
@@ -323,137 +361,128 @@ public:
 
     static const size_type npos = static_cast<size_type>(-1);
 
-    friend constexpr bool operator==(const str &lhs, const str &rhs) noexcept;
-    friend constexpr bool operator!=(const str &lhs, const str &rhs) noexcept;
+    constexpr bool operator==(const str& rhs) const noexcept
+    {
+        return m_data == rhs.m_data;
+    }
+
+    constexpr bool operator!=(const str& rhs) const noexcept
+    {
+        return m_data == rhs.m_data;
+    }
 
     template <size_type N>
-    friend constexpr bool operator==(const str &lhs, const char_type (&a)[N]) noexcept;
-    template <size_type N>
-    friend constexpr bool operator!=(const str &lhs, const char_type (&a)[N]) noexcept;
+    constexpr bool operator==(const char_type (&a)[N]) const noexcept
+    {
+        if (lhs.size() != (N - 1))
+            return false;
+
+        size_type counter{0};
+        for (const auto c : lhs.m_data)
+        {
+            if (c != a[counter])
+                return false;
+            ++counter;
+        }
+        return true;
+    }
 
     template <size_type N>
-    friend constexpr bool operator==(const char_type (&a)[N], const str &rhs) noexcept;
+    constexpr bool operator!=(const char_type (&a)[N]) const noexcept
+    {
+        return !(operator==(lhs, a));
+    }
+
+    constexpr bool operator==(const str::char_type* a) const noexcept
+    {
+        size_type counter{0};
+        for (const auto c : m_data)
+        {
+            if (a[counter] == 0 && c != 0)
+            {
+                return false;
+            }
+
+            if (c != a[counter])
+            {
+                return false;
+            }
+            ++counter;
+        }
+        return true;
+    }
+
+    constexpr bool operator!=(const str::char_type* a) const noexcept
+    {
+        return !(*this == a);
+    }
+
+    template <typename T>
+    constexpr str& operator<<(const T& n)
+    {
+        return append(n);
+    }
+
     template <size_type N>
-    friend constexpr bool operator!=(const char_type (&a)[N], const str &rhs) noexcept;
+    friend constexpr bool operator==(const char_type (&a)[N],
+                                     const str& rhs) noexcept;
+    template <size_type N>
+    friend constexpr bool operator!=(const char_type (&a)[N],
+                                     const str& rhs) noexcept;
 
-    friend constexpr bool operator==(const char_type *a, const str &rhs) noexcept;
-    friend constexpr bool operator!=(const char_type *a, const str &rhs) noexcept;
-    friend constexpr bool operator==(const str &lhs, const char_type *a) noexcept;
-    friend constexpr bool operator!=(const str &lhs, const char_type *a) noexcept;
+    friend constexpr bool operator==(const char_type* a,
+                                     const str& rhs) noexcept;
+    friend constexpr bool operator!=(const char_type* a,
+                                     const str& rhs) noexcept;
 
-    friend bool operator<(const str &lhs, const str &rhs) noexcept;
-    friend str operator+(const str &lhs, const str &rhs) noexcept;
+    constexpr bool operator<(const str& rhs) const noexcept
+    {
+        size_type i{0};
+        while (i < size() && i < rhs.size())
+        {
+            if (m_data[i] < rhs[i])
+            {
+                return true;
+            }
+            else if (m_data[i] > rhs[i])
+            {
+                return false;
+            }
+            ++i;
+        }
+        return size() < rhs.size();
+    }
 };
 
-template <typename T>
-constexpr str &operator<<(str &dest, const T &n)
-{
-    return dest.append(n);
-}
-
-constexpr bool operator==(const str &lhs, const str &rhs) noexcept
-{
-    return lhs.m_data == rhs.m_data;
-}
-
-constexpr bool operator!=(const str &lhs, const str &rhs) noexcept
-{
-    return lhs.m_data != rhs.m_data;
-}
-
-template <size_type N>
-constexpr bool operator==(const str &lhs, const str::char_type (&a)[N]) noexcept
-{
-    if (lhs.size() != (N - 1))
-        return false;
-
-    size_type counter{0};
-    for (const auto c : lhs.m_data)
-    {
-        if (c != a[counter])
-            return false;
-        ++counter;
-    }
-    return true;
-}
-
-template <size_type N>
-constexpr bool operator!=(const str &lhs, const str::char_type (&a)[N]) noexcept
-{
-    return !(operator==(lhs, a));
-}
-
-template <size_type N>
-constexpr bool operator==(const str::char_type (&a)[N], const str &rhs) noexcept
-{
-    return rhs == a;
-}
-
-template <size_type N>
-constexpr bool operator!=(const str::char_type (&a)[N], const str &rhs) noexcept
-{
-    return rhs != a;
-}
-
-constexpr bool operator==(const str &lhs, const str::char_type *a) noexcept
-{
-    size_type counter{0};
-    for (const auto c : lhs.m_data)
-    {
-        if (a[counter] == 0 && c != 0)
-        {
-            return false;
-        }
-
-        if (c != a[counter])
-        {
-            return false;
-        }
-        ++counter;
-    }
-    return true;
-}
-
-constexpr bool operator!=(const str &lhs, const str::char_type *a) noexcept
-{
-    return !(lhs == a);
-}
-
-constexpr bool operator==(const str::char_type *a, const str &rhs) noexcept
-{
-    return rhs == a;
-}
-
-constexpr bool operator!=(const str::char_type *a, const str &rhs) noexcept
-{
-    return rhs != a;
-}
-
-inline bool operator<(const str &lhs, const str &rhs) noexcept
-{
-    size_type i{0};
-    while (i < lhs.size() && i < rhs.size())
-    {
-        if (lhs[i] < rhs[i])
-        {
-            return true;
-        }
-        else if (lhs[i] > rhs[i])
-        {
-            return false;
-        }
-        ++i;
-    }
-    return lhs.size() < rhs.size();
-}
-
-inline str operator+(const str &lhs, const str &rhs) noexcept
+inline str operator+(const str& lhs, const str& rhs) noexcept
 {
     return str(lhs).append(rhs);
 }
 
+template <size_type N>
+constexpr bool operator==(const str::char_type (&a)[N], const str& rhs) noexcept
+{
+    return rhs == a;
+}
+
+template <size_type N>
+constexpr bool operator!=(const str::char_type (&a)[N], const str& rhs) noexcept
+{
+    return rhs != a;
+}
+
+constexpr bool operator==(const str::char_type* a, const str& rhs) noexcept
+{
+    return rhs == a;
+}
+
+constexpr bool operator!=(const str::char_type* a, const str& rhs) noexcept
+{
+    return rhs != a;
+}
+
 template <typename... Args>
-constexpr str make_str(Args &&... args)
+constexpr str make_str(Args&&... args)
 {
     str t;
     make_str_internal(t, std::forward<Args>(args)...);
@@ -461,7 +490,7 @@ constexpr str make_str(Args &&... args)
 }
 
 template <typename T>
-constexpr str make_str(T &&arg)
+constexpr str make_str(T&& arg)
 {
     str t;
     make_str_internal(t, std::forward<T>(arg));
@@ -469,36 +498,56 @@ constexpr str make_str(T &&arg)
 }
 
 template <>
-inline str make_str(u64 &&n) { return str::to_str(std::move(n)); }
+inline str make_str(u64&& n)
+{
+    return str::to_str(std::move(n));
+}
 template <>
-inline str make_str(s64 &&n) { return str::to_str(std::move(n)); }
+inline str make_str(s64&& n)
+{
+    return str::to_str(std::move(n));
+}
 template <>
-inline str make_str(u32 &&n) { return str::to_str(std::move(n)); }
+inline str make_str(u32&& n)
+{
+    return str::to_str(std::move(n));
+}
 template <>
-inline str make_str(s32 &&n) { return str::to_str(std::move(n)); }
+inline str make_str(s32&& n)
+{
+    return str::to_str(std::move(n));
+}
 template <>
-inline str make_str(f32 &&n) { return str::to_str(std::move(n)); }
+inline str make_str(f32&& n)
+{
+    return str::to_str(std::move(n));
+}
 template <>
-inline str make_str(f64 &&n) { return str::to_str(std::move(n)); }
+inline str make_str(f64&& n)
+{
+    return str::to_str(std::move(n));
+}
 
 template <typename T, typename... Args>
-constexpr void make_str_internal(str &buffer, T &&arg, Args &&... args)
+constexpr void make_str_internal(str& buffer, T&& arg, Args&&... args)
 {
     make_str_internal(buffer, std::forward<T>(arg));
     make_str_internal(buffer, std::forward<Args>(args)...);
 }
 
 template <typename T>
-constexpr void make_str_internal(str &buffer, T &&arg)
+constexpr void make_str_internal(str& buffer, T&& arg)
 {
     buffer << std::forward<T>(arg);
 }
 
 static_assert(std::is_move_constructible_v<str>, "str must be movable");
 static_assert(std::is_move_assignable_v<str>, "str must be movable assignable");
-static_assert(std::is_default_constructible_v<str>, "str must be default constructible");
-static_assert(std::is_copy_constructible_v<str>, "str must be copy constructible");
+static_assert(std::is_default_constructible_v<str>,
+              "str must be default constructible");
+static_assert(std::is_copy_constructible_v<str>,
+              "str must be copy constructible");
 using string_vector = vector<str>;
-} // namespace mtps
+}  // namespace mtps
 
 #endif
