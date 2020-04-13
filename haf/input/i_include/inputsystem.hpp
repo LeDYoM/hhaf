@@ -4,6 +4,7 @@
 #define HAF_INPUTSYSTEM_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
+#include <mtypes/include/vector.hpp>
 #include <haf/input/include/key.hpp>
 
 #include <haf/system/include/appservice.hpp>
@@ -18,14 +19,14 @@ namespace haf::sys
 class InputSystem final : public AppService
 {
 public:
-using AppService::AppService;
+    using AppService::AppService;
     InputSystem(sys::SystemProvider& system_provider);
 
     void update();
 
-    const mtps::vector<input::Key> &pressedKeys() const noexcept;
-    const mtps::vector<input::Key> &releasedKeys() const noexcept;
-    const input::KeyStates &keyStates() const noexcept { return m_keyStates; }
+    const mtps::vector<input::Key>& pressedKeys() const noexcept;
+    const mtps::vector<input::Key>& releasedKeys() const noexcept;
+    const input::KeyStates& keyStates() const noexcept { return m_keyStates; }
 
     /**
      * @brief Force or simulate a key press.
@@ -54,6 +55,6 @@ private:
     mtps::vector<input::Key> m_pressedKeys;
     mtps::vector<input::Key> m_releasedKeys;
 };
-} // namespace haf::sys
+}  // namespace haf::sys
 
 #endif

@@ -4,7 +4,6 @@
 #define HAF_CLASSMACROS_INCLUDE_
 
 #include <mtypes/include/types.hpp>
-#include <mtypes/include/types_ext.hpp>
 
 #define QUOTE__TEXT__(x)	#x
 
