@@ -14,7 +14,7 @@ TEST_CASE("vector::vector", "[vector]")
         CHECK(m.size() == 0);
         CHECK(m.empty());
         CHECK(m.capacity() == 0);
-        
+
         SECTION("Check errorneous operations")
         {
             m.pop_back();
@@ -27,16 +27,16 @@ TEST_CASE("vector::vector", "[vector]")
             CHECK(m.empty());
             CHECK(m.capacity() == 0U);
 
-    SECTION("Copy empty")
-    {
-        vector_shared_pointers<s32> empty_vector;
-        CHECK(empty_vector.capacity() == 0U);
-        CHECK(empty_vector.size() == 0U);
+            SECTION("Copy empty")
+            {
+                vector_shared_pointers<s32> empty_vector;
+                CHECK(empty_vector.capacity() == 0U);
+                CHECK(empty_vector.size() == 0U);
 
-        vector_shared_pointers<s32> copy_empty(empty_vector);
-        CHECK(copy_empty.capacity() == 0U);
-        CHECK(copy_empty.size() == 0U);
-    }
+                vector_shared_pointers<s32> copy_empty(empty_vector);
+                CHECK(copy_empty.capacity() == 0U);
+                CHECK(copy_empty.size() == 0U);
+            }
         }
     }
 
@@ -65,7 +65,7 @@ TEST_CASE("vector::vector", "[vector]")
 
         vector<s32> m2(m);
         CHECK(m.size() == m2.size());
-        
+
         m.reserve(10U);
         CHECK(m.size() == 1U);
 
@@ -77,7 +77,7 @@ TEST_CASE("vector::vector", "[vector]")
 
     SECTION("Iterators constructor")
     {
-        const u32 data[] = { 0U, 1U, 2U, 3U, 4U };
+        const u32 data[] = {0U, 1U, 2U, 3U, 4U};
         vector<u32> v(data, data + 5);
         CHECK(v.size() == 5U);
         CHECK(v == vector<u32>{0U, 1U, 2U, 3U, 4U});
@@ -91,8 +91,8 @@ TEST_CASE("vector::vector", "[vector]")
     SECTION("Initializer list constructor")
     {
         vector<u32> m;
-        m = { 1,9,8,7,6,5,4,3,2,0,1 };
-        CHECK(m == vector<u32>{ 1, 9, 8, 7, 6, 5, 4, 3, 2, 0, 1 });
+        m = {1, 9, 8, 7, 6, 5, 4, 3, 2, 0, 1};
+        CHECK(m == vector<u32>{1, 9, 8, 7, 6, 5, 4, 3, 2, 0, 1});
 
         SECTION("Copy and move constructor")
         {
@@ -111,14 +111,14 @@ TEST_CASE("vector::vector", "[vector]")
     {
         SECTION("With sizeof")
         {
-            const u32 arr[] = { 4, 3, 2, 1 };
+            const u32 arr[] = {4, 3, 2, 1};
             vector<u32> v(arr, sizeof(arr) / sizeof(u32));
             CHECK(v.size() == 4U);
         }
 
         SECTION("With sizeof")
         {
-            const u32 arr[] = { 4, 3, 2, 1 };
+            const u32 arr[] = {4, 3, 2, 1};
             vector<u32> v(std::cbegin(arr), std::cend(arr));
             CHECK(v.size() == 4U);
         }
@@ -135,23 +135,25 @@ TEST_CASE("vector::vector", "[vector]")
     }
 }
 
-class A {
+class A
+{
 public:
     s32 b;
 };
 
-inline auto init_vector_shared_pointers_A() {
+inline auto init_vector_shared_pointers_A()
+{
     vector_shared_pointers<A> test_vector1;
-    test_vector1.push_back(msptr<A>(A{ 1 }));
-    test_vector1.push_back(msptr<A>(A{ -2 }));
-    test_vector1.push_back(msptr<A>(A{ 3 }));
-    test_vector1.push_back(msptr<A>(A{ -2 }));
-    test_vector1.push_back(msptr<A>(A{ 5 }));
-    test_vector1.push_back(msptr<A>(A{ 100 }));
-    test_vector1.push_back(msptr<A>(A{ -2 }));
-    test_vector1.push_back(msptr<A>(A{ -2 }));
-    test_vector1.push_back(msptr<A>(A{ -1 }));
-    test_vector1.push_back(msptr<A>(A{ 0 }));
+    test_vector1.push_back(msptr<A>(A{1}));
+    test_vector1.push_back(msptr<A>(A{-2}));
+    test_vector1.push_back(msptr<A>(A{3}));
+    test_vector1.push_back(msptr<A>(A{-2}));
+    test_vector1.push_back(msptr<A>(A{5}));
+    test_vector1.push_back(msptr<A>(A{100}));
+    test_vector1.push_back(msptr<A>(A{-2}));
+    test_vector1.push_back(msptr<A>(A{-2}));
+    test_vector1.push_back(msptr<A>(A{-1}));
+    test_vector1.push_back(msptr<A>(A{0}));
     return test_vector1;
 }
 
@@ -205,7 +207,7 @@ TEST_CASE("vector of shared pointers", "[vector]")
 
         CHECK(test_vector3.size() == 10U);
 
-        test_vector1.push_back(msptr<A>(A{ 1 }));
+        test_vector1.push_back(msptr<A>(A{1}));
     }
 
     SECTION("Remove")
@@ -238,12 +240,13 @@ TEST_CASE("vector of shared pointers", "[vector]")
 
         SECTION("Remove if")
         {
-            sptr<A> temp = msptr<A>(A{ 42 });
+            sptr<A> temp = msptr<A>(A{42});
             wptr<A> weak = temp;
             test_vector1.push_back(std::move(temp));
             CHECK(test_vector1.size() == 9U);
             CHECK_FALSE(weak.lock() == nullptr);
-            test_vector1.erase_if([](const sptr<A> element) { return element->b == 42; });
+            test_vector1.erase_if(
+                [](const sptr<A> element) { return element->b == 42; });
             CHECK(test_vector1.size() == 8U);
             CHECK(weak.lock() == nullptr);
         }
@@ -341,7 +344,8 @@ TEST_CASE("Unique ptr")
 TEST_CASE("Grow policy")
 {
     vector<s32> default_test_vector;
-    vector_storage<s32, AllocatorMallocFree<s32>, GrowPolicyDouble> double_grow_test_vector;
+    vector_storage<s32, AllocatorType<s32>, GrowPolicyDouble>
+        double_grow_test_vector;
 
     CHECK(default_test_vector.empty());
     CHECK(default_test_vector.capacity() == 0U);

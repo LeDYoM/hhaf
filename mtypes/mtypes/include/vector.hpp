@@ -8,7 +8,6 @@
 
 #include <initializer_list>
 #include <utility>
-#include "allocator.hpp"
 #include "function.hpp"
 #include "growpolicy.hpp"
 #include "vector_storage.hpp"
@@ -25,7 +24,7 @@ namespace mtps
  * @tparam GrowPolicy Policy class to dinamically increment the capacity
  */
 template <typename T,
-          typename Allocator  = AllocatorMallocFree<T>,
+          typename Allocator  = AllocatorType<T>,
           typename GrowPolicy = GrowPolicyUnary>
 class vector final : private vector_storage<T, Allocator, GrowPolicy>
 {

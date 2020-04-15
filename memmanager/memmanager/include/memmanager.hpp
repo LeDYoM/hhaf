@@ -4,4 +4,7 @@
 void installMemManager();
 void finishMemManager();
 
+void* mmalloc(unsigned long long size);
+void mfree(void* block);
+
 #endif

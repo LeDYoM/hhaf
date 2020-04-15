@@ -46,13 +46,12 @@ void finishMemManager()
 #endif
 }
 
-/*
-void * operator new(std::size_t n) noexcept(false)
+void*  mmalloc(unsigned long long size)
 {
-    return ::new(n);
+    return std::malloc(size);
 }
-void operator delete(void * p) noexcept false
+
+void mfree(void* block)
 {
-  //...
+    free(block);
 }
-*/
