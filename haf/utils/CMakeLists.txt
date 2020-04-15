@@ -6,4 +6,4 @@ add_library(${CURRENT_TARGET} INTERFACE)
 
 target_include_directories(${CURRENT_TARGET} INTERFACE ${PROJECT_SOURCE_DIR})
 
-target_link_libraries(${CURRENT_TARGET} INTERFACE htypes)
+target_link_libraries(${CURRENT_TARGET} INTERFACE mtypes)

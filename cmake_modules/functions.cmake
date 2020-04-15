@@ -28,10 +28,10 @@ function(build_client_library)
 
 endfunction(build_client_library)
 
-function (add_hlog_and_htypes)
-    target_link_libraries(${CURRENT_TARGET} PUBLIC htypes)
+function (add_log_and_types)
+    target_link_libraries(${CURRENT_TARGET} PUBLIC mtypes)
     target_link_libraries(${CURRENT_TARGET} PUBLIC hlog)
-endfunction(add_hlog_and_htypes)
+endfunction(add_log_and_types)
 
 # Function to build different components from the project in an unified way.
 function(build_lib_component)
@@ -107,7 +107,7 @@ function(build_internal_lib_component)
 
     add_library (${CURRENT_TARGET}_interface INTERFACE)
     target_include_directories(${CURRENT_TARGET}_interface INTERFACE ${_PUBLIC_INCLUDE_DIRECTORY})
-    add_hlog_and_htypes()
+    add_log_and_types()
 
 endfunction(build_internal_lib_component)
 
@@ -121,7 +121,7 @@ function(build_concrete_backend)
     # Patch for testing TO DO: Remove it (use a variable)
     include_directories("..")
 
-    add_hlog_and_htypes()
+    add_log_and_types()
     target_link_libraries(${CURRENT_TARGET} PRIVATE backend_dev)
 
 endfunction(build_concrete_backend)

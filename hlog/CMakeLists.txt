@@ -12,4 +12,4 @@ build_lib_component(
 )
 
 target_link_libraries(${CURRENT_TARGET} PUBLIC logger)
-target_link_libraries(${CURRENT_TARGET} PUBLIC htypes)
+target_link_libraries(${CURRENT_TARGET} PUBLIC mtypes)

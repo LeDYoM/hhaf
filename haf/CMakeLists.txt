@@ -1,24 +1,22 @@
 cmake_minimum_required(VERSION 3.14)
-project (haf)
+project(haf)
 
-include_directories ("..")
+include_directories("..")
 
 set(_SOURCES "main.cpp")
-file (GLOB_RECURSE _HEADERS "include/*.hpp")
+file(GLOB_RECURSE _HEADERS "include/*.hpp")
 
-set (CURRENT_TARGET  ${PROJECT_NAME})
+set(CURRENT_TARGET ${PROJECT_NAME})
 
 add_library(${CURRENT_TARGET} SHARED ${_SOURCES} ${_HEADERS})
-set_target_properties(${CURRENT_TARGET}
-                      PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS true)
+set_target_properties(${CURRENT_TARGET} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS
+                                                   true)
 
-target_include_directories(${CURRENT_TARGET}
-    PUBLIC 
-#        $<INSTALL_INTERFACE:include>    
-#        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-#    PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/../
-)
+target_include_directories(
+  ${CURRENT_TARGET}
+  PUBLIC # $<INSTALL_INTERFACE:include>
+         # $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> PRIVATE
+         ${CMAKE_CURRENT_SOURCE_DIR}/../)
 
 # Directory internal libraries that will be used by the client too.
 add_subdirectory(utils)
@@ -55,13 +53,9 @@ target_link_libraries(${CURRENT_TARGET} PRIVATE window)
 target_link_libraries(${CURRENT_TARGET} PRIVATE hosted_app)
 target_link_libraries(${CURRENT_TARGET} PRIVATE loader)
 
-add_hlog_and_htypes()
+add_log_and_types()
 
-# TODO: Investigate some day
-#if(MSVC)
-#set_target_properties(${CURRENT_TARGET} 
-#    PROPERTIES LINK_FLAGS "${LINK_FLAGS} /NODEFAULTLIB")
-#endif()
-
+# TODO: Investigate some day if(MSVC) set_target_properties(${CURRENT_TARGET}
+# PROPERTIES LINK_FLAGS "${LINK_FLAGS} /NODEFAULTLIB") endif()
 
 add_subdirectory(tests)

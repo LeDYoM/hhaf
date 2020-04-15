@@ -28,11 +28,13 @@ SET(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 include(${CMAKE_MODULE_PATH}/functions.cmake)
 
+# Use the memmanager
+option(USE_MEMMANAGER "Compile mtypes using the memmanager wrappers" ON)
+
 # Sub-directories where more CMakeLists.txt exist
 add_subdirectory(tests)
 add_subdirectory(memmanager)
 add_subdirectory(mtypes)
-add_subdirectory(htypes)
 add_subdirectory(logger)
 add_subdirectory(hlog)
 add_subdirectory(loader)
