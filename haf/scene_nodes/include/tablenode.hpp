@@ -52,7 +52,7 @@ public:
         mtps::sptr<SceneNode> inner_node(createSceneNode<SceneNode>("inner_node" + make_str(index)));
 
         mtps::sptr<T> result(inner_node->createSceneNode<T>(std::forward<Args>(args)...));
-        log_assert(index.x < tableSize().x && index.y < tableSize().y,
+        LogAsserter::log_assert(index.x < tableSize().x && index.y < tableSize().y,
                        "TableSize::createNodeAt: Index ", index, " is out "
                                                                  "of bounds. Size: ",
                        tableSize());

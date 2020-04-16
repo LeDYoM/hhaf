@@ -70,7 +70,7 @@ void Player::update()
 
 void Player::movePlayer(const Direction& direction)
 {
-    log_assert(direction.isValid(), "Invalid direction passed to move");
+    LogAsserter::log_assert(direction.isValid(), "Invalid direction passed to move");
     currentDirection = direction;
     auto nPosition   = direction.applyToVector(boardPosition());
     if (TokenZones::pointInCenter(nPosition))

@@ -113,7 +113,7 @@ void HighScoreTextController::addHighScoreEditor(const sptr<SceneNode> &label,
 
 void HighScoreTextController::addEditAnimation(const size_type line_index)
 {
-    log_assert(line_index < tableSize().y, "Invalid line_index");
+    LogAsserter::log_assert(line_index < tableSize().y, "Invalid line_index");
 
     for_each_tableSceneNode_in_y(
         line_index, [this](const auto, const auto &element) {

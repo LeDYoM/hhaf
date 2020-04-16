@@ -38,7 +38,7 @@ size_type RandomSystem::getNext(const str& name,
 {
     const size_type next = priv_->getNext<size_type>();
     DisplayLog::verbose("RandomSystem: Raw number generator: ", next);
-    log_assert(min < max, "min (", min, ") should be smaller than max (", max,
+    LogAsserter::log_assert(min < max, "min (", min, ") should be smaller than max (", max,
                ")");
     size_type filtered_next = (next % (max - min)) + min;
     DisplayLog::info("RandomSystem: Preselecting output: ", filtered_next);

@@ -44,8 +44,8 @@ void RenderSystem::clear()
 
 void RenderSystem::setRenderTarget(sptr<RenderTarget> render_target)
 {
-    log_assert(render_target != nullptr, "Parameter is nullptr");
-    log_assert(priv_->render_target_ == nullptr,
+    LogAsserter::log_assert(render_target != nullptr, "Parameter is nullptr");
+    LogAsserter::log_assert(priv_->render_target_ == nullptr,
                "Render target was already set");
 
     priv_->render_target_ = std::move(render_target);

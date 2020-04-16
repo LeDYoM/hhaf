@@ -67,7 +67,7 @@ bool Window::create(uptr<win::WindowProperties> window_properties)
     //        DisplayLog::info("Fullscreen:" , wcp.fullScreen);
     //        DisplayLog::info("Antialiasing:", wcp.antialiasing);
 
-    log_assert(!priv_->m_backendWindow, "Cannot create window twice");
+    LogAsserter::log_assert(!priv_->m_backendWindow, "Cannot create window twice");
     DisplayLog::info("Creating window...");
 
     // Create window object

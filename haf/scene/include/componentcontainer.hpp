@@ -24,7 +24,7 @@ public:
     template <typename T>
     mtps::sptr<T> addComponentOfType()
     {
-        log_assert(componentOfType<T>() == nullptr,
+        LogAsserter::log_assert(componentOfType<T>() == nullptr,
                    "There is already a component with this type");
         mtps::sptr<T> nc(create<T>());
         addComponent(nc);

@@ -10,9 +10,9 @@ namespace haf::scene
 {
 void ResourceHandler::onAttached()
 {
-    log_assert(handler_ == nullptr, "ResourceHandler already attached!");
+    LogAsserter::log_assert(handler_ == nullptr, "ResourceHandler already attached!");
     handler_ = &(sys::getSystem<sys::ResourceManager>(attachedNode()));
-    log_assert(handler_ != nullptr, "Invalid IResourceHandler");
+    LogAsserter::log_assert(handler_ != nullptr, "Invalid IResourceHandler");
 }
 
 bool ResourceHandler::loadTTFont(const str&rid, const str&fileName)

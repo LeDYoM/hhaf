@@ -11,7 +11,7 @@ namespace haf::scene
 void ResourceView::onAttached()
 {
     retriever_ = &(sys::getSystem<sys::ResourceManager>(attachedNode()));
-    log_assert(retriever_ != nullptr, "Invalid IResourceRetrieved");
+    LogAsserter::log_assert(retriever_ != nullptr, "Invalid IResourceRetrieved");
 }
 
 sptr<scene::ITTFont> ResourceView::getTTFont(const str&rid)

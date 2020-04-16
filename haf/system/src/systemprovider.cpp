@@ -50,7 +50,7 @@ SystemProvider::~SystemProvider() = default;
 
 void SystemProvider::init(IApp* iapp)
 {
-    log_assert(iapp != nullptr,
+    LogAsserter::log_assert(iapp != nullptr,
                "Cannot create a SystemProvider with a nullptr app");
     p_->backend_factory_ =
         uptr<backend::BackendFactory, void (*)(haf::backend::BackendFactory*)>(

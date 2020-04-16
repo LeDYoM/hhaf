@@ -13,8 +13,8 @@ InputSystem::InputSystem(sys::SystemProvider &system_provider)
 
 void InputSystem::setInputDriver(sptr<input::InputDriver> input_driver)
 {
-    log_assert(input_driver != nullptr, "Parameter is nullptr");
-    log_assert(input_driver_ == nullptr, "Input driver was already set");
+    LogAsserter::log_assert(input_driver != nullptr, "Parameter is nullptr");
+    LogAsserter::log_assert(input_driver_ == nullptr, "Input driver was already set");
 
     input_driver_ = std::move(input_driver);
 }
@@ -46,7 +46,7 @@ const vector<Key> &InputSystem::releasedKeys() const noexcept
 
 void InputSystem::keyPressed(const Key key)
 {
-    log_assert(key < Key::KeyCount, "Incorrect key value");
+    LogAsserter::log_assert(key < Key::KeyCount, "Incorrect key value");
     DisplayLog::info("InputSystem: Key pressed: ", KeyIndex(key));
     m_keyStates[KeyIndex(key)] = true;
     m_pressedKeys.push_back(key);
@@ -54,7 +54,7 @@ void InputSystem::keyPressed(const Key key)
 
 void InputSystem::keyReleased(const Key key)
 {
-    log_assert(key < Key::KeyCount, "Incorrect key value");
+    LogAsserter::log_assert(key < Key::KeyCount, "Incorrect key value");
     DisplayLog::info("InputSystem: Key released: ", KeyIndex(key));
     m_keyStates[KeyIndex(key)] = false;
     m_releasedKeys.push_back(key);

@@ -33,7 +33,7 @@ inline sptr<IComponent> getComponentFromTypeIndex(
 
 bool ComponentContainer::addComponent(sptr<IComponent> nc)
 {
-    log_assert(nc != nullptr, "Trying to add a nullptr component");
+    LogAsserter::log_assert(nc != nullptr, "Trying to add a nullptr component");
     m_components.emplace_back(std::move(nc));
     return true;
 }

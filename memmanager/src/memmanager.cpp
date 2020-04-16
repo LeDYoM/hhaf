@@ -46,7 +46,7 @@ void finishMemManager()
 #endif
 }
 
-void*  mmalloc(unsigned long long size)
+void* mmalloc(std::size_t size)
 {
     return std::malloc(size);
 }

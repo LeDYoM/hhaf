@@ -11,7 +11,7 @@ namespace haf::scene
 {
 void SceneController::setSceneManager(rptr<SceneManager> scene_manager)
 {
-    log_assert(scene_manager_ == nullptr, "The scene_manager_ was set already");
+    LogAsserter::log_assert(scene_manager_ == nullptr, "The scene_manager_ was set already");
     scene_manager_ = scene_manager;
 }
 
@@ -46,7 +46,7 @@ void SceneController::deferredSwitchScene()
 
 void SceneController::terminateCurrentScene()
 {
-    log_assert(current_scene_ != nullptr,
+    LogAsserter::log_assert(current_scene_ != nullptr,
                "Unexpected nullptr in current_scene");
     DisplayLog::info("Terminating scene ", current_scene_->name());
     current_scene_->onFinished();

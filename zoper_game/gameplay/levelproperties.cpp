@@ -23,9 +23,9 @@ void LevelProperties::configure(
     {
         m_levelTimer = attachedNode()->dataWrapper<Timer>();
     }
-    log_assert(sceneTimerComponent != nullptr,
+    LogAsserter::log_assert(sceneTimerComponent != nullptr,
                "m_sceneNodeComponent already contains a value");
-    log_assert(m_sceneTimerComponent == nullptr,
+    LogAsserter::log_assert(m_sceneTimerComponent == nullptr,
                "Passed nullptr sceneTimerComponent");
 
     m_gameMode = gameMode;

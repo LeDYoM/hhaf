@@ -80,7 +80,7 @@ void MenuPage::configure(vector<sptr<MenuPagedOption>> options,
 {
     setTableSize({5U, options.size()});
 
-    log_assert(options.size() > 0U, "options cannot be empty");
+    LogAsserter::log_assert(options.size() > 0U, "options cannot be empty");
     size_type counter{0U};
     for (auto&& option : options)
     {
@@ -111,7 +111,7 @@ void MenuPage::configure(vector<sptr<MenuPagedOption>> options,
 
     Selection.connect(
         [this, options](const size_type index, const s32 /*selection*/) {
-            log_assert(index <= static_cast<s32>(options.size()),
+            LogAsserter::log_assert(index <= static_cast<s32>(options.size()),
                        "Logical error: Received invalid "
                        "index in Selection");
 
@@ -219,7 +219,7 @@ void MenuPage::goSelected()
 sptr<DiscreteTextComponent> MenuPage::optionsLabelAt(const size_type y) const
 {
     auto node = nodeAt({columnForOptions, y});
-    log_assert(node != nullptr, "This node does not have options");
+    LogAsserter::log_assert(node != nullptr, "This node does not have options");
     return node->componentOfType<DiscreteTextComponent>();
 }
 

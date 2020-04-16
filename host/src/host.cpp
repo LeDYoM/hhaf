@@ -68,8 +68,8 @@ Host::~Host() = default;
 
 bool Host::setApplication(rptr<IApp> iapp)
 {
-    log_assert(iapp != nullptr, "Received nullptr Application");
-    log_assert(!m_private->iapp_, "Application already set");
+    LogAsserter::log_assert(iapp != nullptr, "Received nullptr Application");
+    LogAsserter::log_assert(!m_private->iapp_, "Application already set");
 
     if (!m_private->iapp_ && iapp)
     {
@@ -165,7 +165,7 @@ bool Host::loopStep()
 
 void Host::exitProgram()
 {
-    log_assert(m_state == AppState::Executing, "Cannot terminate a program that is not in the executing state");
+    LogAsserter::log_assert(m_state == AppState::Executing, "Cannot terminate a program that is not in the executing state");
     m_state = AppState::ReadyToTerminate;
 }
 } // namespace haf::sys

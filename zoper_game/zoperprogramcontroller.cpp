@@ -79,7 +79,7 @@ void ZoperProgramController::onInit(sys::ISystemProvider &system_provider)
 void ZoperProgramController::onFinish(sys::ISystemProvider &system_provider)
 {
     bool check = sys::getSystemProvider(system_provider).sharedDataSystem().makeEmpty();
-    log_assert(check, "SharedData is empty!");
+    LogAsserter::log_assert(check, "SharedData is empty!");
 }
 
 } // namespace zoper

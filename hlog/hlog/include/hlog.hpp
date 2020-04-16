@@ -14,17 +14,7 @@ namespace haf
 {
 using logClass = logger::Log<mtps::str, logger::COutCommiter>;
 using DisplayLog = logger::LogDisplayer<logClass>;
-using Asserter = logger::LogAsserter<DisplayLog>;
-
-template <typename... Args>
-constexpr void log_assert(const bool condition, Args &&... args) noexcept
-{
-    if (!condition)
-    {
-        DisplayLog::error(std::forward<Args>(args)...);
-        assert(false);
-    }
-}
+using LogAsserter = logger::LogAsserter<DisplayLog>;
 
 // Up to today in MSVC [[maybe_unused]] is ignored for
 // variadic templates.

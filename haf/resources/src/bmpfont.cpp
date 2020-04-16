@@ -55,7 +55,7 @@ vector<str> BMPFont::textureFileNames() const
 
 void BMPFont::setTexturePages(const vector<sptr<ITexture>>& texture_pages)
 {
-    log_assert(texture_pages.size() <= fontPrivate->pagesData_.size(),
+    LogAsserter::log_assert(texture_pages.size() <= fontPrivate->pagesData_.size(),
                "The number of textures to add should be lower or equal that "
                "the number of pages.");
 

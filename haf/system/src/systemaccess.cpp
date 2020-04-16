@@ -23,10 +23,10 @@ ISystemProvider& SystemAccess::isystemProvider() noexcept
 
 void SystemAccess::copySystemProvider(rptr<ISystemProvider> rhs)
 {
-    log_assert(isystem_provider_ == nullptr, "You should not use this function"
+    LogAsserter::log_assert(isystem_provider_ == nullptr, "You should not use this function"
                                 " if isystemProvider is already set");
 
-    log_assert(rhs != nullptr, "Parameter is nullptr");
+    LogAsserter::log_assert(rhs != nullptr, "Parameter is nullptr");
     isystem_provider_ = std::move(rhs);
 }
 

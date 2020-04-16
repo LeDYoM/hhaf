@@ -63,7 +63,7 @@ void BoardGroup::addPlayer()
 {
     DisplayLog::info("Adding player tile at ",
                      TokenZones::centerRect.leftTop());
-    log_assert(player_ == nullptr, "Player already initialized");
+    LogAsserter::log_assert(player_ == nullptr, "Player already initialized");
     // Create the player instance
     player_ = tokens_scene_node->createSceneNode<Player>("playerNode");
     player_->configure(TokenZones::centerRect.leftTop(),
@@ -98,7 +98,7 @@ void BoardGroup::createNewToken(const board::BoardTileData data,
 
 void BoardGroup::tileRemoved(const vector2dst, board::SITilePointer& tile)
 {
-    log_assert(std::dynamic_pointer_cast<Token>(tile) != nullptr,
+    LogAsserter::log_assert(std::dynamic_pointer_cast<Token>(tile) != nullptr,
                "Trying to delete invalid type from board");
     tokens_scene_node->removeSceneNode(std::dynamic_pointer_cast<Token>(tile));
 }

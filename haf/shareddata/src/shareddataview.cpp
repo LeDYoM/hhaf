@@ -15,7 +15,7 @@ void SharedData::store(uptr<IShareable> data)
 
 uptr<IShareable> SharedData::retrieve_imp()
 {
-    log_assert(!isEmpty(), "SharedDataSystem should be empty");
+    LogAsserter::log_assert(!isEmpty(), "SharedDataSystem should be empty");
     return sys::getSystem<sys::ISharedDataSystem>(attachedNode()).retrieve();
 }
 
@@ -29,29 +29,29 @@ SharedDataView::SharedDataView()
 
 SharedDataView::~SharedDataView()
 {
-    log_assert(data_ != nullptr, "Data is nullptr");
-    log_assert(sys::getSystem<sys::ISharedDataSystem>(attachedNode()).isEmpty(),
+    LogAsserter::log_assert(data_ != nullptr, "Data is nullptr");
+    LogAsserter::log_assert(sys::getSystem<sys::ISharedDataSystem>(attachedNode()).isEmpty(),
                "SharedDataSystem should be empty");
 
     sys::getSystem<sys::ISharedDataSystem>(attachedNode()).store(std::move(data_));
 
-    log_assert(!sys::getSystem<sys::ISharedDataSystem>(attachedNode()).isEmpty(),
+    LogAsserter::log_assert(!sys::getSystem<sys::ISharedDataSystem>(attachedNode()).isEmpty(),
                "SharedDataSystem should not be empty");
 
-    log_assert(data_ == nullptr, "SharedDataView should contain nullptr");
+    LogAsserter::log_assert(data_ == nullptr, "SharedDataView should contain nullptr");
 }
 
 void SharedDataView::onAttached()
 {
-    log_assert(data_ == nullptr, "SharedDataView should contain nullptr");
-    log_assert(!sys::getSystem<sys::ISharedDataSystem>(attachedNode()).isEmpty(),
+    LogAsserter::log_assert(data_ == nullptr, "SharedDataView should contain nullptr");
+    LogAsserter::log_assert(!sys::getSystem<sys::ISharedDataSystem>(attachedNode()).isEmpty(),
                "SharedDataSystem should not be empty");
 
     data_ = sys::getSystem<sys::ISharedDataSystem>(attachedNode()).retrieve();
 
-    log_assert(sys::getSystem<sys::ISharedDataSystem>(attachedNode()).isEmpty(),
+    LogAsserter::log_assert(sys::getSystem<sys::ISharedDataSystem>(attachedNode()).isEmpty(),
                "SharedDataSystem should be empty");
-    log_assert(data_ != nullptr, "Data is nullptr");
+    LogAsserter::log_assert(data_ != nullptr, "Data is nullptr");
 }
 
 IShareable &SharedDataView::data()

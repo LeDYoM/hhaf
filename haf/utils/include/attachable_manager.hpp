@@ -42,7 +42,7 @@ protected:
         const mtps::rptr<const sys::Attachable<AttachableType>> temp2 =
             dynamic_cast<mtps::rptr<const sys::Attachable<AttachableType>>>(
                 temp);
-        log_assert(temp2 != nullptr, "");
+        LogAsserter::log_assert(temp2 != nullptr, "");
 
         auto result = mtps::uptr<T>(std::move(temp));
         initialize(result.get());

@@ -154,7 +154,7 @@ void SceneNodeText::update()
                  index >= counter; --index)
             {
                 // Assert we are removing always the last one.
-                log_assert(sceneNodes()[index] == *(sceneNodes().end() - 1U));
+                LogAsserter::log_assert(sceneNodes()[index] == *(sceneNodes().end() - 1U));
                 removeSceneNode(sceneNodes()[index]);
             }
 

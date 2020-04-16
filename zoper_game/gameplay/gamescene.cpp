@@ -77,14 +77,14 @@ void GameScene::onCreated()
 {
     BaseClass::onCreated();
 
-    log_assert(private_ == nullptr, "Private data pointer is not nullptr!");
+    LogAsserter::log_assert(private_ == nullptr, "Private data pointer is not nullptr!");
     private_ = muptr<GameScenePrivate>();
 
     dataWrapper<ResourceHandler>()->loadResources(GameResources{});
 
     using namespace haf::board;
 
-    log_assert(!m_boardGroup, "m_boardGroup is not empty");
+    LogAsserter::log_assert(!m_boardGroup, "m_boardGroup is not empty");
     m_boardGroup = createSceneNode<BoardGroup>("BoardGroup", TokenZones::size);
 
     m_nextTokenPart = 0U;
@@ -189,10 +189,10 @@ void GameScene::onCreated()
 
     private_->token_type_generator_ =
         addComponentOfType<rnd::RandomNumbersComponent>();
-    log_assert(private_->token_type_generator_ != nullptr,
+    LogAsserter::log_assert(private_->token_type_generator_ != nullptr,
                "Cannot create DataProviderComponent");
     private_->token_position_generator_ = private_->token_type_generator_;
-    log_assert(private_->token_position_generator_ != nullptr,
+    LogAsserter::log_assert(private_->token_position_generator_ != nullptr,
                "Cannot create DataProviderComponent");
 
     // Prepare the pause text.
@@ -257,7 +257,7 @@ bool moveTowardsCenter(
         board_model->moveTile(position, next);
         if (TokenZones::pointInCenter(next))
         {
-            log_assert(!moved_to_center, "Double game over!");
+            LogAsserter::log_assert(!moved_to_center, "Double game over!");
             moved_to_center = true;
         }
     }
