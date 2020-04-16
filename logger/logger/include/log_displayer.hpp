@@ -24,16 +24,13 @@ private:
               typename... Args>
     static constexpr void log_if(Args&&... args) noexcept
     {
-        if constexpr (condition)
-        {
-            LogClass::log(SeverityType::as_str(severity_value),
-                          std::forward<Args>(args)...);
-        }
+        LogClass::log_if<condition>(SeverityType::as_str(severity_value),
+                                    std::forward<Args>(args)...);
     }
 
 public:
     template <typename... Args>
-    static constexpr void bebug(Args&&... args) noexcept
+    static constexpr void debug(Args&&... args) noexcept
     {
         log_if_severity_under<SeverityType::severity_type_t::debug>(
             std::forward<Args>(args)...);

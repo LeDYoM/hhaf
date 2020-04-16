@@ -42,6 +42,16 @@ public:
             LogCommiter::commitlog(log_stream.c_str());
         }
     }
+
+        template <bool condition, typename... Args>
+    static constexpr void log_if(Args&&... args) noexcept
+    {
+        if constexpr (condition)
+        {
+            log(std::forward<Args>(args)...);
+        }
+    }
+
 };
 
 } // namespace logger

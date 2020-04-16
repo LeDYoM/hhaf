@@ -5,6 +5,7 @@
 
 #include <logger/include/log.hpp>
 #include <logger/include/log_displayer.hpp>
+#include <logger/include/log_asserter.hpp>
 #include <mtypes/include/str.hpp>
 
 #include <cassert>
@@ -13,6 +14,7 @@ namespace haf
 {
 using logClass = logger::Log<mtps::str, logger::COutCommiter>;
 using DisplayLog = logger::LogDisplayer<logClass>;
+using Asserter = logger::LogAsserter<DisplayLog>;
 
 template <typename... Args>
 constexpr void log_assert(const bool condition, Args &&... args) noexcept
@@ -20,8 +22,8 @@ constexpr void log_assert(const bool condition, Args &&... args) noexcept
     if (!condition)
     {
         DisplayLog::error(std::forward<Args>(args)...);
+        assert(false);
     }
-    assert(condition);
 }
 
 // Up to today in MSVC [[maybe_unused]] is ignored for
