@@ -387,6 +387,8 @@ vector2df GameScene::tileSize() const
 
 void GameScene::_debugDisplayBoard() const
 {
+    DisplayLog::info(m_boardGroup->boardModel()->toStr());
+    /*
     for (u32 y{0}; y < TokenZones::size.y; ++y)
     {
         str temp;
@@ -411,5 +413,6 @@ void GameScene::_debugDisplayBoard() const
         }
         DisplayLog::info(temp);
     }
+    */
 }
 }  // namespace zoper

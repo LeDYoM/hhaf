@@ -8,28 +8,11 @@
 #include <logger/include/log_asserter.hpp>
 #include <mtypes/include/str.hpp>
 
-#include <cassert>
-
 namespace haf
 {
 using logClass = logger::Log<mtps::str, logger::COutCommiter>;
 using DisplayLog = logger::LogDisplayer<logClass>;
 using LogAsserter = logger::LogAsserter<DisplayLog>;
-
-// Up to today in MSVC [[maybe_unused]] is ignored for
-// variadic templates.
-//#ifdef _MSC_VER
-//#pragma warning(push)
-//#pragma warning(disable : 4100)
-//#endif
-//template <bool do_logs, typename... Args>
-//constexpr void log_info_if([[maybe_unused]] Args &&... args) noexcept
-//{
-//    DisplayLog::log_if(do_logs, std::forward<Args>(args)...);
-//}
-//#ifdef _MSC_VER
-//#pragma warning(pop)
-//#endif
 
 #ifdef NDEBUG
 #define CLIENT_EXECUTE_IN_DEBUG(x) ((void)0)

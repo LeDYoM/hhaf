@@ -18,7 +18,7 @@ public:
      * @brief Method to initialize the component.
      * This method should be called once and only once per component.
      * Failing that is underfined behaviour.
-     * 
+     *
      * @param size Size of the board.
      * @param board_model_actuator Pointer to a @b IBoardModelActuator
      * to handle the callbacks.
@@ -38,12 +38,15 @@ public:
     bool validCoords(const mtps::vector2dst& tPosition) const noexcept;
     mtps::vector2dst size() const noexcept;
 
+    mtps::str toStr();
+
 private:
     void _setTile(const mtps::vector2dst& position, SITilePointer newTile);
 
     mtps::rptr<IBoardModelActuator> actuator_{nullptr};
     mtps::vector<mtps::vector<SITilePointer>> tiles_;
 };
+
 }  // namespace haf::board
 
 #endif

@@ -9,6 +9,11 @@
 namespace logger
 {
 
+/**
+ * @brief Class to perform run-time assertions in code.
+ * Provides constexpr methods that could be eliminated under certain conditions.
+ * @tparam LogDisplayerClass Class that performs the actual logging.
+ */
 template <typename LogDisplayerClass>
 struct LogAsserter
 {

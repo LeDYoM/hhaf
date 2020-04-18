@@ -16,7 +16,8 @@ void BoardModelComponent::initialize(
     DisplayLog::info("IBoardModelActuator received: ",
                      (board_model_actuator != nullptr));
 
-    LogAsserter::log_assert(actuator_ == nullptr, "m_actuator already contains a value");
+    LogAsserter::log_assert(actuator_ == nullptr,
+                            "m_actuator already contains a value");
     std::swap(actuator_, board_model_actuator);
 
     // Create the tiles.
@@ -47,7 +48,8 @@ SITilePointer BoardModelComponent::getTile(
 bool BoardModelComponent::setTile(const vector2dst& tPosition,
                                   SITilePointer newTile)
 {
-    LogAsserter::log_assert(tileEmpty(tPosition), "You can only set data in empty tiles");
+    LogAsserter::log_assert(tileEmpty(tPosition),
+                            "You can only set data in empty tiles");
 
     if (tileEmpty(tPosition))
     {
@@ -70,7 +72,8 @@ bool BoardModelComponent::tileEmpty(const vector2dst& position) const noexcept
 
 bool BoardModelComponent::deleteTile(const vector2dst& position)
 {
-    LogAsserter::log_assert(!tileEmpty(position), "You can only delete not empty tiles");
+    LogAsserter::log_assert(!tileEmpty(position),
+                            "You can only delete not empty tiles");
 
     if (!tileEmpty(position))
     {
@@ -91,7 +94,7 @@ bool BoardModelComponent::changeTileData(const vector2dst& source,
                                          const BoardTileData& nv)
 {
     LogAsserter::log_assert(!tileEmpty(source),
-               "You can only change data in not empty tiles");
+                            "You can only change data in not empty tiles");
 
     if (!tileEmpty(source))
     {
@@ -112,8 +115,10 @@ bool BoardModelComponent::changeTileData(const vector2dst& source,
 bool BoardModelComponent::swapTileData(const vector2dst& lhs,
                                        const vector2dst& rhs)
 {
-    LogAsserter::log_assert(!tileEmpty(lhs), "You can only change data in not empty tiles");
-    LogAsserter::log_assert(!tileEmpty(rhs), "You can only change data in not empty tiles");
+    LogAsserter::log_assert(!tileEmpty(lhs),
+                            "You can only change data in not empty tiles");
+    LogAsserter::log_assert(!tileEmpty(rhs),
+                            "You can only change data in not empty tiles");
 
     if (!tileEmpty(lhs) && !tileEmpty(rhs))
     {
@@ -138,7 +143,8 @@ bool BoardModelComponent::moveTile(const vector2dst& source,
         if (sourceTile)
         {
             DisplayLog::info("Source Value: ", sourceTile->value());
-            LogAsserter::log_assert(!destTile, "Trying to move to a not empty tile: ", dest);
+            LogAsserter::log_assert(
+                !destTile, "Trying to move to a not empty tile: ", dest);
 
             if (!destTile)
             {
@@ -172,6 +178,37 @@ vector2dst BoardModelComponent::size() const noexcept
 {
     return !tiles_.empty() ? vector2dst{tiles_.size(), tiles_[0U].size()}
                            : vector2dst{0U, 0U};
+}
+
+str BoardModelComponent::toStr()
+{
+    const auto _size{size()};
+    str temp;
+
+    for (u32 y{0}; y < _size.y; ++y)
+    {
+        for (u32 x{0}; x < _size.x; ++x)
+        {
+            str chTemp;
+            SITilePointer lp_tile(getTile({x, y}));
+            if (lp_tile)
+            {
+                chTemp = str::to_str(lp_tile->value());
+            }
+            else
+            {
+                chTemp = "*";
+                //                if (TokenZones::pointInCenter({x, y}))
+                //                {
+                //                    chTemp = "C";
+                //                }
+            }
+
+            temp += chTemp;
+        }
+        temp += str("\n");
+    }
+    return temp;
 }
 
 void BoardModelComponent::_setTile(const vector2dst& position,
