@@ -50,6 +50,11 @@ void BoardGroup::onCreated()
     p_boardModel = addComponentOfType<board::BoardModelComponent>();
     p_boardModel->initialize(tableSize(), this);
 
+    p_boardModel->setBackgroundFunction(
+        [](const vector2dst position) -> board::BackgroundData {
+            return TokenZones::pointInCenter(position) ? 1 : 0;
+        });
+
     tokens_scene_node = createSceneNode("tokens_scene_node");
     addPlayer();
 }
@@ -99,7 +104,7 @@ void BoardGroup::createNewToken(const board::BoardTileData data,
 void BoardGroup::tileRemoved(const vector2dst, board::SITilePointer& tile)
 {
     LogAsserter::log_assert(std::dynamic_pointer_cast<Token>(tile) != nullptr,
-               "Trying to delete invalid type from board");
+                            "Trying to delete invalid type from board");
     tokens_scene_node->removeSceneNode(std::dynamic_pointer_cast<Token>(tile));
 }
 

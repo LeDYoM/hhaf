@@ -3,6 +3,8 @@
 
 #include <hlog/include/hlog.hpp>
 
+#include <utility>
+
 using namespace mtps;
 
 namespace haf::board
@@ -31,6 +33,22 @@ void BoardModelComponent::initialize(
         }
     }
     tiles_.shrink_to_fit();
+}
+
+BackgroundFunction BoardModelComponent::setBackgroundFunction(
+    BackgroundFunction background_function)
+{
+    return std::exchange(background_function_, std::move(background_function));
+}
+
+BackgroundData BoardModelComponent::backgroundType(
+    const mtps::vector2dst& tPosition) const
+{
+    if (background_function_ && validCoords(tPosition))
+    {
+        return background_function_(tPosition);
+    }
+    return BackgroundData{};
 }
 
 SITilePointer BoardModelComponent::getTile(

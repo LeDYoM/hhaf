@@ -14,10 +14,7 @@ namespace
 class DummyBoardModelActuator : public IBoardModelActuator
 {
 public:
-    virtual void tileAdded(const mtps::vector2dst, SITilePointer&) 
-    {
-        ++data_;
-    }
+    virtual void tileAdded(const mtps::vector2dst, SITilePointer&) { ++data_; }
     virtual void tileRemoved(const mtps::vector2dst, SITilePointer&)
     {
         ++data_;
@@ -40,6 +37,7 @@ public:
 
     u32 data() const { return data_; }
     void resetData() { data_ = 0U; }
+
 private:
     u32 data_{0U};
 };
@@ -195,13 +193,71 @@ TEST_CASE("BoardManager control with actuator", "[board_manager]")
     CHECK(board_model_component.tileEmpty({0, 0}));
     CHECK_FALSE(board_model_component.tileEmpty({0, 1}));
 
-    CHECK(board_model_component.changeTileData({0,1}, 2));
-    CHECK(board_model_component.getTile({1,1})->value() == 0);
-    CHECK(board_model_component.getTile({0,1})->value() == 2);
+    CHECK(board_model_component.changeTileData({0, 1}, 2));
+    CHECK(board_model_component.getTile({1, 1})->value() == 0);
+    CHECK(board_model_component.getTile({0, 1})->value() == 2);
     CHECK(dummy_board_model_actuator->data() == 3U);
 
-    CHECK(board_model_component.swapTileData({0,1}, {1, 1}));
-    CHECK(board_model_component.getTile({0,1})->value() == 0);
-    CHECK(board_model_component.getTile({1,1})->value() == 2);
+    CHECK(board_model_component.swapTileData({0, 1}, {1, 1}));
+    CHECK(board_model_component.getTile({0, 1})->value() == 0);
+    CHECK(board_model_component.getTile({1, 1})->value() == 2);
     CHECK(dummy_board_model_actuator->data() == 5U);
+}
+
+TEST_CASE("BoardManager::validCoords", "[board_manager]")
+{
+    constexpr vector2dst bm_size = vector2dst{8U, 8U};
+    BoardModelComponent board_model_component;
+    board_model_component.initialize(bm_size, nullptr);
+
+    for (auto x = 0U; x < 10U; ++x)
+    {
+        for (auto y = 0U; y < 10U; ++y)
+        {
+            if (x < 8U && y < 8U)
+            {
+                CHECK(board_model_component.validCoords({x, y}));
+            }
+            else
+            {
+                CHECK_FALSE(board_model_component.validCoords({x, y}));
+            }
+        }
+    }
+}
+
+TEST_CASE("BoardManager background data", "[board_manager]")
+{
+    constexpr vector2dst bm_size = vector2dst{8U, 8U};
+    BoardModelComponent board_model_component;
+    board_model_component.initialize(bm_size, nullptr);
+
+    for (auto x = 0U; x < 10U; ++x)
+    {
+        for (auto y = 0U; y < 10U; ++y)
+        {
+            CHECK(board_model_component.backgroundType({x, y}) ==
+                  BackgroundData{});
+        }
+    }
+
+    board_model_component.setBackgroundFunction(
+        [](const auto& position) { return position.x * position.y; });
+
+    for (auto x = 0U; x < 10U; ++x)
+    {
+        for (auto y = 0U; y < 10U; ++y)
+        {
+            if (x < 8U && y < 8U)
+            {
+                CHECK(board_model_component.backgroundType({x, y}) ==
+                      static_cast<BackgroundData>(x *y));
+            }
+            else
+            {
+                CHECK(board_model_component.backgroundType({x, y}) ==
+                      BackgroundData{});
+            }
+        }
+    }
 }
