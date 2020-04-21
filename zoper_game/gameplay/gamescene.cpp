@@ -388,31 +388,5 @@ vector2df GameScene::tileSize() const
 void GameScene::_debugDisplayBoard() const
 {
     DisplayLog::info(m_boardGroup->boardModel()->toStr());
-    /*
-    for (u32 y{0}; y < TokenZones::size.y; ++y)
-    {
-        str temp;
-        for (u32 x{0}; x < TokenZones::size.x; ++x)
-        {
-            str chTemp;
-            auto lp_tile(m_boardGroup->boardModel()->getTile({x, y}));
-            if (lp_tile)
-            {
-                chTemp = str::to_str(lp_tile->value());
-            }
-            else
-            {
-                chTemp = "*";
-                if (TokenZones::pointInCenter({x, y}))
-                {
-                    chTemp = "C";
-                }
-            }
-
-            temp += chTemp;
-        }
-        DisplayLog::info(temp);
-    }
-    */
 }
 }  // namespace zoper

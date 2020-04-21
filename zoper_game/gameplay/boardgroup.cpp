@@ -51,8 +51,8 @@ void BoardGroup::onCreated()
     p_boardModel->initialize(tableSize(), this);
 
     p_boardModel->setBackgroundFunction(
-        [](const vector2dst position) -> board::BackgroundData {
-            return TokenZones::pointInCenter(position) ? 1 : 0;
+        [](const vector2dst& position) -> board::BackgroundData {
+            return ((TokenZones::pointInCenter(position)) ? (1) :(0));
         });
 
     tokens_scene_node = createSceneNode("tokens_scene_node");

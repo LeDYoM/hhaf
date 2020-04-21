@@ -215,11 +215,15 @@ str BoardModelComponent::toStr()
             }
             else
             {
-                chTemp = "*";
-                //                if (TokenZones::pointInCenter({x, y}))
-                //                {
-                //                    chTemp = "C";
-                //                }
+                BackgroundData background_data{backgroundType({x, y})};
+                if (background_data == BackgroundData{})
+                {
+                    chTemp = "*";
+                }
+                else
+                {
+                    chTemp = "C";
+                }
             }
 
             temp += chTemp;
