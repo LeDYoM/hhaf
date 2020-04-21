@@ -8,7 +8,7 @@
 #include <haf/scene_components/include/scenemetrics.hpp>
 #include <haf/scene/include/renderizable.hpp>
 
-#include <boardmanager/include/boardmodel.hpp>
+#include <boardmanager/include/boardmanager.hpp>
 #include <boardmanager/include/itile.hpp>
 
 using namespace mtps;
@@ -47,7 +47,7 @@ void BoardGroup::onCreated()
         }
     }
 
-    p_boardModel = addComponentOfType<board::BoardModelComponent>();
+    p_boardModel = addComponentOfType<board::BoardManager>();
     p_boardModel->initialize(tableSize(), this);
 
     p_boardModel->setBackgroundFunction(
@@ -225,5 +225,28 @@ vector2df BoardGroup::tileSize() const
 {
     return board2Scene({1, 1});
 }
+
+mtps::sptr<board::BoardManager> BoardGroup::boardModel() noexcept
+{
+    return p_boardModel;
+}
+
+const mtps::sptr<const board::BoardManager> BoardGroup::boardModel() const noexcept
+{
+    return p_boardModel;
+}
+
+mtps::sptr<scene::SceneNode> BoardGroup::tokensSceneNode() noexcept
+{
+    return tokens_scene_node;
+}
+
+const mtps::sptr<scene::SceneNode> BoardGroup::tokensSceneNode() const noexcept
+{
+    return tokens_scene_node;
+}
+
+mtps::sptr<Player> BoardGroup::player() noexcept { return player_; }
+const mtps::sptr<Player> BoardGroup::player() const noexcept { return player_; }
 
 }  // namespace zoper

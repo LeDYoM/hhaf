@@ -31,7 +31,7 @@ public:
 
 private:
     BoardTileData data_{0};
-    friend class BoardModelComponent;
+    friend class BoardManager;
 
 };
 

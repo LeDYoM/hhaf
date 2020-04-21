@@ -18,7 +18,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/properties.hpp>
 
-#include <boardmanager/include/boardmodel.hpp>
+#include <boardmanager/include/boardmanager.hpp>
 #include <hlog/include/hlog.hpp>
 #include <haf/scene/include/renderizable.hpp>
 #include <haf/resources/include/resourcehandler.hpp>
@@ -77,7 +77,8 @@ void GameScene::onCreated()
 {
     BaseClass::onCreated();
 
-    LogAsserter::log_assert(private_ == nullptr, "Private data pointer is not nullptr!");
+    LogAsserter::log_assert(private_ == nullptr,
+                            "Private data pointer is not nullptr!");
     private_ = muptr<GameScenePrivate>();
 
     dataWrapper<ResourceHandler>()->loadResources(GameResources{});
@@ -190,10 +191,10 @@ void GameScene::onCreated()
     private_->token_type_generator_ =
         addComponentOfType<rnd::RandomNumbersComponent>();
     LogAsserter::log_assert(private_->token_type_generator_ != nullptr,
-               "Cannot create DataProviderComponent");
+                            "Cannot create DataProviderComponent");
     private_->token_position_generator_ = private_->token_type_generator_;
     LogAsserter::log_assert(private_->token_position_generator_ != nullptr,
-               "Cannot create DataProviderComponent");
+                            "Cannot create DataProviderComponent");
 
     // Prepare the pause text.
     pause_node_ = createSceneNode<PauseSceneNode>("PauseNode");
@@ -235,27 +236,27 @@ void GameScene::onExitState(const GameSceneStates& state)
     DisplayLog::info("Exited state: ", make_str(state));
 }
 
-bool moveTowardsCenter(
-    const sptr<board::BoardModelComponent>& board_model,
-    const Direction direction,
-    const vector2dst position)
+bool moveTowardsCenter(const sptr<board::BoardManager>& board_manager,
+                       const Direction direction,
+                       const vector2dst position)
 {
     bool moved_to_center{false};
 
     // Is the current tile position empty?
-    if (!board_model->tileEmpty(position))
+    if (!board_manager->tileEmpty(position))
     {
         // If not, what about the next position to check, is empty?
         const auto next = direction.applyToVector(position);
 
-        if (!board_model->tileEmpty(next))
+        if (!board_manager->tileEmpty(next))
         {
             // If the target position where to move the
             // token is occupied, move the this target first.
-            moved_to_center = moveTowardsCenter(board_model, direction, next);
+            moved_to_center = moveTowardsCenter(board_manager, direction, next);
         }
-        board_model->moveTile(position, next);
-        if (TokenZones::pointInCenter(next))
+        board_manager->moveTile(position, next);
+        if (TokenZones::toBoardBackgroundType(board_manager->backgroundType(
+                next)) == TokenZones::BoardBackgroundType::Center)
         {
             LogAsserter::log_assert(!moved_to_center, "Double game over!");
             moved_to_center = true;
@@ -314,20 +315,22 @@ void GameScene::launchPlayer()
 {
     haf::DisplayLog::info("Launching player");
     const Direction loopDirection{m_boardGroup->player()->currentDirection()};
-    const vector2dst loopPosition{
-        m_boardGroup->player()->boardPosition()};
+    const vector2dst loopPosition{m_boardGroup->player()->boardPosition()};
     const board::BoardTileData tokenType{m_boardGroup->player()->value()};
     ScoreIncrementer score_incrementer{level_properties_};
     BoardUtils::for_each_token_in_line(
         loopPosition, loopDirection, m_boardGroup->boardModel()->size(),
-        [this, tokenType, &score_incrementer](
-            const vector2dst& loopPosition, const Direction&) {
+        [this, tokenType, &score_incrementer](const vector2dst& loopPosition,
+                                              const Direction&) {
             bool result{true};
             bool found{false};
             vector2df lastTokenPosition{};
 
             if (!m_boardGroup->boardModel()->tileEmpty(loopPosition) &&
-                !TokenZones::pointInCenter(loopPosition) && result)
+                TokenZones::toBoardBackgroundType(
+                    m_boardGroup->boardModel()->backgroundType(loopPosition)) !=
+                    TokenZones::BoardBackgroundType::Center &&
+                result)
             {
                 sptr<board::ITile> currentToken{
                     m_boardGroup->boardModel()->getTile(loopPosition)};

@@ -2,7 +2,7 @@
 #include "constants.hpp"
 #include "tokenzones.hpp"
 #include "boardgroup.hpp"
-#include <boardmanager/include/boardmodel.hpp>
+#include <boardmanager/include/boardmanager.hpp>
 
 #include <hlog/include/hlog.hpp>
 #include <haf/scene/include/scenenodetypes.hpp>

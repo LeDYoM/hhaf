@@ -11,12 +11,12 @@
 
 namespace haf::board
 {
-class IBoardModelActuator;
+class IBoardManagerActuator;
 using BackgroundData = mtps::s32;
 using BackgroundFunction =
     mtps::function<BackgroundData(const mtps::vector2dst)>;
 
-class BoardModelComponent : public haf::scene::IComponent
+class BoardManager : public haf::scene::IComponent
 {
 public:
     /**
@@ -25,11 +25,11 @@ public:
      * Failing that is underfined behaviour.
      *
      * @param size Size of the board.
-     * @param board_model_actuator Pointer to a @b IBoardModelActuator
+     * @param board_manager_actuator Pointer to a @b IBoardManagerActuator
      * to handle the callbacks.
      */
     void initialize(const mtps::vector2dst& size,
-                    mtps::rptr<IBoardModelActuator> board_model_actuator);
+                    mtps::rptr<IBoardManagerActuator> board_manager_actuator);
 
     BackgroundFunction setBackgroundFunction(
         BackgroundFunction background_function);
@@ -54,7 +54,7 @@ private:
     void _setTile(const mtps::vector2dst& position, SITilePointer newTile);
 
     BackgroundFunction background_function_{};
-    mtps::rptr<IBoardModelActuator> actuator_{nullptr};
+    mtps::rptr<IBoardManagerActuator> actuator_{nullptr};
     mtps::vector<mtps::vector<SITilePointer>> tiles_;
 };
 

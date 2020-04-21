@@ -1,5 +1,5 @@
-#include <boardmanager/include/boardmodel.hpp>
-#include <boardmanager/include/iboardmodelactuator.hpp>
+#include <boardmanager/include/boardmanager.hpp>
+#include <boardmanager/include/iboardmanageractuator.hpp>
 
 #include <hlog/include/hlog.hpp>
 
@@ -10,17 +10,17 @@ using namespace mtps;
 namespace haf::board
 {
 
-void BoardModelComponent::initialize(
+void BoardManager::initialize(
     const vector2dst& size,
-    rptr<IBoardModelActuator> board_model_actuator)
+    rptr<IBoardManagerActuator> board_manager_actuator)
 {
-    DisplayLog::info("BoardModelComponent initialize with size: ", size);
-    DisplayLog::info("IBoardModelActuator received: ",
-                     (board_model_actuator != nullptr));
+    DisplayLog::info("BoardManager initialize with size: ", size);
+    DisplayLog::info("IBoardManagerActuator received: ",
+                     (board_manager_actuator != nullptr));
 
     LogAsserter::log_assert(actuator_ == nullptr,
                             "m_actuator already contains a value");
-    std::swap(actuator_, board_model_actuator);
+    std::swap(actuator_, board_manager_actuator);
 
     // Create the tiles.
     tiles_.reserve(size.x);
@@ -35,13 +35,13 @@ void BoardModelComponent::initialize(
     tiles_.shrink_to_fit();
 }
 
-BackgroundFunction BoardModelComponent::setBackgroundFunction(
+BackgroundFunction BoardManager::setBackgroundFunction(
     BackgroundFunction background_function)
 {
     return std::exchange(background_function_, std::move(background_function));
 }
 
-BackgroundData BoardModelComponent::backgroundType(
+BackgroundData BoardManager::backgroundType(
     const mtps::vector2dst& tPosition) const
 {
     if (background_function_ && validCoords(tPosition))
@@ -51,7 +51,7 @@ BackgroundData BoardModelComponent::backgroundType(
     return BackgroundData{};
 }
 
-SITilePointer BoardModelComponent::getTile(
+SITilePointer BoardManager::getTile(
     const vector2dst& position) const noexcept
 {
     if (validCoords(position))
@@ -63,7 +63,7 @@ SITilePointer BoardModelComponent::getTile(
     return SITilePointer();
 }
 
-bool BoardModelComponent::setTile(const vector2dst& tPosition,
+bool BoardManager::setTile(const vector2dst& tPosition,
                                   SITilePointer newTile)
 {
     LogAsserter::log_assert(tileEmpty(tPosition),
@@ -83,12 +83,12 @@ bool BoardModelComponent::setTile(const vector2dst& tPosition,
     return false;
 }
 
-bool BoardModelComponent::tileEmpty(const vector2dst& position) const noexcept
+bool BoardManager::tileEmpty(const vector2dst& position) const noexcept
 {
     return getTile(position) == nullptr;
 }
 
-bool BoardModelComponent::deleteTile(const vector2dst& position)
+bool BoardManager::deleteTile(const vector2dst& position)
 {
     LogAsserter::log_assert(!tileEmpty(position),
                             "You can only delete not empty tiles");
@@ -108,7 +108,7 @@ bool BoardModelComponent::deleteTile(const vector2dst& position)
     return false;
 }
 
-bool BoardModelComponent::changeTileData(const vector2dst& source,
+bool BoardManager::changeTileData(const vector2dst& source,
                                          const BoardTileData& nv)
 {
     LogAsserter::log_assert(!tileEmpty(source),
@@ -130,7 +130,7 @@ bool BoardModelComponent::changeTileData(const vector2dst& source,
     return false;
 }
 
-bool BoardModelComponent::swapTileData(const vector2dst& lhs,
+bool BoardManager::swapTileData(const vector2dst& lhs,
                                        const vector2dst& rhs)
 {
     LogAsserter::log_assert(!tileEmpty(lhs),
@@ -148,7 +148,7 @@ bool BoardModelComponent::swapTileData(const vector2dst& lhs,
     return false;
 }
 
-bool BoardModelComponent::moveTile(const vector2dst& source,
+bool BoardManager::moveTile(const vector2dst& source,
                                    const vector2dst& dest)
 {
     if (!tileEmpty(source))
@@ -186,19 +186,19 @@ bool BoardModelComponent::moveTile(const vector2dst& source,
     return false;
 }
 
-bool BoardModelComponent::validCoords(
+bool BoardManager::validCoords(
     const vector2dst& tPosition) const noexcept
 {
     return tiles_.size() > tPosition.x && tiles_[0U].size() > tPosition.y;
 }
 
-vector2dst BoardModelComponent::size() const noexcept
+vector2dst BoardManager::size() const noexcept
 {
     return !tiles_.empty() ? vector2dst{tiles_.size(), tiles_[0U].size()}
                            : vector2dst{0U, 0U};
 }
 
-str BoardModelComponent::toStr()
+str BoardManager::toStr()
 {
     const auto _size{size()};
     str temp;
@@ -233,7 +233,7 @@ str BoardModelComponent::toStr()
     return temp;
 }
 
-void BoardModelComponent::_setTile(const vector2dst& position,
+void BoardManager::_setTile(const vector2dst& position,
                                    SITilePointer newTile)
 {
     tiles_[position.x][position.y] = newTile;

@@ -54,7 +54,7 @@ Color GameBaseTile::getColorForToken() const
     }
 }
 
-sptr<BoardModelComponent> GameBaseTile::getBoardModel()
+sptr<BoardManager> GameBaseTile::getBoardModel()
 {
     auto board_group{ancestor<BoardGroup>()};
     LogAsserter::log_assert(board_group != nullptr, "Invalid BoardModel found");

@@ -10,7 +10,7 @@
 
 namespace haf::board
 {
-    class BoardModelComponent;
+    class BoardManager;
 }
 namespace zoper
 {
@@ -27,7 +27,7 @@ public:
                      const haf::board::BoardTileData /* oldValue */,
                      const haf::board::BoardTileData /* newValue */) override;
 
-    mtps::sptr<haf::board::BoardModelComponent> getBoardModel();
+    mtps::sptr<haf::board::BoardManager> getBoardModel();
 
 protected:
     mtps::sptr<haf::scene::Renderizable> m_node;

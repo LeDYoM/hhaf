@@ -1,14 +1,14 @@
 #pragma once
 
-#ifndef HAF_BOARD_IBOARDMODEL_ACTUATOR_HPP
-#define HAF_BOARD_IBOARDMODEL_ACTUATOR_HPP
+#ifndef HAF_BOARD_IBOARDMANAGER_ACTUATOR_HPP
+#define HAF_BOARD_IBOARDMANAGER_ACTUATOR_HPP
 
 #include <mtypes/include/types.hpp>
 #include "itile.hpp"
 
 namespace haf::board
 {
-class IBoardModelActuator
+class IBoardManagerActuator
 {
 public:
     virtual void tileAdded(const mtps::vector2dst, SITilePointer&) {}
