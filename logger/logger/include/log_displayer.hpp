@@ -3,16 +3,21 @@
 #ifndef HAF_LOG_LOG_DISPLAYER_INCLUDE_HPP
 #define HAF_LOG_LOG_DISPLAYER_INCLUDE_HPP
 
-#include <logger/include/severity_type.hpp>
-
 namespace logger
 {
 
-template <typename LogClass>
+/**
+ * @brief Helper class to forward the log calls to a Logger. It makes some
+ * assumptions about the @b SeverityType.
+ *
+ * @tparam LogClass Log class capable of displaying logs.
+ */
+template <typename LogClass, typename SeverityType>
 struct LogDisplayer
 {
 private:
-    template <SeverityType::severity_type_t severity_value, typename... Args>
+    template <typename SeverityType::severity_type_t severity_value,
+              typename... Args>
     static constexpr void log_if_severity_under(Args&&... args) noexcept
     {
         log_if<SeverityType::ShowSeverity<severity_value>, severity_value>(
@@ -20,7 +25,7 @@ private:
     }
 
     template <bool condition,
-              SeverityType::severity_type_t severity_value,
+              typename SeverityType::severity_type_t severity_value,
               typename... Args>
     static constexpr void log_if(Args&&... args) noexcept
     {
