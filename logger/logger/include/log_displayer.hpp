@@ -3,7 +3,7 @@
 #ifndef HAF_LOG_LOG_DISPLAYER_INCLUDE_HPP
 #define HAF_LOG_LOG_DISPLAYER_INCLUDE_HPP
 
-#include "severity_type.hpp"
+#include <logger/include/severity_type.hpp>
 
 namespace logger
 {

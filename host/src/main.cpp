@@ -14,7 +14,7 @@ int libMain(int argc, char *argv[])
 
     try
     {
-        logger::init_log();
+        LogClass::init_log();
 
         installMemManager();
 
@@ -37,7 +37,7 @@ int libMain(int argc, char *argv[])
         DisplayLog::info("Unexpected exception");
     }
     finishMemManager();
-    logger::finish_log();
+    LogClass::finish_log();
 
     return result;
 }

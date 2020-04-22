@@ -12,23 +12,22 @@ using namespace mtps;
 
 namespace
 {
-constexpr static const char HostVersion[] = "1";
+constexpr static const char HostVersion[]    = "1";
 constexpr static const char HostSubversion[] = "2";
-constexpr static const char HostPatch[] = "0";
-} // namespace
+constexpr static const char HostPatch[]      = "0";
+}  // namespace
 
 namespace haf::sys
 {
 class Host::HostPrivate final
 {
 public:
-    HostPrivate(const int argc, char *argv[]) : m_params{parpar::create(argc, argv)},
-                                                // Hardcoded default configuration
-                                                // TODO
-                                                m_configuration{
-                                                    {}}
-    {
-    }
+    HostPrivate(const int argc, char* argv[]) :
+        m_params{parpar::create(argc, argv)},
+        // Hardcoded default configuration
+        // TODO
+        m_configuration{{}}
+    {}
 
     ~HostPrivate() = default;
 
@@ -42,8 +41,8 @@ public:
     parpar::ParametersParser m_params;
 
     Dictionary<str> m_configuration;
-    IApp *iapp_{nullptr};
-    IControllableSystemProvider *system_provider_;
+    IApp* iapp_{nullptr};
+    IControllableSystemProvider* system_provider_;
 };
 
 enum class Host::AppState : u8
@@ -55,11 +54,12 @@ enum class Host::AppState : u8
     Terminated
 };
 
-Host::Host(int argc, char *argv[])
-    : m_private{muptr<HostPrivate>(argc, argv)}, m_state{AppState::NotInitialized}
+Host::Host(int argc, char* argv[]) :
+    m_private{muptr<HostPrivate>(argc, argv)}, m_state{AppState::NotInitialized}
 {
     DisplayLog::info("Starting HostController...");
-    DisplayLog::info("Host version: ", HostVersion, ".", HostSubversion, ".", HostPatch);
+    DisplayLog::info("Host version: ", HostVersion, ".", HostSubversion, ".",
+                     HostPatch);
     DisplayLog::info("Parsing parameters...");
     m_private->parseCommandLineParameters();
 }
@@ -82,10 +82,9 @@ bool Host::setApplication(rptr<IApp> iapp)
     return false;
 }
 
-str appDisplayNameAndVersion(const IApp &app)
+str appDisplayNameAndVersion(const IApp& app)
 {
-    return make_str(app.getName(), "(",
-                    app.getVersion(), ".",
+    return make_str(app.getName(), "(", app.getVersion(), ".",
                     app.getSubVersion(), ".", app.getPatch(), ")");
 }
 
@@ -95,8 +94,7 @@ bool Host::update()
     {
     case AppState::NotInitialized:
         break;
-    case AppState::ReadyToStart:
-    {
+    case AppState::ReadyToStart: {
         DisplayLog::info("Starting initialization of new App...");
         m_state = AppState::Executing;
 
@@ -107,21 +105,23 @@ bool Host::update()
                          ": Starting execution...");
     }
     break;
-    case AppState::Executing:
-    {
+    case AppState::Executing: {
         if (loopStep())
         {
             m_state = AppState::ReadyToTerminate;
-            DisplayLog::info(appDisplayNameAndVersion(*(m_private->iapp_)), ": ", " is now ready to terminate");
+            DisplayLog::info(appDisplayNameAndVersion(*(m_private->iapp_)),
+                             ": ", " is now ready to terminate");
         }
         else if (m_state == AppState::ReadyToTerminate)
         {
-            DisplayLog::info(appDisplayNameAndVersion(*(m_private->iapp_)), ": ", " requested to terminate");
+            DisplayLog::info(appDisplayNameAndVersion(*(m_private->iapp_)),
+                             ": ", " requested to terminate");
         }
     }
     break;
     case AppState::ReadyToTerminate:
-        DisplayLog::info(appDisplayNameAndVersion(*(m_private->iapp_)), ": started termination");
+        DisplayLog::info(appDisplayNameAndVersion(*(m_private->iapp_)),
+                         ": started termination");
         m_state = AppState::Terminated;
         m_private->system_provider_->terminate();
         destroySystemProvider(m_private->system_provider_);
@@ -151,7 +151,7 @@ int Host::run()
 
         return 0;
     }
-    catch (const std::exception &e)
+    catch (const std::exception& e)
     {
         std::cerr << e.what() << '\n';
     }
@@ -165,7 +165,9 @@ bool Host::loopStep()
 
 void Host::exitProgram()
 {
-    LogAsserter::log_assert(m_state == AppState::Executing, "Cannot terminate a program that is not in the executing state");
+    LogAsserter::log_assert(
+        m_state == AppState::Executing,
+        "Cannot terminate a program that is not in the executing state");
     m_state = AppState::ReadyToTerminate;
 }
-} // namespace haf::sys
+}  // namespace haf::sys
