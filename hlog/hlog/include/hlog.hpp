@@ -14,12 +14,6 @@ using logClass = logger::Log<mtps::str, logger::COutCommiter>;
 using DisplayLog = logger::LogDisplayer<logClass>;
 using LogAsserter = logger::LogAsserter<DisplayLog>;
 
-#ifdef NDEBUG
-#define CLIENT_EXECUTE_IN_DEBUG(x) ((void)0)
-#else
-#define CLIENT_EXECUTE_IN_DEBUG(x) x
-#endif
-
 } // namespace haf
 
 #endif

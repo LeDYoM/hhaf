@@ -298,7 +298,7 @@ void GameScene::generateNextToken()
     // Select the next token zone.
     m_nextTokenPart = (m_nextTokenPart + 1) % NumWays;
 
-    CLIENT_EXECUTE_IN_DEBUG(_debugDisplayBoard());
+    DisplayLog::debug(m_boardGroup->boardModel()->toStr());
 
     if (game_over)
     {
@@ -329,8 +329,7 @@ void GameScene::launchPlayer()
             if (!m_boardGroup->boardModel()->tileEmpty(loopPosition) &&
                 TokenZones::toBoardBackgroundType(
                     m_boardGroup->boardModel()->backgroundType(loopPosition)) !=
-                    TokenZones::BoardBackgroundType::Center &&
-                result)
+                    TokenZones::BoardBackgroundType::Center)
             {
                 sptr<board::ITile> currentToken{
                     m_boardGroup->boardModel()->getTile(loopPosition)};
@@ -388,8 +387,4 @@ vector2df GameScene::tileSize() const
     return m_boardGroup->tileSize();
 }
 
-void GameScene::_debugDisplayBoard() const
-{
-    DisplayLog::info(m_boardGroup->boardModel()->toStr());
-}
 }  // namespace zoper
