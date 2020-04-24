@@ -31,6 +31,7 @@ endfunction(build_client_library)
 
 function(add_log_and_types)
   target_link_libraries(${CURRENT_TARGET} PUBLIC mtypes)
+  target_link_libraries(${CURRENT_TARGET} PUBLIC memmanager)
   target_link_libraries(${CURRENT_TARGET} PUBLIC hlog)
 endfunction(add_log_and_types)
 

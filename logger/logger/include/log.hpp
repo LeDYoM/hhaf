@@ -10,14 +10,14 @@
  */
 namespace logger
 {
-constexpr bool compile_logs = true;
 
 template <bool EnableLogs, typename StreamType, typename LogCommiter>
 struct Log
 {
 public:
-    static void init_log() {}
-    static void finish_log() {}
+    static void init_log() { LogCommiter::init(); }
+
+    static void finish_log() { LogCommiter::finish(); }
 
     template <typename... Args>
     static constexpr void log(Args&&... args) noexcept
@@ -25,8 +25,8 @@ public:
         if constexpr (EnableLogs)
         {
             StreamType log_stream;
-            (log_stream << ... << std::forward<Args>(args));
-            LogCommiter::commitlog(log_stream.c_str());
+            LogCommiter::commitlog(
+                (log_stream << ... << std::forward<Args>(args)).c_str());
         }
     }
 

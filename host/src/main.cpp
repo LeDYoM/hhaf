@@ -14,9 +14,9 @@ int libMain(int argc, char *argv[])
 
     try
     {
-        LogClass::init_log();
-
         installMemManager();
+
+        LogClass::init_log();
 
         {
             sys::Host host(argc, argv);
@@ -36,8 +36,8 @@ int libMain(int argc, char *argv[])
     {
         DisplayLog::info("Unexpected exception");
     }
-    finishMemManager();
     LogClass::finish_log();
+    finishMemManager();
 
     return result;
 }

@@ -8,11 +8,13 @@
 #include <logger/include/log_displayer.hpp>
 #include <logger/include/log_asserter.hpp>
 #include <logger/include/severity_type.hpp>
+#include <logger/include/cout_thread_commiter.hpp>
+
 #include <mtypes/include/str.hpp>
 
 namespace haf
 {
-using LogClass = logger::Log<true, mtps::str, logger::COutCommiter>;
+using LogClass = logger::Log<true, mtps::str, logger::COutThreadCommiter>;
 using DisplayLog = logger::LogDisplayer<LogClass, logger::SeverityType>;
 using LogAsserter = logger::LogAsserter<DisplayLog>;
 
