@@ -11,5 +11,7 @@ build_lib_component(
     ${SOURCES}
 )
 
+target_compile_definitions(${CURRENT_TARGET} PRIVATE HLOG_EXPORTS)
+
 target_link_libraries(${CURRENT_TARGET} PUBLIC logger)
 target_link_libraries(${CURRENT_TARGET} PUBLIC mtypes)

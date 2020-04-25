@@ -3,6 +3,8 @@
 #ifndef LOGGER_LOG_COUT_THREAD_COMMITER_INCLUDE_HPP
 #define LOGGER_LOG_COUT_THREAD_COMMITER_INCLUDE_HPP
 
+#include <hlog/include/hlogexport.hpp>
+
 #include <iostream>
 #include <mutex>
 #include <thread>
@@ -24,7 +26,7 @@ struct COutThreadCommiter
         bool exit;
     };
 
-    inline static InnerData * data_{nullptr};;
+    static inline HLOG_API InnerData * data_;
 
     static void init() 
     {
@@ -42,6 +44,7 @@ struct COutThreadCommiter
     static void thread_func()
     {
         data_->exit = false;
+        Message message;
 
         while (!data_->exit)
         {
@@ -49,10 +52,11 @@ struct COutThreadCommiter
             // adding, not deleting elements.
             if (!data_->msg_queue_.empty())
             {
-                data_->mutex_.lock();
-                Message message = data_->msg_queue_.front();
-                data_->msg_queue_.pop();
-                data_->mutex_.unlock();
+                {
+                    std::lock_guard<std::mutex> lck{data_->mutex_};
+                    message = data_->msg_queue_.front();
+                    data_->msg_queue_.pop();
+                }
                 std::cout << message << std::endl;
             }
             else
@@ -65,9 +69,8 @@ struct COutThreadCommiter
 
     static inline void commitlog(const char* const log_stream)
     {
-        data_->mutex_.lock();
+        std::lock_guard<std::mutex> lck{data_->mutex_};
         data_->msg_queue_.emplace(log_stream);
-        data_->mutex_.unlock();
     }
 };
 

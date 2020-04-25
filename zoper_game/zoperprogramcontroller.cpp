@@ -12,6 +12,7 @@
 #include <haf/scene/i_include/scenemanager.hpp>
 #include <haf/scene/i_include/scenecontroller.hpp>
 #include <haf/shareddata/include/ishareddatasystem.hpp>
+#include <hlog/include/hlog.hpp>
 
 using namespace mtps;
 using namespace haf;
@@ -30,6 +31,7 @@ ZoperProgramController::~ZoperProgramController() {}
 
 void ZoperProgramController::onInit(sys::ISystemProvider &system_provider)
 {
+    DisplayLog::verbose("Initializing ZoperProgramController");
     sys::SystemProvider &systemprovider = sys::getSystemProvider(system_provider);
     keyMapping = muptr<KeyMapping>();
     keyMapping->reset();
