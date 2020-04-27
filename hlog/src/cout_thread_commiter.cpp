@@ -9,6 +9,16 @@
 
 namespace haf
 {
+using Message = std::string;
+
+struct COutThreadCommiter::InnerData
+{
+    std::mutex mutex_;
+    std::thread thread_;
+    std::queue<Message> msg_queue_;
+    bool exit;
+};
+
 void COutThreadCommiter::init()
 {
     data_          = new InnerData;

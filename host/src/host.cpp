@@ -1,5 +1,6 @@
 #include <host/include/host.hpp>
 
+#include <exception>
 #include <hlog/include/hlog.hpp>
 #include <hosted_app/include/iapp.hpp>
 #include <haf/system/include/icontrollablesystemprovider.hpp>
@@ -153,7 +154,7 @@ int Host::run()
     }
     catch (const std::exception& e)
     {
-        std::cerr << e.what() << '\n';
+        DisplayLog::error(e.what());
     }
     return 1;
 }
