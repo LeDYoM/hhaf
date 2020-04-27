@@ -29,7 +29,7 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 include(${CMAKE_MODULE_PATH}/functions.cmake)
 
 # Use the memmanager
-option(USE_MEMMANAGER "Compile mtypes using the memmanager wrappers" ON)
+option(MTYPES_USE_MEMMANAGER "Compile mtypes using the memmanager wrappers" ON)
 
 # Sub-directories where more CMakeLists.txt exist
 add_subdirectory(tests)

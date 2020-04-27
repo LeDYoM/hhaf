@@ -6,7 +6,7 @@ set(CURRENT_TARGET mtypes)
 add_library(${CURRENT_TARGET} INTERFACE)
 target_include_directories(${CURRENT_TARGET} INTERFACE ${PROJECT_SOURCE_DIR})
 
-if(${USE_MEMMANAGER})
+if(${MTYPES_USE_MEMMANAGER})
   target_include_directories(
     ${CURRENT_TARGET}
     INTERFACE "${PROJECT_SOURCE_DIR}/mtypes/include/alloc_own/")
