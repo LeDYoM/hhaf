@@ -1,0 +1,57 @@
+#include <hlog/include/cout_thread_commiter.hpp>
+
+#include <iostream>
+#include <mutex>
+#include <thread>
+#include <queue>
+#include <chrono>
+#include <string>
+
+namespace haf
+{
+void COutThreadCommiter::init()
+{
+    data_          = new InnerData;
+    data_->thread_ = std::thread(thread_func);
+}
+
+void COutThreadCommiter::finish()
+{
+    data_->exit = true;
+    data_->thread_.join();
+    delete data_;
+}
+
+void COutThreadCommiter::thread_func()
+{
+    data_->exit = false;
+    Message message;
+
+    while (!data_->exit)
+    {
+        // We dont lock this call because the only thread is only
+        // adding, not deleting elements.
+        if (!data_->msg_queue_.empty())
+        {
+            {
+                std::lock_guard<std::mutex> lck{data_->mutex_};
+                message = data_->msg_queue_.front();
+                data_->msg_queue_.pop();
+            }
+            std::cout << message << std::endl;
+        }
+        else
+        {
+            using namespace std::chrono_literals;
+            std::this_thread::sleep_for(10ms);
+        }
+    }
+}
+
+void COutThreadCommiter::commitlog(const char* const log_stream)
+{
+    std::lock_guard<std::mutex> lck{data_->mutex_};
+    data_->msg_queue_.emplace(log_stream);
+}
+
+}  // namespace haf
