@@ -1,4 +1,5 @@
 #include <hlog/include/cout_thread_commiter.hpp>
+#include <hlog/include/hlogexport.hpp>
 
 #include <iostream>
 #include <mutex>
@@ -11,13 +12,19 @@ namespace haf
 {
 using Message = std::string;
 
-struct COutThreadCommiter::InnerData
+struct InnerData
 {
     std::mutex mutex_;
     std::thread thread_;
     std::queue<Message> msg_queue_;
     bool exit;
 };
+
+namespace
+{
+    InnerData * data_{nullptr};
+}
+
 
 void COutThreadCommiter::init()
 {
@@ -44,8 +51,8 @@ void COutThreadCommiter::thread_func()
         if (!data_->msg_queue_.empty())
         {
             {
-                std::lock_guard<std::mutex> lck{data_->mutex_};
                 message = data_->msg_queue_.front();
+                std::lock_guard<std::mutex> lck{data_->mutex_};
                 data_->msg_queue_.pop();
             }
             std::cout << message << std::endl;
@@ -60,8 +67,9 @@ void COutThreadCommiter::thread_func()
 
 void COutThreadCommiter::commitlog(const char* const log_stream)
 {
+    Message message{log_stream};
     std::lock_guard<std::mutex> lck{data_->mutex_};
-    data_->msg_queue_.emplace(log_stream);
+    data_->msg_queue_.emplace(std::move(log_stream));
 }
 
 }  // namespace haf
