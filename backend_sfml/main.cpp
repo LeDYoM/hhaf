@@ -20,7 +20,6 @@ struct BackendManager : haf::backend::client::DefaultBackendManager
         using namespace haf::backend::client;
         using namespace haf::backend::sfmlb;
 
-        createFactoryOfFactories<DefaultFactoryOf<IWindowProviderInfo, WindowBackendInfo>>(factories);
         createFactoryOfFactories<DefaultFactoryOf<IWindow, RenderWindow>>(factories);
         createFactoryOfFactories<DefaultFactoryOf<ITTFontFactory, TTFontFactory>>(factories);
         createFactoryOfFactories<DefaultFactoryOf<ITextureFactory, TextureFactory>>(factories);

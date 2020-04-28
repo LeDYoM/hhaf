@@ -40,7 +40,8 @@ public:
     void setWindowTitle(mtps::str newTitle) override;
     void closeWindow() override;
 
-    virtual IInputDriver *inputDriver() override;
+    IInputDriver *inputDriver() override;
+    mtps::str info() override;
 
 protected:
     virtual void onCreate();
@@ -50,11 +51,6 @@ private:
     InputDriver input_driver_;
 };
 
-class WindowBackendInfo : public IWindowProviderInfo
-{
-public:
-    const mtps::str info() override;
-};
 } // namespace haf::backend::sfmlb
 
 #endif

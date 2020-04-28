@@ -1,5 +1,4 @@
 #include <hlog/include/cout_thread_commiter.hpp>
-#include <hlog/include/hlogexport.hpp>
 
 #include <iostream>
 #include <mutex>

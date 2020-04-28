@@ -2,11 +2,6 @@
 
 namespace haf::backend
 {
-    void BackendRegister::setFactory(IInfoFactory * const info_factory) noexcept
-    {
-        info_factory_ = info_factory;
-    }
-
     void BackendRegister::setFactory(IWindowFactory * const window_factory) noexcept
     {
         window_factory_ = window_factory;

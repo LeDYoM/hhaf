@@ -58,8 +58,7 @@ BackendFactory::BackendFactory()
             backend_register_->init();
         }
 
-        bool result{fillFactory(backend_register_, &m_windowProviderInfo)};
-        result &= fillFactory(backend_register_, &m_window);
+        bool result{fillFactory(backend_register_, &m_window)};
         result &= fillFactory(backend_register_, &m_ttfontFactory);
         result &= fillFactory(backend_register_, &m_textureFactory);
         result &= fillFactory(backend_register_, &m_shaderFactory);
@@ -68,8 +67,7 @@ BackendFactory::BackendFactory()
 
 BackendFactory::~BackendFactory()
 {
-    bool result{emptyFactory(backend_register_, &m_windowProviderInfo)};
-    result &= emptyFactory(backend_register_, &m_window);
+    bool result{emptyFactory(backend_register_, &m_window)};
     result &= emptyFactory(backend_register_, &m_textureFactory);
     result &= emptyFactory(backend_register_, &m_ttfontFactory);
     result &= emptyFactory(backend_register_, &m_shaderFactory);
@@ -83,11 +81,6 @@ BackendFactory::~BackendFactory()
 IWindow* haf::backend::BackendFactory::getWindow()
 {
     return m_window;
-}
-
-IWindowProviderInfo* BackendFactory::getWindowProviderInfo() const noexcept
-{
-    return m_windowProviderInfo;
 }
 
 ITextureFactory* BackendFactory::getTextureFactory() const noexcept
@@ -108,11 +101,6 @@ IShaderFactory* BackendFactory::getShaderFactory() const noexcept
 IBMPFontFactory* BackendFactory::getBMPFontFactory() const noexcept
 {
     return m_bmpFontFactory;
-}
-
-IWindowProviderInfo& BackendFactory::windowProviderInfo() const
-{
-    return *getWindowProviderInfo();
 }
 
 ITextureFactory& BackendFactory::textureFactory() const

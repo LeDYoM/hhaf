@@ -13,7 +13,6 @@ namespace haf::backend
     class BackendRegister final : public IBackendRegister
     {
     public:
-        void setFactory(IInfoFactory* const) noexcept override;
         void setFactory(IWindowFactory* const) noexcept override;
         void setFactory(ITTFontFactoryFactory* const) noexcept override;
         void setFactory(ITextureFactoryFactory* const) noexcept override;
@@ -26,7 +25,6 @@ namespace haf::backend
         template <typename T>
         T* const getFactory() const;
 
-        template <> IInfoFactory* const getFactory() const { return info_factory_; }
         template <> IWindowFactory* const getFactory() const { return window_factory_; }
         template <> ITTFontFactoryFactory* const getFactory() const { return ttfont_factory_factory_; }
         template <> ITextureFactoryFactory* const getFactory() const { return texture_factory_factory_; }
@@ -41,7 +39,6 @@ namespace haf::backend
     private:
         p_initHaf init_lib_func_{ nullptr };
         p_finishHaf finish_lib_func_{ nullptr };
-        IInfoFactory* info_factory_{ nullptr };
         IWindowFactory* window_factory_{ nullptr };
         ITTFontFactoryFactory* ttfont_factory_factory_{ nullptr };
         ITextureFactoryFactory* texture_factory_factory_{ nullptr };

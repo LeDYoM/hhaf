@@ -9,7 +9,6 @@
 
 namespace haf::backend
 {
-    using IInfoFactory = IFactoryOf<IWindowProviderInfo>;
     using IWindowFactory = IFactoryOf<IWindow>;
     using ITTFontFactoryFactory = IFactoryOf<ITTFontFactory>;
     using ITextureFactoryFactory = IFactoryOf<ITextureFactory>;
@@ -19,7 +18,6 @@ namespace haf::backend
     class IBackendRegister
     {
     public:
-        virtual void setFactory(IInfoFactory* const) noexcept = 0;
         virtual void setFactory(IWindowFactory* const) noexcept = 0;
         virtual void setFactory(ITTFontFactoryFactory* const) noexcept = 0;
         virtual void setFactory(ITextureFactoryFactory* const) noexcept = 0;

@@ -93,47 +93,49 @@ bool Host::update()
 {
     switch (m_state)
     {
-    case AppState::NotInitialized:
-        break;
-    case AppState::ReadyToStart: {
-        DisplayLog::info("Starting initialization of new App...");
-        m_state = AppState::Executing;
-
-        m_private->system_provider_ = createSystemProvider();
-        m_private->system_provider_->init(m_private->iapp_);
-
-        DisplayLog::info(appDisplayNameAndVersion(*(m_private->iapp_)),
-                         ": Starting execution...");
-    }
-    break;
-    case AppState::Executing: {
-        if (loopStep())
+        case AppState::NotInitialized:
+            break;
+        case AppState::ReadyToStart:
         {
-            m_state = AppState::ReadyToTerminate;
+            DisplayLog::info("Starting initialization of new App...");
+            m_state = AppState::Executing;
+
+            m_private->system_provider_ = createSystemProvider();
+            m_private->system_provider_->init(m_private->iapp_);
+
             DisplayLog::info(appDisplayNameAndVersion(*(m_private->iapp_)),
-                             ": ", " is now ready to terminate");
+                             ": Starting execution...");
         }
-        else if (m_state == AppState::ReadyToTerminate)
+        break;
+        case AppState::Executing:
         {
-            DisplayLog::info(appDisplayNameAndVersion(*(m_private->iapp_)),
-                             ": ", " requested to terminate");
+            if (loopStep())
+            {
+                m_state = AppState::ReadyToTerminate;
+                DisplayLog::info(appDisplayNameAndVersion(*(m_private->iapp_)),
+                                 ": ", " is now ready to terminate");
+            }
+            else if (m_state == AppState::ReadyToTerminate)
+            {
+                DisplayLog::info(appDisplayNameAndVersion(*(m_private->iapp_)),
+                                 ": ", " requested to terminate");
+            }
         }
-    }
-    break;
-    case AppState::ReadyToTerminate:
-        DisplayLog::info(appDisplayNameAndVersion(*(m_private->iapp_)),
-                         ": started termination");
-        m_state = AppState::Terminated;
-        m_private->system_provider_->terminate();
-        destroySystemProvider(m_private->system_provider_);
-        m_private->system_provider_ = nullptr;
-        return true;
         break;
-    case AppState::Terminated:
-        return true;
-        break;
-    default:
-        break;
+        case AppState::ReadyToTerminate:
+            DisplayLog::info(appDisplayNameAndVersion(*(m_private->iapp_)),
+                             ": started termination");
+            m_state = AppState::Terminated;
+            m_private->system_provider_->terminate();
+            destroySystemProvider(m_private->system_provider_);
+            m_private->system_provider_ = nullptr;
+            return true;
+            break;
+        case AppState::Terminated:
+            return true;
+            break;
+        default:
+            break;
     }
     return false;
 }
