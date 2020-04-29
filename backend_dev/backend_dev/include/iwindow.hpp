@@ -14,8 +14,28 @@ class IInputDriver;
 class IWindow
 {
 public:
+    /**
+     * @brief Destroy the IWindow object
+     */
     virtual ~IWindow() {}
 
+    /**
+     * @brief Create the window of the operating system.
+     * This call is intended to create a window were entities can be drawn.
+     * Since this could be a lot backend dependent, the interface allows some
+     * optional parameters
+     * 
+     * @param width Width of the window.
+     * @param height Height of the Window.
+     * @param red_bpp Number of bits for the red channel
+     * @param green_bpp Number of bits for the green channel
+     * @param blue_bpp Number of bits for the blue channel
+     * @param alpha_bpp Number of bits for the alpha channel
+     * @param num_extra_parameters Number of extra parameters
+     * @param extra_parameters Pointer to an array of extra parameters
+     * @return true The window is successfully created.
+     * @return false Error creating the Window.
+     */
     virtual bool createWindow(const mtps::u32 width,
                               const mtps::u32 height,
                               const mtps::u8 red_bpp,
