@@ -7,7 +7,7 @@ using namespace haf::input;
 
 namespace haf::backend::sfmlb
 {
-void InputDriver::keyEvent(const sf::Event &e)
+void InputDriver::keyEvent(const sf::Event& e)
 {
     const haf::input::Key k(doCast(e.key.code));
     if (k != Key::Unknown)
@@ -34,7 +34,7 @@ bool InputDriver::arePendingKeyReleases() const
 }
 
 template <typename T>
-Key popKey(T &container)
+Key popKey(T& container)
 {
     Key k(Key::Unknown);
     if (!container.empty())
@@ -64,4 +64,4 @@ void InputDriver::keyReleased(const Key k)
 {
     m_keysReleased.push(k);
 }
-} // namespace haf::backend::sfmlb
+}  // namespace haf::backend::sfmlb
