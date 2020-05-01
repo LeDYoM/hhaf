@@ -11,20 +11,24 @@
 
 namespace haf::scene
 {
+class SceneNode;
+
 class SceneNodesGroup
 {
 public:
+    using InnerType = mtps::vector<mtps::sptr<SceneNode>>;
+
     void addSceneNode(mtps::sptr<SceneNode> node);
     void removeSceneNode(mtps::sptr<SceneNode> element);
     void clearSceneNodes();
 
     void renderGroups(const bool parentTransformationChanged);
 
-    constexpr const auto& sceneNodes() const noexcept { return m_groups; }
-    constexpr auto& sceneNodes() noexcept { return m_groups; }
+    const InnerType& sceneNodes() const noexcept;
+    InnerType& sceneNodes() noexcept;
 
 private:
-    mtps::vector<mtps::sptr<SceneNode>> m_groups;
+    InnerType m_groups;
 };
 
 }  // namespace haf::scene

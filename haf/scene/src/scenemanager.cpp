@@ -15,8 +15,8 @@ using namespace mtps;
 
 namespace haf::scene
 {
-SceneManager::SceneManager(sys::SystemProvider &system_provider)
-    : AppService{system_provider}
+SceneManager::SceneManager(sys::SystemProvider& system_provider) :
+    AppService{system_provider}
 {
     scene_controller_ = msptr<SceneController>();
     scene_controller_->setSceneManager(this);
@@ -25,8 +25,7 @@ SceneManager::SceneManager(sys::SystemProvider &system_provider)
 SceneManager::~SceneManager() = default;
 
 void SceneManager::start()
-{
-}
+{}
 
 void SceneManager::update()
 {
@@ -43,7 +42,7 @@ Rectf32 SceneManager::viewPort() const noexcept
     return systemProvider().parentWindow().renderTarget()->viewPort();
 }
 
-void SceneManager::setViewPort(const Rectf32 &vp) noexcept
+void SceneManager::setViewPort(const Rectf32& vp) noexcept
 {
     systemProvider().parentWindow().renderTarget()->setViewPort(vp);
 }
@@ -53,19 +52,29 @@ Rectf32 SceneManager::viewRect() const noexcept
     return systemProvider().parentWindow().renderTarget()->viewRect();
 }
 
-void SceneManager::setViewRect(const Rectf32 &vr) noexcept
+void SceneManager::setViewRect(const Rectf32& vr) noexcept
 {
     systemProvider().parentWindow().renderTarget()->setViewRect(vr);
 }
 
-IResourceRetriever &SceneManager::resources()
+IResourceRetriever& SceneManager::resources()
 {
     return systemProvider().resourceManager();
 }
 
-IResourceHandler &SceneManager::resourcesLoader()
+IResourceHandler& SceneManager::resourcesLoader()
 {
     return systemProvider().resourceManager();
 }
 
-} // namespace haf::scene
+const sptr<SceneController>& SceneManager::sceneController() const noexcept
+{
+    return scene_controller_;
+}
+
+sptr<SceneController>& SceneManager::sceneController() noexcept
+{
+    return scene_controller_;
+}
+
+}  // namespace haf::scene

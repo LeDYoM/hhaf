@@ -44,15 +44,8 @@ public:
 
     void renderGroups(const bool parentTransformationChanged);
 
-    const auto& sceneNodes() const noexcept
-    {
-        return scene_nodes_group_.sceneNodes();
-    }
-    
-    auto& sceneNodes() noexcept
-    {
-        return scene_nodes_group_.sceneNodes();
-    }
+    const SceneNodesGroup::InnerType& sceneNodes() const noexcept;    
+    SceneNodesGroup::InnerType& sceneNodes() noexcept;
 
     mtps::sptr<SceneNode> groupByName(const mtps::str& name) const;
 

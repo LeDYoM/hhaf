@@ -29,4 +29,15 @@ void SceneNodesGroup::clearSceneNodes()
 {
     m_groups.clear();
 }
+
+const SceneNodesGroup::InnerType& SceneNodesGroup::sceneNodes() const noexcept
+{
+    return m_groups;
+}
+
+SceneNodesGroup::InnerType& SceneNodesGroup::sceneNodes() noexcept
+{
+    return m_groups;
+}
+
 }  // namespace haf::scene
