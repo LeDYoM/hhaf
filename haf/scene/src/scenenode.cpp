@@ -20,29 +20,6 @@ SceneNode::SceneNode(rptr<SceneNode> parent, str name) :
 
 SceneNode::~SceneNode() = default;
 
-void SceneNode::render(bool parentTransformationChanged)
-{
-    if (visible())
-    {
-        // Update the node components
-        updateComponents();
-
-        // Update node
-        update();
-
-        parentTransformationChanged |= updateTransformIfNecessary();
-
-        if (parentTransformationChanged)
-        {
-            updateGlobalTransformation(parent() ? parent()->globalTransform()
-                                                : Transform::Identity);
-        }
-
-        updateRenderizables();
-        renderGroups(parentTransformationChanged);
-    }
-}
-
 void SceneNode::clearAll()
 {
     clearSceneNodes();

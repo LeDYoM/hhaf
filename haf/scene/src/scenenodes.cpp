@@ -12,11 +12,6 @@ SceneNodes::SceneNodes(const rptr<SceneNode> scene_node) :
 
 SceneNodes::~SceneNodes() = default;
 
-void SceneNodes::renderGroups(const bool parentTransformationChanged)
-{
-    scene_nodes_group_.renderGroups(parentTransformationChanged);
-}
-
 void SceneNodes::addSceneNode(sptr<SceneNode> node)
 {
     scene_nodes_group_.addSceneNode(node);
@@ -48,12 +43,12 @@ void SceneNodes::clearSceneNodes()
     scene_nodes_group_.clearSceneNodes();
 }
 
-const SceneNodesGroup::InnerType& SceneNodes::sceneNodes() const noexcept
+const SceneNodesGroup::SceneNodeVector& SceneNodes::sceneNodes() const noexcept
 {
     return scene_nodes_group_.sceneNodes();
 }
 
-SceneNodesGroup::InnerType& SceneNodes::sceneNodes() noexcept
+SceneNodesGroup::SceneNodeVector& SceneNodes::sceneNodes() noexcept
 {
     return scene_nodes_group_.sceneNodes();
 }

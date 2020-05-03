@@ -42,10 +42,8 @@ public:
     void removeSceneNode(mtps::sptr<SceneNode> element);
     void clearSceneNodes();
 
-    void renderGroups(const bool parentTransformationChanged);
-
-    const SceneNodesGroup::InnerType& sceneNodes() const noexcept;    
-    SceneNodesGroup::InnerType& sceneNodes() noexcept;
+    const SceneNodesGroup::SceneNodeVector& sceneNodes() const noexcept;    
+    SceneNodesGroup::SceneNodeVector& sceneNodes() noexcept;
 
     mtps::sptr<SceneNode> groupByName(const mtps::str& name) const;
 

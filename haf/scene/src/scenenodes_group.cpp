@@ -7,14 +7,6 @@ using namespace mtps;
 
 namespace haf::scene
 {
-void SceneNodesGroup::renderGroups(const bool parentTransformationChanged)
-{
-    for (auto&& group : m_groups)
-    {
-        group->render(parentTransformationChanged);
-    }
-}
-
 void SceneNodesGroup::addSceneNode(sptr<SceneNode> node)
 {
     m_groups.push_back(node);
@@ -30,12 +22,13 @@ void SceneNodesGroup::clearSceneNodes()
     m_groups.clear();
 }
 
-const SceneNodesGroup::InnerType& SceneNodesGroup::sceneNodes() const noexcept
+const SceneNodesGroup::SceneNodeVector& SceneNodesGroup::sceneNodes()
+    const noexcept
 {
     return m_groups;
 }
 
-SceneNodesGroup::InnerType& SceneNodesGroup::sceneNodes() noexcept
+SceneNodesGroup::SceneNodeVector& SceneNodesGroup::sceneNodes() noexcept
 {
     return m_groups;
 }

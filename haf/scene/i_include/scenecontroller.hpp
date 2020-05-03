@@ -75,6 +75,10 @@ public:
     const mtps::sptr<Scene>& currentScene() const noexcept;
     bool currentSceneIsNull();
 
+    void renderScene(Scene& scene, bool parentTransformationChanged);
+    void render(SceneNode& scene, bool parentTransformationChanged);
+
+
 private:
     void startScene(mtps::sptr<Scene> scene);
     void terminateCurrentScene();
@@ -86,6 +90,7 @@ private:
     mtps::sptr<Scene> current_scene_{nullptr};
     bool switch_scene_{false};
 };
+
 }  // namespace haf::scene
 
 #endif

@@ -16,19 +16,17 @@ class SceneNode;
 class SceneNodesGroup
 {
 public:
-    using InnerType = mtps::vector<mtps::sptr<SceneNode>>;
+    using SceneNodeVector = mtps::vector<mtps::sptr<SceneNode>>;
 
     void addSceneNode(mtps::sptr<SceneNode> node);
     void removeSceneNode(mtps::sptr<SceneNode> element);
     void clearSceneNodes();
 
-    void renderGroups(const bool parentTransformationChanged);
-
-    const InnerType& sceneNodes() const noexcept;
-    InnerType& sceneNodes() noexcept;
+    const SceneNodeVector& sceneNodes() const noexcept;
+    SceneNodeVector& sceneNodes() noexcept;
 
 private:
-    InnerType m_groups;
+    SceneNodeVector m_groups;
 };
 
 }  // namespace haf::scene

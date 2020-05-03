@@ -11,7 +11,8 @@ namespace haf::scene
 {
 void SceneController::setSceneManager(rptr<SceneManager> scene_manager)
 {
-    LogAsserter::log_assert(scene_manager_ == nullptr, "The scene_manager_ was set already");
+    LogAsserter::log_assert(scene_manager_ == nullptr,
+                            "The scene_manager_ was set already");
     scene_manager_ = scene_manager;
 }
 
@@ -47,7 +48,7 @@ void SceneController::deferredSwitchScene()
 void SceneController::terminateCurrentScene()
 {
     LogAsserter::log_assert(current_scene_ != nullptr,
-               "Unexpected nullptr in current_scene");
+                            "Unexpected nullptr in current_scene");
     DisplayLog::info("Terminating scene ", current_scene_->name());
     current_scene_->onFinished();
 }
@@ -67,7 +68,42 @@ void SceneController::update()
 
     if (auto current_scene = currentScene())
     {
-        current_scene->render(false);
+//        current_scene->render(false);
+        renderScene(*current_scene, false);
+    }
+}
+
+void SceneController::renderScene(Scene& scene,
+                                  bool parentTransformationChanged)
+{
+    render(scene, parentTransformationChanged);
+}
+
+void SceneController::render(SceneNode& scene_node,
+                                  bool parentTransformationChanged)
+{
+    if (scene_node.visible())
+    {
+        // Update the node components
+        scene_node.updateComponents();
+
+        // Update node
+        scene_node.update();
+
+        parentTransformationChanged |= scene_node.updateTransformIfNecessary();
+
+        if (parentTransformationChanged)
+        {
+            scene_node.updateGlobalTransformation(
+                scene_node.parent() ? scene_node.parent()->globalTransform()
+                         : Transform::Identity);
+        }
+
+        scene_node.updateRenderizables();
+        for (SceneNodesGroup::SceneNodeVector::value_type& group : scene_node.sceneNodes())
+        {
+            render(*group, parentTransformationChanged);
+        }
     }
 }
 

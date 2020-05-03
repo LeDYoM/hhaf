@@ -40,9 +40,10 @@ public:
 
     void rotateScaleAround(mtps::vector2df point, mtps::f32 angle, mtps::vector2df scale);
 
+    void updateGlobalTransformation(const Transform &) noexcept;
+
 protected:
     bool transformationNeedsUpdate() const noexcept;
-    void updateGlobalTransformation(const Transform &) noexcept;
 
 private:
     void resetNeedsUpdate() noexcept;
