@@ -14,10 +14,13 @@
 namespace haf::scene
 {
 class SceneNode;
-class ComponentContainer : public sys::AttachableManager<IComponent>
+
+template <bool WithUpdate>
+class ComponentContainerBase
+    : public sys::AttachableManager<IComponentBase<WithUpdate>>
 {
 public:
-    using BaseClass = sys::AttachableManager<IComponent>;
+    using BaseClass = sys::AttachableManager<IComponentBase<WithUpdate>>;
 
     using BaseClass::AttachableManager;
 
@@ -25,7 +28,7 @@ public:
     mtps::sptr<T> addComponentOfType()
     {
         LogAsserter::log_assert(componentOfType<T>() == nullptr,
-                   "There is already a component with this type");
+                                "There is already a component with this type");
         mtps::sptr<T> nc(create<T>());
         addComponent(nc);
         return nc;
@@ -69,6 +72,9 @@ private:
         const std::type_index& ti) const;
     mtps::LockableVector<mtps::sptr<IComponent>> m_components;
 };
+
+using ComponentContainer = ComponentContainerBase<true>;
+
 }  // namespace haf::scene
 
 #endif

@@ -11,7 +11,21 @@ namespace haf::scene
 class SceneNode;
 
 /// Base class for all components attached to a scene node.
-class IComponent : public sys::Attachable<SceneNode>
+template <bool WithUpdate>
+class IComponentBase;
+
+template <>
+class IComponentBase<false> : public sys::Attachable<SceneNode>
+{
+public:
+    using AttachedNodeType = sys::Attachable<SceneNode>::AttachedNodeType;
+
+    /// Destructor
+    ~IComponentBase() override {}
+};
+
+template <>
+class IComponentBase<true> : public sys::Attachable<SceneNode>
 {
 public:
     using AttachedNodeType = sys::Attachable<SceneNode>::AttachedNodeType;
@@ -22,11 +36,10 @@ public:
     virtual void update() {}
 
     /// Destructor
-    ~IComponent() override {}
-
-private:
-    friend class ComponentContainer;
+    ~IComponentBase() override {}
 };
+
+using IComponent = IComponentBase<true>;
 
 template <typename T1, typename T2>
 class IComponentMixin : public IComponent
