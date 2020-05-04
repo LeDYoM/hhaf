@@ -60,7 +60,13 @@ public:
     void clearComponents() noexcept { m_components.clear(); }
 
 private:
-    bool addComponent(mtps::sptr<IComponent> nc);
+    bool addComponent(mtps::sptr<IComponent> nc)
+    {
+        LogAsserter::log_assert(nc != nullptr,
+                                "Trying to add a nullptr component");
+        m_components.emplace_back(std::move(nc));
+        return true;
+    }
 
     template <typename T>
     void addComponentOfType(mtps::sptr<T>& component)
@@ -68,8 +74,29 @@ private:
         component = addComponentOfType<T>();
     }
 
+    std::type_index tindexOf(const mtps::sptr<IComponent>& c) const
+    {
+        return std::type_index(typeid(*c));
+    }
+
+    mtps::sptr<IComponent> getComponentFromTypeIndex(
+        const std::type_index& tindex,
+        const mtps::vector_shared_pointers<IComponent>& v) const
+    {
+        auto iterator(std::find_if(
+            v.cbegin(), v.cend(),
+            [this, &tindex](const mtps::sptr<IComponent>& component) {
+                return tindexOf(component) == tindex;
+            }));
+        return (iterator == v.cend()) ? nullptr : (*iterator);
+    }
+
     const mtps::sptr<IComponent> componentOfType(
-        const std::type_index& ti) const;
+        const std::type_index& ti) const
+    {
+        return getComponentFromTypeIndex(ti, m_components.next());
+    }
+
     mtps::LockableVector<mtps::sptr<IComponent>> m_components;
 };
 
