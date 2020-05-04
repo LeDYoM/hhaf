@@ -20,7 +20,8 @@ class ComponentContainerBase
     : public sys::AttachableManager<IComponentBase<WithUpdate>>
 {
 public:
-    using BaseClass = sys::AttachableManager<IComponentBase<WithUpdate>>;
+    using BaseClass     = sys::AttachableManager<IComponentBase<WithUpdate>>;
+    using ComponentType = IComponentBase<WithUpdate>;
 
     using BaseClass::AttachableManager;
 
@@ -53,14 +54,15 @@ public:
     template <typename T>
     mtps::sptr<T> componentOfType() const
     {
-        mtps::sptr<IComponent> cot(componentOfType(std::type_index(typeid(T))));
+        mtps::sptr<ComponentType> cot(
+            componentOfType(std::type_index(typeid(T))));
         return cot ? std::dynamic_pointer_cast<T>(cot) : nullptr;
     }
 
     void clearComponents() noexcept { m_components.clear(); }
 
 private:
-    bool addComponent(mtps::sptr<IComponent> nc)
+    bool addComponent(mtps::sptr<ComponentType> nc)
     {
         LogAsserter::log_assert(nc != nullptr,
                                 "Trying to add a nullptr component");
@@ -74,30 +76,30 @@ private:
         component = addComponentOfType<T>();
     }
 
-    std::type_index tindexOf(const mtps::sptr<IComponent>& c) const
+    std::type_index tindexOf(const mtps::sptr<ComponentType>& c) const
     {
         return std::type_index(typeid(*c));
     }
 
-    mtps::sptr<IComponent> getComponentFromTypeIndex(
+    mtps::sptr<ComponentType> getComponentFromTypeIndex(
         const std::type_index& tindex,
         const mtps::vector_shared_pointers<IComponent>& v) const
     {
         auto iterator(std::find_if(
             v.cbegin(), v.cend(),
-            [this, &tindex](const mtps::sptr<IComponent>& component) {
+            [this, &tindex](const mtps::sptr<ComponentType>& component) {
                 return tindexOf(component) == tindex;
             }));
         return (iterator == v.cend()) ? nullptr : (*iterator);
     }
 
-    const mtps::sptr<IComponent> componentOfType(
+    const mtps::sptr<ComponentType> componentOfType(
         const std::type_index& ti) const
     {
         return getComponentFromTypeIndex(ti, m_components.next());
     }
 
-    mtps::LockableVector<mtps::sptr<IComponent>> m_components;
+    mtps::LockableVector<mtps::sptr<ComponentType>> m_components;
 };
 
 using ComponentContainer = ComponentContainerBase<true>;
