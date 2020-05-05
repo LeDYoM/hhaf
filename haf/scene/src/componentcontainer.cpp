@@ -5,16 +5,14 @@
 
 #include <algorithm>
 #include <functional>  // std::invoke
-#include <memory>      // std::addressof
 
 using namespace mtps;
 
 namespace haf::scene
 {
+
 namespace
 {
-}  // namespace
-
 template <typename T>
 void update_impl(const sptr<T> p)
 {
@@ -32,10 +30,18 @@ void executeForAllComponents(LCKV& components, F&& f)
         components.update();
     }
 }
+}  // namespace
 
-void ComponentContainer::updateComponents()
+template <>
+void ComponentContainerBase<true>::updateComponents()
 {
-    executeForAllComponents(m_components, &update_impl<IComponent>);
+    executeForAllComponents(components_, &update_impl<IComponent>);
+}
+
+template <>
+void ComponentContainerBase<false>::updateComponents()
+{
+    components_.update();
 }
 
 }  // namespace haf::scene
