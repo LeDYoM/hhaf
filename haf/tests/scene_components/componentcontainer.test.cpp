@@ -10,6 +10,8 @@ using namespace mtps;
 using namespace haf;
 using namespace haf::scene;
 
+using ComponentContainer = ComponentContainerBase<true>;
+
 struct TestComponent : public IComponent
 {
     int data_{0};

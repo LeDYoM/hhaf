@@ -19,8 +19,9 @@ class ComponentContainerBase
     : public sys::AttachableManager<IComponentBase<WithUpdate>>
 {
 public:
-    using ComponentType = IComponentBase<WithUpdate>;
-    using BaseClass     = sys::AttachableManager<ComponentType>;
+    using ComponentType  = IComponentBase<WithUpdate>;
+    using BaseClass      = sys::AttachableManager<ComponentType>;
+    using AttachableType = typename BaseClass::AttachableType;
 
     using BaseClass::AttachableManager;
 
@@ -100,8 +101,6 @@ private:
 
     mtps::LockableVector<mtps::sptr<ComponentType>> components_;
 };
-
-using ComponentContainer = ComponentContainerBase<true>;
 
 }  // namespace haf::scene
 

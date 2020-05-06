@@ -12,7 +12,7 @@ SceneNode::SceneNode(rptr<SceneNode> parent, str name) :
     SceneNodes{this},
     Renderizables{this},
     sys::DataWrapperCreator{this},
-    ComponentContainer{this},
+    ComposedComponentContainer{this},
     sys::SystemAccess{parent != nullptr ? &(parent->isystemProvider())
                                         : nullptr},
     visible{true}
