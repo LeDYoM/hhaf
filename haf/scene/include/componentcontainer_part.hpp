@@ -12,8 +12,16 @@
 
 namespace haf::scene
 {
-class SceneNode;
-
+/**
+ * @brief Templated class representing a templated part of a component
+ * container.
+ * A component container part contains methods to manage the components
+ * added to it.
+ *
+ * @tparam WithUpdate Specify if the components to add in this component
+ * container should contain update function or not and if this function will
+ * be updated.
+ */
 template <bool WithUpdate>
 class ComponentContainerPart
     : public sys::AttachableManager<IComponentBase<WithUpdate>>
@@ -48,7 +56,7 @@ public:
 
     /**
      * Returns the component of the specified type if exists
-     * @param T type of the component to be retrieved
+     * @tparam T type of the component to be retrieved
      * @return A shared pointer to the container or nullptr if not found
      */
     template <typename T>
@@ -82,9 +90,9 @@ private:
     }
 
     mtps::sptr<ComponentType> getComponentFromTypeIndex(
-        const std::type_index& tindex,
-        const mtps::vector_shared_pointers<ComponentType>& v) const
+        const std::type_index& tindex) const
     {
+        const auto v{components_.next()};
         auto iterator(std::find_if(
             v.cbegin(), v.cend(),
             [this, &tindex](const mtps::sptr<ComponentType>& component) {
@@ -96,7 +104,7 @@ private:
     const mtps::sptr<ComponentType> componentOfType(
         const std::type_index& ti) const
     {
-        return getComponentFromTypeIndex(ti, components_.next());
+        return getComponentFromTypeIndex(ti);
     }
 
     mtps::LockableVector<mtps::sptr<ComponentType>> components_;
