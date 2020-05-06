@@ -4,21 +4,21 @@
 #define HAF_SCENE_COMPONENTCONTAINER_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <haf/scene/include/componentcontainer_base.hpp>
+#include <haf/scene/include/componentcontainer_part.hpp>
 #include <type_traits>
 
 namespace haf::scene
 {
 
-class ComposedComponentContainer
+class ComponentContainer
 {
 public:
-    using ComponentType = typename ComponentContainerBase<true>::ComponentType;
+    using ComponentType = typename ComponentContainerPart<true>::ComponentType;
     using StaticComponentType =
-        typename ComponentContainerBase<false>::ComponentType;
-    using AttachableType = ComponentContainerBase<true>::AttachableType;
+        typename ComponentContainerPart<false>::ComponentType;
+    using AttachableType = ComponentContainerPart<true>::AttachableType;
 
-    explicit ComposedComponentContainer(mtps::rptr<AttachableType> init) :
+    explicit ComponentContainer(mtps::rptr<AttachableType> init) :
         component_container_{init}, static_component_container_{init}
     {}
 
@@ -97,8 +97,8 @@ private:
             std::is_convertible_v<T, StaticComponentType>>();
     }
 
-    ComponentContainerBase<true> component_container_;
-    ComponentContainerBase<false> static_component_container_;
+    ComponentContainerPart<true> component_container_;
+    ComponentContainerPart<false> static_component_container_;
 };
 
 }  // namespace haf::scene

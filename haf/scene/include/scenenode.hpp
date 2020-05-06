@@ -32,7 +32,7 @@ class SceneNode : public sys::HasName,
                   public Renderizables,
                   public Transformable,
                   public sys::DataWrapperCreator,
-                  public ComposedComponentContainer,
+                  public ComponentContainer,
                   public sys::SystemAccess
 {
 public:

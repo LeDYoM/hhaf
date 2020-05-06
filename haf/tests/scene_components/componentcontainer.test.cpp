@@ -10,7 +10,7 @@ using namespace mtps;
 using namespace haf;
 using namespace haf::scene;
 
-using ComponentContainer = ComponentContainerBase<true>;
+using ComponentContainerWithUpdate = ComponentContainerPart<true>;
 
 struct TestComponent : public IComponent
 {
@@ -28,8 +28,8 @@ private:
 TEST_CASE("haf::scene::ComponentContainer", "[ComponentContainer][constructor]")
 {
     // Create scenario for testing
-    sptr<ComponentContainer> component_container_no_parent(
-        msptr<ComponentContainer>());
+    sptr<ComponentContainerWithUpdate> component_container_no_parent(
+        msptr<ComponentContainerWithUpdate>());
 
     SECTION("Add component")
     {

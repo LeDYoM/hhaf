@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef HAF_SCENE_COMPONENTCONTAINERBASE_INCLUDE_HPP
-#define HAF_SCENE_COMPONENTCONTAINERBASE_INCLUDE_HPP
+#ifndef HAF_SCENE_COMPONENTCONTAINERPART_INCLUDE_HPP
+#define HAF_SCENE_COMPONENTCONTAINERPART_INCLUDE_HPP
 
 #include <hlog/include/hlog.hpp>
 #include <haf/scene/include/icomponent.hpp>
@@ -15,7 +15,7 @@ namespace haf::scene
 class SceneNode;
 
 template <bool WithUpdate>
-class ComponentContainerBase
+class ComponentContainerPart
     : public sys::AttachableManager<IComponentBase<WithUpdate>>
 {
 public:

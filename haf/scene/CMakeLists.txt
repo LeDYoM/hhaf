@@ -2,7 +2,8 @@ project (scene CXX)
 cmake_minimum_required(VERSION 3.12)
 
 set (_SOURCES 
-    "src/componentcontainer.cpp"
+    "src/componentcontainer_update.cpp"
+    "src/componentcontainer_no_update.cpp"
     "src/renderizable.cpp"
     "src/renderizables.cpp"
     "src/scenecontroller.cpp"
