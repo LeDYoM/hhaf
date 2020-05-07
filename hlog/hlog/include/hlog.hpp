@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef HAF_LIBLOG_INCLUDE_HPP
-#define HAF_LIBLOG_INCLUDE_HPP
+#ifndef HAF_HLOG_INCLUDE_HPP
+#define HAF_HLOG_INCLUDE_HPP
 
 #include <logger/include/log.hpp>
 #include <logger/include/log_displayer.hpp>
