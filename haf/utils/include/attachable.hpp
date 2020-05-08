@@ -5,7 +5,7 @@
 
 #include <mtypes/include/types.hpp>
 
-namespace haf::sys
+namespace haf::utils
 {
 template <typename T>
 class Attachable
@@ -31,31 +31,37 @@ public:
      * @brief Get the attached node.
      * @return const mtps::rptr<const T> The const attached node.
      */
-    constexpr const mtps::rptr<const T> attachedNode() const noexcept { return attachedNode_; }
+    constexpr const mtps::rptr<const T> attachedNode() const noexcept
+    {
+        return attachedNode_;
+    }
 
     /**
      * @brief Get the attached node.
      * @return const mtps::rptr<const T> The attached node.
      */
-    constexpr const mtps::rptr<T> attachedNode() noexcept { return attachedNode_; }
+    constexpr const mtps::rptr<T> attachedNode() noexcept
+    {
+        return attachedNode_;
+    }
 
     /**
      * @brief Shortcut method to get the attached node converted to a type.
-     * 
+     *
      * @tparam Y Dest type to convert
-     * @return mtps::rptr<Y> containing the attached node or nullptr if no conversion
-     *  was possible.
+     * @return mtps::rptr<Y> containing the attached node or nullptr if no
+     * conversion was possible.
      */
     template <typename Y>
     mtps::rptr<Y> attachedNodeAs() noexcept
     {
-        return dynamic_cast<Y *>(attachedNode());
+        return dynamic_cast<Y*>(attachedNode());
     }
 
 public:
     mtps::rptr<T> attachedNode_;
 };
 
-} // namespace haf::sys
+}  // namespace haf::utils
 
 #endif

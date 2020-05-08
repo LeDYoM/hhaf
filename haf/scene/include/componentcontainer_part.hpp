@@ -24,11 +24,11 @@ namespace haf::scene
  */
 template <bool WithUpdate>
 class ComponentContainerPart
-    : public sys::AttachableManager<IComponentBase<WithUpdate>>
+    : public utils::AttachableManager<IComponentBase<WithUpdate>>
 {
 public:
     using ComponentType  = IComponentBase<WithUpdate>;
-    using BaseClass      = sys::AttachableManager<ComponentType>;
+    using BaseClass      = utils::AttachableManager<ComponentType>;
     using AttachableType = typename BaseClass::AttachableType;
 
     using BaseClass::AttachableManager;

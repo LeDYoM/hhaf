@@ -15,20 +15,20 @@ template <bool WithUpdate>
 class IComponentBase;
 
 template <>
-class IComponentBase<false> : public sys::Attachable<SceneNode>
+class IComponentBase<false> : public utils::Attachable<SceneNode>
 {
 public:
-    using AttachedNodeType = sys::Attachable<SceneNode>::AttachedNodeType;
+    using AttachedNodeType = utils::Attachable<SceneNode>::AttachedNodeType;
 
     /// Destructor
     ~IComponentBase() override {}
 };
 
 template <>
-class IComponentBase<true> : public sys::Attachable<SceneNode>
+class IComponentBase<true> : public utils::Attachable<SceneNode>
 {
 public:
-    using AttachedNodeType = sys::Attachable<SceneNode>::AttachedNodeType;
+    using AttachedNodeType = utils::Attachable<SceneNode>::AttachedNodeType;
 
     /**
      * @brief Interface to be implemented to update the component

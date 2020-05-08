@@ -19,10 +19,10 @@ namespace haf::sys
  * DataWrappers are stand alone objects, not components that interact with
  * their containers. For active content see @b IComponent.
  */
-class DataWrapperCreator : public AttachableManager<IDataWrapper>
+class DataWrapperCreator : public utils::AttachableManager<IDataWrapper>
 {
 public:
-    using BaseClass = AttachableManager<IDataWrapper>;
+    using BaseClass = utils::AttachableManager<IDataWrapper>;
 
     using BaseClass::AttachableManager;
 

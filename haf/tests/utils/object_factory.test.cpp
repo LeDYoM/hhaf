@@ -8,7 +8,7 @@
 
 using namespace mtps;
 using namespace haf;
-using namespace haf::scene;
+using namespace haf::utils;
 
 namespace
 {

@@ -22,14 +22,14 @@ namespace haf::sys
  * some specific data via a scene node.
  * The @b IDataWrapper is not stored anywhere internally.
  */
-class IDataWrapper : public sys::Attachable<sys::SystemAccess>
+class IDataWrapper : public utils::Attachable<sys::SystemAccess>
 {
 public:
     /**
      * @brief Public type alias template with the acched node type of this
      * attachable. Required from @b sys::Atachable
      */
-    using AttachedNodeType = sys::Attachable<sys::SystemAccess>::AttachedNodeType;
+    using AttachedNodeType = utils::Attachable<sys::SystemAccess>::AttachedNodeType;
 
 private:
     friend class DataWrapperCreator;
