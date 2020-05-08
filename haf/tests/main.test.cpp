@@ -19,7 +19,6 @@ int main(int argc, char* argv[])
     // overrides command line args
     // only do this if you know you need to
 
-    haf::LogClass::init_log();
-    const auto result = session.run();
-    haf::LogClass::finish_log();
+    haf::LogInitializer log;
+    return session.run();
 }
