@@ -67,18 +67,23 @@ str FileSystem::loadTextFile(const Path &file_name)
 
 bool FileSystem::saveFile(const Path &file_name, const str&data)
 {
+    // Open a file
     std::ofstream file(file_name.c_str());
+    // Everything is correct by default
     bool correct{true};
 
+    // If file open successfully
     if (file)
     {
+        // Read the data
         file << data.c_str();
+        // Correct is the status of the file object after reading it
         correct = file.good();
     }
 
     if (!file || !correct)
     {
-        DisplayLog::error("Cannot write text file", file_name);
+        DisplayLog::error("Cannot write text file ", file_name);
     }
 
     return (file && correct);
