@@ -138,7 +138,7 @@ function(add_test_executable)
   include(FetchContent)
   FetchContent_MakeAvailable(Catch2)
 
-  foreach(NAME IN LISTS SOURCE_TESTS)
+  foreach(NAME IN LISTS LC_BUILD_SOURCE_TESTS)
     list(APPEND SOURCE_TESTS_LIST ${NAME}.test.cpp)
   endforeach()
 
@@ -153,7 +153,10 @@ endfunction(add_test_executable)
 
 function(add_haf_test_executable)
 
-  add_test_executable(${ARGV})
+  set(PARAM_LIST ${ARGV})
+  list(APPEND PARAM_LIST main)
+
+  add_test_executable(${PARAM_LIST})
 
   target_link_libraries(${CURRENT_TARGET} PRIVATE haf)
 

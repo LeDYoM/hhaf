@@ -4,8 +4,6 @@ project(lib_utests CXX)
 set(CURRENT_TARGET ${PROJECT_NAME})
 
 set(SOURCE_TESTS
-    main
-
     scene/color
     scene/scenecontroller
     scene/scenenodefactory
