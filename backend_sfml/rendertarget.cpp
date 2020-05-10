@@ -12,7 +12,7 @@ static_assert(sizeof(sf::Vertex) == sizeof(scene::Vertex),
               "Incomptable version of SFML");
 
 void RenderTarget::render(const IRenderData* render_data_begin,
-                        const IRenderData* render_data_end)
+                          const IRenderData* render_data_end)
 {
     while (render_data_begin != render_data_end)
     {
@@ -58,5 +58,13 @@ Rectf32 RenderTarget::viewRect() const
 void RenderTarget::clear()
 {
     sf::RenderTarget::clear();
+}
+
+mtps::str RenderTarget::info() const
+{
+    return make_str(
+        "name:SFMLWindowRenderTargget;provider:SFML;provider_version:",
+        SFML_VERSION_MAJOR, ".", SFML_VERSION_MINOR, ".", SFML_VERSION_PATCH,
+        ";version:0;subversion:2:patch3");
 }
 }  // namespace haf::backend::sfmlb

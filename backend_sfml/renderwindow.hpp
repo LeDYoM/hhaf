@@ -31,7 +31,7 @@ public:
             const unsigned int* const extra_parameters) override;
     sf::Vector2u getSize() const;
 
-    bool setActive(bool active = true) override;
+    bool setActive(bool active) override;
 
     IRenderTarget *renderTarget() override;
 
@@ -41,7 +41,7 @@ public:
     void closeWindow() override;
 
     IInputDriver *inputDriver() override;
-    mtps::str info() override;
+    mtps::str info() const override;
 
 protected:
     virtual void onCreate();

@@ -21,4 +21,12 @@ vector2du32 Texture::size() const
     return {static_cast<u32>(m_texturePrivate->getSize().x),
             static_cast<u32>(m_texturePrivate->getSize().y)};
 }
+
+str Texture::info() const
+{
+    return make_str("name:SFMLTexture;provider:SFML;provider_version:",
+                    SFML_VERSION_MAJOR, ".", SFML_VERSION_MINOR, ".",
+                    SFML_VERSION_PATCH, ";version:0;subversion:2:patch3");
+}
+
 }  // namespace haf::backend::sfmlb

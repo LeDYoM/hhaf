@@ -6,9 +6,11 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
 
+#include "iresourceinfo.hpp"
+
 namespace haf::backend
 {
-class ITexture
+class ITexture : public IResourceInfo
 {
 public:
     ITexture() {}
