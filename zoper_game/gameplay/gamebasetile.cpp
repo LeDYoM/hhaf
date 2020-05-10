@@ -1,6 +1,7 @@
 #include "gamebasetile.hpp"
+#include "boardgroup.hpp"
 
-#include <lib/include/liblog.hpp>
+#include <hlog/include/hlog.hpp>
 
 using namespace haf;
 using namespace haf::board;
@@ -15,22 +16,20 @@ GameBaseTile::GameBaseTile(SceneNode* const parent, str name) :
 
 GameBaseTile::~GameBaseTile() = default;
 
-void GameBaseTile::update()
+void GameBaseTile::tileChanged(const mtps::vector2dst& /*position */,
+                               const BoardTileData /* oldValue */,
+                               const BoardTileData /* newValue */)
 {
-    SceneNode::update();
-
-    if (data.readResetHasChanged())
+    if (m_node)
     {
-        if (m_node)
-        {
-            m_node->color = getColorForToken();
-        }
+        m_node->color = getColorForToken();
     }
+
 }
 
 Color GameBaseTile::getColorForToken() const
 {
-    switch (data.get())
+    switch (value())
     {
     case 0:
         return colors::Red;
@@ -48,10 +47,19 @@ Color GameBaseTile::getColorForToken() const
         return colors::Magenta;
         break;
     default:
-        haf::DisplayLog::error("Error value for token: ", data.get(),
+        haf::DisplayLog::error("Error value for token: ", value(),
                                " is not supported");
         return colors::White;
         break;
     }
 }
+
+sptr<BoardManager> GameBaseTile::getBoardModel()
+{
+    auto board_group{ancestor<BoardGroup>()};
+    LogAsserter::log_assert(board_group != nullptr, "Invalid BoardModel found");
+
+    return board_group != nullptr ? board_group->boardModel() : nullptr;
+}
+
 }  // namespace zoper

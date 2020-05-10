@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_BACKEND_SFMLB_REDNERWINDOW_INCLUDE_HPP
-#define LIB_BACKEND_SFMLB_REDNERWINDOW_INCLUDE_HPP
+#ifndef HAF_BACKEND_SFMLB_REDNERWINDOW_INCLUDE_HPP
+#define HAF_BACKEND_SFMLB_REDNERWINDOW_INCLUDE_HPP
 
 #include <SFML/Window/Window.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
@@ -31,7 +31,7 @@ public:
             const unsigned int* const extra_parameters) override;
     sf::Vector2u getSize() const;
 
-    bool setActive(bool active = true) override;
+    bool setActive(bool active) override;
 
     IRenderTarget *renderTarget() override;
 
@@ -40,7 +40,8 @@ public:
     void setWindowTitle(mtps::str newTitle) override;
     void closeWindow() override;
 
-    virtual IInputDriver *inputDriver() override;
+    IInputDriver *inputDriver() override;
+    mtps::str info() const override;
 
 protected:
     virtual void onCreate();
@@ -50,11 +51,6 @@ private:
     InputDriver input_driver_;
 };
 
-class WindowBackendInfo : public IWindowProviderInfo
-{
-public:
-    const mtps::str info() override;
-};
 } // namespace haf::backend::sfmlb
 
 #endif

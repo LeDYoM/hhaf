@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_BACKEND_FACTORY_INCLUDE_HPP
-#define LIB_BACKEND_FACTORY_INCLUDE_HPP
+#ifndef HAF_BACKEND_FACTORY_INCLUDE_HPP
+#define HAF_BACKEND_FACTORY_INCLUDE_HPP
 
 namespace haf::backend
 {

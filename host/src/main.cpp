@@ -2,8 +2,9 @@
 
 #include <memmanager/include/memmanager.hpp>
 #include <host/include/host.hpp>
-#include <lib/include/liblog.hpp>
+#include <hlog/include/hlog.hpp>
 #include <logger/include/log.hpp>
+#include <logger/include/log_init.hpp>
 #include <host/include/apploader.hpp>
 
 namespace haf
@@ -14,11 +15,10 @@ int libMain(int argc, char *argv[])
 
     try
     {
-        logger::init_log();
-
         installMemManager();
 
         {
+            LogInitializer log_init;
             sys::Host host(argc, argv);
             sys::AppLoader app_loader;
             sys::ManagedApp managed_app = app_loader.loadApp("zoper_game");
@@ -37,7 +37,6 @@ int libMain(int argc, char *argv[])
         DisplayLog::info("Unexpected exception");
     }
     finishMemManager();
-    logger::finish_log();
 
     return result;
 }

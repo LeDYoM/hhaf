@@ -1,0 +1,22 @@
+#include "componentcontainer.hpp"
+
+#include <mtypes/include/types.hpp>
+#include <hlog/include/hlog.hpp>
+
+#include <algorithm>
+#include <functional>  // std::invoke
+
+using namespace mtps;
+
+namespace haf::scene
+{
+template <>
+void ComponentContainerPart<true>::updateComponents()
+{
+    components_.performUpdate([](const sptr<IComponent>& component)
+    {
+        component->update();
+    });
+}
+
+}  // namespace haf::scene

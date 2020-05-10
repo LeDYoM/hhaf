@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_BACKEND_FACTORY_HPP
-#define LIB_BACKEND_FACTORY_HPP
+#ifndef HAF_BACKEND_FACTORY_HPP
+#define HAF_BACKEND_FACTORY_HPP
 
 #include <backend_dev/include/iresourcefactories.hpp>
 
@@ -9,7 +9,6 @@ namespace haf::backend
 {
 class BackendRegister;
 class IWindow;
-class IWindowProviderInfo;
 
 /**
  * @brief Class representing a factory for backend classes.
@@ -22,12 +21,10 @@ public:
     ~BackendFactory();
 
     IWindow *getWindow();
-    IWindowProviderInfo *getWindowProviderInfo() const noexcept;
     ITextureFactory *getTextureFactory() const noexcept;
     ITTFontFactory *getTTFontFactory() const noexcept;
     IShaderFactory *getShaderFactory() const noexcept;
     IBMPFontFactory *getBMPFontFactory() const noexcept;
-    IWindowProviderInfo &windowProviderInfo() const;
     ITextureFactory &textureFactory() const;
     ITTFontFactory &ttfontFactory() const;
     IShaderFactory &shaderFactory() const;
@@ -35,7 +32,6 @@ public:
 
 private:
     mtps::uptr<BackendRegister> backend_register_;
-    IWindowProviderInfo *m_windowProviderInfo{nullptr};
     IWindow *m_window{nullptr};
     ITextureFactory *m_textureFactory{nullptr};
     ITTFontFactory *m_ttfontFactory{nullptr};

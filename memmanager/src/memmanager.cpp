@@ -1,5 +1,7 @@
 #include <memmanager/include/memmanager.hpp>
 
+#include <new>
+
 #ifdef _MSC_VER
 #include <windows.h>
 #include <crtdbg.h>
@@ -20,7 +22,7 @@ static int crtDebugMemAllocHook(int allocType,
     userData;
     allocType;
 
-    if (requestIndex == 141160)  // break;
+    if (requestIndex == 160)  // break;
 
         return true;
 
@@ -42,4 +44,14 @@ void finishMemManager()
 #ifdef _MSC_VER
     _CrtDumpMemoryLeaks();
 #endif
+}
+
+void* mmalloc(std::size_t size)
+{
+    return std::malloc(size);
+}
+
+void mfree(void* block)
+{
+    free(block);
 }

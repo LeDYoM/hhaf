@@ -120,6 +120,13 @@ IInputDriver* RenderWindow::inputDriver()
     return &input_driver_;
 }
 
+str RenderWindow::info() const
+{
+    return make_str("name:SFMLWindow;provider:SFML;provider_version:",
+                    SFML_VERSION_MAJOR, ".", SFML_VERSION_MINOR, ".",
+                    SFML_VERSION_PATCH, ";version:0;subversion:2:patch3");
+}
+
 void RenderWindow::onCreate()
 {
     RenderTarget::initialize();
@@ -130,10 +137,4 @@ void RenderWindow::onResize()
     setView(getView());
 }
 
-const str WindowBackendInfo::info()
-{
-    return make_str(
-        "SFML Backend: 1.0 Using SFML Version : ", SFML_VERSION_MAJOR, ".",
-        SFML_VERSION_MINOR, ".", SFML_VERSION_PATCH);
-}
 }  // namespace haf::backend::sfmlb

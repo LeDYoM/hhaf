@@ -15,13 +15,13 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/function.hpp>
-#include <lib/scene/include/scene.hpp>
-#include <boardmanager/include/boardmodel.hpp>
-#include <lib/scene/include/renderizable.hpp>
-#include <lib/time/include/timercomponent.hpp>
-#include <lib/scene_components/include/statescontroller.hpp>
-#include <lib/scene_components/include/statescontrolleractuator.hpp>
-#include <lib/time/include/timercomponent.hpp>
+#include <haf/scene/include/scene.hpp>
+#include <boardmanager/include/boardmanager.hpp>
+#include <haf/scene/include/renderizable.hpp>
+#include <haf/time/include/timercomponent.hpp>
+#include <haf/scene_components/include/statescontroller.hpp>
+#include <haf/scene_components/include/statescontrolleractuator.hpp>
+#include <haf/time/include/timercomponent.hpp>
 
 namespace zoper
 {

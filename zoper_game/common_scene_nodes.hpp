@@ -1,6 +1,6 @@
 #pragma once
 
-#include <lib/scene/include/renderizables.hpp>
+#include <haf/scene/include/renderizables.hpp>
 
 namespace zoper
 {

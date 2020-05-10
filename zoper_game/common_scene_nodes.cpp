@@ -1,9 +1,9 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/properties.hpp>
 
-#include <lib/include/liblog.hpp>
-#include <lib/scene/include/renderizable.hpp>
-#include <lib/scene/include/scenenode.hpp>
+#include <hlog/include/hlog.hpp>
+#include <haf/scene/include/renderizable.hpp>
+#include <haf/scene/include/scenenode.hpp>
 
 namespace zoper
 {

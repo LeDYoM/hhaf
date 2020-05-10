@@ -5,7 +5,7 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
-#include <lib/scene_components/include/texteditorcomponent.hpp>
+#include <haf/scene_components/include/texteditorcomponent.hpp>
 
 namespace zoper
 {

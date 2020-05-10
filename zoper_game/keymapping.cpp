@@ -58,7 +58,7 @@ bool KeyMapping::isPauseKey(const input::Key key) const noexcept
 
 bool KeyMapping::setKey(const u32 index, const input::Key key)
 {
-    log_assert(index < TotalKeys, "Invalid index");
+    LogAsserter::log_assert(index < TotalKeys, "Invalid index");
 
     for (u32 i{0U}; i < index; ++i)
     {

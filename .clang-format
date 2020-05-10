@@ -21,6 +21,7 @@ BinPackArguments: true
 BinPackParameters: false
 BreakBeforeBraces: Custom
 BraceWrapping:
+  AfterCaseLabel:  true
   AfterClass:      true
   AfterControlStatement: true
   AfterEnum:       true
@@ -69,13 +70,12 @@ IncludeCategories:
   - Regex:           '.*'
     Priority:        4
 IncludeIsMainRegex: '(_test)?$'
-# IndentCaseLabels: false -- changed in stringent.
 # Most of our switch() statements are in violation of coding
 # guidelines, because of the lack of braces around each case. Changing
 # all the switch() statements to conform to our guidelines is better
 # done in a separate patch, where we can turn IndentCaseLabels back
 # on; for now, try not to change the status quo too much.
-IndentCaseLabels: false
+IndentCaseLabels: true
 IndentPPDirectives: None
 IndentWidth:     4
 IndentWrappedFunctionNames: false
@@ -119,6 +119,6 @@ SpacesInContainerLiterals: false
 SpacesInCStyleCastParentheses: false
 SpacesInParentheses: false
 SpacesInSquareBrackets: false
-Standard:        Cpp11
-TabWidth:        8
+Standard:        Latest
+TabWidth:        4
 UseTab:          Never

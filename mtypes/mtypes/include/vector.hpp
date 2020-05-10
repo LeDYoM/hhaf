@@ -8,51 +8,61 @@
 
 #include <initializer_list>
 #include <utility>
-#include "allocator.hpp"
 #include "function.hpp"
 #include "growpolicy.hpp"
 #include "vector_storage.hpp"
 
 namespace mtps
 {
-/** Vector class to store a sequence of elements
-    * This class is a container to store sequences of Ts. It can be resized.
-    * Other use cases include search, replacement, etc...
-    */
+/**
+ * @brief Vector class to store a sequence of elements.
+ * This class is a container to store sequences of Ts. It can be resized.
+ * Other use cases include search, replacement, etc...
+ *
+ * @tparam T Type of the contained element.
+ * @tparam Allocator Allocator to be used by the vector
+ * @tparam GrowPolicy Policy class to dinamically increment the capacity
+ */
 template <typename T,
-          typename Allocator = AllocatorMallocFree<T>,
+          typename Allocator  = AllocatorType<T>,
           typename GrowPolicy = GrowPolicyUnary>
 class vector final : private vector_storage<T, Allocator, GrowPolicy>
 {
     using Base = vector_storage<T, Allocator, GrowPolicy>;
-public:
-    using iterator = T *;
-    using const_iterator = const T *;
-    using reference = T &;
-    using const_reference = const T &;
-    using value_type = T;
-    using pointer = T *;
-    // Constructors. ////////////////////////////////////////////////////////////
 
-    /// Default constructor.
-    /// Sets all members to 0, nullptr or empty.
+public:
+    using iterator        = T*;
+    using const_iterator  = const T*;
+    using reference       = T&;
+    using const_reference = const T&;
+    using value_type      = T;
+    using pointer         = T*;
+
+    /**
+     * @brief Default constructor.
+     * Sets all members to 0, nullptr or empty.
+     */
     constexpr vector() noexcept = default;
 
-    /// Constructor for empty container with reserved memory.
-    /// The memory for the vector is allocated, but no construction
-    /// is done.
-    /// @param size Number of elements to reserve memory for.
-    explicit vector(const size_type size) : 
-        vector_storage(size) {}
+    /**
+     * @brief Construct a new vector object empty with reserved memory.
+     * The memory for the vector is allocated, but no construction
+     * of the elements is performed.
+     *
+     * @param size Expected size of the inner container
+     */
+    explicit vector(const size_type size) : vector_storage(size) {}
 
-    /// @brief Constructor.
-    /// This constructor takes a pointer and a number of elements
-    /// and constructs a vector from it.
-    /// @param source Pointer to the first element of the
-    ///  memory to copy.
-    /// @param count Number of elements to copy.
-    constexpr vector(const T *const source, const size_type count)
-        : vector_storage(count)
+    /**
+     * @brief Constructor with reserved memory and copy from source.
+     * This constructor takes a pointer and a number of elements
+     * and constructs a vector from it.
+     *
+     * @param source Pointer to the first element of the
+     * @param count Number of elements to copy.
+     */
+    constexpr vector(const T* const source, const size_type count) :
+        vector_storage(count)
     {
         for (auto iterator = source; iterator != (source + count); ++iterator)
         {
@@ -61,28 +71,31 @@ public:
         }
     }
 
-    constexpr vector(std::initializer_list<value_type> ilist) noexcept
-        : vector(ilist.begin(), ilist.size()) {}
+    constexpr vector(std::initializer_list<value_type> ilist) noexcept :
+        vector(ilist.begin(), ilist.size())
+    {}
 
-    constexpr vector(const const_iterator _begin, const const_iterator _end)
-        : vector{_begin, static_cast<size_type>(std::distance(_begin, _end))} {}
+    constexpr vector(const const_iterator _begin, const const_iterator _end) :
+        vector{_begin, static_cast<size_type>(std::distance(_begin, _end))}
+    {}
 
-    // Big five. ////////////////////////////////////////////////////
-
-    /// @brief Copy constructor.
-    /// This constructor constructs a vector from another one.
-    /// The capacity of the resultant vector might be different
-    /// from the capacity of the source. The size will be the same.
-    /// @param other Source vector to copy.
-    constexpr vector(const vector &other)
-        : vector(other.m_buffer, other.m_size) {}
+    /**
+     * @brief Copy constructor.
+     * This constructor constructs a vector from another one.
+     * The capacity of the resultant vector might be different
+     * from the capacity of the source. The size will be the same.
+     * 
+     * @param other Source vector to copy.
+     */
+    constexpr vector(const vector& other) : vector(other.m_buffer, other.m_size)
+    {}
 
     // Move constructor.
-    constexpr vector(vector &&other) noexcept
-        : vector_storage{std::move(other)} {}
+    constexpr vector(vector&& other) noexcept : vector_storage{std::move(other)}
+    {}
 
     /// Copy assignment.
-    constexpr vector &operator=(const vector &other)
+    constexpr vector& operator=(const vector& other)
     {
         if (this != &other)
         {
@@ -93,17 +106,14 @@ public:
     }
 
     /// Move assignment
-    constexpr vector &operator=(vector &&other) noexcept
+    constexpr vector& operator=(vector&& other) noexcept
     {
         swap(other);
         return *this;
     }
 
     /// Destructor.
-    inline ~vector() noexcept
-    {
-        clear();
-    }
+    inline ~vector() noexcept { clear(); }
 
     constexpr reference operator[](const size_type index) noexcept
     {
@@ -127,19 +137,19 @@ public:
     constexpr const_iterator end() const noexcept { return Base::end(); }
     constexpr const_iterator cend() const noexcept { return Base::cend(); }
 
-    constexpr T &back() noexcept
+    constexpr T& back() noexcept
     {
         assert(m_size > 0U);
         return *(at(m_size - 1U));
     }
 
-    constexpr const T &back() const noexcept
+    constexpr const T& back() const noexcept
     {
         assert(m_size > 0U);
         return *(at(m_size - 1U));
     }
 
-    constexpr const T &cback() const noexcept
+    constexpr const T& cback() const noexcept
     {
         assert(m_size > 0U);
         return *(cat(m_size - 1U));
@@ -158,13 +168,13 @@ public:
         }
     }
 
-    constexpr void swap(vector &other) noexcept
+    constexpr void swap(vector& other) noexcept
     {
         Base::swap(static_cast<Base&>(other));
     }
 
-    //TO DO: Optimize
-    constexpr iterator erase_values(const T &value, iterator start)
+    // TO DO: Optimize
+    constexpr iterator erase_values(const T& value, iterator start)
     {
         iterator result{start};
         checkRange(result);
@@ -172,18 +182,19 @@ public:
         do
         {
             result = start;
-            start = erase_one(value, start);
+            start  = erase_one(value, start);
         } while (start != end());
 
         return result;
     }
 
-    constexpr iterator erase_values(const T &value)
+    constexpr iterator erase_values(const T& value)
     {
         return erase_values(value, begin());
     }
 
-    constexpr iterator erase_if(function<bool(const T &)> condition, iterator start)
+    constexpr iterator erase_if(function<bool(const T&)> condition,
+                                iterator start)
     {
         // Find a node where the condition is true.
         iterator where_it_was{find_if(start, end(), condition)};
@@ -211,7 +222,7 @@ public:
     /// @return iterator Pointing to the element in the position where the
     /// deleted element was. If the element was the last one or no element
     /// with this value found, the iterator will be end().
-    constexpr iterator erase_one(const T &value, iterator start)
+    constexpr iterator erase_one(const T& value, iterator start)
     {
         checkRange(start);
         if (begin() != end())
@@ -236,34 +247,35 @@ public:
         return end();
     }
 
-    constexpr iterator erase_one(const T &value)
+    constexpr iterator erase_one(const T& value)
     {
         return erase_one(value, begin());
     }
 
-    constexpr iterator erase_if(function<bool(const T &)> condition)
+    constexpr iterator erase_if(function<bool(const T&)> condition)
     {
         return erase_if(std::move(condition), begin());
     }
 
-    constexpr iterator erase_all_if(function<bool(const T &)> condition, iterator start)
+    constexpr iterator erase_all_if(function<bool(const T&)> condition,
+                                    iterator start)
     {
         iterator result{start};
         do
         {
             result = start;
-            start = erase_if(condition, start);
+            start  = erase_if(condition, start);
         } while (start != end());
 
         return result;
     }
 
-    constexpr iterator erase_all_if(function<bool(const T &)> condition)
+    constexpr iterator erase_all_if(function<bool(const T&)> condition)
     {
         return erase_all_if(condition, begin());
     }
 
-    constexpr const_iterator find_first_of(const vector &other) const noexcept
+    constexpr const_iterator find_first_of(const vector& other) const noexcept
     {
         for (auto it(begin()); it != end(); ++it)
         {
@@ -276,7 +288,8 @@ public:
     }
 
     constexpr iterator find(iterator begin,
-                            const iterator end, const T &element) const noexcept
+                            const iterator end,
+                            const T& element) const noexcept
     {
         checkRange(begin);
         checkRange(end);
@@ -288,7 +301,8 @@ public:
 
     template <typename F>
     constexpr const_iterator cfind_if(const_iterator begin,
-                                      const const_iterator end, F &&f) const noexcept
+                                      const const_iterator end,
+                                      F&& f) const noexcept
     {
         checkRange(begin);
         checkRange(end);
@@ -299,14 +313,15 @@ public:
     }
 
     template <typename F>
-    constexpr const_iterator cfind_if(F &&f) const noexcept
+    constexpr const_iterator cfind_if(F&& f) const noexcept
     {
         return cfind_if(cbegin(), cend(), std::forward<F>(f));
     }
 
     template <typename F>
     constexpr iterator find_if(iterator begin,
-                               const const_iterator end, F &&f) noexcept
+                               const const_iterator end,
+                               F&& f) noexcept
     {
         checkRange(begin);
         checkRange(end);
@@ -317,26 +332,28 @@ public:
     }
 
     template <typename F>
-    constexpr iterator find_if(F &&f) noexcept
+    constexpr iterator find_if(F&& f) noexcept
     {
         return find_if(begin(), cend(), std::forward<F>(f));
     }
 
     template <typename F>
     constexpr const_iterator find_if(const const_iterator begin,
-                                     const const_iterator end, F &&f) const noexcept
+                                     const const_iterator end,
+                                     F&& f) const noexcept
     {
         return cfind_if(begin, end, std::forward<F>(f));
     }
 
     template <typename F>
-    constexpr const_iterator find_if(F &&f) const noexcept
+    constexpr const_iterator find_if(F&& f) const noexcept
     {
         return cfind_if(cbegin(), cend(), std::forward<F>(f));
     }
 
     constexpr const_iterator cfind(const_iterator begin,
-                                   const const_iterator end, const T &element) const noexcept
+                                   const const_iterator end,
+                                   const T& element) const noexcept
     {
         checkRange(begin);
         checkRange(end);
@@ -346,76 +363,64 @@ public:
         return begin;
     }
 
-    constexpr const_iterator cfind(const T &element) const noexcept
+    constexpr const_iterator cfind(const T& element) const noexcept
     {
         return cfind(cbegin(), cend(), element);
     }
 
-    constexpr const_iterator find(const T &element) const noexcept
+    constexpr const_iterator find(const T& element) const noexcept
     {
         return cfind(element);
     }
 
-    constexpr void shrink_to_fit()
-    {
-        Base::shrink_to_fit();
-    }
+    constexpr void shrink_to_fit() { Base::shrink_to_fit(); }
 
-    constexpr void push_back(const T &value)
-    {
-        Base::push_back(value);
-    }
+    constexpr void push_back(const T& value) { Base::push_back(value); }
 
-    constexpr void push_back(T &&value)
-    {
-        Base::push_back(std::move(value));
-    }
+    constexpr void push_back(T&& value) { Base::push_back(std::move(value)); }
 
     template <typename... Args>
-    constexpr void emplace_back(Args &&... args)
+    constexpr void emplace_back(Args&&... args)
     {
         Base::emplace_back(std::forward<Args>(args)...);
     }
 
-    constexpr void insert(const vector &other)
+    constexpr void insert(const vector& other)
     {
-        //TODO: Optimize
+        // TODO: Optimize
         if (!other.empty())
         {
             reserve(m_size + other.m_size);
-            for (const auto &element : other)
+            for (const auto& element : other)
             {
                 push_back(element);
             }
         }
     }
 
-    constexpr void insert(vector &&other)
+    constexpr void insert(vector&& other)
     {
-        //TODO: Optimize
+        // TODO: Optimize
         reserve(m_size + other.m_size);
-        for (auto &&element : other)
+        for (auto&& element : other)
         {
             push_back(std::move(element));
         }
     }
 
-    constexpr vector &operator+=(const vector &other)
+    constexpr vector& operator+=(const vector& other)
     {
         insert(other);
         return *this;
     }
 
-    constexpr vector &operator+=(vector &&other)
+    constexpr vector& operator+=(vector&& other)
     {
         insert(std::move(other));
         return *this;
     }
 
-    constexpr void pop_back() noexcept
-    {
-        Base::pop_back();
-    }
+    constexpr void pop_back() noexcept { Base::pop_back(); }
 
     constexpr void reserve(const size_type capacity)
     {
@@ -462,7 +467,7 @@ public:
 };
 
 template <class A>
-constexpr bool operator==(const vector<A> &lhs, const vector<A> &rhs) noexcept
+constexpr bool operator==(const vector<A>& lhs, const vector<A>& rhs) noexcept
 {
     // Comparing with yourself returns true.
     if (&lhs == &rhs)
@@ -481,7 +486,8 @@ constexpr bool operator==(const vector<A> &lhs, const vector<A> &rhs) noexcept
     {
         for (auto lhs_iterator = lhs.cbegin(), rhs_iterator = rhs.cbegin();
              lhs_iterator != lhs.cend()
-             //                    && rhs_iterator != rhs.cend() <- Not needed, they have the same size.
+             //                    && rhs_iterator != rhs.cend() <- Not needed,
+             //                    they have the same size.
              ;
              ++lhs_iterator, ++rhs_iterator)
         {
@@ -495,7 +501,7 @@ constexpr bool operator==(const vector<A> &lhs, const vector<A> &rhs) noexcept
 }
 
 template <class A>
-constexpr bool operator!=(const vector<A> &lhs, const vector<A> &rhs) noexcept
+constexpr bool operator!=(const vector<A>& lhs, const vector<A>& rhs) noexcept
 {
     return !(lhs == rhs);
 }
@@ -508,6 +514,6 @@ using vector_unique_pointers = vector<uptr<T>>;
 
 template <typename T>
 using vector_weak_pointers = vector<wptr<T>>;
-} // namespace mtps
+}  // namespace mtps
 
 #endif

@@ -9,24 +9,27 @@
 #include <mtypes/include/vector2d.hpp>
 
 #include <boardmanager/include/itile.hpp>
-#include <lib/scene_components/include/animationcomponent.hpp>
+#include <haf/scene_components/include/animationcomponent.hpp>
 
 namespace zoper
 {
 
 class LevelProperties;
 
-/// This class represents one of the enemies in the board of the game.
-/// The clas contains internal data like the token type inherited from
-/// the base class. It also provides the required graphical information.
+/**
+ * @brief This class represents one of the enemies in the board of the game.
+ * The clas contains internal data like the token type inherited from
+ * the base class. It also provides the required graphical information.
+ */
 class Token : public GameBaseTile
 {
 public:
+    using BaseClass = GameBaseTile;
+
     Token(mtps::rptr<haf::scene::SceneNode> parent, mtps::str name);
     ~Token() override;
 
     void configure(mtps::sptr<LevelProperties> level_properties,
-                   haf::board::BoardTileData data,
                    const mtps::Rectf32 &box,
                    const mtps::vector2df &board2SceneFactor);
 

@@ -3,10 +3,10 @@
 #ifndef ZOPER_BOARDSCENENODE_INCLUDE_HPP
 #define ZOPER_BOARDSCENENODE_INCLUDE_HPP
 
-#include <lib/scene/include/scenenode.hpp>
-#include <lib/scene/include/color.hpp>
-#include <lib/scene/include/renderizable.hpp>
-#include <lib/scene/include/scenenodetypes.hpp>
+#include <haf/scene/include/scenenode.hpp>
+#include <haf/scene/include/color.hpp>
+#include <haf/scene/include/renderizable.hpp>
+#include <haf/scene/include/scenenodetypes.hpp>
 
 namespace zoper
 {

@@ -2,12 +2,12 @@
 
 #include "../loaders/gameresources.hpp"
 
-#include <lib/scene/include/scene.hpp>
-#include <lib/scene_nodes/include/scenenodetext.hpp>
+#include <haf/scene/include/scene.hpp>
+#include <haf/scene_nodes/include/scenenodetext.hpp>
 
-#include <lib/include/liblog.hpp>
-#include <lib/resources/include/resourceview.hpp>
-#include <lib/resources/include/ittfont.hpp>
+#include <hlog/include/hlog.hpp>
+#include <haf/resources/include/resourceview.hpp>
+#include <haf/resources/include/ittfont.hpp>
 
 using namespace mtps;
 using namespace haf;

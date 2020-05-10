@@ -124,7 +124,7 @@ namespace mtps
 
     // Serialization operators
     template <typename T>
-    constexpr write_stream& operator<<(write_stream & os, const Rect<T> &rect)
+    constexpr str& operator<<(str & os, const Rect<T> &rect)
     {
         os << "{ {" << rect.left << "," << rect.top << "}, {" << rect.width << "," << rect.height << "} }";
         return os;

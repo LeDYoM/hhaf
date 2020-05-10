@@ -6,7 +6,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
 
-#include <lib/include/liblog.hpp>
+#include <hlog/include/hlog.hpp>
 
 namespace zoper
 {

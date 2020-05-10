@@ -1,49 +1,66 @@
 #pragma once
 
-#ifndef LIB_LOGGER_LOG_INCLUDE_HPP
-#define LIB_LOGGER_LOG_INCLUDE_HPP
+#ifndef HAF_LOGGER_LOG_INCLUDE_HPP
+#define HAF_LOGGER_LOG_INCLUDE_HPP
 
-#include <iostream>
+namespace logger
+{
 
 /**
  * @brief Component to facilitate the logging
  * This components provide some easy to use functions and classes
  * to perform a configurable and understandable logging.
  */
-namespace logger
-{
-inline void init_log() {}
-inline void finish_log() {}
-
-constexpr bool compile_logs = true;
-
-struct COutCommiter
-{
-    static inline void commitlog(const char *const log_stream)
-    {
-        std::cout << log_stream << std::endl;
-        std::cout.flush();
-    }
-};
-
-template <typename StreamType, typename LogCommiter>
+template <bool EnableLogs, typename StreamType, typename LogCommiter>
 struct Log
 {
-    static constexpr bool output_logs = compile_logs;
-
 public:
+    /**
+     * @brief Statically initializes the log component.
+     */
+    static void init_log() { LogCommiter::init(); }
+
+    /**
+     * @brief Statically destroys the log component.
+     */
+    static void finish_log() { LogCommiter::finish(); }
+
+    /**
+     * @brief Low level log display. This method should not be called
+     * directly, it displays a log in any case.
+     *
+     * @tparam Args Types of the arguments.
+     * @param args Arguments to build a line in the log.
+     */
     template <typename... Args>
-    static constexpr void log(Args &&... args) noexcept
+    static constexpr void log(Args&&... args) noexcept
     {
-        if constexpr (output_logs)
+        if constexpr (EnableLogs)
         {
             StreamType log_stream;
-            (log_stream << ... << std::forward<Args>(args));
-            LogCommiter::commitlog(log_stream.c_str());
+            LogCommiter::commitlog(
+                (log_stream << ... << std::forward<Args>(args)).c_str());
+        }
+    }
+
+    /**
+     * @brief Low level log display. This method should not be called
+     * directly, it displays a log if and only if the condition is true.
+     *
+     * @tparam Condition Compile time condition.
+     * @tparam Args Types of the arguments.
+     * @param args Arguments to build a line in the log.
+     */
+    template <bool Condition, typename... Args>
+    static constexpr void log_if(Args&&... args) noexcept
+    {
+        if constexpr (Condition)
+        {
+            log(std::forward<Args>(args)...);
         }
     }
 };
 
-} // namespace logger
+}  // namespace logger
 
 #endif

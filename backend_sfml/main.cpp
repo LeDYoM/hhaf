@@ -20,22 +20,27 @@ struct BackendManager : haf::backend::client::DefaultBackendManager
         using namespace haf::backend::client;
         using namespace haf::backend::sfmlb;
 
-        createFactoryOfFactories<DefaultFactoryOf<IWindowProviderInfo, WindowBackendInfo>>(factories);
-        createFactoryOfFactories<DefaultFactoryOf<IWindow, RenderWindow>>(factories);
-        createFactoryOfFactories<DefaultFactoryOf<ITTFontFactory, TTFontFactory>>(factories);
-        createFactoryOfFactories<DefaultFactoryOf<ITextureFactory, TextureFactory>>(factories);
-        createFactoryOfFactories<DefaultFactoryOf<IShaderFactory, ShaderFactory>>(factories);
+        createFactoryOfFactories<DefaultFactoryOf<IWindow, RenderWindow>>(
+            factories);
+        createFactoryOfFactories<
+            DefaultFactoryOf<ITTFontFactory, TTFontFactory>>(factories);
+        createFactoryOfFactories<
+            DefaultFactoryOf<ITextureFactory, TextureFactory>>(factories);
+        createFactoryOfFactories<
+            DefaultFactoryOf<IShaderFactory, ShaderFactory>>(factories);
     }
 };
 
-BackendManager *backend_manager{nullptr};
+BackendManager* backend_manager{nullptr};
 
-EXPORT bool init_lib(haf::backend::IBackendRegister *const ibackend_register)
+EXPORT bool init_lib(haf::backend::IBackendRegister* const ibackend_register)
 {
-    return haf::backend::client::default_init_function(&backend_manager, ibackend_register);
+    return haf::backend::client::default_init_function(&backend_manager,
+                                                       ibackend_register);
 }
 
-EXPORT bool finish_lib(haf::backend::IBackendRegister *const ibackend_register)
+EXPORT bool finish_lib(haf::backend::IBackendRegister* const ibackend_register)
 {
-    return haf::backend::client::default_finish_function(&backend_manager, ibackend_register);
+    return haf::backend::client::default_finish_function(&backend_manager,
+                                                         ibackend_register);
 }

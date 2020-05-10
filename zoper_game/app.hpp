@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_ZOPER_APP_EXPORT_INCLUDE_HPP
-#define LIB_ZOPER_APP_EXPORT_INCLUDE_HPP
+#ifndef HAF_ZOPER_APP_EXPORT_INCLUDE_HPP
+#define HAF_ZOPER_APP_EXPORT_INCLUDE_HPP
 
 #include <hosted_app/include/iapp.hpp>
 

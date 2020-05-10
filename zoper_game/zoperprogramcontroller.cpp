@@ -6,12 +6,13 @@
 #include "gameshareddata.hpp"
 
 #include <mtypes/include/serializer.hpp>
-#include <lib/system/i_include/systemprovider.hpp>
-#include <lib/system/i_include/get_systemprovider.hpp>
-#include <lib/filesystem/i_include/filesystem.hpp>
-#include <lib/scene/i_include/scenemanager.hpp>
-#include <lib/scene/i_include/scenecontroller.hpp>
-#include <lib/shareddata/include/ishareddatasystem.hpp>
+#include <haf/system/i_include/systemprovider.hpp>
+#include <haf/system/i_include/get_systemprovider.hpp>
+#include <haf/filesystem/i_include/filesystem.hpp>
+#include <haf/scene/i_include/scenemanager.hpp>
+#include <haf/scene/i_include/scenecontroller.hpp>
+#include <haf/shareddata/include/ishareddatasystem.hpp>
+#include <hlog/include/hlog.hpp>
 
 using namespace mtps;
 using namespace haf;
@@ -30,6 +31,7 @@ ZoperProgramController::~ZoperProgramController() {}
 
 void ZoperProgramController::onInit(sys::ISystemProvider &system_provider)
 {
+    DisplayLog::verbose("Initializing ZoperProgramController");
     sys::SystemProvider &systemprovider = sys::getSystemProvider(system_provider);
     keyMapping = muptr<KeyMapping>();
     keyMapping->reset();
@@ -79,7 +81,7 @@ void ZoperProgramController::onInit(sys::ISystemProvider &system_provider)
 void ZoperProgramController::onFinish(sys::ISystemProvider &system_provider)
 {
     bool check = sys::getSystemProvider(system_provider).sharedDataSystem().makeEmpty();
-    log_assert(check, "SharedData is empty!");
+    LogAsserter::log_assert(check, "SharedData is empty!");
 }
 
 } // namespace zoper

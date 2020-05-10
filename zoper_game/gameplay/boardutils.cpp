@@ -14,7 +14,7 @@ void BoardUtils::for_each_token_in_line(
     vector2dst loopPosition{startPosition};
     bool stay{true};
 
-    log_assert((board_size.x > loopPosition.x) &&
+    LogAsserter::log_assert((board_size.x > loopPosition.x) &&
                 (board_size.y > loopPosition.y), "Invalid initial point");
 
     while(stay)

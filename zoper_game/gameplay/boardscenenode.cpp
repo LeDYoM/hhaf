@@ -1,5 +1,5 @@
 #include "boardscenenode.hpp"
-#include <lib/include/liblog.hpp>
+#include <hlog/include/hlog.hpp>
 
 using namespace mtps;
 
@@ -32,7 +32,7 @@ BoardSceneNode::~BoardSceneNode() = default;
 
 void BoardSceneNode::setTileColor(Color color)
 {
-    log_assert(m_backgroundTile != nullptr, "This node is not correctly initialized");
+    LogAsserter::log_assert(m_backgroundTile != nullptr, "This node is not correctly initialized");
     m_backgroundTile->color = std::move(color);
 }
 } // namespace zoper

@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_BACKEND_SFMLB_INPUTDRIVER_INCLUDE_HPP
-#define LIB_BACKEND_SFMLB_INPUTDRIVER_INCLUDE_HPP
+#ifndef HAF_BACKEND_SFMLB_INPUTDRIVER_INCLUDE_HPP
+#define HAF_BACKEND_SFMLB_INPUTDRIVER_INCLUDE_HPP
 
 #include <backend_dev/include/iinputdriver.hpp>
 #include <SFML/Window/Event.hpp>
@@ -12,7 +12,7 @@ namespace haf::backend::sfmlb
 class InputDriver : public IInputDriver
 {
 public:
-    InputDriver() = default;
+    InputDriver()           = default;
     ~InputDriver() override = default;
 
     bool arePendingKeyPresses() const override;
@@ -24,11 +24,11 @@ public:
     void keyPressed(const input::Key) override;
     void keyReleased(const input::Key) override;
 
-    void keyEvent(const sf::Event &e);
+    void keyEvent(const sf::Event& e);
 
     std::queue<input::Key> m_keysPressed;
     std::queue<input::Key> m_keysReleased;
 };
-} // namespace haf::backend::sfmlb
+}  // namespace haf::backend::sfmlb
 
 #endif

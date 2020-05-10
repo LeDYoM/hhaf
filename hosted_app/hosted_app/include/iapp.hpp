@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_IAPP_INCLUDE_HPP
-#define LIB_IAPP_INCLUDE_HPP
+#ifndef HAF_IAPP_INCLUDE_HPP
+#define HAF_IAPP_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>

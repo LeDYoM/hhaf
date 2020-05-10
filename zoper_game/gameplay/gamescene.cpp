@@ -18,15 +18,15 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/properties.hpp>
 
-#include <boardmanager/include/boardmodel.hpp>
-#include <lib/include/liblog.hpp>
-#include <lib/scene/include/renderizable.hpp>
-#include <lib/resources/include/resourcehandler.hpp>
-#include <lib/scene_components/include/animationcomponent.hpp>
-#include <lib/scene_components/include/scenecontrol.hpp>
-#include <lib/input/include/inputcomponent.hpp>
-#include <lib/random/include/randomnumberscomponent.hpp>
-#include <lib/shareddata/include/shareddataview.hpp>
+#include <boardmanager/include/boardmanager.hpp>
+#include <hlog/include/hlog.hpp>
+#include <haf/scene/include/renderizable.hpp>
+#include <haf/resources/include/resourcehandler.hpp>
+#include <haf/scene_components/include/animationcomponent.hpp>
+#include <haf/scene_components/include/scenecontrol.hpp>
+#include <haf/input/include/inputcomponent.hpp>
+#include <haf/random/include/randomnumberscomponent.hpp>
+#include <haf/shareddata/include/shareddataview.hpp>
 
 using namespace mtps;
 using namespace haf;
@@ -77,14 +77,15 @@ void GameScene::onCreated()
 {
     BaseClass::onCreated();
 
-    log_assert(private_ == nullptr, "Private data pointer is not nullptr!");
+    LogAsserter::log_assert(private_ == nullptr,
+                            "Private data pointer is not nullptr!");
     private_ = muptr<GameScenePrivate>();
 
     dataWrapper<ResourceHandler>()->loadResources(GameResources{});
 
     using namespace haf::board;
 
-    log_assert(!m_boardGroup, "m_boardGroup is not empty");
+    LogAsserter::log_assert(!m_boardGroup, "m_boardGroup is not empty");
     m_boardGroup = createSceneNode<BoardGroup>("BoardGroup", TokenZones::size);
 
     m_nextTokenPart = 0U;
@@ -189,11 +190,11 @@ void GameScene::onCreated()
 
     private_->token_type_generator_ =
         addComponentOfType<rnd::RandomNumbersComponent>();
-    log_assert(private_->token_type_generator_ != nullptr,
-               "Cannot create DataProviderComponent");
+    LogAsserter::log_assert(private_->token_type_generator_ != nullptr,
+                            "Cannot create DataProviderComponent");
     private_->token_position_generator_ = private_->token_type_generator_;
-    log_assert(private_->token_position_generator_ != nullptr,
-               "Cannot create DataProviderComponent");
+    LogAsserter::log_assert(private_->token_position_generator_ != nullptr,
+                            "Cannot create DataProviderComponent");
 
     // Prepare the pause text.
     pause_node_ = createSceneNode<PauseSceneNode>("PauseNode");
@@ -235,29 +236,29 @@ void GameScene::onExitState(const GameSceneStates& state)
     DisplayLog::info("Exited state: ", make_str(state));
 }
 
-bool moveTowardsCenter(
-    const sptr<board::BoardModelComponent>& board_model,
-    const Direction direction,
-    const vector2dst position)
+bool moveTowardsCenter(const sptr<board::BoardManager>& board_manager,
+                       const Direction direction,
+                       const vector2dst position)
 {
     bool moved_to_center{false};
 
     // Is the current tile position empty?
-    if (!board_model->tileEmpty(position))
+    if (!board_manager->tileEmpty(position))
     {
         // If not, what about the next position to check, is empty?
         const auto next = direction.applyToVector(position);
 
-        if (!board_model->tileEmpty(next))
+        if (!board_manager->tileEmpty(next))
         {
             // If the target position where to move the
             // token is occupied, move the this target first.
-            moved_to_center = moveTowardsCenter(board_model, direction, next);
+            moved_to_center = moveTowardsCenter(board_manager, direction, next);
         }
-        board_model->moveTile(position, next);
-        if (TokenZones::pointInCenter(next))
+        board_manager->moveTile(position, next);
+        if (TokenZones::toBoardBackgroundType(board_manager->backgroundType(
+                next)) == TokenZones::BoardBackgroundType::Center)
         {
-            log_assert(!moved_to_center, "Double game over!");
+            LogAsserter::log_assert(!moved_to_center, "Double game over!");
             moved_to_center = true;
         }
     }
@@ -297,7 +298,7 @@ void GameScene::generateNextToken()
     // Select the next token zone.
     m_nextTokenPart = (m_nextTokenPart + 1) % NumWays;
 
-    CLIENT_EXECUTE_IN_DEBUG(_debugDisplayBoard());
+    DisplayLog::debug(m_boardGroup->boardModel()->toStr());
 
     if (game_over)
     {
@@ -314,24 +315,25 @@ void GameScene::launchPlayer()
 {
     haf::DisplayLog::info("Launching player");
     const Direction loopDirection{m_boardGroup->player()->currentDirection()};
-    const vector2dst loopPosition{
-        m_boardGroup->player()->boardPosition()};
-    const board::BoardTileData tokenType{m_boardGroup->player()->data.get()};
+    const vector2dst loopPosition{m_boardGroup->player()->boardPosition()};
+    const board::BoardTileData tokenType{m_boardGroup->player()->value()};
     ScoreIncrementer score_incrementer{level_properties_};
     BoardUtils::for_each_token_in_line(
         loopPosition, loopDirection, m_boardGroup->boardModel()->size(),
-        [this, tokenType, &score_incrementer](
-            const vector2dst& loopPosition, const Direction&) {
+        [this, tokenType, &score_incrementer](const vector2dst& loopPosition,
+                                              const Direction&) {
             bool result{true};
             bool found{false};
             vector2df lastTokenPosition{};
 
             if (!m_boardGroup->boardModel()->tileEmpty(loopPosition) &&
-                !TokenZones::pointInCenter(loopPosition) && result)
+                TokenZones::toBoardBackgroundType(
+                    m_boardGroup->boardModel()->backgroundType(loopPosition)) !=
+                    TokenZones::BoardBackgroundType::Center)
             {
                 sptr<board::ITile> currentToken{
                     m_boardGroup->boardModel()->getTile(loopPosition)};
-                board::BoardTileData currentTokenType{currentToken->data.get()};
+                board::BoardTileData currentTokenType{currentToken->value()};
 
                 if (currentTokenType == tokenType)
                 {
@@ -360,7 +362,7 @@ void GameScene::launchPlayer()
                         m_boardGroup->player()->boardPosition(), loopPosition);
 
                     DisplayLog::info("Player type changed to ",
-                                     m_boardGroup->player()->data.get());
+                                     m_boardGroup->player()->value());
 
                     // Exit the loop
                     result = false;
@@ -385,31 +387,4 @@ vector2df GameScene::tileSize() const
     return m_boardGroup->tileSize();
 }
 
-void GameScene::_debugDisplayBoard() const
-{
-    for (u32 y{0}; y < TokenZones::size.y; ++y)
-    {
-        str temp;
-        for (u32 x{0}; x < TokenZones::size.x; ++x)
-        {
-            str chTemp;
-            auto lp_tile(m_boardGroup->boardModel()->getTile({x, y}));
-            if (lp_tile)
-            {
-                chTemp = str::to_str(lp_tile->data.get());
-            }
-            else
-            {
-                chTemp = "*";
-                if (TokenZones::pointInCenter({x, y}))
-                {
-                    chTemp = "C";
-                }
-            }
-
-            temp += chTemp;
-        }
-        DisplayLog::info(temp);
-    }
-}
 }  // namespace zoper

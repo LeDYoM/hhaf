@@ -9,8 +9,8 @@
 #include <mtypes/include/rect.hpp>
 #include <mtypes/include/object.hpp>
 #include <mtypes/include/str.hpp>
-#include <lib/time/include/timepoint.hpp>
-#include <lib/shareddata/include/ishareable.hpp>
+#include <haf/time/include/timepoint.hpp>
+#include <haf/shareddata/include/ishareable.hpp>
 #include "gameplay/direction.hpp"
 
 namespace zoper

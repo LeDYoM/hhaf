@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_HOST_MAIN_INCLUDE_HPP
-#define LIB_HOST_MAIN_INCLUDE_HPP
+#ifndef HAF_HOST_MAIN_INCLUDE_HPP
+#define HAF_HOST_MAIN_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 

@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_BACKEND_SFMLB_REDNERTARGET_INCLUDE_HPP
-#define LIB_BACKEND_SFMLB_REDNERTARGET_INCLUDE_HPP
+#ifndef HAF_BACKEND_SFMLB_REDNERTARGET_INCLUDE_HPP
+#define HAF_BACKEND_SFMLB_REDNERTARGET_INCLUDE_HPP
 
 #include <SFML/Graphics/RenderTarget.hpp>
 
@@ -27,6 +27,8 @@ class RenderTarget : public IRenderTarget, public sf::RenderTarget
     void setViewRect(const mtps::Rectf32& nviewRect) override;
     mtps::Rectf32 viewRect() const override;
     void clear() override;
+
+    mtps::str info() const override;
 };
 }  // namespace haf::backend::sfmlb
 

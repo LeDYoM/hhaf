@@ -1,10 +1,10 @@
 #include "menuscene.hpp"
-#include <lib/resources/include/resourceview.hpp>
-#include <lib/resources/include/resourcehandler.hpp>
-#include <lib/resources/include/itexture.hpp>
-#include <lib/shareddata/include/shareddataview.hpp>
-#include <lib/system/include/systemrequests.hpp>
-#include <lib/scene_components/include/scenecontrol.hpp>
+#include <haf/resources/include/resourceview.hpp>
+#include <haf/resources/include/resourcehandler.hpp>
+#include <haf/resources/include/itexture.hpp>
+#include <haf/shareddata/include/shareddataview.hpp>
+#include <haf/system/include/systemrequests.hpp>
+#include <haf/scene_components/include/scenecontrol.hpp>
 
 #include "../menu/mainmenu.hpp"
 #include "../loaders/mainmenuresources.hpp"

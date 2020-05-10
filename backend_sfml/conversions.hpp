@@ -1,5 +1,5 @@
 #include "renderwindow.hpp"
-#include <lib/input/include/key.hpp>
+#include <haf/input/include/key.hpp>
 #include <backend_dev/include/itexture.hpp>
 #include <backend_dev/include/ishader.hpp>
 #include "texture.hpp"

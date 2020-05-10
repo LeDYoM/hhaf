@@ -4,25 +4,34 @@
 #define ZOPER_GAMEBASETILE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <lib/scene/include/scenenode.hpp>
-#include <lib/scene/include/renderizable.hpp>
+#include <haf/scene/include/scenenode.hpp>
+#include <haf/scene/include/renderizable.hpp>
 #include <boardmanager/include/itile.hpp>
 
+namespace haf::board
+{
+    class BoardManager;
+}
 namespace zoper
 {
 
 class GameBaseTile : public haf::board::ITile, public haf::scene::SceneNode
 {
 public:
-    GameBaseTile(haf::scene::SceneNode *const parent, mtps::str name);
+    GameBaseTile(haf::scene::SceneNode* const parent, mtps::str name);
     ~GameBaseTile() override;
 
-    void update() override;
     haf::scene::Color getColorForToken() const;
 
+    void tileChanged(const mtps::vector2dst& /*position */,
+                     const haf::board::BoardTileData /* oldValue */,
+                     const haf::board::BoardTileData /* newValue */) override;
+
+    mtps::sptr<haf::board::BoardManager> getBoardModel();
+
 protected:
-   mtps::sptr<haf::scene::Renderizable> m_node;
+    mtps::sptr<haf::scene::Renderizable> m_node;
 };
-} // namespace zoper
+}  // namespace zoper
 
 #endif

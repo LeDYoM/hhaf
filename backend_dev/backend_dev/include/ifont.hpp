@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef LIB_BACKEND_IFONT_HPP
-#define LIB_BACKEND_IFONT_HPP
+#ifndef HAF_BACKEND_IFONT_HPP
+#define HAF_BACKEND_IFONT_HPP
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/rect.hpp>

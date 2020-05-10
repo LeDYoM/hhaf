@@ -6,7 +6,7 @@
 #include <mtypes/include/array.hpp>
 #include <mtypes/include/object.hpp>
 
-#include <lib/input/include/key.hpp>
+#include <haf/input/include/key.hpp>
 
 #include "gameplay/direction.hpp"
 

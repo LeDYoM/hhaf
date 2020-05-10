@@ -1,9 +1,9 @@
 #pragma once
 
-#ifndef LIB_BACKEND_IINPUTDRIVER_INCLUDE_HPP
-#define LIB_BACKEND_IINPUTDRIVER_INCLUDE_HPP
+#ifndef HAF_BACKEND_IINPUTDRIVER_INCLUDE_HPP
+#define HAF_BACKEND_IINPUTDRIVER_INCLUDE_HPP
 
-#include <lib/input/include/key.hpp>
+#include <haf/input/include/key.hpp>
 
 namespace haf::backend
 {
@@ -12,35 +12,56 @@ namespace haf::backend
 class IInputDriver
 {
 public:
-    /// Virtual demtps::structor to enable inheritance correctly.
+    /**
+     * @brief Destroy the IInputDriver object
+     */
     virtual ~IInputDriver() {}
 
     /// @return This method returns true if there are any pressed @Key
     /// ready to be read
+
+    /**
+     * @brief Ask if there is a pending press @b Key ready to be read
+     *
+     * @return true There is a @b Key press ready to be read
+     * @return false The queue is empty.
+     */
     virtual bool arePendingKeyPresses() const = 0;
 
-    /// @return This method returns true if there are any released @Key
-    /// ready to be read
+    /**
+     * @brief Ask if there is a pending release @b Key ready to be read
+     *
+     * @return true There is a @b Key release ready to be read
+     * @return false The queue is empty.
+     */
     virtual bool arePendingKeyReleases() const = 0;
 
-    /// Extract the last @Key that has been pressed.
-    /// @return The extracted @Key
+    /**
+     * @brief Extract the last @Key that has been pressed.
+     * @return Key The extracted @Key
+     */
     virtual input::Key popKeyPress() = 0;
 
-    /// Extract the last @Key that has been released.
-    /// @return The extracted @Key
+    /**
+     * @brief Extract the last @Key that has been released.
+     * @return Key The extracted @Key
+     */
     virtual input::Key popKeyRelease() = 0;
 
-    /// Users of this class should call this method to add any
-    /// pending key pressed.
-    /// @param[in] Key indicating the element to add.
+    /**
+     * @brief Users of this class should call this method to add any
+     * pending key pressed.
+     *  @param[in] Key indicating the element to add.
+     */
     virtual void keyPressed(const input::Key) = 0;
 
-    /// Users of this class should call this method to add any
-    /// pending key releases.
-    /// @param[in] Key indicating the element to add.
+    /**
+     * @brief Users of this class should call this method to add any
+     * pending key released.
+     *  @param[in] Key indicating the element to add.
+     */
     virtual void keyReleased(const input::Key) = 0;
 };
-} // namespace haf::backend
+}  // namespace haf::backend
 
 #endif

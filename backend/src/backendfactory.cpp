@@ -46,20 +46,19 @@ BackendFactory::BackendFactory()
     static const char* sh_name = "bsfml";
     if (loader->loadModule(sh_name))
     {
-        auto fp_init_lib =
-            static_cast<p_initLib>(loader->loadMethod(sh_name, "init_lib"));
-        auto fp_finish_lib =
-            static_cast<p_initLib>(loader->loadMethod(sh_name, "finish_lib"));
+        auto fp_init_haf =
+            static_cast<p_initHaf>(loader->loadMethod(sh_name, "init_lib"));
+        auto fp_finish_haf =
+            static_cast<p_initHaf>(loader->loadMethod(sh_name, "finish_lib"));
 
-        if (fp_init_lib && fp_finish_lib)
+        if (fp_init_haf && fp_finish_haf)
         {
             backend_register_ = muptr<BackendRegister>();
-            backend_register_->setLibFuncs(fp_init_lib, fp_finish_lib);
+            backend_register_->setLibFuncs(fp_init_haf, fp_finish_haf);
             backend_register_->init();
         }
 
-        bool result{fillFactory(backend_register_, &m_windowProviderInfo)};
-        result &= fillFactory(backend_register_, &m_window);
+        bool result{fillFactory(backend_register_, &m_window)};
         result &= fillFactory(backend_register_, &m_ttfontFactory);
         result &= fillFactory(backend_register_, &m_textureFactory);
         result &= fillFactory(backend_register_, &m_shaderFactory);
@@ -68,8 +67,7 @@ BackendFactory::BackendFactory()
 
 BackendFactory::~BackendFactory()
 {
-    bool result{emptyFactory(backend_register_, &m_windowProviderInfo)};
-    result &= emptyFactory(backend_register_, &m_window);
+    bool result{emptyFactory(backend_register_, &m_window)};
     result &= emptyFactory(backend_register_, &m_textureFactory);
     result &= emptyFactory(backend_register_, &m_ttfontFactory);
     result &= emptyFactory(backend_register_, &m_shaderFactory);
@@ -83,11 +81,6 @@ BackendFactory::~BackendFactory()
 IWindow* haf::backend::BackendFactory::getWindow()
 {
     return m_window;
-}
-
-IWindowProviderInfo* BackendFactory::getWindowProviderInfo() const noexcept
-{
-    return m_windowProviderInfo;
 }
 
 ITextureFactory* BackendFactory::getTextureFactory() const noexcept
@@ -108,11 +101,6 @@ IShaderFactory* BackendFactory::getShaderFactory() const noexcept
 IBMPFontFactory* BackendFactory::getBMPFontFactory() const noexcept
 {
     return m_bmpFontFactory;
-}
-
-IWindowProviderInfo& BackendFactory::windowProviderInfo() const
-{
-    return *getWindowProviderInfo();
 }
 
 ITextureFactory& BackendFactory::textureFactory() const

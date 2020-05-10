@@ -3,8 +3,8 @@
 #ifndef ZOPER_GAMEHUD_SCENENODE_INCLUDE_HPP
 #define ZOPER_GAMEHUD_SCENENODE_INCLUDE_HPP
 
-#include <lib/scene/include/scenenode.hpp>
-#include <lib/scene_nodes/include/textquad.hpp>
+#include <haf/scene/include/scenenode.hpp>
+#include <haf/scene_nodes/include/textquad.hpp>
 
 namespace zoper
 {

@@ -2,12 +2,12 @@
 #include "../loaders/mainmenuresources.hpp"
 #include "../gameshareddata.hpp"
 #include <menu_paged/include/menu_page.hpp>
-#include <lib/scene/include/scenenode.hpp>
-#include <lib/include/liblog.hpp>
-#include <lib/resources/include/resourceview.hpp>
-#include <lib/resources/include/ittfont.hpp>
-#include <lib/shareddata/include/shareddataview.hpp>
-#include <lib/scene_components/include/scenemetrics.hpp>
+#include <haf/scene/include/scenenode.hpp>
+#include <hlog/include/hlog.hpp>
+#include <haf/resources/include/resourceview.hpp>
+#include <haf/resources/include/ittfont.hpp>
+#include <haf/shareddata/include/shareddataview.hpp>
+#include <haf/scene_components/include/scenemetrics.hpp>
 #include <mtypes/include/function.hpp>
 #include <mtypes/include/types.hpp>
 

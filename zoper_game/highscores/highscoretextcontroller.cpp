@@ -3,14 +3,14 @@
 #include "highscorevalidator.hpp"
 #include "../loaders/highscoresresources.hpp"
 #include "../gameshareddata.hpp"
-#include <lib/scene_components/include/texteditorcomponent.hpp>
-#include <lib/scene_components/include/scenemetrics.hpp>
-#include <lib/resources/include/ittfont.hpp>
-#include <lib/resources/include/resourceview.hpp>
-#include <lib/system/i_include/systemprovider.hpp>
-#include <lib/filesystem/i_include/filesystem.hpp>
-#include <lib/shareddata/include/shareddataview.hpp>
-#include <lib/system/i_include/get_system.hpp>
+#include <haf/scene_components/include/texteditorcomponent.hpp>
+#include <haf/scene_components/include/scenemetrics.hpp>
+#include <haf/resources/include/ittfont.hpp>
+#include <haf/resources/include/resourceview.hpp>
+#include <haf/system/i_include/systemprovider.hpp>
+#include <haf/filesystem/i_include/filesystem.hpp>
+#include <haf/shareddata/include/shareddataview.hpp>
+#include <haf/system/i_include/get_system.hpp>
 
 using namespace mtps;
 using namespace haf;
@@ -113,7 +113,7 @@ void HighScoreTextController::addHighScoreEditor(const sptr<SceneNode> &label,
 
 void HighScoreTextController::addEditAnimation(const size_type line_index)
 {
-    log_assert(line_index < tableSize().y, "Invalid line_index");
+    LogAsserter::log_assert(line_index < tableSize().y, "Invalid line_index");
 
     for_each_tableSceneNode_in_y(
         line_index, [this](const auto, const auto &element) {
