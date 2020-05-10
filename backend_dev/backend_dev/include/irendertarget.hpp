@@ -11,13 +11,14 @@
 #include "irenderdata.hpp"
 #include "itexture.hpp"
 #include "ishader.hpp"
+#include "iresourceinfo.hpp"
 
 namespace haf::backend
 {
-class IRenderTarget
+class IRenderTarget : public IResourceInfo
 {
 public:
-    virtual ~IRenderTarget() {}
+    ~IRenderTarget() override {}
 
     virtual void render(const IRenderData *render_data_begin, const IRenderData *render_data_end) = 0;
 

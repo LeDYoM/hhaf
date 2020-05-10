@@ -5,13 +5,14 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
+#include "iresourceinfo.hpp"
 
 namespace haf::backend
 {
 class IRenderTarget;
 class IInputDriver;
 
-class IWindow
+class IWindow : public IResourceInfo
 {
 public:
     /**
@@ -55,7 +56,6 @@ public:
 
     virtual IRenderTarget* renderTarget() = 0;
     virtual IInputDriver* inputDriver()   = 0;
-    virtual mtps::str info()              = 0;
 };
 
 }  // namespace haf::backend

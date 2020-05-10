@@ -27,6 +27,8 @@ class RenderTarget : public IRenderTarget, public sf::RenderTarget
     void setViewRect(const mtps::Rectf32& nviewRect) override;
     mtps::Rectf32 viewRect() const override;
     void clear() override;
+
+    mtps::str info() const override;
 };
 }  // namespace haf::backend::sfmlb
 
