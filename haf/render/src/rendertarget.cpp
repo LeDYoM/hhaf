@@ -18,7 +18,8 @@ namespace haf::sys
 RenderTarget::RenderTarget(rptr<haf::backend::IRenderTarget> renderTarget) :
     irender_target_{std::move(renderTarget)}
 {
-    LogAsserter::log_assert(renderTarget != nullptr, "renderTarget parameter is nullptr");
+    LogAsserter::log_assert(renderTarget != nullptr,
+                            "renderTarget parameter is nullptr");
 }
 
 RenderTarget::~RenderTarget() = default;
@@ -27,9 +28,11 @@ inline void do_render(const rptr<backend::IRenderTarget> irender_target_,
                       const scene::RenderData& renderData)
 {
     backend::IRenderData render_data{
-        renderData.vArray.verticesArray().cbegin(),
+        reinterpret_cast<const backend::iVertex*>(
+            renderData.vArray.verticesArray().cbegin()),
         renderData.vArray.verticesArray().size(),
-        renderData.vArray.primitiveType(),
+        static_cast<const backend::iPrimitiveType>(
+            renderData.vArray.primitiveType()),
         renderData.transform.getMatrix(),
         renderData.texture
             ? dynamic_cast<const scene::Texture*>(renderData.texture)

@@ -1,4 +1,6 @@
+#include "rendertarget.hpp"
 #include "conversions.hpp"
+#include <backend_dev/include/ivertex.hpp>
 
 #include <SFML/Config.hpp>
 
@@ -6,7 +8,7 @@ using namespace mtps;
 
 namespace haf::backend::sfmlb
 {
-static_assert(sizeof(sf::Vertex) == sizeof(scene::Vertex),
+static_assert(sizeof(sf::Vertex) == sizeof(iVertex),
               "Incomptable version of SFML");
 
 void RenderTarget::render(const IRenderData* render_data_begin,

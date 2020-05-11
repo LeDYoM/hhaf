@@ -123,9 +123,6 @@ function(build_concrete_backend)
 
   add_library(${CURRENT_TARGET} SHARED ${SOURCES})
 
-  # Patch for testing TO DO: Remove it (use a variable)
-  include_directories("..")
-
   add_log_and_types()
   target_link_libraries(${CURRENT_TARGET} PRIVATE backend_dev)
 

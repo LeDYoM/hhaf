@@ -10,11 +10,6 @@
 
 #include <backend_dev/include/irendertarget.hpp>
 
-namespace haf::scene
-{
-struct Vertex;
-}
-
 namespace haf::backend::sfmlb
 {
 class RenderTarget : public IRenderTarget, public sf::RenderTarget
