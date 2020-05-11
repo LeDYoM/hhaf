@@ -5,22 +5,13 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/rect.hpp>
-#include <haf/scene/include/vertex.hpp>
 #include <mtypes/include/properties.hpp>
+#include <haf/scene/include/vertex.hpp>
+#include <haf/scene/include/primitivetype.hpp>
 
 namespace haf::scene
 {
 using BasicVertexArray = mtps::vector<Vertex>;
-
-enum class PrimitiveType : mtps::u8
-{
-    Points = 0U,
-    Lines,
-    LineStrip,
-    Triangles,
-    TriangleStrip,
-    TriangleFan
-};
 
 class VertexArray
 {

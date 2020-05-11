@@ -8,6 +8,7 @@
 #include <haf/resources/include/ishader.hpp>
 #include <haf/resources/i_include/shader.hpp>
 #include <haf/scene/include/transform.hpp>
+#include <haf/scene/include/vertexarray.hpp>
 #include <hlog/include/hlog.hpp>
 
 using namespace mtps;

@@ -5,7 +5,7 @@
 
 #include <mtypes/include/types.hpp>
 #include <haf/scene/include/vertex.hpp>
-#include <haf/scene/include/vertexarray.hpp>
+#include <haf/scene/include/primitivetype.hpp>
 #include "itexture.hpp"
 #include "ishader.hpp"
 
