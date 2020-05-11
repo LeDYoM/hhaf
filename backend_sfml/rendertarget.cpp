@@ -1,5 +1,3 @@
-#include <haf/scene/include/vertexarray.hpp>
-
 #include "conversions.hpp"
 
 #include <SFML/Config.hpp>
