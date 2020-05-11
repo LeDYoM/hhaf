@@ -21,9 +21,9 @@ constexpr const sf::Vector2<T> to_sf_type(const mtps::vector2d<T> &v) noexcept {
 template <typename T>
 constexpr const mtps::vector2d<T> from_sf_type(const sf::Vector2<T> &v) noexcept { return mtps::vector2d<T>{v.x, v.y}; }
 
-constexpr input::Key doCast(const sf::Keyboard::Key &k) noexcept
+constexpr iKey doCast(const sf::Keyboard::Key &k) noexcept
 {
-    return static_cast<input::Key>((int)k);
+    return static_cast<iKey>((int)k);
 }
 
 inline sf::String to_sf_type(const mtps::str &other) noexcept
