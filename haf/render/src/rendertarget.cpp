@@ -13,6 +13,48 @@
 
 using namespace mtps;
 
+namespace
+{
+const haf::backend::iVertex* to_backend(
+    const haf::scene::Vertex* vertices) noexcept
+{
+    static_assert(
+        sizeof(haf::backend::iVertex) == sizeof(haf::scene::Vertex),
+        "The scene Vertex and the backend Vertex do not have the same size");
+    return reinterpret_cast<const haf::backend::iVertex*>(vertices);
+}
+
+const haf::backend::iPrimitiveType to_backend(
+    const haf::scene::PrimitiveType primitive_type) noexcept
+{
+    static_assert(sizeof(haf::backend::iPrimitiveType) ==
+                      sizeof(haf::scene::PrimitiveType),
+                  "The scene PrimitiveType and the backend PrimitiveType do "
+                  "not have the same size");
+    return static_cast<const haf::backend::iPrimitiveType>(primitive_type);
+}
+
+void do_render(const rptr<haf::backend::IRenderTarget> irender_target_,
+               const haf::scene::RenderData& renderData)
+{
+    haf::backend::IRenderData render_data{
+        to_backend(renderData.vArray.verticesArray().cbegin()),
+        renderData.vArray.verticesArray().size(),
+        to_backend(renderData.vArray.primitiveType()),
+        renderData.transform.getMatrix(),
+        renderData.texture
+            ? dynamic_cast<const haf::scene::Texture*>(renderData.texture)
+                  ->backEndTexture()
+            : nullptr,
+        renderData.shader
+            ? dynamic_cast<const haf::scene::Shader*>(renderData.shader)
+                  ->backEndShader()
+            : nullptr};
+
+    irender_target_->render(&render_data, &render_data + 1);
+}
+
+}  // namespace
 namespace haf::sys
 {
 RenderTarget::RenderTarget(rptr<haf::backend::IRenderTarget> renderTarget) :
@@ -23,28 +65,6 @@ RenderTarget::RenderTarget(rptr<haf::backend::IRenderTarget> renderTarget) :
 }
 
 RenderTarget::~RenderTarget() = default;
-
-inline void do_render(const rptr<backend::IRenderTarget> irender_target_,
-                      const scene::RenderData& renderData)
-{
-    backend::IRenderData render_data{
-        reinterpret_cast<const backend::iVertex*>(
-            renderData.vArray.verticesArray().cbegin()),
-        renderData.vArray.verticesArray().size(),
-        static_cast<const backend::iPrimitiveType>(
-            renderData.vArray.primitiveType()),
-        renderData.transform.getMatrix(),
-        renderData.texture
-            ? dynamic_cast<const scene::Texture*>(renderData.texture)
-                  ->backEndTexture()
-            : nullptr,
-        renderData.shader
-            ? dynamic_cast<const scene::Shader*>(renderData.shader)
-                  ->backEndShader()
-            : nullptr};
-
-    irender_target_->render(&render_data, &render_data + 1);
-}
 
 void RenderTarget::render(rptr<const scene::RenderData> render_data_begin,
                           rptr<const scene::RenderData> render_data_end)
