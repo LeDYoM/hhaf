@@ -7,28 +7,27 @@
 #include <mtypes/include/vector2d.hpp>
 #include <haf/resources/include/itexture.hpp>
 
-namespace haf
-{
-namespace backend
+namespace haf::backend
 {
 class ITexture;
 }
-namespace scene
+
+namespace haf::scene
 {
 class Texture final : public ITexture
 {
 public:
-    Texture(backend::ITexture *texture);
+    Texture(backend::ITexture* texture);
     ~Texture() override;
 
     mtps::vector2du32 size() const override;
 
-    const backend::ITexture *backEndTexture() const noexcept { return m_texturePrivate; }
+    const backend::ITexture* backEndTexture() const noexcept;
 
 private:
-    backend::ITexture *m_texturePrivate;
+    backend::ITexture* m_texturePrivate;
 };
-} // namespace scene
-} // namespace haf
+
+}  // namespace haf::scene
 
 #endif
