@@ -1,12 +1,12 @@
-#include <haf/render/include/rendertarget.hpp>
+#include "rendertarget.hpp"
 
 #include <backend_dev/include/irendertarget.hpp>
 #include <backend_dev/include/irenderdata.hpp>
 #include <haf/render/include/renderdata.hpp>
 #include <haf/resources/include/itexture.hpp>
-#include <haf/resources/i_include/texture.hpp>
+#include <resources/i_include/texture.hpp>
 #include <haf/resources/include/ishader.hpp>
-#include <haf/resources/i_include/shader.hpp>
+#include <resources/i_include/shader.hpp>
 #include <haf/scene/include/transform.hpp>
 #include <haf/scene/include/vertexarray.hpp>
 #include <hlog/include/hlog.hpp>

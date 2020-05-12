@@ -1,8 +1,8 @@
 #include <haf/resources/include/resourcehandler.hpp>
 #include <haf/resources/include/iresourceloader.hpp>
 #include <hlog/include/hlog.hpp>
-#include <haf/system/i_include/get_system.hpp>
-#include <haf/resources/i_include/resourcemanager.hpp>
+#include <system/i_include/get_system.hpp>
+#include <resources/i_include/resourcemanager.hpp>
 
 using namespace mtps;
 

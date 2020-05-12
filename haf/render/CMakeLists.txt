@@ -16,4 +16,5 @@ build_internal_lib_component(
 )
 
 target_link_libraries(${CURRENT_TARGET} PRIVATE resources)
+target_link_libraries(${CURRENT_TARGET} PRIVATE resources_internal)
 target_link_libraries(${CURRENT_TARGET} PRIVATE backend_dev)

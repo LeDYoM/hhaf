@@ -1,11 +1,11 @@
 #include "scenemanager.hpp"
 #include "scene.hpp"
 
-#include <haf/system/i_include/systemprovider.hpp>
-#include <haf/window/i_include/window.hpp>
-#include <haf/scene/i_include/scenecontroller.hpp>
-#include <haf/resources/i_include/resourcemanager.hpp>
-#include <haf/render/include/rendertarget.hpp>
+#include <system/i_include/systemprovider.hpp>
+#include <window/i_include/window.hpp>
+#include <scene/i_include/scenecontroller.hpp>
+#include <resources/i_include/resourcemanager.hpp>
+#include <render/i_include/rendertarget.hpp>
 
 #include <hlog/include/hlog.hpp>
 #include <haf/resources/include/iresourceretriever.hpp>

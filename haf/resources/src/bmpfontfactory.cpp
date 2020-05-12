@@ -1,6 +1,6 @@
-#include <haf/resources/i_include/bmpfontfactory.hpp>
-#include <haf/resources/i_include/bmpfont.hpp>
-#include <haf/resources/i_include/texture.hpp>
+#include "bmpfontfactory.hpp"
+#include "bmpfont.hpp"
+#include "texture.hpp"
 
 using namespace mtps;
 

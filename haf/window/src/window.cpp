@@ -4,10 +4,10 @@
 #include <backend/include/backendfactory.hpp>
 #include <hlog/include/hlog.hpp>
 #include <haf/time/include/timepoint.hpp>
-#include <haf/input/i_include/inputsystem.hpp>
-#include <haf/render/include/rendertarget.hpp>
-#include <haf/time/i_include/timesystem.hpp>
-#include <haf/system/i_include/systemprovider.hpp>
+#include <input/i_include/inputsystem.hpp>
+#include <render/i_include/rendertarget.hpp>
+#include <time/i_include/timesystem.hpp>
+#include <system/i_include/systemprovider.hpp>
 #include <haf/input/include/inputdriver.hpp>
 
 using namespace mtps;

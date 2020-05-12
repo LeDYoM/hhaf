@@ -93,25 +93,36 @@ function(build_internal_lib_component)
   cmake_parse_arguments(LC_BUILD "" "HEADER_DIRECTORY" "SOURCES" ${ARGN})
 
   set(CURRENT_TARGET ${PROJECT_NAME})
-  set(_PUBLIC_INCLUDE "/include")
-  set(_PUBLIC_INCLUDE_DIRECTORY "${PROJECT_SOURCE_DIR}${_PUBLIC_INCLUDE}")
   set(_INTERNAL_INCLUDE "/i_include")
   set(_INTERNAL_INCLUDE_DIRECTORY "${PROJECT_SOURCE_DIR}${_INTERNAL_INCLUDE}")
+  set(INTERNAL_FOR_OTHERS_INCLUDE_DIRECTORY "${PROJECT_SOURCE_DIR}/../")
 
-  add_library(${CURRENT_TARGET} STATIC ${LC_BUILD_SOURCES}
-                                       ${_PUBLIC_INCLUDE_DIRECTORY})
+  # This variable will point to <root>/haf/include/<module>/include/ it is
+  # intended to allow cpp files in the library to use "file.hpp"
+  set(MODULE_INCLUDE_FOR_SRC_FILES
+      ${HAF_PUBLIC_INCLUDE_DIRECTORY}haf/${CURRENT_TARGET}/include/)
 
-  # As long as static libraries are used for internal components, we do not need
-  # this. set_target_properties(${CURRENT_TARGET} PROPERTIES
-  # WINDOWS_EXPORT_ALL_SYMBOLS true)
+  # TODO: Add all sources
+  add_library(${CURRENT_TARGET} STATIC ${LC_BUILD_SOURCES})
 
-  target_include_directories(
-    ${CURRENT_TARGET} PUBLIC ${_PUBLIC_INCLUDE_DIRECTORY}
-                             ${_INTERNAL_INCLUDE_DIRECTORY})
+  # Add <root>/haf/include/ to all users of haf
+  target_include_directories(${CURRENT_TARGET}
+                             PUBLIC ${HAF_PUBLIC_INCLUDE_DIRECTORY})
 
-  add_library(${CURRENT_TARGET}_interface INTERFACE)
-  target_include_directories(${CURRENT_TARGET}_interface
-                             INTERFACE ${_PUBLIC_INCLUDE_DIRECTORY})
+  # Internal includes
+  target_include_directories(${CURRENT_TARGET}
+                             PRIVATE ${_INTERNAL_INCLUDE_DIRECTORY})
+
+  # Only for this target
+  target_include_directories(${CURRENT_TARGET}
+                             PRIVATE ${MODULE_INCLUDE_FOR_SRC_FILES})
+
+  # Add a target to allow internal access to modules. Perhaps that should be
+  # temporary
+  add_library(${CURRENT_TARGET}_internal INTERFACE)
+  target_include_directories(${CURRENT_TARGET}_internal
+                             INTERFACE ${INTERNAL_FOR_OTHERS_INCLUDE_DIRECTORY})
+
   add_log_and_types()
 
 endfunction(build_internal_lib_component)

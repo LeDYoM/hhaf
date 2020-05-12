@@ -14,13 +14,14 @@ class ResourceView final : public sys::IDataWrapper, public IResourceRetriever
 {
 public:
     void onAttached() override;
-    mtps::sptr<scene::ITTFont> getTTFont(const mtps::str&rid) override;
-    mtps::sptr<scene::ITexture> getTexture(const mtps::str&rid) override;
-    mtps::sptr<scene::IShader> getShader(const mtps::str&rid) override;
-    mtps::sptr<scene::IFont> getBMPFont(const mtps::str&rid) override;
+    mtps::sptr<scene::ITTFont> getTTFont(const mtps::str& rid) override;
+    mtps::sptr<scene::ITexture> getTexture(const mtps::str& rid) override;
+    mtps::sptr<scene::IShader> getShader(const mtps::str& rid) override;
+    mtps::sptr<scene::IFont> getBMPFont(const mtps::str& rid) override;
+
 private:
     mtps::rptr<IResourceRetriever> retriever_;
 };
-} // namespace haf::scene
+}  // namespace haf::scene
 
 #endif

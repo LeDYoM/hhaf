@@ -2,15 +2,15 @@
 
 #include <backend/include/backendfactory.hpp>
 #include <backend/include/backend_creator.hpp>
-#include <haf/filesystem/i_include/filesystem.hpp>
-#include <haf/input/i_include/inputsystem.hpp>
-#include <haf/random/i_include/randomsystem.hpp>
-#include <haf/render/i_include/rendersystem.hpp>
-#include <haf/scene/i_include/scenemanager.hpp>
-#include <haf/window/i_include/window.hpp>
-#include <haf/time/i_include/timesystem.hpp>
-#include <haf/shareddata/i_include/shareddatasystem.hpp>
-#include <haf/resources/i_include/resourcemanager.hpp>
+#include <filesystem/i_include/filesystem.hpp>
+#include <input/i_include/inputsystem.hpp>
+#include <random/i_include/randomsystem.hpp>
+#include <render/i_include/rendersystem.hpp>
+#include <scene/i_include/scenemanager.hpp>
+#include <window/i_include/window.hpp>
+#include <time/i_include/timesystem.hpp>
+#include <shareddata/i_include/shareddatasystem.hpp>
+#include <resources/i_include/resourcemanager.hpp>
 #include <haf/simulation/include/simulationsystem.hpp>
 
 #include <hlog/include/hlog.hpp>

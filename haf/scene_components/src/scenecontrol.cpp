@@ -1,8 +1,8 @@
 #include "scenecontrol.hpp"
 #include <haf/scene/include/scenenode.hpp>
-#include <haf/scene/i_include/scenemanager.hpp>
-#include <haf/scene/i_include/scenecontroller.hpp>
-#include <haf/system/i_include/get_system.hpp>
+#include <scene/i_include/scenemanager.hpp>
+#include <scene/i_include/scenecontroller.hpp>
+#include <system/i_include/get_system.hpp>
 
 namespace haf::scene
 {

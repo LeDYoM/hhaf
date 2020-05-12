@@ -1,5 +1,5 @@
 #include "systemprovider_init.hpp"
-#include <haf/system/i_include/systemprovider.hpp>
+#include "systemprovider.hpp"
 
 IControllableSystemProvider* createSystemProvider()
 {

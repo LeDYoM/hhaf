@@ -16,3 +16,5 @@ build_internal_lib_component(
 
 target_link_libraries(${CURRENT_TARGET} PRIVATE backend)
 target_link_libraries(${CURRENT_TARGET} PRIVATE backend_dev)
+target_link_libraries(${CURRENT_TARGET} PRIVATE input_internal)
+target_link_libraries(${CURRENT_TARGET} PRIVATE render_internal)

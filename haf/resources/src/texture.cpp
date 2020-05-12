@@ -1,4 +1,5 @@
-#include <haf/resources/i_include/texture.hpp>
+#include "texture.hpp"
+
 #include <backend_dev/include/itexture.hpp>
 
 using namespace mtps;

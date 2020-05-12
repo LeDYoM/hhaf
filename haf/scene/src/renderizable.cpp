@@ -1,11 +1,11 @@
 #include "renderizable.hpp"
-#include <haf/render/i_include/rendersystem.hpp>
+#include <render/i_include/rendersystem.hpp>
 
 #include <haf/render/include/renderdata.hpp>
 #include <haf/scene/include/scenenode.hpp>
 #include <haf/resources/include/itexture.hpp>
 #include <haf/resources/include/ishader.hpp>
-#include <haf/system/i_include/get_system.hpp>
+#include <system/i_include/get_system.hpp>
 
 #include "geometry_math.hpp"
 

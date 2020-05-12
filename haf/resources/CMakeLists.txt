@@ -23,3 +23,4 @@ build_internal_lib_component(
 
 target_link_libraries(${CURRENT_TARGET} PRIVATE backend)
 target_link_libraries(${CURRENT_TARGET} PRIVATE backend_dev)
+target_link_libraries(${CURRENT_TARGET} PRIVATE system_internal)

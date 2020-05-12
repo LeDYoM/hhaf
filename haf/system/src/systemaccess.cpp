@@ -1,7 +1,8 @@
 #include "systemaccess.hpp"
-#include "scenemanager.hpp"
+#include "isystemprovider.hpp"
 
-#include <haf/system/include/isystemprovider.hpp>
+#include <scene/i_include/scenemanager.hpp>
+
 #include <hlog/include/hlog.hpp>
 
 using namespace mtps;

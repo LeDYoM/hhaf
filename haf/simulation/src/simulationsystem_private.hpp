@@ -9,8 +9,8 @@
 #include <haf/input/include/key.hpp>
 #include <hlog/include/hlog.hpp>
 #include <haf/time/include/timepoint.hpp>
-#include <haf/system/i_include/systemprovider.hpp>
-#include <haf/random/i_include/randomsystem.hpp>
+#include <system/i_include/systemprovider.hpp>
+#include <random/i_include/randomsystem.hpp>
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/object.hpp>

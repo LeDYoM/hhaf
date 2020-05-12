@@ -16,3 +16,4 @@ build_internal_lib_component(
 )
 
 target_link_libraries(${CURRENT_TARGET} PRIVATE time)
+target_link_libraries(${CURRENT_TARGET} PRIVATE system_internal)

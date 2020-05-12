@@ -1,7 +1,8 @@
-#include <haf/shareddata/include/shareddataview.hpp>
-#include <haf/shareddata/i_include/shareddatasystem.hpp>
-#include <haf/system/i_include/systemprovider.hpp>
-#include <haf/system/i_include/get_system.hpp>
+#include "shareddataview.hpp"
+#include "shareddatasystem.hpp"
+#include <system/i_include/systemprovider.hpp>
+#include <system/i_include/get_system.hpp>
+
 #include <hlog/include/hlog.hpp>
 
 using namespace mtps;

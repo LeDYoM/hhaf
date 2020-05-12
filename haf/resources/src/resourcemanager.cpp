@@ -1,17 +1,17 @@
-#include <haf/resources/i_include/resourcemanager.hpp>
-#include <haf/system/i_include/systemprovider.hpp>
-#include <haf/filesystem/i_include/filesystem.hpp>
+#include "resourcemanager.hpp"
+#include <system/i_include/systemprovider.hpp>
+#include <filesystem/i_include/filesystem.hpp>
 
 #include <hlog/include/hlog.hpp>
 
 #include <haf/resources/include/ittfont.hpp>
 #include <haf/resources/include/itexture.hpp>
 #include <haf/resources/include/ishader.hpp>
-#include <haf/resources/i_include/texture.hpp>
-#include <haf/resources/i_include/shader.hpp>
-#include <haf/resources/i_include/ttfont.hpp>
-#include <haf/resources/i_include/bmpfont.hpp>
-#include <haf/resources/i_include/bmpfontfactory.hpp>
+#include <resources/i_include/texture.hpp>
+#include <resources/i_include/shader.hpp>
+#include <resources/i_include/ttfont.hpp>
+#include <resources/i_include/bmpfont.hpp>
+#include <resources/i_include/bmpfontfactory.hpp>
 
 #include <backend/include/backendfactory.hpp>
 #include <algorithm>

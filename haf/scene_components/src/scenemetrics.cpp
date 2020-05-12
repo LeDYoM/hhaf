@@ -1,7 +1,7 @@
 #include "scenemetrics.hpp"
 #include <haf/scene/include/scenenode.hpp>
-#include <haf/scene/i_include/scenemanager.hpp>
-#include <haf/system/i_include/get_system.hpp>
+#include <scene/i_include/scenemanager.hpp>
+#include <system/i_include/get_system.hpp>
 
 using namespace mtps;
 

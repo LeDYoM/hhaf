@@ -18,3 +18,5 @@ set(SOURCE_TESTS
 )
 
 add_haf_test_executable(SOURCE_TESTS ${SOURCE_TESTS})
+target_link_libraries(${CURRENT_TARGET} PRIVATE scene_internal)
+
