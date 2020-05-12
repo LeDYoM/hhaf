@@ -3,14 +3,12 @@
 #include "highscorevalidator.hpp"
 #include "../loaders/highscoresresources.hpp"
 #include "../gameshareddata.hpp"
+#include <haf/filesystem/include/fileserializer.hpp>
 #include <haf/scene_components/include/texteditorcomponent.hpp>
 #include <haf/scene_components/include/scenemetrics.hpp>
 #include <haf/resources/include/ittfont.hpp>
 #include <haf/resources/include/resourceview.hpp>
-#include <haf/system/i_include/systemprovider.hpp>
-#include <haf/filesystem/i_include/filesystem.hpp>
 #include <haf/shareddata/include/shareddataview.hpp>
-#include <haf/system/i_include/get_system.hpp>
 
 using namespace mtps;
 using namespace haf;
@@ -20,8 +18,9 @@ namespace zoper
 {
 static constexpr char HighScoresFileName[] = "high_scores.txt";
 
-HighScoreTextController::HighScoreTextController(SceneNode *parent, str name)
-    : BaseClass{parent, "HighScreTextController"} {}
+HighScoreTextController::HighScoreTextController(SceneNode* parent, str name) :
+    BaseClass{parent, "HighScreTextController"}
+{}
 
 HighScoreTextController::~HighScoreTextController() = default;
 
@@ -31,30 +30,33 @@ void HighScoreTextController::onCreated()
 
     auto resource_view = dataWrapper<ResourceView>();
 
-    m_normalFont = resource_view->getTTFont("menu.mainFont")->font(72);
-    m_normalColor = colors::Blue;
-    m_selectedColor = colors::Red;
+    m_normalFont         = resource_view->getTTFont("menu.mainFont")->font(72);
+    m_normalColor        = colors::Blue;
+    m_selectedColor      = colors::Red;
     animation_component_ = addComponentOfType<scene::AnimationComponent>();
 
     // Request the high scores.
-    sys::getSystem<sys::FileSystem>(this).deserializeFromFile(HighScoresFileName, m_hsData);
+    dataWrapper<sys::FileSerializer>()->deserializeFromFile(HighScoresFileName,
+                                                            m_hsData);
 
     // Request game score
-    Score gameScore = dataWrapper<shdata::SharedDataView>()->dataAs<GameSharedData>().score;
+    Score gameScore =
+        dataWrapper<shdata::SharedDataView>()->dataAs<GameSharedData>().score;
 
-    Rectf32 textBox{rectFromSize(
-                        dataWrapper<SceneMetrics>()->currentView().size())
-                        .setLeftTop({0, 250})
-                        .setSize({2000, 1500})};
-    position = textBox.leftTop();
+    Rectf32 textBox{
+        rectFromSize(dataWrapper<SceneMetrics>()->currentView().size())
+            .setLeftTop({0, 250})
+            .setSize({2000, 1500})};
+    position      = textBox.leftTop();
     sceneNodeSize = textBox.size();
     setTableSize({3U, NumHighScore});
 
     size_type positionInTable{0U};
-    const bool isInserting{m_hsData.tryInsertHighScore(gameScore, positionInTable)};
+    const bool isInserting{
+        m_hsData.tryInsertHighScore(gameScore, positionInTable)};
 
     size_type counter{0};
-    for (const auto &element : m_hsData.highScoresList())
+    for (const auto& element : m_hsData.highScoresList())
     {
         addHighScoresLine(counter, element,
                           (isInserting && positionInTable == counter));
@@ -64,16 +66,17 @@ void HighScoreTextController::onCreated()
     if (!isInserting)
     {
         auto input_component(addComponentOfType<input::InputComponent>());
-        input_component->KeyPressed.connect([this](const auto &) {
-            Finished();
-        });
+        input_component->KeyPressed.connect(
+            [this](const auto&) { Finished(); });
     }
 }
 
-void HighScoreTextController::addHighScoresLine(
-    const size_type counter, const HighScore &element, const bool is_inserting)
+void HighScoreTextController::addHighScoresLine(const size_type counter,
+                                                const HighScore& element,
+                                                const bool is_inserting)
 {
-    auto label(createNodeAt(vector2dst{0, counter}, make_str("label", 0, counter)));
+    auto label(
+        createNodeAt(vector2dst{0, counter}, make_str("label", 0, counter)));
     standarizeText(label);
     label->text.set(make_str(counter, "."));
 
@@ -94,21 +97,20 @@ void HighScoreTextController::addHighScoresLine(
     }
 }
 
-void HighScoreTextController::addHighScoreEditor(const sptr<SceneNode> &label,
+void HighScoreTextController::addHighScoreEditor(const sptr<SceneNode>& label,
                                                  const size_type counter,
-                                                 const HighScore &element)
+                                                 const HighScore& element)
 {
     addEditAnimation(counter);
     auto editor(label->addComponentOfType<TextEditorComponent>());
     editor->setTextValidator(muptr<HighScoreValidator>());
-    editor->Accepted.connect([this, counter](const str &entry) mutable {
+    editor->Accepted.connect([this, counter](const str& entry) mutable {
         m_hsData.setHighScoreName(counter, entry);
         saveHighScores();
         Finished();
     });
-    editor->Rejected.connect([editor_ = mwptr(editor)]() {
-        editor_.lock()->enabled = true;
-    });
+    editor->Rejected.connect(
+        [editor_ = mwptr(editor)]() { editor_.lock()->enabled = true; });
 }
 
 void HighScoreTextController::addEditAnimation(const size_type line_index)
@@ -116,14 +118,15 @@ void HighScoreTextController::addEditAnimation(const size_type line_index)
     LogAsserter::log_assert(line_index < tableSize().y, "Invalid line_index");
 
     for_each_tableSceneNode_in_y(
-        line_index, [this](const auto, const auto &element) {
+        line_index, [this](const auto, const auto& element) {
             animation_component_->addCircledPropertyAnimation(
-                time::TimePoint_as_miliseconds(2000),
-                element->textColor, colors::White, colors::Black);
+                time::TimePoint_as_miliseconds(2000), element->textColor,
+                colors::White, colors::Black);
         });
 }
 
-void HighScoreTextController::standarizeText(const sptr<nodes::SceneNodeText> &ntext)
+void HighScoreTextController::standarizeText(
+    const sptr<nodes::SceneNodeText>& ntext)
 {
     ntext->textColor.set(m_normalColor);
     ntext->font.set(m_normalFont);
@@ -133,7 +136,8 @@ void HighScoreTextController::saveHighScores()
 {
     DisplayLog::info("Saving highscores...");
 
-    sys::getSystem<sys::FileSystem>(this).serializeToFile(HighScoresFileName, m_hsData);
+    dataWrapper<sys::FileSerializer>()->serializeToFile(HighScoresFileName,
+                                                        m_hsData);
     DisplayLog::info("High Scores saved");
 }
-} // namespace zoper
+}  // namespace zoper
