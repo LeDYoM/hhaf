@@ -9,11 +9,14 @@
 
 namespace haf::shdata
 {
-/// Component to provide access to data resources.
+/**
+ * @brief Component to provide access to data resources.
+ * 
+ */
 class SharedData : public sys::IDataWrapper
 {
 public:
-    void store(mtps::uptr<IShareable> data);
+    bool store(mtps::uptr<IShareable> data);
 
     template <typename T>
     void store(mtps::uptr<T> data)

@@ -15,16 +15,28 @@ SharedDataSystem::~SharedDataSystem()
     data_.reset();
 }
 
-void SharedDataSystem::store(uptr<shdata::IShareable> data) noexcept
+bool SharedDataSystem::store(uptr<shdata::IShareable> data) noexcept
 {
+    if (data == nullptr)
+    {
+        return false;
+    }
+
+    if (data_ != nullptr)
+    {
+        return false;
+    }
+
     LogAsserter::log_assert(data_ == nullptr, "data_ is not nullptr");
     LogAsserter::log_assert(data != nullptr, "data is nullptr");
-    
+
     // Aquire the ownership of data
     data_ = std::move(data);
 
     LogAsserter::log_assert(data_ != nullptr, "data_ is not nullptr");
     LogAsserter::log_assert(data == nullptr, "data is not nullptr");
+
+    return true;
 }
 
 uptr<shdata::IShareable> SharedDataSystem::retrieve() noexcept

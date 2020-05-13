@@ -32,7 +32,7 @@ class FileSystem;
 class SimulationSystem;
 class TimeSystem;
 class RenderSystem;
-class ISharedDataSystem;
+class SharedDataSystem;
 } // namespace haf::sys
 
 namespace haf::sys
@@ -80,8 +80,8 @@ public:
     backend::BackendFactory &backendFactory() noexcept;
     const RenderSystem &renderSystem() const noexcept;
     RenderSystem &renderSystem() noexcept;
-    ISharedDataSystem &sharedDataSystem() noexcept;
-    const ISharedDataSystem &sharedDataSystem() const noexcept;
+    SharedDataSystem &sharedDataSystem() noexcept;
+    const SharedDataSystem &sharedDataSystem() const noexcept;
 
 private:
     struct SystemProviderPrivate;

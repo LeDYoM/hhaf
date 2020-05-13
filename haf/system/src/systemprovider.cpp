@@ -211,12 +211,12 @@ RenderSystem& SystemProvider::renderSystem() noexcept
     return *p_->render_system_;
 }
 
-ISharedDataSystem& SystemProvider::sharedDataSystem() noexcept
+SharedDataSystem& SystemProvider::sharedDataSystem() noexcept
 {
     return *p_->shared_data_system_;
 }
 
-const ISharedDataSystem& SystemProvider::sharedDataSystem() const noexcept
+const SharedDataSystem& SystemProvider::sharedDataSystem() const noexcept
 {
     return *p_->shared_data_system_;
 }

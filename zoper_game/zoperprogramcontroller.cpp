@@ -11,7 +11,7 @@
 #include <haf/filesystem/include/fileserializer.hpp>
 #include <haf/scene/i_include/scenemanager.hpp>
 #include <haf/scene/i_include/scenecontroller.hpp>
-#include <haf/shareddata/include/ishareddatasystem.hpp>
+#include <haf/shareddata/i_include/shareddatasystem.hpp>
 #include <hlog/include/hlog.hpp>
 
 using namespace mtps;
