@@ -29,11 +29,12 @@ public:
      * @brief Public type alias template with the acched node type of this
      * attachable. Required from @b sys::Atachable
      */
-    using AttachedNodeType = utils::Attachable<sys::SystemAccess>::AttachedNodeType;
+    using AttachedNodeType =
+        utils::Attachable<sys::SystemAccess>::AttachedNodeType;
 
 private:
     friend class DataWrapperCreator;
 };
-} // namespace haf::sys
+}  // namespace haf::sys
 
 #endif
