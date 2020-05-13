@@ -43,13 +43,13 @@ str ZoperProgramController::getName() const noexcept
     return "Zoper";
 }
 
-void ZoperProgramController::onInit(sys::ISystemProvider& system_provider)
+void ZoperProgramController::onInit(sys::ISystemProvider& system_provider, haf::sys::DataWrapperCreator &data_wrapper_creator)
 {
     DisplayLog::verbose("Initializing ZoperProgramController");
     sys::SystemProvider& systemprovider =
         sys::getSystemProvider(system_provider);
-    keyMapping = muptr<KeyMapping>();
-    keyMapping->reset();
+//    keyMapping = muptr<KeyMapping>();
+//    keyMapping->reset();
     //dataWrapper<sys::FileSerializer>()->deserializeFromFile("keys.txt",
 //                                                            *keyMapping);
 //    dataWrapper<sys::FileSerializer>()->serializeToFile("keys.txt",
@@ -96,7 +96,7 @@ void ZoperProgramController::onInit(sys::ISystemProvider& system_provider)
     }
 }
 
-void ZoperProgramController::onFinish(sys::ISystemProvider& system_provider)
+void ZoperProgramController::onFinish(sys::ISystemProvider& system_provider, haf::sys::DataWrapperCreator &data_wrapper_creator)
 {
     bool check =
         sys::getSystemProvider(system_provider).sharedDataSystem().makeEmpty();

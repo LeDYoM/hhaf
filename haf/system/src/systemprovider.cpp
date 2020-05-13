@@ -16,6 +16,8 @@
 #include <hlog/include/hlog.hpp>
 #include <hosted_app/include/iapp.hpp>
 
+#include <haf/system/include/datawrappercreator.hpp>
+#include <haf/system/include/systemaccess.hpp>
 #include <functional>
 
 using namespace mtps;
@@ -71,7 +73,10 @@ void SystemProvider::init(IApp* iapp)
     p_->window_->create(nullptr);
     p_->render_system_->setRenderTarget(p_->window_->renderTarget());
     p_->input_system_->setInputDriver(p_->window_->inputDriver());
-    p_->app_->onInit(*this);
+
+    SystemAccess system_access(this);
+    DataWrapperCreator dwc(&system_access);
+    p_->app_->onInit(*this, dwc);
 }
 
 void SystemProvider::requestExit()
@@ -86,7 +91,10 @@ bool SystemProvider::exitRequested() const
 
 void SystemProvider::terminate()
 {
-    p_->app_->onFinish(*this);
+    SystemAccess system_access(this);
+    DataWrapperCreator dwc(&system_access);
+
+    p_->app_->onFinish(*this, dwc);
     p_->scene_manager_->finish();
     p_->scene_manager_     = nullptr;
     p_->simulation_system_ = nullptr;
