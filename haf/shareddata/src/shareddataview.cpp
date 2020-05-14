@@ -26,6 +26,12 @@ bool SharedData::isEmpty()
     return sys::getSystem<sys::SharedDataSystem>(attachedNode()).isEmpty();
 }
 
+bool SharedData::makeEmpty() 
+{
+    return sys::getSystem<sys::SharedDataSystem>(attachedNode()).makeEmpty();
+}
+
+
 SharedDataView::SharedDataView() : data_{nullptr}
 {}
 

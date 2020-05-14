@@ -31,6 +31,7 @@ public:
     }
 
     [[nodiscard]] bool isEmpty();
+    bool makeEmpty();
 private:
     [[nodiscard]] mtps::uptr<IShareable> retrieve_imp();
 };

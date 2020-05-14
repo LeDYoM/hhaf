@@ -12,7 +12,7 @@ SharedDataSystem::SharedDataSystem(sys::SystemProvider& system_provider) noexcep
 
 SharedDataSystem::~SharedDataSystem()
 {
-    data_.reset();
+    makeEmpty();
 }
 
 bool SharedDataSystem::store(uptr<shdata::IShareable> data) noexcept

@@ -11,7 +11,7 @@
 #include <haf/filesystem/include/fileserializer.hpp>
 #include <haf/scene/i_include/scenemanager.hpp>
 #include <haf/scene/i_include/scenecontroller.hpp>
-#include <haf/shareddata/i_include/shareddatasystem.hpp>
+#include <haf/shareddata/include/shareddataview.hpp>
 #include <hlog/include/hlog.hpp>
 
 using namespace mtps;
@@ -43,21 +43,26 @@ str ZoperProgramController::getName() const noexcept
     return "Zoper";
 }
 
-void ZoperProgramController::onInit(sys::ISystemProvider& system_provider, haf::sys::DataWrapperCreator &data_wrapper_creator)
+void ZoperProgramController::onInit(
+    sys::ISystemProvider& system_provider,
+    haf::sys::DataWrapperCreator& data_wrapper_creator)
 {
     DisplayLog::verbose("Initializing ZoperProgramController");
     sys::SystemProvider& systemprovider =
         sys::getSystemProvider(system_provider);
-//    keyMapping = muptr<KeyMapping>();
-//    keyMapping->reset();
-    //dataWrapper<sys::FileSerializer>()->deserializeFromFile("keys.txt",
-//                                                            *keyMapping);
-//    dataWrapper<sys::FileSerializer>()->serializeToFile("keys.txt",
-//                                                        *keyMapping);
+
+    keyMapping = muptr<KeyMapping>();
+    keyMapping->reset();
+
+    data_wrapper_creator.dataWrapper<sys::FileSerializer>()
+        ->deserializeFromFile("keys.txt", *keyMapping);
+    data_wrapper_creator.dataWrapper<sys::FileSerializer>()->serializeToFile(
+        "keys.txt", *keyMapping);
 
     {
         auto game_shared_data{muptr<GameSharedData>()};
-        systemprovider.sharedDataSystem().store(std::move(game_shared_data));
+        data_wrapper_creator.dataWrapper<shdata::SharedData>()->store(
+            std::move(game_shared_data));
     }
     {
         auto& sceneManager(systemprovider.sceneManager());
@@ -96,10 +101,12 @@ void ZoperProgramController::onInit(sys::ISystemProvider& system_provider, haf::
     }
 }
 
-void ZoperProgramController::onFinish(sys::ISystemProvider& system_provider, haf::sys::DataWrapperCreator &data_wrapper_creator)
+void ZoperProgramController::onFinish(
+    sys::ISystemProvider& system_provider,
+    haf::sys::DataWrapperCreator& data_wrapper_creator)
 {
-    bool check =
-        sys::getSystemProvider(system_provider).sharedDataSystem().makeEmpty();
+    const bool check =
+        data_wrapper_creator.dataWrapper<shdata::SharedData>()->makeEmpty();
     LogAsserter::log_assert(check, "SharedData is empty!");
 }
 
