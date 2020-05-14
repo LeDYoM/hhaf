@@ -178,7 +178,7 @@ private:
 
     bool containsType(const mtps::str& name) const
     {
-        return constructors_.find(name) != std::end(constructors_);
+        return constructors_.find(name) != constructor_.cend();
     }
 };
 }  // namespace haf::utils
