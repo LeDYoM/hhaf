@@ -5,7 +5,7 @@
 #include "../gameshareddata.hpp"
 #include <haf/filesystem/include/fileserializer.hpp>
 #include <haf/scene_components/include/texteditorcomponent.hpp>
-#include <haf/scene_components/include/scenemetrics.hpp>
+#include <haf/scene_components/include/scenemetricsview.hpp>
 #include <haf/resources/include/ittfont.hpp>
 #include <haf/resources/include/resourceview.hpp>
 #include <haf/shareddata/include/shareddataview.hpp>
@@ -44,7 +44,7 @@ void HighScoreTextController::onCreated()
         dataWrapper<shdata::SharedDataView>()->dataAs<GameSharedData>().score;
 
     Rectf32 textBox{
-        rectFromSize(dataWrapper<SceneMetrics>()->currentView().size())
+        rectFromSize(dataWrapper<SceneMetricsView>()->currentView().size())
             .setLeftTop({0, 250})
             .setSize({2000, 1500})};
     position      = textBox.leftTop();

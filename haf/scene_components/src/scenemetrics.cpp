@@ -7,9 +7,14 @@ using namespace mtps;
 
 namespace haf::scene
 {
-Rectf32 SceneMetrics::currentView() const
+void SceneMetrics::setViewRect(const mtps::Rectf32& new_view)
 {
-    return sys::getSystem<SceneManager>(attachedNode()).viewRect();
+    sys::getSystem<SceneManager>(attachedNode()).setViewRect(new_view);
 }
 
-} // namespace haf::scene
+void SceneMetrics::setViewPort(const mtps::Rectf32& new_view_port)
+{
+    sys::getSystem<SceneManager>(attachedNode()).setViewPort(new_view_port);
+}
+
+}  // namespace haf::scene

@@ -9,8 +9,9 @@
 #include <haf/system/i_include/systemprovider.hpp>
 #include <haf/system/i_include/get_systemprovider.hpp>
 #include <haf/filesystem/include/fileserializer.hpp>
-#include <haf/scene/i_include/scenemanager.hpp>
 #include <haf/scene/i_include/scenecontroller.hpp>
+#include <haf/scene/i_include/scenemanager.hpp>
+#include <haf/scene_components/include/scenemetrics.hpp>
 #include <haf/shareddata/include/shareddataview.hpp>
 #include <hlog/include/hlog.hpp>
 
@@ -65,10 +66,10 @@ void ZoperProgramController::onInit(
             std::move(game_shared_data));
     }
     {
+        data_wrapper_creator.dataWrapper<scene::SceneMetrics>()->setViewRect(
+            {0U, 0U, 2000U, 2000U});
         auto& sceneManager(systemprovider.sceneManager());
-        sceneManager.setViewRect({0U, 0U, 2000U, 2000U});
         auto& sceneController(sceneManager.sceneController());
-
         auto& scene_node_factory(sceneController->sceneNodeFactory());
 
         scene_node_factory.registerSceneNodeType<MenuScene>();

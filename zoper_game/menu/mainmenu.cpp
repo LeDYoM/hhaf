@@ -7,7 +7,7 @@
 #include <haf/resources/include/resourceview.hpp>
 #include <haf/resources/include/ittfont.hpp>
 #include <haf/shareddata/include/shareddataview.hpp>
-#include <haf/scene_components/include/scenemetrics.hpp>
+#include <haf/scene_components/include/scenemetricsview.hpp>
 #include <mtypes/include/function.hpp>
 #include <mtypes/include/types.hpp>
 
@@ -93,7 +93,7 @@ void MainMenu::onCreated()
     setSelectedColor(colors::Red);
 
     Rectf32 textBox{
-        rectFromSize(dataWrapper<SceneMetrics>()->currentView().size())
+        rectFromSize(dataWrapper<SceneMetricsView>()->currentView().size())
             .setLeftTop({0, 750})
             .setSize({2000, 4 * 150})};
     position = textBox.leftTop();

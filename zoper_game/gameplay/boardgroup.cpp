@@ -5,7 +5,7 @@
 
 #include <haf/scene/include/scenenode.hpp>
 #include <haf/scene_nodes/include/tablenode.hpp>
-#include <haf/scene_components/include/scenemetrics.hpp>
+#include <haf/scene_components/include/scenemetricsview.hpp>
 #include <haf/scene/include/renderizable.hpp>
 
 #include <boardmanager/include/boardmanager.hpp>
@@ -31,7 +31,7 @@ void BoardGroup::onCreated()
 {
     BaseClass::onCreated();
 
-    Rectf32 textBox{dataWrapper<SceneMetrics>()->currentView()};
+    Rectf32 textBox{dataWrapper<SceneMetricsView>()->currentView()};
     position      = textBox.leftTop();
     sceneNodeSize = textBox.size();
 
@@ -212,7 +212,7 @@ Color BoardGroup::getBackgroundTileColor(const size_type level,
 
 vector2df BoardGroup::board2SceneFactor() const
 {
-    return dataWrapper<SceneMetrics>()->currentView().size() /
+    return dataWrapper<SceneMetricsView>()->currentView().size() /
         p_boardModel->size();
 }
 

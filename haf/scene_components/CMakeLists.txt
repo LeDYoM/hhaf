@@ -7,6 +7,7 @@ set (_SOURCES
     "src/discretetextcomponent.cpp"
     "src/scenecontrol.cpp"
     "src/scenemetrics.cpp"
+    "src/scenemetricsview.cpp"
     "src/texteditorcomponent.cpp"
     "src/visibility_selector.cpp"
 )

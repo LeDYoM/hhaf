@@ -5,14 +5,15 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/rect.hpp>
-#include <haf/system/include/idatawrapper.hpp>
+#include <haf/scene_components/include/scenemetricsview.hpp>
 
 namespace haf::scene
 {
-class SceneMetrics : public sys::IDataWrapper
+class SceneMetrics : public SceneMetricsView
 {
 public:
-    mtps::Rectf32 currentView() const;
+    void setViewRect(const mtps::Rectf32& new_view);
+    void setViewPort(const mtps::Rectf32& new_view_port);
 };
 } // namespace haf::scene
 
