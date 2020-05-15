@@ -294,10 +294,16 @@ TEST_CASE("ObjectFactory type without default constructor but StaticType",
     t->set(3);
     CHECK(*t == 3);
 
+    t = a.create<DefaultConstructibleOnlyInherited1>();
+    CHECK(*t == 0);
+
     SECTION("Other object")
     {
         // Test a not existent object
         auto t2 = a.create("DefaultConstructibleOnlyInherited2");
+        CHECK(t2 == nullptr);
+
+        t2 = a.create<DefaultConstructibleOnlyInherited2>();
         CHECK(t2 == nullptr);
     }
 
