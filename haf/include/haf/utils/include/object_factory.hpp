@@ -63,7 +63,7 @@ public:
      *  construction function.
      *
      * @tparam T The concrete object type to be registered. Requires
-     *  T::StaticTypeName to exists as a const char[] member
+     *  @b T::StaticTypeName to exists as a const char[] member
      * @param constructor_function The function that constructs the object.
      * @return true When the object type has been successfully registered.
      * @return false The object type cannot be registered.
@@ -178,7 +178,7 @@ private:
 
     bool containsType(const mtps::str& name) const
     {
-        return constructors_.find(name) != constructor_.cend();
+        return constructors_.find(name) != constructors_.cend();
     }
 };
 }  // namespace haf::utils
