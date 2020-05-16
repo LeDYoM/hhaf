@@ -61,7 +61,7 @@ public:
     }
 
     template <typename T>
-    inline bool startScene()
+    bool startScene()
     {
         return startScene(T::StaticTypeName);
     }

@@ -1,8 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
 project(haf)
 
-#include_directories("..")
-
 set(_SOURCES "main.cpp")
 file(GLOB_RECURSE _HEADERS "include/*.hpp")
 
@@ -12,11 +10,11 @@ add_library(${CURRENT_TARGET} SHARED ${_SOURCES} ${_HEADERS})
 set_target_properties(${CURRENT_TARGET} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS
                                                    true)
 
-target_include_directories(
-  ${CURRENT_TARGET}
-  PUBLIC # $<INSTALL_INTERFACE:include>
-         # $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> PRIVATE
-         ${CMAKE_CURRENT_SOURCE_DIR}/../)
+#target_include_directories(
+#  ${CURRENT_TARGET}
+#  PUBLIC # $<INSTALL_INTERFACE:include>
+#         # $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> PRIVATE
+#         ${CMAKE_CURRENT_SOURCE_DIR}/../)
 
 # Directory internal libraries that will be used by the client too.
 add_subdirectory(filesystem)

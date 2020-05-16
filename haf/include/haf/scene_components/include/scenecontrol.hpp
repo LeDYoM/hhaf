@@ -15,6 +15,15 @@ public:
     void switchToNextScene();
     void setSceneDirector(SceneDirectorType scene_director);
 
+    bool startScene(const mtps::str& scene_name);
+
+    template <typename T>
+    inline bool startScene()
+    {
+        return startScene(T::StaticTypeName);
+    }
+
+
 };
 } // namespace haf::scene
 

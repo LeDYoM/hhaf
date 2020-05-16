@@ -20,4 +20,11 @@ void SceneControl::setSceneDirector(SceneDirectorType scene_director)
         ->setSceneDirector(std::move(scene_director));
 }
 
-} // namespace haf::scene
+bool SceneControl::startScene(const mtps::str& scene_name)
+{
+    return sys::getSystem<scene::SceneManager>(attachedNode())
+        .sceneController()
+        ->startScene(scene_name);
+}
+
+}  // namespace haf::scene
