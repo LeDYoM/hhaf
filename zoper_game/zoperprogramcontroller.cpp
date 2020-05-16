@@ -12,6 +12,7 @@
 #include <haf/scene/i_include/scenecontroller.hpp>
 #include <haf/scene/i_include/scenemanager.hpp>
 #include <haf/scene_components/include/scenemetrics.hpp>
+#include <haf/scene_components/include/scenefactory.hpp>
 #include <haf/shareddata/include/shareddataview.hpp>
 #include <hlog/include/hlog.hpp>
 
@@ -70,11 +71,11 @@ void ZoperProgramController::onInit(
             {0U, 0U, 2000U, 2000U});
         auto& sceneManager(systemprovider.sceneManager());
         auto& sceneController(sceneManager.sceneController());
-        auto& scene_node_factory(sceneController->sceneNodeFactory());
+        auto scene_node_factory(data_wrapper_creator.dataWrapper<scene::SceneFactory>());
 
-        scene_node_factory.registerSceneNodeType<MenuScene>();
-        scene_node_factory.registerSceneNodeType<GameScene>();
-        scene_node_factory.registerSceneNodeType<HighScoresScene>();
+        scene_node_factory->registerSceneType<MenuScene>();
+        scene_node_factory->registerSceneType<GameScene>();
+        scene_node_factory->registerSceneType<HighScoresScene>();
 
         sceneController->setSceneDirector(
             [this, &system_provider](const str& scene_name) -> str {
