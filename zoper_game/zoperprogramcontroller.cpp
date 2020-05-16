@@ -13,6 +13,7 @@
 #include <haf/scene/i_include/scenemanager.hpp>
 #include <haf/scene_components/include/scenemetrics.hpp>
 #include <haf/scene_components/include/scenefactory.hpp>
+#include <haf/scene_components/include/scenecontrol.hpp>
 #include <haf/shareddata/include/shareddataview.hpp>
 #include <hlog/include/hlog.hpp>
 
@@ -77,7 +78,7 @@ void ZoperProgramController::onInit(
         scene_node_factory->registerSceneType<GameScene>();
         scene_node_factory->registerSceneType<HighScoresScene>();
 
-        sceneController->setSceneDirector(
+        data_wrapper_creator.dataWrapper<SceneControl>()->setSceneDirector(
             [this, &system_provider](const str& scene_name) -> str {
                 // Did the user selected exit?
                 if (sys::getSystemProvider(system_provider).exitRequested())

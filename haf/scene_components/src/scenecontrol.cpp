@@ -13,4 +13,11 @@ void SceneControl::switchToNextScene()
         ->switchToNextScene();
 }
 
+void SceneControl::setSceneDirector(SceneDirectorType scene_director)
+{
+    sys::getSystem<scene::SceneManager>(attachedNode())
+        .sceneController()
+        ->setSceneDirector(std::move(scene_director));
+}
+
 } // namespace haf::scene
