@@ -37,22 +37,22 @@ void SceneManager::finish()
     scene_controller_->finish();
 }
 
-Rectf32 SceneManager::viewPort() const noexcept
+Rectf32 SceneManager::viewPort() const
 {
     return systemProvider().parentWindow().renderTarget()->viewPort();
 }
 
-void SceneManager::setViewPort(const Rectf32& vp) noexcept
+void SceneManager::setViewPort(const Rectf32& vp)
 {
     systemProvider().parentWindow().renderTarget()->setViewPort(vp);
 }
 
-Rectf32 SceneManager::viewRect() const noexcept
+Rectf32 SceneManager::viewRect() const
 {
     return systemProvider().parentWindow().renderTarget()->viewRect();
 }
 
-void SceneManager::setViewRect(const Rectf32& vr) noexcept
+void SceneManager::setViewRect(const Rectf32& vr)
 {
     systemProvider().parentWindow().renderTarget()->setViewRect(vr);
 }

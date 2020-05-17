@@ -6,7 +6,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/rect.hpp>
 
-#include <haf/system/include/appservice.hpp>
+#include <system/i_include/appservice.hpp>
 
 namespace haf
 {
@@ -22,7 +22,7 @@ class SceneController;
 
 namespace haf::scene
 {
-class SceneManager : public AppService
+class SceneManager : public sys::AppService
 {
 public:
     SceneManager(sys::SystemProvider& system_provider);
@@ -35,10 +35,10 @@ public:
     IResourceRetriever& resources();
     IResourceHandler& resourcesLoader();
 
-    mtps::Rectf32 viewPort() const noexcept;
-    void setViewPort(const mtps::Rectf32& vp) noexcept;
-    mtps::Rectf32 viewRect() const noexcept;
-    void setViewRect(const mtps::Rectf32& vr) noexcept;
+    mtps::Rectf32 viewPort() const;
+    void setViewPort(const mtps::Rectf32& vp);
+    mtps::Rectf32 viewRect() const;
+    void setViewRect(const mtps::Rectf32& vr);
 
     const mtps::sptr<SceneController>& sceneController() const noexcept;
     mtps::sptr<SceneController>& sceneController() noexcept;

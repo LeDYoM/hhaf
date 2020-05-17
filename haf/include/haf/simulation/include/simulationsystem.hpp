@@ -4,7 +4,7 @@
 #define HAF_CORE_SYSTEM_SIMULATIONSYSTEM_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <haf/system/include/appservice.hpp>
+#include <system/i_include/appservice.hpp>
 #include <haf/simulation/include/simulationactiongroup.hpp>
 
 namespace haf::sys

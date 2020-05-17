@@ -8,7 +8,7 @@
 #include <mtypes/include/rawmemory.hpp>
 
 #include <haf/filesystem/include/path.hpp>
-#include <haf/system/include/appservice.hpp>
+#include <system/i_include/appservice.hpp>
 
 namespace haf::sys
 {

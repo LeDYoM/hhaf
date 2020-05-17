@@ -4,7 +4,7 @@
 #define HAF_SYS_SYSTEM_RENDERSYSTEM_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <haf/system/include/appservice.hpp>
+#include <system/i_include/appservice.hpp>
 
 namespace haf::scene
 {
