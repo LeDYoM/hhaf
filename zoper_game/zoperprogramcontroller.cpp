@@ -44,7 +44,6 @@ str ZoperProgramController::getName() const noexcept
 }
 
 void ZoperProgramController::onInit(
-    sys::ISystemProvider& system_provider,
     haf::sys::DataWrapperCreator& data_wrapper_creator)
 {
     DisplayLog::verbose("Initializing ZoperProgramController");
@@ -75,30 +74,27 @@ void ZoperProgramController::onInit(
         auto scene_control(
             data_wrapper_creator.dataWrapper<scene::SceneControl>());
 
-        scene_control->setSceneDirector(
-            [this](
-                const str& scene_name) -> str {
-                if (scene_name == (MenuScene::StaticTypeName))
-                {
-                    return GameScene::StaticTypeName;
-                }
-                else if (scene_name == (GameScene::StaticTypeName))
-                {
-                    return HighScoresScene::StaticTypeName;
-                }
-                else if (scene_name == (HighScoresScene::StaticTypeName))
-                {
-                    return MenuScene::StaticTypeName;
-                }
-                return str{};
-            });
+        scene_control->setSceneDirector([this](const str& scene_name) -> str {
+            if (scene_name == (MenuScene::StaticTypeName))
+            {
+                return GameScene::StaticTypeName;
+            }
+            else if (scene_name == (GameScene::StaticTypeName))
+            {
+                return HighScoresScene::StaticTypeName;
+            }
+            else if (scene_name == (HighScoresScene::StaticTypeName))
+            {
+                return MenuScene::StaticTypeName;
+            }
+            return str{};
+        });
 
         scene_control->startScene<MenuScene>();
     }
 }
 
 void ZoperProgramController::onFinish(
-    sys::ISystemProvider& system_provider,
     haf::sys::DataWrapperCreator& data_wrapper_creator)
 {
     const bool check =
