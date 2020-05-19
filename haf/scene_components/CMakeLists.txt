@@ -6,6 +6,7 @@ set (_SOURCES
     "src/animationcomponent.cpp"
     "src/discretetextcomponent.cpp"
     "src/scenecontrol.cpp"
+    "src/scenefactory.cpp"
     "src/scenemetrics.cpp"
     "src/scenemetricsview.cpp"
     "src/texteditorcomponent.cpp"

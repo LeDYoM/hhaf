@@ -10,6 +10,7 @@
 
 #include <haf/scene/include/scene.hpp>
 #include <haf/scene/include/scenenodefactory.hpp>
+#include <haf/scene/include/scene_director.hpp>
 
 namespace haf::scene
 {
@@ -23,11 +24,6 @@ class SceneManager;
 class SceneController final
 {
 public:
-    /**
-     * @brief Type defining the function callback for an scene director
-     */
-    using SceneDirectorType = mtps::function<mtps::str(const mtps::str&)>;
-
     void setSceneManager(mtps::rptr<SceneManager> scene_manager);
 
     void switchToNextScene();
@@ -65,7 +61,7 @@ public:
     }
 
     template <typename T>
-    inline bool startScene()
+    bool startScene()
     {
         return startScene(T::StaticTypeName);
     }

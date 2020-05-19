@@ -3,6 +3,7 @@
 #include "scenemanager.hpp"
 
 #include <haf/system/include/isystemprovider.hpp>
+#include <system/i_include/systemprovider.hpp>
 #include <hlog/include/hlog.hpp>
 
 using namespace mtps;
@@ -32,10 +33,13 @@ void SceneController::deferredSwitchScene()
 {
     // Prepare next Scene
     sptr<Scene> nextScene{nullptr};
-    if (scene_director_)
+    if (scene_manager_ && !scene_manager_->systemProvider().exitRequested())
     {
-        nextScene =
-            scene_factory_.create(scene_director_(current_scene_->name()));
+        if (scene_director_)
+        {
+            nextScene =
+                scene_factory_.create(scene_director_(current_scene_->name()));
+        }
     }
 
     terminateCurrentScene();

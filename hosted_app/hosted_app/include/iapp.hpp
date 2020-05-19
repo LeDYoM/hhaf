@@ -8,9 +8,8 @@
 
 namespace haf::sys
 {
-class ISystemProvider;
 class DataWrapperCreator;
-} // namespace haf::sys
+}  // namespace haf::sys
 
 namespace haf
 {
@@ -20,17 +19,17 @@ public:
     constexpr IApp() noexcept {}
     virtual ~IApp() noexcept {}
 
-    virtual void onInit(sys::ISystemProvider& system_provider, sys::DataWrapperCreator &data_wrapper_creator) = 0;
-    virtual void onFinish(sys::ISystemProvider& system_provider, sys::DataWrapperCreator &data_wrapper_creator) = 0;
+    virtual void onInit(sys::DataWrapperCreator& data_wrapper_creator)   = 0;
+    virtual void onFinish(sys::DataWrapperCreator& data_wrapper_creator) = 0;
 
-    virtual mtps::u16 getVersion() const noexcept = 0;
+    virtual mtps::u16 getVersion() const noexcept    = 0;
     virtual mtps::u16 getSubVersion() const noexcept = 0;
-    virtual mtps::u16 getPatch() const noexcept = 0;
-    virtual mtps::str getName() const noexcept = 0;
+    virtual mtps::u16 getPatch() const noexcept      = 0;
+    virtual mtps::str getName() const noexcept       = 0;
 };
-} // namespace haf
+}  // namespace haf
 
-using p_initApp = haf::IApp *(*)();
-using p_finishApp = bool (*)(haf::IApp *const);
+using p_initApp   = haf::IApp* (*)();
+using p_finishApp = bool (*)(haf::IApp* const);
 
 #endif

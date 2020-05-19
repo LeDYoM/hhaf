@@ -7,10 +7,7 @@ namespace haf::sys
 {
 class SystemProvider;
 class ISystemProvider;
-}
 
-namespace haf
-{
 /**
  * @brief Class to serve as a base for all App Services.
  * An App Service is a class, instanciated by SystemProvider to give
@@ -19,51 +16,58 @@ namespace haf
 class AppService
 {
 protected:
-    AppService(sys::SystemProvider &system_provider) noexcept;
+    /**
+     * @brief Construct a new App Service object. This class is intended to be
+     * use as a base class, so there is only one constructor and it is
+     * protected.
+     * @param system_provider Object to handle all systems that this class might
+     * use.
+     */
+    AppService(sys::SystemProvider& system_provider) noexcept;
     virtual ~AppService();
 
 public:
     /**
      * @brief Deleted copy constructor.
      */
-    AppService(const AppService &) = delete;
+    AppService(const AppService&) = delete;
 
     /**
      * @brief Deleted assignment operator.
      */
-    AppService &operator=(const AppService &) = delete;
+    AppService& operator=(const AppService&) = delete;
 
     /**
      * @brief Get a lvalue reference to this apps @b SystemProvider
-     * 
+     *
      * @return sys::SystemProvider& Reference to the SystemProvider
      */
-    sys::SystemProvider &systemProvider() noexcept;
+    sys::SystemProvider& systemProvider() noexcept;
 
     /**
      * @brief Get a const lvalue reference to this apps @b SystemProvider
-     * 
+     *
      * @return sys::SystemProvider& Reference to the SystemProvider
      */
     sys::SystemProvider const& systemProvider() const noexcept;
 
     /**
      * @brief Get a lvalue reference to this apps @b ISystemProvider
-     * 
+     *
      * @return sys::SystemProvider& Reference to the SystemProvider
      */
-    sys::ISystemProvider &isystemProvider() noexcept;
+    sys::ISystemProvider& isystemProvider() noexcept;
 
     /**
      * @brief Get a const lvalue reference to this apps @b ISystemProvider
-     * 
+     *
      * @return sys::SystemProvider& Reference to the SystemProvider
      */
     sys::ISystemProvider const& isystemProvider() const noexcept;
 
 private:
-    sys::SystemProvider &system_provider_;
+    sys::SystemProvider& system_provider_;
 };
-} // namespace haf
+}  // namespace haf::sys
 
 #endif

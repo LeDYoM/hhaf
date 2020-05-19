@@ -76,7 +76,7 @@ void SystemProvider::init(IApp* iapp)
 
     SystemAccess system_access(this);
     DataWrapperCreator dwc(&system_access);
-    p_->app_->onInit(*this, dwc);
+    p_->app_->onInit(dwc);
 }
 
 void SystemProvider::requestExit()
@@ -94,7 +94,7 @@ void SystemProvider::terminate()
     SystemAccess system_access(this);
     DataWrapperCreator dwc(&system_access);
 
-    p_->app_->onFinish(*this, dwc);
+    p_->app_->onFinish(dwc);
     p_->scene_manager_->finish();
     p_->scene_manager_     = nullptr;
     p_->simulation_system_ = nullptr;

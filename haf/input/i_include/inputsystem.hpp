@@ -7,7 +7,7 @@
 #include <mtypes/include/vector.hpp>
 #include <haf/input/include/key.hpp>
 
-#include <haf/system/include/appservice.hpp>
+#include <system/i_include/appservice.hpp>
 
 namespace haf::input
 {

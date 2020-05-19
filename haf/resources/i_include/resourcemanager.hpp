@@ -8,7 +8,7 @@
 
 #include <haf/resources/include/iresourcehandler.hpp>
 #include <haf/resources/include/iresourceretriever.hpp>
-#include <haf/system/include/appservice.hpp>
+#include <system/i_include/appservice.hpp>
 
 namespace haf::scene
 {

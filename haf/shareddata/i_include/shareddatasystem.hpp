@@ -4,7 +4,7 @@
 #define HAF_SYSTEM_SHARED_DATA_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <haf/system/include/appservice.hpp>
+#include <system/i_include/appservice.hpp>
 #include <haf/shareddata/include/ishareable.hpp>
 
 namespace haf::sys

@@ -19,19 +19,23 @@ mtps::uptr<T> createScene()
 class SceneNodeFactory
 {
 public:
-    using InterfaceType = Scene;
-    using CreateReturnType = mtps::sptr<InterfaceType>;
+    using InterfaceType                = Scene;
+    using CreateReturnType             = mtps::sptr<InterfaceType>;
     using SceneNodeConstructorFunction = mtps::function<CreateReturnType()>;
 
     SceneNodeFactory();
     ~SceneNodeFactory();
 
-    bool registerSceneNodeType(mtps::str type_name, SceneNodeConstructorFunction scene_constructor_function);
+    bool registerSceneNodeType(
+        mtps::str type_name,
+        SceneNodeConstructorFunction scene_constructor_function);
 
     template <typename T>
-    constexpr bool registerSceneNodeType(SceneNodeConstructorFunction scene_constructor_function)
+    constexpr bool registerSceneNodeType(
+        SceneNodeConstructorFunction scene_constructor_function)
     {
-        return registerSceneNodeType(T::StaticTypeName, std::move(scene_constructor_function));
+        return registerSceneNodeType(T::StaticTypeName,
+                                     std::move(scene_constructor_function));
     }
 
     template <typename T>
@@ -46,7 +50,7 @@ public:
         return registerSceneNodeType(T::StaticTypeName, createScene<T>);
     }
 
-    CreateReturnType create(const mtps::str&type_name);
+    CreateReturnType create(const mtps::str& type_name);
 
     template <typename T>
     constexpr CreateReturnType create()
@@ -58,6 +62,6 @@ private:
     struct SceneNodeFactoryPrivate;
     mtps::uptr<SceneNodeFactoryPrivate> private_;
 };
-} // namespace haf::scene
+}  // namespace haf::scene
 
 #endif

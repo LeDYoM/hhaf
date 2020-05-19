@@ -6,12 +6,11 @@
 #include "gameshareddata.hpp"
 
 #include <mtypes/include/serializer.hpp>
-#include <haf/system/i_include/systemprovider.hpp>
-#include <haf/system/i_include/get_systemprovider.hpp>
 #include <haf/filesystem/include/fileserializer.hpp>
-#include <haf/scene/i_include/scenecontroller.hpp>
-#include <haf/scene/i_include/scenemanager.hpp>
 #include <haf/scene_components/include/scenemetrics.hpp>
+#include <haf/scene_components/include/scenefactory.hpp>
+#include <haf/scene_components/include/scenecontrol.hpp>
+#include <haf/system/include/systemrequests.hpp>
 #include <haf/shareddata/include/shareddataview.hpp>
 #include <hlog/include/hlog.hpp>
 
@@ -45,12 +44,9 @@ str ZoperProgramController::getName() const noexcept
 }
 
 void ZoperProgramController::onInit(
-    sys::ISystemProvider& system_provider,
     haf::sys::DataWrapperCreator& data_wrapper_creator)
 {
     DisplayLog::verbose("Initializing ZoperProgramController");
-    sys::SystemProvider& systemprovider =
-        sys::getSystemProvider(system_provider);
 
     keyMapping = muptr<KeyMapping>();
     keyMapping->reset();
@@ -68,42 +64,37 @@ void ZoperProgramController::onInit(
     {
         data_wrapper_creator.dataWrapper<scene::SceneMetrics>()->setViewRect(
             {0U, 0U, 2000U, 2000U});
-        auto& sceneManager(systemprovider.sceneManager());
-        auto& sceneController(sceneManager.sceneController());
-        auto& scene_node_factory(sceneController->sceneNodeFactory());
+        auto scene_node_factory(
+            data_wrapper_creator.dataWrapper<scene::SceneFactory>());
 
-        scene_node_factory.registerSceneNodeType<MenuScene>();
-        scene_node_factory.registerSceneNodeType<GameScene>();
-        scene_node_factory.registerSceneNodeType<HighScoresScene>();
+        scene_node_factory->registerSceneType<MenuScene>();
+        scene_node_factory->registerSceneType<GameScene>();
+        scene_node_factory->registerSceneType<HighScoresScene>();
 
-        sceneController->setSceneDirector(
-            [this, &system_provider](const str& scene_name) -> str {
-                // Did the user selected exit?
-                if (sys::getSystemProvider(system_provider).exitRequested())
-                {
-                    return str{};
-                }
-                else if (scene_name == (MenuScene::StaticTypeName))
-                {
-                    return GameScene::StaticTypeName;
-                }
-                else if (scene_name == (GameScene::StaticTypeName))
-                {
-                    return HighScoresScene::StaticTypeName;
-                }
-                else if (scene_name == (HighScoresScene::StaticTypeName))
-                {
-                    return MenuScene::StaticTypeName;
-                }
-                return str{};
-            });
+        auto scene_control(
+            data_wrapper_creator.dataWrapper<scene::SceneControl>());
 
-        sceneController->startScene<MenuScene>();
+        scene_control->setSceneDirector([this](const str& scene_name) -> str {
+            if (scene_name == (MenuScene::StaticTypeName))
+            {
+                return GameScene::StaticTypeName;
+            }
+            else if (scene_name == (GameScene::StaticTypeName))
+            {
+                return HighScoresScene::StaticTypeName;
+            }
+            else if (scene_name == (HighScoresScene::StaticTypeName))
+            {
+                return MenuScene::StaticTypeName;
+            }
+            return str{};
+        });
+
+        scene_control->startScene<MenuScene>();
     }
 }
 
 void ZoperProgramController::onFinish(
-    sys::ISystemProvider& system_provider,
     haf::sys::DataWrapperCreator& data_wrapper_creator)
 {
     const bool check =
