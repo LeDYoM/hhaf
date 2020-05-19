@@ -10,7 +10,7 @@ set(CURRENT_TARGET "host")
 
 set(SRC_FILES "src/apploader.cpp" "src/host.cpp" "src/main.cpp")
 
-build_lib_component(HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
+build_lib_component(EXPORT_ALL HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
                     ${SRC_FILES})
 
 target_link_libraries(${CURRENT_TARGET} PRIVATE hosted_app)

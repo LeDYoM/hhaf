@@ -7,12 +7,15 @@ endfunction(add_log_and_types)
 # Function to build different components from the project in an unified way.
 function(build_lib_component)
 
-  cmake_parse_arguments(LC_BUILD "" "HEADER_DIRECTORY" "SOURCES" ${ARGN})
+  cmake_parse_arguments(LC_BUILD "EXPORT_ALL" "HEADER_DIRECTORY" "SOURCES"
+                        ${ARGN})
 
   add_library(${CURRENT_TARGET} SHARED ${LC_BUILD_SOURCES})
 
-  set_target_properties(${CURRENT_TARGET} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS
-                                                     true)
+  if(LC_BUILD_EXPORT_ALL)
+    set_target_properties(${CURRENT_TARGET}
+                          PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS true)
+  endif()
 
   target_include_directories(${CURRENT_TARGET}
                              PUBLIC ${LC_BUILD_HEADER_DIRECTORY})
