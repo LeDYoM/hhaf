@@ -31,6 +31,7 @@ target_include_directories(${CURRENT_TARGET}
 # $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> PRIVATE
 # ${CMAKE_CURRENT_SOURCE_DIR}/../)
 
+include (cmake/haf_functions.cmake)
 # Directory internal libraries that will be used by the client too.
 add_subdirectory(filesystem)
 target_link_libraries(${CURRENT_TARGET} PRIVATE filesystem)

@@ -24,10 +24,6 @@ add_compile_definitions(HAF_ALLOW_ACCELERATION)
 message("CXX Flags: " ${CMAKE_CXX_FLAGS})
 
 set(_REPO_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-message("A:::: " ${_REPO_OUTPUT_DIRECTORY})
-# set(LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-# set(RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-# set(ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 # First for the generic no-config case (e.g. with mingw, Ninja, Makefiles...)
 if(DEFINED CMAKE_BUILD_TYPE)
@@ -55,7 +51,7 @@ foreach(OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES})
 endforeach()
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
-include(${CMAKE_MODULE_PATH}/functions.cmake)
+include(functions)
 
 # Use the memmanager
 option(MTYPES_USE_MEMMANAGER "Compile mtypes using the memmanager wrappers" ON)
