@@ -1,20 +1,35 @@
 cmake_minimum_required(VERSION 3.14)
-project(haf)
+project(
+  "HAF Main Library"
+  VERSION 0.8.1.1
+  DESCRIPTION "Host Application Framework main library"
+  # [HOMEPAGE_URL <url-string>]
+  LANGUAGES CXX)
 
 set(_SOURCES "main.cpp")
 file(GLOB_RECURSE _HEADERS "include/*.hpp")
 
-set(CURRENT_TARGET ${PROJECT_NAME})
+set(CURRENT_TARGET haf)
+
+# Set the public directory for includes in this library. It will be
+# used by the external components.
 set(HAF_PUBLIC_INCLUDE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/)
+
+# Prepare the haf libray
 add_library(${CURRENT_TARGET} SHARED ${_SOURCES} ${_HEADERS})
+
+# For now, export all simbols
 set_target_properties(${CURRENT_TARGET} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS
                                                    true)
 
-#target_include_directories(
-#  ${CURRENT_TARGET}
-#  PUBLIC # $<INSTALL_INTERFACE:include>
-#         # $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> PRIVATE
-#         ${CMAKE_CURRENT_SOURCE_DIR}/../)
+# External users of the library will need to include from this directory.
+target_include_directories(${CURRENT_TARGET}
+                           INTERFACE ${HAF_PUBLIC_INCLUDE_DIRECTORY})
+
+# target_include_directories( ${CURRENT_TARGET} PUBLIC #
+# $<INSTALL_INTERFACE:include> #
+# $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> PRIVATE
+# ${CMAKE_CURRENT_SOURCE_DIR}/../)
 
 # Directory internal libraries that will be used by the client too.
 add_subdirectory(filesystem)
@@ -52,6 +67,8 @@ add_log_and_types()
 
 # TODO: Investigate some day if(MSVC) set_target_properties(${CURRENT_TARGET}
 # PROPERTIES LINK_FLAGS "${LINK_FLAGS} /NODEFAULTLIB") endif()
-build_doc()
+
+# Build documentation
+build_doc(${CURRENT_TARGET})
 
 add_subdirectory(tests)

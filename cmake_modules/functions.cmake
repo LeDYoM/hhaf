@@ -80,11 +80,6 @@ function(build_lib_interface_component)
   target_include_directories(${CURRENT_TARGET}
                              INTERFACE ${LC_BUILD_HEADER_DIRECTORY})
 
-  install(
-    TARGETS ${CURRENT_TARGET}
-    LIBRARY DESTINATION .
-    RUNTIME DESTINATION .)
-
 endfunction(build_lib_interface_component)
 
 # Function to build different components from the project in an unified way.
@@ -170,32 +165,32 @@ function(add_haf_test_executable)
 
 endfunction(add_haf_test_executable)
 
-function(build_doc)
-    # first we can indicate the documentation build as an option and set it to ON by
-    # default
-    option(BUILD_HAF_DOC "Build documentation" ON)
+function(build_doc _base_name)
+  # first we can indicate the documentation build as an option and set it to ON
+  # by default
+  option(BUILD_HAF_DOC "Build documentation" ON)
 
-    # check if Doxygen is installed
-    find_package(Doxygen)
-    if(DOXYGEN_FOUND)
-        message("Doxygen found")
-        message("Generating doxygen files")
-        # set input and output files
-        set(DOXYGEN_IN ${CMAKE_CURRENT_SOURCE_DIR}/docs/Doxyfile.in)
-        set(DOXYGEN_OUT ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
+  # check if Doxygen is installed
+  find_package(Doxygen)
+  if(DOXYGEN_FOUND)
+    message("Doxygen found")
+    message("Generating doxygen files for " ${_base_name})
+    # set input and output files
+    set(DOXYGEN_IN ${CMAKE_CURRENT_SOURCE_DIR}/docs/Doxyfile.in)
+    set(DOXYGEN_OUT ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
 
-        # request to configure the file
-        configure_file(${DOXYGEN_IN} ${DOXYGEN_OUT} @ONLY)
+    # request to configure the file
+    configure_file(${DOXYGEN_IN} ${DOXYGEN_OUT} @ONLY)
 
-        # note the option ALL which allows to build the docs together with the
-        # application
-        add_custom_target(
-            doc_doxygen
-            COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
-            WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-            COMMENT "Generating API documentation with Doxygen"
-            VERBATIM)
-    else(DOXYGEN_FOUND)
-        message("Doxygen need to be installed to generate the doxygen documentation")
-    endif(DOXYGEN_FOUND)
+    add_custom_target(
+      ${_base_name}_doc_doxygen
+      COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
+      WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+      COMMENT "Generating API documentation with Doxygen for ${_base_name}"
+      VERBATIM)
+  else(DOXYGEN_FOUND)
+    message(
+      "Doxygen need to be installed to generate the doxygen documentation for "
+      ${_base_name})
+  endif(DOXYGEN_FOUND)
 endfunction(build_doc)
