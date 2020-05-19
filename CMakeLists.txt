@@ -56,11 +56,19 @@ include(functions)
 # Use the memmanager
 option(MTYPES_USE_MEMMANAGER "Compile mtypes using the memmanager wrappers" ON)
 
-# Sub-directories where more CMakeLists.txt exist
+# Prepare the test framework
 add_subdirectory(tests)
+
+# Sub-directories where more CMakeLists.txt exist
 add_subdirectory(memmanager)
 add_subdirectory(mtypes)
 add_subdirectory(logger)
+
+# Create interface library to add loggger and types with memory management
+# in one line.
+add_library(log_and_types INTERFACE)
+target_link_libraries(log_and_types INTERFACE mtypes memmanager hlog)
+
 add_subdirectory(hlog)
 add_subdirectory(loader)
 add_subdirectory(hosted_app)

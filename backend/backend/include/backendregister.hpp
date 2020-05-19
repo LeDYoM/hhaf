@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef HAF_BACKEND_REGISTER_HPP
-#define HAF_BACKEND_REGISTER_HPP
+#ifndef HAF_BACKEND_REGISTER_INCLUDE_HPP
+#define HAF_BACKEND_REGISTER_INCLUDE_HPP
 
 #include <backend_dev/include/iwindow.hpp>
 #include <backend_dev/include/iresourcefactories.hpp>
