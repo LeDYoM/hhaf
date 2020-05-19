@@ -6,8 +6,8 @@ function(build_client_library)
 
   add_library(${CURRENT_TARGET} SHARED ${CL_BUILD_SOURCES} ${CL_BUILD_HEADERS})
 
-  set_target_properties(${CURRENT_TARGET} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS
-                                                     true)
+#  set_target_properties(${CURRENT_TARGET} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS
+#                                                     true)
 
   # Detect and add libraries
   target_link_libraries(${CURRENT_TARGET} PRIVATE hosted_app)
