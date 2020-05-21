@@ -24,6 +24,12 @@ public:
     {
     }
 
+    RenderizableSceneNode(mtps::rptr<SceneNode> parent, const mtps::str&name)
+        : SceneNode{std::move(parent), name},
+          node_{}
+    {
+    }
+
     mtps::sptr<Renderizable> node() noexcept { return node_; }
     const mtps::sptr<Renderizable> node() const noexcept { return node_; }
 

@@ -28,6 +28,13 @@ void createStandardBackground(
             })
             .create();
 
+    background->color_modifier = [](const RenderizableModifierContext& context) {
+                const auto n = context.normalizedVertexInBox();
+                static constexpr auto decrease_ratio = 0.5F;
+                return Color::fromFloats(n.y * decrease_ratio,
+                                         n.y * decrease_ratio,
+                                         n.y * decrease_ratio);
+            };
     //        background->shader =
     //        resources_viewer->getShader(MainMenuResources::Shader);
 }
