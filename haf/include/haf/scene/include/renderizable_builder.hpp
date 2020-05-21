@@ -13,7 +13,7 @@
 
 namespace haf::scene
 {
-class SceneNode;
+class Renderizables;
 class Renderizable;
 class IShader;
 class ITexture;
@@ -23,11 +23,11 @@ enum class FigType_t : mtps::u8;
 class RenderizableBuilder
 {
 public:
-    RenderizableBuilder(mtps::str name,
-                        mtps::rptr<SceneNode> scene_node) noexcept;
+    RenderizableBuilder(mtps::rptr<Renderizables> renderizables) noexcept;
 
     mtps::sptr<Renderizable> create();
 
+    RenderizableBuilder& name(mtps::str _name);
     RenderizableBuilder& figType(FigType_t fig_type);
     RenderizableBuilder& box(mtps::Rectf32 _box);
     RenderizableBuilder& color(Color _color);
@@ -37,9 +37,10 @@ public:
     RenderizableBuilder& colorModifier(
         mtps::function<Color(const RenderizableModifierContext&)>
             color_modifier);
+
     struct Data
     {
-        mtps::rptr<SceneNode> scene_node_;
+        mtps::rptr<Renderizables> renderizables_;
         mtps::str name_;
         FigType_t figType_;
         mtps::Rectf32 box_;

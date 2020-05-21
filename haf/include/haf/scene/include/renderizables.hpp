@@ -8,6 +8,7 @@
 #include <mtypes/include/vector.hpp>
 
 #include <haf/scene/include/renderizable.hpp>
+#include <haf/scene/include/renderizable_builder.hpp>
 
 namespace haf::scene
 {
@@ -73,8 +74,8 @@ public:
         std::move(num_points));
     }
 
-    mtps::sptr<Renderizable> createRenderizable(const RenderizableBuilder& builder);
-    
+    RenderizableBuilder renderizableBuilder();
+
     void removeRenderizable(const mtps::sptr<Renderizable> &element);
     void clearRenderizables();
 

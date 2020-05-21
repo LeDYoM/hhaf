@@ -1,19 +1,25 @@
 #include "renderizable_builder.hpp"
-#include "scenenode.hpp"
+#include "renderizables.hpp"
 
 namespace haf::scene
 {
 
 RenderizableBuilder::RenderizableBuilder(
-    mtps::str name,
-    mtps::rptr<SceneNode> scene_node) noexcept :
-    data_{std::move(scene_node), std::move(name)}
-
+    mtps::rptr<Renderizables> renderizables) noexcept :
+    data_{std::move(renderizables)}
 {}
 
 mtps::sptr<Renderizable> RenderizableBuilder::create()
 {
-    return nullptr;
+    return data_.renderizables_->createRenderizable(
+        data_.name_, data_.figType_, data_.box_, data_.color_, data_.texture_,
+        data_.shader_, data_.pointCount_);
+}
+
+RenderizableBuilder& RenderizableBuilder::name(mtps::str _name)
+{
+    data_.name_ = std::move(_name);
+    return *this;
 }
 
 RenderizableBuilder& RenderizableBuilder::figType(FigType_t fig_type)

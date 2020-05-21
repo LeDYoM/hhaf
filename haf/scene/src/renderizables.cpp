@@ -24,12 +24,9 @@ sptr<Renderizable> Renderizables::createRenderizable(str name,
     return result;
 }
 
-mtps::sptr<Renderizable> Renderizables::createRenderizable(
-    const RenderizableBuilder& builder)
+RenderizableBuilder Renderizables::renderizableBuilder()
 {
-    const auto& data{builder.data()};
-    return createRenderizable(data.name_, data.figType_, data.box_, data.color_,
-                              data.texture_, data.shader_, data.pointCount_);
+    return RenderizableBuilder{this};
 }
 
 void Renderizables::updateRenderizables()
