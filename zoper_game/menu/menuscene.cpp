@@ -20,7 +20,8 @@ namespace zoper
 
 constexpr u32 PointsPerQuad = 6U;
 
-MenuScene::MenuScene() : BaseClass{StaticTypeName} {}
+MenuScene::MenuScene() : BaseClass{StaticTypeName}
+{}
 MenuScene::~MenuScene() = default;
 
 void MenuScene::onCreated()
@@ -33,16 +34,25 @@ void MenuScene::onCreated()
 
     createStandardBackground(this);
 
-//    auto logo = createRenderizable(
-//        "mainLogo", FigType_t::EmptyQuad, Rectf32{500, 150, 1000, 500},colors::Red);
+    //    auto logo = createRenderizable(
+    //        "mainLogo", FigType_t::EmptyQuad, Rectf32{500, 150, 1000,
+    //        500},colors::Red);
 
-    auto logo = createRenderizable(
-        "mainLogo", FigType_t::Quad, Rectf32{500, 150, 1000, 500},
-        resources_viewer->getTexture(MainMenuResources::LogoId));
+    auto logo =
+        renderizableBuilder()
+            .name("mainLogo")
+            .figType(FigType_t::Quad)
+            .box(Rectf32{500, 150, 1000, 500})
+            .texture(resources_viewer->getTexture(MainMenuResources::LogoId))
+            .create();
 
+    /*
+        auto logo = createRenderizable(
+            "mainLogo", FigType_t::Quad, Rectf32{500, 150, 1000, 500},
+            resources_viewer->getTexture(MainMenuResources::LogoId));
+    */
     auto mainMenu(createSceneNode<MainMenu>(MainMenu::ClassName));
-    mainMenu->MenuFinished.connect([this](const s32 status)
-    {
+    mainMenu->MenuFinished.connect([this](const s32 status) {
         if (status == 0)
         {
             dataWrapper<sys::SystemRequests>()->requestExit();
@@ -50,4 +60,4 @@ void MenuScene::onCreated()
         dataWrapper<SceneControl>()->switchToNextScene();
     });
 }
-} // namespace zoper
+}  // namespace zoper

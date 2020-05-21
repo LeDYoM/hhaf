@@ -44,8 +44,8 @@ public:
         mtps::str name_;
         FigType_t figType_;
         mtps::Rectf32 box_;
-        Color color_;
-        mtps::size_type pointCount_;
+        Color color_{colors::White};
+        mtps::size_type pointCount_{4U};
         mtps::sptr<IShader> shader_;
         mtps::sptr<ITexture> texture_;
         mtps::function<Color(const RenderizableModifierContext&)> color_modifier_;
