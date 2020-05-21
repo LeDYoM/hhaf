@@ -29,9 +29,13 @@ enum class FigType_t : mtps::u8
 class Renderizable final : public sys::HasName
 {
 public:
-    Renderizable(mtps::rptr<SceneNode> parent, mtps::str name,
-                 FigType_t figure_type, mtps::size_type initial_point_count, 
-                 mtps::Rectf32 _box, Color color, mtps::sptr<ITexture> _texture,
+    Renderizable(mtps::rptr<SceneNode> parent,
+                 mtps::str name,
+                 FigType_t figure_type,
+                 mtps::size_type initial_point_count,
+                 mtps::Rectf32 _box,
+                 Color color,
+                 mtps::sptr<ITexture> _texture,
                  mtps::sptr<IShader> _shader);
 
     ~Renderizable();
@@ -43,12 +47,14 @@ public:
     mtps::PropertyState<Color> color;
     mtps::PropertyState<mtps::size_type> pointCount;
     mtps::PropertyState<mtps::sptr<IShader>> shader;
-    mtps::PropertyState<mtps::function<Color(const RenderizableModifierContext &)>> color_modifier;
+    mtps::PropertyState<
+        mtps::function<Color(const RenderizableModifierContext&)>>
+        color_modifier;
 
     mtps::BasicProperty<bool> visible{true};
 
     void setTextureAndTextureRect(mtps::sptr<ITexture> texture_,
-                                  const mtps::Rectf32 &textRect);
+                                  const mtps::Rectf32& textRect);
 
     void setTextureFill(mtps::sptr<ITexture> texture_);
 
@@ -63,15 +69,20 @@ private:
 
     void updateGeometry();
     void updateTextureCoordsAndColor();
-    void updateTextureCoordsAndColorForVertex(const BasicVertexArray::iterator v_iterator,
-                                              const mtps::Rectf32 &cbox, const mtps::Rects32 &ctexture_rect);
+    void updateTextureCoordsAndColorForVertex(
+        const BasicVertexArray::iterator v_iterator,
+        const mtps::Rectf32& cbox,
+        const mtps::Rects32& ctexture_rect);
     void updateColorForVertex(const BasicVertexArray::iterator v_iterator,
-                              const mtps::Rectf32 &cbox, const mtps::Rects32 &ctexture_rect);
+                              const mtps::Rectf32& cbox,
+                              const mtps::Rects32& ctexture_rect);
     void updateColors();
 
-    mtps::vector2df normalizeInBox(const mtps::vector2df &position, const mtps::Rectf32 box, const mtps::Rectf32 &rect) const;
+    mtps::vector2df normalizeInBox(const mtps::vector2df& position,
+                                   const mtps::Rectf32 box,
+                                   const mtps::Rectf32& rect) const;
     void update();
 };
-} // namespace haf::scene
+}  // namespace haf::scene
 
 #endif

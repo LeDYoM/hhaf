@@ -64,7 +64,7 @@ target_link_libraries(${CURRENT_TARGET} PRIVATE window)
 target_link_libraries(${CURRENT_TARGET} PRIVATE hosted_app)
 target_link_libraries(${CURRENT_TARGET} PRIVATE loader)
 
-add_log_and_types()
+target_link_libraries(${CURRENT_TARGET} PUBLIC log_and_types)
 
 # TODO: Investigate some day if(MSVC) set_target_properties(${CURRENT_TARGET}
 # PROPERTIES LINK_FLAGS "${LINK_FLAGS} /NODEFAULTLIB") endif()

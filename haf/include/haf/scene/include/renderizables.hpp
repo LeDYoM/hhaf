@@ -8,10 +8,12 @@
 #include <mtypes/include/vector.hpp>
 
 #include <haf/scene/include/renderizable.hpp>
+#include <haf/scene/include/renderizable_builder.hpp>
 
 namespace haf::scene
 {
 class SceneNode;
+class RenderizableBuilder;
 
 class Renderizables
 {
@@ -71,6 +73,8 @@ public:
         std::move(box), std::move(color), nullptr, nullptr, 
         std::move(num_points));
     }
+
+    RenderizableBuilder renderizableBuilder();
 
     void removeRenderizable(const mtps::sptr<Renderizable> &element);
     void clearRenderizables();

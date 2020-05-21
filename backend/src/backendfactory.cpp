@@ -4,16 +4,18 @@
 
 #include <loader/include/loader.hpp>
 
-namespace haf::backend
-{
 using namespace mtps;
 
+namespace haf::backend
+{
+namespace
+{
 template <typename FactoryType>
-inline bool fillFactory(const uptr<BackendRegister>& backend_register,
-                        FactoryType** factory_to_fill)
+bool fillFactory(const uptr<BackendRegister>& backend_register,
+                 FactoryType** factory_to_fill)
 {
     if (auto factory(backend_register->getFactory<IFactoryOf<FactoryType>>());
-        factory)
+        factory != nullptr)
     {
         (*factory_to_fill) = factory->create();
         return (*factory_to_fill) != nullptr;
@@ -22,13 +24,13 @@ inline bool fillFactory(const uptr<BackendRegister>& backend_register,
 }
 
 template <typename FactoryType>
-inline bool emptyFactory(const uptr<BackendRegister>& backend_register,
-                         FactoryType** factory_to_empty)
+bool emptyFactory(const uptr<BackendRegister>& backend_register,
+                  FactoryType** factory_to_empty)
 {
     if (auto factory(backend_register->getFactory<IFactoryOf<FactoryType>>());
-        factory)
+        factory != nullptr)
     {
-        if (factory_to_empty && *factory_to_empty)
+        if (factory_to_empty != nullptr && *factory_to_empty != nullptr)
         {
             factory->destroy(*factory_to_empty);
             (*factory_to_empty) = nullptr;
@@ -37,40 +39,45 @@ inline bool emptyFactory(const uptr<BackendRegister>& backend_register,
     }
     return false;
 }
+}  // namespace
 
-BackendFactory::BackendFactory()
+BackendFactory::BackendFactory() :
+    window_{nullptr},
+    textureFactory_{nullptr},
+    ttfontFactory_{nullptr},
+    shaderFactory_{nullptr},
+    bmpFontFactory_{nullptr}
 {
-    using namespace loader;
-    auto* loader(createLoader());
+    auto* loader(loader::createLoader());
 
     static const char* sh_name = "bsfml";
     if (loader->loadModule(sh_name))
     {
-        auto fp_init_haf =
+        const auto fp_init_haf =
             static_cast<p_initHaf>(loader->loadMethod(sh_name, "init_lib"));
-        auto fp_finish_haf =
+        const auto fp_finish_haf =
             static_cast<p_initHaf>(loader->loadMethod(sh_name, "finish_lib"));
 
-        if (fp_init_haf && fp_finish_haf)
+        if (fp_init_haf != nullptr && fp_finish_haf != nullptr)
         {
             backend_register_ = muptr<BackendRegister>();
             backend_register_->setLibFuncs(fp_init_haf, fp_finish_haf);
             backend_register_->init();
         }
 
-        bool result{fillFactory(backend_register_, &m_window)};
-        result &= fillFactory(backend_register_, &m_ttfontFactory);
-        result &= fillFactory(backend_register_, &m_textureFactory);
-        result &= fillFactory(backend_register_, &m_shaderFactory);
+        bool result{fillFactory(backend_register_, &window_)};
+        result &= fillFactory(backend_register_, &ttfontFactory_);
+        result &= fillFactory(backend_register_, &textureFactory_);
+        result &= fillFactory(backend_register_, &shaderFactory_);
     }
 }
 
 BackendFactory::~BackendFactory()
 {
-    bool result{emptyFactory(backend_register_, &m_window)};
-    result &= emptyFactory(backend_register_, &m_textureFactory);
-    result &= emptyFactory(backend_register_, &m_ttfontFactory);
-    result &= emptyFactory(backend_register_, &m_shaderFactory);
+    bool result{emptyFactory(backend_register_, &window_)};
+    result &= emptyFactory(backend_register_, &textureFactory_);
+    result &= emptyFactory(backend_register_, &ttfontFactory_);
+    result &= emptyFactory(backend_register_, &shaderFactory_);
     backend_register_->finish();
 
     backend_register_.reset();
@@ -78,29 +85,29 @@ BackendFactory::~BackendFactory()
     loader::destroyLoader();
 }
 
-IWindow* haf::backend::BackendFactory::getWindow()
+rptr<IWindow> BackendFactory::getWindow()
 {
-    return m_window;
+    return window_;
 }
 
-ITextureFactory* BackendFactory::getTextureFactory() const noexcept
+rptr<ITextureFactory> BackendFactory::getTextureFactory() const noexcept
 {
-    return m_textureFactory;
+    return textureFactory_;
 }
 
-ITTFontFactory* BackendFactory::getTTFontFactory() const noexcept
+rptr<ITTFontFactory> BackendFactory::getTTFontFactory() const noexcept
 {
-    return m_ttfontFactory;
+    return ttfontFactory_;
 }
 
-IShaderFactory* BackendFactory::getShaderFactory() const noexcept
+rptr<IShaderFactory> BackendFactory::getShaderFactory() const noexcept
 {
-    return m_shaderFactory;
+    return shaderFactory_;
 }
 
-IBMPFontFactory* BackendFactory::getBMPFontFactory() const noexcept
+rptr<IBMPFontFactory> BackendFactory::getBMPFontFactory() const noexcept
 {
-    return m_bmpFontFactory;
+    return bmpFontFactory_;
 }
 
 ITextureFactory& BackendFactory::textureFactory() const

@@ -1,9 +1,3 @@
-function(add_log_and_types)
-  target_link_libraries(${CURRENT_TARGET} PUBLIC mtypes)
-  target_link_libraries(${CURRENT_TARGET} PUBLIC memmanager)
-  target_link_libraries(${CURRENT_TARGET} PUBLIC hlog)
-endfunction(add_log_and_types)
-
 # Function to build different components from the project in an unified way.
 function(build_lib_component)
 
@@ -59,7 +53,7 @@ function(build_concrete_backend)
 
   add_library(${CURRENT_TARGET} SHARED ${SOURCES})
 
-  add_log_and_types()
+  target_link_libraries(${CURRENT_TARGET} PRIVATE log_and_types)
   target_link_libraries(${CURRENT_TARGET} PRIVATE backend_dev)
 
 endfunction(build_concrete_backend)
