@@ -12,6 +12,7 @@
 namespace haf::scene
 {
 class SceneNode;
+class RenderizableBuilder;
 
 class Renderizables
 {
@@ -72,6 +73,8 @@ public:
         std::move(num_points));
     }
 
+    mtps::sptr<Renderizable> createRenderizable(const RenderizableBuilder& builder);
+    
     void removeRenderizable(const mtps::sptr<Renderizable> &element);
     void clearRenderizables();
 

@@ -5,6 +5,7 @@ set (_SOURCES
     "src/componentcontainer_update.cpp"
     "src/componentcontainer_no_update.cpp"
     "src/renderizable.cpp"
+    "src/renderizable_builder.cpp"
     "src/renderizables.cpp"
     "src/scenecontroller.cpp"
     "src/scenemanager.cpp"

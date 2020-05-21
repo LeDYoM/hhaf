@@ -2,27 +2,34 @@
 
 #include <hlog/include/hlog.hpp>
 #include <haf/scene/include/scenenode.hpp>
-#include <haf/scene/include/scenenode.hpp>
+#include <haf/scene/include/renderizable_builder.hpp>
 
 using namespace mtps;
 
 namespace haf::scene
 {
-sptr<Renderizable> Renderizables::createRenderizable(
-    str name,
-    FigType_t figure_type,
-    Rectf32 box,
-    Color color,
-    sptr<ITexture> texture,
-    sptr<IShader> shader,
-    size_type num_points)
+sptr<Renderizable> Renderizables::createRenderizable(str name,
+                                                     FigType_t figure_type,
+                                                     Rectf32 box,
+                                                     Color color,
+                                                     sptr<ITexture> texture,
+                                                     sptr<IShader> shader,
+                                                     size_type num_points)
 {
-    auto result(msptr<Renderizable>(
-        scene_node_, std::move(name), figure_type, std::move(num_points),
-        std::move(box), std::move(color), std::move(texture),
-        std::move(shader)));
+    auto result(msptr<Renderizable>(scene_node_, std::move(name), figure_type,
+                                    std::move(num_points), std::move(box),
+                                    std::move(color), std::move(texture),
+                                    std::move(shader)));
     addRenderizable(result);
     return result;
+}
+
+mtps::sptr<Renderizable> Renderizables::createRenderizable(
+    const RenderizableBuilder& builder)
+{
+    const auto& data{builder.data()};
+    return createRenderizable(data.name_, data.figType_, data.box_, data.color_,
+                              data.texture_, data.shader_, data.pointCount_);
 }
 
 void Renderizables::updateRenderizables()
@@ -36,7 +43,7 @@ void Renderizables::updateRenderizables()
 void Renderizables::removeRenderizable(const sptr<Renderizable>& element)
 {
     LogAsserter::log_assert(element.get() != nullptr,
-               "Received empty renderizable node to be deleted");
+                            "Received empty renderizable node to be deleted");
     render_nodes_.erase_values(element);
 }
 
