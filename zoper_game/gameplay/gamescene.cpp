@@ -50,9 +50,9 @@ struct GameScene::GameScenePrivate
         auto sceneNode =
             main_node.createSceneNode("pointIncrementScore_SceneNode");
 
-        auto node(sceneNode->createRenderizable(
-            "pointIncrementScore", FigType_t::Shape, rectFromSize(15.0F, 15.0F),
-            colors::White, 30U));
+        auto node = sceneNode->renderizableBuilder().name("pointIncrementScore").
+        figType(FigType_t::Shape).box(rectFromSize(15.0F, 15.0F)).
+        color(colors::White).pointCount(30U).create();
 
         {
             using namespace gameplay::constants;

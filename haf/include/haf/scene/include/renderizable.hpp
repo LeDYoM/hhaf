@@ -10,6 +10,7 @@
 #include <haf/scene/include/renderizable_modifier_context.hpp>
 #include <haf/scene/include/color.hpp>
 #include <haf/scene/include/hasname.hpp>
+#include <haf/scene/include/fig_type.hpp>
 #include <haf/scene/include/vertexarray.hpp>
 #include <haf/resources/include/itexture.hpp>
 #include <haf/resources/include/ishader.hpp>
@@ -18,13 +19,6 @@
 namespace haf::scene
 {
 class SceneNode;
-
-enum class FigType_t : mtps::u8
-{
-    Quad,
-    Shape,
-    EmptyQuad
-};
 
 class Renderizable final : public sys::HasName
 {

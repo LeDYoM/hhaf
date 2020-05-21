@@ -34,10 +34,6 @@ void MenuScene::onCreated()
 
     createStandardBackground(this);
 
-    //    auto logo = createRenderizable(
-    //        "mainLogo", FigType_t::EmptyQuad, Rectf32{500, 150, 1000,
-    //        500},colors::Red);
-
     auto logo =
         renderizableBuilder()
             .name("mainLogo")
@@ -46,11 +42,6 @@ void MenuScene::onCreated()
             .texture(resources_viewer->getTexture(MainMenuResources::LogoId))
             .create();
 
-    /*
-        auto logo = createRenderizable(
-            "mainLogo", FigType_t::Quad, Rectf32{500, 150, 1000, 500},
-            resources_viewer->getTexture(MainMenuResources::LogoId));
-    */
     auto mainMenu(createSceneNode<MainMenu>(MainMenu::ClassName));
     mainMenu->MenuFinished.connect([this](const s32 status) {
         if (status == 0)

@@ -25,7 +25,7 @@ Player::Player(rptr<SceneNode> parent, str name) :
     auto render_scene_node = rotator_->createSceneNode<RenderizableSceneNode>(
         "player_render_scene_node", FigType_t::Shape, 3U);
 
-    m_node    = render_scene_node->node();
+    node_    = render_scene_node->node();
     scalator_ = render_scene_node;
 }
 
@@ -38,7 +38,7 @@ void Player::configure(const vector2dst& bPosition,
 {
     m_board2SceneFactor = board2SceneFactor;
     boardPosition.set(bPosition);
-    m_node->box.set(box);
+    node_->box.set(box);
 }
 
 void Player::update()
@@ -110,7 +110,7 @@ void Player::launchAnimationBack(const vector2df& toWhere)
 void Player::tileAdded(const vector2dst& position_)
 {
     DisplayLog::info("TokenPlayer appeared at ", position_);
-    m_node->color.set(getColorForToken());
+    node_->color.set(getColorForToken());
 
     // Set the position in the scene depending on the board position
     boardPosition.set(position_);
