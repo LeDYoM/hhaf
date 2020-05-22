@@ -12,10 +12,9 @@ using namespace haf;
 using namespace haf::scene;
 using namespace haf::sys;
 
-void LevelProperties::configure(
-    const size_type currentLevel,
-    const GameMode gameMode,
-    sptr<time::TimerComponent> sceneTimerComponent)
+void LevelProperties::configure(const size_type currentLevel,
+                                const GameMode gameMode,
+                                sptr<time::TimerComponent> sceneTimerComponent)
 {
     using namespace time;
 
@@ -24,9 +23,9 @@ void LevelProperties::configure(
         m_levelTimer = attachedNode()->dataWrapper<Timer>();
     }
     LogAsserter::log_assert(sceneTimerComponent != nullptr,
-               "m_sceneNodeComponent already contains a value");
+                            "m_sceneNodeComponent already contains a value");
     LogAsserter::log_assert(m_sceneTimerComponent == nullptr,
-               "Passed nullptr sceneTimerComponent");
+                            "Passed nullptr sceneTimerComponent");
 
     m_gameMode = gameMode;
     m_sceneTimerComponent.swap(sceneTimerComponent);
@@ -44,10 +43,10 @@ void LevelProperties::configure(
 void LevelProperties::setScore(const size_type new_score)
 {
     m_currentScore = new_score;
-    auto game_shared_data_view =
-        attachedNode()->dataWrapper<shdata::SharedDataView>();
-    auto game_shared_data =
-        game_shared_data_view->dataAs<GameSharedData>().score = m_currentScore;
+    attachedNode()
+        ->dataWrapper<shdata::SharedDataView>()
+        ->dataAs<GameSharedData>()
+        .score = m_currentScore;
     m_gameHud->setScore(m_currentScore);
 }
 
@@ -64,7 +63,7 @@ void LevelProperties::setLevel(const LevelType currentLevel)
             m_currentLevel;
     }
 
-    m_baseScore      = 2U * m_currentLevel;
+    m_baseScore      = 2U * (m_currentLevel + 1U);
     m_consumedTokens = 0U;
 
     if (m_currentLevel <= maxLevelWithProperties)
@@ -107,24 +106,25 @@ void LevelProperties::updateLevelData()
 {
     switch (m_gameMode)
     {
-    default:
-    case GameMode::Token:
-        m_gameHud->setConsumedTokens(m_consumedTokens);
+        default:
+        case GameMode::Token:
+            m_gameHud->setConsumedTokens(m_consumedTokens);
 
-        if (m_consumedTokens >= m_stayCounter)
-        {
-            nextLevel();
-        }
-        break;
+            if (m_consumedTokens >= m_stayCounter)
+            {
+                nextLevel();
+            }
+            break;
 
-    case GameMode::Time:
-        m_gameHud->setEllapsedTimeInSeconds(m_levelTimer->ellapsed().seconds());
+        case GameMode::Time:
+            m_gameHud->setEllapsedTimeInSeconds(
+                m_levelTimer->ellapsed().seconds());
 
-        if (m_levelTimer->ellapsed().seconds() >= m_stayCounter)
-        {
-            nextLevel();
-        }
-        break;
+            if (m_levelTimer->ellapsed().seconds() >= m_stayCounter)
+            {
+                nextLevel();
+            }
+            break;
     }
 }
 
