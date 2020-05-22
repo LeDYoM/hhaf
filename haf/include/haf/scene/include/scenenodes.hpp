@@ -39,6 +39,14 @@ public:
         return result;
     }
 
+    template <typename T = SceneNode>
+    mtps::sptr<T> createSceneNode(mtps::str name)
+    {
+        auto result(mtps::msptr<T>(scene_node_, std::move(name)));
+        addSceneNode(result);
+        return result;
+    }
+
     void removeSceneNode(mtps::sptr<SceneNode> element);
     void clearSceneNodes();
 

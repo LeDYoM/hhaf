@@ -19,8 +19,10 @@ private:
     using BaseClass = SceneNode;
 
 public:
-    BoardSceneNode(SceneNode *parent, mtps::str name, const mtps::Rectf32 &tileBox);
+    using SceneNode::SceneNode;
     virtual ~BoardSceneNode();
+
+    void configure(const mtps::Rectf32 &tileBox);
 
     void setTileColor(Color color);
 

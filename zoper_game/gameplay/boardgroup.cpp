@@ -42,8 +42,9 @@ void BoardGroup::onCreated()
     {
         for (size_type x{0U}; x < tableSize().x; ++x)
         {
-            static_cast<void>(createNodeAt(
-                {x, y}, make_str("BoardGroupTile_", x, y), tileBox));
+            auto node = createNodeAt(
+                {x, y}, make_str("BoardGroupTile_", x, y));
+            node->configure(tileBox);
         }
     }
 
@@ -52,7 +53,7 @@ void BoardGroup::onCreated()
 
     p_boardModel->setBackgroundFunction(
         [](const vector2dst& position) -> board::BackgroundData {
-            return ((TokenZones::pointInCenter(position)) ? (1) :(0));
+            return ((TokenZones::pointInCenter(position)) ? (1) : (0));
         });
 
     tokens_scene_node = createSceneNode("tokens_scene_node");
@@ -231,7 +232,8 @@ mtps::sptr<board::BoardManager> BoardGroup::boardModel() noexcept
     return p_boardModel;
 }
 
-const mtps::sptr<const board::BoardManager> BoardGroup::boardModel() const noexcept
+const mtps::sptr<const board::BoardManager> BoardGroup::boardModel()
+    const noexcept
 {
     return p_boardModel;
 }
@@ -246,7 +248,13 @@ const mtps::sptr<scene::SceneNode> BoardGroup::tokensSceneNode() const noexcept
     return tokens_scene_node;
 }
 
-mtps::sptr<Player> BoardGroup::player() noexcept { return player_; }
-const mtps::sptr<Player> BoardGroup::player() const noexcept { return player_; }
+mtps::sptr<Player> BoardGroup::player() noexcept
+{
+    return player_;
+}
+const mtps::sptr<Player> BoardGroup::player() const noexcept
+{
+    return player_;
+}
 
 }  // namespace zoper

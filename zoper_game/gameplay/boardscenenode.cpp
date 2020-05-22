@@ -7,10 +7,9 @@ namespace zoper
 {
 using namespace haf::scene;
 
-BoardSceneNode::BoardSceneNode(SceneNode* parent,
-                               str name,
-                               const Rectf32& tileBox) :
-    BaseClass{parent, std::move(name)}
+BoardSceneNode::~BoardSceneNode() = default;
+
+void BoardSceneNode::configure(const mtps::Rectf32 &tileBox) 
 {
     // Size of the point in the middle of the tile
     static constexpr vector2df centerPointSize{15, 15};
@@ -34,10 +33,8 @@ BoardSceneNode::BoardSceneNode(SceneNode* parent,
                            .name("backgroundTile")
                            .figType(FigType_t::Quad)
                            .box(tileBox)
-                           .create();
+                           .create();    
 }
-
-BoardSceneNode::~BoardSceneNode() = default;
 
 void BoardSceneNode::setTileColor(Color color)
 {
@@ -45,4 +42,5 @@ void BoardSceneNode::setTileColor(Color color)
                             "This node is not correctly initialized");
     m_backgroundTile->color = std::move(color);
 }
+
 }  // namespace zoper
