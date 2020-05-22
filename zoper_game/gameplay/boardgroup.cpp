@@ -2,6 +2,7 @@
 #include "token.hpp"
 #include "tokenzones.hpp"
 #include "player.hpp"
+#include "levelproperties.hpp"
 
 #include <haf/scene/include/scenenode.hpp>
 #include <haf/scene_nodes/include/tablenode.hpp>
@@ -18,18 +19,13 @@ using namespace haf::scene::nodes;
 namespace zoper
 {
 
-BoardGroup::BoardGroup(SceneNode* parent, str name, vector2dst size) :
-    BaseClass{parent, std::move(name)}
-{
-    setTableSize(std::move(size));
-}
+BoardGroup::~BoardGroup() = default;
 
-BoardGroup::~BoardGroup()
-{}
-
-void BoardGroup::onCreated()
+void BoardGroup::configure(vector2dst size,
+                           sptr<LevelProperties> level_properties)
 {
-    BaseClass::onCreated();
+    level_properties_ = std::move(level_properties);
+    setTableSize(size);
 
     Rectf32 textBox{dataWrapper<SceneMetricsView>()->currentView()};
     position      = textBox.leftTop();
@@ -42,8 +38,7 @@ void BoardGroup::onCreated()
     {
         for (size_type x{0U}; x < tableSize().x; ++x)
         {
-            auto node = createNodeAt(
-                {x, y}, make_str("BoardGroupTile_", x, y));
+            auto node = createNodeAt({x, y}, make_str("BoardGroupTile_", x, y));
             node->configure(tileBox);
         }
     }
@@ -57,12 +52,8 @@ void BoardGroup::onCreated()
         });
 
     tokens_scene_node = createSceneNode("tokens_scene_node");
+    setLevel(level_properties_->currentLevel());
     addPlayer();
-}
-
-void BoardGroup::configure(sptr<LevelProperties> level_properties)
-{
-    level_properties_ = std::move(level_properties);
 }
 
 void BoardGroup::addPlayer()

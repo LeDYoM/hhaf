@@ -12,15 +12,18 @@ class TextQuad : public TableNode<SceneNodeText>
 {
 public:
     using BaseClass = TableNode<SceneNodeText>;
-    TextQuad(SceneNode *parent, mtps::str name,
-             mtps::sptr<IFont> font, const Color &color, const mtps::vector2df &size);
-    virtual ~TextQuad();
+    using BaseClass::BaseClass;
+    ~TextQuad() override;
+
+    void configure(mtps::sptr<IFont> font,
+                   const Color& color,
+                   const mtps::vector2df& size);
 
     inline mtps::sptr<SceneNodeText> text(mtps::vector2dst index) const noexcept
     {
         return nodeAt(std::move(index));
     }
 };
-} // namespace haf::scene::nodes
+}  // namespace haf::scene::nodes
 
 #endif

@@ -86,7 +86,7 @@ void GameScene::onCreated()
     using namespace haf::board;
 
     LogAsserter::log_assert(!m_boardGroup, "m_boardGroup is not empty");
-    m_boardGroup = createSceneNode<BoardGroup>("BoardGroup", TokenZones::size);
+    m_boardGroup = createSceneNode<BoardGroup>("BoardGroup");
 
     m_nextTokenPart = 0U;
 
@@ -157,7 +157,7 @@ void GameScene::onCreated()
     level_properties_->configure(start_level, game_mode,
                                  scene_timer_component_);
 
-    m_boardGroup->configure(level_properties_);
+    m_boardGroup->configure(TokenZones::size, level_properties_);
 
 #ifdef USE_DEBUG_ACTIONS
     addComponentOfType<DebugActions>();

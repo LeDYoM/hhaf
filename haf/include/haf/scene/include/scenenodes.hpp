@@ -31,6 +31,7 @@ public:
      * @param args Actual value for the arguments
      * @return mtps::sptr<T> The created object
      */
+    /*
     template <typename T = SceneNode, typename... Args>
     mtps::sptr<T> createSceneNode(Args&&... args)
     {
@@ -38,7 +39,7 @@ public:
         addSceneNode(result);
         return result;
     }
-
+*/
     template <typename T = SceneNode>
     mtps::sptr<T> createSceneNode(mtps::str name)
     {

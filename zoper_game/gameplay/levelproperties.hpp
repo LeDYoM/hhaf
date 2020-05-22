@@ -29,6 +29,7 @@ public:
     inline size_t millisBetweenTokens() const { return m_millisBetweenTokens; }
     inline size_t baseScore() const { return m_baseScore; }
     inline size_t stayCounter() const { return m_stayCounter; }
+    inline LevelType currentLevel() const { return m_currentLevel; }
     void increaseScore(const mtps::size_type scoreIncrement);
     void nextLevel();
     static constexpr size_t maxLevelWithProperties{25U};
