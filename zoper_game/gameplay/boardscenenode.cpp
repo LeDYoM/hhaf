@@ -18,9 +18,16 @@ BoardSceneNode::BoardSceneNode(SceneNode* parent,
     const Rectf32 point_box{tileBox.center() - (centerPointSize / 2.0F),
                             centerPointSize};
 
-    m_pointInCenter = createSceneNode<RenderizableSceneNode>(
-        "backgroundTilePoint", FigType_t::Quad,
-        Rectf32{0, 0, point_box.width, point_box.height}, colors::White);
+    m_pointInCenter =
+        createSceneNode<RenderizableSceneNode>("backgroundTilePoint");
+
+    auto builder = m_pointInCenter->renderizableBuilder();
+    builder.name("backgroundTilePoint")
+        .figType(FigType_t::Quad)
+        .box(Rectf32{0, 0, point_box.width, point_box.height})
+        .color(colors::White);
+    m_pointInCenter->buildNode(builder);
+
     m_pointInCenter->position.set(point_box.leftTop());
 
     m_backgroundTile = renderizableBuilder()

@@ -5,7 +5,7 @@
 #include <boardmanager/include/boardmanager.hpp>
 
 #include <hlog/include/hlog.hpp>
-#include <haf/scene/include/scenenodetypes.hpp>
+#include <haf/scene_nodes/include/renderizable_scenenode.hpp>
 
 namespace zoper
 {
@@ -23,14 +23,17 @@ Player::Player(rptr<SceneNode> parent, str name) :
     rotator_ = createSceneNode("player_rotator");
 
     auto render_scene_node = rotator_->createSceneNode<RenderizableSceneNode>(
-        "player_render_scene_node", FigType_t::Shape, 3U);
+        "player_render_scene_node");
 
-    node_    = render_scene_node->node();
+    render_scene_node->buildNode(render_scene_node->renderizableBuilder()
+                                     .name("player_render_scene_node")
+                                     .figType(FigType_t::Shape)
+                                     .pointCount(3U));
+    node_     = render_scene_node->node();
     scalator_ = render_scene_node;
 }
 
-Player::~Player()
-{}
+Player::~Player() = default;
 
 void Player::configure(const vector2dst& bPosition,
                        const Rectf32& box,
@@ -70,7 +73,8 @@ void Player::update()
 
 void Player::movePlayer(const Direction& direction)
 {
-    LogAsserter::log_assert(direction.isValid(), "Invalid direction passed to move");
+    LogAsserter::log_assert(direction.isValid(),
+                            "Invalid direction passed to move");
     currentDirection = direction;
     auto nPosition   = direction.applyToVector(boardPosition());
     if (TokenZones::pointInCenter(nPosition))

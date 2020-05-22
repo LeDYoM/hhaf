@@ -7,7 +7,7 @@
 #include <mtypes/include/connection.hpp>
 #include <haf/scene/include/scenenode.hpp>
 #include <haf/resources/include/ifont.hpp>
-#include <haf/scene/include/scenenodetypes.hpp>
+#include <haf/scene_nodes/include/renderizable_scenenode.hpp>
 #include <haf/scene_nodes/include/tablenode.hpp>
 #include <haf/scene_nodes/include/scenenodetext.hpp>
 #include <haf/scene_components/include/animationcomponent.hpp>

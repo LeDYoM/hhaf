@@ -16,7 +16,7 @@ class SceneNodeText : public SceneNode
     using BaseClass = SceneNode;
 
 public:
-    SceneNodeText(SceneNode *const parent, const mtps::str&name);
+    using SceneNode::SceneNode;
     ~SceneNodeText() override;
 
     enum class AlignmentX : mtps::u8

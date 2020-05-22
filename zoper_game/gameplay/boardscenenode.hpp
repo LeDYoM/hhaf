@@ -6,7 +6,7 @@
 #include <haf/scene/include/scenenode.hpp>
 #include <haf/scene/include/color.hpp>
 #include <haf/scene/include/renderizable.hpp>
-#include <haf/scene/include/scenenodetypes.hpp>
+#include <haf/scene_nodes/include/renderizable_scenenode.hpp>
 
 namespace zoper
 {
