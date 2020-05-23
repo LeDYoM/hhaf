@@ -137,10 +137,6 @@ void GameScene::onCreated()
     // At this point, we setup level properties.
     // level_properties_ should not be used before this point.
     level_properties_ = addComponentOfType<LevelProperties>();
-    level_properties_->levelChanged.connect([this](const auto level) {
-        // Forward current level where necessary.
-        m_boardGroup->setLevel(level);
-    });
 
     size_type start_level;
     GameMode game_mode;

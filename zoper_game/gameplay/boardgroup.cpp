@@ -54,6 +54,11 @@ void BoardGroup::configure(vector2dst size,
     tokens_scene_node = createSceneNode("tokens_scene_node");
     setLevel(level_properties_->currentLevel());
     addPlayer();
+
+    level_properties_->levelChanged.connect([this](const auto level) {
+        // Forward current leve
+        setLevel(level);
+    });
 }
 
 void BoardGroup::addPlayer()
