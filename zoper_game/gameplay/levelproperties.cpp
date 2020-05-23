@@ -12,29 +12,30 @@ using namespace haf;
 using namespace haf::scene;
 using namespace haf::sys;
 
-void LevelProperties::configure(const size_type currentLevel,
-                                const GameMode gameMode,
-                                sptr<time::TimerComponent> sceneTimerComponent)
+void LevelProperties::configure(
+    const size_type currentLevel,
+    const GameMode gameMode,
+    sptr<time::TimerComponent> scene_timer_component)
 {
     using namespace time;
 
-    if (!m_levelTimer)
+    if (!level_timer_)
     {
-        m_levelTimer = attachedNode()->dataWrapper<Timer>();
+        level_timer_ = attachedNode()->dataWrapper<Timer>();
     }
-    LogAsserter::log_assert(sceneTimerComponent != nullptr,
+    LogAsserter::log_assert(scene_timer_component != nullptr,
                             "m_sceneNodeComponent already contains a value");
-    LogAsserter::log_assert(m_sceneTimerComponent == nullptr,
+    LogAsserter::log_assert(scene_timerComponent_ == nullptr,
                             "Passed nullptr sceneTimerComponent");
 
-    m_gameMode = gameMode;
-    m_sceneTimerComponent.swap(sceneTimerComponent);
+    game_mode_ = gameMode;
+    scene_timerComponent_.swap(scene_timer_component);
 
-    m_updateLevelDataTimer = m_sceneTimerComponent->addTimer(
+    update_levelData_timer_ = scene_timerComponent_->addTimer(
         TimerType::Continuous, TimePoint_as_miliseconds(120),
         [this](TimePoint /*realEllapsed*/) { updateLevelData(); });
 
-    m_gameHud = attachedNode()->createSceneNode<GameHudSceneNode>("hud");
+    game_hud_ = attachedNode()->createSceneNode<GameHudSceneNode>("hud");
 
     setScore(0U);
     setLevel(currentLevel);
@@ -42,41 +43,41 @@ void LevelProperties::configure(const size_type currentLevel,
 
 void LevelProperties::setScore(const size_type new_score)
 {
-    m_currentScore = new_score;
+    current_score_ = new_score;
     attachedNode()
         ->dataWrapper<shdata::SharedDataView>()
         ->dataAs<GameSharedData>()
-        .score = m_currentScore;
-    m_gameHud->setScore(m_currentScore);
+        .score = current_score_;
+    game_hud_->setScore(current_score_);
 }
 
 void LevelProperties::setLevel(const LevelType currentLevel)
 {
-    m_levelTimer->restart();
+    level_timer_->restart();
 
-    m_currentLevel = currentLevel;
+    current_level_ = currentLevel;
 
     {
         auto game_shared_data_view =
             attachedNode()->dataWrapper<shdata::SharedDataView>();
         game_shared_data_view->dataAs<GameSharedData>().endLevel =
-            m_currentLevel;
+            current_level_;
     }
 
-    m_baseScore      = 2U * (m_currentLevel + 1U);
-    m_consumedTokens = 0U;
+    base_score_      = 2U * (current_level_ + 1U);
+    consumed_tokens_ = 0U;
 
-    if (m_currentLevel <= maxLevelWithProperties)
+    if (current_level_ <= maxLevelWithProperties)
     {
-        m_millisBetweenTokens = 1350U - (m_currentLevel * 50U);
-        m_stayCounter =
-            ((m_gameMode == GameMode::Time) ? 180U + (m_currentLevel * 30U)
-                                            : 25U + (10U * m_currentLevel));
+        millis_between_tokens_ = 1350U - (current_level_ * 50U);
+        stay_counter_ =
+            ((game_mode_ == GameMode::Time) ? 180U + (current_level_ * 30U)
+                                            : 25U + (10U * current_level_));
     }
     else
     {
-        m_millisBetweenTokens = 50;
-        m_stayCounter         = ((m_gameMode == GameMode::Time) ? 1200U : 400U);
+        millis_between_tokens_ = 50;
+        stay_counter_ = ((game_mode_ == GameMode::Time) ? 1200U : 400U);
     }
 
     levelChanged(currentLevel);
@@ -84,7 +85,7 @@ void LevelProperties::setLevel(const LevelType currentLevel)
     updateLevelData();
     increaseScore(0U);
 
-    DisplayLog::info("Level set: ", m_currentLevel);
+    DisplayLog::info("Level set: ", current_level_);
     DisplayLog::info("Millis between tokens: ", millisBetweenTokens());
     DisplayLog::info("Current base score: ", baseScore());
     DisplayLog::info("Seconds or tokens to next level: ", stayCounter());
@@ -92,35 +93,35 @@ void LevelProperties::setLevel(const LevelType currentLevel)
 
 void LevelProperties::tokenConsumed()
 {
-    ++m_consumedTokens;
+    ++consumed_tokens_;
     updateLevelData();
 }
 
 void LevelProperties::updateGoals()
 {
-    m_gameHud->setLevel(m_currentLevel);
-    m_gameHud->setStayCounter(m_stayCounter);
+    game_hud_->setLevel(current_level_);
+    game_hud_->setStayCounter(stay_counter_);
 }
 
 void LevelProperties::updateLevelData()
 {
-    switch (m_gameMode)
+    switch (game_mode_)
     {
         default:
         case GameMode::Token:
-            m_gameHud->setConsumedTokens(m_consumedTokens);
+            game_hud_->setConsumedTokens(consumed_tokens_);
 
-            if (m_consumedTokens >= m_stayCounter)
+            if (consumed_tokens_ >= stay_counter_)
             {
                 nextLevel();
             }
             break;
 
         case GameMode::Time:
-            m_gameHud->setEllapsedTimeInSeconds(
-                m_levelTimer->ellapsed().seconds());
+            game_hud_->setEllapsedTimeInSeconds(
+                level_timer_->ellapsed().seconds());
 
-            if (m_levelTimer->ellapsed().seconds() >= m_stayCounter)
+            if (level_timer_->ellapsed().seconds() >= stay_counter_)
             {
                 nextLevel();
             }
@@ -130,12 +131,12 @@ void LevelProperties::updateLevelData()
 
 void LevelProperties::increaseScore(const size_type scoreIncrement)
 {
-    setScore(m_currentScore + scoreIncrement);
+    setScore(current_score_ + scoreIncrement);
 }
 
 void LevelProperties::nextLevel()
 {
-    setLevel(m_currentLevel + 1);
+    setLevel(current_level_ + 1);
 }
 
 }  // namespace zoper

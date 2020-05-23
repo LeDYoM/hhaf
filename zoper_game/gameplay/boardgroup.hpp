@@ -57,7 +57,7 @@ public:
     mtps::vector2df tileSize() const;
 
 private:
-    mtps::sptr<haf::board::BoardManager> p_boardModel;
+    mtps::sptr<haf::board::BoardManager> board_model_;
     mtps::sptr<Player> player_;
     mtps::sptr<haf::scene::SceneNode> tokens_scene_node;
     mtps::sptr<LevelProperties> level_properties_;

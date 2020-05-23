@@ -43,10 +43,10 @@ void BoardGroup::configure(vector2dst size,
         }
     }
 
-    p_boardModel = addComponentOfType<board::BoardManager>();
-    p_boardModel->initialize(tableSize(), this);
+    board_model_ = addComponentOfType<board::BoardManager>();
+    board_model_->initialize(tableSize(), this);
 
-    p_boardModel->setBackgroundFunction(
+    board_model_->setBackgroundFunction(
         [](const vector2dst& position) -> board::BackgroundData {
             return ((TokenZones::pointInCenter(position)) ? (1) : (0));
         });
@@ -72,7 +72,7 @@ void BoardGroup::addPlayer()
                        rectFromSize(tileSize()), board2SceneFactor());
 
     // Add it to the board and to the scene nodes
-    p_boardModel->setTile(player_->boardPosition(), player_);
+    board_model_->setTile(player_->boardPosition(), player_);
 }
 
 void BoardGroup::createNewToken(const board::BoardTileData data,
@@ -91,8 +91,8 @@ void BoardGroup::createNewToken(const board::BoardTileData data,
     new_tile_token->position.set(board2Scene(board_position));
 
     // Add it to the board
-    p_boardModel->setTile(board_position, new_tile_token);
-    p_boardModel->changeTileData(board_position, data);
+    board_model_->setTile(board_position, new_tile_token);
+    board_model_->changeTileData(board_position, data);
     // Configure it.
     new_tile_token->configure(level_properties_, rectFromSize(size),
                               board2SceneFactor());
@@ -210,7 +210,7 @@ Color BoardGroup::getBackgroundTileColor(const size_type level,
 vector2df BoardGroup::board2SceneFactor() const
 {
     return dataWrapper<SceneMetricsView>()->currentView().size() /
-        p_boardModel->size();
+        board_model_->size();
 }
 
 vector2df BoardGroup::board2Scene(const vector2dst& bPosition) const
@@ -225,13 +225,13 @@ vector2df BoardGroup::tileSize() const
 
 mtps::sptr<board::BoardManager> BoardGroup::boardModel() noexcept
 {
-    return p_boardModel;
+    return board_model_;
 }
 
 const mtps::sptr<const board::BoardManager> BoardGroup::boardModel()
     const noexcept
 {
-    return p_boardModel;
+    return board_model_;
 }
 
 mtps::sptr<scene::SceneNode> BoardGroup::tokensSceneNode() noexcept
