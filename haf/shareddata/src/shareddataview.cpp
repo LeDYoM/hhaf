@@ -9,32 +9,6 @@ using namespace mtps;
 
 namespace haf::shdata
 {
-bool SharedData::store(uptr<IShareable> data)
-{
-    return sys::getSystem<sys::SharedDataSystem>(attachedNode())
-        .store(std::move(data));
-}
-
-uptr<IShareable> SharedData::retrieve_imp()
-{
-    LogAsserter::log_assert(!isEmpty(), "SharedDataSystem should be empty");
-    return sys::getSystem<sys::SharedDataSystem>(attachedNode()).retrieve();
-}
-
-bool SharedData::isEmpty()
-{
-    return sys::getSystem<sys::SharedDataSystem>(attachedNode()).isEmpty();
-}
-
-bool SharedData::makeEmpty() 
-{
-    return sys::getSystem<sys::SharedDataSystem>(attachedNode()).makeEmpty();
-}
-
-
-SharedDataView::SharedDataView() : data_{nullptr}
-{}
-
 SharedDataView::~SharedDataView()
 {
     LogAsserter::log_assert(data_ != nullptr, "Data is nullptr");

@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.12)
 
 set (_SOURCES 
     "src/shareddatasystem.cpp"
+    "src/shareddata.cpp"
     "src/shareddataview.cpp"
 )
 
