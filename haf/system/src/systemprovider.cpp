@@ -42,7 +42,6 @@ struct SystemProvider::SystemProviderPrivate
     uptr<TimeSystem> time_system_;
     uptr<RenderSystem> render_system_;
     uptr<SimulationSystem> simulation_system_;
-    bool exit_requested_{false};
 };
 
 SystemProvider::SystemProvider() : p_{muptr<SystemProviderPrivate>()}
@@ -77,16 +76,6 @@ void SystemProvider::init(IApp* iapp)
     SystemAccess system_access(this);
     DataWrapperCreator dwc(&system_access);
     p_->app_->onInit(dwc);
-}
-
-void SystemProvider::requestExit()
-{
-    p_->exit_requested_ = true;
-}
-
-bool SystemProvider::exitRequested() const
-{
-    return p_->exit_requested_;
 }
 
 void SystemProvider::terminate()

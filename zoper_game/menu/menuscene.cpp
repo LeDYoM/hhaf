@@ -3,7 +3,6 @@
 #include <haf/resources/include/resourcehandler.hpp>
 #include <haf/resources/include/itexture.hpp>
 #include <haf/shareddata/include/shareddataview.hpp>
-#include <haf/system/include/systemrequests.hpp>
 #include <haf/scene_components/include/scenecontrol.hpp>
 
 #include "../menu/mainmenu.hpp"
@@ -46,7 +45,7 @@ void MenuScene::onCreated()
     mainMenu->MenuFinished.connect([this](const s32 status) {
         if (status == 0)
         {
-            dataWrapper<sys::SystemRequests>()->requestExit();
+            dataWrapper<SceneControl>()->requestExit();
         }
         dataWrapper<SceneControl>()->switchToNextScene();
     });

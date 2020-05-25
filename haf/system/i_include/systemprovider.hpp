@@ -48,8 +48,6 @@ public:
     void init(IApp *iapp) override;
     bool runStep() override;
     void terminate() override;
-    void requestExit();
-    bool exitRequested() const;
 
     template <typename T>
     T &app() { return *(dynamic_cast<T *>(&app())); }

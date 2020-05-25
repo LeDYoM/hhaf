@@ -74,6 +74,8 @@ public:
     void renderScene(Scene& scene, bool parentTransformationChanged);
     void render(SceneNode& scene, bool parentTransformationChanged);
 
+    void requestExit();
+    bool exitRequested() const;
 
 private:
     void startScene(mtps::sptr<Scene> scene);
@@ -85,6 +87,7 @@ private:
     mtps::rptr<SceneManager> scene_manager_{nullptr};
     mtps::sptr<Scene> current_scene_{nullptr};
     bool switch_scene_{false};
+    bool exit_requested_{false};
 };
 
 }  // namespace haf::scene

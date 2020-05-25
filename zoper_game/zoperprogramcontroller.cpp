@@ -10,7 +10,6 @@
 #include <haf/scene_components/include/scenemetrics.hpp>
 #include <haf/scene_components/include/scenefactory.hpp>
 #include <haf/scene_components/include/scenecontrol.hpp>
-#include <haf/system/include/systemrequests.hpp>
 #include <haf/shareddata/include/shareddata.hpp>
 #include <hlog/include/hlog.hpp>
 
@@ -20,11 +19,8 @@ using namespace haf::scene;
 
 namespace zoper
 {
-
-ZoperProgramController::ZoperProgramController()
-{}
-ZoperProgramController::~ZoperProgramController()
-{}
+ZoperProgramController::ZoperProgramController() = default;
+ZoperProgramController::~ZoperProgramController() = default;
 
 u16 ZoperProgramController::getVersion() const noexcept
 {

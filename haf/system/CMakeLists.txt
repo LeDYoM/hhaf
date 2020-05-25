@@ -8,7 +8,6 @@ set (_SOURCES
     "src/systemaccess.cpp"
     "src/systemprovider.cpp"
     "src/systemprovider_init.cpp"
-    "src/systemrequests.cpp"
 )
 
 set (CURRENT_TARGET  ${PROJECT_NAME})

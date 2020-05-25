@@ -35,7 +35,7 @@ void SceneController::deferredSwitchScene()
 
     // Prepare next Scene
     sptr<Scene> nextScene{nullptr};
-    if (scene_manager_ && !scene_manager_->systemProvider().exitRequested())
+    if (!exit_requested_)
     {
         if (scene_director_)
         {
@@ -156,6 +156,16 @@ SceneNodeFactory& SceneController::sceneNodeFactory() noexcept
 const SceneNodeFactory& SceneController::sceneNodeFactory() const noexcept
 {
     return scene_factory_;
+}
+
+void SceneController::requestExit()
+{
+    exit_requested_ = true;
+}
+
+bool SceneController::exitRequested() const
+{
+    return exit_requested_;
 }
 
 }  // namespace haf::scene
