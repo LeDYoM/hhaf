@@ -83,7 +83,7 @@ void SceneController::renderScene(Scene& scene,
 }
 
 void SceneController::render(SceneNode& scene_node,
-                                  bool parentTransformationChanged)
+                             bool parentTransformationChanged)
 {
     if (scene_node.visible())
     {
@@ -99,11 +99,12 @@ void SceneController::render(SceneNode& scene_node,
         {
             scene_node.updateGlobalTransformation(
                 scene_node.parent() ? scene_node.parent()->globalTransform()
-                         : Transform::Identity);
+                                    : Transform::Identity);
         }
 
         scene_node.updateRenderizables();
-        for (SceneNodesGroup::SceneNodeVector::value_type& group : scene_node.sceneNodes())
+        for (SceneNodesGroup::SceneNodeVector::value_type& group :
+             scene_node.sceneNodes())
         {
             render(*group, parentTransformationChanged);
         }

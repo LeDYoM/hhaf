@@ -30,13 +30,15 @@ bool SceneControl::startScene(const mtps::str& scene_name)
 void SceneControl::requestExit()
 {
     return sys::getSystem<scene::SceneManager>(attachedNode())
-        .sceneController()->requestExit();
+        .sceneController()
+        ->requestExit();
 }
 
 bool SceneControl::exitRequested() const
 {
     return sys::getSystem<scene::SceneManager>(attachedNode())
-        .sceneController()->exitRequested();
+        .sceneController()
+        ->exitRequested();
 }
 
 }  // namespace haf::scene
