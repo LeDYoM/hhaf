@@ -13,28 +13,30 @@ namespace haf::shdata
  * @brief Component to provide access to data resources.
  *
  */
-class SharedData : public sys::IDataWrapper
+class SharedDataUpdater : public sys::IDataWrapper
 {
 public:
-    bool store(mtps::uptr<IShareable> data);
+    ~SharedDataUpdater() override;
+
+    void onAttached() override;
+
+    [[nodiscard]] IShareable& data();
+    [[nodiscard]] const IShareable& data() const;
 
     template <typename T>
-    void store(mtps::uptr<T> data)
+    [[nodiscard]] T& dataAs()
     {
-        store(unique_pointer_cast<IShareable>(std::move(data)));
+        return dynamic_cast<T&>(data());
     }
 
-    template <typename T = IShareable>
-    [[nodiscard]] mtps::uptr<T> retrieve()
+    template <typename T>
+    [[nodiscard]] const T& dataAs() const
     {
-        return unique_pointer_cast<T>(retrieve_imp());
+        return dynamic_cast<T&>(data());
     }
-
-    [[nodiscard]] bool isEmpty();
-    bool makeEmpty();
 
 private:
-    [[nodiscard]] mtps::uptr<IShareable> retrieve_imp();
+    mtps::uptr<IShareable> data_;
 };
 
 }  // namespace haf::shdata

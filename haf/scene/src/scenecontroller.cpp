@@ -31,6 +31,8 @@ void SceneController::switchToNextScene()
 
 void SceneController::deferredSwitchScene()
 {
+    terminateCurrentScene();
+
     // Prepare next Scene
     sptr<Scene> nextScene{nullptr};
     if (scene_manager_ && !scene_manager_->systemProvider().exitRequested())
@@ -41,8 +43,6 @@ void SceneController::deferredSwitchScene()
                 scene_factory_.create(scene_director_(current_scene_->name()));
         }
     }
-
-    terminateCurrentScene();
 
     DisplayLog::info("Setting new scene: ",
                      nextScene ? nextScene->name() : "<nullptr>");
@@ -72,7 +72,6 @@ void SceneController::update()
 
     if (auto current_scene = currentScene())
     {
-//        current_scene->render(false);
         renderScene(*current_scene, false);
     }
 }

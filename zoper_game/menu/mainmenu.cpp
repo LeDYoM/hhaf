@@ -6,7 +6,7 @@
 #include <hlog/include/hlog.hpp>
 #include <haf/resources/include/resourceview.hpp>
 #include <haf/resources/include/ittfont.hpp>
-#include <haf/shareddata/include/shareddataview.hpp>
+#include <haf/shareddata/include/shareddata_updater.hpp>
 #include <haf/scene_components/include/scenemetricsview.hpp>
 #include <mtypes/include/function.hpp>
 #include <mtypes/include/types.hpp>
@@ -59,7 +59,7 @@ void goGame(MenuPaged *scene_node,
             vector<s32> menu_data)
 {
     {
-        auto game_shared_data_view = scene_node->dataWrapper<shdata::SharedDataView>();
+        auto game_shared_data_view = scene_node->dataWrapper<shdata::SharedDataUpdater>();
         auto& game_shared_data = game_shared_data_view->dataAs<GameSharedData>();
 
         game_shared_data.startLevel = menu_data[0U];

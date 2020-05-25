@@ -33,7 +33,7 @@ bool SharedDataSystem::store(uptr<shdata::IShareable> data) noexcept
     // Aquire the ownership of data
     data_ = std::move(data);
 
-    LogAsserter::log_assert(data_ != nullptr, "data_ is not nullptr");
+    LogAsserter::log_assert(data_ != nullptr, "data_ is nullptr");
     LogAsserter::log_assert(data == nullptr, "data is not nullptr");
 
     return true;
@@ -61,6 +61,12 @@ bool SharedDataSystem::makeEmpty()
         return true;
     }
     return false;
+}
+
+const mtps::uptr<shdata::IShareable>& SharedDataSystem::view() const noexcept
+{
+    LogAsserter::log_assert(data_ != nullptr, "data_ is nullptr");
+    return data_;
 }
 
 } // namespace haf::sys

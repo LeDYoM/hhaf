@@ -32,9 +32,12 @@ public:
     bool isEmpty() const noexcept;
     bool makeEmpty();
 
+    const mtps::uptr<shdata::IShareable>& view() const noexcept;
+
 private:
     mtps::uptr<shdata::IShareable> data_;
 };
+
 }  // namespace haf::sys
 
 #endif

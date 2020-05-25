@@ -16,23 +16,12 @@ namespace haf::shdata
 class SharedDataView : public sys::IDataWrapper
 {
 public:
-    ~SharedDataView() override;
-
-    void onAttached() override;
-
-    [[nodiscard]] IShareable& data();
     [[nodiscard]] const IShareable& data() const;
-
-    template <typename T>
-    [[nodiscard]] T& dataAs()
-    {
-        return dynamic_cast<T&>(data());
-    }
 
     template <typename T>
     [[nodiscard]] const T& dataAs() const
     {
-        return dynamic_cast<T&>(data());
+        return dynamic_cast<const T&>(data());
     }
 
 private:
