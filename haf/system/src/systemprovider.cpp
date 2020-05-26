@@ -24,12 +24,12 @@ using namespace mtps;
 
 namespace haf::sys
 {
-struct SystemProvider::SystemProviderPrivate
+struct SystemProvider::SystemProviderPrivate final
 {
     SystemProviderPrivate()  = default;
     ~SystemProviderPrivate() = default;
 
-    IApp* app_;
+    rptr<IApp> app_;
     uptr<SharedDataSystem> shared_data_system_;
     uptr<backend::BackendFactory, void (*)(haf::backend::BackendFactory*)>
         backend_factory_{nullptr, nullptr};
@@ -49,10 +49,10 @@ SystemProvider::SystemProvider() : p_{muptr<SystemProviderPrivate>()}
 
 SystemProvider::~SystemProvider() = default;
 
-void SystemProvider::init(IApp* iapp)
+void SystemProvider::init(rptr<IApp> iapp)
 {
-    LogAsserter::log_assert(iapp != nullptr,
-               "Cannot create a SystemProvider with a nullptr app");
+    LogAsserter::log_assert(
+        iapp != nullptr, "Cannot create a SystemProvider with a nullptr app");
     p_->backend_factory_ =
         uptr<backend::BackendFactory, void (*)(haf::backend::BackendFactory*)>(
             createBackendFactory(), destroyBackendFactory);
@@ -66,7 +66,7 @@ void SystemProvider::init(IApp* iapp)
     p_->render_system_      = muptr<sys::RenderSystem>(*this);
     p_->random_system_      = muptr<RandomSystem>(*this);
     p_->file_system_        = muptr<FileSystem>(*this);
-    p_->simulation_system_ = muptr<SimulationSystem>(*this);
+    p_->simulation_system_  = muptr<SimulationSystem>(*this);
     p_->simulation_system_->initialize();
 
     p_->window_->create(nullptr);
@@ -218,15 +218,4 @@ const SharedDataSystem& SystemProvider::sharedDataSystem() const noexcept
     return *p_->shared_data_system_;
 }
 
-bool SystemProvider::runStep()
-{
-    const bool windowWants2Close{parentWindow().preLoop()};
-    simulationSystem().update();
-    inputSystem().update();
-    sceneManager().update();
-    renderSystem().update();
-
-    parentWindow().postLoop();
-    return windowWants2Close;
-}
 }  // namespace haf::sys

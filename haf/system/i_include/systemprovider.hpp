@@ -5,24 +5,22 @@
 
 #include <mtypes/include/types.hpp>
 #include <haf/system/include/isystemprovider.hpp>
-#include <haf/system/include/icontrollablesystemprovider.hpp>
 
 namespace haf
 {
 class IApp;
-}
 
-namespace haf::backend
+namespace backend
 {
 class BackendFactory;
 }
 
-namespace haf::scene
+namespace scene
 {
 class SceneManager;
 }
 
-namespace haf::sys
+namespace sys
 {
 class InputSystem;
 class Window;
@@ -33,58 +31,62 @@ class SimulationSystem;
 class TimeSystem;
 class RenderSystem;
 class SharedDataSystem;
-} // namespace haf::sys
+}  // namespace sys
+}  // namespace haf
 
 namespace haf::sys
 {
-class SystemProvider final
-    : public ISystemProvider,
-      public IControllableSystemProvider
+class SystemProvider : public ISystemProvider
 {
 public:
     SystemProvider();
-    ~SystemProvider();
+    ~SystemProvider() override;
 
-    void init(IApp *iapp) override;
-    bool runStep() override;
-    void terminate() override;
-
-    template <typename T>
-    T &app() { return *(dynamic_cast<T *>(&app())); }
+    void init(mtps::rptr<IApp> iapp);
+    void terminate();
 
     template <typename T>
-    const T &app() const { return *(dynamic_cast<T *>(&app())); }
+    T& app()
+    {
+        return *(dynamic_cast<T*>(&app()));
+    }
 
-    IApp &app();
-    const IApp &app() const;
+    template <typename T>
+    const T& app() const
+    {
+        return *(dynamic_cast<T*>(&app()));
+    }
 
-    const Window &parentWindow() const noexcept;
-    Window &parentWindow() noexcept;
-    const ResourceManager &resourceManager() const noexcept;
-    ResourceManager &resourceManager() noexcept;
-    const sys::InputSystem &inputSystem() const noexcept;
-    sys::InputSystem &inputSystem() noexcept;
-    const RandomSystem &randomSystem() const noexcept;
-    RandomSystem &randomSystem() noexcept;
-    const scene::SceneManager &sceneManager() const noexcept;
-    scene::SceneManager &sceneManager() noexcept;
-    const FileSystem &fileSystem() const noexcept;
-    FileSystem &fileSystem() noexcept;
-    const SimulationSystem &simulationSystem() const noexcept;
-    SimulationSystem &simulationSystem() noexcept;
-    const TimeSystem &timeSystem() const noexcept;
-    TimeSystem &timeSystem() noexcept;
-    const backend::BackendFactory &backendFactory() const noexcept;
-    backend::BackendFactory &backendFactory() noexcept;
-    const RenderSystem &renderSystem() const noexcept;
-    RenderSystem &renderSystem() noexcept;
-    SharedDataSystem &sharedDataSystem() noexcept;
-    const SharedDataSystem &sharedDataSystem() const noexcept;
+    IApp& app();
+    const IApp& app() const;
+
+    const Window& parentWindow() const noexcept;
+    Window& parentWindow() noexcept;
+    const ResourceManager& resourceManager() const noexcept;
+    ResourceManager& resourceManager() noexcept;
+    const sys::InputSystem& inputSystem() const noexcept;
+    sys::InputSystem& inputSystem() noexcept;
+    const RandomSystem& randomSystem() const noexcept;
+    RandomSystem& randomSystem() noexcept;
+    const scene::SceneManager& sceneManager() const noexcept;
+    scene::SceneManager& sceneManager() noexcept;
+    const FileSystem& fileSystem() const noexcept;
+    FileSystem& fileSystem() noexcept;
+    const SimulationSystem& simulationSystem() const noexcept;
+    SimulationSystem& simulationSystem() noexcept;
+    const TimeSystem& timeSystem() const noexcept;
+    TimeSystem& timeSystem() noexcept;
+    const backend::BackendFactory& backendFactory() const noexcept;
+    backend::BackendFactory& backendFactory() noexcept;
+    const RenderSystem& renderSystem() const noexcept;
+    RenderSystem& renderSystem() noexcept;
+    SharedDataSystem& sharedDataSystem() noexcept;
+    const SharedDataSystem& sharedDataSystem() const noexcept;
 
 private:
     struct SystemProviderPrivate;
     mtps::uptr<SystemProviderPrivate> p_;
 };
-} // namespace haf::sys
+}  // namespace haf::sys
 
 #endif

@@ -3,7 +3,7 @@
 #include <exception>
 #include <hlog/include/hlog.hpp>
 #include <hosted_app/include/iapp.hpp>
-#include <haf/system/include/icontrollablesystemprovider.hpp>
+#include <haf/system/include/isystemcontroller.hpp>
 #include <haf/system/include/systemprovider_init.hpp>
 
 #include <mtypes/include/parpar.hpp>
@@ -43,7 +43,7 @@ public:
 
     Dictionary<str> m_configuration;
     IApp* iapp_{nullptr};
-    IControllableSystemProvider* system_provider_;
+    ISystemController* system_controller_{nullptr};
 };
 
 enum class Host::AppState : u8
@@ -100,8 +100,8 @@ bool Host::update()
             DisplayLog::info("Starting initialization of new App...");
             m_state = AppState::Executing;
 
-            m_private->system_provider_ = createSystemProvider();
-            m_private->system_provider_->init(m_private->iapp_);
+            m_private->system_controller_ = createSystemController();
+            m_private->system_controller_->init(m_private->iapp_);
 
             DisplayLog::info(appDisplayNameAndVersion(*(m_private->iapp_)),
                              ": Starting execution...");
@@ -126,9 +126,9 @@ bool Host::update()
             DisplayLog::info(appDisplayNameAndVersion(*(m_private->iapp_)),
                              ": started termination");
             m_state = AppState::Terminated;
-            m_private->system_provider_->terminate();
-            destroySystemProvider(m_private->system_provider_);
-            m_private->system_provider_ = nullptr;
+            m_private->system_controller_->terminate();
+            destroySystemController(m_private->system_controller_);
+            m_private->system_controller_ = nullptr;
             return true;
             break;
         case AppState::Terminated:
@@ -163,7 +163,7 @@ int Host::run()
 
 bool Host::loopStep()
 {
-    return m_private->system_provider_->runStep();
+    return m_private->system_controller_->runStep();
 }
 
 void Host::exitProgram()

@@ -6,6 +6,7 @@ set (_SOURCES
     "src/get_systemprovider.cpp"
     "src/get_system.cpp"
     "src/systemaccess.cpp"
+    "src/systemcontroller.cpp"
     "src/systemprovider.cpp"
     "src/systemprovider_init.cpp"
 )

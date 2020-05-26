@@ -3,12 +3,12 @@
 #ifndef HAF_SYSTEM_PROVIDER_INIT_C_INTERFACE_INCLUDE_HPP
 #define HAF_SYSTEM_PROVIDER_INIT_C_INTERFACE_INCLUDE_HPP
 
-#include <haf/system/include/icontrollablesystemprovider.hpp>
+#include <haf/system/include/isystemcontroller.hpp>
 
 extern "C"
 {
-    IControllableSystemProvider *createSystemProvider();
-    void destroySystemProvider(IControllableSystemProvider *);
+    ISystemController *createSystemController();
+    void destroySystemController(ISystemController *);
 }
 
 #endif
