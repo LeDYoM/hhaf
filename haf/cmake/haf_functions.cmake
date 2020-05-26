@@ -1,9 +1,10 @@
 # Function to build different components from the project in an unified way.
 function(build_internal_lib_component)
 
-  cmake_parse_arguments(LC_BUILD "" "HEADER_DIRECTORY" "SOURCES" ${ARGN})
+  cmake_parse_arguments(LC_BUILD "" "INTERNAL_TARGET"
+                        "SOURCES;PRIVATE_INTERNAL_LINK" ${ARGN})
 
-  set(CURRENT_TARGET ${PROJECT_NAME})
+  set(CURRENT_TARGET ${LC_BUILD_INTERNAL_TARGET})
   set(_INTERNAL_INCLUDE "/i_include")
   set(_INTERNAL_INCLUDE_DIRECTORY "${PROJECT_SOURCE_DIR}${_INTERNAL_INCLUDE}")
   set(INTERNAL_FOR_OTHERS_INCLUDE_DIRECTORY "${PROJECT_SOURCE_DIR}/../")
@@ -35,6 +36,11 @@ function(build_internal_lib_component)
                              INTERFACE ${INTERNAL_FOR_OTHERS_INCLUDE_DIRECTORY})
 
   target_link_libraries(${CURRENT_TARGET} PRIVATE log_and_types)
+
+  # Link all private static internal libraries passed as parameters
+  foreach(PRIVATE_LINK IN LISTS LC_BUILD_PRIVATE_INTERNAL_LINK)
+    target_link_libraries(${CURRENT_TARGET} PRIVATE ${PRIVATE_LINK})
+  endforeach()
 
 endfunction(build_internal_lib_component)
 

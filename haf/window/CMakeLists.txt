@@ -2,19 +2,15 @@ project (window CXX)
 cmake_minimum_required(VERSION 3.12)
 
 set (_SOURCES 
+    "i_include/window.hpp"
     "src/window.cpp"
     "src/window_properties.cpp"
     )
 
 set (CURRENT_TARGET  ${PROJECT_NAME})
 
-build_internal_lib_component(
-    HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}"
-    SOURCES
-    ${_SOURCES}
-)
+set(INTERNAL_TARGET window)
+set(_LINK_PRIVATE backend backend_dev input_internal render_internal)
 
-target_link_libraries(${CURRENT_TARGET} PRIVATE backend)
-target_link_libraries(${CURRENT_TARGET} PRIVATE backend_dev)
-target_link_libraries(${CURRENT_TARGET} PRIVATE input_internal)
-target_link_libraries(${CURRENT_TARGET} PRIVATE render_internal)
+build_internal_lib_component(INTERNAL_TARGET ${INTERNAL_TARGET} SOURCES
+                             ${_SOURCES} PRIVATE_INTERNAL_LINK ${_LINK_PRIVATE})

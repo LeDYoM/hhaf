@@ -2,6 +2,7 @@ project (time CXX)
 cmake_minimum_required(VERSION 3.12)
 
 set (_SOURCES 
+    "i_include/timesystem.hpp"
     "src/timer.cpp"
     "src/timercomponent.cpp"
     "src/timesystem.cpp"
@@ -10,10 +11,10 @@ set (_SOURCES
 
 set (CURRENT_TARGET  ${PROJECT_NAME})
 
-build_internal_lib_component(
-    HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}"
-    SOURCES
-    ${_SOURCES}
-)
+set(INTERNAL_TARGET time)
+set(_LINK_PRIVATE system_internal)
+
+build_internal_lib_component(INTERNAL_TARGET ${INTERNAL_TARGET} SOURCES
+                             ${_SOURCES} PRIVATE_INTERNAL_LINK ${_LINK_PRIVATE})
 
 target_link_libraries(${CURRENT_TARGET} PRIVATE system_internal)
