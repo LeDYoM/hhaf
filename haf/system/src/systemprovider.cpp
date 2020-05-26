@@ -11,7 +11,7 @@
 #include <time/i_include/timesystem.hpp>
 #include <shareddata/i_include/shareddatasystem.hpp>
 #include <resources/i_include/resourcemanager.hpp>
-#include <haf/simulation/include/simulationsystem.hpp>
+#include <simulation/i_include/simulationsystem.hpp>
 
 #include <hlog/include/hlog.hpp>
 #include <hosted_app/include/iapp.hpp>

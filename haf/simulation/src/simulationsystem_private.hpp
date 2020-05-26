@@ -3,7 +3,7 @@
 #ifndef HAF_CORE_SYSTEM_SIMULATIONSYSTEM_PRIVATE_INCLUDE_HPP
 #define HAF_CORE_SYSTEM_SIMULATIONSYSTEM_PRIVATE_INCLUDE_HPP
 
-#include <haf/simulation/include/simulationsystem.hpp>
+#include <simulation/i_include/simulationsystem.hpp>
 #include <haf/simulation/include/simulationaction.hpp>
 
 #include <haf/input/include/key.hpp>
