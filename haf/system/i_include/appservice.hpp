@@ -15,7 +15,7 @@ class ISystemProvider;
  */
 class AppService
 {
-protected:
+public:
     /**
      * @brief Construct a new App Service object. This class is intended to be
      * use as a base class, so there is only one constructor and it is
@@ -23,10 +23,9 @@ protected:
      * @param system_provider Object to handle all systems that this class might
      * use.
      */
-    AppService(sys::SystemProvider& system_provider) noexcept;
+    AppService(sys::ISystemProvider& system_provider) noexcept;
     virtual ~AppService();
 
-public:
     /**
      * @brief Deleted copy constructor.
      */
@@ -42,31 +41,31 @@ public:
      *
      * @return sys::SystemProvider& Reference to the SystemProvider
      */
-    sys::SystemProvider& systemProvider() noexcept;
+    SystemProvider& systemProvider() noexcept;
 
     /**
      * @brief Get a const lvalue reference to this apps @b SystemProvider
      *
      * @return sys::SystemProvider& Reference to the SystemProvider
      */
-    sys::SystemProvider const& systemProvider() const noexcept;
+    SystemProvider const& systemProvider() const noexcept;
 
     /**
      * @brief Get a lvalue reference to this apps @b ISystemProvider
      *
      * @return sys::SystemProvider& Reference to the SystemProvider
      */
-    sys::ISystemProvider& isystemProvider() noexcept;
+    ISystemProvider& isystemProvider() noexcept;
 
     /**
      * @brief Get a const lvalue reference to this apps @b ISystemProvider
      *
      * @return sys::SystemProvider& Reference to the SystemProvider
      */
-    sys::ISystemProvider const& isystemProvider() const noexcept;
+    ISystemProvider const& isystemProvider() const noexcept;
 
 private:
-    sys::SystemProvider& system_provider_;
+    ISystemProvider& system_provider_;
 };
 }  // namespace haf::sys
 

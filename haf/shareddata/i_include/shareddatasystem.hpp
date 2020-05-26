@@ -16,14 +16,7 @@ namespace haf::sys
 class SharedDataSystem final : public AppService
 {
 public:
-    /**
-     * @see AppService::AppService
-     */
-    SharedDataSystem(sys::SystemProvider& system_provider) noexcept;
-
-    /**
-     * @brief Destroy the Shared Data System object
-     */
+    using AppService::AppService;
     ~SharedDataSystem() override;
 
     bool store(mtps::uptr<shdata::IShareable> data) noexcept;

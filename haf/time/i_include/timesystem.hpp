@@ -12,7 +12,7 @@ namespace haf::sys
 class TimeSystem final : public AppService
 {
 public:
-    TimeSystem(sys::SystemProvider& system_provider);
+    TimeSystem(sys::ISystemProvider& system_provider);
     ~TimeSystem() override;
 
     time::TimePoint timeSinceStart() const;

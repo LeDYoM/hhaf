@@ -4,28 +4,28 @@
 
 namespace haf::sys
 {
-AppService::AppService(sys::SystemProvider& system_provider) noexcept :
+AppService::AppService(sys::ISystemProvider& system_provider) noexcept :
     system_provider_{system_provider}
 {}
 
 AppService::~AppService() = default;
 
-sys::SystemProvider& AppService::systemProvider() noexcept
+SystemProvider& AppService::systemProvider() noexcept
+{
+    return dynamic_cast<SystemProvider&>(system_provider_);
+}
+
+SystemProvider const& AppService::systemProvider() const noexcept
+{
+    return dynamic_cast<SystemProvider&>(system_provider_);
+}
+
+ISystemProvider& AppService::isystemProvider() noexcept
 {
     return system_provider_;
 }
 
-sys::SystemProvider const& AppService::systemProvider() const noexcept
-{
-    return system_provider_;
-}
-
-sys::ISystemProvider& AppService::isystemProvider() noexcept
-{
-    return system_provider_;
-}
-
-sys::ISystemProvider const& AppService::isystemProvider() const noexcept
+ISystemProvider const& AppService::isystemProvider() const noexcept
 {
     return system_provider_;
 }

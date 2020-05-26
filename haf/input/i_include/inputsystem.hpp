@@ -20,7 +20,6 @@ class InputSystem final : public AppService
 {
 public:
     using AppService::AppService;
-    InputSystem(sys::SystemProvider& system_provider);
 
     void update();
 
@@ -51,7 +50,7 @@ private:
     void keyReleased(const input::Key key);
 
     mtps::sptr<input::InputDriver> input_driver_;
-    input::KeyStates m_keyStates;
+    input::KeyStates m_keyStates{};
     mtps::vector<input::Key> m_pressedKeys;
     mtps::vector<input::Key> m_releasedKeys;
 };

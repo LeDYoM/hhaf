@@ -15,21 +15,14 @@ namespace haf::sys
 class FileSystem final : public AppService
 {
 public:
+    using AppService::AppService;
+    bool fileExists(const Path& path);
 
-    FileSystem(sys::SystemProvider &system_provider);
-    ~FileSystem() override;
+    mtps::RawMemory loadBinaryFile(const mtps::str& file_name);
+    mtps::str loadTextFile(const Path& file_name);
 
-    bool fileExists(const Path &path);
-
-    mtps::RawMemory loadBinaryFile(const mtps::str&file_name);
-    mtps::str loadTextFile(const Path &file_name);
-
-    bool saveFile(const Path &file_name, const mtps::str&data);
-
-private:
-    class FileSystemPrivate;
-    mtps::uptr<FileSystemPrivate> priv_;
+    bool saveFile(const Path& file_name, const mtps::str& data);
 };
-} // namespace haf::sys
+}  // namespace haf::sys
 
 #endif

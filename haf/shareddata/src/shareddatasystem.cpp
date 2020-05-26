@@ -6,10 +6,6 @@ using namespace mtps;
 
 namespace haf::sys
 {
-
-SharedDataSystem::SharedDataSystem(sys::SystemProvider& system_provider) noexcept
-    : AppService{system_provider}, data_{nullptr} {}
-
 SharedDataSystem::~SharedDataSystem()
 {
     makeEmpty();

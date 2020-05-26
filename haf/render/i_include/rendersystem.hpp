@@ -4,7 +4,10 @@
 #define HAF_SYS_SYSTEM_RENDERSYSTEM_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
+#include <mtypes/include/vector.hpp>
 #include <system/i_include/appservice.hpp>
+#include "rendertarget.hpp"
+#include <haf/render/include/renderdata.hpp>
 
 namespace haf::scene
 {
@@ -22,9 +25,7 @@ class RenderTarget;
 class RenderSystem final : public AppService
 {
 public:
-    RenderSystem(sys::SystemProvider &system_provider);
-    ~RenderSystem() override;
-
+    using AppService::AppService;
     void update();
 
     void draw(const scene::RenderData &renderData);
@@ -34,8 +35,8 @@ public:
     void clearRenderQueue();
 
 private:
-    struct RenderSystemPrivate;
-    mtps::uptr<RenderSystemPrivate> priv_;
+    mtps::sptr<RenderTarget> render_target_;
+    mtps::vector<scene::RenderData> render_data_container_;
 };
 } // namespace haf::sys
 
