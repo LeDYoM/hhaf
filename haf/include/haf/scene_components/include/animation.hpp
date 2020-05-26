@@ -15,12 +15,16 @@ namespace haf::scene
 {
 /**
  * @brief Class representing an animation. The animation will be updated when
- *  the animate() method is call.
+ *  the animate() method is called.
  */
 class Animation
 {
 public:
+    /**
+     * @brief Type to represent an animation
+     */
     using ActionFunc = mtps::function<void()>;
+
     enum class AnimationDirection : mtps::u8
     {
         Forward = 0U,
@@ -72,7 +76,6 @@ private:
     mtps::f32 raw_delta_;
     mtps::f32 delta_;
 
-private:
     mtps::f32 postProcessDelta(const mtps::f32 delta);
 };
 
