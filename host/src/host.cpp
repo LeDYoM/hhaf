@@ -24,24 +24,24 @@ class Host::HostPrivate final
 {
 public:
     HostPrivate(const int argc, char* argv[]) :
-        m_params{parpar::create(argc, argv)},
+        params_{parpar::create(argc, argv)},
         // Hardcoded default configuration
         // TODO
-        m_configuration{{}}
+        configuration_{{}}
     {}
 
     ~HostPrivate() = default;
 
     bool parseCommandLineParameters()
     {
-        if (m_params.hasParameters())
+        if (params_.hasParameters())
         {
         }
         return true;
     }
-    parpar::ParametersParser m_params;
+    parpar::ParametersParser params_;
 
-    Dictionary<str> m_configuration;
+    Dictionary<str> configuration_;
     IApp* iapp_{nullptr};
     ISystemController* system_controller_{nullptr};
 };
@@ -56,13 +56,13 @@ enum class Host::AppState : u8
 };
 
 Host::Host(int argc, char* argv[]) :
-    m_private{muptr<HostPrivate>(argc, argv)}, m_state{AppState::NotInitialized}
+    p_{muptr<HostPrivate>(argc, argv)}, app_state_{AppState::NotInitialized}
 {
     DisplayLog::info("Starting HostController...");
     DisplayLog::info("Host version: ", HostVersion, ".", HostSubversion, ".",
                      HostPatch);
     DisplayLog::info("Parsing parameters...");
-    m_private->parseCommandLineParameters();
+    p_->parseCommandLineParameters();
 }
 
 Host::~Host() = default;
@@ -70,14 +70,14 @@ Host::~Host() = default;
 bool Host::setApplication(rptr<IApp> iapp)
 {
     LogAsserter::log_assert(iapp != nullptr, "Received nullptr Application");
-    LogAsserter::log_assert(!m_private->iapp_, "Application already set");
+    LogAsserter::log_assert(!p_->iapp_, "Application already set");
 
-    if (!m_private->iapp_ && iapp)
+    if (!p_->iapp_ && iapp)
     {
         DisplayLog::info("Starting Registering app...");
-        m_private->iapp_ = iapp;
+        p_->iapp_ = iapp;
         DisplayLog::verbose("Starting new app...");
-        m_state = AppState::ReadyToStart;
+        app_state_ = AppState::ReadyToStart;
         return true;
     }
     return false;
@@ -91,19 +91,19 @@ str appDisplayNameAndVersion(const IApp& app)
 
 bool Host::update()
 {
-    switch (m_state)
+    switch (app_state_)
     {
         case AppState::NotInitialized:
             break;
         case AppState::ReadyToStart:
         {
             DisplayLog::info("Starting initialization of new App...");
-            m_state = AppState::Executing;
+            app_state_ = AppState::Executing;
 
-            m_private->system_controller_ = createSystemController();
-            m_private->system_controller_->init(m_private->iapp_);
+            p_->system_controller_ = createSystemController();
+            p_->system_controller_->init(p_->iapp_);
 
-            DisplayLog::info(appDisplayNameAndVersion(*(m_private->iapp_)),
+            DisplayLog::info(appDisplayNameAndVersion(*(p_->iapp_)),
                              ": Starting execution...");
         }
         break;
@@ -111,24 +111,24 @@ bool Host::update()
         {
             if (loopStep())
             {
-                m_state = AppState::ReadyToTerminate;
-                DisplayLog::info(appDisplayNameAndVersion(*(m_private->iapp_)),
+                app_state_ = AppState::ReadyToTerminate;
+                DisplayLog::info(appDisplayNameAndVersion(*(p_->iapp_)),
                                  ": ", " is now ready to terminate");
             }
-            else if (m_state == AppState::ReadyToTerminate)
+            else if (app_state_ == AppState::ReadyToTerminate)
             {
-                DisplayLog::info(appDisplayNameAndVersion(*(m_private->iapp_)),
+                DisplayLog::info(appDisplayNameAndVersion(*(p_->iapp_)),
                                  ": ", " requested to terminate");
             }
         }
         break;
         case AppState::ReadyToTerminate:
-            DisplayLog::info(appDisplayNameAndVersion(*(m_private->iapp_)),
+            DisplayLog::info(appDisplayNameAndVersion(*(p_->iapp_)),
                              ": started termination");
-            m_state = AppState::Terminated;
-            m_private->system_controller_->terminate();
-            destroySystemController(m_private->system_controller_);
-            m_private->system_controller_ = nullptr;
+            app_state_ = AppState::Terminated;
+            p_->system_controller_->terminate();
+            destroySystemController(p_->system_controller_);
+            p_->system_controller_ = nullptr;
             return true;
             break;
         case AppState::Terminated:
@@ -163,14 +163,14 @@ int Host::run()
 
 bool Host::loopStep()
 {
-    return m_private->system_controller_->runStep();
+    return p_->system_controller_->runStep();
 }
 
 void Host::exitProgram()
 {
     LogAsserter::log_assert(
-        m_state == AppState::Executing,
+        app_state_ == AppState::Executing,
         "Cannot terminate a program that is not in the executing state");
-    m_state = AppState::ReadyToTerminate;
+    app_state_ = AppState::ReadyToTerminate;
 }
 }  // namespace haf::sys
