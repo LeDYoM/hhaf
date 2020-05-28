@@ -1,7 +1,0 @@
-#pragma once
-
-#ifndef HAF_ZOPER_APP_EXPORT_INCLUDE_HPP
-#define HAF_ZOPER_APP_EXPORT_INCLUDE_HPP
-
-
-#endif
