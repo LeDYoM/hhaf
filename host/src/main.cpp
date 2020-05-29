@@ -1,5 +1,3 @@
-#include <host/include/host_export.hpp>
-#include <memmanager/include/memmanager.hpp>
 #include <host/include/host.hpp>
 #include <hlog/include/hlog.hpp>
 #include <logger/include/log.hpp>
