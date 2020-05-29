@@ -78,6 +78,10 @@ function(add_test_executable)
 
 endfunction(add_test_executable)
 
+function(add_development_dependency _source _dependency)
+    add_dependencies(${_source} ${_dependency})
+endfunction(add_development_dependency)
+
 function(add_haf_test_executable)
 
   set(PARAM_LIST ${ARGV})

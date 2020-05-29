@@ -14,8 +14,6 @@ HOST_API int haf_host_main(int argc, char* argv[])
 
     try
     {
-        installMemManager();
-
         {
             LogInitializer log_init;
             sys::Host host(argc, argv);
@@ -35,7 +33,5 @@ HOST_API int haf_host_main(int argc, char* argv[])
     {
         DisplayLog::info("Unexpected exception");
     }
-    finishMemManager();
-
     return result;
 }
