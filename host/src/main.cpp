@@ -1,5 +1,3 @@
-#include <host/include/main.hpp>
-
 #include <memmanager/include/memmanager.hpp>
 #include <host/include/host.hpp>
 #include <hlog/include/hlog.hpp>
@@ -7,10 +5,10 @@
 #include <logger/include/log_init.hpp>
 #include <host/include/apploader.hpp>
 
-namespace haf
+int haf_host_main(int argc, char* argv[])
 {
-int libMain(int argc, char *argv[])
-{
+    using namespace haf;
+
     int result = -1;
 
     try
@@ -40,4 +38,3 @@ int libMain(int argc, char *argv[])
 
     return result;
 }
-} // namespace haf

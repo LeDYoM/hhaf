@@ -2,5 +2,5 @@
 
 int main(int argc, char* argv[])
 {
-    return haf::libMain(argc, argv);
+    return haf_host_main(argc, argv);
 }
