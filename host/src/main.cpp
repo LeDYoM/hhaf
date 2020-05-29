@@ -20,9 +20,8 @@ HOST_API int haf_host_main(int argc, char* argv[])
             sys::AppLoader app_loader;
             sys::ManagedApp managed_app = app_loader.loadApp("zoper_game");
             host.setApplication(managed_app.app);
-            int run_result(host.run());
+            result = host.run();
             app_loader.unloadApp(managed_app);
-            result = run_result;
         }
     }
     catch (std::exception e)
