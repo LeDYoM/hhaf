@@ -18,6 +18,6 @@ public:
 
     virtual mtps::vector2du32 size() const = 0;
 };
-} // namespace haf::backend
+}  // namespace haf::backend
 
 #endif

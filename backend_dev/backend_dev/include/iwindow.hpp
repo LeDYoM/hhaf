@@ -25,7 +25,7 @@ public:
      * This call is intended to create a window were entities can be drawn.
      * Since this could be a lot backend dependent, the interface allows some
      * optional parameters
-     * 
+     *
      * @param width Width of the window.
      * @param height Height of the Window.
      * @param red_bpp Number of bits for the red channel
