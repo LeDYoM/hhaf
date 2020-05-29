@@ -6,6 +6,12 @@
 #include <logger/include/log_init.hpp>
 #include <host/include/apploader.hpp>
 
+#ifdef _WIN32
+    #define HOST_API extern "C" __declspec(dllexport)
+#else
+    #define HOST_API
+#endif
+
 HOST_API int haf_host_main(int argc, char* argv[])
 {
     using namespace haf;
