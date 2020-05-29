@@ -20,11 +20,10 @@ void GameBaseTile::tileChanged(const mtps::vector2dst& /*position */,
                                const BoardTileData /* oldValue */,
                                const BoardTileData /* newValue */)
 {
-    if (m_node)
+    if (node_)
     {
-        m_node->color = getColorForToken();
+        node_->color = getColorForToken();
     }
-
 }
 
 Color GameBaseTile::getColorForToken() const

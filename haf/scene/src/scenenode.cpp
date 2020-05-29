@@ -1,6 +1,6 @@
 #include "scenenode.hpp"
 #include "scenemanager.hpp"
-#include <haf/system/i_include/get_system.hpp>
+#include <system/i_include/get_system.hpp>
 
 using namespace mtps;
 

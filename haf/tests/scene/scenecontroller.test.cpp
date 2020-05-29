@@ -4,7 +4,7 @@
 #include <mtypes/include/str.hpp>
 
 #include <haf/scene/include/scene.hpp>
-#include <haf/scene/i_include/scenecontroller.hpp>
+#include <scene/i_include/scenecontroller.hpp>
 
 using namespace mtps;
 

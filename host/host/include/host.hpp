@@ -23,14 +23,14 @@ public:
 
 private:
     class HostPrivate;
-    mtps::uptr<HostPrivate> m_private;
+    mtps::uptr<HostPrivate> p_;
 
     bool loopStep();
     void exitProgram();
     bool update();
 
     enum class AppState : mtps::u8;
-    AppState m_state;
+    AppState app_state_;
     bool exit{false};
 };
 } // namespace haf::sys

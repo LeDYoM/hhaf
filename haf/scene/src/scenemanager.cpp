@@ -1,11 +1,11 @@
 #include "scenemanager.hpp"
 #include "scene.hpp"
 
-#include <haf/system/i_include/systemprovider.hpp>
-#include <haf/window/i_include/window.hpp>
-#include <haf/scene/i_include/scenecontroller.hpp>
-#include <haf/resources/i_include/resourcemanager.hpp>
-#include <haf/render/include/rendertarget.hpp>
+#include <system/i_include/systemprovider.hpp>
+#include <window/i_include/window.hpp>
+#include <scene/i_include/scenecontroller.hpp>
+#include <resources/i_include/resourcemanager.hpp>
+#include <render/i_include/rendertarget.hpp>
 
 #include <hlog/include/hlog.hpp>
 #include <haf/resources/include/iresourceretriever.hpp>
@@ -37,22 +37,22 @@ void SceneManager::finish()
     scene_controller_->finish();
 }
 
-Rectf32 SceneManager::viewPort() const noexcept
+Rectf32 SceneManager::viewPort() const
 {
     return systemProvider().parentWindow().renderTarget()->viewPort();
 }
 
-void SceneManager::setViewPort(const Rectf32& vp) noexcept
+void SceneManager::setViewPort(const Rectf32& vp)
 {
     systemProvider().parentWindow().renderTarget()->setViewPort(vp);
 }
 
-Rectf32 SceneManager::viewRect() const noexcept
+Rectf32 SceneManager::viewRect() const
 {
     return systemProvider().parentWindow().renderTarget()->viewRect();
 }
 
-void SceneManager::setViewRect(const Rectf32& vr) noexcept
+void SceneManager::setViewRect(const Rectf32& vr)
 {
     systemProvider().parentWindow().renderTarget()->setViewRect(vr);
 }

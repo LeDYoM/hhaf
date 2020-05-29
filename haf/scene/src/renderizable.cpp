@@ -1,11 +1,12 @@
 #include "renderizable.hpp"
-#include <haf/render/i_include/rendersystem.hpp>
+#include <render/i_include/rendersystem.hpp>
 
 #include <haf/render/include/renderdata.hpp>
 #include <haf/scene/include/scenenode.hpp>
+#include <haf/scene/include/renderizable_builder.hpp>
 #include <haf/resources/include/itexture.hpp>
 #include <haf/resources/include/ishader.hpp>
-#include <haf/system/i_include/get_system.hpp>
+#include <system/i_include/get_system.hpp>
 
 #include "geometry_math.hpp"
 
@@ -15,48 +16,50 @@ namespace haf::scene
 {
 namespace
 {
-constexpr vector2dd getPositionFromAngleAndRadius(
-    const FigType_t fig_type,
-    const f64 angle,
-    const vector2df& radius)
+constexpr vector2dd getPositionFromAngleAndRadius(const FigType_t fig_type,
+                                                  const f64 angle,
+                                                  const vector2df& radius)
 {
     switch (fig_type)
     {
-    default:
-    case FigType_t::Quad: {
-        return {(sgn_cos(angle) * radius.x), sgn_sin(angle) * radius.y};
-    }
-    break;
-    case FigType_t::Shape: {
-        return {std::cos(angle) * radius.x, std::sin(angle) * radius.y};
-    }
+        default:
+        case FigType_t::Quad:
+        {
+            return {(sgn_cos(angle) * radius.x), sgn_sin(angle) * radius.y};
+        }
+        break;
+        case FigType_t::Shape:
+        {
+            return {std::cos(angle) * radius.x, std::sin(angle) * radius.y};
+        }
     }
 }
 
-constexpr pair<PrimitiveType, size_type>
-initDataVertexPerFigureAndNumPoints(const FigType_t fig_type,
-                                    const size_type num_points) noexcept
+constexpr pair<PrimitiveType, size_type> initDataVertexPerFigureAndNumPoints(
+    const FigType_t fig_type,
+    const size_type num_points) noexcept
 {
     switch (fig_type)
     {
-    default:
-    case FigType_t::Quad:
-    case FigType_t::Shape: {
-        return {PrimitiveType::TriangleFan, num_points + 2U};
-    }
-    break;
-    case FigType_t::EmptyQuad: {
-        return {PrimitiveType::LineStrip, num_points + 1U};
-    }
-    break;
+        default:
+        case FigType_t::Quad:
+        case FigType_t::Shape:
+        {
+            return {PrimitiveType::TriangleFan, num_points + 2U};
+        }
+        break;
+        case FigType_t::EmptyQuad:
+        {
+            return {PrimitiveType::LineStrip, num_points + 1U};
+        }
+        break;
     }
 }
 
 Rects32 textureFillQuad(const sptr<ITexture>& texture)
 {
-    return texture
-        ? Rects32{0, 0, static_cast<vector2ds32>(texture->size())}
-        : Rects32{};
+    return texture ? Rects32{0, 0, static_cast<vector2ds32>(texture->size())}
+                   : Rects32{};
 }
 
 }  // namespace
@@ -112,8 +115,8 @@ void Renderizable::setTextureFill(sptr<ITexture> texture_)
 }
 
 vector2df Renderizable::normalizeInBox(const vector2df& position,
-                                             const Rectf32 box,
-                                             const Rectf32& rect) const
+                                       const Rectf32 box,
+                                       const Rectf32& rect) const
 {
     const f32 xratio{(position.x - box.left) / box.width};
     const f32 yratio{(position.y - box.top) / box.height};
@@ -142,8 +145,7 @@ void Renderizable::updateColorForVertex(
     {
         RenderizableModifierContext context{
             box(), ctexture_rect,
-            texture() ? texture()->size() : vector2du32{0U, 0U},
-            *v_iterator};
+            texture() ? texture()->size() : vector2du32{0U, 0U}, *v_iterator};
         dest_color *= color_modifier()(context);
     }
     v_iterator->color = dest_color;
@@ -228,59 +230,61 @@ void Renderizable::updateGeometry()
         const vector2df radius{cBox.size() / 2.0F};
 
         vertices.resize(nVertex);  // + 2 for center and repeated first point
-        const f64 baseAngle(PiM2Constant<f64> /
-                                  static_cast<f64>(nPoints));
+        const f64 baseAngle(PiM2Constant<f64> / static_cast<f64>(nPoints));
         const auto leftTop(cBox.leftTop());
         const auto base_position{leftTop + radius};
 
         switch (fig_type)
         {
-        case FigType_t::Quad:
-        case FigType_t::Shape: {
-            const auto vertices_iterator_begin =
-                m_vertices.verticesArray().begin();
-            auto vertices_iterator_second = vertices_iterator_begin;
-            auto vertices_iterator{++vertices_iterator_second};
-            auto angle{0.0};
-
-            for (size_type i{0U}; i < nPoints; ++i, ++vertices_iterator)
+            case FigType_t::Quad:
+            case FigType_t::Shape:
             {
-                angle += baseAngle;
-                const vector2dd r{
-                    getPositionFromAngleAndRadius(fig_type, angle, radius)};
+                const auto vertices_iterator_begin =
+                    m_vertices.verticesArray().begin();
+                auto vertices_iterator_second = vertices_iterator_begin;
+                auto vertices_iterator{++vertices_iterator_second};
+                auto angle{0.0};
+
+                for (size_type i{0U}; i < nPoints; ++i, ++vertices_iterator)
+                {
+                    angle += baseAngle;
+                    const vector2dd r{
+                        getPositionFromAngleAndRadius(fig_type, angle, radius)};
+                    vertices_iterator->position =
+                        base_position + static_cast<vector2df>(r);
+                    updateTextureCoordsAndColorForVertex(vertices_iterator,
+                                                         cBox, textureRect());
+                }
+
                 vertices_iterator->position =
-                    base_position + static_cast<vector2df>(r);
+                    vertices_iterator_second->position;
                 updateTextureCoordsAndColorForVertex(vertices_iterator, cBox,
                                                      textureRect());
+                vertices_iterator_begin->position = radius + leftTop;
+                updateTextureCoordsAndColorForVertex(vertices_iterator_begin,
+                                                     cBox, textureRect());
             }
-
-            vertices_iterator->position = vertices_iterator_second->position;
-            updateTextureCoordsAndColorForVertex(vertices_iterator, cBox,
-                                                 textureRect());
-            vertices_iterator_begin->position = radius + leftTop;
-            updateTextureCoordsAndColorForVertex(vertices_iterator_begin, cBox,
-                                                 textureRect());
-        }
-        break;
-        case FigType_t::EmptyQuad: {
-            auto& vertices        = m_vertices.verticesArray();
-            vertices[0U].position = cBox.leftTop();
-            updateTextureCoordsAndColorForVertex(&vertices[0U], cBox,
-                                                 textureRect());
-            vertices[1U].position = cBox.rightTop();
-            updateTextureCoordsAndColorForVertex(&vertices[1U], cBox,
-                                                 textureRect());
-            vertices[2U].position = cBox.rightBottom();
-            updateTextureCoordsAndColorForVertex(&vertices[2U], cBox,
-                                                 textureRect());
-            vertices[3U].position = cBox.leftBottom();
-            updateTextureCoordsAndColorForVertex(&vertices[3U], cBox,
-                                                 textureRect());
-            vertices[4U].position = cBox.leftTop();
-            updateTextureCoordsAndColorForVertex(&vertices[4U], cBox,
-                                                 textureRect());
-        }
-        break;
+            break;
+            case FigType_t::EmptyQuad:
+            {
+                auto& vertices        = m_vertices.verticesArray();
+                vertices[0U].position = cBox.leftTop();
+                updateTextureCoordsAndColorForVertex(&vertices[0U], cBox,
+                                                     textureRect());
+                vertices[1U].position = cBox.rightTop();
+                updateTextureCoordsAndColorForVertex(&vertices[1U], cBox,
+                                                     textureRect());
+                vertices[2U].position = cBox.rightBottom();
+                updateTextureCoordsAndColorForVertex(&vertices[2U], cBox,
+                                                     textureRect());
+                vertices[3U].position = cBox.leftBottom();
+                updateTextureCoordsAndColorForVertex(&vertices[3U], cBox,
+                                                     textureRect());
+                vertices[4U].position = cBox.leftTop();
+                updateTextureCoordsAndColorForVertex(&vertices[4U], cBox,
+                                                     textureRect());
+            }
+            break;
         }
     }
 }

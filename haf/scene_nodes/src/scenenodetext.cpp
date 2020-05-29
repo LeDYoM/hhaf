@@ -5,7 +5,7 @@
 #include <hlog/include/hlog.hpp>
 
 #include <haf/scene/include/vertexarray.hpp>
-#include <haf/scene/include/scenenodetypes.hpp>
+#include <haf/scene_nodes/include/renderizable_scenenode.hpp>
 
 #include <algorithm>
 
@@ -16,16 +16,14 @@ namespace
 constexpr bool do_logs{false};
 
 template <typename... Args>
-constexpr void log_snt(Args &&... args) noexcept
+constexpr void log_snt(Args&&... args) noexcept
 {
     haf::DisplayLog::info_if<do_logs>(std::forward<Args>(args)...);
 }
-} // namespace
+}  // namespace
 
 namespace haf::scene::nodes
 {
-SceneNodeText::SceneNodeText(SceneNode *const parent, const str&name)
-    : SceneNode{parent, name} {}
 
 SceneNodeText::~SceneNodeText() = default;
 
@@ -59,13 +57,14 @@ void SceneNodeText::update()
             u32 prevChar{0U};
             size_type counter{0U};
             size_type old_counter = sceneNodes().size();
-            const Color &tc{textColor()};
+            const Color& tc{textColor()};
 
             log_snt("Text to render: ", text());
 
-            for (auto &&curChar : text())
+            for (auto&& curChar : text())
             {
-                log_snt("-----------------------------------------------------------------");
+                log_snt("------------------------------------------------------"
+                        "-----------");
                 log_snt("Current char: ", make_str(curChar));
                 log_snt("Current x and y: ", x, ",", y);
                 log_snt("minX: ", minX, " minY: ,", minY);
@@ -87,16 +86,16 @@ void SceneNodeText::update()
 
                     switch (curChar)
                     {
-                    case ' ':
-                        x += hspace;
-                        break;
-                    case '\t':
-                        x += hspace * 4;
-                        break;
-                    case '\n':
-                        y += font()->getLineSpacing();
-                        x = 0;
-                        break;
+                        case ' ':
+                            x += hspace;
+                            break;
+                        case '\t':
+                            x += hspace * 4;
+                            break;
+                        case '\n':
+                            y += font()->getLineSpacing();
+                            x = 0;
+                            break;
                     }
 
                     // Update the current bounds (max coordinates)
@@ -106,7 +105,8 @@ void SceneNodeText::update()
                 else
                 {
                     const Rectf32 textureUV{font()->getTextureBounds(curChar)};
-                    Rectf32 letterBox{font()->getBounds(curChar) + vector2df{x, y}};
+                    Rectf32 letterBox{font()->getBounds(curChar) +
+                                      vector2df{x, y}};
                     letterBox += vector2df{50.0F, 50.0F};
                     log_snt("textureUV: ", textureUV);
                     log_snt("letterBox: ", letterBox);
@@ -116,15 +116,22 @@ void SceneNodeText::update()
                     // reuse it. If not, create a new one.
                     if (counter < old_counter)
                     {
-                        letterNode = std::dynamic_pointer_cast<RenderizableSceneNode>(sceneNodes()[counter]);
+                        letterNode =
+                            std::dynamic_pointer_cast<RenderizableSceneNode>(
+                                sceneNodes()[counter]);
                         letterNode->node()->color.set(tc);
                         letterNode->node()->box.set(letterBox);
                     }
                     else
                     {
                         letterNode = createSceneNode<RenderizableSceneNode>(
-                            "text_" + str::to_str(counter),
-                            FigType_t::Quad, letterBox, tc);
+                            "text_" + str::to_str(counter));
+                        auto builder = letterNode->renderizableBuilder()
+                                           .name("text_" + str::to_str(counter))
+                                           .figType(FigType_t::Quad)
+                                           .box(letterBox)
+                                           .color(tc);
+                        letterNode->buildNode(builder);
                     }
                     ++counter;
                     letterNode->node()->setTextureAndTextureRect(texture,
@@ -150,11 +157,12 @@ void SceneNodeText::update()
             const auto scene_nodes_size{sceneNodes().size()};
             // Iterate from the last one to one after counter
             // and delete them
-            for (size_type index{(scene_nodes_size - 1U)};
-                 index >= counter; --index)
+            for (size_type index{(scene_nodes_size - 1U)}; index >= counter;
+                 --index)
             {
                 // Assert we are removing always the last one.
-                LogAsserter::log_assert(sceneNodes()[index] == *(sceneNodes().end() - 1U));
+                LogAsserter::log_assert(sceneNodes()[index] ==
+                                        *(sceneNodes().end() - 1U));
                 removeSceneNode(sceneNodes()[index]);
             }
 
@@ -175,8 +183,8 @@ void SceneNodeText::update()
 
     if (textColor.readResetHasChanged())
     {
-        const Color &tc{textColor()};
-        sceneNodes().for_each([&tc](const SceneNodeSPtr &sNode) {
+        const Color& tc{textColor()};
+        sceneNodes().for_each([&tc](const SceneNodeSPtr& sNode) {
             sNode->snCast<RenderizableSceneNode>()->node()->color.set(tc);
         });
     }
@@ -200,15 +208,15 @@ void SceneNodeText::updateAlignmentX(const f32 textSizeX)
 
     switch (alignmentX())
     {
-    default:
-    case AlignmentX::Left:
-        break;
-    case AlignmentX::Center:
-        newPosX = (alignmentSize().x / 2) - (textSizeX / 2);
-        break;
-    case AlignmentX::Right:
-        newPosX = alignmentSize().x - textSizeX;
-        break;
+        default:
+        case AlignmentX::Left:
+            break;
+        case AlignmentX::Center:
+            newPosX = (alignmentSize().x / 2) - (textSizeX / 2);
+            break;
+        case AlignmentX::Right:
+            newPosX = alignmentSize().x - textSizeX;
+            break;
     }
 
     position.set(vector2df{newPosX, position().y});
@@ -220,18 +228,18 @@ void SceneNodeText::updateAlignmentY(const f32 textSizeY)
 
     switch (alignmentY())
     {
-    default:
-    case AlignmentY::Top:
-        break;
-    case AlignmentY::Middle:
-        newPosY = (alignmentSize().y / 2) - (textSizeY / 2);
-        break;
-    case AlignmentY::Bottom:
-        newPosY = alignmentSize().y - textSizeY;
-        break;
+        default:
+        case AlignmentY::Top:
+            break;
+        case AlignmentY::Middle:
+            newPosY = (alignmentSize().y / 2) - (textSizeY / 2);
+            break;
+        case AlignmentY::Bottom:
+            newPosY = alignmentSize().y - textSizeY;
+            break;
     }
 
     position.set(vector2df{position().x, newPosY});
 }
 
-} // namespace haf::scene::nodes
+}  // namespace haf::scene::nodes

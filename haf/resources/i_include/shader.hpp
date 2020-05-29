@@ -19,7 +19,7 @@ public:
     Shader(backend::IShader *shader);
     ~Shader() override;
 
-    const backend::IShader *backEndShader() const noexcept { return m_ShaderPrivate; }
+    const backend::IShader *const backEndShader() const noexcept;
 
 private:
     backend::IShader *m_ShaderPrivate;

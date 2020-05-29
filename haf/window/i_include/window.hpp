@@ -4,7 +4,7 @@
 #define HAF_WINDOW_WINDOW_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <haf/system/include/appservice.hpp>
+#include <system/i_include/appservice.hpp>
 #include <haf/window/include/window_properties.hpp>
 
 namespace haf::input

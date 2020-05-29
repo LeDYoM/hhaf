@@ -16,10 +16,7 @@ class SceneTypeBasic : public Scene
 public:
     SceneTypeBasic() : Scene{str("SceneTypeBasic")} {}
 
-    static uptr<Scene> createScene()
-    {
-        return muptr<SceneTypeBasic>();
-    }
+    static uptr<Scene> createScene() { return muptr<SceneTypeBasic>(); }
 };
 
 class SceneTypeWithStaticTypeName : public Scene
@@ -27,7 +24,9 @@ class SceneTypeWithStaticTypeName : public Scene
 public:
     static constexpr char StaticTypeName[] = "StaticTypeName";
 
-    SceneTypeWithStaticTypeName() : Scene{str(SceneTypeWithStaticTypeName::StaticTypeName)} {}
+    SceneTypeWithStaticTypeName() :
+        Scene{str(SceneTypeWithStaticTypeName::StaticTypeName)}
+    {}
 
     static uptr<Scene> createScene()
     {
@@ -38,7 +37,8 @@ public:
 class SceneTypeWithStaticCreateScene : public Scene
 {
 public:
-    SceneTypeWithStaticCreateScene() : Scene{"SceneTypeWithStaticCreateScene"} {}
+    SceneTypeWithStaticCreateScene() : Scene{"SceneTypeWithStaticCreateScene"}
+    {}
 
     static uptr<Scene> create()
     {
@@ -49,9 +49,12 @@ public:
 class SceneTypeWithStaticTypeNameAndStaticCreateScene : public Scene
 {
 public:
-    static constexpr char StaticTypeName[] = "SceneTypeWithStaticTypeNameAndStaticCreateScene";
+    static constexpr char StaticTypeName[] =
+        "SceneTypeWithStaticTypeNameAndStaticCreateScene";
 
-    SceneTypeWithStaticTypeNameAndStaticCreateScene() : Scene{"SceneTypeWithStaticTypeNameAndStaticCreateScene"} {}
+    SceneTypeWithStaticTypeNameAndStaticCreateScene() :
+        Scene{"SceneTypeWithStaticTypeNameAndStaticCreateScene"}
+    {}
 
     static uptr<Scene> create()
     {
@@ -65,29 +68,45 @@ TEST_CASE("haf::scene::SceneNodeFactory", "[lib][SceneNodeFactory]")
 
     SECTION("Basic insertion")
     {
-        CHECK(scene_node_factory.registerSceneNodeType("SceneTypeBasic", SceneTypeBasic::createScene));
+        CHECK(scene_node_factory.registerSceneNodeType(
+            "SceneTypeBasic", SceneTypeBasic::createScene));
         // Insertion of the same element is false
-        CHECK_FALSE(scene_node_factory.registerSceneNodeType("SceneTypeBasic", SceneTypeBasic::createScene));
+        CHECK_FALSE(scene_node_factory.registerSceneNodeType(
+            "SceneTypeBasic", SceneTypeBasic::createScene));
 
         SECTION("Inserting overloads")
         {
-            CHECK(scene_node_factory.registerSceneNodeType<SceneTypeWithStaticTypeName>(SceneTypeWithStaticTypeName::createScene));            
-            CHECK(scene_node_factory.registerSceneNodeType<SceneTypeWithStaticCreateScene>(str("SceneTypeWithStaticCreateScene")));
-            CHECK(scene_node_factory.registerSceneNodeType<SceneTypeWithStaticTypeNameAndStaticCreateScene>());
+            CHECK(scene_node_factory
+                      .registerSceneNodeType<SceneTypeWithStaticTypeName>(
+                          SceneTypeWithStaticTypeName::createScene));
+            CHECK(scene_node_factory
+                      .registerSceneNodeType<SceneTypeWithStaticCreateScene>(
+                          str("SceneTypeWithStaticCreateScene")));
+            CHECK(scene_node_factory.registerSceneNodeType<
+                  SceneTypeWithStaticTypeNameAndStaticCreateScene>());
 
-            CHECK_FALSE(scene_node_factory.registerSceneNodeType<SceneTypeWithStaticTypeName>(SceneTypeWithStaticTypeName::createScene));            
-            CHECK_FALSE(scene_node_factory.registerSceneNodeType<SceneTypeWithStaticCreateScene>(str("SceneTypeWithStaticCreateScene")));
-            CHECK_FALSE(scene_node_factory.registerSceneNodeType<SceneTypeWithStaticTypeNameAndStaticCreateScene>());
+            CHECK_FALSE(scene_node_factory
+                            .registerSceneNodeType<SceneTypeWithStaticTypeName>(
+                                SceneTypeWithStaticTypeName::createScene));
+            CHECK_FALSE(
+                scene_node_factory
+                    .registerSceneNodeType<SceneTypeWithStaticCreateScene>(
+                        str("SceneTypeWithStaticCreateScene")));
+            CHECK_FALSE(scene_node_factory.registerSceneNodeType<
+                        SceneTypeWithStaticTypeNameAndStaticCreateScene>());
 
             SECTION("Check existence")
             {
-                auto scene_type_basic = scene_node_factory.create("SceneTypeBasic");
+                auto scene_type_basic =
+                    scene_node_factory.create("SceneTypeBasic");
                 CHECK(scene_type_basic != nullptr);
                 CHECK(typeid(*scene_type_basic) == typeid(SceneTypeBasic));
 
-                auto scene_type_complete = scene_node_factory.create<SceneTypeWithStaticTypeName>();
+                auto scene_type_complete =
+                    scene_node_factory.create<SceneTypeWithStaticTypeName>();
                 CHECK(scene_type_complete != nullptr);
-                CHECK(typeid(*scene_type_complete) == typeid(SceneTypeWithStaticTypeName));
+                CHECK(typeid(*scene_type_complete) ==
+                      typeid(SceneTypeWithStaticTypeName));
             }
         }
     }

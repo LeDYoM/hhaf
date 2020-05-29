@@ -3,14 +3,14 @@
 #ifndef HAF_CORE_SYSTEM_SIMULATIONSYSTEM_PRIVATE_INCLUDE_HPP
 #define HAF_CORE_SYSTEM_SIMULATIONSYSTEM_PRIVATE_INCLUDE_HPP
 
-#include <haf/simulation/include/simulationsystem.hpp>
+#include <simulation/i_include/simulationsystem.hpp>
 #include <haf/simulation/include/simulationaction.hpp>
 
 #include <haf/input/include/key.hpp>
 #include <hlog/include/hlog.hpp>
 #include <haf/time/include/timepoint.hpp>
-#include <haf/system/i_include/systemprovider.hpp>
-#include <haf/random/i_include/randomsystem.hpp>
+#include <system/i_include/systemprovider.hpp>
+#include <random/i_include/randomsystem.hpp>
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/object.hpp>

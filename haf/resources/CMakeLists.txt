@@ -1,9 +1,16 @@
-project (resources CXX)
+project(resources CXX)
 cmake_minimum_required(VERSION 3.12)
 
-set (_SOURCES 
+set(_SOURCES
+    "i_include/bmpfont.hpp"
+    "i_include/bmpfont_private.hpp"
+    "i_include/bmpfontfactory.hpp"
+    "i_include/resourcemanager.hpp"
+    "i_include/shader.hpp"
+    "i_include/texture.hpp"
+    "i_include/ttfont.hpp"
+    "i_include/ttfontinstance.hpp"
     "src/bmpfont.cpp"
-    "src/bmpfont_private.hpp"
     "src/bmpfontfactory.cpp"
     "src/resourcehandler.cpp"
     "src/resourcemanager.cpp"
@@ -11,15 +18,12 @@ set (_SOURCES
     "src/shader.cpp"
     "src/texture.cpp"
     "src/ttfont.cpp"
-    "src/ttfontinstance.cpp"
-)
+    "src/ttfontinstance.cpp")
 
-set (CURRENT_TARGET  ${PROJECT_NAME})
+set(CURRENT_TARGET ${PROJECT_NAME})
 
-build_internal_lib_component(
-    SOURCES
-    ${_SOURCES}
-)
+set(INTERNAL_TARGET resources)
+set(_LINK_PRIVATE backend backend_dev system_internal)
 
-target_link_libraries(${CURRENT_TARGET} PRIVATE backend)
-target_link_libraries(${CURRENT_TARGET} PRIVATE backend_dev)
+build_internal_lib_component(INTERNAL_TARGET ${INTERNAL_TARGET} SOURCES
+                             ${_SOURCES} PRIVATE_INTERNAL_LINK ${_LINK_PRIVATE})

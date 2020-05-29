@@ -2,10 +2,11 @@
 #include "token.hpp"
 #include "tokenzones.hpp"
 #include "player.hpp"
+#include "levelproperties.hpp"
 
 #include <haf/scene/include/scenenode.hpp>
 #include <haf/scene_nodes/include/tablenode.hpp>
-#include <haf/scene_components/include/scenemetrics.hpp>
+#include <haf/scene_components/include/scenemetricsview.hpp>
 #include <haf/scene/include/renderizable.hpp>
 
 #include <boardmanager/include/boardmanager.hpp>
@@ -18,20 +19,15 @@ using namespace haf::scene::nodes;
 namespace zoper
 {
 
-BoardGroup::BoardGroup(SceneNode* parent, str name, vector2dst size) :
-    BaseClass{parent, std::move(name)}
+BoardGroup::~BoardGroup() = default;
+
+void BoardGroup::configure(vector2dst size,
+                           sptr<LevelProperties> level_properties)
 {
-    setTableSize(std::move(size));
-}
+    level_properties_ = std::move(level_properties);
+    setTableSize(size);
 
-BoardGroup::~BoardGroup()
-{}
-
-void BoardGroup::onCreated()
-{
-    BaseClass::onCreated();
-
-    Rectf32 textBox{dataWrapper<SceneMetrics>()->currentView()};
+    Rectf32 textBox{dataWrapper<SceneMetricsView>()->currentView()};
     position      = textBox.leftTop();
     sceneNodeSize = textBox.size();
 
@@ -42,26 +38,27 @@ void BoardGroup::onCreated()
     {
         for (size_type x{0U}; x < tableSize().x; ++x)
         {
-            static_cast<void>(createNodeAt(
-                {x, y}, make_str("BoardGroupTile_", x, y), tileBox));
+            auto node = createNodeAt({x, y}, make_str("BoardGroupTile_", x, y));
+            node->configure(tileBox);
         }
     }
 
-    p_boardModel = addComponentOfType<board::BoardManager>();
-    p_boardModel->initialize(tableSize(), this);
+    board_model_ = addComponentOfType<board::BoardManager>();
+    board_model_->initialize(tableSize(), this);
 
-    p_boardModel->setBackgroundFunction(
+    board_model_->setBackgroundFunction(
         [](const vector2dst& position) -> board::BackgroundData {
-            return ((TokenZones::pointInCenter(position)) ? (1) :(0));
+            return ((TokenZones::pointInCenter(position)) ? (1) : (0));
         });
 
     tokens_scene_node = createSceneNode("tokens_scene_node");
+    setLevel(level_properties_->currentLevel());
     addPlayer();
-}
 
-void BoardGroup::configure(sptr<LevelProperties> level_properties)
-{
-    level_properties_ = std::move(level_properties);
+    level_properties_->levelChanged.connect([this](const auto level) {
+        // Forward current leve
+        setLevel(level);
+    });
 }
 
 void BoardGroup::addPlayer()
@@ -75,7 +72,7 @@ void BoardGroup::addPlayer()
                        rectFromSize(tileSize()), board2SceneFactor());
 
     // Add it to the board and to the scene nodes
-    p_boardModel->setTile(player_->boardPosition(), player_);
+    board_model_->setTile(player_->boardPosition(), player_);
 }
 
 void BoardGroup::createNewToken(const board::BoardTileData data,
@@ -94,8 +91,8 @@ void BoardGroup::createNewToken(const board::BoardTileData data,
     new_tile_token->position.set(board2Scene(board_position));
 
     // Add it to the board
-    p_boardModel->setTile(board_position, new_tile_token);
-    p_boardModel->changeTileData(board_position, data);
+    board_model_->setTile(board_position, new_tile_token);
+    board_model_->changeTileData(board_position, data);
     // Configure it.
     new_tile_token->configure(level_properties_, rectFromSize(size),
                               board2SceneFactor());
@@ -212,8 +209,8 @@ Color BoardGroup::getBackgroundTileColor(const size_type level,
 
 vector2df BoardGroup::board2SceneFactor() const
 {
-    return dataWrapper<SceneMetrics>()->currentView().size() /
-        p_boardModel->size();
+    return dataWrapper<SceneMetricsView>()->currentView().size() /
+        board_model_->size();
 }
 
 vector2df BoardGroup::board2Scene(const vector2dst& bPosition) const
@@ -228,12 +225,13 @@ vector2df BoardGroup::tileSize() const
 
 mtps::sptr<board::BoardManager> BoardGroup::boardModel() noexcept
 {
-    return p_boardModel;
+    return board_model_;
 }
 
-const mtps::sptr<const board::BoardManager> BoardGroup::boardModel() const noexcept
+const mtps::sptr<const board::BoardManager> BoardGroup::boardModel()
+    const noexcept
 {
-    return p_boardModel;
+    return board_model_;
 }
 
 mtps::sptr<scene::SceneNode> BoardGroup::tokensSceneNode() noexcept
@@ -246,7 +244,13 @@ const mtps::sptr<scene::SceneNode> BoardGroup::tokensSceneNode() const noexcept
     return tokens_scene_node;
 }
 
-mtps::sptr<Player> BoardGroup::player() noexcept { return player_; }
-const mtps::sptr<Player> BoardGroup::player() const noexcept { return player_; }
+mtps::sptr<Player> BoardGroup::player() noexcept
+{
+    return player_;
+}
+const mtps::sptr<Player> BoardGroup::player() const noexcept
+{
+    return player_;
+}
 
 }  // namespace zoper

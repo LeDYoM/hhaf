@@ -1,9 +1,10 @@
 #include "virtual_input_component.hpp"
+#include "inputsystem.hpp"
+#include "key.hpp"
+
+#include <system/i_include/get_system.hpp>
 
 #include <hlog/include/hlog.hpp>
-#include <haf/input/include/key.hpp>
-#include <haf/input/i_include/inputsystem.hpp>
-#include <haf/system/i_include/get_system.hpp>
 
 namespace haf::input
 {

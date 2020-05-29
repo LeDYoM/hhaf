@@ -4,22 +4,23 @@
 #define HAF_BACKEND_RENDER_DATA_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <haf/scene/include/vertex.hpp>
-#include <haf/scene/include/vertexarray.hpp>
-#include "itexture.hpp"
-#include "ishader.hpp"
+#include "ivertex.hpp"
+#include "iprimitivetype.hpp"
 
 namespace haf::backend
 {
+class ITexture;
+class IShader;
+
 struct IRenderData
 {
-    const scene::Vertex *vertices;
+    const iVertex* vertices;
     const mtps::u32 nVertex;
-    const scene::PrimitiveType pType;
-    const mtps::f32 *transform;
-    const ITexture *texture;
-    const IShader *shader;
+    const iPrimitiveType pType;
+    const mtps::f32* transform;
+    const ITexture* texture;
+    const IShader* shader;
 };
-} // namespace haf::backend
+}  // namespace haf::backend
 
 #endif

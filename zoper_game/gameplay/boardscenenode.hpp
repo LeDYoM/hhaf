@@ -6,7 +6,7 @@
 #include <haf/scene/include/scenenode.hpp>
 #include <haf/scene/include/color.hpp>
 #include <haf/scene/include/renderizable.hpp>
-#include <haf/scene/include/scenenodetypes.hpp>
+#include <haf/scene_nodes/include/renderizable_scenenode.hpp>
 
 namespace zoper
 {
@@ -19,8 +19,10 @@ private:
     using BaseClass = SceneNode;
 
 public:
-    BoardSceneNode(SceneNode *parent, mtps::str name, const mtps::Rectf32 &tileBox);
+    using SceneNode::SceneNode;
     virtual ~BoardSceneNode();
+
+    void configure(const mtps::Rectf32 &tileBox);
 
     void setTileColor(Color color);
 

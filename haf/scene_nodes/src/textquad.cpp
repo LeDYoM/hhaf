@@ -4,18 +4,15 @@ using namespace mtps;
 
 namespace haf::scene::nodes
 {
-TextQuad::TextQuad(SceneNode* parent,
-                   str name,
-                   sptr<IFont> font,
-                   const Color& color,
-                   const vector2df& size) :
-    BaseClass{parent, std::move(name)}
+void TextQuad::configure(mtps::sptr<IFont> font,
+                         const Color& color,
+                         const mtps::vector2df& size)
 {
     setTableSize({2, 2});
     for (size_type count{0}; count < 4U; ++count)
     {
         auto node  = createNodeAt({count % 2, count / 2},
-                                 name + "node_" + make_str(count));
+                                 name() + "node_" + make_str(count));
         node->font = font;
         node->textColor.set(color);
     }

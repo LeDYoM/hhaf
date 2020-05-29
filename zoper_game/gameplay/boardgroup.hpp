@@ -3,6 +3,8 @@
 #ifndef ZOPER_BOARDGROUP_HPP
 #define ZOPER_BOARDGROUP_HPP
 
+#include <mtypes/include/vector2d.hpp>
+
 #include <haf/scene/include/scenenode.hpp>
 #include <haf/scene_nodes/include/tablenode.hpp>
 
@@ -25,23 +27,23 @@ private:
     using BaseClass = haf::scene::nodes::TableNode<BoardSceneNode>;
 
 public:
-    BoardGroup(mtps::rptr<haf::scene::SceneNode> parent,
-               mtps::str name,
-               mtps::vector2dst size);
+    using BaseClass::BaseClass;
+
     ~BoardGroup() override;
 
-    void configure(mtps::sptr<LevelProperties> level_properties);
+    void configure(mtps::vector2dst size,
+                   mtps::sptr<LevelProperties> level_properties);
     void createNewToken(const haf::board::BoardTileData data,
                         const mtps::vector2dst& board_position,
                         const mtps::vector2df& size);
 
-    void onCreated() override;
-    void tileRemoved(const mtps::vector2dst, haf::board::SITilePointer&) override;
+    void tileRemoved(const mtps::vector2dst,
+                     haf::board::SITilePointer&) override;
     void setLevel(const mtps::size_type level);
 
     haf::scene::Color getBackgroundTileColor(const mtps::size_type level,
-                                        mtps::vector2dst position,
-                                        const bool isCenter) const;
+                                             mtps::vector2dst position,
+                                             const bool isCenter) const;
 
     mtps::sptr<board::BoardManager> boardModel() noexcept;
     const mtps::sptr<const board::BoardManager> boardModel() const noexcept;
@@ -55,7 +57,7 @@ public:
     mtps::vector2df tileSize() const;
 
 private:
-    mtps::sptr<haf::board::BoardManager> p_boardModel;
+    mtps::sptr<haf::board::BoardManager> board_model_;
     mtps::sptr<Player> player_;
     mtps::sptr<haf::scene::SceneNode> tokens_scene_node;
     mtps::sptr<LevelProperties> level_properties_;

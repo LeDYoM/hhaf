@@ -30,7 +30,7 @@ public:
     mtps::sptr<haf::board::BoardManager> getBoardModel();
 
 protected:
-    mtps::sptr<haf::scene::Renderizable> m_node;
+    mtps::sptr<haf::scene::Renderizable> node_;
 };
 }  // namespace zoper
 

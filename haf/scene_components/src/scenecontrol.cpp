@@ -1,8 +1,8 @@
 #include "scenecontrol.hpp"
 #include <haf/scene/include/scenenode.hpp>
-#include <haf/scene/i_include/scenemanager.hpp>
-#include <haf/scene/i_include/scenecontroller.hpp>
-#include <haf/system/i_include/get_system.hpp>
+#include <scene/i_include/scenemanager.hpp>
+#include <scene/i_include/scenecontroller.hpp>
+#include <system/i_include/get_system.hpp>
 
 namespace haf::scene
 {
@@ -13,4 +13,32 @@ void SceneControl::switchToNextScene()
         ->switchToNextScene();
 }
 
-} // namespace haf::scene
+void SceneControl::setSceneDirector(SceneDirectorType scene_director)
+{
+    sys::getSystem<scene::SceneManager>(attachedNode())
+        .sceneController()
+        ->setSceneDirector(std::move(scene_director));
+}
+
+bool SceneControl::startScene(const mtps::str& scene_name)
+{
+    return sys::getSystem<scene::SceneManager>(attachedNode())
+        .sceneController()
+        ->startScene(scene_name);
+}
+
+void SceneControl::requestExit()
+{
+    return sys::getSystem<scene::SceneManager>(attachedNode())
+        .sceneController()
+        ->requestExit();
+}
+
+bool SceneControl::exitRequested() const
+{
+    return sys::getSystem<scene::SceneManager>(attachedNode())
+        .sceneController()
+        ->exitRequested();
+}
+
+}  // namespace haf::scene

@@ -15,8 +15,7 @@ public:
     using BaseClass = haf::scene::MenuPaged;
 
     static constexpr char ClassName[] = "MainMenu";
-    MainMenu(scene::SceneNode *parent, mtps::str name);
-    ~MainMenu() override;
+    using BaseClass::BaseClass;
 
     virtual void onCreated() override;
 };

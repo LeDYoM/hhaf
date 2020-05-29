@@ -4,7 +4,7 @@
 #define HAF_CORE_SYSTEM_TIMESYSTEM_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <haf/system/include/appservice.hpp>
+#include <system/i_include/appservice.hpp>
 #include <haf/time/include/timepoint.hpp>
 
 namespace haf::sys
@@ -12,7 +12,7 @@ namespace haf::sys
 class TimeSystem final : public AppService
 {
 public:
-    TimeSystem(sys::SystemProvider& system_provider);
+    TimeSystem(sys::ISystemProvider& system_provider);
     ~TimeSystem() override;
 
     time::TimePoint timeSinceStart() const;

@@ -6,11 +6,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
 #include <mtypes/include/rect.hpp>
-#include <haf/scene/include/vertex.hpp>
-#include <haf/scene/include/vertexarray.hpp>
 #include "irenderdata.hpp"
-#include "itexture.hpp"
-#include "ishader.hpp"
 #include "iresourceinfo.hpp"
 
 namespace haf::backend

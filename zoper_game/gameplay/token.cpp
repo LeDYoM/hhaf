@@ -20,8 +20,8 @@ Token::Token(SceneNode* const parent, str name) :
                  name + str::to_str(m_tileCounter) + str::to_str(m_tileCounter)}
 {
     ++m_tileCounter;
-    m_node = createRenderizable("Node" + str::to_str(m_tileCounter),
-                                FigType_t::Shape, 30U);
+    node_ = renderizableBuilder().name("Node" + str::to_str(m_tileCounter))
+        .figType(FigType_t::Shape).pointCount(30U).create();
     animation_component_ = addComponentOfType<scene::AnimationComponent>();
 }
 
@@ -31,8 +31,8 @@ void Token::configure(sptr<LevelProperties> level_properties,
                       const Rectf32& box,
                       const vector2df& board2SceneFactor)
 {
-    m_node->box        = box;
-    m_node->color      = getColorForToken();
+    node_->box        = box;
+    node_->color      = getColorForToken();
     level_properties_  = std::move(level_properties);
     board2SceneFactor_ = board2SceneFactor;
 }

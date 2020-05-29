@@ -8,7 +8,7 @@
 
 namespace haf::sys
 {
-    class ISystemProvider;
+    class DataWrapperCreator;
 }
 
 namespace zoper
@@ -21,8 +21,8 @@ public:
     ZoperProgramController();
     ~ZoperProgramController() override;
 
-    void onInit(haf::sys::ISystemProvider& system_provider) override;
-    void onFinish(haf::sys::ISystemProvider& system_provider) override;
+    void onInit(haf::sys::DataWrapperCreator &data_wrapper_creator) override;
+    void onFinish(haf::sys::DataWrapperCreator &data_wrapper_creator) override;
 
     mtps::u16 getVersion() const noexcept override;
     mtps::u16 getSubVersion() const noexcept override;

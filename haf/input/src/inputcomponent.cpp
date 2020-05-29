@@ -1,9 +1,9 @@
 #include <haf/input/include/inputcomponent.hpp>
+#include "inputsystem.hpp"
 
 #include <hlog/include/hlog.hpp>
 #include <haf/input/include/key.hpp>
-#include <haf/input/i_include/inputsystem.hpp>
-#include <haf/system/i_include/get_system.hpp>
+#include <system/i_include/get_system.hpp>
 
 namespace haf::input
 {

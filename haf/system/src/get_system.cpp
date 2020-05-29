@@ -3,14 +3,14 @@
 #include "isystemprovider.hpp"
 #include "get_system.hpp"
 #include <haf/scene/include/scenenode.hpp>
-#include <haf/system/include/systemaccess.hpp>
-#include <haf/scene/i_include/scenemanager.hpp>
-#include <haf/render/i_include/rendersystem.hpp>
-#include <haf/resources/i_include/resourcemanager.hpp>
-#include <haf/input/i_include/inputsystem.hpp>
-#include <haf/time/i_include/timesystem.hpp>
-#include <haf/shareddata/i_include/shareddatasystem.hpp>
-#include <haf/filesystem/i_include/filesystem.hpp>
+#include "systemaccess.hpp"
+#include <scene/i_include/scenemanager.hpp>
+#include <render/i_include/rendersystem.hpp>
+#include <resources/i_include/resourcemanager.hpp>
+#include <input/i_include/inputsystem.hpp>
+#include <time/i_include/timesystem.hpp>
+#include <shareddata/i_include/shareddatasystem.hpp>
+#include <filesystem/i_include/filesystem.hpp>
 
 using namespace mtps;
 
@@ -46,7 +46,7 @@ DEFINE_GETSYSTEM(scene::SceneManager, sceneManager);
 DEFINE_GETSYSTEM(sys::RenderSystem, renderSystem);
 DEFINE_GETSYSTEM(sys::ResourceManager, resourceManager);
 DEFINE_GETSYSTEM(sys::TimeSystem, timeSystem);
-DEFINE_GETSYSTEM(sys::ISharedDataSystem, sharedDataSystem);
+DEFINE_GETSYSTEM(sys::SharedDataSystem, sharedDataSystem);
 DEFINE_GETSYSTEM(sys::RandomSystem, randomSystem);
 DEFINE_GETSYSTEM(sys::FileSystem, fileSystem);
 }

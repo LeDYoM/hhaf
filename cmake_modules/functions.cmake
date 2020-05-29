@@ -1,51 +1,15 @@
-function(build_client_library)
-
-  cmake_parse_arguments(CL_BUILD "" "DATA_SOURCE" "HEADERS;SOURCES" ${ARGN})
-
-  set(CURRENT_TARGET ${PROJECT_NAME})
-
-  add_library(${CURRENT_TARGET} SHARED ${CL_BUILD_SOURCES} ${CL_BUILD_HEADERS})
-
-  set_target_properties(${CURRENT_TARGET} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS
-                                                     true)
-
-  # Detect and add libraries
-  target_link_libraries(${CURRENT_TARGET} PRIVATE hosted_app)
-  target_link_libraries(${CURRENT_TARGET} PRIVATE haf)
-
-  # Copy data if data directory has been passed.
-  if(NOT ${CL_BUILD_DATA_SOURCE} STREQUAL "")
-    message(VERBOSE "Post build command. Copy directory")
-    message(VERBOSE ${CL_BUILD_DATA_SOURCE})
-    message(VERBOSE "to")
-    message(VERBOSE $<TARGET_FILE_DIR:${CURRENT_TARGET}>)
-
-    add_custom_command(
-      TARGET ${CURRENT_TARGET}
-      POST_BUILD
-      COMMAND ${CMAKE_COMMAND} -E copy_directory ${CL_BUILD_DATA_SOURCE}
-              $<TARGET_FILE_DIR:${CURRENT_TARGET}>)
-  endif()
-
-endfunction(build_client_library)
-
-function(add_log_and_types)
-  target_link_libraries(${CURRENT_TARGET} PUBLIC mtypes)
-  target_link_libraries(${CURRENT_TARGET} PUBLIC memmanager)
-  target_link_libraries(${CURRENT_TARGET} PUBLIC hlog)
-endfunction(add_log_and_types)
-
 # Function to build different components from the project in an unified way.
 function(build_lib_component)
 
-  cmake_parse_arguments(LC_BUILD "" "HEADER_DIRECTORY" "SOURCES" ${ARGN})
-
-  set(CURRENT_TARGET ${PROJECT_NAME})
+  cmake_parse_arguments(LC_BUILD "EXPORT_ALL" "HEADER_DIRECTORY" "SOURCES"
+                        ${ARGN})
 
   add_library(${CURRENT_TARGET} SHARED ${LC_BUILD_SOURCES})
 
-  set_target_properties(${CURRENT_TARGET} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS
-                                                     true)
+  if(LC_BUILD_EXPORT_ALL)
+    set_target_properties(${CURRENT_TARGET}
+                          PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS true)
+  endif()
 
   target_include_directories(${CURRENT_TARGET}
                              PUBLIC ${LC_BUILD_HEADER_DIRECTORY})
@@ -80,41 +44,7 @@ function(build_lib_interface_component)
   target_include_directories(${CURRENT_TARGET}
                              INTERFACE ${LC_BUILD_HEADER_DIRECTORY})
 
-  install(
-    TARGETS ${CURRENT_TARGET}
-    LIBRARY DESTINATION .
-    RUNTIME DESTINATION .)
-
 endfunction(build_lib_interface_component)
-
-# Function to build different components from the project in an unified way.
-function(build_internal_lib_component)
-
-  cmake_parse_arguments(LC_BUILD "" "HEADER_DIRECTORY" "SOURCES" ${ARGN})
-
-  set(CURRENT_TARGET ${PROJECT_NAME})
-  set(_PUBLIC_INCLUDE "/include")
-  set(_PUBLIC_INCLUDE_DIRECTORY "${PROJECT_SOURCE_DIR}${_PUBLIC_INCLUDE}")
-  set(_INTERNAL_INCLUDE "/i_include")
-  set(_INTERNAL_INCLUDE_DIRECTORY "${PROJECT_SOURCE_DIR}${_INTERNAL_INCLUDE}")
-
-  add_library(${CURRENT_TARGET} STATIC ${LC_BUILD_SOURCES}
-                                       ${_PUBLIC_INCLUDE_DIRECTORY})
-
-  # As long as static libraries are used for internal components, we do not need
-  # this. set_target_properties(${CURRENT_TARGET} PROPERTIES
-  # WINDOWS_EXPORT_ALL_SYMBOLS true)
-
-  target_include_directories(
-    ${CURRENT_TARGET} PUBLIC ${_PUBLIC_INCLUDE_DIRECTORY}
-                             ${_INTERNAL_INCLUDE_DIRECTORY})
-
-  add_library(${CURRENT_TARGET}_interface INTERFACE)
-  target_include_directories(${CURRENT_TARGET}_interface
-                             INTERFACE ${_PUBLIC_INCLUDE_DIRECTORY})
-  add_log_and_types()
-
-endfunction(build_internal_lib_component)
 
 # Function to build different components from the project in an unified way.
 function(build_concrete_backend)
@@ -123,10 +53,7 @@ function(build_concrete_backend)
 
   add_library(${CURRENT_TARGET} SHARED ${SOURCES})
 
-  # Patch for testing TO DO: Remove it (use a variable)
-  include_directories("..")
-
-  add_log_and_types()
+  target_link_libraries(${CURRENT_TARGET} PRIVATE log_and_types)
   target_link_libraries(${CURRENT_TARGET} PRIVATE backend_dev)
 
 endfunction(build_concrete_backend)
@@ -151,6 +78,10 @@ function(add_test_executable)
 
 endfunction(add_test_executable)
 
+function(add_development_dependency _source _dependency)
+    add_dependencies(${_source} ${_dependency})
+endfunction(add_development_dependency)
+
 function(add_haf_test_executable)
 
   set(PARAM_LIST ${ARGV})
@@ -161,3 +92,33 @@ function(add_haf_test_executable)
   target_link_libraries(${CURRENT_TARGET} PRIVATE haf)
 
 endfunction(add_haf_test_executable)
+
+function(build_doc _base_name)
+  # first we can indicate the documentation build as an option and set it to ON
+  # by default
+  option(BUILD_HAF_DOC "Build documentation" ON)
+
+  # check if Doxygen is installed
+  find_package(Doxygen)
+  if(DOXYGEN_FOUND)
+    message("Doxygen found")
+    message("Generating doxygen files for " ${_base_name})
+    # set input and output files
+    set(DOXYGEN_IN ${CMAKE_CURRENT_SOURCE_DIR}/docs/Doxyfile.in)
+    set(DOXYGEN_OUT ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
+
+    # request to configure the file
+    configure_file(${DOXYGEN_IN} ${DOXYGEN_OUT} @ONLY)
+
+    add_custom_target(
+      ${_base_name}_doc_doxygen
+      COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
+      WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+      COMMENT "Generating API documentation with Doxygen for ${_base_name}"
+      VERBATIM)
+  else(DOXYGEN_FOUND)
+    message(
+      "Doxygen need to be installed to generate the doxygen documentation for "
+      ${_base_name})
+  endif(DOXYGEN_FOUND)
+endfunction(build_doc)

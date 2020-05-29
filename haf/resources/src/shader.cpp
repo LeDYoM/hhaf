@@ -1,12 +1,19 @@
-#include <haf/resources/i_include/shader.hpp>
+#include "shader.hpp"
 
 #include <backend_dev/include/ishader.hpp>
 #include <map>
 
 namespace haf::scene
 {
-Shader::Shader(backend::IShader *shader) : m_ShaderPrivate{shader} {}
+Shader::Shader(backend::IShader* shader) : m_ShaderPrivate{shader}
+{}
 
-Shader::~Shader() {}
+Shader::~Shader()
+{}
 
-} // namespace haf::scene
+const backend::IShader* const Shader::backEndShader() const noexcept
+{
+    return m_ShaderPrivate;
+}
+
+}  // namespace haf::scene

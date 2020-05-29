@@ -2,32 +2,34 @@
 
 #include <backend/include/backendfactory.hpp>
 #include <backend/include/backend_creator.hpp>
-#include <haf/filesystem/i_include/filesystem.hpp>
-#include <haf/input/i_include/inputsystem.hpp>
-#include <haf/random/i_include/randomsystem.hpp>
-#include <haf/render/i_include/rendersystem.hpp>
-#include <haf/scene/i_include/scenemanager.hpp>
-#include <haf/window/i_include/window.hpp>
-#include <haf/time/i_include/timesystem.hpp>
-#include <haf/shareddata/i_include/shareddatasystem.hpp>
-#include <haf/resources/i_include/resourcemanager.hpp>
-#include <haf/simulation/include/simulationsystem.hpp>
+#include <filesystem/i_include/filesystem.hpp>
+#include <input/i_include/inputsystem.hpp>
+#include <random/i_include/randomsystem.hpp>
+#include <render/i_include/rendersystem.hpp>
+#include <scene/i_include/scenemanager.hpp>
+#include <window/i_include/window.hpp>
+#include <time/i_include/timesystem.hpp>
+#include <shareddata/i_include/shareddatasystem.hpp>
+#include <resources/i_include/resourcemanager.hpp>
+#include <simulation/i_include/simulationsystem.hpp>
 
 #include <hlog/include/hlog.hpp>
 #include <hosted_app/include/iapp.hpp>
 
+#include <haf/system/include/datawrappercreator.hpp>
+#include <haf/system/include/systemaccess.hpp>
 #include <functional>
 
 using namespace mtps;
 
 namespace haf::sys
 {
-struct SystemProvider::SystemProviderPrivate
+struct SystemProvider::SystemProviderPrivate final
 {
     SystemProviderPrivate()  = default;
     ~SystemProviderPrivate() = default;
 
-    IApp* app_;
+    rptr<IApp> app_;
     uptr<SharedDataSystem> shared_data_system_;
     uptr<backend::BackendFactory, void (*)(haf::backend::BackendFactory*)>
         backend_factory_{nullptr, nullptr};
@@ -40,7 +42,6 @@ struct SystemProvider::SystemProviderPrivate
     uptr<TimeSystem> time_system_;
     uptr<RenderSystem> render_system_;
     uptr<SimulationSystem> simulation_system_;
-    bool exit_requested_{false};
 };
 
 SystemProvider::SystemProvider() : p_{muptr<SystemProviderPrivate>()}
@@ -48,10 +49,10 @@ SystemProvider::SystemProvider() : p_{muptr<SystemProviderPrivate>()}
 
 SystemProvider::~SystemProvider() = default;
 
-void SystemProvider::init(IApp* iapp)
+void SystemProvider::init(rptr<IApp> iapp)
 {
-    LogAsserter::log_assert(iapp != nullptr,
-               "Cannot create a SystemProvider with a nullptr app");
+    LogAsserter::log_assert(
+        iapp != nullptr, "Cannot create a SystemProvider with a nullptr app");
     p_->backend_factory_ =
         uptr<backend::BackendFactory, void (*)(haf::backend::BackendFactory*)>(
             createBackendFactory(), destroyBackendFactory);
@@ -65,28 +66,24 @@ void SystemProvider::init(IApp* iapp)
     p_->render_system_      = muptr<sys::RenderSystem>(*this);
     p_->random_system_      = muptr<RandomSystem>(*this);
     p_->file_system_        = muptr<FileSystem>(*this);
-    p_->simulation_system_ = muptr<SimulationSystem>(*this);
+    p_->simulation_system_  = muptr<SimulationSystem>(*this);
     p_->simulation_system_->initialize();
 
     p_->window_->create(nullptr);
     p_->render_system_->setRenderTarget(p_->window_->renderTarget());
     p_->input_system_->setInputDriver(p_->window_->inputDriver());
-    p_->app_->onInit(*this);
-}
 
-void SystemProvider::requestExit()
-{
-    p_->exit_requested_ = true;
-}
-
-bool SystemProvider::exitRequested() const
-{
-    return p_->exit_requested_;
+    SystemAccess system_access(this);
+    DataWrapperCreator dwc(&system_access);
+    p_->app_->onInit(dwc);
 }
 
 void SystemProvider::terminate()
 {
-    p_->app_->onFinish(*this);
+    SystemAccess system_access(this);
+    DataWrapperCreator dwc(&system_access);
+
+    p_->app_->onFinish(dwc);
     p_->scene_manager_->finish();
     p_->scene_manager_     = nullptr;
     p_->simulation_system_ = nullptr;
@@ -211,25 +208,14 @@ RenderSystem& SystemProvider::renderSystem() noexcept
     return *p_->render_system_;
 }
 
-ISharedDataSystem& SystemProvider::sharedDataSystem() noexcept
+SharedDataSystem& SystemProvider::sharedDataSystem() noexcept
 {
     return *p_->shared_data_system_;
 }
 
-const ISharedDataSystem& SystemProvider::sharedDataSystem() const noexcept
+const SharedDataSystem& SystemProvider::sharedDataSystem() const noexcept
 {
     return *p_->shared_data_system_;
 }
 
-bool SystemProvider::runStep()
-{
-    const bool windowWants2Close{parentWindow().preLoop()};
-    simulationSystem().update();
-    inputSystem().update();
-    sceneManager().update();
-    renderSystem().update();
-
-    parentWindow().postLoop();
-    return windowWants2Close;
-}
 }  // namespace haf::sys

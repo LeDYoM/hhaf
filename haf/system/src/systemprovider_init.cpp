@@ -1,14 +1,14 @@
 #include "systemprovider_init.hpp"
-#include <haf/system/i_include/systemprovider.hpp>
+#include "systemcontroller.hpp"
 
-IControllableSystemProvider* createSystemProvider()
+ISystemController* createSystemController()
 {
     using namespace haf::sys;
-    return new SystemProvider();
+    return new SystemController();
 }
 
-void destroySystemProvider(IControllableSystemProvider* isp)
+void destroySystemController(ISystemController* isp)
 {
-    auto system_provider = dynamic_cast<haf::sys::SystemProvider*>(isp);
-    delete system_provider;
+    auto system_controller = dynamic_cast<haf::sys::SystemController*>(isp);
+    delete system_controller;
 }

@@ -8,10 +8,8 @@ using namespace haf::input;
 
 namespace haf::sys
 {
-InputSystem::InputSystem(sys::SystemProvider &system_provider)
-    : AppService{system_provider}, input_driver_{}, m_keyStates{} {}
 
-void InputSystem::setInputDriver(sptr<input::InputDriver> input_driver)
+void InputSystem::setInputDriver(sptr<InputDriver> input_driver)
 {
     LogAsserter::log_assert(input_driver != nullptr, "Parameter is nullptr");
     LogAsserter::log_assert(input_driver_ == nullptr, "Input driver was already set");

@@ -6,12 +6,11 @@
 #include "gameshareddata.hpp"
 
 #include <mtypes/include/serializer.hpp>
-#include <haf/system/i_include/systemprovider.hpp>
-#include <haf/system/i_include/get_systemprovider.hpp>
-#include <haf/filesystem/i_include/filesystem.hpp>
-#include <haf/scene/i_include/scenemanager.hpp>
-#include <haf/scene/i_include/scenecontroller.hpp>
-#include <haf/shareddata/include/ishareddatasystem.hpp>
+#include <haf/filesystem/include/fileserializer.hpp>
+#include <haf/scene_components/include/scenemetrics.hpp>
+#include <haf/scene_components/include/scenefactory.hpp>
+#include <haf/scene_components/include/scenecontrol.hpp>
+#include <haf/shareddata/include/shareddata.hpp>
 #include <hlog/include/hlog.hpp>
 
 using namespace mtps;
@@ -20,46 +19,59 @@ using namespace haf::scene;
 
 namespace zoper
 {
+ZoperProgramController::ZoperProgramController() = default;
+ZoperProgramController::~ZoperProgramController() = default;
 
-ZoperProgramController::ZoperProgramController() {}
-ZoperProgramController::~ZoperProgramController() {}
+u16 ZoperProgramController::getVersion() const noexcept
+{
+    return 1;
+}
+u16 ZoperProgramController::getSubVersion() const noexcept
+{
+    return 4;
+}
+u16 ZoperProgramController::getPatch() const noexcept
+{
+    return 0;
+}
+str ZoperProgramController::getName() const noexcept
+{
+    return "Zoper";
+}
 
- u16 ZoperProgramController::getVersion() const noexcept { return 1; }
- u16 ZoperProgramController::getSubVersion() const noexcept { return 4; }
- u16 ZoperProgramController::getPatch() const noexcept { return 0; }
- str ZoperProgramController::getName() const noexcept { return "Zoper"; }
-
-void ZoperProgramController::onInit(sys::ISystemProvider &system_provider)
+void ZoperProgramController::onInit(
+    haf::sys::DataWrapperCreator& data_wrapper_creator)
 {
     DisplayLog::verbose("Initializing ZoperProgramController");
-    sys::SystemProvider &systemprovider = sys::getSystemProvider(system_provider);
+
     keyMapping = muptr<KeyMapping>();
     keyMapping->reset();
-    systemprovider.fileSystem().deserializeFromFile("keys.txt", *keyMapping);
-    systemprovider.fileSystem().serializeToFile("keys.txt", *keyMapping);
+
+    data_wrapper_creator.dataWrapper<sys::FileSerializer>()
+        ->deserializeFromFile("keys.txt", *keyMapping);
+    data_wrapper_creator.dataWrapper<sys::FileSerializer>()->serializeToFile(
+        "keys.txt", *keyMapping);
 
     {
         auto game_shared_data{muptr<GameSharedData>()};
-        systemprovider.sharedDataSystem().store(std::move(game_shared_data));
+        data_wrapper_creator.dataWrapper<shdata::SharedData>()->store(
+            std::move(game_shared_data));
     }
     {
-        auto &sceneManager(systemprovider.sceneManager());
-        sceneManager.setViewRect({0U, 0U, 2000U, 2000U});
-        auto &sceneController(sceneManager.sceneController());
+        data_wrapper_creator.dataWrapper<scene::SceneMetrics>()->setViewRect(
+            {0U, 0U, 2000U, 2000U});
+        auto scene_node_factory(
+            data_wrapper_creator.dataWrapper<scene::SceneFactory>());
 
-        auto &scene_node_factory(sceneController->sceneNodeFactory());
+        scene_node_factory->registerSceneType<MenuScene>();
+        scene_node_factory->registerSceneType<GameScene>();
+        scene_node_factory->registerSceneType<HighScoresScene>();
 
-        scene_node_factory.registerSceneNodeType<MenuScene>();
-        scene_node_factory.registerSceneNodeType<GameScene>();
-        scene_node_factory.registerSceneNodeType<HighScoresScene>();
+        auto scene_control(
+            data_wrapper_creator.dataWrapper<scene::SceneControl>());
 
-        sceneController->setSceneDirector([this, &system_provider](const str &scene_name) -> str {
-            // Did the user selected exit?
-            if (sys::getSystemProvider(system_provider).exitRequested())
-            {
-                return str{};
-            }
-            else if (scene_name == (MenuScene::StaticTypeName))
+        scene_control->setSceneDirector([this](const str& scene_name) -> str {
+            if (scene_name == (MenuScene::StaticTypeName))
             {
                 return GameScene::StaticTypeName;
             }
@@ -74,14 +86,16 @@ void ZoperProgramController::onInit(sys::ISystemProvider &system_provider)
             return str{};
         });
 
-        sceneController->startScene<MenuScene>();
+        scene_control->startScene<MenuScene>();
     }
 }
 
-void ZoperProgramController::onFinish(sys::ISystemProvider &system_provider)
+void ZoperProgramController::onFinish(
+    haf::sys::DataWrapperCreator& data_wrapper_creator)
 {
-    bool check = sys::getSystemProvider(system_provider).sharedDataSystem().makeEmpty();
+    const bool check =
+        data_wrapper_creator.dataWrapper<shdata::SharedData>()->makeEmpty();
     LogAsserter::log_assert(check, "SharedData is empty!");
 }
 
-} // namespace zoper
+}  // namespace zoper

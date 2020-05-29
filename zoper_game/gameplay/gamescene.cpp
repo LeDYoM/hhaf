@@ -50,9 +50,9 @@ struct GameScene::GameScenePrivate
         auto sceneNode =
             main_node.createSceneNode("pointIncrementScore_SceneNode");
 
-        auto node(sceneNode->createRenderizable(
-            "pointIncrementScore", FigType_t::Shape, rectFromSize(15.0F, 15.0F),
-            colors::White, 30U));
+        auto node = sceneNode->renderizableBuilder().name("pointIncrementScore").
+        figType(FigType_t::Shape).box(rectFromSize(15.0F, 15.0F)).
+        color(colors::White).pointCount(30U).create();
 
         {
             using namespace gameplay::constants;
@@ -86,7 +86,7 @@ void GameScene::onCreated()
     using namespace haf::board;
 
     LogAsserter::log_assert(!m_boardGroup, "m_boardGroup is not empty");
-    m_boardGroup = createSceneNode<BoardGroup>("BoardGroup", TokenZones::size);
+    m_boardGroup = createSceneNode<BoardGroup>("BoardGroup");
 
     m_nextTokenPart = 0U;
 
@@ -137,10 +137,6 @@ void GameScene::onCreated()
     // At this point, we setup level properties.
     // level_properties_ should not be used before this point.
     level_properties_ = addComponentOfType<LevelProperties>();
-    level_properties_->levelChanged.connect([this](const auto level) {
-        // Forward current level where necessary.
-        m_boardGroup->setLevel(level);
-    });
 
     size_type start_level;
     GameMode game_mode;
@@ -157,7 +153,7 @@ void GameScene::onCreated()
     level_properties_->configure(start_level, game_mode,
                                  scene_timer_component_);
 
-    m_boardGroup->configure(level_properties_);
+    m_boardGroup->configure(TokenZones::size, level_properties_);
 
 #ifdef USE_DEBUG_ACTIONS
     addComponentOfType<DebugActions>();

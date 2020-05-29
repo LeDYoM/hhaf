@@ -3,6 +3,7 @@
 #include "scenemanager.hpp"
 
 #include <haf/system/include/isystemprovider.hpp>
+#include <system/i_include/systemprovider.hpp>
 #include <hlog/include/hlog.hpp>
 
 using namespace mtps;
@@ -30,15 +31,18 @@ void SceneController::switchToNextScene()
 
 void SceneController::deferredSwitchScene()
 {
+    terminateCurrentScene();
+
     // Prepare next Scene
     sptr<Scene> nextScene{nullptr};
-    if (scene_director_)
+    if (!exit_requested_)
     {
-        nextScene =
-            scene_factory_.create(scene_director_(current_scene_->name()));
+        if (scene_director_)
+        {
+            nextScene =
+                scene_factory_.create(scene_director_(current_scene_->name()));
+        }
     }
-
-    terminateCurrentScene();
 
     DisplayLog::info("Setting new scene: ",
                      nextScene ? nextScene->name() : "<nullptr>");
@@ -68,7 +72,6 @@ void SceneController::update()
 
     if (auto current_scene = currentScene())
     {
-//        current_scene->render(false);
         renderScene(*current_scene, false);
     }
 }
@@ -80,7 +83,7 @@ void SceneController::renderScene(Scene& scene,
 }
 
 void SceneController::render(SceneNode& scene_node,
-                                  bool parentTransformationChanged)
+                             bool parentTransformationChanged)
 {
     if (scene_node.visible())
     {
@@ -96,11 +99,12 @@ void SceneController::render(SceneNode& scene_node,
         {
             scene_node.updateGlobalTransformation(
                 scene_node.parent() ? scene_node.parent()->globalTransform()
-                         : Transform::Identity);
+                                    : Transform::Identity);
         }
 
         scene_node.updateRenderizables();
-        for (SceneNodesGroup::SceneNodeVector::value_type& group : scene_node.sceneNodes())
+        for (SceneNodesGroup::SceneNodeVector::value_type& group :
+             scene_node.sceneNodes())
         {
             render(*group, parentTransformationChanged);
         }
@@ -153,6 +157,16 @@ SceneNodeFactory& SceneController::sceneNodeFactory() noexcept
 const SceneNodeFactory& SceneController::sceneNodeFactory() const noexcept
 {
     return scene_factory_;
+}
+
+void SceneController::requestExit()
+{
+    exit_requested_ = true;
+}
+
+bool SceneController::exitRequested() const
+{
+    return exit_requested_;
 }
 
 }  // namespace haf::scene

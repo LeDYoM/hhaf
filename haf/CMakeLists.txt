@@ -1,26 +1,38 @@
 cmake_minimum_required(VERSION 3.14)
-project(haf)
-
-include_directories("..")
+project(
+  "HAF Main Library"
+  VERSION 0.8.1.1
+  DESCRIPTION "Host Application Framework main library"
+  # [HOMEPAGE_URL <url-string>]
+  LANGUAGES CXX)
 
 set(_SOURCES "main.cpp")
 file(GLOB_RECURSE _HEADERS "include/*.hpp")
 
-set(CURRENT_TARGET ${PROJECT_NAME})
+set(CURRENT_TARGET haf)
 
+# Set the public directory for includes in this library. It will be
+# used by the external components.
+set(HAF_PUBLIC_INCLUDE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/)
+
+# Prepare the haf libray
 add_library(${CURRENT_TARGET} SHARED ${_SOURCES} ${_HEADERS})
+
+# For now, export all simbols
 set_target_properties(${CURRENT_TARGET} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS
                                                    true)
 
-target_include_directories(
-  ${CURRENT_TARGET}
-  PUBLIC # $<INSTALL_INTERFACE:include>
-         # $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> PRIVATE
-         ${CMAKE_CURRENT_SOURCE_DIR}/../)
+# External users of the library will need to include from this directory.
+target_include_directories(${CURRENT_TARGET}
+                           INTERFACE ${HAF_PUBLIC_INCLUDE_DIRECTORY})
 
+# target_include_directories( ${CURRENT_TARGET} PUBLIC #
+# $<INSTALL_INTERFACE:include> #
+# $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> PRIVATE
+# ${CMAKE_CURRENT_SOURCE_DIR}/../)
+
+include (cmake/haf_functions.cmake)
 # Directory internal libraries that will be used by the client too.
-add_subdirectory(utils)
-target_link_libraries(${CURRENT_TARGET} PRIVATE utils)
 add_subdirectory(filesystem)
 target_link_libraries(${CURRENT_TARGET} PRIVATE filesystem)
 add_subdirectory(render)
@@ -45,7 +57,6 @@ add_subdirectory(system)
 target_link_libraries(${CURRENT_TARGET} PUBLIC system)
 add_subdirectory(shareddata)
 target_link_libraries(${CURRENT_TARGET} PRIVATE shareddata)
-target_link_libraries(${CURRENT_TARGET} INTERFACE shareddata_interface)
 add_subdirectory(window)
 target_link_libraries(${CURRENT_TARGET} PRIVATE window)
 
@@ -53,36 +64,12 @@ target_link_libraries(${CURRENT_TARGET} PRIVATE window)
 target_link_libraries(${CURRENT_TARGET} PRIVATE hosted_app)
 target_link_libraries(${CURRENT_TARGET} PRIVATE loader)
 
-add_log_and_types()
+target_link_libraries(${CURRENT_TARGET} PUBLIC log_and_types)
 
 # TODO: Investigate some day if(MSVC) set_target_properties(${CURRENT_TARGET}
 # PROPERTIES LINK_FLAGS "${LINK_FLAGS} /NODEFAULTLIB") endif()
 
-# first we can indicate the documentation build as an option and set it to ON by
-# default
-option(BUILD_DOC "Build documentation" ON)
-
-# check if Doxygen is installed
-find_package(Doxygen)
-if(DOXYGEN_FOUND)
-  # set input and output files
-  set(DOXYGEN_IN ${CMAKE_CURRENT_SOURCE_DIR}/docs/Doxyfile.in)
-  set(DOXYGEN_OUT ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
-
-  # request to configure the file
-  configure_file(${DOXYGEN_IN} ${DOXYGEN_OUT} @ONLY)
-  message("Doxygen build started")
-
-  # note the option ALL which allows to build the docs together with the
-  # application
-  add_custom_target(
-    doc_doxygen
-    COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-    COMMENT "Generating API documentation with Doxygen"
-    VERBATIM)
-else(DOXYGEN_FOUND)
-  message("Doxygen need to be installed to generate the doxygen documentation")
-endif(DOXYGEN_FOUND)
+# Build documentation
+build_doc(${CURRENT_TARGET})
 
 add_subdirectory(tests)

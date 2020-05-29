@@ -3,7 +3,7 @@
 
 #include <haf/scene_components/include/statescontroller.hpp>
 #include <haf/scene_components/include/visibility_selector.hpp>
-#include <haf/scene_components/include/scenemetrics.hpp>
+#include <haf/scene_components/include/scenemetricsview.hpp>
 
 using namespace mtps;
 
@@ -13,7 +13,7 @@ namespace haf::scene
 MenuPaged::MenuPaged(SceneNode* parent, str name) :
     BaseClass{parent, std::move(name)},
     scene_node_size_for_pages_{
-        dataWrapper<SceneMetrics>()->currentView().size()}
+        dataWrapper<SceneMetricsView>()->currentView().size()}
 {}
 
 MenuPaged::~MenuPaged() = default;
