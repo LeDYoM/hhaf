@@ -1,3 +1,4 @@
+#include <host/include/host_export.hpp>
 #include <memmanager/include/memmanager.hpp>
 #include <host/include/host.hpp>
 #include <hlog/include/hlog.hpp>
@@ -5,7 +6,7 @@
 #include <logger/include/log_init.hpp>
 #include <host/include/apploader.hpp>
 
-int haf_host_main(int argc, char* argv[])
+HOST_API int haf_host_main(int argc, char* argv[])
 {
     using namespace haf;
 

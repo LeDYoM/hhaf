@@ -16,5 +16,7 @@ build_lib_component(EXPORT_ALL HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
 target_compile_definitions(${CURRENT_TARGET} PRIVATE HOST_EXPORTS)
 
 target_link_libraries(${CURRENT_TARGET} PRIVATE hosted_app)
+#target_link_libraries(${CURRENT_TARGET} PRIVATE memmanager)
+#target_link_libraries(${CURRENT_TARGET} PRIVATE hlog)
 target_link_libraries(${CURRENT_TARGET} PRIVATE haf)
 target_link_libraries(${CURRENT_TARGET} PRIVATE loader)
