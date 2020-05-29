@@ -368,7 +368,7 @@ public:
 
     constexpr bool operator!=(const str& rhs) const noexcept
     {
-        return m_data == rhs.m_data;
+        return !(m_data == rhs.m_data);
     }
 
     template <size_type N>
