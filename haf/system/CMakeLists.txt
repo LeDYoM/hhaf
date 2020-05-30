@@ -12,8 +12,7 @@ set(_SOURCES
     "src/get_system.cpp"
     "src/systemaccess.cpp"
     "src/systemcontroller.cpp"
-    "src/systemprovider.cpp"
-    "src/systemprovider_init.cpp")
+    "src/systemprovider.cpp")
 
 set(CURRENT_TARGET ${PROJECT_NAME})
 

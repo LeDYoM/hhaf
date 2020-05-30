@@ -4,7 +4,6 @@
 #include <hlog/include/hlog.hpp>
 #include <hosted_app/include/iapp.hpp>
 #include <haf/system/include/isystemcontroller.hpp>
-#include <haf/system/include/systemprovider_init.hpp>
 #include <loader/include/loader.hpp>
 #include <mtypes/include/parpar.hpp>
 #include <mtypes/include/object.hpp>
@@ -25,6 +24,12 @@ class SystemControllerLoader
 public:
     using CreateSystemController_t  = ISystemController* (*)();
     using DestroySystemController_t = void (*)(ISystemController*);
+
+    ~SystemControllerLoader()
+    {
+        destroy();
+        loader::destroyLoader();
+    }
 
     enum class ResultType
     {
@@ -50,32 +55,54 @@ public:
         if (loader_->loadModule(haf_library))
         {
             fp_haf_create_system_controller_ =
-                static_cast<CreateSystemController_t>(loader_->loadMethod(
-                    haf_library, "createSystemController"));
+                static_cast<CreateSystemController_t>(
+                    loader_->loadMethod(haf_library, "createSystemController"));
 
             if (!fp_haf_create_system_controller_)
             {
                 result = ResultType::CreateNotFound;
             }
-            else
-            {
-                fp_haf_destroy_system_controller_ =
-                    static_cast<DestroySystemController_t>(p_->loader_->loadMethod(
-                        haf_library, "destroySystemController"));
-            }
 
-            if (fp_haf_create_system_controller_ != nullptr)
+            fp_haf_destroy_system_controller_ =
+                static_cast<DestroySystemController_t>(loader_->loadMethod(
+                    haf_library, "destroySystemController"));
+
+            if (!fp_haf_destroy_system_controller_)
             {
-                p_->system_controller_ = (*fp_p_haf_create_system_controller)();
+                result = (result == ResultType::CreateNotFound)
+                    ? ResultType::NoFunctionsFound
+                    : ResultType::DestroyNotFound;
             }
         }
         else
         {
             result = ResultType::ObjectNotFound;
         }
+        return result;
     }
 
-    bool create() {}
+    bool create()
+    {
+        if (fp_haf_create_system_controller_ != nullptr)
+        {
+            system_controller_ = (*fp_haf_create_system_controller_)();
+        }
+
+        return (system_controller_ != nullptr);
+    }
+
+    void destroy()
+    {
+        if (system_controller_ != nullptr)
+        {
+            if (fp_haf_destroy_system_controller_)
+            {
+                (*fp_haf_destroy_system_controller_)(system_controller_);
+            }
+            system_controller_ = nullptr;
+        }
+        fp_haf_destroy_system_controller_ = nullptr;
+    }
 
     rptr<ISystemController> systemController() noexcept
     {
@@ -87,7 +114,6 @@ public:
         return system_controller_;
     }
 
-    ~
 private:
     rptr<loader::Loader> loader_{nullptr};
     rptr<ISystemController> system_controller_{nullptr};
@@ -120,6 +146,17 @@ public:
 
     Dictionary<str> configuration_;
     rptr<IApp> iapp_{nullptr};
+    SystemControllerLoader system_loader_;
+
+    rptr<ISystemController> systemController() noexcept
+    {
+        return system_loader_.systemController();
+    }
+
+    rptr<ISystemController const> systemController() const noexcept
+    {
+        return system_loader_.systemController();
+    }
 
     int const argc_;
     char const* const* const argv_;
@@ -178,8 +215,9 @@ bool Host::update()
         {
             DisplayLog::info("Starting initialization of new App...");
             app_state_ = AppState::Executing;
-
-            p_->system_controller_->init(p_->iapp_);
+            p_->system_loader_.loadFunctions();
+            p_->system_loader_.create();
+            p_->systemController()->init(p_->iapp_);
 
             DisplayLog::info(appDisplayNameAndVersion(*(p_->iapp_)),
                              ": Starting execution...");
@@ -204,9 +242,8 @@ bool Host::update()
             DisplayLog::info(appDisplayNameAndVersion(*(p_->iapp_)),
                              ": started termination");
             app_state_ = AppState::Terminated;
-            p_->system_controller_->terminate();
-            destroySystemController(p_->system_controller_);
-            p_->system_controller_ = nullptr;
+            p_->systemController()->terminate();
+            p_->system_loader_.destroy();
             return true;
             break;
         case AppState::Terminated:
@@ -241,7 +278,7 @@ int Host::run()
 
 bool Host::loopStep()
 {
-    return p_->system_controller_->runStep();
+    return p_->systemController()->runStep();
 }
 
 void Host::exitProgram()

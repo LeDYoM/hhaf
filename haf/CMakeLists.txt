@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.14)
 project(
   "HAF Main Library"
-  VERSION 0.8.1.1
+  VERSION 0.8.1.2
   DESCRIPTION "Host Application Framework main library"
   # [HOMEPAGE_URL <url-string>]
   LANGUAGES CXX)
 
-set(_SOURCES "main.cpp")
+set(_SOURCES main.cpp systemprovider_init.cpp)
 file(GLOB_RECURSE _HEADERS "include/*.hpp")
 
 set(CURRENT_TARGET haf)
@@ -17,6 +17,11 @@ set(HAF_PUBLIC_INCLUDE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/)
 
 # Prepare the haf libray
 add_library(${CURRENT_TARGET} SHARED ${_SOURCES} ${_HEADERS})
+target_link_libraries(${CURRENT_TARGET} PRIVATE system_internal)
+
+#Create interface library for libraries creating instances of haf
+add_library(${CURRENT_TARGET}_instancer INTERFACE)
+target_link_libraries(${CURRENT_TARGET}_instancer INTERFACE system)
 
 # For now, export all simbols
 set_target_properties(${CURRENT_TARGET} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS

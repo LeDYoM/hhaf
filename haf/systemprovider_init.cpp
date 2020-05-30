@@ -1,5 +1,4 @@
-#include "systemprovider_init.hpp"
-#include "systemcontroller.hpp"
+#include <system/i_include/systemcontroller.hpp>
 #include <hlog/include/hlog.hpp>
 
 #ifdef _WIN32
