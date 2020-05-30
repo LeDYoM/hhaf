@@ -20,6 +20,81 @@ constexpr static const char HostPatch[]      = "0";
 
 namespace haf::sys
 {
+class SystemControllerLoader
+{
+public:
+    using CreateSystemController_t  = ISystemController* (*)();
+    using DestroySystemController_t = void (*)(ISystemController*);
+
+    enum class ResultType
+    {
+        Success = 0,
+        CannotCreateLoader,
+        ObjectNotFound,
+        CreateNotFound,
+        DestroyNotFound,
+        NoFunctionsFound
+    };
+
+    ResultType loadFunctions()
+    {
+        ResultType result{ResultType::Success};
+
+        loader_ = loader::createLoader();
+        if (!loader_)
+        {
+            return ResultType::CannotCreateLoader;
+        }
+
+        constexpr const char haf_library[] = "haf";
+        if (loader_->loadModule(haf_library))
+        {
+            fp_haf_create_system_controller_ =
+                static_cast<CreateSystemController_t>(loader_->loadMethod(
+                    haf_library, "createSystemController"));
+
+            if (!fp_haf_create_system_controller_)
+            {
+                result = ResultType::CreateNotFound;
+            }
+            else
+            {
+                fp_haf_destroy_system_controller_ =
+                    static_cast<DestroySystemController_t>(p_->loader_->loadMethod(
+                        haf_library, "destroySystemController"));
+            }
+
+            if (fp_haf_create_system_controller_ != nullptr)
+            {
+                p_->system_controller_ = (*fp_p_haf_create_system_controller)();
+            }
+        }
+        else
+        {
+            result = ResultType::ObjectNotFound;
+        }
+    }
+
+    bool create() {}
+
+    rptr<ISystemController> systemController() noexcept
+    {
+        return system_controller_;
+    }
+
+    rptr<ISystemController const> systemController() const noexcept
+    {
+        return system_controller_;
+    }
+
+    ~
+private:
+    rptr<loader::Loader> loader_{nullptr};
+    rptr<ISystemController> system_controller_{nullptr};
+    CreateSystemController_t fp_haf_create_system_controller_;
+    DestroySystemController_t fp_haf_destroy_system_controller_;
+};
+
 class Host::HostPrivate final
 {
 public:
@@ -45,11 +120,9 @@ public:
 
     Dictionary<str> configuration_;
     rptr<IApp> iapp_{nullptr};
-    rptr<ISystemController> system_controller_{nullptr};
 
     int const argc_;
     char const* const* const argv_;
-    rptr<loader::Loader> loader_{nullptr};
 };
 
 enum class Host::AppState : u8
@@ -95,8 +168,6 @@ str appDisplayNameAndVersion(const IApp& app)
                     app.getSubVersion(), ".", app.getPatch(), ")");
 }
 
-using CreateSystemController_t = ISystemController* (*)createSystemController();
-
 bool Host::update()
 {
     switch (app_state_)
@@ -108,27 +179,6 @@ bool Host::update()
             DisplayLog::info("Starting initialization of new App...");
             app_state_ = AppState::Executing;
 
-            p_->loader_ = loader::createLoader();
-
-            constexpr const char haf_library[] = "haf";
-            if (loader->loadModule(haf_library))
-            {
-                const auto fp_p_haf_create_system_controller = static_cast<p_haf_host_main>(
-                    loader->loadMethod(host_library, "haf_host_main"));
-
-                if (fp_p_haf_host_main != nullptr)
-                {
-                    // The haf_host_main method was loaded successfully.
-                    // Call it.
-                    result = (*fp_p_haf_host_main)(argc, argv);
-                }
-                else
-                {
-                    result = -1;
-                }
-            }
-
-            p_->system_controller_ = createSystemController();
             p_->system_controller_->init(p_->iapp_);
 
             DisplayLog::info(appDisplayNameAndVersion(*(p_->iapp_)),
