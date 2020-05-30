@@ -79,7 +79,7 @@ TEST_CASE("program -abc=2 -abc=3", "[parpar][option][errors]")
     CHECK(paramParser.errorAtParameter(1) ==
         ParametersParser::SyntaxParserErrorCodes::OptionAlreadySet);
 
-    (paramParser.getOptions() == OptionParameterVector{
+    CHECK(paramParser.getOptions() == OptionParameterVector{
         { "abc", "2" },
         { "abc", "3" }
     });

@@ -20,7 +20,6 @@ using ParameterName       = str_t;
 using PositionalParameter = str_t;
 using SwitchParameter     = str_t;
 using OptionParameter     = pair<str_t, str_t>;
-
 using PositionalParameterVector = vector_t<PositionalParameter>;
 using SwitchParameterVector     = vector_t<SwitchParameter>;
 using OptionParameterVector     = vector_t<OptionParameter>;
@@ -59,6 +58,113 @@ public:
         EmptyParameter,
         UnknownParameterType
     };
+
+    /**
+     * @brief Check if there is an error in a parameter selected by index.
+     *
+     * @param position The index of the parameter to check.
+     * @return The enum value containing the error or
+     * SyntaxParserErrorCodes::NoError if the index of parameter is out of
+     * bounds.
+     */
+    SyntaxParserErrorCodes errorAtParameter(
+        const std::size_t position) const noexcept
+    {
+        return position < syntax_errors_.size()
+            ? syntax_errors_[position]
+            : SyntaxParserErrorCodes::NoError;
+    }
+
+    /**
+     * @brief Retrieve the number of positional parameters.
+     * @return size_type The value.
+     */
+    size_type numPositionalParameters() const noexcept
+    {
+        return positional_parameters_.size();
+    }
+
+    /**
+     * @brief Retrieve the number of switch parameters.
+     * @return size_type The value.
+     */
+    size_type numSwitchParameters() const noexcept
+    {
+        return switch_parameters_.size();
+    }
+
+    /**
+     * @brief Retrieve the number of option parameters.
+     * @return size_type The value.
+     */
+    size_type numOptionParameters() const noexcept
+    {
+        return option_parameters.size();
+    }
+
+    size_type numParameters() const noexcept
+    {
+        return numPositionalParameters() + numSwitchParameters() +
+            numOptionParameters();
+    }
+
+    bool emptyParameters() const noexcept
+    {
+        return positional_parameters_.empty() && switch_parameters_.empty() &&
+            option_parameters.empty();
+    }
+
+    inline bool hasParameters() const noexcept { return !(emptyParameters()); }
+
+    inline auto numSyntaxErrors() const
+    {
+        return std::count_if(syntax_errors_.cbegin(), syntax_errors_.cend(),
+                             [](const auto error) {
+                                 return error !=
+                                     SyntaxParserErrorCodes::NoError;
+                             });
+    }
+
+    bool hasValidSyntax() const noexcept { return numSyntaxErrors() == 0U; }
+
+    str positionalParameterAt(const std::size_t position) const
+    {
+        return (position < positional_parameters_.size())
+            ? positional_parameters_[position]
+            : "";
+    }
+
+    bool switchExists(const str& swPar) const
+    {
+        return std::find(switch_parameters_.cbegin(), switch_parameters_.cend(),
+                         SwitchParameter{swPar}) != switch_parameters_.cend();
+    }
+
+    bool optionExists(const str& opPar) const
+    {
+        return optionValue(opPar).first;
+    }
+
+    pair<bool, str> optionValue(const str_t& opPar) const
+    {
+        auto iterator(std::find_if(option_parameters.cbegin(),
+                                   option_parameters.cend(),
+                                   [opPar](const OptionParameter& node) {
+                                       return node.first == opPar;
+                                   }));
+
+        return iterator == option_parameters.cend()
+            ? std::make_pair(false, str(""))
+            : std::make_pair(true, str(iterator->second));
+    }
+
+    str_t optionValueOrDefault(const str_t& opPar, const str& def) const
+    {
+        auto ov(optionValue(opPar));
+        return ov.first ? ov.second : def;
+    }
+
+    const auto& getOptions() const noexcept { return option_parameters; }
 
 private:
     enum class ParameterType
@@ -190,121 +296,6 @@ private:
         }
     }
 
-public:
-    /**
-     * @brief Check if there is an error in a parameter selected by index.
-     *
-     * @param position The index of the parameter to check.
-     * @return The enum value containing the error or
-     * SyntaxParserErrorCodes::NoError if the index of parameter is out of
-     * bounds.
-     */
-    SyntaxParserErrorCodes errorAtParameter(
-        const std::size_t position) const noexcept
-    {
-        return position < syntax_errors_.size()
-            ? syntax_errors_[position]
-            : SyntaxParserErrorCodes::NoError;
-    }
-
-    /**
-     * @brief Retrieve the number of positional parameters.
-     * @return size_type The value.
-     */
-    size_type numPositionalParameters() const noexcept
-    {
-        return positional_parameters_.size();
-    }
-
-    /**
-     * @brief Retrieve the number of switch parameters.
-     * @return size_type The value.
-     */
-    size_type numSwitchParameters() const noexcept
-    {
-        return switch_parameters_.size();
-    }
-
-    /**
-     * @brief Retrieve the number of option parameters.
-     * @return size_type The value.
-     */
-    size_type numOptionParameters() const noexcept
-    {
-        return option_parameters.size();
-    }
-
-    size_type numParameters() const noexcept
-    {
-        return numPositionalParameters() + numSwitchParameters() +
-            numOptionParameters();
-    }
-
-    bool emptyParameters() const noexcept
-    {
-        return positional_parameters_.empty() && switch_parameters_.empty() &&
-            option_parameters.empty();
-    }
-
-    inline bool hasParameters() const noexcept { return !(emptyParameters()); }
-
-    inline auto numSyntaxErrors() const
-    {
-        return std::count_if(syntax_errors_.cbegin(), syntax_errors_.cend(),
-                             [](const auto error) {
-                                 return error !=
-                                     SyntaxParserErrorCodes::NoError;
-                             });
-    }
-
-    bool hasValidSyntax() const noexcept
-    {
-        return numSyntaxErrors() == 0U;
-    }
-
-    str positionalParameterAt(const std::size_t position) const
-    {
-        return (position < positional_parameters_.size())
-            ? positional_parameters_[position]
-            : "";
-    }
-
-    bool switchExists(const str& swPar) const
-    {
-        return std::find(switch_parameters_.cbegin(), switch_parameters_.cend(),
-                         SwitchParameter{swPar}) != switch_parameters_.cend();
-    }
-
-    bool optionExists(const str& opPar) const
-    {
-        return optionValue(opPar).first;
-    }
-
-    pair<bool, str> optionValue(const str_t& opPar) const
-    {
-        auto iterator(std::find_if(option_parameters.cbegin(),
-                                   option_parameters.cend(),
-                                   [opPar](const OptionParameter& node) {
-                                       return node.first == opPar;
-                                   }));
-
-        return iterator == option_parameters.cend()
-            ? std::make_pair(false, str(""))
-            : std::make_pair(true, str(iterator->second));
-    }
-
-    str_t optionValueOrDefault(const str_t& opPar, const str& def) const
-    {
-        auto ov(optionValue(opPar));
-        return ov.first ? ov.second : def;
-    }
-
-    const auto& getOptions() const noexcept
-    {
-        return option_parameters;
-    }
-
-private:
     vector_t<SyntaxParserErrorCodes> syntax_errors_;
     PositionalParameterVector positional_parameters_;
     SwitchParameterVector switch_parameters_;
