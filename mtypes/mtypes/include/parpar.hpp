@@ -310,7 +310,7 @@ ParametersParser create(vector_t<str_t> commandLine)
     return ParametersParser(std::move(commandLine));
 }
 
-ParametersParser create(int argc, char* argv[])
+ParametersParser create(int const argc, char const * const argv[])
 {
     vector_t<str> params(argc);
     for (int i = 0; i < argc; ++i)

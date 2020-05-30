@@ -5,10 +5,8 @@
 
 #include <haf/system/include/isystemcontroller.hpp>
 
-extern "C"
-{
-    ISystemController *createSystemController();
-    void destroySystemController(ISystemController *);
-}
+extern "C" __declspec(dllexport) ISystemController* createSystemController();
+extern "C" __declspec(dllexport) void destroySystemController(
+    ISystemController*);
 
 #endif

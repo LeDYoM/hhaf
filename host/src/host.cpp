@@ -5,7 +5,7 @@
 #include <hosted_app/include/iapp.hpp>
 #include <haf/system/include/isystemcontroller.hpp>
 #include <haf/system/include/systemprovider_init.hpp>
-
+#include <loader/include/loader.hpp>
 #include <mtypes/include/parpar.hpp>
 #include <mtypes/include/object.hpp>
 
@@ -23,7 +23,9 @@ namespace haf::sys
 class Host::HostPrivate final
 {
 public:
-    HostPrivate(const int argc, char* argv[]) :
+    HostPrivate(const int argc, char const* const argv[]) :
+        argc_{argc},
+        argv_{argv},
         params_{parpar::create(argc, argv)},
         // Hardcoded default configuration
         // TODO
@@ -42,8 +44,12 @@ public:
     parpar::ParametersParser params_;
 
     Dictionary<str> configuration_;
-    IApp* iapp_{nullptr};
-    ISystemController* system_controller_{nullptr};
+    rptr<IApp> iapp_{nullptr};
+    rptr<ISystemController> system_controller_{nullptr};
+
+    int const argc_;
+    char const* const* const argv_;
+    rptr<loader::Loader> loader_{nullptr};
 };
 
 enum class Host::AppState : u8
@@ -89,6 +95,8 @@ str appDisplayNameAndVersion(const IApp& app)
                     app.getSubVersion(), ".", app.getPatch(), ")");
 }
 
+using CreateSystemController_t = ISystemController* (*)createSystemController();
+
 bool Host::update()
 {
     switch (app_state_)
@@ -99,6 +107,26 @@ bool Host::update()
         {
             DisplayLog::info("Starting initialization of new App...");
             app_state_ = AppState::Executing;
+
+            p_->loader_ = loader::createLoader();
+
+            constexpr const char haf_library[] = "haf";
+            if (loader->loadModule(haf_library))
+            {
+                const auto fp_p_haf_create_system_controller = static_cast<p_haf_host_main>(
+                    loader->loadMethod(host_library, "haf_host_main"));
+
+                if (fp_p_haf_host_main != nullptr)
+                {
+                    // The haf_host_main method was loaded successfully.
+                    // Call it.
+                    result = (*fp_p_haf_host_main)(argc, argv);
+                }
+                else
+                {
+                    result = -1;
+                }
+            }
 
             p_->system_controller_ = createSystemController();
             p_->system_controller_->init(p_->iapp_);
@@ -112,13 +140,13 @@ bool Host::update()
             if (loopStep())
             {
                 app_state_ = AppState::ReadyToTerminate;
-                DisplayLog::info(appDisplayNameAndVersion(*(p_->iapp_)),
-                                 ": ", " is now ready to terminate");
+                DisplayLog::info(appDisplayNameAndVersion(*(p_->iapp_)), ": ",
+                                 " is now ready to terminate");
             }
             else if (app_state_ == AppState::ReadyToTerminate)
             {
-                DisplayLog::info(appDisplayNameAndVersion(*(p_->iapp_)),
-                                 ": ", " requested to terminate");
+                DisplayLog::info(appDisplayNameAndVersion(*(p_->iapp_)), ": ",
+                                 " requested to terminate");
             }
         }
         break;
