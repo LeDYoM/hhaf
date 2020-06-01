@@ -8,13 +8,20 @@ project(
 
 set(CURRENT_TARGET "host")
 
-set(SRC_FILES "src/apploader.cpp" "src/host.cpp" "src/main.cpp")
+set(SRC_FILES 
+    src/apploader.cpp
+    src/host.cpp
+    src/host_private.hpp
+    src/main.cpp
+    src/systemcontroller_loader.cpp
+)
 
 build_lib_component(HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
                     ${SRC_FILES})
 
-target_compile_definitions(${CURRENT_TARGET} PRIVATE HOST_EXPORTS)
-
+configure_file(
+  "${PROJECT_SOURCE_DIR}/${CURRENT_TARGET}/include/host_version.hpp.in"
+  "${PROJECT_SOURCE_DIR}/${CURRENT_TARGET}/include/host_version.hpp" @ONLY)
 target_link_libraries(${CURRENT_TARGET} PRIVATE hosted_app)
 target_link_libraries(${CURRENT_TARGET} PRIVATE memmanager)
 target_link_libraries(${CURRENT_TARGET} PRIVATE hlog)

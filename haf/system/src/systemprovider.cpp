@@ -26,9 +26,6 @@ namespace haf::sys
 {
 struct SystemProvider::SystemProviderPrivate final
 {
-    SystemProviderPrivate()  = default;
-    ~SystemProviderPrivate() = default;
-
     rptr<IApp> app_;
     uptr<SharedDataSystem> shared_data_system_;
     uptr<backend::BackendFactory, void (*)(haf::backend::BackendFactory*)>
@@ -49,7 +46,9 @@ SystemProvider::SystemProvider() : p_{muptr<SystemProviderPrivate>()}
 
 SystemProvider::~SystemProvider() = default;
 
-void SystemProvider::init(rptr<IApp> iapp)
+void SystemProvider::init(rptr<IApp> iapp,
+                          int const argc,
+                          char const* const argv[])
 {
     LogAsserter::log_assert(
         iapp != nullptr, "Cannot create a SystemProvider with a nullptr app");

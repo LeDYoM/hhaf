@@ -1,0 +1,11 @@
+#pragma once
+
+#ifndef HAF_HOST_VERSION_INCLUDE_HPP
+#define HAF_HOST_VERSION_INCLUDE_HPP
+
+constexpr static const char HostVersion[]    = "@PROJECT_VERSION_MAJOR@";
+constexpr static const char HostSubversion[] = "@PROJECT_VERSION_MINOR@";
+constexpr static const char HostPatch[]      = "@PROJECT_VERSION_PATCH@";
+constexpr static const char HostTweak[]      = "@PROJECT_VERSION_TWEAK@";
+
+#endif

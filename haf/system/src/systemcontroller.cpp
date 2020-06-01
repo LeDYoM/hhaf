@@ -12,14 +12,16 @@ using namespace mtps;
 namespace haf::sys
 {
 
-SystemController::SystemController() = default;
+SystemController::SystemController()  = default;
 SystemController::~SystemController() = default;
 
-void SystemController::init(rptr<IApp> iapp)
+void SystemController::init(rptr<IApp> iapp,
+                            int const argc,
+                            char const* const argv[])
 {
     LogAsserter::log_assert(
         iapp != nullptr, "Cannot create a SystemProvider with a nullptr app");
-    SystemProvider::init(std::move(iapp));
+    SystemProvider::init(std::move(iapp), argc, argv);
 }
 
 void SystemController::terminate()

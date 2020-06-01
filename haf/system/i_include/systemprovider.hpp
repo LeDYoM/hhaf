@@ -42,7 +42,7 @@ public:
     SystemProvider();
     ~SystemProvider() override;
 
-    void init(mtps::rptr<IApp> iapp);
+    void init(mtps::rptr<IApp> iapp, int const argc, char const* const argv[]);
     void terminate();
 
     template <typename T>

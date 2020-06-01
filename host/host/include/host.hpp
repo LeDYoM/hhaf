@@ -29,7 +29,15 @@ private:
     void exitProgram();
     bool update();
 
-    enum class AppState : mtps::u8;
+    enum class AppState : mtps::u8
+    {
+        NotInitialized,
+        ReadyToStart,
+        Executing,
+        ReadyToTerminate,
+        Terminated
+    };
+
     AppState app_state_;
     bool exit{false};
 };

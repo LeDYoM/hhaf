@@ -15,7 +15,9 @@ public:
     SystemController();
     ~SystemController() override;
 
-    void init(mtps::rptr<IApp> iapp) override;
+    void init(mtps::rptr<IApp> iapp,
+              int const argc,
+              char const* const argv[]) override;
     bool runStep() override;
     void terminate() override;
 };
