@@ -46,6 +46,84 @@ SystemProvider::SystemProvider() : p_{muptr<SystemProviderPrivate>()}
 
 SystemProvider::~SystemProvider() = default;
 
+void SystemProvider::fastInit(InitSystemOptions const& init_system_options)
+{
+    if (init_system_options.init_shared_data_system)
+    {
+        DisplayLog::debug("Initializing SharedDataSystem");
+        p_->shared_data_system_ = muptr<SharedDataSystem>(*this);
+    }
+
+    if (init_system_options.init_time_system)
+    {
+        DisplayLog::debug("Initializing Time System");
+        p_->time_system_ = muptr<TimeSystem>(*this);
+    }
+
+    if (init_system_options.init_window_system)
+    {
+        DisplayLog::debug("Initializing Window");
+        p_->window_ = muptr<Window>(*this);
+    }
+
+    if (init_system_options.init_input_system)
+    {
+        DisplayLog::debug("Initializing Input System");
+        p_->input_system_ = muptr<InputSystem>(*this);
+    }
+
+    if (init_system_options.init_scene_manager)
+    {
+        DisplayLog::debug("Initializing Scene Manager");
+        p_->scene_manager_ = muptr<scene::SceneManager>(*this);
+    }
+
+    if (init_system_options.init_resource_manager)
+    {
+        DisplayLog::debug("Initializing Resource Manager");
+        p_->resource_manager_ = muptr<sys::ResourceManager>(*this);
+    }
+
+    if (init_system_options.init_render_system)
+    {
+        DisplayLog::debug("Initializing Render System");
+        p_->render_system_ = muptr<sys::RenderSystem>(*this);
+    }
+
+    if (init_system_options.init_random_system)
+    {
+        DisplayLog::debug("Initializing Random System");
+        p_->random_system_ = muptr<RandomSystem>(*this);
+    }
+
+    if (init_system_options.init_file_system)
+    {
+        DisplayLog::debug("Initializing File System");
+        p_->file_system_ = muptr<FileSystem>(*this);
+    }
+
+    if (init_system_options.init_simulation_system)
+    {
+        DisplayLog::debug("Initializing Simulation System");
+        p_->simulation_system_ = muptr<SimulationSystem>(*this);
+        p_->simulation_system_->initialize();
+    }
+
+    if (init_system_options.init_window_system)
+    {
+        p_->window_->create(nullptr);
+        if (init_system_options.init_render_system)
+        {
+            p_->render_system_->setRenderTarget(p_->window_->renderTarget());
+        }
+
+        if (init_system_options.init_input_system)
+        {
+            p_->input_system_->setInputDriver(p_->window_->inputDriver());
+        }
+    }
+}
+
 void SystemProvider::init(rptr<IApp> iapp,
                           int const argc,
                           char const* const argv[])
@@ -55,22 +133,12 @@ void SystemProvider::init(rptr<IApp> iapp,
     p_->backend_factory_ =
         uptr<backend::BackendFactory, void (*)(haf::backend::BackendFactory*)>(
             createBackendFactory(), destroyBackendFactory);
-    p_->app_                = iapp;
-    p_->shared_data_system_ = muptr<SharedDataSystem>(*this);
-    p_->time_system_        = muptr<TimeSystem>(*this);
-    p_->window_             = muptr<Window>(*this);
-    p_->input_system_       = muptr<InputSystem>(*this);
-    p_->scene_manager_      = muptr<scene::SceneManager>(*this);
-    p_->resource_manager_   = muptr<sys::ResourceManager>(*this);
-    p_->render_system_      = muptr<sys::RenderSystem>(*this);
-    p_->random_system_      = muptr<RandomSystem>(*this);
-    p_->file_system_        = muptr<FileSystem>(*this);
-    p_->simulation_system_  = muptr<SimulationSystem>(*this);
-    p_->simulation_system_->initialize();
+    p_->app_ = iapp;
 
-    p_->window_->create(nullptr);
-    p_->render_system_->setRenderTarget(p_->window_->renderTarget());
-    p_->input_system_->setInputDriver(p_->window_->inputDriver());
+    InitSystemOptions init_system_options;
+    init_system_options.setAllTrue();
+
+    fastInit(init_system_options);
 
     SystemAccess system_access(this);
     DataWrapperCreator dwc(&system_access);

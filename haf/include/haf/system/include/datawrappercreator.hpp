@@ -18,6 +18,8 @@ namespace haf::sys
  * @brief Class to create @b IDataWrapper (s) instances.
  * DataWrappers are stand alone objects, not components that interact with
  * their containers. For active content see @b IComponent.
+ * @see IDataWrapper
+ * @see IComponent
  */
 class DataWrapperCreator : public utils::AttachableManager<IDataWrapper>
 {
