@@ -15,11 +15,13 @@ bool SharedDataSystem::store(uptr<shdata::IShareable> data) noexcept
 {
     if (data == nullptr)
     {
+        DisplayLog::error("Trying to store an empty shareddata");
         return false;
     }
 
     if (data_ != nullptr)
     {
+        DisplayLog::error("Shareddata must be empty before storing something");
         return false;
     }
 
@@ -37,6 +39,12 @@ bool SharedDataSystem::store(uptr<shdata::IShareable> data) noexcept
 
 uptr<shdata::IShareable> SharedDataSystem::retrieve() noexcept
 {
+    if (data_ == nullptr)
+    {
+        DisplayLog::error("Trying to retrieve empty shared data");
+        return nullptr;
+    }
+
     LogAsserter::log_assert(data_ != nullptr, "data_ is nullptr");
     uptr<shdata::IShareable> temp = std::move(data_);
     LogAsserter::log_assert(data_ == nullptr, "data_ is not nullptr");
@@ -59,7 +67,7 @@ bool SharedDataSystem::makeEmpty()
     return false;
 }
 
-const mtps::uptr<shdata::IShareable>& SharedDataSystem::view() const noexcept
+mtps::uptr<shdata::IShareable> const& SharedDataSystem::view() const noexcept
 {
     LogAsserter::log_assert(data_ != nullptr, "data_ is nullptr");
     return data_;

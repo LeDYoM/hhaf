@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef HAF_SYSTEM_ISHAREABLE_INCLUDE_HPP
-#define HAF_SYSTEM_ISHAREABLE_INCLUDE_HPP
+#ifndef HAF_SHAREDDATA_ISHAREABLE_INCLUDE_HPP
+#define HAF_SHAREDDATA_ISHAREABLE_INCLUDE_HPP
 
 namespace haf::shdata
 {
@@ -11,6 +11,6 @@ public:
     virtual ~IShareable() {}
 };
 
-} // namespace haf::scene
+}  // namespace haf::shdata
 
 #endif
