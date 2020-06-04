@@ -12,9 +12,9 @@ static constexpr T PiConstant = static_cast<T>(3.14159265358979323846);
 template <typename T>
 static constexpr T PiD2Constant = PiConstant<T> / static_cast<T>(2);
 template <typename T>
-static constexpr T PiM2Constant = PiConstant<T> *static_cast<T>(2);
+static constexpr T PiM2Constant = PiConstant<T>* static_cast<T>(2);
 template <typename T>
-static constexpr T PiMDConstant = PiConstant<T> *static_cast<T>(1.5);
+static constexpr T PiMDConstant = PiConstant<T>* static_cast<T>(1.5);
 template <typename T>
 static constexpr T ToRadians = PiConstant<T> / static_cast<T>(180);
 
@@ -36,6 +36,6 @@ constexpr int sgn_sin(T angle)
     return sgn(std::sin(angle));
 }
 
-} // namespace haf::scene
+}  // namespace haf::scene
 
 #endif

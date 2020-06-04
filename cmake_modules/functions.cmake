@@ -94,10 +94,6 @@ function(add_haf_test_executable)
 endfunction(add_haf_test_executable)
 
 function(build_doc _base_name)
-  # first we can indicate the documentation build as an option and set it to ON
-  # by default
-  option(BUILD_HAF_DOC "Build documentation" ON)
-
   # check if Doxygen is installed
   find_package(Doxygen)
   if(DOXYGEN_FOUND)
