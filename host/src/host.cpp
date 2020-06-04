@@ -71,11 +71,6 @@ bool Host::update()
                 DisplayLog::info(appDisplayNameAndVersion(*(p_->iapp_)), ": ",
                                  " is now ready to terminate");
             }
-            else if (app_state_ == AppState::ReadyToTerminate)
-            {
-                DisplayLog::info(appDisplayNameAndVersion(*(p_->iapp_)), ": ",
-                                 " requested to terminate");
-            }
         }
         break;
         case AppState::ReadyToTerminate:
@@ -101,10 +96,7 @@ int Host::run()
     {
         while (!exit)
         {
-            if (update())
-            {
-                exit = true;
-            }
+            exit = update();
         }
 
         return 0;

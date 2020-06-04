@@ -25,8 +25,6 @@ public:
         configuration_{{}}
     {}
 
-    ~HostPrivate() = default;
-
     bool parseCommandLineParameters()
     {
         if (params_.hasParameters())
@@ -40,12 +38,12 @@ public:
     rptr<IApp> iapp_{nullptr};
     SystemControllerLoader system_loader_;
 
-    rptr<ISystemController> systemController() noexcept
+    inline rptr<ISystemController> systemController() noexcept
     {
         return system_loader_.systemController();
     }
 
-    rptr<ISystemController const> systemController() const noexcept
+    inline rptr<ISystemController const> systemController() const noexcept
     {
         return system_loader_.systemController();
     }
