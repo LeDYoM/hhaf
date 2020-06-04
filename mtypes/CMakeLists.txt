@@ -23,3 +23,5 @@ install(
   RUNTIME DESTINATION .)
 
 add_subdirectory(tests)
+
+build_doc(${CURRENT_TARGET})
