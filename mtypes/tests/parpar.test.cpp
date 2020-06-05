@@ -7,9 +7,7 @@ using namespace parpar;
 
 TEST_CASE("haf::parpar::ParameterParser", "[parpar]")
 {
-    const ParametersParser paramParser (create(
-        {"program"}
-    ));
+    const ParametersParser paramParser(create({"program"}));
 
     CHECK_FALSE(paramParser.hasParameters());
     CHECK(paramParser.hasValidSyntax());
@@ -23,9 +21,7 @@ TEST_CASE("haf::parpar::ParameterParser", "[parpar]")
 
 TEST_CASE("program -", "[parpar][errors]")
 {
-    const ParametersParser paramParser (create(
-        {"program ", "-"}
-    ));
+    const ParametersParser paramParser(create({"program ", "-"}));
 
     CHECK_FALSE(paramParser.hasValidSyntax());
     CHECK_FALSE(paramParser.emptyParameters());
@@ -36,15 +32,12 @@ TEST_CASE("program -", "[parpar][errors]")
     CHECK(paramParser.numSwitchParameters() == 0);
     CHECK(paramParser.numOptionParameters() == 1);
     CHECK(paramParser.errorAtParameter(0) ==
-        ParametersParser::
-            SyntaxParserErrorCodes::OptionWithoutEqual);
+          ParametersParser::SyntaxParserErrorCodes::OptionWithoutEqual);
 }
 
 TEST_CASE("program --abc file", "[parpar][positional][switch][errors]")
 {
-    const ParametersParser paramParser (create(
-        {"program ", "--abc", "file"}
-    ));
+    const ParametersParser paramParser(create({"program ", "--abc", "file"}));
 
     CHECK_FALSE(paramParser.hasValidSyntax());
     CHECK_FALSE(paramParser.emptyParameters());
@@ -55,16 +48,16 @@ TEST_CASE("program --abc file", "[parpar][positional][switch][errors]")
     CHECK(paramParser.numSwitchParameters() == 1);
     CHECK(paramParser.numOptionParameters() == 0);
     CHECK(paramParser.errorAtParameter(0) ==
-        ParametersParser::SyntaxParserErrorCodes::NoError);
-    CHECK(paramParser.errorAtParameter(1) ==
+          ParametersParser::SyntaxParserErrorCodes::NoError);
+    CHECK(
+        paramParser.errorAtParameter(1) ==
         ParametersParser::SyntaxParserErrorCodes::IncorrectPositionalPosition);
 }
 
 TEST_CASE("program -abc=2 -abc=3", "[parpar][option][errors]")
 {
-    const ParametersParser paramParser (create(
-        {"program ", "-abc=2", "-abc=3"}
-    ));
+    const ParametersParser paramParser(
+        create({"program ", "-abc=2", "-abc=3"}));
 
     CHECK_FALSE(paramParser.hasValidSyntax());
     CHECK_FALSE(paramParser.emptyParameters());
@@ -75,21 +68,18 @@ TEST_CASE("program -abc=2 -abc=3", "[parpar][option][errors]")
     CHECK(paramParser.numSwitchParameters() == 0);
     CHECK(paramParser.numOptionParameters() == 2);
     CHECK(paramParser.errorAtParameter(0) ==
-        ParametersParser::SyntaxParserErrorCodes::NoError);
+          ParametersParser::SyntaxParserErrorCodes::NoError);
     CHECK(paramParser.errorAtParameter(1) ==
-        ParametersParser::SyntaxParserErrorCodes::OptionAlreadySet);
+          ParametersParser::SyntaxParserErrorCodes::OptionAlreadySet);
 
-    CHECK(paramParser.getOptions() == OptionParameterVector{
-        { "abc", "2" },
-        { "abc", "3" }
-    });
+    CHECK(paramParser.getOptions() ==
+          ParametersParser::OptionParameterVector{{"abc", "2"}, {"abc", "3"}});
 }
 
 TEST_CASE("program -abc -=3 -def=", "[parpar][syntax][option][errors]")
 {
-    const ParametersParser paramParser (create(
-        {"program", "-abc", "-=3", "-def="}
-    ));
+    const ParametersParser paramParser(
+        create({"program", "-abc", "-=3", "-def="}));
 
     CHECK_FALSE(paramParser.hasValidSyntax());
     CHECK_FALSE(paramParser.emptyParameters());
@@ -101,20 +91,20 @@ TEST_CASE("program -abc -=3 -def=", "[parpar][syntax][option][errors]")
     CHECK(paramParser.numOptionParameters() == 3);
     CHECK_FALSE(paramParser.hasValidSyntax());
     CHECK(paramParser.errorAtParameter(0) ==
-        ParametersParser::SyntaxParserErrorCodes::OptionWithoutEqual);
+          ParametersParser::SyntaxParserErrorCodes::OptionWithoutEqual);
 
     CHECK(paramParser.errorAtParameter(1) ==
-        ParametersParser::SyntaxParserErrorCodes::EmptyOptionName);
+          ParametersParser::SyntaxParserErrorCodes::EmptyOptionName);
 
     CHECK(paramParser.errorAtParameter(2) ==
-        ParametersParser::SyntaxParserErrorCodes::EmptyOptionValue);
+          ParametersParser::SyntaxParserErrorCodes::EmptyOptionValue);
 }
 
-TEST_CASE("program filename --doit -abc=sdf", "[parpar][positional][option][switch]")
+TEST_CASE("program filename --doit -abc=sdf",
+          "[parpar][positional][option][switch]")
 {
-    const ParametersParser paramParser (create(
-        {"program", "filename", "--doit", "-abc=sdf"}
-    ));
+    const ParametersParser paramParser(
+        create({"program", "filename", "--doit", "-abc=sdf"}));
 
     CHECK(paramParser.hasValidSyntax());
     CHECK_FALSE(paramParser.emptyParameters());
@@ -128,18 +118,16 @@ TEST_CASE("program filename --doit -abc=sdf", "[parpar][positional][option][swit
     CHECK(paramParser.positionalParameterAt(1) == "");
     CHECK(paramParser.switchExists("doit"));
     CHECK_FALSE(paramParser.switchExists("doitasd"));
-    paramParser.getOptions() == OptionParameterVector{
-        { "abc", "sdf" }
-    };
-
-
+    paramParser.getOptions() ==
+        ParametersParser::OptionParameterVector{{"abc", "sdf"}};
 }
 
-TEST_CASE("program sourcef.dat targetf.dat --nope -abc=sdf -this=other", "[parpar][positional][option][switch]")
+TEST_CASE("program sourcef.dat targetf.dat --nope -abc=sdf -this=other",
+          "[parpar][positional][option][switch]")
 {
-    const ParametersParser paramParser (create(
-        {"program", "sourcef.dat", "targetf.dat", "--nope", "--ok", "-abc=sdf", "-this=other"}
-    ));
+    const ParametersParser paramParser(
+        create({"program", "sourcef.dat", "targetf.dat", "--nope", "--ok",
+                "-abc=sdf", "-this=other"}));
 
     CHECK(paramParser.hasValidSyntax());
     CHECK_FALSE(paramParser.emptyParameters());
@@ -156,18 +144,17 @@ TEST_CASE("program sourcef.dat targetf.dat --nope -abc=sdf -this=other", "[parpa
     CHECK_FALSE(paramParser.switchExists("doitasd"));
     CHECK(paramParser.optionExists("abc"));
     CHECK(paramParser.optionValue("abc").second == "sdf");
-    CHECK(paramParser.optionValueOrDefault("abc","") == "sdf");
+    CHECK(paramParser.optionValueOrDefault("abc", "") == "sdf");
     CHECK(paramParser.optionExists("this"));
     CHECK(paramParser.optionValue("this").second == "other");
-    CHECK(paramParser.optionValueOrDefault("this","") == "other");
+    CHECK(paramParser.optionValueOrDefault("this", "") == "other");
     CHECK_FALSE(paramParser.optionExists("thisother"));
     CHECK_FALSE(paramParser.optionValue("thisother").first);
-    CHECK(paramParser.optionValueOrDefault("thisother","") == "");
-    CHECK(paramParser.optionValueOrDefault("another","42") == "42");
-    CHECK(paramParser.optionValueOrDefault("another","false") == "false");
+    CHECK(paramParser.optionValueOrDefault("thisother", "") == "");
+    CHECK(paramParser.optionValueOrDefault("another", "42") == "42");
+    CHECK(paramParser.optionValueOrDefault("another", "false") == "false");
 
-    CHECK(paramParser.getOptions() == OptionParameterVector{
-        { "abc", "sdf" },
-        { "this", "other" }
-    });
+    CHECK(paramParser.getOptions() ==
+          ParametersParser::OptionParameterVector{{"abc", "sdf"},
+                                                  {"this", "other"}});
 }

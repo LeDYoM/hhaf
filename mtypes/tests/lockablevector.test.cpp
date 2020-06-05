@@ -40,7 +40,8 @@ TEST_CASE("LockableVector", "[LockableVector]")
         SECTION("Add")
         {
             lockable_vector.update();
-            CHECK(lockable_vector.deferred_current() == lockable_vector.current());
+            CHECK(lockable_vector.deferred_current() ==
+                  lockable_vector.current());
 
             CHECK(lockable_vector.current().size() == 5U);
             CHECK_FALSE(lockable_vector.are_pending_adds());
@@ -54,7 +55,8 @@ TEST_CASE("LockableVector", "[LockableVector]")
             CHECK(lockable_vector.current().size() == 7U);
             CHECK_FALSE(lockable_vector.are_pending_adds());
             CHECK(lockable_vector.pending_add() == 0U);
-            CHECK(lockable_vector.deferred_current() == lockable_vector.current());
+            CHECK(lockable_vector.deferred_current() ==
+                  lockable_vector.current());
         }
 
         SECTION("Remove")
@@ -66,7 +68,8 @@ TEST_CASE("LockableVector", "[LockableVector]")
             CHECK_FALSE(v == lockable_vector.current());
             CHECK(lockable_vector.current().size() == 4U);
             lockable_vector.erase_values(1U);
-            CHECK(lockable_vector.deferred_current() == lockable_vector.current());
+            CHECK(lockable_vector.deferred_current() ==
+                  lockable_vector.current());
             CHECK(lockable_vector.current().size() == 4U);
         }
 
@@ -99,7 +102,8 @@ TEST_CASE("LockableVector", "[LockableVector]")
                 vector<u32> next_one(lockable_vector.next());
 
                 CHECK_FALSE(next_one.empty());
-                CHECK(next_one.size() != lockable_vector.deferred_current().size());
+                CHECK(next_one.size() !=
+                      lockable_vector.deferred_current().size());
                 auto sz(next_one.size());
                 auto rsv(next_one.capacity());
 
@@ -135,10 +139,7 @@ TEST_CASE("LockableVector", "[LockableVector]")
 
         SECTION("Constant Update function")
         {
-            lockable_vector.performUpdate([](auto& element)
-            {
-                element += 1;
-            });
+            lockable_vector.performUpdate([](auto& element) { element += 1; });
 
             const auto& lv = lockable_vector.current();
 
@@ -152,8 +153,7 @@ TEST_CASE("LockableVector", "[LockableVector]")
 
         SECTION("Add elements in Update function")
         {
-            lockable_vector.performUpdate([&lockable_vector](auto& element)
-            {
+            lockable_vector.performUpdate([&lockable_vector](auto& element) {
                 lockable_vector.emplace_back(element + 5);
                 element += 1;
             });
@@ -174,8 +174,7 @@ TEST_CASE("LockableVector", "[LockableVector]")
 
         SECTION("Remove elements in Update function")
         {
-            lockable_vector.performUpdate([&lockable_vector](auto& element)
-            {
+            lockable_vector.performUpdate([&lockable_vector](auto& element) {
                 lockable_vector.erase_value(element);
                 element += 1;
             });

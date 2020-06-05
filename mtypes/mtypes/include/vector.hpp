@@ -84,7 +84,7 @@ public:
      * This constructor constructs a vector from another one.
      * The capacity of the resultant vector might be different
      * from the capacity of the source. The size will be the same.
-     * 
+     *
      * @param other Source vector to copy.
      */
     constexpr vector(const vector& other) : vector(other.m_buffer, other.m_size)

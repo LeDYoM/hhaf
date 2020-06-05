@@ -10,44 +10,40 @@
 
 namespace mtps::parpar
 {
-class ParametersParser;
 using str_t = str;
 
 template <typename T>
 using vector_t = vector<T>;
 
-using ParameterName       = str_t;
-using PositionalParameter = str_t;
-using SwitchParameter     = str_t;
-using OptionParameter     = pair<str_t, str_t>;
-using PositionalParameterVector = vector_t<PositionalParameter>;
-using SwitchParameterVector     = vector_t<SwitchParameter>;
-using OptionParameterVector     = vector_t<OptionParameter>;
+class ParametersParser;
 
+// Forward declare free functions to create parameters parser objects
 ParametersParser create(vector_t<str_t> commandLine);
 ParametersParser create(int argc, char* argv[]);
 
 /**
- * \class ParametersParser
- *
- * \brief Help to collect, read and check command line parameters
- *
- * This class in the main block of this library. The library is done as
- * a hobby and learning purposes. It does not have a lot of super
- * features, it trys to be compant and easy to be understood and user.
- * Of course, no warranty is provided.
- *
+ * @brief Help to collect, read and check command line parameters
+ * This class provides a component to collect the command line parameters
+ * and check them.
  */
 class ParametersParser final
 {
 public:
+    using ParameterName             = str_t;
+    using PositionalParameter       = str_t;
+    using SwitchParameter           = str_t;
+    using OptionParameter           = pair<str_t, str_t>;
+    using PositionalParameterVector = vector_t<PositionalParameter>;
+    using SwitchParameterVector     = vector_t<SwitchParameter>;
+    using OptionParameterVector     = vector_t<OptionParameter>;
+
     /**
      * @brief Enum to describe the possible errors of the parser.
      * Could be checked with the corresponding functions.
      */
     enum class SyntaxParserErrorCodes
     {
-        NoError,
+        NoError = 0U,
         OptionWithoutEqual,
         EmptyOptionName,
         EmptyOptionValue,
@@ -310,7 +306,7 @@ ParametersParser create(vector_t<str_t> commandLine)
     return ParametersParser(std::move(commandLine));
 }
 
-ParametersParser create(int const argc, char const * const argv[])
+ParametersParser create(int const argc, char const* const argv[])
 {
     vector_t<str> params(argc);
     for (int i = 0; i < argc; ++i)
