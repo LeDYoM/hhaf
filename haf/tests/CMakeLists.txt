@@ -18,6 +18,8 @@ set(SOURCE_TESTS
     shareddata/shareddatasystem
     shareddata/shareddataview
 
+    time/timepoint
+
     utils/object_factory
 )
 
