@@ -11,7 +11,7 @@
 
 using namespace mtps;
 
-namespace haf::sys
+namespace haf::host
 {
 class Host::HostPrivate final
 {

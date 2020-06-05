@@ -4,9 +4,8 @@
 
 using namespace mtps;
 
-namespace haf::sys
+namespace haf::host
 {
-
 SystemControllerLoader::~SystemControllerLoader()
 {
     destroy();
@@ -87,4 +86,4 @@ rptr<ISystemController const> SystemControllerLoader::systemController()
     return system_controller_;
 }
 
-}  // namespace haf::sys
+}  // namespace haf::host

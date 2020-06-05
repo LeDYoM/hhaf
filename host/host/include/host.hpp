@@ -10,12 +10,12 @@ namespace haf
 class IApp;
 }
 
-namespace haf::sys
+namespace haf::host
 {
 class Host final
 {
 public:
-    Host(int argc, char *argv[]);
+    Host(int argc, char* argv[]);
     ~Host();
 
     bool setApplication(mtps::rptr<IApp> iapp);
@@ -41,6 +41,6 @@ private:
     AppState app_state_;
     bool exit{false};
 };
-} // namespace haf::sys
+}  // namespace haf::host
 
 #endif

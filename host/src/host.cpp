@@ -9,7 +9,7 @@
 
 using namespace mtps;
 
-namespace haf::sys
+namespace haf::host
 {
 Host::Host(int argc, char* argv[]) :
     p_{muptr<HostPrivate>(argc, argv)}, app_state_{AppState::NotInitialized}

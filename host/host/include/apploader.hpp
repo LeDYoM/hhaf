@@ -8,7 +8,7 @@
 #include <mtypes/include/function.hpp>
 #include <mtypes/include/str.hpp>
 
-namespace haf::sys
+namespace haf::host
 {
 struct ManagedApp
 {
@@ -24,20 +24,20 @@ struct ManagedApp
 class AppLoader final
 {
 public:
-    /// 
-    /// @return 
+    ///
+    /// @return
 
     /**
      * @brief Method to load an app.
-     * 
+     *
      * @param file File name
      * @return ManagedApp Instance of the loaded app or nullptr
      * in case of failure.
      */
-    ManagedApp loadApp(const mtps::str &file) const;
+    ManagedApp loadApp(const mtps::str& file) const;
     ManagedApp loadApp(p_initApp init_app, p_finishApp finish_app) const;
-    bool unloadApp(ManagedApp &managed_app) const;
+    bool unloadApp(ManagedApp& managed_app) const;
 };
-} // namespace haf::sys
+}  // namespace haf::host
 
 #endif
