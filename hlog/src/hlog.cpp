@@ -1,4 +1,3 @@
-#include <hlog/include/hlogexport.hpp>
 #include <hlog/include/hlog.hpp>
 
 #include <logger/include/cout_commiter.hpp>
@@ -10,3 +9,11 @@
 
 #include <mtypes/include/str.hpp>
 
+namespace haf
+{
+using LogClass = logger::Log<true, mtps::str, COutThreadCommiter>;
+using DisplayLog = logger::LogDisplayer<LogClass, logger::SeverityType>;
+using LogAsserter = logger::LogAsserter<DisplayLog>;
+using LogInitializer = logger::LogInitializer<LogClass>;
+
+} // namespace haf
