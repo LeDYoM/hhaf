@@ -1,13 +1,10 @@
 #pragma once
 
-#ifndef HAF_SCENE_SCENENODES_INCLUDE_HPP
-#define HAF_SCENE_SCENENODES_INCLUDE_HPP
+#ifndef HAF_SCENE_SCENENODESGROUP_INCLUDE_HPP
+#define HAF_SCENE_SCENENODESGROUP_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <mtypes/include/vector2d.hpp>
 #include <mtypes/include/vector.hpp>
-#include <haf/scene/include/icomponent.hpp>
-#include <haf/scene/include/componentcontainer.hpp>
 
 namespace haf::scene
 {
@@ -22,7 +19,7 @@ public:
     void removeSceneNode(mtps::sptr<SceneNode> element);
     void clearSceneNodes();
 
-    const SceneNodeVector& sceneNodes() const noexcept;
+    SceneNodeVector const& sceneNodes() const noexcept;
     SceneNodeVector& sceneNodes() noexcept;
 
 private:

@@ -70,6 +70,18 @@ public:
 
     virtual void update() {}
 
+    template <typename T>
+    mtps::rptr<T> snCast() noexcept
+    {
+        return dynamic_cast<T*>(this);
+    }
+
+    template <typename T>
+    const mtps::rptr<const T> snCast() const noexcept
+    {
+        return dynamic_cast<const T* const>(this);
+    }
+
     mtps::BasicProperty<bool> visible;
     void clearAll();
 };
