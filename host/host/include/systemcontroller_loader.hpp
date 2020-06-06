@@ -8,17 +8,16 @@
 
 namespace loader
 {
-    class Loader;
+class Loader;
 }
 
-namespace haf::sys
+namespace haf::host
 {
 class SystemControllerLoader final
 {
 public:
     using CreateSystemController_t  = ISystemController* (*)();
     using DestroySystemController_t = void (*)(ISystemController*);
-
 
     SystemControllerLoader() = default;
     ~SystemControllerLoader();
@@ -45,6 +44,6 @@ private:
     CreateSystemController_t fp_haf_create_system_controller_;
     DestroySystemController_t fp_haf_destroy_system_controller_;
 };
-} // namespace haf::sys
+}  // namespace haf::host
 
 #endif

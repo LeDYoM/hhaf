@@ -3,7 +3,7 @@
 
 using namespace mtps;
 
-namespace haf::sys
+namespace haf::host
 {
 ManagedApp AppLoader::loadApp(const str &file) const
 {

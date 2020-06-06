@@ -13,6 +13,7 @@
 HOST_API int haf_host_main(int argc, char* argv[])
 {
     using namespace haf;
+    using namespace haf::host;
 
     int result = -1;
 
@@ -20,9 +21,9 @@ HOST_API int haf_host_main(int argc, char* argv[])
     {
         {
             LogInitializer log_init;
-            sys::Host host(argc, argv);
-            sys::AppLoader app_loader;
-            sys::ManagedApp managed_app = app_loader.loadApp("zoper_game");
+            Host host(argc, argv);
+            AppLoader app_loader;
+            ManagedApp managed_app = app_loader.loadApp("zoper_game");
             host.setApplication(managed_app.app);
             result = host.run();
             app_loader.unloadApp(managed_app);
