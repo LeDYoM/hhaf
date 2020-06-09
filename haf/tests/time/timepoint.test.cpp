@@ -3,7 +3,15 @@
 #include <haf/time/include/timepoint.hpp>
 #include <mtypes/include/str.hpp>
 
+#include <type_traits>
+
 using namespace haf::time;
+
+static_assert(std::is_default_constructible_v<TimePoint>);
+static_assert(std::is_trivially_move_constructible_v<TimePoint>);
+static_assert(std::is_trivially_move_assignable_v<TimePoint>);
+static_assert(std::is_trivially_copyable_v<TimePoint>);
+static_assert(std::is_trivially_copy_assignable_v<TimePoint>);
 
 TEST_CASE("TimePoint default constructor")
 {
@@ -43,14 +51,14 @@ TEST_CASE("TimePoint operators")
         CHECK(time_point.seconds() == Rep{3U});
 
         time_point *= 2;
-    
+
         CHECK(time_point.nanoseconds() == Rep{6000000000U});
         CHECK(time_point.microseconds() == Rep{6000000U});
         CHECK(time_point.milliseconds() == Rep{6000U});
         CHECK(time_point.seconds() == Rep{6U});
 
         time_point /= 3;
-    
+
         CHECK(time_point.nanoseconds() == Rep{2000000000U});
         CHECK(time_point.microseconds() == Rep{2000000U});
         CHECK(time_point.milliseconds() == Rep{2000U});
@@ -105,6 +113,40 @@ TEST_CASE("TimePoint function constructors")
 
     {
         TimePoint time_point2 = TimePoint_as_seconds(5U);
+        CHECK(time_point == time_point2);
+    }
+
+    {
+        TimePoint time_point2 = TimePoint_as_seconds_f32(5.F);
+        CHECK(time_point == time_point2);
+    }
+
+    {
+        TimePoint time_point2 =
+            TimePoint_as_nanoseconds(time_point.nanoseconds());
+        CHECK(time_point == time_point2);
+    }
+
+    {
+        TimePoint time_point2 =
+            TimePoint_as_microseconds(time_point.microseconds());
+        CHECK(time_point == time_point2);
+    }
+
+    {
+        TimePoint time_point2 =
+            TimePoint_as_miliseconds(time_point.milliseconds());
+        CHECK(time_point == time_point2);
+    }
+
+    {
+        TimePoint time_point2 = TimePoint_as_seconds(time_point.seconds());
+        CHECK(time_point == time_point2);
+    }
+
+    {
+        TimePoint time_point2 =
+            TimePoint_as_seconds_f32(time_point.seconds_f32());
         CHECK(time_point == time_point2);
     }
 }

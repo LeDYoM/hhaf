@@ -26,7 +26,7 @@ public:
 
     /**
      * @brief Construct a new Simulation Action Group object
-     * 
+     *
      * @param[in] simulation_action_container The @b SimulationActionContainer
      * to use for the initialization
      */
@@ -38,7 +38,7 @@ public:
     /**
      * @brief Adds a @b SimulationActionContainer to the container of pending
      * @b SimulationActionContainer (s).
-     * 
+     *
      * @param[in] simulation_action_container Element to be added.
      */
     void addSimulationActionContainer(
@@ -51,7 +51,7 @@ public:
     /**
      * @brief Get a constant reference to the inner
      * @b SimulationActionContainer.
-     * 
+     *
      * @return A const reference to the inner @b SimulationActionContainer.
      */
     constexpr const SimulationActionContainer& getContainer() const noexcept
@@ -63,7 +63,7 @@ public:
      * @brief Add a key to the current internal @b SimulationActionContainer.
      * To do that, an action of simulated keydown and then simulated key up.
      * The separation times will be according the arguments.
-     * 
+     *
      * @param[in] key The @b input::Key to add to the container.
      * @param[in] delta_time @b TimePoint difference with the previous added
      * event. Default 0.1 seconds.
@@ -72,8 +72,9 @@ public:
      */
     void addKeyStroke(
         const input::Key key,
-        time::TimePoint delta_time           = time::TimePoint_as_seconds(0.1f),
-        time::TimePoint delta_between_events = time::TimePoint_as_seconds(0.1f))
+        time::TimePoint delta_time = time::TimePoint_as_seconds_f32(0.1f),
+        time::TimePoint delta_between_events =
+            time::TimePoint_as_seconds_f32(0.1f))
     {
         simulation_action_container_.push_back(
             {sys::SimulationActionType::KeyPressed, delta_time, key});

@@ -15,7 +15,7 @@ namespace
 {
 using clock_t = std::chrono::high_resolution_clock;
 
-constexpr TimePoint timepoint_global_now()
+TimePoint timepoint_global_now()
 {
     return TimePoint{static_cast<u64>(clock_t::now().time_since_epoch().count())};
 }
