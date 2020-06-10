@@ -16,7 +16,6 @@ class TimeView : public sys::IDataWrapper
 public:
     /**
      * @brief Get the current time.
-     * 
      * @return TimePoint containing the current time
      */
     TimePoint now() const;

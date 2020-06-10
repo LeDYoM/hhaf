@@ -12,7 +12,7 @@ namespace haf::time
  * @brief Type representing a point in time.
  * It includes functions to convert and set different points in time.
  */
-class TimePoint
+class TimePoint final
 {
 public:
     using Rep = mtps::u64;  //<! Type to internally represent the data.

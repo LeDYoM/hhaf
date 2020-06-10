@@ -2,14 +2,12 @@
 #include "timesystem.hpp"
 
 #include <hlog/include/hlog.hpp>
-#include <haf/scene/include/scenenode.hpp>
-#include <system/i_include/get_system.hpp>
 
 namespace haf::time
 {
 void Timer::restart()
 {
-    started_at_ = sys::getSystem<sys::TimeSystem>(attachedNode()).now();
+    started_at_ = now();
 }
 
 TimePoint Timer::ellapsed() const
