@@ -161,4 +161,15 @@ bool ResourceManager::loadBMPFont(const str&rid, const str&fileName)
     }
     return bmp_font != nullptr;
 }
+
+bool ResourceManager::setResourceConfigFile(mtps::str) 
+{
+    return true;
+}
+
+bool ResourceManager::loadSection(mtps::str const&) 
+{
+    return true;
+}
+
 } // namespace haf::sys

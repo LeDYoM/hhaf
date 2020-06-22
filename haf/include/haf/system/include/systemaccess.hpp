@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef HAF_SCENE_SYSTEM_ACCESS_INCLUDE_HPP
-#define HAF_SCENE_SYSTEM_ACCESS_INCLUDE_HPP
+#ifndef HAF_SYS_SYSTEM_ACCESS_INCLUDE_HPP
+#define HAF_SYS_SYSTEM_ACCESS_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 
