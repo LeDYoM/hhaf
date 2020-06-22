@@ -9,12 +9,12 @@
 namespace haf::scene
 {
 class SceneNode;
+extern template mtps::vector<mtps::sptr<SceneNode>>;
 
 class SceneNodesGroup
 {
 public:
     using SceneNodeVector = mtps::vector<mtps::sptr<SceneNode>>;
-
     void addSceneNode(mtps::sptr<SceneNode> node);
     void removeSceneNode(mtps::sptr<SceneNode> element);
     void clearSceneNodes();
@@ -23,7 +23,7 @@ public:
     SceneNodeVector& sceneNodes() noexcept;
 
 private:
-    SceneNodeVector m_groups;
+    SceneNodeVector groups_;
 };
 
 }  // namespace haf::scene

@@ -7,30 +7,32 @@ using namespace mtps;
 
 namespace haf::scene
 {
+template mtps::vector<mtps::sptr<SceneNode>>;
+
 void SceneNodesGroup::addSceneNode(sptr<SceneNode> node)
 {
-    m_groups.push_back(node);
+    groups_.push_back(node);
 }
 
 void SceneNodesGroup::removeSceneNode(sptr<SceneNode> element)
 {
-    m_groups.erase_values(element);
+    groups_.erase_values(element);
 }
 
 void SceneNodesGroup::clearSceneNodes()
 {
-    m_groups.clear();
+    groups_.clear();
 }
 
 const SceneNodesGroup::SceneNodeVector& SceneNodesGroup::sceneNodes()
     const noexcept
 {
-    return m_groups;
+    return groups_;
 }
 
 SceneNodesGroup::SceneNodeVector& SceneNodesGroup::sceneNodes() noexcept
 {
-    return m_groups;
+    return groups_;
 }
 
 }  // namespace haf::scene
