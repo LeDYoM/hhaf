@@ -34,7 +34,7 @@ void MenuScene::onCreated()
     resources_loader->loadResources(MainMenuResources{});
     auto resources_viewer = dataWrapper<ResourceView>();
 
-    auto& a = sys::getInterface<res::IResourcesConfigurator>(*this);
+    auto& a = systemInterface<res::IResourcesConfigurator>();
 
     createStandardBackground(this);
 

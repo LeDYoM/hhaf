@@ -2,22 +2,23 @@ project(scene CXX)
 cmake_minimum_required(VERSION 3.12)
 
 set(_SOURCES
-    "i_include/scenecontroller.hpp"
-    "i_include/scenemanager.hpp"
-    "src/componentcontainer_update.cpp"
-    "src/componentcontainer_no_update.cpp"
-    "src/renderizable.cpp"
-    "src/renderizable_builder.cpp"
-    "src/renderizables.cpp"
-    "src/scenecontroller.cpp"
-    "src/scenemanager.cpp"
-    "src/scenenode.cpp"
-    "src/scenenodefactory.cpp"
-    "src/scenenodes.cpp"
-    "src/scenenodes_group.cpp"
-    "src/transform.cpp"
-    "src/transformable.cpp"
-    "src/vertexarray.cpp")
+    i_include/scenecontroller.hpp
+    i_include/scenemanager.hpp
+    src/componentcontainer_update.cpp
+    src/componentcontainer_no_update.cpp
+    src/interface_getter.cpp
+    src/renderizable.cpp
+    src/renderizable_builder.cpp
+    src/renderizables.cpp
+    src/scenecontroller.cpp
+    src/scenemanager.cpp
+    src/scenenode.cpp
+    src/scenenodefactory.cpp
+    src/scenenodes.cpp
+    src/scenenodes_group.cpp
+    src/transform.cpp
+    src/transformable.cpp
+    src/vertexarray.cpp)
 
 set(CURRENT_TARGET ${PROJECT_NAME})
 

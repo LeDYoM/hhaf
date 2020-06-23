@@ -12,6 +12,7 @@
 #include <haf/scene/include/transformable.hpp>
 #include <haf/scene/include/hasname.hpp>
 #include <haf/scene/include/componentcontainer.hpp>
+#include <haf/scene/include/interface_getter.hpp>
 #include <haf/system/include/datawrappercreator.hpp>
 #include <haf/system/include/systemaccess.hpp>
 
@@ -33,7 +34,8 @@ class SceneNode : public sys::HasName,
                   public Transformable,
                   public sys::DataWrapperCreator,
                   public ComponentContainer,
-                  public sys::SystemAccess
+                  public sys::SystemAccess,
+                  public InterfaceGetter
 {
 public:
     /**

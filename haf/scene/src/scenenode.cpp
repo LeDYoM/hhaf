@@ -15,6 +15,7 @@ SceneNode::SceneNode(rptr<SceneNode> parent, str name) :
     ComponentContainer{this},
     sys::SystemAccess{parent != nullptr ? &(parent->isystemProvider())
                                         : nullptr},
+    InterfaceGetter{this},
     visible{true}
 {}
 
