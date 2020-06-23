@@ -10,6 +10,9 @@
 #include "../zoperprogramcontroller.hpp"
 #include "../common_scene_nodes.hpp"
 
+#include <haf/resources/include/iresourceconfigurator.hpp>
+#include <haf/system/include/interfaceaccess.hpp>
+
 using namespace mtps;
 using namespace haf;
 using namespace haf::scene;
@@ -30,6 +33,8 @@ void MenuScene::onCreated()
     auto resources_loader = dataWrapper<ResourceHandler>();
     resources_loader->loadResources(MainMenuResources{});
     auto resources_viewer = dataWrapper<ResourceView>();
+
+    auto& a = sys::getInterface<res::IResourcesConfigurator>(*this);
 
     createStandardBackground(this);
 

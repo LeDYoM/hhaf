@@ -8,10 +8,12 @@
 
 namespace haf::sys
 {
-class ISystemProvider;
 
 template<typename T>
-T& getInterface(ISystemProvider&);
+T& getInterface(SystemAccess&);
+
+template<typename T>
+T const& getInterface(SystemAccess const&);
 
 } // namespace haf::sys
 

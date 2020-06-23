@@ -2,17 +2,18 @@ project(system CXX)
 cmake_minimum_required(VERSION 3.12)
 
 set(_SOURCES
-    "i_include/appservice.hpp"
-    "i_include/get_system.hpp"
-    "i_include/get_systemprovider.hpp"
-    "i_include/systemcontroller.hpp"
-    "i_include/systemprovider.hpp"
-    "src/appservice.cpp"
-    "src/get_systemprovider.cpp"
-    "src/get_system.cpp"
-    "src/systemaccess.cpp"
-    "src/systemcontroller.cpp"
-    "src/systemprovider.cpp")
+    i_include/appservice.hpp
+    i_include/get_system.hpp
+    i_include/get_systemprovider.hpp
+    i_include/systemcontroller.hpp
+    i_include/systemprovider.hpp
+    src/appservice.cpp
+    src/get_systemprovider.cpp
+    src/get_system.cpp
+    src/interfaceaccess.cpp
+    src/systemaccess.cpp
+    src/systemcontroller.cpp
+    src/systemprovider.cpp)
 
 set(CURRENT_TARGET ${PROJECT_NAME})
 
