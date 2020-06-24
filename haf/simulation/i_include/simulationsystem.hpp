@@ -4,7 +4,7 @@
 #define HAF_CORE_SYSTEM_SIMULATIONSYSTEM_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <system/i_include/appservice.hpp>
+#include <system/i_include/systembase.hpp>
 #include <haf/simulation/include/simulationactiongroup.hpp>
 
 namespace haf::sys
@@ -16,13 +16,13 @@ namespace haf::sys
  * actions to be simulated and add data to different system to force or
  * reproduce a set of different behaviours.
  */
-class SimulationSystem final : public AppService
+class SimulationSystem final : public SystemBase
 {
 public:
     using SimulateRandomDataBuffer = mtps::vector<mtps::size_type>;
 
     SimulationSystem(sys::SystemProvider& system_provider);
-    ~SimulationSystem() override;
+    ~SimulationSystem();
 
     void update();
     bool getNext(const mtps::str& name, mtps::size_type& pre_selected);

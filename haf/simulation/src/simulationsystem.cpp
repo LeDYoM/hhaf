@@ -21,7 +21,7 @@ using namespace mtps;
 namespace haf::sys
 {
 SimulationSystem::SimulationSystem(SystemProvider& system_provider) :
-    AppService{system_provider}, priv_{muptr<SimulationSystemPrivate>()}
+    SystemBase{system_provider}, priv_{muptr<SimulationSystemPrivate>()}
 {}
 
 SimulationSystem::~SimulationSystem()

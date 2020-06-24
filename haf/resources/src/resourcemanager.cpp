@@ -101,7 +101,7 @@ struct ResourceManager::ResourceManagerPrivate
 };
 
 ResourceManager::ResourceManager(sys::SystemProvider& system_provider) :
-    AppService{system_provider}, p_{muptr<ResourceManagerPrivate>()}
+    SystemBase{system_provider}, p_{muptr<ResourceManagerPrivate>()}
 {}
 
 ResourceManager::~ResourceManager() = default;

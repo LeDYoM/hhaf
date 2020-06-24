@@ -7,7 +7,7 @@
 #include <mtypes/include/vector.hpp>
 #include <haf/input/include/key.hpp>
 
-#include <system/i_include/appservice.hpp>
+#include <system/i_include/systembase.hpp>
 
 namespace haf::input
 {
@@ -16,10 +16,10 @@ class InputDriver;
 
 namespace haf::sys
 {
-class InputSystem final : public AppService
+class InputSystem final : public SystemBase
 {
 public:
-    using AppService::AppService;
+    using SystemBase::SystemBase;
 
     void update();
 

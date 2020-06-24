@@ -4,16 +4,16 @@
 #define HAF_CORE_SYSTEM_TIMESYSTEM_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <system/i_include/appservice.hpp>
+#include <system/i_include/systembase.hpp>
 #include <haf/time/include/timepoint.hpp>
 
 namespace haf::sys
 {
-class TimeSystem final : public AppService
+class TimeSystem final : public SystemBase
 {
 public:
     TimeSystem(sys::ISystemProvider& system_provider);
-    ~TimeSystem() override;
+    ~TimeSystem();
 
     time::TimePoint timeSinceStart() const;
     time::TimePoint now() const;

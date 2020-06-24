@@ -6,7 +6,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector.hpp>
 #include <mtypes/include/str.hpp>
-#include <system/i_include/appservice.hpp>
+#include <system/i_include/systembase.hpp>
 
 namespace haf::sys
 {
@@ -14,11 +14,11 @@ namespace haf::sys
 * @brief This system is intended to be used to generate
 * a series of random numbers.
 */
-class RandomSystem final : public AppService
+class RandomSystem final : public SystemBase
 {
 public:
     RandomSystem(sys::SystemProvider &system_provider);
-    ~RandomSystem() override;
+    ~RandomSystem();
 
     mtps::size_type getNext(const mtps::str&name, const mtps::size_type min, const mtps::size_type max);
 

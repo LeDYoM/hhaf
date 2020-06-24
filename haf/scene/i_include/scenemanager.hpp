@@ -6,7 +6,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/rect.hpp>
 
-#include <system/i_include/appservice.hpp>
+#include <system/i_include/systembase.hpp>
 
 namespace haf
 {
@@ -22,11 +22,11 @@ class SceneController;
 
 namespace haf::scene
 {
-class SceneManager : public sys::AppService
+class SceneManager : public sys::SystemBase
 {
 public:
     SceneManager(sys::SystemProvider& system_provider);
-    ~SceneManager() override;
+    ~SceneManager();
 
     void start();
     void update();

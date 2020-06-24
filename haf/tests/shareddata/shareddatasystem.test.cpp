@@ -2,7 +2,7 @@
 
 #include <mtypes/include/types.hpp>
 #include <shareddata/i_include/shareddatasystem.hpp>
-#include <system/i_include/appservice.hpp>
+#include <system/i_include/systembase.hpp>
 #include <system/i_include/systemprovider.hpp>
 #include "shareable_test_data.hpp"
 #include "test_utils.hpp"

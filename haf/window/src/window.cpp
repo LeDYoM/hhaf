@@ -27,7 +27,7 @@ struct Window::WindowPrivate final
 };
 
 Window::Window(sys::SystemProvider &system_provider)
-    : AppService{system_provider},
+    : SystemBase{system_provider},
       priv_{muptr<WindowPrivate>()}
 {
 }

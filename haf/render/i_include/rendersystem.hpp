@@ -5,7 +5,7 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector.hpp>
-#include <system/i_include/appservice.hpp>
+#include <system/i_include/systembase.hpp>
 #include "rendertarget.hpp"
 #include <haf/render/include/renderdata.hpp>
 
@@ -22,10 +22,10 @@ class RenderTarget;
  * @brief This system is intended to be the responsible of
 * priving the render data to the Backend render part.
 */
-class RenderSystem final : public AppService
+class RenderSystem final : public SystemBase
 {
 public:
-    using AppService::AppService;
+    using SystemBase::SystemBase;
     void update();
 
     void draw(const scene::RenderData &renderData);

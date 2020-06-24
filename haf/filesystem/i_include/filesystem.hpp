@@ -8,14 +8,14 @@
 #include <mtypes/include/rawmemory.hpp>
 
 #include <haf/filesystem/include/path.hpp>
-#include <system/i_include/appservice.hpp>
+#include <system/i_include/systembase.hpp>
 
 namespace haf::sys
 {
-class FileSystem final : public AppService
+class FileSystem final : public SystemBase
 {
 public:
-    using AppService::AppService;
+    using SystemBase::SystemBase;
     bool fileExists(const Path& path);
 
     mtps::RawMemory loadBinaryFile(const mtps::str& file_name);

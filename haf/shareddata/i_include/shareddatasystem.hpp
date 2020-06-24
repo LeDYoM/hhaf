@@ -4,7 +4,7 @@
 #define HAF_SYSTEM_SHARED_DATA_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <system/i_include/appservice.hpp>
+#include <system/i_include/systembase.hpp>
 #include <haf/shareddata/include/ishareable.hpp>
 
 namespace haf::sys
@@ -13,15 +13,15 @@ namespace haf::sys
  * @brief Thisis a system whose only purpose is to store data shared
  * between different objects on the system.
  */
-class SharedDataSystem final : public AppService
+class SharedDataSystem final : public SystemBase
 {
 public:
-    using AppService::AppService;
+    using SystemBase::SystemBase;
 
     /**
      * @brief Destroy the Shared Data System object
      */
-    ~SharedDataSystem() override;
+    ~SharedDataSystem();
 
     /**
      * @brief Store a shareable object. The shared data system should be

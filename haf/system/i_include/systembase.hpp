@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef HAF_APP_SERVICE_INCLUDE_HPP
-#define HAF_APP_SERVICE_INCLUDE_HPP
+#ifndef HAF_SYSTEM_BASE_INCLUDE_HPP
+#define HAF_SYSTEM_BASE_INCLUDE_HPP
 
 namespace haf::sys
 {
@@ -13,7 +13,7 @@ class ISystemProvider;
  * An App Service is a class, instanciated by SystemProvider to give
  * functionality to the app clients.
  */
-class AppService
+class SystemBase
 {
 public:
     /**
@@ -23,46 +23,48 @@ public:
      * @param system_provider Object to handle all systems that this class might
      * use.
      */
-    AppService(sys::ISystemProvider& system_provider) noexcept;
-    virtual ~AppService();
+    SystemBase(sys::ISystemProvider& system_provider) noexcept;
 
     /**
      * @brief Deleted copy constructor.
      */
-    AppService(const AppService&) = delete;
+    SystemBase(const SystemBase&) = delete;
 
     /**
      * @brief Deleted assignment operator.
      */
-    AppService& operator=(const AppService&) = delete;
+    SystemBase& operator=(const SystemBase&) = delete;
 
     /**
-     * @brief Get a lvalue reference to this apps @b SystemProvider
+     * @brief Get a lvalue reference to this system @b SystemProvider
      *
      * @return sys::SystemProvider& Reference to the SystemProvider
      */
     SystemProvider& systemProvider() noexcept;
 
     /**
-     * @brief Get a const lvalue reference to this apps @b SystemProvider
+     * @brief Get a const lvalue reference to this system @b SystemProvider
      *
      * @return sys::SystemProvider& Reference to the SystemProvider
      */
     SystemProvider const& systemProvider() const noexcept;
 
     /**
-     * @brief Get a lvalue reference to this apps @b ISystemProvider
+     * @brief Get a lvalue reference to this system @b ISystemProvider
      *
      * @return sys::SystemProvider& Reference to the SystemProvider
      */
     ISystemProvider& isystemProvider() noexcept;
 
     /**
-     * @brief Get a const lvalue reference to this apps @b ISystemProvider
+     * @brief Get a const lvalue reference to this system @b ISystemProvider
      *
      * @return sys::SystemProvider& Reference to the SystemProvider
      */
     ISystemProvider const& isystemProvider() const noexcept;
+
+protected:
+    ~SystemBase();
 
 private:
     ISystemProvider& system_provider_;

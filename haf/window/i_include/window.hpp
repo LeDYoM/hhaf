@@ -4,7 +4,7 @@
 #define HAF_WINDOW_WINDOW_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <system/i_include/appservice.hpp>
+#include <system/i_include/systembase.hpp>
 #include <haf/window/include/window_properties.hpp>
 
 namespace haf::input
@@ -22,21 +22,19 @@ class SystemProvider;
  * This class system is intended to be used internally to provide
  * functionallity related to a window.
  */
-class Window final : public AppService
+class Window final : public SystemBase
 {
 public:
     /**
      * @brief Construct a new Window object
-     * 
      * @param system_provider The system provider
      */
     Window(sys::SystemProvider &system_provider);
 
     /**
      * @brief Destroy the Window object
-     * 
      */
-    ~Window() override;
+    ~Window();
 
     /**
      * @brief Creates (or tryes to create) an operating system window

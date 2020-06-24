@@ -9,7 +9,7 @@
 #include <haf/resources/include/iresourcehandler.hpp>
 #include <haf/resources/include/iresourceretriever.hpp>
 #include <haf/resources/include/iresourceconfigurator.hpp>
-#include <system/i_include/appservice.hpp>
+#include <system/i_include/systembase.hpp>
 
 namespace haf::scene
 {
@@ -22,14 +22,14 @@ class IShader;
 
 namespace haf::sys
 {
-class ResourceManager final : public AppService,
+class ResourceManager final : public SystemBase,
                               public IResourceHandler,
                               public IResourceRetriever,
                               public res::IResourcesConfigurator
 {
 public:
     ResourceManager(sys::SystemProvider& system_provider);
-    ~ResourceManager() override;
+    ~ResourceManager();
 
     mtps::sptr<scene::ITTFont> getTTFont(const mtps::str& rid) override;
     mtps::sptr<scene::ITexture> getTexture(const mtps::str& rid) override;

@@ -16,7 +16,7 @@ using namespace mtps;
 namespace haf::scene
 {
 SceneManager::SceneManager(sys::SystemProvider& system_provider) :
-    AppService{system_provider}
+    SystemBase{system_provider}
 {
     scene_controller_ = msptr<SceneController>();
     scene_controller_->setSceneManager(this);
