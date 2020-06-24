@@ -46,7 +46,7 @@ public:
 
 private:
     struct ResourceManagerPrivate;
-    mtps::uptr<ResourceManagerPrivate> m_private;
+    mtps::uptr<ResourceManagerPrivate> p_;
 };
 
 }  // namespace haf::sys

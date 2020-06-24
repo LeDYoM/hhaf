@@ -1,0 +1,26 @@
+{
+    menu: [
+        menu_main_font: {
+            type: "ttf",
+            file: "resources/oldct.ttf"
+        },
+        menu_background: {
+            type: "texture",
+            file: "resources/gr_ms.png"
+        },
+        logo: {
+            type: "texture",
+            file: "resources/zoperbl.png"
+        }
+    ],
+    game: [
+        score_font: {
+            type: "ttf",
+            file: "resources/score.ttf"
+        },
+        game_over_font: {
+            type: "ttf",
+            file: "resources/gameover.ttf"
+        }
+    ]
+}
