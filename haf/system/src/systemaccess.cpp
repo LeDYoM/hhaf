@@ -9,7 +9,7 @@ using namespace mtps;
 
 namespace haf::sys
 {
-SystemAccess::SystemAccess(rptr<ISystemProvider> isystem_provider)
+SystemAccess::SystemAccess(rptr<ISystemProvider> isystem_provider) noexcept
     : isystem_provider_{std::move(isystem_provider)} {}
 
 const ISystemProvider& SystemAccess::isystemProvider() const noexcept

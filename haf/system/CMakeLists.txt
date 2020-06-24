@@ -6,6 +6,7 @@ set(_SOURCES
     i_include/get_systemprovider.hpp
     i_include/systembase.hpp
     i_include/systemcontroller.hpp
+    i_include/systemdatawrappercreator.hpp
     i_include/systemprovider.hpp
     src/systembase.cpp
     src/get_systemprovider.cpp

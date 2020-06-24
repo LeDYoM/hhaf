@@ -6,9 +6,11 @@
 #include <hlog/include/hlog.hpp>
 #include <haf/time/include/timepoint.hpp>
 #include <system/i_include/systemprovider.hpp>
+#include <system/i_include/systemdatawrappercreator.hpp>
 #include <random/i_include/randomsystem.hpp>
 #include <time/i_include/timesystem.hpp>
 #include <filesystem/i_include/filesystem.hpp>
+#include <haf/filesystem/include/fileserializer.hpp>
 #include <input/i_include/inputsystem.hpp>
 
 #include <mtypes/include/serializer.hpp>
@@ -31,16 +33,30 @@ SimulationSystem::~SimulationSystem()
     DisplayLog::info("Serializing play data...");
 
     DisplayLog::info("Going to write play data into file ", SaveFileName);
-    if (systemProvider().fileSystem().saveFile(
-            SaveFileName,
-            Serializer<decltype(priv_->next_replay_data_)>::serialize(
-                priv_->next_replay_data_)))
+
+    SystemDataWrapperCreator dwc{*this};
+    auto file_serializer = dwc.dataWrapper<FileSerializer>();
+    auto const result    = file_serializer->serializeToFile(
+        SaveFileName, priv_->next_replay_data_);
+
+    if (result != FileSerializer::Result::Success)
     {
-        DisplayLog::info("Play data written successfully");
+        if (result == FileSerializer::Result::FileIOError)
+        {
+            DisplayLog::debug("Cannot write ", SaveFileName);
+        }
+        else if (result == FileSerializer::Result::ParsingError)
+        {
+            DisplayLog::error("Error parsing oputput for ", SaveFileName);
+        }
+        else
+        {
+            DisplayLog::error("Unknow error outputting file: ", SaveFileName);
+        }
     }
     else
     {
-        DisplayLog::error("Error while writing the debug data");
+        DisplayLog::info("Play data written correctly to ", SaveFileName);
     }
 }
 
@@ -67,20 +83,28 @@ void SimulationSystem::initialize()
     DisplayLog::info("Trying to load ", InputFileName,
                      " to read simulation data");
 
-    if (auto const file_data{
-            systemProvider().fileSystem().loadTextFile(InputFileName)};
-        !file_data.empty())
+    SystemDataWrapperCreator dwc{*this};
+    auto file_serializer = dwc.dataWrapper<FileSerializer>();
+    auto const result    = file_serializer->deserializeFromFile(
+        InputFileName, priv_->current_replay_data_);
+
+    if (result != FileSerializer::Result::Success)
     {
-        if (!Serializer<decltype(priv_->current_replay_data_)>::deserialize(
-                file_data, priv_->current_replay_data_))
+        if (result == FileSerializer::Result::FileIOError)
+        {
+            DisplayLog::debug("Simulation file ", InputFileName, " not found");
+        }
+        else if (result == FileSerializer::Result::ParsingError)
         {
             DisplayLog::error("File ", InputFileName,
                               " found but contains invalid format.");
         }
-    }
-    else
-    {
-        DisplayLog::debug("Simulation file ", InputFileName, " not found");
+        else
+        {
+            DisplayLog::error(
+                "Unknow error reading and parsing simulation file: ",
+                InputFileName);
+        }
     }
 
     // Prepare output

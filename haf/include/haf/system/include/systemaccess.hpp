@@ -12,7 +12,7 @@ class ISystemProvider;
 class SystemAccess
 {
 public:
-    SystemAccess(mtps::rptr<ISystemProvider> isystem_provider);
+    SystemAccess(mtps::rptr<ISystemProvider> isystem_provider) noexcept;
 
     const ISystemProvider &isystemProvider() const noexcept;
     ISystemProvider &isystemProvider() noexcept;

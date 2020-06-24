@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef HAF_SCENE_DATA_WRAPPER_CREATOR_INCLUDE_HPP
-#define HAF_SCENE_DATA_WRAPPER_CREATOR_INCLUDE_HPP
+#ifndef HAF_SYSTEM_DATA_WRAPPER_CREATOR_INCLUDE_HPP
+#define HAF_SYSTEM_DATA_WRAPPER_CREATOR_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <haf/system/include/idatawrapper.hpp>
