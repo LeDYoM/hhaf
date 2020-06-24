@@ -17,27 +17,43 @@ namespace haf::sys
 class FileSerializer : public sys::IDataWrapper
 {
 public:
-    mtps::str loadTextFile(const Path &file_name);
-    bool saveFile(const Path &file_name, const mtps::str&data);
+    enum class Result : mtps::u8
+    {
+        Success      = 0U,
+        FileIOError  = 1U,
+        ParsingError = 2U
+    };
+
+    mtps::str loadTextFile(const Path& file_name);
+    bool saveFile(const Path& file_name, const mtps::str& data);
 
     template <typename T>
-    bool deserializeFromFile(const Path &file_name, T &data)
+    Result deserializeFromFile(const Path& file_name, T& data)
     {
         const mtps::str text_data{loadTextFile(file_name)};
         if (!text_data.empty())
         {
-            return mtps::Serializer<T>::deserialize(text_data, data);
+            return ((mtps::Serializer<T>::deserialize(text_data, data))
+                        ? Result::Success
+                        : Result::ParsingError);
         }
-        return false;
+        return Result::FileIOError;
     }
 
     template <typename T>
-    bool serializeToFile(const Path &file_name, const T &data)
+    Result serializeToFile(const Path& file_name, const T& data)
     {
-        return saveFile(file_name, mtps::Serializer<T>::serialize(data));
+        auto temp{mtps::Serializer<T>::serialize(data)};
+        if (!temp.empty())
+        {
+            return ((saveFile(file_name, std::move(temp)))
+                        ? Result::Success
+                        : Result::FileIOError);
+        }
+        return Result::ParsingError;
     }
 };
 
-} // namespace haf::scene
+}  // namespace haf::sys
 
 #endif

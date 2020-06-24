@@ -66,22 +66,21 @@ void SimulationSystem::initialize()
 
     DisplayLog::info("Trying to load ", InputFileName,
                      " to read simulation data");
-    if (str temp(systemProvider().fileSystem().loadTextFile(InputFileName));
-        !temp.empty())
+
+    if (auto const file_data{
+            systemProvider().fileSystem().loadTextFile(InputFileName)};
+        !file_data.empty())
     {
-        // If the file has been read corretly,
-        // createan ObjectCompiler and use it.
-        ObjectCompiler obj_compiler(temp);
-        if (obj_compiler.compile())
+        if (!Serializer<decltype(priv_->current_replay_data_)>::deserialize(
+                file_data, priv_->current_replay_data_))
         {
-            // The compilation was correct so, at least we
-            // have a valid Object.
-            obj_compiler.result() >> priv_->current_replay_data_;
+            DisplayLog::error("File ", InputFileName,
+                              " found but contains invalid format.");
         }
     }
     else
     {
-        DisplayLog::info("File ", InputFileName, " not found");
+        DisplayLog::debug("Simulation file ", InputFileName, " not found");
     }
 
     // Prepare output
