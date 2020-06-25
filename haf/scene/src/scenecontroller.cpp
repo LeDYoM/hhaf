@@ -132,8 +132,12 @@ void SceneController::startScene(sptr<Scene> scene)
         if (scene_manager_)
         {
             current_scene_->scene_manager_ = scene_manager_;
-            current_scene_->copySystemProvider(
-                &(scene_manager_->isystemProvider()));
+            if (!(current_scene_->setSystemProvider(
+                    &(scene_manager_->isystemProvider()))))
+            {
+                DisplayLog::debug(
+                    "Internal error: iSystemProvider was already set");
+            }
         }
         current_scene_->onCreated();
     }
