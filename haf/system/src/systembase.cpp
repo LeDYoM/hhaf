@@ -8,7 +8,7 @@ SystemBase::SystemBase(sys::ISystemProvider& system_provider) noexcept :
     system_provider_{system_provider}
 {}
 
-SystemBase::~SystemBase() = default;
+SystemBase::~SystemBase() noexcept = default;
 
 SystemProvider& SystemBase::systemProvider() noexcept
 {

@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef HAF_SYSTEM_BASE_INCLUDE_HPP
-#define HAF_SYSTEM_BASE_INCLUDE_HPP
+#ifndef HAF_SYSTEM_SYSTEM_BASE_INCLUDE_HPP
+#define HAF_SYSTEM_SYSTEM_BASE_INCLUDE_HPP
 
 namespace haf::sys
 {
@@ -23,7 +23,7 @@ public:
      * @param system_provider Object to handle all systems that this class might
      * use.
      */
-    SystemBase(sys::ISystemProvider& system_provider) noexcept;
+    explicit SystemBase(sys::ISystemProvider& system_provider) noexcept;
 
     /**
      * @brief Deleted copy constructor.
@@ -64,7 +64,12 @@ public:
     ISystemProvider const& isystemProvider() const noexcept;
 
 protected:
-    ~SystemBase();
+    /**
+     * @brief Destroy the System Base object
+     * The destructor is protected because this class is intended to be used
+     * as a base class.
+     */
+    ~SystemBase() noexcept;
 
 private:
     ISystemProvider& system_provider_;
