@@ -19,15 +19,14 @@ using namespace haf;
 using namespace haf::scene;
 using namespace haf::scene::nodes;
 
-GameOverSceneNode::GameOverSceneNode(scene::SceneNode* const parent,
-                                     str name) :
+GameOverSceneNode::GameOverSceneNode(scene::SceneNode* const parent, str name) :
     SceneNode{parent, std::move(name)}
 {
     m_gameOverrg = createSceneNode("gameOverScreen");
 
     vector2df gosize{dataWrapper<SceneMetricsView>()->currentView().width, 715};
     m_gameOverrg->position.set({0, 575});
-    auto resources_viewer = dataWrapper<ResourceView>();
+    auto resources_viewer = dataWrapper<res::ResourceView>();
 
     auto gameText(m_gameOverrg->createSceneNode<SceneNodeText>("gameovergame"));
     gameText->text.set("GAME");

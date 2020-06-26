@@ -43,11 +43,11 @@ void do_render(const rptr<haf::backend::IRenderTarget> irender_target_,
         to_backend(renderData.vArray.primitiveType()),
         renderData.transform.getMatrix(),
         renderData.texture
-            ? dynamic_cast<const haf::scene::Texture*>(renderData.texture)
+            ? dynamic_cast<const haf::res::Texture*>(renderData.texture)
                   ->backEndTexture()
             : nullptr,
         renderData.shader
-            ? dynamic_cast<const haf::scene::Shader*>(renderData.shader)
+            ? dynamic_cast<const haf::res::Shader*>(renderData.shader)
                   ->backEndShader()
             : nullptr};
 

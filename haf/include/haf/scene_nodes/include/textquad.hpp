@@ -15,7 +15,7 @@ public:
     using BaseClass::BaseClass;
     ~TextQuad() override;
 
-    void configure(mtps::sptr<IFont> font,
+    void configure(mtps::sptr<res::IFont> font,
                    const Color& color,
                    const mtps::vector2df& size);
 

@@ -8,7 +8,7 @@
 
 using namespace mtps;
 
-namespace haf::scene
+namespace haf::res
 {
 struct TTFont::FontPrivate
 {
@@ -129,4 +129,4 @@ sptr<IFont> TTFont::font(const u32 charactersize)
         return (*iterator).second;
     }
 }
-} // namespace haf::scene
+} // namespace haf::res

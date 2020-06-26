@@ -57,12 +57,12 @@ void SceneManager::setViewRect(const Rectf32& vr)
     systemProvider().parentWindow().renderTarget()->setViewRect(vr);
 }
 
-IResourceRetriever& SceneManager::resources()
+res::IResourceRetriever& SceneManager::resources()
 {
     return systemProvider().resourceManager();
 }
 
-IResourceHandler& SceneManager::resourcesLoader()
+res::IResourceHandler& SceneManager::resourcesLoader()
 {
     return systemProvider().resourceManager();
 }

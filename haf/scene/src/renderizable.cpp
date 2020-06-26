@@ -56,7 +56,7 @@ constexpr pair<PrimitiveType, size_type> initDataVertexPerFigureAndNumPoints(
     }
 }
 
-Rects32 textureFillQuad(const sptr<ITexture>& texture)
+Rects32 textureFillQuad(const sptr<res::ITexture>& texture)
 {
     return texture ? Rects32{0, 0, static_cast<vector2ds32>(texture->size())}
                    : Rects32{};
@@ -70,8 +70,8 @@ Renderizable::Renderizable(rptr<SceneNode> parent,
                            size_type initial_point_count,
                            Rectf32 _box,
                            Color _color,
-                           sptr<ITexture> _texture,
-                           sptr<IShader> _shader) :
+                           sptr<res::ITexture> _texture,
+                           sptr<res::IShader> _shader) :
     sys::HasName{std::move(name)},
     parent_{std::move(parent)},
     figType{figure_type},
@@ -102,14 +102,14 @@ void Renderizable::render()
     }
 }
 
-void Renderizable::setTextureAndTextureRect(sptr<ITexture> texture_,
+void Renderizable::setTextureAndTextureRect(sptr<res::ITexture> texture_,
                                             const Rectf32& textRect)
 {
     textureRect = static_cast<Rects32>(textRect);
     texture.set(std::move(texture_));
 }
 
-void Renderizable::setTextureFill(sptr<ITexture> texture_)
+void Renderizable::setTextureFill(sptr<res::ITexture> texture_)
 {
     setTextureAndTextureRect(texture_, textureFillQuad(texture_));
 }

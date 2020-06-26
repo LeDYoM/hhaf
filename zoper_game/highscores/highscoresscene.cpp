@@ -18,29 +18,31 @@ using namespace haf;
 using namespace haf::scene;
 using namespace haf::scene::nodes;
 
-HighScoresScene::HighScoresScene() : Scene{StaticTypeName} {}
+HighScoresScene::HighScoresScene() : Scene{StaticTypeName}
+{}
 HighScoresScene::~HighScoresScene() = default;
 
 void HighScoresScene::onCreated()
 {
     BaseClass::onCreated();
-    dataWrapper<ResourceHandler>()->loadResources(HighScoresResources{});
+    dataWrapper<res::ResourceHandler>()->loadResources(HighScoresResources{});
 
-    auto statesController(addComponentOfType<StatesController<HighScoresSceneStates>>());
-    auto resources_viewer = dataWrapper<ResourceView>();
+    auto statesController(
+        addComponentOfType<StatesController<HighScoresSceneStates>>());
+    auto resources_viewer = dataWrapper<res::ResourceView>();
 
-    m_normalFont = resources_viewer->getTTFont("menu.mainFont")->font(72);
-    m_normalColor = colors::Blue;
+    m_normalFont    = resources_viewer->getTTFont("menu.mainFont")->font(72);
+    m_normalColor   = colors::Blue;
     m_selectedColor = colors::Red;
 
     createStandardBackground(this);
 
-    auto highScoreTextController(createSceneNode<HighScoreTextController>("HighScoreTextController"));
-    highScoreTextController->Finished.connect([this, statesController]()
-    {
+    auto highScoreTextController(
+        createSceneNode<HighScoreTextController>("HighScoreTextController"));
+    highScoreTextController->Finished.connect([this, statesController]() {
         dataWrapper<SceneControl>()->switchToNextScene();
     });
 
     statesController->start(HighScoresSceneStates::Show);
 }
-} // namespace zoper
+}  // namespace zoper

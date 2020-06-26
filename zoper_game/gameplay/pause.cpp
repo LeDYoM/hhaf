@@ -22,7 +22,7 @@ using namespace haf::time;
 PauseSceneNode::PauseSceneNode(scene::SceneNode* const parent, str name) :
     SceneNode{parent, std::move(name)}
 {
-    auto resources_viewer = dataWrapper<ResourceView>();
+    auto resources_viewer = dataWrapper<res::ResourceView>();
 
     m_pauseText = createSceneNode<SceneNodeText>("pausetext");
     m_pauseText->text.set("PAUSE");

@@ -29,7 +29,7 @@ private:
     using BaseClass = haf::scene::Scene;
 
     mtps::sptr<HighScoreTextController> m_highScoreTextController;
-    mtps::sptr<haf::scene::IFont> m_normalFont;
+    mtps::sptr<haf::res::IFont> m_normalFont;
     haf::scene::Color m_normalColor;
     haf::scene::Color m_selectedColor;
     mtps::ireceiver m_receiver;

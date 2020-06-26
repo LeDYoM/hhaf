@@ -76,7 +76,7 @@ void MainMenu::onCreated()
 {
     BaseClass::onCreated();
 
-    auto resources_viewer = dataWrapper<ResourceView>();
+    auto resources_viewer = dataWrapper<res::ResourceView>();
 
     auto normalFont =
         resources_viewer->getTTFont(MainMenuResources::MenuFontId)->font(72);

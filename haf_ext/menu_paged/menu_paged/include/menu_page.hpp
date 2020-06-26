@@ -38,7 +38,7 @@ protected:
     MenuPaged *parentMenuPaged();
     const MenuPaged *parentMenuPaged() const;
 
-    mtps::sptr<IFont> normalFont() const;
+    mtps::sptr<res::IFont> normalFont() const;
     Color normalColor() const;
     Color selectedColor() const;
 

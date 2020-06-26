@@ -7,19 +7,19 @@
 
 namespace zoper
 {
-class MainMenuResources : public haf::IResourceLoader
+class MainMenuResources : public haf::res::IResourceLoader
 {
 public:
-    constexpr static char LogoId[] = "game_menu.logo";
+    constexpr static char LogoId[]     = "game_menu.logo";
     constexpr static char MenuFontId[] = "menu.mainFont";
-    constexpr static char Shader[] = "menu.shader";
+    constexpr static char Shader[]     = "menu.shader";
 
 #ifdef TEST_BMP_FONT
     constexpr static char TestFontId[] = "menu.testFont";
 #endif
 
-    void loadResources(haf::IResourceHandler &) override;
+    void loadResources(haf::res::IResourceHandler&) override;
 };
-} // namespace zoper
+}  // namespace zoper
 
 #endif

@@ -50,9 +50,13 @@ struct GameScene::GameScenePrivate
         auto sceneNode =
             main_node.createSceneNode("pointIncrementScore_SceneNode");
 
-        auto node = sceneNode->renderizableBuilder().name("pointIncrementScore").
-        figType(FigType_t::Shape).box(rectFromSize(15.0F, 15.0F)).
-        color(colors::White).pointCount(30U).create();
+        auto node = sceneNode->renderizableBuilder()
+                        .name("pointIncrementScore")
+                        .figType(FigType_t::Shape)
+                        .box(rectFromSize(15.0F, 15.0F))
+                        .color(colors::White)
+                        .pointCount(30U)
+                        .create();
 
         {
             using namespace gameplay::constants;
@@ -81,7 +85,7 @@ void GameScene::onCreated()
                             "Private data pointer is not nullptr!");
     private_ = muptr<GameScenePrivate>();
 
-    dataWrapper<ResourceHandler>()->loadResources(GameResources{});
+    dataWrapper<res::ResourceHandler>()->loadResources(GameResources{});
 
     using namespace haf::board;
 
@@ -100,31 +104,32 @@ void GameScene::onCreated()
         //        sceneManager().systemProvider().app<ZoperProgramController>().keyMapping;
         switch (m_sceneStates->currentState())
         {
-        case GameSceneStates::Playing: {
-            auto dir(keyMapping->getDirectionFromKey(key));
-            if (dir.isValid())
+            case GameSceneStates::Playing:
             {
-                m_boardGroup->player()->movePlayer(dir);
-            }
-            else if (keyMapping->isLaunchKey(key))
-            {
-                launchPlayer();
-            }
-            else if (keyMapping->isPauseKey(key))
-            {
-                m_sceneStates->setState(GameSceneStates::Pause);
-            }
-        }
-        break;
-        case GameSceneStates::GameOver:
-            dataWrapper<SceneControl>()->switchToNextScene();
-            break;
-        case GameSceneStates::Pause:
-            if (keyMapping->isPauseKey(key))
-            {
-                m_sceneStates->setState(GameSceneStates::Playing);
+                auto dir(keyMapping->getDirectionFromKey(key));
+                if (dir.isValid())
+                {
+                    m_boardGroup->player()->movePlayer(dir);
+                }
+                else if (keyMapping->isLaunchKey(key))
+                {
+                    launchPlayer();
+                }
+                else if (keyMapping->isPauseKey(key))
+                {
+                    m_sceneStates->setState(GameSceneStates::Pause);
+                }
             }
             break;
+            case GameSceneStates::GameOver:
+                dataWrapper<SceneControl>()->switchToNextScene();
+                break;
+            case GameSceneStates::Pause:
+                if (keyMapping->isPauseKey(key))
+                {
+                    m_sceneStates->setState(GameSceneStates::Playing);
+                }
+                break;
         }
     });
 
@@ -202,17 +207,18 @@ void GameScene::onEnterState(const GameSceneStates& state)
 {
     switch (state)
     {
-    case GameSceneStates::Pause: {
-        scene_timer_component_->pause();
-        pause_node_->enterPause();
-    }
-    break;
-    case GameSceneStates::GameOver:
-        m_gameOver->visible = true;
-        scene_timer_component_->pause();
+        case GameSceneStates::Pause:
+        {
+            scene_timer_component_->pause();
+            pause_node_->enterPause();
+        }
         break;
-    default:
-        break;
+        case GameSceneStates::GameOver:
+            m_gameOver->visible = true;
+            scene_timer_component_->pause();
+            break;
+        default:
+            break;
     }
     DisplayLog::info("Entered state: ", make_str(state));
 }
@@ -221,13 +227,14 @@ void GameScene::onExitState(const GameSceneStates& state)
 {
     switch (state)
     {
-    case GameSceneStates::Pause: {
-        scene_timer_component_->resume();
-        pause_node_->exitPause();
-    }
-    break;
-    default:
+        case GameSceneStates::Pause:
+        {
+            scene_timer_component_->resume();
+            pause_node_->exitPause();
+        }
         break;
+        default:
+            break;
     }
     DisplayLog::info("Exited state: ", make_str(state));
 }

@@ -4,15 +4,14 @@
 
 namespace zoper
 {
-using namespace haf;
-using namespace haf::scene;
 
-void MainMenuResources::loadResources(IResourceHandler &resourceHandler)
+void MainMenuResources::loadResources(
+    haf::res::IResourceHandler& resourceHandler)
 {
     constexpr static char BackgroundTextureFile[] = "resources/gr_ms.png";
-    constexpr static char LogoFile[] = "resources/zoperbl.png";
-    constexpr static char MenuFontFile[] = "resources/oldct.ttf";
-    constexpr static char ShaderFile[] = "resources/wave";
+    constexpr static char LogoFile[]              = "resources/zoperbl.png";
+    constexpr static char MenuFontFile[]          = "resources/oldct.ttf";
+    constexpr static char ShaderFile[]            = "resources/wave";
 
     resourceHandler.loadTexture(LogoId, LogoFile);
     resourceHandler.loadTTFont(MenuFontId, MenuFontFile);
@@ -23,4 +22,4 @@ void MainMenuResources::loadResources(IResourceHandler &resourceHandler)
     resourceHandler.loadBMPFont(TestFontId, TestBMPFontFile);
 #endif
 }
-} // namespace zoper
+}  // namespace zoper

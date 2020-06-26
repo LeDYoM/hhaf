@@ -11,30 +11,30 @@
 #include <haf/resources/include/iresourceconfigurator.hpp>
 #include <system/i_include/systembase.hpp>
 
-namespace haf::scene
+namespace haf::res
 {
 class BMPFont;
 class IFont;
 class ITTFont;
 class ITexture;
 class IShader;
-}  // namespace haf::scene
+}  // namespace haf::res
 
 namespace haf::sys
 {
 class ResourceManager final : public SystemBase,
-                              public IResourceHandler,
-                              public IResourceRetriever,
+                              public res::IResourceHandler,
+                              public res::IResourceRetriever,
                               public res::IResourcesConfigurator
 {
 public:
     ResourceManager(sys::SystemProvider& system_provider);
-    ~ResourceManager();
+    ~ResourceManager() override;
 
-    mtps::sptr<scene::ITTFont> getTTFont(const mtps::str& rid) override;
-    mtps::sptr<scene::ITexture> getTexture(const mtps::str& rid) override;
-    mtps::sptr<scene::IShader> getShader(const mtps::str& rid) override;
-    mtps::sptr<scene::IFont> getBMPFont(const mtps::str& rid) override;
+    mtps::sptr<res::ITTFont> getTTFont(const mtps::str& rid) override;
+    mtps::sptr<res::ITexture> getTexture(const mtps::str& rid) override;
+    mtps::sptr<res::IShader> getShader(const mtps::str& rid) override;
+    mtps::sptr<res::IFont> getBMPFont(const mtps::str& rid) override;
 
     bool loadTTFont(const mtps::str& rid, const mtps::str& fileName) override;
     bool loadTexture(const mtps::str& rid, const mtps::str& fileName) override;

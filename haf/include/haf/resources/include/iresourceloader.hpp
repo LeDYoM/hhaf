@@ -5,15 +5,15 @@
 
 #include <mtypes/include/str.hpp>
 
-namespace haf
+namespace haf::res
 {
-    class IResourceHandler;
+class IResourceHandler;
 
-    class IResourceLoader
-    {
-    public:
-        virtual void loadResources(IResourceHandler&) = 0;
-    };
-}
+class IResourceLoader
+{
+public:
+    virtual void loadResources(IResourceHandler&) = 0;
+};
+}  // namespace haf::res
 
 #endif

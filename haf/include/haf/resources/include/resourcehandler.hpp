@@ -7,27 +7,25 @@
 #include <haf/system/include/idatawrapper.hpp>
 #include <haf/resources/include/iresourcehandler.hpp>
 
-namespace haf
+namespace haf::res
 {
-    class IResourceLoader;
-}
+class IResourceLoader;
 
-namespace haf::scene
-{
 /// Component to provide access to resources.
-class ResourceHandler final : public sys::IDataWrapper, public IResourceHandler
+class ResourceHandler final : public sys::IDataWrapper,
+                              public IResourceHandler
 {
 public:
     void onAttached() override;
-    bool loadTTFont(const mtps::str&rid, const mtps::str&fileName) override;
-    bool loadTexture(const mtps::str&rid, const mtps::str&fileName) override;
-    bool loadShader(const mtps::str&rid, const mtps::str&fileName) override;
-    bool loadBMPFont(const mtps::str&rid, const mtps::str&fileName) override;
+    bool loadTTFont(const mtps::str& rid, const mtps::str& fileName) override;
+    bool loadTexture(const mtps::str& rid, const mtps::str& fileName) override;
+    bool loadShader(const mtps::str& rid, const mtps::str& fileName) override;
+    bool loadBMPFont(const mtps::str& rid, const mtps::str& fileName) override;
     void loadResources(IResourceLoader& resource_loader);
 
 private:
     mtps::rptr<IResourceHandler> handler_;
 };
-} // namespace haf::scene
+}  // namespace haf::res
 
 #endif

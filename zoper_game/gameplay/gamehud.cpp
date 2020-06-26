@@ -19,7 +19,7 @@ namespace zoper
 GameHudSceneNode::GameHudSceneNode(SceneNode* const parent, str name) :
     SceneNode{parent, std::move(name)}
 {
-    auto resources_viewer = dataWrapper<ResourceView>();
+    auto resources_viewer = dataWrapper<res::ResourceView>();
 
     m_scoreQuad = parent->createSceneNode<TextQuad>("score");
     m_scoreQuad->configure(

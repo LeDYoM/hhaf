@@ -8,11 +8,11 @@
 
 #include <system/i_include/systembase.hpp>
 
-namespace haf
+namespace haf::res
 {
 class IResourceRetriever;
 class IResourceHandler;
-}  // namespace haf
+}  // namespace haf::res
 
 namespace haf::scene
 {
@@ -32,8 +32,8 @@ public:
     void update();
     void finish();
 
-    IResourceRetriever& resources();
-    IResourceHandler& resourcesLoader();
+    res::IResourceRetriever& resources();
+    res::IResourceHandler& resourcesLoader();
 
     mtps::Rectf32 viewPort() const;
     void setViewPort(const mtps::Rectf32& vp);

@@ -6,7 +6,7 @@
 
 using namespace mtps;
 
-namespace haf::scene
+namespace haf::res
 {
 void ResourceView::onAttached()
 {
@@ -14,24 +14,24 @@ void ResourceView::onAttached()
     LogAsserter::log_assert(retriever_ != nullptr, "Invalid IResourceRetrieved");
 }
 
-sptr<scene::ITTFont> ResourceView::getTTFont(const str&rid)
+sptr<ITTFont> ResourceView::getTTFont(const str&rid)
 {
     return retriever_->getTTFont(rid);
 }
 
-sptr<scene::ITexture> ResourceView::getTexture(const str&rid)
+sptr<ITexture> ResourceView::getTexture(const str&rid)
 {
     return retriever_->getTexture(rid);
 }
 
-sptr<scene::IShader> ResourceView::getShader(const str&rid)
+sptr<IShader> ResourceView::getShader(const str&rid)
 {
     return retriever_->getShader(rid);
 }
 
-sptr<scene::IFont> ResourceView::getBMPFont(const str&rid)
+sptr<IFont> ResourceView::getBMPFont(const str&rid)
 {
     return retriever_->getBMPFont(rid);
 }
 
-} // namespace haf::scene
+} // namespace haf::res

@@ -36,7 +36,7 @@ const MenuPaged* MenuPage::parentMenuPaged() const
     return parentAs<MenuPaged>();
 }
 
-sptr<IFont> MenuPage::normalFont() const
+sptr<res::IFont> MenuPage::normalFont() const
 {
     return parentMenuPaged()->normalTextFont();
 }

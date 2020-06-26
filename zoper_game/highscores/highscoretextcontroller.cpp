@@ -28,7 +28,7 @@ void HighScoreTextController::onCreated()
 {
     BaseClass::onCreated();
 
-    auto resource_view = dataWrapper<ResourceView>();
+    auto resource_view = dataWrapper<res::ResourceView>();
 
     m_normalFont         = resource_view->getTTFont("menu.mainFont")->font(72);
     m_normalColor        = colors::Blue;

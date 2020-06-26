@@ -30,9 +30,9 @@ void MenuScene::onCreated()
 {
     BaseClass::onCreated();
 
-    auto resources_loader = dataWrapper<ResourceHandler>();
+    auto resources_loader = dataWrapper<res::ResourceHandler>();
     resources_loader->loadResources(MainMenuResources{});
-    auto resources_viewer = dataWrapper<ResourceView>();
+    auto resources_viewer = dataWrapper<res::ResourceView>();
 
     auto& a = systemInterface<res::IResourcesConfigurator>();
 

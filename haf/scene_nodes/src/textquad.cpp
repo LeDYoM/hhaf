@@ -4,7 +4,7 @@ using namespace mtps;
 
 namespace haf::scene::nodes
 {
-void TextQuad::configure(mtps::sptr<IFont> font,
+void TextQuad::configure(mtps::sptr<res::IFont> font,
                          const Color& color,
                          const mtps::vector2df& size)
 {

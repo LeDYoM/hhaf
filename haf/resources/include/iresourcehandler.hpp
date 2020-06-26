@@ -6,13 +6,13 @@
 #include <mtypes/include/str.hpp>
 #include <mtypes/include/types.hpp>
 
-namespace haf::scene
+namespace haf::res
 {
 class BMPFont;
 class TTFont;
 class Texture;
 class IShader;
-}  // namespace haf::scene
+}  // namespace haf::res
 
 namespace haf
 {

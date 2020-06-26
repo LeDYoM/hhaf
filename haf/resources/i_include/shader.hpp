@@ -11,7 +11,7 @@ namespace haf::backend
 class IShader;
 }
 
-namespace haf::scene
+namespace haf::res
 {
 class Shader final : public IShader
 {
@@ -24,6 +24,6 @@ public:
 private:
     backend::IShader *m_ShaderPrivate;
 };
-} // namespace haf::scene
+} // namespace haf::res
 
 #endif

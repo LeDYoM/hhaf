@@ -25,8 +25,8 @@ public:
     MenuPaged(SceneNode* parent, mtps::str name);
     ~MenuPaged() override;
 
-    void setNormalTextFont(mtps::sptr<IFont> normal_text_font);
-    mtps::sptr<IFont> normalTextFont() const noexcept;
+    void setNormalTextFont(mtps::sptr<res::IFont> normal_text_font);
+    mtps::sptr<res::IFont> normalTextFont() const noexcept;
 
     void setNormalColor(Color normal_color);
     Color normalColor() const;
@@ -59,7 +59,7 @@ protected:
 
 private:
     mtps::vector2df scene_node_size_for_pages_;
-    mtps::sptr<IFont> normal_text_font_;
+    mtps::sptr<res::IFont> normal_text_font_;
     Color normal_color_;
     Color selected_color_;
     mtps::vector_shared_pointers<MenuPage> menu_steps_;

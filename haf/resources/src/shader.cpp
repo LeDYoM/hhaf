@@ -3,7 +3,7 @@
 #include <backend_dev/include/ishader.hpp>
 #include <map>
 
-namespace haf::scene
+namespace haf::res
 {
 Shader::Shader(backend::IShader* shader) : m_ShaderPrivate{shader}
 {}
@@ -16,4 +16,4 @@ const backend::IShader* const Shader::backEndShader() const noexcept
     return m_ShaderPrivate;
 }
 
-}  // namespace haf::scene
+}  // namespace haf::res

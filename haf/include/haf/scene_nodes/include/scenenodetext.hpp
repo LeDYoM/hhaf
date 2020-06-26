@@ -34,7 +34,7 @@ public:
     };
 
     mtps::PropertyState<mtps::str> text;
-    mtps::PropertyState<mtps::sptr<IFont>> font;
+    mtps::PropertyState<mtps::sptr<res::IFont>> font;
     mtps::PropertyState<Color> textColor;
     mtps::PropertyState<AlignmentX> alignmentX;
     mtps::PropertyState<AlignmentY> alignmentY;

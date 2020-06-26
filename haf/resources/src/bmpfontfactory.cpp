@@ -4,17 +4,17 @@
 
 using namespace mtps;
 
-namespace haf::scene
+namespace haf::res
 {
 sptr<BMPFont> BMPFontFactory::loadFromFile(const str& file)
 {
-    sptr<scene::BMPFont> font(msptr<scene::BMPFont>(file));
+    sptr<BMPFont> font(msptr<BMPFont>(file));
     return font;
 }
 
 sptr<BMPFont> BMPFontFactory::loadFromRawMemory(RawMemory*)
 {
-    sptr<scene::BMPFont> font(msptr<scene::BMPFont>(""));
+    sptr<BMPFont> font(msptr<BMPFont>(""));
     return font;
     /*
             uptr<sf::Font> font(muptr<sf::Font>());
@@ -26,4 +26,4 @@ sptr<BMPFont> BMPFontFactory::loadFromRawMemory(RawMemory*)
             return (*(m_fontCache.end() - 1)).get();
             */
 }
-}  // namespace haf::scene
+}  // namespace haf::res

@@ -21,6 +21,7 @@
 #include <list>
 
 using namespace mtps;
+using namespace haf::res;
 
 namespace haf::sys
 {
@@ -90,12 +91,12 @@ inline sptr<T> get_or_add(backend::IResourceFactory<V>& factory,
 
 struct ResourceManager::ResourceManagerPrivate
 {
-    ResourceList<sptr<scene::TTFont>> ttf_fonts_;
-    ResourceList<sptr<scene::Texture>> textures_;
-    ResourceList<sptr<scene::Shader>> shaders_;
-    ResourceList<sptr<scene::BMPFont>> bmp_fonts_;
+    ResourceList<sptr<TTFont>> ttf_fonts_;
+    ResourceList<sptr<Texture>> textures_;
+    ResourceList<sptr<Shader>> shaders_;
+    ResourceList<sptr<BMPFont>> bmp_fonts_;
 
-    scene::BMPFontFactory bmp_font_factory_;
+    BMPFontFactory bmp_font_factory_;
 
     str file_name_;
 };
@@ -106,22 +107,22 @@ ResourceManager::ResourceManager(sys::SystemProvider& system_provider) :
 
 ResourceManager::~ResourceManager() = default;
 
-sptr<scene::ITTFont> ResourceManager::getTTFont(const str& rid)
+sptr<ITTFont> ResourceManager::getTTFont(const str& rid)
 {
     return get_or_default(p_->ttf_fonts_, rid);
 }
 
-sptr<scene::ITexture> ResourceManager::getTexture(const str& rid)
+sptr<ITexture> ResourceManager::getTexture(const str& rid)
 {
     return get_or_default(p_->textures_, rid);
 }
 
-sptr<scene::IShader> ResourceManager::getShader(const str& rid)
+sptr<IShader> ResourceManager::getShader(const str& rid)
 {
     return get_or_default(p_->shaders_, rid);
 }
 
-sptr<scene::IFont> ResourceManager::getBMPFont(const str& rid)
+sptr<IFont> ResourceManager::getBMPFont(const str& rid)
 {
     return get_or_default(p_->bmp_fonts_, rid);
 }
@@ -148,19 +149,19 @@ bool ResourceManager::loadShader(const str& rid, const str& fileName)
 
 bool ResourceManager::loadBMPFont(const str& rid, const str& fileName)
 {
-    sptr<scene::BMPFont> bmp_font{p_->bmp_font_factory_.loadFromFile(fileName)};
+    sptr<BMPFont> bmp_font{p_->bmp_font_factory_.loadFromFile(fileName)};
 
     if (bmp_font)
     {
         const auto& texture_file_names{bmp_font->textureFileNames()};
-        vector<sptr<scene::ITexture>> textures(texture_file_names.size());
+        vector<sptr<ITexture>> textures(texture_file_names.size());
 
         for (const auto& file_name : texture_file_names)
         {
             const bool texture_available =
                 loadTexture(rid + "_" + file_name, file_name);
 
-            sptr<scene::ITexture> texture(getTexture(rid + "_" + file_name));
+            sptr<ITexture> texture(getTexture(rid + "_" + file_name));
             textures.push_back(std::move(texture));
         }
 

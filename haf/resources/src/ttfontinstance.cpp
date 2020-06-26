@@ -5,7 +5,7 @@
 
 using namespace mtps;
 
-namespace haf::scene
+namespace haf::res
 {
 using namespace backend;
 
@@ -52,4 +52,4 @@ vector2df TTFontInstance::textSize(const str& text) const
 {
     return m_parentInstance.textSize(text, m_characterSize);
 }
-}  // namespace haf::scene
+}  // namespace haf::res

@@ -6,12 +6,10 @@
 
 namespace zoper
 {
-using namespace haf;
-using namespace haf::scene;
 
 constexpr char ScoreFontFile[] = "resources/score.ttf";
 
-void GameResources::loadResources(IResourceHandler &resourceHandler)
+void GameResources::loadResources(haf::res::IResourceHandler &resourceHandler)
 {
     resourceHandler.loadTTFont(ScoreFontId, ScoreFontFile);
 }

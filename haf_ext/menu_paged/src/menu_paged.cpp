@@ -18,12 +18,12 @@ MenuPaged::MenuPaged(SceneNode* parent, str name) :
 
 MenuPaged::~MenuPaged() = default;
 
-void MenuPaged::setNormalTextFont(sptr<IFont> normal_text_font)
+void MenuPaged::setNormalTextFont(sptr<res::IFont> normal_text_font)
 {
     normal_text_font_ = std::move(normal_text_font);
 }
 
-sptr<IFont> MenuPaged::normalTextFont() const noexcept
+sptr<res::IFont> MenuPaged::normalTextFont() const noexcept
 {
     return normal_text_font_;
 }

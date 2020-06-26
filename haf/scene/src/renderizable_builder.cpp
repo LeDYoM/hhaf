@@ -47,13 +47,15 @@ RenderizableBuilder& RenderizableBuilder::pointCount(
     return *this;
 }
 
-RenderizableBuilder& RenderizableBuilder::shader(mtps::sptr<IShader> _shader)
+RenderizableBuilder& RenderizableBuilder::shader(
+    mtps::sptr<res::IShader> _shader)
 {
     data_.shader_ = std::move(_shader);
     return *this;
 }
 
-RenderizableBuilder& RenderizableBuilder::texture(mtps::sptr<ITexture> _texture)
+RenderizableBuilder& RenderizableBuilder::texture(
+    mtps::sptr<res::ITexture> _texture)
 {
     data_.texture_ = std::move(_texture);
     return *this;

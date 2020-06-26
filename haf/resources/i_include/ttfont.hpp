@@ -14,7 +14,7 @@ namespace haf::backend
 class ITTFont;
 }
 
-namespace haf::scene
+namespace haf::res
 {
 class TTFont final : public ITTFont
 {
@@ -42,6 +42,6 @@ private:
     struct FontPrivate;
     mtps::uptr<FontPrivate> m_private;
 };
-}  // namespace haf::scene
+}  // namespace haf::res
 
 #endif

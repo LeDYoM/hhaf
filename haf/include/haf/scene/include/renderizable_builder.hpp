@@ -15,11 +15,17 @@ namespace haf::scene
 {
 class Renderizables;
 class Renderizable;
+enum class FigType_t : mtps::u8;
+}  // namespace haf::scene
+
+namespace haf::res
+{
 class IShader;
 class ITexture;
+}  // namespace haf::res
 
-enum class FigType_t : mtps::u8;
-
+namespace haf::scene
+{
 class RenderizableBuilder
 {
 public:
@@ -32,8 +38,8 @@ public:
     RenderizableBuilder& box(mtps::Rectf32 _box);
     RenderizableBuilder& color(Color _color);
     RenderizableBuilder& pointCount(mtps::size_type point_count);
-    RenderizableBuilder& shader(mtps::sptr<IShader> _shader);
-    RenderizableBuilder& texture(mtps::sptr<ITexture> _texture);
+    RenderizableBuilder& shader(mtps::sptr<res::IShader> _shader);
+    RenderizableBuilder& texture(mtps::sptr<res::ITexture> _texture);
     RenderizableBuilder& colorModifier(
         mtps::function<Color(const RenderizableModifierContext&)>
             color_modifier);
@@ -46,9 +52,10 @@ public:
         mtps::Rectf32 box_;
         Color color_{colors::White};
         mtps::size_type pointCount_{4U};
-        mtps::sptr<IShader> shader_;
-        mtps::sptr<ITexture> texture_;
-        mtps::function<Color(const RenderizableModifierContext&)> color_modifier_;
+        mtps::sptr<res::IShader> shader_;
+        mtps::sptr<res::ITexture> texture_;
+        mtps::function<Color(const RenderizableModifierContext&)>
+            color_modifier_;
     };
 
     const Data& data() const { return data_; }

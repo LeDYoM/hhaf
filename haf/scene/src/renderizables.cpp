@@ -14,8 +14,8 @@ sptr<Renderizable> Renderizables::createRenderizable(str name,
                                                      FigType_t figure_type,
                                                      Rectf32 box,
                                                      Color color,
-                                                     sptr<ITexture> texture,
-                                                     sptr<IShader> shader,
+                                                     sptr<res::ITexture> texture,
+                                                     sptr<res::IShader> shader,
                                                      size_type num_points)
 {
     auto result(msptr<Renderizable>(scene_node_, std::move(name), figure_type,

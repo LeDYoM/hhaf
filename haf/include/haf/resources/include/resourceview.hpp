@@ -7,21 +7,21 @@
 #include <haf/system/include/idatawrapper.hpp>
 #include <haf/resources/include/iresourceretriever.hpp>
 
-namespace haf::scene
+namespace haf::res
 {
 /// Component to provide access to resources.
 class ResourceView final : public sys::IDataWrapper, public IResourceRetriever
 {
 public:
     void onAttached() override;
-    mtps::sptr<scene::ITTFont> getTTFont(const mtps::str& rid) override;
-    mtps::sptr<scene::ITexture> getTexture(const mtps::str& rid) override;
-    mtps::sptr<scene::IShader> getShader(const mtps::str& rid) override;
-    mtps::sptr<scene::IFont> getBMPFont(const mtps::str& rid) override;
+    mtps::sptr<ITTFont> getTTFont(const mtps::str& rid) override;
+    mtps::sptr<ITexture> getTexture(const mtps::str& rid) override;
+    mtps::sptr<IShader> getShader(const mtps::str& rid) override;
+    mtps::sptr<IFont> getBMPFont(const mtps::str& rid) override;
 
 private:
     mtps::rptr<IResourceRetriever> retriever_;
 };
-}  // namespace haf::scene
+}  // namespace haf::res
 
 #endif

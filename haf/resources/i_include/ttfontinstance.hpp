@@ -8,7 +8,7 @@
 #include "texture.hpp"
 #include <haf/resources/include/ifont.hpp>
 
-namespace haf::scene
+namespace haf::res
 {
 class TTFont;
 
@@ -31,6 +31,6 @@ private:
     mtps::u32 m_characterSize;
     friend class TTFont;
 };
-}  // namespace haf::scene
+}  // namespace haf::res
 
 #endif

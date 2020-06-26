@@ -29,8 +29,8 @@ public:
                  mtps::size_type initial_point_count,
                  mtps::Rectf32 _box,
                  Color color,
-                 mtps::sptr<ITexture> _texture,
-                 mtps::sptr<IShader> _shader);
+                 mtps::sptr<res::ITexture> _texture,
+                 mtps::sptr<res::IShader> _shader);
 
     ~Renderizable();
 
@@ -40,23 +40,23 @@ public:
     mtps::PropertyState<mtps::Rectf32> box;
     mtps::PropertyState<Color> color;
     mtps::PropertyState<mtps::size_type> pointCount;
-    mtps::PropertyState<mtps::sptr<IShader>> shader;
+    mtps::PropertyState<mtps::sptr<res::IShader>> shader;
     mtps::PropertyState<
         mtps::function<Color(const RenderizableModifierContext&)>>
         color_modifier;
 
     mtps::BasicProperty<bool> visible{true};
 
-    void setTextureAndTextureRect(mtps::sptr<ITexture> texture_,
+    void setTextureAndTextureRect(mtps::sptr<res::ITexture> texture_,
                                   const mtps::Rectf32& textRect);
 
-    void setTextureFill(mtps::sptr<ITexture> texture_);
+    void setTextureFill(mtps::sptr<res::ITexture> texture_);
 
 private:
     const mtps::rptr<SceneNode> parent_;
 
     mtps::PropertyState<mtps::Rects32> textureRect;
-    mtps::PropertyState<mtps::sptr<ITexture>> texture;
+    mtps::PropertyState<mtps::sptr<res::ITexture>> texture;
 
     VertexArray m_vertices;
     RenderData render_data_;

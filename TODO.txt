@@ -1,4 +1,4 @@
-Refactor code to read an object file.
-    - Create code to directly read an object file to a type.
-    - Use it in simulationSystem.
+#Refactor code to read an object file.
+#    - Create code to directly read an object file to a type.
+#    - Use it in simulationSystem.
     - Use it in ResourceManager.

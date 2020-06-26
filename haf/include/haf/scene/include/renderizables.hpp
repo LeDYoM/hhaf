@@ -19,24 +19,30 @@ extern template mtps::vector<mtps::sptr<Renderizable>>;
 class Renderizables
 {
 public:
-    Renderizables(mtps::rptr<SceneNode> scene_node) noexcept :
+    explicit Renderizables(mtps::rptr<SceneNode> scene_node) noexcept :
         scene_node_{std::move(scene_node)}
     {}
 
-    /// Method to create a Renderizable
-    /// @param name The name of the Renderizable node.
-    /// @param figure_type Type of the figure to generate.
-    /// @param box Box containing the Renderizable.
-    /// @param color Color of the Renderizable.
-    /// @param num_points Number of points of the Renderizable.
-    /// @returns The created Renderizable
-    mtps::sptr<Renderizable> createRenderizable(mtps::str name,
-                                                FigType_t figure_type,
-                                                mtps::Rectf32 box,
-                                                Color color,
-                                                mtps::sptr<ITexture> texture,
-                                                mtps::sptr<IShader> shader,
-                                                mtps::size_type num_points);
+    /**
+     * @brief Create a Renderizable object
+     *
+     * @param name The name of the Renderizable node.
+     * @param figure_type Type of the figure to generate.
+     * @param box Box containing the Renderizable.
+     * @param color Color of the Renderizable.
+     * @param texture Pointer to the texture to use
+     * @param shader Pointer to the Shader to use
+     * @param num_points Number of points of the Renderizable.
+     * @return mtps::sptr<Renderizable>
+     */
+    mtps::sptr<Renderizable> createRenderizable(
+        mtps::str name,
+        FigType_t figure_type,
+        mtps::Rectf32 box,
+        Color color,
+        mtps::sptr<res::ITexture> texture,
+        mtps::sptr<res::IShader> shader,
+        mtps::size_type num_points);
 
     RenderizableBuilder renderizableBuilder();
 

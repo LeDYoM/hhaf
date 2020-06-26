@@ -12,7 +12,7 @@ namespace haf::backend
 class ITexture;
 }
 
-namespace haf::scene
+namespace haf::res
 {
 class Texture final : public ITexture
 {
@@ -28,6 +28,6 @@ private:
     backend::ITexture* m_texturePrivate;
 };
 
-}  // namespace haf::scene
+}  // namespace haf::res
 
 #endif

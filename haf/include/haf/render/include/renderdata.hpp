@@ -5,24 +5,33 @@
 
 namespace haf::scene
 {
-class ITexture;
-class VertexArray;
 class Transform;
-class IShader;
+class VertexArray;
+}  // namespace haf::scene
 
+namespace haf::res
+{
+class ITexture;
+class IShader;
+}  // namespace haf::res
+
+namespace haf::scene
+{
 class RenderData final
 {
 public:
-    constexpr RenderData(
-        const VertexArray &va, const Transform &transform,
-        const ITexture *texture, const IShader *shader)
-        : vArray{va}, transform{transform}, texture{texture}, shader{shader} {}
+    constexpr RenderData(const VertexArray& va,
+                         const Transform& transform,
+                         const res::ITexture* texture,
+                         const res::IShader* shader) :
+        vArray{va}, transform{transform}, texture{texture}, shader{shader}
+    {}
 
-    const VertexArray &vArray;
-    const Transform &transform;
-    const ITexture *texture;
-    const IShader *shader;
+    const VertexArray& vArray;
+    const Transform& transform;
+    const res::ITexture* texture;
+    const res::IShader* shader;
 };
-} // namespace haf::scene
+}  // namespace haf::scene
 
 #endif
