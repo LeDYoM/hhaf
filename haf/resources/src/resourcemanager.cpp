@@ -53,7 +53,7 @@ inline sptr<T> loadResource(backend::IResourceFactory<V>& factory,
 }
 
 template <typename T>
-inline auto get_or_default(ResourceList<sptr<T>>& container, const str& rid)
+inline auto get_or_default(ResourceList<sptr<T>> const& container, const str& rid)
 {
     auto iterator(
         std::find_if(container.begin(), container.end(),
@@ -108,22 +108,22 @@ ResourceManager::ResourceManager(sys::SystemProvider& system_provider) :
 
 ResourceManager::~ResourceManager() noexcept = default;
 
-sptr<ITTFont> ResourceManager::getTTFont(const str& rid)
+sptr<ITTFont> ResourceManager::getTTFont(const str& rid) const
 {
     return get_or_default(p_->ttf_fonts_, rid);
 }
 
-sptr<ITexture> ResourceManager::getTexture(const str& rid)
+sptr<ITexture> ResourceManager::getTexture(const str& rid) const
 {
     return get_or_default(p_->textures_, rid);
 }
 
-sptr<IShader> ResourceManager::getShader(const str& rid)
+sptr<IShader> ResourceManager::getShader(const str& rid) const
 {
     return get_or_default(p_->shaders_, rid);
 }
 
-sptr<IFont> ResourceManager::getBMPFont(const str& rid)
+sptr<IFont> ResourceManager::getBMPFont(const str& rid) const
 {
     return get_or_default(p_->bmp_fonts_, rid);
 }

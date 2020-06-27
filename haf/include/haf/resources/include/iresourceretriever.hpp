@@ -17,10 +17,10 @@ class IResourceRetriever
 {
 public:
     virtual ~IResourceRetriever() noexcept {}
-    virtual mtps::sptr<ITTFont> getTTFont(const mtps::str& rid)   = 0;
-    virtual mtps::sptr<ITexture> getTexture(const mtps::str& rid) = 0;
-    virtual mtps::sptr<IShader> getShader(const mtps::str& rid)   = 0;
-    virtual mtps::sptr<IFont> getBMPFont(const mtps::str& rid)    = 0;
+    virtual mtps::sptr<ITTFont> getTTFont(const mtps::str& rid) const   = 0;
+    virtual mtps::sptr<ITexture> getTexture(const mtps::str& rid) const = 0;
+    virtual mtps::sptr<IShader> getShader(const mtps::str& rid) const   = 0;
+    virtual mtps::sptr<IFont> getBMPFont(const mtps::str& rid) const    = 0;
 };
 }  // namespace haf::res
 

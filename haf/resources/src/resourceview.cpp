@@ -14,22 +14,22 @@ void ResourceView::onAttached()
     LogAsserter::log_assert(retriever_ != nullptr, "Invalid IResourceRetrieved");
 }
 
-sptr<ITTFont> ResourceView::getTTFont(const str&rid)
+sptr<ITTFont> ResourceView::getTTFont(const str&rid) const
 {
     return retriever_->getTTFont(rid);
 }
 
-sptr<ITexture> ResourceView::getTexture(const str&rid)
+sptr<ITexture> ResourceView::getTexture(const str&rid) const
 {
     return retriever_->getTexture(rid);
 }
 
-sptr<IShader> ResourceView::getShader(const str&rid)
+sptr<IShader> ResourceView::getShader(const str&rid) const
 {
     return retriever_->getShader(rid);
 }
 
-sptr<IFont> ResourceView::getBMPFont(const str&rid)
+sptr<IFont> ResourceView::getBMPFont(const str&rid) const
 {
     return retriever_->getBMPFont(rid);
 }

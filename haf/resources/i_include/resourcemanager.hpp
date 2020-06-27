@@ -30,10 +30,10 @@ public:
     ResourceManager(sys::SystemProvider& system_provider);
     ~ResourceManager() noexcept override;
 
-    mtps::sptr<res::ITTFont> getTTFont(const mtps::str& rid) override;
-    mtps::sptr<res::ITexture> getTexture(const mtps::str& rid) override;
-    mtps::sptr<res::IShader> getShader(const mtps::str& rid) override;
-    mtps::sptr<res::IFont> getBMPFont(const mtps::str& rid) override;
+    mtps::sptr<res::ITTFont> getTTFont(const mtps::str& rid) const override;
+    mtps::sptr<res::ITexture> getTexture(const mtps::str& rid) const override;
+    mtps::sptr<res::IShader> getShader(const mtps::str& rid) const override;
+    mtps::sptr<res::IFont> getBMPFont(const mtps::str& rid) const override;
 
     bool loadTTFont(const mtps::str& rid, const mtps::str& fileName);
     bool loadTexture(const mtps::str& rid, const mtps::str& fileName);

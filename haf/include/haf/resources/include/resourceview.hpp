@@ -14,10 +14,10 @@ class ResourceView final : public sys::IDataWrapper, public IResourceRetriever
 {
 public:
     void onAttached() override;
-    mtps::sptr<ITTFont> getTTFont(const mtps::str& rid) override;
-    mtps::sptr<ITexture> getTexture(const mtps::str& rid) override;
-    mtps::sptr<IShader> getShader(const mtps::str& rid) override;
-    mtps::sptr<IFont> getBMPFont(const mtps::str& rid) override;
+    mtps::sptr<ITTFont> getTTFont(const mtps::str& rid) const override;
+    mtps::sptr<ITexture> getTexture(const mtps::str& rid) const override;
+    mtps::sptr<IShader> getShader(const mtps::str& rid) const override;
+    mtps::sptr<IFont> getBMPFont(const mtps::str& rid) const override;
 
 private:
     mtps::rptr<IResourceRetriever> retriever_;
