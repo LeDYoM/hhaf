@@ -9,8 +9,6 @@
 
 namespace haf::res
 {
-class IResourceLoader;
-
 /// Component to provide access to resources.
 class ResourceHandler final : public sys::IDataWrapper,
                               public IResourceHandler
@@ -21,7 +19,6 @@ public:
     bool loadTexture(const mtps::str& rid, const mtps::str& fileName) override;
     bool loadShader(const mtps::str& rid, const mtps::str& fileName) override;
     bool loadBMPFont(const mtps::str& rid, const mtps::str& fileName) override;
-    void loadResources(IResourceLoader& resource_loader);
 
 private:
     mtps::rptr<IResourceHandler> handler_;

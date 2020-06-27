@@ -12,7 +12,8 @@
 #include <resources/i_include/ttfont.hpp>
 #include <resources/i_include/bmpfont.hpp>
 #include <resources/i_include/bmpfontfactory.hpp>
-
+#include <system/i_include/systemdatawrappercreator.hpp>
+#include <haf/filesystem/include/fileserializer.hpp>
 #include <backend/include/backendfactory.hpp>
 
 #include <mtypes/include/object.hpp>
@@ -97,15 +98,15 @@ struct ResourceManager::ResourceManagerPrivate
     ResourceList<sptr<BMPFont>> bmp_fonts_;
 
     BMPFontFactory bmp_font_factory_;
-
-    str file_name_;
 };
 
 ResourceManager::ResourceManager(sys::SystemProvider& system_provider) :
-    SystemBase{system_provider}, p_{muptr<ResourceManagerPrivate>()}
+    SystemBase{system_provider},
+    p_{muptr<ResourceManagerPrivate>()},
+    resources_config_file_name_{}
 {}
 
-ResourceManager::~ResourceManager() = default;
+ResourceManager::~ResourceManager() noexcept = default;
 
 sptr<ITTFont> ResourceManager::getTTFont(const str& rid)
 {
@@ -171,18 +172,115 @@ bool ResourceManager::loadBMPFont(const str& rid, const str& fileName)
     return bmp_font != nullptr;
 }
 
-bool ResourceManager::setResourceConfigFile(mtps::str file_name)
+bool ResourceManager::parseResourceConfigFile()
 {
-    LogAsserter::log_assert(p_->file_name_.empty(),
-                            "The resources file name was already set");
+    LogAsserter::log_assert(!resources_config_file_name_.empty(),
+                            "The resources file name was not set");
 
-    p_->file_name_ = std::move(file_name);
+    SystemDataWrapperCreator dwc{*this};
+    auto file_serializer = dwc.dataWrapper<FileSerializer>();
+    auto const result    = file_serializer->deserializeFromFile(
+        resources_config_file_name_, resources_config_data_);
+
+    if (result != FileSerializer::Result::Success)
+    {
+        if (result == FileSerializer::Result::FileIOError)
+        {
+            DisplayLog::debug("Simulation file ", resources_config_file_name_,
+                              " not found");
+        }
+        else if (result == FileSerializer::Result::ParsingError)
+        {
+            DisplayLog::error("File ", resources_config_file_name_,
+                              " found but contains invalid format.");
+        }
+        else
+        {
+            DisplayLog::error(
+                "Unknow error reading and parsing simulation file: ",
+                resources_config_file_name_);
+        }
+    }
     return true;
 }
 
-bool ResourceManager::loadSection(mtps::str const&)
+bool ResourceManager::setResourceConfigFile(mtps::str file_name)
 {
-    return true;
+    LogAsserter::log_assert(
+        !file_name.empty(),
+        "Trying to set an empty file name for resources file");
+
+    if (file_name == resources_config_file_name_)
+    {
+        // It is ok to set the same resources file again.
+        return true;
+    }
+
+    LogAsserter::log_assert(resources_config_file_name_.empty(),
+                            "The resources file name was already set");
+
+    resources_config_file_name_ = std::move(file_name);
+    return parseResourceConfigFile();
+}
+
+namespace
+{
+static constexpr char TypeStr[] = "type";
+static constexpr char FileStr[] = "file";
+}  // namespace
+
+bool ResourceManager::loadSection(mtps::str const& section_name)
+{
+    bool global_result{true};
+
+    LogAsserter::log_assert(!resources_config_file_name_.empty(),
+                            "The resources file name was not set");
+
+    LogAsserter::log_assert(!resources_config_data_.elements_.empty(),
+                            "No data to load");
+
+    // Fetch the section data.
+    Object resources_to_load =
+        resources_config_data_.elements_[section_name].getObject();
+
+    // Load the section.
+    for (auto const& obj : resources_to_load.objects())
+    {
+        auto const& element_name = obj.first;
+        auto const& element_type = obj.second[TypeStr].getValue();
+        auto const& element_file = obj.second[FileStr].getValue();
+        DisplayLog::debug("Going to load element: ", element_name, " of type ",
+                          element_type, " with file name: ", element_file);
+
+        bool local_result{false};
+
+        if (element_type == "ttf")
+        {
+            local_result = loadTTFont(element_name, element_file);
+        }
+        else if (element_type == "texture")
+        {
+            local_result = loadTexture(element_name, element_file);
+        }
+        else
+        {
+            // TODO: Load BMPFont
+        }
+
+        if (local_result)
+        {
+            DisplayLog::info("File ", element_file, " loaded as ",
+                             element_name);
+        }
+        else
+        {
+            DisplayLog::error("File ", element_file, " cannot be loaded");
+        }
+
+        global_result &= local_result;
+    }
+
+    return global_result;
 }
 
 }  // namespace haf::sys

@@ -1,5 +1,4 @@
 #include <haf/resources/include/resourcehandler.hpp>
-#include <haf/resources/include/iresourceloader.hpp>
 #include <hlog/include/hlog.hpp>
 #include <system/i_include/get_system.hpp>
 #include <resources/i_include/resourcemanager.hpp>
@@ -34,11 +33,6 @@ bool ResourceHandler::loadShader(const str& rid, const str& fileName)
 bool ResourceHandler::loadBMPFont(const str& rid, const str& fileName)
 {
     return handler_->loadBMPFont(rid, fileName);
-}
-
-void ResourceHandler::loadResources(IResourceLoader& resource_loader)
-{
-    resource_loader.loadResources(*this);
 }
 
 }  // namespace haf::res

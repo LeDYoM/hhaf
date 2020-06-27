@@ -30,14 +30,14 @@ void MenuScene::onCreated()
 {
     BaseClass::onCreated();
 
-    auto resources_loader = dataWrapper<res::ResourceHandler>();
-    resources_loader->loadResources(MainMenuResources{});
-    auto resources_viewer = dataWrapper<res::ResourceView>();
-
-    auto& a = systemInterface<res::IResourcesConfigurator>();
+    auto& resources_configurator =
+        systemInterface<res::IResourcesConfigurator>();
+    resources_configurator.setResourceConfigFile("resources.txt");
+    resources_configurator.loadSection("menu");
 
     createStandardBackground(this);
 
+    auto resources_viewer = dataWrapper<res::ResourceView>();
     auto logo =
         renderizableBuilder()
             .name("mainLogo")

@@ -30,7 +30,8 @@ void HighScoreTextController::onCreated()
 
     auto resource_view = dataWrapper<res::ResourceView>();
 
-    m_normalFont         = resource_view->getTTFont("menu.mainFont")->font(72);
+    m_normalFont =
+        resource_view->getTTFont(HighScoresResources::MenuFontId)->font(72);
     m_normalColor        = colors::Blue;
     m_selectedColor      = colors::Red;
     animation_component_ = addComponentOfType<scene::AnimationComponent>();

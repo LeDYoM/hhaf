@@ -416,6 +416,16 @@ public:
         return m_values.end();
     }
 
+    constexpr ObjectDictionary const& objects() const noexcept
+    {
+        return m_objects;
+    }
+
+    constexpr ValueDictionary const& values() const noexcept
+    {
+        return m_values;
+    }
+
     template <typename T>
     constexpr static bool isArrayElement(const pair<str, T>& it)
     {

@@ -1,5 +1,5 @@
 {
-    menu: [
+    menu: {
         menu_main_font: {
             type: "ttf",
             file: "resources/oldct.ttf"
@@ -12,8 +12,8 @@
             type: "texture",
             file: "resources/zoperbl.png"
         }
-    ],
-    game: [
+    },
+    game: {
         score_font: {
             type: "ttf",
             file: "resources/score.ttf"
@@ -22,5 +22,11 @@
             type: "ttf",
             file: "resources/gameover.ttf"
         }
-    ]
+    },
+    high_scores: {
+        main_font: {
+            type: "ttf",
+            file: "resources/oldct.ttf"
+        }
+    }
 }

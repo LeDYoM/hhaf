@@ -11,6 +11,8 @@
 #include <haf/resources/include/resourceview.hpp>
 #include <haf/resources/include/resourcehandler.hpp>
 #include <haf/scene_components/include/scenecontrol.hpp>
+#include <haf/resources/include/iresourceconfigurator.hpp>
+#include <haf/system/include/interfaceaccess.hpp>
 
 namespace zoper
 {
@@ -25,13 +27,18 @@ HighScoresScene::~HighScoresScene() = default;
 void HighScoresScene::onCreated()
 {
     BaseClass::onCreated();
-    dataWrapper<res::ResourceHandler>()->loadResources(HighScoresResources{});
+
+    auto& resources_configurator =
+        systemInterface<res::IResourcesConfigurator>();
+    resources_configurator.setResourceConfigFile("resources.txt");
+    resources_configurator.loadSection("high_scores");
 
     auto statesController(
         addComponentOfType<StatesController<HighScoresSceneStates>>());
     auto resources_viewer = dataWrapper<res::ResourceView>();
 
-    m_normalFont    = resources_viewer->getTTFont("menu.mainFont")->font(72);
+    m_normalFont =
+        resources_viewer->getTTFont(HighScoresResources::MenuFontId)->font(72);
     m_normalColor   = colors::Blue;
     m_selectedColor = colors::Red;
 

@@ -6,6 +6,7 @@ set(_SOURCES
     i_include/bmpfont_private.hpp
     i_include/bmpfontfactory.hpp
     i_include/resourcemanager.hpp
+    i_include/resources_config_data.hpp
     i_include/shader.hpp
     i_include/texture.hpp
     i_include/ttfont.hpp

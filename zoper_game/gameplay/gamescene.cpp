@@ -27,6 +27,8 @@
 #include <haf/input/include/inputcomponent.hpp>
 #include <haf/random/include/randomnumberscomponent.hpp>
 #include <haf/shareddata/include/shareddataview.hpp>
+#include <haf/resources/include/iresourceconfigurator.hpp>
+#include <haf/system/include/interfaceaccess.hpp>
 
 using namespace mtps;
 using namespace haf;
@@ -85,7 +87,10 @@ void GameScene::onCreated()
                             "Private data pointer is not nullptr!");
     private_ = muptr<GameScenePrivate>();
 
-    dataWrapper<res::ResourceHandler>()->loadResources(GameResources{});
+    auto& resources_configurator =
+        systemInterface<res::IResourcesConfigurator>();
+    resources_configurator.setResourceConfigFile("resources.txt");
+    resources_configurator.loadSection("game");
 
     using namespace haf::board;
 

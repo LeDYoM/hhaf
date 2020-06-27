@@ -10,6 +10,7 @@
 #include <haf/resources/include/iresourceretriever.hpp>
 #include <haf/resources/include/iresourceconfigurator.hpp>
 #include <system/i_include/systembase.hpp>
+#include "resources_config_data.hpp"
 
 namespace haf::res
 {
@@ -29,7 +30,7 @@ class ResourceManager final : public SystemBase,
 {
 public:
     ResourceManager(sys::SystemProvider& system_provider);
-    ~ResourceManager() override;
+    ~ResourceManager() noexcept override;
 
     mtps::sptr<res::ITTFont> getTTFont(const mtps::str& rid) override;
     mtps::sptr<res::ITexture> getTexture(const mtps::str& rid) override;
@@ -41,12 +42,15 @@ public:
     bool loadShader(const mtps::str& rid, const mtps::str& fileName) override;
     bool loadBMPFont(const mtps::str& rid, const mtps::str& fileName) override;
 
-    bool setResourceConfigFile(mtps::str) override;
-    bool loadSection(mtps::str const&) override;
+    bool setResourceConfigFile(mtps::str config_file_name) override;
+    bool loadSection(mtps::str const& section_name) override;
+    bool parseResourceConfigFile();
 
 private:
     struct ResourceManagerPrivate;
     mtps::uptr<ResourceManagerPrivate> p_;
+    mtps::str resources_config_file_name_;
+    res::ResourcesConfigData resources_config_data_;
 };
 
 }  // namespace haf::sys
