@@ -7,7 +7,7 @@
 #include <haf/scene_components/include/scenemetricsview.hpp>
 
 #include <hlog/include/hlog.hpp>
-#include <haf/resources/include/iresourceretriever.hpp>
+#include <haf/resources/include/resourceview.hpp>
 #include <haf/resources/include/ittfont.hpp>
 #include <haf/resources/include/resourceview.hpp>
 

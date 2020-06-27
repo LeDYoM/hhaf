@@ -8,7 +8,6 @@
 #include <render/i_include/rendertarget.hpp>
 
 #include <hlog/include/hlog.hpp>
-#include <haf/resources/include/iresourceretriever.hpp>
 
 using namespace mtps;
 
@@ -54,11 +53,6 @@ Rectf32 SceneManager::viewRect() const
 void SceneManager::setViewRect(const Rectf32& vr)
 {
     systemProvider().parentWindow().renderTarget()->setViewRect(vr);
-}
-
-res::IResourceRetriever& SceneManager::resources()
-{
-    return systemProvider().resourceManager();
 }
 
 const sptr<SceneController>& SceneManager::sceneController() const noexcept
