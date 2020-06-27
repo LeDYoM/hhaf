@@ -9,7 +9,6 @@
 
 #include <hlog/include/hlog.hpp>
 #include <haf/resources/include/iresourceretriever.hpp>
-#include <haf/resources/include/iresourcehandler.hpp>
 
 using namespace mtps;
 
@@ -58,11 +57,6 @@ void SceneManager::setViewRect(const Rectf32& vr)
 }
 
 res::IResourceRetriever& SceneManager::resources()
-{
-    return systemProvider().resourceManager();
-}
-
-res::IResourceHandler& SceneManager::resourcesLoader()
 {
     return systemProvider().resourceManager();
 }

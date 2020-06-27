@@ -14,7 +14,6 @@ set(_SOURCES
     src/bmpfont.cpp
     src/bmpfontfactory.cpp
     src/iresourceconfigurator.cpp
-    src/resourcehandler.cpp
     src/resourcemanager.cpp
     src/resourceview.cpp
     src/shader.cpp

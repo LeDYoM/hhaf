@@ -11,7 +11,6 @@
 namespace haf::res
 {
 class IResourceRetriever;
-class IResourceHandler;
 }  // namespace haf::res
 
 namespace haf::scene
@@ -33,7 +32,6 @@ public:
     void finish();
 
     res::IResourceRetriever& resources();
-    res::IResourceHandler& resourcesLoader();
 
     mtps::Rectf32 viewPort() const;
     void setViewPort(const mtps::Rectf32& vp);

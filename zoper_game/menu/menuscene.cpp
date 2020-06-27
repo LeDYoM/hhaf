@@ -1,6 +1,5 @@
 #include "menuscene.hpp"
 #include <haf/resources/include/resourceview.hpp>
-#include <haf/resources/include/resourcehandler.hpp>
 #include <haf/resources/include/itexture.hpp>
 #include <haf/shareddata/include/shareddataview.hpp>
 #include <haf/scene_components/include/scenecontrol.hpp>

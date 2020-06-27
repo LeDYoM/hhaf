@@ -6,7 +6,6 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
 
-#include <haf/resources/include/iresourcehandler.hpp>
 #include <haf/resources/include/iresourceretriever.hpp>
 #include <haf/resources/include/iresourceconfigurator.hpp>
 #include <system/i_include/systembase.hpp>
@@ -24,7 +23,6 @@ class IShader;
 namespace haf::sys
 {
 class ResourceManager final : public SystemBase,
-                              public res::IResourceHandler,
                               public res::IResourceRetriever,
                               public res::IResourcesConfigurator
 {
@@ -37,10 +35,10 @@ public:
     mtps::sptr<res::IShader> getShader(const mtps::str& rid) override;
     mtps::sptr<res::IFont> getBMPFont(const mtps::str& rid) override;
 
-    bool loadTTFont(const mtps::str& rid, const mtps::str& fileName) override;
-    bool loadTexture(const mtps::str& rid, const mtps::str& fileName) override;
-    bool loadShader(const mtps::str& rid, const mtps::str& fileName) override;
-    bool loadBMPFont(const mtps::str& rid, const mtps::str& fileName) override;
+    bool loadTTFont(const mtps::str& rid, const mtps::str& fileName);
+    bool loadTexture(const mtps::str& rid, const mtps::str& fileName);
+    bool loadShader(const mtps::str& rid, const mtps::str& fileName);
+    bool loadBMPFont(const mtps::str& rid, const mtps::str& fileName);
 
     bool setResourceConfigFile(mtps::str config_file_name) override;
     bool loadSection(mtps::str const& section_name) override;

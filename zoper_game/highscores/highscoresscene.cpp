@@ -9,7 +9,6 @@
 #include <haf/scene_components/include/statescontroller.hpp>
 #include <haf/input/include/inputcomponent.hpp>
 #include <haf/resources/include/resourceview.hpp>
-#include <haf/resources/include/resourcehandler.hpp>
 #include <haf/scene_components/include/scenecontrol.hpp>
 #include <haf/resources/include/iresourceconfigurator.hpp>
 #include <haf/system/include/interfaceaccess.hpp>

@@ -6,7 +6,6 @@
 #include <mtypes/include/types.hpp>
 
 #include <haf/resources/include/ifont.hpp>
-#include <haf/resources/include/iresourcehandler.hpp>
 #include <haf/resources/include/itexture.hpp>
 
 namespace haf::res
