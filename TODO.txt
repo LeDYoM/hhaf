@@ -1,4 +1,8 @@
+#Implement Mixin log.
+Implement FileOutput log.
+Use it with MixinCommiter.
+
 #Refactor code to read an object file.
 #    - Create code to directly read an object file to a type.
 #    - Use it in simulationSystem.
-    - Use it in ResourceManager.
+#    - Use it in ResourceManager.
