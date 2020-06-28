@@ -11,9 +11,9 @@
 
 namespace haf
 {
-using LogClass = logger::Log<true, mtps::str, COutThreadCommiter>;
-using DisplayLog = logger::LogDisplayer<LogClass, logger::SeverityType>;
-using LogAsserter = logger::LogAsserter<DisplayLog>;
-using LogInitializer = logger::LogInitializer<LogClass>;
+template LogClass;
+template DisplayLog;
+template LogAsserter;
+template LogInitializer;
 
 } // namespace haf

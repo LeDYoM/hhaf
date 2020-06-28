@@ -14,17 +14,17 @@
 
 namespace haf
 {
-extern template logger::Log<true, mtps::str, COutThreadCommiter>;
 using LogClass = logger::Log<true, mtps::str, COutThreadCommiter>;
+extern template LogClass;
 
-extern template logger::LogDisplayer<LogClass, logger::SeverityType>;
 using DisplayLog = logger::LogDisplayer<LogClass, logger::SeverityType>;
+extern template DisplayLog;
 
-extern template logger::LogAsserter<DisplayLog>;
 using LogAsserter = logger::LogAsserter<DisplayLog>;
+extern template LogAsserter;
 
-extern template logger::LogInitializer<LogClass>;
 using LogInitializer = logger::LogInitializer<LogClass>;
+extern template LogInitializer;
 
 } // namespace haf
 
