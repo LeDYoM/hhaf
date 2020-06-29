@@ -5,7 +5,7 @@
 #include <logger/include/log_displayer.hpp>
 #include <logger/include/log_asserter.hpp>
 #include <logger/include/severity_type.hpp>
-#include <hlog/include/cout_thread_commiter.hpp>
+#include <hlog/include/thread_commiter.hpp>
 
 #include <mtypes/include/str.hpp>
 

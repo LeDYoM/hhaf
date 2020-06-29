@@ -1,4 +1,6 @@
-#include <hlog/include/cout_thread_commiter.hpp>
+#include <hlog/include/thread_commiter.hpp>
+#include <hlog/include/cout_commiter.hpp>
+#include <hlog/include/file_commiter.hpp>
 
 #include <iostream>
 #include <mutex>
@@ -7,6 +9,8 @@
 #include <chrono>
 #include <string>
 #include <atomic>
+#include <logger/include/stream_commiter.hpp>
+#include <logger/include/mixin_commiter.hpp>
 
 namespace haf
 {
@@ -22,17 +26,20 @@ struct InnerData
 
 namespace
 {
-    InnerData * data_{nullptr};
-}
+InnerData* data_{nullptr};
+using Commiter = logger::MixinCommiter<COutCommiter, FileCommiter>;
 
-void COutThreadCommiter::init()
+}  // namespace
+
+void ThreadCommiter::init()
 {
+    Commiter::init();
     data_          = new InnerData;
     data_->thread_ = std::thread(thread_func);
-    data_->exit = false;
+    data_->exit    = false;
 }
 
-void COutThreadCommiter::finish()
+void ThreadCommiter::finish()
 {
     data_->exit.store(true);
     auto& thread{data_->thread_};
@@ -42,9 +49,10 @@ void COutThreadCommiter::finish()
         thread.join();
     }
     delete data_;
+    Commiter::finish();
 }
 
-void COutThreadCommiter::thread_func()
+void ThreadCommiter::thread_func()
 {
     Message message;
 
@@ -59,17 +67,17 @@ void COutThreadCommiter::thread_func()
                 std::lock_guard<std::mutex> lck{data_->mutex_};
                 data_->msg_queue_.pop();
             }
-            std::cout << message << std::endl;
+            const char* const msg = message.c_str();
+            Commiter::commitlog(msg);
         }
         else
         {
             std::this_thread::yield();
         }
     }
-    std::cout.flush();
 }
 
-void COutThreadCommiter::commitlog(const char* const log_stream)
+void ThreadCommiter::commitlog(const char* const log_stream)
 {
     Message message{log_stream};
     std::lock_guard<std::mutex> lck{data_->mutex_};

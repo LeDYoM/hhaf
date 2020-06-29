@@ -15,6 +15,7 @@ struct StreamCommiter
     static inline void commitlog(const char* const log_stream)
     {
         (*Stream) << log_stream << "\n";
+        (*Stream).flush();
     }
 };
 

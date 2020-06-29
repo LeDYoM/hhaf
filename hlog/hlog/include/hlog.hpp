@@ -9,14 +9,14 @@
 #include <logger/include/severity_type.hpp>
 #include <logger/include/log_init.hpp>
 #include <logger/include/mixin_commiter.hpp>
-#include <hlog/include/cout_thread_commiter.hpp>
+#include <hlog/include/thread_commiter.hpp>
 
 #include <mtypes/include/str.hpp>
 
 namespace haf
 {
 using LogClass =
-    logger::Log<true, mtps::str, logger::MixinCommiter<COutThreadCommiter>>;
+    logger::Log<true, mtps::str, logger::MixinCommiter<ThreadCommiter>>;
 extern template LogClass;
 
 using DisplayLog = logger::LogDisplayer<LogClass, logger::SeverityType>;

@@ -3,7 +3,11 @@ project(hlog)
 
 set(CURRENT_TARGET hlog)
 
-set(SOURCES "src/cout_thread_commiter.cpp" "src/hlog.cpp")
+set(SOURCES 
+    src/cout_commiter.cpp
+    src/file_commiter.cpp
+    src/thread_commiter.cpp
+    src/hlog.cpp)
 
 build_lib_component(EXPORT_ALL HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
                     ${SOURCES})

@@ -1,12 +1,12 @@
 #pragma once
 
-#ifndef LOGGER_LOG_COUT_THREAD_COMMITER_INCLUDE_HPP
-#define LOGGER_LOG_COUT_THREAD_COMMITER_INCLUDE_HPP
+#ifndef HLOG_THREAD_COMMITER_INCLUDE_HPP
+#define HLOG_THREAD_COMMITER_INCLUDE_HPP
 
 namespace haf
 {
 
-struct COutThreadCommiter
+struct ThreadCommiter
 {
     static void init();
 
