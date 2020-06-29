@@ -1,6 +1,6 @@
 #Implement Mixin log.
-Implement FileOutput log.
-Use it with MixinCommiter.
+#Implement FileCommiter.
+#Use it with MixinCommiter.
 
 #Refactor code to read an object file.
 #    - Create code to directly read an object file to a type.

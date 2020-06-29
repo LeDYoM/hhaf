@@ -6,34 +6,36 @@ namespace haf::scene
 {
 const Transform Transform::Identity = Transform{};
 
-Transform::VectorScalar Transform::transformPoint(const Scalar x, const Scalar y) const noexcept
+Transform::VectorScalar Transform::transformPoint(Scalar const x,
+                                                  Scalar const y) const noexcept
 {
-    return {(m_matrix[0U] * x) + (m_matrix[4U] * y) + m_matrix[12U],
-            (m_matrix[1U] * x) + (m_matrix[5U] * y) + m_matrix[13U]};
+    return {
+        (matrix_data_[0U] * x) + (matrix_data_[4U] * y) + matrix_data_[12U],
+        (matrix_data_[1U] * x) + (matrix_data_[5U] * y) + matrix_data_[13U]};
 }
 
-Transform::VectorScalar Transform::transformPoint(const VectorScalar &point) const noexcept
+Transform::VectorScalar Transform::transformPoint(
+    VectorScalar const& point) const noexcept
 {
     return transformPoint(point.x, point.y);
 }
 
-Transform::RectScalar Transform::transformRect(const RectScalar &rectangle) const noexcept
+Transform::RectScalar Transform::transformRect(
+    RectScalar const& rectangle) const noexcept
 {
     // Transform the 4 corners of the rectangle
-    const VectorScalar points[4U] =
-        {
-            transformPoint(rectangle.left, rectangle.top),
-            transformPoint(rectangle.left, rectangle.top + rectangle.height),
-            transformPoint(rectangle.left + rectangle.width, rectangle.top),
-            transformPoint(rectangle.left + rectangle.width, rectangle.top + rectangle.height)};
+    VectorScalar const points[4U] = {
+        transformPoint(rectangle.left, rectangle.top),
+        transformPoint(rectangle.left, rectangle.top + rectangle.height),
+        transformPoint(rectangle.left + rectangle.width, rectangle.top),
+        transformPoint(rectangle.left + rectangle.width,
+                       rectangle.top + rectangle.height)};
 
     // Compute the bounding rectangle of the transformed points
-    Scalar left{points[0U].x},
-        top{points[0U].y},
-        right{points[0U].x},
+    Scalar left{points[0U].x}, top{points[0U].y}, right{points[0U].x},
         bottom{points[0U].y};
 
-    for (const auto &point : points)
+    for (auto const& point : points)
     {
         if (point.x < left)
         {
@@ -57,10 +59,10 @@ Transform::RectScalar Transform::transformRect(const RectScalar &rectangle) cons
     return {left, top, right - left, bottom - top};
 }
 
-Transform &Transform::combine(const Transform &transform) noexcept
+Transform& Transform::combine(Transform const& transform) noexcept
 {
-    const Scalar *const a{&(m_matrix[0U])};
-    const Scalar *const b{&(transform.m_matrix[0U])};
+    const Scalar* const a{&(matrix_data_[0U])};
+    const Scalar* const b{&(transform.matrix_data_[0U])};
 
     *this = {(a[0U] * b[0U]) + (a[4U] * b[1U]) + (a[12U] * b[3U]),
              (a[0U] * b[4U]) + (a[4U] * b[5U]) + (a[12U] * b[7U]),
@@ -75,69 +77,65 @@ Transform &Transform::combine(const Transform &transform) noexcept
     return *this;
 }
 
-Transform &Transform::translate(const Scalar x, const Scalar y) noexcept
+Transform& Transform::translate(Scalar const x, Scalar const y) noexcept
 {
-    return combine({One, Zero, x,
-                    Zero, One, y,
-                    Zero, Zero, One});
+    return combine({One, Zero, x, Zero, One, y, Zero, Zero, One});
 }
 
-Transform &Transform::translate(const VectorScalar &offset) noexcept
+Transform& Transform::translate(VectorScalar const& offset) noexcept
 {
     return translate(offset.x, offset.y);
 }
 
-Transform &Transform::rotate(const Scalar angle) noexcept
+Transform& Transform::rotate(Scalar const angle) noexcept
 {
-    const Scalar rad{angle * ToRadians<Scalar>};
-    const Scalar cos{static_cast<Scalar>(std::cos(rad))};
-    const Scalar sin{static_cast<Scalar>(std::sin(rad))};
+    auto const rad{angle * ToRadians<Scalar>};
+    auto const cos{static_cast<Scalar>(std::cos(rad))};
+    auto const sin{static_cast<Scalar>(std::sin(rad))};
 
-    return combine({cos, -sin, Zero,
-                    sin, cos, Zero,
-                    Zero, Zero, One});
+    return combine({cos, -sin, Zero, sin, cos, Zero, Zero, Zero, One});
 }
 
-Transform &Transform::rotate(
-    const Scalar angle, const Scalar centerX, const Scalar centerY) noexcept
+Transform& Transform::rotate(Scalar const angle,
+                             Scalar const centerX,
+                             Scalar const centerY) noexcept
 {
-    const Scalar rad{static_cast<Scalar>(angle * ToRadians<Scalar>)};
-    const Scalar cos{static_cast<Scalar>(std::cos(rad))};
-    const Scalar sin{static_cast<Scalar>(std::sin(rad))};
+    auto const rad{static_cast<Scalar>(angle * ToRadians<Scalar>)};
+    auto const cos{static_cast<Scalar>(std::cos(rad))};
+    auto const sin{static_cast<Scalar>(std::sin(rad))};
 
-    return combine({cos, -sin, centerX * (One - cos) + centerY * sin,
-                    sin, cos, centerY * (One - cos) - centerX * sin,
-                    Zero, Zero, One});
+    return combine({cos, -sin, centerX * (One - cos) + centerY * sin, sin, cos,
+                    centerY * (One - cos) - centerX * sin, Zero, Zero, One});
 }
 
-Transform &Transform::rotate(const Scalar angle, const VectorScalar &center) noexcept
+Transform& Transform::rotate(Scalar const angle,
+                             VectorScalar const& center) noexcept
 {
     return rotate(angle, center.x, center.y);
 }
 
-Transform &Transform::scale(const Scalar scaleX, const Scalar scaleY) noexcept
+Transform& Transform::scale(Scalar const scaleX, Scalar const scaleY) noexcept
 {
-    return combine({scaleX, Zero, Zero,
-                    Zero, scaleY, Zero,
-                    Zero, Zero, One});
+    return combine({scaleX, Zero, Zero, Zero, scaleY, Zero, Zero, Zero, One});
 }
 
-Transform &Transform::scale(
-    const Scalar scaleX, const Scalar scaleY,
-    const Scalar centerX, const Scalar centerY) noexcept
+Transform& Transform::scale(Scalar const scaleX,
+                            Scalar const scaleY,
+                            Scalar const centerX,
+                            Scalar const centerY) noexcept
 {
-    return combine({scaleX, Zero, centerX * (One - scaleX),
-                    Zero, scaleY, centerY * (One - scaleY),
-                    Zero, Zero, One});
+    return combine({scaleX, Zero, centerX * (One - scaleX), Zero, scaleY,
+                    centerY * (One - scaleY), Zero, Zero, One});
 }
 
-Transform &Transform::scale(const VectorScalar &factors) noexcept
+Transform& Transform::scale(VectorScalar const& factors) noexcept
 {
     return scale(factors.x, factors.y);
 }
 
-Transform &Transform::scale(const VectorScalar &factors, const VectorScalar &center) noexcept
+Transform& Transform::scale(VectorScalar const& factors,
+                            VectorScalar const& center) noexcept
 {
     return scale(factors.x, factors.y, center.x, center.y);
 }
-} // namespace haf::scene
+}  // namespace haf::scene
