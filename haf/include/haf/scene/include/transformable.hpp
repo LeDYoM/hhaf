@@ -5,6 +5,7 @@
 
 #include "transform.hpp"
 #include <mtypes/include/vector2d.hpp>
+#include <mtypes/include/rect.hpp>
 #include <mtypes/include/properties.hpp>
 
 namespace haf::scene
@@ -13,7 +14,8 @@ class Transformable
 {
 public:
     using Scalar = Transform::Scalar;
-    using VectorScalar = Transform::VectorScalar;
+    using VectorScalar = mtps::vector2d<Scalar>;
+    using RectScalar   = mtps::Rect<Scalar>;
 
     Transformable() noexcept;
     virtual ~Transformable();
