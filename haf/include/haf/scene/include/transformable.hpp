@@ -13,7 +13,7 @@ namespace haf::scene
 class Transformable
 {
 public:
-    using Scalar = Transform::Scalar;
+    using Scalar       = Transform::Scalar;
     using VectorScalar = mtps::vector2d<Scalar>;
     using RectScalar   = mtps::Rect<Scalar>;
 
@@ -26,34 +26,42 @@ public:
     mtps::PropertyState<VectorScalar> position;
 
     bool updateTransformIfNecessary() noexcept;
-    inline const Transform &globalTransform() const noexcept { return m_globalTransform; }
+    inline Transform const& globalTransform() const noexcept
+    {
+        return global_transform_;
+    }
 
-    /// Method to set the associated transformation to a rotation around a given point.
-    /// Note: this method overwrites the properties.
-    /// @param [in] point Point to be rotated around
-    /// @param [in] angle Angle for the rotation
-    void rotateAround(VectorScalar point, Scalar angle);
+    /**
+     * @brief Set the associated transformation to a rotation around a given
+     * point.
+     *
+     * @param point Point to be rotated around
+     * @param angle Angle for the rotation
+     */
+    void rotateAround(VectorScalar const point, Scalar const angle) noexcept;
 
-    /// Method to set the associated transformation to a scale around a given point.
-    /// Note: this method overwrites the properties.
-    /// @param [in] point Point to be rotated around
-    /// @param [in] scale Scale factor
-    void scaleAround(VectorScalar point, VectorScalar scale);
+    /**
+     * @brief Set the associated transformation to a scale around a given point.
+     * Note: this method overwrites the properties.
+     *
+     * @param pointPoint Point to be rotated around
+     * @param scale Scale factor
+     */
+    void scaleAround(VectorScalar const point,
+                     VectorScalar const scale) noexcept;
 
-    void rotateScaleAround(mtps::vector2df point, mtps::f32 angle, mtps::vector2df scale);
+    void rotateScaleAround(VectorScalar const point,
+                           Scalar const angle,
+                           VectorScalar const scale) noexcept;
 
-    void updateGlobalTransformation(const Transform &) noexcept;
-
-protected:
-    bool transformationNeedsUpdate() const noexcept;
+    void updateGlobalTransformation(Transform const&) noexcept;
 
 private:
-    void resetNeedsUpdate() noexcept;
-    void updateTransform() noexcept;
+    void updateTransform();
 
-    Transform m_transform;
-    Transform m_globalTransform;
+    Transform transform_;
+    Transform global_transform_;
 };
-} // namespace haf::scene
+}  // namespace haf::scene
 
 #endif

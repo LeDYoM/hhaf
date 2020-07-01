@@ -2,8 +2,6 @@
 #include "geometry_math.hpp"
 #include <cmath>
 
-using namespace mtps;
-
 namespace haf::scene
 {
 Transformable::Transformable() noexcept :
@@ -11,77 +9,69 @@ Transformable::Transformable() noexcept :
     rotation{},
     scale{{1U, 1U}},
     position{},
-    m_transform{},
-    m_globalTransform{}
+    transform_{},
+    global_transform_{}
 {}
 
 Transformable::~Transformable() = default;
 
 bool Transformable::updateTransformIfNecessary() noexcept
 {
-    if (transformationNeedsUpdate())
+    if (ps_hasChanged(position, origin, scale, rotation))
     {
         updateTransform();
-        resetNeedsUpdate();
+        ps_resetHasChanged(origin, rotation, scale, position);
         return true;
     }
     return false;
 }
 
-void Transformable::resetNeedsUpdate() noexcept
-{
-    ps_resetHasChanged(origin, rotation, scale, position);
-}
-
-bool Transformable::transformationNeedsUpdate() const noexcept
-{
-    return ps_hasChanged(position, origin, scale, rotation);
-}
-
 void Transformable::updateGlobalTransformation(
-    const Transform& currentGlobalTransformation) noexcept
+    Transform const& currentGlobalTransformation) noexcept
 {
-    m_globalTransform = currentGlobalTransformation * m_transform;
+    global_transform_ = currentGlobalTransformation * transform_;
 }
 
-void Transformable::rotateAround(VectorScalar point, Scalar angle)
+void Transformable::rotateAround(VectorScalar const point,
+                                 Scalar const angle) noexcept
 {
     origin = position = point;
     rotation          = angle;
 }
 
-void Transformable::scaleAround(VectorScalar point, VectorScalar scale_)
+void Transformable::scaleAround(VectorScalar const point,
+                                VectorScalar const scale_) noexcept
 {
     origin = position = point;
     scale             = scale_;
 }
 
-void Transformable::rotateScaleAround(VectorScalar point,
-                                      f32 angle,
-                                      VectorScalar scale_)
+void Transformable::rotateScaleAround(VectorScalar const point,
+                                      Scalar const angle,
+                                      VectorScalar const scale_) noexcept
 {
     origin = position = point;
     rotation          = angle;
     scale             = scale_;
 }
 
-void Transformable::updateTransform() noexcept
+void Transformable::updateTransform()
 {
     // Recompute the combined transform
-    const Scalar angle{-rotation() * ToRadians<Scalar>},
-        cosine{static_cast<Scalar>(std::cos(angle))},
-        sine{static_cast<Scalar>(std::sin(angle))};
-    const VectorScalar sc{scale() * cosine}, ss{scale() * sine}, orig{origin()},
-        pos{position()};
+    auto const angle{-rotation() * ToRadians<Scalar>};
+    VectorScalar const sc{scale() * static_cast<Scalar>(std::cos(angle))};
+    VectorScalar const ss{scale() * static_cast<Scalar>(std::sin(angle))};
+    VectorScalar const orig{origin()};
+    VectorScalar const pos{position()};
 
-    m_transform = {sc.x,
-                   ss.y,
-                   (((-orig.x * sc.x) - (orig.y * ss.y)) + pos.x),
-                   -ss.x,
-                   sc.y,
-                   (((orig.x * ss.y) - (orig.y * sc.y)) + pos.y),
-                   Transform::Zero,
-                   Transform::Zero,
-                   Transform::One};
+    transform_ = {sc.x,
+                  ss.y,
+                  (((-orig.x * sc.x) - (orig.y * ss.y)) + pos.x),
+                  -ss.x,
+                  sc.y,
+                  (((orig.x * ss.y) - (orig.y * sc.y)) + pos.y),
+                  Transform::Zero,
+                  Transform::Zero,
+                  Transform::One};
 }
 }  // namespace haf::scene
