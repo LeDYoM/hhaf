@@ -46,15 +46,6 @@ void Transformable::scaleAround(VectorScalar const point,
     scale             = scale_;
 }
 
-void Transformable::rotateScaleAround(VectorScalar const point,
-                                      Scalar const angle,
-                                      VectorScalar const scale_) noexcept
-{
-    origin = position = point;
-    rotation          = angle;
-    scale             = scale_;
-}
-
 void Transformable::updateTransform()
 {
     // Recompute the combined transform

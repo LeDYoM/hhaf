@@ -50,10 +50,6 @@ public:
     void scaleAround(VectorScalar const point,
                      VectorScalar const scale) noexcept;
 
-    void rotateScaleAround(VectorScalar const point,
-                           Scalar const angle,
-                           VectorScalar const scale) noexcept;
-
     void updateGlobalTransformation(Transform const&) noexcept;
 
 private:
