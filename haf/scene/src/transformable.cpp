@@ -35,15 +35,15 @@ void Transformable::updateGlobalTransformation(
 void Transformable::rotateAround(VectorScalar const point,
                                  Scalar const angle) noexcept
 {
-    origin = position = point;
-    rotation          = angle;
+    origin   = point;
+    rotation = angle;
 }
 
 void Transformable::scaleAround(VectorScalar const point,
                                 VectorScalar const scale_) noexcept
 {
-    origin = position = point;
-    scale             = scale_;
+    origin = point;
+    scale  = scale_;
 }
 
 void Transformable::updateTransform()

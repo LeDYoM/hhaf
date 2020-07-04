@@ -20,7 +20,7 @@ private:
 
 public:
     using SceneNode::SceneNode;
-    virtual ~BoardSceneNode();
+    ~BoardSceneNode() override;
 
     void configure(const mtps::Rectf32 &tileBox);
 
