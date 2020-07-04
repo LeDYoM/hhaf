@@ -207,6 +207,24 @@ Color BoardGroup::getBackgroundTileColor(const size_type level,
     return colors::Black;
 }
 
+bool BoardGroup::moveTileInDirection(Direction const direction,
+                                       vector2dst const position)
+{
+    // Is the current tile position empty?
+    if (!board_model_->tileEmpty(position))
+    {
+        // If not, what about the next position to check, is empty?
+        const auto next = direction.applyToVector(position);
+
+        LogAsserter::log_assert(board_model_->tileEmpty(next),
+                                "Trying to move a token to a non empty tile");
+        board_model_->moveTile(position, next);
+        return (TokenZones::toBoardBackgroundType(board_model_->backgroundType(
+                next)) == TokenZones::BoardBackgroundType::Center);
+    }
+    return false;
+}
+
 vector2df BoardGroup::board2SceneFactor() const
 {
     return dataWrapper<SceneMetricsView>()->currentView().size() /

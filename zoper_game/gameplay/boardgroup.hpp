@@ -8,7 +8,8 @@
 #include <haf/scene/include/scenenode.hpp>
 #include <haf/scene_nodes/include/tablenode.hpp>
 
-#include "boardscenenode.hpp"
+#include "boardtilescenenode.hpp"
+#include "direction.hpp"
 
 #include <boardmanager/include/boardmanager.hpp>
 #include <boardmanager/include/iboardmanageractuator.hpp>
@@ -20,11 +21,11 @@ namespace zoper
 class LevelProperties;
 class Player;
 
-class BoardGroup : public haf::scene::nodes::TableNode<BoardSceneNode>,
+class BoardGroup : public haf::scene::nodes::TableNode<BoardTileSceneNode>,
                    public haf::board::IBoardManagerActuator
 {
 private:
-    using BaseClass = haf::scene::nodes::TableNode<BoardSceneNode>;
+    using BaseClass = haf::scene::nodes::TableNode<BoardTileSceneNode>;
 
 public:
     using BaseClass::BaseClass;
@@ -44,6 +45,18 @@ public:
     haf::scene::Color getBackgroundTileColor(const mtps::size_type level,
                                              mtps::vector2dst position,
                                              const bool isCenter) const;
+
+    /**
+     * @brief Move a tile from its current position towards the center in a
+     * given direction.
+     * 
+     * @param direction Direction to move the tile to 
+     * @param position Position where the tile currently is.
+     * @return true The tile reached the center
+     * @return false The tile is not in the center
+     */
+    bool moveTileInDirection(Direction const direction,
+                       mtps::vector2dst const position);
 
     mtps::sptr<board::BoardManager> boardModel() noexcept;
     const mtps::sptr<const board::BoardManager> boardModel() const noexcept;

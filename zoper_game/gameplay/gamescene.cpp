@@ -325,7 +325,7 @@ void GameScene::launchPlayer()
     const vector2dst loopPosition{m_boardGroup->player()->boardPosition()};
     const board::BoardTileData tokenType{m_boardGroup->player()->value()};
     ScoreIncrementer score_incrementer{level_properties_};
-    BoardUtils::for_each_token_in_line(
+    BoardUtils::for_each_coordinate_in_rect(
         loopPosition, loopDirection, m_boardGroup->boardModel()->size(),
         [this, tokenType, &score_incrementer](const vector2dst& loopPosition,
                                               const Direction&) {
