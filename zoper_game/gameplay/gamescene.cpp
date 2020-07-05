@@ -243,35 +243,6 @@ void GameScene::onExitState(const GameSceneStates& state)
     DisplayLog::info("Exited state: ", make_str(state));
 }
 
-bool moveTowardsCenter(const sptr<board::BoardManager>& board_manager,
-                       const Direction direction,
-                       const vector2dst position)
-{
-    bool moved_to_center{false};
-
-    // Is the current tile position empty?
-    if (!board_manager->tileEmpty(position))
-    {
-        // If not, what about the next position to check, is empty?
-        const auto next = direction.applyToVector(position);
-
-        if (!board_manager->tileEmpty(next))
-        {
-            // If the target position where to move the
-            // token is occupied, move the this target first.
-            moved_to_center = moveTowardsCenter(board_manager, direction, next);
-        }
-        board_manager->moveTile(position, next);
-        if (TokenZones::toBoardBackgroundType(board_manager->backgroundType(
-                next)) == TokenZones::BoardBackgroundType::Center)
-        {
-            LogAsserter::log_assert(!moved_to_center, "Double game over!");
-            moved_to_center = true;
-        }
-    }
-    return moved_to_center;
-}
-
 void GameScene::generateNextToken()
 {
     const TokenZones::TokenZone& currentTokenZone{
@@ -295,8 +266,8 @@ void GameScene::generateNextToken()
 
     // Now, we have the data for the new token generated, but first,
     /// lets start to move the row or col.
-    const auto game_over = moveTowardsCenter(
-        m_boardGroup->boardModel(), currentTokenZone.direction, new_position);
+    const auto game_over = m_boardGroup->moveTowardsCenter(
+        currentTokenZone.direction, new_position);
 
     // Set the new token
     m_boardGroup->createNewToken(static_cast<board::BoardTileData>(newToken),

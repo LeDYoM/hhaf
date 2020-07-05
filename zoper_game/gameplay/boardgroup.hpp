@@ -49,14 +49,17 @@ public:
     /**
      * @brief Move a tile from its current position towards the center in a
      * given direction.
-     * 
-     * @param direction Direction to move the tile to 
+     *
+     * @param direction Direction to move the tile to
      * @param position Position where the tile currently is.
      * @return true The tile reached the center
      * @return false The tile is not in the center
      */
     bool moveTileInDirection(Direction const direction,
-                       mtps::vector2dst const position);
+                             mtps::vector2dst const position);
+
+    bool moveTowardsCenter(Direction const direction,
+                           mtps::vector2dst const& position);
 
     mtps::sptr<board::BoardManager> boardModel() noexcept;
     const mtps::sptr<const board::BoardManager> boardModel() const noexcept;

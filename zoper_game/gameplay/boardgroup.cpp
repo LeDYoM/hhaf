@@ -208,7 +208,7 @@ Color BoardGroup::getBackgroundTileColor(const size_type level,
 }
 
 bool BoardGroup::moveTileInDirection(Direction const direction,
-                                       vector2dst const position)
+                                     vector2dst const position)
 {
     // Is the current tile position empty?
     if (!board_model_->tileEmpty(position))
@@ -220,9 +220,37 @@ bool BoardGroup::moveTileInDirection(Direction const direction,
                                 "Trying to move a token to a non empty tile");
         board_model_->moveTile(position, next);
         return (TokenZones::toBoardBackgroundType(board_model_->backgroundType(
-                next)) == TokenZones::BoardBackgroundType::Center);
+                    next)) == TokenZones::BoardBackgroundType::Center);
     }
     return false;
+}
+
+bool BoardGroup::moveTowardsCenter(Direction const direction,
+                                   vector2dst const& position)
+{
+    bool moved_to_center{false};
+
+    // Is the current tile position empty?
+    if (!board_model_->tileEmpty(position))
+    {
+        // If not, what about the next position to check, is empty?
+        const auto next = direction.applyToVector(position);
+
+        if (!board_model_->tileEmpty(next))
+        {
+            // If the target position where to move the
+            // token is occupied, move the this target first.
+            moved_to_center = moveTowardsCenter(direction, next);
+        }
+        board_model_->moveTile(position, next);
+        if (TokenZones::toBoardBackgroundType(board_model_->backgroundType(
+                next)) == TokenZones::BoardBackgroundType::Center)
+        {
+            LogAsserter::log_assert(!moved_to_center, "Double game over!");
+            moved_to_center = true;
+        }
+    }
+    return moved_to_center;
 }
 
 vector2df BoardGroup::board2SceneFactor() const
