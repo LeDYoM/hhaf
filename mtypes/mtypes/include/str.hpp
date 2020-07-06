@@ -374,11 +374,11 @@ public:
     template <size_type N>
     constexpr bool operator==(const char_type (&a)[N]) const noexcept
     {
-        if (lhs.size() != (N - 1))
+        if (size() != (N - 1))
             return false;
 
         size_type counter{0};
-        for (const auto c : lhs.m_data)
+        for (const auto c : m_data)
         {
             if (c != a[counter])
                 return false;
