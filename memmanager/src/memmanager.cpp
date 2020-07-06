@@ -1,5 +1,5 @@
 #include <memmanager/include/memmanager.hpp>
-
+#include <cstdlib>
 #include <new>
 
 #ifdef _MSC_VER
