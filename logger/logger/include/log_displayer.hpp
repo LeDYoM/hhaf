@@ -3,9 +3,10 @@
 #ifndef HAF_LOG_LOG_DISPLAYER_INCLUDE_HPP
 #define HAF_LOG_LOG_DISPLAYER_INCLUDE_HPP
 
+#include <utility>
+
 namespace logger
 {
-
 /**
  * @brief Helper class to forward the log calls to a Logger. It makes some
  * assumptions about the @b SeverityType.
@@ -21,7 +22,7 @@ private:
     static constexpr void log_if_severity_under(Args&&... args) noexcept
     {
         log_if<SeverityType::ShowSeverity<severity_value>, severity_value>(
-            std::forward<Args>(args)...);
+            std::forward<Args>(args),...);
     }
 
     template <bool condition,
@@ -30,7 +31,7 @@ private:
     static constexpr void log_if(Args&&... args) noexcept
     {
         LogClass::log_if<condition>(SeverityType::as_str(severity_value),
-                                    std::forward<Args>(args)...);
+                                    std::forward<Args>(args),...);
     }
 
 public:

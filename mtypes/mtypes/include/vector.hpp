@@ -51,7 +51,7 @@ public:
      *
      * @param size Expected size of the inner container
      */
-    explicit vector(const size_type size) : vector_storage(size) {}
+    explicit vector(const size_type size) : Base(size) {}
 
     /**
      * @brief Constructor with reserved memory and copy from source.
@@ -62,7 +62,7 @@ public:
      * @param count Number of elements to copy.
      */
     constexpr vector(const T* const source, const size_type count) :
-        vector_storage(count)
+        Base(count)
     {
         for (auto iterator = source; iterator != (source + count); ++iterator)
         {
@@ -91,7 +91,7 @@ public:
     {}
 
     // Move constructor.
-    constexpr vector(vector&& other) noexcept : vector_storage{std::move(other)}
+    constexpr vector(vector&& other) noexcept : Base{std::move(other)}
     {}
 
     /// Copy assignment.
@@ -117,14 +117,14 @@ public:
 
     constexpr reference operator[](const size_type index) noexcept
     {
-        assert(index < m_size);
-        return *(at(index));
+        assert(index < size());
+        return *(Base::at(index));
     }
 
     constexpr const_reference operator[](const size_type index) const noexcept
     {
-        assert(index < m_size);
-        return *(at(index));
+        assert(index < size());
+        return *(Base::at(index));
     }
 
     constexpr size_type capacity() const noexcept { return Base::capacity(); }
@@ -139,20 +139,20 @@ public:
 
     constexpr T& back() noexcept
     {
-        assert(m_size > 0U);
-        return *(at(m_size - 1U));
+        assert(size() > 0U);
+        return *(at(size() - 1U));
     }
 
     constexpr const T& back() const noexcept
     {
-        assert(m_size > 0U);
-        return *(at(m_size - 1U));
+        assert(size() > 0U);
+        return *(at(size() - 1U));
     }
 
     constexpr const T& cback() const noexcept
     {
-        assert(m_size > 0U);
-        return *(cat(m_size - 1U));
+        assert(size() > 0U);
+        return *(cat(size() - 1U));
     }
 
     template <typename F>
@@ -390,7 +390,7 @@ public:
         // TODO: Optimize
         if (!other.empty())
         {
-            reserve(m_size + other.m_size);
+            reserve(size() + other.size());
             for (const auto& element : other)
             {
                 push_back(element);
@@ -401,7 +401,7 @@ public:
     constexpr void insert(vector&& other)
     {
         // TODO: Optimize
-        reserve(m_size + other.m_size);
+        reserve(size() + other.size());
         for (auto&& element : other)
         {
             push_back(std::move(element));
@@ -427,18 +427,18 @@ public:
         Base::reserve(capacity);
     }
 
-    constexpr void resize(const size_type size)
+    constexpr void resize(const size_type sz)
     {
-        if (size != m_size)
+        if (sz != size())
         {
             // Delete to shrink
-            while (m_size > size)
+            while (size() > sz)
             {
                 pop_back();
             }
 
             // Append the necessary
-            while (m_size < size)
+            while (size() < sz)
             {
                 emplace_back();
             }
@@ -447,7 +447,7 @@ public:
 
     constexpr void clear() noexcept
     {
-        while (m_size > 0U)
+        while (size() > 0U)
         {
             pop_back();
         }

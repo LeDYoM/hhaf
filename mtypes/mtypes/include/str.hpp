@@ -333,7 +333,7 @@ public:
         return (it == m_data.cend()) ? str::npos : std::distance(cbegin(), it);
     }
 
-    constexpr auto find_first_of(const char_type chValue) const noexcept
+    inline auto find_first_of(const char_type chValue) const noexcept
     {
         return find_first_of(vector<char_type>{chValue});
     }
