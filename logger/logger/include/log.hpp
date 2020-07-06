@@ -3,9 +3,10 @@
 #ifndef HAF_LOGGER_LOG_INCLUDE_HPP
 #define HAF_LOGGER_LOG_INCLUDE_HPP
 
+#include <utility>
+
 namespace logger
 {
-
 /**
  * @brief Component to facilitate the logging
  * This components provide some easy to use functions and classes
