@@ -21,7 +21,7 @@ private:
               typename... Args>
     static constexpr void log_if_severity_under(Args&&... args) noexcept
     {
-        log_if<SeverityType::ShowSeverity<severity_value>, severity_value>(
+        log_if<SeverityType::ShowSeverity<(severity_value > severity_value)>, severity_value>(
             std::forward<Args>(args),...);
     }
 
@@ -30,8 +30,8 @@ private:
               typename... Args>
     static constexpr void log_if(Args&&... args) noexcept
     {
-        LogClass::log_if<condition>(SeverityType::as_str(severity_value),
-                                    std::forward<Args>(args),...);
+        LogClass::log_if<condition>(//SeverityType::as_str(severity_value),
+                                    std::forward<Args...>(args),...);
     }
 
 public:

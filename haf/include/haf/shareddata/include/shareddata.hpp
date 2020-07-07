@@ -21,13 +21,13 @@ public:
     template <typename T>
     void store(mtps::uptr<T> data)
     {
-        store(unique_pointer_cast<IShareable>(std::move(data)));
+        store(mtps::unique_pointer_cast<IShareable>(std::move(data)));
     }
 
     template <typename T = IShareable>
     [[nodiscard]] mtps::uptr<T> retrieve()
     {
-        return unique_pointer_cast<T>(retrieve_imp());
+        return mtps::unique_pointer_cast<T>(retrieve_imp());
     }
 
     [[nodiscard]] bool isEmpty();

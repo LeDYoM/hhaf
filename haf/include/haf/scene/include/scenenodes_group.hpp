@@ -9,7 +9,6 @@
 namespace haf::scene
 {
 class SceneNode;
-extern template mtps::vector<mtps::sptr<SceneNode>>;
 
 class SceneNodesGroup
 {

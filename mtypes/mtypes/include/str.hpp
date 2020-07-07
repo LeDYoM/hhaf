@@ -390,7 +390,7 @@ public:
     template <size_type N>
     constexpr bool operator!=(const char_type (&a)[N]) const noexcept
     {
-        return !(operator==(lhs, a));
+        return !(this->operator==(a));
     }
 
     constexpr bool operator==(const str::char_type* a) const noexcept

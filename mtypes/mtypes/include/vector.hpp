@@ -140,19 +140,19 @@ public:
     constexpr T& back() noexcept
     {
         assert(size() > 0U);
-        return *(at(size() - 1U));
+        return *(Base::at(size() - 1U));
     }
 
     constexpr const T& back() const noexcept
     {
         assert(size() > 0U);
-        return *(at(size() - 1U));
+        return *(Base::at(size() - 1U));
     }
 
     constexpr const T& cback() const noexcept
     {
         assert(size() > 0U);
-        return *(cat(size() - 1U));
+        return *(Base::cat(size() - 1U));
     }
 
     template <typename F>

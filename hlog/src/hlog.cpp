@@ -11,9 +11,5 @@
 
 namespace haf
 {
-template LogClass;
-template DisplayLog;
-template LogAsserter;
-template LogInitializer;
 
 } // namespace haf

@@ -160,28 +160,18 @@ public:
                             .convertOrDefault<std::underlying_type_t<T>>());
                 }
             }
+            else if constexpr (std::is_same_v<T,str>)
+            {
+                return (*m_value);
+            }
+            else if constexpr (std::is_same_v<T,Object>)
+            {
+                return (*m_object);
+            }
             else
             {
                 return (*m_value).convertOrDefault<T>();
             }
-        }
-
-        template <>
-        [[nodiscard]] str as() const
-        {
-            return (*m_value);
-        }
-
-        template <>
-        [[nodiscard]] Object as() const
-        {
-            return (*m_object);
-        }
-
-        template <typename T>
-        [[nodiscard]] bool can_convert() const
-        {
-            return convert(value).second;
         }
 
     private:

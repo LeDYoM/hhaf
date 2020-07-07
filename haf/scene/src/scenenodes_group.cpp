@@ -7,8 +7,6 @@ using namespace mtps;
 
 namespace haf::scene
 {
-template mtps::vector<mtps::sptr<SceneNode>>;
-
 void SceneNodesGroup::addSceneNode(sptr<SceneNode> node)
 {
     groups_.push_back(node);

@@ -14,7 +14,7 @@ template <typename T>
 void createFactoryOfFactories(
     mtps::vector<mtps::uptr<IAutoRegisterFactory>>& factories)
 {
-    auto f(mtps::muptr<AutoRegisterFactory<T::Interface>>());
+    auto f(mtps::muptr<AutoRegisterFactory<typename T::Interface>>());
     f.get()->create(mtps::muptr<T>());
     factories.push_back(std::move(f));
 }
@@ -57,7 +57,8 @@ inline bool default_init_function(T** backend_manager,
 {
     if (!(*backend_manager))
     {
-        *backend_manager = new BackendManager;
+        using BManager = std::decay_t<T>;
+        *backend_manager = new BManager;
         (*backend_manager)->create();
 
         (*backend_manager)->setFactories(ibackend_register);
