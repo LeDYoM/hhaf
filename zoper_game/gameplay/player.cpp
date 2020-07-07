@@ -68,6 +68,9 @@ void Player::update()
                 ? vector2df{1.0F, 1.0F}
                 : vector2df{m_board2SceneFactor.y / m_board2SceneFactor.x,
                             m_board2SceneFactor.x / m_board2SceneFactor.y});
+
+        rotator_->position = tileCenter;
+        scalator_->position = tileCenter;
     }
 }
 

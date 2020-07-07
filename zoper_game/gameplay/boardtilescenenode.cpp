@@ -1,4 +1,4 @@
-#include "boardscenenode.hpp"
+#include "boardtilescenenode.hpp"
 #include <hlog/include/hlog.hpp>
 
 using namespace mtps;
@@ -7,9 +7,19 @@ namespace zoper
 {
 using namespace haf::scene;
 
-BoardSceneNode::~BoardSceneNode() = default;
+BoardTileSceneNode::~BoardTileSceneNode() = default;
 
-void BoardSceneNode::configure(const mtps::Rectf32 &tileBox) 
+void BoardTileSceneNode::configure(const mtps::Rectf32& tileBox)
+{
+    LogAsserter::log_assert(m_pointInCenter == nullptr,
+                "Point in center already initialized");
+    LogAsserter::log_assert(background_tile_ == nullptr,
+                "Background tile already initialized");
+
+    createBackgroundTile(tileBox);
+}
+
+void BoardTileSceneNode::createBackgroundTile(const mtps::Rectf32& tileBox)
 {
     // Size of the point in the middle of the tile
     static constexpr vector2df centerPointSize{15, 15};
@@ -29,18 +39,18 @@ void BoardSceneNode::configure(const mtps::Rectf32 &tileBox)
 
     m_pointInCenter->position.set(point_box.leftTop());
 
-    m_backgroundTile = renderizableBuilder()
+    background_tile_ = renderizableBuilder()
                            .name("backgroundTile")
                            .figType(FigType_t::Quad)
                            .box(tileBox)
-                           .create();    
+                           .create();
 }
 
-void BoardSceneNode::setTileColor(Color color)
+void BoardTileSceneNode::setTileColor(Color color)
 {
-    LogAsserter::log_assert(m_backgroundTile != nullptr,
+    LogAsserter::log_assert(background_tile_ != nullptr,
                             "This node is not correctly initialized");
-    m_backgroundTile->color = std::move(color);
+    background_tile_->color = std::move(color);
 }
 
 }  // namespace zoper

@@ -44,15 +44,11 @@ public:
      * @brief Set the associated transformation to a scale around a given point.
      * Note: this method overwrites the properties.
      *
-     * @param pointPoint Point to be rotated around
+     * @param point Point to be rotated around
      * @param scale Scale factor
      */
     void scaleAround(VectorScalar const point,
                      VectorScalar const scale) noexcept;
-
-    void rotateScaleAround(VectorScalar const point,
-                           Scalar const angle,
-                           VectorScalar const scale) noexcept;
 
     void updateGlobalTransformation(Transform const&) noexcept;
 
