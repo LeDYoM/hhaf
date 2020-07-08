@@ -12,6 +12,7 @@
 #include <haf/scene/include/transformable.hpp>
 #include <haf/scene/include/hasname.hpp>
 #include <haf/scene/include/componentcontainer.hpp>
+#include <haf/scene/include/scenenode_cast.hpp>
 #include <haf/scene/include/interface_getter.hpp>
 #include <haf/system/include/datawrappercreator.hpp>
 #include <haf/system/include/systemaccess.hpp>
@@ -75,13 +76,13 @@ public:
     template <typename T>
     mtps::rptr<T> snCast() noexcept
     {
-        return dynamic_cast<T*>(this);
+        return sceneNodeCast<T>(this);
     }
 
     template <typename T>
     const mtps::rptr<const T> snCast() const noexcept
     {
-        return dynamic_cast<const T* const>(this);
+        return sceneNodeCast<T>(this);
     }
 
     mtps::BasicProperty<bool> visible;
