@@ -11,15 +11,23 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# Set compiler flags and options. Here it is setting the Visual Studio warning
-# level to 4
+# Set compiler flags and options.
+
+#Equivalent to:
 if(MSVC)
-  add_compile_definitions(/W4 /WX)
+#  target_compile_options(${TARGET_NAME} PRIVATE /W4 /WX)
+  add_compile_options(
+      /W4
+#      /WX
+      )
 else()
-#  add_compile_definitions("-Wall")
-#  add_compile_definitions(-Wextra)
-#  add_compile_definitions(-pedantic)
-#  add_compile_definitions(-Werror)
+#  target_compile_options(${TARGET_NAME} PRIVATE -Wall -Wextra -pedantic -Werror)
+  add_compile_options(
+    -Wall
+    -Wextra
+    -pedantic
+#    -Werror
+  )
 endif()
 
 add_compile_definitions(HAF_ALLOW_ACCELERATION)

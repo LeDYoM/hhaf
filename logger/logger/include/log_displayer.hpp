@@ -21,8 +21,8 @@ private:
               typename... Args>
     static constexpr void log_if_severity_under(Args&&... args) noexcept
     {
-        log_if<SeverityType::ShowSeverity<(severity_value > severity_value)>, severity_value>(
-            std::forward<Args>(args),...);
+        LogClass::log_if<SeverityType::ShowSeverity<severity_value>>(
+            std::forward<Args>(args)...);
     }
 
     template <bool condition,

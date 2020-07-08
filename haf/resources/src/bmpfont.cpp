@@ -77,8 +77,8 @@ void filterStr(std::stringstream& line_stream, std::string& value)
     bool doNext = true;
     do
     {
-        int first_ = value.find_first_of('\"');
-        int last_  = value.find_last_of('\"');
+        auto const first_ = value.find_first_of('\"');
+        auto const last_  = value.find_last_of('\"');
         doNext     = (first_ > -1 && first_ == last_);
         if (doNext)
         {

@@ -25,7 +25,7 @@ struct DefaultBackendManager : IBackendManager
 
     void setFactories(IBackendRegister* const backend_register) override final
     {
-        for (const auto& factory : factories)
+        for (auto const& factory : factories)
         {
             factory.get()->setFactory(backend_register);
         }
@@ -34,7 +34,7 @@ struct DefaultBackendManager : IBackendManager
     void resetFactories(
         haf::backend::IBackendRegister* const backend_register) override final
     {
-        for (const auto& factory : factories)
+        for (auto const& factory : factories)
         {
             factory.get()->resetFactory(backend_register);
         }

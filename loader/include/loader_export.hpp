@@ -3,9 +3,9 @@
 
 #ifdef _WIN32
 #ifdef loader_EXPORTS
-#define LOADER_API extern "C" __declspec(dllexport)
+#define LOADER_API __declspec(dllexport)
 #else
-#define LOADER_API extern "C" __declspec(dllimport)
+#define LOADER_API __declspec(dllimport)
 #endif
 #else
 #define LOADER_API __attribute__((visibility("default")))

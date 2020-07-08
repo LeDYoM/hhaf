@@ -10,7 +10,7 @@ namespace haf::scene
 void VisibilitySelectorComponent::configure(size_type first_index)
 {
     hideAll();
-    show(active_index, true);
+    show(first_index, true);
 }
 
 void VisibilitySelectorComponent::show(size_type index, bool force)

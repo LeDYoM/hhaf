@@ -115,11 +115,11 @@ void Renderizable::setTextureFill(sptr<res::ITexture> texture_)
 }
 
 vector2df Renderizable::normalizeInBox(const vector2df& position,
-                                       const Rectf32 box,
+                                       const Rectf32 other_box,
                                        const Rectf32& rect) const
 {
-    const f32 xratio{(position.x - box.left) / box.width};
-    const f32 yratio{(position.y - box.top) / box.height};
+    const f32 xratio{(position.x - other_box.left) / other_box.width};
+    const f32 yratio{(position.y - other_box.top) / other_box.height};
     return {(rect.left + (rect.width * xratio)),
             (rect.top + (rect.height * yratio))};
 }
@@ -144,7 +144,7 @@ void Renderizable::updateColorForVertex(
     if (color_modifier())
     {
         RenderizableModifierContext context{
-            box(), ctexture_rect,
+            cbox, ctexture_rect,
             texture() ? texture()->size() : vector2du32{0U, 0U}, *v_iterator};
         dest_color *= color_modifier()(context);
     }
@@ -240,7 +240,7 @@ void Renderizable::updateGeometry()
             case FigType_t::Shape:
             {
                 const auto vertices_iterator_begin =
-                    m_vertices.verticesArray().begin();
+                    vertices.begin();
                 auto vertices_iterator_second = vertices_iterator_begin;
                 auto vertices_iterator{++vertices_iterator_second};
                 auto angle{0.0};
@@ -267,7 +267,6 @@ void Renderizable::updateGeometry()
             break;
             case FigType_t::EmptyQuad:
             {
-                auto& vertices        = m_vertices.verticesArray();
                 vertices[0U].position = cBox.leftTop();
                 updateTextureCoordsAndColorForVertex(&vertices[0U], cBox,
                                                      textureRect());

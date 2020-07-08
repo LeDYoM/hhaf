@@ -73,7 +73,7 @@ private:
     void updateColors();
 
     mtps::vector2df normalizeInBox(const mtps::vector2df& position,
-                                   const mtps::Rectf32 box,
+                                   const mtps::Rectf32 other_box,
                                    const mtps::Rectf32& rect) const;
     void update();
 };
