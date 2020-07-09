@@ -21,8 +21,11 @@ private:
               typename... Args>
     static constexpr void log_if_severity_under(Args&&... args) noexcept
     {
-        LogClass::log_if<SeverityType::ShowSeverity<severity_value>>(
-            std::forward<Args>(args)...);
+        /*
+//        LogClass::log_if<SeverityType::ShowSeverity<severity_value>>(
+        LogClass::log_if<SeverityType::ShowSeverity<severity_value>>(std::forward<Args>(args)...);
+        */
+        LogClass::log(std::forward<Args>(args)...);
     }
 
     template <bool condition,
@@ -30,8 +33,12 @@ private:
               typename... Args>
     static constexpr void log_if(Args&&... args) noexcept
     {
-        LogClass::log_if<condition>(//SeverityType::as_str(severity_value),
-                                    std::forward<Args...>(args),...);
+        /*
+        LogClass::log_if<condition, Args>(
+            //SeverityType::as_str(severity_value),
+                                    std::forward<Args...>(args)... );
+*/
+        LogClass::log(std::forward<Args...>(args)... );
     }
 
 public:

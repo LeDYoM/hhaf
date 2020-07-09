@@ -37,13 +37,13 @@ public:
     template <typename T>
     mtps::sptr<T> componentOfType() const
     {
-        return getComponentContainerForType<T>().componentOfType<T>();
+        return getComponentContainerForType<T>().template componentOfType<T>();
     }
 
     template <typename T>
     mtps::sptr<T> addComponentOfType()
     {
-        return getComponentContainerForType<T>().addComponentOfType<T>();
+        return getComponentContainerForType<T>().template addComponentOfType<T>();
     }
 
     template <typename T>
@@ -54,33 +54,29 @@ public:
 
 private:
     template <bool IsStatic>
-    constexpr auto& getComponentContainer() noexcept;
-
-    template <>
-    constexpr auto& getComponentContainer<true>() noexcept
+    constexpr auto& getComponentContainer() noexcept
     {
-        return static_component_container_;
-    }
-
-    template <>
-    constexpr auto& getComponentContainer<false>() noexcept
-    {
-        return component_container_;
+        if constexpr (IsStatic)
+        {
+            return static_component_container_;
+        }
+        else
+        {
+            return component_container_;
+        }
     }
 
     template <bool IsStatic>
-    constexpr const auto& getComponentContainer() const noexcept;
-
-    template <>
-    constexpr const auto& getComponentContainer<true>() const noexcept
+    constexpr auto const& getComponentContainer() const noexcept
     {
-        return static_component_container_;
-    }
-
-    template <>
-    constexpr const auto& getComponentContainer<false>() const noexcept
-    {
-        return component_container_;
+        if constexpr (IsStatic)
+        {
+            return static_component_container_;
+        }
+        else
+        {
+            return component_container_;
+        }
     }
 
     template <typename T>

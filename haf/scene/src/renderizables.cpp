@@ -8,7 +8,6 @@ using namespace mtps;
 
 namespace haf::scene
 {
-template mtps::vector<mtps::sptr<Renderizable>>;
 
 sptr<Renderizable> Renderizables::createRenderizable(str name,
                                                      FigType_t figure_type,

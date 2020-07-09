@@ -23,7 +23,7 @@ namespace haf::scene
  * @tparam T Type of the property to animate
  * @tparam AT Animable type corresponding to T
  */
-template <typename T, typename AT = AnimableType<T>::type>
+template <typename T, typename AT = typename AnimableType<T>::type>
 class IPropertyAnimation : public Animation
 {
 public:

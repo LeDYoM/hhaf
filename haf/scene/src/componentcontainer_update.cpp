@@ -10,13 +10,5 @@ using namespace mtps;
 
 namespace haf::scene
 {
-template <>
-void ComponentContainerPart<true>::updateComponents()
-{
-    components_.performUpdate([](const sptr<IComponent>& component)
-    {
-        component->update();
-    });
-}
 
 }  // namespace haf::scene

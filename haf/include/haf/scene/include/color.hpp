@@ -69,14 +69,14 @@ struct ColorImp
                      static_cast<value_type>(alpha * value_max)};
     }
 
-    template <typename = std::enable_if_t<std::is_same_v<value_type, u8>>>
+    template <typename = std::enable_if_t<std::is_same_v<value_type, mtps::u8>>>
     constexpr explicit ColorImp(const mtps::u32 color) noexcept
         : r{static_cast<value_type>((color & 0xff000000) >> 24U)},
           g{static_cast<value_type>((color & 0x00ff0000) >> 16U)},
           b{static_cast<value_type>((color & 0x0000ff00) >> 8U)},
           a{static_cast<value_type>((color & 0x000000ff) >> 0U)} {}
 
-    template <typename = std::enable_if_t<std::is_same_v<value_type, u8>>>
+    template <typename = std::enable_if_t<std::is_same_v<value_type, mtps::u8>>>
     constexpr mtps::u32 toInteger() const noexcept { return (r << 24U) | (g << 16U) | (b << 8U) | a; }
 
     constexpr ColorImp(const ColorImp &) noexcept = default;

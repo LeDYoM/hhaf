@@ -23,9 +23,9 @@ if(MSVC)
 else()
 #  target_compile_options(${TARGET_NAME} PRIVATE -Wall -Wextra -pedantic -Werror)
   add_compile_options(
-    -Wall
-    -Wextra
-    -pedantic
+#    -Wall
+#    -Wextra
+#    -pedantic
 #    -Werror
   )
 endif()

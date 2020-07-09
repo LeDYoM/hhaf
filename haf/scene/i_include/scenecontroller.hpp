@@ -47,9 +47,9 @@ public:
     template <typename T>
     bool registerAndStartScene()
     {
-        if (sceneFactory_.registerSceneNodeType<T>())
+        if (scene_factory_.registerSceneNodeType<T>())
         {
-            return startScene(sceneName);
+            return startScene(T::StaticTypeName);
         }
         return false;
     }

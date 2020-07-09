@@ -14,7 +14,6 @@ namespace haf::scene
 {
 class SceneNode;
 class RenderizableBuilder;
-extern template mtps::vector<mtps::sptr<Renderizable>>;
 
 class Renderizables
 {

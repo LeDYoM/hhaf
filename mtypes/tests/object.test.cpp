@@ -456,6 +456,9 @@ namespace TestVectorWithCustomTypes
         short b;
         long c;
 
+        constexpr Simple() noexcept : a{}, b{}, c{} {}
+        constexpr Simple(int a_, short b_, long c_) noexcept : a{a_}, b{b_}, c{c_} {}
+
         bool operator==(const Simple& rhs) const
         {
             return ((a == rhs.a) && (b == rhs.b) && (c == rhs.c));
@@ -531,11 +534,13 @@ namespace TestVectorWithCustomTypesEnumsAndFloats
 
     struct Simple
     {
-        MySmallEnum small_enum;
-        MyDefaultEnum default_enum;
-        MyBigEnum big_enum;
-        f32 a;
-        f64 b;
+        MySmallEnum small_enum{MySmallEnum::First};
+        MyDefaultEnum default_enum{MyDefaultEnum::First};
+        MyBigEnum big_enum{MyBigEnum::First};
+        f32 a{};
+        f64 b{};
+
+        Simple() noexcept = default;
 
         bool operator==(const Simple& rhs) const
         {

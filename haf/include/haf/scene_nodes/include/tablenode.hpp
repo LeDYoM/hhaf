@@ -99,7 +99,7 @@ public:
             {
                 if (mtps::sptr<T> node = nodes_[x][y])
                 {
-                    action(vector2dst{x, y}, node);
+                    action(mtps::vector2dst{x, y}, node);
                 }
             }
         }

@@ -78,7 +78,7 @@ public:
             [ // Capture this by reference
                 this,
                 // these properties by copy
-                time, start, dest, animation_direction
+                time, start, dest, animation_direction,
                                        // Reference to the property by reference
                                        &property = property,
                 // Move endAction inside the inner lambda

@@ -21,6 +21,7 @@ const mtps::rptr<const T> sceneNodeCast(
 {
     return dynamic_cast<const T* const>(scene_node);
 }
+
 }  // namespace haf::scene
 
 #endif

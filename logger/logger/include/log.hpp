@@ -69,7 +69,7 @@ public:
      * @param condition Runtime condition to decide about output or not.
      * @param args Arguments to build a line in the log.
      */
-    template <typename... Args>
+/*    template <typename... Args>
     static constexpr void log_if([[maybe_unused]] bool const condition,
                                  [[maybe_unused]] Args&&... args) noexcept
     {
@@ -81,6 +81,7 @@ public:
             }
         }
     }
+    */
 };
 
 }  // namespace logger
