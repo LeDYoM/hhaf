@@ -137,7 +137,11 @@ constexpr bool ps_readResetHasAnyChanged(PropertyState<T> &arg, Args &&... args)
         const bool result_rest{ps_readResetHasChanged(std::forward<Args>(args)...)};
         return result_unary || result_rest;
     }
-    return result_unary;
+    else
+    {
+        return result_unary;
+    }
+    
 }
 
 template <typename T, typename... Args>
