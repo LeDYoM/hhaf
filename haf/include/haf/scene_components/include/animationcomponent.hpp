@@ -47,7 +47,7 @@ public:
     {
         addAnimation(mtps::muptr<IPropertyAnimation<PropertyType>>(
             attachedNode()->dataWrapper<time::Timer>(),
-            std::move(time), std::move(property), std::move(start),
+            std::move(time), property, std::move(start),
             std::move(dest), std::move(animation_direction),
             std::move(endAction)));
     }

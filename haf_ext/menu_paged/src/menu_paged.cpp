@@ -128,4 +128,9 @@ void MenuPaged::terminate(const s32 status)
     MenuFinished(status_);
 }
 
+void MenuPaged::setMenuPageSceneNodeSizeForPages(mtps::sptr<MenuPage> menuPage)
+{
+    menuPage->sceneNodeSize = scene_node_size_for_pages_;
+}
+
 }  // namespace haf::scene

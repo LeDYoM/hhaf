@@ -19,6 +19,20 @@ struct HighScore
     Score score{0U};
 };
 
+inline const mtps::Object &operator>>(const mtps::Object &obj, HighScore &high_score_data)
+{
+    high_score_data.name = obj["name"].as<mtps::str>();
+    high_score_data.score = obj["score"].as<Score>();
+    return obj;
+}
+
+inline mtps::Object &operator<<(mtps::Object &obj, const HighScore &high_score_data)
+{
+    obj.set("name", high_score_data.name);
+    obj.set("score", high_score_data.score);
+    return obj;
+}
+
 class HighScoresData
 {
 public:
@@ -48,20 +62,6 @@ inline const mtps::Object &operator>>(const mtps::Object &obj, HighScoresData &h
 inline mtps::Object &operator<<(mtps::Object &obj, const HighScoresData &high_scores_data)
 {
     obj.set("high_scores", high_scores_data.m_highScoreList);
-    return obj;
-}
-
-inline const mtps::Object &operator>>(const mtps::Object &obj, HighScore &high_score_data)
-{
-    high_score_data.name = obj["name"].as<mtps::str>();
-    high_score_data.score = obj["score"].as<Score>();
-    return obj;
-}
-
-inline mtps::Object &operator<<(mtps::Object &obj, const HighScore &high_score_data)
-{
-    obj.set("name", high_score_data.name);
-    obj.set("score", high_score_data.score);
     return obj;
 }
 

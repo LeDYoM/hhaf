@@ -19,9 +19,9 @@ public:
 
     template <typename T>
     explicit RangeOption(T)
-        : options_(static_cast<mtps::size_type>(MEnum<T>::max_numeric - MEnum<T>::min_numeric))
+        : options_(static_cast<mtps::size_type>(mtps::MEnum<T>::max_numeric - mtps::MEnum<T>::min_numeric))
     {
-        MEnum<T> v{T::min};
+        mtps::MEnum<T> v{T::min};
         while (v.isValid())
         {
             options_.emplace_back(v.toStr());

@@ -9,10 +9,10 @@
 #include <haf/scene/include/scenenode.hpp>
 #include <haf/scene/include/color.hpp>
 #include <haf/resources/include/ifont.hpp>
+#include "menu_page.hpp"
 
 namespace haf::scene
 {
-class MenuPage;
 
 /**
  * @brief Main class to model a menu in paged style.
@@ -52,12 +52,13 @@ protected:
                                                     Args&&... args)
     {
         auto node{createMenuPage(std::move(name))};
-        node->sceneNodeSize = scene_node_size_for_pages_;
+        setMenuPageSceneNodeSizeForPages(node);
         node->configure(std::forward<Args>(args)...);
         return node;
     }
 
 private:
+    void setMenuPageSceneNodeSizeForPages(mtps::sptr<MenuPage> menuPage);
     mtps::vector2df scene_node_size_for_pages_;
     mtps::sptr<res::IFont> normal_text_font_;
     Color normal_color_;

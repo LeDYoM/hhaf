@@ -54,7 +54,7 @@ struct ColorImp
         return detail::ensureLimits<value_type, Source>(std::move(source));
     }
 
-    constexpr ColorImp() noexcept : r{}, g{}, b{}, a{value_max} {}
+    constexpr explicit ColorImp() noexcept : r{}, g{}, b{}, a{value_max} {}
     constexpr ColorImp(const value_type red,
                     const value_type green,
                     const value_type blue,

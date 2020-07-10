@@ -207,7 +207,7 @@ private:
 };
 
 template <typename T>
-auto createDefaultConstructibleOnly()
+uptr<T> createDefaultConstructibleOnly()
 {
     return muptr<T>();
 }

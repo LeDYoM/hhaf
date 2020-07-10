@@ -11,6 +11,8 @@ function(build_lib_component)
                           PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS true)
   endif()
 
+  set_property(TARGET ${CURRENT} PROPERTY POSITION_INDEPENDENT_CODE ON)
+
   target_include_directories(${CURRENT_TARGET}
                              PUBLIC ${LC_BUILD_HEADER_DIRECTORY})
 

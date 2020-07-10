@@ -38,7 +38,7 @@ public:
     {
         LogAsserter::log_assert(componentOfType<T>() == nullptr,
                                 "There is already a component with this type");
-        mtps::sptr<T> nc(BaseClass::create());
+        mtps::sptr<T> nc(BaseClass::template create<T>());
         addComponent(nc);
         return nc;
     }
