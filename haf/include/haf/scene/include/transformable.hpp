@@ -6,7 +6,7 @@
 #include "transform.hpp"
 #include <mtypes/include/vector2d.hpp>
 #include <mtypes/include/rect.hpp>
-#include <mtypes/include/properties.hpp>
+#include <mtypes/include/propertystate.hpp>
 
 namespace haf::scene
 {
