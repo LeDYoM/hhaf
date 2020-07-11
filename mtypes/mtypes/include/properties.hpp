@@ -1,21 +1,39 @@
 #pragma once
 
-#ifndef MTPS_PROPERTIES_HPP
-#define MTPS_PROPERTIES_HPP
-
-#include "function.hpp"
+#ifndef MTPS_PROPERTIES_INCLUDE_HPP
+#define MTPS_PROPERTIES_INCLUDE_HPP
 
 namespace mtps
 {
-/// This class provides a basic interface for all Properties of
-/// the system.
+/**
+ * @brief Class provides a basic interface for properties. This is the base
+ * class for any Property class.
+ * @tparam T Inner type of the property.
+ */
 template <typename T>
 class IProperty
 {
 public:
-    /// Get value of the property.
-    /// @return The content of the property.
+    using type = T;
+    using const_type = T const;
+    using reference = T&;
+    using const_reference = T const&;
+    using pointer = T*;
+    using const_pointer = T const *;
+
+    /**
+     * @brief Get value of the property.
+     * @return const T& The content of the property.
+     */
     virtual const T &get() const noexcept = 0;
+
+    /**
+     * @brief Sets the vañue of the inner type of the property.
+     * 
+     * @param v New value to set.
+     * @return true The value has changed
+     * @return false v was equal to the content, so no changes made.
+     */
     virtual bool set(const T &v) = 0;
 };
 
@@ -23,6 +41,13 @@ template <typename T>
 class BasicProperty : public IProperty<T>
 {
 public:
+    using type = typename IProperty<T>::type;
+    using const_type = typename IProperty<T>::const_type;
+    using reference = typename IProperty<T>::reference;
+    using const_reference = typename IProperty<T>::const_reference;
+    using pointer = typename IProperty<T>::pointer;
+    using const_pointer = typename IProperty<T>::const_pointer;
+
     constexpr BasicProperty() noexcept = default;
     constexpr BasicProperty(BasicProperty &&) noexcept = default;
     constexpr BasicProperty(const BasicProperty &) noexcept = default;
@@ -57,14 +82,20 @@ template <typename T>
 class PropertyState final : public BasicProperty<T>
 {
     using BaseClass = BasicProperty<T>;
+    using type = BaseClass::type;
+    using const_type = BaseClass::const_type;
+    using reference = BaseClass::reference;
+    using const_reference = BaseClass::const_reference;
+    using pointer = BaseClass::pointer;
+    using const_pointer = BaseClass::const_pointer;
 
 public:
     constexpr PropertyState() noexcept : BaseClass{} {}
     constexpr PropertyState(T iv) noexcept : BaseClass{std::move(iv)} {}
     constexpr PropertyState(PropertyState &&) noexcept = default;
-    constexpr PropertyState(const PropertyState &) = default;
+    constexpr PropertyState(const PropertyState &) noexcept = default;
     constexpr PropertyState &operator=(PropertyState &&) noexcept = default;
-    constexpr PropertyState &operator=(const PropertyState &) = default;
+    constexpr PropertyState &operator=(const PropertyState &) noexcept = default;
 
     constexpr const T &operator=(const T &v) noexcept
     {
@@ -125,7 +156,7 @@ constexpr void ps_resetHasChanged(PropertyState<T> &arg) noexcept
 template <typename T, typename... Args>
 constexpr bool ps_readResetHasAnyChanged(PropertyState<T> &arg, Args &&... args) noexcept
 {
-    const bool result_unary{arg.readResetHasChanged()};
+    const auto result_unary{arg.readResetHasChanged()};
 
     if constexpr (sizeof...(Args) > 1U)
     {
@@ -141,7 +172,6 @@ constexpr bool ps_readResetHasAnyChanged(PropertyState<T> &arg, Args &&... args)
     {
         return result_unary;
     }
-    
 }
 
 template <typename T, typename... Args>
@@ -158,8 +188,10 @@ constexpr bool ps_readResetHasAllChanged(PropertyState<T> &arg, Args &&... args)
     {
         const bool result_rest{ps_readResetHasChanged(std::forward<Args>(args)...)};
         return result_unary && result_rest;
+    } else
+    {
+        return result_unary;
     }
-    return result_unary;
 }
 
 template <typename T>
