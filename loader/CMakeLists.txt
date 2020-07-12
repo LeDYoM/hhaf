@@ -21,9 +21,3 @@ target_include_directories(
   PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/)
 
 target_link_libraries(${CURRENT_TARGET} ${CMAKE_DL_LIBS})
-
-install(
-  TARGETS ${CURRENT_TARGET}
-  ARCHIVE DESTINATION .
-  LIBRARY DESTINATION .
-  RUNTIME DESTINATION .)

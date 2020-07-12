@@ -60,7 +60,7 @@ namespace
 		return (dlclose(handle) != 0);
 	}   
     constexpr const char *const extension = ".so";
-    constexpr const char *const prefix = "lib";
+    constexpr const char *const prefix = "./lib";
 
 #endif
 

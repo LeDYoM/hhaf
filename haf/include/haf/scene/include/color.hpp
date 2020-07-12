@@ -55,11 +55,33 @@ struct ColorImp
     }
 
     constexpr explicit ColorImp() noexcept : r{}, g{}, b{}, a{value_max} {}
-    constexpr ColorImp(const value_type red,
+
+    constexpr explicit ColorImp(const value_type red,
                     const value_type green,
                     const value_type blue,
                     const value_type alpha = value_max) noexcept
         : r{red}, g{green}, b{blue}, a{alpha} {}
+
+    constexpr ColorImp(const ColorImp &) noexcept = default;
+    constexpr ColorImp &operator=(const ColorImp &) noexcept = default;
+    constexpr ColorImp(ColorImp &&) noexcept = default;
+    constexpr ColorImp &operator=(ColorImp &&) noexcept = default;
+
+//    template <typename = std::enable_if_t<std::is_same_v<value_type, mtps::u8>>>
+    constexpr explicit ColorImp(const mtps::u32 color) noexcept
+        : r{static_cast<value_type>((color & 0xff000000) >> 24U)},
+          g{static_cast<value_type>((color & 0x00ff0000) >> 16U)},
+          b{static_cast<value_type>((color & 0x0000ff00) >> 8U)},
+          a{static_cast<value_type>((color & 0x000000ff) >> 0U)} {}
+
+    template <typename vt>
+    constexpr ColorImp& operator=(const ColorImp<vt> &other) noexcept
+    {
+        r = ensureLimits(static_cast<value_type>(other.r));
+        g = ensureLimits(static_cast<value_type>(other.g));
+        b = ensureLimits(static_cast<value_type>(other.b));
+        a = ensureLimits(static_cast<value_type>(other.a));
+    }
 
     static constexpr ColorImp fromFloats(const float red, const float green, const float blue, const float alpha = 1.0F) noexcept
     {
@@ -69,32 +91,8 @@ struct ColorImp
                      static_cast<value_type>(alpha * value_max)};
     }
 
-    template <typename = std::enable_if_t<std::is_same_v<value_type, mtps::u8>>>
-    constexpr explicit ColorImp(const mtps::u32 color) noexcept
-        : r{static_cast<value_type>((color & 0xff000000) >> 24U)},
-          g{static_cast<value_type>((color & 0x00ff0000) >> 16U)},
-          b{static_cast<value_type>((color & 0x0000ff00) >> 8U)},
-          a{static_cast<value_type>((color & 0x000000ff) >> 0U)} {}
-
-    template <typename = std::enable_if_t<std::is_same_v<value_type, mtps::u8>>>
-    constexpr mtps::u32 toInteger() const noexcept { return (r << 24U) | (g << 16U) | (b << 8U) | a; }
-
-    constexpr ColorImp(const ColorImp &) noexcept = default;
-    constexpr ColorImp &operator=(const ColorImp &) noexcept = default;
-    constexpr ColorImp(ColorImp &&) noexcept = default;
-    constexpr ColorImp &operator=(ColorImp &&) noexcept = default;
-
     template <typename vt>
     constexpr ColorImp(const ColorImp<vt> &other) noexcept
-    {
-        r = ensureLimits(static_cast<value_type>(other.r));
-        g = ensureLimits(static_cast<value_type>(other.g));
-        b = ensureLimits(static_cast<value_type>(other.b));
-        a = ensureLimits(static_cast<value_type>(other.a));
-    }
-
-    template <typename vt>
-    constexpr ColorImp& operator=(const ColorImp<vt> &other) noexcept
     {
         r = ensureLimits(static_cast<value_type>(other.r));
         g = ensureLimits(static_cast<value_type>(other.g));
@@ -112,18 +110,20 @@ struct ColorImp
         return !(*this == right);
     }
 
-    template <typename vt>
-    constexpr ColorImp operator+(const ColorImp<vt> &right) const noexcept
+    template <typename VT>
+    constexpr ColorImp operator+(const ColorImp<VT> &right) const noexcept
     {
         return (ColorImp(*this) += right);
     }
 
-    constexpr ColorImp operator-(const ColorImp &right) const noexcept
+    template <typename VT>
+    constexpr ColorImp operator-(const ColorImp<VT> &right) const noexcept
     {
         return (ColorImp(*this) -= right);
     }
 
-    constexpr ColorImp operator*(const ColorImp &right) const noexcept
+    template <typename VT>
+    constexpr ColorImp operator*(const ColorImp<VT> &right) const noexcept
     {
         return (ColorImp(*this) *= right);
     }

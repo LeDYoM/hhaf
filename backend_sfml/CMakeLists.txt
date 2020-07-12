@@ -23,5 +23,3 @@ target_link_libraries(${CURRENT_TARGET} PRIVATE sfml-system sfml-window sfml-gra
 #                           copy_directory
 #                           ${SFML_BINARY_DIR}/lib
 #                           $<TARGET_FILE_DIR:${CURRENT_TARGET}>)
-
-install(TARGETS ${CURRENT_TARGET} LIBRARY DESTINATION . RUNTIME DESTINATION .)

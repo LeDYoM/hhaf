@@ -47,7 +47,7 @@ public:
                     std::move(animation_direction), std::move(endAction)},
           property_{prop}, startValue_{std::move(start)},
           endValue_{std::move(end)},
-          deltaValue_{AT{endValue_} - AT{startValue_}}
+          deltaValue_{static_cast<AT>(AT{endValue_} - AT{startValue_})}
     {
     }
 
@@ -62,7 +62,7 @@ private:
     mtps::IProperty<T> &property_;
     const T startValue_;
     const T endValue_;
-    const AT deltaValue_;
+    const AT deltaValue_{};
 };
 } // namespace haf::scene
 

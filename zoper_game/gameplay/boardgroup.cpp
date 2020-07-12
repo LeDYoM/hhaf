@@ -126,15 +126,15 @@ Color BoardGroup::getBackgroundTileColor(const size_type level,
             {
                 if (level % 2U)
                 {
-                    return {10U, 200U, 50U};
+                    return Color{10U, 200U, 50U};
                 }
                 else if (!(level % 3U))
                 {
-                    return {255U, 70U, 200U};
+                    return Color{255U, 70U, 200U};
                 }
                 else
                 {
-                    return {255U, 100U, 100U};
+                    return Color{255U, 100U, 100U};
                 }
             }
             else
@@ -159,11 +159,11 @@ Color BoardGroup::getBackgroundTileColor(const size_type level,
             }
             else if (level < 3U)
             {
-                return {255U, 128U, 0U};
+                return Color{255U, 128U, 0U};
             }
             else if (level < 5U)
             {
-                return {100U, 128U, 255U};
+                return Color{100U, 128U, 255U};
             }
             else if (level < 10U)
             {

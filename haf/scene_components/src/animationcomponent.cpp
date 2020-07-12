@@ -14,9 +14,12 @@ public:
     AnimationComponentPrivate() {}
     LockableVector<sptr<Animation>> m_animations;
 };
+
 AnimationComponent::AnimationComponent() :
     p_{muptr<AnimationComponentPrivate>()}
 {}
+
+AnimationComponent::~AnimationComponent() = default;
 
 void AnimationComponent::addAnimation(uptr<Animation> nanimation)
 {
