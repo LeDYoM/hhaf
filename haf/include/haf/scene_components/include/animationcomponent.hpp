@@ -18,6 +18,7 @@ class AnimationComponent : public IComponent
 {
 public:
     AnimationComponent();
+    ~AnimationComponent() override;
 
     virtual void update() override;
 
@@ -45,11 +46,13 @@ public:
             Animation::AnimationDirection::Forward,
         Animation::ActionFunc endAction = {})
     {
-        addAnimation(mtps::muptr<IPropertyAnimation<PropertyType>>(
+        auto anim = mtps::muptr<IPropertyAnimation<PropertyType>>(
             attachedNode()->dataWrapper<time::Timer>(),
             std::move(time), property, std::move(start),
             std::move(dest), std::move(animation_direction),
-            std::move(endAction)));
+            std::move(endAction));
+
+        addAnimation(std::move(anim));
     }
 
     /**
