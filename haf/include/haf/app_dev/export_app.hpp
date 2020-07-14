@@ -4,7 +4,7 @@
 #ifdef _WIN32
 #define APP_EXPORT extern "C" __declspec(dllexport)
 #else
-#define APP_EXPORT
+#define APP_EXPORT extern "C" __attribute__((visibility("default")))
 #endif
 
 #define EXPORT_APP_TYPE(app_type) \

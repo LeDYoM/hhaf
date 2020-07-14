@@ -7,8 +7,9 @@
 #ifdef _WIN32
     #define HOST_API extern "C" __declspec(dllexport)
 #else
-    #define HOST_API
+    #define HOST_API extern "C" __attribute__((visibility("default")))
 #endif
+
 
 HOST_API int haf_host_main(int argc, char* argv[])
 {

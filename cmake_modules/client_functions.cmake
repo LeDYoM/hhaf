@@ -10,12 +10,14 @@ function(build_client_library)
   target_link_libraries(${CURRENT_TARGET} PRIVATE hosted_app)
   target_link_libraries(${CURRENT_TARGET} PRIVATE haf)
 
+  message("${CL_BUILD_DATA_SOURCE} Not Post build command. Copy directory")
+
   # Copy data if data directory has been passed.
   if(NOT ${CL_BUILD_DATA_SOURCE} STREQUAL "")
-    message(VERBOSE "Post build command. Copy directory")
-    message(VERBOSE ${CL_BUILD_DATA_SOURCE})
-    message(VERBOSE "to")
-    message(VERBOSE $<TARGET_FILE_DIR:${CURRENT_TARGET}>)
+    message("Post build command. Copy directory")
+    message(${CL_BUILD_DATA_SOURCE})
+    message("to")
+    message("$<TARGET_FILE_DIR:${${CURRENT_TARGET}}>")
 
     add_custom_command(
       TARGET ${CURRENT_TARGET}
