@@ -12,6 +12,7 @@ set(SOURCE_TESTS
     object
     object_utils
     parpar
+    properties
     str
     vector
 )

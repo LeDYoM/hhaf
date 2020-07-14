@@ -29,7 +29,7 @@ void DebugActions::onKeyPressed(const Key &key)
     }
 }
 
-void DebugActions::onKeyReleased(const Key &key)
+void DebugActions::onKeyReleased(const Key &)
 {
 }
 

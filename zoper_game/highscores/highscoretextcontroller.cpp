@@ -90,7 +90,7 @@ void HighScoreTextController::addHighScoresLine(const size_type counter,
 
     if (is_inserting)
     {
-        addHighScoreEditor(label, counter, element);
+        addHighScoreEditor(label, counter);
     }
     else
     {
@@ -99,8 +99,7 @@ void HighScoreTextController::addHighScoresLine(const size_type counter,
 }
 
 void HighScoreTextController::addHighScoreEditor(const sptr<SceneNode>& label,
-                                                 const size_type counter,
-                                                 const HighScore& element)
+                                                 const size_type counter)
 {
     addEditAnimation(counter);
     auto editor(label->addComponentOfType<TextEditorComponent>());

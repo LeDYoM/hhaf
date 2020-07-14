@@ -40,8 +40,7 @@ private:
                            const HighScore& element,
                            const bool is_inserting);
     void addHighScoreEditor(const mtps::sptr<SceneNode>& label,
-                            const mtps::size_type counter,
-                            const HighScore& element);
+                            const mtps::size_type counter);
     void addEditAnimation(const mtps::size_type line_index);
     HighScoresData m_hsData;
     mtps::sptr<res::IFont> m_normalFont;

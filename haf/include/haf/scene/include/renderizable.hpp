@@ -4,7 +4,7 @@
 #define HAF_SCENE_RENDERIZABLE_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <mtypes/include/properties.hpp>
+#include <mtypes/include/propertystate.hpp>
 #include <mtypes/include/function.hpp>
 
 #include <haf/scene/include/renderizable_modifier_context.hpp>
