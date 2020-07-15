@@ -17,8 +17,11 @@ uptr<InnerType[]> readBuffer(uptr<InnerType[]> buffer,
                              const Path& file_name,
                              const size_type file_size)
 {
-    std::basic_ifstream<InnerType> ifs(file_name.c_str(), std::ios::binary);
-    ifs.read(buffer.get(), file_size);
+    using char_type = typename std::ifstream::char_type;
+    static_assert(sizeof(InnerType) == sizeof(char_type));
+    std::ifstream ifs(file_name.c_str(), std::ios::binary);
+    char_type* buffer_char = reinterpret_cast<char_type*>(buffer.get());
+    ifs.read(buffer_char, file_size);
     return buffer;
 }
 }

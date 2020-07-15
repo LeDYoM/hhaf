@@ -17,7 +17,7 @@ function(build_client_library)
     message("Post build command. Copy directory")
     message(${CL_BUILD_DATA_SOURCE})
     message("to")
-    message("$<TARGET_FILE_DIR:${${CURRENT_TARGET}}>")
+    message("$<TARGET_FILE_DIR:${CURRENT_TARGET}>")
 
     add_custom_command(
       TARGET ${CURRENT_TARGET}

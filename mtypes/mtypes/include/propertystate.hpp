@@ -17,12 +17,12 @@ template <typename T>
 class PropertyState final : public BasicProperty<T>
 {
     using BaseClass = BasicProperty<T>;
-    using type = BaseClass::type;
-    using const_type = BaseClass::const_type;
-    using reference = BaseClass::reference;
-    using const_reference = BaseClass::const_reference;
-    using pointer = BaseClass::pointer;
-    using const_pointer = BaseClass::const_pointer;
+    using type = typename BaseClass::type;
+    using const_type = typename BaseClass::const_type;
+    using reference = typename BaseClass::reference;
+    using const_reference = typename BaseClass::const_reference;
+    using pointer = typename BaseClass::pointer;
+    using const_pointer = typename BaseClass::const_pointer;
 
 public:
     constexpr PropertyState() noexcept : BaseClass{} {}
