@@ -33,7 +33,7 @@ public:
         const mtps::vector<mtps::sptr<ITexture>>& texture_pages);
 
 private:
-    BMFontPrivate* fontPrivate;
+    mtps::rptr<BMFontPrivate> fontPrivate_;
     bool ParseFont(const mtps::str&);
 };
 }  // namespace haf::res
