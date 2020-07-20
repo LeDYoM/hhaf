@@ -13,10 +13,10 @@ namespace mtps
  * class for any Property class.
  * @tparam T Inner type of the property.
  */
-template <typename T>
-class PropertyState final : public BasicProperty<T>
+template <typename T, typename Tag = DummyTag>
+class PropertyState final : public BasicProperty<T, Tag>
 {
-    using BaseClass = BasicProperty<T>;
+    using BaseClass = BasicProperty<T, Tag>;
     using type = typename BaseClass::type;
     using const_type = typename BaseClass::const_type;
     using reference = typename BaseClass::reference;
@@ -28,7 +28,7 @@ public:
     constexpr PropertyState() noexcept : BaseClass{} {}
     constexpr PropertyState(T iv) noexcept : BaseClass{std::move(iv)} {}
     constexpr PropertyState(PropertyState &&) noexcept = default;
-    constexpr PropertyState(const PropertyState &) noexcept = default;
+    PropertyState(const PropertyState &) = default;
     constexpr PropertyState &operator=(PropertyState &&) noexcept = default;
     constexpr PropertyState &operator=(const PropertyState &) noexcept = default;
 
@@ -51,6 +51,17 @@ public:
     inline bool set(const T &v) override
     {
         const bool is_different{BaseClass::set(v)};
+
+        if (is_different)
+        {
+            setChanged();
+        }
+        return is_different;
+    }
+
+    inline bool set(T &&v) override
+    {
+        const bool is_different{BaseClass::set(std::move(v))};
 
         if (is_different)
         {
