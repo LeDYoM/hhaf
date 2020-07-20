@@ -1,0 +1,9 @@
+Terminating scene GroupScene1
+Setting new scene: GroupScene2
+Terminating scene GroupScene2
+Setting new scene: <nullptr>
+Initializing SharedDataSystem
+Trying to store an empty shareddata
+Trying to retrieve empty shared data
+Initializing SharedDataSystem
+Trying to retrieve empty shared data

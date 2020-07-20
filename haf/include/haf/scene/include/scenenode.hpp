@@ -6,6 +6,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
 #include <mtypes/include/properties.hpp>
+#include <mtypes/include/grouping_property.hpp>
 #include <haf/scene/include/scenenodeparent.hpp>
 #include <haf/scene/include/scenenodes.hpp>
 #include <haf/scene/include/renderizables.hpp>
@@ -85,8 +86,10 @@ public:
         return sceneNodeCast<T>(this);
     }
 
-    mtps::BasicProperty<bool> visible;
     void clearAll();
+
+    mtps::GroupableProperty<mtps::Visible> visible;
+//    mtps::BasicProperty<bool> visible;
 };
 
 using SceneNodeSPtr = mtps::sptr<SceneNode>;

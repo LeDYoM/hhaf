@@ -5,15 +5,18 @@
 
 namespace mtps
 {
+struct DummyTag {};
+
 /**
  * @brief Class provides a basic interface for properties. This is the base
  * class for any Property class.
  * @tparam T Inner type of the property.
  */
-template <typename T>
+template <typename T, typename Tag = DummyTag>
 class IProperty
 {
 public:
+    using tag = Tag;
     using type = T;
     using const_type = T const;
     using reference = T&;
@@ -35,22 +38,25 @@ public:
      * @return false v was equal to the content, so no changes made.
      */
     virtual bool set(const T &v) = 0;
+    virtual bool set(T &&v) = 0;
 };
 
-template <typename T>
-class BasicProperty : public IProperty<T>
+template <typename T, typename Tag = DummyTag>
+class BasicProperty : public IProperty<T, Tag>
 {
 public:
-    using type = typename IProperty<T>::type;
-    using const_type = typename IProperty<T>::const_type;
-    using reference = typename IProperty<T>::reference;
-    using const_reference = typename IProperty<T>::const_reference;
-    using pointer = typename IProperty<T>::pointer;
-    using const_pointer = typename IProperty<T>::const_pointer;
+    using Base = IProperty<T, Tag>;
+    using tag = typename Base::tag;
+    using type = typename Base::type;
+    using const_type = typename Base::const_type;
+    using reference = typename Base::reference;
+    using const_reference = typename Base::const_reference;
+    using pointer = typename Base::pointer;
+    using const_pointer = typename Base::const_pointer;
 
     constexpr BasicProperty() noexcept = default;
     constexpr BasicProperty(BasicProperty &&) noexcept = default;
-    constexpr BasicProperty(const BasicProperty &) noexcept = default;
+    BasicProperty(const BasicProperty &) = default;
     constexpr BasicProperty &operator=(BasicProperty &&) noexcept = default;
     constexpr BasicProperty &operator=(const BasicProperty &) noexcept = default;
 
@@ -69,6 +75,16 @@ public:
         if (!(m_value == v))
         {
             m_value = v;
+            return true;
+        }
+        return false;
+    }
+
+    inline bool set(T &&v) override
+    {
+        if (!(m_value == std::forward<T>(v)))
+        {
+            m_value = std::move(v);
             return true;
         }
         return false;

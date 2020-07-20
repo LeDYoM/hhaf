@@ -6,6 +6,7 @@ set(CURRENT_TARGET ${PROJECT_NAME})
 set(SOURCE_TESTS
     array
     dictionary
+    grouping_properties
     lockablevector
     main
     menum
@@ -13,6 +14,7 @@ set(SOURCE_TESTS
     object_utils
     parpar
     properties
+    propertystate
     str
     vector
 )
