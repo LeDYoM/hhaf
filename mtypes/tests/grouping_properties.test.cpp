@@ -47,16 +47,16 @@ struct StrTag
     using value_type = str;
 };
 
-TEST_CASE("PropertyGroupImpl two elements", "[mtypes][property][Grouping]")
+TEST_CASE("PropertyGroupImpl four elements", "[mtypes][property][Grouping]")
 {
     using TTPropertyGroupImpl =
-        PropertyGroupImpl<CharTag, IntTag, StrTag,SptrIntTag>;
+        PropertyGroupImpl<CharTag, IntTag, StrTag, SptrIntTag>;
 
     TTPropertyGroupImpl pg;
-    auto a1 = pg.get_property_reference<CharTag>();
-    auto a2 = pg.get_property_reference<IntTag>();
-    auto a3 = pg.get_property_reference<StrTag>();
-    auto a4 = pg.get_property_reference<SptrIntTag>();
+    auto a1         = pg.get_property_reference<CharTag>();
+    auto a2         = pg.get_property_reference<IntTag>();
+    auto a3         = pg.get_property_reference<StrTag>();
+    auto a4         = pg.get_property_reference<SptrIntTag>();
     auto const sca1 = pg.get_property_reference<CharTag>();
     auto const sca2 = pg.get_property_reference<IntTag>();
     auto const sca3 = pg.get_property_reference<StrTag>();
@@ -69,10 +69,9 @@ TEST_CASE("PropertyGroupImpl two elements", "[mtypes][property][Grouping]")
     auto const ca4 = pg.get_property_reference<SptrIntTag>();
 }
 
-TEST_CASE("PropertyGroup two elements", "[mtypes][property][Grouping]")
+TEST_CASE("PropertyGroup four elements", "[mtypes][property][Grouping]")
 {
-    using TTPropertyGroup =
-        PropertyGroup<CharTag, IntTag, StrTag,SptrIntTag>;
+    using TTPropertyGroup = PropertyGroup<CharTag, IntTag, StrTag, SptrIntTag>;
 
     TTPropertyGroup pg;
     CHECK(pg.set<IntTag>(10000));
@@ -93,4 +92,30 @@ TEST_CASE("PropertyGroup two elements", "[mtypes][property][Grouping]")
 
     CHECK_FALSE(pg.set<IntTag>(10));
     CHECK(pg.get<IntTag>() == 10);
+}
+
+TEST_CASE("PropertyGroup construction", "[mtypes][property][Grouping]")
+{
+    using TTPropertyGroup = PropertyGroup<CharTag, IntTag, StrTag, SptrIntTag>;
+
+    TTPropertyGroup pg;
+
+    CHECK(pg.hasChanged<CharTag>());
+    CHECK(pg.hasChanged<IntTag>());
+    CHECK(pg.hasChanged<StrTag>());
+    CHECK(pg.hasChanged<SptrIntTag>());
+
+    CHECK_FALSE(pg.get<CharTag>() == 1);
+    CHECK_FALSE(pg.get<IntTag>() == 2);
+    auto q = pg.get<StrTag>() == "abc";
+    CHECK_FALSE(pg.get<StrTag>() == "abc");
+    CHECK_FALSE(pg.get<SptrIntTag>() != nullptr);
+
+    pg.put<CharTag>(1).put<IntTag>(2).put<StrTag>("abc").put<SptrIntTag>(
+        msptr<s32>(3));
+
+    CHECK(pg.get<CharTag>() == 1);
+    CHECK(pg.get<IntTag>() == 2);
+    CHECK(pg.get<StrTag>() == "abc");
+    CHECK(*pg.get<SptrIntTag>() == 3);
 }

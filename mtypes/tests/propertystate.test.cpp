@@ -19,10 +19,22 @@ TEST_CASE("PropertyState", "[mtypes][property][state]")
     CHECK(*(b.get()) == 5);
     t = msptr<s32>(10);
 
-    CHECK(a.readResetHasChanged());
-    CHECK_FALSE(a.readResetHasChanged());
+    CHECK(b.readResetHasChanged());
+    CHECK_FALSE(b.readResetHasChanged());
 
     b.set(std::move(t));
-    CHECK_FALSE(t.get() != nullptr);
+    CHECK(t.get() == nullptr);
     CHECK(*(b.get()) == 10);
+
+    CHECK(b.readResetHasChanged());
+    CHECK_FALSE(b.readResetHasChanged());
+
+    PropertyState<s32> c;
+    CHECK(c.readResetHasChanged());
+    CHECK_FALSE(c.readResetHasChanged());
+
+    c = 1;
+    CHECK(c.readResetHasChanged());
+    CHECK_FALSE(c.readResetHasChanged());
+    CHECK(c() == 1);
 }

@@ -47,7 +47,8 @@ struct PropertyGroupImpl : public GroupablePropertyImpl<FirstTag>,
     {
         if constexpr (std::is_same_v<Tag_, FirstTag>)
         {
-            return GroupablePropertyImpl<FirstTag>::template get_property_reference<Tag_>();
+            return GroupablePropertyImpl<
+                FirstTag>::template get_property_reference<Tag_>();
         }
         else
         {
@@ -60,20 +61,19 @@ struct PropertyGroupImpl : public GroupablePropertyImpl<FirstTag>,
     {
         if constexpr (std::is_same_v<Tag_, FirstTag>)
         {
-            return GroupablePropertyImpl<FirstTag>::template get_property_reference<Tag_>();
+            return GroupablePropertyImpl<
+                FirstTag>::template get_property_reference<Tag_>();
         }
         else
         {
             return Base::template get_property_reference<Tag_>();
         }
     }
-
 };
 
 template <typename FirstTag>
 struct PropertyGroupImpl<FirstTag> : public GroupablePropertyImpl<FirstTag>
 {
-
     using Base = GroupablePropertyImpl<FirstTag>;
     using Base::get_property_reference;
 };
@@ -93,6 +93,34 @@ struct PropertyGroup : public PropertyGroupImpl<Tag...>
     bool set(typename Tag_::value_type const& value) noexcept
     {
         return Base::template get_property_reference<Tag_>().set(value);
+    }
+
+    template <typename Tag_>
+    bool set(typename Tag_::value_type&& value) noexcept
+    {
+        return Base::template get_property_reference<Tag_>().set(
+            std::move(value));
+    }
+
+    template <typename Tag_>
+    PropertyGroup& put(typename Tag_::value_type const& value) noexcept
+    {
+        (void)Base::template get_property_reference<Tag_>().set(value);
+        return *this;
+    }
+
+    template <typename Tag_>
+    PropertyGroup& put(typename Tag_::value_type&& value) noexcept
+    {
+        (void)Base::template get_property_reference<Tag_>().set(
+            std::move(value));
+        return *this;
+    }
+
+    template <typename Tag_>
+    bool hasChanged() const noexcept
+    {
+        return Base::template get_property_reference<Tag_>().hasChanged();
     }
 };
 
