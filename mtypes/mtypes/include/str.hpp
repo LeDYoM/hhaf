@@ -396,20 +396,14 @@ public:
     constexpr bool operator==(const str::char_type* a) const noexcept
     {
         size_type counter{0};
-        for (const auto c : m_data)
+        for (; counter < size() && a[counter] != 0; ++counter)
         {
-            if (a[counter] == 0 && c != 0)
+            if (m_data[counter] != a[counter])
             {
                 return false;
             }
-
-            if (c != a[counter])
-            {
-                return false;
-            }
-            ++counter;
         }
-        return true;
+        return counter == size() && a[counter] == 0;
     }
 
     constexpr bool operator!=(const str::char_type* a) const noexcept

@@ -11,6 +11,7 @@ TEST_CASE("str::str", "[str]")
         str test;
         CHECK(test == "");
         CHECK(test.size() == 0);
+        CHECK_FALSE(test == "abc");
     }
 
     SECTION("Copy initialize")
