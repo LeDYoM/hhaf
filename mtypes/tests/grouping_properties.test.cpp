@@ -107,7 +107,6 @@ TEST_CASE("PropertyGroup construction", "[mtypes][property][Grouping]")
 
     CHECK_FALSE(pg.get<CharTag>() == 1);
     CHECK_FALSE(pg.get<IntTag>() == 2);
-    auto q = pg.get<StrTag>() == "abc";
     CHECK_FALSE(pg.get<StrTag>() == "abc");
     CHECK_FALSE(pg.get<SptrIntTag>() != nullptr);
 
@@ -118,4 +117,6 @@ TEST_CASE("PropertyGroup construction", "[mtypes][property][Grouping]")
     CHECK(pg.get<IntTag>() == 2);
     CHECK(pg.get<StrTag>() == "abc");
     CHECK(*pg.get<SptrIntTag>() == 3);
+
+
 }

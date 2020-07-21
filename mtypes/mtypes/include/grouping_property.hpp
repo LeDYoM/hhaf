@@ -124,6 +124,30 @@ struct PropertyGroup : public PropertyGroupImpl<Tag...>
     }
 };
 
+template <typename TagFirst, typename... Tag>
+bool anyHasChanged(PropertyGroupImpl<TagFirst, Tag...> const& pg) noexcept
+{
+    bool any_has_changed =
+        pg.template get_property_reference<TagFirst>().hasChanged();
+    if constexpr (sizeof...(Tag) > 0)
+    {
+        any_has_changed |= anyHasChanged(pg);
+    }
+    return any_has_changed;
+}
+
+template <typename TagFirst, typename... Tag>
+bool allHaveChanged(PropertyGroupImpl<TagFirst, Tag...> const& pg) noexcept
+{
+    bool any_has_changed =
+        pg.template get_property_reference<TagFirst>().hasChanged();
+    if constexpr (sizeof...(Tag) > 0U)
+    {
+        any_has_changed |= allHaveChanged(pg);
+    }
+    return any_has_changed;
+}
+
 }  // namespace mtps
 
 #endif
