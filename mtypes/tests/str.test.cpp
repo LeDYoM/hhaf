@@ -29,6 +29,23 @@ TEST_CASE("str::str", "[str]")
         CHECK(test3 == "test1_bigstring_to_test_here_and_now_in_this_test");
         CHECK(test3.size() == sizeof(test_str) - 1);
     }
+
+    SECTION("Copy")
+    {
+        str test;
+        test = "def";
+        CHECK(test == "def");
+        CHECK_FALSE(test != "def");
+        CHECK_FALSE(test == "de");
+        CHECK_FALSE(test == "def0");
+        CHECK(test == "def");
+        CHECK_FALSE(test == "");
+        CHECK_FALSE("def" != test);
+        CHECK_FALSE("de" == test);
+        CHECK_FALSE("def0" == test);
+        CHECK("def" == test);
+        CHECK_FALSE("" == test);
+    }
 }
 
 TEST_CASE("str", "[str]")
