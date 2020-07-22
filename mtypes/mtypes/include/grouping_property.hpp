@@ -122,6 +122,13 @@ struct PropertyGroup : public PropertyGroupImpl<Tag...>
     {
         return Base::template get_property_reference<Tag_>().hasChanged();
     }
+
+    template <typename Tag_>
+    typename Tag_::value_type readResethasChanged() noexcept
+    {
+        return Base::template get_property_reference<Tag_>()
+            .readResethasChanged();
+    }
 };
 
 template <typename TagFirst, typename... Tag>
@@ -131,21 +138,39 @@ bool anyHasChanged(PropertyGroupImpl<TagFirst, Tag...> const& pg) noexcept
         pg.template get_property_reference<TagFirst>().hasChanged();
     if constexpr (sizeof...(Tag) > 0)
     {
-        any_has_changed |= anyHasChanged(pg);
+        any_has_changed |=
+            anyHasChanged(static_cast<PropertyGroupImpl<Tag...>>(pg));
     }
     return any_has_changed;
 }
 
 template <typename TagFirst, typename... Tag>
-bool allHaveChanged(PropertyGroupImpl<TagFirst, Tag...> const& pg) noexcept
+bool allHaveChanged_(PropertyGroupImpl<TagFirst, Tag...> const& pg) noexcept
 {
     bool any_has_changed =
         pg.template get_property_reference<TagFirst>().hasChanged();
     if constexpr (sizeof...(Tag) > 0U)
     {
-        any_has_changed |= allHaveChanged(pg);
+        any_has_changed |=
+            allHaveChanged(static_cast<PropertyGroupImpl<Tag...>>(pg));
     }
     return any_has_changed;
+}
+
+template <typename... Tag>
+bool allHaveChanged(PropertyGroup<Tag...> const& pg) noexcept
+{
+    return allHaveChanged_(static_cast<PropertyGroupImpl<Tag...>>(pg));
+}
+
+template <typename TagFirst, typename... Tag>
+void resetHasChanged(PropertyGroupImpl<TagFirst, Tag...> const& pg) noexcept
+{
+    pg.template get_property_reference<TagFirst>().resetHasChanged();
+    if constexpr (sizeof...(Tag) > 0U)
+    {
+        resetHasChanged(static_cast<PropertyGroupImpl<Tag...>>(pg));
+    }
 }
 
 }  // namespace mtps

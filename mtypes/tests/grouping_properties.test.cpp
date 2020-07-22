@@ -110,6 +110,9 @@ TEST_CASE("PropertyGroup construction", "[mtypes][property][Grouping]")
     CHECK_FALSE(pg.get<StrTag>() == "abc");
     CHECK_FALSE(pg.get<SptrIntTag>() != nullptr);
 
+    CHECK(allHaveChanged(pg));
+//    CHECK(anyHasChanged(pg));
+
     pg.put<CharTag>(1).put<IntTag>(2).put<StrTag>("abc").put<SptrIntTag>(
         msptr<s32>(3));
 
