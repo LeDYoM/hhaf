@@ -152,7 +152,7 @@ bool allHaveChanged_(PropertyGroupImpl<TagFirst, Tag...> const& pg) noexcept
     if constexpr (sizeof...(Tag) > 0U)
     {
         any_has_changed |=
-            allHaveChanged(static_cast<PropertyGroupImpl<Tag...>>(pg));
+            allHaveChanged_(static_cast<PropertyGroupImpl<Tag...>>(pg));
     }
     return any_has_changed;
 }
