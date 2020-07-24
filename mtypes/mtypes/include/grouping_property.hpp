@@ -132,29 +132,35 @@ struct PropertyGroup : public PropertyGroupImpl<Tag...>
 };
 
 template <typename TagFirst, typename... Tag>
-bool anyHasChanged(PropertyGroupImpl<TagFirst, Tag...> const& pg) noexcept
+bool anyHasChanged_(PropertyGroupImpl<TagFirst, Tag...> const& pg) noexcept
 {
     bool any_has_changed =
         pg.template get_property_reference<TagFirst>().hasChanged();
     if constexpr (sizeof...(Tag) > 0)
     {
         any_has_changed |=
-            anyHasChanged(static_cast<PropertyGroupImpl<Tag...>>(pg));
+            anyHasChanged_(static_cast<PropertyGroupImpl<Tag...>>(pg));
     }
     return any_has_changed;
+}
+
+template <typename... Tag>
+bool anyHasChanged(PropertyGroup<Tag...> const& pg) noexcept
+{
+    return anyHasChanged_(static_cast<PropertyGroupImpl<Tag...>>(pg));
 }
 
 template <typename TagFirst, typename... Tag>
 bool allHaveChanged_(PropertyGroupImpl<TagFirst, Tag...> const& pg) noexcept
 {
-    bool any_has_changed =
+    bool all_have_changed =
         pg.template get_property_reference<TagFirst>().hasChanged();
     if constexpr (sizeof...(Tag) > 0U)
     {
-        any_has_changed |=
-            allHaveChanged(static_cast<PropertyGroupImpl<Tag...>>(pg));
+        all_have_changed &=
+            allHaveChanged_(static_cast<PropertyGroupImpl<Tag...>>(pg));
     }
-    return any_has_changed;
+    return all_have_changed;
 }
 
 template <typename... Tag>
@@ -164,13 +170,19 @@ bool allHaveChanged(PropertyGroup<Tag...> const& pg) noexcept
 }
 
 template <typename TagFirst, typename... Tag>
-void resetHasChanged(PropertyGroupImpl<TagFirst, Tag...> const& pg) noexcept
+void resetHasChanged_(PropertyGroupImpl<TagFirst, Tag...>& pg) noexcept
 {
     pg.template get_property_reference<TagFirst>().resetHasChanged();
     if constexpr (sizeof...(Tag) > 0U)
     {
-        resetHasChanged(static_cast<PropertyGroupImpl<Tag...>>(pg));
+        resetHasChanged_(static_cast<PropertyGroupImpl<Tag...>&>(pg));
     }
+}
+
+template <typename... Tag>
+void resetHasChanged(PropertyGroup<Tag...>& pg) noexcept
+{
+    resetHasChanged_(static_cast<PropertyGroupImpl<Tag...>&>(pg));
 }
 
 }  // namespace mtps

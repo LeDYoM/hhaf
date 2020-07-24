@@ -111,15 +111,45 @@ TEST_CASE("PropertyGroup construction", "[mtypes][property][Grouping]")
     CHECK_FALSE(pg.get<SptrIntTag>() != nullptr);
 
     CHECK(allHaveChanged(pg));
-//    CHECK(anyHasChanged(pg));
+    CHECK(anyHasChanged(pg));
+
+    resetHasChanged(pg);
+
+    CHECK_FALSE(pg.hasChanged<CharTag>());
+    CHECK_FALSE(pg.hasChanged<IntTag>());
+    CHECK_FALSE(pg.hasChanged<StrTag>());
+    CHECK_FALSE(pg.hasChanged<SptrIntTag>());
+
+    CHECK_FALSE(allHaveChanged(pg));
+    CHECK_FALSE(anyHasChanged(pg));
 
     pg.put<CharTag>(1).put<IntTag>(2).put<StrTag>("abc").put<SptrIntTag>(
         msptr<s32>(3));
+
+    CHECK(pg.hasChanged<CharTag>());
+    CHECK(pg.hasChanged<IntTag>());
+    CHECK(pg.hasChanged<StrTag>());
+    CHECK(pg.hasChanged<SptrIntTag>());
+
+    CHECK(allHaveChanged(pg));
+    CHECK(anyHasChanged(pg));
 
     CHECK(pg.get<CharTag>() == 1);
     CHECK(pg.get<IntTag>() == 2);
     CHECK(pg.get<StrTag>() == "abc");
     CHECK(*pg.get<SptrIntTag>() == 3);
 
+    resetHasChanged(pg);
+    CHECK_FALSE(allHaveChanged(pg));
+    CHECK_FALSE(anyHasChanged(pg));
 
+    pg.set<IntTag>(5);
+
+    CHECK(pg.get<CharTag>() == 1);
+    CHECK(pg.get<IntTag>() == 5);
+    CHECK(pg.get<StrTag>() == "abc");
+    CHECK(*pg.get<SptrIntTag>() == 3);
+
+    CHECK_FALSE(allHaveChanged(pg));
+    CHECK(anyHasChanged(pg));
 }
