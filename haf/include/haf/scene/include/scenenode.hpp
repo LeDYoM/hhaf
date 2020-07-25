@@ -7,6 +7,7 @@
 #include <mtypes/include/vector2d.hpp>
 #include <mtypes/include/properties.hpp>
 #include <mtypes/include/grouping_property.hpp>
+#include <haf/scene/include/scenenode_properties.hpp>
 #include <haf/scene/include/scenenodeparent.hpp>
 #include <haf/scene/include/scenenodes.hpp>
 #include <haf/scene/include/renderizables.hpp>
@@ -37,7 +38,8 @@ class SceneNode : public sys::HasName,
                   public sys::DataWrapperCreator,
                   public ComponentContainer,
                   public sys::SystemAccess,
-                  public InterfaceGetter
+                  public InterfaceGetter,
+                  public SceneNodeProperties
 {
 public:
     /**
@@ -87,13 +89,6 @@ public:
     }
 
     void clearAll();
-
-    struct Visible
-    {
-        using value_type = bool;
-    };
-    mtps::GroupableProperty<Visible> visible;
-//    mtps::BasicProperty<bool> visible;
 };
 
 using SceneNodeSPtr = mtps::sptr<SceneNode>;

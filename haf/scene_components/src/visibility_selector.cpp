@@ -17,9 +17,9 @@ void VisibilitySelectorComponent::show(size_type index, bool force)
 {
     if (index != active_index || force)
     {
-        attachedNode()->sceneNodes()[active_index]->visible = false;
-        active_index                                        = index;
-        attachedNode()->sceneNodes()[active_index]->visible = true;
+        attachedNode()->sceneNodes()[active_index]->set<Visible>(false);
+        active_index = index;
+        attachedNode()->sceneNodes()[active_index]->set<Visible>(true);
     }
 }
 
@@ -27,7 +27,7 @@ void VisibilitySelectorComponent::hideAll()
 {
     for (auto& scene_node : attachedNode()->sceneNodes())
     {
-        scene_node->visible = false;
+        scene_node->set<Visible>(false);
     }
 }
 

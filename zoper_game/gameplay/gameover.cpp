@@ -46,7 +46,7 @@ GameOverSceneNode::GameOverSceneNode(scene::SceneNode* const parent, str name) :
     overText->alignmentX.set(SceneNodeText::AlignmentX::Center);
     overText->alignmentY.set(SceneNodeText::AlignmentY::Bottom);
 
-    visible = false;
+    set<Visible>(false);
 }
 
 GameOverSceneNode::~GameOverSceneNode() = default;
