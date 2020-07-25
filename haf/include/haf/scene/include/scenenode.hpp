@@ -88,7 +88,11 @@ public:
 
     void clearAll();
 
-    mtps::GroupableProperty<mtps::Visible> visible;
+    struct Visible
+    {
+        using value_type = bool;
+    };
+    mtps::GroupableProperty<Visible> visible;
 //    mtps::BasicProperty<bool> visible;
 };
 
