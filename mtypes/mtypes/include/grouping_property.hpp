@@ -21,6 +21,15 @@ using GroupableProperty = PropertyState<typename Tag::value_type, Tag>;
 template <typename Tag>
 struct GroupablePropertyImpl
 {
+    GroupablePropertyImpl() = default;
+    GroupablePropertyImpl(typename Tag::value_type const& value) noexcept :
+        prop_{value}
+    {}
+
+    GroupablePropertyImpl(typename Tag::value_type&& value) noexcept :
+        prop_{std::move(value)}
+    {}
+
     template <typename Tag_>
     GroupableProperty<Tag_>& get_property_reference() noexcept
     {
@@ -52,6 +61,16 @@ template <typename FirstTag, typename... Tag>
 struct PropertyGroupImpl : public GroupablePropertyImpl<FirstTag>,
                            public PropertyGroupImpl<Tag...>
 {
+    PropertyGroupImpl() = default;
+
+    template <typename FirstTag_, typename... Tag_>
+    PropertyGroupImpl(typename FirstTag_::value_type const& value,
+                      typename Tag_::value_type const& ...values) :
+        GroupablePropertyImpl{value},
+        PropertyGroupImpl<Tag...>::PropertyGroupImpl(
+            std::forward<Tag::value_type>(values)...)
+    {}
+
     template <typename Tag_>
     GroupableProperty<Tag_> const& get_property_reference() const noexcept
     {
@@ -90,18 +109,26 @@ struct PropertyGroupImpl : public GroupablePropertyImpl<FirstTag>,
 template <typename FirstTag>
 struct PropertyGroupImpl<FirstTag> : public GroupablePropertyImpl<FirstTag>
 {
+    PropertyGroupImpl() = default;
+    using GroupablePropertyImpl<FirstTag>::GroupablePropertyImpl;
     using GroupablePropertyImpl<FirstTag>::get_property_reference;
 };
 
 /**
  * @brief Class exporting the functionality to group some properties and their
  * most important actions on them.
- * @tparam Tag... Tags referencing the properties to add in the group. 
+ * @tparam Tag... Tags referencing the properties to add in the group.
  */
 template <typename... Tag>
 struct PropertyGroup : public PropertyGroupImpl<Tag...>
 {
     using Base = PropertyGroupImpl<Tag...>;
+
+    PropertyGroup() = default;
+
+    template <typename... Tag_>
+    PropertyGroup(typename Tag_::value_type const& ...values) : Base{values}...
+    {}
 
     template <typename Tag_>
     typename Tag_::value_type get() const noexcept

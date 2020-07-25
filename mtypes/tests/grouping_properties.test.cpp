@@ -30,6 +30,24 @@ TEST_CASE("PropertyGroup one element", "[mtypes][property][Grouping]")
     CHECK_FALSE(pg.set<IntTag>(3));
 
     CHECK(pg.get<IntTag>() == 3);
+
+    CHECK(allHaveChanged(pg));
+    CHECK(anyHasChanged(pg));
+
+    resetHasChanged(pg);
+
+    CHECK_FALSE(pg.hasChanged<IntTag>());
+
+    CHECK_FALSE(allHaveChanged(pg));
+    CHECK_FALSE(anyHasChanged(pg));
+
+    CHECK(pg.set<IntTag>(5));
+    CHECK_FALSE(pg.set<IntTag>(5));
+
+    CHECK(pg.get<IntTag>() == 5);
+
+    CHECK(allHaveChanged(pg));
+    CHECK(anyHasChanged(pg));
 }
 
 struct CharTag
