@@ -63,12 +63,10 @@ struct PropertyGroupImpl : public GroupablePropertyImpl<FirstTag>,
 {
     PropertyGroupImpl() = default;
 
-    template <typename FirstTag_, typename... Tag_>
-    PropertyGroupImpl(typename FirstTag_::value_type const& value,
-                      typename Tag_::value_type const& ...values) :
-        GroupablePropertyImpl{value},
-        PropertyGroupImpl<Tag...>::PropertyGroupImpl(
-            std::forward<Tag::value_type>(values)...)
+    PropertyGroupImpl(typename FirstTag::value_type const& value,
+                      typename Tag::value_type const&... values) :
+        GroupablePropertyImpl<FirstTag>{value},
+        PropertyGroupImpl<Tag...>::PropertyGroupImpl(values...)
     {}
 
     template <typename Tag_>
@@ -126,8 +124,7 @@ struct PropertyGroup : public PropertyGroupImpl<Tag...>
 
     PropertyGroup() = default;
 
-    template <typename... Tag_>
-    PropertyGroup(typename Tag_::value_type const& ...values) : Base{values}...
+    PropertyGroup(typename Tag::value_type const&... values) : Base(values...)
     {}
 
     template <typename Tag_>

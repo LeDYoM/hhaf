@@ -112,7 +112,7 @@ TEST_CASE("PropertyGroup four elements", "[mtypes][property][Grouping]")
     CHECK(pg.get<IntTag>() == 10);
 }
 
-TEST_CASE("PropertyGroup construction", "[mtypes][property][Grouping]")
+TEST_CASE("PropertyGroup changes check", "[mtypes][property]")
 {
     using TTPropertyGroup = PropertyGroup<CharTag, IntTag, StrTag, SptrIntTag>;
 
@@ -170,4 +170,16 @@ TEST_CASE("PropertyGroup construction", "[mtypes][property][Grouping]")
 
     CHECK_FALSE(allHaveChanged(pg));
     CHECK(anyHasChanged(pg));
+}
+
+TEST_CASE("PropertyGroupImp one element construction", "[mtypes][property]")
+{
+    using TPropertyGroup = PropertyGroup<IntTag>;
+    TPropertyGroup pg(3);
+}
+
+TEST_CASE("PropertyGroup four elements construction", "[mtypes][property]")
+{
+    using TTPropertyGroup = PropertyGroup<CharTag, IntTag, StrTag, SptrIntTag>;
+    TTPropertyGroup pg('2',3,"a", msptr<int>(6));
 }
