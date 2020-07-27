@@ -175,11 +175,31 @@ TEST_CASE("PropertyGroup changes check", "[mtypes][property]")
 TEST_CASE("PropertyGroupImp one element construction", "[mtypes][property]")
 {
     using TPropertyGroup = PropertyGroup<IntTag>;
-    TPropertyGroup pg(3);
+    TPropertyGroup pg(99);
+
+    CHECK(pg.get<IntTag>() == 99);
 }
 
 TEST_CASE("PropertyGroup four elements construction", "[mtypes][property]")
 {
     using TTPropertyGroup = PropertyGroup<CharTag, IntTag, StrTag, SptrIntTag>;
-    TTPropertyGroup pg('2',3,"a", msptr<int>(6));
+    TTPropertyGroup pg('2', 3, "a", msptr<int>(6));
+
+    CHECK(pg.get<CharTag>() == '2');
+    CHECK(pg.get<IntTag>() == 3);
+    CHECK(pg.get<StrTag>() == "a");
+    CHECK(*pg.get<SptrIntTag>() == 6);
+}
+
+TEST_CASE("PropertyGroupImp inheritance", "[mtypes][property]")
+{
+    using TPropertyGroup =
+        PropertyGroupCombiner<IntTag>::Combined<CharTag, StrTag, SptrIntTag>;
+
+    TPropertyGroup pg(10, 'r', "bc", msptr<int>(200));
+
+    CHECK(pg.get<CharTag>() == 'r');
+    CHECK(pg.get<IntTag>() == 10);
+    CHECK(pg.get<StrTag>() == "bc");
+    CHECK(*pg.get<SptrIntTag>() == 200);
 }

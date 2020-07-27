@@ -21,6 +21,9 @@ using GroupableProperty = PropertyState<typename Tag::value_type, Tag>;
 template <typename Tag>
 struct GroupablePropertyImpl
 {
+    using tag_type   = Tag;
+    using value_type = typename Tag::value_type;
+
     GroupablePropertyImpl() = default;
     GroupablePropertyImpl(typename Tag::value_type const& value) noexcept :
         prop_{value}
@@ -107,14 +110,17 @@ struct PropertyGroupImpl : public GroupablePropertyImpl<FirstTag>,
 template <typename FirstTag>
 struct PropertyGroupImpl<FirstTag> : public GroupablePropertyImpl<FirstTag>
 {
+    using tag_type   = typename GroupablePropertyImpl<FirstTag>::tag_type;
+    using value_type = typename GroupablePropertyImpl<FirstTag>::value_type;
+
     PropertyGroupImpl() = default;
     using GroupablePropertyImpl<FirstTag>::GroupablePropertyImpl;
     using GroupablePropertyImpl<FirstTag>::get_property_reference;
 };
 
 /**
- * @brief Class exporting the functionality to group some properties and their
- * most important actions on them.
+ * @brief Class exporting the functionality to group some properties and
+ * their most important actions on them.
  * @tparam Tag... Tags referencing the properties to add in the group.
  */
 template <typename... Tag>
@@ -173,6 +179,19 @@ struct PropertyGroup : public PropertyGroupImpl<Tag...>
         return Base::template get_property_reference<Tag_>()
             .readResethasChanged();
     }
+};
+
+template <typename... Args1>
+//template <template<class> class H, class S>
+struct PropertyGroupCombiner
+{
+    template <typename... Args2>
+    static PropertyGroup<Args1..., Args2...> dummy()
+    {
+        return PropertyGroup<Args1..., Args2...>();
+    }
+    template <typename... Args2>
+    using Combined = decltype(dummy<Args2...>());
 };
 
 template <typename TagFirst, typename... Tag>

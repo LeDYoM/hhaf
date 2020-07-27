@@ -26,9 +26,9 @@ namespace mtps
 template <typename T,
           typename Allocator  = AllocatorType<T>,
           typename GrowPolicy = GrowPolicyUnary>
-class vector final : private vector_storage<T, Allocator, GrowPolicy>
+class vector final
 {
-    using Base = vector_storage<T, Allocator, GrowPolicy>;
+    vector_storage<T, Allocator, GrowPolicy> base_;
 
 public:
     using iterator        = T*;
@@ -51,7 +51,7 @@ public:
      *
      * @param size Expected size of the inner container
      */
-    explicit vector(const size_type size) : Base(size) {}
+    explicit vector(const size_type size) : base_(size) {}
 
     /**
      * @brief Constructor with reserved memory and copy from source.
@@ -62,7 +62,7 @@ public:
      * @param count Number of elements to copy.
      */
     constexpr vector(const T* const source, const size_type count) :
-        Base(count)
+        base_(count)
     {
         for (auto iterator = source; iterator != (source + count); ++iterator)
         {
@@ -87,11 +87,11 @@ public:
      *
      * @param other Source vector to copy.
      */
-    constexpr vector(const vector& other) : vector(other.m_buffer, other.m_size)
+    constexpr vector(const vector& other) : vector(other.begin(), other.begin() + other.size())
     {}
 
     // Move constructor.
-    constexpr vector(vector&& other) noexcept : Base{std::move(other)}
+    constexpr vector(vector&& other) noexcept : base_{std::move(other.base_)}
     {}
 
     /// Copy assignment.
@@ -108,7 +108,7 @@ public:
     /// Move assignment
     constexpr vector& operator=(vector&& other) noexcept
     {
-        swap(other);
+        base_.swap(other.base_);
         return *this;
     }
 
@@ -118,41 +118,41 @@ public:
     constexpr reference operator[](const size_type index) noexcept
     {
         assert(index < size());
-        return *(Base::at(index));
+        return *(base_.at(index));
     }
 
     constexpr const_reference operator[](const size_type index) const noexcept
     {
         assert(index < size());
-        return *(Base::at(index));
+        return *(base_.at(index));
     }
 
-    constexpr size_type capacity() const noexcept { return Base::capacity(); }
-    constexpr size_type size() const noexcept { return Base::size(); }
-    constexpr bool empty() const noexcept { return Base::empty(); }
-    constexpr iterator begin() noexcept { return Base::begin(); }
-    constexpr const_iterator begin() const noexcept { return Base::begin(); }
-    constexpr const_iterator cbegin() const noexcept { return Base::cbegin(); }
-    constexpr iterator end() noexcept { return Base::end(); }
-    constexpr const_iterator end() const noexcept { return Base::end(); }
-    constexpr const_iterator cend() const noexcept { return Base::cend(); }
+    constexpr size_type capacity() const noexcept { return base_.capacity(); }
+    constexpr size_type size() const noexcept { return base_.size(); }
+    constexpr bool empty() const noexcept { return base_.empty(); }
+    constexpr iterator begin() noexcept { return base_.begin(); }
+    constexpr const_iterator begin() const noexcept { return base_.begin(); }
+    constexpr const_iterator cbegin() const noexcept { return base_.cbegin(); }
+    constexpr iterator end() noexcept { return base_.end(); }
+    constexpr const_iterator end() const noexcept { return base_.end(); }
+    constexpr const_iterator cend() const noexcept { return base_.cend(); }
 
     constexpr T& back() noexcept
     {
         assert(size() > 0U);
-        return *(Base::at(size() - 1U));
+        return *(base_.at(size() - 1U));
     }
 
     constexpr const T& back() const noexcept
     {
         assert(size() > 0U);
-        return *(Base::at(size() - 1U));
+        return *(base_.at(size() - 1U));
     }
 
     constexpr const T& cback() const noexcept
     {
         assert(size() > 0U);
-        return *(Base::cat(size() - 1U));
+        return *(base_.cat(size() - 1U));
     }
 
     template <typename F>
@@ -170,7 +170,7 @@ public:
 
     constexpr void swap(vector& other) noexcept
     {
-        Base::swap(static_cast<Base&>(other));
+        base_.swap(other.base_);
     }
 
     // TO DO: Optimize
@@ -373,16 +373,16 @@ public:
         return cfind(element);
     }
 
-    constexpr void shrink_to_fit() { Base::shrink_to_fit(); }
+    constexpr void shrink_to_fit() { base_.shrink_to_fit(); }
 
-    constexpr void push_back(const T& value) { Base::push_back(value); }
+    constexpr void push_back(const T& value) { base_.push_back(value); }
 
-    constexpr void push_back(T&& value) { Base::push_back(std::move(value)); }
+    constexpr void push_back(T&& value) { base_.push_back(std::move(value)); }
 
     template <typename... Args>
     constexpr void emplace_back(Args&&... args)
     {
-        Base::emplace_back(std::forward<Args>(args)...);
+        base_.emplace_back(std::forward<Args>(args)...);
     }
 
     constexpr void insert(const vector& other)
@@ -420,11 +420,11 @@ public:
         return *this;
     }
 
-    constexpr void pop_back() noexcept { Base::pop_back(); }
+    constexpr void pop_back() noexcept { base_.pop_back(); }
 
     constexpr void reserve(const size_type capacity)
     {
-        Base::reserve(capacity);
+        base_.reserve(capacity);
     }
 
     constexpr void resize(const size_type sz)

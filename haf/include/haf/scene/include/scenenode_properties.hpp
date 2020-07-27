@@ -12,8 +12,8 @@ struct Visible
     using value_type = bool;
 };
 
-struct SceneNodeProperties : public mtps::PropertyGroup<Visible>
-{};
+using SceneNodeProperties = mtps::PropertyGroup<Visible>;
+
 }  // namespace haf::scene
 
 #endif

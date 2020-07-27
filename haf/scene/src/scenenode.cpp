@@ -15,10 +15,9 @@ SceneNode::SceneNode(rptr<SceneNode> parent, str name) :
     ComponentContainer{this},
     sys::SystemAccess{parent != nullptr ? &(parent->isystemProvider())
                                         : nullptr},
-    InterfaceGetter{this}
-//    SceneNodeProperties(true)
+    InterfaceGetter{this},
+    SceneNodeProperties(true)
 {
-    set<Visible>(true);
 }
 
 SceneNode::~SceneNode() = default;
