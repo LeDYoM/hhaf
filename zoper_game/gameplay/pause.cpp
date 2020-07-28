@@ -34,14 +34,14 @@ PauseSceneNode::PauseSceneNode(scene::SceneNode* const parent, str name) :
     m_pauseText->alignmentX.set(SceneNodeText::AlignmentX::Center);
     m_pauseText->alignmentY.set(SceneNodeText::AlignmentY::Middle);
 
-    set<Visible>(false);
+    sceneNodeProperties().set<Visible>(false);
 }
 
 PauseSceneNode::~PauseSceneNode() = default;
 
 void PauseSceneNode::enterPause()
 {
-    set<Visible>(true);
+    sceneNodeProperties().set<Visible>(true);
     ensureComponentOfType(animation_component_);
     animation_component_->addPropertyAnimation(
         TimePoint_as_miliseconds(1000U), m_pauseText->textColor,
@@ -50,6 +50,6 @@ void PauseSceneNode::enterPause()
 
 void PauseSceneNode::exitPause()
 {
-    set<Visible>(false);
+    sceneNodeProperties().set<Visible>(false);
 }
 }  // namespace zoper

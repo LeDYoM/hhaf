@@ -190,16 +190,3 @@ TEST_CASE("PropertyGroup four elements construction", "[mtypes][property]")
     CHECK(pg.get<StrTag>() == "a");
     CHECK(*pg.get<SptrIntTag>() == 6);
 }
-
-TEST_CASE("PropertyGroupImp inheritance", "[mtypes][property]")
-{
-    using TPropertyGroup =
-        PropertyGroupCombiner<IntTag>::Combined<CharTag, StrTag, SptrIntTag>;
-
-    TPropertyGroup pg(10, 'r', "bc", msptr<int>(200));
-
-    CHECK(pg.get<CharTag>() == 'r');
-    CHECK(pg.get<IntTag>() == 10);
-    CHECK(pg.get<StrTag>() == "bc");
-    CHECK(*pg.get<SptrIntTag>() == 200);
-}

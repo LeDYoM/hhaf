@@ -78,23 +78,23 @@ void MainMenu::onCreated()
 
     auto resources_viewer = dataWrapper<res::ResourceView>();
 
-    auto normalFont =
-        resources_viewer->getTTFont(MainMenuResources::MenuFontId)->font(72);
-#ifdef TEST_BMP_FONT
-    auto normalFont =
-        resources_viewer->getBMPFont(MainMenuResources::TestFontId);
-#endif
-
-    setNormalTextFont(normalFont);
-    setNormalColor(colors::Blue);
-    setSelectedColor(colors::Red);
-
     Rectf32 textBox{
         rectFromSize(dataWrapper<SceneMetricsView>()->currentView().size())
             .setLeftTop({0, 750})
             .setSize({2000, 4 * 150})};
     position = textBox.leftTop();
-    setSceneNodeSizeForPages(textBox.size());
+
+    menuPagedProperties()
+        .put<NormalTextFont>(
+#ifdef TEST_BMP_FONT
+            getBMPFont(MainMenuResources::TestFontId)
+#else
+            resources_viewer->getTTFont(MainMenuResources::MenuFontId)->font(72)
+#endif
+                )
+        .put<NormalColor>(colors::Blue)
+        .put<SelectedColor>(colors::Red)
+        .put<SceneNodeSizeForPages>(textBox.size());
 
     vector_shared_pointers<scene::MenuPage> menu_steps;
 

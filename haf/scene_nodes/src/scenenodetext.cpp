@@ -46,8 +46,8 @@ void SceneNodeText::update()
         {
             auto texture(font()->getTexture());
 
-            f32 x{0.f};
-            f32 y{0.f};
+            f32 x{0.F};
+            f32 y{0.F};
 
             // Create one quad for each character
             f32 minX{y};

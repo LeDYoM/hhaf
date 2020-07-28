@@ -85,7 +85,7 @@ void SceneController::renderScene(Scene& scene,
 void SceneController::render(SceneNode& scene_node,
                              bool parentTransformationChanged)
 {
-    if (scene_node.get<Visible>())
+    if (scene_node.sceneNodeProperties().get<Visible>())
     {
         // Update the node components
         scene_node.updateComponents();

@@ -39,7 +39,7 @@ class SceneNode : public sys::HasName,
                   public ComponentContainer,
                   public sys::SystemAccess,
                   public InterfaceGetter,
-                  public SceneNodeProperties
+                  public SceneNodePropertiesContent
 {
 public:
     /**

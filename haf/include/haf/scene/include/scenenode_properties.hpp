@@ -14,6 +14,20 @@ struct Visible
 
 using SceneNodeProperties = mtps::PropertyGroup<Visible>;
 
+class SceneNodePropertiesContent
+{
+public:
+    explicit SceneNodePropertiesContent() : properties_(true) {}
+    SceneNodeProperties& sceneNodeProperties() noexcept { return properties_; }
+    SceneNodeProperties const& sceneNodeProperties() const noexcept
+    {
+        return properties_;
+    }
+
+private:
+    SceneNodeProperties properties_;
+};
+
 }  // namespace haf::scene
 
 #endif

@@ -174,24 +174,11 @@ struct PropertyGroup : public PropertyGroupImpl<Tag...>
     }
 
     template <typename Tag_>
-    typename Tag_::value_type readResethasChanged() noexcept
+    bool readResetHasChanged() noexcept
     {
         return Base::template get_property_reference<Tag_>()
-            .readResethasChanged();
+            .readResetHasChanged();
     }
-};
-
-template <typename... Args1>
-//template <template<class> class H, class S>
-struct PropertyGroupCombiner
-{
-    template <typename... Args2>
-    static PropertyGroup<Args1..., Args2...> dummy()
-    {
-        return PropertyGroup<Args1..., Args2...>();
-    }
-    template <typename... Args2>
-    using Combined = decltype(dummy<Args2...>());
 };
 
 template <typename TagFirst, typename... Tag>
