@@ -22,6 +22,17 @@
                     "ignoreFailures": true
                 }
             ]
+        },
+        {
+            "name": "(Windows) Launch",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${command:cmake.launchTargetPath}",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/build/bin/${command:cmake.buildType}",
+            "environment": [],
+            "externalConsole": false
         }
     ]
 }
