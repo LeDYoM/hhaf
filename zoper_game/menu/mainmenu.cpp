@@ -109,7 +109,7 @@ void MainMenu::onCreated()
             make_option("Exit", RangeOption(), MenuPagedOption::GoBack)},
         main_page_options));
 
-    menu_steps.push_back(menuPageMain);
+    menu_steps.emplace_back(menuPageMain);
 
     auto menuPageByToken(createAndConfigureMenuPage(
         "menuPageByToken",
@@ -118,7 +118,7 @@ void MainMenu::onCreated()
             make_option("Play", RangeOption(), MenuPagedOption::Accept),
             make_option("Back", RangeOption(), MenuPagedOption::GoBack)}));
 
-    menu_steps.push_back(menuPageByToken);
+    menu_steps.emplace_back(menuPageByToken);
 
     menu_steps.back()->Accepted.connect([this](vector<s32> menu_data) {
         goGame(this, GameMode::Token, std::move(menu_data));
@@ -131,7 +131,7 @@ void MainMenu::onCreated()
             make_option("Play", RangeOption(), MenuPagedOption::Accept),
             make_option("Back", RangeOption(), MenuPagedOption::GoBack)}));
 
-    menu_steps.push_back(menuPageByTime);
+    menu_steps.emplace_back(menuPageByTime);
 
     menu_steps.back()->Accepted.connect([this](vector<s32> menu_data) {
         goGame(this, GameMode::Time, std::move(menu_data));
@@ -150,7 +150,7 @@ void MainMenu::onCreated()
             make_option("Accept", RangeOption(), MenuPagedOption::GoBack),
             make_option("Cancel", RangeOption(), MenuPagedOption::GoBack)}));
 
-    menu_steps.push_back(menuPageOptions);
+    menu_steps.emplace_back(menuPageOptions);
 
     configure_menu(std::move(menu_steps));
 }
