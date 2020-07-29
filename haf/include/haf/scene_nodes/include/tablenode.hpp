@@ -6,6 +6,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/properties.hpp>
 #include <haf/scene/include/scenenode.hpp>
+#include <haf/scene_nodes/include/tablenode_properties.hpp>
 #include <hlog/include/hlog.hpp>
 
 namespace haf::scene::nodes
@@ -13,7 +14,7 @@ namespace haf::scene::nodes
 /// Class representing a SceneNode with table layout.
 /// Properties of the table can be configured like size and so on.
 template <typename T>
-class TableNode : public SceneNode
+class TableNode : public SceneNode, public TableNodePropertiesContent
 {
 public:
     using BaseClass        = SceneNode;
@@ -29,23 +30,19 @@ public:
     {
         tableSize_.set(std::move(ntableSize));
 
-        nodes_.resize(tableSize_().x);
-        inner_nodes_.resize(tableSize_().x);
+        nodes_.resize(tableSize().x);
+        inner_nodes_.resize(tableSize().x);
 
         for (auto& nodeColumn : nodes_)
         {
-            nodeColumn.resize(tableSize_().y);
+            nodeColumn.resize(tableSize().y);
         }
 
         for (auto& nodeColumn : inner_nodes_)
         {
-            nodeColumn.resize(tableSize_().y);
+            nodeColumn.resize(tableSize().y);
         }
     }
-
-    mtps::vector2dst tableSize() const noexcept { return tableSize_(); }
-
-    mtps::PropertyState<mtps::vector2df> sceneNodeSize;
 
     mtps::sptr<T> createNodeAt(const mtps::vector2dst& index,
                                const mtps::str& name)
@@ -66,10 +63,12 @@ public:
 
     constexpr mtps::vector2df cellSize() const
     {
-        return mtps::vector2df{sceneNodeSize() /
+        return mtps::vector2df{tableNodeProperties().get<SceneNodeSize>() /
                                static_cast<mtps::vector2df>(tableSize())};
     }
 
+    mtps::vector2dst tableSize() const noexcept { return tableSize_(); }
+    
     constexpr mtps::sptr<T> operator()(const mtps::vector2dst& index) noexcept
     {
         return nodes_[index.x][index.y];
@@ -136,9 +135,11 @@ public:
     void update() override
     {
         BaseClass::update();
+        bool do_update{tableNodeProperties().readResetHasChanged<SceneNodeSize>()};
+        do_update |= tableSize_.readResetHasChanged();
 
         // Update row and column size
-        if (ps_readResetHasAnyChanged(sceneNodeSize, tableSize_))
+        if (do_update)
         {
             const mtps::vector2df cell_size{cellSize()};
             for_each_table_innerSceneNode(

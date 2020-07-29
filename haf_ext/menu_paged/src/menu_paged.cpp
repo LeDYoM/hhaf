@@ -11,10 +11,11 @@ namespace haf::scene
 {
 
 MenuPaged::MenuPaged(SceneNode* parent, str name) :
-    BaseClass{parent, std::move(name)},
-    scene_node_size_for_pages_{
-        dataWrapper<SceneMetricsView>()->currentView().size()}
-{}
+    BaseClass{parent, std::move(name)}, MenuPagedPropertiesContent()
+{
+    menuPagedProperties().set<SceneNodeSizeForPages>(
+        dataWrapper<SceneMetricsView>()->currentView().size());
+}
 
 MenuPaged::~MenuPaged() = default;
 
@@ -22,13 +23,12 @@ void MenuPaged::update()
 {
     if (menuPagedProperties().readResetHasChanged<SceneNodeSizeForPages>())
     {
-        auto const scene_node_size_for_pages =
-            menuPagedProperties().get<SceneNodeSizeForPages>();
+        auto const size = menuPagedProperties().get<SceneNodeSizeForPages>();
         for (auto& sceneNode : sceneNodes())
         {
             if (auto menu_page = std::dynamic_pointer_cast<MenuPage>(sceneNode))
             {
-                menu_page->sceneNodeSize = scene_node_size_for_pages;
+                    menu_page->tableNodeProperties().set<SceneNodeSize>(size);
             }
         }
     }
@@ -95,11 +95,6 @@ void MenuPaged::terminate(const s32 status)
 {
     setMenuPagedStatus(status);
     MenuFinished(status_);
-}
-
-void MenuPaged::setMenuPageSceneNodeSizeForPages(mtps::sptr<MenuPage> menuPage)
-{
-    menuPage->sceneNodeSize = scene_node_size_for_pages_;
 }
 
 }  // namespace haf::scene

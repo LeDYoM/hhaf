@@ -43,14 +43,11 @@ protected:
                                                     Args&&... args)
     {
         auto node{createMenuPage(std::move(name))};
-        setMenuPageSceneNodeSizeForPages(node);
         node->configure(std::forward<Args>(args)...);
         return node;
     }
 
 private:
-    void setMenuPageSceneNodeSizeForPages(mtps::sptr<MenuPage> menuPage);
-    mtps::vector2df scene_node_size_for_pages_;
     mtps::vector_shared_pointers<MenuPage> menu_steps_;
     mtps::s32 status_{};
 };

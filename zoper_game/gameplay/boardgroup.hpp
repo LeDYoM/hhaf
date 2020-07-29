@@ -7,6 +7,7 @@
 
 #include <haf/scene/include/scenenode.hpp>
 #include <haf/scene_nodes/include/tablenode.hpp>
+#include <haf/scene_nodes/include/tablenode_properties.hpp>
 
 #include "boardtilescenenode.hpp"
 #include "direction.hpp"

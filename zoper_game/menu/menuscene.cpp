@@ -46,6 +46,7 @@ void MenuScene::onCreated()
             .create();
 
     auto mainMenu(createSceneNode<MainMenu>(MainMenu::ClassName));
+
     mainMenu->MenuFinished.connect([this](const s32 status) {
         if (status == 0)
         {

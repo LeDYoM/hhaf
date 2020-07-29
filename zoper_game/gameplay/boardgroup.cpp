@@ -29,7 +29,7 @@ void BoardGroup::configure(vector2dst size,
 
     Rectf32 textBox{dataWrapper<SceneMetricsView>()->currentView()};
     position      = textBox.leftTop();
-    sceneNodeSize = textBox.size();
+    static_cast<TableNode<BoardTileSceneNode>*>(this)->tableNodeProperties().set<SceneNodeSize>(textBox.size());
 
     const Rectf32 bBox(textBox);
 

@@ -235,6 +235,22 @@ void resetHasChanged(PropertyGroup<Tag...>& pg) noexcept
     resetHasChanged_(static_cast<PropertyGroupImpl<Tag...>&>(pg));
 }
 
+template <typename... Tag>
+bool readResetAnyHasChanged(PropertyGroup<Tag...>& pg) noexcept
+{
+    bool const any_changed{anyHasChanged(pg)};
+    resetHasChanged(pg);
+    return any_changed;
+}
+
+template <typename... Tag>
+bool readResetAllHaveChanged(PropertyGroup<Tag...>& pg) noexcept
+{
+    bool const all_changed{allHaveChanged(pg)};
+    resetHasChanged(pg);
+    return all_changed;
+}
+
 }  // namespace mtps
 
 #endif
