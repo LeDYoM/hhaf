@@ -174,6 +174,12 @@ struct PropertyGroup : public PropertyGroupImpl<Tag...>
     }
 
     template <typename Tag_>
+    bool setChanged() noexcept
+    {
+        return Base::template get_property_reference<Tag_>().setChanged();
+    }
+
+    template <typename Tag_>
     bool readResetHasChanged() noexcept
     {
         return Base::template get_property_reference<Tag_>()

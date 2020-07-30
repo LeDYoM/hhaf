@@ -22,7 +22,7 @@ class MenuPaged : public SceneNode, public MenuPagedPropertiesContent
 {
 public:
     using BaseClass = SceneNode;
-    MenuPaged(SceneNode* parent, mtps::str name);
+    using SceneNode::SceneNode;
     ~MenuPaged() override;
 
     void setMenuPagedStatus(const mtps::s32 status);

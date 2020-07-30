@@ -26,14 +26,14 @@ void MenuPage::onCreated()
     input->Selected.connect({this, &MenuPage::goSelected});
 }
 
-MenuPaged* MenuPage::parentMenuPaged()
+rptr<MenuPaged> MenuPage::parentMenuPaged()
 {
     return parentAs<MenuPaged>();
 }
 
-const MenuPaged* MenuPage::parentMenuPaged() const
+rptr<MenuPaged const> MenuPage::parentMenuPaged() const
 {
-    return parentAs<MenuPaged>();
+    return parentAs<MenuPaged const>();
 }
 
 sptr<res::IFont> MenuPage::normalFont() const

@@ -19,8 +19,9 @@ using namespace haf::scene;
 using namespace haf::scene::nodes;
 using namespace haf::time;
 
-PauseSceneNode::PauseSceneNode(scene::SceneNode* const parent, str name) :
-    SceneNode{parent, std::move(name)}
+PauseSceneNode::~PauseSceneNode() = default;
+
+void PauseSceneNode::onCreated()
 {
     auto resources_viewer = dataWrapper<res::ResourceView>();
 
@@ -36,8 +37,6 @@ PauseSceneNode::PauseSceneNode(scene::SceneNode* const parent, str name) :
 
     sceneNodeProperties().set<Visible>(false);
 }
-
-PauseSceneNode::~PauseSceneNode() = default;
 
 void PauseSceneNode::enterPause()
 {

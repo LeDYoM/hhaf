@@ -13,8 +13,8 @@ void TextQuad::configure(mtps::sptr<res::IFont> font,
     {
         auto node  = createNodeAt({count % 2, count / 2},
                                  name() + "node_" + make_str(count));
-        node->font = font;
-        node->textColor.set(color);
+        node->sceneNodeTextProperties().set<Font>(font);
+        node->sceneNodeTextProperties().set<TextColor>(color);
     }
 
     // Second text is right aligned

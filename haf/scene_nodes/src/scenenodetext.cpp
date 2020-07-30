@@ -31,20 +31,22 @@ void SceneNodeText::update()
 {
     BaseClass::update();
 
+    auto& prop = sceneNodeTextProperties();
+
     // If the font or the text changed, recreate the children nodes.
-    if (font.hasChanged() || text.hasChanged())
+    if (prop.hasChanged<Font>() || prop.hasChanged<Text>())
     {
         // Force reposition if font changed.
-        if (font.hasChanged())
+        if (prop.hasChanged<Font>())
         {
-            alignmentSize.setChanged();
+            prop.setChanged<AlignmentSize>();
         }
-        font.resetHasChanged();
-        text.resetHasChanged();
+        prop.readResetHasChanged<Font>();
+        prop.readResetHasChanged<Text>();
 
-        if (font() && !(text().empty()))
+        if (prop.get<Font>() && !(prop.get<Text>().empty()))
         {
-            auto texture(font()->getTexture());
+            auto texture(prop.get<Font>()->getTexture());
 
             f32 x{0.F};
             f32 y{0.F};
@@ -57,11 +59,11 @@ void SceneNodeText::update()
             u32 prevChar{0U};
             size_type counter{0U};
             size_type old_counter = sceneNodes().size();
-            const Color& tc{textColor()};
+            const Color& tc{prop.get<TextColor>()};
 
-            log_snt("Text to render: ", text());
+            log_snt("Text to render: ", prop.get<Text>());
 
-            for (auto&& curChar : text())
+            for (auto&& curChar : prop.get<Text>())
             {
                 log_snt("------------------------------------------------------"
                         "-----------");
@@ -70,9 +72,9 @@ void SceneNodeText::update()
                 log_snt("minX: ", minX, " minY: ,", minY);
                 log_snt("maxX: ", maxX, " maxY: ,", maxY);
                 log_snt("prevChar: ", make_str(prevChar));
-                log_snt("kerning: ", font()->getKerning(prevChar, curChar));
+                log_snt("kerning: ", prop.get<Font>()->getKerning(prevChar, curChar));
                 // Apply the kerning offset
-                x += font()->getKerning(prevChar, curChar);
+                x += prop.get<Font>()->getKerning(prevChar, curChar);
                 prevChar = curChar;
 
                 // Handle special characters
@@ -82,7 +84,7 @@ void SceneNodeText::update()
                     // Update the current bounds (min coordinates)
                     minX = min(minX, x);
                     minY = min(minY, y);
-                    const f32 hspace{font()->getAdvance(L' ')};
+                    const f32 hspace{prop.get<Font>()->getAdvance(L' ')};
 
                     switch (curChar)
                     {
@@ -93,7 +95,7 @@ void SceneNodeText::update()
                             x += hspace * 4;
                             break;
                         case '\n':
-                            y += font()->getLineSpacing();
+                            y += prop.get<Font>()->getLineSpacing();
                             x = 0;
                             break;
                     }
@@ -104,8 +106,8 @@ void SceneNodeText::update()
                 }
                 else
                 {
-                    const Rectf32 textureUV{font()->getTextureBounds(curChar)};
-                    Rectf32 letterBox{font()->getBounds(curChar) +
+                    const Rectf32 textureUV{prop.get<Font>()->getTextureBounds(curChar)};
+                    Rectf32 letterBox{prop.get<Font>()->getBounds(curChar) +
                                       vector2df{x, y}};
                     letterBox += vector2df{50.0F, 50.0F};
                     log_snt("textureUV: ", textureUV);
