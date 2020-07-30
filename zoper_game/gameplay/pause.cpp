@@ -19,32 +19,34 @@ using namespace haf::scene;
 using namespace haf::scene::nodes;
 using namespace haf::time;
 
-PauseSceneNode::PauseSceneNode(scene::SceneNode* const parent, str name) :
-    SceneNode{parent, std::move(name)}
+PauseSceneNode::~PauseSceneNode() = default;
+
+void PauseSceneNode::onCreated()
 {
     auto resources_viewer = dataWrapper<res::ResourceView>();
 
     m_pauseText = createSceneNode<SceneNodeText>("pausetext");
-    m_pauseText->text.set("PAUSE");
-    m_pauseText->font.set(
-        resources_viewer->getTTFont(GameResources::ScoreFontId)->font(180));
-    m_pauseText->textColor.set(colors::White);
-    m_pauseText->alignmentSize.set(
-        dataWrapper<SceneMetricsView>()->currentView().size());
-    m_pauseText->alignmentX.set(SceneNodeText::AlignmentX::Center);
-    m_pauseText->alignmentY.set(SceneNodeText::AlignmentY::Middle);
+    m_pauseText->sceneNodeTextProperties()
+        .put<Text>("PAUSE")
+        .put<Font>(
+            resources_viewer->getTTFont(GameResources::ScoreFontId)->font(180U))
+        .put<TextColor>(colors::White)
+        .put<AlignmentSize>(
+            dataWrapper<SceneMetricsView>()->currentView().size())
+        .put<AlignmentX>(AlignmentXModes::Center)
+        .put<AlignmentY>(AlignmentYModes::Middle);
 
     sceneNodeProperties().set<Visible>(false);
 }
-
-PauseSceneNode::~PauseSceneNode() = default;
 
 void PauseSceneNode::enterPause()
 {
     sceneNodeProperties().set<Visible>(true);
     ensureComponentOfType(animation_component_);
     animation_component_->addPropertyAnimation(
-        TimePoint_as_miliseconds(1000U), m_pauseText->textColor,
+        TimePoint_as_miliseconds(1000U),
+        m_pauseText->sceneNodeTextProperties()
+            .get_property_reference<TextColor>(),
         Color{255U, 255U, 255U, 0U}, Color{255U, 255U, 255U, 255U});
 }
 

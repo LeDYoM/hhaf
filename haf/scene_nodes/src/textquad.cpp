@@ -13,32 +13,40 @@ void TextQuad::configure(mtps::sptr<res::IFont> font,
     {
         auto node  = createNodeAt({count % 2, count / 2},
                                  name() + "node_" + make_str(count));
-        node->font = font;
-        node->textColor.set(color);
+        node->sceneNodeTextProperties().set<Font>(font);
+        node->sceneNodeTextProperties().set<TextColor>(color);
     }
 
-    // Second text is right aligned
+    // First text is left aligned on top
     {
-        auto align(nodeAt({1, 0}));
-        align->alignmentSize.set(size);
-        align->alignmentX.set(SceneNodeText::AlignmentX::Right);
-        align->alignmentY.set(SceneNodeText::AlignmentY::Top);
+        auto& align(nodeAt({0U, 0U})->sceneNodeTextProperties());
+        align.set<AlignmentSize>(size);
+        align.set<AlignmentX>(AlignmentXModes::Left);
+        align.set<AlignmentY>(AlignmentYModes::Top);
     }
 
-    // Third text is bottom aligned
+    // Second text is right aligned op top
     {
-        auto align(nodeAt({0, 1}));
-        align->alignmentSize.set(size);
-        align->alignmentX.set(SceneNodeText::AlignmentX::Left);
-        align->alignmentY.set(SceneNodeText::AlignmentY::Bottom);
+        auto& align(nodeAt({1U, 0U})->sceneNodeTextProperties());
+        align.set<AlignmentSize>(size);
+        align.set<AlignmentX>(AlignmentXModes::Right);
+        align.set<AlignmentY>(AlignmentYModes::Top);
     }
 
-    // Fourth text is right and bottom aligned
+    // Third text is left aligned on bottom
     {
-        auto align(nodeAt({1, 1}));
-        align->alignmentSize.set(size);
-        align->alignmentX.set(SceneNodeText::AlignmentX::Right);
-        align->alignmentY.set(SceneNodeText::AlignmentY::Bottom);
+        auto& align(nodeAt({0U, 1U})->sceneNodeTextProperties());
+        align.set<AlignmentSize>(size);
+        align.set<AlignmentX>(AlignmentXModes::Left);
+        align.set<AlignmentY>(AlignmentYModes::Bottom);
+    }
+
+    // Fourth text is right aligned on bottom
+    {
+        auto& align(nodeAt({1U, 1U})->sceneNodeTextProperties());
+        align.set<AlignmentSize>(size);
+        align.set<AlignmentX>(AlignmentXModes::Right);
+        align.set<AlignmentY>(AlignmentYModes::Bottom);
     }
 }
 

@@ -9,59 +9,64 @@ void TextEditorComponent::onAttached()
 {
     BaseClass::onAttached();
 
-    m_originalText = attachedNodeAs<nodes::SceneNodeText>()->text();
-    attachedNodeAs<nodes::SceneNodeText>()->text.set("");
+    using namespace haf::scene::nodes;
+
+    auto& text_prop(
+        attachedNodeAs<nodes::SceneNodeText>()->sceneNodeTextProperties());
+    m_originalText = text_prop.get<Text>();
+    text_prop.set<Text>("");
 
     using namespace haf::input;
 
-    m_receiver.connect(InputComponent::KeyPressed, [this](Key const &key) {
-        if (enabled)
-        {
-            auto attachedTextNode(attachedNodeAs<nodes::SceneNodeText>());
-            if (isAscii(key))
+    m_receiver.connect(
+        InputComponent::KeyPressed, [this, &text_prop](Key const& key) {
+            if (enabled)
             {
-                const char c_ascii{toAscii(key)};
-                bool success{true};
-                if (m_textValidator)
+                auto attachedTextNode(attachedNodeAs<nodes::SceneNodeText>());
+                if (isAscii(key))
                 {
-                    success = m_textValidator->canAddChar(
-                        attachedTextNode->text(),
-                        c_ascii);
-                }
+                    const char c_ascii{toAscii(key)};
+                    bool success{true};
+                    if (m_textValidator)
+                    {
+                        success = m_textValidator->canAddChar(
+                            text_prop.get<Text>(), c_ascii);
+                    }
 
-                if (success)
-                {
-                    str new_text{attachedTextNode->text()};
-                    new_text.append_char(c_ascii);
-                    attachedTextNode->text.set(new_text);
+                    if (success)
+                    {
+                        str new_text{text_prop.get<Text>()};
+                        new_text.append_char(c_ascii);
+                        text_prop.set<Text>(std::move(new_text));
+                    }
                 }
-            }
-            else if (key == Key::BackSpace && !attachedTextNode->text().empty())
-            {
-                attachedTextNode->text.set(
-                    attachedTextNode->text().substr(0U,
-                                                    attachedTextNode->text().size() - 1));
-            }
-            else if (key == Key::Return)
-            {
-                bool success{true};
-                if (m_textValidator)
+                else if (key == Key::BackSpace &&
+                         !text_prop.get<Text>().empty())
                 {
-                    success = m_textValidator->isValidText(attachedTextNode->text());
+                    text_prop.set<Text>(text_prop.get<Text>().substr(
+                        0U, text_prop.get<Text>().size() - 1));
                 }
-                if (success)
+                else if (key == Key::Return)
                 {
+                    bool success{true};
+                    if (m_textValidator)
+                    {
+                        success = m_textValidator->isValidText(
+                            text_prop.get<Text>());
+                    }
+                    if (success)
+                    {
+                        enabled = false;
+                        Accepted(text_prop.get<Text>());
+                    }
+                }
+                else if (key == Key::Escape)
+                {
+                    text_prop.set<Text>(m_originalText);
                     enabled = false;
-                    Accepted(attachedTextNode->text());
+                    Rejected();
                 }
             }
-            else if (key == Key::Escape)
-            {
-                attachedTextNode->text.set(m_originalText);
-                enabled = false;
-                Rejected();
-            }
-        }
-    });
+        });
 }
-} // namespace haf::scene
+}  // namespace haf::scene

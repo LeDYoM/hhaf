@@ -26,14 +26,14 @@ void MenuPage::onCreated()
     input->Selected.connect({this, &MenuPage::goSelected});
 }
 
-MenuPaged* MenuPage::parentMenuPaged()
+rptr<MenuPaged> MenuPage::parentMenuPaged()
 {
     return parentAs<MenuPaged>();
 }
 
-const MenuPaged* MenuPage::parentMenuPaged() const
+rptr<MenuPaged const> MenuPage::parentMenuPaged() const
 {
-    return parentAs<MenuPaged>();
+    return parentAs<MenuPaged const>();
 }
 
 sptr<res::IFont> MenuPage::normalFont() const
@@ -92,7 +92,7 @@ void MenuPage::configure(vector<sptr<MenuPagedOption>> options,
         auto newOption(createNodeAt(vector2dst{title_column, counter},
                                     make_str("label", counter)));
         standarizeText(newOption);
-        newOption->text.set(option->title());
+        newOption->sceneNodeTextProperties().set<nodes::Text>(option->title());
 
         if (!option->option().options().empty())
         {
@@ -163,14 +163,14 @@ void MenuPage::setColorToLine(const size_type index, const Color& color)
         index,
         [&color](const size_type,
                  const sptr<BaseClass::ContainedElement>& node) {
-            node->textColor.set(color);
+            node->sceneNodeTextProperties().set<nodes::TextColor>(color);
         });
 }
 
 void MenuPage::standarizeText(const sptr<ContainedElement>& ntext)
 {
-    ntext->textColor.set(normalColor());
-    ntext->font.set(normalFont());
+    ntext->sceneNodeTextProperties().set<nodes::TextColor>(normalColor());
+    ntext->sceneNodeTextProperties().set<nodes::Font>(normalFont());
 }
 
 void MenuPage::goDown()

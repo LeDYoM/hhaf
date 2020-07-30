@@ -48,7 +48,7 @@ void HighScoreTextController::onCreated()
         rectFromSize(dataWrapper<SceneMetricsView>()->currentView().size())
             .setLeftTop({0, 250})
             .setSize({2000, 1500})};
-    position      = textBox.leftTop();
+    position = textBox.leftTop();
     tableNodeProperties().set<SceneNodeSize>(textBox.size());
     setTableSize({3U, NumHighScore});
 
@@ -76,14 +76,16 @@ void HighScoreTextController::addHighScoresLine(const size_type counter,
                                                 const HighScore& element,
                                                 const bool is_inserting)
 {
+    using namespace nodes;
+
     auto label(
         createNodeAt(vector2dst{0, counter}, make_str("label", 0, counter)));
     standarizeText(label);
-    label->text.set(make_str(counter, "."));
+    label->sceneNodeTextProperties().set<Text>(make_str(counter, "."));
 
     label = createNodeAt(vector2dst{1, counter}, make_str("label", 1, counter));
     standarizeText(label);
-    label->text.set(make_str(element.score));
+    label->sceneNodeTextProperties().set<Text>(make_str(element.score));
 
     label = createNodeAt(vector2dst{2, counter}, make_str("label", 2, counter));
     standarizeText(label);
@@ -94,7 +96,7 @@ void HighScoreTextController::addHighScoresLine(const size_type counter,
     }
     else
     {
-        label->text.set(element.name);
+        label->sceneNodeTextProperties().set<Text>(element.name);
     }
 }
 
@@ -118,9 +120,12 @@ void HighScoreTextController::addEditAnimation(const size_type line_index)
     LogAsserter::log_assert(line_index < tableSize().y, "Invalid line_index");
 
     for_each_tableSceneNode_in_y(
-        line_index, [this](const auto, const auto& element) {
+        line_index,
+        [this](const auto, const sptr<nodes::SceneNodeText>& element) {
             animation_component_->addCircledPropertyAnimation(
-                time::TimePoint_as_miliseconds(2000), element->textColor,
+                time::TimePoint_as_miliseconds(2000),
+                element->sceneNodeTextProperties()
+                    .get_property_reference<nodes::TextColor>(),
                 colors::White, colors::Black);
         });
 }
@@ -128,8 +133,9 @@ void HighScoreTextController::addEditAnimation(const size_type line_index)
 void HighScoreTextController::standarizeText(
     const sptr<nodes::SceneNodeText>& ntext)
 {
-    ntext->textColor.set(m_normalColor);
-    ntext->font.set(m_normalFont);
+    ntext->sceneNodeTextProperties()
+        .put<nodes::TextColor>(m_normalColor)
+        .put<nodes::Font>(m_normalFont);
 }
 
 void HighScoreTextController::saveHighScores()

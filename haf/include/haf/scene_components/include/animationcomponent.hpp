@@ -38,15 +38,15 @@ public:
      * @param animation_direction Direction of the animation
      * @param endAction Action to perform when the animation finishes
      */
-    template <typename PropertyType>
+    template <typename PropertyType, typename PropertyTag = mtps::DummyTag>
     void addPropertyAnimation(
-        time::TimePoint time, mtps::IProperty<PropertyType> &property,
+        time::TimePoint time, mtps::IProperty<PropertyType, PropertyTag> &property,
         PropertyType start, PropertyType dest,
         Animation::AnimationDirection animation_direction =
             Animation::AnimationDirection::Forward,
         Animation::ActionFunc endAction = {})
     {
-        auto anim = mtps::muptr<IPropertyAnimation<PropertyType>>(
+        auto anim = mtps::muptr<IPropertyAnimation<PropertyType, PropertyTag>>(
             attachedNode()->dataWrapper<time::Timer>(),
             std::move(time), property, std::move(start),
             std::move(dest), std::move(animation_direction),
@@ -108,9 +108,9 @@ public:
      * @param animation_direction Direction of the animation
      * @param endAction Action to perform when the animation finishes.
      */
-    template <typename PropertyType>
+    template <typename PropertyType, typename PropertyTag>
     void addCircledPropertyAnimation(
-        time::TimePoint time, mtps::IProperty<PropertyType> &property,
+        time::TimePoint time, mtps::IProperty<PropertyType, PropertyTag> &property,
         PropertyType start, PropertyType dest,
         Animation::AnimationDirection animation_direction =
             Animation::AnimationDirection::Forward,

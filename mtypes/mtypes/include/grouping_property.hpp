@@ -129,6 +129,10 @@ struct PropertyGroup : public PropertyGroupImpl<Tag...>
     using Base = PropertyGroupImpl<Tag...>;
 
     PropertyGroup() = default;
+    PropertyGroup(PropertyGroup const&) = delete;
+    PropertyGroup& operator=(PropertyGroup const&) = delete;
+    PropertyGroup(PropertyGroup&&) = default;
+    PropertyGroup& operator=(PropertyGroup&&) = default;
 
     PropertyGroup(typename Tag::value_type const&... values) : Base(values...)
     {}
@@ -171,6 +175,12 @@ struct PropertyGroup : public PropertyGroupImpl<Tag...>
     bool hasChanged() const noexcept
     {
         return Base::template get_property_reference<Tag_>().hasChanged();
+    }
+
+    template <typename Tag_>
+    void setChanged() noexcept
+    {
+        Base::template get_property_reference<Tag_>().setChanged();
     }
 
     template <typename Tag_>

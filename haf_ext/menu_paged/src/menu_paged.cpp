@@ -10,13 +10,6 @@ using namespace mtps;
 namespace haf::scene
 {
 
-MenuPaged::MenuPaged(SceneNode* parent, str name) :
-    BaseClass{parent, std::move(name)}, MenuPagedPropertiesContent()
-{
-    menuPagedProperties().set<SceneNodeSizeForPages>(
-        dataWrapper<SceneMetricsView>()->currentView().size());
-}
-
 MenuPaged::~MenuPaged() = default;
 
 void MenuPaged::update()

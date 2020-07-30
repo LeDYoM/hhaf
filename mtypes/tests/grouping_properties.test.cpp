@@ -161,7 +161,7 @@ TEST_CASE("PropertyGroup changes check", "[mtypes][property]")
     CHECK_FALSE(allHaveChanged(pg));
     CHECK_FALSE(anyHasChanged(pg));
 
-    pg.set<IntTag>(5);
+    CHECK(pg.set<IntTag>(5));
 
     CHECK(pg.get<CharTag>() == 1);
     CHECK(pg.get<IntTag>() == 5);
@@ -170,6 +170,15 @@ TEST_CASE("PropertyGroup changes check", "[mtypes][property]")
 
     CHECK_FALSE(allHaveChanged(pg));
     CHECK(anyHasChanged(pg));
+
+    resetHasChanged(pg);
+
+    CHECK(pg.set<IntTag>(50));
+
+    CHECK_FALSE(pg.readResetHasChanged<CharTag>());
+    CHECK_FALSE(pg.readResetHasChanged<StrTag>());
+    CHECK_FALSE(pg.readResetHasChanged<SptrIntTag>());
+    CHECK(pg.readResetHasChanged<IntTag>());
 }
 
 TEST_CASE("PropertyGroupImp one element construction", "[mtypes][property]")
