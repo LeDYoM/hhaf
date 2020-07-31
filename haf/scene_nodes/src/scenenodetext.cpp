@@ -76,6 +76,9 @@ void SceneNodeText::update()
                 log_snt("kerning: ", font->getKerning(prevChar, curChar));
                 // Apply the kerning offset
                 x += font->getKerning(prevChar, curChar);
+                log_snt("kerning: ", prop.get<Font>()->getKerning(prevChar, curChar));
+                // Apply the kerning offset
+                x += prop.get<Font>()->getKerning(prevChar, curChar);
                 prevChar = curChar;
 
                 // Handle special characters
@@ -86,6 +89,7 @@ void SceneNodeText::update()
                     minX = min(minX, x);
                     minY = min(minY, y);
                     f32 const hspace{font->getAdvance(L' ')};
+                    const f32 hspace{prop.get<Font>()->getAdvance(L' ')};
 
                     switch (curChar)
                     {
@@ -98,6 +102,8 @@ void SceneNodeText::update()
                         case '\n':
                             y += font->getLineSpacing();
                             x = 0.0F;
+                            y += prop.get<Font>()->getLineSpacing();
+                            x = 0;
                             break;
                     }
 
@@ -109,6 +115,8 @@ void SceneNodeText::update()
                 {
                     Rectf32 const textureUV{font->getTextureBounds(curChar)};
                     Rectf32 letterBox{font->getBounds(curChar) +
+                    const Rectf32 textureUV{prop.get<Font>()->getTextureBounds(curChar)};
+                    Rectf32 letterBox{prop.get<Font>()->getBounds(curChar) +
                                       vector2df{x, y}};
                     letterBox += vector2df{50.0F, 50.0F};
                     log_snt("textureUV: ", textureUV);
