@@ -49,10 +49,6 @@ private:
     GroupableProperty<Tag> prop_;
 };
 
-// Forwatd declare the non-variadic specialization
-template <typename Tag>
-struct GroupablePropertyImpl;
-
 /**
  * @brief Base class for @b GroupableProperty It contains some common
  * functionality not intended to be used directly.
@@ -71,6 +67,12 @@ struct PropertyGroupImpl : public GroupablePropertyImpl<FirstTag>,
         GroupablePropertyImpl<FirstTag>{value},
         PropertyGroupImpl<Tag...>::PropertyGroupImpl(values...)
     {}
+
+    template <typename Tag_>
+    struct ContainsTag
+    {
+        static constexpr bool value = std::is_same_v<Tag_,FirstTag>;
+    };
 
     template <typename Tag_>
     GroupableProperty<Tag_> const& get_property_reference() const noexcept
@@ -110,8 +112,11 @@ struct PropertyGroupImpl : public GroupablePropertyImpl<FirstTag>,
 template <typename FirstTag>
 struct PropertyGroupImpl<FirstTag> : public GroupablePropertyImpl<FirstTag>
 {
-    using tag_type   = typename GroupablePropertyImpl<FirstTag>::tag_type;
-    using value_type = typename GroupablePropertyImpl<FirstTag>::value_type;
+    template <typename Tag_>
+    struct ContainsTag
+    {
+        static constexpr bool value = std::is_same_v<Tag_,FirstTag>;
+    };
 
     PropertyGroupImpl() = default;
     using GroupablePropertyImpl<FirstTag>::GroupablePropertyImpl;
