@@ -199,3 +199,40 @@ TEST_CASE("PropertyGroup four elements construction", "[mtypes][property]")
     CHECK(pg.get<StrTag>() == "a");
     CHECK(*pg.get<SptrIntTag>() == 6);
 }
+
+struct AnotherTag
+{
+    using value_type = int;
+};
+
+TEST_CASE("PropertyGroup containsTag", "[mtypes][property]")
+{
+    using TTPropertyGroup = PropertyGroup<CharTag, IntTag, StrTag, SptrIntTag>;
+    using TPropertyGroup = PropertyGroup<IntTag>;
+    using ATPropertyGroup = PropertyGroup<AnotherTag, IntTag>;
+    using APropertyGroup = PropertyGroup<AnotherTag>;
+
+    static_assert(TTPropertyGroup::ContainsTag<IntTag>::value);
+    static_assert(TTPropertyGroup::ContainsTag<CharTag>::value);
+    static_assert(TTPropertyGroup::ContainsTag<StrTag>::value);
+    static_assert(TTPropertyGroup::ContainsTag<SptrIntTag>::value);
+    static_assert(!TTPropertyGroup::ContainsTag<AnotherTag>::value);
+
+    static_assert(TPropertyGroup::ContainsTag<IntTag>::value);
+    static_assert(!TPropertyGroup::ContainsTag<CharTag>::value);
+    static_assert(!TPropertyGroup::ContainsTag<StrTag>::value);
+    static_assert(!TPropertyGroup::ContainsTag<SptrIntTag>::value);
+    static_assert(!TPropertyGroup::ContainsTag<AnotherTag>::value);
+
+    static_assert(ATPropertyGroup::ContainsTag<IntTag>::value);
+    static_assert(!ATPropertyGroup::ContainsTag<CharTag>::value);
+    static_assert(!ATPropertyGroup::ContainsTag<StrTag>::value);
+    static_assert(!ATPropertyGroup::ContainsTag<SptrIntTag>::value);
+    static_assert(ATPropertyGroup::ContainsTag<AnotherTag>::value);
+
+    static_assert(!APropertyGroup::ContainsTag<IntTag>::value);
+    static_assert(!APropertyGroup::ContainsTag<CharTag>::value);
+    static_assert(!APropertyGroup::ContainsTag<StrTag>::value);
+    static_assert(!APropertyGroup::ContainsTag<SptrIntTag>::value);
+    static_assert(APropertyGroup::ContainsTag<AnotherTag>::value);
+}

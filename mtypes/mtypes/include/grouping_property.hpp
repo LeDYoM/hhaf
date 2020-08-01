@@ -9,7 +9,6 @@
 namespace mtps
 {
 
-
 /// @brief Alias to encapsulate a @b PropertyState given a Tag
 /// @tparam Tag Tsg type encapsulated in the PropertyState.
 /// This Tag should export a value_type with the tyè contained
@@ -65,7 +64,9 @@ struct PropertyGroupImpl : public GroupablePropertyImpl<FirstTag>,
     template <typename Tag_>
     struct ContainsTag
     {
-        static constexpr bool value = std::is_same_v<Tag_,FirstTag>;
+        static constexpr bool value =
+            PropertyGroupImpl<FirstTag>::ContainsTag<Tag_>::value ||
+            PropertyGroupImpl<Tag...>::ContainsTag<Tag_>::value;
     };
 
     template <typename Tag_>
@@ -107,7 +108,7 @@ struct PropertyGroupImpl<FirstTag> : public GroupablePropertyImpl<FirstTag>
     template <typename Tag_>
     struct ContainsTag
     {
-        static constexpr bool value = std::is_same_v<Tag_,FirstTag>;
+        static constexpr bool value = std::is_same_v<Tag_, FirstTag>;
     };
 
     PropertyGroupImpl() = default;
@@ -123,10 +124,10 @@ struct PropertyGroup : public PropertyGroupImpl<Tag...>
 {
     using Base = PropertyGroupImpl<Tag...>;
 
-    PropertyGroup() = default;
+    PropertyGroup()                     = default;
     PropertyGroup(PropertyGroup const&) = delete;
     PropertyGroup& operator=(PropertyGroup const&) = delete;
-    PropertyGroup(PropertyGroup&&) = default;
+    PropertyGroup(PropertyGroup&&)                 = default;
     PropertyGroup& operator=(PropertyGroup&&) = default;
 
     PropertyGroup(typename Tag::value_type const&... values) : Base(values...)
