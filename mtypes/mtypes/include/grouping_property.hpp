@@ -9,21 +9,17 @@
 namespace mtps
 {
 
-/**
- * @brief Alias to encapsulate a @b PropertyState given a Tag
- * @tparam Tag Tsg type encapsulated in the PropertyState.
- * This Tag should export a value_type with the tyè contained
- * in this Tag
- */
+
+/// @brief Alias to encapsulate a @b PropertyState given a Tag
+/// @tparam Tag Tsg type encapsulated in the PropertyState.
+/// This Tag should export a value_type with the tyè contained
+/// in this Tag
 template <typename Tag>
 using GroupableProperty = PropertyState<typename Tag::value_type, Tag>;
 
 template <typename Tag>
 struct GroupablePropertyImpl
 {
-    using tag_type   = Tag;
-    using value_type = typename Tag::value_type;
-
     GroupablePropertyImpl() = default;
     GroupablePropertyImpl(typename Tag::value_type const& value) noexcept :
         prop_{value}
@@ -49,13 +45,11 @@ private:
     GroupableProperty<Tag> prop_;
 };
 
-/**
- * @brief Base class for @b GroupableProperty It contains some common
- * functionality not intended to be used directly.
- * @tparam FirstTag First element of the group of Tag types
- * @tparam Tag... Group of tags to include inside this type. Each Tag element
- * should contain a @b Tag::value_type exporting the type it exposes.
- */
+/// @brief Base class for @b GroupableProperty It contains some common
+/// functionality not intended to be used directly.
+/// @tparam FirstTag First element of the group of Tag types
+/// @tparam Tag... Group of tags to include inside this type. Each Tag element
+/// should contain a @b Tag::value_type exporting the type it exposes.
 template <typename FirstTag, typename... Tag>
 struct PropertyGroupImpl : public GroupablePropertyImpl<FirstTag>,
                            public PropertyGroupImpl<Tag...>
@@ -105,10 +99,8 @@ struct PropertyGroupImpl : public GroupablePropertyImpl<FirstTag>,
     }
 };
 
-/**
- * @brief Specialization for one type only
- * @tparam Tag Unique Tag
- */
+/// @brief Specialization for one type only
+/// @tparam Tag Unique Tag
 template <typename FirstTag>
 struct PropertyGroupImpl<FirstTag> : public GroupablePropertyImpl<FirstTag>
 {
@@ -123,11 +115,9 @@ struct PropertyGroupImpl<FirstTag> : public GroupablePropertyImpl<FirstTag>
     using GroupablePropertyImpl<FirstTag>::get_property_reference;
 };
 
-/**
- * @brief Class exporting the functionality to group some properties and
- * their most important actions on them.
- * @tparam Tag... Tags referencing the properties to add in the group.
- */
+/// @brief Class exporting the functionality to group some properties and
+/// their most important actions on them.
+/// @tparam Tag... Tags referencing the properties to add in the group.
 template <typename... Tag>
 struct PropertyGroup : public PropertyGroupImpl<Tag...>
 {
@@ -186,9 +176,6 @@ struct PropertyGroup : public PropertyGroupImpl<Tag...>
     void setChanged() noexcept
     {
         Base::template get_property_reference<Tag_>().setChanged();
-    bool setChanged() noexcept
-    {
-        return Base::template get_property_reference<Tag_>().setChanged();
     }
 
     template <typename Tag_>

@@ -89,7 +89,6 @@ void SceneNodeText::update()
                     minX = min(minX, x);
                     minY = min(minY, y);
                     f32 const hspace{font->getAdvance(L' ')};
-                    const f32 hspace{prop.get<Font>()->getAdvance(L' ')};
 
                     switch (curChar)
                     {
@@ -115,8 +114,6 @@ void SceneNodeText::update()
                 {
                     Rectf32 const textureUV{font->getTextureBounds(curChar)};
                     Rectf32 letterBox{font->getBounds(curChar) +
-                    const Rectf32 textureUV{prop.get<Font>()->getTextureBounds(curChar)};
-                    Rectf32 letterBox{prop.get<Font>()->getBounds(curChar) +
                                       vector2df{x, y}};
                     letterBox += vector2df{50.0F, 50.0F};
                     log_snt("textureUV: ", textureUV);

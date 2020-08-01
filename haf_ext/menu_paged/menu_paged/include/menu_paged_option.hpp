@@ -35,7 +35,7 @@ public:
     explicit RangeOption();
 
     template <typename T>
-    explicit RangeOption(T cons)
+    explicit RangeOption(T const)
         : options_(static_cast<mtps::size_type>(mtps::MEnum<T>::max_numeric - mtps::MEnum<T>::min_numeric))
     {
         mtps::MEnum<T> v{T::min};
