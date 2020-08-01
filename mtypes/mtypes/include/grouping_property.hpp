@@ -134,6 +134,13 @@ struct PropertyGroup : public PropertyGroupImpl<Tag...>
     {}
 
     template <typename Tag_>
+    struct ContainsTag
+    {
+        static constexpr bool value =
+            PropertyGroupImpl<Tag...>::ContainsTag<Tag_>::value;
+    };
+
+    template <typename Tag_>
     typename Tag_::value_type get() const noexcept
     {
         return Base::template get_property_reference<Tag_>().get();
