@@ -140,7 +140,9 @@ struct PropertyGroup : public PropertyGroupImpl<Tag...>
             PropertyGroupImpl<Tag...>::ContainsTag<Tag_>::value;
     };
 
-    template <typename Tag_>
+    template <
+        typename Tag_,
+        std::enable_if_t<PropertyGroup::ContainsTag<Tag_>::value>* = nullptr>
     typename Tag_::value_type get() const noexcept
     {
         return Base::template get_property_reference<Tag_>().get();

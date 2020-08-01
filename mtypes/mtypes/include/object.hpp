@@ -160,11 +160,11 @@ public:
                             .convertOrDefault<std::underlying_type_t<T>>());
                 }
             }
-            else if constexpr (std::is_same_v<T,str>)
+            else if constexpr (std::is_same_v<T, str>)
             {
                 return (*m_value);
             }
-            else if constexpr (std::is_same_v<T,Object>)
+            else if constexpr (std::is_same_v<T, Object>)
             {
                 return (*m_object);
             }
