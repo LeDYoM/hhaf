@@ -205,12 +205,12 @@ struct AnotherTag
     using value_type = int;
 };
 
-TEST_CASE("PropertyGroup containsTag", "[mtypes][property]")
+TEST_CASE("PropertyGroup::ContainsTag", "[mtypes][property]")
 {
     using TTPropertyGroup = PropertyGroup<CharTag, IntTag, StrTag, SptrIntTag>;
-    using TPropertyGroup = PropertyGroup<IntTag>;
+    using TPropertyGroup  = PropertyGroup<IntTag>;
     using ATPropertyGroup = PropertyGroup<AnotherTag, IntTag>;
-    using APropertyGroup = PropertyGroup<AnotherTag>;
+    using APropertyGroup  = PropertyGroup<AnotherTag>;
 
     static_assert(TTPropertyGroup::ContainsTag<IntTag>::value);
     static_assert(TTPropertyGroup::ContainsTag<CharTag>::value);
@@ -235,4 +235,27 @@ TEST_CASE("PropertyGroup containsTag", "[mtypes][property]")
     static_assert(!APropertyGroup::ContainsTag<StrTag>::value);
     static_assert(!APropertyGroup::ContainsTag<SptrIntTag>::value);
     static_assert(APropertyGroup::ContainsTag<AnotherTag>::value);
+}
+
+class FakeSceneNode : public PropertyGroup<IntTag, CharTag>
+{
+public:
+    void notUsed() {}
+};
+
+class EnhancedFakeSceneNode : public FakeSceneNode,
+                              public PropertyGroup<SptrIntTag, StrTag>
+{
+public:
+    int getter() { return 8; };
+};
+
+TEST_CASE("PropertyGroup inheritance", "[mtypes][property]")
+{
+    EnhancedFakeSceneNode efsn;
+    CHECK(efsn.set<IntTag>(2));
+    CHECK(efsn.get<IntTag>() == 2);
+
+    CHECK(efsn.set<StrTag>("hello"));
+    CHECK(efsn.get<StrTag>() == "hello");
 }
