@@ -14,9 +14,9 @@ MenuPaged::~MenuPaged() = default;
 
 void MenuPaged::update()
 {
-    if (menuPagedProperties().readResetHasChanged<SceneNodeSizeForPages>())
+    if (readResetHasChanged<SceneNodeSizeForPages>())
     {
-        auto const size = menuPagedProperties().get<SceneNodeSizeForPages>();
+        auto const size = get<SceneNodeSizeForPages>();
         for (auto& sceneNode : sceneNodes())
         {
             if (auto menu_page = std::dynamic_pointer_cast<MenuPage>(sceneNode))

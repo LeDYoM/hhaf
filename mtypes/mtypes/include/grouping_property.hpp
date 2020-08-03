@@ -53,7 +53,8 @@ template <typename FirstTag, typename... Tag>
 struct PropertyGroupImpl : public GroupablePropertyImpl<FirstTag>,
                            public PropertyGroupImpl<Tag...>
 {
-    PropertyGroupImpl() = default;
+    using PropertyGroupImplBase = PropertyGroupImpl<Tag...>;
+    PropertyGroupImpl()         = default;
 
     PropertyGroupImpl(typename FirstTag::value_type const& value,
                       typename Tag::value_type const&... values) :
@@ -64,9 +65,10 @@ struct PropertyGroupImpl : public GroupablePropertyImpl<FirstTag>,
     template <typename Tag_>
     struct ContainsTag
     {
+        static constexpr bool base_value =
+            PropertyGroupImplBase::template ContainsTag<Tag_>::value;
         static constexpr bool value =
-            PropertyGroupImpl<FirstTag>::ContainsTag<Tag_>::value ||
-            PropertyGroupImpl<Tag...>::ContainsTag<Tag_>::value;
+            std::is_same_v<Tag_, FirstTag> || base_value;
     };
 
     template <typename Tag_>
@@ -136,8 +138,7 @@ struct PropertyGroup : public PropertyGroupImpl<Tag...>
     template <typename Tag_>
     struct ContainsTag
     {
-        static constexpr bool value =
-            PropertyGroupImpl<Tag...>::ContainsTag<Tag_>::value;
+        static constexpr bool value = Base::template ContainsTag<Tag_>::value;
     };
 
     template <

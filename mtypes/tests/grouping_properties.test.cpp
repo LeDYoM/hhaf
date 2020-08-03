@@ -240,6 +240,7 @@ TEST_CASE("PropertyGroup::ContainsTag", "[mtypes][property]")
 class FakeSceneNode : public PropertyGroup<IntTag, CharTag>
 {
 public:
+    using GroupProperties = PropertyGroup<IntTag, CharTag>;
     void notUsed() {}
 };
 
@@ -247,7 +248,17 @@ class EnhancedFakeSceneNode : public FakeSceneNode,
                               public PropertyGroup<SptrIntTag, StrTag>
 {
 public:
-    int getter() { return 8; };
+    using BasePG = PropertyGroup<SptrIntTag, StrTag>;
+    using GroupProperties = BasePG;
+    int get() const { return 8; };
+    void set(int const) const { };
+
+    using FakeSceneNode::GroupProperties::set;
+    using FakeSceneNode::GroupProperties::get;
+    using FakeSceneNode::GroupProperties::put;
+    using GroupProperties::set;
+    using GroupProperties::get;
+    using GroupProperties::put;
 };
 
 TEST_CASE("PropertyGroup inheritance", "[mtypes][property]")

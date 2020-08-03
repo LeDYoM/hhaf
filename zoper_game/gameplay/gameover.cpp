@@ -54,7 +54,7 @@ GameOverSceneNode::GameOverSceneNode(scene::SceneNode* const parent, str name) :
             .put<AlignmentY>(AlignmentYModes::Bottom);
     }
 
-    sceneNodeProperties().set<Visible>(false);
+    set<Visible>(false);
 }
 
 GameOverSceneNode::~GameOverSceneNode() = default;

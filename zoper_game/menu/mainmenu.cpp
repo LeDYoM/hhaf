@@ -84,8 +84,7 @@ void MainMenu::onCreated()
             .setSize({2000, 4 * 150})};
     position = textBox.leftTop();
 
-    menuPagedProperties()
-        .put<NormalTextFont>(
+    put<NormalTextFont>(
 #ifdef TEST_BMP_FONT
             getBMPFont(MainMenuResources::TestFontId)
 #else

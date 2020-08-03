@@ -18,11 +18,19 @@ namespace haf::scene
  * @brief Main class to model a menu in paged style.
  * This class should be used as a base class for a new type of @b SceneNode.
  */
-class MenuPaged : public SceneNode, public MenuPagedPropertiesContent
+class MenuPaged : public SceneNode, public MenuPagedProperties
 {
 public:
     using BaseClass = SceneNode;
     using SceneNode::SceneNode;
+    using SceneNode::get;
+    using SceneNode::set;
+    using SceneNode::put;
+    using MenuPagedProperties::readResetHasChanged;
+    using MenuPagedProperties::get;
+    using MenuPagedProperties::set;
+    using MenuPagedProperties::put;
+
     ~MenuPaged() override;
 
     void setMenuPagedStatus(const mtps::s32 status);

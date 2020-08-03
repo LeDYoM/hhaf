@@ -180,7 +180,7 @@ void GameScene::onCreated()
         });
 
     m_gameOver = createSceneNode<GameOverSceneNode>("gameOverSceneNode");
-    m_gameOver->sceneNodeProperties().set<Visible>(false);
+    m_gameOver->set<Visible>(false);
 
     // Set state control.
     {
@@ -218,7 +218,7 @@ void GameScene::onEnterState(const GameSceneStates& state)
         }
         break;
         case GameSceneStates::GameOver:
-            m_gameOver->sceneNodeProperties().set<Visible>(true);
+            m_gameOver->set<Visible>(true);
             scene_timer_component_->pause();
             break;
         default:

@@ -36,12 +36,12 @@ void PauseSceneNode::onCreated()
         .put<AlignmentX>(AlignmentXModes::Center)
         .put<AlignmentY>(AlignmentYModes::Middle);
 
-    sceneNodeProperties().set<Visible>(false);
+    set<Visible>(false);
 }
 
 void PauseSceneNode::enterPause()
 {
-    sceneNodeProperties().set<Visible>(true);
+    set<Visible>(true);
     ensureComponentOfType(animation_component_);
     animation_component_->addPropertyAnimation(
         TimePoint_as_miliseconds(1000U),
@@ -52,6 +52,6 @@ void PauseSceneNode::enterPause()
 
 void PauseSceneNode::exitPause()
 {
-    sceneNodeProperties().set<Visible>(false);
+    set<Visible>(false);
 }
 }  // namespace zoper
