@@ -22,7 +22,7 @@ namespace zoper
 {
 ZoperProgramController::ZoperProgramController() = default;
 ZoperProgramController::~ZoperProgramController() = default;
-/*
+
 u16 ZoperProgramController::getVersion() const noexcept
 {
     return cl_version::VersionMajor;
@@ -40,9 +40,9 @@ u16 ZoperProgramController::getPatch() const noexcept
 
 str ZoperProgramController::getName() const noexcept
 {
-    return cl_version::ProjectName;
+    return "abc"; //cl_version::ProjectName;
 }
-*/
+
 void ZoperProgramController::onInit(
     haf::sys::DataWrapperCreator& data_wrapper_creator)
 {

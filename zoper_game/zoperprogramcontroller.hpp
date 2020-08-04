@@ -9,29 +9,31 @@
 
 namespace haf::sys
 {
-    class DataWrapperCreator;
+class DataWrapperCreator;
 }
 
 namespace zoper
 {
 class KeyMapping;
 
-class ZoperProgramController : public haf::user::IAppWithDefaultVersionSystem
+class ZoperProgramController
+    : public  // haf::user::IAppWithDefaultVersionSystem
+      haf::IApp
 {
 public:
     ZoperProgramController();
     ~ZoperProgramController() override;
 
-    void onInit(haf::sys::DataWrapperCreator &data_wrapper_creator) override;
-    void onFinish(haf::sys::DataWrapperCreator &data_wrapper_creator) override;
-/*
-    mtps::u16 getVersion() const noexcept override;
-    mtps::u16 getSubVersion() const noexcept override;
-    mtps::u16 getPatch() const noexcept override;
-    mtps::str getName() const noexcept override;
-*/
+    void onInit(haf::sys::DataWrapperCreator& data_wrapper_creator) override;
+    void onFinish(haf::sys::DataWrapperCreator& data_wrapper_creator) override;
+    
+        mtps::u16 getVersion() const noexcept override;
+        mtps::u16 getSubVersion() const noexcept override;
+        mtps::u16 getPatch() const noexcept override;
+        mtps::str getName() const noexcept override;
+
     mtps::uptr<KeyMapping> keyMapping;
 };
-} // namespace zoper
+}  // namespace zoper
 
 #endif

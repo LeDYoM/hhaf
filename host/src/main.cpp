@@ -24,7 +24,7 @@ HOST_API int haf_host_main(int argc, char* argv[])
             LogInitializer log_init;
             Host host(argc, argv);
             AppLoader app_loader;
-            ManagedApp managed_app = app_loader.loadApp("zoper_game");
+            ManagedApp managed_app = app_loader.loadApp("Zoper");
             host.setApplication(managed_app.app);
             result = host.run();
             app_loader.unloadApp(managed_app);

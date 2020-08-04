@@ -12,7 +12,7 @@ public:
     mtps::u16 getVersion() const noexcept override  { return 2U; }
     mtps::u16 getSubVersion() const noexcept override { return 1; }
     mtps::u16 getPatch() const noexcept override { return 1; }
-    mtps::u16 getTweak() const noexcept override { return 1; }
+//    mtps::u16 getTweak() const noexcept override { return 1; }
     mtps::str getName() const noexcept override { return "aaaa"; }
 };
 }  // namespace haf::user
