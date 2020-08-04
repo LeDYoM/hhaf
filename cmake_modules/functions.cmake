@@ -1,18 +1,27 @@
 # Function to build different components from the project in an unified way.
 function(build_lib_component)
 
-  cmake_parse_arguments(LC_BUILD "EXPORT_ALL" "HEADER_DIRECTORY" "SOURCES"
+  cmake_parse_arguments(LC_BUILD "EXPORT_ALL;STATIC" "HEADER_DIRECTORY" "SOURCES"
                         ${ARGN})
 
+if(LC_BUILD_STATIC)
+  add_library(${CURRENT_TARGET} STATIC ${LC_BUILD_SOURCES})
+else()
   add_library(${CURRENT_TARGET} SHARED ${LC_BUILD_SOURCES})
+endif()
 
   if(LC_BUILD_EXPORT_ALL)
+    if (LC_BUILD_STATIC)
+      message(WARN "STATIC and EXPORT_ALL together make no sense")
+    endif()
     set_target_properties(${CURRENT_TARGET}
                           PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS true)
   endif()
 
-  set_property(TARGET ${CURRENT} PROPERTY POSITION_INDEPENDENT_CODE ON)
-
+  if (NOT LC_BUILD_STATIC)
+    set_property(TARGET ${CURRENT} PROPERTY POSITION_INDEPENDENT_CODE ON)
+  endif()
+  
   target_include_directories(${CURRENT_TARGET}
                              PUBLIC ${LC_BUILD_HEADER_DIRECTORY})
 

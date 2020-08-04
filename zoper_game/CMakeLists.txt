@@ -25,6 +25,7 @@ build_client_library(
 )
 
 # Extension libraries
+target_link_libraries(${CURRENT_TARGET} PRIVATE haf_user)
 target_link_libraries(${CURRENT_TARGET} PRIVATE boardmanager)
 target_link_libraries(${CURRENT_TARGET} PRIVATE menu_paged)
 
