@@ -1,5 +1,10 @@
-project(zoper_game)
-cmake_minimum_required(VERSION 3.11)
+cmake_minimum_required(VERSION 3.14)
+project(
+  "Zoper"
+  VERSION 1.5.1.2
+  DESCRIPTION "Zoper game"
+  # [HOMEPAGE_URL <url-string>]
+  LANGUAGES CXX)
 
 file (GLOB_RECURSE HEADERS "*.hpp")
 file (GLOB_RECURSE SOURCES "*.cpp")

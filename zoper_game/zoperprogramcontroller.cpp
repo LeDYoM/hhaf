@@ -4,6 +4,7 @@
 #include "gameplay/gamescene.hpp"
 #include "highscores/highscoresscene.hpp"
 #include "gameshareddata.hpp"
+#include "app_version.hpp"
 
 #include <mtypes/include/serializer.hpp>
 #include <haf/filesystem/include/fileserializer.hpp>
@@ -24,19 +25,22 @@ ZoperProgramController::~ZoperProgramController() = default;
 
 u16 ZoperProgramController::getVersion() const noexcept
 {
-    return 1;
+    return cl_version::VersionMajor;
 }
+
 u16 ZoperProgramController::getSubVersion() const noexcept
 {
-    return 4;
+    return cl_version::VersionMinor;
 }
+
 u16 ZoperProgramController::getPatch() const noexcept
 {
-    return 0;
+    return cl_version::VersionPatch;
 }
+
 str ZoperProgramController::getName() const noexcept
 {
-    return "Zoper";
+    return cl_version::ProjectName;
 }
 
 void ZoperProgramController::onInit(
