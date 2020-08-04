@@ -17,12 +17,12 @@ bool InputComponentBase::isPressed(const Key key)
     return false;
 }
 
-bool InputComponentBase::isShiftPressed() const
+bool InputComponentBase::isShiftPressed() const noexcept
 {
     return false;
 }
 
-char InputComponentBase::toAscii(const Key key) noexcept
+char InputComponentBase::toAscii(const Key key) const noexcept
 {
     return static_cast<char>(KeyIndex(key) + (isShiftPressed() ? 65 : 65));
 }

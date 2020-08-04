@@ -82,11 +82,25 @@ private:
     SceneNodeTextProperties properties_;
 };
 
-class SceneNodeText : public SceneNode, public SceneNodeTextPropertiesContent
+class SceneNodeText : public SceneNode, public SceneNodeTextProperties
 {
     using BaseClass = SceneNode;
 
 public:
+    using SceneNode::get;
+    using SceneNode::set;
+    using SceneNode::put;
+    using SceneNode::hasChanged;
+    using SceneNode::setChanged;
+    using SceneNode::get_property_reference;
+    using SceneNodeTextProperties::readResetHasChanged;
+    using SceneNodeTextProperties::get;
+    using SceneNodeTextProperties::set;
+    using SceneNodeTextProperties::put;
+    using SceneNodeTextProperties::hasChanged;
+    using SceneNodeTextProperties::setChanged;
+    using SceneNodeTextProperties::get_property_reference;
+
     using SceneNode::SceneNode;
     ~SceneNodeText() override;
 

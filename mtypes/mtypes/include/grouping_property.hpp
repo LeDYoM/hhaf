@@ -5,6 +5,7 @@
 
 #include "properties.hpp"
 #include "propertystate.hpp"
+#include <type_traits>
 
 namespace mtps
 {
@@ -19,6 +20,15 @@ using GroupableProperty = PropertyState<typename Tag::value_type, Tag>;
 template <typename Tag>
 struct GroupablePropertyImpl
 {
+    template <typename Tag_>
+    struct ContainsTag
+    {
+        static constexpr bool value = std::is_same_v<Tag_, Tag>;
+    };
+
+    template <typename Tag_>
+    static constexpr bool ContainsTag_v = ContainsTag<Tag_>::value;
+
     GroupablePropertyImpl() = default;
     GroupablePropertyImpl(typename Tag::value_type const& value) noexcept :
         prop_{value}
@@ -29,13 +39,17 @@ struct GroupablePropertyImpl
     {}
 
     template <typename Tag_>
-    GroupableProperty<Tag_>& get_property_reference() noexcept
+    std::enable_if_t<GroupablePropertyImpl::ContainsTag_v<Tag_>,
+                     GroupableProperty<Tag_>&>
+    get_property_reference() noexcept
     {
         return prop_;
     }
 
     template <typename Tag_>
-    GroupableProperty<Tag_> const& get_property_reference() const noexcept
+    std::enable_if_t<GroupablePropertyImpl::ContainsTag_v<Tag_>,
+                     GroupableProperty<Tag_> const&>
+    get_property_reference() const noexcept
     {
         return prop_;
     }
@@ -72,12 +86,13 @@ struct PropertyGroupImpl : public GroupablePropertyImpl<FirstTag>,
     };
 
     template <typename Tag_>
-    static constexpr bool ContainsTag_v = ContainsTag<Tag>::value;
+    static constexpr bool ContainsTag_v =
+        PropertyGroupImpl::ContainsTag<Tag_>::value;
 
-    template <typename Tag_>
-    std::enable_if_t<PropertyGroupImpl::ContainsTag<Tag_>::value,
-                     typename GroupableProperty<Tag_> const&>
-    get_property_reference() const noexcept
+    template <
+        typename Tag_,
+        std::enable_if_t<PropertyGroupImpl::ContainsTag_v<Tag_>>* = nullptr>
+    GroupableProperty<Tag_> const& get_property_reference() const noexcept
     {
         if constexpr (std::is_same_v<Tag_, FirstTag>)
         {
@@ -91,10 +106,10 @@ struct PropertyGroupImpl : public GroupablePropertyImpl<FirstTag>,
         }
     }
 
-    template <typename Tag_>
-    std::enable_if_t<PropertyGroupImpl::ContainsTag<Tag_>::value,
-                     typename GroupableProperty<Tag_>&>
-    get_property_reference() noexcept
+    template <
+        typename Tag_,
+        std::enable_if_t<PropertyGroupImpl::ContainsTag_v<Tag_>>* = nullptr>
+    GroupableProperty<Tag_>& get_property_reference() noexcept
     {
         if constexpr (std::is_same_v<Tag_, FirstTag>)
         {
@@ -117,13 +132,15 @@ struct PropertyGroupImpl<FirstTag> : public GroupablePropertyImpl<FirstTag>
     template <typename Tag_>
     struct ContainsTag
     {
-        static constexpr bool value = std::is_same_v<Tag_, FirstTag>;
+        static constexpr bool value =
+            GroupablePropertyImpl<FirstTag>::template ContainsTag<Tag_>::value;
     };
 
     template <typename Tag_>
-    static constexpr bool ContainsTag_v = ContainsTag<Tag>::value;
+    static constexpr bool ContainsTag_v = ContainsTag<Tag_>::value;
 
     PropertyGroupImpl() = default;
+
     using GroupablePropertyImpl<FirstTag>::GroupablePropertyImpl;
     using GroupablePropertyImpl<FirstTag>::get_property_reference;
 };
@@ -154,10 +171,11 @@ struct PropertyGroup : public PropertyGroupImpl<Tag...>
     template <typename Tag_>
     static constexpr bool ContainsTag_v = ContainsTag<Tag_>::value;
 
-    template <typename Tag_>
-    std::enable_if_t<PropertyGroup::ContainsTag_v<Tag_>,
-                     typename Tag_::value_type>
-    get() const noexcept
+    template <typename Tag_,
+              typename Tag__ = Tag_,
+              bool contains = PropertyGroup::ContainsTag_v<Tag__>,
+              std::enable_if_t<contains>* = nullptr>
+    typename Tag_::value_type get() const noexcept
     {
         return Base::template get_property_reference<Tag_>().get();
     }
@@ -177,18 +195,16 @@ struct PropertyGroup : public PropertyGroupImpl<Tag...>
             std::move(value));
     }
 
-    template <
-        typename Tag_,
-        std::enable_if_t<PropertyGroup::ContainsTag<Tag_>::value>* = nullptr>
+    template <typename Tag_,
+              std::enable_if_t<PropertyGroup::ContainsTag_v<Tag_>>* = nullptr>
     PropertyGroup& put(typename Tag_::value_type const& value) noexcept
     {
         (void)Base::template get_property_reference<Tag_>().set(value);
         return *this;
     }
 
-    template <
-        typename Tag_,
-        std::enable_if_t<PropertyGroup::ContainsTag<Tag_>::value>* = nullptr>
+    template <typename Tag_,
+              std::enable_if_t<PropertyGroup::ContainsTag_v<Tag_>>* = nullptr>
     PropertyGroup& put(typename Tag_::value_type&& value) noexcept
     {
         (void)Base::template get_property_reference<Tag_>().set(
@@ -196,26 +212,22 @@ struct PropertyGroup : public PropertyGroupImpl<Tag...>
         return *this;
     }
 
-    template <
-        typename Tag_,
-        std::enable_if_t<PropertyGroup::ContainsTag<Tag_>::value>* = nullptr>
-    bool hasChanged() const noexcept
+    template <typename Tag_>
+    std::enable_if_t<PropertyGroup::ContainsTag_v<Tag_>, bool> hasChanged()
+        const noexcept
     {
         return Base::template get_property_reference<Tag_>().hasChanged();
     }
 
-    template <
-        typename Tag_,
-        std::enable_if_t<PropertyGroup::ContainsTag<Tag_>::value>* = nullptr>
-    void setChanged() noexcept
+    template <typename Tag_>
+    std::enable_if_t<PropertyGroup::ContainsTag_v<Tag_>> setChanged() noexcept
     {
         Base::template get_property_reference<Tag_>().setChanged();
     }
 
-    template <
-        typename Tag_,
-        std::enable_if_t<PropertyGroup::ContainsTag<Tag_>::value>* = nullptr>
-    bool readResetHasChanged() noexcept
+    template <typename Tag_>
+    std::enable_if_t<PropertyGroup::ContainsTag_v<Tag_>, bool>
+    readResetHasChanged() noexcept
     {
         return Base::template get_property_reference<Tag_>()
             .readResetHasChanged();

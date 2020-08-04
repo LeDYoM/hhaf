@@ -267,6 +267,14 @@ TEST_CASE("PropertyGroup inheritance", "[mtypes][property]")
     CHECK(efsn.set<IntTag>(2));
     CHECK(efsn.get<IntTag>() == 2);
 
+    efsn.put<IntTag>(3).put<CharTag>(5);
+    CHECK(efsn.get<IntTag>() == 3);
+    CHECK(efsn.get<CharTag>() == 5);
+
+    efsn.put<StrTag>("world").put<SptrIntTag>(msptr<int>(15));
+    CHECK(efsn.get<StrTag>() == "world");
+    CHECK(*(efsn.get<SptrIntTag>()) == 15);
+
     CHECK(efsn.set<StrTag>("hello"));
     CHECK(efsn.get<StrTag>() == "hello");
 }

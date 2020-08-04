@@ -19,6 +19,7 @@ class PauseSceneNode : public haf::scene::SceneNode
 {
 public:
     using haf::scene::SceneNode::SceneNode;
+    
     ~PauseSceneNode() override;
 
     void onCreated() override;

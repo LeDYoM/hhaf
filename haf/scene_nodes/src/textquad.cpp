@@ -13,40 +13,40 @@ void TextQuad::configure(mtps::sptr<res::IFont> font,
     {
         auto node  = createNodeAt({count % 2, count / 2},
                                  name() + "node_" + make_str(count));
-        node->sceneNodeTextProperties().set<Font>(font);
-        node->sceneNodeTextProperties().set<TextColor>(color);
+        node->set<Font>(font);
+        node->set<TextColor>(color);
     }
 
     // First text is left aligned on top
     {
-        auto& align(nodeAt({0U, 0U})->sceneNodeTextProperties());
-        align.set<AlignmentSize>(size);
-        align.set<AlignmentX>(AlignmentXModes::Left);
-        align.set<AlignmentY>(AlignmentYModes::Top);
+        auto const& align(nodeAt({0U, 0U}));
+        align->set<AlignmentSize>(size);
+        align->set<AlignmentX>(AlignmentXModes::Left);
+        align->set<AlignmentY>(AlignmentYModes::Top);
     }
 
     // Second text is right aligned op top
     {
-        auto& align(nodeAt({1U, 0U})->sceneNodeTextProperties());
-        align.set<AlignmentSize>(size);
-        align.set<AlignmentX>(AlignmentXModes::Right);
-        align.set<AlignmentY>(AlignmentYModes::Top);
+        auto const& align(nodeAt({1U, 0U}));
+        align->set<AlignmentSize>(size);
+        align->set<AlignmentX>(AlignmentXModes::Right);
+        align->set<AlignmentY>(AlignmentYModes::Top);
     }
 
     // Third text is left aligned on bottom
     {
-        auto& align(nodeAt({0U, 1U})->sceneNodeTextProperties());
-        align.set<AlignmentSize>(size);
-        align.set<AlignmentX>(AlignmentXModes::Left);
-        align.set<AlignmentY>(AlignmentYModes::Bottom);
+        auto const& align(nodeAt({0U, 1U}));
+        align->set<AlignmentSize>(size);
+        align->set<AlignmentX>(AlignmentXModes::Left);
+        align->set<AlignmentY>(AlignmentYModes::Bottom);
     }
 
     // Fourth text is right aligned on bottom
     {
-        auto& align(nodeAt({1U, 1U})->sceneNodeTextProperties());
-        align.set<AlignmentSize>(size);
-        align.set<AlignmentX>(AlignmentXModes::Right);
-        align.set<AlignmentY>(AlignmentYModes::Bottom);
+        auto const& align(nodeAt({1U, 1U}));
+        align->set<AlignmentSize>(size);
+        align->set<AlignmentX>(AlignmentXModes::Right);
+        align->set<AlignmentY>(AlignmentYModes::Bottom);
     }
 }
 
