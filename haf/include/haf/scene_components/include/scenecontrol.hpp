@@ -4,7 +4,7 @@
 #define HAF_SCENE_SCENE_CONTROL_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <haf/scene/include/scene_director.hpp>
+#include <mtypes/include/str.hpp>
 #include <haf/system/include/idatawrapper.hpp>
 
 namespace haf::scene
@@ -12,7 +12,7 @@ namespace haf::scene
 /**
  * @brief Class to provide access to the control of the scene.
  * This class provides methods to finish the scene and change
- * to a new one, attach a @b SceneDirectorType or finish
+ * to a new one, overload the appropiate function in @b Scene
  * the scene management.
  */
 class SceneControl : public sys::IDataWrapper
@@ -22,15 +22,6 @@ public:
      * @brief Method to change to the next scene.
      */
     void switchToNextScene();
-
-    /**
-     * @brief Set the Scene Director object to allow the scene
-     * @b SceneManager to perform scene changes in the desired scene
-     * order.
-     *
-     * @param scene_director Object of the @b SceneDirectorType
-     */
-    void setSceneDirector(SceneDirectorType scene_director);
 
     /**
      * @brief Gives the control to the @b SceneController and

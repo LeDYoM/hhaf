@@ -8,18 +8,12 @@
 #include <haf_user/include/iapp_with_default_app_versioning_system.hpp>
 #include "app_version.hpp"
 
-namespace haf::sys
-{
-class DataWrapperCreator;
-}
-
 namespace zoper
 {
 class KeyMapping;
 
-class ZoperProgramController
+class ZoperProgramController final
     : public haf::user::IAppWithDefaultVersionSystem<cl_version::AppVersion>
-//      haf::IApp
 {
 public:
     ZoperProgramController();
@@ -28,6 +22,7 @@ public:
     void onInit(haf::sys::DataWrapperCreator& data_wrapper_creator) override;
     void onFinish(haf::sys::DataWrapperCreator& data_wrapper_creator) override;
 
+    void configureScenes(haf::sys::DataWrapperCreator& data_wrapper_creator);
     mtps::uptr<KeyMapping> keyMapping;
 };
 }  // namespace zoper

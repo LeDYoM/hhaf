@@ -13,13 +13,6 @@ void SceneControl::switchToNextScene()
         ->switchToNextScene();
 }
 
-void SceneControl::setSceneDirector(SceneDirectorType scene_director)
-{
-    sys::getSystem<scene::SceneManager>(attachedNode())
-        .sceneController()
-        ->setSceneDirector(std::move(scene_director));
-}
-
 bool SceneControl::startScene(const mtps::str& scene_name)
 {
     return sys::getSystem<scene::SceneManager>(attachedNode())

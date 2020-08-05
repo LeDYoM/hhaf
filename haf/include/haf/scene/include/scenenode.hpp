@@ -3,6 +3,7 @@
 #ifndef HAF_SCENE_SCENENODE_INCLUDE_HPP
 #define HAF_SCENE_SCENENODE_INCLUDE_HPP
 
+#include <haf/haf_export.hpp>
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
 #include <mtypes/include/properties.hpp>
@@ -30,7 +31,7 @@ class SceneManager;
  * This class serves as main entry point in the hierarchy of the scene.
  * To create new SceneNode types, inherit from this class.
  */
-class SceneNode : public sys::HasName,
+class HAF_API SceneNode : public sys::HasName,
                   public SceneNodeParent,
                   public SceneNodes,
                   public Renderizables,

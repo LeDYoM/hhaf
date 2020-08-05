@@ -76,7 +76,10 @@ struct GameScene::GameScenePrivate
 
 GameScene::GameScene() : Scene{StaticTypeName}
 {}
+
 GameScene::~GameScene() = default;
+
+str GameScene::nextSceneName() { return HIGHSCORES_SCENE_NAME; }
 
 void GameScene::onCreated()
 {

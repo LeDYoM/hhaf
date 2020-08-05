@@ -21,7 +21,10 @@ using namespace haf::scene::nodes;
 
 HighScoresScene::HighScoresScene() : Scene{StaticTypeName}
 {}
+
 HighScoresScene::~HighScoresScene() = default;
+
+mtps::str HighScoresScene::nextSceneName() { return MENU_SCENE_NAME; }
 
 void HighScoresScene::onCreated()
 {

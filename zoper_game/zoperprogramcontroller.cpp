@@ -19,7 +19,24 @@ using namespace haf::scene;
 
 namespace zoper
 {
-ZoperProgramController::ZoperProgramController() = default;
+
+void ZoperProgramController::configureScenes(
+    haf::sys::DataWrapperCreator& data_wrapper_creator)
+{
+        auto scene_node_factory(
+            data_wrapper_creator.dataWrapper<scene::SceneFactory>());
+
+        scene_node_factory->registerSceneType<MenuScene>();
+        scene_node_factory->registerSceneType<GameScene>();
+        scene_node_factory->registerSceneType<HighScoresScene>();
+
+        auto scene_control(
+            data_wrapper_creator.dataWrapper<scene::SceneControl>());
+
+        scene_control->startScene<MenuScene>();
+}
+
+ZoperProgramController::ZoperProgramController()  = default;
 ZoperProgramController::~ZoperProgramController() = default;
 
 void ZoperProgramController::onInit(
@@ -43,34 +60,9 @@ void ZoperProgramController::onInit(
     {
         data_wrapper_creator.dataWrapper<scene::SceneMetrics>()->setViewRect(
             {0U, 0U, 2000U, 2000U});
-        auto scene_node_factory(
-            data_wrapper_creator.dataWrapper<scene::SceneFactory>());
-
-        scene_node_factory->registerSceneType<MenuScene>();
-        scene_node_factory->registerSceneType<GameScene>();
-        scene_node_factory->registerSceneType<HighScoresScene>();
-
-        auto scene_control(
-            data_wrapper_creator.dataWrapper<scene::SceneControl>());
-
-        scene_control->setSceneDirector([this](const str& scene_name) -> str {
-            if (scene_name == (MenuScene::StaticTypeName))
-            {
-                return GameScene::StaticTypeName;
-            }
-            else if (scene_name == (GameScene::StaticTypeName))
-            {
-                return HighScoresScene::StaticTypeName;
-            }
-            else if (scene_name == (HighScoresScene::StaticTypeName))
-            {
-                return MenuScene::StaticTypeName;
-            }
-            return str{};
-        });
-
-        scene_control->startScene<MenuScene>();
     }
+
+    configureScenes(data_wrapper_creator);
 }
 
 void ZoperProgramController::onFinish(

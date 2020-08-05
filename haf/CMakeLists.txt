@@ -17,6 +17,7 @@ set(HAF_PUBLIC_INCLUDE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/)
 
 # Prepare the haf libray
 add_library(${CURRENT_TARGET} SHARED ${_SOURCES} ${_HEADERS})
+target_compile_definitions(${CURRENT_TARGET} PRIVATE haf_EXPORTS)
 target_link_libraries(${CURRENT_TARGET} PRIVATE system_internal)
 
 #Create interface library for libraries creating instances of haf

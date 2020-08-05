@@ -37,10 +37,11 @@ void SceneController::deferredSwitchScene()
     sptr<Scene> nextScene{nullptr};
     if (!exit_requested_)
     {
-        if (scene_director_)
+        auto const next_scene_name = current_scene_->nextSceneName();
+
+        if (!next_scene_name.empty())
         {
-            nextScene =
-                scene_factory_.create(scene_director_(current_scene_->name()));
+            nextScene = scene_factory_.create(next_scene_name);
         }
     }
 
@@ -55,11 +56,6 @@ void SceneController::terminateCurrentScene()
                             "Unexpected nullptr in current_scene");
     DisplayLog::info("Terminating scene ", current_scene_->name());
     current_scene_->onFinished();
-}
-
-void SceneController::setSceneDirector(SceneDirectorType sceneDirector)
-{
-    scene_director_ = std::move(sceneDirector);
 }
 
 void SceneController::update()

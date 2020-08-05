@@ -23,7 +23,10 @@ constexpr u32 PointsPerQuad = 6U;
 
 MenuScene::MenuScene() : BaseClass{StaticTypeName}
 {}
+
 MenuScene::~MenuScene() = default;
+
+str MenuScene::nextSceneName() { return GAME_SCENE_NAME; }
 
 void MenuScene::onCreated()
 {

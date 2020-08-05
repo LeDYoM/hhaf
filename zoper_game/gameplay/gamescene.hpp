@@ -23,6 +23,8 @@
 #include <haf/scene_components/include/statescontrolleractuator.hpp>
 #include <haf/time/include/timercomponent.hpp>
 
+#include "../scene_names.hpp"
+
 namespace zoper
 {
 class PauseSceneNode;
@@ -35,8 +37,9 @@ public:
     GameScene();
     ~GameScene() override;
 
-    static constexpr char StaticTypeName[] = "GameScene";
+    static constexpr char StaticTypeName[] = GAME_SCENE_NAME;
 
+    mtps::str nextSceneName() override;
     void onCreated() override;
 
     void onEnterState(const GameSceneStates &) override;

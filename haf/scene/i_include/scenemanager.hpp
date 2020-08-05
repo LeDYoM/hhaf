@@ -5,7 +5,6 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/rect.hpp>
-
 #include <system/i_include/systembase.hpp>
 
 namespace haf::scene
