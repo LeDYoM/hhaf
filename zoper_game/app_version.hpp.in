@@ -5,11 +5,14 @@
 
 namespace cl_version
 {
+struct AppVersion
+{
 static constexpr mtps::u16 VersionMajor = @PROJECT_VERSION_MAJOR@U;
 static constexpr mtps::u16 VersionMinor = @PROJECT_VERSION_MINOR@U;
 static constexpr mtps::u16 VersionPatch = @PROJECT_VERSION_PATCH@U;
 static constexpr mtps::u16 VersionTweak = @PROJECT_VERSION_TWEAK@U;
 static constexpr char ProjectName[] = "@PROJECT_NAME@";
+};
 
 }  // namespace cl_version
 

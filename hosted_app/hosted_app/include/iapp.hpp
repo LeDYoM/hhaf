@@ -25,7 +25,7 @@ public:
     virtual mtps::u16 getVersion() const noexcept    = 0;
     virtual mtps::u16 getSubVersion() const noexcept = 0;
     virtual mtps::u16 getPatch() const noexcept      = 0;
-//    virtual mtps::u16 getTweak() const noexcept      = 0;
+    virtual mtps::u16 getTweak() const noexcept      = 0;
     virtual mtps::str getName() const noexcept       = 0;
 };
 }  // namespace haf
