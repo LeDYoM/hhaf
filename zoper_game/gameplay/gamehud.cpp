@@ -16,7 +16,9 @@ using namespace haf::scene::nodes;
 
 namespace zoper
 {
-GameHudSceneNode::GameHudSceneNode(SceneNode* const parent, str name) :
+GameHudSceneNode::GameHudSceneNode(
+    mtps::rptr<haf::scene::SceneNode> const parent,
+    str name) :
     SceneNode{parent, std::move(name)}
 {
     auto resources_viewer = dataWrapper<res::ResourceView>();
