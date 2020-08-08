@@ -1,6 +1,7 @@
 # Function to build different components from the project in an unified way.
 function(build_internal_lib_component)
 
+
   cmake_parse_arguments(LC_BUILD "" "INTERNAL_TARGET"
                         "SOURCES;PRIVATE_INTERNAL_LINK" ${ARGN})
 
@@ -17,6 +18,8 @@ function(build_internal_lib_component)
   # TODO: Add all sources
   add_library(${CURRENT_TARGET} STATIC ${LC_BUILD_SOURCES})
 
+  target_compile_definitions(${CURRENT_TARGET} PRIVATE haf_EXPORTS)
+  
   # Add <root>/haf/include/ to all users of haf
   target_include_directories(${CURRENT_TARGET}
                              PUBLIC ${HAF_PUBLIC_INCLUDE_DIRECTORY})
