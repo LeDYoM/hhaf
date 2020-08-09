@@ -172,8 +172,8 @@ struct PropertyGroup : public PropertyGroupImpl<Tag...>
     static constexpr bool ContainsTag_v = ContainsTag<Tag_>::value;
 
     template <typename Tag_,
-              typename Tag__ = Tag_,
-              bool contains = PropertyGroup::ContainsTag_v<Tag__>,
+              typename Tag__              = Tag_,
+              bool contains               = PropertyGroup::ContainsTag_v<Tag__>,
               std::enable_if_t<contains>* = nullptr>
     typename Tag_::value_type get() const noexcept
     {
