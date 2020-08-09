@@ -253,17 +253,27 @@ public:
     int get() const { return 8; };
     void set(int const) const { };
 
+/*
     using FakeSceneNode::GroupProperties::set;
     using FakeSceneNode::GroupProperties::get;
     using FakeSceneNode::GroupProperties::put;
     using GroupProperties::set;
     using GroupProperties::get;
     using GroupProperties::put;
+*/
+    template <typename Tag>
+    auto& property()
+    {
+        return get_property_reference<Tag>();
+    }
 };
 
 TEST_CASE("PropertyGroup inheritance", "[mtypes][property]")
 {
     EnhancedFakeSceneNode efsn;
+
+    efsn.property<IntTag>().set(3);
+/*
     CHECK(efsn.set<IntTag>(2));
     CHECK(efsn.get<IntTag>() == 2);
 
@@ -277,4 +287,5 @@ TEST_CASE("PropertyGroup inheritance", "[mtypes][property]")
 
     CHECK(efsn.set<StrTag>("hello"));
     CHECK(efsn.get<StrTag>() == "hello");
+*/
 }
