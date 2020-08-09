@@ -237,22 +237,27 @@ TEST_CASE("PropertyGroup::ContainsTag", "[mtypes][property]")
     static_assert(APropertyGroup::ContainsTag<AnotherTag>::value);
 }
 
-class FakeSceneNode : public PropertyGroup<IntTag, CharTag>
+using FakeSceneNodeProperties = PropertyGroup<IntTag, CharTag>;
+class FakeSceneNode : public FakeSceneNodeProperties
 {
 public:
-    using GroupProperties = PropertyGroup<IntTag, CharTag>;
     void notUsed() {}
 };
 
+using EnhancedFakeSceneNodeProperties = PropertyGroup<SptrIntTag, StrTag>;
+
 class EnhancedFakeSceneNode : public FakeSceneNode,
-                              public PropertyGroup<SptrIntTag, StrTag>
+                              public EnhancedFakeSceneNodeProperties
 {
 public:
-    using BasePG = PropertyGroup<SptrIntTag, StrTag>;
-    using GroupProperties = BasePG;
     int get() const { return 8; };
     void set(int const) const { };
 
+    template <typename T>
+    auto& prop()
+    {
+        return static_cast<T&>(*this);
+    }
 /*
     using FakeSceneNode::GroupProperties::set;
     using FakeSceneNode::GroupProperties::get;
@@ -266,7 +271,9 @@ public:
     {
         return get_property_reference<Tag>();
     }
+    */
 };
+
 
 TEST_CASE("PropertyGroup inheritance", "[mtypes][property]")
 {
@@ -275,6 +282,8 @@ TEST_CASE("PropertyGroup inheritance", "[mtypes][property]")
     efsn.property<IntTag>().set(3);
 /*
     CHECK(efsn.set<IntTag>(2));
+    CHECK(efsn.prop<FakeSceneNodeProperties>().set<IntTag>(2));
+    /*
     CHECK(efsn.get<IntTag>() == 2);
 
     efsn.put<IntTag>(3).put<CharTag>(5);
@@ -288,4 +297,5 @@ TEST_CASE("PropertyGroup inheritance", "[mtypes][property]")
     CHECK(efsn.set<StrTag>("hello"));
     CHECK(efsn.get<StrTag>() == "hello");
 */
+}
 }
