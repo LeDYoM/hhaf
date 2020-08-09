@@ -238,7 +238,19 @@ TEST_CASE("PropertyGroup::ContainsTag", "[mtypes][property]")
 }
 
 using FakeSceneNodeProperties = PropertyGroup<IntTag, CharTag>;
-class FakeSceneNode : public FakeSceneNodeProperties
+
+class FakeSceneNodePropertiesContainer : public FakeSceneNodeProperties
+{
+public:
+    template <typename T>
+    std::enable_if_t<std::is_same_v<T, FakeSceneNodeProperties>, FakeSceneNodeProperties&>
+    prop()
+    {
+        return static_cast<FakeSceneNodeProperties&>(*this);
+    }
+};
+
+class FakeSceneNode : public FakeSceneNodePropertiesContainer
 {
 public:
     void notUsed() {}
@@ -246,56 +258,62 @@ public:
 
 using EnhancedFakeSceneNodeProperties = PropertyGroup<SptrIntTag, StrTag>;
 
+class EnhancedFakeSceneNodePropertiesContainer : public EnhancedFakeSceneNodeProperties
+{
+public:
+    template <typename T>
+    std::enable_if_t<std::is_same_v<T, EnhancedFakeSceneNodeProperties>, EnhancedFakeSceneNodeProperties&>
+    prop2()
+    {
+        return static_cast<EnhancedFakeSceneNodeProperties&>(*this);
+    }
+};
+
 class EnhancedFakeSceneNode : public FakeSceneNode,
-                              public EnhancedFakeSceneNodeProperties
+                              public EnhancedFakeSceneNodePropertiesContainer
 {
 public:
     int get() const { return 8; };
-    void set(int const) const { };
+    void set(int const) const {};
 
-    template <typename T>
-    auto& prop()
-    {
-        return static_cast<T&>(*this);
-    }
-/*
-    using FakeSceneNode::GroupProperties::set;
-    using FakeSceneNode::GroupProperties::get;
-    using FakeSceneNode::GroupProperties::put;
-    using GroupProperties::set;
-    using GroupProperties::get;
-    using GroupProperties::put;
-*/
-    template <typename Tag>
-    auto& property()
-    {
-        return get_property_reference<Tag>();
-    }
+    /*
+        using FakeSceneNode::GroupProperties::set;
+        using FakeSceneNode::GroupProperties::get;
+        using FakeSceneNode::GroupProperties::put;
+        using GroupProperties::set;
+        using GroupProperties::get;
+        using GroupProperties::put;
+
+        template <typename Tag>
+        auto& property()
+        {
+            return get_property_reference<Tag>();
+        }
     */
 };
-
 
 TEST_CASE("PropertyGroup inheritance", "[mtypes][property]")
 {
     EnhancedFakeSceneNode efsn;
 
-    efsn.property<IntTag>().set(3);
-/*
-    CHECK(efsn.set<IntTag>(2));
+    //    efsn.property<IntTag>().set(3);
+    //    efsn.property<StrTag>().set("hello");
     CHECK(efsn.prop<FakeSceneNodeProperties>().set<IntTag>(2));
+    CHECK(efsn.prop2<EnhancedFakeSceneNodeProperties>().set<StrTag>("hello"));
+
     /*
-    CHECK(efsn.get<IntTag>() == 2);
+        CHECK(efsn.set<IntTag>(2));
+        CHECK(efsn.get<IntTag>() == 2);
 
-    efsn.put<IntTag>(3).put<CharTag>(5);
-    CHECK(efsn.get<IntTag>() == 3);
-    CHECK(efsn.get<CharTag>() == 5);
+        efsn.put<IntTag>(3).put<CharTag>(5);
+        CHECK(efsn.get<IntTag>() == 3);
+        CHECK(efsn.get<CharTag>() == 5);
 
-    efsn.put<StrTag>("world").put<SptrIntTag>(msptr<int>(15));
-    CHECK(efsn.get<StrTag>() == "world");
-    CHECK(*(efsn.get<SptrIntTag>()) == 15);
+        efsn.put<StrTag>("world").put<SptrIntTag>(msptr<int>(15));
+        CHECK(efsn.get<StrTag>() == "world");
+        CHECK(*(efsn.get<SptrIntTag>()) == 15);
 
-    CHECK(efsn.set<StrTag>("hello"));
-    CHECK(efsn.get<StrTag>() == "hello");
-*/
-}
+        CHECK(efsn.set<StrTag>("hello"));
+        CHECK(efsn.get<StrTag>() == "hello");
+    */
 }
