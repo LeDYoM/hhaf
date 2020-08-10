@@ -211,7 +211,7 @@ void SceneNodeText::update()
     }
 }
 
-void SceneNodeText::updateAlignmentX(const f32 textSizeX)
+void SceneNodeText::updateAlignmentX(f32 const textSizeX)
 {
     f32 newPosX{0.f};
 
@@ -234,7 +234,7 @@ void SceneNodeText::updateAlignmentX(const f32 textSizeX)
     position.set(vector2df{newPosX, position().y});
 }
 
-void SceneNodeText::updateAlignmentY(const f32 textSizeY)
+void SceneNodeText::updateAlignmentY(f32 const textSizeY)
 {
     f32 newPosY{0.f};
 
