@@ -9,8 +9,9 @@ namespace haf::sys
 {
 class ISystemProvider;
 class SystemProvider;
-const SystemProvider &getSystemProvider(const ISystemProvider &isystem_provider);
-SystemProvider &getSystemProvider(ISystemProvider &isystem_provider);
-} // namespace haf::sys
+const SystemProvider& getSystemProvider(
+    const ISystemProvider& isystem_provider);
+SystemProvider& getSystemProvider(ISystemProvider& isystem_provider);
+}  // namespace haf::sys
 
 #endif

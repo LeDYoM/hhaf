@@ -68,7 +68,7 @@ public:
     }
 
     mtps::vector2dst tableSize() const noexcept { return tableSize_(); }
-    
+
     constexpr mtps::sptr<T> operator()(const mtps::vector2dst& index) noexcept
     {
         return nodes_[index.x][index.y];
@@ -135,7 +135,8 @@ public:
     void update() override
     {
         BaseClass::update();
-        bool do_update{tableNodeProperties().readResetHasChanged<SceneNodeSize>()};
+        bool do_update{
+            tableNodeProperties().readResetHasChanged<SceneNodeSize>()};
         do_update |= tableSize_.readResetHasChanged();
 
         // Update row and column size

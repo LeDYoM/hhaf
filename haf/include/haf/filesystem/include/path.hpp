@@ -7,7 +7,7 @@
 
 namespace haf::sys
 {
-    using Path = mtps::str;
-} // namespace haf::scene
+using Path = mtps::str;
+}  // namespace haf::sys
 
 #endif

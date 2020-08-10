@@ -20,6 +20,6 @@ public:
      */
     TimePoint now() const;
 };
-} // namespace haf::time
+}  // namespace haf::time
 
 #endif

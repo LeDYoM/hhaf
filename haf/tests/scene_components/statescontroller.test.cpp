@@ -7,9 +7,10 @@ using namespace mtps;
 using namespace haf;
 using namespace haf::scene;
 
-TEST_CASE("haf::StatesController", "[StatesController][lib][scene][component][StatesController]")
+TEST_CASE("haf::StatesController",
+          "[StatesController][lib][scene][component][StatesController]")
 {
-    constexpr u32 Start_State = 0U;
+    constexpr u32 Start_State  = 0U;
     constexpr u32 Finish_State = 1U;
 
     struct CommonData
@@ -28,17 +29,19 @@ TEST_CASE("haf::StatesController", "[StatesController][lib][scene][component][St
         CHECK(common.step == 1U);
     });
 
-    common.states_controller->StatePushed.connect([&common, Start_State](const auto &state) {
-        CHECK(state == Start_State);
-        common.step++;
-        CHECK(common.step == 2U);
-    });
+    common.states_controller->StatePushed.connect(
+        [&common, Start_State](const auto& state) {
+            CHECK(state == Start_State);
+            common.step++;
+            CHECK(common.step == 2U);
+        });
 
-    common.states_controller->StatePopped.connect([&common, Finish_State](const auto &state) {
-        CHECK(state == Finish_State);
-        common.step++;
-        CHECK(common.step == 7U);
-    });
+    common.states_controller->StatePopped.connect(
+        [&common, Finish_State](const auto& state) {
+            CHECK(state == Finish_State);
+            common.step++;
+            CHECK(common.step == 7U);
+        });
 
     common.states_controller->AfterFinish.connect([&common]() {
         common.step++;
@@ -46,38 +49,40 @@ TEST_CASE("haf::StatesController", "[StatesController][lib][scene][component][St
         common.exit = true;
     });
 
-    common.states_controller->StateStarted.connect([&common, Start_State, Finish_State](const auto &state) {
-        if (common.step == 2U)
-        {
-            CHECK(state == Start_State);
-            common.step++;
-            CHECK(common.step == 3U);
-            common.states_controller->setState(Finish_State);
-        }
-        else
-        {
-            CHECK(state == Finish_State);
-            common.step++;
-            CHECK(common.step == 5U);
-            common.states_controller->pop_state();
-        }
-    });
+    common.states_controller->StateStarted.connect(
+        [&common, Start_State, Finish_State](const auto& state) {
+            if (common.step == 2U)
+            {
+                CHECK(state == Start_State);
+                common.step++;
+                CHECK(common.step == 3U);
+                common.states_controller->setState(Finish_State);
+            }
+            else
+            {
+                CHECK(state == Finish_State);
+                common.step++;
+                CHECK(common.step == 5U);
+                common.states_controller->pop_state();
+            }
+        });
 
-    common.states_controller->StateFinished.connect([&common, Start_State, Finish_State](const auto &state) {
-        if (common.step == 3U)
-        {
-            CHECK(state == Start_State);
-            common.step++;
-            CHECK(common.step == 4U);
-        }
-        else
-        {
-            CHECK(state == Finish_State);
-            common.step++;
-            CHECK(common.step == 6U);
-            common.states_controller->pop_state();
-        }
-    });
+    common.states_controller->StateFinished.connect(
+        [&common, Start_State, Finish_State](const auto& state) {
+            if (common.step == 3U)
+            {
+                CHECK(state == Start_State);
+                common.step++;
+                CHECK(common.step == 4U);
+            }
+            else
+            {
+                CHECK(state == Finish_State);
+                common.step++;
+                CHECK(common.step == 6U);
+                common.states_controller->pop_state();
+            }
+        });
 
     common.states_controller->start(Start_State);
 

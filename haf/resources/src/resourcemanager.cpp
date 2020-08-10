@@ -53,7 +53,8 @@ inline sptr<T> loadResource(backend::IResourceFactory<V>& factory,
 }
 
 template <typename T>
-inline auto get_or_default(ResourceList<sptr<T>> const& container, const str& rid)
+inline auto get_or_default(ResourceList<sptr<T>> const& container,
+                           const str& rid)
 {
     auto iterator(
         std::find_if(container.begin(), container.end(),

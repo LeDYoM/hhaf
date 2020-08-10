@@ -26,7 +26,7 @@ bool SharedData::isEmpty()
     return sys::getSystem<sys::SharedDataSystem>(attachedNode()).isEmpty();
 }
 
-bool SharedData::makeEmpty() 
+bool SharedData::makeEmpty()
 {
     return sys::getSystem<sys::SharedDataSystem>(attachedNode()).makeEmpty();
 }

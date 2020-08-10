@@ -124,7 +124,8 @@ void HighScoreTextController::addEditAnimation(const size_type line_index)
         [this](const auto, const sptr<nodes::SceneNodeText>& element) {
             animation_component_->addCircledPropertyAnimation(
                 time::TimePoint_as_miliseconds(2000),
-                element->prop<nodes::SceneNodeTextProperties>().get_property_reference<nodes::TextColor>(),
+                element->prop<nodes::SceneNodeTextProperties>()
+                    .get_property_reference<nodes::TextColor>(),
                 colors::White, colors::Black);
         });
 }
@@ -132,7 +133,9 @@ void HighScoreTextController::addEditAnimation(const size_type line_index)
 void HighScoreTextController::standarizeText(
     const sptr<nodes::SceneNodeText>& ntext)
 {
-    ntext->prop<nodes::SceneNodeTextProperties>().put<nodes::TextColor>(m_normalColor).put<nodes::Font>(m_normalFont);
+    ntext->prop<nodes::SceneNodeTextProperties>()
+        .put<nodes::TextColor>(m_normalColor)
+        .put<nodes::Font>(m_normalFont);
 }
 
 void HighScoreTextController::saveHighScores()

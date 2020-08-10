@@ -10,6 +10,6 @@ class ISystemProvider
 public:
     virtual ~ISystemProvider() {}
 };
-} // namespace haf::sys
+}  // namespace haf::sys
 
 #endif

@@ -32,6 +32,6 @@ public:
     void show(mtps::size_type index, bool force = false);
 };
 
-} // namespace haf::scene::nodes
+}  // namespace haf::scene
 
 #endif

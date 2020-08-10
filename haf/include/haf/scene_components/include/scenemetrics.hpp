@@ -15,6 +15,6 @@ public:
     void setViewRect(const mtps::Rectf32& new_view);
     void setViewPort(const mtps::Rectf32& new_view_port);
 };
-} // namespace haf::scene
+}  // namespace haf::scene
 
 #endif

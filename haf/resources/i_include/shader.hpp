@@ -16,14 +16,14 @@ namespace haf::res
 class Shader final : public IShader
 {
 public:
-    Shader(backend::IShader *shader);
+    Shader(backend::IShader* shader);
     ~Shader() override;
 
-    const backend::IShader *const backEndShader() const noexcept;
+    const backend::IShader* const backEndShader() const noexcept;
 
 private:
-    backend::IShader *m_ShaderPrivate;
+    backend::IShader* m_ShaderPrivate;
 };
-} // namespace haf::res
+}  // namespace haf::res
 
 #endif

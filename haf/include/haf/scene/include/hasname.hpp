@@ -13,7 +13,7 @@ public:
     constexpr HasName(mtps::str const& name) noexcept : m_name(name) {}
     constexpr HasName(mtps::str&& name) noexcept : m_name(std::move(name)) {}
     constexpr HasName(HasName&& other) noexcept = default;
-    constexpr HasName(const HasName& other) = default;
+    constexpr HasName(const HasName& other)     = default;
     HasName& operator=(HasName&& other) noexcept = default;
     HasName& operator=(const HasName& other) = default;
 
@@ -25,6 +25,6 @@ protected:
 private:
     mtps::str m_name;
 };
-}  // namespace haf::scene
+}  // namespace haf::sys
 
 #endif

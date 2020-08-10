@@ -22,14 +22,15 @@ class TimerComponent : public scene::IComponent
 public:
     /**
      * @brief Create a Timer and get the connection to it.
-     * 
+     *
      * @param timerType Type of the timer created.
      * @param timeOut  Time for when the timer will trigger.
      * @param callback Function to be triggered.
      * @return TimerConnectorSPtr  mtps::Objectto control the timer created.
      */
     TimerConnectorSPtr addTimer(TimerType timerType,
-                                TimePoint timeOut, timer_callback_t callback);
+                                TimePoint timeOut,
+                                timer_callback_t callback);
 
     void update() override;
     void pause();
@@ -37,8 +38,8 @@ public:
     void switchPause();
 
 private:
-   mtps::LockableVector<mtps::sptr<TimerConnector>> activeTimers_;
+    mtps::LockableVector<mtps::sptr<TimerConnector>> activeTimers_;
 };
-} // namespace haf::time
+}  // namespace haf::time
 
 #endif

@@ -21,6 +21,6 @@ struct RenderizableModifierContext
         return (box.rightBottom() - vertex.position) / box.rightBottom();
     }
 };
-} // namespace haf::scene
+}  // namespace haf::scene
 
 #endif

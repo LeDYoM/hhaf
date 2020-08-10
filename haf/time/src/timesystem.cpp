@@ -17,14 +17,14 @@ using clock_t = std::chrono::high_resolution_clock;
 
 TimePoint timepoint_global_now()
 {
-    return TimePoint{static_cast<u64>(clock_t::now().time_since_epoch().count())};
+    return TimePoint{
+        static_cast<u64>(clock_t::now().time_since_epoch().count())};
 }
-} // namespace
+}  // namespace
 
 struct TimeSystem::TimeSystemPrivate final
 {
-    TimeSystemPrivate()
-        : globalStart_{timepoint_global_now()}
+    TimeSystemPrivate() : globalStart_{timepoint_global_now()}
     {
         DisplayLog::info("TimeSystem started at: ", globalStart_.seconds());
     }
@@ -35,20 +35,14 @@ struct TimeSystem::TimeSystemPrivate final
     {
         return (timepoint_global_now() - globalStart_)
 #ifdef HAF_ALLOW_ACCELERATION
-               * acceleration_;
+            * acceleration_;
 #endif
         ;
     }
 
-    void updateStartFrameTime()
-    {
-        last_start_frame_ = timepoint_global_now();
-    }
+    void updateStartFrameTime() { last_start_frame_ = timepoint_global_now(); }
 
-    void updateEndFrameTime()
-    {
-        last_end_frame_ = timepoint_global_now();
-    }
+    void updateEndFrameTime() { last_end_frame_ = timepoint_global_now(); }
 
 #ifdef HAF_ALLOW_ACCELERATION
     void setAcceleration(const f32 acceleration) noexcept
@@ -65,11 +59,9 @@ private:
 #endif
 };
 
-TimeSystem::TimeSystem(sys::ISystemProvider& system_provider)
-    : SystemBase{system_provider},
-      priv_{muptr<TimeSystemPrivate>()}
-{
-}
+TimeSystem::TimeSystem(sys::ISystemProvider& system_provider) :
+    SystemBase{system_provider}, priv_{muptr<TimeSystemPrivate>()}
+{}
 
 TimeSystem::~TimeSystem() = default;
 
@@ -99,4 +91,4 @@ void TimeSystem::endFrame()
 {
     priv_->updateEndFrameTime();
 }
-} // namespace haf::sys
+}  // namespace haf::sys

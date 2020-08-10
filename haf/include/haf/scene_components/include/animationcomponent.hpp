@@ -29,7 +29,7 @@ public:
 
     /**
      * @brief Add an animation that animates a certain property of the node.
-     * 
+     *
      * @tparam PropertyType Type of the property to animate.
      * @param time Time that the animation will last.
      * @param property Reference of the instance to animate.
@@ -40,17 +40,18 @@ public:
      */
     template <typename PropertyType, typename PropertyTag = mtps::DummyTag>
     void addPropertyAnimation(
-        time::TimePoint time, mtps::IProperty<PropertyType, PropertyTag> &property,
-        PropertyType start, PropertyType dest,
+        time::TimePoint time,
+        mtps::IProperty<PropertyType, PropertyTag>& property,
+        PropertyType start,
+        PropertyType dest,
         Animation::AnimationDirection animation_direction =
             Animation::AnimationDirection::Forward,
         Animation::ActionFunc endAction = {})
     {
         auto anim = mtps::muptr<IPropertyAnimation<PropertyType, PropertyTag>>(
-            attachedNode()->dataWrapper<time::Timer>(),
-            std::move(time), property, std::move(start),
-            std::move(dest), std::move(animation_direction),
-            std::move(endAction));
+            attachedNode()->dataWrapper<time::Timer>(), std::move(time),
+            property, std::move(start), std::move(dest),
+            std::move(animation_direction), std::move(endAction));
 
         addAnimation(std::move(anim));
     }
@@ -59,7 +60,7 @@ public:
      * @brief Add an animation that animates a certain property of the node.
      *  When the animation finishes, it starts again setting the property
      *  to start and repeating the process.
-     * 
+     *
      * @tparam PropertyType Type of the property to animate.
      * @param time Time that the animation will last.
      * @param property Reference of the instance to animate.
@@ -70,29 +71,31 @@ public:
      */
     template <typename PropertyType>
     void addRepeatedPropertyAnimation(
-        time::TimePoint time, mtps::IProperty<PropertyType> &property,
-        PropertyType start, PropertyType dest,
+        time::TimePoint time,
+        mtps::IProperty<PropertyType>& property,
+        PropertyType start,
+        PropertyType dest,
         Animation::AnimationDirection animation_direction =
             Animation::AnimationDirection::Forward,
         Animation::ActionFunc endAction = {})
     {
         addPropertyAnimation(
             time, property, start, dest, animation_direction,
-            [ // Capture this by reference
+            [  // Capture this by reference
                 this,
                 // these properties by copy
                 time, start, dest, animation_direction,
                                        // Reference to the property by reference
-                                       &property = property,
+                                       & property = property,
                 // Move endAction inside the inner lambda
                 endAction = std::move(endAction)]() {
                 if (endAction)
                 {
                     endAction();
                 }
-                addRepeatedPropertyAnimation(
-                    time, property, start, dest, animation_direction,
-                    std::move(endAction));
+                addRepeatedPropertyAnimation(time, property, start, dest,
+                                             animation_direction,
+                                             std::move(endAction));
             });
     }
 
@@ -100,7 +103,7 @@ public:
      * @brief Add an animation that animates a certain property of the node.
      *  When the animation finishes, it starts again using the states currently
      *  set at the end of the animation.
-     * 
+     *
      * @tparam PropertyType Type of the property to animate.
      * @param time Time that the animation will last.
      * @param property Reference of the instance to animate.
@@ -110,15 +113,17 @@ public:
      */
     template <typename PropertyType, typename PropertyTag>
     void addCircledPropertyAnimation(
-        time::TimePoint time, mtps::IProperty<PropertyType, PropertyTag> &property,
-        PropertyType start, PropertyType dest,
+        time::TimePoint time,
+        mtps::IProperty<PropertyType, PropertyTag>& property,
+        PropertyType start,
+        PropertyType dest,
         Animation::AnimationDirection animation_direction =
             Animation::AnimationDirection::Forward,
         Animation::ActionFunc endAction = {})
     {
         addPropertyAnimation(
             time, property, start, dest, animation_direction,
-            [ // Capture this by reference
+            [  // Capture this by reference
                 this,
                 // these properties by copy
                 time, start, dest, animation_direction,
@@ -144,6 +149,6 @@ private:
     class AnimationComponentPrivate;
     mtps::uptr<AnimationComponentPrivate> p_;
 };
-} // namespace haf::scene
+}  // namespace haf::scene
 
 #endif

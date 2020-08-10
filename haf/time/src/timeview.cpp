@@ -9,8 +9,8 @@ namespace haf::time
 {
 TimePoint TimeView::now() const
 {
-    
+
     return sys::getSystem<sys::TimeSystem>(attachedNode()).now();
 }
 
-} // namespace haf::scene
+}  // namespace haf::time

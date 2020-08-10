@@ -25,6 +25,6 @@ public:
     void onAttached() override;
 };
 
-} // namespace haf::win
+}  // namespace haf::win
 
 #endif

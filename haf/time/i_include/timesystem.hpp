@@ -27,6 +27,6 @@ private:
     struct TimeSystemPrivate;
     mtps::uptr<TimeSystemPrivate> priv_;
 };
-} // namespace haf::sys
+}  // namespace haf::sys
 
 #endif

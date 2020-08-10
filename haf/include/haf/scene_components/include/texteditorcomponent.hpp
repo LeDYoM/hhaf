@@ -29,7 +29,8 @@ public:
 
     bool enabled{true};
 
-    inline void setTextValidator(mtps::uptr<TextValidator> nTextValidator) noexcept
+    inline void setTextValidator(
+        mtps::uptr<TextValidator> nTextValidator) noexcept
     {
         std::swap(m_textValidator, nTextValidator);
     }
@@ -39,6 +40,6 @@ private:
     mtps::uptr<TextValidator> m_textValidator;
     mtps::str m_originalText;
 };
-} // namespace haf::scene
+}  // namespace haf::scene
 
 #endif

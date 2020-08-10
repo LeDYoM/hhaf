@@ -22,6 +22,6 @@ public:
     virtual char toAscii(const Key key) const noexcept;
     virtual bool isShiftPressed() const noexcept;
 };
-} // namespace haf::scene
+}  // namespace haf::input
 
 #endif

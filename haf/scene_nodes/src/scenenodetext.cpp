@@ -221,10 +221,13 @@ void SceneNodeText::updateAlignmentX(const f32 textSizeX)
         case AlignmentXModes::Left:
             break;
         case AlignmentXModes::Center:
-            newPosX = (prop<SceneNodeTextProperties>().get<AlignmentSize>().x / 2) - (textSizeX / 2);
+            newPosX =
+                (prop<SceneNodeTextProperties>().get<AlignmentSize>().x / 2) -
+                (textSizeX / 2);
             break;
         case AlignmentXModes::Right:
-            newPosX = (prop<SceneNodeTextProperties>().get<AlignmentSize>().x - textSizeX);
+            newPosX = (prop<SceneNodeTextProperties>().get<AlignmentSize>().x -
+                       textSizeX);
             break;
     }
 
@@ -241,10 +244,13 @@ void SceneNodeText::updateAlignmentY(const f32 textSizeY)
         case AlignmentYModes::Top:
             break;
         case AlignmentYModes::Middle:
-            newPosY = (prop<SceneNodeTextProperties>().get<AlignmentSize>().y / 2) - (textSizeY / 2);
+            newPosY =
+                (prop<SceneNodeTextProperties>().get<AlignmentSize>().y / 2) -
+                (textSizeY / 2);
             break;
         case AlignmentYModes::Bottom:
-            newPosY = prop<SceneNodeTextProperties>().get<AlignmentSize>().y - textSizeY;
+            newPosY = prop<SceneNodeTextProperties>().get<AlignmentSize>().y -
+                textSizeY;
             break;
     }
 

@@ -6,6 +6,4 @@
 using namespace mtps;
 
 namespace haf::scene
-{
-
-}  // namespace haf::scene
+{}  // namespace haf::scene

@@ -28,7 +28,7 @@ public:
      * empty before this call. You can check the empty state with isEmpty
      * before calling it.
      * @see isEmpty
-     * 
+     *
      * @param data Object derived from @b shdata::IShareable to store
      * @return true The object has been stored.
      * @return false Cannot store the object.
@@ -37,7 +37,7 @@ public:
 
     /**
      * @brief Retrieve the stored object in the SharedData system.
-     * 
+     *
      * @return mtps::uptr<shdata::IShareable> Object stored in the system.
      * It will be nullptr if no object was stored.
      */
@@ -45,7 +45,7 @@ public:
 
     /**
      * @brief Ask if the system has an object stored
-     * 
+     *
      * @return true There is an object stored
      * @return false No object stored currently
      */
@@ -53,7 +53,7 @@ public:
 
     /**
      * @brief Make the Shared object empty.
-     * 
+     *
      * @return true It was not empty. Now it is.
      * @return false It was empty already, no actions performed.
      */

@@ -13,15 +13,21 @@
 
 namespace haf::time
 {
-using timer_emitter_t = mtps::emitter<TimePoint>;
+using timer_emitter_t  = mtps::emitter<TimePoint>;
 using timer_callback_t = timer_emitter_t::emitter_callback_t;
 
 class TimerConnector
 {
 public:
-    TimerConnector(mtps::uptr<Timer> timer, TimerType timerType, TimePoint timeOut, timer_callback_t emitter)
-        : timer_{std::move(timer)}, m_timeOut{std::move(timeOut)},
-          m_emitter{std::move(emitter)}, m_timerType{timerType} {}
+    TimerConnector(mtps::uptr<Timer> timer,
+                   TimerType timerType,
+                   TimePoint timeOut,
+                   timer_callback_t emitter) :
+        timer_{std::move(timer)},
+        m_timeOut{std::move(timeOut)},
+        m_emitter{std::move(emitter)},
+        m_timerType{timerType}
+    {}
 
     inline bool timeOut() const { return timer_->ellapsed() >= m_timeOut; }
     inline void pause() { timer_->pause(); }
@@ -38,6 +44,6 @@ private:
 
 using TimerConnectorSPtr = mtps::sptr<TimerConnector>;
 
-} // namespace haf::time
+}  // namespace haf::time
 
 #endif

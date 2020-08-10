@@ -29,11 +29,12 @@ sptr<SceneNode> SceneNodes::groupByName(const str& name) const
 void SceneNodes::removeSceneNode(sptr<SceneNode> element)
 {
     LogAsserter::log_assert(element.get() != nullptr,
-               "Received empty scene node to be deleted");
+                            "Received empty scene node to be deleted");
     LogAsserter::log_assert(scene_node_ != element.get(),
-               "Cannot delete myself from myself");
-    LogAsserter::log_assert(scene_node_ == element->parent(),
-               " You must call removeSceneNode from the parent node");
+                            "Cannot delete myself from myself");
+    LogAsserter::log_assert(
+        scene_node_ == element->parent(),
+        " You must call removeSceneNode from the parent node");
 
     scene_nodes_group_.removeSceneNode(std::move(element));
 }
