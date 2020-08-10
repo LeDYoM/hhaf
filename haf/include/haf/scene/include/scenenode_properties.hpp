@@ -7,6 +7,12 @@
 
 namespace haf::scene
 {
+struct Visible
+{
+    using value_type = bool;
+};
+
+using SceneNodeProperties = mtps::PropertyGroup<Visible>;
 
 }  // namespace haf::scene
 

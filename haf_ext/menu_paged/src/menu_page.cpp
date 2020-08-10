@@ -92,7 +92,7 @@ void MenuPage::configure(vector<sptr<MenuPagedOption>> options,
         auto newOption(createNodeAt(vector2dst{title_column, counter},
                                     make_str("label", counter)));
         standarizeText(newOption);
-        newOption->set<nodes::Text>(option->title());
+        newOption->prop<nodes::SceneNodeTextProperties>().set<nodes::Text>(option->title());
 
         if (!option->option().options().empty())
         {
@@ -163,13 +163,13 @@ void MenuPage::setColorToLine(const size_type index, const Color& color)
         index,
         [&color](const size_type,
                  const sptr<BaseClass::ContainedElement>& node) {
-            node->set<nodes::TextColor>(color);
+            node->prop<nodes::SceneNodeTextProperties>().set<nodes::TextColor>(color);
         });
 }
 
 void MenuPage::standarizeText(const sptr<ContainedElement>& ntext)
 {
-    ntext->put<nodes::TextColor>(normalColor()).put<nodes::Font>(normalFont());
+    ntext->prop<nodes::SceneNodeTextProperties>().put<nodes::TextColor>(normalColor()).put<nodes::Font>(normalFont());
 }
 
 void MenuPage::goDown()

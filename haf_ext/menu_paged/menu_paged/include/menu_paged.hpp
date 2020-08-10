@@ -24,7 +24,6 @@ public:
     using BaseClass = SceneNode;
     using SceneNode::SceneNode;
 
-    using SceneNode::prop;
     using MenuPagedPropertiesContent::prop;
 
     ~MenuPaged() override;

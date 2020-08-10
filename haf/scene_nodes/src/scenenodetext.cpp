@@ -31,21 +31,22 @@ void SceneNodeText::update()
 {
     BaseClass::update();
 
+    auto& pr = prop<SceneNodeTextProperties>();
     // If the font or the text changed, recreate the children nodes.
-    if (hasChanged<Font>() || hasChanged<Text>())
+    if (pr.hasChanged<Font>() || pr.hasChanged<Text>())
     {
         // Force reposition if font changed.
-        if (hasChanged<Font>())
+        if (pr.hasChanged<Font>())
         {
-            setChanged<AlignmentSize>();
+            pr.setChanged<AlignmentSize>();
         }
-        readResetHasChanged<Font>();
-        readResetHasChanged<Text>();
+        pr.readResetHasChanged<Font>();
+        pr.readResetHasChanged<Text>();
 
-        if (get<Font>() && !(get<Text>().empty()))
+        if (pr.get<Font>() && !(pr.get<Text>().empty()))
         {
-            auto font(get<Font>());
-            auto texture(get<Font>()->getTexture());
+            auto font(pr.get<Font>());
+            auto texture(pr.get<Font>()->getTexture());
 
             f32 x{0.F};
             f32 y{0.F};
@@ -58,11 +59,11 @@ void SceneNodeText::update()
             u32 prevChar{0U};
             size_type counter{0U};
             size_type old_counter = sceneNodes().size();
-            const Color& tc{get<TextColor>()};
+            const Color& tc{pr.get<TextColor>()};
 
-            log_snt("Text to render: ", get<Text>());
+            log_snt("Text to render: ", pr.get<Text>());
 
-            for (auto&& curChar : get<Text>())
+            for (auto&& curChar : pr.get<Text>())
             {
                 log_snt("------------------------------------------------------"
                         "-----------");
@@ -175,11 +176,11 @@ void SceneNodeText::update()
             // Force reposition if text size changed.
             if (counter != old_counter)
             {
-                setChanged<AlignmentSize>();
+                pr.setChanged<AlignmentSize>();
             }
 
             // Force update color
-            readResetHasChanged<TextColor>();
+            pr.readResetHasChanged<TextColor>();
         }
         else
         {
@@ -187,26 +188,26 @@ void SceneNodeText::update()
         }
     }
 
-    if (readResetHasChanged<TextColor>())
+    if (pr.readResetHasChanged<TextColor>())
     {
-        Color const& tc{get<TextColor>()};
+        Color const& tc{pr.get<TextColor>()};
         sceneNodes().for_each([&tc](const SceneNodeSPtr& sNode) {
             sNode->snCast<RenderizableSceneNode>()->node()->color.set(tc);
         });
     }
 
-    bool const as_rr_hasChanged{readResetHasChanged<AlignmentSize>()};
-    bool const align_x{readResetHasChanged<AlignmentX>()};
-    bool const align_y{readResetHasChanged<AlignmentY>()};
+    bool const as_rr_hasChanged{pr.readResetHasChanged<AlignmentSize>()};
+    bool const align_x{pr.readResetHasChanged<AlignmentX>()};
+    bool const align_y{pr.readResetHasChanged<AlignmentY>()};
 
     if (as_rr_hasChanged || align_x)
     {
-        updateAlignmentX(get<Font>()->textSize(get<Text>()).x);
+        updateAlignmentX(pr.get<Font>()->textSize(pr.get<Text>()).x);
     }
 
     if (as_rr_hasChanged || align_y)
     {
-        updateAlignmentY(get<Font>()->textSize(get<Text>()).y);
+        updateAlignmentY(pr.get<Font>()->textSize(pr.get<Text>()).y);
     }
 }
 
@@ -214,16 +215,16 @@ void SceneNodeText::updateAlignmentX(const f32 textSizeX)
 {
     f32 newPosX{0.f};
 
-    switch (get<AlignmentX>())
+    switch (prop<SceneNodeTextProperties>().get<AlignmentX>())
     {
         default:
         case AlignmentXModes::Left:
             break;
         case AlignmentXModes::Center:
-            newPosX = (get<AlignmentSize>().x / 2) - (textSizeX / 2);
+            newPosX = (prop<SceneNodeTextProperties>().get<AlignmentSize>().x / 2) - (textSizeX / 2);
             break;
         case AlignmentXModes::Right:
-            newPosX = get<AlignmentSize>().x - textSizeX;
+            newPosX = (prop<SceneNodeTextProperties>().get<AlignmentSize>().x - textSizeX);
             break;
     }
 
@@ -234,16 +235,16 @@ void SceneNodeText::updateAlignmentY(const f32 textSizeY)
 {
     f32 newPosY{0.f};
 
-    switch (get<AlignmentY>())
+    switch (prop<SceneNodeTextProperties>().get<AlignmentY>())
     {
         default:
         case AlignmentYModes::Top:
             break;
         case AlignmentYModes::Middle:
-            newPosY = (get<AlignmentSize>().y / 2) - (textSizeY / 2);
+            newPosY = (prop<SceneNodeTextProperties>().get<AlignmentSize>().y / 2) - (textSizeY / 2);
             break;
         case AlignmentYModes::Bottom:
-            newPosY = get<AlignmentSize>().y - textSizeY;
+            newPosY = prop<SceneNodeTextProperties>().get<AlignmentSize>().y - textSizeY;
             break;
     }
 

@@ -19,28 +19,32 @@ void TextQuad::onCreated()
     // First text is left aligned on top
     {
         nodeAt({0U, 0U})
-            ->put<AlignmentX>(AlignmentXModes::Left)
+            ->prop<SceneNodeTextProperties>()
+            .put<AlignmentX>(AlignmentXModes::Left)
             .put<AlignmentY>(AlignmentYModes::Top);
     }
 
     // Second text is right aligned op top
     {
         nodeAt({1U, 0U})
-            ->put<AlignmentX>(AlignmentXModes::Right)
+            ->prop<SceneNodeTextProperties>()
+            .put<AlignmentX>(AlignmentXModes::Right)
             .put<AlignmentY>(AlignmentYModes::Top);
     }
 
     // Third text is left aligned on bottom
     {
         nodeAt({0U, 1U})
-            ->put<AlignmentX>(AlignmentXModes::Left)
+            ->prop<SceneNodeTextProperties>()
+            .put<AlignmentX>(AlignmentXModes::Left)
             .put<AlignmentY>(AlignmentYModes::Bottom);
     }
 
     // Fourth text is right aligned on bottom
     {
         nodeAt({1U, 1U})
-            ->put<AlignmentX>(AlignmentXModes::Right)
+            ->prop<SceneNodeTextProperties>()
+            .put<AlignmentX>(AlignmentXModes::Right)
             .put<AlignmentY>(AlignmentYModes::Bottom);
     }
 }
@@ -52,7 +56,10 @@ void TextQuad::configure(mtps::sptr<res::IFont> font,
     for (size_type count{0}; count < 4U; ++count)
     {
         auto node(nodeAt({count % 2U, count / 2U}));
-        node->put<Font>(font).put<TextColor>(color).put<AlignmentSize>(size);
+        node->prop<SceneNodeTextProperties>()
+            .put<Font>(font)
+            .put<TextColor>(color)
+            .put<AlignmentSize>(size);
     }
 }
 

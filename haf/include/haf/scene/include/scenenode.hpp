@@ -10,6 +10,7 @@
 #include <mtypes/include/grouping_property.hpp>
 #include <haf/scene/include/scenenodeparent.hpp>
 #include <haf/scene/include/scenenodes.hpp>
+#include <haf/scene/include/scenenode_properties.hpp>
 #include <haf/scene/include/renderizables.hpp>
 #include <haf/scene/include/transformable.hpp>
 #include <haf/scene/include/hasname.hpp>
@@ -24,13 +25,6 @@ namespace haf::scene
 class Renderizable;
 class Scene;
 class SceneManager;
-
-struct Visible
-{
-    using value_type = bool;
-};
-
-using SceneNodeProperties = mtps::PropertyGroup<Visible>;
 
 /**
  * @brief Main class representing all SceneNodes from a Scene.
