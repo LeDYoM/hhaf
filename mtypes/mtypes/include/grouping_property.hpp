@@ -234,6 +234,27 @@ struct PropertyGroup : public PropertyGroupImpl<Tag...>
     }
 };
 
+template <typename PropertyG>
+class PropertyContainer : public PropertyG
+{
+public:
+    using PropertyG::PropertyG;
+
+    template <typename T>
+    std::enable_if_t<std::is_same_v<T, PropertyG>, PropertyG&>
+    prop() noexcept
+    {
+        return static_cast<PropertyG&>(*this);
+    }
+
+    template <typename T>
+    std::enable_if_t<std::is_same_v<T, PropertyG>, PropertyG const&>
+    prop() const noexcept
+    {
+        return static_cast<PropertyG const&>(*this);
+    }
+};
+
 template <typename TagFirst, typename... Tag>
 bool anyHasChanged_(PropertyGroupImpl<TagFirst, Tag...> const& pg) noexcept
 {

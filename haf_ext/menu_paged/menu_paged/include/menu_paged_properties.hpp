@@ -33,19 +33,7 @@ using MenuPagedProperties = mtps::PropertyGroup<NormalTextFont,
                                                 SelectedColor,
                                                 SceneNodeSizeForPages>;
 
-class MenuPagedPropertiesContent
-{
-public:
-    MenuPagedPropertiesContent() : properties_() {}
-    MenuPagedProperties& menuPagedProperties() noexcept { return properties_; }
-    MenuPagedProperties const& menuPagedProperties() const noexcept
-    {
-        return properties_;
-    }
-
-private:
-    MenuPagedProperties properties_;
-};
+using MenuPagedPropertiesContent = mtps::PropertyContainer<MenuPagedProperties>;
 
 }  // namespace haf::scene
 

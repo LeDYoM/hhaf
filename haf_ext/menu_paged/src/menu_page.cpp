@@ -38,17 +38,17 @@ rptr<MenuPaged const> MenuPage::parentMenuPaged() const
 
 sptr<res::IFont> MenuPage::normalFont() const
 {
-    return parentMenuPaged()->get<NormalTextFont>();
+    return parentMenuPaged()->prop<MenuPagedProperties>().get<NormalTextFont>();
 }
 
 Color MenuPage::normalColor() const
 {
-    return parentMenuPaged()->get<NormalColor>();
+    return parentMenuPaged()->prop<MenuPagedProperties>().get<NormalColor>();
 }
 
 Color MenuPage::selectedColor() const
 {
-    return parentMenuPaged()->get<SelectedColor>();
+    return parentMenuPaged()->prop<MenuPagedProperties>().get<SelectedColor>();
 }
 
 constexpr size_type columnForOptions = 4U;
