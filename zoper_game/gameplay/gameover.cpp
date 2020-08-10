@@ -31,7 +31,8 @@ GameOverSceneNode::GameOverSceneNode(scene::SceneNode* const parent, str name) :
     {
         auto gameText(
             m_gameOverrg->createSceneNode<SceneNodeText>("gameovergame"));
-        gameText->put<Text>("GAME")
+        gameText->prop<SceneNodeTextProperties>()
+            .put<Text>("GAME")
             .put<Font>(resources_viewer->getTTFont(GameResources::ScoreFontId)
                            ->font(360))
             .put<TextColor>(colors::White)
@@ -43,7 +44,8 @@ GameOverSceneNode::GameOverSceneNode(scene::SceneNode* const parent, str name) :
     {
         auto overText(
             m_gameOverrg->createSceneNode<SceneNodeText>("gameoverover"));
-        overText->put<Text>("OVER")
+        overText->prop<SceneNodeTextProperties>()
+            .put<Text>("OVER")
             .put<Font>(resources_viewer->getTTFont(GameResources::ScoreFontId)
                            ->font(360))
             .put<TextColor>(colors::White)
