@@ -14,7 +14,7 @@ public:
     mtps::u16 getSubVersion() const noexcept override { return VersionClass::VersionMinor; }
     mtps::u16 getPatch() const noexcept override { return VersionClass::VersionPatch; }
     mtps::u16 getTweak() const noexcept override { return VersionClass::VersionTweak; }
-    mtps::str getName() const noexcept override { return "aaaa"; }
+    mtps::str getName() const noexcept override { return VersionClass::ProjectName; }
 };
 }  // namespace haf::user
 
