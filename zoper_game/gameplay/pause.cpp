@@ -26,7 +26,8 @@ void PauseSceneNode::onCreated()
     auto resources_viewer = dataWrapper<res::ResourceView>();
 
     m_pauseText = createSceneNode<SceneNodeText>("pausetext");
-    m_pauseText->put<Text>("PAUSE")
+    m_pauseText->prop<SceneNodeTextProperties>()
+        .put<Text>("PAUSE")
         .put<Font>(
             resources_viewer->getTTFont(GameResources::ScoreFontId)->font(180U))
         .put<TextColor>(colors::White)
@@ -44,7 +45,8 @@ void PauseSceneNode::enterPause()
     ensureComponentOfType(animation_component_);
     animation_component_->addPropertyAnimation(
         TimePoint_as_miliseconds(1000U),
-        m_pauseText->get_property_reference<TextColor>(),
+        m_pauseText->prop<SceneNodeTextProperties>()
+            .get_property_reference<TextColor>(),
         Color{255U, 255U, 255U, 0U}, Color{255U, 255U, 255U, 255U});
 }
 

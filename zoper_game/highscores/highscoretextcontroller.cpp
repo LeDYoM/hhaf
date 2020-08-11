@@ -6,6 +6,7 @@
 #include <haf/filesystem/include/fileserializer.hpp>
 #include <haf/scene_components/include/texteditorcomponent.hpp>
 #include <haf/scene_components/include/scenemetricsview.hpp>
+#include <haf/scene_nodes/include/scenenodetext_properties.hpp>
 #include <haf/resources/include/ittfont.hpp>
 #include <haf/resources/include/resourceview.hpp>
 #include <haf/shareddata/include/shareddataview.hpp>
@@ -81,11 +82,11 @@ void HighScoreTextController::addHighScoresLine(const size_type counter,
     auto label(
         createNodeAt(vector2dst{0, counter}, make_str("label", 0, counter)));
     standarizeText(label);
-    label->set<Text>(make_str(counter, "."));
+    label->prop<SceneNodeTextProperties>().set<Text>(make_str(counter, "."));
 
     label = createNodeAt(vector2dst{1, counter}, make_str("label", 1, counter));
     standarizeText(label);
-    label->set<Text>(make_str(element.score));
+    label->prop<SceneNodeTextProperties>().set<Text>(make_str(element.score));
 
     label = createNodeAt(vector2dst{2, counter}, make_str("label", 2, counter));
     standarizeText(label);
@@ -96,7 +97,7 @@ void HighScoreTextController::addHighScoresLine(const size_type counter,
     }
     else
     {
-        label->set<Text>(element.name);
+        label->prop<SceneNodeTextProperties>().set<Text>(element.name);
     }
 }
 
@@ -124,7 +125,8 @@ void HighScoreTextController::addEditAnimation(const size_type line_index)
         [this](const auto, const sptr<nodes::SceneNodeText>& element) {
             animation_component_->addCircledPropertyAnimation(
                 time::TimePoint_as_miliseconds(2000),
-                element->get_property_reference<nodes::TextColor>(),
+                element->prop<nodes::SceneNodeTextProperties>()
+                    .get_property_reference<nodes::TextColor>(),
                 colors::White, colors::Black);
         });
 }
@@ -132,7 +134,9 @@ void HighScoreTextController::addEditAnimation(const size_type line_index)
 void HighScoreTextController::standarizeText(
     const sptr<nodes::SceneNodeText>& ntext)
 {
-    ntext->put<nodes::TextColor>(m_normalColor).put<nodes::Font>(m_normalFont);
+    ntext->prop<nodes::SceneNodeTextProperties>()
+        .put<nodes::TextColor>(m_normalColor)
+        .put<nodes::Font>(m_normalFont);
 }
 
 void HighScoreTextController::saveHighScores()
