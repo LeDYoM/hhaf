@@ -50,7 +50,7 @@ void HighScoreTextController::onCreated()
             .setLeftTop({0, 250})
             .setSize({2000, 1500})};
     position = textBox.leftTop();
-    tableNodeProperties().set<SceneNodeSize>(textBox.size());
+    prop<TableNodeProperties>().set<SceneNodeSize>(textBox.size());
     setTableSize({3U, NumHighScore});
 
     size_type positionInTable{0U};

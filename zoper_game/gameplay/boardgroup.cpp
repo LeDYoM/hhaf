@@ -6,6 +6,7 @@
 
 #include <haf/scene/include/scenenode.hpp>
 #include <haf/scene_nodes/include/tablenode.hpp>
+#include <haf/scene_nodes/include/scene_node_size.hpp>
 #include <haf/scene_components/include/scenemetricsview.hpp>
 #include <haf/scene/include/renderizable.hpp>
 
@@ -28,18 +29,20 @@ void BoardGroup::configure(vector2dst size,
     setTableSize(size);
 
     Rectf32 textBox{dataWrapper<SceneMetricsView>()->currentView()};
-    position      = textBox.leftTop();
-    static_cast<TableNode<BoardTileSceneNode>*>(this)->tableNodeProperties().set<SceneNodeSize>(textBox.size());
+    position = textBox.leftTop();
+    snCast<TableNode<BoardTileSceneNode>>()
+        ->prop<TableNodeProperties>()
+        .set<SceneNodeSize>(textBox.size());
 
-    const Rectf32 bBox(textBox);
-
+    Rectf32 const bBox{textBox};
     Rectf32 tileBox({}, cellSize());
+
     for (size_type y{0U}; y < tableSize().y; ++y)
     {
         for (size_type x{0U}; x < tableSize().x; ++x)
         {
             auto node = createNodeAt({x, y}, make_str("BoardGroupTile_", x, y));
-            node->configure(tileBox);
+            node->prop<SceneNodeSizeProperties>().set<NodeSize>(tileBox);
         }
     }
 
@@ -108,10 +111,12 @@ void BoardGroup::tileRemoved(const vector2dst, board::SITilePointer& tile)
 void BoardGroup::setLevel(const size_type level)
 {
     // Update background tiles
-    for_each_tableSceneNode([this, level](const auto position, auto node) {
-        node->setTileColor(getBackgroundTileColor(
-            level, position, TokenZones::pointInCenter(position)));
-    });
+    for_each_tableSceneNode(
+        [this, level](const auto position, sptr<BoardTileSceneNode> node) {
+            node->prop<BoardTileSceneNodeProperties>().set<BackgroundColor>(
+                getBackgroundTileColor(level, position,
+                                       TokenZones::pointInCenter(position)));
+        });
 }
 
 Color BoardGroup::getBackgroundTileColor(const size_type level,

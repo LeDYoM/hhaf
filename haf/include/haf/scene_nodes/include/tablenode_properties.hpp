@@ -15,19 +15,7 @@ struct SceneNodeSize
 
 using TableNodeProperties = mtps::PropertyGroup<SceneNodeSize>;
 
-class TableNodePropertiesContent
-{
-public:
-    TableNodePropertiesContent() : properties_() {}
-    TableNodeProperties& tableNodeProperties() noexcept { return properties_; }
-    TableNodeProperties const& tableNodeProperties() const noexcept
-    {
-        return properties_;
-    }
-
-private:
-    TableNodeProperties properties_;
-};
+using TableNodePropertiesContent = mtps::PropertyContainer<TableNodeProperties>;
 
 }  // namespace haf::scene
 

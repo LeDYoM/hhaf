@@ -21,7 +21,7 @@ void MenuPaged::update()
         {
             if (auto menu_page = std::dynamic_pointer_cast<MenuPage>(sceneNode))
             {
-                    menu_page->tableNodeProperties().set<SceneNodeSize>(size);
+                    menu_page->prop<TableNodeProperties>().set<SceneNodeSize>(size);
             }
         }
     }

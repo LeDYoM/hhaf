@@ -20,9 +20,8 @@ public:
     using BaseClass        = SceneNode;
     using ContainedElement = T;
 
-    TableNode(SceneNode* parent, mtps::str name) :
-        BaseClass{parent, std::move(name)}
-    {}
+    using BaseClass::BaseClass;
+    using TableNodePropertiesContent::prop;
 
     virtual ~TableNode() = default;
 
@@ -63,12 +62,13 @@ public:
 
     constexpr mtps::vector2df cellSize() const
     {
-        return mtps::vector2df{tableNodeProperties().get<SceneNodeSize>() /
-                               static_cast<mtps::vector2df>(tableSize())};
+        return mtps::vector2df{
+            prop<TableNodeProperties>().get<SceneNodeSize>() /
+            static_cast<mtps::vector2df>(tableSize())};
     }
 
     mtps::vector2dst tableSize() const noexcept { return tableSize_(); }
-    
+
     constexpr mtps::sptr<T> operator()(const mtps::vector2dst& index) noexcept
     {
         return nodes_[index.x][index.y];
@@ -135,7 +135,8 @@ public:
     void update() override
     {
         BaseClass::update();
-        bool do_update{tableNodeProperties().readResetHasChanged<SceneNodeSize>()};
+        bool do_update{
+            prop<TableNodeProperties>().readResetHasChanged<SceneNodeSize>()};
         do_update |= tableSize_.readResetHasChanged();
 
         // Update row and column size

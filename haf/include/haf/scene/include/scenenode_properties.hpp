@@ -13,6 +13,7 @@ struct Visible
 };
 
 using SceneNodeProperties = mtps::PropertyGroup<Visible>;
+using SceneNodePropertiesContent = mtps::PropertyContainer<SceneNodeProperties>;
 
 }  // namespace haf::scene
 

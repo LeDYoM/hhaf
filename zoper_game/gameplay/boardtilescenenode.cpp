@@ -9,16 +9,6 @@ using namespace haf::scene;
 
 BoardTileSceneNode::~BoardTileSceneNode() = default;
 
-void BoardTileSceneNode::configure(const mtps::Rectf32& tileBox)
-{
-    LogAsserter::log_assert(m_pointInCenter == nullptr,
-                "Point in center already initialized");
-    LogAsserter::log_assert(background_tile_ == nullptr,
-                "Background tile already initialized");
-
-    createBackgroundTile(tileBox);
-}
-
 void BoardTileSceneNode::createBackgroundTile(const mtps::Rectf32& tileBox)
 {
     // Size of the point in the middle of the tile
@@ -46,11 +36,25 @@ void BoardTileSceneNode::createBackgroundTile(const mtps::Rectf32& tileBox)
                            .create();
 }
 
-void BoardTileSceneNode::setTileColor(Color color)
+void BoardTileSceneNode::update()
 {
-    LogAsserter::log_assert(background_tile_ != nullptr,
-                            "This node is not correctly initialized");
-    background_tile_->color = std::move(color);
+    if (prop<SceneNodeSizeProperties>().readResetHasChanged<NodeSize>())
+    {
+        LogAsserter::log_assert(m_pointInCenter == nullptr,
+                                "Point in center already initialized");
+        LogAsserter::log_assert(background_tile_ == nullptr,
+                                "Background tile already initialized");
+
+        createBackgroundTile(prop<SceneNodeSizeProperties>().get<NodeSize>());
+        prop<BoardTileSceneNodeProperties>().setChanged<BackgroundColor>();
+    }
+
+    if (prop<BoardTileSceneNodeProperties>()
+            .readResetHasChanged<BackgroundColor>())
+    {
+        background_tile_->color = std::move(
+            prop<BoardTileSceneNodeProperties>().get<BackgroundColor>());
+    }
 }
 
 }  // namespace zoper
