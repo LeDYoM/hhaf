@@ -33,30 +33,24 @@ public:
                      Zero, Zero, One,  Zero, a02, a12, Zero, a22}
     {}
 
-    constexpr Transform(const Transform&) noexcept = default;
-    Transform& operator=(const Transform&) noexcept = default;
+    constexpr Transform(Transform const&) noexcept = default;
+    Transform& operator=(Transform const&) noexcept = default;
 
     constexpr Transform(Transform&&) noexcept = default;
     Transform& operator=(Transform&&) noexcept = default;
 
     constexpr mtps::rptr<Scalar const> const getMatrix() const noexcept
     {
-        return matrix_data_;
+        return matrix_data_.cbegin();
     }
 
     static Transform const Identity;
 
     Transform& operator*=(Transform const& right) noexcept;
-
-    inline Transform operator*(Transform const& right) const noexcept
-    {
-        Transform copy{*this};
-        copy *= right;
-        return copy;
-    }
+    Transform operator*(Transform const& right) const noexcept;
 
 private:
-    Scalar matrix_data_[16U];
+    std::array<Scalar, 16U> matrix_data_;
 };
 }  // namespace haf::scene
 
