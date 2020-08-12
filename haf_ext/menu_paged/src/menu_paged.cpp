@@ -14,14 +14,14 @@ MenuPaged::~MenuPaged() = default;
 
 void MenuPaged::update()
 {
-    if (prop<MenuPagedProperties>().readResetHasChanged<SceneNodeSizeForPages>())
+    if (prop<SceneNodeSizeForPages>().readResetHasChanged())
     {
-        auto const size = prop<MenuPagedProperties>().get<SceneNodeSizeForPages>();
+        auto const size = prop<SceneNodeSizeForPages>().get();
         for (auto& sceneNode : sceneNodes())
         {
             if (auto menu_page = std::dynamic_pointer_cast<MenuPage>(sceneNode))
             {
-                    menu_page->prop<TableNodeProperties>().set<SceneNodeSize>(size);
+                    menu_page->prop<SceneNodeSize>().set(size);
             }
         }
     }

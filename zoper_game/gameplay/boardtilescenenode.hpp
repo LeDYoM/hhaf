@@ -22,16 +22,15 @@ struct BackgroundColor
 };
 
 using BoardTileSceneNodeProperties = mtps::PropertyGroup<BackgroundColor>;
-using BoardTileSceneNodePropertiesContent = mtps::PropertyContainer<BoardTileSceneNodeProperties>;
 
 class BoardTileSceneNode : public SceneNode,
-                           public SceneNodeSizePropertiesContent,
-                           public BoardTileSceneNodePropertiesContent
+                           public SceneNodeSizeProperties,
+                           public BoardTileSceneNodeProperties
 {
 public:
     using BaseClass = SceneNode;
-    using SceneNodeSizePropertiesContent::prop;
-    using BoardTileSceneNodePropertiesContent::prop;
+    using SceneNodeSizeProperties::prop;
+    using BoardTileSceneNodeProperties::prop;
 
     /**
      * @brief Inherit SceneNode constructors.

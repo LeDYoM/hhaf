@@ -17,8 +17,10 @@ namespace haf::scene
 class MenuPaged;
 class MenuPage : public scene::nodes::TableNode<nodes::SceneNodeText>
 {
-private:
+public:
     using BaseClass = scene::nodes::TableNode<nodes::SceneNodeText>;
+    using BaseClass::prop;
+private:
 
     void standarizeText(const mtps::sptr<ContainedElement> &ntext);
     void goDown();

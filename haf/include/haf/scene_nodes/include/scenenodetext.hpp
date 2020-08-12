@@ -15,13 +15,13 @@
 namespace haf::scene::nodes
 {
 
-class SceneNodeText : public SceneNode, public SceneNodeTextPropertiesContent
+class SceneNodeText : public SceneNode, public SceneNodeTextProperties
 {
     using BaseClass = SceneNode;
 
 public:
     using SceneNode::SceneNode;
-    using SceneNodeTextPropertiesContent::prop;
+    using SceneNodeTextProperties::prop;
     ~SceneNodeText() override;
 
 protected:

@@ -16,7 +16,7 @@ SceneNode::SceneNode(rptr<SceneNode> parent, str name) :
     sys::SystemAccess{parent != nullptr ? &(parent->isystemProvider())
                                         : nullptr},
     InterfaceGetter{this},
-    mtps::PropertyContainer<SceneNodeProperties>(true)
+    SceneNodeProperties(true)
 {}
 
 SceneNode::~SceneNode() = default;

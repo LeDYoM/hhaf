@@ -14,14 +14,14 @@ namespace haf::scene::nodes
 /// Class representing a SceneNode with table layout.
 /// Properties of the table can be configured like size and so on.
 template <typename T>
-class TableNode : public SceneNode, public TableNodePropertiesContent
+class TableNode : public SceneNode, public TableNodeProperties
 {
 public:
     using BaseClass        = SceneNode;
     using ContainedElement = T;
 
     using BaseClass::BaseClass;
-    using TableNodePropertiesContent::prop;
+    using TableNodeProperties::prop;
 
     virtual ~TableNode() = default;
 

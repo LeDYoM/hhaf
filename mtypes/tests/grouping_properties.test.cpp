@@ -254,8 +254,8 @@ public:
     int get() const { return 8; };
     void set(int const) const {};
 
-    using FakeSceneNodeProperties::prop;
     using EnhancedFakeSceneNodeProperties::prop;
+    using FakeSceneNodeProperties::prop;
 };
 
 TEST_CASE("PropertyGroup inheritance", "[mtypes][property]")
@@ -272,7 +272,9 @@ TEST_CASE("PropertyGroup inheritance", "[mtypes][property]")
     CHECK(efsn.prop<IntTag>().get() == 3);
     CHECK(efsn.prop<CharTag>().get() == 5);
 
-    efsn.prop<EnhancedFakeSceneNodeProperties>().put<StrTag>("world").put<SptrIntTag>(msptr<int>(15));
+    efsn.prop<EnhancedFakeSceneNodeProperties>()
+        .put<StrTag>("world")
+        .put<SptrIntTag>(msptr<int>(15));
     CHECK(efsn.prop<StrTag>().get() == "world");
     CHECK(*(efsn.prop<SptrIntTag>().get()) == 15);
 

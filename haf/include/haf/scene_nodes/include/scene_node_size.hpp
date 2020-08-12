@@ -14,8 +14,6 @@ struct NodeSize
 };
 
 using SceneNodeSizeProperties = mtps::PropertyGroup<NodeSize>;
-using SceneNodeSizePropertiesContent =
-    mtps::PropertyContainer<SceneNodeSizeProperties>;
 
 }  // namespace haf::scene
 

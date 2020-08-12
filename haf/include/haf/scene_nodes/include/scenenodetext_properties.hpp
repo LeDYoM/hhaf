@@ -61,8 +61,6 @@ struct AlignmentSize
 using SceneNodeTextProperties = mtps::
     PropertyGroup<Text, Font, TextColor, AlignmentX, AlignmentY, AlignmentSize>;
 
-using SceneNodeTextPropertiesContent =
-    mtps::PropertyContainer<SceneNodeTextProperties>;
 }  // namespace haf::scene::nodes
 
 #endif
