@@ -61,26 +61,25 @@ GameHudSceneNode::~GameHudSceneNode() = default;
 
 void GameHudSceneNode::setLevel(const size_type level)
 {
-    m_scoreQuad->text({1U, 0U})->prop<SceneNodeTextProperties>().set<Text>(
+    m_scoreQuad->text({1U, 0U})->prop<Text>().set(
         make_str(level + 1U));
 }
 
 void GameHudSceneNode::setStayCounter(const size_type stayCounter)
 {
-    m_goalQuad->text({1U, 1U})->prop<SceneNodeTextProperties>().set<Text>(
-        make_str(stayCounter));
+    m_goalQuad->text({1U, 1U})->prop<Text>().set(make_str(stayCounter));
 }
 
 void GameHudSceneNode::setConsumedTokens(const size_type consumedTokens)
 {
     m_goalQuad->text(vector2dst{1U, 0U})
-        ->prop<SceneNodeTextProperties>()
-        .set<Text>(str::to_str(consumedTokens));
+        ->prop<Text>()
+        .set(str::to_str(consumedTokens));
 }
 
 void GameHudSceneNode::setEllapsedTimeInSeconds(const u64 seconds)
 {
-    m_goalQuad->text({1U, 0U})->prop<SceneNodeTextProperties>().set<Text>(
+    m_goalQuad->text({1U, 0U})->prop<Text>().set(
         str::to_str(static_cast<u16>(seconds)));
 }
 
@@ -91,7 +90,6 @@ void GameHudSceneNode::setScore(const size_type score)
     str result(str::to_str(score));
     while (result.size() < scoreSize)
         result = "0" + result;
-    m_scoreQuad->text({1U, 1U})->prop<SceneNodeTextProperties>().set<Text>(
-        result);
+    m_scoreQuad->text({1U, 1U})->prop<Text>().set(result);
 }
 }  // namespace zoper

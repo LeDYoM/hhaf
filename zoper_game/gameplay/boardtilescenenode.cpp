@@ -38,22 +38,21 @@ void BoardTileSceneNode::createBackgroundTile(const mtps::Rectf32& tileBox)
 
 void BoardTileSceneNode::update()
 {
-    if (prop<SceneNodeSizeProperties>().readResetHasChanged<NodeSize>())
+    if (prop<NodeSize>().readResetHasChanged())
     {
         LogAsserter::log_assert(m_pointInCenter == nullptr,
                                 "Point in center already initialized");
         LogAsserter::log_assert(background_tile_ == nullptr,
                                 "Background tile already initialized");
 
-        createBackgroundTile(prop<SceneNodeSizeProperties>().get<NodeSize>());
-        prop<BoardTileSceneNodeProperties>().setChanged<BackgroundColor>();
+        createBackgroundTile(prop<NodeSize>().get());
+        prop<BackgroundColor>().setChanged();
     }
 
-    if (prop<BoardTileSceneNodeProperties>()
-            .readResetHasChanged<BackgroundColor>())
+    if (prop<BackgroundColor>().readResetHasChanged())
     {
         background_tile_->color = std::move(
-            prop<BoardTileSceneNodeProperties>().get<BackgroundColor>());
+            prop<BackgroundColor>().get());
     }
 }
 
