@@ -41,7 +41,7 @@ public:
 
     constexpr mtps::rptr<Scalar const> const getMatrix() const noexcept
     {
-        return matrix_data_.cbegin();
+        return matrix_data_;
     }
 
     static Transform const Identity;
@@ -50,7 +50,7 @@ public:
     Transform operator*(Transform const& right) const noexcept;
 
 private:
-    std::array<Scalar, 16U> matrix_data_;
+    Scalar matrix_data_[16U];
 };
 }  // namespace haf::scene
 
