@@ -10,7 +10,7 @@ namespace haf::scene
 class Transform final
 {
 public:
-    using Scalar       = mtps::f32;
+    using Scalar = mtps::f32;
 
     static constexpr Scalar One  = 1.0F;
     static constexpr Scalar Zero = 0.0F;

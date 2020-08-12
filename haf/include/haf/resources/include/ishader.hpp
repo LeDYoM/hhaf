@@ -7,11 +7,11 @@
 
 namespace haf::res
 {
-    class IShader
-    {
-    public:
-        virtual ~IShader() {}
-    };
-}
+class IShader
+{
+public:
+    virtual ~IShader() {}
+};
+}  // namespace haf::res
 
 #endif

@@ -13,6 +13,6 @@ enum class FigType_t : mtps::u8
     Shape,
     EmptyQuad
 };
-} // namespace haf::scene
+}  // namespace haf::scene
 
 #endif

@@ -84,9 +84,11 @@ public:
         else
         {
             auto parent_as_type{sceneNodeCast<T>(_parent)};
-            auto const parent_as_scene_node_parent{sceneNodeCast<SceneNodeParent>(_parent)};
-            return parent_as_type == nullptr ? parent_as_scene_node_parent->ancestor<T>()
-                                             : parent_as_type;
+            auto const parent_as_scene_node_parent{
+                sceneNodeCast<SceneNodeParent>(_parent)};
+            return parent_as_type == nullptr
+                ? parent_as_scene_node_parent->ancestor<T>()
+                : parent_as_type;
         }
     }
 
@@ -107,9 +109,11 @@ public:
         else
         {
             auto const parent_as_type{sceneNodeCast<T const>(_parent)};
-            auto const parent_as_scene_node_parent{sceneNodeCast<SceneNodeParent const>(_parent)};
-            return parent_as_type == nullptr ? parent_as_scene_node_parent->ancestor<T const>()
-                                             : parent_as_type;
+            auto const parent_as_scene_node_parent{
+                sceneNodeCast<SceneNodeParent const>(_parent)};
+            return parent_as_type == nullptr
+                ? parent_as_scene_node_parent->ancestor<T const>()
+                : parent_as_type;
         }
     }
 

@@ -11,7 +11,7 @@ namespace haf::shdata
 {
 /**
  * @brief Component to provide access to data resources.
- * 
+ *
  */
 class SharedDataView : public sys::IDataWrapper
 {
@@ -28,6 +28,6 @@ private:
     mtps::uptr<IShareable> data_;
 };
 
-} // namespace haf::scene
+}  // namespace haf::shdata
 
 #endif

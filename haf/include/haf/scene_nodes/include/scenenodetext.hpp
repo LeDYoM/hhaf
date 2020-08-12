@@ -20,16 +20,16 @@ class SceneNodeText : public SceneNode, public SceneNodeTextPropertiesContent
     using BaseClass = SceneNode;
 
 public:
-    using SceneNodeTextPropertiesContent::prop;
     using SceneNode::SceneNode;
+    using SceneNodeTextPropertiesContent::prop;
     ~SceneNodeText() override;
 
 protected:
     void update() override final;
 
 private:
-    void updateAlignmentX(const mtps::f32 textSizeX);
-    void updateAlignmentY(const mtps::f32 textSizeY);
+    void updateAlignmentX(mtps::f32 const textSizeX);
+    void updateAlignmentY(mtps::f32 const textSizeY);
 };
 }  // namespace haf::scene::nodes
 

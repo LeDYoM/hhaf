@@ -26,11 +26,9 @@ struct Window::WindowPrivate final
     str title_{};
 };
 
-Window::Window(sys::SystemProvider &system_provider)
-    : SystemBase{system_provider},
-      priv_{muptr<WindowPrivate>()}
-{
-}
+Window::Window(sys::SystemProvider& system_provider) :
+    SystemBase{system_provider}, priv_{muptr<WindowPrivate>()}
+{}
 
 Window::~Window() = default;
 
@@ -63,32 +61,34 @@ bool Window::create(uptr<win::WindowProperties> window_properties)
     }
 
     DisplayLog::info("Going to create Window");
-    //        DisplayLog::info("Resolution:", wcp.width, "x", wcp.height ,"x", wcp.bpp);
-    //        DisplayLog::info("Fullscreen:" , wcp.fullScreen);
+    //        DisplayLog::info("Resolution:", wcp.width, "x", wcp.height ,"x",
+    //        wcp.bpp); DisplayLog::info("Fullscreen:" , wcp.fullScreen);
     //        DisplayLog::info("Antialiasing:", wcp.antialiasing);
 
-    LogAsserter::log_assert(!priv_->m_backendWindow, "Cannot create window twice");
+    LogAsserter::log_assert(!priv_->m_backendWindow,
+                            "Cannot create window twice");
     DisplayLog::info("Creating window...");
 
     // Create window object
     priv_->m_backendWindow = systemProvider().backendFactory().getWindow();
-    backend::IWindow &bw(*priv_->m_backendWindow);
+    backend::IWindow& bw(*priv_->m_backendWindow);
 
     // Create physical window
     if (bw.createWindow(window_properties->width(), window_properties->height(),
-        window_properties->bits_per_red(), window_properties->bits_per_green(),
-        window_properties->bits_per_blue(), window_properties->bits_per_alpha(),
-        0U, nullptr))
+                        window_properties->bits_per_red(),
+                        window_properties->bits_per_green(),
+                        window_properties->bits_per_blue(),
+                        window_properties->bits_per_alpha(), 0U, nullptr))
     {
         DisplayLog::info("Window created...");
         // If window created successfully, extract the render target
         // associated with the window.
-        priv_->m_renderTarget = msptr<RenderTarget>(
-            priv_->m_backendWindow->renderTarget());
+        priv_->m_renderTarget =
+            msptr<RenderTarget>(priv_->m_backendWindow->renderTarget());
 
         // Also take the input driver.
-        priv_->input_driver_ = msptr<input::InputDriver>(
-            priv_->m_backendWindow->inputDriver());
+        priv_->input_driver_ =
+            msptr<input::InputDriver>(priv_->m_backendWindow->inputDriver());
         DisplayLog::info("Window creation completed");
         return true;
     }
@@ -101,13 +101,13 @@ bool Window::create(uptr<win::WindowProperties> window_properties)
 
 bool Window::preLoop()
 {
-    backend::IWindow &bw(*priv_->m_backendWindow);
+    backend::IWindow& bw(*priv_->m_backendWindow);
     const TimePoint eMs = systemProvider().timeSystem().timeSinceStart();
     if ((eMs - priv_->lastTimeFps).milliseconds() > 1000U)
     {
         priv_->lastTimeFps = eMs;
-        priv_->lastFps = priv_->currentFps;
-        priv_->currentFps = 0U;
+        priv_->lastFps     = priv_->currentFps;
+        priv_->currentFps  = 0U;
         bw.setWindowTitle(make_str(priv_->title_, " FPS:", priv_->lastFps));
     }
     ++(priv_->currentFps);
@@ -132,4 +132,4 @@ void Window::onDestroy()
     priv_->m_backendWindow->closeWindow();
     DisplayLog::info("Window closed");
 }
-} // namespace haf::sys
+}  // namespace haf::sys

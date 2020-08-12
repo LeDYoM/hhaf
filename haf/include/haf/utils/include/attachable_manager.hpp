@@ -40,8 +40,7 @@ protected:
 
         // Dynamic check that T is a valid types for this class.
         const mtps::rptr<const Attachable<AttachableType>> temp2 =
-            dynamic_cast<mtps::rptr<const Attachable<AttachableType>>>(
-                temp);
+            dynamic_cast<mtps::rptr<const Attachable<AttachableType>>>(temp);
         LogAsserter::log_assert(temp2 != nullptr, "");
 
         auto result = mtps::uptr<T>(std::move(temp));

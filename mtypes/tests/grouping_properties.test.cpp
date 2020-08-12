@@ -239,7 +239,7 @@ TEST_CASE("PropertyGroup::ContainsTag", "[mtypes][property]")
 
 using FakeSceneNodeProperties = PropertyGroup<IntTag, CharTag>;
 
-class FakeSceneNode : public PropertyContainer<FakeSceneNodeProperties>
+class FakeSceneNode : public FakeSceneNodeProperties
 {
 public:
     void notUsed() {}
@@ -248,34 +248,34 @@ public:
 using EnhancedFakeSceneNodeProperties = PropertyGroup<SptrIntTag, StrTag>;
 
 class EnhancedFakeSceneNode : public FakeSceneNode,
-                              public PropertyContainer<EnhancedFakeSceneNodeProperties>
+                              public EnhancedFakeSceneNodeProperties
 {
 public:
     int get() const { return 8; };
     void set(int const) const {};
 
-    using PropertyContainer<FakeSceneNodeProperties>::prop;
-    using PropertyContainer<EnhancedFakeSceneNodeProperties>::prop;
+    using FakeSceneNodeProperties::prop;
+    using EnhancedFakeSceneNodeProperties::prop;
 };
 
 TEST_CASE("PropertyGroup inheritance", "[mtypes][property]")
 {
     EnhancedFakeSceneNode efsn;
 
-    auto& fsnp = efsn.prop<FakeSceneNodeProperties>();
-    auto& efsnp = efsn.prop<EnhancedFakeSceneNodeProperties>();
+    efsn.prop<IntTag>().get();
+    efsn.prop<StrTag>().get();
 
-    CHECK(fsnp.set<IntTag>(2));
-    CHECK(fsnp.get<IntTag>() == 2);
+    CHECK(efsn.prop<IntTag>().set(2));
+    CHECK(efsn.prop<IntTag>().get() == 2);
 
-    fsnp.put<IntTag>(3).put<CharTag>(5);
-    CHECK(fsnp.get<IntTag>() == 3);
-    CHECK(fsnp.get<CharTag>() == 5);
+    efsn.put<IntTag>(3).put<CharTag>(5);
+    CHECK(efsn.prop<IntTag>().get() == 3);
+    CHECK(efsn.prop<CharTag>().get() == 5);
 
-    efsnp.put<StrTag>("world").put<SptrIntTag>(msptr<int>(15));
-    CHECK(efsnp.get<StrTag>() == "world");
-    CHECK(*(efsnp.get<SptrIntTag>()) == 15);
+//    efsn.prop<StrTag>().put<StrTag>("world").put<SptrIntTag>(msptr<int>(15));
+    CHECK(efsn.prop<StrTag>().get() == "world");
+    CHECK(*(efsn.prop<SptrIntTag>().get()) == 15);
 
-    CHECK(efsnp.set<StrTag>("hello"));
-    CHECK(efsnp.get<StrTag>() == "hello");
+    CHECK(efsn.prop<StrTag>().set("hello"));
+    CHECK(efsn.prop<StrTag>().get() == "hello");
 }

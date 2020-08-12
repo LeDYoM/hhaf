@@ -9,12 +9,12 @@
 namespace haf::sys
 {
 
-template<typename T>
+template <typename T>
 T& getInterface(SystemAccess&);
 
-template<typename T>
+template <typename T>
 T const& getInterface(SystemAccess const&);
 
-} // namespace haf::sys
+}  // namespace haf::sys
 
 #endif

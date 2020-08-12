@@ -232,6 +232,35 @@ struct PropertyGroup : public PropertyGroupImpl<Tag...>
         return Base::template get_property_reference<Tag_>()
             .readResetHasChanged();
     }
+
+    template <typename Tag_>
+    std::enable_if_t<PropertyGroup::ContainsTag_v<Tag_>, GroupableProperty<Tag_>&>
+    prop() noexcept
+    {
+        return Base::template get_property_reference<Tag_>();
+    }
+
+    template <typename Tag_>
+    std::enable_if_t<PropertyGroup::ContainsTag_v<Tag_>, GroupableProperty<Tag_> const&>
+    prop() const noexcept
+    {
+        return Base::template get_property_reference<Tag_>();
+    }
+
+    template <typename P>
+    std::enable_if_t<std::is_same_v<P, PropertyGroup>, PropertyGroup&>
+    props() noexcept
+    {
+        return *this;
+    }
+
+    template <typename P>
+    std::enable_if_t<std::is_same_v<P, PropertyGroup>, PropertyGroup const&>
+    props() const noexcept
+    {
+        return *this;
+    }
+
 };
 
 template <typename PropertyG>
@@ -253,6 +282,29 @@ public:
     {
         return static_cast<PropertyG const&>(*this);
     }
+};
+
+template <typename PropertyG>
+class PropertyContainer2 : public PropertyG
+{
+public:
+    using PropertyG::PropertyG;
+
+    template <typename Tag>
+//    std::enable_if_t<std::is_same_v<T, PropertyG>, PropertyG&>
+    GroupableProperty<Tag>&
+    prop() noexcept
+    {
+        return static_cast<PropertyG&>(*this).template get_property_reference<Tag>();
+    }
+/*
+    template <typename T>
+    std::enable_if_t<std::is_same_v<T, PropertyG>, PropertyG const&>
+    prop() const noexcept
+    {
+        return static_cast<PropertyG const&>(*this);
+    }
+*/
 };
 
 template <typename TagFirst, typename... Tag>

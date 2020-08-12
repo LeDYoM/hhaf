@@ -17,4 +17,4 @@ Rectf32 SceneMetricsView::currentViewPort() const
     return sys::getSystem<SceneManager>(attachedNode()).viewPort();
 }
 
-} // namespace haf::scene
+}  // namespace haf::scene

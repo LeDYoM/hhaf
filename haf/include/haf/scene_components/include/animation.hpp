@@ -33,7 +33,7 @@ public:
 
     /**
      * @brief Construct a new Animation object
-     * 
+     *
      * @param timer @b Timer to use to animate
      * @param duration @b time::TimePoint containing the time the animation is
      *  going to last
@@ -42,13 +42,14 @@ public:
      * @param endAction Functor containing an action to perform when the
      *  animation finishes
      */
-    Animation(mtps::uptr<time::Timer> timer, time::TimePoint duration,
-               const AnimationDirection animation_direction,
-               ActionFunc endAction = {}) noexcept;
+    Animation(mtps::uptr<time::Timer> timer,
+              time::TimePoint duration,
+              const AnimationDirection animation_direction,
+              ActionFunc endAction = {}) noexcept;
 
     /**
      * @brief Performs one step on the animation
-     * 
+     *
      * @return true If the animation should continue
      * @return false The animation should finish
      */
@@ -79,6 +80,6 @@ private:
     mtps::f32 postProcessDelta(const mtps::f32 delta);
 };
 
-} // namespace haf::scene
+}  // namespace haf::scene
 
 #endif

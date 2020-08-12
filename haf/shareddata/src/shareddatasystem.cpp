@@ -73,4 +73,4 @@ mtps::uptr<shdata::IShareable> const& SharedDataSystem::view() const noexcept
     return data_;
 }
 
-} // namespace haf::sys
+}  // namespace haf::sys

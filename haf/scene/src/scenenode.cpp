@@ -17,8 +17,7 @@ SceneNode::SceneNode(rptr<SceneNode> parent, str name) :
                                         : nullptr},
     InterfaceGetter{this},
     mtps::PropertyContainer<SceneNodeProperties>(true)
-{
-}
+{}
 
 SceneNode::~SceneNode() = default;
 

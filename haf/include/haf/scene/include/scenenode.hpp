@@ -32,15 +32,15 @@ class SceneManager;
  * To create new SceneNode types, inherit from this class.
  */
 class HAF_API SceneNode : public sys::HasName,
-                  public SceneNodeParent,
-                  public SceneNodes,
-                  public Renderizables,
-                  public Transformable,
-                  public sys::DataWrapperCreator,
-                  public ComponentContainer,
-                  public sys::SystemAccess,
-                  public InterfaceGetter,
-                  public mtps::PropertyContainer<SceneNodeProperties>
+                          public SceneNodeParent,
+                          public SceneNodes,
+                          public Renderizables,
+                          public Transformable,
+                          public sys::DataWrapperCreator,
+                          public ComponentContainer,
+                          public sys::SystemAccess,
+                          public InterfaceGetter,
+                          public mtps::PropertyContainer<SceneNodeProperties>
 {
 public:
     using PropertyContainer<SceneNodeProperties>::prop;

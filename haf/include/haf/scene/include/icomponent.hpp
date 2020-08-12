@@ -50,6 +50,6 @@ class IComponentMixin : public IComponent
         T2::update();
     }
 };
-} // namespace haf::scene
+}  // namespace haf::scene
 
 #endif

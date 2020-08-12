@@ -43,7 +43,8 @@ public:
     template <typename T>
     mtps::sptr<T> addComponentOfType()
     {
-        return getComponentContainerForType<T>().template addComponentOfType<T>();
+        return getComponentContainerForType<T>()
+            .template addComponentOfType<T>();
     }
 
     template <typename T>

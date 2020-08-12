@@ -8,6 +8,5 @@ using namespace mtps;
 
 TEST_CASE("SharedData::SharedData", "[haf][shareddatasystem]")
 {
-//    MockSystemProvider mock_system_provider;
-
+    //    MockSystemProvider mock_system_provider;
 }

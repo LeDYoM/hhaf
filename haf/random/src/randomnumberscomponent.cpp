@@ -16,7 +16,7 @@ public:
         random_system_{random_system}
     {
         LogAsserter::log_assert(std::addressof(random_system_) != nullptr,
-                   "nullptr RandomSystem received");
+                                "nullptr RandomSystem received");
     }
 
     ~RandomNumbersComponentPrivate() = default;
@@ -51,8 +51,10 @@ u32 RandomNumbersComponent::getUInt(const size_type max,
 {
     DisplayLog::info("Asked for random number between ", min, " and ", max);
 
-    LogAsserter::log_assert(min != max, "The min and max parameters must be different");
-    LogAsserter::log_assert(max > min, "The max paramter must be greater than min");
+    LogAsserter::log_assert(min != max,
+                            "The min and max parameters must be different");
+    LogAsserter::log_assert(max > min,
+                            "The max paramter must be greater than min");
 
     const auto next(priv_->randomsystem().getNext(name(), min, max));
     DisplayLog::verbose("Fetch next element from queue: ", next);

@@ -20,7 +20,7 @@ struct ResourcesConfigDataElement
 };
 
 inline const mtps::Object& operator>>(const mtps::Object& obj,
-                               ResourcesConfigDataElement& element)
+                                      ResourcesConfigDataElement& element)
 {
     element.type      = obj[ResourcesConfigDataElement::TypeStr].getValue();
     element.file_name = obj[ResourcesConfigDataElement::FileNameStr].getValue();
@@ -34,7 +34,7 @@ struct ResourcesConfigData
 };
 
 inline const mtps::Object& operator>>(const mtps::Object& obj,
-                               ResourcesConfigData& element)
+                                      ResourcesConfigData& element)
 {
     element.elements_ = obj;
     return obj;

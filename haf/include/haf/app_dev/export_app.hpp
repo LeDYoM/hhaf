@@ -8,19 +8,16 @@
 #endif
 
 #define EXPORT_APP_TYPE(app_type) \
-    APP_EXPORT haf::IApp* createApp() \
-    { \
-        return new app_type(); \
-} \
+    APP_EXPORT haf::IApp* createApp() { return new app_type(); } \
 \
-APP_EXPORT bool destroyApp(haf::IApp* app) \
-{ \
-    if (app) \
+    APP_EXPORT bool destroyApp(haf::IApp* app) \
     { \
-        delete app; \
-        return true; \
-    } \
-    return false; \
-}
+        if (app) \
+        { \
+            delete app; \
+            return true; \
+        } \
+        return false; \
+    }
 
 #endif

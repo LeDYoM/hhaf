@@ -12,7 +12,8 @@ namespace haf::sys
 void InputSystem::setInputDriver(sptr<InputDriver> input_driver)
 {
     LogAsserter::log_assert(input_driver != nullptr, "Parameter is nullptr");
-    LogAsserter::log_assert(input_driver_ == nullptr, "Input driver was already set");
+    LogAsserter::log_assert(input_driver_ == nullptr,
+                            "Input driver was already set");
 
     input_driver_ = std::move(input_driver);
 }
@@ -32,12 +33,12 @@ void InputSystem::update()
     }
 }
 
-const vector<Key> &InputSystem::pressedKeys() const noexcept
+const vector<Key>& InputSystem::pressedKeys() const noexcept
 {
     return m_pressedKeys;
 }
 
-const vector<Key> &InputSystem::releasedKeys() const noexcept
+const vector<Key>& InputSystem::releasedKeys() const noexcept
 {
     return m_releasedKeys;
 }
@@ -67,4 +68,4 @@ void InputSystem::simulateReleaseKey(const Key key)
 {
     input_driver_->keyReleased(key);
 }
-} // namespace haf::sys
+}  // namespace haf::sys

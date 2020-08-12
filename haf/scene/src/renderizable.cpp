@@ -239,9 +239,8 @@ void Renderizable::updateGeometry()
             case FigType_t::Quad:
             case FigType_t::Shape:
             {
-                const auto vertices_iterator_begin =
-                    vertices.begin();
-                auto vertices_iterator_second = vertices_iterator_begin;
+                const auto vertices_iterator_begin = vertices.begin();
+                auto vertices_iterator_second      = vertices_iterator_begin;
                 auto vertices_iterator{++vertices_iterator_second};
                 auto angle{0.0};
 

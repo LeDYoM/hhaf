@@ -52,15 +52,14 @@ public:
         }
     }
 
-
     void updateComponents()
     {
         if constexpr (WithUpdate)
         {
-            components_.performUpdate([](const mtps::sptr<IComponent>& component)
-            {
-                component->update();
-            });
+            components_.performUpdate(
+                [](const mtps::sptr<IComponent>& component) {
+                    component->update();
+                });
         }
         else
         {

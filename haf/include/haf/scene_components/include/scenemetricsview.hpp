@@ -15,6 +15,6 @@ public:
     mtps::Rectf32 currentView() const;
     mtps::Rectf32 currentViewPort() const;
 };
-} // namespace haf::scene
+}  // namespace haf::scene
 
 #endif

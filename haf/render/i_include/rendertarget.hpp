@@ -44,7 +44,7 @@ public:
     mtps::Rectf32 viewRect() const;
 
     void render(mtps::rptr<const scene::RenderData> render_data_begin,
-                   mtps::rptr<const scene::RenderData> render_data_end);
+                mtps::rptr<const scene::RenderData> render_data_end);
     void clear();
 
 private:

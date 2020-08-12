@@ -26,6 +26,6 @@ private:
     TimePoint time_paused_;
     bool is_paused_;
 };
-} // namespace haf::time
+}  // namespace haf::time
 
 #endif

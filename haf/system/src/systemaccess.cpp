@@ -13,7 +13,8 @@ SystemAccess::SystemAccess(rptr<ISystemProvider> isystem_provider) noexcept :
     isystem_provider_{std::move(isystem_provider)}
 {}
 
-SystemAccess::~SystemAccess() noexcept {}
+SystemAccess::~SystemAccess() noexcept
+{}
 
 ISystemProvider const& SystemAccess::isystemProvider() const noexcept
 {

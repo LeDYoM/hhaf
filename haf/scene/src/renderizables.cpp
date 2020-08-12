@@ -9,13 +9,14 @@ using namespace mtps;
 namespace haf::scene
 {
 
-sptr<Renderizable> Renderizables::createRenderizable(str name,
-                                                     FigType_t figure_type,
-                                                     Rectf32 box,
-                                                     Color color,
-                                                     sptr<res::ITexture> texture,
-                                                     sptr<res::IShader> shader,
-                                                     size_type num_points)
+sptr<Renderizable> Renderizables::createRenderizable(
+    str name,
+    FigType_t figure_type,
+    Rectf32 box,
+    Color color,
+    sptr<res::ITexture> texture,
+    sptr<res::IShader> shader,
+    size_type num_points)
 {
     auto result(msptr<Renderizable>(scene_node_, std::move(name), figure_type,
                                     std::move(num_points), std::move(box),
