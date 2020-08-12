@@ -18,6 +18,13 @@ void BoardTileSceneNode::createBackgroundTile(const mtps::Rectf32& tileBox)
     const Rectf32 point_box{tileBox.center() - (centerPointSize / 2.0F),
                             centerPointSize};
 
+    if (m_pointInCenter)
+    {
+        auto const result = removeSceneNode(m_pointInCenter);
+        m_pointInCenter.reset();
+        LogAsserter::log_assert(result);
+    }
+
     m_pointInCenter =
         createSceneNode<RenderizableSceneNode>("backgroundTilePoint");
 

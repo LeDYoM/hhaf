@@ -13,7 +13,12 @@ struct SceneNodeSize
     using value_type = mtps::vector2df;
 };
 
-using TableNodeProperties = mtps::PropertyGroup<SceneNodeSize>;
+struct TableSize
+{
+    using value_type = mtps::vector2dst;
+};
+
+using TableNodeProperties = mtps::PropertyGroup<TableSize, SceneNodeSize>;
 
 }  // namespace haf::scene
 

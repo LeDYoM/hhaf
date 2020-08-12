@@ -51,7 +51,7 @@ void HighScoreTextController::onCreated()
             .setSize({2000, 1500})};
     position = textBox.leftTop();
     prop<TableNodeProperties>().set<SceneNodeSize>(textBox.size());
-    setTableSize({3U, NumHighScore});
+    prop<TableSize>().set({3U, NumHighScore});
 
     size_type positionInTable{0U};
     const bool isInserting{
@@ -118,7 +118,7 @@ void HighScoreTextController::addHighScoreEditor(const sptr<SceneNode>& label,
 
 void HighScoreTextController::addEditAnimation(const size_type line_index)
 {
-    LogAsserter::log_assert(line_index < tableSize().y, "Invalid line_index");
+    LogAsserter::log_assert(line_index < prop<TableSize>().get().y, "Invalid line_index");
 
     for_each_tableSceneNode_in_y(
         line_index,

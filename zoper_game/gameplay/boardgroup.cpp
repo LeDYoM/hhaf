@@ -26,28 +26,28 @@ void BoardGroup::configure(vector2dst size,
                            sptr<LevelProperties> level_properties)
 {
     level_properties_ = std::move(level_properties);
-    setTableSize(size);
+    prop<TableSize>().set(size);
+    auto const tableSize{prop<TableSize>().get()};
 
     Rectf32 textBox{dataWrapper<SceneMetricsView>()->currentView()};
     position = textBox.leftTop();
-    snCast<TableNode<BoardTileSceneNode>>()
-        ->prop<TableNodeProperties>()
-        .set<SceneNodeSize>(textBox.size());
+    snCast<TableNode<BoardTileSceneNode>>()->prop<SceneNodeSize>().set(
+        textBox.size());
 
     Rectf32 const bBox{textBox};
     Rectf32 tileBox({}, cellSize());
 
-    for (size_type y{0U}; y < tableSize().y; ++y)
+    for (size_type y{0U}; y < tableSize.y; ++y)
     {
-        for (size_type x{0U}; x < tableSize().x; ++x)
+        for (size_type x{0U}; x < tableSize.x; ++x)
         {
             auto node = createNodeAt({x, y}, make_str("BoardGroupTile_", x, y));
-            node->prop<SceneNodeSizeProperties>().set<NodeSize>(tileBox);
+            node->prop<NodeSize>().set(tileBox);
         }
     }
 
     board_model_ = addComponentOfType<board::BoardManager>();
-    board_model_->initialize(tableSize(), this);
+    board_model_->initialize(tableSize, this);
 
     board_model_->setBackgroundFunction(
         [](const vector2dst& position) -> board::BackgroundData {
