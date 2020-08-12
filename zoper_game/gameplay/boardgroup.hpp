@@ -62,10 +62,10 @@ public:
     bool moveTowardsCenter(Direction const direction,
                            mtps::vector2dst const& position);
 
-    mtps::sptr<board::BoardManager> boardModel() noexcept;
-    const mtps::sptr<const board::BoardManager> boardModel() const noexcept;
-    mtps::sptr<scene::SceneNode> tokensSceneNode() noexcept;
-    const mtps::sptr<scene::SceneNode> tokensSceneNode() const noexcept;
+    mtps::sptr<haf::board::BoardManager> boardModel() noexcept;
+    const mtps::sptr<const haf::board::BoardManager> boardModel() const noexcept;
+    mtps::sptr<haf::scene::SceneNode> tokensSceneNode() noexcept;
+    const mtps::sptr<haf::scene::SceneNode> tokensSceneNode() const noexcept;
     mtps::sptr<Player> player() noexcept;
     const mtps::sptr<Player> player() const noexcept;
 

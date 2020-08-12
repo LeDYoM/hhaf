@@ -5,6 +5,7 @@ using namespace mtps;
 
 namespace zoper
 {
+using namespace haf;
 using namespace haf::scene;
 
 BoardTileSceneNode::~BoardTileSceneNode() = default;
