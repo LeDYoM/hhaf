@@ -4,6 +4,7 @@ cmake_minimum_required(VERSION 3.14)
 set (_SOURCES 
     "src/renderizable_scenenode.cpp"
     "src/scenenodetext.cpp"
+    "src/tablenode_imp.cpp"
     "src/textquad.cpp"
 )
 

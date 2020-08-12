@@ -3,10 +3,7 @@
 #ifndef HAF_SCENE_TABLENODE_INCLUDE_HPP
 #define HAF_SCENE_TABLENODE_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/properties.hpp>
-#include <haf/scene/include/scenenode.hpp>
-#include <haf/scene_nodes/include/tablenode_properties.hpp>
+#include <haf/scene_nodes/include/tablenode_imp.hpp>
 #include <hlog/include/hlog.hpp>
 
 namespace haf::scene::nodes
@@ -14,41 +11,36 @@ namespace haf::scene::nodes
 /// Class representing a SceneNode with table layout.
 /// Properties of the table can be configured like size and so on.
 template <typename T>
-class TableNode : public SceneNode, public TableNodeProperties
+class TableNode : public TableNodeImp
 {
 public:
-    using BaseClass        = SceneNode;
+    using BaseClass        = TableNodeImp;
     using ContainedElement = T;
 
     using BaseClass::BaseClass;
-    using TableNodeProperties::prop;
+    using TableNodeImp::prop;
 
-    virtual ~TableNode() = default;
+    ~TableNode() override = default;
 
     mtps::sptr<T> createNodeAt(const mtps::vector2dst& index,
                                const mtps::str& name)
     {
-        updateTableSizeIfNecessary();
-
         mtps::sptr<SceneNode> inner_node(
             createSceneNode<SceneNode>(name + "inner_node" + make_str(index)));
 
         mtps::sptr<T> result(
             inner_node->createSceneNode<T>("inner_inner_node"));
+     
+        updateTableSizeIfNecessary();
+
         LogAsserter::log_assert(
-            index.x < prop<TableSize>().get().x && index.y < prop<TableSize>().get().y,
+            index.x < prop<TableSize>().get().x &&
+                index.y < prop<TableSize>().get().y,
             "TableSize::createNodeAt: Index ", index,
             " is out of bounds. Size: ", prop<TableSize>().get());
-        inner_nodes_[index.x][index.y] = std::move(inner_node);
-        nodes_[index.x][index.y]       = result;
+        BaseClass::setInnerSceneNodeAt(index, std::move(inner_node));
+        nodes_[index.x][index.y] = result;
         return result;
-    }
-
-    constexpr mtps::vector2df cellSize() const
-    {
-        return mtps::vector2df{
-            prop<SceneNodeSize>().get() /
-            static_cast<mtps::vector2df>(prop<TableSize>().get())};
     }
 
     constexpr mtps::sptr<T> operator()(const mtps::vector2dst& index) noexcept
@@ -61,10 +53,12 @@ public:
     {
         return nodes_[index.x][index.y];
     }
+
     constexpr mtps::sptr<T> nodeAt(const mtps::vector2dst& index) noexcept
     {
         return nodes_[index.x][index.y];
     }
+
     constexpr const mtps::sptr<T> nodeAt(
         const mtps::vector2dst& index) const noexcept
     {
@@ -115,67 +109,18 @@ public:
         });
     }
 
-    void update() override
-    {
-        BaseClass::update();
-
-        updateTableSizeIfNecessary();
-
-        // Update row and column size
-        if (prop<SceneNodeSize>().readResetHasChanged())
-        {
-            const mtps::vector2df cell_size{cellSize()};
-            for_each_table_innerSceneNode(
-                [this, cell_size](const mtps::vector2dst& p, const auto& n) {
-                    n->position = cell_size * static_cast<mtps::vector2df>(p);
-                });
-        }
-    }
-
 private:
-    void updateTableSizeIfNecessary()
+    void setTableSize(mtps::vector2dst ntableSize) override
     {
-        if (prop<TableSize>().readResetHasChanged())
-        {
-            setTableSize(prop<TableSize>().get());
-            prop<SceneNodeSize>().setChanged();
-        }
-    }
-
-    void setTableSize(mtps::vector2dst ntableSize)
-    {
-        auto const tableSize{prop<TableSize>().get()};
-        nodes_.resize(tableSize.x);
-        inner_nodes_.resize(tableSize.x);
+        BaseClass::setTableSize(ntableSize);
+        nodes_.resize(ntableSize.x);
 
         for (auto& nodeColumn : nodes_)
         {
-            nodeColumn.resize(tableSize.y);
-        }
-
-        for (auto& nodeColumn : inner_nodes_)
-        {
-            nodeColumn.resize(tableSize.y);
+            nodeColumn.resize(ntableSize.y);
         }
     }
 
-    constexpr void for_each_table_innerSceneNode(
-        mtps::function<void(const mtps::vector2dst&,
-                            const mtps::sptr<SceneNode>&)> action)
-    {
-        for (mtps::size_type x{0}; x < inner_nodes_.size(); ++x)
-        {
-            for (mtps::size_type y{0}; y < inner_nodes_[x].size(); ++y)
-            {
-                if (auto&& inner_node = inner_nodes_[x][y])
-                {
-                    action(mtps::vector2dst{x, y}, inner_node);
-                }
-            }
-        }
-    }
-
-    mtps::vector<mtps::vector_shared_pointers<SceneNode>> inner_nodes_;
     mtps::vector<mtps::vector_shared_pointers<T>> nodes_;
 };
 }  // namespace haf::scene::nodes
