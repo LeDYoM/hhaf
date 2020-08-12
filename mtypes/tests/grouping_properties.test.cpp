@@ -268,11 +268,11 @@ TEST_CASE("PropertyGroup inheritance", "[mtypes][property]")
     CHECK(efsn.prop<IntTag>().set(2));
     CHECK(efsn.prop<IntTag>().get() == 2);
 
-    efsn.put<IntTag>(3).put<CharTag>(5);
+    efsn.prop<FakeSceneNodeProperties>().put<IntTag>(3).put<CharTag>(5);
     CHECK(efsn.prop<IntTag>().get() == 3);
     CHECK(efsn.prop<CharTag>().get() == 5);
 
-//    efsn.prop<StrTag>().put<StrTag>("world").put<SptrIntTag>(msptr<int>(15));
+    efsn.prop<EnhancedFakeSceneNodeProperties>().put<StrTag>("world").put<SptrIntTag>(msptr<int>(15));
     CHECK(efsn.prop<StrTag>().get() == "world");
     CHECK(*(efsn.prop<SptrIntTag>().get()) == 15);
 

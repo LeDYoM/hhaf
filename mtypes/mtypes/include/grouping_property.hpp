@@ -249,14 +249,14 @@ struct PropertyGroup : public PropertyGroupImpl<Tag...>
 
     template <typename P>
     std::enable_if_t<std::is_same_v<P, PropertyGroup>, PropertyGroup&>
-    props() noexcept
+    prop() noexcept
     {
         return *this;
     }
 
     template <typename P>
     std::enable_if_t<std::is_same_v<P, PropertyGroup>, PropertyGroup const&>
-    props() const noexcept
+    prop() const noexcept
     {
         return *this;
     }
