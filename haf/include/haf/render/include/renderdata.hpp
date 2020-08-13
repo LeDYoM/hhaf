@@ -5,7 +5,7 @@
 
 namespace haf::scene
 {
-class Transform;
+class Matrix4x4;
 class VertexArray;
 }  // namespace haf::scene
 
@@ -21,14 +21,14 @@ class RenderData final
 {
 public:
     constexpr RenderData(const VertexArray& va,
-                         const Transform& transform,
+                         const Matrix4x4& transform,
                          const res::ITexture* texture,
                          const res::IShader* shader) :
         vArray{va}, transform{transform}, texture{texture}, shader{shader}
     {}
 
     const VertexArray& vArray;
-    const Transform& transform;
+    const Matrix4x4& transform;
     const res::ITexture* texture;
     const res::IShader* shader;
 };

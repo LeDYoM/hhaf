@@ -27,7 +27,7 @@ bool Transformable::updateTransformIfNecessary() noexcept
 }
 
 void Transformable::updateGlobalTransformation(
-    Transform const& currentGlobalTransformation) noexcept
+    Matrix4x4 const& currentGlobalTransformation) noexcept
 {
     global_transform_ = currentGlobalTransformation * transform_;
 }
@@ -61,8 +61,8 @@ void Transformable::updateTransform()
                   -ss.x,
                   sc.y,
                   (((orig.x * ss.y) - (orig.y * sc.y)) + pos.y),
-                  Transform::Zero,
-                  Transform::Zero,
-                  Transform::One};
+                  Matrix4x4::Zero,
+                  Matrix4x4::Zero,
+                  Matrix4x4::One};
 }
 }  // namespace haf::scene

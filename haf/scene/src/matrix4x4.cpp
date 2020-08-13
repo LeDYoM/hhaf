@@ -1,10 +1,10 @@
-#include "transform.hpp"
+#include "matrix4x4.hpp"
 
 namespace haf::scene
 {
-const Transform Transform::Identity = Transform{};
+const Matrix4x4 Matrix4x4::Identity = Matrix4x4{};
 
-Transform& Transform::operator*=(Transform const& transform) noexcept
+Matrix4x4& Matrix4x4::operator*=(Matrix4x4 const& transform) noexcept
 {
     auto const a{matrix_data_};
     auto const b{transform.matrix_data_};
@@ -22,9 +22,9 @@ Transform& Transform::operator*=(Transform const& transform) noexcept
     return *this;
 }
 
-Transform Transform::operator*(Transform const& right) const noexcept
+Matrix4x4 Matrix4x4::operator*(Matrix4x4 const& right) const noexcept
 {
-    Transform copy{*this};
+    Matrix4x4 copy{*this};
     return copy *= right;
 }
 

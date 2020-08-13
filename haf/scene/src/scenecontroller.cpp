@@ -95,7 +95,7 @@ void SceneController::render(SceneNode& scene_node,
         {
             scene_node.updateGlobalTransformation(
                 scene_node.parent() ? scene_node.parent()->globalTransform()
-                                    : Transform::Identity);
+                                    : Matrix4x4::Identity);
         }
 
         scene_node.updateRenderizables();

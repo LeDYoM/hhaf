@@ -7,7 +7,7 @@
 #include <resources/i_include/texture.hpp>
 #include <haf/resources/include/ishader.hpp>
 #include <resources/i_include/shader.hpp>
-#include <haf/scene/include/transform.hpp>
+#include <haf/scene/include/matrix4x4.hpp>
 #include <haf/scene/include/vertexarray.hpp>
 #include <hlog/include/hlog.hpp>
 

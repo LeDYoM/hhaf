@@ -1,9 +1,9 @@
 #pragma once
 
-#ifndef HAF_TRANSFORMABLE_INCLUDE_HPP
-#define HAF_TRANSFORMABLE_INCLUDE_HPP
+#ifndef HAF_SCENE_TRANSFORMABLE_INCLUDE_HPP
+#define HAF_SCENE_TRANSFORMABLE_INCLUDE_HPP
 
-#include "transform.hpp"
+#include "matrix4x4.hpp"
 #include <mtypes/include/vector2d.hpp>
 #include <mtypes/include/rect.hpp>
 #include <mtypes/include/propertystate.hpp>
@@ -13,7 +13,7 @@ namespace haf::scene
 class Transformable
 {
 public:
-    using Scalar       = Transform::Scalar;
+    using Scalar       = Matrix4x4::Scalar;
     using VectorScalar = mtps::vector2d<Scalar>;
     using RectScalar   = mtps::Rect<Scalar>;
 
@@ -26,7 +26,7 @@ public:
     mtps::PropertyState<VectorScalar> position;
 
     bool updateTransformIfNecessary() noexcept;
-    inline Transform const& globalTransform() const noexcept
+    inline Matrix4x4 const& globalTransform() const noexcept
     {
         return global_transform_;
     }
@@ -50,13 +50,13 @@ public:
     void scaleAround(VectorScalar const point,
                      VectorScalar const scale) noexcept;
 
-    void updateGlobalTransformation(Transform const&) noexcept;
+    void updateGlobalTransformation(Matrix4x4 const&) noexcept;
 
 private:
     void updateTransform();
 
-    Transform transform_;
-    Transform global_transform_;
+    Matrix4x4 transform_;
+    Matrix4x4 global_transform_;
 };
 }  // namespace haf::scene
 

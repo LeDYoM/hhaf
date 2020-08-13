@@ -16,7 +16,7 @@ set(_SOURCES
     src/scenenodefactory.cpp
     src/scenenodes.cpp
     src/scenenodes_group.cpp
-    src/transform.cpp
+    src/matrix4x4.cpp
     src/transformable.cpp
     src/vertexarray.cpp)
 
