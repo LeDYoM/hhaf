@@ -35,7 +35,7 @@ void BoardTileSceneNode::createBackgroundTile(const mtps::Rectf32& tileBox)
         .color(colors::White);
     m_pointInCenter->buildNode(builder);
 
-    m_pointInCenter->position.set(point_box.leftTop());
+    m_pointInCenter->prop<Position>().set(point_box.leftTop());
 
     background_tile_ = renderizableBuilder()
                            .name("backgroundTile")

@@ -25,7 +25,7 @@ GameOverSceneNode::GameOverSceneNode(scene::SceneNode* const parent, str name) :
     m_gameOverrg = createSceneNode("gameOverScreen");
 
     vector2df gosize{dataWrapper<SceneMetricsView>()->currentView().width, 715};
-    m_gameOverrg->position.set({0, 575});
+    m_gameOverrg->prop<Position>() = Position::value_type{0, 575};
     auto resources_viewer = dataWrapper<res::ResourceView>();
 
     {
@@ -54,7 +54,7 @@ GameOverSceneNode::GameOverSceneNode(scene::SceneNode* const parent, str name) :
             .put<AlignmentY>(AlignmentYModes::Bottom);
     }
 
-    set<Visible>(false);
+    prop<Visible>().set(false);
 }
 
 GameOverSceneNode::~GameOverSceneNode() = default;

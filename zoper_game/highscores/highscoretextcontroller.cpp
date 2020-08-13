@@ -10,6 +10,7 @@
 #include <haf/resources/include/ittfont.hpp>
 #include <haf/resources/include/resourceview.hpp>
 #include <haf/shareddata/include/shareddataview.hpp>
+#include <haf/scene/include/transformable_properties.hpp>
 
 using namespace mtps;
 using namespace haf;
@@ -49,7 +50,7 @@ void HighScoreTextController::onCreated()
         rectFromSize(dataWrapper<SceneMetricsView>()->currentView().size())
             .setLeftTop({0, 250})
             .setSize({2000, 1500})};
-    position = textBox.leftTop();
+    prop<haf::scene::Position>().set(textBox.leftTop());
     prop<TableNodeProperties>().set<SceneNodeSize>(textBox.size());
     prop<TableSize>().set({3U, NumHighScore});
 

@@ -21,6 +21,7 @@ class SceneNodeText : public SceneNode, public SceneNodeTextProperties
 
 public:
     using SceneNode::SceneNode;
+    using SceneNode::prop;
     using SceneNodeTextProperties::prop;
     ~SceneNodeText() override;
 

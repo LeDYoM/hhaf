@@ -19,13 +19,13 @@ namespace zoper
 using namespace haf;
 using namespace haf::scene;
 
-namespace
-{}
 class HighScoreTextController : public nodes::TableNode<nodes::SceneNodeText>
 {
-    using BaseClass = nodes::TableNode<nodes::SceneNodeText>;
-
+    using BaseClass = nodes::TableNode<nodes::SceneNodeText>;    
 public:
+    using BaseClass::prop;
+    using TransformableProperties::prop;
+
     HighScoreTextController(scene::SceneNode* parent, mtps::str name);
     virtual ~HighScoreTextController();
 

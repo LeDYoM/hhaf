@@ -65,7 +65,7 @@ struct GameScene::GameScenePrivate
             DisplayLog::info("Creating animation for points to score");
             scene_animation_component_->addPropertyAnimation(
                 time::TimePoint_as_miliseconds(MillisAnimationPointsToScore),
-                sceneNode->position, lastTokenPosition,
+                sceneNode->prop<Position>(), lastTokenPosition,
                 EndPositionPointsToScore,
                 Animation::AnimationDirection::Forward, [this, sceneNode]() {
                     sceneNode->parent()->removeSceneNode(sceneNode);
@@ -183,7 +183,7 @@ void GameScene::onCreated()
         });
 
     m_gameOver = createSceneNode<GameOverSceneNode>("gameOverSceneNode");
-    m_gameOver->set<Visible>(false);
+    m_gameOver->prop<Visible>().set(false);
 
     // Set state control.
     {
@@ -221,7 +221,7 @@ void GameScene::onEnterState(const GameSceneStates& state)
         }
         break;
         case GameSceneStates::GameOver:
-            m_gameOver->set<Visible>(true);
+            m_gameOver->prop<Visible>().set(true);
             scene_timer_component_->pause();
             break;
         default:

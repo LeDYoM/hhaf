@@ -5,10 +5,7 @@
 namespace haf::scene
 {
 Transformable::Transformable() noexcept :
-    origin{},
-    rotation{},
-    scale{{1U, 1U}},
-    position{},
+    TransformableProperties({}, {}, {1U, 1U}, {}),
     transform_{},
     global_transform_{}
 {}
@@ -17,10 +14,10 @@ Transformable::~Transformable() = default;
 
 bool Transformable::updateTransformIfNecessary() noexcept
 {
-    if (ps_hasChanged(position, origin, scale, rotation))
+    if (anyHasChanged(prop<TransformableProperties>()))
     {
         updateTransform();
-        ps_resetHasChanged(origin, rotation, scale, position);
+        resetHasChanged(prop<TransformableProperties>());
         return true;
     }
     return false;
@@ -35,25 +32,25 @@ void Transformable::updateGlobalTransformation(
 void Transformable::rotateAround(VectorScalar const point,
                                  Scalar const angle) noexcept
 {
-    origin   = point;
-    rotation = angle;
+    prop<Origin>()   = point;
+    prop<Rotation>() = angle;
 }
 
 void Transformable::scaleAround(VectorScalar const point,
                                 VectorScalar const scale_) noexcept
 {
-    origin = point;
-    scale  = scale_;
+    prop<Origin>() = point;
+    prop<Scale>()  = scale_;
 }
 
 void Transformable::updateTransform()
 {
     // Recompute the combined transform
-    auto const angle{-rotation() * ToRadians<Scalar>};
-    VectorScalar const sc{scale() * static_cast<Scalar>(std::cos(angle))};
-    VectorScalar const ss{scale() * static_cast<Scalar>(std::sin(angle))};
-    VectorScalar const orig{origin()};
-    VectorScalar const pos{position()};
+    auto const angle{-prop<Rotation>().get() * ToRadians<Scalar>};
+    VectorScalar const sc{prop<Scale>().get() * static_cast<Scalar>(std::cos(angle))};
+    VectorScalar const ss{prop<Scale>().get() * static_cast<Scalar>(std::sin(angle))};
+    VectorScalar const orig{prop<Origin>().get()};
+    VectorScalar const pos{prop<Position>().get()};
 
     transform_ = {sc.x,
                   ss.y,

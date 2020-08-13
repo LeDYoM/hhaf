@@ -18,7 +18,7 @@ public:
     using ContainedElement = T;
 
     using BaseClass::BaseClass;
-    using TableNodeImp::prop;
+    using BaseClass::prop;
 
     ~TableNode() override = default;
 

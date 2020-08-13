@@ -30,7 +30,7 @@ void BoardGroup::configure(vector2dst size,
     auto const tableSize{prop<TableSize>().get()};
 
     Rectf32 textBox{dataWrapper<SceneMetricsView>()->currentView()};
-    position = textBox.leftTop();
+    prop<Position>() = textBox.leftTop();
     snCast<TableNode<BoardTileSceneNode>>()->prop<SceneNodeSize>().set(
         textBox.size());
 
@@ -91,7 +91,7 @@ void BoardGroup::createNewToken(const board::BoardTileData data,
     auto new_tile_token = tokens_scene_node->createSceneNode<Token>("tileNode");
 
     // Set the position in the scene depending on the board position
-    new_tile_token->position.set(board2Scene(board_position));
+    new_tile_token->prop<Position>().set(board2Scene(board_position));
 
     // Add it to the board
     board_model_->setTile(board_position, new_tile_token);

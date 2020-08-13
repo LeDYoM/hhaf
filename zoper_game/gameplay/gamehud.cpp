@@ -27,7 +27,7 @@ GameHudSceneNode::GameHudSceneNode(
     m_scoreQuad->configure(
         resources_viewer->getTTFont(GameResources::ScoreFontId)->font(90U),
         colors::White, vector2df{600, 300});
-    m_scoreQuad->position.set(vector2df{50, 150});
+    m_scoreQuad->prop<Position>() = Position::value_type{50, 150};
     m_scoreQuad->text(vector2dst{0U, 0U})
         ->prop<SceneNodeTextProperties>()
         .put<Text>("Level:")
@@ -41,7 +41,7 @@ GameHudSceneNode::GameHudSceneNode(
     m_goalQuad->configure(
         resources_viewer->getTTFont(GameResources::ScoreFontId)->font(90),
         colors::White, vector2df{600, 300});
-    m_goalQuad->position.set(vector2df{1250, 150});
+    m_goalQuad->prop<Position>().set(vector2df{1250, 150});
     m_goalQuad->text({0U, 0U})
         ->prop<SceneNodeTextProperties>()
         .put<TextColor>(colors::Blue)

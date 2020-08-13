@@ -4,26 +4,25 @@
 #define HAF_SCENE_TRANSFORMABLE_INCLUDE_HPP
 
 #include "matrix4x4.hpp"
+#include "transformable_properties.hpp"
 #include <mtypes/include/vector2d.hpp>
 #include <mtypes/include/rect.hpp>
 #include <mtypes/include/propertystate.hpp>
 
 namespace haf::scene
 {
-class Transformable
+class Transformable : public TransformableProperties
 {
 public:
+    using BaseClass = TransformableProperties;
+    using BaseClass::prop;
+
     using Scalar       = Matrix4x4::Scalar;
     using VectorScalar = mtps::vector2d<Scalar>;
     using RectScalar   = mtps::Rect<Scalar>;
 
     Transformable() noexcept;
     virtual ~Transformable();
-
-    mtps::PropertyState<VectorScalar> origin;
-    mtps::PropertyState<Scalar> rotation;
-    mtps::PropertyState<VectorScalar> scale;
-    mtps::PropertyState<VectorScalar> position;
 
     bool updateTransformIfNecessary() noexcept;
     inline Matrix4x4 const& globalTransform() const noexcept

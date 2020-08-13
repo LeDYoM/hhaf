@@ -13,6 +13,8 @@ class TextQuad : public TableNode<SceneNodeText>
 public:
     using BaseClass = TableNode<SceneNodeText>;
     using BaseClass::BaseClass;
+    using BaseClass::prop;
+
     ~TextQuad() override;
 
     void onCreated() override;

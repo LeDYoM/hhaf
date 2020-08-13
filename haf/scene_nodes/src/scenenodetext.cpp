@@ -228,7 +228,7 @@ void SceneNodeText::updateAlignmentX(f32 const textSizeX)
             break;
     }
 
-    position.set(vector2df{newPosX, position().y});
+    prop<Position>().set(vector2df{newPosX, prop<Position>().get().y});
 }
 
 void SceneNodeText::updateAlignmentY(f32 const textSizeY)
@@ -248,7 +248,7 @@ void SceneNodeText::updateAlignmentY(f32 const textSizeY)
             break;
     }
 
-    position.set(vector2df{position().x, newPosY});
+    prop<Position>().set(vector2df{prop<Position>().get().x, newPosY});
 }
 
 }  // namespace haf::scene::nodes

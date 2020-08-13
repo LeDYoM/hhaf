@@ -51,8 +51,8 @@ void Player::update()
     if (boardPosition.readResetHasChanged())
     {
         DisplayLog::info("Player board position: ", boardPosition());
-        position = m_board2SceneFactor * boardPosition();
-        DisplayLog::info("Player scene position: ", position());
+        prop<Position>() = m_board2SceneFactor * boardPosition();
+        DisplayLog::info("Player scene position: ", prop<Position>().get());
     }
 
     if (currentDirection.readResetHasChanged())
@@ -69,8 +69,8 @@ void Player::update()
                 : vector2df{m_board2SceneFactor.y / m_board2SceneFactor.x,
                             m_board2SceneFactor.x / m_board2SceneFactor.y});
 
-        rotator_->position = tileCenter;
-        scalator_->position = tileCenter;
+        rotator_->prop<Position>() = tileCenter;
+        scalator_->prop<Position>() = tileCenter;
     }
 }
 
@@ -97,8 +97,8 @@ void Player::launchAnimation(const vector2df& toWhere)
     animation_component_->addPropertyAnimation(
         TimePoint_as_miliseconds(
             gameplay::constants::MillisAnimationLaunchPlayerStep),
-        position, position(), toWhere, Animation::AnimationDirection::Forward,
-        [this, currentPosition = position()]() {
+        prop<Position>(), prop<Position>()(), toWhere, Animation::AnimationDirection::Forward,
+        [this, currentPosition = prop<Position>()()]() {
             launchAnimationBack(currentPosition);
         });
 }
@@ -111,7 +111,7 @@ void Player::launchAnimationBack(const vector2df& toWhere)
     animation_component_->addPropertyAnimation(
         TimePoint_as_miliseconds(
             gameplay::constants::MillisAnimationLaunchPlayerStep),
-        position, position(), toWhere);
+        prop<Position>(), prop<Position>().get(), toWhere);
 }
 
 void Player::tileAdded(const vector2dst& position_)

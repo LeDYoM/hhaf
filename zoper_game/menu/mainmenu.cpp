@@ -82,7 +82,7 @@ void MainMenu::onCreated()
         rectFromSize(dataWrapper<SceneMetricsView>()->currentView().size())
             .setLeftTop({0, 750})
             .setSize({2000, 4 * 150})};
-    position = textBox.leftTop();
+    prop<Position>() = textBox.leftTop();
 
     prop<MenuPagedProperties>().put<NormalTextFont>(
 #ifdef TEST_BMP_FONT

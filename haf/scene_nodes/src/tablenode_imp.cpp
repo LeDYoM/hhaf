@@ -25,8 +25,8 @@ void TableNodeImp::update()
     {
         mtps::vector2df const& cell_size{cellSize()};
         for_each_table_innerSceneNode(
-            [this, cell_size](mtps::vector2dst const& p, const auto& n) {
-                n->position = cell_size * static_cast<mtps::vector2df>(p);
+            [this, cell_size](mtps::vector2dst const& p, const mtps::sptr<SceneNode>& n) {
+                n->prop<Position>().set(cell_size * static_cast<mtps::vector2df>(p));
             });
     }
 }

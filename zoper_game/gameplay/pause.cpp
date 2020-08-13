@@ -36,22 +36,21 @@ void PauseSceneNode::onCreated()
         .put<AlignmentX>(AlignmentXModes::Center)
         .put<AlignmentY>(AlignmentYModes::Middle);
 
-    set<Visible>(false);
+    prop<Visible>().set(false);
 }
 
 void PauseSceneNode::enterPause()
 {
-    set<Visible>(true);
+    prop<Visible>().set(true);
     ensureComponentOfType(animation_component_);
     animation_component_->addPropertyAnimation(
         TimePoint_as_miliseconds(1000U),
-        m_pauseText->prop<SceneNodeTextProperties>()
-            .get_property_reference<TextColor>(),
+        m_pauseText->prop<TextColor>(),
         Color{255U, 255U, 255U, 0U}, Color{255U, 255U, 255U, 255U});
 }
 
 void PauseSceneNode::exitPause()
 {
-    set<Visible>(false);
+    prop<Visible>().set(false);
 }
 }  // namespace zoper

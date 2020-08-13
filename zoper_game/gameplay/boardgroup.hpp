@@ -27,7 +27,7 @@ class BoardGroup : public haf::scene::nodes::TableNode<BoardTileSceneNode>,
 {
 private:
     using BaseClass = haf::scene::nodes::TableNode<BoardTileSceneNode>;
-
+    using BaseClass::prop;    
 public:
     using BaseClass::BaseClass;
 
