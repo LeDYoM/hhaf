@@ -53,6 +53,12 @@ void TableNodeImp::setTableSize(mtps::vector2dst const ntableSize)
 void TableNodeImp::setInnerSceneNodeAt(mtps::vector2dst const index,
                                        mtps::sptr<SceneNode> scene_node)
 {
+    LogAsserter::log_assert(
+        index.x < prop<TableSize>().get().x &&
+            index.y < prop<TableSize>().get().y,
+        "TableSize::createNodeAt: Index ", index,
+        " is out of bounds. Size: ", prop<TableSize>().get());
+
     inner_nodes_[index.x][index.y] = std::move(scene_node);
 }
 

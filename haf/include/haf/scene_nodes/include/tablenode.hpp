@@ -33,47 +33,42 @@ public:
      
         updateTableSizeIfNecessary();
 
-        LogAsserter::log_assert(
-            index.x < prop<TableSize>().get().x &&
-                index.y < prop<TableSize>().get().y,
-            "TableSize::createNodeAt: Index ", index,
-            " is out of bounds. Size: ", prop<TableSize>().get());
         BaseClass::setInnerSceneNodeAt(index, std::move(inner_node));
         nodes_[index.x][index.y] = result;
         return result;
     }
 
-    constexpr mtps::sptr<T> operator()(const mtps::vector2dst& index) noexcept
+    constexpr mtps::sptr<T> operator()(mtps::vector2dst const& index) noexcept
     {
         return nodes_[index.x][index.y];
     }
 
     constexpr const mtps::sptr<T> operator()(
-        const mtps::vector2dst& index) const noexcept
+        mtps::vector2dst const& index) const noexcept
     {
         return nodes_[index.x][index.y];
     }
 
-    constexpr mtps::sptr<T> nodeAt(const mtps::vector2dst& index) noexcept
+    constexpr mtps::sptr<T> nodeAt(mtps::vector2dst const& index) noexcept
     {
         return nodes_[index.x][index.y];
     }
 
     constexpr const mtps::sptr<T> nodeAt(
-        const mtps::vector2dst& index) const noexcept
+        mtps::vector2dst const& index) const noexcept
     {
         return nodes_[index.x][index.y];
     }
 
     constexpr void for_each_tableSceneNode(
-        mtps::function<void(const mtps::vector2dst&, const mtps::sptr<T>&)>
+        mtps::function<void(mtps::vector2dst const&, mtps::sptr<T> const&)> const
             action)
     {
         for (mtps::size_type x{0}; x < nodes_.size(); ++x)
         {
             for (mtps::size_type y{0}; y < nodes_[x].size(); ++y)
             {
-                if (mtps::sptr<T> node = nodes_[x][y])
+                if (mtps::sptr<T> node = nodes_[x][y]; node)
                 {
                     action(mtps::vector2dst{x, y}, node);
                 }
@@ -82,12 +77,12 @@ public:
     }
 
     constexpr void for_each_tableSceneNode_in_x(
-        const mtps::size_type x,
-        mtps::function<void(const mtps::size_type, const mtps::sptr<T>&)>
+        mtps::size_type const x,
+        mtps::function<void(const mtps::size_type, mtps::sptr<T> const&)> const
             action)
     {
-        for_each_tableSceneNode([action, x](const mtps::vector2dst& pos,
-                                            const mtps::sptr<T>& node) {
+        for_each_tableSceneNode([action, x](mtps::vector2dst const& pos,
+                                            mtps::sptr<T> const& node) {
             if (pos.x == x)
             {
                 action(pos.y, node);
@@ -97,7 +92,7 @@ public:
 
     constexpr void for_each_tableSceneNode_in_y(
         const mtps::size_type y,
-        mtps::function<void(const mtps::size_type, const mtps::sptr<T>&)>
+        mtps::function<void(const mtps::size_type, const mtps::sptr<T>&)> const
             action)
     {
         for_each_tableSceneNode([action, y](const mtps::vector2dst& pos,
