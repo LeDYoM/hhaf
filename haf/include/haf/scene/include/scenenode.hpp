@@ -50,7 +50,7 @@ class HAF_API SceneNode : public sys::HasName,
 {
 public:
     using SceneNodeProperties::prop;
-    using TransformableProperties::prop;
+    using TransformationProperties::prop;
 
     /**
      * @brief Disabled copy constructor.

@@ -1,18 +1,18 @@
-#include "transformable.hpp"
+#include "transformation.hpp"
 #include "geometry_math.hpp"
 #include <cmath>
 
 namespace haf::scene
 {
-Transformable::Transformable() noexcept :
+Transformation::Transformation() noexcept :
     TransformationProperties({}, {}, {1U, 1U}, {}),
     transform_{},
     global_transform_{}
 {}
 
-Transformable::~Transformable() = default;
+Transformation::~Transformation() = default;
 
-bool Transformable::updateTransformIfNecessary() noexcept
+bool Transformation::updateTransformIfNecessary() noexcept
 {
     if (anyHasChanged(prop<TransformationProperties>()))
     {
@@ -23,27 +23,27 @@ bool Transformable::updateTransformIfNecessary() noexcept
     return false;
 }
 
-void Transformable::updateGlobalTransformation(
+void Transformation::updateGlobalTransformation(
     Matrix4x4 const& currentGlobalTransformation) noexcept
 {
     global_transform_ = currentGlobalTransformation * transform_;
 }
 
-void Transformable::rotateAround(VectorScalar const point,
+void Transformation::rotateAround(VectorScalar const point,
                                  Scalar const angle) noexcept
 {
     prop<Origin>()   = point;
     prop<Rotation>() = angle;
 }
 
-void Transformable::scaleAround(VectorScalar const point,
+void Transformation::scaleAround(VectorScalar const point,
                                 VectorScalar const scale_) noexcept
 {
     prop<Origin>() = point;
     prop<Scale>()  = scale_;
 }
 
-void Transformable::updateTransform()
+void Transformation::updateTransform()
 {
     // Recompute the combined transform
     auto const angle{-prop<Rotation>().get() * ToRadians<Scalar>};

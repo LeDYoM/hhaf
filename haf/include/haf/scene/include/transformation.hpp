@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef HAF_SCENE_TRANSFORMABLE_INCLUDE_HPP
-#define HAF_SCENE_TRANSFORMABLE_INCLUDE_HPP
+#ifndef HAF_SCENE_TRANSFORMATION_INCLUDE_HPP
+#define HAF_SCENE_TRANSFORMATION_INCLUDE_HPP
 
 #include "matrix4x4.hpp"
 #include "transformation_properties.hpp"
@@ -11,7 +11,7 @@
 
 namespace haf::scene
 {
-class Transformable : public TransformationProperties
+class Transformation : public TransformationProperties
 {
 public:
     using BaseClass = TransformationProperties;
@@ -21,8 +21,8 @@ public:
     using VectorScalar = mtps::vector2d<Scalar>;
     using RectScalar   = mtps::Rect<Scalar>;
 
-    Transformable() noexcept;
-    virtual ~Transformable();
+    Transformation() noexcept;
+    virtual ~Transformation();
 
     bool updateTransformIfNecessary() noexcept;
     inline Matrix4x4 const& globalTransform() const noexcept

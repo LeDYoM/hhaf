@@ -10,7 +10,6 @@
 #include <haf/resources/include/ittfont.hpp>
 #include <haf/resources/include/resourceview.hpp>
 #include <haf/shareddata/include/shareddataview.hpp>
-#include <haf/scene/include/transformable_properties.hpp>
 
 using namespace mtps;
 using namespace haf;

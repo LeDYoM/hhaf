@@ -18,6 +18,7 @@ set(_SOURCES
     src/scenenodes_group.cpp
     src/matrix4x4.cpp
     src/transformable.cpp
+    src/transformation.cpp
     src/vertexarray.cpp)
 
 set(CURRENT_TARGET ${PROJECT_NAME})
