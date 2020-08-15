@@ -10,6 +10,7 @@ set(SOURCE_TESTS
     scene/scenenode
     scene/scenenodeparent
     scene/scenemanager
+    scene/transformation
 
     scene_components/componentcontainer
     scene_components/statescontroller
