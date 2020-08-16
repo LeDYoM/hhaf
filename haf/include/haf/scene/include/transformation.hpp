@@ -24,12 +24,6 @@ public:
     Transformation() noexcept;
     virtual ~Transformation();
 
-    bool updateTransformIfNecessary() noexcept;
-    inline Matrix4x4 const& globalTransform() const noexcept
-    {
-        return global_transform_;
-    }
-
     /**
      * @brief Set the associated transformation to a rotation around a given
      * point.
@@ -55,7 +49,6 @@ private:
     void updateTransform();
 
     Matrix4x4 transform_;
-    Matrix4x4 global_transform_;
 };
 }  // namespace haf::scene
 

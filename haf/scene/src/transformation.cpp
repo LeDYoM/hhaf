@@ -6,28 +6,10 @@ namespace haf::scene
 {
 Transformation::Transformation() noexcept :
     TransformationProperties({}, {}, {1U, 1U}, {}),
-    transform_{},
-    global_transform_{}
+    transform_{}
 {}
 
 Transformation::~Transformation() = default;
-
-bool Transformation::updateTransformIfNecessary() noexcept
-{
-    if (anyHasChanged(prop<TransformationProperties>()))
-    {
-        updateTransform();
-        resetHasChanged(prop<TransformationProperties>());
-        return true;
-    }
-    return false;
-}
-
-void Transformation::updateGlobalTransformation(
-    Matrix4x4 const& currentGlobalTransformation) noexcept
-{
-    global_transform_ = currentGlobalTransformation * transform_;
-}
 
 void Transformation::rotateAround(VectorScalar const point,
                                  Scalar const angle) noexcept
