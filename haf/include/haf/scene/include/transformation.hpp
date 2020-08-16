@@ -25,6 +25,10 @@ public:
     virtual ~Transformation();
 
     bool updateTransformIfNecessary() noexcept;
+    inline Matrix4x4 const& globalTransform() const noexcept
+    {
+        return global_transform_;
+    }
 
     /**
      * @brief Set the associated transformation to a rotation around a given
@@ -45,15 +49,13 @@ public:
     void scaleAround(VectorScalar const point,
                      VectorScalar const scale) noexcept;
 
-    constexpr mtps::rptr<Scalar const> const getMatrix() const noexcept
-    {
-        return transform_.getMatrix();
-    }
+    void updateGlobalTransformation(Matrix4x4 const&) noexcept;
 
 private:
     void updateTransform();
 
     Matrix4x4 transform_;
+    Matrix4x4 global_transform_;
 };
 }  // namespace haf::scene
 
