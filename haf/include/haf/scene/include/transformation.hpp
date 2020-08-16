@@ -45,8 +45,8 @@ public:
 
     void updateGlobalTransformation(Matrix4x4 const&) noexcept;
 
-private:
     void updateTransform();
+private:
 
     Matrix4x4 transform_;
 };
