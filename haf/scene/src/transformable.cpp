@@ -5,7 +5,7 @@
 namespace haf::scene
 {
 Transformable::Transformable() noexcept :
-    TransformationProperties({}, {}, {1U, 1U}, {}),
+    Transformation(),
     transform_{},
     global_transform_{}
 {}

@@ -5,16 +5,17 @@
 
 #include "matrix4x4.hpp"
 #include "transformation_properties.hpp"
+#include "transformation.hpp"
 #include <mtypes/include/vector2d.hpp>
 #include <mtypes/include/rect.hpp>
 #include <mtypes/include/propertystate.hpp>
 
 namespace haf::scene
 {
-class Transformable : public TransformationProperties
+class Transformable : public Transformation
 {
 public:
-    using BaseClass = TransformationProperties;
+    using BaseClass = Transformation;
     using BaseClass::prop;
 
     using Scalar       = Matrix4x4::Scalar;
