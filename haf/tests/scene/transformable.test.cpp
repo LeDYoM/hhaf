@@ -50,23 +50,56 @@ TEST_CASE("haf::scene::Transformable adding transformations",
     CHECK(transformable.updateTransformIfNecessary());
     CHECK_FALSE(transformable.updateTransformIfNecessary());
 
-    CHECK(transformable.numTransformations() == 1U);
-    CHECK(transformable.addTransformation() == 2U);
+    SECTION("UpdateTransformIfNecessary")
+    {
+        CHECK(transformable.numTransformations() == 1U);
+        CHECK(transformable.addTransformation() == 2U);
 
-    CHECK_FALSE(
-        transformable.getTransformation(0U).updateTransformIfNecessary());
+        CHECK_FALSE(
+            transformable.getTransformation(0U).updateTransformIfNecessary());
 
-    CHECK(transformable.getTransformation(1U).updateTransformIfNecessary());
-    CHECK_FALSE(
-        transformable.getTransformation(1U).updateTransformIfNecessary());
+        CHECK(transformable.getTransformation(1U).updateTransformIfNecessary());
+        CHECK_FALSE(
+            transformable.getTransformation(1U).updateTransformIfNecessary());
 
-    transformable.prop<Origin>() = {2.0F, 4.0F};
-    CHECK_FALSE(
-        transformable.getTransformation(1U).updateTransformIfNecessary());    
-    CHECK(transformable.updateTransformIfNecessary());
+        transformable.prop<Origin>() = {2.0F, 4.0F};
+        CHECK_FALSE(
+            transformable.getTransformation(1U).updateTransformIfNecessary());
+        CHECK(transformable.updateTransformIfNecessary());
 
-    transformable.getTransformation(1U).prop<Origin>() = {2.0F, 4.0F};
-    CHECK(
-        transformable.getTransformation(1U).updateTransformIfNecessary());    
-    CHECK_FALSE(transformable.updateTransformIfNecessary());
+        transformable.getTransformation(1U).prop<Origin>() = {2.0F, 4.0F};
+        CHECK(transformable.getTransformation(1U).updateTransformIfNecessary());
+        CHECK_FALSE(transformable.updateTransformIfNecessary());
+    }
+
+    SECTION("UpdateLocalTransformIfNecessary")
+    {
+        CHECK(transformable.numTransformations() == 1U);
+        CHECK(transformable.addTransformation() == 2U);
+
+        CHECK(transformable.updateLocalTransformationsIfNecessary());
+
+        CHECK_FALSE(
+            transformable.getTransformation(1U).updateTransformIfNecessary());
+
+        transformable.prop<Origin>() = {2.0F, 4.0F};
+        CHECK_FALSE(
+            transformable.getTransformation(1U).updateTransformIfNecessary());
+        CHECK(transformable.updateLocalTransformationsIfNecessary());
+
+        transformable.getTransformation(1U).prop<Origin>() = {2.0F, 4.0F};
+        CHECK(transformable.updateLocalTransformationsIfNecessary());
+        CHECK_FALSE(transformable.updateTransformIfNecessary());
+        CHECK_FALSE(
+            transformable.getTransformation(1U).updateTransformIfNecessary());
+    }
+}
+
+TEST_CASE("haf::scene::Transformable check math",
+          "[haf][scene][Transformable]")
+{
+    Transformable transformable;
+    transformable.prop<Position>() = {2.0F, 2.0F};
+
+
 }

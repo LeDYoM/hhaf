@@ -5,6 +5,7 @@ set(CURRENT_TARGET ${PROJECT_NAME})
 
 set(SOURCE_TESTS
     scene/color
+    scene/matrix4x4
     scene/scenecontroller
     scene/scenenodefactory
     scene/scenenode

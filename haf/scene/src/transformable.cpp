@@ -29,14 +29,21 @@ size_type Transformable::numTransformations() const noexcept
 
 bool Transformable::updateLocalTransformationsIfNecessary() noexcept
 {
-    bool const result = updateTransformIfNecessary();
+    bool result{false};
+
+    for (auto index{0}; index < numTransformations(); ++index)
+    {
+        result |= getTransformation(index).updateTransformIfNecessary();
+    }
 
     if (result)
     {
-        // If any of the transformations has changed, update our local
-        // transformation.
-        local_transform_ = Transformation::matrix();
+        for (auto index{0}; index < numTransformations(); ++index)
+        {
+            local_transform_ *= Transformation::matrix();
+        }
     }
+
     return result;
 }
 
@@ -52,7 +59,7 @@ Transformation& Transformable::getTransformation(size_type const index) noexcept
 void Transformable::updateGlobalTransformation(
     Matrix4x4 const& currentGlobalTransformation) noexcept
 {
-    global_transform_ = currentGlobalTransformation * Transformation::matrix();
+    global_transform_ = currentGlobalTransformation * local_transform_;
 }
 
 }  // namespace haf::scene
