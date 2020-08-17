@@ -25,7 +25,6 @@ public:
     Transformable() noexcept;
     virtual ~Transformable();
 
-    bool updateTransformIfNecessary() noexcept;
     inline Matrix4x4 const& globalTransform() const noexcept
     {
         return global_transform_;
@@ -34,13 +33,15 @@ public:
     using Transformation::rotateAround;
     using Transformation::scaleAround;
 
+    bool updateLocalTransformationsIfNecessary() noexcept;
+
     void updateGlobalTransformation(Matrix4x4 const&) noexcept;
 
 private:
     void updateTransform();
 
-    Matrix4x4 transform_;
     Matrix4x4 global_transform_;
+    Matrix4x4 local_transform_;
 };
 }  // namespace haf::scene
 

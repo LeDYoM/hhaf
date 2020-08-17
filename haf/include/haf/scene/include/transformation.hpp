@@ -43,9 +43,11 @@ public:
     void scaleAround(VectorScalar const point,
                      VectorScalar const scale) noexcept;
 
-    void updateGlobalTransformation(Matrix4x4 const&) noexcept;
+    bool updateTransformIfNecessary() noexcept;
 
     void updateTransform();
+
+    Matrix4x4 const& matrix() { return transform_; }
 private:
 
     Matrix4x4 transform_;

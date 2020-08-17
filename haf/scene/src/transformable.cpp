@@ -6,27 +6,29 @@ namespace haf::scene
 {
 Transformable::Transformable() noexcept :
     Transformation(),
-    transform_{},
+    local_transform_{},
     global_transform_{}
 {}
 
 Transformable::~Transformable() = default;
 
-bool Transformable::updateTransformIfNecessary() noexcept
+bool Transformable::updateLocalTransformationsIfNecessary() noexcept
 {
-    if (anyHasChanged(prop<TransformationProperties>()))
+    bool const result = updateTransformIfNecessary();
+
+    if (result)
     {
-        updateTransform();
-        resetHasChanged(prop<TransformationProperties>());
-        return true;
+        // If any of the transformations has changed, update our local
+        // transformation.
+        local_transform_ = Transformation::matrix();
     }
-    return false;
+    return result;
 }
 
 void Transformable::updateGlobalTransformation(
     Matrix4x4 const& currentGlobalTransformation) noexcept
 {
-    global_transform_ = currentGlobalTransformation * transform_;
+    global_transform_ = currentGlobalTransformation * Transformation::matrix();
 }
 
 void Transformable::updateTransform()

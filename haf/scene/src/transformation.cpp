@@ -11,6 +11,17 @@ Transformation::Transformation() noexcept :
 
 Transformation::~Transformation() = default;
 
+bool Transformation::updateTransformIfNecessary() noexcept
+{
+    if (anyHasChanged(prop<TransformationProperties>()))
+    {
+        updateTransform();
+        resetHasChanged(prop<TransformationProperties>());
+        return true;
+    }
+    return false;
+}
+
 void Transformation::rotateAround(VectorScalar const point,
                                  Scalar const angle) noexcept
 {

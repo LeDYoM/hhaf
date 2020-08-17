@@ -89,7 +89,8 @@ void SceneController::render(SceneNode& scene_node,
         // Update node
         scene_node.update();
 
-        parentTransformationChanged |= scene_node.updateTransformIfNecessary();
+        parentTransformationChanged |=
+            scene_node.updateLocalTransformationsIfNecessary();
 
         if (parentTransformationChanged)
         {
