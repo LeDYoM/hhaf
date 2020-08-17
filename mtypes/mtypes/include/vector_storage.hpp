@@ -138,35 +138,31 @@ public:
 
     constexpr void push_back(const T &value)
     {
-        //            LOG("vector::push_back(const T&) --- m_size before: " << m_size);
-
         reserve(GrowPolicy::growSize(m_size));
         Allocator::construct(m_buffer + m_size, value);
         ++m_size;
-
-        //            LOG("vector::push_back(const T&) --- m_size after: " << m_size);
     }
 
     constexpr void push_back(T &&value)
     {
-        //            LOG("vector::push_back(T&&) --- m_size before: " << m_size);
-
         reserve(GrowPolicy::growSize(m_size));
         Allocator::construct(static_cast<T*>(m_buffer + m_size), std::move(value));
         ++m_size;
-
-        //            LOG("vector::push_back(T&&) --- m_size after: " << m_size);
     }
 
     template <typename... Args>
     constexpr void emplace_back(Args &&... args)
     {
-        //            LOG("vector::emplace_back() --- m_size before: " << m_size);
-
         reserve(GrowPolicy::growSize(m_size));
         Allocator::construct(static_cast<T*>(m_buffer + m_size), std::forward<Args>(args)...);
         m_size++;
-        //            LOG("vector::emplace_back() --- m_size before: " << m_size);
+    }
+
+    constexpr void emplace_back()
+    {
+        reserve(GrowPolicy::growSize(m_size));
+        Allocator::construct(static_cast<T*>(m_buffer + m_size));
+        m_size++;
     }
 
     constexpr void pop_back() noexcept

@@ -6,6 +6,7 @@
 #include "matrix4x4.hpp"
 #include "transformation_properties.hpp"
 #include "transformation.hpp"
+#include <mtypes/include/vector.hpp>
 #include <mtypes/include/vector2d.hpp>
 #include <mtypes/include/rect.hpp>
 #include <mtypes/include/propertystate.hpp>
@@ -33,15 +34,19 @@ public:
     using Transformation::rotateAround;
     using Transformation::scaleAround;
 
-    bool updateLocalTransformationsIfNecessary() noexcept;
+    mtps::size_type addTransformation();
+    mtps::size_type numTransformations() const noexcept;
 
+    bool updateLocalTransformationsIfNecessary() noexcept;
     void updateGlobalTransformation(Matrix4x4 const&) noexcept;
 
-private:
-    void updateTransform();
+    Transformation& getTransformation(mtps::size_type const index) noexcept;
 
+private:
     Matrix4x4 global_transform_;
     Matrix4x4 local_transform_;
+
+    mtps::vector<Transformation> extra_transformations_;
 };
 }  // namespace haf::scene
 

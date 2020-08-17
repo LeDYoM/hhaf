@@ -23,6 +23,10 @@ public:
 
     Transformation() noexcept;
     virtual ~Transformation();
+    Transformation(Transformation const&) = delete;
+    Transformation& operator=(Transformation const&) = delete;
+    Transformation(Transformation &&) noexcept = default;
+    Transformation& operator=(Transformation &&) noexcept = default;
 
     /**
      * @brief Set the associated transformation to a rotation around a given
@@ -45,10 +49,9 @@ public:
 
     bool updateTransformIfNecessary() noexcept;
 
-    void updateTransform();
-
     Matrix4x4 const& matrix() { return transform_; }
 private:
+    void updateTransform();
 
     Matrix4x4 transform_;
 };

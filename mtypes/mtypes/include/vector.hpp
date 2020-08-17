@@ -379,6 +379,11 @@ public:
 
     constexpr void push_back(T&& value) { base_.push_back(std::move(value)); }
 
+    constexpr void emplace_back()
+    {
+        base_.emplace_back();
+    }
+
     template <typename... Args>
     constexpr void emplace_back(Args&&... args)
     {
