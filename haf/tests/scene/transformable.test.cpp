@@ -2,9 +2,11 @@
 
 #include <mtypes/include/types.hpp>
 #include <haf/scene/include/transformable.hpp>
+#include "matrix_utils.hpp"
 
 using namespace haf;
 using namespace haf::scene;
+using namespace haf::scene::testing;
 
 TEST_CASE("haf::scene::Transformable", "[haf][scene][Transformable]")
 {
@@ -101,5 +103,10 @@ TEST_CASE("haf::scene::Transformable check math",
     Transformable transformable;
     transformable.prop<Position>() = {2.0F, 2.0F};
 
+    Transformable transformable_temp;
+    transformable_temp.prop<Position>() = {2.0F, 2.0F};
 
+    CHECK(transformable.updateLocalTransformationsIfNecessary());
+
+    CHECK()
 }

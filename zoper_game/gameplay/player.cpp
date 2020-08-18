@@ -51,7 +51,7 @@ void Player::update()
     if (boardPosition.readResetHasChanged())
     {
         DisplayLog::info("Player board position: ", boardPosition());
-        prop<Position>() = m_board2SceneFactor * boardPosition();
+//        prop<Position>() = m_board2SceneFactor * boardPosition();
         DisplayLog::info("Player scene position: ", prop<Position>().get());
     }
 
@@ -60,7 +60,7 @@ void Player::update()
         const auto direction{currentDirection()};
 
         const auto tileCenter{m_board2SceneFactor / 2.0F};
-        rotator_->rotateAround(tileCenter, direction.angle());
+/*        rotator_->rotateAround(tileCenter, direction.angle());
 
         scalator_->scaleAround(
             tileCenter,
@@ -71,6 +71,7 @@ void Player::update()
 
         rotator_->prop<Position>() = tileCenter;
         scalator_->prop<Position>() = tileCenter;
+*/
     }
 }
 
