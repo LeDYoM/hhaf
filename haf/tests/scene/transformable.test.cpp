@@ -101,12 +101,16 @@ TEST_CASE("haf::scene::Transformable check math",
           "[haf][scene][Transformable]")
 {
     Transformable transformable;
-    transformable.prop<Position>() = {2.0F, 2.0F};
+    transformable.prop<Position>() = {3.0F, 3.0F};
 
     Transformable transformable_temp;
     transformable_temp.prop<Position>() = {2.0F, 2.0F};
 
+    CHECK(transformable_temp.updateLocalTransformationsIfNecessary());
     CHECK(transformable.updateLocalTransformationsIfNecessary());
+    CHECK_FALSE(isAlmostEqual(transformable_temp.localTransform(), transformable.localTransform()));
 
-    CHECK()
+    transformable.prop<Position>() = {2.0F, 2.0F};
+    CHECK(transformable.updateLocalTransformationsIfNecessary());
+    CHECK(isAlmostEqual(transformable_temp.localTransform(), transformable.localTransform()));
 }

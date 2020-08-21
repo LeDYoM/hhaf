@@ -36,11 +36,13 @@ bool Transformable::updateLocalTransformationsIfNecessary() noexcept
         result |= getTransformation(index).updateTransformIfNecessary();
     }
 
+    // Result contains if any of the sub local transformations has changed.
     if (result)
     {
+        local_transform_ = Matrix4x4::Identity;
         for (auto index{0}; index < numTransformations(); ++index)
         {
-            local_transform_ *= Transformation::matrix();
+            local_transform_ *= getTransformation(index).matrix();
         }
     }
 

@@ -9,12 +9,12 @@
 
 namespace haf::scene::testing
 {
-bool isAlmostEqual(mtps::f32 const lhs, mtps::f32 const rhs)
+inline bool isAlmostEqual(mtps::f32 const lhs, mtps::f32 const rhs)
 {
     return std::abs(lhs - rhs) < std::numeric_limits<mtps::f32>::epsilon();
 }
 
-bool isAlmostEqual(Matrix4x4 const& lhs, Matrix4x4 const& rhs)
+inline bool isAlmostEqual(Matrix4x4 const& lhs, Matrix4x4 const& rhs)
 {
     for (auto index{0U}; index < 16U; ++index)
     {

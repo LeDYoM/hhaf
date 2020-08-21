@@ -31,6 +31,11 @@ public:
         return global_transform_;
     }
 
+    inline Matrix4x4 const& localTransform() const noexcept
+    {
+        return local_transform_;
+    }
+
     using Transformation::rotateAround;
     using Transformation::scaleAround;
 
