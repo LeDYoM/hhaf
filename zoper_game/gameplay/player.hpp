@@ -43,7 +43,6 @@ private:
     void launchAnimationBack(const mtps::vector2df &toWhere);
     mtps::sptr<haf::scene::AnimationComponent> animation_component_;
     haf::scene::SceneNodeSPtr rotator_;
-    haf::scene::SceneNodeSPtr scalator_;
     mtps::vector2df m_board2SceneFactor;
 };
 } // namespace zoper

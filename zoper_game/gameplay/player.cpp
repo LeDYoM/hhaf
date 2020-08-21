@@ -30,7 +30,7 @@ Player::Player(rptr<SceneNode> parent, str name) :
                                      .figType(FigType_t::Shape)
                                      .pointCount(3U));
     node_     = render_scene_node->node();
-    scalator_ = render_scene_node;
+    rotator_->addTransformation();
 }
 
 Player::~Player() = default;
@@ -62,7 +62,8 @@ void Player::update()
         const auto tileCenter{m_board2SceneFactor / 2.0F};
         rotator_->rotateAround(tileCenter, direction.angle());
 
-        scalator_->scaleAround(
+        rotator_->getTransformation(1).
+        scaleAround(
             tileCenter,
             (!direction.isVertical())
                 ? vector2df{1.0F, 1.0F}
@@ -70,7 +71,7 @@ void Player::update()
                             m_board2SceneFactor.x / m_board2SceneFactor.y});
 
         rotator_->prop<Position>() = tileCenter;
-        scalator_->prop<Position>() = tileCenter;
+        rotator_->getTransformation(1).prop<Position>() = tileCenter;
     }
 }
 
