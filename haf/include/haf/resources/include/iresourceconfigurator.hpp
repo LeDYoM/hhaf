@@ -21,21 +21,26 @@ enum class SetResourceConfigFileResult : mtps::u8
 };
 
 /**
- *
  * @brief Interface class to perform the load of resources using sections.
  */
 class IResourcesConfigurator
 {
 public:
     /**
-     * @brief Set the config file to be loaded.
+     * @brief Set the config file to be loaded
      *
-     * @return true The config file passed is already set or the new one is
-     *      parsed correctly.
-     * @return false Error parsing object file. It either does not exist or
-     *      error parsing.
+     * @return Result status of the function
+     * @see SetResourceConfigFileResult
      */
     virtual SetResourceConfigFileResult setResourceConfigFile(mtps::str) = 0;
+
+    /**
+     * @brief Load a section from the previously set config file for resource
+     * loading.
+     * 
+     * @return true Section loaded correctly
+     * @return false Section not loaded
+     */
     virtual bool loadSection(mtps::str const&)                           = 0;
 };
 }  // namespace haf::res
