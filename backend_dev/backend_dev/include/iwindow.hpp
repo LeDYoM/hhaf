@@ -56,6 +56,7 @@ public:
 
     virtual IRenderTarget* renderTarget() = 0;
     virtual IInputDriver* inputDriver()   = 0;
+    virtual mtps::str settingsInfo()      = 0;
 };
 
 }  // namespace haf::backend

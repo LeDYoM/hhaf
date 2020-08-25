@@ -90,6 +90,9 @@ bool Window::create(uptr<win::WindowProperties> window_properties)
         priv_->input_driver_ =
             msptr<input::InputDriver>(priv_->m_backendWindow->inputDriver());
         DisplayLog::info("Window creation completed");
+        DisplayLog::debug("Window driver info: ", bw.info());
+        DisplayLog::debug("Window settings: ", bw.settingsInfo());
+
         return true;
     }
     else

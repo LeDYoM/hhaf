@@ -21,7 +21,7 @@ class RenderWindow : public IWindow, public RenderTarget, public sf::Window
 {
 public:
     RenderWindow();
-    virtual ~RenderWindow();
+    ~RenderWindow() override;
 
     bool createWindow(
             const mtps::u32 width, const mtps::u32 height,
@@ -42,6 +42,7 @@ public:
 
     IInputDriver *inputDriver() override;
     mtps::str info() const override;
+    mtps::str settingsInfo() override;
 
 protected:
     virtual void onCreate();
