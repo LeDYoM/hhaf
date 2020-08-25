@@ -40,9 +40,10 @@ public:
     bool loadShader(const mtps::str& rid, const mtps::str& fileName);
     bool loadBMPFont(const mtps::str& rid, const mtps::str& fileName);
 
-    bool setResourceConfigFile(mtps::str config_file_name) override;
+    res::SetResourceConfigFileResult setResourceConfigFile(
+        mtps::str config_file_name) override;
     bool loadSection(mtps::str const& section_name) override;
-    bool parseResourceConfigFile();
+    res::SetResourceConfigFileResult parseResourceConfigFile();
 
 private:
     struct ResourceManagerPrivate;

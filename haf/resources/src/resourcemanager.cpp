@@ -173,7 +173,7 @@ bool ResourceManager::loadBMPFont(const str& rid, const str& fileName)
     return bmp_font != nullptr;
 }
 
-bool ResourceManager::parseResourceConfigFile()
+SetResourceConfigFileResult ResourceManager::parseResourceConfigFile()
 {
     LogAsserter::log_assert(!resources_config_file_name_.empty(),
                             "The resources file name was not set");
@@ -189,23 +189,27 @@ bool ResourceManager::parseResourceConfigFile()
         {
             DisplayLog::debug("Simulation file ", resources_config_file_name_,
                               " not found");
+            return SetResourceConfigFileResult::FileNotFound;
         }
         else if (result == FileSerializer::Result::ParsingError)
         {
             DisplayLog::error("File ", resources_config_file_name_,
                               " found but contains invalid format.");
+            return SetResourceConfigFileResult::ParseError;
         }
         else
         {
             DisplayLog::error(
                 "Unknow error reading and parsing simulation file: ",
                 resources_config_file_name_);
+            return SetResourceConfigFileResult::UnknownError;
         }
     }
-    return true;
+    return SetResourceConfigFileResult::Ok;
 }
 
-bool ResourceManager::setResourceConfigFile(mtps::str file_name)
+SetResourceConfigFileResult ResourceManager::setResourceConfigFile(
+    mtps::str file_name)
 {
     LogAsserter::log_assert(
         !file_name.empty(),
@@ -214,7 +218,7 @@ bool ResourceManager::setResourceConfigFile(mtps::str file_name)
     if (file_name == resources_config_file_name_)
     {
         // It is ok to set the same resources file again.
-        return true;
+        return SetResourceConfigFileResult::AlreadySet;
     }
 
     LogAsserter::log_assert(resources_config_file_name_.empty(),

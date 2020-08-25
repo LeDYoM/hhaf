@@ -79,7 +79,10 @@ GameScene::GameScene() : Scene{StaticTypeName}
 
 GameScene::~GameScene() = default;
 
-str GameScene::nextSceneName() { return HIGHSCORES_SCENE_NAME; }
+str GameScene::nextSceneName()
+{
+    return HIGHSCORES_SCENE_NAME;
+}
 
 void GameScene::onCreated()
 {
@@ -107,8 +110,7 @@ void GameScene::onCreated()
         // TODO: Fixme
         KeyMapping keyMapping__;
         KeyMapping* keyMapping = &keyMapping__;
-        //        const auto &keyMapping =
-        //        sceneManager().systemProvider().app<ZoperProgramController>().keyMapping;
+
         switch (m_sceneStates->currentState())
         {
             case GameSceneStates::Playing:
