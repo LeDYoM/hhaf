@@ -17,7 +17,7 @@
 #include <mtypes/include/function.hpp>
 #include <haf/scene/include/scene.hpp>
 #include <boardmanager/include/boardmanager.hpp>
-#include <haf/scene/include/renderizable.hpp>
+#include <haf/render/include/renderizable.hpp>
 #include <haf/time/include/timercomponent.hpp>
 #include <haf/scene_components/include/statescontroller.hpp>
 #include <haf/scene_components/include/statescontrolleractuator.hpp>

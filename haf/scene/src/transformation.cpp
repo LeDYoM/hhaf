@@ -1,6 +1,5 @@
 #include "transformation.hpp"
-#include "geometry_math.hpp"
-#include <cmath>
+#include <haf/render/include/geometry_math.hpp>
 
 namespace haf::scene
 {

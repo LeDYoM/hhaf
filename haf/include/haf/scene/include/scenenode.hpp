@@ -10,7 +10,7 @@
 #include <mtypes/include/grouping_property.hpp>
 #include <haf/scene/include/scenenodeparent.hpp>
 #include <haf/scene/include/scenenodes.hpp>
-#include <haf/scene/include/renderizables.hpp>
+#include <haf/render/include/renderizables.hpp>
 #include <haf/scene/include/transformable.hpp>
 #include <haf/scene/include/hasname.hpp>
 #include <haf/scene/include/componentcontainer.hpp>

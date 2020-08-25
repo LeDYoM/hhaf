@@ -7,8 +7,8 @@
 #include <mtypes/include/rect.hpp>
 #include <mtypes/include/properties.hpp>
 #include <mtypes/include/vector.hpp>
-#include <haf/scene/include/vertex.hpp>
-#include <haf/scene/include/primitivetype.hpp>
+#include <haf/render/include/vertex.hpp>
+#include <haf/render/include/primitivetype.hpp>
 
 namespace haf::scene
 {

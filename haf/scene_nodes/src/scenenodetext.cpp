@@ -4,7 +4,7 @@
 #include <haf/resources/include/itexture.hpp>
 #include <hlog/include/hlog.hpp>
 
-#include <haf/scene/include/vertexarray.hpp>
+#include <haf/render/include/vertexarray.hpp>
 #include <haf/scene_nodes/include/renderizable_scenenode.hpp>
 
 #include <algorithm>

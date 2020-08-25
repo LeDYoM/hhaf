@@ -1,5 +1,4 @@
 #include "transformable.hpp"
-#include "geometry_math.hpp"
 #include <hlog/include/hlog.hpp>
 #include <cmath>
 

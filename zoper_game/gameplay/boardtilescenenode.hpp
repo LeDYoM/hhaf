@@ -8,7 +8,7 @@
 #include <haf/scene/include/scenenode.hpp>
 #include <haf/scene_nodes/include/scene_node_size.hpp>
 #include <haf/scene/include/color.hpp>
-#include <haf/scene/include/renderizable.hpp>
+#include <haf/render/include/renderizable.hpp>
 #include <haf/scene_nodes/include/renderizable_scenenode.hpp>
 #include <haf/scene_nodes/include/scene_node_size.hpp>
 #include "boardtilescenenode_properties.hpp"

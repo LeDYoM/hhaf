@@ -3,7 +3,7 @@
 
 #include <haf/render/include/renderdata.hpp>
 #include <haf/scene/include/scenenode.hpp>
-#include <haf/scene/include/renderizable_builder.hpp>
+#include <haf/render/include/renderizable_builder.hpp>
 #include <haf/resources/include/itexture.hpp>
 #include <haf/resources/include/ishader.hpp>
 #include <system/i_include/get_system.hpp>

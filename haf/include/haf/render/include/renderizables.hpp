@@ -7,8 +7,8 @@
 #include <mtypes/include/function.hpp>
 #include <mtypes/include/vector.hpp>
 
-#include <haf/scene/include/renderizable.hpp>
-#include <haf/scene/include/renderizable_builder.hpp>
+#include <haf/render/include/renderizable.hpp>
+#include <haf/render/include/renderizable_builder.hpp>
 
 namespace haf::scene
 {

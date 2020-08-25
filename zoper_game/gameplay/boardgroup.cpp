@@ -8,7 +8,7 @@
 #include <haf/scene_nodes/include/tablenode.hpp>
 #include <haf/scene_nodes/include/scene_node_size.hpp>
 #include <haf/scene_components/include/scenemetricsview.hpp>
-#include <haf/scene/include/renderizable.hpp>
+#include <haf/render/include/renderizable.hpp>
 
 #include <boardmanager/include/boardmanager.hpp>
 #include <boardmanager/include/itile.hpp>

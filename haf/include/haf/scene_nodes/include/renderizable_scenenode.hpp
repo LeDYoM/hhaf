@@ -4,7 +4,7 @@
 #define HAF_SCENE_RENDERIZABLE_SCENENODE_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <haf/scene/include/renderizable_builder.hpp>
+#include <haf/render/include/renderizable_builder.hpp>
 #include <haf/scene/include/scenenode.hpp>
 
 namespace haf::scene

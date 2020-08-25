@@ -2,7 +2,7 @@
 
 #include <hlog/include/hlog.hpp>
 #include <haf/scene/include/scenenode.hpp>
-#include <haf/scene/include/renderizable_builder.hpp>
+#include <haf/render/include/renderizable_builder.hpp>
 
 using namespace mtps;
 

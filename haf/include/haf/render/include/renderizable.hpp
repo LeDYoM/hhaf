@@ -7,11 +7,11 @@
 #include <mtypes/include/propertystate.hpp>
 #include <mtypes/include/function.hpp>
 
-#include <haf/scene/include/renderizable_modifier_context.hpp>
+#include <haf/render/include/renderizable_modifier_context.hpp>
 #include <haf/scene/include/color.hpp>
 #include <haf/scene/include/hasname.hpp>
-#include <haf/scene/include/fig_type.hpp>
-#include <haf/scene/include/vertexarray.hpp>
+#include <haf/render/include/fig_type.hpp>
+#include <haf/render/include/vertexarray.hpp>
 #include <haf/resources/include/itexture.hpp>
 #include <haf/resources/include/ishader.hpp>
 #include <haf/render/include/renderdata.hpp>

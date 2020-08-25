@@ -6,7 +6,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/rect.hpp>
 #include <mtypes/include/vector2d.hpp>
-#include <haf/scene/include/vertex.hpp>
+#include <haf/render/include/vertex.hpp>
 
 namespace haf::scene
 {

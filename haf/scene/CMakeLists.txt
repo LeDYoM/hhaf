@@ -7,9 +7,6 @@ set(_SOURCES
     src/componentcontainer_update.cpp
     src/componentcontainer_no_update.cpp
     src/interface_getter.cpp
-    src/renderizable.cpp
-    src/renderizable_builder.cpp
-    src/renderizables.cpp
     src/scenecontroller.cpp
     src/scenemanager.cpp
     src/scenenode.cpp
@@ -18,8 +15,7 @@ set(_SOURCES
     src/scenenodes_group.cpp
     src/matrix4x4.cpp
     src/transformable.cpp
-    src/transformation.cpp
-    src/vertexarray.cpp)
+    src/transformation.cpp)
 
 set(CURRENT_TARGET ${PROJECT_NAME})
 

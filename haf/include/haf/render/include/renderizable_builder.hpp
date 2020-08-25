@@ -9,7 +9,7 @@
 #include <mtypes/include/function.hpp>
 
 #include <haf/scene/include/color.hpp>
-#include <haf/scene/include/renderizable_modifier_context.hpp>
+#include <haf/render/include/renderizable_modifier_context.hpp>
 
 namespace haf::scene
 {
