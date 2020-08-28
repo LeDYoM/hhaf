@@ -14,6 +14,8 @@ namespace haf::backend::sfmlb
 {
 class RenderTarget : public IRenderTarget, public sf::RenderTarget
 {
+    void initialize() override;
+
     void render(const IRenderData* render_data_begin,
                 const IRenderData* render_data_end) override;
 

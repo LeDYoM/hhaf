@@ -16,6 +16,8 @@ class IRenderTarget : public IResourceInfo
 public:
     ~IRenderTarget() override {}
 
+    virtual void initialize() = 0;
+
     virtual void render(const IRenderData* render_data_begin,
                         const IRenderData* render_data_end) = 0;
 

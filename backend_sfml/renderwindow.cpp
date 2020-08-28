@@ -142,12 +142,12 @@ str RenderWindow::settingsInfo()
 
 void RenderWindow::onCreate()
 {
-    RenderTarget::initialize();
+    renderTarget()->initialize();
 }
 
 void RenderWindow::onResize()
 {
-    setView(getView());
+    renderTarget()->setViewPort(renderTarget()->viewPort());
 }
 
 }  // namespace haf::backend::sfmlb
