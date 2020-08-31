@@ -85,9 +85,14 @@ BackendFactory::~BackendFactory()
     loader::destroyLoader();
 }
 
-rptr<IWindow> BackendFactory::getWindow()
+rptr<IWindow> BackendFactory::getWindow() const noexcept
 {
     return window_;
+}
+
+rptr<IRenderTarget> BackendFactory::getRenderTarget() const noexcept
+{
+    return render_target_;
 }
 
 rptr<ITextureFactory> BackendFactory::getTextureFactory() const noexcept

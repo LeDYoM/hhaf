@@ -4,6 +4,7 @@
 #define HAF_BACKEND_REGISTER_INCLUDE_HPP
 
 #include <backend_dev/include/iwindow.hpp>
+#include <backend_dev/include/irendertarget.hpp>
 #include <backend_dev/include/iresourcefactories.hpp>
 #include <backend_dev/include/client/ibackendregister.hpp>
 #include <backend_dev/include/client/interfaces.hpp>
@@ -14,6 +15,7 @@ class BackendRegister final : public IBackendRegister
 {
 public:
     void setFactory(IWindowFactory* const) noexcept override;
+    void setFactory(IRenderTargetFactory* const) noexcept override;
     void setFactory(ITTFontFactoryFactory* const) noexcept override;
     void setFactory(ITextureFactoryFactory* const) noexcept override;
     void setFactory(IShaderFactoryFactory* const) noexcept override;
@@ -64,6 +66,7 @@ private:
     p_initHaf init_lib_func_{nullptr};
     p_finishHaf finish_lib_func_{nullptr};
     IWindowFactory* window_factory_{nullptr};
+    IRenderTargetFactory* render_target_factory_{nullptr};
     ITTFontFactoryFactory* ttfont_factory_factory_{nullptr};
     ITextureFactoryFactory* texture_factory_factory_{nullptr};
     IShaderFactoryFactory* shader_factory_factory_{nullptr};

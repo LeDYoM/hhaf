@@ -1,6 +1,7 @@
 #include <backend_dev/include/client/interfaces.hpp>
 
 #include "renderwindow.hpp"
+#include "rendertarget.hpp"
 #include "ttfontfactory.hpp"
 #include "texturefactory.hpp"
 #include "shaderfactory.hpp"
@@ -21,6 +22,8 @@ struct BackendManager : haf::backend::client::DefaultBackendManager
         using namespace haf::backend::sfmlb;
 
         createFactoryOfFactories<DefaultFactoryOf<IWindow, RenderWindow>>(
+            factories);
+        createFactoryOfFactories<DefaultFactoryOf<IRenderTarget, RenderTarget>>(
             factories);
         createFactoryOfFactories<
             DefaultFactoryOf<ITTFontFactory, TTFontFactory>>(factories);

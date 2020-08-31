@@ -26,6 +26,8 @@ class RenderTarget : public IRenderTarget, public sf::RenderTarget
     void clear() override;
 
     mtps::str info() const override;
+    sf::Vector2u getSize() const override;
+
 };
 }  // namespace haf::backend::sfmlb
 

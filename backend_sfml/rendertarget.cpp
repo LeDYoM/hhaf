@@ -72,4 +72,10 @@ mtps::str RenderTarget::info() const
         SFML_VERSION_MAJOR, ".", SFML_VERSION_MINOR, ".", SFML_VERSION_PATCH,
         ";version:0;subversion:2:patch3");
 }
+
+sf::Vector2u RenderTarget::getSize() const
+{
+    return sf::Vector2u{};
+}
+
 }  // namespace haf::backend::sfmlb
