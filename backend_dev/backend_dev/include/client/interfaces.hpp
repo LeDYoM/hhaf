@@ -10,18 +10,18 @@
 
 namespace haf::backend::client
 {
-template <typename T>
-void createFactoryOfFactories(
-    mtps::vector<mtps::uptr<IAutoRegisterFactory>>& factories)
-{
-    auto f(mtps::muptr<AutoRegisterFactory<typename T::Interface>>());
-    f.get()->create(mtps::muptr<T>());
-    factories.push_back(std::move(f));
-}
 
-struct DefaultBackendManager : IBackendManager
+class DefaultBackendManager : public IBackendManager
 {
-    mtps::vector<mtps::uptr<IAutoRegisterFactory>> factories;
+public:
+    template <typename T>
+    void createFactoryOfFactories(
+        mtps::vector<mtps::uptr<IAutoRegisterFactory>>& factories)
+    {
+        auto f(mtps::muptr<AutoRegisterFactory<typename T::Interface>>());
+        f.get()->create(mtps::muptr<T>());
+        factories.push_back(std::move(f));
+    }
 
     void setFactories(IBackendRegister* const backend_register) override final
     {
@@ -49,6 +49,9 @@ struct DefaultBackendManager : IBackendManager
     }
 
     ~DefaultBackendManager() override { destroy(); }
+
+private:
+    mtps::vector<mtps::uptr<IAutoRegisterFactory>> factories;
 };
 
 template <typename T>
