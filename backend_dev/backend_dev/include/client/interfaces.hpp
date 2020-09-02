@@ -15,8 +15,7 @@ class DefaultBackendManager : public IBackendManager
 {
 public:
     template <typename T>
-    void createFactoryOfFactories(
-        mtps::vector<mtps::uptr<IAutoRegisterFactory>>& factories)
+    void createFactoryOfFactories()
     {
         auto f(mtps::muptr<AutoRegisterFactory<typename T::Interface>>());
         f.get()->create(mtps::muptr<T>());

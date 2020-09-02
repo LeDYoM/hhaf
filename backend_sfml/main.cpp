@@ -21,16 +21,15 @@ struct BackendManager : haf::backend::client::DefaultBackendManager
         using namespace haf::backend::client;
         using namespace haf::backend::sfmlb;
 
-        createFactoryOfFactories<DefaultFactoryOf<IWindow, RenderWindow>>(
-            factories);
-        createFactoryOfFactories<DefaultFactoryOf<IRenderTarget, RenderTarget>>(
-            factories);
+        createFactoryOfFactories<DefaultFactoryOf<IWindow, RenderWindow>>();
         createFactoryOfFactories<
-            DefaultFactoryOf<ITTFontFactory, TTFontFactory>>(factories);
+            DefaultFactoryOf<IRenderTarget, RenderTarget>>();
         createFactoryOfFactories<
-            DefaultFactoryOf<ITextureFactory, TextureFactory>>(factories);
+            DefaultFactoryOf<ITTFontFactory, TTFontFactory>>();
         createFactoryOfFactories<
-            DefaultFactoryOf<IShaderFactory, ShaderFactory>>(factories);
+            DefaultFactoryOf<ITextureFactory, TextureFactory>>();
+        createFactoryOfFactories<
+            DefaultFactoryOf<IShaderFactory, ShaderFactory>>();
     }
 };
 

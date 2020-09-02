@@ -4,6 +4,7 @@
 #define HAF_BACKEND_BACKEND_REGISTER_INLUDE_HPP
 
 #include "../iwindow.hpp"
+#include "../irendertarget.hpp"
 #include "../iresourcefactories.hpp"
 #include "factory.hpp"
 
