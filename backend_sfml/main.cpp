@@ -1,4 +1,6 @@
-#include <backend_client/include/interfaces.hpp>
+#include <backend_client/include/default_functions.hpp>
+#include <backend_client/include/default_factory.hpp>
+#include <backend_client/include/default_backend_manager.hpp>
 
 #include "renderwindow.hpp"
 #include "rendertarget.hpp"

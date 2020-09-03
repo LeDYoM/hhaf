@@ -7,7 +7,9 @@
 #include <backend_dev/include/irendertarget.hpp>
 #include <backend_dev/include/iresourcefactories.hpp>
 #include <backend_client/include/ibackendregister.hpp>
-#include <backend_client/include/interfaces.hpp>
+
+using p_initHaf   = bool (*)(haf::backend::client::IBackendRegister* const);
+using p_finishHaf = bool (*)(haf::backend::client::IBackendRegister* const);
 
 namespace haf::backend
 {

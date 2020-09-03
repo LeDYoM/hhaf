@@ -6,18 +6,9 @@
 #include <backend_dev/include/iwindow.hpp>
 #include <backend_dev/include/irendertarget.hpp>
 #include <backend_dev/include/iresourcefactories.hpp>
-#include "factory.hpp"
+#include <backend_dev/include/factory_types.hpp>
 
-namespace haf::backend
-{
-using IWindowFactory         = IFactoryOf<IWindow>;
-using IRenderTargetFactory   = IFactoryOf<IRenderTarget>;
-using ITTFontFactoryFactory  = IFactoryOf<ITTFontFactory>;
-using ITextureFactoryFactory = IFactoryOf<ITextureFactory>;
-using IShaderFactoryFactory  = IFactoryOf<IShaderFactory>;
-using IBMPFontFactoryFactory = IFactoryOf<IBMPFontFactory>;
-
-namespace client
+namespace haf::backend::client
 {
 class IBackendRegister
 {
@@ -31,7 +22,6 @@ public:
 
     virtual ~IBackendRegister() {}
 };
-}
 
 }  // namespace haf::backend::client
 
