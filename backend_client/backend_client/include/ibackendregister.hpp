@@ -6,7 +6,7 @@
 #include <backend_dev/include/iwindow.hpp>
 #include <backend_dev/include/irendertarget.hpp>
 #include <backend_dev/include/iresourcefactories.hpp>
-#include "factory.hpp"
+#include "ifactory.hpp"
 
 namespace haf::backend
 {

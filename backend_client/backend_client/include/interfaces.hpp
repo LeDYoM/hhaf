@@ -3,55 +3,20 @@
 #ifndef HAF_BACKEND_INTERFACES_INLUDE_HPP
 #define HAF_BACKEND_INTERFACES_INLUDE_HPP
 
-#include "ibackendregister.hpp"
-#include "autoregisterfactory.hpp"
-#include "ibackendmanager.hpp"
-#include "factory.hpp"
+#include <mtypes/include/types.hpp>
+#include <backend_client/include/ibackendregister.hpp>
+#include <backend_client/include/autoregisterfactory.hpp>
+#include <backend_client/include/ibackendmanager.hpp>
+#include <backend_client/include/ifactory.hpp>
 
 namespace haf::backend::client
 {
-
-class DefaultBackendManager : public IBackendManager
+void default_init_function_imp(IBackendManager* backend_manager,
+                                  IBackendRegister* const ibackend_register)
 {
-public:
-    template <typename T>
-    void createFactoryOfFactories()
-    {
-        auto f(mtps::muptr<AutoRegisterFactory<typename T::Interface>>());
-        f.get()->create(mtps::muptr<T>());
-        factories.push_back(std::move(f));
-    }
-
-    void setFactories(IBackendRegister* const backend_register) override final
-    {
-        for (auto const& factory : factories)
-        {
-            factory.get()->setFactory(backend_register);
-        }
-    }
-
-    void resetFactories(
-        IBackendRegister* const backend_register) override final
-    {
-        for (auto const& factory : factories)
-        {
-            factory.get()->resetFactory(backend_register);
-        }
-    }
-
-    void destroy() override final
-    {
-        for (const auto& factory : factories)
-        {
-            factory.get()->destroy();
-        }
-    }
-
-    ~DefaultBackendManager() override { destroy(); }
-
-private:
-    mtps::vector<mtps::uptr<IAutoRegisterFactory>> factories;
-};
+    (*backend_manager).create();
+    (*backend_manager).setFactories(ibackend_register);
+}
 
 template <typename T>
 inline bool default_init_function(T** backend_manager,
@@ -59,14 +24,19 @@ inline bool default_init_function(T** backend_manager,
 {
     if (!(*backend_manager))
     {
-        using BManager = std::decay_t<T>;
+        using BManager   = std::decay_t<T>;
         *backend_manager = new BManager;
-        (*backend_manager)->create();
-
-        (*backend_manager)->setFactories(ibackend_register);
+        default_init_function_imp(*backend_manager, ibackend_register);
         return true;
     }
     return false;
+}
+
+inline void default_finish_function_imp(IBackendManager& backend_manager,
+                                    IBackendRegister* const ibackend_register)
+{
+    backend_manager.resetFactories(ibackend_register);
+    backend_manager.destroy();
 }
 
 template <typename T>
@@ -75,8 +45,7 @@ inline bool default_finish_function(T** backend_manager,
 {
     if (*backend_manager)
     {
-        (*backend_manager)->resetFactories(ibackend_register);
-        (*backend_manager)->destroy();
+        default_finish_function_imp(**backend_manager, ibackend_register);
         delete (*backend_manager);
         (*backend_manager) = nullptr;
         return true;
@@ -84,6 +53,7 @@ inline bool default_finish_function(T** backend_manager,
 
     return false;
 }
+
 }  // namespace haf::backend::client
 
 using p_initHaf   = bool (*)(haf::backend::client::IBackendRegister* const);
