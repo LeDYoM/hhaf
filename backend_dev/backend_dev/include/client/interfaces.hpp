@@ -31,7 +31,7 @@ public:
     }
 
     void resetFactories(
-        haf::backend::IBackendRegister* const backend_register) override final
+        IBackendRegister* const backend_register) override final
     {
         for (auto const& factory : factories)
         {
@@ -86,7 +86,7 @@ inline bool default_finish_function(T** backend_manager,
 }
 }  // namespace haf::backend::client
 
-using p_initHaf   = bool (*)(haf::backend::IBackendRegister* const);
-using p_finishHaf = bool (*)(haf::backend::IBackendRegister* const);
+using p_initHaf   = bool (*)(haf::backend::client::IBackendRegister* const);
+using p_finishHaf = bool (*)(haf::backend::client::IBackendRegister* const);
 
 #endif

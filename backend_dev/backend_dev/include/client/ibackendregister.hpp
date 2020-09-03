@@ -17,6 +17,8 @@ using ITextureFactoryFactory = IFactoryOf<ITextureFactory>;
 using IShaderFactoryFactory  = IFactoryOf<IShaderFactory>;
 using IBMPFontFactoryFactory = IFactoryOf<IBMPFontFactory>;
 
+namespace client
+{
 class IBackendRegister
 {
 public:
@@ -29,6 +31,8 @@ public:
 
     virtual ~IBackendRegister() {}
 };
-}  // namespace haf::backend
+}
+
+}  // namespace haf::backend::client
 
 #endif

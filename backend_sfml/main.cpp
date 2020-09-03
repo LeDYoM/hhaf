@@ -35,13 +35,15 @@ struct BackendManager : haf::backend::client::DefaultBackendManager
 
 BackendManager* backend_manager{nullptr};
 
-EXPORT bool init_lib(haf::backend::IBackendRegister* const ibackend_register)
+EXPORT bool init_lib(
+    haf::backend::client::IBackendRegister* const ibackend_register)
 {
     return haf::backend::client::default_init_function(&backend_manager,
                                                        ibackend_register);
 }
 
-EXPORT bool finish_lib(haf::backend::IBackendRegister* const ibackend_register)
+EXPORT bool finish_lib(
+    haf::backend::client::IBackendRegister* const ibackend_register)
 {
     return haf::backend::client::default_finish_function(&backend_manager,
                                                          ibackend_register);
