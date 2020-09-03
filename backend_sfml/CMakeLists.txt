@@ -9,6 +9,9 @@ build_concrete_backend(
     ${SOURCES}
 )
 
+#TODO: That should be deleted, but it cannot, for unknown reason.
+target_link_libraries(${CURRENT_TARGET} PRIVATE backend_client)
+
 # Detect and add SFML
 add_subdirectory(sfml)
 

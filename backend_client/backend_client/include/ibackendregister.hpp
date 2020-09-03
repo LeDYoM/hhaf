@@ -3,9 +3,9 @@
 #ifndef HAF_BACKEND_BACKEND_REGISTER_INLUDE_HPP
 #define HAF_BACKEND_BACKEND_REGISTER_INLUDE_HPP
 
-#include "../iwindow.hpp"
-#include "../irendertarget.hpp"
-#include "../iresourcefactories.hpp"
+#include <backend_dev/include/iwindow.hpp>
+#include <backend_dev/include/irendertarget.hpp>
+#include <backend_dev/include/iresourcefactories.hpp>
 #include "factory.hpp"
 
 namespace haf::backend

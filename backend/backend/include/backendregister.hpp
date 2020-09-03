@@ -6,8 +6,8 @@
 #include <backend_dev/include/iwindow.hpp>
 #include <backend_dev/include/irendertarget.hpp>
 #include <backend_dev/include/iresourcefactories.hpp>
-#include <backend_dev/include/client/ibackendregister.hpp>
-#include <backend_dev/include/client/interfaces.hpp>
+#include <backend_client/include/ibackendregister.hpp>
+#include <backend_client/include/interfaces.hpp>
 
 namespace haf::backend
 {
