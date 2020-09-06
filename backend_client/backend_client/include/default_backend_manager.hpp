@@ -13,9 +13,31 @@ namespace haf::backend::client
 {
 class IBackendRegister;
 
+/**
+ * @brief This class is a default (or an example if one wants) of how to
+ * inherit from @b IBackendManager and create your new one. For normal
+ * use cases, this one can be directoly used. Only create your own if you
+ * need very special behavior.
+ */
 class BC_API DefaultBackendManager : public IBackendManager
 {
 public:
+    /**
+     * @brief Construct a new Default Backend Manager object
+     */
+    DefaultBackendManager();
+
+    /**
+     * @brief Destroy the Default Backend Manager object
+     */
+    ~DefaultBackendManager() override;
+
+    void setFactories(
+        mtps::rptr<IBackendRegister> const backend_register) override final;
+
+    void resetFactories(
+        mtps::rptr<IBackendRegister> const backend_register) override final;
+
     template <typename T>
     void createFactoryOfFactories()
     {
@@ -24,19 +46,9 @@ public:
         pushFactory(std::move(f));
     }
 
-    DefaultBackendManager();
-
-    void setFactories(
-        mtps::rptr<IBackendRegister> const backend_register) override final;
-
-    void resetFactories(
-        mtps::rptr<IBackendRegister> const backend_register) override final;
-
+private:
     void destroy() override final;
 
-    ~DefaultBackendManager() override;
-
-private:
     void pushFactory(mtps::uptr<IAutoRegisterFactory> f);
     struct DefaultBackendManagerPrivate;
     mtps::uptr<DefaultBackendManagerPrivate> priv_;

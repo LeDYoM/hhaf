@@ -30,7 +30,7 @@ namespace zoper
 class PauseSceneNode;
 class GameOverSceneNode;
 
-class GameScene final : public scene::Scene,
+class GameScene final : public haf::scene::Scene,
                         public haf::StatesControllerActuator<GameSceneStates>
 {
 public:

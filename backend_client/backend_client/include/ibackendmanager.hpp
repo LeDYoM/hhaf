@@ -8,6 +8,9 @@
 
 namespace haf::backend::client
 {
+/**
+ * @brief Abstact class to derive concrete backend managers.
+ */
 class  BC_API IBackendManager
 {
 public:
