@@ -5,9 +5,9 @@
 
 #ifdef _WIN32
 #ifdef backend_client_EXPORTS
-#define BC_API __declspec(dllexport)
+#define BC_API /* __declspec(dllexport) */
 #else
-#define BC_API __declspec(dllexport)
+#define BC_API /* __declspec(dllexport) */
 #endif
 #else
 #define BC_API __attribute__((visibility("default")))
