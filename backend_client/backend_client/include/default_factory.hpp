@@ -5,7 +5,7 @@
 
 #include <backend_dev/include/ifactory.hpp>
 
-namespace haf::backend
+namespace haf::backend::client
 {
 template <typename T, typename ConcreteObject>
 class DefaultFactoryOf : public IFactoryOf<T>
@@ -23,6 +23,6 @@ public:
 
     ~DefaultFactoryOf() override {}
 };
-}  // namespace haf::backend
+}  // namespace haf::backend::client
 
 #endif

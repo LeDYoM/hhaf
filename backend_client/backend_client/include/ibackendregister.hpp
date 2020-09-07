@@ -7,7 +7,7 @@
 #include <backend_dev/include/irendertarget.hpp>
 #include <backend_dev/include/iresourcefactories.hpp>
 #include <backend_dev/include/factory_types.hpp>
-#include "ifactory.hpp"
+#include <backend_dev/include/ifactory.hpp>
 
 namespace haf::backend::client
 {
