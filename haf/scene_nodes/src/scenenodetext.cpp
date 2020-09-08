@@ -192,7 +192,7 @@ void SceneNodeText::update()
     {
         Color const& tc{pr.get<TextColor>()};
         sceneNodes().for_each([&tc](const SceneNodeSPtr& sNode) {
-            sNode->snCast<RenderizableSceneNode>()->node()->color.set(tc);
+            sceneNodeCast<RenderizableSceneNode>(sNode)->node()->color.set(tc);
         });
     }
 

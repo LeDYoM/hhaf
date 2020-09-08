@@ -33,7 +33,7 @@ struct Visible
 using SceneNodeProperties = mtps::PropertyGroup<Visible>;
 
 /**
- * @brief Main class representing all SceneNodes from a Scene.
+ * @brief Main class representing all SceneNodes from a @b Scene.
  * This class serves as main entry point in the hierarchy of the scene.
  * To create new SceneNode types, inherit from this class.
  */
@@ -53,7 +53,7 @@ public:
     using TransformationProperties::prop;
 
     /**
-     * @brief Disabled copy constructor.
+     * @brief Disabled copy constructor
      */
     SceneNode(const SceneNode&) = delete;
 
@@ -62,7 +62,15 @@ public:
      */
     SceneNode& operator=(const SceneNode&) = delete;
 
+    /**
+     * @brief Defaulted move constructor
+     */
     SceneNode(SceneNode&&) noexcept = default;
+
+    /**
+     * @brief Defaulted move assignment
+     * @return SceneNode& The resulting scene node
+     */
     SceneNode& operator=(SceneNode&&) noexcept = default;
 
     /**
@@ -84,20 +92,14 @@ public:
      */
     virtual void onCreated() {}
 
+    /**
+     * @brief Method called every frame
+     */
     virtual void update() {}
 
-    template <typename T>
-    mtps::rptr<T> snCast() noexcept
-    {
-        return sceneNodeCast<T>(this);
-    }
-
-    template <typename T>
-    const mtps::rptr<const T> snCast() const noexcept
-    {
-        return sceneNodeCast<T>(this);
-    }
-
+    /**
+     * @brief Clear all elements in this scene node
+     */
     void clearAll();
 };
 

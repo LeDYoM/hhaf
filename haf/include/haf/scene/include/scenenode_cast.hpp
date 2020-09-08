@@ -22,6 +22,19 @@ const mtps::rptr<const T> sceneNodeCast(
     return dynamic_cast<const T* const>(scene_node);
 }
 
+template <typename T>
+mtps::sptr<T> sceneNodeCast(mtps::sptr<SceneNode> const scene_node) noexcept
+{
+    return std::dynamic_pointer_cast<T>(scene_node);
+}
+
+template <typename T>
+const mtps::sptr<const T> sceneNodeCast(
+    mtps::sptr<SceneNode const> const scene_node) noexcept
+{
+    return std::dynamic_pointer_cast<const T>(scene_node);
+}
+
 }  // namespace haf::scene
 
 #endif

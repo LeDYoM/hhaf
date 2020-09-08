@@ -31,8 +31,9 @@ void BoardGroup::configure(vector2dst size,
 
     Rectf32 textBox{dataWrapper<SceneMetricsView>()->currentView()};
     prop<Position>() = textBox.leftTop();
-    snCast<TableNode<BoardTileSceneNode>>()->prop<SceneNodeSize>().set(
-        textBox.size());
+    sceneNodeCast<TableNode<BoardTileSceneNode>>(this)
+        ->prop<SceneNodeSize>()
+        .set(textBox.size());
 
     Rectf32 const bBox{textBox};
     Rectf32 tileBox({}, cellSize());
