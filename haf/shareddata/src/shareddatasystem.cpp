@@ -8,7 +8,7 @@ namespace haf::sys
 {
 SharedDataSystem::~SharedDataSystem()
 {
-    makeEmpty();
+//    makeEmpty();
 }
 
 bool SharedDataSystem::store(uptr<shdata::IShareable> data) noexcept

@@ -68,9 +68,9 @@ void ZoperProgramController::onInit(
 void ZoperProgramController::onFinish(
     haf::sys::DataWrapperCreator& data_wrapper_creator)
 {
-    const bool check =
-        data_wrapper_creator.dataWrapper<shdata::SharedData>()->makeEmpty();
-    LogAsserter::log_assert(check, "SharedData is empty!");
+//    const bool check =
+//        data_wrapper_creator.dataWrapper<shdata::SharedData>()->makeEmpty();
+//    LogAsserter::log_assert(check, "SharedData is empty!");
 }
 
 }  // namespace zoper

@@ -22,7 +22,8 @@ build_lib_component(HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
 configure_file(
   "${PROJECT_SOURCE_DIR}/${CURRENT_TARGET}/include/host_version.hpp.in"
   "${PROJECT_SOURCE_DIR}/${CURRENT_TARGET}/include/host_version.hpp" @ONLY)
-target_link_libraries(${CURRENT_TARGET} PRIVATE hosted_app)
+
+  target_link_libraries(${CURRENT_TARGET} PRIVATE hosted_app)
 target_link_libraries(${CURRENT_TARGET} PRIVATE memmanager)
 target_link_libraries(${CURRENT_TARGET} PRIVATE hlog)
 target_link_libraries(${CURRENT_TARGET} PRIVATE haf_instancer)

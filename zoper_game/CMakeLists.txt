@@ -9,7 +9,7 @@ project(
 file (GLOB_RECURSE HEADERS "*.hpp")
 file (GLOB_RECURSE SOURCES "*.cpp")
 
-set (CURRENT_TARGET  ${PROJECT_NAME})
+set (CURRENT_TARGET ${PROJECT_NAME})
 
 include(client_functions)
 
