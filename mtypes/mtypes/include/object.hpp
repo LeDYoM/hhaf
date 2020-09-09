@@ -174,6 +174,54 @@ public:
             }
         }
 
+        template <typename T>
+        [[nodiscard]] bool as(T& value) const
+        {
+            if constexpr (std::is_enum_v<T>)
+            {
+                if constexpr (sizeof(T) == sizeof(char))
+                {
+                    auto [result, nval] = (*m_value).convert<s16>();
+                    if (result)
+                    {
+                        value = std::move(nval);
+                        return true;
+                    }
+                    return false;
+                }
+                else
+                {
+                    auto [result, nval] = (*m_value).convert<std::underlying_type_t<T>>();
+                    if (result)
+                    {
+                        value = std::move(nval);
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            else if constexpr (std::is_same_v<T, str>)
+            {
+                value = (*m_value);
+                return true;
+            }
+            else if constexpr (std::is_same_v<T, Object>)
+            {
+                value = (*m_object);
+                return true;
+            }
+            else
+            {
+                auto [result, nval] = (*m_value).convert<T>();
+                if (result)
+                {
+                    value = std::move(nval);
+                    return true;
+                }
+                return false;
+            }
+        }
+
     private:
         const Object* m_object{nullptr};
         const str* m_value{nullptr};

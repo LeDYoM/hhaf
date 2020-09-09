@@ -15,10 +15,10 @@
 
 namespace zoper
 {
-enum class GameMode :  mtps::u8
+enum class GameMode : mtps::u8
 {
     Token = 0,
-    Time = 1,
+    Time  = 1,
 };
 
 struct GameSharedData : public haf::shdata::IShareable
@@ -39,11 +39,33 @@ struct GameSharedData : public haf::shdata::IShareable
         return temp;
     }
 
-    ~GameSharedData() override {
-        int a = 0;
+    static constexpr char StartLevel[] = "StartLevel";
+    static constexpr char GameModeGame[] = "GameMode";
+    static constexpr char EndLevel[] = "EndLevel";
+    static constexpr char GameScore[] = "GameScore";
+
+    bool serialize(mtps::Object& obj) const override 
+    {
+        bool result{true};
+        result &= obj.set(StartLevel, startLevel);
+        result &= obj.set(GameModeGame, gameMode);
+
+        result &= obj.set(EndLevel, endLevel);
+        result &= obj.set(GameScore, score);
+
+        return result;
+
     }
+
+    bool deserialize(mtps::Object const& obj) override
+    {
+        startLevel = obj.getValue(StartLevel).as<decltype(startLevel)>();
+        return true;
+    }
+
+    ~GameSharedData() override { int a = 0; }
 };
 
-} // namespace zoper
+}  // namespace zoper
 
 #endif

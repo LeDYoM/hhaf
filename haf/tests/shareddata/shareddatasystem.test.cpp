@@ -11,7 +11,7 @@ using namespace mtps;
 using namespace haf;
 using namespace haf::sys;
 using namespace haf::shdata;
-
+/*
 TEST_CASE("SharedDataSystem construction", "[haf][shareddatasystem]")
 {
     auto test_shared_data = makeTestSystem<TestSharedDataSystem>();
@@ -51,3 +51,4 @@ TEST_CASE("SharedDataSystem storing and retrieving", "[haf][shareddatasystem]")
     CHECK(test_data2 == nullptr);
     CHECK(sh_system.view() != nullptr);
 }
+*/
