@@ -184,7 +184,7 @@ public:
                     auto [result, nval] = (*m_value).convert<s16>();
                     if (result)
                     {
-                        value = std::move(nval);
+                        value = static_cast<T>(nval);
                         return true;
                     }
                     return false;
@@ -194,7 +194,7 @@ public:
                     auto [result, nval] = (*m_value).convert<std::underlying_type_t<T>>();
                     if (result)
                     {
-                        value = std::move(nval);
+                        value = static_cast<T>(nval);
                         return true;
                     }
                     return false;
@@ -215,7 +215,7 @@ public:
                 auto [result, nval] = (*m_value).convert<T>();
                 if (result)
                 {
-                    value = std::move(nval);
+                    std::swap(value, nval);
                     return true;
                 }
                 return false;

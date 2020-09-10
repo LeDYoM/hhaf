@@ -333,6 +333,21 @@ TEST_CASE("Object with vector", "[Object][vector]")
             CHECK(obj[2U].as<s32>() == v[2U]);
             CHECK(obj[3U].as<s32>() == v[3U]);
             CHECK_FALSE(obj[4U].isValid());
+
+            SECTION("Simple2")
+            {
+                s32 value{0};
+
+                CHECK(obj[0U].as(value));
+                CHECK(value == v[0U]);
+                CHECK(obj[1U].as(value));
+                CHECK(value == v[1U]);
+                CHECK(obj[2U].as(value));
+                CHECK(value == v[2U]);
+                CHECK(obj[3U].as(value));
+                CHECK(value == v[3U]);
+                CHECK_FALSE(obj[4U].isValid());
+            }
         }
 
         SECTION("Direct")
@@ -344,6 +359,21 @@ TEST_CASE("Object with vector", "[Object][vector]")
             CHECK(obj[2U].as<s32>() == v[2U]);
             CHECK(obj[3U].as<s32>() == v[3U]);
             CHECK_FALSE(obj[4U].isValid());
+
+            SECTION("Direct with parameter")
+            {
+                s32 value{0};
+
+                CHECK(obj[0U].as(value));
+                CHECK(value == v[0U]);
+                CHECK(obj[1U].as(value));
+                CHECK(value == v[1U]);
+                CHECK(obj[2U].as(value));
+                CHECK(value == v[2U]);
+                CHECK(obj[3U].as(value));
+                CHECK(value == v[3U]);
+                CHECK_FALSE(obj[4U].isValid());
+            }
         }
 
         SECTION("More direct with rv vector and float")
@@ -351,6 +381,17 @@ TEST_CASE("Object with vector", "[Object][vector]")
             obj << vector<f32>{2.3F, 1.1F};
             CHECK(obj[0U].as<f32>() == 2.3F);
             CHECK(obj[1U].as<f32>() == 1.1F);
+            CHECK_FALSE(obj[2U].isValid());
+
+            SECTION("More direct with rv vector and float with parameter")
+            {
+                float value{};
+                CHECK(obj[0U].as(value));
+                CHECK(value == 2.3F);
+                CHECK(obj[1U].as(value));
+                CHECK(value == 1.1F);
+                CHECK_FALSE(obj[2U].isValid());
+            }
         }
     }
 
@@ -411,6 +452,21 @@ TEST_CASE("Object with array", "[Object][vector]")
             CHECK(obj[2U].as<s32>() == v[2U]);
             CHECK(obj[3U].as<s32>() == v[3U]);
             CHECK_FALSE(obj[4U].isValid());
+
+            SECTION("Direct with parameter")
+            {
+                s32 value{0};
+
+                CHECK(obj[0U].as(value));
+                CHECK(value == v[0U]);
+                CHECK(obj[1U].as(value));
+                CHECK(value == v[1U]);
+                CHECK(obj[2U].as(value));
+                CHECK(value == v[2U]);
+                CHECK(obj[3U].as(value));
+                CHECK(value == v[3U]);
+                CHECK_FALSE(obj[4U].isValid());
+            }
         }
 
         SECTION("More direct with rv array and float")
@@ -418,6 +474,16 @@ TEST_CASE("Object with array", "[Object][vector]")
             obj << array<f32, 2U>{2.3F, 1.1F};
             CHECK(obj[0U].as<f32>() == 2.3F);
             CHECK(obj[1U].as<f32>() == 1.1F);
+
+            SECTION("More direct with rv array and float with parameter")
+            {
+                float value{};
+                CHECK(obj[0U].as(value));
+                CHECK(value == 2.3F);
+                CHECK(obj[1U].as(value));
+                CHECK(value == 1.1F);
+                CHECK_FALSE(obj[2U].isValid());
+            }
         }
     }
 
@@ -435,6 +501,22 @@ TEST_CASE("Object with array", "[Object][vector]")
             CHECK(obj["test_property"][3U].as<s32>() == v[3U]);
             CHECK_FALSE(obj["test_property"][4U].isValid());
             CHECK_FALSE(obj[0U].isValid());
+
+            SECTION("Direct with parameter")
+            {
+                s32 value{0};
+
+                CHECK(obj["test_property"][0U].as(value));
+                CHECK(value == v[0U]);
+                CHECK(obj["test_property"][1U].as(value));
+                CHECK(value == v[1U]);
+                CHECK(obj["test_property"][2U].as(value));
+                CHECK(value == v[2U]);
+                CHECK(obj["test_property"][3U].as(value));
+                CHECK(value == v[3U]);
+                CHECK_FALSE(obj["test_property"][4U].isValid());
+                CHECK_FALSE(obj[0U].isValid());
+            }
         }
 
         SECTION("More direct with rv vector and float")
@@ -510,6 +592,20 @@ TEST_CASE("Object with vector of custom types", "[Object][vector]")
     obj >> output;
 
     CHECK(vec == output);
+
+    SECTION("As with parameter and custom types")
+    {
+        int a{};
+        short b{};
+        long c{};
+
+        CHECK(obj[0U]["a"].as(a));
+        CHECK(a == vec[0U].a);
+        CHECK(obj[0U]["b"].as(b));
+        CHECK(b == vec[0U].b);
+        CHECK(obj[0U]["c"].as(c));
+        CHECK(c == vec[0U].c);
+    }
 }
 
 namespace TestVectorWithCustomTypesEnumsAndFloats
@@ -584,24 +680,63 @@ TEST_CASE("Object with vector of custom types, enums and floats", "[Object][vect
     Object obj;
     obj << vec;
 
-    CHECK(obj[0U]["a"].as<f32>() == vec[0U].a);
-    CHECK(obj[0U]["b"].as<f64>() == vec[0U].b);
-    CHECK(obj[0U]["small_enum"].as<MySmallEnum>() == vec[0U].small_enum);
-    CHECK(obj[0U]["default_enum"].as<MyDefaultEnum>() == vec[0U].default_enum);
-    CHECK(obj[0U]["big_enum"].as<MyBigEnum>() == vec[0U].big_enum);
-    CHECK(obj[0U].getObject().empty_objects());
-    CHECK(obj[0U].getObject().size_values() == 5U);
+    SECTION("as<>() without parameter")
+    {
+        CHECK(obj[0U]["a"].as<f32>() == vec[0U].a);
+        CHECK(obj[0U]["b"].as<f64>() == vec[0U].b);
+        CHECK(obj[0U]["small_enum"].as<MySmallEnum>() == vec[0U].small_enum);
+        CHECK(obj[0U]["default_enum"].as<MyDefaultEnum>() == vec[0U].default_enum);
+        CHECK(obj[0U]["big_enum"].as<MyBigEnum>() == vec[0U].big_enum);
+        CHECK(obj[0U].getObject().empty_objects());
+        CHECK(obj[0U].getObject().size_values() == 5U);
 
-    CHECK(obj[1U]["a"].as<f32>() == vec[1U].a);
-    CHECK(obj[1U]["b"].as<f64>() == vec[1U].b);
-    CHECK(obj[1U]["small_enum"].as<MySmallEnum>() == vec[1U].small_enum);
-    CHECK(obj[1U]["default_enum"].as<MyDefaultEnum>() == vec[1U].default_enum);
-    CHECK(obj[1U]["big_enum"].as<MyBigEnum>() == vec[1U].big_enum);
-    CHECK(obj[1U].getObject().empty_objects());
-    CHECK(obj[1U].getObject().size_values() == 5U);
+        CHECK(obj[1U]["a"].as<f32>() == vec[1U].a);
+        CHECK(obj[1U]["b"].as<f64>() == vec[1U].b);
+        CHECK(obj[1U]["small_enum"].as<MySmallEnum>() == vec[1U].small_enum);
+        CHECK(obj[1U]["default_enum"].as<MyDefaultEnum>() == vec[1U].default_enum);
+        CHECK(obj[1U]["big_enum"].as<MyBigEnum>() == vec[1U].big_enum);
+        CHECK(obj[1U].getObject().empty_objects());
+        CHECK(obj[1U].getObject().size_values() == 5U);
 
-    CHECK(obj.size_objects() == 2U);
-    CHECK(obj.empty_values());
+        CHECK(obj.size_objects() == 2U);
+        CHECK(obj.empty_values());
+    }
+
+    SECTION("as<>(T&) with parameters")
+    {
+        f32 a{};
+        f64 b{};
+        MySmallEnum my_small_enum;
+        MyDefaultEnum my_default_enum;
+        MyBigEnum my_big_enum;
+    
+        CHECK(obj[0U]["a"].as(a));
+        CHECK(a == vec[0U].a);
+        CHECK(obj[0U]["b"].as(b));
+        CHECK(b == vec[0U].b);
+        CHECK(obj[0U]["small_enum"].as(my_small_enum));
+        CHECK(my_small_enum == vec[0U].small_enum);
+        CHECK(obj[0U]["default_enum"].as(my_default_enum));
+        CHECK(my_default_enum == vec[0U].default_enum);
+        CHECK(obj[0U]["big_enum"].as(my_big_enum));
+        CHECK(my_big_enum == vec[0U].big_enum);
+
+        CHECK(obj[0U].getObject().empty_objects());
+        CHECK(obj[0U].getObject().size_values() == 5U);
+
+        CHECK(obj[1U]["a"].as(a));
+        CHECK(a == vec[1U].a);
+        CHECK(obj[1U]["b"].as(b));
+        CHECK(b == vec[1U].b);
+        CHECK(obj[1U]["small_enum"].as(my_small_enum));
+        CHECK(my_small_enum == vec[1U].small_enum);
+        CHECK(obj[1U]["default_enum"].as(my_default_enum));
+        CHECK(my_default_enum == vec[1U].default_enum);
+        CHECK(obj[1U]["big_enum"].as(my_big_enum));
+        CHECK(my_big_enum == vec[1U].big_enum);
+        CHECK(obj[1U].getObject().empty_objects());
+        CHECK(obj[1U].getObject().size_values() == 5U);
+    }
 
     vector<Simple> output;
     obj >> output;

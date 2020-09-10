@@ -221,7 +221,7 @@ public:
     }
 
     template <typename T>
-    [[nodiscard]] pair<T, bool> convert() const
+    [[nodiscard]] pair<bool, T> convert() const
     {
         T value;
         return {convert(value), value};

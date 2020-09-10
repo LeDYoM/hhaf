@@ -59,7 +59,13 @@ struct GameSharedData : public haf::shdata::IShareable
 
     bool deserialize(mtps::Object const& obj) override
     {
-        startLevel = obj.getValue(StartLevel).as<decltype(startLevel)>();
+        bool result = true;
+        result &= obj.getValue(StartLevel).as(startLevel);
+        result &= obj.getValue(GameModeGame).as(gameMode);
+
+        result &= obj.getValue(EndLevel).as(endLevel);
+        result &= obj.getValue(GameScore).as(score);
+
         return true;
     }
 
