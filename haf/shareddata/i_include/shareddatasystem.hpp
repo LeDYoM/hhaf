@@ -34,6 +34,7 @@ public:
      * @return false Cannot store the object.
      */
     bool store(mtps::uptr<shdata::IShareable> data) noexcept;
+    bool store(mtps::str const& address, mtps::uptr<shdata::IShareable> data);
 
     /**
      * @brief Retrieve the stored object in the SharedData system.
@@ -63,6 +64,7 @@ public:
 
 private:
     mtps::uptr<shdata::IShareable> data_;
+    mtps::Object data_object_;
 };
 
 }  // namespace haf::sys

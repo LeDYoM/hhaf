@@ -69,7 +69,7 @@ struct GameSharedData : public haf::shdata::IShareable
         return true;
     }
 
-    ~GameSharedData() override { int a = 0; }
+    ~GameSharedData() override = default;
 };
 
 }  // namespace zoper

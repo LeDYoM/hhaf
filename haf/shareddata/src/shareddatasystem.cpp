@@ -8,7 +8,7 @@ namespace haf::sys
 {
 SharedDataSystem::~SharedDataSystem()
 {
-//    makeEmpty();
+    //    makeEmpty();
 }
 
 bool SharedDataSystem::store(uptr<shdata::IShareable> data) noexcept
@@ -71,6 +71,17 @@ mtps::uptr<shdata::IShareable> const& SharedDataSystem::view() const noexcept
 {
     LogAsserter::log_assert(data_ != nullptr, "data_ is nullptr");
     return data_;
+}
+
+bool SharedDataSystem::store(mtps::str const& address,
+                             mtps::uptr<shdata::IShareable> data)
+{
+    Object data_object;
+    bool correct{data->serialize(data_object)};
+    if (data_object_[address].isValid())
+    {
+        Object sub_object = data_object_[address].getObject();
+    }
 }
 
 }  // namespace haf::sys
