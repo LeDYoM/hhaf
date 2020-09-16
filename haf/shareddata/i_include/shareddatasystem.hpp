@@ -34,7 +34,7 @@ public:
      * @return false Cannot store the object.
      */
     bool store(mtps::uptr<shdata::IShareable> data) noexcept;
-    bool store(mtps::str const& address, mtps::uptr<shdata::IShareable> data);
+    bool store(mtps::str const& address, mtps::uptr<shdata::IShareable> const& data);
 
     /**
      * @brief Retrieve the stored object in the SharedData system.
@@ -43,6 +43,8 @@ public:
      * It will be nullptr if no object was stored.
      */
     [[nodiscard]] mtps::uptr<shdata::IShareable> retrieve() noexcept;
+    [[nodiscard]] bool retrieve(
+        mtps::str const& address, mtps::uptr<shdata::IShareable>& data);
 
     /**
      * @brief Ask if the system has an object stored

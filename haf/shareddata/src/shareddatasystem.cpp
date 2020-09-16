@@ -73,15 +73,24 @@ mtps::uptr<shdata::IShareable> const& SharedDataSystem::view() const noexcept
     return data_;
 }
 
-bool SharedDataSystem::store(mtps::str const& address,
-                             mtps::uptr<shdata::IShareable> data)
+bool SharedDataSystem::store(mtps::str const&, uptr<shdata::IShareable> const& data)
 {
-    Object data_object;
-    bool correct{data->serialize(data_object)};
-    if (data_object_[address].isValid())
+    Object temp;
+    bool const result{data->deserialize(temp)};
+    if (result)
     {
-        Object sub_object = data_object_[address].getObject();
+        data_object_ = temp;
     }
+
+    return result;
+}
+
+bool SharedDataSystem::retrieve(str const& address,
+                                uptr<shdata::IShareable>& data)
+{
+    LogAsserter::log_assert(data != nullptr,
+                            "You should pass an allocated pointer");
+    return data->deserialize(data_object_);
 }
 
 }  // namespace haf::sys
