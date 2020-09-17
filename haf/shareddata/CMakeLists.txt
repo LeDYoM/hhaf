@@ -2,11 +2,12 @@ project (shareddata CXX)
 cmake_minimum_required(VERSION 3.12)
 
 set (_SOURCES 
-    "i_include/shareddatasystem.hpp"
-    "src/shareddatasystem.cpp"
-    "src/shareddata_updater.cpp"
-    "src/shareddata.cpp"
-    "src/shareddataview.cpp"
+    i_include/shareddatasystem.hpp
+    src/address.cpp
+    src/shareddatasystem.cpp
+    src/shareddata_updater.cpp
+    src/shareddata.cpp
+    src/shareddataview.cpp
 )
 
 set (CURRENT_TARGET  ${PROJECT_NAME})
