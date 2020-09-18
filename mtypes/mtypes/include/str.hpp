@@ -7,7 +7,6 @@
 #include "types.hpp"
 
 #include <sstream>
-#include <string>
 #include <type_traits>
 #include <algorithm>
 #include <cctype>
@@ -98,13 +97,25 @@ public:
     vector<str> split(const char_type separator) const
     {
         vector<str> result;
-        std::stringstream ss((*this).c_str());
-        std::string tok;
 
-        while (std::getline(ss, tok, separator))
+        str tok;
+        auto _cend(cend());
+
+        for (auto _cbegin(cbegin()); _cbegin != _cend; ++_cbegin)
         {
-            result.push_back(str(tok.c_str()));
+            str::char_type const ch = *_cbegin;
+            if (ch == separator)
+            {
+                result.emplace_back(std::move(tok));
+                tok = str();
+            }
+            else
+            {
+                tok.append_char(*_cbegin);
+            }
         }
+
+        result.emplace_back(std::move(tok));
         return result;
     }
 

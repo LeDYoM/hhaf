@@ -131,18 +131,19 @@ TEST_CASE("str", "[str]")
 
     SECTION("str split", "[str]")
     {
-        str foo("hello. This. To Split string. Lets see");
+        str foo("hello. This. To Split string. Lets see.");
         auto strSplitted = foo.split('.');
-        CHECK(strSplitted.size() == 4);
-        CHECK(strSplitted[0] == "hello");
-        CHECK(strSplitted[1] == " This");
-        CHECK(strSplitted[2] == " To Split string");
-        CHECK(strSplitted[3] == " Lets see");
+        CHECK(strSplitted.size() == 5);
+        CHECK(strSplitted[0U] == "hello");
+        CHECK(strSplitted[1U] == " This");
+        CHECK(strSplitted[2U] == " To Split string");
+        CHECK(strSplitted[3U] == " Lets see");
+        CHECK(strSplitted[4U] == "");
 
         auto moreSplitted(strSplitted[2].substr(4).split('s'));
         CHECK(moreSplitted.size() == 2);
-        CHECK(moreSplitted[0] == "Split ");
-        CHECK(moreSplitted[1] == "tring");
+        CHECK(moreSplitted[0U] == "Split ");
+        CHECK(moreSplitted[1U] == "tring");
     }
 
     SECTION("trims")

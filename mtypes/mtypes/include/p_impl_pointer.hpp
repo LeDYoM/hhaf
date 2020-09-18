@@ -19,7 +19,27 @@ public:
     constexpr PImplPointer(PImplPointer &&) noexcept = default;
     constexpr PImplPointer& operator=(PImplPointer&&) noexcept = default;
 
-    ~PImplPointer()
+    constexpr T* operator->() noexcept
+    {
+        return pointer_;
+    }
+
+    constexpr T const * operator->() const noexcept
+    {
+        return pointer_;
+    }
+
+    constexpr T& operator*() noexcept
+    {
+        return *pointer_;
+    }
+
+    constexpr T const & operator*() const noexcept
+    {
+        return *pointer_;
+    }
+
+    ~PImplPointer() noexcept
     {
         if (pointer_ != nullptr)
         {

@@ -17,6 +17,7 @@ set(SOURCE_TESTS
     scene_components/componentcontainer
     scene_components/statescontroller
 
+    shareddata/address
     shareddata/shareddata
     shareddata/shareddatasystem
     shareddata/shareddataview
