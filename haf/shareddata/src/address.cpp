@@ -69,7 +69,8 @@ Address::reference Address::operator[](mtps::size_type const index) noexcept
     return private_->address_parts_[index];
 }
 
-Address::const_reference Address::operator[](mtps::size_type const index) const noexcept
+Address::const_reference Address::operator[](
+    mtps::size_type const index) const noexcept
 {
     return private_->address_parts_[index];
 }
@@ -90,6 +91,17 @@ str Address::last() const
         return private_->address_parts_[private_->address_parts_.size() - 1U];
     }
     return "";
+}
+
+pair<bool, mtps::Object> applyAddress(Address const& address,
+                                      Object const& object)
+{
+    Object result;
+
+    for (auto const it = address.cbegin(); it != address.cend(); ++it)
+    {
+        
+    }
 }
 
 }  // namespace haf::shdata

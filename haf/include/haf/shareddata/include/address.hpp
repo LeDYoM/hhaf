@@ -4,7 +4,9 @@
 #define HAF_SHAREDDATA_ADRESS_INCLUDE_HPP
 
 #include <mtypes/include/p_impl_pointer.hpp>
+#include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
+#include <mtypes/include/object.hpp>
 #include <haf/haf_export.hpp>
 
 namespace haf::shdata
@@ -87,6 +89,10 @@ private:
     struct AddressPrivate;
     mtps::PImplPointer<AddressPrivate> private_;
 };
+
+mtps::pair<bool, mtps::Object> applyAddress(Address const& address,
+                                      mtps::Object const& object);
+
 }  // namespace haf::shdata
 
 #endif

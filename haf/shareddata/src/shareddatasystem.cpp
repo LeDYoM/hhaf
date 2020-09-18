@@ -73,7 +73,7 @@ mtps::uptr<shdata::IShareable> const& SharedDataSystem::view() const noexcept
     return data_;
 }
 
-bool SharedDataSystem::store(mtps::str const&, uptr<shdata::IShareable> const& data)
+bool SharedDataSystem::store(shdata::Address const &address , uptr<shdata::IShareable> const& data)
 {
     Object temp;
     bool const result{data->deserialize(temp)};

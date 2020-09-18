@@ -5,6 +5,7 @@
 
 #include <mtypes/include/types.hpp>
 #include <system/i_include/systembase.hpp>
+#include <haf/shareddata/include/address.hpp>
 #include <haf/shareddata/include/ishareable.hpp>
 
 namespace haf::sys
@@ -34,7 +35,7 @@ public:
      * @return false Cannot store the object.
      */
     bool store(mtps::uptr<shdata::IShareable> data) noexcept;
-    bool store(mtps::str const& address, mtps::uptr<shdata::IShareable> const& data);
+    bool store(shdata::Address const& address, mtps::uptr<shdata::IShareable> const& data);
 
     /**
      * @brief Retrieve the stored object in the SharedData system.
@@ -44,7 +45,7 @@ public:
      */
     [[nodiscard]] mtps::uptr<shdata::IShareable> retrieve() noexcept;
     [[nodiscard]] bool retrieve(
-        mtps::str const& address, mtps::uptr<shdata::IShareable>& data);
+        shdata::Address const& address, mtps::uptr<shdata::IShareable>& data);
 
     /**
      * @brief Ask if the system has an object stored
