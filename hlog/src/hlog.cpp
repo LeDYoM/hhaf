@@ -9,6 +9,14 @@
 
 #include <mtypes/include/str.hpp>
 
+namespace logger
+{
+    template class Log<true, mtps::str, MixinCommiter<haf::ThreadCommiter>>;
+    template class LogDisplayer<haf::LogClass, SeverityType>;
+    template class LogAsserter<haf::DisplayLog>;
+    template class LogInitializer<haf::LogClass>;
+}
+
 namespace haf
 {
 
