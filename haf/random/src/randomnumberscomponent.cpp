@@ -4,6 +4,8 @@
 #include <hlog/include/hlog.hpp>
 #include <system/i_include/get_system.hpp>
 
+#include <limits>
+
 using namespace mtps;
 
 namespace haf::rnd
@@ -61,7 +63,7 @@ u32 RandomNumbersComponent::getUInt(const size_type max,
     const size_type generated(next % (max - min));
     DisplayLog::verbose("\tGot ", generated);
     DisplayLog::info("\tReturning ", min + generated);
-    return min + generated;
+    return (min + generated) % std::numeric_limits<u32>::max();
 }
 
 void RandomNumbersComponent::onAttached()

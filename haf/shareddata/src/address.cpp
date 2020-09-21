@@ -1,6 +1,8 @@
 #include "address.hpp"
 #include <mtypes/include/vector.hpp>
 
+#include <utility>
+
 using namespace mtps;
 
 namespace haf::shdata
@@ -31,6 +33,8 @@ Address::~Address() = default;
 
 Address& Address::operator=(Address const& address)
 {
+    Address tmp(address);
+    std::swap(*this, tmp);
     return *this;
 }
 
@@ -98,10 +102,12 @@ pair<bool, mtps::Object> applyAddress(Address const& address,
 {
     Object result;
 
-    for (auto const it = address.cbegin(); it != address.cend(); ++it)
+    for (auto it = address.cbegin(); it != address.cend(); ++it)
     {
         
     }
+
+    return {true, Object{}};
 }
 
 }  // namespace haf::shdata

@@ -39,7 +39,7 @@ public:
 
     /**
      * @brief Retrieve the stored object in the SharedData system.
-     *
+     *+
      * @return mtps::uptr<shdata::IShareable> Object stored in the system.
      * It will be nullptr if no object was stored.
      */
