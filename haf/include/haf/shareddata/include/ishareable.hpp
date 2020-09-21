@@ -12,7 +12,7 @@ class IShareable
 public:
     virtual ~IShareable() {}
     virtual bool serialize(mtps::Object&) const = 0;
-    virtual bool deserialize(mtps::Object const&) const = 0;  
+    virtual bool deserialize(mtps::Object const&) = 0;  
 };
 
 }  // namespace haf::shdata
