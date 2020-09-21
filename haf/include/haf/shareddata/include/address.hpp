@@ -68,7 +68,6 @@ public:
     Address& operator=(Address&& address) noexcept = default;
 
     mtps::size_type size() const noexcept;
-    bool empty() const noexcept;
 
     iterator begin() noexcept;
     iterator end() noexcept;
@@ -85,13 +84,47 @@ public:
     mtps::str first() const;
     mtps::str last() const;
 
+    /**
+     * @brief Check if an address is relative (it does not start with separator)
+     * 
+     * @return true If the address is not empty AND starts with a separator
+     * @return false Otherwise
+     */
+    bool isAbsolute() const noexcept;
+
+    /**
+     * @brief Check if an address is final (it ends with separator)
+     * 
+     * @return true If the address is not empty AND ends with a separator
+     * @return false Otherwise
+     */
+    bool isFinal() const noexcept;
+
+    /**
+     * @brief Opposite of isAbsolute()
+     * @see isAbsolute
+     * 
+     * @return true  not absolute
+     * @return false absolute
+     */
+    inline bool isRelative() const noexcept { return !isAbsolute(); }
+
+    /**
+     * @brief Opposite of isFinal()
+     * @see isFinal
+     * 
+     * @return true not relative
+     * @return false relative
+     */
+    inline bool isNotFinal() const noexcept { return !isFinal(); }
+
 private:
     struct AddressPrivate;
     mtps::PImplPointer<AddressPrivate> private_;
 };
 
 mtps::pair<bool, mtps::Object> applyAddress(Address const& address,
-                                      mtps::Object const& object);
+                                            mtps::Object const& object);
 
 }  // namespace haf::shdata
 

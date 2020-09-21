@@ -39,11 +39,6 @@ size_type Address::size() const noexcept
     return private_->address_parts_.size();
 }
 
-bool Address::empty() const noexcept
-{
-    return private_->address_parts_.empty();
-}
-
 Address::iterator Address::begin() noexcept
 {
     return private_->address_parts_.begin();
@@ -77,31 +72,49 @@ Address::const_reference Address::operator[](
 
 str Address::first() const
 {
-    if (!private_->address_parts_.empty())
-    {
-        return private_->address_parts_[0U];
-    }
-    return "";
+    return private_->address_parts_[0U];
 }
 
 str Address::last() const
 {
-    if (!private_->address_parts_.empty())
-    {
-        return private_->address_parts_[private_->address_parts_.size() - 1U];
-    }
-    return "";
+    return private_->address_parts_[private_->address_parts_.size() - 1U];
 }
 
-pair<bool, mtps::Object> applyAddress(Address const& address,
-                                      Object const& object)
+bool Address::isAbsolute() const noexcept
 {
-    Object result;
+    return first().empty();
+}
 
-    for (auto const it = address.cbegin(); it != address.cend(); ++it)
+bool Address::isFinal() const noexcept
+{
+    return last().empty();
+}
+
+pair<bool, mtps::Object> objectFromAddress(Address const& address,
+                                           Object const& object)
+{
+    if (address.isFinal())
     {
-        
+        Object const* result{nullptr};
+        size_type size{address.size()};
+
+        for (size_type index{0U}; index < (size - 1U); ++index)
+        {
+            Object::Value temp = result->getObject(address[index]);
+            if (temp.isObject())
+            {
+                result = &(temp.getObject());
+            }
+            else
+            {
+                return {false, {}};
+            }
+        }
+
+        return {true, *result};
     }
+
+    return {false, {}};
 }
 
 }  // namespace haf::shdata

@@ -7,13 +7,12 @@ using namespace mtps;
 using namespace haf;
 using namespace haf::shdata;
 
-TEST_CASE("Address construction", "[haf][shdata][Address]")
+TEST_CASE("Address", "[haf][shdata][Address]")
 {
     SECTION("Normal")
     {
         Address address("abc/def");
         CHECK(address.size() == 2U);
-        CHECK_FALSE(address.empty());
         CHECK(address[0U] == "abc");
         CHECK(address[1U] == "def");
         CHECK(address.first() == "abc");
@@ -24,7 +23,6 @@ TEST_CASE("Address construction", "[haf][shdata][Address]")
     {
         Address address("/resource/temp");
         CHECK(address.size() == 3U);
-        CHECK_FALSE(address.empty());
         CHECK(address[0U] == "");
         CHECK(address[1U] == "resource");
         CHECK(address[2U] == "temp");
@@ -36,7 +34,6 @@ TEST_CASE("Address construction", "[haf][shdata][Address]")
     {
         Address address("qwe/asd/");
         CHECK(address.size() == 3U);
-        CHECK_FALSE(address.empty());
         CHECK(address[0U] == "qwe");
         CHECK(address[1U] == "asd");
         CHECK(address[2U] == "");
@@ -48,7 +45,6 @@ TEST_CASE("Address construction", "[haf][shdata][Address]")
     {
         Address address("/qwe/asd/");
         CHECK(address.size() == 4U);
-        CHECK_FALSE(address.empty());
         CHECK(address[0U] == "");
         CHECK(address[1U] == "qwe");
         CHECK(address[2U] == "asd");
@@ -61,7 +57,6 @@ TEST_CASE("Address construction", "[haf][shdata][Address]")
     {
         Address address("/qwe//asd/");
         CHECK(address.size() == 5U);
-        CHECK_FALSE(address.empty());
         CHECK(address[0U] == "");
         CHECK(address[1U] == "qwe");
         CHECK(address[2U] == "");
@@ -69,5 +64,61 @@ TEST_CASE("Address construction", "[haf][shdata][Address]")
         CHECK(address[4U] == "");
         CHECK(address.first() == "");
         CHECK(address.last() == "");
+    }
+
+    SECTION("Relative, final and opposites")
+    {
+        {
+            Address address("");
+            CHECK(address.size() == 1U);
+            CHECK(address.isAbsolute());
+            CHECK_FALSE(address.isRelative());
+            CHECK(address.isFinal());
+            CHECK_FALSE(address.isNotFinal());
+        }
+        {
+            Address address("/");
+            CHECK(address.size() == 2U);
+            CHECK(address.isAbsolute());
+            CHECK_FALSE(address.isRelative());
+            CHECK(address.isFinal());
+            CHECK_FALSE(address.isNotFinal());
+        }
+
+        {
+            Address address("abc");
+            CHECK(address.size() == 1U);
+            CHECK_FALSE(address.isAbsolute());
+            CHECK(address.isRelative());
+            CHECK_FALSE(address.isFinal());
+            CHECK(address.isNotFinal());
+        }
+
+        {
+            Address address("/abc/def/");
+            CHECK(address.size() == 4U);
+            CHECK(address.isAbsolute());
+            CHECK_FALSE(address.isRelative());
+            CHECK(address.isFinal());
+            CHECK_FALSE(address.isNotFinal());
+        }
+
+        {
+            Address address("/abc/def");
+            CHECK(address.size() == 3U);
+            CHECK(address.isAbsolute());
+            CHECK_FALSE(address.isRelative());
+            CHECK_FALSE(address.isFinal());
+            CHECK(address.isNotFinal());
+        }
+
+        {
+            Address address("abc/def/");
+            CHECK(address.size() == 3U);
+            CHECK_FALSE(address.isAbsolute());
+            CHECK(address.isRelative());
+            CHECK(address.isFinal());
+            CHECK_FALSE(address.isNotFinal());
+        }
     }
 }

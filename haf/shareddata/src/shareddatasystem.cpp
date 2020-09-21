@@ -85,7 +85,7 @@ bool SharedDataSystem::store(shdata::Address const &address , uptr<shdata::IShar
     return result;
 }
 
-bool SharedDataSystem::retrieve(str const& address,
+bool SharedDataSystem::retrieve(shdata::Address const& address,
                                 uptr<shdata::IShareable>& data)
 {
     LogAsserter::log_assert(data != nullptr,
