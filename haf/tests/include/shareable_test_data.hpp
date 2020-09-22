@@ -3,17 +3,38 @@
 #ifndef HAF_TESTS_SHAREABLE_TEST_DATA_INCLUDE_HPP
 #define HAF_TESTS_SHAREABLE_TEST_DATA_INCLUDE_HPP
 
+#include <mtypes/include/types.hpp>
+#include <mtypes/include/str.hpp>
 #include <haf/shareddata/include/ishareable.hpp>
 
-class ShareableTest : public haf::shdata::IShareable
+class ShareableTestData : public haf::shdata::IShareable
 {
 public:
-    ShareableTest(int const data) : data_{data} {}
-    int& data() { return data_; }
-    int const& data() const { return data_; }
+    mtps::s32 a;
+    mtps::f32 b;
+    mtps::str c;
 
-private:
-    int data_;
+    ~ShareableTestData() override = default;
+
+    bool serialize(mtps::Object& obj) const override
+    {
+        bool result{true};
+        result &= obj.set("a", a);
+        result &= obj.set("b", b);
+        result &= obj.set("c", c);
+
+        return result;
+    }
+
+    bool deserialize(mtps::Object const& obj) override
+    {
+        bool result = true;
+        result &= obj.getValue("a").as(a);
+        result &= obj.getValue("b").as(b);
+        result &= obj.getValue("c").as(c);
+
+        return result;
+    }
 };
 
 #endif

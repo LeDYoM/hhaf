@@ -1,6 +1,7 @@
 #include "catch.hpp"
 
 #include <mtypes/include/types.hpp>
+#include <mtypes/include/object.hpp>
 #include <haf/shareddata/include/address.hpp>
 
 using namespace mtps;
@@ -120,5 +121,67 @@ TEST_CASE("Address", "[haf][shdata][Address]")
             CHECK(address.isFinal());
             CHECK_FALSE(address.isNotFinal());
         }
+    }
+}
+
+TEST_CASE("applyAddress", "[haf][shdata][Address][Object]")
+{
+    Object obj
+    {
+        { "key1",
+            {
+                { "subkey1", "subvalue1" }
+            }
+        },
+        { "abc",
+            {
+                { "subkey2", "subvalue2" }
+            }
+        },
+        { "abc",
+            Object{ {"def",
+                Object {
+                    { "subsubkey1", "subsubvalue" }
+                }
+            } }
+        }
+    };
+    
+    {
+        Address address("abc/def/");
+        auto const result = objectFromAddress(address, obj);
+        CHECK(result.first);
+        CHECK(result.second["subsubkey1"].getValue() == "subsubvalue");
+        CHECK(result.second == obj["abc"]["def"].getObject());
+    }
+
+    {
+        auto const result = objectFromAddress(Address{"abc/def"}, obj);
+        CHECK_FALSE(result.first);
+    }
+
+    {
+        auto const result = objectFromAddress(Address{"abc/def1/"}, obj);
+        CHECK_FALSE(result.first);
+    }
+
+    {
+        auto const result = objectFromAddress(Address{"/"}, obj);
+        CHECK(result.first);
+        CHECK(result.second == obj);
+    }
+
+    {
+        auto const result = objectFromAddress(Address{""}, obj);
+        CHECK(result.first);
+        CHECK(result.second == obj);
+    }
+
+    {
+        Address address("/abc/def/");
+        auto const result = objectFromAddress(address, obj);
+        CHECK(result.first);
+        CHECK(result.second["subsubkey1"].getValue() == "subsubvalue");
+        CHECK(result.second == obj["abc"]["def"].getObject());
     }
 }

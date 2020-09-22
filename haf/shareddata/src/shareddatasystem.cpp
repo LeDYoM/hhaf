@@ -1,37 +1,20 @@
 #include "shareddatasystem.hpp"
+#include <haf/shareddata/include/address.hpp>
 
 #include <hlog/include/hlog.hpp>
+
+#include <utility>
 
 using namespace mtps;
 
 namespace haf::sys
 {
-SharedDataSystem::~SharedDataSystem()
-{
-    //    makeEmpty();
-}
+SharedDataSystem::~SharedDataSystem() = default;
 
 bool SharedDataSystem::store(uptr<shdata::IShareable> data) noexcept
 {
-    if (data == nullptr)
-    {
-        DisplayLog::error("Trying to store an empty shareddata");
-        return false;
-    }
-
-    if (data_ != nullptr)
-    {
-        DisplayLog::error("Shareddata must be empty before storing something");
-        return false;
-    }
-
-    LogAsserter::log_assert(data_ == nullptr, "data_ is not nullptr");
     LogAsserter::log_assert(data != nullptr, "data is nullptr");
 
-    // Aquire the ownership of data
-    data_ = std::move(data);
-
-    LogAsserter::log_assert(data_ != nullptr, "data_ is nullptr");
     LogAsserter::log_assert(data == nullptr, "data is not nullptr");
 
     return true;
@@ -39,29 +22,18 @@ bool SharedDataSystem::store(uptr<shdata::IShareable> data) noexcept
 
 uptr<shdata::IShareable> SharedDataSystem::retrieve() noexcept
 {
-    if (data_ == nullptr)
-    {
-        DisplayLog::error("Trying to retrieve empty shared data");
-        return nullptr;
-    }
-
-    LogAsserter::log_assert(data_ != nullptr, "data_ is nullptr");
-    uptr<shdata::IShareable> temp = std::move(data_);
-    LogAsserter::log_assert(data_ == nullptr, "data_ is not nullptr");
-
-    return temp;
 }
 
 bool SharedDataSystem::isEmpty() const noexcept
 {
-    return data_ == nullptr;
+    return data_object_.empty();
 }
 
 bool SharedDataSystem::makeEmpty()
 {
     if (!isEmpty())
     {
-        data_.reset();
+        data_object_ = Object{};
         return true;
     }
     return false;
@@ -69,28 +41,53 @@ bool SharedDataSystem::makeEmpty()
 
 mtps::uptr<shdata::IShareable> const& SharedDataSystem::view() const noexcept
 {
-    LogAsserter::log_assert(data_ != nullptr, "data_ is nullptr");
-    return data_;
 }
 
-bool SharedDataSystem::store(shdata::Address const &address , uptr<shdata::IShareable> const& data)
+bool SharedDataSystem::store(shdata::Address const& address,
+                             shdata::IShareable const& data)
 {
     Object temp;
-    bool const result{data->deserialize(temp)};
+
+    bool const result{data.serialize(temp)};
     if (result)
     {
-        data_object_ = temp;
+        auto result_apply_address =
+            shdata::objectFromAddress(address, data_object_);
+
+        if (result_apply_address.first)
+        {
+            std::swap(data_object_, temp);
+            return true;
+        }
     }
 
-    return result;
+    return false;
+}
+
+bool SharedDataSystem::createIfNecessary(shdata::Address const& address)
+{
+    auto result_apply_address =
+        shdata::objectFromAddress(address, data_object_);
+
+    if (!result_apply_address.first)
+    {
+        
+    }
+
 }
 
 bool SharedDataSystem::retrieve(shdata::Address const& address,
-                                uptr<shdata::IShareable>& data)
+                                shdata::IShareable& data)
 {
-    LogAsserter::log_assert(data != nullptr,
-                            "You should pass an allocated pointer");
-    return data->deserialize(data_object_);
+    auto result_apply_address =
+        shdata::objectFromAddress(address, data_object_);
+
+    if (result_apply_address.first)
+    {
+        return data.deserialize(result_apply_address.second);
+    }
+
+    return false;
 }
 
 }  // namespace haf::sys

@@ -66,7 +66,7 @@ struct GameSharedData : public haf::shdata::IShareable
         result &= obj.getValue(EndLevel).as(endLevel);
         result &= obj.getValue(GameScore).as(score);
 
-        return true;
+        return result;
     }
 
     ~GameSharedData() override = default;

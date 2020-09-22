@@ -123,8 +123,10 @@ private:
     mtps::PImplPointer<AddressPrivate> private_;
 };
 
-mtps::pair<bool, mtps::Object> applyAddress(Address const& address,
+mtps::pair<bool, mtps::Object> objectFromAddress(Address const& address,
                                             mtps::Object const& object);
+
+bool ensureAddress(Address const& address, mtps::Object& object);
 
 }  // namespace haf::shdata
 

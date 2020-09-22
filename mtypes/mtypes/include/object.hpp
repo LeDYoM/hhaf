@@ -36,7 +36,7 @@ public:
     using ObjectDictionary = Dictionary<Object>;
     using ValueDictionary  = Dictionary<str>;
 
-    constexpr Object() noexcept {}
+    constexpr Object() noexcept = default;
 
     inline Object(std::initializer_list<KeyValueStr> iListValues)
     {

@@ -102,7 +102,13 @@ pair<bool, mtps::Object> objectFromAddress(Address const& address,
         Object const* result{&object};
         size_type size{address.size()};
 
-        for (size_type index{0U}; index < (size - 1U); ++index)
+        size_type index_start{0U};
+        if (address[0].empty())
+        {
+            index_start = 1U;
+        }
+
+        for (size_type index{index_start}; index < (size - 1U); ++index)
         {
             Object::Value temp = result->getObject(address[index]);
             if (temp.isObject())
@@ -119,6 +125,34 @@ pair<bool, mtps::Object> objectFromAddress(Address const& address,
     }
 
     return {false, {}};
+}
+
+bool ensureAddress(Address const& address, mtps::Object& object)
+{
+    Object * result{&object};
+    size_type size{address.size()};
+
+    size_type index_start{0U};
+    if (address[0].empty())
+    {
+        index_start = 1U;
+    }
+
+    for (size_type index{index_start}; index < (size - 1U); ++index)
+    {
+        Object::Value temp = result->getObject(address[index]);
+        if (temp.isObject())
+        {
+            result = &(temp.getObject());
+        }
+        else
+        {
+            result->set(address[index],Object{});
+            return {false, {}};
+        }
+    }
+
+    return {true, *result};
 }
 
 }  // namespace haf::shdata
