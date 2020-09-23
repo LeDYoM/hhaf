@@ -118,6 +118,9 @@ public:
      */
     inline bool isNotFinal() const noexcept { return !isFinal(); }
 
+    bool removeFirst();
+    bool removeLast();
+
 private:
     struct AddressPrivate;
     mtps::PImplPointer<AddressPrivate> private_;

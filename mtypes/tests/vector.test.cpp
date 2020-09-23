@@ -226,6 +226,24 @@ TEST_CASE("vector of shared pointers", "[vector]")
         test_vector1.erase_values(nullptr);
         CHECK(test_vector1.size() == 8U);
 
+        SECTION("erase_one")
+        {
+            test_vector1.emplace_back(msptr<A>(A{50}));
+            test_vector1.emplace_back(msptr<A>(A{51}));
+            CHECK(test_vector1.size() == 10U);
+
+            {
+                auto const result = test_vector1.erase_one_index(8U);
+                CHECK(test_vector1.size() == 9U);
+                CHECK((*result)->b == 51);
+            }
+
+            {
+                auto const result = test_vector1.erase_one_index(9U);
+                CHECK(result == test_vector1.end());
+            }
+        }
+
         SECTION("Remove removed shared pointer")
         {
             sptr<A> temp = msptr<A>(A{42});

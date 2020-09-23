@@ -94,6 +94,27 @@ bool Address::isFinal() const noexcept
     return last().empty();
 }
 
+bool Address::removeFirst()
+{
+    if (!private_->address_parts_.empty())
+    {
+        private_->address_parts_.erase_one_index(0U);
+        return true;
+    }
+    return false;
+}
+
+bool Address::removeLast()
+{
+    if (!private_->address_parts_.empty())
+    {
+        private_->address_parts_.erase_one_index(
+            private_->address_parts_.size() - 1U);
+        return true;
+    }
+    return false;
+}
+
 pair<bool, mtps::Object> objectFromAddress(Address const& address,
                                            Object const& object)
 {
@@ -127,32 +148,56 @@ pair<bool, mtps::Object> objectFromAddress(Address const& address,
     return {false, {}};
 }
 
+bool ensureAddressObject(str const& address_part, mtps::Object& object)
+{
+    if (!object.getObject(address_part).isObject())
+    {
+        object.set("address_part", Object{});
+        return true;
+    }
+    return false;
+}
+
+bool ensureAddressValue(str const& address_part, mtps::Object& object)
+{
+    if (!object.getValue(address_part).isValue())
+    {
+        object.set("address_part", "");
+        return true;
+    }
+    return false;
+}
+
 bool ensureAddress(Address const& address, mtps::Object& object)
 {
-    Object * result{&object};
-    size_type size{address.size()};
-
-    size_type index_start{0U};
-    if (address[0].empty())
+    if (address.isFinal())
     {
-        index_start = 1U;
+        Object const* result{&object};
+        size_type size{address.size()};
+
+        size_type index_start{0U};
+        if (address[0].empty())
+        {
+            index_start = 1U;
+        }
+
+        for (size_type index{index_start}; index < (size - 1U); ++index)
+        {
+            Object::Value temp = result->getObject(address[index]);
+            if (temp.isObject())
+            {
+                result = &(temp.getObject());
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
-    for (size_type index{index_start}; index < (size - 1U); ++index)
-    {
-        Object::Value temp = result->getObject(address[index]);
-        if (temp.isObject())
-        {
-            result = &(temp.getObject());
-        }
-        else
-        {
-            result->set(address[index],Object{});
-            return {false, {}};
-        }
-    }
-
-    return {true, *result};
+    return false;
 }
 
 }  // namespace haf::shdata

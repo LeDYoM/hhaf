@@ -263,10 +263,13 @@ public:
         return (token.first ? Value(&(token.second->second)) : Value());
     }
 
-    /// Get a @Value pointing to an element with the specified key.
-    /// @param[in] key Key str to search for.
-    /// @return Empty invalid @Value if not found or a @Value
-    /// pointing to the data if found.
+    /**
+     * @brief Get a @b Value pointing to an element with the specified key.
+     * 
+     * @param[in] key Key str to search for
+     * @return Empty invalid @b Value if not found or a @b Value
+     * pointing to the data if found.
+     */
     Value operator[](const str& key) const
     {
         // Note: Priority to str
@@ -276,11 +279,14 @@ public:
 
     static constexpr const char* const arraySeparator = "::";
 
-    /// Get a @Value in the array form.
-    /// @param index The index of the element you want to read.
-    /// @return @b Value Representing the element.
-    /// Note: You might need to check with @Value::isValid
-    /// if the value is valid.
+    /**
+     * @brief Get a @b Value in the array form.
+     * 
+     * @param index The index of the element you want to read.
+     * @return Value Representing the element.
+     * Note: You might need to check with @Value::isValid
+     * if the value is valid.
+     */
     Value operator[](const size_t index) const
     {
         return (*this)[str(arraySeparator) + str::to_str(index)];

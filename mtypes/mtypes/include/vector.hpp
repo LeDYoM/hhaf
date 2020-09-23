@@ -214,14 +214,20 @@ public:
         return where_it_was;
     }
 
-    /// @brief Erase one element (the first one containing a specified)
-    /// value.
-    /// @param value [in] Value to search for in the vector.
-    /// @param value [in] start iterator pointing to the first element
-    ///  to look for.
-    /// @return iterator Pointing to the element in the position where the
-    /// deleted element was. If the element was the last one or no element
-    /// with this value found, the iterator will be end().
+    /**
+     * @brief Erase one element (the first one containing a specified)
+     * value.
+     * 
+     * @param value [in] Value to search for in the vector.
+     * @param value [in] start iterator pointing to the first element
+     * to look for.
+     * @return iterator Pointing to the element in the position where the
+     * deleted element was. If the element was the last one or no element
+     * with this value found, the iterator will be end().
+     * @warning This method does not allocate or deallocate memory. And it
+     * des not preserve the order. Actually, the deleted element will now
+     * contain the previous last element.
+     */
     constexpr iterator erase_one(const T& value, iterator start)
     {
         checkRange(start);
@@ -244,6 +250,16 @@ public:
             }
             return where_it_was;
         }
+        return end();
+    }
+
+    constexpr iterator erase_one_index(size_type const index)
+    {
+        if (index < size())
+        {
+            return erase_one(*(begin() + index), (begin() + index));
+        }
+
         return end();
     }
 
