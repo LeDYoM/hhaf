@@ -226,7 +226,7 @@ TEST_CASE("vector of shared pointers", "[vector]")
         test_vector1.erase_values(nullptr);
         CHECK(test_vector1.size() == 8U);
 
-        SECTION("erase_one")
+        SECTION("erase_one_index")
         {
             test_vector1.emplace_back(msptr<A>(A{50}));
             test_vector1.emplace_back(msptr<A>(A{51}));
@@ -241,6 +241,26 @@ TEST_CASE("vector of shared pointers", "[vector]")
             {
                 auto const result = test_vector1.erase_one_index(9U);
                 CHECK(result == test_vector1.end());
+            }
+        }
+
+        SECTION("erase_one keep order")
+        {
+            test_vector1.emplace_back(msptr<A>(A{50}));
+            test_vector1.emplace_back(msptr<A>(A{51}));
+            CHECK(test_vector1.size() == 10U);
+
+            {
+                auto const iterator = test_vector1.begin();
+                auto const value2   = (test_vector1[1U]->b);
+                auto const value_last =
+                    (test_vector1[test_vector1.size() - 1U]->b);
+
+                CHECK(std::next(iterator) == &(test_vector1[1U]));
+                test_vector1.erase_one(*test_vector1.begin(), false);
+                CHECK(test_vector1[0U]->b == value2);
+                CHECK((test_vector1[test_vector1.size() - 1U]->b) ==
+                      value_last);
             }
         }
 

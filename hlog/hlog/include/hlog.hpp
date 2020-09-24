@@ -47,7 +47,7 @@ using LogAsserter = logger::LogAsserter<DisplayLog>;
 
 namespace logger
 {
-extern template class LogInitializer<haf::LogClass>;
+extern template struct LogInitializer<haf::LogClass>;
 }
 
 namespace haf

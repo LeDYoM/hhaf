@@ -22,6 +22,7 @@ bool SharedDataSystem::store(uptr<shdata::IShareable> data) noexcept
 
 uptr<shdata::IShareable> SharedDataSystem::retrieve() noexcept
 {
+    return nullptr;
 }
 
 bool SharedDataSystem::isEmpty() const noexcept
@@ -41,6 +42,7 @@ bool SharedDataSystem::makeEmpty()
 
 mtps::uptr<shdata::IShareable> const& SharedDataSystem::view() const noexcept
 {
+    return nullptr;
 }
 
 bool SharedDataSystem::store(shdata::Address const& address,
@@ -73,7 +75,7 @@ bool SharedDataSystem::createIfNecessary(shdata::Address const& address)
     {
         
     }
-
+    return true;
 }
 
 bool SharedDataSystem::retrieve(shdata::Address const& address,
