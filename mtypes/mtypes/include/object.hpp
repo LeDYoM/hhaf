@@ -277,6 +277,18 @@ public:
         return ((val.isValid()) ? val : getObject(key));
     }
 
+    Object* acquireObject(const str& key) noexcept
+    {
+        auto token(m_objects.find(key));
+        return ((token != m_objects.end()) ? &(token->second) : nullptr);
+    }
+
+    str* acquireValue(const str& key) noexcept
+    {
+        auto token(m_values.find(key));
+        return ((token != m_values.end()) ? &(token->second) : nullptr);
+    }
+
     static constexpr const char* const arraySeparator = "::";
 
     /**
