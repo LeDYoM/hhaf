@@ -172,32 +172,33 @@ bool ensureAddress(Address const& address, mtps::Object& object)
 {
     if (address.isFinal())
     {
-        Object const* result{&object};
+        Object * result{&object};
         size_type size{address.size()};
 
         size_type index_start{0U};
-        if (address[0].empty())
+        if (address.first().empty())
         {
             index_start = 1U;
         }
 
         for (size_type index{index_start}; index < (size - 1U); ++index)
         {
-            Object::Value temp = result->getObject(address[index]);
-            if (temp.isObject())
+            Object* temp = result->acquireObject(address[index]);
+            if (temp != nullptr)
             {
-                result = &(temp.getObject());
+                result = temp;
             }
             else
             {
-                return false;
+                result->set(address[index], Object{});
+                result = result->acquireObject(address[index]);
             }
         }
 
-        return true;
+        return false;
     }
 
-    return false;
+    return true;
 }
 
 }  // namespace haf::shdata
