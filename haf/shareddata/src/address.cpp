@@ -96,9 +96,9 @@ bool Address::isFinal() const noexcept
 
 bool Address::removeFirst()
 {
-    if (!private_->address_parts_.empty())
+    if (private_->address_parts_.size() > 1U)
     {
-        private_->address_parts_.erase_one_index(0U);
+        private_->address_parts_.erase_one_index(0U, false);
         return true;
     }
     return false;
@@ -106,7 +106,7 @@ bool Address::removeFirst()
 
 bool Address::removeLast()
 {
-    if (!private_->address_parts_.empty())
+    if (private_->address_parts_.size() > 1U)
     {
         private_->address_parts_.erase_one_index(
             private_->address_parts_.size() - 1U);

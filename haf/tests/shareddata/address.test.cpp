@@ -151,22 +151,27 @@ TEST_CASE("removefirst and removelast", "[haf][shdata][Address]")
         address.removeFirst();
         CHECK(address.size() == 4U);
         CHECK(address.first() == "abc");
+        CHECK(address.last() == "");
 
         CHECK(address.removeFirst());
         CHECK(address.size() == 3U);
         CHECK(address.first() == "def");
+        CHECK(address.last() == "");
 
         CHECK(address.removeFirst());
         CHECK(address.size() == 2U);
         CHECK(address.first() == "hij");
+        CHECK(address.last() == "");
 
         CHECK(address.removeFirst());
         CHECK(address.size() == 1U);
         CHECK(address.first() == "");
+        CHECK(address.last() == "");
 
         CHECK_FALSE(address.removeFirst());
         CHECK(address.size() == 1U);
         CHECK(address.first() == "");
+        CHECK(address.last() == "");
     }
 
     {
@@ -177,23 +182,28 @@ TEST_CASE("removefirst and removelast", "[haf][shdata][Address]")
 
         CHECK(address.removeLast());
         CHECK(address.size() == 4U);
-        CHECK(address.first() == "hij");
+        CHECK(address.first() == "");
+        CHECK(address.last() == "hij");
 
         CHECK(address.removeLast());
         CHECK(address.size() == 3U);
-        CHECK(address.first() == "def");
+        CHECK(address.first() == "");
+        CHECK(address.last() == "def");
 
         CHECK(address.removeLast());
         CHECK(address.size() == 2U);
-        CHECK(address.first() == "abc");
+        CHECK(address.first() == "");
+        CHECK(address.last() == "abc");
 
         CHECK(address.removeLast());
         CHECK(address.size() == 1U);
         CHECK(address.first() == "");
+        CHECK(address.last() == "");
 
         CHECK_FALSE(address.removeLast());
         CHECK(address.size() == 1U);
         CHECK(address.first() == "");
+        CHECK(address.last() == "");
     }
 
     {
@@ -211,17 +221,14 @@ TEST_CASE("removefirst and removelast", "[haf][shdata][Address]")
         CHECK(address.removeFirst());
         CHECK(address.removeLast());
         CHECK(address.size() == 1U);
-        CHECK(address.first() == "");
-        CHECK(address.last() == "");
+        CHECK(address.first() == "def");
+        CHECK(address.last() == "def");
 
-        CHECK(address.removeFirst());
-        CHECK(address.removeLast());
-        CHECK(address.size() == 1U);
-        CHECK(address.first() == "");
-
+        CHECK_FALSE(address.removeFirst());
         CHECK_FALSE(address.removeLast());
         CHECK(address.size() == 1U);
-        CHECK(address.first() == "");
+        CHECK(address.first() == "def");
+        CHECK(address.last() == "def");
     }
 }
 
