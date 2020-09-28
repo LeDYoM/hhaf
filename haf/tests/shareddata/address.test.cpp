@@ -293,3 +293,86 @@ TEST_CASE("applyAddress", "[haf][shdata][Address][Object]")
         CHECK(result.second == obj["abc"]["def"].getObject());
     }
 }
+
+TEST_CASE("ensureAddress", "[haf][shdata][Address][Object]")
+{
+    Object obj
+    {
+        { "key1",
+            {
+                { "subkey1", "subvalue1" }
+            }
+        },
+        { "abc",
+            {
+                { "subkey2", "subvalue2" }
+            }
+        },
+        { "abc",
+            Object{ {"def",
+                Object {
+                    { "subsubkey1", "subsubvalue" }
+                }
+            } }
+        }
+    };
+    
+    {
+        Address address("abc/def/");
+        CHECK(ensureAddress(address, obj) != nullptr);
+        auto const result = objectFromAddress(address, obj);
+        CHECK(result.first);
+        CHECK(result.second["subsubkey1"].getValue() == "subsubvalue");
+        CHECK(result.second == obj["abc"]["def"].getObject());
+    }
+
+    {
+        Address address("/abc/def/");
+        CHECK(ensureAddress(address, obj) != nullptr);
+        auto const result = objectFromAddress(address, obj);
+        CHECK(result.first);
+        CHECK(result.second["subsubkey1"].getValue() == "subsubvalue");
+        CHECK(result.second == obj["abc"]["def"].getObject());
+    }
+
+    {
+        Address address("first/second/");
+        auto new_object = ensureAddress(address, obj);
+        CHECK(new_object != nullptr);
+        auto const result = objectFromAddress(address, obj);
+        CHECK(result.first);
+        CHECK(result.second == Object{});
+
+        new_object->set("new_key", "new_value");
+        CHECK(obj["first"]["second"]["new_key"].getValue() == "new_value");
+        CHECK(result.second == Object{});
+    }
+
+    {
+        Address address("abc/second/");
+        auto new_object = ensureAddress(address, obj);
+        CHECK(new_object != nullptr);
+        auto const result = objectFromAddress(address, obj);
+        CHECK(result.first);
+        CHECK(result.second == Object{});
+
+        new_object->set("new_key", "new_value");
+        CHECK(obj["abc"]["second"]["new_key"].getValue() == "new_value");
+        CHECK(result.second == Object{});
+
+        {
+            Address address2("abc/def/");
+            auto const result2 = objectFromAddress(address2, obj);
+            CHECK(result2.first);
+            CHECK(result2.second["subsubkey1"].getValue() == "subsubvalue");
+            CHECK(result2.second == obj["abc"]["def"].getObject());
+        }
+    }
+
+    {
+        Address address("abc/def");
+        CHECK_FALSE(ensureAddress(address, obj) != nullptr);
+        auto const result = objectFromAddress(address, obj);
+        CHECK_FALSE(result.first);
+    }
+}

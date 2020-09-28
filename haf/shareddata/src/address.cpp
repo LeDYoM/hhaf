@@ -148,27 +148,7 @@ pair<bool, mtps::Object> objectFromAddress(Address const& address,
     return {false, {}};
 }
 
-bool ensureAddressObject(str const& address_part, mtps::Object& object)
-{
-    if (!object.getObject(address_part).isObject())
-    {
-        object.set("address_part", Object{});
-        return true;
-    }
-    return false;
-}
-
-bool ensureAddressValue(str const& address_part, mtps::Object& object)
-{
-    if (!object.getValue(address_part).isValue())
-    {
-        object.set("address_part", "");
-        return true;
-    }
-    return false;
-}
-
-bool ensureAddress(Address const& address, mtps::Object& object)
+mtps::Object* ensureAddress(Address const& address, mtps::Object& object)
 {
     if (address.isFinal())
     {
@@ -195,10 +175,10 @@ bool ensureAddress(Address const& address, mtps::Object& object)
             }
         }
 
-        return false;
+        return result;
     }
 
-    return true;
+    return nullptr;
 }
 
 }  // namespace haf::shdata

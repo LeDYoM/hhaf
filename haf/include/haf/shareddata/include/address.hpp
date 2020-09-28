@@ -129,7 +129,7 @@ private:
 mtps::pair<bool, mtps::Object> objectFromAddress(Address const& address,
                                             mtps::Object const& object);
 
-bool ensureAddress(Address const& address, mtps::Object& object);
+mtps::Object *ensureAddress(Address const& address, mtps::Object& object);
 
 }  // namespace haf::shdata
 
