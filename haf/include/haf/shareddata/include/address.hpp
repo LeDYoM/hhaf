@@ -126,9 +126,28 @@ private:
     mtps::PImplPointer<AddressPrivate> private_;
 };
 
+/**
+ * @brief Get a copy of an @b mtps::Object contained at that address
+ * 
+ * @param address Address to retrieve
+ * @param object Object where to search
+ * @return mtps::pair<bool, mtps::Object> In the returned pair, the first
+ * will be if the operation wass successful and the second will be an
+ * @b mtps::Object . If first is false, the second value is undefined.
+ */
 mtps::pair<bool, mtps::Object> objectFromAddress(Address const& address,
                                             mtps::Object const& object);
 
+/**
+ * @brief Check that an @b Address exists in an @b mtps::Object and retrieve
+ * a pointer to the element. Otherwhise, create the structure inside the
+ * @b mtps::Object and return a pointer to the newly created @b mtps::Object
+ * too.
+ * @param address Adress to search for
+ * @param object Object where to search
+ * @return mtps::Object* Pointer to the old or new Object. Might be nullptr if
+ * for any reason it cannot be created.
+ */
 mtps::Object *ensureAddress(Address const& address, mtps::Object& object);
 
 }  // namespace haf::shdata
