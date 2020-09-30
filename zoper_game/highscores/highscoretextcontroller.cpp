@@ -9,7 +9,7 @@
 #include <haf/scene_nodes/include/scenenodetext_properties.hpp>
 #include <haf/resources/include/ittfont.hpp>
 #include <haf/resources/include/resourceview.hpp>
-#include <haf/shareddata/include/shareddataview.hpp>
+#include <haf/shareddata/include/shareddata.hpp>
 
 using namespace mtps;
 using namespace haf;
@@ -42,9 +42,10 @@ void HighScoreTextController::onCreated()
                                                             m_hsData);
 
     // Request game score
-    Score gameScore =
-        dataWrapper<shdata::SharedDataView>()->dataAs<GameSharedData>().score;
-
+    GameSharedData gsd{};
+    Score gameScore = dataWrapper<shdata::SharedDataUpdater>()
+                          ->view<GameSharedData>(GameSharedData::address(), gsd)
+                          ->score;
     Rectf32 textBox{
         rectFromSize(dataWrapper<SceneMetricsView>()->currentView().size())
             .setLeftTop({0, 250})
@@ -118,7 +119,8 @@ void HighScoreTextController::addHighScoreEditor(const sptr<SceneNode>& label,
 
 void HighScoreTextController::addEditAnimation(const size_type line_index)
 {
-    LogAsserter::log_assert(line_index < prop<TableSize>().get().y, "Invalid line_index");
+    LogAsserter::log_assert(line_index < prop<TableSize>().get().y,
+                            "Invalid line_index");
 
     for_each_tableSceneNode_in_y(
         line_index,

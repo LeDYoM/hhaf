@@ -6,7 +6,7 @@
 #include <hlog/include/hlog.hpp>
 #include <haf/resources/include/resourceview.hpp>
 #include <haf/resources/include/ittfont.hpp>
-#include <haf/shareddata/include/shareddata_updater.hpp>
+#include <haf/shareddata/include/shareddata.hpp>
 #include <haf/scene_components/include/scenemetricsview.hpp>
 #include <mtypes/include/function.hpp>
 #include <mtypes/include/types.hpp>
@@ -59,14 +59,13 @@ void goGame(rptr<MenuPaged> scene_node,
             vector<s32> menu_data)
 {
     {
-        auto game_shared_data_view =
-            scene_node->dataWrapper<shdata::SharedDataUpdater>();
-        auto& game_shared_data =
-            game_shared_data_view->dataAs<GameSharedData>();
+        GameSharedData game_shared_data{};
 
         game_shared_data.startLevel = menu_data[0U];
         game_shared_data.gameMode   = game_mode;
         DisplayLog::info(game_shared_data.to_str());
+        scene_node->dataWrapper<shdata::SharedData>()->store(
+            GameSharedData::address(), game_shared_data);
     }
 
     scene_node->terminate(1);
@@ -84,7 +83,8 @@ void MainMenu::onCreated()
             .setSize({2000, 4 * 150})};
     prop<Position>() = textBox.leftTop();
 
-    prop<MenuPagedProperties>().put<NormalTextFont>(
+    prop<MenuPagedProperties>()
+        .put<NormalTextFont>(
 #ifdef TEST_BMP_FONT
             getBMPFont(MainMenuResources::TestFontId)
 #else

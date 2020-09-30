@@ -32,17 +32,17 @@ public:
     Address(mtps::str const& addr, char const separator = '/');
 
     /**
+     * @brief Destroy the Address object
+     */
+    ~Address();
+
+    /**
      * @brief Construct a new Address object.
      * Explicit copy constructor.
      *
      * @param address Source address to copy from.
      */
     explicit Address(Address const& address);
-
-    /**
-     * @brief Destroy the Address object
-     */
-    ~Address();
 
     /**
      * @brief Construct a new Address object moving from another one

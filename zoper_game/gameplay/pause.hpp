@@ -9,8 +9,6 @@
 #include <haf/scene_nodes/include/scenenodetext.hpp>
 #include <haf/scene_components/include/animationcomponent.hpp>
 
-#include "../gameshareddata.hpp"
-
 namespace zoper
 {
 class GameScene;

@@ -6,24 +6,11 @@
 #include <utility>
 
 using namespace mtps;
+using namespace haf::shdata;
 
 namespace haf::sys
 {
 SharedDataSystem::~SharedDataSystem() = default;
-
-bool SharedDataSystem::store(uptr<shdata::IShareable> data) noexcept
-{
-    LogAsserter::log_assert(data != nullptr, "data is nullptr");
-
-    LogAsserter::log_assert(data == nullptr, "data is not nullptr");
-
-    return true;
-}
-
-uptr<shdata::IShareable> SharedDataSystem::retrieve() noexcept
-{
-    return nullptr;
-}
 
 bool SharedDataSystem::isEmpty() const noexcept
 {
@@ -40,42 +27,28 @@ bool SharedDataSystem::makeEmpty()
     return false;
 }
 
-mtps::uptr<shdata::IShareable> const& SharedDataSystem::view() const noexcept
+bool SharedDataSystem::store(Address const& address,
+                             IShareable const& data)
 {
-    return nullptr;
-}
-
-bool SharedDataSystem::store(shdata::Address const& address,
-                             shdata::IShareable const& data)
-{
-    Object temp;
-
-    bool const result{data.serialize(temp)};
-    if (result)
+    if (address.isFinal())
     {
-        auto result_apply_address =
-            shdata::objectFromAddress(address, data_object_);
+        Object temp;
 
-        if (result_apply_address.first)
+        auto * result_ensure_address =
+            ensureAddress(address, data_object_);
+
+        if (result_ensure_address != nullptr)
         {
-            std::swap(data_object_, temp);
-            return true;
+            bool const result{data.serialize(temp)};
+            if (result)
+            {
+                std::swap(*result_ensure_address, temp);
+                return true;
+            }
         }
     }
 
     return false;
-}
-
-bool SharedDataSystem::createIfNecessary(shdata::Address const& address)
-{
-    auto result_apply_address =
-        shdata::objectFromAddress(address, data_object_);
-
-    if (!result_apply_address.first)
-    {
-        
-    }
-    return true;
 }
 
 bool SharedDataSystem::retrieve(shdata::Address const& address,

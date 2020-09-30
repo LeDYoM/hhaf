@@ -5,9 +5,7 @@ set (_SOURCES
     i_include/shareddatasystem.hpp
     src/address.cpp
     src/shareddatasystem.cpp
-    src/shareddata_updater.cpp
     src/shareddata.cpp
-    src/shareddataview.cpp
 )
 
 set (CURRENT_TARGET  ${PROJECT_NAME})

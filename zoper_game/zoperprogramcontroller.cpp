@@ -53,9 +53,9 @@ void ZoperProgramController::onInit(
         "keys.txt", *keyMapping);
 
     {
-        auto game_shared_data{muptr<GameSharedData>()};
+        GameSharedData game_shared_data{};
         data_wrapper_creator.dataWrapper<shdata::SharedData>()->store(
-            std::move(game_shared_data));
+            GameSharedData::address(), game_shared_data);
     }
     {
         data_wrapper_creator.dataWrapper<scene::SceneMetrics>()->setViewRect(

@@ -17,6 +17,10 @@ struct Address::AddressPrivate
         address_parts_(addr_private.address_parts_)
     {}
 
+    AddressPrivate(AddressPrivate&&) noexcept = default;
+    AddressPrivate& operator=(AddressPrivate const&) noexcept = default;
+    AddressPrivate& operator=(AddressPrivate&&) noexcept = default;
+
     vector<str> address_parts_;
 };
 
@@ -34,7 +38,7 @@ Address::~Address() = default;
 Address& Address::operator=(Address const& address)
 {
     Address tmp(address);
-    std::swap(*this, tmp);
+    std::swap(*this->private_, *(tmp.private_));
     return *this;
 }
 

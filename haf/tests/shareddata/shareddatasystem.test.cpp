@@ -100,7 +100,6 @@ TEST_CASE("SharedDataSystem", "[haf][shareddatasystem][Object][Address]")
 
     SECTION("Simple Store and Retrieve with address")
     {
-        /*
         static constexpr char TAddrStr[] = "abc/def/";
         ShareableTestData test_store_data;
         test_store_data.a = 2;
@@ -174,6 +173,5 @@ TEST_CASE("SharedDataSystem", "[haf][shareddatasystem][Object][Address]")
                 CHECK_FALSE(sh_system.makeEmpty());
             }
         }
-        */
     }
 }

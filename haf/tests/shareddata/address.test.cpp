@@ -20,6 +20,41 @@ TEST_CASE("Address", "[haf][shdata][Address]")
         CHECK(address.last() == "def");
     }
 
+    SECTION("Copy constructor")
+    {
+        Address address("abc/def");
+        CHECK(address.size() == 2U);
+        CHECK(address[0U] == "abc");
+        CHECK(address[1U] == "def");
+        CHECK(address.first() == "abc");
+        CHECK(address.last() == "def");
+
+        Address address1(address);
+        CHECK(address1.size() == 2U);
+        CHECK(address1[0U] == "abc");
+        CHECK(address1[1U] == "def");
+        CHECK(address1.first() == "abc");
+        CHECK(address1.last() == "def");
+    }
+
+    SECTION("Copy assignment")
+    {
+        Address address("abc/def");
+        CHECK(address.size() == 2U);
+        CHECK(address[0U] == "abc");
+        CHECK(address[1U] == "def");
+        CHECK(address.first() == "abc");
+        CHECK(address.last() == "def");
+
+        Address address1("");
+        address1 = address;
+        CHECK(address1.size() == 2U);
+        CHECK(address1[0U] == "abc");
+        CHECK(address1[1U] == "def");
+        CHECK(address1.first() == "abc");
+        CHECK(address1.last() == "def");
+    }
+
     SECTION("Separator at the beggining")
     {
         Address address("/resource/temp");

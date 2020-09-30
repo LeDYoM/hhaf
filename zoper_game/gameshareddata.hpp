@@ -11,6 +11,8 @@
 #include <mtypes/include/str.hpp>
 #include <haf/time/include/timepoint.hpp>
 #include <haf/shareddata/include/ishareable.hpp>
+#include <haf/shareddata/include/address.hpp>
+
 #include "gameplay/direction.hpp"
 
 namespace zoper
@@ -23,6 +25,8 @@ enum class GameMode : mtps::u8
 
 struct GameSharedData : public haf::shdata::IShareable
 {
+    static constexpr char address_str[] = "/";
+
     // MenuScene will write these
     mtps::size_type startLevel{0U};
     GameMode gameMode{GameMode::Token};
@@ -30,6 +34,12 @@ struct GameSharedData : public haf::shdata::IShareable
     // GameScene will write these.
     mtps::size_type endLevel{0U};
     mtps::size_type score{0U};
+
+    static haf::shdata::Address address()
+    {
+        haf::shdata::Address addr{address_str};
+        return addr;
+    }
 
     mtps::str to_str() const
     {
@@ -39,12 +49,12 @@ struct GameSharedData : public haf::shdata::IShareable
         return temp;
     }
 
-    static constexpr char StartLevel[] = "StartLevel";
+    static constexpr char StartLevel[]   = "StartLevel";
     static constexpr char GameModeGame[] = "GameMode";
-    static constexpr char EndLevel[] = "EndLevel";
-    static constexpr char GameScore[] = "GameScore";
+    static constexpr char EndLevel[]     = "EndLevel";
+    static constexpr char GameScore[]    = "GameScore";
 
-    bool serialize(mtps::Object& obj) const override 
+    bool serialize(mtps::Object& obj) const override
     {
         bool result{true};
         result &= obj.set(StartLevel, startLevel);
@@ -54,7 +64,6 @@ struct GameSharedData : public haf::shdata::IShareable
         result &= obj.set(GameScore, score);
 
         return result;
-
     }
 
     bool deserialize(mtps::Object const& obj) override
@@ -68,8 +77,9 @@ struct GameSharedData : public haf::shdata::IShareable
 
         return result;
     }
-
+    
     ~GameSharedData() override = default;
+
 };
 
 }  // namespace zoper

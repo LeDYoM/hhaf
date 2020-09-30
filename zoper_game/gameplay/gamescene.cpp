@@ -25,7 +25,7 @@
 #include <haf/scene_components/include/scenecontrol.hpp>
 #include <haf/input/include/inputcomponent.hpp>
 #include <haf/random/include/randomnumberscomponent.hpp>
-#include <haf/shareddata/include/shareddataview.hpp>
+#include <haf/shareddata/include/shareddata.hpp>
 #include <haf/resources/include/iresourceconfigurator.hpp>
 #include <haf/system/include/interfaceaccess.hpp>
 
@@ -156,12 +156,14 @@ void GameScene::onCreated()
     GameMode game_mode;
 
     {
-        auto game_shared_data_view = dataWrapper<shdata::SharedDataView>();
-        auto& game_shared_data =
-            game_shared_data_view->dataAs<GameSharedData>();
+        GameSharedData gsd{};
 
-        start_level = game_shared_data.startLevel;
-        game_mode   = game_shared_data.gameMode;
+        auto game_shared_data =
+            dataWrapper<shdata::SharedDataUpdater>()->view<GameSharedData>(
+                GameSharedData::address(), gsd);
+
+        start_level = game_shared_data->startLevel;
+        game_mode   = game_shared_data->gameMode;
     }
 
     level_properties_->configure(start_level, game_mode,

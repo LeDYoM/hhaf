@@ -2,7 +2,7 @@
 #include "../gameshareddata.hpp"
 
 #include <hlog/include/hlog.hpp>
-#include <haf/shareddata/include/shareddata_updater.hpp>
+#include <haf/shareddata/include/shareddata.hpp>
 
 using namespace mtps;
 
@@ -44,10 +44,22 @@ void LevelProperties::configure(
 void LevelProperties::setScore(const size_type new_score)
 {
     current_score_ = new_score;
-    attachedNode()
-        ->dataWrapper<shdata::SharedDataUpdater>()
-        ->dataAs<GameSharedData>()
-        .score = current_score_;
+
+    {
+        auto const game_shared_data =
+            attachedNode()
+                ->dataWrapper<shdata::SharedDataUpdater>()
+                ->update<GameSharedData>(GameSharedData::address());
+
+        if (!game_shared_data)
+        {
+            DisplayLog::debug("Cannot retrieve GameSharedData");
+        }
+        else
+        {
+            game_shared_data->score = current_score_;
+        }
+    }
     game_hud_->setScore(current_score_);
 }
 
@@ -58,10 +70,17 @@ void LevelProperties::setLevel(const LevelType currentLevel)
     current_level_ = currentLevel;
 
     {
-        auto game_shared_data_view =
-            attachedNode()->dataWrapper<shdata::SharedDataUpdater>();
-        game_shared_data_view->dataAs<GameSharedData>().endLevel =
-            current_level_;
+        auto game_shared_data =
+            attachedNode()
+                ->dataWrapper<shdata::SharedDataUpdater>()
+                ->update<GameSharedData>(GameSharedData::address());
+
+        if (game_shared_data == nullptr)
+        {
+            DisplayLog::debug("Cannot retrieve GameSharedData");
+        }
+
+        game_shared_data->endLevel = current_level_;
     }
 
     base_score_      = 2U * (current_level_ + 1U);
