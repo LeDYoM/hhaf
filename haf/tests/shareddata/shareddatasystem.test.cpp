@@ -5,7 +5,7 @@
 #include <haf/shareddata/include/address.hpp>
 #include <system/i_include/systembase.hpp>
 #include <system/i_include/systemprovider.hpp>
-#include "shareable_test_data.hpp"
+#include "include/shareable_test_data.hpp"
 #include "test_utils.hpp"
 
 using namespace mtps;

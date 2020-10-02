@@ -2,7 +2,7 @@
 #include "../gameshareddata.hpp"
 
 #include <hlog/include/hlog.hpp>
-#include <haf/shareddata/include/shareddata.hpp>
+#include <haf/shareddata/include/shareddataupdater.hpp>
 
 using namespace mtps;
 
@@ -46,10 +46,11 @@ void LevelProperties::setScore(const size_type new_score)
     current_score_ = new_score;
 
     {
+        GameSharedData gsd;
         auto const game_shared_data =
             attachedNode()
                 ->dataWrapper<shdata::SharedDataUpdater>()
-                ->update<GameSharedData>(GameSharedData::address());
+                ->update<GameSharedData>(GameSharedData::address(), gsd);
 
         if (!game_shared_data)
         {
@@ -70,10 +71,11 @@ void LevelProperties::setLevel(const LevelType currentLevel)
     current_level_ = currentLevel;
 
     {
+        GameSharedData gsd;
         auto game_shared_data =
             attachedNode()
                 ->dataWrapper<shdata::SharedDataUpdater>()
-                ->update<GameSharedData>(GameSharedData::address());
+                ->update<GameSharedData>(GameSharedData::address(), gsd);
 
         if (game_shared_data == nullptr)
         {

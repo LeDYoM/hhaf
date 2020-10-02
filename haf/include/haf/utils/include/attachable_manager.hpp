@@ -5,6 +5,7 @@
 
 #include <haf/utils/include/attachable.hpp>
 #include <mtypes/include/types.hpp>
+#include <hlog/include/hlog.hpp>
 
 namespace haf::utils
 {

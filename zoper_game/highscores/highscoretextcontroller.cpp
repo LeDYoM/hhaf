@@ -10,6 +10,7 @@
 #include <haf/resources/include/ittfont.hpp>
 #include <haf/resources/include/resourceview.hpp>
 #include <haf/shareddata/include/shareddata.hpp>
+#include <haf/shareddata/include/shareddataviewer.hpp>
 
 using namespace mtps;
 using namespace haf;
@@ -43,7 +44,7 @@ void HighScoreTextController::onCreated()
 
     // Request game score
     GameSharedData gsd{};
-    Score gameScore = dataWrapper<shdata::SharedDataUpdater>()
+    Score gameScore = dataWrapper<shdata::SharedDataViewer>()
                           ->view<GameSharedData>(GameSharedData::address(), gsd)
                           ->score;
     Rectf32 textBox{

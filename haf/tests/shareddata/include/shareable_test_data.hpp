@@ -6,6 +6,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
 #include <haf/shareddata/include/ishareable.hpp>
+#include <haf/shareddata/include/address.hpp>
 
 class ShareableTestData : public haf::shdata::IShareable
 {
@@ -15,6 +16,8 @@ public:
     mtps::str c;
 
     ~ShareableTestData() override = default;
+
+    static haf::shdata::Address address() { return haf::shdata::Address{"/test/data/"}; }
 
     bool serialize(mtps::Object& obj) const override
     {

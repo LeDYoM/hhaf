@@ -20,6 +20,8 @@ set(SOURCE_TESTS
     shareddata/address
     shareddata/shareddata
     shareddata/shareddatasystem
+    shareddata/shareddataupdater
+    shareddata/shareddataviewer
 
     time/timepoint
 
