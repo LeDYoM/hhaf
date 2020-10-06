@@ -12,9 +12,7 @@ using namespace haf::shdata;
 TEST_CASE("SharedDataSystemUpdater::SharedDataSystemUpdater",
           "[haf][shareddatasystem]")
 {
-    auto test_shared_data = makeTestSystem<TestSharedDataSystem>();
-    haf::sys::SharedDataSystem& sh_system =
-        test_shared_data->sharedDataSystem();
+    auto const test_shared_data = makeTestSystem<TestSharedDataSystem>();
 
     ShareableTestData shareable_test_data;
 
@@ -31,7 +29,7 @@ TEST_CASE("SharedDataSystemUpdater::SharedDataSystemUpdater",
         auto update_result = shared_data_wrapper->update(
             ShareableTestData::address(), shareable_test_data);
 
-        CHECK(update_result == nullptr);
+        CHECK_FALSE(update_result);
     }
 
     SECTION("Store and update")
@@ -52,17 +50,45 @@ TEST_CASE("SharedDataSystemUpdater::SharedDataSystemUpdater",
         CHECK(result.b == 0.0F);
         CHECK(result.c == "");
 
+        SECTION("Update")
         {
-            auto shared_data_wrapper_internal{
-                dwc.dataWrapper<SharedDataUpdater>()};
+            {
+                auto shared_data_wrapper_internal{
+                    dwc.dataWrapper<SharedDataUpdater>()};
 
-            bool const update_result = shared_data_wrapper_internal->update(
-                ShareableTestData::address(), result);
+                auto const update_result = shared_data_wrapper_internal->update(
+                    ShareableTestData::address(), result);
 
-            CHECK(update_result);
-            CHECK(result.a == 42);
-            CHECK(result.b == 123.33F);
-            CHECK(result.c == "hello test");
+                CHECK(update_result);
+                CHECK(result.a == 42);
+                CHECK(result.b == 123.33F);
+                CHECK(result.c == "hello test");
+
+                result.a = 11;
+                result.b = 657.45F;
+                result.c = "updated!";
+            }
+
+            CHECK(result.a == 11);
+            CHECK(result.b == 657.45F);
+            CHECK(result.c == "updated!");
+
+            {
+                // Check that the data inserted in the update has been stored
+                auto shared_data_wrapper_internal{
+                    dwc.dataWrapper<SharedDataUpdater>()};
+
+                auto const update_result = shared_data_wrapper_internal->update(
+                    ShareableTestData::address(), result);
+
+                CHECK(result.a == 11);
+                CHECK(result.b == 657.45F);
+                CHECK(result.c == "updated!");
+            }
+
+            CHECK(result.a == 11);
+            CHECK(result.b == 657.45F);
+            CHECK(result.c == "updated!");
         }
     }
 }

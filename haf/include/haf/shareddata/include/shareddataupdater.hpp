@@ -18,7 +18,7 @@ class SharedDataUpdater : public SharedData
 {
 public:
     template <typename T>
-    T* update(Address const& address, T& data)
+    bool update(Address const& address, T& data)
     {
         bool const result = retrieve(address, data);
         if (result)
