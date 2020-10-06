@@ -32,7 +32,6 @@ TEST_CASE("SharedDataSystemUpdater::SharedDataSystemUpdater",
             ShareableTestData::address(), shareable_test_data);
 
         CHECK(update_result == nullptr);
-
     }
 
     SECTION("Store and update")
@@ -53,12 +52,17 @@ TEST_CASE("SharedDataSystemUpdater::SharedDataSystemUpdater",
         CHECK(result.b == 0.0F);
         CHECK(result.c == "");
 
-        bool const update_result =
-            shared_data_wrapper->update(ShareableTestData::address(), result);
+        {
+            auto shared_data_wrapper_internal{
+                dwc.dataWrapper<SharedDataUpdater>()};
 
-        CHECK(update_result);
-        CHECK(result.a == 42);
-        CHECK(result.b == 123.33F);
-        CHECK(result.c == "hello test");
+            bool const update_result = shared_data_wrapper_internal->update(
+                ShareableTestData::address(), result);
+
+            CHECK(update_result);
+            CHECK(result.a == 42);
+            CHECK(result.b == 123.33F);
+            CHECK(result.c == "hello test");
+        }
     }
 }

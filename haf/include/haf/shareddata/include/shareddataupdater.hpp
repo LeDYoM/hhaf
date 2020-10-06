@@ -29,17 +29,25 @@ public:
         return dynamic_cast<T*>(internal_data_);
     }
 
-    ~SharedDataUpdater() override
+    bool commit()
     {
         if (internal_data_ != nullptr)
         {
             bool const result = store(address_, *internal_data_);
+            internal_data_ = nullptr;
+
             if (!result)
             {
                 DisplayLog::debug("Cannot store!");
             }
-            internal_data_ = nullptr;
+            return result;
         }
+        return false;
+    }
+
+    ~SharedDataUpdater() override
+    {
+        (void)commit();
     }
 
 private:
