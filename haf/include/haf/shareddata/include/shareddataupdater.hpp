@@ -14,19 +14,43 @@
 namespace haf::shdata
 {
 
+template <typename T>
 class SharedDataUpdater : public SharedData
 {
 public:
-    template <typename T>
-    bool update(Address const& address, T& data)
+    /*
+        template <typename T>
+        T* update(Address const& address, T& data)
+        {
+            bool const result = retrieve(address, data);
+            if (result)
+            {
+                internal_data_ = &data;
+                address_       = address;
+            }
+            return dynamic_cast<T*>(internal_data_);
+        }
+    */
+    mtps::sptr<T>  update(Address const& address)
     {
-        bool const result = retrieve(address, data);
+        if (!internal_data_)
+        {
+            internal_data_ = mtps::msptr<T>();
+        }
+
+        bool const result = retrieve(address, *internal_data_);
         if (result)
         {
-            internal_data_ = &data;
-            address_       = address;
+            address_ = address;
         }
-        return dynamic_cast<T*>(internal_data_);
+        else
+        {
+            DisplayLog::error("Invalid address");
+            address_ = Address{""};
+            internal_data_.reset();
+        }
+
+        return internal_data_;
     }
 
     bool commit()
@@ -34,7 +58,7 @@ public:
         if (internal_data_ != nullptr)
         {
             bool const result = store(address_, *internal_data_);
-            internal_data_ = nullptr;
+            internal_data_    = nullptr;
 
             if (!result)
             {
@@ -45,14 +69,11 @@ public:
         return false;
     }
 
-    ~SharedDataUpdater() override
-    {
-        (void)commit();
-    }
+    ~SharedDataUpdater() override { (void)commit(); }
 
 private:
     Address address_{""};
-    IShareable* internal_data_{nullptr};
+    mtps::sptr<T> internal_data_{nullptr};
 };
 
 }  // namespace haf::shdata

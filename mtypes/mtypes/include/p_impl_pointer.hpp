@@ -11,7 +11,7 @@ template <typename T>
 class PImplPointer
 {
 public:
-    explicit constexpr PImplPointer(rptr<T> pointer) : pointer_{std::move(pointer)} {}
+    explicit constexpr PImplPointer(rptr<T> pointer) : pointer_{pointer} {}
 
     PImplPointer(PImplPointer const &) = delete;
     PImplPointer& operator=(PImplPointer const&) = delete;

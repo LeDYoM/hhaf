@@ -20,14 +20,14 @@ TEST_CASE("SharedDataSystemUpdater::SharedDataSystemUpdater",
 
     SECTION("View from empty")
     {
-        auto shared_data_wrapper{dwc.dataWrapper<SharedDataUpdater>()};
+        auto shared_data_wrapper{dwc.dataWrapper<SharedDataUpdater<ShareableTestData>>()};
         bool const retrieve_result = shared_data_wrapper->retrieve(
             ShareableTestData::address(), shareable_test_data);
 
         CHECK_FALSE(retrieve_result);
 
         auto update_result = shared_data_wrapper->update(
-            ShareableTestData::address(), shareable_test_data);
+            ShareableTestData::address());
 
         CHECK_FALSE(update_result);
     }
@@ -38,7 +38,7 @@ TEST_CASE("SharedDataSystemUpdater::SharedDataSystemUpdater",
         shareable_test_data.b = 123.33F;
         shareable_test_data.c = "hello test";
 
-        auto shared_data_wrapper{dwc.dataWrapper<SharedDataUpdater>()};
+        auto shared_data_wrapper{dwc.dataWrapper<SharedDataUpdater<ShareableTestData>>()};
         bool const store_result = shared_data_wrapper->store(
             ShareableTestData::address(), shareable_test_data);
 
@@ -52,43 +52,16 @@ TEST_CASE("SharedDataSystemUpdater::SharedDataSystemUpdater",
 
         SECTION("Update")
         {
-            {
-                auto shared_data_wrapper_internal{
-                    dwc.dataWrapper<SharedDataUpdater>()};
+            auto shared_data_wrapper_internal{
+                dwc.dataWrapper<SharedDataUpdater<ShareableTestData>>()};
 
-                auto const update_result = shared_data_wrapper_internal->update(
-                    ShareableTestData::address(), result);
+            auto update_result = shared_data_wrapper_internal->update(
+                ShareableTestData::address());
 
-                CHECK(update_result);
-                CHECK(result.a == 42);
-                CHECK(result.b == 123.33F);
-                CHECK(result.c == "hello test");
-
-                result.a = 11;
-                result.b = 657.45F;
-                result.c = "updated!";
-            }
-
-            CHECK(result.a == 11);
-            CHECK(result.b == 657.45F);
-            CHECK(result.c == "updated!");
-
-            {
-                // Check that the data inserted in the update has been stored
-                auto shared_data_wrapper_internal{
-                    dwc.dataWrapper<SharedDataUpdater>()};
-
-                auto const update_result = shared_data_wrapper_internal->update(
-                    ShareableTestData::address(), result);
-
-                CHECK(result.a == 11);
-                CHECK(result.b == 657.45F);
-                CHECK(result.c == "updated!");
-            }
-
-            CHECK(result.a == 11);
-            CHECK(result.b == 657.45F);
-            CHECK(result.c == "updated!");
+            CHECK(update_result);
+            CHECK(update_result->a == 42);
+            CHECK(update_result->b == 123.33F);
+            CHECK(update_result->c == "hello test");
         }
     }
 }
