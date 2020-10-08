@@ -13,31 +13,30 @@ class PImplPointer
 public:
     explicit constexpr PImplPointer(rptr<T> pointer) : pointer_{pointer} {}
 
-    PImplPointer(PImplPointer const &) = delete;
+    PImplPointer(PImplPointer const&) = delete;
     PImplPointer& operator=(PImplPointer const&) = delete;
 
-    constexpr PImplPointer(PImplPointer &&) noexcept = default;
-    constexpr PImplPointer& operator=(PImplPointer&&) noexcept = default;
-
-    constexpr T* operator->() noexcept
+    constexpr PImplPointer(PImplPointer&& other) noexcept :
+        pointer_{other.pointer_}
     {
-        return pointer_;
+        other.pointer_ = nullptr;
     }
 
-    constexpr T const * operator->() const noexcept
+    constexpr PImplPointer& operator=(PImplPointer&& other) noexcept
     {
-        return pointer_;
+        auto tmp = pointer_;
+        pointer_ = other.pointer_;
+        other.pointer_ = tmp;
+        return *this;
     }
 
-    constexpr T& operator*() noexcept
-    {
-        return *pointer_;
-    }
+    constexpr T* operator->() noexcept { return pointer_; }
 
-    constexpr T const & operator*() const noexcept
-    {
-        return *pointer_;
-    }
+    constexpr T const* operator->() const noexcept { return pointer_; }
+
+    constexpr T& operator*() noexcept { return *pointer_; }
+
+    constexpr T const& operator*() const noexcept { return *pointer_; }
 
     ~PImplPointer() noexcept
     {
@@ -47,6 +46,7 @@ public:
             pointer_ = nullptr;
         }
     }
+
 private:
     rptr<T> pointer_;
 };
