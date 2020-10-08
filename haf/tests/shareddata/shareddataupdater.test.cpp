@@ -13,9 +13,7 @@ using namespace haf::shdata;
 TEST_CASE("SharedDataSystemUpdater::SharedDataSystemUpdater",
           "[haf][shareddatasystem]")
 {
-    auto test_shared_data = makeTestSystem<TestSharedDataSystem>();
-    haf::sys::SharedDataSystem& sh_system =
-        test_shared_data->sharedDataSystem();
+    auto const test_shared_data = makeTestSystem<TestSharedDataSystem>();
 
     ShareableTestData shareable_test_data;
 
@@ -33,7 +31,7 @@ TEST_CASE("SharedDataSystemUpdater::SharedDataSystemUpdater",
         auto update_result =
             shared_data_wrapper->update(ShareableTestData::address());
 
-        CHECK(update_result == nullptr);
+        CHECK_FALSE(update_result);
     }
 
     SECTION("Store and update")
@@ -102,19 +100,7 @@ TEST_CASE("SharedDataSystemUpdater::SharedDataSystemUpdater",
             CHECK(shared_data_wrapper_internal->commit());
             CHECK_FALSE(shared_data_wrapper_internal->commit());
 
-            auto shared_data_wrapper_internal2{
-                dwc.dataWrapper<SharedDataViewer<ShareableTestData>>()};
-
-            auto update_result2 = shared_data_wrapper_internal2->view(
-                ShareableTestData::address());
-
-            CHECK(update_result2);
-            CHECK(update_result2->a == 64);
-            CHECK(update_result2->b == 552.125F);
-            CHECK(update_result2->c == "updated!");
-        }
-
-        SECTION("Update not performed")
+        SECTION("Update")
         {
             auto shared_data_wrapper_internal{
                 dwc.dataWrapper<SharedDataUpdater<ShareableTestData>>()};
