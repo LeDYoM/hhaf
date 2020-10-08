@@ -13,26 +13,35 @@
 
 namespace haf::shdata
 {
-
+template <typename T>
 class SharedDataViewer : public SharedData
 {
 public:
-
-    template <typename T>
-    T const* view(Address const& address, T& data)
+    mtps::sptr<T const> view(Address const& address)
     {
-        bool const result{retrieve(address, data)};
+        if (internal_data_ == nullptr)
+        {
+            internal_data_ = mtps::msptr<T>();
+        }
+
+        bool const result = retrieve(address, *internal_data_);
         if (result)
         {
-            internal_data_ = &data;
-            address_       = address;
+            address_ = address;
         }
-        return dynamic_cast<T const*>(internal_data_);
+        else
+        {
+            DisplayLog::error("Invalid address");
+            address_ = Address{""};
+            internal_data_.reset();
+        }
+
+        return internal_data_;
     }
 
 private:
     Address address_{""};
-    IShareable* internal_data_{nullptr};
+    mtps::sptr<T> internal_data_{nullptr};
 };
 
 }  // namespace haf::shdata
