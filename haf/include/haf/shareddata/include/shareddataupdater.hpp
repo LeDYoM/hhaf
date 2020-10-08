@@ -18,20 +18,7 @@ template <typename T>
 class SharedDataUpdater : public SharedData
 {
 public:
-    /*
-        template <typename T>
-        T* update(Address const& address, T& data)
-        {
-            bool const result = retrieve(address, data);
-            if (result)
-            {
-                internal_data_ = &data;
-                address_       = address;
-            }
-            return dynamic_cast<T*>(internal_data_);
-        }
-    */
-    mtps::sptr<T>  update(Address const& address)
+    mtps::sptr<T> update(Address const& address)
     {
         if (!internal_data_)
         {
@@ -58,7 +45,7 @@ public:
         if (internal_data_ != nullptr)
         {
             bool const result = store(address_, *internal_data_);
-            internal_data_    = nullptr;
+            internal_data_.reset();
 
             if (!result)
             {
@@ -69,6 +56,15 @@ public:
         return false;
     }
 
+    bool rollback()
+    {
+        if (internal_data_ != nullptr)
+        {
+            internal_data_.reset();
+            return true;
+        }
+        return false;
+    }
     ~SharedDataUpdater() override { (void)commit(); }
 
 private:

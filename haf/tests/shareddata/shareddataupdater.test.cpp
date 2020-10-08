@@ -49,6 +49,40 @@ TEST_CASE("SharedDataSystemUpdater::SharedDataSystemUpdater",
 
         CHECK(store_result);
 
+        SECTION("Update normal")
+        {
+            {
+                auto shared_data_wrapper_internal{
+                    dwc.dataWrapper<SharedDataUpdater<ShareableTestData>>()};
+
+                auto update_result = shared_data_wrapper_internal->update(
+                    ShareableTestData::address());
+
+                CHECK(update_result != nullptr);
+                CHECK(update_result->a == 42);
+                CHECK(update_result->b == 123.33F);
+                CHECK(update_result->c == "hello test");
+
+                update_result->a = 64;
+                update_result->b = 552.125F;
+                update_result->c = "updated!";
+            }
+
+            {
+                auto shared_data_wrapper_internal{
+                    dwc.dataWrapper<SharedDataViewer<ShareableTestData>>()};
+
+                auto update_result = shared_data_wrapper_internal->view(
+                    ShareableTestData::address());
+
+                CHECK(update_result);
+                CHECK(update_result->a == 64);
+                CHECK(update_result->b == 552.125F);
+                CHECK(update_result->c == "updated!");
+            }
+        }
+
+        SECTION("Update commit")
         {
             auto shared_data_wrapper_internal{
                 dwc.dataWrapper<SharedDataUpdater<ShareableTestData>>()};
@@ -56,23 +90,93 @@ TEST_CASE("SharedDataSystemUpdater::SharedDataSystemUpdater",
             auto update_result = shared_data_wrapper_internal->update(
                 ShareableTestData::address());
 
-            CHECK(update_result);
+            CHECK(update_result != nullptr);
             CHECK(update_result->a == 42);
             CHECK(update_result->b == 123.33F);
             CHECK(update_result->c == "hello test");
-        }
 
-        {
-            auto shared_data_wrapper_internal{
+            update_result->a = 64;
+            update_result->b = 552.125F;
+            update_result->c = "updated!";
+
+            CHECK(shared_data_wrapper_internal->commit());
+            CHECK_FALSE(shared_data_wrapper_internal->commit());
+
+            auto shared_data_wrapper_internal2{
                 dwc.dataWrapper<SharedDataViewer<ShareableTestData>>()};
 
-            auto update_result = shared_data_wrapper_internal->view(
+            auto update_result2 = shared_data_wrapper_internal2->view(
                 ShareableTestData::address());
 
-            CHECK(update_result);
+            CHECK(update_result2);
+            CHECK(update_result2->a == 64);
+            CHECK(update_result2->b == 552.125F);
+            CHECK(update_result2->c == "updated!");
+        }
+
+        SECTION("Update not performed")
+        {
+            auto shared_data_wrapper_internal{
+                dwc.dataWrapper<SharedDataUpdater<ShareableTestData>>()};
+
+            auto update_result = shared_data_wrapper_internal->update(
+                ShareableTestData::address());
+
+            CHECK(update_result != nullptr);
             CHECK(update_result->a == 42);
             CHECK(update_result->b == 123.33F);
             CHECK(update_result->c == "hello test");
+
+            update_result->a = 64;
+            update_result->b = 552.125F;
+            update_result->c = "updated!";
+
+            auto shared_data_wrapper_internal2{
+                dwc.dataWrapper<SharedDataViewer<ShareableTestData>>()};
+
+            auto update_result2 = shared_data_wrapper_internal2->view(
+                ShareableTestData::address());
+
+            CHECK(update_result2 != nullptr);
+            CHECK(update_result2->a == 42);
+            CHECK(update_result2->b == 123.33F);
+            CHECK(update_result2->c == "hello test");
+        }
+
+        SECTION("Update rollback")
+        {
+            {
+                auto shared_data_wrapper_internal{
+                    dwc.dataWrapper<SharedDataUpdater<ShareableTestData>>()};
+
+                auto update_result = shared_data_wrapper_internal->update(
+                    ShareableTestData::address());
+
+                CHECK(update_result != nullptr);
+                CHECK(update_result->a == 42);
+                CHECK(update_result->b == 123.33F);
+                CHECK(update_result->c == "hello test");
+
+                update_result->a = 64;
+                update_result->b = 552.125F;
+                update_result->c = "updated!";
+
+                CHECK(shared_data_wrapper_internal->rollback());
+                CHECK_FALSE(shared_data_wrapper_internal->rollback());
+            }
+
+            {
+                auto shared_data_wrapper_internal{
+                    dwc.dataWrapper<SharedDataViewer<ShareableTestData>>()};
+
+                auto update_result = shared_data_wrapper_internal->view(
+                    ShareableTestData::address());
+
+                CHECK(update_result != nullptr);
+                CHECK(update_result->a == 42);
+                CHECK(update_result->b == 123.33F);
+                CHECK(update_result->c == "hello test");
+            }
         }
     }
 }
