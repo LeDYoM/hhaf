@@ -37,7 +37,7 @@ TEST_CASE("Address", "[haf][shdata][Address]")
         CHECK(address1.last() == "def");
     }
 
-    SECTION("Copy assignment")
+    SECTION("Copy assignment to lvalue")
     {
         Address address("abc/def");
         CHECK(address.size() == 2U);
@@ -53,6 +53,21 @@ TEST_CASE("Address", "[haf][shdata][Address]")
         CHECK(address1[1U] == "def");
         CHECK(address1.first() == "abc");
         CHECK(address1.last() == "def");
+    }
+
+    SECTION("Copy assignment to rvalue")
+    {
+        Address address("abc/def");
+        CHECK(address.size() == 2U);
+        CHECK(address[0U] == "abc");
+        CHECK(address[1U] == "def");
+        CHECK(address.first() == "abc");
+        CHECK(address.last() == "def");
+
+        address = Address("");
+        CHECK(address.size() == 1U);
+        CHECK(address.first() == "");
+        CHECK(address.last() == "");
     }
 
     SECTION("Separator at the beggining")
