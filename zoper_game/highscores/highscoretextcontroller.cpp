@@ -43,9 +43,8 @@ void HighScoreTextController::onCreated()
                                                             m_hsData);
 
     // Request game score
-    GameSharedData gsd{};
-    Score gameScore = dataWrapper<shdata::SharedDataViewer>()
-                          ->view<GameSharedData>(GameSharedData::address(), gsd)
+    Score gameScore = dataWrapper<shdata::SharedDataViewer<GameSharedData>>()
+                          ->view(GameSharedData::address())
                           ->score;
     Rectf32 textBox{
         rectFromSize(dataWrapper<SceneMetricsView>()->currentView().size())

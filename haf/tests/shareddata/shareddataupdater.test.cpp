@@ -99,6 +99,7 @@ TEST_CASE("SharedDataSystemUpdater::SharedDataSystemUpdater",
 
             CHECK(shared_data_wrapper_internal->commit());
             CHECK_FALSE(shared_data_wrapper_internal->commit());
+        }
 
         SECTION("Update")
         {

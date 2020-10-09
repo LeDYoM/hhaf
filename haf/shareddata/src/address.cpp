@@ -17,6 +17,8 @@ struct Address::AddressPrivate
         address_parts_(addr_private.address_parts_)
     {}
 
+    ~AddressPrivate() = default;
+
     AddressPrivate(AddressPrivate&&) noexcept = default;
     AddressPrivate& operator=(AddressPrivate const&) noexcept = default;
     AddressPrivate& operator=(AddressPrivate&&) noexcept = default;
