@@ -223,6 +223,24 @@ public:
             }
         }
 
+        template <typename T>
+        [[nodiscard]] bool as(vector<T>& value) const
+        {
+            vector<T> result;
+            getObject() >> result;
+            std::swap(result, value);
+            return true;
+        }
+
+        template <typename T, size_type Size>
+        [[nodiscard]] bool as(array<T,Size>& value) const
+        {
+            array<T, Size> result;
+            getObject() >> result;
+            std::swap(result, value);
+            return true;
+        }
+
     private:
         const Object* m_object{nullptr};
         const str* m_value{nullptr};
