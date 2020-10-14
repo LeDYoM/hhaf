@@ -44,6 +44,9 @@ Address& Address::operator=(Address const& address)
     return *this;
 }
 
+Address::Address(Address&& address) noexcept = default;
+Address& Address::operator=(Address&& address) noexcept = default;
+
 size_type Address::size() const noexcept
 {
     return private_->address_parts_.size();

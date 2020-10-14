@@ -42,14 +42,14 @@ public:
      *
      * @param address Source address to copy from.
      */
-    explicit Address(Address const& address);
+    Address(Address const& address);
 
     /**
      * @brief Construct a new Address object moving from another one
      *
      * @param address Source address
      */
-    Address(Address&& address) noexcept = default;
+    Address(Address&& address) noexcept;
 
     /**
      * @brief Copy assignment
@@ -65,7 +65,7 @@ public:
      * @param address Source address
      * @return Address& Updated address
      */
-    Address& operator=(Address&& address) noexcept = default;
+    Address& operator=(Address&& address) noexcept;
 
     mtps::size_type size() const noexcept;
 
