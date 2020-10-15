@@ -116,6 +116,11 @@ TEST_CASE("program filename --doit -abc=sdf",
     CHECK(paramParser.numOptionParameters() == 1);
     CHECK(paramParser.positionalParameterAt(0) == "filename");
     CHECK(paramParser.positionalParameterAt(1) == "");
+    CHECK(paramParser.positionalParameterExists("filename"));
+    CHECK_FALSE(paramParser.positionalParameterExists(""));
+    CHECK_FALSE(paramParser.positionalParameterExists("doit"));
+    CHECK_FALSE(paramParser.positionalParameterExists("abc"));
+    CHECK_FALSE(paramParser.positionalParameterExists("sdf"));
     CHECK(paramParser.switchExists("doit"));
     CHECK_FALSE(paramParser.switchExists("doitasd"));
     paramParser.getOptions() ==

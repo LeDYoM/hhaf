@@ -130,6 +130,14 @@ public:
             : "";
     }
 
+    bool positionalParameterExists(str const& poPar) const
+    {
+        return std::find(positional_parameters_.cbegin(),
+                         positional_parameters_.cend(),
+                         PositionalParameter{poPar}) !=
+            positional_parameters_.cend();
+    }
+
     bool switchExists(const str& swPar) const
     {
         return std::find(switch_parameters_.cbegin(), switch_parameters_.cend(),
@@ -301,12 +309,12 @@ private:
     friend ParametersParser parpar::create(vector_t<str_t> commandLine);
 };
 
-ParametersParser create(vector_t<str_t> commandLine)
+inline ParametersParser create(vector_t<str_t> commandLine)
 {
     return ParametersParser(std::move(commandLine));
 }
 
-ParametersParser create(int const argc, char const* const argv[])
+inline ParametersParser create(int const argc, char const* const argv[])
 {
     vector_t<str> params(argc);
     for (int i = 0; i < argc; ++i)

@@ -31,12 +31,11 @@ SimulationSystem::~SimulationSystem()
     constexpr char SaveFileName[] = "simulation_output.txt";
 
     DisplayLog::info("Serializing play data...");
-
     DisplayLog::info("Going to write play data into file ", SaveFileName);
 
     SystemDataWrapperCreator dwc{*this};
     auto file_serializer = dwc.dataWrapper<FileSerializer>();
-    auto const result    = file_serializer->serializeToFile(
+    auto const result    = file_serializer->serializeToFile2(
         SaveFileName, priv_->next_replay_data_);
 
     if (result != FileSerializer::Result::Success)

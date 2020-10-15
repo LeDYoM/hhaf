@@ -7,8 +7,9 @@
 #include <haf/simulation/include/simulationaction.hpp>
 
 #include <haf/input/include/key.hpp>
-#include <hlog/include/hlog.hpp>
 #include <haf/time/include/timepoint.hpp>
+#include <haf/shareddata/include/ishareable.hpp>
+#include <hlog/include/hlog.hpp>
 #include <system/i_include/systemprovider.hpp>
 #include <random/i_include/randomsystem.hpp>
 
@@ -19,13 +20,31 @@
 namespace haf::sys
 {
 
-struct ReplayData
+struct ReplayData : public shdata::IShareable
 {
     SimulationSystem::SimulateRandomDataBuffer data_buffer_;
     SimulationActionContainer simulation_actions_;
 
     constexpr static char DataBufferName[] = "replay_data";
     constexpr static char InputDataName[]  = "input_data";
+
+    friend const mtps::Object& operator>>(const mtps::Object& obj, ReplayData& replay_data);
+    friend mtps::Object& operator<<(mtps::Object& obj,
+                                const ReplayData& replay_data);
+
+    bool serialize(mtps::Object& obj) const override
+    {
+        obj << *this;
+        return true;
+    }
+
+    bool deserialize(mtps::Object const& obj) override
+    {
+        obj >> *this;
+        return true;
+    }
+
+    ~ReplayData() override = default;
 };
 
 const mtps::Object& operator>>(const mtps::Object& obj, ReplayData& replay_data)
@@ -45,7 +64,7 @@ const mtps::Object& operator>>(const mtps::Object& obj, ReplayData& replay_data)
     return obj;
 }
 
-inline mtps::Object& operator<<(mtps::Object& obj,
+mtps::Object& operator<<(mtps::Object& obj,
                                 const ReplayData& replay_data)
 {
     obj.set(ReplayData::DataBufferName, replay_data.data_buffer_);
