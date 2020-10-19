@@ -66,6 +66,14 @@ using f32 = float;
 using f64 = double;
 using size_type = std::size_t;
 using ssize_type = std::ptrdiff_t;
+using fast_u64 = uint_fast64_t;
+using fast_u32 = uint_fast32_t;
+using fast_u16 = uint_fast16_t;
+using fast_u8 = uint_fast8_t;
+using fast_s64 = int_fast64_t;
+using fast_s32 = int_fast32_t;
+using fast_s16 = int_fast16_t;
+using fast_s8 = int_fast8_t;
 
 template <typename T, typename V>
 using map = std::map<T, V>;
