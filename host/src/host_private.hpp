@@ -8,6 +8,7 @@
 #include <loader/include/loader.hpp>
 #include <mtypes/include/parpar.hpp>
 #include <mtypes/include/object.hpp>
+#include <mtypes/include/parpar.hpp>
 
 using namespace mtps;
 

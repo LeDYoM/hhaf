@@ -15,6 +15,7 @@ using str_t = str;
 template <typename T>
 using vector_t = vector<T>;
 
+// Forward declaration of main class.
 class ParametersParser;
 
 // Forward declare free functions to create parameters parser objects
@@ -43,15 +44,23 @@ public:
      */
     enum class SyntaxParserErrorCodes
     {
+        /// There is no error
         NoError = 0U,
+        /// Found an option without equal sign (starts with -, but no =)
         OptionWithoutEqual,
+        /// Found an option without name (-=foo)
         EmptyOptionName,
+        /// Found an option without value (-foo=)
         EmptyOptionValue,
+        /// Found a positional argument in a wrong place
         IncorrectPositionalPosition,
+        /// Found a duplicated optional argument
         OptionAlreadySet,
 
         // Exceptional cases, might never be reached
+        /// There is an empty parameter
         EmptyParameter,
+        /// Cannot determine the type of the parameter
         UnknownParameterType
     };
 
@@ -98,21 +107,40 @@ public:
         return option_parameters.size();
     }
 
+    /**
+     * @brief Get the total number of parameters of all types
+     * @return size_type The value
+     */
     size_type numParameters() const noexcept
     {
         return numPositionalParameters() + numSwitchParameters() +
             numOptionParameters();
     }
 
+    /**
+     * @brief Ask if there is any parsed parameter
+     * @return true No parsed parameters
+     * @return false There is at least one parsed parameter
+     */
     bool emptyParameters() const noexcept
     {
         return positional_parameters_.empty() && switch_parameters_.empty() &&
             option_parameters.empty();
     }
 
+    /**
+     * @brief Opposite of the emptyParameters() function
+     * @see emptyParameters
+     * @return true There is at least one parsed parameter
+     * @return false No parsed parameters
+     */
     inline bool hasParameters() const noexcept { return !(emptyParameters()); }
 
-    inline auto numSyntaxErrors() const
+    /**
+     * @brief Get the total number of syntax errors detected
+     * @return The value
+     */
+    inline size_type numSyntaxErrors() const
     {
         return std::count_if(syntax_errors_.cbegin(), syntax_errors_.cend(),
                              [](const auto error) {
@@ -121,15 +149,34 @@ public:
                              });
     }
 
+    /**
+     * @brief Method to ask if the proccessed parameters are syntactically
+     * correct
+     * @return true They are correct
+     * @return false At least one error was detected
+     */
     bool hasValidSyntax() const noexcept { return numSyntaxErrors() == 0U; }
 
-    str positionalParameterAt(const std::size_t position) const
+    /**
+     * @brief Get the positional parameter at a given index
+     * @param position Position to fetch
+     * @return str Empty string if the index is higher than the number of
+     * positional parameters found. The value otherwise
+     */
+    str positionalParameterAt(size_type const position) const noexcept
     {
         return (position < positional_parameters_.size())
             ? positional_parameters_[position]
             : "";
     }
 
+    /**
+     * @brief Ask if a given positional parameter exists.
+     * 
+     * @param poPar Name of the positional parameter
+     * @return true Found
+     * @return false Not found
+     */
     bool positionalParameterExists(str const& poPar) const
     {
         return std::find(positional_parameters_.cbegin(),
