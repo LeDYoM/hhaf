@@ -71,6 +71,18 @@ bool KeyMapping::setKey(const u32 index, const input::Key key)
     return true;
 }
 
+bool KeyMapping::serialize(mtps::Object &obj) const
+{
+    obj << *this;
+    return true;
+}
+
+bool KeyMapping::deserialize(mtps::Object const &obj)
+{
+    obj >> *this;
+    return true;
+}
+
 void KeyMapping::apply()
 {
     for (auto i = 0u; i < Direction::Total; ++i)
