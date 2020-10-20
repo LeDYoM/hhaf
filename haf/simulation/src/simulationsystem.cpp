@@ -84,7 +84,7 @@ void SimulationSystem::initialize()
 
     SystemDataWrapperCreator dwc{*this};
     auto file_serializer = dwc.dataWrapper<FileSerializer>();
-    auto const result    = file_serializer->deserializeFromFile(
+    auto const result    = file_serializer->deserializeFromFile2(
         InputFileName, priv_->current_replay_data_);
 
     if (result != FileSerializer::Result::Success)

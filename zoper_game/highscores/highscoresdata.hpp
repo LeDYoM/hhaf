@@ -6,11 +6,13 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/array.hpp>
 #include <mtypes/include/object.hpp>
+#include <haf/shareddata/include/ishareable.hpp>
 
 namespace zoper
 {
 
-constexpr mtps::size_type NumHighScore = 10;
+constexpr mtps::fast_u16 NumHighScore = 10U;
+
 using Score = mtps::size_type;
 
 struct HighScore
@@ -33,7 +35,7 @@ inline mtps::Object &operator<<(mtps::Object &obj, const HighScore &high_score_d
     return obj;
 }
 
-class HighScoresData
+class HighScoresData : public haf::shdata::IShareable
 {
 public:
     using HighScoresList = mtps::array<HighScore, NumHighScore>;
@@ -46,6 +48,19 @@ public:
 
     friend mtps::Object &operator<<(mtps::Object &obj, const HighScoresData &high_scores_data);
     friend const mtps::Object &operator>>(const mtps::Object &obj, HighScoresData &high_scores_data);
+
+    bool serialize(mtps::Object& obj) const override
+    {
+        obj << *this;
+        return true;
+    }
+
+    bool deserialize(mtps::Object const& obj) override
+    {
+        obj >> *this;
+        return true;
+    }
+
 private:
     HighScoresList m_highScoreList;
 };
