@@ -5,6 +5,7 @@
 
 #include <hosted_app/include/iapp.hpp>
 #include <haf/system/include/isystemcontroller.hpp>
+#include <hlog/include/hlog.hpp>
 #include <loader/include/loader.hpp>
 #include <mtypes/include/parpar.hpp>
 #include <mtypes/include/object.hpp>
@@ -30,6 +31,14 @@ public:
     {
         if (params_.hasParameters())
         {
+            auto const simulation_input = params_.optionValue("simin");
+            // If the parameter simin exists
+            if (simulation_input.first)
+            {
+                simulation_input_file = simulation_input.second;
+                DisplayLog::debug("Parameter simin found eith value: ",
+                                  simulation_input_file);
+            }
         }
         return true;
     }
@@ -51,8 +60,11 @@ public:
 
     int const argc_;
     char const* const* const argv_;
+
+    str simulation_input_file;
+    str simulation_output_file;
 };
 
-}  // namespace haf::sys
+}  // namespace haf::host
 
 #endif

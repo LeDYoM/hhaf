@@ -184,11 +184,23 @@ public:
                          PositionalParameter{poPar}) !=
             positional_parameters_.cend();
     }
-
+    
     bool switchExists(const str& swPar) const
     {
         return std::find(switch_parameters_.cbegin(), switch_parameters_.cend(),
                          SwitchParameter{swPar}) != switch_parameters_.cend();
+    }
+
+    bool onlyValidSwitches(vector_t<str_t> const& validSwitches) const noexcept
+    {
+        for (const auto& swt : validSwitches)
+        {
+            if (!switchExists(swt))
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     bool optionExists(const str& opPar) const
@@ -196,6 +208,14 @@ public:
         return optionValue(opPar).first;
     }
 
+    /**
+     * @brief Get the value of a given option
+     * 
+     * @param opPar Name of the option
+     * @return pair<bool, str> The first element of the pair says if the option
+     * was found. The second the value. If the option was not found, the value
+     * contained in the second is rmpty string.d
+     */
     pair<bool, str> optionValue(const str_t& opPar) const
     {
         auto iterator(std::find_if(option_parameters.cbegin(),
@@ -216,6 +236,18 @@ public:
     }
 
     const auto& getOptions() const noexcept { return option_parameters; }
+
+    bool onlyValidOptions(vector_t<str_t> const& validOptions) const noexcept
+    {
+        for (const auto& op : validOptions)
+        {
+            if (!optionExists(op))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 
 private:
     enum class ParameterType
