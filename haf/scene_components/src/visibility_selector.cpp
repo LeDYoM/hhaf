@@ -1,4 +1,4 @@
-#include "visibility_selector.hpp"
+#include <haf/scene_components/include/visibility_selector.hpp>
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>

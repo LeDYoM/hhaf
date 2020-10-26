@@ -1,4 +1,4 @@
-#include "textquad.hpp"
+#include <haf/scene_nodes/include/textquad.hpp>
 
 using namespace mtps;
 

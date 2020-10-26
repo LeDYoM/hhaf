@@ -21,5 +21,5 @@ set(_LINK_PRIVATE scene scene_internal)
 build_internal_lib_component(INTERNAL_TARGET ${INTERNAL_TARGET} SOURCES
                              ${_SOURCES} PRIVATE_INTERNAL_LINK ${_LINK_PRIVATE})
 
-target_link_libraries(${CURRENT_TARGET} PRIVATE scene)
-target_link_libraries(${CURRENT_TARGET} PRIVATE scene_internal)
+#target_link_libraries(${CURRENT_TARGET} PRIVATE scene)
+#target_link_libraries(${CURRENT_TARGET} PRIVATE scene_internal)

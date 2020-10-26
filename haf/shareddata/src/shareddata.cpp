@@ -1,5 +1,5 @@
-#include "shareddata.hpp"
-#include "shareddatasystem.hpp"
+#include <haf/shareddata/include/shareddata.hpp>
+#include <haf/shareddata/i_include/shareddatasystem.hpp>
 #include <system/i_include/systemprovider.hpp>
 #include <system/i_include/get_system.hpp>
 

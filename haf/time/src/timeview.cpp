@@ -1,5 +1,5 @@
-#include "timeview.hpp"
-#include "timesystem.hpp"
+#include <haf/time/include/timeview.hpp>
+#include <haf/time/i_include/timesystem.hpp>
 
 #include <haf/scene/include/scenenode.hpp>
 

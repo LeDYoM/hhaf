@@ -1,4 +1,4 @@
-#include "animation.hpp"
+#include <haf/scene_components/include/animation.hpp>
 
 using namespace mtps;
 

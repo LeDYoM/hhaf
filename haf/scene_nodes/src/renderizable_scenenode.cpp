@@ -1,4 +1,4 @@
-#include "renderizable_scenenode.hpp"
+#include <haf/scene_nodes/include/renderizable_scenenode.hpp>
 #include <mtypes/include/types.hpp>
 #include <haf/render/include/renderizable.hpp>
 #include <hlog/include/hlog.hpp>

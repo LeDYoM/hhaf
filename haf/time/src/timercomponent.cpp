@@ -1,4 +1,4 @@
-#include "timercomponent.hpp"
+#include <haf/time/include/timercomponent.hpp>
 
 #include <mtypes/include/function.hpp>
 #include <mtypes/include/algoutils.hpp>

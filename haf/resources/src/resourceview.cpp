@@ -1,5 +1,5 @@
-#include "resourceview.hpp"
-#include "resourcemanager.hpp"
+#include <haf/resources/include/resourceview.hpp>
+#include <haf/resources/i_include/resourcemanager.hpp>
 
 #include <hlog/include/hlog.hpp>
 #include <system/i_include/get_system.hpp>

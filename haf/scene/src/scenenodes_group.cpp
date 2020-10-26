@@ -1,5 +1,4 @@
-#include "scenenodes.hpp"
-#include "scenenode.hpp"
+#include <haf/scene/include/scenenodes.hpp>
 #include <haf/scene/include/scenenode.hpp>
 #include <hlog/include/hlog.hpp>
 

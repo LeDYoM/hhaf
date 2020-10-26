@@ -1,4 +1,4 @@
-#include "renderizable.hpp"
+#include <haf/render/include/renderizable.hpp>
 #include <render/i_include/rendersystem.hpp>
 
 #include <haf/render/include/renderdata.hpp>

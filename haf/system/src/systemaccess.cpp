@@ -1,5 +1,5 @@
-#include "systemaccess.hpp"
-#include "isystemprovider.hpp"
+#include <haf/system/include/systemaccess.hpp>
+#include <haf/system/includeisystemprovider.hpp>
 
 #include <scene/i_include/scenemanager.hpp>
 

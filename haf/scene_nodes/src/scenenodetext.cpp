@@ -1,4 +1,4 @@
-#include "scenenodetext.hpp"
+#include <haf/scene_nodes/include/scenenodetext.hpp>
 
 #include <haf/resources/include/ifont.hpp>
 #include <haf/resources/include/itexture.hpp>

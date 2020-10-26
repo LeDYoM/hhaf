@@ -1,6 +1,6 @@
-#include "input_component_base.hpp"
-#include "inputsystem.hpp"
-#include "key.hpp"
+#include <haf/input/include/input_component_base.hpp>
+#include <haf/input/i_include/inputsystem.hpp>
+#include <haf/input/include/key.hpp>
 
 #include <hlog/include/hlog.hpp>
 #include <system/i_include/get_system.hpp>

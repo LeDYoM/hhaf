@@ -1,4 +1,4 @@
-#include "matrix4x4.hpp"
+#include <haf/scene/include/matrix4x4.hpp>
 
 namespace haf::scene
 {

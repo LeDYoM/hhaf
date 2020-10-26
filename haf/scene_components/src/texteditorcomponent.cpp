@@ -1,4 +1,4 @@
-#include "texteditorcomponent.hpp"
+#include <haf/scene_components/include/texteditorcomponent.hpp>
 #include <haf/scene_nodes/include/scenenodetext.hpp>
 
 using namespace mtps;

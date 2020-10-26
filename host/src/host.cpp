@@ -5,7 +5,7 @@
 #include <exception>
 #include <hlog/include/hlog.hpp>
 #include <hosted_app/include/iapp.hpp>
-#include <haf/system/include/isystemcontroller.hpp>
+#include <haf/include/haf/system/include/isystemcontroller.hpp>
 
 using namespace mtps;
 

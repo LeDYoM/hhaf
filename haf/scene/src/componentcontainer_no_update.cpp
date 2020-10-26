@@ -1,4 +1,4 @@
-#include "componentcontainer.hpp"
+#include <haf/scene/include/componentcontainer.hpp>
 
 #include <hlog/include/hlog.hpp>
 #include <mtypes/include/algoutils.hpp>

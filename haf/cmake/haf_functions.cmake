@@ -10,27 +10,30 @@ function(build_internal_lib_component)
   set(_INTERNAL_INCLUDE_DIRECTORY "${PROJECT_SOURCE_DIR}${_INTERNAL_INCLUDE}")
   set(INTERNAL_FOR_OTHERS_INCLUDE_DIRECTORY "${PROJECT_SOURCE_DIR}/../")
 
-  # This variable will point to <root>/haf/include/<module>/include/ it is
-  # intended to allow cpp files in the library to use "file.hpp"
-  set(MODULE_INCLUDE_FOR_SRC_FILES
-      ${HAF_PUBLIC_INCLUDE_DIRECTORY}haf/${CURRENT_TARGET}/include/)
+#  set(MODULE_INCLUDE_FOR_SRC_FILES
+#      ${HAF_PUBLIC_INCLUDE_DIRECTORY}haf/${CURRENT_TARGET}/include/)
 
   # TODO: Add all sources
-  add_library(${CURRENT_TARGET} STATIC ${LC_BUILD_SOURCES})
-
-  target_compile_definitions(${CURRENT_TARGET} PRIVATE haf_EXPORTS)
+  target_sources(haf PRIVATE ${extra_file} ${LC_BUILD_SOURCES})
+  #add_library(${CURRENT_TARGET} STATIC ${LC_BUILD_SOURCES})
   
   # Add <root>/haf/include/ to all users of haf
-  target_include_directories(${CURRENT_TARGET}
-                             PUBLIC ${HAF_PUBLIC_INCLUDE_DIRECTORY})
+  #target_include_directories(${CURRENT_TARGET}
+  #                           PUBLIC ${HAF_PUBLIC_INCLUDE_DIRECTORY})
+
+  target_include_directories(haf PUBLIC ${HAF_PUBLIC_INCLUDE_DIRECTORY})
 
   # Internal includes
-  target_include_directories(${CURRENT_TARGET}
+  target_include_directories(haf
                              PRIVATE ${_INTERNAL_INCLUDE_DIRECTORY})
+  #target_include_directories(${CURRENT_TARGET}
+  #                           PRIVATE ${_INTERNAL_INCLUDE_DIRECTORY})
 
   # Only for this target
-  target_include_directories(${CURRENT_TARGET}
+  target_include_directories(haf
                              PRIVATE ${MODULE_INCLUDE_FOR_SRC_FILES})
+  #target_include_directories(${CURRENT_TARGET}
+  #                           PRIVATE ${MODULE_INCLUDE_FOR_SRC_FILES})
 
   # Add a target to allow internal access to modules. Perhaps that should be
   # temporary
@@ -38,11 +41,12 @@ function(build_internal_lib_component)
   target_include_directories(${CURRENT_TARGET}_internal
                              INTERFACE ${INTERNAL_FOR_OTHERS_INCLUDE_DIRECTORY})
 
-  target_link_libraries(${CURRENT_TARGET} PRIVATE log_and_types)
+#  target_link_libraries(${CURRENT_TARGET} PRIVATE log_and_types)
+  target_link_libraries(haf PRIVATE log_and_types)
 
   # Link all private static internal libraries passed as parameters
   foreach(PRIVATE_LINK IN LISTS LC_BUILD_PRIVATE_INTERNAL_LINK)
-    target_link_libraries(${CURRENT_TARGET} PRIVATE ${PRIVATE_LINK})
+    target_link_libraries(haf PRIVATE ${PRIVATE_LINK})
   endforeach()
 
 endfunction(build_internal_lib_component)
