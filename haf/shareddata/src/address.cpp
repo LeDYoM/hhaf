@@ -1,4 +1,4 @@
-#include "address.hpp"
+#include <haf/shareddata/include/address.hpp>
 #include <mtypes/include/vector.hpp>
 
 #include <utility>

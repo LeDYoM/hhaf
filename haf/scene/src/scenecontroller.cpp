@@ -1,6 +1,6 @@
-#include "scenecontroller.hpp"
-#include "scene.hpp"
-#include "scenemanager.hpp"
+#include <haf/scene/i_include/scenecontroller.hpp>
+#include <haf/scene/include/scene.hpp>
+#include <haf/scene/i_include/scenemanager.hpp>
 
 #include <haf/system/include/isystemprovider.hpp>
 #include <system/i_include/systemprovider.hpp>

@@ -1,4 +1,4 @@
-#include "window_properties.hpp"
+#include <haf/window/include/window_properties.hpp>
 
 using namespace mtps;
 

@@ -1,9 +1,9 @@
 #include "get_systemprovider.hpp"
 #include "systemprovider.hpp"
-#include "isystemprovider.hpp"
-#include "get_system.hpp"
+#include <haf/system/include/isystemprovider.hpp>
+#include <haf/system/i_include/get_system.hpp>
 #include <haf/scene/include/scenenode.hpp>
-#include "systemaccess.hpp"
+#include <haf/system/include/systemaccess.hpp>
 #include <scene/i_include/scenemanager.hpp>
 #include <render/i_include/rendersystem.hpp>
 #include <resources/i_include/resourcemanager.hpp>

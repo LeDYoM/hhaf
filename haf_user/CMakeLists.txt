@@ -21,6 +21,6 @@ build_lib_component(STATIC HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
 target_link_libraries(${CURRENT_TARGET} PRIVATE hosted_app)
 #target_link_libraries(${CURRENT_TARGET} PRIVATE memmanager)
 #target_link_libraries(${CURRENT_TARGET} PRIVATE hlog)
-#target_link_libraries(${CURRENT_TARGET} PRIVATE haf_instancer)
+#target_link_libraries(${CURRENT_TARGET} PRIVATE haf)
 #target_link_libraries(${CURRENT_TARGET} PRIVATE loader)
 target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)

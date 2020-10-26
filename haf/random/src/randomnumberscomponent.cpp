@@ -1,5 +1,5 @@
 #include <haf/random/include/randomnumberscomponent.hpp>
-#include <haf/system/i_include/randomsystem.hpp>
+#include <haf/random/i_include/randomsystem.hpp>
 
 #include <hlog/include/hlog.hpp>
 #include <system/i_include/get_system.hpp>

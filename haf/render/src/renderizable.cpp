@@ -8,7 +8,7 @@
 #include <haf/resources/include/ishader.hpp>
 #include <system/i_include/get_system.hpp>
 
-#include "geometry_math.hpp"
+#include <haf/render/include/geometry_math.hpp>
 
 using namespace mtps;
 

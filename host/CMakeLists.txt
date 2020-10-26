@@ -26,5 +26,5 @@ configure_file(
   target_link_libraries(${CURRENT_TARGET} PRIVATE hosted_app)
 target_link_libraries(${CURRENT_TARGET} PRIVATE memmanager)
 target_link_libraries(${CURRENT_TARGET} PRIVATE hlog)
-target_link_libraries(${CURRENT_TARGET} PRIVATE haf_instancer)
+target_link_libraries(${CURRENT_TARGET} PRIVATE haf)
 target_link_libraries(${CURRENT_TARGET} PRIVATE loader)

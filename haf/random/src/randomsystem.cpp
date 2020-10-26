@@ -45,6 +45,7 @@ size_type RandomSystem::getNext(const str& name,
 
     bool generated{
         systemProvider().simulationSystem().getNext(name, filtered_next)};
+    (void)generated;
 
     return filtered_next;
 }

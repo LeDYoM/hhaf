@@ -1,5 +1,5 @@
-#include "scenemanager.hpp"
-#include "scene.hpp"
+#include <haf/scene/i_include/scenemanager.hpp>
+#include <haf/scene/include/scene.hpp>
 
 #include <system/i_include/systemprovider.hpp>
 #include <window/i_include/window.hpp>
