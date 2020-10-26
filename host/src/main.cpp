@@ -31,7 +31,7 @@ HOST_API int haf_host_main(int argc, char* argv[])
             app_loader.unloadApp(managed_app);
         }
     }
-    catch (std::exception e)
+    catch (std::exception &e)
     {
         DisplayLog::error("std::Exception: ", e.what());
     }
