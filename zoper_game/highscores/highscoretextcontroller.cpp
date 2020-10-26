@@ -39,7 +39,7 @@ void HighScoreTextController::onCreated()
     animation_component_ = addComponentOfType<scene::AnimationComponent>();
 
     // Request the high scores.
-    dataWrapper<sys::FileSerializer>()->deserializeFromFile2(HighScoresFileName,
+    dataWrapper<sys::FileSerializer>()->deserializeFromFile(HighScoresFileName,
                                                             m_hsData);
 
     // Request game score
@@ -145,7 +145,7 @@ void HighScoreTextController::saveHighScores()
 {
     DisplayLog::info("Saving highscores...");
 
-    dataWrapper<sys::FileSerializer>()->serializeToFile(HighScoresFileName,
+    dataWrapper<sys::FileSerializer>()->serializeToFileTemplate(HighScoresFileName,
                                                         m_hsData);
     DisplayLog::info("High Scores saved");
 }

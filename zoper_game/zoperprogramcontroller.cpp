@@ -48,8 +48,8 @@ void ZoperProgramController::onInit(
     keyMapping->reset();
 
     data_wrapper_creator.dataWrapper<sys::FileSerializer>()
-        ->deserializeFromFile2("keys.txt", *keyMapping);
-    data_wrapper_creator.dataWrapper<sys::FileSerializer>()->serializeToFile2(
+        ->deserializeFromFile("keys.txt", *keyMapping);
+    data_wrapper_creator.dataWrapper<sys::FileSerializer>()->serializeToFile(
         "keys.txt", *keyMapping);
 
     {

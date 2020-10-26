@@ -10,13 +10,14 @@
 #include <haf/filesystem/include/path.hpp>
 #include <haf/system/include/idatawrapper.hpp>
 #include <haf/shareddata/include/ishareable.hpp>
+#include <haf/haf_export.hpp>
 
 namespace haf::sys
 {
 /**
  * @brief Component to provider access to file serialization operations.
  */
-class FileSerializer : public sys::IDataWrapper
+class HAF_API FileSerializer : public sys::IDataWrapper
 {
 public:
     enum class Result : mtps::u8
@@ -31,7 +32,7 @@ public:
     bool saveFile(const Path& file_name, const mtps::str& data);
 
     template <typename T>
-    Result deserializeFromFile(const Path& file_name, T& data)
+    Result deserializeFromFileTemplate(const Path& file_name, T& data)
     {
         const mtps::str text_data{loadTextFile(file_name)};
         if (!text_data.empty())
@@ -43,33 +44,10 @@ public:
         return Result::FileIOError;
     }
 
-    Result deserializeFromFile2(const Path& file_name, shdata::IShareable& data)
-    {
-        const mtps::str text_data{loadTextFile(file_name)};
-        if (!text_data.empty())
-        {
-            mtps::ObjectCompiler obj_compiler(text_data);
-            if (obj_compiler.compile())
-            {
-                // The compilation was correct so, at least we
-                // have a valid Object.
-                return ((data.deserialize(obj_compiler.result()))
-                            ? Result::Success
-                            : Result::ParsingError);
-            }
-            else
-            {
-                return Result::ParsingError;
-            }
-        }
-        else
-        {
-            return Result::FileIOError;
-        }        
-    }
+    Result deserializeFromFile(const Path& file_name, shdata::IShareable& data);
 
     template <typename T>
-    Result serializeToFile(const Path& file_name, const T& data)
+    Result serializeToFileTemplate(const Path& file_name, const T& data)
     {
         auto temp{mtps::Serializer<T>::serialize(data)};
         if (!temp.empty())
@@ -81,24 +59,8 @@ public:
         return Result::ParsingError;
     }
 
-    Result serializeToFile2(const Path& file_name,
-                            const shdata::IShareable& data)
-    {
-        //        auto temp{mtps::Serializer<T>::serialize(data)};
-        mtps::Object obj;
-        auto temp(data.serialize(obj));
-
-        if (temp)
-        {
-            mtps::str data_str;
-            data_str << obj;
-
-            return ((saveFile(file_name, std::move(data_str)))
-                        ? Result::Success
-                        : Result::FileIOError);
-        }
-        return Result::ParsingError;
-    }
+    Result serializeToFile(const Path& file_name,
+                            const shdata::IShareable& data);
 };
 
 }  // namespace haf::sys

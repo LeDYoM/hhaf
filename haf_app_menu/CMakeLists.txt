@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
 project(
-  "basic_app_loader"
+  "haf_app_menu"
   VERSION 0.1.1.1
   DESCRIPTION "HAF Application loader"
   # [HOMEPAGE_URL <url-string>]

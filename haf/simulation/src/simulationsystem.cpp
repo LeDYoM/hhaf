@@ -35,7 +35,7 @@ SimulationSystem::~SimulationSystem()
 
     SystemDataWrapperCreator dwc{*this};
     auto file_serializer = dwc.dataWrapper<FileSerializer>();
-    auto const result    = file_serializer->serializeToFile2(
+    auto const result    = file_serializer->serializeToFile(
         SaveFileName, priv_->next_replay_data_);
 
     if (result != FileSerializer::Result::Success)
@@ -81,10 +81,9 @@ void SimulationSystem::initialize()
 
     DisplayLog::info("Trying to load ", InputFileName,
                      " to read simulation data");
-
     SystemDataWrapperCreator dwc{*this};
     auto file_serializer = dwc.dataWrapper<FileSerializer>();
-    auto const result    = file_serializer->deserializeFromFile2(
+    auto const result    = file_serializer->deserializeFromFile(
         InputFileName, priv_->current_replay_data_);
 
     if (result != FileSerializer::Result::Success)

@@ -180,7 +180,7 @@ SetResourceConfigFileResult ResourceManager::parseResourceConfigFile()
 
     SystemDataWrapperCreator dwc{*this};
     auto file_serializer = dwc.dataWrapper<FileSerializer>();
-    auto const result    = file_serializer->deserializeFromFile(
+    auto const result    = file_serializer->deserializeFromFileTemplate(
         resources_config_file_name_, resources_config_data_);
 
     if (result != FileSerializer::Result::Success)
