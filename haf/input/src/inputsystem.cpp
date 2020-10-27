@@ -1,4 +1,4 @@
-#include "inputsystem.hpp"
+#include <input/i_include/inputsystem.hpp>
 
 #include <hlog/include/hlog.hpp>
 #include <haf/input/include/inputdriver.hpp>

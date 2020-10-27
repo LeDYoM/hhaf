@@ -1,5 +1,5 @@
-#include "bmpfont.hpp"
-#include "bmpfont_private.hpp"
+#include <resources/i_include/bmpfont.hpp>
+#include <resources/i_include/bmpfont_private.hpp>
 #include <hlog/include/hlog.hpp>
 
 #include <fstream>

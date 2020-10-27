@@ -1,5 +1,5 @@
-#include "ttfont.hpp"
-#include "ttfontinstance.hpp"
+#include <resources/i_include/ttfont.hpp>
+#include <resources/i_include/ttfontinstance.hpp>
 
 #include <backend_dev/include/ittfont.hpp>
 

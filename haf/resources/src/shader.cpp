@@ -1,7 +1,5 @@
-#include "shader.hpp"
-
+#include <resources/i_include/shader.hpp>
 #include <backend_dev/include/ishader.hpp>
-#include <map>
 
 namespace haf::res
 {

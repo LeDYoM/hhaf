@@ -15,10 +15,12 @@ set(CURRENT_TARGET haf)
 # used by the external components.
 set(HAF_PUBLIC_INCLUDE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/)
 
+set(HAF_PRIVATE_INCLUDE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+
 # Prepare the haf libray
 add_library(${CURRENT_TARGET} SHARED ${_SOURCES} ${_HEADERS})
+
 target_compile_definitions(${CURRENT_TARGET} PRIVATE haf_EXPORTS)
-target_link_libraries(${CURRENT_TARGET} PRIVATE system_internal)
 
 # For now, export all simbols
 set_target_properties(${CURRENT_TARGET} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS
@@ -26,7 +28,11 @@ set_target_properties(${CURRENT_TARGET} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS
 
 # External users of the library will need to include from this directory.
 target_include_directories(${CURRENT_TARGET}
-                           INTERFACE ${HAF_PUBLIC_INCLUDE_DIRECTORY})
+                           PUBLIC ${HAF_PUBLIC_INCLUDE_DIRECTORY})
+
+# For now, we need it public for tests.
+target_include_directories(${CURRENT_TARGET}
+                           PUBLIC ${HAF_PRIVATE_INCLUDE_DIRECTORY})
 
 # target_include_directories( ${CURRENT_TARGET} PUBLIC #
 # $<INSTALL_INTERFACE:include> #
