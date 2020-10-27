@@ -7,7 +7,7 @@ function(build_internal_lib_component)
   set(_INTERNAL_INCLUDE_DIRECTORY "${PROJECT_SOURCE_DIR}${_INTERNAL_INCLUDE}")
   set(INTERNAL_FOR_OTHERS_INCLUDE_DIRECTORY "${PROJECT_SOURCE_DIR}/../")
 
-  # TODO: Add all sources
+  # Add the sources of this directory (passed as parameter)
   target_sources(haf PRIVATE ${extra_file} ${LC_BUILD_SOURCES})
   
   # Add <root>/haf/include/ to all users of haf
@@ -15,10 +15,6 @@ function(build_internal_lib_component)
   # Internal includes
   target_include_directories(haf
                              PRIVATE ${_INTERNAL_INCLUDE_DIRECTORY})
-
-  # Only for this target
-  target_include_directories(haf
-                             PRIVATE ${MODULE_INCLUDE_FOR_SRC_FILES})
 
   # Link all private static internal libraries passed as parameters
   foreach(PRIVATE_LINK IN LISTS LC_BUILD_PRIVATE_INTERNAL_LINK)

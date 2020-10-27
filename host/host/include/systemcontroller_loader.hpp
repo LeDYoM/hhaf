@@ -4,8 +4,7 @@
 #define HAF_HOST_SYSTEM_CONTROLLER_LOADER_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-///FIXME: CMake add include
-#include <haf/include/haf/system/include/isystemcontroller.hpp>
+#include <haf/system/include/isystemcontroller.hpp>
 
 namespace loader
 {

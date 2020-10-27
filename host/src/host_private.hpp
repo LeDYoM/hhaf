@@ -4,8 +4,7 @@
 #define HAF_HOST_PRIVATE_INCLUDE_HPP
 
 #include <hosted_app/include/iapp.hpp>
-///FIXME: Cmake
-#include <haf/include/haf/system/include/isystemcontroller.hpp>
+#include <haf/system/include/isystemcontroller.hpp>
 #include <hlog/include/hlog.hpp>
 #include <loader/include/loader.hpp>
 #include <mtypes/include/parpar.hpp>

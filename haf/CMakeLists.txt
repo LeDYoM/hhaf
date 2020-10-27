@@ -31,6 +31,7 @@ target_include_directories(${CURRENT_TARGET}
                            PUBLIC ${HAF_PUBLIC_INCLUDE_DIRECTORY})
 
 # For now, we need it public for tests.
+# TODO: Fix it
 target_include_directories(${CURRENT_TARGET}
                            PUBLIC ${HAF_PRIVATE_INCLUDE_DIRECTORY})
 
@@ -62,7 +63,6 @@ target_link_libraries(${CURRENT_TARGET} PRIVATE hosted_app)
 target_link_libraries(${CURRENT_TARGET} PRIVATE loader)
 target_link_libraries(${CURRENT_TARGET} PRIVATE backend)
 target_link_libraries(${CURRENT_TARGET} PRIVATE backend_dev)
-
 target_link_libraries(${CURRENT_TARGET} PUBLIC log_and_types)
 
 # TODO: Investigate some day if(MSVC) set_target_properties(${CURRENT_TARGET}
