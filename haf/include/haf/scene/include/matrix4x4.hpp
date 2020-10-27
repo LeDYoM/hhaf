@@ -4,10 +4,11 @@
 #define HAF_SCENE_MATRIX4X4_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
+#include <haf/haf_export.hpp>
 
 namespace haf::scene
 {
-class Matrix4x4 final
+class HAF__API Matrix4x4 final
 {
 public:
     using Scalar = mtps::f32;
