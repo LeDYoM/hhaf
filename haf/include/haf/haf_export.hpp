@@ -15,5 +15,6 @@
 #endif
 #else
 #define HAF_API __attribute__((visibility("default")))
+#define HAF__API __attribute__((visibility("default")))
 #endif
 #endif
