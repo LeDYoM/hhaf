@@ -8,6 +8,7 @@
 #include "pause.hpp"
 #include "boardutils.hpp"
 #include "scoreutils.hpp"
+#include "next_token.hpp"
 
 #ifdef USE_DEBUG_ACTIONS
 #include "debug_actions.hpp"
@@ -174,6 +175,11 @@ void GameScene::onCreated()
     addComponentOfType<DebugActions>();
 #endif
 
+    next_token_ = msptr<NextToken>(scene_timer_component_);
+    next_token_->prepareNextToken(time::TimePoint_as_miliseconds(
+                                      level_properties_->millisBetweenTokens()),
+                                  [this]() { generateNextToken(); });
+/*
     m_nextTokenTimer = scene_timer_component_->addTimer(
         time::TimerType::Continuous,
         time::TimePoint_as_miliseconds(
@@ -184,7 +190,7 @@ void GameScene::onCreated()
             // New token
             generateNextToken();
         });
-
+*/
     m_gameOver = createSceneNode<GameOverSceneNode>("gameOverSceneNode");
     m_gameOver->prop<Visible>().set(false);
 

@@ -29,6 +29,7 @@ namespace zoper
 {
 class PauseSceneNode;
 class GameOverSceneNode;
+class NextToken;
 
 class GameScene final : public haf::scene::Scene,
                         public haf::StatesControllerActuator<GameSceneStates>
@@ -68,6 +69,7 @@ private:
     // Timer related properties
     mtps::sptr<time::TimerComponent> scene_timer_component_;
     time::TimerConnectorSPtr m_nextTokenTimer;
+    mtps::sptr<NextToken> next_token_;
 
     // General properties.
     mtps::u8 m_nextTokenPart{0U};
