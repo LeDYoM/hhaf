@@ -9,7 +9,7 @@ NextToken::NextToken(wptr<time::TimerComponent> timer_component) :
     timer_component_{std::move(timer_component)}
 {}
 
-void NextToken::prepareNextToken(time::TimePoint const  time_to_next_token)
+void NextToken::prepareNextToken(time::TimePoint const time_to_next_token)
 {
     /*
         m_nextTokenTimer = scene_timer_component_->addTimer(

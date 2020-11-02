@@ -12,8 +12,8 @@ using namespace haf::shdata;
 TEST_CASE("SharedData::SharedData", "[haf][shareddatasystem]")
 {
     auto test_shared_data = makeTestSystem<TestSharedDataSystem>();
-    haf::sys::SharedDataSystem& sh_system =
-        test_shared_data->sharedDataSystem();
+//    haf::sys::SharedDataSystem& sh_system =
+//        test_shared_data->sharedDataSystem();
 
     ShareableTestData shareable_test_data;
 

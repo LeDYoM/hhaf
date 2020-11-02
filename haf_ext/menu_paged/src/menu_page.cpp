@@ -137,10 +137,10 @@ vector<s32> MenuPage::optionsSelected() const
 {
     vector<s32> result(prop<TableSize>().get().y);
 
-    for (size_type index = 0U; index < prop<TableSize>().get().y; ++index)
+    for (size_type index{0U}; index < prop<TableSize>().get().y; ++index)
     {
         result.emplace_back(
-            (nodeHasOptions(index)) ? optionsLabelAt(index)->index() : -1);
+            (nodeHasOptions(index)) ? static_cast<s32>(optionsLabelAt(index)->index()) : -1);
     }
     return result;
 }

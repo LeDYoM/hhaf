@@ -16,7 +16,7 @@ namespace haf::app_menu
 {
 
 void HafAppMenu::configureScenes(
-    haf::sys::DataWrapperCreator& data_wrapper_creator)
+    haf::sys::DataWrapperCreator&)
 {
 }
 
@@ -32,7 +32,7 @@ void HafAppMenu::onInit(
 }
 
 void HafAppMenu::onFinish(
-    haf::sys::DataWrapperCreator& data_wrapper_creator)
+    haf::sys::DataWrapperCreator&)
 {
 }
 
