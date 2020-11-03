@@ -18,7 +18,7 @@ public:
     Host(int argc, char* argv[]);
     ~Host();
 
-    bool setApplication(mtps::rptr<IApp> iapp);
+    bool addApplication(mtps::rptr<IApp> iapp);
     int run();
 
 private:

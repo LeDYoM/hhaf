@@ -7,6 +7,7 @@
 #include <haf/system/include/isystemcontroller.hpp>
 #include <hlog/include/hlog.hpp>
 #include <loader/include/loader.hpp>
+#include <mtypes/include/vector.hpp>
 #include <mtypes/include/parpar.hpp>
 #include <mtypes/include/object.hpp>
 #include <mtypes/include/parpar.hpp>
@@ -15,6 +16,19 @@ using namespace mtps;
 
 namespace haf::host
 {
+class HostedApplication final
+{
+public:
+    HostedApplication(rptr<IApp> iapp) : iapp_{iapp} {}
+
+    rptr<IApp> iapp_{nullptr};
+
+    bool operator==(HostedApplication const& other) noexcept
+    {
+        return iapp_ == other.iapp_;
+    }
+};
+
 class Host::HostPrivate final
 {
 public:
@@ -45,8 +59,8 @@ public:
     parpar::ParametersParser params_;
 
     Dictionary<str> configuration_;
-    rptr<IApp> iapp_{nullptr};
     SystemControllerLoader system_loader_;
+    vector<HostedApplication> app_;
 
     inline rptr<ISystemController> systemController() noexcept
     {

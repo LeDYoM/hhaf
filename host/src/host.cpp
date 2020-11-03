@@ -23,20 +23,31 @@ Host::Host(int argc, char* argv[]) :
 
 Host::~Host() = default;
 
-bool Host::setApplication(rptr<IApp> iapp)
+bool Host::addApplication(rptr<IApp> iapp)
 {
     LogAsserter::log_assert(iapp != nullptr, "Received nullptr Application");
-    LogAsserter::log_assert(!p_->iapp_, "Application already set");
 
-    if (!p_->iapp_ && iapp)
+    // Search for a pointer to the same app
+    auto const found = p_->app_.cfind(HostedApplication{iapp});
+
+    // Store if the app is already registered
+    bool const is_reapeated = found != p_->app_.cend();
+
+    if (!is_reapeated)
     {
+    p_->app_.emplace_back(std::move(iapp));
+
         DisplayLog::info("Starting Registering app...");
         p_->iapp_ = iapp;
         DisplayLog::verbose("Starting new app...");
         app_state_ = AppState::ReadyToStart;
         return true;
     }
-    return false;
+    else
+    {
+        DisplayLog::info("Application already registered");
+        return false;
+    }
 }
 
 str appDisplayNameAndVersion(const IApp& app)
