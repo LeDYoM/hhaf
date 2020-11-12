@@ -22,12 +22,12 @@ public:
     HostedApplication(rptr<IApp> iapp) : iapp_{iapp} {}
 
     rptr<IApp> iapp_{nullptr};
-
-    bool operator==(HostedApplication const& other) noexcept
-    {
-        return iapp_ == other.iapp_;
-    }
 };
+
+bool operator==(HostedApplication const& lhs, HostedApplication const& rhs) noexcept
+{
+    return lhs.iapp_ == rhs.iapp_;
+}
 
 class Host::HostPrivate final
 {
@@ -61,6 +61,17 @@ public:
     Dictionary<str> configuration_;
     SystemControllerLoader system_loader_;
     vector<HostedApplication> app_;
+    u32 index_current_app{0U};
+
+    rptr<IApp> currentApp()
+    {
+        return app_[index_current_app].iapp_;
+    }
+
+    rptr<IApp const> currentApp() const
+    {
+        return app_[index_current_app].iapp_;
+    }
 
     inline rptr<ISystemController> systemController() noexcept
     {

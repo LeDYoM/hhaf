@@ -35,10 +35,8 @@ bool Host::addApplication(rptr<IApp> iapp)
 
     if (!is_reapeated)
     {
-    p_->app_.emplace_back(std::move(iapp));
-
         DisplayLog::info("Starting Registering app...");
-        p_->iapp_ = iapp;
+        p_->app_.emplace_back(std::move(iapp));
         DisplayLog::verbose("Starting new app...");
         app_state_ = AppState::ReadyToStart;
         return true;
@@ -68,9 +66,9 @@ bool Host::update()
             app_state_ = AppState::Executing;
             p_->system_loader_.loadFunctions();
             p_->system_loader_.create();
-            p_->systemController()->init(p_->iapp_, p_->argc_, p_->argv_);
+            p_->systemController()->init(p_->currentApp(), p_->argc_, p_->argv_);
 
-            DisplayLog::info(appDisplayNameAndVersion(*(p_->iapp_)),
+            DisplayLog::info(appDisplayNameAndVersion(*(p_->currentApp())),
                              ": Starting execution...");
         }
         break;
@@ -79,13 +77,13 @@ bool Host::update()
             if (loopStep())
             {
                 app_state_ = AppState::ReadyToTerminate;
-                DisplayLog::info(appDisplayNameAndVersion(*(p_->iapp_)), ": ",
+                DisplayLog::info(appDisplayNameAndVersion(*(p_->currentApp())), ": ",
                                  " is now ready to terminate");
             }
         }
         break;
         case AppState::ReadyToTerminate:
-            DisplayLog::info(appDisplayNameAndVersion(*(p_->iapp_)),
+            DisplayLog::info(appDisplayNameAndVersion(*(p_->currentApp())),
                              ": started termination");
             app_state_ = AppState::Terminated;
             p_->systemController()->terminate();

@@ -27,7 +27,7 @@ HOST_API int haf_host_main(int argc, char* argv[])
             AppLoader app_loader;
 //            ManagedApp managed_app = app_loader.loadApp("haf_app_menu");
             ManagedApp managed_app = app_loader.loadApp("Zoper");
-            host.setApplication(managed_app.app);
+            host.addApplication(managed_app.app);
             result = host.run();
             app_loader.unloadApp(managed_app);
         }
