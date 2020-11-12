@@ -418,3 +418,36 @@ TEST_CASE("Grow policy")
     CHECK(double_grow_test_vector.size() == 3U);
     CHECK(double_grow_test_vector.capacity() == 4U);
 }
+
+struct MoveOnly
+{
+public:
+    explicit MoveOnly(int b) : a{b} {}
+    MoveOnly(const MoveOnly&) = delete;
+    MoveOnly& operator=(const MoveOnly&) = delete;
+
+    MoveOnly(MoveOnly&&) noexcept = default;
+    MoveOnly& operator=(MoveOnly&&) = default;
+    int get() const noexcept { return a; }
+private:
+    int a;
+};
+
+TEST_CASE("Movable only objects")
+{
+    static_assert(!std::is_copy_constructible_v<MoveOnly>);
+    static_assert(!std::is_copy_assignable_v<MoveOnly>);
+
+    static_assert(std::is_move_constructible_v<MoveOnly>);
+    static_assert(std::is_move_assignable_v<MoveOnly>);
+
+    vector<MoveOnly> v;
+    v.push_back(MoveOnly{5});
+    v.emplace_back(4);
+    CHECK(5 == v[0U].get());
+    CHECK(4 == v[1U].get());
+
+    vector<MoveOnly> v2 = std::move(v);
+    CHECK(5 == v2[0U].get());
+    CHECK(4 == v2[1U].get());
+}
