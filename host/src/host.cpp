@@ -1,3 +1,4 @@
+#include <mtypes/include/str.hpp>
 #include <host/include/host.hpp>
 #include <host/include/host_version.hpp>
 #include <host/include/systemcontroller_loader.hpp>
@@ -23,20 +24,29 @@ Host::Host(int argc, char* argv[]) :
 
 Host::~Host() = default;
 
-bool Host::addApplication(rptr<IApp> iapp)
+bool Host::loadApplication(mtps::str const& app_name)
+{
+    ManagedApp managed_app = p_->app_loader.loadApp(app_name);
+    return addApplication(managed_app.app, std::move(managed_app), app_name);
+}
+
+bool Host::addApplication(rptr<IApp> iapp,
+                          ManagedApp managed_app,
+                          mtps::str name)
 {
     LogAsserter::log_assert(iapp != nullptr, "Received nullptr Application");
 
     // Search for a pointer to the same app
-    auto const found = p_->app_.cfind(HostedApplication{iapp});
+    auto const found = p_->app_.cfind(HostedApplication{name});
 
     // Store if the app is already registered
-    bool const is_reapeated = found != p_->app_.cend();
+    bool const is_reapeated{found != p_->app_.cend()};
 
     if (!is_reapeated)
     {
         DisplayLog::info("Starting Registering app...");
-        p_->app_.emplace_back(std::move(iapp));
+        p_->app_.emplace_back(std::move(iapp), std::move(managed_app),
+                              std::move(name));
         DisplayLog::verbose("Starting new app...");
         app_state_ = AppState::ReadyToStart;
         return true;
@@ -46,6 +56,19 @@ bool Host::addApplication(rptr<IApp> iapp)
         DisplayLog::info("Application already registered");
         return false;
     }
+}
+
+bool Host::unloadApplication(mtps::str const& app_name)
+{
+    auto const old_size = p_->app_.size();
+    p_->app_.erase_if([&app_name](HostedApplication const& app) {
+        return app.app_name_ == app_name;
+    });
+    auto const new_size = p_->app_.size();
+
+    DisplayLog::info_if(old_size != new_size, "Application ", app_name, " unloaded");
+
+    return old_size != new_size;
 }
 
 str appDisplayNameAndVersion(const IApp& app)
@@ -66,7 +89,8 @@ bool Host::update()
             app_state_ = AppState::Executing;
             p_->system_loader_.loadFunctions();
             p_->system_loader_.create();
-            p_->systemController()->init(p_->currentApp(), p_->argc_, p_->argv_);
+            p_->systemController()->init(p_->currentApp(), p_->argc_,
+                                         p_->argv_);
 
             DisplayLog::info(appDisplayNameAndVersion(*(p_->currentApp())),
                              ": Starting execution...");
@@ -77,8 +101,8 @@ bool Host::update()
             if (loopStep())
             {
                 app_state_ = AppState::ReadyToTerminate;
-                DisplayLog::info(appDisplayNameAndVersion(*(p_->currentApp())), ": ",
-                                 " is now ready to terminate");
+                DisplayLog::info(appDisplayNameAndVersion(*(p_->currentApp())),
+                                 ": ", " is now ready to terminate");
             }
         }
         break;
@@ -129,4 +153,4 @@ void Host::exitProgram()
         "Cannot terminate a program that is not in the executing state");
     app_state_ = AppState::ReadyToTerminate;
 }
-}  // namespace haf::sys
+}  // namespace haf::host

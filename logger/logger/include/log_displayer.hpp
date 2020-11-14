@@ -80,11 +80,21 @@ public:
     }
 
     template <bool Condition, typename... Args>
-    static constexpr void info_if(Args&&... args) noexcept
+    static constexpr void info_if_ce([[maybe_unused]] Args&&... args) noexcept
     {
-        log_if_severity_under<Condition ? SeverityType::severity_type_t::info
-                                        : SeverityType::severity_type_t::none>(
-            std::forward<Args>(args)...);
+        if constexpr (Condition)
+        {
+            info(std::forward<Args>(args)...);
+        }
+    }
+
+    template <typename... Args>
+    static constexpr void info_if(bool const cond, Args&&... args) noexcept
+    {
+        if (cond)
+        {
+            info(std::forward<Args>(args)...);
+        }
     }
 
     template <typename... Args>

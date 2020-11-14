@@ -18,7 +18,7 @@ constexpr bool do_logs{false};
 template <typename... Args>
 constexpr void log_snt(Args&&... args) noexcept
 {
-    haf::DisplayLog::info_if<do_logs>(std::forward<Args>(args)...);
+    haf::DisplayLog::info_if_ce<do_logs>(std::forward<Args>(args)...);
 }
 }  // namespace
 

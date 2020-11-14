@@ -4,6 +4,7 @@
 #define HAF_HOST_PRIVATE_INCLUDE_HPP
 
 #include <hosted_app/include/iapp.hpp>
+#include <host/include/apploader.hpp>
 #include <haf/system/include/isystemcontroller.hpp>
 #include <hlog/include/hlog.hpp>
 #include <loader/include/loader.hpp>
@@ -19,14 +20,24 @@ namespace haf::host
 class HostedApplication final
 {
 public:
-    HostedApplication(rptr<IApp> iapp) : iapp_{iapp} {}
+    HostedApplication(str app_name) noexcept : app_name_{std::move(app_name)} {}
+    HostedApplication(rptr<IApp> iapp,
+                      ManagedApp managed_app,
+                      str app_name) noexcept :
+        iapp_{iapp},
+        managed_app_{std::move(managed_app)},
+        app_name_{std::move(app_name)}
+    {}
 
     rptr<IApp> iapp_{nullptr};
+    ManagedApp managed_app_;
+    str app_name_;
 };
 
-bool operator==(HostedApplication const& lhs, HostedApplication const& rhs) noexcept
+bool operator==(HostedApplication const& lhs,
+                HostedApplication const& rhs) noexcept
 {
-    return lhs.iapp_ == rhs.iapp_;
+    return lhs.app_name_ == rhs.app_name_;
 }
 
 class Host::HostPrivate final
@@ -62,11 +73,9 @@ public:
     SystemControllerLoader system_loader_;
     vector<HostedApplication> app_;
     u32 index_current_app{0U};
+    AppLoader app_loader;
 
-    rptr<IApp> currentApp()
-    {
-        return app_[index_current_app].iapp_;
-    }
+    rptr<IApp> currentApp() { return app_[index_current_app].iapp_; }
 
     rptr<IApp const> currentApp() const
     {
