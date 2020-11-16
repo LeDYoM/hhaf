@@ -22,7 +22,19 @@ Host::Host(int argc, char* argv[]) :
     p_->parseCommandLineParameters();
 }
 
-Host::~Host() = default;
+Host::~Host()
+{
+    DisplayLog::info("Terminating Host...");
+    DisplayLog::verbose_if(!p_->app_.empty(), p_->app_.size(),
+                           " pending apps to be terminated");
+
+    while (p_->app_.empty())
+    {
+        HostedApplication& last = p_->app_.back();
+        unloadApplication(last.app_name_);
+    }
+    DisplayLog::info("All applications unloaded");
+}
 
 bool Host::loadApplication(mtps::str const& app_name)
 {
@@ -60,15 +72,35 @@ bool Host::addApplication(rptr<IApp> iapp,
 
 bool Host::unloadApplication(mtps::str const& app_name)
 {
-    auto const old_size = p_->app_.size();
-    p_->app_.erase_if([&app_name](HostedApplication const& app) {
-        return app.app_name_ == app_name;
-    });
-    auto const new_size = p_->app_.size();
+    // First step, search the app in the array
+    auto const app_iterator =
+        p_->app_.find_if([&app_name](HostedApplication const& app) {
+            return app.app_name_ == app_name;
+        });
 
-    DisplayLog::info_if(old_size != new_size, "Application ", app_name, " unloaded");
+    if (app_iterator != p_->app_.end())
+    {
+        // Aplication found. Execute unload steps.
+        p_->app_loader.unloadApp(app_iterator->managed_app_);
 
-    return old_size != new_size;
+        auto const old_size = p_->app_.size();
+
+        // Remove the application from the list
+        p_->app_.erase_iterator(app_iterator, p_->app_.end());
+
+        auto const new_size = p_->app_.size();
+
+        // Show logs informing the user
+        DisplayLog::info_if(old_size != new_size, "Application ", app_name,
+                            " unloaded");
+
+        DisplayLog::info_if(old_size == new_size, "Application ", app_name,
+                            " unloaded, but cannot be deleted");
+
+        return true;
+    }
+
+    return false;
 }
 
 str appDisplayNameAndVersion(const IApp& app)
