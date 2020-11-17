@@ -25,9 +25,6 @@ public:
     ~Host();
 
     bool loadApplication(mtps::str const& app_name);
-    bool addApplication(mtps::rptr<IApp> iapp,
-                        ManagedApp managed_app,
-                        mtps::str name);
     bool unloadApplication(mtps::str const& app_name);
 
     int run();
@@ -40,17 +37,9 @@ private:
     void exitProgram();
     bool update();
 
-    enum class AppState : mtps::u8
-    {
-        NotInitialized,
-        ReadyToStart,
-        Executing,
-        ReadyToTerminate,
-        Terminated
-    };
-
-    AppState app_state_;
-    bool exit{false};
+    bool addApplication(mtps::rptr<IApp> iapp,
+                        ManagedApp managed_app,
+                        mtps::str name);
 };
 }  // namespace haf::host
 

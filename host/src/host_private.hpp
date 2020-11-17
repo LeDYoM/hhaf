@@ -17,6 +17,15 @@ using namespace mtps;
 
 namespace haf::host
 {
+enum class AppState : mtps::u8
+{
+    NotInitialized,
+    ReadyToStart,
+    Executing,
+    ReadyToTerminate,
+    Terminated
+};
+
 class HostedApplication final
 {
 public:
@@ -49,7 +58,8 @@ public:
         params_{parpar::create(argc, argv)},
         // Hardcoded default configuration
         // TODO
-        configuration_{{}}
+        configuration_{{}},
+        app_state_{AppState::NotInitialized}
     {}
 
     bool parseCommandLineParameters()
@@ -97,6 +107,8 @@ public:
 
     str simulation_input_file;
     str simulation_output_file;
+    bool exit{false};
+    AppState app_state_;
 };
 
 }  // namespace haf::host

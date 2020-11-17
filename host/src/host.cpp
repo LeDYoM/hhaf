@@ -13,7 +13,7 @@ using namespace mtps;
 namespace haf::host
 {
 Host::Host(int argc, char* argv[]) :
-    p_{muptr<HostPrivate>(argc, argv)}, app_state_{AppState::NotInitialized}
+    p_{muptr<HostPrivate>(argc, argv)}
 {
     DisplayLog::info("Starting HostController...");
     DisplayLog::info("Host version: ", HostVersion, ".", HostSubversion, ".",
@@ -60,7 +60,7 @@ bool Host::addApplication(rptr<IApp> iapp,
         p_->app_.emplace_back(std::move(iapp), std::move(managed_app),
                               std::move(name));
         DisplayLog::verbose("Starting new app...");
-        app_state_ = AppState::ReadyToStart;
+        p_->app_state_ = AppState::ReadyToStart;
         return true;
     }
     else
@@ -111,14 +111,14 @@ str appDisplayNameAndVersion(const IApp& app)
 
 bool Host::update()
 {
-    switch (app_state_)
+    switch (p_->app_state_)
     {
         case AppState::NotInitialized:
             break;
         case AppState::ReadyToStart:
         {
             DisplayLog::info("Starting initialization of new App...");
-            app_state_ = AppState::Executing;
+            p_->app_state_ = AppState::Executing;
             p_->system_loader_.loadFunctions();
             p_->system_loader_.create();
             p_->systemController()->init(p_->currentApp(), p_->argc_,
@@ -132,7 +132,7 @@ bool Host::update()
         {
             if (loopStep())
             {
-                app_state_ = AppState::ReadyToTerminate;
+                p_->app_state_ = AppState::ReadyToTerminate;
                 DisplayLog::info(appDisplayNameAndVersion(*(p_->currentApp())),
                                  ": ", " is now ready to terminate");
             }
@@ -141,7 +141,7 @@ bool Host::update()
         case AppState::ReadyToTerminate:
             DisplayLog::info(appDisplayNameAndVersion(*(p_->currentApp())),
                              ": started termination");
-            app_state_ = AppState::Terminated;
+            p_->app_state_ = AppState::Terminated;
             p_->systemController()->terminate();
             p_->system_loader_.destroy();
             return true;
@@ -159,9 +159,9 @@ int Host::run()
 {
     try
     {
-        while (!exit)
+        while (!p_->exit)
         {
-            exit = update();
+            p_->exit = update();
         }
 
         return 0;
@@ -181,8 +181,8 @@ bool Host::loopStep()
 void Host::exitProgram()
 {
     LogAsserter::log_assert(
-        app_state_ == AppState::Executing,
+        p_->app_state_ == AppState::Executing,
         "Cannot terminate a program that is not in the executing state");
-    app_state_ = AppState::ReadyToTerminate;
+    p_->app_state_ = AppState::ReadyToTerminate;
 }
 }  // namespace haf::host
