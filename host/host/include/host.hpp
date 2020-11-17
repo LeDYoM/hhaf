@@ -32,14 +32,6 @@ public:
 private:
     class HostPrivate;
     mtps::uptr<HostPrivate> p_;
-
-    bool loopStep();
-    void exitProgram();
-    bool update();
-
-    bool addApplication(mtps::rptr<IApp> iapp,
-                        ManagedApp managed_app,
-                        mtps::str name);
 };
 }  // namespace haf::host
 

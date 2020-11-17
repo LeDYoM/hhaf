@@ -49,6 +49,12 @@ bool operator==(HostedApplication const& lhs,
     return lhs.app_name_ == rhs.app_name_;
 }
 
+str appDisplayNameAndVersion(const IApp& app)
+{
+    return make_str(app.getName(), "(", app.getVersion(), ".",
+                    app.getSubVersion(), ".", app.getPatch(), ")");
+}
+
 class Host::HostPrivate final
 {
 public:
@@ -100,6 +106,86 @@ public:
     inline rptr<ISystemController const> systemController() const noexcept
     {
         return system_loader_.systemController();
+    }
+
+    AppState currentAppState() noexcept { return app_state_; }
+
+    void setCurrentAppState(AppState const app_state) noexcept
+    {
+        app_state_ = app_state;
+    }
+    bool loopStep() { return systemController()->runStep(); }
+
+    bool update()
+    {
+        switch (currentAppState())
+        {
+            case AppState::NotInitialized:
+                break;
+            case AppState::ReadyToStart:
+            {
+                DisplayLog::info("Starting initialization of new App...");
+                setCurrentAppState(AppState::Executing);
+                system_loader_.loadFunctions();
+                system_loader_.create();
+                systemController()->init(currentApp(), argc_, argv_);
+
+                DisplayLog::info(appDisplayNameAndVersion(*currentApp()),
+                                 ": Starting execution...");
+            }
+            break;
+            case AppState::Executing:
+            {
+                if (loopStep())
+                {
+                    setCurrentAppState(AppState::ReadyToTerminate);
+                    DisplayLog::info(appDisplayNameAndVersion(*currentApp()),
+                                     ": ", " is now ready to terminate");
+                }
+            }
+            break;
+            case AppState::ReadyToTerminate:
+                DisplayLog::info(appDisplayNameAndVersion(*currentApp()),
+                                 ": started termination");
+                setCurrentAppState(AppState::Terminated);
+                systemController()->terminate();
+                system_loader_.destroy();
+                return true;
+                break;
+            case AppState::Terminated:
+                return true;
+                break;
+            default:
+                break;
+        }
+        return false;
+    }
+
+    bool addApplication(rptr<IApp> iapp, ManagedApp managed_app, mtps::str name)
+    {
+        LogAsserter::log_assert(iapp != nullptr,
+                                "Received nullptr Application");
+
+        // Search for a pointer to the same app
+        auto const found = app_.cfind(HostedApplication{name});
+
+        // Store if the app is already registered
+        bool const is_reapeated{found != app_.cend()};
+
+        if (!is_reapeated)
+        {
+            DisplayLog::info("Starting Registering app...");
+            app_.emplace_back(std::move(iapp), std::move(managed_app),
+                                  std::move(name));
+            DisplayLog::verbose("Starting new app...");
+            app_state_ = AppState::ReadyToStart;
+            return true;
+        }
+        else
+        {
+            DisplayLog::info("Application already registered");
+            return false;
+        }
     }
 
     int const argc_;

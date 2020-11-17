@@ -12,8 +12,7 @@ using namespace mtps;
 
 namespace haf::host
 {
-Host::Host(int argc, char* argv[]) :
-    p_{muptr<HostPrivate>(argc, argv)}
+Host::Host(int argc, char* argv[]) : p_{muptr<HostPrivate>(argc, argv)}
 {
     DisplayLog::info("Starting HostController...");
     DisplayLog::info("Host version: ", HostVersion, ".", HostSubversion, ".",
@@ -39,35 +38,8 @@ Host::~Host()
 bool Host::loadApplication(mtps::str const& app_name)
 {
     ManagedApp managed_app = p_->app_loader.loadApp(app_name);
-    return addApplication(managed_app.app, std::move(managed_app), app_name);
-}
-
-bool Host::addApplication(rptr<IApp> iapp,
-                          ManagedApp managed_app,
-                          mtps::str name)
-{
-    LogAsserter::log_assert(iapp != nullptr, "Received nullptr Application");
-
-    // Search for a pointer to the same app
-    auto const found = p_->app_.cfind(HostedApplication{name});
-
-    // Store if the app is already registered
-    bool const is_reapeated{found != p_->app_.cend()};
-
-    if (!is_reapeated)
-    {
-        DisplayLog::info("Starting Registering app...");
-        p_->app_.emplace_back(std::move(iapp), std::move(managed_app),
-                              std::move(name));
-        DisplayLog::verbose("Starting new app...");
-        p_->app_state_ = AppState::ReadyToStart;
-        return true;
-    }
-    else
-    {
-        DisplayLog::info("Application already registered");
-        return false;
-    }
+    return p_->addApplication(managed_app.app, std::move(managed_app),
+                              app_name);
 }
 
 bool Host::unloadApplication(mtps::str const& app_name)
@@ -103,65 +75,13 @@ bool Host::unloadApplication(mtps::str const& app_name)
     return false;
 }
 
-str appDisplayNameAndVersion(const IApp& app)
-{
-    return make_str(app.getName(), "(", app.getVersion(), ".",
-                    app.getSubVersion(), ".", app.getPatch(), ")");
-}
-
-bool Host::update()
-{
-    switch (p_->app_state_)
-    {
-        case AppState::NotInitialized:
-            break;
-        case AppState::ReadyToStart:
-        {
-            DisplayLog::info("Starting initialization of new App...");
-            p_->app_state_ = AppState::Executing;
-            p_->system_loader_.loadFunctions();
-            p_->system_loader_.create();
-            p_->systemController()->init(p_->currentApp(), p_->argc_,
-                                         p_->argv_);
-
-            DisplayLog::info(appDisplayNameAndVersion(*(p_->currentApp())),
-                             ": Starting execution...");
-        }
-        break;
-        case AppState::Executing:
-        {
-            if (loopStep())
-            {
-                p_->app_state_ = AppState::ReadyToTerminate;
-                DisplayLog::info(appDisplayNameAndVersion(*(p_->currentApp())),
-                                 ": ", " is now ready to terminate");
-            }
-        }
-        break;
-        case AppState::ReadyToTerminate:
-            DisplayLog::info(appDisplayNameAndVersion(*(p_->currentApp())),
-                             ": started termination");
-            p_->app_state_ = AppState::Terminated;
-            p_->systemController()->terminate();
-            p_->system_loader_.destroy();
-            return true;
-            break;
-        case AppState::Terminated:
-            return true;
-            break;
-        default:
-            break;
-    }
-    return false;
-}
-
 int Host::run()
 {
     try
     {
         while (!p_->exit)
         {
-            p_->exit = update();
+            p_->exit = p_->update();
         }
 
         return 0;
@@ -173,16 +93,4 @@ int Host::run()
     return 1;
 }
 
-bool Host::loopStep()
-{
-    return p_->systemController()->runStep();
-}
-
-void Host::exitProgram()
-{
-    LogAsserter::log_assert(
-        p_->app_state_ == AppState::Executing,
-        "Cannot terminate a program that is not in the executing state");
-    p_->app_state_ = AppState::ReadyToTerminate;
-}
 }  // namespace haf::host
