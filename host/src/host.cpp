@@ -27,7 +27,7 @@ Host::~Host()
     DisplayLog::verbose_if(!p_->app_.empty(), p_->app_.size(),
                            " pending apps to be terminated");
 
-    while (p_->app_.empty())
+    while (!p_->app_.empty())
     {
         HostedApplication& last = p_->app_.back();
         unloadApplication(last.app_name_);
