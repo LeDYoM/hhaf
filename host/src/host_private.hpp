@@ -170,22 +170,20 @@ public:
         auto const found = app_.cfind(HostedApplication{name});
 
         // Store if the app is already registered
-        bool const is_reapeated{found != app_.cend()};
+        bool const is_new_app{found == app_.cend()};
 
-        if (!is_reapeated)
+        DisplayLog::error_if(!is_new_app, "Application already registered");
+
+        if (is_new_app)
         {
             DisplayLog::info("Starting Registering app...");
             app_.emplace_back(std::move(iapp), std::move(managed_app),
                                   std::move(name));
             DisplayLog::verbose("Starting new app...");
             app_state_ = AppState::ReadyToStart;
-            return true;
         }
-        else
-        {
-            DisplayLog::info("Application already registered");
-            return false;
-        }
+
+        return is_new_app;
     }
 
     int const argc_;
