@@ -6,3 +6,6 @@
 #    - Create code to directly read an object file to a type.
 #    - Use it in simulationSystem.
 #    - Use it in ResourceManager.
+
+To format from command line:
+find haf/ -iname *.hpp -o -iname *.cpp| xargs clang-format -i

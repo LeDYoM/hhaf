@@ -26,9 +26,9 @@ namespace mtps
 template <typename T,
           typename Allocator  = AllocatorType<T>,
           typename GrowPolicy = GrowPolicyUnary>
-class vector final : private vector_storage<T, Allocator, GrowPolicy>
+class vector final
 {
-    using Base = vector_storage<T, Allocator, GrowPolicy>;
+    vector_storage<T, Allocator, GrowPolicy> base_;
 
 public:
     using iterator        = T*;
@@ -51,7 +51,7 @@ public:
      *
      * @param size Expected size of the inner container
      */
-    explicit vector(const size_type size) : Base(size) {}
+    explicit vector(const size_type size) : base_(size) {}
 
     /**
      * @brief Constructor with reserved memory and copy from source.
@@ -62,7 +62,7 @@ public:
      * @param count Number of elements to copy.
      */
     constexpr vector(const T* const source, const size_type count) :
-        Base(count)
+        base_(count)
     {
         for (auto iterator = source; iterator != (source + count); ++iterator)
         {
@@ -87,12 +87,12 @@ public:
      *
      * @param other Source vector to copy.
      */
-    constexpr vector(const vector& other) : vector(other.m_buffer, other.m_size)
+    constexpr vector(const vector& other) :
+        vector(other.begin(), other.begin() + other.size())
     {}
 
     // Move constructor.
-    constexpr vector(vector&& other) noexcept : Base{std::move(other)}
-    {}
+    constexpr vector(vector&& other) noexcept : base_{std::move(other.base_)} {}
 
     /// Copy assignment.
     constexpr vector& operator=(const vector& other)
@@ -108,7 +108,7 @@ public:
     /// Move assignment
     constexpr vector& operator=(vector&& other) noexcept
     {
-        swap(other);
+        base_.swap(other.base_);
         return *this;
     }
 
@@ -118,41 +118,41 @@ public:
     constexpr reference operator[](const size_type index) noexcept
     {
         assert(index < size());
-        return *(Base::at(index));
+        return *(base_.at(index));
     }
 
     constexpr const_reference operator[](const size_type index) const noexcept
     {
         assert(index < size());
-        return *(Base::at(index));
+        return *(base_.at(index));
     }
 
-    constexpr size_type capacity() const noexcept { return Base::capacity(); }
-    constexpr size_type size() const noexcept { return Base::size(); }
-    constexpr bool empty() const noexcept { return Base::empty(); }
-    constexpr iterator begin() noexcept { return Base::begin(); }
-    constexpr const_iterator begin() const noexcept { return Base::begin(); }
-    constexpr const_iterator cbegin() const noexcept { return Base::cbegin(); }
-    constexpr iterator end() noexcept { return Base::end(); }
-    constexpr const_iterator end() const noexcept { return Base::end(); }
-    constexpr const_iterator cend() const noexcept { return Base::cend(); }
+    constexpr size_type capacity() const noexcept { return base_.capacity(); }
+    constexpr size_type size() const noexcept { return base_.size(); }
+    constexpr bool empty() const noexcept { return base_.empty(); }
+    constexpr iterator begin() noexcept { return base_.begin(); }
+    constexpr const_iterator begin() const noexcept { return base_.begin(); }
+    constexpr const_iterator cbegin() const noexcept { return base_.cbegin(); }
+    constexpr iterator end() noexcept { return base_.end(); }
+    constexpr const_iterator end() const noexcept { return base_.end(); }
+    constexpr const_iterator cend() const noexcept { return base_.cend(); }
 
     constexpr T& back() noexcept
     {
         assert(size() > 0U);
-        return *(at(size() - 1U));
+        return *(base_.at(size() - 1U));
     }
 
     constexpr const T& back() const noexcept
     {
         assert(size() > 0U);
-        return *(at(size() - 1U));
+        return *(base_.at(size() - 1U));
     }
 
     constexpr const T& cback() const noexcept
     {
         assert(size() > 0U);
-        return *(cat(size() - 1U));
+        return *(base_.cat(size() - 1U));
     }
 
     template <typename F>
@@ -168,13 +168,12 @@ public:
         }
     }
 
-    constexpr void swap(vector& other) noexcept
-    {
-        Base::swap(static_cast<Base&>(other));
-    }
+    constexpr void swap(vector& other) noexcept { base_.swap(other.base_); }
 
     // TO DO: Optimize
-    constexpr iterator erase_values(const T& value, iterator start)
+    constexpr iterator erase_values(const T& value,
+                                    iterator start,
+                                    bool const discard_order = true)
     {
         iterator result{start};
         checkRange(result);
@@ -182,53 +181,29 @@ public:
         do
         {
             result = start;
-            start  = erase_one(value, start);
+            start  = erase_one(value, start, discard_order);
         } while (start != end());
 
         return result;
     }
 
-    constexpr iterator erase_values(const T& value)
+    constexpr iterator erase_values(const T& value,
+                                    bool const discard_order = true)
     {
-        return erase_values(value, begin());
+        return erase_values(value, begin(), discard_order);
     }
 
-    constexpr iterator erase_if(function<bool(const T&)> condition,
-                                iterator start)
-    {
-        // Find a node where the condition is true.
-        iterator where_it_was{find_if(start, end(), condition)};
-
-        // If such a node is found erase it, if not,
-        // return end() (result from find_if(...)).
-        if (where_it_was != end())
-        {
-            // If the element to delete is not the last one
-            if (where_it_was < end() - 1U)
-            {
-                // swap the element to delete with the last one
-                std::swap(*where_it_was, back());
-            }
-            pop_back();
-        }
-        return where_it_was;
-    }
-
-    /// @brief Erase one element (the first one containing a specified)
-    /// value.
-    /// @param value [in] Value to search for in the vector.
-    /// @param value [in] start iterator pointing to the first element
-    ///  to look for.
-    /// @return iterator Pointing to the element in the position where the
-    /// deleted element was. If the element was the last one or no element
-    /// with this value found, the iterator will be end().
-    constexpr iterator erase_one(const T& value, iterator start)
+    template <typename U>
+    constexpr iterator erase_one_imp(U&& v,
+                                     iterator const start,
+                                     bool const discard_order = true) noexcept
     {
         checkRange(start);
+
         if (begin() != end())
         {
             // Find a node with the specified value
-            iterator where_it_was{find(start, end(), value)};
+            iterator where_it_was{find(start, end(), std::forward<U>(v))};
 
             // If such a node is found erase it, if not,
             // return end() (result from find(...)).
@@ -237,8 +212,7 @@ public:
                 // If the element to delete is not the last one
                 if (where_it_was < end() - 1U)
                 {
-                    // swap the element to delete with the last one
-                    std::swap(*where_it_was, back());
+                    remove_iterator(where_it_was, end(), discard_order);
                 }
                 pop_back();
             }
@@ -247,32 +221,133 @@ public:
         return end();
     }
 
-    constexpr iterator erase_one(const T& value)
+    constexpr iterator erase_iterator(iterator const where,
+                                      iterator const _end,
+                                      bool const discard_order = true) noexcept
     {
-        return erase_one(value, begin());
+        // If such a node is found erase it, if not,
+        // return end() (result from find(...)).
+        if (where != _end)
+        {
+            // If the element to delete is not the last one
+            if (std::distance(where, _end) > 0)
+            {
+                remove_element(where, _end, discard_order);
+            }
+            pop_back();
+        }
+        return where;
     }
 
-    constexpr iterator erase_if(function<bool(const T&)> condition)
+    constexpr iterator erase_if(function<bool(const T&)> condition,
+                                iterator start,
+                                bool const discard_order = true)
     {
-        return erase_if(std::move(condition), begin());
+        checkRange(start);
+
+        if (begin() != end())
+        {
+            // Find a node with the specified value
+            return erase_iterator(find_if(start, end(), condition), end(),
+                                  discard_order);
+        }
+        return end();
+    }
+
+    /**
+     * @brief Erase one element (the first one containing a specified)
+     * value.
+     *
+     * @param value Value to search for in the vector.
+     * @param start start iterator pointing to the first element
+     * to look for.
+     * @param discard_order If true, relative order after deleting will not
+     * be taken into accound. If false, the order will remain the same.
+     * Note that using true will keep iterators pointing to other elements,
+     * except the deleted one and to the last one valid. Using false, only
+     * the iterators to the one previous the one deleted will still be valid.
+     * @return iterator Pointing to the element in the position where the
+     * deleted element was. If the element was the last one or no element
+     * with this value found, the iterator will be end().
+     * @warning This method does not allocate or deallocate memory. And it
+     * des not preserve the order. Actually, the deleted element will now
+     * contain the previous last element.
+     */
+    constexpr iterator erase_one(const T& value,
+                                 iterator const start,
+                                 bool const discard_order = true) noexcept
+    {
+        checkRange(start);
+
+        if (begin() != end())
+        {
+            // Find a node with the specified value and erase it
+            return erase_iterator(find(start, end(), value), end(),
+                                  discard_order);
+        }
+        return end();
+    }
+
+    constexpr void remove_element(iterator const element,
+                                  iterator const end,
+                                  bool const discard_order) noexcept
+    {
+        if (discard_order)
+        {
+            // swap the element to delete with the last one
+            std::swap(*element, *std::prev(end));
+        }
+        else
+        {
+            for (iterator it{element}; it != std::prev(end); ++it)
+            {
+                std::swap(*it, *(std::next(it)));
+            }
+        }
+    }
+
+    constexpr iterator erase_one_index(size_type const index,
+                                       bool const discard_order = true) noexcept
+    {
+        if (index < size())
+        {
+            return erase_one(*(begin() + index), (begin() + index),
+                             discard_order);
+        }
+
+        return end();
+    }
+
+    constexpr iterator erase_one(const T& value,
+                                 bool const discard_order = true)
+    {
+        return erase_one(value, begin(), discard_order);
+    }
+
+    constexpr iterator erase_if(function<bool(const T&)> condition,
+                                bool const discard_order = true)
+    {
+        return erase_if(std::move(condition), begin(), discard_order);
     }
 
     constexpr iterator erase_all_if(function<bool(const T&)> condition,
-                                    iterator start)
+                                    iterator start,
+                                    bool const discard_order = true)
     {
         iterator result{start};
         do
         {
             result = start;
-            start  = erase_if(condition, start);
+            start  = erase_if(condition, start, discard_order);
         } while (start != end());
 
         return result;
     }
 
-    constexpr iterator erase_all_if(function<bool(const T&)> condition)
+    constexpr iterator erase_all_if(function<bool(const T&)> condition,
+                                    bool const discard_order = true)
     {
-        return erase_all_if(condition, begin());
+        return erase_all_if(condition, begin(), discard_order);
     }
 
     constexpr const_iterator find_first_of(const vector& other) const noexcept
@@ -373,16 +448,18 @@ public:
         return cfind(element);
     }
 
-    constexpr void shrink_to_fit() { Base::shrink_to_fit(); }
+    constexpr void shrink_to_fit() { base_.shrink_to_fit(); }
 
-    constexpr void push_back(const T& value) { Base::push_back(value); }
+    constexpr void push_back(const T& value) { base_.push_back(value); }
 
-    constexpr void push_back(T&& value) { Base::push_back(std::move(value)); }
+    constexpr void push_back(T&& value) { base_.push_back(std::move(value)); }
+
+    constexpr void emplace_back() { base_.emplace_back(); }
 
     template <typename... Args>
     constexpr void emplace_back(Args&&... args)
     {
-        Base::emplace_back(std::forward<Args>(args)...);
+        base_.emplace_back(std::forward<Args>(args)...);
     }
 
     constexpr void insert(const vector& other)
@@ -420,11 +497,11 @@ public:
         return *this;
     }
 
-    constexpr void pop_back() noexcept { Base::pop_back(); }
+    constexpr void pop_back() noexcept { base_.pop_back(); }
 
     constexpr void reserve(const size_type capacity)
     {
-        Base::reserve(capacity);
+        base_.reserve(capacity);
     }
 
     constexpr void resize(const size_type sz)

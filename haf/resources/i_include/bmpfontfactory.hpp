@@ -15,9 +15,9 @@ class BMPFont;
 class BMPFontFactory final
 {
 public:
-    mtps::sptr<BMPFont> loadFromFile(const mtps::str &file);
-    mtps::sptr<BMPFont> loadFromRawMemory(mtps::RawMemory *raw_memory);
+    mtps::sptr<BMPFont> loadFromFile(const mtps::str& file);
+    mtps::sptr<BMPFont> loadFromRawMemory(mtps::RawMemory* raw_memory);
 };
-} // namespace haf::res
+}  // namespace haf::res
 
 #endif

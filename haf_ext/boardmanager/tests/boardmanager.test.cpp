@@ -64,7 +64,7 @@ TEST_CASE("BoardManager of size 0,0 with actuator", "[board_manager]")
     auto dummy_board_manager_actuator = muptr<DummyBoardModelActuator>();
 
     board_manager_component.initialize(vector2dst{0U, 0U},
-                                     dummy_board_manager_actuator.get());
+                                       dummy_board_manager_actuator.get());
     CHECK(board_manager_component.size() == vector2dst{0U, 0U});
 }
 
@@ -98,7 +98,8 @@ TEST_CASE("BoardManager of size 32,32 with actuator", "[board_manager]")
 
     auto dummy_board_manager_actuator = muptr<DummyBoardModelActuator>();
 
-    board_manager_component.initialize(bm_size, dummy_board_manager_actuator.get());
+    board_manager_component.initialize(bm_size,
+                                       dummy_board_manager_actuator.get());
     CHECK(board_manager_component.size() == bm_size);
 
     for (auto x = 0U; x < bm_size.x; ++x)
@@ -142,7 +143,8 @@ TEST_CASE("BoardManager get and set with actuator", "[board_manager]")
     BoardManager board_manager_component;
     auto dummy_board_manager_actuator = muptr<DummyBoardModelActuator>();
 
-    board_manager_component.initialize(bm_size, dummy_board_manager_actuator.get());
+    board_manager_component.initialize(bm_size,
+                                       dummy_board_manager_actuator.get());
 
     auto tile = msptr<ITile>();
 
@@ -169,7 +171,8 @@ TEST_CASE("BoardManager control with actuator", "[board_manager]")
     BoardManager board_manager_component;
     auto dummy_board_manager_actuator = muptr<DummyBoardModelActuator>();
 
-    board_manager_component.initialize(bm_size, dummy_board_manager_actuator.get());
+    board_manager_component.initialize(bm_size,
+                                       dummy_board_manager_actuator.get());
     CHECK(dummy_board_manager_actuator->data() == 0U);
 
     for (auto x = 0U; x < bm_size.x; ++x)
@@ -241,8 +244,9 @@ TEST_CASE("BoardManager background data", "[board_manager]")
         }
     }
 
-    board_manager_component.setBackgroundFunction(
-        [](const auto& position) { return position.x * position.y; });
+    board_manager_component.setBackgroundFunction([](const auto& position) {
+        return static_cast<BackgroundData>(position.x * position.y);
+    });
 
     for (auto x = 0U; x < 10U; ++x)
     {
@@ -251,7 +255,7 @@ TEST_CASE("BoardManager background data", "[board_manager]")
             if (x < 8U && y < 8U)
             {
                 CHECK(board_manager_component.backgroundType({x, y}) ==
-                      static_cast<BackgroundData>(x *y));
+                      static_cast<BackgroundData>(x * y));
             }
             else
             {

@@ -1,7 +1,5 @@
-#include "animationcomponent.hpp"
-
+#include <haf/scene_components/include/animationcomponent.hpp>
 #include <hlog/include/hlog.hpp>
-
 #include <mtypes/include/lockablevector.hpp>
 
 using namespace mtps;
@@ -14,9 +12,12 @@ public:
     AnimationComponentPrivate() {}
     LockableVector<sptr<Animation>> m_animations;
 };
+
 AnimationComponent::AnimationComponent() :
     p_{muptr<AnimationComponentPrivate>()}
 {}
+
+AnimationComponent::~AnimationComponent() = default;
 
 void AnimationComponent::addAnimation(uptr<Animation> nanimation)
 {

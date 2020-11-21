@@ -21,9 +21,9 @@ enum class SimulationActionType : mtps::u8
 
 struct SimulationAction
 {
-    SimulationActionType type;
+    SimulationActionType type{SimulationActionType::KeyPressed};
     time::TimePoint time_point;
-    input::Key key;
+    input::Key key{input::Key::A};
 
     inline bool timeToLaunch(
         const time::TimePoint& time_since_start,

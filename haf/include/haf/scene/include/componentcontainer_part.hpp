@@ -38,7 +38,7 @@ public:
     {
         LogAsserter::log_assert(componentOfType<T>() == nullptr,
                                 "There is already a component with this type");
-        mtps::sptr<T> nc(create<T>());
+        mtps::sptr<T> nc(BaseClass::template create<T>());
         addComponent(nc);
         return nc;
     }
@@ -52,7 +52,20 @@ public:
         }
     }
 
-    void updateComponents();
+    void updateComponents()
+    {
+        if constexpr (WithUpdate)
+        {
+            components_.performUpdate(
+                [](const mtps::sptr<IComponent>& component) {
+                    component->update();
+                });
+        }
+        else
+        {
+            components_.update();
+        }
+    }
 
     /**
      * Returns the component of the specified type if exists

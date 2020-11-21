@@ -9,26 +9,25 @@
 #include <haf/scene_nodes/include/scenenodetext.hpp>
 #include <haf/scene_components/include/animationcomponent.hpp>
 
-#include "../gameshareddata.hpp"
-
 namespace zoper
 {
 class GameScene;
 
-using namespace haf;
-
-class PauseSceneNode : public scene::SceneNode
+class PauseSceneNode : public haf::scene::SceneNode
 {
 public:
-    PauseSceneNode(scene::SceneNode *const parent, mtps::str name);
+    using haf::scene::SceneNode::SceneNode;
+    
     ~PauseSceneNode() override;
+
+    void onCreated() override;
 
     void enterPause();
     void exitPause();
 
 private:
-    mtps::sptr<scene::nodes::SceneNodeText> m_pauseText;
-    mtps::sptr<scene::AnimationComponent> animation_component_;
+    mtps::sptr<haf::scene::nodes::SceneNodeText> m_pauseText;
+    mtps::sptr<haf::scene::AnimationComponent> animation_component_;
 };
 } // namespace zoper
 

@@ -13,21 +13,46 @@
 
 #include <mtypes/include/str.hpp>
 
+namespace logger
+{
+extern template struct Log<true, mtps::str, MixinCommiter<haf::ThreadCommiter>>;
+}
 namespace haf
 {
+
 using LogClass =
     logger::Log<true, mtps::str, logger::MixinCommiter<ThreadCommiter>>;
-extern template LogClass;
 
+}
+
+namespace logger
+{
+extern template struct LogDisplayer<haf::LogClass, SeverityType>;
+}
+
+namespace haf
+{
 using DisplayLog = logger::LogDisplayer<LogClass, logger::SeverityType>;
-extern template DisplayLog;
+}
 
+namespace logger
+{
+extern template struct LogAsserter<haf::DisplayLog>;
+}
+
+namespace haf
+{
 using LogAsserter = logger::LogAsserter<DisplayLog>;
-extern template LogAsserter;
+}
 
+namespace logger
+{
+extern template struct LogInitializer<haf::LogClass>;
+}
+
+namespace haf
+{
 using LogInitializer = logger::LogInitializer<LogClass>;
-extern template LogInitializer;
-
 }  // namespace haf
 
 #endif

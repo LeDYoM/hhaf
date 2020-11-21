@@ -6,7 +6,7 @@
 #include <hlog/include/hlog.hpp>
 #include <haf/resources/include/resourceview.hpp>
 #include <haf/resources/include/ittfont.hpp>
-#include <haf/shareddata/include/shareddata_updater.hpp>
+#include <haf/shareddata/include/shareddata.hpp>
 #include <haf/scene_components/include/scenemetricsview.hpp>
 #include <mtypes/include/function.hpp>
 #include <mtypes/include/types.hpp>
@@ -59,14 +59,13 @@ void goGame(rptr<MenuPaged> scene_node,
             vector<s32> menu_data)
 {
     {
-        auto game_shared_data_view =
-            scene_node->dataWrapper<shdata::SharedDataUpdater>();
-        auto& game_shared_data =
-            game_shared_data_view->dataAs<GameSharedData>();
+        GameSharedData game_shared_data{};
 
         game_shared_data.startLevel = menu_data[0U];
         game_shared_data.gameMode   = game_mode;
         DisplayLog::info(game_shared_data.to_str());
+        scene_node->dataWrapper<shdata::SharedData>()->store(
+            GameSharedData::address(), game_shared_data);
     }
 
     scene_node->terminate(1);
@@ -78,23 +77,23 @@ void MainMenu::onCreated()
 
     auto resources_viewer = dataWrapper<res::ResourceView>();
 
-    auto normalFont =
-        resources_viewer->getTTFont(MainMenuResources::MenuFontId)->font(72);
-#ifdef TEST_BMP_FONT
-    auto normalFont =
-        resources_viewer->getBMPFont(MainMenuResources::TestFontId);
-#endif
-
-    setNormalTextFont(normalFont);
-    setNormalColor(colors::Blue);
-    setSelectedColor(colors::Red);
-
     Rectf32 textBox{
         rectFromSize(dataWrapper<SceneMetricsView>()->currentView().size())
             .setLeftTop({0, 750})
             .setSize({2000, 4 * 150})};
-    position = textBox.leftTop();
-    setSceneNodeSizeForPages(textBox.size());
+    prop<Position>() = textBox.leftTop();
+
+    prop<MenuPagedProperties>()
+        .put<NormalTextFont>(
+#ifdef TEST_BMP_FONT
+            getBMPFont(MainMenuResources::TestFontId)
+#else
+            resources_viewer->getTTFont(MainMenuResources::MenuFontId)->font(72)
+#endif
+                )
+        .put<NormalColor>(colors::Blue)
+        .put<SelectedColor>(colors::Red)
+        .put<SceneNodeSizeForPages>(textBox.size());
 
     vector_shared_pointers<scene::MenuPage> menu_steps;
 
@@ -109,7 +108,7 @@ void MainMenu::onCreated()
             make_option("Exit", RangeOption(), MenuPagedOption::GoBack)},
         main_page_options));
 
-    menu_steps.push_back(menuPageMain);
+    menu_steps.emplace_back(menuPageMain);
 
     auto menuPageByToken(createAndConfigureMenuPage(
         "menuPageByToken",
@@ -118,7 +117,7 @@ void MainMenu::onCreated()
             make_option("Play", RangeOption(), MenuPagedOption::Accept),
             make_option("Back", RangeOption(), MenuPagedOption::GoBack)}));
 
-    menu_steps.push_back(menuPageByToken);
+    menu_steps.emplace_back(menuPageByToken);
 
     menu_steps.back()->Accepted.connect([this](vector<s32> menu_data) {
         goGame(this, GameMode::Token, std::move(menu_data));
@@ -131,7 +130,7 @@ void MainMenu::onCreated()
             make_option("Play", RangeOption(), MenuPagedOption::Accept),
             make_option("Back", RangeOption(), MenuPagedOption::GoBack)}));
 
-    menu_steps.push_back(menuPageByTime);
+    menu_steps.emplace_back(menuPageByTime);
 
     menu_steps.back()->Accepted.connect([this](vector<s32> menu_data) {
         goGame(this, GameMode::Time, std::move(menu_data));
@@ -150,7 +149,7 @@ void MainMenu::onCreated()
             make_option("Accept", RangeOption(), MenuPagedOption::GoBack),
             make_option("Cancel", RangeOption(), MenuPagedOption::GoBack)}));
 
-    menu_steps.push_back(menuPageOptions);
+    menu_steps.emplace_back(menuPageOptions);
 
     configure_menu(std::move(menu_steps));
 }

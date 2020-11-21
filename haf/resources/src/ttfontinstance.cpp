@@ -1,5 +1,5 @@
-#include "ttfontinstance.hpp"
-#include "ttfont.hpp"
+#include <resources/i_include/ttfontinstance.hpp>
+#include <resources/i_include/ttfont.hpp>
 
 #include <backend_dev/include/ittfont.hpp>
 
@@ -9,8 +9,7 @@ namespace haf::res
 {
 using namespace backend;
 
-TTFontInstance::TTFontInstance(const TTFont& parent,
-                               const u32 characterSize) :
+TTFontInstance::TTFontInstance(const TTFont& parent, const u32 characterSize) :
     m_parentInstance{parent}, m_characterSize{characterSize}
 {}
 
@@ -36,8 +35,7 @@ f32 TTFontInstance::getLineSpacing() const
     return m_parentInstance.getLineSpacing(m_characterSize);
 }
 
-f32 TTFontInstance::getKerning(const u32 first,
-                                     const u32 second) const
+f32 TTFontInstance::getKerning(const u32 first, const u32 second) const
 {
     return m_parentInstance.getKerning(first, second, m_characterSize);
 }

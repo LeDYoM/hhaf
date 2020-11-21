@@ -20,9 +20,9 @@ Player::Player(rptr<SceneNode> parent, str name) :
     currentDirection{Direction{Direction::DirectionData::Up}},
     m_board2SceneFactor{}
 {
-    rotator_ = createSceneNode("player_rotator");
+    rotator_scalator_ = createSceneNode("player_rotator");
 
-    auto render_scene_node = rotator_->createSceneNode<RenderizableSceneNode>(
+    auto render_scene_node = rotator_scalator_->createSceneNode<RenderizableSceneNode>(
         "player_render_scene_node");
 
     render_scene_node->buildNode(render_scene_node->renderizableBuilder()
@@ -30,7 +30,7 @@ Player::Player(rptr<SceneNode> parent, str name) :
                                      .figType(FigType_t::Shape)
                                      .pointCount(3U));
     node_     = render_scene_node->node();
-    scalator_ = render_scene_node;
+    rotator_scalator_->addTransformation();
 }
 
 Player::~Player() = default;
@@ -51,8 +51,8 @@ void Player::update()
     if (boardPosition.readResetHasChanged())
     {
         DisplayLog::info("Player board position: ", boardPosition());
-        position = m_board2SceneFactor * boardPosition();
-        DisplayLog::info("Player scene position: ", position());
+        prop<Position>() = m_board2SceneFactor * boardPosition();
+        DisplayLog::info("Player scene position: ", prop<Position>().get());
     }
 
     if (currentDirection.readResetHasChanged())
@@ -60,14 +60,18 @@ void Player::update()
         const auto direction{currentDirection()};
 
         const auto tileCenter{m_board2SceneFactor / 2.0F};
-        rotator_->rotateAround(tileCenter, direction.angle());
+        rotator_scalator_->rotateAround(tileCenter, direction.angle());
 
-        scalator_->scaleAround(
+        rotator_scalator_->getTransformation(1).
+        scaleAround(
             tileCenter,
             (!direction.isVertical())
                 ? vector2df{1.0F, 1.0F}
                 : vector2df{m_board2SceneFactor.y / m_board2SceneFactor.x,
                             m_board2SceneFactor.x / m_board2SceneFactor.y});
+
+        rotator_scalator_->prop<Position>() = tileCenter;
+        rotator_scalator_->getTransformation(1).prop<Position>() = tileCenter;
     }
 }
 
@@ -94,8 +98,8 @@ void Player::launchAnimation(const vector2df& toWhere)
     animation_component_->addPropertyAnimation(
         TimePoint_as_miliseconds(
             gameplay::constants::MillisAnimationLaunchPlayerStep),
-        position, position(), toWhere, Animation::AnimationDirection::Forward,
-        [this, currentPosition = position()]() {
+        prop<Position>(), prop<Position>()(), toWhere, Animation::AnimationDirection::Forward,
+        [this, currentPosition = prop<Position>()()]() {
             launchAnimationBack(currentPosition);
         });
 }
@@ -108,7 +112,7 @@ void Player::launchAnimationBack(const vector2df& toWhere)
     animation_component_->addPropertyAnimation(
         TimePoint_as_miliseconds(
             gameplay::constants::MillisAnimationLaunchPlayerStep),
-        position, position(), toWhere);
+        prop<Position>(), prop<Position>().get(), toWhere);
 }
 
 void Player::tileAdded(const vector2dst& position_)

@@ -4,6 +4,7 @@
 #define HAF_SCENE_SCENENODEPARENT_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
+#include <haf/scene/include/scenenode_cast.hpp>
 
 namespace haf::scene
 {
@@ -82,9 +83,12 @@ public:
         }
         else
         {
-            auto parent_as_type{_parent->snCast<T>()};
-            return parent_as_type == nullptr ? _parent->ancestor<T>()
-                                             : parent_as_type;
+            auto parent_as_type{sceneNodeCast<T>(_parent)};
+            auto const parent_as_scene_node_parent{
+                sceneNodeCast<SceneNodeParent>(_parent)};
+            return parent_as_type == nullptr
+                ? parent_as_scene_node_parent->ancestor<T>()
+                : parent_as_type;
         }
     }
 
@@ -104,9 +108,12 @@ public:
         }
         else
         {
-            auto const parent_as_type{_parent->snCast<T const>()};
-            return parent_as_type == nullptr ? _parent->ancestor<T const>()
-                                             : parent_as_type;
+            auto const parent_as_type{sceneNodeCast<T const>(_parent)};
+            auto const parent_as_scene_node_parent{
+                sceneNodeCast<SceneNodeParent const>(_parent)};
+            return parent_as_type == nullptr
+                ? parent_as_scene_node_parent->ancestor<T const>()
+                : parent_as_type;
         }
     }
 

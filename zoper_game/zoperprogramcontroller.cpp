@@ -19,25 +19,25 @@ using namespace haf::scene;
 
 namespace zoper
 {
-ZoperProgramController::ZoperProgramController() = default;
-ZoperProgramController::~ZoperProgramController() = default;
 
-u16 ZoperProgramController::getVersion() const noexcept
+void ZoperProgramController::configureScenes(
+    haf::sys::DataWrapperCreator& data_wrapper_creator)
 {
-    return 1;
+        auto scene_node_factory(
+            data_wrapper_creator.dataWrapper<scene::SceneFactory>());
+
+        scene_node_factory->registerSceneType<MenuScene>();
+        scene_node_factory->registerSceneType<GameScene>();
+        scene_node_factory->registerSceneType<HighScoresScene>();
+
+        auto scene_control(
+            data_wrapper_creator.dataWrapper<scene::SceneControl>());
+
+        scene_control->startScene<MenuScene>();
 }
-u16 ZoperProgramController::getSubVersion() const noexcept
-{
-    return 4;
-}
-u16 ZoperProgramController::getPatch() const noexcept
-{
-    return 0;
-}
-str ZoperProgramController::getName() const noexcept
-{
-    return "Zoper";
-}
+
+ZoperProgramController::ZoperProgramController()  = default;
+ZoperProgramController::~ZoperProgramController() = default;
 
 void ZoperProgramController::onInit(
     haf::sys::DataWrapperCreator& data_wrapper_creator)
@@ -53,49 +53,24 @@ void ZoperProgramController::onInit(
         "keys.txt", *keyMapping);
 
     {
-        auto game_shared_data{muptr<GameSharedData>()};
+        GameSharedData game_shared_data{};
         data_wrapper_creator.dataWrapper<shdata::SharedData>()->store(
-            std::move(game_shared_data));
+            GameSharedData::address(), game_shared_data);
     }
     {
         data_wrapper_creator.dataWrapper<scene::SceneMetrics>()->setViewRect(
             {0U, 0U, 2000U, 2000U});
-        auto scene_node_factory(
-            data_wrapper_creator.dataWrapper<scene::SceneFactory>());
-
-        scene_node_factory->registerSceneType<MenuScene>();
-        scene_node_factory->registerSceneType<GameScene>();
-        scene_node_factory->registerSceneType<HighScoresScene>();
-
-        auto scene_control(
-            data_wrapper_creator.dataWrapper<scene::SceneControl>());
-
-        scene_control->setSceneDirector([this](const str& scene_name) -> str {
-            if (scene_name == (MenuScene::StaticTypeName))
-            {
-                return GameScene::StaticTypeName;
-            }
-            else if (scene_name == (GameScene::StaticTypeName))
-            {
-                return HighScoresScene::StaticTypeName;
-            }
-            else if (scene_name == (HighScoresScene::StaticTypeName))
-            {
-                return MenuScene::StaticTypeName;
-            }
-            return str{};
-        });
-
-        scene_control->startScene<MenuScene>();
     }
+
+    configureScenes(data_wrapper_creator);
 }
 
 void ZoperProgramController::onFinish(
-    haf::sys::DataWrapperCreator& data_wrapper_creator)
+    haf::sys::DataWrapperCreator&)
 {
-    const bool check =
-        data_wrapper_creator.dataWrapper<shdata::SharedData>()->makeEmpty();
-    LogAsserter::log_assert(check, "SharedData is empty!");
+//    const bool check =
+//        data_wrapper_creator.dataWrapper<shdata::SharedData>()->makeEmpty();
+//    LogAsserter::log_assert(check, "SharedData is empty!");
 }
 
 }  // namespace zoper

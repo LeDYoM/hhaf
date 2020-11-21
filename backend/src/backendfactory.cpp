@@ -54,9 +54,9 @@ BackendFactory::BackendFactory() :
     if (loader->loadModule(sh_name))
     {
         const auto fp_init_haf =
-            static_cast<p_initHaf>(loader->loadMethod(sh_name, "init_lib"));
+            reinterpret_cast<p_initHaf>(loader->loadMethod(sh_name, "init_lib"));
         const auto fp_finish_haf =
-            static_cast<p_initHaf>(loader->loadMethod(sh_name, "finish_lib"));
+            reinterpret_cast<p_initHaf>(loader->loadMethod(sh_name, "finish_lib"));
 
         if (fp_init_haf != nullptr && fp_finish_haf != nullptr)
         {
@@ -85,9 +85,14 @@ BackendFactory::~BackendFactory()
     loader::destroyLoader();
 }
 
-rptr<IWindow> BackendFactory::getWindow()
+rptr<IWindow> BackendFactory::getWindow() const noexcept
 {
     return window_;
+}
+
+rptr<IRenderTarget> BackendFactory::getRenderTarget() const noexcept
+{
+    return render_target_;
 }
 
 rptr<ITextureFactory> BackendFactory::getTextureFactory() const noexcept

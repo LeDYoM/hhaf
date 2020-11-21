@@ -3,6 +3,7 @@
 #ifndef HEF_EXT_MENU_PAGE_INCLUDE_HPP
 #define HEF_EXT_MENU_PAGE_INCLUDE_HPP
 
+#include <mtypes/include/types.hpp>
 #include <menu_paged/include/menu_paged_option.hpp>
 #include <haf/scene/include/scenenode.hpp>
 #include <haf/scene_nodes/include/tablenode.hpp>
@@ -16,8 +17,11 @@ namespace haf::scene
 class MenuPaged;
 class MenuPage : public scene::nodes::TableNode<nodes::SceneNodeText>
 {
+public:
     using BaseClass = scene::nodes::TableNode<nodes::SceneNodeText>;
+    using BaseClass::prop;
 private:
+
     void standarizeText(const mtps::sptr<ContainedElement> &ntext);
     void goDown();
     void goUp();
@@ -35,8 +39,8 @@ private:
 protected:
     using ContainedElement = BaseClass::ContainedElement;
 
-    MenuPaged *parentMenuPaged();
-    const MenuPaged *parentMenuPaged() const;
+    mtps::rptr<MenuPaged> parentMenuPaged();
+    mtps::rptr<MenuPaged const> parentMenuPaged() const;
 
     mtps::sptr<res::IFont> normalFont() const;
     Color normalColor() const;

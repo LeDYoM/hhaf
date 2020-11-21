@@ -1,4 +1,4 @@
-#include "systemprovider.hpp"
+#include <system/i_include/systemprovider.hpp>
 
 #include <backend/include/backendfactory.hpp>
 #include <backend/include/backend_creator.hpp>
@@ -128,6 +128,10 @@ void SystemProvider::init(rptr<IApp> iapp,
                           int const argc,
                           char const* const argv[])
 {
+    // TODO: Use argc and argv to read configuration.
+    argc;
+    argv;
+
     LogAsserter::log_assert(
         iapp != nullptr, "Cannot create a SystemProvider with a nullptr app");
     p_->backend_factory_ =

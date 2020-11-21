@@ -11,21 +11,23 @@
 namespace haf::sys
 {
 /**
-* @brief This system is intended to be used to generate
-* a series of random numbers.
-*/
+ * @brief This system is intended to be used to generate
+ * a series of random numbers.
+ */
 class RandomSystem final : public SystemBase
 {
 public:
-    RandomSystem(sys::SystemProvider &system_provider);
+    RandomSystem(sys::SystemProvider& system_provider);
     ~RandomSystem();
 
-    mtps::size_type getNext(const mtps::str&name, const mtps::size_type min, const mtps::size_type max);
+    mtps::size_type getNext(const mtps::str& name,
+                            const mtps::size_type min,
+                            const mtps::size_type max);
 
 private:
     class RandomSystemPrivate;
     mtps::uptr<RandomSystemPrivate> priv_;
 };
-} // namespace haf::sys
+}  // namespace haf::sys
 
 #endif

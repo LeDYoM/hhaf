@@ -11,6 +11,7 @@ TEST_CASE("str::str", "[str]")
         str test;
         CHECK(test == "");
         CHECK(test.size() == 0);
+        CHECK_FALSE(test == "abc");
     }
 
     SECTION("Copy initialize")
@@ -27,6 +28,23 @@ TEST_CASE("str::str", "[str]")
         str test3 = "test1_bigstring_to_test_here_and_now_in_this_test";
         CHECK(test3 == "test1_bigstring_to_test_here_and_now_in_this_test");
         CHECK(test3.size() == sizeof(test_str) - 1);
+    }
+
+    SECTION("Copy")
+    {
+        str test;
+        test = "def";
+        CHECK(test == "def");
+        CHECK_FALSE(test != "def");
+        CHECK_FALSE(test == "de");
+        CHECK_FALSE(test == "def0");
+        CHECK(test == "def");
+        CHECK_FALSE(test == "");
+        CHECK_FALSE("def" != test);
+        CHECK_FALSE("de" == test);
+        CHECK_FALSE("def0" == test);
+        CHECK("def" == test);
+        CHECK_FALSE("" == test);
     }
 }
 
@@ -113,18 +131,19 @@ TEST_CASE("str", "[str]")
 
     SECTION("str split", "[str]")
     {
-        str foo("hello. This. To Split string. Lets see");
+        str foo("hello. This. To Split string. Lets see.");
         auto strSplitted = foo.split('.');
-        CHECK(strSplitted.size() == 4);
-        CHECK(strSplitted[0] == "hello");
-        CHECK(strSplitted[1] == " This");
-        CHECK(strSplitted[2] == " To Split string");
-        CHECK(strSplitted[3] == " Lets see");
+        CHECK(strSplitted.size() == 5);
+        CHECK(strSplitted[0U] == "hello");
+        CHECK(strSplitted[1U] == " This");
+        CHECK(strSplitted[2U] == " To Split string");
+        CHECK(strSplitted[3U] == " Lets see");
+        CHECK(strSplitted[4U] == "");
 
         auto moreSplitted(strSplitted[2].substr(4).split('s'));
         CHECK(moreSplitted.size() == 2);
-        CHECK(moreSplitted[0] == "Split ");
-        CHECK(moreSplitted[1] == "tring");
+        CHECK(moreSplitted[0U] == "Split ");
+        CHECK(moreSplitted[1U] == "tring");
     }
 
     SECTION("trims")

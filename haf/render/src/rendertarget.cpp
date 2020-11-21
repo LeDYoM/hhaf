@@ -1,4 +1,4 @@
-#include "rendertarget.hpp"
+#include <render/i_include/rendertarget.hpp>
 
 #include <backend_dev/include/irendertarget.hpp>
 #include <backend_dev/include/irenderdata.hpp>
@@ -7,8 +7,8 @@
 #include <resources/i_include/texture.hpp>
 #include <haf/resources/include/ishader.hpp>
 #include <resources/i_include/shader.hpp>
-#include <haf/scene/include/transform.hpp>
-#include <haf/scene/include/vertexarray.hpp>
+#include <haf/scene/include/matrix4x4.hpp>
+#include <haf/render/include/vertexarray.hpp>
 #include <hlog/include/hlog.hpp>
 
 using namespace mtps;

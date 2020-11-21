@@ -1,5 +1,5 @@
-#include "scenenodefactory.hpp"
-#include "scenenode.hpp"
+#include <haf/scene/include/scenenodefactory.hpp>
+#include <haf/scene/include/scenenode.hpp>
 
 #include <map>
 

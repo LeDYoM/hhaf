@@ -5,12 +5,17 @@
 
 #include <mtypes/include/types.hpp>
 #include <system/i_include/systemprovider.hpp>
+#include <system/i_include/systemdatawrappercreator.hpp>
+#include <haf/system/include/datawrappercreator.hpp>
 #include <shareddata/i_include/shareddatasystem.hpp>
 
 class TestSystem
 {
 public:
-    TestSystem() : system_provider_{}, init_system_options_{} {}
+    TestSystem() :
+        system_provider_{},
+        init_system_options_{}
+    {}
 
     void init()
     {
@@ -27,7 +32,20 @@ public:
         return system_provider_.sharedDataSystem();
     }
 
-    haf::sys::SystemProvider& systemProvider() { return system_provider_; }
+    inline haf::sys::SharedDataSystem const& sharedDataSystem() const
+    {
+        return system_provider_.sharedDataSystem();
+    }
+
+    haf::sys::SystemProvider& systemProvider() noexcept
+    {
+        return system_provider_;
+    }
+
+    haf::sys::SystemProvider const& systemProvider() const noexcept
+    {
+        return system_provider_;
+    }
 
 private:
     haf::sys::SystemProvider system_provider_;
@@ -36,6 +54,13 @@ private:
 
 class TestSharedDataSystem : public TestSystem
 {
+public:
+    haf::sys::SystemDataWrapperCreator get()
+    {
+        return haf::sys::SystemDataWrapperCreator{systemProvider().sharedDataSystem()};
+    }
+
+private:
     void setInitSystemOptions(
         haf::sys::InitSystemOptions& init_system_options) override
     {
@@ -50,4 +75,5 @@ mtps::uptr<T> makeTestSystem()
     t->init();
     return t;
 }
+
 #endif

@@ -1,6 +1,6 @@
-#include "input_component_base.hpp"
-#include "inputsystem.hpp"
-#include "key.hpp"
+#include <haf/input/include/input_component_base.hpp>
+#include <haf/input/i_include/inputsystem.hpp>
+#include <haf/input/include/key.hpp>
 
 #include <hlog/include/hlog.hpp>
 #include <system/i_include/get_system.hpp>
@@ -17,12 +17,12 @@ bool InputComponentBase::isPressed(const Key key)
     return false;
 }
 
-bool InputComponentBase::isShiftPressed() const
+bool InputComponentBase::isShiftPressed() const noexcept
 {
     return false;
 }
 
-char InputComponentBase::toAscii(const Key key) noexcept
+char InputComponentBase::toAscii(const Key key) const noexcept
 {
     return static_cast<char>(KeyIndex(key) + (isShiftPressed() ? 65 : 65));
 }

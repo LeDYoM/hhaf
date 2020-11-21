@@ -1,0 +1,21 @@
+{
+    "workbench.colorCustomizations": {
+        "activityBar.background": "#5A1310",
+        "titleBar.activeBackground": "#7E1A16",
+        "titleBar.activeForeground": "#FEFBFB"
+    },
+    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+    "cmake.configureOnOpen": true,
+    "files.associations": {
+        "array": "cpp",
+        "string_view": "cpp",
+        "*.tcc": "cpp",
+        "fstream": "cpp",
+        "iosfwd": "cpp",
+        "istream": "cpp",
+        "limits": "cpp",
+        "shared_mutex": "cpp",
+        "sstream": "cpp",
+        "streambuf": "cpp"
+    }
+}

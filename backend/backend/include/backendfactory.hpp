@@ -10,6 +10,7 @@ namespace haf::backend
 {
 class BackendRegister;
 class IWindow;
+class IRenderTarget;
 
 /**
  * @brief Class representing a factory for backend classes.
@@ -21,7 +22,8 @@ public:
     BackendFactory();
     ~BackendFactory();
 
-    mtps::rptr<IWindow> getWindow();
+    mtps::rptr<IWindow> getWindow() const noexcept;
+    mtps::rptr<IRenderTarget> getRenderTarget() const noexcept;
     mtps::rptr<ITextureFactory> getTextureFactory() const noexcept;
     mtps::rptr<ITTFontFactory> getTTFontFactory() const noexcept;
     mtps::rptr<IShaderFactory> getShaderFactory() const noexcept;
@@ -34,6 +36,7 @@ public:
 private:
     mtps::uptr<BackendRegister> backend_register_;
     mtps::rptr<IWindow> window_{nullptr};
+    mtps::rptr<IRenderTarget> render_target_{nullptr};
     mtps::rptr<ITextureFactory> textureFactory_{nullptr};
     mtps::rptr<ITTFontFactory> ttfontFactory_{nullptr};
     mtps::rptr<IShaderFactory> shaderFactory_{nullptr};

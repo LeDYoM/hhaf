@@ -9,39 +9,34 @@
 #include <haf/scene/include/scenenode.hpp>
 #include <haf/scene/include/color.hpp>
 #include <haf/resources/include/ifont.hpp>
+#include "menu_paged_properties.hpp"
+#include "menu_page.hpp"
 
 namespace haf::scene
 {
-class MenuPage;
-
 /**
  * @brief Main class to model a menu in paged style.
  * This class should be used as a base class for a new type of @b SceneNode.
  */
-class MenuPaged : public SceneNode
+class MenuPaged : public SceneNode, MenuPagedProperties
 {
 public:
     using BaseClass = SceneNode;
-    MenuPaged(SceneNode* parent, mtps::str name);
+    using SceneNode::SceneNode;
+
+    using MenuPagedProperties::prop;
+    using SceneNode::prop;
+
     ~MenuPaged() override;
 
-    void setNormalTextFont(mtps::sptr<res::IFont> normal_text_font);
-    mtps::sptr<res::IFont> normalTextFont() const noexcept;
-
-    void setNormalColor(Color normal_color);
-    Color normalColor() const;
-
-    void setSelectedColor(Color selected_color);
-    Color selectedColor() const;
-
-    void setSceneNodeSizeForPages(mtps::vector2df size);
-    mtps::vector2df sceneNodeSizeForPages() const;
     void setMenuPagedStatus(const mtps::s32 status);
     mtps::s32 status() const;
 
     void terminate(const mtps::s32 status);
 
     mtps::emitter<const mtps::s32> MenuFinished;
+
+    void update() override;
 
 protected:
     mtps::sptr<MenuPage> createMenuPage(mtps::str name);
@@ -52,16 +47,11 @@ protected:
                                                     Args&&... args)
     {
         auto node{createMenuPage(std::move(name))};
-        node->sceneNodeSize = scene_node_size_for_pages_;
         node->configure(std::forward<Args>(args)...);
         return node;
     }
 
 private:
-    mtps::vector2df scene_node_size_for_pages_;
-    mtps::sptr<res::IFont> normal_text_font_;
-    Color normal_color_;
-    Color selected_color_;
     mtps::vector_shared_pointers<MenuPage> menu_steps_;
     mtps::s32 status_{};
 };

@@ -6,11 +6,13 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/array.hpp>
 #include <mtypes/include/object.hpp>
+#include <haf/shareddata/include/ishareable.hpp>
 
 namespace zoper
 {
 
-constexpr mtps::size_type NumHighScore = 10;
+constexpr mtps::fast_u16 NumHighScore = 10U;
+
 using Score = mtps::size_type;
 
 struct HighScore
@@ -19,7 +21,21 @@ struct HighScore
     Score score{0U};
 };
 
-class HighScoresData
+inline const mtps::Object &operator>>(const mtps::Object &obj, HighScore &high_score_data)
+{
+    high_score_data.name = obj["name"].as<mtps::str>();
+    high_score_data.score = obj["score"].as<Score>();
+    return obj;
+}
+
+inline mtps::Object &operator<<(mtps::Object &obj, const HighScore &high_score_data)
+{
+    obj.set("name", high_score_data.name);
+    obj.set("score", high_score_data.score);
+    return obj;
+}
+
+class HighScoresData : public haf::shdata::IShareable
 {
 public:
     using HighScoresList = mtps::array<HighScore, NumHighScore>;
@@ -32,6 +48,19 @@ public:
 
     friend mtps::Object &operator<<(mtps::Object &obj, const HighScoresData &high_scores_data);
     friend const mtps::Object &operator>>(const mtps::Object &obj, HighScoresData &high_scores_data);
+
+    bool serialize(mtps::Object& obj) const override
+    {
+        obj << *this;
+        return true;
+    }
+
+    bool deserialize(mtps::Object const& obj) override
+    {
+        obj >> *this;
+        return true;
+    }
+
 private:
     HighScoresList m_highScoreList;
 };
@@ -48,20 +77,6 @@ inline const mtps::Object &operator>>(const mtps::Object &obj, HighScoresData &h
 inline mtps::Object &operator<<(mtps::Object &obj, const HighScoresData &high_scores_data)
 {
     obj.set("high_scores", high_scores_data.m_highScoreList);
-    return obj;
-}
-
-inline const mtps::Object &operator>>(const mtps::Object &obj, HighScore &high_score_data)
-{
-    high_score_data.name = obj["name"].as<mtps::str>();
-    high_score_data.score = obj["score"].as<Score>();
-    return obj;
-}
-
-inline mtps::Object &operator<<(mtps::Object &obj, const HighScore &high_score_data)
-{
-    obj.set("name", high_score_data.name);
-    obj.set("score", high_score_data.score);
     return obj;
 }
 

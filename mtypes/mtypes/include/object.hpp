@@ -9,6 +9,7 @@
 #include "array.hpp"
 #include "dictionary.hpp"
 #include <type_traits>
+#include <utility>
 
 namespace mtps
 {
@@ -35,7 +36,7 @@ public:
     using ObjectDictionary = Dictionary<Object>;
     using ValueDictionary  = Dictionary<str>;
 
-    constexpr Object() noexcept {}
+    constexpr Object() noexcept = default;
 
     inline Object(std::initializer_list<KeyValueStr> iListValues)
     {
@@ -160,28 +161,84 @@ public:
                             .convertOrDefault<std::underlying_type_t<T>>());
                 }
             }
+            else if constexpr (std::is_same_v<T, str>)
+            {
+                return (*m_value);
+            }
+            else if constexpr (std::is_same_v<T, Object>)
+            {
+                return (*m_object);
+            }
             else
             {
                 return (*m_value).convertOrDefault<T>();
             }
         }
 
-        template <>
-        [[nodiscard]] str as() const
+        template <typename T>
+        [[nodiscard]] bool as(T& value) const
         {
-            return (*m_value);
-        }
-
-        template <>
-        [[nodiscard]] Object as() const
-        {
-            return (*m_object);
+            if constexpr (std::is_enum_v<T>)
+            {
+                if constexpr (sizeof(T) == sizeof(char))
+                {
+                    auto [result, nval] = (*m_value).convert<s16>();
+                    if (result)
+                    {
+                        value = static_cast<T>(nval);
+                        return true;
+                    }
+                    return false;
+                }
+                else
+                {
+                    auto [result, nval] = (*m_value).convert<std::underlying_type_t<T>>();
+                    if (result)
+                    {
+                        value = static_cast<T>(nval);
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            else if constexpr (std::is_same_v<T, str>)
+            {
+                value = (*m_value);
+                return true;
+            }
+            else if constexpr (std::is_same_v<T, Object>)
+            {
+                value = (*m_object);
+                return true;
+            }
+            else
+            {
+                auto [result, nval] = (*m_value).convert<T>();
+                if (result)
+                {
+                    std::swap(value, nval);
+                    return true;
+                }
+                return false;
+            }
         }
 
         template <typename T>
-        [[nodiscard]] bool can_convert() const
+        [[nodiscard]] bool as(vector<T>& value) const
         {
-            return convert(value).second;
+            vector<T> result;
+            getObject() >> result;
+            std::swap(result, value);
+            return true;
+        }
+
+        template <typename T, size_type Size>
+        [[nodiscard]] bool as(array<T,Size>& value) const
+        {
+            array<T, Size> result;
+            getObject() >> result;
+            std::swap(result, value);
+            return true;
         }
 
     private:
@@ -224,10 +281,13 @@ public:
         return (token.first ? Value(&(token.second->second)) : Value());
     }
 
-    /// Get a @Value pointing to an element with the specified key.
-    /// @param[in] key Key str to search for.
-    /// @return Empty invalid @Value if not found or a @Value
-    /// pointing to the data if found.
+    /**
+     * @brief Get a @b Value pointing to an element with the specified key.
+     * 
+     * @param[in] key Key str to search for
+     * @return Empty invalid @b Value if not found or a @b Value
+     * pointing to the data if found.
+     */
     Value operator[](const str& key) const
     {
         // Note: Priority to str
@@ -235,13 +295,28 @@ public:
         return ((val.isValid()) ? val : getObject(key));
     }
 
+    Object* acquireObject(const str& key) noexcept
+    {
+        auto token(m_objects.find(key));
+        return ((token != m_objects.end()) ? &(token->second) : nullptr);
+    }
+
+    str* acquireValue(const str& key) noexcept
+    {
+        auto token(m_values.find(key));
+        return ((token != m_values.end()) ? &(token->second) : nullptr);
+    }
+
     static constexpr const char* const arraySeparator = "::";
 
-    /// Get a @Value in the array form.
-    /// @param index The index of the element you want to read.
-    /// @return @b Value Representing the element.
-    /// Note: You might need to check with @Value::isValid
-    /// if the value is valid.
+    /**
+     * @brief Get a @b Value in the array form.
+     * 
+     * @param index The index of the element you want to read.
+     * @return Value Representing the element.
+     * Note: You might need to check with @Value::isValid
+     * if the value is valid.
+     */
     Value operator[](const size_t index) const
     {
         return (*this)[str(arraySeparator) + str::to_str(index)];

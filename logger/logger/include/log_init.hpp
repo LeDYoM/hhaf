@@ -13,9 +13,8 @@ namespace logger
  * @tparam LogType The logger type to manage.
  */
 template <typename LogType>
-class LogInitializer
+struct LogInitializer
 {
-public:
     /**
      * @brief Construct a new Log Initializer object. It will initialize the
      * static log type.

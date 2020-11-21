@@ -116,6 +116,11 @@ TEST_CASE("program filename --doit -abc=sdf",
     CHECK(paramParser.numOptionParameters() == 1);
     CHECK(paramParser.positionalParameterAt(0) == "filename");
     CHECK(paramParser.positionalParameterAt(1) == "");
+    CHECK(paramParser.positionalParameterExists("filename"));
+    CHECK_FALSE(paramParser.positionalParameterExists(""));
+    CHECK_FALSE(paramParser.positionalParameterExists("doit"));
+    CHECK_FALSE(paramParser.positionalParameterExists("abc"));
+    CHECK_FALSE(paramParser.positionalParameterExists("sdf"));
     CHECK(paramParser.switchExists("doit"));
     CHECK_FALSE(paramParser.switchExists("doitasd"));
     paramParser.getOptions() ==
@@ -157,4 +162,46 @@ TEST_CASE("program sourcef.dat targetf.dat --nope -abc=sdf -this=other",
     CHECK(paramParser.getOptions() ==
           ParametersParser::OptionParameterVector{{"abc", "sdf"},
                                                   {"this", "other"}});
+}
+
+TEST_CASE("program sourcef.dat targetf.dat --nope -abc=sdf -this=other "
+          "check_valid_opt",
+          "[parpar][positional][option][switch][valid]")
+{
+    const ParametersParser paramParser(
+        create({"program", "sourcef.dat", "targetf.dat", "--nope", "--ok",
+                "-abc=sdf", "-this=other"}));
+
+    CHECK(paramParser.onlyValidOptions({"abc", "this"}));
+    CHECK(paramParser.onlyValidOptions({"this"}));
+    CHECK(paramParser.onlyValidOptions({"abc"}));
+    CHECK_FALSE(paramParser.onlyValidOptions({"abcqwe", "this2"}));
+    CHECK_FALSE(paramParser.onlyValidOptions({"abc", "this2"}));
+    CHECK_FALSE(paramParser.onlyValidOptions({"thisasf"}));
+    CHECK_FALSE(paramParser.onlyValidOptions({"abc2"}));
+    CHECK_FALSE(paramParser.onlyValidOptions({"abc", "this", "abc3"}));
+    CHECK(paramParser.onlyValidOptions({"abc", "abc"}));
+    CHECK(paramParser.onlyValidOptions({"this", "this"}));
+    CHECK(paramParser.onlyValidOptions({}));
+}
+
+TEST_CASE("program sourcef.dat targetf.dat --nope -abc=sdf -this=other "
+          "check_valid_switch",
+          "[parpar][positional][option][switch][valid]")
+{
+    const ParametersParser paramParser(
+        create({"program", "sourcef.dat", "targetf.dat", "--nope", "--ok",
+                "-abc=sdf", "-this=other"}));
+
+    CHECK(paramParser.onlyValidSwitches({"nope", "ok"}));
+    CHECK(paramParser.onlyValidSwitches({"nope"}));
+    CHECK(paramParser.onlyValidSwitches({"ok"}));
+    CHECK_FALSE(paramParser.onlyValidSwitches({"nop", "ok"}));
+    CHECK_FALSE(paramParser.onlyValidSwitches({"nope", "ok2"}));
+    CHECK_FALSE(paramParser.onlyValidSwitches({"nop"}));
+    CHECK_FALSE(paramParser.onlyValidSwitches({"ok2"}));
+    CHECK_FALSE(paramParser.onlyValidSwitches({"nope", "ok", "ok2"}));
+    CHECK(paramParser.onlyValidSwitches({"nope", "nope"}));
+    CHECK(paramParser.onlyValidSwitches({"ok", "ok"}));
+    CHECK(paramParser.onlyValidSwitches({}));
 }

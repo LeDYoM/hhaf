@@ -6,18 +6,17 @@ using namespace mtps;
 
 TEST_CASE("Object basic values", "[Object][ValueDictionary]")
 {
-    Object::ValueDictionary bdictionary{ {"key1", "value1"} };
-    CHECK(bdictionary.data() == Object::ValueDictionary::content{ Object::ValueDictionary::element("key1", "value1") });
+    Object::ValueDictionary bdictionary{{"key1", "value1"}};
+    CHECK(bdictionary.data() ==
+          Object::ValueDictionary::content{
+              Object::ValueDictionary::element("key1", "value1")});
     CHECK_FALSE(bdictionary.add("key1", "asd", false));
 }
 
 TEST_CASE("Object create 1", "[Object]")
 {
-    Object tester{ {"subkey","subValue"} };
-    Object obj{
-        {"key1", "value1"},
-        {"key2", "value2"}
-    };
+    Object tester{{"subkey", "subValue"}};
+    Object obj{{"key1", "value1"}, {"key2", "value2"}};
 
     CHECK(tester["subkey"] == "subValue");
     CHECK(obj["key1"] == "value1");
@@ -32,34 +31,18 @@ TEST_CASE("Object create 1", "[Object]")
 TEST_CASE("Object create 2", "[Object]")
 {
     // Initialize with initializer list of objects
-    Object obj
-    {
-        { "key1",
-            {
-                { "subkey1", "subvalue1" }
-            }
-        },
-        { "key2",
-            {
-                { "subkey2", "subvalue2" }
-            }
-        },
-        { "key3",
-            Object{ {"subkey1",
-                Object {
-                    { "subsubkey1", "subsubvalue" }
-                }
-            } }
-        }
-    };
+    Object obj{
+        {"key1", {{"subkey1", "subvalue1"}}},
+        {"key2", {{"subkey2", "subvalue2"}}},
+        {"key3", Object{{"subkey1", Object{{"subsubkey1", "subsubvalue"}}}}}};
 
     SECTION("Compare")
     {
-        Object obj2{ obj };
+        Object obj2{obj};
         CHECK(obj == obj2);
         CHECK_FALSE(obj != obj2);
 
-        const Object::Value v{ obj["key1"] };
+        const Object::Value v{obj["key1"]};
         CHECK(v == obj2["key1"]);
         CHECK_FALSE(v != obj2["key1"]);
     }
@@ -72,37 +55,39 @@ TEST_CASE("Object create 2", "[Object]")
     CHECK_FALSE(obj.empty_objects());
     CHECK_FALSE(obj.empty());
     CHECK(obj["key3"]["subkey1"].isObject());
+
+    SECTION("Modify")
+    {
+        auto tmp_iterator1 = obj.acquireObject("key1");
+        CHECK(obj["key1"] == *tmp_iterator1);
+        CHECK(obj["key1"].getObject() == *tmp_iterator1);
+        tmp_iterator1->set("subkey1", "megavalue1");
+        CHECK(obj["key1"]["subkey1"] == "megavalue1");
+
+        auto tmp_iterator2 =
+            obj.acquireObject("key2")->acquireValue("subkey2");
+        CHECK(obj["key2"]["subkey2"] == tmp_iterator2);
+        (*tmp_iterator2) = "ultravalue1";
+        CHECK(obj["key2"]["subkey2"] == "ultravalue1");
+
+        CHECK(obj["key3"]["subkey1"]["subsubkey1"] == "subsubvalue");
+        CHECK(obj.size_objects() == 3U);
+        CHECK(obj.empty_values());
+        CHECK_FALSE(obj.empty_objects());
+        CHECK_FALSE(obj.empty());
+        CHECK(obj["key3"]["subkey1"].isObject());
+    }
 }
 
 TEST_CASE("Object create 3", "[Object]")
 {
     // Initialize with initializer list of objects and initializer list of
     // properties.
-    Object obj3
-    {
-        {
-            { "key1",
-                {
-                    { "subkey1", "subvalue1" }
-                }
-            },
-            { "key2",
-                {
-                    { "subkey2", "subvalue2" }
-                }
-            },
-            { "key3",
-                Object{ {"subkey1",
-                    Object {
-                        { "subsubkey1", "subsubvalue" }
-                    }
-                } }
-            }
-        },
-        {
-            {"key4","value4"}
-        }
-    };
+    Object obj3{
+        {{"key1", {{"subkey1", "subvalue1"}}},
+         {"key2", {{"subkey2", "subvalue2"}}},
+         {"key3", Object{{"subkey1", Object{{"subsubkey1", "subsubvalue"}}}}}},
+        {{"key4", "value4"}}};
 
     CHECK(obj3["key1"]["subkey1"] == "subvalue1");
     CHECK(obj3["key2"]["subkey2"] == "subvalue2");
@@ -113,36 +98,15 @@ TEST_CASE("Object create 3", "[Object]")
     CHECK_FALSE(obj3["adf"] == "");
 }
 
-TEST_CASE("Object create 4","[Object]")
+TEST_CASE("Object create 4", "[Object]")
 {
     // Initialize with initializer list of objects and initializer list of
     // properties.
-    Object obj4
-    {
-        {
-            { "key1",
-                {
-                    { "subkey1", "subvalue1" }
-                }
-            },
-            { "key2",
-                {
-                    { "subkey2", "subvalue2" }
-                }
-            },
-            { "key3",
-                Object{ { "subkey1",
-                    Object{
-                        { "subsubkey1", "subsubvalue" }
-                    }
-                }
-            }
-        }
-        },
-        {
-            { "key4","value4" }
-        }
-    };
+    Object obj4{
+        {{"key1", {{"subkey1", "subvalue1"}}},
+         {"key2", {{"subkey2", "subvalue2"}}},
+         {"key3", Object{{"subkey1", Object{{"subsubkey1", "subsubvalue"}}}}}},
+        {{"key4", "value4"}}};
 
     CHECK(obj4["key1"]["subkey1"] == "subvalue1");
     CHECK(obj4["key2"]["subkey2"] == "subvalue2");
@@ -155,10 +119,8 @@ TEST_CASE("Object create 4","[Object]")
 
 TEST_CASE("Object: Read array1", "[Object][vector]")
 {
-    Object obj{
-        {str(Object::arraySeparator) + "0", "value1"},
-        {str(Object::arraySeparator) + "1", "value2"}
-    };
+    Object obj{{str(Object::arraySeparator) + "0", "value1"},
+               {str(Object::arraySeparator) + "1", "value2"}};
 
     CHECK(obj[0U] == "value1");
     CHECK(obj[1U] == "value2");
@@ -197,33 +159,15 @@ TEST_CASE("Object: Read array2", "[Object][vector]")
 {
     // Initialize with initializer list of objects and initializer list of
     // properties.
-    Object obj
-    {
-        {
-            { "key1",
-                {
-                    { str(Object::arraySeparator) + "0", "subvalue0" },
-                    { str(Object::arraySeparator) + "1", "subvalue1" }
-                }
-            },
-            { "key2",
-                {
-                    { "subkey2", "subvalue2" }
-                }
-            },
-            { "key3",
-                Object{ { "subkey1",
-                    Object{
-                        { str(Object::arraySeparator) + "0", "subsubvalue" }
-                    }
-                }
-            }
-        }
-        },
-        {
-            { "key4","value4" }
-        }
-    };
+    Object obj{{{"key1",
+                 {{str(Object::arraySeparator) + "0", "subvalue0"},
+                  {str(Object::arraySeparator) + "1", "subvalue1"}}},
+                {"key2", {{"subkey2", "subvalue2"}}},
+                {"key3",
+                 Object{{"subkey1",
+                         Object{{str(Object::arraySeparator) + "0",
+                                 "subsubvalue"}}}}}},
+               {{"key4", "value4"}}};
 
     CHECK(obj["key1"][0U] == "subvalue0");
     CHECK(obj["key1"][1U] == "subvalue1");
@@ -238,7 +182,8 @@ TEST_CASE("Object: Read array2", "[Object][vector]")
     CHECK_FALSE(obj["key2"][0U].isValid());
 
     CHECK(obj["key3"]["subkey1"][0U] == "subsubvalue");
-    CHECK(obj["key3"]["subkey1"][str(Object::arraySeparator) + "0"] == "subsubvalue");
+    CHECK(obj["key3"]["subkey1"][str(Object::arraySeparator) + "0"] ==
+          "subsubvalue");
 
     CHECK_FALSE(obj["key4"][0U].isValid());
 }
@@ -247,31 +192,11 @@ TEST_CASE("Object copy", "[Object]")
 {
     // Initialize with initializer list of objects and initializer list of
     // properties.
-    Object obj
-    {
-        {
-            { "key1",
-                {
-                    { "subkey1", "subvalue1" }
-                }
-            },
-            { "key2",
-                {
-                    { "subkey2", "subvalue2" }
-                }
-            },
-            { "key3",
-                Object{ {"subkey1",
-                    Object {
-                        { "subsubkey1", "subsubvalue" }
-                    }
-                } }
-            }
-        },
-        {
-            {"key4","value4"}
-        }
-    };
+    Object obj{
+        {{"key1", {{"subkey1", "subvalue1"}}},
+         {"key2", {{"subkey2", "subvalue2"}}},
+         {"key3", Object{{"subkey1", Object{{"subsubkey1", "subsubvalue"}}}}}},
+        {{"key4", "value4"}}};
 
     SECTION("Copy values")
     {
@@ -296,7 +221,6 @@ TEST_CASE("Object copy", "[Object]")
         obj2.set("other_key1", "other_value");
         CHECK(obj["key1"]["subkey1"] == "subvalue1");
         CHECK(obj2["other_key1"] == "other_value");
-
     }
 
     SECTION("Copy objects")
@@ -333,6 +257,21 @@ TEST_CASE("Object with vector", "[Object][vector]")
             CHECK(obj[2U].as<s32>() == v[2U]);
             CHECK(obj[3U].as<s32>() == v[3U]);
             CHECK_FALSE(obj[4U].isValid());
+
+            SECTION("Simple2")
+            {
+                s32 value{0};
+
+                CHECK(obj[0U].as(value));
+                CHECK(value == v[0U]);
+                CHECK(obj[1U].as(value));
+                CHECK(value == v[1U]);
+                CHECK(obj[2U].as(value));
+                CHECK(value == v[2U]);
+                CHECK(obj[3U].as(value));
+                CHECK(value == v[3U]);
+                CHECK_FALSE(obj[4U].isValid());
+            }
         }
 
         SECTION("Direct")
@@ -344,6 +283,21 @@ TEST_CASE("Object with vector", "[Object][vector]")
             CHECK(obj[2U].as<s32>() == v[2U]);
             CHECK(obj[3U].as<s32>() == v[3U]);
             CHECK_FALSE(obj[4U].isValid());
+
+            SECTION("Direct with parameter")
+            {
+                s32 value{0};
+
+                CHECK(obj[0U].as(value));
+                CHECK(value == v[0U]);
+                CHECK(obj[1U].as(value));
+                CHECK(value == v[1U]);
+                CHECK(obj[2U].as(value));
+                CHECK(value == v[2U]);
+                CHECK(obj[3U].as(value));
+                CHECK(value == v[3U]);
+                CHECK_FALSE(obj[4U].isValid());
+            }
         }
 
         SECTION("More direct with rv vector and float")
@@ -351,6 +305,17 @@ TEST_CASE("Object with vector", "[Object][vector]")
             obj << vector<f32>{2.3F, 1.1F};
             CHECK(obj[0U].as<f32>() == 2.3F);
             CHECK(obj[1U].as<f32>() == 1.1F);
+            CHECK_FALSE(obj[2U].isValid());
+
+            SECTION("More direct with rv vector and float with parameter")
+            {
+                float value{};
+                CHECK(obj[0U].as(value));
+                CHECK(value == 2.3F);
+                CHECK(obj[1U].as(value));
+                CHECK(value == 1.1F);
+                CHECK_FALSE(obj[2U].isValid());
+            }
         }
     }
 
@@ -411,6 +376,21 @@ TEST_CASE("Object with array", "[Object][vector]")
             CHECK(obj[2U].as<s32>() == v[2U]);
             CHECK(obj[3U].as<s32>() == v[3U]);
             CHECK_FALSE(obj[4U].isValid());
+
+            SECTION("Direct with parameter")
+            {
+                s32 value{0};
+
+                CHECK(obj[0U].as(value));
+                CHECK(value == v[0U]);
+                CHECK(obj[1U].as(value));
+                CHECK(value == v[1U]);
+                CHECK(obj[2U].as(value));
+                CHECK(value == v[2U]);
+                CHECK(obj[3U].as(value));
+                CHECK(value == v[3U]);
+                CHECK_FALSE(obj[4U].isValid());
+            }
         }
 
         SECTION("More direct with rv array and float")
@@ -418,6 +398,16 @@ TEST_CASE("Object with array", "[Object][vector]")
             obj << array<f32, 2U>{2.3F, 1.1F};
             CHECK(obj[0U].as<f32>() == 2.3F);
             CHECK(obj[1U].as<f32>() == 1.1F);
+
+            SECTION("More direct with rv array and float with parameter")
+            {
+                float value{};
+                CHECK(obj[0U].as(value));
+                CHECK(value == 2.3F);
+                CHECK(obj[1U].as(value));
+                CHECK(value == 1.1F);
+                CHECK_FALSE(obj[2U].isValid());
+            }
         }
     }
 
@@ -435,6 +425,22 @@ TEST_CASE("Object with array", "[Object][vector]")
             CHECK(obj["test_property"][3U].as<s32>() == v[3U]);
             CHECK_FALSE(obj["test_property"][4U].isValid());
             CHECK_FALSE(obj[0U].isValid());
+
+            SECTION("Direct with parameter")
+            {
+                s32 value{0};
+
+                CHECK(obj["test_property"][0U].as(value));
+                CHECK(value == v[0U]);
+                CHECK(obj["test_property"][1U].as(value));
+                CHECK(value == v[1U]);
+                CHECK(obj["test_property"][2U].as(value));
+                CHECK(value == v[2U]);
+                CHECK(obj["test_property"][3U].as(value));
+                CHECK(value == v[3U]);
+                CHECK_FALSE(obj["test_property"][4U].isValid());
+                CHECK_FALSE(obj[0U].isValid());
+            }
         }
 
         SECTION("More direct with rv vector and float")
@@ -450,34 +456,38 @@ TEST_CASE("Object with array", "[Object][vector]")
 
 namespace TestVectorWithCustomTypes
 {
-    struct Simple
-    {
-        int a;
-        short b;
-        long c;
+struct Simple
+{
+    int a;
+    short b;
+    long c;
 
-        bool operator==(const Simple& rhs) const
-        {
-            return ((a == rhs.a) && (b == rhs.b) && (c == rhs.c));
-        }
-    };
+    constexpr Simple() noexcept : a{}, b{}, c{} {}
+    constexpr Simple(int a_, short b_, long c_) noexcept : a{a_}, b{b_}, c{c_}
+    {}
 
-    inline const Object& operator>>(const Object& obj, Simple& data)
+    bool operator==(const Simple& rhs) const
     {
-        data.a = obj["a"].as<int>();
-        data.b = obj["b"].as<short>();
-        data.c = obj["c"].as<long>();
-        return obj;
-    }
-
-    inline Object& operator<<(Object& obj, const Simple& data)
-    {
-        obj.set("a", data.a);
-        obj.set("b", data.b);
-        obj.set("c", data.c);
-        return obj;
+        return ((a == rhs.a) && (b == rhs.b) && (c == rhs.c));
     }
 };
+
+inline const Object& operator>>(const Object& obj, Simple& data)
+{
+    data.a = obj["a"].as<int>();
+    data.b = obj["b"].as<short>();
+    data.c = obj["c"].as<long>();
+    return obj;
+}
+
+inline Object& operator<<(Object& obj, const Simple& data)
+{
+    obj.set("a", data.a);
+    obj.set("b", data.b);
+    obj.set("c", data.c);
+    return obj;
+}
+};  // namespace TestVectorWithCustomTypes
 
 TEST_CASE("Object with vector of custom types", "[Object][vector]")
 {
@@ -507,96 +517,155 @@ TEST_CASE("Object with vector of custom types", "[Object][vector]")
     obj >> output;
 
     CHECK(vec == output);
+
+    SECTION("As with parameter and custom types")
+    {
+        int a{};
+        short b{};
+        long c{};
+
+        CHECK(obj[0U]["a"].as(a));
+        CHECK(a == vec[0U].a);
+        CHECK(obj[0U]["b"].as(b));
+        CHECK(b == vec[0U].b);
+        CHECK(obj[0U]["c"].as(c));
+        CHECK(c == vec[0U].c);
+    }
 }
 
 namespace TestVectorWithCustomTypesEnumsAndFloats
 {
-    enum class MySmallEnum : u8
-    {
-        First,
-        Second
-    };
-
-    enum class MyDefaultEnum
-    {
-        First,
-        Second
-    };
-
-    enum class MyBigEnum : u64
-    {
-        First,
-        Second
-    };
-
-    struct Simple
-    {
-        MySmallEnum small_enum;
-        MyDefaultEnum default_enum;
-        MyBigEnum big_enum;
-        f32 a;
-        f64 b;
-
-        bool operator==(const Simple& rhs) const
-        {
-            return ((small_enum == rhs.small_enum) && (default_enum == rhs.default_enum) &&
-            (big_enum == rhs.big_enum) && (a == rhs.a) && (b == rhs.b));
-        }
-    };
-
-    inline const Object& operator>>(const Object& obj, Simple& data)
-    {
-        data.a = obj["a"].as<f32>();
-        data.b = obj["b"].as<f64>();
-        data.small_enum = obj["small_enum"].as<MySmallEnum>();
-        data.default_enum = obj["default_enum"].as<MyDefaultEnum>();
-        data.big_enum = obj["big_enum"].as<MyBigEnum>();
-
-        return obj;
-    }
-
-    inline Object& operator<<(Object& obj, const Simple& data)
-    {
-        obj.set("a", data.a);
-        obj.set("b", data.b);
-        obj.set("small_enum", data.small_enum);
-        obj.set("default_enum", data.default_enum);
-        obj.set("big_enum", data.big_enum);
-        return obj;
-    }
-
+enum class MySmallEnum : u8
+{
+    First,
+    Second
 };
 
-TEST_CASE("Object with vector of custom types, enums and floats", "[Object][vector]")
+enum class MyDefaultEnum
+{
+    First,
+    Second
+};
+
+enum class MyBigEnum : u64
+{
+    First,
+    Second
+};
+
+struct Simple
+{
+    MySmallEnum small_enum{MySmallEnum::First};
+    MyDefaultEnum default_enum{MyDefaultEnum::First};
+    MyBigEnum big_enum{MyBigEnum::First};
+    f32 a{};
+    f64 b{};
+
+    Simple() noexcept = default;
+
+    bool operator==(const Simple& rhs) const
+    {
+        return ((small_enum == rhs.small_enum) &&
+                (default_enum == rhs.default_enum) &&
+                (big_enum == rhs.big_enum) && (a == rhs.a) && (b == rhs.b));
+    }
+};
+
+inline const Object& operator>>(const Object& obj, Simple& data)
+{
+    data.a            = obj["a"].as<f32>();
+    data.b            = obj["b"].as<f64>();
+    data.small_enum   = obj["small_enum"].as<MySmallEnum>();
+    data.default_enum = obj["default_enum"].as<MyDefaultEnum>();
+    data.big_enum     = obj["big_enum"].as<MyBigEnum>();
+
+    return obj;
+}
+
+inline Object& operator<<(Object& obj, const Simple& data)
+{
+    obj.set("a", data.a);
+    obj.set("b", data.b);
+    obj.set("small_enum", data.small_enum);
+    obj.set("default_enum", data.default_enum);
+    obj.set("big_enum", data.big_enum);
+    return obj;
+}
+
+};  // namespace TestVectorWithCustomTypesEnumsAndFloats
+
+TEST_CASE("Object with vector of custom types, enums and floats",
+          "[Object][vector]")
 {
     using namespace TestVectorWithCustomTypesEnumsAndFloats;
 
-    vector<Simple> vec = {
-        { MySmallEnum::First, MyDefaultEnum::First, MyBigEnum::First, 4.5F, 2000.123},
-        { MySmallEnum::Second, MyDefaultEnum::Second, MyBigEnum::Second, -1.2F, -454341.999999}
-    };
+    vector<Simple> vec = {{MySmallEnum::First, MyDefaultEnum::First,
+                           MyBigEnum::First, 4.5F, 2000.123},
+                          {MySmallEnum::Second, MyDefaultEnum::Second,
+                           MyBigEnum::Second, -1.2F, -454341.999999}};
 
     Object obj;
     obj << vec;
 
-    CHECK(obj[0U]["a"].as<f32>() == vec[0U].a);
-    CHECK(obj[0U]["b"].as<f64>() == vec[0U].b);
-    CHECK(obj[0U]["small_enum"].as<MySmallEnum>() == vec[0U].small_enum);
-    CHECK(obj[0U]["default_enum"].as<MyDefaultEnum>() == vec[0U].default_enum);
-    CHECK(obj[0U]["big_enum"].as<MyBigEnum>() == vec[0U].big_enum);
-    CHECK(obj[0U].getObject().empty_objects());
-    CHECK(obj[0U].getObject().size_values() == 5U);
+    SECTION("as<>() without parameter")
+    {
+        CHECK(obj[0U]["a"].as<f32>() == vec[0U].a);
+        CHECK(obj[0U]["b"].as<f64>() == vec[0U].b);
+        CHECK(obj[0U]["small_enum"].as<MySmallEnum>() == vec[0U].small_enum);
+        CHECK(obj[0U]["default_enum"].as<MyDefaultEnum>() ==
+              vec[0U].default_enum);
+        CHECK(obj[0U]["big_enum"].as<MyBigEnum>() == vec[0U].big_enum);
+        CHECK(obj[0U].getObject().empty_objects());
+        CHECK(obj[0U].getObject().size_values() == 5U);
 
-    CHECK(obj[1U]["a"].as<f32>() == vec[1U].a);
-    CHECK(obj[1U]["b"].as<f64>() == vec[1U].b);
-    CHECK(obj[1U]["small_enum"].as<MySmallEnum>() == vec[1U].small_enum);
-    CHECK(obj[1U]["default_enum"].as<MyDefaultEnum>() == vec[1U].default_enum);
-    CHECK(obj[1U]["big_enum"].as<MyBigEnum>() == vec[1U].big_enum);
-    CHECK(obj[1U].getObject().empty_objects());
-    CHECK(obj[1U].getObject().size_values() == 5U);
+        CHECK(obj[1U]["a"].as<f32>() == vec[1U].a);
+        CHECK(obj[1U]["b"].as<f64>() == vec[1U].b);
+        CHECK(obj[1U]["small_enum"].as<MySmallEnum>() == vec[1U].small_enum);
+        CHECK(obj[1U]["default_enum"].as<MyDefaultEnum>() ==
+              vec[1U].default_enum);
+        CHECK(obj[1U]["big_enum"].as<MyBigEnum>() == vec[1U].big_enum);
+        CHECK(obj[1U].getObject().empty_objects());
+        CHECK(obj[1U].getObject().size_values() == 5U);
 
-    CHECK(obj.size_objects() == 2U);
-    CHECK(obj.empty_values());
+        CHECK(obj.size_objects() == 2U);
+        CHECK(obj.empty_values());
+    }
+
+    SECTION("as<>(T&) with parameters")
+    {
+        f32 a{};
+        f64 b{};
+        MySmallEnum my_small_enum;
+        MyDefaultEnum my_default_enum;
+        MyBigEnum my_big_enum;
+
+        CHECK(obj[0U]["a"].as(a));
+        CHECK(a == vec[0U].a);
+        CHECK(obj[0U]["b"].as(b));
+        CHECK(b == vec[0U].b);
+        CHECK(obj[0U]["small_enum"].as(my_small_enum));
+        CHECK(my_small_enum == vec[0U].small_enum);
+        CHECK(obj[0U]["default_enum"].as(my_default_enum));
+        CHECK(my_default_enum == vec[0U].default_enum);
+        CHECK(obj[0U]["big_enum"].as(my_big_enum));
+        CHECK(my_big_enum == vec[0U].big_enum);
+
+        CHECK(obj[0U].getObject().empty_objects());
+        CHECK(obj[0U].getObject().size_values() == 5U);
+
+        CHECK(obj[1U]["a"].as(a));
+        CHECK(a == vec[1U].a);
+        CHECK(obj[1U]["b"].as(b));
+        CHECK(b == vec[1U].b);
+        CHECK(obj[1U]["small_enum"].as(my_small_enum));
+        CHECK(my_small_enum == vec[1U].small_enum);
+        CHECK(obj[1U]["default_enum"].as(my_default_enum));
+        CHECK(my_default_enum == vec[1U].default_enum);
+        CHECK(obj[1U]["big_enum"].as(my_big_enum));
+        CHECK(my_big_enum == vec[1U].big_enum);
+        CHECK(obj[1U].getObject().empty_objects());
+        CHECK(obj[1U].getObject().size_values() == 5U);
+    }
 
     vector<Simple> output;
     obj >> output;
@@ -604,14 +673,15 @@ TEST_CASE("Object with vector of custom types, enums and floats", "[Object][vect
     CHECK(vec == output);
 }
 
-TEST_CASE("Object with array of custom types, enums and floats", "[Object][vector]")
+TEST_CASE("Object with array of custom types, enums and floats",
+          "[Object][vector]")
 {
     using namespace TestVectorWithCustomTypesEnumsAndFloats;
 
-    array<Simple, 2U> vec = {
-        { MySmallEnum::First, MyDefaultEnum::First, MyBigEnum::First, 4.5F, 2000.123},
-        { MySmallEnum::Second, MyDefaultEnum::Second, MyBigEnum::Second, -1.2F, -454341.999999}
-    };
+    array<Simple, 2U> vec = {{MySmallEnum::First, MyDefaultEnum::First,
+                              MyBigEnum::First, 4.5F, 2000.123},
+                             {MySmallEnum::Second, MyDefaultEnum::Second,
+                              MyBigEnum::Second, -1.2F, -454341.999999}};
 
     Object obj;
     obj << vec;

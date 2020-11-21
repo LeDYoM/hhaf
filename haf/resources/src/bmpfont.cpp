@@ -1,5 +1,5 @@
-#include "bmpfont.hpp"
-#include "bmpfont_private.hpp"
+#include <resources/i_include/bmpfont.hpp>
+#include <resources/i_include/bmpfont_private.hpp>
 #include <hlog/include/hlog.hpp>
 
 #include <fstream>
@@ -11,8 +11,8 @@ namespace haf::res
 
 BMPFont::BMPFont(const str& file_name)
 {
-    fontPrivate = new BMFontPrivate;
-    fontPrivate->chars_.resize(256U);
+    fontPrivate_ = new BMFontPrivate;
+    fontPrivate_->chars_.resize(256U);
 
     str fontfile(file_name + ".fnt");
     str texturefile(file_name + ".png");
@@ -20,23 +20,23 @@ BMPFont::BMPFont(const str& file_name)
     ParseFont(fontfile);
     DisplayLog::info("Finished Parsing Font ", fontfile);
     DisplayLog::info("Calculating some metrics");
-    fontPrivate->adv = 1.0f / (f32)size().x;
+    fontPrivate_->adv = 1.0f / (f32)size().x;
 
-    for (u32 i{0U}; i < fontPrivate->chars_.size(); ++i)
+    for (u32 i{0U}; i < fontPrivate_->chars_.size(); ++i)
     {
-        fontPrivate->chars_[i].offsetedPosition = Rectf32(
-            static_cast<vector2df>(fontPrivate->chars_[i].offset),
-            static_cast<vector2df>(fontPrivate->chars_[i].position.size()));
+        fontPrivate_->chars_[i].offsetedPosition = Rectf32(
+            static_cast<vector2df>(fontPrivate_->chars_[i].offset),
+            static_cast<vector2df>(fontPrivate_->chars_[i].position.size()));
     }
     DisplayLog::info("Finished Parsing Font ", fontfile);
     DisplayLog::info("Loading pages. Number of pages: ",
-                     fontPrivate->pagesData_.size());
+                     fontPrivate_->pagesData_.size());
     /*
-        for (u32 i = 0; i < fontPrivate->pagesData_.size(); ++i)
+        for (u32 i = 0; i < fontPrivate_->pagesData_.size(); ++i)
         {
-            fontPrivate->pagesData_[i].it = resource_handler.loadTexture(
-                fontPrivate->pagesData_[i].file,
-                fontPrivate->pagesData_[i].file);
+            fontPrivate_->pagesData_[i].it = resource_handler.loadTexture(
+                fontPrivate_->pagesData_[i].file,
+                fontPrivate_->pagesData_[i].file);
         }
         DisplayLog::info("Page(s) loaded");
         */
@@ -44,8 +44,8 @@ BMPFont::BMPFont(const str& file_name)
 
 vector<str> BMPFont::textureFileNames() const
 {
-    vector<str> texture_file_names(fontPrivate->pagesData_.size());
-    for (const auto& page_data : fontPrivate->pagesData_)
+    vector<str> texture_file_names(fontPrivate_->pagesData_.size());
+    for (const auto& page_data : fontPrivate_->pagesData_)
     {
         texture_file_names.push_back(page_data.file);
     }
@@ -55,21 +55,22 @@ vector<str> BMPFont::textureFileNames() const
 
 void BMPFont::setTexturePages(const vector<sptr<ITexture>>& texture_pages)
 {
-    LogAsserter::log_assert(texture_pages.size() <= fontPrivate->pagesData_.size(),
-               "The number of textures to add should be lower or equal that "
-               "the number of pages.");
+    LogAsserter::log_assert(
+        texture_pages.size() <= fontPrivate_->pagesData_.size(),
+        "The number of textures to add should be lower or equal that "
+        "the number of pages.");
 
     size_type count{0U};
 
     for (sptr<ITexture> texture : texture_pages)
     {
-        fontPrivate->pagesData_[count].it = texture;
+        fontPrivate_->pagesData_[count].it = texture;
     }
 }
 
 BMPFont::~BMPFont()
 {
-    delete fontPrivate;
+    delete fontPrivate_;
 }
 
 void filterStr(std::stringstream& line_stream, std::string& value)
@@ -77,9 +78,9 @@ void filterStr(std::stringstream& line_stream, std::string& value)
     bool doNext = true;
     do
     {
-        int first_ = value.find_first_of('\"');
-        int last_  = value.find_last_of('\"');
-        doNext     = (first_ > -1 && first_ == last_);
+        auto const first_ = value.find_first_of('\"');
+        auto const last_  = value.find_last_of('\"');
+        doNext            = (first_ > -1 && first_ == last_);
         if (doNext)
         {
             std::string readTemp;
@@ -91,7 +92,7 @@ void filterStr(std::stringstream& line_stream, std::string& value)
 
 const vector2du32& BMPFont::size() const
 {
-    return fontPrivate->size_;
+    return fontPrivate_->size_;
 }
 
 std::string getStr(const std::string& read)
@@ -146,27 +147,27 @@ bool BMPFont::ParseFont(const str& fontfile)
                 converter << value;
                 if (key == "lineHeight")
                 {
-                    converter >> fontPrivate->lineHeight;
+                    converter >> fontPrivate_->lineHeight;
                 }
                 else if (key == "base")
                 {
-                    converter >> fontPrivate->base;
+                    converter >> fontPrivate_->base;
                 }
                 else if (key == "scaleW")
                 {
-                    converter >> fontPrivate->size_.x;
+                    converter >> fontPrivate_->size_.x;
                 }
                 else if (key == "scaleH")
                 {
-                    converter >> fontPrivate->size_.y;
+                    converter >> fontPrivate_->size_.y;
                 }
                 else if (key == "pages")
                 {
-                    converter >> fontPrivate->pages;
+                    converter >> fontPrivate_->pages;
                 }
                 else if (key == "outline")
                 {
-                    converter >> fontPrivate->outline;
+                    converter >> fontPrivate_->outline;
                 }
             }
         }
@@ -189,11 +190,11 @@ bool BMPFont::ParseFont(const str& fontfile)
                 if (key == "id")
                 {
                     converter >> id;
-                    fontPrivate->pagesData_.resize(id + 1);
+                    fontPrivate_->pagesData_.resize(id + 1);
                 }
                 else if (key == "file")
                 {
-                    fontPrivate->pagesData_[id].file =
+                    fontPrivate_->pagesData_[id].file =
                         str(getStr(value).c_str());
                 }
             }
@@ -213,69 +214,69 @@ bool BMPFont::ParseFont(const str& fontfile)
                 converter << value;
                 if (key == "face")
                 {
-                    fontPrivate->fInfo.face = getStr(value).c_str();
+                    fontPrivate_->fInfo.face = getStr(value).c_str();
                 }
                 else if (key == "size")
                 {
-                    converter >> fontPrivate->fInfo.size;
+                    converter >> fontPrivate_->fInfo.size;
                 }
                 else if (key == "bold")
                 {
-                    converter >> fontPrivate->fInfo.bold;
+                    converter >> fontPrivate_->fInfo.bold;
                 }
                 else if (key == "italic")
                 {
-                    converter >> fontPrivate->fInfo.italic;
+                    converter >> fontPrivate_->fInfo.italic;
                 }
                 else if (key == "charset")
                 {
-                    fontPrivate->fInfo.charset = getStr(value).c_str();
+                    fontPrivate_->fInfo.charset = getStr(value).c_str();
                 }
                 else if (key == "unicode")
                 {
-                    converter >> fontPrivate->fInfo.unicode;
+                    converter >> fontPrivate_->fInfo.unicode;
                 }
                 else if (key == "stretchH")
                 {
-                    converter >> fontPrivate->fInfo.stretchH;
+                    converter >> fontPrivate_->fInfo.stretchH;
                 }
                 else if (key == "smooth")
                 {
-                    converter >> fontPrivate->fInfo.smooth;
+                    converter >> fontPrivate_->fInfo.smooth;
                 }
                 else if (key == "aa")
                 {
-                    converter >> fontPrivate->fInfo.aa;
+                    converter >> fontPrivate_->fInfo.aa;
                 }
                 else if (key == "padding")
                 {
                     std::string temp;
                     std::getline(converter, temp, ',');
-                    fontPrivate->fInfo.padding.left =
+                    fontPrivate_->fInfo.padding.left =
                         static_cast<s16>(std::atoi(temp.c_str()));
                     std::getline(converter, temp, ',');
-                    fontPrivate->fInfo.padding.top =
+                    fontPrivate_->fInfo.padding.top =
                         static_cast<s16>(std::atoi(temp.c_str()));
                     std::getline(converter, temp, ',');
-                    fontPrivate->fInfo.padding.setRight(
+                    fontPrivate_->fInfo.padding.setRight(
                         static_cast<s16>(std::atoi(temp.c_str())));
                     std::getline(converter, temp, ',');
-                    fontPrivate->fInfo.padding.setBottom(
+                    fontPrivate_->fInfo.padding.setBottom(
                         static_cast<s16>(std::atoi(temp.c_str())));
                 }
                 else if (key == "spacing")
                 {
                     std::string temp;
                     std::getline(converter, temp, ',');
-                    fontPrivate->fInfo.spacing.x =
+                    fontPrivate_->fInfo.spacing.x =
                         static_cast<s16>(std::atoi(temp.c_str()));
                     std::getline(converter, temp, ',');
-                    fontPrivate->fInfo.spacing.y =
+                    fontPrivate_->fInfo.spacing.y =
                         static_cast<s16>(std::atoi(temp.c_str()));
                 }
                 else if (key == "outline")
                 {
-                    converter >> fontPrivate->fInfo.outline;
+                    converter >> fontPrivate_->fInfo.outline;
                 }
             }
         }
@@ -337,7 +338,7 @@ bool BMPFont::ParseFont(const str& fontfile)
             }
             if (char_id < 256)
             {
-                fontPrivate->chars_[char_id] = C;
+                fontPrivate_->chars_[char_id] = C;
             }
         }
         else if (read == "kernings")
@@ -383,7 +384,7 @@ bool BMPFont::ParseFont(const str& fontfile)
                     converter >> amount;
                 }
             }
-            fontPrivate->chars_[first].kearn.emplace_back(second, amount);
+            fontPrivate_->chars_[first].kearn.emplace_back(second, amount);
         }
     }
 
@@ -392,17 +393,17 @@ bool BMPFont::ParseFont(const str& fontfile)
 
 Rectf32 BMPFont::getBounds(const u32 codePoint) const
 {
-    return fontPrivate->chars_[codePoint].offsetedPosition;
+    return fontPrivate_->chars_[codePoint].offsetedPosition;
 }
 
 Rectf32 BMPFont::getTextureBounds(const u32 codePoint) const
 {
-    return static_cast<Rectf32>(fontPrivate->chars_[codePoint].position);
+    return static_cast<Rectf32>(fontPrivate_->chars_[codePoint].position);
 }
 
 f32 BMPFont::getAdvance(const u32 codePoint) const
 {
-    return static_cast<f32>(fontPrivate->chars_[codePoint].xadvance);
+    return static_cast<f32>(fontPrivate_->chars_[codePoint].xadvance);
 }
 
 f32 BMPFont::getLineSpacing() const
@@ -412,16 +413,17 @@ f32 BMPFont::getLineSpacing() const
 
 f32 BMPFont::getKerning(const u32 first, const u32 second) const
 {
-    return static_cast<f32>(fontPrivate->chars_[first].GetKerningPair(second));
+    return static_cast<f32>(fontPrivate_->chars_[first].GetKerningPair(second));
 }
 
 sptr<ITexture> BMPFont::getTexture() const
 {
-    return fontPrivate->pagesData_[0U].it;
+    return fontPrivate_->pagesData_[0U].it;
 }
 
 vector2df BMPFont::textSize(const str& text) const
 {
+    (void)text;
     return vector2df{};
 }
 }  // namespace haf::res

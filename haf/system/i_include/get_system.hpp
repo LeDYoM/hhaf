@@ -15,16 +15,16 @@ namespace haf::sys
 class SystemAccess;
 
 template <typename SystemType>
-const SystemType &getSystem(mtps::rptr<const SystemAccess>);
+const SystemType& getSystem(mtps::rptr<const SystemAccess>);
 
 template <typename SystemType>
-SystemType &getSystem(mtps::rptr<SystemAccess>);
+SystemType& getSystem(mtps::rptr<SystemAccess>);
 
 template <typename SystemType>
-const SystemType &getSystem(mtps::rptr<const scene::SceneNode>);
+const SystemType& getSystem(mtps::rptr<const scene::SceneNode>);
 
 template <typename SystemType>
-SystemType &getSystem(mtps::rptr<scene::SceneNode>);
-} // namespace haf::sys
+SystemType& getSystem(mtps::rptr<scene::SceneNode>);
+}  // namespace haf::sys
 
 #endif

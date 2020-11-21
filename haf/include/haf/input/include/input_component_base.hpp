@@ -19,9 +19,9 @@ public:
         return key >= Key::A && key <= Key::Z;
     }
 
-    char toAscii(const Key key) noexcept;
-    bool isShiftPressed() const;
+    virtual char toAscii(const Key key) const noexcept;
+    virtual bool isShiftPressed() const noexcept;
 };
-} // namespace haf::scene
+}  // namespace haf::input
 
 #endif

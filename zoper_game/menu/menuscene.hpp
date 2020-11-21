@@ -5,23 +5,25 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/connection.hpp>
-#include <haf/scene/include/renderizable.hpp>
+#include <haf/render/include/renderizable.hpp>
 #include <haf/scene/include/scene.hpp>
+
+#include "../scene_names.hpp"
 
 namespace zoper
 {
-using namespace haf;
-class MenuScene final : public scene::Scene
+class MenuScene final : public haf::scene::Scene
 {
 public:
     MenuScene();
     ~MenuScene() override;
 
-    static constexpr char StaticTypeName[] = "MenuScene";
+    static constexpr char StaticTypeName[] = MENU_SCENE_NAME;
 
-    using BaseClass = scene::Scene;
+    using BaseClass = haf::scene::Scene;
 
-    virtual void onCreated() override;
+    mtps::str nextSceneName() override;
+    void onCreated() override;
 
 private:
     mtps::ireceiver m_receiver;

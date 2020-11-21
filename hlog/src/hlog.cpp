@@ -9,11 +9,15 @@
 
 #include <mtypes/include/str.hpp>
 
+namespace logger
+{
+    template struct Log<true, mtps::str, MixinCommiter<haf::ThreadCommiter>>;
+    template struct LogDisplayer<haf::LogClass, SeverityType>;
+    template struct LogAsserter<haf::DisplayLog>;
+    template struct LogInitializer<haf::LogClass>;
+}
+
 namespace haf
 {
-template LogClass;
-template DisplayLog;
-template LogAsserter;
-template LogInitializer;
 
 } // namespace haf

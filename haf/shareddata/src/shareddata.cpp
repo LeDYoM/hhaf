@@ -1,5 +1,5 @@
-#include "shareddata.hpp"
-#include "shareddatasystem.hpp"
+#include <haf/shareddata/include/shareddata.hpp>
+#include <haf/shareddata/i_include/shareddatasystem.hpp>
 #include <system/i_include/systemprovider.hpp>
 #include <system/i_include/get_system.hpp>
 
@@ -9,16 +9,16 @@ using namespace mtps;
 
 namespace haf::shdata
 {
-bool SharedData::store(uptr<IShareable> data)
+bool SharedData::store(Address const& address, IShareable const& data)
 {
     return sys::getSystem<sys::SharedDataSystem>(attachedNode())
-        .store(std::move(data));
+        .store(address, data);
 }
 
-uptr<IShareable> SharedData::retrieve_imp()
+bool SharedData::retrieve(Address const& address, IShareable& data)
 {
-    LogAsserter::log_assert(!isEmpty(), "SharedDataSystem should be empty");
-    return sys::getSystem<sys::SharedDataSystem>(attachedNode()).retrieve();
+    return sys::getSystem<sys::SharedDataSystem>(attachedNode())
+        .retrieve(address, data);
 }
 
 bool SharedData::isEmpty()
@@ -26,7 +26,7 @@ bool SharedData::isEmpty()
     return sys::getSystem<sys::SharedDataSystem>(attachedNode()).isEmpty();
 }
 
-bool SharedData::makeEmpty() 
+bool SharedData::makeEmpty()
 {
     return sys::getSystem<sys::SharedDataSystem>(attachedNode()).makeEmpty();
 }

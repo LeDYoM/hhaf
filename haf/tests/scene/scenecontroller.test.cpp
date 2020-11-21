@@ -33,6 +33,7 @@ public:
 
     void onCreated() override { ++(common.step); }
 
+    virtual mtps::str nextSceneName() { return "GroupScene2"; }
     void update() override
     {
         ++(common.step);
@@ -77,18 +78,6 @@ TEST_CASE("SceneController", "[lib][SceneController]")
 
     SECTION("Two scenes")
     {
-        common.scene_controller->setSceneDirector([](const str& scene_name) {
-            if (str(scene_name) == GroupScene1::StaticTypeName)
-            {
-                return str(GroupScene2::StaticTypeName);
-            }
-            else if (str(scene_name) == GroupScene2::StaticTypeName)
-            {
-                return str("");
-            }
-            CHECK(false);
-            return str("");
-        });
         CHECK(common.scene_controller->registerSceneNodeType<GroupScene1>());
         CHECK(common.scene_controller->registerSceneNodeType<GroupScene2>());
         CHECK_FALSE(

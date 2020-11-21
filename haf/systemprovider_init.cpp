@@ -4,7 +4,7 @@
 #ifdef _WIN32
 #define HAF_SYSTEM_API extern "C" __declspec(dllexport)
 #else
-#define HAF_SYSTEM_API
+#define HAF_SYSTEM_API extern "C" __attribute__((visibility("default")))
 #endif
 
 HAF_SYSTEM_API ISystemController* createSystemController()

@@ -9,5 +9,4 @@ TEST_CASE("haf::scene::SceneManager", "[haf][scene][scenemanager]")
 {
     using namespace haf;
     using namespace haf::scene;
-
 }

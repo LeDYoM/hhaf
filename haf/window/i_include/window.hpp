@@ -9,7 +9,7 @@
 
 namespace haf::input
 {
-    class InputDriver;
+class InputDriver;
 }
 
 namespace haf::sys
@@ -29,7 +29,7 @@ public:
      * @brief Construct a new Window object
      * @param system_provider The system provider
      */
-    Window(sys::SystemProvider &system_provider);
+    Window(sys::SystemProvider& system_provider);
 
     /**
      * @brief Destroy the Window object
@@ -38,7 +38,7 @@ public:
 
     /**
      * @brief Creates (or tryes to create) an operating system window
-     * 
+     *
      * @param window_properties Desired properties for the window
      * @return true If window creation was successful
      * @return false Failed trying to create the window
@@ -47,7 +47,7 @@ public:
 
     /**
      * @brief Method to be executed before starting a cycle of the system
-     * 
+     *
      * @return true The window has requested to exit
      * @return false The window did not request to exit
      */
@@ -70,6 +70,6 @@ private:
     struct WindowPrivate;
     mtps::uptr<WindowPrivate> priv_;
 };
-} // namespace haf::sys
+}  // namespace haf::sys
 
 #endif

@@ -8,7 +8,7 @@
 
 namespace haf::backend
 {
-    class IInputDriver;
+class IInputDriver;
 }
 
 namespace haf::input
@@ -31,6 +31,6 @@ public:
 private:
     mtps::rptr<backend::IInputDriver> input_driver_;
 };
-} // namespace haf::backend::sfmlb
+}  // namespace haf::input
 
 #endif

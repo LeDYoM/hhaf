@@ -1,4 +1,5 @@
-#include "discretetextcomponent.hpp"
+#include <haf/scene_components/include/discretetextcomponent.hpp>
+#include <haf/scene_nodes/include/scenenodetext_properties.hpp>
 
 using namespace mtps;
 
@@ -44,8 +45,10 @@ void DiscreteTextComponent::update()
     }
 }
 
-void DiscreteTextComponent::_setText(const str&nText)
+void DiscreteTextComponent::_setText(const str& nText)
 {
-    attachedNodeAs<nodes::SceneNodeText>()->text.set(nText);
+    attachedNodeAs<nodes::SceneNodeText>()
+        ->prop<nodes::SceneNodeTextProperties>()
+        .set<nodes::Text>(nText);
 }
-} // namespace haf::scene
+}  // namespace haf::scene

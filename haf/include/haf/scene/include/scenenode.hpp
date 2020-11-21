@@ -3,15 +3,18 @@
 #ifndef HAF_SCENE_SCENENODE_INCLUDE_HPP
 #define HAF_SCENE_SCENENODE_INCLUDE_HPP
 
+#include <haf/haf_export.hpp>
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/vector2d.hpp>
 #include <mtypes/include/properties.hpp>
+#include <mtypes/include/grouping_property.hpp>
 #include <haf/scene/include/scenenodeparent.hpp>
 #include <haf/scene/include/scenenodes.hpp>
-#include <haf/scene/include/renderizables.hpp>
+#include <haf/render/include/renderizables.hpp>
 #include <haf/scene/include/transformable.hpp>
 #include <haf/scene/include/hasname.hpp>
 #include <haf/scene/include/componentcontainer.hpp>
+#include <haf/scene/include/scenenode_cast.hpp>
 #include <haf/scene/include/interface_getter.hpp>
 #include <haf/system/include/datawrappercreator.hpp>
 #include <haf/system/include/systemaccess.hpp>
@@ -22,24 +25,35 @@ class Renderizable;
 class Scene;
 class SceneManager;
 
+struct Visible
+{
+    using value_type = bool;
+};
+
+using SceneNodeProperties = mtps::PropertyGroup<Visible>;
+
 /**
- * @brief Main class representing all SceneNodes from a Scene.
+ * @brief Main class representing all SceneNodes from a @b Scene.
  * This class serves as main entry point in the hierarchy of the scene.
  * To create new SceneNode types, inherit from this class.
  */
-class SceneNode : public sys::HasName,
-                  public SceneNodeParent,
-                  public SceneNodes,
-                  public Renderizables,
-                  public Transformable,
-                  public sys::DataWrapperCreator,
-                  public ComponentContainer,
-                  public sys::SystemAccess,
-                  public InterfaceGetter
+class HAF_API SceneNode : public sys::HasName,
+                          public SceneNodeParent,
+                          public SceneNodes,
+                          public Renderizables,
+                          public Transformable,
+                          public sys::DataWrapperCreator,
+                          public ComponentContainer,
+                          public sys::SystemAccess,
+                          public InterfaceGetter,
+                          public SceneNodeProperties
 {
 public:
+    using SceneNodeProperties::prop;
+    using TransformationProperties::prop;
+
     /**
-     * @brief Disabled copy constructor.
+     * @brief Disabled copy constructor
      */
     SceneNode(const SceneNode&) = delete;
 
@@ -48,7 +62,15 @@ public:
      */
     SceneNode& operator=(const SceneNode&) = delete;
 
+    /**
+     * @brief Defaulted move constructor
+     */
     SceneNode(SceneNode&&) noexcept = default;
+
+    /**
+     * @brief Defaulted move assignment
+     * @return SceneNode& The resulting scene node
+     */
     SceneNode& operator=(SceneNode&&) noexcept = default;
 
     /**
@@ -70,21 +92,14 @@ public:
      */
     virtual void onCreated() {}
 
+    /**
+     * @brief Method called every frame
+     */
     virtual void update() {}
 
-    template <typename T>
-    mtps::rptr<T> snCast() noexcept
-    {
-        return dynamic_cast<T*>(this);
-    }
-
-    template <typename T>
-    const mtps::rptr<const T> snCast() const noexcept
-    {
-        return dynamic_cast<const T* const>(this);
-    }
-
-    mtps::BasicProperty<bool> visible;
+    /**
+     * @brief Clear all elements in this scene node
+     */
     void clearAll();
 };
 

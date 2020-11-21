@@ -1,7 +1,7 @@
 #include "menuscene.hpp"
 #include <haf/resources/include/resourceview.hpp>
 #include <haf/resources/include/itexture.hpp>
-#include <haf/shareddata/include/shareddataview.hpp>
+#include <haf/shareddata/include/shareddata.hpp>
 #include <haf/scene_components/include/scenecontrol.hpp>
 
 #include "../menu/mainmenu.hpp"
@@ -23,7 +23,10 @@ constexpr u32 PointsPerQuad = 6U;
 
 MenuScene::MenuScene() : BaseClass{StaticTypeName}
 {}
+
 MenuScene::~MenuScene() = default;
+
+str MenuScene::nextSceneName() { return GAME_SCENE_NAME; }
 
 void MenuScene::onCreated()
 {
@@ -46,6 +49,7 @@ void MenuScene::onCreated()
             .create();
 
     auto mainMenu(createSceneNode<MainMenu>(MainMenu::ClassName));
+
     mainMenu->MenuFinished.connect([this](const s32 status) {
         if (status == 0)
         {

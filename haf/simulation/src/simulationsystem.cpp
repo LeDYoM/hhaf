@@ -1,4 +1,4 @@
-#include "simulationsystem.hpp"
+#include <simulation/i_include/simulationsystem.hpp>
 #include "simulationsystem_private.hpp"
 #include <haf/simulation/include/simulationaction.hpp>
 
@@ -31,7 +31,6 @@ SimulationSystem::~SimulationSystem()
     constexpr char SaveFileName[] = "simulation_output.txt";
 
     DisplayLog::info("Serializing play data...");
-
     DisplayLog::info("Going to write play data into file ", SaveFileName);
 
     SystemDataWrapperCreator dwc{*this};
@@ -82,7 +81,6 @@ void SimulationSystem::initialize()
 
     DisplayLog::info("Trying to load ", InputFileName,
                      " to read simulation data");
-
     SystemDataWrapperCreator dwc{*this};
     auto file_serializer = dwc.dataWrapper<FileSerializer>();
     auto const result    = file_serializer->deserializeFromFile(

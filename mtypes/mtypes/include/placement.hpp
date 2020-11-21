@@ -18,7 +18,21 @@ public:
     static void construct(pointer where, Args&&... args)
     {
         assert(where != nullptr);
-        ::new ((void*)where) T(std::forward<Args>(args)...);
+
+        if constexpr (sizeof...(args) > 0U)
+        {
+            ::new ((void*)where) T(std::forward<Args>(args)...);
+        }
+        else
+        {
+            ::new ((void*)where) T();
+        }
+    }
+
+    static void construct(pointer where, T const& arg)
+    {
+        assert(where != nullptr);
+        ::new ((void*)where) T(arg);
     }
 
     static void destruct(pointer where) noexcept

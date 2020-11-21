@@ -8,12 +8,12 @@
 
 namespace haf::res
 {
-    class ITexture
-    {
-    public:
-        virtual ~ITexture() {}
-        virtual mtps::vector2du32 size() const = 0;
-    };
-}
+class ITexture
+{
+public:
+    virtual ~ITexture() {}
+    virtual mtps::vector2du32 size() const = 0;
+};
+}  // namespace haf::res
 
 #endif

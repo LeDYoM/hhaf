@@ -170,10 +170,10 @@ public:
 private:
     mtps::Dictionary<ObjectConstructorFunction> constructors_;
 
-    template <typename T, typename... Args>
-    static CreateReturnType createObject(Args&&... args)
+    template <typename T, typename... MArgs>
+    static CreateReturnType createObject(MArgs&&... args)
     {
-        return mtps::muptr<T>(std::forward<Args>(args)...);
+        return mtps::muptr<T>(std::forward<MArgs>(args)...);
     }
 
     bool containsType(const mtps::str& name) const

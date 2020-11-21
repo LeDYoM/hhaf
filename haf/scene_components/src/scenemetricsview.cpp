@@ -1,4 +1,4 @@
-#include "scenemetricsview.hpp"
+#include <haf/scene_components/include/scenemetricsview.hpp>
 #include <haf/scene/include/scenenode.hpp>
 #include <scene/i_include/scenemanager.hpp>
 #include <system/i_include/get_system.hpp>
@@ -17,4 +17,4 @@ Rectf32 SceneMetricsView::currentViewPort() const
     return sys::getSystem<SceneManager>(attachedNode()).viewPort();
 }
 
-} // namespace haf::scene
+}  // namespace haf::scene

@@ -10,59 +10,21 @@ using namespace mtps;
 namespace haf::scene
 {
 
-MenuPaged::MenuPaged(SceneNode* parent, str name) :
-    BaseClass{parent, std::move(name)},
-    scene_node_size_for_pages_{
-        dataWrapper<SceneMetricsView>()->currentView().size()}
-{}
-
 MenuPaged::~MenuPaged() = default;
 
-void MenuPaged::setNormalTextFont(sptr<res::IFont> normal_text_font)
+void MenuPaged::update()
 {
-    normal_text_font_ = std::move(normal_text_font);
-}
-
-sptr<res::IFont> MenuPaged::normalTextFont() const noexcept
-{
-    return normal_text_font_;
-}
-
-void MenuPaged::setNormalColor(Color normal_color)
-{
-    normal_color_ = std::move(normal_color);
-}
-
-Color MenuPaged::normalColor() const
-{
-    return normal_color_;
-}
-
-void MenuPaged::setSelectedColor(Color selected_color)
-{
-    selected_color_ = std::move(selected_color);
-}
-
-Color MenuPaged::selectedColor() const
-{
-    return selected_color_;
-}
-
-void MenuPaged::setSceneNodeSizeForPages(vector2df size)
-{
-    scene_node_size_for_pages_ = std::move(size);
-    for (auto& sceneNode : sceneNodes())
+    if (prop<SceneNodeSizeForPages>().readResetHasChanged())
     {
-        if (auto menu_page = std::dynamic_pointer_cast<MenuPage>(sceneNode))
+        auto const size = prop<SceneNodeSizeForPages>().get();
+        for (auto& sceneNode : sceneNodes())
         {
-            menu_page->sceneNodeSize = scene_node_size_for_pages_;
+            if (auto menu_page = std::dynamic_pointer_cast<MenuPage>(sceneNode))
+            {
+                    menu_page->prop<SceneNodeSize>().set(size);
+            }
         }
     }
-}
-
-vector2df MenuPaged::sceneNodeSizeForPages() const
-{
-    return scene_node_size_for_pages_;
 }
 
 void MenuPaged::setMenuPagedStatus(const s32 status)

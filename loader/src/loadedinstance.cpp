@@ -52,7 +52,7 @@ namespace
 
 	inline void *loadSharedObject(const char *fileName)
 	{
-		return static_cast<void*>(dlopen(fileName, RTLD_NOW));
+		return static_cast<void*>(dlopen(fileName, RTLD_LAZY));
 	}
 
 	inline bool freeSharedObject(void *handle)
@@ -60,7 +60,7 @@ namespace
 		return (dlclose(handle) != 0);
 	}   
     constexpr const char *const extension = ".so";
-    constexpr const char *const prefix = "lib";
+    constexpr const char *const prefix = "./lib";
 
 #endif
 

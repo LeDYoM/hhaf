@@ -4,6 +4,7 @@
 #define MTPS_MTYPES_RAWMEMORY_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
+#include <cstring>
 
 namespace mtps
 {
@@ -31,7 +32,7 @@ public:
     RawMemory(RawMemory &&) noexcept = default;
     RawMemory &operator=(RawMemory &&) noexcept = default;
 
-    constexpr size_type size() const noexcept { return (data_ != nullptr) ? size_ : 0U; }
+    inline size_type size() const noexcept { return (data_ != nullptr) ? size_ : 0U; }
     const std::byte *data() const noexcept { return data_.get(); }
 
 private:

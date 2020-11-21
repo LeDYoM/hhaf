@@ -1,66 +1,57 @@
 #pragma once
 
-#ifndef HAF_TRANSFORMABLE_INCLUDE_HPP
-#define HAF_TRANSFORMABLE_INCLUDE_HPP
+#ifndef HAF_SCENE_TRANSFORMABLE_INCLUDE_HPP
+#define HAF_SCENE_TRANSFORMABLE_INCLUDE_HPP
 
-#include "transform.hpp"
+#include "matrix4x4.hpp"
+#include "transformation_properties.hpp"
+#include "transformation.hpp"
+#include <mtypes/include/vector.hpp>
 #include <mtypes/include/vector2d.hpp>
 #include <mtypes/include/rect.hpp>
-#include <mtypes/include/properties.hpp>
+#include <mtypes/include/propertystate.hpp>
 
 namespace haf::scene
 {
-class Transformable
+class Transformable : public Transformation
 {
 public:
-    using Scalar       = Transform::Scalar;
+    using BaseClass = Transformation;
+    using BaseClass::prop;
+
+    using Scalar       = Matrix4x4::Scalar;
     using VectorScalar = mtps::vector2d<Scalar>;
     using RectScalar   = mtps::Rect<Scalar>;
 
     Transformable() noexcept;
     virtual ~Transformable();
 
-    mtps::PropertyState<VectorScalar> origin;
-    mtps::PropertyState<Scalar> rotation;
-    mtps::PropertyState<VectorScalar> scale;
-    mtps::PropertyState<VectorScalar> position;
-
-    bool updateTransformIfNecessary() noexcept;
-    inline Transform const& globalTransform() const noexcept
+    inline Matrix4x4 const& globalTransform() const noexcept
     {
         return global_transform_;
     }
 
-    /**
-     * @brief Set the associated transformation to a rotation around a given
-     * point.
-     *
-     * @param point Point to be rotated around
-     * @param angle Angle for the rotation
-     */
-    void rotateAround(VectorScalar const point, Scalar const angle) noexcept;
+    inline Matrix4x4 const& localTransform() const noexcept
+    {
+        return local_transform_;
+    }
 
-    /**
-     * @brief Set the associated transformation to a scale around a given point.
-     * Note: this method overwrites the properties.
-     *
-     * @param pointPoint Point to be rotated around
-     * @param scale Scale factor
-     */
-    void scaleAround(VectorScalar const point,
-                     VectorScalar const scale) noexcept;
+    using Transformation::rotateAround;
+    using Transformation::scaleAround;
 
-    void rotateScaleAround(VectorScalar const point,
-                           Scalar const angle,
-                           VectorScalar const scale) noexcept;
+    mtps::size_type addTransformation();
+    mtps::size_type numTransformations() const noexcept;
 
-    void updateGlobalTransformation(Transform const&) noexcept;
+    bool updateLocalTransformationsIfNecessary() noexcept;
+    void updateGlobalTransformation(Matrix4x4 const&) noexcept;
+
+    Transformation& getTransformation(mtps::size_type const index) noexcept;
 
 private:
-    void updateTransform();
+    Matrix4x4 global_transform_;
+    Matrix4x4 local_transform_;
 
-    Transform transform_;
-    Transform global_transform_;
+    mtps::vector<Transformation> extra_transformations_;
 };
 }  // namespace haf::scene
 

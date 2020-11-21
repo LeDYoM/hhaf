@@ -26,36 +26,36 @@ void MenuPage::onCreated()
     input->Selected.connect({this, &MenuPage::goSelected});
 }
 
-MenuPaged* MenuPage::parentMenuPaged()
+rptr<MenuPaged> MenuPage::parentMenuPaged()
 {
     return parentAs<MenuPaged>();
 }
 
-const MenuPaged* MenuPage::parentMenuPaged() const
+rptr<MenuPaged const> MenuPage::parentMenuPaged() const
 {
-    return parentAs<MenuPaged>();
+    return parentAs<MenuPaged const>();
 }
 
 sptr<res::IFont> MenuPage::normalFont() const
 {
-    return parentMenuPaged()->normalTextFont();
+    return parentMenuPaged()->prop<MenuPagedProperties>().get<NormalTextFont>();
 }
 
 Color MenuPage::normalColor() const
 {
-    return parentMenuPaged()->normalColor();
+    return parentMenuPaged()->prop<MenuPagedProperties>().get<NormalColor>();
 }
 
 Color MenuPage::selectedColor() const
 {
-    return parentMenuPaged()->selectedColor();
+    return parentMenuPaged()->prop<MenuPagedProperties>().get<SelectedColor>();
 }
 
 constexpr size_type columnForOptions = 4U;
 
 size_type MenuPage::SelectedOptionAtRow(const size_type row) const
 {
-    if (row < tableSize().y)
+    if (row < prop<TableSize>().get().y)
     {
         auto node(nodeAt({columnForOptions, row}));
         if (auto discreteText = node->componentOfType<DiscreteTextComponent>())
@@ -78,7 +78,7 @@ size_type MenuPage::SelectedOptionAtRow(const size_type row) const
 void MenuPage::configure(vector<sptr<MenuPagedOption>> options,
                          PageOptions page_options)
 {
-    setTableSize({5U, options.size()});
+    prop<TableSize>().set({5U, options.size()});
 
     LogAsserter::log_assert(options.size() > 0U, "options cannot be empty");
     size_type counter{0U};
@@ -92,7 +92,8 @@ void MenuPage::configure(vector<sptr<MenuPagedOption>> options,
         auto newOption(createNodeAt(vector2dst{title_column, counter},
                                     make_str("label", counter)));
         standarizeText(newOption);
-        newOption->text.set(option->title());
+        newOption->prop<nodes::SceneNodeTextProperties>().set<nodes::Text>(
+            option->title());
 
         if (!option->option().options().empty())
         {
@@ -112,8 +113,8 @@ void MenuPage::configure(vector<sptr<MenuPagedOption>> options,
     Selection.connect(
         [this, options](const size_type index, const s32 /*selection*/) {
             LogAsserter::log_assert(index <= static_cast<s32>(options.size()),
-                       "Logical error: Received invalid "
-                       "index in Selection");
+                                    "Logical error: Received invalid "
+                                    "index in Selection");
 
             const auto option = options[index];
             if (option->onSelected() > MenuPagedOption::NoAction)
@@ -134,12 +135,12 @@ void MenuPage::configure(vector<sptr<MenuPagedOption>> options,
 
 vector<s32> MenuPage::optionsSelected() const
 {
-    vector<s32> result(tableSize().y);
+    vector<s32> result(prop<TableSize>().get().y);
 
-    for (size_type index = 0U; index < tableSize().y; ++index)
+    for (size_type index{0U}; index < prop<TableSize>().get().y; ++index)
     {
         result.emplace_back(
-            (nodeHasOptions(index)) ? optionsLabelAt(index)->index() : -1);
+            (nodeHasOptions(index)) ? static_cast<s32>(optionsLabelAt(index)->index()) : -1);
     }
     return result;
 }
@@ -163,28 +164,31 @@ void MenuPage::setColorToLine(const size_type index, const Color& color)
         index,
         [&color](const size_type,
                  const sptr<BaseClass::ContainedElement>& node) {
-            node->textColor.set(color);
+            node->prop<nodes::SceneNodeTextProperties>().set<nodes::TextColor>(
+                color);
         });
 }
 
 void MenuPage::standarizeText(const sptr<ContainedElement>& ntext)
 {
-    ntext->textColor.set(normalColor());
-    ntext->font.set(normalFont());
+    ntext->prop<nodes::SceneNodeTextProperties>()
+        .put<nodes::TextColor>(normalColor())
+        .put<nodes::Font>(normalFont());
 }
 
 void MenuPage::goDown()
 {
     m_previouslySelectedItem = m_selectedItem;
-    setSelectedItem(
-        (m_selectedItem < (tableSize().y - 1U)) ? (m_selectedItem + 1U) : (0U));
+    setSelectedItem((m_selectedItem < (prop<TableSize>().get().y - 1U))
+                        ? (m_selectedItem + 1U)
+                        : (0U));
 }
 
 void MenuPage::goUp()
 {
     m_previouslySelectedItem = m_selectedItem;
     setSelectedItem((m_selectedItem > 0U) ? (m_selectedItem - 1U)
-                                          : (tableSize().y - 1U));
+                                          : (prop<TableSize>().get().y - 1U));
 }
 
 void MenuPage::goLeft()
@@ -225,7 +229,7 @@ sptr<DiscreteTextComponent> MenuPage::optionsLabelAt(const size_type y) const
 
 bool MenuPage::nodeHasOptions(const size_type y) const noexcept
 {
-    if (tableSize().x >= columnForOptions)
+    if (prop<TableSize>().get().x >= columnForOptions)
     {
         if (auto node = nodeAt({columnForOptions, y}))
         {

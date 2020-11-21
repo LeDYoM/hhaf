@@ -11,6 +11,11 @@ namespace haf::backend::sfmlb
 static_assert(sizeof(sf::Vertex) == sizeof(iVertex),
               "Incomptable version of SFML");
 
+void RenderTarget::initialize()
+{
+    sf::RenderTarget::initialize();
+}
+
 void RenderTarget::render(const IRenderData* render_data_begin,
                           const IRenderData* render_data_end)
 {
@@ -67,4 +72,10 @@ mtps::str RenderTarget::info() const
         SFML_VERSION_MAJOR, ".", SFML_VERSION_MINOR, ".", SFML_VERSION_PATCH,
         ";version:0;subversion:2:patch3");
 }
+
+sf::Vector2u RenderTarget::getSize() const
+{
+    return sf::Vector2u{};
+}
+
 }  // namespace haf::backend::sfmlb

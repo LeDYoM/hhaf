@@ -1,5 +1,4 @@
-#include "scenenodes.hpp"
-#include "scenenode.hpp"
+#include <haf/scene/include/scenenodes.hpp>
 #include <haf/scene/include/scenenode.hpp>
 #include <hlog/include/hlog.hpp>
 
@@ -7,16 +6,16 @@ using namespace mtps;
 
 namespace haf::scene
 {
-template mtps::vector<mtps::sptr<SceneNode>>;
-
 void SceneNodesGroup::addSceneNode(sptr<SceneNode> node)
 {
     groups_.push_back(node);
 }
 
-void SceneNodesGroup::removeSceneNode(sptr<SceneNode> element)
+bool SceneNodesGroup::removeSceneNode(sptr<SceneNode> element)
 {
-    groups_.erase_values(element);
+    auto const old_size = groups_.size();
+    groups_.erase_one(element);
+    return old_size == groups_.size() + 1U;
 }
 
 void SceneNodesGroup::clearSceneNodes()

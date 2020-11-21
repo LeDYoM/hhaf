@@ -7,9 +7,11 @@
 #include <mtypes/include/connection.hpp>
 
 #include <haf/scene/include/scene.hpp>
-#include <haf/scene/include/renderizable.hpp>
+#include <haf/render/include/renderizable.hpp>
 #include <haf/resources/include/itexture.hpp>
 #include <haf/resources/include/ittfont.hpp>
+
+#include "../scene_names.hpp"
 
 namespace zoper
 {
@@ -21,8 +23,9 @@ public:
     HighScoresScene();
     ~HighScoresScene() override;
 
-    static constexpr char StaticTypeName[] = "HighScoresScene";
+    static constexpr char StaticTypeName[] = HIGHSCORES_SCENE_NAME;
 
+    mtps::str nextSceneName() override;
     void onCreated() override;
 
 private:

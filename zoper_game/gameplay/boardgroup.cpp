@@ -6,8 +6,9 @@
 
 #include <haf/scene/include/scenenode.hpp>
 #include <haf/scene_nodes/include/tablenode.hpp>
+#include <haf/scene_nodes/include/scene_node_size.hpp>
 #include <haf/scene_components/include/scenemetricsview.hpp>
-#include <haf/scene/include/renderizable.hpp>
+#include <haf/render/include/renderizable.hpp>
 
 #include <boardmanager/include/boardmanager.hpp>
 #include <boardmanager/include/itile.hpp>
@@ -25,26 +26,29 @@ void BoardGroup::configure(vector2dst size,
                            sptr<LevelProperties> level_properties)
 {
     level_properties_ = std::move(level_properties);
-    setTableSize(size);
+    prop<TableSize>().set(size);
+    auto const tableSize{prop<TableSize>().get()};
 
     Rectf32 textBox{dataWrapper<SceneMetricsView>()->currentView()};
-    position      = textBox.leftTop();
-    sceneNodeSize = textBox.size();
+    prop<Position>() = textBox.leftTop();
+    sceneNodeCast<TableNode<BoardTileSceneNode>>(this)
+        ->prop<SceneNodeSize>()
+        .set(textBox.size());
 
-    const Rectf32 bBox(textBox);
-
+    Rectf32 const bBox{textBox};
     Rectf32 tileBox({}, cellSize());
-    for (size_type y{0U}; y < tableSize().y; ++y)
+
+    for (size_type y{0U}; y < tableSize.y; ++y)
     {
-        for (size_type x{0U}; x < tableSize().x; ++x)
+        for (size_type x{0U}; x < tableSize.x; ++x)
         {
             auto node = createNodeAt({x, y}, make_str("BoardGroupTile_", x, y));
-            node->configure(tileBox);
+            node->prop<NodeSize>().set(tileBox);
         }
     }
 
     board_model_ = addComponentOfType<board::BoardManager>();
-    board_model_->initialize(tableSize(), this);
+    board_model_->initialize(tableSize, this);
 
     board_model_->setBackgroundFunction(
         [](const vector2dst& position) -> board::BackgroundData {
@@ -88,7 +92,7 @@ void BoardGroup::createNewToken(const board::BoardTileData data,
     auto new_tile_token = tokens_scene_node->createSceneNode<Token>("tileNode");
 
     // Set the position in the scene depending on the board position
-    new_tile_token->position.set(board2Scene(board_position));
+    new_tile_token->prop<Position>().set(board2Scene(board_position));
 
     // Add it to the board
     board_model_->setTile(board_position, new_tile_token);
@@ -108,10 +112,12 @@ void BoardGroup::tileRemoved(const vector2dst, board::SITilePointer& tile)
 void BoardGroup::setLevel(const size_type level)
 {
     // Update background tiles
-    for_each_tableSceneNode([this, level](const auto position, auto node) {
-        node->setTileColor(getBackgroundTileColor(
-            level, position, TokenZones::pointInCenter(position)));
-    });
+    for_each_tableSceneNode(
+        [this, level](const auto position, sptr<BoardTileSceneNode> node) {
+            node->prop<BoardTileSceneNodeProperties>().set<BackgroundColor>(
+                getBackgroundTileColor(level, position,
+                                       TokenZones::pointInCenter(position)));
+        });
 }
 
 Color BoardGroup::getBackgroundTileColor(const size_type level,
@@ -126,15 +132,15 @@ Color BoardGroup::getBackgroundTileColor(const size_type level,
             {
                 if (level % 2U)
                 {
-                    return {10U, 200U, 50U};
+                    return Color{10U, 200U, 50U};
                 }
                 else if (!(level % 3U))
                 {
-                    return {255U, 70U, 200U};
+                    return Color{255U, 70U, 200U};
                 }
                 else
                 {
-                    return {255U, 100U, 100U};
+                    return Color{255U, 100U, 100U};
                 }
             }
             else
@@ -159,11 +165,11 @@ Color BoardGroup::getBackgroundTileColor(const size_type level,
             }
             else if (level < 3U)
             {
-                return {255U, 128U, 0U};
+                return Color{255U, 128U, 0U};
             }
             else if (level < 5U)
             {
-                return {100U, 128U, 255U};
+                return Color{100U, 128U, 255U};
             }
             else if (level < 10U)
             {
@@ -205,6 +211,52 @@ Color BoardGroup::getBackgroundTileColor(const size_type level,
         }
     }
     return colors::Black;
+}
+
+bool BoardGroup::moveTileInDirection(Direction const direction,
+                                     vector2dst const position)
+{
+    // Is the current tile position empty?
+    if (!board_model_->tileEmpty(position))
+    {
+        // If not, what about the next position to check, is empty?
+        const auto next = direction.applyToVector(position);
+
+        LogAsserter::log_assert(board_model_->tileEmpty(next),
+                                "Trying to move a token to a non empty tile");
+        board_model_->moveTile(position, next);
+        return (TokenZones::toBoardBackgroundType(board_model_->backgroundType(
+                    next)) == TokenZones::BoardBackgroundType::Center);
+    }
+    return false;
+}
+
+bool BoardGroup::moveTowardsCenter(Direction const direction,
+                                   vector2dst const& position)
+{
+    bool moved_to_center{false};
+
+    // Is the current tile position empty?
+    if (!board_model_->tileEmpty(position))
+    {
+        // If not, what about the next position to check, is empty?
+        const auto next = direction.applyToVector(position);
+
+        if (!board_model_->tileEmpty(next))
+        {
+            // If the target position where to move the
+            // token is occupied, move the this target first.
+            moved_to_center = moveTowardsCenter(direction, next);
+        }
+        board_model_->moveTile(position, next);
+        if (TokenZones::toBoardBackgroundType(board_model_->backgroundType(
+                next)) == TokenZones::BoardBackgroundType::Center)
+        {
+            LogAsserter::log_assert(!moved_to_center, "Double game over!");
+            moved_to_center = true;
+        }
+    }
+    return moved_to_center;
 }
 
 vector2df BoardGroup::board2SceneFactor() const

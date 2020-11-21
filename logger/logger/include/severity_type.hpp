@@ -28,33 +28,35 @@ struct SeverityType
     {
         switch (severity_value)
         {
-        case severity_type_t::debug:
-            return "<DEBUG> :";
-            break;
-        case severity_type_t::verbose:
-            return "<VERBOSE> :";
-            break;
-        case severity_type_t::info:
-            return "<INFO> :";
-            break;
-        case severity_type_t::warn:
-            return "<WARN> :";
-            break;
-        case severity_type_t::error:
-            return "<ERROR> :";
-            break;
-        case severity_type_t::none:
-            return "";
-            break;
-        default:
-            // That should not happen.
-            return "<> :";
+            case severity_type_t::debug:
+                return "<DEBUG> :";
+                break;
+            case severity_type_t::verbose:
+                return "<VERBOSE> :";
+                break;
+            case severity_type_t::info:
+                return "<INFO> :";
+                break;
+            case severity_type_t::warn:
+                return "<WARN> :";
+                break;
+            case severity_type_t::error:
+                return "<ERROR> :";
+                break;
+            case severity_type_t::none:
+                return "";
+                break;
+            default:
+                // That should not happen.
+                return "<> :";
         }
     }
 
     template <severity_type_t severity_type>
     static constexpr bool ShowSeverity =
-        severity_type >= severity_type_t::debug;
+        (static_cast<std::underlying_type_t<severity_type_t>>(severity_type) >=
+         static_cast<std::underlying_type_t<severity_type_t>>(
+             severity_type_t::debug));
 };
 
 }  // namespace logger

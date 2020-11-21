@@ -20,15 +20,15 @@ class RenderTarget;
 
 /**
  * @brief This system is intended to be the responsible of
-* priving the render data to the Backend render part.
-*/
+ * priving the render data to the Backend render part.
+ */
 class RenderSystem final : public SystemBase
 {
 public:
     using SystemBase::SystemBase;
     void update();
 
-    void draw(const scene::RenderData &renderData);
+    void draw(const scene::RenderData& renderData);
     void clear();
 
     void setRenderTarget(mtps::sptr<RenderTarget> render_target);
@@ -38,6 +38,6 @@ private:
     mtps::sptr<RenderTarget> render_target_;
     mtps::vector<scene::RenderData> render_data_container_;
 };
-} // namespace haf::sys
+}  // namespace haf::sys
 
 #endif

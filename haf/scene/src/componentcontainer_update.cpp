@@ -1,4 +1,4 @@
-#include "componentcontainer.hpp"
+#include <haf/scene/include/componentcontainer.hpp>
 
 #include <mtypes/include/types.hpp>
 #include <hlog/include/hlog.hpp>
@@ -9,14 +9,4 @@
 using namespace mtps;
 
 namespace haf::scene
-{
-template <>
-void ComponentContainerPart<true>::updateComponents()
-{
-    components_.performUpdate([](const sptr<IComponent>& component)
-    {
-        component->update();
-    });
-}
-
-}  // namespace haf::scene
+{}  // namespace haf::scene

@@ -1,6 +1,6 @@
-#include "bmpfontfactory.hpp"
-#include "bmpfont.hpp"
-#include "texture.hpp"
+#include <resources/i_include/bmpfontfactory.hpp>
+#include <resources/i_include/bmpfont.hpp>
+#include <resources/i_include/texture.hpp>
 
 using namespace mtps;
 

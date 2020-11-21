@@ -1,10 +1,15 @@
-project(zoper_game)
-cmake_minimum_required(VERSION 3.11)
+cmake_minimum_required(VERSION 3.14)
+project(
+  "Zoper"
+  VERSION 1.5.1.2
+  DESCRIPTION "Zoper game"
+  # [HOMEPAGE_URL <url-string>]
+  LANGUAGES CXX)
 
 file (GLOB_RECURSE HEADERS "*.hpp")
 file (GLOB_RECURSE SOURCES "*.cpp")
 
-set (CURRENT_TARGET  ${PROJECT_NAME})
+set (CURRENT_TARGET ${PROJECT_NAME})
 
 include(client_functions)
 
@@ -20,6 +25,7 @@ build_client_library(
 )
 
 # Extension libraries
+target_link_libraries(${CURRENT_TARGET} PRIVATE haf_user)
 target_link_libraries(${CURRENT_TARGET} PRIVATE boardmanager)
 target_link_libraries(${CURRENT_TARGET} PRIVATE menu_paged)
 

@@ -309,10 +309,6 @@ TEST_CASE("Parser basic", "[streams][translator][Parser]")
         "}"
     };
 
-    auto func = [](const str& input)
-    {
-
-    };
     Parser parser(Scaner{ input }.scan());
     parser.parse();
     const Object& obj{ parser.innerObject() };

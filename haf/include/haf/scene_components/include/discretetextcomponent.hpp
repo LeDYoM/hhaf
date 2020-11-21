@@ -23,8 +23,8 @@ public:
     virtual void update() override;
 
 private:
-    void _setText(const mtps::str&nText);
+    void _setText(const mtps::str& nText);
 };
-} // namespace haf::scene
+}  // namespace haf::scene
 
 #endif

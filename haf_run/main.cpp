@@ -1,11 +1,18 @@
 #include <loader/include/loader.hpp>
 #include <memmanager/include/memmanager.hpp>
+#include <thread>
 
 // Signature of the main function exported from host shared library
 using p_haf_host_main = int (*)(int argc, char* argv[]);
 
 int main(int argc, char* argv[])
 {
+    {
+        // Create a dummy thread to initialize pthread library in
+        // the executable. This is a workaround necessary for linux only.
+        std::thread t([]() { });
+        t.join();
+    }
     int result = 0;
     installMemManager();
 
@@ -14,7 +21,7 @@ int main(int argc, char* argv[])
     constexpr const char host_library[] = "host";
     if (loader->loadModule(host_library))
     {
-        const auto fp_p_haf_host_main = static_cast<p_haf_host_main>(
+        const auto fp_p_haf_host_main = reinterpret_cast<p_haf_host_main>(
             loader->loadMethod(host_library, "haf_host_main"));
 
         if (fp_p_haf_host_main != nullptr)

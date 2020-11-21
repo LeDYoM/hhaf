@@ -7,6 +7,11 @@ void BackendRegister::setFactory(IWindowFactory* const window_factory) noexcept
     window_factory_ = window_factory;
 }
 
+void BackendRegister::setFactory(IRenderTargetFactory* const render_target_factory) noexcept
+{
+    render_target_factory_ = render_target_factory;
+}
+
 void BackendRegister::setFactory(
     ITTFontFactoryFactory* const ttfont_factory_factory) noexcept
 {

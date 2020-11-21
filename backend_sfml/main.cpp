@@ -1,6 +1,9 @@
-#include <backend_dev/include/client/interfaces.hpp>
+#include <backend_client/include/default_functions.hpp>
+#include <backend_client/include/default_factory.hpp>
+#include <backend_client/include/default_backend_manager.hpp>
 
 #include "renderwindow.hpp"
+#include "rendertarget.hpp"
 #include "ttfontfactory.hpp"
 #include "texturefactory.hpp"
 #include "shaderfactory.hpp"
@@ -8,7 +11,7 @@
 #ifdef _WIN32
 #define EXPORT extern "C" __declspec(dllexport)
 #else
-#define EXPORT extern "C"
+#define EXPORT extern "C" __attribute__((visibility("default")))
 #endif
 
 struct BackendManager : haf::backend::client::DefaultBackendManager
@@ -20,26 +23,29 @@ struct BackendManager : haf::backend::client::DefaultBackendManager
         using namespace haf::backend::client;
         using namespace haf::backend::sfmlb;
 
-        createFactoryOfFactories<DefaultFactoryOf<IWindow, RenderWindow>>(
-            factories);
+        createFactoryOfFactories<DefaultFactoryOf<IWindow, RenderWindow>>();
         createFactoryOfFactories<
-            DefaultFactoryOf<ITTFontFactory, TTFontFactory>>(factories);
+            DefaultFactoryOf<IRenderTarget, RenderTarget>>();
         createFactoryOfFactories<
-            DefaultFactoryOf<ITextureFactory, TextureFactory>>(factories);
+            DefaultFactoryOf<ITTFontFactory, TTFontFactory>>();
         createFactoryOfFactories<
-            DefaultFactoryOf<IShaderFactory, ShaderFactory>>(factories);
+            DefaultFactoryOf<ITextureFactory, TextureFactory>>();
+        createFactoryOfFactories<
+            DefaultFactoryOf<IShaderFactory, ShaderFactory>>();
     }
 };
 
 BackendManager* backend_manager{nullptr};
 
-EXPORT bool init_lib(haf::backend::IBackendRegister* const ibackend_register)
+EXPORT bool init_lib(
+    haf::backend::client::IBackendRegister* const ibackend_register)
 {
     return haf::backend::client::default_init_function(&backend_manager,
                                                        ibackend_register);
 }
 
-EXPORT bool finish_lib(haf::backend::IBackendRegister* const ibackend_register)
+EXPORT bool finish_lib(
+    haf::backend::client::IBackendRegister* const ibackend_register)
 {
     return haf::backend::client::default_finish_function(&backend_manager,
                                                          ibackend_register);

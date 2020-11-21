@@ -169,7 +169,7 @@ constexpr str& operator<<(str& os, const vector2d<T>& v2d)
 }
 
 template <typename T>
-inline std::istream& operator>>(str& is, const vector2d<T>& v2d)
+constexpr str& operator>>(str& is, const vector2d<T>& v2d)
 {
     return is;
 }

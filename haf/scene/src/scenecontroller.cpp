@@ -1,6 +1,6 @@
-#include "scenecontroller.hpp"
-#include "scene.hpp"
-#include "scenemanager.hpp"
+#include <haf/scene/i_include/scenecontroller.hpp>
+#include <haf/scene/include/scene.hpp>
+#include <haf/scene/i_include/scenemanager.hpp>
 
 #include <haf/system/include/isystemprovider.hpp>
 #include <system/i_include/systemprovider.hpp>
@@ -37,10 +37,11 @@ void SceneController::deferredSwitchScene()
     sptr<Scene> nextScene{nullptr};
     if (!exit_requested_)
     {
-        if (scene_director_)
+        auto const next_scene_name = current_scene_->nextSceneName();
+
+        if (!next_scene_name.empty())
         {
-            nextScene =
-                scene_factory_.create(scene_director_(current_scene_->name()));
+            nextScene = scene_factory_.create(next_scene_name);
         }
     }
 
@@ -55,11 +56,6 @@ void SceneController::terminateCurrentScene()
                             "Unexpected nullptr in current_scene");
     DisplayLog::info("Terminating scene ", current_scene_->name());
     current_scene_->onFinished();
-}
-
-void SceneController::setSceneDirector(SceneDirectorType sceneDirector)
-{
-    scene_director_ = std::move(sceneDirector);
 }
 
 void SceneController::update()
@@ -85,7 +81,7 @@ void SceneController::renderScene(Scene& scene,
 void SceneController::render(SceneNode& scene_node,
                              bool parentTransformationChanged)
 {
-    if (scene_node.visible())
+    if (scene_node.prop<Visible>().get())
     {
         // Update the node components
         scene_node.updateComponents();
@@ -93,13 +89,14 @@ void SceneController::render(SceneNode& scene_node,
         // Update node
         scene_node.update();
 
-        parentTransformationChanged |= scene_node.updateTransformIfNecessary();
+        parentTransformationChanged |=
+            scene_node.updateLocalTransformationsIfNecessary();
 
         if (parentTransformationChanged)
         {
             scene_node.updateGlobalTransformation(
                 scene_node.parent() ? scene_node.parent()->globalTransform()
-                                    : Transform::Identity);
+                                    : Matrix4x4::Identity);
         }
 
         scene_node.updateRenderizables();

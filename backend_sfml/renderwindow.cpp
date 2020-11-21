@@ -61,9 +61,10 @@ bool RenderWindow::createWindow(const u32 width,
     unsigned int bpp =
         static_cast<unsigned int>(red_bpp + green_bpp + blue_bpp + alpha_bpp);
 
-    sf::Window::create(sf::VideoMode(w, h, bpp), "", style);
+    sf::ContextSettings context_settings = sf::ContextSettings();
+    sf::Window::create(sf::VideoMode(w, h, bpp), "", style, context_settings);
 
-    this->setVerticalSyncEnabled(false);
+    setVerticalSyncEnabled(false);
     return true;
 }
 
@@ -124,17 +125,29 @@ str RenderWindow::info() const
 {
     return make_str("name:SFMLWindow;provider:SFML;provider_version:",
                     SFML_VERSION_MAJOR, ".", SFML_VERSION_MINOR, ".",
-                    SFML_VERSION_PATCH, ";version:0;subversion:2:patch3");
+                    SFML_VERSION_PATCH, ";version:0;subversion:2:patch:4");
+}
+
+str RenderWindow::settingsInfo()
+{
+    sf::ContextSettings settings = sf::Window::getSettings();
+
+    return make_str("Depth bits: ", settings.depthBits,
+    ", stencil bits: ", settings.stencilBits,
+    ", antialiasing level: ", settings.antialiasingLevel,
+    ", attribute flags: ", settings.attributeFlags,
+    ", sRGB capable: ", settings.sRgbCapable,
+    ", version: ", settings.majorVersion, ".", settings.minorVersion);
 }
 
 void RenderWindow::onCreate()
 {
-    RenderTarget::initialize();
+    renderTarget()->initialize();
 }
 
 void RenderWindow::onResize()
 {
-    setView(getView());
+    renderTarget()->setViewPort(renderTarget()->viewPort());
 }
 
 }  // namespace haf::backend::sfmlb

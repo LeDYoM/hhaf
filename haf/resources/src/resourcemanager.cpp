@@ -1,4 +1,4 @@
-#include "resourcemanager.hpp"
+#include <resources/i_include/resourcemanager.hpp>
 #include <system/i_include/systemprovider.hpp>
 #include <filesystem/i_include/filesystem.hpp>
 
@@ -53,7 +53,8 @@ inline sptr<T> loadResource(backend::IResourceFactory<V>& factory,
 }
 
 template <typename T>
-inline auto get_or_default(ResourceList<sptr<T>> const& container, const str& rid)
+inline auto get_or_default(ResourceList<sptr<T>> const& container,
+                           const str& rid)
 {
     auto iterator(
         std::find_if(container.begin(), container.end(),
@@ -172,14 +173,14 @@ bool ResourceManager::loadBMPFont(const str& rid, const str& fileName)
     return bmp_font != nullptr;
 }
 
-bool ResourceManager::parseResourceConfigFile()
+SetResourceConfigFileResult ResourceManager::parseResourceConfigFile()
 {
     LogAsserter::log_assert(!resources_config_file_name_.empty(),
                             "The resources file name was not set");
 
     SystemDataWrapperCreator dwc{*this};
     auto file_serializer = dwc.dataWrapper<FileSerializer>();
-    auto const result    = file_serializer->deserializeFromFile(
+    auto const result    = file_serializer->deserializeFromFileTemplate(
         resources_config_file_name_, resources_config_data_);
 
     if (result != FileSerializer::Result::Success)
@@ -188,23 +189,27 @@ bool ResourceManager::parseResourceConfigFile()
         {
             DisplayLog::debug("Simulation file ", resources_config_file_name_,
                               " not found");
+            return SetResourceConfigFileResult::FileNotFound;
         }
         else if (result == FileSerializer::Result::ParsingError)
         {
             DisplayLog::error("File ", resources_config_file_name_,
                               " found but contains invalid format.");
+            return SetResourceConfigFileResult::ParseError;
         }
         else
         {
             DisplayLog::error(
                 "Unknow error reading and parsing simulation file: ",
                 resources_config_file_name_);
+            return SetResourceConfigFileResult::UnknownError;
         }
     }
-    return true;
+    return SetResourceConfigFileResult::Ok;
 }
 
-bool ResourceManager::setResourceConfigFile(mtps::str file_name)
+SetResourceConfigFileResult ResourceManager::setResourceConfigFile(
+    mtps::str file_name)
 {
     LogAsserter::log_assert(
         !file_name.empty(),
@@ -213,7 +218,7 @@ bool ResourceManager::setResourceConfigFile(mtps::str file_name)
     if (file_name == resources_config_file_name_)
     {
         // It is ok to set the same resources file again.
-        return true;
+        return SetResourceConfigFileResult::AlreadySet;
     }
 
     LogAsserter::log_assert(resources_config_file_name_.empty(),

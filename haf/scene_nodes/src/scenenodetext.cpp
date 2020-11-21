@@ -1,10 +1,10 @@
-#include "scenenodetext.hpp"
+#include <haf/scene_nodes/include/scenenodetext.hpp>
 
 #include <haf/resources/include/ifont.hpp>
 #include <haf/resources/include/itexture.hpp>
 #include <hlog/include/hlog.hpp>
 
-#include <haf/scene/include/vertexarray.hpp>
+#include <haf/render/include/vertexarray.hpp>
 #include <haf/scene_nodes/include/renderizable_scenenode.hpp>
 
 #include <algorithm>
@@ -18,7 +18,7 @@ constexpr bool do_logs{false};
 template <typename... Args>
 constexpr void log_snt(Args&&... args) noexcept
 {
-    haf::DisplayLog::info_if<do_logs>(std::forward<Args>(args)...);
+    haf::DisplayLog::info_if_ce<do_logs>(std::forward<Args>(args)...);
 }
 }  // namespace
 
@@ -31,23 +31,25 @@ void SceneNodeText::update()
 {
     BaseClass::update();
 
+    auto& pr = prop<SceneNodeTextProperties>();
     // If the font or the text changed, recreate the children nodes.
-    if (font.hasChanged() || text.hasChanged())
+    if (pr.hasChanged<Font>() || pr.hasChanged<Text>())
     {
         // Force reposition if font changed.
-        if (font.hasChanged())
+        if (pr.hasChanged<Font>())
         {
-            alignmentSize.setChanged();
+            pr.setChanged<AlignmentSize>();
         }
-        font.resetHasChanged();
-        text.resetHasChanged();
+        pr.readResetHasChanged<Font>();
+        pr.readResetHasChanged<Text>();
 
-        if (font() && !(text().empty()))
+        if (pr.get<Font>() && !(pr.get<Text>().empty()))
         {
-            auto texture(font()->getTexture());
+            auto font(pr.get<Font>());
+            auto texture(pr.get<Font>()->getTexture());
 
-            f32 x{0.f};
-            f32 y{0.f};
+            f32 x{0.F};
+            f32 y{0.F};
 
             // Create one quad for each character
             f32 minX{y};
@@ -57,11 +59,11 @@ void SceneNodeText::update()
             u32 prevChar{0U};
             size_type counter{0U};
             size_type old_counter = sceneNodes().size();
-            const Color& tc{textColor()};
+            const Color& tc{pr.get<TextColor>()};
 
-            log_snt("Text to render: ", text());
+            log_snt("Text to render: ", pr.get<Text>());
 
-            for (auto&& curChar : text())
+            for (auto&& curChar : pr.get<Text>())
             {
                 log_snt("------------------------------------------------------"
                         "-----------");
@@ -70,9 +72,12 @@ void SceneNodeText::update()
                 log_snt("minX: ", minX, " minY: ,", minY);
                 log_snt("maxX: ", maxX, " maxY: ,", maxY);
                 log_snt("prevChar: ", make_str(prevChar));
-                log_snt("kerning: ", font()->getKerning(prevChar, curChar));
+                log_snt("kerning: ", font->getKerning(prevChar, curChar));
                 // Apply the kerning offset
-                x += font()->getKerning(prevChar, curChar);
+                x += font->getKerning(prevChar, curChar);
+                log_snt("kerning: ", font->getKerning(prevChar, curChar));
+                // Apply the kerning offset
+                x += font->getKerning(prevChar, curChar);
                 prevChar = curChar;
 
                 // Handle special characters
@@ -82,7 +87,7 @@ void SceneNodeText::update()
                     // Update the current bounds (min coordinates)
                     minX = min(minX, x);
                     minY = min(minY, y);
-                    const f32 hspace{font()->getAdvance(L' ')};
+                    f32 const hspace{font->getAdvance(L' ')};
 
                     switch (curChar)
                     {
@@ -93,7 +98,9 @@ void SceneNodeText::update()
                             x += hspace * 4;
                             break;
                         case '\n':
-                            y += font()->getLineSpacing();
+                            y += font->getLineSpacing();
+                            x = 0.0F;
+                            y += font->getLineSpacing();
                             x = 0;
                             break;
                     }
@@ -104,8 +111,8 @@ void SceneNodeText::update()
                 }
                 else
                 {
-                    const Rectf32 textureUV{font()->getTextureBounds(curChar)};
-                    Rectf32 letterBox{font()->getBounds(curChar) +
+                    Rectf32 const textureUV{font->getTextureBounds(curChar)};
+                    Rectf32 letterBox{font->getBounds(curChar) +
                                       vector2df{x, y}};
                     letterBox += vector2df{50.0F, 50.0F};
                     log_snt("textureUV: ", textureUV);
@@ -147,8 +154,8 @@ void SceneNodeText::update()
                     }
 
                     // Advance to the next character
-                    x += font()->getAdvance(curChar);
-                    log_snt("advance :", font()->getAdvance(curChar));
+                    x += font->getAdvance(curChar);
+                    log_snt("advance :", font->getAdvance(curChar));
                 }
             }
 
@@ -169,11 +176,11 @@ void SceneNodeText::update()
             // Force reposition if text size changed.
             if (counter != old_counter)
             {
-                alignmentSize.setChanged();
+                pr.setChanged<AlignmentSize>();
             }
 
             // Force update color
-            textColor.resetHasChanged();
+            pr.readResetHasChanged<TextColor>();
         }
         else
         {
@@ -181,65 +188,67 @@ void SceneNodeText::update()
         }
     }
 
-    if (textColor.readResetHasChanged())
+    if (pr.readResetHasChanged<TextColor>())
     {
-        const Color& tc{textColor()};
+        Color const& tc{pr.get<TextColor>()};
         sceneNodes().for_each([&tc](const SceneNodeSPtr& sNode) {
-            sNode->snCast<RenderizableSceneNode>()->node()->color.set(tc);
+            sceneNodeCast<RenderizableSceneNode>(sNode)->node()->color.set(tc);
         });
     }
 
-    const bool as_rr_hasChanged{alignmentSize.readResetHasChanged()};
+    bool const as_rr_hasChanged{pr.readResetHasChanged<AlignmentSize>()};
+    bool const align_x{pr.readResetHasChanged<AlignmentX>()};
+    bool const align_y{pr.readResetHasChanged<AlignmentY>()};
 
-    if (as_rr_hasChanged || alignmentX.readResetHasChanged())
+    if (as_rr_hasChanged || align_x)
     {
-        updateAlignmentX(font()->textSize(text()).x);
+        updateAlignmentX(pr.get<Font>()->textSize(pr.get<Text>()).x);
     }
 
-    if (as_rr_hasChanged || alignmentY.readResetHasChanged())
+    if (as_rr_hasChanged || align_y)
     {
-        updateAlignmentY(font()->textSize(text()).y);
+        updateAlignmentY(pr.get<Font>()->textSize(pr.get<Text>()).y);
     }
 }
 
-void SceneNodeText::updateAlignmentX(const f32 textSizeX)
+void SceneNodeText::updateAlignmentX(f32 const textSizeX)
 {
     f32 newPosX{0.f};
 
-    switch (alignmentX())
+    switch (prop<AlignmentX>().get())
     {
         default:
-        case AlignmentX::Left:
+        case AlignmentXModes::Left:
             break;
-        case AlignmentX::Center:
-            newPosX = (alignmentSize().x / 2) - (textSizeX / 2);
+        case AlignmentXModes::Center:
+            newPosX = (prop<AlignmentSize>().get().x / 2) - (textSizeX / 2);
             break;
-        case AlignmentX::Right:
-            newPosX = alignmentSize().x - textSizeX;
+        case AlignmentXModes::Right:
+            newPosX = (prop<AlignmentSize>().get().x - textSizeX);
             break;
     }
 
-    position.set(vector2df{newPosX, position().y});
+    prop<Position>().set(vector2df{newPosX, prop<Position>().get().y});
 }
 
-void SceneNodeText::updateAlignmentY(const f32 textSizeY)
+void SceneNodeText::updateAlignmentY(f32 const textSizeY)
 {
     f32 newPosY{0.f};
 
-    switch (alignmentY())
+    switch (prop<AlignmentY>().get())
     {
         default:
-        case AlignmentY::Top:
+        case AlignmentYModes::Top:
             break;
-        case AlignmentY::Middle:
-            newPosY = (alignmentSize().y / 2) - (textSizeY / 2);
+        case AlignmentYModes::Middle:
+            newPosY = (prop<AlignmentSize>().get().y / 2) - (textSizeY / 2);
             break;
-        case AlignmentY::Bottom:
-            newPosY = alignmentSize().y - textSizeY;
+        case AlignmentYModes::Bottom:
+            newPosY = prop<AlignmentSize>().get().y - textSizeY;
             break;
     }
 
-    position.set(vector2df{position().x, newPosY});
+    prop<Position>().set(vector2df{prop<Position>().get().x, newPosY});
 }
 
 }  // namespace haf::scene::nodes

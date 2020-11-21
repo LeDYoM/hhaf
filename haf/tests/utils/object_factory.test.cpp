@@ -51,8 +51,8 @@ TEST_CASE("ObjectFactory simple case", "[haf][ObjectFactory]")
 
         SECTION("Create with function")
         {
-            auto t = a.create("obj2", 10);
-            CHECK(*t == 11);
+            auto t2 = a.create("obj2", 10);
+            CHECK(*t2 == 11);
         }
     }
 }
@@ -207,7 +207,7 @@ private:
 };
 
 template <typename T>
-auto createDefaultConstructibleOnly()
+uptr<T> createDefaultConstructibleOnly()
 {
     return muptr<T>();
 }
@@ -248,9 +248,9 @@ TEST_CASE("ObjectFactory type without default constructor",
 
         SECTION("Create with function")
         {
-            auto t = a.create("obj2");
-            t->set(11);
-            CHECK(*t == 11);
+            auto t2 = a.create("obj2");
+            t2->set(11);
+            CHECK(*t2 == 11);
         }
     }
 }
@@ -316,9 +316,9 @@ TEST_CASE("ObjectFactory type without default constructor but StaticType",
 
         SECTION("Create with function")
         {
-            auto t = a.create<DefaultConstructibleOnlyInherited2>();
-            t->set(11);
-            CHECK(*t == 11);
+            auto t2 = a.create<DefaultConstructibleOnlyInherited2>();
+            t2->set(11);
+            CHECK(*t2 == 11);
         }
     }
 }

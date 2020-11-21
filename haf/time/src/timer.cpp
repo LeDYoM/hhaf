@@ -1,5 +1,5 @@
 #include <haf/time/include/timer.hpp>
-#include "timesystem.hpp"
+#include <time/i_include/timesystem.hpp>
 
 #include <hlog/include/hlog.hpp>
 
@@ -26,7 +26,7 @@ void Timer::pause()
 {
     if (!isPaused())
     {
-        is_paused_ = true;
+        is_paused_   = true;
         time_paused_ = now();
     }
 }
@@ -48,7 +48,7 @@ void Timer::switchPause()
 void Timer::onAttached()
 {
     restart();
-    is_paused_ = false;
+    is_paused_   = false;
     time_paused_ = TimePoint{};
 }
-} // namespace haf::scene
+}  // namespace haf::time

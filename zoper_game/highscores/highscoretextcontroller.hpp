@@ -19,13 +19,13 @@ namespace zoper
 using namespace haf;
 using namespace haf::scene;
 
-namespace
-{}
 class HighScoreTextController : public nodes::TableNode<nodes::SceneNodeText>
 {
-    using BaseClass = nodes::TableNode<nodes::SceneNodeText>;
-
+    using BaseClass = nodes::TableNode<nodes::SceneNodeText>;    
 public:
+    using BaseClass::prop;
+    using TransformationProperties::prop;
+
     HighScoreTextController(scene::SceneNode* parent, mtps::str name);
     virtual ~HighScoreTextController();
 
@@ -40,8 +40,7 @@ private:
                            const HighScore& element,
                            const bool is_inserting);
     void addHighScoreEditor(const mtps::sptr<SceneNode>& label,
-                            const mtps::size_type counter,
-                            const HighScore& element);
+                            const mtps::size_type counter);
     void addEditAnimation(const mtps::size_type line_index);
     HighScoresData m_hsData;
     mtps::sptr<res::IFont> m_normalFont;

@@ -1,4 +1,4 @@
-#include "randomsystem.hpp"
+#include <random/i_include/randomsystem.hpp>
 #include <system/i_include/systemprovider.hpp>
 #include <simulation/i_include/simulationsystem.hpp>
 #include <hlog/include/hlog.hpp>
@@ -38,13 +38,14 @@ size_type RandomSystem::getNext(const str& name,
 {
     const size_type next = priv_->getNext<size_type>();
     DisplayLog::verbose("RandomSystem: Raw number generator: ", next);
-    LogAsserter::log_assert(min < max, "min (", min, ") should be smaller than max (", max,
-               ")");
+    LogAsserter::log_assert(min < max, "min (", min,
+                            ") should be smaller than max (", max, ")");
     size_type filtered_next = (next % (max - min)) + min;
     DisplayLog::info("RandomSystem: Preselecting output: ", filtered_next);
 
     bool generated{
         systemProvider().simulationSystem().getNext(name, filtered_next)};
+    (void)generated;
 
     return filtered_next;
 }

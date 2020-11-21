@@ -1,4 +1,5 @@
 #include "next_token.hpp"
+#include <hlog/include/hlog.hpp>
 
 using namespace mtps;
 using namespace haf;
@@ -9,19 +10,17 @@ NextToken::NextToken(wptr<time::TimerComponent> timer_component) :
     timer_component_{std::move(timer_component)}
 {}
 
-void NextToken::prepareNextToken(time::TimePoint const  time_to_next_token)
+void NextToken::prepareNextToken(time::TimePoint const time_to_next_token,
+                                 mtps::function<void()> next_token_function)
 {
-    /*
-        m_nextTokenTimer = scene_timer_component_->addTimer(
-        time::TimerType::Continuous,
-        time::TimePoint_as_miliseconds(
-            level_properties_->millisBetweenTokens()),
-        [this](time::TimePoint realEllapsed) {
+    next_token_timer = timer_component_.lock()->addTimer(
+        time::TimerType::Continuous, time_to_next_token,
+        [this, next_token_function = std::move(next_token_function)](
+            time::TimePoint realEllapsed) {
             DisplayLog::info("Elapsed between tokens: ",
                              realEllapsed.milliseconds());
             // New token
-            generateNextToken();
+            next_token_function();
         });
-        */
 }
 }  // namespace zoper

@@ -20,6 +20,6 @@ struct AnimableType<Color>
     using type = ColorImp<mtps::s16>;
 };
 
-} // namespace haf::scene
+}  // namespace haf::scene
 
 #endif

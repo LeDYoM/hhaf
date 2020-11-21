@@ -1,5 +1,5 @@
-#include "scenenode.hpp"
-#include "scenemanager.hpp"
+#include <haf/scene/include/scenenode.hpp>
+#include <haf/scene/i_include/scenemanager.hpp>
 #include <system/i_include/get_system.hpp>
 
 using namespace mtps;
@@ -16,7 +16,7 @@ SceneNode::SceneNode(rptr<SceneNode> parent, str name) :
     sys::SystemAccess{parent != nullptr ? &(parent->isystemProvider())
                                         : nullptr},
     InterfaceGetter{this},
-    visible{true}
+    SceneNodeProperties(true)
 {}
 
 SceneNode::~SceneNode() = default;

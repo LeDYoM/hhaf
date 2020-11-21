@@ -26,7 +26,7 @@ SystemControllerLoader::ResultType SystemControllerLoader::loadFunctions()
     if (loader_->loadModule(haf_library))
     {
         fp_haf_create_system_controller_ =
-            static_cast<CreateSystemController_t>(
+            reinterpret_cast<CreateSystemController_t>(
                 loader_->loadMethod(haf_library, "createSystemController"));
 
         if (!fp_haf_create_system_controller_)
@@ -35,7 +35,7 @@ SystemControllerLoader::ResultType SystemControllerLoader::loadFunctions()
         }
 
         fp_haf_destroy_system_controller_ =
-            static_cast<DestroySystemController_t>(
+            reinterpret_cast<DestroySystemController_t>(
                 loader_->loadMethod(haf_library, "destroySystemController"));
 
         if (!fp_haf_destroy_system_controller_)

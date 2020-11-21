@@ -68,7 +68,7 @@ void Token::tileMoved(const vector2dst& /*source*/, const vector2dst& dest)
         level_properties_->millisBetweenTokens() / 2));
 
     const auto destination(board2SceneFactor_ * dest);
-    animation_component_->addPropertyAnimation(time, position, position(),
+    animation_component_->addPropertyAnimation(time, prop<Position>(), prop<Position>()(),
                                                destination);
 }
 }  // namespace zoper

@@ -5,16 +5,19 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/str.hpp>
+#include <mtypes/include/object_utils.hpp>
 #include <mtypes/include/serializer.hpp>
 #include <haf/filesystem/include/path.hpp>
 #include <haf/system/include/idatawrapper.hpp>
+#include <haf/shareddata/include/ishareable.hpp>
+#include <haf/haf_export.hpp>
 
 namespace haf::sys
 {
 /**
  * @brief Component to provider access to file serialization operations.
  */
-class FileSerializer : public sys::IDataWrapper
+class HAF_API FileSerializer : public sys::IDataWrapper
 {
 public:
     enum class Result : mtps::u8
@@ -25,10 +28,11 @@ public:
     };
 
     mtps::str loadTextFile(const Path& file_name);
+
     bool saveFile(const Path& file_name, const mtps::str& data);
 
     template <typename T>
-    Result deserializeFromFile(const Path& file_name, T& data)
+    Result deserializeFromFileTemplate(const Path& file_name, T& data)
     {
         const mtps::str text_data{loadTextFile(file_name)};
         if (!text_data.empty())
@@ -40,8 +44,10 @@ public:
         return Result::FileIOError;
     }
 
+    Result deserializeFromFile(const Path& file_name, shdata::IShareable& data);
+
     template <typename T>
-    Result serializeToFile(const Path& file_name, const T& data)
+    Result serializeToFileTemplate(const Path& file_name, const T& data)
     {
         auto temp{mtps::Serializer<T>::serialize(data)};
         if (!temp.empty())
@@ -52,6 +58,9 @@ public:
         }
         return Result::ParsingError;
     }
+
+    Result serializeToFile(const Path& file_name,
+                            const shdata::IShareable& data);
 };
 
 }  // namespace haf::sys

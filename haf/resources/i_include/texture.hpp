@@ -22,7 +22,7 @@ public:
 
     mtps::vector2du32 size() const override;
 
-    const backend::ITexture *const backEndTexture() const noexcept;
+    const backend::ITexture* const backEndTexture() const noexcept;
 
 private:
     backend::ITexture* m_texturePrivate;

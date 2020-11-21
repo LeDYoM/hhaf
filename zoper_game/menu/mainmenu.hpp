@@ -13,6 +13,7 @@ class MainMenu : public haf::scene::MenuPaged
 {
 public:
     using BaseClass = haf::scene::MenuPaged;
+    using BaseClass::prop;
 
     static constexpr char ClassName[] = "MainMenu";
     using BaseClass::BaseClass;

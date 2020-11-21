@@ -20,10 +20,11 @@ public:
     {
         return sceneNodeFactory().registerSceneNodeType<T>();
     }
+
 private:
     SceneNodeFactory& sceneNodeFactory();
 };
 
-} // namespace haf::scene
+}  // namespace haf::scene
 
 #endif

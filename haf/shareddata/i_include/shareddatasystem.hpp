@@ -7,6 +7,11 @@
 #include <system/i_include/systembase.hpp>
 #include <haf/shareddata/include/ishareable.hpp>
 
+namespace haf::shdata
+{
+class Address;
+}
+
 namespace haf::sys
 {
 /**
@@ -24,28 +29,29 @@ public:
     ~SharedDataSystem();
 
     /**
-     * @brief Store a shareable object. The shared data system should be
-     * empty before this call. You can check the empty state with isEmpty
-     * before calling it.
-     * @see isEmpty
-     * 
+     * @brief Store a shareable object. T. If there is already an object
+     * at this address, it will be overwritten.
+     *
+     * @param address Adress in the tree to store the data.
      * @param data Object derived from @b shdata::IShareable to store
      * @return true The object has been stored.
-     * @return false Cannot store the object.
+     * @return false if cannot store the object.
      */
-    bool store(mtps::uptr<shdata::IShareable> data) noexcept;
+    bool store(shdata::Address const& address, shdata::IShareable const& data);
 
     /**
      * @brief Retrieve the stored object in the SharedData system.
-     * 
-     * @return mtps::uptr<shdata::IShareable> Object stored in the system.
-     * It will be nullptr if no object was stored.
+     *
+     * @param address Adress in the tree where to retrieve the object from.
+     * @param data Reference to where to store the result.
+     * @return If successful.
      */
-    [[nodiscard]] mtps::uptr<shdata::IShareable> retrieve() noexcept;
+    [[nodiscard]] bool retrieve(shdata::Address const& address,
+                                shdata::IShareable& data);
 
     /**
      * @brief Ask if the system has an object stored
-     * 
+     *
      * @return true There is an object stored
      * @return false No object stored currently
      */
@@ -53,16 +59,14 @@ public:
 
     /**
      * @brief Make the Shared object empty.
-     * 
+     *
      * @return true It was not empty. Now it is.
      * @return false It was empty already, no actions performed.
      */
     bool makeEmpty();
 
-    mtps::uptr<shdata::IShareable> const& view() const noexcept;
-
 private:
-    mtps::uptr<shdata::IShareable> data_;
+    mtps::Object data_object_;
 };
 
 }  // namespace haf::sys

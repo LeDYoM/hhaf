@@ -7,7 +7,6 @@
 #include "types.hpp"
 
 #include <sstream>
-#include <string>
 #include <type_traits>
 #include <algorithm>
 #include <cctype>
@@ -98,13 +97,25 @@ public:
     vector<str> split(const char_type separator) const
     {
         vector<str> result;
-        std::stringstream ss((*this).c_str());
-        std::string tok;
 
-        while (std::getline(ss, tok, separator))
+        str tok;
+        auto _cend(cend());
+
+        for (auto _cbegin(cbegin()); _cbegin != _cend; ++_cbegin)
         {
-            result.push_back(str(tok.c_str()));
+            str::char_type const ch = *_cbegin;
+            if (ch == separator)
+            {
+                result.emplace_back(std::move(tok));
+                tok = str();
+            }
+            else
+            {
+                tok.append_char(*_cbegin);
+            }
         }
+
+        result.emplace_back(std::move(tok));
         return result;
     }
 
@@ -221,7 +232,7 @@ public:
     }
 
     template <typename T>
-    [[nodiscard]] pair<T, bool> convert() const
+    [[nodiscard]] pair<bool, T> convert() const
     {
         T value;
         return {convert(value), value};
@@ -374,11 +385,11 @@ public:
     template <size_type N>
     constexpr bool operator==(const char_type (&a)[N]) const noexcept
     {
-        if (lhs.size() != (N - 1))
+        if (size() != (N - 1))
             return false;
 
         size_type counter{0};
-        for (const auto c : lhs.m_data)
+        for (const auto c : m_data)
         {
             if (c != a[counter])
                 return false;
@@ -390,26 +401,20 @@ public:
     template <size_type N>
     constexpr bool operator!=(const char_type (&a)[N]) const noexcept
     {
-        return !(operator==(lhs, a));
+        return !(this->operator==(a));
     }
 
     constexpr bool operator==(const str::char_type* a) const noexcept
     {
         size_type counter{0};
-        for (const auto c : m_data)
+        for (; counter < size() && a[counter] != 0; ++counter)
         {
-            if (a[counter] == 0 && c != 0)
+            if (m_data[counter] != a[counter])
             {
                 return false;
             }
-
-            if (c != a[counter])
-            {
-                return false;
-            }
-            ++counter;
         }
-        return true;
+        return counter == size() && a[counter] == 0;
     }
 
     constexpr bool operator!=(const str::char_type* a) const noexcept

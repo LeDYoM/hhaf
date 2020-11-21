@@ -33,7 +33,7 @@ public:
         return result;
     }
 
-    void removeSceneNode(mtps::sptr<SceneNode> element);
+    bool removeSceneNode(mtps::sptr<SceneNode> element);
     void clearSceneNodes();
 
     const SceneNodesGroup::SceneNodeVector& sceneNodes() const noexcept;

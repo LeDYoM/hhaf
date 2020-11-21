@@ -1,4 +1,4 @@
-#include "scenemetrics.hpp"
+#include <haf/scene_components/include/scenemetrics.hpp>
 #include <haf/scene/include/scenenode.hpp>
 #include <scene/i_include/scenemanager.hpp>
 #include <system/i_include/get_system.hpp>

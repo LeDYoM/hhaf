@@ -9,13 +9,13 @@ RangeOption::RangeOption(size_type min, size_type max) :
 {
     for (auto element = min; element <= max; ++element)
     {
-        options_.push_back(make_str(element));
+        options_.emplace_back(make_str(element));
     }
 }
 
 RangeOption::RangeOption(string_vector options)
+    : options_{std::move(options)}
 {
-    options_ = std::move(options);
 }
 
 RangeOption::RangeOption() = default;

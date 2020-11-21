@@ -17,26 +17,30 @@
 #include <mtypes/include/function.hpp>
 #include <haf/scene/include/scene.hpp>
 #include <boardmanager/include/boardmanager.hpp>
-#include <haf/scene/include/renderizable.hpp>
+#include <haf/render/include/renderizable.hpp>
 #include <haf/time/include/timercomponent.hpp>
 #include <haf/scene_components/include/statescontroller.hpp>
 #include <haf/scene_components/include/statescontrolleractuator.hpp>
 #include <haf/time/include/timercomponent.hpp>
 
+#include "../scene_names.hpp"
+
 namespace zoper
 {
 class PauseSceneNode;
 class GameOverSceneNode;
+class NextToken;
 
-class GameScene final : public scene::Scene,
+class GameScene final : public haf::scene::Scene,
                         public haf::StatesControllerActuator<GameSceneStates>
 {
 public:
     GameScene();
     ~GameScene() override;
 
-    static constexpr char StaticTypeName[] = "GameScene";
+    static constexpr char StaticTypeName[] = GAME_SCENE_NAME;
 
+    mtps::str nextSceneName() override;
     void onCreated() override;
 
     void onEnterState(const GameSceneStates &) override;
@@ -65,6 +69,7 @@ private:
     // Timer related properties
     mtps::sptr<time::TimerComponent> scene_timer_component_;
     time::TimerConnectorSPtr m_nextTokenTimer;
+    mtps::sptr<NextToken> next_token_;
 
     // General properties.
     mtps::u8 m_nextTokenPart{0U};

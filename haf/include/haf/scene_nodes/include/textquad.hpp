@@ -13,7 +13,11 @@ class TextQuad : public TableNode<SceneNodeText>
 public:
     using BaseClass = TableNode<SceneNodeText>;
     using BaseClass::BaseClass;
+    using BaseClass::prop;
+
     ~TextQuad() override;
+
+    void onCreated() override;
 
     void configure(mtps::sptr<res::IFont> font,
                    const Color& color,

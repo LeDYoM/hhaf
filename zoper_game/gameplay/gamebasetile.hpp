@@ -5,7 +5,7 @@
 
 #include <mtypes/include/types.hpp>
 #include <haf/scene/include/scenenode.hpp>
-#include <haf/scene/include/renderizable.hpp>
+#include <haf/render/include/renderizable.hpp>
 #include <boardmanager/include/itile.hpp>
 
 namespace haf::board

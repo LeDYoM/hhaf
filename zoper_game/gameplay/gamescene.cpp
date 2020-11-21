@@ -8,6 +8,7 @@
 #include "pause.hpp"
 #include "boardutils.hpp"
 #include "scoreutils.hpp"
+#include "next_token.hpp"
 
 #ifdef USE_DEBUG_ACTIONS
 #include "debug_actions.hpp"
@@ -20,12 +21,13 @@
 
 #include <boardmanager/include/boardmanager.hpp>
 #include <hlog/include/hlog.hpp>
-#include <haf/scene/include/renderizable.hpp>
+#include <haf/render/include/renderizable.hpp>
 #include <haf/scene_components/include/animationcomponent.hpp>
 #include <haf/scene_components/include/scenecontrol.hpp>
 #include <haf/input/include/inputcomponent.hpp>
 #include <haf/random/include/randomnumberscomponent.hpp>
-#include <haf/shareddata/include/shareddataview.hpp>
+#include <haf/shareddata/include/shareddataupdater.hpp>
+#include <haf/shareddata/include/shareddataviewer.hpp>
 #include <haf/resources/include/iresourceconfigurator.hpp>
 #include <haf/system/include/interfaceaccess.hpp>
 
@@ -65,7 +67,7 @@ struct GameScene::GameScenePrivate
             DisplayLog::info("Creating animation for points to score");
             scene_animation_component_->addPropertyAnimation(
                 time::TimePoint_as_miliseconds(MillisAnimationPointsToScore),
-                sceneNode->position, lastTokenPosition,
+                sceneNode->prop<Position>(), lastTokenPosition,
                 EndPositionPointsToScore,
                 Animation::AnimationDirection::Forward, [this, sceneNode]() {
                     sceneNode->parent()->removeSceneNode(sceneNode);
@@ -76,7 +78,13 @@ struct GameScene::GameScenePrivate
 
 GameScene::GameScene() : Scene{StaticTypeName}
 {}
+
 GameScene::~GameScene() = default;
+
+str GameScene::nextSceneName()
+{
+    return HIGHSCORES_SCENE_NAME;
+}
 
 void GameScene::onCreated()
 {
@@ -104,8 +112,7 @@ void GameScene::onCreated()
         // TODO: Fixme
         KeyMapping keyMapping__;
         KeyMapping* keyMapping = &keyMapping__;
-        //        const auto &keyMapping =
-        //        sceneManager().systemProvider().app<ZoperProgramController>().keyMapping;
+
         switch (m_sceneStates->currentState())
         {
             case GameSceneStates::Playing:
@@ -151,12 +158,12 @@ void GameScene::onCreated()
     GameMode game_mode;
 
     {
-        auto game_shared_data_view = dataWrapper<shdata::SharedDataView>();
-        auto& game_shared_data =
-            game_shared_data_view->dataAs<GameSharedData>();
+        auto game_shared_data =
+            dataWrapper<shdata::SharedDataViewer<GameSharedData>>()->view(
+                GameSharedData::address());
 
-        start_level = game_shared_data.startLevel;
-        game_mode   = game_shared_data.gameMode;
+        start_level = game_shared_data->startLevel;
+        game_mode   = game_shared_data->gameMode;
     }
 
     level_properties_->configure(start_level, game_mode,
@@ -168,6 +175,11 @@ void GameScene::onCreated()
     addComponentOfType<DebugActions>();
 #endif
 
+    next_token_ = msptr<NextToken>(scene_timer_component_);
+    next_token_->prepareNextToken(time::TimePoint_as_miliseconds(
+                                      level_properties_->millisBetweenTokens()),
+                                  [this]() { generateNextToken(); });
+/*
     m_nextTokenTimer = scene_timer_component_->addTimer(
         time::TimerType::Continuous,
         time::TimePoint_as_miliseconds(
@@ -178,9 +190,9 @@ void GameScene::onCreated()
             // New token
             generateNextToken();
         });
-
+*/
     m_gameOver = createSceneNode<GameOverSceneNode>("gameOverSceneNode");
-    m_gameOver->visible = false;
+    m_gameOver->prop<Visible>().set(false);
 
     // Set state control.
     {
@@ -218,7 +230,7 @@ void GameScene::onEnterState(const GameSceneStates& state)
         }
         break;
         case GameSceneStates::GameOver:
-            m_gameOver->visible = true;
+            m_gameOver->prop<Visible>().set(true);
             scene_timer_component_->pause();
             break;
         default:
@@ -241,35 +253,6 @@ void GameScene::onExitState(const GameSceneStates& state)
             break;
     }
     DisplayLog::info("Exited state: ", make_str(state));
-}
-
-bool moveTowardsCenter(const sptr<board::BoardManager>& board_manager,
-                       const Direction direction,
-                       const vector2dst position)
-{
-    bool moved_to_center{false};
-
-    // Is the current tile position empty?
-    if (!board_manager->tileEmpty(position))
-    {
-        // If not, what about the next position to check, is empty?
-        const auto next = direction.applyToVector(position);
-
-        if (!board_manager->tileEmpty(next))
-        {
-            // If the target position where to move the
-            // token is occupied, move the this target first.
-            moved_to_center = moveTowardsCenter(board_manager, direction, next);
-        }
-        board_manager->moveTile(position, next);
-        if (TokenZones::toBoardBackgroundType(board_manager->backgroundType(
-                next)) == TokenZones::BoardBackgroundType::Center)
-        {
-            LogAsserter::log_assert(!moved_to_center, "Double game over!");
-            moved_to_center = true;
-        }
-    }
-    return moved_to_center;
 }
 
 void GameScene::generateNextToken()
@@ -295,8 +278,8 @@ void GameScene::generateNextToken()
 
     // Now, we have the data for the new token generated, but first,
     /// lets start to move the row or col.
-    const auto game_over = moveTowardsCenter(
-        m_boardGroup->boardModel(), currentTokenZone.direction, new_position);
+    const auto game_over = m_boardGroup->moveTowardsCenter(
+        currentTokenZone.direction, new_position);
 
     // Set the new token
     m_boardGroup->createNewToken(static_cast<board::BoardTileData>(newToken),
@@ -325,7 +308,7 @@ void GameScene::launchPlayer()
     const vector2dst loopPosition{m_boardGroup->player()->boardPosition()};
     const board::BoardTileData tokenType{m_boardGroup->player()->value()};
     ScoreIncrementer score_incrementer{level_properties_};
-    BoardUtils::for_each_token_in_line(
+    BoardUtils::for_each_coordinate_in_rect(
         loopPosition, loopDirection, m_boardGroup->boardModel()->size(),
         [this, tokenType, &score_incrementer](const vector2dst& loopPosition,
                                               const Direction&) {

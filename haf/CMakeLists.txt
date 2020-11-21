@@ -15,13 +15,12 @@ set(CURRENT_TARGET haf)
 # used by the external components.
 set(HAF_PUBLIC_INCLUDE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/)
 
+set(HAF_PRIVATE_INCLUDE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+
 # Prepare the haf libray
 add_library(${CURRENT_TARGET} SHARED ${_SOURCES} ${_HEADERS})
-target_link_libraries(${CURRENT_TARGET} PRIVATE system_internal)
 
-#Create interface library for libraries creating instances of haf
-add_library(${CURRENT_TARGET}_instancer INTERFACE)
-target_link_libraries(${CURRENT_TARGET}_instancer INTERFACE system)
+target_compile_definitions(${CURRENT_TARGET} PRIVATE haf_EXPORTS)
 
 # For now, export all simbols
 set_target_properties(${CURRENT_TARGET} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS
@@ -29,46 +28,41 @@ set_target_properties(${CURRENT_TARGET} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS
 
 # External users of the library will need to include from this directory.
 target_include_directories(${CURRENT_TARGET}
-                           INTERFACE ${HAF_PUBLIC_INCLUDE_DIRECTORY})
+                           PUBLIC ${HAF_PUBLIC_INCLUDE_DIRECTORY})
+
+# For now, we need it public for tests.
+# TODO: Fix it
+target_include_directories(${CURRENT_TARGET}
+                           PUBLIC ${HAF_PRIVATE_INCLUDE_DIRECTORY})
 
 # target_include_directories( ${CURRENT_TARGET} PUBLIC #
 # $<INSTALL_INTERFACE:include> #
 # $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> PRIVATE
 # ${CMAKE_CURRENT_SOURCE_DIR}/../)
 
+target_compile_definitions(haf PRIVATE haf_EXPORTS)
+
 include (cmake/haf_functions.cmake)
 # Directory internal libraries that will be used by the client too.
 add_subdirectory(filesystem)
-target_link_libraries(${CURRENT_TARGET} PRIVATE filesystem)
 add_subdirectory(render)
-target_link_libraries(${CURRENT_TARGET} PRIVATE render)
 add_subdirectory(resources)
-target_link_libraries(${CURRENT_TARGET} PRIVATE resources)
 add_subdirectory(scene)
-target_link_libraries(${CURRENT_TARGET} PRIVATE scene)
 add_subdirectory(scene_components)
-target_link_libraries(${CURRENT_TARGET} PRIVATE scene_components)
 add_subdirectory(scene_nodes)
-target_link_libraries(${CURRENT_TARGET} PRIVATE scene_nodes)
 add_subdirectory(time)
-target_link_libraries(${CURRENT_TARGET} PRIVATE time)
 add_subdirectory(input)
-target_link_libraries(${CURRENT_TARGET} PRIVATE input)
 add_subdirectory(random)
-target_link_libraries(${CURRENT_TARGET} PRIVATE random)
 add_subdirectory(simulation)
-target_link_libraries(${CURRENT_TARGET} PRIVATE simulation)
 add_subdirectory(system)
-target_link_libraries(${CURRENT_TARGET} PUBLIC system)
 add_subdirectory(shareddata)
-target_link_libraries(${CURRENT_TARGET} PRIVATE shareddata)
 add_subdirectory(window)
-target_link_libraries(${CURRENT_TARGET} PRIVATE window)
 
 # Internal libraries necessary for the library only.
 target_link_libraries(${CURRENT_TARGET} PRIVATE hosted_app)
 target_link_libraries(${CURRENT_TARGET} PRIVATE loader)
-
+target_link_libraries(${CURRENT_TARGET} PRIVATE backend)
+target_link_libraries(${CURRENT_TARGET} PRIVATE backend_dev)
 target_link_libraries(${CURRENT_TARGET} PUBLIC log_and_types)
 
 # TODO: Investigate some day if(MSVC) set_target_properties(${CURRENT_TARGET}

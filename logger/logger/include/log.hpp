@@ -53,7 +53,7 @@ public:
      * @param args Arguments to build a line in the log.
      */
     template <bool Condition, typename... Args>
-    static constexpr void log_if([[maybe_unused]] Args&&... args) noexcept
+    static constexpr void log_if_ce([[maybe_unused]] Args&&... args) noexcept
     {
         if constexpr (EnableLogs && Condition)
         {

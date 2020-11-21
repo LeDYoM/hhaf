@@ -35,8 +35,8 @@ void ThreadCommiter::init()
 {
     Commiter::init();
     data_          = new InnerData;
-    data_->thread_ = std::thread(thread_func);
     data_->exit    = false;
+    data_->thread_ = std::thread(thread_func);
 }
 
 void ThreadCommiter::finish()

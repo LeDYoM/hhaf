@@ -10,7 +10,6 @@
 
 #include <haf/scene/include/scene.hpp>
 #include <haf/scene/include/scenenodefactory.hpp>
-#include <haf/scene/include/scene_director.hpp>
 
 namespace haf::scene
 {
@@ -27,7 +26,6 @@ public:
     void setSceneManager(mtps::rptr<SceneManager> scene_manager);
 
     void switchToNextScene();
-    void setSceneDirector(SceneDirectorType sceneDirector);
     void update();
     void finish();
     bool isActive();
@@ -47,9 +45,9 @@ public:
     template <typename T>
     bool registerAndStartScene()
     {
-        if (sceneFactory_.registerSceneNodeType<T>())
+        if (scene_factory_.registerSceneNodeType<T>())
         {
-            return startScene(sceneName);
+            return startScene(T::StaticTypeName);
         }
         return false;
     }
@@ -82,7 +80,6 @@ private:
     void terminateCurrentScene();
     void deferredSwitchScene();
 
-    SceneDirectorType scene_director_;
     SceneNodeFactory scene_factory_;
     mtps::rptr<SceneManager> scene_manager_{nullptr};
     mtps::sptr<Scene> current_scene_{nullptr};
