@@ -81,7 +81,5 @@ ipch/
 #dist/
 #Zoper.VC.opendb
 #install/
-_build/
-3rdparty/SFML/
-
+build/
 \.vscode/
