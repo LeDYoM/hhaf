@@ -21,24 +21,7 @@ private:
               typename... Args>
     static constexpr void log_if_severity_under(Args&&... args) noexcept
     {
-        /*
-//        LogClass::log_if<SeverityType::ShowSeverity<severity_value>>(
-        LogClass::log_if<SeverityType::ShowSeverity<severity_value>>(std::forward<Args>(args)...);
-        */
         LogClass::log(std::forward<Args>(args)...);
-    }
-
-    template <bool condition,
-              typename SeverityType::severity_type_t severity_value,
-              typename... Args>
-    static constexpr void log_if(Args&&... args) noexcept
-    {
-        /*
-        LogClass::log_if<condition, Args>(
-            //SeverityType::as_str(severity_value),
-                                    std::forward<Args...>(args)... );
-*/
-        LogClass::log(std::forward<Args...>(args)... );
     }
 
 public:
@@ -50,11 +33,21 @@ public:
     }
 
     template <bool Condition, typename... Args>
-    static constexpr void debug_if(Args&&... args) noexcept
+    static constexpr void debug_if_ce([[maybe_unused]] Args&&... args) noexcept
     {
-        log_if_severity_under<Condition ? SeverityType::severity_type_t::debug
-                                        : SeverityType::severity_type_t::none>(
-            std::forward<Args>(args)...);
+        if constexpr (Condition)
+        {
+            debug(std::forward<Args>(args)...);
+        }
+    }
+
+    template <typename... Args>
+    static constexpr void debug_if(bool const cond, Args&&... args) noexcept
+    {
+        if (cond)
+        {
+            debug(std::forward<Args>(args)...);
+        }
     }
 
     template <typename... Args>
@@ -65,11 +58,21 @@ public:
     }
 
     template <bool Condition, typename... Args>
-    static constexpr void verbose_if(Args&&... args) noexcept
+    static constexpr void verbose_if_ce([[maybe_unused]] Args&&... args) noexcept
     {
-        log_if_severity_under<Condition ? SeverityType::severity_type_t::verbose
-                                        : SeverityType::severity_type_t::none>(
-            std::forward<Args>(args)...);
+        if constexpr (Condition)
+        {
+            verbose(std::forward<Args>(args)...);
+        }
+    }
+
+    template <typename... Args>
+    static constexpr void verbose_if(bool const cond, Args&&... args) noexcept
+    {
+        if (cond)
+        {
+            verbose(std::forward<Args>(args)...);
+        }
     }
 
     template <typename... Args>
@@ -80,11 +83,21 @@ public:
     }
 
     template <bool Condition, typename... Args>
-    static constexpr void info_if(Args&&... args) noexcept
+    static constexpr void info_if_ce([[maybe_unused]] Args&&... args) noexcept
     {
-        log_if_severity_under<Condition ? SeverityType::severity_type_t::info
-                                        : SeverityType::severity_type_t::none>(
-            std::forward<Args>(args)...);
+        if constexpr (Condition)
+        {
+            info(std::forward<Args>(args)...);
+        }
+    }
+
+    template <typename... Args>
+    static constexpr void info_if(bool const cond, Args&&... args) noexcept
+    {
+        if (cond)
+        {
+            info(std::forward<Args>(args)...);
+        }
     }
 
     template <typename... Args>
@@ -95,11 +108,21 @@ public:
     }
 
     template <bool Condition, typename... Args>
-    static constexpr void warn_if(Args&&... args) noexcept
+    static constexpr void warn_if_ce([[maybe_unused]] Args&&... args) noexcept
     {
-        log_if_severity_under<Condition ? SeverityType::severity_type_t::warn
-                                        : SeverityType::severity_type_t::none>(
-            std::forward<Args>(args)...);
+        if constexpr (Condition)
+        {
+            warn(std::forward<Args>(args)...);
+        }
+    }
+
+    template <typename... Args>
+    static constexpr void warn_if(bool const cond, Args&&... args) noexcept
+    {
+        if (cond)
+        {
+            warn(std::forward<Args>(args)...);
+        }
     }
 
     template <typename... Args>
@@ -110,11 +133,21 @@ public:
     }
 
     template <bool Condition, typename... Args>
-    static constexpr void error_if(Args&&... args) noexcept
+    static constexpr void error_if_ce([[maybe_unused]] Args&&... args) noexcept
     {
-        log_if_severity_under<Condition ? SeverityType::severity_type_t::error
-                                        : SeverityType::severity_type_t::none>(
-            std::forward<Args>(args)...);
+        if constexpr (Condition)
+        {
+            error(std::forward<Args>(args)...);
+        }
+    }
+
+    template <typename... Args>
+    static constexpr void error_if(bool const cond, Args&&... args) noexcept
+    {
+        if (cond)
+        {
+            error(std::forward<Args>(args)...);
+        }
     }
 };
 
