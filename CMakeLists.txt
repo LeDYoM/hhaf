@@ -71,6 +71,8 @@ option(MTYPES_USE_MEMMANAGER "Compile mtypes using the memmanager wrappers" ON)
 # Prepare the test framework
 add_subdirectory(tests)
 
+add_subdirectory(tools)
+
 # Sub-directories where more CMakeLists.txt exist
 add_subdirectory(memmanager)
 add_subdirectory(mtypes)
