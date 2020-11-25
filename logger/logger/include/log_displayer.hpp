@@ -24,7 +24,7 @@ private:
 
     /**
      * @brief Add a log if the severity is configured to be shown
-     * 
+     *
      * @tparam severity_type Severity of the log
      * @tparam Args... Variadic with types of the the args to be passed to the
      * log function
@@ -41,7 +41,7 @@ private:
 public:
     /**
      * @brief Add a debug log
-     * 
+     *
      * @tparam Args... Variadic with types of the the args to be passed to the
      * log function
      * @param args Aguments to pass to the log function
@@ -49,7 +49,7 @@ public:
     template <typename... Args>
     static constexpr void debug(Args&&... args) noexcept
     {
-        log_if_show_severity<SeverityType::severity_type_t::debug>(
+        log_if_show_severity<severity_type_t::debug>(
             std::forward<Args>(args)...);
     }
 
@@ -74,7 +74,7 @@ public:
     template <typename... Args>
     static constexpr void verbose(Args&&... args) noexcept
     {
-        log_if_show_severity<SeverityType::severity_type_t::verbose>(
+        log_if_show_severity<severity_type_t::verbose>(
             std::forward<Args>(args)...);
     }
 
@@ -100,7 +100,7 @@ public:
     template <typename... Args>
     static constexpr void info(Args&&... args) noexcept
     {
-        log_if_show_severity<SeverityType::severity_type_t::info>(
+        log_if_show_severity<severity_type_t::info>(
             std::forward<Args>(args)...);
     }
 
@@ -125,7 +125,7 @@ public:
     template <typename... Args>
     static constexpr void warn(Args&&... args) noexcept
     {
-        log_if_show_severity<SeverityType::severity_type_t::warn>(
+        log_if_show_severity<severity_type_t::warn>(
             std::forward<Args>(args)...);
     }
 
@@ -150,7 +150,7 @@ public:
     template <typename... Args>
     static constexpr void error(Args&&... args) noexcept
     {
-        log_if_show_severity<SeverityType::severity_type_t::error>(
+        log_if_show_severity<severity_type_t::error>(
             std::forward<Args>(args)...);
     }
 

@@ -55,30 +55,9 @@ public:
     template <bool Condition, typename... Args>
     static constexpr void log_if_ce([[maybe_unused]] Args&&... args) noexcept
     {
-        if constexpr (EnableLogs && Condition)
+        if constexpr (Condition)
         {
             log(std::forward<Args>(args)...);
-        }
-    }
-
-    /**
-     * @brief Low level log display. This method should not be called
-     * directly, it displays a log if and only if the condition is true.
-     *
-     * @tparam Args Types of the arguments.
-     * @param condition Runtime condition to decide about output or not.
-     * @param args Arguments to build a line in the log.
-     */
-    template <typename... Args>
-    static constexpr void log_if([[maybe_unused]] bool const condition,
-                                 [[maybe_unused]] Args&&... args) noexcept
-    {
-        if constexpr (EnableLogs)
-        {
-            if (condition)
-            {
-                log(std::forward<Args>(args)...);
-            }
         }
     }
 };
