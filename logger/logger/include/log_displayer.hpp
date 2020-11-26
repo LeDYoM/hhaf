@@ -34,7 +34,8 @@ private:
     static constexpr void log_if_show_severity([
         [maybe_unused]] Args&&... args) noexcept
     {
-        LogClass::log_if_ce<SeverityType::ShowSeverity<severity_type>>(
+        LogClass::template log_if_ce<
+            SeverityType::template ShowSeverity<severity_type>>(
             std::forward<Args>(args)...);
     }
 
