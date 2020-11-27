@@ -73,33 +73,40 @@ bool Window::create(uptr<win::WindowProperties> window_properties)
     priv_->m_backendWindow = systemProvider().backendFactory().getWindow();
     backend::IWindow& bw(*priv_->m_backendWindow);
 
-    // Create physical window
-    if (bw.createWindow(window_properties->width(), window_properties->height(),
-                        window_properties->bits_per_red(),
-                        window_properties->bits_per_green(),
-                        window_properties->bits_per_blue(),
-                        window_properties->bits_per_alpha(), 0U, nullptr))
+    // Create physical window if not already done
+    if (!bw.isAlreadyCreated())
     {
-        DisplayLog::info("Window created...");
-        // If window created successfully, extract the render target
-        // associated with the window.
-        priv_->m_renderTarget =
-            msptr<RenderTarget>(priv_->m_backendWindow->renderTarget());
+        if (bw.createWindow(window_properties->width(), window_properties->height(),
+                            window_properties->bits_per_red(),
+                            window_properties->bits_per_green(),
+                            window_properties->bits_per_blue(),
+                            window_properties->bits_per_alpha(), 0U, nullptr))
+        {
+            DisplayLog::info("Window created...");
+            // If window created successfully, extract the render target
+            // associated with the window.
+            priv_->m_renderTarget =
+                msptr<RenderTarget>(priv_->m_backendWindow->renderTarget());
 
-        // Also take the input driver.
-        priv_->input_driver_ =
-            msptr<input::InputDriver>(priv_->m_backendWindow->inputDriver());
-        DisplayLog::info("Window creation completed");
-        DisplayLog::debug("Window driver info: ", bw.info());
-        DisplayLog::debug("Window settings: ", bw.settingsInfo());
+            // Also take the input driver.
+            priv_->input_driver_ =
+                msptr<input::InputDriver>(priv_->m_backendWindow->inputDriver());
+            DisplayLog::info("Window creation completed");
+            DisplayLog::debug("Window driver info: ", bw.info());
+            DisplayLog::debug("Window settings: ", bw.settingsInfo());
 
-        return true;
+            return true;
+        }
+        else
+        {
+            DisplayLog::error("Cannot create window");
+            return false;
+        }
     }
     else
     {
-        DisplayLog::error("Cannot create window");
-        return false;
-    }
+        return true;
+    }    
 }
 
 bool Window::preLoop()

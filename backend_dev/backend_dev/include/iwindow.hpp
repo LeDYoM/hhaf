@@ -46,6 +46,8 @@ public:
                               const unsigned int num_extra_parameters,
                               const unsigned int* const extra_parameters) = 0;
 
+    virtual bool isAlreadyCreated() const = 0;
+
     virtual bool setActive(const bool activate) = 0;
 
     virtual bool processEvents() = 0;

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.11)
-project(hlog)
+project(hlog LANGUAGES CXX)
 
 set(CURRENT_TARGET hlog)
 

@@ -29,6 +29,9 @@ public:
             const mtps::u8 alpha_bpp,
             const unsigned int num_extra_parameters, 
             const unsigned int* const extra_parameters) override;
+
+    bool isAlreadyCreated() const override;
+
     sf::Vector2u getSize() const;
 
     bool setActive(bool active) override;
@@ -49,6 +52,7 @@ protected:
     virtual void onResize();
 
 private:
+    bool already_created_{false};
     InputDriver input_driver_;
 };
 

@@ -37,6 +37,11 @@ private:
     const unsigned int* const data_;
 };
 
+bool RenderWindow::isAlreadyCreated() const
+{
+    return already_created_;
+}
+
 bool RenderWindow::createWindow(const u32 width,
                                 const u32 height,
                                 const u8 red_bpp,
@@ -46,26 +51,29 @@ bool RenderWindow::createWindow(const u32 width,
                                 const unsigned int num_extra_parameters,
                                 const unsigned int* const extra_parameters)
 {
-    using uint = unsigned int;
-    sf::Uint32 style{sf::Style::Default};
-    //        if (wcp.fullScreen)
-    //            style = sf::Style::Fullscreen;
+    if (!already_created_)
+    {
+        sf::Uint32 style{sf::Style::Default};
+        //        if (wcp.fullScreen)
+        //            style = sf::Style::Fullscreen;
 
-    ParamExtractor prm_xtr{num_extra_parameters, extra_parameters};
-    //    uint width = prm_xtr.getParam(800U);
-    //    uint height = prm_xtr.getParam(600U);
-    //    uint bpp = prm_xtr.getParam(32U);
+        ParamExtractor prm_xtr{num_extra_parameters, extra_parameters};
+        //    uint width = prm_xtr.getParam(800U);
+        //    uint height = prm_xtr.getParam(600U);
+        //    uint bpp = prm_xtr.getParam(32U);
 
-    unsigned int w = static_cast<unsigned int>(width);
-    unsigned int h = static_cast<unsigned int>(height);
-    unsigned int bpp =
-        static_cast<unsigned int>(red_bpp + green_bpp + blue_bpp + alpha_bpp);
+        unsigned int w = static_cast<unsigned int>(width);
+        unsigned int h = static_cast<unsigned int>(height);
+        unsigned int bpp =
+            static_cast<unsigned int>(red_bpp + green_bpp + blue_bpp + alpha_bpp);
 
-    sf::ContextSettings context_settings = sf::ContextSettings();
-    sf::Window::create(sf::VideoMode(w, h, bpp), "", style, context_settings);
+        sf::ContextSettings context_settings = sf::ContextSettings();
+        sf::Window::create(sf::VideoMode(w, h, bpp), "", style, context_settings);
 
-    setVerticalSyncEnabled(false);
-    return true;
+        setVerticalSyncEnabled(false);
+        return true;
+    }
+    return false;
 }
 
 sf::Vector2u RenderWindow::getSize() const
