@@ -66,36 +66,27 @@ bool Window::create(uptr<win::WindowProperties> window_properties)
     //        DisplayLog::info("Antialiasing:", wcp.antialiasing);
 
     LogAsserter::log_assert(!priv_->m_backendWindow,
-                            "Cannot create window twice");
+                            "Pointer to window already initialized");
+
     DisplayLog::info("Creating window...");
 
     // Create window object
     priv_->m_backendWindow = systemProvider().backendFactory().getWindow();
     backend::IWindow& bw(*priv_->m_backendWindow);
 
+    DisplayLog::info_if(bw.isAlreadyCreated(), "Window was already created.");
+
     // Create physical window if not already done
     if (!bw.isAlreadyCreated())
     {
-        if (bw.createWindow(window_properties->width(), window_properties->height(),
+        if (bw.createWindow(window_properties->width(),
+                            window_properties->height(),
                             window_properties->bits_per_red(),
                             window_properties->bits_per_green(),
                             window_properties->bits_per_blue(),
                             window_properties->bits_per_alpha(), 0U, nullptr))
         {
-            DisplayLog::info("Window created...");
-            // If window created successfully, extract the render target
-            // associated with the window.
-            priv_->m_renderTarget =
-                msptr<RenderTarget>(priv_->m_backendWindow->renderTarget());
-
-            // Also take the input driver.
-            priv_->input_driver_ =
-                msptr<input::InputDriver>(priv_->m_backendWindow->inputDriver());
             DisplayLog::info("Window creation completed");
-            DisplayLog::debug("Window driver info: ", bw.info());
-            DisplayLog::debug("Window settings: ", bw.settingsInfo());
-
-            return true;
         }
         else
         {
@@ -103,10 +94,18 @@ bool Window::create(uptr<win::WindowProperties> window_properties)
             return false;
         }
     }
-    else
-    {
-        return true;
-    }    
+
+    // If window created successfully, extract the render target
+    // associated with the window.
+    priv_->m_renderTarget =
+        msptr<RenderTarget>(priv_->m_backendWindow->renderTarget());
+
+    // Also take the input driver.
+    priv_->input_driver_ = msptr<input::InputDriver>(
+        priv_->m_backendWindow->inputDriver());
+    DisplayLog::debug("Window driver info: ", bw.info());
+    DisplayLog::debug("Window settings: ", bw.settingsInfo());
+    return true;
 }
 
 bool Window::preLoop()
