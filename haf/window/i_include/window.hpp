@@ -57,8 +57,6 @@ public:
      * @brief Method to be executed after the cycle of a system
      */
     void postLoop();
-    void onCreate();
-    void onDestroy();
 
     mtps::sptr<RenderTarget> renderTarget();
     const mtps::sptr<RenderTarget> renderTarget() const;

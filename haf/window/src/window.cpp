@@ -15,14 +15,19 @@ using namespace haf::time;
 
 namespace haf::sys
 {
-struct Window::WindowPrivate final
+struct FPSCounter
 {
     TimePoint lastTimeFps{0U};
-    s32 lastFps{0};
-    s32 currentFps{0};
+    fast_u32 lastFps{0U};
+    fast_u32 currentFps{0U};
+};
+
+struct Window::WindowPrivate final
+{
+    FPSCounter fps_counter;
     rptr<backend::IWindow> m_backendWindow{nullptr};
-    sptr<input::InputDriver> input_driver_{nullptr};
-    sptr<RenderTarget> m_renderTarget{nullptr};
+    sptr<input::InputDriver> input_driver_;
+    sptr<RenderTarget> m_renderTarget;
     str title_{};
 };
 
@@ -61,9 +66,6 @@ bool Window::create(uptr<win::WindowProperties> window_properties)
     }
 
     DisplayLog::info("Going to create Window");
-    //        DisplayLog::info("Resolution:", wcp.width, "x", wcp.height ,"x",
-    //        wcp.bpp); DisplayLog::info("Fullscreen:" , wcp.fullScreen);
-    //        DisplayLog::info("Antialiasing:", wcp.antialiasing);
 
     LogAsserter::log_assert(!priv_->m_backendWindow,
                             "Pointer to window already initialized");
@@ -111,15 +113,18 @@ bool Window::create(uptr<win::WindowProperties> window_properties)
 bool Window::preLoop()
 {
     backend::IWindow& bw(*priv_->m_backendWindow);
-    const TimePoint eMs = systemProvider().timeSystem().timeSinceStart();
-    if ((eMs - priv_->lastTimeFps).milliseconds() > 1000U)
+    auto& fps_counter{priv_->fps_counter};
+
+    const TimePoint eMs{systemProvider().timeSystem().timeSinceStart()};
+
+    if ((eMs - fps_counter.lastTimeFps).milliseconds() > 1000U)
     {
-        priv_->lastTimeFps = eMs;
-        priv_->lastFps     = priv_->currentFps;
-        priv_->currentFps  = 0U;
-        bw.setWindowTitle(make_str(priv_->title_, " FPS:", priv_->lastFps));
+        fps_counter.lastTimeFps = eMs;
+        fps_counter.lastFps     = fps_counter.currentFps;
+        fps_counter.currentFps  = 0U;
+        bw.setWindowTitle(make_str(priv_->title_, " FPS:", fps_counter.lastFps));
     }
-    ++(priv_->currentFps);
+    ++(fps_counter.currentFps);
     priv_->m_renderTarget->clear();
 
     return bw.processEvents();
@@ -130,15 +135,4 @@ void Window::postLoop()
     priv_->m_backendWindow->display();
 }
 
-void Window::onCreate()
-{
-    DisplayLog::info("Window created");
-}
-
-void Window::onDestroy()
-{
-    DisplayLog::info("Going to close Window");
-    priv_->m_backendWindow->closeWindow();
-    DisplayLog::info("Window closed");
-}
 }  // namespace haf::sys

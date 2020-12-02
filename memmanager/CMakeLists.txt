@@ -8,10 +8,7 @@ set(CURRENT_TARGET memmanager)
 set(SOURCES src/memmanager.cpp)
 set(HEADERS memmanager/include/memmanager.hpp)
 
-include(GenerateExportHeader)
 add_library(${CURRENT_TARGET} SHARED ${SOURCES} ${HEADERS})
-generate_export_header(${CURRENT_TARGET})
-set_target_properties(${CURRENT_TARGET} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS true)
  
  target_include_directories(${CURRENT_TARGET}
     PUBLIC
@@ -19,21 +16,19 @@ set_target_properties(${CURRENT_TARGET} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS tr
     "$<INSTALL_INTERFACE:include>"
 )
 
+include(GNUInstallDirs)
 install(TARGETS ${CURRENT_TARGET}
-        EXPORT "${CURRENT_TARGET}Targets"
-        LIBRARY DESTINATION lib
-        ARCHIVE DESTINATION lib
-        RUNTIME DESTINATION bin
-        INCLUDES DESTINATION include
+    EXPORT "${CURRENT_TARGET}Targets"
+    INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
 
 install(FILES 
     ${HEADERS} 
-    "${PROJECT_BINARY_DIR}/${CURRENT_TARGET}_export.h"
-    DESTINATION include)
-#install(FILES
-# "${PROJECT_BINARY_DIR}/${CURRENT_TARGET}_export.h" DESTINATION ${INCLUDE_INSTALL_DIR}
-#)
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+
 install(EXPORT "${CURRENT_TARGET}Targets"
         FILE "${CURRENT_TARGET}Targets.cmake"
         NAMESPACE "${CURRENT_TARGET}::"
