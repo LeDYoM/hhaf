@@ -1,5 +1,7 @@
 SET(CMAKE_INSTALL_PREFIX /home/ismael/h_test/)
 
+SET(CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}phaf/")
+
 project(memmanager)
 cmake_minimum_required(VERSION 3.11)
 
