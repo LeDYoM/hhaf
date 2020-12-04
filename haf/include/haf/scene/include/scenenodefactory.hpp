@@ -30,6 +30,8 @@ public:
         mtps::str type_name,
         SceneNodeConstructorFunction scene_constructor_function);
 
+    bool unregisterSceneNodeType(mtps::str type_name);
+
     template <typename T>
     constexpr bool registerSceneNodeType(
         SceneNodeConstructorFunction scene_constructor_function)
@@ -48,6 +50,12 @@ public:
     constexpr bool registerSceneNodeType()
     {
         return registerSceneNodeType(T::StaticTypeName, createScene<T>);
+    }
+
+    template <typename T>
+    constexpr bool unregisterSceneNodeType()
+    {
+        return unregisterSceneNodeType(T::StaticTypeName);
     }
 
     CreateReturnType create(const mtps::str& type_name);

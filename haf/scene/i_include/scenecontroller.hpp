@@ -25,6 +25,11 @@ class SceneController final
 public:
     void setSceneManager(mtps::rptr<SceneManager> scene_manager);
 
+    /**
+     * @brief Switch to the next scene. For that to success, the current
+     * scene shouold return the next scene in the member overriden
+     * @b Scene::nextSceneName() and it has to be previously registered.
+     */
     void switchToNextScene();
     void update();
     void finish();
@@ -59,10 +64,17 @@ public:
     }
 
     template <typename T>
+    bool unregisterSceneNodeType()
+    {
+        return scene_factory_.unregisterSceneNodeType<T>();
+    }
+
+    template <typename T>
     bool startScene()
     {
         return startScene(T::StaticTypeName);
     }
+
 
     SceneNodeFactory& sceneNodeFactory() noexcept;
     const SceneNodeFactory& sceneNodeFactory() const noexcept;

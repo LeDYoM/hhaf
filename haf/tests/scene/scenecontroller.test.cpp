@@ -109,5 +109,42 @@ TEST_CASE("SceneController", "[lib][SceneController]")
         CHECK(common.scene_controller->currentSceneIsNull());
         CHECK_FALSE(common.scene_controller->isActive());
         CHECK(common.step == 4U);
+
+        CHECK(common.scene_controller->unregisterSceneNodeType<GroupScene1>());
+        CHECK(common.scene_controller->unregisterSceneNodeType<GroupScene2>());
+        CHECK_FALSE(
+            common.scene_controller->unregisterSceneNodeType<GroupScene1>());
+        CHECK_FALSE(
+            common.scene_controller->unregisterSceneNodeType<GroupScene2>());
+    }
+
+    SECTION("Two scenes: Error unregistered scene")
+    {
+        CHECK(common.scene_controller->registerSceneNodeType<GroupScene1>());
+        CHECK_FALSE(
+            common.scene_controller->registerSceneNodeType<GroupScene1>());
+
+        common.step = 0U;
+        common.scene_controller->startScene<GroupScene1>();
+        CHECK(common.scene_controller->currentScene()->name() ==
+              GroupScene1::StaticTypeName);
+        CHECK(common.step == 1U);
+
+        common.scene_controller->update();
+        CHECK(common.scene_controller->currentScene()->name() ==
+              GroupScene1::StaticTypeName);
+        CHECK(common.step == 2U);
+
+        // Update triggers finish and creation of new scene.
+        common.scene_controller->update();
+        CHECK(common.scene_controller->currentSceneIsNull());
+        CHECK(common.step == 2U);
+        CHECK_FALSE(common.scene_controller->isActive());
+
+        CHECK(common.scene_controller->unregisterSceneNodeType<GroupScene1>());
+        CHECK_FALSE(
+            common.scene_controller->unregisterSceneNodeType<GroupScene1>());
+        CHECK_FALSE(
+            common.scene_controller->unregisterSceneNodeType<GroupScene2>());
     }
 }

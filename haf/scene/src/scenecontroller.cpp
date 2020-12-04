@@ -42,6 +42,9 @@ void SceneController::deferredSwitchScene()
         if (!next_scene_name.empty())
         {
             nextScene = scene_factory_.create(next_scene_name);
+            DisplayLog::error_if(nextScene == nullptr,
+                                 "Requested next scene of type: ",
+                                 next_scene_name, ", but cannot be created");
         }
     }
 

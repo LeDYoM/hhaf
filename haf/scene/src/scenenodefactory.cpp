@@ -21,6 +21,11 @@ struct SceneNodeFactory::SceneNodeFactoryPrivate
         constructors_[std::move(name)] = std::move(scene_cf);
     }
 
+    inline void erase(str name)
+    {
+        constructors_.erase(std::move(name));
+    }
+
     inline SceneNodeConstructorFunction get(str name)
     {
         return constructors_[std::move(name)];
@@ -45,6 +50,17 @@ bool SceneNodeFactory::registerSceneNodeType(
     private_->insert(std::move(type_name),
                      std::move(scene_constructor_function));
     return true;
+}
+
+bool SceneNodeFactory::unregisterSceneNodeType(mtps::str type_name)
+{
+    if (!private_->containsSceneNodeType(type_name))
+    {
+        return false;
+    }
+
+    private_->erase(type_name);
+    return (!private_->containsSceneNodeType(type_name));
 }
 
 SceneNodeFactory::CreateReturnType SceneNodeFactory::create(
