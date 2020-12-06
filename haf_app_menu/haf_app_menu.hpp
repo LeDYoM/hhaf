@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef HAF_HAF_APP_MENU_INCLUDE_HPP
 #define HAF_HAF_APP_MENU_INCLUDE_HPP
 

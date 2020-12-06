@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef MTYPES_PLACEMENT_INCLUDE_HPP
 #define MTYPES_PLACEMENT_INCLUDE_HPP
 

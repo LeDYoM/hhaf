@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef LOADER_LOADEDINSTANCE_HPP
 #define LOADER_LOADEDINSTANCE_HPP
 

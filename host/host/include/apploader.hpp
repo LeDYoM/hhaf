@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef HAF_HOST_APP_LOADER_INCLUDE_HPP
 #define HAF_HOST_APP_LOADER_INCLUDE_HPP
 

@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef HAF_BACKEND_ITTFONT_HPP
 #define HAF_BACKEND_ITTFONT_HPP
 

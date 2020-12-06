@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef MTYPES_OBJECT_INCLUDE_HPP
 #define MTYPES_OBJECT_INCLUDE_HPP
 

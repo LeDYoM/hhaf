@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef MTYPES_DICTIONARY_INCLUDE_HPP
 #define MTYPES_DICTIONARY_INCLUDE_HPP
 

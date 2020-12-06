@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef HAF_COMPONENT_INPUT_INCLUDE_HPP
 #define HAF_COMPONENT_INPUT_INCLUDE_HPP
 

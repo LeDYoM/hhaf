@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef MTYPES_ALLOCATOR_INCLUDE_HPP
 #define MTYPES_ALLOCATOR_INCLUDE_HPP
 

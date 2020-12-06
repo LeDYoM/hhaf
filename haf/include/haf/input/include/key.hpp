@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef HAF_KEY_INCLUDE_HPP
 #define HAF_KEY_INCLUDE_HPP
 

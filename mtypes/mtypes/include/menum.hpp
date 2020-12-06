@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef MTYPES_MENUM_INCLUDE_HPP
 #define MTYPES_MENUM_INCLUDE_HPP
 

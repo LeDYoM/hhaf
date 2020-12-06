@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef HAF_HLOG_INCLUDE_HPP
 #define HAF_HLOG_INCLUDE_HPP
 

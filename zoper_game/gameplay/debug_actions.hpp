@@ -1,5 +1,3 @@
-#pragma once
-
 #ifdef USE_DEBUG_ACTIONS
 
 #ifndef ZOPER_DEBUG_ACTIONS_INCLUDE_HPP

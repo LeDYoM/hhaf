@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef ZOPER_BOARDGROUP_HPP
 #define ZOPER_BOARDGROUP_HPP
 

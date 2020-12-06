@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef HAF_BOARD_ITILE_HPP
 #define HAF_BOARD_ITILE_HPP
 

@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef ZOOPER_GAMESCENE_INCLUDE_HPP
 #define ZOOPER_GAMESCENE_INCLUDE_HPP
 

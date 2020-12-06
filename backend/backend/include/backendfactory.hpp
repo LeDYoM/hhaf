@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef HAF_BACKEND_FACTORY_HPP
 #define HAF_BACKEND_FACTORY_HPP
 

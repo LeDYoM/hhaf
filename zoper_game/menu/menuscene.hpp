@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef ZOPER_MENUSCENE_INCLUDE_HPP
 #define ZOPER_MENUSCENE_INCLUDE_HPP
 

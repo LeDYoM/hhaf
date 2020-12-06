@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef HEF_EXT_MENU_PAGED_MAIN_INCLUDE_HPP
 #define HEF_EXT_MENU_PAGED_MAIN_INCLUDE_HPP
 

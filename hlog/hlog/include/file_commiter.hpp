@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef HLOG_FILE_COMMITER_INCLUDE_HPP
 #define HLOG_FILE_COMMITER_INCLUDE_HPP
 

@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef HAF_SYS_ATTACHABLE_INCLUDE_HPP
 #define HAF_SYS_ATTACHABLE_INCLUDE_HPP
 

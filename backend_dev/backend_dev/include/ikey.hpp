@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef HAF_BACKEND_DEV_IKEY_INCLUDE_HPP
 #define HAF_BACKEND_DEV_IKEY_INCLUDE_HPP
 

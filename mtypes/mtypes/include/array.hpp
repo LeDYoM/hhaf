@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef MTYPES_ARRAY_INCLUDE_HPP
 #define MTYPES_ARRAY_INCLUDE_HPP
 

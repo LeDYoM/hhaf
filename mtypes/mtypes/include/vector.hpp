@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef MTYPES_VECTOR_INCLUDE_HPP
 #define MTYPES_VECTOR_INCLUDE_HPP
 

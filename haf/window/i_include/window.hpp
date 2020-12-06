@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef HAF_WINDOW_WINDOW_INCLUDE_HPP
 #define HAF_WINDOW_WINDOW_INCLUDE_HPP
 

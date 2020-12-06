@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef HAF_HOST_MAIN_INCLUDE_HPP
 #define HAF_HOST_MAIN_INCLUDE_HPP
 

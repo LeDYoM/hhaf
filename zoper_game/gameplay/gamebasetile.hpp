@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef ZOPER_GAMEBASETILE_HPP
 #define ZOPER_GAMEBASETILE_HPP
 

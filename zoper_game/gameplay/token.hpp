@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef ZOPER_TOKEN_HPP
 #define ZOPER_TOKEN_HPP
 

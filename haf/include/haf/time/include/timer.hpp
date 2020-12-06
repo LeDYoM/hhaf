@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef HAF_TIME_TIMER_INCLUDE_HPP
 #define HAF_TIME_TIMER_INCLUDE_HPP
 

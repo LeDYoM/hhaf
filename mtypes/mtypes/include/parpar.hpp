@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef MTYPES_PARPAR_INCLUDE_HPP
 #define MTYPES_PARPAR_INCLUDE_HPP
 

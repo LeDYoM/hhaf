@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef ZOPER_BOARDUTILS_INCLUDE_HPP
 #define ZOPER_BOARDUTILS_INCLUDE_HPP
 

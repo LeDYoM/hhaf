@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef MTYPES_SERIALIZER_INCLUDE_HPP
 #define MTYPES_SERIALIZER_INCLUDE_HPP
 

@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef MTYPES_GROW_POLICY_INCLUDE_HPP
 #define MTYPES_GROW_POLICY_INCLUDE_HPP
 

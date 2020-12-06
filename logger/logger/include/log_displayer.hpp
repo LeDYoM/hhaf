@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef HAF_LOG_LOG_DISPLAYER_INCLUDE_HPP
 #define HAF_LOG_LOG_DISPLAYER_INCLUDE_HPP
 

@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef MTPS_PROPERTIES_INCLUDE_HPP
 #define MTPS_PROPERTIES_INCLUDE_HPP
 

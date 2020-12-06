@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef MTPS_MTYPES_RECT_INCLUDE_HPP
 #define MTPS_MTYPES_RECT_INCLUDE_HPP
 

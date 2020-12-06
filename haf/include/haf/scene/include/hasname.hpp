@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef HAF_SCENE_HASNAME_HPP
 #define HAF_SCENE_HASNAME_HPP
 

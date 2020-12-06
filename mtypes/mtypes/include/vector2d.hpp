@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef MTPS_VECTOR2D_INCLUDE_HPP
 #define MTPS_VECTOR2D_INCLUDE_HPP
 

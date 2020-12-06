@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef HAF_SCENE_FIG_TYPE_T_HPP
 #define HAF_SCENE_FIG_TYPE_T_HPP
 

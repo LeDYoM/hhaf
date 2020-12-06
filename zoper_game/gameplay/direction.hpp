@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef ZOPER_DIRECTION_INCLUDE_HPP
 #define ZOPER_DIRECTION_INCLUDE_HPP
 

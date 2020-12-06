@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef ZOPER_KEYMAPPING_HPP
 #define ZOPER_KEYMAPPING_HPP
 

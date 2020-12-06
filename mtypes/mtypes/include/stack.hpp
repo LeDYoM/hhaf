@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef MTYPES_STACK_INCLUDE_HPP
 #define MTYPES_STACK_INCLUDE_HPP
 

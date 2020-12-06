@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef MTPS_CONNECTION_INCLUDE_HPP
 #define MTPS_CONNECTION_INCLUDE_HPP
 

@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef HAF_EXPORT_INCLUDE_HPP
 #define HAF_EXPORT_INCLUDE_HPP
 

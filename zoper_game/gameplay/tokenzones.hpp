@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef ZOPER_TOKENZONES_INCLUDE_HPP
 #define ZOPER_TOKENZONES_INCLUDE_HPP
 

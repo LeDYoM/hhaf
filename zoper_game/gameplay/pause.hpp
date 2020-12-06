@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef ZOOPER_GAME_PAUSE_INCLUDE_HPP
 #define ZOOPER_GAME_PAUSE_INCLUDE_HPP
 

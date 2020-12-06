@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef MTPS_P_IMPL_POINTER_INCLUDE_HPP
 #define MTPS_P_IMPL_POINTER_INCLUDE_HPP
 

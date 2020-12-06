@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef HAF_LOG_LOG_ASSERTER_INCLUDE_HPP
 #define HAF_LOG_LOG_ASSERTER_INCLUDE_HPP
 

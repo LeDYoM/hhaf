@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef ZOPER_SCOREUTILS_INCLUDE_HPP
 #define ZOPER_SCOREUTILS_INCLUDE_HPP
 
