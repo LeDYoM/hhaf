@@ -11,8 +11,9 @@ set(SOURCES src/memmanager.cpp)
 set(HEADERS memmanager/include/memmanager.hpp)
 
 add_library(${CURRENT_TARGET} SHARED ${SOURCES} ${HEADERS})
+set_target_properties(${CURRENT_TARGET} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS true)
  
- target_include_directories(${CURRENT_TARGET}
+target_include_directories(${CURRENT_TARGET}
     PUBLIC
     "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
     "$<INSTALL_INTERFACE:include>"
@@ -29,7 +30,8 @@ install(TARGETS ${CURRENT_TARGET}
 
 install(FILES 
     ${HEADERS} 
-    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
 
 install(EXPORT "${CURRENT_TARGET}Targets"
         FILE "${CURRENT_TARGET}Targets.cmake"
