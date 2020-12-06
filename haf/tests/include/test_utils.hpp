@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef HAF_TESTS_UTILS_INCLUDE_HPP
 #define HAF_TESTS_UTILS_INCLUDE_HPP
 
@@ -8,6 +6,7 @@
 #include <system/i_include/systemdatawrappercreator.hpp>
 #include <haf/system/include/datawrappercreator.hpp>
 #include <shareddata/i_include/shareddatasystem.hpp>
+#include <system/i_include/init_system_options.hpp>
 
 class TestSystem
 {

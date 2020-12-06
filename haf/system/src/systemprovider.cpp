@@ -12,6 +12,7 @@
 #include <shareddata/i_include/shareddatasystem.hpp>
 #include <resources/i_include/resourcemanager.hpp>
 #include <simulation/i_include/simulationsystem.hpp>
+#include <system/i_include/init_system_options.hpp>
 
 #include <hlog/include/hlog.hpp>
 #include <hosted_app/include/iapp.hpp>
