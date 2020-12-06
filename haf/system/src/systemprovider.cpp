@@ -156,17 +156,17 @@ void SystemProvider::terminate()
 
     p_->app_->onFinish(dwc);
     p_->scene_manager_->finish();
-    p_->scene_manager_     = nullptr;
-    p_->simulation_system_ = nullptr;
-    p_->file_system_       = nullptr;
-    p_->random_system_     = nullptr;
-    p_->render_system_     = nullptr;
-    p_->resource_manager_  = nullptr;
-    p_->scene_manager_     = nullptr;
-    p_->input_system_      = nullptr;
-    p_->window_            = nullptr;
-    p_->time_system_       = nullptr;
-    p_->backend_factory_   = nullptr;
+    p_->scene_manager_.reset();
+    p_->simulation_system_.reset();
+    p_->file_system_.reset();
+    p_->random_system_.reset();
+    p_->render_system_.reset();
+    p_->resource_manager_.reset();
+    p_->scene_manager_.reset();
+    p_->input_system_.reset();
+    p_->window_.reset();
+    p_->time_system_.reset();
+    p_->backend_factory_.reset();
 }
 
 IApp& SystemProvider::app()
