@@ -26,7 +26,7 @@ namespace haf::sys
 {
 struct SystemProvider::SystemProviderPrivate final
 {
-    rptr<IApp> app_;
+    rptr<IApp> app_{nullptr};
     uptr<SharedDataSystem> shared_data_system_;
     uptr<backend::BackendFactory, void (*)(haf::backend::BackendFactory*)>
         backend_factory_{nullptr, nullptr};
