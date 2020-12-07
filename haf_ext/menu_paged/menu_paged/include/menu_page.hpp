@@ -47,8 +47,6 @@ protected:
     mtps::size_type m_previouslySelectedItem{0U};
     mtps::size_type m_selectedItem{0U};
 
-    mtps::ireceiver m_receiver;
-
 public:
     using BaseClass::BaseClass;
     ~MenuPage() override;

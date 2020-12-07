@@ -11,10 +11,9 @@ namespace haf::scene
 class MenuPageInputComponent : public input::InputComponent
 {
 public:
+    using input::InputComponent::InputComponent;
     using BaseClass = input::InputComponent;
     ~MenuPageInputComponent() override = default;
-
-    using input::InputComponent::InputComponent;
     void onAttached() override;
 
     mtps::emitter<> Up;
@@ -23,8 +22,6 @@ public:
     mtps::emitter<> Right;
     mtps::emitter<> Selected;
 
-private:
-    mtps::ireceiver m_receiver;
 };
 } // namespace zoper
 

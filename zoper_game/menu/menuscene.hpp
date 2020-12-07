@@ -23,8 +23,6 @@ public:
     mtps::str nextSceneName() override;
     void onCreated() override;
 
-private:
-    mtps::ireceiver m_receiver;
 };
 } // namespace zoper
 

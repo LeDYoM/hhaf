@@ -33,7 +33,6 @@ private:
     mtps::sptr<haf::res::IFont> m_normalFont;
     haf::scene::Color m_normalColor;
     haf::scene::Color m_selectedColor;
-    mtps::ireceiver m_receiver;
 };
 } // namespace zoper
 
