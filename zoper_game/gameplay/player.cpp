@@ -86,7 +86,11 @@ void Player::movePlayer(const Direction& direction)
                             "Invalid direction passed to move");
     currentDirection = direction;
     auto nPosition   = direction.applyToVector(boardPosition());
-    getBoardModel()->moveTile(boardPosition(), nPosition);
+    auto result = getBoardModel()->moveTile(boardPosition(), nPosition);
+    if (result)
+    {
+        ++movements_;
+    }
 }
 
 void Player::tileMoved(const vector2dst& /*source*/, const vector2dst& dest)
