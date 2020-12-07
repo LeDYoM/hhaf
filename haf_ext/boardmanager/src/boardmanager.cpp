@@ -156,10 +156,16 @@ bool BoardManager::moveTile(const vector2dst& source,
         DisplayLog::info("Moving tile from ", source, " to ", dest);
 
         SITilePointer sourceTile{getTile(source)};
-        SITilePointer destTile{getTile(dest)};
 
         if (sourceTile)
         {
+            // Check if we can move the tile sourceTile to its destination
+            if (!sourceTile->canBeMoved(dest))
+            {
+                return false;
+            }
+
+            SITilePointer destTile{getTile(dest)};
             DisplayLog::info("Source Value: ", sourceTile->value());
             LogAsserter::log_assert(
                 !destTile, "Trying to move to a not empty tile: ", dest);
@@ -176,6 +182,12 @@ bool BoardManager::moveTile(const vector2dst& source,
                 sourceTile->tileMoved(source, dest);
                 return true;
             }
+            else
+            {
+                DisplayLog::error("Trying to move to non empty tile");
+                return false;
+            }
+            
         }
     }
     else

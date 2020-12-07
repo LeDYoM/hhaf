@@ -8,7 +8,7 @@
 
 namespace haf::board
 {
-    class BoardManager;
+class BoardManager;
 }
 namespace zoper
 {
@@ -16,7 +16,8 @@ namespace zoper
 class GameBaseTile : public haf::board::ITile, public haf::scene::SceneNode
 {
 public:
-    GameBaseTile(haf::scene::SceneNode* const parent, mtps::str name);
+    GameBaseTile(mtps::rptr<haf::scene::SceneNode> const parent,
+                 mtps::str name);
     ~GameBaseTile() override;
 
     haf::scene::Color getColorForToken() const;
@@ -28,6 +29,8 @@ public:
     mtps::sptr<haf::board::BoardManager> getBoardModel();
 
 protected:
+
+    
     mtps::sptr<haf::scene::Renderizable> node_;
 };
 }  // namespace zoper

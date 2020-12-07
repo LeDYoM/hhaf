@@ -14,6 +14,7 @@ public:
     constexpr ITile() noexcept {}
     virtual ~ITile() {}
 
+    virtual bool canBeMoved(mtps::vector2dst const&) const { return true; }
     virtual void tileAdded(const mtps::vector2dst& /* position */) {}
     virtual void tileRemoved(const mtps::vector2dst& /* position */) {}
     virtual void tileChanged(const mtps::vector2dst& /*position */,

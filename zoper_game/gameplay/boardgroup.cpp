@@ -38,6 +38,7 @@ void BoardGroup::configure(vector2dst size,
     Rectf32 const bBox{textBox};
     Rectf32 tileBox({}, cellSize());
 
+    // Create the nodes to render the tiles
     for (size_type y{0U}; y < tableSize.y; ++y)
     {
         for (size_type x{0U}; x < tableSize.x; ++x)
@@ -47,6 +48,7 @@ void BoardGroup::configure(vector2dst size,
         }
     }
 
+    // Create and initialize the BoardManager
     board_model_ = addComponentOfType<board::BoardManager>();
     board_model_->initialize(tableSize, this);
 

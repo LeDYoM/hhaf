@@ -33,6 +33,7 @@ public:
 
     static void resetTileCounter();
 
+    bool canBeMoved(mtps::vector2dst const& dest_position) const;
     void tileAdded(const mtps::vector2dst &position) override;
     void tileRemoved(const mtps::vector2dst & /* position */) override;
     void tileChanged(const mtps::vector2dst & /*position */,

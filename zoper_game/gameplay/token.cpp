@@ -4,6 +4,7 @@
 
 #include "gamescene.hpp"
 #include "levelproperties.hpp"
+#include "tokenzones.hpp"
 
 using namespace mtps;
 using namespace haf;
@@ -35,6 +36,12 @@ void Token::configure(sptr<LevelProperties> level_properties,
     node_->color      = getColorForToken();
     level_properties_  = std::move(level_properties);
     board2SceneFactor_ = board2SceneFactor;
+}
+
+bool Token::canBeMoved(mtps::vector2dst const& dest_position) const
+{
+    return true;
+//    return !TokenZones::pointInCenter(dest_position);
 }
 
 void Token::resetTileCounter()

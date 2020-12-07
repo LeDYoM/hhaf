@@ -75,16 +75,18 @@ void Player::update()
     }
 }
 
+bool Player::canBeMoved(mtps::vector2dst const& dest_position) const
+{
+    return TokenZones::pointInCenter(dest_position);
+}
+
 void Player::movePlayer(const Direction& direction)
 {
     LogAsserter::log_assert(direction.isValid(),
                             "Invalid direction passed to move");
     currentDirection = direction;
     auto nPosition   = direction.applyToVector(boardPosition());
-    if (TokenZones::pointInCenter(nPosition))
-    {
-        getBoardModel()->moveTile(boardPosition(), nPosition);
-    }
+    getBoardModel()->moveTile(boardPosition(), nPosition);
 }
 
 void Player::tileMoved(const vector2dst& /*source*/, const vector2dst& dest)

@@ -26,6 +26,8 @@ public:
     mtps::PropertyState<mtps::vector2dst> boardPosition;
     mtps::PropertyState<Direction> currentDirection;
 
+    bool canBeMoved(mtps::vector2dst const& dest_position) const;
+
     void movePlayer(const Direction &direction);
     void launchAnimation(const mtps::vector2df &toWhere);
 

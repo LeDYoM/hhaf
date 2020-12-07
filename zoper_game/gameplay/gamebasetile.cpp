@@ -10,7 +10,7 @@ using namespace mtps;
 
 namespace zoper
 {
-GameBaseTile::GameBaseTile(SceneNode* const parent, str name) :
+GameBaseTile::GameBaseTile(mtps::rptr<SceneNode> const parent, str name) :
     ITile{}, SceneNode{parent, std::move(name)}
 {}
 
