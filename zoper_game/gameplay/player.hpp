@@ -42,7 +42,7 @@ public:
     void update() override;
 
 private:
-    u32 movements_{0U};
+    mtps::u32 movements_{0U};
     void launchAnimationBack(const mtps::vector2df &toWhere);
     mtps::sptr<haf::scene::AnimationComponent> animation_component_;
     haf::scene::SceneNodeSPtr rotator_scalator_;
