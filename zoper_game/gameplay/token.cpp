@@ -51,11 +51,13 @@ void Token::resetTileCounter()
 
 void Token::tileAdded(const vector2dst& position_)
 {
+    BaseClass::tileAdded(position_);
     DisplayLog::info("Token ", name(), " appeared at ", position_);
 }
 
 void Token::tileRemoved(const vector2dst& position_)
 {
+    BaseClass::tileRemoved(position_);
     DisplayLog::info("Deleting token ", name(), " from scene at position ",
                      position_);
 }
@@ -69,8 +71,10 @@ void Token::tileChanged(const vector2dst& position_,
                      oldValue, " to ", newValue);
 }
 
-void Token::tileMoved(const vector2dst& /*source*/, const vector2dst& dest)
+void Token::tileMoved(const vector2dst& source, const vector2dst& dest)
 {
+    BaseClass::tileMoved(source, dest);
+
     const auto time(time::TimePoint_as_miliseconds(
         level_properties_->millisBetweenTokens() / 2));
 

@@ -1,5 +1,6 @@
 #include "gamebasetile.hpp"
 #include "boardgroup.hpp"
+#include "tokenzones.hpp"
 
 #include <hlog/include/hlog.hpp>
 
@@ -15,6 +16,19 @@ GameBaseTile::GameBaseTile(mtps::rptr<SceneNode> const parent, str name) :
 {}
 
 GameBaseTile::~GameBaseTile() = default;
+
+void GameBaseTile::tileAdded(const mtps::vector2dst& position)
+{
+    TileBase::tileAdded(position);
+    is_in_center = TokenZones::pointInCenter(position);
+}
+
+void GameBaseTile::tileMoved(const mtps::vector2dst&  source,
+                        const mtps::vector2dst&  dest)
+{
+    TileBase::tileMoved(source, dest);
+    is_in_center = TokenZones::pointInCenter(dest);
+}
 
 void GameBaseTile::tileChanged(const mtps::vector2dst& /*position */,
                                const BoardTileData /* oldValue */,

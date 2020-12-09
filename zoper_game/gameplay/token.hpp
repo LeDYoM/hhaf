@@ -35,8 +35,8 @@ public:
 
     bool canBeMoved(mtps::vector2dst const& dest_position) const;
     void tileAdded(const mtps::vector2dst &position) override;
-    void tileRemoved(const mtps::vector2dst & /* position */) override;
-    void tileChanged(const mtps::vector2dst & /*position */,
+    void tileRemoved(const mtps::vector2dst & position) override;
+    void tileChanged(const mtps::vector2dst & position,
                      const haf::board::BoardTileData oldValue,
                      const haf::board::BoardTileData newValue) override;
     void tileMoved(const mtps::vector2dst &source,

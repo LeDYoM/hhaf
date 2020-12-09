@@ -16,6 +16,8 @@ namespace zoper
 class GameBaseTile : public haf::board::ITile, public haf::scene::SceneNode
 {
 public:
+    using TileBase = haf::board::ITile;
+
     GameBaseTile(mtps::rptr<haf::scene::SceneNode> const parent,
                  mtps::str name);
     ~GameBaseTile() override;
@@ -26,12 +28,18 @@ public:
                      const haf::board::BoardTileData /* oldValue */,
                      const haf::board::BoardTileData /* newValue */) override;
 
+    void tileAdded(const mtps::vector2dst& /* position */) override;
+
+    void tileMoved(const mtps::vector2dst& /* source */,
+                           const mtps::vector2dst& /* dest */) override;
+
     mtps::sptr<haf::board::BoardManager> getBoardManager();
 
+    bool isInCenter() const noexcept { return is_in_center; }
 protected:
-
-    
     mtps::sptr<haf::scene::Renderizable> node_;
+private:
+    bool is_in_center{false};
 };
 }  // namespace zoper
 

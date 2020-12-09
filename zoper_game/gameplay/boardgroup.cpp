@@ -62,7 +62,7 @@ void BoardGroup::configure(vector2dst size,
     addPlayer();
 
     level_properties_->levelChanged.connect([this](const auto level) {
-        // Forward current leve
+        // Forward current level
         setLevel(level);
     });
 }
@@ -251,8 +251,11 @@ bool BoardGroup::moveTowardsCenter(Direction const direction,
             moved_to_center = moveTowardsCenter(direction, next);
         }
         board_model_->moveTile(position, next);
-        if (TokenZones::toBoardBackgroundType(board_model_->backgroundType(
-                next)) == TokenZones::BoardBackgroundType::Center)
+        auto dest_tile{std::dynamic_pointer_cast<Token>(board_model_->getTile(next))};
+
+        LogAsserter::log_assert(dest_tile != nullptr, "Error moving the tile!");
+    
+        if (dest_tile->isInCenter())
         {
             LogAsserter::log_assert(!moved_to_center, "Double game over!");
             moved_to_center = true;

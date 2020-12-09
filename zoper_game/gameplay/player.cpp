@@ -93,8 +93,9 @@ void Player::movePlayer(const Direction& direction)
     }
 }
 
-void Player::tileMoved(const vector2dst& /*source*/, const vector2dst& dest)
+void Player::tileMoved(const vector2dst& source, const vector2dst& dest)
 {
+    BaseClass::tileMoved(source, dest);
     boardPosition.set(dest);
 }
 
