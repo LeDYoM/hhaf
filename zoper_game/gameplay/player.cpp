@@ -86,7 +86,7 @@ void Player::movePlayer(const Direction& direction)
                             "Invalid direction passed to move");
     currentDirection = direction;
     auto nPosition   = direction.applyToVector(boardPosition());
-    auto result = getBoardModel()->moveTile(boardPosition(), nPosition);
+    auto result = getBoardManager()->moveTile(boardPosition(), nPosition);
     if (result)
     {
         ++movements_;

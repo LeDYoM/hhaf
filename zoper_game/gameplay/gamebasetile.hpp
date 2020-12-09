@@ -26,7 +26,7 @@ public:
                      const haf::board::BoardTileData /* oldValue */,
                      const haf::board::BoardTileData /* newValue */) override;
 
-    mtps::sptr<haf::board::BoardManager> getBoardModel();
+    mtps::sptr<haf::board::BoardManager> getBoardManager();
 
 protected:
 
