@@ -17,6 +17,11 @@ GameBaseTile::GameBaseTile(mtps::rptr<SceneNode> const parent, str name) :
 
 GameBaseTile::~GameBaseTile() = default;
 
+mtps::rptr<BoardGroup> GameBaseTile::getBoardGroup()
+{
+    return ancestor<BoardGroup>();
+}
+
 void GameBaseTile::tileAdded(const mtps::vector2dst& position)
 {
     TileBase::tileAdded(position);

@@ -100,8 +100,7 @@ void BoardGroup::createNewToken(const board::BoardTileData data,
     board_model_->setTile(board_position, new_tile_token);
     board_model_->changeTileData(board_position, data);
     // Configure it.
-    new_tile_token->configure(level_properties_, rectFromSize(size),
-                              board2SceneFactor());
+    new_tile_token->configure(level_properties_, rectFromSize(size));
 }
 
 void BoardGroup::tileRemoved(const vector2dst, board::SITilePointer& tile)

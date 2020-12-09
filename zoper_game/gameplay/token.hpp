@@ -28,8 +28,7 @@ public:
     ~Token() override;
 
     void configure(mtps::sptr<LevelProperties> level_properties,
-                   const mtps::Rectf32 &box,
-                   const mtps::vector2df &board2SceneFactor);
+                   const mtps::Rectf32 &box);
 
     static void resetTileCounter();
 

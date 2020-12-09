@@ -29,13 +29,11 @@ Token::Token(SceneNode* const parent, str name) :
 Token::~Token() = default;
 
 void Token::configure(sptr<LevelProperties> level_properties,
-                      const Rectf32& box,
-                      const vector2df& board2SceneFactor)
+                      const Rectf32& box)
 {
     node_->box        = box;
     node_->color      = getColorForToken();
     level_properties_  = std::move(level_properties);
-    board2SceneFactor_ = board2SceneFactor;
 }
 
 bool Token::canBeMoved(mtps::vector2dst const& dest_position) const
@@ -78,7 +76,7 @@ void Token::tileMoved(const vector2dst& source, const vector2dst& dest)
     const auto time(time::TimePoint_as_miliseconds(
         level_properties_->millisBetweenTokens() / 2));
 
-    const auto destination(board2SceneFactor_ * dest);
+    const auto destination(getBoardGroup()->board2Scene(dest));
     animation_component_->addPropertyAnimation(time, prop<Position>(), prop<Position>()(),
                                                destination);
 }

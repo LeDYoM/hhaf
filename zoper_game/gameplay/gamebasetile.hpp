@@ -5,6 +5,7 @@
 #include <haf/scene/include/scenenode.hpp>
 #include <haf/render/include/renderizable.hpp>
 #include <boardmanager/include/itile.hpp>
+#include "boardgroup.hpp"
 
 namespace haf::board
 {
@@ -34,6 +35,7 @@ public:
                            const mtps::vector2dst& /* dest */) override;
 
     mtps::sptr<haf::board::BoardManager> getBoardManager();
+    mtps::rptr<BoardGroup> getBoardGroup();
 
     bool isInCenter() const noexcept { return is_in_center; }
 protected:
