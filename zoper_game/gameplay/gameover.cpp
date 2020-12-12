@@ -7,9 +7,8 @@
 #include <haf/scene_components/include/scenemetricsview.hpp>
 
 #include <hlog/include/hlog.hpp>
-#include <haf/resources/include/resourceview.hpp>
 #include <haf/resources/include/ittfont.hpp>
-#include <haf/resources/include/resourceview.hpp>
+#include <haf/resources/include/iresourceretriever.hpp>
 
 using namespace mtps;
 
@@ -26,14 +25,14 @@ GameOverSceneNode::GameOverSceneNode(scene::SceneNode* const parent, str name) :
 
     vector2df gosize{dataWrapper<SceneMetricsView>()->currentView().width, 715};
     m_gameOverrg->prop<Position>() = Position::value_type{0, 575};
-    auto resources_viewer = dataWrapper<res::ResourceView>();
 
     {
         auto gameText(
             m_gameOverrg->createSceneNode<SceneNodeText>("gameovergame"));
         gameText->prop<SceneNodeTextProperties>()
             .put<Text>("GAME")
-            .put<Font>(resources_viewer->getTTFont(GameResources::ScoreFontId)
+            .put<Font>(systemInterface<res::IResourceRetriever>()
+                           .getTTFont(GameResources::ScoreFontId)
                            ->font(360))
             .put<TextColor>(colors::White)
             .put<AlignmentSize>(gosize)
@@ -46,7 +45,8 @@ GameOverSceneNode::GameOverSceneNode(scene::SceneNode* const parent, str name) :
             m_gameOverrg->createSceneNode<SceneNodeText>("gameoverover"));
         overText->prop<SceneNodeTextProperties>()
             .put<Text>("OVER")
-            .put<Font>(resources_viewer->getTTFont(GameResources::ScoreFontId)
+            .put<Font>(systemInterface<res::IResourceRetriever>()
+                           .getTTFont(GameResources::ScoreFontId)
                            ->font(360))
             .put<TextColor>(colors::White)
             .put<AlignmentSize>(gosize)

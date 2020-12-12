@@ -8,7 +8,7 @@
 
 #include <haf/scene_components/include/statescontroller.hpp>
 #include <haf/input/include/inputcomponent.hpp>
-#include <haf/resources/include/resourceview.hpp>
+#include <haf/resources/include/iresourceretriever.hpp>
 #include <haf/scene_components/include/scenecontrol.hpp>
 #include <haf/resources/include/iresourceconfigurator.hpp>
 #include <haf/system/include/interfaceaccess.hpp>
@@ -24,7 +24,10 @@ HighScoresScene::HighScoresScene() : Scene{StaticTypeName}
 
 HighScoresScene::~HighScoresScene() = default;
 
-mtps::str HighScoresScene::nextSceneName() { return MENU_SCENE_NAME; }
+mtps::str HighScoresScene::nextSceneName()
+{
+    return MENU_SCENE_NAME;
+}
 
 void HighScoresScene::onCreated()
 {
@@ -37,10 +40,10 @@ void HighScoresScene::onCreated()
 
     auto statesController(
         addComponentOfType<StatesController<HighScoresSceneStates>>());
-    auto resources_viewer = dataWrapper<res::ResourceView>();
 
-    m_normalFont =
-        resources_viewer->getTTFont(HighScoresResources::MenuFontId)->font(72);
+    m_normalFont = systemInterface<res::IResourceRetriever>()
+                       .getTTFont(HighScoresResources::MenuFontId)
+                       ->font(72);
     m_normalColor   = colors::Blue;
     m_selectedColor = colors::Red;
 

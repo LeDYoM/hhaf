@@ -4,7 +4,7 @@
 #include <menu_paged/include/menu_page.hpp>
 #include <haf/scene/include/scenenode.hpp>
 #include <hlog/include/hlog.hpp>
-#include <haf/resources/include/resourceview.hpp>
+#include <haf/resources/include/iresourceretriever.hpp>
 #include <haf/resources/include/ittfont.hpp>
 #include <haf/shareddata/include/shareddata.hpp>
 #include <haf/scene_components/include/scenemetricsview.hpp>
@@ -75,8 +75,6 @@ void MainMenu::onCreated()
 {
     BaseClass::onCreated();
 
-    auto resources_viewer = dataWrapper<res::ResourceView>();
-
     Rectf32 textBox{
         rectFromSize(dataWrapper<SceneMetricsView>()->currentView().size())
             .setLeftTop({0, 750})
@@ -88,7 +86,9 @@ void MainMenu::onCreated()
 #ifdef TEST_BMP_FONT
             getBMPFont(MainMenuResources::TestFontId)
 #else
-            resources_viewer->getTTFont(MainMenuResources::MenuFontId)->font(72)
+            systemInterface<res::IResourceRetriever>()
+                .getTTFont(MainMenuResources::MenuFontId)
+                ->font(72)
 #endif
                 )
         .put<NormalColor>(colors::Blue)

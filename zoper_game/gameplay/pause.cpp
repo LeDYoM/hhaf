@@ -8,7 +8,7 @@
 
 #include <haf/resources/include/itexture.hpp>
 #include <haf/resources/include/ittfont.hpp>
-#include <haf/resources/include/resourceview.hpp>
+#include <haf/resources/include/iresourceretriever.hpp>
 
 using namespace mtps;
 
@@ -23,13 +23,12 @@ PauseSceneNode::~PauseSceneNode() = default;
 
 void PauseSceneNode::onCreated()
 {
-    auto resources_viewer = dataWrapper<res::ResourceView>();
-
     m_pauseText = createSceneNode<SceneNodeText>("pausetext");
     m_pauseText->prop<SceneNodeTextProperties>()
         .put<Text>("PAUSE")
-        .put<Font>(
-            resources_viewer->getTTFont(GameResources::ScoreFontId)->font(180U))
+        .put<Font>(systemInterface<res::IResourceRetriever>()
+                       .getTTFont(GameResources::ScoreFontId)
+                       ->font(180U))
         .put<TextColor>(colors::White)
         .put<AlignmentSize>(
             dataWrapper<SceneMetricsView>()->currentView().size())
@@ -44,8 +43,7 @@ void PauseSceneNode::enterPause()
     prop<Visible>().set(true);
     ensureComponentOfType(animation_component_);
     animation_component_->addPropertyAnimation(
-        TimePoint_as_miliseconds(1000U),
-        m_pauseText->prop<TextColor>(),
+        TimePoint_as_miliseconds(1000U), m_pauseText->prop<TextColor>(),
         Color{255U, 255U, 255U, 0U}, Color{255U, 255U, 255U, 255U});
 }
 

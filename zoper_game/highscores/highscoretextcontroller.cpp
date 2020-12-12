@@ -8,7 +8,7 @@
 #include <haf/scene_components/include/scenemetricsview.hpp>
 #include <haf/scene_nodes/include/scenenodetext_properties.hpp>
 #include <haf/resources/include/ittfont.hpp>
-#include <haf/resources/include/resourceview.hpp>
+#include <haf/resources/include/iresourceretriever.hpp>
 #include <haf/shareddata/include/shareddata.hpp>
 #include <haf/shareddata/include/shareddataviewer.hpp>
 
@@ -30,10 +30,9 @@ void HighScoreTextController::onCreated()
 {
     BaseClass::onCreated();
 
-    auto resource_view = dataWrapper<res::ResourceView>();
-
-    m_normalFont =
-        resource_view->getTTFont(HighScoresResources::MenuFontId)->font(72);
+    m_normalFont = systemInterface<res::IResourceRetriever>()
+                       .getTTFont(HighScoresResources::MenuFontId)
+                       ->font(72);
     m_normalColor        = colors::Blue;
     m_selectedColor      = colors::Red;
     animation_component_ = addComponentOfType<scene::AnimationComponent>();
@@ -145,8 +144,8 @@ void HighScoreTextController::saveHighScores()
 {
     DisplayLog::info("Saving highscores...");
 
-    dataWrapper<sys::FileSerializer>()->serializeToFileTemplate(HighScoresFileName,
-                                                        m_hsData);
+    dataWrapper<sys::FileSerializer>()->serializeToFileTemplate(
+        HighScoresFileName, m_hsData);
     DisplayLog::info("High Scores saved");
 }
 }  // namespace zoper

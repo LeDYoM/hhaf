@@ -6,7 +6,7 @@
 #include <haf/scene_nodes/include/scenenodetext.hpp>
 
 #include <hlog/include/hlog.hpp>
-#include <haf/resources/include/resourceview.hpp>
+#include <haf/resources/include/iresourceretriever.hpp>
 #include <haf/resources/include/ittfont.hpp>
 
 using namespace mtps;
@@ -21,12 +21,11 @@ GameHudSceneNode::GameHudSceneNode(
     str name) :
     SceneNode{parent, std::move(name)}
 {
-    auto resources_viewer = dataWrapper<res::ResourceView>();
-
     m_scoreQuad = parent->createSceneNode<TextQuad>("score");
-    m_scoreQuad->configure(
-        resources_viewer->getTTFont(GameResources::ScoreFontId)->font(90U),
-        colors::White, vector2df{600, 300});
+    m_scoreQuad->configure(systemInterface<res::IResourceRetriever>()
+                               .getTTFont(GameResources::ScoreFontId)
+                               ->font(90U),
+                           colors::White, vector2df{600, 300});
     m_scoreQuad->prop<Position>() = Position::value_type{50, 150};
     m_scoreQuad->text(vector2dst{0U, 0U})
         ->prop<SceneNodeTextProperties>()
@@ -38,9 +37,10 @@ GameHudSceneNode::GameHudSceneNode(
         .put<TextColor>(colors::Blue);
 
     m_goalQuad = parent->createSceneNode<TextQuad>("goal");
-    m_goalQuad->configure(
-        resources_viewer->getTTFont(GameResources::ScoreFontId)->font(90),
-        colors::White, vector2df{600, 300});
+    m_goalQuad->configure(systemInterface<res::IResourceRetriever>()
+                              .getTTFont(GameResources::ScoreFontId)
+                              ->font(90),
+                          colors::White, vector2df{600, 300});
     m_goalQuad->prop<Position>().set(vector2df{1250, 150});
     m_goalQuad->text({0U, 0U})
         ->prop<SceneNodeTextProperties>()
@@ -61,8 +61,7 @@ GameHudSceneNode::~GameHudSceneNode() = default;
 
 void GameHudSceneNode::setLevel(const size_type level)
 {
-    m_scoreQuad->text({1U, 0U})->prop<Text>().set(
-        make_str(level + 1U));
+    m_scoreQuad->text({1U, 0U})->prop<Text>().set(make_str(level + 1U));
 }
 
 void GameHudSceneNode::setStayCounter(const size_type stayCounter)

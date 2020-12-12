@@ -12,11 +12,12 @@ set(_SOURCES
     src/bmpfont.cpp
     src/bmpfontfactory.cpp
     src/iresourceconfigurator.cpp
+    src/iresourceretriever.cpp
     src/resourcemanager.cpp
-    src/resourceview.cpp
     src/shader.cpp
     src/texture.cpp
     src/ttfont.cpp
-    src/ttfontinstance.cpp)
+    src/ttfontinstance.cpp
+    )
 
 build_internal_lib_component(SOURCES ${_SOURCES})

@@ -1,5 +1,5 @@
 #include "menuscene.hpp"
-#include <haf/resources/include/resourceview.hpp>
+#include <haf/resources/include/iresourceretriever.hpp>
 #include <haf/resources/include/itexture.hpp>
 #include <haf/shareddata/include/shareddata.hpp>
 #include <haf/scene_components/include/scenecontrol.hpp>
@@ -26,7 +26,10 @@ MenuScene::MenuScene() : BaseClass{StaticTypeName}
 
 MenuScene::~MenuScene() = default;
 
-str MenuScene::nextSceneName() { return GAME_SCENE_NAME; }
+str MenuScene::nextSceneName()
+{
+    return GAME_SCENE_NAME;
+}
 
 void MenuScene::onCreated()
 {
@@ -39,13 +42,13 @@ void MenuScene::onCreated()
 
     createStandardBackground(this);
 
-    auto resources_viewer = dataWrapper<res::ResourceView>();
     auto logo =
         renderizableBuilder()
             .name("mainLogo")
             .figType(FigType_t::Quad)
-            .box(Rectf32{500, 150, 1000, 500})
-            .texture(resources_viewer->getTexture(MainMenuResources::LogoId))
+            .box(Rectf32{500.f, 150.f, 1000.f, 500.f})
+            .texture(systemInterface<res::IResourceRetriever>().getTexture(
+                MainMenuResources::LogoId))
             .create();
 
     auto mainMenu(createSceneNode<MainMenu>(MainMenu::ClassName));
