@@ -1,20 +1,23 @@
+#include <haf/system/include/interfaceaccess.hpp>
 #include <haf/scene_components/include/scenemetrics.hpp>
-#include <haf/scene/include/scenenode.hpp>
-#include <scene/i_include/scenemanager.hpp>
 #include <system/i_include/get_system.hpp>
+#include <scene/i_include/scenemanager.hpp>
 
-using namespace mtps;
-
-namespace haf::scene
+namespace haf::sys
 {
-void SceneMetrics::setViewRect(const mtps::Rectf32& new_view)
+template <>
+scene::ISceneMetrics& getInterface(SystemAccess& system_access)
 {
-    sys::getSystem<SceneManager>(attachedNode()).setViewRect(new_view);
+    return static_cast<scene::ISceneMetrics&>(
+        getSystem<scene::SceneManager>(&system_access));
 }
 
-void SceneMetrics::setViewPort(const mtps::Rectf32& new_view_port)
+template <>
+scene::ISceneMetrics const& getInterface(
+    SystemAccess const& system_access)
 {
-    sys::getSystem<SceneManager>(attachedNode()).setViewPort(new_view_port);
+    return static_cast<scene::ISceneMetrics const&>(
+        getSystem<scene::SceneManager>(&system_access));
 }
 
-}  // namespace haf::scene
+}  // namespace haf::sys

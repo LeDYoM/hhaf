@@ -4,6 +4,7 @@
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/rect.hpp>
 #include <system/i_include/systembase.hpp>
+#include <haf/scene_components/include/scenemetrics.hpp>
 
 namespace haf::scene
 {
@@ -12,7 +13,7 @@ class SceneController;
 
 namespace haf::scene
 {
-class SceneManager final : public sys::SystemBase
+class SceneManager final : public sys::SystemBase, public ISceneMetrics
 {
 public:
     explicit SceneManager(sys::SystemProvider& system_provider);
@@ -22,10 +23,10 @@ public:
     void update();
     void finish();
 
-    mtps::Rectf32 viewPort() const;
-    void setViewPort(const mtps::Rectf32& vp);
-    mtps::Rectf32 viewRect() const;
-    void setViewRect(const mtps::Rectf32& vr);
+    mtps::Rectf32 currentViewPort() const override;
+    mtps::Rectf32 currentView() const override;
+    void setViewPort(const mtps::Rectf32& vp) override;
+    void setViewRect(const mtps::Rectf32& vr) override;
 
     mtps::sptr<SceneController> const& sceneController() const noexcept;
     mtps::sptr<SceneController>& sceneController() noexcept;

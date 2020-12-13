@@ -1,17 +1,35 @@
-#ifndef HAF_SCENE_SCENEMETRICS_VIEW_INCLUDE_HPP
-#define HAF_SCENE_SCENEMETRICS_VIEW_INCLUDE_HPP
+#ifndef HAF_SCENE_ISCENEMETRICS_VIEW_INCLUDE_HPP
+#define HAF_SCENE_ISCENEMETRICS_VIEW_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/rect.hpp>
-#include <haf/system/include/idatawrapper.hpp>
 
 namespace haf::scene
 {
-class SceneMetricsView : public sys::IDataWrapper
+/**
+ * @brief Interface class to read some metrics of the current set
+ * @b Scene
+ */
+class ISceneMetricsView
 {
 public:
-    mtps::Rectf32 currentView() const;
-    mtps::Rectf32 currentViewPort() const;
+    /**
+     * @brief Destroy the ISceneMetricsView object
+     * Default empty destructor.
+     */
+    ~ISceneMetricsView() {}
+
+    /**
+     * @brief Get the current view set for the Scene
+     * @return mtps::Rectf32 containing the view
+     */
+    virtual mtps::Rectf32 currentView() const = 0;
+
+    /**
+     * @brief Get The current Viewport of the Scene
+     * @return mtps::Rectf32 Containing the view port
+     */
+    virtual mtps::Rectf32 currentViewPort() const = 0;
 };
 }  // namespace haf::scene
 

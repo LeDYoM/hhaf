@@ -7,11 +7,11 @@
 
 namespace haf::scene
 {
-class SceneMetrics : public SceneMetricsView
+class ISceneMetrics : public ISceneMetricsView
 {
 public:
-    void setViewRect(const mtps::Rectf32& new_view);
-    void setViewPort(const mtps::Rectf32& new_view_port);
+    virtual void setViewRect(const mtps::Rectf32& new_view) = 0;
+    virtual void setViewPort(const mtps::Rectf32& new_view_port) = 0;
 };
 }  // namespace haf::scene
 

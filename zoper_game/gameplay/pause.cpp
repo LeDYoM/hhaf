@@ -31,7 +31,7 @@ void PauseSceneNode::onCreated()
                        ->font(180U))
         .put<TextColor>(colors::White)
         .put<AlignmentSize>(
-            dataWrapper<SceneMetricsView>()->currentView().size())
+            systemInterface<ISceneMetricsView>().currentView().size())
         .put<AlignmentX>(AlignmentXModes::Center)
         .put<AlignmentY>(AlignmentYModes::Middle);
 

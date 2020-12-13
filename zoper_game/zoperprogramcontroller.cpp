@@ -23,17 +23,16 @@ namespace zoper
 void ZoperProgramController::configureScenes(
     haf::sys::DataWrapperCreator& data_wrapper_creator)
 {
-        auto scene_node_factory(
-            data_wrapper_creator.dataWrapper<scene::SceneFactory>());
+    auto scene_node_factory(
+        data_wrapper_creator.dataWrapper<scene::SceneFactory>());
 
-        scene_node_factory->registerSceneType<MenuScene>();
-        scene_node_factory->registerSceneType<GameScene>();
-        scene_node_factory->registerSceneType<HighScoresScene>();
+    scene_node_factory->registerSceneType<MenuScene>();
+    scene_node_factory->registerSceneType<GameScene>();
+    scene_node_factory->registerSceneType<HighScoresScene>();
 
-        auto scene_control(
-            data_wrapper_creator.dataWrapper<scene::SceneControl>());
+    auto scene_control(data_wrapper_creator.dataWrapper<scene::SceneControl>());
 
-        scene_control->startScene<MenuScene>();
+    scene_control->startScene<MenuScene>();
 }
 
 ZoperProgramController::ZoperProgramController()  = default;
@@ -58,19 +57,20 @@ void ZoperProgramController::onInit(
             GameSharedData::address(), game_shared_data);
     }
     {
-        data_wrapper_creator.dataWrapper<scene::SceneMetrics>()->setViewRect(
-            {0U, 0U, 2000U, 2000U});
+        /*
+        data_wrapper_creator.systemInterface<scene::ISceneMetrics>()
+            ->setViewRect({0U, 0U, 2000U, 2000U});
+            */
     }
 
     configureScenes(data_wrapper_creator);
 }
 
-void ZoperProgramController::onFinish(
-    haf::sys::DataWrapperCreator&)
+void ZoperProgramController::onFinish(haf::sys::DataWrapperCreator&)
 {
-//    const bool check =
-//        data_wrapper_creator.dataWrapper<shdata::SharedData>()->makeEmpty();
-//    LogAsserter::log_assert(check, "SharedData is empty!");
+    //    const bool check =
+    //        data_wrapper_creator.dataWrapper<shdata::SharedData>()->makeEmpty();
+    //    LogAsserter::log_assert(check, "SharedData is empty!");
 }
 
 }  // namespace zoper

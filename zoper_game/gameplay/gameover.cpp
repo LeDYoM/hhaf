@@ -23,7 +23,7 @@ GameOverSceneNode::GameOverSceneNode(scene::SceneNode* const parent, str name) :
 {
     m_gameOverrg = createSceneNode("gameOverScreen");
 
-    vector2df gosize{dataWrapper<SceneMetricsView>()->currentView().width, 715};
+    vector2df gosize{systemInterface<ISceneMetricsView>().currentView().width, 715};
     m_gameOverrg->prop<Position>() = Position::value_type{0, 575};
 
     {

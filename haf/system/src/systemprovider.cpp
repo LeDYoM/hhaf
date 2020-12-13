@@ -19,6 +19,7 @@
 
 #include <haf/system/include/datawrappercreator.hpp>
 #include <haf/system/include/systemaccess.hpp>
+#include <haf/scene/include/interface_getter.hpp>
 #include <functional>
 
 using namespace mtps;
@@ -147,6 +148,7 @@ void SystemProvider::init(rptr<IApp> iapp,
 
     SystemAccess system_access(this);
     DataWrapperCreator dwc(&system_access);
+    scene::InterfaceGetter interface_getter(&system_access);
     p_->app_->onInit(dwc);
 }
 
