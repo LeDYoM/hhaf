@@ -1,6 +1,7 @@
 set(_SOURCES
     i_include/get_system.hpp
     i_include/get_systemprovider.hpp
+    i_include/interfaceaccess_imp.hpp
     i_include/systembase.hpp
     i_include/systemcontroller.hpp
     i_include/systemdatawrappercreator.hpp
@@ -8,7 +9,6 @@ set(_SOURCES
     src/systembase.cpp
     src/get_systemprovider.cpp
     src/get_system.cpp
-    src/interfaceaccess.cpp
     src/systemaccess.cpp
     src/systemcontroller.cpp
     src/systemprovider.cpp)

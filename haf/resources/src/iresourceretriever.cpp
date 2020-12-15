@@ -1,23 +1,11 @@
 #include <haf/system/include/interfaceaccess.hpp>
 #include <haf/resources/include/iresourceretriever.hpp>
 #include <system/i_include/get_system.hpp>
+#include <system/i_include/interfaceaccess_imp.hpp>
 #include <resources/i_include/resourcemanager.hpp>
 
 namespace haf::sys
 {
-template <>
-res::IResourceRetriever& getInterface(SystemAccess& system_access)
-{
-    return static_cast<res::IResourceRetriever&>(
-        getSystem<sys::ResourceManager>(&system_access));
-}
-
-template <>
-res::IResourceRetriever const& getInterface(
-    SystemAccess const& system_access)
-{
-    return static_cast<res::IResourceRetriever const&>(
-        getSystem<sys::ResourceManager>(&system_access));
-}
+GET_INTERFACE_IMP(res::IResourceRetriever, sys::ResourceManager)
 
 }  // namespace haf::sys
