@@ -7,7 +7,6 @@
 
 #include <mtypes/include/serializer.hpp>
 #include <haf/filesystem/include/fileserializer.hpp>
-#include <haf/scene_components/include/scenemetrics.hpp>
 #include <haf/scene_components/include/scenefactory.hpp>
 #include <haf/scene_components/include/scenecontrol.hpp>
 #include <haf/shareddata/include/shareddata.hpp>
@@ -50,18 +49,6 @@ void ZoperProgramController::onInit(
         ->deserializeFromFile("keys.txt", *keyMapping);
     data_wrapper_creator.dataWrapper<sys::FileSerializer>()->serializeToFile(
         "keys.txt", *keyMapping);
-
-    {
-        GameSharedData game_shared_data{};
-        data_wrapper_creator.dataWrapper<shdata::SharedData>()->store(
-            GameSharedData::address(), game_shared_data);
-    }
-    {
-        /*
-        data_wrapper_creator.systemInterface<scene::ISceneMetrics>()
-            ->setViewRect({0U, 0U, 2000U, 2000U});
-            */
-    }
 
     configureScenes(data_wrapper_creator);
 }

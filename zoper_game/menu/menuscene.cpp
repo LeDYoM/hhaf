@@ -1,4 +1,5 @@
 #include "menuscene.hpp"
+#include "menu_static_data.hpp"
 #include <haf/resources/include/iresourceretriever.hpp>
 #include <haf/resources/include/itexture.hpp>
 #include <haf/shareddata/include/shareddata.hpp>
@@ -11,6 +12,7 @@
 
 #include <haf/resources/include/iresourceconfigurator.hpp>
 #include <haf/system/include/interfaceaccess.hpp>
+#include <haf/scene_components/include/scenemetrics.hpp>
 
 using namespace mtps;
 using namespace haf;
@@ -35,6 +37,11 @@ void MenuScene::onCreated()
 {
     BaseClass::onCreated();
 
+    // Set the default view for this scene
+    systemInterface<ISceneMetrics>()
+            .setViewRect(DefaultView);
+
+    // Load the necessary resources
     auto& resources_configurator =
         systemInterface<res::IResourcesConfigurator>();
     resources_configurator.setResourceConfigFile("resources.txt");
