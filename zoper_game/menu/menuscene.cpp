@@ -1,14 +1,14 @@
 #include "menuscene.hpp"
-#include "menu_static_data.hpp"
 #include <haf/resources/include/iresourceretriever.hpp>
 #include <haf/resources/include/itexture.hpp>
 #include <haf/shareddata/include/shareddata.hpp>
 #include <haf/scene_components/include/scenecontrol.hpp>
 
-#include "../menu/mainmenu.hpp"
+#include "mainmenu.hpp"
 #include "../loaders/mainmenuresources.hpp"
 #include "../zoperprogramcontroller.hpp"
 #include "../common_scene_nodes.hpp"
+#include "../static_data.hpp"
 
 #include <haf/resources/include/iresourceconfigurator.hpp>
 #include <haf/system/include/interfaceaccess.hpp>

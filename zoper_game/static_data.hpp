@@ -1,5 +1,5 @@
-#ifndef MENU_STATIC_DATA_INCLUDE_HPP
-#define MENU_STATIC_DATA_INCLUDE_HPP
+#ifndef ZOPERSTATIC_DATA_INCLUDE_HPP
+#define ZOPER_STATIC_DATA_INCLUDE_HPP
 
 #include <mtypes/include/rect.hpp>
 
