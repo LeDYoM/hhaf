@@ -18,6 +18,7 @@ public:
     void onInit(haf::sys::DataWrapperCreator& data_wrapper_creator) override;
     void onFinish(haf::sys::DataWrapperCreator& data_wrapper_creator) override;
 
+private:
     void configureScenes(haf::sys::DataWrapperCreator& data_wrapper_creator);
 };
 }  // namespace zoper
