@@ -4,6 +4,7 @@ set(_SOURCES
     src/inputcomponent.cpp
     src/inputdriver.cpp
     src/inputsystem.cpp
+    src/key_manager.cpp
     src/virtual_input_component.cpp)
 
 build_internal_lib_component(SOURCES ${_SOURCES})
