@@ -53,7 +53,7 @@ public:
 
 private:
     struct GameScenePrivate;
-    mtps::uptr<GameScenePrivate> private_;
+    mtps::uptr<GameScenePrivate> p_;
     using BaseClass = scene::Scene;
     void generateNextToken();
     mtps::vector2df tileSize() const;

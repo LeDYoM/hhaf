@@ -15,7 +15,7 @@
 #endif
 
 #include "../zoperprogramcontroller.hpp"
-
+#include "../keymapping.hpp"
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/properties.hpp>
 
@@ -30,6 +30,8 @@
 #include <haf/shareddata/include/shareddataviewer.hpp>
 #include <haf/resources/include/iresourceconfigurator.hpp>
 #include <haf/system/include/interfaceaccess.hpp>
+#include <mtypes/include/serializer.hpp>
+#include <haf/filesystem/include/fileserializer.hpp>
 
 using namespace mtps;
 using namespace haf;
@@ -67,13 +69,14 @@ struct GameScene::GameScenePrivate
             DisplayLog::info("Creating animation for points to score");
             scene_animation_component_->addPropertyAnimation(
                 time::TimePoint_as_miliseconds(MillisAnimationPointsToScore),
-                sceneNode->prop<Position>(), lastTokenPosition,
+                sceneNode->prop<haf::scene::Position>(), lastTokenPosition,
                 EndPositionPointsToScore,
                 Animation::AnimationDirection::Forward, [this, sceneNode]() {
                     sceneNode->parent()->removeSceneNode(sceneNode);
                 });
         }
     }
+    uptr<KeyMapping> key_mapping_;
 };
 
 GameScene::GameScene() : Scene{StaticTypeName}
@@ -90,9 +93,9 @@ void GameScene::onCreated()
 {
     BaseClass::onCreated();
 
-    LogAsserter::log_assert(private_ == nullptr,
+    LogAsserter::log_assert(p_ == nullptr,
                             "Private data pointer is not nullptr!");
-    private_ = muptr<GameScenePrivate>();
+    p_ = muptr<GameScenePrivate>();
 
     auto& resources_configurator =
         systemInterface<res::IResourcesConfigurator>();
@@ -147,8 +150,7 @@ void GameScene::onCreated()
     // Create the general timer component for the scene.
     scene_timer_component_ = addComponentOfType<time::TimerComponent>();
 
-    private_->scene_animation_component_ =
-        addComponentOfType<AnimationComponent>();
+    p_->scene_animation_component_ = addComponentOfType<AnimationComponent>();
 
     // At this point, we setup level properties.
     // level_properties_ should not be used before this point.
@@ -179,18 +181,18 @@ void GameScene::onCreated()
     next_token_->prepareNextToken(time::TimePoint_as_miliseconds(
                                       level_properties_->millisBetweenTokens()),
                                   [this]() { generateNextToken(); });
-/*
-    m_nextTokenTimer = scene_timer_component_->addTimer(
-        time::TimerType::Continuous,
-        time::TimePoint_as_miliseconds(
-            level_properties_->millisBetweenTokens()),
-        [this](time::TimePoint realEllapsed) {
-            DisplayLog::info("Elapsed between tokens: ",
-                             realEllapsed.milliseconds());
-            // New token
-            generateNextToken();
-        });
-*/
+    /*
+        m_nextTokenTimer = scene_timer_component_->addTimer(
+            time::TimerType::Continuous,
+            time::TimePoint_as_miliseconds(
+                level_properties_->millisBetweenTokens()),
+            [this](time::TimePoint realEllapsed) {
+                DisplayLog::info("Elapsed between tokens: ",
+                                 realEllapsed.milliseconds());
+                // New token
+                generateNextToken();
+            });
+    */
     m_gameOver = createSceneNode<GameOverSceneNode>("gameOverSceneNode");
     m_gameOver->prop<Visible>().set(false);
 
@@ -205,16 +207,24 @@ void GameScene::onCreated()
             *m_sceneStates, *this);
     }
 
-    private_->token_type_generator_ =
+    p_->token_type_generator_ =
         addComponentOfType<rnd::RandomNumbersComponent>();
-    LogAsserter::log_assert(private_->token_type_generator_ != nullptr,
+    LogAsserter::log_assert(p_->token_type_generator_ != nullptr,
                             "Cannot create DataProviderComponent");
-    private_->token_position_generator_ = private_->token_type_generator_;
-    LogAsserter::log_assert(private_->token_position_generator_ != nullptr,
+    p_->token_position_generator_ = p_->token_type_generator_;
+    LogAsserter::log_assert(p_->token_position_generator_ != nullptr,
                             "Cannot create DataProviderComponent");
 
     // Prepare the pause text.
     pause_node_ = createSceneNode<PauseSceneNode>("PauseNode");
+
+    p_->key_mapping_ = muptr<KeyMapping>();
+    p_->key_mapping_->reset();
+
+    dataWrapper<sys::FileSerializer>()->deserializeFromFile("keys.txt",
+                                                            *p_->key_mapping_);
+    dataWrapper<sys::FileSerializer>()->serializeToFile("keys.txt",
+                                                        *p_->key_mapping_);
 
     m_sceneStates->start(GameSceneStates::Playing);
 }
@@ -264,12 +274,11 @@ void GameScene::generateNextToken()
     DisplayLog::info("zone: ", currentTokenZone.zone_start);
 
     // Generate the new token type
-    const size_type newToken{
-        private_->token_type_generator_->getUInt(NumTokens)};
+    const size_type newToken{p_->token_type_generator_->getUInt(NumTokens)};
 
     // Calculate in wich tile zone offset is going to appear
     const size_type token_displacement{
-        private_->token_position_generator_->getUInt(currentTokenZone.size)};
+        p_->token_position_generator_->getUInt(currentTokenZone.size)};
 
     // Prepare the position for the new token
     const vector2dst new_position{
@@ -363,7 +372,7 @@ void GameScene::launchPlayer()
             {
                 DisplayLog::info("Tile with same color found");
                 DisplayLog::info("Creating points to score");
-                private_->createScoreIncrementPoints(*this, lastTokenPosition);
+                p_->createScoreIncrementPoints(*this, lastTokenPosition);
 
                 DisplayLog::info("Launching player");
                 m_boardGroup->player()->launchAnimation(lastTokenPosition);

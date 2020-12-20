@@ -1,12 +1,8 @@
 #include "zoperprogramcontroller.hpp"
-#include "keymapping.hpp"
 #include "menu/menuscene.hpp"
 #include "gameplay/gamescene.hpp"
 #include "highscores/highscoresscene.hpp"
-#include "gameshareddata.hpp"
 
-#include <mtypes/include/serializer.hpp>
-#include <haf/filesystem/include/fileserializer.hpp>
 #include <haf/scene_components/include/scenefactory.hpp>
 #include <haf/scene_components/include/scenecontrol.hpp>
 #include <haf/shareddata/include/shareddata.hpp>
@@ -41,23 +37,11 @@ void ZoperProgramController::onInit(
     haf::sys::DataWrapperCreator& data_wrapper_creator)
 {
     DisplayLog::verbose("Initializing ZoperProgramController");
-
-    keyMapping = muptr<KeyMapping>();
-    keyMapping->reset();
-
-    data_wrapper_creator.dataWrapper<sys::FileSerializer>()
-        ->deserializeFromFile("keys.txt", *keyMapping);
-    data_wrapper_creator.dataWrapper<sys::FileSerializer>()->serializeToFile(
-        "keys.txt", *keyMapping);
-
     configureScenes(data_wrapper_creator);
 }
 
 void ZoperProgramController::onFinish(haf::sys::DataWrapperCreator&)
 {
-    //    const bool check =
-    //        data_wrapper_creator.dataWrapper<shdata::SharedData>()->makeEmpty();
-    //    LogAsserter::log_assert(check, "SharedData is empty!");
 }
 
 }  // namespace zoper

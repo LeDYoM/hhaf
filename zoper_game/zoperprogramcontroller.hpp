@@ -8,8 +8,6 @@
 
 namespace zoper
 {
-class KeyMapping;
-
 class ZoperProgramController final
     : public haf::user::IAppWithDefaultVersionSystem<cl_version::AppVersion>
 {
@@ -21,7 +19,6 @@ public:
     void onFinish(haf::sys::DataWrapperCreator& data_wrapper_creator) override;
 
     void configureScenes(haf::sys::DataWrapperCreator& data_wrapper_creator);
-    mtps::uptr<KeyMapping> keyMapping;
 };
 }  // namespace zoper
 
