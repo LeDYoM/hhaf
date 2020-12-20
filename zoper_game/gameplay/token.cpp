@@ -36,7 +36,7 @@ void Token::configure(sptr<LevelProperties> level_properties,
     level_properties_  = std::move(level_properties);
 }
 
-bool Token::canBeMoved(mtps::vector2dst const& dest_position) const
+bool Token::canBeMoved(mtps::vector2dst const&) const
 {
     return true;
 //    return !TokenZones::pointInCenter(dest_position);
