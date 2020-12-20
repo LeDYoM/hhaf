@@ -40,17 +40,6 @@ private:
     mtps::array<haf::input::Key, KeyMapping::TotalKeys> m_keys;
 };
 
-inline const mtps::Object &operator>>(const mtps::Object &obj, KeyMapping &key_mapping)
-{
-    obj["keys"].getObject() >> key_mapping.m_keys;
-    return obj;
-}
-
-inline mtps::Object &operator<<(mtps::Object &obj, const KeyMapping &key_mapping)
-{
-    obj.set("keys", key_mapping.m_keys);
-    return obj;
-}
 } // namespace zoper
 
 #endif
