@@ -14,6 +14,10 @@ class InputDriver;
 
 namespace haf::sys
 {
+/**
+ * @brief System responsible of managing everything related with inputs from
+ * the user.
+ */
 class InputSystem final : public SystemBase
 {
 public:
