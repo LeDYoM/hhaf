@@ -1,5 +1,5 @@
-#ifndef HAF_KEY_INCLUDE_HPP
-#define HAF_KEY_INCLUDE_HPP
+#ifndef HAF_INPUT_KEY_INCLUDE_HPP
+#define HAF_INPUT_KEY_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 
