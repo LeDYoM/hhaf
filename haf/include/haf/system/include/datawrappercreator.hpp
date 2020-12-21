@@ -4,6 +4,7 @@
 #include <mtypes/include/types.hpp>
 #include <haf/system/include/idatawrapper.hpp>
 #include <haf/utils/include/attachable_manager.hpp>
+#include <haf/scene/include/interface_getter.hpp>
 
 namespace haf::sys
 {
@@ -33,6 +34,20 @@ public:
     mtps::uptr<T> dataWrapper() const
     {
         return create<T>();
+    }
+
+    template <typename T>
+    T& systemInterface()
+    {
+        scene::InterfaceGetter tmp(attachable());
+        return tmp.systemInterface<T>();
+    }
+
+    template <typename T>
+    T const& systemInterface() const
+    {
+        scene::InterfaceGetter tmp(attachable());
+        return tmp.systemInterface<T>();
     }
 };
 }  // namespace haf::sys

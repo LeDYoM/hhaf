@@ -47,6 +47,12 @@ protected:
         return result;
     }
 
+protected:
+    mtps::rptr<AttachableType> attachable() const noexcept
+    {
+        return attachable_;
+    }
+
 private:
     void initialize(mtps::rptr<AttachedBase> dw) const
     {

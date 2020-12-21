@@ -3,7 +3,11 @@
 
 #include <mtypes/include/types.hpp>
 #include <haf/system/include/interfaceaccess.hpp>
-#include <haf/system/include/systemaccess.hpp>
+
+namespace haf::sys
+{
+    class SystemAccess;
+}
 
 namespace haf::scene
 {
