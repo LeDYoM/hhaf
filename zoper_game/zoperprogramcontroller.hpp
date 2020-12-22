@@ -17,7 +17,7 @@ public:
 
     void onInit(
         haf::scene::AppInitializer& app_initializer) override;
-    void onFinish(haf::sys::DataWrapperCreator& data_wrapper_creator) override;
+    void onFinish(haf::scene::AppFinisher& app_finisher) override;
 
 private:
     void configureScenes(haf::scene::AppInitializer& app_initializer);

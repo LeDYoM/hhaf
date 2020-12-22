@@ -4,6 +4,7 @@
 #include "highscores/highscoresscene.hpp"
 
 #include <haf/scene_components/include/app_initializer.hpp>
+#include <haf/scene_components/include/app_finisher.hpp>
 #include <haf/shareddata/include/shareddata.hpp>
 #include <hlog/include/hlog.hpp>
 
@@ -32,7 +33,7 @@ void ZoperProgramController::onInit(AppInitializer& app_initializer)
     configureScenes(app_initializer);
 }
 
-void ZoperProgramController::onFinish(haf::sys::DataWrapperCreator&)
+void ZoperProgramController::onFinish(AppFinisher&)
 {}
 
 }  // namespace zoper

@@ -2,6 +2,7 @@ set (_SOURCES
     src/animation.cpp
     src/animationcomponent.cpp
     src/app_initializer.cpp
+    src/app_finisher.cpp
     src/discretetextcomponent.cpp
     src/scenecontrol.cpp
     src/scenefactory.cpp

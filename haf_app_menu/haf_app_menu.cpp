@@ -1,11 +1,7 @@
 #include "haf_app_menu.hpp"
 
-#include <mtypes/include/serializer.hpp>
-#include <haf/filesystem/include/fileserializer.hpp>
-#include <haf/scene_components/include/scenemetrics.hpp>
-#include <haf/scene_components/include/scenefactory.hpp>
-#include <haf/scene_components/include/scenecontrol.hpp>
-#include <haf/shareddata/include/shareddata.hpp>
+#include <haf/scene_components/include/app_finisher.hpp>
+#include <haf/scene_components/include/app_initializer.hpp>
 #include <hlog/include/hlog.hpp>
 
 using namespace mtps;
@@ -28,7 +24,7 @@ void HafAppMenu::onInit(AppInitializer& app_initializer)
     //    configureScenes(data_wrapper_creator);
 }
 
-void HafAppMenu::onFinish(haf::sys::DataWrapperCreator&)
+void HafAppMenu::onFinish(scene::AppFinisher&)
 {}
 
 }  // namespace haf::app_menu

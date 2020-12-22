@@ -21,7 +21,7 @@
 #include <haf/system/include/systemaccess.hpp>
 #include <haf/scene/include/interface_getter.hpp>
 #include <haf/scene_components/include/app_initializer.hpp>
-#include <functional>
+#include <haf/scene_components/include/app_finisher.hpp>
 
 using namespace mtps;
 
@@ -149,7 +149,6 @@ void SystemProvider::init(rptr<IApp> iapp,
 
     SystemAccess system_access(this);
     DataWrapperCreator dwc(&system_access);
-    scene::InterfaceGetter interface_getter(&system_access);
     p_->app_->onInit(*dwc.dataWrapper<scene::AppInitializer>());
 }
 
@@ -158,7 +157,7 @@ void SystemProvider::terminate()
     SystemAccess system_access(this);
     DataWrapperCreator dwc(&system_access);
 
-    p_->app_->onFinish(dwc);
+    p_->app_->onFinish(*dwc.dataWrapper<scene::AppFinisher>());
     p_->scene_manager_->finish();
     p_->scene_manager_.reset();
     p_->simulation_system_.reset();

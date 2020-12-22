@@ -12,7 +12,8 @@ class DataWrapperCreator;
 namespace haf::scene
 {
 class AppInitializer;
-}
+class AppFinisher;
+}  // namespace haf::scene
 
 namespace haf
 {
@@ -22,8 +23,8 @@ public:
     constexpr IApp() noexcept {}
     virtual ~IApp() noexcept {}
 
-    virtual void onInit(scene::AppInitializer& data_wrapper_creator) = 0;
-    virtual void onFinish(sys::DataWrapperCreator& data_wrapper_creator)    = 0;
+    virtual void onInit(scene::AppInitializer& app_initializer) = 0;
+    virtual void onFinish(scene::AppFinisher& app_finisher)     = 0;
 
     virtual mtps::u16 getVersion() const noexcept    = 0;
     virtual mtps::u16 getSubVersion() const noexcept = 0;
