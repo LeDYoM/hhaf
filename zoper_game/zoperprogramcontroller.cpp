@@ -3,8 +3,7 @@
 #include "gameplay/gamescene.hpp"
 #include "highscores/highscoresscene.hpp"
 
-#include <haf/scene_components/include/scenefactory.hpp>
-#include <haf/scene_components/include/scenecontrol.hpp>
+#include <haf/scene_components/include/app_initializer.hpp>
 #include <haf/shareddata/include/shareddata.hpp>
 #include <hlog/include/hlog.hpp>
 
@@ -15,29 +14,22 @@ using namespace haf::scene;
 namespace zoper
 {
 
-void ZoperProgramController::configureScenes(
-    haf::sys::DataWrapperCreator& data_wrapper_creator)
+void ZoperProgramController::configureScenes(AppInitializer& app_initializer)
 {
-    auto scene_node_factory(
-        data_wrapper_creator.dataWrapper<scene::SceneFactory>());
+    app_initializer.registerSceneType<MenuScene>();
+    app_initializer.registerSceneType<GameScene>();
+    app_initializer.registerSceneType<HighScoresScene>();
 
-    scene_node_factory->registerSceneType<MenuScene>();
-    scene_node_factory->registerSceneType<GameScene>();
-    scene_node_factory->registerSceneType<HighScoresScene>();
-
-    auto scene_control(data_wrapper_creator.dataWrapper<scene::SceneControl>());
-
-    scene_control->startScene<MenuScene>();
+    app_initializer.startScene<MenuScene>();
 }
 
 ZoperProgramController::ZoperProgramController()  = default;
 ZoperProgramController::~ZoperProgramController() = default;
 
-void ZoperProgramController::onInit(
-    SceneGroupInitializer& scene_group_initializer)
+void ZoperProgramController::onInit(AppInitializer& app_initializer)
 {
     DisplayLog::verbose("Initializing ZoperProgramController");
-//    configureScenes(data_wrapper_creator);
+    configureScenes(app_initializer);
 }
 
 void ZoperProgramController::onFinish(haf::sys::DataWrapperCreator&)

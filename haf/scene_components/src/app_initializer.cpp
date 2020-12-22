@@ -1,4 +1,4 @@
-#include <haf/scene_components/include/scene_group_initializer.hpp>
+#include <haf/scene_components/include/app_initializer.hpp>
 #include <haf/scene_components/include/scenefactory.hpp>
 #include <haf/scene/include/scenenode.hpp>
 #include <scene/i_include/scenemanager.hpp>
@@ -9,14 +9,14 @@
 
 namespace haf::scene
 {
-SceneNodeFactory& SceneGroupInitializer::sceneNodeFactory()
+SceneNodeFactory& AppInitializer::sceneNodeFactory()
 {
     return sys::getSystem<scene::SceneManager>(attachedNode())
         .sceneController()
         ->sceneNodeFactory();
 }
 
-bool SceneGroupInitializer::startScene(const mtps::str& scene_name)
+bool AppInitializer::startScene(const mtps::str& scene_name)
 {
     return sys::getSystem<scene::SceneManager>(attachedNode())
         .sceneController()

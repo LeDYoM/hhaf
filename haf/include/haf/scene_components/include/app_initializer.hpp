@@ -1,5 +1,5 @@
-#ifndef HAF_SCENE_SCENE_GROUP_INITIALIZER_INCLUDE_HPP
-#define HAF_SCENE_SCENE_GROUP_INITIALIZER_INCLUDE_HPP
+#ifndef HAF_SCENE_APP_INITIALIZER_INCLUDE_HPP
+#define HAF_SCENE_APP_INITIALIZER_INCLUDE_HPP
 
 #include <haf/system/include/idatawrapper.hpp>
 #include <haf/scene/include/scenenodefactory.hpp>
@@ -7,7 +7,7 @@
 
 namespace haf::scene
 {
-class SceneGroupInitializer : public sys::IDataWrapper
+class AppInitializer : public sys::IDataWrapper
 {
 public:
     /**

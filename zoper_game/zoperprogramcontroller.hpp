@@ -16,11 +16,11 @@ public:
     ~ZoperProgramController() override;
 
     void onInit(
-        haf::scene::SceneGroupInitializer& scene_group_initializer) override;
+        haf::scene::AppInitializer& app_initializer) override;
     void onFinish(haf::sys::DataWrapperCreator& data_wrapper_creator) override;
 
 private:
-    void configureScenes(haf::sys::DataWrapperCreator& data_wrapper_creator);
+    void configureScenes(haf::scene::AppInitializer& app_initializer);
 };
 }  // namespace zoper
 

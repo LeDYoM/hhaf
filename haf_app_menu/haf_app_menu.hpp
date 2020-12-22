@@ -15,7 +15,7 @@ public:
     HafAppMenu();
     ~HafAppMenu() override;
 
-    void onInit(scene::SceneGroupInitializer& scene_group_initializer) override;
+    void onInit(scene::AppInitializer& app_initializer) override;
     void onFinish(sys::DataWrapperCreator& data_wrapper_creator) override;
 
     void configureScenes(sys::DataWrapperCreator& data_wrapper_creator);

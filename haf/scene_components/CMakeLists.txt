@@ -1,8 +1,8 @@
 set (_SOURCES 
     src/animation.cpp
     src/animationcomponent.cpp
+    src/app_initializer.cpp
     src/discretetextcomponent.cpp
-    src/scene_group_initializer.cpp
     src/scenecontrol.cpp
     src/scenefactory.cpp
     src/scenemetrics.cpp

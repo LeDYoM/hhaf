@@ -21,7 +21,7 @@ void HafAppMenu::configureScenes(haf::sys::DataWrapperCreator&)
 HafAppMenu::HafAppMenu()  = default;
 HafAppMenu::~HafAppMenu() = default;
 
-void HafAppMenu::onInit(SceneGroupInitializer& scene_group_initializer)
+void HafAppMenu::onInit(AppInitializer& app_initializer)
 {
     DisplayLog::verbose("Initializing HafAppMenu");
 
