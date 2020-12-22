@@ -15,7 +15,8 @@ public:
     ZoperProgramController();
     ~ZoperProgramController() override;
 
-    void onInit(haf::sys::DataWrapperCreator& data_wrapper_creator) override;
+    void onInit(
+        haf::scene::SceneGroupInitializer& scene_group_initializer) override;
     void onFinish(haf::sys::DataWrapperCreator& data_wrapper_creator) override;
 
 private:

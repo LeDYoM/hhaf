@@ -34,14 +34,13 @@ ZoperProgramController::ZoperProgramController()  = default;
 ZoperProgramController::~ZoperProgramController() = default;
 
 void ZoperProgramController::onInit(
-    haf::sys::DataWrapperCreator& data_wrapper_creator)
+    SceneGroupInitializer& scene_group_initializer)
 {
     DisplayLog::verbose("Initializing ZoperProgramController");
-    configureScenes(data_wrapper_creator);
+//    configureScenes(data_wrapper_creator);
 }
 
 void ZoperProgramController::onFinish(haf::sys::DataWrapperCreator&)
-{
-}
+{}
 
 }  // namespace zoper

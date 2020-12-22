@@ -15,11 +15,11 @@ public:
     HafAppMenu();
     ~HafAppMenu() override;
 
-    void onInit(haf::sys::DataWrapperCreator& data_wrapper_creator) override;
-    void onFinish(haf::sys::DataWrapperCreator& data_wrapper_creator) override;
+    void onInit(scene::SceneGroupInitializer& scene_group_initializer) override;
+    void onFinish(sys::DataWrapperCreator& data_wrapper_creator) override;
 
-    void configureScenes(haf::sys::DataWrapperCreator& data_wrapper_creator);
+    void configureScenes(sys::DataWrapperCreator& data_wrapper_creator);
 };
-}  // namespace zoper
+}  // namespace haf::app_menu
 
 #endif
