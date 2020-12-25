@@ -15,12 +15,5 @@ set(SRC_FILES
 build_lib_component(STATIC HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
                     ${SRC_FILES})
 
-#configure_file(
-#  "${PROJECT_SOURCE_DIR}/${CURRENT_TARGET}/include/host_version.hpp.in"
-#  "${PROJECT_SOURCE_DIR}/${CURRENT_TARGET}/include/host_version.hpp" @ONLY)
 target_link_libraries(${CURRENT_TARGET} PRIVATE hosted_app)
-#target_link_libraries(${CURRENT_TARGET} PRIVATE memmanager)
-#target_link_libraries(${CURRENT_TARGET} PRIVATE hlog)
-#target_link_libraries(${CURRENT_TARGET} PRIVATE haf)
-#target_link_libraries(${CURRENT_TARGET} PRIVATE loader)
 target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
