@@ -6,17 +6,16 @@ using namespace mtps;
 namespace zoper
 {
 void BoardUtils::for_each_coordinate(
-    const vector2dst& startPosition,
+    vector2dst startPosition,
     const Direction& direction,
     function<bool(const vector2dst&, const Direction&)> updatePredicate)
 {
-    vector2dst loopPosition{startPosition};
     bool stay{true};
 
     while (stay)
     {
-        stay &= updatePredicate(loopPosition, direction);
-        loopPosition = direction.applyToVector(loopPosition);
+        stay &= updatePredicate(startPosition, direction);
+        startPosition = direction.applyToVector(startPosition);
     };
 }
 
@@ -34,7 +33,7 @@ void BoardUtils::for_each_coordinate_in_rect(
         startPosition, direction,
         [&board_size, updatePredicate = std::move(updatePredicate)](
             const vector2dst& v, const Direction& d) {
-            return (board_size.x > v.x) && (board_size.y > v.y) &&
+            return (v.x < board_size.x) && (v.y < board_size.y) &&
                 updatePredicate(v, d);
         });
 }

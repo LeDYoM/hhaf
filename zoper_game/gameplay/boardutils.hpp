@@ -23,7 +23,7 @@ public:
      * @param updatePredicate Function to call for each position
      */
     static void for_each_coordinate(
-        const mtps::vector2dst& startPosition,
+        mtps::vector2dst startPosition,
         const Direction& direction,
         mtps::function<bool(const mtps::vector2dst&, const Direction&)>
             updatePredicate);
