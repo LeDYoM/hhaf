@@ -317,13 +317,14 @@ void GameScene::launchPlayer()
     const vector2dst loopPosition{m_boardGroup->player()->boardPosition()};
     const board::BoardTileData tokenType{m_boardGroup->player()->value()};
     ScoreIncrementer score_incrementer{level_properties_};
+    vector2df lastTokenPosition{};
+
     BoardUtils::for_each_coordinate_in_rect(
         loopPosition, loopDirection, m_boardGroup->boardModel()->size(),
-        [this, tokenType, &score_incrementer](const vector2dst& loopPosition,
-                                              const Direction&) {
+        [this, tokenType, &score_incrementer, &lastTokenPosition](
+            const vector2dst& loopPosition, const Direction&) {
             bool result{true};
             bool found{false};
-            vector2df lastTokenPosition{};
 
             if (!m_boardGroup->boardModel()->tileEmpty(loopPosition) &&
                 TokenZones::toBoardBackgroundType(
@@ -340,9 +341,6 @@ void GameScene::launchPlayer()
 
                     // Increment the number of tokens deleted in a row
                     score_incrementer.addHit();
-
-                    // Store the position of this last cosumed token
-                    lastTokenPosition = m_boardGroup->board2Scene(loopPosition);
 
                     // Delete the token
                     m_boardGroup->boardModel()->deleteTile(loopPosition);
@@ -368,17 +366,19 @@ void GameScene::launchPlayer()
                 }
             }
 
+            // Store the position of this last cosumed token
+            lastTokenPosition = m_boardGroup->board2Scene(loopPosition);
+
             if (found)
             {
                 DisplayLog::info("Tile with same color found");
                 DisplayLog::info("Creating points to score");
                 p_->createScoreIncrementPoints(*this, lastTokenPosition);
-
-                DisplayLog::info("Launching player");
-                m_boardGroup->player()->launchAnimation(lastTokenPosition);
             }
             return result;
         });
+    DisplayLog::info("Launching player");
+    m_boardGroup->player()->launchAnimation(lastTokenPosition);
 }
 
 vector2df GameScene::tileSize() const
