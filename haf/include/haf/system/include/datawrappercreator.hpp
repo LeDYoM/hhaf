@@ -35,20 +35,6 @@ public:
     {
         return create<T>();
     }
-
-    template <typename T>
-    T& systemInterface()
-    {
-        scene::InterfaceGetter tmp(attachable());
-        return tmp.systemInterface<T>();
-    }
-
-    template <typename T>
-    T const& systemInterface() const
-    {
-        scene::InterfaceGetter tmp(attachable());
-        return tmp.systemInterface<T>();
-    }
 };
 }  // namespace haf::sys
 
