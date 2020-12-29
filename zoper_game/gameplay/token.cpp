@@ -73,8 +73,10 @@ void Token::tileMoved(const vector2dst& source, const vector2dst& dest)
 {
     BaseClass::tileMoved(source, dest);
 
-    const auto time(time::TimePoint_as_miliseconds(
-        level_properties_->millisBetweenTokens() / 2));
+//    const auto time(time::TimePoint_as_miliseconds(
+//        level_properties_->millisBetweenTokens() / 2));
+
+    const auto time(time::TimePoint_as_miliseconds(1000U));
 
     const auto destination(getBoardGroup()->board2Scene(dest));
     animation_component_->addPropertyAnimation(time, prop<Position>(), prop<Position>()(),

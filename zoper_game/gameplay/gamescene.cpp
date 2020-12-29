@@ -181,18 +181,7 @@ void GameScene::onCreated()
     next_token_->prepareNextToken(time::TimePoint_as_miliseconds(
                                       level_properties_->millisBetweenTokens()),
                                   [this]() { generateNextToken(); });
-    /*
-        m_nextTokenTimer = scene_timer_component_->addTimer(
-            time::TimerType::Continuous,
-            time::TimePoint_as_miliseconds(
-                level_properties_->millisBetweenTokens()),
-            [this](time::TimePoint realEllapsed) {
-                DisplayLog::info("Elapsed between tokens: ",
-                                 realEllapsed.milliseconds());
-                // New token
-                generateNextToken();
-            });
-    */
+
     m_gameOver = createSceneNode<GameOverSceneNode>("gameOverSceneNode");
     m_gameOver->prop<Visible>().set(false);
 
