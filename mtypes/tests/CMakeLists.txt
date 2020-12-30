@@ -5,6 +5,7 @@ set(CURRENT_TARGET ${PROJECT_NAME})
 
 set(SOURCE_TESTS
     array
+    connection
     dictionary
     grouping_properties
     lockablevector
