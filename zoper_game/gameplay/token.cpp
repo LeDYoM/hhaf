@@ -28,12 +28,10 @@ Token::Token(SceneNode* const parent, str name) :
 
 Token::~Token() = default;
 
-void Token::configure(sptr<LevelProperties> level_properties,
-                      const Rectf32& box)
+void Token::configure(const Rectf32& box)
 {
     node_->box        = box;
     node_->color      = getColorForToken();
-    level_properties_  = std::move(level_properties);
 }
 
 bool Token::canBeMoved(mtps::vector2dst const&) const

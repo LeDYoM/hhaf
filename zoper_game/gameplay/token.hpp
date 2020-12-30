@@ -11,9 +11,6 @@
 
 namespace zoper
 {
-
-class LevelProperties;
-
 /**
  * @brief This class represents one of the enemies in the board of the game.
  * The clas contains internal data like the token type inherited from
@@ -27,8 +24,7 @@ public:
     Token(mtps::rptr<haf::scene::SceneNode> parent, mtps::str name);
     ~Token() override;
 
-    void configure(mtps::sptr<LevelProperties> level_properties,
-                   const mtps::Rectf32 &box);
+    void configure(const mtps::Rectf32 &box);
 
     static void resetTileCounter();
 
@@ -45,7 +41,6 @@ private:
     static mtps::u32 m_tileCounter;
     mtps::vector2df board2SceneFactor_;
     mtps::sptr<haf::scene::AnimationComponent> animation_component_;
-    mtps::sptr<LevelProperties> level_properties_;
 };
 } // namespace zoper
 
