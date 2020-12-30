@@ -3,6 +3,7 @@
 #include "highscorevalidator.hpp"
 #include "../loaders/highscoresresources.hpp"
 #include "../gameshareddata.hpp"
+
 #include <haf/filesystem/include/fileserializer.hpp>
 #include <haf/scene_components/include/texteditorcomponent.hpp>
 #include <haf/scene_components/include/scenemetricsview.hpp>
@@ -11,6 +12,7 @@
 #include <haf/resources/include/iresourceretriever.hpp>
 #include <haf/shareddata/include/shareddata.hpp>
 #include <haf/shareddata/include/shareddataviewer.hpp>
+#include <haf/input/include/inputcomponent.hpp>
 
 using namespace mtps;
 using namespace haf;
@@ -57,7 +59,7 @@ void HighScoreTextController::onCreated()
     const bool isInserting{
         m_hsData.tryInsertHighScore(gameScore, positionInTable)};
 
-    size_type counter{0};
+    size_type counter{0U};
     for (const auto& element : m_hsData.highScoresList())
     {
         addHighScoresLine(counter, element,
@@ -125,7 +127,7 @@ void HighScoreTextController::addEditAnimation(const size_type line_index)
         line_index,
         [this](const auto, const sptr<nodes::SceneNodeText>& element) {
             animation_component_->addCircledPropertyAnimation(
-                time::TimePoint_as_miliseconds(2000),
+                time::TimePoint_as_miliseconds(2000U),
                 element->prop<nodes::SceneNodeTextProperties>()
                     .get_property_reference<nodes::TextColor>(),
                 colors::White, colors::Black);

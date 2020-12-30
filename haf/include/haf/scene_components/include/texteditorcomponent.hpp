@@ -1,9 +1,10 @@
 #ifndef HAF_COMPONENT_TEXTEDITOR_INCLUDE_HPP
 #define HAF_COMPONENT_TEXTEDITOR_INCLUDE_HPP
 
-#include <haf/input/include/inputcomponent.hpp>
 #include <mtypes/include/types.hpp>
-#include <haf/scene_nodes/include/scenenodetext.hpp>
+#include <mtypes/include/str.hpp>
+#include <mtypes/include/connection.hpp>
+#include <haf/input/include/virtual_input_component.hpp>
 
 namespace haf::scene
 {
@@ -14,10 +15,10 @@ public:
     virtual bool isValidText(const mtps::str&) { return true; }
 };
 
-class TextEditorComponent : public input::InputComponent
+class TextEditorComponent final : public input::VirtualInputComponent
 {
 private:
-    using BaseClass = InputComponent;
+    using BaseClass = input::VirtualInputComponent;
 
 public:
     virtual void onAttached() override;
@@ -34,7 +35,8 @@ public:
     }
 
 private:
-    mtps::ireceiver m_receiver;
+    void onKeyPressed(const input::Key&) override;
+
     mtps::uptr<TextValidator> m_textValidator;
     mtps::str m_originalText;
 };
