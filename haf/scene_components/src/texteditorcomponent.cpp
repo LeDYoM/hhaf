@@ -71,4 +71,10 @@ void TextEditorComponent::onKeyPressed(const input::Key& key)
     }
 }
 
+void TextEditorComponent::setTextValidator(
+    mtps::uptr<TextValidator> nTextValidator) noexcept
+{
+    std::swap(m_textValidator, nTextValidator);
+}
+
 }  // namespace haf::scene

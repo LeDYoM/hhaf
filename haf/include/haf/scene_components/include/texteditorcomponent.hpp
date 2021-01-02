@@ -28,11 +28,7 @@ public:
 
     bool enabled{true};
 
-    inline void setTextValidator(
-        mtps::uptr<TextValidator> nTextValidator) noexcept
-    {
-        std::swap(m_textValidator, nTextValidator);
-    }
+    void setTextValidator(mtps::uptr<TextValidator> nTextValidator) noexcept;
 
 private:
     void onKeyPressed(const input::Key&) override;
