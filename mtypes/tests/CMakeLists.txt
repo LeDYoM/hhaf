@@ -7,6 +7,7 @@ set(SOURCE_TESTS
     array
     connection
     dictionary
+    function
     grouping_properties
     lockablevector
     main
