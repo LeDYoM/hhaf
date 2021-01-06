@@ -62,9 +62,11 @@ public:
     constexpr bool disconnect(emitter_callback_t const& f) noexcept
     {
         auto const old_size = m_receivers.size();
-    
-        (void)(m_receivers.erase_values(f, m_receivers.begin()) !=
-            m_receivers.end());
+
+        (void)(m_receivers.erase_if([&f](auto const& element)
+        {
+            return f.equals(element);
+        }));
 
         return m_receivers.size() < old_size;
     }
