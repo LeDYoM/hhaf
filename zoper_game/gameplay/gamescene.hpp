@@ -50,6 +50,7 @@ public:
     }
     
     void goGameOver();
+    void tokenHitAnimation(mtps::vector2dst const& pos);
 
 private:
     struct GameScenePrivate;

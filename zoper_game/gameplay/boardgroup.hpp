@@ -2,6 +2,7 @@
 #define ZOPER_BOARDGROUP_HPP
 
 #include <mtypes/include/vector2d.hpp>
+#include <mtypes/include/connection.hpp>
 
 #include <haf/scene/include/scenenode.hpp>
 #include <haf/scene_nodes/include/tablenode.hpp>
@@ -70,6 +71,10 @@ public:
     mtps::vector2df board2SceneFactor() const;
     mtps::vector2df board2Scene(const mtps::vector2dst& bPosition) const;
     mtps::vector2df tileSize() const;
+
+    void launchPlayer();
+
+    mtps::emitter<mtps::vector2dst const> token_hit;
 
 private:
     mtps::sptr<haf::board::BoardManager> board_model_;

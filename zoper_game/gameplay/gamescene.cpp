@@ -106,6 +106,7 @@ void GameScene::onCreated()
 
     LogAsserter::log_assert(!m_boardGroup, "m_boardGroup is not empty");
     m_boardGroup = createSceneNode<BoardGroup>("BoardGroup");
+//    m_boardGroup->token_hit.connect(&(this->tokenHitAnimation));
 
     m_nextTokenPart = 0U;
 
@@ -368,6 +369,12 @@ void GameScene::launchPlayer()
         });
     DisplayLog::info("Launching player");
     m_boardGroup->player()->launchAnimation(lastTokenPosition);
+}
+
+void GameScene::tokenHitAnimation(vector2dst const& pos)
+{
+    auto const lastTokenPosition = m_boardGroup->board2Scene(pos);
+    p_->createScoreIncrementPoints(*this, lastTokenPosition);
 }
 
 vector2df GameScene::tileSize() const
