@@ -80,7 +80,7 @@ TEST_CASE("emitter::emitter with member pointer connect",
 
     // Connect to the target receiver
     test_emitter.connect(
-        function<void(s32)>(&t_connection, &TargetConnection::receiver_method));
+        make_function(&t_connection, &TargetConnection::receiver_method));
     CHECK(t_connection.data == 0);
     CHECK(test_emitter.size() == 1U);
     CHECK(!test_emitter.empty());
@@ -101,8 +101,8 @@ TEST_CASE("emitter::emitter with member pointer connect",
     CHECK(t_connection.data == 9123);
 
     // Now perform a correct disconnection
-    CHECK(test_emitter.disconnect(make_function(
-        &t_connection, &TargetConnection::receiver_method)));
+    CHECK(test_emitter.disconnect(
+        make_function(&t_connection, &TargetConnection::receiver_method)));
 
     // Check is empty after disconnection
     CHECK(test_emitter.size() == 0U);
@@ -114,12 +114,14 @@ TEST_CASE("emitter::emitter with member pointer connect",
     CHECK(t_connection.data == 9123);
 
     // Test reconnection to the same object works
-    test_emitter += t_connection.receiver_lambda;
+    test_emitter +=
+        make_function(&t_connection, &TargetConnection::receiver_method);
     CHECK(test_emitter.size() == 1U);
     CHECK(!test_emitter.empty());
     test_emitter(200);
     CHECK(t_connection.data == 200);
-    test_emitter -= t_connection.receiver_lambda;
+    test_emitter -=
+        make_function(&t_connection, &TargetConnection::receiver_method);
     CHECK(test_emitter.size() == 0U);
     CHECK(test_emitter.empty());
 }
