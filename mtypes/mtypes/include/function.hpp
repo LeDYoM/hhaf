@@ -65,13 +65,16 @@ public:
     /**
      * @brief Operator invoke to perform the actual call.
      * 
+     * @tparam Args2 Types of the actual call. They should be forwardable
+     * to the function call.
      * @param args Arguments to be forwarded to the function.
      * @return ReturnValue Return value of the function.
      */
-    constexpr ReturnValue operator()(Args&&... args) const
+    template <typename... Args2>
+    constexpr ReturnValue operator()(Args2&&... args) const
     {
         assert(m_callable);
-        return m_callable->Invoke(std::forward<Args>(args)...);
+        return m_callable->Invoke(std::forward<Args2>(args)...);
     }
 
     /**
@@ -107,7 +110,7 @@ private:
     {
     public:
         virtual ~ICallable() {}
-        virtual ReturnValue Invoke(Args&&...)                = 0;
+        virtual ReturnValue Invoke(Args...)                = 0;
         virtual bool equals(ICallable const&) const noexcept = 0;
     };
 
@@ -119,7 +122,7 @@ private:
         constexpr CallableT(Y&& t) noexcept : m_t{std::forward<Y>(t)}
         {}
 
-        inline ReturnValue Invoke(Args&&... args) override
+        inline ReturnValue Invoke(Args... args) override
         {
             return m_t(std::forward<Args>(args)...);
         }
@@ -154,7 +157,7 @@ private:
             obj{receiver}, function_{function}
         {}
 
-        inline ReturnValue Invoke(Args&&... args) override
+        inline ReturnValue Invoke(Args... args) override
         {
             return (obj->*function_)(std::forward<Args>(args)...);
         }

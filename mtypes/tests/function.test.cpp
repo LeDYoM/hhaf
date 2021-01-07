@@ -110,3 +110,11 @@ TEST_CASE("make_function", "[function]")
         CHECK(b(50) == 52);
     }
 }
+
+TEST_CASE("function::operator()", "[function]")
+{
+    function<s32(s32)> a = [](s32 d) { return d + 1; };
+    s32 tmp{4};
+
+    s32 tmp2 = a(tmp);
+}

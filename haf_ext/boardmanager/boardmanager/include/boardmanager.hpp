@@ -12,7 +12,7 @@ namespace haf::board
 class IBoardManagerActuator;
 using BackgroundData = mtps::s32;
 using BackgroundFunction =
-    mtps::function<BackgroundData(const mtps::vector2dst)>;
+    mtps::function<BackgroundData(const mtps::vector2dst&)>;
 
 class BoardManager : public haf::scene::IComponent
 {
