@@ -112,7 +112,7 @@ public:
     /// signature). That is, when the original emitter e is called, it will
     /// generate a call to the second emitter.
     constexpr connection_t(emitter_type& e, emitter_type& r) :
-        m_emitter{e}, m_function{[&r](Args&&... args) {
+        m_emitter{e}, m_function{[&r](Args... args) {
             r(std::forward<Args>(args)...);
         }}
     {
