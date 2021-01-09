@@ -24,7 +24,7 @@ public:
 
     /**
      * @brief Default constructor.
-     * Creates an emitter object without receivers
+     * Creates an emitter object without receivers.
      */
     constexpr emitter_t() = default;
 
@@ -94,7 +94,6 @@ public:
     virtual ~iconnection() {}
 };
 
-// template <typename... Args>
 template <template <typename... G> typename function_type,
           typename em_type,
           typename... Args>
@@ -102,15 +101,27 @@ class connection_t final : public iconnection
 {
 public:
     using emitter_type = em_type;
+
+    /**
+     * @brief Constructor to create a connection to a function
+     * 
+     * @param e Emitter source.
+     * @param f Function to connect.
+     */
     constexpr connection_t(emitter_type& e, function_type<void(Args...)> f) :
         m_emitter{e}, m_function{std::move(f)}
     {
         m_emitter.connect(m_function);
     }
 
-    /// Constructor to forward the connection to another connection (of the same
-    /// signature). That is, when the original emitter e is called, it will
-    /// generate a call to the second emitter.
+    /**
+     * @brief Constructor to forward the connection to another connection (of
+     * the same signature). That is, when the original emitter e is called, it
+     * will generate a call to the second emitter.
+     * 
+     * @param e Emitter source.
+     * @param r Emitter receiver.
+     */
     constexpr connection_t(emitter_type& e, emitter_type& r) :
         m_emitter{e}, m_function{[&r](Args... args) {
             r(std::forward<Args>(args)...);

@@ -125,3 +125,20 @@ TEST_CASE("emitter::emitter with member pointer connect",
     CHECK(test_emitter.size() == 0U);
     CHECK(test_emitter.empty());
 }
+
+TEST_CASE("connection::connection", "[emitter][connection][iconnection")
+{
+    emitter<s32> test_emitter;
+    TargetConnection t_connection;
+
+    {
+        connection<s32> connection{test_emitter, t_connection.receiver_lambda};
+
+        test_emitter(700);
+        CHECK(t_connection.data == 700);
+    }
+
+    // The connection was destroyed, so triggering it does nothing.
+    test_emitter(900);
+    CHECK(t_connection.data == 700);
+}
