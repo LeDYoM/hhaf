@@ -1,9 +1,18 @@
-cmake_minimum_required(VERSION 3.14)
-project(mtypes CXX)
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/../cmake_modules" ${CMAKE_MODULE_PATH})
 
+cmake_minimum_required(VERSION 3.14)
+project("Minitypes"
+    VERSION 0.9.1.1
+    DESCRIPTION "Simple types for HAF"
+    # [HOMEPAGE_URL <url-string>]
+    LANGUAGES CXX
+)
+include (testing)
+include (functions)
 set(CURRENT_TARGET mtypes)
 
 add_library(${CURRENT_TARGET} INTERFACE)
+#set_cxx_standard(${CURRENT_TARGET})
 target_include_directories(${CURRENT_TARGET} INTERFACE ${PROJECT_SOURCE_DIR})
 
 if(${MTYPES_USE_MEMMANAGER})
