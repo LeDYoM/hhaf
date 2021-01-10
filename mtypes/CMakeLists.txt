@@ -9,6 +9,7 @@ project("Minitypes"
 )
 include (testing)
 include (functions)
+enable_testing()
 set(CURRENT_TARGET mtypes)
 
 add_library(${CURRENT_TARGET} INTERFACE)

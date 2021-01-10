@@ -25,12 +25,13 @@ function(add_test_executable)
     list(APPEND SOURCE_TESTS_LIST ${NAME}.test.cpp)
   endforeach()
 
-  enable_testing()
   add_executable(${CURRENT_TARGET} ${SOURCE_TESTS_LIST})
-
+  
   target_link_libraries(${CURRENT_TARGET} PUBLIC Catch2)
   target_include_directories(
     ${CURRENT_TARGET} PRIVATE "${Catch2_SOURCE_DIR}/single_include/catch2")
+
+  add_test(NAME ${CURRENT_TARGET} COMMAND ${CURRENT_TARGET})
 
 endfunction()
 
