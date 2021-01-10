@@ -30,7 +30,7 @@ bool Transformable::updateLocalTransformationsIfNecessary() noexcept
 {
     bool result{false};
 
-    for (auto index{0}; index < numTransformations(); ++index)
+    for (auto index{0U}; index < numTransformations(); ++index)
     {
         result |= getTransformation(index).updateTransformIfNecessary();
     }
@@ -39,7 +39,7 @@ bool Transformable::updateLocalTransformationsIfNecessary() noexcept
     if (result)
     {
         local_transform_ = Matrix4x4::Identity;
-        for (auto index{0}; index < numTransformations(); ++index)
+        for (auto index{0U}; index < numTransformations(); ++index)
         {
             local_transform_ *= getTransformation(index).matrix();
         }

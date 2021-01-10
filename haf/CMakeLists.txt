@@ -4,7 +4,8 @@ project(
   VERSION 0.8.1.2
   DESCRIPTION "Host Application Framework main library"
   # [HOMEPAGE_URL <url-string>]
-  LANGUAGES CXX)
+  LANGUAGES CXX
+)
 
 set(_SOURCES main.cpp systemprovider_init.cpp)
 file(GLOB_RECURSE _HEADERS "include/*.hpp")

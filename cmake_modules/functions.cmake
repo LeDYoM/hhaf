@@ -1,3 +1,10 @@
+function(set_cxx_standard CURRENT_TARGET)
+    set_property(TARGET ${CURRENT_TARGET} PROPERTY CXX_STANDARD 17)
+    set_property(TARGET ${CURRENT_TARGET} PROPERTY CXX_STANDARD_REQUIRED ON)
+    set_property(TARGET ${CURRENT_TARGET} PROPERTY CXX_EXTENSIONS ON)
+    set_property(TARGET ${CURRENT_TARGET} PROPERTY POSITION_INDEPENDENT_CODE ON)       
+endfunction()
+
 # Function to build different components from the project in an unified way.
 function(build_lib_component)
 
@@ -69,40 +76,9 @@ function(build_concrete_backend)
 
 endfunction(build_concrete_backend)
 
-function(add_test_executable)
-
-  cmake_parse_arguments(LC_BUILD "" "" "SOURCE_TESTS" ${ARGN})
-
-  include(FetchContent)
-  FetchContent_MakeAvailable(Catch2)
-
-  foreach(NAME IN LISTS LC_BUILD_SOURCE_TESTS)
-    list(APPEND SOURCE_TESTS_LIST ${NAME}.test.cpp)
-  endforeach()
-
-  enable_testing()
-  add_executable(${CURRENT_TARGET} ${SOURCE_TESTS_LIST})
-
-  target_link_libraries(${CURRENT_TARGET} PUBLIC Catch2)
-  target_include_directories(
-    ${CURRENT_TARGET} PRIVATE "${Catch2_SOURCE_DIR}/single_include/catch2")
-
-endfunction(add_test_executable)
-
 function(add_development_dependency _source _dependency)
     add_dependencies(${_source} ${_dependency})
 endfunction(add_development_dependency)
-
-function(add_haf_test_executable)
-
-  set(PARAM_LIST ${ARGV})
-  list(APPEND PARAM_LIST main)
-
-  add_test_executable(${PARAM_LIST})
-
-  target_link_libraries(${CURRENT_TARGET} PRIVATE haf)
-
-endfunction(add_haf_test_executable)
 
 function(build_doc _base_name)
   # check if Doxygen is installed

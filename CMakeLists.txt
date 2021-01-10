@@ -66,6 +66,7 @@ endforeach()
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 include(functions)
+include(testing)
 
 # Use the memmanager
 option(MTYPES_USE_MEMMANAGER "Compile mtypes using the memmanager wrappers" ON)
