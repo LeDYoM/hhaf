@@ -15,15 +15,17 @@ add_library(${CURRENT_TARGET} INTERFACE)
 #set_cxx_standard(${CURRENT_TARGET})
 target_include_directories(${CURRENT_TARGET} INTERFACE ${PROJECT_SOURCE_DIR})
 
+set(base_directory mtypes/include)
+
 if(${MTYPES_USE_MEMMANAGER})
   target_include_directories(
     ${CURRENT_TARGET}
-    INTERFACE "${PROJECT_SOURCE_DIR}/mtypes/include/alloc_own/")
+    INTERFACE "${base_directory}/alloc_own")
   target_link_libraries(${CURRENT_TARGET} INTERFACE memmanager)
 else()
   target_include_directories(
     ${CURRENT_TARGET}
-    INTERFACE "${PROJECT_SOURCE_DIR}/mtypes/include/alloc_inline/")
+    INTERFACE "${base_directory}/alloc_inline")
 endif()
 
 install(

@@ -8,7 +8,7 @@ namespace mtps
 {
 
 template <typename T, auto M, auto F>
-class AllocatorFunc1
+class AllocatorFunc
 {
 public:
     using pointer = T*;
