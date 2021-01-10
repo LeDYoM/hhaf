@@ -21,23 +21,25 @@ Token::Token(SceneNode* const parent, str name) :
                  name + str::to_str(m_tileCounter) + str::to_str(m_tileCounter)}
 {
     ++m_tileCounter;
-    node_ = renderizableBuilder().name("Node" + str::to_str(m_tileCounter))
-        .figType(FigType_t::Shape).pointCount(30U).create();
+    node_ = renderizableBuilder()
+                .name("Node" + str::to_str(m_tileCounter))
+                .figType(FigType_t::Shape)
+                .pointCount(30U)
+                .create();
     animation_component_ = addComponentOfType<scene::AnimationComponent>();
 }
 
 Token::~Token() = default;
 
-void Token::configure(const Rectf32& box)
+void Token::setBoxBoundaries(const Rectf32& box)
 {
-    node_->box        = box;
-    node_->color      = getColorForToken();
+    node_->box = box;
 }
 
 bool Token::canBeMoved(mtps::vector2dst const&) const
 {
     return true;
-//    return !TokenZones::pointInCenter(dest_position);
+    //    return !TokenZones::pointInCenter(dest_position);
 }
 
 void Token::resetTileCounter()
@@ -71,13 +73,10 @@ void Token::tileMoved(const vector2dst& source, const vector2dst& dest)
 {
     BaseClass::tileMoved(source, dest);
 
-//    const auto time(time::TimePoint_as_miliseconds(
-//        level_properties_->millisBetweenTokens() / 2));
-
-    const auto time(time::TimePoint_as_miliseconds(1000U));
+    auto const MoveTokenTime = time::TimePoint_as_miliseconds(1000U);
 
     const auto destination(getBoardGroup()->board2Scene(dest));
-    animation_component_->addPropertyAnimation(time, prop<Position>(), prop<Position>()(),
-                                               destination);
+    animation_component_->addPropertyAnimation(MoveTokenTime, prop<Position>(),
+                                               prop<Position>()(), destination);
 }
 }  // namespace zoper

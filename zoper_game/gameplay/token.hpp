@@ -24,7 +24,7 @@ public:
     Token(mtps::rptr<haf::scene::SceneNode> parent, mtps::str name);
     ~Token() override;
 
-    void configure(const mtps::Rectf32 &box);
+    void setBoxBoundaries(const mtps::Rectf32 &box);
 
     static void resetTileCounter();
 

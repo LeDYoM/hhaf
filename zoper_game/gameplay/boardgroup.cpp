@@ -97,12 +97,11 @@ void BoardGroup::createNewToken(const board::BoardTileData data,
 
     // Set the position in the scene depending on the board position
     new_tile_token->prop<Position>().set(board2Scene(board_position));
+    new_tile_token->setBoxBoundaries(rectFromSize(size));
 
     // Add it to the board
     board_model_->setTile(board_position, new_tile_token);
     board_model_->changeTileData(board_position, data);
-    // Configure it.
-    new_tile_token->configure(rectFromSize(size));
 }
 
 void BoardGroup::tileRemoved(const vector2dst, board::SITilePointer& tile)
