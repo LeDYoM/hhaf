@@ -77,7 +77,7 @@ sptr<BoardManager> GameBaseTile::getBoardManager()
     auto board_group{ancestor<BoardGroup>()};
     LogAsserter::log_assert(board_group != nullptr, "Invalid BoardModel found");
 
-    return board_group != nullptr ? board_group->boardModel() : nullptr;
+    return board_group != nullptr ? board_group->boardManager() : nullptr;
 }
 
 }  // namespace zoper

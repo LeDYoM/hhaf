@@ -287,7 +287,7 @@ void GameScene::generateNextToken()
     // Select the next token zone.
     m_nextTokenPart = (m_nextTokenPart + 1) % NumWays;
 
-    DisplayLog::debug(m_boardGroup->boardModel()->toStr());
+    DisplayLog::debug(m_boardGroup->boardManager()->toStr());
 
     if (game_over)
     {
@@ -310,19 +310,19 @@ void GameScene::launchPlayer()
     vector2df lastTokenPosition{};
 
     BoardUtils::for_each_coordinate_in_rect(
-        loopPosition, loopDirection, m_boardGroup->boardModel()->size(),
+        loopPosition, loopDirection, m_boardGroup->boardManager()->size(),
         [this, tokenType, &score_incrementer, &lastTokenPosition](
             const vector2dst& loopPosition, const Direction&) {
             bool result{true};
             bool found{false};
 
-            if (!m_boardGroup->boardModel()->tileEmpty(loopPosition) &&
+            if (!m_boardGroup->boardManager()->tileEmpty(loopPosition) &&
                 TokenZones::toBoardBackgroundType(
-                    m_boardGroup->boardModel()->backgroundType(loopPosition)) !=
+                    m_boardGroup->boardManager()->backgroundType(loopPosition)) !=
                     TokenZones::BoardBackgroundType::Center)
             {
                 sptr<board::ITile> currentToken{
-                    m_boardGroup->boardModel()->getTile(loopPosition)};
+                    m_boardGroup->boardManager()->getTile(loopPosition)};
                 board::BoardTileData currentTokenType{currentToken->value()};
 
                 if (currentTokenType == tokenType)
@@ -333,7 +333,7 @@ void GameScene::launchPlayer()
                     score_incrementer.addHit();
 
                     // Delete the token
-                    m_boardGroup->boardModel()->deleteTile(loopPosition);
+                    m_boardGroup->boardManager()->deleteTile(loopPosition);
 
                     // At least you found one token
                     found = true;
@@ -345,7 +345,7 @@ void GameScene::launchPlayer()
                     // Change the type of the player to this new one and
                     // change the type of the token for the previous type of the
                     // player
-                    m_boardGroup->boardModel()->swapTileData(
+                    m_boardGroup->boardManager()->swapTileData(
                         m_boardGroup->player()->boardPosition(), loopPosition);
 
                     DisplayLog::info("Player type changed to ",

@@ -61,8 +61,8 @@ public:
     bool moveTowardsCenter(Direction const direction,
                            mtps::vector2dst const& position);
 
-    mtps::sptr<haf::board::BoardManager> boardModel() noexcept;
-    const mtps::sptr<const haf::board::BoardManager> boardModel() const noexcept;
+    mtps::sptr<haf::board::BoardManager> boardManager() noexcept;
+    const mtps::sptr<const haf::board::BoardManager> boardManager() const noexcept;
     mtps::sptr<haf::scene::SceneNode> tokensSceneNode() noexcept;
     const mtps::sptr<haf::scene::SceneNode> tokensSceneNode() const noexcept;
     mtps::sptr<Player> player() noexcept;
@@ -77,7 +77,6 @@ public:
     mtps::emitter<mtps::vector2dst const> token_hit;
 
 private:
-    mtps::sptr<haf::board::BoardManager> board_model_;
     mtps::sptr<Player> player_;
     mtps::sptr<haf::scene::SceneNode> tokens_scene_node;
     mtps::sptr<LevelProperties> level_properties_;

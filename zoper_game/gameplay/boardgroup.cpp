@@ -52,7 +52,6 @@ void BoardGroup::configure(vector2dst size,
 
     // Create and initialize the BoardManager
     auto board_model = addComponentOfType<board::BoardManager>();
-    board_model_     = board_model;
     board_model->initialize(tableSize, this);
 
     board_model->setBackgroundFunction(
@@ -219,16 +218,18 @@ Color BoardGroup::getBackgroundTileColor(const size_type level,
 bool BoardGroup::moveTileInDirection(Direction const direction,
                                      vector2dst const position)
 {
+    auto board_model = componentOfType<board::BoardManager>();
+
     // Is the current tile position empty?
-    if (!board_model_->tileEmpty(position))
+    if (!board_model->tileEmpty(position))
     {
         // If not, what about the next position to check, is empty?
         const auto next = direction.applyToVector(position);
 
-        LogAsserter::log_assert(board_model_->tileEmpty(next),
+        LogAsserter::log_assert(board_model->tileEmpty(next),
                                 "Trying to move a token to a non empty tile");
-        board_model_->moveTile(position, next);
-        return (TokenZones::toBoardBackgroundType(board_model_->backgroundType(
+        board_model->moveTile(position, next);
+        return (TokenZones::toBoardBackgroundType(board_model->backgroundType(
                     next)) == TokenZones::BoardBackgroundType::Center);
     }
     return false;
@@ -238,22 +239,23 @@ bool BoardGroup::moveTowardsCenter(Direction const direction,
                                    vector2dst const& position)
 {
     bool moved_to_center{false};
+    auto board_model = componentOfType<board::BoardManager>();
 
     // Is the current tile position empty?
-    if (!board_model_->tileEmpty(position))
+    if (!board_model->tileEmpty(position))
     {
         // If not, what about the next position to check, is empty?
         const auto next = direction.applyToVector(position);
 
-        if (!board_model_->tileEmpty(next))
+        if (!board_model->tileEmpty(next))
         {
             // If the target position where to move the
             // token is occupied, move the this target first.
             moved_to_center = moveTowardsCenter(direction, next);
         }
-        board_model_->moveTile(position, next);
+        board_model->moveTile(position, next);
         auto dest_tile{
-            std::dynamic_pointer_cast<Token>(board_model_->getTile(next))};
+            std::dynamic_pointer_cast<Token>(board_model->getTile(next))};
 
         LogAsserter::log_assert(dest_tile != nullptr, "Error moving the tile!");
 
@@ -269,7 +271,7 @@ bool BoardGroup::moveTowardsCenter(Direction const direction,
 vector2df BoardGroup::board2SceneFactor() const
 {
     return systemInterface<ISceneMetricsView>().currentView().size() /
-        board_model_->size();
+        componentOfType<board::BoardManager>()->size();
 }
 
 vector2df BoardGroup::board2Scene(const vector2dst& bPosition) const
@@ -282,15 +284,15 @@ vector2df BoardGroup::tileSize() const
     return board2Scene({1, 1});
 }
 
-mtps::sptr<board::BoardManager> BoardGroup::boardModel() noexcept
+mtps::sptr<board::BoardManager> BoardGroup::boardManager() noexcept
 {
-    return board_model_;
+    return componentOfType<board::BoardManager>();
 }
 
-const mtps::sptr<const board::BoardManager> BoardGroup::boardModel()
+const mtps::sptr<const board::BoardManager> BoardGroup::boardManager()
     const noexcept
 {
-    return board_model_;
+    return componentOfType<board::BoardManager>();
 }
 
 mtps::sptr<scene::SceneNode> BoardGroup::tokensSceneNode() noexcept
@@ -323,18 +325,19 @@ void BoardGroup::launchPlayer()
     vector2df lastTokenPosition{};
 
     BoardUtils::for_each_coordinate_in_rect(
-        loopPosition, loopDirection, board_model_->size(),
+        loopPosition, loopDirection, boardManager()->size(),
         [this, tokenType, &score_incrementer, &lastTokenPosition](
             const vector2dst& loopPosition, const Direction&) {
             bool result{true};
             bool found{false};
 
-            if (!board_model_->tileEmpty(loopPosition) &&
-                TokenZones::toBoardBackgroundType(board_model_->backgroundType(
-                    loopPosition)) != TokenZones::BoardBackgroundType::Center)
+            if (!boardManager()->tileEmpty(loopPosition) &&
+                TokenZones::toBoardBackgroundType(
+                    boardManager()->backgroundType(loopPosition)) !=
+                    TokenZones::BoardBackgroundType::Center)
             {
                 sptr<board::ITile> currentToken{
-                    board_model_->getTile(loopPosition)};
+                    boardManager()->getTile(loopPosition)};
                 board::BoardTileData currentTokenType{currentToken->value()};
 
                 if (currentTokenType == tokenType)
@@ -345,7 +348,7 @@ void BoardGroup::launchPlayer()
                     score_incrementer.addHit();
 
                     // Delete the token
-                    board_model_->deleteTile(loopPosition);
+                    boardManager()->deleteTile(loopPosition);
 
                     // At least you found one token
                     found = true;
@@ -357,8 +360,8 @@ void BoardGroup::launchPlayer()
                     // Change the type of the player to this new one and
                     // change the type of the token for the previous type of the
                     // player
-                    board_model_->swapTileData(player_->boardPosition(),
-                                               loopPosition);
+                    boardManager()->swapTileData(player_->boardPosition(),
+                                              loopPosition);
 
                     DisplayLog::info("Player type changed to ",
                                      player_->value());

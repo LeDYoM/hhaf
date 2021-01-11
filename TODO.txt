@@ -9,3 +9,6 @@
 
 To format from command line:
 find haf/ -iname *.hpp -o -iname *.cpp| xargs clang-format -i
+
+- When changing level, tokens spawn to same speed always.
+- Points to score not working.
