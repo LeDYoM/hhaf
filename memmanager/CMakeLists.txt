@@ -1,40 +1,24 @@
-SET(CMAKE_INSTALL_PREFIX /home/ismael/h_test/)
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/../cmake_modules" ${CMAKE_MODULE_PATH})
 
-SET(CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}phaf/")
+set_install_dir()
 
-project(memmanager)
-cmake_minimum_required(VERSION 3.11)
+cmake_minimum_required(VERSION 3.14)
+project("HAF MemManager"
+    VERSION 0.2.0.0
+    DESCRIPTION "Memory manager for HAF"
+    # [HOMEPAGE_URL <url-string>]
+    LANGUAGES CXX
+)
+
+include (testing)
+include (functions)
+enable_testing()
 
 set(CURRENT_TARGET memmanager)
 
 set(SOURCES src/memmanager.cpp)
 set(HEADERS memmanager/include/memmanager.hpp)
 
-add_library(${CURRENT_TARGET} SHARED ${SOURCES} ${HEADERS})
-set_target_properties(${CURRENT_TARGET} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS true)
+build_lib_component(EXPORT_ALL HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
+                    ${SOURCES})
  
-target_include_directories(${CURRENT_TARGET}
-    PUBLIC
-    "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
-    "$<INSTALL_INTERFACE:include>"
-)
-
-include(GNUInstallDirs)
-install(TARGETS ${CURRENT_TARGET}
-    EXPORT "${CURRENT_TARGET}Targets"
-    INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-)
-
-install(FILES 
-    ${HEADERS} 
-    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-)
-
-install(EXPORT "${CURRENT_TARGET}Targets"
-        FILE "${CURRENT_TARGET}Targets.cmake"
-        NAMESPACE "${CURRENT_TARGET}::"
-        DESTINATION lib/cmake
-)

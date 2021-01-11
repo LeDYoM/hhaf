@@ -1,4 +1,5 @@
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/../cmake_modules" ${CMAKE_MODULE_PATH})
+set_install_dir()
 
 cmake_minimum_required(VERSION 3.14)
 project("Minitypes"
@@ -13,7 +14,7 @@ enable_testing()
 set(CURRENT_TARGET mtypes)
 
 add_library(${CURRENT_TARGET} INTERFACE)
-#set_cxx_standard(${CURRENT_TARGET})
+
 target_include_directories(${CURRENT_TARGET} INTERFACE ${PROJECT_SOURCE_DIR})
 
 set(base_directory mtypes/include)

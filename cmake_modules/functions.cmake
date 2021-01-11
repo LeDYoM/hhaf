@@ -5,17 +5,26 @@ function(set_cxx_standard CURRENT_TARGET)
     set_property(TARGET ${CURRENT_TARGET} PROPERTY POSITION_INDEPENDENT_CODE ON)       
 endfunction()
 
+macro(set_install_dir)
+  set(CMAKE_INSTALL_PREFIX /home/ismael/h_test/)
+  set(CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}phaf/")
+endmacro()
+
 # Function to build different components from the project in an unified way.
 function(build_lib_component)
 
   cmake_parse_arguments(LC_BUILD "EXPORT_ALL;STATIC" "HEADER_DIRECTORY" "SOURCES"
                         ${ARGN})
 
-if(LC_BUILD_STATIC)
-  add_library(${CURRENT_TARGET} STATIC ${LC_BUILD_SOURCES})
-else()
-  add_library(${CURRENT_TARGET} SHARED ${LC_BUILD_SOURCES})
-endif()
+  if(LC_BUILD_STATIC)
+    message(STATUS "Add library static: ${CURRENT_TARGET}")
+    add_library(${CURRENT_TARGET} STATIC ${LC_BUILD_SOURCES})
+  else()
+    message(STATUS "Add library shared: ${CURRENT_TARGET}")
+    add_library(${CURRENT_TARGET} SHARED ${LC_BUILD_SOURCES})
+  endif()
+
+  set_cxx_standard(${CURRENT_TARGET})
 
   if(LC_BUILD_EXPORT_ALL)
     if (LC_BUILD_STATIC)
@@ -30,7 +39,30 @@ endif()
   endif()
   
   target_include_directories(${CURRENT_TARGET}
-                             PUBLIC ${LC_BUILD_HEADER_DIRECTORY})
+      PUBLIC
+      "$<BUILD_INTERFACE:${LC_BUILD_HEADER_DIRECTORY}>"
+      "$<INSTALL_INTERFACE:include>"
+  )
+
+  include(GNUInstallDirs)
+  install(TARGETS ${CURRENT_TARGET}
+      EXPORT "${CURRENT_TARGET}Targets"
+      INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+      RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+      ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+      LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  )
+
+  install(FILES 
+      ${HEADERS} 
+      DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+  )
+
+#  install(EXPORT "${CURRENT_TARGET}Targets"
+#          FILE "${CURRENT_TARGET}Targets.cmake"
+#          NAMESPACE "${CURRENT_TARGET}::"
+#          DESTINATION lib/cmake
+#  )
 
 endfunction(build_lib_component)
 
