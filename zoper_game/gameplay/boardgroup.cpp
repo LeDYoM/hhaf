@@ -51,10 +51,11 @@ void BoardGroup::configure(vector2dst size,
     }
 
     // Create and initialize the BoardManager
-    board_model_ = addComponentOfType<board::BoardManager>();
-    board_model_->initialize(tableSize, this);
+    auto board_model = addComponentOfType<board::BoardManager>();
+    board_model_     = board_model;
+    board_model->initialize(tableSize, this);
 
-    board_model_->setBackgroundFunction(
+    board_model->setBackgroundFunction(
         [](const vector2dst& position) -> board::BackgroundData {
             return ((TokenZones::pointInCenter(position)) ? (1) : (0));
         });
@@ -63,10 +64,8 @@ void BoardGroup::configure(vector2dst size,
     setLevel(level_properties_->currentLevel());
     addPlayer();
 
-    level_properties_->levelChanged.connect([this](const auto level) {
-        // Forward current level
-        setLevel(level);
-    });
+    level_properties_->levelChanged.connect(
+        make_function(this, &BoardGroup::setLevel));
 }
 
 void BoardGroup::addPlayer()
@@ -251,10 +250,11 @@ bool BoardGroup::moveTowardsCenter(Direction const direction,
             moved_to_center = moveTowardsCenter(direction, next);
         }
         board_model_->moveTile(position, next);
-        auto dest_tile{std::dynamic_pointer_cast<Token>(board_model_->getTile(next))};
+        auto dest_tile{
+            std::dynamic_pointer_cast<Token>(board_model_->getTile(next))};
 
         LogAsserter::log_assert(dest_tile != nullptr, "Error moving the tile!");
-    
+
         if (dest_tile->isInCenter())
         {
             LogAsserter::log_assert(!moved_to_center, "Double game over!");
@@ -328,9 +328,8 @@ void BoardGroup::launchPlayer()
             bool found{false};
 
             if (!board_model_->tileEmpty(loopPosition) &&
-                TokenZones::toBoardBackgroundType(
-                    board_model_->backgroundType(loopPosition)) !=
-                    TokenZones::BoardBackgroundType::Center)
+                TokenZones::toBoardBackgroundType(board_model_->backgroundType(
+                    loopPosition)) != TokenZones::BoardBackgroundType::Center)
             {
                 sptr<board::ITile> currentToken{
                     board_model_->getTile(loopPosition)};
@@ -356,8 +355,8 @@ void BoardGroup::launchPlayer()
                     // Change the type of the player to this new one and
                     // change the type of the token for the previous type of the
                     // player
-                    board_model_->swapTileData(
-                        player_->boardPosition(), loopPosition);
+                    board_model_->swapTileData(player_->boardPosition(),
+                                               loopPosition);
 
                     DisplayLog::info("Player type changed to ",
                                      player_->value());
@@ -375,7 +374,8 @@ void BoardGroup::launchPlayer()
                 DisplayLog::info("Tile with same color found");
                 DisplayLog::info("Creating points to score");
                 token_hit(loopPosition);
-//                p_->createScoreIncrementPoints(*this, lastTokenPosition);
+                //                p_->createScoreIncrementPoints(*this,
+                //                lastTokenPosition);
             }
             return result;
         });
