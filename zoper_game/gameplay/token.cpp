@@ -51,6 +51,12 @@ void Token::tileAdded(const vector2dst& position_)
 {
     BaseClass::tileAdded(position_);
     DisplayLog::info("Token ", name(), " appeared at ", position_);
+
+    auto const AppearTokenTime = time::TimePoint_as_miliseconds(1000U);
+
+    animation_component_->addPropertyAnimation(AppearTokenTime, prop<Scale>(),
+                                               Scale::value_type{0.0F, 0.0F},
+                                               Scale::value_type{1.0F, 1.0F});
 }
 
 void Token::tileRemoved(const vector2dst& position_)
