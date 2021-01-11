@@ -92,15 +92,9 @@ void SceneController::render(SceneNode& scene_node,
         // Update node
         scene_node.update();
 
-        parentTransformationChanged |=
-            scene_node.updateLocalTransformationsIfNecessary();
-
-        if (parentTransformationChanged)
-        {
-            scene_node.updateGlobalTransformation(
-                scene_node.parent() ? scene_node.parent()->globalTransform()
-                                    : Matrix4x4::Identity);
-        }
+        parentTransformationChanged |= scene_node.updateTransformations(
+            scene_node.parent() ? scene_node.parent()->globalTransform()
+                                : Matrix4x4::Identity);
 
         scene_node.updateRenderizables();
         for (SceneNodesGroup::SceneNodeVector::value_type& group :

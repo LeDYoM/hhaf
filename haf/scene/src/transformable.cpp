@@ -48,6 +48,18 @@ bool Transformable::updateLocalTransformationsIfNecessary() noexcept
     return result;
 }
 
+bool Transformable::updateTransformations(
+    Matrix4x4 const& parentTransformation) noexcept
+{
+    bool localTransformationChanged = updateLocalTransformationsIfNecessary();
+
+    if (localTransformationChanged)
+    {
+        updateGlobalTransformation(parentTransformation);
+    }
+    return localTransformationChanged;
+}
+
 Transformation& Transformable::getTransformation(size_type const index) noexcept
 {
     LogAsserter::log_assert(index < numTransformations());
