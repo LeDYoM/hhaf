@@ -49,9 +49,11 @@ bool Transformable::updateLocalTransformationsIfNecessary() noexcept
 }
 
 bool Transformable::updateTransformations(
+    bool const parentTransformationChanged,
     Matrix4x4 const& parentTransformation) noexcept
 {
-    bool localTransformationChanged = updateLocalTransformationsIfNecessary();
+    bool const localTransformationChanged =
+        updateLocalTransformationsIfNecessary() || parentTransformationChanged;
 
     if (localTransformationChanged)
     {

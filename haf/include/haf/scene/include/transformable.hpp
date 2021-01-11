@@ -43,11 +43,13 @@ public:
 
     Transformation& getTransformation(mtps::size_type const index) noexcept;
 
-    bool updateTransformations(Matrix4x4 const& parentTransformation) noexcept;
+    bool updateTransformations(bool const parentTransformationChanged,
+                               Matrix4x4 const& parentTransformation) noexcept;
 
 TESTABLE_PRIVATE:
     bool updateLocalTransformationsIfNecessary() noexcept;
     void updateGlobalTransformation(Matrix4x4 const&) noexcept;
+
 private:
     Matrix4x4 global_transform_;
     Matrix4x4 local_transform_;
