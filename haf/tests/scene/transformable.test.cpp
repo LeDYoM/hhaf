@@ -1,5 +1,8 @@
 #include "catch.hpp"
 
+#undef TESTABLE_PRIVATE
+#define TESTABLE_PRIVATE    public
+
 #include <mtypes/include/types.hpp>
 #include <haf/scene/include/transformable.hpp>
 #include "matrix_utils.hpp"
