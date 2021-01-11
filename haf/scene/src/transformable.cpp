@@ -15,6 +15,16 @@ Transformable::Transformable() noexcept :
 
 Transformable::~Transformable() = default;
 
+Matrix4x4 const& Transformable::globalTransform() const noexcept
+{
+    return global_transform_;
+}
+
+Matrix4x4 const& Transformable::localTransform() const noexcept
+{
+    return local_transform_;
+}
+
 size_type Transformable::addTransformation()
 {
     extra_transformations_.resize(extra_transformations_.size() + 1U);

@@ -24,15 +24,8 @@ public:
     Transformable() noexcept;
     virtual ~Transformable();
 
-    inline Matrix4x4 const& globalTransform() const noexcept
-    {
-        return global_transform_;
-    }
-
-    inline Matrix4x4 const& localTransform() const noexcept
-    {
-        return local_transform_;
-    }
+    Matrix4x4 const& globalTransform() const noexcept;
+    Matrix4x4 const& localTransform() const noexcept;
 
     using Transformation::rotateAround;
     using Transformation::scaleAround;
