@@ -8,7 +8,6 @@
 #include <mtypes/include/vector2d.hpp>
 #include <mtypes/include/rect.hpp>
 #include <mtypes/include/propertystate.hpp>
-#include <haf/haf_access.hpp>
 
 namespace haf::scene
 {
@@ -46,11 +45,10 @@ public:
     bool updateTransformations(bool const parentTransformationChanged,
                                Matrix4x4 const& parentTransformation) noexcept;
 
-TESTABLE_PRIVATE:
     bool updateLocalTransformationsIfNecessary() noexcept;
+private:
     void updateGlobalTransformation(Matrix4x4 const&) noexcept;
 
-private:
     Matrix4x4 global_transform_;
     Matrix4x4 local_transform_;
 

@@ -79,7 +79,8 @@ void BoardGroup::addPlayer()
                        rectFromSize(tileSize()), board2SceneFactor());
 
     // Add it to the board and to the scene nodes
-    board_model_->setTile(player_->boardPosition(), player_);
+    componentOfType<board::BoardManager>()->setTile(player_->boardPosition(),
+                                                    player_);
 }
 
 void BoardGroup::createNewToken(const board::BoardTileData data,
@@ -99,8 +100,9 @@ void BoardGroup::createNewToken(const board::BoardTileData data,
     new_tile_token->setBoxBoundaries(rectFromSize(size));
 
     // Add it to the board
-    board_model_->setTile(board_position, new_tile_token);
-    board_model_->changeTileData(board_position, data);
+    auto board_model = componentOfType<board::BoardManager>();
+    board_model->setTile(board_position, new_tile_token);
+    board_model->changeTileData(board_position, data);
 }
 
 void BoardGroup::tileRemoved(const vector2dst, board::SITilePointer& tile)
