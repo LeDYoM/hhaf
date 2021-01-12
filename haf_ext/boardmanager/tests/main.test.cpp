@@ -1,6 +1,9 @@
 #define CATCH_CONFIG_RUNNER
 #include "catch.hpp"
 
+
+#include <hlog/include/hlog.hpp>
+
 int main(int argc, char* argv[])
 {
     Catch::Session session; // There must be exactly once instance
@@ -17,5 +20,6 @@ int main(int argc, char* argv[])
     // overrides command line args
     // only do this if you know you need to
 
+    haf::LogInitializer log;
     return session.run();
 }
