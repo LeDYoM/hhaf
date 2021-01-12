@@ -24,7 +24,7 @@ public:
                const GameMode gameMode,
                mtps::sptr<time::TimerComponent> scene_timer_component);
 
-    inline size_t millisBetweenTokens() const noexcept { return millis_between_tokens_; }
+    mtps::size_type millisBetweenTokens();
     inline size_t baseScore() const noexcept { return base_score_; }
     inline size_t stayCounter() const noexcept { return stay_counter_; }
     inline LevelType currentLevel() const noexcept { return current_level_; }

@@ -10,17 +10,26 @@ NextToken::NextToken(wptr<time::TimerComponent> timer_component) :
     timer_component_{std::move(timer_component)}
 {}
 
-void NextToken::prepareNextToken(time::TimePoint const time_to_next_token,
-                                 mtps::function<void()> next_token_function)
+void NextToken::prepareNextToken(function<mtps::size_type()> nextTokenTime,
+                                 function<void()> nextTokenAction)
 {
-    next_token_timer = timer_component_.lock()->addTimer(
-        time::TimerType::Continuous, time_to_next_token,
-        [this, next_token_function = std::move(next_token_function)](
-            time::TimePoint realEllapsed) {
+//    time_point_getter_ = nextTokenTime;
+//    action_            = nextTokenAction;
+
+//    prepareNextTokenImpl();
+}
+
+void NextToken::prepareNextTokenImpl()
+{
+    timer_ = timer_component_.lock()->addTimer(
+        time::TimerType::OneShot, time::TimePoint_as_miliseconds(1000U),
+        [this](time::TimePoint realEllapsed) {
             DisplayLog::info("Elapsed between tokens: ",
                              realEllapsed.milliseconds());
             // New token
-            next_token_function();
+//            action_();
+//            prepareNextTokenImpl();
         });
 }
+
 }  // namespace zoper

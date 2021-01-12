@@ -179,8 +179,10 @@ void GameScene::onCreated()
 #endif
 
     next_token_ = msptr<NextToken>(scene_timer_component_);
-    next_token_->prepareNextToken(time::TimePoint_as_miliseconds(
-                                      level_properties_->millisBetweenTokens()),
+    LevelProperties* t = level_properties_.get();
+    auto f = &LevelProperties::millisBetweenTokens;
+    auto o = make_function(t, &LevelProperties::millisBetweenTokens);
+    next_token_->prepareNextToken(make_function(t, &LevelProperties::millisBetweenTokens),
                                   [this]() { generateNextToken(); });
 
     m_gameOver = createSceneNode<GameOverSceneNode>("gameOverSceneNode");

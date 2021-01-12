@@ -64,6 +64,8 @@ void LevelProperties::setScore(const size_type new_score)
     game_hud_->setScore(current_score_);
 }
 
+mtps::size_type LevelProperties::millisBetweenTokens() { return millis_between_tokens_; }
+
 void LevelProperties::setLevel(const LevelType currentLevel)
 {
     level_timer_->restart();
