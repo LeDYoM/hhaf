@@ -15,12 +15,16 @@ class NextToken
 {
 public:
     NextToken(mtps::wptr<haf::time::TimerComponent> timer_component);
-    void prepareNextToken(haf::time::TimePoint const time_to_next_token,
-                          mtps::function<void()>);
+    void prepareNextToken(mtps::function<mtps::size_type()> nextTokenTime,
+                          mtps::function<void()> nextTokenAction);
 
 private:
+    void prepareNextTokenImpl();
+
     mtps::wptr<haf::time::TimerComponent> timer_component_;
-    haf::time::TimerConnectorSPtr next_token_timer;
+    haf::time::TimerConnectorSPtr timer_;
+    mtps::function<void()> action_;
+    mtps::function<mtps::size_type()> time_point_getter_;
 };
 }  // namespace zoper
 
