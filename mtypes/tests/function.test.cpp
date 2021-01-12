@@ -117,4 +117,5 @@ TEST_CASE("function::operator()", "[function]")
     s32 tmp{4};
 
     s32 tmp2 = a(tmp);
+    CHECK(tmp2 == 5);
 }
