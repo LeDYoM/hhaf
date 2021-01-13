@@ -45,13 +45,17 @@ public:
      * @brief Construct from a pointer to member and object.
      * 
      * @tparam T Type of the object
-     * @tparam V Type of the member object pointer
      * @param t Object of the type t
      * @param f Pointer to the member function
      */
-    template <typename T, typename V>
-    constexpr function(T* const t, V f) :
+    template<typename T>
+    constexpr function(T* const t, ReturnValue(T::*f)(Args...)) :
         m_callable{msptr<CallableMethodPointerT<T>>(t, f)}
+    {}
+
+    template<typename T>
+    constexpr function(T const* const t, ReturnValue(T::*f)(Args...) const) :
+        m_callable{msptr<ConstCallableMethodPointerT<T>>(t, f)}
     {}
 
     /**
@@ -150,7 +154,8 @@ private:
     class CallableMethodPointerT final : public ICallable
     {
     public:
-        typedef ReturnValue (T::*HandlerFunctionPtr)(Args...);
+//        typedef ReturnValue (T::*HandlerFunctionPtr)(Args...);
+        using HandlerFunctionPtr =  ReturnValue (T::*)(Args...);
 
         constexpr CallableMethodPointerT(T* const receiver,
                                          const HandlerFunctionPtr function) :
@@ -181,6 +186,44 @@ private:
 
     private:
         T* const obj;
+        const HandlerFunctionPtr function_;
+    };
+
+    template <class T>
+    class ConstCallableMethodPointerT final : public ICallable
+    {
+    public:
+        using HandlerFunctionPtr =  ReturnValue (T::*)(Args...) const;
+
+        constexpr ConstCallableMethodPointerT(T const * const receiver,
+                                         const HandlerFunctionPtr function) :
+            obj{receiver}, function_{function}
+        {}
+
+        inline ReturnValue Invoke(Args... args) override
+        {
+            return (obj->*function_)(std::forward<Args>(args)...);
+        }
+
+        inline bool equals(ConstCallableMethodPointerT const& other) const noexcept
+        {
+            return obj == other.obj && function_ == other.function_;
+        }
+
+        inline bool equals(ICallable const& other) const noexcept override
+        {
+            function::ConstCallableMethodPointerT<T> const* const tmp =
+                dynamic_cast<function::ConstCallableMethodPointerT<T> const*>(
+                    &other);
+            if (tmp == nullptr)
+            {
+                return false;
+            }
+            return equals(*tmp);
+        }
+
+    private:
+        T const * const obj;
         const HandlerFunctionPtr function_;
     };
 

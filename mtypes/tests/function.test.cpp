@@ -5,18 +5,62 @@
 
 using namespace mtps;
 
+struct TestObject
+{
+    s32 add2(s32 const n) { return n + 2; }
+
+    s32 add3(s32 const n) { return n + 3; }
+};
+
+struct ConstTestObject
+{
+    s32 add2(s32 const n) const { return n + 2; }
+
+    s32 add3(s32 const n) const { return n + 3; }
+};
+
+struct ModifableTestObject
+{
+    s32 add2(s32 const n) { data += 2; return data; }
+
+    s32 add3(s32 const n) { data += 3; return data; }
+
+    s32 data{0};
+};
+
 TEST_CASE("function::function", "[function]")
 {
-    function<s32(s32 const)> a;
-    CHECK_FALSE(a);
-}
+    SECTION("Empty")
+    {
+        function<s32(s32 const)> a;
+        CHECK_FALSE(a);
+    }
 
-TEST_CASE("function::function with lambda", "[function]")
-{
-    function<s32(s32 const)> b = [](s32 const n) { return n + 1; };
-    CHECK(b);
+    SECTION("With lambda")
+    {
+        function<s32(s32 const)> b = [](s32 const n) { return n + 1; };
+        CHECK(b);
 
-    CHECK(4 == b(3));
+        CHECK(4 == b(3));
+    }
+
+    SECTION("With function pointer")
+    {
+        TestObject a_obj;
+
+        function<s32(s32 const)> a =
+            function<s32(s32 const)>(&a_obj, &TestObject::add2);
+
+        CHECK(6 == a(4));
+
+        ConstTestObject const b_obj;
+
+        function<s32(s32 const)> b =
+            function<s32(s32 const)>(&b_obj, &ConstTestObject::add2);
+
+        CHECK(10 == b(8));
+
+    }
 }
 
 TEST_CASE("function::operator==() for lambdas", "[function]")
@@ -32,19 +76,6 @@ TEST_CASE("function::operator==() for lambdas", "[function]")
     CHECK(a == b);
     CHECK(a.equals(b));
 }
-
-struct TestObject
-{
-    s32 add2(s32 const n)
-    {
-        return n + 2;
-    }
-
-    s32 add3(s32 const n)
-    {
-        return n + 3;
-    }
-};
 
 TEST_CASE("function::equals for pointer to members", "[function]")
 {
@@ -87,6 +118,10 @@ TEST_CASE("make_function", "[function]")
 {
     TestObject a_obj;
     TestObject b_obj;
+    const ConstTestObject c_obj;
+
+    function<s32(s32 const)> c =
+        function<s32(s32 const)>(&c_obj, &ConstTestObject::add2);
 
     {
         auto a = make_function(&a_obj, &TestObject::add2);
