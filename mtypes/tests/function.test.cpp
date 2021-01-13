@@ -21,9 +21,15 @@ struct ConstTestObject
 
 struct ModifableTestObject
 {
-    s32 add2(s32 const n) { data += 2; return data; }
+    s32 add2(s32 const n) const { return n + 2; }
 
-    s32 add3(s32 const n) { data += 3; return data; }
+    s32 add3(s32 const n) const { return n + 3; }
+
+    s32 add2M(s32 const n) const { return data + 2; }
+
+    s32 add2M(s32 const n) { data = n + 2; return data; }
+
+    s32 add3M(s32 const n) { data = n + 3; return data; }
 
     s32 data{0};
 };
@@ -60,7 +66,24 @@ TEST_CASE("function::function", "[function]")
 
         CHECK(10 == b(8));
 
+        ModifableTestObject c_obj;
+
+        function<s32(s32 const)> c =
+            function<s32(s32 const)>(&c_obj, &ModifableTestObject::add2M);
+
+        CHECK(c_obj.data == 0);
+        CHECK(34 == c(32));
+        CHECK(c_obj.data == 34);
     }
+}
+
+TEST_CASE("function::operator()", "[function]")
+{
+    function<s32(s32)> a = [](s32 d) { return d + 1; };
+    s32 tmp{4};
+
+    s32 tmp2 = a(tmp);
+    CHECK(tmp2 == 5);
 }
 
 TEST_CASE("function::operator==() for lambdas", "[function]")
@@ -112,6 +135,20 @@ TEST_CASE("function::equals for pointer to members", "[function]")
         CHECK(a(5) == 7);
         CHECK(b(50) == 53);
     }
+
+    {
+        ModifableTestObject c_obj;
+
+        auto a = function<s32(s32 const)>(&c_obj, &ModifableTestObject::add2M);
+        auto b = function<s32(s32 const)>(&c_obj, &ModifableTestObject::add2);
+
+        CHECK_FALSE(a == b);
+        CHECK_FALSE(a.equals(b));
+        CHECK(c_obj.data == 0);
+        CHECK(a(5) == 7);
+        CHECK(b(50) == 52);
+        CHECK(c_obj.data == 7);
+    }
 }
 
 TEST_CASE("make_function", "[function]")
@@ -144,13 +181,4 @@ TEST_CASE("make_function", "[function]")
         CHECK(a(5) == 7);
         CHECK(b(50) == 52);
     }
-}
-
-TEST_CASE("function::operator()", "[function]")
-{
-    function<s32(s32)> a = [](s32 d) { return d + 1; };
-    s32 tmp{4};
-
-    s32 tmp2 = a(tmp);
-    CHECK(tmp2 == 5);
 }
