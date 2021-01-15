@@ -25,7 +25,7 @@ struct ModifableTestObject
 
     s32 add3(s32 const n) const { return n + 3; }
 
-    s32 add2M(s32 const n) const { return data + 2; }
+    s32 add2M(s32 const) const { return data + 2; }
 
     s32 add2M(s32 const n) { data = n + 2; return data; }
 
@@ -157,28 +157,40 @@ TEST_CASE("make_function", "[function]")
     TestObject b_obj;
     const ConstTestObject c_obj;
 
-    function<s32(s32 const)> c =
-        function<s32(s32 const)>(&c_obj, &ConstTestObject::add2);
+//    function<s32(s32 const)> const c =
+//        function<s32(s32 const)>(&c_obj, &ConstTestObject::add2);
+
+//    auto c =
+//        function<s32(s32 const)>(&c_obj, &ConstTestObject::add2);
+
+    auto c =
+        make_function(&c_obj, &ConstTestObject::add2);
 
     {
         auto a = make_function(&a_obj, &TestObject::add2);
         auto b = make_function(&b_obj, &TestObject::add2);
 
-        // The lambda contains the same code, but the addresses are different
         CHECK_FALSE(a == b);
         CHECK_FALSE(a.equals(b));
+        CHECK_FALSE(a == c);
+        CHECK_FALSE(a.equals(c));
         CHECK(a(5) == 7);
         CHECK(b(50) == 52);
+        CHECK(c(1) == 3);
     }
 
     {
         auto a = make_function(&a_obj, &TestObject::add2);
         auto b = make_function(&a_obj, &TestObject::add2);
 
-        // The lambda contains the same code, but the addresses are different
         CHECK_FALSE(a == b);
         CHECK(a.equals(b));
+        CHECK_FALSE(b == c);
+        CHECK_FALSE(b.equals(c));
         CHECK(a(5) == 7);
         CHECK(b(50) == 52);
+        CHECK(c(6) == 8);
+
+        CHECK(a(b(c(85))) == 91);
     }
 }

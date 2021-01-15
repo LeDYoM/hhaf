@@ -264,6 +264,12 @@ constexpr auto make_function(T *obj, ReturnType(T::*p)(Args...))
   return function<ReturnType(Args...)>(obj, p);
 }
 
+template<typename ReturnType, typename T, typename... Args>
+constexpr auto make_function(T const *obj, ReturnType(T::*p)(Args...) const)
+{
+  return function<ReturnType(Args...)>(obj, p);
+}
+
 }  // namespace mtps
 
 #endif
