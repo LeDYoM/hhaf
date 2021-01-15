@@ -13,22 +13,23 @@ NextToken::NextToken(wptr<time::TimerComponent> timer_component) :
 void NextToken::prepareNextToken(function<mtps::size_type()> nextTokenTime,
                                  function<void()> nextTokenAction)
 {
-//    time_point_getter_ = nextTokenTime;
-//    action_            = nextTokenAction;
+    time_point_getter_ = nextTokenTime;
+    action_            = nextTokenAction;
 
-//    prepareNextTokenImpl();
+    prepareNextTokenImpl();
 }
 
 void NextToken::prepareNextTokenImpl()
 {
     timer_ = timer_component_.lock()->addTimer(
-        time::TimerType::OneShot, time::TimePoint_as_miliseconds(1000U),
+        time::TimerType::OneShot,
+        time::TimePoint_as_miliseconds(time_point_getter_()),
         [this](time::TimePoint realEllapsed) {
             DisplayLog::info("Elapsed between tokens: ",
                              realEllapsed.milliseconds());
             // New token
-//            action_();
-//            prepareNextTokenImpl();
+            action_();
+            prepareNextTokenImpl();
         });
 }
 
