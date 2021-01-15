@@ -106,7 +106,7 @@ void GameScene::onCreated()
 
     LogAsserter::log_assert(!m_boardGroup, "m_boardGroup is not empty");
     m_boardGroup = createSceneNode<BoardGroup>("BoardGroup");
-//    m_boardGroup->token_hit.connect(&(this->tokenHitAnimation));
+    //    m_boardGroup->token_hit.connect(&(this->tokenHitAnimation));
 
     m_nextTokenPart = 0U;
 
@@ -178,12 +178,11 @@ void GameScene::onCreated()
     addComponentOfType<DebugActions>();
 #endif
 
-    next_token_ = msptr<NextToken>(scene_timer_component_);
+    next_token_        = msptr<NextToken>(scene_timer_component_);
     LevelProperties* t = level_properties_.get();
-    auto f = &LevelProperties::millisBetweenTokens;
-    auto o = make_function(t, &LevelProperties::millisBetweenTokens);
-    next_token_->prepareNextToken(make_function(t, &LevelProperties::millisBetweenTokens),
-                                  [this]() { generateNextToken(); });
+    next_token_->prepareNextToken(
+        make_function(t, &LevelProperties::millisBetweenTokens),
+        [this]() { generateNextToken(); });
 
     m_gameOver = createSceneNode<GameOverSceneNode>("gameOverSceneNode");
     m_gameOver->prop<Visible>().set(false);
@@ -320,7 +319,8 @@ void GameScene::launchPlayer()
 
             if (!m_boardGroup->boardManager()->tileEmpty(loopPosition) &&
                 TokenZones::toBoardBackgroundType(
-                    m_boardGroup->boardManager()->backgroundType(loopPosition)) !=
+                    m_boardGroup->boardManager()->backgroundType(
+                        loopPosition)) !=
                     TokenZones::BoardBackgroundType::Center)
             {
                 sptr<board::ITile> currentToken{
