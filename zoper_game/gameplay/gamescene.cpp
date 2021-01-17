@@ -178,19 +178,24 @@ void GameScene::onCreated()
     addComponentOfType<DebugActions>();
 #endif
 
+    // The next token has the responsibility of calling the function
+    // generate new tokens according with the time provided by level proverties
     next_token_        = msptr<NextToken>(scene_timer_component_);
-    LevelProperties* t = level_properties_.get();
     next_token_->prepareNextToken(
-        make_function(t, &LevelProperties::millisBetweenTokens),
+        make_function(level_properties_.get(), &LevelProperties::millisBetweenTokens),
         [this]() { generateNextToken(); });
 
+
+    // Prepare the game over text
     m_gameOver = createSceneNode<GameOverSceneNode>("gameOverSceneNode");
     m_gameOver->prop<Visible>().set(false);
 
+    // Prepare the pause text.
+    pause_node_ = createSceneNode<PauseSceneNode>("PauseNode");
+
     // Set state control.
     {
-        m_sceneStates = addComponentOfType<
-            std::remove_reference_t<decltype(*m_sceneStates)>>();
+        ensureComponentOfType(m_sceneStates);
 
         StatesControllerActuatorRegister<GameSceneStates>
             gameSceneActuatorRegister;
@@ -205,9 +210,6 @@ void GameScene::onCreated()
     p_->token_position_generator_ = p_->token_type_generator_;
     LogAsserter::log_assert(p_->token_position_generator_ != nullptr,
                             "Cannot create DataProviderComponent");
-
-    // Prepare the pause text.
-    pause_node_ = createSceneNode<PauseSceneNode>("PauseNode");
 
     p_->key_mapping_ = muptr<KeyMapping>();
     p_->key_mapping_->reset();

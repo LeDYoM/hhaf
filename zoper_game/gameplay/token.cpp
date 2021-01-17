@@ -54,9 +54,16 @@ void Token::tileAdded(const vector2dst& position_)
 
     auto const AppearTokenTime = time::TimePoint_as_miliseconds(1000U);
 
+    auto newTransformation = addTransformation();
     animation_component_->addPropertyAnimation(AppearTokenTime, prop<Scale>(),
                                                Scale::value_type{0.0F, 0.0F},
                                                Scale::value_type{1.0F, 1.0F});
+
+    auto const nodeBox = node_->box().size() / 2.0F;
+
+    animation_component_->addPropertyAnimation(
+        AppearTokenTime, getTransformation(newTransformation).prop<Position>(),
+        nodeBox, Position::value_type{0.0F, 0.0F});
 }
 
 void Token::tileRemoved(const vector2dst& position_)

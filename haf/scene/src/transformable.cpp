@@ -28,7 +28,7 @@ Matrix4x4 const& Transformable::localTransform() const noexcept
 size_type Transformable::addTransformation()
 {
     extra_transformations_.resize(extra_transformations_.size() + 1U);
-    return numTransformations();
+    return extra_transformations_.size();
 }
 
 size_type Transformable::numTransformations() const noexcept
