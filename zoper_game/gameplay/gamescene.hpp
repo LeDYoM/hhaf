@@ -62,6 +62,7 @@ private:
     mtps::sptr<scene::StatesController<GameSceneStates>> m_sceneStates;
     void launchPlayer();
     void _debugDisplayBoard() const;
+    void keyPressed(input::Key key);
 
     mtps::sptr<BoardGroup> m_boardGroup;
 

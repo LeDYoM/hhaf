@@ -110,43 +110,10 @@ void GameScene::onCreated()
 
     m_nextTokenPart = 0U;
 
+    // Connect to key press funtion
     auto inputComponent(addComponentOfType<input::InputComponent>());
-    inputComponent->KeyPressed.connect([this](const haf::input::Key& key) {
-        DisplayLog::info("Key pressed in GameScene");
-        // TODO: Fixme
-        KeyMapping keyMapping__;
-        KeyMapping* keyMapping = &keyMapping__;
-
-        switch (m_sceneStates->currentState())
-        {
-            case GameSceneStates::Playing:
-            {
-                auto dir(keyMapping->getDirectionFromKey(key));
-                if (dir.isValid())
-                {
-                    m_boardGroup->player()->movePlayer(dir);
-                }
-                else if (keyMapping->isLaunchKey(key))
-                {
-                    launchPlayer();
-                }
-                else if (keyMapping->isPauseKey(key))
-                {
-                    m_sceneStates->setState(GameSceneStates::Pause);
-                }
-            }
-            break;
-            case GameSceneStates::GameOver:
-                dataWrapper<SceneControl>()->switchToNextScene();
-                break;
-            case GameSceneStates::Pause:
-                if (keyMapping->isPauseKey(key))
-                {
-                    m_sceneStates->setState(GameSceneStates::Playing);
-                }
-                break;
-        }
-    });
+    inputComponent->KeyPressed.connect(
+        make_function(this, &GameScene::keyPressed));
 
     // Create the general timer component for the scene.
     scene_timer_component_ = addComponentOfType<time::TimerComponent>();
@@ -180,11 +147,11 @@ void GameScene::onCreated()
 
     // The next token has the responsibility of calling the function
     // generate new tokens according with the time provided by level proverties
-    next_token_        = msptr<NextToken>(scene_timer_component_);
+    next_token_ = msptr<NextToken>(scene_timer_component_);
     next_token_->prepareNextToken(
-        make_function(level_properties_.get(), &LevelProperties::millisBetweenTokens),
+        make_function(level_properties_.get(),
+                      &LevelProperties::millisBetweenTokens),
         [this]() { generateNextToken(); });
-
 
     // Prepare the game over text
     m_gameOver = createSceneNode<GameOverSceneNode>("gameOverSceneNode");
@@ -384,6 +351,44 @@ void GameScene::tokenHitAnimation(vector2dst const& pos)
 vector2df GameScene::tileSize() const
 {
     return m_boardGroup->tileSize();
+}
+
+void GameScene::keyPressed(input::Key key)
+{
+    DisplayLog::info("Key pressed in GameScene");
+    // TODO: Fixme
+    KeyMapping keyMapping__;
+    KeyMapping* keyMapping = &keyMapping__;
+
+    switch (m_sceneStates->currentState())
+    {
+        case GameSceneStates::Playing:
+        {
+            auto dir(keyMapping->getDirectionFromKey(key));
+            if (dir.isValid())
+            {
+                m_boardGroup->player()->movePlayer(dir);
+            }
+            else if (keyMapping->isLaunchKey(key))
+            {
+                launchPlayer();
+            }
+            else if (keyMapping->isPauseKey(key))
+            {
+                m_sceneStates->setState(GameSceneStates::Pause);
+            }
+        }
+        break;
+        case GameSceneStates::GameOver:
+            dataWrapper<SceneControl>()->switchToNextScene();
+            break;
+        case GameSceneStates::Pause:
+            if (keyMapping->isPauseKey(key))
+            {
+                m_sceneStates->setState(GameSceneStates::Playing);
+            }
+            break;
+    }
 }
 
 }  // namespace zoper
