@@ -57,7 +57,8 @@ public:
     virtual bool animate() override
     {
         const bool bResult{Animation::animate()};
-        property_.set(AT{startValue_ + (deltaValue_ * delta())});
+        auto const p = AT{startValue_ + (deltaValue_ * delta())};
+        property_.set(p);
         return bResult;
     }
 

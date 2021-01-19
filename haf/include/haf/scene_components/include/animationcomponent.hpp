@@ -36,7 +36,7 @@ public:
      * @param animation_direction Direction of the animation
      * @param endAction Action to perform when the animation finishes
      */
-    template <typename PropertyType, typename PropertyTag = mtps::DummyTag>
+    template <typename PropertyType, typename PropertyTag>
     void addPropertyAnimation(
         time::TimePoint time,
         mtps::IProperty<PropertyType, PropertyTag>& property,
