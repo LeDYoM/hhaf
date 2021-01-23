@@ -2,8 +2,6 @@
 #define HAF_ANIMATION_COMPONENT_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <mtypes/include/vector2d.hpp>
-#include <haf/scene/include/scenenode.hpp>
 #include <haf/scene/include/icomponent.hpp>
 #include <haf/time/include/timeview.hpp>
 #include <haf/scene_components/include/animation.hpp>
@@ -11,14 +9,16 @@
 
 namespace haf::scene
 {
-
+/**
+ * @brief Component designed to store, manage and update animations.
+ */
 class AnimationComponent : public IComponent
 {
 public:
     AnimationComponent();
     ~AnimationComponent() override;
 
-    virtual void update() override;
+    void update() override;
 
     /**
      * @brief Add an already created animation to the list of animations.
@@ -67,10 +67,10 @@ public:
      * @param animation_direction Direction of the animation
      * @param endAction Action to perform when the animation finishes.
      */
-    template <typename PropertyType>
+    template <typename PropertyType, typename PropertyTag>
     void addRepeatedPropertyAnimation(
         time::TimePoint time,
-        mtps::IProperty<PropertyType>& property,
+        mtps::IProperty<PropertyType, PropertyTag>& property,
         PropertyType start,
         PropertyType dest,
         Animation::AnimationDirection animation_direction =

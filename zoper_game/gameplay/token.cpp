@@ -65,6 +65,8 @@ void Token::tileAdded(const vector2dst& position_)
 */
 
     auto newTransformationScale = addTransformation();
+    auto newTransformationPosition = addTransformation();
+
     auto prop = getTransformation(newTransformationScale).prop<Scale>();
     animation_component_->addPropertyAnimation(AppearTokenTime, getTransformation(newTransformationScale).prop<Scale>(),
                                                Scale::value_type{0.0F, 0.0F},
@@ -79,8 +81,7 @@ void Token::tileAdded(const vector2dst& position_)
 
     auto const nodeBox = node_->box().size() / 2.0F;
 
-    auto newTransformationPosition = addTransformation();
-//    getTransformation(newTransformationPosition).prop<Position>().set(Position::value_type{nodeBox});
+    getTransformation(newTransformationPosition).prop<Position>().set(Position::value_type{nodeBox});
 
 }
 

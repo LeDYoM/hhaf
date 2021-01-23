@@ -22,8 +22,8 @@ namespace haf::scene
  * @tparam AT Animable type corresponding to T
  */
 template <typename T,
-          typename PropertyTag = mtps::DummyTag,
-          typename AT          = typename AnimableType<T>::type>
+          typename PropertyTag,
+          typename AT = typename AnimableType<T>::type>
 class IPropertyAnimation : public Animation
 {
 public:
