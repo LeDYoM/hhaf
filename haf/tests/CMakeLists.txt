@@ -14,6 +14,7 @@ set(SOURCE_TESTS
     scene/transformable
     scene/transformation
 
+    scene_components/animationcomponent
     scene_components/componentcontainer
     scene_components/statescontroller
 
