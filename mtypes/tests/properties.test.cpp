@@ -37,6 +37,8 @@ TEST_CASE("BasicProperty::set", "[mtypes][property][BasicProperty]")
     CHECK(p.get() == 10);
 }
 
+struct Tag {};
+
 TEST_CASE("BasicProperty::toIProperty", "[mtypes][property][BasicProperty]")
 {
     BasicProperty<int> p;
@@ -49,7 +51,7 @@ TEST_CASE("BasicProperty::toIProperty", "[mtypes][property][BasicProperty]")
     CHECK(p() == 10);
     CHECK(p.get() == 10);
 
-    auto ip = dynamic_cast<IProperty<int>*>(&p);
+    auto ip = dynamic_cast<IProperty<int, Tag>*>(&p);
     CHECK(ip->set(50));
     CHECK_FALSE(ip->set(50));
     CHECK(ip->get() == 50);

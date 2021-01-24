@@ -10,7 +10,7 @@ struct DummyTag {};
  * class for any Property class.
  * @tparam T Inner type of the property.
  */
-template <typename T, typename Tag = DummyTag>
+template <typename T, typename Tag>
 class IProperty
 {
 public:
