@@ -55,7 +55,7 @@ TEST_CASE("haf::scene::Transformable adding transformations",
     SECTION("UpdateTransformIfNecessary")
     {
         CHECK(transformable.numTransformations() == 1U);
-        CHECK(transformable.addTransformation() == 2U);
+        CHECK(transformable.addTransformation() == 1U);
 
         CHECK_FALSE(
             transformable.getTransformation(0U).updateTransformIfNecessary());
@@ -77,7 +77,7 @@ TEST_CASE("haf::scene::Transformable adding transformations",
     SECTION("UpdateLocalTransformIfNecessary")
     {
         CHECK(transformable.numTransformations() == 1U);
-        CHECK(transformable.addTransformation() == 2U);
+        CHECK(transformable.addTransformation() == 1U);
 
         CHECK(transformable.updateLocalTransformationsIfNecessary());
 
@@ -97,8 +97,37 @@ TEST_CASE("haf::scene::Transformable adding transformations",
     }
 }
 
-TEST_CASE("haf::scene::Transformable check math",
-          "[haf][scene][Transformable]")
+TEST_CASE("haf::scene::Transformable remove transformations")
+{
+    Transformable transformable;
+    CHECK(transformable.updateTransformIfNecessary());
+    CHECK_FALSE(transformable.updateTransformIfNecessary());
+
+    auto const tr2 = transformable.addTransformation();
+    CHECK(transformable.numTransformations() == 2U);
+
+    SECTION("Local check for second")
+    {
+        CHECK(
+            transformable.getTransformation(tr2).updateTransformIfNecessary());
+        CHECK_FALSE(
+            transformable.getTransformation(tr2).updateTransformIfNecessary());
+    }
+
+    SECTION("Local transformation")
+    {
+        CHECK(transformable.updateLocalTransformationsIfNecessary());
+        CHECK_FALSE(transformable.updateLocalTransformationsIfNecessary());
+    }
+
+    SECTION("Global transformation")
+    {
+        CHECK(transformable.updateTransformations(false, Matrix4x4{}));
+        CHECK_FALSE(transformable.updateTransformations(false, Matrix4x4{}));
+    }
+}
+
+TEST_CASE("haf::scene::Transformable check math", "[haf][scene][Transformable]")
 {
     Transformable transformable;
     transformable.prop<Position>() = {3.0F, 3.0F};
@@ -108,9 +137,11 @@ TEST_CASE("haf::scene::Transformable check math",
 
     CHECK(transformable_temp.updateLocalTransformationsIfNecessary());
     CHECK(transformable.updateLocalTransformationsIfNecessary());
-    CHECK_FALSE(isAlmostEqual(transformable_temp.localTransform(), transformable.localTransform()));
+    CHECK_FALSE(isAlmostEqual(transformable_temp.localTransform(),
+                              transformable.localTransform()));
 
     transformable.prop<Position>() = {2.0F, 2.0F};
     CHECK(transformable.updateLocalTransformationsIfNecessary());
-    CHECK(isAlmostEqual(transformable_temp.localTransform(), transformable.localTransform()));
+    CHECK(isAlmostEqual(transformable_temp.localTransform(),
+                        transformable.localTransform()));
 }
