@@ -2,7 +2,7 @@
 #define HEF_WINDOW_WINDOW_PROPERTIES_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
-#include <mtypes/include/properties.hpp>
+#include <mtypes/include/basic_property.hpp>
 #include <haf/system/include/idatawrapper.hpp>
 
 namespace haf::win

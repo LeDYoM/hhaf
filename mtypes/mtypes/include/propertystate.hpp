@@ -1,7 +1,7 @@
 #ifndef MTPS_PROPERTY_STATE_INCLUDE_HPP
 #define MTPS_PROPERTY_STATE_INCLUDE_HPP
 
-#include "properties.hpp"
+#include "basic_property.hpp"
 
 namespace mtps
 {

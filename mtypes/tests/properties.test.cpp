@@ -2,6 +2,7 @@
 
 #include <mtypes/include/types.hpp>
 #include <mtypes/include/properties.hpp>
+#include <mtypes/include/basic_property.hpp>
 
 using namespace mtps;
 
