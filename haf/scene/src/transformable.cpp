@@ -31,6 +31,15 @@ size_type Transformable::addTransformation()
     return extra_transformations_.size();
 }
 
+size_type Transformable::removeTransformation()
+{
+    LogAsserter::log_assert(
+        !extra_transformations_.empty(),
+        "There is only one transformation. Cannot remove one");
+    extra_transformations_.pop_back();
+    return extra_transformations_.size();
+}
+
 size_type Transformable::numTransformations() const noexcept
 {
     return extra_transformations_.size() + 1U;
