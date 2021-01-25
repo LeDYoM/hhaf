@@ -52,37 +52,24 @@ void Token::tileAdded(const vector2dst& position_)
     BaseClass::tileAdded(position_);
     DisplayLog::info("Token ", name(), " appeared at ", position_);
 
-    auto const AppearTokenTime = time::TimePoint_as_miliseconds(5000U);
-/*
-    animation_component_->addPropertyAnimation(AppearTokenTime, prop<Scale>(),
-                                               Scale::value_type{0.0F, 0.0F},
-                                               Scale::value_type{1.0F, 1.0F});
-*/
-    /*
-    animation_component_->addPropertyAnimation(
-        AppearTokenTime, getTransformation(newTransformation).prop<Position>(),
-        nodeBox, Position::value_type{0.0F, 0.0F});
-*/
+    auto const AppearTokenTime = time::TimePoint_as_miliseconds(1000U);
+    auto const nodeBox{node_->box().size() / 2.0F};
 
-    auto newTransformationScale = addTransformation();
     auto newTransformationPosition = addTransformation();
-
-    auto prop = getTransformation(newTransformationScale).prop<Scale>();
-    animation_component_->addPropertyAnimation(AppearTokenTime, getTransformation(newTransformationScale).prop<Scale>(),
-                                               Scale::value_type{0.0F, 0.0F},
-                                               Scale::value_type{1.0F, 1.0F});
-/*
-    auto const nodeBox = node_->box().size() / 2.0F;
+    auto newTransformationScale    = addTransformation();
 
     animation_component_->addPropertyAnimation(
-        AppearTokenTime, getTransformation(newTransformation).prop<Position>(),
-        nodeBox, Position::value_type{0.0F, 0.0F});
-        */
+        AppearTokenTime,
+        getTransformation(newTransformationScale).prop<Scale>(),
+        Scale::Zeros, Scale::Ones);
 
-    auto const nodeBox = node_->box().size() / 2.0F;
-
-    getTransformation(newTransformationPosition).prop<Position>().set(Position::value_type{nodeBox});
-
+    getTransformation(newTransformationPosition)
+        .prop<Position>()
+        .set(Position::value_type{nodeBox});
+    animation_component_->addPropertyAnimation(
+        AppearTokenTime,
+        getTransformation(newTransformationPosition).prop<Position>(), nodeBox,
+        Position::value_type{0.0F, 0.0F});
 }
 
 void Token::tileRemoved(const vector2dst& position_)
