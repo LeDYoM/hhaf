@@ -22,8 +22,6 @@ public:
     using pointer = T*;
     using const_pointer = T const *;
 
-    virtual ~IProperty() = default;
-
     /**
      * @brief Get value of the property.
      * @return const T& The content of the property.

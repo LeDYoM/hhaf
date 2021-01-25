@@ -19,7 +19,6 @@ public:
     using const_pointer = typename Base::const_pointer;
 
     constexpr BasicProperty() noexcept = default;
-    ~BasicProperty() override = default;
 
     constexpr BasicProperty(BasicProperty &&) noexcept = default;
     BasicProperty(const BasicProperty &) = default;

@@ -42,7 +42,7 @@ struct Tag {};
 
 TEST_CASE("BasicProperty::toIProperty", "[mtypes][property][BasicProperty]")
 {
-    BasicProperty<int> p;
+    BasicProperty<int, Tag> p;
     CHECK(p() == 0);
     CHECK(p.get() == 0);
     CHECK(p.set(10));
