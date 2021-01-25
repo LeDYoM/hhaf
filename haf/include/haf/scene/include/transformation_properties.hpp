@@ -23,6 +23,10 @@ template <typename Scalar>
 struct ScaleScalar
 {
     using value_type = mtps::vector2d<Scalar>;
+    static constexpr auto Ones =
+        value_type{static_cast<Scalar>(1), static_cast<Scalar>(1)};
+    static constexpr auto Zeros =
+        value_type{static_cast<Scalar>(0), static_cast<Scalar>(0)};
 };
 
 template <typename Scalar>
@@ -36,10 +40,8 @@ using Rotation = RotationScalar<Matrix4x4::Scalar>;
 using Scale    = ScaleScalar<Matrix4x4::Scalar>;
 using Position = PositionScalar<Matrix4x4::Scalar>;
 
-using TransformationProperties = mtps::PropertyGroup<Origin,
-                                                    Rotation,
-                                                    Scale,
-                                                    Position>;
+using TransformationProperties =
+    mtps::PropertyGroup<Origin, Rotation, Scale, Position>;
 
 }  // namespace haf::scene
 
