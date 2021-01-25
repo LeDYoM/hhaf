@@ -6,6 +6,7 @@
 #include <haf/time/include/timeview.hpp>
 #include <haf/scene_components/include/animation.hpp>
 #include <haf/scene_components/include/ipropertyanimation.hpp>
+#include <haf/scene/include/scenenode.hpp>
 
 namespace haf::scene
 {
