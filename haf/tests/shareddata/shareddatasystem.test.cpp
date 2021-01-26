@@ -6,7 +6,7 @@
 #include <system/i_include/systembase.hpp>
 #include <system/i_include/systemprovider.hpp>
 #include "include/shareable_test_data.hpp"
-#include "test_utils.hpp"
+#include "system_test_utils.hpp"
 
 using namespace mtps;
 using namespace haf;

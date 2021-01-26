@@ -1,5 +1,5 @@
-#ifndef HAF_TESTS_UTILS_INCLUDE_HPP
-#define HAF_TESTS_UTILS_INCLUDE_HPP
+#ifndef HAF_SYSTEM_TESTS_UTILS_INCLUDE_HPP
+#define HAF_SYSTEM_TESTS_UTILS_INCLUDE_HPP
 
 #include <mtypes/include/types.hpp>
 #include <system/i_include/systemprovider.hpp>

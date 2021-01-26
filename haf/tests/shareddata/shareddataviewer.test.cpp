@@ -4,7 +4,7 @@
 #include <shareddata/i_include/shareddatasystem.hpp>
 #include <haf/shareddata/include/shareddataviewer.hpp>
 #include "include/shareable_test_data.hpp"
-#include "test_utils.hpp"
+#include "system_test_utils.hpp"
 
 using namespace mtps;
 using namespace haf::shdata;
@@ -13,9 +13,6 @@ TEST_CASE("SharedDataSystemViewer::SharedDataSystemViewer",
           "[haf][shareddatasystem]")
 {
     auto test_shared_data = makeTestSystem<TestSharedDataSystem>();
-//    haf::sys::SharedDataSystem& sh_system =
-//        test_shared_data->sharedDataSystem();
-
     ShareableTestData shareable_test_data;
 
     auto dwc{test_shared_data->get()};
