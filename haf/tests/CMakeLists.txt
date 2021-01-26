@@ -25,6 +25,7 @@ set(SOURCE_TESTS
     shareddata/shareddataviewer
 
     time/timepoint
+    time/timesystem
 
     utils/object_factory
 )

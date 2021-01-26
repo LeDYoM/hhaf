@@ -6,6 +6,7 @@
 #include <system/i_include/systemdatawrappercreator.hpp>
 #include <haf/system/include/datawrappercreator.hpp>
 #include <shareddata/i_include/shareddatasystem.hpp>
+#include <time/i_include/timesystem.hpp>
 #include <system/i_include/init_system_options.hpp>
 
 class TestSystem
@@ -36,6 +37,16 @@ public:
         return system_provider_.sharedDataSystem();
     }
 
+    inline haf::sys::TimeSystem& timeSystem()
+    {
+        return system_provider_.timeSystem();
+    }
+
+    inline haf::sys::TimeSystem const& timeSystem() const
+    {
+        return system_provider_.timeSystem();
+    }
+
     haf::sys::SystemProvider& systemProvider() noexcept
     {
         return system_provider_;
@@ -64,6 +75,22 @@ private:
         haf::sys::InitSystemOptions& init_system_options) override
     {
         init_system_options.init_shared_data_system = true;
+    }
+};
+
+class TestTimeSystem : public TestSystem
+{
+public:
+    haf::sys::SystemDataWrapperCreator get()
+    {
+        return haf::sys::SystemDataWrapperCreator{systemProvider().timeSystem()};
+    }
+
+private:
+    void setInitSystemOptions(
+        haf::sys::InitSystemOptions& init_system_options) override
+    {
+        init_system_options.init_time_system = true;
     }
 };
 

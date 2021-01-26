@@ -7,9 +7,16 @@
 
 namespace haf::sys
 {
+/**
+ * @brief System class to manage everything related to time.
+ */
 class TimeSystem final : public SystemBase
 {
 public:
+    /**
+     * @brief Construct a new Time System object
+     * @param system_provider The system provider instance
+     */
     TimeSystem(sys::ISystemProvider& system_provider);
     ~TimeSystem();
 
@@ -19,7 +26,7 @@ public:
     void startFrame();
     void endFrame();
 
-    void setAcceleration(const mtps::f32 acceleration);
+    void setAcceleration(mtps::f32 const acceleration);
 
 private:
     struct TimeSystemPrivate;
