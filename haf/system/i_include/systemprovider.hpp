@@ -81,8 +81,8 @@ public:
     backend::BackendFactory& backendFactory() noexcept;
     const RenderSystem& renderSystem() const noexcept;
     RenderSystem& renderSystem() noexcept;
-    SharedDataSystem& sharedDataSystem() noexcept;
     const SharedDataSystem& sharedDataSystem() const noexcept;
+    SharedDataSystem& sharedDataSystem() noexcept;
 
 private:
     struct SystemProviderPrivate;
