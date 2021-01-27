@@ -12,10 +12,7 @@
 class TestSystem
 {
 public:
-    TestSystem() :
-        system_provider_{},
-        init_system_options_{}
-    {}
+    TestSystem() : system_provider_{}, init_system_options_{} {}
 
     void init()
     {
@@ -67,7 +64,8 @@ class TestSharedDataSystem : public TestSystem
 public:
     haf::sys::SystemDataWrapperCreator get()
     {
-        return haf::sys::SystemDataWrapperCreator{systemProvider().sharedDataSystem()};
+        return haf::sys::SystemDataWrapperCreator{
+            systemProvider().sharedDataSystem()};
     }
 
 private:
@@ -83,7 +81,8 @@ class TestTimeSystem : public TestSystem
 public:
     haf::sys::SystemDataWrapperCreator get()
     {
-        return haf::sys::SystemDataWrapperCreator{systemProvider().timeSystem()};
+        return haf::sys::SystemDataWrapperCreator{
+            systemProvider().timeSystem()};
     }
 
 private:
