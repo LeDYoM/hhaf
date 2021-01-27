@@ -1,7 +1,6 @@
 #ifndef HAF_SYSTEM_INTERNAL_GET_SYSTEM_PROVIDER_INCLUDE_HPP
 #define HAF_SYSTEM_INTERNAL_GET_SYSTEM_PROVIDER_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
 
 namespace haf::sys
 {
