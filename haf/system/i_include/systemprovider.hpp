@@ -84,6 +84,12 @@ public:
     const SharedDataSystem& sharedDataSystem() const noexcept;
     SharedDataSystem& sharedDataSystem() noexcept;
 
+    template <typename T>
+    T const& system() const noexcept;
+
+    template <typename T>
+    T& system() noexcept;
+
 private:
     struct SystemProviderPrivate;
     mtps::uptr<SystemProviderPrivate> p_;

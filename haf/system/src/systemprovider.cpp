@@ -292,4 +292,28 @@ const SharedDataSystem& SystemProvider::sharedDataSystem() const noexcept
     return *p_->shared_data_system_;
 }
 
+template <>
+SharedDataSystem const& SystemProvider::system() const noexcept
+{
+    return sharedDataSystem();
+}
+
+template <>
+SharedDataSystem& SystemProvider::system() noexcept
+{
+    return sharedDataSystem();
+}
+
+template <>
+TimeSystem const& SystemProvider::system() const noexcept
+{
+    return timeSystem();
+}
+
+template <>
+TimeSystem& SystemProvider::system() noexcept
+{
+    return timeSystem();
+}
+
 }  // namespace haf::sys

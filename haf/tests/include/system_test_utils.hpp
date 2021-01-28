@@ -26,22 +26,22 @@ public:
 
     inline haf::sys::SharedDataSystem& sharedDataSystem()
     {
-        return system_provider_.sharedDataSystem();
+        return system_provider_.system<haf::sys::SharedDataSystem>();
     }
 
     inline haf::sys::SharedDataSystem const& sharedDataSystem() const
     {
-        return system_provider_.sharedDataSystem();
+        return system_provider_.system<haf::sys::SharedDataSystem>();
     }
 
     inline haf::sys::TimeSystem& timeSystem()
     {
-        return system_provider_.timeSystem();
+        return system_provider_.system<haf::sys::TimeSystem>();
     }
 
     inline haf::sys::TimeSystem const& timeSystem() const
     {
-        return system_provider_.timeSystem();
+        return system_provider_.system<haf::sys::TimeSystem>();
     }
 
     haf::sys::SystemProvider& systemProvider() noexcept
@@ -52,6 +52,18 @@ public:
     haf::sys::SystemProvider const& systemProvider() const noexcept
     {
         return system_provider_;
+    }
+
+    template <typename T>
+    T& system()
+    {
+        return system_provider_.system<T>();
+    }
+
+    template <typename T>
+    T const& system() const
+    {
+        return system_provider_.system<T>();
     }
 
 private:
@@ -65,7 +77,7 @@ public:
     haf::sys::SystemDataWrapperCreator get()
     {
         return haf::sys::SystemDataWrapperCreator{
-            systemProvider().sharedDataSystem()};
+            systemProvider().system<haf::sys::SharedDataSystem>()};
     }
 
 private:
@@ -82,7 +94,7 @@ public:
     haf::sys::SystemDataWrapperCreator get()
     {
         return haf::sys::SystemDataWrapperCreator{
-            systemProvider().timeSystem()};
+            systemProvider().system<haf::sys::TimeSystem>()};
     }
 
 private:
