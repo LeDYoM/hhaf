@@ -17,7 +17,7 @@ TEST_CASE("SharedDataSystem", "[haf][shareddatasystem][Object][Address]")
 {
     auto test_shared_data = makeTestSystem<TestSharedDataSystem>();
     haf::sys::SharedDataSystem& sh_system =
-        test_shared_data->sharedDataSystem();
+        test_shared_data->system<SharedDataSystem>();
 
     CHECK(sh_system.isEmpty());
     CHECK_FALSE(sh_system.makeEmpty());

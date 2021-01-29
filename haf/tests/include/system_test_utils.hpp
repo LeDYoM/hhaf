@@ -9,10 +9,17 @@
 #include <time/i_include/timesystem.hpp>
 #include <system/i_include/init_system_options.hpp>
 
+template <typename T>
 class TestSystem
 {
 public:
     TestSystem() : system_provider_{}, init_system_options_{} {}
+
+    haf::sys::SystemDataWrapperCreator get()
+    {
+        return haf::sys::SystemDataWrapperCreator{
+            systemProvider().template system<T>()};
+    }
 
     void init()
     {
@@ -24,26 +31,6 @@ public:
 
     virtual void setInitSystemOptions(haf::sys::InitSystemOptions&) = 0;
 
-    inline haf::sys::SharedDataSystem& sharedDataSystem()
-    {
-        return system_provider_.system<haf::sys::SharedDataSystem>();
-    }
-
-    inline haf::sys::SharedDataSystem const& sharedDataSystem() const
-    {
-        return system_provider_.system<haf::sys::SharedDataSystem>();
-    }
-
-    inline haf::sys::TimeSystem& timeSystem()
-    {
-        return system_provider_.system<haf::sys::TimeSystem>();
-    }
-
-    inline haf::sys::TimeSystem const& timeSystem() const
-    {
-        return system_provider_.system<haf::sys::TimeSystem>();
-    }
-
     haf::sys::SystemProvider& systemProvider() noexcept
     {
         return system_provider_;
@@ -54,16 +41,16 @@ public:
         return system_provider_;
     }
 
-    template <typename T>
-    T& system()
+    template <typename S>
+    S& system()
     {
-        return system_provider_.system<T>();
+        return system_provider_.system<S>();
     }
 
-    template <typename T>
-    T const& system() const
+    template <typename S>
+    S const& system() const
     {
-        return system_provider_.system<T>();
+        return system_provider_.system<S>();
     }
 
 private:
@@ -71,15 +58,8 @@ private:
     haf::sys::InitSystemOptions init_system_options_;
 };
 
-class TestSharedDataSystem : public TestSystem
+class TestSharedDataSystem : public TestSystem<haf::sys::SharedDataSystem>
 {
-public:
-    haf::sys::SystemDataWrapperCreator get()
-    {
-        return haf::sys::SystemDataWrapperCreator{
-            systemProvider().system<haf::sys::SharedDataSystem>()};
-    }
-
 private:
     void setInitSystemOptions(
         haf::sys::InitSystemOptions& init_system_options) override
@@ -88,15 +68,8 @@ private:
     }
 };
 
-class TestTimeSystem : public TestSystem
+class TestTimeSystem : public TestSystem<haf::sys::TimeSystem>
 {
-public:
-    haf::sys::SystemDataWrapperCreator get()
-    {
-        return haf::sys::SystemDataWrapperCreator{
-            systemProvider().system<haf::sys::TimeSystem>()};
-    }
-
 private:
     void setInitSystemOptions(
         haf::sys::InitSystemOptions& init_system_options) override
