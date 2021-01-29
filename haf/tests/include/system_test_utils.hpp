@@ -29,7 +29,10 @@ public:
 
     virtual ~TestSystem() = default;
 
-    virtual void setInitSystemOptions(haf::sys::InitSystemOptions&) = 0;
+    void setInitSystemOptions(haf::sys::InitSystemOptions& init_system_options)
+    {
+        haf::sys::setInitSystem<T>(init_system_options);
+    }
 
     haf::sys::SystemProvider& systemProvider() noexcept
     {
@@ -58,25 +61,8 @@ private:
     haf::sys::InitSystemOptions init_system_options_;
 };
 
-class TestSharedDataSystem : public TestSystem<haf::sys::SharedDataSystem>
-{
-private:
-    void setInitSystemOptions(
-        haf::sys::InitSystemOptions& init_system_options) override
-    {
-        init_system_options.init_shared_data_system = true;
-    }
-};
-
-class TestTimeSystem : public TestSystem<haf::sys::TimeSystem>
-{
-private:
-    void setInitSystemOptions(
-        haf::sys::InitSystemOptions& init_system_options) override
-    {
-        init_system_options.init_time_system = true;
-    }
-};
+using TestSharedDataSystem = TestSystem<haf::sys::SharedDataSystem>;
+using TestTimeSystem = TestSystem<haf::sys::TimeSystem>;
 
 template <typename T>
 mtps::uptr<T> makeTestSystem()

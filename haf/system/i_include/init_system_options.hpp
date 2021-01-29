@@ -3,6 +3,10 @@
 
 namespace haf::sys
 {
+
+class SharedDataSystem;
+class TimeSystem;
+
 struct InitSystemOptions
 {
     bool init_shared_data_system{false};
@@ -30,6 +34,41 @@ struct InitSystemOptions
         init_simulation_system  = true;
     }
 };
+
+template <typename T>
+bool getInitSystem(InitSystemOptions const&);
+
+template <>
+inline bool getInitSystem<SharedDataSystem>(
+    InitSystemOptions const& init_system_options)
+{
+    return init_system_options.init_shared_data_system;
+}
+
+template <>
+inline bool getInitSystem<TimeSystem>(
+    InitSystemOptions const& init_system_options)
+{
+    return init_system_options.init_time_system;
+}
+
+template <typename T>
+inline void setInitSystem(InitSystemOptions &);
+
+template <>
+inline void setInitSystem<SharedDataSystem>(
+    InitSystemOptions& init_system_options)
+{
+    init_system_options.init_shared_data_system = true;
+}
+
+template <>
+inline void setInitSystem<TimeSystem>(
+    InitSystemOptions& init_system_options)
+{
+    init_system_options.init_time_system = true;
+}
+
 }  // namespace haf::sys
 
 #endif
