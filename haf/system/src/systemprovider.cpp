@@ -316,4 +316,16 @@ TimeSystem& SystemProvider::system() noexcept
     return timeSystem();
 }
 
+template <>
+scene::SceneManager const& SystemProvider::system() const noexcept
+{
+    return sceneManager();
+}
+
+template <>
+scene::SceneManager& SystemProvider::system() noexcept
+{
+    return sceneManager();
+}
+
 }  // namespace haf::sys

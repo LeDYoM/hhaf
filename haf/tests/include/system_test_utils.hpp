@@ -7,6 +7,7 @@
 #include <haf/system/include/datawrappercreator.hpp>
 #include <shareddata/i_include/shareddatasystem.hpp>
 #include <time/i_include/timesystem.hpp>
+#include <scene/i_include/scenemanager.hpp>
 #include <system/i_include/init_system_options.hpp>
 
 template <typename T>
@@ -63,6 +64,7 @@ private:
 
 using TestSharedDataSystem = TestSystem<haf::sys::SharedDataSystem>;
 using TestTimeSystem = TestSystem<haf::sys::TimeSystem>;
+using TestSceneManager = TestSystem<haf::scene::SceneManager>;
 
 template <typename T>
 mtps::uptr<T> makeTestSystem()

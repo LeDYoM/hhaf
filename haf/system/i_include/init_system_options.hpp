@@ -1,6 +1,11 @@
 #ifndef HAF_SYSTEM_INIT_SYSTEM_OPTIONS_INCLUDE_HPP
 #define HAF_SYSTEM_INIT_SYSTEM_OPTIONS_INCLUDE_HPP
 
+namespace haf::scene
+{
+    class SceneManager;
+}
+
 namespace haf::sys
 {
 
@@ -52,6 +57,13 @@ inline bool getInitSystem<TimeSystem>(
     return init_system_options.init_time_system;
 }
 
+template <>
+inline bool getInitSystem<scene::SceneManager>(
+    InitSystemOptions const& init_system_options)
+{
+    return init_system_options.init_scene_manager;
+}
+
 template <typename T>
 inline void setInitSystem(InitSystemOptions &);
 
@@ -67,6 +79,13 @@ inline void setInitSystem<TimeSystem>(
     InitSystemOptions& init_system_options)
 {
     init_system_options.init_time_system = true;
+}
+
+template <>
+inline void setInitSystem<scene::SceneManager>(
+    InitSystemOptions& init_system_options)
+{
+    init_system_options.init_scene_manager = true;
 }
 
 }  // namespace haf::sys
