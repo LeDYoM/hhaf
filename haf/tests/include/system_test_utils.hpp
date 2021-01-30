@@ -8,7 +8,7 @@
 #include <shareddata/i_include/shareddatasystem.hpp>
 #include <time/i_include/timesystem.hpp>
 #include <scene/i_include/scenemanager.hpp>
-#include <system/i_include/init_system_options.hpp>
+#include <system/i_include/system_options_init.hpp>
 
 template <typename T>
 class TestSystem

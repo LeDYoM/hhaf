@@ -1,16 +1,8 @@
 #ifndef HAF_SYSTEM_INIT_SYSTEM_OPTIONS_INCLUDE_HPP
 #define HAF_SYSTEM_INIT_SYSTEM_OPTIONS_INCLUDE_HPP
 
-namespace haf::scene
-{
-    class SceneManager;
-}
-
 namespace haf::sys
 {
-
-class SharedDataSystem;
-class TimeSystem;
 
 struct InitSystemOptions
 {
@@ -39,54 +31,6 @@ struct InitSystemOptions
         init_simulation_system  = true;
     }
 };
-
-template <typename T>
-bool getInitSystem(InitSystemOptions const&);
-
-template <>
-inline bool getInitSystem<SharedDataSystem>(
-    InitSystemOptions const& init_system_options)
-{
-    return init_system_options.init_shared_data_system;
-}
-
-template <>
-inline bool getInitSystem<TimeSystem>(
-    InitSystemOptions const& init_system_options)
-{
-    return init_system_options.init_time_system;
-}
-
-template <>
-inline bool getInitSystem<scene::SceneManager>(
-    InitSystemOptions const& init_system_options)
-{
-    return init_system_options.init_scene_manager;
-}
-
-template <typename T>
-inline void setInitSystem(InitSystemOptions &);
-
-template <>
-inline void setInitSystem<SharedDataSystem>(
-    InitSystemOptions& init_system_options)
-{
-    init_system_options.init_shared_data_system = true;
-}
-
-template <>
-inline void setInitSystem<TimeSystem>(
-    InitSystemOptions& init_system_options)
-{
-    init_system_options.init_time_system = true;
-}
-
-template <>
-inline void setInitSystem<scene::SceneManager>(
-    InitSystemOptions& init_system_options)
-{
-    init_system_options.init_scene_manager = true;
-}
 
 }  // namespace haf::sys
 
