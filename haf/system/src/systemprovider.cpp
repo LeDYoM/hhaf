@@ -328,4 +328,88 @@ scene::SceneManager& SystemProvider::system() noexcept
     return sceneManager();
 }
 
+template <>
+Window const& SystemProvider::system() const noexcept
+{
+    return parentWindow();
+}
+
+template <>
+Window& SystemProvider::system() noexcept
+{
+    return parentWindow();
+}
+
+template <>
+ResourceManager const& SystemProvider::system() const noexcept
+{
+    return resourceManager();
+}
+
+template <>
+ResourceManager& SystemProvider::system() noexcept
+{
+    return resourceManager();
+}
+
+template <>
+InputSystem const& SystemProvider::system() const noexcept
+{
+    return inputSystem();
+}
+
+template <>
+InputSystem& SystemProvider::system() noexcept
+{
+    return inputSystem();
+}
+
+template <>
+RandomSystem const& SystemProvider::system() const noexcept
+{
+    return randomSystem();
+}
+
+template <>
+RandomSystem& SystemProvider::system() noexcept
+{
+    return randomSystem();
+}
+
+template <>
+FileSystem const& SystemProvider::system() const noexcept
+{
+    return fileSystem();
+}
+
+template <>
+FileSystem& SystemProvider::system() noexcept
+{
+    return fileSystem();
+}
+
+template <>
+RenderSystem const& SystemProvider::system() const noexcept
+{
+    return renderSystem();
+}
+
+template <>
+RenderSystem& SystemProvider::system() noexcept
+{
+    return renderSystem();
+}
+
+template <>
+SimulationSystem const& SystemProvider::system() const noexcept
+{
+    return simulationSystem();
+}
+
+template <>
+SimulationSystem& SystemProvider::system() noexcept
+{
+    return simulationSystem();
+}
+
 }  // namespace haf::sys
