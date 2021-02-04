@@ -59,7 +59,8 @@ SimulationSystem::~SimulationSystem()
     }
 }
 
-void SimulationSystem::initialize()
+void SimulationSystem::setSimulationInputFile(
+    mtps::str const& simulation_input_file)
 {
     // Just test.
     SimulationActionGroup simulation_action_group;
@@ -77,31 +78,30 @@ void SimulationSystem::initialize()
     }
 #endif
 
-    static constexpr char InputFileName[] = "simulation_input.txt";
-
-    DisplayLog::info("Trying to load ", InputFileName,
+    DisplayLog::info("Trying to load ", priv_->simulation_input_file_,
                      " to read simulation data");
     SystemDataWrapperCreator dwc{*this};
     auto file_serializer = dwc.dataWrapper<FileSerializer>();
     auto const result    = file_serializer->deserializeFromFile(
-        InputFileName, priv_->current_replay_data_);
+        priv_->simulation_input_file_, priv_->current_replay_data_);
 
     if (result != FileSerializer::Result::Success)
     {
         if (result == FileSerializer::Result::FileIOError)
         {
-            DisplayLog::debug("Simulation file ", InputFileName, " not found");
+            DisplayLog::debug("Simulation file ", priv_->simulation_input_file_, " not found");
+            LogAsserter::log_assert(false, "If simulation file is set and not found is an error");
         }
         else if (result == FileSerializer::Result::ParsingError)
         {
-            DisplayLog::error("File ", InputFileName,
+            DisplayLog::error("File ", priv_->simulation_input_file_,
                               " found but contains invalid format.");
         }
         else
         {
             DisplayLog::error(
                 "Unknow error reading and parsing simulation file: ",
-                InputFileName);
+                priv_->simulation_input_file_);
         }
     }
 
@@ -111,6 +111,14 @@ void SimulationSystem::initialize()
         priv_->current_replay_data_.simulation_actions_.cbegin();
     priv_->current_simulable_data_buffer_iterator =
         priv_->current_replay_data_.data_buffer_.cbegin();
+}
+
+void SimulationSystem::setSimulationOutputFile(
+    mtps::str const& simulation_output_file)
+{}
+
+void SimulationSystem::initialize()
+{
 }
 
 void SimulationSystem::setSimulationActions(

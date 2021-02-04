@@ -68,17 +68,6 @@ public:
 
     bool parseCommandLineParameters()
     {
-        if (params_.hasParameters())
-        {
-            auto const simulation_input = params_.optionValue("simin");
-            // If the parameter simin exists
-            if (simulation_input.first)
-            {
-                simulation_input_file = simulation_input.second;
-                DisplayLog::debug("Parameter simin found eith value: ",
-                                  simulation_input_file);
-            }
-        }
         return true;
     }
     parpar::ParametersParser params_;
@@ -88,7 +77,6 @@ public:
     vector<HostedApplication> app_;
     u32 index_current_app{0U};
     AppLoader app_loader;
-
     rptr<IApp> currentApp() { return app_[index_current_app].iapp_; }
 
     rptr<IApp const> currentApp() const
@@ -176,7 +164,7 @@ public:
         {
             DisplayLog::info("Starting Registering app...");
             app_.emplace_back(std::move(iapp), std::move(managed_app),
-                                  std::move(name));
+                              std::move(name));
             DisplayLog::verbose("Starting new app...");
             app_state_ = AppState::ReadyToStart;
         }

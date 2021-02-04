@@ -12,6 +12,7 @@
 #include <random/i_include/randomsystem.hpp>
 
 #include <mtypes/include/types.hpp>
+#include <mtypes/include/str.hpp>
 #include <mtypes/include/object.hpp>
 #include <mtypes/include/object_utils.hpp>
 
@@ -81,6 +82,9 @@ struct SimulationSystem::SimulationSystemPrivate final
 
     time::TimePoint current_last_checked_point_;
     time::TimePoint next_last_checked_point_;
+
+    mtps::str simulation_input_file_;
+    mtps::str simulation_output_file_;
 
     void setSimulationActions(const time::TimePoint& current,
                               SimulationActionContainer sim_act_container)

@@ -23,6 +23,8 @@
 #include <haf/scene_components/include/app_initializer.hpp>
 #include <haf/scene_components/include/app_finisher.hpp>
 
+#include <mtypes/include/parpar.hpp>
+
 using namespace mtps;
 
 namespace haf::sys
@@ -42,6 +44,38 @@ struct SystemProvider::SystemProviderPrivate final
     uptr<TimeSystem> time_system_;
     uptr<RenderSystem> render_system_;
     uptr<SimulationSystem> simulation_system_;
+
+    str simulation_input_file_;
+    str simulation_output_file_;
+
+    void setArgumments(parpar::ParametersParser parameter_parser)
+    {
+        if (parameter_parser.hasParameters())
+        {
+            static constexpr char kSimulationInputFile[]  = "sim_in";
+            static constexpr char kSimulationOutputFile[] = "sim_out";
+
+            auto const simulation_input =
+                parameter_parser.optionValue(kSimulationInputFile);
+
+            auto const simulation_output =
+                parameter_parser.optionValue(kSimulationOutputFile);
+
+            if (simulation_input.first)
+            {
+                simulation_input_file_ = simulation_input.second;
+                DisplayLog::debug("Parameter ", kSimulationInputFile,
+                                  " found with value: ", simulation_input_file_);
+            }
+
+            if (simulation_output.first)
+            {
+                simulation_output_file_ = simulation_output.second;
+                DisplayLog::debug("Parameter ", kSimulationOutputFile,
+                                  " found with value: ", simulation_output_file_);
+            }
+        }
+    }
 };
 
 SystemProvider::SystemProvider() : p_{muptr<SystemProviderPrivate>()}
@@ -131,9 +165,8 @@ void SystemProvider::init(rptr<IApp> iapp,
                           int const argc,
                           char const* const argv[])
 {
-    // TODO: Use argc and argv to read configuration.
-    argc;
-    argv;
+    parpar::ParametersParser parameter_parser{parpar::create(argc, argv)};
+    p_->setArgumments(parameter_parser);
 
     LogAsserter::log_assert(
         iapp != nullptr, "Cannot create a SystemProvider with a nullptr app");
@@ -150,6 +183,20 @@ void SystemProvider::init(rptr<IApp> iapp,
     SystemAccess system_access(this);
     DataWrapperCreator dwc(&system_access);
     p_->app_->onInit(*dwc.dataWrapper<scene::AppInitializer>());
+}
+
+void SystemProvider::setSimulationInputFile(
+    mtps::str const& simulation_input_file)
+{
+    LogAsserter::log_assert(p_->simulation_system_ != nullptr,
+                            "SimulationSystem is nullptr");
+}
+
+void SystemProvider::setSimulationOutputFile(
+    mtps::str const& simulation_output_file)
+{
+    LogAsserter::log_assert(p_->simulation_system_ != nullptr,
+                            "SimulationSystem is nullptr");
 }
 
 void SystemProvider::terminate()
