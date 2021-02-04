@@ -64,15 +64,17 @@ struct SystemProvider::SystemProviderPrivate final
             if (simulation_input.first)
             {
                 simulation_input_file_ = simulation_input.second;
-                DisplayLog::debug("Parameter ", kSimulationInputFile,
-                                  " found with value: ", simulation_input_file_);
+                DisplayLog::debug(
+                    "Parameter ", kSimulationInputFile,
+                    " found with value: ", simulation_input_file_);
             }
 
             if (simulation_output.first)
             {
                 simulation_output_file_ = simulation_output.second;
-                DisplayLog::debug("Parameter ", kSimulationOutputFile,
-                                  " found with value: ", simulation_output_file_);
+                DisplayLog::debug(
+                    "Parameter ", kSimulationOutputFile,
+                    " found with value: ", simulation_output_file_);
             }
         }
     }
@@ -143,6 +145,24 @@ void SystemProvider::fastInit(InitSystemOptions const& init_system_options)
     {
         DisplayLog::debug("Initializing Simulation System");
         p_->simulation_system_ = muptr<SimulationSystem>(*this);
+        if (!p_->simulation_input_file_.empty())
+        {
+            DisplayLog::debug(
+                "Passing simulation input file to simulation system: ",
+                p_->simulation_input_file_);
+            p_->simulation_system_->setSimulationInputFile(
+                p_->simulation_input_file_);
+        }
+
+        if (!p_->simulation_output_file_.empty())
+        {
+            DisplayLog::debug(
+                "Passing simulation output file to simulation system: ",
+                p_->simulation_output_file_);
+            p_->simulation_system_->setSimulationOutputFile(
+                p_->simulation_output_file_);
+        }
+
         p_->simulation_system_->initialize();
     }
 
