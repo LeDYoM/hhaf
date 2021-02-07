@@ -65,57 +65,64 @@ void SimulationSystem::initialize(str const& simulation_input_file,
     priv_->simulation_input_file_  = simulation_input_file;
     priv_->simulation_output_file_ = simulation_output_file;
 
-    // Just test.
-    SimulationActionGroup simulation_action_group;
+    if (!priv_->simulation_input_file_.empty())
+    {
+        // Just test.
+        SimulationActionGroup simulation_action_group;
 
 #if 0
-    {
-        simulation_action_group.addKeyStroke(Key::Return);
-        simulation_action_group.addKeyStroke(Key::Down);
-        simulation_action_group.addKeyStroke(Key::Return);
+        {
+            simulation_action_group.addKeyStroke(Key::Return);
+            simulation_action_group.addKeyStroke(Key::Down);
+            simulation_action_group.addKeyStroke(Key::Return);
 
-        auto &simulationSystem(systemProvider().simulationSystem());
-        simulationSystem.setSimulationActions(simulation_action_group);
-        simulationSystem.setSimulateRandomDataBuffer(
-            SimulateRandomDataBuffer{0U, 0U, 0U, 0U});
-    }
+            auto &simulationSystem(systemProvider().simulationSystem());
+            simulationSystem.setSimulationActions(simulation_action_group);
+            simulationSystem.setSimulateRandomDataBuffer(
+                SimulateRandomDataBuffer{0U, 0U, 0U, 0U});
+        }
 #endif
 
-    DisplayLog::info("Trying to load ", priv_->simulation_input_file_,
-                     " to read simulation data");
-    SystemDataWrapperCreator dwc{*this};
-    auto file_serializer = dwc.dataWrapper<FileSerializer>();
-    auto const result    = file_serializer->deserializeFromFile(
-        priv_->simulation_input_file_, priv_->current_replay_data_);
+        DisplayLog::info("Trying to load ", priv_->simulation_input_file_,
+                        " to read simulation data");
+        SystemDataWrapperCreator dwc{*this};
+        auto file_serializer = dwc.dataWrapper<FileSerializer>();
+        auto const result    = file_serializer->deserializeFromFile(
+            priv_->simulation_input_file_, priv_->current_replay_data_);
 
-    if (result != FileSerializer::Result::Success)
-    {
-        if (result == FileSerializer::Result::FileIOError)
+        if (result != FileSerializer::Result::Success)
         {
-            DisplayLog::debug("Simulation file ", priv_->simulation_input_file_,
-                              " not found");
-            LogAsserter::log_assert(
-                false, "If simulation file is set and not found is an error");
+            if (result == FileSerializer::Result::FileIOError)
+            {
+                DisplayLog::debug("Simulation file ", priv_->simulation_input_file_,
+                                " not found");
+                LogAsserter::log_assert(
+                    false, "If simulation file is set and not found is an error");
+            }
+            else if (result == FileSerializer::Result::ParsingError)
+            {
+                DisplayLog::error("File ", priv_->simulation_input_file_,
+                                " found but contains invalid format.");
+            }
+            else
+            {
+                DisplayLog::error(
+                    "Unknow error reading and parsing simulation file: ",
+                    priv_->simulation_input_file_);
+            }
         }
-        else if (result == FileSerializer::Result::ParsingError)
-        {
-            DisplayLog::error("File ", priv_->simulation_input_file_,
-                              " found but contains invalid format.");
-        }
-        else
-        {
-            DisplayLog::error(
-                "Unknow error reading and parsing simulation file: ",
-                priv_->simulation_input_file_);
-        }
+
+        // Prepare output
+        priv_->next_last_checked_point_ = systemProvider().timeSystem().now();
+        priv_->current_simulation_action_iterator_ =
+            priv_->current_replay_data_.simulation_actions_.cbegin();
+        priv_->current_simulable_data_buffer_iterator =
+            priv_->current_replay_data_.data_buffer_.cbegin();
     }
-
-    // Prepare output
-    priv_->next_last_checked_point_ = systemProvider().timeSystem().now();
-    priv_->current_simulation_action_iterator_ =
-        priv_->current_replay_data_.simulation_actions_.cbegin();
-    priv_->current_simulable_data_buffer_iterator =
-        priv_->current_replay_data_.data_buffer_.cbegin();
+    else
+    {
+        DisplayLog::debug("No simulation input file loaded");
+    }
 }
 
 void SimulationSystem::setSimulationActions(

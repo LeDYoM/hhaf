@@ -6,7 +6,7 @@ function(set_cxx_standard CURRENT_TARGET)
 endfunction()
 
 macro(set_install_dir)
-  set(CMAKE_INSTALL_PREFIX /home/ismael/h_test/)
+#  set(CMAKE_INSTALL_PREFIX /home/ismael/h_test/)
   set(CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}phaf/")
 endmacro()
 
