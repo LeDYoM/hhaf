@@ -27,8 +27,10 @@ Player::Player(rptr<SceneNode> parent, str name) :
                                       .figType(FigType_t::Shape)
                                       .pointCount(3U));
     node_             = render_scene_node_->node();
+    rotator_scalator_position_ = render_scene_node_->addTransformation();
     rotator_scalator_ = render_scene_node_->addTransformation();
     scalator_         = render_scene_node_->addTransformation();
+    scalator_position_  = render_scene_node_->addTransformation();
 }
 
 Player::~Player() = default;
@@ -56,20 +58,20 @@ void Player::update()
         const auto direction{currentDirection()};
 
         const auto tileCenter{board2SceneFactor() / 2.0F};
-        render_scene_node_->getTransformation(rotator_scalator_)
-            .rotateAround(tileCenter, direction.angle());
+        render_scene_node_->getTransformation(rotator_scalator_position_)
+            .prop<Position>() = tileCenter;
 
-        render_scene_node_->getTransformation(scalator_).scaleAround(
-            tileCenter,
+        render_scene_node_->getTransformation(rotator_scalator_)
+            .prop<Rotation>().set(direction.angle());
+
+        render_scene_node_->getTransformation(scalator_).prop<Scale>().set(
             (direction.isVertical())
                 ? vector2df{board2SceneFactor().y / board2SceneFactor().x,
                             board2SceneFactor().x / board2SceneFactor().y}
                 : vector2df{1.0F, 1.0F});
 
-        render_scene_node_->getTransformation(rotator_scalator_)
-            .prop<Position>() = tileCenter;
-        render_scene_node_->getTransformation(scalator_).prop<Position>() =
-            tileCenter;
+        render_scene_node_->getTransformation(scalator_position_)
+            .prop<Position>() = -tileCenter;
     }
 }
 

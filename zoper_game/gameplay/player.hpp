@@ -42,7 +42,9 @@ public:
 
 private:
     mtps::u32 movements_{0U};
+    mtps::size_type rotator_scalator_position_;
     mtps::size_type rotator_scalator_;
+    mtps::size_type scalator_position_;
     mtps::size_type scalator_;
     void launchAnimationBack(const mtps::vector2df &toWhere);
     mtps::sptr<haf::scene::AnimationComponent> animation_component_;
