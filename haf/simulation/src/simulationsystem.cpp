@@ -59,10 +59,12 @@ SimulationSystem::~SimulationSystem()
     }
 }
 
-void SimulationSystem::setSimulationInputFile(
-    mtps::str const& simulation_input_file)
+void SimulationSystem::initialize(str const& simulation_input_file,
+                                  str const& simulation_output_file)
 {
-    priv_->simulation_input_file_ = simulation_input_file;
+    priv_->simulation_input_file_  = simulation_input_file;
+    priv_->simulation_output_file_ = simulation_output_file;
+
     // Just test.
     SimulationActionGroup simulation_action_group;
 
@@ -90,8 +92,10 @@ void SimulationSystem::setSimulationInputFile(
     {
         if (result == FileSerializer::Result::FileIOError)
         {
-            DisplayLog::debug("Simulation file ", priv_->simulation_input_file_, " not found");
-            LogAsserter::log_assert(false, "If simulation file is set and not found is an error");
+            DisplayLog::debug("Simulation file ", priv_->simulation_input_file_,
+                              " not found");
+            LogAsserter::log_assert(
+                false, "If simulation file is set and not found is an error");
         }
         else if (result == FileSerializer::Result::ParsingError)
         {
@@ -112,16 +116,6 @@ void SimulationSystem::setSimulationInputFile(
         priv_->current_replay_data_.simulation_actions_.cbegin();
     priv_->current_simulable_data_buffer_iterator =
         priv_->current_replay_data_.data_buffer_.cbegin();
-}
-
-void SimulationSystem::setSimulationOutputFile(
-    mtps::str const& simulation_output_file)
-{
-    priv_->simulation_output_file_ = simulation_output_file;
-}
-
-void SimulationSystem::initialize()
-{
 }
 
 void SimulationSystem::setSimulationActions(

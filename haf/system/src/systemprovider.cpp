@@ -150,8 +150,6 @@ void SystemProvider::fastInit(InitSystemOptions const& init_system_options)
             DisplayLog::debug(
                 "Passing simulation input file to simulation system: ",
                 p_->simulation_input_file_);
-            p_->simulation_system_->setSimulationInputFile(
-                p_->simulation_input_file_);
         }
 
         if (!p_->simulation_output_file_.empty())
@@ -159,11 +157,10 @@ void SystemProvider::fastInit(InitSystemOptions const& init_system_options)
             DisplayLog::debug(
                 "Passing simulation output file to simulation system: ",
                 p_->simulation_output_file_);
-            p_->simulation_system_->setSimulationOutputFile(
-                p_->simulation_output_file_);
         }
 
-        p_->simulation_system_->initialize();
+        p_->simulation_system_->initialize(p_->simulation_input_file_,
+                                           p_->simulation_output_file_);
     }
 
     if (init_system_options.init_window_system)
