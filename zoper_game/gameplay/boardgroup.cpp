@@ -72,14 +72,14 @@ void BoardGroup::addPlayer()
     DisplayLog::info("Adding player tile at ",
                      TokenZones::centerRect.leftTop());
     LogAsserter::log_assert(player_ == nullptr, "Player already initialized");
+
     // Create the player instance
     player_ = tokens_scene_node->createSceneNode<Player>("playerNode");
-    player_->configure(TokenZones::centerRect.leftTop(),
-                       rectFromSize(tileSize()));
+    player_->configure(rectFromSize(tileSize()));
 
     // Add it to the board and to the scene nodes
-    componentOfType<board::BoardManager>()->setTile(player_->boardPosition(),
-                                                    player_);
+    componentOfType<board::BoardManager>()->setTile(
+        TokenZones::centerRect.leftTop(), player_);
 }
 
 void BoardGroup::createNewToken(const board::BoardTileData data,
@@ -361,7 +361,7 @@ void BoardGroup::launchPlayer()
                     // change the type of the token for the previous type of the
                     // player
                     boardManager()->swapTileData(player_->boardPosition(),
-                                              loopPosition);
+                                                 loopPosition);
 
                     DisplayLog::info("Player type changed to ",
                                      player_->value());

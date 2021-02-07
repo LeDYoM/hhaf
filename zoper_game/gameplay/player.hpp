@@ -19,8 +19,7 @@ public:
     Player(mtps::rptr<haf::scene::SceneNode> parent, mtps::str name);
     ~Player() override;
 
-    void configure(const mtps::vector2dst &bPosition,
-                   const mtps::Rectf32 &box);
+    void configure(const mtps::Rectf32 &box);
 
     mtps::PropertyState<mtps::vector2dst> boardPosition;
     mtps::PropertyState<Direction> currentDirection;
@@ -42,10 +41,10 @@ public:
 
 private:
     mtps::u32 movements_{0U};
-    mtps::size_type rotator_scalator_position_;
-    mtps::size_type rotator_scalator_;
-    mtps::size_type scalator_position_;
+    mtps::size_type move_in_;
+    mtps::size_type rotator_;
     mtps::size_type scalator_;
+    mtps::size_type move_out_;
     void launchAnimationBack(const mtps::vector2df &toWhere);
     mtps::sptr<haf::scene::AnimationComponent> animation_component_;
     mtps::sptr<haf::scene::RenderizableSceneNode> render_scene_node_;
