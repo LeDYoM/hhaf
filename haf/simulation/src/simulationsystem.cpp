@@ -62,6 +62,7 @@ SimulationSystem::~SimulationSystem()
 void SimulationSystem::setSimulationInputFile(
     mtps::str const& simulation_input_file)
 {
+    priv_->simulation_input_file_ = simulation_input_file;
     // Just test.
     SimulationActionGroup simulation_action_group;
 
@@ -115,7 +116,9 @@ void SimulationSystem::setSimulationInputFile(
 
 void SimulationSystem::setSimulationOutputFile(
     mtps::str const& simulation_output_file)
-{}
+{
+    priv_->simulation_output_file_ = simulation_output_file;
+}
 
 void SimulationSystem::initialize()
 {

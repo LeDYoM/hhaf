@@ -205,20 +205,6 @@ void SystemProvider::init(rptr<IApp> iapp,
     p_->app_->onInit(*dwc.dataWrapper<scene::AppInitializer>());
 }
 
-void SystemProvider::setSimulationInputFile(
-    mtps::str const& simulation_input_file)
-{
-    LogAsserter::log_assert(p_->simulation_system_ != nullptr,
-                            "SimulationSystem is nullptr");
-}
-
-void SystemProvider::setSimulationOutputFile(
-    mtps::str const& simulation_output_file)
-{
-    LogAsserter::log_assert(p_->simulation_system_ != nullptr,
-                            "SimulationSystem is nullptr");
-}
-
 void SystemProvider::terminate()
 {
     SystemAccess system_access(this);

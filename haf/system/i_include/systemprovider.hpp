@@ -45,8 +45,6 @@ public:
 
     void fastInit(InitSystemOptions const& init_system_options);
     void init(mtps::rptr<IApp> iapp, int const argc, char const* const argv[]);
-    void setSimulationInputFile(mtps::str const& simulation_input_file);
-    void setSimulationOutputFile(mtps::str const& simulation_output_file);
     void terminate();
 
     template <typename T>
