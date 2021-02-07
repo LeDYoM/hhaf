@@ -94,7 +94,7 @@ void Token::tileMoved(const vector2dst& source, const vector2dst& dest)
 
     auto const MoveTokenTime = time::TimePoint_as_miliseconds(1000U);
 
-    const auto destination(getBoardGroup()->board2Scene(dest));
+    const auto destination(board2Scene(dest));
     animation_component_->addPropertyAnimation(MoveTokenTime, prop<Position>(),
                                                prop<Position>()(), destination);
 }

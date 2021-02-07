@@ -17,30 +17,25 @@ using namespace haf::time;
 Player::Player(rptr<SceneNode> parent, str name) :
     BaseClass{std::move(parent), std::move(name)},
     boardPosition{},
-    currentDirection{Direction{Direction::DirectionData::Up}},
-    m_board2SceneFactor{}
+    currentDirection{Direction{Direction::DirectionData::Up}}
 {
-//    rotator_scalator_ = createSceneNode("player_rotator");
-
-    render_scene_node_ = /*rotator_scalator_->*/createSceneNode<RenderizableSceneNode>(
-        "player_render_scene_node");
+    render_scene_node_ =
+        createSceneNode<RenderizableSceneNode>("player_render_scene_node");
 
     render_scene_node_->buildNode(render_scene_node_->renderizableBuilder()
-                                     .name("player_render_scene_node")
-                                     .figType(FigType_t::Shape)
-                                     .pointCount(3U));
-    node_     = render_scene_node_->node();
+                                      .name("player_render_scene_node")
+                                      .figType(FigType_t::Shape)
+                                      .pointCount(3U));
+    node_             = render_scene_node_->node();
     rotator_scalator_ = render_scene_node_->addTransformation();
-    scalator_ = render_scene_node_->addTransformation();
+    scalator_         = render_scene_node_->addTransformation();
 }
 
 Player::~Player() = default;
 
 void Player::configure(const vector2dst& bPosition,
-                       const Rectf32& box,
-                       const vector2df& board2SceneFactor)
+                       const Rectf32& box)
 {
-    m_board2SceneFactor = board2SceneFactor;
     boardPosition.set(bPosition);
     node_->box.set(box);
 }
@@ -52,7 +47,7 @@ void Player::update()
     if (boardPosition.readResetHasChanged())
     {
         DisplayLog::info("Player board position: ", boardPosition());
-        prop<Position>() = m_board2SceneFactor * boardPosition();
+        prop<Position>() = board2Scene(boardPosition());
         DisplayLog::info("Player scene position: ", prop<Position>().get());
     }
 
@@ -60,19 +55,21 @@ void Player::update()
     {
         const auto direction{currentDirection()};
 
-        const auto tileCenter{m_board2SceneFactor / 2.0F};
-        render_scene_node_->getTransformation(rotator_scalator_).rotateAround(tileCenter, direction.angle());
+        const auto tileCenter{board2SceneFactor() / 2.0F};
+        render_scene_node_->getTransformation(rotator_scalator_)
+            .rotateAround(tileCenter, direction.angle());
 
-        render_scene_node_->getTransformation(scalator_).
-        scaleAround(
+        render_scene_node_->getTransformation(scalator_).scaleAround(
             tileCenter,
             (!direction.isVertical())
                 ? vector2df{1.0F, 1.0F}
-                : vector2df{m_board2SceneFactor.y / m_board2SceneFactor.x,
-                            m_board2SceneFactor.x / m_board2SceneFactor.y});
+                : vector2df{board2SceneFactor().y / board2SceneFactor().x,
+                            board2SceneFactor().x / board2SceneFactor().y});
 
-        render_scene_node_->getTransformation(rotator_scalator_).prop<Position>() = tileCenter;
-        render_scene_node_->getTransformation(scalator_).prop<Position>() = tileCenter;
+        render_scene_node_->getTransformation(rotator_scalator_)
+            .prop<Position>() = tileCenter;
+        render_scene_node_->getTransformation(scalator_).prop<Position>() =
+            tileCenter;
     }
 }
 
@@ -87,7 +84,7 @@ void Player::movePlayer(const Direction& direction)
                             "Invalid direction passed to move");
     currentDirection = direction;
     auto nPosition   = direction.applyToVector(boardPosition());
-    auto result = getBoardManager()->moveTile(boardPosition(), nPosition);
+    auto result      = getBoardManager()->moveTile(boardPosition(), nPosition);
     if (result)
     {
         ++movements_;
@@ -106,7 +103,8 @@ void Player::launchAnimation(const vector2df& toWhere)
     animation_component_->addPropertyAnimation(
         TimePoint_as_miliseconds(
             gameplay::constants::MillisAnimationLaunchPlayerStep),
-        prop<Position>(), prop<Position>()(), toWhere, Animation::AnimationDirection::Forward,
+        prop<Position>(), prop<Position>()(), toWhere,
+        Animation::AnimationDirection::Forward,
         [this, currentPosition = prop<Position>()()]() {
             launchAnimationBack(currentPosition);
         });

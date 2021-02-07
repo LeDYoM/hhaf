@@ -20,8 +20,7 @@ public:
     ~Player() override;
 
     void configure(const mtps::vector2dst &bPosition,
-                   const mtps::Rectf32 &box,
-                   const mtps::vector2df &board2SceneFactor);
+                   const mtps::Rectf32 &box);
 
     mtps::PropertyState<mtps::vector2dst> boardPosition;
     mtps::PropertyState<Direction> currentDirection;
@@ -48,7 +47,6 @@ private:
     void launchAnimationBack(const mtps::vector2df &toWhere);
     mtps::sptr<haf::scene::AnimationComponent> animation_component_;
     mtps::sptr<haf::scene::RenderizableSceneNode> render_scene_node_;
-    mtps::vector2df m_board2SceneFactor;
 };
 } // namespace zoper
 

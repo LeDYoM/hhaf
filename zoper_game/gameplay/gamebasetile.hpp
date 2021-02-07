@@ -2,6 +2,7 @@
 #define ZOPER_GAMEBASETILE_HPP
 
 #include <mtypes/include/types.hpp>
+#include <mtypes/include/vector2d.hpp>
 #include <haf/scene/include/scenenode.hpp>
 #include <haf/render/include/renderizable.hpp>
 #include <boardmanager/include/itile.hpp>
@@ -38,7 +39,11 @@ public:
     mtps::rptr<BoardGroup> getBoardGroup();
 
     bool isInCenter() const noexcept { return is_in_center; }
+
 protected:
+    mtps::vector2df board2SceneFactor() const;
+    mtps::vector2df board2Scene(const mtps::vector2dst& bPosition) const;
+
     mtps::sptr<haf::scene::Renderizable> node_;
 private:
     bool is_in_center{false};

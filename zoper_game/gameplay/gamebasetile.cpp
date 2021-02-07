@@ -11,31 +11,41 @@ using namespace mtps;
 
 namespace zoper
 {
-GameBaseTile::GameBaseTile(mtps::rptr<SceneNode> const parent, str name) :
+GameBaseTile::GameBaseTile(rptr<SceneNode> const parent, str name) :
     ITile{}, SceneNode{parent, std::move(name)}
 {}
 
 GameBaseTile::~GameBaseTile() = default;
 
-mtps::rptr<BoardGroup> GameBaseTile::getBoardGroup()
+rptr<BoardGroup> GameBaseTile::getBoardGroup()
 {
     return ancestor<BoardGroup>();
 }
 
-void GameBaseTile::tileAdded(const mtps::vector2dst& position)
+vector2df GameBaseTile::board2SceneFactor() const
+{
+    return ancestor<BoardGroup>()->board2SceneFactor();
+}
+
+vector2df GameBaseTile::board2Scene(const vector2dst& bPosition) const
+{
+    return ancestor<BoardGroup>()->board2Scene(bPosition);
+}
+
+void GameBaseTile::tileAdded(const vector2dst& position)
 {
     TileBase::tileAdded(position);
     is_in_center = TokenZones::pointInCenter(position);
 }
 
-void GameBaseTile::tileMoved(const mtps::vector2dst&  source,
-                        const mtps::vector2dst&  dest)
+void GameBaseTile::tileMoved(const vector2dst&  source,
+                        const vector2dst&  dest)
 {
     TileBase::tileMoved(source, dest);
     is_in_center = TokenZones::pointInCenter(dest);
 }
 
-void GameBaseTile::tileChanged(const mtps::vector2dst& /*position */,
+void GameBaseTile::tileChanged(const vector2dst& /*position */,
                                const BoardTileData /* oldValue */,
                                const BoardTileData /* newValue */)
 {
