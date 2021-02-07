@@ -61,10 +61,10 @@ void Player::update()
 
         render_scene_node_->getTransformation(scalator_).scaleAround(
             tileCenter,
-            (!direction.isVertical())
-                ? vector2df{1.0F, 1.0F}
-                : vector2df{board2SceneFactor().y / board2SceneFactor().x,
-                            board2SceneFactor().x / board2SceneFactor().y});
+            (direction.isVertical())
+                ? vector2df{board2SceneFactor().y / board2SceneFactor().x,
+                            board2SceneFactor().x / board2SceneFactor().y}
+                : vector2df{1.0F, 1.0F});
 
         render_scene_node_->getTransformation(rotator_scalator_)
             .prop<Position>() = tileCenter;
