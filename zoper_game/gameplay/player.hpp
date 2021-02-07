@@ -43,9 +43,11 @@ public:
 
 private:
     mtps::u32 movements_{0U};
+    mtps::size_type rotator_scalator_;
+    mtps::size_type scalator_;
     void launchAnimationBack(const mtps::vector2df &toWhere);
     mtps::sptr<haf::scene::AnimationComponent> animation_component_;
-    haf::scene::SceneNodeSPtr rotator_scalator_;
+    mtps::sptr<haf::scene::RenderizableSceneNode> render_scene_node_;
     mtps::vector2df m_board2SceneFactor;
 };
 } // namespace zoper
