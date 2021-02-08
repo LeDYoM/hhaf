@@ -22,14 +22,19 @@ rptr<BoardGroup> GameBaseTile::getBoardGroup()
     return ancestor<BoardGroup>();
 }
 
+rptr<BoardGroup const> const GameBaseTile::getBoardGroup() const
+{
+    return ancestor<BoardGroup>();
+}
+
 vector2df GameBaseTile::board2SceneFactor() const
 {
-    return ancestor<BoardGroup>()->board2SceneFactor();
+    return getBoardGroup()->board2SceneFactor();
 }
 
 vector2df GameBaseTile::board2Scene(const vector2dst& bPosition) const
 {
-    return ancestor<BoardGroup>()->board2Scene(bPosition);
+    return getBoardGroup()->board2Scene(bPosition);
 }
 
 void GameBaseTile::tileAdded(const vector2dst& position)
@@ -84,7 +89,15 @@ Color GameBaseTile::getColorForToken() const
 
 sptr<BoardManager> GameBaseTile::getBoardManager()
 {
-    auto board_group{ancestor<BoardGroup>()};
+    auto board_group{getBoardGroup()};
+    LogAsserter::log_assert(board_group != nullptr, "Invalid BoardModel found");
+
+    return board_group != nullptr ? board_group->boardManager() : nullptr;
+}
+
+sptr<BoardManager const> const GameBaseTile::getBoardManager() const
+{
+    auto const board_group{getBoardGroup()};
     LogAsserter::log_assert(board_group != nullptr, "Invalid BoardModel found");
 
     return board_group != nullptr ? board_group->boardManager() : nullptr;

@@ -75,7 +75,6 @@ void BoardGroup::addPlayer()
 
     // Create the player instance
     player_ = tokens_scene_node->createSceneNode<Player>("playerNode");
-    player_->configure(rectFromSize(tileSize()));
 
     // Add it to the board and to the scene nodes
     componentOfType<board::BoardManager>()->setTile(

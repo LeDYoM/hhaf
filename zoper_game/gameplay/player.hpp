@@ -19,8 +19,6 @@ public:
     Player(mtps::rptr<haf::scene::SceneNode> parent, mtps::str name);
     ~Player() override;
 
-    void configure(const mtps::Rectf32 &box);
-
     mtps::PropertyState<mtps::vector2dst> boardPosition;
     mtps::PropertyState<Direction> currentDirection;
 

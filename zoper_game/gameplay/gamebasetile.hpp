@@ -36,13 +36,16 @@ public:
                            const mtps::vector2dst& /* dest */) override;
 
     mtps::sptr<haf::board::BoardManager> getBoardManager();
+    mtps::sptr<haf::board::BoardManager const> const getBoardManager() const;
     mtps::rptr<BoardGroup> getBoardGroup();
+    mtps::rptr<BoardGroup const> const getBoardGroup() const;
 
     bool isInCenter() const noexcept { return is_in_center; }
 
 protected:
     mtps::vector2df board2SceneFactor() const;
     mtps::vector2df board2Scene(const mtps::vector2dst& bPosition) const;
+    mtps::vector2df tileSize() const;
 
     mtps::sptr<haf::scene::Renderizable> node_;
 private:

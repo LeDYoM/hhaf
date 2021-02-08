@@ -31,14 +31,11 @@ Player::Player(rptr<SceneNode> parent, str name) :
     rotator_  = render_scene_node_->addTransformation();
     scalator_ = render_scene_node_->addTransformation();
     move_out_ = render_scene_node_->addTransformation();
+    node_->box.set(rectFromSize(board2Scene({1, 1})));
+
 }
 
 Player::~Player() = default;
-
-void Player::configure(const Rectf32& box)
-{
-    node_->box.set(box);
-}
 
 void Player::update()
 {
