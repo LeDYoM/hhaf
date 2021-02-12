@@ -7,7 +7,8 @@ endfunction()
 
 macro(set_install_dir)
 #  set(CMAKE_INSTALL_PREFIX /home/ismael/h_test/)
-  set(CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}phaf/")
+  set(CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}/phaf/")
+  message("CMAKE_INSTALL_PREFIX: ${CMAKE_INSTALL_PREFIX}")
 endmacro()
 
 # Function to build different components from the project in an unified way.
@@ -46,25 +47,20 @@ function(build_lib_component)
 
   include(GNUInstallDirs)
   install(TARGETS ${CURRENT_TARGET}
-      EXPORT "${CURRENT_TARGET}Targets"
+      EXPORT ${CURRENT_TARGET}Targets
       INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
       RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
       ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
       LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   )
 
-  install(FILES 
-      ${HEADERS} 
-      DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-  )
+#  install(EXPORT ${CURRENT_TARGET}Targets
+#    FILE ${CURRENT_TARGET}Targets.cmake
+#    NAMESPACE hhaf::
+#  DESTINATION
+#    ${CMAKE_INSTALL_LIBDIR}/cmake/hhaf)
 
-#  install(EXPORT "${CURRENT_TARGET}Targets"
-#          FILE "${CURRENT_TARGET}Targets.cmake"
-#          NAMESPACE "${CURRENT_TARGET}::"
-#          DESTINATION lib/cmake
-#  )
-
-endfunction(build_lib_component)
+endfunction()
 
 function(build_lib_ext)
 

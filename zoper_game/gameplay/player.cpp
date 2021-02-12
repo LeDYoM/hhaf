@@ -41,13 +41,6 @@ void Player::update()
 {
     BaseClass::update();
 
-    if (boardPosition.readResetHasChanged())
-    {
-        DisplayLog::info("Player board position: ", boardPosition());
-        prop<Position>() = board2Scene(boardPosition());
-        DisplayLog::info("Player scene position: ", prop<Position>().get());
-    }
-
     if (currentDirection.readResetHasChanged())
     {
         const auto direction{currentDirection()};
@@ -91,6 +84,10 @@ void Player::movePlayer(const Direction& direction)
 void Player::tileMoved(const vector2dst& source, const vector2dst& dest)
 {
     BaseClass::tileMoved(source, dest);
+    DisplayLog::info("Player board position: ", dest);
+    prop<Position>() = board2Scene(dest);
+    DisplayLog::info("Player scene position: ", prop<Position>().get());
+
     boardPosition.set(dest);
 }
 

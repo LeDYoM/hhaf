@@ -1,7 +1,5 @@
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/../cmake_modules" ${CMAKE_MODULE_PATH})
 
-set_install_dir()
-
 cmake_minimum_required(VERSION 3.14)
 project("HAF MemManager"
     VERSION 0.2.0.0
@@ -12,6 +10,9 @@ project("HAF MemManager"
 
 include (testing)
 include (functions)
+
+set_install_dir()
+
 enable_testing()
 
 set(CURRENT_TARGET memmanager)

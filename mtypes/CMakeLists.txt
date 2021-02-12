@@ -1,5 +1,4 @@
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/../cmake_modules" ${CMAKE_MODULE_PATH})
-set_install_dir()
 
 cmake_minimum_required(VERSION 3.14)
 project("Minitypes"
@@ -8,9 +7,12 @@ project("Minitypes"
     # [HOMEPAGE_URL <url-string>]
     LANGUAGES CXX
 )
+
 include (testing)
 include (functions)
 enable_testing()
+set_install_dir()
+
 set(CURRENT_TARGET mtypes)
 
 add_library(${CURRENT_TARGET} INTERFACE)

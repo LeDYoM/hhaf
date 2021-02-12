@@ -89,6 +89,7 @@ add_library(log_and_types INTERFACE)
 target_link_libraries(log_and_types INTERFACE mtypes memmanager hlog)
 
 add_subdirectory(hlog)
+add_subdirectory(htypes)
 add_subdirectory(loader)
 add_subdirectory(hosted_app)
 add_subdirectory(host)
