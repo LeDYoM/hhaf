@@ -1,5 +1,17 @@
-cmake_minimum_required(VERSION 3.11)
-project(htypes LANGUAGES CXX)
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/../cmake_modules" ${CMAKE_MODULE_PATH})
+
+cmake_minimum_required(VERSION 3.14)
+project("HafTypes"
+    VERSION 0.9.1.2
+    DESCRIPTION "Types for HAF librart"
+    # [HOMEPAGE_URL <url-string>]
+    LANGUAGES CXX
+)
+
+include (testing)
+include (functions)
+#enable_testing()
+set_install_dir()
 
 set(CURRENT_TARGET htypes)
 
@@ -9,4 +21,5 @@ set(SOURCES
 build_lib_component(EXPORT_ALL HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
                     ${SOURCES})
 
+target_compile_definitions(${CURRENT_TARGET} PRIVATE htypes_EXPORTS)
 target_link_libraries(${CURRENT_TARGET} PUBLIC mtypes)
