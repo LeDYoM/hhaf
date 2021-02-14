@@ -47,7 +47,7 @@ public:
 
     bool updateTransformIfNecessary() noexcept;
 
-    Matrix4x4 const& matrix() { return transform_; }
+    Matrix4x4 const& matrix() noexcept { return transform_; }
 private:
     void updateTransform();
 

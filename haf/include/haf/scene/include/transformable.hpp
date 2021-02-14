@@ -12,18 +12,22 @@
 namespace haf::scene
 {
 /**
- * @brief This class specifies the functionality required for any object
- * this is transformable, that is, has transformations.
+ * @brief This class adds methods needed for an object to be Transformable,
+ * that is, providing a @b Transformation and methods to modify this
+ * Transformation.
+ * @see Transofrmation
  */
 class Transformable : public Transformation
 {
 public:
-    using BaseClass = Transformation;
-    using BaseClass::prop;
+    using BaseClass = Transformation;  ///< Shortcut for the baseclass
+    using BaseClass::prop;             ///< Export properties
 
-    using Scalar       = Matrix4x4::Scalar;
-    using VectorScalar = mtps::vector2d<Scalar>;
-    using RectScalar   = mtps::Rect<Scalar>;
+    using Scalar = Matrix4x4::Scalar;  ///< Type Scalar for this class
+    using VectorScalar =
+        mtps::vector2d<Scalar>;  ///< Type VectorScalar for this class
+    using RectScalar =
+        mtps::Rect<Scalar>;  ///< Type of RectScalar for this class
 
     /**
      * @brief Construct a new Transformable object. The object will be
@@ -72,7 +76,7 @@ public:
     /**
      * @brief Remove last @b Transformation grom the extra transformations of
      * the object.
-     * @note If no extra transformations are contained 
+     * @note If no extra transformations are contained
      * (numTransformations() == 1U), the you have UB.
      * @return mtps::size_type Count of extra transformations.
      */
@@ -96,12 +100,17 @@ public:
                                Matrix4x4 const& parentTransformation) noexcept;
 
     bool updateLocalTransformationsIfNecessary() noexcept;
+
 private:
     void updateGlobalTransformation(Matrix4x4 const&) noexcept;
 
-    Matrix4x4 global_transform_;
-    Matrix4x4 local_transform_;
+    Matrix4x4 global_transform_;  ///< Global Transformation Matrix cached
+    Matrix4x4 local_transform_;   ///< Current local Transformation cached
 
+    /**
+     * Extra transformations contained in this object. One is at least always
+     * there
+     */
     mtps::vector<Transformation> extra_transformations_;
 };
 }  // namespace haf::scene
