@@ -18,7 +18,6 @@ constexpr uptr<To> unique_pointer_cast(uptr<From, Deleter> &&p)
     return mtps::unique_pointer_cast(std::move(p));
 }
 
-
 template <typename T>
 using wptr = mtps::wptr<T>;
 

@@ -30,6 +30,12 @@ struct Visible
 
 using SceneNodeProperties = mtps::PropertyGroup<Visible>;
 
+class HAF__API Test
+{
+private:
+    std::vector<int> a;
+};
+
 /**
  * @brief Main class representing all SceneNodes from a @b Scene.
  * This class serves as main entry point in the hierarchy of the scene.

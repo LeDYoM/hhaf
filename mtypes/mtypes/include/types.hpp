@@ -14,18 +14,6 @@ template <typename T, typename D = std::default_delete<T>>
 using uptr = std::unique_ptr<T, D>;
 
 template <typename To, typename From, typename Deleter>
-uptr<To, Deleter> unique_pointer_cast2(uptr<From, Deleter> &&p)
-{
-    if (To *cast = dynamic_cast<To *>(p.get()))
-    {
-        uptr<To, Deleter> result(cast, std::move(p.get_deleter()));
-        p.release();
-        return result;
-    }
-    return uptr<To, Deleter>(nullptr);
-}
-
-template <typename To, typename From, typename Deleter>
 uptr<To> unique_pointer_cast(uptr<From, Deleter> &&p)
 {
     if (To *cast = dynamic_cast<To *>(p.get()))
