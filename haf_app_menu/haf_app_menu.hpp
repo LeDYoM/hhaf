@@ -2,7 +2,7 @@
 #define HAF_HAF_APP_MENU_INCLUDE_HPP
 
 #include <hosted_app/include/iapp.hpp>
-#include <mtypes/include/types.hpp>
+#include <htypes/include/types.hpp>
 #include <haf_user/include/iapp_with_default_app_versioning_system.hpp>
 #include "app_version.hpp"
 

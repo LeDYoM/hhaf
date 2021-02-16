@@ -1,8 +1,8 @@
 #ifndef ZOPER_DIRECTION_INCLUDE_HPP
 #define ZOPER_DIRECTION_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/vector2d.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/vector2d.hpp>
 
 #include <hlog/include/hlog.hpp>
 

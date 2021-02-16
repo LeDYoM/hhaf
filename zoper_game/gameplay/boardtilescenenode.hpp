@@ -1,8 +1,8 @@
 #ifndef ZOPER_BOARD_TILE_SCENENODE_INCLUDE_HPP
 #define ZOPER_BOARD_TILE_SCENENODE_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/grouping_property.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/grouping_property.hpp>
 #include <haf/scene/include/scenenode.hpp>
 #include <haf/scene_nodes/include/scene_node_size.hpp>
 #include <haf/scene/include/color.hpp>

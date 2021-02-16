@@ -1,8 +1,8 @@
 #ifndef ZOOPER_NEXT_TOKEN_INCLUDE_HPP
 #define ZOOPER_NEXT_TOKEN_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/function.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/function.hpp>
 #include <haf/time/include/timercomponent.hpp>
 #include <haf/time/include/timerconnector.hpp>
 

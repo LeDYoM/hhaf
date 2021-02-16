@@ -1,11 +1,11 @@
 #ifndef HAF_SCENE_OBJECTFACTORY_INCLUDE_HPP
 #define HAF_SCENE_OBJECTFACTORY_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/function.hpp>
-#include <mtypes/include/str.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/function.hpp>
+#include <htypes/include/str.hpp>
 
-#include <mtypes/include/dictionary.hpp>
+#include <htypes/include/dictionary.hpp>
 
 namespace haf::utils
 {

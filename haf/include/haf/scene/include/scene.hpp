@@ -3,8 +3,8 @@
 
 #include <haf/haf_export.hpp>
 #include <haf/scene/include/scenenode.hpp>
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/str.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/str.hpp>
 
 namespace haf::scene
 {

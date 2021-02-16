@@ -1,7 +1,7 @@
 #ifndef HAF_BOARD_IBOARDMANAGER_ACTUATOR_HPP
 #define HAF_BOARD_IBOARDMANAGER_ACTUATOR_HPP
 
-#include <mtypes/include/types.hpp>
+#include <htypes/include/types.hpp>
 #include "itile.hpp"
 
 namespace haf::board

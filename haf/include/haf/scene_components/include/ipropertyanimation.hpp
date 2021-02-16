@@ -5,9 +5,9 @@
 #include <haf/time/include/timeview.hpp>
 #include <haf/time/include/timer.hpp>
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/properties.hpp>
-#include <mtypes/include/function.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/properties.hpp>
+#include <htypes/include/function.hpp>
 #include <haf/scene_components/include/animation.hpp>
 #include <haf/scene_components/include/animabletypes.hpp>
 

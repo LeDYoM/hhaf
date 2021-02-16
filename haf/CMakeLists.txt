@@ -65,7 +65,6 @@ target_link_libraries(${CURRENT_TARGET} PRIVATE loader)
 target_link_libraries(${CURRENT_TARGET} PRIVATE backend)
 target_link_libraries(${CURRENT_TARGET} PRIVATE backend_dev)
 target_link_libraries(${CURRENT_TARGET} PUBLIC log_and_types)
-target_link_libraries(${CURRENT_TARGET} PUBLIC htypes)
 
 
 # TODO: Investigate some day if(MSVC) set_target_properties(${CURRENT_TARGET}

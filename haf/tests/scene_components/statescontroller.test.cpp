@@ -1,6 +1,6 @@
 #include "catch.hpp"
 
-#include <mtypes/include/types.hpp>
+#include <htypes/include/types.hpp>
 #include <haf/scene_components/include/statescontroller.hpp>
 
 using namespace mtps;

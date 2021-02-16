@@ -1,9 +1,9 @@
 #ifndef HAF_COMPONENT_TEXTEDITOR_INCLUDE_HPP
 #define HAF_COMPONENT_TEXTEDITOR_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/str.hpp>
-#include <mtypes/include/connection.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/str.hpp>
+#include <htypes/include/connection.hpp>
 #include <haf/input/include/virtual_input_component.hpp>
 
 namespace haf::scene

@@ -1,8 +1,8 @@
 #ifndef HAF_IRESOURCERETRIVER_INCLUDE_HPP
 #define HAF_IRESOURCERETRIVER_INCLUDE_HPP
 
-#include <mtypes/include/str.hpp>
-#include <mtypes/include/types.hpp>
+#include <htypes/include/str.hpp>
+#include <htypes/include/types.hpp>
 
 namespace haf::res
 {

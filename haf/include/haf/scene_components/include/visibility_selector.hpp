@@ -1,8 +1,8 @@
 #ifndef HAF_SCENE_VISIBILITY_SELECTOR_INCLUDE_HPP
 #define HAF_SCENE_VISIBILITY_SELECTOR_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/str.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/str.hpp>
 
 #include <haf/scene/include/scenenode.hpp>
 

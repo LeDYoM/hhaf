@@ -1,7 +1,7 @@
 #include "catch.hpp"
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/object.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/object.hpp>
 #include <haf/shareddata/include/address.hpp>
 
 using namespace mtps;

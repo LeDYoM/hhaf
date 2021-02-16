@@ -2,7 +2,7 @@
 #define ZOPER_MENU_MENUPAGE_INPUT_COMPONENT_INCLUDE_HPP
 
 #include <haf/input/include/virtual_input_component.hpp>
-#include <mtypes/include/connection.hpp>
+#include <htypes/include/connection.hpp>
 
 namespace haf::scene
 {

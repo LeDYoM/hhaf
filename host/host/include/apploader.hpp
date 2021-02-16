@@ -2,9 +2,9 @@
 #define HAF_HOST_APP_LOADER_INCLUDE_HPP
 
 #include "hosted_app/include/iapp.hpp"
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/function.hpp>
-#include <mtypes/include/str.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/function.hpp>
+#include <htypes/include/str.hpp>
 
 namespace haf::host
 {

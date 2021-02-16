@@ -1,7 +1,7 @@
 #ifndef HAF_SCENE_FIG_TYPE_T_HPP
 #define HAF_SCENE_FIG_TYPE_T_HPP
 
-#include <mtypes/include/types.hpp>
+#include <htypes/include/types.hpp>
 
 namespace haf::scene
 {

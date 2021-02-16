@@ -1,8 +1,8 @@
 #ifndef ZOPER_HIGHSCORE_VALIDATOR_INCLUDE_HPP
 #define ZOPER_HIGHSCORE_VALIDATOR_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/str.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/str.hpp>
 #include <haf/scene_components/include/texteditorcomponent.hpp>
 
 namespace zoper

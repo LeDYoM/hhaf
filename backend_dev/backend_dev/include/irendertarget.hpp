@@ -1,9 +1,9 @@
 #ifndef HAF_BACKEND_RENDER_TARGET_INCLUDE_HPP
 #define HAF_BACKEND_RENDER_TARGET_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/vector2d.hpp>
-#include <mtypes/include/rect.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/vector2d.hpp>
+#include <htypes/include/rect.hpp>
 #include "irenderdata.hpp"
 #include "iresourceinfo.hpp"
 

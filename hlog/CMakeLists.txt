@@ -16,4 +16,4 @@ find_package(Threads REQUIRED)
 target_link_libraries(${CURRENT_TARGET} PRIVATE Threads::Threads)
 
 target_link_libraries(${CURRENT_TARGET} PUBLIC logger)
-target_link_libraries(${CURRENT_TARGET} PUBLIC mtypes)
+target_link_libraries(${CURRENT_TARGET} PUBLIC htypes)

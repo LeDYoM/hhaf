@@ -7,7 +7,7 @@
 #include <logger/include/severity_type.hpp>
 #include <hlog/include/thread_commiter.hpp>
 
-#include <mtypes/include/str.hpp>
+#include <htypes/include/str.hpp>
 
 namespace logger
 {

@@ -1,8 +1,8 @@
 #ifndef ZOPER_MENUSCENE_INCLUDE_HPP
 #define ZOPER_MENUSCENE_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/connection.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/connection.hpp>
 #include <haf/render/include/renderizable.hpp>
 #include <haf/scene/include/scene.hpp>
 

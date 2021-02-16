@@ -1,6 +1,6 @@
 #include "catch.hpp"
 
-#include <mtypes/include/types.hpp>
+#include <htypes/include/types.hpp>
 #include <haf/scene/include/color.hpp>
 #include <type_traits>
 

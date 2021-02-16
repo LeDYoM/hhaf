@@ -1,13 +1,13 @@
 #ifndef HEF_EXT_MENU_PAGE_INCLUDE_HPP
 #define HEF_EXT_MENU_PAGE_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
+#include <htypes/include/types.hpp>
 #include <menu_paged/include/menu_paged_option.hpp>
 #include <haf/scene/include/scenenode.hpp>
 #include <haf/scene_nodes/include/tablenode.hpp>
 #include <haf/scene_nodes/include/scenenodetext.hpp>
 
-#include <mtypes/include/connection.hpp>
+#include <htypes/include/connection.hpp>
 #include <haf/scene_components/include/discretetextcomponent.hpp>
 
 namespace haf::scene

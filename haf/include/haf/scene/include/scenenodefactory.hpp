@@ -1,8 +1,8 @@
 #ifndef HAF_SCENE_SCENENODEFACTORY_INCLUDE_HPP
 #define HAF_SCENE_SCENENODEFACTORY_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/function.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/function.hpp>
 
 #include <haf/scene/include/scene.hpp>
 

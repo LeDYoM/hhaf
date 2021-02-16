@@ -1,7 +1,7 @@
 #ifndef HAF_SCENE_BMPFONTPRIVATE_INCLUDE_HPP
 #define HAF_SCENE_BMPFONTPRIVATE_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
+#include <htypes/include/types.hpp>
 #include <haf/resources/include/ifont.hpp>
 #include <haf/resources/include/itexture.hpp>
 

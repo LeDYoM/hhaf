@@ -1,9 +1,9 @@
 #ifndef ZOPER_BOARDUTILS_INCLUDE_HPP
 #define ZOPER_BOARDUTILS_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/vector.hpp>
-#include <mtypes/include/function.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/vector.hpp>
+#include <htypes/include/function.hpp>
 
 #include "direction.hpp"
 

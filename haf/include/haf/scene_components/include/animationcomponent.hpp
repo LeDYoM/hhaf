@@ -1,7 +1,7 @@
 #ifndef HAF_ANIMATION_COMPONENT_INCLUDE_HPP
 #define HAF_ANIMATION_COMPONENT_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
+#include <htypes/include/types.hpp>
 #include <haf/scene/include/icomponent.hpp>
 #include <haf/time/include/timeview.hpp>
 #include <haf/scene_components/include/animation.hpp>

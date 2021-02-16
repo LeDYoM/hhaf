@@ -1,6 +1,6 @@
 #include "catch.hpp"
 
-#include <mtypes/include/types.hpp>
+#include <htypes/include/types.hpp>
 #include <boardmanager/include/boardmanager.hpp>
 #include <boardmanager/include/iboardmanageractuator.hpp>
 #include <boardmanager/include/itile.hpp>

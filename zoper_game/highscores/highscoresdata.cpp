@@ -1,6 +1,6 @@
 #include "highscoresdata.hpp"
 
-#include <mtypes/include/serializer.hpp>
+#include <htypes/include/serializer.hpp>
 #include <hlog/include/hlog.hpp>
 
 using namespace mtps;

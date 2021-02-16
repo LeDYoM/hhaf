@@ -3,7 +3,7 @@
 #include <logger/include/log.hpp>
 #include <logger/include/log_init.hpp>
 #include <host/include/apploader.hpp>
-#include <mtypes/include/parpar.hpp>
+#include <htypes/include/parpar.hpp>
 
 #ifdef _WIN32
     #define HOST_API extern "C" __declspec(dllexport)

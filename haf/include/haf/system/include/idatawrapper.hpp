@@ -1,7 +1,7 @@
 #ifndef HAF_SCENE_IDATA_WRAPPER_INCLUDE_HPP
 #define HAF_SCENE_IDATA_WRAPPER_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
+#include <htypes/include/types.hpp>
 #include <haf/utils/include/attachable.hpp>
 
 namespace haf::sys

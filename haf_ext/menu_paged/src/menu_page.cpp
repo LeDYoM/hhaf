@@ -6,7 +6,7 @@
 #include <haf/input/include/key.hpp>
 #include <haf/scene_components/include/discretetextcomponent.hpp>
 
-#include <mtypes/include/function.hpp>
+#include <htypes/include/function.hpp>
 
 using namespace mtps;
 

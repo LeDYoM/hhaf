@@ -1,7 +1,7 @@
 #ifndef HAF_SCENE_VERTEX_INCLUDE_HPP
 #define HAF_SCENE_VERTEX_INCLUDE_HPP
 
-#include <mtypes/include/vector2d.hpp>
+#include <htypes/include/vector2d.hpp>
 #include <haf/scene/include/color.hpp>
 
 namespace haf::scene

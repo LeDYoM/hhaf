@@ -1,6 +1,6 @@
 #include "catch.hpp"
 
-#include <mtypes/include/types.hpp>
+#include <htypes/include/types.hpp>
 #include <haf/scene/include/transformable.hpp>
 #include "matrix_utils.hpp"
 

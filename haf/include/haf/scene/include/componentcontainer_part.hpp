@@ -4,8 +4,8 @@
 #include <hlog/include/hlog.hpp>
 #include <haf/scene/include/icomponent.hpp>
 #include <haf/utils/include/attachable_manager.hpp>
-#include <mtypes/include/lockablevector.hpp>
-#include <mtypes/include/types.hpp>
+#include <htypes/include/lockablevector.hpp>
+#include <htypes/include/types.hpp>
 #include <typeindex>
 
 namespace haf::scene

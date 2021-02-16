@@ -23,7 +23,7 @@
 #include <haf/scene_components/include/app_initializer.hpp>
 #include <haf/scene_components/include/app_finisher.hpp>
 
-#include <mtypes/include/parpar.hpp>
+#include <htypes/include/parpar.hpp>
 
 using namespace mtps;
 

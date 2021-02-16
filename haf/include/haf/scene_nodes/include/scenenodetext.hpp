@@ -1,10 +1,10 @@
 #ifndef HAF_SCENE_NODES_SCENENODETEXT_INCLUDE_HPP
 #define HAF_SCENE_NODES_SCENENODETEXT_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/properties.hpp>
-#include <mtypes/include/str.hpp>
-#include <mtypes/include/grouping_property.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/properties.hpp>
+#include <htypes/include/str.hpp>
+#include <htypes/include/grouping_property.hpp>
 #include <haf/resources/include/ifont.hpp>
 #include <haf/scene_nodes/include/scenenodetext_properties.hpp>
 #include <haf/scene/include/scenenode.hpp>

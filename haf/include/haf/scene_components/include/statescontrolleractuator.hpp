@@ -1,7 +1,7 @@
 #ifndef HAF_STATES_CONTROLLER_ACTUATOR_INCLUDE_HPP
 #define HAF_STATES_CONTROLLER_ACTUATOR_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
+#include <htypes/include/types.hpp>
 #include <haf/scene_components/include/statescontroller.hpp>
 
 namespace haf

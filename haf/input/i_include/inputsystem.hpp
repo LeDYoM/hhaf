@@ -1,8 +1,8 @@
 #ifndef HAF_INPUTSYSTEM_INCLUDE_HPP
 #define HAF_INPUTSYSTEM_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/vector.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/vector.hpp>
 #include <haf/input/include/key.hpp>
 
 #include <system/i_include/systembase.hpp>

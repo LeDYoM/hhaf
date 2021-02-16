@@ -1,8 +1,8 @@
 #ifndef HAF_COMPONENT_INPUT_INCLUDE_HPP
 #define HAF_COMPONENT_INPUT_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/connection.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/connection.hpp>
 #include <haf/input/include/input_component_base.hpp>
 #include <haf/input/include/key.hpp>
 

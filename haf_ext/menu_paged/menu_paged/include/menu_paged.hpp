@@ -1,8 +1,8 @@
 #ifndef HEF_EXT_MENU_PAGED_MAIN_INCLUDE_HPP
 #define HEF_EXT_MENU_PAGED_MAIN_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/connection.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/connection.hpp>
 
 #include <haf/scene/include/scenenode.hpp>
 #include <haf/scene/include/color.hpp>

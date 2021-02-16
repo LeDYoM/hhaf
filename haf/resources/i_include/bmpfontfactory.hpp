@@ -1,10 +1,10 @@
 #ifndef HAF_RESOURCES_BMPFONT_FACTORY_HPP
 #define HAF_RESOURCES_BMPFONT_FACTORY_HPP
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/vector.hpp>
-#include <mtypes/include/rawmemory.hpp>
-#include <mtypes/include/str.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/vector.hpp>
+#include <htypes/include/rawmemory.hpp>
+#include <htypes/include/str.hpp>
 
 namespace haf::res
 {

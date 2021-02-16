@@ -1,9 +1,9 @@
 #ifndef ZOPER_HIGHSCORESDATA_INCLUDE_HPP
 #define ZOPER_HIGHSCORESDATA_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/array.hpp>
-#include <mtypes/include/object.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/array.hpp>
+#include <htypes/include/object.hpp>
 #include <haf/shareddata/include/ishareable.hpp>
 
 namespace zoper

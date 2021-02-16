@@ -1,7 +1,7 @@
 #ifndef HAF_INPUT_KEY_INCLUDE_HPP
 #define HAF_INPUT_KEY_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
+#include <htypes/include/types.hpp>
 
 namespace haf::input
 {

@@ -1,7 +1,7 @@
 #ifndef HAF_SCENE_ISHADER_INTERFACE_INCLUDE_HPP
 #define HAF_SCENE_ISHADER_INTERFACE_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
+#include <htypes/include/types.hpp>
 
 namespace haf::res
 {

@@ -83,13 +83,15 @@ add_subdirectory(memmanager)
 add_subdirectory(mtypes)
 add_subdirectory(logger)
 
+add_subdirectory(hlog)
+add_subdirectory(htypes)
+
 # Create interface library to add loggger and types with memory management
 # in one line.
 add_library(log_and_types INTERFACE)
-target_link_libraries(log_and_types INTERFACE mtypes memmanager hlog)
+target_link_libraries(log_and_types INTERFACE htypes memmanager hlog)
 
-add_subdirectory(hlog)
-add_subdirectory(htypes)
+
 add_subdirectory(loader)
 add_subdirectory(hosted_app)
 add_subdirectory(host)

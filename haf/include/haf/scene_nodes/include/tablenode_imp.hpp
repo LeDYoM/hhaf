@@ -1,8 +1,8 @@
 #ifndef HAF_SCENE_TABLENODE_IMP_INCLUDE_HPP
 #define HAF_SCENE_TABLENODE_IMP_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/properties.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/properties.hpp>
 #include <haf/scene/include/scenenode.hpp>
 #include <haf/scene_nodes/include/tablenode_properties.hpp>
 #include <hlog/include/hlog.hpp>

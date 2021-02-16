@@ -2,10 +2,10 @@
 #define HAF_SCENE_SCENENODE_INCLUDE_HPP
 
 #include <haf/haf_export.hpp>
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/vector2d.hpp>
-#include <mtypes/include/properties.hpp>
-#include <mtypes/include/grouping_property.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/vector2d.hpp>
+#include <htypes/include/properties.hpp>
+#include <htypes/include/grouping_property.hpp>
 #include <haf/scene/include/scenenodeparent.hpp>
 #include <haf/scene/include/scenenodes.hpp>
 #include <haf/render/include/renderizables.hpp>

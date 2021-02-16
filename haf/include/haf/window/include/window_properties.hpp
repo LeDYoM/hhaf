@@ -1,8 +1,8 @@
 #ifndef HEF_WINDOW_WINDOW_PROPERTIES_INCLUDE_HPP
 #define HEF_WINDOW_WINDOW_PROPERTIES_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/basic_property.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/basic_property.hpp>
 #include <haf/system/include/idatawrapper.hpp>
 
 namespace haf::win

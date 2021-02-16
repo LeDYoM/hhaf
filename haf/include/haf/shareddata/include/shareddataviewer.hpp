@@ -1,7 +1,7 @@
 #ifndef HAF_SHAREDDATA_SHAREDDATA_VIEWER_INCLUDE_HPP
 #define HAF_SHAREDDATA_SHAREDDATA_VIEWER_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
+#include <htypes/include/types.hpp>
 #include <haf/system/include/idatawrapper.hpp>
 #include <haf/shareddata/include/ishareable.hpp>
 #include <haf/shareddata/include/address.hpp>

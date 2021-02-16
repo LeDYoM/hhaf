@@ -16,8 +16,8 @@
 
 #include "../zoperprogramcontroller.hpp"
 #include "../keymapping.hpp"
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/properties.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/properties.hpp>
 
 #include <boardmanager/include/boardmanager.hpp>
 #include <hlog/include/hlog.hpp>
@@ -30,7 +30,7 @@
 #include <haf/shareddata/include/shareddataviewer.hpp>
 #include <haf/resources/include/iresourceconfigurator.hpp>
 #include <haf/system/include/interfaceaccess.hpp>
-#include <mtypes/include/serializer.hpp>
+#include <htypes/include/serializer.hpp>
 #include <haf/filesystem/include/fileserializer.hpp>
 
 using namespace mtps;

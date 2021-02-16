@@ -1,10 +1,10 @@
 #ifndef HAF_RESOURCES_RESOURCES_CONFIG_DATA_INCLUDE_HPP
 #define HAF_RESOURCES_RESOURCES_CONFIG_DATA_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/vector.hpp>
-#include <mtypes/include/str.hpp>
-#include <mtypes/include/object.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/vector.hpp>
+#include <htypes/include/str.hpp>
+#include <htypes/include/object.hpp>
 
 namespace haf::res
 {

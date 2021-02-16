@@ -1,6 +1,6 @@
 #include <haf/scene_components/include/animationcomponent.hpp>
 #include <hlog/include/hlog.hpp>
-#include <mtypes/include/lockablevector.hpp>
+#include <htypes/include/lockablevector.hpp>
 
 using namespace mtps;
 

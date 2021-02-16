@@ -1,7 +1,7 @@
 #include <haf/scene/include/componentcontainer.hpp>
 
 #include <hlog/include/hlog.hpp>
-#include <mtypes/include/algoutils.hpp>
+#include <htypes/include/algoutils.hpp>
 
 using namespace mtps;
 

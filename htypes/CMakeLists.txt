@@ -29,6 +29,15 @@ set(SOURCES
     src/object.cpp
     src/optional.cpp
     src/p_impl_pointer.cpp
+    src/parpar.cpp
+    src/properties.cpp
+    src/propertystate.cpp
+    src/rawmemory.cpp
+    src/rect.cpp
+    src/serializer.cpp
+    src/stack.cpp
+    src/str.cpp
+    src/vector2d.cpp
     src/types.cpp
     src/vector.cpp)
 

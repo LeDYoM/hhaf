@@ -1,8 +1,8 @@
 #ifndef HAF_TESTS_SHAREABLE_TEST_DATA_INCLUDE_HPP
 #define HAF_TESTS_SHAREABLE_TEST_DATA_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/str.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/str.hpp>
 #include <haf/shareddata/include/ishareable.hpp>
 #include <haf/shareddata/include/address.hpp>
 

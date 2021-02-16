@@ -8,8 +8,8 @@
 #include <haf/resources/include/ittfont.hpp>
 #include <haf/shareddata/include/shareddata.hpp>
 #include <haf/scene_components/include/scenemetricsview.hpp>
-#include <mtypes/include/function.hpp>
-#include <mtypes/include/types.hpp>
+#include <htypes/include/function.hpp>
+#include <htypes/include/types.hpp>
 
 using namespace mtps;
 using namespace haf;

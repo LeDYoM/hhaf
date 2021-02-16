@@ -1,8 +1,8 @@
 #ifndef HAF_BACKEND_ITEXTURE_HPP
 #define HAF_BACKEND_ITEXTURE_HPP
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/vector2d.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/vector2d.hpp>
 
 #include "iresourceinfo.hpp"
 

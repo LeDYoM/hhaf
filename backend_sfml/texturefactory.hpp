@@ -1,8 +1,8 @@
 #ifndef HAF_BACKEND_SFML_TEXTUREFACTORY_HPP
 #define HAF_BACKEND_SFML_TEXTUREFACTORY_HPP
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/str.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/str.hpp>
 
 #include <backend_dev/include/iresourcefactories.hpp>
 #include "texture.hpp"

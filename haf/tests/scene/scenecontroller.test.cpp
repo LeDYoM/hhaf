@@ -1,7 +1,7 @@
 #include "catch.hpp"
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/str.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/str.hpp>
 
 #include <haf/scene/include/scene.hpp>
 #include <scene/i_include/scenecontroller.hpp>

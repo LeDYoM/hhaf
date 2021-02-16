@@ -4,10 +4,10 @@
 #include "matrix4x4.hpp"
 #include "transformation_properties.hpp"
 #include "transformation.hpp"
-#include <mtypes/include/vector.hpp>
-#include <mtypes/include/vector2d.hpp>
-#include <mtypes/include/rect.hpp>
-#include <mtypes/include/propertystate.hpp>
+#include <htypes/include/vector.hpp>
+#include <htypes/include/vector2d.hpp>
+#include <htypes/include/rect.hpp>
+#include <htypes/include/propertystate.hpp>
 
 namespace haf::scene
 {

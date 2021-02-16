@@ -1,7 +1,7 @@
 #include <haf/scene_components/include/visibility_selector.hpp>
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/str.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/str.hpp>
 
 using namespace mtps;
 

@@ -1,9 +1,9 @@
 #ifndef HEF_EXT_BOARDMANAGER_BOARDMODEL_INCLUDE_HPP
 #define HEF_EXT_BOARDMANAGER_BOARDMODEL_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/function.hpp>
-#include <mtypes/include/vector2d.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/function.hpp>
+#include <htypes/include/vector2d.hpp>
 #include <haf/scene/include/icomponent.hpp>
 #include "itile.hpp"
 

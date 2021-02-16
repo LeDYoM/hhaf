@@ -1,8 +1,8 @@
 #ifndef HAF_BACKEND_ITTFONT_HPP
 #define HAF_BACKEND_ITTFONT_HPP
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/rect.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/rect.hpp>
 #include "itexture.hpp"
 
 namespace haf::backend

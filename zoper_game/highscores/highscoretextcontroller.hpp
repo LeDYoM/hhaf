@@ -1,8 +1,8 @@
 #ifndef ZOPER_HIGHSCORETEXTCONTROLLER_INCLUDE_HPP
 #define ZOPER_HIGHSCORETEXTCONTROLLER_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/connection.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/connection.hpp>
 #include <haf/scene/include/scenenode.hpp>
 #include <haf/resources/include/ifont.hpp>
 #include <haf/scene_nodes/include/renderizable_scenenode.hpp>

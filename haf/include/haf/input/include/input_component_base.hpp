@@ -1,7 +1,7 @@
 #ifndef HAF_INPUT_COMPONENT_BASE_INCLUDE_HPP
 #define HAF_INPUT_COMPONENT_BASE_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
+#include <htypes/include/types.hpp>
 #include <haf/scene/include/icomponent.hpp>
 #include <haf/input/include/key.hpp>
 

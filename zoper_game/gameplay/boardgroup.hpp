@@ -1,8 +1,8 @@
 #ifndef ZOPER_BOARDGROUP_HPP
 #define ZOPER_BOARDGROUP_HPP
 
-#include <mtypes/include/vector2d.hpp>
-#include <mtypes/include/connection.hpp>
+#include <htypes/include/vector2d.hpp>
+#include <htypes/include/connection.hpp>
 
 #include <haf/scene/include/scenenode.hpp>
 #include <haf/scene_nodes/include/tablenode.hpp>

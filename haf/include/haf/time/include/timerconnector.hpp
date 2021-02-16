@@ -1,9 +1,9 @@
 #ifndef HAF_COMPONENT_TIMER_CONNECTOR_COMPONENTEMENT_INCLUDE_HPP
 #define HAF_COMPONENT_TIMER_CONNECTOR_COMPONENTEMENT_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/function.hpp>
-#include <mtypes/include/connection.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/function.hpp>
+#include <htypes/include/connection.hpp>
 #include <haf/time/include/timepoint.hpp>
 #include <haf/time/include/timeview.hpp>
 #include <haf/time/include/timer.hpp>

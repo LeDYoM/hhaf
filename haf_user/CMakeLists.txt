@@ -16,4 +16,4 @@ build_lib_component(STATIC HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
                     ${SRC_FILES})
 
 target_link_libraries(${CURRENT_TARGET} PRIVATE hosted_app)
-target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
+target_link_libraries(${CURRENT_TARGET} PRIVATE htypes)

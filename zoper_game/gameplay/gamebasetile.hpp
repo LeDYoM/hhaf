@@ -1,8 +1,8 @@
 #ifndef ZOPER_GAMEBASETILE_HPP
 #define ZOPER_GAMEBASETILE_HPP
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/vector2d.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/vector2d.hpp>
 #include <haf/scene/include/scenenode.hpp>
 #include <haf/render/include/renderizable.hpp>
 #include <boardmanager/include/itile.hpp>

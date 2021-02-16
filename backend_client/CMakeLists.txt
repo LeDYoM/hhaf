@@ -18,4 +18,4 @@ build_lib_component(EXPORT_ALL HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
 target_compile_definitions(${CURRENT_TARGET} PRIVATE backend_client_EXPORTS)
 
 target_link_libraries(${CURRENT_TARGET} PRIVATE backend_dev)
-target_link_libraries(${CURRENT_TARGET} PRIVATE mtypes)
+target_link_libraries(${CURRENT_TARGET} PRIVATE htypes)

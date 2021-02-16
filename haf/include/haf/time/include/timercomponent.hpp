@@ -1,8 +1,8 @@
 #ifndef HAF_COMPONENT_TIMER_COMPONENTEMENT_INCLUDE_HPP
 #define HAF_COMPONENT_TIMER_COMPONENTEMENT_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/lockablevector.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/lockablevector.hpp>
 #include <haf/time/include/timerconnector.hpp>
 #include <haf/time/include/timertype.hpp>
 #include <haf/scene/include/icomponent.hpp>

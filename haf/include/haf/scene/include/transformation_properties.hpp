@@ -1,8 +1,8 @@
 #ifndef HAF_SCENE_TRANSFORMATION_PROPERTIES_INCLUDE_HPP
 #define HAF_SCENE_TRANSFORMATION_PROPERTIES_INCLUDE_HPP
 
-#include <mtypes/include/grouping_property.hpp>
-#include <mtypes/include/vector2d.hpp>
+#include <htypes/include/grouping_property.hpp>
+#include <htypes/include/vector2d.hpp>
 #include <haf/scene/include/matrix4x4.hpp>
 
 namespace haf::scene

@@ -6,10 +6,10 @@
 #include <haf/system/include/isystemcontroller.hpp>
 #include <hlog/include/hlog.hpp>
 #include <loader/include/loader.hpp>
-#include <mtypes/include/vector.hpp>
-#include <mtypes/include/parpar.hpp>
-#include <mtypes/include/object.hpp>
-#include <mtypes/include/parpar.hpp>
+#include <htypes/include/vector.hpp>
+#include <htypes/include/parpar.hpp>
+#include <htypes/include/object.hpp>
+#include <htypes/include/parpar.hpp>
 
 using namespace mtps;
 
