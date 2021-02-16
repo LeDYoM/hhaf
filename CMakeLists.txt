@@ -69,7 +69,9 @@ endforeach()
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 include(functions)
 include(testing)
+include(install)
 
+generate_pack("haf")
 # Use the memmanager
 option(MTYPES_USE_MEMMANAGER "Compile mtypes using the memmanager wrappers" ON)
 
@@ -77,6 +79,8 @@ option(MTYPES_USE_MEMMANAGER "Compile mtypes using the memmanager wrappers" ON)
 add_subdirectory(tests)
 
 add_subdirectory(tools)
+
+set(BUILD_COMPOENT "haf")
 
 # Sub-directories where more CMakeLists.txt exist
 add_subdirectory(memmanager)
