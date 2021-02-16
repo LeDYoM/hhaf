@@ -2,10 +2,11 @@
 #define HAF_SCENE_HASNAME_HPP
 
 #include <htypes/include/str.hpp>
+#include <haf/haf_export.hpp>
 
 namespace haf::sys
 {
-class HasName
+class HAF_API HasName
 {
 public:
     constexpr HasName(mtps::str const& name) noexcept : m_name(name) {}
