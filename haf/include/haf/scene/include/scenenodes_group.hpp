@@ -1,8 +1,8 @@
 #ifndef HAF_SCENE_SCENENODESGROUP_INCLUDE_HPP
 #define HAF_SCENE_SCENENODESGROUP_INCLUDE_HPP
 
-#include <mtypes/include/types.hpp>
-#include <mtypes/include/vector.hpp>
+#include <htypes/include/types.hpp>
+#include <htypes/include/vector.hpp>
 
 namespace haf::scene
 {
@@ -11,7 +11,7 @@ class SceneNode;
 class SceneNodesGroup
 {
 public:
-    using SceneNodeVector = mtps::vector<mtps::sptr<SceneNode>>;
+    using SceneNodeVector = htps::vector<htps::sptr<SceneNode>>;
     void addSceneNode(mtps::sptr<SceneNode> node);
     bool removeSceneNode(mtps::sptr<SceneNode> element);
     void clearSceneNodes();

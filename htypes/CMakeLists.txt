@@ -16,7 +16,7 @@ set_install_dir()
 set(CURRENT_TARGET htypes)
 
 set(SOURCES 
-    src/htypes.cpp
+    src/types.cpp
     src/vector.cpp)
 
 build_lib_component(EXPORT_ALL HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
