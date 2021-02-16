@@ -16,6 +16,19 @@ set_install_dir()
 set(CURRENT_TARGET htypes)
 
 set(SOURCES 
+    src/algoutils.cpp
+    src/array.cpp
+    src/basic_property.cpp
+    src/connection.cpp
+    src/dictionary.cpp
+    src/function.cpp
+    src/grouping_property.cpp
+    src/lockablevector.cpp
+    src/menum.cpp
+    src/object_utils.cpp
+    src/object.cpp
+    src/optional.cpp
+    src/p_impl_pointer.cpp
     src/types.cpp
     src/vector.cpp)
 

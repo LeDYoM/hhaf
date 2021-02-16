@@ -1,6 +1,8 @@
 #ifndef MTYPES_OPTIONAL_INCLUDE_HPP
 #define MTYPES_OPTIONAL_INCLUDE_HPP
 
+#include <mtypes/include/types.hpp>
+
 namespace mtps
 {
     template <typename T>
@@ -22,8 +24,8 @@ namespace mtps
         }
 
         constexpr bool empty() const noexcept { return m_value != nullptr; }
-        constexpr T &operator() { return *m_value; }
-        constexpr const T &operator() const { return *m_value; }
+        constexpr T &operator()() { return *m_value; }
+        constexpr const T &operator()() const { return *m_value; }
 
     private:
         uptr<T> m_value;

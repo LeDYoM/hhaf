@@ -2,6 +2,7 @@
 #define MTPS_BASIC_PROPERTY_INCLUDE_HPP
 
 #include "properties.hpp"
+#include <utility>
 
 namespace mtps
 {
