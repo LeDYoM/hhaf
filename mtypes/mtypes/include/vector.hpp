@@ -9,6 +9,7 @@
 #include "function.hpp"
 #include "growpolicy.hpp"
 #include "vector_storage.hpp"
+#include "allocator.hpp"
 
 namespace mtps
 {

@@ -2,17 +2,13 @@
 #define MTYPES_ALLOCATOR_INCLUDE_HPP
 
 #include "placement.hpp"
-#ifdef OWN_ALLOCATOR
-    #include OWN_ALLOCATOR
-#else
-    #include "alloc_func.hpp"
-#endif
+#include "alloc_func.hpp"
 
 namespace mtps
 {
 
-template <typename T>
-class AllocatorType : public AllocatorMallocFree<T>,
+template <typename T, typename ReserveDestroy = AllocatorMallocFree<T>>
+class AllocatorType : public ReserveDestroy,
                       public BasicConstructDestruct<T>
 {};
 
