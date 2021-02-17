@@ -2,7 +2,11 @@
 #define MTYPES_ALLOCATOR_INCLUDE_HPP
 
 #include "placement.hpp"
-#include "alloc_func.hpp"
+#ifdef OWN_ALLOCATOR
+    #include OWN_ALLOCATOR
+#else
+    #include "alloc_func.hpp"
+#endif
 
 namespace mtps
 {

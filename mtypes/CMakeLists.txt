@@ -21,18 +21,18 @@ target_include_directories(${CURRENT_TARGET} INTERFACE ${PROJECT_SOURCE_DIR})
 
 set(base_directory mtypes/include)
 
-if(${MTYPES_USE_MEMMANAGER})
-    message(STATUS "Linking ${CURRENT_TARGET} against memmanager")
-    target_include_directories(
-        ${CURRENT_TARGET}
-        INTERFACE "${base_directory}/alloc_own")
-      target_link_libraries(${CURRENT_TARGET} INTERFACE memmanager)
-else()
-    message(STATUS "${CURRENT_TARGET} is not using any 3rd party memmanager")
-    target_include_directories(
-        ${CURRENT_TARGET}
-        INTERFACE "${base_directory}/alloc_inline")
-endif()
+#if(${MTYPES_USE_MEMMANAGER})
+#    message(STATUS "Linking ${CURRENT_TARGET} against memmanager")
+#    target_include_directories(
+#        ${CURRENT_TARGET}
+#        INTERFACE "${base_directory}/alloc_own")
+#      target_link_libraries(${CURRENT_TARGET} INTERFACE memmanager)
+#else()
+#    message(STATUS "${CURRENT_TARGET} is not using any 3rd party memmanager")
+#    target_include_directories(
+#        ${CURRENT_TARGET}
+#        INTERFACE "${base_directory}/alloc_inline")
+#endif()
 
 install(
   TARGETS ${CURRENT_TARGET}
