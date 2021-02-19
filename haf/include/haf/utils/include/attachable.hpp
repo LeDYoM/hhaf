@@ -27,18 +27,18 @@ public:
 
     /**
      * @brief Get the attached node.
-     * @return const mtps::rptr<const T> The const attached node.
+     * @return const htps::rptr<const T> The const attached node.
      */
-    constexpr const mtps::rptr<const T> attachedNode() const noexcept
+    constexpr const htps::rptr<const T> attachedNode() const noexcept
     {
         return attachedNode_;
     }
 
     /**
      * @brief Get the attached node.
-     * @return const mtps::rptr<const T> The attached node.
+     * @return const htps::rptr<const T> The attached node.
      */
-    constexpr const mtps::rptr<T> attachedNode() noexcept
+    constexpr const htps::rptr<T> attachedNode() noexcept
     {
         return attachedNode_;
     }
@@ -47,17 +47,17 @@ public:
      * @brief Shortcut method to get the attached node converted to a type.
      *
      * @tparam Y Dest type to convert
-     * @return mtps::rptr<Y> containing the attached node or nullptr if no
+     * @return htps::rptr<Y> containing the attached node or nullptr if no
      * conversion was possible.
      */
     template <typename Y>
-    mtps::rptr<Y> attachedNodeAs() noexcept
+    htps::rptr<Y> attachedNodeAs() noexcept
     {
         return dynamic_cast<Y*>(attachedNode());
     }
 
 public:
-    mtps::rptr<T> attachedNode_;
+    htps::rptr<T> attachedNode_;
 };
 
 }  // namespace haf::utils

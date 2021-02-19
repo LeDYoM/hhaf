@@ -5,7 +5,7 @@
 
 #include <utility>
 
-using namespace mtps;
+using namespace htps;
 
 namespace haf::board
 {
@@ -42,7 +42,7 @@ BackgroundFunction BoardManager::setBackgroundFunction(
 }
 
 BackgroundData BoardManager::backgroundType(
-    const mtps::vector2dst& tPosition) const
+    const htps::vector2dst& tPosition) const
 {
     if (background_function_ && validCoords(tPosition))
     {

@@ -12,7 +12,7 @@ class SceneNode;
 class SceneNodes
 {
 public:
-    SceneNodes(const mtps::rptr<SceneNode> scene_node);
+    SceneNodes(const htps::rptr<SceneNode> scene_node);
 
     /**
      * @brief Create a Scene Node object.
@@ -21,23 +21,23 @@ public:
      * It also adds the new node to the parents list.
      *
      * @tparam T Type to create
-     * @return mtps::sptr<T> The created object
+     * @return htps::sptr<T> The created object
      */
     template <typename T = SceneNode>
-    mtps::sptr<T> createSceneNode(mtps::str name)
+    htps::sptr<T> createSceneNode(htps::str name)
     {
-        auto result(mtps::msptr<T>(scene_node_, std::move(name)));
+        auto result(htps::msptr<T>(scene_node_, std::move(name)));
         addSceneNode(result);
         return result;
     }
 
-    bool removeSceneNode(mtps::sptr<SceneNode> element);
+    bool removeSceneNode(htps::sptr<SceneNode> element);
     void clearSceneNodes();
 
     const SceneNodesGroup::SceneNodeVector& sceneNodes() const noexcept;
     SceneNodesGroup::SceneNodeVector& sceneNodes() noexcept;
 
-    mtps::sptr<SceneNode> groupByName(const mtps::str& name) const;
+    htps::sptr<SceneNode> groupByName(const htps::str& name) const;
 
 protected:
     /**
@@ -45,10 +45,10 @@ protected:
      */
     ~SceneNodes();
 
-    void addSceneNode(mtps::sptr<SceneNode> node);
+    void addSceneNode(htps::sptr<SceneNode> node);
 
 private:
-    const mtps::rptr<SceneNode> scene_node_;
+    const htps::rptr<SceneNode> scene_node_;
     SceneNodesGroup scene_nodes_group_;
 };
 

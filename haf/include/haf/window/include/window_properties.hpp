@@ -11,14 +11,14 @@ namespace haf::win
 class WindowProperties : public sys::IDataWrapper
 {
 public:
-    mtps::BasicProperty<mtps::u32> width;
-    mtps::BasicProperty<mtps::u32> height;
-    mtps::BasicProperty<mtps::u8> bits_per_red;
-    mtps::BasicProperty<mtps::u8> bits_per_green;
-    mtps::BasicProperty<mtps::u8> bits_per_blue;
-    mtps::BasicProperty<mtps::u8> bits_per_alpha;
+    htps::BasicProperty<htps::u32> width;
+    htps::BasicProperty<htps::u32> height;
+    htps::BasicProperty<htps::u8> bits_per_red;
+    htps::BasicProperty<htps::u8> bits_per_green;
+    htps::BasicProperty<htps::u8> bits_per_blue;
+    htps::BasicProperty<htps::u8> bits_per_alpha;
 
-    mtps::u32 bitsPerPixel() const;
+    htps::u32 bitsPerPixel() const;
 
     void onAttached() override;
 };

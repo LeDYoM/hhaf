@@ -16,11 +16,11 @@ template <typename T>
 class SharedDataUpdater : public SharedData
 {
 public:
-    mtps::sptr<T> update(Address const& address)
+    htps::sptr<T> update(Address const& address)
     {
         if (!internal_data_)
         {
-            internal_data_ = mtps::msptr<T>();
+            internal_data_ = htps::msptr<T>();
         }
 
         bool const result = retrieve(address, *internal_data_);
@@ -67,7 +67,7 @@ public:
 
 private:
     Address address_{""};
-    mtps::sptr<T> internal_data_{nullptr};
+    htps::sptr<T> internal_data_{nullptr};
 };
 
 }  // namespace haf::shdata

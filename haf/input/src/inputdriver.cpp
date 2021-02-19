@@ -2,7 +2,7 @@
 #include <backend_dev/include/iinputdriver.hpp>
 #include <backend_dev/include/ikey.hpp>
 
-using namespace mtps;
+using namespace htps;
 
 namespace
 {

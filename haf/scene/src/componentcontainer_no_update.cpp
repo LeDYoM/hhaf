@@ -3,7 +3,7 @@
 #include <hlog/include/hlog.hpp>
 #include <htypes/include/algoutils.hpp>
 
-using namespace mtps;
+using namespace htps;
 
 namespace haf::scene
 {}  // namespace haf::scene

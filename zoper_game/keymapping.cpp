@@ -1,7 +1,7 @@
 #include "keymapping.hpp"
 
 using namespace haf;
-using namespace mtps;
+using namespace htps;
 
 namespace zoper
 {
@@ -71,13 +71,13 @@ bool KeyMapping::setKey(const u32 index, const input::Key key)
     return true;
 }
 
-bool KeyMapping::serialize(mtps::Object &obj) const
+bool KeyMapping::serialize(htps::Object &obj) const
 {
     obj.set("keys", m_keys);
     return true;
 }
 
-bool KeyMapping::deserialize(mtps::Object const &obj)
+bool KeyMapping::deserialize(htps::Object const &obj)
 {
     obj["keys"].getObject() >> m_keys;
     return true;

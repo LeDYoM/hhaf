@@ -67,9 +67,9 @@ using TestTimeSystem = TestSystem<haf::sys::TimeSystem>;
 using TestSceneManager = TestSystem<haf::scene::SceneManager>;
 
 template <typename T>
-mtps::uptr<T> makeTestSystem()
+htps::uptr<T> makeTestSystem()
 {
-    auto t = mtps::muptr<T>();
+    auto t = htps::muptr<T>();
     t->init();
     return t;
 }

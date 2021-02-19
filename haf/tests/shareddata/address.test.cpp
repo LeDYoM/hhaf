@@ -4,7 +4,7 @@
 #include <htypes/include/object.hpp>
 #include <haf/shareddata/include/address.hpp>
 
-using namespace mtps;
+using namespace htps;
 using namespace haf;
 using namespace haf::shdata;
 

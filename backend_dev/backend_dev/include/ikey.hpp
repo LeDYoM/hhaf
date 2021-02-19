@@ -5,7 +5,7 @@
 
 namespace haf::backend
 {
-enum class iKey : mtps::s32
+enum class iKey : htps::s32
 {
     Unknown = -1, ///< Unhandled key
     A = 0,        ///< The A key

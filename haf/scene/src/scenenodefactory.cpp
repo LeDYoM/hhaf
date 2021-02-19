@@ -3,7 +3,7 @@
 
 #include <map>
 
-using namespace mtps;
+using namespace htps;
 
 namespace haf::scene
 {
@@ -52,7 +52,7 @@ bool SceneNodeFactory::registerSceneNodeType(
     return true;
 }
 
-bool SceneNodeFactory::unregisterSceneNodeType(mtps::str type_name)
+bool SceneNodeFactory::unregisterSceneNodeType(htps::str type_name)
 {
     if (!private_->containsSceneNodeType(type_name))
     {

@@ -2,7 +2,7 @@
 #include <haf/scene/include/scenenode.hpp>
 #include <hlog/include/hlog.hpp>
 
-using namespace mtps;
+using namespace htps;
 
 namespace haf::scene
 {

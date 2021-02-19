@@ -16,7 +16,7 @@ public:
         typename ComponentContainerPart<false>::ComponentType;
     using AttachableType = ComponentContainerPart<true>::AttachableType;
 
-    explicit ComponentContainer(mtps::rptr<AttachableType> init) :
+    explicit ComponentContainer(htps::rptr<AttachableType> init) :
         component_container_{init}, static_component_container_{init}
     {}
 
@@ -33,20 +33,20 @@ public:
     }
 
     template <typename T>
-    mtps::sptr<T> componentOfType() const
+    htps::sptr<T> componentOfType() const
     {
         return getComponentContainerForType<T>().template componentOfType<T>();
     }
 
     template <typename T>
-    mtps::sptr<T> addComponentOfType()
+    htps::sptr<T> addComponentOfType()
     {
         return getComponentContainerForType<T>()
             .template addComponentOfType<T>();
     }
 
     template <typename T>
-    void ensureComponentOfType(mtps::sptr<T>& element)
+    void ensureComponentOfType(htps::sptr<T>& element)
     {
         getComponentContainerForType<T>().ensureComponentOfType(element);
     }

@@ -8,7 +8,7 @@
 #include "include/shareable_test_data.hpp"
 #include "system_test_utils.hpp"
 
-using namespace mtps;
+using namespace htps;
 using namespace haf;
 using namespace haf::sys;
 using namespace haf::shdata;

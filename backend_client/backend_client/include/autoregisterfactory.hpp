@@ -20,7 +20,7 @@ class AutoRegisterFactory : public IAutoRegisterFactory
 public:
     AutoRegisterFactory() noexcept : factory_{} {}
 
-    void create(mtps::uptr<IFactoryOf<T>> f) { factory_ = std::move(f); }
+    void create(htps::uptr<IFactoryOf<T>> f) { factory_ = std::move(f); }
 
     void setFactory(IBackendRegister* const backend_register) const override
     {
@@ -35,7 +35,7 @@ public:
     void destroy() override { factory_.reset(); }
 
 private:
-    mtps::uptr<IFactoryOf<T>> factory_;
+    htps::uptr<IFactoryOf<T>> factory_;
 };
 }  // namespace haf::backend::client
 

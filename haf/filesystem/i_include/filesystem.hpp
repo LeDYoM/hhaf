@@ -16,10 +16,10 @@ public:
     using SystemBase::SystemBase;
     bool fileExists(const Path& path);
 
-    mtps::RawMemory loadBinaryFile(const mtps::str& file_name);
-    mtps::str loadTextFile(const Path& file_name);
+    htps::RawMemory loadBinaryFile(const htps::str& file_name);
+    htps::str loadTextFile(const Path& file_name);
 
-    bool saveFile(const Path& file_name, const mtps::str& data);
+    bool saveFile(const Path& file_name, const htps::str& data);
 };
 }  // namespace haf::sys
 

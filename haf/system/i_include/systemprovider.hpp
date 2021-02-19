@@ -44,7 +44,7 @@ public:
     ~SystemProvider() override;
 
     void fastInit(InitSystemOptions const& init_system_options);
-    void init(mtps::rptr<IApp> iapp, int const argc, char const* const argv[]);
+    void init(htps::rptr<IApp> iapp, int const argc, char const* const argv[]);
     void terminate();
 
     template <typename T>
@@ -93,7 +93,7 @@ public:
 
 private:
     struct SystemProviderPrivate;
-    mtps::uptr<SystemProviderPrivate> p_;
+    htps::uptr<SystemProviderPrivate> p_;
 };
 }  // namespace haf::sys
 

@@ -28,25 +28,25 @@ public:
     ResourceManager(sys::SystemProvider& system_provider);
     ~ResourceManager() noexcept override;
 
-    mtps::sptr<res::ITTFont> getTTFont(const mtps::str& rid) const override;
-    mtps::sptr<res::ITexture> getTexture(const mtps::str& rid) const override;
-    mtps::sptr<res::IShader> getShader(const mtps::str& rid) const override;
-    mtps::sptr<res::IFont> getBMPFont(const mtps::str& rid) const override;
+    htps::sptr<res::ITTFont> getTTFont(const htps::str& rid) const override;
+    htps::sptr<res::ITexture> getTexture(const htps::str& rid) const override;
+    htps::sptr<res::IShader> getShader(const htps::str& rid) const override;
+    htps::sptr<res::IFont> getBMPFont(const htps::str& rid) const override;
 
-    bool loadTTFont(const mtps::str& rid, const mtps::str& fileName);
-    bool loadTexture(const mtps::str& rid, const mtps::str& fileName);
-    bool loadShader(const mtps::str& rid, const mtps::str& fileName);
-    bool loadBMPFont(const mtps::str& rid, const mtps::str& fileName);
+    bool loadTTFont(const htps::str& rid, const htps::str& fileName);
+    bool loadTexture(const htps::str& rid, const htps::str& fileName);
+    bool loadShader(const htps::str& rid, const htps::str& fileName);
+    bool loadBMPFont(const htps::str& rid, const htps::str& fileName);
 
     res::SetResourceConfigFileResult setResourceConfigFile(
-        mtps::str config_file_name) override;
-    bool loadSection(mtps::str const& section_name) override;
+        htps::str config_file_name) override;
+    bool loadSection(htps::str const& section_name) override;
     res::SetResourceConfigFileResult parseResourceConfigFile();
 
 private:
     struct ResourceManagerPrivate;
-    mtps::uptr<ResourceManagerPrivate> p_;
-    mtps::str resources_config_file_name_;
+    htps::uptr<ResourceManagerPrivate> p_;
+    htps::str resources_config_file_name_;
     res::ResourcesConfigData resources_config_data_;
 };
 

@@ -7,13 +7,13 @@ namespace haf::backend
 {
 struct iVertex final
 {
-    mtps::f32 pos_x;
-    mtps::f32 pos_y;
-    mtps::u8 r;
-    mtps::u8 g;
-    mtps::u8 b;
-    mtps::f32 tc_x;
-    mtps::f32 tc_y;
+    htps::f32 pos_x;
+    htps::f32 pos_y;
+    htps::u8 r;
+    htps::u8 g;
+    htps::u8 b;
+    htps::f32 tc_x;
+    htps::f32 tc_y;
 };
 
 }  // namespace haf::backend

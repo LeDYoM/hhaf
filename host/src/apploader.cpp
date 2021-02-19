@@ -1,7 +1,7 @@
 #include <host/include/apploader.hpp>
 #include <loader/include/loader.hpp>
 
-using namespace mtps;
+using namespace htps;
 
 namespace haf::host
 {

@@ -9,7 +9,7 @@
 #include <haf/resources/include/iresourceretriever.hpp>
 #include <haf/resources/include/ittfont.hpp>
 
-using namespace mtps;
+using namespace htps;
 using namespace haf;
 using namespace haf::scene;
 using namespace haf::scene::nodes;
@@ -17,7 +17,7 @@ using namespace haf::scene::nodes;
 namespace zoper
 {
 GameHudSceneNode::GameHudSceneNode(
-    mtps::rptr<haf::scene::SceneNode> const parent,
+    htps::rptr<haf::scene::SceneNode> const parent,
     str name) :
     SceneNode{parent, std::move(name)}
 {

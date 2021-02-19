@@ -13,7 +13,7 @@ namespace haf::scene
 {
 class Renderizables;
 class Renderizable;
-enum class FigType_t : mtps::u8;
+enum class FigType_t : htps::u8;
 }  // namespace haf::scene
 
 namespace haf::res
@@ -27,32 +27,32 @@ namespace haf::scene
 class RenderizableBuilder
 {
 public:
-    RenderizableBuilder(mtps::rptr<Renderizables> renderizables) noexcept;
+    RenderizableBuilder(htps::rptr<Renderizables> renderizables) noexcept;
 
-    mtps::sptr<Renderizable> create();
+    htps::sptr<Renderizable> create();
 
-    RenderizableBuilder& name(mtps::str _name);
+    RenderizableBuilder& name(htps::str _name);
     RenderizableBuilder& figType(FigType_t fig_type);
-    RenderizableBuilder& box(mtps::Rectf32 _box);
+    RenderizableBuilder& box(htps::Rectf32 _box);
     RenderizableBuilder& color(Color _color);
-    RenderizableBuilder& pointCount(mtps::size_type point_count);
-    RenderizableBuilder& shader(mtps::sptr<res::IShader> _shader);
-    RenderizableBuilder& texture(mtps::sptr<res::ITexture> _texture);
+    RenderizableBuilder& pointCount(htps::size_type point_count);
+    RenderizableBuilder& shader(htps::sptr<res::IShader> _shader);
+    RenderizableBuilder& texture(htps::sptr<res::ITexture> _texture);
     RenderizableBuilder& colorModifier(
-        mtps::function<Color(const RenderizableModifierContext&)>
+        htps::function<Color(const RenderizableModifierContext&)>
             color_modifier);
 
     struct Data
     {
-        mtps::rptr<Renderizables> renderizables_;
-        mtps::str name_;
+        htps::rptr<Renderizables> renderizables_;
+        htps::str name_;
         FigType_t figType_;
-        mtps::Rectf32 box_;
+        htps::Rectf32 box_;
         Color color_{colors::White};
-        mtps::size_type pointCount_{4U};
-        mtps::sptr<res::IShader> shader_;
-        mtps::sptr<res::ITexture> texture_;
-        mtps::function<Color(const RenderizableModifierContext&)>
+        htps::size_type pointCount_{4U};
+        htps::sptr<res::IShader> shader_;
+        htps::sptr<res::ITexture> texture_;
+        htps::function<Color(const RenderizableModifierContext&)>
             color_modifier_;
     };
 

@@ -19,10 +19,10 @@ public:
     virtual void render(const IRenderData* render_data_begin,
                         const IRenderData* render_data_end) = 0;
 
-    virtual void setViewPort(const mtps::Rectf32& nviewport) = 0;
-    virtual mtps::Rectf32 viewPort() const                   = 0;
-    virtual void setViewRect(const mtps::Rectf32& nviewRect) = 0;
-    virtual mtps::Rectf32 viewRect() const                   = 0;
+    virtual void setViewPort(const htps::Rectf32& nviewport) = 0;
+    virtual htps::Rectf32 viewPort() const                   = 0;
+    virtual void setViewRect(const htps::Rectf32& nviewRect) = 0;
+    virtual htps::Rectf32 viewRect() const                   = 0;
 
     virtual void clear() = 0;
 };

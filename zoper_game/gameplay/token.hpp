@@ -21,26 +21,26 @@ class Token : public GameBaseTile
 public:
     using BaseClass = GameBaseTile;
 
-    Token(mtps::rptr<haf::scene::SceneNode> parent, mtps::str name);
+    Token(htps::rptr<haf::scene::SceneNode> parent, htps::str name);
     ~Token() override;
 
-    void setBoxBoundaries(const mtps::Rectf32 &box);
+    void setBoxBoundaries(const htps::Rectf32 &box);
 
     static void resetTileCounter();
 
-    bool canBeMoved(mtps::vector2dst const& dest_position) const;
-    void tileAdded(const mtps::vector2dst &position) override;
-    void tileRemoved(const mtps::vector2dst & position) override;
-    void tileChanged(const mtps::vector2dst & position,
+    bool canBeMoved(htps::vector2dst const& dest_position) const;
+    void tileAdded(const htps::vector2dst &position) override;
+    void tileRemoved(const htps::vector2dst & position) override;
+    void tileChanged(const htps::vector2dst & position,
                      const haf::board::BoardTileData oldValue,
                      const haf::board::BoardTileData newValue) override;
-    void tileMoved(const mtps::vector2dst &source,
-                   const mtps::vector2dst &dest) override;
+    void tileMoved(const htps::vector2dst &source,
+                   const htps::vector2dst &dest) override;
 
 private:
-    static mtps::u32 m_tileCounter;
-    mtps::vector2df board2SceneFactor_;
-    mtps::sptr<haf::scene::AnimationComponent> animation_component_;
+    static htps::u32 m_tileCounter;
+    htps::vector2df board2SceneFactor_;
+    htps::sptr<haf::scene::AnimationComponent> animation_component_;
 };
 } // namespace zoper
 

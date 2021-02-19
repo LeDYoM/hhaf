@@ -10,14 +10,14 @@ namespace haf::res
 {
 struct ResourcesConfigDataElement
 {
-    mtps::str type;
-    mtps::str file_name;
+    htps::str type;
+    htps::str file_name;
 
     static constexpr char TypeStr[]     = "type";
     static constexpr char FileNameStr[] = "filename";
 };
 
-inline const mtps::Object& operator>>(const mtps::Object& obj,
+inline const htps::Object& operator>>(const htps::Object& obj,
                                       ResourcesConfigDataElement& element)
 {
     element.type      = obj[ResourcesConfigDataElement::TypeStr].getValue();
@@ -28,10 +28,10 @@ inline const mtps::Object& operator>>(const mtps::Object& obj,
 
 struct ResourcesConfigData
 {
-    mtps::Object elements_;
+    htps::Object elements_;
 };
 
-inline const mtps::Object& operator>>(const mtps::Object& obj,
+inline const htps::Object& operator>>(const htps::Object& obj,
                                       ResourcesConfigData& element)
 {
     element.elements_ = obj;

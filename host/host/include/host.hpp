@@ -35,8 +35,8 @@ public:
      */
     ~Host();
 
-    bool loadApplication(mtps::str const& app_name);
-    bool unloadApplication(mtps::str const& app_name);
+    bool loadApplication(htps::str const& app_name);
+    bool unloadApplication(htps::str const& app_name);
 
     /**
      * @brief Main loop function. When it returns, you can safely destroy
@@ -47,7 +47,7 @@ public:
 
 private:
     class HostPrivate;
-    mtps::uptr<HostPrivate> p_;
+    htps::uptr<HostPrivate> p_;
 };
 }  // namespace haf::host
 

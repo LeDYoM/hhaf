@@ -10,7 +10,7 @@ namespace haf::scene
 template <typename Scalar>
 struct OriginScalar
 {
-    using value_type = mtps::vector2d<Scalar>;
+    using value_type = htps::vector2d<Scalar>;
 };
 
 template <typename Scalar>
@@ -22,7 +22,7 @@ struct RotationScalar
 template <typename Scalar>
 struct ScaleScalar
 {
-    using value_type = mtps::vector2d<Scalar>;
+    using value_type = htps::vector2d<Scalar>;
     static constexpr auto Ones =
         value_type{static_cast<Scalar>(1), static_cast<Scalar>(1)};
     static constexpr auto Zeros =
@@ -32,7 +32,7 @@ struct ScaleScalar
 template <typename Scalar>
 struct PositionScalar
 {
-    using value_type = mtps::vector2d<Scalar>;
+    using value_type = htps::vector2d<Scalar>;
 };
 
 using Origin   = OriginScalar<Matrix4x4::Scalar>;
@@ -41,7 +41,7 @@ using Scale    = ScaleScalar<Matrix4x4::Scalar>;
 using Position = PositionScalar<Matrix4x4::Scalar>;
 
 using TransformationProperties =
-    mtps::PropertyGroup<Origin, Rotation, Scale, Position>;
+    htps::PropertyGroup<Origin, Rotation, Scale, Position>;
 
 }  // namespace haf::scene
 

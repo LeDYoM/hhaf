@@ -25,9 +25,9 @@ public:
 
     using Scalar = Matrix4x4::Scalar;  ///< Type Scalar for this class
     using VectorScalar =
-        mtps::vector2d<Scalar>;  ///< Type VectorScalar for this class
+        htps::vector2d<Scalar>;  ///< Type VectorScalar for this class
     using RectScalar =
-        mtps::Rect<Scalar>;  ///< Type of RectScalar for this class
+        htps::Rect<Scalar>;  ///< Type of RectScalar for this class
 
     /**
      * @brief Construct a new Transformable object. The object will be
@@ -69,24 +69,24 @@ public:
     /**
      * @brief Add a new @b Transformation to the extra transformations of the
      * object.
-     * @return mtps::size_type Index to refer to new added @b Transformation
+     * @return htps::size_type Index to refer to new added @b Transformation
      */
-    mtps::size_type addTransformation();
+    htps::size_type addTransformation();
 
     /**
      * @brief Remove last @b Transformation grom the extra transformations of
      * the object.
      * @note If no extra transformations are contained
      * (numTransformations() == 1U), the you have UB.
-     * @return mtps::size_type Count of extra transformations.
+     * @return htps::size_type Count of extra transformations.
      */
-    mtps::size_type removeTransformation();
+    htps::size_type removeTransformation();
 
     /**
      * @brief Total number of @b Transformation objects
-     * @return mtps::size_type 1 + the number of extra transformations
+     * @return htps::size_type 1 + the number of extra transformations
      */
-    mtps::size_type numTransformations() const noexcept;
+    htps::size_type numTransformations() const noexcept;
 
     /**
      * @brief Get the Transformation object at a given index
@@ -94,7 +94,7 @@ public:
      * @param index Index of the transformation. Starting at 0
      * @return Transformation& Object at the specified index
      */
-    Transformation& getTransformation(mtps::size_type const index) noexcept;
+    Transformation& getTransformation(htps::size_type const index) noexcept;
 
     bool updateTransformations(bool const parentTransformationChanged,
                                Matrix4x4 const& parentTransformation) noexcept;
@@ -111,7 +111,7 @@ private:
      * Extra transformations contained in this object. One is at least always
      * there
      */
-    mtps::vector<Transformation> extra_transformations_;
+    htps::vector<Transformation> extra_transformations_;
 };
 }  // namespace haf::scene
 

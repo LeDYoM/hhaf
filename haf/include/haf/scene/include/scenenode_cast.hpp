@@ -8,27 +8,27 @@ namespace haf::scene
 class SceneNode;
 
 template <typename T>
-mtps::rptr<T> sceneNodeCast(mtps::rptr<SceneNode> const scene_node) noexcept
+htps::rptr<T> sceneNodeCast(htps::rptr<SceneNode> const scene_node) noexcept
 {
     return dynamic_cast<T*>(scene_node);
 }
 
 template <typename T>
-const mtps::rptr<const T> sceneNodeCast(
-    mtps::rptr<SceneNode const> const scene_node) noexcept
+const htps::rptr<const T> sceneNodeCast(
+    htps::rptr<SceneNode const> const scene_node) noexcept
 {
     return dynamic_cast<const T* const>(scene_node);
 }
 
 template <typename T>
-mtps::sptr<T> sceneNodeCast(mtps::sptr<SceneNode> const scene_node) noexcept
+htps::sptr<T> sceneNodeCast(htps::sptr<SceneNode> const scene_node) noexcept
 {
     return std::dynamic_pointer_cast<T>(scene_node);
 }
 
 template <typename T>
-const mtps::sptr<const T> sceneNodeCast(
-    mtps::sptr<SceneNode const> const scene_node) noexcept
+const htps::sptr<const T> sceneNodeCast(
+    htps::sptr<SceneNode const> const scene_node) noexcept
 {
     return std::dynamic_pointer_cast<const T>(scene_node);
 }

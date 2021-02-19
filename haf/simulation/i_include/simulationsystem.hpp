@@ -18,25 +18,25 @@ namespace haf::sys
 class SimulationSystem final : public SystemBase
 {
 public:
-    using SimulateRandomDataBuffer = mtps::vector<mtps::size_type>;
+    using SimulateRandomDataBuffer = htps::vector<htps::size_type>;
 
     SimulationSystem(sys::SystemProvider& system_provider);
     ~SimulationSystem();
 
     void update();
-    bool getNext(const mtps::str& name, mtps::size_type& pre_selected);
+    bool getNext(const htps::str& name, htps::size_type& pre_selected);
 
     void setSimulationActions(const time::TimePoint& current,
                               SimulationActionGroup simulation_action_group);
     void setSimulationActions(SimulationActionGroup simulation_action_group);
     void setSimulateRandomDataBuffer(
         SimulateRandomDataBuffer simulated_data_buffer);
-    void initialize(mtps::str const& simulation_input_file,
-                    mtps::str const& simulation_output_file);
+    void initialize(htps::str const& simulation_input_file,
+                    htps::str const& simulation_output_file);
 
 private:
     struct SimulationSystemPrivate;
-    mtps::uptr<SimulationSystemPrivate> priv_;
+    htps::uptr<SimulationSystemPrivate> priv_;
 };
 }  // namespace haf::sys
 

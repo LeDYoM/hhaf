@@ -24,25 +24,25 @@ public:
     using BaseClass::prop;
     using TransformationProperties::prop;
 
-    HighScoreTextController(scene::SceneNode* parent, mtps::str name);
+    HighScoreTextController(scene::SceneNode* parent, htps::str name);
     virtual ~HighScoreTextController();
 
     virtual void onCreated() override;
 
-    mtps::emitter<> Finished;
+    htps::emitter<> Finished;
 
 private:
-    void standarizeText(const mtps::sptr<nodes::SceneNodeText>& ntext);
+    void standarizeText(const htps::sptr<nodes::SceneNodeText>& ntext);
     void saveHighScores();
-    void addHighScoresLine(const mtps::size_type counter,
+    void addHighScoresLine(const htps::size_type counter,
                            const HighScore& element,
                            const bool is_inserting);
-    void addHighScoreEditor(const mtps::sptr<SceneNode>& label,
-                            const mtps::size_type counter);
-    void addEditAnimation(const mtps::size_type line_index);
+    void addHighScoreEditor(const htps::sptr<SceneNode>& label,
+                            const htps::size_type counter);
+    void addEditAnimation(const htps::size_type line_index);
     HighScoresData m_hsData;
-    mtps::sptr<res::IFont> m_normalFont;
-    mtps::sptr<scene::AnimationComponent> animation_component_;
+    htps::sptr<res::IFont> m_normalFont;
+    htps::sptr<scene::AnimationComponent> animation_component_;
 
     Color m_normalColor;
     Color m_selectedColor;

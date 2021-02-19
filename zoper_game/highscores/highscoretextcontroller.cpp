@@ -14,7 +14,7 @@
 #include <haf/shareddata/include/shareddataviewer.hpp>
 #include <haf/input/include/inputcomponent.hpp>
 
-using namespace mtps;
+using namespace htps;
 using namespace haf;
 using namespace haf::scene;
 

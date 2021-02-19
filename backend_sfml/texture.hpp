@@ -16,10 +16,10 @@ namespace haf::backend::sfmlb
         Texture(const sf::Texture* const texture, const bool owned);
         ~Texture() override;
 
-        virtual mtps::vector2du32 size() const override;
+        virtual htps::vector2du32 size() const override;
 
         const sf::Texture &backEndTexture() const { return *m_texturePrivate; }
-        mtps::str info() const;
+        htps::str info() const;
 
     private:
         const sf::Texture* const m_texturePrivate;

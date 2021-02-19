@@ -181,7 +181,7 @@ TEST_CASE("TimePoint comparison operators")
 TEST_CASE("TimePoint output operator")
 {
     TimePoint time_point{500U};
-    mtps::str result("The result: ");
+    htps::str result("The result: ");
     result << time_point;
     CHECK(result == "The result: 500");
 }

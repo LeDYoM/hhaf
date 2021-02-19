@@ -32,17 +32,17 @@ public:
     using BaseClass::AttachableManager;
 
     template <typename T>
-    mtps::sptr<T> addComponentOfType()
+    htps::sptr<T> addComponentOfType()
     {
         LogAsserter::log_assert(componentOfType<T>() == nullptr,
                                 "There is already a component with this type");
-        mtps::sptr<T> nc(BaseClass::template create<T>());
+        htps::sptr<T> nc(BaseClass::template create<T>());
         addComponent(nc);
         return nc;
     }
 
     template <typename T>
-    void ensureComponentOfType(mtps::sptr<T>& element)
+    void ensureComponentOfType(htps::sptr<T>& element)
     {
         if (!element)
         {
@@ -55,7 +55,7 @@ public:
         if constexpr (WithUpdate)
         {
             components_.performUpdate(
-                [](const mtps::sptr<IComponent>& component) {
+                [](const htps::sptr<IComponent>& component) {
                     component->update();
                 });
         }
@@ -71,9 +71,9 @@ public:
      * @return A shared pointer to the container or nullptr if not found
      */
     template <typename T>
-    mtps::sptr<T> componentOfType() const
+    htps::sptr<T> componentOfType() const
     {
-        mtps::sptr<ComponentType> cot(
+        htps::sptr<ComponentType> cot(
             componentOfType(std::type_index(typeid(T))));
         return cot ? std::dynamic_pointer_cast<T>(cot) : nullptr;
     }
@@ -81,7 +81,7 @@ public:
     void clearComponents() noexcept { components_.clear(); }
 
 private:
-    bool addComponent(mtps::sptr<ComponentType> nc)
+    bool addComponent(htps::sptr<ComponentType> nc)
     {
         LogAsserter::log_assert(nc != nullptr,
                                 "Trying to add a nullptr component");
@@ -90,35 +90,35 @@ private:
     }
 
     template <typename T>
-    void addComponentOfType(mtps::sptr<T>& component)
+    void addComponentOfType(htps::sptr<T>& component)
     {
         component = addComponentOfType<T>();
     }
 
-    std::type_index tindexOf(const mtps::sptr<ComponentType>& c) const
+    std::type_index tindexOf(const htps::sptr<ComponentType>& c) const
     {
         return std::type_index(typeid(*c));
     }
 
-    mtps::sptr<ComponentType> getComponentFromTypeIndex(
+    htps::sptr<ComponentType> getComponentFromTypeIndex(
         const std::type_index& tindex) const
     {
         const auto v{components_.next()};
         auto iterator(std::find_if(
             v.cbegin(), v.cend(),
-            [this, &tindex](const mtps::sptr<ComponentType>& component) {
+            [this, &tindex](const htps::sptr<ComponentType>& component) {
                 return tindexOf(component) == tindex;
             }));
         return (iterator == v.cend()) ? nullptr : (*iterator);
     }
 
-    const mtps::sptr<ComponentType> componentOfType(
+    const htps::sptr<ComponentType> componentOfType(
         const std::type_index& ti) const
     {
         return getComponentFromTypeIndex(ti);
     }
 
-    mtps::LockableVector<mtps::sptr<ComponentType>> components_;
+    htps::LockableVector<htps::sptr<ComponentType>> components_;
 };
 
 }  // namespace haf::scene

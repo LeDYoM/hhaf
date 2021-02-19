@@ -6,7 +6,7 @@
 namespace zoper
 {
     void createStandardBackground(
-        const mtps::rptr<haf::scene::Renderizables> renderizables);
+        const htps::rptr<haf::scene::Renderizables> renderizables);
 }
 
 #endif

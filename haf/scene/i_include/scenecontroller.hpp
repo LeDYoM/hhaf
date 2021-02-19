@@ -21,7 +21,7 @@ class SceneManager;
 class SceneController final
 {
 public:
-    void setSceneManager(mtps::rptr<SceneManager> scene_manager);
+    void setSceneManager(htps::rptr<SceneManager> scene_manager);
 
     /**
      * @brief Switch to the next scene. For that to success, the current
@@ -33,10 +33,10 @@ public:
     void finish();
     bool isActive();
 
-    bool startScene(const mtps::str& sceneName);
+    bool startScene(const htps::str& sceneName);
 
     template <typename T>
-    bool registerAndStartScene(const mtps::str& sceneName)
+    bool registerAndStartScene(const htps::str& sceneName)
     {
         if (scene_factory_.registerSceneNodeType<T>(sceneName))
         {
@@ -76,7 +76,7 @@ public:
 
     SceneNodeFactory& sceneNodeFactory() noexcept;
     const SceneNodeFactory& sceneNodeFactory() const noexcept;
-    const mtps::sptr<Scene>& currentScene() const noexcept;
+    const htps::sptr<Scene>& currentScene() const noexcept;
     bool currentSceneIsNull();
 
     void renderScene(Scene& scene, bool parentTransformationChanged);
@@ -86,13 +86,13 @@ public:
     bool exitRequested() const;
 
 private:
-    void startScene(mtps::sptr<Scene> scene);
+    void startScene(htps::sptr<Scene> scene);
     void terminateCurrentScene();
     void deferredSwitchScene();
 
     SceneNodeFactory scene_factory_;
-    mtps::rptr<SceneManager> scene_manager_{nullptr};
-    mtps::sptr<Scene> current_scene_{nullptr};
+    htps::rptr<SceneManager> scene_manager_{nullptr};
+    htps::sptr<Scene> current_scene_{nullptr};
     bool switch_scene_{false};
     bool exit_requested_{false};
 };

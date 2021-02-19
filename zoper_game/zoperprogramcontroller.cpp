@@ -8,7 +8,7 @@
 #include <haf/shareddata/include/shareddata.hpp>
 #include <hlog/include/hlog.hpp>
 
-using namespace mtps;
+using namespace htps;
 using namespace haf;
 using namespace haf::scene;
 

@@ -33,12 +33,12 @@ public:
     ResultType loadFunctions();
     bool create();
     void destroy();
-    mtps::rptr<ISystemController> systemController() noexcept;
-    mtps::rptr<ISystemController const> systemController() const noexcept;
+    htps::rptr<ISystemController> systemController() noexcept;
+    htps::rptr<ISystemController const> systemController() const noexcept;
 
 private:
-    mtps::rptr<loader::Loader> loader_{nullptr};
-    mtps::rptr<ISystemController> system_controller_{nullptr};
+    htps::rptr<loader::Loader> loader_{nullptr};
+    htps::rptr<ISystemController> system_controller_{nullptr};
     CreateSystemController_t fp_haf_create_system_controller_;
     DestroySystemController_t fp_haf_destroy_system_controller_;
 };

@@ -26,11 +26,11 @@ public:
     virtual void onInit(scene::AppInitializer& app_initializer) = 0;
     virtual void onFinish(scene::AppFinisher& app_finisher)     = 0;
 
-    virtual mtps::u16 getVersion() const noexcept    = 0;
-    virtual mtps::u16 getSubVersion() const noexcept = 0;
-    virtual mtps::u16 getPatch() const noexcept      = 0;
-    virtual mtps::u16 getTweak() const noexcept      = 0;
-    virtual mtps::str getName() const noexcept       = 0;
+    virtual htps::u16 getVersion() const noexcept    = 0;
+    virtual htps::u16 getSubVersion() const noexcept = 0;
+    virtual htps::u16 getPatch() const noexcept      = 0;
+    virtual htps::u16 getTweak() const noexcept      = 0;
+    virtual htps::str getName() const noexcept       = 0;
 };
 }  // namespace haf
 

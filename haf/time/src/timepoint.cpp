@@ -29,10 +29,10 @@ TimePoint::Rep TimePoint::seconds() const noexcept
     return static_cast<Rep>(nanoseconds_ / static_cast<Rep>(1000000000U));
 }
 
-mtps::f32 TimePoint::seconds_f32() const noexcept
+htps::f32 TimePoint::seconds_f32() const noexcept
 {
-    return static_cast<mtps::f32>(static_cast<mtps::f32>(nanoseconds_) /
-                                  static_cast<mtps::f32>(1000000000U));
+    return static_cast<htps::f32>(static_cast<htps::f32>(nanoseconds_) /
+                                  static_cast<htps::f32>(1000000000U));
 }
 
 TimePoint& TimePoint::operator+=(TimePoint const& other) noexcept
@@ -47,17 +47,17 @@ TimePoint& TimePoint::operator-=(TimePoint const& other) noexcept
     return *this;
 }
 
-TimePoint& TimePoint::operator*=(mtps::f32 const scalar) noexcept
+TimePoint& TimePoint::operator*=(htps::f32 const scalar) noexcept
 {
     nanoseconds_ =
-        static_cast<Rep>(static_cast<mtps::f32>(nanoseconds_ * scalar));
+        static_cast<Rep>(static_cast<htps::f32>(nanoseconds_ * scalar));
     return *this;
 }
 
-TimePoint& TimePoint::operator/=(mtps::f32 const scalar) noexcept
+TimePoint& TimePoint::operator/=(htps::f32 const scalar) noexcept
 {
     nanoseconds_ =
-        static_cast<Rep>(static_cast<mtps::f32>(nanoseconds_ / scalar));
+        static_cast<Rep>(static_cast<htps::f32>(nanoseconds_ / scalar));
     return *this;
 }
 
@@ -71,12 +71,12 @@ TimePoint operator-(TimePoint const& lhs, TimePoint const& rhs) noexcept
     return TimePoint{lhs.nanoseconds()} -= rhs;
 }
 
-TimePoint operator*(TimePoint const& lhs, mtps::f32 const scalar) noexcept
+TimePoint operator*(TimePoint const& lhs, htps::f32 const scalar) noexcept
 {
     return TimePoint{lhs.nanoseconds()} *= scalar;
 }
 
-TimePoint operator/(TimePoint const& lhs, mtps::f32 const scalar) noexcept
+TimePoint operator/(TimePoint const& lhs, htps::f32 const scalar) noexcept
 {
     return TimePoint{lhs.nanoseconds()} /= scalar;
 }
@@ -101,7 +101,7 @@ TimePoint TimePoint_as_seconds(TimePoint::Rep const secs) noexcept
     return TimePoint_as_miliseconds(secs * 1000U);
 }
 
-TimePoint TimePoint_as_seconds_f32(mtps::f32 const secs) noexcept
+TimePoint TimePoint_as_seconds_f32(htps::f32 const secs) noexcept
 {
     return TimePoint_as_miliseconds(static_cast<TimePoint::Rep>(secs * 1000U));
 }
@@ -136,7 +136,7 @@ bool operator!=(TimePoint const& lhs, TimePoint const& rhs) noexcept
     return lhs.nanoseconds() != rhs.nanoseconds();
 }
 
-mtps::str& operator<<(mtps::str& os, TimePoint const& tp)
+htps::str& operator<<(htps::str& os, TimePoint const& tp)
 {
     os << tp.nanoseconds();
     return os;

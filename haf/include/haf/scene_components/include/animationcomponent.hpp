@@ -24,7 +24,7 @@ public:
     /**
      * @brief Add an already created animation to the list of animations.
      */
-    void addAnimation(mtps::uptr<Animation>);
+    void addAnimation(htps::uptr<Animation>);
 
     /**
      * @brief Add an animation that animates a certain property of the node.
@@ -40,14 +40,14 @@ public:
     template <typename PropertyType, typename PropertyTag>
     void addPropertyAnimation(
         time::TimePoint time,
-        mtps::IProperty<PropertyType, PropertyTag>& property,
+        htps::IProperty<PropertyType, PropertyTag>& property,
         PropertyType start,
         PropertyType dest,
         Animation::AnimationDirection animation_direction =
             Animation::AnimationDirection::Forward,
         Animation::ActionFunc endAction = {})
     {
-        auto anim = mtps::muptr<IPropertyAnimation<PropertyType, PropertyTag>>(
+        auto anim = htps::muptr<IPropertyAnimation<PropertyType, PropertyTag>>(
             attachedNode()->dataWrapper<time::Timer>(), std::move(time),
             property, std::move(start), std::move(dest),
             std::move(animation_direction), std::move(endAction));
@@ -71,7 +71,7 @@ public:
     template <typename PropertyType, typename PropertyTag>
     void addRepeatedPropertyAnimation(
         time::TimePoint time,
-        mtps::IProperty<PropertyType, PropertyTag>& property,
+        htps::IProperty<PropertyType, PropertyTag>& property,
         PropertyType start,
         PropertyType dest,
         Animation::AnimationDirection animation_direction =
@@ -113,7 +113,7 @@ public:
     template <typename PropertyType, typename PropertyTag>
     void addCircledPropertyAnimation(
         time::TimePoint time,
-        mtps::IProperty<PropertyType, PropertyTag>& property,
+        htps::IProperty<PropertyType, PropertyTag>& property,
         PropertyType start,
         PropertyType dest,
         Animation::AnimationDirection animation_direction =
@@ -146,7 +146,7 @@ public:
 
 private:
     class AnimationComponentPrivate;
-    mtps::uptr<AnimationComponentPrivate> p_;
+    htps::uptr<AnimationComponentPrivate> p_;
 };
 }  // namespace haf::scene
 

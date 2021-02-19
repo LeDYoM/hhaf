@@ -15,11 +15,11 @@ template <typename T>
 class SharedDataViewer : public SharedData
 {
 public:
-    mtps::sptr<T const> view(Address const& address)
+    htps::sptr<T const> view(Address const& address)
     {
         if (internal_data_ == nullptr)
         {
-            internal_data_ = mtps::msptr<T>();
+            internal_data_ = htps::msptr<T>();
         }
 
         bool const result = retrieve(address, *internal_data_);
@@ -39,7 +39,7 @@ public:
 
 private:
     Address address_{""};
-    mtps::sptr<T> internal_data_{nullptr};
+    htps::sptr<T> internal_data_{nullptr};
 };
 
 }  // namespace haf::shdata

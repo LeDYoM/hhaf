@@ -14,7 +14,7 @@ public:
     ITexture() {}
     virtual ~ITexture() {}
 
-    virtual mtps::vector2du32 size() const = 0;
+    virtual htps::vector2du32 size() const = 0;
 };
 }  // namespace haf::backend
 

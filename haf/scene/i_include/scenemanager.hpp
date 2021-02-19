@@ -23,16 +23,16 @@ public:
     void update();
     void finish();
 
-    mtps::Rectf32 currentViewPort() const override;
-    mtps::Rectf32 currentView() const override;
-    void setViewPort(const mtps::Rectf32& vp) override;
-    void setViewRect(const mtps::Rectf32& vr) override;
+    htps::Rectf32 currentViewPort() const override;
+    htps::Rectf32 currentView() const override;
+    void setViewPort(const htps::Rectf32& vp) override;
+    void setViewRect(const htps::Rectf32& vr) override;
 
-    mtps::sptr<SceneController> const& sceneController() const noexcept;
-    mtps::sptr<SceneController>& sceneController() noexcept;
+    htps::sptr<SceneController> const& sceneController() const noexcept;
+    htps::sptr<SceneController>& sceneController() noexcept;
 
 private:
-    mtps::sptr<SceneController> scene_controller_;
+    htps::sptr<SceneController> scene_controller_;
 };
 }  // namespace haf::scene
 

@@ -9,8 +9,8 @@ class IShareable
 {
 public:
     virtual ~IShareable() {}
-    virtual bool serialize(mtps::Object&) const = 0;
-    virtual bool deserialize(mtps::Object const&) = 0;  
+    virtual bool serialize(htps::Object&) const = 0;
+    virtual bool deserialize(htps::Object const&) = 0;  
 };
 
 }  // namespace haf::shdata

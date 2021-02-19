@@ -12,11 +12,11 @@ namespace haf::backend::sfmlb
     class TTFontFactory : public ITTFontFactory
     {
     public:
-        virtual ITTFont* loadFromFile(const mtps::str &file) override;
-        ITTFont *loadFromRawMemory(mtps::RawMemory *raw_memory) override;
+        virtual ITTFont* loadFromFile(const htps::str &file) override;
+        ITTFont *loadFromRawMemory(htps::RawMemory *raw_memory) override;
         ~TTFontFactory() override;
     private:
-        mtps::vector<mtps::uptr<TTFont>> m_fontCache;
+        htps::vector<htps::uptr<TTFont>> m_fontCache;
     };
 }
 

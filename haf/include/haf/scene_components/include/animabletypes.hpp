@@ -15,7 +15,7 @@ struct AnimableType
 template <>
 struct AnimableType<Color>
 {
-    using type = ColorImp<mtps::s16>;
+    using type = ColorImp<htps::s16>;
 };
 
 }  // namespace haf::scene

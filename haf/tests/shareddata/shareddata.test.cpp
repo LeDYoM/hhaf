@@ -6,7 +6,7 @@
 #include "include/shareable_test_data.hpp"
 #include "system_test_utils.hpp"
 
-using namespace mtps;
+using namespace htps;
 using namespace haf::shdata;
 
 TEST_CASE("SharedData::SharedData", "[haf][shareddatasystem]")

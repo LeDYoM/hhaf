@@ -8,8 +8,8 @@
 
 namespace haf::scene
 {
-RenderizableSceneNode::RenderizableSceneNode(mtps::rptr<SceneNode> parent,
-                                             const mtps::str& name) :
+RenderizableSceneNode::RenderizableSceneNode(htps::rptr<SceneNode> parent,
+                                             const htps::str& name) :
     SceneNode{std::move(parent), name}, node_{}
 {}
 
@@ -18,11 +18,11 @@ void RenderizableSceneNode::buildNode(RenderizableBuilder& node_builder)
     node_ = node_builder.create();
 }
 
-mtps::sptr<Renderizable> RenderizableSceneNode::node() noexcept
+htps::sptr<Renderizable> RenderizableSceneNode::node() noexcept
 {
     return node_;
 }
-const mtps::sptr<Renderizable> RenderizableSceneNode::node() const noexcept
+const htps::sptr<Renderizable> RenderizableSceneNode::node() const noexcept
 {
     return node_;
 }

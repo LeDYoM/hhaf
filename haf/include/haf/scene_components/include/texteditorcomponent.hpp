@@ -11,8 +11,8 @@ namespace haf::scene
 class TextValidator
 {
 public:
-    virtual bool canAddChar(const mtps::str&, const char) { return true; }
-    virtual bool isValidText(const mtps::str&) { return true; }
+    virtual bool canAddChar(const htps::str&, const char) { return true; }
+    virtual bool isValidText(const htps::str&) { return true; }
 };
 
 class TextEditorComponent final : public input::VirtualInputComponent
@@ -23,18 +23,18 @@ private:
 public:
     virtual void onAttached() override;
 
-    mtps::emitter<const mtps::str&> Accepted;
-    mtps::emitter<> Rejected;
+    htps::emitter<const htps::str&> Accepted;
+    htps::emitter<> Rejected;
 
     bool enabled{true};
 
-    void setTextValidator(mtps::uptr<TextValidator> nTextValidator) noexcept;
+    void setTextValidator(htps::uptr<TextValidator> nTextValidator) noexcept;
 
 private:
     void onKeyPressed(const input::Key&) override;
 
-    mtps::uptr<TextValidator> m_textValidator;
-    mtps::str m_originalText;
+    htps::uptr<TextValidator> m_textValidator;
+    htps::str m_originalText;
 };
 }  // namespace haf::scene
 

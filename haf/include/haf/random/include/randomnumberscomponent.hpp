@@ -17,16 +17,16 @@ class RandomNumbersComponent final : public scene::IComponent
 public:
     RandomNumbersComponent() noexcept;
     ~RandomNumbersComponent() override;
-    mtps::u32 getUInt(const mtps::size_type max,
-                      const mtps::size_type min = 0U) const;
-    void setName(mtps::str new_name);
-    const mtps::str& name() const noexcept;
+    htps::u32 getUInt(const htps::size_type max,
+                      const htps::size_type min = 0U) const;
+    void setName(htps::str new_name);
+    const htps::str& name() const noexcept;
 
     void onAttached() override;
 
 private:
     class RandomNumbersComponentPrivate;
-    mtps::uptr<RandomNumbersComponentPrivate> priv_;
+    htps::uptr<RandomNumbersComponentPrivate> priv_;
 };
 }  // namespace haf::rnd
 

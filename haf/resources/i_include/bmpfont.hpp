@@ -13,26 +13,26 @@ class BMFontPrivate;
 class BMPFont : public IFont
 {
 public:
-    BMPFont(const mtps::str& file_name);
+    BMPFont(const htps::str& file_name);
     ~BMPFont() override;
 
-    mtps::Rectf32 getBounds(const mtps::u32 codePoint) const override;
-    mtps::Rectf32 getTextureBounds(const mtps::u32 codePoint) const override;
-    mtps::f32 getAdvance(const mtps::u32 codePoint) const override;
-    mtps::f32 getLineSpacing() const override;
-    mtps::f32 getKerning(const mtps::u32 first,
-                         const mtps::u32 second) const override;
-    mtps::sptr<ITexture> getTexture() const override;
-    mtps::vector2df textSize(const mtps::str& text) const override;
-    const mtps::vector2du32& size() const;
+    htps::Rectf32 getBounds(const htps::u32 codePoint) const override;
+    htps::Rectf32 getTextureBounds(const htps::u32 codePoint) const override;
+    htps::f32 getAdvance(const htps::u32 codePoint) const override;
+    htps::f32 getLineSpacing() const override;
+    htps::f32 getKerning(const htps::u32 first,
+                         const htps::u32 second) const override;
+    htps::sptr<ITexture> getTexture() const override;
+    htps::vector2df textSize(const htps::str& text) const override;
+    const htps::vector2du32& size() const;
 
-    mtps::vector<mtps::str> textureFileNames() const;
+    htps::vector<htps::str> textureFileNames() const;
     void setTexturePages(
-        const mtps::vector<mtps::sptr<ITexture>>& texture_pages);
+        const htps::vector<htps::sptr<ITexture>>& texture_pages);
 
 private:
-    mtps::rptr<BMFontPrivate> fontPrivate_;
-    bool ParseFont(const mtps::str&);
+    htps::rptr<BMFontPrivate> fontPrivate_;
+    bool ParseFont(const htps::str&);
 };
 }  // namespace haf::res
 

@@ -1,6 +1,6 @@
 #include "texture.hpp"
 
-using namespace mtps;
+using namespace htps;
 
 namespace haf::backend::sfmlb
 {

@@ -27,8 +27,8 @@ template <typename InterfaceType, typename... Args>
 class ObjectFactory
 {
 public:
-    using CreateReturnType          = mtps::uptr<InterfaceType>;
-    using ObjectConstructorFunction = mtps::function<CreateReturnType(Args...)>;
+    using CreateReturnType          = htps::uptr<InterfaceType>;
+    using ObjectConstructorFunction = htps::function<CreateReturnType(Args...)>;
 
     /**
      * @brief Constructs an ObjectFactory object
@@ -44,12 +44,12 @@ public:
      * @brief Register a concrete object type with a given name and a
      *  construction function.
      *
-     * @param type_name An @b mtps::str Representing the unique type name.
+     * @param type_name An @b htps::str Representing the unique type name.
      * @param constructor_function The function that constructs the object.
      * @return true When the object type has been successfully registered.
      * @return false The object type cannot be registered.
      */
-    bool registerObjectType(mtps::str type_name,
+    bool registerObjectType(htps::str type_name,
                             ObjectConstructorFunction constructor_function)
     {
         return constructors_.add(std::move(type_name),
@@ -80,12 +80,12 @@ public:
      *
      * @tparam T The concrete object type to be registered. Requires
      *  T::StaticTypeName to exists as a const char[] member
-     * @param type_name An @b mtps::str Representing the unique type name.
+     * @param type_name An @b htps::str Representing the unique type name.
      * @return true When the object type has been successfully registered.
      * @return false The object type cannot be registered.
      */
     template <typename T>
-    constexpr bool registerObjectType(mtps::str type_name)
+    constexpr bool registerObjectType(htps::str type_name)
     {
         return registerObjectType(std::move(type_name),
                                   createObject<T, Args...>);
@@ -115,7 +115,7 @@ public:
      * @return CreateReturnType The object created or nullptr if the type name
      * does not exist.
      */
-    CreateReturnType create(const mtps::str& type_name, Args... args)
+    CreateReturnType create(const htps::str& type_name, Args... args)
     {
         if (!containsType(type_name))
         {
@@ -155,7 +155,7 @@ public:
      *
      * @return The number of objects
      */
-    constexpr mtps::size_type size() const { return constructors_.size(); }
+    constexpr htps::size_type size() const { return constructors_.size(); }
 
     /**
      * @brief Ask if this instance contains any object registered
@@ -166,15 +166,15 @@ public:
     constexpr bool empty() const { return constructors_.empty(); }
 
 private:
-    mtps::Dictionary<ObjectConstructorFunction> constructors_;
+    htps::Dictionary<ObjectConstructorFunction> constructors_;
 
     template <typename T, typename... MArgs>
     static CreateReturnType createObject(MArgs&&... args)
     {
-        return mtps::muptr<T>(std::forward<MArgs>(args)...);
+        return htps::muptr<T>(std::forward<MArgs>(args)...);
     }
 
-    bool containsType(const mtps::str& name) const
+    bool containsType(const htps::str& name) const
     {
         return constructors_.find(name) != constructors_.cend();
     }

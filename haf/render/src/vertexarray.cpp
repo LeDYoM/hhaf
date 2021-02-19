@@ -1,6 +1,6 @@
 #include <haf/render/include/vertexarray.hpp>
 
-using namespace mtps;
+using namespace htps;
 
 namespace haf::scene
 {

@@ -16,8 +16,8 @@ public:
     using BaseClass::prop;
 
     using Scalar       = Matrix4x4::Scalar;
-    using VectorScalar = mtps::vector2d<Scalar>;
-    using RectScalar   = mtps::Rect<Scalar>;
+    using VectorScalar = htps::vector2d<Scalar>;
+    using RectScalar   = htps::Rect<Scalar>;
 
     Transformation() noexcept;
     virtual ~Transformation();

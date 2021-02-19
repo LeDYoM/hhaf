@@ -13,12 +13,12 @@ class SceneManager;
 class HAF_API Scene : public SceneNode
 {
 public:
-    explicit Scene(mtps::str name) : SceneNode{nullptr, std::move(name)} {}
-    virtual mtps::str nextSceneName() { return ""; }
+    explicit Scene(htps::str name) : SceneNode{nullptr, std::move(name)} {}
+    virtual htps::str nextSceneName() { return ""; }
     virtual void onFinished() {}
 
 private:
-    mtps::rptr<SceneManager> scene_manager_;
+    htps::rptr<SceneManager> scene_manager_;
     friend class SceneController;
 };
 }  // namespace haf::scene

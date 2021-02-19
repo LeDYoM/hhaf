@@ -9,13 +9,13 @@ namespace haf::board
 class IBoardManagerActuator
 {
 public:
-    virtual void tileAdded(const mtps::vector2dst, SITilePointer&) {}
-    virtual void tileRemoved(const mtps::vector2dst, SITilePointer&) {}
-    virtual void tileMoved(const mtps::vector2dst,
-                           const mtps::vector2dst,
+    virtual void tileAdded(const htps::vector2dst, SITilePointer&) {}
+    virtual void tileRemoved(const htps::vector2dst, SITilePointer&) {}
+    virtual void tileMoved(const htps::vector2dst,
+                           const htps::vector2dst,
                            SITilePointer&)
     {}
-    virtual void tileChanged(const mtps::vector2dst,
+    virtual void tileChanged(const htps::vector2dst,
                              SITilePointer&,
                              const BoardTileData,
                              const BoardTileData)

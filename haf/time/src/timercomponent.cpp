@@ -5,7 +5,7 @@
 #include <hlog/include/hlog.hpp>
 #include <haf/scene/include/scenenode.hpp>
 
-using namespace mtps;
+using namespace htps;
 
 namespace haf::time
 {

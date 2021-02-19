@@ -10,8 +10,8 @@ namespace haf::scene
 class ISceneMetrics : public ISceneMetricsView
 {
 public:
-    virtual void setViewRect(const mtps::Rectf32& new_view) = 0;
-    virtual void setViewPort(const mtps::Rectf32& new_view_port) = 0;
+    virtual void setViewRect(const htps::Rectf32& new_view) = 0;
+    virtual void setViewPort(const htps::Rectf32& new_view_port) = 0;
 };
 }  // namespace haf::scene
 

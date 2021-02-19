@@ -10,9 +10,9 @@
 namespace haf::board
 {
 class IBoardManagerActuator;
-using BackgroundData = mtps::s32;
+using BackgroundData = htps::s32;
 using BackgroundFunction =
-    mtps::function<BackgroundData(const mtps::vector2dst&)>;
+    htps::function<BackgroundData(const htps::vector2dst&)>;
 
 class BoardManager : public haf::scene::IComponent
 {
@@ -26,34 +26,34 @@ public:
      * @param board_manager_actuator Pointer to a @b IBoardManagerActuator
      * to handle the callbacks.
      */
-    void initialize(const mtps::vector2dst& size,
-                    mtps::rptr<IBoardManagerActuator> board_manager_actuator);
+    void initialize(const htps::vector2dst& size,
+                    htps::rptr<IBoardManagerActuator> board_manager_actuator);
 
     BackgroundFunction setBackgroundFunction(
         BackgroundFunction background_function);
 
-    SITilePointer getTile(const mtps::vector2dst& position) const noexcept;
-    bool tileEmpty(const mtps::vector2dst& position) const noexcept;
-    bool setTile(const mtps::vector2dst& position, SITilePointer newTile);
-    bool deleteTile(const mtps::vector2dst& position);
-    bool moveTile(const mtps::vector2dst& source, const mtps::vector2dst& dest);
-    bool changeTileData(const mtps::vector2dst& source,
+    SITilePointer getTile(const htps::vector2dst& position) const noexcept;
+    bool tileEmpty(const htps::vector2dst& position) const noexcept;
+    bool setTile(const htps::vector2dst& position, SITilePointer newTile);
+    bool deleteTile(const htps::vector2dst& position);
+    bool moveTile(const htps::vector2dst& source, const htps::vector2dst& dest);
+    bool changeTileData(const htps::vector2dst& source,
                         const BoardTileData& nv);
-    bool swapTileData(const mtps::vector2dst& lhs, const mtps::vector2dst& rhs);
+    bool swapTileData(const htps::vector2dst& lhs, const htps::vector2dst& rhs);
 
-    bool validCoords(const mtps::vector2dst& tPosition) const noexcept;
+    bool validCoords(const htps::vector2dst& tPosition) const noexcept;
     BackgroundData backgroundType(
-        const mtps::vector2dst& tPosition) const;
-    mtps::vector2dst size() const noexcept;
+        const htps::vector2dst& tPosition) const;
+    htps::vector2dst size() const noexcept;
 
-    mtps::str toStr();
+    htps::str toStr();
 
 private:
-    void _setTile(const mtps::vector2dst& position, SITilePointer newTile);
+    void _setTile(const htps::vector2dst& position, SITilePointer newTile);
 
     BackgroundFunction background_function_{};
-    mtps::rptr<IBoardManagerActuator> actuator_{nullptr};
-    mtps::vector<mtps::vector<SITilePointer>> tiles_;
+    htps::rptr<IBoardManagerActuator> actuator_{nullptr};
+    htps::vector<htps::vector<SITilePointer>> tiles_;
 };
 
 }  // namespace haf::board

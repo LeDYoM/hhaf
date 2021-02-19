@@ -18,13 +18,13 @@ public:
     RandomSystem(sys::SystemProvider& system_provider);
     ~RandomSystem();
 
-    mtps::size_type getNext(const mtps::str& name,
-                            const mtps::size_type min,
-                            const mtps::size_type max);
+    htps::size_type getNext(const htps::str& name,
+                            const htps::size_type min,
+                            const htps::size_type max);
 
 private:
     class RandomSystemPrivate;
-    mtps::uptr<RandomSystemPrivate> priv_;
+    htps::uptr<RandomSystemPrivate> priv_;
 };
 }  // namespace haf::sys
 

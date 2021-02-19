@@ -11,7 +11,7 @@
 
 namespace haf::sys
 {
-enum class SimulationActionType : mtps::u8
+enum class SimulationActionType : htps::u8
 {
     KeyPressed = 0U,
     KeyReleased
@@ -38,7 +38,7 @@ struct SimulationAction
     }
 };
 
-inline const mtps::Object& operator>>(const mtps::Object& obj,
+inline const htps::Object& operator>>(const htps::Object& obj,
                                       SimulationAction& simulation_action)
 {
     simulation_action.type = obj["type"].as<SimulationActionType>();
@@ -49,7 +49,7 @@ inline const mtps::Object& operator>>(const mtps::Object& obj,
     return obj;
 }
 
-inline mtps::Object& operator<<(mtps::Object& obj,
+inline htps::Object& operator<<(htps::Object& obj,
                                 const SimulationAction& simulation_action)
 {
     obj.set("type", simulation_action.type);
@@ -59,7 +59,7 @@ inline mtps::Object& operator<<(mtps::Object& obj,
     return obj;
 }
 
-using SimulationActionContainer = mtps::vector<SimulationAction>;
+using SimulationActionContainer = htps::vector<SimulationAction>;
 using CurrentSimulationActionIterator =
     SimulationActionContainer::const_iterator;
 }  // namespace haf::sys

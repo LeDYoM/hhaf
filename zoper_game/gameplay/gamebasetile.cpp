@@ -7,7 +7,7 @@
 using namespace haf;
 using namespace haf::board;
 using namespace haf::scene;
-using namespace mtps;
+using namespace htps;
 
 namespace zoper
 {

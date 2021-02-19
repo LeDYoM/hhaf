@@ -11,7 +11,7 @@ struct BackgroundColor
     using value_type = haf::scene::Color;
 };
 
-using BoardTileSceneNodeProperties = mtps::PropertyGroup<BackgroundColor>;
+using BoardTileSceneNodeProperties = htps::PropertyGroup<BackgroundColor>;
 
 
 }  // namespace zoper

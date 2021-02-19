@@ -11,11 +11,11 @@
 #include <htypes/include/object.hpp>
 #include <htypes/include/parpar.hpp>
 
-using namespace mtps;
+using namespace htps;
 
 namespace haf::host
 {
-enum class AppState : mtps::u8
+enum class AppState : htps::u8
 {
     NotInitialized,
     ReadyToStart,
@@ -147,7 +147,7 @@ public:
         return false;
     }
 
-    bool addApplication(rptr<IApp> iapp, ManagedApp managed_app, mtps::str name)
+    bool addApplication(rptr<IApp> iapp, ManagedApp managed_app, htps::str name)
     {
         LogAsserter::log_assert(iapp != nullptr,
                                 "Received nullptr Application");

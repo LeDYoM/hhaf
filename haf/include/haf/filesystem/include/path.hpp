@@ -5,7 +5,7 @@
 
 namespace haf::sys
 {
-using Path = mtps::str;
+using Path = htps::str;
 }  // namespace haf::sys
 
 #endif

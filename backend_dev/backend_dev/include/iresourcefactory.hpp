@@ -10,8 +10,8 @@ template <typename T>
 class IResourceFactory
 {
 public:
-    virtual T* loadFromFile(const mtps::str&) = 0;
-    virtual T* loadFromRawMemory(mtps::RawMemory*) { return nullptr; }
+    virtual T* loadFromFile(const htps::str&) = 0;
+    virtual T* loadFromRawMemory(htps::RawMemory*) { return nullptr; }
     virtual ~IResourceFactory() {}
 };
 }  // namespace haf::backend

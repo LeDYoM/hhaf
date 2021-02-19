@@ -8,7 +8,7 @@ namespace haf::backend
 class IResourceInfo
 {
 public:
-    virtual mtps::str info() const = 0;
+    virtual htps::str info() const = 0;
     virtual ~IResourceInfo() {}
 };
 }  // namespace haf::backend

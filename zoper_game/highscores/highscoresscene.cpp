@@ -24,7 +24,7 @@ HighScoresScene::HighScoresScene() : Scene{StaticTypeName}
 
 HighScoresScene::~HighScoresScene() = default;
 
-mtps::str HighScoresScene::nextSceneName()
+htps::str HighScoresScene::nextSceneName()
 {
     return MENU_SCENE_NAME;
 }

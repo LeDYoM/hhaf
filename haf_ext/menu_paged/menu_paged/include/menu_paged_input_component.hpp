@@ -13,11 +13,11 @@ public:
     using BaseClass = input::VirtualInputComponent;
     using BaseClass::BaseClass;
     
-    mtps::emitter<> Up;
-    mtps::emitter<> Down;
-    mtps::emitter<> Left;
-    mtps::emitter<> Right;
-    mtps::emitter<> Selected;
+    htps::emitter<> Up;
+    htps::emitter<> Down;
+    htps::emitter<> Left;
+    htps::emitter<> Right;
+    htps::emitter<> Selected;
 
 private:
     void onKeyPressed(const input::Key&) override;

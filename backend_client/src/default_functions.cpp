@@ -7,8 +7,8 @@
 namespace haf::backend::client
 {
 void default_init_function_imp(
-    mtps::rptr<IBackendManager> backend_manager,
-    mtps::rptr<IBackendRegister> const ibackend_register)
+    htps::rptr<IBackendManager> backend_manager,
+    htps::rptr<IBackendRegister> const ibackend_register)
 {
     (*backend_manager).create();
     (*backend_manager).setFactories(ibackend_register);
@@ -16,7 +16,7 @@ void default_init_function_imp(
 
 void default_finish_function_imp(
     IBackendManager& backend_manager,
-    mtps::rptr<IBackendRegister> const ibackend_register)
+    htps::rptr<IBackendRegister> const ibackend_register)
 {
     backend_manager.resetFactories(ibackend_register);
     backend_manager.destroy();

@@ -15,10 +15,10 @@ namespace haf::shdata
 class HAF_API Address
 {
 public:
-    using iterator        = mtps::str*;
-    using const_iterator  = mtps::str const*;
-    using reference       = mtps::str&;
-    using const_reference = mtps::str const&;
+    using iterator        = htps::str*;
+    using const_iterator  = htps::str const*;
+    using reference       = htps::str&;
+    using const_reference = htps::str const&;
 
     /**
      * @brief Construct a new Address object
@@ -27,7 +27,7 @@ public:
      * @param separator Element to be used as a separator of the parts of the
      *  address.
      */
-    Address(mtps::str const& addr, char const separator = '/');
+    Address(htps::str const& addr, char const separator = '/');
 
     /**
      * @brief Destroy the Address object
@@ -65,7 +65,7 @@ public:
      */
     Address& operator=(Address&& address) noexcept;
 
-    mtps::size_type size() const noexcept;
+    htps::size_type size() const noexcept;
 
     iterator begin() noexcept;
     iterator end() noexcept;
@@ -76,11 +76,11 @@ public:
     inline const_iterator cbegin() const noexcept { return begin(); }
     inline const_iterator cend() const noexcept { return end(); }
 
-    reference operator[](mtps::size_type const index) noexcept;
-    const_reference operator[](mtps::size_type const index) const noexcept;
+    reference operator[](htps::size_type const index) noexcept;
+    const_reference operator[](htps::size_type const index) const noexcept;
 
-    mtps::str first() const;
-    mtps::str last() const;
+    htps::str first() const;
+    htps::str last() const;
 
     /**
      * @brief Check if an address is relative (it does not start with separator)
@@ -121,32 +121,32 @@ public:
 
 private:
     struct AddressPrivate;
-    mtps::PImplPointer<AddressPrivate> private_;
+    htps::PImplPointer<AddressPrivate> private_;
 };
 
 /**
- * @brief Get a copy of an @b mtps::Object contained at that address
+ * @brief Get a copy of an @b htps::Object contained at that address
  * 
  * @param address Address to retrieve
  * @param object Object where to search
- * @return mtps::pair<bool, mtps::Object> In the returned pair, the first
+ * @return htps::pair<bool, htps::Object> In the returned pair, the first
  * will be if the operation wass successful and the second will be an
- * @b mtps::Object . If first is false, the second value is undefined.
+ * @b htps::Object . If first is false, the second value is undefined.
  */
-mtps::pair<bool, mtps::Object> objectFromAddress(Address const& address,
-                                            mtps::Object const& object);
+htps::pair<bool, htps::Object> objectFromAddress(Address const& address,
+                                            htps::Object const& object);
 
 /**
- * @brief Check that an @b Address exists in an @b mtps::Object and retrieve
+ * @brief Check that an @b Address exists in an @b htps::Object and retrieve
  * a pointer to the element. Otherwhise, create the structure inside the
- * @b mtps::Object and return a pointer to the newly created @b mtps::Object
+ * @b htps::Object and return a pointer to the newly created @b htps::Object
  * too.
  * @param address Adress to search for
  * @param object Object where to search
- * @return mtps::Object* Pointer to the old or new Object. Might be nullptr if
+ * @return htps::Object* Pointer to the old or new Object. Might be nullptr if
  * for any reason it cannot be created.
  */
-mtps::Object *ensureAddress(Address const& address, mtps::Object& object);
+htps::Object *ensureAddress(Address const& address, htps::Object& object);
 
 }  // namespace haf::shdata
 

@@ -13,7 +13,7 @@ void SceneControl::switchToNextScene()
         ->switchToNextScene();
 }
 
-bool SceneControl::startScene(const mtps::str& scene_name)
+bool SceneControl::startScene(const htps::str& scene_name)
 {
     return sys::getSystem<scene::SceneManager>(attachedNode())
         .sceneController()

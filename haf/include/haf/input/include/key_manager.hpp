@@ -12,12 +12,12 @@ namespace haf::input
 class KeyManager : public sys::IDataWrapper
 {
 public:
-    using KeyIndex = mtps::u16;
+    using KeyIndex = htps::u16;
 
     bool registerKey(KeyIndex const key_index, Key const key) noexcept;
     Key keyForIndex(KeyIndex const key_index) const noexcept;
 private:
-    mtps::vector<Key> keys_;
+    htps::vector<Key> keys_;
 };
 }  // namespace haf::input
 

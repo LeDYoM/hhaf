@@ -15,8 +15,8 @@ public:
     IShader() {}
     virtual ~IShader() {}
 
-    virtual void setUniform(const mtps::str& name, mtps::vector2df v) = 0;
-    virtual void setUniform(const mtps::str& name, ITexture* texture) = 0;
+    virtual void setUniform(const htps::str& name, htps::vector2df v) = 0;
+    virtual void setUniform(const htps::str& name, ITexture* texture) = 0;
 };
 }  // namespace haf::backend
 

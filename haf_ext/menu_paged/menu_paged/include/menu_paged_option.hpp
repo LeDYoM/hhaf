@@ -19,13 +19,13 @@ public:
      * @param min Index with the minimum index for the option.
      * @param max  Index with the maxumum index for the option
      */
-    RangeOption(mtps::size_type min, mtps::size_type max);
+    RangeOption(htps::size_type min, htps::size_type max);
 
     /**
      * @brief Construct a new Range Option object
      * @param options The options will be from 0 to options.size() -1
      */
-    explicit RangeOption(mtps::string_vector options);
+    explicit RangeOption(htps::string_vector options);
 
     /**
      * @brief Construct a new Range Option object
@@ -34,9 +34,9 @@ public:
 
     template <typename T>
     explicit RangeOption(T const)
-        : options_(static_cast<mtps::size_type>(mtps::MEnum<T>::max_numeric - mtps::MEnum<T>::min_numeric))
+        : options_(static_cast<htps::size_type>(htps::MEnum<T>::max_numeric - htps::MEnum<T>::min_numeric))
     {
-        mtps::MEnum<T> v{T::min};
+        htps::MEnum<T> v{T::min};
         while (v.isValid())
         {
             options_.emplace_back(v.toStr());
@@ -44,10 +44,10 @@ public:
         }
     }
 
-    const mtps::string_vector& options() const noexcept { return options_; }
+    const htps::string_vector& options() const noexcept { return options_; }
 
 private:
-    mtps::string_vector options_;
+    htps::string_vector options_;
 };
 
 /**
@@ -59,21 +59,21 @@ private:
 class MenuPagedOption
 {
 public:
-    static constexpr mtps::s32 NoAction = -3;
-    static constexpr mtps::s32 GoBack = -2;
-    static constexpr mtps::s32 Accept = -1;
+    static constexpr htps::s32 NoAction = -3;
+    static constexpr htps::s32 GoBack = -2;
+    static constexpr htps::s32 Accept = -1;
 
-    MenuPagedOption(mtps::str title,
+    MenuPagedOption(htps::str title,
                     RangeOption range_options,
-                    mtps::s32 on_selected = NoAction);
+                    htps::s32 on_selected = NoAction);
 
-    inline mtps::str title() const noexcept { return title_; }
+    inline htps::str title() const noexcept { return title_; }
     const RangeOption& option() const noexcept { return option_; }
-    mtps::s32 onSelected() const noexcept;
+    htps::s32 onSelected() const noexcept;
 
 private:
-    mtps::str title_;
-    mtps::s32 on_selected_;
+    htps::str title_;
+    htps::s32 on_selected_;
     RangeOption option_;
 };
 
@@ -84,9 +84,9 @@ public:
 };
 
 template <typename... Args>
-mtps::sptr<MenuPagedOption> make_option(Args &&... args)
+htps::sptr<MenuPagedOption> make_option(Args &&... args)
 {
-    return mtps::msptr<MenuPagedOption>(std::forward<Args>(args)...);
+    return htps::msptr<MenuPagedOption>(std::forward<Args>(args)...);
 }
 } // namespace haf::scene
 

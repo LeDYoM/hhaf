@@ -12,13 +12,13 @@ namespace haf::scene
 class VisibilitySelectorComponent : public IComponent
 {
 public:
-    void configure(mtps::size_type first_index);
-    void show(mtps::size_type index, bool force = false);
+    void configure(htps::size_type first_index);
+    void show(htps::size_type index, bool force = false);
 
 private:
     void hideAll();
 
-    mtps::size_type active_index{0U};
+    htps::size_type active_index{0U};
 };
 
 class VisibilitySelector : public SceneNode
@@ -26,8 +26,8 @@ class VisibilitySelector : public SceneNode
 public:
     using SceneNode::SceneNode;
 
-    void configure(mtps::size_type first_index);
-    void show(mtps::size_type index, bool force = false);
+    void configure(htps::size_type first_index);
+    void show(htps::size_type index, bool force = false);
 };
 
 }  // namespace haf::scene

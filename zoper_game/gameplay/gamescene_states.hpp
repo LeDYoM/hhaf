@@ -6,7 +6,7 @@ namespace zoper
 
 #include <htypes/include/str.hpp>
 
-enum class GameSceneStates :  mtps::u8
+enum class GameSceneStates :  htps::u8
 {
     Playing = 0U,
     GameOver,

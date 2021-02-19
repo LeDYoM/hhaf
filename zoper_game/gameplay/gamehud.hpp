@@ -12,19 +12,19 @@ using namespace haf;
 class GameHudSceneNode : public scene::SceneNode
 {
 public:
-    GameHudSceneNode(mtps::rptr<haf::scene::SceneNode> const parent,
-                     mtps::str name);
+    GameHudSceneNode(htps::rptr<haf::scene::SceneNode> const parent,
+                     htps::str name);
     ~GameHudSceneNode() override;
 
-    void setLevel(const mtps::size_type level);
-    void setStayCounter(const mtps::size_type stayCounter);
-    void setConsumedTokens(const mtps::size_type consumedTokens);
-    void setEllapsedTimeInSeconds(const mtps::u64 seconds);
-    void setScore(const mtps::size_type score);
+    void setLevel(const htps::size_type level);
+    void setStayCounter(const htps::size_type stayCounter);
+    void setConsumedTokens(const htps::size_type consumedTokens);
+    void setEllapsedTimeInSeconds(const htps::u64 seconds);
+    void setScore(const htps::size_type score);
 
 private:
-    mtps::sptr<scene::nodes::TextQuad> m_scoreQuad;
-    mtps::sptr<scene::nodes::TextQuad> m_goalQuad;
+    htps::sptr<scene::nodes::TextQuad> m_scoreQuad;
+    htps::sptr<scene::nodes::TextQuad> m_goalQuad;
 };
 }  // namespace zoper
 

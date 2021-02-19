@@ -10,7 +10,7 @@
 
 #include <haf/render/include/geometry_math.hpp>
 
-using namespace mtps;
+using namespace htps;
 
 namespace haf::scene
 {

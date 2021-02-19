@@ -64,8 +64,8 @@ struct ColorImp
     constexpr ColorImp& operator=(ColorImp&&) noexcept = default;
 
     //    template <typename = std::enable_if_t<std::is_same_v<value_type,
-    //    mtps::u8>>>
-    constexpr explicit ColorImp(const mtps::u32 color) noexcept :
+    //    htps::u8>>>
+    constexpr explicit ColorImp(const htps::u32 color) noexcept :
         r{static_cast<value_type>((color & 0xff000000) >> 24U)},
         g{static_cast<value_type>((color & 0x00ff0000) >> 16U)},
         b{static_cast<value_type>((color & 0x0000ff00) >> 8U)},
@@ -141,41 +141,41 @@ struct ColorImp
 
     constexpr ColorImp& operator-=(const ColorImp& right) noexcept
     {
-        r = ensureLimits(static_cast<mtps::s32>(r) - right.r);
-        g = ensureLimits(static_cast<mtps::s32>(g) - right.g);
-        b = ensureLimits(static_cast<mtps::s32>(b) - right.b);
-        a = ensureLimits(static_cast<mtps::s32>(a) - right.a);
+        r = ensureLimits(static_cast<htps::s32>(r) - right.r);
+        g = ensureLimits(static_cast<htps::s32>(g) - right.g);
+        b = ensureLimits(static_cast<htps::s32>(b) - right.b);
+        a = ensureLimits(static_cast<htps::s32>(a) - right.a);
         return *this;
     }
 
     constexpr ColorImp& operator*=(const ColorImp& right) noexcept
     {
-        r = static_cast<value_type>(static_cast<mtps::u32>(r) * right.r /
+        r = static_cast<value_type>(static_cast<htps::u32>(r) * right.r /
                                     value_max);
-        g = static_cast<value_type>(static_cast<mtps::u32>(g) * right.g /
+        g = static_cast<value_type>(static_cast<htps::u32>(g) * right.g /
                                     value_max);
-        b = static_cast<value_type>(static_cast<mtps::u32>(b) * right.b /
+        b = static_cast<value_type>(static_cast<htps::u32>(b) * right.b /
                                     value_max);
-        a = static_cast<value_type>(static_cast<mtps::u32>(a) * right.a /
+        a = static_cast<value_type>(static_cast<htps::u32>(a) * right.a /
                                     value_max);
         return *this;
     }
 
-    constexpr ColorImp& operator*=(const mtps::f32 delta) noexcept
+    constexpr ColorImp& operator*=(const htps::f32 delta) noexcept
     {
-        r = detail::ensureLimits<value_type>(static_cast<mtps::f32>(r) * delta);
-        g = detail::ensureLimits<value_type>(static_cast<mtps::f32>(g) * delta);
-        b = detail::ensureLimits<value_type>(static_cast<mtps::f32>(b) * delta);
-        a = detail::ensureLimits<value_type>(static_cast<mtps::f32>(a) * delta);
+        r = detail::ensureLimits<value_type>(static_cast<htps::f32>(r) * delta);
+        g = detail::ensureLimits<value_type>(static_cast<htps::f32>(g) * delta);
+        b = detail::ensureLimits<value_type>(static_cast<htps::f32>(b) * delta);
+        a = detail::ensureLimits<value_type>(static_cast<htps::f32>(a) * delta);
         return *this;
     }
 
-    constexpr ColorImp& operator/=(const mtps::f32 delta) noexcept
+    constexpr ColorImp& operator/=(const htps::f32 delta) noexcept
     {
-        r = detail::ensureLimits<value_type>(static_cast<mtps::f32>(r) / delta);
-        g = detail::ensureLimits<value_type>(static_cast<mtps::f32>(g) / delta);
-        b = detail::ensureLimits<value_type>(static_cast<mtps::f32>(b) / delta);
-        a = detail::ensureLimits<value_type>(static_cast<mtps::f32>(a) / delta);
+        r = detail::ensureLimits<value_type>(static_cast<htps::f32>(r) / delta);
+        g = detail::ensureLimits<value_type>(static_cast<htps::f32>(g) / delta);
+        b = detail::ensureLimits<value_type>(static_cast<htps::f32>(b) / delta);
+        a = detail::ensureLimits<value_type>(static_cast<htps::f32>(a) / delta);
         return *this;
     }
 
@@ -184,19 +184,19 @@ struct ColorImp
     constexpr float blue() const noexcept { return detail::normalize(b); }
     constexpr float alpha() const noexcept { return detail::normalize(a); }
 
-    constexpr void setRed(const mtps::f32 red) noexcept
+    constexpr void setRed(const htps::f32 red) noexcept
     {
         detail::denormalize(red, r);
     }
-    constexpr void setGreen(const mtps::f32 green) noexcept
+    constexpr void setGreen(const htps::f32 green) noexcept
     {
         detail::denormalize(green, g);
     }
-    constexpr void setBlue(const mtps::f32 blue) noexcept
+    constexpr void setBlue(const htps::f32 blue) noexcept
     {
         detail::denormalize(blue, b);
     }
-    constexpr void setAlpha(const mtps::f32 alpha) noexcept
+    constexpr void setAlpha(const htps::f32 alpha) noexcept
     {
         detail::denormalize(alpha, a);
     }
@@ -209,13 +209,13 @@ struct ColorImp
 
 template <typename vt>
 constexpr ColorImp<vt> operator*(ColorImp<vt> color,
-                                 const mtps::f32 delta) noexcept
+                                 const htps::f32 delta) noexcept
 {
     return ColorImp<vt>{std::move(color)} *= delta;
 }
 
 template <typename vt>
-constexpr ColorImp<vt> operator*(const mtps::f32 delta,
+constexpr ColorImp<vt> operator*(const htps::f32 delta,
                                  ColorImp<vt> color) noexcept
 {
     return std::move(color) * delta;
@@ -223,18 +223,18 @@ constexpr ColorImp<vt> operator*(const mtps::f32 delta,
 
 template <typename vt>
 constexpr ColorImp<vt> operator/(ColorImp<vt> color,
-                                 const mtps::f32 delta) noexcept
+                                 const htps::f32 delta) noexcept
 {
     return ColorImp<vt>{std::move(color)} /= delta;
 }
 template <typename vt>
-constexpr ColorImp<vt> operator/(const mtps::f32 delta,
+constexpr ColorImp<vt> operator/(const htps::f32 delta,
                                  ColorImp<vt> color) noexcept
 {
     return std::move(color) / delta;
 }
 
-using Color = ColorImp<mtps::u8>;
+using Color = ColorImp<htps::u8>;
 
 namespace colors
 {

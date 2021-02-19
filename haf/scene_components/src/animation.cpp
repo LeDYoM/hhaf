@@ -1,6 +1,6 @@
 #include <haf/scene_components/include/animation.hpp>
 
-using namespace mtps;
+using namespace htps;
 
 namespace haf::scene
 {

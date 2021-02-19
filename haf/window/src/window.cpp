@@ -10,7 +10,7 @@
 #include <system/i_include/systemprovider.hpp>
 #include <haf/input/include/inputdriver.hpp>
 
-using namespace mtps;
+using namespace htps;
 using namespace haf::time;
 
 namespace haf::sys

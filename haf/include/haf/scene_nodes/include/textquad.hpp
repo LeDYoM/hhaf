@@ -17,11 +17,11 @@ public:
 
     void onCreated() override;
 
-    void configure(mtps::sptr<res::IFont> font,
+    void configure(htps::sptr<res::IFont> font,
                    const Color& color,
-                   const mtps::vector2df& size);
+                   const htps::vector2df& size);
 
-    inline mtps::sptr<SceneNodeText> text(mtps::vector2dst index) const noexcept
+    inline htps::sptr<SceneNodeText> text(htps::vector2dst index) const noexcept
     {
         return nodeAt(std::move(index));
     }

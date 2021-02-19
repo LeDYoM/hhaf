@@ -9,7 +9,7 @@
 
 namespace zoper
 {
-using namespace mtps;
+using namespace htps;
 using namespace haf;
 using namespace haf::scene;
 using namespace haf::time;
@@ -63,7 +63,7 @@ void Player::update()
     }
 }
 
-bool Player::canBeMoved(mtps::vector2dst const& dest_position) const
+bool Player::canBeMoved(htps::vector2dst const& dest_position) const
 {
     return TokenZones::pointInCenter(dest_position);
 }

@@ -3,7 +3,7 @@
 #include <system/i_include/systemprovider.hpp>
 #include <system/i_include/get_system.hpp>
 
-using namespace mtps;
+using namespace htps;
 
 namespace haf::sys
 {
@@ -23,10 +23,10 @@ FileSerializer::Result FileSerializer::deserializeFromFile(
     const Path& file_name,
     shdata::IShareable& data)
 {
-    const mtps::str text_data{loadTextFile(file_name)};
+    const htps::str text_data{loadTextFile(file_name)};
     if (!text_data.empty())
     {
-        mtps::ObjectCompiler obj_compiler(text_data);
+        htps::ObjectCompiler obj_compiler(text_data);
         if (obj_compiler.compile())
         {
             // The compilation was correct so, at least we
@@ -50,13 +50,13 @@ FileSerializer::Result FileSerializer::serializeToFile(
     const Path& file_name,
     const shdata::IShareable& data)
 {
-    //        auto temp{mtps::Serializer<T>::serialize(data)};
-    mtps::Object obj;
+    //        auto temp{htps::Serializer<T>::serialize(data)};
+    htps::Object obj;
     auto temp(data.serialize(obj));
 
     if (temp)
     {
-        mtps::str data_str;
+        htps::str data_str;
         data_str << obj;
 
         return ((saveFile(file_name, std::move(data_str)))

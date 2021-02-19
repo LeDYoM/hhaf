@@ -10,7 +10,7 @@ namespace haf::host
 {
 struct ManagedApp
 {
-    mtps::rptr<IApp> app{nullptr};
+    htps::rptr<IApp> app{nullptr};
     p_initApp init_app{nullptr};
     p_finishApp finish_app{nullptr};
 };
@@ -32,7 +32,7 @@ public:
      * @return ManagedApp Instance of the loaded app or nullptr
      * in case of failure.
      */
-    ManagedApp loadApp(const mtps::str& file) const;
+    ManagedApp loadApp(const htps::str& file) const;
     ManagedApp loadApp(p_initApp init_app, p_finishApp finish_app) const;
     bool unloadApp(ManagedApp& managed_app) const;
 };

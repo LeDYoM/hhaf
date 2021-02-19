@@ -13,7 +13,7 @@ public:
     SystemController();
     ~SystemController() override;
 
-    void init(mtps::rptr<IApp> iapp,
+    void init(htps::rptr<IApp> iapp,
               int const argc,
               char const* const argv[]) override;
     bool runStep() override;

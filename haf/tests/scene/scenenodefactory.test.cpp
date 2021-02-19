@@ -7,7 +7,7 @@
 
 #include <typeinfo>
 
-using namespace mtps;
+using namespace htps;
 using namespace haf;
 using namespace haf::scene;
 

@@ -8,15 +8,15 @@ namespace haf::scene
 {
 struct SceneNodeSize
 {
-    using value_type = mtps::vector2df;
+    using value_type = htps::vector2df;
 };
 
 struct TableSize
 {
-    using value_type = mtps::vector2dst;
+    using value_type = htps::vector2dst;
 };
 
-using TableNodeProperties = mtps::PropertyGroup<TableSize, SceneNodeSize>;
+using TableNodeProperties = htps::PropertyGroup<TableSize, SceneNodeSize>;
 
 }  // namespace haf::scene
 

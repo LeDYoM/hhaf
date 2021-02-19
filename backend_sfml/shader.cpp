@@ -1,7 +1,7 @@
 #include "shader.hpp"
 #include "conversions.hpp"
 
-using namespace mtps;
+using namespace htps;
 
 namespace haf::backend::sfmlb
 {

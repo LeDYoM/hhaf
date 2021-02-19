@@ -10,11 +10,11 @@ namespace haf::scene
 {
 struct RenderizableModifierContext
 {
-    const mtps::Rectf32 box;
-    const mtps::Rects32 texture_rect;
-    const mtps::vector2du32 texture_size;
+    const htps::Rectf32 box;
+    const htps::Rects32 texture_rect;
+    const htps::vector2du32 texture_size;
     const Vertex vertex;
-    constexpr mtps::vector2df normalizedVertexInBox() const
+    constexpr htps::vector2df normalizedVertexInBox() const
     {
         return (box.rightBottom() - vertex.position) / box.rightBottom();
     }

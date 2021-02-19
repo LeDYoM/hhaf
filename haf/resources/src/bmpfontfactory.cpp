@@ -2,7 +2,7 @@
 #include <resources/i_include/bmpfont.hpp>
 #include <resources/i_include/texture.hpp>
 
-using namespace mtps;
+using namespace htps;
 
 namespace haf::res
 {

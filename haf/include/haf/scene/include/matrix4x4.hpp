@@ -9,7 +9,7 @@ namespace haf::scene
 class HAF__API Matrix4x4 final
 {
 public:
-    using Scalar = mtps::f32;
+    using Scalar = htps::f32;
 
     static constexpr Scalar One  = 1.0F;
     static constexpr Scalar Zero = 0.0F;
@@ -38,7 +38,7 @@ public:
     constexpr Matrix4x4(Matrix4x4&&) noexcept = default;
     Matrix4x4& operator=(Matrix4x4&&) noexcept = default;
 
-    constexpr mtps::rptr<Scalar const> const getMatrix() const noexcept
+    constexpr htps::rptr<Scalar const> const getMatrix() const noexcept
     {
         return matrix_data_;
     }

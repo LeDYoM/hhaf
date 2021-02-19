@@ -9,26 +9,26 @@
 namespace haf::scene
 {
 template <typename T>
-mtps::uptr<T> createScene()
+htps::uptr<T> createScene()
 {
-    return mtps::muptr<T>();
+    return htps::muptr<T>();
 }
 
 class SceneNodeFactory
 {
 public:
     using InterfaceType                = Scene;
-    using CreateReturnType             = mtps::sptr<InterfaceType>;
-    using SceneNodeConstructorFunction = mtps::function<CreateReturnType()>;
+    using CreateReturnType             = htps::sptr<InterfaceType>;
+    using SceneNodeConstructorFunction = htps::function<CreateReturnType()>;
 
     SceneNodeFactory();
     ~SceneNodeFactory();
 
     bool registerSceneNodeType(
-        mtps::str type_name,
+        htps::str type_name,
         SceneNodeConstructorFunction scene_constructor_function);
 
-    bool unregisterSceneNodeType(mtps::str type_name);
+    bool unregisterSceneNodeType(htps::str type_name);
 
     template <typename T>
     constexpr bool registerSceneNodeType(
@@ -39,7 +39,7 @@ public:
     }
 
     template <typename T>
-    constexpr bool registerSceneNodeType(mtps::str type_name)
+    constexpr bool registerSceneNodeType(htps::str type_name)
     {
         return registerSceneNodeType(std::move(type_name), createScene<T>);
     }
@@ -56,7 +56,7 @@ public:
         return unregisterSceneNodeType(T::StaticTypeName);
     }
 
-    CreateReturnType create(const mtps::str& type_name);
+    CreateReturnType create(const htps::str& type_name);
 
     template <typename T>
     constexpr CreateReturnType create()
@@ -66,7 +66,7 @@ public:
 
 private:
     struct SceneNodeFactoryPrivate;
-    mtps::uptr<SceneNodeFactoryPrivate> private_;
+    htps::uptr<SceneNodeFactoryPrivate> private_;
 };
 }  // namespace haf::scene
 

@@ -3,7 +3,7 @@
 #include <hlog/include/hlog.hpp>
 #include <haf/input/include/inputdriver.hpp>
 
-using namespace mtps;
+using namespace htps;
 using namespace haf::input;
 
 namespace haf::sys

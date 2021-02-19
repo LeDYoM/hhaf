@@ -21,7 +21,7 @@
 #include <algorithm>
 #include <list>
 
-using namespace mtps;
+using namespace htps;
 using namespace haf::res;
 
 namespace haf::sys
@@ -209,7 +209,7 @@ SetResourceConfigFileResult ResourceManager::parseResourceConfigFile()
 }
 
 SetResourceConfigFileResult ResourceManager::setResourceConfigFile(
-    mtps::str file_name)
+    htps::str file_name)
 {
     LogAsserter::log_assert(
         !file_name.empty(),
@@ -234,7 +234,7 @@ static constexpr char TypeStr[] = "type";
 static constexpr char FileStr[] = "file";
 }  // namespace
 
-bool ResourceManager::loadSection(mtps::str const& section_name)
+bool ResourceManager::loadSection(htps::str const& section_name)
 {
     bool global_result{true};
 

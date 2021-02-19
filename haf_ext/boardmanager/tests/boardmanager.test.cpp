@@ -5,7 +5,7 @@
 #include <boardmanager/include/iboardmanageractuator.hpp>
 #include <boardmanager/include/itile.hpp>
 
-using namespace mtps;
+using namespace htps;
 using namespace haf;
 using namespace haf::board;
 
@@ -14,20 +14,20 @@ namespace
 class DummyBoardModelActuator : public IBoardManagerActuator
 {
 public:
-    virtual void tileAdded(const mtps::vector2dst, SITilePointer&) { ++data_; }
-    virtual void tileRemoved(const mtps::vector2dst, SITilePointer&)
+    virtual void tileAdded(const htps::vector2dst, SITilePointer&) { ++data_; }
+    virtual void tileRemoved(const htps::vector2dst, SITilePointer&)
     {
         ++data_;
     }
 
-    virtual void tileMoved(const mtps::vector2dst,
-                           const mtps::vector2dst,
+    virtual void tileMoved(const htps::vector2dst,
+                           const htps::vector2dst,
                            SITilePointer&)
     {
         ++data_;
     }
 
-    virtual void tileChanged(const mtps::vector2dst,
+    virtual void tileChanged(const htps::vector2dst,
                              SITilePointer&,
                              const BoardTileData,
                              const BoardTileData)

@@ -21,7 +21,7 @@ public:
      * stored on this instance.
      */
     explicit SystemAccess(
-        mtps::rptr<ISystemProvider> isystem_provider) noexcept;
+        htps::rptr<ISystemProvider> isystem_provider) noexcept;
 
     /**
      * @brief Destroy the System Access object
@@ -48,10 +48,10 @@ public:
      * @return false The instance already contained a valid pointer to object or
      * you passed nullptr as parameter.
      */
-    bool setSystemProvider(mtps::rptr<ISystemProvider> const);
+    bool setSystemProvider(htps::rptr<ISystemProvider> const);
 
 private:
-    mtps::rptr<ISystemProvider> isystem_provider_;
+    htps::rptr<ISystemProvider> isystem_provider_;
 };
 }  // namespace haf::sys
 

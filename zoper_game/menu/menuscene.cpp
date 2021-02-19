@@ -14,7 +14,7 @@
 #include <haf/system/include/interfaceaccess.hpp>
 #include <haf/scene_components/include/scenemetrics.hpp>
 
-using namespace mtps;
+using namespace htps;
 using namespace haf;
 using namespace haf::scene;
 

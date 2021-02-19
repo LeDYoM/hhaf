@@ -27,17 +27,17 @@ struct ReplayData : public shdata::IShareable
     constexpr static char DataBufferName[] = "replay_data";
     constexpr static char InputDataName[]  = "input_data";
 
-    friend const mtps::Object& operator>>(const mtps::Object& obj, ReplayData& replay_data);
-    friend mtps::Object& operator<<(mtps::Object& obj,
+    friend const htps::Object& operator>>(const htps::Object& obj, ReplayData& replay_data);
+    friend htps::Object& operator<<(htps::Object& obj,
                                 const ReplayData& replay_data);
 
-    bool serialize(mtps::Object& obj) const override
+    bool serialize(htps::Object& obj) const override
     {
         obj << *this;
         return true;
     }
 
-    bool deserialize(mtps::Object const& obj) override
+    bool deserialize(htps::Object const& obj) override
     {
         obj >> *this;
         return true;
@@ -46,7 +46,7 @@ struct ReplayData : public shdata::IShareable
     ~ReplayData() override = default;
 };
 
-const mtps::Object& operator>>(const mtps::Object& obj, ReplayData& replay_data)
+const htps::Object& operator>>(const htps::Object& obj, ReplayData& replay_data)
 {
     if (const auto obj_random_generator_data = obj[ReplayData::DataBufferName];
         obj_random_generator_data.isObject())
@@ -63,7 +63,7 @@ const mtps::Object& operator>>(const mtps::Object& obj, ReplayData& replay_data)
     return obj;
 }
 
-mtps::Object& operator<<(mtps::Object& obj,
+htps::Object& operator<<(htps::Object& obj,
                                 const ReplayData& replay_data)
 {
     obj.set(ReplayData::DataBufferName, replay_data.data_buffer_);
@@ -83,8 +83,8 @@ struct SimulationSystem::SimulationSystemPrivate final
     time::TimePoint current_last_checked_point_;
     time::TimePoint next_last_checked_point_;
 
-    mtps::str simulation_input_file_;
-    mtps::str simulation_output_file_;
+    htps::str simulation_input_file_;
+    htps::str simulation_output_file_;
 
     void setSimulationActions(const time::TimePoint& current,
                               SimulationActionContainer sim_act_container)

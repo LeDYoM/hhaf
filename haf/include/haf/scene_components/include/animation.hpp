@@ -21,9 +21,9 @@ public:
     /**
      * @brief Type to represent an animation
      */
-    using ActionFunc = mtps::function<void()>;
+    using ActionFunc = htps::function<void()>;
 
-    enum class AnimationDirection : mtps::u8
+    enum class AnimationDirection : htps::u8
     {
         Forward = 0U,
         Backward
@@ -40,7 +40,7 @@ public:
      * @param endAction Functor containing an action to perform when the
      *  animation finishes
      */
-    Animation(mtps::uptr<time::Timer> timer,
+    Animation(htps::uptr<time::Timer> timer,
               time::TimePoint duration,
               const AnimationDirection animation_direction,
               ActionFunc endAction = {}) noexcept;
@@ -64,18 +64,18 @@ public:
     void executeEndAction();
 
 protected:
-    mtps::f32 delta() const noexcept { return delta_; }
+    htps::f32 delta() const noexcept { return delta_; }
 
 private:
-    mtps::uptr<time::Timer> timer_;
+    htps::uptr<time::Timer> timer_;
     time::TimePoint m_duration;
     time::TimePoint m_currentTime;
     ActionFunc m_endAction;
     AnimationDirection animation_direction_;
-    mtps::f32 raw_delta_;
-    mtps::f32 delta_;
+    htps::f32 raw_delta_;
+    htps::f32 delta_;
 
-    mtps::f32 postProcessDelta(const mtps::f32 delta);
+    htps::f32 postProcessDelta(const htps::f32 delta);
 };
 
 }  // namespace haf::scene

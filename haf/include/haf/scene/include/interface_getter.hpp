@@ -16,7 +16,7 @@ class InterfaceGetter
 {
 public:
     explicit InterfaceGetter(
-        mtps::rptr<sys::SystemAccess> system_access) noexcept :
+        htps::rptr<sys::SystemAccess> system_access) noexcept :
         system_access_{system_access}
     {}
 
@@ -33,7 +33,7 @@ public:
     }
 
 private:
-    mtps::rptr<sys::SystemAccess> const system_access_;
+    htps::rptr<sys::SystemAccess> const system_access_;
 };
 
 }  // namespace haf::scene

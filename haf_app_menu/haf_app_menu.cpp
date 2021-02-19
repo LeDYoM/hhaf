@@ -4,7 +4,7 @@
 #include <haf/scene_components/include/app_initializer.hpp>
 #include <hlog/include/hlog.hpp>
 
-using namespace mtps;
+using namespace htps;
 using namespace haf;
 using namespace haf::scene;
 

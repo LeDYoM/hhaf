@@ -4,7 +4,7 @@
 
 #include <SFML/Config.hpp>
 
-using namespace mtps;
+using namespace htps;
 
 namespace haf::backend::sfmlb
 {
@@ -65,7 +65,7 @@ void RenderTarget::clear()
     sf::RenderTarget::clear();
 }
 
-mtps::str RenderTarget::info() const
+htps::str RenderTarget::info() const
 {
     return make_str(
         "name:SFMLWindowRenderTargget;provider:SFML;provider_version:",

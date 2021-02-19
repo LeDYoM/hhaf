@@ -20,34 +20,34 @@ class GameBaseTile : public haf::board::ITile, public haf::scene::SceneNode
 public:
     using TileBase = haf::board::ITile;
 
-    GameBaseTile(mtps::rptr<haf::scene::SceneNode> const parent,
-                 mtps::str name);
+    GameBaseTile(htps::rptr<haf::scene::SceneNode> const parent,
+                 htps::str name);
     ~GameBaseTile() override;
 
     haf::scene::Color getColorForToken() const;
 
-    void tileChanged(const mtps::vector2dst& /*position */,
+    void tileChanged(const htps::vector2dst& /*position */,
                      const haf::board::BoardTileData /* oldValue */,
                      const haf::board::BoardTileData /* newValue */) override;
 
-    void tileAdded(const mtps::vector2dst& /* position */) override;
+    void tileAdded(const htps::vector2dst& /* position */) override;
 
-    void tileMoved(const mtps::vector2dst& /* source */,
-                           const mtps::vector2dst& /* dest */) override;
+    void tileMoved(const htps::vector2dst& /* source */,
+                           const htps::vector2dst& /* dest */) override;
 
-    mtps::sptr<haf::board::BoardManager> getBoardManager();
-    mtps::sptr<haf::board::BoardManager const> const getBoardManager() const;
-    mtps::rptr<BoardGroup> getBoardGroup();
-    mtps::rptr<BoardGroup const> const getBoardGroup() const;
+    htps::sptr<haf::board::BoardManager> getBoardManager();
+    htps::sptr<haf::board::BoardManager const> const getBoardManager() const;
+    htps::rptr<BoardGroup> getBoardGroup();
+    htps::rptr<BoardGroup const> const getBoardGroup() const;
 
     bool isInCenter() const noexcept { return is_in_center; }
 
 protected:
-    mtps::vector2df board2SceneFactor() const;
-    mtps::vector2df board2Scene(const mtps::vector2dst& bPosition) const;
-    mtps::vector2df tileSize() const;
+    htps::vector2df board2SceneFactor() const;
+    htps::vector2df board2Scene(const htps::vector2dst& bPosition) const;
+    htps::vector2df tileSize() const;
 
-    mtps::sptr<haf::scene::Renderizable> node_;
+    htps::sptr<haf::scene::Renderizable> node_;
 private:
     bool is_in_center{false};
 };

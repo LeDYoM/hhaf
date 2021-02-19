@@ -12,8 +12,8 @@ class SceneNodesGroup
 {
 public:
     using SceneNodeVector = htps::vector<htps::sptr<SceneNode>>;
-    void addSceneNode(mtps::sptr<SceneNode> node);
-    bool removeSceneNode(mtps::sptr<SceneNode> element);
+    void addSceneNode(htps::sptr<SceneNode> node);
+    bool removeSceneNode(htps::sptr<SceneNode> element);
     void clearSceneNodes();
 
     SceneNodeVector const& sceneNodes() const noexcept;

@@ -14,17 +14,17 @@ namespace zoper
 class NextToken
 {
 public:
-    NextToken(mtps::wptr<haf::time::TimerComponent> timer_component);
-    void prepareNextToken(mtps::function<mtps::size_type()> nextTokenTime,
-                          mtps::function<void()> nextTokenAction);
+    NextToken(htps::wptr<haf::time::TimerComponent> timer_component);
+    void prepareNextToken(htps::function<htps::size_type()> nextTokenTime,
+                          htps::function<void()> nextTokenAction);
 
 private:
     void prepareNextTokenImpl();
 
-    mtps::wptr<haf::time::TimerComponent> timer_component_;
+    htps::wptr<haf::time::TimerComponent> timer_component_;
     haf::time::TimerConnectorSPtr timer_;
-    mtps::function<void()> action_;
-    mtps::function<mtps::size_type()> time_point_getter_;
+    htps::function<void()> action_;
+    htps::function<htps::size_type()> time_point_getter_;
 };
 }  // namespace zoper
 

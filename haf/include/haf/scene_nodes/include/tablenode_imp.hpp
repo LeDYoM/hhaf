@@ -19,23 +19,23 @@ public:
 
     ~TableNodeImp() override;
 
-    mtps::vector2df cellSize() const;
+    htps::vector2df cellSize() const;
 
     void update() override;
 
 protected:
-    void setInnerSceneNodeAt(mtps::vector2dst const index,
-                             mtps::sptr<SceneNode> scene_node);
+    void setInnerSceneNodeAt(htps::vector2dst const index,
+                             htps::sptr<SceneNode> scene_node);
 
     void updateTableSizeIfNecessary();
-    virtual void setTableSize(mtps::vector2dst const ntableSize);
+    virtual void setTableSize(htps::vector2dst const ntableSize);
 
 private:
     void for_each_table_innerSceneNode(
-        mtps::function<void(const mtps::vector2dst&,
-                            const mtps::sptr<SceneNode>&)> action);
+        htps::function<void(const htps::vector2dst&,
+                            const htps::sptr<SceneNode>&)> action);
 
-    mtps::vector<mtps::vector_shared_pointers<SceneNode>> inner_nodes_;
+    htps::vector<htps::vector_shared_pointers<SceneNode>> inner_nodes_;
 };
 }  // namespace haf::scene::nodes
 

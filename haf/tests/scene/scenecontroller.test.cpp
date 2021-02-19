@@ -6,7 +6,7 @@
 #include <haf/scene/include/scene.hpp>
 #include <scene/i_include/scenecontroller.hpp>
 
-using namespace mtps;
+using namespace htps;
 
 struct CommonData
 {
@@ -33,7 +33,7 @@ public:
 
     void onCreated() override { ++(common.step); }
 
-    virtual mtps::str nextSceneName() { return "GroupScene2"; }
+    virtual htps::str nextSceneName() { return "GroupScene2"; }
     void update() override
     {
         ++(common.step);

@@ -12,14 +12,14 @@
 namespace haf::scene::nodes
 {
 
-enum class AlignmentXModes : mtps::u8
+enum class AlignmentXModes : htps::u8
 {
     Left = 0,
     Center,
     Right
 };
 
-enum class AlignmentYModes : mtps::u8
+enum class AlignmentYModes : htps::u8
 {
     Top = 0,
     Middle,
@@ -28,12 +28,12 @@ enum class AlignmentYModes : mtps::u8
 
 struct Text
 {
-    using value_type = mtps::str;
+    using value_type = htps::str;
 };
 
 struct Font
 {
-    using value_type = mtps::sptr<res::IFont>;
+    using value_type = htps::sptr<res::IFont>;
 };
 
 struct TextColor
@@ -53,10 +53,10 @@ struct AlignmentY
 
 struct AlignmentSize
 {
-    using value_type = mtps::vector2df;
+    using value_type = htps::vector2df;
 };
 
-using SceneNodeTextProperties = mtps::
+using SceneNodeTextProperties = htps::
     PropertyGroup<Text, Font, TextColor, AlignmentX, AlignmentY, AlignmentSize>;
 
 }  // namespace haf::scene::nodes

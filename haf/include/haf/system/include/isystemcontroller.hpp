@@ -13,7 +13,7 @@ class ISystemController
 public:
     virtual ~ISystemController() {}
 
-    virtual void init(mtps::rptr<haf::IApp> iapp,
+    virtual void init(htps::rptr<haf::IApp> iapp,
                       int const argc,
                       char const* const argv[]) = 0;
     virtual bool runStep()                      = 0;

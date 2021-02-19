@@ -4,7 +4,7 @@
 #include <haf/scene/include/color.hpp>
 #include <type_traits>
 
-using namespace mtps;
+using namespace htps;
 using namespace haf;
 using namespace haf::scene;
 

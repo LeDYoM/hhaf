@@ -4,7 +4,7 @@
 #include <haf/scene/include/scenenode.hpp>
 #include <haf/scene/include/scene.hpp>
 
-using namespace mtps;
+using namespace htps;
 
 class TestScene : public haf::scene::Scene
 {

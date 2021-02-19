@@ -20,7 +20,7 @@ public:
 
     using BaseClass = haf::scene::Scene;
 
-    mtps::str nextSceneName() override;
+    htps::str nextSceneName() override;
     void onCreated() override;
 
 };

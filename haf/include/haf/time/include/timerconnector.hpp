@@ -11,13 +11,13 @@
 
 namespace haf::time
 {
-using timer_emitter_t  = mtps::emitter<TimePoint>;
+using timer_emitter_t  = htps::emitter<TimePoint>;
 using timer_callback_t = timer_emitter_t::emitter_callback_t;
 
 class TimerConnector
 {
 public:
-    TimerConnector(mtps::uptr<Timer> timer,
+    TimerConnector(htps::uptr<Timer> timer,
                    TimerType timerType,
                    TimePoint timeOut,
                    timer_callback_t emitter) :
@@ -33,14 +33,14 @@ public:
     inline void switchPause() { timer_->switchPause(); }
 
 private:
-    mtps::uptr<Timer> timer_;
+    htps::uptr<Timer> timer_;
     TimePoint m_timeOut;
     timer_emitter_t m_emitter;
     TimerType m_timerType;
     friend class TimerComponent;
 };
 
-using TimerConnectorSPtr = mtps::sptr<TimerConnector>;
+using TimerConnectorSPtr = htps::sptr<TimerConnector>;
 
 }  // namespace haf::time
 

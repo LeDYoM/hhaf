@@ -11,7 +11,7 @@
 
 namespace haf
 {
-using Action = mtps::function<void()>;
+using Action = htps::function<void()>;
 }
 
 namespace haf::scene
@@ -87,7 +87,7 @@ public:
         return !m_statesStack.empty();
     }
 
-    constexpr mtps::size_type stateStackSize() const noexcept
+    constexpr htps::size_type stateStackSize() const noexcept
     {
         return m_statesStack.size();
     }
@@ -99,14 +99,14 @@ public:
 
     constexpr T& currentState() noexcept { return m_statesStack.back(); }
 
-    mtps::emitter<const T&> StateFinished;
-    mtps::emitter<const T&> StateStarted;
-    mtps::emitter<const T&> StatePushed;
-    mtps::emitter<const T&> StatePopped;
-    mtps::emitter<const T&> StatePaused;
-    mtps::emitter<const T&> StateResumed;
-    mtps::emitter<> BeforeStart;
-    mtps::emitter<> AfterFinish;
+    htps::emitter<const T&> StateFinished;
+    htps::emitter<const T&> StateStarted;
+    htps::emitter<const T&> StatePushed;
+    htps::emitter<const T&> StatePopped;
+    htps::emitter<const T&> StatePaused;
+    htps::emitter<const T&> StateResumed;
+    htps::emitter<> BeforeStart;
+    htps::emitter<> AfterFinish;
 
 private:
     inline void changeState(T newState)
@@ -126,8 +126,8 @@ private:
         m_pendingActions.push_back(std::move(action));
     }
 
-    mtps::stack<T> m_statesStack;
-    mtps::LockableVector<Action> m_pendingActions;
+    htps::stack<T> m_statesStack;
+    htps::LockableVector<Action> m_pendingActions;
 };
 
 template <typename T>

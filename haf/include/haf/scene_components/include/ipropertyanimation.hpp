@@ -39,9 +39,9 @@ public:
      * @param endAction Functor with an action to perform when the animation
      *  is completed
      */
-    IPropertyAnimation(mtps::uptr<time::Timer> timer,
+    IPropertyAnimation(htps::uptr<time::Timer> timer,
                        time::TimePoint duration,
-                       mtps::IProperty<T, PropertyTag>& prop,
+                       htps::IProperty<T, PropertyTag>& prop,
                        T start,
                        T end,
                        Animation::AnimationDirection animation_direction,
@@ -63,7 +63,7 @@ public:
     }
 
 private:
-    mtps::IProperty<T, PropertyTag>& property_;
+    htps::IProperty<T, PropertyTag>& property_;
     const T startValue_;
     const T endValue_;
     const AT deltaValue_{};

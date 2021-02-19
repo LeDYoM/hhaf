@@ -11,16 +11,16 @@ namespace haf::backend::sfmlb
 class Shader : public IShader
 {
 public:
-    Shader(mtps::uptr<sf::Shader> shader);
+    Shader(htps::uptr<sf::Shader> shader);
     ~Shader() override;
 
-    void setUniform(const mtps::str &name, mtps::vector2df v) override;
-    void setUniform(const mtps::str &name, ITexture *texture) override;
+    void setUniform(const htps::str &name, htps::vector2df v) override;
+    void setUniform(const htps::str &name, ITexture *texture) override;
 
     const sf::Shader &backEndShader() const { return *m_shaderPrivate; }
 
 private:
-    mtps::uptr<sf::Shader> m_shaderPrivate;
+    htps::uptr<sf::Shader> m_shaderPrivate;
 };
 } // namespace haf::backend::sfmlb
 

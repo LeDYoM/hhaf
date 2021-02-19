@@ -17,19 +17,19 @@ namespace haf::backend::sfmlb
     class TTFont : public ITTFont
     {
     public:
-        TTFont(mtps::uptr<sf::Font> f, mtps::RawMemory raw_memory);
+        TTFont(htps::uptr<sf::Font> f, htps::RawMemory raw_memory);
         ~TTFont() override;
 
-        mtps::Rectf32 getBounds(const mtps::u32 codePoint, const mtps::u32 characterSize) const override;
-        mtps::Rectf32 getTextureBounds(const mtps::u32 codePoint, const mtps::u32 characterSize) const override;
-        mtps::f32 getAdvance(const mtps::u32 codePoint, const mtps::u32 characterSize) const override;
-        mtps::f32 getLineSpacing(const mtps::u32 characterSize) const override;
-        mtps::f32 getKerning(const mtps::u32 first, const mtps::u32 second, const mtps::u32 characterSize) const override;
-        ITexture *getTexture(const mtps::u32 characterSize) override;
+        htps::Rectf32 getBounds(const htps::u32 codePoint, const htps::u32 characterSize) const override;
+        htps::Rectf32 getTextureBounds(const htps::u32 codePoint, const htps::u32 characterSize) const override;
+        htps::f32 getAdvance(const htps::u32 codePoint, const htps::u32 characterSize) const override;
+        htps::f32 getLineSpacing(const htps::u32 characterSize) const override;
+        htps::f32 getKerning(const htps::u32 first, const htps::u32 second, const htps::u32 characterSize) const override;
+        ITexture *getTexture(const htps::u32 characterSize) override;
     private:
-        mtps::uptr<sf::Font> m_font;
-        mtps::RawMemory raw_memory_;
-        std::map<mtps::u32, mtps::uptr<Texture>> m_fontTexturesCache;
+        htps::uptr<sf::Font> m_font;
+        htps::RawMemory raw_memory_;
+        std::map<htps::u32, htps::uptr<Texture>> m_fontTexturesCache;
     };
 }
 

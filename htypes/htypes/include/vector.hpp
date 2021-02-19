@@ -11,7 +11,7 @@ namespace htypes
 {
 template <typename T>
 using vector =
-    mtps::vector<T, mtps::AllocatorType<T, AllocatorMemManagerRaw<T>>>;
+    htps::vector<T, htps::AllocatorType<T, AllocatorMemManagerRaw<T>>>;
 };
 
 #endif

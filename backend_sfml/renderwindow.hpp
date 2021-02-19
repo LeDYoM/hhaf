@@ -22,9 +22,9 @@ public:
     ~RenderWindow() override;
 
     bool createWindow(
-            const mtps::u32 width, const mtps::u32 height,
-            const mtps::u8 red_bpp, const mtps::u8 green_bpp, const mtps::u8 blue_bpp,
-            const mtps::u8 alpha_bpp,
+            const htps::u32 width, const htps::u32 height,
+            const htps::u8 red_bpp, const htps::u8 green_bpp, const htps::u8 blue_bpp,
+            const htps::u8 alpha_bpp,
             const unsigned int num_extra_parameters, 
             const unsigned int* const extra_parameters) override;
 
@@ -38,12 +38,12 @@ public:
 
     bool processEvents() override;
     void display() override;
-    void setWindowTitle(mtps::str newTitle) override;
+    void setWindowTitle(htps::str newTitle) override;
     void closeWindow() override;
 
     IInputDriver *inputDriver() override;
-    mtps::str info() const override;
-    mtps::str settingsInfo() override;
+    htps::str info() const override;
+    htps::str settingsInfo() override;
 
 protected:
     virtual void onCreate();

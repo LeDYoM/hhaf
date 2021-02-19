@@ -16,8 +16,8 @@ public:
 
     void update() override;
 
-    mtps::emitter<const Key&> KeyPressed;
-    mtps::emitter<const Key&> KeyReleased;
+    htps::emitter<const Key&> KeyPressed;
+    htps::emitter<const Key&> KeyReleased;
 };
 }  // namespace haf::input
 

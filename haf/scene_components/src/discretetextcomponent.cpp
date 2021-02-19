@@ -1,7 +1,7 @@
 #include <haf/scene_components/include/discretetextcomponent.hpp>
 #include <haf/scene_nodes/include/scenenodetext_properties.hpp>
 
-using namespace mtps;
+using namespace htps;
 
 namespace haf::scene
 {

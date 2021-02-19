@@ -6,7 +6,7 @@
 #include <haf/scene/include/componentcontainer.hpp>
 #include <haf/scene/include/icomponent.hpp>
 
-using namespace mtps;
+using namespace htps;
 using namespace haf;
 using namespace haf::scene;
 

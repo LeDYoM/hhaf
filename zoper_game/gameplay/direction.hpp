@@ -12,7 +12,7 @@ namespace zoper
 class Direction
 {
 public:
-    enum class DirectionData :  mtps::u8
+    enum class DirectionData :  htps::u8
     {
         Left = 0,
         Right = 1,
@@ -20,17 +20,17 @@ public:
         Down = 3,
         Invalid = 4
     };
-    static constexpr  mtps::u8 Total = static_cast< mtps::u8>(DirectionData::Invalid);
+    static constexpr  htps::u8 Total = static_cast< htps::u8>(DirectionData::Invalid);
 
     constexpr Direction(DirectionData d) noexcept : data{d} {}
     constexpr Direction() noexcept : Direction{DirectionData::Up} {}
-    constexpr Direction( mtps::u8 d) noexcept : Direction{static_cast<DirectionData>(d)} {}
+    constexpr Direction( htps::u8 d) noexcept : Direction{static_cast<DirectionData>(d)} {}
     constexpr Direction(const Direction &other) noexcept = default;
     constexpr Direction &operator=(const Direction &other) noexcept = default;
     constexpr Direction(Direction &&other) noexcept = default;
     constexpr Direction &operator=(Direction &&other) noexcept = default;
 
-    constexpr operator  mtps::u8() const noexcept { return static_cast< mtps::u8>(data); }
+    constexpr operator  htps::u8() const noexcept { return static_cast< htps::u8>(data); }
 
     constexpr DirectionData value() const noexcept { return data; }
     constexpr bool isValid() const noexcept { return data < DirectionData::Invalid; }
@@ -57,13 +57,13 @@ public:
         return DirectionData::Invalid;
     }
 
-    constexpr mtps::vector2dst applyToVector(const mtps::vector2dst &v, const mtps::u32 scale = 1U) const noexcept
+    constexpr htps::vector2dst applyToVector(const htps::vector2dst &v, const htps::u32 scale = 1U) const noexcept
     {
-        const mtps::vector2ds32 dv{directionVector(scale)};
+        const htps::vector2ds32 dv{directionVector(scale)};
         return {v.x + dv.x, v.y + dv.y};
     }
 
-    constexpr mtps::vector2ds32 directionVector(const mtps::s32 scale = 1) const noexcept
+    constexpr htps::vector2ds32 directionVector(const htps::s32 scale = 1) const noexcept
     {
         switch (data)
         {
@@ -82,12 +82,12 @@ public:
         return {};
     }
 
-    constexpr mtps::vector2ds32 negatedDirectionVector(const mtps::u32 scale = 1U) const noexcept
+    constexpr htps::vector2ds32 negatedDirectionVector(const htps::u32 scale = 1U) const noexcept
     {
         return directionVector(scale) * -1;
     }
 
-    constexpr mtps::f32 angle() const noexcept
+    constexpr htps::f32 angle() const noexcept
     {
         switch (data)
         {

@@ -2,7 +2,7 @@
 #include <haf/scene_nodes/include/scenenodetext.hpp>
 #include <haf/input/include/key.hpp>
 
-using namespace mtps;
+using namespace htps;
 
 namespace haf::scene
 {
@@ -72,7 +72,7 @@ void TextEditorComponent::onKeyPressed(const input::Key& key)
 }
 
 void TextEditorComponent::setTextValidator(
-    mtps::uptr<TextValidator> nTextValidator) noexcept
+    htps::uptr<TextValidator> nTextValidator) noexcept
 {
     std::swap(m_textValidator, nTextValidator);
 }

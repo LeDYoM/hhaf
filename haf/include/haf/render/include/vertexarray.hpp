@@ -10,7 +10,7 @@
 
 namespace haf::scene
 {
-using BasicVertexArray = mtps::vector<Vertex>;
+using BasicVertexArray = htps::vector<Vertex>;
 
 class VertexArray
 {
@@ -21,12 +21,12 @@ public:
     {}
 
     inline VertexArray(const PrimitiveType type,
-                       const mtps::size_type vertexCount) noexcept :
+                       const htps::size_type vertexCount) noexcept :
         m_vertices(vertexCount), m_primitiveType{type}
     {}
 
     explicit inline VertexArray(
-        mtps::pair<PrimitiveType, mtps::size_type> init) noexcept :
+        htps::pair<PrimitiveType, htps::size_type> init) noexcept :
         VertexArray{init.first, init.second}
     {}
 
@@ -43,9 +43,9 @@ public:
         return m_primitiveType;
     }
 
-    void move(const mtps::vector2df& offset) noexcept;
-    void moveX(const mtps::f32 xOffset) noexcept;
-    void moveY(const mtps::f32 yOffset) noexcept;
+    void move(const htps::vector2df& offset) noexcept;
+    void moveX(const htps::f32 xOffset) noexcept;
+    void moveY(const htps::f32 yOffset) noexcept;
 
 private:
     BasicVertexArray m_vertices;

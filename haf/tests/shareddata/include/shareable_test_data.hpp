@@ -9,15 +9,15 @@
 class ShareableTestData : public haf::shdata::IShareable
 {
 public:
-    mtps::s32 a;
-    mtps::f32 b;
-    mtps::str c;
+    htps::s32 a;
+    htps::f32 b;
+    htps::str c;
 
     ~ShareableTestData() override = default;
 
     static haf::shdata::Address address() { return haf::shdata::Address{"/test/data/"}; }
 
-    bool serialize(mtps::Object& obj) const override
+    bool serialize(htps::Object& obj) const override
     {
         bool result{true};
         result &= obj.set("a", a);
@@ -27,7 +27,7 @@ public:
         return result;
     }
 
-    bool deserialize(mtps::Object const& obj) override
+    bool deserialize(htps::Object const& obj) override
     {
         bool result = true;
         result &= obj.getValue("a").as(a);

@@ -41,7 +41,7 @@ public:
      * @return true If window creation was successful
      * @return false Failed trying to create the window
      */
-    bool create(mtps::uptr<win::WindowProperties> window_properties);
+    bool create(htps::uptr<win::WindowProperties> window_properties);
 
     /**
      * @brief Method to be executed before starting a cycle of the system
@@ -56,15 +56,15 @@ public:
      */
     void postLoop();
 
-    mtps::sptr<RenderTarget> renderTarget();
-    const mtps::sptr<RenderTarget> renderTarget() const;
+    htps::sptr<RenderTarget> renderTarget();
+    const htps::sptr<RenderTarget> renderTarget() const;
 
-    mtps::sptr<input::InputDriver> inputDriver();
-    const mtps::sptr<input::InputDriver> inputDriver() const;
+    htps::sptr<input::InputDriver> inputDriver();
+    const htps::sptr<input::InputDriver> inputDriver() const;
 
 private:
     struct WindowPrivate;
-    mtps::uptr<WindowPrivate> priv_;
+    htps::uptr<WindowPrivate> priv_;
 };
 }  // namespace haf::sys
 

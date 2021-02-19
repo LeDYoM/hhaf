@@ -6,7 +6,7 @@
 
 namespace haf::board
 {
-using BoardTileData = mtps::s32;
+using BoardTileData = htps::s32;
 
 class ITile
 {
@@ -14,16 +14,16 @@ public:
     constexpr ITile() noexcept {}
     virtual ~ITile() {}
 
-    virtual bool canBeMoved(mtps::vector2dst const&) const { return true; }
-    virtual void tileAdded(const mtps::vector2dst& /* position */) {}
-    virtual void tileRemoved(const mtps::vector2dst& /* position */) {}
-    virtual void tileChanged(const mtps::vector2dst& /*position */,
+    virtual bool canBeMoved(htps::vector2dst const&) const { return true; }
+    virtual void tileAdded(const htps::vector2dst& /* position */) {}
+    virtual void tileRemoved(const htps::vector2dst& /* position */) {}
+    virtual void tileChanged(const htps::vector2dst& /*position */,
                              const BoardTileData /* oldValue */,
                              const BoardTileData /* newValue */)
     {}
 
-    virtual void tileMoved(const mtps::vector2dst& /* source */,
-                           const mtps::vector2dst& /* dest */)
+    virtual void tileMoved(const htps::vector2dst& /* source */,
+                           const htps::vector2dst& /* dest */)
     {}
 
     BoardTileData value() const noexcept { return data_; }
@@ -34,7 +34,7 @@ private:
 
 };
 
-using SITilePointer = mtps::sptr<ITile>;
+using SITilePointer = htps::sptr<ITile>;
 }  // namespace haf::board
 
 #endif

@@ -10,15 +10,15 @@ namespace zoper
 class HighScoreValidator : public haf::scene::TextValidator
 {
 public:
-    bool canAddChar(const mtps::str &source, const char new_char) override
+    bool canAddChar(const htps::str &source, const char new_char) override
     {
-        mtps::str dest{source};
+        htps::str dest{source};
         dest.append_char(new_char);
         return isValidText(dest);
         return true;
     }
 
-    bool isValidText(const mtps::str &source) override
+    bool isValidText(const htps::str &source) override
     {
         return source.size() < 4U;
     }

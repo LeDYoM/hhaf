@@ -5,7 +5,7 @@
 #include <haf/scene_components/include/visibility_selector.hpp>
 #include <haf/scene_components/include/scenemetricsview.hpp>
 
-using namespace mtps;
+using namespace htps;
 
 namespace haf::scene
 {

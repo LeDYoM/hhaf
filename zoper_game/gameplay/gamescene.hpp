@@ -38,44 +38,44 @@ public:
 
     static constexpr char StaticTypeName[] = GAME_SCENE_NAME;
 
-    mtps::str nextSceneName() override;
+    htps::str nextSceneName() override;
     void onCreated() override;
 
     void onEnterState(const GameSceneStates &) override;
     void onExitState(const GameSceneStates &) override;
 
-    mtps::sptr<LevelProperties> levelProperties() const
+    htps::sptr<LevelProperties> levelProperties() const
     {
         return level_properties_;
     }
     
     void goGameOver();
-    void tokenHitAnimation(mtps::vector2dst const& pos);
+    void tokenHitAnimation(htps::vector2dst const& pos);
 
 private:
     struct GameScenePrivate;
-    mtps::uptr<GameScenePrivate> p_;
+    htps::uptr<GameScenePrivate> p_;
     using BaseClass = scene::Scene;
     void generateNextToken();
-    mtps::vector2df tileSize() const;
+    htps::vector2df tileSize() const;
 
-    mtps::sptr<scene::StatesController<GameSceneStates>> m_sceneStates;
+    htps::sptr<scene::StatesController<GameSceneStates>> m_sceneStates;
     void launchPlayer();
     void _debugDisplayBoard() const;
     void keyPressed(input::Key key);
 
-    mtps::sptr<BoardGroup> m_boardGroup;
+    htps::sptr<BoardGroup> m_boardGroup;
 
     // Timer related properties
-    mtps::sptr<time::TimerComponent> scene_timer_component_;
+    htps::sptr<time::TimerComponent> scene_timer_component_;
     time::TimerConnectorSPtr m_nextTokenTimer;
-    mtps::sptr<NextToken> next_token_;
+    htps::sptr<NextToken> next_token_;
 
     // General properties.
-    mtps::u8 m_nextTokenPart{0U};
-    mtps::sptr<LevelProperties> level_properties_;
-    mtps::sptr<GameOverSceneNode> m_gameOver;
-    mtps::sptr<PauseSceneNode> pause_node_;
+    htps::u8 m_nextTokenPart{0U};
+    htps::sptr<LevelProperties> level_properties_;
+    htps::sptr<GameOverSceneNode> m_gameOver;
+    htps::sptr<PauseSceneNode> pause_node_;
 };
 } // namespace zoper
 

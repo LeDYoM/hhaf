@@ -15,7 +15,7 @@
 #include <boardmanager/include/boardmanager.hpp>
 #include <boardmanager/include/itile.hpp>
 
-using namespace mtps;
+using namespace htps;
 using namespace haf::scene;
 using namespace haf::scene::nodes;
 
@@ -283,33 +283,33 @@ vector2df BoardGroup::tileSize() const
     return board2Scene({1, 1});
 }
 
-mtps::sptr<board::BoardManager> BoardGroup::boardManager() noexcept
+htps::sptr<board::BoardManager> BoardGroup::boardManager() noexcept
 {
     return componentOfType<board::BoardManager>();
 }
 
-const mtps::sptr<const board::BoardManager> BoardGroup::boardManager()
+const htps::sptr<const board::BoardManager> BoardGroup::boardManager()
     const noexcept
 {
     return componentOfType<board::BoardManager>();
 }
 
-mtps::sptr<scene::SceneNode> BoardGroup::tokensSceneNode() noexcept
+htps::sptr<scene::SceneNode> BoardGroup::tokensSceneNode() noexcept
 {
     return tokens_scene_node;
 }
 
-const mtps::sptr<scene::SceneNode> BoardGroup::tokensSceneNode() const noexcept
+const htps::sptr<scene::SceneNode> BoardGroup::tokensSceneNode() const noexcept
 {
     return tokens_scene_node;
 }
 
-mtps::sptr<Player> BoardGroup::player() noexcept
+htps::sptr<Player> BoardGroup::player() noexcept
 {
     return player_;
 }
 
-const mtps::sptr<Player> BoardGroup::player() const noexcept
+const htps::sptr<Player> BoardGroup::player() const noexcept
 {
     return player_;
 }

@@ -23,14 +23,14 @@ public:
 
     static constexpr char StaticTypeName[] = HIGHSCORES_SCENE_NAME;
 
-    mtps::str nextSceneName() override;
+    htps::str nextSceneName() override;
     void onCreated() override;
 
 private:
     using BaseClass = haf::scene::Scene;
 
-    mtps::sptr<HighScoreTextController> m_highScoreTextController;
-    mtps::sptr<haf::res::IFont> m_normalFont;
+    htps::sptr<HighScoreTextController> m_highScoreTextController;
+    htps::sptr<haf::res::IFont> m_normalFont;
     haf::scene::Color m_normalColor;
     haf::scene::Color m_selectedColor;
 };

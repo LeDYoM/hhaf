@@ -5,7 +5,7 @@
 
 namespace haf::backend
 {
-enum class iPrimitiveType : mtps::u8
+enum class iPrimitiveType : htps::u8
 {
     Points = 0U,
     Lines,

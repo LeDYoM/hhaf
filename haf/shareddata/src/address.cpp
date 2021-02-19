@@ -3,7 +3,7 @@
 
 #include <utility>
 
-using namespace mtps;
+using namespace htps;
 
 namespace haf::shdata
 {
@@ -72,13 +72,13 @@ Address::const_iterator Address::end() const noexcept
     return private_->address_parts_.end();
 }
 
-Address::reference Address::operator[](mtps::size_type const index) noexcept
+Address::reference Address::operator[](htps::size_type const index) noexcept
 {
     return private_->address_parts_[index];
 }
 
 Address::const_reference Address::operator[](
-    mtps::size_type const index) const noexcept
+    htps::size_type const index) const noexcept
 {
     return private_->address_parts_[index];
 }
@@ -124,7 +124,7 @@ bool Address::removeLast()
     return false;
 }
 
-pair<bool, mtps::Object> objectFromAddress(Address const& address,
+pair<bool, htps::Object> objectFromAddress(Address const& address,
                                            Object const& object)
 {
     if (address.isFinal())
@@ -157,7 +157,7 @@ pair<bool, mtps::Object> objectFromAddress(Address const& address,
     return {false, {}};
 }
 
-mtps::Object* ensureAddress(Address const& address, mtps::Object& object)
+htps::Object* ensureAddress(Address const& address, htps::Object& object)
 {
     if (address.isFinal())
     {

@@ -7,7 +7,7 @@
 #include <hlog/include/hlog.hpp>
 #include <hosted_app/include/iapp.hpp>
 
-using namespace mtps;
+using namespace htps;
 
 namespace haf::sys
 {

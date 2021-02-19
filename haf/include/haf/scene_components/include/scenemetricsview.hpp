@@ -21,15 +21,15 @@ public:
 
     /**
      * @brief Get the current view set for the Scene
-     * @return mtps::Rectf32 containing the view
+     * @return htps::Rectf32 containing the view
      */
-    virtual mtps::Rectf32 currentView() const = 0;
+    virtual htps::Rectf32 currentView() const = 0;
 
     /**
      * @brief Get The current Viewport of the Scene
-     * @return mtps::Rectf32 Containing the view port
+     * @return htps::Rectf32 Containing the view port
      */
-    virtual mtps::Rectf32 currentViewPort() const = 0;
+    virtual htps::Rectf32 currentViewPort() const = 0;
 };
 }  // namespace haf::scene
 

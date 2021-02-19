@@ -9,7 +9,7 @@ namespace haf::res
 /**
  * @brief Enum to return the status of the function @b setResourceConfigFile
  */
-enum class SetResourceConfigFileResult : mtps::u8
+enum class SetResourceConfigFileResult : htps::u8
 {
     Ok = 0U,       ///< Everything was ok
     AlreadySet,    ///< The same file was already set. No actions performed
@@ -30,7 +30,7 @@ public:
      * @return Result status of the function
      * @see SetResourceConfigFileResult
      */
-    virtual SetResourceConfigFileResult setResourceConfigFile(mtps::str) = 0;
+    virtual SetResourceConfigFileResult setResourceConfigFile(htps::str) = 0;
 
     /**
      * @brief Load a section from the previously set config file for resource
@@ -39,7 +39,7 @@ public:
      * @return true Section loaded correctly
      * @return false Section not loaded
      */
-    virtual bool loadSection(mtps::str const&)                           = 0;
+    virtual bool loadSection(htps::str const&)                           = 0;
 };
 }  // namespace haf::res
 

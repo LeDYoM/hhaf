@@ -4,7 +4,7 @@
 #include "texture.hpp"
 #include <filesystem>
 
-using namespace mtps;
+using namespace htps;
 
 namespace haf::backend::sfmlb
 {

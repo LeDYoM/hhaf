@@ -14,14 +14,14 @@ class RenderizableSceneNode : public SceneNode
 public:
     using BaseClass = SceneNode;
 
-    RenderizableSceneNode(mtps::rptr<SceneNode> parent, const mtps::str& name);
+    RenderizableSceneNode(htps::rptr<SceneNode> parent, const htps::str& name);
     void buildNode(RenderizableBuilder& node_builder);
 
-    mtps::sptr<Renderizable> node() noexcept;
-    const mtps::sptr<Renderizable> node() const noexcept;
+    htps::sptr<Renderizable> node() noexcept;
+    const htps::sptr<Renderizable> node() const noexcept;
 
 private:
-    mtps::sptr<Renderizable> node_;
+    htps::sptr<Renderizable> node_;
 };
 }  // namespace haf::scene
 

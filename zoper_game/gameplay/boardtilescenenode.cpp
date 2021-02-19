@@ -1,7 +1,7 @@
 #include "boardtilescenenode.hpp"
 #include <hlog/include/hlog.hpp>
 
-using namespace mtps;
+using namespace htps;
 
 namespace zoper
 {
@@ -10,7 +10,7 @@ using namespace haf::scene;
 
 BoardTileSceneNode::~BoardTileSceneNode() = default;
 
-void BoardTileSceneNode::createBackgroundTile(const mtps::Rectf32& tileBox)
+void BoardTileSceneNode::createBackgroundTile(const htps::Rectf32& tileBox)
 {
     // Size of the point in the middle of the tile
     static constexpr vector2df centerPointSize{15, 15};

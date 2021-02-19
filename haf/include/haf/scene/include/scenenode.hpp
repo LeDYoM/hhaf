@@ -28,7 +28,7 @@ struct Visible
     using value_type = bool;
 };
 
-using SceneNodeProperties = mtps::PropertyGroup<Visible>;
+using SceneNodeProperties = htps::PropertyGroup<Visible>;
 
 /**
  * @brief Main class representing all SceneNodes from a @b Scene.
@@ -77,7 +77,7 @@ public:
      * @param[in] parent Parent of this element.
      * @param[in] name Name of this element.
      */
-    SceneNode(mtps::rptr<SceneNode> parent, mtps::str name);
+    SceneNode(htps::rptr<SceneNode> parent, htps::str name);
 
     /**
      * @brief Destroy the Scene Node object.
@@ -101,7 +101,7 @@ public:
     void clearAll();
 };
 
-using SceneNodeSPtr = mtps::sptr<SceneNode>;
+using SceneNodeSPtr = htps::sptr<SceneNode>;
 }  // namespace haf::scene
 
 #endif

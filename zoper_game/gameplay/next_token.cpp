@@ -1,7 +1,7 @@
 #include "next_token.hpp"
 #include <hlog/include/hlog.hpp>
 
-using namespace mtps;
+using namespace htps;
 using namespace haf;
 
 namespace zoper
@@ -10,7 +10,7 @@ NextToken::NextToken(wptr<time::TimerComponent> timer_component) :
     timer_component_{std::move(timer_component)}
 {}
 
-void NextToken::prepareNextToken(function<mtps::size_type()> nextTokenTime,
+void NextToken::prepareNextToken(function<htps::size_type()> nextTokenTime,
                                  function<void()> nextTokenAction)
 {
     time_point_getter_ = nextTokenTime;

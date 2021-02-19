@@ -4,7 +4,7 @@
 #include <hlog/include/hlog.hpp>
 #include <haf/shareddata/include/shareddataupdater.hpp>
 
-using namespace mtps;
+using namespace htps;
 
 namespace zoper
 {
@@ -64,7 +64,7 @@ void LevelProperties::setScore(const size_type new_score)
     game_hud_->setScore(current_score_);
 }
 
-mtps::size_type LevelProperties::millisBetweenTokens() const
+htps::size_type LevelProperties::millisBetweenTokens() const
 {
     return millis_between_tokens_;
 }

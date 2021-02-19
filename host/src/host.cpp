@@ -8,7 +8,7 @@
 #include <hosted_app/include/iapp.hpp>
 #include <haf/include/haf/system/include/isystemcontroller.hpp>
 
-using namespace mtps;
+using namespace htps;
 
 namespace haf::host
 {
@@ -35,14 +35,14 @@ Host::~Host()
     DisplayLog::info("All applications unloaded");
 }
 
-bool Host::loadApplication(mtps::str const& app_name)
+bool Host::loadApplication(htps::str const& app_name)
 {
     ManagedApp managed_app = p_->app_loader.loadApp(app_name);
     return p_->addApplication(managed_app.app, std::move(managed_app),
                               app_name);
 }
 
-bool Host::unloadApplication(mtps::str const& app_name)
+bool Host::unloadApplication(htps::str const& app_name)
 {
     // First step, search the app in the array
     auto const app_iterator =

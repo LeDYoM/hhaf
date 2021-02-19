@@ -1,7 +1,7 @@
 #include <resources/i_include/texture.hpp>
 #include <backend_dev/include/itexture.hpp>
 
-using namespace mtps;
+using namespace htps;
 
 namespace haf::res
 {

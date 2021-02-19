@@ -13,13 +13,13 @@
 
 namespace logger
 {
-extern template struct Log<true, mtps::str, MixinCommiter<haf::ThreadCommiter>>;
+extern template struct Log<true, htps::str, MixinCommiter<haf::ThreadCommiter>>;
 }
 namespace haf
 {
 
 using LogClass =
-    logger::Log<true, mtps::str, logger::MixinCommiter<ThreadCommiter>>;
+    logger::Log<true, htps::str, logger::MixinCommiter<ThreadCommiter>>;
 
 }
 

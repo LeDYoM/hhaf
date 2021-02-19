@@ -5,7 +5,7 @@
 
 namespace haf::scene
 {
-enum class PrimitiveType : mtps::u8
+enum class PrimitiveType : htps::u8
 {
     Points = 0U,
     Lines,

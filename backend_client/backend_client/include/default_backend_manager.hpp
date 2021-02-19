@@ -31,25 +31,25 @@ public:
     ~DefaultBackendManager() override;
 
     void setFactories(
-        mtps::rptr<IBackendRegister> const backend_register) override final;
+        htps::rptr<IBackendRegister> const backend_register) override final;
 
     void resetFactories(
-        mtps::rptr<IBackendRegister> const backend_register) override final;
+        htps::rptr<IBackendRegister> const backend_register) override final;
 
     template <typename T>
     void createFactoryOfFactories()
     {
-        auto f(mtps::muptr<AutoRegisterFactory<typename T::Interface>>());
-        f.get()->create(mtps::muptr<T>());
+        auto f(htps::muptr<AutoRegisterFactory<typename T::Interface>>());
+        f.get()->create(htps::muptr<T>());
         pushFactory(std::move(f));
     }
 
 private:
     void destroy() override final;
 
-    void pushFactory(mtps::uptr<IAutoRegisterFactory> f);
+    void pushFactory(htps::uptr<IAutoRegisterFactory> f);
     struct DefaultBackendManagerPrivate;
-    mtps::uptr<DefaultBackendManagerPrivate> priv_;
+    htps::uptr<DefaultBackendManagerPrivate> priv_;
 };
 }  // namespace haf::backend::client
 

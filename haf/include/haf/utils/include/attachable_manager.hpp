@@ -20,7 +20,7 @@ public:
     using AttachableType = typename AttachedBase::AttachedNodeType;
 
     constexpr explicit AttachableManager(
-        mtps::rptr<AttachableType> attachable = nullptr) noexcept :
+        htps::rptr<AttachableType> attachable = nullptr) noexcept :
         attachable_{std::move(attachable)}
     {}
 
@@ -28,7 +28,7 @@ public:
 
 protected:
     template <typename T>
-    mtps::uptr<T> create() const
+    htps::uptr<T> create() const
     {
         // Static check that T is a valid type for this class.
         static_assert(std::is_base_of_v<Attachable<AttachableType>, T>,
@@ -38,29 +38,29 @@ protected:
         T* temp = new T();
 
         // Dynamic check that T is a valid types for this class.
-        const mtps::rptr<const Attachable<AttachableType>> temp2 =
-            dynamic_cast<mtps::rptr<const Attachable<AttachableType>>>(temp);
+        const htps::rptr<const Attachable<AttachableType>> temp2 =
+            dynamic_cast<htps::rptr<const Attachable<AttachableType>>>(temp);
         LogAsserter::log_assert(temp2 != nullptr, "");
 
-        auto result = mtps::uptr<T>(std::move(temp));
+        auto result = htps::uptr<T>(std::move(temp));
         initialize(result.get());
         return result;
     }
 
 protected:
-    mtps::rptr<AttachableType> attachable() const noexcept
+    htps::rptr<AttachableType> attachable() const noexcept
     {
         return attachable_;
     }
 
 private:
-    void initialize(mtps::rptr<AttachedBase> dw) const
+    void initialize(htps::rptr<AttachedBase> dw) const
     {
         dw->attachedNode_ = attachable_;
         dw->onAttached();
     }
 
-    const mtps::rptr<AttachableType> attachable_;
+    const htps::rptr<AttachableType> attachable_;
 };
 }  // namespace haf::utils
 

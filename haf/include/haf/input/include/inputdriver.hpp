@@ -14,7 +14,7 @@ namespace haf::input
 class InputDriver final
 {
 public:
-    InputDriver(mtps::rptr<backend::IInputDriver> input_driver);
+    InputDriver(htps::rptr<backend::IInputDriver> input_driver);
     ~InputDriver();
 
     bool arePendingKeyPresses() const;
@@ -27,7 +27,7 @@ public:
     void keyReleased(const Key);
 
 private:
-    mtps::rptr<backend::IInputDriver> input_driver_;
+    htps::rptr<backend::IInputDriver> input_driver_;
 };
 }  // namespace haf::input
 

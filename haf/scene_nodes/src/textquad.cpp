@@ -1,6 +1,6 @@
 #include <haf/scene_nodes/include/textquad.hpp>
 
-using namespace mtps;
+using namespace htps;
 
 namespace haf::scene::nodes
 {
@@ -49,9 +49,9 @@ void TextQuad::onCreated()
     }
 }
 
-void TextQuad::configure(mtps::sptr<res::IFont> font,
+void TextQuad::configure(htps::sptr<res::IFont> font,
                          const Color& color,
-                         const mtps::vector2df& size)
+                         const htps::vector2df& size)
 {
     for (size_type count{0}; count < 4U; ++count)
     {

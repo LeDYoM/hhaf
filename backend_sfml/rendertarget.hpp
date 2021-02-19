@@ -17,13 +17,13 @@ class RenderTarget : public IRenderTarget, public sf::RenderTarget
     void render(const IRenderData* render_data_begin,
                 const IRenderData* render_data_end) override;
 
-    void setViewPort(const mtps::Rectf32& nviewport) override;
-    mtps::Rectf32 viewPort() const override;
-    void setViewRect(const mtps::Rectf32& nviewRect) override;
-    mtps::Rectf32 viewRect() const override;
+    void setViewPort(const htps::Rectf32& nviewport) override;
+    htps::Rectf32 viewPort() const override;
+    void setViewRect(const htps::Rectf32& nviewRect) override;
+    htps::Rectf32 viewRect() const override;
     void clear() override;
 
-    mtps::str info() const override;
+    htps::str info() const override;
     sf::Vector2u getSize() const override;
 
 };

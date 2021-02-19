@@ -1,6 +1,6 @@
 #include <menu_paged/include/menu_paged_option.hpp>
 
-using namespace mtps;
+using namespace htps;
 
 namespace haf::scene
 {

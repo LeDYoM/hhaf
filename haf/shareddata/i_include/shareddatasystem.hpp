@@ -64,7 +64,7 @@ public:
     bool makeEmpty();
 
 private:
-    mtps::Object data_object_;
+    htps::Object data_object_;
 };
 
 }  // namespace haf::sys

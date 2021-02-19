@@ -8,10 +8,10 @@ namespace haf::scene
 {
 struct NodeSize
 {
-    using value_type = mtps::Rectf32;
+    using value_type = htps::Rectf32;
 };
 
-using SceneNodeSizeProperties = mtps::PropertyGroup<NodeSize>;
+using SceneNodeSizeProperties = htps::PropertyGroup<NodeSize>;
 
 }  // namespace haf::scene
 

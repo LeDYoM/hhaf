@@ -3,7 +3,7 @@
 #include <htypes/include/types.hpp>
 #include <haf/scene_components/include/animationcomponent.hpp>
 
-using namespace mtps;
+using namespace htps;
 using namespace haf;
 using namespace haf::scene;
 

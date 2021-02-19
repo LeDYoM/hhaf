@@ -5,7 +5,7 @@
 
 namespace haf::scene
 {
-enum class FigType_t : mtps::u8
+enum class FigType_t : htps::u8
 {
     Quad,
     Shape,

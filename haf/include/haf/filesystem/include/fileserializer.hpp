@@ -18,24 +18,24 @@ namespace haf::sys
 class HAF_API FileSerializer : public sys::IDataWrapper
 {
 public:
-    enum class Result : mtps::u8
+    enum class Result : htps::u8
     {
         Success      = 0U,
         FileIOError  = 1U,
         ParsingError = 2U
     };
 
-    mtps::str loadTextFile(const Path& file_name);
+    htps::str loadTextFile(const Path& file_name);
 
-    bool saveFile(const Path& file_name, const mtps::str& data);
+    bool saveFile(const Path& file_name, const htps::str& data);
 
     template <typename T>
     Result deserializeFromFileTemplate(const Path& file_name, T& data)
     {
-        const mtps::str text_data{loadTextFile(file_name)};
+        const htps::str text_data{loadTextFile(file_name)};
         if (!text_data.empty())
         {
-            return ((mtps::Serializer<T>::deserialize(text_data, data))
+            return ((htps::Serializer<T>::deserialize(text_data, data))
                         ? Result::Success
                         : Result::ParsingError);
         }
@@ -47,7 +47,7 @@ public:
     template <typename T>
     Result serializeToFileTemplate(const Path& file_name, const T& data)
     {
-        auto temp{mtps::Serializer<T>::serialize(data)};
+        auto temp{htps::Serializer<T>::serialize(data)};
         if (!temp.empty())
         {
             return ((saveFile(file_name, std::move(temp)))

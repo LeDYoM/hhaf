@@ -23,9 +23,9 @@ public:
      * @param updatePredicate Function to call for each position
      */
     static void for_each_coordinate(
-        mtps::vector2dst startPosition,
+        htps::vector2dst startPosition,
         const Direction& direction,
-        mtps::function<bool(const mtps::vector2dst&, const Direction&)>
+        htps::function<bool(const htps::vector2dst&, const Direction&)>
             updatePredicate);
 
     /**
@@ -40,10 +40,10 @@ public:
      * @param updatePredicate Function to call for each position
      */
     static void for_each_coordinate_in_rect(
-        const mtps::vector2dst& startPosition,
+        const htps::vector2dst& startPosition,
         const Direction& direction,
-        const mtps::vector2dst& board_size,
-        mtps::function<bool(const mtps::vector2dst&, const Direction&)>
+        const htps::vector2dst& board_size,
+        htps::function<bool(const htps::vector2dst&, const Direction&)>
             updatePredicate);
 
 };

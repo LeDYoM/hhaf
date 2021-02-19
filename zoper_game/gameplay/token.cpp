@@ -6,7 +6,7 @@
 #include "levelproperties.hpp"
 #include "tokenzones.hpp"
 
-using namespace mtps;
+using namespace htps;
 using namespace haf;
 using namespace haf::scene;
 using namespace haf::board;
@@ -36,7 +36,7 @@ void Token::setBoxBoundaries(const Rectf32& box)
     node_->box = box;
 }
 
-bool Token::canBeMoved(mtps::vector2dst const&) const
+bool Token::canBeMoved(htps::vector2dst const&) const
 {
     return true;
     //    return !TokenZones::pointInCenter(dest_position);

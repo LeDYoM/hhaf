@@ -13,7 +13,7 @@ namespace haf::time
 class TimePoint final
 {
 public:
-    using Rep = mtps::u64;  //<! Type to internally represent the data.
+    using Rep = htps::u64;  //<! Type to internally represent the data.
 
     TimePoint() noexcept;
 
@@ -51,10 +51,10 @@ public:
     Rep seconds() const noexcept;
 
     /**
-     * @brief Return the time point as seconds in an mtps::f32 value
-     * @return The value in mtps::32
+     * @brief Return the time point as seconds in an htps::f32 value
+     * @return The value in htps::32
      */
-    mtps::f32 seconds_f32() const noexcept;
+    htps::f32 seconds_f32() const noexcept;
 
     /**
      * @brief Increase operator.
@@ -78,7 +78,7 @@ public:
      * @param scalar Value to multiply
      * @return TimePoint& The already multiplied object
      */
-    TimePoint& operator*=(mtps::f32 const scalar) noexcept;
+    TimePoint& operator*=(htps::f32 const scalar) noexcept;
 
     /**
      * @brief Multiplication operator.
@@ -87,7 +87,7 @@ public:
      * @param scalar Value to divide
      * @return TimePoint& The already divided object
      */
-    TimePoint& operator/=(mtps::f32 const scalar) noexcept;
+    TimePoint& operator/=(htps::f32 const scalar) noexcept;
 
 private:
     Rep nanoseconds_;  ///< Internal value representation
@@ -115,7 +115,7 @@ TimePoint operator-(TimePoint const& lhs, TimePoint const& rhs) noexcept;
  * @param scalar Scalar value
  * @return Resulting TimePoint
  */
-TimePoint operator*(TimePoint const& lhs, mtps::f32 const scalar) noexcept;
+TimePoint operator*(TimePoint const& lhs, htps::f32 const scalar) noexcept;
 
 /**
  * @brief Divide one time point with an scalar
@@ -123,7 +123,7 @@ TimePoint operator*(TimePoint const& lhs, mtps::f32 const scalar) noexcept;
  * @param scalar Scalar value
  * @return Resulting TimePoint
  */
-TimePoint operator/(TimePoint const& lhs, mtps::f32 const scalar) noexcept;
+TimePoint operator/(TimePoint const& lhs, htps::f32 const scalar) noexcept;
 
 /**
  * @brief Create a TimePoint given an initial value in nanoseconds
@@ -159,7 +159,7 @@ TimePoint TimePoint_as_seconds(TimePoint::Rep const secs) noexcept;
  * @param seconds The initial value
  * @return TimePoint initialized to the correct value
  */
-TimePoint TimePoint_as_seconds_f32(mtps::f32 const secs) noexcept;
+TimePoint TimePoint_as_seconds_f32(htps::f32 const secs) noexcept;
 
 /**
  * @brief Lower than operator
@@ -217,11 +217,11 @@ bool operator!=(TimePoint const& lhs, TimePoint const& rhs) noexcept;
 
 /**
  * @brief Output operator
- * @param os mtps::str where to perform the output
+ * @param os htps::str where to perform the output
  * @param tp TimePoint to output
- * @return mtps::str& Reference to os with tp already output.
+ * @return htps::str& Reference to os with tp already output.
  */
-mtps::str& operator<<(mtps::str& os, TimePoint const& tp);
+htps::str& operator<<(htps::str& os, TimePoint const& tp);
 
 }  // namespace haf::time
 

@@ -6,7 +6,7 @@
 #include <algorithm>
 #include <functional>  // std::invoke
 
-using namespace mtps;
+using namespace htps;
 
 namespace haf::scene
 {}  // namespace haf::scene

@@ -1,6 +1,6 @@
 #include <haf/window/include/window_properties.hpp>
 
-using namespace mtps;
+using namespace htps;
 
 namespace haf::win
 {

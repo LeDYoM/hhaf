@@ -9,8 +9,8 @@
 namespace haf::backend::client
 {
 void default_init_function_imp(
-    mtps::rptr<IBackendManager> backend_manager,
-    mtps::rptr<IBackendRegister> const ibackend_register);
+    htps::rptr<IBackendManager> backend_manager,
+    htps::rptr<IBackendRegister> const ibackend_register);
 
 template <typename T>
 inline bool default_init_function(T** backend_manager,
@@ -28,12 +28,12 @@ inline bool default_init_function(T** backend_manager,
 
 void default_finish_function_imp(
     IBackendManager& backend_manager,
-    mtps::rptr<IBackendRegister> const ibackend_register);
+    htps::rptr<IBackendRegister> const ibackend_register);
 
 template <typename T>
 inline bool default_finish_function(
     T** backend_manager,
-    mtps::rptr<IBackendRegister> const ibackend_register)
+    htps::rptr<IBackendRegister> const ibackend_register)
 {
     if (*backend_manager)
     {

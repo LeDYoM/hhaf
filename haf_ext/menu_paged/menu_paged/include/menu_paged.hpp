@@ -27,21 +27,21 @@ public:
 
     ~MenuPaged() override;
 
-    void setMenuPagedStatus(const mtps::s32 status);
-    mtps::s32 status() const;
+    void setMenuPagedStatus(const htps::s32 status);
+    htps::s32 status() const;
 
-    void terminate(const mtps::s32 status);
+    void terminate(const htps::s32 status);
 
-    mtps::emitter<const mtps::s32> MenuFinished;
+    htps::emitter<const htps::s32> MenuFinished;
 
     void update() override;
 
 protected:
-    mtps::sptr<MenuPage> createMenuPage(mtps::str name);
-    void configure_menu(mtps::vector_shared_pointers<MenuPage> menu_steps);
+    htps::sptr<MenuPage> createMenuPage(htps::str name);
+    void configure_menu(htps::vector_shared_pointers<MenuPage> menu_steps);
 
     template <typename... Args>
-    mtps::sptr<MenuPage> createAndConfigureMenuPage(mtps::str name,
+    htps::sptr<MenuPage> createAndConfigureMenuPage(htps::str name,
                                                     Args&&... args)
     {
         auto node{createMenuPage(std::move(name))};
@@ -50,8 +50,8 @@ protected:
     }
 
 private:
-    mtps::vector_shared_pointers<MenuPage> menu_steps_;
-    mtps::s32 status_{};
+    htps::vector_shared_pointers<MenuPage> menu_steps_;
+    htps::s32 status_{};
 };
 }  // namespace haf::scene
 

@@ -29,9 +29,9 @@ public:
 
     /// Fetch a specific type of data wrapper.
     /// @paramt T Concrete type of the data wrapper.
-    /// @return \b mtps::uptr<T> containing the data wrapper.
+    /// @return \b htps::uptr<T> containing the data wrapper.
     template <typename T>
-    mtps::uptr<T> dataWrapper() const
+    htps::uptr<T> dataWrapper() const
     {
         return create<T>();
     }

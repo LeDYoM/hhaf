@@ -26,11 +26,11 @@ public:
     void startFrame();
     void endFrame();
 
-    void setAcceleration(mtps::f32 const acceleration);
+    void setAcceleration(htps::f32 const acceleration);
 
 private:
     struct TimeSystemPrivate;
-    mtps::uptr<TimeSystemPrivate> priv_;
+    htps::uptr<TimeSystemPrivate> priv_;
 };
 }  // namespace haf::sys
 

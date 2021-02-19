@@ -16,7 +16,7 @@ class RenderizableBuilder;
 class Renderizables
 {
 public:
-    explicit Renderizables(mtps::rptr<SceneNode> scene_node) noexcept :
+    explicit Renderizables(htps::rptr<SceneNode> scene_node) noexcept :
         scene_node_{std::move(scene_node)}
     {}
 
@@ -30,27 +30,27 @@ public:
      * @param texture Pointer to the texture to use
      * @param shader Pointer to the Shader to use
      * @param num_points Number of points of the Renderizable.
-     * @return mtps::sptr<Renderizable>
+     * @return htps::sptr<Renderizable>
      */
-    mtps::sptr<Renderizable> createRenderizable(
-        mtps::str name,
+    htps::sptr<Renderizable> createRenderizable(
+        htps::str name,
         FigType_t figure_type,
-        mtps::Rectf32 box,
+        htps::Rectf32 box,
         Color color,
-        mtps::sptr<res::ITexture> texture,
-        mtps::sptr<res::IShader> shader,
-        mtps::size_type num_points);
+        htps::sptr<res::ITexture> texture,
+        htps::sptr<res::IShader> shader,
+        htps::size_type num_points);
 
     RenderizableBuilder renderizableBuilder();
 
-    void removeRenderizable(const mtps::sptr<Renderizable>& element);
+    void removeRenderizable(const htps::sptr<Renderizable>& element);
     void clearRenderizables();
 
     template <typename T>
     constexpr void for_each_node_as(
-        mtps::function<void(const mtps::sptr<T>&)> action)
+        htps::function<void(const htps::sptr<T>&)> action)
     {
-        for_each_node([&action](const mtps::sptr<Renderizable>& node) {
+        for_each_node([&action](const htps::sptr<Renderizable>& node) {
             if (auto tnode = std::dynamic_pointer_cast<T>(node))
             {
                 action(tnode);
@@ -59,14 +59,14 @@ public:
     }
 
     void for_each_node(
-        mtps::function<void(const mtps::sptr<Renderizable>&)> action) const;
+        htps::function<void(const htps::sptr<Renderizable>&)> action) const;
 
     void updateRenderizables();
 
 private:
-    void addRenderizable(mtps::sptr<Renderizable> newElement);
-    mtps::rptr<SceneNode> scene_node_;
-    mtps::vector<mtps::sptr<Renderizable>> render_nodes_;
+    void addRenderizable(htps::sptr<Renderizable> newElement);
+    htps::rptr<SceneNode> scene_node_;
+    htps::vector<htps::sptr<Renderizable>> render_nodes_;
 };
 }  // namespace haf::scene
 

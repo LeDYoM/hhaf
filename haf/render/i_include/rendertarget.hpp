@@ -29,24 +29,24 @@ public:
      *
      * @param renderTarget Interface to the underlying low level render target.
      */
-    RenderTarget(mtps::rptr<backend::IRenderTarget> renderTarget);
+    RenderTarget(htps::rptr<backend::IRenderTarget> renderTarget);
 
     /**
      * @brief Destroy the Render Target object
      */
     ~RenderTarget();
 
-    void setViewPort(const mtps::Rectf32& nviewport);
-    mtps::Rectf32 viewPort() const;
-    void setViewRect(const mtps::Rectf32& nviewRect);
-    mtps::Rectf32 viewRect() const;
+    void setViewPort(const htps::Rectf32& nviewport);
+    htps::Rectf32 viewPort() const;
+    void setViewRect(const htps::Rectf32& nviewRect);
+    htps::Rectf32 viewRect() const;
 
-    void render(mtps::rptr<const scene::RenderData> render_data_begin,
-                mtps::rptr<const scene::RenderData> render_data_end);
+    void render(htps::rptr<const scene::RenderData> render_data_begin,
+                htps::rptr<const scene::RenderData> render_data_end);
     void clear();
 
 private:
-    const mtps::rptr<backend::IRenderTarget> irender_target_;
+    const htps::rptr<backend::IRenderTarget> irender_target_;
 };
 }  // namespace haf::sys
 

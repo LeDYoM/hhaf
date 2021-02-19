@@ -7,9 +7,9 @@
 
 namespace haf::scene::testing
 {
-inline bool isAlmostEqual(mtps::f32 const lhs, mtps::f32 const rhs)
+inline bool isAlmostEqual(htps::f32 const lhs, htps::f32 const rhs)
 {
-    return std::abs(lhs - rhs) < std::numeric_limits<mtps::f32>::epsilon();
+    return std::abs(lhs - rhs) < std::numeric_limits<htps::f32>::epsilon();
 }
 
 inline bool isAlmostEqual(Matrix4x4 const& lhs, Matrix4x4 const& rhs)

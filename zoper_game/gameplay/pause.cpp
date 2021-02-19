@@ -10,7 +10,7 @@
 #include <haf/resources/include/ittfont.hpp>
 #include <haf/resources/include/iresourceretriever.hpp>
 
-using namespace mtps;
+using namespace htps;
 
 namespace zoper
 {

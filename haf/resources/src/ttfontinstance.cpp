@@ -3,7 +3,7 @@
 
 #include <backend_dev/include/ittfont.hpp>
 
-using namespace mtps;
+using namespace htps;
 
 namespace haf::res
 {

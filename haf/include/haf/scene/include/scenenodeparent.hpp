@@ -20,23 +20,23 @@ public:
      * @brief Constructor.
      * @param[in] parent       The parent of this node.
      */
-    constexpr SceneNodeParent(mtps::rptr<SceneNode> parent) noexcept :
+    constexpr SceneNodeParent(htps::rptr<SceneNode> parent) noexcept :
         parent_{std::move(parent)}
     {}
 
     /**
      * @brief Get the parent of this @b SceneNode
      * @see SceneNode
-     * @return constexpr mtps::rptr<SceneNode> Parent or nullptr if no parent
+     * @return constexpr htps::rptr<SceneNode> Parent or nullptr if no parent
      */
-    constexpr mtps::rptr<SceneNode> parent() noexcept { return parent_; }
+    constexpr htps::rptr<SceneNode> parent() noexcept { return parent_; }
 
     /**
      * @brief Get the constant parent of this @b SceneNode
      * @see SceneNode
-     * @return constexpr mtps::rptr<SceneNode> Parent or nullptr if no parent
+     * @return constexpr htps::rptr<SceneNode> Parent or nullptr if no parent
      */
-    constexpr const mtps::rptr<const SceneNode> parent() const noexcept
+    constexpr const htps::rptr<const SceneNode> parent() const noexcept
     {
         return parent_;
     }
@@ -44,37 +44,37 @@ public:
     /**
      * @brief Get the pointer to the parent converted to another type
      * @tparam SceneNodeType Type to what te parent will be converted
-     * @return mtps::rptr<SceneNodeType> The pointer to the parent converted
+     * @return htps::rptr<SceneNodeType> The pointer to the parent converted
      * to the specified type or nullptr if conversion cannot be done
      */
     template <typename SceneNodeType>
-    mtps::rptr<SceneNodeType> parentAs() noexcept
+    htps::rptr<SceneNodeType> parentAs() noexcept
     {
-        return dynamic_cast<mtps::rptr<SceneNodeType>>(parent());
+        return dynamic_cast<htps::rptr<SceneNodeType>>(parent());
     }
 
     /**
      * @brief Get the const pointer to the parent converted to another type
      * @tparam SceneNodeType Type to what te parent will be converted
-     * @return mtps::rptr<SceneNodeType> The pointer to the parent converted
+     * @return htps::rptr<SceneNodeType> The pointer to the parent converted
      * to the specified type or nullptr if conversion cannot be done
      */
     template <typename SceneNodeType>
-    mtps::rptr<SceneNodeType const> parentAs() const noexcept
+    htps::rptr<SceneNodeType const> parentAs() const noexcept
     {
-        return dynamic_cast<mtps::rptr<SceneNodeType const>>(parent());
+        return dynamic_cast<htps::rptr<SceneNodeType const>>(parent());
     }
 
     /**
      * @brief Get the first ancestor of a concrete type going up the tree.
      * @tparam T Expected type of the ancestor.
-     * @return constexpr mtps::rptr<T> Pointer to the ancestor of the
+     * @return constexpr htps::rptr<T> Pointer to the ancestor of the
      * specific type or nullptr if none found.
      */
     template <typename T = SceneNode>
-    constexpr mtps::rptr<T> ancestor() noexcept
+    constexpr htps::rptr<T> ancestor() noexcept
     {
-        mtps::rptr<SceneNode> _parent{parent()};
+        htps::rptr<SceneNode> _parent{parent()};
         if (_parent == nullptr)
         {
             return nullptr;
@@ -93,13 +93,13 @@ public:
     /**
      * @brief Get the const first ancestor of a concrete type going up the tree.
      * @tparam T Expected type of the ancestor.
-     * @return constexpr mtps::rptr<T> Pointer to the ancestor of the
+     * @return constexpr htps::rptr<T> Pointer to the ancestor of the
      * specific type or nullptr if none found.
      */
     template <typename T = SceneNode>
-    constexpr mtps::rptr<T const> const ancestor() const noexcept
+    constexpr htps::rptr<T const> const ancestor() const noexcept
     {
-        mtps::rptr<SceneNode const> _parent{parent()};
+        htps::rptr<SceneNode const> _parent{parent()};
         if (_parent == nullptr)
         {
             return nullptr;
@@ -123,7 +123,7 @@ protected:
     ~SceneNodeParent() {}
 
 private:
-    mtps::rptr<SceneNode> const parent_;
+    htps::rptr<SceneNode> const parent_;
 };
 
 }  // namespace haf::scene

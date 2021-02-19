@@ -2,7 +2,7 @@
 #include <haf/scene/i_include/scenemanager.hpp>
 #include <system/i_include/get_system.hpp>
 
-using namespace mtps;
+using namespace htps;
 
 namespace haf::scene
 {

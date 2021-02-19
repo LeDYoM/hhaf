@@ -29,12 +29,12 @@ public:
     void draw(const scene::RenderData& renderData);
     void clear();
 
-    void setRenderTarget(mtps::sptr<RenderTarget> render_target);
+    void setRenderTarget(htps::sptr<RenderTarget> render_target);
     void clearRenderQueue();
 
 private:
-    mtps::sptr<RenderTarget> render_target_;
-    mtps::vector<scene::RenderData> render_data_container_;
+    htps::sptr<RenderTarget> render_target_;
+    htps::vector<scene::RenderData> render_data_container_;
 };
 }  // namespace haf::sys
 

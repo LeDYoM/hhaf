@@ -11,7 +11,7 @@
 #include <haf/render/include/vertexarray.hpp>
 #include <hlog/include/hlog.hpp>
 
-using namespace mtps;
+using namespace htps;
 
 namespace
 {

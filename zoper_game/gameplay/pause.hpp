@@ -24,8 +24,8 @@ public:
     void exitPause();
 
 private:
-    mtps::sptr<haf::scene::nodes::SceneNodeText> m_pauseText;
-    mtps::sptr<haf::scene::AnimationComponent> animation_component_;
+    htps::sptr<haf::scene::nodes::SceneNodeText> m_pauseText;
+    htps::sptr<haf::scene::AnimationComponent> animation_component_;
 };
 } // namespace zoper
 

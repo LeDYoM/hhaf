@@ -12,16 +12,16 @@ class DiscreteTextComponent final : public IComponent
 public:
     using BaseClass = IComponent;
 
-    mtps::BasicProperty<bool> circleAroud{true};
-    mtps::BasicProperty<mtps::string_vector> data;
+    htps::BasicProperty<bool> circleAroud{true};
+    htps::BasicProperty<htps::string_vector> data;
     void incrementIndex() noexcept;
     void decrementIndex() noexcept;
-    mtps::PropertyState<mtps::size_type> index{0U};
+    htps::PropertyState<htps::size_type> index{0U};
 
     virtual void update() override;
 
 private:
-    void _setText(const mtps::str& nText);
+    void _setText(const htps::str& nText);
 };
 }  // namespace haf::scene
 

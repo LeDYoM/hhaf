@@ -35,10 +35,10 @@ public:
     void update() override;
 
 private:
-    void createBackgroundTile(const mtps::Rectf32& tileBox);
+    void createBackgroundTile(const htps::Rectf32& tileBox);
 
-    mtps::sptr<haf::scene::Renderizable> background_tile_;
-    mtps::sptr<haf::scene::RenderizableSceneNode> m_pointInCenter;
+    htps::sptr<haf::scene::Renderizable> background_tile_;
+    htps::sptr<haf::scene::RenderizableSceneNode> m_pointInCenter;
 };
 }  // namespace zoper
 

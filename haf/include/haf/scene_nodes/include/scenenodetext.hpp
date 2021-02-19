@@ -27,8 +27,8 @@ protected:
     void update() override final;
 
 private:
-    void updateAlignmentX(mtps::f32 const textSizeX);
-    void updateAlignmentY(mtps::f32 const textSizeY);
+    void updateAlignmentX(htps::f32 const textSizeX);
+    void updateAlignmentY(htps::f32 const textSizeY);
 };
 }  // namespace haf::scene::nodes
 

@@ -20,25 +20,25 @@ public:
     BackendFactory();
     ~BackendFactory();
 
-    mtps::rptr<IWindow> getWindow() const noexcept;
-    mtps::rptr<IRenderTarget> getRenderTarget() const noexcept;
-    mtps::rptr<ITextureFactory> getTextureFactory() const noexcept;
-    mtps::rptr<ITTFontFactory> getTTFontFactory() const noexcept;
-    mtps::rptr<IShaderFactory> getShaderFactory() const noexcept;
-    mtps::rptr<IBMPFontFactory> getBMPFontFactory() const noexcept;
+    htps::rptr<IWindow> getWindow() const noexcept;
+    htps::rptr<IRenderTarget> getRenderTarget() const noexcept;
+    htps::rptr<ITextureFactory> getTextureFactory() const noexcept;
+    htps::rptr<ITTFontFactory> getTTFontFactory() const noexcept;
+    htps::rptr<IShaderFactory> getShaderFactory() const noexcept;
+    htps::rptr<IBMPFontFactory> getBMPFontFactory() const noexcept;
     ITextureFactory &textureFactory() const;
     ITTFontFactory &ttfontFactory() const;
     IShaderFactory &shaderFactory() const;
     IBMPFontFactory &bmpFontFactory() const;
 
 private:
-    mtps::uptr<BackendRegister> backend_register_;
-    mtps::rptr<IWindow> window_{nullptr};
-    mtps::rptr<IRenderTarget> render_target_{nullptr};
-    mtps::rptr<ITextureFactory> textureFactory_{nullptr};
-    mtps::rptr<ITTFontFactory> ttfontFactory_{nullptr};
-    mtps::rptr<IShaderFactory> shaderFactory_{nullptr};
-    mtps::rptr<IBMPFontFactory> bmpFontFactory_{nullptr};
+    htps::uptr<BackendRegister> backend_register_;
+    htps::rptr<IWindow> window_{nullptr};
+    htps::rptr<IRenderTarget> render_target_{nullptr};
+    htps::rptr<ITextureFactory> textureFactory_{nullptr};
+    htps::rptr<ITTFontFactory> ttfontFactory_{nullptr};
+    htps::rptr<IShaderFactory> shaderFactory_{nullptr};
+    htps::rptr<IBMPFontFactory> bmpFontFactory_{nullptr};
 };
 } // namespace haf::backend
 
