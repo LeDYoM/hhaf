@@ -1,9 +1,9 @@
 #ifndef HAF_SCENE_TRANSFORMABLE_INCLUDE_HPP
 #define HAF_SCENE_TRANSFORMABLE_INCLUDE_HPP
 
-#include "matrix4x4.hpp"
-#include "transformation_properties.hpp"
-#include "transformation.hpp"
+#include <haf/scene/include/matrix4x4.hpp>
+#include <haf/scene/include/transformation_properties.hpp>
+#include <haf/scene/include/transformation.hpp>
 #include <htypes/include/vector.hpp>
 #include <htypes/include/vector2d.hpp>
 #include <htypes/include/rect.hpp>
