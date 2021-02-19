@@ -17,12 +17,21 @@ set(CURRENT_TARGET mtypes)
 
 add_library(${CURRENT_TARGET} INTERFACE)
 
-target_include_directories(${CURRENT_TARGET} INTERFACE ${PROJECT_SOURCE_DIR})
+#target_include_directories(${CURRENT_TARGET} INTERFACE ${PROJECT_SOURCE_DIR})
+
+target_include_directories(${CURRENT_TARGET}
+    INTERFACE 
+        $<INSTALL_INTERFACE:.>
+        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+)
+
+file(GLOB_RECURSE public_headers *.hpp)
+set_target_properties(${CURRENT_TARGET} PROPERTIES PUBLIC_HEADER "${public_headers}")
 
 install(
   TARGETS ${CURRENT_TARGET}
-  LIBRARY DESTINATION .
-  RUNTIME DESTINATION .)
+  PUBLIC_HEADER DESTINATION ${CURRENT_TARGET}/include
+  )
 
 add_subdirectory(tests)
 
