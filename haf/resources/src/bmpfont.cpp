@@ -31,15 +31,6 @@ BMPFont::BMPFont(const str& file_name)
     DisplayLog::info("Finished Parsing Font ", fontfile);
     DisplayLog::info("Loading pages. Number of pages: ",
                      fontPrivate_->pagesData_.size());
-    /*
-        for (u32 i = 0; i < fontPrivate_->pagesData_.size(); ++i)
-        {
-            fontPrivate_->pagesData_[i].it = resource_handler.loadTexture(
-                fontPrivate_->pagesData_[i].file,
-                fontPrivate_->pagesData_[i].file);
-        }
-        DisplayLog::info("Page(s) loaded");
-        */
 }
 
 vector<str> BMPFont::textureFileNames() const
