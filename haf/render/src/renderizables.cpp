@@ -9,6 +9,10 @@ using namespace htps;
 namespace haf::scene
 {
 
+Renderizables::Renderizables(htps::rptr<SceneNode> scene_node) noexcept :
+    scene_node_{std::move(scene_node)}
+{}
+
 sptr<Renderizable> Renderizables::createRenderizable(
     str name,
     FigType_t figure_type,

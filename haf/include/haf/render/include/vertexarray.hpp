@@ -10,38 +10,34 @@
 
 namespace haf::scene
 {
-using BasicVertexArray = htps::vector<Vertex>;
+using BasicVertexArray = htypes::vector<Vertex>;
 
+/**
+ * @brief Low level class representing a vertex array. As needed to render
+ * the vertex. It provides some very basic operations too.
+ */
 class VertexArray
 {
 public:
-    constexpr VertexArray() noexcept = default;
-    explicit constexpr VertexArray(const PrimitiveType type) noexcept :
-        m_vertices(), m_primitiveType{type}
-    {}
+    /**
+     * @brief Construct a new empty Vertex Array object.
+     */
+    VertexArray() noexcept;
 
-    inline VertexArray(const PrimitiveType type,
-                       const htps::size_type vertexCount) noexcept :
-        m_vertices(vertexCount), m_primitiveType{type}
-    {}
+    explicit VertexArray(const PrimitiveType type) noexcept;
 
-    explicit inline VertexArray(
-        htps::pair<PrimitiveType, htps::size_type> init) noexcept :
-        VertexArray{init.first, init.second}
-    {}
+    VertexArray(const PrimitiveType type,
+                       const htps::size_type vertexCount) noexcept;
 
-    constexpr bool empty() const noexcept { return m_vertices.empty(); }
+    explicit VertexArray(
+        htps::pair<PrimitiveType, htps::size_type> init) noexcept;
 
-    constexpr const BasicVertexArray& verticesArray() const noexcept
-    {
-        return m_vertices;
-    }
-    constexpr BasicVertexArray& verticesArray() noexcept { return m_vertices; }
+    bool empty() const noexcept;
 
-    constexpr PrimitiveType primitiveType() const noexcept
-    {
-        return m_primitiveType;
-    }
+    const BasicVertexArray& verticesArray() const noexcept;
+    BasicVertexArray& verticesArray() noexcept;
+
+    PrimitiveType primitiveType() const noexcept;
 
     void move(const htps::vector2df& offset) noexcept;
     void moveX(const htps::f32 xOffset) noexcept;

@@ -16,9 +16,11 @@ class RenderizableBuilder;
 class Renderizables
 {
 public:
-    explicit Renderizables(htps::rptr<SceneNode> scene_node) noexcept :
-        scene_node_{std::move(scene_node)}
-    {}
+    /**
+     * @brief Construct a new Renderizables object with a parent node
+     * @param scene_node Node to be used as a parent
+     */
+    explicit Renderizables(htps::rptr<SceneNode> scene_node) noexcept;
 
     /**
      * @brief Create a Renderizable object
@@ -66,7 +68,7 @@ public:
 private:
     void addRenderizable(htps::sptr<Renderizable> newElement);
     htps::rptr<SceneNode> scene_node_;
-    htps::vector<htps::sptr<Renderizable>> render_nodes_;
+    htypes::vector<htps::sptr<Renderizable>> render_nodes_;
 };
 }  // namespace haf::scene
 

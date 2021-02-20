@@ -1,13 +1,15 @@
 #include <backend_client/include/default_backend_manager.hpp>
 #include <backend_client/include/ibackendregister.hpp>
 
+#include <htypes/include/vector.hpp>
+
 using namespace htps;
 
 namespace haf::backend::client
 {
 struct DefaultBackendManager::DefaultBackendManagerPrivate
 {
-    htps::vector<htps::uptr<IAutoRegisterFactory>> factories;
+    htypes::vector<htps::uptr<IAutoRegisterFactory>> factories;
     void pushFactory(htps::uptr<IAutoRegisterFactory> f);
 
 };
