@@ -35,6 +35,7 @@ public:
 
     void render();
 
+    htps::PropertyState<FigType_t> figType;
     htps::PropertyState<htps::Rectf32> box;
     htps::PropertyState<Color> color;
     htps::PropertyState<htps::size_type> pointCount;
@@ -54,12 +55,10 @@ private:
     struct RenderizablePrivate;
     htps::PImplPointer<RenderizablePrivate> p_;
 
-    const htps::rptr<SceneNode> parent_;
-    htps::PropertyState<htps::Rects32> textureRect;
-    htps::PropertyState<htps::sptr<res::ITexture>> texture;
-
     VertexArray m_vertices;
     RenderData render_data_;
+
+    const htps::rptr<SceneNode> parent_;
 
     void updateGeometry();
     void updateTextureCoordsAndColor();

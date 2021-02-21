@@ -66,9 +66,11 @@ Rects32 textureFillQuad(const sptr<res::ITexture>& texture)
 
 struct Renderizable::RenderizablePrivate
 {
-    htps::PropertyState<FigType_t> figType;
+    htps::PropertyState<Rects32> textureRect;
+    htps::PropertyState<sptr<res::ITexture>> texture;
 
-    RenderizablePrivate(FigType_t const figure_type) : figType{figure_type}
+    RenderizablePrivate(sptr<res::ITexture> _texture) :
+        textureRect{textureFillQuad(_texture)}, texture{std::move(_texture)}
     {}
 };
 
@@ -81,17 +83,15 @@ Renderizable::Renderizable(rptr<SceneNode> parent,
                            sptr<res::ITexture> _texture,
                            sptr<res::IShader> _shader) :
     sys::HasName{std::move(name)},
-    p_{make_pimplp<RenderizablePrivate>(figure_type)},
+    p_{make_pimplp<RenderizablePrivate>(std::move(_texture))},
     parent_{std::move(parent)},
     pointCount{initial_point_count},
     box{std::move(_box)},
-        color{std::move(_color)},
+    color{std::move(_color)},
     shader{std::move(_shader)},
-    textureRect{textureFillQuad(_texture)},
-    texture{std::move(_texture)},
     m_vertices{
         initDataVertexPerFigureAndNumPoints(figure_type, initial_point_count)},
-    render_data_{m_vertices, parent->globalTransform(), texture().get(),
+    render_data_{m_vertices, parent->globalTransform(), p_->texture().get(),
                  shader().get()}
 {}
 
@@ -113,8 +113,8 @@ void Renderizable::render()
 void Renderizable::setTextureAndTextureRect(sptr<res::ITexture> texture_,
                                             const Rectf32& textRect)
 {
-    textureRect = static_cast<Rects32>(textRect);
-    texture.set(std::move(texture_));
+    p_->textureRect = static_cast<Rects32>(textRect);
+    p_->texture.set(std::move(texture_));
 }
 
 void Renderizable::setTextureFill(sptr<res::ITexture> texture_)
@@ -153,7 +153,7 @@ void Renderizable::updateColorForVertex(
     {
         RenderizableModifierContext context{
             cbox, ctexture_rect,
-            texture() ? texture()->size() : vector2du32{0U, 0U}, *v_iterator};
+            p_->texture() ? p_->texture()->size() : vector2du32{0U, 0U}, *v_iterator};
         dest_color *= color_modifier()(context);
     }
     v_iterator->color = dest_color;
@@ -162,7 +162,7 @@ void Renderizable::updateColorForVertex(
 void Renderizable::updateTextureCoordsAndColor()
 {
     const auto& cbox(box());
-    const auto ctexture_rect{textureRect()};
+    const auto ctexture_rect{p_->textureRect()};
 
     BasicVertexArray& vertices{m_vertices.verticesArray()};
 
@@ -176,7 +176,7 @@ void Renderizable::updateTextureCoordsAndColor()
 void Renderizable::updateColors()
 {
     const auto& cbox(box());
-    const auto ctexture_rect{textureRect()};
+    const auto ctexture_rect{p_->textureRect()};
 
     BasicVertexArray& vertices{m_vertices.verticesArray()};
 
@@ -189,15 +189,15 @@ void Renderizable::updateColors()
 
 void Renderizable::update()
 {
-    if (ps_readResetHasAnyChanged(box, p_->figType, pointCount))
+    if (ps_readResetHasAnyChanged(box, figType, pointCount))
     {
         updateGeometry();
-        textureRect.resetHasChanged();
+        p_->textureRect.resetHasChanged();
         color.resetHasChanged();
         color_modifier.resetHasChanged();
     }
 
-    if (ps_readResetHasAnyChanged(textureRect))
+    if (ps_readResetHasAnyChanged(p_->textureRect))
     {
         updateTextureCoordsAndColor();
         color.resetHasChanged();
@@ -209,11 +209,11 @@ void Renderizable::update()
         updateColors();
     }
 
-    if (ps_readResetHasChanged(texture))
+    if (ps_readResetHasChanged(p_->texture))
     {
         //        render_data_.texture = (texture().get() != nullptr) ?
         //        (dynamic_cast<Texture *>(texture().get())) : nullptr;
-        render_data_.texture = texture().get();
+        render_data_.texture = p_->texture().get();
     }
 
     if (ps_readResetHasChanged(shader))
@@ -231,7 +231,7 @@ void Renderizable::updateGeometry()
         const Rectf32& cBox{box()};
         auto& vertices(m_vertices.verticesArray());
 
-        const auto fig_type{p_->figType()};
+        const auto fig_type{figType()};
         const size_type nPoints{pointCount()};
         const size_type nVertex{
             initDataVertexPerFigureAndNumPoints(fig_type, nPoints).second};
@@ -260,35 +260,35 @@ void Renderizable::updateGeometry()
                     vertices_iterator->position =
                         base_position + static_cast<vector2df>(r);
                     updateTextureCoordsAndColorForVertex(vertices_iterator,
-                                                         cBox, textureRect());
+                                                         cBox, p_->textureRect());
                 }
 
                 vertices_iterator->position =
                     vertices_iterator_second->position;
                 updateTextureCoordsAndColorForVertex(vertices_iterator, cBox,
-                                                     textureRect());
+                                                     p_->textureRect());
                 vertices_iterator_begin->position = radius + leftTop;
                 updateTextureCoordsAndColorForVertex(vertices_iterator_begin,
-                                                     cBox, textureRect());
+                                                     cBox, p_->textureRect());
             }
             break;
             case FigType_t::EmptyQuad:
             {
                 vertices[0U].position = cBox.leftTop();
                 updateTextureCoordsAndColorForVertex(&vertices[0U], cBox,
-                                                     textureRect());
+                                                     p_->textureRect());
                 vertices[1U].position = cBox.rightTop();
                 updateTextureCoordsAndColorForVertex(&vertices[1U], cBox,
-                                                     textureRect());
+                                                     p_->textureRect());
                 vertices[2U].position = cBox.rightBottom();
                 updateTextureCoordsAndColorForVertex(&vertices[2U], cBox,
-                                                     textureRect());
+                                                     p_->textureRect());
                 vertices[3U].position = cBox.leftBottom();
                 updateTextureCoordsAndColorForVertex(&vertices[3U], cBox,
-                                                     textureRect());
+                                                     p_->textureRect());
                 vertices[4U].position = cBox.leftTop();
                 updateTextureCoordsAndColorForVertex(&vertices[4U], cBox,
-                                                     textureRect());
+                                                     p_->textureRect());
             }
             break;
         }
