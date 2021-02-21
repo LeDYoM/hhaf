@@ -66,21 +66,23 @@ Rects32 textureFillQuad(const sptr<res::ITexture>& texture)
 
 struct Renderizable::RenderizablePrivate
 {
-    int a;
+    htps::PropertyState<FigType_t> figType;
+
+    RenderizablePrivate(FigType_t const figure_type) : figType{figure_type}
+    {}
 };
 
 Renderizable::Renderizable(rptr<SceneNode> parent,
                            str name,
-                           FigType_t figure_type,
+                           FigType_t const figure_type,
                            size_type initial_point_count,
                            Rectf32 _box,
                            Color _color,
                            sptr<res::ITexture> _texture,
                            sptr<res::IShader> _shader) :
     sys::HasName{std::move(name)},
-    p_{make_pimplp<RenderizablePrivate>()},
+    p_{make_pimplp<RenderizablePrivate>(figure_type)},
     parent_{std::move(parent)},
-    figType{figure_type},
     pointCount{initial_point_count},
     box{std::move(_box)},
         color{std::move(_color)},
@@ -187,7 +189,7 @@ void Renderizable::updateColors()
 
 void Renderizable::update()
 {
-    if (ps_readResetHasAnyChanged(box, figType, pointCount))
+    if (ps_readResetHasAnyChanged(box, p_->figType, pointCount))
     {
         updateGeometry();
         textureRect.resetHasChanged();
@@ -229,7 +231,7 @@ void Renderizable::updateGeometry()
         const Rectf32& cBox{box()};
         auto& vertices(m_vertices.verticesArray());
 
-        const auto fig_type{figType()};
+        const auto fig_type{p_->figType()};
         const size_type nPoints{pointCount()};
         const size_type nVertex{
             initDataVertexPerFigureAndNumPoints(fig_type, nPoints).second};
