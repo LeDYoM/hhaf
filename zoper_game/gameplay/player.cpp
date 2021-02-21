@@ -41,6 +41,13 @@ void Player::update()
 {
     BaseClass::update();
 
+    if (boardPosition.readResetHasChanged())
+    {
+        DisplayLog::info("Player board position: ", boardPosition());
+        prop<Position>() = board2Scene(boardPosition());
+        DisplayLog::info("Player scene position: ", prop<Position>().get());
+    }
+
     if (currentDirection.readResetHasChanged())
     {
         const auto direction{currentDirection()};
