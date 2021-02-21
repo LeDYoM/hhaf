@@ -64,6 +64,11 @@ Rects32 textureFillQuad(const sptr<res::ITexture>& texture)
 
 }  // namespace
 
+struct Renderizable::RenderizablePrivate
+{
+    int a;
+};
+
 Renderizable::Renderizable(rptr<SceneNode> parent,
                            str name,
                            FigType_t figure_type,
@@ -73,11 +78,12 @@ Renderizable::Renderizable(rptr<SceneNode> parent,
                            sptr<res::ITexture> _texture,
                            sptr<res::IShader> _shader) :
     sys::HasName{std::move(name)},
+    p_{make_pimplp<RenderizablePrivate>()},
     parent_{std::move(parent)},
     figType{figure_type},
     pointCount{initial_point_count},
     box{std::move(_box)},
-    color{std::move(_color)},
+        color{std::move(_color)},
     shader{std::move(_shader)},
     textureRect{textureFillQuad(_texture)},
     texture{std::move(_texture)},

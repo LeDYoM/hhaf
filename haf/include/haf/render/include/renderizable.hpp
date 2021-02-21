@@ -4,6 +4,7 @@
 #include <htypes/include/types.hpp>
 #include <htypes/include/propertystate.hpp>
 #include <htypes/include/function.hpp>
+#include <htypes/include/p_impl_pointer.hpp>
 
 #include <haf/render/include/renderizable_modifier_context.hpp>
 #include <haf/scene/include/color.hpp>
@@ -51,8 +52,10 @@ public:
     void setTextureFill(htps::sptr<res::ITexture> texture_);
 
 private:
-    const htps::rptr<SceneNode> parent_;
+    struct RenderizablePrivate;
+    htps::PImplPointer<RenderizablePrivate> p_;
 
+    const htps::rptr<SceneNode> parent_;
     htps::PropertyState<htps::Rects32> textureRect;
     htps::PropertyState<htps::sptr<res::ITexture>> texture;
 
