@@ -66,7 +66,6 @@ Rects32 textureFillQuad(const sptr<res::ITexture>& texture)
 
 struct Renderizable::RenderizablePrivate
 {
-    int a;
 };
 
 Renderizable::Renderizable(rptr<SceneNode> parent,
@@ -83,7 +82,7 @@ Renderizable::Renderizable(rptr<SceneNode> parent,
     figType{figure_type},
     pointCount{initial_point_count},
     box{std::move(_box)},
-        color{std::move(_color)},
+    color{std::move(_color)},
     shader{std::move(_shader)},
     textureRect{textureFillQuad(_texture)},
     texture{std::move(_texture)},
