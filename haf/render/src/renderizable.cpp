@@ -63,28 +63,36 @@ Rects32 textureFillQuad(const sptr<res::ITexture>& texture)
 }
 
 vector2df normalizeInBox(const vector2df& position,
-                         const Rectf32 other_box,
-                         const Rectf32& rect)
+                         Renderizable::RenderizableInternalData const& data)
 {
-    const f32 xratio{(position.x - other_box.left) / other_box.width};
-    const f32 yratio{(position.y - other_box.top) / other_box.height};
-    return {(rect.left + (rect.width * xratio)),
-            (rect.top + (rect.height * yratio))};
+    const f32 xratio{(position.x - data.box.left) / data.box.width};
+    const f32 yratio{(position.y - data.box.top) / data.box.height};
+    return {(data.textureRect.left + (data.textureRect.width * xratio)),
+            (data.textureRect.top + (data.textureRect.height * yratio))};
 }
 
-void updateColorForVertex(
-    Renderizable::RenderizableInternalData const& data,
-    const BasicVertexArray::iterator v_iterator)
+void updateColorForVertex(Renderizable::RenderizableInternalData const& data,
+                          const BasicVertexArray::iterator v_iterator)
 {
     Color dest_color{data.color};
     if (data.color_modifier)
     {
         RenderizableModifierContext context{
             data.box, data.textureRect,
-            data.texture ? data.texture->size() : vector2du32{0U, 0U}, *v_iterator};
+            data.texture ? data.texture->size() : vector2du32{0U, 0U},
+            *v_iterator};
         dest_color *= data.color_modifier(context);
     }
     v_iterator->color = dest_color;
+}
+
+void updateTextureCoordsAndColorForVertex(
+    const BasicVertexArray::iterator v_iterator,
+    Renderizable::RenderizableInternalData const& iData)
+{
+    auto& dest_vertex = *v_iterator;
+    dest_vertex.texCoords = normalizeInBox(dest_vertex.position, iData);
+    updateColorForVertex(iData, v_iterator);
 }
 
 }  // namespace
@@ -118,9 +126,11 @@ Renderizable::Renderizable(rptr<SceneNode> parent,
 
 Renderizable::~Renderizable() = default;
 
-Renderizable::RenderizableInternalData Renderizable::getMomentumInternalData() const
+Renderizable::RenderizableInternalData Renderizable::getMomentumInternalData()
+    const
 {
-    return {figType(), box(), color(), pointCount(), shader(), textureRect(), texture(), color_modifier()};
+    return {figType(), box(),         color(),   pointCount(),
+            shader(),  textureRect(), texture(), color_modifier()};
 }
 
 void Renderizable::render()
@@ -148,17 +158,6 @@ void Renderizable::setTextureFill(sptr<res::ITexture> texture_)
     setTextureAndTextureRect(texture_, textureFillQuad(texture_));
 }
 
-void Renderizable::updateTextureCoordsAndColorForVertex(
-    const BasicVertexArray::iterator v_iterator,
-    const Rectf32& cbox,
-    const Rects32& ctexture_rect)
-{
-    auto& dest_vertex = *v_iterator;
-    dest_vertex.texCoords =
-        normalizeInBox(dest_vertex.position, cbox, ctexture_rect);
-    updateColorForVertex(getMomentumInternalData(), v_iterator);
-}
-
 void Renderizable::updateTextureCoordsAndColor()
 {
     const auto& cbox(box());
@@ -169,7 +168,7 @@ void Renderizable::updateTextureCoordsAndColor()
     for (auto v_iterator = vertices.begin(); v_iterator != vertices.end();
          ++v_iterator)
     {
-        updateTextureCoordsAndColorForVertex(v_iterator, cbox, ctexture_rect);
+        updateTextureCoordsAndColorForVertex(v_iterator, getMomentumInternalData());
     }
 }
 
@@ -256,35 +255,28 @@ void Renderizable::updateGeometry()
                     vertices_iterator->position =
                         base_position + static_cast<vector2df>(r);
                     updateTextureCoordsAndColorForVertex(vertices_iterator,
-                                                         cBox, textureRect());
+                                                         getMomentumInternalData());
                 }
 
                 vertices_iterator->position =
                     vertices_iterator_second->position;
-                updateTextureCoordsAndColorForVertex(vertices_iterator, cBox,
-                                                     textureRect());
+                updateTextureCoordsAndColorForVertex(vertices_iterator, getMomentumInternalData());
                 vertices_iterator_begin->position = radius + leftTop;
-                updateTextureCoordsAndColorForVertex(vertices_iterator_begin,
-                                                     cBox, textureRect());
+                updateTextureCoordsAndColorForVertex(vertices_iterator_begin, getMomentumInternalData());
             }
             break;
             case FigType_t::EmptyQuad:
             {
                 vertices[0U].position = cBox.leftTop();
-                updateTextureCoordsAndColorForVertex(&vertices[0U], cBox,
-                                                     textureRect());
+                updateTextureCoordsAndColorForVertex(&vertices[0U], getMomentumInternalData());
                 vertices[1U].position = cBox.rightTop();
-                updateTextureCoordsAndColorForVertex(&vertices[1U], cBox,
-                                                     textureRect());
+                updateTextureCoordsAndColorForVertex(&vertices[1U], getMomentumInternalData());
                 vertices[2U].position = cBox.rightBottom();
-                updateTextureCoordsAndColorForVertex(&vertices[2U], cBox,
-                                                     textureRect());
+                updateTextureCoordsAndColorForVertex(&vertices[2U], getMomentumInternalData());
                 vertices[3U].position = cBox.leftBottom();
-                updateTextureCoordsAndColorForVertex(&vertices[3U], cBox,
-                                                     textureRect());
+                updateTextureCoordsAndColorForVertex(&vertices[3U], getMomentumInternalData());
                 vertices[4U].position = cBox.leftTop();
-                updateTextureCoordsAndColorForVertex(&vertices[4U], cBox,
-                                                     textureRect());
+                updateTextureCoordsAndColorForVertex(&vertices[4U], getMomentumInternalData());
             }
             break;
         }
