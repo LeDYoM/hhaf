@@ -24,7 +24,7 @@ class Renderizable final : public sys::HasName
 public:
     Renderizable(htps::rptr<SceneNode> parent,
                  htps::str name,
-                 FigType_t const figure_type,
+                 FigType_t figure_type,
                  htps::size_type initial_point_count,
                  htps::Rectf32 _box,
                  Color color,
@@ -55,10 +55,12 @@ private:
     struct RenderizablePrivate;
     htps::PImplPointer<RenderizablePrivate> p_;
 
+    const htps::rptr<SceneNode> parent_;
+    htps::PropertyState<htps::Rects32> textureRect;
+    htps::PropertyState<htps::sptr<res::ITexture>> texture;
+
     VertexArray m_vertices;
     RenderData render_data_;
-
-    const htps::rptr<SceneNode> parent_;
 
     void updateGeometry();
     void updateTextureCoordsAndColor();

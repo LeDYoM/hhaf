@@ -70,22 +70,25 @@ struct Renderizable::RenderizablePrivate
 
 Renderizable::Renderizable(rptr<SceneNode> parent,
                            str name,
-                           FigType_t const figure_type,
+                           FigType_t figure_type,
                            size_type initial_point_count,
                            Rectf32 _box,
                            Color _color,
                            sptr<res::ITexture> _texture,
                            sptr<res::IShader> _shader) :
     sys::HasName{std::move(name)},
-    p_{make_pimplp<RenderizablePrivate>(std::move(_texture))},
+    p_{make_pimplp<RenderizablePrivate>()},
     parent_{std::move(parent)},
+    figType{figure_type},
     pointCount{initial_point_count},
     box{std::move(_box)},
     color{std::move(_color)},
     shader{std::move(_shader)},
+    textureRect{textureFillQuad(_texture)},
+    texture{std::move(_texture)},
     m_vertices{
         initDataVertexPerFigureAndNumPoints(figure_type, initial_point_count)},
-    render_data_{m_vertices, parent->globalTransform(), p_->texture().get(),
+    render_data_{m_vertices, parent->globalTransform(), texture().get(),
                  shader().get()}
 {}
 
@@ -107,8 +110,8 @@ void Renderizable::render()
 void Renderizable::setTextureAndTextureRect(sptr<res::ITexture> texture_,
                                             const Rectf32& textRect)
 {
-    p_->textureRect = static_cast<Rects32>(textRect);
-    p_->texture.set(std::move(texture_));
+    textureRect = static_cast<Rects32>(textRect);
+    texture.set(std::move(texture_));
 }
 
 void Renderizable::setTextureFill(sptr<res::ITexture> texture_)
@@ -147,7 +150,7 @@ void Renderizable::updateColorForVertex(
     {
         RenderizableModifierContext context{
             cbox, ctexture_rect,
-            p_->texture() ? p_->texture()->size() : vector2du32{0U, 0U}, *v_iterator};
+            texture() ? texture()->size() : vector2du32{0U, 0U}, *v_iterator};
         dest_color *= color_modifier()(context);
     }
     v_iterator->color = dest_color;
@@ -156,7 +159,7 @@ void Renderizable::updateColorForVertex(
 void Renderizable::updateTextureCoordsAndColor()
 {
     const auto& cbox(box());
-    const auto ctexture_rect{p_->textureRect()};
+    const auto ctexture_rect{textureRect()};
 
     BasicVertexArray& vertices{m_vertices.verticesArray()};
 
@@ -170,7 +173,7 @@ void Renderizable::updateTextureCoordsAndColor()
 void Renderizable::updateColors()
 {
     const auto& cbox(box());
-    const auto ctexture_rect{p_->textureRect()};
+    const auto ctexture_rect{textureRect()};
 
     BasicVertexArray& vertices{m_vertices.verticesArray()};
 
@@ -186,12 +189,12 @@ void Renderizable::update()
     if (ps_readResetHasAnyChanged(box, figType, pointCount))
     {
         updateGeometry();
-        p_->textureRect.resetHasChanged();
+        textureRect.resetHasChanged();
         color.resetHasChanged();
         color_modifier.resetHasChanged();
     }
 
-    if (ps_readResetHasAnyChanged(p_->textureRect))
+    if (ps_readResetHasAnyChanged(textureRect))
     {
         updateTextureCoordsAndColor();
         color.resetHasChanged();
@@ -203,11 +206,11 @@ void Renderizable::update()
         updateColors();
     }
 
-    if (ps_readResetHasChanged(p_->texture))
+    if (ps_readResetHasChanged(texture))
     {
         //        render_data_.texture = (texture().get() != nullptr) ?
         //        (dynamic_cast<Texture *>(texture().get())) : nullptr;
-        render_data_.texture = p_->texture().get();
+        render_data_.texture = texture().get();
     }
 
     if (ps_readResetHasChanged(shader))
@@ -254,35 +257,35 @@ void Renderizable::updateGeometry()
                     vertices_iterator->position =
                         base_position + static_cast<vector2df>(r);
                     updateTextureCoordsAndColorForVertex(vertices_iterator,
-                                                         cBox, p_->textureRect());
+                                                         cBox, textureRect());
                 }
 
                 vertices_iterator->position =
                     vertices_iterator_second->position;
                 updateTextureCoordsAndColorForVertex(vertices_iterator, cBox,
-                                                     p_->textureRect());
+                                                     textureRect());
                 vertices_iterator_begin->position = radius + leftTop;
                 updateTextureCoordsAndColorForVertex(vertices_iterator_begin,
-                                                     cBox, p_->textureRect());
+                                                     cBox, textureRect());
             }
             break;
             case FigType_t::EmptyQuad:
             {
                 vertices[0U].position = cBox.leftTop();
                 updateTextureCoordsAndColorForVertex(&vertices[0U], cBox,
-                                                     p_->textureRect());
+                                                     textureRect());
                 vertices[1U].position = cBox.rightTop();
                 updateTextureCoordsAndColorForVertex(&vertices[1U], cBox,
-                                                     p_->textureRect());
+                                                     textureRect());
                 vertices[2U].position = cBox.rightBottom();
                 updateTextureCoordsAndColorForVertex(&vertices[2U], cBox,
-                                                     p_->textureRect());
+                                                     textureRect());
                 vertices[3U].position = cBox.leftBottom();
                 updateTextureCoordsAndColorForVertex(&vertices[3U], cBox,
-                                                     p_->textureRect());
+                                                     textureRect());
                 vertices[4U].position = cBox.leftTop();
                 updateTextureCoordsAndColorForVertex(&vertices[4U], cBox,
-                                                     p_->textureRect());
+                                                     textureRect());
             }
             break;
         }
