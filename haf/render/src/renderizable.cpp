@@ -63,8 +63,8 @@ Rects32 textureFillQuad(const sptr<res::ITexture>& texture)
 }
 
 vector2df normalizeInBox(const vector2df& position,
-                                       const Rectf32 other_box,
-                                       const Rectf32& rect)
+                         const Rectf32 other_box,
+                         const Rectf32& rect)
 {
     const f32 xratio{(position.x - other_box.left) / other_box.width};
     const f32 yratio{(position.y - other_box.top) / other_box.height};
@@ -94,8 +94,7 @@ void updateColorForVertex(
 }  // namespace
 
 struct Renderizable::RenderizablePrivate
-{
-};
+{};
 
 Renderizable::Renderizable(rptr<SceneNode> parent,
                            str name,
@@ -156,7 +155,8 @@ void Renderizable::updateTextureCoordsAndColorForVertex(
     auto& dest_vertex = *v_iterator;
     dest_vertex.texCoords =
         normalizeInBox(dest_vertex.position, cbox, ctexture_rect);
-    updateColorForVertex(color(), texture(), color_modifier(), v_iterator, cbox, ctexture_rect);
+    updateColorForVertex(color(), texture(), color_modifier(), v_iterator, cbox,
+                         ctexture_rect);
 }
 
 void Renderizable::updateTextureCoordsAndColor()
@@ -183,7 +183,8 @@ void Renderizable::updateColors()
     for (auto v_iterator = vertices.begin(); v_iterator != vertices.end();
          ++v_iterator)
     {
-        updateColorForVertex(color(), texture(), color_modifier(), v_iterator, cbox, ctexture_rect);
+        updateColorForVertex(color(), texture(), color_modifier(), v_iterator,
+                             cbox, ctexture_rect);
     }
 }
 
@@ -211,15 +212,11 @@ void Renderizable::update()
 
     if (ps_readResetHasChanged(texture))
     {
-        //        render_data_.texture = (texture().get() != nullptr) ?
-        //        (dynamic_cast<Texture *>(texture().get())) : nullptr;
         render_data_.texture = texture().get();
     }
 
     if (ps_readResetHasChanged(shader))
     {
-        //        render_data_.shader = (shader().get() != nullptr) ?
-        //        (dynamic_cast<Shader *>(shader().get())) : nullptr;
         render_data_.shader = shader().get();
     }
 }
