@@ -68,9 +68,6 @@ private:
         const BasicVertexArray::iterator v_iterator,
         const htps::Rectf32& cbox,
         const htps::Rects32& ctexture_rect);
-    void updateColorForVertex(const BasicVertexArray::iterator v_iterator,
-                              const htps::Rectf32& cbox,
-                              const htps::Rects32& ctexture_rect);
     void updateColors();
 
     void update();

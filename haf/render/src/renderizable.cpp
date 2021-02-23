@@ -72,6 +72,25 @@ vector2df normalizeInBox(const vector2df& position,
             (rect.top + (rect.height * yratio))};
 }
 
+void updateColorForVertex(
+    Color const& color,
+    sptr<res::ITexture const> const& texture,
+    function<Color(const RenderizableModifierContext&)> color_modifier,
+    const BasicVertexArray::iterator v_iterator,
+    const Rectf32& cbox,
+    const Rects32& ctexture_rect)
+{
+    Color dest_color{color};
+    if (color_modifier)
+    {
+        RenderizableModifierContext context{
+            cbox, ctexture_rect,
+            texture ? texture->size() : vector2du32{0U, 0U}, *v_iterator};
+        dest_color *= color_modifier(context);
+    }
+    v_iterator->color = dest_color;
+}
+
 }  // namespace
 
 struct Renderizable::RenderizablePrivate
@@ -137,23 +156,7 @@ void Renderizable::updateTextureCoordsAndColorForVertex(
     auto& dest_vertex = *v_iterator;
     dest_vertex.texCoords =
         normalizeInBox(dest_vertex.position, cbox, ctexture_rect);
-    updateColorForVertex(v_iterator, cbox, ctexture_rect);
-}
-
-void Renderizable::updateColorForVertex(
-    const BasicVertexArray::iterator v_iterator,
-    const Rectf32& cbox,
-    const Rects32& ctexture_rect)
-{
-    Color dest_color{color()};
-    if (color_modifier())
-    {
-        RenderizableModifierContext context{
-            cbox, ctexture_rect,
-            texture() ? texture()->size() : vector2du32{0U, 0U}, *v_iterator};
-        dest_color *= color_modifier()(context);
-    }
-    v_iterator->color = dest_color;
+    updateColorForVertex(color(), texture(), color_modifier(), v_iterator, cbox, ctexture_rect);
 }
 
 void Renderizable::updateTextureCoordsAndColor()
@@ -180,7 +183,7 @@ void Renderizable::updateColors()
     for (auto v_iterator = vertices.begin(); v_iterator != vertices.end();
          ++v_iterator)
     {
-        updateColorForVertex(v_iterator, cbox, ctexture_rect);
+        updateColorForVertex(color(), texture(), color_modifier(), v_iterator, cbox, ctexture_rect);
     }
 }
 
