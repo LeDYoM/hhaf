@@ -66,12 +66,6 @@ Rects32 textureFillQuad(const sptr<res::ITexture>& texture)
 
 struct Renderizable::RenderizablePrivate
 {
-    htps::PropertyState<Rects32> textureRect;
-    htps::PropertyState<sptr<res::ITexture>> texture;
-
-    RenderizablePrivate(sptr<res::ITexture> _texture) :
-        textureRect{textureFillQuad(_texture)}, texture{std::move(_texture)}
-    {}
 };
 
 Renderizable::Renderizable(rptr<SceneNode> parent,
