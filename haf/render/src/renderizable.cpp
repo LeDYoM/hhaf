@@ -62,6 +62,16 @@ Rects32 textureFillQuad(const sptr<res::ITexture>& texture)
                    : Rects32{};
 }
 
+vector2df normalizeInBox(const vector2df& position,
+                                       const Rectf32 other_box,
+                                       const Rectf32& rect)
+{
+    const f32 xratio{(position.x - other_box.left) / other_box.width};
+    const f32 yratio{(position.y - other_box.top) / other_box.height};
+    return {(rect.left + (rect.width * xratio)),
+            (rect.top + (rect.height * yratio))};
+}
+
 }  // namespace
 
 struct Renderizable::RenderizablePrivate
@@ -117,16 +127,6 @@ void Renderizable::setTextureAndTextureRect(sptr<res::ITexture> texture_,
 void Renderizable::setTextureFill(sptr<res::ITexture> texture_)
 {
     setTextureAndTextureRect(texture_, textureFillQuad(texture_));
-}
-
-vector2df Renderizable::normalizeInBox(const vector2df& position,
-                                       const Rectf32 other_box,
-                                       const Rectf32& rect) const
-{
-    const f32 xratio{(position.x - other_box.left) / other_box.width};
-    const f32 yratio{(position.y - other_box.top) / other_box.height};
-    return {(rect.left + (rect.width * xratio)),
-            (rect.top + (rect.height * yratio))};
 }
 
 void Renderizable::updateTextureCoordsAndColorForVertex(

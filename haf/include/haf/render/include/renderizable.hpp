@@ -73,9 +73,6 @@ private:
                               const htps::Rects32& ctexture_rect);
     void updateColors();
 
-    htps::vector2df normalizeInBox(const htps::vector2df& position,
-                                   const htps::Rectf32 other_box,
-                                   const htps::Rectf32& rect) const;
     void update();
 };
 }  // namespace haf::scene
