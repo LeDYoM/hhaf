@@ -77,8 +77,8 @@ Renderizable::Renderizable(rptr<SceneNode> parent,
                            sptr<res::ITexture> _texture,
                            sptr<res::IShader> _shader) :
     sys::HasName{std::move(name)},
+    SceneNodeParent{parent},
     p_{make_pimplp<RenderizablePrivate>()},
-    parent_{std::move(parent)},
     figType{figure_type},
     pointCount{initial_point_count},
     box{std::move(_box)},
@@ -102,7 +102,7 @@ void Renderizable::render()
 
         if (!m_vertices.empty())
         {
-            sys::getSystem<sys::RenderSystem>(parent_).draw(render_data_);
+            sys::getSystem<sys::RenderSystem>(parent()).draw(render_data_);
         }
     }
 }

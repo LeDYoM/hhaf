@@ -7,6 +7,7 @@
 #include <htypes/include/p_impl_pointer.hpp>
 
 #include <haf/render/include/renderizable_modifier_context.hpp>
+#include <haf/scene/include/scenenodeparent.hpp>
 #include <haf/scene/include/color.hpp>
 #include <haf/scene/include/hasname.hpp>
 #include <haf/render/include/fig_type.hpp>
@@ -19,7 +20,7 @@ namespace haf::scene
 {
 class SceneNode;
 
-class Renderizable final : public sys::HasName
+class Renderizable final : public sys::HasName, SceneNodeParent
 {
 public:
     Renderizable(htps::rptr<SceneNode> parent,
@@ -55,7 +56,6 @@ private:
     struct RenderizablePrivate;
     htps::PImplPointer<RenderizablePrivate> p_;
 
-    const htps::rptr<SceneNode> parent_;
     htps::PropertyState<htps::Rects32> textureRect;
     htps::PropertyState<htps::sptr<res::ITexture>> texture;
 
