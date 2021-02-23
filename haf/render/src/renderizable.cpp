@@ -73,20 +73,16 @@ vector2df normalizeInBox(const vector2df& position,
 }
 
 void updateColorForVertex(
-    Color const& color,
-    sptr<res::ITexture const> const& texture,
-    function<Color(const RenderizableModifierContext&)> color_modifier,
-    const BasicVertexArray::iterator v_iterator,
-    const Rectf32& cbox,
-    const Rects32& ctexture_rect)
+    Renderizable::RenderizableInternalData const& data,
+    const BasicVertexArray::iterator v_iterator)
 {
-    Color dest_color{color};
-    if (color_modifier)
+    Color dest_color{data.color};
+    if (data.color_modifier)
     {
         RenderizableModifierContext context{
-            cbox, ctexture_rect,
-            texture ? texture->size() : vector2du32{0U, 0U}, *v_iterator};
-        dest_color *= color_modifier(context);
+            data.box, data.textureRect,
+            data.texture ? data.texture->size() : vector2du32{0U, 0U}, *v_iterator};
+        dest_color *= data.color_modifier(context);
     }
     v_iterator->color = dest_color;
 }
@@ -122,6 +118,11 @@ Renderizable::Renderizable(rptr<SceneNode> parent,
 
 Renderizable::~Renderizable() = default;
 
+Renderizable::RenderizableInternalData Renderizable::getMomentumInternalData() const
+{
+    return {figType(), box(), color(), pointCount(), shader(), textureRect(), texture(), color_modifier()};
+}
+
 void Renderizable::render()
 {
     if (visible())
@@ -155,8 +156,7 @@ void Renderizable::updateTextureCoordsAndColorForVertex(
     auto& dest_vertex = *v_iterator;
     dest_vertex.texCoords =
         normalizeInBox(dest_vertex.position, cbox, ctexture_rect);
-    updateColorForVertex(color(), texture(), color_modifier(), v_iterator, cbox,
-                         ctexture_rect);
+    updateColorForVertex(getMomentumInternalData(), v_iterator);
 }
 
 void Renderizable::updateTextureCoordsAndColor()
@@ -183,8 +183,7 @@ void Renderizable::updateColors()
     for (auto v_iterator = vertices.begin(); v_iterator != vertices.end();
          ++v_iterator)
     {
-        updateColorForVertex(color(), texture(), color_modifier(), v_iterator,
-                             cbox, ctexture_rect);
+        updateColorForVertex(getMomentumInternalData(), v_iterator);
     }
 }
 

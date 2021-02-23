@@ -52,6 +52,18 @@ public:
 
     void setTextureFill(htps::sptr<res::ITexture> texture_);
 
+    struct RenderizableInternalData
+    {
+        FigType_t const& figType;
+        htps::Rectf32 const& box;
+        Color const& color;
+        htps::size_type const& pointCount;
+        htps::sptr<res::IShader> const& shader;
+        htps::Rects32 const& textureRect;
+        htps::sptr<res::ITexture> const& texture;
+        htps::function<Color(const RenderizableModifierContext&)> const& color_modifier;
+    };
+
 private:
     struct RenderizablePrivate;
     htps::PImplPointer<RenderizablePrivate> p_;
@@ -59,6 +71,7 @@ private:
     htps::PropertyState<htps::Rects32> textureRect;
     htps::PropertyState<htps::sptr<res::ITexture>> texture;
 
+    RenderizableInternalData getMomentumInternalData() const;
     VertexArray m_vertices;
     RenderData render_data_;
 
