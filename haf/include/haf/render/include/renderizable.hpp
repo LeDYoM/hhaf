@@ -75,7 +75,6 @@ private:
     VertexArray m_vertices;
     RenderData render_data_;
 
-    void updateGeometry();
     void update();
 };
 }  // namespace haf::scene

@@ -113,6 +113,68 @@ void updateTextureCoordsAndColor(
     }
 }
 
+void updateGeometry(Renderizable::RenderizableInternalData const &data, BasicVertexArray& vertices)
+{
+    if (data.pointCount > 0U)
+    {
+        const auto fig_type{data.figType};
+        const size_type nPoints{data.pointCount};
+        const size_type nVertex{
+            initDataVertexPerFigureAndNumPoints(fig_type, nPoints).second};
+        const vector2df radius{data.box.size() / 2.0F};
+
+        vertices.resize(nVertex);  // + 2 for center and repeated first point
+        const f64 baseAngle(PiM2Constant<f64> / static_cast<f64>(nPoints));
+        const auto leftTop(data.box.leftTop());
+        const auto base_position{leftTop + radius};
+
+        switch (fig_type)
+        {
+            case FigType_t::Quad:
+            case FigType_t::Shape:
+            {
+                const auto vertices_iterator_begin = vertices.begin();
+                auto vertices_iterator_second      = vertices_iterator_begin;
+                auto vertices_iterator{++vertices_iterator_second};
+                auto angle{0.0};
+
+                for (size_type i{0U}; i < nPoints; ++i, ++vertices_iterator)
+                {
+                    angle += baseAngle;
+                    const vector2dd r{
+                        getPositionFromAngleAndRadius(fig_type, angle, radius)};
+                    vertices_iterator->position =
+                        base_position + static_cast<vector2df>(r);
+                    updateTextureCoordsAndColorForVertex(vertices_iterator,
+                                                         data);
+                }
+
+                vertices_iterator->position =
+                    vertices_iterator_second->position;
+                updateTextureCoordsAndColorForVertex(vertices_iterator, data);
+                vertices_iterator_begin->position = radius + leftTop;
+                updateTextureCoordsAndColorForVertex(vertices_iterator_begin,
+                                                     data);
+            }
+            break;
+            case FigType_t::EmptyQuad:
+            {
+                vertices[0U].position = data.box.leftTop();
+                updateTextureCoordsAndColorForVertex(&vertices[0U], data);
+                vertices[1U].position = data.box.rightTop();
+                updateTextureCoordsAndColorForVertex(&vertices[1U], data);
+                vertices[2U].position = data.box.rightBottom();
+                updateTextureCoordsAndColorForVertex(&vertices[2U], data);
+                vertices[3U].position = data.box.leftBottom();
+                updateTextureCoordsAndColorForVertex(&vertices[3U], data);
+                vertices[4U].position = data.box.leftTop();
+                updateTextureCoordsAndColorForVertex(&vertices[4U], data);
+            }
+            break;
+        }
+    }
+}
+
 }  // namespace
 
 struct Renderizable::RenderizablePrivate
@@ -180,7 +242,7 @@ void Renderizable::update()
 {
     if (ps_readResetHasAnyChanged(box, figType, pointCount))
     {
-        updateGeometry();
+        updateGeometry(getMomentumInternalData(), m_vertices.verticesArray());
         textureRect.resetHasChanged();
         color.resetHasChanged();
         color_modifier.resetHasChanged();
@@ -210,70 +272,4 @@ void Renderizable::update()
     }
 }
 
-void Renderizable::updateGeometry()
-{
-    if (pointCount())
-    {
-        const Rectf32& cBox{box()};
-        auto& vertices(m_vertices.verticesArray());
-
-        const auto fig_type{figType()};
-        const size_type nPoints{pointCount()};
-        const size_type nVertex{
-            initDataVertexPerFigureAndNumPoints(fig_type, nPoints).second};
-        const vector2df radius{cBox.size() / 2.0F};
-
-        vertices.resize(nVertex);  // + 2 for center and repeated first point
-        const f64 baseAngle(PiM2Constant<f64> / static_cast<f64>(nPoints));
-        const auto leftTop(cBox.leftTop());
-        const auto base_position{leftTop + radius};
-
-        auto const& iData{getMomentumInternalData()};
-
-        switch (fig_type)
-        {
-            case FigType_t::Quad:
-            case FigType_t::Shape:
-            {
-                const auto vertices_iterator_begin = vertices.begin();
-                auto vertices_iterator_second      = vertices_iterator_begin;
-                auto vertices_iterator{++vertices_iterator_second};
-                auto angle{0.0};
-
-                for (size_type i{0U}; i < nPoints; ++i, ++vertices_iterator)
-                {
-                    angle += baseAngle;
-                    const vector2dd r{
-                        getPositionFromAngleAndRadius(fig_type, angle, radius)};
-                    vertices_iterator->position =
-                        base_position + static_cast<vector2df>(r);
-                    updateTextureCoordsAndColorForVertex(vertices_iterator,
-                                                         iData);
-                }
-
-                vertices_iterator->position =
-                    vertices_iterator_second->position;
-                updateTextureCoordsAndColorForVertex(vertices_iterator, iData);
-                vertices_iterator_begin->position = radius + leftTop;
-                updateTextureCoordsAndColorForVertex(vertices_iterator_begin,
-                                                     iData);
-            }
-            break;
-            case FigType_t::EmptyQuad:
-            {
-                vertices[0U].position = cBox.leftTop();
-                updateTextureCoordsAndColorForVertex(&vertices[0U], iData);
-                vertices[1U].position = cBox.rightTop();
-                updateTextureCoordsAndColorForVertex(&vertices[1U], iData);
-                vertices[2U].position = cBox.rightBottom();
-                updateTextureCoordsAndColorForVertex(&vertices[2U], iData);
-                vertices[3U].position = cBox.leftBottom();
-                updateTextureCoordsAndColorForVertex(&vertices[3U], iData);
-                vertices[4U].position = cBox.leftTop();
-                updateTextureCoordsAndColorForVertex(&vertices[4U], iData);
-            }
-            break;
-        }
-    }
-}
 }  // namespace haf::scene
