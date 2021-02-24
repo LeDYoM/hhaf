@@ -113,8 +113,8 @@ void updateTextureCoordsAndColor(
     }
 }
 
-void updateGeometry(Renderizable::RenderizableInternalData const& data,
-                    BasicVertexArray& vertices)
+void updateGeometry(BasicVertexArray& vertices,
+                    Renderizable::RenderizableInternalData const& data)
 {
     if (data.pointCount > 0U)
     {
@@ -243,7 +243,7 @@ void Renderizable::update()
 {
     if (ps_readResetHasAnyChanged(box, figType, pointCount))
     {
-        updateGeometry(getMomentumInternalData(), m_vertices.verticesArray());
+        updateGeometry(m_vertices.verticesArray(), getMomentumInternalData());
         textureRect.resetHasChanged();
         color.resetHasChanged();
         color_modifier.resetHasChanged();
