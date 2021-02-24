@@ -76,9 +76,6 @@ private:
     RenderData render_data_;
 
     void updateGeometry();
-    void updateTextureCoordsAndColor();
-    void updateColors();
-
     void update();
 };
 }  // namespace haf::scene
