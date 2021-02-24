@@ -61,7 +61,8 @@ public:
         htps::sptr<res::IShader> const& shader;
         htps::Rects32 const& textureRect;
         htps::sptr<res::ITexture> const& texture;
-        htps::function<Color(const RenderizableModifierContext&)> const& color_modifier;
+        htps::function<Color(const RenderizableModifierContext&)> const&
+            color_modifier;
     };
 
 private:

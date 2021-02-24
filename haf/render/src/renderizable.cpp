@@ -113,7 +113,8 @@ void updateTextureCoordsAndColor(
     }
 }
 
-void updateGeometry(Renderizable::RenderizableInternalData const &data, BasicVertexArray& vertices)
+void updateGeometry(Renderizable::RenderizableInternalData const& data,
+                    BasicVertexArray& vertices)
 {
     if (data.pointCount > 0U)
     {
