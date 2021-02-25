@@ -23,8 +23,8 @@ class Renderizable final : public sys::HasName, SceneNodeParent
 public:
     Renderizable(htps::rptr<SceneNode> parent,
                  htps::str name,
-                 FigType_t figure_type,
-                 htps::size_type initial_point_count,
+                 FigType_t const figure_type,
+                 htps::size_type const initial_point_count,
                  htps::Rectf32 _box,
                  Color color,
                  htps::sptr<res::ITexture> _texture,

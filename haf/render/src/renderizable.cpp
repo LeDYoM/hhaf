@@ -197,8 +197,8 @@ struct Renderizable::RenderizablePrivate
 
 Renderizable::Renderizable(rptr<SceneNode> _parent,
                            str name,
-                           FigType_t figure_type,
-                           size_type initial_point_count,
+                           FigType_t const figure_type,
+                           size_type const initial_point_count,
                            Rectf32 _box,
                            Color _color,
                            sptr<res::ITexture> _texture,
