@@ -13,7 +13,6 @@
 #include <haf/render/include/fig_type.hpp>
 #include <haf/resources/include/itexture.hpp>
 #include <haf/resources/include/ishader.hpp>
-#include <haf/render/include/renderdata.hpp>
 
 namespace haf::scene
 {
@@ -72,7 +71,6 @@ private:
     htps::PropertyState<htps::sptr<res::ITexture>> texture;
 
     RenderizableInternalData getMomentumInternalData() const;
-    RenderData render_data_;
 
     void update();
 };

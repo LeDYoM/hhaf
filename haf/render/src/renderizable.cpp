@@ -8,6 +8,7 @@
 #include <haf/resources/include/ishader.hpp>
 #include <system/i_include/get_system.hpp>
 #include <haf/render/include/vertexarray.hpp>
+#include <haf/render/include/renderdata.hpp>
 #include <haf/render/include/geometry_math.hpp>
 
 using namespace htps;
@@ -181,15 +182,20 @@ void updateGeometry(BasicVertexArray& vertices,
 struct Renderizable::RenderizablePrivate
 {
     VertexArray vertices_;
+    RenderData render_data_;
 
     RenderizablePrivate(FigType_t const figure_type,
-                        size_type const initial_point_count) :
+                        size_type const initial_point_count,
+                        Matrix4x4 const& matrix,
+                        rptr<res::ITexture> texture,
+                        rptr<res::IShader> shader) :
         vertices_{initDataVertexPerFigureAndNumPoints(figure_type,
-                                                      initial_point_count)}
+                                                      initial_point_count)},
+        render_data_{vertices_, matrix, texture, shader}
     {}
 };
 
-Renderizable::Renderizable(rptr<SceneNode> parent,
+Renderizable::Renderizable(rptr<SceneNode> _parent,
                            str name,
                            FigType_t figure_type,
                            size_type initial_point_count,
@@ -198,17 +204,19 @@ Renderizable::Renderizable(rptr<SceneNode> parent,
                            sptr<res::ITexture> _texture,
                            sptr<res::IShader> _shader) :
     sys::HasName{std::move(name)},
-    SceneNodeParent{parent},
-    p_{make_pimplp<RenderizablePrivate>(figure_type, initial_point_count)},
+    SceneNodeParent{_parent},
+    p_{make_pimplp<RenderizablePrivate>(figure_type,
+                                        initial_point_count,
+                                        parent()->globalTransform(),
+                                        texture().get(),
+                                        shader().get())},
     figType{figure_type},
     pointCount{initial_point_count},
     box{std::move(_box)},
     color{std::move(_color)},
     shader{std::move(_shader)},
     textureRect{textureFillQuad(_texture)},
-    texture{std::move(_texture)},
-    render_data_{p_->vertices_, parent->globalTransform(), texture().get(),
-                 shader().get()}
+    texture{std::move(_texture)}
 {}
 
 Renderizable::~Renderizable() = default;
@@ -228,7 +236,7 @@ void Renderizable::render()
 
         if (!p_->vertices_.empty())
         {
-            sys::getSystem<sys::RenderSystem>(parent()).draw(render_data_);
+            sys::getSystem<sys::RenderSystem>(parent()).draw(p_->render_data_);
         }
     }
 }
@@ -249,7 +257,8 @@ void Renderizable::update()
 {
     if (ps_readResetHasAnyChanged(box, figType, pointCount))
     {
-        updateGeometry(p_->vertices_.verticesArray(), getMomentumInternalData());
+        updateGeometry(p_->vertices_.verticesArray(),
+                       getMomentumInternalData());
         textureRect.resetHasChanged();
         color.resetHasChanged();
         color_modifier.resetHasChanged();
@@ -270,12 +279,12 @@ void Renderizable::update()
 
     if (ps_readResetHasChanged(texture))
     {
-        render_data_.texture = texture().get();
+        p_->render_data_.texture = texture().get();
     }
 
     if (ps_readResetHasChanged(shader))
     {
-        render_data_.shader = shader().get();
+        p_->render_data_.shader = shader().get();
     }
 }
 
