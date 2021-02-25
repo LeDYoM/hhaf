@@ -11,7 +11,6 @@
 #include <haf/scene/include/color.hpp>
 #include <haf/scene/include/hasname.hpp>
 #include <haf/render/include/fig_type.hpp>
-#include <haf/render/include/vertexarray.hpp>
 #include <haf/resources/include/itexture.hpp>
 #include <haf/resources/include/ishader.hpp>
 #include <haf/render/include/renderdata.hpp>
@@ -73,7 +72,6 @@ private:
     htps::PropertyState<htps::sptr<res::ITexture>> texture;
 
     RenderizableInternalData getMomentumInternalData() const;
-    VertexArray m_vertices;
     RenderData render_data_;
 
     void update();

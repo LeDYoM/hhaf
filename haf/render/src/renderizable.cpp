@@ -7,7 +7,7 @@
 #include <haf/resources/include/itexture.hpp>
 #include <haf/resources/include/ishader.hpp>
 #include <system/i_include/get_system.hpp>
-
+#include <haf/render/include/vertexarray.hpp>
 #include <haf/render/include/geometry_math.hpp>
 
 using namespace htps;
@@ -179,7 +179,15 @@ void updateGeometry(BasicVertexArray& vertices,
 }  // namespace
 
 struct Renderizable::RenderizablePrivate
-{};
+{
+    VertexArray vertices_;
+
+    RenderizablePrivate(FigType_t const figure_type,
+                        size_type const initial_point_count) :
+        vertices_{initDataVertexPerFigureAndNumPoints(figure_type,
+                                                      initial_point_count)}
+    {}
+};
 
 Renderizable::Renderizable(rptr<SceneNode> parent,
                            str name,
@@ -191,7 +199,7 @@ Renderizable::Renderizable(rptr<SceneNode> parent,
                            sptr<res::IShader> _shader) :
     sys::HasName{std::move(name)},
     SceneNodeParent{parent},
-    p_{make_pimplp<RenderizablePrivate>()},
+    p_{make_pimplp<RenderizablePrivate>(figure_type, initial_point_count)},
     figType{figure_type},
     pointCount{initial_point_count},
     box{std::move(_box)},
@@ -199,9 +207,7 @@ Renderizable::Renderizable(rptr<SceneNode> parent,
     shader{std::move(_shader)},
     textureRect{textureFillQuad(_texture)},
     texture{std::move(_texture)},
-    m_vertices{
-        initDataVertexPerFigureAndNumPoints(figure_type, initial_point_count)},
-    render_data_{m_vertices, parent->globalTransform(), texture().get(),
+    render_data_{p_->vertices_, parent->globalTransform(), texture().get(),
                  shader().get()}
 {}
 
@@ -220,7 +226,7 @@ void Renderizable::render()
     {
         update();
 
-        if (!m_vertices.empty())
+        if (!p_->vertices_.empty())
         {
             sys::getSystem<sys::RenderSystem>(parent()).draw(render_data_);
         }
@@ -243,7 +249,7 @@ void Renderizable::update()
 {
     if (ps_readResetHasAnyChanged(box, figType, pointCount))
     {
-        updateGeometry(m_vertices.verticesArray(), getMomentumInternalData());
+        updateGeometry(p_->vertices_.verticesArray(), getMomentumInternalData());
         textureRect.resetHasChanged();
         color.resetHasChanged();
         color_modifier.resetHasChanged();
@@ -251,7 +257,7 @@ void Renderizable::update()
 
     if (ps_readResetHasAnyChanged(textureRect))
     {
-        updateTextureCoordsAndColor(m_vertices.verticesArray(),
+        updateTextureCoordsAndColor(p_->vertices_.verticesArray(),
                                     getMomentumInternalData());
         color.resetHasChanged();
         color_modifier.resetHasChanged();
@@ -259,7 +265,7 @@ void Renderizable::update()
 
     if (ps_readResetHasAnyChanged(color, color_modifier))
     {
-        updateColors(m_vertices.verticesArray(), getMomentumInternalData());
+        updateColors(p_->vertices_.verticesArray(), getMomentumInternalData());
     }
 
     if (ps_readResetHasChanged(texture))
