@@ -1,12 +1,14 @@
 #include <haf/render/include/renderizable.hpp>
+
 #include <render/i_include/rendersystem.hpp>
+#include <render/i_include/renderizable_internal_data.hpp>
+#include <system/i_include/get_system.hpp>
 
 #include <haf/render/include/renderdata.hpp>
 #include <haf/scene/include/scenenode.hpp>
 #include <haf/render/include/renderizable_builder.hpp>
 #include <haf/resources/include/itexture.hpp>
 #include <haf/resources/include/ishader.hpp>
-#include <system/i_include/get_system.hpp>
 #include <haf/render/include/vertexarray.hpp>
 #include <haf/render/include/renderdata.hpp>
 #include <haf/render/include/geometry_math.hpp>
@@ -15,6 +17,7 @@ using namespace htps;
 
 namespace haf::scene
 {
+
 namespace
 {
 constexpr vector2dd getPositionFromAngleAndRadius(const FigType_t fig_type,
@@ -183,16 +186,27 @@ struct Renderizable::RenderizablePrivate
 {
     VertexArray vertices_;
     RenderData render_data_;
+    rptr<Renderizable const> const i_this_;
 
     RenderizablePrivate(FigType_t const figure_type,
                         size_type const initial_point_count,
                         Matrix4x4 const& matrix,
                         rptr<res::ITexture> texture,
-                        rptr<res::IShader> shader) :
+                        rptr<res::IShader> shader,
+                        rptr<Renderizable const> i_this) :
         vertices_{initDataVertexPerFigureAndNumPoints(figure_type,
                                                       initial_point_count)},
-        render_data_{vertices_, matrix, texture, shader}
+        render_data_{vertices_, matrix, texture, shader},
+        i_this_{std::move(i_this)}
     {}
+
+    Renderizable::RenderizableInternalData getMomentumInternalData() const
+    {
+        return {i_this_->figType(), i_this_->box(),
+                i_this_->color(),   i_this_->pointCount(),
+                i_this_->shader(),  i_this_->textureRect(),
+                i_this_->texture(), i_this_->color_modifier()};
+    }
 };
 
 Renderizable::Renderizable(rptr<SceneNode> _parent,
@@ -209,7 +223,7 @@ Renderizable::Renderizable(rptr<SceneNode> _parent,
                                         initial_point_count,
                                         parent()->globalTransform(),
                                         texture().get(),
-                                        shader().get())},
+                                        shader().get(), this)},
     figType{figure_type},
     pointCount{initial_point_count},
     box{std::move(_box)},
@@ -220,13 +234,6 @@ Renderizable::Renderizable(rptr<SceneNode> _parent,
 {}
 
 Renderizable::~Renderizable() = default;
-
-Renderizable::RenderizableInternalData Renderizable::getMomentumInternalData()
-    const
-{
-    return {figType(), box(),         color(),   pointCount(),
-            shader(),  textureRect(), texture(), color_modifier()};
-}
 
 void Renderizable::render()
 {
@@ -255,10 +262,11 @@ void Renderizable::setTextureFill(sptr<res::ITexture> texture_)
 
 void Renderizable::update()
 {
+    auto const& mi_data{p_->getMomentumInternalData()};
+
     if (ps_readResetHasAnyChanged(box, figType, pointCount))
     {
-        updateGeometry(p_->vertices_.verticesArray(),
-                       getMomentumInternalData());
+        updateGeometry(p_->vertices_.verticesArray(), mi_data);
         textureRect.resetHasChanged();
         color.resetHasChanged();
         color_modifier.resetHasChanged();
@@ -266,15 +274,14 @@ void Renderizable::update()
 
     if (ps_readResetHasAnyChanged(textureRect))
     {
-        updateTextureCoordsAndColor(p_->vertices_.verticesArray(),
-                                    getMomentumInternalData());
+        updateTextureCoordsAndColor(p_->vertices_.verticesArray(), mi_data);
         color.resetHasChanged();
         color_modifier.resetHasChanged();
     }
 
     if (ps_readResetHasAnyChanged(color, color_modifier))
     {
-        updateColors(p_->vertices_.verticesArray(), getMomentumInternalData());
+        updateColors(p_->vertices_.verticesArray(), mi_data);
     }
 
     if (ps_readResetHasChanged(texture))
