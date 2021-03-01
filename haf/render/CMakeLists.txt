@@ -1,8 +1,10 @@
 set(_SOURCES 
     i_include/renderizable_internal_data.hpp
+    i_include/renderizable_internal_functions.hpp
     i_include/rendersystem.hpp
     i_include/rendertarget.hpp
     src/renderizable_builder.cpp
+    src/renderizable_internal_functions.cpp
     src/renderizable.cpp
     src/renderizables.cpp
     src/rendersystem.cpp
