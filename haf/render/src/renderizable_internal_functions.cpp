@@ -115,18 +115,16 @@ void updateGeometry(BasicVertexArray& vertices,
 {
     if (data.pointCount > 0U)
     {
-        const auto fig_type{data.figType};
-        const size_type nPoints{data.pointCount};
-        const size_type nVertex{
-            initDataVertexPerFigureAndNumPoints(fig_type, nPoints).second};
         const vector2df radius{data.box.size() / 2.0F};
 
-        vertices.resize(nVertex);  // + 2 for center and repeated first point
-        const f64 baseAngle(PiM2Constant<f64> / static_cast<f64>(nPoints));
-        const auto leftTop(data.box.leftTop());
-        const auto base_position{leftTop + radius};
+        vertices.resize(
+            initDataVertexPerFigureAndNumPoints(data.figType, data.pointCount)
+                .second);
+        const f64 baseAngle(PiM2Constant<f64> /
+                            static_cast<f64>(data.pointCount));
+        const auto base_position{data.box.leftTop() + radius};
 
-        switch (fig_type)
+        switch (data.figType)
         {
             case FigType_t::Quad:
             case FigType_t::Shape:
@@ -136,12 +134,13 @@ void updateGeometry(BasicVertexArray& vertices,
                 auto vertices_iterator{++vertices_iterator_second};
                 auto angle{0.0};
 
-                for (size_type i{0U}; i < nPoints; ++i, ++vertices_iterator)
+                for (size_type i{0U}; i < data.pointCount;
+                     ++i, ++vertices_iterator)
                 {
                     angle += baseAngle;
                     vertices_iterator->position = base_position +
                         static_cast<vector2df>(getPositionFromAngleAndRadius(
-                            fig_type, angle, radius));
+                            data.figType, angle, radius));
                     updateTextureCoordsAndColorForVertex(vertices_iterator,
                                                          data);
                 }
@@ -149,7 +148,7 @@ void updateGeometry(BasicVertexArray& vertices,
                 vertices_iterator->position =
                     vertices_iterator_second->position;
                 updateTextureCoordsAndColorForVertex(vertices_iterator, data);
-                vertices_iterator_begin->position = radius + leftTop;
+                vertices_iterator_begin->position = radius + data.box.leftTop();
                 updateTextureCoordsAndColorForVertex(vertices_iterator_begin,
                                                      data);
             }
