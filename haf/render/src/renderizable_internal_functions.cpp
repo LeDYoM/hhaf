@@ -6,8 +6,8 @@ using namespace htps;
 namespace haf::scene
 {
 vector2dd getPositionFromAngleAndRadius(const FigType_t fig_type,
-                                                  const f64 angle,
-                                                  const vector2df& radius)
+                                        const f64 angle,
+                                        const vector2df& radius)
 {
     switch (fig_type)
     {
@@ -26,7 +26,7 @@ vector2dd getPositionFromAngleAndRadius(const FigType_t fig_type,
 
 /**
  * @brief Get the init data for a vertex array
- * 
+ *
  * @param fig_type Figure type to create
  * @param num_points Initial number of points
  * @return pair<PrimitiveType, size_type> Initialization data for a vertex
@@ -139,10 +139,9 @@ void updateGeometry(BasicVertexArray& vertices,
                 for (size_type i{0U}; i < nPoints; ++i, ++vertices_iterator)
                 {
                     angle += baseAngle;
-                    const vector2dd r{
-                        getPositionFromAngleAndRadius(fig_type, angle, radius)};
-                    vertices_iterator->position =
-                        base_position + static_cast<vector2df>(r);
+                    vertices_iterator->position = base_position +
+                        static_cast<vector2df>(getPositionFromAngleAndRadius(
+                            fig_type, angle, radius));
                     updateTextureCoordsAndColorForVertex(vertices_iterator,
                                                          data);
                 }
