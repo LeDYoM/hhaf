@@ -13,6 +13,17 @@
 
 namespace haf::scene
 {
+/**
+ * @brief Get the Position From angle and radius
+ * Get the expected vector position for a given fig_type angle and radius.
+ * This function will perform different calculations depending on the 
+ * @b fig_type parameter.
+ * 
+ * @param fig_type Enum value with the figure we use
+ * @param angle Current angle to use
+ * @param radius The radius of the figure
+ * @return vector2dd Position vector
+ */
 htps::vector2dd getPositionFromAngleAndRadius(const FigType_t fig_type,
                                                   const htps::f64 angle,
                                                   const htps::vector2df& radius);

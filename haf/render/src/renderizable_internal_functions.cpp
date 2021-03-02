@@ -24,6 +24,14 @@ vector2dd getPositionFromAngleAndRadius(const FigType_t fig_type,
     }
 }
 
+/**
+ * @brief Get the init data for a vertex array
+ * 
+ * @param fig_type Figure type to create
+ * @param num_points Initial number of points
+ * @return pair<PrimitiveType, size_type> Initialization data for a vertex
+ * array
+ */
 pair<PrimitiveType, size_type> initDataVertexPerFigureAndNumPoints(
     const FigType_t fig_type,
     const size_type num_points) noexcept
