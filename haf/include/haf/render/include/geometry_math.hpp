@@ -17,19 +17,19 @@ template <typename T>
 static constexpr T ToRadians = PiConstant<T> / static_cast<T>(180);
 
 template <typename T>
-constexpr int sgn(const T val) noexcept
+constexpr int sgn(T const val) noexcept
 {
     return (T(0) < val) - (val < T(0));
 }
 
 template <typename T>
-constexpr int sgn_cos(T angle)
+constexpr int sgn_cos(T const angle)
 {
     return sgn(std::cos(angle));
 }
 
 template <typename T>
-constexpr int sgn_sin(T angle)
+constexpr int sgn_sin(T const angle)
 {
     return sgn(std::sin(angle));
 }
