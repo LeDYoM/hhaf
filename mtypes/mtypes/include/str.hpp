@@ -40,6 +40,7 @@ public:
     constexpr str(const char_type* n, const size_type N) noexcept :
         m_data(n, N + 1)
     {}
+
     explicit str(const char_type* n) noexcept : str(n, _str_len(n)) {}
 
     constexpr str(const_iterator _begin, const_iterator _end) :
@@ -56,14 +57,17 @@ public:
     {
         return str{std::to_string(n).c_str()};
     }
+
     inline static str to_str(const s64 n)
     {
         return str{std::to_string(n).c_str()};
     }
+
     inline static str to_str(const u32 n)
     {
         return str{std::to_string(n).c_str()};
     }
+
     inline static str to_str(const s32 n)
     {
         return str{std::to_string(n).c_str()};
