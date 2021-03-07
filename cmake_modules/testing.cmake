@@ -5,7 +5,7 @@ function (prepareTestLibrary)
 
     FetchContent_Declare(CATCH2
         GIT_REPOSITORY https://github.com/catchorg/Catch2.git
-        GIT_TAG v2.11.1
+        GIT_TAG v2.12.4
         CMAKE_ARGS -DBUILD_TESTING=OFF
     )
 
