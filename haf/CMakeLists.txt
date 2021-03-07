@@ -20,7 +20,7 @@ set(HAF_PRIVATE_INCLUDE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
 # Prepare the haf libray
 add_library(${CURRENT_TARGET} SHARED ${_SOURCES} ${_HEADERS})
-
+target_compile_definitions(${CURRENT_TARGET} PRIVATE HAF_ALLOW_ACCELERATION)
 target_compile_definitions(${CURRENT_TARGET} PRIVATE haf_EXPORTS)
 
 # For now, export all simbols

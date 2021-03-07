@@ -35,8 +35,6 @@ else()
   )
 endif()
 
-add_compile_definitions(HAF_ALLOW_ACCELERATION)
-
 message("CXX Flags: " ${CMAKE_CXX_FLAGS})
 
 set(_REPO_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
@@ -71,41 +69,46 @@ include(functions)
 include(testing)
 include(install)
 
-generate_pack("haf")
-# Use the memmanager
-option(MTYPES_USE_MEMMANAGER "Compile mtypes using the memmanager wrappers" ON)
+generate_pack_for_haf()
+
+option(BUILD_MTYPES "Specifies if mtypes should be build or not" ON)
 
 # Prepare the test framework
 add_subdirectory(tests)
 
-add_subdirectory(tools)
+#add_subdirectory(tools)
 
-set(BUILD_COMPOENT "haf")
+option(BUILD_MTYPES "Specifies if mtypes should be build or not" ON)
 
 # Sub-directories where more CMakeLists.txt exist
-add_subdirectory(memmanager)
-add_subdirectory(mtypes)
-add_subdirectory(logger)
+if(${BUILD_MYPES})
+    add_subdirectory(mtypes)
+endif()
 
-add_subdirectory(hlog)
-add_subdirectory(htypes)
+if(${BUILD_OTHER})
+    add_subdirectory(memmanager)
+    add_subdirectory(logger)
+    add_subdirectory(htypes)
 
-# Create interface library to add loggger and types with memory management
-# in one line.
-add_library(log_and_types INTERFACE)
-target_link_libraries(log_and_types INTERFACE htypes memmanager hlog)
+    add_subdirectory(hlog)
 
+    # Create interface library to add loggger and types with memory management
+    # in one line.
+    add_library(log_and_types INTERFACE)
+    target_link_libraries(log_and_types INTERFACE htypes memmanager hlog)
 
-add_subdirectory(loader)
-add_subdirectory(hosted_app)
-add_subdirectory(host)
-add_subdirectory(backend_dev)
-add_subdirectory(backend_client)
-add_subdirectory(backend)
-add_subdirectory(haf)
-add_subdirectory(haf_ext)
-add_subdirectory(haf_user)
-add_subdirectory(backend_sfml)
-add_subdirectory(zoper_game)
-add_subdirectory(haf_app_menu)
-add_subdirectory(haf_run)
+    add_subdirectory(loader)
+    add_subdirectory(hosted_app)
+    add_subdirectory(host)
+    add_subdirectory(backend_dev)
+    add_subdirectory(backend_client)
+    add_subdirectory(backend)
+    add_subdirectory(haf)
+    add_subdirectory(haf_ext)
+    add_subdirectory(haf_user)
+    add_subdirectory(haf_run)
+
+    add_subdirectory(backend_sfml)
+    add_subdirectory(zoper_game)
+    add_subdirectory(haf_app_menu)
+endif()
