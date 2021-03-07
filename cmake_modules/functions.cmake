@@ -77,7 +77,7 @@ function(build_lib_ext)
                              PUBLIC ${LC_BUILD_HEADER_DIRECTORY})
   target_link_libraries(${CURRENT_TARGET} PRIVATE haf)
 
-endfunction(build_lib_ext)
+endfunction()
 
 # Function to build different components from the project in an unified way.
 function(build_lib_interface_component)
@@ -90,7 +90,7 @@ function(build_lib_interface_component)
   target_include_directories(${CURRENT_TARGET}
                              INTERFACE ${LC_BUILD_HEADER_DIRECTORY})
 
-endfunction(build_lib_interface_component)
+endfunction()
 
 # Function to build different components from the project in an unified way.
 function(build_concrete_backend)
@@ -106,7 +106,7 @@ endfunction(build_concrete_backend)
 
 function(add_development_dependency _source _dependency)
     add_dependencies(${_source} ${_dependency})
-endfunction(add_development_dependency)
+endfunction()
 
 function(build_doc _base_name)
   # check if Doxygen is installed
@@ -132,4 +132,4 @@ function(build_doc _base_name)
       "Doxygen need to be installed to generate the doxygen documentation for "
       ${_base_name})
   endif(DOXYGEN_FOUND)
-endfunction(build_doc)
+endfunction()
