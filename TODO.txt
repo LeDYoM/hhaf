@@ -11,5 +11,6 @@ To format from command line:
 find haf/ -iname *.hpp -o -iname *.cpp| xargs clang-format -i
 
 # When changing level, tokens spawn to same speed always.
-- Points to score not working.
+# Points to score not working.
+- Points to score go to somewhere on top
 - Make the Boardmanager tests not need the init_log

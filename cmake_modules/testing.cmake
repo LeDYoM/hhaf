@@ -37,8 +37,35 @@ endfunction()
 
 function(add_haf_test_executable)
 
+  file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/main.test.cpp"
+  "#define CATCH_CONFIG_RUNNER
+    #include <catch.hpp>
+
+    #include <hlog/include/hlog.hpp>
+
+    int main(int argc, char* argv[])
+    {
+        Catch::Session session;  // There must be exactly once instance
+
+        // writing to session.configData() here sets defaults
+        // this is the preferred way to set them
+
+        //    session.configData().showSuccessfulTests = true;
+        int returnCode = session.applyCommandLine(argc, argv);
+        if (returnCode != 0)  // Indicates a command line error
+            return returnCode;
+
+        // writing to session.configData() or session.Config() here
+        // overrides command line args
+        // only do this if you know you need to
+
+        haf::LogInitializer log;
+        return session.run();
+    }
+    ")
+
   set(PARAM_LIST ${ARGV})
-  list(APPEND PARAM_LIST main)
+  list(APPEND PARAM_LIST "${CMAKE_CURRENT_BINARY_DIR}/main")
 
   add_test_executable(${PARAM_LIST})
 
