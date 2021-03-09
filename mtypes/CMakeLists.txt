@@ -11,7 +11,6 @@ project("Minitypes"
 include (testing)
 include (functions)
 enable_testing()
-set_install_dir()
 
 set(CURRENT_TARGET mtypes)
 
@@ -25,7 +24,12 @@ target_include_directories(${CURRENT_TARGET}
         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
 )
 
-file(GLOB_RECURSE public_headers *.hpp)
+file(GLOB public_headers 
+  RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+  ${CMAKE_CURRENT_SOURCE_DIR}/${CURRENT_TARGET}/include/*.hpp
+  )
+
+message("public_headers: ${public_headers}")
 set_target_properties(${CURRENT_TARGET} PROPERTIES PUBLIC_HEADER "${public_headers}")
 
 install(
@@ -36,3 +40,23 @@ install(
 add_subdirectory(tests)
 
 build_doc(${CURRENT_TARGET})
+
+  # Common properties
+  set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Library containing small and simple types")
+  set(CPACK_PACKAGE_NAME ${CURRENT_TARGET})
+  set(CPACK_PACKAGE_VENDOR "Ismael Gonzalez Burgos")
+  set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
+  set(CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})
+  set(CPACK_PACKAGE_VERSION_PATCH ${PROJECT_VERSION_PATCH})
+  set(CPACK_PACKAGE_VERSION "${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
+  message("Package version: ${CPACK_PACKAGE_VERSION}")
+  if(WINDOWS)
+      message("Packaginf haf for Windows")
+      set(CPACK_GENERATOR "ZIP")
+  else()
+      message("Packaginf haf for DEB")
+      set(CPACK_GENERATOR "DEB")
+      set(CPACK_DEBIAN_PACKAGE_MAINTAINER "${CPACK_PACKAGE_VENDOR}")
+      set(CPACK_DEBIAN_FILE_NAME "${CURRENT_TARGET}.deb")
+  endif()
+  include(CPack)

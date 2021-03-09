@@ -69,8 +69,6 @@ include(functions)
 include(testing)
 include(install)
 
-generate_pack_for_haf()
-
 option(BUILD_MTYPES "Specifies if mtypes should be build or not" ON)
 
 # Prepare the test framework
@@ -78,10 +76,8 @@ add_subdirectory(tests)
 
 #add_subdirectory(tools)
 
-option(BUILD_MTYPES "Specifies if mtypes should be build or not" ON)
-
 # Sub-directories where more CMakeLists.txt exist
-if(${BUILD_MYPES})
+if(${BUILD_MTYPES})
     add_subdirectory(mtypes)
 endif()
 

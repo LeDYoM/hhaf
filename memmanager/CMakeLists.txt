@@ -11,8 +11,6 @@ project("HAF MemManager"
 include (testing)
 include (functions)
 
-set_install_dir()
-
 enable_testing()
 
 set(CURRENT_TARGET memmanager)

@@ -11,7 +11,6 @@ project("HafTypes"
 include (testing)
 include (functions)
 #enable_testing()
-set_install_dir()
 
 set(CURRENT_TARGET htypes)
 

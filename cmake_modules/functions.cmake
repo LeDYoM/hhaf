@@ -5,12 +5,6 @@ function(set_cxx_standard CURRENT_TARGET)
     set_property(TARGET ${CURRENT_TARGET} PROPERTY POSITION_INDEPENDENT_CODE ON)       
 endfunction()
 
-macro(set_install_dir)
-#  set(CMAKE_INSTALL_PREFIX /home/ismael/h_test/)
-  set(CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}/phaf/")
-  message("CMAKE_INSTALL_PREFIX: ${CMAKE_INSTALL_PREFIX}")
-endmacro()
-
 # Function to build different components from the project in an unified way.
 function(build_lib_component)
 
