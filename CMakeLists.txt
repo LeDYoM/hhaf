@@ -69,7 +69,7 @@ include(functions)
 include(testing)
 include(install)
 
-option(BUILD_MTYPES "Specifies if mtypes should be build or not" ON)
+set(BUILD_PACKAGE_FOR "mtypes")
 
 # Prepare the test framework
 add_subdirectory(tests)
@@ -77,34 +77,30 @@ add_subdirectory(tests)
 #add_subdirectory(tools)
 
 # Sub-directories where more CMakeLists.txt exist
-if(${BUILD_MTYPES})
-    add_subdirectory(mtypes)
-endif()
+  add_subdirectory(mtypes)
 
-if(${BUILD_OTHER})
-    add_subdirectory(memmanager)
-    add_subdirectory(logger)
-    add_subdirectory(htypes)
+  add_subdirectory(memmanager)
+  add_subdirectory(logger)
+  add_subdirectory(htypes)
 
-    add_subdirectory(hlog)
+  add_subdirectory(hlog)
 
-    # Create interface library to add loggger and types with memory management
-    # in one line.
-    add_library(log_and_types INTERFACE)
-    target_link_libraries(log_and_types INTERFACE htypes memmanager hlog)
+  # Create interface library to add loggger and types with memory management
+  # in one line.
+  add_library(log_and_types INTERFACE)
+  target_link_libraries(log_and_types INTERFACE htypes memmanager hlog)
 
-    add_subdirectory(loader)
-    add_subdirectory(hosted_app)
-    add_subdirectory(host)
-    add_subdirectory(backend_dev)
-    add_subdirectory(backend_client)
-    add_subdirectory(backend)
-    add_subdirectory(haf)
-    add_subdirectory(haf_ext)
-    add_subdirectory(haf_user)
-    add_subdirectory(haf_run)
+  add_subdirectory(loader)
+  add_subdirectory(hosted_app)
+  add_subdirectory(host)
+  add_subdirectory(backend_dev)
+  add_subdirectory(backend_client)
+  add_subdirectory(backend)
+  add_subdirectory(haf)
+  add_subdirectory(haf_ext)
+  add_subdirectory(haf_user)
+  add_subdirectory(haf_run)
 
-    add_subdirectory(backend_sfml)
-    add_subdirectory(zoper_game)
-    add_subdirectory(haf_app_menu)
-endif()
+  add_subdirectory(backend_sfml)
+  add_subdirectory(zoper_game)
+  add_subdirectory(haf_app_menu)

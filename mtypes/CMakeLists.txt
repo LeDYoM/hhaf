@@ -16,8 +16,6 @@ set(CURRENT_TARGET mtypes)
 
 add_library(${CURRENT_TARGET} INTERFACE)
 
-#target_include_directories(${CURRENT_TARGET} INTERFACE ${PROJECT_SOURCE_DIR})
-
 target_include_directories(${CURRENT_TARGET}
     INTERFACE 
         $<INSTALL_INTERFACE:.>
@@ -29,7 +27,6 @@ file(GLOB public_headers
   ${CMAKE_CURRENT_SOURCE_DIR}/${CURRENT_TARGET}/include/*.hpp
   )
 
-message("public_headers: ${public_headers}")
 set_target_properties(${CURRENT_TARGET} PROPERTIES PUBLIC_HEADER "${public_headers}")
 
 install(
@@ -41,6 +38,8 @@ add_subdirectory(tests)
 
 build_doc(${CURRENT_TARGET})
 
+if(${BUILD_PACKAGE_FOR} STREQUAL ${CURRENT_TARGET})
+  message("Preparing package for mtypes")
   # Common properties
   set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Library containing small and simple types")
   set(CPACK_PACKAGE_NAME ${CURRENT_TARGET})
@@ -60,3 +59,4 @@ build_doc(${CURRENT_TARGET})
       set(CPACK_DEBIAN_FILE_NAME "${CURRENT_TARGET}.deb")
   endif()
   include(CPack)
+endif()
