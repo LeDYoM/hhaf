@@ -19,6 +19,7 @@ HafAppMenu::~HafAppMenu() = default;
 
 void HafAppMenu::onInit(AppInitializer& app_initializer)
 {
+    (void)(app_initializer);
     DisplayLog::verbose("Initializing HafAppMenu");
 
     //    configureScenes(data_wrapper_creator);

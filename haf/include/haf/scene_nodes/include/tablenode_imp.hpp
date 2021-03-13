@@ -13,8 +13,8 @@ class TableNodeImp : public SceneNode, public TableNodeProperties
 {
 public:
     using BaseClass = SceneNode;
-    using BaseClass::BaseClass;
-    using BaseClass::prop;
+    using SceneNode::SceneNode;
+    using SceneNode::prop;
     using TableNodeProperties::prop;
 
     ~TableNodeImp() override;
