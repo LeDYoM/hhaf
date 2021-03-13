@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
 project(
-  "Loader"
+  "AG Loader"
   VERSION 1.1.1.2
   DESCRIPTION "Multiplatform library to load shared libraries system agnostic"
   # [HOMEPAGE_URL <url-string>]
@@ -20,4 +20,4 @@ target_include_directories(
          $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../>
   PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/)
 
-target_link_libraries(${CURRENT_TARGET} ${CMAKE_DL_LIBS})
+target_link_libraries(${CURRENT_TARGET} PRIVATE ${CMAKE_DL_LIBS})

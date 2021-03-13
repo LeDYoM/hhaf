@@ -3,6 +3,7 @@
 #include <string>
 #include <map>
 #include <memory>
+#include <cstdint>
 
 namespace loader
 {
@@ -14,8 +15,8 @@ public:
     std::map<std::string, std::shared_ptr<LoadedInstance>> m_loadedInstances;
 };
 
-static Loader* loaderInstance{nullptr};
-static unsigned int reference_counter{0U};
+static std::unique_ptr<Loader> loaderInstance;
+static uintmax_t reference_counter{0U};
 
 Loader::Loader()
 {
@@ -32,7 +33,7 @@ Loader::~Loader()
     }
 }
 
-void* Loader::loadModule(const char* fileName)
+void* Loader::loadModule(const char* const fileName)
 {
     auto loadedInstace(std::make_shared<LoadedInstance>());
     loadedInstace->load(fileName);
@@ -44,7 +45,8 @@ void* Loader::loadModule(const char* fileName)
     return loadedInstace->loadedData();
 }
 
-void* Loader::loadMethod(const char* fileName, const char* methodName)
+void* Loader::loadMethod(const char* const fileName,
+                         const char* const methodName)
 {
     auto iterator(m_private->m_loadedInstances.find(fileName));
     if (iterator != m_private->m_loadedInstances.end())
@@ -69,23 +71,22 @@ bool Loader::unloadModule(const char* fileName)
 Loader* createLoader()
 {
     ++reference_counter;
-    if (!loaderInstance)
+    if (loaderInstance == nullptr)
     {
-        loaderInstance = new Loader;
+        loaderInstance = std::make_unique<Loader>();
     }
 
-    return loaderInstance;
+    return loaderInstance.get();
 }
 
 void destroyLoader()
 {
-    if (loaderInstance)
+    if (loaderInstance > 0U)
     {
         --reference_counter;
         if (reference_counter == 0U)
         {
-            delete loaderInstance;
-            loaderInstance = nullptr;
+            loaderInstance.reset(nullptr);
         }
     }
 }
