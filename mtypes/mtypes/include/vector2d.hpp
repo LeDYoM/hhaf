@@ -3,6 +3,7 @@
 
 #include "types.hpp"
 #include "str.hpp"
+#include <type_traits>
 
 namespace mtps
 {
@@ -172,8 +173,10 @@ constexpr str& operator>>(str& is, const vector2d<T>& v2d)
     return is;
 }
 
-static_assert(std::is_pod_v<vector2d<u8>>, "vector2du8 is not a pod");
-static_assert(std::is_pod_v<vector2d<f64>>, "vector2df64 is not a pod");
+static_assert(std::is_standard_layout_v<vector2d<u8>>,
+              "vector2du8 has not standard layout");
+static_assert(std::is_standard_layout_v<vector2d<f64>>,
+              "vector2df64 has not standard layout");
 
 using vector2du8  = vector2d<u8>;
 using vector2ds8  = vector2d<s8>;

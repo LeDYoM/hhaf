@@ -1,8 +1,26 @@
 function(set_cxx_standard CURRENT_TARGET)
-    set_property(TARGET ${CURRENT_TARGET} PROPERTY CXX_STANDARD 17)
-    set_property(TARGET ${CURRENT_TARGET} PROPERTY CXX_STANDARD_REQUIRED ON)
-    set_property(TARGET ${CURRENT_TARGET} PROPERTY CXX_EXTENSIONS ON)
-    set_property(TARGET ${CURRENT_TARGET} PROPERTY POSITION_INDEPENDENT_CODE ON)       
+    set_target_properties(${CURRENT_TARGET} PROPERTIES
+        CXX_STANDARD 20
+        CXX_STANDARD_REQUIRED ON
+        CXX_EXTENSIONS OFF
+        POSITION_INDEPENDENT_CODE ON)
+endfunction()
+
+function (set_compile_warning_level CURRENT_TARGET level)
+    if(MSVC)
+        target_compile_options(${CURRENT_TARGET} ${level} /W4 /WX)
+    else()
+        target_compile_options(${CURRENT_TARGET} {level} -Wall -Wextra -pedantic -Werror)
+    endif()
+endfunction()
+
+function (set_compile_warning_level_interface CURRENT_TARGET)
+    set_compile_warning_level(${CURRENT_TARGET} INTERFACE)
+endfunction()
+
+function(set_compile_warning_level_and_cxx_properties CURRENT_TARGET)
+    set_compile_warning_level(${CURRENT_TARGET} PRIVATE)
+    set_cxx_standard(${CURRENT_TARGET})
 endfunction()
 
 # Function to build different components from the project in an unified way.
