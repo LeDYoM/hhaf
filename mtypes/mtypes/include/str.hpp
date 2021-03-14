@@ -555,6 +555,17 @@ static_assert(std::is_default_constructible_v<str>,
 static_assert(std::is_copy_constructible_v<str>,
               "str must be copy constructible");
 using string_vector = vector<str>;
+
+template<size_t N>
+struct cestr
+{
+    constexpr cestr(const char (&str)[N])
+    {
+        std::copy_n(str, N, value);
+    }
+    
+    char value[N];
+};
 }  // namespace mtps
 
 #endif

@@ -50,7 +50,7 @@ public:
      *
      * @param size Expected size of the inner container
      */
-    explicit vector(const size_type size) : base_(size) {}
+    explicit constexpr vector(const size_type size) : base_(size) {}
 
     /**
      * @brief Constructor with reserved memory and copy from source.
@@ -60,9 +60,10 @@ public:
      * @param source Pointer to the first element of the
      * @param count Number of elements to copy.
      */
-    constexpr vector(const T* const source, const size_type count) :
+    constexpr vector(T const* const source, size_type const count) :
         base_(count)
     {
+        reserve(count);
         for (auto iterator = source; iterator != (source + count); ++iterator)
         {
             // Construct by copy.
