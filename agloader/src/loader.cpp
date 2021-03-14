@@ -5,7 +5,7 @@
 #include <memory>
 #include <cstdint>
 
-namespace loader
+namespace agloader
 {
 class Loader::LoaderPrivate
 {
@@ -90,4 +90,4 @@ void destroyLoader()
         }
     }
 }
-}  // namespace loader
+}  // namespace agloader

@@ -79,7 +79,7 @@ add_subdirectory(tools)
 # Sub-directories where more CMakeLists.txt exist
 add_subdirectory(mtypes)
 
-add_subdirectory(loader)
+add_subdirectory(agloader)
 
 add_subdirectory(memmanager)
 add_subdirectory(logger)

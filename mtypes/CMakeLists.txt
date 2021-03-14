@@ -2,7 +2,7 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/../cmake_modules" ${CMAKE_MODULE_PATH
 
 cmake_minimum_required(VERSION 3.14)
 project("Minitypes"
-    VERSION 0.9.1.2
+    VERSION 0.9.2.0
     DESCRIPTION "Simple types for HAF"
     # [HOMEPAGE_URL <url-string>]
     LANGUAGES CXX

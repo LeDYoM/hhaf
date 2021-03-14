@@ -7,7 +7,7 @@ namespace haf::host
 {
 ManagedApp AppLoader::loadApp(const str &file) const
 {
-    using namespace loader;
+    using namespace agloader;
     auto *loader(createLoader());
 
     if (loader->loadModule(file.c_str()))
@@ -28,7 +28,7 @@ ManagedApp AppLoader::loadApp(p_initApp init_app, p_finishApp finish_app) const
 
 bool AppLoader::unloadApp(ManagedApp &managed_app) const
 {
-    using namespace loader;
+    using namespace agloader;
 
     bool result{false};
 

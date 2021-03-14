@@ -4,7 +4,7 @@
 #include <htypes/include/types.hpp>
 #include <haf/system/include/isystemcontroller.hpp>
 
-namespace loader
+namespace agloader
 {
 class Loader;
 }
@@ -37,7 +37,7 @@ public:
     htps::rptr<ISystemController const> systemController() const noexcept;
 
 private:
-    htps::rptr<loader::Loader> loader_{nullptr};
+    htps::rptr<agloader::Loader> loader_{nullptr};
     htps::rptr<ISystemController> system_controller_{nullptr};
     CreateSystemController_t fp_haf_create_system_controller_;
     DestroySystemController_t fp_haf_destroy_system_controller_;

@@ -64,7 +64,7 @@ namespace
 
 #endif
 
-namespace loader
+namespace agloader
 {
 	class LoadedInstancePrivate
 	{

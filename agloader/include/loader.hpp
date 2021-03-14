@@ -3,7 +3,7 @@
 
 #include "loader_export.hpp"
 
-namespace loader
+namespace agloader
 {
 /**
  * @brief Main class to load a module
@@ -63,6 +63,6 @@ LOADER_API Loader* createLoader();
  */
 LOADER_API void destroyLoader();
 
-}  // namespace loader
+}  // namespace agloader
 
 #endif
