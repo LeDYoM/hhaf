@@ -1,4 +1,4 @@
-#include <loader/include/loader.hpp>
+#include <agloader/include/loader.hpp>
 #include <memmanager/include/memmanager.hpp>
 #include <thread>
 
@@ -16,7 +16,7 @@ int main(int argc, char* argv[])
     int result = 0;
     installMemManager();
 
-    auto* loader(loader::createLoader());
+    auto* loader(agloader::createLoader());
 
     constexpr const char host_library[] = "host";
     if (loader->loadModule(host_library))
@@ -35,7 +35,8 @@ int main(int argc, char* argv[])
             result = -1;
         }
     }
-    loader::destroyLoader();
+
+    agloader::destroyLoader();
     finishMemManager();
     return result;
 }

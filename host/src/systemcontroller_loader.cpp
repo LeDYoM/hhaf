@@ -1,6 +1,6 @@
 #include <host/include/systemcontroller_loader.hpp>
 #include <hlog/include/hlog.hpp>
-#include <loader/include/loader.hpp>
+#include <agloader/include/loader.hpp>
 
 using namespace htps;
 
@@ -9,14 +9,14 @@ namespace haf::host
 SystemControllerLoader::~SystemControllerLoader()
 {
     destroy();
-    loader::destroyLoader();
+    agloader::destroyLoader();
 }
 
 SystemControllerLoader::ResultType SystemControllerLoader::loadFunctions()
 {
     ResultType result{ResultType::Success};
 
-    loader_ = loader::createLoader();
+    loader_ = agloader::createLoader();
     if (!loader_)
     {
         return ResultType::CannotCreateLoader;

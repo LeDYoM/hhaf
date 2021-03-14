@@ -2,7 +2,7 @@
 #include <backend/include/backendregister.hpp>
 #include <backend_dev/include/iwindow.hpp>
 
-#include <loader/include/loader.hpp>
+#include <agloader/include/loader.hpp>
 
 using namespace htps;
 
@@ -48,7 +48,7 @@ BackendFactory::BackendFactory() :
     shaderFactory_{nullptr},
     bmpFontFactory_{nullptr}
 {
-    auto* loader(loader::createLoader());
+    auto* loader(agloader::createLoader());
 
     static const char* sh_name = "bsfml";
     if (loader->loadModule(sh_name))
@@ -82,7 +82,7 @@ BackendFactory::~BackendFactory()
 
     backend_register_.reset();
 
-    loader::destroyLoader();
+    agloader::destroyLoader();
 }
 
 rptr<IWindow> BackendFactory::getWindow() const noexcept
