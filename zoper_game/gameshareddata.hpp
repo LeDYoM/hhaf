@@ -2,16 +2,12 @@
 #define ZOPER_GAME_SHARED_DATA_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/array.hpp>
 #include <htypes/include/vector2d.hpp>
 #include <htypes/include/rect.hpp>
 #include <htypes/include/object.hpp>
 #include <htypes/include/str.hpp>
-#include <haf/time/include/timepoint.hpp>
 #include <haf/shareddata/include/ishareable.hpp>
 #include <haf/shareddata/include/address.hpp>
-
-#include "gameplay/direction.hpp"
 
 namespace zoper
 {
