@@ -80,9 +80,8 @@ add_subdirectory(tools)
 add_subdirectory(mtypes)
 
 add_subdirectory(agloader)
-
-add_subdirectory(memmanager)
 add_subdirectory(logger)
+add_subdirectory(memmanager)
 add_subdirectory(htypes)
 add_subdirectory(hlog)
 
@@ -104,3 +103,5 @@ add_subdirectory(haf_run)
 add_subdirectory(backend_sfml)
 add_subdirectory(zoper_game)
 add_subdirectory(haf_app_menu)
+
+stardard_install_haf()

@@ -561,7 +561,7 @@ struct Simple
     f32 a{};
     f64 b{};
 
-    Simple() noexcept = default;
+//    Simple() noexcept = default;
 
     bool operator==(const Simple& rhs) const
     {

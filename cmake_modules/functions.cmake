@@ -37,7 +37,7 @@ function(build_lib_component)
     add_library(${CURRENT_TARGET} SHARED ${LC_BUILD_SOURCES})
   endif()
 
-  set_cxx_standard(${CURRENT_TARGET})
+  set_compile_warning_level_and_cxx_properties(${CURRENT_TARGET})
 
   if(LC_BUILD_EXPORT_ALL)
     if (LC_BUILD_STATIC)
@@ -47,14 +47,15 @@ function(build_lib_component)
                           PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS true)
   endif()
 
-  if (NOT LC_BUILD_STATIC)
-    set_property(TARGET ${CURRENT} PROPERTY POSITION_INDEPENDENT_CODE ON)
-  endif()
-  
   target_include_directories(${CURRENT_TARGET}
       PUBLIC
-      "$<BUILD_INTERFACE:${LC_BUILD_HEADER_DIRECTORY}>"
       "$<INSTALL_INTERFACE:include>"
+      "$<BUILD_INTERFACE:${LC_BUILD_HEADER_DIRECTORY}>"
+  )
+
+file(GLOB_RECURSE public_headers 
+  RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+  ${CMAKE_CURRENT_SOURCE_DIR}/${CURRENT_TARGET}/include/*.hpp
   )
 
   include(GNUInstallDirs)
@@ -149,7 +150,8 @@ endfunction()
 macro(stardard_install_package)
     if(${BUILD_PACKAGE_FOR})
         if("${BUILD_PACKAGE_FOR}" STREQUAL "${CURRENT_TARGET}")
-        message("Preparing package for mtypes")
+        message("Preparing package for ${CURRENT_TARGET}")
+
         # Common properties
         set(CPACK_PACKAGE_DESCRIPTION_SUMMARY ${PROJECT_DESCRIPTION})
         set(CPACK_PACKAGE_NAME ${CURRENT_TARGET})
@@ -157,6 +159,34 @@ macro(stardard_install_package)
         set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
         set(CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})
         set(CPACK_PACKAGE_VERSION_PATCH ${PROJECT_VERSION_PATCH})
+        set(CPACK_PACKAGE_VERSION "${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
+        message("Package version: ${CPACK_PACKAGE_VERSION}")
+        if(WINDOWS)
+            message("Packaginf ${CURRENT_TARGET} for Windows")
+            set(CPACK_GENERATOR "ZIP")
+        else()
+            message("Packaging ${CURRENT_TARGET} for DEB")
+            set(CPACK_GENERATOR "DEB")
+            set(CPACK_DEBIAN_PACKAGE_MAINTAINER "${CPACK_PACKAGE_VENDOR}")
+            set(CPACK_DEBIAN_FILE_NAME "${CURRENT_TARGET}.deb")
+        endif()
+        include(CPack)
+        endif()
+    endif()
+endmacro()
+
+macro(stardard_install_haf)
+    if(${BUILD_PACKAGE_FOR})
+        if("${BUILD_PACKAGE_FOR}" STREQUAL "hhaf")
+        message("Preparing package for hhaf")
+
+        # Common properties
+        set(CPACK_PACKAGE_DESCRIPTION_SUMMARY ${PROJECT_DESCRIPTION})
+        set(CPACK_PACKAGE_NAME ${CURRENT_TARGET})
+        set(CPACK_PACKAGE_VENDOR "Ismael Gonzalez Burgos")
+        set(CPACK_PACKAGE_VERSION_MAJOR "1")
+        set(CPACK_PACKAGE_VERSION_MINOR "0")
+        set(CPACK_PACKAGE_VERSION_PATCH "0")
         set(CPACK_PACKAGE_VERSION "${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
         message("Package version: ${CPACK_PACKAGE_VERSION}")
         if(WINDOWS)

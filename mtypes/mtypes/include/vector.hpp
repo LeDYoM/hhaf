@@ -531,14 +531,22 @@ public:
 
     constexpr void checkRange(const iterator it) const
     {
+#ifndef NDEBUG
         assert(it >= begin());
         assert(it <= end());
+#else
+        (void)(it);
+#endif
     }
 
     constexpr void checkRange(const const_iterator it) const
     {
-        assert(it >= cbegin());
-        assert(it <= cend());
+#ifndef NDEBUG
+        assert(it >= begin());
+        assert(it <= end());
+#else
+        (void)(it);
+#endif
     }
 };
 

@@ -23,7 +23,7 @@ target_include_directories(${CURRENT_TARGET}
         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
 )
 
-file(GLOB public_headers 
+file(GLOB_RECURSE public_headers 
   RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}/${CURRENT_TARGET}/include/*.hpp
   )

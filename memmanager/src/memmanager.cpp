@@ -6,6 +6,7 @@
 #include <windows.h>
 #include <crtdbg.h>
 
+#ifndef NDEBUG
 static int crtDebugMemAllocHook(int allocType,
                                 void* userData,
                                 size_t size,
@@ -28,7 +29,7 @@ static int crtDebugMemAllocHook(int allocType,
 
     return true;
 }
-
+#endif
 #endif
 
 void installMemManager()

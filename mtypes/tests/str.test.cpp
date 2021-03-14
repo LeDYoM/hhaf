@@ -101,7 +101,7 @@ TEST_CASE("str", "[str]")
 
     SECTION("conversions", "[str]")
     {
-        str test = str::to_str(1234567890L);
+        str test = str::to_str(static_cast<u64>(1234567890L));
         CHECK(test == "1234567890");
         test = str::to_str('A');
         CHECK(test == "65");
