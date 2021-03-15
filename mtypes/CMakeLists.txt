@@ -39,4 +39,4 @@ add_subdirectory(tests)
 
 build_doc(${CURRENT_TARGET})
 
-stardard_install_package()
+#stardard_install_package()

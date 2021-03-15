@@ -1,5 +1,3 @@
-SET(CMAKE_INSTALL_PREFIX /home/ismael/h_test)
-
 # Host Application Framework
 cmake_minimum_required(VERSION 3.14)
 project(
@@ -96,12 +94,13 @@ add_subdirectory(backend_dev)
 add_subdirectory(backend_client)
 add_subdirectory(backend)
 add_subdirectory(haf)
-add_subdirectory(haf_ext)
 add_subdirectory(haf_user)
 add_subdirectory(haf_run)
 
+add_subdirectory(haf_ext)
+
 add_subdirectory(backend_sfml)
-add_subdirectory(zoper_game)
-add_subdirectory(haf_app_menu)
+#add_subdirectory(zoper_game)
+#add_subdirectory(haf_app_menu)
 
 stardard_install_haf()
