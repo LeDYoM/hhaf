@@ -100,7 +100,7 @@ add_subdirectory(haf_run)
 add_subdirectory(haf_ext)
 
 add_subdirectory(backend_sfml)
-#add_subdirectory(zoper_game)
-#add_subdirectory(haf_app_menu)
+add_subdirectory(zoper_game)
+add_subdirectory(haf_app_menu)
 
 stardard_install_haf()
