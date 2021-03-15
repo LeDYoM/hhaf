@@ -7,16 +7,10 @@ function(set_cxx_standard CURRENT_TARGET)
 endfunction()
 
 function (set_compile_warning_level CURRENT_TARGET level)
-    if(MSVC)
-        target_compile_options(${CURRENT_TARGET} ${level} /W4 /WX)
-    else()
-        target_compile_options(${CURRENT_TARGET} ${level} 
-          -Wall 
-          -Wextra 
-          -pedantic 
-          -Werror
-          )
-    endif()
+    target_compile_options(${CURRENT_TARGET} ${level}
+        $<$<CXX_COMPILER_ID:MSVC>:/W4 /WX>
+        $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall -Wextra -pedantic -Werror>
+    )
 endfunction()
 
 function (set_compile_warning_level_interface CURRENT_TARGET)
