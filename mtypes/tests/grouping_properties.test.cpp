@@ -15,9 +15,10 @@ TEST_CASE("PropertyGroupImpl one element", "[mtypes][property][Grouping]")
 {
     PropertyGroupImpl<IntTag> pg;
     auto a = pg.get_property_reference<IntTag>();
-
+    (void)(a);
     PropertyGroupImpl<IntTag> const pgc;
     auto b = pgc.get_property_reference<IntTag>();
+    (void)(b);
 }
 
 TEST_CASE("PropertyGroup one element", "[mtypes][property][Grouping]")
@@ -72,17 +73,23 @@ TEST_CASE("PropertyGroupImpl four elements", "[mtypes][property][Grouping]")
 
     TTPropertyGroupImpl pg;
     auto a1         = pg.get_property_reference<CharTag>();
+    (void)(a1);
     auto a2         = pg.get_property_reference<IntTag>();
+    (void)(a2);
     auto a3         = pg.get_property_reference<StrTag>();
     auto a4         = pg.get_property_reference<SptrIntTag>();
     auto const sca1 = pg.get_property_reference<CharTag>();
+    (void)(sca1);
     auto const sca2 = pg.get_property_reference<IntTag>();
+    (void)(sca2);
     auto const sca3 = pg.get_property_reference<StrTag>();
     auto const sca4 = pg.get_property_reference<SptrIntTag>();
 
     TTPropertyGroupImpl const pg2;
     auto const ca1 = pg.get_property_reference<CharTag>();
+    (void)(ca1);
     auto const ca2 = pg.get_property_reference<IntTag>();
+    (void)(ca2);
     auto const ca3 = pg.get_property_reference<StrTag>();
     auto const ca4 = pg.get_property_reference<SptrIntTag>();
 }

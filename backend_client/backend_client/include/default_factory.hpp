@@ -11,9 +11,9 @@ class DefaultFactoryOf : public IFactoryOf<T>
 public:
     using Interface = typename IFactoryOf<T>::Interface;
 
-    T* const create() noexcept override { return new ConcreteObject; }
+    T* create() const override { return new ConcreteObject; }
 
-    bool destroy(T* obj) noexcept override
+    bool destroy(T* obj) const override
     {
         delete obj;
         return true;

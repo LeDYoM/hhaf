@@ -55,7 +55,7 @@ inline sf::Transform to_sf_type(const htps::f32* matrix) noexcept
                          matrix[3], matrix[7], matrix[15]};
 }
 
-constexpr const sf::Texture* const to_sf_type(const ITexture* t)
+constexpr sf::Texture const* to_sf_type(const ITexture* t)
 {
     if (t)
     {
@@ -67,11 +67,11 @@ constexpr const sf::Texture* const to_sf_type(const ITexture* t)
     return nullptr;
 }
 
-constexpr const sf::Shader* const to_sf_type(const IShader* s)
+constexpr sf::Shader const* to_sf_type(const IShader* s)
 {
     if (s)
     {
-        if (auto tmp = dynamic_cast<const Shader*>(s))
+        if (auto tmp = dynamic_cast<Shader const*>(s))
         {
             return &(tmp->backEndShader());
         }
@@ -79,8 +79,8 @@ constexpr const sf::Shader* const to_sf_type(const IShader* s)
     return nullptr;
 }
 
-inline const sf::PrimitiveType to_sf_type(
-    const iPrimitiveType primitive_type)
+inline sf::PrimitiveType to_sf_type(
+    iPrimitiveType const primitive_type)
 {
     return static_cast<sf::PrimitiveType>(primitive_type);
 }

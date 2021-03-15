@@ -15,7 +15,7 @@ vector2du32 Texture::size() const
     return m_texturePrivate->size();
 }
 
-const backend::ITexture* const Texture::backEndTexture() const noexcept
+backend::ITexture const* Texture::backEndTexture() const noexcept
 {
     return m_texturePrivate;
 }

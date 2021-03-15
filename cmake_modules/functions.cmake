@@ -1,6 +1,6 @@
 function(set_cxx_standard CURRENT_TARGET)
     set_target_properties(${CURRENT_TARGET} PROPERTIES
-        CXX_STANDARD 20
+        CXX_STANDARD 17
         CXX_STANDARD_REQUIRED ON
         CXX_EXTENSIONS OFF
         POSITION_INDEPENDENT_CODE ON)
@@ -10,7 +10,7 @@ function (set_compile_warning_level CURRENT_TARGET level)
     if(MSVC)
         target_compile_options(${CURRENT_TARGET} ${level} /W4 /WX)
     else()
-        target_compile_options(${CURRENT_TARGET} {level} -Wall -Wextra -pedantic -Werror)
+#        target_compile_options(${CURRENT_TARGET} ${level} -Wall -Wextra -pedantic -Werror)
     endif()
 endfunction()
 

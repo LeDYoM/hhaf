@@ -16,7 +16,7 @@ enum class A : s32
     TestValue3 = max
 };
 
-constexpr const char* const to_str(const A value)
+constexpr char const* to_str(const A value)
 {
     switch (value)
     {

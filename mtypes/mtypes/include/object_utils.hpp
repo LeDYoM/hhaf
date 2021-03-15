@@ -247,13 +247,13 @@ namespace mtps
 
             if (next.value.is<s32>())
             {
-                return { next.value, TokenType::Integer };
+                return { next.value, TokenType::Integer, {}};
             }
             else if (next.value.is<f32>())
             {
-                return { next.value, TokenType::Float };
+                return { next.value, TokenType::Float, {} };
             }
-            return { next.value, next.token_type };
+            return { next.value, next.token_type, {} };
         }
 
     private:
@@ -400,7 +400,6 @@ namespace mtps
         inline void expectTypeAndAdvance(const TokenType expectedCurrent)
         {
             const Token& current_token{ currentTokenAndAdvance() };
-            const TokenType current(current_token.token_type);
             if (current_token.token_type != expectedCurrent)
             {
                 errors_.error(expectedCurrent, current_token);

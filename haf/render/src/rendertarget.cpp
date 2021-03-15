@@ -24,14 +24,14 @@ const haf::backend::iVertex* to_backend(
     return reinterpret_cast<const haf::backend::iVertex*>(vertices);
 }
 
-const haf::backend::iPrimitiveType to_backend(
+haf::backend::iPrimitiveType to_backend(
     const haf::scene::PrimitiveType primitive_type) noexcept
 {
     static_assert(sizeof(haf::backend::iPrimitiveType) ==
                       sizeof(haf::scene::PrimitiveType),
                   "The scene PrimitiveType and the backend PrimitiveType do "
                   "not have the same size");
-    return static_cast<const haf::backend::iPrimitiveType>(primitive_type);
+    return static_cast<haf::backend::iPrimitiveType>(primitive_type);
 }
 
 void do_render(const rptr<haf::backend::IRenderTarget> irender_target_,

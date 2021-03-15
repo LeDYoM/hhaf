@@ -104,8 +104,8 @@ public:
 private:
     void updateGlobalTransformation(Matrix4x4 const&) noexcept;
 
-    Matrix4x4 global_transform_;  ///< Global Transformation Matrix cached
     Matrix4x4 local_transform_;   ///< Current local Transformation cached
+    Matrix4x4 global_transform_;  ///< Global Transformation Matrix cached
 
     /**
      * Extra transformations contained in this object. One is at least always

@@ -9,8 +9,8 @@ class IFactoryOf
 public:
     using Interface = T;
 
-    virtual T* const create() noexcept = 0;
-    virtual bool destroy(T*) noexcept  = 0;
+    virtual T* create() const = 0;
+    virtual bool destroy(T*) const = 0;
     virtual ~IFactoryOf() {}
 };
 }  // namespace haf::backend

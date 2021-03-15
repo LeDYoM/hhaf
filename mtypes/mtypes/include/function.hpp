@@ -175,7 +175,7 @@ private:
         inline bool equals(ICallable const& other) const noexcept override
         {
             function::CallableMethodPointerT<T> const* const tmp =
-                dynamic_cast<function::CallableMethodPointerT<T> const*>(
+                dynamic_cast<CallableMethodPointerT<T> const*>(
                     &other);
             if (tmp == nullptr)
             {
@@ -213,7 +213,7 @@ private:
         inline bool equals(ICallable const& other) const noexcept override
         {
             function::ConstCallableMethodPointerT<T> const* const tmp =
-                dynamic_cast<function::ConstCallableMethodPointerT<T> const*>(
+                dynamic_cast<ConstCallableMethodPointerT<T> const*>(
                     &other);
             if (tmp == nullptr)
             {

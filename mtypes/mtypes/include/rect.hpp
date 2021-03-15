@@ -30,12 +30,12 @@ namespace mtps
         constexpr const vector2d<T> center() const { return vector2d<T> {left + (width / static_cast<T>(2)),
             top + (height / static_cast<T>(2))}; }
 
-        constexpr const bool operator==(const Rect &r) const
+        constexpr bool operator==(const Rect &r) const
         {
             return (left == r.left && width == r.width && top == r.top && height == r.height);
         }
 
-        constexpr const bool operator!=(const Rect &r) const
+        constexpr bool operator!=(const Rect &r) const
         {
             return !(operator==(r));
         }

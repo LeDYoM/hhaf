@@ -26,7 +26,7 @@ public:
 
     template <typename T,
               typename = std::enable_if_t<std::is_same_v<T, IWindowFactory>>>
-    IWindowFactory* const getFactory() const
+    IWindowFactory const* getFactory() const
     {
         return window_factory_;
     }
@@ -34,7 +34,7 @@ public:
     template <
         typename T,
         typename = std::enable_if_t<std::is_same_v<T, ITTFontFactoryFactory>>>
-    ITTFontFactoryFactory* const getFactory() const
+    ITTFontFactoryFactory const* getFactory() const
     {
         return ttfont_factory_factory_;
     }
@@ -42,7 +42,7 @@ public:
     template <
         typename T,
         typename = std::enable_if_t<std::is_same_v<T, ITextureFactoryFactory>>>
-    ITextureFactoryFactory* const getFactory() const
+    ITextureFactoryFactory const* getFactory() const
     {
         return texture_factory_factory_;
     }
@@ -50,7 +50,7 @@ public:
     template <
         typename T,
         typename = std::enable_if_t<std::is_same_v<T, IShaderFactoryFactory>>>
-    IShaderFactoryFactory* const getFactory() const
+    IShaderFactoryFactory const* getFactory() const
     {
         return shader_factory_factory_;
     }
@@ -58,7 +58,7 @@ public:
     template <
         typename T,
         typename = std::enable_if_t<std::is_same_v<T, IBMPFontFactoryFactory>>>
-    IBMPFontFactoryFactory* const getFactory() const
+    IBMPFontFactoryFactory const* getFactory() const
     {
         return bmpfont_factory_factory_;
     }

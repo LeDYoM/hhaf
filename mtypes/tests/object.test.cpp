@@ -487,7 +487,7 @@ inline Object& operator<<(Object& obj, const Simple& data)
     obj.set("c", data.c);
     return obj;
 }
-};  // namespace TestVectorWithCustomTypes
+}  // namespace TestVectorWithCustomTypes
 
 TEST_CASE("Object with vector of custom types", "[Object][vector]")
 {
@@ -592,7 +592,7 @@ inline Object& operator<<(Object& obj, const Simple& data)
     return obj;
 }
 
-};  // namespace TestVectorWithCustomTypesEnumsAndFloats
+}  // namespace TestVectorWithCustomTypesEnumsAndFloats
 
 TEST_CASE("Object with vector of custom types, enums and floats",
           "[Object][vector]")

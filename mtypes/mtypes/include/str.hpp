@@ -333,7 +333,7 @@ public:
         return m_data.cbegin() + size();
     }
 
-    constexpr const char_type* const c_str() const noexcept
+    constexpr char_type const* c_str() const noexcept
     {
         return m_data.empty() ? "" : m_data.cbegin();
     }

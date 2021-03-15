@@ -38,7 +38,7 @@ public:
     constexpr Matrix4x4(Matrix4x4&&) noexcept = default;
     Matrix4x4& operator=(Matrix4x4&&) noexcept = default;
 
-    constexpr htps::rptr<Scalar const> const getMatrix() const noexcept
+    constexpr htps::rptr<Scalar const> getMatrix() const noexcept
     {
         return matrix_data_;
     }

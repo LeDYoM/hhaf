@@ -9,7 +9,7 @@ Shader::Shader(backend::IShader* shader) : m_ShaderPrivate{shader}
 Shader::~Shader()
 {}
 
-const backend::IShader* const Shader::backEndShader() const noexcept
+backend::IShader const* Shader::backEndShader() const noexcept
 {
     return m_ShaderPrivate;
 }

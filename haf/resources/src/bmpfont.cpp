@@ -71,7 +71,7 @@ void filterStr(std::stringstream& line_stream, std::string& value)
     {
         auto const first_ = value.find_first_of('\"');
         auto const last_  = value.find_last_of('\"');
-        doNext            = (first_ > -1 && first_ == last_);
+        doNext            = (static_cast<s32>(first_) > -1 && first_ == last_);
         if (doNext)
         {
             std::string readTemp;
