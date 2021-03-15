@@ -18,7 +18,7 @@ private:
     void onKeyPressed(const haf::input::Key& key) override;
     void onKeyReleased(const haf::input::Key& key) override;
 
-    htps::rptr<GameScene> const gameScene();
+    htps::rptr<GameScene> gameScene();
 };
 } // namespace zoper
 

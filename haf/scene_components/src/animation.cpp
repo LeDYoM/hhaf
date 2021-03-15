@@ -10,8 +10,9 @@ Animation::Animation(uptr<time::Timer> timer,
                      ActionFunc endAction) noexcept :
     timer_{std::move(timer)},
     m_duration{std::move(duration)},
-    animation_direction_{std::move(animation_direction)},
+    m_currentTime{},
     m_endAction{std::move(endAction)},
+    animation_direction_{std::move(animation_direction)},
     raw_delta_{0.0F},
     delta_{postProcessDelta(raw_delta_)}
 {}

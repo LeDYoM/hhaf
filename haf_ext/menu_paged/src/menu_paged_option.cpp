@@ -33,4 +33,4 @@ s32 MenuPagedOption::onSelected() const noexcept
     return on_selected_;
 }
 
-};  // namespace haf::scene
+}  // namespace haf::scene

@@ -43,7 +43,7 @@ public:
         SimulationActionContainer simulation_action_container)
     {
         simulation_action_container_.insert(
-            std::move(simulation_action_container_));
+            std::move(simulation_action_container));
     }
 
     /**

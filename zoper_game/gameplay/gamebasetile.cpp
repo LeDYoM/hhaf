@@ -22,7 +22,7 @@ rptr<BoardGroup> GameBaseTile::getBoardGroup()
     return ancestor<BoardGroup>();
 }
 
-rptr<BoardGroup const> const GameBaseTile::getBoardGroup() const
+rptr<BoardGroup const> GameBaseTile::getBoardGroup() const
 {
     return ancestor<BoardGroup>();
 }

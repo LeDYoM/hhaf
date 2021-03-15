@@ -70,6 +70,10 @@ public:
     {
         return true;
     }
+
+    int const argc_;
+    char const* const* const argv_;
+
     parpar::ParametersParser params_;
 
     Dictionary<str> configuration_;
@@ -171,9 +175,6 @@ public:
 
         return is_new_app;
     }
-
-    int const argc_;
-    char const* const* const argv_;
 
     str simulation_input_file;
     str simulation_output_file;

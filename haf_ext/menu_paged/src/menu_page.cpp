@@ -112,7 +112,7 @@ void MenuPage::configure(vector<sptr<MenuPagedOption>> options,
 
     Selection.connect(
         [this, options](const size_type index, const s32 /*selection*/) {
-            LogAsserter::log_assert(index <= static_cast<s32>(options.size()),
+            LogAsserter::log_assert(index <= options.size(),
                                     "Logical error: Received invalid "
                                     "index in Selection");
 

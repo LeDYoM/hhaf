@@ -38,7 +38,7 @@ public:
     htps::sptr<haf::board::BoardManager> getBoardManager();
     htps::sptr<haf::board::BoardManager const> const getBoardManager() const;
     htps::rptr<BoardGroup> getBoardGroup();
-    htps::rptr<BoardGroup const> const getBoardGroup() const;
+    htps::rptr<BoardGroup const> getBoardGroup() const;
 
     bool isInCenter() const noexcept { return is_in_center; }
 

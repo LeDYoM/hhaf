@@ -160,8 +160,8 @@ bool ResourceManager::loadBMPFont(const str& rid, const str& fileName)
 
         for (const auto& file_name : texture_file_names)
         {
-            const bool texture_available =
-                loadTexture(rid + "_" + file_name, file_name);
+//            const bool texture_available =
+//                loadTexture(rid + "_" + file_name, file_name);
 
             sptr<ITexture> texture(getTexture(rid + "_" + file_name));
             textures.push_back(std::move(texture));

@@ -14,3 +14,4 @@ find haf/ -iname *.hpp -o -iname *.cpp| xargs clang-format -i
 # Points to score not working.
 - Points to score go to somewhere on top
 - Make the Boardmanager tests not need the init_log
+- Fix warnings

@@ -26,6 +26,8 @@ void DebugActions::onKeyPressed(const Key &key)
     case Key::A:
         gameScene()->levelProperties()->nextLevel();
         break;
+    default:
+        break;
     }
 }
 
@@ -33,7 +35,7 @@ void DebugActions::onKeyReleased(const Key &)
 {
 }
 
-const rptr<GameScene> DebugActions::gameScene()
+rptr<GameScene> DebugActions::gameScene()
 {
     return attachedNodeAs<GameScene>();
 }

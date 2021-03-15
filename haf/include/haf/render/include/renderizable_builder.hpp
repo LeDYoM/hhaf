@@ -47,13 +47,13 @@ public:
         htps::rptr<Renderizables> renderizables_;
         htps::str name_;
         FigType_t figType_;
-        htps::Rectf32 box_;
+        htps::Rectf32 box_{};
         Color color_{colors::White};
         htps::size_type pointCount_{4U};
-        htps::sptr<res::IShader> shader_;
-        htps::sptr<res::ITexture> texture_;
+        htps::sptr<res::IShader> shader_{nullptr};
+        htps::sptr<res::ITexture> texture_{nullptr};
         htps::function<Color(const RenderizableModifierContext&)>
-            color_modifier_;
+            color_modifier_{};
     };
 
     const Data& data() const { return data_; }

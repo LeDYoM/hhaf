@@ -47,12 +47,12 @@ namespace haf::sys
             static_cast<rptr<SystemAccess>>(scene_node)); \
     }
 
-DEFINE_GETSYSTEM(sys::InputSystem, inputSystem);
-DEFINE_GETSYSTEM(scene::SceneManager, sceneManager);
-DEFINE_GETSYSTEM(sys::RenderSystem, renderSystem);
-DEFINE_GETSYSTEM(sys::ResourceManager, resourceManager);
-DEFINE_GETSYSTEM(sys::TimeSystem, timeSystem);
-DEFINE_GETSYSTEM(sys::SharedDataSystem, sharedDataSystem);
-DEFINE_GETSYSTEM(sys::RandomSystem, randomSystem);
-DEFINE_GETSYSTEM(sys::FileSystem, fileSystem);
+DEFINE_GETSYSTEM(sys::InputSystem, inputSystem)
+DEFINE_GETSYSTEM(scene::SceneManager, sceneManager)
+DEFINE_GETSYSTEM(sys::RenderSystem, renderSystem)
+DEFINE_GETSYSTEM(sys::ResourceManager, resourceManager)
+DEFINE_GETSYSTEM(sys::TimeSystem, timeSystem)
+DEFINE_GETSYSTEM(sys::SharedDataSystem, sharedDataSystem)
+DEFINE_GETSYSTEM(sys::RandomSystem, randomSystem)
+DEFINE_GETSYSTEM(sys::FileSystem, fileSystem)
 }  // namespace haf::sys
