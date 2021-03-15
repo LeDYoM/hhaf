@@ -16,7 +16,7 @@ struct cestr
     constexpr bool empty() const noexcept { return N < 2U; }
 
     template <size_type N2>
-    constexpr bool operator==(char const (&str)[N2])
+    constexpr bool operator==(char const (&str)[N2]) const
     {
         if (N != N2)
         {
