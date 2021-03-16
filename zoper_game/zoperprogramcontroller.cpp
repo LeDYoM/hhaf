@@ -24,9 +24,6 @@ void ZoperProgramController::configureScenes(AppInitializer& app_initializer)
     app_initializer.startScene<MenuScene>();
 }
 
-ZoperProgramController::ZoperProgramController()  = default;
-ZoperProgramController::~ZoperProgramController() = default;
-
 void ZoperProgramController::onInit(AppInitializer& app_initializer)
 {
     DisplayLog::verbose("Initializing ZoperProgramController");
