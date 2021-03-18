@@ -17,8 +17,6 @@ Host::Host(int argc, char* argv[]) : p_{muptr<HostPrivate>(argc, argv)}
     DisplayLog::info("Starting HostController...");
     DisplayLog::info("Host version: ", HostVersion, ".", HostSubversion, ".",
                      HostPatch, ".", HostTweak);
-    DisplayLog::info("Parsing parameters...");
-    p_->parseCommandLineParameters();
 }
 
 Host::~Host()

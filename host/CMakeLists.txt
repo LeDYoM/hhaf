@@ -10,8 +10,9 @@ set(CURRENT_TARGET "host")
 
 set(SRC_FILES 
     src/apploader.cpp
-    src/host.cpp
+    src/host_config.hpp
     src/host_private.hpp
+    src/host.cpp
     src/main.cpp
     src/systemcontroller_loader.cpp
 )

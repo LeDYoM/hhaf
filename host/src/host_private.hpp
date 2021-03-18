@@ -3,6 +3,7 @@
 
 #include <hosted_app/include/iapp.hpp>
 #include <host/include/apploader.hpp>
+#include "host_config.hpp"
 #include <haf/system/include/isystemcontroller.hpp>
 #include <hlog/include/hlog.hpp>
 #include <agloader/include/loader.hpp>
@@ -10,6 +11,9 @@
 #include <htypes/include/parpar.hpp>
 #include <htypes/include/object.hpp>
 #include <htypes/include/parpar.hpp>
+
+#include <fstream>
+#include <string>
 
 using namespace htps;
 
@@ -60,23 +64,14 @@ public:
         argc_{argc},
         argv_{argv},
         params_{parpar::create(argc, argv)},
-        // Hardcoded default configuration
-        // TODO
-        configuration_{{}},
         app_state_{AppState::NotInitialized}
     {}
-
-    bool parseCommandLineParameters()
-    {
-        return true;
-    }
 
     int const argc_;
     char const* const* const argv_;
 
     parpar::ParametersParser params_;
 
-    Dictionary<str> configuration_;
     SystemControllerLoader system_loader_;
     vector<HostedApplication> app_;
     u32 index_current_app{0U};
@@ -104,6 +99,7 @@ public:
     {
         app_state_ = app_state;
     }
+
     bool loopStep() { return systemController()->runStep(); }
 
     bool update()
