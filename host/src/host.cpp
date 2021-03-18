@@ -34,6 +34,11 @@ Host::~Host()
     DisplayLog::info("All applications unloaded");
 }
 
+bool Host::initialize()
+{
+    return true;
+}
+
 bool Host::loadApplication(htps::str const& app_name)
 {
     ManagedApp managed_app = p_->app_loader.loadApp(app_name);

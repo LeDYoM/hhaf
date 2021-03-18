@@ -35,6 +35,7 @@ public:
      */
     ~Host();
 
+    bool initialize();
     bool loadApplication(htps::str const& app_name);
     bool unloadApplication(htps::str const& app_name);
 
