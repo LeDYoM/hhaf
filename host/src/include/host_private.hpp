@@ -1,6 +1,7 @@
 #ifndef HAF_HOST_PRIVATE_INCLUDE_HPP
 #define HAF_HOST_PRIVATE_INCLUDE_HPP
 
+#include "hosted_application.hpp"
 #include <hosted_app/include/iapp.hpp>
 #include <host/include/apploader.hpp>
 #include "host_config.hpp"
@@ -27,35 +28,6 @@ enum class AppState : htps::u8
     ReadyToTerminate,
     Terminated
 };
-
-class HostedApplication final
-{
-public:
-    HostedApplication(str app_name) noexcept : app_name_{std::move(app_name)} {}
-    HostedApplication(rptr<IApp> iapp,
-                      ManagedApp managed_app,
-                      str app_name) noexcept :
-        iapp_{iapp},
-        managed_app_{std::move(managed_app)},
-        app_name_{std::move(app_name)}
-    {}
-
-    rptr<IApp> iapp_{nullptr};
-    ManagedApp managed_app_;
-    str app_name_;
-};
-
-bool operator==(HostedApplication const& lhs,
-                HostedApplication const& rhs) noexcept
-{
-    return lhs.app_name_ == rhs.app_name_;
-}
-
-str appDisplayNameAndVersion(const IApp& app)
-{
-    return make_str(app.getName(), "(", app.getVersion(), ".",
-                    app.getSubVersion(), ".", app.getPatch(), ")");
-}
 
 class Host::HostPrivate final
 {
