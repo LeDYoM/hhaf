@@ -17,7 +17,7 @@ HOST_API int haf_host_main(int argc, char* argv[])
     using namespace haf;
     using namespace haf::host;
 
-    int result = -1;
+    int result{-1};
 
     try
     {
