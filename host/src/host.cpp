@@ -36,7 +36,7 @@ Host::~Host()
 
 bool Host::initialize()
 {
-    return true;
+    return loadApplication(p_->configuredFirstApp());
 }
 
 bool Host::loadApplication(htps::str const& app_name)

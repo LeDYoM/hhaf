@@ -35,6 +35,7 @@ public:
     HostPrivate(const int argc, char const* const argv[]) :
         argc_{argc},
         argv_{argv},
+        config_{argc, argv},
         params_{parpar::create(argc, argv)},
         app_state_{AppState::NotInitialized}
     {}
@@ -42,13 +43,18 @@ public:
     int const argc_;
     char const* const* const argv_;
 
+    HostConfig config_;
     parpar::ParametersParser params_;
-
     SystemControllerLoader system_loader_;
     vector<HostedApplication> app_;
     u32 index_current_app{0U};
     AppLoader app_loader;
     rptr<IApp> currentApp() { return app_[index_current_app].iapp_; }
+
+    str configuredFirstApp() const
+    {
+        return config_.configuredFirstApp();
+    }
 
     rptr<IApp const> currentApp() const
     {

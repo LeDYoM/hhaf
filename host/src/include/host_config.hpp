@@ -24,7 +24,7 @@ public:
 
     }
 
-    str configuredFirstApp() const { return "zoper"; }
+    str configuredFirstApp() const { return "Zoper"; }
 
     void loadConfigFile()
     {

@@ -21,10 +21,10 @@ HOST_API int haf_host_main(int argc, char* argv[])
 
     try
     {
+        LogInitializer log_init;
+        Host host(argc, argv);
+        if (host.initialize())
         {
-            LogInitializer log_init;
-            Host host(argc, argv);
-            host.loadApplication("Zoper");
             result = host.run();
         }
     }
