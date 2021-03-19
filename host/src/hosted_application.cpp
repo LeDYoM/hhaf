@@ -8,10 +8,8 @@ namespace haf::host
 HostedApplication::HostedApplication(str app_name) noexcept :
     app_name_{std::move(app_name)}
 {}
-HostedApplication::HostedApplication(rptr<IApp> iapp,
-                                     ManagedApp managed_app,
+HostedApplication::HostedApplication(ManagedApp managed_app,
                                      str app_name) noexcept :
-    iapp_{iapp},
     managed_app_{std::move(managed_app)},
     app_name_{std::move(app_name)}
 {}

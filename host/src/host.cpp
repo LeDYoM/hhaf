@@ -43,7 +43,7 @@ bool Host::loadApplication(htps::str const& app_name)
 {
     ManagedApp managed_app = p_->app_loader.loadApp(app_name);
     return managed_app.app != nullptr
-        ? p_->addApplication(managed_app.app, std::move(managed_app), app_name)
+        ? p_->addApplication(std::move(managed_app), app_name)
         : false;
 }
 

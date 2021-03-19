@@ -38,7 +38,7 @@ public:
     vector<HostedApplication> app_;
     u32 index_current_app{0U};
     AppLoader app_loader;
-    rptr<IApp> currentApp() { return app_[index_current_app].iapp_; }
+    rptr<IApp> currentApp() { return app_[index_current_app].managed_app_.app; }
 
     str configuredFirstApp() const
     {
@@ -47,7 +47,7 @@ public:
 
     rptr<IApp const> currentApp() const
     {
-        return app_[index_current_app].iapp_;
+        return app_[index_current_app].managed_app_.app;
     }
 
     inline rptr<ISystemController> systemController() noexcept
@@ -114,9 +114,9 @@ public:
         return false;
     }
 
-    bool addApplication(rptr<IApp> iapp, ManagedApp managed_app, htps::str name)
+    bool addApplication(ManagedApp managed_app, htps::str name)
     {
-        LogAsserter::log_assert(iapp != nullptr,
+        LogAsserter::log_assert(managed_app.app != nullptr,
                                 "Received nullptr Application");
 
         // Search for a pointer to the same app
@@ -130,7 +130,7 @@ public:
         if (is_new_app)
         {
             DisplayLog::info("Starting Registering app...");
-            app_.emplace_back(std::move(iapp), std::move(managed_app),
+            app_.emplace_back(std::move(managed_app),
                               std::move(name));
             DisplayLog::verbose("Starting new app...");
             app_state_ = AppState::ReadyToStart;

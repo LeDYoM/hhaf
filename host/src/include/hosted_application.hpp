@@ -4,6 +4,7 @@
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
 #include "app_loader.hpp"
+#include "app_state.hpp"
 #include <hosted_app/include/iapp.hpp>
 
 using namespace htps;
@@ -14,13 +15,12 @@ class HostedApplication final
 {
 public:
     HostedApplication(htps::str app_name) noexcept;
-    HostedApplication(htps::rptr<IApp> iapp,
-                      ManagedApp managed_app,
+    HostedApplication(ManagedApp managed_app,
                       str app_name) noexcept;
 
-    htps::rptr<IApp> iapp_{nullptr};
     ManagedApp managed_app_;
     htps::str app_name_;
+    AppState app_state{AppState::NotInitialized};
 };
 
 bool operator==(HostedApplication const& lhs,
