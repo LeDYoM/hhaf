@@ -5,6 +5,7 @@
 #include <hosted_app/include/iapp.hpp>
 #include <host/include/apploader.hpp>
 #include "host_config.hpp"
+#include "app_state.hpp"
 #include <haf/system/include/isystemcontroller.hpp>
 #include <hlog/include/hlog.hpp>
 #include <agloader/include/loader.hpp>
@@ -20,15 +21,6 @@ using namespace htps;
 
 namespace haf::host
 {
-enum class AppState : htps::u8
-{
-    NotInitialized,
-    ReadyToStart,
-    Executing,
-    ReadyToTerminate,
-    Terminated
-};
-
 class Host::HostPrivate final
 {
 public:

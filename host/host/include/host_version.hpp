@@ -3,7 +3,7 @@
 
 constexpr static const char HostVersion[]    = "0";
 constexpr static const char HostSubversion[] = "5";
-constexpr static const char HostPatch[]      = "2";
+constexpr static const char HostPatch[]      = "4";
 constexpr static const char HostTweak[]      = "1";
 
 #endif
