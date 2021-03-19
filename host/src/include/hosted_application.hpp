@@ -3,7 +3,7 @@
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
-#include <host/include/apploader.hpp>
+#include "app_loader.hpp"
 #include <hosted_app/include/iapp.hpp>
 
 using namespace htps;

@@ -9,11 +9,12 @@ project(
 set(CURRENT_TARGET "host")
 
 set(SRC_FILES 
+    src/include/app_loader.hpp
     src/include/app_state.hpp
     src/include/host_config.hpp
     src/include/host_private.hpp
     src/include/hosted_application.hpp
-    src/apploader.cpp
+    src/app_loader.cpp
     src/host.cpp
     src/hosted_application.cpp
     src/main.cpp

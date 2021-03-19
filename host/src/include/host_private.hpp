@@ -3,7 +3,7 @@
 
 #include "hosted_application.hpp"
 #include <hosted_app/include/iapp.hpp>
-#include <host/include/apploader.hpp>
+#include "app_loader.hpp"
 #include "host_config.hpp"
 #include "app_state.hpp"
 #include <haf/system/include/isystemcontroller.hpp>
