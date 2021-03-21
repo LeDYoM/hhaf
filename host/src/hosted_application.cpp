@@ -5,9 +5,6 @@ using namespace htps;
 namespace haf::host
 {
 
-HostedApplication::HostedApplication(str app_name) noexcept :
-    app_name_{std::move(app_name)}
-{}
 HostedApplication::HostedApplication(ManagedApp managed_app,
                                      str app_name) noexcept :
     managed_app_{std::move(managed_app)},

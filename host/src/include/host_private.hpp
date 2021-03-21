@@ -120,7 +120,7 @@ public:
                                 "Received nullptr Application");
 
         // Search for a pointer to the same app
-        auto const found = app_.cfind(HostedApplication{name});
+        auto const found = app_.cfind(HostedApplication{ManagedApp{}, name});
 
         // Store if the app is already registered
         bool const is_new_app{found == app_.cend()};
