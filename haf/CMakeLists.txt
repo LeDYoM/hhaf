@@ -22,6 +22,7 @@ set(HAF_PRIVATE_INCLUDE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 add_library(${CURRENT_TARGET} SHARED ${_SOURCES} ${_HEADERS})
 target_compile_definitions(${CURRENT_TARGET} PRIVATE HAF_ALLOW_ACCELERATION)
 target_compile_definitions(${CURRENT_TARGET} PRIVATE haf_EXPORTS)
+set_compile_warning_level_and_cxx_properties(${CURRENT_TARGET})
 
 # For now, export all simbols
 set_target_properties(${CURRENT_TARGET} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS
