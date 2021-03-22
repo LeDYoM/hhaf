@@ -1,6 +1,6 @@
 #include "displayvar_console.hpp"
-
-#include "../loaders/gameresources.hpp"
+#include <haf/scene_nodes/include/scenenodetext.hpp>
+#include "../loaders/mainmenuresources.hpp"
 
 #include <haf/scene/include/scene.hpp>
 #include <haf/scene_nodes/include/scenenodetext.hpp>
@@ -21,6 +21,16 @@ DisplayVarConsole::DisplayVarConsole(
     str name) :
     SceneNode{parent, std::move(name)}
 {
+}
+
+void DisplayVarConsole::init()
+{
+    auto a = createSceneNode<SceneNodeText>("scnText");
+    a->prop<Font>().set(systemInterface<res::IResourceRetriever>()
+                .getTTFont(MainMenuResources::MenuFontId)
+                ->font(72));
+
+    a->prop<Text>().set("abc");
 }
 
 DisplayVarConsole::~DisplayVarConsole() = default;

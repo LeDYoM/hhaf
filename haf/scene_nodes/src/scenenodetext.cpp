@@ -196,18 +196,21 @@ void SceneNodeText::update()
         });
     }
 
-    bool const as_rr_hasChanged{pr.readResetHasChanged<AlignmentSize>()};
-    bool const align_x{pr.readResetHasChanged<AlignmentX>()};
-    bool const align_y{pr.readResetHasChanged<AlignmentY>()};
-
-    if (as_rr_hasChanged || align_x)
+    if (pr.get<Font>() != nullptr)
     {
-        updateAlignmentX(pr.get<Font>()->textSize(pr.get<Text>()).x);
-    }
+        bool const as_rr_hasChanged{pr.readResetHasChanged<AlignmentSize>()};
+        bool const align_x{pr.readResetHasChanged<AlignmentX>()};
+        bool const align_y{pr.readResetHasChanged<AlignmentY>()};
 
-    if (as_rr_hasChanged || align_y)
-    {
-        updateAlignmentY(pr.get<Font>()->textSize(pr.get<Text>()).y);
+        if (as_rr_hasChanged || align_x)
+        {
+            updateAlignmentX(pr.get<Font>()->textSize(pr.get<Text>()).x);
+        }
+
+        if (as_rr_hasChanged || align_y)
+        {
+            updateAlignmentY(pr.get<Font>()->textSize(pr.get<Text>()).y);
+        }
     }
 }
 

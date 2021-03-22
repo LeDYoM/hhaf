@@ -26,7 +26,6 @@ constexpr u32 PointsPerQuad = 6U;
 
 MenuScene::MenuScene() : BaseClass{StaticTypeName}
 {
-    createSceneNode<DisplayVarConsole>("a");
 }
 
 MenuScene::~MenuScene() = default;
@@ -70,5 +69,9 @@ void MenuScene::onCreated()
         }
         dataWrapper<SceneControl>()->switchToNextScene();
     });
+
+    auto a = createSceneNode<DisplayVarConsole>("a");
+    a->init();
+
 }
 }  // namespace zoper
