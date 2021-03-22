@@ -8,7 +8,7 @@ project(
 
 file (GLOB_RECURSE HEADERS "*.hpp")
 file (GLOB_RECURSE SOURCES "*.cpp")
-
+message("SOURCES: ${SOURCES}")
 set (CURRENT_TARGET ${PROJECT_NAME})
 
 include(client_functions)

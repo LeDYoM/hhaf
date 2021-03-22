@@ -9,6 +9,7 @@
 #include "../zoperprogramcontroller.hpp"
 #include "../common_scene_nodes.hpp"
 #include "../static_data.hpp"
+#include "../gameplay/displayvar_console.hpp"
 
 #include <haf/resources/include/iresourceconfigurator.hpp>
 #include <haf/system/include/interfaceaccess.hpp>
@@ -24,7 +25,9 @@ namespace zoper
 constexpr u32 PointsPerQuad = 6U;
 
 MenuScene::MenuScene() : BaseClass{StaticTypeName}
-{}
+{
+    createSceneNode<DisplayVarConsole>("a");
+}
 
 MenuScene::~MenuScene() = default;
 
