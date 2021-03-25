@@ -1,4 +1,4 @@
-#include "displayvar_console.hpp"
+#include "console.hpp"
 #include <haf/scene_nodes/include/scenenodetext.hpp>
 #include "../loaders/mainmenuresources.hpp"
 
@@ -16,11 +16,17 @@ using namespace haf::scene::nodes;
 
 namespace zoper
 {
-DisplayVarConsole::DisplayVarConsole(
-    htps::rptr<haf::scene::SceneNode> const parent,
-    str name) :
-    Console{parent, std::move(name)}
+
+void Console::onCreated()
 {
+    SceneNode::onCreated();
+
+    auto a = createSceneNode<SceneNodeText>("scnText");
+    a->prop<Font>().set(systemInterface<res::IResourceRetriever>()
+                .getTTFont(MainMenuResources::MenuFontId)
+                ->font(72));
+
+    a->prop<Text>().set("abc");
 }
 
 }  // namespace zoper

@@ -9,4 +9,4 @@ class TextSpaceCalculator
 {};
 }  // namespace haf::res
 
-#endif  // !HAF_TEXTSIZE_CALCULATOR
+#endif

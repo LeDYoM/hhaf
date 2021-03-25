@@ -3,17 +3,15 @@
 
 #include <htypes/include/types.hpp>
 #include <haf/scene/include/scenenode.hpp>
+#include "console.hpp"
 
 namespace zoper
 {
-class DisplayVarConsole : public haf::scene::SceneNode
+class DisplayVarConsole : public Console
 {
 public:
     DisplayVarConsole(htps::rptr<haf::scene::SceneNode> const parent,
                      htps::str name);
-    ~DisplayVarConsole() override;
-
-    void init();
 };
 }  // namespace zoper
 

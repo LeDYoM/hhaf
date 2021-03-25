@@ -71,7 +71,5 @@ void MenuScene::onCreated()
     });
 
     auto a = createSceneNode<DisplayVarConsole>("a");
-    a->init();
-
 }
 }  // namespace zoper
