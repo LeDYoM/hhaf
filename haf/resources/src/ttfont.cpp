@@ -70,7 +70,7 @@ vector2df TTFont::textSize(const str& text, const u32 characterSize) const
 
     // Create one quad for each character
     vector2df max{};
-    u32 prevChar{0};
+    u32 prevChar{0U};
 
     for (auto curChar : text)
     {
@@ -79,16 +79,13 @@ vector2df TTFont::textSize(const str& text, const u32 characterSize) const
         prevChar = curChar;
 
         // Handle special characters
-        if ((curChar == ' ') || (curChar == '\t') || (curChar == '\n'))
+        if ((curChar == '\t') || (curChar == '\n'))
         {
             // Update the current bounds (min coordinates)
             const f32 hspace{getAdvance(L' ', characterSize)};
 
             switch (curChar)
             {
-                case ' ':
-                    x += hspace;
-                    break;
                 case '\t':
                     x += hspace * 4;
                     break;

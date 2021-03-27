@@ -52,10 +52,7 @@ void SceneNodeText::update()
             f32 y{0.F};
 
             // Create one quad for each character
-            f32 minX{y};
-            f32 minY{y};
-            f32 maxX{0.f};
-            f32 maxY{0.f};
+            Rectf32 bounds{x, y, 0.0F, 0.0F};
             u32 prevChar{0U};
             size_type counter{0U};
             size_type old_counter = sceneNodes().size();
@@ -63,14 +60,14 @@ void SceneNodeText::update()
 
             log_snt("Text to render: ", pr.get<Text>());
 
-            for (auto&& curChar : pr.get<Text>())
+            for (auto curChar : pr.get<Text>())
             {
                 log_snt("------------------------------------------------------"
                         "-----------");
                 log_snt("Current char: ", make_str(curChar));
                 log_snt("Current x and y: ", x, ",", y);
-                log_snt("minX: ", minX, " minY: ,", minY);
-                log_snt("maxX: ", maxX, " maxY: ,", maxY);
+                log_snt("bounds left top: ", bounds.leftTop());
+                log_snt("bounds right bottom: ", bounds.rightBottom());
                 log_snt("prevChar: ", make_str(prevChar));
                 log_snt("kerning: ", font->getKerning(prevChar, curChar));
                 // Apply the kerning offset
@@ -81,19 +78,16 @@ void SceneNodeText::update()
                 prevChar = curChar;
 
                 // Handle special characters
-                if ((curChar == ' ') || (curChar == '\t') || (curChar == '\n'))
+                if ((curChar == '\t') || (curChar == '\n'))
                 {
                     using namespace std;
                     // Update the current bounds (min coordinates)
-                    minX = min(minX, x);
-                    minY = min(minY, y);
+                    bounds.left = min(bounds.left, x);
+                    bounds.top = min(bounds.top, y);
                     f32 const hspace{font->getAdvance(L' ')};
 
                     switch (curChar)
                     {
-                        case ' ':
-                            x += hspace;
-                            break;
                         case '\t':
                             x += hspace * 4;
                             break;
@@ -106,8 +100,8 @@ void SceneNodeText::update()
                     }
 
                     // Update the current bounds (max coordinates)
-                    maxX = max(maxX, x);
-                    maxY = max(maxY, y);
+                    bounds.setRight(max(bounds.right(), x));
+                    bounds.setBottom(max(bounds.bottom(), y));
                 }
                 else
                 {
@@ -147,10 +141,10 @@ void SceneNodeText::update()
                     // Update the current bounds
                     {
                         using namespace std;
-                        minX = min(minX, letterBox.left);
-                        maxX = max(maxX, letterBox.right());
-                        minY = min(minY, letterBox.top);
-                        maxY = max(maxY, letterBox.bottom());
+                        bounds = Rectf32{min(bounds.left, letterBox.left),
+                            min(bounds.top, letterBox.top),
+                            max(bounds.right(), letterBox.right()),
+                            max(bounds.bottom(), letterBox.bottom())};
                     }
 
                     // Advance to the next character
