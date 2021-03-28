@@ -62,95 +62,59 @@ void SceneNodeText::update()
 
             for (auto curChar : pr.get<Text>())
             {
-                log_snt("------------------------------------------------------"
-                        "-----------");
+                log_snt("----------------------------------------------------");
                 log_snt("Current char: ", make_str(curChar));
-                log_snt("Current x and y: ", x, ",", y);
-                log_snt("bounds left top: ", bounds.leftTop());
-                log_snt("bounds right bottom: ", bounds.rightBottom());
+                log_snt("current bounds: ", bounds);
                 log_snt("prevChar: ", make_str(prevChar));
-                log_snt("kerning: ", font->getKerning(prevChar, curChar));
-                // Apply the kerning offset
-                x += font->getKerning(prevChar, curChar);
                 log_snt("kerning: ", font->getKerning(prevChar, curChar));
                 // Apply the kerning offset
                 x += font->getKerning(prevChar, curChar);
                 prevChar = curChar;
 
-                // Handle special characters
-                if ((curChar == '\t') || (curChar == '\n'))
+                Rectf32 letterBox{font->getBounds(curChar) + vector2df{x, y}};
+                letterBox += vector2df{0.0F, 50.0F};
+                log_snt("letterBox: ", letterBox);
+
+                sptr<RenderizableSceneNode> letterNode;
+                // In case we already have a node containing the letter,
+                // reuse it. If not, create a new one.
+                if (counter < old_counter)
                 {
-                    using namespace std;
-                    // Update the current bounds (min coordinates)
-                    bounds.left = min(bounds.left, x);
-                    bounds.top = min(bounds.top, y);
-                    f32 const hspace{font->getAdvance(L' ')};
-
-                    switch (curChar)
-                    {
-                        case '\t':
-                            x += hspace * 4;
-                            break;
-                        case '\n':
-                            y += font->getLineSpacing();
-                            x = 0.0F;
-                            y += font->getLineSpacing();
-                            x = 0;
-                            break;
-                    }
-
-                    // Update the current bounds (max coordinates)
-                    bounds.setRight(max(bounds.right(), x));
-                    bounds.setBottom(max(bounds.bottom(), y));
+                    letterNode =
+                        std::dynamic_pointer_cast<RenderizableSceneNode>(
+                            sceneNodes()[counter]);
+                    letterNode->node()->color.set(tc);
+                    letterNode->node()->box.set(letterBox);
                 }
                 else
                 {
-                    Rectf32 const textureUV{font->getTextureBounds(curChar)};
-                    Rectf32 letterBox{font->getBounds(curChar) +
-                                      vector2df{x, y}};
-                    letterBox += vector2df{50.0F, 50.0F};
-                    log_snt("textureUV: ", textureUV);
-                    log_snt("letterBox: ", letterBox);
-
-                    sptr<RenderizableSceneNode> letterNode;
-                    // In case we already have a node containing the letter,
-                    // reuse it. If not, create a new one.
-                    if (counter < old_counter)
-                    {
-                        letterNode =
-                            std::dynamic_pointer_cast<RenderizableSceneNode>(
-                                sceneNodes()[counter]);
-                        letterNode->node()->color.set(tc);
-                        letterNode->node()->box.set(letterBox);
-                    }
-                    else
-                    {
-                        letterNode = createSceneNode<RenderizableSceneNode>(
-                            "text_" + str::to_str(counter));
-                        auto builder = letterNode->renderizableBuilder()
-                                           .name("text_" + str::to_str(counter))
-                                           .figType(FigType_t::Quad)
-                                           .box(letterBox)
-                                           .color(tc);
-                        letterNode->buildNode(builder);
-                    }
-                    ++counter;
-                    letterNode->node()->setTextureAndTextureRect(texture,
-                                                                 textureUV);
-
-                    // Update the current bounds
-                    {
-                        using namespace std;
-                        bounds = Rectf32{min(bounds.left, letterBox.left),
-                            min(bounds.top, letterBox.top),
-                            max(bounds.right(), letterBox.right()),
-                            max(bounds.bottom(), letterBox.bottom())};
-                    }
-
-                    // Advance to the next character
-                    x += font->getAdvance(curChar);
-                    log_snt("advance :", font->getAdvance(curChar));
+                    letterNode = createSceneNode<RenderizableSceneNode>(
+                        "text_" + str::to_str(counter));
+                    auto builder = letterNode->renderizableBuilder()
+                                       .name("text_" + str::to_str(counter))
+                                       .figType(FigType_t::Quad)
+                                       .box(letterBox)
+                                       .color(tc);
+                    letterNode->buildNode(builder);
                 }
+                ++counter;
+                Rectf32 const textureUV{font->getTextureBounds(curChar)};
+                log_snt("textureUV: ", textureUV);
+                letterNode->node()->setTextureAndTextureRect(texture,
+                                                             textureUV);
+
+                // Update the current bounds
+                {
+                    using namespace std;
+                    bounds = Rectf32{min(bounds.left, letterBox.left),
+                                     min(bounds.top, letterBox.top),
+                                     max(bounds.right(), letterBox.right()),
+                                     max(bounds.bottom(), letterBox.bottom())};
+                }
+
+                // Advance to the next character
+                x += font->getAdvance(curChar);
+                log_snt("advance :", font->getAdvance(curChar));
             }
 
             // Remove the unused letters.
