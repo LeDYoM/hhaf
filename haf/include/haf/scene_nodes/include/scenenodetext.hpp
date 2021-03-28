@@ -18,8 +18,19 @@ class SceneNodeText : public SceneNode, public SceneNodeTextProperties
     using BaseClass = SceneNode;
 
 public:
+    /**
+     * @brief Use SceneNode constructor
+     */
     using SceneNode::SceneNode;
+
+    /**
+     * @brief Expose SceneNode properties
+     */
     using SceneNode::prop;
+
+    /**
+     * @brief Expose Text properties
+     */
     using SceneNodeTextProperties::prop;
 
 protected:
