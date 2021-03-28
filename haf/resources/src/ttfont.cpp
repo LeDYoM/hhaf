@@ -56,67 +56,6 @@ sptr<ITexture> TTFont::getTexture(const u32 characterSize) const
         msptr<Texture>(m_private->m_font->getTexture(characterSize)));
 }
 
-vector2df TTFont::textSize(const str& text, const u32 characterSize) const
-{
-    if (text.empty())
-    {
-        return {};
-    }
-
-    const f32 vspace{getLineSpacing(characterSize)};
-
-    f32 x{0.f};
-    f32 y{static_cast<f32>(characterSize)};
-
-    // Create one quad for each character
-    vector2df max{};
-    u32 prevChar{0U};
-
-    for (auto curChar : text)
-    {
-        // Apply the kerning offset
-        x += getKerning(prevChar, curChar, characterSize);
-        prevChar = curChar;
-
-        // Handle special characters
-        if ((curChar == '\t') || (curChar == '\n'))
-        {
-            // Update the current bounds (min coordinates)
-            const f32 hspace{getAdvance(L' ', characterSize)};
-
-            switch (curChar)
-            {
-                case '\t':
-                    x += hspace * 4;
-                    break;
-                case '\n':
-                    y += vspace;
-                    x = 0;
-                    break;
-            }
-
-            // Update the current bounds (max coordinates)
-            max.x = std::max(max.x, x);
-            max.y = std::max(max.y, y);
-        }
-        else
-        {
-            const Rectf32 letterBox{getBounds(curChar, characterSize) +
-                                    vector2df{x, y}};
-
-            // Update the current bounds
-            {
-                max.x = std::max(max.x, letterBox.right());
-                max.y = std::max(max.y, letterBox.bottom());
-            }
-
-            // Advance to the next character
-            x += getAdvance(curChar, characterSize);
-        }
-    }
-    return max;
-}
-
 sptr<IFont> TTFont::font(const u32 charactersize)
 {
     if (auto iterator = m_private->m_fontMap.find(charactersize);

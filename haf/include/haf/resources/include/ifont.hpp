@@ -22,7 +22,6 @@ public:
     virtual htps::f32 getKerning(const htps::u32 first,
                                  const htps::u32 second) const              = 0;
     virtual htps::sptr<ITexture> getTexture() const                         = 0;
-    virtual htps::vector2df textSize(const htps::str& text) const           = 0;
 };
 }  // namespace haf::res
 

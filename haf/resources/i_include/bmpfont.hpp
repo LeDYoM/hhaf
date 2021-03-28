@@ -23,7 +23,6 @@ public:
     htps::f32 getKerning(const htps::u32 first,
                          const htps::u32 second) const override;
     htps::sptr<ITexture> getTexture() const override;
-    htps::vector2df textSize(const htps::str& text) const override;
     const htps::vector2du32& size() const;
 
     htps::vector<htps::str> textureFileNames() const;

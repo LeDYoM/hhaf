@@ -32,8 +32,6 @@ public:
                          const htps::u32 characterSize) const override;
     htps::sptr<ITexture> getTexture(
         const htps::u32 characterSize) const override;
-    htps::vector2df textSize(const htps::str& text,
-                             const htps::u32 characterSize) const override;
     htps::sptr<IFont> font(const htps::u32 charactersize) override;
 
 private:

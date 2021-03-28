@@ -412,9 +412,4 @@ sptr<ITexture> BMPFont::getTexture() const
     return fontPrivate_->pagesData_[0U].it;
 }
 
-vector2df BMPFont::textSize(const str& text) const
-{
-    (void)text;
-    return vector2df{};
-}
 }  // namespace haf::res

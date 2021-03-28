@@ -2,37 +2,25 @@
 
 #include <haf/resources/include/ifont.hpp>
 #include <haf/resources/include/itexture.hpp>
+#include <haf/resources/i_include/font_utils.hpp>
 #include <hlog/include/hlog.hpp>
 
 #include <haf/render/include/vertexarray.hpp>
 #include <haf/scene_nodes/include/renderizable_scenenode.hpp>
 
-#include <algorithm>
-
 using namespace htps;
-
-namespace
-{
-constexpr bool do_logs{false};
-
-template <typename... Args>
-constexpr void log_snt(Args&&... args) noexcept
-{
-    haf::DisplayLog::info_if_ce<do_logs>(std::forward<Args>(args)...);
-}
-}  // namespace
 
 namespace haf::scene::nodes
 {
-
-SceneNodeText::~SceneNodeText() = default;
 
 void SceneNodeText::update()
 {
     BaseClass::update();
 
     auto& pr = prop<SceneNodeTextProperties>();
-    // If the font or the text changed, recreate the children nodes.
+    res::FontUtils const font_utils{pr.get<Font>().get()};
+    auto const textSize = font_utils.textSize(pr.get<Text>());
+
     if (pr.hasChanged<Font>() || pr.hasChanged<Text>())
     {
         // Force reposition if font changed.
@@ -53,27 +41,17 @@ void SceneNodeText::update()
 
             // Create one quad for each character
             Rectf32 bounds{x, y, 0.0F, 0.0F};
-            u32 prevChar{0U};
             size_type counter{0U};
-            size_type old_counter = sceneNodes().size();
+            auto const old_counter{sceneNodes().size()};
             const Color& tc{pr.get<TextColor>()};
-
-            log_snt("Text to render: ", pr.get<Text>());
+            auto const boxes = font_utils.getTextBoxes(pr.get<Text>());
+            size_type indexChar{0U};
 
             for (auto curChar : pr.get<Text>())
             {
-                log_snt("----------------------------------------------------");
-                log_snt("Current char: ", make_str(curChar));
-                log_snt("current bounds: ", bounds);
-                log_snt("prevChar: ", make_str(prevChar));
-                log_snt("kerning: ", font->getKerning(prevChar, curChar));
-                // Apply the kerning offset
-                x += font->getKerning(prevChar, curChar);
-                prevChar = curChar;
-
                 Rectf32 letterBox{font->getBounds(curChar) + vector2df{x, y}};
                 letterBox += vector2df{0.0F, 50.0F};
-                log_snt("letterBox: ", letterBox);
+                letterBox = boxes[indexChar++];
 
                 sptr<RenderizableSceneNode> letterNode;
                 // In case we already have a node containing the letter,
@@ -97,9 +75,9 @@ void SceneNodeText::update()
                                        .color(tc);
                     letterNode->buildNode(builder);
                 }
+
                 ++counter;
                 Rectf32 const textureUV{font->getTextureBounds(curChar)};
-                log_snt("textureUV: ", textureUV);
                 letterNode->node()->setTextureAndTextureRect(texture,
                                                              textureUV);
 
@@ -114,7 +92,6 @@ void SceneNodeText::update()
 
                 // Advance to the next character
                 x += font->getAdvance(curChar);
-                log_snt("advance :", font->getAdvance(curChar));
             }
 
             // Remove the unused letters.
@@ -162,12 +139,12 @@ void SceneNodeText::update()
 
         if (as_rr_hasChanged || align_x)
         {
-            updateAlignmentX(pr.get<Font>()->textSize(pr.get<Text>()).x);
+            updateAlignmentX(textSize.width);
         }
 
         if (as_rr_hasChanged || align_y)
         {
-            updateAlignmentY(pr.get<Font>()->textSize(pr.get<Text>()).y);
+            updateAlignmentY(textSize.height);
         }
     }
 }

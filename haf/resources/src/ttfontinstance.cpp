@@ -46,8 +46,4 @@ sptr<ITexture> TTFontInstance::getTexture() const
         m_parentInstance.getTexture(m_characterSize));
 }
 
-vector2df TTFontInstance::textSize(const str& text) const
-{
-    return m_parentInstance.textSize(text, m_characterSize);
-}
 }  // namespace haf::res

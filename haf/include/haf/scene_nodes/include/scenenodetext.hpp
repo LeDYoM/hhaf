@@ -21,7 +21,6 @@ public:
     using SceneNode::SceneNode;
     using SceneNode::prop;
     using SceneNodeTextProperties::prop;
-    ~SceneNodeText() override;
 
 protected:
     void update() override final;
