@@ -13,6 +13,55 @@ using namespace htps;
 namespace haf::scene::nodes
 {
 
+namespace
+{
+inline void updateAlignmentX(PropertyState<vector2df, Position>& position,
+                      AlignmentX::value_type const alignmentX,
+                      f32 const textSizeX,
+                      AlignmentSize::value_type const& alignmentSize) noexcept
+{
+    f32 newPosX{0.f};
+
+    switch (alignmentX)
+    {
+        default:
+        case AlignmentXModes::Left:
+            break;
+        case AlignmentXModes::Center:
+            newPosX = (alignmentSize.x / 2) - (textSizeX / 2);
+            break;
+        case AlignmentXModes::Right:
+            newPosX = (alignmentSize.x - textSizeX);
+            break;
+    }
+
+    position.set(vector2df{newPosX, position.get().y});
+}
+
+inline void updateAlignmentY(PropertyState<vector2df, Position>& position,
+                      AlignmentY::value_type const alignmentY,
+                      f32 const textSizeY,
+                      AlignmentSize::value_type const& alignmentSize) noexcept
+{
+    f32 newPosY{0.f};
+
+    switch (alignmentY)
+    {
+        default:
+        case AlignmentYModes::Top:
+            break;
+        case AlignmentYModes::Middle:
+            newPosY = (alignmentSize.y / 2) - (textSizeY / 2);
+            break;
+        case AlignmentYModes::Bottom:
+            newPosY = alignmentSize.y - textSizeY;
+            break;
+    }
+
+    position.set(vector2df{position.get().x, newPosY});
+}
+}  // namespace
+
 void SceneNodeText::update()
 {
     BaseClass::update();
@@ -139,54 +188,18 @@ void SceneNodeText::update()
 
         if (as_rr_hasChanged || align_x)
         {
-            updateAlignmentX(textSize.width);
+            updateAlignmentX(get_property_reference<Position>(),
+                             prop<AlignmentX>().get(), textSize.width,
+                             pr.get<AlignmentSize>());
         }
 
         if (as_rr_hasChanged || align_y)
         {
-            updateAlignmentY(textSize.height);
+            updateAlignmentY(get_property_reference<Position>(),
+                             prop<AlignmentY>().get(), textSize.height,
+                             pr.get<AlignmentSize>());
         }
     }
-}
-
-void SceneNodeText::updateAlignmentX(f32 const textSizeX)
-{
-    f32 newPosX{0.f};
-
-    switch (prop<AlignmentX>().get())
-    {
-        default:
-        case AlignmentXModes::Left:
-            break;
-        case AlignmentXModes::Center:
-            newPosX = (prop<AlignmentSize>().get().x / 2) - (textSizeX / 2);
-            break;
-        case AlignmentXModes::Right:
-            newPosX = (prop<AlignmentSize>().get().x - textSizeX);
-            break;
-    }
-
-    prop<Position>().set(vector2df{newPosX, prop<Position>().get().y});
-}
-
-void SceneNodeText::updateAlignmentY(f32 const textSizeY)
-{
-    f32 newPosY{0.f};
-
-    switch (prop<AlignmentY>().get())
-    {
-        default:
-        case AlignmentYModes::Top:
-            break;
-        case AlignmentYModes::Middle:
-            newPosY = (prop<AlignmentSize>().get().y / 2) - (textSizeY / 2);
-            break;
-        case AlignmentYModes::Bottom:
-            newPosY = prop<AlignmentSize>().get().y - textSizeY;
-            break;
-    }
-
-    prop<Position>().set(vector2df{prop<Position>().get().x, newPosY});
 }
 
 }  // namespace haf::scene::nodes

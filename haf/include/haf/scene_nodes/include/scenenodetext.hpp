@@ -10,6 +10,8 @@
 #include <haf/scene/include/scenenode.hpp>
 #include <haf/scene/include/color.hpp>
 
+#include <htypes/include/vector2d.hpp>
+
 namespace haf::scene::nodes
 {
 
@@ -35,10 +37,6 @@ public:
 
 protected:
     void update() override final;
-
-private:
-    void updateAlignmentX(htps::f32 const textSizeX);
-    void updateAlignmentY(htps::f32 const textSizeY);
 };
 }  // namespace haf::scene::nodes
 
