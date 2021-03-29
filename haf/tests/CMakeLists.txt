@@ -9,6 +9,7 @@ set(SOURCE_TESTS
     scene/scenecontroller
     scene/scenenodefactory
     scene/scenenode
+    scene/scenenode_utils
     scene/scenenodeparent
     scene/scenemanager
     scene/transformable

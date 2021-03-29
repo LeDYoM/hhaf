@@ -6,6 +6,7 @@ set(_SOURCES
     src/interface_getter.cpp
     src/scenecontroller.cpp
     src/scenemanager.cpp
+    src/scenenode_utils.cpp
     src/scenenode.cpp
     src/scenenodefactory.cpp
     src/scenenodes.cpp
