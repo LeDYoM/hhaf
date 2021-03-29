@@ -594,7 +594,7 @@ inline Object& operator<<(Object& obj, const Simple& data)
 
 }  // namespace TestVectorWithCustomTypesEnumsAndFloats
 
-TEST_CASE("Object with vector of custom types, enums and floats",
+TEST_CASE("Object with vector of custom type sand enums and floats",
           "[Object][vector]")
 {
     using namespace TestVectorWithCustomTypesEnumsAndFloats;
@@ -673,7 +673,7 @@ TEST_CASE("Object with vector of custom types, enums and floats",
     CHECK(vec == output);
 }
 
-TEST_CASE("Object with array of custom types, enums and floats",
+TEST_CASE("Object with array of custom types and enums and floats",
           "[Object][vector]")
 {
     using namespace TestVectorWithCustomTypesEnumsAndFloats;
