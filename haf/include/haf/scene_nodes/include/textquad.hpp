@@ -8,8 +8,9 @@ namespace haf::scene::nodes
 {
 class TextQuad : public TableNode<SceneNodeText>
 {
-public:
+private:
     using BaseClass = TableNode<SceneNodeText>;
+public:
     using BaseClass::BaseClass;
     using BaseClass::prop;
 
@@ -21,7 +22,7 @@ public:
                    const Color& color,
                    const htps::vector2df& size);
 
-    inline htps::sptr<SceneNodeText> text(htps::vector2dst index) const noexcept
+    inline htps::sptr<SceneNodeText> text(htps::vector2dst index) noexcept
     {
         return nodeAt(std::move(index));
     }

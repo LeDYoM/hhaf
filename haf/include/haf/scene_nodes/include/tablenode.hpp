@@ -28,7 +28,7 @@ public:
 
         htps::sptr<T> result(
             inner_node->createSceneNode<T>("inner_inner_node"));
-     
+
         updateTableSizeIfNecessary();
 
         BaseClass::setInnerSceneNodeAt(index, std::move(inner_node));
@@ -41,7 +41,7 @@ public:
         return nodes_[index.x][index.y];
     }
 
-    constexpr const htps::sptr<T> operator()(
+    constexpr htps::sptr<T const> const operator()(
         htps::vector2dst const& index) const noexcept
     {
         return nodes_[index.x][index.y];
@@ -52,15 +52,15 @@ public:
         return nodes_[index.x][index.y];
     }
 
-    constexpr const htps::sptr<T> nodeAt(
+    constexpr htps::sptr<T const> const nodeAt(
         htps::vector2dst const& index) const noexcept
     {
         return nodes_[index.x][index.y];
     }
 
     constexpr void for_each_tableSceneNode(
-        htps::function<void(htps::vector2dst const&, htps::sptr<T> const&)> const
-            action)
+        htps::function<void(htps::vector2dst const&,
+                            htps::sptr<T> const&)> const action)
     {
         for (htps::size_type x{0}; x < nodes_.size(); ++x)
         {
@@ -116,6 +116,7 @@ private:
 
     htps::vector<htps::vector_shared_pointers<T>> nodes_;
 };
+
 }  // namespace haf::scene::nodes
 
 #endif
