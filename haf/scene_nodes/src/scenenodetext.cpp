@@ -188,14 +188,14 @@ void SceneNodeText::update()
 
         if (as_rr_hasChanged || align_x)
         {
-            updateAlignmentX(get_property_reference<Position>(),
+            updateAlignmentX(prop<Position>(),
                              prop<AlignmentX>().get(), textSize.width,
                              pr.get<AlignmentSize>());
         }
 
         if (as_rr_hasChanged || align_y)
         {
-            updateAlignmentY(get_property_reference<Position>(),
+            updateAlignmentY(prop<Position>(),
                              prop<AlignmentY>().get(), textSize.height,
                              pr.get<AlignmentSize>());
         }
