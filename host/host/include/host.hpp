@@ -3,7 +3,7 @@
 
 #include <htypes/include/types.hpp>
 
-namespace mtps
+namespace htps
 {
 class str;
 }

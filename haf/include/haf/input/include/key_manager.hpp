@@ -17,7 +17,7 @@ public:
     bool registerKey(KeyIndex const key_index, Key const key) noexcept;
     Key keyForIndex(KeyIndex const key_index) const noexcept;
 private:
-    htypes::vector<Key> keys_;
+    htps::vector<Key> keys_;
 };
 }  // namespace haf::input
 

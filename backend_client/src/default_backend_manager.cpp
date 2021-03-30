@@ -9,7 +9,7 @@ namespace haf::backend::client
 {
 struct DefaultBackendManager::DefaultBackendManagerPrivate
 {
-    htypes::vector<htps::uptr<IAutoRegisterFactory>> factories;
+    htps::vector<htps::uptr<IAutoRegisterFactory>> factories;
     void pushFactory(htps::uptr<IAutoRegisterFactory> f);
 
 };

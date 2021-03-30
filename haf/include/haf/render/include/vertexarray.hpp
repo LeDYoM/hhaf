@@ -10,7 +10,7 @@
 
 namespace haf::scene
 {
-using BasicVertexArray = htypes::vector<Vertex>;
+using BasicVertexArray = htps::vector<Vertex>;
 
 /**
  * @brief Low level class representing a vertex array. As needed to render

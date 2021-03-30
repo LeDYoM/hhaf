@@ -68,7 +68,7 @@ public:
 private:
     void addRenderizable(htps::sptr<Renderizable> newElement);
     htps::rptr<SceneNode> scene_node_;
-    htypes::vector<htps::sptr<Renderizable>> render_nodes_;
+    htps::vector<htps::sptr<Renderizable>> render_nodes_;
 };
 }  // namespace haf::scene
 

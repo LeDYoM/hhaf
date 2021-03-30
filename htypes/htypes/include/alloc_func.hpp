@@ -1,15 +1,15 @@
-#ifndef MTYPES_ALLOCATOR_MEMMANAGER_MMALLOC_MFREE_INCLUDE_HPP
-#define MTYPES_ALLOCATOR_MEMMANAGER_MMALLOC_MFREE_INCLUDE_HPP
+#ifndef MTYPES_ALLOCATOR_MALLOC_FREE_INCLUDE_HPP
+#define MTYPES_ALLOCATOR_MALLOC_FREE_INCLUDE_HPP
 
-#include <mtypes/include/allocatorfunc.hpp>
-#include <memmanager/include/memmanager.hpp>
+#include <cstdlib>
+#include <htypes/include/allocatorfunc.hpp>
 
-namespace htypes
+namespace htps
 {
 
 template <typename T>
-using AllocatorMemManagerRaw = mtps::AllocatorFunc<T, mmalloc, mfree>;
+using AllocatorMallocFree = AllocatorFunc<T, std::malloc, std::free>;
 
-}  // namespace htypes
+}  // namespace htps
 
 #endif

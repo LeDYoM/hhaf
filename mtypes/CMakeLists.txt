@@ -12,31 +12,15 @@ include (testing)
 include (functions)
 enable_testing()
 
-set(CURRENT_TARGET mtypes)
+set(CURRENT_TARGET htypes)
 
-add_library(${CURRENT_TARGET} INTERFACE)
-set_compile_warning_level_interface(${CURRENT_TARGET})
+file(GLOB SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
 
-target_include_directories(${CURRENT_TARGET}
-    INTERFACE 
-        $<INSTALL_INTERFACE:.>
-        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
-)
+build_lib_component(EXPORT_ALL HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
+                    ${SOURCES})
 
-file(GLOB_RECURSE public_headers 
-  RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
-  ${CMAKE_CURRENT_SOURCE_DIR}/${CURRENT_TARGET}/include/*.hpp
-  )
-
-set_target_properties(${CURRENT_TARGET} PROPERTIES PUBLIC_HEADER "${public_headers}")
-
-install(
-  TARGETS ${CURRENT_TARGET}
-  PUBLIC_HEADER DESTINATION ${CURRENT_TARGET}/include
-  )
+target_compile_definitions(${CURRENT_TARGET} PRIVATE htypes_EXPORTS)
 
 add_subdirectory(tests)
 
 build_doc(${CURRENT_TARGET})
-
-#stardard_install_package()

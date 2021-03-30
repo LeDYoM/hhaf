@@ -67,7 +67,7 @@ include(functions)
 include(testing)
 include(install)
 
-#set(BUILD_PACKAGE_FOR "mtypes")
+#set(BUILD_PACKAGE_FOR "htypes")
 
 # Prepare the test framework
 add_subdirectory(tests)
@@ -75,8 +75,6 @@ add_subdirectory(tests)
 add_subdirectory(tools)
 
 # Sub-directories where more CMakeLists.txt exist
-add_subdirectory(mtypes)
-
 add_subdirectory(agloader)
 add_subdirectory(logger)
 add_subdirectory(memmanager)
