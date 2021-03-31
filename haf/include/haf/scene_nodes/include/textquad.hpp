@@ -3,13 +3,13 @@
 
 #include <haf/scene_nodes/include/tablenode.hpp>
 #include <haf/scene_nodes/include/scenenodetext.hpp>
+#include <haf/scene_nodes/include/text_table_node.hpp>
 
 namespace haf::scene::nodes
 {
-class TextQuad : public TableNode<SceneNodeText>
+class TextQuad : public TextTableNode
 {
-private:
-    using BaseClass = TableNode<SceneNodeText>;
+    using BaseClass = TextTableNode;
 public:
     using BaseClass::BaseClass;
     using BaseClass::prop;
