@@ -149,3 +149,56 @@ TEST_CASE("scenenode_utils::for_each const", "[SceneNode][SceneNodeUtils]")
     CHECK(numCheck == kNumSceneNodes);
     numCheck = 0U;
 }
+
+TEST_CASE("scenenode_utils::set_property_for_each_sceneNode",
+          "[SceneNode][SceneNodeUtils]")
+{
+    using namespace haf;
+    using namespace haf::scene;
+
+    constexpr size_type kNumSceneNodes{10U};
+    auto testScene(unitTestScene());
+
+    // Create 10 scene nodes
+    for (size_type index{0U}; index < kNumSceneNodes; ++index)
+    {
+        str name{make_str("SceneNode_test_", index)};
+        auto node_test(testScene->createSceneNode(name));
+    }
+    CHECK(testScene->sceneNodes().size() == kNumSceneNodes);
+
+    set_property_for_each_sceneNode<Position>(*testScene,
+                                              vector2df{4.5F, 3.5F});
+
+    size_type numCheck{0U};
+
+    for (auto const childNode : testScene->sceneNodes())
+    {
+        CHECK(childNode->prop<Position>().get() == vector2df{4.5F, 3.5F});
+        ++numCheck;
+    }
+
+    CHECK(numCheck == kNumSceneNodes);
+    numCheck = 0U;
+
+    // Create more scene nodes with different static type
+    for (size_type index{0U}; index < kNumSceneNodes; ++index)
+    {
+        str name{make_str("SceneNode_test_", index)};
+        auto node_test(testScene->createSceneNode<TestSceneNode>(name));
+    }
+
+    set_property_for_each_sceneNode_as<TestSceneNode, Position>(
+        *testScene, vector2df{33.0F, 44.0F});
+
+    for (auto const childNode : testScene->sceneNodes())
+    {
+        if (auto node = std::dynamic_pointer_cast<TestSceneNode>(childNode))
+        {
+            CHECK(childNode->prop<Position>().get() == vector2df{33.0F, 44.0F});
+            ++numCheck;
+        }
+    }
+
+    CHECK(numCheck == kNumSceneNodes);
+}

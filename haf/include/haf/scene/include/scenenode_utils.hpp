@@ -42,5 +42,22 @@ constexpr void for_each_sceneNode_as(
     });
 }
 
+template <typename Tag, typename T>
+void set_property_for_each_sceneNode(SceneNode& node, T const& value)
+{
+    for_each_sceneNode(node, [&value](htps::sptr<SceneNode> const& node) {
+        node->prop<Tag>().set(value);
+    });
+}
+
+template <typename NodeType, typename Tag, typename T>
+void set_property_for_each_sceneNode_as(SceneNode& node, T const& value)
+{
+    for_each_sceneNode_as<NodeType>(
+        node, [&value](auto& node) {
+            node->template prop<Tag>().set(value);
+        });
+}
+
 }  // namespace haf::scene
 #endif
