@@ -1,8 +1,9 @@
 set(_SOURCES
     i_include/scenecontroller.hpp
     i_include/scenemanager.hpp
-    src/componentcontainer_update.cpp
     src/componentcontainer_no_update.cpp
+    src/componentcontainer_update.cpp
+    src/componentcontainer.cpp
     src/interface_getter.cpp
     src/scenecontroller.cpp
     src/scenemanager.cpp
