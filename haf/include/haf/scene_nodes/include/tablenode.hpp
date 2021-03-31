@@ -18,8 +18,6 @@ public:
     using BaseClass::BaseClass;
     using BaseClass::prop;
 
-    ~TableNode() override = default;
-
     htps::sptr<T> createNodeAt(const htps::vector2dst& index,
                                const htps::str& name)
     {
