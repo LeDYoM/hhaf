@@ -17,8 +17,6 @@ public:
     using SceneNode::prop;
     using TableNodeProperties::prop;
 
-    ~TableNodeImp() override;
-
     htps::vector2df cellSize() const;
 
     void update() override;

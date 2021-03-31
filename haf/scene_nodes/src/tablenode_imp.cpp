@@ -5,8 +5,6 @@
 namespace haf::scene::nodes
 {
 
-TableNodeImp::~TableNodeImp() = default;
-
 htps::vector2df TableNodeImp::cellSize() const
 {
     return htps::vector2df{
