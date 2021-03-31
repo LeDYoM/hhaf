@@ -14,7 +14,7 @@ SceneNodes::~SceneNodes() = default;
 
 void SceneNodes::addSceneNode(sptr<SceneNode> node)
 {
-    scene_nodes_group_.addSceneNode(node);
+    scene_nodes_.emplace_back(node);
     node->onCreated();
 }
 
@@ -36,22 +36,24 @@ bool SceneNodes::removeSceneNode(sptr<SceneNode> element)
         scene_node_ == element->parent(),
         " You must call removeSceneNode from the parent node");
 
-    return scene_nodes_group_.removeSceneNode(std::move(element));
+    auto const old_size = scene_nodes_.size();
+    scene_nodes_.erase_one(element);
+    return old_size == scene_nodes_.size() + 1U;
 }
 
 void SceneNodes::clearSceneNodes()
 {
-    scene_nodes_group_.clearSceneNodes();
+    scene_nodes_.clear();
 }
 
-const SceneNodesGroup::SceneNodeVector& SceneNodes::sceneNodes() const noexcept
+const SceneNodes::SceneNodeVector& SceneNodes::sceneNodes() const noexcept
 {
-    return scene_nodes_group_.sceneNodes();
+    return scene_nodes_;
 }
 
-SceneNodesGroup::SceneNodeVector& SceneNodes::sceneNodes() noexcept
+SceneNodes::SceneNodeVector& SceneNodes::sceneNodes() noexcept
 {
-    return scene_nodes_group_.sceneNodes();
+    return scene_nodes_;
 }
 
 }  // namespace haf::scene

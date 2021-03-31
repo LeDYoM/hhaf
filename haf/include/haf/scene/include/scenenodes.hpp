@@ -3,7 +3,7 @@
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
-#include <haf/scene/include/scenenodes_group.hpp>
+#include <htypes/include/vector.hpp>
 
 namespace haf::scene
 {
@@ -12,6 +12,8 @@ class SceneNode;
 class SceneNodes
 {
 public:
+    using SceneNodeVector = htps::vector<htps::sptr<SceneNode>>;
+
     SceneNodes(const htps::rptr<SceneNode> scene_node);
 
     /**
@@ -34,8 +36,8 @@ public:
     bool removeSceneNode(htps::sptr<SceneNode> element);
     void clearSceneNodes();
 
-    const SceneNodesGroup::SceneNodeVector& sceneNodes() const noexcept;
-    SceneNodesGroup::SceneNodeVector& sceneNodes() noexcept;
+    const SceneNodeVector& sceneNodes() const noexcept;
+    SceneNodeVector& sceneNodes() noexcept;
 
     htps::sptr<SceneNode> groupByName(const htps::str& name) const;
 
@@ -49,7 +51,7 @@ protected:
 
 private:
     const htps::rptr<SceneNode> scene_node_;
-    SceneNodesGroup scene_nodes_group_;
+    SceneNodeVector scene_nodes_;
 };
 
 }  // namespace haf::scene

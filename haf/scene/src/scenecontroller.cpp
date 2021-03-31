@@ -92,14 +92,17 @@ void SceneController::render(SceneNode& scene_node,
         // Update node
         scene_node.update();
 
+        // Update the transformation (local and global)
         parentTransformationChanged = scene_node.updateTransformations(
             parentTransformationChanged,
             scene_node.parent() ? scene_node.parent()->globalTransform()
                                 : Matrix4x4::Identity);
 
+        // Update the renderizables added to this node
         scene_node.updateRenderizables();
-        for (SceneNodesGroup::SceneNodeVector::value_type& group :
-             scene_node.sceneNodes())
+
+        // Render the nodes added to this node
+        for (auto& group : scene_node.sceneNodes())
         {
             render(*group, parentTransformationChanged);
         }
