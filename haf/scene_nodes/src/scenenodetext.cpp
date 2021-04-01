@@ -68,7 +68,8 @@ void SceneNodeText::update()
 
     auto& pr = prop<SceneNodeTextProperties>();
     res::FontUtils const font_utils{pr.get<Font>().get()};
-    auto const textSize = font_utils.textSize(pr.get<Text>());
+    auto const textSize = pr.get<Font>() != nullptr ? 
+        font_utils.textSize(pr.get<Text>()) : Rectf32{};
 
     if (pr.hasChanged<Font>() || pr.hasChanged<Text>())
     {
