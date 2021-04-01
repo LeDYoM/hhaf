@@ -4,21 +4,23 @@
 #include <haf/haf_export.hpp>
 #include <htypes/include/types.hpp>
 #include <htypes/include/function.hpp>
-#include <haf/scene/include/scenenode.hpp>
 
 namespace haf::scene
 {
+class SceneNode;
+class SceneNodes;
+
 HAF_API void for_each_sceneNode(
-    SceneNode& node,
+    SceneNodes& node,
     htps::function<void(htps::sptr<SceneNode> const&)> action);
 
 HAF_API void for_each_sceneNode(
-    SceneNode const& node,
+    SceneNodes const& node,
     htps::function<void(htps::sptr<SceneNode const> const&)> action);
 
 template <typename T>
 constexpr void for_each_sceneNode_as(
-    SceneNode& node,
+    SceneNodes& node,
     htps::function<void(htps::sptr<T> const&)> action)
 {
     for_each_sceneNode(node, [&action](htps::sptr<SceneNode> const& node) {
@@ -31,7 +33,7 @@ constexpr void for_each_sceneNode_as(
 
 template <typename T>
 constexpr void for_each_sceneNode_as(
-    SceneNode const& node,
+    SceneNodes const& node,
     htps::function<void(htps::sptr<T const> const&)> action)
 {
     for_each_sceneNode(node, [&action](htps::sptr<SceneNode const> const& node) {

@@ -6,14 +6,14 @@ using namespace htps;
 namespace haf::scene
 {
 void for_each_sceneNode(
-    SceneNode& node,
+    SceneNodes& node,
     htps::function<void(htps::sptr<SceneNode> const&)> action)
 {
     std::for_each(node.sceneNodes().cbegin(), node.sceneNodes().cend(), action);
 }
 
 void for_each_sceneNode(
-    SceneNode const& node,
+    SceneNodes const& node,
     htps::function<void(htps::sptr<SceneNode const> const&)> action)
 {
     std::for_each(node.sceneNodes().cbegin(), node.sceneNodes().cend(), action);
