@@ -14,13 +14,7 @@ public:
     using BaseClass::BaseClass;
     using BaseClass::prop;
 
-    ~TextQuad() override;
-
     void onCreated() override;
-
-    void configure(htps::sptr<res::IFont> font,
-                   const Color& color,
-                   const htps::vector2df& size);
 
     inline htps::sptr<SceneNodeText> text(htps::vector2dst index) noexcept
     {

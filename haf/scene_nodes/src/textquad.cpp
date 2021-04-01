@@ -5,8 +5,6 @@ using namespace htps;
 namespace haf::scene::nodes
 {
 
-TextQuad::~TextQuad() = default;
-
 void TextQuad::onCreated()
 {
     prop<TableSize>().set({2U, 2U});
@@ -46,20 +44,6 @@ void TextQuad::onCreated()
             ->prop<SceneNodeTextProperties>()
             .put<AlignmentX>(AlignmentXModes::Right)
             .put<AlignmentY>(AlignmentYModes::Bottom);
-    }
-}
-
-void TextQuad::configure(htps::sptr<res::IFont> font,
-                         const Color& color,
-                         const htps::vector2df& size)
-{
-    for (size_type count{0}; count < 4U; ++count)
-    {
-        auto node(nodeAt({count % 2U, count / 2U}));
-        node->prop<SceneNodeTextProperties>()
-            .put<Font>(font)
-            .put<TextColor>(color)
-            .put<AlignmentSize>(size);
     }
 }
 

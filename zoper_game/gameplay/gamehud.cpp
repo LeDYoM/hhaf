@@ -22,10 +22,12 @@ GameHudSceneNode::GameHudSceneNode(
     SceneNode{parent, std::move(name)}
 {
     m_scoreQuad = parent->createSceneNode<TextQuad>("score");
-    m_scoreQuad->configure(systemInterface<res::IResourceRetriever>()
+    m_scoreQuad->setProperty<Font>(systemInterface<res::IResourceRetriever>()
                                .getTTFont(GameResources::ScoreFontId)
-                               ->font(90U),
-                           colors::White, vector2df{600, 300});
+                               ->font(90U));
+    m_scoreQuad->setProperty<TextColor>(colors::White);
+    m_scoreQuad->setProperty<AlignmentSize>(vector2df{600, 300});
+
     m_scoreQuad->prop<Position>() = Position::value_type{50, 150};
     m_scoreQuad->text(vector2dst{0U, 0U})
         ->prop<SceneNodeTextProperties>()
@@ -37,10 +39,12 @@ GameHudSceneNode::GameHudSceneNode(
         .put<TextColor>(colors::Blue);
 
     m_goalQuad = parent->createSceneNode<TextQuad>("goal");
-    m_goalQuad->configure(systemInterface<res::IResourceRetriever>()
-                              .getTTFont(GameResources::ScoreFontId)
-                              ->font(90),
-                          colors::White, vector2df{600, 300});
+    m_goalQuad->setProperty<Font>(systemInterface<res::IResourceRetriever>()
+                               .getTTFont(GameResources::ScoreFontId)
+                               ->font(90U));
+    m_goalQuad->setProperty<TextColor>(colors::White);
+    m_goalQuad->setProperty<AlignmentSize>(vector2df{600, 300});
+
     m_goalQuad->prop<Position>().set(vector2df{1250, 150});
     m_goalQuad->text({0U, 0U})
         ->prop<SceneNodeTextProperties>()
