@@ -21,12 +21,13 @@ GameHudSceneNode::GameHudSceneNode(
     str name) :
     SceneNode{parent, std::move(name)}
 {
-    m_scoreQuad = parent->createSceneNode<TextQuad>("score");
-    m_scoreQuad->setProperty<Font>(systemInterface<res::IResourceRetriever>()
-                               .getTTFont(GameResources::ScoreFontId)
-                               ->font(90U));
-    m_scoreQuad->setProperty<TextColor>(colors::White);
-    m_scoreQuad->setProperty<AlignmentSize>(vector2df{600, 300});
+    Font::value_type font{systemInterface<res::IResourceRetriever>()
+                                .getTTFont(GameResources::ScoreFontId)
+                                ->font(90U)};
+    (m_scoreQuad = parent->createSceneNode<TextQuad>("score"))
+        ->setTableNodeProperty<Font>(font)
+        ->setTableNodeProperty<TextColor>(colors::White)
+        ->setTableNodeProperty<AlignmentSize>(vector2df{600, 300});
 
     m_scoreQuad->prop<Position>() = Position::value_type{50, 150};
     m_scoreQuad->text(vector2dst{0U, 0U})
@@ -38,18 +39,16 @@ GameHudSceneNode::GameHudSceneNode(
         .put<Text>("Score:")
         .put<TextColor>(colors::Blue);
 
-    m_goalQuad = parent->createSceneNode<TextQuad>("goal");
-    m_goalQuad->setProperty<Font>(systemInterface<res::IResourceRetriever>()
-                               .getTTFont(GameResources::ScoreFontId)
-                               ->font(90U));
-    m_goalQuad->setProperty<TextColor>(colors::White);
-    m_goalQuad->setProperty<AlignmentSize>(vector2df{600, 300});
+    (m_goalQuad = parent->createSceneNode<TextQuad>("goal"))
+        ->setTableNodeProperty<Font>(font)
+        ->setTableNodeProperty<TextColor>(colors::White)
+        ->setTableNodeProperty<AlignmentSize>(vector2df{600, 300});
 
     m_goalQuad->prop<Position>().set(vector2df{1250, 150});
     m_goalQuad->text({0U, 0U})
         ->prop<SceneNodeTextProperties>()
         .put<TextColor>(colors::Blue)
-        .put<Text>("Look here");
+        .put<Text>("Current");
     m_goalQuad->text({0U, 1U})
         ->prop<SceneNodeTextProperties>()
         .put<TextColor>(colors::Blue)
