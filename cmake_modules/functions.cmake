@@ -139,11 +139,11 @@ function(build_doc _base_name)
       WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
       COMMENT "Generating API documentation with Doxygen for ${_base_name}"
       VERBATIM)
-  else(DOXYGEN_FOUND)
+  else()
     message(
-      "Doxygen need to be installed to generate the doxygen documentation for "
+      "Doxygen needs to be installed to generate the doxygen documentation for "
       ${_base_name})
-  endif(DOXYGEN_FOUND)
+  endif()
 endfunction()
 
 macro(stardard_install_package)
