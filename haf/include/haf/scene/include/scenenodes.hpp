@@ -41,6 +41,14 @@ public:
 
     htps::sptr<SceneNode> groupByName(const htps::str& name) const;
 
+    void for_each_sceneNode(
+        SceneNodes& node,
+        htps::function<void(htps::sptr<SceneNode> const&)> action);
+
+    void for_each_sceneNode(
+        SceneNodes const& node,
+        htps::function<void(htps::sptr<SceneNode const> const&)> action);
+
 protected:
     /**
      * @brief Destroy the Scene Nodes object
