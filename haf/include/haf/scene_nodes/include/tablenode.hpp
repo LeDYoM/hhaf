@@ -100,6 +100,15 @@ public:
         });
     }
 
+    template <typename PropertyType>
+    void setProperty(PropertyType::value_type value)
+    {
+        for_each_tableSceneNode([&value](auto const&, htps::sptr<T> const& node)
+        {
+            node->template prop<PropertyType>().set(value);
+        });
+    }
+
 private:
     void setTableSize(htps::vector2dst ntableSize) override
     {
