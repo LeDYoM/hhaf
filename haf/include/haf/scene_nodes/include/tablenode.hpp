@@ -6,13 +6,17 @@
 
 namespace haf::scene::nodes
 {
-/// Class representing a SceneNode with table layout.
-/// Properties of the table can be configured like size and so on.
+/**
+ * @brief Class representing a SceneNode with table layout.
+ * Properties of the table can be configured like size and so on.
+ * @tparam T 
+ */
 template <typename T>
 class TableNode : public TableNodeImp
 {
-public:
     using BaseClass        = TableNodeImp;
+
+public:
     using ContainedElement = T;
 
     using BaseClass::BaseClass;
