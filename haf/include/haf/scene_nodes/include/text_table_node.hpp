@@ -3,7 +3,6 @@
 
 #include <haf/scene_nodes/include/tablenode.hpp>
 #include <haf/scene_nodes/include/scenenodetext.hpp>
-#include <haf/scene_nodes/include/scenenodetext_properties.hpp>
 
 namespace haf::scene::nodes
 {

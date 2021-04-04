@@ -9,16 +9,28 @@
 
 namespace haf::scene::nodes
 {
+/**
+ * @brief class Node with implementation details for a Table node.
+ */
 class TableNodeImp : public SceneNode, public TableNodeProperties
 {
-public:
     using BaseClass = SceneNode;
-    using SceneNode::SceneNode;
-    using SceneNode::prop;
-    using TableNodeProperties::prop;
+public:
+    using SceneNode::SceneNode;         ///< Inherited constuctor
+    using SceneNode::prop;              ///< Properties from @b SceneNode
+    using TableNodeProperties::prop;    ///< Properties TableNodeProperties
 
+    /**
+     * @brief Get the size of each cell.
+     * @note It might change when new size for the table is set
+     * @return htps::vector2df The size of each cell
+     */
     htps::vector2df cellSize() const;
 
+    /**
+     * @brief Update the node
+     * 
+     */
     void update() override;
 
 protected:

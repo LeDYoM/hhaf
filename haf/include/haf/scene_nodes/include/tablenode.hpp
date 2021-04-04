@@ -9,12 +9,12 @@ namespace haf::scene::nodes
 /**
  * @brief Class representing a SceneNode with table layout.
  * Properties of the table can be configured like size and so on.
- * @tparam T 
+ * @tparam T
  */
 template <typename T>
 class TableNode : public TableNodeImp
 {
-    using BaseClass        = TableNodeImp;
+    using BaseClass = TableNodeImp;
 
 public:
     using ContainedElement = T;
@@ -64,14 +64,11 @@ public:
         htps::function<void(htps::vector2dst const&,
                             htps::sptr<T> const&)> const action)
     {
-        for (htps::size_type x{0}; x < nodes_.size(); ++x)
+        for (htps::size_type x{0U}; x < nodes_.size(); ++x)
         {
-            for (htps::size_type y{0}; y < nodes_[x].size(); ++y)
+            for (htps::size_type y{0U}; y < nodes_[x].size(); ++y)
             {
-                if (htps::sptr<T> node = nodes_[x][y]; node)
-                {
-                    action(htps::vector2dst{x, y}, node);
-                }
+                action(htps::vector2dst{x, y}, nodes_[x][y]);
             }
         }
     }
@@ -81,8 +78,8 @@ public:
         htps::function<void(const htps::size_type, htps::sptr<T> const&)> const
             action)
     {
-        for_each_tableSceneNode([action, x](htps::vector2dst const& pos,
-                                            htps::sptr<T> const& node) {
+        for_each_tableSceneNode([&action, x](htps::vector2dst const& pos,
+                                             htps::sptr<T> const& node) {
             if (pos.x == x)
             {
                 action(pos.y, node);
@@ -95,8 +92,8 @@ public:
         htps::function<void(const htps::size_type, const htps::sptr<T>&)> const
             action)
     {
-        for_each_tableSceneNode([action, y](const htps::vector2dst& pos,
-                                            const htps::sptr<T>& node) {
+        for_each_tableSceneNode([&action, y](const htps::vector2dst& pos,
+                                             const htps::sptr<T>& node) {
             if (pos.y == y)
             {
                 action(pos.x, node);
@@ -107,10 +104,10 @@ public:
     template <typename PropertyType>
     auto* setTableNodeProperty(typename PropertyType::value_type const& value)
     {
-        for_each_tableSceneNode([&value](auto const&, htps::sptr<T> const& node)
-        {
-            node->template prop<PropertyType>().set(value);
-        });
+        for_each_tableSceneNode(
+            [&value](auto const&, htps::sptr<T> const& node) {
+                node->template prop<PropertyType>().set(value);
+            });
         return this;
     }
 
