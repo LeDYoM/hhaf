@@ -42,12 +42,49 @@ public:
     htps::sptr<SceneNode> groupByName(const htps::str& name) const;
 
     void for_each_sceneNode(
-        SceneNodes& node,
         htps::function<void(htps::sptr<SceneNode> const&)> action);
 
     void for_each_sceneNode(
-        SceneNodes const& node,
-        htps::function<void(htps::sptr<SceneNode const> const&)> action);
+        htps::function<void(htps::sptr<SceneNode const> const&)> action) const;
+
+    template <typename T>
+    constexpr void for_each_sceneNode_as(
+        htps::function<void(htps::sptr<T> const&)> action)
+    {
+        for_each_sceneNode([&action](htps::sptr<SceneNode> const& node) {
+            if (auto const tnode = std::dynamic_pointer_cast<T>(node))
+            {
+                action(tnode);
+            }
+        });
+    }
+
+    template <typename T>
+    constexpr void for_each_sceneNode_as(
+        htps::function<void(htps::sptr<T const> const&)> action) const
+    {
+        for_each_sceneNode([&action](htps::sptr<SceneNode const> const& node) {
+            if (auto const tnode = std::dynamic_pointer_cast<T const>(node))
+            {
+                action(tnode);
+            }
+        });
+    }
+
+    template <typename Tag, typename T>
+    void set_property_for_each_sceneNode(T const& value)
+    {
+        for_each_sceneNode([&value](htps::sptr<SceneNode> const& node) {
+            node->template prop<Tag>().set(value);
+        });
+    }
+
+    template <typename NodeType, typename Tag, typename T>
+    void set_property_for_each_sceneNode_as(T const& value)
+    {
+        for_each_sceneNode_as<NodeType>(
+            [&value](auto& node) { node->template prop<Tag>().set(value); });
+    }
 
 protected:
     /**

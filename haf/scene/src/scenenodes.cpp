@@ -57,17 +57,15 @@ SceneNodes::SceneNodeVector& SceneNodes::sceneNodes() noexcept
 }
 
 void SceneNodes::for_each_sceneNode(
-    SceneNodes& node,
     htps::function<void(htps::sptr<SceneNode> const&)> action)
 {
-    std::for_each(node.sceneNodes().cbegin(), node.sceneNodes().cend(), action);
+    std::for_each(sceneNodes().begin(), sceneNodes().end(), action);
 }
 
 void SceneNodes::for_each_sceneNode(
-    SceneNodes const& node,
-    htps::function<void(htps::sptr<SceneNode const> const&)> action)
+    htps::function<void(htps::sptr<SceneNode const> const&)> action) const
 {
-    std::for_each(node.sceneNodes().cbegin(), node.sceneNodes().cend(), action);
+    std::for_each(sceneNodes().cbegin(), sceneNodes().cend(), action);
 }
 
 }  // namespace haf::scene

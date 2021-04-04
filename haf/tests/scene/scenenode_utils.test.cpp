@@ -4,6 +4,7 @@
 #include <htypes/include/str.hpp>
 #include <htypes/include/vector2d.hpp>
 #include <haf/scene/include/scenenode.hpp>
+#include <haf/scene/include/scenenodes.hpp>
 #include <haf/scene/include/scenenode_utils.hpp>
 #include <haf/scene/include/scene.hpp>
 
@@ -39,11 +40,11 @@ TEST_CASE("scenenode_utils::for_each", "[SceneNode][SceneNodeUtils]")
 
     size_type numCheck{0U};
 
-    for_each_sceneNode(*testScene,
-                       [&numCheck](sptr<SceneNode> const& childNode) {
-                           childNode->prop<Position>().set({1.0F, 2.0F});
-                           ++numCheck;
-                       });
+    testScene->for_each_sceneNode(
+        [&numCheck](sptr<SceneNode> const& childNode) {
+            childNode->prop<Position>().set({1.0F, 2.0F});
+            ++numCheck;
+        });
 
     CHECK(numCheck == kNumSceneNodes);
     numCheck = 0U;
@@ -66,11 +67,11 @@ TEST_CASE("scenenode_utils::for_each", "[SceneNode][SceneNodeUtils]")
 
     CHECK(testScene->sceneNodes().size() == kNumSceneNodes * 2U);
 
-    for_each_sceneNode(*testScene,
-                       [&numCheck](sptr<SceneNode> const& childNode) {
-                           childNode->prop<Position>().set({10.0F, 20.0F});
-                           ++numCheck;
-                       });
+    testScene->for_each_sceneNode(
+        [&numCheck](sptr<SceneNode> const& childNode) {
+            childNode->prop<Position>().set({10.0F, 20.0F});
+            ++numCheck;
+        });
 
     CHECK(numCheck == kNumSceneNodes * 2U);
     numCheck = 0U;
@@ -84,8 +85,8 @@ TEST_CASE("scenenode_utils::for_each", "[SceneNode][SceneNodeUtils]")
     CHECK(numCheck == kNumSceneNodes * 2U);
     numCheck = 0U;
 
-    for_each_sceneNode_as<TestSceneNode>(
-        *testScene, [&numCheck](sptr<TestSceneNode> const& childNode) {
+    testScene->for_each_sceneNode_as<TestSceneNode>(
+        [&numCheck](sptr<TestSceneNode> const& childNode) {
             childNode->prop<Position>().set({100.0F, 200.0F});
             ++numCheck;
         });
@@ -113,8 +114,8 @@ TEST_CASE("scenenode_utils::for_each const", "[SceneNode][SceneNodeUtils]")
 
     size_type numCheck{0U};
 
-    for_each_sceneNode(
-        *testScene_, [&numCheck](sptr<SceneNode const> const& childNode) {
+    testScene_->for_each_sceneNode(
+        [&numCheck](sptr<SceneNode const> const& childNode) {
             CHECK(childNode->prop<Position>().get() == vector2df{});
             ++numCheck;
         });
@@ -131,8 +132,8 @@ TEST_CASE("scenenode_utils::for_each const", "[SceneNode][SceneNodeUtils]")
 
     CHECK(testScene_->sceneNodes().size() == kNumSceneNodes * 2U);
 
-    for_each_sceneNode(
-        *testScene_, [&numCheck](sptr<SceneNode const> const& childNode) {
+    testScene_->for_each_sceneNode(
+        [&numCheck](sptr<SceneNode const> const& childNode) {
             CHECK(childNode->prop<Position>().get() == vector2df{});
             ++numCheck;
         });
@@ -140,8 +141,8 @@ TEST_CASE("scenenode_utils::for_each const", "[SceneNode][SceneNodeUtils]")
     CHECK(numCheck == kNumSceneNodes * 2U);
     numCheck = 0U;
 
-    for_each_sceneNode_as<TestSceneNode>(
-        *testScene_, [&numCheck](sptr<TestSceneNode const> const& childNode) {
+    testScene_->for_each_sceneNode_as<TestSceneNode>(
+        [&numCheck](sptr<TestSceneNode const> const& childNode) {
             CHECK(childNode->prop<Position>().get() == vector2df{});
             ++numCheck;
         });
@@ -167,8 +168,7 @@ TEST_CASE("scenenode_utils::set_property_for_each_sceneNode",
     }
     CHECK(testScene->sceneNodes().size() == kNumSceneNodes);
 
-    set_property_for_each_sceneNode<Position>(*testScene,
-                                              vector2df{4.5F, 3.5F});
+    testScene->set_property_for_each_sceneNode<Position>(vector2df{4.5F, 3.5F});
 
     size_type numCheck{0U};
 
@@ -188,8 +188,8 @@ TEST_CASE("scenenode_utils::set_property_for_each_sceneNode",
         auto node_test(testScene->createSceneNode<TestSceneNode>(name));
     }
 
-    set_property_for_each_sceneNode_as<TestSceneNode, Position>(
-        *testScene, vector2df{33.0F, 44.0F});
+    testScene->set_property_for_each_sceneNode_as<TestSceneNode, Position>(
+        vector2df{33.0F, 44.0F});
 
     for (auto const childNode : testScene->sceneNodes())
     {
