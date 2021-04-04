@@ -5,7 +5,6 @@
 #include <htypes/include/vector2d.hpp>
 #include <haf/scene/include/scenenode.hpp>
 #include <haf/scene/include/scenenodes.hpp>
-#include <haf/scene/include/scenenode_utils.hpp>
 #include <haf/scene/include/scene.hpp>
 
 using namespace htps;
@@ -22,7 +21,7 @@ class TestSceneNode : public haf::scene::SceneNode
     using haf::scene::SceneNode::SceneNode;
 };
 
-TEST_CASE("scenenode_utils::for_each", "[SceneNode][SceneNodeUtils]")
+TEST_CASE("scenenodes::for_each", "[SceneNode][SceneNodeUtils]")
 {
     using namespace haf;
     using namespace haf::scene;
@@ -95,7 +94,7 @@ TEST_CASE("scenenode_utils::for_each", "[SceneNode][SceneNodeUtils]")
     numCheck = 0U;
 }
 
-TEST_CASE("scenenode_utils::for_each const", "[SceneNode][SceneNodeUtils]")
+TEST_CASE("scenenodes::for_each const", "[SceneNode][SceneNodeUtils]")
 {
     using namespace haf;
     using namespace haf::scene;
@@ -151,7 +150,7 @@ TEST_CASE("scenenode_utils::for_each const", "[SceneNode][SceneNodeUtils]")
     numCheck = 0U;
 }
 
-TEST_CASE("scenenode_utils::set_property_for_each_sceneNode",
+TEST_CASE("scenenodes::set_property_for_each_sceneNode",
           "[SceneNode][SceneNodeUtils]")
 {
     using namespace haf;
