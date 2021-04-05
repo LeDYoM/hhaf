@@ -11,6 +11,10 @@
         logo: {
             type: "texture",
             file: "resources/zoperbl.png"
+        },
+        console_font: {
+            type: "bmp_font_fnt",
+            file: "resources/abc.fnt"
         }
     },
     game: {
