@@ -14,8 +14,7 @@ BMPFont::BMPFont(const str& file_name)
     fontPrivate_ = new BMFontPrivate;
     fontPrivate_->chars_.resize(256U);
 
-    str fontfile(file_name + ".fnt");
-    str texturefile(file_name + ".png");
+    str fontfile(file_name);
     DisplayLog::info("Starting to Parse Font ", fontfile);
     ParseFont(fontfile);
     DisplayLog::info("Finished Parsing Font ", fontfile);

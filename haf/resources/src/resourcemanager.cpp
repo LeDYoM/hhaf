@@ -267,9 +267,9 @@ bool ResourceManager::loadSection(htps::str const& section_name)
         {
             local_result = loadTexture(element_name, element_file);
         }
-        else
+        else if (element_type.starts_with("bmp_font"))
         {
-            // TODO: Load BMPFont
+            local_result = loadBMPFont(element_name, element_file);
         }
 
         if (local_result)
