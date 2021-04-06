@@ -162,8 +162,8 @@ bool ResourceManager::loadBMPFont(const str& rid, const str& fileName)
 
         for (const auto& file_name : texture_file_names)
         {
-//            const bool texture_available =
-//                loadTexture(rid + "_" + file_name, file_name);
+            //            const bool texture_available =
+            //                loadTexture(rid + "_" + file_name, file_name);
 
             sptr<ITexture> texture(getTexture(rid + "_" + file_name));
             textures.push_back(std::move(texture));
@@ -261,17 +261,16 @@ bool ResourceManager::loadSection(htps::str const& section_name)
     {
         auto const& element_name = obj.first;
         auto const& element_type = obj.second[TypeStr].getValue();
-        auto element_file = obj.second[FileStr].getValue();
+        auto element_file        = obj.second[FileStr].getValue();
         DisplayLog::debug("Going to load element: ", element_name, " of type ",
                           element_type, " with file name: ", element_file);
-
 
         if (!p_->config_directory_.empty())
         {
             element_file = p_->config_directory_ + element_file;
             DisplayLog::debug("Element file with directory: ", element_file);
         }
-    
+
         bool local_result{false};
 
         if (element_type == "ttf")
@@ -285,6 +284,10 @@ bool ResourceManager::loadSection(htps::str const& section_name)
         else if (element_type.starts_with("bmp_font"))
         {
             local_result = loadBMPFont(element_name, element_file);
+        }
+        else
+        {
+            LogAsserter::log_assert(local_result, "Invalid type of element")
         }
 
         if (local_result)
