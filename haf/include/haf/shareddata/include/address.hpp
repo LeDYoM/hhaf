@@ -10,7 +10,7 @@
 namespace haf::shdata
 {
 /**
- * @brief Class to encapsulate an address comming from an string and a separator
+ * @brief Class to encapsulate an address coming from an string and a separator
  */
 class HAF_API Address
 {

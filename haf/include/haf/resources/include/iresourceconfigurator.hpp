@@ -25,21 +25,28 @@ class IResourcesConfigurator
 {
 public:
     /**
+     * @brief Set the directory where the resources will be loaded.
+     * @param[in] directory The directory where the resources are
+     */
+    virtual void setResourcesDirectory(htps::str directory) = 0;
+
+    /**
      * @brief Set the config file to be loaded
-     *
+     * @param[in] fileName Name of the configuration file
      * @return Result status of the function
      * @see SetResourceConfigFileResult
      */
-    virtual SetResourceConfigFileResult setResourceConfigFile(htps::str) = 0;
+    virtual SetResourceConfigFileResult setResourceConfigFile(
+        htps::str fileName) = 0;
 
     /**
      * @brief Load a section from the previously set config file for resource
      * loading.
-     * 
+     *
      * @return true Section loaded correctly
      * @return false Section not loaded
      */
-    virtual bool loadSection(htps::str const&)                           = 0;
+    virtual bool loadSection(htps::str const&) = 0;
 };
 }  // namespace haf::res
 

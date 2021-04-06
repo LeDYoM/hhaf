@@ -99,6 +99,8 @@ struct ResourceManager::ResourceManagerPrivate
     ResourceList<sptr<BMPFont>> bmp_fonts_;
 
     BMPFontFactory bmp_font_factory_;
+
+    str config_directory_{};
 };
 
 ResourceManager::ResourceManager(sys::SystemProvider& system_provider) :
@@ -206,6 +208,12 @@ SetResourceConfigFileResult ResourceManager::parseResourceConfigFile()
         }
     }
     return SetResourceConfigFileResult::Ok;
+}
+
+void ResourceManager::setResourcesDirectory(htps::str directory)
+{
+    DisplayLog::debug("Set resources directory to: ", directory);
+    p_->config_directory_ = std::move(directory);
 }
 
 SetResourceConfigFileResult ResourceManager::setResourceConfigFile(

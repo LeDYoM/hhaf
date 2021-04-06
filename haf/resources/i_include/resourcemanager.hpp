@@ -41,6 +41,8 @@ public:
     res::SetResourceConfigFileResult setResourceConfigFile(
         htps::str config_file_name) override;
     bool loadSection(htps::str const& section_name) override;
+    void setResourcesDirectory(htps::str directory) override;
+
     res::SetResourceConfigFileResult parseResourceConfigFile();
 
 private:
