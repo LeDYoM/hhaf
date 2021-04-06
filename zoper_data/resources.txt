@@ -2,35 +2,35 @@
     menu: {
         menu_main_font: {
             type: "ttf",
-            file: "resources/oldct.ttf"
+            file: "oldct.ttf"
         },
         menu_background: {
             type: "texture",
-            file: "resources/gr_ms.png"
+            file: "gr_ms.png"
         },
         logo: {
             type: "texture",
-            file: "resources/zoperbl.png"
+            file: "zoperbl.png"
         },
         console_font: {
             type: "bmp_font_fnt",
-            file: "resources/abc.fnt"
+            file: "abc.fnt"
         }
     },
     game: {
         score_font: {
             type: "ttf",
-            file: "resources/score.ttf"
+            file: "score.ttf"
         },
         game_over_font: {
             type: "ttf",
-            file: "resources/gameover.ttf"
+            file: "gameover.ttf"
         }
     },
     high_scores: {
         main_font: {
             type: "ttf",
-            file: "resources/oldct.ttf"
+            file: "oldct.ttf"
         }
     }
 }

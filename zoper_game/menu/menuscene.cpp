@@ -47,6 +47,7 @@ void MenuScene::onCreated()
     auto& resources_configurator =
         systemInterface<res::IResourcesConfigurator>();
     resources_configurator.setResourceConfigFile("resources.txt");
+    resources_configurator.setResourcesDirectory("resources/");
     resources_configurator.loadSection("menu");
 
     createStandardBackground(this);
