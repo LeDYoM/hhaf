@@ -261,10 +261,17 @@ bool ResourceManager::loadSection(htps::str const& section_name)
     {
         auto const& element_name = obj.first;
         auto const& element_type = obj.second[TypeStr].getValue();
-        auto const& element_file = obj.second[FileStr].getValue();
+        auto element_file = obj.second[FileStr].getValue();
         DisplayLog::debug("Going to load element: ", element_name, " of type ",
                           element_type, " with file name: ", element_file);
 
+
+        if (!p_->config_directory_.empty())
+        {
+            element_file = p_->config_directory_ + element_file;
+            DisplayLog::debug("Element file with directory: ", element_file);
+        }
+    
         bool local_result{false};
 
         if (element_type == "ttf")
