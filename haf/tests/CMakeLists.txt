@@ -7,11 +7,11 @@ set(SOURCE_TESTS
     scene/color
     scene/matrix4x4
     scene/scenecontroller
-    scene/scenenodefactory
+    scene/scenemanager
     scene/scenenode
+    scene/scenenodefactory
     scene/scenenodeparent
     scene/scenenodes
-    scene/scenemanager
     scene/transformable
     scene/transformation
 

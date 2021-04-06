@@ -74,9 +74,8 @@ public:
     template <typename Tag, typename T>
     void set_property_for_each_sceneNode(T const& value)
     {
-        for_each_sceneNode([&value](htps::sptr<SceneNode> const& node) {
-            node->template prop<Tag>().set(value);
-        });
+        for_each_sceneNode_as<SceneNode>(
+            [&value](auto& node) { node->template prop<Tag>().set(value); });
     }
 
     template <typename NodeType, typename Tag, typename T>
