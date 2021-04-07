@@ -287,7 +287,7 @@ bool ResourceManager::loadSection(htps::str const& section_name)
         }
         else
         {
-            LogAsserter::log_assert(local_result, "Invalid type of element")
+            LogAsserter::log_assert(local_result, "Invalid type of element");
         }
 
         if (local_result)
