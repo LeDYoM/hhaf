@@ -37,6 +37,9 @@ target_include_directories(${CURRENT_TARGET}
 target_include_directories(${CURRENT_TARGET}
                            PUBLIC ${HAF_PRIVATE_INCLUDE_DIRECTORY})
 
+                           target_include_directories(${CURRENT_TARGET}
+                           PUBLIC "${HAF_PRIVATE_INCLUDE_DIRECTORY}/../")
+
 # target_include_directories( ${CURRENT_TARGET} PUBLIC #
 # $<INSTALL_INTERFACE:include> #
 # $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> PRIVATE

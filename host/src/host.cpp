@@ -5,7 +5,7 @@
 #include "include/host_private.hpp"
 #include <hlog/include/hlog.hpp>
 #include <hosted_app/include/iapp.hpp>
-#include <haf/include/haf/system/include/isystemcontroller.hpp>
+#include <haf/system/include/isystemcontroller.hpp>
 
 #include <exception>
 
