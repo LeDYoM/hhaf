@@ -42,7 +42,7 @@ target_include_directories(${CURRENT_TARGET}
 # $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> PRIVATE
 # ${CMAKE_CURRENT_SOURCE_DIR}/../)
 
-target_compile_definitions(haf PRIVATE haf_EXPORTS)
+target_compile_definitions(${CURRENT_TARGET} PRIVATE haf_EXPORTS)
 
 include (cmake/haf_functions.cmake)
 # Directory internal libraries that will be used by the client too.

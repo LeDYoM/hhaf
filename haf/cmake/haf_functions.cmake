@@ -10,18 +10,11 @@ function(build_internal_lib_component)
   # Add the sources of this directory (passed as parameter)
   target_sources(haf PRIVATE ${extra_file} ${LC_BUILD_SOURCES})
   
-  # Add <root>/haf/include/ to all users of haf
-
   # Internal includes
   target_include_directories(haf
                              PRIVATE ${_INTERNAL_INCLUDE_DIRECTORY})
 
-  # Link all private static internal libraries passed as parameters
-  foreach(PRIVATE_LINK IN LISTS LC_BUILD_PRIVATE_INTERNAL_LINK)
-    target_link_libraries(haf PRIVATE ${PRIVATE_LINK})
-  endforeach()
-
-endfunction(build_internal_lib_component)
+endfunction()
 
 # Function to build different components from the project in an unified way.
 function(build_concrete_backend)
