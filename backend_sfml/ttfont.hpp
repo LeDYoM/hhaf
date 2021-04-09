@@ -1,5 +1,5 @@
-#ifndef HAF_BACKEND_SFML_TTFONT_INCLUDE_HPP__
-#define HAF_BACKEND_SFML_TTFONT_INCLUDE_HPP__
+#ifndef HAF_BACKEND_SFML_TTFONT_INCLUDE_HPP
+#define HAF_BACKEND_SFML_TTFONT_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/rect.hpp>
@@ -26,6 +26,7 @@ namespace haf::backend::sfmlb
         htps::f32 getLineSpacing(const htps::u32 characterSize) const override;
         htps::f32 getKerning(const htps::u32 first, const htps::u32 second, const htps::u32 characterSize) const override;
         ITexture *getTexture(const htps::u32 characterSize) override;
+
     private:
         htps::uptr<sf::Font> m_font;
         htps::RawMemory raw_memory_;

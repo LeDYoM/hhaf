@@ -34,22 +34,23 @@ using ResourceList = std::list<NamedIndex<T>>;
 
 namespace
 {
-template <bool UseInternalFileSystem, typename T, typename V>
+template <typename T, typename V>
 inline sptr<T> loadResource(backend::IResourceFactory<V>& factory,
                             FileSystem& fileSystem,
                             const str& fileName)
 {
-    if constexpr (UseInternalFileSystem)
-    {
+//    if constexpr (UseInternalFileSystem)
+//    {
         RawMemory data(fileSystem.loadBinaryFile(fileName));
 
         // Prototype / check
         return msptr<T>(factory.loadFromRawMemory(&data));
-    }
-    else
-    {
-        return msptr<T>(factory.loadFromFile(fileName));
-    }
+//! Old "load from disk" code. Maintained here just in case
+//    }
+//    else
+//    {
+//        return msptr<T>(factory.loadFromFile(fileName));
+//    }
 }
 
 template <typename T>
@@ -64,8 +65,8 @@ inline auto get_or_default(ResourceList<sptr<T>> const& container,
                                          : sptr<T>(nullptr);
 }
 
-template <bool UseInternalFileSystem, typename V, typename T>
-inline sptr<T> get_or_add(backend::IResourceFactory<V>& factory,
+template <typename V, typename T>
+sptr<T> get_or_add(backend::IResourceFactory<V>& factory,
                           ResourceList<sptr<T>>& container,
                           FileSystem& fileSystem,
                           const str& rid,
@@ -83,7 +84,7 @@ inline sptr<T> get_or_add(backend::IResourceFactory<V>& factory,
         // Not found, try to load it.
         DisplayLog::info(rid, " not found on resource list.");
         DisplayLog::info("Going to load file: ", fileName);
-        sptr<T> resource(loadResource<UseInternalFileSystem, T>(
+        sptr<T> resource(loadResource<T>(
             factory, fileSystem, fileName));
         container.emplace_back(rid, resource);
         return resource;

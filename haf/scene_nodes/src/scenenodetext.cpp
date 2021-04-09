@@ -100,7 +100,6 @@ void SceneNodeText::update()
             for (auto curChar : pr.get<Text>())
             {
                 Rectf32 letterBox{font->getBounds(curChar) + vector2df{x, y}};
-                letterBox += vector2df{0.0F, 50.0F};
                 letterBox = boxes[indexChar++];
 
                 sptr<RenderizableSceneNode> letterNode;

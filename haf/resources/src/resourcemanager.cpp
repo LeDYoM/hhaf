@@ -45,22 +45,22 @@ sptr<IFont> ResourceManager::getBMPFont(const str& rid) const
 
 bool ResourceManager::loadTTFont(const str& rid, const str& fileName)
 {
-    return get_or_add<true>(systemProvider().backendFactory().ttfontFactory(),
-                            p_->ttf_fonts_, systemProvider().fileSystem(), rid,
-                            fileName) != nullptr;
+    return get_or_add(systemProvider().backendFactory().ttfontFactory(),
+                      p_->ttf_fonts_, systemProvider().fileSystem(), rid,
+                      fileName) != nullptr;
 }
 bool ResourceManager::loadTexture(const str& rid, const str& fileName)
 {
-    return get_or_add<true>(systemProvider().backendFactory().textureFactory(),
-                            p_->textures_, systemProvider().fileSystem(), rid,
-                            fileName) != nullptr;
+    return get_or_add(systemProvider().backendFactory().textureFactory(),
+                      p_->textures_, systemProvider().fileSystem(), rid,
+                      fileName) != nullptr;
 }
 
 bool ResourceManager::loadShader(const str& rid, const str& fileName)
 {
-    return get_or_add<false>(systemProvider().backendFactory().shaderFactory(),
-                             p_->shaders_, systemProvider().fileSystem(), rid,
-                             fileName) != nullptr;
+    return get_or_add(systemProvider().backendFactory().shaderFactory(),
+                      p_->shaders_, systemProvider().fileSystem(), rid,
+                      fileName) != nullptr;
 }
 
 bool ResourceManager::loadBMPFont(const str& rid, const str& fileName)
@@ -74,8 +74,10 @@ bool ResourceManager::loadBMPFont(const str& rid, const str& fileName)
 
         for (const auto& file_name : texture_file_names)
         {
-            //            const bool texture_available =
-            //                loadTexture(rid + "_" + file_name, file_name);
+            const bool texture_available = loadTexture(
+                rid + "_" + file_name, p_->config_directory_ + file_name);
+
+            (void)(texture_available);
 
             sptr<ITexture> texture(getTexture(rid + "_" + file_name));
             textures.push_back(std::move(texture));

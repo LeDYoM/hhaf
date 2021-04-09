@@ -23,10 +23,12 @@ void Console::onCreated()
 
     auto a = createSceneNode<SceneNodeText>("scnText");
     a->prop<Font>().set(systemInterface<res::IResourceRetriever>()
-                .getTTFont(MainMenuResources::MenuFontId)
-                ->font(72));
+                .getBMPFont("console_font"));
 
-    a->prop<Text>().set("abc");
+    prop<Position>().set(vector2df{0.0F, 1.0F});
+    a->prop<Text>().set("1234 ABC");
+    a->prop<TextColor>().set(colors::Red);
+//    a->prop<Scale>().set({1, 1});
 }
 
 }  // namespace zoper

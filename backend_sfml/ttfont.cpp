@@ -53,7 +53,9 @@ ITexture* TTFont::getTexture(const u32 characterSize)
 
     // What is needed here is to force the load of the font surface
     for (u32 i{0U}; i < 0xff; ++i)
+    {
         getTextureBounds(i, characterSize);
+    }
 
     auto* ret(nTexture.get());
     m_fontTexturesCache[characterSize] = std::move(nTexture);
