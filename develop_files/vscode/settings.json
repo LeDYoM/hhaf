@@ -78,5 +78,7 @@
         "xlocinfo": "cpp",
         "xstddef": "cpp",
         "xtr1common": "cpp"
-    }
+    },
+    "C_Cpp.dimInactiveRegions": false,
+    "testMate.cpp.log.logSentry": "disable_3"
 }

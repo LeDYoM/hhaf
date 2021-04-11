@@ -30,7 +30,7 @@
             "program": "${command:cmake.launchTargetPath}",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}/build/bin/${command:cmake.buildType}",
+            "cwd": "${command:cmake.buildDirectory}/bin/${command:cmake.buildType}",
             "environment": [],
             "externalConsole": false
         }
