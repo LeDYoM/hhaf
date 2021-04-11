@@ -2,12 +2,24 @@
 #include <haf/resources/i_include/bmpfont_private.hpp>
 #include <haf/resources/i_include/bmpfont.hpp>
 
+#include <string>
 #include <fstream>
 
 using namespace htps;
 
 namespace haf::res
 {
+s16 my_stoi(std::string const& data)
+{
+    try
+    {
+        return static_cast<s16>(std::stoi(data));
+    }
+    catch (...)
+    {}
+    return 0;
+}
+
 std::string getStr(const std::string& read)
 {
     std::string result;
@@ -190,25 +202,21 @@ bool BMPFont::BMFontPrivate::ParseFont(const str& fontfile)
                 {
                     std::string temp;
                     std::getline(converter, temp, ',');
-                    fInfo.padding.left =
-                        static_cast<s16>(std::atoi(temp.c_str()));
+                    fInfo.padding.left = my_stoi(temp);
                     std::getline(converter, temp, ',');
-                    fInfo.padding.top =
-                        static_cast<s16>(std::atoi(temp.c_str()));
+                    fInfo.padding.top = my_stoi(temp);
                     std::getline(converter, temp, ',');
-                    fInfo.padding.setRight(
-                        static_cast<s16>(std::atoi(temp.c_str())));
+                    fInfo.padding.setRight(my_stoi(temp));
                     std::getline(converter, temp, ',');
-                    fInfo.padding.setBottom(
-                        static_cast<s16>(std::atoi(temp.c_str())));
+                    fInfo.padding.setBottom(my_stoi(temp));
                 }
                 else if (key == "spacing")
                 {
                     std::string temp;
                     std::getline(converter, temp, ',');
-                    fInfo.spacing.x = static_cast<s16>(std::atoi(temp.c_str()));
+                    fInfo.spacing.x = my_stoi(temp);
                     std::getline(converter, temp, ',');
-                    fInfo.spacing.y = static_cast<s16>(std::atoi(temp.c_str()));
+                    fInfo.spacing.y = my_stoi(temp);
                 }
                 else if (key == "outline")
                 {
