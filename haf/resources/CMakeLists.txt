@@ -1,6 +1,6 @@
 set(_SOURCES
-    i_include/bmpfont.hpp
     i_include/bmpfont_private.hpp
+    i_include/bmpfont.hpp
     i_include/bmpfontfactory.hpp
     i_include/font_utils.hpp
     i_include/resourcemanager_private.hpp
@@ -10,6 +10,7 @@ set(_SOURCES
     i_include/texture.hpp
     i_include/ttfont.hpp
     i_include/ttfontinstance.hpp
+    src/bmpfont_private.cpp
     src/bmpfont.cpp
     src/bmpfontfactory.cpp
     src/font_utils.cpp

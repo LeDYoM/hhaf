@@ -8,12 +8,10 @@
 
 namespace haf::res
 {
-class BMFontPrivate;
-
 class BMPFont : public IFont
 {
 public:
-    BMPFont(const htps::str& file_name);
+    explicit BMPFont(const htps::str& file_name);
     ~BMPFont() override;
 
     htps::Rectf32 getBounds(const htps::u32 codePoint) const override;
@@ -30,8 +28,8 @@ public:
         const htps::vector<htps::sptr<ITexture>>& texture_pages);
 
 private:
-    htps::rptr<BMFontPrivate> fontPrivate_;
-    bool ParseFont(const htps::str&);
+    class BMFontPrivate;
+    htps::rptr<BMFontPrivate> p_;
 };
 }  // namespace haf::res
 

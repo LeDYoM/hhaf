@@ -1,9 +1,15 @@
-#ifndef HAF_SCENE_BMPFONTPRIVATE_INCLUDE_HPP
-#define HAF_SCENE_BMPFONTPRIVATE_INCLUDE_HPP
+#ifndef HAF_SCENE_RESOURCES_BMPFONT_PRIVATE_INCLUDE_HPP
+#define HAF_SCENE_RESOURCES_BMPFONT_PRIVATE_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
+#include <htypes/include/str.hpp>
 #include <haf/resources/include/ifont.hpp>
 #include <haf/resources/include/itexture.hpp>
+#include <haf/resources/i_include/bmpfont.hpp>
+
+#include <fstream>
+
+using namespace htps;
 
 namespace haf::res
 {
@@ -26,14 +32,7 @@ struct CharDescriptor
     htps::vector<KearningInfo> kearn;
     htps::Rectf32 offsetedPosition;
 
-    constexpr htps::s32 GetKerningPair(const htps::u32 second) const
-    {
-        const auto iterator(kearn.cfind_if([second](const auto& this_kearn) {
-            return this_kearn.second == second;
-        }));
-
-        return iterator == kearn.cend() ? 0 : iterator->amount;
-    }
+    htps::s32 GetKerningPair(const htps::u32 second) const;
 };
 
 struct PageData
@@ -58,7 +57,7 @@ struct FontInfo
     bool outline;
 };
 
-class BMFontPrivate
+class BMPFont::BMFontPrivate
 {
 public:
     htps::s16 lineHeight;
@@ -71,18 +70,9 @@ public:
     htps::vector<CharDescriptor> chars_;
     htps::vector<PageData> pagesData_;
 
-    static void advanceCharPos(htps::vector2df& nextCharPos,
-                               const CharDescriptor* charDescriptor,
-                               const char* nextChar)
-    {
-        if (nextChar)
-        {
-            nextCharPos.x += charDescriptor->GetKerningPair(*nextChar);
-        }
-
-        nextCharPos.x += charDescriptor->xadvance;
-    }
+    bool ParseFont(const str& fontfile);
 };
+
 }  // namespace haf::res
 
 #endif
