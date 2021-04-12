@@ -280,6 +280,7 @@ bool BMPFont::BMFontPrivate::ParseFont(const str& fontfile)
                     converter >> charDescriptor.page;
                 }
             }
+
             if (char_id < 256)
             {
                 chars_[char_id] = charDescriptor;
