@@ -62,6 +62,12 @@ inline void updateAlignmentY(PropertyState<vector2df, Position>& position,
 }
 }  // namespace
 
+SceneNodeText::SceneNodeText(rptr<SceneNode> parent, str name)
+    : SceneNode{parent, std::move(name)}
+{
+    inner_transformation_ = addTransformation();
+}
+
 void SceneNodeText::update()
 {
     BaseClass::update();
@@ -188,14 +194,14 @@ void SceneNodeText::update()
 
         if (as_rr_hasChanged || align_x)
         {
-            updateAlignmentX(prop<Position>(),
+            updateAlignmentX(getTransformation(inner_transformation_).prop<Position>(),
                              prop<AlignmentX>().get(), textSize.width,
                              pr.get<AlignmentSize>());
         }
 
         if (as_rr_hasChanged || align_y)
         {
-            updateAlignmentY(prop<Position>(),
+            updateAlignmentY(getTransformation(inner_transformation_).prop<Position>(),
                              prop<AlignmentY>().get(), textSize.height,
                              pr.get<AlignmentSize>());
         }

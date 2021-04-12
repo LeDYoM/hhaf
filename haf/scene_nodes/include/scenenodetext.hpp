@@ -3,14 +3,9 @@
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/properties.hpp>
-#include <htypes/include/str.hpp>
 #include <htypes/include/grouping_property.hpp>
-#include <haf/resources/include/ifont.hpp>
 #include <haf/scene_nodes/include/scenenodetext_properties.hpp>
 #include <haf/scene/include/scenenode.hpp>
-#include <haf/scene/include/color.hpp>
-
-#include <htypes/include/vector2d.hpp>
 
 namespace haf::scene::nodes
 {
@@ -21,9 +16,9 @@ class SceneNodeText : public SceneNode, public SceneNodeTextProperties
 
 public:
     /**
-     * @brief Use SceneNode constructor
+     * @brief Constructor
      */
-    using SceneNode::SceneNode;
+    SceneNodeText(htps::rptr<SceneNode> parent, htps::str name);
 
     /**
      * @brief Expose SceneNode properties
@@ -37,6 +32,7 @@ public:
 
 protected:
     void update() override final;
+    htps::size_type inner_transformation_;
 };
 }  // namespace haf::scene::nodes
 
