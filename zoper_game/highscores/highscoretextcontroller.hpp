@@ -37,7 +37,7 @@ private:
     void addHighScoresLine(const htps::size_type counter,
                            const HighScore& element,
                            const bool is_inserting);
-    void addHighScoreEditor(const htps::sptr<SceneNode>& label,
+    void addHighScoreEditor(const htps::sptr<nodes::SceneNodeText>& label,
                             const htps::size_type counter);
     void addEditAnimation(const htps::size_type line_index);
     HighScoresData m_hsData;

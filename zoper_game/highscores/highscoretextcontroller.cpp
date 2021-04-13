@@ -103,7 +103,7 @@ void HighScoreTextController::addHighScoresLine(const size_type counter,
     }
 }
 
-void HighScoreTextController::addHighScoreEditor(const sptr<SceneNode>& label,
+void HighScoreTextController::addHighScoreEditor(const sptr<nodes::SceneNodeText>& label,
                                                  const size_type counter)
 {
     addEditAnimation(counter);
