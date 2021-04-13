@@ -7,8 +7,6 @@
 #include <haf/resources/include/itexture.hpp>
 #include <haf/resources/i_include/bmpfont.hpp>
 
-#include <fstream>
-
 using namespace htps;
 
 namespace haf::res
