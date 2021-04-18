@@ -7,9 +7,8 @@ using namespace htps;
 namespace haf::res
 {
 
-BMPFont::BMPFont(const str& file_name)
+BMPFont::BMPFont(const str& file_name) : p_{muptr<BMFontPrivate>()}
 {
-    p_ = new BMFontPrivate;
     p_->chars_.resize(256U);
 
     str fontfile(file_name);
@@ -17,17 +16,17 @@ BMPFont::BMPFont(const str& file_name)
     p_->ParseFont(fontfile);
     DisplayLog::info("Finished Parsing Font ", fontfile);
     DisplayLog::info("Calculating some metrics");
-    p_->adv = 1.0f / (f32)size().x;
+    p_->adv = 1.0F / static_cast<f32>(size().x);
 
-    for (u32 i{0U}; i < p_->chars_.size(); ++i)
+    for (auto& charDescriptor : p_->chars_)
     {
-        p_->chars_[i].offsetedPosition = Rectf32(
-            static_cast<vector2df>(p_->chars_[i].offset),
-            static_cast<vector2df>(p_->chars_[i].position.size()));
+        charDescriptor.offsetedPosition =
+            Rectf32{static_cast<vector2df>(charDescriptor.offset),
+                    static_cast<vector2df>(charDescriptor.position.size())};
     }
+
     DisplayLog::info("Finished Parsing Font ", fontfile);
-    DisplayLog::info("Loading pages. Number of pages: ",
-                     p_->pagesData_.size());
+    DisplayLog::info("Loading pages. Number of pages: ", p_->pagesData_.size());
 }
 
 vector<str> BMPFont::textureFileNames() const
@@ -35,7 +34,7 @@ vector<str> BMPFont::textureFileNames() const
     vector<str> texture_file_names(p_->pagesData_.size());
     for (const auto& page_data : p_->pagesData_)
     {
-        texture_file_names.push_back(page_data.file);
+        texture_file_names.emplace_back(page_data.file);
     }
 
     return texture_file_names;
@@ -52,14 +51,11 @@ void BMPFont::setTexturePages(const vector<sptr<ITexture>>& texture_pages)
 
     for (sptr<ITexture> texture : texture_pages)
     {
-        p_->pagesData_[count].it = texture;
+        p_->pagesData_[count].texture = texture;
     }
 }
 
-BMPFont::~BMPFont()
-{
-    delete p_;
-}
+BMPFont::~BMPFont() = default;
 
 const vector2du32& BMPFont::size() const
 {
@@ -93,7 +89,7 @@ f32 BMPFont::getKerning(const u32 first, const u32 second) const
 
 sptr<ITexture> BMPFont::getTexture() const
 {
-    return p_->pagesData_[0U].it;
+    return p_->pagesData_[0U].texture;
 }
 
 }  // namespace haf::res

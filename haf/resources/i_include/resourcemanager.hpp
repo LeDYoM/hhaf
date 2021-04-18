@@ -37,6 +37,9 @@ public:
     bool loadTexture(const htps::str& rid, const htps::str& fileName);
     bool loadShader(const htps::str& rid, const htps::str& fileName);
     bool loadBMPFont(const htps::str& rid, const htps::str& fileName);
+    bool loadBmpFontTextures(htps::sptr<res::BMPFont> bmp_font,
+                             const htps::str& rid,
+                             const htps::str& fileName);
 
     res::SetResourceConfigFileResult setResourceConfigFile(
         htps::str config_file_name) override;

@@ -66,11 +66,29 @@ bool ResourceManager::loadShader(const str& rid, const str& fileName)
 bool ResourceManager::loadBMPFont(const str& rid, const str& fileName)
 {
     sptr<BMPFont> bmp_font{p_->bmp_font_factory_.loadFromFile(fileName)};
+    return loadBmpFontTextures(bmp_font, rid, fileName);
+}
 
+bool ResourceManager::loadBmpFontTextures(htps::sptr<res::BMPFont> bmp_font,
+                                          const htps::str& rid,
+                                          const htps::str& fileName)
+{
     if (bmp_font)
     {
+        DisplayLog::debug("Font config file ", fileName,
+                          " loaded and parsed successfully");
+        DisplayLog::debug("Loading font textures");
         const auto& texture_file_names{bmp_font->textureFileNames()};
+        DisplayLog::debug("Number of textures to load: ",
+                          texture_file_names.size());
         vector<sptr<ITexture>> textures(texture_file_names.size());
+
+        // If no textures in the font, the font is invalid
+        if (texture_file_names.empty())
+        {
+            DisplayLog::error("Invalid font. It has no textures");
+            bmp_font.reset();
+        }
 
         for (const auto& file_name : texture_file_names)
         {
@@ -78,13 +96,19 @@ bool ResourceManager::loadBMPFont(const str& rid, const str& fileName)
                 rid + "_" + file_name, p_->config_directory_ + file_name);
 
             (void)(texture_available);
+            DisplayLog::debug_if(!texture_available,
+                                 "Texture for font not found: ", file_name);
 
             sptr<ITexture> texture(getTexture(rid + "_" + file_name));
-            textures.push_back(std::move(texture));
+            textures.emplace_back(std::move(texture));
         }
 
         bmp_font->setTexturePages(textures);
         p_->bmp_fonts_.emplace_back(rid, bmp_font);
+    }
+    else
+    {
+        DisplayLog::debug("Cannot load bmp font: ", fileName);
     }
     return bmp_font != nullptr;
 }

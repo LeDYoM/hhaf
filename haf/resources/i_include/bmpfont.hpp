@@ -29,7 +29,7 @@ public:
 
 private:
     class BMFontPrivate;
-    htps::rptr<BMFontPrivate> p_;
+    htps::uptr<BMFontPrivate> p_;
 };
 }  // namespace haf::res
 

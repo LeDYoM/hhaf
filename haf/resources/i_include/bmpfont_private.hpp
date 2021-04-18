@@ -36,7 +36,7 @@ struct CharDescriptor
 struct PageData
 {
     htps::str file;
-    htps::sptr<ITexture> it;
+    htps::sptr<ITexture> texture;
 };
 
 struct FontInfo
