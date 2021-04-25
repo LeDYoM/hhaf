@@ -30,7 +30,7 @@ namespace htps
         ExpectedTokenType
     };
 
-    struct Position
+    struct TokenPosition
     {
         size_type line;
         size_type column;
@@ -40,7 +40,7 @@ namespace htps
     {
         str value;
         TokenType token_type{ TokenType::Str };
-        Position position;
+        TokenPosition position;
     };
 
     struct Error
@@ -63,7 +63,7 @@ namespace htps
             errors_ += other.errors_;
         }
 
-        inline void error(const TokenType expected, const Token& found)
+        void error(const TokenType expected, const Token& found)
         {
             Error error_;
             error_.token = found;
@@ -73,7 +73,7 @@ namespace htps
             errors_.push_back(std::move(error_));
         }
 
-        inline void unterminatedString(const Token& token)
+        void unterminatedString(const Token& token)
         {
             Error error_;
             error_.token = token;
@@ -83,20 +83,21 @@ namespace htps
             errors_.push_back(std::move(error_));
         }
 
-        inline void invalidCharacter(const Token& token, const str::char_type ch)
+        void invalidCharacter(const Token& token, const str::char_type ch)
         {
             Error error_;
             error_.token = token;
             error_.type = ErrorType::InvalidCharacter;
             error_.error_data = static_cast<decltype(Error::error_data)>(ch);
 
-            errors_.push_back(std::move(error_));
+            errors_.emplace_back(std::move(error_));
         }
 
-        constexpr const vector<Error>& errors() const noexcept
+        const vector<Error>& errors() const noexcept
         {
             return errors_;
         }
+    
     private:
         vector<Error> errors_;
     };
@@ -260,7 +261,7 @@ namespace htps
 
         str::const_iterator begin_;
         str::const_iterator end_;
-        Position position_{};
+        TokenPosition position_{};
         vector<str::char_type> special_chars{ '{', '}', ',', ':', '[', ']' };
         ErrorContainer& errors_;
     };
