@@ -34,12 +34,6 @@ public:
         }
     }
 
-    static void construct(pointer where, T const& arg)
-    {
-        assert(where != nullptr);
-        ::new ((void*)where) T(arg);
-    }
-
     static void destruct(pointer where) noexcept
     {
         assert(where != nullptr);
