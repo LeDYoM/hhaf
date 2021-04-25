@@ -9,9 +9,10 @@ class IAutoRegisterFactory
 {
 public:
     virtual ~IAutoRegisterFactory() {}
-    virtual void setFactory(IBackendRegister* const backend_register) const  = 0;
-    virtual void resetFactory(IBackendRegister* const backend_register) const = 0;
-    virtual void destroy()                                              = 0;
+    virtual void setFactory(IBackendRegister* const backend_register) const = 0;
+    virtual void resetFactory(
+        IBackendRegister* const backend_register) const = 0;
+    virtual void destroy()                              = 0;
 };
 
 template <typename T>
