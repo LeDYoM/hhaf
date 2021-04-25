@@ -6,6 +6,13 @@
 namespace htps
 {
 
+/**
+ * @brief Class dedicated to the construction and destruction
+ * of objects. You pass the pointer to the allocated memory or
+ * the memory to be deallocated.
+ * 
+ * @tparam T 
+ */
 template <typename T>
 class BasicConstructDestruct
 {
