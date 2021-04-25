@@ -4,7 +4,7 @@
 #include <htypes/include/allocatorfunc.hpp>
 #include <memmanager/include/memmanager.hpp>
 
-namespace htypes
+namespace htps
 {
 
 template <typename T>
