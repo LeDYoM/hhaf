@@ -16,16 +16,16 @@ public:
     bool arePendingKeyPresses() const override;
     bool arePendingKeyReleases() const override;
 
-    iKey popKeyPress() override;
-    iKey popKeyRelease() override;
+    IKey popKeyPress() override;
+    IKey popKeyRelease() override;
 
-    void keyPressed(const iKey) override;
-    void keyReleased(const iKey) override;
+    void keyPressed(const IKey) override;
+    void keyReleased(const IKey) override;
 
     void keyEvent(const sf::Event& e);
 
-    std::queue<iKey> keysPressed_;
-    std::queue<iKey> keysReleased_;
+    std::queue<IKey> keysPressed_;
+    std::queue<IKey> keysReleased_;
 };
 }  // namespace haf::backend::sfmlb
 

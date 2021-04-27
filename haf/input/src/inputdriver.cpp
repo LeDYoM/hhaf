@@ -6,14 +6,14 @@ using namespace htps;
 
 namespace
 {
-haf::input::Key toKey(const haf::backend::iKey ikey)
+haf::input::Key toKey(const haf::backend::IKey ikey)
 {
     return static_cast<haf::input::Key>(ikey);
 }
 
-haf::backend::iKey toiKey(const haf::input::Key key)
+haf::backend::IKey toiKey(const haf::input::Key key)
 {
-    return static_cast<haf::backend::iKey>(key);
+    return static_cast<haf::backend::IKey>(key);
 }
 
 }  // namespace

@@ -37,27 +37,27 @@ public:
      * @brief Extract the last @b iKey that has been pressed.
      * @return Key The extracted @b iKey
      */
-    virtual iKey popKeyPress() = 0;
+    virtual IKey popKeyPress() = 0;
 
     /**
      * @brief Extract the last @b iKey that has been released.
      * @return Key The extracted @b iKey
      */
-    virtual iKey popKeyRelease() = 0;
+    virtual IKey popKeyRelease() = 0;
 
     /**
      * @brief Users of this class should call this method to add any
      * pending key pressed.
      *  @param[in] iKey indicating the element to add.
      */
-    virtual void keyPressed(const iKey) = 0;
+    virtual void keyPressed(const IKey) = 0;
 
     /**
      * @brief Users of this class should call this method to add any
      * pending key released.
      *  @param[in] iKey indicating the element to add.
      */
-    virtual void keyReleased(const iKey) = 0;
+    virtual void keyReleased(const IKey) = 0;
 };
 }  // namespace haf::backend
 

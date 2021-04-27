@@ -33,9 +33,9 @@ constexpr const htps::vector2d<T> from_sf_type(const sf::Vector2<T>& v) noexcept
     return htps::vector2d<T>{v.x, v.y};
 }
 
-constexpr iKey doCast(const sf::Keyboard::Key& k) noexcept
+constexpr IKey doCast(const sf::Keyboard::Key& k) noexcept
 {
-    return static_cast<iKey>((int)k);
+    return static_cast<IKey>((int)k);
 }
 
 inline sf::String to_sf_type(const htps::str& other) noexcept

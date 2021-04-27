@@ -7,8 +7,8 @@ namespace haf::backend::sfmlb
 {
 void InputDriver::keyEvent(const sf::Event& e)
 {
-    const iKey k(doCast(e.key.code));
-    if (k != iKey::Unknown)
+    const IKey k(doCast(e.key.code));
+    if (k != IKey::Unknown)
     {
         if (e.type == sf::Event::KeyPressed)
         {
@@ -32,9 +32,9 @@ bool InputDriver::arePendingKeyReleases() const
 }
 
 template <typename T>
-iKey popKey(T& container)
+IKey popKey(T& container)
 {
-    iKey k(iKey::Unknown);
+    IKey k(IKey::Unknown);
     if (!container.empty())
     {
         k = container.front();
@@ -43,22 +43,22 @@ iKey popKey(T& container)
     return k;
 }
 
-iKey InputDriver::popKeyPress()
+IKey InputDriver::popKeyPress()
 {
     return popKey(keysPressed_);
 }
 
-iKey InputDriver::popKeyRelease()
+IKey InputDriver::popKeyRelease()
 {
     return popKey(keysReleased_);
 }
 
-void InputDriver::keyPressed(const iKey k)
+void InputDriver::keyPressed(const IKey k)
 {
     keysPressed_.push(k);
 }
 
-void InputDriver::keyReleased(const iKey k)
+void InputDriver::keyReleased(const IKey k)
 {
     keysReleased_.push(k);
 }
