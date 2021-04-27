@@ -1,5 +1,5 @@
-#ifndef MTPS_MTYPES_RAWMEMORY_INCLUDE_HPP
-#define MTPS_MTYPES_RAWMEMORY_INCLUDE_HPP
+#ifndef MTPS_HTYPES_RAWMEMORY_INCLUDE_HPP
+#define MTPS_HTYPES_RAWMEMORY_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
 #include <cstring>

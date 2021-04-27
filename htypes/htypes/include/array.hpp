@@ -1,5 +1,5 @@
-#ifndef MTYPES_ARRAY_INCLUDE_HPP
-#define MTYPES_ARRAY_INCLUDE_HPP
+#ifndef HTYPES_ARRAY_INCLUDE_HPP
+#define HTYPES_ARRAY_INCLUDE_HPP
 
 #include <initializer_list>
 #include "types.hpp"

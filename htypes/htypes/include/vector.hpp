@@ -1,5 +1,5 @@
-#ifndef MTYPES_VECTOR_INCLUDE_HPP
-#define MTYPES_VECTOR_INCLUDE_HPP
+#ifndef HTYPES_VECTOR_INCLUDE_HPP
+#define HTYPES_VECTOR_INCLUDE_HPP
 
 //#define LOG_MODE
 #include "debug_internal.hpp"
@@ -9,7 +9,7 @@
 #include "function.hpp"
 #include "growpolicy.hpp"
 #include "vector_storage.hpp"
-#include "allocator.hpp"
+#include "memory/allocator.hpp"
 
 namespace htps
 {

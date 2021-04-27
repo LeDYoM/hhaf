@@ -1,5 +1,5 @@
-#ifndef MTYPES_MENUM_INCLUDE_HPP
-#define MTYPES_MENUM_INCLUDE_HPP
+#ifndef HTYPES_MENUM_INCLUDE_HPP
+#define HTYPES_MENUM_INCLUDE_HPP
 
 #include <type_traits>
 #include <limits>

@@ -1,5 +1,5 @@
-#ifndef MTYPES_STACK_INCLUDE_HPP
-#define MTYPES_STACK_INCLUDE_HPP
+#ifndef HTYPES_STACK_INCLUDE_HPP
+#define HTYPES_STACK_INCLUDE_HPP
 
 #include "types.hpp"
 #include "vector.hpp"

@@ -1,12 +1,12 @@
-#ifndef MTYPES_VECTOR_STORAGE_INCLUDE_HPP
-#define MTYPES_VECTOR_STORAGE_INCLUDE_HPP
+#ifndef HTYPES_VECTOR_STORAGE_INCLUDE_HPP
+#define HTYPES_VECTOR_STORAGE_INCLUDE_HPP
 
 //#define LOG_MODE
 #include "debug_internal.hpp"
 
 #include <initializer_list>
 #include <utility>
-#include "allocator.hpp"
+#include "memory/allocator.hpp"
 #include "function.hpp"
 #include "growpolicy.hpp"
 

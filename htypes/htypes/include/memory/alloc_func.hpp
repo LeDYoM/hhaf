@@ -1,8 +1,8 @@
-#ifndef MTYPES_ALLOCATOR_MALLOC_FREE_INCLUDE_HPP
-#define MTYPES_ALLOCATOR_MALLOC_FREE_INCLUDE_HPP
+#ifndef HTYPES_ALLOCATOR_MALLOC_FREE_INCLUDE_HPP
+#define HTYPES_ALLOCATOR_MALLOC_FREE_INCLUDE_HPP
 
 #include <cstdlib>
-#include <htypes/include/allocatorfunc.hpp>
+#include <htypes/include/memory/allocatorfunc.hpp>
 
 namespace htps
 {

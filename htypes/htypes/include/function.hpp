@@ -1,5 +1,5 @@
-#ifndef MTYPES_FUNCTION_INCLUDE_HPP
-#define MTYPES_FUNCTION_INCLUDE_HPP
+#ifndef HTYPES_FUNCTION_INCLUDE_HPP
+#define HTYPES_FUNCTION_INCLUDE_HPP
 
 #include <cassert>
 #include "types.hpp"

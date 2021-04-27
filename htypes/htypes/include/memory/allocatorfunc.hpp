@@ -1,7 +1,7 @@
-#ifndef MTYPES_ALLOCATOR_FUNC_1_INCLUDE_HPP
-#define MTYPES_ALLOCATOR_FUNC_1_INCLUDE_HPP
+#ifndef HTYPES_ALLOCATOR_FUNC_1_INCLUDE_HPP
+#define HTYPES_ALLOCATOR_FUNC_1_INCLUDE_HPP
 
-#include "types.hpp"
+#include <htypes/include/types.hpp>
 #include <cassert>
 
 namespace htps

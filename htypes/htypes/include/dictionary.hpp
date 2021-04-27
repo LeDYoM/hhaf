@@ -1,5 +1,5 @@
-#ifndef MTYPES_DICTIONARY_INCLUDE_HPP
-#define MTYPES_DICTIONARY_INCLUDE_HPP
+#ifndef HTYPES_DICTIONARY_INCLUDE_HPP
+#define HTYPES_DICTIONARY_INCLUDE_HPP
 
 #include "types.hpp"
 #include "str.hpp"

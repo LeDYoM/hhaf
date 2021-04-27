@@ -1,5 +1,5 @@
-#ifndef MTYPES_OPTIONAL_INCLUDE_HPP
-#define MTYPES_OPTIONAL_INCLUDE_HPP
+#ifndef HTYPES_OPTIONAL_INCLUDE_HPP
+#define HTYPES_OPTIONAL_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
 
