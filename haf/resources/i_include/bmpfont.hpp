@@ -8,6 +8,10 @@
 
 namespace haf::res
 {
+/**
+ * @brief Class implementing a font loaded from a bitmap file
+ * 
+ */
 class BMPFont : public IFont
 {
 public:
