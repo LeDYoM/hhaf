@@ -1,7 +1,7 @@
 # Host Application Framework
 cmake_minimum_required(VERSION 3.14)
 project(
-  haf_repo
+  hhaf
   VERSION 0.2.1
   DESCRIPTION "Host Application Framework"
   # [HOMEPAGE_URL <url-string>]

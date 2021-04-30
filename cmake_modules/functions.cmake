@@ -120,7 +120,7 @@ function(add_development_dependency _source _dependency)
     add_dependencies(${_source} ${_dependency})
 endfunction()
 
-function(build_doc _base_name)
+function(build_doc_old _base_name)
   # check if Doxygen is installed
   find_package(Doxygen)
   if(DOXYGEN_FOUND)
@@ -144,6 +144,19 @@ function(build_doc _base_name)
       "Doxygen needs to be installed to generate the doxygen documentation for "
       ${_base_name})
   endif()
+endfunction()
+
+function(build_doc CURRENT_TARGET)
+set(DOXYGEN_GENERATE_HTML YES)
+set(DOXYGEN_EXCLUDE build;tests)
+
+find_package(Doxygen REQUIRED)
+
+doxygen_add_docs(
+    ${CURRENT_TARGET}_doc
+    ${PROJECT_SOURCE_DIR}
+    COMMENT "Generate html pages for ${CURRENT_TARGET}"
+)
 endfunction()
 
 macro(stardard_install_package)
