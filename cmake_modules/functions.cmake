@@ -147,16 +147,16 @@ function(build_doc_old _base_name)
 endfunction()
 
 function(build_doc CURRENT_TARGET)
-set(DOXYGEN_GENERATE_HTML YES)
-set(DOXYGEN_EXCLUDE build;tests)
+  set(DOXYGEN_GENERATE_HTML YES)
+  set(DOXYGEN_EXCLUDE build;tests)
 
-find_package(Doxygen REQUIRED)
+  find_package(Doxygen REQUIRED)
 
-doxygen_add_docs(
-    ${CURRENT_TARGET}_doc
-    ${PROJECT_SOURCE_DIR}
-    COMMENT "Generate html pages for ${CURRENT_TARGET}"
-)
+  doxygen_add_docs(
+      ${CURRENT_TARGET}_doc
+      ${PROJECT_SOURCE_DIR}
+      COMMENT "Generate html pages for ${CURRENT_TARGET}"
+  )
 endfunction()
 
 macro(stardard_install_package)
