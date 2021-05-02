@@ -30,12 +30,13 @@ class vector final
     vector_storage<T, Allocator, GrowPolicy> base_;
 
 public:
-    using iterator        = T*;
-    using const_iterator  = const T*;
-    using reference       = T&;
-    using const_reference = const T&;
-    using value_type      = T;
-    using pointer         = T*;
+    using iterator        = T*;       /**< Iterator for the values */
+    using const_iterator  = const T*; /**< Iterator pointing to const values */
+    using reference       = T&;       /**< Reference to member */
+    using const_reference = const T&; /**< Const reference to members */
+    using value_type      = T;        /** Value of the contained member */
+    using pointer         = T*;       /** Pointer to the contained member */
+    using const_pointer   = T const*; /**< Pointer to constant value */
 
     /**
      * @brief Default constructor.
@@ -504,24 +505,34 @@ public:
         base_.reserve(capacity);
     }
 
-    constexpr void resize(const size_type sz)
+    /**
+     * @brief Resize the inner container of this vector
+     * @note This function affects the size of the vector it might
+     * leave the inner reserved memory untouched.
+     * @note If the size of the vector is equal to the parameter, this
+     * function will do nothing..
+     *
+     * @param new_size New expected size of the vector.
+     */
+    constexpr void resize(size_type const new_size)
     {
-        if (sz != size())
+        // Delete to shrink
+        while (size() > new_size)
         {
-            // Delete to shrink
-            while (size() > sz)
-            {
-                pop_back();
-            }
+            pop_back();
+        }
 
-            // Append the necessary
-            while (size() < sz)
-            {
-                emplace_back();
-            }
+        // Append the necessary default constructed elements
+        while (size() < new_size)
+        {
+            emplace_back();
         }
     }
 
+    /**
+     * @brief Delete all elements in the vector. but maintains the inner
+     * reserved memory unmodified.
+     */
     constexpr void clear() noexcept
     {
         while (size() > 0U)
@@ -530,24 +541,15 @@ public:
         }
     }
 
-    constexpr void checkRange(const iterator it) const
+    /**
+     * @brief Check that this iterator is valid. This function is for debug
+     * purposes
+     * @param it Const iterator to check
+     */
+    constexpr void checkRange([[maybe_unused]] const const_iterator it) const
     {
-#ifndef NDEBUG
         assert(it >= begin());
         assert(it <= end());
-#else
-        (void)(it);
-#endif
-    }
-
-    constexpr void checkRange(const const_iterator it) const
-    {
-#ifndef NDEBUG
-        assert(it >= begin());
-        assert(it <= end());
-#else
-        (void)(it);
-#endif
     }
 };
 
@@ -559,22 +561,15 @@ constexpr bool operator==(const vector<A>& lhs, const vector<A>& rhs) noexcept
     {
         return true;
     }
+    // If the vectors have different sizes, they are different
     else if (lhs.size() != rhs.size())
     {
         return false;
     }
-    else if (lhs.empty())
-    {
-        return true;
-    }
     else
     {
         for (auto lhs_iterator = lhs.cbegin(), rhs_iterator = rhs.cbegin();
-             lhs_iterator != lhs.cend()
-             //                    && rhs_iterator != rhs.cend() <- Not needed,
-             //                    they have the same size.
-             ;
-             ++lhs_iterator, ++rhs_iterator)
+             lhs_iterator != lhs.cend(); ++lhs_iterator, ++rhs_iterator)
         {
             if (!(*lhs_iterator == *rhs_iterator))
             {
