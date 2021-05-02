@@ -43,7 +43,7 @@ private:
 };
 }  // namespace
 
-TEST_CASE("BoardManager of size 0|0 no actuator", "[board_manager]")
+TEST_CASE("BoardManager of size 0 and 0 no actuator", "[board_manager]")
 {
     BoardManager board_manager_component;
 
@@ -54,7 +54,7 @@ TEST_CASE("BoardManager of size 0|0 no actuator", "[board_manager]")
     CHECK(board_manager_component.size() == vector2dst{0U, 0U});
 }
 
-TEST_CASE("BoardManager of size 0|0 with actuator", "[board_manager]")
+TEST_CASE("BoardManager of size 0 and 0 with actuator", "[board_manager]")
 {
     BoardManager board_manager_component;
 
@@ -68,7 +68,7 @@ TEST_CASE("BoardManager of size 0|0 with actuator", "[board_manager]")
     CHECK(board_manager_component.size() == vector2dst{0U, 0U});
 }
 
-TEST_CASE("BoardManager of size 32|32 no actuator", "[board_manager]")
+TEST_CASE("BoardManager of size 32 and 32 no actuator", "[board_manager]")
 {
     constexpr vector2dst bm_size = vector2dst{4U, 4U};
     BoardManager board_manager_component;
@@ -88,7 +88,7 @@ TEST_CASE("BoardManager of size 32|32 no actuator", "[board_manager]")
     }
 }
 
-TEST_CASE("BoardManager of size 32|32 with actuator", "[board_manager]")
+TEST_CASE("BoardManager of size 32 and 32 with actuator", "[board_manager]")
 {
     constexpr vector2dst bm_size = vector2dst{4U, 4U};
     BoardManager board_manager_component;
