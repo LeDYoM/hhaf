@@ -15,10 +15,11 @@ namespace haf::scene::nodes
 
 namespace
 {
-inline void updateAlignmentX(PropertyState<vector2df, Position>& position,
-                      AlignmentX::value_type const alignmentX,
-                      f32 const textSizeX,
-                      AlignmentSize::value_type const& alignmentSize) noexcept
+inline void updateAlignmentX(
+    PropertyState<vector2df, Position>& position,
+    AlignmentX::value_type const alignmentX,
+    f32 const textSizeX,
+    AlignmentSize::value_type const& alignmentSize) noexcept
 {
     f32 newPosX{0.f};
 
@@ -38,10 +39,11 @@ inline void updateAlignmentX(PropertyState<vector2df, Position>& position,
     position.set(vector2df{newPosX, position.get().y});
 }
 
-inline void updateAlignmentY(PropertyState<vector2df, Position>& position,
-                      AlignmentY::value_type const alignmentY,
-                      f32 const textSizeY,
-                      AlignmentSize::value_type const& alignmentSize) noexcept
+inline void updateAlignmentY(
+    PropertyState<vector2df, Position>& position,
+    AlignmentY::value_type const alignmentY,
+    f32 const textSizeY,
+    AlignmentSize::value_type const& alignmentSize) noexcept
 {
     f32 newPosY{0.f};
 
@@ -62,8 +64,8 @@ inline void updateAlignmentY(PropertyState<vector2df, Position>& position,
 }
 }  // namespace
 
-SceneNodeText::SceneNodeText(rptr<SceneNode> parent, str name)
-    : SceneNode{parent, std::move(name)}
+SceneNodeText::SceneNodeText(rptr<SceneNode> parent, str name) :
+    SceneNode{parent, std::move(name)}
 {
     inner_transformation_ = addTransformation();
 }
@@ -74,8 +76,9 @@ void SceneNodeText::update()
 
     auto& pr = prop<SceneNodeTextProperties>();
     res::FontUtils const font_utils{pr.get<Font>().get()};
-    auto const textSize = pr.get<Font>() != nullptr ? 
-        font_utils.textSize(pr.get<Text>()) : Rectf32{};
+    auto const textSize = pr.get<Font>() != nullptr
+        ? font_utils.textSize(pr.get<Text>())
+        : Rectf32{};
 
     if (pr.hasChanged<Font>() || pr.hasChanged<Text>())
     {
@@ -194,16 +197,18 @@ void SceneNodeText::update()
 
         if (as_rr_hasChanged || align_x)
         {
-            updateAlignmentX(getTransformation(inner_transformation_).prop<Position>(),
-                             prop<AlignmentX>().get(), textSize.width,
-                             pr.get<AlignmentSize>());
+            updateAlignmentX(
+                getTransformation(inner_transformation_).prop<Position>(),
+                prop<AlignmentX>().get(), textSize.width,
+                pr.get<AlignmentSize>());
         }
 
         if (as_rr_hasChanged || align_y)
         {
-            updateAlignmentY(getTransformation(inner_transformation_).prop<Position>(),
-                             prop<AlignmentY>().get(), textSize.height,
-                             pr.get<AlignmentSize>());
+            updateAlignmentY(
+                getTransformation(inner_transformation_).prop<Position>(),
+                prop<AlignmentY>().get(), textSize.height,
+                pr.get<AlignmentSize>());
         }
     }
 }
