@@ -9,9 +9,11 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${command:cmake.launchTargetPath}",
+//            "program": "${command:cmake.launchTargetPath}",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${command:cmake.buildDirectory}/bin/${command:cmake.buildType}/",
+            "cwd": "${command:cmake.buildDirectory}/bin/",
+//            "cwd": "${command:cmake.buildDirectory}/bin/${command:cmake.buildType}/",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
@@ -30,7 +32,8 @@
             "program": "${command:cmake.launchTargetPath}",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${command:cmake.buildDirectory}/bin/${command:cmake.buildType}",
+            "cwd": "${command:cmake.buildDirectory}/bin",
+//            "cwd": "${command:cmake.buildDirectory}/bin/${command:cmake.buildType}",
             "environment": [],
             "externalConsole": false
         }
