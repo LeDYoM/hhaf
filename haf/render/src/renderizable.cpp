@@ -20,16 +20,19 @@ namespace haf::scene
 
 struct Renderizable::RenderizablePrivate
 {
+    rptr<SceneNode> m_parent;
     VertexArray vertices_;
     RenderData render_data_;
     rptr<Renderizable const> const i_this_;
 
-    RenderizablePrivate(FigType_t const figure_type,
+    RenderizablePrivate(rptr<SceneNode> parent,
+                        FigType_t const figure_type,
                         size_type const initial_point_count,
                         Matrix4x4 const& matrix,
                         rptr<res::ITexture> texture,
                         rptr<res::IShader> shader,
                         rptr<Renderizable const> i_this) :
+                        m_parent{parent},
         vertices_{initDataVertexPerFigureAndNumPoints(figure_type,
                                                       initial_point_count)},
         render_data_{vertices_, matrix, texture, shader},
@@ -45,7 +48,7 @@ struct Renderizable::RenderizablePrivate
     }
 };
 
-Renderizable::Renderizable(rptr<SceneNode> _parent,
+Renderizable::Renderizable(rptr<SceneNode> parent,
                            str name,
                            FigType_t const figure_type,
                            size_type const initial_point_count,
@@ -54,22 +57,33 @@ Renderizable::Renderizable(rptr<SceneNode> _parent,
                            sptr<res::ITexture> _texture,
                            sptr<res::IShader> _shader) :
     sys::HasName{std::move(name)},
-    SceneNodeParent{_parent},
     figType{figure_type},
     box{std::move(_box)},
     color{std::move(_color)},
     pointCount{initial_point_count},
     shader{std::move(_shader)},
-    p_{make_pimplp<RenderizablePrivate>(figure_type,
+    p_{make_pimplp<RenderizablePrivate>(parent,
+                                        figure_type,
                                         initial_point_count,
-                                        parent()->globalTransform(),
+                                        parent->globalTransform(),
                                         texture().get(),
-                                        shader().get(), this)},
+                                        shader().get(),
+                                        this)},
     textureRect{textureFillQuad(_texture)},
     texture{std::move(_texture)}
 {}
 
 Renderizable::~Renderizable() = default;
+
+htps::rptr<SceneNode> Renderizable::parent() noexcept
+{
+    return p_->m_parent;
+}
+
+htps::rptr<SceneNode const> Renderizable::parent() const noexcept
+{
+    return p_->m_parent;
+}
 
 void Renderizable::render()
 {
