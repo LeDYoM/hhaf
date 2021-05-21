@@ -95,7 +95,7 @@ void SceneController::render(SceneNode& scene_node,
         // Update the transformation (local and global)
         parentTransformationChanged = scene_node.updateTransformations(
             parentTransformationChanged,
-            scene_node.parent() ? scene_node.parent()->globalTransform()
+            scene_node.parent() ? scene_node.parentAs<SceneNode>()->globalTransform()
                                 : Matrix4x4::Identity);
 
         // Update the renderizables added to this node

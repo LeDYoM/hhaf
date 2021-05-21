@@ -2,13 +2,9 @@
 #define HAF_SCENE_SCENENODEPARENT_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <haf/scene/include/scenenode_cast.hpp>
 
 namespace haf::scene
 {
-class SceneNode;
-class Scene;
-
 /**
  * @brief Class encapsulating the functionallity related to the parent and
  * ancestors management.
@@ -20,7 +16,7 @@ public:
      * @brief Constructor.
      * @param[in] parent       The parent of this node.
      */
-    constexpr SceneNodeParent(htps::rptr<SceneNode> parent) noexcept :
+    constexpr SceneNodeParent(htps::rptr<SceneNodeParent> parent) noexcept :
         parent_{std::move(parent)}
     {}
 
@@ -29,14 +25,14 @@ public:
      * @see SceneNode
      * @return constexpr htps::rptr<SceneNode> Parent or nullptr if no parent
      */
-    constexpr htps::rptr<SceneNode> parent() noexcept { return parent_; }
+    constexpr htps::rptr<SceneNodeParent> parent() noexcept { return parent_; }
 
     /**
      * @brief Get the constant parent of this @b SceneNode
      * @see SceneNode
      * @return constexpr htps::rptr<SceneNode> Parent or nullptr if no parent
      */
-    constexpr htps::rptr<const SceneNode> parent() const noexcept
+    constexpr htps::rptr<const SceneNodeParent> parent() const noexcept
     {
         return parent_;
     }
@@ -71,22 +67,19 @@ public:
      * @return constexpr htps::rptr<T> Pointer to the ancestor of the
      * specific type or nullptr if none found.
      */
-    template <typename T = SceneNode>
+    template <typename T>
     constexpr htps::rptr<T> ancestor() noexcept
     {
-        htps::rptr<SceneNode> _parent{parent()};
+        auto const _parent{parent()};
         if (_parent == nullptr)
         {
             return nullptr;
         }
         else
         {
-            auto parent_as_type{sceneNodeCast<T>(_parent)};
-            auto const parent_as_scene_node_parent{
-                sceneNodeCast<SceneNodeParent>(_parent)};
-            return parent_as_type == nullptr
-                ? parent_as_scene_node_parent->ancestor<T>()
-                : parent_as_type;
+            auto parent_as_type{parentAs<T>()};
+            return parent_as_type == nullptr ? _parent->ancestor<T>()
+                                             : parent_as_type;
         }
     }
 
@@ -96,34 +89,30 @@ public:
      * @return constexpr htps::rptr<T> Pointer to the ancestor of the
      * specific type or nullptr if none found.
      */
-    template <typename T = SceneNode>
+    template <typename T>
     constexpr htps::rptr<T const> const ancestor() const noexcept
     {
-        htps::rptr<SceneNode const> _parent{parent()};
+        auto const _parent{parent()};
         if (_parent == nullptr)
         {
             return nullptr;
         }
         else
         {
-            auto const parent_as_type{sceneNodeCast<T const>(_parent)};
-            auto const parent_as_scene_node_parent{
-                sceneNodeCast<SceneNodeParent const>(_parent)};
-            return parent_as_type == nullptr
-                ? parent_as_scene_node_parent->ancestor<T const>()
-                : parent_as_type;
+            auto parent_as_type{parentAs<T>()};
+            return parent_as_type == nullptr ? _parent->ancestor<T>()
+                                             : parent_as_type;
         }
     }
 
-protected:
     /**
-     * @brief Destroy the Scene Node Parent object. Only derived classes can
-     * use it.
+     * @brief Destroy the Scene Node Parent object.
+     * We need this class to be polymorphics
      */
-    ~SceneNodeParent() {}
+    virtual ~SceneNodeParent() {}
 
 private:
-    htps::rptr<SceneNode> const parent_;
+    htps::rptr<SceneNodeParent> const parent_;
 };
 
 }  // namespace haf::scene

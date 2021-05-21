@@ -57,12 +57,12 @@ TEST_CASE("SceneNodeParent::SceneNodeParent", "[SceneNode][SceneNodeParent]")
         CHECK(scene_node->ancestor<Scene>() == test_scene.get());
         CHECK(scene_node->ancestor<UnusedScene>() == nullptr);
         CHECK(scene_node->ancestor<TestScene>() == test_scene.get());
-        CHECK(scene_node->ancestor() == scene_node_test.get());
+        CHECK(scene_node->ancestor<SceneNode>() == scene_node_test.get());
 
         CHECK(scene_node_test->ancestor<TestSceneNode>() == nullptr);
         CHECK(scene_node_test->ancestor<Scene>() == test_scene.get());
         CHECK(scene_node_test->ancestor<UnusedScene>() == nullptr);
         CHECK(scene_node_test->ancestor<TestScene>() == test_scene.get());
-        CHECK(scene_node_test->ancestor() == test_scene.get());
+        CHECK(scene_node_test->ancestor<SceneNode>() == test_scene.get());
     }
 }

@@ -72,7 +72,8 @@ struct GameScene::GameScenePrivate
                 sceneNode->prop<haf::scene::Position>(), lastTokenPosition,
                 EndPositionPointsToScore,
                 Animation::AnimationDirection::Forward, [this, sceneNode]() {
-                    sceneNode->parent()->removeSceneNode(sceneNode);
+                    sceneNode->parentAs<SceneNode>()->removeSceneNode(
+                        sceneNode);
                 });
         }
     }
