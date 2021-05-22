@@ -19,7 +19,6 @@
 
 #include <haf/system/include/datawrappercreator.hpp>
 #include <haf/system/include/systemaccess.hpp>
-#include <haf/scene/include/interface_getter.hpp>
 #include <haf/scene_components/include/app_initializer.hpp>
 #include <haf/scene_components/include/app_finisher.hpp>
 

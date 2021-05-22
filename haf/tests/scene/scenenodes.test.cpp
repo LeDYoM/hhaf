@@ -297,7 +297,7 @@ TEST_CASE("Scenenodes::removeSceneNodeNyName", "[SceneNode][SceneNodes]")
     CHECK(testScene->sceneNodes().size() == kNumSceneNodes - 1U);
 }
 
-TEST_CASE("Scenenodes::removeSceneNodeNyName", "[SceneNode][SceneNodes]")
+TEST_CASE("Scenenodes::removeSceneNodeByNode", "[SceneNode][SceneNodes]")
 {
     using namespace haf;
     using namespace haf::scene;

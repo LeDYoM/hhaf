@@ -1,5 +1,5 @@
-#ifndef HAF_SCENE_INTERFACE_GETTER_INCLUDE_HPP
-#define HAF_SCENE_INTERFACE_GETTER_INCLUDE_HPP
+#ifndef HAF_SYSTEM_INTERFACE_GETTER_INCLUDE_HPP
+#define HAF_SYSTEM_INTERFACE_GETTER_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
 #include <haf/system/include/interfaceaccess.hpp>
@@ -9,21 +9,20 @@ namespace haf::sys
     class SystemAccess;
 }
 
-namespace haf::scene
+namespace haf::sys
 {
-
 class InterfaceGetter
 {
 public:
     explicit InterfaceGetter(
-        htps::rptr<sys::SystemAccess> system_access) noexcept :
+        htps::rptr<SystemAccess> system_access) noexcept :
         system_access_{system_access}
     {}
 
     template <typename T>
     T& systemInterface()
     {
-        return sys::getInterface<T>(*system_access_);
+        return getInterface<T>(*system_access_);
     }
 
     template <typename T>
@@ -33,7 +32,7 @@ public:
     }
 
 private:
-    htps::rptr<sys::SystemAccess> const system_access_;
+    htps::rptr<SystemAccess> const system_access_;
 };
 
 }  // namespace haf::scene

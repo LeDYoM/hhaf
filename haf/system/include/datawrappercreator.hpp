@@ -4,7 +4,6 @@
 #include <htypes/include/types.hpp>
 #include <haf/system/include/idatawrapper.hpp>
 #include <haf/utils/include/attachable_manager.hpp>
-#include <haf/scene/include/interface_getter.hpp>
 
 namespace haf::sys
 {

@@ -13,7 +13,7 @@
 #include <haf/scene/include/hasname.hpp>
 #include <haf/scene/include/componentcontainer.hpp>
 #include <haf/scene/include/scenenode_cast.hpp>
-#include <haf/scene/include/interface_getter.hpp>
+#include <haf/system/include/interface_getter.hpp>
 #include <haf/system/include/datawrappercreator.hpp>
 #include <haf/system/include/systemaccess.hpp>
 
@@ -43,7 +43,7 @@ class HAF_API SceneNode : public sys::HasName,
                           public sys::DataWrapperCreator,
                           public ComponentContainer,
                           public sys::SystemAccess,
-                          public InterfaceGetter,
+                          public sys::InterfaceGetter,
                           public SceneNodeProperties
 {
 public:
