@@ -18,7 +18,7 @@ void SceneNodes::addSceneNode(sptr<SceneNode> node)
     node->onCreated();
 }
 
-sptr<SceneNode> SceneNodes::groupByName(const str& name) const
+sptr<SceneNode> SceneNodes::getByName(const str& name) const
 {
     const auto iterator = sceneNodes().find_if(
         [name](const auto& node) { return node->name() == name; });
@@ -39,6 +39,16 @@ bool SceneNodes::removeSceneNode(sptr<SceneNode> element)
     auto const old_size = scene_nodes_.size();
     scene_nodes_.erase_one(element);
     return old_size == scene_nodes_.size() + 1U;
+}
+
+bool SceneNodes::removeSceneNode(htps::str const& name)
+{
+    auto node = getByName(name);
+    if (node != nullptr)
+    {
+        return removeSceneNode(std::move(node));
+    }
+    return false;
 }
 
 void SceneNodes::clearSceneNodes()

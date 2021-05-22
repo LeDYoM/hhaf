@@ -33,13 +33,37 @@ public:
         return result;
     }
 
+    /**
+     * @brief Remove a given SceneNode
+     * 
+     * @param element Element to remove
+     * @return true The element existed and was removed
+     * @return false The element was not on the group list
+     */
     bool removeSceneNode(htps::sptr<SceneNode> element);
+
+    /**
+     * @brief Remove a given SceneNode by name
+     * 
+     * @param element Name of the element to remove
+     * @return true The element existed and was removed
+     * @return false The element was not on the group list
+     */
+    bool removeSceneNode(htps::str const& name);
+
     void clearSceneNodes();
 
     const SceneNodeVector& sceneNodes() const noexcept;
     SceneNodeVector& sceneNodes() noexcept;
 
-    htps::sptr<SceneNode> groupByName(const htps::str& name) const;
+    /**
+     * @brief Get a SceneNode in the group looking for its name
+     * 
+     * @param name Name to look for
+     * @return htps::sptr<SceneNode> Pointer to the node with the
+     * specified name or nullptr if not found. 
+     */
+    htps::sptr<SceneNode> getByName(const htps::str& name) const;
 
     void for_each_sceneNode(
         htps::function<void(htps::sptr<SceneNode> const&)> action);
