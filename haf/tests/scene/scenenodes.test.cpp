@@ -296,3 +296,32 @@ TEST_CASE("Scenenodes::removeSceneNodeNyName", "[SceneNode][SceneNodes]")
     CHECK(result == false);
     CHECK(testScene->sceneNodes().size() == kNumSceneNodes - 1U);
 }
+
+TEST_CASE("Scenenodes::removeSceneNodeNyName", "[SceneNode][SceneNodes]")
+{
+    using namespace haf;
+    using namespace haf::scene;
+
+    constexpr size_type kNumSceneNodes{10U};
+    auto testScene(unitTestScene());
+    sptr<SceneNode> node_test;
+
+    // Create 10 scene nodes
+    for (size_type index{0U}; index < kNumSceneNodes; ++index)
+    {
+        str name{make_str("SceneNode_test_", index)};
+        if (index == 0U)
+        {
+            node_test = testScene->createSceneNode(name);
+        }
+        else
+        {
+            testScene->createSceneNode(name);
+        }
+    }
+    
+    CHECK(testScene->sceneNodes().size() == kNumSceneNodes);
+    testScene->clearSceneNodes();
+    CHECK(testScene->sceneNodes().size() == 0U);
+
+}

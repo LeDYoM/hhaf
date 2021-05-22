@@ -51,9 +51,21 @@ public:
      */
     bool removeSceneNode(htps::str const& name);
 
+    /**
+     * @brief Delete all scene nodes in this group
+     */
     void clearSceneNodes();
 
+    /**
+     * @return Get a constant reference to the underlying container
+     * of scenenodes.
+     */
     const SceneNodeVector& sceneNodes() const noexcept;
+
+    /**
+     * @return Get a mutable reference to the underlying container
+     * of scenenodes.
+     */
     SceneNodeVector& sceneNodes() noexcept;
 
     /**
@@ -65,12 +77,28 @@ public:
      */
     htps::sptr<SceneNode> getByName(const htps::str& name) const;
 
+    /**
+     * @brief Execute a mutable action for every SceneNode in the
+     * group.
+     * @param action Action to perform
+     */
     void for_each_sceneNode(
         htps::function<void(htps::sptr<SceneNode> const&)> action);
 
+    /**
+     * @brief Execute a constant action for every SceneNode in the
+     * group.
+     * @param action Action to perform
+     */
     void for_each_sceneNode(
         htps::function<void(htps::sptr<SceneNode const> const&)> action) const;
 
+    /**
+     * @brief Execute a mutable action for every SceneNode that is a T in the
+     * group.
+     * @tparam Type to perform actions on
+     * @param action Action to perform
+     */
     template <typename T>
     constexpr void for_each_sceneNode_as(
         htps::function<void(htps::sptr<T> const&)> action)
@@ -83,6 +111,12 @@ public:
         });
     }
 
+    /**
+     * @brief Execute a const action for every SceneNode that is a T in the
+     * group.
+     * @tparam Type to perform actions on
+     * @param action Action to perform
+     */
     template <typename T>
     constexpr void for_each_sceneNode_as(
         htps::function<void(htps::sptr<T const> const&)> action) const
@@ -95,6 +129,13 @@ public:
         });
     }
 
+    /**
+     * @brief Set a property value for each SceneNode object in the group
+     * 
+     * @tparam Tag Name of the property
+     * @tparam T Type of the property
+     * @param value Value of the property
+     */
     template <typename Tag, typename T>
     void set_property_for_each_sceneNode(T const& value)
     {
@@ -102,6 +143,15 @@ public:
             [&value](auto& node) { node->template prop<Tag>().set(value); });
     }
 
+    /**
+     * @brief Set a property value for each SceneNode object in the group
+     * that is convertible to NodeType
+     * 
+     * @tparam NodeType Type to convert the SceneNode to
+     * @tparam Tag Name of the property
+     * @tparam T Type of the property
+     * @param value Value of the property
+     */
     template <typename NodeType, typename Tag, typename T>
     void set_property_for_each_sceneNode_as(T const& value)
     {
@@ -115,10 +165,21 @@ protected:
      */
     ~SceneNodes();
 
+    /**
+     * @brief Add an already created SceneNode to the group
+     * @param node Node to add
+     */
     void addSceneNode(htps::sptr<SceneNode> node);
 
 private:
+    /**
+     * @brief SceneNode that owns this group
+     */
     const htps::rptr<SceneNode> scene_node_;
+
+    /**
+     * @brief Container of a group of SceneNode
+     */
     SceneNodeVector scene_nodes_;
 };
 
