@@ -290,9 +290,9 @@ TEST_CASE("Scenenodes::removeSceneNodeNyName", "[SceneNode][SceneNodes]")
     
     CHECK(testScene->sceneNodes().size() == kNumSceneNodes);
 
-    auto result = testScene->removeSceneNodeByName("SceneNode_test_0");
+    auto result = testScene->removeSceneNode("SceneNode_test_0");
     CHECK(result == true);
-    result = testScene->removeSceneNodeByName("SceneNode_test_0");
+    result = testScene->removeSceneNode("SceneNode_test_0");
     CHECK(result == false);
     CHECK(testScene->sceneNodes().size() == kNumSceneNodes - 1U);
 }
