@@ -1,4 +1,4 @@
-#include "include/hosted_application.hpp"
+#include "hosted_application.hpp"
 
 using namespace htps;
 

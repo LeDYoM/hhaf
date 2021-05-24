@@ -9,27 +9,29 @@ project(
 set(CURRENT_TARGET "host")
 
 set(SRC_FILES 
-    src/include/app_loader.hpp
-    src/include/app_state.hpp
-    src/include/host_config.hpp
-    src/include/host_private.hpp
-    src/include/hosted_application.hpp
-    src/app_loader.cpp
-    src/host.cpp
-    src/hosted_application.cpp
-    src/main.cpp
-    src/systemcontroller_loader.cpp
+  src/app_loader.cpp
+  src/app_loader.hpp
+  src/app_state.hpp
+  src/host_config.hpp
+  src/host_private.hpp
+  src/host.cpp
+  src/hosted_application.cpp
+  src/hosted_application.hpp
+  src/main.cpp
+  src/managed_app.hpp
+  src/systemcontroller_loader.cpp
+  src/systemcontroller_loader.hpp
+
+  host/include/host.hpp
 )
 
 build_lib_component(HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
                     ${SRC_FILES})
 
 configure_file(
-  "${PROJECT_SOURCE_DIR}/${CURRENT_TARGET}/include/host_version.hpp.in"
-  "${PROJECT_SOURCE_DIR}/${CURRENT_TARGET}/include/host_version.hpp" @ONLY)
+  "${PROJECT_SOURCE_DIR}/config/host_version.hpp.in"
+  "${PROJECT_BINARY_DIR}/host_version.hpp" @ONLY)
 
-target_link_libraries(${CURRENT_TARGET} PRIVATE hosted_app)
-target_link_libraries(${CURRENT_TARGET} PRIVATE memmanager)
-target_link_libraries(${CURRENT_TARGET} PRIVATE hlog)
-target_link_libraries(${CURRENT_TARGET} PRIVATE haf)
-target_link_libraries(${CURRENT_TARGET} PRIVATE loader)
+target_include_directories(${CURRENT_TARGET} PRIVATE ${PROJECT_BINARY_DIR})
+
+target_link_libraries(${CURRENT_TARGET} PRIVATE hosted_app memmanager hlog loader)

@@ -1,11 +1,16 @@
-#include <htypes/include/str.hpp>
 #include <host/include/host.hpp>
-#include <host/include/host_version.hpp>
-#include <host/include/systemcontroller_loader.hpp>
-#include "include/host_private.hpp"
-#include <hlog/include/hlog.hpp>
+
+#include "host_private.hpp"
+#include "systemcontroller_loader.hpp"
+#include "host_version.hpp" // In binary directory
+
 #include <hosted_app/include/iapp.hpp>
+
+#include <hlog/include/hlog.hpp>
+
 #include <haf/system/include/isystemcontroller.hpp>
+
+#include <htypes/include/str.hpp>
 
 #include <exception>
 

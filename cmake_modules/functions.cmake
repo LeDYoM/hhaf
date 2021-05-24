@@ -6,6 +6,14 @@ function(set_cxx_standard CURRENT_TARGET)
         POSITION_INDEPENDENT_CODE ON)
 endfunction()
 
+function(set_output_directories CURRENT_TARGET)
+  set_target_properties(${CURRENT_TARGET}
+    PROPERTIES
+      ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+      LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+      RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+endfunction()
+
 function (set_compile_warning_level CURRENT_TARGET level)
     target_compile_options(${CURRENT_TARGET} ${level}
         $<$<CXX_COMPILER_ID:MSVC>:/W4 /WX>
@@ -37,10 +45,11 @@ function(build_lib_component)
   endif()
 
   set_compile_warning_level_and_cxx_properties(${CURRENT_TARGET})
+  set_output_directories(${CURRENT_TARGET})
 
   if(LC_BUILD_EXPORT_ALL)
     if (LC_BUILD_STATIC)
-      message(WARN "STATIC and EXPORT_ALL together make no sense")
+      message(WARN "STATIC and EXPORT_ALL together makes no sense")
     endif()
     set_target_properties(${CURRENT_TARGET}
                           PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS true)
@@ -52,10 +61,62 @@ function(build_lib_component)
       "$<BUILD_INTERFACE:${LC_BUILD_HEADER_DIRECTORY}>"
   )
 
-file(GLOB_RECURSE public_headers 
-  RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
-  ${CMAKE_CURRENT_SOURCE_DIR}/${CURRENT_TARGET}/include/*.hpp
+  file(GLOB_RECURSE public_headers 
+    RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/${CURRENT_TARGET}/include/*.hpp
+    )
+
+  include(GNUInstallDirs)
+  install(TARGETS ${CURRENT_TARGET}
+      EXPORT ${CURRENT_TARGET}Targets
+      INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+      RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+      ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+      LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   )
+
+#  install(EXPORT ${CURRENT_TARGET}Targets
+#    FILE ${CURRENT_TARGET}Targets.cmake
+#    NAMESPACE hhaf::
+#  DESTINATION
+#    ${CMAKE_INSTALL_LIBDIR}/cmake/hhaf)
+
+endfunction()
+
+# Function to build different components from the project in an unified way.
+function(build_lib_component_modern)
+
+  cmake_parse_arguments(LC_BUILD "EXPORT_ALL;STATIC" "HEADER_DIRECTORY" "SOURCES"
+                        ${ARGN})
+
+  if(LC_BUILD_STATIC)
+    message(STATUS "Add library static: ${CURRENT_TARGET}")
+    add_library(${CURRENT_TARGET} STATIC ${LC_BUILD_SOURCES})
+  else()
+    message(STATUS "Add library shared: ${CURRENT_TARGET}")
+    add_library(${CURRENT_TARGET} SHARED ${LC_BUILD_SOURCES})
+  endif()
+
+  set_compile_warning_level_and_cxx_properties(${CURRENT_TARGET})
+
+  if(LC_BUILD_EXPORT_ALL)
+    if (LC_BUILD_STATIC)
+      message(WARN "STATIC and EXPORT_ALL together makes no sense")
+    endif()
+    set_target_properties(${CURRENT_TARGET}
+                          PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS true)
+  endif()
+
+  target_include_directories(${CURRENT_TARGET}
+      PUBLIC
+      "$<INSTALL_INTERFACE:include>"
+      "$<BUILD_INTERFACE:${LC_BUILD_HEADER_DIRECTORY}>"
+  )
+
+  file(GLOB_RECURSE public_headers 
+    RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/${CURRENT_TARGET}/include/*.hpp
+    )
 
   include(GNUInstallDirs)
   install(TARGETS ${CURRENT_TARGET}

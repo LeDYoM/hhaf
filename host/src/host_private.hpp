@@ -1,18 +1,26 @@
 #ifndef HAF_HOST_PRIVATE_INCLUDE_HPP
 #define HAF_HOST_PRIVATE_INCLUDE_HPP
 
+#include <host/include/host.hpp>
+#include "systemcontroller_loader.hpp"
+
 #include "hosted_application.hpp"
-#include <hosted_app/include/iapp.hpp>
 #include "app_loader.hpp"
 #include "host_config.hpp"
 #include "app_state.hpp"
+
 #include <haf/system/include/isystemcontroller.hpp>
+
 #include <hlog/include/hlog.hpp>
+
 #include <agloader/include/loader.hpp>
+
 #include <htypes/include/vector.hpp>
 #include <htypes/include/parpar.hpp>
 #include <htypes/include/object.hpp>
 #include <htypes/include/parpar.hpp>
+
+#include <hosted_app/include/iapp.hpp>
 
 using namespace htps;
 
