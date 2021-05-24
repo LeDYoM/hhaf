@@ -1,7 +1,7 @@
 macro(setOptions)
   option(BUILD_TESTS "Build test programs" ON)
   option(BUILD_PACKAGES "Build packages" OFF)
-  option(BUILD_DOCS "Build docs" ON)
+  option(BUILD_DOCS "Build docs" OFF)
 endmacro()
 
 macro(includeForOptions)
