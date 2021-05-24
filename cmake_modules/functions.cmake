@@ -1,3 +1,33 @@
+macro(setOptions)
+  option(BUILD_TESTS "Build test programs" ON)
+  option(BUILD_PACKAGES "Build packages" OFF)
+  option(BUILD_DOCS "Build docs" ON)
+endmacro()
+
+macro(includeForOptions)
+  if (BUILD_TESTS)
+    message("Building tests")
+    enable_testing()
+    include(testing)
+    add_subdirectory(tests)
+  else()
+    message("Not building tests")
+  endif()
+
+  if(BUILD_PACKAGES)
+    include(install)
+    message("Building packages")
+  else()
+    message("Not building packages")
+  endif()
+
+  if(BUILD_DOCS)
+    message("Building documentation")
+  else()
+    message("Not building documentation")
+  endif()
+endmacro()
+
 function(set_cxx_standard CURRENT_TARGET)
     set_target_properties(${CURRENT_TARGET} PROPERTIES
         CXX_STANDARD 20
@@ -130,16 +160,19 @@ function(build_concrete_backend)
 endfunction()
 
 function(build_doc CURRENT_TARGET)
-  set(DOXYGEN_GENERATE_HTML YES)
-  set(DOXYGEN_EXCLUDE build;tests)
+  if(BUILD_DOCS)
+    set(DOXYGEN_GENERATE_HTML YES)
+    set(DOXYGEN_EXCLUDE build;tests)
 
-  find_package(Doxygen REQUIRED)
+    find_package(Doxygen REQUIRED)
 
-  doxygen_add_docs(
-      ${CURRENT_TARGET}_doc
-      ${PROJECT_SOURCE_DIR}
-      COMMENT "Generate html pages for ${CURRENT_TARGET}"
-  )
+    doxygen_add_docs(
+        ${CURRENT_TARGET}_doc
+        ${PROJECT_SOURCE_DIR}
+        ALL
+        COMMENT "Generate html pages for ${CURRENT_TARGET}"
+    )
+  endif()
 endfunction()
 
 macro(stardard_install_package)
