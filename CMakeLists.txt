@@ -17,8 +17,6 @@ include(functions)
 setOptions()
 includeForOptions()
 
-add_subdirectory(tools)
-
 add_subdirectory(agloader)
 add_subdirectory(logger)
 add_subdirectory(memmanager)
@@ -30,14 +28,23 @@ add_subdirectory(hlog)
 add_library(log_and_types INTERFACE)
 target_link_libraries(log_and_types INTERFACE htypes memmanager hlog)
 
-add_subdirectory(hosted_app)
-add_subdirectory(host)
-add_subdirectory(backend_dev)
-add_subdirectory(backend_client)
-add_subdirectory(backend)
-add_subdirectory(haf)
-add_subdirectory(haf_user)
-add_subdirectory(haf_run)
+add_subdirectory(tools)
+
+set(module_list
+  hosted_app
+  host
+  backend_dev
+  backend_client
+  backend
+  haf
+  haf_user
+  haf_run
+)
+
+foreach(target ${module_list})
+  message("Adding module: ${target}")
+  add_subdirectory(${target})
+endforeach()
 
 add_subdirectory(haf_ext)
 
