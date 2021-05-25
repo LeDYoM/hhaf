@@ -24,6 +24,5 @@ target_compile_definitions(${CURRENT_TARGET} PRIVATE htypes_EXPORTS)
 # Use Memmamanger
 target_compile_definitions(${CURRENT_TARGET} PUBLIC USER_MEM_MANAGER)
 target_link_libraries(${CURRENT_TARGET} PUBLIC memmanager)
-add_subdirectory(tests)
 
-build_doc(${CURRENT_TARGET})
+add_subdirectory(tests)

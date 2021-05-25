@@ -55,3 +55,5 @@ add_subdirectory(haf_app_menu)
 if(BUILD_PACKAGES)
   stardard_install_haf()
 endif()
+
+build_docs(${module_list})

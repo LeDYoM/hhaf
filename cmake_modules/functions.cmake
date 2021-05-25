@@ -1,7 +1,7 @@
 macro(setOptions)
   option(BUILD_TESTS "Build test programs" ON)
   option(BUILD_PACKAGES "Build packages" OFF)
-  option(BUILD_DOCS "Build docs" OFF)
+  option(BUILD_DOCS "Build docs" ON)
 endmacro()
 
 macro(includeForOptions)
@@ -159,7 +159,7 @@ function(build_concrete_backend)
 
 endfunction()
 
-function(build_doc CURRENT_TARGET)
+function(build_docs module_list)
   if(BUILD_DOCS)
     set(DOXYGEN_GENERATE_HTML YES)
     set(DOXYGEN_EXCLUDE build;tests)
@@ -167,10 +167,11 @@ function(build_doc CURRENT_TARGET)
     find_package(Doxygen REQUIRED)
 
     doxygen_add_docs(
-        ${CURRENT_TARGET}_doc
+        docs
+        ${module_list}
         ${PROJECT_SOURCE_DIR}
         ALL
-        COMMENT "Generate html pages for ${CURRENT_TARGET}"
+        COMMENT "Generate html pages for the framework"
     )
   endif()
 endfunction()

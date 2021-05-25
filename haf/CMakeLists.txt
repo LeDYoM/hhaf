@@ -74,7 +74,4 @@ target_link_libraries(${CURRENT_TARGET} PUBLIC log_and_types)
 # TODO: Investigate some day if(MSVC) set_target_properties(${CURRENT_TARGET}
 # PROPERTIES LINK_FLAGS "${LINK_FLAGS} /NODEFAULTLIB") endif()
 
-# Build documentation
-build_doc(${CURRENT_TARGET})
-
 add_subdirectory(tests)
