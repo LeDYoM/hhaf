@@ -56,4 +56,4 @@ if(BUILD_PACKAGES)
   stardard_install_haf()
 endif()
 
-build_docs(${module_list})
+build_docs("${module_list}")
