@@ -76,13 +76,14 @@ void SystemControllerLoader::destroy()
     fp_haf_destroy_system_controller_ = nullptr;
 }
 
-rptr<ISystemController> SystemControllerLoader::systemController() noexcept
+rptr<haf::sys::ISystemController>
+SystemControllerLoader::systemController() noexcept
 {
     return system_controller_;
 }
 
-rptr<ISystemController const> SystemControllerLoader::systemController()
-    const noexcept
+rptr<haf::sys::ISystemController const>
+SystemControllerLoader::systemController() const noexcept
 {
     return system_controller_;
 }

@@ -8,6 +8,8 @@ namespace haf
 class IApp;
 }
 
+namespace haf::sys
+{
 class ISystemController
 {
 public:
@@ -19,5 +21,6 @@ public:
     virtual bool runStep()                      = 0;
     virtual void terminate()                    = 0;
 };
+}  // namespace haf::sys
 
 #endif

@@ -58,12 +58,12 @@ public:
         return app_[index_current_app].managed_app_.app;
     }
 
-    inline rptr<ISystemController> systemController() noexcept
+    rptr<haf::sys::ISystemController> systemController() noexcept
     {
         return system_loader_.systemController();
     }
 
-    inline rptr<ISystemController const> systemController() const noexcept
+    rptr<haf::sys::ISystemController const> systemController() const noexcept
     {
         return system_loader_.systemController();
     }

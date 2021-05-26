@@ -13,12 +13,11 @@ namespace haf
 class IApp;
 }
 
+namespace haf::host
+{
 /**
  * @brief Class containing a Host from the haf framework.
  */
-namespace haf::host
-{
-
 class Host final
 {
 public:

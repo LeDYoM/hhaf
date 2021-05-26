@@ -7,12 +7,12 @@
 #define HAF_SYSTEM_API extern "C" __attribute__((visibility("default")))
 #endif
 
-HAF_SYSTEM_API ISystemController* createSystemController()
+HAF_SYSTEM_API haf::sys::ISystemController* createSystemController()
 {
     return new haf::sys::SystemController();
 }
 
-HAF_SYSTEM_API void destroySystemController(ISystemController* isp)
+HAF_SYSTEM_API void destroySystemController(haf::sys::ISystemController* isp)
 {
     haf::LogAsserter::log_assert(
         isp != nullptr, "nullptr parameter to destroySystemController");
