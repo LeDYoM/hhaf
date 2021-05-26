@@ -4,8 +4,9 @@
 #include <htypes/include/types.hpp>
 #include <haf/scene_components/include/statescontroller.hpp>
 
-namespace haf
+namespace haf::scene
 {
+
 template <typename T>
 class StatesControllerActuator
 {
@@ -23,7 +24,7 @@ class StatesControllerActuatorRegister
 {
 public:
     void registerStatesControllerActuator(
-        scene::StatesController<T>& statesController,
+        StatesController<T>& statesController,
         StatesControllerActuator<T>& statesControllerActuator)
     {
         statesController.StateStarted.connect(
@@ -36,6 +37,6 @@ public:
             });
     }
 };
-}  // namespace haf
+}  // namespace haf::scene
 
 #endif

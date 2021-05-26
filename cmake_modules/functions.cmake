@@ -163,14 +163,17 @@ function(build_docs module_list)
   if(BUILD_DOCS)
     set(DOXYGEN_GENERATE_HTML YES)
     set(DOXYGEN_EXCLUDE build;tests)
-    set(DOXYGEN_EXCLUDE_PATTERNS build;tests)
+    set(DOXYGEN_EXCLUDE_PATTERNS 
+      */.git/*
+      */build/*
+    */tests/*)
+    set(DOXYGEN_USE_MDFILE_AS_MAINPAGE README.md)
 
     find_package(Doxygen REQUIRED)
 
     doxygen_add_docs(
         docs
-        ${module_list}
-#        ${PROJECT_SOURCE_DIR}
+        ${module_list} README.md
         ALL
         COMMENT "Generate html pages for the framework"
     )

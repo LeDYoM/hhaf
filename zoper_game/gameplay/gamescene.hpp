@@ -30,7 +30,7 @@ class GameOverSceneNode;
 class NextToken;
 
 class GameScene final : public haf::scene::Scene,
-                        public haf::StatesControllerActuator<GameSceneStates>
+                        public haf::scene::StatesControllerActuator<GameSceneStates>
 {
 public:
     GameScene();
