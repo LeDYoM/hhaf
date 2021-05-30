@@ -63,7 +63,7 @@ endfunction()
 # Function to build different components from the project in an unified way.
 function(build_lib_component)
 
-  cmake_parse_arguments(LC_BUILD "EXPORT_ALL;STATIC" "HEADER_DIRECTORY" "SOURCES"
+  cmake_parse_arguments(LC_BUILD "EXPORT_ALL;STATIC" "HEADER_DIRECTORY" "SOURCES;HEADERS"
                         ${ARGN})
 
   if(LC_BUILD_STATIC)
@@ -74,6 +74,7 @@ function(build_lib_component)
     add_library(${CURRENT_TARGET} SHARED ${LC_BUILD_SOURCES})
   endif()
 
+  target_sources(${CURRENT_TARGET} PRIVATE "${SOURCES};${HEADERS}")
   set_compile_warning_level_and_cxx_properties(${CURRENT_TARGET})
   set_output_directories(${CURRENT_TARGET})
 
@@ -91,28 +92,22 @@ function(build_lib_component)
       "$<BUILD_INTERFACE:${LC_BUILD_HEADER_DIRECTORY}>"
   )
 
-  file(GLOB_RECURSE public_headers 
-    RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}
-    ${CMAKE_CURRENT_SOURCE_DIR}/${CURRENT_TARGET}/include/*.hpp
-    )
-
-  include(GNUInstallDirs)
-  install(TARGETS ${CURRENT_TARGET}
-      EXPORT ${CURRENT_TARGET}Targets
-      INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-      RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-      ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-      LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  set_target_properties(${CURRENT_TARGET}
+    PROPERTIES
+    PUBLIC_HEADER "${HEADERS}"
   )
 
-#  install(EXPORT ${CURRENT_TARGET}Targets
-#    FILE ${CURRENT_TARGET}Targets.cmake
-#    NAMESPACE hhaf::
-#  DESTINATION
-#    ${CMAKE_INSTALL_LIBDIR}/cmake/hhaf)
+  include(GNUInstallDirs)
+  install(TARGETS ${target}
+    EXPORT ${target}_targets
+    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+    INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  )
 
 endfunction()
-
 
 function(build_lib_ext)
 
@@ -181,15 +176,6 @@ function(build_docs module_list)
 endfunction()
 
 function(set_install_options_for_target target)
-include(GNUInstallDirs)
-  install(TARGETS ${target}
-    EXPORT ${target}_targets
-    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-    INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-)
 endfunction()
 
 function(generate_package module_list)

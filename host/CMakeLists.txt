@@ -34,5 +34,5 @@ configure_file(
 
 target_include_directories(${CURRENT_TARGET} PRIVATE ${PROJECT_BINARY_DIR})
 
-target_link_libraries(${CURRENT_TARGET} PRIVATE hosted_app memmanager hlog agloader)
+target_link_libraries(${CURRENT_TARGET} PRIVATE hosted_app memmanager hlog agloader haf)
 #export(TARGETS ${CURRENT_TARGET} FILE HostTarget.cmake EXPORT_LINK_INTERFACE_LIBRARIES)

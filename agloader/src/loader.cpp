@@ -1,4 +1,4 @@
-#include "include/loader.hpp"
+#include <agloader/include/loader.hpp>
 #include "loadedinstance.hpp"
 #include <string>
 #include <map>
