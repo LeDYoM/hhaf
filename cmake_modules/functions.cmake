@@ -181,9 +181,10 @@ function(build_docs module_list)
 endfunction()
 
 function(set_install_options_for_target target)
-  include(GNUInstallDirs)
+include(GNUInstallDirs)
   install(TARGETS ${target}
     EXPORT ${target}_targets
+    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
     INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
@@ -200,7 +201,6 @@ function(generate_package module_list)
     set_install_options_for_target(${target})
   endforeach()
 
-
   set(CPACK_PACKAGE_DESCRIPTION_SUMMARY ${PROJECT_DESCRIPTION})
   set(CPACK_PACKAGE_NAME ${PROJECT_NAME})
   set(CPACK_PACKAGE_VENDOR "Ismael Gonzalez Burgos")
@@ -208,8 +208,10 @@ function(generate_package module_list)
   set(CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})
   set(CPACK_PACKAGE_VERSION_PATCH ${PROJECT_VERSION_PATCH})
   set(CPACK_PACKAGE_VERSION "${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
+  set(CPACK_PACKAGE_HOMEPAGE_URL ${PROJECT_HOMEPAGE_URL})
   message("Package version: ${CPACK_PACKAGE_VERSION}")
-  if(WINDOWS)
+
+  if(WIN32)
       message("Packaging ${PROJECT_NAME} for Windows")
       set(CPACK_GENERATOR "ZIP")
   else()

@@ -6,11 +6,21 @@ project(
   # [HOMEPAGE_URL <url-string>]
   LANGUAGES CXX)
 
-set(CURRENT_TARGET loader)
+set(CURRENT_TARGET agloader)
 
-set(SOURCES "src/loadedinstance.cpp" "src/loader.cpp")
+set(SOURCES 
+  src/loadedinstance.cpp 
+  src/loader.cpp
+  )
 
-add_library(${CURRENT_TARGET} SHARED ${SOURCES})
+set(PUBLIC_HEADERS 
+  agloader/include/loader_export.hpp
+  agloader/include/loader.hpp
+  )
+
+set(PUBLIC_HEADERS_DIRECTORY include)
+
+add_library(${CURRENT_TARGET} SHARED "${SOURCES}")
 
 target_compile_definitions(${CURRENT_TARGET} PRIVATE loader_EXPORTS)
 
@@ -21,3 +31,9 @@ target_include_directories(
   PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/)
 
 target_link_libraries(${CURRENT_TARGET} PRIVATE ${CMAKE_DL_LIBS})
+set_output_directories(${CURRENT_TARGET})
+
+set_target_properties(${CURRENT_TARGET}
+    PROPERTIES
+    PUBLIC_HEADER "${PUBLIC_HEADERS}"
+)

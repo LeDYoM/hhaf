@@ -65,7 +65,7 @@ add_subdirectory(window)
 
 # Internal libraries necessary for the library only.
 target_link_libraries(${CURRENT_TARGET} PRIVATE hosted_app)
-target_link_libraries(${CURRENT_TARGET} PRIVATE loader)
+target_link_libraries(${CURRENT_TARGET} PRIVATE agloader)
 target_link_libraries(${CURRENT_TARGET} PRIVATE backend)
 target_link_libraries(${CURRENT_TARGET} PRIVATE backend_dev)
 target_link_libraries(${CURRENT_TARGET} PUBLIC log_and_types)

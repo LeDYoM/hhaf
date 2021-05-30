@@ -6,6 +6,7 @@ project(
   DESCRIPTION "Host Application Framework"
   # [HOMEPAGE_URL <url-string>]
   LANGUAGES CXX)
+set(CMAKE_INSTALL_PREFIX hhaf)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -17,32 +18,32 @@ include(functions)
 setOptions()
 includeForOptions()
 
-#add_subdirectory(agloader)
-#add_subdirectory(logger)
-#add_subdirectory(memmanager)
-#add_subdirectory(htypes)
 #add_subdirectory(hlog)
 
 # Create interface library to add loggger and types with memory management
 # in one line.
-#add_library(log_and_types INTERFACE)
-#target_link_libraries(log_and_types INTERFACE htypes memmanager hlog)
+add_library(log_and_types INTERFACE)
+target_link_libraries(log_and_types INTERFACE htypes memmanager hlog)
 
 #add_subdirectory(tools)
 
 set(hhaf_core_module_list
   agloader
-#  hosted_app
-#  host
-#  haf
-#  haf_user
-#  haf_run
+  logger
+  memmanager
+  htypes
+  hlog
+  hosted_app
+  host
+  backend_dev
+  backend
+  backend_client
+  haf
+  haf_user
+  haf_run
 )
 
 set(backend_module_list 
-  backend
-  backend_dev
-  backend_client
   )
 
 #set(module_list "${hhaf_core_module_list};${backend_module_list}")
