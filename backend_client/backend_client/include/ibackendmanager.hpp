@@ -1,11 +1,11 @@
 #ifndef HAF_BACKEND_IBACKEND_MANAGER_INLUDE_HPP
 #define HAF_BACKEND_IBACKEND_MANAGER_INLUDE_HPP
 
-#include "ibackendregister.hpp"
 #include <backend_client/include/backend_client_exports.hpp>
 
 namespace haf::backend::client
 {
+class IBackendRegister;
 /**
  * @brief Abstact class to derive concrete backend managers.
  */

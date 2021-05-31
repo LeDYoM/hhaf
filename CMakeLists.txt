@@ -37,7 +37,7 @@ set(hhaf_core_module_list
   host
   backend_dev
   backend
-  backend_client
+#  backend_client
   haf
   haf_user
   haf_run

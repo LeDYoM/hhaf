@@ -7,6 +7,7 @@ build_lib_interface_component(
     HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}"
     SOURCES
         backend_dev/include/factory_types.hpp
+        backend_dev/include/ibackendregister.hpp
         backend_dev/include/ibmpfont.hpp
         backend_dev/include/ifactory.hpp
         backend_dev/include/ifont.hpp

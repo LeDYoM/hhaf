@@ -1,7 +1,8 @@
 #ifndef HAF_BACKEND_AUTO_REGISTER_FACTORY_INLUDE_HPP
 #define HAF_BACKEND_AUTO_REGISTER_FACTORY_INLUDE_HPP
 
-#include <backend_client/include/ibackendregister.hpp>
+#include <backend_dev/include/ifactory.hpp>
+#include <backend_dev/include/ibackendregister.hpp>
 
 namespace haf::backend::client
 {

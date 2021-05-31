@@ -68,13 +68,13 @@ function(build_lib_component)
 
   if(LC_BUILD_STATIC)
     message(STATUS "Add library static: ${CURRENT_TARGET}")
-    add_library(${CURRENT_TARGET} STATIC ${LC_BUILD_SOURCES})
+    add_library(${CURRENT_TARGET} STATIC)
   else()
     message(STATUS "Add library shared: ${CURRENT_TARGET}")
-    add_library(${CURRENT_TARGET} SHARED ${LC_BUILD_SOURCES})
+    add_library(${CURRENT_TARGET} SHARED)
   endif()
 
-  target_sources(${CURRENT_TARGET} PRIVATE "${SOURCES};${HEADERS}")
+  target_sources(${CURRENT_TARGET} PRIVATE "${LC_BUILD_SOURCES};${LC_BUILD_HEADERS}")
   set_compile_warning_level_and_cxx_properties(${CURRENT_TARGET})
   set_output_directories(${CURRENT_TARGET})
 
@@ -85,23 +85,25 @@ function(build_lib_component)
     set_target_properties(${CURRENT_TARGET}
                           PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS true)
   endif()
-
+message("LC_BUILD_HEADER_DIRECTORY: ${LC_BUILD_HEADER_DIRECTORY}")
   target_include_directories(${CURRENT_TARGET}
       PUBLIC
       "$<INSTALL_INTERFACE:include>"
       "$<BUILD_INTERFACE:${LC_BUILD_HEADER_DIRECTORY}>"
   )
 
+  message("HEADERS: ${LC_BUILD_HEADERS}")
+
   set_target_properties(${CURRENT_TARGET}
     PROPERTIES
-    PUBLIC_HEADER "${HEADERS}"
+    PUBLIC_HEADER "${LC_BUILD_HEADERS}"
   )
 
   include(GNUInstallDirs)
   install(TARGETS ${target}
     EXPORT ${target}_targets
-    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-    INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${target}/include
+    INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${target}/include
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
