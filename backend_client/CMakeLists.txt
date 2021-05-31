@@ -8,14 +8,23 @@ project(
 
 set (CURRENT_TARGET ${PROJECT_NAME})
 
-set(SOURCES 
+set(include_dir backend_client/include)
+set(headers 
+  ${include_dir}/autoregisterfactory.hpp
+  ${include_dir}/backend_client_exports.hpp
+  ${include_dir}/default_backend_manager.hpp
+  ${include_dir}/default_factory.hpp
+  ${include_dir}/ibackendmanager.hpp
+  )
+
+set(sources 
     src/default_backend_manager.cpp
-    src/default_functions.cpp)
+    src/default_functions.cpp
+    )
 
 build_lib_component(EXPORT_ALL HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
-                    ${SOURCES})
+                    ${sources} HEADERS ${headers})
 
 target_compile_definitions(${CURRENT_TARGET} PRIVATE backend_client_EXPORTS)
 
-target_link_libraries(${CURRENT_TARGET} PRIVATE backend_dev)
-target_link_libraries(${CURRENT_TARGET} PRIVATE htypes)
+target_link_libraries(${CURRENT_TARGET} PRIVATE backend_dev htypes)

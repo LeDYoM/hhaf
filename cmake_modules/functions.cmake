@@ -61,44 +61,22 @@ function(set_compile_warning_level_and_cxx_properties CURRENT_TARGET)
 endfunction()
 
 # Function to build different components from the project in an unified way.
-function(build_lib_component)
+function(build_lib_interface_component)
 
-  cmake_parse_arguments(LC_BUILD "EXPORT_ALL;STATIC" "HEADER_DIRECTORY" "SOURCES;HEADERS"
-                        ${ARGN})
+  cmake_parse_arguments(LC_BUILD "" "HEADER_DIRECTORY" "SOURCES" ${ARGN})
 
-  if(LC_BUILD_STATIC)
-    message(STATUS "Add library static: ${CURRENT_TARGET}")
-    add_library(${CURRENT_TARGET} STATIC)
-  else()
-    message(STATUS "Add library shared: ${CURRENT_TARGET}")
-    add_library(${CURRENT_TARGET} SHARED)
-  endif()
+  set(CURRENT_TARGET ${PROJECT_NAME})
 
-  target_sources(${CURRENT_TARGET} PRIVATE "${LC_BUILD_SOURCES};${LC_BUILD_HEADERS}")
-  set_compile_warning_level_and_cxx_properties(${CURRENT_TARGET})
-  set_output_directories(${CURRENT_TARGET})
-
-  if(LC_BUILD_EXPORT_ALL)
-    if (LC_BUILD_STATIC)
-      message(WARN "STATIC and EXPORT_ALL together makes no sense")
-    endif()
-    set_target_properties(${CURRENT_TARGET}
-                          PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS true)
-  endif()
-message("LC_BUILD_HEADER_DIRECTORY: ${LC_BUILD_HEADER_DIRECTORY}")
+  add_library(${CURRENT_TARGET} INTERFACE)
+  target_sources(${CURRENT_TARGET} INTERFACE ${LC_BUILD_SOURCES})
   target_include_directories(${CURRENT_TARGET}
-      PUBLIC
-      "$<INSTALL_INTERFACE:include>"
-      "$<BUILD_INTERFACE:${LC_BUILD_HEADER_DIRECTORY}>"
-  )
+                             INTERFACE ${LC_BUILD_HEADER_DIRECTORY})
 
-  message("HEADERS: ${LC_BUILD_HEADERS}")
+  export(TARGETS ${CURRENT_TARGET} FILE ${CURRENT_TARGET}_target.cmake)
 
-  set_target_properties(${CURRENT_TARGET}
-    PROPERTIES
-    PUBLIC_HEADER "${LC_BUILD_HEADERS}"
-  )
+endfunction()
 
+function(set_install_options_for_target target)
   include(GNUInstallDirs)
   install(TARGETS ${target}
     EXPORT ${target}_targets
@@ -108,7 +86,63 @@ message("LC_BUILD_HEADER_DIRECTORY: ${LC_BUILD_HEADER_DIRECTORY}")
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   )
+endfunction()
 
+# Function to build different components from the project in an unified way.
+function(build_lib_component)
+
+  cmake_parse_arguments(LC_BUILD "EXPORT_ALL;STATIC;HEADERS_ONLY" "HEADER_DIRECTORY" "SOURCES;HEADERS"
+                        ${ARGN})
+
+  if(LC_BUILD_STATIC)
+    message(STATUS "Add library static: ${CURRENT_TARGET}")
+    add_library(${CURRENT_TARGET} STATIC)
+    set(mode PRIVATE)
+    set(mode_for_others PUBLIC)
+  elseif(LC_BUILD_HEADERS_ONLY)
+    message(STATUS "Add INTERFACE library: ${CURRENT_TARGET}")
+    add_library(${CURRENT_TARGET} INTERFACE)
+    set(mode INTERFACE)
+    set(mode_for_others INTERFACE)
+  else()
+    message(STATUS "Add library shared: ${CURRENT_TARGET}")
+    add_library(${CURRENT_TARGET} SHARED)
+    set(mode PRIVATE)
+    set(mode_for_others PUBLIC)
+  endif()
+
+  target_sources(${CURRENT_TARGET} ${mode} "${LC_BUILD_SOURCES};${LC_BUILD_HEADERS}")
+
+  set_compile_warning_level(${CURRENT_TARGET} ${mode})
+  if(NOT ${mode} STREQUAL "INTERFACE")
+    set_cxx_standard(${CURRENT_TARGET})
+  endif()
+
+  if(NOT ${mode} STREQUAL "INTERFACE")
+    set_output_directories(${CURRENT_TARGET})
+  endif()
+
+  if(LC_BUILD_EXPORT_ALL)
+    if (LC_BUILD_STATIC)
+      message(WARN "STATIC and EXPORT_ALL together makes no sense")
+    endif()
+    set_target_properties(${CURRENT_TARGET}
+                          PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS true)
+  endif()
+
+  target_include_directories(${CURRENT_TARGET}
+      ${mode_for_others}
+      "$<INSTALL_INTERFACE:include>"
+      "$<BUILD_INTERFACE:${LC_BUILD_HEADER_DIRECTORY}>"
+  )
+
+  set_target_properties(${CURRENT_TARGET}
+    PROPERTIES
+    PUBLIC_HEADER "${LC_BUILD_HEADERS}"
+  )
+
+  set_install_options_for_target(${CURRENT_TARGET})
+  
 endfunction()
 
 function(build_lib_ext)
@@ -129,31 +163,12 @@ function(build_lib_ext)
 endfunction()
 
 # Function to build different components from the project in an unified way.
-function(build_lib_interface_component)
-
-  cmake_parse_arguments(LC_BUILD "" "HEADER_DIRECTORY" "SOURCES" ${ARGN})
-
-  set(CURRENT_TARGET ${PROJECT_NAME})
-
-  add_library(${CURRENT_TARGET} INTERFACE)
-  target_sources(${CURRENT_TARGET} INTERFACE ${LC_BUILD_SOURCES})
-  target_include_directories(${CURRENT_TARGET}
-                             INTERFACE ${LC_BUILD_HEADER_DIRECTORY})
-
-  export(TARGETS ${CURRENT_TARGET} FILE ${CURRENT_TARGET}_target.cmake)
-
-endfunction()
-
-# Function to build different components from the project in an unified way.
 function(build_concrete_backend)
 
   cmake_parse_arguments(LC_BUILD "" "" "SOURCES" ${ARGN})
 
   add_library(${CURRENT_TARGET} SHARED ${SOURCES})
-  target_link_libraries(${CURRENT_TARGET} PRIVATE log_and_types)
-  target_link_libraries(${CURRENT_TARGET} PRIVATE backend_dev)
-  target_link_libraries(${CURRENT_TARGET} PRIVATE backend_client)
-
+  target_link_libraries(${CURRENT_TARGET} PRIVATE log_and_types backend_dev backend_client)
 endfunction()
 
 function(build_docs module_list)
@@ -177,17 +192,10 @@ function(build_docs module_list)
   endif()
 endfunction()
 
-function(set_install_options_for_target target)
-endfunction()
-
 function(generate_package module_list)
   message("Preparing package for ${PROJECT_NAME}")
 
   message("Generating install for module list: ${module_list}")
-  # Common properties
-  foreach(target ${module_list})
-    set_install_options_for_target(${target})
-  endforeach()
 
   set(CPACK_PACKAGE_DESCRIPTION_SUMMARY ${PROJECT_DESCRIPTION})
   set(CPACK_PACKAGE_NAME ${PROJECT_NAME})

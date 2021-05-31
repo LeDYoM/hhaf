@@ -6,14 +6,19 @@ project(
   # [HOMEPAGE_URL <url-string>]
   LANGUAGES CXX)
 
-set(CURRENT_TARGET "haf_user")
+set(CURRENT_TARGET haf_user)
 
-set(SRC_FILES 
+set(sources 
     src/iapp_with_default_app_versioning_system.cpp
 )
 
-build_lib_component(STATIC HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
-                    ${SRC_FILES})
+set(include_dir haf_user/include)
+set(headers
+  ${include_dir}/export_app.hpp
+  ${include_dir}/iapp_with_default_app_versioning_system.hpp
+  )
 
-target_link_libraries(${CURRENT_TARGET} PRIVATE hosted_app)
-target_link_libraries(${CURRENT_TARGET} PRIVATE htypes)
+build_lib_component(STATIC HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
+                    ${sources} HEADERS ${headers})
+
+target_link_libraries(${CURRENT_TARGET} PRIVATE hosted_app htypes)

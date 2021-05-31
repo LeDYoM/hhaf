@@ -37,7 +37,7 @@ set(hhaf_core_module_list
   host
   backend_dev
   backend
-#  backend_client
+  backend_client
   haf
   haf_user
   haf_run
@@ -53,11 +53,11 @@ foreach(target ${module_list})
   add_subdirectory(${target})
 endforeach()
 
-#add_subdirectory(haf_ext)
+add_subdirectory(haf_ext)
 
-#add_subdirectory(backend_sfml)
-#add_subdirectory(zoper_game)
-#add_subdirectory(haf_app_menu)
+add_subdirectory(backend_sfml)
+add_subdirectory(zoper_game)
+add_subdirectory(haf_app_menu)
 
 #if(BUILD_PACKAGES)
 #  generate_package("${hhaf_core_module_list}")

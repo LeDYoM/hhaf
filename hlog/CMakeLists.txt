@@ -3,14 +3,23 @@ project(hlog LANGUAGES CXX)
 
 set(CURRENT_TARGET hlog)
 
-set(SOURCES 
+set(sources 
     src/cout_commiter.cpp
     src/file_commiter.cpp
     src/thread_commiter.cpp
-    src/hlog.cpp)
+    src/hlog.cpp
+    )
+
+set(include_dir hlog/include)
+set(headers
+    ${include_dir}/cout_commiter.hpp
+    ${include_dir}/file_commiter.hpp
+    ${include_dir}/hlog.hpp
+    ${include_dir}/thread_commiter.hpp
+    )
 
 build_lib_component(EXPORT_ALL HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
-                    ${SOURCES})
+                    ${sources} HEADERS ${headers})
 
 find_package(Threads REQUIRED)
 target_link_libraries(${CURRENT_TARGET} PRIVATE Threads::Threads)

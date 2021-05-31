@@ -3,25 +3,29 @@ cmake_minimum_required (VERSION 3.11)
 
 set (CURRENT_TARGET ${PROJECT_NAME})
 
-build_lib_interface_component(
+set(include_dir ${PROJECT_SOURCE_DIR}/backend_dev/include)
+set(headers 
+    ${include_dir}/factory_types.hpp
+    ${include_dir}/ibackendregister.hpp
+    ${include_dir}/ibmpfont.hpp
+    ${include_dir}/ifactory.hpp
+    ${include_dir}/ifont.hpp
+    ${include_dir}/iinputdriver.hpp
+    ${include_dir}/ikey.hpp
+    ${include_dir}/iprimitivetype.hpp
+    ${include_dir}/irenderdata.hpp
+    ${include_dir}/irendertarget.hpp
+    ${include_dir}/iresourcefactories.hpp
+    ${include_dir}/iresourcefactory.hpp
+    ${include_dir}/iresourceinfo.hpp
+    ${include_dir}/ishader.hpp
+    ${include_dir}/itexture.hpp
+    ${include_dir}/ittfont.hpp
+    ${include_dir}/ivertex.hpp
+    ${include_dir}/iwindow.hpp
+)
+
+build_lib_component(HEADERS_ONLY
     HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}"
-    SOURCES
-        backend_dev/include/factory_types.hpp
-        backend_dev/include/ibackendregister.hpp
-        backend_dev/include/ibmpfont.hpp
-        backend_dev/include/ifactory.hpp
-        backend_dev/include/ifont.hpp
-        backend_dev/include/iinputdriver.hpp
-        backend_dev/include/ikey.hpp
-        backend_dev/include/iprimitivetype.hpp
-        backend_dev/include/irenderdata.hpp
-        backend_dev/include/irendertarget.hpp
-        backend_dev/include/iresourcefactories.hpp
-        backend_dev/include/iresourcefactory.hpp
-        backend_dev/include/iresourceinfo.hpp
-        backend_dev/include/ishader.hpp
-        backend_dev/include/itexture.hpp
-        backend_dev/include/ittfont.hpp
-        backend_dev/include/ivertex.hpp
-        backend_dev/include/iwindow.hpp
+    HEADERS ${headers}
 )
