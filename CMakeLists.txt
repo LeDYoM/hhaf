@@ -8,17 +8,10 @@ project(
   LANGUAGES CXX)
 set(CMAKE_INSTALL_PREFIX hhaf)
 
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 include(functions)
 setOptions()
 includeForOptions()
-
-#add_subdirectory(hlog)
 
 # Create interface library to add loggger and types with memory management
 # in one line.
@@ -37,14 +30,10 @@ set(hhaf_core_module_list
   host
   backend_dev
   backend
-  backend_client
   haf
   haf_user
   haf_run
 )
-
-set(backend_module_list 
-  )
 
 #set(module_list "${hhaf_core_module_list};${backend_module_list}")
 set(module_list "${hhaf_core_module_list}")
@@ -53,7 +42,14 @@ foreach(target ${module_list})
   add_subdirectory(${target})
 endforeach()
 
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
 add_subdirectory(haf_ext)
+
+add_subdirectory(backend_client)
 
 add_subdirectory(backend_sfml)
 add_subdirectory(zoper_game)
