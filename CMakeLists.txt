@@ -42,17 +42,12 @@ foreach(target ${module_list})
   add_subdirectory(${target})
 endforeach()
 
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-
 add_subdirectory(haf_ext)
 
 add_subdirectory(backend_client)
-
 add_subdirectory(backend_sfml)
 add_subdirectory(zoper_game)
+
 add_subdirectory(haf_app_menu)
 
 #if(BUILD_PACKAGES)

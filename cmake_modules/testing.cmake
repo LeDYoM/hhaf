@@ -70,5 +70,5 @@ function(add_haf_test_executable)
   add_test_executable(${PARAM_LIST})
 
   target_link_libraries(${CURRENT_TARGET} PRIVATE haf)
-
+  set_compile_warning_level_and_cxx_properties(${CURRENT_TARGET})
 endfunction(add_haf_test_executable)
