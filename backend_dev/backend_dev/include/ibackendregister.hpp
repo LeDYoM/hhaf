@@ -12,12 +12,12 @@ namespace haf::backend::client
 class IBackendRegister
 {
 public:
-    virtual void setFactory(IWindowFactory* const) noexcept         = 0;
-    virtual void setFactory(IRenderTargetFactory* const) noexcept   = 0;
-    virtual void setFactory(ITTFontFactoryFactory* const) noexcept  = 0;
-    virtual void setFactory(ITextureFactoryFactory* const) noexcept = 0;
-    virtual void setFactory(IShaderFactoryFactory* const) noexcept  = 0;
-    virtual void setFactory(IBMPFontFactoryFactory* const) noexcept = 0;
+    virtual void setFactory(htps::uptr<IWindowFactory>) noexcept         = 0;
+    virtual void setFactory(htps::uptr<IRenderTargetFactory>) noexcept   = 0;
+    virtual void setFactory(htps::uptr<ITTFontFactoryFactory>) noexcept  = 0;
+    virtual void setFactory(htps::uptr<ITextureFactoryFactory>) noexcept = 0;
+    virtual void setFactory(htps::uptr<IShaderFactoryFactory>) noexcept  = 0;
+    virtual void setFactory(htps::uptr<IBMPFontFactoryFactory>) noexcept = 0;
 
     virtual ~IBackendRegister() {}
 };

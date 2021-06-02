@@ -14,19 +14,19 @@ namespace haf::backend
 class BackendRegister final : public client::IBackendRegister
 {
 public:
-    void setFactory(IWindowFactory* const) noexcept override;
-    void setFactory(IRenderTargetFactory* const) noexcept override;
-    void setFactory(ITTFontFactoryFactory* const) noexcept override;
-    void setFactory(ITextureFactoryFactory* const) noexcept override;
-    void setFactory(IShaderFactoryFactory* const) noexcept override;
-    void setFactory(IBMPFontFactoryFactory* const) noexcept override;
+    void setFactory(htps::uptr<IWindowFactory>) noexcept override;
+    void setFactory(htps::uptr<IRenderTargetFactory>) noexcept override;
+    void setFactory(htps::uptr<ITTFontFactoryFactory>) noexcept override;
+    void setFactory(htps::uptr<ITextureFactoryFactory>) noexcept override;
+    void setFactory(htps::uptr<IShaderFactoryFactory>) noexcept override;
+    void setFactory(htps::uptr<IBMPFontFactoryFactory>) noexcept override;
 
     void setLibFuncs(p_initHaf init_lib_func,
                      p_finishHaf finish_lib_func) noexcept;
 
     template <typename T,
               typename = std::enable_if_t<std::is_same_v<T, IWindowFactory>>>
-    IWindowFactory const* getFactory() const
+    htps::sptr<IWindowFactory> getFactory()
     {
         return window_factory_;
     }
@@ -34,7 +34,7 @@ public:
     template <
         typename T,
         typename = std::enable_if_t<std::is_same_v<T, ITTFontFactoryFactory>>>
-    ITTFontFactoryFactory const* getFactory() const
+    htps::sptr<ITTFontFactoryFactory> getFactory() const
     {
         return ttfont_factory_factory_;
     }
@@ -42,7 +42,7 @@ public:
     template <
         typename T,
         typename = std::enable_if_t<std::is_same_v<T, ITextureFactoryFactory>>>
-    ITextureFactoryFactory const* getFactory() const
+    htps::sptr<ITextureFactoryFactory> getFactory() const
     {
         return texture_factory_factory_;
     }
@@ -50,7 +50,7 @@ public:
     template <
         typename T,
         typename = std::enable_if_t<std::is_same_v<T, IShaderFactoryFactory>>>
-    IShaderFactoryFactory const* getFactory() const
+    htps::sptr<IShaderFactoryFactory> getFactory() const
     {
         return shader_factory_factory_;
     }
@@ -58,7 +58,7 @@ public:
     template <
         typename T,
         typename = std::enable_if_t<std::is_same_v<T, IBMPFontFactoryFactory>>>
-    IBMPFontFactoryFactory const* getFactory() const
+    htps::sptr<IBMPFontFactoryFactory> getFactory() const
     {
         return bmpfont_factory_factory_;
     }
@@ -74,12 +74,12 @@ public:
 private:
     p_initHaf init_lib_func_{nullptr};
     p_finishHaf finish_lib_func_{nullptr};
-    IWindowFactory* window_factory_{nullptr};
-    IRenderTargetFactory* render_target_factory_{nullptr};
-    ITTFontFactoryFactory* ttfont_factory_factory_{nullptr};
-    ITextureFactoryFactory* texture_factory_factory_{nullptr};
-    IShaderFactoryFactory* shader_factory_factory_{nullptr};
-    IBMPFontFactoryFactory* bmpfont_factory_factory_{nullptr};
+    htps::sptr<IWindowFactory> window_factory_;
+    htps::sptr<IRenderTargetFactory> render_target_factory_;
+    htps::sptr<ITTFontFactoryFactory> ttfont_factory_factory_;
+    htps::sptr<ITextureFactoryFactory> texture_factory_factory_;
+    htps::sptr<IShaderFactoryFactory> shader_factory_factory_;
+    htps::sptr<IBMPFontFactoryFactory> bmpfont_factory_factory_;
 };
 }  // namespace haf::backend
 
