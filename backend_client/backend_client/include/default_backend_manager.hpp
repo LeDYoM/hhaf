@@ -17,7 +17,7 @@ class IBackendRegister;
  * use cases, this one can be directoly used. Only create your own if you
  * need very special behavior.
  */
-class BC_API DefaultBackendManager : public IBackendManager
+class BC_API DefaultBackendManager final : public IBackendManager
 {
 public:
     /**
@@ -44,10 +44,12 @@ public:
         pushFactory(std::move(f));
     }
 
-private:
     void destroy() override final;
 
+private:
+
     void pushFactory(htps::uptr<IAutoRegisterFactory> f);
+
     struct DefaultBackendManagerPrivate;
     htps::uptr<DefaultBackendManagerPrivate> priv_;
 };
