@@ -17,7 +17,7 @@ class IBackendRegister;
  * use cases, this one can be directoly used. Only create your own if you
  * need very special behavior.
  */
-class BC_API DefaultBackendManager final : public IBackendManager
+class BC_API DefaultBackendManager : public IBackendManager
 {
 public:
     /**

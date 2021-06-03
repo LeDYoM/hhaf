@@ -47,6 +47,7 @@ void finishMemManager()
 #endif
 }
 
+
 void* mmalloc(std::size_t size)
 {
     return std::malloc(size);
@@ -55,4 +56,59 @@ void* mmalloc(std::size_t size)
 void mfree(void* block)
 {
     free(block);
+}
+
+void* operator new (std::size_t size)
+{
+    return std::malloc(size);
+}
+
+void* operator new (std::size_t size, const std::nothrow_t&) noexcept
+{
+    return std::malloc(size);
+}
+
+void* operator new[](std::size_t size)
+{
+    return std::malloc(size);
+}
+
+void* operator new[](std::size_t size, const std::nothrow_t&) noexcept
+{
+    return std::malloc(size);
+}
+
+void operator delete(void* data) noexcept
+{
+    return std::free(data);
+}
+
+void operator delete(void* data, const std::nothrow_t&) noexcept
+{
+    return std::free(data);
+}
+
+void operator delete(void* data,std::size_t)
+{
+    return std::free(data);
+}
+
+void operator delete(void* data, std::size_t, const std::nothrow_t&) noexcept
+{
+    return std::free(data);
+}
+
+void operator delete[](void* data)
+{
+    return std::free(data);
+}
+
+void operator delete[](void* data, std::size_t)
+{
+    return std::free(data);
+}
+
+void operator delete[](void* data, const std::nothrow_t&) noexcept
+{
+    return std::free(data);
 }
