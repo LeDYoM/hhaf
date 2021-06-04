@@ -53,12 +53,12 @@ public:
     /**
      * @brief Disabled copy constructor
      */
-    SceneNode(const SceneNode&) = delete;
+    SceneNode(SceneNode const &) = delete;
 
     /**
      * @brief Disabled copy assignment
      */
-    SceneNode& operator=(const SceneNode&) = delete;
+    SceneNode& operator=(SceneNode const&) = delete;
 
     /**
      * @brief Defaulted move constructor
@@ -74,8 +74,8 @@ public:
     /**
      * @brief Constructor normally used to create a scene node.
      *
-     * @param[in] parent Parent of this element.
-     * @param[in] name Name of this element.
+     * @param parent Parent of this element.
+     * @param name Name of this element.
      */
     SceneNode(htps::rptr<SceneNode> parent, htps::str name);
 
