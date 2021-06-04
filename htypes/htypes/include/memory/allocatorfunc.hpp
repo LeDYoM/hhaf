@@ -13,10 +13,10 @@ class AllocatorFunc
 public:
     using pointer = T*;
 
-    static pointer allocate(const size_type size)
+    static pointer allocate(size_type const size)
     {
         assert(size > 0U);
-        return (pointer)Allocate(sizeof(T) * size);
+        return static_cast<pointer>(Allocate(sizeof(T) * size));
     }
 
     static void deallocate(pointer element)
@@ -24,6 +24,13 @@ public:
         assert(element != nullptr);
         Deallocate(element);
     }
+/*
+    static void deallocate(pointer element, size_type const size)
+    {
+        assert(element != nullptr);
+        Deallocate(element, size);
+    }
+    */
 };
 
 }  // namespace htps

@@ -10,31 +10,32 @@ class IAutoRegisterFactory
 {
 public:
     virtual ~IAutoRegisterFactory() {}
-    virtual void setFactory(IBackendRegister* const backend_register) const = 0;
+    virtual void setFactory(
+        IBackendRegister* const backend_register) noexcept = 0;
     virtual void resetFactory(
-        IBackendRegister* const backend_register) const = 0;
-    virtual void destroy()                              = 0;
+        IBackendRegister* const backend_register) const noexcept = 0;
+    virtual void destroy() noexcept                              = 0;
 };
 
 template <typename T>
 class AutoRegisterFactory : public IAutoRegisterFactory
 {
 public:
-    AutoRegisterFactory() noexcept : factory_{} {}
+    constexpr AutoRegisterFactory() noexcept : factory_{} {}
 
     void create(htps::uptr<IFactoryOf<T>> f) { factory_ = std::move(f); }
 
-    void setFactory(IBackendRegister* const backend_register) const override
+    void setFactory(IBackendRegister* const backend_register) noexcept override
     {
-        backend_register->setFactory(factory_.get());
+        backend_register->setFactory(std::move(factory_));
     }
 
-    void resetFactory(IBackendRegister* const backend_register) const override
+    void resetFactory(IBackendRegister* const backend_register) const noexcept override
     {
-        backend_register->setFactory(static_cast<IFactoryOf<T>*>(nullptr));
+        backend_register->setFactory(std::unique_ptr<IFactoryOf<T>>{});
     }
 
-    void destroy() override { factory_.reset(); }
+    void destroy() noexcept override { factory_.reset(); }
 
 private:
     htps::uptr<IFactoryOf<T>> factory_;
