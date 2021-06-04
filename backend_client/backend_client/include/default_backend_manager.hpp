@@ -44,10 +44,12 @@ public:
         pushFactory(std::move(f));
     }
 
-private:
     void destroy() override final;
 
+private:
+
     void pushFactory(htps::uptr<IAutoRegisterFactory> f);
+
     struct DefaultBackendManagerPrivate;
     htps::uptr<DefaultBackendManagerPrivate> priv_;
 };

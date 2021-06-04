@@ -7,7 +7,7 @@
 namespace htps
 {
 
-template <typename T, auto M, auto F>
+template <typename T, auto Allocate, auto Deallocate>
 class AllocatorFunc
 {
 public:
@@ -16,13 +16,13 @@ public:
     static pointer allocate(const size_type size)
     {
         assert(size > 0U);
-        return (pointer)M(sizeof(T) * size);
+        return (pointer)Allocate(sizeof(T) * size);
     }
 
     static void deallocate(pointer element)
     {
         assert(element != nullptr);
-        F(element);
+        Deallocate(element);
     }
 };
 

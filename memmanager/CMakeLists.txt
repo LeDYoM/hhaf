@@ -7,7 +7,12 @@ project("HAF MemManager"
 
 set(CURRENT_TARGET memmanager)
 
-set(sources src/memmanager.cpp)
+set(sources 
+    src/memmanager.cpp
+    src/memory_statistics.cpp
+    src/memory_statistics.hpp
+)
+
 set(headers memmanager/include/memmanager.hpp)
 
 build_lib_component(EXPORT_ALL HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES

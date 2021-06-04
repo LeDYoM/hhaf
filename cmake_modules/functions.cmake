@@ -160,6 +160,8 @@ function(build_lib_ext)
                              PUBLIC ${LC_BUILD_HEADER_DIRECTORY})
   target_link_libraries(${CURRENT_TARGET} PRIVATE haf)
 
+  set_compile_warning_level_and_cxx_properties(${CURRENT_TARGET})
+
 endfunction()
 
 # Function to build different components from the project in an unified way.

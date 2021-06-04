@@ -50,9 +50,9 @@ endforeach()
 add_subdirectory(haf_ext)
 
 add_subdirectory(backend_client)
-
 add_subdirectory(backend_sfml)
 add_subdirectory(zoper_game)
+
 add_subdirectory(haf_app_menu)
 
 #if(BUILD_PACKAGES)

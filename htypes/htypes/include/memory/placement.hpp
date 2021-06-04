@@ -11,7 +11,7 @@ namespace htps
  * of objects. You pass the pointer to the allocated memory or
  * the memory to be deallocated.
  * 
- * @tparam T 
+ * @tparam T Type of the object to be constructed and destructed
  */
 template <typename T>
 class BasicConstructDestruct
@@ -30,7 +30,7 @@ public:
         }
         else
         {
-            ::new ((void*)where) T();
+            ::new ((void*)where) T{};
         }
     }
 
