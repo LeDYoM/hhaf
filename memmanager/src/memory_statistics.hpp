@@ -1,7 +1,7 @@
 #ifndef MEMMANAGER_MEMORY_STATISTICS_INCLUDE_HPP
 #define MEMMANAGER_MEMORY_STATISTICS_INCLUDE_HPP
 
-#include <cstdint>
+#include <cstddef>
 
 namespace memm
 {
