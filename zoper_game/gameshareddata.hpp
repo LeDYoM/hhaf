@@ -6,8 +6,8 @@
 #include <htypes/include/rect.hpp>
 #include <htypes/include/object.hpp>
 #include <htypes/include/str.hpp>
-#include <haf/shareddata/include/ishareable.hpp>
-#include <haf/shareddata/include/address.hpp>
+#include <haf/include/shareddata/ishareable.hpp>
+#include <haf/include/shareddata/address.hpp>
 
 namespace zoper
 {

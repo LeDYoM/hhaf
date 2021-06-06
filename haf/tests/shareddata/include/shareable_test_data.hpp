@@ -3,8 +3,8 @@
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
-#include <haf/shareddata/include/ishareable.hpp>
-#include <haf/shareddata/include/address.hpp>
+#include <haf/include/shareddata/ishareable.hpp>
+#include <haf/include/shareddata/address.hpp>
 
 class ShareableTestData : public haf::shdata::IShareable
 {

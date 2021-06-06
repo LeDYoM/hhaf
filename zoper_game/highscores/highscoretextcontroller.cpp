@@ -4,15 +4,15 @@
 #include "../loaders/highscoresresources.hpp"
 #include "../gameshareddata.hpp"
 
-#include <haf/filesystem/include/fileserializer.hpp>
-#include <haf/scene_components/include/texteditorcomponent.hpp>
-#include <haf/scene_components/include/scenemetricsview.hpp>
-#include <haf/scene_nodes/include/scenenodetext_properties.hpp>
-#include <haf/resources/include/ittfont.hpp>
-#include <haf/resources/include/iresourceretriever.hpp>
-#include <haf/shareddata/include/shareddata.hpp>
-#include <haf/shareddata/include/shareddataviewer.hpp>
-#include <haf/input/include/inputcomponent.hpp>
+#include <haf/include/filesystem/fileserializer.hpp>
+#include <haf/include/scene_components/texteditorcomponent.hpp>
+#include <haf/include/scene_components/scenemetricsview.hpp>
+#include <haf/include/scene_nodes/scenenodetext_properties.hpp>
+#include <haf/include/resources/ittfont.hpp>
+#include <haf/include/resources/iresourceretriever.hpp>
+#include <haf/include/shareddata/shareddata.hpp>
+#include <haf/include/shareddata/shareddataviewer.hpp>
+#include <haf/include/input/inputcomponent.hpp>
 
 using namespace htps;
 using namespace haf;

@@ -3,8 +3,8 @@
 #include <menu_paged/include/menu_paged_input_component.hpp>
 
 #include <hlog/include/hlog.hpp>
-#include <haf/input/include/key.hpp>
-#include <haf/scene_components/include/discretetextcomponent.hpp>
+#include <haf/include/input/key.hpp>
+#include <haf/include/scene_components/discretetextcomponent.hpp>
 
 #include <htypes/include/function.hpp>
 

@@ -9,7 +9,7 @@
 #include "host_config.hpp"
 #include "app_state.hpp"
 
-#include <haf/system/include/isystemcontroller.hpp>
+#include <haf/include/system/isystemcontroller.hpp>
 
 #include <hlog/include/hlog.hpp>
 

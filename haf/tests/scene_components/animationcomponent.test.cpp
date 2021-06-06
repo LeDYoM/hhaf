@@ -1,7 +1,7 @@
 #include "catch.hpp"
 
 #include <htypes/include/types.hpp>
-#include <haf/scene_components/include/animationcomponent.hpp>
+#include <haf/include/scene_components/animationcomponent.hpp>
 
 using namespace htps;
 using namespace haf;

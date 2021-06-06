@@ -3,12 +3,12 @@
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/connection.hpp>
-#include <haf/scene/include/scenenode.hpp>
-#include <haf/resources/include/ifont.hpp>
-#include <haf/scene_nodes/include/renderizable_scenenode.hpp>
-#include <haf/scene_nodes/include/tablenode.hpp>
-#include <haf/scene_nodes/include/scenenodetext.hpp>
-#include <haf/scene_components/include/animationcomponent.hpp>
+#include <haf/include/scene/scenenode.hpp>
+#include <haf/include/resources/ifont.hpp>
+#include <haf/include/scene_nodes/renderizable_scenenode.hpp>
+#include <haf/include/scene_nodes/tablenode.hpp>
+#include <haf/include/scene_nodes/scenenodetext.hpp>
+#include <haf/include/scene_components/animationcomponent.hpp>
 #include "../loaders/highscoresresources.hpp"
 #include "highscoresdata.hpp"
 

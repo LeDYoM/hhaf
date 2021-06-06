@@ -4,9 +4,9 @@
 #include <htypes/include/types.hpp>
 #include <htypes/include/connection.hpp>
 
-#include <haf/scene/include/scenenode.hpp>
-#include <haf/scene/include/color.hpp>
-#include <haf/resources/include/ifont.hpp>
+#include <haf/include/scene/scenenode.hpp>
+#include <haf/include/scene/color.hpp>
+#include <haf/include/resources/ifont.hpp>
 #include "menu_paged_properties.hpp"
 #include "menu_page.hpp"
 

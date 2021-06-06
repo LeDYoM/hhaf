@@ -5,7 +5,7 @@
 #include <boardmanager/include/boardmanager.hpp>
 
 #include <hlog/include/hlog.hpp>
-#include <haf/scene_nodes/include/renderizable_scenenode.hpp>
+#include <haf/include/scene_nodes/renderizable_scenenode.hpp>
 
 namespace zoper
 {

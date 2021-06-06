@@ -1,9 +1,9 @@
 #include "catch.hpp"
 
 #include <htypes/include/types.hpp>
-#include <haf/scene/include/scenenode.hpp>
-#include <haf/scene/include/scene.hpp>
-#include <scene/i_include/scenemanager.hpp>
+#include <haf/include/scene/scenenode.hpp>
+#include <haf/include/scene/scene.hpp>
+#include "scene/scenemanager.hpp"
 #include "system_test_utils.hpp"
 
 TEST_CASE("haf::scene::SceneManager", "[haf][scene][scenemanager]")

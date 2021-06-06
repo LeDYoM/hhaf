@@ -1,8 +1,8 @@
 #include "menuscene.hpp"
-#include <haf/resources/include/iresourceretriever.hpp>
-#include <haf/resources/include/itexture.hpp>
-#include <haf/shareddata/include/shareddata.hpp>
-#include <haf/scene_components/include/scenecontrol.hpp>
+#include <haf/include/resources/iresourceretriever.hpp>
+#include <haf/include/resources/itexture.hpp>
+#include <haf/include/shareddata/shareddata.hpp>
+#include <haf/include/scene_components/scenecontrol.hpp>
 
 #include "mainmenu.hpp"
 #include "../loaders/mainmenuresources.hpp"
@@ -11,9 +11,9 @@
 #include "../static_data.hpp"
 #include "../gameplay/displayvar_console.hpp"
 
-#include <haf/resources/include/iresourceconfigurator.hpp>
-#include <haf/system/include/interfaceaccess.hpp>
-#include <haf/scene_components/include/scenemetrics.hpp>
+#include <haf/include/resources/iresourceconfigurator.hpp>
+#include <haf/include/system/interfaceaccess.hpp>
+#include <haf/include/scene_components/scenemetrics.hpp>
 
 using namespace htps;
 using namespace haf;

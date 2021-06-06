@@ -3,7 +3,7 @@
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
-#include <haf/scene_components/include/texteditorcomponent.hpp>
+#include <haf/include/scene_components/texteditorcomponent.hpp>
 
 namespace zoper
 {

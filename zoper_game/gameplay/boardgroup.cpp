@@ -6,11 +6,11 @@
 #include "scoreutils.hpp"
 #include "boardutils.hpp"
 
-#include <haf/scene/include/scenenode.hpp>
-#include <haf/scene_nodes/include/tablenode.hpp>
-#include <haf/scene_nodes/include/scene_node_size.hpp>
-#include <haf/scene_components/include/scenemetricsview.hpp>
-#include <haf/render/include/renderizable.hpp>
+#include <haf/include/scene/scenenode.hpp>
+#include <haf/include/scene_nodes/tablenode.hpp>
+#include <haf/include/scene_nodes/scene_node_size.hpp>
+#include <haf/include/scene_components/scenemetricsview.hpp>
+#include <haf/include/render/renderizable.hpp>
 
 #include <boardmanager/include/boardmanager.hpp>
 #include <boardmanager/include/itile.hpp>

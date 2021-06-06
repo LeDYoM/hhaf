@@ -2,7 +2,7 @@
 #define HAF_SCENE_MATRIX_UTILS_TEST_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <haf/scene/include/matrix4x4.hpp>
+#include <haf/include/scene/matrix4x4.hpp>
 #include <limits>
 
 namespace haf::scene::testing

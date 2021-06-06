@@ -2,7 +2,7 @@
 #include "../gameshareddata.hpp"
 
 #include <hlog/include/hlog.hpp>
-#include <haf/shareddata/include/shareddataupdater.hpp>
+#include <haf/include/shareddata/shareddataupdater.hpp>
 
 using namespace htps;
 

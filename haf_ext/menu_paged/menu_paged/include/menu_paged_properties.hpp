@@ -3,8 +3,8 @@
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/grouping_property.hpp>
-#include <haf/resources/include/ifont.hpp>
-#include <haf/scene/include/color.hpp>
+#include <haf/include/resources/ifont.hpp>
+#include <haf/include/scene/color.hpp>
 
 namespace haf::scene
 {

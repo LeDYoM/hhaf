@@ -1,8 +1,8 @@
 #include "catch.hpp"
 
 #include <htypes/include/types.hpp>
-#include <shareddata/i_include/shareddatasystem.hpp>
-#include <haf/shareddata/include/shareddata.hpp>
+#include "shareddata/shareddatasystem.hpp"
+#include <haf/include/shareddata/shareddata.hpp>
 #include "include/shareable_test_data.hpp"
 #include "system_test_utils.hpp"
 

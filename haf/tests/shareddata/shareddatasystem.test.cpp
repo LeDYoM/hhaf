@@ -1,10 +1,12 @@
 #include "catch.hpp"
 
 #include <htypes/include/types.hpp>
-#include <shareddata/i_include/shareddatasystem.hpp>
-#include <haf/shareddata/include/address.hpp>
-#include <system/i_include/systembase.hpp>
-#include <system/i_include/systemprovider.hpp>
+#include <haf/include/shareddata/address.hpp>
+
+#include "system/systembase.hpp"
+#include "system/systemprovider.hpp"
+#include "shareddata/shareddatasystem.hpp"
+
 #include "include/shareable_test_data.hpp"
 #include "system_test_utils.hpp"
 

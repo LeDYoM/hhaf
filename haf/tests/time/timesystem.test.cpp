@@ -1,10 +1,10 @@
 #include "catch.hpp"
 
 #include <htypes/include/types.hpp>
-#include <time/i_include/timesystem.hpp>
-#include <haf/time/include/timepoint.hpp>
-#include <system/i_include/systembase.hpp>
-#include <system/i_include/systemprovider.hpp>
+#include "time/timesystem.hpp"
+#include <haf/include/time/timepoint.hpp>
+#include "system/systembase.hpp"
+#include "system/systemprovider.hpp"
 #include "system_test_utils.hpp"
 
 #include <thread>

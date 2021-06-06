@@ -21,17 +21,17 @@
 
 #include <boardmanager/include/boardmanager.hpp>
 #include <hlog/include/hlog.hpp>
-#include <haf/render/include/renderizable.hpp>
-#include <haf/scene_components/include/animationcomponent.hpp>
-#include <haf/scene_components/include/scenecontrol.hpp>
-#include <haf/input/include/inputcomponent.hpp>
-#include <haf/random/include/randomnumberscomponent.hpp>
-#include <haf/shareddata/include/shareddataupdater.hpp>
-#include <haf/shareddata/include/shareddataviewer.hpp>
-#include <haf/resources/include/iresourceconfigurator.hpp>
-#include <haf/system/include/interfaceaccess.hpp>
+#include <haf/include/render/renderizable.hpp>
+#include <haf/include/scene_components/animationcomponent.hpp>
+#include <haf/include/scene_components/scenecontrol.hpp>
+#include <haf/include/input/inputcomponent.hpp>
+#include <haf/include/random/randomnumberscomponent.hpp>
+#include <haf/include/shareddata/shareddataupdater.hpp>
+#include <haf/include/shareddata/shareddataviewer.hpp>
+#include <haf/include/resources/iresourceconfigurator.hpp>
+#include <haf/include/system/interfaceaccess.hpp>
 #include <htypes/include/serializer.hpp>
-#include <haf/filesystem/include/fileserializer.hpp>
+#include <haf/include/filesystem/fileserializer.hpp>
 
 using namespace htps;
 using namespace haf;

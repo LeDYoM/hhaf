@@ -33,5 +33,4 @@ set(SOURCE_TESTS
 
 add_haf_test_executable(SOURCE_TESTS ${SOURCE_TESTS})
 target_include_directories(${CURRENT_TARGET} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
-
-
+set_compile_warning_level_and_cxx_properties(${CURRENT_TARGET})

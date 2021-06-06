@@ -4,7 +4,7 @@
 #define ZOPER_DEBUG_ACTIONS_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <haf/input/include/virtual_input_component.hpp>
+#include <haf/include/input/virtual_input_component.hpp>
 
 namespace zoper
 {

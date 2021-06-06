@@ -4,7 +4,7 @@
 #include <htypes/include/types.hpp>
 #include <htypes/include/array.hpp>
 #include <htypes/include/object.hpp>
-#include <haf/shareddata/include/ishareable.hpp>
+#include <haf/include/shareddata/ishareable.hpp>
 
 namespace zoper
 {

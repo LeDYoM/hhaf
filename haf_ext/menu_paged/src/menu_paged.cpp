@@ -1,9 +1,9 @@
 #include <menu_paged/include/menu_paged.hpp>
 #include <menu_paged/include/menu_page.hpp>
 
-#include <haf/scene_components/include/statescontroller.hpp>
-#include <haf/scene_components/include/visibility_selector.hpp>
-#include <haf/scene_components/include/scenemetricsview.hpp>
+#include <haf/include/scene_components/statescontroller.hpp>
+#include <haf/include/scene_components/visibility_selector.hpp>
+#include <haf/include/scene_components/scenemetricsview.hpp>
 
 using namespace htps;
 

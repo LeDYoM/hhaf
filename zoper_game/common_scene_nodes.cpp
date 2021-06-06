@@ -2,8 +2,8 @@
 #include <htypes/include/properties.hpp>
 
 #include <hlog/include/hlog.hpp>
-#include <haf/render/include/renderizable.hpp>
-#include <haf/scene/include/scenenode.hpp>
+#include <haf/include/render/renderizable.hpp>
+#include <haf/include/scene/scenenode.hpp>
 
 namespace zoper
 {

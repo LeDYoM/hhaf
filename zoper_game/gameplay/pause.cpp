@@ -2,13 +2,13 @@
 
 #include "../loaders/gameresources.hpp"
 
-#include <haf/scene_nodes/include/scenenodetext.hpp>
-#include <haf/scene_components/include/animationcomponent.hpp>
-#include <haf/scene_components/include/scenemetricsview.hpp>
+#include <haf/include/scene_nodes/scenenodetext.hpp>
+#include <haf/include/scene_components/animationcomponent.hpp>
+#include <haf/include/scene_components/scenemetricsview.hpp>
 
-#include <haf/resources/include/itexture.hpp>
-#include <haf/resources/include/ittfont.hpp>
-#include <haf/resources/include/iresourceretriever.hpp>
+#include <haf/include/resources/itexture.hpp>
+#include <haf/include/resources/ittfont.hpp>
+#include <haf/include/resources/iresourceretriever.hpp>
 
 using namespace htps;
 

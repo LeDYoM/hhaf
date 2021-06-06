@@ -3,9 +3,9 @@
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
 #include <htypes/include/vector2d.hpp>
-#include <haf/scene/include/scenenode.hpp>
-#include <haf/scene/include/scenenodes.hpp>
-#include <haf/scene/include/scene.hpp>
+#include <haf/include/scene/scenenode.hpp>
+#include <haf/include/scene/scenenodes.hpp>
+#include <haf/include/scene/scene.hpp>
 
 using namespace htps;
 namespace

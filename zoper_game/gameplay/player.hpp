@@ -6,7 +6,7 @@
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/function.hpp>
-#include <haf/scene_components/include/animationcomponent.hpp>
+#include <haf/include/scene_components/animationcomponent.hpp>
 
 namespace zoper
 {

@@ -7,7 +7,7 @@
 #include <htypes/include/vector2d.hpp>
 
 #include <boardmanager/include/itile.hpp>
-#include <haf/scene_components/include/animationcomponent.hpp>
+#include <haf/include/scene_components/animationcomponent.hpp>
 
 namespace zoper
 {

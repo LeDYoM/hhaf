@@ -3,8 +3,8 @@
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
 
-#include <haf/scene/include/scene.hpp>
-#include <scene/i_include/scenecontroller.hpp>
+#include <haf/include/scene/scene.hpp>
+#include "scene/scenecontroller.hpp"
 
 using namespace htps;
 

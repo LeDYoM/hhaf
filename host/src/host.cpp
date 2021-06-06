@@ -8,7 +8,7 @@
 
 #include <hlog/include/hlog.hpp>
 
-#include <haf/system/include/isystemcontroller.hpp>
+#include <haf/include/system/isystemcontroller.hpp>
 
 #include <htypes/include/str.hpp>
 

@@ -1,9 +1,9 @@
 #include "catch.hpp"
 
 #include <htypes/include/types.hpp>
-#include <haf/scene/include/scene.hpp>
-#include <haf/scene/include/scenenode.hpp>
-#include <haf/scene/include/scenenodefactory.hpp>
+#include <haf/include/scene/scene.hpp>
+#include <haf/include/scene/scenenode.hpp>
+#include <haf/include/scene/scenenodefactory.hpp>
 
 #include <typeinfo>
 

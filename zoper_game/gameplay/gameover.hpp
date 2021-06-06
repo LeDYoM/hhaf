@@ -1,7 +1,7 @@
 #ifndef ZOPER_GAMEOVER_SCENENODE_INCLUDE_HPP
 #define ZOPER_GAMEOVER_SCENENODE_INCLUDE_HPP
 
-#include <haf/scene/include/scenenode.hpp>
+#include <haf/include/scene/scenenode.hpp>
 
 namespace zoper
 {

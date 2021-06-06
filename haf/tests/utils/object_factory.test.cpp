@@ -1,7 +1,7 @@
 #include "catch.hpp"
 
 #include <htypes/include/types.hpp>
-#include <haf/utils/include/object_factory.hpp>
+#include <haf/include/utils/object_factory.hpp>
 
 #include <typeinfo>
 #include <typeindex>

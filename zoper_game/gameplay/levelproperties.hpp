@@ -4,9 +4,9 @@
 #include <htypes/include/types.hpp>
 #include <htypes/include/vector2d.hpp>
 
-#include <haf/time/include/timercomponent.hpp>
-#include <haf/scene/include/icomponent.hpp>
-#include <haf/scene/include/color.hpp>
+#include <haf/include/time/timercomponent.hpp>
+#include <haf/include/scene/icomponent.hpp>
+#include <haf/include/scene/color.hpp>
 
 #include "../gameshareddata.hpp"
 #include "gamehud.hpp"

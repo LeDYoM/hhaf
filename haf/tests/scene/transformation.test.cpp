@@ -1,7 +1,7 @@
 #include "catch.hpp"
 
 #include <htypes/include/types.hpp>
-#include <haf/scene/include/transformation.hpp>
+#include <haf/include/scene/transformation.hpp>
 
 TEST_CASE("haf::scene::Transformation", "[haf][scene][Transformation]")
 {

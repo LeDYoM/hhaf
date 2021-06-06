@@ -2,13 +2,13 @@
 #define HAF_SYSTEM_TESTS_UTILS_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <system/i_include/systemprovider.hpp>
-#include <system/i_include/systemdatawrappercreator.hpp>
-#include <haf/system/include/datawrappercreator.hpp>
-#include <shareddata/i_include/shareddatasystem.hpp>
-#include <time/i_include/timesystem.hpp>
-#include <scene/i_include/scenemanager.hpp>
-#include <system/i_include/system_options_init.hpp>
+#include "system/systemprovider.hpp"
+#include "system/systemdatawrappercreator.hpp"
+#include <haf/include/system/datawrappercreator.hpp>
+#include "shareddata/shareddatasystem.hpp"
+#include "time/timesystem.hpp"
+#include "scene/scenemanager.hpp"
+#include "system/system_options_init.hpp"
 
 template <typename T>
 class TestSystem

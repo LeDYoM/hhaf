@@ -1,13 +1,13 @@
 #include "displayvar_console.hpp"
-#include <haf/scene_nodes/include/scenenodetext.hpp>
+#include <haf/include/scene_nodes/scenenodetext.hpp>
 #include "../loaders/mainmenuresources.hpp"
 
-#include <haf/scene/include/scene.hpp>
-#include <haf/scene_nodes/include/scenenodetext.hpp>
+#include <haf/include/scene/scene.hpp>
+#include <haf/include/scene_nodes/scenenodetext.hpp>
 
 #include <hlog/include/hlog.hpp>
-#include <haf/resources/include/iresourceretriever.hpp>
-#include <haf/resources/include/ittfont.hpp>
+#include <haf/include/resources/iresourceretriever.hpp>
+#include <haf/include/resources/ittfont.hpp>
 
 using namespace htps;
 using namespace haf;

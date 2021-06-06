@@ -2,7 +2,7 @@
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/object.hpp>
-#include <haf/shareddata/include/address.hpp>
+#include <haf/include/shareddata/address.hpp>
 
 using namespace htps;
 using namespace haf;

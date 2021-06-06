@@ -13,13 +13,13 @@
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/function.hpp>
-#include <haf/scene/include/scene.hpp>
+#include <haf/include/scene/scene.hpp>
 #include <boardmanager/include/boardmanager.hpp>
-#include <haf/render/include/renderizable.hpp>
-#include <haf/time/include/timercomponent.hpp>
-#include <haf/scene_components/include/statescontroller.hpp>
-#include <haf/scene_components/include/statescontrolleractuator.hpp>
-#include <haf/time/include/timercomponent.hpp>
+#include <haf/include/render/renderizable.hpp>
+#include <haf/include/time/timercomponent.hpp>
+#include <haf/include/scene_components/statescontroller.hpp>
+#include <haf/include/scene_components/statescontrolleractuator.hpp>
+#include <haf/include/time/timercomponent.hpp>
 
 #include "../scene_names.hpp"
 

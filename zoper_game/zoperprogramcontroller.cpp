@@ -3,9 +3,9 @@
 #include "gameplay/gamescene.hpp"
 #include "highscores/highscoresscene.hpp"
 
-#include <haf/scene_components/include/app_initializer.hpp>
-#include <haf/scene_components/include/app_finisher.hpp>
-#include <haf/shareddata/include/shareddata.hpp>
+#include <haf/include/scene_components/app_initializer.hpp>
+#include <haf/include/scene_components/app_finisher.hpp>
+#include <haf/include/shareddata/shareddata.hpp>
 #include <hlog/include/hlog.hpp>
 
 using namespace htps;

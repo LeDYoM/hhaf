@@ -3,8 +3,8 @@
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/vector2d.hpp>
-#include <haf/scene/include/scenenode.hpp>
-#include <haf/render/include/renderizable.hpp>
+#include <haf/include/scene/scenenode.hpp>
+#include <haf/include/render/renderizable.hpp>
 #include <boardmanager/include/itile.hpp>
 #include "boardgroup.hpp"
 

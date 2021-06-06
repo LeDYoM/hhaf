@@ -2,7 +2,7 @@
 #define HAF_CONSOLE_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <haf/scene/include/scenenode.hpp>
+#include <haf/include/scene/scenenode.hpp>
 
 namespace zoper
 {

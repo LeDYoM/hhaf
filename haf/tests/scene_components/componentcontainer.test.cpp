@@ -1,10 +1,10 @@
 #include "catch.hpp"
 
 #include <htypes/include/types.hpp>
-#include <haf/scene/include/scenenode.hpp>
-#include <haf/scene/include/scene.hpp>
-#include <haf/scene/include/componentcontainer.hpp>
-#include <haf/scene/include/icomponent.hpp>
+#include <haf/include/scene/scenenode.hpp>
+#include <haf/include/scene/scene.hpp>
+#include <haf/include/scene/componentcontainer.hpp>
+#include <haf/include/scene/icomponent.hpp>
 
 using namespace htps;
 using namespace haf;

@@ -1,7 +1,7 @@
 #include "catch.hpp"
 
 #include <htypes/include/types.hpp>
-#include <haf/scene/include/color.hpp>
+#include <haf/include/scene/color.hpp>
 #include <type_traits>
 
 using namespace htps;

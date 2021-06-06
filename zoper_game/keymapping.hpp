@@ -3,8 +3,8 @@
 
 #include <htypes/include/array.hpp>
 #include <htypes/include/object.hpp>
-#include <haf/shareddata/include/ishareable.hpp>
-#include <haf/input/include/key.hpp>
+#include <haf/include/shareddata/ishareable.hpp>
+#include <haf/include/input/key.hpp>
 
 #include "gameplay/direction.hpp"
 

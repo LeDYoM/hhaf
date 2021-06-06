@@ -3,8 +3,8 @@
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/connection.hpp>
-#include <haf/render/include/renderizable.hpp>
-#include <haf/scene/include/scene.hpp>
+#include <haf/include/render/renderizable.hpp>
+#include <haf/include/scene/scene.hpp>
 
 #include "../scene_names.hpp"
 

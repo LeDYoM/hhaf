@@ -2,7 +2,7 @@
 #define HAF_HOST_SYSTEM_CONTROLLER_LOADER_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <haf/system/include/isystemcontroller.hpp>
+#include <haf/include/system/isystemcontroller.hpp>
 
 namespace agloader
 {

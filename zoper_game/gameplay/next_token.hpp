@@ -3,8 +3,8 @@
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/function.hpp>
-#include <haf/time/include/timercomponent.hpp>
-#include <haf/time/include/timerconnector.hpp>
+#include <haf/include/time/timercomponent.hpp>
+#include <haf/include/time/timerconnector.hpp>
 
 namespace zoper
 {
