@@ -7,9 +7,11 @@ project(
   LANGUAGES CXX
 )
 
+set(CURRENT_TARGET haf)
+
 set(src_dir src)
 
-set(_SOURCES
+set(sources
   # Global
   ${src_dir}/main.cpp 
   ${src_dir}/systemprovider_init.cpp
@@ -148,9 +150,129 @@ set(_SOURCES
   ${src_dir}/window/window.hpp
   )
 
-file(GLOB_RECURSE _HEADERS "include/*.hpp")
+set(inc_dir include/haf/include)
 
-set(CURRENT_TARGET haf)
+set(headers
+  # Global
+  ${inc_dir}/haf_export.hpp
+
+  # File system
+  ${inc_dir}/filesystem/fileserializer.hpp
+  ${inc_dir}/filesystem/path.hpp
+
+  # Input
+  ${inc_dir}/input/input_component_base.hpp
+  ${inc_dir}/input/inputcomponent.hpp
+  ${inc_dir}/input/inputdriver.hpp
+  ${inc_dir}/input/key_manager.hpp
+  ${inc_dir}/input/key.hpp
+  ${inc_dir}/input/virtual_input_component.hpp
+
+  # Random
+  ${inc_dir}/random/randomnumberscomponent.hpp
+
+  # Render
+  ${inc_dir}/render/fig_type.hpp
+  ${inc_dir}/render/geometry_math.hpp
+  ${inc_dir}/render/primitivetype.hpp
+  ${inc_dir}/render/renderdata.hpp
+  ${inc_dir}/render/renderizable_builder.hpp
+  ${inc_dir}/render/renderizable_modifier_context.hpp
+  ${inc_dir}/render/renderizable.hpp
+  ${inc_dir}/render/renderizables.hpp
+  ${inc_dir}/render/vertex.hpp
+  ${inc_dir}/render/vertexarray.hpp
+
+  # Resources
+  ${inc_dir}/resources/ifont.hpp
+  ${inc_dir}/resources/iresourceconfigurator.hpp
+  ${inc_dir}/resources/iresourceretriever.hpp
+  ${inc_dir}/resources/ishader.hpp
+  ${inc_dir}/resources/itexture.hpp
+  ${inc_dir}/resources/ittfont.hpp
+
+  # Scene
+  ${inc_dir}/scene/color.hpp
+  ${inc_dir}/scene/componentcontainer_part.hpp
+  ${inc_dir}/scene/componentcontainer.hpp
+  ${inc_dir}/scene/hasname.hpp
+  ${inc_dir}/scene/icomponent.hpp
+  ${inc_dir}/scene/matrix4x4.hpp
+  ${inc_dir}/scene/scene.hpp
+  ${inc_dir}/scene/scenenode_cast.hpp
+  ${inc_dir}/scene/scenenode_properties.hpp
+  ${inc_dir}/scene/scenenode.hpp
+  ${inc_dir}/scene/scenenodefactory.hpp
+  ${inc_dir}/scene/scenenodeparent.hpp
+  ${inc_dir}/scene/scenenodes.hpp
+  ${inc_dir}/scene/transformable.hpp
+  ${inc_dir}/scene/transformation_properties.hpp
+  ${inc_dir}/scene/transformation.hpp
+
+  # Scene components
+  ${inc_dir}/scene_components/animabletypes.hpp
+  ${inc_dir}/scene_components/animation.hpp
+  ${inc_dir}/scene_components/animationcomponent.hpp
+  ${inc_dir}/scene_components/app_finisher.hpp
+  ${inc_dir}/scene_components/app_initializer.hpp
+  ${inc_dir}/scene_components/discretetextcomponent.hpp
+  ${inc_dir}/scene_components/ipropertyanimation.hpp
+  ${inc_dir}/scene_components/scenecontrol.hpp
+  ${inc_dir}/scene_components/scenefactory.hpp
+  ${inc_dir}/scene_components/scenemetrics.hpp
+  ${inc_dir}/scene_components/scenemetricsview.hpp
+  ${inc_dir}/scene_components/statescontroller.hpp
+  ${inc_dir}/scene_components/statescontrolleractuator.hpp
+  ${inc_dir}/scene_components/texteditorcomponent.hpp
+  ${inc_dir}/scene_components/visibility_selector.hpp
+
+  # Scene nodes
+  ${inc_dir}/scene_nodes/renderizable_scenenode.hpp
+  ${inc_dir}/scene_nodes/scene_node_size.hpp
+  ${inc_dir}/scene_nodes/scenenodetext_properties.hpp
+  ${inc_dir}/scene_nodes/scenenodetext.hpp
+  ${inc_dir}/scene_nodes/tablenode_imp.hpp
+  ${inc_dir}/scene_nodes/tablenode_properties.hpp
+  ${inc_dir}/scene_nodes/tablenode.hpp
+  ${inc_dir}/scene_nodes/text_table_node.hpp
+  ${inc_dir}/scene_nodes/textquad.hpp
+
+  # Shared data
+  ${inc_dir}/shareddata/address.hpp
+  ${inc_dir}/shareddata/ishareable.hpp
+  ${inc_dir}/shareddata/shareddata.hpp
+  ${inc_dir}/shareddata/shareddataupdater.hpp
+  ${inc_dir}/shareddata/shareddataviewer.hpp
+
+  # Simulation
+  ${inc_dir}/simulation/simulationaction.hpp
+  ${inc_dir}/simulation/simulationactiongroup.hpp
+
+  # System
+  ${inc_dir}/system/datawrappercreator.hpp
+  ${inc_dir}/system/idatawrapper.hpp
+  ${inc_dir}/system/interface_getter.hpp
+  ${inc_dir}/system/interfaceaccess.hpp
+  ${inc_dir}/system/isystemcontroller.hpp
+  ${inc_dir}/system/isystemprovider.hpp
+  ${inc_dir}/system/systemaccess.hpp
+
+  # Timer
+  ${inc_dir}/time/timepoint.hpp
+  ${inc_dir}/time/timer.hpp
+  ${inc_dir}/time/timercomponent.hpp
+  ${inc_dir}/time/timerconnector.hpp
+  ${inc_dir}/time/timertype.hpp
+  ${inc_dir}/time/timeview.hpp
+
+  # Utils
+  ${inc_dir}/utils/attachable_manager.hpp
+  ${inc_dir}/utils/attachable.hpp
+  ${inc_dir}/utils/object_factory.hpp
+
+  # Window
+  ${inc_dir}/window/window_properties.hpp
+  )
 
 # Set the public directory for includes in this library. It will be
 # used by the external components.
@@ -158,50 +280,22 @@ set(HAF_PUBLIC_INCLUDE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/)
 
 set(HAF_PRIVATE_INCLUDE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
+build_lib_component(EXPORT_ALL HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}/include" 
+  SOURCES ${sources} HEADERS ${headers})
+
 # Prepare the haf libray
-add_library(${CURRENT_TARGET} SHARED ${_SOURCES} ${_HEADERS})
 target_compile_definitions(${CURRENT_TARGET} PRIVATE HAF_ALLOW_ACCELERATION)
 target_compile_definitions(${CURRENT_TARGET} PRIVATE haf_EXPORTS)
-set_compile_warning_level_and_cxx_properties(${CURRENT_TARGET})
+target_link_libraries(${CURRENT_TARGET} PRIVATE hosted_app agloader backend backend_dev)
 
-# For now, export all simbols
-set_target_properties(${CURRENT_TARGET} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS
-                                                   true)
-
-# External users of the library will need to include from this directory.
-target_include_directories(${CURRENT_TARGET}
-                           PUBLIC ${HAF_PUBLIC_INCLUDE_DIRECTORY})
+target_link_libraries(${CURRENT_TARGET} PUBLIC log_and_types)
 
 # For now, we need it public for tests.
 # TODO: Fix it
 target_include_directories(${CURRENT_TARGET}
                            PUBLIC ${HAF_PRIVATE_INCLUDE_DIRECTORY})
 
-target_include_directories(${CURRENT_TARGET}
-                           PUBLIC "${HAF_PRIVATE_INCLUDE_DIRECTORY}/../")
-
-target_compile_definitions(${CURRENT_TARGET} PRIVATE haf_EXPORTS)
-
 include (cmake/haf_functions.cmake)
-
-#add_subdirectory(filesystem)
-#add_subdirectory(render)
-#add_subdirectory(resources)
-#add_subdirectory(scene)
-#add_subdirectory(scene_components)
-#add_subdirectory(scene_nodes)
-#add_subdirectory(time)
-#add_subdirectory(input)
-#add_subdirectory(random)
-#add_subdirectory(simulation)
-#add_subdirectory(system)
-#add_subdirectory(shareddata)
-#add_subdirectory(window)
-
-# Internal libraries necessary for the library only.
-target_link_libraries(${CURRENT_TARGET} PRIVATE hosted_app agloader backend backend_dev)
-target_link_libraries(${CURRENT_TARGET} PUBLIC log_and_types)
-
 
 # TODO: Investigate some day if(MSVC) set_target_properties(${CURRENT_TARGET}
 # PROPERTIES LINK_FLAGS "${LINK_FLAGS} /NODEFAULTLIB") endif()
