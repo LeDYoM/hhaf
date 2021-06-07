@@ -5,8 +5,8 @@
 #include <htypes/include/types.hpp>
 #include <htypes/include/vector2d.hpp>
 #include <htypes/include/properties.hpp>
-#include <htypes/include/grouping_property.hpp>
 #include <haf/include/scene/scenenodeparent.hpp>
+#include <haf/include/scene/scenenode_properties.hpp>
 #include <haf/include/scene/scenenodes.hpp>
 #include <haf/include/render/renderizables.hpp>
 #include <haf/include/scene/transformable.hpp>
@@ -22,13 +22,6 @@ namespace haf::scene
 class Renderizable;
 class Scene;
 class SceneManager;
-
-struct Visible
-{
-    using value_type = bool;
-};
-
-using SceneNodeProperties = htps::PropertyGroup<Visible>;
 
 /**
  * @brief Main class representing all SceneNodes from a @b Scene.
