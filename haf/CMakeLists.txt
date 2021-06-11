@@ -299,5 +299,4 @@ include (cmake/haf_functions.cmake)
 
 # TODO: Investigate some day if(MSVC) set_target_properties(${CURRENT_TARGET}
 # PROPERTIES LINK_FLAGS "${LINK_FLAGS} /NODEFAULTLIB") endif()
-
-add_subdirectory(tests)
+addTestingDirectory(tests)

@@ -11,4 +11,4 @@ build_lib_ext(
     ${SRC_FILES}
 )
 
-add_subdirectory(tests)
+addTestingDirectory(tests)

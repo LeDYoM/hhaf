@@ -58,4 +58,4 @@ target_compile_definitions(${CURRENT_TARGET} PUBLIC USER_MEM_MANAGER)
 target_link_libraries(${CURRENT_TARGET} PUBLIC memmanager)
 target_compile_features(${CURRENT_TARGET} INTERFACE cxx_std_20)
 
-add_subdirectory(tests)
+addTestingDirectory(tests)

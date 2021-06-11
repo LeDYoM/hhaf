@@ -1,3 +1,14 @@
+macro(testing_init)
+  option(BUILD_TESTS "Build test programs" ON)
+  if (BUILD_TESTS)
+    message("Building tests")
+    enable_testing()
+    prepareTestLibrary()
+  else()
+    message("Not building tests")
+  endif()
+endmacro()
+
 function (prepareTestLibrary)
     include(FetchContent)
     message(STATUS "Fetching Catch2")
@@ -16,59 +27,67 @@ function (prepareTestLibrary)
 endfunction()
 
 function(add_test_executable)
+  if (BUILD_TESTS)
+    cmake_parse_arguments(LC_BUILD "" "" "SOURCE_TESTS" ${ARGN})
 
-  cmake_parse_arguments(LC_BUILD "" "" "SOURCE_TESTS" ${ARGN})
+    prepareTestLibrary()
 
-  prepareTestLibrary()
+    foreach(NAME IN LISTS LC_BUILD_SOURCE_TESTS)
+      list(APPEND SOURCE_TESTS_LIST ${NAME}.test.cpp)
+    endforeach()
 
-  foreach(NAME IN LISTS LC_BUILD_SOURCE_TESTS)
-    list(APPEND SOURCE_TESTS_LIST ${NAME}.test.cpp)
-  endforeach()
+    add_executable(${CURRENT_TARGET} ${SOURCE_TESTS_LIST})
+    
+    target_link_libraries(${CURRENT_TARGET} PUBLIC Catch2)
+    target_include_directories(
+      ${CURRENT_TARGET} PRIVATE "${Catch2_SOURCE_DIR}/single_include/catch2")
 
-  add_executable(${CURRENT_TARGET} ${SOURCE_TESTS_LIST})
-  
-  target_link_libraries(${CURRENT_TARGET} PUBLIC Catch2)
-  target_include_directories(
-    ${CURRENT_TARGET} PRIVATE "${Catch2_SOURCE_DIR}/single_include/catch2")
-
-  add_test(NAME ${CURRENT_TARGET} COMMAND ${CURRENT_TARGET})
-
+    add_test(NAME ${CURRENT_TARGET} COMMAND ${CURRENT_TARGET})
+  endif()
 endfunction()
 
 function(add_haf_test_executable)
+  if (BUILD_TESTS)
+  
+    file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/main.test.cpp"
+    "#define CATCH_CONFIG_RUNNER
+      #include <catch.hpp>
 
-  file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/main.test.cpp"
-  "#define CATCH_CONFIG_RUNNER
-    #include <catch.hpp>
+      #include <hlog/include/hlog.hpp>
 
-    #include <hlog/include/hlog.hpp>
+      int main(int argc, char* argv[])
+      {
+          Catch::Session session;  // There must be exactly once instance
 
-    int main(int argc, char* argv[])
-    {
-        Catch::Session session;  // There must be exactly once instance
+          // writing to session.configData() here sets defaults
+          // this is the preferred way to set them
 
-        // writing to session.configData() here sets defaults
-        // this is the preferred way to set them
+          //    session.configData().showSuccessfulTests = true;
+          int returnCode = session.applyCommandLine(argc, argv);
+          if (returnCode != 0)  // Indicates a command line error
+              return returnCode;
 
-        //    session.configData().showSuccessfulTests = true;
-        int returnCode = session.applyCommandLine(argc, argv);
-        if (returnCode != 0)  // Indicates a command line error
-            return returnCode;
+          // writing to session.configData() or session.Config() here
+          // overrides command line args
+          // only do this if you know you need to
 
-        // writing to session.configData() or session.Config() here
-        // overrides command line args
-        // only do this if you know you need to
+          haf::LogInitializer log;
+          return session.run();
+      }
+      ")
 
-        haf::LogInitializer log;
-        return session.run();
-    }
-    ")
+    set(PARAM_LIST ${ARGV})
+    list(APPEND PARAM_LIST "${CMAKE_CURRENT_BINARY_DIR}/main")
 
-  set(PARAM_LIST ${ARGV})
-  list(APPEND PARAM_LIST "${CMAKE_CURRENT_BINARY_DIR}/main")
+    add_test_executable(${PARAM_LIST})
 
-  add_test_executable(${PARAM_LIST})
+    target_link_libraries(${CURRENT_TARGET} PRIVATE haf)
+    set_compile_warning_level_and_cxx_properties(${CURRENT_TARGET})
+  endif()
+endfunction()
 
-  target_link_libraries(${CURRENT_TARGET} PRIVATE haf)
-  set_compile_warning_level_and_cxx_properties(${CURRENT_TARGET})
-endfunction(add_haf_test_executable)
+function(addTestingDirectory dir)
+  if (BUILD_TESTS)
+    add_subdirectory(${dir})
+  endif()
+endfunction()

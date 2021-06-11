@@ -15,5 +15,6 @@ TEST_CASE("haf::scene::SceneManager", "[haf][scene][scenemanager]")
     SceneManager& scene_manager =
         test_scene_manager->system<SceneManager>();
 
-    CHECK(&scene_manager != nullptr);
+    (void)(scene_manager);
+//    CHECK(&scene_manager != nullptr);
 }
