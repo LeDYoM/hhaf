@@ -27,4 +27,14 @@ void SceneNode::clearAll()
     clearComponents();
 }
 
+Renderizables& SceneNode::renderizables()
+{
+    return *this;
+}
+
+Renderizables const& SceneNode::renderizables() const
+{
+    return *this;
+}
+
 }  // namespace haf::scene

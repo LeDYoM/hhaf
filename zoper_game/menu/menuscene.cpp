@@ -50,10 +50,11 @@ void MenuScene::onCreated()
     resources_configurator.setResourcesDirectory("resources/");
     resources_configurator.loadSection("menu");
 
-    createStandardBackground(this);
+    auto renderizable_builder = renderizables().renderizableBuilder();
+    createStandardBackground(renderizable_builder);
 
     auto logo =
-        renderizableBuilder()
+        renderizables().renderizableBuilder()
             .name("mainLogo")
             .figType(FigType_t::Quad)
             .box(Rectf32{500.f, 150.f, 1000.f, 500.f})

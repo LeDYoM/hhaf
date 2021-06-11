@@ -11,7 +11,6 @@
 namespace haf::scene
 {
 class SceneNode;
-class RenderizableBuilder;
 
 class Renderizables
 {

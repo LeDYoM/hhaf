@@ -17,6 +17,8 @@
 #include <haf/include/system/datawrappercreator.hpp>
 #include <haf/include/system/systemaccess.hpp>
 
+#include <haf/include/render/renderizable_builder.hpp>
+
 namespace haf::scene
 {
 /**
@@ -27,7 +29,7 @@ namespace haf::scene
 class HAF_API SceneNode : public sys::HasName,
                           public SceneNodeParent,
                           public SceneNodes,
-                          public Renderizables,
+                          private Renderizables,
                           public Transformable,
                           public sys::DataWrapperCreator,
                           public ComponentContainer,
@@ -88,6 +90,9 @@ public:
      * @brief Clear all elements in this scene node
      */
     void clearAll();
+
+    Renderizables& renderizables();
+    Renderizables const& renderizables() const;
 };
 
 using SceneNodeSPtr = htps::sptr<SceneNode>;

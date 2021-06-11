@@ -55,7 +55,8 @@ struct GameScene::GameScenePrivate
         auto sceneNode =
             main_node.createSceneNode("pointIncrementScore_SceneNode");
 
-        auto node = sceneNode->renderizableBuilder()
+        auto node = sceneNode->renderizables()
+                        .renderizableBuilder()
                         .name("pointIncrementScore")
                         .figType(FigType_t::Shape)
                         .box(rectFromSize(15.0F, 15.0F))

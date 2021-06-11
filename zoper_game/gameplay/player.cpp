@@ -22,7 +22,8 @@ Player::Player(rptr<SceneNode> parent, str name) :
     render_scene_node_ =
         createSceneNode<RenderizableSceneNode>("player_render_scene_node");
 
-    render_scene_node_->buildNode(render_scene_node_->renderizableBuilder()
+    render_scene_node_->buildNode(render_scene_node_->renderizables()
+                                      .renderizableBuilder()
                                       .name("player_render_scene_node")
                                       .figType(FigType_t::Shape)
                                       .pointCount(3U));
@@ -32,7 +33,6 @@ Player::Player(rptr<SceneNode> parent, str name) :
     scalator_ = render_scene_node_->addTransformation();
     move_out_ = render_scene_node_->addTransformation();
     node_->box.set(rectFromSize(board2Scene({1, 1})));
-
 }
 
 Player::~Player() = default;

@@ -12,11 +12,10 @@ using namespace haf;
 using namespace haf::scene;
 
 void createStandardBackground(
-    const rptr<haf::scene::Renderizables> renderizables)
+    haf::scene::RenderizableBuilder& renderizable_builder)
 {
     auto background =
-        renderizables->renderizableBuilder()
-            .name("background")
+        renderizable_builder.name("background")
             .figType(FigType_t::Quad)
             .box(rectFromSize(2000.0f, 2000.0f))
             .colorModifier([](const RenderizableModifierContext& context) {
