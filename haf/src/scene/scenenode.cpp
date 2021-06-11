@@ -6,6 +6,11 @@ using namespace htps;
 
 namespace haf::scene
 {
+struct SceneNode::SceneNodePrivate
+{
+
+};
+
 SceneNode::SceneNode(rptr<SceneNode> parent, str name) :
     sys::HasName{std::move(name)},
     SceneNodeParent{parent},
@@ -16,7 +21,8 @@ SceneNode::SceneNode(rptr<SceneNode> parent, str name) :
     sys::SystemAccess{parent != nullptr ? &(parent->isystemProvider())
                                         : nullptr},
     InterfaceGetter{this},
-    SceneNodeProperties(true)
+    SceneNodeProperties(true),
+    p_{make_pimplp<SceneNodePrivate>}
 {}
 
 SceneNode::~SceneNode() = default;

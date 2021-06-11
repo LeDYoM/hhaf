@@ -16,8 +16,9 @@
 #include <haf/include/system/interface_getter.hpp>
 #include <haf/include/system/datawrappercreator.hpp>
 #include <haf/include/system/systemaccess.hpp>
-
 #include <haf/include/render/renderizable_builder.hpp>
+
+#include <htypes/include/p_impl_pointer.hpp>
 
 namespace haf::scene
 {
@@ -93,6 +94,10 @@ public:
 
     Renderizables& renderizables();
     Renderizables const& renderizables() const;
+
+private:
+    struct SceneNodePrivate;
+    htps::PImplPointer<SceneNodePrivate> p_;
 };
 
 using SceneNodeSPtr = htps::sptr<SceneNode>;
