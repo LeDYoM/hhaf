@@ -19,10 +19,6 @@
 
 namespace haf::scene
 {
-class Renderizable;
-class Scene;
-class SceneManager;
-
 /**
  * @brief Main class representing all SceneNodes from a @b Scene.
  * This class serves as main entry point in the hierarchy of the scene.
