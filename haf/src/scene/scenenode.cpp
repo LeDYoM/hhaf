@@ -8,7 +8,7 @@ namespace haf::scene
 {
 struct SceneNode::SceneNodePrivate
 {
-
+    SceneNodePrivate() = default;
 };
 
 SceneNode::SceneNode(rptr<SceneNode> parent, str name) :
@@ -22,7 +22,7 @@ SceneNode::SceneNode(rptr<SceneNode> parent, str name) :
                                         : nullptr},
     InterfaceGetter{this},
     SceneNodeProperties(true),
-    p_{make_pimplp<SceneNodePrivate>}
+    p_{make_pimplp<SceneNodePrivate>()}
 {}
 
 SceneNode::~SceneNode() = default;
