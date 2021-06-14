@@ -52,7 +52,7 @@ void MenuScene::onCreated()
     resources_configurator.setResourcesDirectory("resources/");
     resources_configurator.loadSection("menu");
 
-    auto renderizable_builder = renderizables().renderizableBuilder();
+    auto renderizable_builder = createRenderizables().renderizableBuilder();
     createStandardBackground(renderizable_builder);
 
     auto logo =

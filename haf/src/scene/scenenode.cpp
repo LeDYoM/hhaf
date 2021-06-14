@@ -40,7 +40,7 @@ void SceneNode::clearAll()
 Renderizables& SceneNode::createRenderizables()
 {
     LogAsserter::log_assert(
-        p_->renderizables == nullptr,
+        !containsRenderizables(),
         "createRenderizables already invoked for this object");
 
     if (p_->renderizables == nullptr)
@@ -54,8 +54,8 @@ Renderizables& SceneNode::createRenderizables()
 Renderizables& SceneNode::renderizables()
 {
     LogAsserter::log_assert(
-        p_->renderizables == nullptr,
-        "createRenderizables already invoked for this object");
+        containsRenderizables(),
+        "createRenderizables is not invoked for this object");
 
     return *(p_->renderizables);
 }
@@ -63,10 +63,15 @@ Renderizables& SceneNode::renderizables()
 Renderizables const& SceneNode::renderizables() const
 {
     LogAsserter::log_assert(
-        p_->renderizables == nullptr,
-        "createRenderizables already invoked for this object");
+        containsRenderizables(),
+        "createRenderizables is not invoked for this object");
 
     return *(p_->renderizables);
+}
+
+bool SceneNode::containsRenderizables() const noexcept
+{
+    return p_->renderizables != nullptr;
 }
 
 }  // namespace haf::scene

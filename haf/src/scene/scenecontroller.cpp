@@ -101,7 +101,10 @@ void SceneController::render(SceneNode& scene_node,
                                 : Matrix4x4::Identity);
 
         // Update the renderizables added to this node
-        scene_node.renderizables().updateRenderizables();
+        if (scene_node.containsRenderizables())
+        {
+            scene_node.renderizables().updateRenderizables();
+        }
 
         // Render the nodes added to this node
         for (auto& group : scene_node.sceneNodes())

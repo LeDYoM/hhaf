@@ -33,7 +33,7 @@
             "args": [],
             "stopAtEntry": false,
             "cwd": "${command:cmake.launchTargetDirectory}",
-            "environment": [],
+            "environment": []
         }
     ]
 }

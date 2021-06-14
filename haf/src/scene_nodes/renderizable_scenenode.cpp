@@ -11,7 +11,9 @@ namespace haf::scene
 RenderizableSceneNode::RenderizableSceneNode(htps::rptr<SceneNode> parent,
                                              const htps::str& name) :
     SceneNode{std::move(parent), name}, node_{}
-{}
+{
+    createRenderizables();
+}
 
 void RenderizableSceneNode::buildNode(RenderizableBuilder& node_builder)
 {

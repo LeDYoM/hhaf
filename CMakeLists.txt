@@ -50,7 +50,7 @@ endforeach()
 add_library(log_and_types INTERFACE)
 target_link_libraries(log_and_types INTERFACE htypes memmanager hlog)
 
-#add_subdirectory(tools)
+add_subdirectory(tools)
 
 set(hhaf_core_module_list
   agloader
