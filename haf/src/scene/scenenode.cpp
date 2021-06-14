@@ -37,17 +37,35 @@ void SceneNode::clearAll()
     clearComponents();
 }
 
-Renderizables& SceneNode::renderizables()
+Renderizables& SceneNode::createRenderizables()
 {
+    LogAsserter::log_assert(
+        p_->renderizables == nullptr,
+        "createRenderizables already invoked for this object");
+
     if (p_->renderizables == nullptr)
     {
         p_->renderizables = muptr<Renderizables>(this);
     }
+
+    return renderizables();
+}
+
+Renderizables& SceneNode::renderizables()
+{
+    LogAsserter::log_assert(
+        p_->renderizables == nullptr,
+        "createRenderizables already invoked for this object");
+
     return *(p_->renderizables);
 }
 
 Renderizables const& SceneNode::renderizables() const
 {
+    LogAsserter::log_assert(
+        p_->renderizables == nullptr,
+        "createRenderizables already invoked for this object");
+
     return *(p_->renderizables);
 }
 

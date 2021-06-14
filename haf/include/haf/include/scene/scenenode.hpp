@@ -90,6 +90,7 @@ public:
      */
     void clearAll();
 
+    Renderizables& createRenderizables();
     Renderizables& renderizables();
     Renderizables const& renderizables() const;
 
