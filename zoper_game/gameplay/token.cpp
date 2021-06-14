@@ -33,7 +33,7 @@ Token::Token(SceneNode* const parent, str name) :
 
 Token::~Token() = default;
 
-void Token::setBoxBoundaries(const Rectf32& box)
+void Token::setBox(const Rectf32& box)
 {
     node()->box = box;
 }

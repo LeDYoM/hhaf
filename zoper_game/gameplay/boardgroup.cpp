@@ -95,7 +95,7 @@ void BoardGroup::createNewToken(const board::BoardTileData data,
 
     // Set the position in the scene depending on the board position
     new_tile_token->prop<Position>().set(board2Scene(board_position));
-    new_tile_token->setBoxBoundaries(rectFromSize(size));
+    new_tile_token->setBox(rectFromSize(size));
 
     // Add it to the board
     auto board_model = componentOfType<board::BoardManager>();
