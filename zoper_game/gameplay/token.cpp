@@ -23,11 +23,11 @@ Token::Token(SceneNode* const parent, str name) :
                  name + str::to_str(m_tileCounter) + str::to_str(m_tileCounter)}
 {
     ++m_tileCounter;
-    node() = renderizables().renderizableBuilder()
-                .name("Node" + str::to_str(m_tileCounter))
-                .figType(FigType_t::Shape)
-                .pointCount(30U)
-                .create();
+    buildNode(renderizables()
+                  .renderizableBuilder()
+                  .name("Node" + str::to_str(m_tileCounter))
+                  .figType(FigType_t::Shape)
+                  .pointCount(30U));
     animation_component_ = addComponentOfType<scene::AnimationComponent>();
 }
 
@@ -62,8 +62,8 @@ void Token::tileAdded(const vector2dst& position_)
 
     animation_component_->addPropertyAnimation(
         AppearTokenTime,
-        getTransformation(newTransformationScale).prop<Scale>(),
-        Scale::Zeros, Scale::Ones);
+        getTransformation(newTransformationScale).prop<Scale>(), Scale::Zeros,
+        Scale::Ones);
 
     getTransformation(newTransformationPosition)
         .prop<Position>()

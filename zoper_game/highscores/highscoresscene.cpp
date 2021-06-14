@@ -49,7 +49,7 @@ void HighScoresScene::onCreated()
     m_normalColor   = colors::Blue;
     m_selectedColor = colors::Red;
 
-    auto renderizable_builder = renderizables().renderizableBuilder();
+    auto renderizable_builder = createRenderizables().renderizableBuilder();
     createStandardBackground(renderizable_builder);
 
     auto highScoreTextController(

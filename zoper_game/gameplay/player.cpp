@@ -20,20 +20,17 @@ Player::Player(rptr<SceneNode> parent, str name) :
     boardPosition{},
     currentDirection{Direction{Direction::DirectionData::Up}}
 {
-    render_scene_node_ =
-        createSceneNode<RenderizableSceneNode>("player_render_scene_node");
-
-    render_scene_node_->buildNode(render_scene_node_->renderizables()
-                                      .renderizableBuilder()
-                                      .name("player_render_scene_node")
-                                      .figType(FigType_t::Shape)
-                                      .pointCount(3U));
-    node()     = render_scene_node_->node();
-    move_in_  = render_scene_node_->addTransformation();
-    rotator_  = render_scene_node_->addTransformation();
-    scalator_ = render_scene_node_->addTransformation();
-    move_out_ = render_scene_node_->addTransformation();
+    buildNode(renderizables()
+                  .renderizableBuilder()
+                  .name("player_render_scene_node")
+                  .figType(FigType_t::Shape)
+                  .pointCount(3U));
     node()->box.set(rectFromSize(board2Scene({1, 1})));
+
+    move_in_  = addTransformation();
+    rotator_  = addTransformation();
+    scalator_ = addTransformation();
+    move_out_ = addTransformation();
 }
 
 Player::~Player() = default;
@@ -54,20 +51,17 @@ void Player::update()
         const auto direction{currentDirection()};
 
         const auto tileCenter{board2SceneFactor() / 2.0F};
-        render_scene_node_->getTransformation(move_in_).prop<Position>() =
-            tileCenter;
+        getTransformation(move_in_).prop<Position>() = tileCenter;
 
-        render_scene_node_->getTransformation(rotator_).prop<Rotation>().set(
-            direction.angle());
+        getTransformation(rotator_).prop<Rotation>().set(direction.angle());
 
-        render_scene_node_->getTransformation(scalator_).prop<Scale>().set(
+        getTransformation(scalator_).prop<Scale>().set(
             (direction.isVertical())
                 ? vector2df{board2SceneFactor().y / board2SceneFactor().x,
                             board2SceneFactor().x / board2SceneFactor().y}
                 : vector2df{1.0F, 1.0F});
 
-        render_scene_node_->getTransformation(move_out_).prop<Position>() =
-            -tileCenter;
+        getTransformation(move_out_).prop<Position>() = -tileCenter;
     }
 }
 

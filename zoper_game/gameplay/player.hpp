@@ -45,7 +45,7 @@ private:
     htps::size_type move_out_;
     void launchAnimationBack(const htps::vector2df &toWhere);
     htps::sptr<haf::scene::AnimationComponent> animation_component_;
-    htps::sptr<haf::scene::RenderizableSceneNode> render_scene_node_;
+//    htps::sptr<haf::scene::RenderizableSceneNode> render_scene_node_;
 };
 } // namespace zoper
 
