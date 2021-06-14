@@ -16,6 +16,7 @@
 #include <haf/include/scene_components/scenemetrics.hpp>
 #include <haf/include/render/renderizables.hpp>
 #include <haf/include/render/renderizable_builder.hpp>
+#include <haf/include/scene/renderizables_scenenode.hpp>
 
 using namespace htps;
 using namespace haf;
@@ -27,8 +28,7 @@ namespace zoper
 constexpr u32 PointsPerQuad = 6U;
 
 MenuScene::MenuScene() : BaseClass{StaticTypeName}
-{
-}
+{}
 
 MenuScene::~MenuScene() = default;
 
@@ -42,8 +42,7 @@ void MenuScene::onCreated()
     BaseClass::onCreated();
 
     // Set the default view for this scene
-    systemInterface<ISceneMetrics>()
-            .setViewRect(DefaultView);
+    systemInterface<ISceneMetrics>().setViewRect(DefaultView);
 
     // Load the necessary resources
     auto& resources_configurator =
@@ -52,18 +51,20 @@ void MenuScene::onCreated()
     resources_configurator.setResourcesDirectory("resources/");
     resources_configurator.loadSection("menu");
 
-//    auto renderizable_builder = createRenderizables().renderizableBuilder();
-//    createStandardBackground(renderizable_builder);
-/*
+    auto renderizable_builder =
+        createSceneNode<RenderizablesSceneNode>("main_menu_background")
+            ->createRenderizables()
+            .renderizableBuilder();
+    createStandardBackground(renderizable_builder);
+
     auto logo =
-        renderizables().renderizableBuilder()
-            .name("mainLogo")
+        renderizable_builder.name("mainLogo")
             .figType(FigType_t::Quad)
             .box(Rectf32{500.f, 150.f, 1000.f, 500.f})
             .texture(systemInterface<res::IResourceRetriever>().getTexture(
                 MainMenuResources::LogoId))
             .create();
-*/
+
     auto mainMenu(createSceneNode<MainMenu>(MainMenu::ClassName));
 
     mainMenu->MenuFinished.connect([this](const s32 status) {
