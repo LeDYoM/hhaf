@@ -15,11 +15,16 @@ class BoardManager;
 namespace zoper
 {
 
-class GameBaseTile : public haf::board::ITile, public haf::scene::SceneNode
+class GameBaseTile : public haf::board::ITile,
+                     public haf::scene::RenderizableSceneNode
 {
-public:
+
+    using BaseClass = haf::scene::RenderizableSceneNode;
+
+protected:
     using TileBase = haf::board::ITile;
 
+public:
     GameBaseTile(htps::rptr<haf::scene::SceneNode> const parent,
                  htps::str name);
     ~GameBaseTile() override;
@@ -33,7 +38,7 @@ public:
     void tileAdded(const htps::vector2dst& /* position */) override;
 
     void tileMoved(const htps::vector2dst& /* source */,
-                           const htps::vector2dst& /* dest */) override;
+                   const htps::vector2dst& /* dest */) override;
 
     htps::sptr<haf::board::BoardManager> getBoardManager();
     htps::sptr<haf::board::BoardManager const> const getBoardManager() const;
@@ -47,7 +52,6 @@ protected:
     htps::vector2df board2Scene(const htps::vector2dst& bPosition) const;
     htps::vector2df tileSize() const;
 
-    htps::sptr<haf::scene::Renderizable> node_;
 private:
     bool is_in_center{false};
 };

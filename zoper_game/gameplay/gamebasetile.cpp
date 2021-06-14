@@ -12,7 +12,7 @@ using namespace htps;
 namespace zoper
 {
 GameBaseTile::GameBaseTile(rptr<SceneNode> const parent, str name) :
-    ITile{}, SceneNode{parent, std::move(name)}
+    ITile{}, BaseClass{parent, std::move(name)}
 {}
 
 GameBaseTile::~GameBaseTile() = default;
@@ -54,9 +54,9 @@ void GameBaseTile::tileChanged(const vector2dst& /*position */,
                                const BoardTileData /* oldValue */,
                                const BoardTileData /* newValue */)
 {
-    if (node_)
+    if (node())
     {
-        node_->color = getColorForToken();
+        node()->color = getColorForToken();
     }
 }
 

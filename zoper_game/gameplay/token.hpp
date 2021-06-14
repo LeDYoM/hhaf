@@ -18,9 +18,8 @@ namespace zoper
  */
 class Token : public GameBaseTile
 {
-public:
     using BaseClass = GameBaseTile;
-
+public:
     Token(htps::rptr<haf::scene::SceneNode> parent, htps::str name);
     ~Token() override;
 

@@ -28,12 +28,12 @@ Player::Player(rptr<SceneNode> parent, str name) :
                                       .name("player_render_scene_node")
                                       .figType(FigType_t::Shape)
                                       .pointCount(3U));
-    node_     = render_scene_node_->node();
+    node()     = render_scene_node_->node();
     move_in_  = render_scene_node_->addTransformation();
     rotator_  = render_scene_node_->addTransformation();
     scalator_ = render_scene_node_->addTransformation();
     move_out_ = render_scene_node_->addTransformation();
-    node_->box.set(rectFromSize(board2Scene({1, 1})));
+    node()->box.set(rectFromSize(board2Scene({1, 1})));
 }
 
 Player::~Player() = default;
@@ -126,7 +126,7 @@ void Player::launchAnimationBack(const vector2df& toWhere)
 void Player::tileAdded(const vector2dst& position_)
 {
     DisplayLog::info("TokenPlayer appeared at ", position_);
-    node_->color.set(getColorForToken());
+    node()->color.set(getColorForToken());
 
     // Set the position in the scene depending on the board position
     boardPosition.set(position_);

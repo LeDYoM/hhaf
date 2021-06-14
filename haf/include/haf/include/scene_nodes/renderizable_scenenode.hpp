@@ -11,9 +11,9 @@ class Renderizable;
 
 class RenderizableSceneNode : public SceneNode
 {
-public:
     using BaseClass = SceneNode;
 
+public:
     RenderizableSceneNode(htps::rptr<SceneNode> parent, const htps::str& name);
     void buildNode(RenderizableBuilder& node_builder);
 
