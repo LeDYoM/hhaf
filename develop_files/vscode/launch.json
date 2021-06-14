@@ -32,10 +32,8 @@
             "program": "${command:cmake.launchTargetPath}",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${command:cmake.buildDirectory}/bin",
-//            "cwd": "${command:cmake.buildDirectory}/bin/${command:cmake.buildType}",
+            "cwd": "${command:cmake.launchTargetDirectory}",
             "environment": [],
-            "externalConsole": false
         }
     ]
 }

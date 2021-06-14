@@ -18,6 +18,33 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
+set(_REPO_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
+# First for the generic no-config case (e.g. with mingw, Ninja, Makefiles...)
+if(DEFINED CMAKE_BUILD_TYPE)
+  message("Mono-config generator. Config type: " ${CMAKE_BUILD_TYPE})
+  message("Output directory " ${_REPO_OUTPUT_DIRECTORY}/${CMAKE_BUILD_TYPE})
+  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY
+      ${_REPO_OUTPUT_DIRECTORY}/${CMAKE_BUILD_TYPE})
+  set(CMAKE_LIBRARY_OUTPUT_DIRECTORY
+      ${_REPO_OUTPUT_DIRECTORY}/${CMAKE_BUILD_TYPE})
+  set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY
+      ${_REPO_OUTPUT_DIRECTORY}/${CMAKE_BUILD_TYPE})
+endif()
+
+# Second, for multi-config builds (e.g. msvc)
+foreach(OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES})
+  message("For config " ${OUTPUTCONFIG} " we have "
+          ${_REPO_OUTPUT_DIRECTORY}/${OUTPUTCONFIG})
+  string(TOUPPER ${OUTPUTCONFIG} OUTPUTCONFIG)
+  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_${OUTPUTCONFIG}
+      ${_REPO_OUTPUT_DIRECTORY}/${OUTPUTCONFIG})
+  set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_${OUTPUTCONFIG}
+      ${_REPO_OUTPUT_DIRECTORY}/${OUTPUTCONFIG})
+  set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_${OUTPUTCONFIG}
+      ${_REPO_OUTPUT_DIRECTORY}/${OUTPUTCONFIG})
+endforeach()
+
 # Create interface library to add loggger and types with memory management
 # in one line.
 add_library(log_and_types INTERFACE)
