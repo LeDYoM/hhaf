@@ -32,6 +32,8 @@
 #include <haf/include/system/interfaceaccess.hpp>
 #include <htypes/include/serializer.hpp>
 #include <haf/include/filesystem/fileserializer.hpp>
+#include <haf/include/render/renderizables.hpp>
+#include <haf/include/render/renderizable_builder.hpp>
 
 using namespace htps;
 using namespace haf;

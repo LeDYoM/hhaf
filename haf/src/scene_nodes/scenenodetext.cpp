@@ -1,4 +1,6 @@
 #include <haf/include/scene_nodes/scenenodetext.hpp>
+#include <haf/include/render/renderizables.hpp>
+
 #include "resources/font_utils.hpp"
 
 #include <haf/include/resources/ifont.hpp>

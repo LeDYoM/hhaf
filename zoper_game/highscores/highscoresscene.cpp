@@ -12,6 +12,8 @@
 #include <haf/include/scene_components/scenecontrol.hpp>
 #include <haf/include/resources/iresourceconfigurator.hpp>
 #include <haf/include/system/interfaceaccess.hpp>
+#include <haf/include/render/renderizables.hpp>
+#include <haf/include/render/renderizable_builder.hpp>
 
 namespace zoper
 {

@@ -1,5 +1,6 @@
 #include "boardtilescenenode.hpp"
 #include <hlog/include/hlog.hpp>
+#include <haf/include/render/renderizables.hpp>
 
 using namespace htps;
 

@@ -14,6 +14,8 @@
 #include <haf/include/resources/iresourceconfigurator.hpp>
 #include <haf/include/system/interfaceaccess.hpp>
 #include <haf/include/scene_components/scenemetrics.hpp>
+#include <haf/include/render/renderizables.hpp>
+#include <haf/include/render/renderizable_builder.hpp>
 
 using namespace htps;
 using namespace haf;

@@ -4,6 +4,7 @@
 #include <hlog/include/hlog.hpp>
 #include <haf/include/render/renderizable.hpp>
 #include <haf/include/scene/scenenode.hpp>
+#include <haf/include/render/renderizables.hpp>
 
 namespace zoper
 {

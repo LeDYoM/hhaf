@@ -4,6 +4,7 @@
 
 #include <haf/include/scene/scene.hpp>
 #include <haf/include/system/isystemprovider.hpp>
+#include <haf/include/render/renderizables.hpp>
 
 #include <hlog/include/hlog.hpp>
 

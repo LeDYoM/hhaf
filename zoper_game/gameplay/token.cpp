@@ -5,6 +5,8 @@
 #include "gamescene.hpp"
 #include "levelproperties.hpp"
 #include "tokenzones.hpp"
+#include <haf/include/render/renderizables.hpp>
+#include <haf/include/render/renderizable_builder.hpp>
 
 using namespace htps;
 using namespace haf;

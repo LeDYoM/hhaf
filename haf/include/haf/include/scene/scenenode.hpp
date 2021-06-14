@@ -8,7 +8,6 @@
 #include <haf/include/scene/scenenodeparent.hpp>
 #include <haf/include/scene/scenenode_properties.hpp>
 #include <haf/include/scene/scenenodes.hpp>
-#include <haf/include/render/renderizables.hpp>
 #include <haf/include/scene/transformable.hpp>
 #include <haf/include/scene/hasname.hpp>
 #include <haf/include/scene/componentcontainer.hpp>
@@ -16,12 +15,12 @@
 #include <haf/include/system/interface_getter.hpp>
 #include <haf/include/system/datawrappercreator.hpp>
 #include <haf/include/system/systemaccess.hpp>
-#include <haf/include/render/renderizable_builder.hpp>
 
 #include <htypes/include/p_impl_pointer.hpp>
 
 namespace haf::scene
 {
+class Renderizables;
 /**
  * @brief Main class representing all SceneNodes from a @b Scene.
  * This class serves as main entry point in the hierarchy of the scene.

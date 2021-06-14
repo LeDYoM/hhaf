@@ -2,6 +2,8 @@
 #include "scenemanager.hpp"
 #include "system/get_system.hpp"
 
+#include <haf/include/render/renderizables.hpp>
+
 using namespace htps;
 
 namespace haf::scene
