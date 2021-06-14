@@ -20,7 +20,6 @@
 
 namespace haf::scene
 {
-class Renderizables;
 /**
  * @brief Main class representing all SceneNodes from a @b Scene.
  * This class serves as main entry point in the hierarchy of the scene.
@@ -89,11 +88,6 @@ public:
      * @brief Clear all elements in this scene node
      */
     void clearAll();
-
-    Renderizables& createRenderizables();
-    Renderizables& renderizables();
-    Renderizables const& renderizables() const;
-    bool containsRenderizables() const noexcept;
 
 private:
     struct SceneNodePrivate;

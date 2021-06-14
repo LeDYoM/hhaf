@@ -78,6 +78,7 @@ set(sources
   ${src_dir}/scene/componentcontainer.cpp
   ${src_dir}/scene/interface_getter.cpp
   ${src_dir}/scene/matrix4x4.cpp
+  ${src_dir}/scene/renderizables_scenenode.cpp
   ${src_dir}/scene/scenecontroller.cpp
   ${src_dir}/scene/scenecontroller.hpp
   ${src_dir}/scene/scenemanager.cpp
@@ -198,6 +199,7 @@ set(headers
   ${inc_dir}/scene/hasname.hpp
   ${inc_dir}/scene/icomponent.hpp
   ${inc_dir}/scene/matrix4x4.hpp
+  ${inc_dir}/scene/renderizables_scenenode.hpp
   ${inc_dir}/scene/scene.hpp
   ${inc_dir}/scene/scenenode_cast.hpp
   ${inc_dir}/scene/scenenode_properties.hpp

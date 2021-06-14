@@ -3,6 +3,7 @@
 #include "system/systemprovider.hpp"
 
 #include <haf/include/scene/scene.hpp>
+#include <haf/include/scene/renderizables_scenenode.hpp>
 #include <haf/include/system/isystemprovider.hpp>
 #include <haf/include/render/renderizables.hpp>
 
@@ -101,9 +102,9 @@ void SceneController::render(SceneNode& scene_node,
                                 : Matrix4x4::Identity);
 
         // Update the renderizables added to this node
-        if (scene_node.containsRenderizables())
+        if (auto* renderizable_scene_node = dynamic_cast<RenderizablesSceneNode*>(&scene_node))
         {
-            scene_node.renderizables().updateRenderizables();
+            renderizable_scene_node->renderizables().updateRenderizables();
         }
 
         // Render the nodes added to this node

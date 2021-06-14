@@ -52,9 +52,9 @@ void MenuScene::onCreated()
     resources_configurator.setResourcesDirectory("resources/");
     resources_configurator.loadSection("menu");
 
-    auto renderizable_builder = createRenderizables().renderizableBuilder();
-    createStandardBackground(renderizable_builder);
-
+//    auto renderizable_builder = createRenderizables().renderizableBuilder();
+//    createStandardBackground(renderizable_builder);
+/*
     auto logo =
         renderizables().renderizableBuilder()
             .name("mainLogo")
@@ -63,7 +63,7 @@ void MenuScene::onCreated()
             .texture(systemInterface<res::IResourceRetriever>().getTexture(
                 MainMenuResources::LogoId))
             .create();
-
+*/
     auto mainMenu(createSceneNode<MainMenu>(MainMenu::ClassName));
 
     mainMenu->MenuFinished.connect([this](const s32 status) {

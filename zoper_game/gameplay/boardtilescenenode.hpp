@@ -7,25 +7,27 @@
 #include <haf/include/scene_nodes/scene_node_size.hpp>
 #include <haf/include/scene/color.hpp>
 #include <haf/include/render/renderizable.hpp>
+#include <haf/include/scene/renderizables_scenenode.hpp>
 #include <haf/include/scene_nodes/renderizable_scenenode.hpp>
 #include <haf/include/scene_nodes/scene_node_size.hpp>
 #include "boardtilescenenode_properties.hpp"
 
 namespace zoper
 {
-class BoardTileSceneNode : public haf::scene::SceneNode,
+class BoardTileSceneNode : public haf::scene::RenderizablesSceneNode,
                            public haf::scene::SceneNodeSizeProperties,
                            public BoardTileSceneNodeProperties
 {
+    using BaseClass = haf::scene::RenderizablesSceneNode;
+
 public:
-    using BaseClass = haf::scene::SceneNode;
     using haf::scene::SceneNodeSizeProperties::prop;
     using BoardTileSceneNodeProperties::prop;
 
     /**
      * @brief Inherit SceneNode constructors.
      */
-    using haf::scene::SceneNode::SceneNode;
+    using BaseClass::BaseClass;
 
     /**
      * @brief Destroy the Board Tile Scene Node object

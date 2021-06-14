@@ -3,15 +3,15 @@
 
 #include <htypes/include/types.hpp>
 #include <haf/include/render/renderizable_builder.hpp>
-#include <haf/include/scene/scenenode.hpp>
+#include <haf/include/scene/renderizables_scenenode.hpp>
 
 namespace haf::scene
 {
 class Renderizable;
 
-class RenderizableSceneNode : public SceneNode
+class RenderizableSceneNode : public RenderizablesSceneNode
 {
-    using BaseClass = SceneNode;
+    using BaseClass = RenderizablesSceneNode;
 
 public:
     RenderizableSceneNode(htps::rptr<SceneNode> parent, const htps::str& name);

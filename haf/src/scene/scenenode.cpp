@@ -2,8 +2,6 @@
 #include "scenemanager.hpp"
 #include "system/get_system.hpp"
 
-#include <haf/include/render/renderizables.hpp>
-
 using namespace htps;
 
 namespace haf::scene
@@ -11,8 +9,6 @@ namespace haf::scene
 struct SceneNode::SceneNodePrivate
 {
     SceneNodePrivate() = default;
-
-    uptr<Renderizables> renderizables;
 };
 
 SceneNode::SceneNode(rptr<SceneNode> parent, str name) :
@@ -35,43 +31,6 @@ void SceneNode::clearAll()
 {
     clearSceneNodes();
     clearComponents();
-}
-
-Renderizables& SceneNode::createRenderizables()
-{
-    LogAsserter::log_assert(
-        !containsRenderizables(),
-        "createRenderizables already invoked for this object");
-
-    if (p_->renderizables == nullptr)
-    {
-        p_->renderizables = muptr<Renderizables>(this);
-    }
-
-    return renderizables();
-}
-
-Renderizables& SceneNode::renderizables()
-{
-    LogAsserter::log_assert(
-        containsRenderizables(),
-        "createRenderizables is not invoked for this object");
-
-    return *(p_->renderizables);
-}
-
-Renderizables const& SceneNode::renderizables() const
-{
-    LogAsserter::log_assert(
-        containsRenderizables(),
-        "createRenderizables is not invoked for this object");
-
-    return *(p_->renderizables);
-}
-
-bool SceneNode::containsRenderizables() const noexcept
-{
-    return p_->renderizables != nullptr;
 }
 
 }  // namespace haf::scene

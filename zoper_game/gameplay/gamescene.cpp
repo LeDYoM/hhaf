@@ -55,7 +55,7 @@ struct GameScene::GameScenePrivate
                                     const vector2df& lastTokenPosition)
     {
         auto sceneNode =
-            main_node.createSceneNode("pointIncrementScore_SceneNode");
+            main_node.createSceneNode<RenderizablesSceneNode>("pointIncrementScore_SceneNode");
 
         auto node = sceneNode->createRenderizables()
                         .renderizableBuilder()
