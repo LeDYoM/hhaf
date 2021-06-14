@@ -30,7 +30,6 @@ namespace haf::scene
 class HAF_API SceneNode : public sys::HasName,
                           public SceneNodeParent,
                           public SceneNodes,
-                          private Renderizables,
                           public Transformable,
                           public sys::DataWrapperCreator,
                           public ComponentContainer,
