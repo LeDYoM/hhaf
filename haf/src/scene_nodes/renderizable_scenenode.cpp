@@ -24,6 +24,7 @@ htps::sptr<Renderizable> RenderizableSceneNode::node() noexcept
 {
     return node_;
 }
+
 const htps::sptr<Renderizable> RenderizableSceneNode::node() const noexcept
 {
     return node_;

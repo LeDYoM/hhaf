@@ -35,7 +35,7 @@ Token::~Token() = default;
 
 void Token::setBoxBoundaries(const Rectf32& box)
 {
-    node_->box = box;
+    node()->box = box;
 }
 
 bool Token::canBeMoved(htps::vector2dst const&) const
@@ -55,7 +55,7 @@ void Token::tileAdded(const vector2dst& position_)
     DisplayLog::info("Token ", name(), " appeared at ", position_);
 
     auto const AppearTokenTime = time::TimePoint_as_miliseconds(1000U);
-    auto const nodeBox{node_->box().size() / 2.0F};
+    auto const nodeBox{node()->box().size() / 2.0F};
 
     auto newTransformationPosition = addTransformation();
     auto newTransformationScale    = addTransformation();
