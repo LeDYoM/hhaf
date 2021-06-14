@@ -55,18 +55,6 @@ public:
     Matrix4x4 const& localTransform() const noexcept;
 
     /**
-     * @brief Export @b Transformable::rotateAround
-     * @see Transformable
-     */
-    using Transformation::rotateAround;
-
-    /**
-     * @brief Export @b Transformable::scaleAround
-     * @see Transformable
-     */
-    using Transformation::scaleAround;
-
-    /**
      * @brief Add a new @b Transformation to the extra transformations of the
      * object.
      * @return htps::size_type Index to refer to new added @b Transformation
