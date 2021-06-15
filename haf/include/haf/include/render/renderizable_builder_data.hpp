@@ -12,7 +12,7 @@ namespace haf::scene
 {
 class Renderizables;
 class Renderizable;
-class RenderizableModifierContext;
+struct RenderizableModifierContext;
 enum class FigType_t : htps::u8;
 }  // namespace haf::scene
 
