@@ -30,11 +30,12 @@ function(set_cxx_standard CURRENT_TARGET)
 endfunction()
 
 function(set_output_directories CURRENT_TARGET)
-  set_target_properties(${CURRENT_TARGET}
-    PROPERTIES
-      ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
-      LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
-      RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+  # Check if needed for packge generation
+#  set_target_properties(${CURRENT_TARGET}
+#    PROPERTIES
+#      ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+#      LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+#      RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 endfunction()
 
 function (set_compile_warning_level CURRENT_TARGET level)
