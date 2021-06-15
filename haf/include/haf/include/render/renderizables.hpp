@@ -42,7 +42,7 @@ public:
         htps::sptr<res::IShader> shader,
         htps::size_type num_points);
 
-    RenderizableBuilder renderizableBuilder();
+    render::RenderizableBuilder renderizableBuilder();
 
     void removeRenderizable(const htps::sptr<Renderizable>& element);
     void clearRenderizables();

@@ -11,9 +11,10 @@ namespace zoper
 using namespace htps;
 using namespace haf;
 using namespace haf::scene;
+using namespace haf::render;
 
 void createStandardBackground(
-    haf::scene::RenderizableBuilder& renderizable_builder)
+    RenderizableBuilder& renderizable_builder)
 {
     auto background =
         renderizable_builder.name("background")

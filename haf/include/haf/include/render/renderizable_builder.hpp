@@ -23,7 +23,7 @@ class IShader;
 class ITexture;
 }  // namespace haf::res
 
-namespace haf::scene
+namespace haf::render
 {
 /**
  * @brief Class to help the building of @b Renderizable objects
@@ -35,23 +35,23 @@ class RenderizableBuilder
 public:
     
     explicit RenderizableBuilder(
-        htps::rptr<Renderizables> renderizables) noexcept;
+        htps::rptr<scene::Renderizables> renderizables) noexcept;
 
-    htps::sptr<Renderizable> create();
+    htps::sptr<scene::Renderizable> create();
 
     RenderizableBuilder& name(htps::str _name);
-    RenderizableBuilder& figType(FigType_t fig_type);
+    RenderizableBuilder& figType(scene::FigType_t fig_type);
     RenderizableBuilder& box(htps::Rectf32 _box);
-    RenderizableBuilder& color(Color _color);
+    RenderizableBuilder& color(scene::Color _color);
     RenderizableBuilder& pointCount(htps::size_type point_count);
     RenderizableBuilder& shader(htps::sptr<res::IShader> _shader);
     RenderizableBuilder& texture(htps::sptr<res::ITexture> _texture);
     RenderizableBuilder& colorModifier(
-        htps::function<Color(const RenderizableModifierContext&)>
+        htps::function<scene::Color(const scene::RenderizableModifierContext&)>
             color_modifier);
 
 private:
-    render::RenderizableBuilderData data_;
+    RenderizableBuilderData data_;
 };
 }  // namespace haf::scene
 

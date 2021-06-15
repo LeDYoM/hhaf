@@ -3,17 +3,17 @@
 
 #include <utility>
 
-namespace haf::scene
+namespace haf::render
 {
 
 RenderizableBuilder::RenderizableBuilder(
-    htps::rptr<Renderizables> renderizables) noexcept :
+    htps::rptr<scene::Renderizables> renderizables) noexcept :
     data_{render::RenderizableBuilderData{std::move(renderizables),
                                           {},
-                                          FigType_t::Shape}}
+                                          scene::FigType_t::Shape}}
 {}
 
-htps::sptr<Renderizable> RenderizableBuilder::create()
+htps::sptr<scene::Renderizable> RenderizableBuilder::create()
 {
     return data_.renderizables_->createRenderizable(
         data_.name_, data_.figType_, data_.box_, data_.color_, data_.texture_,
@@ -26,7 +26,7 @@ RenderizableBuilder& RenderizableBuilder::name(htps::str _name)
     return *this;
 }
 
-RenderizableBuilder& RenderizableBuilder::figType(FigType_t fig_type)
+RenderizableBuilder& RenderizableBuilder::figType(scene::FigType_t fig_type)
 {
     data_.figType_ = std::move(fig_type);
     return *this;
@@ -38,7 +38,7 @@ RenderizableBuilder& RenderizableBuilder::box(htps::Rectf32 _box)
     return *this;
 }
 
-RenderizableBuilder& RenderizableBuilder::color(Color _color)
+RenderizableBuilder& RenderizableBuilder::color(scene::Color _color)
 {
     data_.color_ = std::move(_color);
     return *this;
@@ -66,7 +66,7 @@ RenderizableBuilder& RenderizableBuilder::texture(
 }
 
 RenderizableBuilder& RenderizableBuilder::colorModifier(
-    htps::function<Color(const RenderizableModifierContext&)> color_modifier)
+    htps::function<scene::Color(const scene::RenderizableModifierContext&)> color_modifier)
 {
     data_.color_modifier_ = std::move(color_modifier);
     return *this;

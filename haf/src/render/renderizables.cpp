@@ -30,9 +30,9 @@ sptr<Renderizable> Renderizables::createRenderizable(
     return result;
 }
 
-RenderizableBuilder Renderizables::renderizableBuilder()
+render::RenderizableBuilder Renderizables::renderizableBuilder()
 {
-    return RenderizableBuilder{this};
+    return render::RenderizableBuilder{this};
 }
 
 void Renderizables::updateRenderizables()
