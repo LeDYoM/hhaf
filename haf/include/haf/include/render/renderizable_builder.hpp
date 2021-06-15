@@ -50,8 +50,6 @@ public:
         htps::function<Color(const RenderizableModifierContext&)>
             color_modifier);
 
-    const render::RenderizableBuilderData& data() const { return data_; }
-
 private:
     render::RenderizableBuilderData data_;
 };
