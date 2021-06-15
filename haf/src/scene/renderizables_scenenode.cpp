@@ -26,12 +26,12 @@ RenderizablesSceneNode::RenderizablesSceneNode(rptr<SceneNode> parent,
 
 RenderizablesSceneNode::~RenderizablesSceneNode() = default;
 
-Renderizables& RenderizablesSceneNode::renderizables()
+Renderizables& RenderizablesSceneNode::renderizables() noexcept
 {
     return *(p_->renderizables);
 }
 
-Renderizables const& RenderizablesSceneNode::renderizables() const
+Renderizables const& RenderizablesSceneNode::renderizables() const noexcept
 {
     return *(p_->renderizables);
 }

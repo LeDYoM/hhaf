@@ -21,10 +21,10 @@ public:
     using SceneNodeProperties::prop;
     using TransformationProperties::prop;
 
-    ~RenderizablesSceneNode();
+    ~RenderizablesSceneNode() override;
 
-    Renderizables& renderizables();
-    Renderizables const& renderizables() const;
+    Renderizables& renderizables() noexcept;
+    Renderizables const& renderizables() const noexcept;
 
 private:
     struct RenderizablesSceneNodePrivate;

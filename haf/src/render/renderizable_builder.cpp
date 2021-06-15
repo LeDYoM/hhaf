@@ -1,6 +1,8 @@
 #include <haf/include/render/renderizable_builder.hpp>
 #include <haf/include/render/renderizables.hpp>
 
+#include <utility>
+
 namespace haf::scene
 {
 
@@ -30,7 +32,7 @@ RenderizableBuilder& RenderizableBuilder::figType(FigType_t fig_type)
 
 RenderizableBuilder& RenderizableBuilder::box(htps::Rectf32 _box)
 {
-    data_.box_ = _box;
+    data_.box_ = std::move(_box);
     return *this;
 }
 
