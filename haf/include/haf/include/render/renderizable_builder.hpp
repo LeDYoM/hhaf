@@ -25,10 +25,17 @@ class ITexture;
 
 namespace haf::scene
 {
+/**
+ * @brief Class to help the building of @b Renderizable objects
+ * This class implements the builder pattern to facilitate the
+ * building of new renderizable objects
+ */
 class RenderizableBuilder
 {
 public:
-    RenderizableBuilder(htps::rptr<Renderizables> renderizables) noexcept;
+    
+    explicit RenderizableBuilder(
+        htps::rptr<Renderizables> renderizables) noexcept;
 
     htps::sptr<Renderizable> create();
 

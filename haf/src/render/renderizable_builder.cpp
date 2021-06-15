@@ -8,7 +8,9 @@ namespace haf::scene
 
 RenderizableBuilder::RenderizableBuilder(
     htps::rptr<Renderizables> renderizables) noexcept :
-    data_{render::RenderizableBuilderData{std::move(renderizables), {}, FigType_t::Shape} }
+    data_{render::RenderizableBuilderData{std::move(renderizables),
+                                          {},
+                                          FigType_t::Shape}}
 {}
 
 htps::sptr<Renderizable> RenderizableBuilder::create()
