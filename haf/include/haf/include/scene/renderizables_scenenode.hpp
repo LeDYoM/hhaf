@@ -23,10 +23,8 @@ public:
 
     ~RenderizablesSceneNode();
 
-    Renderizables& createRenderizables();
     Renderizables& renderizables();
     Renderizables const& renderizables() const;
-    bool containsRenderizables() const noexcept;
 
 private:
     struct RenderizablesSceneNodePrivate;

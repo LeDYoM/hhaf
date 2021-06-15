@@ -51,8 +51,7 @@ void HighScoresScene::onCreated()
 
     auto renderizable_builder = createSceneNode<RenderizablesSceneNode>(
                                 "high_scores_main_menu_background")
-                                ->createRenderizables()
-                                .renderizableBuilder();
+                                ->renderizables().renderizableBuilder();
 
     createStandardBackground(renderizable_builder);
 

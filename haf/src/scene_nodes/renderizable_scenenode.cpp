@@ -12,7 +12,6 @@ RenderizableSceneNode::RenderizableSceneNode(htps::rptr<SceneNode> parent,
                                              const htps::str& name) :
     BaseClass{std::move(parent), name}, node_{}
 {
-    createRenderizables();
 }
 
 void RenderizableSceneNode::buildNode(RenderizableBuilder& node_builder)

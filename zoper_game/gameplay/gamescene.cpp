@@ -54,11 +54,10 @@ struct GameScene::GameScenePrivate
     void createScoreIncrementPoints(SceneNode& main_node,
                                     const vector2df& lastTokenPosition)
     {
-        auto sceneNode =
+        auto renderizableSceneNode =
             main_node.createSceneNode<RenderizablesSceneNode>("pointIncrementScore_SceneNode");
 
-        auto node = sceneNode->createRenderizables()
-                        .renderizableBuilder()
+        auto node = renderizableSceneNode->renderizables().renderizableBuilder()
                         .name("pointIncrementScore")
                         .figType(FigType_t::Shape)
                         .box(rectFromSize(15.0F, 15.0F))
@@ -72,11 +71,11 @@ struct GameScene::GameScenePrivate
             DisplayLog::info("Creating animation for points to score");
             scene_animation_component_->addPropertyAnimation(
                 time::TimePoint_as_miliseconds(MillisAnimationPointsToScore),
-                sceneNode->prop<haf::scene::Position>(), lastTokenPosition,
+                renderizableSceneNode->prop<haf::scene::Position>(), lastTokenPosition,
                 EndPositionPointsToScore,
-                Animation::AnimationDirection::Forward, [this, sceneNode]() {
-                    sceneNode->parentAs<SceneNode>()->removeSceneNode(
-                        sceneNode);
+                Animation::AnimationDirection::Forward, [this, renderizableSceneNode]() {
+                    renderizableSceneNode->parentAs<SceneNode>()->removeSceneNode(
+                        renderizableSceneNode);
                 });
         }
     }
