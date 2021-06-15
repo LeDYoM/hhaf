@@ -7,13 +7,13 @@
 #include <htypes/include/function.hpp>
 
 #include <haf/include/scene/color.hpp>
-#include <haf/include/render/renderizable_modifier_context.hpp>
 #include <haf/include/render/renderizable_builder_data.hpp>
 
 namespace haf::scene
 {
 class Renderizables;
 class Renderizable;
+class RenderizableModifierContext;
 enum class FigType_t : htps::u8;
 }  // namespace haf::scene
 
