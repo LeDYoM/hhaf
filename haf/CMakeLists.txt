@@ -177,6 +177,7 @@ set(headers
   ${inc_dir}/render/geometry_math.hpp
   ${inc_dir}/render/primitivetype.hpp
   ${inc_dir}/render/renderdata.hpp
+  ${inc_dir}/render/renderizable_builder_data.hpp
   ${inc_dir}/render/renderizable_builder.hpp
   ${inc_dir}/render/renderizable_modifier_context.hpp
   ${inc_dir}/render/renderizable.hpp

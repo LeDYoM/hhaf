@@ -8,6 +8,7 @@
 
 #include <haf/include/scene/color.hpp>
 #include <haf/include/render/renderizable_modifier_context.hpp>
+#include <haf/include/render/renderizable_builder_data.hpp>
 
 namespace haf::scene
 {
@@ -42,24 +43,10 @@ public:
         htps::function<Color(const RenderizableModifierContext&)>
             color_modifier);
 
-    struct Data
-    {
-        htps::rptr<Renderizables> renderizables_;
-        htps::str name_;
-        FigType_t figType_;
-        htps::Rectf32 box_{};
-        Color color_{colors::White};
-        htps::size_type pointCount_{4U};
-        htps::sptr<res::IShader> shader_{nullptr};
-        htps::sptr<res::ITexture> texture_{nullptr};
-        htps::function<Color(const RenderizableModifierContext&)>
-            color_modifier_{};
-    };
-
-    const Data& data() const { return data_; }
+    const render::RenderizableBuilderData& data() const { return data_; }
 
 private:
-    RenderizableBuilder::Data data_;
+    render::RenderizableBuilderData data_;
 };
 }  // namespace haf::scene
 
