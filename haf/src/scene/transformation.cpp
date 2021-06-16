@@ -38,7 +38,7 @@ void Transformation::scaleAround(VectorScalar const point,
 void Transformation::updateTransform()
 {
     // Recompute the combined transform
-    auto const angle{-prop<Rotation>().get() * ToRadians<Scalar>};
+    auto const angle{-prop<Rotation>().get() * render::ToRadians<Scalar>};
     VectorScalar const sc{prop<Scale>().get() *
                           static_cast<Scalar>(std::cos(angle))};
     VectorScalar const ss{prop<Scale>().get() *

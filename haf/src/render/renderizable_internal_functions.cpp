@@ -2,7 +2,6 @@
 #include <haf/include/render/geometry_math.hpp>
 
 using namespace htps;
-using namespace haf::scene;
 
 namespace haf::render
 {
@@ -72,7 +71,7 @@ vector2df normalizeInBox(const vector2df& position,
 void updateColorForVertex(Renderizable::RenderizableInternalData const& data,
                           BasicVertexArray::value_type& vertex)
 {
-    Color dest_color{data.color};
+    scene::Color dest_color{data.color};
     if (data.color_modifier)
     {
         RenderizableModifierContext context{

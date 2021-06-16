@@ -8,7 +8,7 @@
 #include <haf/include/render/vertex.hpp>
 #include <haf/include/render/primitivetype.hpp>
 
-namespace haf::scene
+namespace haf::render
 {
 using BasicVertexArray = htps::vector<Vertex>;
 

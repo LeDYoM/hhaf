@@ -16,26 +16,26 @@ using namespace htps;
 namespace
 {
 const haf::backend::iVertex* to_backend(
-    const haf::scene::Vertex* vertices) noexcept
+    const haf::render::Vertex* vertices) noexcept
 {
     static_assert(
-        sizeof(haf::backend::iVertex) == sizeof(haf::scene::Vertex),
+        sizeof(haf::backend::iVertex) == sizeof(haf::render::Vertex),
         "The scene Vertex and the backend Vertex do not have the same size");
     return reinterpret_cast<const haf::backend::iVertex*>(vertices);
 }
 
 haf::backend::iPrimitiveType to_backend(
-    const haf::scene::PrimitiveType primitive_type) noexcept
+    const haf::render::PrimitiveType primitive_type) noexcept
 {
     static_assert(sizeof(haf::backend::iPrimitiveType) ==
-                      sizeof(haf::scene::PrimitiveType),
+                      sizeof(haf::render::PrimitiveType),
                   "The scene PrimitiveType and the backend PrimitiveType do "
                   "not have the same size");
     return static_cast<haf::backend::iPrimitiveType>(primitive_type);
 }
 
 void do_render(const rptr<haf::backend::IRenderTarget> irender_target_,
-               const haf::scene::RenderData& renderData)
+               const haf::render::RenderData& renderData)
 {
     haf::backend::IRenderData render_data{
         to_backend(renderData.vArray.verticesArray().cbegin()),
@@ -66,12 +66,14 @@ RenderTarget::RenderTarget(rptr<haf::backend::IRenderTarget> renderTarget) :
 
 RenderTarget::~RenderTarget() = default;
 
-void RenderTarget::render(rptr<const scene::RenderData> render_data_begin,
-                          rptr<const scene::RenderData> render_data_end)
+void RenderTarget::render(rptr<render::RenderData const> const render_data_begin,
+                          rptr<render::RenderData const> const render_data_end)
 {
-    while (render_data_begin != render_data_end)
+    auto render_data_begin_temp{render_data_begin};
+
+    while (render_data_begin_temp != render_data_end)
     {
-        do_render(irender_target_, *(render_data_begin++));
+        do_render(irender_target_, *(render_data_begin_temp++));
     }
 }
 

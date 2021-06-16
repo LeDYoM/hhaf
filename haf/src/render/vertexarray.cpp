@@ -1,8 +1,9 @@
 #include <haf/include/render/vertexarray.hpp>
 
 using namespace htps;
+using namespace haf::scene;
 
-namespace haf::scene
+namespace haf::render
 {
 
 VertexArray::VertexArray() noexcept = default;

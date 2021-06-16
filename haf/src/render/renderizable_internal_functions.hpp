@@ -25,7 +25,7 @@ htps::vector2dd getPositionFromAngleAndRadius(const FigType_t fig_type,
                                               const htps::f64 angle,
                                               const htps::vector2df& radius);
 
-htps::pair<scene::PrimitiveType, htps::size_type>
+htps::pair<PrimitiveType, htps::size_type>
 initDataVertexPerFigureAndNumPoints(const FigType_t fig_type,
                                     const htps::size_type num_points) noexcept;
 
@@ -38,20 +38,20 @@ htps::vector2df normalizeInBox(
 
 void updateColorForVertex(
     Renderizable::RenderizableInternalData const& data,
-    scene::BasicVertexArray::value_type& vertex);
+    BasicVertexArray::value_type& vertex);
 
-void updateColors(scene::BasicVertexArray& vertices,
+void updateColors(BasicVertexArray& vertices,
                   Renderizable::RenderizableInternalData const& data);
 
 void updateTextureCoordsAndColorForVertex(
-    const scene::BasicVertexArray::iterator v_iterator,
+    const BasicVertexArray::iterator v_iterator,
     Renderizable::RenderizableInternalData const& iData);
 
 void updateTextureCoordsAndColor(
-    scene::BasicVertexArray& vertices,
+    BasicVertexArray& vertices,
     Renderizable::RenderizableInternalData const& data);
 
-void updateGeometry(scene::BasicVertexArray& vertices,
+void updateGeometry(BasicVertexArray& vertices,
                     Renderizable::RenderizableInternalData const& data);
 }  // namespace haf::render
 

@@ -3,7 +3,7 @@
 
 #include <cmath>
 
-namespace haf::scene
+namespace haf::render
 {
 template <typename T>
 static constexpr T PiConstant = static_cast<T>(3.14159265358979323846);

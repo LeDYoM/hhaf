@@ -27,7 +27,7 @@ public:
     using SystemBase::SystemBase;
     void update();
 
-    void draw(const scene::RenderData& renderData);
+    void draw(const render::RenderData& renderData);
     void clear();
 
     void setRenderTarget(htps::sptr<RenderTarget> render_target);
@@ -35,7 +35,7 @@ public:
 
 private:
     htps::sptr<RenderTarget> render_target_;
-    htps::vector<scene::RenderData> render_data_container_;
+    htps::vector<render::RenderData> render_data_container_;
 };
 }  // namespace haf::sys
 

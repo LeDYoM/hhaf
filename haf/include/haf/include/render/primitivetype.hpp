@@ -3,7 +3,7 @@
 
 #include <htypes/include/types.hpp>
 
-namespace haf::scene
+namespace haf::render
 {
 enum class PrimitiveType : htps::u8
 {
@@ -15,6 +15,6 @@ enum class PrimitiveType : htps::u8
     TriangleFan
 };
 
-}  // namespace haf::scene
+}  // namespace haf::render
 
 #endif

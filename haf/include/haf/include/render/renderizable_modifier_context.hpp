@@ -13,7 +13,7 @@ struct RenderizableModifierContext
     const htps::Rectf32 box;
     const htps::Rects32 texture_rect;
     const htps::vector2du32 texture_size;
-    const scene::Vertex vertex;
+    const Vertex vertex;
     constexpr htps::vector2df normalizedVertexInBox() const
     {
         return (box.rightBottom() - vertex.position) / box.rightBottom();
