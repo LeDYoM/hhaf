@@ -5,6 +5,7 @@
 #include <haf/include/render/renderizables.hpp>
 
 using namespace htps;
+using namespace haf::render;
 
 namespace haf::scene
 {
@@ -31,7 +32,8 @@ Renderizables& RenderizablesSceneNode::renderizables() noexcept
     return *(p_->renderizables);
 }
 
-Renderizables const& RenderizablesSceneNode::renderizables() const noexcept
+Renderizables const& RenderizablesSceneNode::renderizables()
+    const noexcept
 {
     return *(p_->renderizables);
 }

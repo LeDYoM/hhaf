@@ -70,7 +70,7 @@ Renderizable::Renderizable(rptr<scene::SceneNode> parent,
                                         texture().get(),
                                         shader().get(),
                                         this)},
-    textureRect{render::textureFillQuad(_texture)},
+    textureRect{textureFillQuad(_texture)},
     texture{std::move(_texture)}
 {}
 
@@ -108,7 +108,7 @@ void Renderizable::setTextureAndTextureRect(sptr<res::ITexture> texture_,
 
 void Renderizable::setTextureFill(sptr<res::ITexture> texture_)
 {
-    setTextureAndTextureRect(texture_, render::textureFillQuad(texture_));
+    setTextureAndTextureRect(texture_, textureFillQuad(texture_));
 }
 
 void Renderizable::update()
@@ -117,7 +117,7 @@ void Renderizable::update()
 
     if (ps_readResetHasAnyChanged(box, figType, pointCount))
     {
-        render::updateGeometry(p_->vertices_.verticesArray(), mi_data);
+        updateGeometry(p_->vertices_.verticesArray(), mi_data);
         textureRect.resetHasChanged();
         color.resetHasChanged();
         color_modifier.resetHasChanged();
@@ -125,14 +125,14 @@ void Renderizable::update()
 
     if (ps_readResetHasAnyChanged(textureRect))
     {
-        render::updateTextureCoordsAndColor(p_->vertices_.verticesArray(), mi_data);
+        updateTextureCoordsAndColor(p_->vertices_.verticesArray(), mi_data);
         color.resetHasChanged();
         color_modifier.resetHasChanged();
     }
 
     if (ps_readResetHasAnyChanged(color, color_modifier))
     {
-        render::updateColors(p_->vertices_.verticesArray(), mi_data);
+        updateColors(p_->vertices_.verticesArray(), mi_data);
     }
 
     if (ps_readResetHasChanged(texture))

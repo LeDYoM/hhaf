@@ -11,7 +11,10 @@
 namespace haf::scene
 {
 class SceneNode;
+}
 
+namespace haf::render
+{
 class Renderizables
 {
 public:
@@ -19,7 +22,7 @@ public:
      * @brief Construct a new Renderizables object with a parent node
      * @param scene_node Node to be used as a parent
      */
-    explicit Renderizables(htps::rptr<SceneNode> scene_node) noexcept;
+    explicit Renderizables(htps::rptr<scene::SceneNode> scene_node) noexcept;
 
     /**
      * @brief Create a Renderizable object
@@ -33,25 +36,25 @@ public:
      * @param num_points Number of points of the Renderizable.
      * @return htps::sptr<Renderizable>
      */
-    htps::sptr<render::Renderizable> createRenderizable(
+    htps::sptr<Renderizable> createRenderizable(
         htps::str name,
-        render::FigType_t figure_type,
+        FigType_t figure_type,
         htps::Rectf32 box,
-        Color color,
+        scene::Color color,
         htps::sptr<res::ITexture> texture,
         htps::sptr<res::IShader> shader,
         htps::size_type num_points);
 
-    render::RenderizableBuilder renderizableBuilder();
+    RenderizableBuilder renderizableBuilder();
 
-    void removeRenderizable(const htps::sptr<render::Renderizable>& element);
+    void removeRenderizable(const htps::sptr<Renderizable>& element);
     void clearRenderizables();
 
     template <typename T>
     constexpr void for_each_node_as(
         htps::function<void(const htps::sptr<T>&)> action)
     {
-        for_each_node([&action](const htps::sptr<render::Renderizable>& node) {
+        for_each_node([&action](const htps::sptr<Renderizable>& node) {
             if (auto tnode = std::dynamic_pointer_cast<T>(node))
             {
                 action(tnode);
@@ -60,15 +63,16 @@ public:
     }
 
     void for_each_node(
-        htps::function<void(const htps::sptr<render::Renderizable>&)> action) const;
+        htps::function<void(const htps::sptr<Renderizable>&)> action)
+        const;
 
     void updateRenderizables();
 
 private:
-    void addRenderizable(htps::sptr<render::Renderizable> newElement);
-    htps::rptr<SceneNode> scene_node_;
-    htps::vector<htps::sptr<render::Renderizable>> render_nodes_;
+    void addRenderizable(htps::sptr<Renderizable> newElement);
+    htps::rptr<scene::SceneNode> scene_node_;
+    htps::vector<htps::sptr<Renderizable>> render_nodes_;
 };
-}  // namespace haf::scene
+}  // namespace haf::render
 
 #endif

@@ -7,10 +7,13 @@
 #include <htypes/include/types.hpp>
 #include <htypes/include/p_impl_pointer.hpp>
 
-namespace haf::scene
+namespace haf::render
 {
 class Renderizables;
+}
 
+namespace haf::scene
+{
 class HAF_API RenderizablesSceneNode : public SceneNode
 {
     using BaseClass = SceneNode;
@@ -23,8 +26,8 @@ public:
 
     ~RenderizablesSceneNode() override;
 
-    Renderizables& renderizables() noexcept;
-    Renderizables const& renderizables() const noexcept;
+    render::Renderizables& renderizables() noexcept;
+    render::Renderizables const& renderizables() const noexcept;
 
 private:
     struct RenderizablesSceneNodePrivate;

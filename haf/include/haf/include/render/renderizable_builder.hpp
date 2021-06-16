@@ -9,11 +9,6 @@
 #include <haf/include/scene/color.hpp>
 #include <haf/include/render/renderizable_builder_data.hpp>
 
-namespace haf::scene
-{
-class Renderizables;
-}  // namespace haf::scene
-
 namespace haf::res
 {
 class IShader;
@@ -24,6 +19,7 @@ namespace haf::render
 {
 struct RenderizableModifierContext;
 class Renderizable;
+class Renderizables;
 enum class FigType_t : htps::u8;
 }  // namespace haf::render
 
@@ -38,7 +34,7 @@ class RenderizableBuilder
 {
 public:
     explicit RenderizableBuilder(
-        htps::rptr<scene::Renderizables> renderizables) noexcept;
+        htps::rptr<Renderizables> renderizables) noexcept;
 
     htps::sptr<Renderizable> create();
 

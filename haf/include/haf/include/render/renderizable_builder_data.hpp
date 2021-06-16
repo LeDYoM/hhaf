@@ -8,12 +8,6 @@
 
 #include <haf/include/scene/color.hpp>
 
-namespace haf::scene
-{
-class Renderizables;
-class Renderizable;
-}  // namespace haf::scene
-
 namespace haf::res
 {
 class IShader;
@@ -24,13 +18,14 @@ namespace haf::render
 {
 struct RenderizableModifierContext;
 enum class FigType_t : htps::u8;
+class Renderizables;
 }  // namespace haf::render
 
 namespace haf::render
 {
 struct RenderizableBuilderData
 {
-    htps::rptr<scene::Renderizables> renderizables_;
+    htps::rptr<Renderizables> renderizables_;
     htps::str name_;
     FigType_t figType_;
     htps::Rectf32 box_{};
