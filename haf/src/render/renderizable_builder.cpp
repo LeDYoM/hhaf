@@ -66,10 +66,11 @@ RenderizableBuilder& RenderizableBuilder::texture(
 }
 
 RenderizableBuilder& RenderizableBuilder::colorModifier(
-    htps::function<scene::Color(const scene::RenderizableModifierContext&)> color_modifier)
+    htps::function<scene::Color(const RenderizableModifierContext&)>
+        color_modifier)
 {
     data_.color_modifier_ = std::move(color_modifier);
     return *this;
 }
 
-}  // namespace haf::scene
+}  // namespace haf::render

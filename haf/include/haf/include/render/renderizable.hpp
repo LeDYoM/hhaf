@@ -39,7 +39,7 @@ public:
     htps::PropertyState<htps::size_type> pointCount;
     htps::PropertyState<htps::sptr<res::IShader>> shader;
     htps::PropertyState<
-        htps::function<Color(const RenderizableModifierContext&)>>
+        htps::function<Color(const render::RenderizableModifierContext&)>>
         color_modifier;
 
     htps::BasicProperty<bool> visible{true};

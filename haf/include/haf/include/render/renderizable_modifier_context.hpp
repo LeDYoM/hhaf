@@ -6,14 +6,14 @@
 #include <htypes/include/vector2d.hpp>
 #include <haf/include/render/vertex.hpp>
 
-namespace haf::scene
+namespace haf::render
 {
 struct RenderizableModifierContext
 {
     const htps::Rectf32 box;
     const htps::Rects32 texture_rect;
     const htps::vector2du32 texture_size;
-    const Vertex vertex;
+    const scene::Vertex vertex;
     constexpr htps::vector2df normalizedVertexInBox() const
     {
         return (box.rightBottom() - vertex.position) / box.rightBottom();

@@ -13,7 +13,6 @@ namespace haf::scene
 {
 class Renderizables;
 class Renderizable;
-struct RenderizableModifierContext;
 enum class FigType_t : htps::u8;
 }  // namespace haf::scene
 
@@ -25,6 +24,11 @@ class ITexture;
 
 namespace haf::render
 {
+struct RenderizableModifierContext;
+}
+
+namespace haf::render
+{
 /**
  * @brief Class to help the building of @b Renderizable objects
  * This class implements the builder pattern to facilitate the
@@ -33,7 +37,6 @@ namespace haf::render
 class RenderizableBuilder
 {
 public:
-    
     explicit RenderizableBuilder(
         htps::rptr<scene::Renderizables> renderizables) noexcept;
 
@@ -47,12 +50,12 @@ public:
     RenderizableBuilder& shader(htps::sptr<res::IShader> _shader);
     RenderizableBuilder& texture(htps::sptr<res::ITexture> _texture);
     RenderizableBuilder& colorModifier(
-        htps::function<scene::Color(const scene::RenderizableModifierContext&)>
+        htps::function<scene::Color(const RenderizableModifierContext&)>
             color_modifier);
 
 private:
     RenderizableBuilderData data_;
 };
-}  // namespace haf::scene
+}  // namespace haf::render
 
 #endif

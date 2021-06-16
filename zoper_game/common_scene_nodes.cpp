@@ -5,6 +5,7 @@
 #include <haf/include/render/renderizable.hpp>
 #include <haf/include/scene/scenenode.hpp>
 #include <haf/include/render/renderizables.hpp>
+#include <haf/include/render/renderizable_modifier_context.hpp>
 
 namespace zoper
 {

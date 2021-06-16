@@ -74,7 +74,7 @@ void updateColorForVertex(Renderizable::RenderizableInternalData const& data,
     Color dest_color{data.color};
     if (data.color_modifier)
     {
-        RenderizableModifierContext context{
+        render::RenderizableModifierContext context{
             data.box, data.textureRect,
             data.texture ? data.texture->size() : vector2du32{0U, 0U}, vertex};
         dest_color *= data.color_modifier(context);

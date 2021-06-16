@@ -12,7 +12,6 @@ namespace haf::scene
 {
 class Renderizables;
 class Renderizable;
-struct RenderizableModifierContext;
 enum class FigType_t : htps::u8;
 }  // namespace haf::scene
 
@@ -21,6 +20,11 @@ namespace haf::res
 class IShader;
 class ITexture;
 }  // namespace haf::res
+
+namespace haf::render
+{
+struct RenderizableModifierContext;
+}
 
 namespace haf::render
 {
@@ -34,9 +38,9 @@ struct RenderizableBuilderData
     htps::size_type pointCount_{4U};
     htps::sptr<res::IShader> shader_{nullptr};
     htps::sptr<res::ITexture> texture_{nullptr};
-    htps::function<scene::Color(const scene::RenderizableModifierContext&)>
+    htps::function<scene::Color(const RenderizableModifierContext&)>
         color_modifier_{};
 };
-}  // namespace haf::scene
+}  // namespace haf::render
 
 #endif
