@@ -36,6 +36,7 @@ set(sources
   ${src_dir}/random/randomsystem.hpp
 
   # Render
+  ${src_dir}/render/geometry_math.hpp
   ${src_dir}/render/renderizable_builder.cpp
   ${src_dir}/render/renderizable_internal_data.hpp
   ${src_dir}/render/renderizable_internal_functions.cpp
@@ -174,7 +175,6 @@ set(headers
 
   # Render
   ${inc_dir}/render/fig_type.hpp
-  ${inc_dir}/render/geometry_math.hpp
   ${inc_dir}/render/primitivetype.hpp
   ${inc_dir}/render/renderdata.hpp
   ${inc_dir}/render/renderizable_builder_data.hpp
