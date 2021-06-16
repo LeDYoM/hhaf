@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef HAF_RENDER_RENDERIZABLE_INTERNAL_DATA_INCLUDE_HPP
 #define HAF_RENDER_RENDERIZABLE_INTERNAL_DATA_INCLUDE_HPP
 
@@ -10,7 +8,7 @@ namespace haf::scene
 
 struct Renderizable::RenderizableInternalData
 {
-    FigType_t const& figType;
+    render::FigType_t const& figType;
     htps::Rectf32 const& box;
     Color const& color;
     htps::size_type const& pointCount;

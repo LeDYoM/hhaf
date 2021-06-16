@@ -35,7 +35,7 @@ public:
      */
     htps::sptr<Renderizable> createRenderizable(
         htps::str name,
-        FigType_t figure_type,
+        render::FigType_t figure_type,
         htps::Rectf32 box,
         Color color,
         htps::sptr<res::ITexture> texture,

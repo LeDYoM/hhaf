@@ -22,7 +22,7 @@ class Renderizable final : public sys::HasName
 public:
     Renderizable(htps::rptr<SceneNode> parent,
                  htps::str name,
-                 FigType_t const figure_type,
+                 render::FigType_t const figure_type,
                  htps::size_type const initial_point_count,
                  htps::Rectf32 _box,
                  Color color,
@@ -33,7 +33,7 @@ public:
 
     void render();
 
-    htps::PropertyState<FigType_t> figType;
+    htps::PropertyState<render::FigType_t> figType;
     htps::PropertyState<htps::Rectf32> box;
     htps::PropertyState<Color> color;
     htps::PropertyState<htps::size_type> pointCount;

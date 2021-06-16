@@ -5,10 +5,10 @@
 #include <haf/include/render/renderizable_builder.hpp>
 
 using namespace htps;
+using namespace haf::render;
 
 namespace haf::scene
 {
-
 Renderizables::Renderizables(htps::rptr<SceneNode> scene_node) noexcept :
     scene_node_{std::move(scene_node)}
 {}

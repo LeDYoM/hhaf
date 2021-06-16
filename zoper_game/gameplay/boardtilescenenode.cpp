@@ -31,7 +31,7 @@ void BoardTileSceneNode::createBackgroundTile(const htps::Rectf32& tileBox)
 
     auto builder = m_pointInCenter->renderizables().renderizableBuilder();
     builder.name("backgroundTilePoint")
-        .figType(FigType_t::Quad)
+        .figType(render::FigType_t::Quad)
         .box(Rectf32{0, 0, point_box.width, point_box.height})
         .color(colors::White);
     m_pointInCenter->buildNode(builder);
@@ -40,7 +40,7 @@ void BoardTileSceneNode::createBackgroundTile(const htps::Rectf32& tileBox)
 
     background_tile_ = renderizables().renderizableBuilder()
                            .name("backgroundTile")
-                           .figType(FigType_t::Quad)
+                           .figType(render::FigType_t::Quad)
                            .box(tileBox)
                            .create();
 }

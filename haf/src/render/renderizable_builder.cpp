@@ -8,9 +8,8 @@ namespace haf::render
 
 RenderizableBuilder::RenderizableBuilder(
     htps::rptr<scene::Renderizables> renderizables) noexcept :
-    data_{RenderizableBuilderData{std::move(renderizables),
-                                          {},
-                                          scene::FigType_t::Shape}}
+    data_{
+        RenderizableBuilderData{std::move(renderizables), {}, FigType_t::Shape}}
 {}
 
 htps::sptr<scene::Renderizable> RenderizableBuilder::create()
@@ -26,7 +25,7 @@ RenderizableBuilder& RenderizableBuilder::name(htps::str _name)
     return *this;
 }
 
-RenderizableBuilder& RenderizableBuilder::figType(scene::FigType_t fig_type)
+RenderizableBuilder& RenderizableBuilder::figType(FigType_t fig_type)
 {
     data_.figType_ = std::move(fig_type);
     return *this;

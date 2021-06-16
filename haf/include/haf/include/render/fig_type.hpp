@@ -1,9 +1,9 @@
-#ifndef HAF_SCENE_FIG_TYPE_T_HPP
-#define HAF_SCENE_FIG_TYPE_T_HPP
+#ifndef HAF_RENDER_FIG_TYPE_T_HPP
+#define HAF_RENDER_FIG_TYPE_T_HPP
 
 #include <htypes/include/types.hpp>
 
-namespace haf::scene
+namespace haf::render
 {
 enum class FigType_t : htps::u8
 {
@@ -11,6 +11,6 @@ enum class FigType_t : htps::u8
     Shape,
     EmptyQuad
 };
-}  // namespace haf::scene
+}  // namespace haf::render
 
 #endif

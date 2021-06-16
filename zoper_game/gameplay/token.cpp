@@ -11,6 +11,7 @@
 using namespace htps;
 using namespace haf;
 using namespace haf::scene;
+using namespace haf::render;
 using namespace haf::board;
 
 namespace zoper

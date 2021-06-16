@@ -14,6 +14,7 @@
 #include <haf/include/render/renderdata.hpp>
 
 using namespace htps;
+using namespace haf::render;
 
 namespace haf::scene
 {

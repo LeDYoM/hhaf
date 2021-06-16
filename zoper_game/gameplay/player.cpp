@@ -13,6 +13,7 @@ namespace zoper
 using namespace htps;
 using namespace haf;
 using namespace haf::scene;
+using namespace haf::render;
 using namespace haf::time;
 
 Player::Player(rptr<SceneNode> parent, str name) :

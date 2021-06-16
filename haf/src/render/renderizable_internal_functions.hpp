@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef HAF_RENDER_RENDERIZABLE_INTERNAL_FUNCTIONS_INCLUDE_HPP
 #define HAF_RENDER_RENDERIZABLE_INTERNAL_FUNCTIONS_INCLUDE_HPP
 
@@ -23,12 +21,12 @@ namespace haf::render
  * @param radius The radius of the figure
  * @return vector2dd Position vector
  */
-htps::vector2dd getPositionFromAngleAndRadius(const scene::FigType_t fig_type,
+htps::vector2dd getPositionFromAngleAndRadius(const FigType_t fig_type,
                                               const htps::f64 angle,
                                               const htps::vector2df& radius);
 
 htps::pair<scene::PrimitiveType, htps::size_type>
-initDataVertexPerFigureAndNumPoints(const scene::FigType_t fig_type,
+initDataVertexPerFigureAndNumPoints(const FigType_t fig_type,
                                     const htps::size_type num_points) noexcept;
 
 htps::Rects32 textureFillQuad(

@@ -13,7 +13,6 @@ namespace haf::scene
 {
 class Renderizables;
 class Renderizable;
-enum class FigType_t : htps::u8;
 }  // namespace haf::scene
 
 namespace haf::res
@@ -25,6 +24,7 @@ class ITexture;
 namespace haf::render
 {
 struct RenderizableModifierContext;
+enum class FigType_t : htps::u8;
 }
 
 namespace haf::render
@@ -43,7 +43,7 @@ public:
     htps::sptr<scene::Renderizable> create();
 
     RenderizableBuilder& name(htps::str _name);
-    RenderizableBuilder& figType(scene::FigType_t fig_type);
+    RenderizableBuilder& figType(FigType_t fig_type);
     RenderizableBuilder& box(htps::Rectf32 _box);
     RenderizableBuilder& color(scene::Color _color);
     RenderizableBuilder& pointCount(htps::size_type point_count);
