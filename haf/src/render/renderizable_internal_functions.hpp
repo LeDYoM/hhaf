@@ -21,20 +21,28 @@ namespace haf::render
  * @param radius The radius of the figure
  * @return vector2dd Position vector
  */
-htps::vector2dd getPositionFromAngleAndRadius(const FigType_t fig_type,
-                                              const htps::f64 angle,
-                                              const htps::vector2df& radius);
+htps::vector2dd getPositionFromAngleAndRadius(FigType_t const fig_type,
+                                              htps::f64 const angle,
+                                              htps::vector2df const & radius);
 
-htps::pair<PrimitiveType, htps::size_type>
-initDataVertexPerFigureAndNumPoints(const FigType_t fig_type,
-                                    const htps::size_type num_points) noexcept;
+/**
+ * @brief Get the init data for a vertex array
+ *
+ * @param fig_type Figure type to create
+ * @param num_points Initial number of points
+ * @return pair<PrimitiveType, size_type> Initialization data for a vertex
+ * array
+ */
+htps::pair<PrimitiveType const, htps::size_type const>
+initDataVertexPerFigureAndNumPoints(FigType_t const fig_type,
+                                    htps::size_type const num_points) noexcept;
 
 htps::Rects32 textureFillQuad(
-    const htps::sptr<res::ITexture>& texture) noexcept;
+    htps::sptr<res::ITexture const> const& texture) noexcept;
 
 htps::vector2df normalizeInBox(
-    const htps::vector2df& position,
-    Renderizable::RenderizableInternalData const& data);
+    htps::vector2df const& position,
+    Renderizable::RenderizableInternalData const& data) noexcept;
 
 void updateColorForVertex(
     Renderizable::RenderizableInternalData const& data,
@@ -44,7 +52,7 @@ void updateColors(BasicVertexArray& vertices,
                   Renderizable::RenderizableInternalData const& data);
 
 void updateTextureCoordsAndColorForVertex(
-    const BasicVertexArray::iterator v_iterator,
+    BasicVertexArray::iterator const v_iterator,
     Renderizable::RenderizableInternalData const& iData);
 
 void updateTextureCoordsAndColor(

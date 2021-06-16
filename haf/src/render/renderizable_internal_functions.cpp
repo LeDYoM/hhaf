@@ -5,9 +5,9 @@ using namespace htps;
 
 namespace haf::render
 {
-vector2dd getPositionFromAngleAndRadius(const FigType_t fig_type,
-                                        const f64 angle,
-                                        const vector2df& radius)
+vector2dd getPositionFromAngleAndRadius(FigType_t const fig_type,
+                                        f64 const angle,
+                                        vector2df const& radius)
 {
     switch (fig_type)
     {
@@ -24,17 +24,9 @@ vector2dd getPositionFromAngleAndRadius(const FigType_t fig_type,
     }
 }
 
-/**
- * @brief Get the init data for a vertex array
- *
- * @param fig_type Figure type to create
- * @param num_points Initial number of points
- * @return pair<PrimitiveType, size_type> Initialization data for a vertex
- * array
- */
-pair<PrimitiveType, size_type> initDataVertexPerFigureAndNumPoints(
-    const FigType_t fig_type,
-    const size_type num_points) noexcept
+pair<PrimitiveType const, size_type const> initDataVertexPerFigureAndNumPoints(
+    FigType_t const fig_type,
+    size_type const num_points) noexcept
 {
     switch (fig_type)
     {
@@ -53,14 +45,14 @@ pair<PrimitiveType, size_type> initDataVertexPerFigureAndNumPoints(
     }
 }
 
-Rects32 textureFillQuad(const sptr<res::ITexture>& texture) noexcept
+Rects32 textureFillQuad(sptr<res::ITexture const> const& texture) noexcept
 {
     return texture ? Rects32{0, 0, static_cast<vector2ds32>(texture->size())}
                    : Rects32{};
 }
 
-vector2df normalizeInBox(const vector2df& position,
-                         Renderizable::RenderizableInternalData const& data)
+vector2df normalizeInBox(vector2df const& position,
+                         Renderizable::RenderizableInternalData const& data) noexcept
 {
     const f32 xratio{(position.x - data.box.left) / data.box.width};
     const f32 yratio{(position.y - data.box.top) / data.box.height};
@@ -74,7 +66,7 @@ void updateColorForVertex(Renderizable::RenderizableInternalData const& data,
     scene::Color dest_color{data.color};
     if (data.color_modifier)
     {
-        RenderizableModifierContext context{
+        RenderizableModifierContext const context{
             data.box, data.textureRect,
             data.texture ? data.texture->size() : vector2du32{0U, 0U}, vertex};
         dest_color *= data.color_modifier(context);
@@ -92,7 +84,7 @@ void updateColors(BasicVertexArray& vertices,
 }
 
 void updateTextureCoordsAndColorForVertex(
-    const BasicVertexArray::iterator v_iterator,
+    BasicVertexArray::iterator const v_iterator,
     Renderizable::RenderizableInternalData const& iData)
 {
     auto& dest_vertex     = *v_iterator;
@@ -115,13 +107,13 @@ void updateGeometry(BasicVertexArray& vertices,
 {
     if (data.pointCount > 0U)
     {
-        const vector2df radius{data.box.size() / 2.0F};
+        vector2df const radius{data.box.size() / 2.0F};
 
         vertices.resize(
             initDataVertexPerFigureAndNumPoints(data.figType, data.pointCount)
                 .second);
-        const f64 baseAngle(PiM2Constant<f64> /
-                            static_cast<f64>(data.pointCount));
+        const auto baseAngle{PiM2Constant<f64> /
+                            static_cast<f64>(data.pointCount)};
         const auto base_position{data.box.leftTop() + radius};
 
         switch (data.figType)
