@@ -2,8 +2,9 @@
 #include <haf/include/render/geometry_math.hpp>
 
 using namespace htps;
+using namespace haf::scene;
 
-namespace haf::scene
+namespace haf::render
 {
 vector2dd getPositionFromAngleAndRadius(const FigType_t fig_type,
                                         const f64 angle,
@@ -74,7 +75,7 @@ void updateColorForVertex(Renderizable::RenderizableInternalData const& data,
     Color dest_color{data.color};
     if (data.color_modifier)
     {
-        render::RenderizableModifierContext context{
+        RenderizableModifierContext context{
             data.box, data.textureRect,
             data.texture ? data.texture->size() : vector2du32{0U, 0U}, vertex};
         dest_color *= data.color_modifier(context);
@@ -170,4 +171,4 @@ void updateGeometry(BasicVertexArray& vertices,
         }
     }
 }
-}  // namespace haf::scene
+}  // namespace haf::render

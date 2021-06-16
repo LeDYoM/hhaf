@@ -33,7 +33,7 @@ struct Renderizable::RenderizablePrivate
                         rptr<res::IShader> shader,
                         rptr<Renderizable const> i_this) :
                         m_parent{parent},
-        vertices_{initDataVertexPerFigureAndNumPoints(figure_type,
+        vertices_{render::initDataVertexPerFigureAndNumPoints(figure_type,
                                                       initial_point_count)},
         render_data_{vertices_, matrix, texture, shader},
         i_this_{std::move(i_this)}
@@ -69,7 +69,7 @@ Renderizable::Renderizable(rptr<SceneNode> parent,
                                         texture().get(),
                                         shader().get(),
                                         this)},
-    textureRect{textureFillQuad(_texture)},
+    textureRect{render::textureFillQuad(_texture)},
     texture{std::move(_texture)}
 {}
 
@@ -107,7 +107,7 @@ void Renderizable::setTextureAndTextureRect(sptr<res::ITexture> texture_,
 
 void Renderizable::setTextureFill(sptr<res::ITexture> texture_)
 {
-    setTextureAndTextureRect(texture_, textureFillQuad(texture_));
+    setTextureAndTextureRect(texture_, render::textureFillQuad(texture_));
 }
 
 void Renderizable::update()
@@ -116,7 +116,7 @@ void Renderizable::update()
 
     if (ps_readResetHasAnyChanged(box, figType, pointCount))
     {
-        updateGeometry(p_->vertices_.verticesArray(), mi_data);
+        render::updateGeometry(p_->vertices_.verticesArray(), mi_data);
         textureRect.resetHasChanged();
         color.resetHasChanged();
         color_modifier.resetHasChanged();
@@ -124,14 +124,14 @@ void Renderizable::update()
 
     if (ps_readResetHasAnyChanged(textureRect))
     {
-        updateTextureCoordsAndColor(p_->vertices_.verticesArray(), mi_data);
+        render::updateTextureCoordsAndColor(p_->vertices_.verticesArray(), mi_data);
         color.resetHasChanged();
         color_modifier.resetHasChanged();
     }
 
     if (ps_readResetHasAnyChanged(color, color_modifier))
     {
-        updateColors(p_->vertices_.verticesArray(), mi_data);
+        render::updateColors(p_->vertices_.verticesArray(), mi_data);
     }
 
     if (ps_readResetHasChanged(texture))
