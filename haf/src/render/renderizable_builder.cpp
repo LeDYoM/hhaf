@@ -21,7 +21,7 @@ htps::sptr<Renderizable> RenderizableBuilder::create()
 
 RenderizableBuilder& RenderizableBuilder::name(htps::str _name)
 {
-    data_.name_ = std::move(_name);
+    data_.name_.swap(_name);
     return *this;
 }
 

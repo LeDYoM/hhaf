@@ -11,7 +11,6 @@
 
 namespace htps
 {
-// template <typename char_type = char, typename Container = vector>
 class str
 {
 public:
@@ -37,49 +36,35 @@ public:
     constexpr str(const char_type (&a)[N]) noexcept : m_data(a, N)
     {}
 
-    constexpr str(const char_type* n, const size_type N) noexcept :
+    constexpr str(char_type const* const n, size_type const N) noexcept :
         m_data(n, N + 1)
     {}
 
-    explicit str(const char_type* n) noexcept : str(n, _str_len(n)) {}
+    explicit str(char_type const* const n) noexcept : str(n, _str_len(n)) {}
 
     constexpr str(const_iterator _begin, const_iterator _end) :
         str(_begin, (_end - _begin) + 1U)
     {}
 
-    str& operator=(const char_type* n) noexcept
+    str& operator=(const char_type* n)
     {
         *this = str(n, _str_len(n));
         return *this;
     }
 
-    inline static str to_str(const u64 n)
-    {
-        return str{std::to_string(n).c_str()};
-    }
+    void swap(str& other) { m_data.swap(other.m_data); }
 
-    inline static str to_str(const s64 n)
-    {
-        return str{std::to_string(n).c_str()};
-    }
+    static str to_str(u64 const n) { return str{std::to_string(n).c_str()}; }
 
-    inline static str to_str(const u32 n)
-    {
-        return str{std::to_string(n).c_str()};
-    }
+    static str to_str(s64 const n) { return str{std::to_string(n).c_str()}; }
 
-    inline static str to_str(const s32 n)
-    {
-        return str{std::to_string(n).c_str()};
-    }
-    inline static str to_str(const f32 n)
-    {
-        return str{std::to_string(n).c_str()};
-    }
-    inline static str to_str(const f64 n)
-    {
-        return str{std::to_string(n).c_str()};
-    }
+    static str to_str(u32 const n) { return str{std::to_string(n).c_str()}; }
+
+    static str to_str(s32 const n) { return str{std::to_string(n).c_str()}; }
+
+    static str to_str(f32 const n) { return str{std::to_string(n).c_str()}; }
+
+    static str to_str(f64 const n) { return str{std::to_string(n).c_str()}; }
 
     template <typename T>
     bool is() const
@@ -88,32 +73,35 @@ public:
         return convert(temp);
     }
 
-    constexpr size_t _str_len(const char_type* const p_str) noexcept
+    constexpr static size_type _str_len(char_type const* const p_str) noexcept
     {
-        const str::char_type* p_str_copy{p_str};
+        auto const* p_str_copy{p_str};
+
         while (*p_str_copy)
+        {
             ++p_str_copy;
-        return p_str_copy - p_str;
+        }
+
+        auto const tmp_result{p_str_copy - p_str};
+        return ((tmp_result > 0U) ? static_cast<size_type>(tmp_result) : 0U);
     }
 
-    vector<str> split(const char_type separator) const
+    vector<str> split(char_type const separator) const
     {
         vector<str> result;
 
         str tok;
-        auto _cend(cend());
 
-        for (auto _cbegin(cbegin()); _cbegin != _cend; ++_cbegin)
+        for (auto const it : *this)
         {
-            str::char_type const ch = *_cbegin;
-            if (ch == separator)
+            if (it == separator)
             {
                 result.emplace_back(std::move(tok));
                 tok = str();
             }
             else
             {
-                tok.append_char(*_cbegin);
+                tok.push_back(it);
             }
         }
 
@@ -143,11 +131,13 @@ public:
 
     str substr(size_type start, size_type len = npos) const
     {
-        if (start >= size() || len < 1)
+        if (start >= size() || len < 1U)
+        {
             return "";
+        }
 
         str temp;
-        while (start < size() && len > 0)
+        while (start < size() && len > 0U)
         {
             if (m_data[start] != 0)
             {
@@ -163,10 +153,17 @@ public:
 
     constexpr str& append() { return *this; }
 
-    str& append(const str& n)
+    str& append(str const& n)
     {
         m_data.pop_back();
         m_data.insert(n.m_data);
+        return *this;
+    }
+
+    str& append(str&& n)
+    {
+        m_data.pop_back();
+        m_data.insert(std::move(n.m_data));
         return *this;
     }
 
@@ -177,52 +174,52 @@ public:
         return *this;
     }
 
-    str& append(const char_type* n)
+    str& append(char_type const * const n)
     {
         append(str(n));
         return *this;
     }
 
-    str& append(const u64 n)
+    str& append(u64 const n)
     {
         append(to_str(n));
         return *this;
     }
 
-    str& append(const s64 n)
+    str& append(s64 const n)
     {
         append(to_str(n));
         return *this;
     }
 
-    str& append(const u32 n)
+    str& append(u32 const n)
     {
         append(to_str(n));
         return *this;
     }
 
-    str& append(const s32 n)
+    str& append(s32 const n)
     {
         append(to_str(n));
         return *this;
     }
 
-    str& append(const f32 n)
+    str& append(f32 const n)
     {
         append(to_str(n));
         return *this;
     }
 
-    str& append(const f64 n)
+    str& append(f64 const n)
     {
         append(to_str(n));
         return *this;
     }
 
-    str& append_char(const char_type n)
+    str& push_back(char_type const n)
     {
-        const char_type temp[2U] = {n, 0U};
-        return append(temp);
+        char_type const temp[2U] = {n, 0U};
+        return append(std::move(temp));
     }
 
     template <typename T>
@@ -284,11 +281,11 @@ public:
     }
 
     // trim from end (in place)
-    inline void rtrim()
+    void rtrim()
     {
         if (!empty())
         {
-            for (size_type index = size() - 1; index > 0; --index)
+            for (size_type index{size() - 1U}; index > 0U; --index)
             {
                 if (!std::isspace(static_cast<unsigned char>(m_data[index])))
                 {
@@ -304,7 +301,7 @@ public:
     }
 
     // trim from both ends (in place)
-    inline void trim()
+    void trim()
     {
         ltrim();
         rtrim();
@@ -312,14 +309,16 @@ public:
 
     // TO DO: Change them by using, eg.
     // using vector<T>::begin();
-    constexpr reference operator[](const size_type index) noexcept
+    constexpr reference operator[](size_type const index) noexcept
     {
         return m_data[index];
     }
-    constexpr const_reference operator[](const size_type index) const noexcept
+
+    constexpr const_reference operator[](size_type const index) const noexcept
     {
         return m_data[index];
     }
+
     constexpr iterator begin() noexcept { return m_data.begin(); }
     constexpr const_iterator begin() const noexcept { return m_data.begin(); }
     constexpr const_iterator cbegin() const noexcept { return m_data.cbegin(); }
@@ -328,6 +327,7 @@ public:
     {
         return m_data.begin() + size();
     }
+
     constexpr const_iterator cend() const noexcept
     {
         return m_data.cbegin() + size();
@@ -337,18 +337,14 @@ public:
     {
         return m_data.empty() ? "" : m_data.cbegin();
     }
+
     constexpr bool empty() const noexcept { return size() == 0; }
 
     constexpr auto find_first_of(
-        const vector<char_type>& chValue) const noexcept
+        vector<char_type> const& chValue) const noexcept
     {
-        const auto it(m_data.find_first_of(chValue));
+        const auto it{m_data.find_first_of(chValue)};
         return (it == m_data.cend()) ? str::npos : std::distance(cbegin(), it);
-    }
-
-    inline auto find_first_of(const char_type chValue) const noexcept
-    {
-        return find_first_of(vector<char_type>{chValue});
     }
 
     template <typename T>
@@ -388,38 +384,43 @@ public:
     constexpr bool operator==(const char_type (&a)[N]) const noexcept
     {
         if (size() != (N - 1))
+        {
             return false;
+        }
 
-        size_type counter{0};
+        size_type counter{0U};
         for (const auto c : m_data)
         {
             if (c != a[counter])
+            {
                 return false;
+            }
             ++counter;
         }
         return true;
     }
 
     template <size_type N>
-    constexpr bool operator!=(const char_type (&a)[N]) const noexcept
+    constexpr bool operator!=(char_type const (&rhs)[N]) const noexcept
     {
-        return !(this->operator==(a));
+        return !(this->operator==(std::forward<char_type const (&)[N]>(rhs)));
     }
 
-    constexpr bool operator==(const str::char_type* a) const noexcept
+    constexpr bool operator==(str::char_type const * const rhs) const noexcept
     {
         size_type counter{0};
-        for (; counter < size() && a[counter] != 0; ++counter)
+        for (; counter < size() && rhs[counter] != 0U; ++counter)
         {
-            if (m_data[counter] != a[counter])
+            if (m_data[counter] != rhs[counter])
             {
                 return false;
             }
         }
-        return counter == size() && a[counter] == 0;
+    
+        return (counter == size() && rhs[counter] == 0);
     }
 
-    constexpr bool operator!=(const str::char_type* a) const noexcept
+    constexpr bool operator!=(str::char_type const * const a) const noexcept
     {
         return !(*this == a);
     }
@@ -444,8 +445,8 @@ public:
 
     constexpr bool operator<(const str& rhs) const noexcept
     {
-        size_type i{0};
-        while (i < size() && i < rhs.size())
+        size_type i{0U};
+        for (;i < size() && i < rhs.size();++i)
         {
             if (m_data[i] < rhs[i])
             {
@@ -455,37 +456,36 @@ public:
             {
                 return false;
             }
-            ++i;
         }
         return size() < rhs.size();
     }
 };
 
-inline str operator+(const str& lhs, const str& rhs) noexcept
+inline str operator+(str const& lhs, str const& rhs)
 {
     return str(lhs).append(rhs);
 }
 
 template <size_type N>
-constexpr bool operator==(const str::char_type (&a)[N], const str& rhs) noexcept
+constexpr bool operator==(str::char_type const (&lhs)[N], str const& rhs) noexcept
 {
-    return rhs == a;
+    return rhs == lhs;
 }
 
 template <size_type N>
-constexpr bool operator!=(const str::char_type (&a)[N], const str& rhs) noexcept
+constexpr bool operator!=(str::char_type const (&lhs)[N], str const& rhs) noexcept
 {
-    return rhs != a;
+    return rhs != lhs;
 }
 
-constexpr bool operator==(const str::char_type* a, const str& rhs) noexcept
+constexpr bool operator==(str::char_type const * const lhs, str const& rhs) noexcept
 {
-    return rhs == a;
+    return rhs == lhs;
 }
 
-constexpr bool operator!=(const str::char_type* a, const str& rhs) noexcept
+constexpr bool operator!=(str::char_type const * const lhs, str const& rhs) noexcept
 {
-    return rhs != a;
+    return rhs != lhs;
 }
 
 template <typename... Args>
@@ -509,26 +509,31 @@ inline str make_str(u64&& n)
 {
     return str::to_str(std::move(n));
 }
+
 template <>
 inline str make_str(s64&& n)
 {
     return str::to_str(std::move(n));
 }
+
 template <>
 inline str make_str(u32&& n)
 {
     return str::to_str(std::move(n));
 }
+
 template <>
 inline str make_str(s32&& n)
 {
     return str::to_str(std::move(n));
 }
+
 template <>
 inline str make_str(f32&& n)
 {
     return str::to_str(std::move(n));
 }
+
 template <>
 inline str make_str(f64&& n)
 {
@@ -556,14 +561,11 @@ static_assert(std::is_copy_constructible_v<str>,
               "str must be copy constructible");
 using string_vector = vector<str>;
 
-template<size_t N>
+template <size_t N>
 struct cestr
 {
-    constexpr cestr(const char (&str)[N])
-    {
-        std::copy_n(str, N, value);
-    }
-    
+    constexpr cestr(const char (&str)[N]) { std::copy_n(str, N, value); }
+
     char value[N];
 };
 }  // namespace htps

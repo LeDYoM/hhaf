@@ -59,18 +59,18 @@ TEST_CASE("str", "[str]")
         CHECK(test.size() == sizeof("This is a test") - 1);
     }
 
-    SECTION("Find first of")
+    SECTION("Find")
     {
         str test("Lets play this");
-        auto sep{ test.find_first_of(' ') };
-        CHECK(sep == 4);
+        auto sep{ test.find(' ') };
+        CHECK(sep == 4U);
         str sub{ test.substr(sep + 1) };
         CHECK(sub == "play this");
-        str sub2{ sub.substr(sub.find_first_of('z')) };
+        str sub2{ sub.substr(sub.find('z')) };
         CHECK(sub2 == "");
-        str sub3{ sub.substr(sub.find_first_of(' ')) };
+        str sub3{ sub.substr(sub.find(' ')) };
         CHECK(sub3 == " this");
-        sub3 += make_str(3);
+        sub3 += make_str(3U);
         CHECK(sub3 == " this3");
     }
 
@@ -79,7 +79,7 @@ TEST_CASE("str", "[str]")
         str test("String to test substr=!other tests");
         CHECK(test.substr(str::npos) == "");
         CHECK(test.substr(str::npos).empty());
-        CHECK(test.substr(str::npos).size() == 0);
+        CHECK(test.substr(str::npos).size() == 0U);
         CHECK(test.substr(0) == test);
         CHECK(test.substr(7, 21) == "to test substr=!other");
         CHECK(test.substr(7, 21).substr(8, 50) == "substr=!other");
@@ -90,13 +90,13 @@ TEST_CASE("str", "[str]")
     {
         str test("Try to=test! some parsing&&now");
 
-        CHECK(test.find_first_of(' ') == 3);
-        CHECK(test.find_first_of('=') == 6);
-        CHECK(test.find_first_of('!') == 11);
-        CHECK(test.find_first_of('&') == 25);
+        CHECK(test.find(' ') == 3);
+        CHECK(test.find('=') == 6);
+        CHECK(test.find('!') == 11);
+        CHECK(test.find('&') == 25);
         test[25] = '/';
-        CHECK(test.find_first_of('/') == 25);
-        CHECK(test.find_first_of('&') == 26);
+        CHECK(test.find('/') == 25);
+        CHECK(test.find('&') == 26);
     }
 
     SECTION("conversions", "[str]")

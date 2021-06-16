@@ -10,7 +10,9 @@ project("HAF Types"
 
 set(CURRENT_TARGET htypes)
 
-set(sources src/types.cpp)
+set(sources 
+    src/types.cpp
+    )
 
 set(include_dir htypes/include)
 set(headers

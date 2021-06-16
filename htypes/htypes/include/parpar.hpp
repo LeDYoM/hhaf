@@ -287,7 +287,7 @@ private:
     static COptionResult checkOptionParameter(const ParameterName& param)
     {
         // Find '=' sign
-        const auto equalSign(param.find_first_of('='));
+        const auto equalSign(param.find('='));
 
         if (equalSign != str_t::npos)
         {

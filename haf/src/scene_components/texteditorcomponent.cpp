@@ -40,7 +40,7 @@ void TextEditorComponent::onKeyPressed(const input::Key& key)
             if (success)
             {
                 str new_text{text_prop.get<Text>()};
-                new_text.append_char(c_ascii);
+                new_text.push_back(c_ascii);
                 text_prop.set<Text>(std::move(new_text));
             }
         }

@@ -13,7 +13,7 @@ public:
     bool canAddChar(const htps::str &source, const char new_char) override
     {
         htps::str dest{source};
-        dest.append_char(new_char);
+        dest.push_back(new_char);
         return isValidText(dest);
         return true;
     }

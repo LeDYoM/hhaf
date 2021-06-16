@@ -450,4 +450,15 @@ TEST_CASE("Movable only objects")
     vector<MoveOnly> v2 = std::move(v);
     CHECK(5 == v2[0U].get());
     CHECK(4 == v2[1U].get());
+
+    SECTION("Swap")
+    {
+        vector<MoveOnly> v3;
+        v3.swap(v2);
+
+        CHECK(5 == v3[0U].get());
+        CHECK(4 == v3[1U].get());
+        CHECK(v.empty());
+    }
 }
+

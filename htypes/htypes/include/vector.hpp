@@ -31,7 +31,7 @@ class vector final
 
 public:
     using iterator        = T*;       /**< Iterator for the values */
-    using const_iterator  = const T*; /**< Iterator pointing to const values */
+    using const_iterator  = T const*; /**< Iterator pointing to const values */
     using reference       = T&;       /**< Reference to member */
     using const_reference = const T&; /**< Const reference to members */
     using value_type      = T;        /** Value of the contained member */
@@ -471,7 +471,7 @@ public:
             reserve(size() + other.size());
             for (const auto& element : other)
             {
-                push_back(element);
+                emplace_back(element);
             }
         }
     }
@@ -480,9 +480,9 @@ public:
     {
         // TODO: Optimize
         reserve(size() + other.size());
-        for (auto&& element : other)
+        for (auto&& element : std::move(other))
         {
-            push_back(std::move(element));
+            emplace_back(std::move(element));
         }
     }
 

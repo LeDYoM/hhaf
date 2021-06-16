@@ -169,7 +169,7 @@ namespace htps
                             // token, store it.
                             if (preparedToken.value.empty())
                             {
-                                preparedToken.value.append_char(*begin_);
+                                preparedToken.value.push_back(*begin_);
                             }
                             else
                             {
@@ -187,7 +187,7 @@ namespace htps
                         {
                             // If it is not special char, store it
                             // in the current token.
-                            preparedToken.value.append_char(*begin_);
+                            preparedToken.value.push_back(*begin_);
                         }
                     }
                 }
