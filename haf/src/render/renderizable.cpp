@@ -14,9 +14,9 @@
 #include <haf/include/render/renderdata.hpp>
 
 using namespace htps;
-using namespace haf::render;
+using namespace haf::scene;
 
-namespace haf::scene
+namespace haf::render
 {
 
 struct Renderizable::RenderizablePrivate
@@ -34,7 +34,7 @@ struct Renderizable::RenderizablePrivate
                         rptr<res::IShader> shader,
                         rptr<Renderizable const> i_this) :
                         m_parent{parent},
-        vertices_{render::initDataVertexPerFigureAndNumPoints(figure_type,
+        vertices_{initDataVertexPerFigureAndNumPoints(figure_type,
                                                       initial_point_count)},
         render_data_{vertices_, matrix, texture, shader},
         i_this_{std::move(i_this)}
@@ -49,7 +49,7 @@ struct Renderizable::RenderizablePrivate
     }
 };
 
-Renderizable::Renderizable(rptr<SceneNode> parent,
+Renderizable::Renderizable(rptr<scene::SceneNode> parent,
                            str name,
                            FigType_t const figure_type,
                            size_type const initial_point_count,

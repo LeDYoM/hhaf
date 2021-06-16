@@ -12,7 +12,7 @@ RenderizableBuilder::RenderizableBuilder(
         RenderizableBuilderData{std::move(renderizables), {}, FigType_t::Shape}}
 {}
 
-htps::sptr<scene::Renderizable> RenderizableBuilder::create()
+htps::sptr<Renderizable> RenderizableBuilder::create()
 {
     return data_.renderizables_->createRenderizable(
         data_.name_, data_.figType_, data_.box_, data_.color_, data_.texture_,

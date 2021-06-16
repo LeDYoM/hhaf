@@ -16,16 +16,19 @@
 namespace haf::scene
 {
 class SceneNode;
+}
 
+namespace haf::render
+{
 class Renderizable final : public sys::HasName
 {
 public:
-    Renderizable(htps::rptr<SceneNode> parent,
+    Renderizable(htps::rptr<scene::SceneNode> parent,
                  htps::str name,
                  render::FigType_t const figure_type,
                  htps::size_type const initial_point_count,
                  htps::Rectf32 _box,
-                 Color color,
+                 scene::Color color,
                  htps::sptr<res::ITexture> _texture,
                  htps::sptr<res::IShader> _shader);
 
@@ -33,13 +36,13 @@ public:
 
     void render();
 
-    htps::PropertyState<render::FigType_t> figType;
+    htps::PropertyState<FigType_t> figType;
     htps::PropertyState<htps::Rectf32> box;
-    htps::PropertyState<Color> color;
+    htps::PropertyState<scene::Color> color;
     htps::PropertyState<htps::size_type> pointCount;
     htps::PropertyState<htps::sptr<res::IShader>> shader;
     htps::PropertyState<
-        htps::function<Color(const render::RenderizableModifierContext&)>>
+        htps::function<scene::Color(const RenderizableModifierContext&)>>
         color_modifier;
 
     htps::BasicProperty<bool> visible{true};
@@ -49,10 +52,11 @@ public:
 
     void setTextureFill(htps::sptr<res::ITexture> texture_);
 
-    htps::rptr<SceneNode> parent() noexcept;
-    htps::rptr<SceneNode const> parent() const noexcept;
+    htps::rptr<scene::SceneNode> parent() noexcept;
+    htps::rptr<scene::SceneNode const> parent() const noexcept;
 
     struct RenderizableInternalData;
+
 private:
     struct RenderizablePrivate;
     htps::PImplPointer<RenderizablePrivate> p_;
@@ -62,6 +66,6 @@ private:
 
     void update();
 };
-}  // namespace haf::scene
+}  // namespace haf::render
 
 #endif

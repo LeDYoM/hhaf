@@ -19,12 +19,12 @@ void RenderizableSceneNode::buildNode(render::RenderizableBuilder& node_builder)
     node_ = node_builder.create();
 }
 
-htps::sptr<Renderizable> RenderizableSceneNode::node() noexcept
+htps::sptr<render::Renderizable> RenderizableSceneNode::node() noexcept
 {
     return node_;
 }
 
-const htps::sptr<Renderizable> RenderizableSceneNode::node() const noexcept
+const htps::sptr<render::Renderizable> RenderizableSceneNode::node() const noexcept
 {
     return node_;
 }

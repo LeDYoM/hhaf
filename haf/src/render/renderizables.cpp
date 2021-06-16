@@ -13,7 +13,7 @@ Renderizables::Renderizables(htps::rptr<SceneNode> scene_node) noexcept :
     scene_node_{std::move(scene_node)}
 {}
 
-sptr<Renderizable> Renderizables::createRenderizable(
+sptr<render::Renderizable> Renderizables::createRenderizable(
     str name,
     FigType_t figure_type,
     Rectf32 box,
@@ -22,7 +22,7 @@ sptr<Renderizable> Renderizables::createRenderizable(
     sptr<res::IShader> shader,
     size_type num_points)
 {
-    auto result(msptr<Renderizable>(scene_node_, std::move(name), figure_type,
+    auto result(msptr<render::Renderizable>(scene_node_, std::move(name), figure_type,
                                     std::move(num_points), std::move(box),
                                     std::move(color), std::move(texture),
                                     std::move(shader)));
@@ -43,7 +43,7 @@ void Renderizables::updateRenderizables()
     }
 }
 
-void Renderizables::removeRenderizable(const sptr<Renderizable>& element)
+void Renderizables::removeRenderizable(const sptr<render::Renderizable>& element)
 {
     LogAsserter::log_assert(element.get() != nullptr,
                             "Received empty renderizable node to be deleted");
@@ -56,12 +56,12 @@ void Renderizables::clearRenderizables()
 }
 
 void Renderizables::for_each_node(
-    function<void(const sptr<Renderizable>&)> action) const
+    function<void(const sptr<render::Renderizable>&)> action) const
 {
     std::for_each(render_nodes_.cbegin(), render_nodes_.cend(), action);
 }
 
-void Renderizables::addRenderizable(sptr<Renderizable> newElement)
+void Renderizables::addRenderizable(sptr<render::Renderizable> newElement)
 {
     render_nodes_.push_back(std::move(newElement));
 }
