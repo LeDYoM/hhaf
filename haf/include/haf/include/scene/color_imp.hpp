@@ -52,9 +52,9 @@ struct ColorImp
     constexpr ColorImp() noexcept : r{}, g{}, b{}, a{value_max} {}
 
     ColorImp(value_type const red,
-                                value_type const green,
-                                value_type const blue,
-                                value_type const alpha = value_max) noexcept :
+             value_type const green,
+             value_type const blue,
+             value_type const alpha = value_max) noexcept :
         r{red}, g{green}, b{blue}, a{alpha}
     {}
 
@@ -177,28 +177,15 @@ struct ColorImp
         return *this;
     }
 
-    constexpr float red() const noexcept { return detail::normalize(r); }
-    constexpr float green() const noexcept { return detail::normalize(g); }
-    constexpr float blue() const noexcept { return detail::normalize(b); }
-    constexpr float alpha() const noexcept { return detail::normalize(a); }
+    constexpr value_type red() const noexcept { return r; }
+    constexpr value_type green() const noexcept { return g; }
+    constexpr value_type blue() const noexcept { return b; }
+    constexpr value_type alpha() const noexcept { return a; }
 
-    constexpr void setRed(const htps::f32 red) noexcept
-    {
-        detail::denormalize(red, r);
-    }
-    constexpr void setGreen(const htps::f32 green) noexcept
-    {
-        detail::denormalize(green, g);
-    }
-    constexpr void setBlue(const htps::f32 blue) noexcept
-    {
-        detail::denormalize(blue, b);
-    }
-    constexpr void setAlpha(const htps::f32 alpha) noexcept
-    {
-        detail::denormalize(alpha, a);
-    }
+  template<typename vt>
+  friend class ColorImp;
 
+private:
     value_type r;
     value_type g;
     value_type b;
