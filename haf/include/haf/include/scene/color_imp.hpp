@@ -183,7 +183,7 @@ struct ColorImp
     constexpr value_type alpha() const noexcept { return a; }
 
   template<typename vt>
-  friend class ColorImp;
+  friend struct ColorImp;
 
 private:
     value_type r;
