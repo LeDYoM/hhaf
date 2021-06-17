@@ -122,7 +122,7 @@ void updateGeometry(BasicVertexArray& vertices,
             case FigType_t::Shape:
             {
                 const auto vertices_iterator_begin = vertices.begin();
-                auto vertices_iterator_second      = vertices_iterator_begin;
+                auto vertices_iterator_second{vertices_iterator_begin};
                 auto vertices_iterator{++vertices_iterator_second};
                 auto angle{0.0};
 

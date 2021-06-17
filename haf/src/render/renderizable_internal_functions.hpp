@@ -36,7 +36,12 @@ htps::vector2dd getPositionFromAngleAndRadius(FigType_t const fig_type,
 htps::pair<PrimitiveType const, htps::size_type const>
 initDataVertexPerFigureAndNumPoints(FigType_t const fig_type,
                                     htps::size_type const num_points) noexcept;
-
+/**
+ * @brief Get the rectange for a given texture
+ * 
+ * @param texture Texture where to extract the Rect
+ * @return Rects32 Quad around the texture if it is not nullptr
+ */
 htps::Rects32 textureFillQuad(
     htps::sptr<res::ITexture const> const& texture) noexcept;
 
