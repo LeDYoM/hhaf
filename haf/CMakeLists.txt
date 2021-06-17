@@ -74,6 +74,7 @@ set(sources
   ${src_dir}/resources/ttfontinstance.hpp
 
   # Scene
+  ${src_dir}/scene/color.cpp
   ${src_dir}/scene/componentcontainer_no_update.cpp
   ${src_dir}/scene/componentcontainer_update.cpp
   ${src_dir}/scene/componentcontainer.cpp
@@ -194,6 +195,7 @@ set(headers
   ${inc_dir}/resources/ittfont.hpp
 
   # Scene
+  ${inc_dir}/scene/color_imp.hpp
   ${inc_dir}/scene/color.hpp
   ${inc_dir}/scene/componentcontainer_part.hpp
   ${inc_dir}/scene/componentcontainer.hpp

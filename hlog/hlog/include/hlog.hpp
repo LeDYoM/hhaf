@@ -15,12 +15,11 @@ namespace logger
 {
 extern template struct Log<true, htps::str, MixinCommiter<haf::ThreadCommiter>>;
 }
+
 namespace haf
 {
-
 using LogClass =
     logger::Log<true, htps::str, logger::MixinCommiter<ThreadCommiter>>;
-
 }
 
 namespace logger
@@ -51,6 +50,6 @@ extern template struct LogInitializer<haf::LogClass>;
 namespace haf
 {
 using LogInitializer = logger::LogInitializer<LogClass>;
-}  // namespace haf
+}
 
 #endif

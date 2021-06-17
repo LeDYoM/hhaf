@@ -11,13 +11,11 @@
 
 namespace logger
 {
-    template struct Log<true, htps::str, MixinCommiter<haf::ThreadCommiter>>;
-    template struct LogDisplayer<haf::LogClass, SeverityType>;
-    template struct LogAsserter<haf::DisplayLog>;
-    template struct LogInitializer<haf::LogClass>;
-}
+template struct Log<true, htps::str, MixinCommiter<haf::ThreadCommiter>>;
+template struct LogDisplayer<haf::LogClass, SeverityType>;
+template struct LogAsserter<haf::DisplayLog>;
+template struct LogInitializer<haf::LogClass>;
+}  // namespace logger
 
 namespace haf
-{
-
-} // namespace haf
+{}  // namespace haf
