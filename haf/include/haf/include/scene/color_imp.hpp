@@ -212,6 +212,7 @@ constexpr ColorImp<vt> operator/(ColorImp<vt> color,
 {
     return ColorImp<vt>{std::move(color)} /= delta;
 }
+
 template <typename vt>
 constexpr ColorImp<vt> operator/(const htps::f32 delta,
                                  ColorImp<vt> color) noexcept
