@@ -25,7 +25,7 @@ public:
      * @see SceneNode
      * @return constexpr htps::rptr<SceneNode> Parent or nullptr if no parent
      */
-    constexpr htps::rptr<SceneNodeParent> parent() noexcept { return parent_; }
+//    constexpr htps::rptr<SceneNodeParent> parent() noexcept { return parent_; }
 
     /**
      * @brief Get the constant parent of this @b SceneNode
