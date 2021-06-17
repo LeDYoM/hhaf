@@ -3,4 +3,5 @@
 namespace haf::scene
 {
 template struct ColorImp<htps::u8>;
-}
+
+}  // namespace haf::scene

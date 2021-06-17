@@ -51,7 +51,7 @@ struct ColorImp
 
     constexpr ColorImp() noexcept : r{}, g{}, b{}, a{value_max} {}
 
-    constexpr ColorImp(value_type const red,
+    ColorImp(value_type const red,
                                 value_type const green,
                                 value_type const blue,
                                 value_type const alpha = value_max) noexcept :
