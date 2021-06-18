@@ -98,11 +98,14 @@ void SceneController::render(SceneNode& scene_node,
         // Update the transformation (local and global)
         parentTransformationChanged = scene_node.updateTransformations(
             parentTransformationChanged,
-            scene_node.parent() ? scene_node.parentAs<SceneNode>()->globalTransform()
-                                : Matrix4x4::Identity);
+            scene_node.parent()
+                ? scene_node.parentAs<SceneNode>()->globalTransform()
+                : Matrix4x4::Identity);
 
         // Update the renderizables added to this node
-        if (auto* renderizable_scene_node = dynamic_cast<RenderizablesSceneNode*>(&scene_node))
+        if (auto* const renderizable_scene_node =
+                dynamic_cast<RenderizablesSceneNode*>(&scene_node);
+            renderizable_scene_node != nullptr)
         {
             renderizable_scene_node->renderizables().updateRenderizables();
         }
