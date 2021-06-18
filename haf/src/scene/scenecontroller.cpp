@@ -134,9 +134,9 @@ const sptr<Scene>& SceneController::currentScene() const noexcept
 void SceneController::startScene(sptr<Scene> scene)
 {
     current_scene_ = std::move(scene);
-    if (current_scene_)
+    if (current_scene_ != nullptr)
     {
-        if (scene_manager_)
+        if (scene_manager_ != nullptr)
         {
             current_scene_->scene_manager_ = scene_manager_;
             if (!(current_scene_->setSystemProvider(

@@ -27,7 +27,7 @@ public:
      * @brief Destroy the System Access object
      * The destructor is virtual because this class is intended to be inherited.
      */
-    virtual ~SystemAccess() noexcept;
+    virtual ~SystemAccess();
 
     /**
      * @brief Get a ref-to-const version of the stored pointer.
