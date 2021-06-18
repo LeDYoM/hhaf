@@ -37,7 +37,6 @@ private:
 protected:
     using ContainedElement = BaseClass::ContainedElement;
 
-    htps::rptr<MenuPaged> parentMenuPaged();
     htps::rptr<MenuPaged const> parentMenuPaged() const;
 
     htps::sptr<res::IFont> normalFont() const;

@@ -26,11 +26,6 @@ void MenuPage::onCreated()
     input->Selected.connect({this, &MenuPage::goSelected});
 }
 
-rptr<MenuPaged> MenuPage::parentMenuPaged()
-{
-    return parentAs<MenuPaged>();
-}
-
 rptr<MenuPaged const> MenuPage::parentMenuPaged() const
 {
     return parentAs<MenuPaged const>();
