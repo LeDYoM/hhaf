@@ -107,7 +107,7 @@ bool Address::removeFirst()
 {
     if (private_->address_parts_.size() > 1U)
     {
-        private_->address_parts_.erase_one_index(0U, false);
+        private_->address_parts_.erase_one_index<false>(0U);
         return true;
     }
     return false;

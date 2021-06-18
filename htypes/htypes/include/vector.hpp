@@ -171,9 +171,9 @@ public:
 
     constexpr void swap(vector& other) noexcept { base_.swap(other.base_); }
 
+    template <bool discard_order = true>
     constexpr iterator erase_values(const T& value,
-                                    iterator start,
-                                    bool const discard_order = true)
+                                    iterator start)
     {
         iterator result{start};
         checkRange(result);
@@ -181,22 +181,21 @@ public:
         do
         {
             result = start;
-            start  = erase_one(value, start, discard_order);
+            start  = erase_one<discard_order>(value, start);
         } while (start != end());
 
         return result;
     }
 
-    constexpr iterator erase_values(const T& value,
-                                    bool const discard_order = true)
+    template <bool discard_order = true>
+    constexpr iterator erase_values(const T& value)
     {
-        return erase_values(value, begin(), discard_order);
+        return erase_values<discard_order>(value, begin());
     }
 
-    template <typename U>
+    template <typename U, bool discard_order = true>
     constexpr iterator erase_one_imp(U&& v,
-                                     iterator const start,
-                                     bool const discard_order = true) noexcept
+                                     iterator const start) noexcept
     {
         checkRange(start);
 
@@ -212,7 +211,7 @@ public:
                 // If the element to delete is not the last one
                 if (where_it_was < end() - 1U)
                 {
-                    remove_iterator(where_it_was, end(), discard_order);
+                    remove_iterator<discard_order>(where_it_was, end());
                 }
                 pop_back();
             }
@@ -221,9 +220,9 @@ public:
         return end();
     }
 
+    template <bool discard_order = true>
     constexpr iterator erase_iterator(iterator const where,
-                                      iterator const _end,
-                                      bool const discard_order = true) noexcept
+                                      iterator const _end) noexcept
     {
         // If such a node is found erase it, if not,
         // return end() (result from find(...)).
@@ -232,24 +231,24 @@ public:
             // If the element to delete is not the last one
             if (std::distance(where, _end) > 0)
             {
-                remove_element(where, _end, discard_order);
+                remove_element<discard_order>(where, _end);
             }
             pop_back();
         }
         return where;
     }
 
+    template <bool discard_order = true>
     constexpr iterator erase_if(function<bool(const T&)> condition,
-                                iterator start,
-                                bool const discard_order = true)
+                                iterator start)
     {
         checkRange(start);
 
         if (begin() != end())
         {
             // Find a node with the specified value
-            return erase_iterator(find_if(start, end(), condition), end(),
-                                  discard_order);
+            return erase_iterator<discard_order>(
+                find_if(start, end(), condition), end());
         }
         return end();
     }
@@ -273,26 +272,25 @@ public:
      * des not preserve the order. Actually, the deleted element will now
      * contain the previous last element.
      */
-    constexpr iterator erase_one(const T& value,
-                                 iterator const start,
-                                 bool const discard_order = true) noexcept
+    template <bool discard_order = true>
+    constexpr iterator erase_one(const T& value, iterator const start) noexcept
     {
         checkRange(start);
 
         if (begin() != end())
         {
             // Find a node with the specified value and erase it
-            return erase_iterator(find(start, end(), value), end(),
-                                  discard_order);
+            return erase_iterator<discard_order>(find(start, end(), value),
+                                                 end());
         }
         return end();
     }
 
+    template <bool discard_order = true>
     constexpr void remove_element(iterator const element,
-                                  iterator const end,
-                                  bool const discard_order) noexcept
+                                  iterator const end) noexcept
     {
-        if (discard_order)
+        if constexpr (discard_order)
         {
             // swap the element to delete with the last one
             std::swap(*element, *std::prev(end));
@@ -306,48 +304,47 @@ public:
         }
     }
 
-    constexpr iterator erase_one_index(size_type const index,
-                                       bool const discard_order = true) noexcept
+    template <bool discard_order = true>
+    constexpr iterator erase_one_index(size_type const index) noexcept
     {
         if (index < size())
         {
-            return erase_one(*(begin() + index), (begin() + index),
-                             discard_order);
+            return erase_one<discard_order>(*(begin() + index), (begin() + index));
         }
 
         return end();
     }
 
-    constexpr iterator erase_one(const T& value,
-                                 bool const discard_order = true)
+    template <bool discard_order = true>
+    constexpr iterator erase_one(const T& value)
     {
-        return erase_one(value, begin(), discard_order);
+        return erase_one<discard_order>(value, begin());
     }
 
-    constexpr iterator erase_if(function<bool(const T&)> condition,
-                                bool const discard_order = true)
+    template <bool discard_order = true>
+    constexpr iterator erase_if(function<bool(const T&)> condition)
     {
-        return erase_if(std::move(condition), begin(), discard_order);
+        return erase_if<discard_order>(std::move(condition), begin());
     }
 
+    template <bool discard_order = true>
     constexpr iterator erase_all_if(function<bool(const T&)> condition,
-                                    iterator start,
-                                    bool const discard_order = true)
+                                    iterator start)
     {
         iterator result{start};
         do
         {
             result = start;
-            start  = erase_if(condition, start, discard_order);
+            start  = erase_if<discard_order>(condition, start);
         } while (start != end());
 
         return result;
     }
 
-    constexpr iterator erase_all_if(function<bool(const T&)> condition,
-                                    bool const discard_order = true)
+    template <bool discard_order = true>
+    constexpr iterator erase_all_if(function<bool(const T&)> condition)
     {
-        return erase_all_if(condition, begin(), discard_order);
+        return erase_all_if<discard_order>(condition, begin());
     }
 
     constexpr const_iterator find_first_of(const vector& other) const noexcept

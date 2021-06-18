@@ -257,7 +257,7 @@ TEST_CASE("vector of shared pointers", "[vector]")
                     (test_vector1[test_vector1.size() - 1U]->b);
 
                 CHECK(std::next(iterator) == &(test_vector1[1U]));
-                test_vector1.erase_one(*test_vector1.begin(), false);
+                test_vector1.erase_one<false>(*test_vector1.begin());
                 CHECK(test_vector1[0U]->b == value2);
                 CHECK((test_vector1[test_vector1.size() - 1U]->b) ==
                       value_last);
