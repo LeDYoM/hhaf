@@ -171,7 +171,6 @@ public:
 
     constexpr void swap(vector& other) noexcept { base_.swap(other.base_); }
 
-    // TO DO: Optimize
     constexpr iterator erase_values(const T& value,
                                     iterator start,
                                     bool const discard_order = true)
@@ -201,7 +200,7 @@ public:
     {
         checkRange(start);
 
-        if (begin() != end())
+        if (cbegin() != cend())
         {
             // Find a node with the specified value
             iterator where_it_was{find(start, end(), std::forward<U>(v))};
