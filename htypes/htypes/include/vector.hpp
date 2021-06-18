@@ -238,17 +238,19 @@ public:
         return where;
     }
 
+    using Predicate_t = function<bool(const T&)>;
+
     template <bool discard_order = true>
-    constexpr iterator erase_if(function<bool(const T&)> condition,
+    constexpr iterator erase_if(Predicate_t condition,
                                 iterator start)
     {
         checkRange(start);
 
-        if (begin() != end())
+        if (cbegin() != cend())
         {
             // Find a node with the specified value
             return erase_iterator<discard_order>(
-                find_if(start, end(), condition), end());
+                find_if(start, end(), std::move(condition)), end());
         }
         return end();
     }
@@ -322,13 +324,13 @@ public:
     }
 
     template <bool discard_order = true>
-    constexpr iterator erase_if(function<bool(const T&)> condition)
+    constexpr iterator erase_if(Predicate_t condition)
     {
         return erase_if<discard_order>(std::move(condition), begin());
     }
 
     template <bool discard_order = true>
-    constexpr iterator erase_all_if(function<bool(const T&)> condition,
+    constexpr iterator erase_all_if(Predicate_t condition,
                                     iterator start)
     {
         iterator result{start};
@@ -342,9 +344,9 @@ public:
     }
 
     template <bool discard_order = true>
-    constexpr iterator erase_all_if(function<bool(const T&)> condition)
+    constexpr iterator erase_all_if(Predicate_t condition)
     {
-        return erase_all_if<discard_order>(condition, begin());
+        return erase_all_if<discard_order>(std::move(condition), begin());
     }
 
     constexpr const_iterator find_first_of(const vector& other) const noexcept
