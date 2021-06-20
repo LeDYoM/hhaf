@@ -100,11 +100,13 @@ void SceneNodeText::update()
             f32 y{0.F};
 
             // Create one quad for each character
+            using counter_t = decltype(sceneNodes().size());
+
             Rectf32 bounds{x, y, 0.0F, 0.0F};
-            size_type counter{0U};
-            auto const old_counter{sceneNodes().size()};
-            const Color& tc{pr.get<TextColor>()};
-            auto const boxes = font_utils.getTextBoxes(pr.get<Text>());
+            counter_t counter{0U};
+            counter_t const old_counter{sceneNodes().size()};
+            auto const& text_color{pr.get<TextColor>()};
+            auto const boxes{font_utils.getTextBoxes(pr.get<Text>())};
             size_type indexChar{0U};
 
             for (auto curChar : pr.get<Text>())
@@ -120,7 +122,7 @@ void SceneNodeText::update()
                     letterNode =
                         std::dynamic_pointer_cast<RenderizableSceneNode>(
                             sceneNodes()[counter]);
-                    letterNode->node()->color.set(tc);
+                    letterNode->node()->color.set(text_color);
                     letterNode->node()->box.set(letterBox);
                 }
                 else
@@ -132,7 +134,7 @@ void SceneNodeText::update()
                                        .name("text_" + str::to_str(counter))
                                        .figType(render::FigType_t::Quad)
                                        .box(letterBox)
-                                       .color(tc);
+                                       .color(text_color);
                     letterNode->buildNode(builder);
                 }
 
@@ -186,7 +188,7 @@ void SceneNodeText::update()
     if (pr.readResetHasChanged<TextColor>())
     {
         Color const& tc{pr.get<TextColor>()};
-        sceneNodes().for_each([&tc](const SceneNodeSPtr& sNode) {
+        sceneNodes().for_each([&tc](SceneNodeSPtr const& sNode) {
             sceneNodeCast<RenderizableSceneNode>(sNode)->node()->color.set(tc);
         });
     }
