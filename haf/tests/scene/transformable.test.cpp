@@ -33,16 +33,6 @@ TEST_CASE("haf::scene::Transformable", "[haf][scene][Transformable]")
 
     CHECK(transformable.updateTransformIfNecessary());
     CHECK_FALSE(transformable.updateTransformIfNecessary());
-
-    transformable.rotateAround({20.0F, 20.0F}, 4.0F);
-
-    CHECK(transformable.updateTransformIfNecessary());
-    CHECK_FALSE(transformable.updateTransformIfNecessary());
-
-    transformable.scaleAround({20.0F, 20.0F}, {5.0F, 2.0f});
-
-    CHECK(transformable.updateTransformIfNecessary());
-    CHECK_FALSE(transformable.updateTransformIfNecessary());
 }
 
 TEST_CASE("haf::scene::Transformable adding transformations",

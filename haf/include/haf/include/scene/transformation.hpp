@@ -26,25 +26,6 @@ public:
     Transformation(Transformation &&) noexcept = default;
     Transformation& operator=(Transformation &&) noexcept = default;
 
-    /**
-     * @brief Set the associated transformation to a rotation around a given
-     * point.
-     *
-     * @param point Point to be rotated around
-     * @param angle Angle for the rotation
-     */
-    void rotateAround(VectorScalar const point, Scalar const angle) noexcept;
-
-    /**
-     * @brief Set the associated transformation to a scale around a given point.
-     * Note: this method overwrites the properties.
-     *
-     * @param point Point to be rotated around
-     * @param scale Scale factor
-     */
-    void scaleAround(VectorScalar const point,
-                     VectorScalar const scale) noexcept;
-
     bool updateTransformIfNecessary() noexcept;
 
     Matrix4x4 const& matrix() noexcept { return transform_; }

@@ -23,20 +23,6 @@ bool Transformation::updateTransformIfNecessary() noexcept
     return false;
 }
 
-void Transformation::rotateAround(VectorScalar const point,
-                                 Scalar const angle) noexcept
-{
-    prop<Origin>()   = point;
-    prop<Rotation>() = angle;
-}
-
-void Transformation::scaleAround(VectorScalar const point,
-                                VectorScalar const scale_) noexcept
-{
-    prop<Origin>() = point;
-    prop<Scale>()  = scale_;
-}
-
 void Transformation::updateTransform()
 {
     // Recompute the combined transform
