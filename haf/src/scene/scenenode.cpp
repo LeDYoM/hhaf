@@ -15,7 +15,6 @@ SceneNode::SceneNode(rptr<SceneNode> parent, str name) :
     sys::HasName{std::move(name)},
     SceneNodeParent{parent},
     SceneNodes{this},
-    Transformable{},
     sys::DataWrapperCreator{this},
     ComponentContainer{this},
     sys::SystemAccess{parent != nullptr ? &(parent->isystemProvider())

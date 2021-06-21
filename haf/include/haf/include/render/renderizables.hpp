@@ -10,7 +10,7 @@
 
 namespace haf::scene
 {
-class SceneNode;
+class TransformableSceneNode;
 }
 
 namespace haf::render
@@ -22,7 +22,7 @@ public:
      * @brief Construct a new Renderizables object with a parent node
      * @param scene_node Node to be used as a parent
      */
-    explicit Renderizables(htps::rptr<scene::SceneNode> scene_node) noexcept;
+    explicit Renderizables(htps::rptr<scene::TransformableSceneNode> scene_node) noexcept;
 
     /**
      * @brief Create a Renderizable object
@@ -70,7 +70,7 @@ public:
 
 private:
     void addRenderizable(htps::sptr<Renderizable> newElement);
-    htps::rptr<scene::SceneNode> scene_node_;
+    htps::rptr<scene::TransformableSceneNode> scene_node_;
     htps::vector<htps::sptr<Renderizable>> render_nodes_;
 };
 }  // namespace haf::render
