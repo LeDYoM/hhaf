@@ -130,8 +130,7 @@ void SceneNodeText::update()
                 {
                     letterNode = createSceneNode<RenderizableSceneNode>(
                         "text_" + str::to_str(counter));
-                    auto builder = letterNode->renderizables()
-                                       .renderizableBuilder()
+                    auto builder = letterNode->renderizableBuilder()
                                        .name("text_" + str::to_str(counter))
                                        .figType(render::FigType_t::Quad)
                                        .box(letterBox)

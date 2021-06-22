@@ -50,8 +50,8 @@ void HighScoresScene::onCreated()
     m_selectedColor = colors::Red;
 
     auto renderizable_builder = createSceneNode<RenderizablesSceneNode>(
-                                "high_scores_main_menu_background")
-                                ->renderizables().renderizableBuilder();
+                                    "high_scores_main_menu_background")
+                                    ->renderizableBuilder();
 
     createStandardBackground(renderizable_builder);
 

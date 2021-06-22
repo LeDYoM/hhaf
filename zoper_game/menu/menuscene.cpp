@@ -54,7 +54,7 @@ void MenuScene::onCreated()
 
     auto renderizable_builder =
         createSceneNode<RenderizablesSceneNode>("main_menu_background")
-            ->renderizables().renderizableBuilder();
+            ->renderizableBuilder();
     createStandardBackground(renderizable_builder);
 
     auto logo =

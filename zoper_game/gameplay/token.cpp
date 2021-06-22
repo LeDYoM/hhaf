@@ -24,8 +24,7 @@ Token::Token(SceneNode* const parent, str name) :
                  name + str::to_str(m_tileCounter) + str::to_str(m_tileCounter)}
 {
     ++m_tileCounter;
-    buildNode(renderizables()
-                  .renderizableBuilder()
+    buildNode(renderizableBuilder()
                   .name("Node" + str::to_str(m_tileCounter))
                   .figType(FigType_t::Shape)
                   .pointCount(30U));

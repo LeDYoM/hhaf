@@ -21,8 +21,7 @@ Player::Player(rptr<SceneNode> parent, str name) :
     boardPosition{},
     currentDirection{Direction{Direction::DirectionData::Up}}
 {
-    buildNode(renderizables()
-                  .renderizableBuilder()
+    buildNode(renderizableBuilder()
                   .name("player_render_scene_node")
                   .figType(FigType_t::Shape)
                   .pointCount(3U));

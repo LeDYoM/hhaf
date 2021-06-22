@@ -30,7 +30,7 @@ void BoardTileSceneNode::createBackgroundTile(const htps::Rectf32& tileBox)
     m_pointInCenter =
         createSceneNode<RenderizableSceneNode>("backgroundTilePoint");
 
-    auto builder = m_pointInCenter->renderizables().renderizableBuilder();
+    auto builder = m_pointInCenter->renderizableBuilder();
     builder.name("backgroundTilePoint")
         .figType(FigType_t::Quad)
         .box(Rectf32{0, 0, point_box.width, point_box.height})
@@ -39,7 +39,7 @@ void BoardTileSceneNode::createBackgroundTile(const htps::Rectf32& tileBox)
 
     m_pointInCenter->prop<Position>().set(point_box.leftTop());
 
-    background_tile_ = renderizables().renderizableBuilder()
+    background_tile_ = renderizableBuilder()
                            .name("backgroundTile")
                            .figType(FigType_t::Quad)
                            .box(tileBox)
@@ -61,8 +61,7 @@ void BoardTileSceneNode::update()
 
     if (prop<BackgroundColor>().readResetHasChanged())
     {
-        background_tile_->color = std::move(
-            prop<BackgroundColor>().get());
+        background_tile_->color = std::move(prop<BackgroundColor>().get());
     }
 }
 

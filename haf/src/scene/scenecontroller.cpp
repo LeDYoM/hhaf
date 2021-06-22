@@ -113,7 +113,7 @@ void SceneController::render(SceneNode& scene_node,
                 dynamic_cast<RenderizablesSceneNode*>(&scene_node);
             renderizable_scene_node != nullptr)
         {
-            renderizable_scene_node->renderizables().updateRenderizables();
+            renderizable_scene_node->updateRenderizables();
         }
 
         // Render the nodes added to this node
