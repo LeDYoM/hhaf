@@ -2,7 +2,7 @@
 #define HAF_SCENE_RENDERIZABLES_SCENENODE_INCLUDE_HPP
 
 #include <haf/include/haf_export.hpp>
-#include <haf/include/scene/scenenode.hpp>
+#include <haf/include/scene/transformable_scenenode.hpp>
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/p_impl_pointer.hpp>
@@ -14,9 +14,9 @@ class Renderizables;
 
 namespace haf::scene
 {
-class HAF_API RenderizablesSceneNode : public SceneNode
+class HAF_API RenderizablesSceneNode : public TransformableSceneNode
 {
-    using BaseClass = SceneNode;
+    using BaseClass = TransformableSceneNode;
 
 public:
     RenderizablesSceneNode(htps::rptr<SceneNode> parent, htps::str name);

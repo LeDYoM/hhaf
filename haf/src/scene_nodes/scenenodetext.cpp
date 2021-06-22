@@ -66,7 +66,7 @@ inline void updateAlignmentY(
 }  // namespace
 
 SceneNodeText::SceneNodeText(rptr<SceneNode> parent, str name) :
-    SceneNode{parent, std::move(name)}
+    BaseClass{parent, std::move(name)}
 {
     inner_transformation_ = addTransformation();
 }

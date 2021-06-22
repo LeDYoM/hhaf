@@ -6,7 +6,7 @@
 #include "system/get_system.hpp"
 
 #include <haf/include/render/renderdata.hpp>
-#include <haf/include/scene/scenenode.hpp>
+#include <haf/include/scene/transformable_scenenode.hpp>
 #include <haf/include/render/renderizable_builder.hpp>
 #include <haf/include/resources/itexture.hpp>
 #include <haf/include/resources/ishader.hpp>
@@ -21,12 +21,12 @@ namespace haf::render
 
 struct Renderizable::RenderizablePrivate
 {
-    rptr<SceneNode> m_parent;
+    rptr<TransformableSceneNode> m_parent;
     VertexArray vertices_;
     RenderData render_data_;
     rptr<Renderizable const> const i_this_;
 
-    RenderizablePrivate(rptr<SceneNode> parent,
+    RenderizablePrivate(rptr<TransformableSceneNode> parent,
                         FigType_t const figure_type,
                         size_type const initial_point_count,
                         Matrix4x4 const& matrix,
@@ -49,7 +49,7 @@ struct Renderizable::RenderizablePrivate
     }
 };
 
-Renderizable::Renderizable(rptr<scene::SceneNode> parent,
+Renderizable::Renderizable(rptr<TransformableSceneNode> parent,
                            str name,
                            FigType_t const figure_type,
                            size_type const initial_point_count,
@@ -76,12 +76,12 @@ Renderizable::Renderizable(rptr<scene::SceneNode> parent,
 
 Renderizable::~Renderizable() = default;
 
-htps::rptr<SceneNode> Renderizable::parent() noexcept
+htps::rptr<TransformableSceneNode> Renderizable::parent() noexcept
 {
     return p_->m_parent;
 }
 
-htps::rptr<SceneNode const> Renderizable::parent() const noexcept
+htps::rptr<TransformableSceneNode const> Renderizable::parent() const noexcept
 {
     return p_->m_parent;
 }

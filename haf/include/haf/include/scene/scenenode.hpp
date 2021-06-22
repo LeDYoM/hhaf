@@ -8,7 +8,6 @@
 #include <haf/include/scene/scenenodeparent.hpp>
 #include <haf/include/scene/scenenode_properties.hpp>
 #include <haf/include/scene/scenenodes.hpp>
-#include <haf/include/scene/transformable.hpp>
 #include <haf/include/scene/hasname.hpp>
 #include <haf/include/scene/componentcontainer.hpp>
 #include <haf/include/scene/scenenode_cast.hpp>
@@ -28,7 +27,6 @@ namespace haf::scene
 class HAF_API SceneNode : public sys::HasName,
                           public SceneNodeParent,
                           public SceneNodes,
-                          public Transformable,
                           public sys::DataWrapperCreator,
                           public ComponentContainer,
                           public sys::SystemAccess,
@@ -37,7 +35,6 @@ class HAF_API SceneNode : public sys::HasName,
 {
 public:
     using SceneNodeProperties::prop;
-    using TransformationProperties::prop;
 
     /**
      * @brief Disabled copy constructor

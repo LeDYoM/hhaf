@@ -19,16 +19,17 @@ using namespace haf::scene;
 using namespace haf::scene::nodes;
 
 GameOverSceneNode::GameOverSceneNode(scene::SceneNode* const parent, str name) :
-    SceneNode{parent, std::move(name)}
+    BaseClass{parent, std::move(name)}
 {
-    m_gameOverrg = createSceneNode("gameOverScreen");
+    game_over_rg_ = createSceneNode<TransformableSceneNode>("gameOverScreen");
 
-    vector2df gosize{systemInterface<ISceneMetricsView>().currentView().width, 715};
-    m_gameOverrg->prop<Position>() = Position::value_type{0, 575};
+    vector2df gosize{systemInterface<ISceneMetricsView>().currentView().width,
+                     715};
+    game_over_rg_->prop<Position>() = Position::value_type{0, 575};
 
     {
         auto gameText(
-            m_gameOverrg->createSceneNode<SceneNodeText>("gameovergame"));
+            game_over_rg_->createSceneNode<SceneNodeText>("gameovergame"));
         gameText->prop<SceneNodeTextProperties>()
             .put<Text>("GAME")
             .put<Font>(systemInterface<res::IResourceRetriever>()
@@ -42,7 +43,7 @@ GameOverSceneNode::GameOverSceneNode(scene::SceneNode* const parent, str name) :
 
     {
         auto overText(
-            m_gameOverrg->createSceneNode<SceneNodeText>("gameoverover"));
+            game_over_rg_->createSceneNode<SceneNodeText>("gameoverover"));
         overText->prop<SceneNodeTextProperties>()
             .put<Text>("OVER")
             .put<Font>(systemInterface<res::IResourceRetriever>()
@@ -57,5 +58,4 @@ GameOverSceneNode::GameOverSceneNode(scene::SceneNode* const parent, str name) :
     prop<Visible>().set(false);
 }
 
-GameOverSceneNode::~GameOverSceneNode() = default;
 }  // namespace zoper

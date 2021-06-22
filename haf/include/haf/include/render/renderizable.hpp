@@ -15,7 +15,7 @@
 
 namespace haf::scene
 {
-class SceneNode;
+class TransformableSceneNode;
 }
 
 namespace haf::render
@@ -23,7 +23,7 @@ namespace haf::render
 class Renderizable final : public sys::HasName
 {
 public:
-    Renderizable(htps::rptr<scene::SceneNode> parent,
+    Renderizable(htps::rptr<scene::TransformableSceneNode> parent,
                  htps::str name,
                  FigType_t const figure_type,
                  htps::size_type const initial_point_count,
@@ -52,8 +52,8 @@ public:
 
     void setTextureFill(htps::sptr<res::ITexture> texture_);
 
-    htps::rptr<scene::SceneNode> parent() noexcept;
-    htps::rptr<scene::SceneNode const> parent() const noexcept;
+    htps::rptr<scene::TransformableSceneNode> parent() noexcept;
+    htps::rptr<scene::TransformableSceneNode const> parent() const noexcept;
 
     struct RenderizableInternalData;
 

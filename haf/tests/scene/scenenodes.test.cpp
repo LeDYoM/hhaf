@@ -4,6 +4,7 @@
 #include <htypes/include/str.hpp>
 #include <htypes/include/vector2d.hpp>
 #include <haf/include/scene/scenenode.hpp>
+#include <haf/include/scene/transformable_scenenode.hpp>
 #include <haf/include/scene/scenenodes.hpp>
 #include <haf/include/scene/scene.hpp>
 
@@ -21,7 +22,12 @@ class TestSceneNode : public haf::scene::SceneNode
     using haf::scene::SceneNode::SceneNode;
 };
 
-TEST_CASE("Scenenodes::for_each", "[SceneNode][SceneNodeUtils]")
+class TestTransformableSceneNode : public haf::scene::TransformableSceneNode
+{
+    using haf::scene::TransformableSceneNode::TransformableSceneNode;
+};
+
+TEST_CASE("Scenenodes::for_each", "[SceneNode][SceneNodes]")
 {
     using namespace haf;
     using namespace haf::scene;
@@ -41,7 +47,7 @@ TEST_CASE("Scenenodes::for_each", "[SceneNode][SceneNodeUtils]")
 
     testScene->for_each_sceneNode(
         [&numCheck](sptr<SceneNode> const& childNode) {
-            childNode->prop<Position>().set({1.0F, 2.0F});
+            childNode->prop<Visible>().set(false);
             ++numCheck;
         });
 
@@ -50,7 +56,7 @@ TEST_CASE("Scenenodes::for_each", "[SceneNode][SceneNodeUtils]")
 
     for (auto const childNode : testScene->sceneNodes())
     {
-        CHECK(childNode->prop<Position>().get() == vector2df{1.0F, 2.0F});
+        CHECK(childNode->prop<Visible>().get() == false);
         ++numCheck;
     }
 
@@ -68,7 +74,7 @@ TEST_CASE("Scenenodes::for_each", "[SceneNode][SceneNodeUtils]")
 
     testScene->for_each_sceneNode(
         [&numCheck](sptr<SceneNode> const& childNode) {
-            childNode->prop<Position>().set({10.0F, 20.0F});
+            childNode->prop<Visible>().set(false);
             ++numCheck;
         });
 
@@ -77,7 +83,7 @@ TEST_CASE("Scenenodes::for_each", "[SceneNode][SceneNodeUtils]")
 
     for (auto const childNode : testScene->sceneNodes())
     {
-        CHECK(childNode->prop<Position>().get() == vector2df{10.0F, 20.0F});
+        CHECK(childNode->prop<Visible>().get() == false);
         ++numCheck;
     }
 
@@ -86,7 +92,7 @@ TEST_CASE("Scenenodes::for_each", "[SceneNode][SceneNodeUtils]")
 
     testScene->for_each_sceneNode_as<TestSceneNode>(
         [&numCheck](sptr<TestSceneNode> const& childNode) {
-            childNode->prop<Position>().set({100.0F, 200.0F});
+            childNode->prop<Visible>().set(true);
             ++numCheck;
         });
 
@@ -94,7 +100,7 @@ TEST_CASE("Scenenodes::for_each", "[SceneNode][SceneNodeUtils]")
     numCheck = 0U;
 }
 
-TEST_CASE("Scenenodes::for_each const", "[SceneNode][SceneNodeUtils]")
+TEST_CASE("Scenenodes::for_each const", "[SceneNode][SceneNodes]")
 {
     using namespace haf;
     using namespace haf::scene;
@@ -115,7 +121,7 @@ TEST_CASE("Scenenodes::for_each const", "[SceneNode][SceneNodeUtils]")
 
     testScene_->for_each_sceneNode(
         [&numCheck](sptr<SceneNode const> const& childNode) {
-            CHECK(childNode->prop<Position>().get() == vector2df{});
+            CHECK(childNode->prop<Visible>().get() == true);
             ++numCheck;
         });
 
@@ -133,7 +139,7 @@ TEST_CASE("Scenenodes::for_each const", "[SceneNode][SceneNodeUtils]")
 
     testScene_->for_each_sceneNode(
         [&numCheck](sptr<SceneNode const> const& childNode) {
-            CHECK(childNode->prop<Position>().get() == vector2df{});
+            CHECK(childNode->prop<Visible>().get() == true);
             ++numCheck;
         });
 
@@ -142,7 +148,7 @@ TEST_CASE("Scenenodes::for_each const", "[SceneNode][SceneNodeUtils]")
 
     testScene_->for_each_sceneNode_as<TestSceneNode>(
         [&numCheck](sptr<TestSceneNode const> const& childNode) {
-            CHECK(childNode->prop<Position>().get() == vector2df{});
+            CHECK(childNode->prop<Visible>().get() == true);
             ++numCheck;
         });
 
@@ -151,7 +157,7 @@ TEST_CASE("Scenenodes::for_each const", "[SceneNode][SceneNodeUtils]")
 }
 
 TEST_CASE("Scenenodes::set_property_for_each_sceneNode",
-          "[SceneNode][SceneNodeUtils]")
+          "[SceneNode][SceneNodes]")
 {
     using namespace haf;
     using namespace haf::scene;
@@ -167,13 +173,13 @@ TEST_CASE("Scenenodes::set_property_for_each_sceneNode",
     }
     CHECK(testScene->sceneNodes().size() == kNumSceneNodes);
 
-    testScene->set_property_for_each_sceneNode<Position>(vector2df{4.5F, 3.5F});
+    //    testScene->set_property_for_each_sceneNode<Visible>(true);
 
     size_type numCheck{0U};
 
     for (auto const childNode : testScene->sceneNodes())
     {
-        CHECK(childNode->prop<Position>().get() == vector2df{4.5F, 3.5F});
+        CHECK(childNode->prop<Visible>().get() == true);
         ++numCheck;
     }
 
@@ -187,14 +193,14 @@ TEST_CASE("Scenenodes::set_property_for_each_sceneNode",
         auto node_test(testScene->createSceneNode<TestSceneNode>(name));
     }
 
-    testScene->set_property_for_each_sceneNode_as<TestSceneNode, Position>(
-        vector2df{33.0F, 44.0F});
+    //    testScene->set_property_for_each_sceneNode_as<TestSceneNode, Visible>(
+    //        true);
 
     for (auto const childNode : testScene->sceneNodes())
     {
         if (auto node = std::dynamic_pointer_cast<TestSceneNode>(childNode))
         {
-            CHECK(childNode->prop<Position>().get() == vector2df{33.0F, 44.0F});
+            CHECK(childNode->prop<Visible>().get() == true);
             ++numCheck;
         }
     }
@@ -202,7 +208,7 @@ TEST_CASE("Scenenodes::set_property_for_each_sceneNode",
     CHECK(numCheck == kNumSceneNodes);
 }
 
-TEST_CASE("Scenenodes::getByName", "[SceneNode][SceneNodeUtils]")
+TEST_CASE("Scenenodes::getByName", "[SceneNode][SceneNodes]")
 {
     using namespace haf;
     using namespace haf::scene;
@@ -224,7 +230,7 @@ TEST_CASE("Scenenodes::getByName", "[SceneNode][SceneNodeUtils]")
             testScene->createSceneNode(name);
         }
     }
-    
+
     CHECK(testScene->sceneNodes().size() == kNumSceneNodes);
 
     auto result = testScene->getByName("SceneNode_test_0");
@@ -233,7 +239,7 @@ TEST_CASE("Scenenodes::getByName", "[SceneNode][SceneNodeUtils]")
     CHECK(result == nullptr);
 }
 
-TEST_CASE("Scenenodes::removeSceneNode", "[SceneNode][SceneNodeUtils]")
+TEST_CASE("Scenenodes::removeSceneNode", "[SceneNode][SceneNodes]")
 {
     using namespace haf;
     using namespace haf::scene;
@@ -255,7 +261,7 @@ TEST_CASE("Scenenodes::removeSceneNode", "[SceneNode][SceneNodeUtils]")
             testScene->createSceneNode(name);
         }
     }
-    
+
     CHECK(testScene->sceneNodes().size() == kNumSceneNodes);
 
     auto result = testScene->removeSceneNode(node_test);
@@ -287,7 +293,7 @@ TEST_CASE("Scenenodes::removeSceneNodeNyName", "[SceneNode][SceneNodes]")
             testScene->createSceneNode(name);
         }
     }
-    
+
     CHECK(testScene->sceneNodes().size() == kNumSceneNodes);
 
     auto result = testScene->removeSceneNode("SceneNode_test_0");
@@ -319,9 +325,234 @@ TEST_CASE("Scenenodes::removeSceneNodeByNode", "[SceneNode][SceneNodes]")
             testScene->createSceneNode(name);
         }
     }
-    
+
     CHECK(testScene->sceneNodes().size() == kNumSceneNodes);
     testScene->clearSceneNodes();
     CHECK(testScene->sceneNodes().size() == 0U);
+}
 
+TEST_CASE("Scenenodes::for_each_as", "[SceneNode]")
+{
+    using namespace haf;
+    using namespace haf::scene;
+
+    constexpr size_type kNumSceneNodes{10U};
+    auto testScene(unitTestScene());
+
+    // Create 10 scene nodes
+    for (size_type index{0U}; index < kNumSceneNodes; ++index)
+    {
+        str name{make_str("SceneNode_test_", index)};
+        auto node_test(
+            testScene->createSceneNode<TransformableSceneNode>(name));
+    }
+    CHECK(testScene->sceneNodes().size() == kNumSceneNodes);
+
+    size_type numCheck{0U};
+
+    testScene->for_each_sceneNode_as<TransformableSceneNode>(
+        [&numCheck](sptr<TransformableSceneNode> const& childNode) {
+            childNode->prop<Position>().set({1.0F, 2.0F});
+            ++numCheck;
+        });
+
+    CHECK(numCheck == kNumSceneNodes);
+    numCheck = 0U;
+
+    for (auto const childNode : testScene->sceneNodes())
+    {
+        CHECK(std::dynamic_pointer_cast<TransformableSceneNode>(childNode)
+                  ->prop<Position>()
+                  .get() == vector2df{1.0F, 2.0F});
+        ++numCheck;
+    }
+
+    CHECK(numCheck == kNumSceneNodes);
+    numCheck = 0U;
+
+    // Create more scene nodes with different static type
+    for (size_type index{0U}; index < kNumSceneNodes; ++index)
+    {
+        str name{make_str("SceneNode_test_", index)};
+        auto node_test(
+            testScene->createSceneNode<TestTransformableSceneNode>(name));
+    }
+
+    CHECK(testScene->sceneNodes().size() == kNumSceneNodes * 2U);
+
+    testScene->for_each_sceneNode_as<TransformableSceneNode>(
+        [&numCheck](sptr<TransformableSceneNode> const& childNode) {
+            childNode->prop<Position>().set({10.0F, 20.0F});
+            ++numCheck;
+        });
+
+    CHECK(numCheck == kNumSceneNodes * 2U);
+    numCheck = 0U;
+
+    for (auto const childNode : testScene->sceneNodes())
+    {
+        CHECK(std::dynamic_pointer_cast<TransformableSceneNode>(childNode)
+                  ->prop<Position>()
+                  .get() == vector2df{10.0F, 20.0F});
+        ++numCheck;
+    }
+
+    CHECK(numCheck == kNumSceneNodes * 2U);
+    numCheck = 0U;
+
+    testScene->for_each_sceneNode_as<TestTransformableSceneNode>(
+        [&numCheck](sptr<TestTransformableSceneNode> const& childNode) {
+            childNode->prop<Position>().set({100.0F, 200.0F});
+            ++numCheck;
+        });
+
+    CHECK(numCheck == kNumSceneNodes);
+    numCheck = 0U;
+}
+
+TEST_CASE("Scenenodes::for_each_as const", "[SceneNode][SceneNodes]")
+{
+    using namespace haf;
+    using namespace haf::scene;
+
+    constexpr size_type kNumSceneNodes{10U};
+    auto testScene(unitTestScene());
+    sptr<Scene const> testScene_ = testScene;
+
+    // Create 10 scene nodes
+    for (size_type index{0U}; index < kNumSceneNodes; ++index)
+    {
+        str name{make_str("SceneNode_test_", index)};
+        auto node_test(
+            testScene->createSceneNode<TransformableSceneNode>(name));
+    }
+    CHECK(testScene_->sceneNodes().size() == kNumSceneNodes);
+
+    size_type numCheck{0U};
+
+    testScene_->for_each_sceneNode_as<TransformableSceneNode>(
+        [&numCheck](sptr<TransformableSceneNode const> const& childNode) {
+            CHECK(childNode->prop<Position>().get() == vector2df{});
+            ++numCheck;
+        });
+
+    CHECK(numCheck == kNumSceneNodes);
+    numCheck = 0U;
+
+    // Create more scene nodes with different static type
+    for (size_type index{0U}; index < kNumSceneNodes; ++index)
+    {
+        str name{make_str("SceneNode_test_", index)};
+        auto node_test(
+            testScene->createSceneNode<TestTransformableSceneNode>(name));
+    }
+
+    CHECK(testScene_->sceneNodes().size() == kNumSceneNodes * 2U);
+
+    testScene_->for_each_sceneNode_as<TransformableSceneNode>(
+        [&numCheck](sptr<TransformableSceneNode const> const& childNode) {
+            CHECK(childNode->prop<Position>().get() == vector2df{});
+            ++numCheck;
+        });
+
+    CHECK(numCheck == kNumSceneNodes * 2U);
+    numCheck = 0U;
+
+    testScene_->for_each_sceneNode_as<TestTransformableSceneNode>(
+        [&numCheck](sptr<TestTransformableSceneNode const> const& childNode) {
+            CHECK(childNode->prop<Position>().get() == vector2df{});
+            ++numCheck;
+        });
+
+    CHECK(numCheck == kNumSceneNodes);
+    numCheck = 0U;
+}
+
+TEST_CASE("Scenenodes::set_property_for_each_as", "[SceneNode][SceneNodes]")
+{
+    using namespace haf;
+    using namespace haf::scene;
+
+    constexpr size_type kNumSceneNodes{10U};
+    auto testScene(unitTestScene());
+
+    // Create 10 scene nodes
+    for (size_type index{0U}; index < kNumSceneNodes; ++index)
+    {
+        str name{make_str("SceneNode_test_", index)};
+        auto node_test(
+            testScene->createSceneNode<TransformableSceneNode>(name));
+    }
+    CHECK(testScene->sceneNodes().size() == kNumSceneNodes);
+
+    testScene
+        ->set_property_for_each_sceneNode_as<TransformableSceneNode, Position>(
+            vector2df{4.5F, 3.5F});
+
+    size_type numCheck{0U};
+
+    for (auto const childNode : testScene->sceneNodes())
+    {
+        CHECK(std::dynamic_pointer_cast<TransformableSceneNode>(childNode)
+                  ->prop<Position>()
+                  .get() == vector2df{4.5F, 3.5F});
+        ++numCheck;
+    }
+
+    CHECK(numCheck == kNumSceneNodes);
+    numCheck = 0U;
+
+    // Create more scene nodes with different static type
+    for (size_type index{0U}; index < kNumSceneNodes; ++index)
+    {
+        str name{make_str("SceneNode_test_", index)};
+        auto node_test(
+            testScene->createSceneNode<TestTransformableSceneNode>(name));
+    }
+
+    testScene->set_property_for_each_sceneNode_as<TestTransformableSceneNode,
+                                                  Position>(
+        vector2df{33.0F, 44.0F});
+
+    for (auto const childNode : testScene->sceneNodes())
+    {
+        if (auto node = std::dynamic_pointer_cast<TestTransformableSceneNode>(
+                childNode))
+        {
+            CHECK(node->prop<Position>().get() == vector2df{33.0F, 44.0F});
+            ++numCheck;
+        }
+    }
+
+    CHECK(numCheck == kNumSceneNodes);
+}
+
+TEST_CASE("Scenenodes::removeSceneNodeByNodeTestNode",
+          "[SceneNode][SceneNodes]")
+{
+    using namespace haf;
+    using namespace haf::scene;
+
+    constexpr size_type kNumSceneNodes{10U};
+    auto testScene(unitTestScene());
+    sptr<TestTransformableSceneNode> node_test;
+
+    // Create 10 scene nodes
+    for (size_type index{0U}; index < kNumSceneNodes; ++index)
+    {
+        str name{make_str("SceneNode_test_", index)};
+        if (index == 0U)
+        {
+            node_test =
+                testScene->createSceneNode<TestTransformableSceneNode>(name);
+        }
+        else
+        {
+            testScene->createSceneNode<TestTransformableSceneNode>(name);
+        }
+    }
+
+    CHECK(testScene->sceneNodes().size() == kNumSceneNodes);
+    testScene->clearSceneNodes();
+    CHECK(testScene->sceneNodes().size() == 0U);
 }

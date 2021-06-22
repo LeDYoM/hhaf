@@ -3,7 +3,7 @@
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/properties.hpp>
-#include <haf/include/scene/scenenode.hpp>
+#include <haf/include/scene/transformable_scenenode.hpp>
 #include <haf/include/scene_nodes/tablenode_properties.hpp>
 #include <hlog/include/hlog.hpp>
 
@@ -12,13 +12,15 @@ namespace haf::scene::nodes
 /**
  * @brief class Node with implementation details for a Table node.
  */
-class TableNodeImp : public SceneNode, public TableNodeProperties
+class TableNodeImp : public TransformableSceneNode, public TableNodeProperties
 {
-    using BaseClass = SceneNode;
+    using BaseClass = TransformableSceneNode;
 public:
-    using SceneNode::SceneNode;         ///< Inherited constuctor
-    using SceneNode::prop;              ///< Properties from @b SceneNode
+    using BaseClass::BaseClass;         ///< Inherited constuctor
+    using BaseClass::prop;              ///< Properties from @b SceneNode
     using TableNodeProperties::prop;    ///< Properties TableNodeProperties
+
+    using ContainedType_t = htps::sptr<TransformableSceneNode>;
 
     /**
      * @brief Get the size of each cell.
@@ -35,7 +37,7 @@ public:
 
 protected:
     void setInnerSceneNodeAt(htps::vector2dst const index,
-                             htps::sptr<SceneNode> scene_node);
+                             ContainedType_t scene_node);
 
     void updateTableSizeIfNecessary();
     virtual void setTableSize(htps::vector2dst const ntableSize);
@@ -43,10 +45,11 @@ protected:
 private:
     void for_each_table_innerSceneNode(
         htps::function<void(const htps::vector2dst&,
-                            const htps::sptr<SceneNode>&)> action);
+                            ContainedType_t&)> action);
 
-    htps::vector<htps::vector_shared_pointers<SceneNode>> inner_nodes_;
+    htps::vector<htps::vector<ContainedType_t>> inner_nodes_;
 };
+
 }  // namespace haf::scene::nodes
 
 #endif

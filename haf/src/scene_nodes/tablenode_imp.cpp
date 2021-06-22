@@ -23,8 +23,8 @@ void TableNodeImp::update()
     {
         htps::vector2df const& cell_size{cellSize()};
         for_each_table_innerSceneNode(
-            [this, cell_size](htps::vector2dst const& p, const htps::sptr<SceneNode>& n) {
-                n->prop<Position>().set(cell_size * static_cast<htps::vector2df>(p));
+            [this, cell_size](htps::vector2dst const& p, ContainedType_t& node) {
+                node->prop<Position>().set(cell_size * static_cast<htps::vector2df>(p));
             });
     }
 }
@@ -49,7 +49,7 @@ void TableNodeImp::setTableSize(htps::vector2dst const ntableSize)
 }
 
 void TableNodeImp::setInnerSceneNodeAt(htps::vector2dst const index,
-                                       htps::sptr<SceneNode> scene_node)
+                                       ContainedType_t scene_node)
 {
     LogAsserter::log_assert(
         index.x < prop<TableSize>().get().x &&
@@ -61,7 +61,7 @@ void TableNodeImp::setInnerSceneNodeAt(htps::vector2dst const index,
 }
 
 void TableNodeImp::for_each_table_innerSceneNode(
-    htps::function<void(const htps::vector2dst&, const htps::sptr<SceneNode>&)>
+    htps::function<void(htps::vector2dst const&, ContainedType_t&)>
         action)
 {
     for (htps::size_type x{0}; x < inner_nodes_.size(); ++x)

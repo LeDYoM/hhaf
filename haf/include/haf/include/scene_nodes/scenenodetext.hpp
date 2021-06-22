@@ -5,14 +5,14 @@
 #include <htypes/include/properties.hpp>
 #include <htypes/include/grouping_property.hpp>
 #include <haf/include/scene_nodes/scenenodetext_properties.hpp>
-#include <haf/include/scene/scenenode.hpp>
+#include <haf/include/scene/transformable_scenenode.hpp>
 
 namespace haf::scene::nodes
 {
 
-class SceneNodeText : public SceneNode, public SceneNodeTextProperties
+class SceneNodeText : public TransformableSceneNode, public SceneNodeTextProperties
 {
-    using BaseClass = SceneNode;
+    using BaseClass = TransformableSceneNode;
 
 public:
     /**
@@ -21,9 +21,9 @@ public:
     SceneNodeText(htps::rptr<SceneNode> parent, htps::str name);
 
     /**
-     * @brief Expose SceneNode properties
+     * @brief Expose TransformableSceneNode properties
      */
-    using SceneNode::prop;
+    using TransformableSceneNode::prop;
 
     /**
      * @brief Expose Text properties

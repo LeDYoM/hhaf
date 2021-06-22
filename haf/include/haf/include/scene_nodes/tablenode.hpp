@@ -25,8 +25,10 @@ public:
     htps::sptr<T> createNodeAt(const htps::vector2dst& index,
                                const htps::str& name)
     {
-        htps::sptr<SceneNode> inner_node(
-            createSceneNode<SceneNode>(name + "inner_node" + make_str(index)));
+        using ContainedType_t = BaseClass::ContainedType_t;
+
+        ContainedType_t inner_node(
+            createSceneNode<TransformableSceneNode>(name + "inner_node" + make_str(index)));
 
         htps::sptr<T> result(
             inner_node->createSceneNode<T>("inner_inner_node"));
