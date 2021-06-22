@@ -210,6 +210,7 @@ set(headers
   ${inc_dir}/scene/scenenodefactory.hpp
   ${inc_dir}/scene/scenenodeparent.hpp
   ${inc_dir}/scene/scenenodes.hpp
+  ${inc_dir}/scene/transformable_scenenode.hpp
   ${inc_dir}/scene/transformable.hpp
   ${inc_dir}/scene/transformation_properties.hpp
   ${inc_dir}/scene/transformation.hpp

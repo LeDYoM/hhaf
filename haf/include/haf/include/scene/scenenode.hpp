@@ -10,7 +10,6 @@
 #include <haf/include/scene/scenenodes.hpp>
 #include <haf/include/scene/hasname.hpp>
 #include <haf/include/scene/componentcontainer.hpp>
-#include <haf/include/scene/scenenode_cast.hpp>
 #include <haf/include/system/interface_getter.hpp>
 #include <haf/include/system/datawrappercreator.hpp>
 #include <haf/include/system/systemaccess.hpp>
