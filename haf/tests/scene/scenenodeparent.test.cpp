@@ -3,6 +3,7 @@
 #include <htypes/include/types.hpp>
 #include <haf/include/scene/scenenode.hpp>
 #include <haf/include/scene/scene.hpp>
+#include <haf/include/scene/scenenode_cast.hpp>
 
 using namespace htps;
 
