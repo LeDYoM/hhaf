@@ -17,7 +17,10 @@ class RenderizableSceneNode : public RenderizablesSceneNode
     using BaseClass = RenderizablesSceneNode;
 
 public:
+    using BaseClass::prop;
+
     RenderizableSceneNode(htps::rptr<SceneNode> parent, const htps::str& name);
+
     void buildNode(render::RenderizableBuilder& node_builder);
 
     htps::sptr<render::Renderizable> node() noexcept;
