@@ -19,8 +19,9 @@ namespace haf::scene
  */
 class Transformable : public Transformation
 {
-public:
     using BaseClass = Transformation;  ///< Shortcut for the baseclass
+
+public:
     using BaseClass::prop;             ///< Export properties
 
     using Scalar = Matrix4x4::Scalar;  ///< Type Scalar for this class

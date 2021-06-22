@@ -21,9 +21,9 @@ namespace haf::sys
  */
 class DataWrapperCreator : public utils::AttachableManager<IDataWrapper>
 {
-public:
     using BaseClass = utils::AttachableManager<IDataWrapper>;
 
+public:
     using BaseClass::AttachableManager;
 
     /// Fetch a specific type of data wrapper.

@@ -15,10 +15,11 @@ namespace haf::scene::nodes
 class TableNodeImp : public TransformableSceneNode, public TableNodeProperties
 {
     using BaseClass = TransformableSceneNode;
+
 public:
-    using BaseClass::BaseClass;         ///< Inherited constuctor
-    using BaseClass::prop;              ///< Properties from @b SceneNode
-    using TableNodeProperties::prop;    ///< Properties TableNodeProperties
+    using BaseClass::BaseClass;       ///< Inherited constuctor
+    using BaseClass::prop;            ///< Properties from @b SceneNode
+    using TableNodeProperties::prop;  ///< Properties TableNodeProperties
 
     using ContainedType_t = htps::sptr<TransformableSceneNode>;
 
@@ -31,7 +32,7 @@ public:
 
     /**
      * @brief Update the node
-     * 
+     *
      */
     void update() override;
 
@@ -44,8 +45,7 @@ protected:
 
 private:
     void for_each_table_innerSceneNode(
-        htps::function<void(const htps::vector2dst&,
-                            ContainedType_t&)> action);
+        htps::function<void(const htps::vector2dst&, ContainedType_t&)> action);
 
     htps::vector<htps::vector<ContainedType_t>> inner_nodes_;
 };
