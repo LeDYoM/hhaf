@@ -19,10 +19,9 @@ class HAF_API RenderizablesSceneNode : public TransformableSceneNode
     using BaseClass = TransformableSceneNode;
 
 public:
-    RenderizablesSceneNode(htps::rptr<SceneNode> parent, htps::str name);
+    using TransformableSceneNode::prop;
 
-    using SceneNodeProperties::prop;
-    using TransformationProperties::prop;
+    RenderizablesSceneNode(htps::rptr<SceneNode> parent, htps::str name);
 
     ~RenderizablesSceneNode() override;
 

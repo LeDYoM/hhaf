@@ -11,8 +11,8 @@ namespace haf::scene
 class HAF_API TransformableSceneNode : public SceneNode, public Transformable
 {
 public:
-    using SceneNodeProperties::prop;
-    using TransformationProperties::prop;
+    using SceneNode::prop;
+    using Transformable::prop;
 
     using SceneNode::SceneNode;
 };
