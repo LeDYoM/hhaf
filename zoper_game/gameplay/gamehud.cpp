@@ -19,7 +19,7 @@ namespace zoper
 GameHudSceneNode::GameHudSceneNode(
     htps::rptr<haf::scene::SceneNode> const parent,
     str name) :
-    SceneNode{parent, std::move(name)}
+    BaseClass{parent, std::move(name)}
 {
     Font::value_type font{systemInterface<res::IResourceRetriever>()
                                 .getTTFont(GameResources::ScoreFontId)
@@ -59,8 +59,6 @@ GameHudSceneNode::GameHudSceneNode(
     //            gameMode == GameMode::Token ? "Tokens: " : "Time: ")
     //            "Look here: ");
 }
-
-GameHudSceneNode::~GameHudSceneNode() = default;
 
 void GameHudSceneNode::setLevel(const size_type level)
 {

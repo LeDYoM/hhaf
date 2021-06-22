@@ -22,7 +22,6 @@ class HighScoreTextController : public nodes::TableNode<nodes::SceneNodeText>
     using BaseClass = nodes::TableNode<nodes::SceneNodeText>;    
 public:
     using BaseClass::prop;
-    using TransformationProperties::prop;
 
     HighScoreTextController(scene::SceneNode* parent, htps::str name);
     virtual ~HighScoreTextController();

@@ -6,7 +6,7 @@
 #include <haf/include/scene/scenenode.hpp>
 #include <haf/include/scene/scenenodes.hpp>
 #include <haf/include/scene/scene.hpp>
-
+/*
 using namespace htps;
 namespace
 {
@@ -323,5 +323,5 @@ TEST_CASE("Scenenodes::removeSceneNodeByNode", "[SceneNode][SceneNodes]")
     CHECK(testScene->sceneNodes().size() == kNumSceneNodes);
     testScene->clearSceneNodes();
     CHECK(testScene->sceneNodes().size() == 0U);
-
 }
+*/

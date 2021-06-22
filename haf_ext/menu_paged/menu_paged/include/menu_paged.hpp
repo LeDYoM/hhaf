@@ -4,7 +4,7 @@
 #include <htypes/include/types.hpp>
 #include <htypes/include/connection.hpp>
 
-#include <haf/include/scene/scenenode.hpp>
+#include <haf/include/scene/transformable_scenenode.hpp>
 #include <haf/include/scene/color.hpp>
 #include <haf/include/resources/ifont.hpp>
 #include "menu_paged_properties.hpp"
@@ -14,16 +14,15 @@ namespace haf::scene
 {
 /**
  * @brief Main class to model a menu in paged style.
- * This class should be used as a base class for a new type of @b SceneNode.
  */
-class MenuPaged : public SceneNode, MenuPagedProperties
+class MenuPaged : public TransformableSceneNode, MenuPagedProperties
 {
+    using BaseClass = TransformableSceneNode;
 public:
-    using BaseClass = SceneNode;
-    using SceneNode::SceneNode;
+    using BaseClass::BaseClass;
 
     using MenuPagedProperties::prop;
-    using SceneNode::prop;
+    using BaseClass::prop;
 
     ~MenuPaged() override;
 

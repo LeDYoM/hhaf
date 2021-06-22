@@ -12,12 +12,12 @@ namespace haf::scene::nodes
 /**
  * @brief class Node with implementation details for a Table node.
  */
-class TableNodeImp : public SceneNode, public TableNodeProperties
+class TableNodeImp : public TransformableSceneNode, public TableNodeProperties
 {
-    using BaseClass = SceneNode;
+    using BaseClass = TransformableSceneNode;
 public:
-    using SceneNode::SceneNode;         ///< Inherited constuctor
-    using SceneNode::prop;              ///< Properties from @b SceneNode
+    using BaseClass::BaseClass;         ///< Inherited constuctor
+    using BaseClass::prop;              ///< Properties from @b SceneNode
     using TableNodeProperties::prop;    ///< Properties TableNodeProperties
 
     using ContainedType_t = htps::sptr<TransformableSceneNode>;
