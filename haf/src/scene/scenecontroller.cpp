@@ -7,6 +7,7 @@
 #include <haf/include/scene/transformable_scenenode.hpp>
 #include <haf/include/system/isystemprovider.hpp>
 #include <haf/include/render/renderizables.hpp>
+#include <haf/include/scene/componentcontainer.hpp>
 
 #include <hlog/include/hlog.hpp>
 
@@ -91,7 +92,7 @@ void SceneController::render(SceneNode& scene_node,
     if (scene_node.prop<Visible>().get())
     {
         // Update the node components
-        scene_node.updateComponents();
+        scene_node.components().updateComponents();
 
         // Update node
         scene_node.update();

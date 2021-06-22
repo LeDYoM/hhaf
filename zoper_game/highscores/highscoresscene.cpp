@@ -14,6 +14,7 @@
 #include <haf/include/system/interfaceaccess.hpp>
 #include <haf/include/render/renderizables.hpp>
 #include <haf/include/render/renderizable_builder.hpp>
+#include <haf/include/scene/componentcontainer.hpp>
 
 namespace zoper
 {
@@ -41,7 +42,7 @@ void HighScoresScene::onCreated()
     resources_configurator.loadSection("high_scores");
 
     auto statesController(
-        addComponentOfType<StatesController<HighScoresSceneStates>>());
+        components().addComponentOfType<StatesController<HighScoresSceneStates>>());
 
     m_normalFont = systemInterface<res::IResourceRetriever>()
                        .getTTFont(HighScoresResources::MenuFontId)

@@ -12,6 +12,7 @@
 #include <haf/include/scene_components/scenemetricsview.hpp>
 #include <haf/include/render/renderizable.hpp>
 #include <haf/include/scene/scenenode_cast.hpp>
+#include <haf/include/scene/componentcontainer.hpp>
 
 #include <boardmanager/include/boardmanager.hpp>
 #include <boardmanager/include/itile.hpp>
@@ -52,7 +53,7 @@ void BoardGroup::configure(vector2dst size,
     }
 
     // Create and initialize the BoardManager
-    auto board_model = addComponentOfType<board::BoardManager>();
+    auto board_model = components().addComponentOfType<board::BoardManager>();
     board_model->initialize(tableSize, this);
 
     board_model->setBackgroundFunction(
@@ -78,7 +79,7 @@ void BoardGroup::addPlayer()
     player_ = tokens_scene_node->createSceneNode<Player>("playerNode");
 
     // Add it to the board and to the scene nodes
-    componentOfType<board::BoardManager>()->setTile(
+    components().componentOfType<board::BoardManager>()->setTile(
         TokenZones::centerRect.leftTop(), player_);
 }
 
@@ -99,7 +100,7 @@ void BoardGroup::createNewToken(const board::BoardTileData data,
     new_tile_token->setBox(rectFromSize(size));
 
     // Add it to the board
-    auto board_model = componentOfType<board::BoardManager>();
+    auto board_model = components().componentOfType<board::BoardManager>();
     board_model->setTile(board_position, new_tile_token);
     board_model->changeTileData(board_position, data);
 }
@@ -218,7 +219,7 @@ Color BoardGroup::getBackgroundTileColor(const size_type level,
 bool BoardGroup::moveTileInDirection(Direction const direction,
                                      vector2dst const position)
 {
-    auto board_model = componentOfType<board::BoardManager>();
+    auto board_model = components().componentOfType<board::BoardManager>();
 
     // Is the current tile position empty?
     if (!board_model->tileEmpty(position))
@@ -239,7 +240,7 @@ bool BoardGroup::moveTowardsCenter(Direction const direction,
                                    vector2dst const& position)
 {
     bool moved_to_center{false};
-    auto board_model = componentOfType<board::BoardManager>();
+    auto board_model = components().componentOfType<board::BoardManager>();
 
     // Is the current tile position empty?
     if (!board_model->tileEmpty(position))
@@ -271,7 +272,7 @@ bool BoardGroup::moveTowardsCenter(Direction const direction,
 vector2df BoardGroup::board2SceneFactor() const
 {
     return systemInterface<ISceneMetricsView>().currentView().size() /
-        componentOfType<board::BoardManager>()->size();
+        components().componentOfType<board::BoardManager>()->size();
 }
 
 vector2df BoardGroup::board2Scene(const vector2dst& bPosition) const
@@ -286,13 +287,13 @@ vector2df BoardGroup::tileSize() const
 
 htps::sptr<board::BoardManager> BoardGroup::boardManager() noexcept
 {
-    return componentOfType<board::BoardManager>();
+    return components().componentOfType<board::BoardManager>();
 }
 
 const htps::sptr<const board::BoardManager> BoardGroup::boardManager()
     const noexcept
 {
-    return componentOfType<board::BoardManager>();
+    return components().componentOfType<board::BoardManager>();
 }
 
 htps::sptr<scene::SceneNode> BoardGroup::tokensSceneNode() noexcept

@@ -2,6 +2,8 @@
 #include "scenemanager.hpp"
 #include "system/get_system.hpp"
 
+#include <haf/include/scene/componentcontainer.hpp>
+
 using namespace htps;
 
 namespace haf::scene
@@ -9,6 +11,7 @@ namespace haf::scene
 struct SceneNode::SceneNodePrivate
 {
     SceneNodePrivate() = default;
+    uptr<ComponentContainer> component_container_;
 };
 
 SceneNode::SceneNode(rptr<SceneNode> parent, str name) :
@@ -16,7 +19,6 @@ SceneNode::SceneNode(rptr<SceneNode> parent, str name) :
     SceneNodeParent{parent},
     SceneNodes{this},
     sys::DataWrapperCreator{this},
-    ComponentContainer{this},
     sys::SystemAccess{parent != nullptr ? &(parent->isystemProvider())
                                         : nullptr},
     InterfaceGetter{this},
@@ -29,7 +31,22 @@ SceneNode::~SceneNode() = default;
 void SceneNode::clearAll()
 {
     clearSceneNodes();
-    clearComponents();
+    //clearComponents();
+}
+
+ComponentContainer& SceneNode::components()
+{
+    if (p_->component_container_ == nullptr)
+    {
+        p_->component_container_ = muptr<ComponentContainer>(this);
+    }
+
+    return *(p_->component_container_);
+}
+
+ComponentContainer const& SceneNode::components() const
+{
+    return *(p_->component_container_);
 }
 
 }  // namespace haf::scene

@@ -1,4 +1,5 @@
 #include <haf/include/scene_components/visibility_selector.hpp>
+#include <haf/include/scene/componentcontainer.hpp>
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
@@ -33,12 +34,12 @@ void VisibilitySelectorComponent::hideAll()
 
 void VisibilitySelector::configure(size_type first_index)
 {
-    componentOfType<VisibilitySelectorComponent>()->configure(first_index);
+    components().componentOfType<VisibilitySelectorComponent>()->configure(first_index);
 }
 
 void VisibilitySelector::show(size_type index, bool force)
 {
-    componentOfType<VisibilitySelectorComponent>()->show(index, force);
+    components().componentOfType<VisibilitySelectorComponent>()->show(index, force);
 }
 
 }  // namespace haf::scene

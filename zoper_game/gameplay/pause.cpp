@@ -5,6 +5,7 @@
 #include <haf/include/scene_nodes/scenenodetext.hpp>
 #include <haf/include/scene_components/animationcomponent.hpp>
 #include <haf/include/scene_components/scenemetricsview.hpp>
+#include <haf/include/scene/componentcontainer.hpp>
 
 #include <haf/include/resources/itexture.hpp>
 #include <haf/include/resources/ittfont.hpp>
@@ -41,7 +42,7 @@ void PauseSceneNode::onCreated()
 void PauseSceneNode::enterPause()
 {
     prop<Visible>().set(true);
-    ensureComponentOfType(animation_component_);
+    components().ensureComponentOfType(animation_component_);
     animation_component_->addPropertyAnimation(
         TimePoint_as_miliseconds(1000U), m_pauseText->prop<TextColor>(),
         Color{255U, 255U, 255U, 0U}, Color{255U, 255U, 255U, 255U});

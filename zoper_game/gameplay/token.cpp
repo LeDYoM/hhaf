@@ -5,8 +5,10 @@
 #include "gamescene.hpp"
 #include "levelproperties.hpp"
 #include "tokenzones.hpp"
+
 #include <haf/include/render/renderizables.hpp>
 #include <haf/include/render/renderizable_builder.hpp>
+#include <haf/include/scene/componentcontainer.hpp>
 
 using namespace htps;
 using namespace haf;
@@ -28,7 +30,7 @@ Token::Token(SceneNode* const parent, str name) :
                   .name("Node" + str::to_str(m_tileCounter))
                   .figType(FigType_t::Shape)
                   .pointCount(30U));
-    animation_component_ = addComponentOfType<scene::AnimationComponent>();
+    animation_component_ = components().addComponentOfType<scene::AnimationComponent>();
 }
 
 Token::~Token() = default;

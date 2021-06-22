@@ -9,7 +9,6 @@
 #include <haf/include/scene/scenenode_properties.hpp>
 #include <haf/include/scene/scenenodes.hpp>
 #include <haf/include/scene/hasname.hpp>
-#include <haf/include/scene/componentcontainer.hpp>
 #include <haf/include/system/interface_getter.hpp>
 #include <haf/include/system/datawrappercreator.hpp>
 #include <haf/include/system/systemaccess.hpp>
@@ -18,6 +17,7 @@
 
 namespace haf::scene
 {
+class ComponentContainer;
 /**
  * @brief Main class representing all SceneNodes from a @b Scene.
  * This class serves as main entry point in the hierarchy of the scene.
@@ -27,7 +27,6 @@ class HAF_API SceneNode : public sys::HasName,
                           public SceneNodeParent,
                           public SceneNodes,
                           public sys::DataWrapperCreator,
-                          public ComponentContainer,
                           public sys::SystemAccess,
                           public sys::InterfaceGetter,
                           public SceneNodeProperties
@@ -38,7 +37,7 @@ public:
     /**
      * @brief Disabled copy constructor
      */
-    SceneNode(SceneNode const &) = delete;
+    SceneNode(SceneNode const&) = delete;
 
     /**
      * @brief Disabled copy assignment
@@ -84,6 +83,9 @@ public:
      * @brief Clear all elements in this scene node
      */
     void clearAll();
+
+    ComponentContainer& components();
+    ComponentContainer const& components() const;
 
 private:
     struct SceneNodePrivate;

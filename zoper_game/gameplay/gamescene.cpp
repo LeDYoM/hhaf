@@ -21,6 +21,7 @@
 
 #include <boardmanager/include/boardmanager.hpp>
 #include <hlog/include/hlog.hpp>
+#include <haf/include/scene/componentcontainer.hpp>
 #include <haf/include/render/renderizable.hpp>
 #include <haf/include/scene_components/animationcomponent.hpp>
 #include <haf/include/scene_components/scenecontrol.hpp>
@@ -117,18 +118,18 @@ void GameScene::onCreated()
     m_nextTokenPart = 0U;
 
     // Connect to key press funtion
-    auto inputComponent(addComponentOfType<input::InputComponent>());
+    auto inputComponent(components().addComponentOfType<input::InputComponent>());
     inputComponent->KeyPressed.connect(
         make_function(this, &GameScene::keyPressed));
 
     // Create the general timer component for the scene.
-    scene_timer_component_ = addComponentOfType<time::TimerComponent>();
+    scene_timer_component_ = components().addComponentOfType<time::TimerComponent>();
 
-    p_->scene_animation_component_ = addComponentOfType<AnimationComponent>();
+    p_->scene_animation_component_ = components().addComponentOfType<AnimationComponent>();
 
     // At this point, we setup level properties.
     // level_properties_ should not be used before this point.
-    level_properties_ = addComponentOfType<LevelProperties>();
+    level_properties_ = components().addComponentOfType<LevelProperties>();
 
     size_type start_level;
     GameMode game_mode;
@@ -148,7 +149,7 @@ void GameScene::onCreated()
     m_boardGroup->configure(TokenZones::size, level_properties_);
 
 #ifdef USE_DEBUG_ACTIONS
-    addComponentOfType<DebugActions>();
+    components().addComponentOfType<DebugActions>();
 #endif
 
     // The next token has the responsibility of calling the function
@@ -168,7 +169,7 @@ void GameScene::onCreated()
 
     // Set state control.
     {
-        ensureComponentOfType(m_sceneStates);
+        components().ensureComponentOfType(m_sceneStates);
 
         StatesControllerActuatorRegister<GameSceneStates>
             gameSceneActuatorRegister;
@@ -177,7 +178,7 @@ void GameScene::onCreated()
     }
 
     p_->token_type_generator_ =
-        addComponentOfType<rnd::RandomNumbersComponent>();
+        components().addComponentOfType<rnd::RandomNumbersComponent>();
     LogAsserter::log_assert(p_->token_type_generator_ != nullptr,
                             "Cannot create DataProviderComponent");
     p_->token_position_generator_ = p_->token_type_generator_;

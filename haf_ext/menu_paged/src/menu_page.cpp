@@ -1,6 +1,7 @@
 #include <menu_paged/include/menu_page.hpp>
 #include <menu_paged/include/menu_paged.hpp>
 #include <menu_paged/include/menu_paged_input_component.hpp>
+#include <haf/include/scene/componentcontainer.hpp>
 
 #include <hlog/include/hlog.hpp>
 #include <haf/include/input/key.hpp>
@@ -18,7 +19,7 @@ void MenuPage::onCreated()
 {
     BaseClass::onCreated();
 
-    auto input = addComponentOfType<MenuPageInputComponent>();
+    auto input = components().addComponentOfType<MenuPageInputComponent>();
     input->Up.connect({this, &MenuPage::goUp});
     input->Down.connect({this, &MenuPage::goDown});
     input->Left.connect({this, &MenuPage::goLeft});
@@ -53,7 +54,7 @@ size_type MenuPage::SelectedOptionAtRow(const size_type row) const
     if (row < prop<TableSize>().get().y)
     {
         auto node(nodeAt({columnForOptions, row}));
-        if (auto discreteText = node->componentOfType<DiscreteTextComponent>())
+        if (auto discreteText = node->components().componentOfType<DiscreteTextComponent>())
         {
             return discreteText->index();
         }
@@ -97,7 +98,7 @@ void MenuPage::configure(vector<sptr<MenuPagedOption>> options,
                              make_str("option", counter)));
             standarizeText(discreteTextLabel);
             auto discreteTextComponent(
-                discreteTextLabel->addComponentOfType<DiscreteTextComponent>());
+                discreteTextLabel->components().addComponentOfType<DiscreteTextComponent>());
             discreteTextComponent->data.set(option->option().options());
         }
 
@@ -219,7 +220,7 @@ sptr<DiscreteTextComponent> MenuPage::optionsLabelAt(const size_type y) const
 {
     auto node = nodeAt({columnForOptions, y});
     LogAsserter::log_assert(node != nullptr, "This node does not have options");
-    return node->componentOfType<DiscreteTextComponent>();
+    return node->components().componentOfType<DiscreteTextComponent>();
 }
 
 bool MenuPage::nodeHasOptions(const size_type y) const noexcept
@@ -228,7 +229,7 @@ bool MenuPage::nodeHasOptions(const size_type y) const noexcept
     {
         if (auto node = nodeAt({columnForOptions, y}))
         {
-            return node->componentOfType<DiscreteTextComponent>() != nullptr;
+            return node->components().componentOfType<DiscreteTextComponent>() != nullptr;
         }
     }
     return false;

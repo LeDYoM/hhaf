@@ -4,6 +4,7 @@
 #include <haf/include/scene_components/statescontroller.hpp>
 #include <haf/include/scene_components/visibility_selector.hpp>
 #include <haf/include/scene_components/scenemetricsview.hpp>
+#include <haf/include/scene/componentcontainer.hpp>
 
 using namespace htps;
 
@@ -46,8 +47,8 @@ void MenuPaged::configure_menu(
     vector_shared_pointers<scene::MenuPage> menu_steps)
 {
     auto visibility_selector =
-        addComponentOfType<VisibilitySelectorComponent>();
-    auto statesController = addComponentOfType<StatesController<s32>>();
+        components().addComponentOfType<VisibilitySelectorComponent>();
+    auto statesController = components().addComponentOfType<StatesController<s32>>();
     menu_steps_           = std::move(menu_steps);
 
     for (auto&& menu_page : menu_steps_)

@@ -13,6 +13,7 @@
 #include <haf/include/shareddata/shareddata.hpp>
 #include <haf/include/shareddata/shareddataviewer.hpp>
 #include <haf/include/input/inputcomponent.hpp>
+#include <haf/include/scene/componentcontainer.hpp>
 
 using namespace htps;
 using namespace haf;
@@ -37,7 +38,7 @@ void HighScoreTextController::onCreated()
                        ->font(72);
     m_normalColor        = colors::Blue;
     m_selectedColor      = colors::Red;
-    animation_component_ = addComponentOfType<scene::AnimationComponent>();
+    animation_component_ = components().addComponentOfType<scene::AnimationComponent>();
 
     // Request the high scores.
     dataWrapper<sys::FileSerializer>()->deserializeFromFile(HighScoresFileName,
@@ -69,7 +70,7 @@ void HighScoreTextController::onCreated()
 
     if (!isInserting)
     {
-        auto input_component(addComponentOfType<input::InputComponent>());
+        auto input_component(components().addComponentOfType<input::InputComponent>());
         input_component->KeyPressed.connect(
             [this](const auto&) { Finished(); });
     }
@@ -107,7 +108,7 @@ void HighScoreTextController::addHighScoreEditor(const sptr<nodes::SceneNodeText
                                                  const size_type counter)
 {
     addEditAnimation(counter);
-    auto editor(label->addComponentOfType<TextEditorComponent>());
+    auto editor(label->components().addComponentOfType<TextEditorComponent>());
     editor->setTextValidator(muptr<HighScoreValidator>());
     editor->Accepted.connect([this, counter](const str& entry) mutable {
         m_hsData.setHighScoreName(counter, entry);

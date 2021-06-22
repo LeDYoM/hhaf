@@ -5,6 +5,7 @@
 #include <htypes/include/str.hpp>
 
 #include <haf/include/scene/scenenode.hpp>
+#include <haf/include/scene/icomponent.hpp>
 
 namespace haf::scene
 {
