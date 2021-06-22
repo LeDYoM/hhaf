@@ -139,7 +139,7 @@ public:
     template <typename Tag, typename T>
     void set_property_for_each_sceneNode(T const& value)
     {
-        for_each_sceneNode_as<SceneNode>(
+        for_each_sceneNode(
             [&value](auto& node) { node->template prop<Tag>().set(value); });
     }
 
