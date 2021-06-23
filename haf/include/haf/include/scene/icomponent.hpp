@@ -38,6 +38,7 @@ public:
 };
 
 using IComponent = IComponentBase<true>;
+using IStaticComponent = IComponentBase<true>;
 
 template <typename T1, typename T2>
 class IComponentMixin : public IComponent

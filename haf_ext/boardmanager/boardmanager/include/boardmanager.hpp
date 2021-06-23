@@ -14,7 +14,7 @@ using BackgroundData = htps::s32;
 using BackgroundFunction =
     htps::function<BackgroundData(const htps::vector2dst&)>;
 
-class BoardManager : public haf::scene::IComponent
+class BoardManager : public haf::scene::IStaticComponent
 {
 public:
     /**
