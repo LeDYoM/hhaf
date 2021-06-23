@@ -32,14 +32,4 @@ void VisibilitySelectorComponent::hideAll()
     }
 }
 
-void VisibilitySelector::configure(size_type first_index)
-{
-    components().componentOfType<VisibilitySelectorComponent>()->configure(first_index);
-}
-
-void VisibilitySelector::show(size_type index, bool force)
-{
-    components().componentOfType<VisibilitySelectorComponent>()->show(index, force);
-}
-
 }  // namespace haf::scene
