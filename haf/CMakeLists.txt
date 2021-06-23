@@ -102,7 +102,7 @@ set(sources
   ${src_dir}/scene_components/scenemetrics.cpp
   ${src_dir}/scene_components/scenemetricsview.cpp
   ${src_dir}/scene_components/texteditorcomponent.cpp
-  ${src_dir}/scene_components/visibility_selector.cpp
+  ${src_dir}/scene_components/visibility_selector_component.cpp
 
   # Scene nodes
   ${src_dir}/scene_nodes/renderizable_scenenode.cpp
@@ -230,7 +230,7 @@ set(headers
   ${inc_dir}/scene_components/statescontroller.hpp
   ${inc_dir}/scene_components/statescontrolleractuator.hpp
   ${inc_dir}/scene_components/texteditorcomponent.hpp
-  ${inc_dir}/scene_components/visibility_selector.hpp
+  ${inc_dir}/scene_components/visibility_selector_component.hpp
 
   # Scene nodes
   ${inc_dir}/scene_nodes/renderizable_scenenode.hpp

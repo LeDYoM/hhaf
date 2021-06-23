@@ -1,4 +1,4 @@
-#include <haf/include/scene_components/visibility_selector.hpp>
+#include <haf/include/scene_components/visibility_selector_component.hpp>
 #include <haf/include/scene/componentcontainer.hpp>
 
 #include <htypes/include/types.hpp>
