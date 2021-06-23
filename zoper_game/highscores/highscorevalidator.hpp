@@ -7,21 +7,12 @@
 
 namespace zoper
 {
-class HighScoreValidator : public haf::scene::TextValidator
+class HighScoreValidator : public haf::scene::TextEditorComponent::TextValidator
 {
 public:
-    bool canAddChar(const htps::str &source, const char new_char) override
-    {
-        htps::str dest{source};
-        dest.push_back(new_char);
-        return isValidText(dest);
-        return true;
-    }
+    bool canAddChar(const htps::str &source, const char new_char) override;
 
-    bool isValidText(const htps::str &source) override
-    {
-        return source.size() < 4U;
-    }
+    bool isValidText(const htps::str &source) override;
 };
 } // namespace zoper
 

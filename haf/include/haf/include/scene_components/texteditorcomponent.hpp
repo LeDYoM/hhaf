@@ -8,16 +8,8 @@
 
 namespace haf::scene
 {
-class TextValidator
-{
-public:
-    virtual bool canAddChar(const htps::str&, const char) { return true; }
-    virtual bool isValidText(const htps::str&) { return true; }
-};
-
 class TextEditorComponent final : public input::VirtualInputComponent
 {
-private:
     using BaseClass = input::VirtualInputComponent;
 
 public:
@@ -27,6 +19,13 @@ public:
     htps::emitter<> Rejected;
 
     bool enabled{true};
+
+    class TextValidator
+    {
+    public:
+        virtual bool canAddChar(const htps::str&, const char) { return true; }
+        virtual bool isValidText(const htps::str&) { return true; }
+    };
 
     void setTextValidator(htps::uptr<TextValidator> nTextValidator) noexcept;
 
