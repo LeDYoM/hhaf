@@ -19,10 +19,12 @@ void SceneController::setSceneManager(rptr<SceneManager> scene_manager)
 {
     LogAsserter::log_assert(scene_manager_ == nullptr,
                             "The scene_manager_ was set already");
+    LogAsserter::log_assert(scene_manager != nullptr,
+                            "Invalid parameter scene_node");
     scene_manager_ = scene_manager;
 }
 
-bool SceneController::startScene(const str& sceneName)
+bool SceneController::startScene(str const& sceneName)
 {
     auto scene = scene_factory_.create(sceneName);
     startScene(sptr<Scene>(std::move(scene)));
@@ -74,7 +76,7 @@ void SceneController::update()
         switch_scene_ = false;
     }
 
-    if (auto current_scene = currentScene())
+    if (auto current_scene = currentScene(); current_scene != nullptr)
     {
         renderScene(*current_scene, false);
     }

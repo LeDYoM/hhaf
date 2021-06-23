@@ -26,9 +26,12 @@ class DataWrapperCreator : public utils::AttachableManager<IDataWrapper>
 public:
     using BaseClass::AttachableManager;
 
-    /// Fetch a specific type of data wrapper.
-    /// @paramt T Concrete type of the data wrapper.
-    /// @return \b htps::uptr<T> containing the data wrapper.
+    /**
+     * @brief Fetch a specific type of data wrapper.
+     * 
+     * @tparam T Concrete type of the data wrapper.
+     * @return htps::uptr<T> containing the data wrapper.
+     */
     template <typename T>
     htps::uptr<T> dataWrapper() const
     {

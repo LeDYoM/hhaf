@@ -33,10 +33,10 @@ public:
     void finish();
     bool isActive();
 
-    bool startScene(const htps::str& sceneName);
+    bool startScene(htps::str const& sceneName);
 
     template <typename T>
-    bool registerAndStartScene(const htps::str& sceneName)
+    bool registerAndStartScene(htps::str const& sceneName)
     {
         if (scene_factory_.registerSceneNodeType<T>(sceneName))
         {
