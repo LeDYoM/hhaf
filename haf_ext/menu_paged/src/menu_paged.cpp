@@ -71,18 +71,18 @@ void MenuPaged::configure_menu(
 
     statesController->StatePushed.connect(
         [visibility_selector](const s32 menu_page) {
-            visibility_selector->show(static_cast<size_type>(menu_page));
+            visibility_selector->visible_index.set(static_cast<size_type>(menu_page));
         });
 
     statesController->StateResumed.connect(
         [visibility_selector](const s32 menu_page) {
-            visibility_selector->show(static_cast<size_type>(menu_page));
+            visibility_selector->visible_index.set(static_cast<size_type>(menu_page));
         });
 
     statesController->AfterFinish.connect([this]() { MenuFinished(status_); });
 
     statesController->start(0);
-    visibility_selector->configure(0U);
+    visibility_selector->visible_index.set(0U);
 }
 
 void MenuPaged::terminate(const s32 status)

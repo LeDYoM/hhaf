@@ -1,34 +1,32 @@
 #include <haf/include/scene_components/visibility_selector_component.hpp>
-#include <haf/include/scene/componentcontainer.hpp>
+#include <haf/include/scene/scenenode.hpp>
 
 #include <htypes/include/types.hpp>
-#include <htypes/include/str.hpp>
+#include <hlog/include/hlog.hpp>
 
 using namespace htps;
 
 namespace haf::scene
 {
-void VisibilitySelectorComponent::configure(size_type first_index)
-{
-    hideAll();
-    show(first_index, true);
-}
+VisibilitySelectorComponent::VisibilitySelectorComponent() :
+    IComponent{}, visible_index{0U}
+{}
 
-void VisibilitySelectorComponent::show(size_type index, bool force)
+void VisibilitySelectorComponent::update()
 {
-    if (index != active_index || force)
+    if (visible_index.readResetHasChanged())
     {
-        attachedNode()->sceneNodes()[active_index]->prop<Visible>().set(false);
-        active_index = index;
-        attachedNode()->sceneNodes()[active_index]->prop<Visible>().set(true);
-    }
-}
+        attachedNode()->set_property_for_each_sceneNode<Visible>(false);
 
-void VisibilitySelectorComponent::hideAll()
-{
-    for (auto& scene_node : attachedNode()->sceneNodes())
-    {
-        scene_node->prop<Visible>().set(false);
+        LogAsserter::log_assert(
+            visible_index() < attachedNode()->sceneNodes().size(),
+            "Invalid visible_index");
+
+        if (visible_index() < attachedNode()->sceneNodes().size())
+        {
+            attachedNode()->sceneNodes()[visible_index()]->prop<Visible>().set(
+                true);
+        }
     }
 }
 
