@@ -84,8 +84,8 @@ void Token::tileRemoved(const vector2dst& position_)
 }
 
 void Token::tileChanged(const vector2dst& position_,
-                        const board::BoardTileData oldValue,
-                        const board::BoardTileData newValue)
+                        const BoardTileData oldValue,
+                        const BoardTileData newValue)
 {
     BaseClass::tileChanged(position_, oldValue, newValue);
     DisplayLog::info("Token at position ", position_, " changed from ",

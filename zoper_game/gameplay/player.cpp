@@ -128,8 +128,8 @@ void Player::tileAdded(const vector2dst& position_)
 }
 
 void Player::tileChanged(const vector2dst& position_,
-                         const board::BoardTileData oldValue,
-                         const board::BoardTileData newValue)
+                         const BoardTileData oldValue,
+                         const BoardTileData newValue)
 {
     BaseClass::tileChanged(position_, oldValue, newValue);
     DisplayLog::info("Player (position ", position_, ") changed from ",

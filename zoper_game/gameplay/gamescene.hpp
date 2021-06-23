@@ -72,7 +72,7 @@ private:
     htps::sptr<NextToken> next_token_;
 
     // General properties.
-    htps::u8 m_nextTokenPart{0U};
+    htps::u16 m_nextTokenPart{0U};
     htps::sptr<LevelProperties> level_properties_;
     htps::sptr<GameOverSceneNode> m_gameOver;
     htps::sptr<PauseSceneNode> pause_node_;

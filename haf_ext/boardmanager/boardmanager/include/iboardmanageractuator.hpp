@@ -9,6 +9,8 @@ namespace haf::board
 class IBoardManagerActuator
 {
 public:
+    using BoardTileData = ITile::BoardTileData;
+
     virtual void tileAdded(const htps::vector2dst, SITilePointer&) {}
     virtual void tileRemoved(const htps::vector2dst, SITilePointer&) {}
     virtual void tileMoved(const htps::vector2dst,

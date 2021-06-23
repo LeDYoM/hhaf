@@ -26,15 +26,17 @@ class BoardGroup : public haf::scene::nodes::TableNode<BoardTileSceneNode>,
 {
 private:
     using BaseClass = haf::scene::nodes::TableNode<BoardTileSceneNode>;
-    using BaseClass::prop;    
+    using BaseClass::prop;
+
 public:
+    using BoardTileData = haf::board::IBoardManagerActuator::BoardTileData;
     using BaseClass::BaseClass;
 
     ~BoardGroup() override;
 
     void configure(htps::vector2dst size,
                    htps::sptr<LevelProperties> level_properties);
-    void createNewToken(const haf::board::BoardTileData data,
+    void createNewToken(const BoardTileData data,
                         const htps::vector2dst& board_position,
                         const htps::vector2df& size);
 
@@ -62,7 +64,8 @@ public:
                            htps::vector2dst const& position);
 
     htps::sptr<haf::board::BoardManager> boardManager() noexcept;
-    const htps::sptr<const haf::board::BoardManager> boardManager() const noexcept;
+    const htps::sptr<const haf::board::BoardManager> boardManager()
+        const noexcept;
     htps::sptr<haf::scene::SceneNode> tokensSceneNode() noexcept;
     const htps::sptr<haf::scene::SceneNode> tokensSceneNode() const noexcept;
     htps::sptr<Player> player() noexcept;

@@ -57,7 +57,7 @@ void BoardGroup::configure(vector2dst size,
     board_model->initialize(tableSize, this);
 
     board_model->setBackgroundFunction(
-        [](const vector2dst& position) -> board::BackgroundData {
+        [](const vector2dst& position) -> board::BoardManager::BackgroundData {
             return ((TokenZones::pointInCenter(position)) ? (1) : (0));
         });
 
@@ -83,7 +83,7 @@ void BoardGroup::addPlayer()
         TokenZones::centerRect.leftTop(), player_);
 }
 
-void BoardGroup::createNewToken(const board::BoardTileData data,
+void BoardGroup::createNewToken(const BoardTileData data,
                                 const vector2dst& board_position,
                                 const vector2df& size)
 {
@@ -230,7 +230,7 @@ bool BoardGroup::moveTileInDirection(Direction const direction,
         LogAsserter::log_assert(board_model->tileEmpty(next),
                                 "Trying to move a token to a non empty tile");
         board_model->moveTile(position, next);
-        return (TokenZones::toBoardBackgroundType(board_model->backgroundType(
+        return (TokenZones::toBoardBackgroundType(board_model->backgroundData(
                     next)) == TokenZones::BoardBackgroundType::Center);
     }
     return false;
@@ -321,7 +321,7 @@ void BoardGroup::launchPlayer()
     haf::DisplayLog::info("Launching player");
     const Direction loopDirection{player_->currentDirection()};
     const vector2dst loopPosition{player_->boardPosition()};
-    const board::BoardTileData tokenType{player_->value()};
+    const BoardTileData tokenType{player_->value()};
     ScoreIncrementer score_incrementer{level_properties_};
     vector2df lastTokenPosition{};
 
@@ -334,12 +334,12 @@ void BoardGroup::launchPlayer()
 
             if (!boardManager()->tileEmpty(loopPosition) &&
                 TokenZones::toBoardBackgroundType(
-                    boardManager()->backgroundType(loopPosition)) !=
+                    boardManager()->backgroundData(loopPosition)) !=
                     TokenZones::BoardBackgroundType::Center)
             {
                 sptr<board::ITile> currentToken{
                     boardManager()->getTile(loopPosition)};
-                board::BoardTileData currentTokenType{currentToken->value()};
+                BoardTileData currentTokenType{currentToken->value()};
 
                 if (currentTokenType == tokenType)
                 {

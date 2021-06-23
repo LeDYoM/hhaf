@@ -118,14 +118,17 @@ void GameScene::onCreated()
     m_nextTokenPart = 0U;
 
     // Connect to key press funtion
-    auto inputComponent(components().addComponentOfType<input::InputComponent>());
+    auto inputComponent(
+        components().addComponentOfType<input::InputComponent>());
     inputComponent->KeyPressed.connect(
         make_function(this, &GameScene::keyPressed));
 
     // Create the general timer component for the scene.
-    scene_timer_component_ = components().addComponentOfType<time::TimerComponent>();
+    scene_timer_component_ =
+        components().addComponentOfType<time::TimerComponent>();
 
-    p_->scene_animation_component_ = components().addComponentOfType<AnimationComponent>();
+    p_->scene_animation_component_ =
+        components().addComponentOfType<AnimationComponent>();
 
     // At this point, we setup level properties.
     // level_properties_ should not be used before this point.
@@ -241,14 +244,14 @@ void GameScene::generateNextToken()
     DisplayLog::info("zone: ", currentTokenZone.zone_start);
 
     // Generate the new token type
-    const size_type newToken{p_->token_type_generator_->getUInt(NumTokens)};
+    size_type const newToken{p_->token_type_generator_->getUInt(NumTokens)};
 
     // Calculate in wich tile zone offset is going to appear
-    const size_type token_displacement{
+    size_type const token_displacement{
         p_->token_position_generator_->getUInt(currentTokenZone.size)};
 
     // Prepare the position for the new token
-    const vector2dst new_position{
+    vector2dst const new_position{
         TokenZones::displacedStartPoint(currentTokenZone, token_displacement)};
     haf::DisplayLog::info("New tile pos: ", new_position);
 
@@ -258,11 +261,12 @@ void GameScene::generateNextToken()
         currentTokenZone.direction, new_position);
 
     // Set the new token
-    m_boardGroup->createNewToken(static_cast<board::BoardTileData>(newToken),
-                                 new_position, tileSize());
+    m_boardGroup->createNewToken(
+        static_cast<BoardGroup::BoardTileData>(newToken), new_position,
+        tileSize());
 
     // Select the next token zone.
-    m_nextTokenPart = (m_nextTokenPart + 1) % NumWays;
+    m_nextTokenPart = (m_nextTokenPart + 1U) % NumWays;
 
     DisplayLog::debug(m_boardGroup->boardManager()->toStr());
 
@@ -282,7 +286,7 @@ void GameScene::launchPlayer()
     haf::DisplayLog::info("Launching player");
     const Direction loopDirection{m_boardGroup->player()->currentDirection()};
     const vector2dst loopPosition{m_boardGroup->player()->boardPosition()};
-    const board::BoardTileData tokenType{m_boardGroup->player()->value()};
+    auto const tokenType{m_boardGroup->player()->value()};
     ScoreIncrementer score_incrementer{level_properties_};
     vector2df lastTokenPosition{};
 
@@ -295,13 +299,13 @@ void GameScene::launchPlayer()
 
             if (!m_boardGroup->boardManager()->tileEmpty(loopPosition) &&
                 TokenZones::toBoardBackgroundType(
-                    m_boardGroup->boardManager()->backgroundType(
+                    m_boardGroup->boardManager()->backgroundData(
                         loopPosition)) !=
                     TokenZones::BoardBackgroundType::Center)
             {
                 sptr<board::ITile> currentToken{
                     m_boardGroup->boardManager()->getTile(loopPosition)};
-                board::BoardTileData currentTokenType{currentToken->value()};
+                auto const currentTokenType{currentToken->value()};
 
                 if (currentTokenType == tokenType)
                 {

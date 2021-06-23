@@ -12,6 +12,7 @@ namespace haf::board
 {
 class BoardManager;
 }
+
 namespace zoper
 {
 
@@ -25,6 +26,8 @@ protected:
     using TileBase = haf::board::ITile;
 
 public:
+    using BoardTileData = haf::board::ITile::BoardTileData;
+
     GameBaseTile(htps::rptr<haf::scene::SceneNode> const parent,
                  htps::str name);
     ~GameBaseTile() override;
@@ -32,8 +35,8 @@ public:
     haf::scene::Color getColorForToken() const;
 
     void tileChanged(const htps::vector2dst& /*position */,
-                     const haf::board::BoardTileData /* oldValue */,
-                     const haf::board::BoardTileData /* newValue */) override;
+                     const BoardTileData /* oldValue */,
+                     const BoardTileData /* newValue */) override;
 
     void tileAdded(const htps::vector2dst& /* position */) override;
 

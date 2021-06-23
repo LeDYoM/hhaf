@@ -6,11 +6,12 @@
 
 namespace haf::board
 {
-using BoardTileData = htps::s32;
 
 class ITile
 {
 public:
+    using BoardTileData = htps::s32;
+
     constexpr ITile() noexcept {}
     virtual ~ITile() {}
 

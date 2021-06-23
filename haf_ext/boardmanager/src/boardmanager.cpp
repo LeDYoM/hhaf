@@ -24,10 +24,10 @@ void BoardManager::initialize(
 
     // Create the tiles.
     tiles_.reserve(size.x);
-    for (auto x = 0U; x < size.x; ++x)
+    for (decltype(size.x) x{0U}; x < size.x; ++x)
     {
         tiles_.emplace_back(size.y);
-        for (auto y = 0U; y < size.y; ++y)
+        for (decltype(size.y) y{0U}; y < size.y; ++y)
         {
             tiles_[x].emplace_back();
         }
@@ -41,7 +41,7 @@ BoardManager::BackgroundFunction BoardManager::setBackgroundFunction(
     return std::exchange(background_function_, std::move(background_function));
 }
 
-BackgroundData BoardManager::backgroundType(
+BoardManager::BackgroundData BoardManager::backgroundData(
     const htps::vector2dst& tPosition) const
 {
     if (background_function_ && validCoords(tPosition))
@@ -227,7 +227,7 @@ str BoardManager::toStr()
             }
             else
             {
-                BackgroundData background_data{backgroundType({x, y})};
+                auto const background_data{backgroundData({x, y})};
                 if (background_data == BackgroundData{})
                 {
                     chTemp = "*";

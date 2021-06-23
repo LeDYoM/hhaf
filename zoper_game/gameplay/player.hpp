@@ -14,6 +14,7 @@ namespace zoper
 class Player : public GameBaseTile
 {
 public:
+    using BoardTileData = GameBaseTile::BoardTileData;
     using BaseClass = GameBaseTile;
 
     Player(htps::rptr<haf::scene::SceneNode> parent, htps::str name);
@@ -29,8 +30,8 @@ public:
 
     void tileAdded(const htps::vector2dst &position) override;
     void tileChanged(const htps::vector2dst &position,
-                     const haf::board::BoardTileData oldValue,
-                     const haf::board::BoardTileData newValue) override;
+                     const BoardTileData oldValue,
+                     const BoardTileData newValue) override;
 
     void tileMoved(const htps::vector2dst &source,
                         const htps::vector2dst &dest) override;

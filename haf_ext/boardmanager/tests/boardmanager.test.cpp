@@ -239,13 +239,14 @@ TEST_CASE("BoardManager background data", "[board_manager]")
     {
         for (auto y = 0U; y < 10U; ++y)
         {
-            CHECK(board_manager_component.backgroundType({x, y}) ==
-                  BackgroundData{});
+            CHECK(board_manager_component.backgroundData({x, y}) ==
+                  BoardManager::BackgroundData{});
         }
     }
 
     board_manager_component.setBackgroundFunction([](const auto& position) {
-        return static_cast<BackgroundData>(position.x * position.y);
+        return static_cast<BoardManager::BackgroundData>(position.x *
+                                                         position.y);
     });
 
     for (auto x = 0U; x < 10U; ++x)
@@ -254,13 +255,13 @@ TEST_CASE("BoardManager background data", "[board_manager]")
         {
             if (x < 8U && y < 8U)
             {
-                CHECK(board_manager_component.backgroundType({x, y}) ==
-                      static_cast<BackgroundData>(x * y));
+                CHECK(board_manager_component.backgroundData({x, y}) ==
+                      static_cast<BoardManager::BackgroundData>(x * y));
             }
             else
             {
-                CHECK(board_manager_component.backgroundType({x, y}) ==
-                      BackgroundData{});
+                CHECK(board_manager_component.backgroundData({x, y}) ==
+                      BoardManager::BackgroundData{});
             }
         }
     }
