@@ -115,7 +115,7 @@ void GameScene::onCreated()
     m_boardGroup = createSceneNode<BoardGroup>("BoardGroup");
     //    m_boardGroup->token_hit.connect(&(this->tokenHitAnimation));
 
-    m_nextTokenPart = 0U;
+    next_token_part_ = 0U;
 
     // Connect to key press funtion
     auto inputComponent(
@@ -164,8 +164,9 @@ void GameScene::onCreated()
         [this]() { generateNextToken(); });
 
     // Prepare the game over text
-    m_gameOver = createSceneNode<GameOverSceneNode>("gameOverSceneNode");
-    m_gameOver->prop<Visible>().set(false);
+    game_over_scene_node_ =
+        createSceneNode<GameOverSceneNode>("gameOverSceneNode");
+    game_over_scene_node_->prop<Visible>().set(false);
 
     // Prepare the pause text.
     pause_node_ = createSceneNode<PauseSceneNode>("PauseNode");
@@ -210,7 +211,7 @@ void GameScene::onEnterState(const GameSceneStates& state)
         }
         break;
         case GameSceneStates::GameOver:
-            m_gameOver->prop<Visible>().set(true);
+            game_over_scene_node_->prop<Visible>().set(true);
             scene_timer_component_->pause();
             break;
         default:
@@ -238,9 +239,9 @@ void GameScene::onExitState(const GameSceneStates& state)
 void GameScene::generateNextToken()
 {
     const TokenZones::TokenZone& currentTokenZone{
-        TokenZones::tokenZones[m_nextTokenPart]};
+        TokenZones::tokenZones[next_token_part_]};
 
-    DisplayLog::info("NextTokenPart: ", m_nextTokenPart);
+    DisplayLog::info("NextTokenPart: ", next_token_part_);
     DisplayLog::info("zone: ", currentTokenZone.zone_start);
 
     // Generate the new token type
@@ -263,10 +264,10 @@ void GameScene::generateNextToken()
     // Set the new token
     m_boardGroup->createNewToken(
         static_cast<BoardGroup::BoardTileData>(newToken), new_position,
-        tileSize());
+        m_boardGroup->tileSize());
 
     // Select the next token zone.
-    m_nextTokenPart = (m_nextTokenPart + 1U) % NumWays;
+    next_token_part_ = ((next_token_part_ + 1U) % NumWays);
 
     DisplayLog::debug(m_boardGroup->boardManager()->toStr());
 
@@ -357,11 +358,6 @@ void GameScene::tokenHitAnimation(vector2dst const& pos)
 {
     auto const lastTokenPosition = m_boardGroup->board2Scene(pos);
     p_->createScoreIncrementPoints(*this, lastTokenPosition);
-}
-
-vector2df GameScene::tileSize() const
-{
-    return m_boardGroup->tileSize();
 }
 
 void GameScene::keyPressed(input::Key key)

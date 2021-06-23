@@ -57,9 +57,9 @@ private:
     htps::uptr<GameScenePrivate> p_;
     using BaseClass = scene::Scene;
     void generateNextToken();
-    htps::vector2df tileSize() const;
 
     htps::sptr<scene::StatesController<GameSceneStates>> m_sceneStates;
+
     void launchPlayer();
     void _debugDisplayBoard() const;
     void keyPressed(input::Key key);
@@ -72,9 +72,9 @@ private:
     htps::sptr<NextToken> next_token_;
 
     // General properties.
-    htps::u16 m_nextTokenPart{0U};
+    htps::u16 next_token_part_{0U};
     htps::sptr<LevelProperties> level_properties_;
-    htps::sptr<GameOverSceneNode> m_gameOver;
+    htps::sptr<GameOverSceneNode> game_over_scene_node_;
     htps::sptr<PauseSceneNode> pause_node_;
 };
 } // namespace zoper
