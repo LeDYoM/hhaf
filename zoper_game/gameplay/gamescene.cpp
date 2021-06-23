@@ -204,6 +204,11 @@ void GameScene::onEnterState(const GameSceneStates& state)
 {
     switch (state)
     {
+        case GameSceneStates::Playing:
+        {
+        }
+        break;
+
         case GameSceneStates::Pause:
         {
             scene_timer_component_->pause();
@@ -211,11 +216,11 @@ void GameScene::onEnterState(const GameSceneStates& state)
         }
         break;
         case GameSceneStates::GameOver:
+        {
             game_over_scene_node_->prop<Visible>().set(true);
             scene_timer_component_->pause();
-            break;
-        default:
-            break;
+        }
+        break;
     }
     DisplayLog::info("Entered state: ", make_str(state));
 }
@@ -224,14 +229,22 @@ void GameScene::onExitState(const GameSceneStates& state)
 {
     switch (state)
     {
+        case GameSceneStates::Playing:
+        {
+        }
+        break;
+
         case GameSceneStates::Pause:
         {
             scene_timer_component_->resume();
             pause_node_->exitPause();
         }
         break;
-        default:
-            break;
+
+        case GameSceneStates::GameOver:
+        {
+        }
+        break;
     }
     DisplayLog::info("Exited state: ", make_str(state));
 }
@@ -360,7 +373,7 @@ void GameScene::tokenHitAnimation(vector2dst const& pos)
     p_->createScoreIncrementPoints(*this, lastTokenPosition);
 }
 
-void GameScene::keyPressed(input::Key key)
+void GameScene::keyPressed(input::Key const key)
 {
     DisplayLog::info("Key pressed in GameScene");
     // TODO: Fixme
@@ -386,15 +399,21 @@ void GameScene::keyPressed(input::Key key)
             }
         }
         break;
+
         case GameSceneStates::GameOver:
+        {
             dataWrapper<SceneControl>()->switchToNextScene();
-            break;
+        }
+        break;
+
         case GameSceneStates::Pause:
+        {
             if (keyMapping->isPauseKey(key))
             {
                 m_sceneStates->setState(GameSceneStates::Playing);
             }
-            break;
+        }
+        break;
     }
 }
 

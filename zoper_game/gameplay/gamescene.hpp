@@ -32,6 +32,8 @@ class NextToken;
 class GameScene final : public haf::scene::Scene,
                         public haf::scene::StatesControllerActuator<GameSceneStates>
 {
+    using BaseClass = scene::Scene;
+
 public:
     GameScene();
     ~GameScene() override;
@@ -44,7 +46,7 @@ public:
     void onEnterState(const GameSceneStates &) override;
     void onExitState(const GameSceneStates &) override;
 
-    htps::sptr<LevelProperties> levelProperties() const
+    htps::sptr<LevelProperties> levelProperties() const noexcept
     {
         return level_properties_;
     }
@@ -55,14 +57,14 @@ public:
 private:
     struct GameScenePrivate;
     htps::uptr<GameScenePrivate> p_;
-    using BaseClass = scene::Scene;
+
     void generateNextToken();
 
     htps::sptr<scene::StatesController<GameSceneStates>> m_sceneStates;
 
     void launchPlayer();
     void _debugDisplayBoard() const;
-    void keyPressed(input::Key key);
+    void keyPressed(input::Key const key);
 
     htps::sptr<BoardGroup> m_boardGroup;
 
