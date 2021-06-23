@@ -35,8 +35,8 @@ void BoardManager::initialize(
     tiles_.shrink_to_fit();
 }
 
-BackgroundFunction BoardManager::setBackgroundFunction(
-    BackgroundFunction background_function)
+BoardManager::BackgroundFunction BoardManager::setBackgroundFunction(
+    BoardManager::BackgroundFunction background_function)
 {
     return std::exchange(background_function_, std::move(background_function));
 }

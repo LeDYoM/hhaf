@@ -11,12 +11,13 @@ namespace haf::board
 {
 class IBoardManagerActuator;
 using BackgroundData = htps::s32;
-using BackgroundFunction =
-    htps::function<BackgroundData(const htps::vector2dst&)>;
 
 class BoardManager : public haf::scene::IStaticComponent
 {
 public:
+    using BackgroundFunction =
+        htps::function<BackgroundData(const htps::vector2dst&)>;
+
     /**
      * @brief Method to initialize the component.
      * This method should be called once and only once per component.
@@ -42,8 +43,7 @@ public:
     bool swapTileData(const htps::vector2dst& lhs, const htps::vector2dst& rhs);
 
     bool validCoords(const htps::vector2dst& tPosition) const noexcept;
-    BackgroundData backgroundType(
-        const htps::vector2dst& tPosition) const;
+    BackgroundData backgroundType(const htps::vector2dst& tPosition) const;
     htps::vector2dst size() const noexcept;
 
     htps::str toStr();
