@@ -44,9 +44,14 @@ ComponentContainer& SceneNode::components()
     return *(p_->component_container_);
 }
 
-ComponentContainer const& SceneNode::components() const
+ComponentContainer const& SceneNode::components() const noexcept
 {
     return *(p_->component_container_);
+}
+
+bool SceneNode::hasComponents() const noexcept
+{
+    return p_->component_container_ != nullptr;
 }
 
 }  // namespace haf::scene

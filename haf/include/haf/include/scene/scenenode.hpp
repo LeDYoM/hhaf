@@ -85,7 +85,8 @@ public:
     void clearAll();
 
     ComponentContainer& components();
-    ComponentContainer const& components() const;
+    ComponentContainer const& components() const noexcept;
+    bool hasComponents() const noexcept;
 
 private:
     struct SceneNodePrivate;
