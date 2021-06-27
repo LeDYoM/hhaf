@@ -1,4 +1,5 @@
 #include "gamescene.hpp"
+#include "gamescene_private.hpp"
 
 #include "token.hpp"
 #include "player.hpp"
@@ -24,10 +25,8 @@
 #include <hlog/include/hlog.hpp>
 #include <haf/include/scene/componentcontainer.hpp>
 #include <haf/include/render/renderizable.hpp>
-#include <haf/include/scene_components/animationcomponent.hpp>
 #include <haf/include/scene_components/scenecontrol.hpp>
 #include <haf/include/input/inputcomponent.hpp>
-#include <haf/include/random/randomnumberscomponent.hpp>
 #include <haf/include/shareddata/shareddataupdater.hpp>
 #include <haf/include/shareddata/shareddataviewer.hpp>
 #include <haf/include/resources/iresourceconfigurator.hpp>
@@ -47,45 +46,6 @@ namespace zoper
 {
 constexpr u32 NumTokens   = 5U;
 constexpr u32 PlayerToken = NumTokens;
-
-struct GameScene::GameScenePrivate
-{
-    sptr<AnimationComponent> scene_animation_component_;
-    sptr<rnd::RandomNumbersComponent> token_type_generator_;
-    sptr<rnd::RandomNumbersComponent> token_position_generator_;
-
-    void createScoreIncrementPoints(SceneNode& main_node,
-                                    const vector2df& lastTokenPosition)
-    {
-        auto renderizableSceneNode =
-            main_node.createSceneNode<RenderizablesSceneNode>(
-                "pointIncrementScore_SceneNode");
-
-        auto node = renderizableSceneNode->renderizableBuilder()
-                        .name("pointIncrementScore")
-                        .figType(FigType_t::Shape)
-                        .box(rectFromSize(15.0F, 15.0F))
-                        .color(colors::White)
-                        .pointCount(30U)
-                        .create();
-
-        {
-            using namespace gameplay::constants;
-
-            DisplayLog::info("Creating animation for points to score");
-            scene_animation_component_->addPropertyAnimation(
-                time::TimePoint_as_miliseconds(MillisAnimationPointsToScore),
-                renderizableSceneNode->prop<haf::scene::Position>(),
-                lastTokenPosition, EndPositionPointsToScore,
-                Animation::AnimationDirection::Forward,
-                [this, renderizableSceneNode]() {
-                    renderizableSceneNode->parentAs<SceneNode>()
-                        ->removeSceneNode(renderizableSceneNode);
-                });
-        }
-    }
-    uptr<KeyMapping> key_mapping_;
-};
 
 GameScene::GameScene() : Scene{StaticTypeName}
 {}

@@ -6,8 +6,6 @@
 
 namespace zoper::gameplay::constants
 {
-    using namespace haf;
-
     constexpr htps::u32 MillisAnimationPointsToScore = 600U;
     constexpr htps::vector2df EndPositionPointsToScore = htps::vector2df{ 450.0F, 100.0F };
 
