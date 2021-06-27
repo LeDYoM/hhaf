@@ -34,7 +34,7 @@ void GameScene::GameScenePrivate::createScoreIncrementPoints(
         DisplayLog::info("Creating animation for points to score");
         scene_animation_component_->addPropertyAnimation(
             time::TimePoint_as_miliseconds(MillisAnimationPointsToScore),
-            renderizableSceneNode->prop<haf::scene::Position>(),
+            renderizableSceneNode->prop<Position>(),
             lastTokenPosition, EndPositionPointsToScore,
             Animation::AnimationDirection::Forward,
             [this, renderizableSceneNode]() {
