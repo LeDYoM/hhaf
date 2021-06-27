@@ -37,7 +37,7 @@ void GameScene::GameScenePrivate::createScoreIncrementPoints(
             renderizableSceneNode->prop<Position>(),
             lastTokenPosition, EndPositionPointsToScore,
             Animation::AnimationDirection::Forward,
-            [this, renderizableSceneNode]() {
+            [renderizableSceneNode]() {
                 renderizableSceneNode->parentAs<SceneNode>()->removeSceneNode(
                     renderizableSceneNode);
             });
