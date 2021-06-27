@@ -15,8 +15,10 @@ using namespace haf::scene::nodes;
 namespace zoper
 {
 
-void PlayerLauncher::operator()(ScoreIncrementer& score_incrementer,
-                                BoardGroup& board_group)
+void PlayerLauncher::operator()(
+    ScoreIncrementer& score_incrementer,
+    BoardGroup& board_group,
+    htps::function<void(htps::vector2df)> createScoreIncrementPoints)
 {
     haf::DisplayLog::info("Launching player");
     auto const loopDirection{board_group.player()->currentDirection()};
@@ -26,15 +28,15 @@ void PlayerLauncher::operator()(ScoreIncrementer& score_incrementer,
 
     BoardUtils::for_each_coordinate_in_rect(
         loopPosition, loopDirection, board_group.boardManager()->size(),
-        [&board_group, tokenType, &score_incrementer, &lastTokenPosition](
-            const vector2dst& loopPosition, const Direction&) {
+        [&board_group, tokenType, &score_incrementer, &lastTokenPosition,
+         &createScoreIncrementPoints](const vector2dst& loopPosition,
+                                      const Direction&) {
             bool result{true};
             bool found{false};
 
             if (!board_group.boardManager()->tileEmpty(loopPosition) &&
                 TokenZones::toBoardBackgroundType(
-                    board_group.boardManager()->backgroundData(
-                        loopPosition)) !=
+                    board_group.boardManager()->backgroundData(loopPosition)) !=
                     TokenZones::BoardBackgroundType::Center)
             {
                 sptr<board::ITile> currentToken{
@@ -79,7 +81,7 @@ void PlayerLauncher::operator()(ScoreIncrementer& score_incrementer,
             {
                 DisplayLog::info("Tile with same color found");
                 DisplayLog::info("Creating points to score");
-                p_->createScoreIncrementPoints(*this, lastTokenPosition);
+                createScoreIncrementPoints(lastTokenPosition);
             }
             return result;
         });

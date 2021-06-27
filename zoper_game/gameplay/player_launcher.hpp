@@ -9,6 +9,9 @@
 
 #include "player.hpp"
 
+#include <htypes/include/types.hpp>
+#include <htypes/include/function.hpp>
+
 namespace zoper
 {
 class Player;
@@ -18,8 +21,10 @@ class BoardGroup;
 class PlayerLauncher
 {
 public:
-    void operator()(ScoreIncrementer& score_incrementer,
-                    BoardGroup& board_group);
+    void operator()(
+        ScoreIncrementer& score_incrementer,
+        BoardGroup& board_group,
+        htps::function<void(htps::vector2df)> createScoreIncrementPoints);
 };
 }  // namespace zoper
 
