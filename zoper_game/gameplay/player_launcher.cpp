@@ -15,31 +15,30 @@ using namespace haf::scene::nodes;
 namespace zoper
 {
 
-void PlayerLauncher::operator()(Player& player,
-                                ScoreIncrementer& score_incrementer,
+void PlayerLauncher::operator()(ScoreIncrementer& score_incrementer,
                                 BoardGroup& board_group)
 {
     haf::DisplayLog::info("Launching player");
-    auto const loopDirection{player.currentDirection()};
-    auto const loopPosition{player.boardPosition()};
-    auto const tokenType{player.value()};
+    auto const loopDirection{board_group.player()->currentDirection()};
+    auto const loopPosition{board_group.player()->boardPosition()};
+    auto const tokenType{board_group.player()->value()};
     vector2df lastTokenPosition{};
 
     BoardUtils::for_each_coordinate_in_rect(
         loopPosition, loopDirection, board_group.boardManager()->size(),
-        [this, tokenType, &score_incrementer, &lastTokenPosition](
+        [&board_group, tokenType, &score_incrementer, &lastTokenPosition](
             const vector2dst& loopPosition, const Direction&) {
             bool result{true};
             bool found{false};
 
             if (!board_group.boardManager()->tileEmpty(loopPosition) &&
                 TokenZones::toBoardBackgroundType(
-                    m_boardGroup->boardManager()->backgroundData(
+                    board_group.boardManager()->backgroundData(
                         loopPosition)) !=
                     TokenZones::BoardBackgroundType::Center)
             {
                 sptr<board::ITile> currentToken{
-                    m_boardGroup->boardManager()->getTile(loopPosition)};
+                    board_group.boardManager()->getTile(loopPosition)};
                 auto const currentTokenType{currentToken->value()};
 
                 if (currentTokenType == tokenType)
@@ -50,7 +49,7 @@ void PlayerLauncher::operator()(Player& player,
                     score_incrementer.addHit();
 
                     // Delete the token
-                    m_boardGroup->boardManager()->deleteTile(loopPosition);
+                    board_group.boardManager()->deleteTile(loopPosition);
 
                     // At least you found one token
                     found = true;
@@ -62,11 +61,11 @@ void PlayerLauncher::operator()(Player& player,
                     // Change the type of the player to this new one and
                     // change the type of the token for the previous type of the
                     // player
-                    m_boardGroup->boardManager()->swapTileData(
-                        m_boardGroup->player()->boardPosition(), loopPosition);
+                    board_group.boardManager()->swapTileData(
+                        board_group.player()->boardPosition(), loopPosition);
 
                     DisplayLog::info("Player type changed to ",
-                                     m_boardGroup->player()->value());
+                                     board_group.player()->value());
 
                     // Exit the loop
                     result = false;
@@ -74,7 +73,7 @@ void PlayerLauncher::operator()(Player& player,
             }
 
             // Store the position of this last cosumed token
-            lastTokenPosition = m_boardGroup->board2Scene(loopPosition);
+            lastTokenPosition = board_group.board2Scene(loopPosition);
 
             if (found)
             {
@@ -85,7 +84,7 @@ void PlayerLauncher::operator()(Player& player,
             return result;
         });
     DisplayLog::info("Launching player");
-    m_boardGroup->player()->launchAnimation(lastTokenPosition);
+    board_group.player()->launchAnimation(lastTokenPosition);
 }
 
 }  // namespace zoper

@@ -18,8 +18,7 @@ class BoardGroup;
 class PlayerLauncher
 {
 public:
-    void operator()(Player& player,
-                    ScoreIncrementer& score_incrementer,
+    void operator()(ScoreIncrementer& score_incrementer,
                     BoardGroup& board_group);
 };
 }  // namespace zoper
