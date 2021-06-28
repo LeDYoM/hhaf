@@ -125,13 +125,16 @@ void GameScene::onCreated()
         [this]() { generateNextToken(); });
 
     // Prepare the game over text
-    game_over_scene_node_ =
+    auto game_over_scene_node =
         createSceneNode<GameOverSceneNode>("gameOverSceneNode");
-    game_over_scene_node_->prop<Visible>().set(false);
+    game_over_scene_node->prop<Visible>().set(false);
 
     // Prepare the pause text.
-    pause_node_ = createSceneNode<PauseSceneNode>("PauseNode");
+    auto pause_node = createSceneNode<PauseSceneNode>("PauseNode");
 
+    p_->m_states_manager = muptr<GameSceneStateManager>(
+        scene_timer_component_, std::move(pause_node),
+        std::move(game_over_scene_node));
     // Set state control.
     {
         components().ensureComponentOfType(m_sceneStates);
@@ -139,7 +142,7 @@ void GameScene::onCreated()
         StatesControllerActuatorRegister<GameSceneStates>
             gameSceneActuatorRegister;
         gameSceneActuatorRegister.registerStatesControllerActuator(
-            *m_sceneStates, *this);
+            *m_sceneStates, *(p_->m_states_manager));
     }
 
     p_->token_type_generator_ =
@@ -159,55 +162,6 @@ void GameScene::onCreated()
                                                         *p_->key_mapping_);
 
     m_sceneStates->start(GameSceneStates::Playing);
-}
-
-void GameScene::onEnterState(const GameSceneStates& state)
-{
-    switch (state)
-    {
-        case GameSceneStates::Playing:
-        {
-        }
-        break;
-
-        case GameSceneStates::Pause:
-        {
-            scene_timer_component_->pause();
-            pause_node_->enterPause();
-        }
-        break;
-        case GameSceneStates::GameOver:
-        {
-            game_over_scene_node_->prop<Visible>().set(true);
-            scene_timer_component_->pause();
-        }
-        break;
-    }
-    DisplayLog::info("Entered state: ", make_str(state));
-}
-
-void GameScene::onExitState(const GameSceneStates& state)
-{
-    switch (state)
-    {
-        case GameSceneStates::Playing:
-        {
-        }
-        break;
-
-        case GameSceneStates::Pause:
-        {
-            scene_timer_component_->resume();
-            pause_node_->exitPause();
-        }
-        break;
-
-        case GameSceneStates::GameOver:
-        {
-        }
-        break;
-    }
-    DisplayLog::info("Exited state: ", make_str(state));
 }
 
 void GameScene::generateNextToken()

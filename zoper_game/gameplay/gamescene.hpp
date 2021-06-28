@@ -25,12 +25,10 @@
 
 namespace zoper
 {
-class PauseSceneNode;
 class GameOverSceneNode;
 class NextToken;
 
-class GameScene final : public haf::scene::Scene,
-                        public haf::scene::StatesControllerActuator<GameSceneStates>
+class GameScene final : public haf::scene::Scene
 {
     using BaseClass = scene::Scene;
 
@@ -42,9 +40,6 @@ public:
 
     htps::str nextSceneName() override;
     void onCreated() override;
-
-    void onEnterState(const GameSceneStates &) override;
-    void onExitState(const GameSceneStates &) override;
 
     htps::sptr<LevelProperties> levelProperties() const noexcept
     {
@@ -76,8 +71,6 @@ private:
     // General properties.
     htps::u16 next_token_part_{0U};
     htps::sptr<LevelProperties> level_properties_;
-    htps::sptr<GameOverSceneNode> game_over_scene_node_;
-    htps::sptr<PauseSceneNode> pause_node_;
 };
 } // namespace zoper
 
