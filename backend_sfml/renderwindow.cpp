@@ -12,7 +12,9 @@ namespace haf::backend::sfmlb
 RenderWindow::RenderWindow()
 {}
 RenderWindow::~RenderWindow()
-{}
+{
+    sf::Window::close();
+}
 
 class ParamExtractor
 {
@@ -62,13 +64,14 @@ bool RenderWindow::createWindow(const u32 width,
         //    uint height = prm_xtr.getParam(600U);
         //    uint bpp = prm_xtr.getParam(32U);
 
-        unsigned int w = static_cast<unsigned int>(width);
-        unsigned int h = static_cast<unsigned int>(height);
-        unsigned int bpp =
-            static_cast<unsigned int>(red_bpp + green_bpp + blue_bpp + alpha_bpp);
+        unsigned int w   = static_cast<unsigned int>(width);
+        unsigned int h   = static_cast<unsigned int>(height);
+        unsigned int bpp = static_cast<unsigned int>(red_bpp + green_bpp +
+                                                     blue_bpp + alpha_bpp);
 
         sf::ContextSettings context_settings = sf::ContextSettings();
-        sf::Window::create(sf::VideoMode(w, h, bpp), "", style, context_settings);
+        sf::Window::create(sf::VideoMode(w, h, bpp), "", style,
+                           context_settings);
 
         setVerticalSyncEnabled(false);
         return true;
@@ -141,11 +144,12 @@ str RenderWindow::settingsInfo()
     sf::ContextSettings settings = sf::Window::getSettings();
 
     return make_str("Depth bits: ", settings.depthBits,
-    ", stencil bits: ", settings.stencilBits,
-    ", antialiasing level: ", settings.antialiasingLevel,
-    ", attribute flags: ", settings.attributeFlags,
-    ", sRGB capable: ", settings.sRgbCapable,
-    ", version: ", settings.majorVersion, ".", settings.minorVersion);
+                    ", stencil bits: ", settings.stencilBits,
+                    ", antialiasing level: ", settings.antialiasingLevel,
+                    ", attribute flags: ", settings.attributeFlags,
+                    ", sRGB capable: ", settings.sRgbCapable,
+                    ", version: ", settings.majorVersion, ".",
+                    settings.minorVersion);
 }
 
 void RenderWindow::onCreate()

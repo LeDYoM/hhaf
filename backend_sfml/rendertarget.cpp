@@ -11,6 +11,8 @@ namespace haf::backend::sfmlb
 static_assert(sizeof(sf::Vertex) == sizeof(iVertex),
               "Incomptable version of SFML");
 
+RenderTarget::~RenderTarget() = default;
+
 void RenderTarget::initialize()
 {
     sf::RenderTarget::initialize();
