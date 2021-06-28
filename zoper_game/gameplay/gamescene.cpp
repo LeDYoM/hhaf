@@ -259,11 +259,7 @@ void GameScene::goGameOver()
 void GameScene::launchPlayer()
 {
     haf::DisplayLog::info("Launching player");
-    const Direction loopDirection{m_boardGroup->player()->currentDirection()};
-    const vector2dst loopPosition{m_boardGroup->player()->boardPosition()};
-    auto const tokenType{m_boardGroup->player()->value()};
     ScoreIncrementer score_incrementer{level_properties_};
-    vector2df lastTokenPosition{};
 
     PlayerLauncher player_launcher;
     player_launcher(score_incrementer, *m_boardGroup,
