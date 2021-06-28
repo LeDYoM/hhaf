@@ -11,6 +11,7 @@
 #include "scoreutils.hpp"
 #include "next_token.hpp"
 #include "player_launcher.hpp"
+#include "gamescene_input.hpp"
 
 #ifdef USE_DEBUG_ACTIONS
 #include "debug_actions.hpp"
@@ -26,7 +27,6 @@
 #include <haf/include/scene/componentcontainer.hpp>
 #include <haf/include/render/renderizable.hpp>
 #include <haf/include/scene_components/scenecontrol.hpp>
-#include <haf/include/input/inputcomponent.hpp>
 #include <haf/include/shareddata/shareddataupdater.hpp>
 #include <haf/include/shareddata/shareddataviewer.hpp>
 #include <haf/include/resources/iresourceconfigurator.hpp>
@@ -139,12 +139,6 @@ void GameScene::onCreated()
             *m_sceneStates, *(p_->m_states_manager));
     }
 
-    // Connect to key press funtion
-    auto inputComponent(
-        components().addComponentOfType<input::InputComponent>());
-    inputComponent->KeyPressed.connect(
-        make_function(this, &GameScene::keyPressed));
-
     p_->token_type_generator_ =
         components().addComponentOfType<rnd::RandomNumbersComponent>();
     LogAsserter::log_assert(p_->token_type_generator_ != nullptr,
@@ -153,6 +147,9 @@ void GameScene::onCreated()
     p_->token_position_generator_ = p_->token_type_generator_;
     LogAsserter::log_assert(p_->token_position_generator_ != nullptr,
                             "Cannot create RandomNumbersComponent");
+
+    auto game_scene_input = components().addComponentOfType<GameSceneInput>();
+    game_scene_input->configure(m_sceneStates, m_boardGroup);
 
     p_->key_mapping_ = muptr<KeyMapping>();
     p_->key_mapping_->reset();
@@ -227,50 +224,6 @@ void GameScene::tokenHitAnimation(vector2dst const& pos)
 {
     auto const lastTokenPosition = m_boardGroup->board2Scene(pos);
     p_->createScoreIncrementPoints(*this, lastTokenPosition);
-}
-
-void GameScene::keyPressed(input::Key const key)
-{
-    DisplayLog::info("Key pressed in GameScene");
-    // TODO: Fixme
-    KeyMapping keyMapping__;
-    KeyMapping* keyMapping = &keyMapping__;
-
-    switch (m_sceneStates->currentState())
-    {
-        case GameSceneStates::Playing:
-        {
-            auto dir(keyMapping->getDirectionFromKey(key));
-            if (dir.isValid())
-            {
-                m_boardGroup->player()->movePlayer(dir);
-            }
-            else if (keyMapping->isLaunchKey(key))
-            {
-                launchPlayer();
-            }
-            else if (keyMapping->isPauseKey(key))
-            {
-                m_sceneStates->setState(GameSceneStates::Pause);
-            }
-        }
-        break;
-
-        case GameSceneStates::GameOver:
-        {
-            dataWrapper<SceneControl>()->switchToNextScene();
-        }
-        break;
-
-        case GameSceneStates::Pause:
-        {
-            if (keyMapping->isPauseKey(key))
-            {
-                m_sceneStates->setState(GameSceneStates::Playing);
-            }
-        }
-        break;
-    }
 }
 
 }  // namespace zoper

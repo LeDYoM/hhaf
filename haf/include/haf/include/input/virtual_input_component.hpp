@@ -16,8 +16,8 @@ public:
     void update() override;
 
 private:
-    virtual void onKeyPressed(const Key&) {}
-    virtual void onKeyReleased(const Key&) {}
+    virtual void onKeyPressed(Key const&) {}
+    virtual void onKeyReleased(Key const&) {}
 };
 }  // namespace haf::input
 

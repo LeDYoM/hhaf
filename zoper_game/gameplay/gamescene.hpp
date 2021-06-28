@@ -25,7 +25,6 @@
 
 namespace zoper
 {
-class GameOverSceneNode;
 class NextToken;
 
 class GameScene final : public haf::scene::Scene
@@ -48,6 +47,7 @@ public:
     
     void goGameOver();
     void tokenHitAnimation(htps::vector2dst const& pos);
+    void launchPlayer();
 
 private:
     struct GameScenePrivate;
@@ -57,9 +57,7 @@ private:
 
     htps::sptr<scene::StatesController<GameSceneStates>> m_sceneStates;
 
-    void launchPlayer();
     void _debugDisplayBoard() const;
-    void keyPressed(input::Key const key);
 
     htps::sptr<BoardGroup> m_boardGroup;
 
