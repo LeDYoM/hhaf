@@ -35,29 +35,16 @@ protected:
                       "You can only use this "
                       "function with types derived from AttachedBase");
 
-        T* temp = new T();
-
-        // Dynamic check that T is a valid types for this class.
-        const htps::rptr<const Attachable<AttachableType>> temp2 =
-            dynamic_cast<htps::rptr<const Attachable<AttachableType>>>(temp);
-        LogAsserter::log_assert(temp2 != nullptr, "");
-
-        auto result = htps::uptr<T>(std::move(temp));
-        initialize(result.get());
+        auto result{htps::muptr<T>()};
+        initialize(*result);
         return result;
     }
 
-protected:
-    htps::rptr<AttachableType> attachable() const noexcept
-    {
-        return attachable_;
-    }
-
 private:
-    void initialize(htps::rptr<AttachedBase> dw) const
+    void initialize(AttachedBase& dw) const
     {
-        dw->attachedNode_ = attachable_;
-        dw->onAttached();
+        dw.attachedNode_ = attachable_;
+        dw.onAttached();
     }
 
     const htps::rptr<AttachableType> attachable_;

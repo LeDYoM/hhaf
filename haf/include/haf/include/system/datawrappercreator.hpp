@@ -14,8 +14,8 @@ namespace haf::sys
 {
 /**
  * @brief Class to create @b IDataWrapper (s) instances.
- * DataWrappers are stand alone objects, not components that interact with
- * their containers. For active content see @b IComponent.
+ * DataWrappers are stand alone objects, not components that get updated.
+ * You can also create as much as you need for a given type.
  * @see IDataWrapper
  * @see IComponent
  */
@@ -24,7 +24,7 @@ class DataWrapperCreator : public utils::AttachableManager<IDataWrapper>
     using BaseClass = utils::AttachableManager<IDataWrapper>;
 
 public:
-    using BaseClass::AttachableManager;
+    using BaseClass::BaseClass;
 
     /**
      * @brief Fetch a specific type of data wrapper.
@@ -35,7 +35,7 @@ public:
     template <typename T>
     htps::uptr<T> dataWrapper() const
     {
-        return create<T>();
+        return BaseClass::create<T>();
     }
 };
 }  // namespace haf::sys

@@ -78,12 +78,6 @@ void GameScene::onCreated()
 
     next_token_part_ = 0U;
 
-    // Connect to key press funtion
-    auto inputComponent(
-        components().addComponentOfType<input::InputComponent>());
-    inputComponent->KeyPressed.connect(
-        make_function(this, &GameScene::keyPressed));
-
     // Create the general timer component for the scene.
     scene_timer_component_ =
         components().addComponentOfType<time::TimerComponent>();
@@ -125,16 +119,16 @@ void GameScene::onCreated()
         [this]() { generateNextToken(); });
 
     // Prepare the game over text
-    auto game_over_scene_node =
-        createSceneNode<GameOverSceneNode>("gameOverSceneNode");
-    game_over_scene_node->prop<Visible>().set(false);
+    {
+        auto game_over_scene_node =
+            createSceneNode<GameOverSceneNode>("gameOverSceneNode");
+        game_over_scene_node->prop<Visible>().set(false);
 
-    // Prepare the pause text.
-    auto pause_node = createSceneNode<PauseSceneNode>("PauseNode");
+        p_->m_states_manager = muptr<GameSceneStateManager>(
+            scene_timer_component_, createSceneNode<PauseSceneNode>("PauseNode"),
+            std::move(game_over_scene_node));
+    }
 
-    p_->m_states_manager = muptr<GameSceneStateManager>(
-        scene_timer_component_, std::move(pause_node),
-        std::move(game_over_scene_node));
     // Set state control.
     {
         components().ensureComponentOfType(m_sceneStates);
@@ -145,13 +139,20 @@ void GameScene::onCreated()
             *m_sceneStates, *(p_->m_states_manager));
     }
 
+    // Connect to key press funtion
+    auto inputComponent(
+        components().addComponentOfType<input::InputComponent>());
+    inputComponent->KeyPressed.connect(
+        make_function(this, &GameScene::keyPressed));
+
     p_->token_type_generator_ =
         components().addComponentOfType<rnd::RandomNumbersComponent>();
     LogAsserter::log_assert(p_->token_type_generator_ != nullptr,
-                            "Cannot create DataProviderComponent");
+                            "Cannot create RandomNumbersComponent");
+
     p_->token_position_generator_ = p_->token_type_generator_;
     LogAsserter::log_assert(p_->token_position_generator_ != nullptr,
-                            "Cannot create DataProviderComponent");
+                            "Cannot create RandomNumbersComponent");
 
     p_->key_mapping_ = muptr<KeyMapping>();
     p_->key_mapping_->reset();

@@ -11,14 +11,15 @@ namespace haf::rnd
 /**
  * @brief This component class is intended to be used to generate
  * a series of random numbers.
+ * @see scene::IStaticComponent
  */
-class RandomNumbersComponent final : public scene::IComponent
+class RandomNumbersComponent final : public scene::IStaticComponent
 {
 public:
     RandomNumbersComponent() noexcept;
     ~RandomNumbersComponent() override;
-    htps::u32 getUInt(const htps::size_type max,
-                      const htps::size_type min = 0U) const;
+    htps::u32 getUInt(htps::size_type const max,
+                      htps::size_type const min = 0U) const;
     void setName(htps::str new_name);
     const htps::str& name() const noexcept;
 

@@ -48,8 +48,8 @@ const str& RandomNumbersComponent::name() const noexcept
     return priv_->name();
 }
 
-u32 RandomNumbersComponent::getUInt(const size_type max,
-                                    const size_type min) const
+u32 RandomNumbersComponent::getUInt(size_type const max,
+                                    size_type const min) const
 {
     DisplayLog::info("Asked for random number between ", min, " and ", max);
 
