@@ -20,7 +20,7 @@ public:
     using AttachableType = typename AttachedBase::AttachedNodeType;
 
     constexpr explicit AttachableManager(
-        htps::rptr<AttachableType> attachable = nullptr) noexcept :
+        htps::rptr<AttachableType> attachable) noexcept :
         attachable_{std::move(attachable)}
     {}
 

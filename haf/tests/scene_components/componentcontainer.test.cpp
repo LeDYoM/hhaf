@@ -29,7 +29,7 @@ TEST_CASE("haf::scene::ComponentContainer", "[ComponentContainer][constructor]")
 {
     // Create scenario for testing
     sptr<ComponentContainerWithUpdate> component_container_no_parent(
-        msptr<ComponentContainerWithUpdate>());
+        msptr<ComponentContainerWithUpdate>(nullptr));
 
     SECTION("Add component")
     {
