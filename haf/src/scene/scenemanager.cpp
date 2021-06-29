@@ -66,14 +66,4 @@ sptr<SceneController>& SceneManager::sceneController() noexcept
     return scene_controller_;
 }
 
-bool SceneManager::startScene(const htps::str& scene_name)
-{
-    return scene_controller_->startScene(scene_name);
-}
-
-SceneNodeFactory& SceneManager::sceneNodeFactory()
-{
-    return scene_controller_->sceneNodeFactory();
-}
-
 }  // namespace haf::scene

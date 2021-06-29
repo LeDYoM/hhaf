@@ -38,7 +38,6 @@ public:
         return BaseClass::create<T>();
     }
 };
-
 }  // namespace haf::sys
 
 #endif

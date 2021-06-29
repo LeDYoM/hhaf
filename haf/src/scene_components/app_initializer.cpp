@@ -7,10 +7,6 @@
 #include "scene/scenecontroller.hpp"
 #include "system/get_system.hpp"
 
-#include "system/interfaceaccess_imp.hpp"
-
-#include "scene/scenemanager.hpp"
-
 namespace haf::scene
 {
 SceneNodeFactory& AppInitializer::sceneNodeFactory()
@@ -26,7 +22,5 @@ bool AppInitializer::startScene(htps::str const& scene_name)
         .sceneController()
         ->startScene(scene_name);
 }
-
-GET_INTERFACE_IMP(scene::IAppInitializer, scene::SceneManager)
 
 }  // namespace haf::scene
