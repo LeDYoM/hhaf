@@ -4,6 +4,8 @@
 #include <htypes/include/types.hpp>
 #include <htypes/include/rect.hpp>
 #include <haf/include/scene_components/scenemetrics.hpp>
+#include <haf/include/scene_components/app_initializer.hpp>
+
 #include "system/systembase.hpp"
 
 namespace haf::scene
@@ -13,7 +15,7 @@ class SceneController;
 
 namespace haf::scene
 {
-class SceneManager final : public sys::SystemBase, public ISceneMetrics
+class SceneManager final : public sys::SystemBase, public ISceneMetrics, public IAppInitializer
 {
 public:
     explicit SceneManager(sys::SystemProvider& system_provider);
@@ -30,6 +32,9 @@ public:
 
     htps::sptr<SceneController> const& sceneController() const noexcept;
     htps::sptr<SceneController>& sceneController() noexcept;
+
+    bool startScene(const htps::str& scene_name) override;
+    SceneNodeFactory& sceneNodeFactory() override;
 
 private:
     htps::sptr<SceneController> scene_controller_;

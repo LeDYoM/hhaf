@@ -17,7 +17,7 @@ public:
      * @brief Destroy the ISceneMetricsView object
      * Default empty destructor.
      */
-    ~ISceneMetricsView() {}
+    virtual ~ISceneMetricsView() {}
 
     /**
      * @brief Get the current view set for the Scene
