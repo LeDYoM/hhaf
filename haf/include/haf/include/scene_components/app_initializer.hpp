@@ -32,7 +32,7 @@ public:
      * @return true  Everything went correct
      * @return false A problem happened.
      */
-    bool startScene(const htps::str& scene_name);
+    bool startScene(htps::str const& scene_name);
 
     /**
      * @brief Gives the control to the @b SceneController and
