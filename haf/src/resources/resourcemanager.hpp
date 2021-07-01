@@ -4,8 +4,8 @@
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
 
-#include <haf/include/resources/iresourceretriever.hpp>
-#include <haf/include/resources/iresourceconfigurator.hpp>
+#include <haf/include/resources/resourceretriever.hpp>
+#include <haf/include/resources/resourceconfigurator.hpp>
 #include "system/systembase.hpp"
 #include "resources_config_data.hpp"
 
@@ -20,18 +20,16 @@ class IShader;
 
 namespace haf::sys
 {
-class ResourceManager final : public SystemBase,
-                              public res::IResourceRetriever,
-                              public res::IResourcesConfigurator
+class ResourceManager final : public SystemBase
 {
 public:
     ResourceManager(sys::SystemProvider& system_provider);
-    ~ResourceManager() noexcept override;
+    ~ResourceManager();
 
-    htps::sptr<res::ITTFont> getTTFont(const htps::str& rid) const override;
-    htps::sptr<res::ITexture> getTexture(const htps::str& rid) const override;
-    htps::sptr<res::IShader> getShader(const htps::str& rid) const override;
-    htps::sptr<res::IFont> getBMPFont(const htps::str& rid) const override;
+    htps::sptr<res::ITTFont> getTTFont(const htps::str& rid) const;
+    htps::sptr<res::ITexture> getTexture(const htps::str& rid) const;
+    htps::sptr<res::IShader> getShader(const htps::str& rid) const;
+    htps::sptr<res::IFont> getBMPFont(const htps::str& rid) const;
 
     bool loadTTFont(const htps::str& rid, const htps::str& fileName);
     bool loadTexture(const htps::str& rid, const htps::str& fileName);
@@ -42,9 +40,9 @@ public:
                              const htps::str& fileName);
 
     res::SetResourceConfigFileResult setResourceConfigFile(
-        htps::str config_file_name) override;
-    bool loadSection(htps::str const& section_name) override;
-    void setResourcesDirectory(htps::str directory) override;
+        htps::str config_file_name);
+    bool loadSection(htps::str const& section_name);
+    void setResourcesDirectory(htps::str directory);
 
     res::SetResourceConfigFileResult parseResourceConfigFile();
 

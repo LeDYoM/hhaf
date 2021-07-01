@@ -9,7 +9,7 @@
 #include <haf/include/scene_components/scenemetricsview.hpp>
 #include <haf/include/scene_nodes/scenenodetext_properties.hpp>
 #include <haf/include/resources/ittfont.hpp>
-#include <haf/include/resources/iresourceretriever.hpp>
+#include <haf/include/resources/resourceretriever.hpp>
 #include <haf/include/shareddata/shareddata.hpp>
 #include <haf/include/shareddata/shareddataviewer.hpp>
 #include <haf/include/input/inputcomponent.hpp>
@@ -33,12 +33,13 @@ void HighScoreTextController::onCreated()
 {
     BaseClass::onCreated();
 
-    m_normalFont = systemInterface<res::IResourceRetriever>()
-                       .getTTFont(HighScoresResources::MenuFontId)
+    m_normalFont = dataWrapper<res::ResourceRetriever>()
+                       ->getTTFont(HighScoresResources::MenuFontId)
                        ->font(72);
-    m_normalColor        = colors::Blue;
-    m_selectedColor      = colors::Red;
-    animation_component_ = components().addComponentOfType<scene::AnimationComponent>();
+    m_normalColor   = colors::Blue;
+    m_selectedColor = colors::Red;
+    animation_component_ =
+        components().addComponentOfType<scene::AnimationComponent>();
 
     // Request the high scores.
     dataWrapper<sys::FileSerializer>()->deserializeFromFile(HighScoresFileName,
@@ -70,7 +71,8 @@ void HighScoreTextController::onCreated()
 
     if (!isInserting)
     {
-        auto input_component(components().addComponentOfType<input::InputComponent>());
+        auto input_component(
+            components().addComponentOfType<input::InputComponent>());
         input_component->KeyPressed.connect(
             [this](const auto&) { Finished(); });
     }
@@ -104,8 +106,9 @@ void HighScoreTextController::addHighScoresLine(const size_type counter,
     }
 }
 
-void HighScoreTextController::addHighScoreEditor(const sptr<nodes::SceneNodeText>& label,
-                                                 const size_type counter)
+void HighScoreTextController::addHighScoreEditor(
+    const sptr<nodes::SceneNodeText>& label,
+    const size_type counter)
 {
     addEditAnimation(counter);
     auto editor(label->components().addComponentOfType<TextEditorComponent>());

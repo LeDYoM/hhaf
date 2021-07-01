@@ -4,7 +4,7 @@
 #include <menu_paged/include/menu_page.hpp>
 #include <haf/include/scene/scenenode.hpp>
 #include <hlog/include/hlog.hpp>
-#include <haf/include/resources/iresourceretriever.hpp>
+#include <haf/include/resources/resourceretriever.hpp>
 #include <haf/include/resources/ittfont.hpp>
 #include <haf/include/shareddata/shareddata.hpp>
 #include <haf/include/scene_components/scenemetricsview.hpp>
@@ -30,7 +30,7 @@ enum class Antialiasing
     max = Best
 };
 
-constexpr auto to_str(Antialiasing aa)
+constexpr auto to_str(Antialiasing const aa)
 {
     switch (aa)
     {
@@ -86,8 +86,8 @@ void MainMenu::onCreated()
 #ifdef TEST_BMP_FONT
             getBMPFont(MainMenuResources::TestFontId)
 #else
-            systemInterface<res::IResourceRetriever>()
-                .getTTFont(MainMenuResources::MenuFontId)
+            dataWrapper<res::ResourceRetriever>()
+                ->getTTFont(MainMenuResources::MenuFontId)
                 ->font(72)
 #endif
                 )

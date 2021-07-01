@@ -6,7 +6,7 @@
 #include <haf/include/scene_nodes/scenenodetext.hpp>
 
 #include <hlog/include/hlog.hpp>
-#include <haf/include/resources/iresourceretriever.hpp>
+#include <haf/include/resources/resourceretriever.hpp>
 #include <haf/include/resources/ittfont.hpp>
 
 using namespace htps;
@@ -22,8 +22,8 @@ void Console::onCreated()
     SceneNode::onCreated();
 
     auto a = createSceneNode<SceneNodeText>("scnText");
-    a->prop<Font>().set(systemInterface<res::IResourceRetriever>()
-                .getBMPFont("console_font"));
+    a->prop<Font>().set(dataWrapper<res::ResourceRetriever>()
+                ->getBMPFont("console_font"));
 
     prop<Position>().set(vector2df{100.0F, 0.0F});
     a->prop<Text>().set("1234 ABC abc");

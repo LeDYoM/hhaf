@@ -29,7 +29,7 @@
 #include <haf/include/scene_components/scenecontrol.hpp>
 #include <haf/include/shareddata/shareddataupdater.hpp>
 #include <haf/include/shareddata/shareddataviewer.hpp>
-#include <haf/include/resources/iresourceconfigurator.hpp>
+#include <haf/include/resources/resourceconfigurator.hpp>
 #include <haf/include/system/interfaceaccess.hpp>
 #include <htypes/include/serializer.hpp>
 #include <haf/include/filesystem/fileserializer.hpp>
@@ -65,10 +65,10 @@ void GameScene::onCreated()
                             "Private data pointer is not nullptr!");
     p_ = muptr<GameScenePrivate>();
 
-    auto& resources_configurator =
-        systemInterface<res::IResourcesConfigurator>();
-    resources_configurator.setResourceConfigFile("resources.txt");
-    resources_configurator.loadSection("game");
+    auto resources_configurator =
+        dataWrapper<res::ResourcesConfigurator>();
+    resources_configurator->setResourceConfigFile("resources.txt");
+    resources_configurator->loadSection("game");
 
     using namespace haf::board;
 

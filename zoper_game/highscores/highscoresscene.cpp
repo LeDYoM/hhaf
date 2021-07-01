@@ -8,9 +8,9 @@
 
 #include <haf/include/scene_components/statescontroller.hpp>
 #include <haf/include/input/inputcomponent.hpp>
-#include <haf/include/resources/iresourceretriever.hpp>
+#include <haf/include/resources/resourceretriever.hpp>
+#include <haf/include/resources/resourceconfigurator.hpp>
 #include <haf/include/scene_components/scenecontrol.hpp>
-#include <haf/include/resources/iresourceconfigurator.hpp>
 #include <haf/include/system/interfaceaccess.hpp>
 #include <haf/include/render/renderizables.hpp>
 #include <haf/include/render/renderizable_builder.hpp>
@@ -36,16 +36,16 @@ void HighScoresScene::onCreated()
 {
     BaseClass::onCreated();
 
-    auto& resources_configurator =
-        systemInterface<res::IResourcesConfigurator>();
-    resources_configurator.setResourceConfigFile("resources.txt");
-    resources_configurator.loadSection("high_scores");
+    auto resources_configurator =
+        dataWrapper<res::ResourcesConfigurator>();
+    resources_configurator->setResourceConfigFile("resources.txt");
+    resources_configurator->loadSection("high_scores");
 
     auto statesController(
         components().addComponentOfType<StatesController<HighScoresSceneStates>>());
 
-    m_normalFont = systemInterface<res::IResourceRetriever>()
-                       .getTTFont(HighScoresResources::MenuFontId)
+    m_normalFont = dataWrapper<res::ResourceRetriever>()
+                       ->getTTFont(HighScoresResources::MenuFontId)
                        ->font(72);
     m_normalColor   = colors::Blue;
     m_selectedColor = colors::Red;
