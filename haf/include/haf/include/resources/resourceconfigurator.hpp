@@ -1,8 +1,9 @@
-#ifndef HAF_RESOURCES_IRESOURCESCONFIGURATOR_INCLUDE_HPP
-#define HAF_RESOURCES_IRESOURCESCONFIGURATOR_INCLUDE_HPP
+#ifndef HAF_RESOURCES_RESOURCES_CONFIGURATOR_INCLUDE_HPP
+#define HAF_RESOURCES_RESOURCES_CONFIGURATOR_INCLUDE_HPP
 
 #include <htypes/include/str.hpp>
 #include <htypes/include/types.hpp>
+#include <haf/include/system/idatawrapper.hpp>
 
 namespace haf::res
 {
@@ -19,16 +20,16 @@ enum class SetResourceConfigFileResult : htps::u8
 };
 
 /**
- * @brief Interface class to perform the load of resources using sections.
+ * @brief Class to perform the load of resources using sections.
  */
-class IResourcesConfigurator
+class ResourcesConfigurator : public sys::IDataWrapper
 {
 public:
     /**
      * @brief Set the directory where the resources will be loaded.
      * @param[in] directory The directory where the resources are
      */
-    virtual void setResourcesDirectory(htps::str directory) = 0;
+    void setResourcesDirectory(htps::str directory);
 
     /**
      * @brief Set the config file to be loaded
@@ -36,8 +37,7 @@ public:
      * @return Result status of the function
      * @see SetResourceConfigFileResult
      */
-    virtual SetResourceConfigFileResult setResourceConfigFile(
-        htps::str fileName) = 0;
+    SetResourceConfigFileResult setResourceConfigFile(htps::str fileName);
 
     /**
      * @brief Load a section from the previously set config file for resource
@@ -46,8 +46,9 @@ public:
      * @return true Section loaded correctly
      * @return false Section not loaded
      */
-    virtual bool loadSection(htps::str const&) = 0;
+    bool loadSection(htps::str const&);
 };
+
 }  // namespace haf::res
 
 #endif

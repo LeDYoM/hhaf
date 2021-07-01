@@ -6,7 +6,7 @@
 
 namespace haf::sys
 {
-    class SystemAccess;
+class SystemAccess;
 }
 
 namespace haf::sys
@@ -14,8 +14,7 @@ namespace haf::sys
 class InterfaceGetter
 {
 public:
-    explicit InterfaceGetter(
-        htps::rptr<SystemAccess> system_access) noexcept :
+    explicit InterfaceGetter(htps::rptr<SystemAccess> system_access) noexcept :
         system_access_{system_access}
     {}
 
@@ -35,6 +34,6 @@ private:
     htps::rptr<SystemAccess> const system_access_;
 };
 
-}  // namespace haf::scene
+}  // namespace haf::sys
 
 #endif

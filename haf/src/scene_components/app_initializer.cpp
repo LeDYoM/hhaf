@@ -20,7 +20,7 @@ SceneNodeFactory& AppInitializer::sceneNodeFactory()
         ->sceneNodeFactory();
 }
 
-bool AppInitializer::startScene(const htps::str& scene_name)
+bool AppInitializer::startScene(htps::str const& scene_name)
 {
     return sys::getSystem<scene::SceneManager>(attachedNode())
         .sceneController()
