@@ -50,7 +50,7 @@ void HighScoreTextController::onCreated()
                           ->view(GameSharedData::address())
                           ->score;
     Rectf32 textBox{
-        rectFromSize(systemInterface<ISceneMetricsView>().currentView().size())
+        rectFromSize(dataWrapper<SceneMetricsView>()->currentView().size())
             .setLeftTop({0, 250})
             .setSize({2000, 1500})};
     prop<haf::scene::Position>().set(textBox.leftTop());

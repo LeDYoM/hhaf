@@ -1,9 +1,21 @@
-#include "system/interfaceaccess_imp.hpp"
-
 #include <haf/include/scene_components/scenemetricsview.hpp>
 #include "scene/scenemanager.hpp"
 
-namespace haf::sys
+#include "system/get_system.hpp"
+
+using namespace htps;
+
+namespace haf::scene
 {
-GET_INTERFACE_IMP(scene::ISceneMetricsView, scene::SceneManager)
-}  // namespace haf::sys
+Rectf32 SceneMetricsView::currentView() const
+{
+    return sys::getSystem<scene::SceneManager>(attachedNode()).currentView();
+}
+
+Rectf32 SceneMetricsView::currentViewPort() const
+{
+    return sys::getSystem<scene::SceneManager>(attachedNode())
+        .currentViewPort();
+}
+
+}  // namespace haf::scene
