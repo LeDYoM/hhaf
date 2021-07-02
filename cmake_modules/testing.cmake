@@ -18,6 +18,7 @@ function (prepareTestLibrary)
         GIT_REPOSITORY https://github.com/catchorg/Catch2.git
         GIT_TAG v2.12.4
         CMAKE_ARGS -DBUILD_TESTING=OFF
+
     )
 
     FetchContent_MakeAvailable(Catch2)
@@ -36,8 +37,10 @@ function(add_test_executable)
       list(APPEND SOURCE_TESTS_LIST ${NAME}.test.cpp)
     endforeach()
 
-    add_executable(${CURRENT_TARGET} ${SOURCE_TESTS_LIST})
-    
+    add_executable(${CURRENT_TARGET})
+    target_sources(${CURRENT_TARGET} PRIVATE ${SOURCE_TESTS_LIST})
+    target_compile_definitions(${CURRENT_TARGET} PUBLIC CATCH_CONFIG_ENABLE_BENCHMARKING)
+
     target_link_libraries(${CURRENT_TARGET} PUBLIC Catch2)
     target_include_directories(
       ${CURRENT_TARGET} PRIVATE "${Catch2_SOURCE_DIR}/single_include/catch2")
@@ -82,7 +85,6 @@ function(add_haf_test_executable)
     add_test_executable(${PARAM_LIST})
 
     target_link_libraries(${CURRENT_TARGET} PRIVATE haf)
-    set_compile_warning_level_and_cxx_properties(${CURRENT_TARGET})
   endif()
 endfunction()
 
