@@ -6,13 +6,27 @@
 
 namespace haf::scene
 {
+/**
+ * @brief Type representing a 4x4 matrix.
+ * Used to perform operations on the engine
+ */
 class HAF_API Matrix4x4 final
 {
 public:
+    /**
+     * @brief Type of the elements internal data
+     */
     using Scalar = htps::f32;
 
-    static constexpr Scalar One  = 1.0F;
-    static constexpr Scalar Zero = 0.0F;
+    /**
+     * @brief Value "0" for the elements of this matrix
+     */
+    static constexpr Scalar const One  = static_cast<Scalar>(1.0);
+
+    /**
+     * @brief Value "1" for the elements of this matrix
+     */
+    static constexpr Scalar const Zero = static_cast<Scalar>(0.0);
 
     constexpr Matrix4x4() noexcept :
         matrix_data_{One,  Zero, Zero, Zero, Zero, One,  Zero, Zero,
@@ -33,10 +47,10 @@ public:
     {}
 
     constexpr Matrix4x4(Matrix4x4 const&) noexcept = default;
-    Matrix4x4& operator=(Matrix4x4 const&) noexcept = default;
+    constexpr Matrix4x4& operator=(Matrix4x4 const&) noexcept = default;
 
     constexpr Matrix4x4(Matrix4x4&&) noexcept = default;
-    Matrix4x4& operator=(Matrix4x4&&) noexcept = default;
+    constexpr Matrix4x4& operator=(Matrix4x4&&) noexcept = default;
 
     constexpr htps::rptr<Scalar const> getMatrix() const noexcept
     {
