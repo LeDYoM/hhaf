@@ -30,7 +30,6 @@
 #include <haf/include/shareddata/shareddataupdater.hpp>
 #include <haf/include/shareddata/shareddataviewer.hpp>
 #include <haf/include/resources/resourceconfigurator.hpp>
-#include <haf/include/system/interfaceaccess.hpp>
 #include <htypes/include/serializer.hpp>
 #include <haf/include/filesystem/fileserializer.hpp>
 #include <haf/include/render/renderizables.hpp>

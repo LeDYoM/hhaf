@@ -12,7 +12,6 @@
 #include "../gameplay/displayvar_console.hpp"
 
 #include <haf/include/resources/resourceconfigurator.hpp>
-#include <haf/include/system/interfaceaccess.hpp>
 #include <haf/include/scene_components/scenemetrics.hpp>
 #include <haf/include/render/renderizables.hpp>
 #include <haf/include/render/renderizable_builder.hpp>

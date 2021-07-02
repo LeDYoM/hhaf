@@ -78,7 +78,6 @@ set(sources
   ${src_dir}/scene/componentcontainer_no_update.cpp
   ${src_dir}/scene/componentcontainer_update.cpp
   ${src_dir}/scene/componentcontainer.cpp
-  ${src_dir}/scene/interface_getter.cpp
   ${src_dir}/scene/matrix4x4.cpp
   ${src_dir}/scene/renderizables_scenenode.cpp
   ${src_dir}/scene/scenecontroller.cpp
@@ -128,7 +127,6 @@ set(sources
   ${src_dir}/system/get_systemprovider.cpp
   ${src_dir}/system/get_systemprovider.hpp
   ${src_dir}/system/init_system_options.hpp
-  ${src_dir}/system/interfaceaccess_imp.hpp
   ${src_dir}/system/system_options_init.hpp
   ${src_dir}/system/systemaccess.cpp
   ${src_dir}/system/systembase.cpp
@@ -257,8 +255,6 @@ set(headers
   # System
   ${inc_dir}/system/datawrappercreator.hpp
   ${inc_dir}/system/idatawrapper.hpp
-  ${inc_dir}/system/interface_getter.hpp
-  ${inc_dir}/system/interfaceaccess.hpp
   ${inc_dir}/system/isystemcontroller.hpp
   ${inc_dir}/system/isystemprovider.hpp
   ${inc_dir}/system/systemaccess.hpp

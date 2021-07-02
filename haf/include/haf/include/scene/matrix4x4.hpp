@@ -6,7 +6,7 @@
 
 namespace haf::scene
 {
-class HAF__API Matrix4x4 final
+class HAF_API Matrix4x4 final
 {
 public:
     using Scalar = htps::f32;
