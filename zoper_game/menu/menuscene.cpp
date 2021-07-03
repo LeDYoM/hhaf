@@ -12,7 +12,6 @@
 #include "../gameplay/displayvar_console.hpp"
 
 #include <haf/include/resources/resourceconfigurator.hpp>
-#include <haf/include/system/interfaceaccess.hpp>
 #include <haf/include/scene_components/scenemetrics.hpp>
 #include <haf/include/render/renderizables.hpp>
 #include <haf/include/render/renderizable_builder.hpp>
@@ -43,7 +42,7 @@ void MenuScene::onCreated()
     BaseClass::onCreated();
 
     // Set the default view for this scene
-    systemInterface<ISceneMetrics>().setViewRect(DefaultView);
+    dataWrapper<SceneMetrics>()->setViewRect(DefaultView);
 
     // Load the necessary resources
     auto resources_configurator =

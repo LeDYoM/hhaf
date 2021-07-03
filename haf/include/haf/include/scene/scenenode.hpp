@@ -9,7 +9,6 @@
 #include <haf/include/scene/scenenode_properties.hpp>
 #include <haf/include/scene/scenenodes.hpp>
 #include <haf/include/scene/hasname.hpp>
-#include <haf/include/system/interface_getter.hpp>
 #include <haf/include/system/datawrappercreator.hpp>
 #include <haf/include/system/systemaccess.hpp>
 
@@ -28,7 +27,6 @@ class HAF_API SceneNode : public sys::HasName,
                           public SceneNodes,
                           public sys::DataWrapperCreator,
                           public sys::SystemAccess,
-                          public sys::InterfaceGetter,
                           public SceneNodeProperties
 {
 public:

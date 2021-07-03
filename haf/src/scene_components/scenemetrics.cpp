@@ -1,10 +1,17 @@
-#include "system/interfaceaccess_imp.hpp"
-#include "scene/scenemanager.hpp"
-
 #include <haf/include/scene_components/scenemetrics.hpp>
+#include "scene/scenemanager.hpp"
+#include "system/get_system.hpp"
 
-namespace haf::sys
+namespace haf::scene
 {
-GET_INTERFACE_IMP(scene::ISceneMetrics, scene::SceneManager)
+void SceneMetrics::setViewRect(const htps::Rectf32& new_view)
+{
+    getSystem<scene::SceneManager>(attachedNode()).setViewRect(new_view);
+}
 
-}  // namespace haf::sys
+void SceneMetrics::setViewPort(const htps::Rectf32& new_view_port)
+{
+    getSystem<scene::SceneManager>(attachedNode()).setViewPort(new_view_port);
+}
+
+}  // namespace haf::scene

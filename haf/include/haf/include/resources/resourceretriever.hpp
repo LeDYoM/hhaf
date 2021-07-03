@@ -1,6 +1,7 @@
 #ifndef HAF_RESOURCES_RESOURCE_RETRIVER_INCLUDE_HPP
 #define HAF_RESOURCES_RESOURCE_RETRIVER_INCLUDE_HPP
 
+#include <haf/include/haf_export.hpp>
 #include <htypes/include/str.hpp>
 #include <htypes/include/types.hpp>
 #include <haf/include/system/idatawrapper.hpp>
@@ -12,7 +13,7 @@ class ITTFont;
 class ITexture;
 class IShader;
 
-class ResourceRetriever : public sys::IDataWrapper
+class HAF_API ResourceRetriever : public sys::IDataWrapper
 {
 public:
     htps::sptr<ITTFont> getTTFont(const htps::str& rid) const;

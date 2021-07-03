@@ -1,6 +1,5 @@
 #include <haf/include/scene/scenenode.hpp>
 #include "scenemanager.hpp"
-#include "system/get_system.hpp"
 
 #include <haf/include/scene/componentcontainer.hpp>
 
@@ -21,7 +20,6 @@ SceneNode::SceneNode(rptr<SceneNode> parent, str name) :
     sys::DataWrapperCreator{this},
     sys::SystemAccess{parent != nullptr ? &(parent->isystemProvider())
                                         : nullptr},
-    InterfaceGetter{this},
     SceneNodeProperties(true),
     p_{make_pimplp<SceneNodePrivate>()}
 {}

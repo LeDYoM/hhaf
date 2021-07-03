@@ -13,7 +13,7 @@ class SceneController;
 
 namespace haf::scene
 {
-class SceneManager final : public sys::SystemBase, public ISceneMetrics
+class SceneManager final : public sys::SystemBase
 {
 public:
     explicit SceneManager(sys::SystemProvider& system_provider);
@@ -23,10 +23,10 @@ public:
     void update();
     void finish();
 
-    htps::Rectf32 currentViewPort() const override;
-    htps::Rectf32 currentView() const override;
-    void setViewPort(const htps::Rectf32& vp) override;
-    void setViewRect(const htps::Rectf32& vr) override;
+    htps::Rectf32 currentViewPort() const;
+    htps::Rectf32 currentView() const;
+    void setViewPort(const htps::Rectf32& vp);
+    void setViewRect(const htps::Rectf32& vr);
 
     htps::sptr<SceneController> const& sceneController() const noexcept;
     htps::sptr<SceneController>& sceneController() noexcept;
