@@ -3,7 +3,6 @@
 
 #include <haf/include/haf_export.hpp>
 #include <htypes/include/types.hpp>
-#include <htypes/include/vector2d.hpp>
 #include <htypes/include/properties.hpp>
 #include <haf/include/scene/scenenodeparent.hpp>
 #include <haf/include/scene/scenenode_properties.hpp>

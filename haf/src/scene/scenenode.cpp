@@ -1,5 +1,4 @@
 #include <haf/include/scene/scenenode.hpp>
-#include "scenemanager.hpp"
 
 #include <haf/include/scene/componentcontainer.hpp>
 #include <haf/include/system/datawrappercreator.hpp>
