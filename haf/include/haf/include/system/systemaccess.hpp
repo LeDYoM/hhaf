@@ -3,6 +3,11 @@
 
 #include <htypes/include/types.hpp>
 
+namespace haf::scene
+{
+    class SceneController;
+}
+
 namespace haf::sys
 {
 class ISystemProvider;
@@ -41,17 +46,9 @@ public:
      */
     ISystemProvider& isystemProvider() noexcept;
 
-    /**
-     * @brief Set the @b ISystemProvider object. It assumes it had been
-     * initialized with a nullptr.
-     * @return true The instance contained a nullptr and has been correctly set.
-     * @return false The instance already contained a valid pointer to object or
-     * you passed nullptr as parameter.
-     */
-    bool setSystemProvider(htps::rptr<ISystemProvider> const);
-
 private:
     htps::rptr<ISystemProvider> isystem_provider_;
+    friend class scene::SceneController;
 };
 }  // namespace haf::sys
 

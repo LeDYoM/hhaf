@@ -9,6 +9,10 @@
 #include <haf/include/scene/scene.hpp>
 #include <haf/include/scene/scenenodefactory.hpp>
 
+namespace haf::sys
+{
+    class SystemAccess;
+}
 namespace haf::scene
 {
 class SceneManager;
@@ -22,6 +26,8 @@ class SceneController final
 {
 public:
     void setSceneManager(htps::rptr<SceneManager> scene_manager);
+    bool setSystemProviderInScene(htps::sptr<sys::SystemAccess> scene,
+                              htps::rptr<sys::ISystemProvider> const isystem_provider);
 
     /**
      * @brief Switch to the next scene. For that to success, the current

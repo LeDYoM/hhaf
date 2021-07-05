@@ -145,6 +145,27 @@ const sptr<Scene>& SceneController::currentScene() const noexcept
     return current_scene_;
 }
 
+bool SceneController::setSystemProviderInScene(htps::sptr<sys::SystemAccess> scene,
+                              rptr<sys::ISystemProvider> const isystem_provider)
+{
+    LogAsserter::log_assert(scene->isystem_provider_ == nullptr,
+                            "You should not use this function"
+                            " if isystemProvider is already set");
+
+    LogAsserter::log_assert(isystem_provider != nullptr,
+                            "Parameter is nullptr");
+
+    // Invalid data. Exit performing no action.
+    if (scene->isystem_provider_ != nullptr || isystem_provider == nullptr)
+    {
+        return false;
+    }
+
+    // Valid data. Perform action and return true.
+    scene->isystem_provider_ = isystem_provider;
+    return true;
+}
+
 void SceneController::startScene(sptr<Scene> scene)
 {
     current_scene_ = std::move(scene);
@@ -153,7 +174,7 @@ void SceneController::startScene(sptr<Scene> scene)
         if (scene_manager_ != nullptr)
         {
             current_scene_->scene_manager_ = scene_manager_;
-            if (!(current_scene_->setSystemProvider(
+            if (!(setSystemProviderInScene(current_scene_,
                     &(scene_manager_->isystemProvider()))))
             {
                 DisplayLog::debug(
