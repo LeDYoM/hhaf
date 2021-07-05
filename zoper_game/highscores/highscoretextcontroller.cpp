@@ -33,7 +33,7 @@ void HighScoreTextController::onCreated()
 {
     BaseClass::onCreated();
 
-    m_normalFont = dataWrapper<res::ResourceRetriever>()
+    m_normalFont = subsystems().dataWrapper<res::ResourceRetriever>()
                        ->getTTFont(HighScoresResources::MenuFontId)
                        ->font(72);
     m_normalColor   = colors::Blue;
@@ -42,15 +42,15 @@ void HighScoreTextController::onCreated()
         components().addComponentOfType<scene::AnimationComponent>();
 
     // Request the high scores.
-    dataWrapper<sys::FileSerializer>()->deserializeFromFile(HighScoresFileName,
+    subsystems().dataWrapper<sys::FileSerializer>()->deserializeFromFile(HighScoresFileName,
                                                             m_hsData);
 
     // Request game score
-    Score gameScore = dataWrapper<shdata::SharedDataViewer<GameSharedData>>()
+    Score gameScore = subsystems().dataWrapper<shdata::SharedDataViewer<GameSharedData>>()
                           ->view(GameSharedData::address())
                           ->score;
     Rectf32 textBox{
-        rectFromSize(dataWrapper<SceneMetricsView>()->currentView().size())
+        rectFromSize(subsystems().dataWrapper<SceneMetricsView>()->currentView().size())
             .setLeftTop({0, 250})
             .setSize({2000, 1500})};
     prop<haf::scene::Position>().set(textBox.leftTop());
@@ -150,7 +150,7 @@ void HighScoreTextController::saveHighScores()
 {
     DisplayLog::info("Saving highscores...");
 
-    dataWrapper<sys::FileSerializer>()->serializeToFileTemplate(
+    subsystems().dataWrapper<sys::FileSerializer>()->serializeToFileTemplate(
         HighScoresFileName, m_hsData);
     DisplayLog::info("High Scores saved");
 }

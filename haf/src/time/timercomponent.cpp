@@ -4,6 +4,7 @@
 #include <htypes/include/algoutils.hpp>
 #include <hlog/include/hlog.hpp>
 #include <haf/include/scene/scenenode.hpp>
+#include <haf/include/system/datawrappercreator.hpp>
 
 using namespace htps;
 
@@ -14,7 +15,7 @@ TimerConnectorSPtr TimerComponent::addTimer(TimerType timerType,
                                             timer_callback_t callback)
 {
     auto timerConnector(
-        msptr<TimerConnector>(attachedNode()->dataWrapper<Timer>(), timerType,
+        msptr<TimerConnector>(attachedNode()->subsystems().dataWrapper<Timer>(), timerType,
                               std::move(timeOut), std::move(callback)));
     activeTimers_.emplace_back(timerConnector);
     return timerConnector;

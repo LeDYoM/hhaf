@@ -36,14 +36,14 @@ void HighScoresScene::onCreated()
     BaseClass::onCreated();
 
     auto resources_configurator =
-        dataWrapper<res::ResourcesConfigurator>();
+        subsystems().dataWrapper<res::ResourcesConfigurator>();
     resources_configurator->setResourceConfigFile("resources.txt");
     resources_configurator->loadSection("high_scores");
 
     auto statesController(
         components().addComponentOfType<StatesController<HighScoresSceneStates>>());
 
-    m_normalFont = dataWrapper<res::ResourceRetriever>()
+    m_normalFont = subsystems().dataWrapper<res::ResourceRetriever>()
                        ->getTTFont(HighScoresResources::MenuFontId)
                        ->font(72);
     m_normalColor   = colors::Blue;
@@ -58,7 +58,7 @@ void HighScoresScene::onCreated()
     auto highScoreTextController(
         createSceneNode<HighScoreTextController>("HighScoreTextController"));
     highScoreTextController->Finished.connect([this, statesController]() {
-        dataWrapper<SceneControl>()->switchToNextScene();
+        subsystems().dataWrapper<SceneControl>()->switchToNextScene();
     });
 
     statesController->start(HighScoresSceneStates::Show);

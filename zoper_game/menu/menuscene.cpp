@@ -16,6 +16,7 @@
 #include <haf/include/render/renderizables.hpp>
 #include <haf/include/render/renderizable_builder.hpp>
 #include <haf/include/scene/renderizables_scenenode.hpp>
+#include <haf/include/system/datawrappercreator.hpp>
 
 using namespace htps;
 using namespace haf;
@@ -42,11 +43,11 @@ void MenuScene::onCreated()
     BaseClass::onCreated();
 
     // Set the default view for this scene
-    dataWrapper<SceneMetrics>()->setViewRect(DefaultView);
+    subsystems().dataWrapper<SceneMetrics>()->setViewRect(DefaultView);
 
     // Load the necessary resources
     auto resources_configurator =
-        dataWrapper<res::ResourcesConfigurator>();
+        subsystems().dataWrapper<res::ResourcesConfigurator>();
     resources_configurator->setResourceConfigFile("resources.txt");
     resources_configurator->setResourcesDirectory("resources/");
     resources_configurator->loadSection("menu");
@@ -60,7 +61,7 @@ void MenuScene::onCreated()
         renderizable_builder.name("mainLogo")
             .figType(FigType_t::Quad)
             .box(Rectf32{500.f, 150.f, 1000.f, 500.f})
-            .texture(dataWrapper<res::ResourceRetriever>()->getTexture(
+            .texture(subsystems().dataWrapper<res::ResourceRetriever>()->getTexture(
                 MainMenuResources::LogoId))
             .create();
 
@@ -69,9 +70,9 @@ void MenuScene::onCreated()
     mainMenu->MenuFinished.connect([this](const s32 status) {
         if (status == 0)
         {
-            dataWrapper<SceneControl>()->requestExit();
+            subsystems().dataWrapper<SceneControl>()->requestExit();
         }
-        dataWrapper<SceneControl>()->switchToNextScene();
+        subsystems().dataWrapper<SceneControl>()->switchToNextScene();
     });
 
     auto a = createSceneNode<DisplayVarConsole>("a");

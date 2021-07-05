@@ -8,6 +8,7 @@
 #include <hlog/include/hlog.hpp>
 #include <haf/include/resources/resourceretriever.hpp>
 #include <haf/include/resources/ittfont.hpp>
+#include <haf/include/system/datawrappercreator.hpp>
 
 using namespace htps;
 using namespace haf;
@@ -22,7 +23,7 @@ void Console::onCreated()
     SceneNode::onCreated();
 
     auto a = createSceneNode<SceneNodeText>("scnText");
-    a->prop<Font>().set(dataWrapper<res::ResourceRetriever>()
+    a->prop<Font>().set(subsystems().dataWrapper<res::ResourceRetriever>()
                 ->getBMPFont("console_font"));
 
     prop<Position>().set(vector2df{100.0F, 0.0F});

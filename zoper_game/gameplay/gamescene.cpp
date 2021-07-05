@@ -65,7 +65,7 @@ void GameScene::onCreated()
     p_ = muptr<GameScenePrivate>();
 
     auto resources_configurator =
-        dataWrapper<res::ResourcesConfigurator>();
+        subsystems().dataWrapper<res::ResourcesConfigurator>();
     resources_configurator->setResourceConfigFile("resources.txt");
     resources_configurator->loadSection("game");
 
@@ -93,7 +93,7 @@ void GameScene::onCreated()
 
     {
         auto game_shared_data =
-            dataWrapper<shdata::SharedDataViewer<GameSharedData>>()->view(
+            subsystems().dataWrapper<shdata::SharedDataViewer<GameSharedData>>()->view(
                 GameSharedData::address());
 
         start_level = game_shared_data->startLevel;
@@ -153,9 +153,9 @@ void GameScene::onCreated()
     p_->key_mapping_ = muptr<KeyMapping>();
     p_->key_mapping_->reset();
 
-    dataWrapper<sys::FileSerializer>()->deserializeFromFile("keys.txt",
+    subsystems().dataWrapper<sys::FileSerializer>()->deserializeFromFile("keys.txt",
                                                             *p_->key_mapping_);
-    dataWrapper<sys::FileSerializer>()->serializeToFile("keys.txt",
+    subsystems().dataWrapper<sys::FileSerializer>()->serializeToFile("keys.txt",
                                                         *p_->key_mapping_);
 
     m_sceneStates->start(GameSceneStates::Playing);

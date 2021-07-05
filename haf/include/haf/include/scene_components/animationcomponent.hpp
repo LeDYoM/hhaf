@@ -7,6 +7,7 @@
 #include <haf/include/scene_components/animation.hpp>
 #include <haf/include/scene_components/ipropertyanimation.hpp>
 #include <haf/include/scene/scenenode.hpp>
+#include <haf/include/system/datawrappercreator.hpp>
 
 namespace haf::scene
 {
@@ -48,7 +49,7 @@ public:
         Animation::ActionFunc endAction = {})
     {
         auto anim = htps::muptr<IPropertyAnimation<PropertyType, PropertyTag>>(
-            attachedNode()->dataWrapper<time::Timer>(), std::move(time),
+            attachedNode()->subsystems().dataWrapper<time::Timer>(), std::move(time),
             property, std::move(start), std::move(dest),
             std::move(animation_direction), std::move(endAction));
 

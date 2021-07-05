@@ -10,6 +10,7 @@
 #include <haf/include/scene_components/scenemetricsview.hpp>
 #include <htypes/include/function.hpp>
 #include <htypes/include/types.hpp>
+#include <haf/include/system/datawrappercreator.hpp>
 
 using namespace htps;
 using namespace haf;
@@ -64,7 +65,7 @@ void goGame(rptr<MenuPaged> scene_node,
         game_shared_data.startLevel = menu_data[0U];
         game_shared_data.gameMode   = game_mode;
         DisplayLog::info(game_shared_data.to_str());
-        scene_node->dataWrapper<shdata::SharedData>()->store(
+        scene_node->subsystems().dataWrapper<shdata::SharedData>()->store(
             GameSharedData::address(), game_shared_data);
     }
 
@@ -76,7 +77,7 @@ void MainMenu::onCreated()
     BaseClass::onCreated();
 
     Rectf32 textBox{
-        rectFromSize(dataWrapper<SceneMetricsView>()->currentView().size())
+        rectFromSize(subsystems().dataWrapper<SceneMetricsView>()->currentView().size())
             .setLeftTop({0, 750})
             .setSize({2000, 4 * 150})};
     prop<Position>() = textBox.leftTop();
@@ -86,7 +87,7 @@ void MainMenu::onCreated()
 #ifdef TEST_BMP_FONT
             getBMPFont(MainMenuResources::TestFontId)
 #else
-            dataWrapper<res::ResourceRetriever>()
+            subsystems().dataWrapper<res::ResourceRetriever>()
                 ->getTTFont(MainMenuResources::MenuFontId)
                 ->font(72)
 #endif

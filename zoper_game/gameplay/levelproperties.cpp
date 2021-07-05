@@ -3,6 +3,7 @@
 
 #include <hlog/include/hlog.hpp>
 #include <haf/include/shareddata/shareddataupdater.hpp>
+#include <haf/include/system/datawrappercreator.hpp>
 
 using namespace htps;
 
@@ -21,7 +22,7 @@ void LevelProperties::configure(
 
     if (!level_timer_)
     {
-        level_timer_ = attachedNode()->dataWrapper<Timer>();
+        level_timer_ = attachedNode()->subsystems().dataWrapper<Timer>();
     }
     LogAsserter::log_assert(scene_timer_component != nullptr,
                             "m_sceneNodeComponent already contains a value");
@@ -48,7 +49,7 @@ void LevelProperties::setScore(const size_type new_score)
     {
         auto const game_shared_data_updater =
             attachedNode()
-                ->dataWrapper<shdata::SharedDataUpdater<GameSharedData>>();
+                ->subsystems().dataWrapper<shdata::SharedDataUpdater<GameSharedData>>();
         auto game_shared_data =
             game_shared_data_updater->update(GameSharedData::address());
 
@@ -78,7 +79,7 @@ void LevelProperties::setLevel(const LevelType currentLevel)
     {
         auto game_shared_data =
             attachedNode()
-                ->dataWrapper<shdata::SharedDataUpdater<GameSharedData>>()
+                ->subsystems().dataWrapper<shdata::SharedDataUpdater<GameSharedData>>()
                 ->update(GameSharedData::address());
 
         if (game_shared_data == nullptr)

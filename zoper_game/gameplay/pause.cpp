@@ -27,12 +27,12 @@ void PauseSceneNode::onCreated()
     m_pauseText = createSceneNode<SceneNodeText>("pausetext");
     m_pauseText->prop<SceneNodeTextProperties>()
         .put<Text>("PAUSE")
-        .put<Font>(dataWrapper<res::ResourceRetriever>()
+        .put<Font>(subsystems().dataWrapper<res::ResourceRetriever>()
                        ->getTTFont(GameResources::ScoreFontId)
                        ->font(180U))
         .put<TextColor>(colors::White)
         .put<AlignmentSize>(
-            dataWrapper<SceneMetricsView>()->currentView().size())
+            subsystems().dataWrapper<SceneMetricsView>()->currentView().size())
         .put<AlignmentX>(AlignmentXModes::Center)
         .put<AlignmentY>(AlignmentYModes::Middle);
 

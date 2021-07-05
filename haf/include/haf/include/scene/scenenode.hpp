@@ -9,10 +9,14 @@
 #include <haf/include/scene/scenenode_properties.hpp>
 #include <haf/include/scene/scenenodes.hpp>
 #include <haf/include/scene/hasname.hpp>
-#include <haf/include/system/datawrappercreator.hpp>
 #include <haf/include/system/systemaccess.hpp>
 
 #include <htypes/include/p_impl_pointer.hpp>
+
+namespace haf::sys
+{
+class DataWrapperCreator;
+}
 
 namespace haf::scene
 {
@@ -25,7 +29,6 @@ class ComponentContainer;
 class HAF_API SceneNode : public sys::HasName,
                           public SceneNodeParent,
                           public SceneNodes,
-                          public sys::DataWrapperCreator,
                           public sys::SystemAccess,
                           public SceneNodeProperties
 {
@@ -85,6 +88,9 @@ public:
     ComponentContainer& components();
     ComponentContainer const& components() const noexcept;
     bool hasComponents() const noexcept;
+
+    sys::DataWrapperCreator& subsystems();
+    sys::DataWrapperCreator& subsystems() const;
 
 private:
     struct SceneNodePrivate;

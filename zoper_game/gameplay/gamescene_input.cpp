@@ -51,7 +51,7 @@ void GameSceneInput::onKeyPressed(haf::input::Key const& key)
         case GameSceneStates::GameOver:
         {
             attachedNode()
-                ->dataWrapper<haf::scene::SceneControl>()
+                ->subsystems().dataWrapper<haf::scene::SceneControl>()
                 ->switchToNextScene();
         }
         break;

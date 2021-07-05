@@ -8,6 +8,7 @@
 #include <hlog/include/hlog.hpp>
 #include <haf/include/resources/resourceretriever.hpp>
 #include <haf/include/resources/ittfont.hpp>
+#include <haf/include/system/datawrappercreator.hpp>
 
 using namespace htps;
 using namespace haf;
@@ -21,7 +22,7 @@ GameHudSceneNode::GameHudSceneNode(
     str name) :
     BaseClass{parent, std::move(name)}
 {
-    Font::value_type font{dataWrapper<res::ResourceRetriever>()
+    Font::value_type font{subsystems().dataWrapper<res::ResourceRetriever>()
                                 ->getTTFont(GameResources::ScoreFontId)
                                 ->font(90U)};
     (m_scoreQuad = parent->createSceneNode<TextQuad>("score"))

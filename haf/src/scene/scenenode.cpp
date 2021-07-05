@@ -2,6 +2,7 @@
 #include "scenemanager.hpp"
 
 #include <haf/include/scene/componentcontainer.hpp>
+#include <haf/include/system/datawrappercreator.hpp>
 
 using namespace htps;
 
@@ -11,13 +12,13 @@ struct SceneNode::SceneNodePrivate
 {
     SceneNodePrivate() = default;
     uptr<ComponentContainer> component_container_;
+    uptr<sys::DataWrapperCreator> subsystems_;
 };
 
 SceneNode::SceneNode(rptr<SceneNode> parent, str name) :
     sys::HasName{std::move(name)},
     SceneNodeParent{parent},
     SceneNodes{this},
-    sys::DataWrapperCreator{this},
     sys::SystemAccess{parent != nullptr ? &(parent->isystemProvider())
                                         : nullptr},
     SceneNodeProperties(true),
@@ -50,6 +51,21 @@ ComponentContainer const& SceneNode::components() const noexcept
 bool SceneNode::hasComponents() const noexcept
 {
     return p_->component_container_ != nullptr;
+}
+
+sys::DataWrapperCreator& SceneNode::subsystems()
+{
+    if (p_->subsystems_ == nullptr)
+    {
+        p_->subsystems_ = muptr<sys::DataWrapperCreator>(this);
+    }
+
+    return *(p_->subsystems_);
+}
+
+sys::DataWrapperCreator& SceneNode::subsystems() const
+{
+    return *(p_->subsystems_);
 }
 
 }  // namespace haf::scene
