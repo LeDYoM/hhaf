@@ -1,6 +1,7 @@
 #include <haf/include/scene/scenenode.hpp>
 
 #include <haf/include/scene/componentcontainer.hpp>
+#include <haf/include/scene/scene.hpp>
 #include <haf/include/system/datawrappercreator.hpp>
 
 using namespace htps;
@@ -18,18 +19,20 @@ SceneNode::SceneNode(rptr<SceneNode> parent, str name) :
     sys::HasName{std::move(name)},
     SceneNodeParent{parent},
     SceneNodes{this},
-    sys::SystemAccess{parent != nullptr ? &(parent->isystemProvider())
-                                        : nullptr},
+    sys::SystemAccess{ancestor<Scene>() != nullptr
+                          ? &(ancestor<Scene>()->isystemProvider())
+                          : nullptr},
     SceneNodeProperties(true),
     p_{make_pimplp<SceneNodePrivate>()}
 {}
+
 
 SceneNode::~SceneNode() = default;
 
 void SceneNode::clearAll()
 {
     clearSceneNodes();
-    //clearComponents();
+    // clearComponents();
 }
 
 ComponentContainer& SceneNode::components()
