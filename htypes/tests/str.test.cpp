@@ -1,6 +1,7 @@
 #include "catch.hpp"
 
 #include <htypes/include/str.hpp>
+#include <cstring>
 
 using namespace htps;
 
@@ -253,4 +254,16 @@ TEST_CASE("str", "[str]")
             CHECK_FALSE(tst_string.ends_with("String to test "));
         }
     }
+}
+
+TEST_CASE("str::c_str", "[str]")
+{
+    str test{"str_test_data"};
+    CHECK(0 == std::strcmp("str_test_data", test.c_str()));
+    test += "_good";
+    CHECK(0 == std::strcmp("str_test_data_good", test.c_str()));
+
+    test = test.substr(1U);
+    CHECK(0 != std::strcmp("str_test_data_good", test.c_str()));
+    CHECK(0 == std::strcmp("tr_test_data_good", test.c_str()));
 }
