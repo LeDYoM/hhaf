@@ -43,6 +43,7 @@ public:
     SystemProvider();
     ~SystemProvider() override;
 
+    void createBackend();
     void fastInit(InitSystemOptions const& init_system_options);
     void init(htps::rptr<IApp> iapp, int const argc, char const* const argv[]);
     void terminate();

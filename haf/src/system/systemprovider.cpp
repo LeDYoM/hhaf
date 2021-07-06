@@ -177,6 +177,13 @@ void SystemProvider::fastInit(InitSystemOptions const& init_system_options)
     }
 }
 
+void SystemProvider::createBackend()
+{
+    p_->backend_factory_ =
+        uptr<backend::BackendFactory, void (*)(haf::backend::BackendFactory*)>(
+            createBackendFactory(), destroyBackendFactory);
+}
+
 void SystemProvider::init(rptr<IApp> iapp,
                           int const argc,
                           char const* const argv[])
@@ -186,9 +193,7 @@ void SystemProvider::init(rptr<IApp> iapp,
 
     LogAsserter::log_assert(
         iapp != nullptr, "Cannot create a SystemProvider with a nullptr app");
-    p_->backend_factory_ =
-        uptr<backend::BackendFactory, void (*)(haf::backend::BackendFactory*)>(
-            createBackendFactory(), destroyBackendFactory);
+    createBackend();
     p_->app_ = iapp;
 
     InitSystemOptions init_system_options;
