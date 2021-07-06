@@ -13,9 +13,9 @@ class SceneManager;
 class HAF_API Scene : public SceneNode
 {
 public:
-    explicit Scene(htps::str name) : SceneNode{nullptr, std::move(name)} {}
-    virtual htps::str nextSceneName() { return ""; }
-    virtual void onFinished() {}
+    explicit Scene(htps::str name);
+    virtual htps::str nextSceneName();
+    virtual void onFinished();
 
 private:
     htps::rptr<SceneManager> scene_manager_;

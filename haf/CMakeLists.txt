@@ -80,6 +80,7 @@ set(sources
   ${src_dir}/scene/componentcontainer.cpp
   ${src_dir}/scene/matrix4x4.cpp
   ${src_dir}/scene/renderizables_scenenode.cpp
+  ${src_dir}/scene/scene.cpp
   ${src_dir}/scene/scenecontroller.cpp
   ${src_dir}/scene/scenecontroller.hpp
   ${src_dir}/scene/scenemanager.cpp

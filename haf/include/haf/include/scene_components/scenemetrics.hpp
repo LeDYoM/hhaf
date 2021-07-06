@@ -13,8 +13,8 @@ namespace haf::scene
 class HAF_API SceneMetrics : public SceneMetricsView
 {
 public:
-    void setViewRect(const htps::Rectf32& new_view);
-    void setViewPort(const htps::Rectf32& new_view_port);
+    void setViewRect(htps::Rectf32 const& new_view);
+    void setViewPort(htps::Rectf32 const& new_view_port);
 };
 }  // namespace haf::scene
 
