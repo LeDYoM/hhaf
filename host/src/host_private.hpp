@@ -29,12 +29,7 @@ namespace haf::host
 class Host::HostPrivate final
 {
 public:
-    HostPrivate(const int argc, char const* const argv[]) :
-        argc_{argc},
-        argv_{argv},
-        config_{argc, argv},
-        params_{parpar::create(argc, argv)}
-    {}
+    HostPrivate(const int argc, char const* const argv[]);
 
     int const argc_;
     char const* const* const argv_;
@@ -45,113 +40,27 @@ public:
     vector<HostedApplication> app_;
     u32 index_current_app{0U};
     AppLoader app_loader;
-    HostedApplication& currentHostedApplication()
-    {
-        return app_[index_current_app];
-    }
 
-    rptr<IApp> currentApp()
-    {
-        return currentHostedApplication().managed_app_.app;
-    }
+    HostedApplication& currentHostedApplication();
+    HostedApplication const& currentHostedApplication() const;
+    rptr<IApp const> currentApp() const;
+    rptr<IApp> currentApp();
 
-    str configuredFirstApp() const { return config_.configuredFirstApp(); }
+    str configuredFirstApp() const;
 
-    rptr<IApp const> currentApp() const
-    {
-        return app_[index_current_app].managed_app_.app;
-    }
+    rptr<haf::sys::ISystemController> systemController() noexcept;
 
-    rptr<haf::sys::ISystemController> systemController() noexcept
-    {
-        return system_loader_.systemController();
-    }
+    rptr<haf::sys::ISystemController const> systemController() const noexcept;
 
-    rptr<haf::sys::ISystemController const> systemController() const noexcept
-    {
-        return system_loader_.systemController();
-    }
+    AppState currentAppState() noexcept;
 
-    AppState currentAppState() noexcept
-    {
-        return currentHostedApplication().app_state;
-    }
+    void setCurrentAppState(AppState const app_state) noexcept;
 
-    void setCurrentAppState(AppState const app_state) noexcept
-    {
-        currentHostedApplication().app_state = app_state;
-    }
+    bool loopStep();
 
-    bool loopStep() { return systemController()->runStep(); }
+    bool update();
 
-    bool update()
-    {
-        switch (currentAppState())
-        {
-            case AppState::NotInitialized:
-                break;
-            case AppState::ReadyToStart:
-            {
-                DisplayLog::info("Starting initialization of new App...");
-                setCurrentAppState(AppState::Executing);
-                system_loader_.loadFunctions();
-                system_loader_.create();
-                systemController()->init(currentApp(), argc_, argv_);
-
-                DisplayLog::info(appDisplayNameAndVersion(*currentApp()),
-                                 ": Starting execution...");
-            }
-            break;
-            case AppState::Executing:
-            {
-                if (loopStep())
-                {
-                    setCurrentAppState(AppState::ReadyToTerminate);
-                    DisplayLog::info(appDisplayNameAndVersion(*currentApp()),
-                                     ": ", " is now ready to terminate");
-                }
-            }
-            break;
-            case AppState::ReadyToTerminate:
-                DisplayLog::info(appDisplayNameAndVersion(*currentApp()),
-                                 ": started termination");
-                setCurrentAppState(AppState::Terminated);
-                systemController()->terminate();
-                system_loader_.destroy();
-                return true;
-                break;
-            case AppState::Terminated:
-                return true;
-                break;
-            default:
-                break;
-        }
-        return false;
-    }
-
-    bool addApplication(ManagedApp managed_app, htps::str name)
-    {
-        LogAsserter::log_assert(managed_app.app != nullptr,
-                                "Received nullptr Application");
-
-        // Search for a pointer to the same app
-        auto const found = app_.cfind(HostedApplication{ManagedApp{}, name});
-
-        // Store if the app is already registered
-        bool const is_new_app{found == app_.cend()};
-
-        DisplayLog::error_if(!is_new_app, "Application already registered");
-
-        if (is_new_app)
-        {
-            DisplayLog::info("Starting Registering app...");
-            app_.emplace_back(std::move(managed_app), std::move(name));
-            DisplayLog::verbose("Starting new app...");
-            setCurrentAppState(AppState::ReadyToStart);
-        }
-
-        return is_new_app;
-    }
+    bool addApplication(ManagedApp managed_app, htps::str name);
 
     str simulation_input_file;
     str simulation_output_file;
