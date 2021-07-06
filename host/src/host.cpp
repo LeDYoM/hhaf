@@ -36,6 +36,7 @@ Host::~Host()
         HostedApplication& last = p_->app_.back();
         unloadApplication(last.app_name_);
     }
+
     DisplayLog::info("All applications unloaded");
 }
 
