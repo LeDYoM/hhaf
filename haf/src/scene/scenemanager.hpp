@@ -25,8 +25,8 @@ public:
 
     htps::Rectf32 currentViewPort() const;
     htps::Rectf32 currentView() const;
-    void setViewPort(const htps::Rectf32& vp);
-    void setViewRect(const htps::Rectf32& vr);
+    void setViewPort(htps::Rectf32 const& vp);
+    void setViewRect(htps::Rectf32 const& vr);
 
     htps::sptr<SceneController> const& sceneController() const noexcept;
     htps::sptr<SceneController>& sceneController() noexcept;

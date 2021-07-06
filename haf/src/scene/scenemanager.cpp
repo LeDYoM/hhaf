@@ -15,9 +15,8 @@ using namespace htps;
 namespace haf::scene
 {
 SceneManager::SceneManager(sys::SystemProvider& system_provider) :
-    SystemBase{system_provider}
+    SystemBase{system_provider}, scene_controller_{msptr<SceneController>()}
 {
-    scene_controller_ = msptr<SceneController>();
     scene_controller_->setSceneManager(this);
 }
 
@@ -41,7 +40,7 @@ Rectf32 SceneManager::currentViewPort() const
     return systemProvider().parentWindow().renderTarget()->viewPort();
 }
 
-void SceneManager::setViewPort(const Rectf32& vp)
+void SceneManager::setViewPort(Rectf32 const& vp)
 {
     systemProvider().parentWindow().renderTarget()->setViewPort(vp);
 }
@@ -51,12 +50,12 @@ Rectf32 SceneManager::currentView() const
     return systemProvider().parentWindow().renderTarget()->viewRect();
 }
 
-void SceneManager::setViewRect(const Rectf32& vr)
+void SceneManager::setViewRect(Rectf32 const& vr)
 {
     systemProvider().parentWindow().renderTarget()->setViewRect(vr);
 }
 
-const sptr<SceneController>& SceneManager::sceneController() const noexcept
+sptr<SceneController> const& SceneManager::sceneController() const noexcept
 {
     return scene_controller_;
 }
