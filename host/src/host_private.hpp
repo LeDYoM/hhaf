@@ -8,7 +8,7 @@
 #include "app_loader.hpp"
 #include "host_config.hpp"
 #include "app_state.hpp"
-
+#include "hosted_app_group.hpp"
 #include <haf/include/system/isystemcontroller.hpp>
 
 #include <hlog/include/hlog.hpp>
@@ -37,9 +37,8 @@ public:
     HostConfig config_;
     parpar::ParametersParser params_;
     SystemControllerLoader system_loader_;
-    vector<HostedApplication> app_;
-    u32 index_current_app{0U};
     AppLoader app_loader;
+    HostedAppGroup app_group_;
 
     HostedApplication& currentHostedApplication();
     HostedApplication const& currentHostedApplication() const;

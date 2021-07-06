@@ -16,6 +16,8 @@ set(sources
   src/host_private.cpp
   src/host_private.hpp
   src/host.cpp
+  src/hosted_app_group.cpp
+  src/hosted_app_group.hpp
   src/hosted_application.cpp
   src/hosted_application.hpp
   src/main.cpp

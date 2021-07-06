@@ -28,12 +28,12 @@ Host::Host(int argc, char* argv[]) : p_{muptr<HostPrivate>(argc, argv)}
 Host::~Host()
 {
     DisplayLog::info("Terminating Host...");
-    DisplayLog::verbose_if(!p_->app_.empty(), p_->app_.size(),
+    DisplayLog::verbose_if(!p_->app_group_.app_.empty(), p_->app_group_.app_.size(),
                            " pending apps to be terminated");
 
-    while (!p_->app_.empty())
+    while (!p_->app_group_.app_.empty())
     {
-        HostedApplication& last = p_->app_.back();
+        HostedApplication& last = p_->app_group_.app_.back();
         unloadApplication(last.app_name_);
     }
 
@@ -57,21 +57,21 @@ bool Host::unloadApplication(htps::str const& app_name)
 {
     // First step, search the app in the array
     auto const app_iterator =
-        p_->app_.find_if([&app_name](HostedApplication const& app) {
+        p_->app_group_.app_.find_if([&app_name](HostedApplication const& app) {
             return app.app_name_ == app_name;
         });
 
-    if (app_iterator != p_->app_.end())
+    if (app_iterator != p_->app_group_.app_.end())
     {
         // Aplication found. Execute unload steps.
         p_->app_loader.unloadApp(app_iterator->managed_app_);
 
-        auto const old_size = p_->app_.size();
+        auto const old_size = p_->app_group_.app_.size();
 
         // Remove the application from the list
-        p_->app_.erase_iterator(app_iterator, p_->app_.end());
+        p_->app_group_.erase_iterator(app_iterator, p_->app_group_.app_.end());
 
-        auto const new_size = p_->app_.size();
+        auto const new_size = p_->app_group_.app_.size();
 
         // Show logs informing the user
         DisplayLog::info_if(old_size != new_size, "Application ", app_name,

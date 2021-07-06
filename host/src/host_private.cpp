@@ -14,12 +14,12 @@ Host::HostPrivate::HostPrivate(const int argc, char const* const argv[]) :
 
 HostedApplication& Host::HostPrivate::currentHostedApplication()
 {
-    return app_[index_current_app];
+    return app_group_.currentHostedApplication();
 }
 
 HostedApplication const& Host::HostPrivate::currentHostedApplication() const
 {
-    return app_[index_current_app];
+    return app_group_.currentHostedApplication();
 }
 
 rptr<IApp> Host::HostPrivate::currentApp()
@@ -34,7 +34,7 @@ str Host::HostPrivate::configuredFirstApp() const
 
 rptr<IApp const> Host::HostPrivate::currentApp() const
 {
-    return app_[index_current_app].managed_app_.app;
+    return currentHostedApplication().managed_app_.app;
 }
 
 rptr<haf::sys::ISystemController> Host::HostPrivate::systemController() noexcept
@@ -114,17 +114,17 @@ bool Host::HostPrivate::addApplication(ManagedApp managed_app, htps::str name)
                             "Received nullptr Application");
 
     // Search for a pointer to the same app
-    auto const found = app_.cfind(HostedApplication{ManagedApp{}, name});
+    auto const found = app_group_.app.cfind(HostedApplication{ManagedApp{}, name});
 
     // Store if the app is already registered
-    bool const is_new_app{found == app_.cend()};
+    bool const is_new_app{found == app_group_.cend()};
 
     DisplayLog::error_if(!is_new_app, "Application already registered");
 
     if (is_new_app)
     {
         DisplayLog::info("Starting Registering app...");
-        app_.emplace_back(std::move(managed_app), std::move(name));
+        app_group_.emplace_back(std::move(managed_app), std::move(name));
         DisplayLog::verbose("Starting new app...");
         setCurrentAppState(AppState::ReadyToStart);
     }
