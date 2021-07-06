@@ -33,8 +33,7 @@ public:
         argc_{argc},
         argv_{argv},
         config_{argc, argv},
-        params_{parpar::create(argc, argv)},
-        app_state_{AppState::NotInitialized}
+        params_{parpar::create(argc, argv)}
     {}
 
     int const argc_;
@@ -46,12 +45,17 @@ public:
     vector<HostedApplication> app_;
     u32 index_current_app{0U};
     AppLoader app_loader;
-    rptr<IApp> currentApp() { return app_[index_current_app].managed_app_.app; }
-
-    str configuredFirstApp() const
+    HostedApplication& currentHostedApplication()
     {
-        return config_.configuredFirstApp();
+        return app_[index_current_app];
     }
+
+    rptr<IApp> currentApp()
+    {
+        return currentHostedApplication().managed_app_.app;
+    }
+
+    str configuredFirstApp() const { return config_.configuredFirstApp(); }
 
     rptr<IApp const> currentApp() const
     {
@@ -68,11 +72,14 @@ public:
         return system_loader_.systemController();
     }
 
-    AppState currentAppState() noexcept { return app_state_; }
+    AppState currentAppState() noexcept
+    {
+        return currentHostedApplication().app_state;
+    }
 
     void setCurrentAppState(AppState const app_state) noexcept
     {
-        app_state_ = app_state;
+        currentHostedApplication().app_state = app_state;
     }
 
     bool loopStep() { return systemController()->runStep(); }
@@ -138,10 +145,9 @@ public:
         if (is_new_app)
         {
             DisplayLog::info("Starting Registering app...");
-            app_.emplace_back(std::move(managed_app),
-                              std::move(name));
+            app_.emplace_back(std::move(managed_app), std::move(name));
             DisplayLog::verbose("Starting new app...");
-            app_state_ = AppState::ReadyToStart;
+            setCurrentAppState(AppState::ReadyToStart);
         }
 
         return is_new_app;
@@ -150,7 +156,6 @@ public:
     str simulation_input_file;
     str simulation_output_file;
     bool exit{false};
-    AppState app_state_;
 };
 
 }  // namespace haf::host
