@@ -6,12 +6,6 @@
 
 #include <hosted_app/include/iapp.hpp>
 
-#include <hlog/include/hlog.hpp>
-
-#include <haf/include/system/isystemcontroller.hpp>
-
-#include <htypes/include/str.hpp>
-
 #include <exception>
 
 using namespace htps;
