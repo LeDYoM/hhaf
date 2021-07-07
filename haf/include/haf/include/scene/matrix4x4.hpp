@@ -10,7 +10,7 @@ namespace haf::scene
  * @brief Type representing a 4x4 matrix.
  * Used to perform operations on the engine
  */
-class HAF_API Matrix4x4 final
+class HAF__API Matrix4x4 final
 {
 public:
     /**
