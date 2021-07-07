@@ -30,11 +30,11 @@ public:
         NoFunctionsFound   = 5U
     };
 
-    ResultType loadFunctions();
-    bool create();
+    [[nodiscard]] ResultType loadFunctions();
+    [[nodiscard]] bool create();
     void destroy();
-    htps::rptr<haf::sys::ISystemController> systemController() noexcept;
-    htps::rptr<haf::sys::ISystemController const> systemController()
+    [[nodiscard]] htps::rptr<haf::sys::ISystemController> systemController() noexcept;
+    [[nodiscard]] htps::rptr<haf::sys::ISystemController const> systemController()
         const noexcept;
 
 private:

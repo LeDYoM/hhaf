@@ -1,7 +1,7 @@
 #ifndef HAF_HOST_PRIVATE_INCLUDE_HPP
 #define HAF_HOST_PRIVATE_INCLUDE_HPP
 
-#include <host/include/host.hpp>
+#include "host.hpp"
 #include "systemcontroller_loader.hpp"
 
 #include "hosted_application.hpp"
@@ -47,23 +47,24 @@ public:
 
     str configuredFirstApp() const;
 
-    rptr<haf::sys::ISystemController> systemController() noexcept;
-
-    rptr<haf::sys::ISystemController const> systemController() const noexcept;
-
     AppState currentAppState() noexcept;
-
-    void setCurrentAppState(AppState const app_state) noexcept;
 
     bool loopStep();
 
     bool update();
 
     bool addApplication(ManagedApp managed_app, htps::str name);
+    bool loadApplication(htps::str const& app_name);
+    bool unloadApplication(htps::str const& app_name);
 
     str simulation_input_file;
     str simulation_output_file;
     bool exit{false};
+private:
+    rptr<haf::sys::ISystemController> systemController() noexcept;
+
+    rptr<haf::sys::ISystemController const> systemController() const noexcept;
+
 };
 
 }  // namespace haf::host

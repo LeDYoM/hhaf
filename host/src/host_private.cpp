@@ -1,5 +1,5 @@
-#include <host/include/host.hpp>
 #include "host_private.hpp"
+#include "host.hpp"
 
 using namespace htps;
 
@@ -53,11 +53,6 @@ AppState Host::HostPrivate::currentAppState() noexcept
     return currentHostedApplication().app_state;
 }
 
-void Host::HostPrivate::setCurrentAppState(AppState const app_state) noexcept
-{
-    currentHostedApplication().app_state = app_state;
-}
-
 bool Host::HostPrivate::loopStep()
 {
     return systemController()->runStep();
@@ -72,20 +67,32 @@ bool Host::HostPrivate::update()
         case AppState::ReadyToStart:
         {
             DisplayLog::info("Starting initialization of new App...");
-            setCurrentAppState(AppState::Executing);
-            system_loader_.loadFunctions();
-            system_loader_.create();
-            systemController()->init(currentApp(), argc_, argv_);
+            app_group_.setCurrentAppState(AppState::Executing);
+            auto const result = system_loader_.loadFunctions();
+            if (result != SystemControllerLoader::ResultType::Success)
+            {
+                DisplayLog::error("Cannot load haf system!");
+                app_group_.setCurrentAppState(AppState::ReadyToTerminate);
+            }
+            else if (!system_loader_.create())
+            {
+                DisplayLog::error("Cannot create haf system!");
+                app_group_.setCurrentAppState(AppState::ReadyToTerminate);
+            }
+            else
+            {
+                systemController()->init(currentApp(), argc_, argv_);
 
-            DisplayLog::info(appDisplayNameAndVersion(*currentApp()),
-                             ": Starting execution...");
+                DisplayLog::info(appDisplayNameAndVersion(*currentApp()),
+                                 ": Starting execution...");
+            }
         }
         break;
         case AppState::Executing:
         {
             if (loopStep())
             {
-                setCurrentAppState(AppState::ReadyToTerminate);
+                app_group_.setCurrentAppState(AppState::ReadyToTerminate);
                 DisplayLog::info(appDisplayNameAndVersion(*currentApp()), ": ",
                                  " is now ready to terminate");
             }
@@ -94,7 +101,7 @@ bool Host::HostPrivate::update()
         case AppState::ReadyToTerminate:
             DisplayLog::info(appDisplayNameAndVersion(*currentApp()),
                              ": started termination");
-            setCurrentAppState(AppState::Terminated);
+            app_group_.setCurrentAppState(AppState::Terminated);
             systemController()->terminate();
             system_loader_.destroy();
             return true;
@@ -110,27 +117,27 @@ bool Host::HostPrivate::update()
 
 bool Host::HostPrivate::addApplication(ManagedApp managed_app, htps::str name)
 {
-    LogAsserter::log_assert(managed_app.app != nullptr,
-                            "Received nullptr Application");
+    return app_group_.try_add_app(std::move(managed_app), std::move(name));
+}
 
-    // Search for a pointer to the same app
-    auto const found =
-        app_group_.app_.cfind(HostedApplication{ManagedApp{}, name});
+bool Host::HostPrivate::loadApplication(htps::str const& app_name)
+{
+    ManagedApp managed_app = app_loader.loadApp(app_name);
+    return managed_app.app != nullptr
+        ? addApplication(std::move(managed_app), app_name)
+        : false;
+}
 
-    // Store if the app is already registered
-    bool const is_new_app{found == app_group_.app_.cend()};
-
-    DisplayLog::error_if(!is_new_app, "Application already registered");
-
-    if (is_new_app)
+bool Host::HostPrivate::unloadApplication(htps::str const& app_name)
+{
+    if (app_group_.appExists(app_name))
     {
-        DisplayLog::info("Starting Registering app...");
-        app_group_.app_.emplace_back(std::move(managed_app), std::move(name));
-        DisplayLog::verbose("Starting new app...");
-        setCurrentAppState(AppState::ReadyToStart);
+        // This is safe, given that app exists
+        auto& app = app_group_.getAppByName(app_name)->managed_app_;
+        app_loader.unloadApp(app);
+        return app_group_.removeApp(app_name);
     }
-
-    return is_new_app;
+    return false;
 }
 
 }  // namespace haf::host

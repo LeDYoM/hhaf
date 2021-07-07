@@ -1,16 +1,9 @@
-#include <host/include/host.hpp>
 #include <hlog/include/hlog.hpp>
-#include <logger/include/log.hpp>
-#include <logger/include/log_init.hpp>
+#include "host.hpp"
 
-#ifdef _WIN32
-    #define HOST_API extern "C" __declspec(dllexport)
-#else
-    #define HOST_API extern "C" __attribute__((visibility("default")))
-#endif
+#include "host_export.hpp"
 
-
-HOST_API int haf_host_main(int argc, char* argv[])
+int host_main(int argc, char* argv[]) noexcept
 {
     using namespace haf;
     using namespace haf::host;
@@ -35,4 +28,9 @@ HOST_API int haf_host_main(int argc, char* argv[])
         DisplayLog::info("Unexpected exception");
     }
     return result;
+}
+
+HOST_API int haf_host_main(int argc, char* argv[])
+{
+    return host_main(argc, argv);
 }

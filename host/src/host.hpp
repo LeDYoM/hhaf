@@ -3,16 +3,6 @@
 
 #include <htypes/include/types.hpp>
 
-namespace htps
-{
-class str;
-}
-
-namespace haf
-{
-class IApp;
-}
-
 namespace haf::host
 {
 /**
@@ -35,8 +25,6 @@ public:
     ~Host();
 
     bool initialize();
-    bool loadApplication(htps::str const& app_name);
-    bool unloadApplication(htps::str const& app_name);
 
     /**
      * @brief Main loop function. When it returns, you can safely destroy
