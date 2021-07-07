@@ -69,7 +69,7 @@ bool Host::unloadApplication(htps::str const& app_name)
         auto const old_size = p_->app_group_.app_.size();
 
         // Remove the application from the list
-        p_->app_group_.erase_iterator(app_iterator, p_->app_group_.app_.end());
+        p_->app_group_.app_.erase_iterator(app_iterator, p_->app_group_.app_.end());
 
         auto const new_size = p_->app_group_.app_.size();
 
