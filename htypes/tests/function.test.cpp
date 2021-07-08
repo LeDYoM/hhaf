@@ -27,9 +27,17 @@ struct ModifableTestObject
 
     s32 add2M(s32 const) const { return data + 2; }
 
-    s32 add2M(s32 const n) { data = n + 2; return data; }
+    s32 add2M(s32 const n)
+    {
+        data = n + 2;
+        return data;
+    }
 
-    s32 add3M(s32 const n) { data = n + 3; return data; }
+    s32 add3M(s32 const n)
+    {
+        data = n + 3;
+        return data;
+    }
 
     s32 data{0};
 };
@@ -157,14 +165,13 @@ TEST_CASE("make_function", "[function]")
     TestObject b_obj;
     const ConstTestObject c_obj;
 
-//    function<s32(s32 const)> const c =
-//        function<s32(s32 const)>(&c_obj, &ConstTestObject::add2);
+    //    function<s32(s32 const)> const c =
+    //        function<s32(s32 const)>(&c_obj, &ConstTestObject::add2);
 
-//    auto c =
-//        function<s32(s32 const)>(&c_obj, &ConstTestObject::add2);
+    //    auto c =
+    //        function<s32(s32 const)>(&c_obj, &ConstTestObject::add2);
 
-    auto c =
-        make_function(&c_obj, &ConstTestObject::add2);
+    auto c = make_function(&c_obj, &ConstTestObject::add2);
 
     {
         auto a = make_function(&a_obj, &TestObject::add2);

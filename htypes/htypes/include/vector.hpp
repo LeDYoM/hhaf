@@ -172,8 +172,7 @@ public:
     constexpr void swap(vector& other) noexcept { base_.swap(other.base_); }
 
     template <bool discard_order = true>
-    constexpr iterator erase_values(const T& value,
-                                    iterator start)
+    constexpr iterator erase_values(const T& value, iterator start)
     {
         iterator result{start};
         checkRange(result);
@@ -194,8 +193,7 @@ public:
     }
 
     template <typename U, bool discard_order = true>
-    constexpr iterator erase_one_imp(U&& v,
-                                     iterator const start) noexcept
+    constexpr iterator erase_one_imp(U&& v, iterator const start) noexcept
     {
         checkRange(start);
 
@@ -241,8 +239,7 @@ public:
     using Predicate_t = function<bool(const T&)>;
 
     template <bool discard_order = true>
-    constexpr iterator erase_if(Predicate_t condition,
-                                iterator start)
+    constexpr iterator erase_if(Predicate_t condition, iterator start)
     {
         checkRange(start);
 
@@ -311,7 +308,8 @@ public:
     {
         if (index < size())
         {
-            return erase_one<discard_order>(*(begin() + index), (begin() + index));
+            return erase_one<discard_order>(*(begin() + index),
+                                            (begin() + index));
         }
 
         return end();
@@ -330,8 +328,7 @@ public:
     }
 
     template <bool discard_order = true>
-    constexpr iterator erase_all_if(Predicate_t condition,
-                                    iterator start)
+    constexpr iterator erase_all_if(Predicate_t condition, iterator start)
     {
         iterator result{start};
         do

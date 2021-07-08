@@ -91,7 +91,8 @@ bool Host::HostPrivate::update()
             }
             else
             {
-                systemController()->init(currentApp(), backend_factory_.get(), argc_, argv_);
+                systemController()->init(currentApp(), backend_factory_.get(),
+                                         argc_, argv_);
 
                 DisplayLog::info(appDisplayNameAndVersion(*currentApp()),
                                  ": Starting execution...");

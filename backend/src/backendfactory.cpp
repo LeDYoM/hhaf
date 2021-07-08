@@ -53,10 +53,10 @@ BackendFactory::BackendFactory() :
     static const char* sh_name = "bsfml";
     if (loader->loadModule(sh_name))
     {
-        const auto fp_init_haf =
-            reinterpret_cast<p_initBackendClient>(loader->loadMethod(sh_name, "init_lib"));
-        const auto fp_finish_haf =
-            reinterpret_cast<p_initBackendClient>(loader->loadMethod(sh_name, "finish_lib"));
+        const auto fp_init_haf = reinterpret_cast<p_initBackendClient>(
+            loader->loadMethod(sh_name, "init_lib"));
+        const auto fp_finish_haf = reinterpret_cast<p_initBackendClient>(
+            loader->loadMethod(sh_name, "finish_lib"));
 
         if (fp_init_haf != nullptr && fp_finish_haf != nullptr)
         {

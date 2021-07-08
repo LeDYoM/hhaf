@@ -12,8 +12,7 @@ class ZoperProgramController final
     : public haf::user::IAppWithDefaultVersionSystem<cl_version::AppVersion>
 {
 public:
-    void onInit(
-        haf::scene::AppInitializer& app_initializer) override;
+    void onInit(haf::scene::AppInitializer& app_initializer) override;
     void onFinish(haf::scene::AppFinisher& app_finisher) override;
 
 private:

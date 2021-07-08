@@ -6,10 +6,11 @@
 
 namespace zoper::gameplay::constants
 {
-    constexpr htps::u32 MillisAnimationPointsToScore = 600U;
-    constexpr htps::vector2df EndPositionPointsToScore = htps::vector2df{ 450.0F, 100.0F };
+constexpr htps::u32 MillisAnimationPointsToScore = 600U;
+constexpr htps::vector2df EndPositionPointsToScore =
+    htps::vector2df{450.0F, 100.0F};
 
-    constexpr htps::u32 MillisAnimationLaunchPlayerStep = 125U;
-}
+constexpr htps::u32 MillisAnimationLaunchPlayerStep = 125U;
+}  // namespace zoper::gameplay::constants
 
 #endif

@@ -30,7 +30,8 @@ public:
         backend_register->setFactory(std::move(factory_));
     }
 
-    void resetFactory(IBackendRegister* const backend_register) const noexcept override
+    void resetFactory(
+        IBackendRegister* const backend_register) const noexcept override
     {
         backend_register->setFactory(std::unique_ptr<IFactoryOf<T>>{});
     }

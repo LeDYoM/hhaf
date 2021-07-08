@@ -34,6 +34,6 @@ private:
     haf::scene::Color m_normalColor;
     haf::scene::Color m_selectedColor;
 };
-} // namespace zoper
+}  // namespace zoper
 
 #endif

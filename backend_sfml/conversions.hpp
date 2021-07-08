@@ -79,8 +79,7 @@ constexpr sf::Shader const* to_sf_type(const IShader* s)
     return nullptr;
 }
 
-inline sf::PrimitiveType to_sf_type(
-    iPrimitiveType const primitive_type)
+inline sf::PrimitiveType to_sf_type(iPrimitiveType const primitive_type)
 {
     return static_cast<sf::PrimitiveType>(primitive_type);
 }

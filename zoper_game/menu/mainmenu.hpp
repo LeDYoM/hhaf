@@ -18,6 +18,6 @@ public:
 
     virtual void onCreated() override;
 };
-} // namespace zoper
+}  // namespace zoper
 
 #endif

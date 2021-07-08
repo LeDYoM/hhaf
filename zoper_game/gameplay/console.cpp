@@ -23,13 +23,14 @@ void Console::onCreated()
     SceneNode::onCreated();
 
     auto a = createSceneNode<SceneNodeText>("scnText");
-    a->prop<Font>().set(subsystems().dataWrapper<res::ResourceRetriever>()
-                ->getBMPFont("console_font"));
+    a->prop<Font>().set(
+        subsystems().dataWrapper<res::ResourceRetriever>()->getBMPFont(
+            "console_font"));
 
     prop<Position>().set(vector2df{100.0F, 0.0F});
     a->prop<Text>().set("1234 ABC abc");
     a->prop<TextColor>().set(colors::Red);
-//    a->prop<Scale>().set({1, 1});
+    //    a->prop<Scale>().set({1, 1});
 }
 
 }  // namespace zoper

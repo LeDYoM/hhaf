@@ -19,7 +19,7 @@ int host_main(int argc, char* argv[]) noexcept
             result = host.run();
         }
     }
-    catch (std::exception &e)
+    catch (std::exception& e)
     {
         DisplayLog::error("std::Exception: ", e.what());
     }

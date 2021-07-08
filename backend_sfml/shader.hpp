@@ -14,14 +14,14 @@ public:
     Shader(htps::uptr<sf::Shader> shader);
     ~Shader() override;
 
-    void setUniform(const htps::str &name, htps::vector2df v) override;
-    void setUniform(const htps::str &name, ITexture *texture) override;
+    void setUniform(const htps::str& name, htps::vector2df v) override;
+    void setUniform(const htps::str& name, ITexture* texture) override;
 
-    const sf::Shader &backEndShader() const { return *m_shaderPrivate; }
+    const sf::Shader& backEndShader() const { return *m_shaderPrivate; }
 
 private:
     htps::uptr<sf::Shader> m_shaderPrivate;
 };
-} // namespace haf::backend::sfmlb
+}  // namespace haf::backend::sfmlb
 
 #endif

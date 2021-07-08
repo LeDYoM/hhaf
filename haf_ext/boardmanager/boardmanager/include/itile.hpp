@@ -32,7 +32,6 @@ public:
 private:
     BoardTileData data_{0};
     friend class BoardManager;
-
 };
 
 using SITilePointer = htps::sptr<ITile>;

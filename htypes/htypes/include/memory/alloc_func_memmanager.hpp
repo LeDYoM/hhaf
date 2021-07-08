@@ -10,6 +10,6 @@ namespace htps
 template <typename T>
 using AllocatorMemManagerRaw = htps::AllocatorFunc<T, mmalloc, mfree>;
 
-}  // namespace htypes
+}  // namespace htps
 
 #endif

@@ -26,10 +26,10 @@ public:
     htps::rptr<ITTFontFactory> getTTFontFactory() const noexcept;
     htps::rptr<IShaderFactory> getShaderFactory() const noexcept;
     htps::rptr<IBMPFontFactory> getBMPFontFactory() const noexcept;
-    ITextureFactory &textureFactory() const;
-    ITTFontFactory &ttfontFactory() const;
-    IShaderFactory &shaderFactory() const;
-    IBMPFontFactory &bmpFontFactory() const;
+    ITextureFactory& textureFactory() const;
+    ITTFontFactory& ttfontFactory() const;
+    IShaderFactory& shaderFactory() const;
+    IBMPFontFactory& bmpFontFactory() const;
 
 private:
     htps::uptr<BackendRegister> backend_register_;
@@ -40,6 +40,6 @@ private:
     htps::rptr<IShaderFactory> shaderFactory_{nullptr};
     htps::rptr<IBMPFontFactory> bmpFontFactory_{nullptr};
 };
-} // namespace haf::backend
+}  // namespace haf::backend
 
 #endif

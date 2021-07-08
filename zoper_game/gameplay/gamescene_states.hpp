@@ -6,7 +6,7 @@ namespace zoper
 
 #include <htypes/include/str.hpp>
 
-enum class GameSceneStates :  htps::u8
+enum class GameSceneStates : htps::u8
 {
     Playing = 0U,
     GameOver,
@@ -31,6 +31,6 @@ constexpr const auto make_str(const GameSceneStates gss)
     }
 }
 
-} // namespace zoper
+}  // namespace zoper
 
 #endif

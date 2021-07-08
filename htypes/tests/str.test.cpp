@@ -26,7 +26,7 @@ TEST_CASE("str::str", "[str]")
         CHECK(test2.size() == 1);
 
         char test_str[] = "test1_bigstring_to_test_here_and_now_in_this_test";
-        str test3 = "test1_bigstring_to_test_here_and_now_in_this_test";
+        str test3       = "test1_bigstring_to_test_here_and_now_in_this_test";
         CHECK(test3 == "test1_bigstring_to_test_here_and_now_in_this_test");
         CHECK(test3.size() == sizeof(test_str) - 1);
     }
@@ -63,13 +63,13 @@ TEST_CASE("str", "[str]")
     SECTION("Find")
     {
         str test("Lets play this");
-        auto sep{ test.find(' ') };
+        auto sep{test.find(' ')};
         CHECK(sep == 4U);
-        str sub{ test.substr(sep + 1) };
+        str sub{test.substr(sep + 1)};
         CHECK(sub == "play this");
-        str sub2{ sub.substr(sub.find('z')) };
+        str sub2{sub.substr(sub.find('z'))};
         CHECK(sub2 == "");
-        str sub3{ sub.substr(sub.find(' ')) };
+        str sub3{sub.substr(sub.find(' '))};
         CHECK(sub3 == " this");
         sub3 += make_str(3U);
         CHECK(sub3 == " this3");
@@ -206,9 +206,9 @@ TEST_CASE("str", "[str]")
         str sIntCopy(sInt);
         str longStr(str::to_str(12345678900));
         str slongStr(str::to_str(-12345678900));
-        s32 i{ 0 };
-        f32 j{ 0 };
-        u64 k{ 0 };
+        s32 i{0};
+        f32 j{0};
+        u64 k{0};
 
         CHECK(sInt.convert(i));
         CHECK(i == -42);

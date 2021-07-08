@@ -18,11 +18,12 @@ namespace haf::scene
 class MenuPaged : public TransformableSceneNode, MenuPagedProperties
 {
     using BaseClass = TransformableSceneNode;
+
 public:
     using BaseClass::BaseClass;
 
-    using MenuPagedProperties::prop;
     using BaseClass::prop;
+    using MenuPagedProperties::prop;
 
     ~MenuPaged() override;
 

@@ -10,24 +10,24 @@ void MenuPageInputComponent::onKeyPressed(const Key& key)
 
     switch (key)
     {
-    case Key::Left:
-        Left();
-        break;
-    case Key::Right:
-        Right();
-        break;
-    case Key::Up:
-        Up();
-        break;
-    case Key::Down:
-        Down();
-        break;
-    case Key::Return:
-        Selected();
-        break;
-    default:
-        break;
+        case Key::Left:
+            Left();
+            break;
+        case Key::Right:
+            Right();
+            break;
+        case Key::Up:
+            Up();
+            break;
+        case Key::Down:
+            Down();
+            break;
+        case Key::Return:
+            Selected();
+            break;
+        default:
+            break;
     }
 }
 
-} // namespace haf::scene
+}  // namespace haf::scene

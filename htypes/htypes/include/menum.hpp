@@ -16,8 +16,10 @@ public:
     static constexpr auto min = T::min;
     static constexpr auto max = T::max;
 
-    static constexpr auto min_numeric = static_cast<std::underlying_type_t<T>>(T::min);
-    static constexpr auto max_numeric = static_cast<std::underlying_type_t<T>>(T::max);
+    static constexpr auto min_numeric =
+        static_cast<std::underlying_type_t<T>>(T::min);
+    static constexpr auto max_numeric =
+        static_cast<std::underlying_type_t<T>>(T::max);
 
     static constexpr auto min_str = to_str(T::min);
     static constexpr auto max_str = to_str(T::max);
@@ -38,24 +40,23 @@ public:
 
     constexpr T getValue() const noexcept { return value; }
 
-    constexpr MEnum &operator++() noexcept
+    constexpr MEnum& operator++() noexcept
     {
-        value = static_cast<T>(
-            static_cast<std::underlying_type_t<T>>(value) + 1);
+        value =
+            static_cast<T>(static_cast<std::underlying_type_t<T>>(value) + 1);
         return *this;
     }
 
-    constexpr MEnum &operator--() noexcept
+    constexpr MEnum& operator--() noexcept
     {
-        value = static_cast<T>(
-            static_cast<std::underlying_type_t<T>>(value) - 1);
+        value =
+            static_cast<T>(static_cast<std::underlying_type_t<T>>(value) - 1);
         return *this;
     }
 
     constexpr bool isValid() const noexcept
     {
-        return (getNumeric() >= min_numeric) &&
-            (getNumeric() <= max_numeric);
+        return (getNumeric() >= min_numeric) && (getNumeric() <= max_numeric);
     }
 
     constexpr bool nextIsValid() const noexcept
@@ -69,10 +70,11 @@ public:
         MEnum temp{value};
         return (--temp).isValid();
     }
+
 private:
     T value;
 };
 
-} // namespace htps
+}  // namespace htps
 
 #endif

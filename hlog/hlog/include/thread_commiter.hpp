@@ -15,6 +15,6 @@ struct ThreadCommiter
     static void commitlog(const char* const log_stream);
 };
 
-}  // namespace logger
+}  // namespace haf
 
 #endif

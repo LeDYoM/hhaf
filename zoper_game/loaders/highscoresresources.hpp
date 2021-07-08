@@ -8,6 +8,6 @@ class HighScoresResources
 public:
     constexpr static char MenuFontId[] = "main_font";
 };
-} // namespace zoper
+}  // namespace zoper
 
 #endif

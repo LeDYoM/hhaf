@@ -71,7 +71,6 @@ struct GameSharedData : public haf::shdata::IShareable
 
         return result;
     }
-    
 };
 
 }  // namespace zoper

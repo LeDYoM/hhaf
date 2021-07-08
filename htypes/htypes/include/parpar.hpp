@@ -170,7 +170,7 @@ public:
 
     /**
      * @brief Ask if a given positional parameter exists.
-     * 
+     *
      * @param poPar Name of the positional parameter
      * @return true Found
      * @return false Not found
@@ -182,7 +182,7 @@ public:
                          PositionalParameter{poPar}) !=
             positional_parameters_.cend();
     }
-    
+
     bool switchExists(const str& swPar) const
     {
         return std::find(switch_parameters_.cbegin(), switch_parameters_.cend(),
@@ -208,7 +208,7 @@ public:
 
     /**
      * @brief Get the value of a given option
-     * 
+     *
      * @param opPar Name of the option
      * @return pair<bool, str> The first element of the pair says if the option
      * was found. The second the value. If the option was not found, the value

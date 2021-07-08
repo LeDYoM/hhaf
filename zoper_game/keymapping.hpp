@@ -30,8 +30,10 @@ public:
     bool setKey(const htps::u32 index, const haf::input::Key key);
     void apply();
 
-    friend const htps::Object &operator>>(const htps::Object &obj, KeyMapping &key_mapping);
-    friend htps::Object &operator<<(htps::Object &obj, const KeyMapping &key_mapping);
+    friend const htps::Object& operator>>(const htps::Object& obj,
+                                          KeyMapping& key_mapping);
+    friend htps::Object& operator<<(htps::Object& obj,
+                                    const KeyMapping& key_mapping);
 
     bool serialize(htps::Object&) const override;
     bool deserialize(htps::Object const&) override;
@@ -40,6 +42,6 @@ private:
     htps::array<haf::input::Key, KeyMapping::TotalKeys> m_keys;
 };
 
-} // namespace zoper
+}  // namespace zoper
 
 #endif

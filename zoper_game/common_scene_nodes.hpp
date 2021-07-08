@@ -6,8 +6,8 @@
 
 namespace zoper
 {
-    void createStandardBackground(
-        haf::render::RenderizableBuilder& renderizable_builder);
+void createStandardBackground(
+    haf::render::RenderizableBuilder& renderizable_builder);
 }
 
 #endif

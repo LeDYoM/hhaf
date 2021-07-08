@@ -14,4 +14,3 @@
 #define LOADER_PRIVATE __attribute__((visibility("hidden")))
 #endif
 #endif
-

@@ -5,7 +5,7 @@
 
 namespace haf
 {
-std::ofstream *f{nullptr};
+std::ofstream* f{nullptr};
 
 void FileCommiter::init()
 {

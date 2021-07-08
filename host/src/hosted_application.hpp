@@ -14,8 +14,7 @@ namespace haf::host
 class HostedApplication final
 {
 public:
-    HostedApplication(ManagedApp managed_app,
-                      str app_name) noexcept;
+    HostedApplication(ManagedApp managed_app, str app_name) noexcept;
 
     ManagedApp managed_app_;
     htps::str app_name_;

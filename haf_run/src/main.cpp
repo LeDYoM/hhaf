@@ -10,7 +10,7 @@ int main(int argc, char* argv[])
     {
         // Create a dummy thread to initialize pthread library in
         // the executable. This is a workaround necessary for linux only.
-        std::thread t([]() { });
+        std::thread t([]() {});
         t.join();
     }
     int result = 0;

@@ -24,8 +24,8 @@ struct cestr
         }
         else
         {
-            return std::equal(std::cbegin(value), std::cend(value), std::cbegin(str),
-                       std::cend(str));
+            return std::equal(std::cbegin(value), std::cend(value),
+                              std::cbegin(str), std::cend(str));
         }
     }
 

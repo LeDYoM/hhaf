@@ -21,12 +21,14 @@ public:
     RenderWindow();
     ~RenderWindow() override;
 
-    bool createWindow(
-            const htps::u32 width, const htps::u32 height,
-            const htps::u8 red_bpp, const htps::u8 green_bpp, const htps::u8 blue_bpp,
-            const htps::u8 alpha_bpp,
-            const unsigned int num_extra_parameters, 
-            const unsigned int* const extra_parameters) override;
+    bool createWindow(const htps::u32 width,
+                      const htps::u32 height,
+                      const htps::u8 red_bpp,
+                      const htps::u8 green_bpp,
+                      const htps::u8 blue_bpp,
+                      const htps::u8 alpha_bpp,
+                      const unsigned int num_extra_parameters,
+                      const unsigned int* const extra_parameters) override;
 
     bool isAlreadyCreated() const override;
 
@@ -34,14 +36,14 @@ public:
 
     bool setActive(bool active) override;
 
-    IRenderTarget *renderTarget() override;
+    IRenderTarget* renderTarget() override;
 
     bool processEvents() override;
     void display() override;
     void setWindowTitle(htps::str newTitle) override;
     void closeWindow() override;
 
-    IInputDriver *inputDriver() override;
+    IInputDriver* inputDriver() override;
     htps::str info() const override;
     htps::str settingsInfo() override;
 
@@ -54,6 +56,6 @@ private:
     InputDriver input_driver_;
 };
 
-} // namespace haf::backend::sfmlb
+}  // namespace haf::backend::sfmlb
 
 #endif

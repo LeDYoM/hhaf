@@ -32,8 +32,8 @@ static int crtDebugMemAllocHook(int allocType,
 
     return true;
 }
-#endif // NDEBUG
-#endif // _MSC_VER
+#endif  // NDEBUG
+#endif  // _MSC_VER
 
 void installMemManager()
 {
@@ -71,12 +71,12 @@ void mfree(void* block, std::size_t const size)
     std::free(block);
 }
 
-void* operator new (std::size_t size)
+void* operator new(std::size_t size)
 {
     return mmalloc(size);
 }
 
-void* operator new (std::size_t size, const std::nothrow_t&) noexcept
+void* operator new(std::size_t size, const std::nothrow_t&) noexcept
 {
     return mmalloc(size);
 }
@@ -101,12 +101,14 @@ void operator delete(void* data, const std::nothrow_t&) noexcept
     return mfree(data);
 }
 
-void operator delete(void* data,std::size_t size)
+void operator delete(void* data, std::size_t size)
 {
     return mfree(data, size);
 }
 
-void operator delete(void* data, std::size_t size, const std::nothrow_t&) noexcept
+void operator delete(void* data,
+                     std::size_t size,
+                     const std::nothrow_t&) noexcept
 {
     return mfree(data, size);
 }
@@ -126,7 +128,9 @@ void operator delete[](void* data, const std::nothrow_t&) noexcept
     return mfree(data);
 }
 
-void operator delete[](void* data, std::size_t size, const std::nothrow_t&) noexcept
+void operator delete[](void* data,
+                       std::size_t size,
+                       const std::nothrow_t&) noexcept
 {
     return mfree(data, size);
 }

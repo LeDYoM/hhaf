@@ -16,7 +16,8 @@ template <typename LogDisplayerClass>
 struct LogAsserter
 {
     template <typename... Args>
-    static constexpr void log_assert(const bool condition, Args&&... args) noexcept
+    static constexpr void log_assert(const bool condition,
+                                     Args&&... args) noexcept
     {
         // Store the condition in a variable to execute it only once.
         const bool cond{condition};

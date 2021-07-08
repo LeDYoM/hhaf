@@ -10,21 +10,21 @@
 
 namespace haf::backend::sfmlb
 {
-    class Texture : public ITexture
-    {
-    public:
-        Texture(const sf::Texture* const texture, const bool owned);
-        ~Texture() override;
+class Texture : public ITexture
+{
+public:
+    Texture(const sf::Texture* const texture, const bool owned);
+    ~Texture() override;
 
-        virtual htps::vector2du32 size() const override;
+    virtual htps::vector2du32 size() const override;
 
-        const sf::Texture &backEndTexture() const { return *m_texturePrivate; }
-        htps::str info() const;
+    const sf::Texture& backEndTexture() const { return *m_texturePrivate; }
+    htps::str info() const;
 
-    private:
-        const sf::Texture* const m_texturePrivate;
-        const bool owned_;
-    };
-}
+private:
+    const sf::Texture* const m_texturePrivate;
+    const bool owned_;
+};
+}  // namespace haf::backend::sfmlb
 
 #endif

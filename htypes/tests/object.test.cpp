@@ -64,8 +64,7 @@ TEST_CASE("Object create 2", "[Object]")
         tmp_iterator1->set("subkey1", "megavalue1");
         CHECK(obj["key1"]["subkey1"] == "megavalue1");
 
-        auto tmp_iterator2 =
-            obj.acquireObject("key2")->acquireValue("subkey2");
+        auto tmp_iterator2 = obj.acquireObject("key2")->acquireValue("subkey2");
         CHECK(obj["key2"]["subkey2"] == tmp_iterator2);
         (*tmp_iterator2) = "ultravalue1";
         CHECK(obj["key2"]["subkey2"] == "ultravalue1");
@@ -561,7 +560,7 @@ struct Simple
     f32 a{};
     f64 b{};
 
-//    Simple() noexcept = default;
+    //    Simple() noexcept = default;
 
     bool operator==(const Simple& rhs) const
     {

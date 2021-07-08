@@ -47,7 +47,6 @@ public:
     void destroy() override final;
 
 private:
-
     void pushFactory(htps::uptr<IAutoRegisterFactory> f);
 
     struct DefaultBackendManagerPrivate;

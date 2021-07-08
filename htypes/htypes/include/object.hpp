@@ -190,7 +190,8 @@ public:
                 }
                 else
                 {
-                    auto [result, nval] = (*m_value).convert<std::underlying_type_t<T>>();
+                    auto [result, nval] =
+                        (*m_value).convert<std::underlying_type_t<T>>();
                     if (result)
                     {
                         value = static_cast<T>(nval);
@@ -231,7 +232,7 @@ public:
         }
 
         template <typename T, size_type Size>
-        [[nodiscard]] bool as(array<T,Size>& value) const
+        [[nodiscard]] bool as(array<T, Size>& value) const
         {
             array<T, Size> result;
             getObject() >> result;
@@ -281,7 +282,7 @@ public:
 
     /**
      * @brief Get a @b Value pointing to an element with the specified key.
-     * 
+     *
      * @param[in] key Key str to search for
      * @return Empty invalid @b Value if not found or a @b Value
      * pointing to the data if found.
@@ -309,7 +310,7 @@ public:
 
     /**
      * @brief Get a @b Value in the array form.
-     * 
+     *
      * @param index The index of the element you want to read.
      * @return Value Representing the element.
      * Note: You might need to check with @Value::isValid

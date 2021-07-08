@@ -2,7 +2,7 @@
 
 #include "host_private.hpp"
 #include "systemcontroller_loader.hpp"
-#include "host_version.hpp" // In binary directory
+#include "host_version.hpp"  // In binary directory
 
 #include <hosted_app/include/iapp.hpp>
 
@@ -22,7 +22,8 @@ Host::Host(int argc, char* argv[]) : p_{muptr<HostPrivate>(argc, argv)}
 Host::~Host()
 {
     DisplayLog::info("Terminating Host...");
-    DisplayLog::verbose_if(!p_->app_group_.app_.empty(), p_->app_group_.app_.size(),
+    DisplayLog::verbose_if(!p_->app_group_.app_.empty(),
+                           p_->app_group_.app_.size(),
                            " pending apps to be terminated");
 
     while (!p_->app_group_.app_.empty())

@@ -22,6 +22,6 @@ struct GameScene::GameScenePrivate
     void createScoreIncrementPoints(haf::scene::SceneNode& main_node,
                                     const htps::vector2df& lastTokenPosition);
 };
-} // namespace zoper
+}  // namespace zoper
 
 #endif

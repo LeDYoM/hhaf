@@ -21,8 +21,8 @@ class LevelProperties : public haf::scene::IComponent
 {
 public:
     void configure(const htps::size_type currentLevel,
-               const GameMode gameMode,
-               htps::sptr<time::TimerComponent> scene_timer_component);
+                   const GameMode gameMode,
+                   htps::sptr<time::TimerComponent> scene_timer_component);
 
     htps::size_type millisBetweenTokens() const;
     inline size_t baseScore() const noexcept { return base_score_; }
@@ -54,6 +54,6 @@ private:
     GameMode game_mode_;
     htps::sptr<GameHudSceneNode> game_hud_;
 };
-} // namespace zoper
+}  // namespace zoper
 
 #endif

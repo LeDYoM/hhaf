@@ -15,7 +15,7 @@ class PauseSceneNode : public haf::scene::SceneNode
 {
 public:
     using haf::scene::SceneNode::SceneNode;
-    
+
     ~PauseSceneNode() override;
 
     void onCreated() override;
@@ -27,6 +27,6 @@ private:
     htps::sptr<haf::scene::nodes::SceneNodeText> m_pauseText;
     htps::sptr<haf::scene::AnimationComponent> animation_component_;
 };
-} // namespace zoper
+}  // namespace zoper
 
 #endif

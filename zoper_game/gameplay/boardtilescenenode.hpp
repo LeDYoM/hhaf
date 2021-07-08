@@ -21,8 +21,8 @@ class BoardTileSceneNode : public haf::scene::RenderizablesSceneNode,
     using BaseClass = haf::scene::RenderizablesSceneNode;
 
 public:
-    using haf::scene::SceneNodeSizeProperties::prop;
     using BoardTileSceneNodeProperties::prop;
+    using haf::scene::SceneNodeSizeProperties::prop;
 
     /**
      * @brief Inherit SceneNode constructors.

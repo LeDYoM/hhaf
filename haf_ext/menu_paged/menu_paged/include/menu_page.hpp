@@ -18,9 +18,9 @@ class MenuPage : public scene::nodes::TableNode<nodes::SceneNodeText>
 public:
     using BaseClass = scene::nodes::TableNode<nodes::SceneNodeText>;
     using BaseClass::prop;
-private:
 
-    void standarizeText(const htps::sptr<ContainedElement> &ntext);
+private:
+    void standarizeText(const htps::sptr<ContainedElement>& ntext);
     void goDown();
     void goUp();
     void goLeft();
@@ -28,10 +28,11 @@ private:
     void goSelected();
 
     bool nodeHasOptions(const htps::size_type y) const noexcept;
-    htps::sptr<DiscreteTextComponent> optionsLabelAt(const htps::size_type y) const;
+    htps::sptr<DiscreteTextComponent> optionsLabelAt(
+        const htps::size_type y) const;
     void setSelectedItem(const htps::size_type index);
     void updateSelection();
-    void setColorToLine(const htps::size_type, const scene::Color &);
+    void setColorToLine(const htps::size_type, const scene::Color&);
     htps::vector<htps::s32> optionsSelected() const;
 
 protected:
@@ -52,7 +53,7 @@ public:
 
     void onCreated() override;
     void configure(htps::vector<htps::sptr<MenuPagedOption>> options,
-        PageOptions page_options = PageOptions{});
+                   PageOptions page_options = PageOptions{});
     htps::size_type SelectedOptionAtRow(const htps::size_type row) const;
 
     htps::emitter<const htps::s32> Forward;
@@ -62,6 +63,6 @@ public:
     htps::emitter<const htps::size_type, const htps::s32> Selection;
 };
 
-} // namespace haf::scene
+}  // namespace haf::scene
 
 #endif

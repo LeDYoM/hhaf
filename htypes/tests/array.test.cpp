@@ -312,7 +312,7 @@ TEST_CASE("array unique ptr", "[array][uptr]")
     CHECK_FALSE(test_array2[2U]);
 
     *test_array1[0U] = 2;
-    uptr<s32> t = std::move(test_array1[0U]);
+    uptr<s32> t      = std::move(test_array1[0U]);
     CHECK(*t == 2);
     CHECK_FALSE(test_array1[0U]);
     test_array1[0U] = std::move(test_array2[0U]);

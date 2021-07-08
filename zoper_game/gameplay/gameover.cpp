@@ -24,8 +24,8 @@ GameOverSceneNode::GameOverSceneNode(scene::SceneNode* const parent, str name) :
 {
     game_over_rg_ = createSceneNode<TransformableSceneNode>("gameOverScreen");
 
-    vector2df gosize{subsystems().dataWrapper<SceneMetricsView>()->currentView().width,
-                     715};
+    vector2df gosize{
+        subsystems().dataWrapper<SceneMetricsView>()->currentView().width, 715};
     game_over_rg_->prop<Position>() = Position::value_type{0, 575};
 
     {
@@ -33,7 +33,8 @@ GameOverSceneNode::GameOverSceneNode(scene::SceneNode* const parent, str name) :
             game_over_rg_->createSceneNode<SceneNodeText>("gameovergame"));
         gameText->prop<SceneNodeTextProperties>()
             .put<Text>("GAME")
-            .put<Font>(subsystems().dataWrapper<res::ResourceRetriever>()
+            .put<Font>(subsystems()
+                           .dataWrapper<res::ResourceRetriever>()
                            ->getTTFont(GameResources::ScoreFontId)
                            ->font(360))
             .put<TextColor>(colors::White)
@@ -47,7 +48,8 @@ GameOverSceneNode::GameOverSceneNode(scene::SceneNode* const parent, str name) :
             game_over_rg_->createSceneNode<SceneNodeText>("gameoverover"));
         overText->prop<SceneNodeTextProperties>()
             .put<Text>("OVER")
-            .put<Font>(subsystems().dataWrapper<res::ResourceRetriever>()
+            .put<Font>(subsystems()
+                           .dataWrapper<res::ResourceRetriever>()
                            ->getTTFont(GameResources::ScoreFontId)
                            ->font(360))
             .put<TextColor>(colors::White)

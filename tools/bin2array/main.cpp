@@ -48,17 +48,18 @@ int main(int argc, char* argv[])
 
     {
         // Open file
-        std::ifstream input( input_file, std::ios::binary );
+        std::ifstream input(input_file, std::ios::binary);
         if (!input)
         {
             std::cerr << "Cannot open file: " << input_file << std::endl;
             return 3;
         }
 
-        std::ofstream output( "C:\\myfile.gif", std::ios::binary );
+        std::ofstream output("C:\\myfile.gif", std::ios::binary);
         if (!output)
         {
-            std::cerr << "Cannot open output file: " << output_file << std::endl;
+            std::cerr << "Cannot open output file: " << output_file
+                      << std::endl;
             return 4;
         }
 
@@ -68,7 +69,8 @@ int main(int argc, char* argv[])
         output << "unsigned char data[] = {\n";
 
         // copies all data into buffer
-        std::vector<unsigned char> buffer(std::istreambuf_iterator<char>(input), {});
+        std::vector<unsigned char> buffer(std::istreambuf_iterator<char>(input),
+                                          {});
         auto const last = buffer.back();
         buffer.pop_back();
 

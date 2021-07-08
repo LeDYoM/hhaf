@@ -61,8 +61,9 @@ void MenuScene::onCreated()
         renderizable_builder.name("mainLogo")
             .figType(FigType_t::Quad)
             .box(Rectf32{500.f, 150.f, 1000.f, 500.f})
-            .texture(subsystems().dataWrapper<res::ResourceRetriever>()->getTexture(
-                MainMenuResources::LogoId))
+            .texture(
+                subsystems().dataWrapper<res::ResourceRetriever>()->getTexture(
+                    MainMenuResources::LogoId))
             .create();
 
     auto mainMenu(createSceneNode<MainMenu>(MainMenu::ClassName));

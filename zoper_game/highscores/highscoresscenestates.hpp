@@ -7,8 +7,8 @@ namespace zoper
 {
 enum class HighScoresSceneStates : htps::u32
 {
-    FadeIn = 0,
-    Show = 1,
+    FadeIn  = 0,
+    Show    = 1,
     FadeOut = 2
 };
 }

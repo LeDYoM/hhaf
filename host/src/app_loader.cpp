@@ -5,15 +5,17 @@ using namespace htps;
 
 namespace haf::host
 {
-ManagedApp AppLoader::loadApp(const str &file) const
+ManagedApp AppLoader::loadApp(const str& file) const
 {
     using namespace agloader;
-    auto *loader(createLoader());
+    auto* loader(createLoader());
 
     if (loader->loadModule(file.c_str()))
     {
-        auto fp_init_app = (p_initApp)loader->loadMethod(file.c_str(), "createApp");
-        auto fp_destroy_app = (p_finishApp)loader->loadMethod(file.c_str(), "destroyApp");
+        auto fp_init_app =
+            (p_initApp)loader->loadMethod(file.c_str(), "createApp");
+        auto fp_destroy_app =
+            (p_finishApp)loader->loadMethod(file.c_str(), "destroyApp");
 
         return loadApp(fp_init_app, fp_destroy_app);
     }
@@ -26,7 +28,7 @@ ManagedApp AppLoader::loadApp(p_initApp init_app, p_finishApp finish_app) const
     return {init_app ? init_app() : nullptr, init_app, finish_app};
 }
 
-bool AppLoader::unloadApp(ManagedApp &managed_app) const
+bool AppLoader::unloadApp(ManagedApp& managed_app) const
 {
     using namespace agloader;
 
@@ -43,11 +45,11 @@ bool AppLoader::unloadApp(ManagedApp &managed_app) const
         result = true;
     }
 
-    managed_app.app = nullptr;
-    managed_app.init_app = nullptr;
+    managed_app.app        = nullptr;
+    managed_app.init_app   = nullptr;
     managed_app.finish_app = nullptr;
     destroyLoader();
     return result;
 }
 
-} // namespace haf::sys
+}  // namespace haf::host

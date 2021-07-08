@@ -41,9 +41,11 @@ void HighScoresScene::onCreated()
     resources_configurator->loadSection("high_scores");
 
     auto statesController(
-        components().addComponentOfType<StatesController<HighScoresSceneStates>>());
+        components()
+            .addComponentOfType<StatesController<HighScoresSceneStates>>());
 
-    m_normalFont = subsystems().dataWrapper<res::ResourceRetriever>()
+    m_normalFont = subsystems()
+                       .dataWrapper<res::ResourceRetriever>()
                        ->getTTFont(HighScoresResources::MenuFontId)
                        ->font(72);
     m_normalColor   = colors::Blue;

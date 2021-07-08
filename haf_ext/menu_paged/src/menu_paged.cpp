@@ -48,8 +48,9 @@ void MenuPaged::configure_menu(
 {
     auto visibility_selector =
         components().addComponentOfType<VisibilitySelectorComponent>();
-    auto statesController = components().addComponentOfType<StatesController<s32>>();
-    menu_steps_           = std::move(menu_steps);
+    auto statesController =
+        components().addComponentOfType<StatesController<s32>>();
+    menu_steps_ = std::move(menu_steps);
 
     for (auto&& menu_page : menu_steps_)
     {
@@ -71,12 +72,14 @@ void MenuPaged::configure_menu(
 
     statesController->StatePushed.connect(
         [visibility_selector](const s32 menu_page) {
-            visibility_selector->visible_index.set(static_cast<size_type>(menu_page));
+            visibility_selector->visible_index.set(
+                static_cast<size_type>(menu_page));
         });
 
     statesController->StateResumed.connect(
         [visibility_selector](const s32 menu_page) {
-            visibility_selector->visible_index.set(static_cast<size_type>(menu_page));
+            visibility_selector->visible_index.set(
+                static_cast<size_type>(menu_page));
         });
 
     statesController->AfterFinish.connect([this]() { MenuFinished(status_); });

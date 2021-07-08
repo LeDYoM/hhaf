@@ -8,7 +8,7 @@ namespace htps
 {
 /**
  * @brief Unused general template
- * @tparam typename 
+ * @tparam typename
  */
 template <typename>
 class function;
@@ -16,7 +16,7 @@ class function;
 /**
  * @brief Wrapper class to store a pointer to a function. It can store any
  * pointer to function, lambda or pointer to member with object
- * 
+ *
  * @tparam ReturnValue Return type of the stored function
  * @tparam Args Arguments type for the stored function
  */
@@ -33,7 +33,7 @@ public:
     /**
      * @brief Construct from a callable object. Normally, a lambda or a pointer
      * to function.
-     * 
+     *
      * @tparam T Type of the object passed
      * @param t Object to construct from
      */
@@ -43,32 +43,32 @@ public:
 
     /**
      * @brief Construct from a pointer to member and object.
-     * 
+     *
      * @tparam T Type of the object
      * @param t Object of the type t
      * @param f Pointer to the member function
      */
-    template<typename T>
-    constexpr function(T* const t, ReturnValue(T::*f)(Args...)) :
+    template <typename T>
+    constexpr function(T* const t, ReturnValue (T::*f)(Args...)) :
         m_callable{msptr<CallableMethodPointerT<T>>(t, f)}
     {}
 
-    template<typename T>
-    constexpr function(T const* const t, ReturnValue(T::*f)(Args...) const) :
+    template <typename T>
+    constexpr function(T const* const t, ReturnValue (T::*f)(Args...) const) :
         m_callable{msptr<ConstCallableMethodPointerT<T>>(t, f)}
     {}
 
     /**
      * @brief Implicit conversion to bool
-     * 
+     *
      * @return true The object contains data.
-     * @return false The object is empty 
+     * @return false The object is empty
      */
     constexpr operator bool() const noexcept { return m_callable != nullptr; }
 
     /**
      * @brief Operator invoke to perform the actual call.
-     * 
+     *
      * @tparam Args2 Types of the actual call. They should be forwardable
      * to the function call.
      * @param args Arguments to be forwarded to the function.
@@ -85,7 +85,7 @@ public:
      * @brief Equality comparison operator. Compares if two objects points
      * to the same internal object.
      * @note Returns false if they are not copy constructed or copy assigned.
-     * 
+     *
      * @param other Other object to compare to.
      * @return true The two objects point to the same internal object.
      * @return false The two object point to different internal objects.
@@ -99,7 +99,7 @@ public:
      * @brief Compare two objects if they point to the same callable object.
      * @note Returns true in case of pointers to members to the same object
      * and method.
-     * 
+     *
      * @param other Other object to compare to.
      * @return true If the two objects are equal.
      * @return false If the two objects are different.
@@ -114,7 +114,7 @@ private:
     {
     public:
         virtual ~ICallable() {}
-        virtual ReturnValue Invoke(Args...)                = 0;
+        virtual ReturnValue Invoke(Args...)                  = 0;
         virtual bool equals(ICallable const&) const noexcept = 0;
     };
 
@@ -154,8 +154,8 @@ private:
     class CallableMethodPointerT final : public ICallable
     {
     public:
-//        typedef ReturnValue (T::*HandlerFunctionPtr)(Args...);
-        using HandlerFunctionPtr =  ReturnValue (T::*)(Args...);
+        //        typedef ReturnValue (T::*HandlerFunctionPtr)(Args...);
+        using HandlerFunctionPtr = ReturnValue (T::*)(Args...);
 
         constexpr CallableMethodPointerT(T* const receiver,
                                          const HandlerFunctionPtr function) :
@@ -175,8 +175,7 @@ private:
         inline bool equals(ICallable const& other) const noexcept override
         {
             function::CallableMethodPointerT<T> const* const tmp =
-                dynamic_cast<CallableMethodPointerT<T> const*>(
-                    &other);
+                dynamic_cast<CallableMethodPointerT<T> const*>(&other);
             if (tmp == nullptr)
             {
                 return false;
@@ -193,10 +192,11 @@ private:
     class ConstCallableMethodPointerT final : public ICallable
     {
     public:
-        using HandlerFunctionPtr =  ReturnValue (T::*)(Args...) const;
+        using HandlerFunctionPtr = ReturnValue (T::*)(Args...) const;
 
-        constexpr ConstCallableMethodPointerT(T const * const receiver,
-                                         const HandlerFunctionPtr function) :
+        constexpr ConstCallableMethodPointerT(
+            T const* const receiver,
+            const HandlerFunctionPtr function) :
             obj{receiver}, function_{function}
         {}
 
@@ -205,7 +205,8 @@ private:
             return (obj->*function_)(std::forward<Args>(args)...);
         }
 
-        inline bool equals(ConstCallableMethodPointerT const& other) const noexcept
+        inline bool equals(
+            ConstCallableMethodPointerT const& other) const noexcept
         {
             return obj == other.obj && function_ == other.function_;
         }
@@ -213,8 +214,7 @@ private:
         inline bool equals(ICallable const& other) const noexcept override
         {
             function::ConstCallableMethodPointerT<T> const* const tmp =
-                dynamic_cast<ConstCallableMethodPointerT<T> const*>(
-                    &other);
+                dynamic_cast<ConstCallableMethodPointerT<T> const*>(&other);
             if (tmp == nullptr)
             {
                 return false;
@@ -223,7 +223,7 @@ private:
         }
 
     private:
-        T const * const obj;
+        T const* const obj;
         const HandlerFunctionPtr function_;
     };
 
@@ -233,23 +233,23 @@ private:
 /**
  * @brief Helper function to create a @b function object deducing the type
  * automatically. The template parameters will be autodeduced.
- * 
+ *
  * @tparam ReturnType Return type of the function
  * @tparam Args Parameter types of the arguments
  * @param p Callable object
  * @return function with the same return type and arguments that the object
  * passed.
  */
-template<typename ReturnType, typename... Args>
-constexpr auto make_function(ReturnType(*p)(Args...))
+template <typename ReturnType, typename... Args>
+constexpr auto make_function(ReturnType (*p)(Args...))
 {
-  return function<ReturnType(Args...)>(p);
+    return function<ReturnType(Args...)>(p);
 }
 
 /**
  * @brief Helper function to create a @b function object deducing the type
  * automatically. Overload for objects and member pointers.
- * 
+ *
  * @tparam ReturnType Return type of the function
  * @tparam T Type of the class with the member function
  * @tparam Args Parameter types of the arguments
@@ -258,16 +258,16 @@ constexpr auto make_function(ReturnType(*p)(Args...))
  * @return function with the same return type and arguments that the object
  * and member function passed.
  */
-template<typename ReturnType, typename T, typename... Args>
-constexpr auto make_function(T *obj, ReturnType(T::*p)(Args...))
+template <typename ReturnType, typename T, typename... Args>
+constexpr auto make_function(T* obj, ReturnType (T::*p)(Args...))
 {
-  return function<ReturnType(Args...)>(obj, p);
+    return function<ReturnType(Args...)>(obj, p);
 }
 
-template<typename ReturnType, typename T, typename... Args>
-constexpr auto make_function(T const *obj, ReturnType(T::*p)(Args...) const)
+template <typename ReturnType, typename T, typename... Args>
+constexpr auto make_function(T const* obj, ReturnType (T::*p)(Args...) const)
 {
-  return function<ReturnType(Args...)>(obj, p);
+    return function<ReturnType(Args...)>(obj, p);
 }
 
 }  // namespace htps

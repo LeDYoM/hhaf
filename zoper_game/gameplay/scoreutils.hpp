@@ -17,14 +17,14 @@ class ScoreIncrementer
 public:
     /**
      * @brief Construct a new Score Incrementer object
-     * 
-     * @param level_properties 
+     *
+     * @param level_properties
      */
     ScoreIncrementer(htps::sptr<LevelProperties> level_properties);
 
     /**
      * @brief Destroy the Score Incrementer object
-     * 
+     *
      */
     ~ScoreIncrementer();
 
@@ -37,6 +37,6 @@ private:
     htps::size_type hits_{0U};
     htps::sptr<LevelProperties> level_properties_;
 };
-} // namespace zoper
+}  // namespace zoper
 
 #endif

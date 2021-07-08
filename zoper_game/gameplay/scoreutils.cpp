@@ -9,10 +9,9 @@ using namespace htps;
 namespace zoper
 {
 
-ScoreIncrementer::ScoreIncrementer(sptr<LevelProperties> level_properties)
-    : hits_{0U}, level_properties_{std::move(level_properties)}
-{
-}
+ScoreIncrementer::ScoreIncrementer(sptr<LevelProperties> level_properties) :
+    hits_{0U}, level_properties_{std::move(level_properties)}
+{}
 
 ScoreIncrementer::~ScoreIncrementer()
 {
@@ -35,4 +34,4 @@ void ScoreIncrementer::addHit()
     ++hits_;
 }
 
-} // namespace zoper
+}  // namespace zoper

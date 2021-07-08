@@ -8,6 +8,7 @@ namespace zoper
 class GameOverSceneNode : public haf::scene::TransformableSceneNode
 {
     using BaseClass = haf::scene::TransformableSceneNode;
+
 public:
     GameOverSceneNode(haf::scene::SceneNode* const parent, htps::str name);
 

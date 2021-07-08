@@ -63,10 +63,8 @@ public:
     {
         auto const old_size = m_receivers.size();
 
-        (void)(m_receivers.erase_if([&f](auto const& element)
-        {
-            return f.equals(element);
-        }));
+        (void)(m_receivers.erase_if(
+            [&f](auto const& element) { return f.equals(element); }));
 
         return m_receivers.size() < old_size;
     }
@@ -104,7 +102,7 @@ public:
 
     /**
      * @brief Constructor to create a connection to a function
-     * 
+     *
      * @param e Emitter source.
      * @param f Function to connect.
      */
@@ -118,7 +116,7 @@ public:
      * @brief Constructor to forward the connection to another connection (of
      * the same signature). That is, when the original emitter e is called, it
      * will generate a call to the second emitter.
-     * 
+     *
      * @param e Emitter source.
      * @param r Emitter receiver.
      */

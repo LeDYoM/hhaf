@@ -24,13 +24,13 @@ public:
         assert(element != nullptr);
         Deallocate(element);
     }
-/*
-    static void deallocate(pointer element, size_type const size)
-    {
-        assert(element != nullptr);
-        Deallocate(element, size);
-    }
-    */
+    /*
+        static void deallocate(pointer element, size_type const size)
+        {
+            assert(element != nullptr);
+            Deallocate(element, size);
+        }
+        */
 };
 
 }  // namespace htps

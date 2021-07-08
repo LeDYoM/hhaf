@@ -27,7 +27,6 @@ public:
 
     htps::str info() const override;
     sf::Vector2u getSize() const override;
-
 };
 }  // namespace haf::backend::sfmlb
 

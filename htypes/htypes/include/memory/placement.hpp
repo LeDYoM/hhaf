@@ -10,7 +10,7 @@ namespace htps
  * @brief Class dedicated to the construction and destruction
  * of objects. You pass the pointer to the allocated memory or
  * the memory to be deallocated.
- * 
+ *
  * @tparam T Type of the object to be constructed and destructed
  */
 template <typename T>

@@ -72,9 +72,9 @@ TEST_CASE("PropertyGroupImpl four elements", "[htypes][property][Grouping]")
         PropertyGroupImpl<CharTag, IntTag, StrTag, SptrIntTag>;
 
     TTPropertyGroupImpl pg;
-    auto a1         = pg.get_property_reference<CharTag>();
+    auto a1 = pg.get_property_reference<CharTag>();
     (void)(a1);
-    auto a2         = pg.get_property_reference<IntTag>();
+    auto a2 = pg.get_property_reference<IntTag>();
     (void)(a2);
     auto a3         = pg.get_property_reference<StrTag>();
     auto a4         = pg.get_property_reference<SptrIntTag>();

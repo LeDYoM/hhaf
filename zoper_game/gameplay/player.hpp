@@ -15,7 +15,7 @@ class Player : public GameBaseTile
 {
 public:
     using BoardTileData = GameBaseTile::BoardTileData;
-    using BaseClass = GameBaseTile;
+    using BaseClass     = GameBaseTile;
 
     Player(htps::rptr<haf::scene::SceneNode> parent, htps::str name);
     ~Player() override;
@@ -25,16 +25,16 @@ public:
 
     bool canBeMoved(htps::vector2dst const& dest_position) const;
 
-    void movePlayer(const Direction &direction);
-    void launchAnimation(const htps::vector2df &toWhere);
+    void movePlayer(const Direction& direction);
+    void launchAnimation(const htps::vector2df& toWhere);
 
-    void tileAdded(const htps::vector2dst &position) override;
-    void tileChanged(const htps::vector2dst &position,
+    void tileAdded(const htps::vector2dst& position) override;
+    void tileChanged(const htps::vector2dst& position,
                      const BoardTileData oldValue,
                      const BoardTileData newValue) override;
 
-    void tileMoved(const htps::vector2dst &source,
-                        const htps::vector2dst &dest) override;
+    void tileMoved(const htps::vector2dst& source,
+                   const htps::vector2dst& dest) override;
 
     void update() override;
 
@@ -44,10 +44,10 @@ private:
     htps::size_type rotator_;
     htps::size_type scalator_;
     htps::size_type move_out_;
-    void launchAnimationBack(const htps::vector2df &toWhere);
+    void launchAnimationBack(const htps::vector2df& toWhere);
     htps::sptr<haf::scene::AnimationComponent> animation_component_;
-//    htps::sptr<haf::scene::RenderizableSceneNode> render_scene_node_;
+    //    htps::sptr<haf::scene::RenderizableSceneNode> render_scene_node_;
 };
-} // namespace zoper
+}  // namespace zoper
 
 #endif

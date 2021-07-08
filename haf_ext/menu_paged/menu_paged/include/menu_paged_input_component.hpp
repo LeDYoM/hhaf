@@ -12,7 +12,7 @@ class MenuPageInputComponent : public input::VirtualInputComponent
 public:
     using BaseClass = input::VirtualInputComponent;
     using BaseClass::BaseClass;
-    
+
     htps::emitter<> Up;
     htps::emitter<> Down;
     htps::emitter<> Left;
@@ -21,8 +21,7 @@ public:
 
 private:
     void onKeyPressed(const input::Key&) override;
-
 };
-} // namespace zoper
+}  // namespace haf::scene
 
 #endif

@@ -22,8 +22,7 @@ public:
 
     htps::str nextSceneName() override;
     void onCreated() override;
-
 };
-} // namespace zoper
+}  // namespace zoper
 
 #endif

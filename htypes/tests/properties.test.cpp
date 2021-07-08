@@ -25,7 +25,6 @@ TEST_CASE("BasicProperty::BasicProperty", "[htypes][property][BasicProperty]")
         CHECK(p() == 5);
         CHECK(p.get() == 5);
     }
-
 }
 
 TEST_CASE("BasicProperty::set", "[htypes][property][BasicProperty]")
@@ -38,7 +37,8 @@ TEST_CASE("BasicProperty::set", "[htypes][property][BasicProperty]")
     CHECK(p.get() == 10);
 }
 
-struct Tag {};
+struct Tag
+{};
 
 TEST_CASE("BasicProperty::toIProperty", "[htypes][property][BasicProperty]")
 {
@@ -57,4 +57,3 @@ TEST_CASE("BasicProperty::toIProperty", "[htypes][property][BasicProperty]")
     CHECK_FALSE(ip->set(50));
     CHECK(ip->get() == 50);
 }
-

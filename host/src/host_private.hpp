@@ -66,10 +66,10 @@ public:
     str simulation_input_file;
     str simulation_output_file;
     bool exit{false};
+
 private:
     rptr<haf::sys::ISystemController> systemController() noexcept;
     rptr<haf::sys::ISystemController const> systemController() const noexcept;
-
 };
 
 }  // namespace haf::host

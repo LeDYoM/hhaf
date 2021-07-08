@@ -18,7 +18,7 @@ void GameSceneInput::configure(
     htps::sptr<BoardGroup> boardGroup)
 {
     m_sceneStates = std::move(sceneStates);
-    m_boardGroup = std::move(boardGroup);
+    m_boardGroup  = std::move(boardGroup);
 }
 
 void GameSceneInput::onKeyPressed(haf::input::Key const& key)
@@ -51,7 +51,8 @@ void GameSceneInput::onKeyPressed(haf::input::Key const& key)
         case GameSceneStates::GameOver:
         {
             attachedNode()
-                ->subsystems().dataWrapper<haf::scene::SceneControl>()
+                ->subsystems()
+                .dataWrapper<haf::scene::SceneControl>()
                 ->switchToNextScene();
         }
         break;

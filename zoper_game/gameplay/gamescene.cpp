@@ -93,8 +93,9 @@ void GameScene::onCreated()
 
     {
         auto game_shared_data =
-            subsystems().dataWrapper<shdata::SharedDataViewer<GameSharedData>>()->view(
-                GameSharedData::address());
+            subsystems()
+                .dataWrapper<shdata::SharedDataViewer<GameSharedData>>()
+                ->view(GameSharedData::address());
 
         start_level = game_shared_data->startLevel;
         game_mode   = game_shared_data->gameMode;
@@ -124,7 +125,8 @@ void GameScene::onCreated()
         game_over_scene_node->prop<Visible>().set(false);
 
         p_->m_states_manager = muptr<GameSceneStateManager>(
-            scene_timer_component_, createSceneNode<PauseSceneNode>("PauseNode"),
+            scene_timer_component_,
+            createSceneNode<PauseSceneNode>("PauseNode"),
             std::move(game_over_scene_node));
     }
 
@@ -153,10 +155,10 @@ void GameScene::onCreated()
     p_->key_mapping_ = muptr<KeyMapping>();
     p_->key_mapping_->reset();
 
-    subsystems().dataWrapper<sys::FileSerializer>()->deserializeFromFile("keys.txt",
-                                                            *p_->key_mapping_);
-    subsystems().dataWrapper<sys::FileSerializer>()->serializeToFile("keys.txt",
-                                                        *p_->key_mapping_);
+    subsystems().dataWrapper<sys::FileSerializer>()->deserializeFromFile(
+        "keys.txt", *p_->key_mapping_);
+    subsystems().dataWrapper<sys::FileSerializer>()->serializeToFile(
+        "keys.txt", *p_->key_mapping_);
 
     m_sceneStates->start(GameSceneStates::Playing);
 }

@@ -13,25 +13,31 @@
 
 namespace haf::backend::sfmlb
 {
-    class Texture;
-    class TTFont : public ITTFont
-    {
-    public:
-        TTFont(htps::uptr<sf::Font> f, htps::RawMemory raw_memory);
-        ~TTFont() override;
+class Texture;
+class TTFont : public ITTFont
+{
+public:
+    TTFont(htps::uptr<sf::Font> f, htps::RawMemory raw_memory);
+    ~TTFont() override;
 
-        htps::Rectf32 getBounds(const htps::u32 codePoint, const htps::u32 characterSize) const override;
-        htps::Rectf32 getTextureBounds(const htps::u32 codePoint, const htps::u32 characterSize) const override;
-        htps::f32 getAdvance(const htps::u32 codePoint, const htps::u32 characterSize) const override;
-        htps::f32 getLineSpacing(const htps::u32 characterSize) const override;
-        htps::f32 getKerning(const htps::u32 first, const htps::u32 second, const htps::u32 characterSize) const override;
-        ITexture *getTexture(const htps::u32 characterSize) override;
+    htps::Rectf32 getBounds(const htps::u32 codePoint,
+                            const htps::u32 characterSize) const override;
+    htps::Rectf32 getTextureBounds(
+        const htps::u32 codePoint,
+        const htps::u32 characterSize) const override;
+    htps::f32 getAdvance(const htps::u32 codePoint,
+                         const htps::u32 characterSize) const override;
+    htps::f32 getLineSpacing(const htps::u32 characterSize) const override;
+    htps::f32 getKerning(const htps::u32 first,
+                         const htps::u32 second,
+                         const htps::u32 characterSize) const override;
+    ITexture* getTexture(const htps::u32 characterSize) override;
 
-    private:
-        htps::uptr<sf::Font> m_font;
-        htps::RawMemory raw_memory_;
-        std::map<htps::u32, htps::uptr<Texture>> m_fontTexturesCache;
-    };
-}
+private:
+    htps::uptr<sf::Font> m_font;
+    htps::RawMemory raw_memory_;
+    std::map<htps::u32, htps::uptr<Texture>> m_fontTexturesCache;
+};
+}  // namespace haf::backend::sfmlb
 
 #endif

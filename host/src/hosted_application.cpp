@@ -7,8 +7,7 @@ namespace haf::host
 
 HostedApplication::HostedApplication(ManagedApp managed_app,
                                      str app_name) noexcept :
-    managed_app_{std::move(managed_app)},
-    app_name_{std::move(app_name)}
+    managed_app_{std::move(managed_app)}, app_name_{std::move(app_name)}
 {}
 
 bool operator==(HostedApplication const& lhs,

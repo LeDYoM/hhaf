@@ -232,14 +232,16 @@ struct PropertyGroup : public PropertyGroupImpl<Tag...>
     }
 
     template <typename Tag_>
-    std::enable_if_t<PropertyGroup::ContainsTag_v<Tag_>, GroupableProperty<Tag_>&>
+    std::enable_if_t<PropertyGroup::ContainsTag_v<Tag_>,
+                     GroupableProperty<Tag_>&>
     prop() noexcept
     {
         return Base::template get_property_reference<Tag_>();
     }
 
     template <typename Tag_>
-    std::enable_if_t<PropertyGroup::ContainsTag_v<Tag_>, GroupableProperty<Tag_> const&>
+    std::enable_if_t<PropertyGroup::ContainsTag_v<Tag_>,
+                     GroupableProperty<Tag_> const&>
     prop() const noexcept
     {
         return Base::template get_property_reference<Tag_>();
@@ -258,7 +260,6 @@ struct PropertyGroup : public PropertyGroupImpl<Tag...>
     {
         return *this;
     }
-
 };
 
 template <typename TagFirst, typename... Tag>

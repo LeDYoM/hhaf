@@ -33,9 +33,10 @@ public:
     [[nodiscard]] ResultType loadFunctions();
     [[nodiscard]] bool create();
     void destroy();
-    [[nodiscard]] htps::rptr<haf::sys::ISystemController> systemController() noexcept;
-    [[nodiscard]] htps::rptr<haf::sys::ISystemController const> systemController()
-        const noexcept;
+    [[nodiscard]] htps::rptr<haf::sys::ISystemController>
+    systemController() noexcept;
+    [[nodiscard]] htps::rptr<haf::sys::ISystemController const>
+    systemController() const noexcept;
 
 private:
     htps::rptr<agloader::Loader> loader_{nullptr};

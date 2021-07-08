@@ -20,7 +20,6 @@ DisplayVarConsole::DisplayVarConsole(
     htps::rptr<haf::scene::SceneNode> const parent,
     str name) :
     Console{parent, std::move(name)}
-{
-}
+{}
 
 }  // namespace zoper

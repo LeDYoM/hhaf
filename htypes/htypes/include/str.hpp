@@ -174,7 +174,7 @@ public:
         return *this;
     }
 
-    str& append(char_type const * const n)
+    str& append(char_type const* const n)
     {
         append(str(n));
         return *this;
@@ -403,10 +403,10 @@ public:
     template <size_type N>
     constexpr bool operator!=(char_type const (&rhs)[N]) const noexcept
     {
-        return !(this->operator==(std::forward<char_type const (&)[N]>(rhs)));
+        return !(this->operator==(std::forward<char_type const(&)[N]>(rhs)));
     }
 
-    constexpr bool operator==(str::char_type const * const rhs) const noexcept
+    constexpr bool operator==(str::char_type const* const rhs) const noexcept
     {
         size_type counter{0};
         for (; counter < size() && rhs[counter] != 0U; ++counter)
@@ -416,11 +416,11 @@ public:
                 return false;
             }
         }
-    
+
         return (counter == size() && rhs[counter] == 0);
     }
 
-    constexpr bool operator!=(str::char_type const * const a) const noexcept
+    constexpr bool operator!=(str::char_type const* const a) const noexcept
     {
         return !(*this == a);
     }
@@ -446,7 +446,7 @@ public:
     constexpr bool operator<(const str& rhs) const noexcept
     {
         size_type i{0U};
-        for (;i < size() && i < rhs.size();++i)
+        for (; i < size() && i < rhs.size(); ++i)
         {
             if (m_data[i] < rhs[i])
             {
@@ -467,23 +467,27 @@ inline str operator+(str const& lhs, str const& rhs)
 }
 
 template <size_type N>
-constexpr bool operator==(str::char_type const (&lhs)[N], str const& rhs) noexcept
+constexpr bool operator==(str::char_type const (&lhs)[N],
+                          str const& rhs) noexcept
 {
     return rhs == lhs;
 }
 
 template <size_type N>
-constexpr bool operator!=(str::char_type const (&lhs)[N], str const& rhs) noexcept
+constexpr bool operator!=(str::char_type const (&lhs)[N],
+                          str const& rhs) noexcept
 {
     return rhs != lhs;
 }
 
-constexpr bool operator==(str::char_type const * const lhs, str const& rhs) noexcept
+constexpr bool operator==(str::char_type const* const lhs,
+                          str const& rhs) noexcept
 {
     return rhs == lhs;
 }
 
-constexpr bool operator!=(str::char_type const * const lhs, str const& rhs) noexcept
+constexpr bool operator!=(str::char_type const* const lhs,
+                          str const& rhs) noexcept
 {
     return rhs != lhs;
 }

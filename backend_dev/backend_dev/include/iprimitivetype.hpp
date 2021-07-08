@@ -15,6 +15,6 @@ enum class iPrimitiveType : htps::u8
     TriangleFan
 };
 
-}  // namespace haf::scene
+}  // namespace haf::backend
 
 #endif

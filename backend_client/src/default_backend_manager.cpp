@@ -11,7 +11,6 @@ struct DefaultBackendManager::DefaultBackendManagerPrivate
 {
     htps::vector<htps::uptr<IAutoRegisterFactory>> factories;
     void pushFactory(htps::uptr<IAutoRegisterFactory> f);
-
 };
 
 DefaultBackendManager::DefaultBackendManager() :

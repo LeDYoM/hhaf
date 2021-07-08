@@ -8,6 +8,6 @@ class GameResources
 public:
     static constexpr char ScoreFontId[] = "score_font";
 };
-} // namespace zoper
+}  // namespace zoper
 
 #endif

@@ -16,7 +16,7 @@ struct TokenZones
     enum class BoardBackgroundType
     {
         Nothing = 0U,
-        Center = 1U
+        Center  = 1U
     };
 
     struct TokenZone

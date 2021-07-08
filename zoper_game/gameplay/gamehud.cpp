@@ -22,9 +22,10 @@ GameHudSceneNode::GameHudSceneNode(
     str name) :
     BaseClass{parent, std::move(name)}
 {
-    Font::value_type font{subsystems().dataWrapper<res::ResourceRetriever>()
-                                ->getTTFont(GameResources::ScoreFontId)
-                                ->font(90U)};
+    Font::value_type font{subsystems()
+                              .dataWrapper<res::ResourceRetriever>()
+                              ->getTTFont(GameResources::ScoreFontId)
+                              ->font(90U)};
     (m_scoreQuad = parent->createSceneNode<TextQuad>("score"))
         ->setTableNodeProperty<Font>(font)
         ->setTableNodeProperty<TextColor>(colors::White)

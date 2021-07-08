@@ -33,8 +33,9 @@ public:
     explicit RangeOption();
 
     template <typename T>
-    explicit RangeOption(T const)
-        : options_(static_cast<htps::size_type>(htps::MEnum<T>::max_numeric - htps::MEnum<T>::min_numeric))
+    explicit RangeOption(T const) :
+        options_(static_cast<htps::size_type>(htps::MEnum<T>::max_numeric -
+                                              htps::MEnum<T>::min_numeric))
     {
         htps::MEnum<T> v{T::min};
         while (v.isValid())
@@ -60,8 +61,8 @@ class MenuPagedOption
 {
 public:
     static constexpr htps::s32 NoAction = -3;
-    static constexpr htps::s32 GoBack = -2;
-    static constexpr htps::s32 Accept = -1;
+    static constexpr htps::s32 GoBack   = -2;
+    static constexpr htps::s32 Accept   = -1;
 
     MenuPagedOption(htps::str title,
                     RangeOption range_options,
@@ -84,10 +85,10 @@ public:
 };
 
 template <typename... Args>
-htps::sptr<MenuPagedOption> make_option(Args &&... args)
+htps::sptr<MenuPagedOption> make_option(Args&&... args)
 {
     return htps::msptr<MenuPagedOption>(std::forward<Args>(args)...);
 }
-} // namespace haf::scene
+}  // namespace haf::scene
 
 #endif

@@ -9,8 +9,8 @@ using namespace htps;
 
 enum class A : s32
 {
-    min = 0,
-    max = 2,
+    min        = 0,
+    max        = 2,
     TestValue1 = min,
     TestValue2 = min + 1,
     TestValue3 = max
@@ -20,15 +20,15 @@ constexpr char const* to_str(const A value)
 {
     switch (value)
     {
-    case A::TestValue1:
-        return "TestValue1";
-        break;
-    case A::TestValue2:
-        return "TestValue2";
-        break;
-    case A::TestValue3:
-        return "TestValue3";
-        break;
+        case A::TestValue1:
+            return "TestValue1";
+            break;
+        case A::TestValue2:
+            return "TestValue2";
+            break;
+        case A::TestValue3:
+            return "TestValue3";
+            break;
     }
     return "";
 }

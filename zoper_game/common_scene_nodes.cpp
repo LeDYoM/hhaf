@@ -14,8 +14,7 @@ using namespace haf;
 using namespace haf::scene;
 using namespace haf::render;
 
-void createStandardBackground(
-    RenderizableBuilder& renderizable_builder)
+void createStandardBackground(RenderizableBuilder& renderizable_builder)
 {
     auto background =
         renderizable_builder.name("background")

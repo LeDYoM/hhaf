@@ -29,7 +29,7 @@ public:
     /**
      * @brief Main loop function. When it returns, you can safely destroy
      * the Host object.
-     * @return int 
+     * @return int
      */
     int run();
 

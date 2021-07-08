@@ -13,10 +13,8 @@ RangeOption::RangeOption(size_type min, size_type max) :
     }
 }
 
-RangeOption::RangeOption(string_vector options)
-    : options_{std::move(options)}
-{
-}
+RangeOption::RangeOption(string_vector options) : options_{std::move(options)}
+{}
 
 RangeOption::RangeOption() = default;
 

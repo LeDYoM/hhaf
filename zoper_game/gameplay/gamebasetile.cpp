@@ -43,8 +43,7 @@ void GameBaseTile::tileAdded(const vector2dst& position)
     is_in_center = TokenZones::pointInCenter(position);
 }
 
-void GameBaseTile::tileMoved(const vector2dst&  source,
-                        const vector2dst&  dest)
+void GameBaseTile::tileMoved(const vector2dst& source, const vector2dst& dest)
 {
     TileBase::tileMoved(source, dest);
     is_in_center = TokenZones::pointInCenter(dest);
@@ -64,26 +63,26 @@ Color GameBaseTile::getColorForToken() const
 {
     switch (value())
     {
-    case 0:
-        return colors::Red;
-        break;
-    case 1:
-        return colors::Green;
-        break;
-    case 2:
-        return colors::Blue;
-        break;
-    case 3:
-        return colors::Yellow;
-        break;
-    case 4:
-        return colors::Magenta;
-        break;
-    default:
-        haf::DisplayLog::error("Error value for token: ", value(),
-                               " is not supported");
-        return colors::White;
-        break;
+        case 0:
+            return colors::Red;
+            break;
+        case 1:
+            return colors::Green;
+            break;
+        case 2:
+            return colors::Blue;
+            break;
+        case 3:
+            return colors::Yellow;
+            break;
+        case 4:
+            return colors::Magenta;
+            break;
+        default:
+            haf::DisplayLog::error("Error value for token: ", value(),
+                                   " is not supported");
+            return colors::White;
+            break;
     }
 }
 

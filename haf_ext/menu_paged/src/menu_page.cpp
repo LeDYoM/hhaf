@@ -54,7 +54,8 @@ size_type MenuPage::SelectedOptionAtRow(const size_type row) const
     if (row < prop<TableSize>().get().y)
     {
         auto node(nodeAt({columnForOptions, row}));
-        if (auto discreteText = node->components().componentOfType<DiscreteTextComponent>())
+        if (auto discreteText =
+                node->components().componentOfType<DiscreteTextComponent>())
         {
             return discreteText->index();
         }
@@ -98,7 +99,8 @@ void MenuPage::configure(vector<sptr<MenuPagedOption>> options,
                              make_str("option", counter)));
             standarizeText(discreteTextLabel);
             auto discreteTextComponent(
-                discreteTextLabel->components().addComponentOfType<DiscreteTextComponent>());
+                discreteTextLabel->components()
+                    .addComponentOfType<DiscreteTextComponent>());
             discreteTextComponent->data.set(option->option().options());
         }
 
@@ -136,7 +138,9 @@ vector<s32> MenuPage::optionsSelected() const
     for (size_type index{0U}; index < prop<TableSize>().get().y; ++index)
     {
         result.emplace_back(
-            (nodeHasOptions(index)) ? static_cast<s32>(optionsLabelAt(index)->index()) : -1);
+            (nodeHasOptions(index))
+                ? static_cast<s32>(optionsLabelAt(index)->index())
+                : -1);
     }
     return result;
 }
@@ -229,7 +233,8 @@ bool MenuPage::nodeHasOptions(const size_type y) const noexcept
     {
         if (auto node = nodeAt({columnForOptions, y}))
         {
-            return node->components().componentOfType<DiscreteTextComponent>() != nullptr;
+            return node->components()
+                       .componentOfType<DiscreteTextComponent>() != nullptr;
         }
     }
     return false;

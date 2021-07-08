@@ -77,7 +77,8 @@ void MainMenu::onCreated()
     BaseClass::onCreated();
 
     Rectf32 textBox{
-        rectFromSize(subsystems().dataWrapper<SceneMetricsView>()->currentView().size())
+        rectFromSize(
+            subsystems().dataWrapper<SceneMetricsView>()->currentView().size())
             .setLeftTop({0, 750})
             .setSize({2000, 4 * 150})};
     prop<Position>() = textBox.leftTop();
@@ -87,7 +88,8 @@ void MainMenu::onCreated()
 #ifdef TEST_BMP_FONT
             getBMPFont(MainMenuResources::TestFontId)
 #else
-            subsystems().dataWrapper<res::ResourceRetriever>()
+            subsystems()
+                .dataWrapper<res::ResourceRetriever>()
                 ->getTTFont(MainMenuResources::MenuFontId)
                 ->font(72)
 #endif

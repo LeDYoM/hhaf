@@ -429,6 +429,7 @@ public:
     MoveOnly(MoveOnly&&) noexcept = default;
     MoveOnly& operator=(MoveOnly&&) = default;
     int get() const noexcept { return a; }
+
 private:
     int a;
 };
@@ -461,4 +462,3 @@ TEST_CASE("Movable only objects")
         CHECK(v.empty());
     }
 }
-

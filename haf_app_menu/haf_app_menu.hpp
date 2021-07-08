@@ -17,6 +17,7 @@ public:
 
     void onInit(scene::AppInitializer& app_initializer) override;
     void onFinish(scene::AppFinisher& app_finisher) override;
+
 private:
     void configureScenes(sys::DataWrapperCreator& data_wrapper_creator);
 };

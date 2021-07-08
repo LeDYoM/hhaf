@@ -9,14 +9,15 @@
 
 namespace haf::backend::sfmlb
 {
-    class ShaderFactory : public IShaderFactory
-    {
-    public:
-        virtual IShader* loadFromFile(const htps::str &file) override;
-        ~ShaderFactory() override;
-    private:
-        htps::vector<htps::sptr<Shader>> m_shaderCache;
-    };
-}
+class ShaderFactory : public IShaderFactory
+{
+public:
+    virtual IShader* loadFromFile(const htps::str& file) override;
+    ~ShaderFactory() override;
+
+private:
+    htps::vector<htps::sptr<Shader>> m_shaderCache;
+};
+}  // namespace haf::backend::sfmlb
 
 #endif

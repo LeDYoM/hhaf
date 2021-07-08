@@ -5,8 +5,8 @@
 
 namespace zoper
 {
-    static constexpr htps::Rectf32 DefaultView = 
-        htps::Rectf32{0U, 0U, 2000U, 2000U};
+static constexpr htps::Rectf32 DefaultView =
+    htps::Rectf32{0U, 0U, 2000U, 2000U};
 
 }
 #endif

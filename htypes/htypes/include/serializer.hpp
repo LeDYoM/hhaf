@@ -10,7 +10,7 @@ template <typename T>
 class Serializer
 {
 public:
-    static constexpr str serialize(const T &data)
+    static constexpr str serialize(const T& data)
     {
         Object obj;
         obj << data;
@@ -20,7 +20,7 @@ public:
         return temp;
     }
 
-    static constexpr bool deserialize(const str &data, T &output)
+    static constexpr bool deserialize(const str& data, T& output)
     {
         ObjectCompiler obj_compiler(data);
         if (obj_compiler.compile())
@@ -34,6 +34,6 @@ public:
     }
 };
 
-} // namespace htps
+}  // namespace htps
 
 #endif

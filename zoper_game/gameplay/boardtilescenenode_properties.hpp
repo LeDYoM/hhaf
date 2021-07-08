@@ -13,7 +13,6 @@ struct BackgroundColor
 
 using BoardTileSceneNodeProperties = htps::PropertyGroup<BackgroundColor>;
 
-
 }  // namespace zoper
 
 #endif

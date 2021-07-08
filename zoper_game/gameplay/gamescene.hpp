@@ -44,7 +44,7 @@ public:
     {
         return level_properties_;
     }
-    
+
     void goGameOver();
     void tokenHitAnimation(htps::vector2dst const& pos);
     void launchPlayer();
@@ -70,6 +70,6 @@ private:
     htps::u16 next_token_part_{0U};
     htps::sptr<LevelProperties> level_properties_;
 };
-} // namespace zoper
+}  // namespace zoper
 
 #endif

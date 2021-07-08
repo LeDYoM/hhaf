@@ -22,8 +22,8 @@ public:
 
     constexpr PImplPointer& operator=(PImplPointer&& other) noexcept
     {
-        auto tmp = pointer_;
-        pointer_ = other.pointer_;
+        auto tmp       = pointer_;
+        pointer_       = other.pointer_;
         other.pointer_ = tmp;
         return *this;
     }

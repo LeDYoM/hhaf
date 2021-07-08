@@ -11,7 +11,7 @@ class DisplayVarConsole : public Console
 {
 public:
     DisplayVarConsole(htps::rptr<haf::scene::SceneNode> const parent,
-                     htps::str name);
+                      htps::str name);
 };
 }  // namespace zoper
 

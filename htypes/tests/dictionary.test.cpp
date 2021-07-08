@@ -21,5 +21,4 @@ TEST_CASE("dictionary::dictionary", "[htypes][dictionry]")
 
         CHECK((*(v.find("ABC"))).second == 4);
     }
-
 }

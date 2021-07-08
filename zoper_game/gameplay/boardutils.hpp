@@ -45,7 +45,6 @@ public:
         const htps::vector2dst& board_size,
         htps::function<bool(const htps::vector2dst&, const Direction&)>
             updatePredicate);
-
 };
 }  // namespace zoper
 

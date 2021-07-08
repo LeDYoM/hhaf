@@ -9,7 +9,7 @@ class IFactoryOf
 public:
     using Interface = T;
 
-    virtual T* create() const = 0;
+    virtual T* create() const      = 0;
     virtual bool destroy(T*) const = 0;
     virtual ~IFactoryOf() {}
 };

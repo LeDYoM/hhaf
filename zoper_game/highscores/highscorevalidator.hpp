@@ -10,10 +10,10 @@ namespace zoper
 class HighScoreValidator : public haf::scene::TextEditorComponent::TextValidator
 {
 public:
-    bool canAddChar(const htps::str &source, const char new_char) override;
+    bool canAddChar(const htps::str& source, const char new_char) override;
 
-    bool isValidText(const htps::str &source) override;
+    bool isValidText(const htps::str& source) override;
 };
-} // namespace zoper
+}  // namespace zoper
 
 #endif

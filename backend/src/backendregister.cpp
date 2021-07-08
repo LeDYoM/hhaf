@@ -39,8 +39,9 @@ void BackendRegister::setFactory(
     bmpfont_factory_factory_ = std::move(bmpfont_factory_factory);
 }
 
-void BackendRegister::setLibFuncs(p_initBackendClient init_lib_func,
-                                  p_finishBackendClient finish_lib_func) noexcept
+void BackendRegister::setLibFuncs(
+    p_initBackendClient init_lib_func,
+    p_finishBackendClient finish_lib_func) noexcept
 {
     init_lib_func_   = init_lib_func;
     finish_lib_func_ = finish_lib_func;

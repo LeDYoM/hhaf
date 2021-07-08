@@ -19,7 +19,8 @@ using namespace haf::scene;
 
 class HighScoreTextController : public nodes::TableNode<nodes::SceneNodeText>
 {
-    using BaseClass = nodes::TableNode<nodes::SceneNodeText>;    
+    using BaseClass = nodes::TableNode<nodes::SceneNodeText>;
+
 public:
     using BaseClass::prop;
 

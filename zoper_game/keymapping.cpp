@@ -71,13 +71,13 @@ bool KeyMapping::setKey(const u32 index, const input::Key key)
     return true;
 }
 
-bool KeyMapping::serialize(htps::Object &obj) const
+bool KeyMapping::serialize(htps::Object& obj) const
 {
     obj.set("keys", m_keys);
     return true;
 }
 
-bool KeyMapping::deserialize(htps::Object const &obj)
+bool KeyMapping::deserialize(htps::Object const& obj)
 {
     obj["keys"].getObject() >> m_keys;
     return true;
@@ -87,11 +87,12 @@ void KeyMapping::apply()
 {
     for (auto i = 0u; i < Direction::Total; ++i)
     {
-        //addConfigInt("key" + str(i), _keys[i],true);
+        // addConfigInt("key" + str(i), _keys[i],true);
     }
 
     //  addConfigInt("key_launch" + str(Direction::Total),
-    //_keys[Direction::Total]); 		addConfigInt("key_pause" + str(Direction::Total
+    //_keys[Direction::Total]); 		addConfigInt("key_pause" +
+    //str(Direction::Total
     //+ 1), _keys[Direction::Total + 1]);
 }
 }  // namespace zoper

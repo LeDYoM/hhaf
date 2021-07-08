@@ -9,16 +9,17 @@
 
 namespace haf::backend::sfmlb
 {
-    class Texture;
-    class TextureFactory : public ITextureFactory
-    {
-    public:
-        ITexture *loadFromFile(const htps::str &file) override;
-        ITexture *loadFromRawMemory(htps::RawMemory *raw_memory) override;
-        ~TextureFactory() override;
-    private:
-        htps::vector<htps::sptr<Texture>> m_textureCache;
-    };
-}
+class Texture;
+class TextureFactory : public ITextureFactory
+{
+public:
+    ITexture* loadFromFile(const htps::str& file) override;
+    ITexture* loadFromRawMemory(htps::RawMemory* raw_memory) override;
+    ~TextureFactory() override;
+
+private:
+    htps::vector<htps::sptr<Texture>> m_textureCache;
+};
+}  // namespace haf::backend::sfmlb
 
 #endif

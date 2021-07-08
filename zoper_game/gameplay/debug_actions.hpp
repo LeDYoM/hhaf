@@ -20,7 +20,7 @@ private:
 
     htps::rptr<GameScene> gameScene();
 };
-} // namespace zoper
+}  // namespace zoper
 
 #endif
 
