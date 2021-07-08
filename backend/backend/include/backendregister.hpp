@@ -6,8 +6,8 @@
 #include <backend_dev/include/iresourcefactories.hpp>
 #include <backend_dev/include/ibackendregister.hpp>
 
-using p_initHaf   = bool (*)(haf::backend::client::IBackendRegister* const);
-using p_finishHaf = bool (*)(haf::backend::client::IBackendRegister* const);
+using p_initBackendClient   = bool (*)(haf::backend::client::IBackendRegister* const);
+using p_finishBackendClient = bool (*)(haf::backend::client::IBackendRegister* const);
 
 namespace haf::backend
 {
@@ -21,8 +21,8 @@ public:
     void setFactory(htps::uptr<IShaderFactoryFactory>) noexcept override;
     void setFactory(htps::uptr<IBMPFontFactoryFactory>) noexcept override;
 
-    void setLibFuncs(p_initHaf init_lib_func,
-                     p_finishHaf finish_lib_func) noexcept;
+    void setLibFuncs(p_initBackendClient init_lib_func,
+                     p_finishBackendClient finish_lib_func) noexcept;
 
     template <typename T,
               typename = std::enable_if_t<std::is_same_v<T, IWindowFactory>>>
@@ -72,8 +72,8 @@ public:
     }
 
 private:
-    p_initHaf init_lib_func_{nullptr};
-    p_finishHaf finish_lib_func_{nullptr};
+    p_initBackendClient init_lib_func_{nullptr};
+    p_finishBackendClient finish_lib_func_{nullptr};
     htps::sptr<IWindowFactory> window_factory_;
     htps::sptr<IRenderTargetFactory> render_target_factory_;
     htps::sptr<ITTFontFactoryFactory> ttfont_factory_factory_;

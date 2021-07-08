@@ -203,6 +203,10 @@ void SystemProvider::init(rptr<IApp> iapp,
     p_->setArgumments(parameter_parser);
 
     LogAsserter::log_assert(
+        backend_factory != nullptr,
+        "Cannot create a SystemProvider with a nullptr backend_factory");
+
+    LogAsserter::log_assert(
         iapp != nullptr, "Cannot create a SystemProvider with a nullptr app");
     setBackend(backend_factory);
     p_->app_ = iapp;
