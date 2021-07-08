@@ -21,6 +21,8 @@ class SystemProvider;
  * @brief Class containing elements to manage a window.
  * This class system is intended to be used internally to provide
  * functionallity related to a window.
+ * It encapsulates an IWindow from the backend. This Window reference
+ * might be already created or not.
  */
 class Window final : public SystemBase
 {
