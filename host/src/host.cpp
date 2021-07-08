@@ -36,7 +36,7 @@ Host::~Host()
 
 bool Host::initialize()
 {
-    return p_->loadApplication(p_->configuredFirstApp());
+    return p_->initialize();
 }
 
 int Host::run()

@@ -44,8 +44,12 @@ public:
     ~SystemProvider() override;
 
     void createBackend();
+    void setBackend(htps::rptr<backend::BackendFactory> backend_factory);
     void fastInit(InitSystemOptions const& init_system_options);
-    void init(htps::rptr<IApp> iapp, int const argc, char const* const argv[]);
+    void init(htps::rptr<IApp> iapp,
+              htps::rptr<backend::BackendFactory> backend_factory,
+              int const argc,
+              char const* const argv[]);
     void terminate();
 
     template <typename T>

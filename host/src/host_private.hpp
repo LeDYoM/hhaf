@@ -22,6 +22,9 @@
 
 #include <hosted_app/include/iapp.hpp>
 
+#include <backend/include/backendfactory.hpp>
+#include <backend/include/backend_creator.hpp>
+
 using namespace htps;
 
 namespace haf::host
@@ -33,6 +36,7 @@ public:
 
     int const argc_;
     char const* const* const argv_;
+    BackendFactoryUPtr backend_factory_;
 
     HostConfig config_;
     parpar::ParametersParser params_;
@@ -44,6 +48,8 @@ public:
     HostedApplication const& currentHostedApplication() const;
     rptr<IApp const> currentApp() const;
     rptr<IApp> currentApp();
+
+    bool initialize();
 
     str configuredFirstApp() const;
 
@@ -62,7 +68,6 @@ public:
     bool exit{false};
 private:
     rptr<haf::sys::ISystemController> systemController() noexcept;
-
     rptr<haf::sys::ISystemController const> systemController() const noexcept;
 
 };

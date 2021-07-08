@@ -19,5 +19,6 @@ set(headers
 build_lib_component(EXPORT_ALL HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
                     "${SOURCES}" HEADERS "${headers}")
 
-target_link_libraries(${CURRENT_TARGET} PRIVATE agloader htypes backend_dev)
+target_link_libraries(${CURRENT_TARGET} PRIVATE agloader htypes)
+target_link_libraries(${CURRENT_TARGET} PUBLIC backend_dev)
 

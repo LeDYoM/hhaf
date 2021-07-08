@@ -8,6 +8,7 @@ namespace haf::host
 Host::HostPrivate::HostPrivate(const int argc, char const* const argv[]) :
     argc_{argc},
     argv_{argv},
+    backend_factory_{nullptr, nullptr},
     config_{argc, argv},
     params_{parpar::create(argc, argv)}
 {}
@@ -53,6 +54,15 @@ AppState Host::HostPrivate::currentAppState() noexcept
     return currentHostedApplication().app_state;
 }
 
+bool Host::HostPrivate::initialize()
+{
+    backend_factory_ =
+        uptr<backend::BackendFactory, void (*)(haf::backend::BackendFactory*)>(
+            createBackendFactory(), destroyBackendFactory);
+
+    return loadApplication(configuredFirstApp()) && backend_factory_ != nullptr;
+}
+
 bool Host::HostPrivate::loopStep()
 {
     return systemController()->runStep();
@@ -81,7 +91,7 @@ bool Host::HostPrivate::update()
             }
             else
             {
-                systemController()->init(currentApp(), argc_, argv_);
+                systemController()->init(currentApp(), backend_factory_.get(), argc_, argv_);
 
                 DisplayLog::info(appDisplayNameAndVersion(*currentApp()),
                                  ": Starting execution...");

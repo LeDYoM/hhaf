@@ -32,8 +32,7 @@ struct SystemProvider::SystemProviderPrivate final
 {
     rptr<IApp> app_{nullptr};
     uptr<SharedDataSystem> shared_data_system_;
-    uptr<backend::BackendFactory, void (*)(haf::backend::BackendFactory*)>
-        backend_factory_{nullptr, nullptr};
+    BackendFactoryPtr backend_factory_{nullptr};
     uptr<Window> window_;
     uptr<ResourceManager> resource_manager_;
     uptr<InputSystem> input_system_;
@@ -179,12 +178,24 @@ void SystemProvider::fastInit(InitSystemOptions const& init_system_options)
 
 void SystemProvider::createBackend()
 {
-    p_->backend_factory_ =
-        uptr<backend::BackendFactory, void (*)(haf::backend::BackendFactory*)>(
-            createBackendFactory(), destroyBackendFactory);
+    //    p_->backend_factory_ =
+    //        uptr<backend::BackendFactory, void
+    //        (*)(haf::backend::BackendFactory*)>(
+    //            createBackendFactory(), destroyBackendFactory);
+}
+
+void SystemProvider::setBackend(
+    htps::rptr<backend::BackendFactory> backend_factory)
+{
+    LogAsserter::log_assert(backend_factory != nullptr,
+                            "nullptr backend_factory received");
+    LogAsserter::log_assert(p_->backend_factory_ == nullptr,
+                            "backend_factory_ was already initialized");
+    p_->backend_factory_ = backend_factory;
 }
 
 void SystemProvider::init(rptr<IApp> iapp,
+                          rptr<backend::BackendFactory> backend_factory,
                           int const argc,
                           char const* const argv[])
 {
@@ -193,7 +204,7 @@ void SystemProvider::init(rptr<IApp> iapp,
 
     LogAsserter::log_assert(
         iapp != nullptr, "Cannot create a SystemProvider with a nullptr app");
-    createBackend();
+    setBackend(backend_factory);
     p_->app_ = iapp;
 
     InitSystemOptions init_system_options;
@@ -223,7 +234,7 @@ void SystemProvider::terminate()
     p_->input_system_.reset();
     p_->window_.reset();
     p_->time_system_.reset();
-    p_->backend_factory_.reset();
+    p_->backend_factory_ = nullptr;
 }
 
 IApp& SystemProvider::app()

@@ -42,5 +42,7 @@ target_link_libraries(${CURRENT_TARGET} PRIVATE
   hlog
   agloader
   haf
+  backend
 )
+
 #export(TARGETS ${CURRENT_TARGET} FILE HostTarget.cmake EXPORT_LINK_INTERFACE_LIBRARIES)

@@ -5,6 +5,10 @@
 #include "systemprovider.hpp"
 #include <haf/include/system/isystemcontroller.hpp>
 
+namespace haf::backend
+{
+class BackendFactory;
+}
 namespace haf::sys
 {
 class SystemController final : public ISystemController, SystemProvider
@@ -14,6 +18,7 @@ public:
     ~SystemController() override;
 
     void init(htps::rptr<IApp> iapp,
+              htps::rptr<backend::BackendFactory> const backend_factory,
               int const argc,
               char const* const argv[]) override;
     bool runStep() override;

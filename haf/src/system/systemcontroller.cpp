@@ -17,12 +17,13 @@ SystemController::SystemController()  = default;
 SystemController::~SystemController() = default;
 
 void SystemController::init(rptr<IApp> iapp,
+                            rptr<backend::BackendFactory> backend_factory,
                             int const argc,
                             char const* const argv[])
 {
     LogAsserter::log_assert(
         iapp != nullptr, "Cannot create a SystemProvider with a nullptr app");
-    SystemProvider::init(std::move(iapp), argc, argv);
+    SystemProvider::init(std::move(iapp), backend_factory, argc, argv);
 }
 
 void SystemController::terminate()
