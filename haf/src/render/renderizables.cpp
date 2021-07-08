@@ -9,7 +9,8 @@ using namespace haf::scene;
 
 namespace haf::render
 {
-Renderizables::Renderizables(htps::rptr<TransformableSceneNode> scene_node) noexcept :
+Renderizables::Renderizables(
+    htps::rptr<TransformableSceneNode> scene_node) noexcept :
     scene_node_{std::move(scene_node)}
 {}
 
@@ -65,4 +66,4 @@ void Renderizables::addRenderizable(sptr<Renderizable> newElement)
 {
     render_nodes_.push_back(std::move(newElement));
 }
-}  // namespace haf::scene
+}  // namespace haf::render

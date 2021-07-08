@@ -21,10 +21,7 @@ struct SceneNodeFactory::SceneNodeFactoryPrivate
         constructors_[std::move(name)] = std::move(scene_cf);
     }
 
-    inline void erase(str name)
-    {
-        constructors_.erase(std::move(name));
-    }
+    inline void erase(str name) { constructors_.erase(std::move(name)); }
 
     inline SceneNodeConstructorFunction get(str name)
     {

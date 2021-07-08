@@ -35,7 +35,7 @@ public:
 
     /**
      * @brief Remove a given SceneNode
-     * 
+     *
      * @param element Element to remove
      * @return true The element existed and was removed
      * @return false The element was not on the group list
@@ -44,7 +44,7 @@ public:
 
     /**
      * @brief Remove a given SceneNode by name
-     * 
+     *
      * @param element Name of the element to remove
      * @return true The element existed and was removed
      * @return false The element was not on the group list
@@ -70,10 +70,10 @@ public:
 
     /**
      * @brief Get a SceneNode in the group looking for its name
-     * 
+     *
      * @param name Name to look for
      * @return htps::sptr<SceneNode> Pointer to the node with the
-     * specified name or nullptr if not found. 
+     * specified name or nullptr if not found.
      */
     htps::sptr<SceneNode> getByName(const htps::str& name) const;
 
@@ -131,7 +131,7 @@ public:
 
     /**
      * @brief Set a property value for each SceneNode object in the group
-     * 
+     *
      * @tparam Tag Name of the property
      * @tparam T Type of the property
      * @param value Value of the property
@@ -146,7 +146,7 @@ public:
     /**
      * @brief Set a property value for each SceneNode object in the group
      * that is convertible to NodeType
-     * 
+     *
      * @tparam NodeType Type to convert the SceneNode to
      * @tparam Tag Name of the property
      * @tparam T Type of the property

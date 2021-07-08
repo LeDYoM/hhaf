@@ -5,7 +5,7 @@
 
 namespace haf::scene
 {
-    class SceneController;
+class SceneController;
 }
 
 namespace haf::sys

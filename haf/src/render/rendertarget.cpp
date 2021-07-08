@@ -66,8 +66,9 @@ RenderTarget::RenderTarget(rptr<haf::backend::IRenderTarget> renderTarget) :
 
 RenderTarget::~RenderTarget() = default;
 
-void RenderTarget::render(rptr<render::RenderData const> const render_data_begin,
-                          rptr<render::RenderData const> const render_data_end)
+void RenderTarget::render(
+    rptr<render::RenderData const> const render_data_begin,
+    rptr<render::RenderData const> const render_data_end)
 {
     auto render_data_begin_temp{render_data_begin};
 

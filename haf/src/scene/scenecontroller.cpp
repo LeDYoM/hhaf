@@ -145,8 +145,9 @@ const sptr<Scene>& SceneController::currentScene() const noexcept
     return current_scene_;
 }
 
-bool SceneController::setSystemProviderInScene(htps::sptr<sys::SystemAccess> scene,
-                              rptr<sys::ISystemProvider> const isystem_provider)
+bool SceneController::setSystemProviderInScene(
+    htps::sptr<sys::SystemAccess> scene,
+    rptr<sys::ISystemProvider> const isystem_provider)
 {
     LogAsserter::log_assert(scene->isystem_provider_ == nullptr,
                             "You should not use this function"
@@ -174,8 +175,8 @@ void SceneController::startScene(sptr<Scene> scene)
         if (scene_manager_ != nullptr)
         {
             current_scene_->scene_manager_ = scene_manager_;
-            if (!(setSystemProviderInScene(current_scene_,
-                    &(scene_manager_->isystemProvider()))))
+            if (!(setSystemProviderInScene(
+                    current_scene_, &(scene_manager_->isystemProvider()))))
             {
                 DisplayLog::debug(
                     "Internal error: iSystemProvider was already set");

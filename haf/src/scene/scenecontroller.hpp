@@ -11,7 +11,7 @@
 
 namespace haf::sys
 {
-    class SystemAccess;
+class SystemAccess;
 }
 namespace haf::scene
 {
@@ -26,8 +26,9 @@ class SceneController final
 {
 public:
     void setSceneManager(htps::rptr<SceneManager> scene_manager);
-    bool setSystemProviderInScene(htps::sptr<sys::SystemAccess> scene,
-                              htps::rptr<sys::ISystemProvider> const isystem_provider);
+    bool setSystemProviderInScene(
+        htps::sptr<sys::SystemAccess> scene,
+        htps::rptr<sys::ISystemProvider> const isystem_provider);
 
     /**
      * @brief Switch to the next scene. For that to success, the current
@@ -78,7 +79,6 @@ public:
     {
         return startScene(T::StaticTypeName);
     }
-
 
     SceneNodeFactory& sceneNodeFactory() noexcept;
     const SceneNodeFactory& sceneNodeFactory() const noexcept;

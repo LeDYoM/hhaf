@@ -7,7 +7,7 @@
 
 namespace haf::render
 {
-    class Renderizable;
+class Renderizable;
 }
 
 namespace haf::scene

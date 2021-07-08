@@ -34,6 +34,6 @@ constexpr int sgn_sin(T const angle)
     return sgn(std::sin(angle));
 }
 
-}  // namespace haf::scene
+}  // namespace haf::render
 
 #endif

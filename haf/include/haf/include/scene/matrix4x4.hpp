@@ -21,7 +21,7 @@ public:
     /**
      * @brief Value "0" for the elements of this matrix
      */
-    static constexpr Scalar const One  = static_cast<Scalar>(1.0);
+    static constexpr Scalar const One = static_cast<Scalar>(1.0);
 
     /**
      * @brief Value "1" for the elements of this matrix

@@ -45,9 +45,9 @@ public:
 
     /**
      * @brief Ask if the system contains any data.
-     * 
-     * @return true 
-     * @return false 
+     *
+     * @return true
+     * @return false
      */
     [[nodiscard]] bool isEmpty();
     bool makeEmpty();

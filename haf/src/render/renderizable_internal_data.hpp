@@ -19,6 +19,6 @@ struct Renderizable::RenderizableInternalData
         color_modifier;
 };
 
-}  // namespace haf::scene
+}  // namespace haf::render
 
 #endif

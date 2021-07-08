@@ -10,7 +10,8 @@
 namespace haf::scene::nodes
 {
 
-class SceneNodeText : public TransformableSceneNode, public SceneNodeTextProperties
+class SceneNodeText : public TransformableSceneNode,
+                      public SceneNodeTextProperties
 {
     using BaseClass = TransformableSceneNode;
 

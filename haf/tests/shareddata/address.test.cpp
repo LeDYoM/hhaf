@@ -197,7 +197,7 @@ TEST_CASE("removefirst and removelast", "[haf][shdata][Address]")
         CHECK(address.size() == 5U);
         CHECK(address.first() == "");
         CHECK(address.last() == "");
-        
+
         address.removeFirst();
         CHECK(address.size() == 4U);
         CHECK(address.first() == "abc");
@@ -284,27 +284,10 @@ TEST_CASE("removefirst and removelast", "[haf][shdata][Address]")
 
 TEST_CASE("applyAddress", "[haf][shdata][Address][Object]")
 {
-    Object obj
-    {
-        { "key1",
-            {
-                { "subkey1", "subvalue1" }
-            }
-        },
-        { "abc",
-            {
-                { "subkey2", "subvalue2" }
-            }
-        },
-        { "abc",
-            Object{ {"def",
-                Object {
-                    { "subsubkey1", "subsubvalue" }
-                }
-            } }
-        }
-    };
-    
+    Object obj{{"key1", {{"subkey1", "subvalue1"}}},
+               {"abc", {{"subkey2", "subvalue2"}}},
+               {"abc", Object{{"def", Object{{"subsubkey1", "subsubvalue"}}}}}};
+
     {
         Address address("abc/def/");
         auto const result = objectFromAddress(address, obj);
@@ -346,27 +329,10 @@ TEST_CASE("applyAddress", "[haf][shdata][Address][Object]")
 
 TEST_CASE("ensureAddress", "[haf][shdata][Address][Object]")
 {
-    Object obj
-    {
-        { "key1",
-            {
-                { "subkey1", "subvalue1" }
-            }
-        },
-        { "abc",
-            {
-                { "subkey2", "subvalue2" }
-            }
-        },
-        { "abc",
-            Object{ {"def",
-                Object {
-                    { "subsubkey1", "subsubvalue" }
-                }
-            } }
-        }
-    };
-    
+    Object obj{{"key1", {{"subkey1", "subvalue1"}}},
+               {"abc", {{"subkey2", "subvalue2"}}},
+               {"abc", Object{{"def", Object{{"subsubkey1", "subsubvalue"}}}}}};
+
     {
         Address address("abc/def/");
         CHECK(ensureAddress(address, obj) != nullptr);

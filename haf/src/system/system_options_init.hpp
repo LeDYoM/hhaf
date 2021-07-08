@@ -5,7 +5,7 @@
 
 namespace haf::scene
 {
-    class SceneManager;
+class SceneManager;
 }
 
 namespace haf::sys
@@ -39,8 +39,7 @@ inline bool getInitSystem<scene::SceneManager>(
 }
 
 template <>
-inline bool getInitSystem<Window>(
-    InitSystemOptions const& init_system_options)
+inline bool getInitSystem<Window>(InitSystemOptions const& init_system_options)
 {
     return init_system_options.init_window_system;
 }
@@ -95,7 +94,7 @@ inline bool getInitSystem<SimulationSystem>(
 }
 
 template <typename T>
-inline void setInitSystem(InitSystemOptions &);
+inline void setInitSystem(InitSystemOptions&);
 
 template <>
 inline void setInitSystem<SharedDataSystem>(
@@ -105,8 +104,7 @@ inline void setInitSystem<SharedDataSystem>(
 }
 
 template <>
-inline void setInitSystem<TimeSystem>(
-    InitSystemOptions& init_system_options)
+inline void setInitSystem<TimeSystem>(InitSystemOptions& init_system_options)
 {
     init_system_options.init_time_system = true;
 }
@@ -119,15 +117,13 @@ inline void setInitSystem<scene::SceneManager>(
 }
 
 template <>
-inline void setInitSystem<Window>(
-    InitSystemOptions& init_system_options)
+inline void setInitSystem<Window>(InitSystemOptions& init_system_options)
 {
     init_system_options.init_window_system = true;
 }
 
 template <>
-inline void setInitSystem<InputSystem>(
-    InitSystemOptions& init_system_options)
+inline void setInitSystem<InputSystem>(InitSystemOptions& init_system_options)
 {
     init_system_options.init_input_system = true;
 }
@@ -140,22 +136,19 @@ inline void setInitSystem<ResourceManager>(
 }
 
 template <>
-inline void setInitSystem<RenderSystem>(
-    InitSystemOptions& init_system_options)
+inline void setInitSystem<RenderSystem>(InitSystemOptions& init_system_options)
 {
     init_system_options.init_render_system = true;
 }
 
 template <>
-inline void setInitSystem<RandomSystem>(
-    InitSystemOptions& init_system_options)
+inline void setInitSystem<RandomSystem>(InitSystemOptions& init_system_options)
 {
     init_system_options.init_random_system = true;
 }
 
 template <>
-inline void setInitSystem<FileSystem>(
-    InitSystemOptions& init_system_options)
+inline void setInitSystem<FileSystem>(InitSystemOptions& init_system_options)
 {
     init_system_options.init_file_system = true;
 }

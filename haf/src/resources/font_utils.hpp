@@ -8,7 +8,7 @@
 
 namespace haf::res
 {
-    class IFont;
+class IFont;
 }
 
 namespace haf::res
@@ -16,12 +16,12 @@ namespace haf::res
 class FontUtils
 {
 public:
-    FontUtils(res::IFont * const font);
+    FontUtils(res::IFont* const font);
     htps::vector<htps::Rectf32> getTextBoxes(htps::str const& text) const;
     htps::Rectf32 textSize(htps::str const& text) const;
 
 private:
-    res::IFont * const font_;
+    res::IFont* const font_;
 };
 
 }  // namespace haf::res

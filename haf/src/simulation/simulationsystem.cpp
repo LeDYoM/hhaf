@@ -85,7 +85,7 @@ void SimulationSystem::initialize(str const& simulation_input_file,
 #endif
 
         DisplayLog::info("Trying to load ", priv_->simulation_input_file_,
-                        " to read simulation data");
+                         " to read simulation data");
         SystemDataWrapperCreator dwc{*this};
         auto file_serializer = dwc.dataWrapper<FileSerializer>();
         auto const result    = file_serializer->deserializeFromFile(
@@ -95,15 +95,16 @@ void SimulationSystem::initialize(str const& simulation_input_file,
         {
             if (result == FileSerializer::Result::FileIOError)
             {
-                DisplayLog::debug("Simulation file ", priv_->simulation_input_file_,
-                                " not found");
+                DisplayLog::debug("Simulation file ",
+                                  priv_->simulation_input_file_, " not found");
                 LogAsserter::log_assert(
-                    false, "If simulation file is set and not found is an error");
+                    false,
+                    "If simulation file is set and not found is an error");
             }
             else if (result == FileSerializer::Result::ParsingError)
             {
                 DisplayLog::error("File ", priv_->simulation_input_file_,
-                                " found but contains invalid format.");
+                                  " found but contains invalid format.");
             }
             else
             {

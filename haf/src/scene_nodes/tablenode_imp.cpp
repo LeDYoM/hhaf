@@ -23,8 +23,10 @@ void TableNodeImp::update()
     {
         htps::vector2df const& cell_size{cellSize()};
         for_each_table_innerSceneNode(
-            [this, cell_size](htps::vector2dst const& p, ContainedType_t& node) {
-                node->prop<Position>().set(cell_size * static_cast<htps::vector2df>(p));
+            [this, cell_size](htps::vector2dst const& p,
+                              ContainedType_t& node) {
+                node->prop<Position>().set(cell_size *
+                                           static_cast<htps::vector2df>(p));
             });
     }
 }
@@ -61,8 +63,7 @@ void TableNodeImp::setInnerSceneNodeAt(htps::vector2dst const index,
 }
 
 void TableNodeImp::for_each_table_innerSceneNode(
-    htps::function<void(htps::vector2dst const&, ContainedType_t&)>
-        action)
+    htps::function<void(htps::vector2dst const&, ContainedType_t&)> action)
 {
     for (htps::size_type x{0}; x < inner_nodes_.size(); ++x)
     {

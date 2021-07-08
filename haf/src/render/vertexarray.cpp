@@ -13,7 +13,7 @@ VertexArray::VertexArray(const PrimitiveType type) noexcept :
 {}
 
 VertexArray::VertexArray(const PrimitiveType type,
-                   const htps::size_type vertexCount) noexcept :
+                         const htps::size_type vertexCount) noexcept :
     m_vertices(vertexCount), m_primitiveType{type}
 {}
 
@@ -59,4 +59,4 @@ void VertexArray::moveY(const f32 yOffset) noexcept
     for (auto& v : m_vertices)
         v.position.y += yOffset;
 }
-}  // namespace haf::scene
+}  // namespace haf::render

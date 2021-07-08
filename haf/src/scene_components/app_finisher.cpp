@@ -8,5 +8,4 @@
 #include "system/get_system.hpp"
 
 namespace haf::scene
-{
-}  // namespace haf::scene
+{}  // namespace haf::scene

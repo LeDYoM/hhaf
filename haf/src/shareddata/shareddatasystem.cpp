@@ -27,15 +27,13 @@ bool SharedDataSystem::makeEmpty()
     return false;
 }
 
-bool SharedDataSystem::store(Address const& address,
-                             IShareable const& data)
+bool SharedDataSystem::store(Address const& address, IShareable const& data)
 {
     if (address.isFinal())
     {
         Object temp;
 
-        auto * result_ensure_address =
-            ensureAddress(address, data_object_);
+        auto* result_ensure_address = ensureAddress(address, data_object_);
 
         if (result_ensure_address != nullptr)
         {

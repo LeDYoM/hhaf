@@ -40,18 +40,18 @@ inline sptr<T> loadResource(backend::IResourceFactory<V>& factory,
                             FileSystem& fileSystem,
                             const str& fileName)
 {
-//    if constexpr (UseInternalFileSystem)
-//    {
-        RawMemory data(fileSystem.loadBinaryFile(fileName));
+    //    if constexpr (UseInternalFileSystem)
+    //    {
+    RawMemory data(fileSystem.loadBinaryFile(fileName));
 
-        // Prototype / check
-        return msptr<T>(factory.loadFromRawMemory(&data));
-//! Old "load from disk" code. Maintained here just in case
-//    }
-//    else
-//    {
-//        return msptr<T>(factory.loadFromFile(fileName));
-//    }
+    // Prototype / check
+    return msptr<T>(factory.loadFromRawMemory(&data));
+    //! Old "load from disk" code. Maintained here just in case
+    //    }
+    //    else
+    //    {
+    //        return msptr<T>(factory.loadFromFile(fileName));
+    //    }
 }
 
 template <typename T>
@@ -68,10 +68,10 @@ inline auto get_or_default(ResourceList<sptr<T>> const& container,
 
 template <typename V, typename T>
 sptr<T> get_or_add(backend::IResourceFactory<V>& factory,
-                          ResourceList<sptr<T>>& container,
-                          FileSystem& fileSystem,
-                          const str& rid,
-                          const str& fileName)
+                   ResourceList<sptr<T>>& container,
+                   FileSystem& fileSystem,
+                   const str& rid,
+                   const str& fileName)
 {
     auto internal_resource(get_or_default(container, rid));
 
@@ -85,8 +85,7 @@ sptr<T> get_or_add(backend::IResourceFactory<V>& factory,
         // Not found, try to load it.
         DisplayLog::info(rid, " not found on resource list.");
         DisplayLog::info("Going to load file: ", fileName);
-        sptr<T> resource(loadResource<T>(
-            factory, fileSystem, fileName));
+        sptr<T> resource(loadResource<T>(factory, fileSystem, fileName));
         container.emplace_back(rid, resource);
         return resource;
     }

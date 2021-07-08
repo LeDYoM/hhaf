@@ -51,8 +51,9 @@ Rects32 textureFillQuad(sptr<res::ITexture const> const& texture) noexcept
                    : Rects32{};
 }
 
-vector2df normalizeInBox(vector2df const& position,
-                         Renderizable::RenderizableInternalData const& data) noexcept
+vector2df normalizeInBox(
+    vector2df const& position,
+    Renderizable::RenderizableInternalData const& data) noexcept
 {
     const f32 xratio{(position.x - data.box.left) / data.box.width};
     const f32 yratio{(position.y - data.box.top) / data.box.height};
@@ -113,7 +114,7 @@ void updateGeometry(BasicVertexArray& vertices,
             initDataVertexPerFigureAndNumPoints(data.figType, data.pointCount)
                 .second);
         const auto baseAngle{PiM2Constant<f64> /
-                            static_cast<f64>(data.pointCount)};
+                             static_cast<f64>(data.pointCount)};
         const auto base_position{data.box.leftTop() + radius};
 
         switch (data.figType)

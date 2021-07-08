@@ -27,9 +27,10 @@ struct ReplayData : public shdata::IShareable
     constexpr static char DataBufferName[] = "replay_data";
     constexpr static char InputDataName[]  = "input_data";
 
-    friend const htps::Object& operator>>(const htps::Object& obj, ReplayData& replay_data);
+    friend const htps::Object& operator>>(const htps::Object& obj,
+                                          ReplayData& replay_data);
     friend htps::Object& operator<<(htps::Object& obj,
-                                const ReplayData& replay_data);
+                                    const ReplayData& replay_data);
 
     bool serialize(htps::Object& obj) const override
     {
@@ -63,8 +64,7 @@ const htps::Object& operator>>(const htps::Object& obj, ReplayData& replay_data)
     return obj;
 }
 
-htps::Object& operator<<(htps::Object& obj,
-                                const ReplayData& replay_data)
+htps::Object& operator<<(htps::Object& obj, const ReplayData& replay_data)
 {
     obj.set(ReplayData::DataBufferName, replay_data.data_buffer_);
     obj.set(ReplayData::InputDataName, replay_data.simulation_actions_);

@@ -21,16 +21,16 @@ class RenderData final
 public:
     constexpr RenderData(VertexArray const& va,
                          scene::Matrix4x4 const& transform,
-                         res::ITexture const * const texture,
-                         res::IShader const * const shader) noexcept :
+                         res::ITexture const* const texture,
+                         res::IShader const* const shader) noexcept :
         vArray{va}, transform{transform}, texture{texture}, shader{shader}
     {}
 
     VertexArray const& vArray;
     scene::Matrix4x4 const& transform;
-    res::ITexture const * texture;
-    res::IShader const * shader;
+    res::ITexture const* texture;
+    res::IShader const* shader;
 };
-}  // namespace haf::scene
+}  // namespace haf::render
 
 #endif

@@ -25,8 +25,8 @@ public:
                                  const htps::u32 second,
                                  const htps::u32 characterSize) const     = 0;
     virtual htps::sptr<ITexture> getTexture(
-        const htps::u32 characterSize) const                              = 0;
-    virtual htps::sptr<IFont> font(const htps::u32 charactersize)         = 0;
+        const htps::u32 characterSize) const                      = 0;
+    virtual htps::sptr<IFont> font(const htps::u32 charactersize) = 0;
 };
 }  // namespace haf::res
 

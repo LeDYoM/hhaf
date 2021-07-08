@@ -16,6 +16,7 @@ public:
 
     bool registerKey(KeyIndex const key_index, Key const key) noexcept;
     Key keyForIndex(KeyIndex const key_index) const noexcept;
+
 private:
     htps::vector<Key> keys_;
 };

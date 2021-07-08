@@ -49,8 +49,8 @@ public:
         Animation::ActionFunc endAction = {})
     {
         auto anim = htps::muptr<IPropertyAnimation<PropertyType, PropertyTag>>(
-            attachedNode()->subsystems().dataWrapper<time::Timer>(), std::move(time),
-            property, std::move(start), std::move(dest),
+            attachedNode()->subsystems().dataWrapper<time::Timer>(),
+            std::move(time), property, std::move(start), std::move(dest),
             std::move(animation_direction), std::move(endAction));
 
         addAnimation(std::move(anim));

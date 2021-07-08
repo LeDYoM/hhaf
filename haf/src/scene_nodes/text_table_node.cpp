@@ -4,6 +4,4 @@
 using namespace htps;
 
 namespace haf::scene::nodes
-{
-
-}  // namespace haf::scene::nodes
+{}  // namespace haf::scene::nodes

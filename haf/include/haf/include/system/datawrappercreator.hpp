@@ -28,7 +28,7 @@ public:
 
     /**
      * @brief Fetch a specific type of data wrapper.
-     * 
+     *
      * @tparam T Concrete type of the data wrapper.
      * @return htps::uptr<T> containing the data wrapper.
      */

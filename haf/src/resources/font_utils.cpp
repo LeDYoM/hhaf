@@ -18,7 +18,7 @@ vector<Rectf32> FontUtils::getTextBoxes(str const& text) const
     }
 
     // Take it into account for multilines
-//    const f32 vspace{font_->getLineSpacing()};
+    //    const f32 vspace{font_->getLineSpacing()};
     f32 x{0.f};
     f32 y{0.0F};  // static_cast<f32>(characterSize)};
 
@@ -32,11 +32,9 @@ vector<Rectf32> FontUtils::getTextBoxes(str const& text) const
         x += font_->getKerning(prevChar, curChar);
         prevChar = curChar;
 
-        Rectf32 letterBox{font_->getBounds(curChar) +
-                                vector2df{x, y}};
+        Rectf32 letterBox{font_->getBounds(curChar) + vector2df{x, y}};
         // TODO: This is because the SFML bug printing at 0.
         letterBox += vector2df{0.0F, 50.0F};
-
 
         result.emplace_back(std::move(letterBox));
 

@@ -84,7 +84,7 @@ public:
 
     /**
      * @brief Check if an address is relative (it does not start with separator)
-     * 
+     *
      * @return true If the address is not empty AND starts with a separator
      * @return false Otherwise
      */
@@ -92,7 +92,7 @@ public:
 
     /**
      * @brief Check if an address is final (it ends with separator)
-     * 
+     *
      * @return true If the address is not empty AND ends with a separator
      * @return false Otherwise
      */
@@ -101,7 +101,7 @@ public:
     /**
      * @brief Opposite of isAbsolute()
      * @see isAbsolute
-     * 
+     *
      * @return true  not absolute
      * @return false absolute
      */
@@ -110,7 +110,7 @@ public:
     /**
      * @brief Opposite of isFinal()
      * @see isFinal
-     * 
+     *
      * @return true not relative
      * @return false relative
      */
@@ -126,7 +126,7 @@ private:
 
 /**
  * @brief Get a copy of an @b htps::Object contained at that address
- * 
+ *
  * @param address Address to retrieve
  * @param object Object where to search
  * @return htps::pair<bool, htps::Object> In the returned pair, the first
@@ -134,7 +134,7 @@ private:
  * @b htps::Object . If first is false, the second value is undefined.
  */
 htps::pair<bool, htps::Object> objectFromAddress(Address const& address,
-                                            htps::Object const& object);
+                                                 htps::Object const& object);
 
 /**
  * @brief Check that an @b Address exists in an @b htps::Object and retrieve
@@ -146,7 +146,7 @@ htps::pair<bool, htps::Object> objectFromAddress(Address const& address,
  * @return htps::Object* Pointer to the old or new Object. Might be nullptr if
  * for any reason it cannot be created.
  */
-htps::Object *ensureAddress(Address const& address, htps::Object& object);
+htps::Object* ensureAddress(Address const& address, htps::Object& object);
 
 }  // namespace haf::shdata
 

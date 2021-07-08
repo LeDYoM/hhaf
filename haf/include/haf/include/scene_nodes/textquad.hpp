@@ -10,6 +10,7 @@ namespace haf::scene::nodes
 class TextQuad : public TextTableNode
 {
     using BaseClass = TextTableNode;
+
 public:
     using BaseClass::BaseClass;
     using BaseClass::prop;

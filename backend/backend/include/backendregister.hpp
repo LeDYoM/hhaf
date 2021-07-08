@@ -6,8 +6,10 @@
 #include <backend_dev/include/iresourcefactories.hpp>
 #include <backend_dev/include/ibackendregister.hpp>
 
-using p_initBackendClient   = bool (*)(haf::backend::client::IBackendRegister* const);
-using p_finishBackendClient = bool (*)(haf::backend::client::IBackendRegister* const);
+using p_initBackendClient =
+    bool (*)(haf::backend::client::IBackendRegister* const);
+using p_finishBackendClient =
+    bool (*)(haf::backend::client::IBackendRegister* const);
 
 namespace haf::backend
 {

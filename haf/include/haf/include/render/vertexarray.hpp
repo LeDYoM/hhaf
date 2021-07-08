@@ -97,6 +97,6 @@ private:
     BasicVertexArray m_vertices;
     PrimitiveType m_primitiveType{PrimitiveType::Triangles};
 };
-}  // namespace haf::scene
+}  // namespace haf::render
 
 #endif

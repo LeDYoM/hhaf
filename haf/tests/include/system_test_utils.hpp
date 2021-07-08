@@ -63,8 +63,8 @@ private:
 };
 
 using TestSharedDataSystem = TestSystem<haf::sys::SharedDataSystem>;
-using TestTimeSystem = TestSystem<haf::sys::TimeSystem>;
-using TestSceneManager = TestSystem<haf::scene::SceneManager>;
+using TestTimeSystem       = TestSystem<haf::sys::TimeSystem>;
+using TestSceneManager     = TestSystem<haf::scene::SceneManager>;
 
 template <typename T>
 htps::uptr<T> makeTestSystem()

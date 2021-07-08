@@ -23,7 +23,7 @@ namespace haf::render
  */
 htps::vector2dd getPositionFromAngleAndRadius(FigType_t const fig_type,
                                               htps::f64 const angle,
-                                              htps::vector2df const & radius);
+                                              htps::vector2df const& radius);
 
 /**
  * @brief Get the init data for a vertex array
@@ -38,7 +38,7 @@ initDataVertexPerFigureAndNumPoints(FigType_t const fig_type,
                                     htps::size_type const num_points) noexcept;
 /**
  * @brief Get the rectange for a given texture
- * 
+ *
  * @param texture Texture where to extract the Rect
  * @return Rects32 Quad around the texture if it is not nullptr
  */
@@ -49,9 +49,8 @@ htps::vector2df normalizeInBox(
     htps::vector2df const& position,
     Renderizable::RenderizableInternalData const& data) noexcept;
 
-void updateColorForVertex(
-    Renderizable::RenderizableInternalData const& data,
-    BasicVertexArray::value_type& vertex);
+void updateColorForVertex(Renderizable::RenderizableInternalData const& data,
+                          BasicVertexArray::value_type& vertex);
 
 void updateColors(BasicVertexArray& vertices,
                   Renderizable::RenderizableInternalData const& data);

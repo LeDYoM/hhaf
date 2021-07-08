@@ -8,7 +8,9 @@ namespace haf::render
 {
 struct Vertex final
 {
-    constexpr Vertex(htps::vector2df p, scene::Color c, htps::vector2df tc) noexcept :
+    constexpr Vertex(htps::vector2df p,
+                     scene::Color c,
+                     htps::vector2df tc) noexcept :
         position{std::move(p)}, color{std::move(c)}, texCoords{std::move(tc)}
     {}
 
@@ -27,6 +29,6 @@ struct Vertex final
     htps::vector2df texCoords{};
 };
 
-}  // namespace haf::scene
+}  // namespace haf::render
 
 #endif

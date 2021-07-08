@@ -143,8 +143,8 @@ TEST_CASE("SharedDataSystem", "[haf][shareddatasystem][Object][Address]")
 
             {
                 ShareableTestData test_store_data_result;
-                bool const result =
-                    sh_system.retrieve(Address(TAddrStr), test_store_data_result);
+                bool const result = sh_system.retrieve(Address(TAddrStr),
+                                                       test_store_data_result);
 
                 CHECK(result);
                 CHECK(test_store_data_result.a == 42);
@@ -154,8 +154,8 @@ TEST_CASE("SharedDataSystem", "[haf][shareddatasystem][Object][Address]")
 
             {
                 ShareableTestData test_store_data_result;
-                bool const result =
-                    sh_system.retrieve(Address(TAddrStr), test_store_data_result);
+                bool const result = sh_system.retrieve(Address(TAddrStr),
+                                                       test_store_data_result);
 
                 CHECK(result);
                 CHECK(test_store_data_result.a == 42);

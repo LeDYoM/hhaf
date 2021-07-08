@@ -19,7 +19,6 @@ bool KeyManager::registerKey(KeyIndex const key_index, Key const key) noexcept
         std::fill(&keys_[current_size], std::end(keys_), Key::Unknown);
     }
 
-
     if (keys_[key_index] == Key::Unknown)
     {
         // The slot is free to register
@@ -28,7 +27,6 @@ bool KeyManager::registerKey(KeyIndex const key_index, Key const key) noexcept
     }
 
     return false;
-
 }
 
 Key KeyManager::keyForIndex(KeyIndex const key_index) const noexcept

@@ -161,7 +161,7 @@ htps::Object* ensureAddress(Address const& address, htps::Object& object)
 {
     if (address.isFinal())
     {
-        Object * result{&object};
+        Object* result{&object};
         size_type size{address.size()};
 
         size_type index_start{0U};

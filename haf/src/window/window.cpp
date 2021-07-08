@@ -106,8 +106,8 @@ bool Window::create(uptr<win::WindowProperties> window_properties)
         msptr<RenderTarget>(priv_->m_backendWindow->renderTarget());
 
     // Also take the input driver.
-    priv_->input_driver_ = msptr<input::InputDriver>(
-        priv_->m_backendWindow->inputDriver());
+    priv_->input_driver_ =
+        msptr<input::InputDriver>(priv_->m_backendWindow->inputDriver());
     DisplayLog::debug("Window driver info: ", bw.info());
     DisplayLog::debug("Window settings: ", bw.settingsInfo());
     return true;
@@ -125,7 +125,8 @@ bool Window::preLoop()
         fps_counter.lastTimeFps = eMs;
         fps_counter.lastFps     = fps_counter.currentFps;
         fps_counter.currentFps  = 0U;
-        bw.setWindowTitle(make_str(priv_->title_, " FPS:", fps_counter.lastFps));
+        bw.setWindowTitle(
+            make_str(priv_->title_, " FPS:", fps_counter.lastFps));
     }
     ++(fps_counter.currentFps);
     priv_->m_renderTarget->clear();

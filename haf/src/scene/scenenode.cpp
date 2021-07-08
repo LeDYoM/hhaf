@@ -26,7 +26,6 @@ SceneNode::SceneNode(rptr<SceneNode> parent, str name) :
     p_{make_pimplp<SceneNodePrivate>()}
 {}
 
-
 SceneNode::~SceneNode() = default;
 
 void SceneNode::clearAll()

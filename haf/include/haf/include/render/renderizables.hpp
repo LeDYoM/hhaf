@@ -22,7 +22,8 @@ public:
      * @brief Construct a new Renderizables object with a parent node
      * @param scene_node Node to be used as a parent
      */
-    explicit Renderizables(htps::rptr<scene::TransformableSceneNode> scene_node) noexcept;
+    explicit Renderizables(
+        htps::rptr<scene::TransformableSceneNode> scene_node) noexcept;
 
     /**
      * @brief Create a Renderizable object
@@ -63,8 +64,7 @@ public:
     }
 
     void for_each_node(
-        htps::function<void(const htps::sptr<Renderizable>&)> action)
-        const;
+        htps::function<void(const htps::sptr<Renderizable>&)> action) const;
 
     void updateRenderizables();
 

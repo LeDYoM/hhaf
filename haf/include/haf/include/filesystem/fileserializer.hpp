@@ -58,7 +58,7 @@ public:
     }
 
     Result serializeToFile(const Path& file_name,
-                            const shdata::IShareable& data);
+                           const shdata::IShareable& data);
 };
 
 }  // namespace haf::sys

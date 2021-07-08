@@ -37,7 +37,7 @@ public:
     ~IComponentBase() override {}
 };
 
-using IComponent = IComponentBase<true>;
+using IComponent       = IComponentBase<true>;
 using IStaticComponent = IComponentBase<true>;
 
 template <typename T1, typename T2>

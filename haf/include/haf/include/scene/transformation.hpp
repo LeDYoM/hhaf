@@ -23,12 +23,13 @@ public:
     virtual ~Transformation();
     Transformation(Transformation const&) = delete;
     Transformation& operator=(Transformation const&) = delete;
-    Transformation(Transformation &&) noexcept = default;
-    Transformation& operator=(Transformation &&) noexcept = default;
+    Transformation(Transformation&&) noexcept        = default;
+    Transformation& operator=(Transformation&&) noexcept = default;
 
     bool updateTransformIfNecessary() noexcept;
 
     Matrix4x4 const& matrix() noexcept { return transform_; }
+
 private:
     void updateTransform();
 

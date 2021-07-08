@@ -4,7 +4,6 @@
 
 #include <haf/include/scene/scenenode.hpp>
 
-
 namespace haf::time
 {
 TimePoint TimeView::now() const

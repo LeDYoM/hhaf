@@ -21,8 +21,8 @@ TEST_CASE("SharedDataSystemViewer::SharedDataSystemViewer",
     {
         auto shared_data_wrapper{
             dwc.dataWrapper<SharedDataViewer<ShareableTestData>>()};
-        auto const retrieve_result = shared_data_wrapper->view(
-            ShareableTestData::address());
+        auto const retrieve_result =
+            shared_data_wrapper->view(ShareableTestData::address());
 
         CHECK(retrieve_result == nullptr);
     }

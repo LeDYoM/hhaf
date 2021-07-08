@@ -33,7 +33,7 @@ struct Renderizable::RenderizablePrivate
                         rptr<res::ITexture> texture,
                         rptr<res::IShader> shader,
                         rptr<Renderizable const> i_this) :
-                        m_parent{parent},
+        m_parent{parent},
         vertices_{initDataVertexPerFigureAndNumPoints(figure_type,
                                                       initial_point_count)},
         render_data_{vertices_, matrix, texture, shader},
@@ -146,4 +146,4 @@ void Renderizable::update()
     }
 }
 
-}  // namespace haf::scene
+}  // namespace haf::render

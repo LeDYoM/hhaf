@@ -6,8 +6,7 @@
 namespace haf::scene
 {
 Transformation::Transformation() noexcept :
-    TransformationProperties({}, {}, {1U, 1U}, {}),
-    transform_{}
+    TransformationProperties({}, {}, {1U, 1U}, {}), transform_{}
 {}
 
 Transformation::~Transformation() = default;

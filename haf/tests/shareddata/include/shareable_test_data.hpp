@@ -15,7 +15,10 @@ public:
 
     ~ShareableTestData() override = default;
 
-    static haf::shdata::Address address() { return haf::shdata::Address{"/test/data/"}; }
+    static haf::shdata::Address address()
+    {
+        return haf::shdata::Address{"/test/data/"};
+    }
 
     bool serialize(htps::Object& obj) const override
     {

@@ -11,10 +11,9 @@ TEST_CASE("haf::scene::SceneManager", "[haf][scene][scenemanager]")
     using namespace haf;
     using namespace haf::scene;
 
-    auto test_scene_manager = makeTestSystem<TestSceneManager>();
-    SceneManager& scene_manager =
-        test_scene_manager->system<SceneManager>();
+    auto test_scene_manager     = makeTestSystem<TestSceneManager>();
+    SceneManager& scene_manager = test_scene_manager->system<SceneManager>();
 
     (void)(scene_manager);
-//    CHECK(&scene_manager != nullptr);
+    //    CHECK(&scene_manager != nullptr);
 }
