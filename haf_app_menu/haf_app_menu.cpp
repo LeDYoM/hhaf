@@ -26,7 +26,9 @@ void HafAppMenu::onInit(AppInitializer& app_initializer)
     //    configureScenes(data_wrapper_creator);
 }
 
-void HafAppMenu::onFinish(scene::AppFinisher&)
-{}
+void HafAppMenu::onFinish(scene::AppFinisher& finisher)
+{
+    finisher.NextApp = "Zoper";
+}
 
 }  // namespace haf::app_menu

@@ -7,6 +7,11 @@
 
 namespace haf::scene
 {
+/**
+ * @brief @b sys::IDataWrapper to be used as the first subsystem
+ * that an app will receive. It contains the necessary methods to
+ * initialize the app and perform some actions in the system
+ */
 class AppInitializer : public sys::IDataWrapper
 {
 public:
