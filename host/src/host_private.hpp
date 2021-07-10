@@ -44,16 +44,9 @@ public:
     AppLoader app_loader;
     HostedAppGroup app_group_;
 
-    HostedApplication& currentHostedApplication();
-    HostedApplication const& currentHostedApplication() const;
-    rptr<IApp const> currentApp() const;
-    rptr<IApp> currentApp();
-
     bool initialize();
 
     str configuredFirstApp() const;
-
-    AppState currentAppState() noexcept;
 
     bool loopStep();
 

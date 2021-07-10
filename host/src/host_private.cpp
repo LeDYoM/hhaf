@@ -13,29 +13,9 @@ Host::HostPrivate::HostPrivate(const int argc, char const* const argv[]) :
     params_{parpar::create(argc, argv)}
 {}
 
-HostedApplication& Host::HostPrivate::currentHostedApplication()
-{
-    return app_group_.currentHostedApplication();
-}
-
-HostedApplication const& Host::HostPrivate::currentHostedApplication() const
-{
-    return app_group_.currentHostedApplication();
-}
-
-rptr<IApp> Host::HostPrivate::currentApp()
-{
-    return currentHostedApplication().managed_app_.app;
-}
-
 str Host::HostPrivate::configuredFirstApp() const
 {
     return config_.configuredFirstApp();
-}
-
-rptr<IApp const> Host::HostPrivate::currentApp() const
-{
-    return currentHostedApplication().managed_app_.app;
 }
 
 rptr<sys::ISystemController> Host::HostPrivate::systemController() noexcept
@@ -49,18 +29,15 @@ rptr<sys::ISystemController const> Host::HostPrivate::systemController()
     return system_loader_.systemController();
 }
 
-AppState Host::HostPrivate::currentAppState() noexcept
-{
-    return currentHostedApplication().app_state;
-}
-
 bool Host::HostPrivate::initialize()
 {
+    // Initialize and create the backend factory
     backend_factory_ =
         uptr<backend::BackendFactory, void (*)(haf::backend::BackendFactory*)>(
             createBackendFactory(), destroyBackendFactory);
 
-    return loadApplication(configuredFirstApp()) && backend_factory_ != nullptr;
+    // Return the status of loading the first application
+    return backend_factory_ != nullptr && loadApplication(configuredFirstApp());
 }
 
 bool Host::HostPrivate::loopStep()
@@ -70,31 +47,33 @@ bool Host::HostPrivate::loopStep()
 
 bool Host::HostPrivate::update()
 {
-    switch (currentAppState())
+    auto& app = app_group_.currentHostedApplication();
+
+    switch (app.app_state)
     {
         case AppState::NotInitialized:
             break;
         case AppState::ReadyToStart:
         {
             DisplayLog::info("Starting initialization of new App...");
-            app_group_.setCurrentAppState(AppState::Executing);
+            app.app_state     = AppState::Executing;
             auto const result = system_loader_.loadFunctions();
             if (result != SystemControllerLoader::ResultType::Success)
             {
                 DisplayLog::error("Cannot load haf system!");
-                app_group_.setCurrentAppState(AppState::ReadyToTerminate);
+                app.app_state = AppState::ReadyToTerminate;
             }
             else if (!system_loader_.create())
             {
                 DisplayLog::error("Cannot create haf system!");
-                app_group_.setCurrentAppState(AppState::ReadyToTerminate);
+                app.app_state = AppState::ReadyToTerminate;
             }
             else
             {
-                systemController()->init(currentApp(), backend_factory_.get(),
-                                         argc_, argv_);
+                systemController()->init(app.managed_app_.app,
+                                         backend_factory_.get(), argc_, argv_);
 
-                DisplayLog::info(appDisplayNameAndVersion(*currentApp()),
+                DisplayLog::info(appDisplayNameAndVersion(app),
                                  ": Starting execution...");
             }
         }
@@ -103,16 +82,16 @@ bool Host::HostPrivate::update()
         {
             if (loopStep())
             {
-                app_group_.setCurrentAppState(AppState::ReadyToTerminate);
-                DisplayLog::info(appDisplayNameAndVersion(*currentApp()), ": ",
-                                 " is now ready to terminate");
+                app.app_state = AppState::ReadyToTerminate;
+                DisplayLog::info(appDisplayNameAndVersion(app),
+                                 ": is now ready to terminate");
             }
         }
         break;
         case AppState::ReadyToTerminate:
-            DisplayLog::info(appDisplayNameAndVersion(*currentApp()),
+            DisplayLog::info(appDisplayNameAndVersion(app),
                              ": started termination");
-            app_group_.setCurrentAppState(AppState::Terminated);
+            app.app_state = AppState::Terminated;
             systemController()->terminate();
             system_loader_.destroy();
             return true;

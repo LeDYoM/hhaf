@@ -22,4 +22,14 @@ str appDisplayNameAndVersion(const IApp& app)
                     app.getSubVersion(), ".", app.getPatch(), ")");
 }
 
+str appDisplayNameAndVersion(ManagedApp const& app)
+{
+    return appDisplayNameAndVersion(*(app.app));
+}
+
+str appDisplayNameAndVersion(HostedApplication const& app)
+{
+    return appDisplayNameAndVersion(app.managed_app_);
+}
+
 }  // namespace haf::host

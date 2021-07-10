@@ -24,7 +24,9 @@ public:
 bool operator==(HostedApplication const& lhs,
                 HostedApplication const& rhs) noexcept;
 
-htps::str appDisplayNameAndVersion(const IApp& app);
+htps::str appDisplayNameAndVersion(IApp const& app);
+htps::str appDisplayNameAndVersion(ManagedApp const& app);
+htps::str appDisplayNameAndVersion(HostedApplication const& app);
 
 }  // namespace haf::host
 
