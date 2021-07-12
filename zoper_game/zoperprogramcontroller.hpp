@@ -3,17 +3,20 @@
 
 #include <hosted_app/include/iapp.hpp>
 #include <htypes/include/types.hpp>
-#include <haf_user/include/iapp_with_default_app_versioning_system.hpp>
-#include "app_version.hpp"
 
 namespace zoper
 {
-class ZoperProgramController final
-    : public haf::user::IAppWithDefaultVersionSystem<cl_version::AppVersion>
+class ZoperProgramController final : public haf::IApp
 {
 public:
     void onInit(haf::scene::AppInitializer& app_initializer) override;
     void onFinish(haf::scene::AppFinisher& app_finisher) override;
+
+    htps::u16 getVersion() const noexcept override;
+    htps::u16 getSubVersion() const noexcept override;
+    htps::u16 getPatch() const noexcept override;
+    htps::u16 getTweak() const noexcept override;
+    htps::str getName() const noexcept override;
 
 private:
     void configureScenes(haf::scene::AppInitializer& app_initializer);

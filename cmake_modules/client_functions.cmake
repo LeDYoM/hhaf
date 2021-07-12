@@ -12,6 +12,14 @@ function(build_client_library)
   configure_file(app_version.hpp.in app_version.hpp @ONLY)
   include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
+  # Set defines for project versions using standard cmake nomenclature
+  target_compile_definitions(${CURRENT_TARGET} PRIVATE
+    ${CURRENT_TARGET}_VERSION=${PROJECT_VERSION_MAJOR}
+    ${CURRENT_TARGET}_SUBVERSION=${PROJECT_VERSION_MINOR}
+    ${CURRENT_TARGET}_PATCH=${PROJECT_VERSION_PATCH}
+    ${CURRENT_TARGET}_TWEAK=${PROJECT_VERSION_TWEAK}
+  )
+
   # Copy data if data directory has been passed.
   if(NOT ${CL_BUILD_DATA_SOURCE} STREQUAL "")
     message(${CL_BUILD_DATA_SOURCE})
