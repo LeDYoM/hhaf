@@ -81,6 +81,7 @@ add_subdirectory(backend_sfml)
 add_subdirectory(zoper_game)
 
 add_subdirectory(haf_app_menu)
+add_subdirectory(haf_app_middleware)
 
 #if(BUILD_PACKAGES)
 #  generate_package("${hhaf_core_module_list}")
