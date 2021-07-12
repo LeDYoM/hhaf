@@ -6,8 +6,8 @@
 
 namespace haf::user
 {
-template <typename VersionClass>
-class IAppWithDefaultVersionSystem : public haf::IApp
+template <typename VersionClass, typename Base = haf::IApp>
+class IAppWithDefaultVersionSystem : public Base
 {
 public:
     htps::u16 getVersion() const noexcept override

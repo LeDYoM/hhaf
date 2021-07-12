@@ -6,7 +6,6 @@ set (CURRENT_TARGET ${PROJECT_NAME})
 set(include_dir ${PROJECT_SOURCE_DIR}/hosted_app/include)
 set(headers 
     ${include_dir}/iapp.hpp
-    ${include_dir}/iapp_with_host_access.hpp
     )
 
 build_lib_component(HEADERS_ONLY
