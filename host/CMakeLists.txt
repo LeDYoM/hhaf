@@ -31,11 +31,6 @@ set(sources
 build_lib_component(HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
                     ${sources})
 
-configure_file(
-  "${PROJECT_SOURCE_DIR}/config/host_version.hpp.in"
-  "${PROJECT_BINARY_DIR}/host_version.hpp" @ONLY)
-target_include_directories(${CURRENT_TARGET} PRIVATE ${PROJECT_BINARY_DIR})
-
 target_link_libraries(${CURRENT_TARGET} PRIVATE 
   hosted_app 
   memmanager 

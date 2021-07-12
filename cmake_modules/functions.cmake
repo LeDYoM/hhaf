@@ -135,6 +135,14 @@ function(build_lib_component)
     PUBLIC_HEADER "${LC_BUILD_HEADERS}"
   )
 
+  # Set defines for project versions using standard cmake nomenclature
+  target_compile_definitions(${CURRENT_TARGET} ${mode}
+    ${CURRENT_TARGET}_VERSION=${PROJECT_VERSION_MAJOR}
+    ${CURRENT_TARGET}_SUBVERSION=${PROJECT_VERSION_MINOR}
+    ${CURRENT_TARGET}_PATCH=${PROJECT_VERSION_PATCH}
+    ${CURRENT_TARGET}_TWEAK=${PROJECT_VERSION_TWEAK}
+  )
+
   set_install_options_for_target(${CURRENT_TARGET})
   
 endfunction()

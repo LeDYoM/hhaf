@@ -2,7 +2,6 @@
 
 #include "host_private.hpp"
 #include "systemcontroller_loader.hpp"
-#include "host_version.hpp"  // In binary directory
 
 #include <hosted_app/include/iapp.hpp>
 
@@ -15,8 +14,8 @@ namespace haf::host
 Host::Host(int argc, char* argv[]) : p_{muptr<HostPrivate>(argc, argv)}
 {
     DisplayLog::info("Starting HostController...");
-    DisplayLog::info("Host version: ", HostVersion, ".", HostSubversion, ".",
-                     HostPatch, ".", HostTweak);
+    DisplayLog::info("Host version: ", host_VERSION, ".", host_SUBVERSION, ".",
+                     host_PATCH, ".", host_TWEAK);
 }
 
 Host::~Host()
