@@ -9,7 +9,6 @@ function(build_client_library)
   target_link_libraries(${CURRENT_TARGET} PRIVATE haf)
 
   message("${CL_BUILD_DATA_SOURCE} Not Post build command. Copy directory")
-  configure_file(app_version.hpp.in app_version.hpp @ONLY)
   include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
   # Set defines for project versions using standard cmake nomenclature
@@ -18,6 +17,7 @@ function(build_client_library)
     ${CURRENT_TARGET}_SUBVERSION=${PROJECT_VERSION_MINOR}
     ${CURRENT_TARGET}_PATCH=${PROJECT_VERSION_PATCH}
     ${CURRENT_TARGET}_TWEAK=${PROJECT_VERSION_TWEAK}
+    ${CURRENT_TARGET}_NAME="${PROJECT_NAME}"
   )
 
   # Copy data if data directory has been passed.

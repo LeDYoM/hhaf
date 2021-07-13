@@ -33,29 +33,4 @@ void ZoperProgramController::onInit(AppInitializer& app_initializer)
 void ZoperProgramController::onFinish(AppFinisher&)
 {}
 
-u16 ZoperProgramController::getVersion() const noexcept
-{
-    return Zoper_VERSION;
-}
-
-u16 ZoperProgramController::getSubVersion() const noexcept
-{
-    return Zoper_VERSION;
-}
-
-u16 ZoperProgramController::getPatch() const noexcept
-{
-    return Zoper_VERSION;
-}
-
-u16 ZoperProgramController::getTweak() const noexcept
-{
-    return Zoper_VERSION;
-}
-
-str ZoperProgramController::getName() const noexcept
-{
-    return "";
-}
-
 }  // namespace zoper

@@ -11,6 +11,22 @@
 
 namespace htps
 {
+namespace detail
+{
+template <typename char_type>
+constexpr static size_type _str_len(char_type const* const p_str) noexcept
+{
+    auto const* p_str_copy{p_str};
+
+    while (*p_str_copy)
+    {
+        ++p_str_copy;
+    }
+
+    auto const tmp_result{p_str_copy - p_str};
+    return ((tmp_result > 0U) ? static_cast<size_type>(tmp_result) : 0U);
+}
+}  // namespace detail
 class str
 {
 public:
@@ -40,7 +56,7 @@ public:
         m_data(n, N + 1)
     {}
 
-    explicit str(char_type const* const n) noexcept : str(n, _str_len(n)) {}
+    explicit str(char_type const* const n) noexcept : str(n, detail::_str_len(n)) {}
 
     constexpr str(const_iterator _begin, const_iterator _end) :
         str(_begin, (_end - _begin) + 1U)
@@ -48,7 +64,7 @@ public:
 
     str& operator=(const char_type* n)
     {
-        *this = str(n, _str_len(n));
+        *this = str(n, detail::_str_len(n));
         return *this;
     }
 
@@ -71,19 +87,6 @@ public:
     {
         T temp;
         return convert(temp);
-    }
-
-    constexpr static size_type _str_len(char_type const* const p_str) noexcept
-    {
-        auto const* p_str_copy{p_str};
-
-        while (*p_str_copy)
-        {
-            ++p_str_copy;
-        }
-
-        auto const tmp_result{p_str_copy - p_str};
-        return ((tmp_result > 0U) ? static_cast<size_type>(tmp_result) : 0U);
     }
 
     vector<str> split(char_type const separator) const
@@ -565,13 +568,27 @@ static_assert(std::is_copy_constructible_v<str>,
               "str must be copy constructible");
 using string_vector = vector<str>;
 
-template <size_t N>
-struct cestr
+class str_view
 {
-    constexpr cestr(const char (&str)[N]) { std::copy_n(str, N, value); }
+public:
+    constexpr str_view(str::char_type const* const begin,
+                       size_type const size) :
+        begin_{begin}, size_{size}
+    {}
 
-    char value[N];
+    template <size_type N>
+    constexpr str_view(char const (&data)[N]) : begin_{&data[0U]}, size_{N}
+    {}
+
+    constexpr str_view(char const* data) : begin_{&data[0U]}, size_{detail::_str_len(data)} {}
+
+    constexpr str::char_type const* data() const noexcept { return begin_; }
+
+private:
+    str::char_type const* begin_;
+    size_type const size_;
 };
+
 }  // namespace htps
 
 #endif

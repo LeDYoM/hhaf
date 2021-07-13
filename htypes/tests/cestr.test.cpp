@@ -7,6 +7,7 @@ using namespace htps;
 
 TEST_CASE("cestr::cestr", "[cestr]")
 {
+    /*
     {
         cestr a{""};
         CHECK(a.size() == 0U);
@@ -29,4 +30,5 @@ TEST_CASE("cestr::cestr", "[cestr]")
         CHECK_FALSE(std::is_same_v<decltype(a), decltype(c)>);
         CHECK_FALSE(std::is_same_v<decltype(b), decltype(c)>);
     }
+    */
 }

@@ -12,9 +12,6 @@ using namespace haf::scene;
 namespace haf::app_menu
 {
 
-void HafAppMenu::configureScenes(haf::sys::DataWrapperCreator&)
-{}
-
 HafAppMenu::HafAppMenu()  = default;
 HafAppMenu::~HafAppMenu() = default;
 

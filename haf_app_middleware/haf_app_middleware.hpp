@@ -10,7 +10,7 @@
 namespace haf::app_middleware
 {
 class HafAppMiddleware final
-    : public user::IAppWithHostAccess<user::IAppWithDefaultVersionSystem<cl_version::AppVersion>>
+    : public user::IAppWithHostAccess<user::IAppWithDefaultVersionSystem<1,2,3,4>>
 {
 public:
     HafAppMiddleware();
