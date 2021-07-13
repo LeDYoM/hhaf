@@ -584,7 +584,6 @@ public:
 
     constexpr str::char_type const* data() const noexcept { return begin_; }
 
-private:
     str::char_type const* begin_;
     size_type const size_;
 };
