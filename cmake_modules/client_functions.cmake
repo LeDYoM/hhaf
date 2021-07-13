@@ -38,4 +38,4 @@ function(build_client_library)
               "$<TARGET_FILE_DIR:${CURRENT_TARGET}>/${CL_BUILD_DATA_DEST}")
   endif()
 
-endfunction(build_client_library)
+endfunction()
