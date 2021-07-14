@@ -5,18 +5,14 @@
 
 #include <haf/include/scene_components/app_initializer.hpp>
 #include <haf/include/scene_components/app_finisher.hpp>
-#include <haf/include/shareddata/shareddata.hpp>
 #include <hlog/include/hlog.hpp>
-
-using namespace htps;
-using namespace haf;
-using namespace haf::scene;
 
 namespace zoper
 {
 
-void ZoperProgramController::configureScenes(AppInitializer& app_initializer)
+void ZoperProgramController::onInit(haf::scene::AppInitializer& app_initializer)
 {
+    DisplayLog::verbose("Initializing ZoperProgramController");
     app_initializer.registerSceneType<MenuScene>();
     app_initializer.registerSceneType<GameScene>();
     app_initializer.registerSceneType<HighScoresScene>();
@@ -24,13 +20,7 @@ void ZoperProgramController::configureScenes(AppInitializer& app_initializer)
     app_initializer.startScene<MenuScene>();
 }
 
-void ZoperProgramController::onInit(AppInitializer& app_initializer)
-{
-    DisplayLog::verbose("Initializing ZoperProgramController");
-    configureScenes(app_initializer);
-}
-
-void ZoperProgramController::onFinish(AppFinisher&)
+void ZoperProgramController::onFinish(haf::scene::AppFinisher&)
 {}
 
 }  // namespace zoper
