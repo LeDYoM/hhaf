@@ -12,15 +12,10 @@ using namespace haf::scene;
 namespace haf::app_menu
 {
 
-HafAppMenu::HafAppMenu()  = default;
-HafAppMenu::~HafAppMenu() = default;
-
 void HafAppMenu::onInit(AppInitializer& app_initializer)
 {
     (void)(app_initializer);
     DisplayLog::verbose("Initializing HafAppMenu");
-
-    //    configureScenes(data_wrapper_creator);
 }
 
 void HafAppMenu::onFinish(scene::AppFinisher& finisher)

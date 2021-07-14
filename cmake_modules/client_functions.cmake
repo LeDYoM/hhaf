@@ -13,11 +13,11 @@ function(build_client_library)
 
   # Set defines for project versions using standard cmake nomenclature
   target_compile_definitions(${CURRENT_TARGET} PRIVATE
-    ${CURRENT_TARGET}_VERSION=${PROJECT_VERSION_MAJOR}
-    ${CURRENT_TARGET}_SUBVERSION=${PROJECT_VERSION_MINOR}
-    ${CURRENT_TARGET}_PATCH=${PROJECT_VERSION_PATCH}
-    ${CURRENT_TARGET}_TWEAK=${PROJECT_VERSION_TWEAK}
-    ${CURRENT_TARGET}_NAME="${PROJECT_NAME}"
+    APP_VERSION=${PROJECT_VERSION_MAJOR}
+    APP_SUBVERSION=${PROJECT_VERSION_MINOR}
+    APP_PATCH=${PROJECT_VERSION_PATCH}
+    APP_TWEAK=${PROJECT_VERSION_TWEAK}
+    APP_NAME="${PROJECT_NAME}"
   )
 
   # Copy data if data directory has been passed.

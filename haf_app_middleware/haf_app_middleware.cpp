@@ -11,16 +11,14 @@ using namespace haf::scene;
 
 namespace haf::app_middleware
 {
-HafAppMiddleware::HafAppMiddleware()  = default;
-HafAppMiddleware::~HafAppMiddleware() = default;
-
 void HafAppMiddleware::onInit(AppInitializer& app_initializer)
 {
     (void)(app_initializer);
     DisplayLog::verbose("Initializing HafAppFirmware");
 }
 
-void HafAppMiddleware::onHostInit(host::HostCommunication&)
-{}
+void HafAppMiddleware::onFinish(scene::AppFinisher&)
+{
+}
 
 }  // namespace haf::app_middleware

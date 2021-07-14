@@ -14,6 +14,7 @@ set(sources
 
 set(include_dir haf_user/include)
 set(headers
+  ${include_dir}/declare_app.hpp
   ${include_dir}/export_app.hpp
   ${include_dir}/iapp_with_default_app_versioning_system.hpp
   ${include_dir}/iapp_with_host_access.hpp
