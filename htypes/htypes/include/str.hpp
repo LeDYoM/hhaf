@@ -2,6 +2,7 @@
 #define MTPS_STR_INCLUDE_HPP
 
 #include "vector.hpp"
+#include "str_view.hpp"
 #include "types.hpp"
 
 #include <sstream>
@@ -11,22 +12,6 @@
 
 namespace htps
 {
-namespace detail
-{
-template <typename char_type>
-constexpr static size_type _str_len(char_type const* const p_str) noexcept
-{
-    auto const* p_str_copy{p_str};
-
-    while (*p_str_copy)
-    {
-        ++p_str_copy;
-    }
-
-    auto const tmp_result{p_str_copy - p_str};
-    return ((tmp_result > 0U) ? static_cast<size_type>(tmp_result) : 0U);
-}
-}  // namespace detail
 class str
 {
 public:
@@ -567,26 +552,6 @@ static_assert(std::is_default_constructible_v<str>,
 static_assert(std::is_copy_constructible_v<str>,
               "str must be copy constructible");
 using string_vector = vector<str>;
-
-class str_view
-{
-public:
-    constexpr str_view(str::char_type const* const begin,
-                       size_type const size) :
-        begin_{begin}, size_{size}
-    {}
-
-    template <size_type N>
-    constexpr str_view(char const (&data)[N]) : begin_{&data[0U]}, size_{N}
-    {}
-
-    constexpr str_view(char const* data) : begin_{&data[0U]}, size_{detail::_str_len(data)} {}
-
-    constexpr str::char_type const* data() const noexcept { return begin_; }
-
-    str::char_type const* begin_;
-    size_type const size_;
-};
 
 }  // namespace htps
 

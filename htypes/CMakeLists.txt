@@ -43,6 +43,7 @@ set(headers
     ${include_dir}/rect.hpp
     ${include_dir}/serializer.hpp
     ${include_dir}/stack.hpp
+    ${include_dir}/str_view.hpp
     ${include_dir}/str.hpp
     ${include_dir}/types.hpp
     ${include_dir}/vector_storage.hpp

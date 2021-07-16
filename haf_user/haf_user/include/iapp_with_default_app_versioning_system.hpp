@@ -3,6 +3,7 @@
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
+#include <htypes/include/str_view.hpp>
 #include <hosted_app/include/iapp.hpp>
 
 namespace haf::user
