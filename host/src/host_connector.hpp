@@ -8,6 +8,7 @@ namespace haf::host
 class HostConnector final : public IHostConnector
 {
 public:
+    HostConnector();
 };
 
 }  // namespace haf::host
