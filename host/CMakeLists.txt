@@ -13,6 +13,8 @@ set(sources
   src/app_loader.hpp
   src/app_state.hpp
   src/host_config.hpp
+  src/host_connector.cpp
+  src/host_connector.hpp
   src/host_export.hpp
   src/host_private.cpp
   src/host_private.hpp
@@ -31,7 +33,8 @@ set(sources
 build_lib_component(HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
                     ${sources})
 
-target_link_libraries(${CURRENT_TARGET} PRIVATE 
+target_link_libraries(${CURRENT_TARGET} PRIVATE
+  host_connector
   hosted_app 
   memmanager 
   hlog

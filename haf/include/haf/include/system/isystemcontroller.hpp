@@ -8,6 +8,11 @@ namespace haf
 class IApp;
 }
 
+namespace haf::host
+{
+class IHostConnector;
+}
+
 namespace haf::backend
 {
 class BackendFactory;
@@ -21,6 +26,7 @@ public:
     virtual ~ISystemController() {}
 
     virtual void init(htps::rptr<haf::IApp> iapp,
+                      htps::rptr<host::IHostConnector> const host_connector,
                       htps::rptr<backend::BackendFactory> const backend_factory,
                       int const argc,
                       char const* const argv[]) = 0;

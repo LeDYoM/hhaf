@@ -18,7 +18,6 @@ function (prepareTestLibrary)
         GIT_REPOSITORY https://github.com/catchorg/Catch2.git
         GIT_TAG v2.12.4
         CMAKE_ARGS -DBUILD_TESTING=OFF
-
     )
 
     FetchContent_MakeAvailable(Catch2)

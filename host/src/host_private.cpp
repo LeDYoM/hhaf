@@ -70,7 +70,7 @@ bool Host::HostPrivate::update()
             }
             else
             {
-                systemController()->init(app.managed_app_.app,
+                systemController()->init(app.managed_app_.app, nullptr,
                                          backend_factory_.get(), argc_, argv_);
 
                 DisplayLog::info(appDisplayNameAndVersion(app),

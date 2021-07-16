@@ -58,6 +58,7 @@ set(hhaf_core_module_list
   memmanager
   htypes
   hlog
+  host_connector
   hosted_app
   host
   backend_dev
