@@ -16,8 +16,8 @@ public:
 
     HostedApplication& currentHostedApplication();
     HostedApplication const& currentHostedApplication() const;
-    rptr<IApp const> currentApp() const;
-    rptr<IApp> currentApp();
+    htps::rptr<IApp const> currentApp() const;
+    htps::rptr<IApp> currentApp();
 
     void setCurrentAppState(AppState const app_state) noexcept;
 

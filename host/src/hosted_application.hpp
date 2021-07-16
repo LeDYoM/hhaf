@@ -6,19 +6,19 @@
 #include "app_loader.hpp"
 #include "app_state.hpp"
 #include <hosted_app/include/iapp.hpp>
-
-using namespace htps;
+#include <host_connector/include/ihost_connector.hpp>
 
 namespace haf::host
 {
 class HostedApplication final
 {
 public:
-    HostedApplication(ManagedApp managed_app, str app_name) noexcept;
+    HostedApplication(ManagedApp managed_app, htps::str app_name) noexcept;
 
     ManagedApp managed_app_;
     htps::str app_name_;
     AppState app_state{AppState::NotInitialized};
+    htps::uptr<IHostConnector> host_connector;
 };
 
 bool operator==(HostedApplication const& lhs,
