@@ -77,7 +77,7 @@ public:
         errors_.push_back(std::move(error_));
     }
 
-    void invalidCharacter(const Token& token, const str::char_type ch)
+    void invalidCharacter(const Token& token, const str::value_type ch)
     {
         Error error_;
         error_.token      = token;
@@ -251,7 +251,7 @@ private:
     str::const_iterator begin_;
     str::const_iterator end_;
     TokenPosition position_{};
-    vector<str::char_type> special_chars{'{', '}', ',', ':', '[', ']'};
+    vector<str::value_type> special_chars{'{', '}', ',', ':', '[', ']'};
     ErrorContainer& errors_;
 };
 

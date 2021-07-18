@@ -67,10 +67,10 @@ str FileSystem::loadTextFile(const Path& file_name)
         size_type file_size = static_cast<size_type>(
             std::filesystem::file_size(file_name.c_str()));
 
-        uptr<str::char_type[]> buf{muptr<str::char_type[]>(file_size + 1U)};
+        uptr<str::value_type[]> buf{muptr<str::value_type[]>(file_size + 1U)};
         buf = readBuffer(std::move(buf), file_name, file_size);
 
-        buf[file_size] = static_cast<str::char_type>(0);
+        buf[file_size] = static_cast<str::value_type>(0);
         return str(buf.get());
     }
     return str{};

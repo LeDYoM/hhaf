@@ -1,6 +1,7 @@
 #include "catch.hpp"
 
 #include <htypes/include/object.hpp>
+#include <htypes/include/str.hpp>
 
 using namespace htps;
 
