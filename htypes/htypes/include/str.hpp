@@ -15,11 +15,13 @@ namespace htps
 class str
 {
 public:
-    using char_type       = char;
-    using reference       = char_type&;
-    using const_reference = const char_type&;
-    using iterator        = char_type*;
-    using const_iterator  = const char_type*;
+    using char_type = char;        //< Type of the characters used
+    using reference = char_type&;  //< Type of the characters used
+    using const_reference =
+        char_type const&;         //< Type of a const reference to a char_type;
+    using iterator = char_type*;  //< Iterator value of the string;
+    using const_iterator =
+        char_type const*;  //< Const iterator type of the string
 
 private:
     vector<char_type> m_data;
@@ -27,25 +29,27 @@ private:
 public:
     constexpr str() noexcept : m_data{} {}
 
+    template <size_type N>
+    constexpr str(const char_type (&a)[N]) : m_data(a, N)
+    {}
+
+    constexpr str(const_iterator const n, size_type const N) :
+        m_data(n, N + 1)
+    {}
+
+    explicit constexpr str(char_type const* const n) :
+        str(n, detail::_str_len(n))
+    {}
+
+    constexpr str(const_iterator _begin, const_iterator _end) :
+        str(_begin, (_end - _begin) + 1U)
+    {}
+
     constexpr str(str&&) noexcept = default;
     str& operator=(str&&) noexcept = default;
 
     constexpr str(const str& n) = default;
     constexpr str& operator=(const str& rhs) = default;
-
-    template <size_type N>
-    constexpr str(const char_type (&a)[N]) noexcept : m_data(a, N)
-    {}
-
-    constexpr str(char_type const* const n, size_type const N) noexcept :
-        m_data(n, N + 1)
-    {}
-
-    explicit str(char_type const* const n) noexcept : str(n, detail::_str_len(n)) {}
-
-    constexpr str(const_iterator _begin, const_iterator _end) :
-        str(_begin, (_end - _begin) + 1U)
-    {}
 
     str& operator=(const char_type* n)
     {
