@@ -24,6 +24,7 @@ set(headers
     ${include_dir}/algoutils.hpp
     ${include_dir}/array.hpp
     ${include_dir}/basic_property.hpp
+    ${include_dir}/basic_str.hpp
     ${include_dir}/cestr.hpp
     ${include_dir}/connection.hpp
     ${include_dir}/debug_internal.hpp
