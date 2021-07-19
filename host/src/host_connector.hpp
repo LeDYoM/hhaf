@@ -11,10 +11,13 @@ class HostConnectorImpl;
 class HostConnector final : public IHostConnector
 {
 public:
-    HostConnector();
-    ~HostConnector();
+    HostConnector(htps::uptr<HostConnectorImpl> host_connector_impl);
+    ~HostConnector() override;
+
+    bool loadApplication(htps::str const& app_name) override;
+
 private:
-    htps::uptr<HostConnectorImpl> host_connector_impl;
+    htps::uptr<HostConnectorImpl> host_connector_impl_;
 };
 
 }  // namespace haf::host

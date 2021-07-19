@@ -33,8 +33,9 @@ public:
      */
     int run();
 
-private:
     class HostPrivate;
+
+private:
     htps::uptr<HostPrivate> p_;
 };
 }  // namespace haf::host

@@ -109,7 +109,8 @@ bool Host::HostPrivate::update()
 
 bool Host::HostPrivate::addApplication(ManagedApp managed_app, htps::str name)
 {
-    auto host_connector = muptr<HostConnector>();
+    auto host_connector_impl = muptr<HostConnectorImpl>(*this);
+    auto host_connector = muptr<HostConnector>(std::move(host_connector_impl));
     return app_group_.try_add_app(std::move(managed_app), std::move(name),
                                   std::move(host_connector));
 }

@@ -20,6 +20,8 @@ public:
      * to be empty in this class
      */
     virtual ~IHostConnector() {}
+
+    virtual bool loadApplication(htps::str const& app_name) = 0;
 };
 
 }  // namespace haf::host
