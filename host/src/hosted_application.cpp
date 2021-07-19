@@ -5,9 +5,13 @@ using namespace htps;
 namespace haf::host
 {
 
-HostedApplication::HostedApplication(ManagedApp managed_app,
-                                     str app_name) noexcept :
-    managed_app_{std::move(managed_app)}, app_name_{std::move(app_name)}
+HostedApplication::HostedApplication(
+    ManagedApp managed_app,
+    str app_name,
+    uptr<IHostConnector> host_connector) noexcept :
+    managed_app_{std::move(managed_app)},
+    app_name_{std::move(app_name)},
+    host_connector_{std::move(host_connector)}
 {}
 
 bool operator==(HostedApplication const& lhs,

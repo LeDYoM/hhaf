@@ -15,6 +15,8 @@ set(sources
   src/host_config.hpp
   src/host_connector.cpp
   src/host_connector.hpp
+  src/host_connectorimpl.cpp
+  src/host_connectorimpl.hpp
   src/host_export.hpp
   src/host_private.cpp
   src/host_private.hpp

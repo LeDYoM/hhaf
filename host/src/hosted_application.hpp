@@ -13,12 +13,14 @@ namespace haf::host
 class HostedApplication final
 {
 public:
-    HostedApplication(ManagedApp managed_app, htps::str app_name) noexcept;
+    HostedApplication(ManagedApp managed_app,
+                      htps::str app_name,
+                      htps::uptr<IHostConnector> host_connector) noexcept;
 
     ManagedApp managed_app_;
     htps::str app_name_;
+    htps::uptr<IHostConnector> host_connector_;
     AppState app_state{AppState::NotInitialized};
-    htps::uptr<IHostConnector> host_connector;
 };
 
 bool operator==(HostedApplication const& lhs,

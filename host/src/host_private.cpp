@@ -1,5 +1,7 @@
 #include "host_private.hpp"
 #include "host.hpp"
+#include "host_connector.hpp"
+#include "host_connectorimpl.hpp"
 
 using namespace htps;
 
@@ -107,7 +109,9 @@ bool Host::HostPrivate::update()
 
 bool Host::HostPrivate::addApplication(ManagedApp managed_app, htps::str name)
 {
-    return app_group_.try_add_app(std::move(managed_app), std::move(name));
+    auto host_connector = muptr<HostConnector>();
+    return app_group_.try_add_app(std::move(managed_app), std::move(name),
+                                  std::move(host_connector));
 }
 
 bool Host::HostPrivate::loadApplication(htps::str const& app_name)

@@ -1,4 +1,6 @@
 #include "hosted_app_group.hpp"
+#include "host_connector.hpp"
+
 #include <hlog/include/hlog.hpp>
 
 using namespace htps;
@@ -30,7 +32,9 @@ void HostedAppGroup::setCurrentAppState(AppState const app_state) noexcept
     currentHostedApplication().app_state = app_state;
 }
 
-bool HostedAppGroup::try_add_app(ManagedApp managed_app, htps::str name)
+bool HostedAppGroup::try_add_app(ManagedApp managed_app,
+                                 htps::str name,
+                                 uptr<HostConnector> host_connector)
 {
     LogAsserter::log_assert(managed_app.app != nullptr,
                             "Received nullptr Application");
@@ -43,7 +47,7 @@ bool HostedAppGroup::try_add_app(ManagedApp managed_app, htps::str name)
     if (is_new_app)
     {
         DisplayLog::info("Starting Registering app...");
-        add_app(std::move(managed_app), std::move(name));
+        add_app(std::move(managed_app), std::move(name), std::move(host_connector));
         DisplayLog::verbose("Starting new app...");
         setCurrentAppState(AppState::ReadyToStart);
     }
@@ -83,12 +87,16 @@ bool HostedAppGroup::removeApp(htps::str const& app_name)
 bool HostedAppGroup::appExists(htps::str const& name) noexcept
 {
     // Search for a pointer to the same app
-    return (app_.cfind(HostedApplication{ManagedApp{}, name}) != app_.cend());
+    return (app_.cfind(HostedApplication{ManagedApp{}, name, nullptr}) !=
+            app_.cend());
 }
 
-void HostedAppGroup::add_app(ManagedApp&& app, htps::str name)
+void HostedAppGroup::add_app(ManagedApp&& app,
+                             htps::str name,
+                             uptr<HostConnector> host_connector)
 {
-    app_.emplace_back(std::move(app), std::move(name));
+    app_.emplace_back(std::move(app), std::move(name),
+                      std::move(host_connector));
 }
 
 }  // namespace haf::host

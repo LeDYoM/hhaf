@@ -8,6 +8,7 @@
 
 namespace haf::host
 {
+class HostConnector;
 class HostedAppGroup final
 {
 public:
@@ -21,7 +22,9 @@ public:
 
     void setCurrentAppState(AppState const app_state) noexcept;
 
-    bool try_add_app(ManagedApp managed_app, htps::str name);
+    bool try_add_app(ManagedApp managed_app,
+                     htps::str name,
+                     htps::uptr<HostConnector> host_connector);
     bool removeApp(htps::str const& app_name);
     bool appExists(htps::str const& name) noexcept;
 
@@ -40,7 +43,9 @@ public:
     }
 
 private:
-    void add_app(ManagedApp&& app, htps::str name);
+    void add_app(ManagedApp&& app,
+                 htps::str name,
+                 htps::uptr<HostConnector> host_connector);
 };
 
 }  // namespace haf::host
