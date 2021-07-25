@@ -3,6 +3,7 @@
 
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
+#include <host_connector/include/ihost_connector.hpp>
 
 namespace haf::sys
 {

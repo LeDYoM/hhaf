@@ -12,3 +12,5 @@ build_lib_component(HEADERS_ONLY
     HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}"
     HEADERS "${headers}"
     )
+
+target_link_libraries(${CURRENT_TARGET} INTERFACE host_connector)

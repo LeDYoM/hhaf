@@ -59,8 +59,8 @@ bool Host::HostPrivate::update()
         {
             DisplayLog::info("Starting initialization of new App...");
             app.app_state     = AppState::Executing;
-            auto const result = system_loader_.loadFunctions();
-            if (result != SystemControllerLoader::ResultType::Success)
+            auto const result_load_functions = system_loader_.loadFunctions();
+            if (result_load_functions != SystemControllerLoader::ResultType::Success)
             {
                 DisplayLog::error("Cannot load haf system!");
                 app.app_state = AppState::ReadyToTerminate;
