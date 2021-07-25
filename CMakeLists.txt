@@ -13,11 +13,6 @@ include(functions)
 setOptions()
 includeForOptions()
 
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-
 set(_REPO_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 
 # First for the generic no-config case (e.g. with mingw, Ninja, Makefiles...)
