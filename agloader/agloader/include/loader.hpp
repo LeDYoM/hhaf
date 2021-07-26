@@ -49,7 +49,7 @@ public:
 
 private:
     class LoaderPrivate;
-    LoaderPrivate* m_private;
+    LoaderPrivate* m_private{nullptr};
 };
 
 /**
