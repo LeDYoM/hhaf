@@ -49,6 +49,7 @@ public:
     str configuredFirstApp() const;
 
     bool update();
+    bool updateApp(HostedApplication& app);
 
     bool addApplication(ManagedApp managed_app, htps::str name);
     bool loadApplication(htps::str const& app_name);

@@ -52,8 +52,11 @@ bool Host::HostPrivate::initialize()
 
 bool Host::HostPrivate::update()
 {
-    auto& app = app_group_.currentHostedApplication();
+    return updateApp(app_group_.currentHostedApplication());
+}
 
+bool Host::HostPrivate::updateApp(HostedApplication& app)
+{
     switch (app.app_state)
     {
         case AppState::NotInitialized:
@@ -93,7 +96,7 @@ bool Host::HostPrivate::update()
                              ": started termination");
             app.app_state = AppState::Terminated;
             app.app_system_controller->terminate();
-            //system_loader_.destroy();
+            app.app_system_controller.reset();
             return true;
             break;
         case AppState::Terminated:

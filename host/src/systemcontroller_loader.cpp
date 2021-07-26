@@ -127,7 +127,6 @@ void SystemControllerLoader::destroy(sys::ISystemController* system_controller)
         }
         system_controller = nullptr;
     }
-    fp_haf_destroy_system_controller_ = nullptr;
 }
 
 }  // namespace haf::host
