@@ -74,6 +74,7 @@ bool RenderWindow::createWindow(const u32 width,
                            context_settings);
 
         setVerticalSyncEnabled(false);
+        already_created_ = true;
         return true;
     }
     return false;
