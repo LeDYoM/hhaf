@@ -61,6 +61,8 @@ public:
     bool exit{false};
 
 private:
+    bool initializeBackend();
+    bool initializeHaf();
     rptr<haf::sys::ISystemController> systemController() noexcept;
     rptr<haf::sys::ISystemController const> systemController() const noexcept;
 };

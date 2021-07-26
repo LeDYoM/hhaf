@@ -17,7 +17,7 @@ public:
     using CreateSystemController_t  = haf::sys::ISystemController* (*)();
     using DestroySystemController_t = void (*)(haf::sys::ISystemController*);
 
-    SystemControllerLoader() = default;
+    SystemControllerLoader();
     ~SystemControllerLoader();
 
     enum class ResultType : htps::u32
@@ -39,8 +39,8 @@ public:
     systemController() const noexcept;
 
 private:
-    htps::rptr<agloader::Loader> loader_{nullptr};
-    htps::rptr<haf::sys::ISystemController> system_controller_{nullptr};
+    htps::rptr<agloader::Loader> loader_;
+    htps::rptr<haf::sys::ISystemController> system_controller_;
     CreateSystemController_t fp_haf_create_system_controller_;
     DestroySystemController_t fp_haf_destroy_system_controller_;
 };

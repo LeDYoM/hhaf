@@ -31,15 +31,34 @@ rptr<sys::ISystemController const> Host::HostPrivate::systemController()
     return system_loader_.systemController();
 }
 
-bool Host::HostPrivate::initialize()
+bool Host::HostPrivate::initializeBackend()
 {
     // Initialize and create the backend factory
     backend_factory_ =
         uptr<backend::BackendFactory, void (*)(haf::backend::BackendFactory*)>(
             createBackendFactory(), destroyBackendFactory);
 
+    return backend_factory_ != nullptr;
+}
+
+bool Host::HostPrivate::initializeHaf()
+{
+    auto const result_load_functions = system_loader_.loadFunctions();
+    if (result_load_functions != SystemControllerLoader::ResultType::Success)
+    {
+        DisplayLog::error("Cannot load haf system!");
+    }
+    return result_load_functions == SystemControllerLoader::ResultType::Success;
+}
+
+bool Host::HostPrivate::initialize()
+{
+    auto const result_init_backend{initializeBackend()};
+    auto const result_load_functions{initializeHaf()};
+
     // Return the status of loading the first application
-    return backend_factory_ != nullptr && loadApplication(configuredFirstApp());
+    return result_init_backend && result_load_functions &&
+        loadApplication(configuredFirstApp());
 }
 
 bool Host::HostPrivate::loopStep()
@@ -58,14 +77,8 @@ bool Host::HostPrivate::update()
         case AppState::ReadyToStart:
         {
             DisplayLog::info("Starting initialization of new App...");
-            app.app_state     = AppState::Executing;
-            auto const result_load_functions = system_loader_.loadFunctions();
-            if (result_load_functions != SystemControllerLoader::ResultType::Success)
-            {
-                DisplayLog::error("Cannot load haf system!");
-                app.app_state = AppState::ReadyToTerminate;
-            }
-            else if (!system_loader_.create())
+            app.app_state                    = AppState::Executing;
+            if (!system_loader_.create())
             {
                 DisplayLog::error("Cannot create haf system!");
                 app.app_state = AppState::ReadyToTerminate;
