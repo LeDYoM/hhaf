@@ -20,17 +20,6 @@ str Host::HostPrivate::configuredFirstApp() const
     return config_.configuredFirstApp();
 }
 
-rptr<sys::ISystemController> Host::HostPrivate::systemController() noexcept
-{
-    return system_loader_.systemController();
-}
-
-rptr<sys::ISystemController const> Host::HostPrivate::systemController()
-    const noexcept
-{
-    return system_loader_.systemController();
-}
-
 bool Host::HostPrivate::initializeBackend()
 {
     // Initialize and create the backend factory
@@ -61,11 +50,6 @@ bool Host::HostPrivate::initialize()
         loadApplication(configuredFirstApp());
 }
 
-bool Host::HostPrivate::loopStep()
-{
-    return systemController()->runStep();
-}
-
 bool Host::HostPrivate::update()
 {
     auto& app = app_group_.currentHostedApplication();
@@ -78,14 +62,15 @@ bool Host::HostPrivate::update()
         {
             DisplayLog::info("Starting initialization of new App...");
             app.app_state                    = AppState::Executing;
-            if (!system_loader_.create())
+            app.app_system_controller = system_loader_.create();
+            if (app.app_system_controller == nullptr)
             {
                 DisplayLog::error("Cannot create haf system!");
                 app.app_state = AppState::ReadyToTerminate;
             }
             else
             {
-                systemController()->init(app.managed_app_.app, nullptr,
+                app.app_system_controller->init(app.managed_app_.app, nullptr,
                                          backend_factory_.get(), argc_, argv_);
 
                 DisplayLog::info(appDisplayNameAndVersion(app),
@@ -95,7 +80,7 @@ bool Host::HostPrivate::update()
         break;
         case AppState::Executing:
         {
-            if (loopStep())
+            if (app.app_system_controller->runStep())
             {
                 app.app_state = AppState::ReadyToTerminate;
                 DisplayLog::info(appDisplayNameAndVersion(app),
@@ -107,8 +92,8 @@ bool Host::HostPrivate::update()
             DisplayLog::info(appDisplayNameAndVersion(app),
                              ": started termination");
             app.app_state = AppState::Terminated;
-            systemController()->terminate();
-            system_loader_.destroy();
+            app.app_system_controller->terminate();
+            //system_loader_.destroy();
             return true;
             break;
         case AppState::Terminated:

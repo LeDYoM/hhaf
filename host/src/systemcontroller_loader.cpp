@@ -14,22 +14,28 @@ namespace haf::host
 {
 SystemControllerLoader::SystemControllerLoader() :
     loader_{nullptr},
-    system_controller_{nullptr},
     fp_haf_create_system_controller_{nullptr},
     fp_haf_destroy_system_controller_{nullptr}
 {}
 
 SystemControllerLoader::~SystemControllerLoader()
 {
-    destroy();
+    DisplayLog::debug("SystemControllers created: ", created_);
+    DisplayLog::debug("SystemControllers deleted: ", deleted_);
+    LogAsserter::log_assert(
+        created_ == deleted_,
+        "Different number of created and deleted system controllers: ",
+        created_, " and ", deleted_);
 
     if (loader_)
     {
         loader_->unloadModule(haf_library);
         loader_ = nullptr;
     }
-    fp_haf_create_system_controller_ = nullptr;
+
+    fp_haf_create_system_controller_  = nullptr;
     fp_haf_destroy_system_controller_ = nullptr;
+
     agloader::destroyLoader();
 }
 
@@ -87,39 +93,41 @@ SystemControllerLoader::ResultType SystemControllerLoader::loadFunctions()
     return result;
 }
 
-bool SystemControllerLoader::create()
+sys::DestructibleSystemController SystemControllerLoader::create()
 {
     if (fp_haf_create_system_controller_ != nullptr)
     {
-        system_controller_ = (*fp_haf_create_system_controller_)();
+        sys::DestructibleSystemController result{
+            (*fp_haf_create_system_controller_)(),
+            [this](sys::ISystemController* system_controller) {
+                if (system_controller != nullptr)
+                {
+                    ++deleted_;
+                    destroy(system_controller);
+                }
+            }};
+        ++created_;
+        return result;
     }
-
-    return (system_controller_ != nullptr);
+    return nullptr;
 }
 
-void SystemControllerLoader::destroy()
+void SystemControllerLoader::destroy(sys::ISystemController* system_controller)
 {
-    if (system_controller_ != nullptr)
+    if (system_controller != nullptr)
     {
-        if (fp_haf_destroy_system_controller_)
+        if (fp_haf_destroy_system_controller_ != nullptr)
         {
-            (*fp_haf_destroy_system_controller_)(system_controller_);
+            (*fp_haf_destroy_system_controller_)(system_controller);
         }
-        system_controller_ = nullptr;
+        else
+        {
+            DisplayLog::error("Cannot destroy a system loader because the "
+                              "destruction function is not loaded");
+        }
+        system_controller = nullptr;
     }
     fp_haf_destroy_system_controller_ = nullptr;
-}
-
-rptr<haf::sys::ISystemController>
-SystemControllerLoader::systemController() noexcept
-{
-    return system_controller_;
-}
-
-rptr<haf::sys::ISystemController const>
-SystemControllerLoader::systemController() const noexcept
-{
-    return system_controller_;
 }
 
 }  // namespace haf::host

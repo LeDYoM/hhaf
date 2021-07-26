@@ -7,6 +7,7 @@
 #include "app_state.hpp"
 #include <hosted_app/include/iapp.hpp>
 #include <host_connector/include/ihost_connector.hpp>
+#include <haf/include/system/isystemcontroller.hpp>
 
 namespace haf::host
 {
@@ -20,6 +21,7 @@ public:
     ManagedApp managed_app_;
     htps::str app_name_;
     htps::uptr<IHostConnector> host_connector_;
+    sys::DestructibleSystemController app_system_controller;
     AppState app_state{AppState::NotInitialized};
 };
 
