@@ -7,11 +7,8 @@
 
 namespace agloader
 {
-class Loader::LoaderPrivate
+struct Loader::LoaderPrivate
 {
-public:
-    LoaderPrivate() {}
-    ~LoaderPrivate() {}
     std::map<std::string, std::shared_ptr<LoadedInstance>> m_loadedInstances;
 };
 
@@ -33,7 +30,7 @@ Loader::~Loader()
     }
 }
 
-void* Loader::loadModule(const char* const fileName)
+void const* Loader::loadModule(const char* const fileName)
 {
     auto loadedInstace{std::make_shared<LoadedInstance>()};
     loadedInstace->load(fileName);
@@ -45,13 +42,13 @@ void* Loader::loadModule(const char* const fileName)
     return loadedInstace->loadedData();
 }
 
-void* Loader::loadMethod(const char* const fileName,
+void const* Loader::loadMethod(const char* const fileName,
                          const char* const methodName)
 {
-    auto iterator(m_private->m_loadedInstances.find(fileName));
+    auto iterator{m_private->m_loadedInstances.find(fileName)};
     if (iterator != m_private->m_loadedInstances.end())
     {
-        auto loadedInstance((*iterator).second);
+        auto loadedInstance{(*iterator).second};
         return loadedInstance->loadMethod(methodName);
     }
     return nullptr;
@@ -59,7 +56,7 @@ void* Loader::loadMethod(const char* const fileName,
 
 bool Loader::unloadModule(const char* fileName)
 {
-    auto iterator(m_private->m_loadedInstances.find(fileName));
+    auto iterator{m_private->m_loadedInstances.find(fileName)};
     if (iterator != m_private->m_loadedInstances.end())
     {
         m_private->m_loadedInstances.erase(iterator);

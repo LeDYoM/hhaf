@@ -12,11 +12,11 @@ public:
     ~LoadedInstance();
 
     bool load(const char* fileName);
-    void* loadMethod(const char* methodName);
+    void const* loadMethod(const char* methodName);
 
     bool loaded() const;
     bool unload();
-    void* loadedData() const;
+    void const* loadedData() const;
 
 private:
     LoadedInstancePrivate* m_private;

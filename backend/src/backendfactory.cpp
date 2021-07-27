@@ -8,6 +8,11 @@
 
 using namespace htps;
 
+namespace
+{
+    static char const sh_name[] = "bsfml";
+}
+
 namespace haf::backend
 {
 
@@ -16,18 +21,16 @@ BackendFactory::BackendFactory() :
     textureFactory_{nullptr},
     ttfontFactory_{nullptr},
     shaderFactory_{nullptr},
-    bmpFontFactory_{nullptr}
+    bmpFontFactory_{nullptr},
+    loader_{agloader::createLoader()}
 {
-    auto* const loader{agloader::createLoader()};
-
-    static const char* sh_name = "bsfml";
-    if (loader->loadModule(sh_name))
+    if (loader_->loadModule(sh_name))
     {
         // Get the function pointer to load and unload the backend module
-        const auto fp_init_haf = reinterpret_cast<p_initBackendClient>(
-            loader->loadMethod(sh_name, "init_lib"));
-        const auto fp_finish_haf = reinterpret_cast<p_initBackendClient>(
-            loader->loadMethod(sh_name, "finish_lib"));
+        const auto fp_init_haf =
+            loader_->loadMethod<p_initBackendClient>(sh_name, "init_lib");
+        const auto fp_finish_haf =
+            loader_->loadMethod<p_initBackendClient>(sh_name, "finish_lib");
 
         if (fp_init_haf != nullptr && fp_finish_haf != nullptr)
         {
@@ -47,6 +50,8 @@ BackendFactory::~BackendFactory()
                    &ttfontFactory_, &shaderFactory_);
     backend_register_->finish();
     backend_register_.reset();
+
+    loader_->unloadModule(sh_name);
 
     agloader::destroyLoader();
 }

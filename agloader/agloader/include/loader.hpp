@@ -29,7 +29,7 @@ public:
      * @param fileName File to load WITHOUT extension
      * @return Pointer to the loaded module.
      */
-    LOADER_API void* loadModule(const char* const fileName);
+    LOADER_API void const* loadModule(const char* const fileName);
 
     /**
      * @brief Load a method from an already loaded module
@@ -37,9 +37,17 @@ public:
      * @param methodName Method to load
      * @return Pointer to the loaded method.
      */
-    LOADER_API void* loadMethod(const char* const fileName,
+    LOADER_API void const* loadMethod(const char* const fileName,
                                 const char* const methodName);
 
+    /**
+     * @brief Load a method from an already loaded module
+     * 
+     * @tparam T Type to load
+     * @param fileName File name containing the already loaded module.
+     * @param methodName Method to load
+     * @return Pointer to the loaded method.
+     */
     template <typename T>
     LOADER_API T loadMethod(const char* const fileName,
                                 const char* const methodName)

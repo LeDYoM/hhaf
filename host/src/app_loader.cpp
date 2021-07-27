@@ -60,7 +60,6 @@ bool AppLoader::unloadApp(ManagedApp& managed_app) const
     managed_app.app        = nullptr;
     managed_app.init_app   = nullptr;
     managed_app.finish_app = nullptr;
-    destroyLoader();
     return result;
 }
 
