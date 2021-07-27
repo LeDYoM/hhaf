@@ -28,32 +28,23 @@ public:
     using pointer         = T*;
     using const_pointer   = const T*;
 
-    // Constructors.
-    // ////////////////////////////////////////////////////////////
-
-    /// Default constructor.
-    /// Sets all members to 0, nullptr or empty.
+    /**
+     * @brief Default constructor
+     */
     constexpr vector_storage() noexcept = default;
 
-    /// Constructor for empty container with reserved memory.
-    /// The memory for the vector is allocated, but no construction
-    /// is done.
-    /// @param size Number of elements to reserve memory for.
-    explicit vector_storage(const size_type size) :
+    /**
+     * @brief Construct a new vector storage object with reserved memory.
+     * The memory for the vector is allocated, but no construction is done
+     * @param size Number of elements to reserve memory for
+     */
+    explicit vector_storage(size_type const size) :
         m_capacity{size},
         m_buffer{size > 0U ? Allocator::allocate(size) : nullptr}
     {}
 
-    // Big five. ////////////////////////////////////////////////////
-
-    /// @brief Copy constructor.
-    /// This constructor constructs a vector from another one.
-    /// The capacity of the resultant vector might be different
-    /// from the capacity of the source. The size will be the same.
-    /// @param other Source vector to copy.
-    constexpr vector_storage(const vector_storage& other) :
-        vector_storage(other.m_buffer, other.m_size)
-    {}
+    constexpr vector_storage(vector_storage const& other) = delete;
+    constexpr vector_storage& operator=(vector_storage const& other) = delete;
 
     // Move constructor.
     constexpr vector_storage(vector_storage&& other) noexcept :
@@ -61,9 +52,6 @@ public:
         m_size{std::exchange(other.m_size, 0U)},
         m_buffer{std::exchange(other.m_buffer, nullptr)}
     {}
-
-    /// Copy assignment.
-    constexpr vector_storage& operator=(const vector_storage& other) = default;
 
     /// Move assignment
     constexpr vector_storage& operator=(vector_storage&& other) noexcept
@@ -160,22 +148,13 @@ public:
         m_size++;
     }
 
-    constexpr void emplace_back()
-    {
-        reserve(GrowPolicy::growSize(m_size));
-        Allocator::construct(static_cast<T*>(m_buffer + m_size));
-        m_size++;
-    }
-
     constexpr void pop_back() noexcept
     {
-        //            LOG("vector::pop_back() --- m_size before: " << m_size);
         if (m_size > 0U)
         {
             Allocator::destruct(end() - 1U);
             --m_size;
         }
-        //            LOG("vector::pop_back() --- m_size after: " << m_size);
     }
 
     constexpr void reserve(const size_type capacity)
