@@ -22,8 +22,8 @@ inline void updateFileExtension(std::string& fileName,
 }
 
 inline std::string formatFileName(std::string fileName,
-                                  char const * const extension,
-                                  char const * const prefix)
+                                  char const* const extension,
+                                  char const* const prefix)
 {
     updateFileExtension(fileName, extension);
     return prefix + fileName;
@@ -50,18 +50,18 @@ inline bool freeSharedObject(void* handle)
 }
 
 constexpr char const extension[] = ".dll";
-constexpr char const prefix    = "";
+constexpr char const prefix[]    = "";
 
 #else
 
 // For now, windows or linux
 #include <dlfcn.h>
-inline void* getMethod(void* handle, char const * const methodName)
+inline void* getMethod(void* handle, char const* const methodName)
 {
     return static_cast<void*>(dlsym(handle, methodName));
 }
 
-inline void* loadSharedObject(char const * const fileName)
+inline void* loadSharedObject(char const* const fileName)
 {
     return static_cast<void*>(dlopen(fileName, RTLD_LAZY));
 }

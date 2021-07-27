@@ -49,7 +49,7 @@ public:
      * @return Pointer to the loaded method.
      */
     template <typename T>
-    LOADER_API T loadMethod(const char* const fileName,
+    T loadMethod(const char* const fileName,
                                 const char* const methodName)
     {
         return reinterpret_cast<T>(loadMethod(fileName, methodName));
@@ -63,7 +63,7 @@ public:
     LOADER_API bool unloadModule(const char* const fileName);
 
 private:
-    class LoaderPrivate;
+    struct LoaderPrivate;
     LoaderPrivate* m_private{nullptr};
 };
 
