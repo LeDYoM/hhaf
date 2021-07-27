@@ -35,7 +35,7 @@ Loader::~Loader()
 
 void* Loader::loadModule(const char* const fileName)
 {
-    auto loadedInstace(std::make_shared<LoadedInstance>());
+    auto loadedInstace{std::make_shared<LoadedInstance>()};
     loadedInstace->load(fileName);
 
     if (loadedInstace->loaded())
@@ -81,13 +81,14 @@ Loader* createLoader()
 
 void destroyLoader()
 {
-    if (loaderInstance > 0U)
+    if (reference_counter > 0U)
     {
         --reference_counter;
-        if (reference_counter == 0U)
-        {
-            loaderInstance.reset(nullptr);
-        }
+    }
+
+    if (reference_counter == 0U)
+    {
+        loaderInstance.reset(nullptr);
     }
 }
 }  // namespace agloader

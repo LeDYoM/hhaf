@@ -40,6 +40,13 @@ public:
     LOADER_API void* loadMethod(const char* const fileName,
                                 const char* const methodName);
 
+    template <typename T>
+    LOADER_API T loadMethod(const char* const fileName,
+                                const char* const methodName)
+    {
+        return reinterpret_cast<T>(loadMethod(fileName, methodName));
+    }
+
     /**
      * @brief Unload a module from a shared library.
      * @param fileName File containing the already loaded module
