@@ -4,7 +4,7 @@
 
 namespace
 {
-inline bool endsWith(const std::string& fullString, const std::string& ending)
+inline bool endsWith(std::string const& fullString, std::string const& ending)
 {
     return fullString.length() >= ending.length()
         ? fullString.compare(fullString.length() - ending.length(),
@@ -13,7 +13,7 @@ inline bool endsWith(const std::string& fullString, const std::string& ending)
 }
 
 inline void updateFileExtension(std::string& fileName,
-                                const std::string& extension)
+                                std::string const& extension)
 {
     if (!endsWith(fileName, extension))
     {
@@ -22,8 +22,8 @@ inline void updateFileExtension(std::string& fileName,
 }
 
 inline std::string formatFileName(std::string fileName,
-                                  const char* const extension,
-                                  const char* const prefix)
+                                  char const* const extension,
+                                  char const* const prefix)
 {
     updateFileExtension(fileName, extension);
     return prefix + fileName;
@@ -49,25 +49,28 @@ inline bool freeSharedObject(void* handle)
     return (FreeLibrary(static_cast<HMODULE>(handle)) != 0);
 }
 
-constexpr const char* const extension = ".dll";
-constexpr const char* const prefix    = "";
+constexpr char const extension[] = ".dll";
+constexpr char const prefix[]    = "";
+
 #else
-   // For now, windows or linux
+
+// For now, windows or linux
 #include <dlfcn.h>
-inline void* getMethod(void* handle, const char* methodName)
+inline void* getMethod(void* handle, char const* const methodName)
 {
     return static_cast<void*>(dlsym(handle, methodName));
 }
 
-inline void* loadSharedObject(const char* fileName)
+inline void* loadSharedObject(char const* const fileName)
 {
     return static_cast<void*>(dlopen(fileName, RTLD_LAZY));
 }
 
 inline bool freeSharedObject(void* handle)
 {
-    return (dlclose(handle) != 0);
+    return (dlclose(handle) == 0);
 }
+
 constexpr const char* const extension = ".so";
 constexpr const char* const prefix    = "./lib";
 
@@ -91,14 +94,14 @@ LoadedInstance::~LoadedInstance()
     delete m_private;
 }
 
-bool LoadedInstance::load(const char* fileName)
+bool LoadedInstance::load(char const* fileName)
 {
     m_private->m_sharedFileHandle =
         loadSharedObject(formatFileName(fileName, extension, prefix).c_str());
     return loaded();
 }
 
-void* LoadedInstance::loadMethod(const char* methodName)
+void const* LoadedInstance::loadMethod(char const* methodName)
 {
     if (loaded())
     {
@@ -140,7 +143,7 @@ bool LoadedInstance::unload()
     return result;
 }
 
-void* LoadedInstance::loadedData() const
+void const* LoadedInstance::loadedData() const
 {
     return m_private->m_sharedFileHandle;
 }

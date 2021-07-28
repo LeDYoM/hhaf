@@ -1,31 +1,39 @@
 #include "app_loader.hpp"
-#include <agloader/include/loader.hpp>
 
 using namespace htps;
 
 namespace haf::host
 {
-ManagedApp AppLoader::loadApp(const str& file) const
+AppLoader::AppLoader() : loader_{agloader::createLoader()}
+{}
+
+AppLoader::~AppLoader()
 {
-    using namespace agloader;
-    auto* loader(createLoader());
+    loader_ = nullptr;
+    agloader::destroyLoader();
+}
 
-    if (loader->loadModule(file.c_str()))
+ManagedApp AppLoader::loadApp(const str& file)
+{
+    if (loader_->loadModule(file.c_str()))
     {
-        auto fp_init_app =
-            (p_initApp)loader->loadMethod(file.c_str(), "createApp");
-        auto fp_destroy_app =
-            (p_finishApp)loader->loadMethod(file.c_str(), "destroyApp");
+        p_initApp fp_init_app =
+            loader_->loadMethod<p_initApp>(file.c_str(), "createApp");
+        p_finishApp fp_destroy_app =
+            loader_->loadMethod<p_finishApp>(file.c_str(), "destroyApp");
 
-        return loadApp(fp_init_app, fp_destroy_app);
+        return loadApp(fp_init_app, fp_destroy_app, file);
     }
+
     return ManagedApp();
 }
 
-ManagedApp AppLoader::loadApp(p_initApp init_app, p_finishApp finish_app) const
+ManagedApp AppLoader::loadApp(p_initApp init_app,
+                              p_finishApp finish_app,
+                              str const& origin_file) const
 {
     // Do the loading if parameters are correct.
-    return {init_app ? init_app() : nullptr, init_app, finish_app};
+    return {init_app ? init_app() : nullptr, init_app, finish_app, origin_file};
 }
 
 bool AppLoader::unloadApp(ManagedApp& managed_app) const
@@ -37,6 +45,10 @@ bool AppLoader::unloadApp(ManagedApp& managed_app) const
     if (managed_app.finish_app)
     {
         managed_app.finish_app(managed_app.app);
+        if (loader_ != nullptr)
+        {
+            result = loader_->unloadModule(managed_app.origin_file.c_str());
+        }
         result = true;
     }
     else if (managed_app.app)
@@ -48,7 +60,6 @@ bool AppLoader::unloadApp(ManagedApp& managed_app) const
     managed_app.app        = nullptr;
     managed_app.init_app   = nullptr;
     managed_app.finish_app = nullptr;
-    destroyLoader();
     return result;
 }
 

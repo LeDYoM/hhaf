@@ -4,16 +4,16 @@
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
 
-#include <haf/include/scene/icomponent.hpp>
+#include <haf/include/components/icomponent.hpp>
 
 namespace haf::rnd
 {
 /**
  * @brief This component class is intended to be used to generate
  * a series of random numbers.
- * @see scene::IStaticComponent
+ * @see component::IComponent
  */
-class RandomNumbersComponent final : public scene::IStaticComponent
+class RandomNumbersComponent final : public component::IComponent
 {
 public:
     RandomNumbersComponent() noexcept;

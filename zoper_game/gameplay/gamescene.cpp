@@ -24,7 +24,7 @@
 
 #include <boardmanager/include/boardmanager.hpp>
 #include <hlog/include/hlog.hpp>
-#include <haf/include/scene/componentcontainer.hpp>
+#include <haf/include/components/component_container.hpp>
 #include <haf/include/render/renderizable.hpp>
 #include <haf/include/scene_components/scenecontrol.hpp>
 #include <haf/include/shareddata/shareddataupdater.hpp>
@@ -79,14 +79,14 @@ void GameScene::onCreated()
 
     // Create the general timer component for the scene.
     scene_timer_component_ =
-        components().addComponentOfType<time::TimerComponent>();
+        components().component<time::TimerComponent>();
 
     p_->scene_animation_component_ =
-        components().addComponentOfType<AnimationComponent>();
+        components().component<AnimationComponent>();
 
     // At this point, we setup level properties.
     // level_properties_ should not be used before this point.
-    level_properties_ = components().addComponentOfType<LevelProperties>();
+    level_properties_ = components().component<LevelProperties>();
 
     size_type start_level;
     GameMode game_mode;
@@ -107,7 +107,7 @@ void GameScene::onCreated()
     m_boardGroup->configure(TokenZones::size, level_properties_);
 
 #ifdef USE_DEBUG_ACTIONS
-    components().addComponentOfType<DebugActions>();
+    components().component<DebugActions>();
 #endif
 
     // The next token has the responsibility of calling the function
@@ -141,7 +141,7 @@ void GameScene::onCreated()
     }
 
     p_->token_type_generator_ =
-        components().addComponentOfType<rnd::RandomNumbersComponent>();
+        components().component<rnd::RandomNumbersComponent>();
     LogAsserter::log_assert(p_->token_type_generator_ != nullptr,
                             "Cannot create RandomNumbersComponent");
 
@@ -149,7 +149,7 @@ void GameScene::onCreated()
     LogAsserter::log_assert(p_->token_position_generator_ != nullptr,
                             "Cannot create RandomNumbersComponent");
 
-    auto game_scene_input = components().addComponentOfType<GameSceneInput>();
+    auto game_scene_input = components().component<GameSceneInput>();
     game_scene_input->configure(m_sceneStates, m_boardGroup);
 
     p_->key_mapping_ = muptr<KeyMapping>();

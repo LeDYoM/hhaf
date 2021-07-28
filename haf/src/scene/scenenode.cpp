@@ -1,6 +1,6 @@
 #include <haf/include/scene/scenenode.hpp>
 
-#include <haf/include/scene/componentcontainer.hpp>
+#include <haf/include/components/component_container.hpp>
 #include <haf/include/scene/scene.hpp>
 #include <haf/include/system/datawrappercreator.hpp>
 
@@ -11,7 +11,7 @@ namespace haf::scene
 struct SceneNode::SceneNodePrivate
 {
     SceneNodePrivate() = default;
-    uptr<ComponentContainer> component_container_;
+    uptr<component::ComponentContainer> component_container_;
     uptr<sys::DataWrapperCreator> subsystems_;
 };
 
@@ -34,17 +34,17 @@ void SceneNode::clearAll()
     // clearComponents();
 }
 
-ComponentContainer& SceneNode::components()
+component::ComponentContainer& SceneNode::components()
 {
     if (p_->component_container_ == nullptr)
     {
-        p_->component_container_ = muptr<ComponentContainer>(this);
+        p_->component_container_ = muptr<component::ComponentContainer>(this);
     }
 
     return *(p_->component_container_);
 }
 
-ComponentContainer const& SceneNode::components() const noexcept
+component::ComponentContainer const& SceneNode::components() const noexcept
 {
     return *(p_->component_container_);
 }

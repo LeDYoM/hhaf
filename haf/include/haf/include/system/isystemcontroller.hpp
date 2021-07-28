@@ -33,6 +33,11 @@ public:
     virtual bool runStep()                      = 0;
     virtual void terminate()                    = 0;
 };
+
+using DestructibleSystemController =
+    htps::uptr<sys::ISystemController,
+               htps::function<void(sys::ISystemController*)>>;
+
 }  // namespace haf::sys
 
 #endif

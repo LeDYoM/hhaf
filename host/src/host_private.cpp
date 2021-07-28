@@ -20,37 +20,43 @@ str Host::HostPrivate::configuredFirstApp() const
     return config_.configuredFirstApp();
 }
 
-rptr<sys::ISystemController> Host::HostPrivate::systemController() noexcept
-{
-    return system_loader_.systemController();
-}
-
-rptr<sys::ISystemController const> Host::HostPrivate::systemController()
-    const noexcept
-{
-    return system_loader_.systemController();
-}
-
-bool Host::HostPrivate::initialize()
+bool Host::HostPrivate::initializeBackend()
 {
     // Initialize and create the backend factory
     backend_factory_ =
         uptr<backend::BackendFactory, void (*)(haf::backend::BackendFactory*)>(
             createBackendFactory(), destroyBackendFactory);
 
-    // Return the status of loading the first application
-    return backend_factory_ != nullptr && loadApplication(configuredFirstApp());
+    return backend_factory_ != nullptr;
 }
 
-bool Host::HostPrivate::loopStep()
+bool Host::HostPrivate::initializeHaf()
 {
-    return systemController()->runStep();
+    auto const result_load_functions = system_loader_.loadFunctions();
+    if (result_load_functions != SystemControllerLoader::ResultType::Success)
+    {
+        DisplayLog::error("Cannot load haf system!");
+    }
+    return result_load_functions == SystemControllerLoader::ResultType::Success;
+}
+
+bool Host::HostPrivate::initialize()
+{
+    auto const result_init_backend{initializeBackend()};
+    auto const result_load_functions{initializeHaf()};
+
+    // Return the status of loading the first application
+    return result_init_backend && result_load_functions &&
+        loadApplication(configuredFirstApp());
 }
 
 bool Host::HostPrivate::update()
 {
-    auto& app = app_group_.currentHostedApplication();
+    return updateApp(app_group_.currentHostedApplication());
+}
 
+bool Host::HostPrivate::updateApp(HostedApplication& app)
+{
     switch (app.app_state)
     {
         case AppState::NotInitialized:
@@ -58,21 +64,16 @@ bool Host::HostPrivate::update()
         case AppState::ReadyToStart:
         {
             DisplayLog::info("Starting initialization of new App...");
-            app.app_state     = AppState::Executing;
-            auto const result_load_functions = system_loader_.loadFunctions();
-            if (result_load_functions != SystemControllerLoader::ResultType::Success)
-            {
-                DisplayLog::error("Cannot load haf system!");
-                app.app_state = AppState::ReadyToTerminate;
-            }
-            else if (!system_loader_.create())
+            app.app_state                    = AppState::Executing;
+            app.app_system_controller = system_loader_.create();
+            if (app.app_system_controller == nullptr)
             {
                 DisplayLog::error("Cannot create haf system!");
                 app.app_state = AppState::ReadyToTerminate;
             }
             else
             {
-                systemController()->init(app.managed_app_.app, nullptr,
+                app.app_system_controller->init(app.managed_app_.app, nullptr,
                                          backend_factory_.get(), argc_, argv_);
 
                 DisplayLog::info(appDisplayNameAndVersion(app),
@@ -82,7 +83,7 @@ bool Host::HostPrivate::update()
         break;
         case AppState::Executing:
         {
-            if (loopStep())
+            if (app.app_system_controller->runStep())
             {
                 app.app_state = AppState::ReadyToTerminate;
                 DisplayLog::info(appDisplayNameAndVersion(app),
@@ -94,8 +95,8 @@ bool Host::HostPrivate::update()
             DisplayLog::info(appDisplayNameAndVersion(app),
                              ": started termination");
             app.app_state = AppState::Terminated;
-            systemController()->terminate();
-            system_loader_.destroy();
+            app.app_system_controller->terminate();
+            app.app_system_controller.reset();
             return true;
             break;
         case AppState::Terminated:

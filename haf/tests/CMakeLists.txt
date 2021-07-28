@@ -4,6 +4,8 @@ project(haf_utests CXX)
 set(CURRENT_TARGET ${PROJECT_NAME})
 
 set(SOURCE_TESTS
+    components/component_container
+
     scene/color
     scene/matrix4x4
     scene/matrix4x4.benchmark
@@ -17,7 +19,6 @@ set(SOURCE_TESTS
     scene/transformation
 
     scene_components/animationcomponent
-    scene_components/componentcontainer
     scene_components/statescontroller
 
     shareddata/address

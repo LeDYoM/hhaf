@@ -1,14 +1,14 @@
-#ifndef HAF_SCENE_COMPONENTCONTAINERPART_INCLUDE_HPP
-#define HAF_SCENE_COMPONENTCONTAINERPART_INCLUDE_HPP
+#ifndef HAF_SCENE_COMPONENTCONTAINER_INCLUDE_HPP
+#define HAF_SCENE_COMPONENTCONTAINER_INCLUDE_HPP
 
 #include <hlog/include/hlog.hpp>
-#include <haf/include/scene/icomponent.hpp>
+#include <haf/include/components/icomponent.hpp>
 #include <haf/include/utils/attachable_manager.hpp>
 #include <htypes/include/lockablevector.hpp>
 #include <htypes/include/types.hpp>
 #include <typeindex>
 
-namespace haf::scene
+namespace haf::component
 {
 /**
  * @brief Templated class representing a templated part of a component
@@ -20,19 +20,17 @@ namespace haf::scene
  * container should contain update function or not and if this function will
  * be updated.
  */
-template <bool WithUpdate>
-class ComponentContainerPart
-    : public utils::AttachableManager<IComponentBase<WithUpdate>>
+class ComponentContainer : public utils::AttachableManager<IComponent>
 {
 public:
-    using ComponentType  = IComponentBase<WithUpdate>;
+    using ComponentType  = IComponent;
     using BaseClass      = utils::AttachableManager<ComponentType>;
     using AttachableType = typename BaseClass::AttachableType;
 
     using BaseClass::AttachableManager;
 
     template <typename T>
-    htps::sptr<T> addComponentOfType()
+    htps::sptr<T> component()
     {
         LogAsserter::log_assert(componentOfType<T>() == nullptr,
                                 "There is already a component with this type");
@@ -46,23 +44,15 @@ public:
     {
         if (!element)
         {
-            element = addComponentOfType<T>();
+            element = component<T>();
         }
     }
 
     void updateComponents()
     {
-        if constexpr (WithUpdate)
-        {
-            components_.performUpdate(
-                [](const htps::sptr<IComponent>& component) {
-                    component->update();
-                });
-        }
-        else
-        {
-            components_.update();
-        }
+        components_.performUpdate([](const htps::sptr<IComponent>& component) {
+            component->update();
+        });
     }
 
     /**
@@ -90,9 +80,9 @@ private:
     }
 
     template <typename T>
-    void addComponentOfType(htps::sptr<T>& component)
+    void component(htps::sptr<T>& _component)
     {
-        component = addComponentOfType<T>();
+        _component = component<T>();
     }
 
     std::type_index tindexOf(const htps::sptr<ComponentType>& c) const
@@ -104,7 +94,7 @@ private:
         const std::type_index& tindex) const
     {
         const auto v{components_.next()};
-        auto iterator(std::find_if(
+        auto iterator(v.find_if(
             v.cbegin(), v.cend(),
             [this, &tindex](const htps::sptr<ComponentType>& component) {
                 return tindexOf(component) == tindex;
@@ -121,6 +111,6 @@ private:
     htps::LockableVector<htps::sptr<ComponentType>> components_;
 };
 
-}  // namespace haf::scene
+}  // namespace haf::component
 
 #endif

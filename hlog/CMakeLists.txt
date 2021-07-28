@@ -24,5 +24,4 @@ build_lib_component(EXPORT_ALL HEADER_DIRECTORY "${PROJECT_SOURCE_DIR}" SOURCES
 find_package(Threads REQUIRED)
 target_link_libraries(${CURRENT_TARGET} PRIVATE Threads::Threads)
 
-target_link_libraries(${CURRENT_TARGET} PUBLIC logger)
-target_link_libraries(${CURRENT_TARGET} PUBLIC htypes)
+target_link_libraries(${CURRENT_TARGET} PUBLIC logger htypes)

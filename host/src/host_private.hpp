@@ -48,9 +48,8 @@ public:
 
     str configuredFirstApp() const;
 
-    bool loopStep();
-
     bool update();
+    bool updateApp(HostedApplication& app);
 
     bool addApplication(ManagedApp managed_app, htps::str name);
     bool loadApplication(htps::str const& app_name);
@@ -61,8 +60,8 @@ public:
     bool exit{false};
 
 private:
-    rptr<haf::sys::ISystemController> systemController() noexcept;
-    rptr<haf::sys::ISystemController const> systemController() const noexcept;
+    bool initializeBackend();
+    bool initializeHaf();
 };
 
 }  // namespace haf::host

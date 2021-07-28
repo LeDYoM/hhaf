@@ -4,6 +4,11 @@
 #include <htypes/include/types.hpp>
 #include <backend_dev/include/iresourcefactories.hpp>
 
+namespace agloader
+{
+    class Loader;
+}
+
 namespace haf::backend
 {
 class BackendRegister;
@@ -39,6 +44,7 @@ private:
     htps::rptr<ITTFontFactory> ttfontFactory_{nullptr};
     htps::rptr<IShaderFactory> shaderFactory_{nullptr};
     htps::rptr<IBMPFontFactory> bmpFontFactory_{nullptr};
+    htps::rptr<agloader::Loader> loader_{nullptr};
 };
 }  // namespace haf::backend
 

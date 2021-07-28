@@ -3,14 +3,14 @@
 
 #include <htypes/include/types.hpp>
 #include <haf/include/scene_nodes/scenenodetext.hpp>
-#include <haf/include/scene/icomponent.hpp>
+#include <haf/include/components/icomponent.hpp>
 
 namespace haf::scene
 {
-class DiscreteTextComponent final : public IComponent
+class DiscreteTextComponent final : public component::IComponent
 {
+    using BaseClass = component::IComponent;
 public:
-    using BaseClass = IComponent;
 
     htps::BasicProperty<bool> circleAroud{true};
     htps::BasicProperty<htps::string_vector> data;

@@ -70,7 +70,7 @@ public:
      * @brief Remove an element. Overload for rvalues
      * @param element The element to remove.
      */
-    constexpr void erase_values(T&& element)
+    constexpr void erase_value(T&& element)
     {
         remove_cache_.push_back(std::move(element));
     }
@@ -84,12 +84,6 @@ public:
     {
         add_to_main_container();
         remove_from_containers();
-    }
-
-    constexpr void swap()
-    {
-        main_container_.clear();
-        update();
     }
 
     /**
@@ -107,7 +101,7 @@ public:
      * @brief Retrieve a reference to the internal main container.
      * @return const vector<T>& lvalue reference to the main container.
      */
-    constexpr const vector<T>& deferred_current() const noexcept
+    constexpr vector<T> const& deferred_current() const noexcept
     {
         return main_container_;
     }
@@ -118,8 +112,7 @@ public:
      */
     constexpr vector<T> next() const
     {
-        LockableVector<T> temp(*this);
-        return temp.current();
+        return LockableVector<T>(*this).current();
     }
 
     /**
@@ -128,7 +121,7 @@ public:
      * @return constexpr const vector<T>& const lvalue reference to the updated
      * main container.
      */
-    constexpr const vector<T>& current() noexcept
+    constexpr vector<T> const& current() noexcept
     {
         update();
         return main_container_;
@@ -136,17 +129,17 @@ public:
 
     /**
      * @brief Retrieve the number of pending elements to be added.
-     * @return constexpr size_type The number of elements.
+     * @return The number of elements.
      */
-    constexpr size_type pending_add() const noexcept
+    constexpr auto pending_add() const noexcept
     {
         return addingCache_.size();
     }
 
     /**
      * @brief Ask if there is any number of elements pending to be added.
-     * @return true
-     * @return false
+     * @return true Elements are waiting for an update
+     * @return false No elements waiting for an update
      */
     constexpr bool are_pending_adds() const noexcept
     {
@@ -155,7 +148,7 @@ public:
 
     /**
      * @brief Retrieve the number of pending elements to be added.
-     * @return constexpr auto The number of elements.
+     * @return The number of elements waiting to be removed.
      */
     constexpr auto pending_remove() const noexcept
     {
@@ -164,8 +157,8 @@ public:
 
     /**
      * @brief Ask if there is any number of elements pending to be removed.
-     * @return true
-     * @return false
+     * @return true The are some pending removes waiting
+     * @return false No pending removes
      */
     constexpr bool are_pending_removes() const noexcept
     {

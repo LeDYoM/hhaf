@@ -1,7 +1,7 @@
 #include <menu_paged/include/menu_page.hpp>
 #include <menu_paged/include/menu_paged.hpp>
 #include <menu_paged/include/menu_paged_input_component.hpp>
-#include <haf/include/scene/componentcontainer.hpp>
+#include <haf/include/components/component_container.hpp>
 
 #include <hlog/include/hlog.hpp>
 #include <haf/include/input/key.hpp>
@@ -19,7 +19,7 @@ void MenuPage::onCreated()
 {
     BaseClass::onCreated();
 
-    auto input = components().addComponentOfType<MenuPageInputComponent>();
+    auto input = components().component<MenuPageInputComponent>();
     input->Up.connect({this, &MenuPage::goUp});
     input->Down.connect({this, &MenuPage::goDown});
     input->Left.connect({this, &MenuPage::goLeft});
@@ -100,7 +100,7 @@ void MenuPage::configure(vector<sptr<MenuPagedOption>> options,
             standarizeText(discreteTextLabel);
             auto discreteTextComponent(
                 discreteTextLabel->components()
-                    .addComponentOfType<DiscreteTextComponent>());
+                    .component<DiscreteTextComponent>());
             discreteTextComponent->data.set(option->option().options());
         }
 

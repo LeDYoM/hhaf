@@ -372,7 +372,7 @@ public:
 
     template <typename F>
     constexpr const_iterator cfind_if(const_iterator begin,
-                                      const const_iterator end,
+                                      const_iterator const end,
                                       F&& f) const noexcept
     {
         checkRange(begin);

@@ -2,12 +2,12 @@
 #define HAF_INPUT_COMPONENT_BASE_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
-#include <haf/include/scene/icomponent.hpp>
+#include <haf/include/components/icomponent.hpp>
 #include <haf/include/input/key.hpp>
 
 namespace haf::input
 {
-class InputComponentBase : public scene::IComponent
+class InputComponentBase : public component::IComponent
 {
 public:
     bool isPressed(const Key key);

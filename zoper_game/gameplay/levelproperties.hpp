@@ -5,7 +5,7 @@
 #include <htypes/include/vector2d.hpp>
 
 #include <haf/include/time/timercomponent.hpp>
-#include <haf/include/scene/icomponent.hpp>
+#include <haf/include/components/icomponent.hpp>
 #include <haf/include/scene/color.hpp>
 
 #include "../gameshareddata.hpp"
@@ -17,7 +17,7 @@ using namespace haf;
 
 using LevelType = htps::size_type;
 
-class LevelProperties : public haf::scene::IComponent
+class LevelProperties : public haf::component::IComponent
 {
 public:
     void configure(const htps::size_type currentLevel,

@@ -25,10 +25,18 @@ struct LogAsserter
         if (!cond)
         {
             LogDisplayerClass::error(std::forward<Args>(args)...);
-            assert(cond);
+            if (UseLowLevelAssert)
+            {
+                assert(cond);
+            }
         }
     }
+
+    static bool UseLowLevelAssert;
 };
+
+template <typename LogDisplayerClass>
+bool LogAsserter<LogDisplayerClass>::UseLowLevelAssert{true};
 
 }  // namespace logger
 

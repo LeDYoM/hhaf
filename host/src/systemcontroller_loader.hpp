@@ -2,6 +2,7 @@
 #define HAF_HOST_SYSTEM_CONTROLLER_LOADER_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
+#include <htypes/include/function.hpp>
 #include <haf/include/system/isystemcontroller.hpp>
 
 namespace agloader
@@ -17,7 +18,7 @@ public:
     using CreateSystemController_t  = haf::sys::ISystemController* (*)();
     using DestroySystemController_t = void (*)(haf::sys::ISystemController*);
 
-    SystemControllerLoader() = default;
+    SystemControllerLoader();
     ~SystemControllerLoader();
 
     enum class ResultType : htps::u32
@@ -31,18 +32,16 @@ public:
     };
 
     [[nodiscard]] ResultType loadFunctions();
-    [[nodiscard]] bool create();
-    void destroy();
-    [[nodiscard]] htps::rptr<haf::sys::ISystemController>
-    systemController() noexcept;
-    [[nodiscard]] htps::rptr<haf::sys::ISystemController const>
-    systemController() const noexcept;
+    [[nodiscard]] sys::DestructibleSystemController create();
 
 private:
-    htps::rptr<agloader::Loader> loader_{nullptr};
-    htps::rptr<haf::sys::ISystemController> system_controller_{nullptr};
+    void destroy(sys::ISystemController* system_controller);
+
+    htps::rptr<agloader::Loader> loader_;
     CreateSystemController_t fp_haf_create_system_controller_;
     DestroySystemController_t fp_haf_destroy_system_controller_;
+    htps::size_type created_{0U};
+    htps::size_type deleted_{0U};
 };
 }  // namespace haf::host
 

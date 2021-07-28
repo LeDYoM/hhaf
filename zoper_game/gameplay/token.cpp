@@ -8,7 +8,7 @@
 
 #include <haf/include/render/renderizables.hpp>
 #include <haf/include/render/renderizable_builder.hpp>
-#include <haf/include/scene/componentcontainer.hpp>
+#include <haf/include/components/component_container.hpp>
 
 using namespace htps;
 using namespace haf;
@@ -31,7 +31,7 @@ Token::Token(SceneNode* const parent, str name) :
                   .figType(FigType_t::Shape)
                   .pointCount(30U));
     animation_component_ =
-        components().addComponentOfType<scene::AnimationComponent>();
+        components().component<scene::AnimationComponent>();
 }
 
 Token::~Token() = default;

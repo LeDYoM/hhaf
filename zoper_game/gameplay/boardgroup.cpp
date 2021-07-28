@@ -12,7 +12,7 @@
 #include <haf/include/scene_components/scenemetricsview.hpp>
 #include <haf/include/render/renderizable.hpp>
 #include <haf/include/scene/scenenode_cast.hpp>
-#include <haf/include/scene/componentcontainer.hpp>
+#include <haf/include/components/component_container.hpp>
 
 #include <boardmanager/include/boardmanager.hpp>
 #include <boardmanager/include/itile.hpp>
@@ -54,7 +54,7 @@ void BoardGroup::configure(vector2dst size,
     }
 
     // Create and initialize the BoardManager
-    auto board_model = components().addComponentOfType<board::BoardManager>();
+    auto board_model = components().component<board::BoardManager>();
     board_model->initialize(tableSize, this);
 
     board_model->setBackgroundFunction(
