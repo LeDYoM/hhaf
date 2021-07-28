@@ -104,7 +104,7 @@ private:
         const std::type_index& tindex) const
     {
         const auto v{components_.next()};
-        auto iterator(std::find_if(
+        auto iterator(v.find_if(
             v.cbegin(), v.cend(),
             [this, &tindex](const htps::sptr<ComponentType>& component) {
                 return tindexOf(component) == tindex;
