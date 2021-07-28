@@ -61,13 +61,13 @@ TEST_CASE("LockableVector", "[LockableVector]")
 
         SECTION("Remove")
         {
-            lockable_vector.erase_values(1);
+            lockable_vector.erase_value(1);
             CHECK(lockable_vector.are_pending_removes());
             CHECK(lockable_vector.pending_remove() == 1U);
             const auto v(lockable_vector.deferred_current());
             CHECK_FALSE(v == lockable_vector.current());
             CHECK(lockable_vector.current().size() == 4U);
-            lockable_vector.erase_values(1U);
+            lockable_vector.erase_value(1U);
             CHECK(lockable_vector.deferred_current() ==
                   lockable_vector.current());
             CHECK(lockable_vector.current().size() == 4U);
@@ -75,7 +75,7 @@ TEST_CASE("LockableVector", "[LockableVector]")
 
         SECTION("Mix Add and Remove (KISS version)")
         {
-            lockable_vector.erase_values(1U);
+            lockable_vector.erase_value(1U);
             lockable_vector.push_back(5U);
             lockable_vector.emplace_back(6U);
 
@@ -93,7 +93,7 @@ TEST_CASE("LockableVector", "[LockableVector]")
 
         SECTION("Mix Add and Remove (more complicated version)")
         {
-            lockable_vector.erase_values(1U);
+            lockable_vector.erase_value(1U);
             lockable_vector.push_back(5U);
             lockable_vector.emplace_back(6U);
 
@@ -108,7 +108,7 @@ TEST_CASE("LockableVector", "[LockableVector]")
                 auto rsv(next_one.capacity());
 
                 lockable_vector.push_back(9U);
-                lockable_vector.erase_values(3U);
+                lockable_vector.erase_value(3U);
 
                 CHECK(next_one.size() == sz);
                 CHECK(next_one.capacity() == rsv);
