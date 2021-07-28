@@ -54,7 +54,7 @@ void BoardGroup::configure(vector2dst size,
     }
 
     // Create and initialize the BoardManager
-    auto board_model = components().addComponentOfType<board::BoardManager>();
+    auto board_model = components().component<board::BoardManager>();
     board_model->initialize(tableSize, this);
 
     board_model->setBackgroundFunction(

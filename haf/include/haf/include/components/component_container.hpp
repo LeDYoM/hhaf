@@ -30,7 +30,7 @@ public:
     using BaseClass::AttachableManager;
 
     template <typename T>
-    htps::sptr<T> addComponentOfType()
+    htps::sptr<T> component()
     {
         LogAsserter::log_assert(componentOfType<T>() == nullptr,
                                 "There is already a component with this type");
@@ -44,7 +44,7 @@ public:
     {
         if (!element)
         {
-            element = addComponentOfType<T>();
+            element = component<T>();
         }
     }
 
@@ -80,9 +80,9 @@ private:
     }
 
     template <typename T>
-    void addComponentOfType(htps::sptr<T>& component)
+    void component(htps::sptr<T>& _component)
     {
-        component = addComponentOfType<T>();
+        _component = component<T>();
     }
 
     std::type_index tindexOf(const htps::sptr<ComponentType>& c) const

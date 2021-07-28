@@ -19,7 +19,7 @@ void MenuPage::onCreated()
 {
     BaseClass::onCreated();
 
-    auto input = components().addComponentOfType<MenuPageInputComponent>();
+    auto input = components().component<MenuPageInputComponent>();
     input->Up.connect({this, &MenuPage::goUp});
     input->Down.connect({this, &MenuPage::goDown});
     input->Left.connect({this, &MenuPage::goLeft});
@@ -100,7 +100,7 @@ void MenuPage::configure(vector<sptr<MenuPagedOption>> options,
             standarizeText(discreteTextLabel);
             auto discreteTextComponent(
                 discreteTextLabel->components()
-                    .addComponentOfType<DiscreteTextComponent>());
+                    .component<DiscreteTextComponent>());
             discreteTextComponent->data.set(option->option().options());
         }
 

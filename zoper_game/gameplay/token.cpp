@@ -31,7 +31,7 @@ Token::Token(SceneNode* const parent, str name) :
                   .figType(FigType_t::Shape)
                   .pointCount(30U));
     animation_component_ =
-        components().addComponentOfType<scene::AnimationComponent>();
+        components().component<scene::AnimationComponent>();
 }
 
 Token::~Token() = default;

@@ -17,7 +17,7 @@ struct TestComponent : public IComponent
 
     sptr<TestComponent> addAnother()
     {
-        return attachedNode()->components().addComponentOfType<TestComponent>();
+        return attachedNode()->components().component<TestComponent>();
     }
 
 private:
@@ -33,14 +33,18 @@ TEST_CASE("haf::scene::ComponentContainer", "[ComponentContainer][constructor]")
     SECTION("Add component")
     {
         sptr<TestComponent> component =
-            component_container_no_parent->addComponentOfType<TestComponent>();
+            component_container_no_parent->component<TestComponent>();
+
+        LogAsserter::UseLowLevelAssert = false;
+        sptr<TestComponent> component_not_created =
+            component_container_no_parent->component<TestComponent>();        
 
         SECTION("Update")
         {
             component_container_no_parent->updateComponents();
             CHECK(component->data_ == 1);
 
-            SECTION("Add twice")
+            SECTION("Try Add twice")
             {
                 sptr<TestComponent> component2 = component;
                 component_container_no_parent->ensureComponentOfType(
@@ -67,7 +71,7 @@ TEST_CASE("haf::scene::ComponentContainer", "[ComponentContainer][constructor]")
     SECTION("Clear")
     {
         sptr<TestComponent> component =
-            component_container_no_parent->addComponentOfType<TestComponent>();
+            component_container_no_parent->component<TestComponent>();
         auto data_copy(component->data_);
         component_container_no_parent->clearComponents();
         CHECK(data_copy == component->data_);
