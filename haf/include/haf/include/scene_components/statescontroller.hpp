@@ -7,7 +7,7 @@
 #include <htypes/include/stack.hpp>
 #include <htypes/include/lockablevector.hpp>
 #include <hlog/include/hlog.hpp>
-#include <haf/include/scene/icomponent.hpp>
+#include <haf/include/components/icomponent.hpp>
 
 namespace haf
 {

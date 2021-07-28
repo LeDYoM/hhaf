@@ -24,7 +24,7 @@
 
 #include <boardmanager/include/boardmanager.hpp>
 #include <hlog/include/hlog.hpp>
-#include <haf/include/scene/component_container.hpp>
+#include <haf/include/components/component_container.hpp>
 #include <haf/include/render/renderizable.hpp>
 #include <haf/include/scene_components/scenecontrol.hpp>
 #include <haf/include/shareddata/shareddataupdater.hpp>

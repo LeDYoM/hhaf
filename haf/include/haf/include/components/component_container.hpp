@@ -2,7 +2,7 @@
 #define HAF_SCENE_COMPONENTCONTAINER_INCLUDE_HPP
 
 #include <hlog/include/hlog.hpp>
-#include <haf/include/scene/icomponent.hpp>
+#include <haf/include/components/icomponent.hpp>
 #include <haf/include/utils/attachable_manager.hpp>
 #include <htypes/include/lockablevector.hpp>
 #include <htypes/include/types.hpp>

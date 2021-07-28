@@ -13,7 +13,7 @@
 #include <haf/include/shareddata/shareddata.hpp>
 #include <haf/include/shareddata/shareddataviewer.hpp>
 #include <haf/include/input/inputcomponent.hpp>
-#include <haf/include/scene/component_container.hpp>
+#include <haf/include/components/component_container.hpp>
 
 using namespace htps;
 using namespace haf;

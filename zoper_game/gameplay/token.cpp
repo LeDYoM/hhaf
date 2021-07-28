@@ -8,7 +8,7 @@
 
 #include <haf/include/render/renderizables.hpp>
 #include <haf/include/render/renderizable_builder.hpp>
-#include <haf/include/scene/component_container.hpp>
+#include <haf/include/components/component_container.hpp>
 
 using namespace htps;
 using namespace haf;

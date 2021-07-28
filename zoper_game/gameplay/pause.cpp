@@ -5,7 +5,7 @@
 #include <haf/include/scene_nodes/scenenodetext.hpp>
 #include <haf/include/scene_components/animationcomponent.hpp>
 #include <haf/include/scene_components/scenemetricsview.hpp>
-#include <haf/include/scene/component_container.hpp>
+#include <haf/include/components/component_container.hpp>
 
 #include <haf/include/resources/itexture.hpp>
 #include <haf/include/resources/ittfont.hpp>

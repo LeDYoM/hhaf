@@ -5,7 +5,7 @@
 #include <htypes/include/lockablevector.hpp>
 #include <haf/include/time/timerconnector.hpp>
 #include <haf/include/time/timertype.hpp>
-#include <haf/include/scene/icomponent.hpp>
+#include <haf/include/components/icomponent.hpp>
 
 namespace haf::time
 {

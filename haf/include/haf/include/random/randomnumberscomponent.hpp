@@ -4,7 +4,7 @@
 #include <htypes/include/types.hpp>
 #include <htypes/include/str.hpp>
 
-#include <haf/include/scene/icomponent.hpp>
+#include <haf/include/components/icomponent.hpp>
 
 namespace haf::rnd
 {

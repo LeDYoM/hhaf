@@ -7,7 +7,7 @@
 #include <hlog/include/hlog.hpp>
 #include <haf/include/scene_nodes/renderizable_scenenode.hpp>
 #include <haf/include/render/renderizables.hpp>
-#include <haf/include/scene/component_container.hpp>
+#include <haf/include/components/component_container.hpp>
 
 namespace zoper
 {

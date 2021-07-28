@@ -4,7 +4,7 @@
 #include <htypes/include/types.hpp>
 #include <htypes/include/function.hpp>
 #include <htypes/include/vector2d.hpp>
-#include <haf/include/scene/icomponent.hpp>
+#include <haf/include/components/icomponent.hpp>
 #include "itile.hpp"
 
 namespace haf::board

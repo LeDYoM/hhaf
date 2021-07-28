@@ -3,7 +3,7 @@
 
 #include <htypes/include/types.hpp>
 #include <haf/include/scene_nodes/scenenodetext.hpp>
-#include <haf/include/scene/icomponent.hpp>
+#include <haf/include/components/icomponent.hpp>
 
 namespace haf::scene
 {

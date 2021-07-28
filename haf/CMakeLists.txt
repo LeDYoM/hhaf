@@ -155,6 +155,10 @@ set(headers
   # Global
   ${inc_dir}/haf_export.hpp
 
+  # Components
+  ${inc_dir}/components/component_container.hpp
+  ${inc_dir}/components/icomponent.hpp
+
   # File system
   ${inc_dir}/filesystem/fileserializer.hpp
   ${inc_dir}/filesystem/path.hpp
@@ -193,9 +197,7 @@ set(headers
   # Scene
   ${inc_dir}/scene/color_imp.hpp
   ${inc_dir}/scene/color.hpp
-  ${inc_dir}/scene/component_container.hpp
   ${inc_dir}/scene/hasname.hpp
-  ${inc_dir}/scene/icomponent.hpp
   ${inc_dir}/scene/matrix4x4.hpp
   ${inc_dir}/scene/renderizables_scenenode.hpp
   ${inc_dir}/scene/scene.hpp
