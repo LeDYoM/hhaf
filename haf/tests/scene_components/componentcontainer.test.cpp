@@ -3,14 +3,12 @@
 #include <htypes/include/types.hpp>
 #include <haf/include/scene/scenenode.hpp>
 #include <haf/include/scene/scene.hpp>
-#include <haf/include/scene/componentcontainer.hpp>
+#include <haf/include/scene/component_container.hpp>
 #include <haf/include/scene/icomponent.hpp>
 
 using namespace htps;
 using namespace haf;
 using namespace haf::scene;
-
-using ComponentContainerWithUpdate = ComponentContainerPart<true>;
 
 struct TestComponent : public IComponent
 {
@@ -28,8 +26,8 @@ private:
 TEST_CASE("haf::scene::ComponentContainer", "[ComponentContainer][constructor]")
 {
     // Create scenario for testing
-    sptr<ComponentContainerWithUpdate> component_container_no_parent(
-        msptr<ComponentContainerWithUpdate>(nullptr));
+    sptr<ComponentContainer> component_container_no_parent(
+        msptr<ComponentContainer>(nullptr));
 
     SECTION("Add component")
     {

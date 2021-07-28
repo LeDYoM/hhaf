@@ -13,7 +13,7 @@ namespace haf::rnd
  * a series of random numbers.
  * @see scene::IStaticComponent
  */
-class RandomNumbersComponent final : public scene::IStaticComponent
+class RandomNumbersComponent final : public scene::IComponent
 {
 public:
     RandomNumbersComponent() noexcept;

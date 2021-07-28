@@ -4,7 +4,7 @@
 #include <haf/include/scene_components/statescontroller.hpp>
 #include <haf/include/scene_components/visibility_selector_component.hpp>
 #include <haf/include/scene_components/scenemetricsview.hpp>
-#include <haf/include/scene/componentcontainer.hpp>
+#include <haf/include/scene/component_container.hpp>
 
 using namespace htps;
 

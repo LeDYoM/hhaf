@@ -1,6 +1,6 @@
 #include <haf/include/scene/scenenode.hpp>
 
-#include <haf/include/scene/componentcontainer.hpp>
+#include <haf/include/scene/component_container.hpp>
 #include <haf/include/scene/scene.hpp>
 #include <haf/include/system/datawrappercreator.hpp>
 

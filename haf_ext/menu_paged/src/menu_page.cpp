@@ -1,7 +1,7 @@
 #include <menu_paged/include/menu_page.hpp>
 #include <menu_paged/include/menu_paged.hpp>
 #include <menu_paged/include/menu_paged_input_component.hpp>
-#include <haf/include/scene/componentcontainer.hpp>
+#include <haf/include/scene/component_container.hpp>
 
 #include <hlog/include/hlog.hpp>
 #include <haf/include/input/key.hpp>

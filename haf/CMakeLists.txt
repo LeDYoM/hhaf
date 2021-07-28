@@ -75,9 +75,6 @@ set(sources
 
   # Scene
   ${src_dir}/scene/color.cpp
-  ${src_dir}/scene/componentcontainer_no_update.cpp
-  ${src_dir}/scene/componentcontainer_update.cpp
-  ${src_dir}/scene/componentcontainer.cpp
   ${src_dir}/scene/matrix4x4.cpp
   ${src_dir}/scene/renderizables_scenenode.cpp
   ${src_dir}/scene/scene.cpp
@@ -196,8 +193,7 @@ set(headers
   # Scene
   ${inc_dir}/scene/color_imp.hpp
   ${inc_dir}/scene/color.hpp
-  ${inc_dir}/scene/componentcontainer_part.hpp
-  ${inc_dir}/scene/componentcontainer.hpp
+  ${inc_dir}/scene/component_container.hpp
   ${inc_dir}/scene/hasname.hpp
   ${inc_dir}/scene/icomponent.hpp
   ${inc_dir}/scene/matrix4x4.hpp

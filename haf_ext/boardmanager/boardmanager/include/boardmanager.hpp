@@ -11,7 +11,7 @@ namespace haf::board
 {
 class IBoardManagerActuator;
 
-class BoardManager : public haf::scene::IStaticComponent
+class BoardManager : public haf::scene::IComponent
 {
 public:
     using BackgroundData = htps::s32;

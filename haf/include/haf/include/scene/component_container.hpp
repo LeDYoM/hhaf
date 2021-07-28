@@ -1,5 +1,5 @@
-#ifndef HAF_SCENE_COMPONENTCONTAINERPART_INCLUDE_HPP
-#define HAF_SCENE_COMPONENTCONTAINERPART_INCLUDE_HPP
+#ifndef HAF_SCENE_COMPONENTCONTAINER_INCLUDE_HPP
+#define HAF_SCENE_COMPONENTCONTAINER_INCLUDE_HPP
 
 #include <hlog/include/hlog.hpp>
 #include <haf/include/scene/icomponent.hpp>
@@ -20,12 +20,11 @@ namespace haf::scene
  * container should contain update function or not and if this function will
  * be updated.
  */
-template <bool WithUpdate>
-class ComponentContainerPart
-    : public utils::AttachableManager<IComponentBase<WithUpdate>>
+class ComponentContainer
+    : public utils::AttachableManager<IComponent>
 {
 public:
-    using ComponentType  = IComponentBase<WithUpdate>;
+    using ComponentType  = IComponent;
     using BaseClass      = utils::AttachableManager<ComponentType>;
     using AttachableType = typename BaseClass::AttachableType;
 
@@ -52,17 +51,10 @@ public:
 
     void updateComponents()
     {
-        if constexpr (WithUpdate)
-        {
-            components_.performUpdate(
-                [](const htps::sptr<IComponent>& component) {
-                    component->update();
-                });
-        }
-        else
-        {
-            components_.update();
-        }
+        components_.performUpdate(
+            [](const htps::sptr<IComponent>& component) {
+                component->update();
+            });
     }
 
     /**

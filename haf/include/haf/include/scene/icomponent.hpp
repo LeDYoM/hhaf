@@ -8,22 +8,7 @@ namespace haf::scene
 {
 class SceneNode;
 
-/// Base class for all components attached to a scene node.
-template <bool WithUpdate>
-class IComponentBase;
-
-template <>
-class IComponentBase<false> : public utils::Attachable<SceneNode>
-{
-public:
-    using AttachedNodeType = utils::Attachable<SceneNode>::AttachedNodeType;
-
-    /// Destructor
-    ~IComponentBase() override {}
-};
-
-template <>
-class IComponentBase<true> : public utils::Attachable<SceneNode>
+class IComponent : public utils::Attachable<SceneNode>
 {
 public:
     using AttachedNodeType = utils::Attachable<SceneNode>::AttachedNodeType;
@@ -33,12 +18,7 @@ public:
      */
     virtual void update() {}
 
-    /// Destructor
-    ~IComponentBase() override {}
 };
-
-using IComponent       = IComponentBase<true>;
-using IStaticComponent = IComponentBase<true>;
 
 template <typename T1, typename T2>
 class IComponentMixin : public IComponent
