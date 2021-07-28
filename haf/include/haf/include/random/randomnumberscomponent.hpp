@@ -11,9 +11,9 @@ namespace haf::rnd
 /**
  * @brief This component class is intended to be used to generate
  * a series of random numbers.
- * @see scene::IComponent
+ * @see component::IComponent
  */
-class RandomNumbersComponent final : public scene::IComponent
+class RandomNumbersComponent final : public component::IComponent
 {
 public:
     RandomNumbersComponent() noexcept;

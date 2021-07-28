@@ -157,6 +157,7 @@ set(headers
 
   # Components
   ${inc_dir}/components/component_container.hpp
+  ${inc_dir}/components/icomponent_mixin.hpp
   ${inc_dir}/components/icomponent.hpp
 
   # File system

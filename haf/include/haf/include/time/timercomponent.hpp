@@ -15,7 +15,7 @@ namespace haf::time
  * managed by the returned @b TimerConnectorSptr. They can be of different
  * @b TimerType.
  */
-class TimerComponent : public scene::IComponent
+class TimerComponent : public component::IComponent
 {
 public:
     /**

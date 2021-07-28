@@ -12,7 +12,7 @@ namespace haf::scene
  * @brief Component to facilitatee the usage of scenenodes with
  * only one visible node.
  */
-class VisibilitySelectorComponent : public IComponent
+class VisibilitySelectorComponent : public component::IComponent
 {
 public:
     /**

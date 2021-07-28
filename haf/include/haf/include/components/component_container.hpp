@@ -8,7 +8,7 @@
 #include <htypes/include/types.hpp>
 #include <typeindex>
 
-namespace haf::scene
+namespace haf::component
 {
 /**
  * @brief Templated class representing a templated part of a component
@@ -20,8 +20,7 @@ namespace haf::scene
  * container should contain update function or not and if this function will
  * be updated.
  */
-class ComponentContainer
-    : public utils::AttachableManager<IComponent>
+class ComponentContainer : public utils::AttachableManager<IComponent>
 {
 public:
     using ComponentType  = IComponent;
@@ -51,10 +50,9 @@ public:
 
     void updateComponents()
     {
-        components_.performUpdate(
-            [](const htps::sptr<IComponent>& component) {
-                component->update();
-            });
+        components_.performUpdate([](const htps::sptr<IComponent>& component) {
+            component->update();
+        });
     }
 
     /**
@@ -113,6 +111,6 @@ private:
     htps::LockableVector<htps::sptr<ComponentType>> components_;
 };
 
-}  // namespace haf::scene
+}  // namespace haf::component
 
 #endif

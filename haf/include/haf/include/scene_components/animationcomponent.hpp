@@ -14,7 +14,7 @@ namespace haf::scene
 /**
  * @brief Component designed to store, manage and update animations.
  */
-class AnimationComponent : public IComponent
+class AnimationComponent : public component::IComponent
 {
 public:
     AnimationComponent();

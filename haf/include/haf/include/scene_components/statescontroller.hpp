@@ -131,7 +131,7 @@ private:
 };
 
 template <typename T>
-class StatesController : public StatesControllerRaw<T>, public IComponent
+class StatesController : public StatesControllerRaw<T>, public component::IComponent
 {
 public:
     ~StatesController() override {}

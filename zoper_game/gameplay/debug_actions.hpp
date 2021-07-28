@@ -13,7 +13,7 @@ class GameScene;
 class DebugActions : public haf::input::VirtualInputComponent
 {
 private:
-    using BaseClass = haf::scene::IComponent;
+    using BaseClass = haf::component::IComponent;
 
     void onKeyPressed(const haf::input::Key& key) override;
     void onKeyReleased(const haf::input::Key& key) override;

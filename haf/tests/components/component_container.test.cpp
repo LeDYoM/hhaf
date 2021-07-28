@@ -9,6 +9,7 @@
 using namespace htps;
 using namespace haf;
 using namespace haf::scene;
+using namespace haf::component;
 
 struct TestComponent : public IComponent
 {

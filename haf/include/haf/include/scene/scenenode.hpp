@@ -17,9 +17,13 @@ namespace haf::sys
 class DataWrapperCreator;
 }
 
-namespace haf::scene
+namespace haf::component
 {
 class ComponentContainer;
+}
+
+namespace haf::scene
+{
 /**
  * @brief Main class representing all SceneNodes from a @b Scene.
  * This class serves as main entry point in the hierarchy of the scene.
@@ -84,8 +88,8 @@ public:
      */
     void clearAll();
 
-    ComponentContainer& components();
-    ComponentContainer const& components() const noexcept;
+    component::ComponentContainer& components();
+    component::ComponentContainer const& components() const noexcept;
     bool hasComponents() const noexcept;
 
     sys::DataWrapperCreator& subsystems();

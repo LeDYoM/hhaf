@@ -7,7 +7,7 @@
 
 namespace haf::input
 {
-class InputComponentBase : public scene::IComponent
+class InputComponentBase : public component::IComponent
 {
 public:
     bool isPressed(const Key key);
