@@ -11,6 +11,8 @@
 
 namespace htps
 {
+class Object;
+
 template <typename T>
 constexpr bool storable_as_value_v = std::is_arithmetic_v<std::decay_t<T>> ||
     std::is_same_v<std::decay_t<T>, str>;

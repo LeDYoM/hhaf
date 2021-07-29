@@ -8,7 +8,6 @@
 
 namespace htps
 {
-    class Object;
 /**
  * @brief This class contains a group of keys and their associated values.
  * @tparam T Type of the values stored
