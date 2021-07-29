@@ -132,7 +132,7 @@ void GameScene::onCreated()
 
     // Set state control.
     {
-        components().ensureComponentOfType(m_sceneStates);
+        components().component(m_sceneStates);
 
         StatesControllerActuatorRegister<GameSceneStates>
             gameSceneActuatorRegister;

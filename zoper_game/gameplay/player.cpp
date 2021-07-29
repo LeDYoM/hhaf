@@ -96,7 +96,7 @@ void Player::tileMoved(const vector2dst& source, const vector2dst& dest)
 
 void Player::launchAnimation(const vector2df& toWhere)
 {
-    components().ensureComponentOfType(animation_component_);
+    components().component(animation_component_);
     animation_component_->addPropertyAnimation(
         TimePoint_as_miliseconds(
             gameplay::constants::MillisAnimationLaunchPlayerStep),
@@ -111,7 +111,7 @@ void Player::launchAnimationBack(const vector2df& toWhere)
 {
     DisplayLog::info("Creating animation for player to go back");
     currentDirection = currentDirection().negate();
-    components().ensureComponentOfType(animation_component_);
+    components().component(animation_component_);
     animation_component_->addPropertyAnimation(
         TimePoint_as_miliseconds(
             gameplay::constants::MillisAnimationLaunchPlayerStep),

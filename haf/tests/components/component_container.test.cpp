@@ -35,9 +35,9 @@ TEST_CASE("haf::scene::ComponentContainer", "[ComponentContainer][constructor]")
         sptr<TestComponent> component =
             component_container_no_parent->component<TestComponent>();
 
-        LogAsserter::UseLowLevelAssert = false;
         sptr<TestComponent> component_not_created =
-            component_container_no_parent->component<TestComponent>();        
+            component_container_no_parent->component<TestComponent>();
+        CHECK(component == component_not_created);
 
         SECTION("Update")
         {
@@ -47,7 +47,7 @@ TEST_CASE("haf::scene::ComponentContainer", "[ComponentContainer][constructor]")
             SECTION("Try Add twice")
             {
                 sptr<TestComponent> component2 = component;
-                component_container_no_parent->ensureComponentOfType(
+                component_container_no_parent->component(
                     component2);
                 component_container_no_parent->updateComponents();
                 CHECK(component->data_ == 2);
@@ -61,7 +61,7 @@ TEST_CASE("haf::scene::ComponentContainer", "[ComponentContainer][constructor]")
             SECTION("Add twice")
             {
                 sptr<TestComponent> component2 = component;
-                component_container_no_parent->ensureComponentOfType(
+                component_container_no_parent->component(
                     component2);
                 CHECK(component == component2);
             }

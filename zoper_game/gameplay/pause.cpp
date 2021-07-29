@@ -43,7 +43,7 @@ void PauseSceneNode::onCreated()
 void PauseSceneNode::enterPause()
 {
     prop<Visible>().set(true);
-    components().ensureComponentOfType(animation_component_);
+    components().component(animation_component_);
     animation_component_->addPropertyAnimation(
         TimePoint_as_miliseconds(1000U), m_pauseText->prop<TextColor>(),
         Color{255U, 255U, 255U, 0U}, Color{255U, 255U, 255U, 255U});
