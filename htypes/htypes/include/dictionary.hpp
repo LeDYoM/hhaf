@@ -1,27 +1,33 @@
 #ifndef HTYPES_DICTIONARY_INCLUDE_HPP
 #define HTYPES_DICTIONARY_INCLUDE_HPP
 
+#include <initializer_list>
 #include "types.hpp"
 #include "str.hpp"
 #include "vector.hpp"
 
 namespace htps
 {
-class Object;
-
-/// This class contains a group of keys and their associated values.
-/// It is used as a component for the @Object class.
+    class Object;
+/**
+ * @brief This class contains a group of keys and their associated values.
+ * @tparam T Type of the values stored
+ */
 template <typename T>
-class Dictionary
+class Dictionary final
 {
 public:
     using value_type     = T;
+    using key            = str;
     using element        = pair<str, value_type>;
     using content        = vector<element>;
     using iterator       = typename content::iterator;
     using const_iterator = typename content::const_iterator;
 
-    /// Default constructor.
+    /**
+     * @brief  Default constructor
+     *
+     */
     constexpr Dictionary() = default;
 
     constexpr Dictionary(std::initializer_list<element> eList) :
@@ -77,48 +83,47 @@ public:
 
     constexpr void clear() { data_.clear(); }
 
-    constexpr const content& data() const noexcept { return data_; }
+    constexpr content const& data() const noexcept { return data_; }
 
-    constexpr const_iterator find(const str& key) const noexcept
+    constexpr const_iterator find(str const& key) const noexcept
     {
-        for (auto& element : data_)
-        {
-            if (element.first == key)
-            {
-                return &element;
-            }
-        }
-        return data_.cend();
+        return data_.find_if(
+            [&key](auto const& element) { return element.first == key; });
+    }
+
+    constexpr const_iterator cfind(str const& key) const noexcept
+    {
+        return find(key);
     }
 
     constexpr iterator find(const str& key) noexcept
     {
-        for (auto&& element : data_)
-        {
-            if (element.first == key)
-            {
-                return &element;
-            }
-        }
-        return data_.end();
+        return data_.find_if(
+            [&key](auto const& element) { return element.first == key; });
     }
 
-    constexpr bool exists(const str& key) const noexcept
+    constexpr bool exists(str const& key) const noexcept
     {
-        return find(key) != data_.cend();
+        return cfind(key) != data_.cend();
     }
 
-    constexpr pair<bool, iterator> findChecked(const str& key) noexcept
+    constexpr pair<bool, iterator> find_checked(str const& key) noexcept
     {
-        auto iterator(find(key));
-        return {iterator != data_.end(), iterator};
+        auto const iterator(find(key));
+        return {iterator != data_.cend(), iterator};
     }
 
-    constexpr pair<bool, const_iterator> findChecked(
-        const str& key) const noexcept
+    constexpr pair<bool, const_iterator> find_checked(
+        str const& key) const noexcept
     {
-        const auto it(find(key));
+        auto const it(cfind(key));
         return {it != data_.cend(), it};
+    }
+
+    constexpr pair<bool, const_iterator> cfind_checked(
+        str const& key) const noexcept
+    {
+        return find_checked(key);
     }
 
     constexpr size_type size() const noexcept { return data_.size(); }
@@ -127,22 +132,7 @@ public:
 
     constexpr bool operator==(const Dictionary& other) const noexcept
     {
-        if (data_.size() == other.data_.size())
-        {
-            for (size_type i = {0U}; i < data_.size(); ++i)
-            {
-                if (data_[i].first != other.data_[i].first)
-                {
-                    return false;
-                }
-                else if (data_[i].second != other.data_[i].second)
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-        return false;
+        return data_ == other.data_;
     }
 
     constexpr bool operator!=(const Dictionary& other) const noexcept

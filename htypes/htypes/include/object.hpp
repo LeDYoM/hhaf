@@ -270,13 +270,13 @@ public:
 
     Value getObject(const str& key) const
     {
-        auto token(m_objects.findChecked(key));
+        auto token(m_objects.find_checked(key));
         return (token.first ? Value(&(token.second->second)) : Value());
     }
 
     Value getValue(const str& key) const
     {
-        auto token(m_values.findChecked(key));
+        auto token(m_values.find_checked(key));
         return (token.first ? Value(&(token.second->second)) : Value());
     }
 
