@@ -27,7 +27,7 @@ public:
      * @brief  Default constructor
      *
      */
-    constexpr Dictionary() = default;
+    constexpr Dictionary() noexcept = default;
 
     constexpr Dictionary(std::initializer_list<element> eList) :
         data_{std::move(eList)}
@@ -129,12 +129,12 @@ public:
 
     constexpr bool empty() const noexcept { return data_.empty(); }
 
-    constexpr bool operator==(const Dictionary& other) const noexcept
+    constexpr bool operator==(Dictionary const& other) const noexcept
     {
         return data_ == other.data_;
     }
 
-    constexpr bool operator!=(const Dictionary& other) const noexcept
+    constexpr bool operator!=(Dictionary const& other) const noexcept
     {
         return !(*this == other);
     }
