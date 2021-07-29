@@ -16,6 +16,9 @@ set(sources
   ${src_dir}/main.cpp 
   ${src_dir}/systemprovider_init.cpp
 
+  # Component
+  ${src_dir}/component/component_container.cpp
+
   # FileSystem
   ${src_dir}/filesystem/fileserializer.cpp
   ${src_dir}/filesystem/filesystem.cpp
@@ -155,10 +158,10 @@ set(headers
   # Global
   ${inc_dir}/haf_export.hpp
 
-  # Components
-  ${inc_dir}/components/component_container.hpp
-  ${inc_dir}/components/icomponent_mixin.hpp
-  ${inc_dir}/components/icomponent.hpp
+  # Component
+  ${inc_dir}/component/component_container.hpp
+  ${inc_dir}/component/icomponent_mixin.hpp
+  ${inc_dir}/component/icomponent.hpp
 
   # File system
   ${inc_dir}/filesystem/fileserializer.hpp

@@ -13,7 +13,7 @@
 #include <haf/include/scene_components/scenecontrol.hpp>
 #include <haf/include/render/renderizables.hpp>
 #include <haf/include/render/renderizable_builder.hpp>
-#include <haf/include/components/component_container.hpp>
+#include <haf/include/component/component_container.hpp>
 
 namespace zoper
 {

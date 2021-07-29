@@ -1,7 +1,7 @@
 #ifndef HAF_SCENE_ICOMPONENT_MIXIN_INCLUDE_HPP
 #define HAF_SCENE_ICOMPONENT_MININ_INCLUDE_HPP
 
-#include <haf/include/components/icomponent.hpp>
+#include <haf/include/component/icomponent.hpp>
 
 namespace haf::component
 {

@@ -7,7 +7,7 @@
 #include <haf/include/scene/transformable_scenenode.hpp>
 #include <haf/include/system/isystemprovider.hpp>
 #include <haf/include/render/renderizables.hpp>
-#include <haf/include/components/component_container.hpp>
+#include <haf/include/component/component_container.hpp>
 
 #include <hlog/include/hlog.hpp>
 

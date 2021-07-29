@@ -5,7 +5,7 @@
 #include <htypes/include/vector2d.hpp>
 
 #include <haf/include/time/timercomponent.hpp>
-#include <haf/include/components/icomponent.hpp>
+#include <haf/include/component/icomponent.hpp>
 #include <haf/include/scene/color.hpp>
 
 #include "../gameshareddata.hpp"

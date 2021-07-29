@@ -4,7 +4,7 @@
 #include <htypes/include/types.hpp>
 #include <htypes/include/propertystate.hpp>
 
-#include <haf/include/components/icomponent.hpp>
+#include <haf/include/component/icomponent.hpp>
 
 namespace haf::scene
 {

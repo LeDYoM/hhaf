@@ -3,8 +3,8 @@
 #include <htypes/include/types.hpp>
 #include <haf/include/scene/scenenode.hpp>
 #include <haf/include/scene/scene.hpp>
-#include <haf/include/components/component_container.hpp>
-#include <haf/include/components/icomponent.hpp>
+#include <haf/include/component/component_container.hpp>
+#include <haf/include/component/icomponent.hpp>
 
 using namespace htps;
 using namespace haf;

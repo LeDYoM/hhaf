@@ -12,7 +12,7 @@
 #include <haf/include/scene_components/scenemetricsview.hpp>
 #include <haf/include/render/renderizable.hpp>
 #include <haf/include/scene/scenenode_cast.hpp>
-#include <haf/include/components/component_container.hpp>
+#include <haf/include/component/component_container.hpp>
 
 #include <boardmanager/include/boardmanager.hpp>
 #include <boardmanager/include/itile.hpp>
