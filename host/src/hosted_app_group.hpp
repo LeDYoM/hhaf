@@ -24,7 +24,6 @@ public:
     bool removeApp(htps::str const& app_name);
     bool appExists(htps::str const& name) noexcept;
 
-
     /**
      * @brief Get the App By Name object
      *
@@ -32,20 +31,24 @@ public:
      * @return iterator pointing to the app with the specified
      * name. If the app was not found, dereferencing it is UB.
      */
-    auto getAppByName(htps::str const& app_name)
+    auto operator[](htps::str const& app_name)
     {
         return app_.find_if([&app_name](HostedApplication const& app) {
             return app.app_name_ == app_name;
         });
     }
 
+    bool empty() const noexcept;
+    htps::size_type size() const noexcept;
+    HostedApplication& back();
+
 private:
     htps::vector<HostedApplication> app_;
     htps::u32 index_current_app{0U};
 
-    void add_app(ManagedApp&& app,
-                 htps::str name,
-                 htps::uptr<HostConnector> host_connector);
+    HostedApplication& add_app(ManagedApp&& app,
+                              htps::str name,
+                              htps::uptr<HostConnector> host_connector);
 };
 
 }  // namespace haf::host

@@ -33,7 +33,7 @@ void HostedAppGroup::setCurrentAppState(AppState const app_state) noexcept
 }
 
 bool HostedAppGroup::try_add_app(ManagedApp managed_app,
-                                 htps::str name,
+                                 str name,
                                  uptr<HostConnector> host_connector)
 {
     LogAsserter::log_assert(managed_app.app != nullptr,
@@ -47,21 +47,19 @@ bool HostedAppGroup::try_add_app(ManagedApp managed_app,
     if (is_new_app)
     {
         DisplayLog::info("Starting Registering app...");
-        add_app(std::move(managed_app), std::move(name), std::move(host_connector));
+        auto& new_app = add_app(std::move(managed_app), std::move(name),
+                std::move(host_connector));
         DisplayLog::verbose("Starting new app...");
-        setCurrentAppState(AppState::ReadyToStart);
+        new_app.app_state = AppState::ReadyToStart;
     }
 
     return is_new_app;
 }
 
-bool HostedAppGroup::removeApp(htps::str const& app_name)
+bool HostedAppGroup::removeApp(str const& app_name)
 {
-    // First step, search the app in the array
-    auto const app_iterator = getAppByName(app_name);
-
     // If the app is found, remove it from the group
-    if (app_iterator != app_.end())
+    if (auto const app_iterator{(*this)[app_name]}; app_iterator != app_.end())
     {
         // Aplication found. Execute unload steps.
         auto const old_size = app_.size();
@@ -84,19 +82,35 @@ bool HostedAppGroup::removeApp(htps::str const& app_name)
     return false;
 }
 
-bool HostedAppGroup::appExists(htps::str const& name) noexcept
+bool HostedAppGroup::empty() const noexcept
+{
+    return app_.empty();
+}
+
+size_type HostedAppGroup::size() const noexcept
+{
+    return app_.size();
+}
+
+HostedApplication& HostedAppGroup::back()
+{
+    return app_.back();
+}
+
+bool HostedAppGroup::appExists(str const& name) noexcept
 {
     // Search for a pointer to the same app
     return (app_.cfind(HostedApplication{ManagedApp{}, name, nullptr}) !=
             app_.cend());
 }
 
-void HostedAppGroup::add_app(ManagedApp&& app,
-                             htps::str name,
-                             uptr<HostConnector> host_connector)
+HostedApplication& HostedAppGroup::add_app(ManagedApp&& app,
+                                           str name,
+                                           uptr<HostConnector> host_connector)
 {
     app_.emplace_back(std::move(app), std::move(name),
                       std::move(host_connector));
+    return app_.back();
 }
 
 }  // namespace haf::host

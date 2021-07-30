@@ -129,7 +129,7 @@ bool Host::HostPrivate::unloadApplication(htps::str const& app_name)
     if (app_group_.appExists(app_name))
     {
         // This is safe, given that app exists
-        auto& app = app_group_.getAppByName(app_name)->managed_app_;
+        auto& app = app_group_[app_name]->managed_app_;
         app_loader.unloadApp(app);
         return app_group_.removeApp(app_name);
     }
