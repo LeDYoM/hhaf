@@ -21,7 +21,7 @@ public:
     /**
      * @brief Get the App By Name object
      *
-     * @param app_name
+     * @param app_name Name of the application to search
      * @return iterator pointing to the app with the specified
      * name. If the app was not found, dereferencing it is UB.
      */
