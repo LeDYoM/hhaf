@@ -54,7 +54,13 @@ bool HostInternal::initialize()
 
 bool HostInternal::update()
 {
-    return updateApp(app_group_.currentHostedApplication());
+    bool result{false};
+    for (auto& app : app_group_)
+    {
+        result |= updateApp(app);
+    }
+
+    return result;
 }
 
 bool HostInternal::updateApp(HostedApplication& app)

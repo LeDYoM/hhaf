@@ -42,13 +42,21 @@ public:
     htps::size_type size() const noexcept;
     HostedApplication& back();
 
+    auto begin() const noexcept { return app_.begin(); }
+
+    auto begin() noexcept { return app_.begin(); }
+
+    auto end() const noexcept { return app_.end(); }
+
+    auto end() noexcept { return app_.end(); }
+
 private:
     htps::vector<HostedApplication> app_;
     htps::u32 index_current_app{0U};
 
     HostedApplication& add_app(ManagedApp&& app,
-                              htps::str name,
-                              htps::uptr<HostConnector> host_connector);
+                               htps::str name,
+                               htps::uptr<HostConnector> host_connector);
 };
 
 }  // namespace haf::host
