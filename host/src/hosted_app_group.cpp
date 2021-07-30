@@ -7,31 +7,6 @@ using namespace htps;
 
 namespace haf::host
 {
-HostedApplication& HostedAppGroup::currentHostedApplication()
-{
-    return app_[index_current_app];
-}
-
-HostedApplication const& HostedAppGroup::currentHostedApplication() const
-{
-    return app_[index_current_app];
-}
-
-rptr<IApp const> HostedAppGroup::currentApp() const
-{
-    return app_[index_current_app].managed_app_.app;
-}
-
-rptr<IApp> HostedAppGroup::currentApp()
-{
-    return app_[index_current_app].managed_app_.app;
-}
-
-void HostedAppGroup::setCurrentAppState(AppState const app_state) noexcept
-{
-    currentHostedApplication().app_state = app_state;
-}
-
 bool HostedAppGroup::try_add_app(ManagedApp managed_app,
                                  str name,
                                  uptr<HostConnector> host_connector)

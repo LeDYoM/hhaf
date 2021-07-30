@@ -11,12 +11,6 @@ class HostConnector;
 class HostedAppGroup final
 {
 public:
-    HostedApplication& currentHostedApplication();
-    HostedApplication const& currentHostedApplication() const;
-    htps::rptr<IApp const> currentApp() const;
-    htps::rptr<IApp> currentApp();
-
-    void setCurrentAppState(AppState const app_state) noexcept;
 
     bool try_add_app(ManagedApp managed_app,
                      htps::str name,
