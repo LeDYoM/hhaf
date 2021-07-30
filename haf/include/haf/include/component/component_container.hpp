@@ -62,8 +62,14 @@ public:
         }
     }
 
+    /**
+     * @brief Update componentents of this container
+     */
     void updateComponents();
 
+    /**
+     * @brief Clear all elements of this container     * 
+     */
     void clearComponents() noexcept;
 
 private:
