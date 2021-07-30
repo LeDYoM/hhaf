@@ -1,18 +1,18 @@
 #ifndef HAF_HOST_HOST_CONNECTOR_IMPL_INCLUDE_HPP
 #define HAF_HOST_HOST_CONNECTOR_IMPL_INCLUDE_HPP
 
-#include "host_private.hpp"
+#include "host_internal.hpp"
 
 namespace haf::host
 {
 class HostConnectorImpl final
 {
 public:
-    HostConnectorImpl(Host::HostPrivate& host_private);
+    HostConnectorImpl(HostInternal& host_internal);
     ~HostConnectorImpl();
 private:
 
-    Host::HostPrivate& host_private_;
+    HostInternal& host_internal_;
 };
 
 }  // namespace haf::host

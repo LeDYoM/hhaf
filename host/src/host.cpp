@@ -1,8 +1,6 @@
 #include "host.hpp"
 
-#include "host_private.hpp"
-#include "systemcontroller_loader.hpp"
-
+#include "host_internal.hpp"
 #include <hosted_app/include/iapp.hpp>
 
 #include <exception>
@@ -11,6 +9,11 @@ using namespace htps;
 
 namespace haf::host
 {
+struct Host::HostPrivate : public HostInternal
+{
+    using HostInternal::HostInternal;
+};
+
 Host::Host(int argc, char* argv[]) : p_{muptr<HostPrivate>(argc, argv)}
 {
     DisplayLog::info("Starting HostController...");

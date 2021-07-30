@@ -1,13 +1,15 @@
-#include "host_private.hpp"
+#include "host_internal.hpp"
 #include "host.hpp"
 #include "host_connector.hpp"
 #include "host_connectorimpl.hpp"
+
+#include <backend/include/backendfactory.hpp>
 
 using namespace htps;
 
 namespace haf::host
 {
-Host::HostPrivate::HostPrivate(const int argc, char const* const argv[]) :
+HostInternal::HostInternal(const int argc, char const* const argv[]) :
     argc_{argc},
     argv_{argv},
     backend_factory_{nullptr, nullptr},
@@ -15,12 +17,12 @@ Host::HostPrivate::HostPrivate(const int argc, char const* const argv[]) :
     params_{parpar::create(argc, argv)}
 {}
 
-str Host::HostPrivate::configuredFirstApp() const
+str HostInternal::configuredFirstApp() const
 {
     return config_.configuredFirstApp();
 }
 
-bool Host::HostPrivate::initializeBackend()
+bool HostInternal::initializeBackend()
 {
     // Initialize and create the backend factory
     backend_factory_ =
@@ -30,7 +32,7 @@ bool Host::HostPrivate::initializeBackend()
     return backend_factory_ != nullptr;
 }
 
-bool Host::HostPrivate::initializeHaf()
+bool HostInternal::initializeHaf()
 {
     auto const result_load_functions = system_loader_.loadFunctions();
     if (result_load_functions != SystemControllerLoader::ResultType::Success)
@@ -40,7 +42,7 @@ bool Host::HostPrivate::initializeHaf()
     return result_load_functions == SystemControllerLoader::ResultType::Success;
 }
 
-bool Host::HostPrivate::initialize()
+bool HostInternal::initialize()
 {
     auto const result_init_backend{initializeBackend()};
     auto const result_load_functions{initializeHaf()};
@@ -50,12 +52,12 @@ bool Host::HostPrivate::initialize()
         loadApplication(configuredFirstApp());
 }
 
-bool Host::HostPrivate::update()
+bool HostInternal::update()
 {
     return updateApp(app_group_.currentHostedApplication());
 }
 
-bool Host::HostPrivate::updateApp(HostedApplication& app)
+bool HostInternal::updateApp(HostedApplication& app)
 {
     switch (app.app_state)
     {
@@ -108,7 +110,7 @@ bool Host::HostPrivate::updateApp(HostedApplication& app)
     return false;
 }
 
-bool Host::HostPrivate::addApplication(ManagedApp managed_app, htps::str name)
+bool HostInternal::addApplication(ManagedApp managed_app, htps::str name)
 {
     auto host_connector_impl = muptr<HostConnectorImpl>(*this);
     auto host_connector = muptr<HostConnector>(std::move(host_connector_impl));
@@ -116,7 +118,7 @@ bool Host::HostPrivate::addApplication(ManagedApp managed_app, htps::str name)
                                   std::move(host_connector));
 }
 
-bool Host::HostPrivate::loadApplication(htps::str const& app_name)
+bool HostInternal::loadApplication(htps::str const& app_name)
 {
     ManagedApp managed_app = app_loader.loadApp(app_name);
     return managed_app.app != nullptr
@@ -124,7 +126,7 @@ bool Host::HostPrivate::loadApplication(htps::str const& app_name)
         : false;
 }
 
-bool Host::HostPrivate::unloadApplication(htps::str const& app_name)
+bool HostInternal::unloadApplication(htps::str const& app_name)
 {
     if (app_group_.appExists(app_name))
     {
@@ -136,7 +138,7 @@ bool Host::HostPrivate::unloadApplication(htps::str const& app_name)
     return false;
 }
 
-bool Host::HostPrivate::unloadAllApplications()
+bool HostInternal::unloadAllApplications()
 {
     bool result{true};
 

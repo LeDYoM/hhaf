@@ -18,8 +18,8 @@ set(sources
   src/host_connectorimpl.cpp
   src/host_connectorimpl.hpp
   src/host_export.hpp
-  src/host_private.cpp
-  src/host_private.hpp
+  src/host_internal.cpp
+  src/host_internal.hpp
   src/host.cpp
   src/host.hpp
   src/hosted_app_group.cpp

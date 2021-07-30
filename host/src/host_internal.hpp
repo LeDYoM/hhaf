@@ -1,5 +1,5 @@
-#ifndef HAF_HOST_PRIVATE_INCLUDE_HPP
-#define HAF_HOST_PRIVATE_INCLUDE_HPP
+#ifndef HAF_HOST_INTERNAL_INCLUDE_HPP
+#define HAF_HOST_INTERNAL_INCLUDE_HPP
 
 #include "host.hpp"
 #include "systemcontroller_loader.hpp"
@@ -22,15 +22,14 @@
 
 #include <hosted_app/include/iapp.hpp>
 
-#include <backend/include/backendfactory.hpp>
 #include <backend/include/backend_creator.hpp>
 
 namespace haf::host
 {
-class Host::HostPrivate final
+class HostInternal
 {
 public:
-    HostPrivate(const int argc, char const* const argv[]);
+    HostInternal(const int argc, char const* const argv[]);
 
     int const argc_;
     char const* const* const argv_;

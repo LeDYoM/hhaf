@@ -2,8 +2,8 @@
 
 namespace haf::host
 {
-HostConnectorImpl::HostConnectorImpl(Host::HostPrivate& host_private) :
-    host_private_{host_private}
+HostConnectorImpl::HostConnectorImpl(HostInternal& host_internal) :
+    host_internal_{host_internal}
 {}
 
 HostConnectorImpl::~HostConnectorImpl() = default;

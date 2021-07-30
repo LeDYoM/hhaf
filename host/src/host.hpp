@@ -2,13 +2,14 @@
 #define HAF_HOST_MAIN_INCLUDE_HPP
 
 #include <htypes/include/types.hpp>
+#include "host_export.hpp"
 
 namespace haf::host
 {
 /**
  * @brief Class containing a Host from the haf framework.
  */
-class Host final
+class HOST_PRIVATE Host final
 {
 public:
     /**
@@ -33,9 +34,8 @@ public:
      */
     int run();
 
-    class HostPrivate;
-
 private:
+    class HostPrivate;
     htps::uptr<HostPrivate> p_;
 };
 }  // namespace haf::host
