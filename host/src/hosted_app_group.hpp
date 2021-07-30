@@ -4,7 +4,6 @@
 #include <htypes/include/str.hpp>
 #include <htypes/include/vector.hpp>
 #include "hosted_application.hpp"
-#include "app_loader.hpp"
 
 namespace haf::host
 {
@@ -12,9 +11,6 @@ class HostConnector;
 class HostedAppGroup final
 {
 public:
-    htps::vector<HostedApplication> app_;
-    htps::u32 index_current_app{0U};
-
     HostedApplication& currentHostedApplication();
     HostedApplication const& currentHostedApplication() const;
     htps::rptr<IApp const> currentApp() const;
@@ -27,6 +23,7 @@ public:
                      htps::uptr<HostConnector> host_connector);
     bool removeApp(htps::str const& app_name);
     bool appExists(htps::str const& name) noexcept;
+
 
     /**
      * @brief Get the App By Name object
@@ -43,6 +40,9 @@ public:
     }
 
 private:
+    htps::vector<HostedApplication> app_;
+    htps::u32 index_current_app{0U};
+
     void add_app(ManagedApp&& app,
                  htps::str name,
                  htps::uptr<HostConnector> host_connector);

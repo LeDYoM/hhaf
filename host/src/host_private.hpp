@@ -25,8 +25,6 @@
 #include <backend/include/backendfactory.hpp>
 #include <backend/include/backend_creator.hpp>
 
-using namespace htps;
-
 namespace haf::host
 {
 class Host::HostPrivate final
@@ -46,20 +44,20 @@ public:
 
     bool initialize();
 
-    str configuredFirstApp() const;
+    htps::str configuredFirstApp() const;
 
     bool update();
-    bool updateApp(HostedApplication& app);
 
     bool addApplication(ManagedApp managed_app, htps::str name);
     bool loadApplication(htps::str const& app_name);
     bool unloadApplication(htps::str const& app_name);
 
-    str simulation_input_file;
-    str simulation_output_file;
+    htps::str simulation_input_file;
+    htps::str simulation_output_file;
     bool exit{false};
 
 private:
+    bool updateApp(HostedApplication& app);
     bool initializeBackend();
     bool initializeHaf();
 };
