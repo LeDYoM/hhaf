@@ -27,7 +27,7 @@ Host::~Host()
 
     while (!p_->app_group_.empty())
     {
-        HostedApplication& last = p_->app_group_.app_.back();
+        HostedApplication& last = p_->app_group_.back();
         p_->unloadApplication(last.app_name_);
     }
 

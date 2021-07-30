@@ -45,6 +45,14 @@ public:
         return result;
     }
 
+        template <typename T>
+        htps::sptr<T> componentOfType() const
+        {
+            htps::sptr<IComponent> cot(
+                componentOfType(std::type_index(typeid(T))));
+            return cot ? std::dynamic_pointer_cast<T>(cot) : nullptr;
+        }
+
     /**
      * @brief Retrieve an instance of a component type. Either newly created
      * or newly added.
@@ -73,13 +81,6 @@ public:
     void clearComponents() noexcept;
 
 private:
-    template <typename T>
-    htps::sptr<T> componentOfType()
-    {
-        htps::sptr<IComponent> cot(
-            componentOfType(std::type_index(typeid(T))));
-        return cot ? std::dynamic_pointer_cast<T>(cot) : nullptr;
-    }
 
     htps::sptr<IComponent> componentOfType(const std::type_index& ti) const;
 
