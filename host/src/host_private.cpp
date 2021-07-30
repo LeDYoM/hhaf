@@ -136,4 +136,16 @@ bool Host::HostPrivate::unloadApplication(htps::str const& app_name)
     return false;
 }
 
+bool Host::HostPrivate::unloadAllApplications()
+{
+    bool result{true};
+
+    while (!app_group_.empty())
+    {
+        HostedApplication& last = app_group_.back();
+        result &= unloadApplication(last.app_name_);
+    }
+    return result;
+}
+
 }  // namespace haf::host
