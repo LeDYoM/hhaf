@@ -35,6 +35,13 @@ public:
 
     htps::str configuredFirstApp() const;
 
+    /**
+     * @brief Performs the main update cycle, updating all current active
+     * applications.
+     *
+     * @return true The host wants to exit
+     * @return false The host wants to continue
+     */
     bool update();
 
     bool addApplication(ManagedApp managed_app, htps::str name);
@@ -47,6 +54,14 @@ public:
     bool exit{false};
 
 private:
+    /**
+     * @brief Updates a given @b HostApplication, performing actions
+     * depending on which state the application currently is.
+     *
+     * @param app Application to update
+     * @return true The application wants to exit
+     * @return false The application wants to continue executing
+     */
     bool updateApp(HostedApplication& app);
     bool initializeBackend();
     bool initializeHaf();

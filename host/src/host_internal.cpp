@@ -53,13 +53,17 @@ bool HostInternal::initialize()
 
 bool HostInternal::update()
 {
-    bool result{false};
+    // By default, the host wants to exit.
+    // Only the existence of at least one application that
+    // does not want to exit will avoid that.
+    bool host_wants_to_exit{true};
+
     for (auto& app : app_group_)
     {
-        result |= updateApp(app);
+        host_wants_to_exit &= updateApp(app);
     }
 
-    return result;
+    return host_wants_to_exit;
 }
 
 bool HostInternal::updateApp(HostedApplication& app)
