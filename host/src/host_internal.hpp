@@ -3,25 +3,15 @@
 
 #include "host.hpp"
 #include "systemcontroller_loader.hpp"
-
 #include "hosted_application.hpp"
 #include "app_loader.hpp"
 #include "host_config.hpp"
 #include "app_state.hpp"
 #include "hosted_app_group.hpp"
+
 #include <haf/include/system/isystemcontroller.hpp>
-
-#include <hlog/include/hlog.hpp>
-
-#include <agloader/include/loader.hpp>
-
-#include <htypes/include/vector.hpp>
 #include <htypes/include/parpar.hpp>
-#include <htypes/include/object.hpp>
-#include <htypes/include/parpar.hpp>
-
 #include <hosted_app/include/iapp.hpp>
-
 #include <backend/include/backend_creator.hpp>
 
 namespace haf::host

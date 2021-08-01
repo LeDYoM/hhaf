@@ -1,5 +1,4 @@
 #include "host_internal.hpp"
-#include "host.hpp"
 #include "host_connector.hpp"
 #include "host_connectorimpl.hpp"
 
