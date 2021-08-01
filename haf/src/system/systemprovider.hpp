@@ -67,8 +67,8 @@ public:
     IApp& app();
     const IApp& app() const;
 
-    const Window& parentWindow() const noexcept;
-    Window& parentWindow() noexcept;
+    const Window& window() const noexcept;
+    Window& window() noexcept;
     const ResourceManager& resourceManager() const noexcept;
     ResourceManager& resourceManager() noexcept;
     const sys::InputSystem& inputSystem() const noexcept;

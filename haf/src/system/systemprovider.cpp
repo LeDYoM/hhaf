@@ -251,12 +251,12 @@ const IApp& SystemProvider::app() const
     return *p_->app_;
 }
 
-const Window& SystemProvider::parentWindow() const noexcept
+const Window& SystemProvider::window() const noexcept
 {
     return *p_->window_;
 }
 
-Window& SystemProvider::parentWindow() noexcept
+Window& SystemProvider::window() noexcept
 {
     return *p_->window_;
 }
@@ -400,13 +400,13 @@ scene::SceneManager& SystemProvider::system() noexcept
 template <>
 Window const& SystemProvider::system() const noexcept
 {
-    return parentWindow();
+    return window();
 }
 
 template <>
 Window& SystemProvider::system() noexcept
 {
-    return parentWindow();
+    return window();
 }
 
 template <>

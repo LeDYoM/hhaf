@@ -35,13 +35,13 @@ void SystemController::terminate()
 
 bool SystemController::runStep()
 {
-    const bool windowWants2Close{parentWindow().preLoop()};
+    const bool windowWants2Close{window().preLoop()};
     simulationSystem().update();
     inputSystem().update();
     sceneManager().update();
     renderSystem().update();
 
-    parentWindow().postLoop();
+    window().postLoop();
     return windowWants2Close;
 }
 }  // namespace haf::sys
