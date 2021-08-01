@@ -14,7 +14,7 @@ struct Host::HostPrivate : public HostInternal
     using HostInternal::HostInternal;
 };
 
-Host::Host(int argc, char* argv[]) : p_{muptr<HostPrivate>(argc, argv)}
+Host::Host(int argc, char* argv[]) : p_{make_pimplp<HostPrivate>(argc, argv)}
 {
     DisplayLog::info("Starting HostController...");
     DisplayLog::info("Host version: ", host_VERSION, ".", host_SUBVERSION, ".",

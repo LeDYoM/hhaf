@@ -10,7 +10,6 @@ namespace haf::scene
 {
 struct SceneNode::SceneNodePrivate
 {
-    SceneNodePrivate() = default;
     uptr<component::ComponentContainer> component_container_;
     uptr<sys::DataWrapperCreator> subsystems_;
 };

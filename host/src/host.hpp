@@ -1,7 +1,7 @@
 #ifndef HAF_HOST_MAIN_INCLUDE_HPP
 #define HAF_HOST_MAIN_INCLUDE_HPP
 
-#include <htypes/include/types.hpp>
+#include <htypes/include/p_impl_pointer.hpp>
 #include "host_export.hpp"
 
 namespace haf::host
@@ -35,8 +35,8 @@ public:
     int run();
 
 private:
-    class HostPrivate;
-    htps::uptr<HostPrivate> p_;
+    struct HostPrivate;
+    htps::PImplPointer<HostPrivate> p_;
 };
 }  // namespace haf::host
 
