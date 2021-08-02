@@ -498,6 +498,37 @@ public:
         return *this;
     }
 
+    constexpr bool operator==(vector_base const& rhs) const noexcept
+    {
+        // Comparing with yourself returns true.
+        if (this == &rhs)
+        {
+            return true;
+        }
+        // If the vectors have different sizes, they are different
+        else if (size() != rhs.size())
+        {
+            return false;
+        }
+        else
+        {
+            for (auto lhs_iterator = cbegin(), rhs_iterator = rhs.cbegin();
+                 lhs_iterator != cend(); ++lhs_iterator, ++rhs_iterator)
+            {
+                if (!(*lhs_iterator == *rhs_iterator))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+
+    constexpr bool operator!=(vector_base const& rhs) const noexcept
+    {
+        return !(*this == rhs);
+    }
+
     constexpr void pop_back() noexcept { base_.pop_back(); }
 
     constexpr void reserve(size_type const capacity)
@@ -552,43 +583,6 @@ public:
         assert(it <= end());
     }
 };
-
-template <class T, typename Allocator, typename GrowPolicy>
-constexpr bool operator==(
-    vector_base<T, Allocator, GrowPolicy> const& lhs,
-    vector_base<T, Allocator, GrowPolicy> const& rhs) noexcept
-{
-    // Comparing with yourself returns true.
-    if (&lhs == &rhs)
-    {
-        return true;
-    }
-    // If the vectors have different sizes, they are different
-    else if (lhs.size() != rhs.size())
-    {
-        return false;
-    }
-    else
-    {
-        for (auto lhs_iterator = lhs.cbegin(), rhs_iterator = rhs.cbegin();
-             lhs_iterator != lhs.cend(); ++lhs_iterator, ++rhs_iterator)
-        {
-            if (!(*lhs_iterator == *rhs_iterator))
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-}
-
-template <class T, typename Allocator, typename GrowPolicy>
-constexpr bool operator!=(
-    vector_base<T, Allocator, GrowPolicy> const& lhs,
-    vector_base<T, Allocator, GrowPolicy> const& rhs) noexcept
-{
-    return !(lhs == rhs);
-}
 
 }  // namespace htps
 
