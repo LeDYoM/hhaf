@@ -1,5 +1,5 @@
-#ifndef HAF_HOST_HOSTED_APP_GROUP_PRIVATE_INCLUDE_HPP
-#define HAF_HOST_HOSTED_APP_GROUP_PRIVATE_INCLUDE_HPP
+#ifndef HAF_HOST_HOSTED_APP_GROUP_INCLUDE_HPP
+#define HAF_HOST_HOSTED_APP_GROUP_INCLUDE_HPP
 
 #include <htypes/include/str.hpp>
 #include <htypes/include/vector.hpp>
