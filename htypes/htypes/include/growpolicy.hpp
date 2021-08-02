@@ -8,7 +8,7 @@ namespace htps
 class GrowPolicyUnary
 {
 public:
-    static constexpr size_type growSize(const size_type size) noexcept
+    static constexpr size_type growSize(size_type const size) noexcept
     {
         return size + 1U;
     }
@@ -17,9 +17,9 @@ public:
 class GrowPolicyDouble
 {
 public:
-    static constexpr size_type growSize(const size_type size) noexcept
+    static constexpr size_type growSize(size_type const size) noexcept
     {
-        return size > 0U ? (size * 2U) : (size + 1);
+        return size > 0U ? (size * 2U) : 1U;
     }
 };
 }  // namespace htps

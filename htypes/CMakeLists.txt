@@ -47,6 +47,7 @@ set(headers
     ${include_dir}/str_view.hpp
     ${include_dir}/str.hpp
     ${include_dir}/types.hpp
+    ${include_dir}/vector_base.hpp
     ${include_dir}/vector_storage.hpp
     ${include_dir}/vector.hpp
     ${include_dir}/vector2d.hpp
